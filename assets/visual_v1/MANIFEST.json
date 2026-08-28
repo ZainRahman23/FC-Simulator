@@ -1,0 +1,124 @@
+{
+  "manifest": "TouchlineSimulator Visual V1 — PixelLab asset freeze",
+  "branch": "visual-integration-v1",
+  "retrieval_date": "2026-08-27",
+  "retrieval_method": "non-generative HTTP GET of existing PixelLab assets (frame CDN + authenticated /mcp tileset endpoints); zero PixelLab generations spent",
+  "pixellab_generations_spent": 0,
+  "notes": [
+    "Original downloads live under originals/ and must never be resampled, recolored, antialiased, or otherwise altered.",
+    "Any runtime-packed representation must be derived into a separate directory, leaving originals/ byte-identical to HASHES.sha256.",
+    "Animated Idle intentionally does not exist for the MVP; static 8-direction rotations are the accepted Idle.",
+    "The experimental east-only Dribble/Carry animation (group 5fc20f4b-b01e-4443-88ed-7a5b5f187681) was intentionally NOT imported.",
+    "Animation frame canvases are larger than the 128x128 character base (motion padding, source-faithful): 140x140 for most directions, 144x144 for north-east/north-west in the v3 template groups. Frames are assumed pivot-centred per PixelLab convention; this must be validated visually in the renderer sandbox.",
+    "Signed/transient URLs and credentials are deliberately excluded; assets are addressed by PixelLab IDs only."
+  ],
+  "character": {
+    "pixellab_character_id": "31a11357-1d06-40c3-958e-5103d1fdd8cd",
+    "acceptance": "VERIFIED_ACCEPTED (user authorization, Visual V1 phase 1, 2026-08-27)",
+    "base_size": "128x128",
+    "directions": 8,
+    "view": "low top-down",
+    "state": "Idle",
+    "state_group_id": "6472488f-74f5-43ca-b3e2-7cc957bd0bf9"
+  },
+  "idle": {
+    "source": "static 8-direction rotations of character 31a11357-1d06-40c3-958e-5103d1fdd8cd (no animation group; rotations are part of the Idle state)",
+    "acceptance": "VERIFIED_ACCEPTED (static-by-design for MVP)",
+    "frame_count_per_direction": 1,
+    "canvas": "128x128",
+    "local_path": "originals/character_31a11357/idle/{direction}.png"
+  },
+  "jog": {
+    "acceptance": "VERIFIED_ACCEPTED (user directive: template Jogging group is the base; custom South-East group fills SE)",
+    "runtime_mapping": {
+      "north":      {"animation_group_id": "c1c58078-4bb5-40eb-a8cd-b7bc6961ff16", "animation_id": "c4444b32-78bb-4ef7-a831-9c4a79e9ca98", "canvas": "140x140", "frames": 8},
+      "north-east": {"animation_group_id": "c1c58078-4bb5-40eb-a8cd-b7bc6961ff16", "animation_id": "4337b79d-2ef0-4276-aefa-90a1ed4a1ebf", "canvas": "144x144", "frames": 8},
+      "east":       {"animation_group_id": "c1c58078-4bb5-40eb-a8cd-b7bc6961ff16", "animation_id": "73ac7d36-e783-46c6-9f23-e183d63e7921", "canvas": "140x140", "frames": 8},
+      "south-east": {"animation_group_id": "455013ba-72c0-412f-a5f1-49ab5c5a9dd0", "animation_id": "9d65783f-0ee7-4d5a-a1b5-cdf9a3ce92d2", "canvas": "140x140", "frames": 8},
+      "south":      {"animation_group_id": "c1c58078-4bb5-40eb-a8cd-b7bc6961ff16", "animation_id": "c66a10ab-1bf5-4852-99b4-161aea4ae9b9", "canvas": "140x140", "frames": 8},
+      "south-west": {"animation_group_id": "c1c58078-4bb5-40eb-a8cd-b7bc6961ff16", "animation_id": "ac63e259-a4d0-499a-ad15-b7e074b947ab", "canvas": "140x140", "frames": 8},
+      "west":       {"animation_group_id": "c1c58078-4bb5-40eb-a8cd-b7bc6961ff16", "animation_id": "c74b0011-69ef-40d5-a0ac-24cd3ee78a83", "canvas": "140x140", "frames": 8},
+      "north-west": {"animation_group_id": "c1c58078-4bb5-40eb-a8cd-b7bc6961ff16", "animation_id": "f3b486c5-22b7-4ede-8509-e6e00fe7f161", "canvas": "144x144", "frames": 8}
+    },
+    "base_group": {
+      "animation_group_id": "c1c58078-4bb5-40eb-a8cd-b7bc6961ff16",
+      "name": "Jogging",
+      "template": "v3:running",
+      "directions_provided": ["north", "north-east", "east", "south", "south-west", "west", "north-west"],
+      "local_path": "originals/character_31a11357/jog/template_jogging_c1c58078/{direction}/{frame}.png"
+    },
+    "se_fill_group": {
+      "animation_group_id": "455013ba-72c0-412f-a5f1-49ab5c5a9dd0",
+      "name": "custom-South-East moderate football jog",
+      "template": "custom text prompt",
+      "direction_used_at_runtime": "south-east",
+      "local_path": "originals/character_31a11357/jog_variants/custom_se_455013ba/south-east/{frame}.png"
+    },
+    "preserved_variants_not_runtime": [
+      {
+        "animation_group_id": "455013ba-72c0-412f-a5f1-49ab5c5a9dd0",
+        "direction": "south-west",
+        "animation_id": "f5056d48-fe54-42e9-a3b9-ed48b59ec690",
+        "acceptance": "EXPERIMENTAL/PRESERVED — competing SW jog variant, superseded at runtime by template Jogging SW per user directive",
+        "local_path": "originals/character_31a11357/jog_variants/custom_se_455013ba/south-west/{frame}.png"
+      },
+      {
+        "animation_group_id": "6d125aab-7dd9-46d8-9d10-8a32b4a5abfd",
+        "direction": "east",
+        "animation_id": "a718cfb9-0f78-49ff-a9a0-8f95db4171cf",
+        "acceptance": "EXPERIMENTAL/PRESERVED — competing E jog variant, superseded at runtime by template Jogging E per user directive",
+        "local_path": "originals/character_31a11357/jog_variants/custom_ew_6d125aab/east/{frame}.png"
+      },
+      {
+        "animation_group_id": "6d125aab-7dd9-46d8-9d10-8a32b4a5abfd",
+        "direction": "west",
+        "animation_id": "5c7a4642-7228-455a-bb4c-1bb6ae7cdb21",
+        "acceptance": "EXPERIMENTAL/PRESERVED — competing W jog variant, superseded at runtime by template Jogging W per user directive",
+        "local_path": "originals/character_31a11357/jog_variants/custom_ew_6d125aab/west/{frame}.png"
+      }
+    ]
+  },
+  "sprint": {
+    "acceptance": "VERIFIED_ACCEPTED (user authorization, Visual V1 phase 1)",
+    "animation_group_id": "ed94f81a-6a8b-4309-a432-2d183c95e450",
+    "name": "Full Sprint",
+    "template": "v3:full sprinting",
+    "frames_per_direction": 8,
+    "local_path": "originals/character_31a11357/sprint/full_sprint_ed94f81a/{direction}/{frame}.png",
+    "per_direction": {
+      "north":      {"animation_id": "c9203877-7b48-4056-b07a-81410be9ae7c", "canvas": "140x140"},
+      "north-east": {"animation_id": "dcd73e01-61f9-4c96-924b-3b6fd12ff5dd", "canvas": "144x144"},
+      "east":       {"animation_id": "4883bc0c-8a8b-430f-af14-9c35f0768d1e", "canvas": "140x140"},
+      "south-east": {"animation_id": "3e92bb60-0980-493a-a2d9-61732c80f8e3", "canvas": "140x140"},
+      "south":      {"animation_id": "a9a2615f-7efe-47d5-9846-4309613afc4a", "canvas": "140x140"},
+      "south-west": {"animation_id": "ccc44608-22ba-4484-8ac4-24fc22012984", "canvas": "140x140"},
+      "west":       {"animation_id": "555323c0-81e2-4f0d-bc88-e5be8aafddba", "canvas": "140x140"},
+      "north-west": {"animation_id": "507fef78-4ae1-4941-bd5f-42eb9fdc404a", "canvas": "144x144"}
+    }
+  },
+  "grass_tileset": {
+    "acceptance": "VERIFIED_ACCEPTED (user authorization, Visual V1 phase 1)",
+    "pixellab_tileset_id": "1495fe3a-2420-4350-b487-709e41105ccb",
+    "type": "topdown Wang tileset",
+    "tiles": 16,
+    "tile_size": "32x32",
+    "sheet_size": "128x128",
+    "view": "high top-down",
+    "terrains": {
+      "lower": {"description_short": "dark green stadium perimeter turf", "base_tile_id": "f535f8a0-a8e6-470b-ad83-536e8f1a8bb9"},
+      "upper": {"description_short": "professional pitch grass with mowing variation", "base_tile_id": "268c57f7-0b7a-4594-8309-eac7ab1c1aef"}
+    },
+    "slicing_rule": "Slice the sheet using each tile's bounding_box from tileset_metadata.json ONLY. Never derive positions from wang_N names or original_position (produces banding, per PixelLab metadata warning).",
+    "scope_limitation": "Surface texture/material ONLY. This tileset does NOT define pitch geometry, white markings, boundaries, penalty areas, goals, or simulator coordinates. Authoritative geometry comes from the engine.",
+    "local_paths": {
+      "sheet": "originals/tileset_1495fe3a/tileset_sheet.png",
+      "metadata": "originals/tileset_1495fe3a/tileset_metadata.json"
+    }
+  },
+  "integrity": {
+    "lock_file": "HASHES.sha256",
+    "verified": "2026-08-27",
+    "checks": "PNG signature, per-chunk CRC32, full IDAT zlib decompression, IHDR dimensions, RGBA-8 (color type 6) on all 161 PNGs; per-direction frame counts complete; zero errors"
+  },
+  "engine_boundary": "Visual integration consumes authoritative engine state read-only. No simulation file (decisions, movement physics, acceleration, stamina, possession, passing, reception, shooting, tackling, restarts, coordinates, timing) may be modified for visual reasons."
+}
