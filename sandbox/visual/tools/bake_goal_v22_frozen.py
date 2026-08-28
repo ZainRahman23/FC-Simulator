@@ -35,23 +35,12 @@ _th = AUTHOR["pitch"] * math.pi / 180
 _fy, _fh = -math.sin(_th), math.cos(_th)
 C = (52.5, AUTHOR["height"], 68 + AUTHOR["dist"])
 FPX = (VIEW_H / 2) / math.tan((AUTHOR["fov"] * math.pi / 180) / 2)
-_dzRef = (34 + AUTHOR["depthoff"]) - C[2]
-CZREF = math.hypot(AUTHOR["height"], _dzRef)
-
-SX = FPX / CZREF  # strip px per metre of rail travel
 
 def vproj3(wx, wy, wz):
-    """STRIP/RAIL projection — must mirror match.js vproj3 exactly."""
-    vy, vz = wy - C[1], wz - C[2]
-    # reference column (rig at wx); yaw shear via r.z (zero at yaw 0)
+    vx, vy, vz = wx - C[0], wy - C[1], wz - C[2]
     cy = vy * _fh + vz * _fy
     cz = vy * _fy + vz * (-_fh)
-    _yawR = AUTHOR["yaw"] * math.pi / 180
-    _fh2 = math.cos(AUTHOR["pitch"] * math.pi / 180)
-    _rz = math.sin(_yawR)  # r.z of the yawed basis (r = (cos, 0, sin) at unit fh)
-    cx = vz * _rz
-    return (VIEW_W / 2 + FPX * cx / cz + SX * (wx - C[0]),
-            VIEW_H / 2 - FPX * cy / cz)
+    return (VIEW_W / 2 + FPX * vx / cz, VIEW_H / 2 - FPX * cy / cz)
 
 # ── authoritative frozen destination geometry (right goal) ──
 GX, DEPTH, H, RH = 105.0, 2.0, 2.44, 2.44
@@ -223,7 +212,6 @@ def main():
         print(f"{label:22s} mapped ({mx:.2f},{my:.2f}) target ({tv[0]:.2f},{tv[1]:.2f}) err {e:.4f}px")
     meta = {
         "derived_from": "goal_v2_2_surgical.png (byte-untouched)",
-        "projection_model": "strip-v1",
         "author_projection": AUTHOR, "view": [VIEW_W, VIEW_H],
         "v_offset": [bx0, by0], "size": [W, Hh],
         "dest_geometry": {"mouth_m": [7.32, 2.44], "depth_m": DEPTH, "rear_h_m": RH,

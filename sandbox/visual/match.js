@@ -74,7 +74,8 @@ const S = {
   images: {}, anims: null, standTex: null, standPat: null,
   author: { ...AUTHOR_DEFAULTS },
   camV: { x: 0, y: 0, zoom: RUNTIME_DEFAULTS.zoom, zoomTarget: RUNTIME_DEFAULTS.zoom,
-          mode: "ball", smooth: RUNTIME_DEFAULTS.smooth, lead: 0, target: null },
+          mode: "ball", smooth: RUNTIME_DEFAULTS.smooth, lead: 0, manualX: 52.5,
+          target: null },
   dbg: { anchors: false, ids: false, vel: false, state: false,
          ball: false, track: false, goalgeo: false, grid: false, xform: false,
          cam: true },
@@ -365,18 +366,15 @@ function buildGroundTexture() {
 // ═══ THE FROZEN PROJECTION (authoring; runs at boot / on authoring change) ═══
 // World (x metres, h metres up, y metres depth) → V-space (2D). This is the
 // ONLY place perspective mathematics exist. Nothing here runs per frame.
-// STRIP / RAIL projection ("pushbroom"): the authored rig travels on a rail
-// parallel to the touchline. Every world point is projected AS IF the rig
-// stood at that point's own longitudinal position (full perspective in
-// depth/height, authored yaw giving a uniform oblique everywhere), then
-// placed along the strip linearly by its true x. The projection is therefore
-// TRANSLATION-INVARIANT along the pitch: moving the runtime viewport centre
-// is mathematically identical to the rig physically travelling the rail.
-const PROJ = { C: null, f: null, u: null, r: null, fpx: 0, czRef: 1, Sx: 1 };
+// ONE fixed CAMERA_V1 perspective projection, authored from the midfield
+// pose. The entire visual world is projected/baked into this single V-space
+// once; the runtime camera is ONLY a viewport translation + uniform zoom
+// sliding across that pre-projected scene (never a reprojection).
+const PROJ = { C: null, f: null, u: null, r: null, fpx: 0, czRef: 1 };
 function buildFrozenBasis() {
   const a = S.author;
   const h = a.height;
-  const C = { x: 52.5, y: h, z: PITCH.h + a.dist };       // rig height/offset (rail)
+  const C = { x: 52.5, y: h, z: PITCH.h + a.dist };       // authored midfield pose
   const dz = (34 + a.depthoff) - C.z;
   const th = a.pitch * Math.PI / 180;
   const yawR = a.yaw * Math.PI / 180;
@@ -387,15 +385,13 @@ function buildFrozenBasis() {
   PROJ.C = C; PROJ.f = f; PROJ.u = u; PROJ.r = r;
   PROJ.fpx = (VIEW.h / 2) / Math.tan((a.fov * Math.PI / 180) / 2);
   PROJ.czRef = Math.hypot(h, dz);
-  PROJ.Sx = PROJ.fpx / PROJ.czRef;      // strip px per metre of rail travel
 }
-function vproj3(wx, wy, wz) {           // world → V-space (frozen strip projection)
-  const vy = wy - PROJ.C.y, vz = wz - PROJ.C.z;   // reference column (rig at wx)
-  const cx = vz * PROJ.r.z;                        // yaw shear (r.y = 0, vx = 0)
-  const cy = vy * PROJ.u.y + vz * PROJ.u.z;
-  const cz = vy * PROJ.f.y + vz * PROJ.f.z;
-  return { x: VIEW.w / 2 + PROJ.fpx * cx / cz + PROJ.Sx * (wx - PROJ.C.x),
-           y: VIEW.h / 2 - PROJ.fpx * cy / cz, d: cz };
+function vproj3(wx, wy, wz) {           // world → V-space (single fixed projection)
+  const vx = wx - PROJ.C.x, vy = wy - PROJ.C.y, vz = wz - PROJ.C.z;
+  const cx = vx * PROJ.r.x + vz * PROJ.r.z;
+  const cy = vx * PROJ.u.x + vy * PROJ.u.y + vz * PROJ.u.z;
+  const cz = vx * PROJ.f.x + vy * PROJ.f.y + vz * PROJ.f.z;
+  return { x: VIEW.w / 2 + PROJ.fpx * cx / cz, y: VIEW.h / 2 - PROJ.fpx * cy / cz, d: cz };
 }
 function vproj(wx, wz) { return vproj3(wx, 0, wz); }
 
@@ -438,9 +434,14 @@ function fillWorldSpot(wx, wz, r) {
   LCTX.closePath(); LCTX.fill();
 }
 function envXRangeAt(h, z) {
-  // strip projection: depth is independent of wx — no clipping needed, just
-  // enough rail length to cover every runtime pan position
-  return { xL: PROJ.C.x - 150, xR: PROJ.C.x + 150 };
+  let xL = PROJ.C.x - 220, xR = PROJ.C.x + 220;
+  const k = (h - PROJ.C.y) * PROJ.f.y + (z - PROJ.C.z) * PROJ.f.z;
+  const fx = PROJ.f.x;
+  if (Math.abs(fx) > 1e-6) {
+    const xLim = PROJ.C.x + (0.8 - k) / fx;
+    if (fx > 0) xL = Math.max(xL, xLim); else xR = Math.min(xR, xLim);
+  }
+  return { xL, xR };
 }
 function envXRange2(hA, zA, hB, zB) {
   const a = envXRangeAt(hA, zA), b = envXRangeAt(hB, zB);
@@ -583,15 +584,15 @@ function paintGround(bb) {
   const tx = (x) => (x - APRON.x0) * REF_ZOOM, tz = (z) => (z - APRON.y0) * REF_ZOOM;
   const BH = 3;
   const rowWorld = (vy) => {
-    // strip model: a V row is a constant-depth world line; invert vy -> wz in
-    // the reference column, then wx maps linearly with slope 1/Sx
     const qy = (VIEW.h / 2 - vy) / PROJ.fpx;
     const dy = PROJ.f.y + qy * PROJ.u.y;
     if (dy >= -1e-6) return null;
     const lam = -PROJ.C.y / dy;
-    const wz = PROJ.C.z + lam * (PROJ.f.z + qy * PROJ.u.z);
-    const xref = vproj(PROJ.C.x, wz).x;             // strip x of the reference column
-    const at = (vx) => ({ x: PROJ.C.x + (vx - xref) / PROJ.Sx, z: wz });
+    const bx = PROJ.f.x + qy * PROJ.u.x, bz = PROJ.f.z + qy * PROJ.u.z;
+    const Ax = PROJ.C.x + lam * bx, Az = PROJ.C.z + lam * bz;
+    const st = lam / PROJ.fpx;
+    const at = (vx) => ({ x: Ax + (vx - VIEW.w / 2) * st * PROJ.r.x,
+                          z: Az + (vx - VIEW.w / 2) * st * PROJ.r.z });
     return at;
   };
   for (let vy = Math.floor(bb.y0); vy < bb.y1; vy += BH) {
@@ -701,7 +702,6 @@ function freezeProjection() {
   // differently, we fall back to the optimal rigid V2.2 fit (residual shown).
   const bm = S.goalBakeMeta;
   const bakeValid = bm && S.images.goalBake &&
-    bm.projection_model === "strip-v1" &&
     ["height", "dist", "fov", "depthoff", "pitch", "yaw"]
       .every(k => S.author[k] === bm.author_projection[k]);
   let goals;
@@ -771,6 +771,7 @@ function v2s(v) {
            y: (v.y - S.camV.y) * S.camV.zoom + cv.height / 2 };
 }
 function camTargetV(sample) {
+  if (S.camV.mode === "manual") return vproj(S.camV.manualX, 34);
   if (S.camV.mode === "static" || !sample) return vproj(52.5, 34);
   // optional tracking look-ahead: lead the target along the ball's motion
   const sp = Math.hypot(sample.ball.vx || 0, sample.ball.vy || 0);
@@ -975,31 +976,35 @@ function draw(sample, dt) {
   drawLayer(S.frozen.front);
   drawReadout(sample);
 }
+function viewportCentreM() {
+  // world x (on the ground line z=34) whose fixed projection sits at the
+  // viewport centre — a readout of viewport position, NOT a reprojection
+  const cz34 = -PROJ.C.y * PROJ.f.y + (34 - PROJ.C.z) * PROJ.f.z;
+  return PROJ.C.x + (S.camV.x - VIEW.w / 2) * cz34 / PROJ.fpx;
+}
 function drawReadout(sample) {
   const el = document.getElementById("readout");
   const a = S.frozen.author;
-  // rig longitudinal position: the world x whose column sits at the view centre
-  const xref34 = vproj(PROJ.C.x, 34).x;
-  const rigM = PROJ.C.x + (S.camV.x - xref34) / PROJ.Sx;
+  const vm = viewportCentreM();
   let camdbg = "";
   if (S.dbg.cam && sample) {
     const bV = vproj(sample.ball.x, sample.ball.y);
     const t = S.camV.target || bV;
     camdbg =
       `── camera travel debug ──\n` +
-      `ball V   (${bV.x.toFixed(1)}, ${bV.y.toFixed(1)})\n` +
-      `target V (${t.x.toFixed(1)}, ${t.y.toFixed(1)})\n` +
-      `camera V (${S.camV.x.toFixed(1)}, ${S.camV.y.toFixed(1)})\n` +
-      `rig at   ${rigM.toFixed(1)} m along touchline (0 = left goal line)\n`;
+      `ball V     (${bV.x.toFixed(1)}, ${bV.y.toFixed(1)})\n` +
+      `target V   (${t.x.toFixed(1)}, ${t.y.toFixed(1)})\n` +
+      `camera V   (${S.camV.x.toFixed(1)}, ${S.camV.y.toFixed(1)})\n` +
+      `viewport ≈ ${vm.toFixed(1)} m along pitch (0 = left goal line)\n`;
   }
   el.textContent =
     `head     ${S.pb.head.toFixed(1)}s / buffered ${bufferedSeconds()}s${S.pb.finished ? " (FT)" : ""}\n` +
-    `frozen   h${a.height} d${a.dist} fov${a.fov} pitch${a.pitch} yaw${a.yaw} [strip/rail]\n` +
-    `camera   ${S.camV.mode}  rig ${rigM.toFixed(1)}m  zoom ×${S.camV.zoom.toFixed(2)}  lead ${S.camV.lead.toFixed(1)}m\n` +
+    `frozen   h${a.height} d${a.dist} fov${a.fov} pitch${a.pitch} yaw${a.yaw} [single CAMERA_V1 projection]\n` +
+    `camera   ${S.camV.mode}  viewport ≈${vm.toFixed(1)}m  zoom ×${S.camV.zoom.toFixed(2)}  lead ${S.camV.lead.toFixed(1)}m\n` +
     `goals    ${S.frozen_goalMode}\n` +
     (sample ? `ball     (${sample.ball.x.toFixed(1)}, ${sample.ball.y.toFixed(1)}) m\n` : "") +
     camdbg +
-    (S.dbg.xform ? `xform    screen = (V − cam)·zoom + centre  [shared by all]\n` : "") +
+    (S.dbg.xform ? `xform    screen = (frozenV − cam)·zoom + centre  [shared by all]\n` : "") +
     `players  ${sample ? sample.players.length : 0} active`;
 }
 
@@ -1061,6 +1066,13 @@ function bindUI() {
     document.getElementById("dbg-" + id)?.addEventListener("change", (e) => {
       S.dbg[id] = e.target.checked;
     });
+  const cxEl = document.getElementById("camx"), cxOut = document.getElementById("v-camx");
+  cxEl.value = S.camV.manualX;
+  cxOut.textContent = S.camV.manualX.toFixed(1) + " m";
+  cxEl.addEventListener("input", () => {
+    S.camV.manualX = parseFloat(cxEl.value);
+    cxOut.textContent = S.camV.manualX.toFixed(1) + " m";
+  });
   const leadEl = document.getElementById("lead"), leadOut = document.getElementById("v-lead");
   leadEl.value = S.camV.lead;
   leadOut.textContent = S.camV.lead.toFixed(1) + " m";
