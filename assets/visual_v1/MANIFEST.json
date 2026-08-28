@@ -257,6 +257,28 @@
       "NOT integrated; procedural Goal V3 remains the active sandbox presentation."
     ]
   },
+  "goal_art_v2_3_frozen_bake": {
+    "acceptance": "PENDING_VISUAL_REVIEW (derived 2026-08-28; 0 PixelLab generations; authorized one-time authoring bake)",
+    "derivation_method": "Deterministic panel-projective rectification of goal_v2_2_surgical.png into the frozen CAMERA_V1 projection: three measured art panels (mouth plane, roof net, near-side net; back net rides as baked through-view content) homography-mapped onto the authoritative frozen box-goal faces (7.32x2.44m mouth on the goal line, 2.0m depth, rear 2.44m). Shared panel edges map to identical destination lines (seam-free); outer-edge margins preserve the sag silhouette; cord-preserving footprint sampling (max-alpha, structure-biased nearest) - no blur, no halos, no broken cords. Generator: sandbox/visual/tools/bake_goal_v22_frozen.py.",
+    "based_on": "goal_art_v2_2_surgical (V2.2 originals byte-untouched, verified)",
+    "size": "150x96", "v_offset": [1513, 276],
+    "generations_cost": 0,
+    "correspondence_errors_px": "all 8 structural points 0.0000 (exact by homography construction); runtime residual = pixel snap <= 0.71px, pan-invariant",
+    "valid_for_projection": { "height": 30, "dist": 43, "fov": 28, "depthoff": 3, "pitch": 22, "yaw": 0 },
+    "local_paths": {
+      "asset": "originals/goal_v2_oblique/goal_v2_3_frozen_bake.png",
+      "meta": "originals/goal_v2_oblique/goal_v2_3_frozen_bake.json"
+    },
+    "sha256": {
+      "asset": "c6cad0d8ca4195d84be837fe66796a9e440cdb0a711d6f1cb1bae492a9e9402f",
+      "meta": "00801627333d9829f7c784e2fc9920499322293ddf610e9751bc40d396326f7c"
+    },
+    "notes": [
+      "Left goal = horizontal mirror about V x=640 (the frozen projection is x-symmetric) - no separate artwork.",
+      "Runtime treats it as an ordinary rigid 2D scene member; zero per-frame goal-specific correction.",
+      "If the projection is re-authored with different parameters the viewer falls back to the rigid V2.2 fit and flags it."
+    ]
+  },
   "integrity": {
     "lock_file": "HASHES.sha256",
     "verified": "2026-08-27",

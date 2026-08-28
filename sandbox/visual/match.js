@@ -133,6 +133,7 @@ async function boot() {
   jobs.push({ key: ["sheet", "-", 0], path: ASSET_ROOT + S.manifest.grass_tileset.local_paths.sheet });
   jobs.push({ key: ["standart", "-", 0], path: ASSET_ROOT + S.manifest.stadium_art.local_path });
   jobs.push({ key: ["goal22", "-", 0], path: ASSET_ROOT + S.manifest.goal_art_v2_2_surgical.local_paths.asset });
+  jobs.push({ key: ["goalbake", "-", 0], path: ASSET_ROOT + "originals/goal_v2_oblique/goal_v2_3_frozen_bake.png" });
   let done = 0;
   const anims = { idle: {}, jog: {}, sprint: {} };
   await Promise.all(jobs.map(async (j) => {
@@ -142,8 +143,17 @@ async function boot() {
     if (kind === "sheet") { S.images.sheet = im; return; }
     if (kind === "standart") { S.images.stand = im; return; }
     if (kind === "goal22") { S.images.goal22 = im; return; }
+    if (kind === "goalbake") { S.images.goalBake = im; return; }
     (anims[kind][dir] ||= [])[idx] = im;
   }));
+  S.goalBakeMeta = await loadJSON(ASSET_ROOT + "originals/goal_v2_oblique/goal_v2_3_frozen_bake.json");
+  const gb = S.images.goalBake;
+  const gm = document.createElement("canvas");
+  gm.width = gb.width; gm.height = gb.height;
+  const gmc = gm.getContext("2d");
+  gmc.imageSmoothingEnabled = false;
+  gmc.translate(gb.width, 0); gmc.scale(-1, 1); gmc.drawImage(gb, 0, 0);
+  S.images.goalBakeM = gm;
   S.anims = anims;
   S.standTex = deriveStandMaterial(S.images.stand);
   const g = S.images.goal22;
@@ -677,13 +687,44 @@ function freezeProjection() {
   // ── frozen entity constants ──
   const pxPerM = PROJ.fpx / PROJ.czRef;                 // authored reference density
   const playerVScale = (pxPerM / REF_ZOOM) * S.author.pscale;
-  // One-time frozen goal calibration: least-squares translation + UNIFORM
-  // scale fitting the artwork's two measured front-post feet onto the frozen
-  // projected authoritative post feet. This is the optimal transform in the
-  // permitted class (no rotation/warp/anisotropy — artwork unchanged); the
-  // residual per post is recorded and displayed, not hidden. No per-frame
-  // correction exists: the result is a V-space constant.
-  const goals = [0, 1].map(side => {
+  // Goal placement. PREFERRED: the one-time authoring bake
+  // (goal_v2_3_frozen_bake) — V2.2 panels rectified into THIS frozen
+  // projection offline; at runtime it is an ordinary rigid 2D scene member
+  // with exact post-foot registration. The bake is valid only for the
+  // authoring parameters it was made with; if the projection is re-authored
+  // differently, we fall back to the optimal rigid V2.2 fit (residual shown).
+  const bm = S.goalBakeMeta;
+  const bakeValid = bm && S.images.goalBake &&
+    ["height", "dist", "fov", "depthoff", "pitch", "yaw"]
+      .every(k => S.author[k] === bm.author_projection[k]);
+  let goals;
+  if (bakeValid) {
+    const [bx0, by0] = bm.v_offset, [bw, bh] = bm.size;
+    goals = [0, 1].map(side => {
+      const gx = side ? 105 : 0, out = side ? 1 : -1;
+      const tF = vproj(gx, 30.34), tN = vproj(gx, 37.66);
+      const base = vproj(gx, 34);
+      const off = vproj(gx + out * GOAL_CFG.offX, 34 + GOAL_CFG.offDepth);
+      const dx = off.x - base.x, dy = off.y - base.y;   // world-offset trim (V delta)
+      const k = GOAL_CFG.scale;
+      const mid = [(tF.x + tN.x) / 2 + dx, (tF.y + tN.y) / 2 + dy];
+      const rawX = side ? bx0 : (2 * (VIEW.w / 2) - bx0 - bw);  // left = mirror about V x=640
+      const x0 = mid[0] + ((rawX + dx) - mid[0]) * k;           // scale trim about mouth mid
+      const y0 = mid[1] + ((by0 + dy) - mid[1]) * k;
+      const fit = (t) => [mid[0] + (t.x + dx - mid[0]) * k, mid[1] + (t.y + dy - mid[1]) * k];
+      const fFar = fit(tF), fNear = fit(tN);
+      return { side, img: side ? S.images.goalBake : S.images.goalBakeM,
+               vx: x0, vy: y0, w: bw * k, h: bh * k, sortY: 33.5,
+               tF: { x: tF.x + dx, y: tF.y + dy }, tN: { x: tN.x + dx, y: tN.y + dy },
+               fFar, fNear, baked: true,
+               eFar: Math.hypot(fFar[0] - tF.x - dx, fFar[1] - tF.y - dy),
+               eNear: Math.hypot(fNear[0] - tN.x - dx, fNear[1] - tN.y - dy) };
+    });
+    S.frozen_goalMode = "baked (goal_v2_3_frozen_bake)";
+  } else {
+    console.warn("goal bake authoring params mismatch — using rigid V2.2 fallback fit");
+    S.frozen_goalMode = "rigid V2.2 fallback (bake params mismatch)";
+    goals = [0, 1].map(side => {
     const gx = side ? 105 : 0, out = side ? 1 : -1;
     const mirrored = side ? GOAL_CFG.mirrorR : GOAL_CFG.mirrorL;
     const mx = (p) => mirrored ? [GOAL_SPRITE.W - 1 - p[0], p[1]] : [p[0], p[1]];
@@ -700,11 +741,13 @@ function freezeProjection() {
     const T = [tm[0] - s * am[0], tm[1] - s * am[1]];      // trim scales about midpoint
     const fFar = [s * aF[0] + T[0], s * aF[1] + T[1]];     // fitted feet (V-space)
     const fNear = [s * aN[0] + T[0], s * aN[1] + T[1]];
-    return { side, mirrored, s, vx: T[0], vy: T[1], sortY: 33.5,
-             tF, tN, fFar, fNear,
+    return { side, img: mirrored ? S.images.goal22m : S.images.goal22,
+             vx: T[0], vy: T[1], w: GOAL_SPRITE.W * s, h: GOAL_SPRITE.H * s,
+             sortY: 33.5, tF, tN, fFar, fNear, baked: false,
              eFar: Math.hypot(fFar[0] - tF.x, fFar[1] - tF.y),
              eNear: Math.hypot(fNear[0] - tN.x, fNear[1] - tN.y) };
-  });
+    });
+  }
   S.frozen = { back, ground, front, playerVScale, pxPerM, goals,
                author: { ...S.author },
                vbb: { x0: Math.min(bbb.x0, gbb.x0, fbb.x0), x1: Math.max(bbb.x1, gbb.x1, fbb.x1),
@@ -839,11 +882,10 @@ function drawBall(ball) {
 }
 function drawGoal(gz) {
   const z = S.camV.zoom;
-  const img = gz.mirrored ? S.images.goal22m : S.images.goal22;
-  ctx.drawImage(img,
+  ctx.drawImage(gz.img,
     Math.round((gz.vx - S.camV.x) * z + cv.width / 2),
     Math.round((gz.vy - S.camV.y) * z + cv.height / 2),
-    Math.round(GOAL_SPRITE.W * gz.s * z), Math.round(GOAL_SPRITE.H * gz.s * z));
+    Math.round(gz.w * z), Math.round(gz.h * z));
 }
 function drawGoalGeoDebug(side) {
   // Goal calibration debug: authoritative frozen geometry (red), the
@@ -879,7 +921,7 @@ function drawGoalGeoDebug(side) {
   ctx.fillStyle = "#fff"; ctx.font = "11px monospace"; ctx.textAlign = "left";
   const tx0 = Math.min(cv.width - 300, Math.max(8, mid.x + 18));
   ctx.fillText(`far-post err  ${gz.eFar.toFixed(2)}Vpx (${(gz.eFar * z).toFixed(1)}px @z${z.toFixed(2)})`, tx0, mid.y - 26);
-  ctx.fillText(`near-post err ${gz.eNear.toFixed(2)}Vpx (${(gz.eNear * z).toFixed(1)}px)  s=${gz.s.toFixed(3)} ${gz.mirrored ? "MIRROR" : "ORIG"}`, tx0, mid.y - 14);
+  ctx.fillText(`near-post err ${gz.eNear.toFixed(2)}Vpx (${(gz.eNear * z).toFixed(1)}px)  ${gz.baked ? "FROZEN BAKE" : "rigid fallback"}`, tx0, mid.y - 14);
 }
 function drawGrid() {
   ctx.strokeStyle = "rgba(255,255,255,0.14)"; ctx.lineWidth = 1;
@@ -928,6 +970,7 @@ function drawReadout(sample) {
     `head     ${S.pb.head.toFixed(1)}s / buffered ${bufferedSeconds()}s${S.pb.finished ? " (FT)" : ""}\n` +
     `frozen   h${a.height} d${a.dist} fov${a.fov} pitch${a.pitch} yaw${a.yaw} (authoring)\n` +
     `camera   ${S.camV.mode}  centre=(${S.camV.x.toFixed(0)},${S.camV.y.toFixed(0)})V  zoom ×${S.camV.zoom.toFixed(2)}\n` +
+    `goals    ${S.frozen_goalMode}\n` +
     (sample ? `ball     (${sample.ball.x.toFixed(1)}, ${sample.ball.y.toFixed(1)}) m\n` : "") +
     (S.dbg.xform ? `xform    screen = (V − cam)·zoom + centre  [shared by all]\n` : "") +
     `players  ${sample ? sample.players.length : 0} active`;

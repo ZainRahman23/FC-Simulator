@@ -1,0 +1,161 @@
+{
+ "derived_from": "goal_v2_2_surgical.png (byte-untouched)",
+ "author_projection": {
+  "height": 30,
+  "dist": 43,
+  "fov": 28,
+  "depthoff": 3,
+  "pitch": 22,
+  "yaw": 0
+ },
+ "view": [
+  1280,
+  720
+ ],
+ "v_offset": [
+  1513,
+  276
+ ],
+ "size": [
+  150,
+  96
+ ],
+ "dest_geometry": {
+  "mouth_m": [
+   7.32,
+   2.44
+  ],
+  "depth_m": 2.0,
+  "rear_h_m": 2.44,
+  "goal_line_x_m": 105.0
+ },
+ "correspondence_errors_px": {
+  "far post foot": 0.0,
+  "near post foot": 0.0,
+  "far post top": 0.0,
+  "near post top": 0.0,
+  "rear far top": 0.0,
+  "rear near top": 0.0,
+  "rear near ground": 0.0
+ },
+ "panels": [
+  {
+   "name": "mouth",
+   "src_quad": [
+    [
+     42,
+     40
+    ],
+    [
+     105,
+     183
+    ],
+    [
+     94,
+     327
+    ],
+    [
+     44,
+     194
+    ]
+   ],
+   "dst_quad": [
+    [
+     1530.65,
+     280.9
+    ],
+    [
+     1607.83,
+     324.6
+    ],
+    [
+     1596.66,
+     366.23
+    ],
+    [
+     1521.18,
+     319.71
+    ]
+   ]
+  },
+  {
+   "name": "roof",
+   "src_quad": [
+    [
+     42,
+     40
+    ],
+    [
+     168,
+     40
+    ],
+    [
+     232,
+     186
+    ],
+    [
+     105,
+     183
+    ]
+   ],
+   "dst_quad": [
+    [
+     1530.65,
+     280.9
+    ],
+    [
+     1564.58,
+     280.9
+    ],
+    [
+     1644.69,
+     324.6
+    ],
+    [
+     1607.83,
+     324.6
+    ]
+   ]
+  },
+  {
+   "name": "side",
+   "src_quad": [
+    [
+     105,
+     183
+    ],
+    [
+     232,
+     186
+    ],
+    [
+     222,
+     320
+    ],
+    [
+     94,
+     327
+    ]
+   ],
+   "dst_quad": [
+    [
+     1607.83,
+     324.6
+    ],
+    [
+     1644.69,
+     324.6
+    ],
+    [
+     1633.11,
+     366.23
+    ],
+    [
+     1596.66,
+     366.23
+    ]
+   ]
+  }
+ ],
+ "mirror_rule": "left goal = horizontal mirror about V x=640 (projection is x-symmetric)"
+}
