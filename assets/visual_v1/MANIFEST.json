@@ -115,6 +115,51 @@
       "metadata": "originals/tileset_1495fe3a/tileset_metadata.json"
     }
   },
+  "goal_art": {
+    "acceptance": "PENDING_VISUAL_REVIEW (generated 2026-08-27 under explicit phase-3 authorization)",
+    "tool": "create_image_pixflux",
+    "model": "pixflux",
+    "pixellab_image_id": "32ad92c2-1ac3-4ad9-ad16-212b452a3901",
+    "seed": 31415,
+    "size": "160x192",
+    "sha256": "82d1840e379a54392bb03bb414b3c9666b62ab0fef28f45eb12c6a1ee284bde1",
+    "generations_cost": 1,
+    "local_path": "originals/goal_32ad92c2/goal.png",
+    "content_bbox_after_grass_strip": { "x0": 8, "x1": 129, "y0": 46, "y1": 149 },
+    "derivation": [
+      "Original stored untouched. At sandbox load time a derived copy strips the baked grass mound with the deterministic chroma rule g>r+20 && g>b+20 (transparent).",
+      "Right-end goal is the same art mirrored horizontally at render time — no second generation.",
+      "Artwork is presentation only: authoritative goal geometry (7.32m mouth, 2.44m bar) stays procedural and unchanged by the art.",
+      "KNOWN LIMITATION flagged for review: the art is front-on (mouth toward viewer) while the true mouths open east/west; integrated as a stylized billboard scaled to player metric height. A side-profile goal would need a future authorized generation."
+    ]
+  },
+  "goal_art_rejected_candidate": {
+    "acceptance": "EXPERIMENTAL/REJECTED (2026-08-27 — corrective side-profile attempt still came out front-on and paler; attempt 1 kept as working art)",
+    "tool": "create_image_pixflux",
+    "model": "pixflux",
+    "pixellab_image_id": "5937b8e5-a0d6-45d9-b25b-a184c481351a",
+    "seed": 16180,
+    "size": "160x160",
+    "sha256": "bf38c5dc91ae41891f3e9bb6133baa92e3eb3b219b3c9b1bffa3cf2473678ab1",
+    "generations_cost": 1,
+    "local_path": "originals/goal_5937b8e5/goal_attempt2.png"
+  },
+  "stadium_art": {
+    "acceptance": "PENDING_VISUAL_REVIEW (generated 2026-08-27 under explicit phase-3 authorization)",
+    "tool": "create_image_pixflux",
+    "model": "pixflux",
+    "pixellab_image_id": "03aa33f8-fb36-4840-8185-b194b3b2bef6",
+    "seed": 27182,
+    "size": "400x112",
+    "sha256": "f3597f40e83aef99d72505e0fcfb819206aaf41dabcecab79fd7471f96e8ea41",
+    "generations_cost": 1,
+    "local_path": "originals/stadium_03aa33f8/stand_strip.png",
+    "derivation": [
+      "Rendered as a perspective-correct vertical wall on the plane z = -8 m (far apron edge), outside the playing surface.",
+      "Mirror-tiled along world x (alternate copies flipped) so left/right panning exposes no seams or gaps; one strip covers the whole visible environment.",
+      "Scenery only: never occludes the pitch, players, or ball; drawn before the ground pass."
+    ]
+  },
   "integrity": {
     "lock_file": "HASHES.sha256",
     "verified": "2026-08-27",

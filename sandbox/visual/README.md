@@ -42,6 +42,13 @@ sandbox fetches the manifest and frames over HTTP.)
   rate, pause, camera modes (static / ball / play), debug anchors / grid /
   tracking marker, and seven test scenes (incl. Camera calibration).
 
+- Stadium + goals (phase 3): the PixelLab grandstand strip renders as a
+  perspective-correct vertical wall at z = −8 m (mirror-tiled along x, seam-
+  free panning, scenery only); PixelLab goal art is an unwarped billboard
+  anchored to the authoritative goal centres (right goal mirrored at runtime,
+  baked grass chroma-stripped at load — stored originals untouched). Goal
+  geometry stays procedural; the red debug footprint appears with Anchors.
+
 ## Status
 
 CAMERA UNLOCKED — VISUAL REVIEW REQUIRED. No values here are final; the point of

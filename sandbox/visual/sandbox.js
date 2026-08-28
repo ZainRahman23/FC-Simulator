@@ -34,9 +34,11 @@ const GRASS_ZONE = { x0: -3, x1: 108, y0: -3, y1: 71 };   // pitch-grass texture
 const APRON = { x0: -8, x1: 113, y0: -8, y1: 76 };        // perimeter turf beyond that
 const DIRS = ["east", "south-east", "south", "south-west", "west", "north-west", "north", "north-east"];
 
+// CAMERA_V1 — accepted working production defaults (2026-08-27 visual review).
+// Working defaults, not immutable constants: the developer controls stay live.
 const DEFAULTS = {
-  height: 24, dist: 20, fov: 26, depthoff: 0, smooth: 0.35,
-  pscale: 1.0, jogfps: 10, sprintfps: 12, rate: 1.0,
+  height: 30, dist: 43, fov: 28, depthoff: 3, smooth: 0.35,
+  pscale: 0.85, jogfps: 10, sprintfps: 12, rate: 1.0,
 };
 
 // ---------------------------------------------------------------- state
@@ -47,7 +49,9 @@ const S = {
   cam: { x: 52.5, z: 34, mode: "static", target: null },
   ui: { ...DEFAULTS },
   dbg: { anchors: false, grid: false, track: false },
-  pause: false, snap: true,
+  // snap defaults OFF: CAMERA_V1 was reviewed with fractional sprite scale
+  // (0.85×), which integer snapping would override.
+  pause: false, snap: false,
   scene: "midfield",
   players: [],         // {x,y,heading,state,team,frame,ft,test}
   ball: { x: 52.5, y: 34 },
@@ -107,6 +111,8 @@ async function boot() {
 
   const jobs = framePaths(S.manifest);
   jobs.push({ key: ["sheet", "-", 0], path: ASSET_ROOT + S.manifest.grass_tileset.local_paths.sheet });
+  jobs.push({ key: ["goalart", "-", 0], path: ASSET_ROOT + S.manifest.goal_art.local_path });
+  jobs.push({ key: ["standart", "-", 0], path: ASSET_ROOT + S.manifest.stadium_art.local_path });
 
   let done = 0;
   const anims = { idle: {}, jog: {}, sprint: {} };
@@ -115,15 +121,52 @@ async function boot() {
     done++; pctEl.textContent = Math.round((done / jobs.length) * 100) + "%";
     const [kind, dir, idx] = j.key;
     if (kind === "sheet") { S.images.sheet = im; return; }
+    if (kind === "goalart") { S.images.goalRaw = im; return; }
+    if (kind === "standart") { S.images.stand = im; return; }
     (anims[kind][dir] ||= [])[idx] = im;
   }));
   S.anims = anims;
+  // Derived presentation copies (stored originals untouched): strip the baked
+  // grass mound from the goal art (deterministic chroma rule), and mirror it
+  // for the right-hand goal instead of spending a second generation.
+  S.images.goalClean = chromaStripGreen(S.images.goalRaw);
+  S.images.goalMirror = mirrorCanvas(S.images.goalClean);
 
   buildGround();
   bindUI();
   setScene("midfield");
   document.getElementById("loading").style.display = "none";
   requestAnimationFrame(tick);
+}
+
+// ---------------------------------------------------------------- derived art
+// Goal art content bbox after the grass-strip pass (measured 2026-08-27; see
+// MANIFEST.json goal_art.content_bbox_after_grass_strip).
+const GOAL_ART = { x0: 8, x1: 129, y0: 46, y1: 149 };
+const GOAL_TARGET_H_M = 2.6;      // rendered goal height in player-metric terms
+const PLAYER_PX_PER_M = 52.8;     // measured: 95px idle content = 1.8 m
+const WALL_H_M = 12;              // stadium stand wall height (scenery only)
+
+function chromaStripGreen(img) {
+  const c = document.createElement("canvas");
+  c.width = img.width; c.height = img.height;
+  const cc = c.getContext("2d", { willReadFrequently: true });
+  cc.imageSmoothingEnabled = false;
+  cc.drawImage(img, 0, 0);
+  const id = cc.getImageData(0, 0, c.width, c.height), d = id.data;
+  for (let i = 0; i < d.length; i += 4)
+    if (d[i + 3] > 0 && d[i + 1] > d[i] + 20 && d[i + 1] > d[i + 2] + 20) d[i + 3] = 0;
+  cc.putImageData(id, 0, 0);
+  return c;
+}
+function mirrorCanvas(src) {
+  const c = document.createElement("canvas");
+  c.width = src.width; c.height = src.height;
+  const cc = c.getContext("2d");
+  cc.imageSmoothingEnabled = false;
+  cc.translate(src.width, 0); cc.scale(-1, 1);
+  cc.drawImage(src, 0, 0);
+  return c;
 }
 
 // ---------------------------------------------------------------- ground prerender
@@ -513,27 +556,60 @@ function drawMarkings() {
   strokeWorldPoly(circlePts(105, 68, 1, Math.PI, Math.PI * 1.5));
   strokeWorldPoly(circlePts(0, 68, 1, Math.PI * 1.5, Math.PI * 2));
 
-  // temporary procedural goals (ground-plane footprint + simple posts)
-  for (const side of [0, 1]) {
-    const x0 = side ? 105 : -2;
-    const yT = 34 - 3.66, yB = 34 + 3.66;
-    ctx.strokeStyle = "rgba(255,255,255,0.9)";
-    ctx.lineWidth = 2.5;
-    strokeWorldPoly([[x0, yT], [x0 + 2, yT], [x0 + 2, yB], [x0, yB]], true);
-    ctx.strokeStyle = "rgba(255,255,255,0.30)";
+  // Authoritative goal footprint (7.32 m mouth, 2 m net box) — debug only now
+  // that the goal artwork is rendered; geometry itself never changes.
+  if (S.dbg.anchors) {
+    ctx.strokeStyle = "rgba(255,80,80,0.8)";
     ctx.lineWidth = 1;
-    for (let nx = 0.5; nx < 2; nx += 0.5) strokeWorldPoly([[x0 + nx, yT], [x0 + nx, yB]]);
-    for (let ny = yT + 0.6; ny < yB; ny += 0.6) strokeWorldPoly([[x0, ny], [x0 + 2, ny]]);
-    // posts: short vertical screen strokes at the goal-line corners
-    ctx.strokeStyle = "rgba(255,255,255,0.9)";
-    ctx.lineWidth = 3;
-    for (const yy of [yT, yB]) {
-      const p = project(side ? 105 : 0, yy);
-      if (p.d < 0.5) continue;
-      const hpx = 2.44 * pxPerMeter(CAM.czTarget);   // constant-size like sprites
-      ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x, p.y - hpx); ctx.stroke();
+    for (const side of [0, 1]) {
+      const x0 = side ? 105 : -2;
+      strokeWorldPoly([[x0, 30.34], [x0 + 2, 30.34], [x0 + 2, 37.66], [x0, 37.66]], true);
     }
   }
+}
+
+// Stadium stand: a perspective-correct vertical wall on the plane z = APRON.y0
+// (outside the playing surface). For a planar wall at constant depth the
+// projection is a uniform scale, so one drawImage per tile is exact.
+// Mirror-tiling (alternate copies flipped) guarantees seamless panning.
+function drawStadium() {
+  const im = S.images.stand;
+  const zW = APRON.y0;
+  const czW = -CAM.C.y * CAM.f.y + (zW - CAM.C.z) * CAM.f.z;
+  if (czW < 0.5) return;
+  const k = CAM.fpx / czW;                       // px per metre at the wall
+  const baseY = Math.round(project(CAM.C.x, zW).y);
+  const hpx = Math.round(WALL_H_M * k);
+  if (baseY < 0) return;
+  const tileWm = im.width * WALL_H_M / im.height; // world metres per strip copy
+  const halfWm = (cv.width / 2) * czW / CAM.fpx;
+  const i0 = Math.floor((CAM.C.x - halfWm) / tileWm);
+  const i1 = Math.floor((CAM.C.x + halfWm) / tileWm);
+  for (let i = i0; i <= i1; i++) {
+    const sx = Math.floor(cv.width / 2 + CAM.fpx * (i * tileWm - CAM.C.x) / czW);
+    const w = Math.ceil(tileWm * k) + 1;         // 1px overlap kills rounding gaps
+    if (((i % 2) + 2) % 2 === 1) {
+      ctx.save(); ctx.translate(sx + w / 2, 0); ctx.scale(-1, 1);
+      ctx.drawImage(im, -w / 2, baseY - hpx, w, hpx); ctx.restore();
+    } else {
+      ctx.drawImage(im, sx, baseY - hpx, w, hpx);
+    }
+  }
+}
+
+// Goal artwork: unwarped billboard anchored to the authoritative goal centre,
+// scaled to player-metric height. Right goal is the mirrored derived copy.
+function drawGoalArt(side, s) {
+  const img = side ? S.images.goalMirror : S.images.goalClean;
+  const anchor = project(side ? 106.2 : -1.2, 34);
+  if (anchor.d < 0.5) return;
+  const gs = s * (GOAL_TARGET_H_M * PLAYER_PX_PER_M) / (GOAL_ART.y1 - GOAL_ART.y0 + 1);
+  const cx = (GOAL_ART.x0 + GOAL_ART.x1 + 1) / 2;
+  const cxm = side ? img.width - cx : cx;        // content centre in (mirrored) art coords
+  ctx.drawImage(img,
+    Math.round(anchor.x - cxm * gs),
+    Math.round(anchor.y - (GOAL_ART.y1 + 1) * gs),
+    Math.round(img.width * gs), Math.round(img.height * gs));
 }
 
 function draw() {
@@ -541,13 +617,20 @@ function draw() {
   ctx.fillStyle = "#0b0e12";
   ctx.fillRect(0, 0, cv.width, cv.height);
 
+  drawStadium();
   drawGroundPerspective();
   drawMarkings();
   if (S.dbg.grid) drawGrid();
 
-  const order = [...S.players].sort((a, b) => a.y - b.y);
+  // painter's order over players + goal billboards (goals sort just behind
+  // the mouth line so keepers/attackers at y>=34 draw in front of the net)
   const s = spriteScale();
-  for (const p of order) drawPlayer(p, s);
+  const ents = [
+    ...S.players.map(p => ({ y: p.y, p })),
+    { y: 33.5, goal: 0 }, { y: 33.5, goal: 1 },
+  ].sort((a, b) => a.y - b.y);
+  const order = [...S.players].sort((a, b) => a.y - b.y);
+  for (const e of ents) (e.p ? drawPlayer(e.p, s) : drawGoalArt(e.goal, s));
   drawBall();
   if (S.dbg.anchors) for (const p of order) drawAnchors(p, s);
   if (S.dbg.track && S.cam.target) {
