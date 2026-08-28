@@ -55,6 +55,8 @@
       <input type="range" id="rzoom" min="0.5" max="2" step="0.05"></label>
     <label>Tracking smoothing <span id="v-smooth"></span>
       <input type="range" id="smooth" min="0" max="1.5" step="0.05"></label>
+    <label>Tracking look-ahead <span id="v-lead"></span>
+      <input type="range" id="lead" min="0" max="10" step="0.5"></label>
   </section>
 
   <section>
@@ -106,6 +108,7 @@
     <label class="inline"><input type="checkbox" id="dbg-goalgeo"> Goal geometry debug (mouth, anchor, pivot, post bases)</label>
     <label class="inline"><input type="checkbox" id="dbg-grid"> World grid (5 m)</label>
     <label class="inline"><input type="checkbox" id="dbg-xform"> Show camera transform equation</label>
+    <label class="inline"><input type="checkbox" id="dbg-cam" checked> Camera travel debug (ball/target/camera V, rig position)</label>
   </section>
 </div>
 
