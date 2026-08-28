@@ -83,6 +83,20 @@ The renderer owns all deformation state; the event can never influence
 authoritative ball physics or scoring. (`window.netImpact` is exposed for
 console testing.)
 
+## Live match visual preview — PCS-style frozen projection (phase 5)
+
+The match renderer now uses the Pixel-Cup-Soccer-style architecture:
+simulator metres → ONE frozen authored projection (CAMERA_V1 pose) →
+coherent 2D visual world (V-space, prerendered into back/ground/front
+layers) → runtime camera = `screen = (V − camCentre)·zoom + viewportCentre`
+— a single pan + uniform zoom shared by pitch, markings, stadium, barriers,
+goals, players, ball and shadows. Perspective math exists only in the
+freeze step (authoring sliders re-freeze the world; they are not gameplay
+camera DOF). Goal V2.2 is calibrated once against the frozen world and is
+then an ordinary 2D scene member — no per-frame registration. Players have
+a stable authored V-space size (no presentation-depth scaling): zoom
+scales everything in exact tandem.
+
 ## Live match visual preview (phase 4)
 
 Watches an ACTUAL simulator match (deterministic fixture, seed 20260827,

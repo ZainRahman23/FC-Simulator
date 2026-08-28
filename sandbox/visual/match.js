@@ -1,63 +1,55 @@
-/* Touchline — LIVE MATCH VISUAL PREVIEW.
+/* Touchline — LIVE MATCH VISUAL PREVIEW (PCS-style frozen projection).
  *
- * Renders an actual simulator match (deterministic fixture + seed) with the
- * accepted Visual V1 systems: frozen PixelLab players, grass, stadium,
- * CAMERA_V1 perspective camera (pitch/yaw), and Goal V2.2 artwork.
+ * ARCHITECTURE:
+ *   simulator metres → ONE FROZEN AUTHORED PROJECTION → coherent 2D visual
+ *   world ("V-space") → runtime camera = pan + uniform zoom only:
  *
- * ENGINE BOUNDARY: the renderer is strictly read-only. It starts a match via
- * the untouched Touchline API and consumes the server's renderer-keyframe
- * stream (POST /api/matches/{id}/advance {frames:true} — per-second
- * authoritative [clock, ball.x, ball.y, possession, [[x,y,act,active]..]]
- * sampled read-only inside the engine's own advance loop). Nothing here
- * writes into simulator state; playback, interpolation, animation choice,
- * facing quantization and the camera are presentation only.
+ *       screen = (V − cameraCentre) · zoom + viewportCentre
  *
- * Simulator coordinates are percent-of-pitch (0..100 both axes) and are
- * mapped to the authoritative 105 x 68 m world here (x*1.05, y*0.68).
+ * The projection is authored from the accepted CAMERA_V1 pose and frozen at
+ * boot (re-frozen only when an authoring slider changes — never during
+ * gameplay). Pitch, markings, mowing bands, stadium, barriers, goals,
+ * players, ball, shadows: ALL live in the same V-space and receive the same
+ * single translation + uniform zoom. No object recomputes perspective at
+ * runtime and no object-specific camera compensation exists.
  *
- * FUTURE NET-RIPPLE CONNECTION POINT: goal art is static in this preview.
- * When authorized, ball/net contacts (shot-on-goal / goal events with ball
- * trajectory) map to netImpact(side, pos, vel, strength?) — see sandbox.js —
- * either via a deformable overlay or by warping the sprite's panel quads.
+ * Removed gameplay-time paths (obsolete live-perspective debt):
+ *   - per-frame rebuildCamera / variable perspective
+ *   - player constant-screen-size presentation-depth scaling (players now
+ *     have a stable authored V-space size; zoom scales everything in tandem)
+ *   - per-frame goal projected-post scaling / perspective registration
+ *     (V2.2 is calibrated ONCE against the frozen projection, then it is an
+ *     ordinary member of the 2D scene)
+ *
+ * ENGINE BOUNDARY unchanged: the renderer is read-only over the Touchline
+ * API's authoritative per-second keyframes. Presentation only.
  */
 "use strict";
 
 const ASSET_ROOT = "../../assets/visual_v1/";
 const API = "/api";
-const REF_ZOOM = 32;
+const REF_ZOOM = 32;                        // px/m of the ground source texture
 const PITCH = { w: 105, h: 68 };
-const SIM2W = { x: PITCH.w / 100, y: PITCH.h / 100 };   // percent -> metres
+const SIM2W = { x: PITCH.w / 100, y: PITCH.h / 100 };
 const GRASS_ZONE = { x0: -3, x1: 108, y0: -3, y1: 71 };
 const APRON = { x0: -8, x1: 113, y0: -8, y1: 76 };
 const DIRS = ["east", "south-east", "south", "south-west", "west", "north-west", "north", "north-east"];
+const VIEW = { w: 1280, h: 720 };           // reference viewport defining V-space units
 
-// CAMERA_V1 working defaults (unlocked)
-const DEFAULTS = {
-  height: 30, dist: 43, fov: 28, depthoff: 3, smooth: 0.35, pscale: 0.85,
-  yaw: 0, pitch: 22,
+// CAMERA_V1 — the authored projection (frozen; sliders re-freeze, not animate)
+const AUTHOR_DEFAULTS = {
+  height: 30, dist: 43, fov: 28, depthoff: 3, pitch: 22, yaw: 0, pscale: 0.85,
 };
+const RUNTIME_DEFAULTS = { zoom: 1.0, smooth: 0.35 };
 const JOG_FPS = 10, SPRINT_FPS = 12;
-// presentation speed thresholds (m/s) from authoritative displacement
 const IDLE_MAX = 0.5, JOG_MAX = 5.2, TELEPORT = 12;
 
-// Goal V2.2 sprite: pre-rendered pixel art with its oblique perspective baked
-// in. It is a BILLBOARD like the player sprites: one world anchor, one
-// uniform scale, never warped/sheared/anisotropically fitted. The measured
-// points below define only its LOCAL pivot and debug markers.
+// Goal V2.2 sprite (unmodified art; measured local geometry)
 const GOAL_SPRITE = {
   W: 312, H: 332,
-  // measured against the source photo's actual goal line (diagnosis 2026-08-27):
-  baseL: [30, 182], baseR: [95, 325],       // front FAR / NEAR post ground contacts
-  topL: [42, 40], topR: [105, 183],         // front post tops (crossbar runs between)
-  pivot: [62.5, 253.5],                     // (P1+P2)/2 — mouth-centre ground contact
-  mouthHpx: 142,                            // true front-post length in art px == 2.44 m
+  baseL: [30, 182], baseR: [95, 325],
+  pivot: [62.5, 253.5], mouthHpx: 142,
 };
-// presentation-only goal-art calibration (renderer state; never touches
-// authoritative geometry).
-// Orientation rule: the mouth faces INTO the pitch, net depth extends
-// outward behind the goal line. V2.2 was generated from a reference of the
-// RIGHT-end goal (mouth opening left toward the pitch, net receding away),
-// so the unmirrored art is the RIGHT goal and the mirror is the LEFT goal.
 const GOAL_CFG = { scale: 1.0, mirrorL: true, mirrorR: false, offX: 0, offDepth: 0 };
 
 const ENV = {
@@ -77,24 +69,24 @@ const ENV_COL = {
 const S = {
   manifest: null, pivots: null, tilesMeta: null,
   images: {}, anims: null, standTex: null, standPat: null,
-  cam: { x: 52.5, z: 34, mode: "ball", target: null },
-  ui: { ...DEFAULTS },
+  author: { ...AUTHOR_DEFAULTS },
+  camV: { x: 0, y: 0, zoom: RUNTIME_DEFAULTS.zoom, zoomTarget: RUNTIME_DEFAULTS.zoom,
+          mode: "ball", smooth: RUNTIME_DEFAULTS.smooth, target: null },
   dbg: { anchors: false, ids: false, vel: false, state: false,
-         ball: false, track: false, goalgeo: false, grid: false },
-  ground: null,
-  // playback of authoritative keyframes
+         ball: false, track: false, goalgeo: false, grid: false, xform: false },
+  groundTex: null,                     // 32px/m world texture (built once)
+  frozen: null,                        // the frozen projection + layers + constants
   pb: { frames: [], roster: [], acts: [], meta: {}, head: 0, playing: true,
         speed: 1, matchId: null, fetching: false, finished: false,
         lastEventIndex: 0, events: [], score: [0, 0], minute: 0, half: 1,
         possession: null, players: {} },
-  view: [],          // per-player presentation state (facing, anim clock)
-  time: 0,
+  view: [], time: 0,
 };
 
 const cv = document.getElementById("view");
 const ctx = cv.getContext("2d");
 
-// ═══ loading ═════════════════════════════════════════════════════════════════
+// ═══ loading (unchanged pipeline) ════════════════════════════════════════════
 async function loadJSON(p) {
   const r = await fetch(p);
   if (!r.ok) throw new Error(`fetch failed: ${p} (${r.status})`);
@@ -151,11 +143,6 @@ async function boot() {
   }));
   S.anims = anims;
   S.standTex = deriveStandMaterial(S.images.stand);
-  S.standPat = {
-    upper: ctx.createPattern(S.standTex.upper, "repeat"),
-    lower: ctx.createPattern(S.standTex.lower, "repeat"),
-  };
-  // mirrored goal sprite for the opposite end (derived at load; source untouched)
   const g = S.images.goal22;
   const mc = document.createElement("canvas");
   mc.width = g.width; mc.height = g.height;
@@ -164,14 +151,15 @@ async function boot() {
   mctx.translate(g.width, 0); mctx.scale(-1, 1); mctx.drawImage(g, 0, 0);
   S.images.goal22m = mc;
 
-  buildGround();
+  buildGroundTexture();
+  freezeProjection();                 // ← the authored projection, built once
   bindUI();
   await startMatch();
   document.getElementById("loading").style.display = "none";
   requestAnimationFrame(tick);
 }
 
-// ═══ match driver (read-only API client) ═════════════════════════════════════
+// ═══ match driver (unchanged, read-only) ═════════════════════════════════════
 async function startMatch() {
   const fixture = await loadJSON("fixture_liv_eve.json");
   const r = await fetch(API + "/matches/start", {
@@ -185,9 +173,7 @@ async function startMatch() {
   hudSub(`${S.pb.meta.fixture} seed ${S.pb.meta.seed} · match ${r.match_id} · buffering…`);
   ensureBuffer();
 }
-
 function bufferedSeconds() { return S.pb.frames.length; }
-
 async function ensureBuffer() {
   const pb = S.pb;
   if (pb.fetching || pb.finished || !pb.matchId) return;
@@ -204,7 +190,7 @@ async function ensureBuffer() {
     }
     if (r.players) for (const [pid, p] of Object.entries(r.players)) pb.players[pid] = p;
     pb.minute = r.minute; pb.half = r.half; pb.possession = r.possession;
-    if (r.score) pb.score = [r.score.home ?? 0, r.score.away ?? 0];   // authoritative
+    if (r.score) pb.score = [r.score.home ?? 0, r.score.away ?? 0];
     if (Array.isArray(r.new_events)) {
       const NOTABLE = /GOAL|SHOT|SAVE|FOUL|CARD|KICKOFF|HALF|PENALTY|CORNER|OFFSIDE|SUB/i;
       for (const ev of r.new_events)
@@ -219,12 +205,11 @@ async function ensureBuffer() {
     pb.fetching = false;
   }
 }
-
 function hudSub(t) { document.getElementById("hud-sub").textContent = t; }
 function updateHUD() {
   const pb = S.pb;
   document.getElementById("hud-score").textContent =
-    `${S.pb.meta.home || "HOME"}  ${pb.score[0]} : ${pb.score[1]}  ${S.pb.meta.away || "AWAY"}`;
+    `${pb.meta.home || "HOME"}  ${pb.score[0]} : ${pb.score[1]}  ${pb.meta.away || "AWAY"}`;
   const clock = pb.frames.length ? pb.frames[Math.min(Math.floor(pb.head), pb.frames.length - 1)][0] : 0;
   const mm = String(Math.floor(clock / 60)).padStart(2, "0");
   const ss = String(Math.floor(clock % 60)).padStart(2, "0");
@@ -234,8 +219,6 @@ function updateHUD() {
     `${Math.floor((e.timestamp ?? 0) / 60)}' ${e.event_type} — ${e.actor_name ?? ""} (${e.team_id ?? ""})`);
   document.getElementById("ticker").innerHTML = last.join("<br>");
 }
-
-// interpolated authoritative sample at playhead
 function sampleAt(head) {
   const pb = S.pb;
   if (!pb.frames.length) return null;
@@ -244,14 +227,12 @@ function sampleAt(head) {
   const t = Math.max(0, Math.min(1, head - i));
   const A = pb.frames[i], B = pb.frames[j];
   const dt = Math.max(0.001, B[0] - A[0]);
-  const ball = {
-    x: (A[1] + (B[1] - A[1]) * t) * SIM2W.x,
-    y: (A[2] + (B[2] - A[2]) * t) * SIM2W.y,
-  };
+  const ball = { x: (A[1] + (B[1] - A[1]) * t) * SIM2W.x,
+                 y: (A[2] + (B[2] - A[2]) * t) * SIM2W.y };
   const players = [];
   for (let k = 0; k < pb.roster.length; k++) {
     const a = A[4][k], b = B[4][k];
-    if (!a || !b || (!a[3] && !b[3])) continue;      // inactive (bench/sent off)
+    if (!a || !b || (!a[3] && !b[3])) continue;
     const ax = a[0] * SIM2W.x, ay = a[1] * SIM2W.y;
     const bx = b[0] * SIM2W.x, by = b[1] * SIM2W.y;
     let vx = (bx - ax) / dt, vy = (by - ay) / dt;
@@ -265,7 +246,7 @@ function sampleAt(head) {
   return { clock: A[0] + t * dt, ball, players };
 }
 
-// ═══ shared renderer (ported verbatim from the accepted sandbox) ═════════════
+// ═══ world ground texture (32 px/m, camera-independent, built once) ══════════
 function hash01(x, y) {
   let n = (x | 0) * 374761393 + (y | 0) * 668265263;
   n = (n ^ (n >>> 13)) * 1274126177;
@@ -320,7 +301,7 @@ function deriveStandMaterial(img) {
   };
   return { upper: band(42, 18), lower: band(66, 23) };
 }
-function buildGround() {
+function buildGroundTexture() {
   const W = (APRON.x1 - APRON.x0) * REF_ZOOM, H = (APRON.y1 - APRON.y0) * REF_ZOOM;
   const g = document.createElement("canvas");
   g.width = W; g.height = H;
@@ -362,66 +343,82 @@ function buildGround() {
     c.fillRect(gx(x0), gy(GRASS_ZONE.y0), (x1 - x0) * M, (GRASS_ZONE.y1 - GRASS_ZONE.y0) * M);
     x = x1;
   }
-  S.ground = g;
+  S.groundTex = g;
 }
 
-const CAM = { C: null, f: null, u: null, r: null, fpx: 0, czTarget: 1, lookAngle: 0 };
-function rebuildCamera() {
-  const h = S.ui.height;
-  const C = { x: S.cam.x, y: h, z: PITCH.h + S.ui.dist };
-  const dz = (S.cam.z + S.ui.depthoff) - C.z;
-  const len = Math.hypot(h, dz);
-  const yawR = (S.ui.yaw || 0) * Math.PI / 180;
-  const refDz = (34 + S.ui.depthoff) - C.z;
-  const trim = Math.atan2(h, -dz) - Math.atan2(h, -refDz);
-  const theta = (S.ui.pitch * Math.PI / 180) + trim;
-  const fy = -Math.sin(theta), fh = Math.cos(theta);
+// ═══ THE FROZEN PROJECTION (authoring; runs at boot / on authoring change) ═══
+// World (x metres, h metres up, y metres depth) → V-space (2D). This is the
+// ONLY place perspective mathematics exist. Nothing here runs per frame.
+const PROJ = { C: null, f: null, u: null, r: null, fpx: 0, czRef: 1, effPitch: 0 };
+function buildFrozenBasis() {
+  const a = S.author;
+  const h = a.height;
+  const C = { x: 52.5, y: h, z: PITCH.h + a.dist };       // authored reference pose
+  const dz = (34 + a.depthoff) - C.z;
+  const th = a.pitch * Math.PI / 180;                      // authored pitch, exact
+  const yawR = a.yaw * Math.PI / 180;
+  const fy = -Math.sin(th), fh = Math.cos(th);
   const f = { x: fh * Math.sin(yawR), y: fy, z: -fh * Math.cos(yawR) };
   const r = { x: -f.z / fh, y: 0, z: f.x / fh };
   const u = { x: -r.z * f.y, y: r.z * f.x - r.x * f.z, z: r.x * f.y };
-  CAM.C = C; CAM.f = f; CAM.u = u; CAM.r = r;
-  CAM.fpx = (cv.height / 2) / Math.tan((S.ui.fov * Math.PI / 180) / 2);
-  CAM.czTarget = len;
-  CAM.lookAngle = theta * 180 / Math.PI;
+  PROJ.C = C; PROJ.f = f; PROJ.u = u; PROJ.r = r;
+  PROJ.fpx = (VIEW.h / 2) / Math.tan((a.fov * Math.PI / 180) / 2);
+  PROJ.czRef = Math.hypot(h, dz);
+  PROJ.effPitch = a.pitch;
 }
-function project3(wx, wy, wz) {
-  const vx = wx - CAM.C.x, vy = wy - CAM.C.y, vz = wz - CAM.C.z;
-  const cx = vx * CAM.r.x + vz * CAM.r.z;
-  const cy = vx * CAM.u.x + vy * CAM.u.y + vz * CAM.u.z;
-  const cz = vx * CAM.f.x + vy * CAM.f.y + vz * CAM.f.z;
-  return { x: cv.width / 2 + CAM.fpx * cx / cz, y: cv.height / 2 - CAM.fpx * cy / cz, d: cz };
+function vproj3(wx, wy, wz) {           // world → V-space (frozen projection)
+  const vx = wx - PROJ.C.x, vy = wy - PROJ.C.y, vz = wz - PROJ.C.z;
+  const cx = vx * PROJ.r.x + vz * PROJ.r.z;
+  const cy = vx * PROJ.u.x + vy * PROJ.u.y + vz * PROJ.u.z;
+  const cz = vx * PROJ.f.x + vy * PROJ.f.y + vz * PROJ.f.z;
+  return { x: VIEW.w / 2 + PROJ.fpx * cx / cz, y: VIEW.h / 2 - PROJ.fpx * cy / cz, d: cz };
 }
-function project(wx, wz) { return project3(wx, 0, wz); }
-function pxPerMeter(depth) { return CAM.fpx / depth; }
+function vproj(wx, wz) { return vproj3(wx, 0, wz); }
 
-function camTarget(sample) {
-  if (S.cam.mode === "static" || !sample) return { x: 52.5, y: 34 };
-  if (S.cam.mode === "ball") return { x: sample.ball.x, y: sample.ball.y };
-  let sx = 0, sy = 0, n = 0;
-  for (const p of sample.players) {
-    if (Math.hypot(p.x - sample.ball.x, p.y - sample.ball.y) < 18) { sx += p.x; sy += p.y; n++; }
+// ── freeze-time helpers reused by the layer painters (draw in V coords) ──
+let LCTX = null;                        // layer context during freezing
+function strokeSeg3(x1, h1, z1, x2, h2, z2) {
+  const a = vproj3(x1, h1, z1), b = vproj3(x2, h2, z2);
+  if (a.d < 0.5 || b.d < 0.5) return;
+  LCTX.beginPath(); LCTX.moveTo(a.x, a.y); LCTX.lineTo(b.x, b.y); LCTX.stroke();
+}
+function strokeWorldPoly(pts, close) {
+  LCTX.beginPath();
+  let started = false;
+  for (const [wx, wz] of pts) {
+    const p = vproj(wx, wz);
+    if (p.d < 0.5) { started = false; continue; }
+    if (!started) { LCTX.moveTo(p.x, p.y); started = true; }
+    else LCTX.lineTo(p.x, p.y);
   }
-  if (!n) return { x: sample.ball.x, y: sample.ball.y };
-  return { x: 0.55 * sample.ball.x + 0.45 * (sx / n), y: 0.55 * sample.ball.y + 0.45 * (sy / n) };
+  if (close) LCTX.closePath();
+  LCTX.stroke();
 }
-function updateCamera(dt, sample) {
-  const t = camTarget(sample);
-  S.cam.target = t;
-  const hw = (cv.width / 2) * CAM.czTarget / CAM.fpx;
-  const cl = (v, lo, hi) => (lo > hi ? (lo + hi) / 2 : Math.min(hi, Math.max(lo, v)));
-  const tx = cl(t.x, Math.min(hw - 8, 52.5), Math.max(105 - hw + 8, 52.5));
-  const tz = cl(t.y, 14, 54);
-  const k = S.ui.smooth <= 0.001 ? 1 : 1 - Math.exp(-dt / S.ui.smooth);
-  S.cam.x += (tx - S.cam.x) * k;
-  S.cam.z += (tz - S.cam.z) * k;
+function circlePts(cx, cz, r, a0 = 0, a1 = Math.PI * 2) {
+  const pts = [];
+  const n = Math.max(8, Math.ceil((a1 - a0) / (Math.PI / 45)));
+  for (let i = 0; i <= n; i++) {
+    const a = a0 + (a1 - a0) * (i / n);
+    pts.push([cx + r * Math.cos(a), cz + r * Math.sin(a)]);
+  }
+  return pts;
 }
-
+function fillWorldSpot(wx, wz, r) {
+  LCTX.beginPath();
+  let first = true;
+  for (const [x, z] of circlePts(wx, wz, r)) {
+    const p = vproj(x, z);
+    if (p.d < 0.5) return;
+    if (first) { LCTX.moveTo(p.x, p.y); first = false; } else LCTX.lineTo(p.x, p.y);
+  }
+  LCTX.closePath(); LCTX.fill();
+}
 function envXRangeAt(h, z) {
-  let xL = CAM.C.x - 200, xR = CAM.C.x + 200;
-  const k = (h - CAM.C.y) * CAM.f.y + (z - CAM.C.z) * CAM.f.z;
-  const fx = CAM.f.x;
+  let xL = PROJ.C.x - 220, xR = PROJ.C.x + 220;
+  const k = (h - PROJ.C.y) * PROJ.f.y + (z - PROJ.C.z) * PROJ.f.z;
+  const fx = PROJ.f.x;
   if (Math.abs(fx) > 1e-6) {
-    const xLim = CAM.C.x + (0.8 - k) / fx;
+    const xLim = PROJ.C.x + (0.8 - k) / fx;
     if (fx > 0) xL = Math.max(xL, xLim); else xR = Math.min(xR, xLim);
   }
   return { xL, xR };
@@ -433,35 +430,30 @@ function envXRange2(hA, zA, hB, zB) {
 function fillStructQuad(color, hA, zA, hB, zB) {
   const { xL, xR } = envXRange2(hA, zA, hB, zB);
   if (xL >= xR) return null;
-  const p = [project3(xL, hA, zA), project3(xR, hA, zA),
-             project3(xR, hB, zB), project3(xL, hB, zB)];
+  const p = [vproj3(xL, hA, zA), vproj3(xR, hA, zA),
+             vproj3(xR, hB, zB), vproj3(xL, hB, zB)];
   if (p.some(q => q.d < 0.5)) return null;
   if (color) {
-    ctx.fillStyle = color;
-    ctx.beginPath();
-    ctx.moveTo(p[0].x, p[0].y); ctx.lineTo(p[1].x, p[1].y);
-    ctx.lineTo(p[2].x, p[2].y); ctx.lineTo(p[3].x, p[3].y);
-    ctx.closePath(); ctx.fill();
+    LCTX.fillStyle = color;
+    LCTX.beginPath();
+    LCTX.moveTo(p[0].x, p[0].y); LCTX.lineTo(p[1].x, p[1].y);
+    LCTX.lineTo(p[2].x, p[2].y); LCTX.lineTo(p[3].x, p[3].y);
+    LCTX.closePath(); LCTX.fill();
   }
   return p;
-}
-function strokeSeg3(x1, h1, z1, x2, h2, z2) {
-  const a = project3(x1, h1, z1), b = project3(x2, h2, z2);
-  if (a.d < 0.5 || b.d < 0.5) return;
-  ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
 }
 function railLine(h, z, width = 2, color = ENV_COL.rail) {
   const { xL, xR } = envXRangeAt(h, z);
   if (xL >= xR) return;
-  ctx.strokeStyle = color; ctx.lineWidth = width;
+  LCTX.strokeStyle = color; LCTX.lineWidth = width;
   strokeSeg3(xL, h, z, xR, h, z);
 }
 function fillSeatQuad(patKey, hF, zF, hB, zB) {
   const { xL, xR } = envXRange2(hF, zF, hB, zB);
   if (xL >= xR) return;
   const tex = S.standTex[patKey], pat = S.standPat[patKey];
-  const BL = project3(xL, hB, zB), BR = project3(xR, hB, zB);
-  const FL = project3(xL, hF, zF), FR = project3(xR, hF, zF);
+  const BL = vproj3(xL, hB, zB), BR = vproj3(xR, hB, zB);
+  const FL = vproj3(xL, hF, zF), FR = vproj3(xR, hF, zF);
   if ([BL, BR, FL, FR].some(q => q.d < 0.5)) return;
   const ppm = tex.width / (2 * ENV.texWorldM);
   const T0x = xL * ppm, T1x = xR * ppm;
@@ -469,31 +461,31 @@ function fillSeatQuad(patKey, hF, zF, hB, zB) {
   const a = (BR.x - BL.x) / u1x, b2 = (BR.y - BL.y) / u1x;
   const c = (FL.x - BL.x) / u2y, d = (FL.y - BL.y) / u2y;
   const e = BL.x - a * T0x, f2 = BL.y - b2 * T0x;
-  pat.setTransform(new DOMMatrix([a, b2, c, d, e, f2]));
-  ctx.fillStyle = pat;
-  ctx.beginPath();
-  ctx.moveTo(BL.x, BL.y); ctx.lineTo(BR.x, BR.y);
-  ctx.lineTo(FR.x, FR.y); ctx.lineTo(FL.x, FL.y);
-  ctx.closePath(); ctx.fill();
+  pat.setTransform(new DOMMatrix([a, b2, c, d, e, f2]).multiply(
+    new DOMMatrix()));                 // pattern space == layer space pre-translate
+  LCTX.fillStyle = pat;
+  LCTX.beginPath();
+  LCTX.moveTo(BL.x, BL.y); LCTX.lineTo(BR.x, BR.y);
+  LCTX.lineTo(FR.x, FR.y); LCTX.lineTo(FL.x, FL.y);
+  LCTX.closePath(); LCTX.fill();
 }
 function cutAisles(hF, zF, hB, zB) {
   const { xL, xR } = envXRange2(hF, zF, hB, zB);
   if (xL >= xR) return;
-  ctx.fillStyle = ENV_COL.aisle;
+  LCTX.fillStyle = ENV_COL.aisle;
   const k0 = Math.ceil((xL - 6) / ENV.aisleEveryM), k1 = Math.floor((xR - 6) / ENV.aisleEveryM);
   for (let k = k0; k <= k1; k++) {
     const wx = k * ENV.aisleEveryM + 6, hw = ENV.aisleW / 2;
-    const p = [project3(wx - hw, hB, zB), project3(wx + hw, hB, zB),
-               project3(wx + hw, hF, zF), project3(wx - hw, hF, zF)];
+    const p = [vproj3(wx - hw, hB, zB), vproj3(wx + hw, hB, zB),
+               vproj3(wx + hw, hF, zF), vproj3(wx - hw, hF, zF)];
     if (p.some(q => q.d < 0.5)) continue;
-    if (p[0].x > cv.width + 40 || p[1].x < -40) continue;
-    ctx.beginPath();
-    ctx.moveTo(p[0].x, p[0].y); ctx.lineTo(p[1].x, p[1].y);
-    ctx.lineTo(p[2].x, p[2].y); ctx.lineTo(p[3].x, p[3].y);
-    ctx.closePath(); ctx.fill();
+    LCTX.beginPath();
+    LCTX.moveTo(p[0].x, p[0].y); LCTX.lineTo(p[1].x, p[1].y);
+    LCTX.lineTo(p[2].x, p[2].y); LCTX.lineTo(p[3].x, p[3].y);
+    LCTX.closePath(); LCTX.fill();
   }
 }
-function drawStadium() {
+function paintStadium() {
   const tiers = [
     { rows: ENV.lowerRows, dz: ENV.lowerRowDepth, dh: ENV.lowerRowRise,
       z0: ENV.standFrontZ, h0: ENV.frontWallH, pat: "lower" },
@@ -506,11 +498,11 @@ function drawStadium() {
   const topZ = backTier.z0 - backTier.rows * backTier.dz;
   const bw = fillStructQuad(ENV_COL.backing, topH, topZ, topH + ENV.backWallH, topZ);
   if (bw) {
-    ctx.fillStyle = "#101218";
-    ctx.beginPath();
-    ctx.moveTo(bw[3].x, bw[3].y); ctx.lineTo(bw[2].x, bw[2].y);
-    ctx.lineTo(bw[2].x, -8); ctx.lineTo(bw[3].x, -8);
-    ctx.closePath(); ctx.fill();
+    LCTX.fillStyle = "#101218";
+    LCTX.beginPath();
+    LCTX.moveTo(bw[3].x, bw[3].y); LCTX.lineTo(bw[2].x, bw[2].y);
+    LCTX.lineTo(bw[2].x, bw[2].y - 4000); LCTX.lineTo(bw[3].x, bw[3].y - 4000);
+    LCTX.closePath(); LCTX.fill();
   }
   railLine(topH + ENV.backWallH, topZ, 3, ENV_COL.roofEdge);
   for (let t = tiers.length - 1; t >= 0; t--) {
@@ -530,102 +522,22 @@ function drawStadium() {
   railLine(tiers[1].h0, tiers[1].z0 + 0.01, 2);
   fillStructQuad(ENV_COL.frontWall, 0, ENV.standFrontZ, ENV.frontWallH, ENV.standFrontZ);
   railLine(ENV.frontWallH, ENV.standFrontZ, 2);
-}
-function drawFarBarrier() {
+  // far barrier boards
   fillStructQuad(ENV_COL.board, 0, ENV.farBarrierZ, ENV.barrierH, ENV.farBarrierZ);
   const { xL, xR } = envXRange2(0, ENV.farBarrierZ, ENV.barrierH, ENV.farBarrierZ);
-  if (xL >= xR) return;
-  ctx.strokeStyle = "rgba(255,255,255,0.10)"; ctx.lineWidth = 1;
-  const k0 = Math.ceil(xL / ENV.boardPanelM), k1 = Math.floor(xR / ENV.boardPanelM);
-  for (let k = k0; k <= k1; k++)
-    strokeSeg3(k * ENV.boardPanelM, 0, ENV.farBarrierZ, k * ENV.boardPanelM, ENV.barrierH, ENV.farBarrierZ);
-  railLine(ENV.barrierH, ENV.farBarrierZ, 2, ENV_COL.boardTop);
-}
-function drawNearBarrier() {
-  fillStructQuad("#20262e", 0, ENV.nearBarrierZ, ENV.barrierH, ENV.nearBarrierZ);
-  railLine(ENV.barrierH, ENV.nearBarrierZ, 2, ENV_COL.boardTop);
-}
-
-function groundRowWorld(sy) {
-  const qy = (cv.height / 2 - sy) / CAM.fpx;
-  const dy = CAM.f.y + qy * CAM.u.y;
-  if (dy >= -1e-6) return null;
-  const lam = -CAM.C.y / dy;
-  const bx = CAM.f.x + qy * CAM.u.x, bz = CAM.f.z + qy * CAM.u.z;
-  const Ax = CAM.C.x + lam * bx, Az = CAM.C.z + lam * bz;
-  const st = lam / CAM.fpx;
-  const hx = (cv.width / 2) * st * CAM.r.x, hz = (cv.width / 2) * st * CAM.r.z;
-  return { Lx: Ax - hx, Lz: Az - hz, Rx: Ax + hx, Rz: Az + hz };
-}
-function drawGroundPerspective() {
-  const W = cv.width, H = cv.height, BH = 3;
-  const gW = S.ground.width, gH = S.ground.height;
-  const tx = (x) => (x - APRON.x0) * REF_ZOOM, tz = (z) => (z - APRON.y0) * REF_ZOOM;
-  for (let sy = 0; sy < H; sy += BH) {
-    const b = Math.min(H, sy + BH);
-    const rt = groundRowWorld(sy), rb = groundRowWorld(b);
-    if (!rt || !rb) continue;
-    const T0x = tx(rt.Lx), T0y = tz(rt.Lz);
-    const T1x = tx(rt.Rx), T1y = tz(rt.Rz);
-    const T2x = tx(rb.Lx), T2y = tz(rb.Lz);
-    const u1x = T1x - T0x, u1y = T1y - T0y, u2x = T2x - T0x, u2y = T2y - T0y;
-    const det = u1x * u2y - u1y * u2x;
-    if (Math.abs(det) < 1e-9) continue;
-    const bh = b - sy;
-    const a = (W * u2y) / det, b2 = (-bh * u1y) / det;
-    const c = (-W * u2x) / det, d = (bh * u1x) / det;
-    const e = 0 - (a * T0x + c * T0y);
-    const f2 = sy - (b2 * T0x + d * T0y);
-    const T3x = tx(rb.Rx), T3y = tz(rb.Rz);
-    const bx0 = Math.max(0, Math.floor(Math.min(T0x, T1x, T2x, T3x)) - 2);
-    const bx1 = Math.min(gW, Math.ceil(Math.max(T0x, T1x, T2x, T3x)) + 2);
-    const by0 = Math.max(0, Math.floor(Math.min(T0y, T1y, T2y, T3y)) - 2);
-    const by1 = Math.min(gH, Math.ceil(Math.max(T0y, T1y, T2y, T3y)) + 2);
-    if (bx1 <= bx0 || by1 <= by0) continue;
-    ctx.save();
-    ctx.beginPath(); ctx.rect(0, sy, W, bh); ctx.clip();
-    ctx.setTransform(a, b2, c, d, e, f2);
-    ctx.drawImage(S.ground, bx0, by0, bx1 - bx0, by1 - by0, bx0, by0, bx1 - bx0, by1 - by0);
-    ctx.restore();
+  if (xL < xR) {
+    LCTX.strokeStyle = "rgba(255,255,255,0.10)"; LCTX.lineWidth = 1;
+    const k0 = Math.ceil(xL / ENV.boardPanelM), k1 = Math.floor(xR / ENV.boardPanelM);
+    for (let k = k0; k <= k1; k++)
+      strokeSeg3(k * ENV.boardPanelM, 0, ENV.farBarrierZ, k * ENV.boardPanelM, ENV.barrierH, ENV.farBarrierZ);
+    railLine(ENV.barrierH, ENV.farBarrierZ, 2, ENV_COL.boardTop);
   }
 }
-
-function strokeWorldPoly(pts, close) {
-  ctx.beginPath();
-  let started = false;
-  for (const [wx, wz] of pts) {
-    const p = project(wx, wz);
-    if (p.d < 0.5) { started = false; continue; }
-    if (!started) { ctx.moveTo(p.x, p.y); started = true; }
-    else ctx.lineTo(p.x, p.y);
-  }
-  if (close) ctx.closePath();
-  ctx.stroke();
-}
-function circlePts(cx, cz, r, a0 = 0, a1 = Math.PI * 2) {
-  const pts = [];
-  const n = Math.max(8, Math.ceil((a1 - a0) / (Math.PI / 45)));
-  for (let i = 0; i <= n; i++) {
-    const a = a0 + (a1 - a0) * (i / n);
-    pts.push([cx + r * Math.cos(a), cz + r * Math.sin(a)]);
-  }
-  return pts;
-}
-function fillWorldSpot(wx, wz, r) {
-  ctx.beginPath();
-  let first = true;
-  for (const [x, z] of circlePts(wx, wz, r)) {
-    const p = project(x, z);
-    if (p.d < 0.5) return;
-    if (first) { ctx.moveTo(p.x, p.y); first = false; } else ctx.lineTo(p.x, p.y);
-  }
-  ctx.closePath(); ctx.fill();
-}
-function drawMarkings() {
-  ctx.strokeStyle = "rgba(250,250,250,0.92)";
-  ctx.fillStyle = "rgba(250,250,250,0.92)";
-  ctx.lineWidth = 2;
-  ctx.lineJoin = "round";
+function paintMarkings() {
+  LCTX.strokeStyle = "rgba(250,250,250,0.92)";
+  LCTX.fillStyle = "rgba(250,250,250,0.92)";
+  LCTX.lineWidth = 2;
+  LCTX.lineJoin = "round";
   const rect = (x, z, w, d) =>
     strokeWorldPoly([[x, z], [x + w, z], [x + w, z + d], [x, z + d]], true);
   rect(0, 0, PITCH.w, PITCH.h);
@@ -646,107 +558,200 @@ function drawMarkings() {
   strokeWorldPoly(circlePts(105, 68, 1, Math.PI, Math.PI * 1.5));
   strokeWorldPoly(circlePts(0, 68, 1, Math.PI * 1.5, Math.PI * 2));
 }
-function drawGrid() {
-  ctx.strokeStyle = "rgba(255,255,255,0.14)"; ctx.lineWidth = 1;
-  ctx.fillStyle = "rgba(255,255,255,0.5)"; ctx.font = "10px monospace"; ctx.textAlign = "left";
-  for (let x = 0; x <= 105; x += 5) strokeWorldPoly([[x, 0], [x, 68]]);
-  for (let y = 0; y <= 68; y += 5) strokeWorldPoly([[0, y], [105, y]]);
-}
-
-// ═══ Goal V2.2 billboard (undeformed, like the player sprites) ══════════════
-// authoritative world anchor (goal mouth centre on the goal line, plus
-// renderer-only calibration offsets) -> camera projection -> translation +
-// ONE uniform scale -> intact sprite. Aspect ratio and internal pixel
-// geometry are exactly the PNG's. Scale reference: the sprite's average
-// front-post length (138 art px == the authoritative 2.44 m bar height) at
-// the same constant presentation depth used for player sprites, times the
-// live "goal visual scale" multiplier.
-function goalSpriteXform(side) {
-  const gx = side ? 105 : 0, out = side ? 1 : -1;
-  const anchorW = { x: gx + out * GOAL_CFG.offX, y: 34 + GOAL_CFG.offDepth };
-  const A = project(anchorW.x, anchorW.y);
-  if (A.d < 0.5) return null;
-  // Uniform scale from the GOAL'S OWN projected world geometry at the live
-  // camera state: the authoritative 2.44 m post at this goal, divided by the
-  // artwork's measured 142 px post. The goal is a fixed world object — no
-  // player presentation-depth / constant-screen-size logic may enter here.
-  const pb = project3(gx, 0, 34), pt = project3(gx, 2.44, 34);
-  if (pt.d < 0.5) return null;
-  const s = (Math.hypot(pt.x - pb.x, pt.y - pb.y) / GOAL_SPRITE.mouthHpx) * GOAL_CFG.scale;
-  const mirrored = side ? GOAL_CFG.mirrorR : GOAL_CFG.mirrorL;
-  const px = mirrored ? GOAL_SPRITE.W - 1 - GOAL_SPRITE.pivot[0] : GOAL_SPRITE.pivot[0];
-  const py = GOAL_SPRITE.pivot[1];
-  return { A, s, mirrored,
-           ox: A.x - px * s, oy: A.y - py * s,
-           map: (mx, my) => {                       // art px -> screen (debug markers)
-             const ax = mirrored ? GOAL_SPRITE.W - 1 - mx : mx;
-             return [A.x + (ax - px) * s, A.y + (my - py) * s];
-           } };
-}
-function drawGoalSprite(side) {
-  const t = goalSpriteXform(side);
-  if (!t) return;
-  const w = GOAL_SPRITE.W * t.s, h = GOAL_SPRITE.H * t.s;
-  if (t.ox + w < -40 || t.ox > cv.width + 40) return;
-  const img = t.mirrored ? S.images.goal22m : S.images.goal22;
-  ctx.drawImage(img, Math.round(t.ox), Math.round(t.oy), Math.round(w), Math.round(h));
-}
-function drawGoalGeoDebug(side) {
-  const gx = side ? 105 : 0, dir = side ? 1 : -1;
-  // authoritative geometry (invisible simulation truth)
-  ctx.strokeStyle = "rgba(255,80,80,0.9)"; ctx.lineWidth = 1.5;
-  strokeWorldPoly([[gx, 28], [gx, 40]]);                              // projected goal line
-  strokeWorldPoly([[gx, 30.34], [gx + dir * 2, 30.34], [gx + dir * 2, 37.66], [gx, 37.66]], true);
-  ctx.lineWidth = 2;
-  strokeSeg3(gx, 0, 30.34, gx, 2.44, 30.34);
-  strokeSeg3(gx, 0, 37.66, gx, 2.44, 37.66);
-  strokeSeg3(gx, 2.44, 30.34, gx, 2.44, 37.66);
-  const dot = (p, col, r = 3) => {
-    ctx.fillStyle = col;
-    ctx.beginPath(); ctx.arc(p[0] ?? p.x, p[1] ?? p.y, r, 0, Math.PI * 2); ctx.fill();
+function paintGround(bb) {
+  // exact per-band homography of the world ground texture into V-space rows
+  const gW = S.groundTex.width, gH = S.groundTex.height;
+  const tx = (x) => (x - APRON.x0) * REF_ZOOM, tz = (z) => (z - APRON.y0) * REF_ZOOM;
+  const BH = 3;
+  const rowWorld = (vy) => {
+    const qy = (VIEW.h / 2 - vy) / PROJ.fpx;
+    const dy = PROJ.f.y + qy * PROJ.u.y;
+    if (dy >= -1e-6) return null;
+    const lam = -PROJ.C.y / dy;
+    const bx = PROJ.f.x + qy * PROJ.u.x, bz = PROJ.f.z + qy * PROJ.u.z;
+    const Ax = PROJ.C.x + lam * bx, Az = PROJ.C.z + lam * bz;
+    const st = lam / PROJ.fpx;
+    const at = (vx) => ({ x: Ax + (vx - VIEW.w / 2) * st * PROJ.r.x,
+                          z: Az + (vx - VIEW.w / 2) * st * PROJ.r.z });
+    return at;
   };
-  dot(project(gx, 30.34), "#ff5050", 4);                              // mouth endpoints
-  dot(project(gx, 37.66), "#ff5050", 4);
-  const C = project(gx, 34);
-  ctx.strokeStyle = "#ffd23c"; ctx.lineWidth = 2;                     // centre anchor
-  ctx.beginPath(); ctx.moveTo(C.x - 7, C.y); ctx.lineTo(C.x + 7, C.y);
-  ctx.moveTo(C.x, C.y - 7); ctx.lineTo(C.x, C.y + 7); ctx.stroke();
-  const t = goalSpriteXform(side);
-  if (!t) return;
-  dot([t.A.x, t.A.y], "#ffd23c", 3);                                  // world anchor / sprite pivot
-  const p1 = t.map(...GOAL_SPRITE.baseL);                             // screen P1/P2 after
-  const p2 = t.map(...GOAL_SPRITE.baseR);                             // uniform scaling
-  dot(p1, "#ff5ce0", 4);
-  dot(p2, "#ff5ce0", 4);
-  // screen Pmouth as ACTUALLY DRAWN (includes the pixel-snap rounding of the
-  // blit) vs the projected authoritative mouth centre — must overlap
-  const w = GOAL_SPRITE.W * t.s;
-  const px = t.mirrored ? GOAL_SPRITE.W - 1 - GOAL_SPRITE.pivot[0] : GOAL_SPRITE.pivot[0];
-  const drawnPm = [Math.round(t.ox) + px * t.s, Math.round(t.oy) + GOAL_SPRITE.pivot[1] * t.s];
-  dot(drawnPm, "#40e0ff", 3);                                         // drawn Pmouth (cyan)
-  const err = Math.hypot(drawnPm[0] - C.x, drawnPm[1] - C.y);
-  ctx.fillStyle = "#fff"; ctx.font = "11px monospace"; ctx.textAlign = "left";
-  const tx0 = Math.min(cv.width - 250, Math.max(8, C.x + 20));
-  ctx.fillText(`P1(${GOAL_SPRITE.baseL}) P2(${GOAL_SPRITE.baseR}) Pm(${GOAL_SPRITE.pivot})`, tx0, C.y - 26);
-  ctx.fillText(`anchor err ${err.toFixed(2)}px  scale x${t.s.toFixed(3)}  ${t.mirrored ? "MIRROR" : "ORIG"}`, tx0, C.y - 14);
+  for (let vy = Math.floor(bb.y0); vy < bb.y1; vy += BH) {
+    const b = vy + BH;
+    const rt = rowWorld(vy), rb = rowWorld(b);
+    if (!rt || !rb) continue;
+    const L0 = rt(bb.x0), R0 = rt(bb.x1), L1 = rb(bb.x0);
+    const T0x = tx(L0.x), T0y = tz(L0.z);
+    const T1x = tx(R0.x), T1y = tz(R0.z);
+    const T2x = tx(L1.x), T2y = tz(L1.z);
+    const u1x = T1x - T0x, u1y = T1y - T0y, u2x = T2x - T0x, u2y = T2y - T0y;
+    const det = u1x * u2y - u1y * u2x;
+    if (Math.abs(det) < 1e-9) continue;
+    const w = bb.x1 - bb.x0, bh = BH;
+    const a = (w * u2y) / det, b2 = (-bh * u1y) / det;
+    const c = (-w * u2x) / det, d = (bh * u1x) / det;
+    const e = bb.x0 - (a * T0x + c * T0y);
+    const f2 = vy - (b2 * T0x + d * T0y);
+    const R1 = rb(bb.x1);
+    const T3x = tx(R1.x), T3y = tz(R1.z);
+    const bx0 = Math.max(0, Math.floor(Math.min(T0x, T1x, T2x, T3x)) - 2);
+    const bx1 = Math.min(gW, Math.ceil(Math.max(T0x, T1x, T2x, T3x)) + 2);
+    const by0 = Math.max(0, Math.floor(Math.min(T0y, T1y, T2y, T3y)) - 2);
+    const by1 = Math.min(gH, Math.ceil(Math.max(T0y, T1y, T2y, T3y)) + 2);
+    if (bx1 <= bx0 || by1 <= by0) continue;
+    LCTX.save();
+    LCTX.beginPath(); LCTX.rect(bb.x0, vy, w, bh); LCTX.clip();
+    const base = LCTX.getTransform();
+    LCTX.setTransform(base.multiply(new DOMMatrix([a, b2, c, d, e, f2])));
+    LCTX.drawImage(S.groundTex, bx0, by0, bx1 - bx0, by1 - by0, bx0, by0, bx1 - bx0, by1 - by0);
+    LCTX.restore();
+  }
 }
 
-// ═══ players + ball ══════════════════════════════════════════════════════════
+function makeLayer(bb) {
+  const c = document.createElement("canvas");
+  c.width = Math.ceil(bb.x1 - bb.x0);
+  c.height = Math.ceil(bb.y1 - bb.y0);
+  const lc = c.getContext("2d");
+  lc.imageSmoothingEnabled = false;
+  lc.translate(-bb.x0, -bb.y0);        // draw in V coords directly
+  return { canvas: c, ctx: lc, bb };
+}
+
+function freezeProjection() {
+  buildFrozenBasis();
+  S.standPat = {
+    upper: null, lower: null,          // patterns must belong to a live context
+  };
+  // ── V-space bounds ──
+  const groundPts = [
+    vproj(APRON.x0, APRON.y0), vproj(APRON.x1, APRON.y0),
+    vproj(APRON.x0, APRON.y1), vproj(APRON.x1, APRON.y1),
+    vproj(52.5, APRON.y1),
+  ];
+  const gbb = {
+    x0: Math.min(...groundPts.map(p => p.x)) - 4, x1: Math.max(...groundPts.map(p => p.x)) + 4,
+    y0: Math.min(...groundPts.map(p => p.y)) - 4, y1: Math.max(...groundPts.map(p => p.y)) + 4,
+  };
+  const standTopZ = ENV.standFrontZ - ENV.lowerRows * ENV.lowerRowDepth - ENV.walkDepth
+                    - ENV.upperRows * ENV.upperRowDepth;
+  const standTopH = ENV.frontWallH + ENV.lowerRows * ENV.lowerRowRise + 1.0
+                    + ENV.upperRows * ENV.upperRowRise + ENV.backWallH;
+  const backPts = [];
+  for (const wx of [52.5 - 220, 52.5, 52.5 + 220])
+    for (const [h, z] of [[0, ENV.farBarrierZ], [standTopH + 2, standTopZ], [0, APRON.y0]])
+      backPts.push(vproj3(wx, h, z));
+  const bbb = {
+    x0: Math.min(gbb.x0, ...backPts.map(p => p.x)) - 4,
+    x1: Math.max(gbb.x1, ...backPts.map(p => p.x)) + 4,
+    y0: Math.min(...backPts.map(p => p.y)) - 40,
+    y1: Math.max(...backPts.map(p => p.y)) + 4,
+  };
+  const frontPts = [];
+  for (const wx of [52.5 - 260, 52.5 + 260])
+    for (const h of [0, ENV.barrierH + 0.2])
+      frontPts.push(vproj3(wx, h, ENV.nearBarrierZ));
+  const fbb = {
+    x0: Math.min(...frontPts.map(p => p.x)) - 4, x1: Math.max(...frontPts.map(p => p.x)) + 4,
+    y0: Math.min(...frontPts.map(p => p.y)) - 4, y1: Math.max(...frontPts.map(p => p.y)) + 4,
+  };
+  // ── paint layers (all drawing goes through the frozen projection once) ──
+  const back = makeLayer(bbb);
+  LCTX = back.ctx;
+  S.standPat = {
+    upper: LCTX.createPattern(S.standTex.upper, "repeat"),
+    lower: LCTX.createPattern(S.standTex.lower, "repeat"),
+  };
+  paintStadium();
+  const ground = makeLayer(gbb);
+  LCTX = ground.ctx;
+  paintGround(gbb);
+  paintMarkings();
+  const front = makeLayer(fbb);
+  LCTX = front.ctx;
+  fillStructQuad("#20262e", 0, ENV.nearBarrierZ, ENV.barrierH, ENV.nearBarrierZ);
+  railLine(ENV.barrierH, ENV.nearBarrierZ, 2, ENV_COL.boardTop);
+  LCTX = null;
+  // ── frozen entity constants ──
+  const pxPerM = PROJ.fpx / PROJ.czRef;                 // authored reference density
+  const playerVScale = (pxPerM / REF_ZOOM) * S.author.pscale;
+  const goals = [0, 1].map(side => {
+    const gx = side ? 105 : 0, out = side ? 1 : -1;
+    const A = vproj(gx + out * GOAL_CFG.offX, 34 + GOAL_CFG.offDepth);
+    const pb = vproj3(gx, 0, 34), pt = vproj3(gx, 2.44, 34);
+    const s = (Math.hypot(pt.x - pb.x, pt.y - pb.y) / GOAL_SPRITE.mouthHpx) * GOAL_CFG.scale;
+    const mirrored = side ? GOAL_CFG.mirrorR : GOAL_CFG.mirrorL;
+    const px = mirrored ? GOAL_SPRITE.W - 1 - GOAL_SPRITE.pivot[0] : GOAL_SPRITE.pivot[0];
+    return { side, mirrored, s,
+             vx: A.x - px * s, vy: A.y - GOAL_SPRITE.pivot[1] * s,
+             sortY: 33.5 };
+  });
+  S.frozen = { back, ground, front, playerVScale, pxPerM, goals,
+               author: { ...S.author },
+               vbb: { x0: Math.min(bbb.x0, gbb.x0, fbb.x0), x1: Math.max(bbb.x1, gbb.x1, fbb.x1),
+                      y0: bbb.y0, y1: fbb.y1 },
+               gbb };
+  // start the camera at pitch centre
+  const c0 = vproj(52.5, 34);
+  S.camV.x = c0.x; S.camV.y = c0.y;
+}
+
+// ═══ runtime camera: pan + uniform zoom ONLY ═════════════════════════════════
+function v2s(v) {
+  return { x: (v.x - S.camV.x) * S.camV.zoom + cv.width / 2,
+           y: (v.y - S.camV.y) * S.camV.zoom + cv.height / 2 };
+}
+function camTargetV(sample) {
+  if (S.camV.mode === "static" || !sample) return vproj(52.5, 34);
+  if (S.camV.mode === "ball") return vproj(sample.ball.x, sample.ball.y);
+  let sx = 0, sy = 0, n = 0;
+  for (const p of sample.players)
+    if (Math.hypot(p.x - sample.ball.x, p.y - sample.ball.y) < 18) { sx += p.x; sy += p.y; n++; }
+  if (!n) return vproj(sample.ball.x, sample.ball.y);
+  return vproj(0.55 * sample.ball.x + 0.45 * (sx / n), 0.55 * sample.ball.y + 0.45 * (sy / n));
+}
+function updateCameraV(dt, sample) {
+  const t = camTargetV(sample);
+  S.camV.target = t;
+  const z = S.camV.zoom, g = S.frozen.gbb;
+  const hw = cv.width / (2 * z), hh = cv.height / (2 * z);
+  const cl = (v, lo, hi) => (lo > hi ? (lo + hi) / 2 : Math.min(hi, Math.max(lo, v)));
+  const tx = cl(t.x, g.x0 + hw - 60, g.x1 - hw + 60);
+  const ty = cl(t.y, S.frozen.vbb.y0 + hh - 40, S.frozen.vbb.y1 - hh + 40);
+  const k = S.camV.smooth <= 0.001 ? 1 : 1 - Math.exp(-dt / S.camV.smooth);
+  S.camV.x += (tx - S.camV.x) * k;
+  S.camV.y += (ty - S.camV.y) * k;
+  S.camV.zoom += (S.camV.zoomTarget - S.camV.zoom) * k;   // structured for dynamic zoom
+}
+
+// ═══ frame loop ══════════════════════════════════════════════════════════════
+let lastTs = 0;
+function tick(ts) {
+  const dt = Math.min(0.05, (ts - lastTs) / 1000 || 0.016);
+  lastTs = ts;
+  const pb = S.pb;
+  if (pb.playing && pb.frames.length > 1)
+    pb.head = Math.min(pb.head + dt * pb.speed, pb.frames.length - 1.001);
+  ensureBuffer();
+  const sample = sampleAt(pb.head);
+  updateCameraV(dt, sample);
+  draw(sample, dt);
+  if ((ts | 0) % 500 < 20) updateHUD();
+  requestAnimationFrame(tick);
+}
+
+function drawLayer(layer) {
+  const z = S.camV.zoom;
+  ctx.drawImage(layer.canvas,
+    Math.round((layer.bb.x0 - S.camV.x) * z + cv.width / 2),
+    Math.round((layer.bb.y0 - S.camV.y) * z + cv.height / 2),
+    Math.round(layer.canvas.width * z), Math.round(layer.canvas.height * z));
+}
 function headingToDir(h) { return DIRS[Math.round(((h % 360) + 360) % 360 / 45) % 8]; }
-function spriteScale() {
-  return (pxPerMeter(CAM.czTarget) / REF_ZOOM) * S.ui.pscale;
-}
-function groundBasis(wx, wz) {
-  const p0 = project(wx, wz);
-  const px = project(wx + 0.5, wz), pz = project(wx, wz + 0.5);
-  return { p0, dxm: Math.abs(px.x - p0.x) * 2, dzm: Math.abs(pz.y - p0.y) * 2 };
-}
 function viewState(idx) {
   return S.view[idx] ||= { heading: 90, ft: Math.random() * 0.1, frame: 0, state: "idle" };
 }
-function drawPlayer(p, s, dt) {
+function drawPlayer(p, dt) {
   const vs = viewState(p.idx);
-  // presentation state from authoritative movement (speed thresholds)
   const st = p.speed < IDLE_MAX ? "idle" : p.speed < JOG_MAX ? "jog" : "sprint";
   if (p.speed > 0.3) vs.heading = Math.atan2(p.vy, p.vx) * 180 / Math.PI;
   vs.state = st;
@@ -755,11 +760,15 @@ function drawPlayer(p, s, dt) {
   const dir = headingToDir(vs.heading);
   const frames = S.anims[vs.state][dir];
   const im = frames[vs.state === "idle" ? 0 : vs.frame % frames.length];
-  const gb = groundBasis(p.x, p.y);
-  if (gb.p0.d < 0.5) return;
-  const ax = Math.round(gb.p0.x), ay = Math.round(gb.p0.y);
+  const vpos = vproj(p.x, p.y);
+  const sp = v2s(vpos);
+  const ax = Math.round(sp.x), ay = Math.round(sp.y);
+  const s = S.frozen.playerVScale * S.camV.zoom;    // authored size × shared zoom
   const team = (S.pb.players[p.pid] || {}).team === "AWAY" ? 1 : 0;
-  const flat = gb.dxm > 0.01 ? gb.dzm / gb.dxm : 0.4;
+  // ground ring/shadow: foreshortening from the FROZEN projection (authored,
+  // position-dependent world property — not camera compensation)
+  const p2 = vproj(p.x, p.y + 0.5);
+  const flat = Math.max(0.15, Math.min(0.8, Math.abs(p2.y - vpos.y) * 2 / (S.frozen.pxPerM)));
   ctx.save();
   ctx.beginPath();
   ctx.ellipse(ax, ay, 9 * s, Math.max(1.5, 9 * s * flat), 0, 0, Math.PI * 2);
@@ -772,14 +781,13 @@ function drawPlayer(p, s, dt) {
   const foot = h / 2 + S.pivots.foot_offset_base128;
   ctx.drawImage(im, Math.round(ax - (w / 2) * s), Math.round(ay - foot * s),
     Math.round(w * s), Math.round(h * s));
-  // debug overlays
   if (S.dbg.anchors) {
     ctx.strokeStyle = "#ff4040"; ctx.lineWidth = 1;
     ctx.beginPath(); ctx.moveTo(ax - 5, ay); ctx.lineTo(ax + 5, ay);
     ctx.moveTo(ax, ay - 5); ctx.lineTo(ax, ay + 5); ctx.stroke();
   }
   if (S.dbg.vel && p.speed > 0.2) {
-    const tip = project(p.x + p.vx * 0.8, p.y + p.vy * 0.8);
+    const tip = v2s(vproj(p.x + p.vx * 0.8, p.y + p.vy * 0.8));
     ctx.strokeStyle = "#5cff8a"; ctx.lineWidth = 2;
     ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(tip.x, tip.y); ctx.stroke();
   }
@@ -795,41 +803,65 @@ function drawPlayer(p, s, dt) {
   }
 }
 function drawBall(ball) {
-  const gb = groundBasis(ball.x, ball.y);
-  if (gb.p0.d < 0.5) return;
-  const x = Math.round(gb.p0.x), y = Math.round(gb.p0.y);
-  const r = Math.max(3, 0.16 * pxPerMeter(CAM.czTarget));
-  const flat = gb.dxm > 0.01 ? gb.dzm / gb.dxm : 0.4;
-  ctx.beginPath(); ctx.ellipse(x, y + r * 0.9, r * 1.1, Math.max(1, r * 1.1 * flat), 0, 0, Math.PI * 2);
+  const vpos = vproj(ball.x, ball.y);
+  const sp = v2s(vpos);
+  const x = Math.round(sp.x), y = Math.round(sp.y);
+  const r = Math.max(2, 0.16 * S.frozen.pxPerM * S.camV.zoom);
+  ctx.beginPath(); ctx.ellipse(x, y + r * 0.9, r * 1.1, Math.max(1, r * 0.5), 0, 0, Math.PI * 2);
   ctx.fillStyle = "rgba(0,0,0,0.3)"; ctx.fill();
   ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2);
   ctx.fillStyle = "#f2f2f2"; ctx.fill();
   ctx.lineWidth = 1; ctx.strokeStyle = "#333"; ctx.stroke();
-  ctx.fillStyle = "#444";
-  ctx.fillRect(x - 1, y - 1, Math.max(1, r * 0.4), Math.max(1, r * 0.4));
   if (S.dbg.ball) {
     ctx.fillStyle = "#ffd23c"; ctx.font = "10px monospace"; ctx.textAlign = "center";
     ctx.fillText(`ball (${ball.x.toFixed(1)}, ${ball.y.toFixed(1)}) m`, x, y - r - 5);
   }
 }
-
-// ═══ frame loop ══════════════════════════════════════════════════════════════
-let lastTs = 0, lastDt = 0.016;
-function tick(ts) {
-  const dt = Math.min(0.05, (ts - lastTs) / 1000 || 0.016);
-  lastTs = ts; lastDt = dt;
-  const pb = S.pb;
-  if (pb.playing && pb.frames.length > 1) {
-    pb.head = Math.min(pb.head + dt * pb.speed, pb.frames.length - 1.001);
-  }
-  ensureBuffer();
-  const sample = sampleAt(pb.head);
-  rebuildCamera();
-  updateCamera(dt, sample);
-  rebuildCamera();
-  draw(sample, dt);
-  if ((ts | 0) % 500 < 20) updateHUD();
-  requestAnimationFrame(tick);
+function drawGoal(gz) {
+  const z = S.camV.zoom;
+  const img = gz.mirrored ? S.images.goal22m : S.images.goal22;
+  ctx.drawImage(img,
+    Math.round((gz.vx - S.camV.x) * z + cv.width / 2),
+    Math.round((gz.vy - S.camV.y) * z + cv.height / 2),
+    Math.round(GOAL_SPRITE.W * gz.s * z), Math.round(GOAL_SPRITE.H * gz.s * z));
+}
+function drawGoalGeoDebug(side) {
+  const gx = side ? 105 : 0, dir = side ? 1 : -1;
+  const seg = (aw, bw) => {
+    const a = v2s(vproj3(...aw)), b = v2s(vproj3(...bw));
+    ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+  };
+  ctx.strokeStyle = "rgba(255,80,80,0.9)"; ctx.lineWidth = 1.5;
+  seg([gx, 0, 28], [gx, 0, 40]);
+  seg([gx, 0, 30.34], [gx + dir * 2, 0, 30.34]);
+  seg([gx + dir * 2, 0, 30.34], [gx + dir * 2, 0, 37.66]);
+  seg([gx + dir * 2, 0, 37.66], [gx, 0, 37.66]);
+  ctx.lineWidth = 2;
+  seg([gx, 0, 30.34], [gx, 2.44, 30.34]);
+  seg([gx, 0, 37.66], [gx, 2.44, 37.66]);
+  seg([gx, 2.44, 30.34], [gx, 2.44, 37.66]);
+  const gz = S.frozen.goals[side];
+  const C = v2s(vproj(gx, 34));
+  ctx.fillStyle = "#ffd23c";
+  ctx.fillRect(C.x - 3, C.y - 3, 6, 6);
+  const px = gz.mirrored ? GOAL_SPRITE.W - 1 - GOAL_SPRITE.pivot[0] : GOAL_SPRITE.pivot[0];
+  const z = S.camV.zoom;
+  const pmX = Math.round((gz.vx - S.camV.x) * z + cv.width / 2) + px * gz.s * z;
+  const pmY = Math.round((gz.vy - S.camV.y) * z + cv.height / 2) + GOAL_SPRITE.pivot[1] * gz.s * z;
+  ctx.fillStyle = "#40e0ff";
+  ctx.beginPath(); ctx.arc(pmX, pmY, 3, 0, Math.PI * 2); ctx.fill();
+  const err = Math.hypot(pmX - C.x, pmY - C.y);
+  ctx.fillStyle = "#fff"; ctx.font = "11px monospace"; ctx.textAlign = "left";
+  ctx.fillText(`anchor err ${err.toFixed(2)}px (frozen calib; const/zoom)`, Math.min(cv.width - 240, Math.max(8, C.x + 16)), C.y - 12);
+}
+function drawGrid() {
+  ctx.strokeStyle = "rgba(255,255,255,0.14)"; ctx.lineWidth = 1;
+  const line = (aw, bw) => {
+    const a = v2s(vproj(...aw)), b = v2s(vproj(...bw));
+    ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+  };
+  for (let x = 0; x <= 105; x += 5) line([x, 0], [x, 68]);
+  for (let y = 0; y <= 68; y += 5) line([0, y], [105, y]);
 }
 
 function draw(sample, dt) {
@@ -838,72 +870,88 @@ function draw(sample, dt) {
   bg.addColorStop(0, "#0a0b10"); bg.addColorStop(0.5, "#12141b"); bg.addColorStop(1, "#0b0e12");
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, cv.width, cv.height);
-  drawGroundPerspective();
-  drawStadium();
-  drawFarBarrier();
-  drawMarkings();
+  drawLayer(S.frozen.back);
+  drawLayer(S.frozen.ground);
   if (S.dbg.grid) drawGrid();
-  const s = spriteScale();
   const ents = [];
   if (sample) {
     for (const p of sample.players) ents.push({ y: p.y, p });
     ents.push({ y: sample.ball.y, ball: sample.ball });
   }
-  ents.push({ y: 33.5, goal: 0 }, { y: 33.5, goal: 1 });
+  for (const gz of S.frozen.goals) ents.push({ y: gz.sortY, gz });
   ents.sort((a, b) => a.y - b.y);
   for (const e of ents) {
-    if (e.p) drawPlayer(e.p, s, dt);
+    if (e.p) drawPlayer(e.p, dt);
     else if (e.ball) drawBall(e.ball);
-    else drawGoalSprite(e.goal);
+    else drawGoal(e.gz);
   }
   if (S.dbg.goalgeo) { drawGoalGeoDebug(0); drawGoalGeoDebug(1); }
-  if (S.dbg.track && S.cam.target) {
-    const t = project(S.cam.target.x, S.cam.target.y);
-    if (t.d > 0.5) {
-      ctx.strokeStyle = "#ff5ce0"; ctx.lineWidth = 2;
-      ctx.strokeRect(t.x - 7, t.y - 7, 14, 14);
-    }
+  if (S.dbg.track && S.camV.target) {
+    const t = v2s(S.camV.target);
+    ctx.strokeStyle = "#ff5ce0"; ctx.lineWidth = 2;
+    ctx.strokeRect(t.x - 7, t.y - 7, 14, 14);
   }
-  drawNearBarrier();
+  drawLayer(S.frozen.front);
   drawReadout(sample);
 }
 function drawReadout(sample) {
   const el = document.getElementById("readout");
+  const a = S.frozen.author;
   el.textContent =
     `head     ${S.pb.head.toFixed(1)}s / buffered ${bufferedSeconds()}s${S.pb.finished ? " (FT)" : ""}\n` +
-    `camera   ${S.cam.mode}  pitch ${S.ui.pitch}° (eff ${CAM.lookAngle.toFixed(1)}°)  yaw ${S.ui.yaw}°\n` +
-    (sample ? `ball     (${sample.ball.x.toFixed(1)}, ${sample.ball.y.toFixed(1)}) m  clock ${sample.clock.toFixed(0)}s\n` : "") +
+    `frozen   h${a.height} d${a.dist} fov${a.fov} pitch${a.pitch} yaw${a.yaw} (authoring)\n` +
+    `camera   ${S.camV.mode}  centre=(${S.camV.x.toFixed(0)},${S.camV.y.toFixed(0)})V  zoom ×${S.camV.zoom.toFixed(2)}\n` +
+    (sample ? `ball     (${sample.ball.x.toFixed(1)}, ${sample.ball.y.toFixed(1)}) m\n` : "") +
+    (S.dbg.xform ? `xform    screen = (V − cam)·zoom + centre  [shared by all]\n` : "") +
     `players  ${sample ? sample.players.length : 0} active`;
 }
 
 // ═══ UI ══════════════════════════════════════════════════════════════════════
-const RANGE_FMT = {
+const AUTHOR_FMT = {
   height: v => v.toFixed(0) + " m", dist: v => v.toFixed(0) + " m",
   fov: v => v.toFixed(0) + "°", depthoff: v => v.toFixed(0) + " m",
   yaw: v => (v > 0 ? "+" : "") + v.toFixed(0) + "°", pitch: v => v.toFixed(0) + "°",
-  smooth: v => v.toFixed(2) + " s", pscale: v => "×" + v.toFixed(2),
+  pscale: v => "×" + v.toFixed(2),
 };
-function syncRanges() {
-  for (const key of Object.keys(RANGE_FMT)) {
-    const el = document.getElementById(key);
-    el.value = S.ui[key];
-    document.getElementById("v-" + key).textContent = RANGE_FMT[key](S.ui[key]);
-  }
-}
 function bindUI() {
-  for (const key of Object.keys(RANGE_FMT)) {
+  for (const key of Object.keys(AUTHOR_FMT)) {
     const el = document.getElementById(key), out = document.getElementById("v-" + key);
+    el.value = S.author[key];
+    out.textContent = AUTHOR_FMT[key](S.author[key]);
+    el.addEventListener("change", () => {        // authoring: RE-FREEZES the world
+      S.author[key] = parseFloat(el.value);
+      out.textContent = AUTHOR_FMT[key](S.author[key]);
+      freezeProjection();
+    });
     el.addEventListener("input", () => {
-      S.ui[key] = parseFloat(el.value);
-      out.textContent = RANGE_FMT[key](S.ui[key]);
+      out.textContent = AUTHOR_FMT[key](parseFloat(el.value));
     });
   }
-  syncRanges();
-  document.getElementById("reset").addEventListener("click", () => {
-    S.ui = { ...DEFAULTS }; syncRanges();
+  const zoomEl = document.getElementById("rzoom"), zoomOut = document.getElementById("v-rzoom");
+  zoomEl.value = S.camV.zoomTarget;
+  zoomOut.textContent = "×" + S.camV.zoomTarget.toFixed(2);
+  zoomEl.addEventListener("input", () => {
+    S.camV.zoomTarget = parseFloat(zoomEl.value);
+    zoomOut.textContent = "×" + S.camV.zoomTarget.toFixed(2);
+  });
+  const smEl = document.getElementById("smooth"), smOut = document.getElementById("v-smooth");
+  smEl.value = S.camV.smooth;
+  smOut.textContent = S.camV.smooth.toFixed(2) + " s";
+  smEl.addEventListener("input", () => {
+    S.camV.smooth = parseFloat(smEl.value);
+    smOut.textContent = S.camV.smooth.toFixed(2) + " s";
+  });
+  document.getElementById("refreeze").addEventListener("click", freezeProjection);
+  document.getElementById("resetauthor").addEventListener("click", () => {
+    S.author = { ...AUTHOR_DEFAULTS };
+    for (const key of Object.keys(AUTHOR_FMT)) {
+      document.getElementById(key).value = S.author[key];
+      document.getElementById("v-" + key).textContent = AUTHOR_FMT[key](S.author[key]);
+    }
+    freezeProjection();
   });
   for (const r of document.querySelectorAll("input[name=cammode]"))
-    r.addEventListener("change", () => { if (r.checked) S.cam.mode = r.value; });
+    r.addEventListener("change", () => { if (r.checked) S.camV.mode = r.value; });
   const pp = document.getElementById("playpause");
   pp.addEventListener("click", () => {
     S.pb.playing = !S.pb.playing;
@@ -912,26 +960,26 @@ function bindUI() {
   document.getElementById("pbspeed").addEventListener("change", (e) => {
     S.pb.speed = parseFloat(e.target.value);
   });
-  for (const id of ["anchors", "ids", "vel", "state", "ball", "track", "goalgeo", "grid"])
-    document.getElementById("dbg-" + id).addEventListener("change", (e) => {
+  for (const id of ["anchors", "ids", "vel", "state", "ball", "track", "goalgeo", "grid", "xform"])
+    document.getElementById("dbg-" + id)?.addEventListener("change", (e) => {
       S.dbg[id] = e.target.checked;
     });
-  // goal-art calibration (renderer-only; never touches authoritative geometry)
   const gbind = (id, key, fmt) => {
     const el = document.getElementById(id), out = document.getElementById("v-" + id);
     el.value = GOAL_CFG[key]; out.textContent = fmt(GOAL_CFG[key]);
     el.addEventListener("input", () => {
       GOAL_CFG[key] = parseFloat(el.value);
       out.textContent = fmt(GOAL_CFG[key]);
+      freezeProjection();                       // recalibrate against frozen world
     });
   };
   gbind("gscale", "scale", v => "×" + v.toFixed(2));
   gbind("goffx", "offX", v => v.toFixed(2) + " m");
   gbind("goffd", "offDepth", v => v.toFixed(2) + " m");
   document.getElementById("gleft").addEventListener("change",
-    (e) => { GOAL_CFG.mirrorL = e.target.value === "mirror"; });
+    (e) => { GOAL_CFG.mirrorL = e.target.value === "mirror"; freezeProjection(); });
   document.getElementById("gright").addEventListener("change",
-    (e) => { GOAL_CFG.mirrorR = e.target.value === "mirror"; });
+    (e) => { GOAL_CFG.mirrorR = e.target.value === "mirror"; freezeProjection(); });
   const resize = () => { cv.width = cv.clientWidth; cv.height = cv.clientHeight; };
   window.addEventListener("resize", resize);
   resize();
