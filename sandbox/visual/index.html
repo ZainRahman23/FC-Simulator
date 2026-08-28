@@ -26,6 +26,15 @@
       <input type="range" id="fov" min="12" max="70" step="1"></label>
     <label>Look-target depth offset <span id="v-depthoff"></span>
       <input type="range" id="depthoff" min="-20" max="20" step="1"></label>
+    <label>Camera pitch (downward angle) <span id="v-pitch"></span>
+      <input type="range" id="pitch" min="12" max="45" step="1"></label>
+    <div class="row" id="pitch-presets">
+      <button data-pitch="15">15°</button>
+      <button data-pitch="20">20°</button>
+      <button data-pitch="25">25°</button>
+      <button data-pitch="30">30°</button>
+      <button data-pitch="35">35°</button>
+    </div>
     <label>Camera yaw <span id="v-yaw"></span>
       <input type="range" id="yaw" min="-35" max="35" step="1"></label>
     <div class="row" id="yaw-presets">
@@ -101,6 +110,7 @@
       <button data-scene="dirtest">Direction test</button>
       <button data-scene="locotest">Locomotion test</button>
       <button data-scene="camcal">Camera calibration</button>
+      <button data-scene="goalcam">Goal + camera cal</button>
     </div>
   </section>
 

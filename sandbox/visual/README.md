@@ -50,13 +50,21 @@ sandbox fetches the manifest and frames over HTTP.)
   texture material: two measured seat-row bands (its white strips excluded)
   are pre-mirrored and mapped continuously across the seating with exact
   per-row parallax. Aisle breaks at fixed world x cut through all rows.
-- Goals V2: rectangular procedural 3D cage — regulation 7.32×2.44 m front
-  frame, 2.0 m net depth, 2.3 m rear frame — plus a deformable spring-mesh
-  net (back/top as one 11×8 grid, two 5×5 side nets; attachments pinned).
-  Net impacts produce a localized bulge and damped outward ripple with no
-  permanent deformation (visual physics only; never affects scoring).
-  Developer buttons fire synthetic impacts; `Reset net` zeroes the mesh.
-  The generated goal art stays disabled (front-facing; file preserved).
+- Goals V3: production rectangular box goal — regulation 7.32×2.44 m front
+  frame (substantial round-capped white posts/crossbar with darker edge pass
+  and base plates), 2.1 m deep support cage (rear uprights, rear upper
+  cross-member, upper/ground depth rails, rear ground rail; thinner grey),
+  approximately horizontal roof. Net is a dense deformable mesh: back 20×12,
+  roof 20×8, sides 8×12 (≈700 verts/goal), with subtle baked resting sag
+  (roof 7 cm, back/side 5 cm bow; attachment edges exactly on structure).
+  Depth-aware simplification halves grid-line density and fades cords when
+  the goal is small on screen. Impacts bulge/ripple locally and relax back to
+  the sagged rest shape (visual physics only; never affects scoring). The
+  generated goal art stays disabled (front-facing; file preserved).
+- Camera pitch: explicit downward look angle (12–45°, presets 15–35°),
+  independent of height/distance/FOV/yaw/tracking/depth-offset; z-tracking
+  adds only a follow trim relative to the slider's reference. Default 22° ≈
+  the previously derived CAMERA_V1 angle. Nothing is locked.
 
 ### Future engine contract (net ripple — do not wire yet)
 

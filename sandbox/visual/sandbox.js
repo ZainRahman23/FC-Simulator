@@ -39,7 +39,9 @@ const DIRS = ["east", "south-east", "south", "south-west", "west", "north-west",
 const DEFAULTS = {
   height: 30, dist: 43, fov: 28, depthoff: 3, smooth: 0.35,
   pscale: 0.85, jogfps: 10, sprintfps: 12, rate: 1.0,
-  yaw: 0,   // additional unlocked visual parameter; 0 = pre-yaw behaviour
+  yaw: 0,     // additional unlocked visual parameter; 0 = pre-yaw behaviour
+  pitch: 22,  // explicit downward look angle (deg); 22 ~= the old derived
+              // CAMERA_V1 angle, so defaults keep the accepted framing
 };
 
 // ---------------------------------------------------------------- state
@@ -298,13 +300,19 @@ const CAM = { C: null, f: null, u: null, r: null, fpx: 0, czTarget: 1, lookAngle
 function rebuildCamera() {
   const h = S.ui.height;
   const C = { x: S.cam.x, y: h, z: PITCH.h + S.ui.dist };
-  const T = { x: S.cam.x, y: 0, z: S.cam.z + S.ui.depthoff };
-  const dz = T.z - C.z;                       // negative (looking toward far side)
+  const dz = (S.cam.z + S.ui.depthoff) - C.z;  // tracked look point offset (negative)
   const len = Math.hypot(h, dz);
   const yawR = (S.ui.yaw || 0) * Math.PI / 180;
-  const fy = -h / len, fh = -dz / len;        // vertical / horizontal forward parts
-  // true orientation change: rotate the horizontal forward about the vertical
-  // axis (positive yaw looks toward the +x / right-goal end)
+  // EXPLICIT camera pitch: the slider sets the downward look angle exactly
+  // when framing the reference point (pitch centre + depth offset); z-tracking
+  // adds only the tilt DELTA needed to follow play, so the pitch control stays
+  // independent of height, distance, FOV, yaw, tracking and depth offset.
+  const refDz = (34 + S.ui.depthoff) - C.z;
+  const trim = Math.atan2(h, -dz) - Math.atan2(h, -refDz);
+  const theta = (S.ui.pitch * Math.PI / 180) + trim;
+  const fy = -Math.sin(theta), fh = Math.cos(theta);
+  // yaw rotates the horizontal forward about the vertical axis
+  // (positive yaw looks toward the +x / right-goal end)
   const f = { x: fh * Math.sin(yawR), y: fy, z: -fh * Math.cos(yawR) };
   const r = { x: -f.z / fh, y: 0, z: f.x / fh };          // right (horizontal)
   const u = {                                              // up = right × forward
@@ -314,9 +322,9 @@ function rebuildCamera() {
   };
   CAM.C = C; CAM.f = f; CAM.u = u; CAM.r = r;
   CAM.fpx = (cv.height / 2) / Math.tan((S.ui.fov * Math.PI / 180) / 2);
-  CAM.czTarget = len;                          // distance to look target (yaw-invariant
-                                               // so sprite scale never changes with yaw)
-  CAM.lookAngle = Math.atan2(h, -dz) * 180 / Math.PI;
+  CAM.czTarget = len;                          // distance to look target (yaw/pitch-
+                                               // invariant so sprite scale is stable)
+  CAM.lookAngle = theta * 180 / Math.PI;       // effective angle incl. tracking trim
 }
 
 // Project a 3D world point (sim x, height above ground, sim y) -> screen px.
@@ -420,6 +428,21 @@ const SCENES = {
   locotest() {
     return { players: [P(35, 34, 0, "idle", 0, true)], ball: { x: 35, y: 38 }, ramp: true };
   },
+  goalcam() {
+    // Goal + camera calibration: frames the right penalty area & goal with
+    // players for scale. Judge pitch-line slope, goal-mouth width, visible
+    // net depth/side/roof and player/goal scale together. Grid stays off.
+    const ps = [
+      P(103, 34, 180, "idle", 1),                            // GK
+      P(99, 29, 200, "idle", 1), P(100, 39, 160, "idle", 1),
+      P(96, 26, 180, "jog", 1), P(96, 42, 180, "jog", 1), P(92, 34, 180, "idle", 1),
+      P(94, 30, 20, "jog", 0), P(95, 38, 340, "jog", 0),
+      P(90, 24, 45, "jog", 0), P(90, 44, 315, "jog", 0),
+      P(87, 34, 0, "idle", 0), P(82, 28, 0, "idle", 0), P(82, 40, 0, "idle", 0),
+      P(70, 34, 0, "idle", 0),
+    ];
+    return { players: ps, ball: { x: 94, y: 33 }, cammode: "ball", cam: { x: 80, z: 34 } };
+  },
   camcal() {
     // Perspective validation: full centre circle, halfway line, players at
     // near / middle / far depth, both touchlines when framing permits.
@@ -446,7 +469,13 @@ function setScene(name) {
     document.querySelector('input[name=tstate][value=ramp]').checked = true;
     S.test.state = "ramp"; S.test.ramp.t = 0;
   }
-  S.cam.x = 52.5; S.cam.z = 34;
+  if (sc.cammode) {
+    S.cam.mode = sc.cammode;
+    const rb = document.querySelector(`input[name=cammode][value=${sc.cammode}]`);
+    if (rb) rb.checked = true;
+  }
+  S.cam.x = sc.cam ? sc.cam.x : 52.5;
+  S.cam.z = sc.cam ? sc.cam.z : 34;
 }
 
 // ---------------------------------------------------------------- per-frame update
@@ -803,7 +832,14 @@ function drawNearBarrier() {
 //     strength optional normalized 0..1; derived from |vel|/30 when omitted
 // The event is fire-and-forget; the renderer owns all deformation state.
 
-const GOAL = { W: 7.32, H: 2.44, REAR_H: 2.3, DEPTH: 2.0, yF: 34 - 3.66, yN: 34 + 3.66 };
+const GOAL = { W: 7.32, H: 2.44, REAR_H: 2.3, DEPTH: 2.1, yF: 34 - 3.66, yN: 34 + 3.66 };
+// Net resolution (V3): dense enough to read as real netting, cheap enough to
+// simulate. width divisions along the 7.32 m mouth; vertical divisions down
+// the 2.44 m; depth divisions across the 2.1 m roof/side depth.
+const NET_NW = 20, NET_NV = 12, NET_ND = 8;
+// Resting slack (m): the rest shape is baked into the base positions, so the
+// spring system relaxes back to the naturally sagged net, not a rigid grid.
+const SAG_ROOF = 0.07, SAG_BACK = 0.05, SAG_SIDE = 0.05;
 
 function makeGoalNet(side) {
   const gx = side ? 105 : 0, dir = side ? 1 : -1;
@@ -811,33 +847,52 @@ function makeGoalNet(side) {
   const sheets = [];
   const vert = (bx, bh, by, pin) =>
     ({ bx, bh, by, pin, ox: 0, oh: 0, oy: 0, vx: 0, vh: 0, vy: 0 });
+  const sin = (t) => Math.sin(Math.PI * t);   // 0 at edges, 1 mid — pins get zero sag
 
-  // Main sheet: top net + back net as one grid. Profile rows run
-  // crossbar -> rear crossbar (top panel) -> ground (back panel);
-  // columns run along the goal mouth. Rows 0 / TOPR / last and the two edge
-  // columns are attachments (crossbar, rear frame, ground, posts) => pinned.
-  const NY = 10, NTOP = 3, NBACK = 4, TOPR = NTOP;
-  const prof = [];
-  for (let i = 0; i <= NTOP; i++)
-    prof.push({ x: gx + dir * GOAL.DEPTH * i / NTOP, h: GOAL.H + (GOAL.REAR_H - GOAL.H) * i / NTOP });
-  for (let j = 1; j <= NBACK; j++)
-    prof.push({ x: rearX, h: GOAL.REAR_H * (1 - j / NBACK) });
-  const main = { nx: NY + 1, ny: prof.length, verts: [] };
-  for (let r = 0; r < prof.length; r++)
-    for (let c = 0; c <= NY; c++)
-      main.verts.push(vert(prof[r].x, prof[r].h, GOAL.yF + (GOAL.yN - GOAL.yF) * c / NY,
-        r === 0 || r === TOPR || r === prof.length - 1 || c === 0 || c === NY));
-  sheets.push(main);
-
-  // Side sheets (left/right side nets): depth x height grids at yF and yN,
-  // pinned along front post, rear post, ground and top edge.
-  for (const sy of [GOAL.yF, GOAL.yN]) {
-    const NSX = 4, NSY = 4, sh = { nx: NSX + 1, ny: NSY + 1, verts: [] };
-    for (let r = 0; r <= NSY; r++)
-      for (let c = 0; c <= NSX; c++) {
-        const hTop = GOAL.H + (GOAL.REAR_H - GOAL.H) * c / NSX;
-        sh.verts.push(vert(gx + dir * GOAL.DEPTH * c / NSX, hTop * r / NSY, sy,
-          c === 0 || c === NSX || r === 0 || r === NSY));
+  // BACK net: width x height at the rear plane, bulging slightly outward.
+  // Pins: rear cross-member (top), rear ground rail (bottom), rear uprights.
+  {
+    const sh = { nx: NET_NW + 1, ny: NET_NV + 1, verts: [] };
+    for (let r = 0; r <= NET_NV; r++)
+      for (let c = 0; c <= NET_NW; c++) {
+        const u = c / NET_NW, v = r / NET_NV;
+        sh.verts.push(vert(
+          rearX + dir * SAG_BACK * sin(u) * sin(v),
+          GOAL.REAR_H * (1 - v),
+          GOAL.yF + GOAL.W * u,
+          r === 0 || r === NET_NV || c === 0 || c === NET_NW));
+      }
+    sheets.push(sh);
+  }
+  // ROOF net: width x depth from crossbar to rear cross-member (approximately
+  // horizontal in world space), with slight downward sag.
+  // Pins: crossbar (front), rear cross-member (back), upper depth rails (sides).
+  {
+    const sh = { nx: NET_NW + 1, ny: NET_ND + 1, verts: [] };
+    for (let r = 0; r <= NET_ND; r++)
+      for (let c = 0; c <= NET_NW; c++) {
+        const u = c / NET_NW, t = r / NET_ND;
+        sh.verts.push(vert(
+          gx + dir * GOAL.DEPTH * t,
+          GOAL.H + (GOAL.REAR_H - GOAL.H) * t - SAG_ROOF * sin(u) * sin(t),
+          GOAL.yF + GOAL.W * u,
+          r === 0 || r === NET_ND || c === 0 || c === NET_NW));
+      }
+    sheets.push(sh);
+  }
+  // SIDE nets: depth x height at each post plane, bowing slightly outward.
+  // Pins: front post, rear upright, upper depth rail, ground depth rail.
+  for (const [sy, out] of [[GOAL.yF, -1], [GOAL.yN, 1]]) {
+    const sh = { nx: NET_ND + 1, ny: NET_NV + 1, verts: [] };
+    for (let r = 0; r <= NET_NV; r++)
+      for (let c = 0; c <= NET_ND; c++) {
+        const t = c / NET_ND, v = r / NET_NV;
+        const hTop = GOAL.H + (GOAL.REAR_H - GOAL.H) * t;
+        sh.verts.push(vert(
+          gx + dir * GOAL.DEPTH * t,
+          hTop * (1 - v),
+          sy + out * SAG_SIDE * sin(t) * sin(v),
+          c === 0 || c === NET_ND || r === 0 || r === NET_NV));
       }
     sheets.push(sh);
   }
@@ -917,48 +972,82 @@ function strokeSeg3(x1, h1, z1, x2, h2, z2) {
   ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
 }
 
+// Draw one net sheet: polylines along every kept grid line, through every
+// deformed vertex. `stride` drops alternate grid LINES when the goal is small
+// on screen (depth-aware simplification) but never skips vertices along a
+// kept line, so deformation stays faithful.
+function drawNetSheet(sh, stride) {
+  const pts = sh.verts.map(v => project3(v.bx + v.ox, v.bh + v.oh, v.by + v.oy));
+  if (pts.some(p => p.d < 0.5)) return;
+  ctx.beginPath();
+  for (let r = 0; r < sh.ny; r += (r + stride >= sh.ny && r !== sh.ny - 1 ? sh.ny - 1 - r : stride))
+    for (let c = 0; c < sh.nx; c++) {
+      const p = pts[r * sh.nx + c];
+      c ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y);
+    }
+  for (let c = 0; c < sh.nx; c += (c + stride >= sh.nx && c !== sh.nx - 1 ? sh.nx - 1 - c : stride))
+    for (let r = 0; r < sh.ny; r++) {
+      const p = pts[r * sh.nx + c];
+      r ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y);
+    }
+  ctx.stroke();
+}
+
 function drawGoal3D(side) {
   const net = NETS[side];
   const pc = project3(net.gx, 1.2, 34);
-  if (pc.d < 0.5 || pc.x < -400 || pc.x > cv.width + 400) return;
+  if (pc.d < 0.5 || pc.x < -450 || pc.x > cv.width + 450) return;
+  const pxm = CAM.fpx / pc.d;                        // px per metre at the goal
+  const postW = Math.max(2, Math.min(6, Math.round(0.13 * pxm)));
+  // depth-aware net simplification: halve grid-line density when small, and
+  // fade the cords slightly so overlap never blooms into a white block
+  const stride = pxm < 15 ? 2 : 1;
+  const netAlpha = pxm < 15 ? 0.24 : 0.30;
 
-  // net mesh (deformed vertex grid; subtle, less dominant than the frame)
-  ctx.strokeStyle = "rgba(228,228,234,0.32)";
+  // --- net sheets (back, roof, sides), behind the structure
+  ctx.strokeStyle = `rgba(226,226,232,${netAlpha})`;
   ctx.lineWidth = 1;
-  for (const sh of net.sheets) {
-    const pts = sh.verts.map(v => project3(v.bx + v.ox, v.bh + v.oh, v.by + v.oy));
-    ctx.beginPath();
-    for (let r = 0; r < sh.ny; r++)
-      for (let c = 0; c < sh.nx; c++) {
-        const p = pts[r * sh.nx + c];
-        c ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y);
-      }
-    for (let c = 0; c < sh.nx; c++)
-      for (let r = 0; r < sh.ny; r++) {
-        const p = pts[r * sh.nx + c];
-        r ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y);
-      }
-    ctx.stroke();
-  }
+  for (const sh of net.sheets) drawNetSheet(sh, stride);
 
-  // rectangular frame: rear cage (grey) then front posts/crossbar (white)
+  // --- rectangular support cage (visually lighter than the front frame)
   const { gx, rearX } = net, { yF, yN, H, REAR_H } = GOAL;
-  ctx.strokeStyle = "rgba(205,205,210,0.85)";
-  ctx.lineWidth = 1.5;
-  strokeSeg3(rearX, 0, yF, rearX, REAR_H, yF);      // rear verticals
-  strokeSeg3(rearX, 0, yN, rearX, REAR_H, yN);
-  strokeSeg3(rearX, REAR_H, yF, rearX, REAR_H, yN); // rear crossbar
-  strokeSeg3(rearX, 0, yF, rearX, 0, yN);           // rear ground bar
-  strokeSeg3(gx, 0, yF, rearX, 0, yF);              // side ground bars
-  strokeSeg3(gx, 0, yN, rearX, 0, yN);
-  strokeSeg3(gx, H, yF, rearX, REAR_H, yF);         // top side rails
+  ctx.strokeStyle = "rgba(208,208,214,0.85)";
+  ctx.lineWidth = Math.max(1, Math.round(postW * 0.45));
+  ctx.lineCap = "round";
+  strokeSeg3(rearX, 0, yF, rearX, REAR_H, yF);      // rear left upright
+  strokeSeg3(rearX, 0, yN, rearX, REAR_H, yN);      // rear right upright
+  strokeSeg3(rearX, REAR_H, yF, rearX, REAR_H, yN); // rear upper cross-member
+  strokeSeg3(rearX, 0, yF, rearX, 0, yN);           // rear ground rail
+  strokeSeg3(gx, H, yF, rearX, REAR_H, yF);         // upper depth rails
   strokeSeg3(gx, H, yN, rearX, REAR_H, yN);
-  ctx.strokeStyle = "rgba(250,250,250,0.96)";
-  ctx.lineWidth = 2.5;
+  strokeSeg3(gx, 0, yF, rearX, 0, yF);              // ground depth rails
+  strokeSeg3(gx, 0, yN, rearX, 0, yN);
+
+  // --- front frame: substantial white posts + crossbar with a darker
+  // underside/edge pass for pixel-art depth, plus ground base plates
+  const off = Math.max(1, Math.round(postW * 0.3));
+  ctx.strokeStyle = "#8e8e98";                      // edge/underside first
+  ctx.lineWidth = postW;
+  const edge = (x1, h1, z1, x2, h2, z2) => {
+    const a = project3(x1, h1, z1), b = project3(x2, h2, z2);
+    if (a.d < 0.5 || b.d < 0.5) return;
+    ctx.beginPath(); ctx.moveTo(a.x + off, a.y + off); ctx.lineTo(b.x + off, b.y + off); ctx.stroke();
+  };
+  edge(gx, 0, yF, gx, H, yF);
+  edge(gx, 0, yN, gx, H, yN);
+  edge(gx, H, yF, gx, H, yN);
+  ctx.strokeStyle = "#fafafa";                      // bright main frame on top
   strokeSeg3(gx, 0, yF, gx, H, yF);                 // far post
-  ctx.lineWidth = 3;
   strokeSeg3(gx, 0, yN, gx, H, yN);                 // near post
   strokeSeg3(gx, H, yF, gx, H, yN);                 // crossbar
+  ctx.lineCap = "butt";
+  for (const yy of [yF, yN]) {                      // base plates at the post feet
+    const p = project3(gx, 0, yy);
+    if (p.d < 0.5) continue;
+    ctx.fillStyle = "#d8d8de";
+    ctx.fillRect(Math.round(p.x - postW * 0.9), Math.round(p.y - postW * 0.25),
+      Math.round(postW * 1.8), Math.max(2, Math.round(postW * 0.5)));
+  }
 }
 
 function draw() {
@@ -1097,7 +1186,7 @@ function drawReadout() {
     `camera   mode=${S.cam.mode}\n` +
     `         pos=(${S.cam.x.toFixed(1)}, ${S.ui.height.toFixed(0)}, ${(PITCH.h + S.ui.dist).toFixed(1)}) m\n` +
     `         look=(${S.cam.x.toFixed(1)}, 0, ${(S.cam.z + S.ui.depthoff).toFixed(1)}) m\n` +
-    `         look angle ${CAM.lookAngle.toFixed(1)}° down  yaw ${RANGE_FMT.yaw(S.ui.yaw)}  fov ${S.ui.fov}°\n` +
+    `         pitch ${S.ui.pitch}° (effective ${CAM.lookAngle.toFixed(1)}°)  yaw ${RANGE_FMT.yaw(S.ui.yaw)}  fov ${S.ui.fov}°\n` +
     `scale    ${pxPerMeter(CAM.czTarget).toFixed(1)} px/m @target  sprite×${spriteScale().toFixed(2)}${S.snap ? " (snapped)" : ""}\n` +
     `ball     (${S.ball.x.toFixed(1)}, ${S.ball.y.toFixed(1)}) m\n` +
     `test     heading=${Math.round(S.test.heading)}°  facing=${headingToDir(S.test.heading)}` +
@@ -1114,6 +1203,7 @@ const RANGE_FMT = {
   height: v => v.toFixed(0) + " m", dist: v => v.toFixed(0) + " m",
   fov: v => v.toFixed(0) + "°", depthoff: v => v.toFixed(0) + " m",
   yaw: v => (v > 0 ? "+" : "") + v.toFixed(0) + "°",
+  pitch: v => v.toFixed(0) + "°",
   smooth: v => v.toFixed(2) + " s",
   pscale: v => "×" + v.toFixed(2), jogfps: v => v, sprintfps: v => v,
   rate: v => "×" + v.toFixed(2),
@@ -1187,12 +1277,18 @@ function bindUI() {
     pos: { x: gx, h: 1.1, y: 33.5 }, vel: { x: dir * 30, h: 0.5, y: 1 }, strength: 1.0 })));
   document.getElementById("net-reset").addEventListener("click", resetNets);
 
-  // yaw calibration presets (test values only — nothing is locked)
+  // yaw / pitch calibration presets (test values only — nothing is locked)
   for (const b of document.querySelectorAll("#yaw-presets button"))
     b.addEventListener("click", () => {
       S.ui.yaw = parseFloat(b.dataset.yaw);
       document.getElementById("yaw").value = S.ui.yaw;
       document.getElementById("v-yaw").textContent = RANGE_FMT.yaw(S.ui.yaw);
+    });
+  for (const b of document.querySelectorAll("#pitch-presets button"))
+    b.addEventListener("click", () => {
+      S.ui.pitch = parseFloat(b.dataset.pitch);
+      document.getElementById("pitch").value = S.ui.pitch;
+      document.getElementById("v-pitch").textContent = RANGE_FMT.pitch(S.ui.pitch);
     });
 
   const resize = () => { cv.width = cv.clientWidth; cv.height = cv.clientHeight; };
