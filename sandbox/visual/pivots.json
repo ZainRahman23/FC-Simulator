@@ -1,0 +1,12 @@
+{
+  "comment": "Derived pivot data for Visual V1 renderer sandbox. Computed 2026-08-27 by measuring opaque content bounds of the frozen originals. Source PNGs untouched.",
+  "pivot_rule": "Anchor = (canvas_width/2, canvas_height/2 + FOOT_OFFSET_BASE128). Content is symmetric-centre padded on every canvas size, so the canvas centre is invariant across 128/140/144 and feet do not teleport on canvas-size changes.",
+  "foot_offset_base128": 47,
+  "canvas_padding_px": { "128": 0, "140": 6, "144": 8 },
+  "measured_bottom_from_center": {
+    "idle": { "min": 43, "max": 49 },
+    "jog": { "min": 41, "max": 53 },
+    "sprint": { "min": 34, "max": 50 },
+    "note": "Variation is pose (stride/leg lift), not padding. Content cx deviates from canvas cx by <= 4px in all sampled frames (pose asymmetry)."
+  }
+}

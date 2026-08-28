@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Touchline Visual V1 — Renderer Sandbox</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="stage">
+  <canvas id="view"></canvas>
+  <div id="loading">Loading frozen Visual V1 assets…<br><span id="loadpct">0%</span></div>
+  <div id="banner">CAMERA UNLOCKED — VISUAL REVIEW REQUIRED · presentation sandbox · fixture data only (no engine)</div>
+</div>
+
+<div id="panel">
+  <h1>Visual V1 Sandbox</h1>
+
+  <section>
+    <h2>Camera</h2>
+    <label>Tilt / depth compression <span id="v-tilt"></span>
+      <input type="range" id="tilt" min="0.45" max="1.00" step="0.01"></label>
+    <label>Zoom ×<span id="v-zoom"></span>
+      <input type="range" id="zoom" min="0.50" max="2.00" step="0.01"></label>
+    <label>Field coverage (view width, m) <span id="v-cov"></span>
+      <input type="range" id="cov" min="24" max="110" step="1"></label>
+    <label>Tracking smoothing (s) <span id="v-smooth"></span>
+      <input type="range" id="smooth" min="0" max="1.5" step="0.05"></label>
+    <div class="row">
+      <label class="inline"><input type="radio" name="cammode" value="static" checked> Static</label>
+      <label class="inline"><input type="radio" name="cammode" value="ball"> Ball follow</label>
+      <label class="inline"><input type="radio" name="cammode" value="play"> Play follow</label>
+    </div>
+    <button id="reset">Reset to defaults</button>
+  </section>
+
+  <section>
+    <h2>Players / Animation</h2>
+    <label>Player scale ×<span id="v-pscale"></span>
+      <input type="range" id="pscale" min="0.5" max="3" step="0.05"></label>
+    <label class="inline"><input type="checkbox" id="snap" checked> Pixel-perfect sprite snap (integer scale)</label>
+    <label>Jog FPS <span id="v-jogfps"></span>
+      <input type="range" id="jogfps" min="4" max="20" step="1"></label>
+    <label>Sprint FPS <span id="v-sprintfps"></span>
+      <input type="range" id="sprintfps" min="4" max="24" step="1"></label>
+    <label>Playback rate ×<span id="v-rate"></span>
+      <input type="range" id="rate" min="0.25" max="2" step="0.05"></label>
+    <label class="inline"><input type="checkbox" id="pause"> Pause animation</label>
+  </section>
+
+  <section>
+    <h2>Test player</h2>
+    <div class="row">
+      <label class="inline"><input type="radio" name="tstate" value="idle" checked> Idle</label>
+      <label class="inline"><input type="radio" name="tstate" value="jog"> Jog</label>
+      <label class="inline"><input type="radio" name="tstate" value="sprint"> Sprint</label>
+      <label class="inline"><input type="radio" name="tstate" value="ramp"> Speed ramp</label>
+    </div>
+    <label class="inline"><input type="checkbox" id="autorot"> Auto 360° direction sweep</label>
+    <label>Heading (°) <span id="v-heading"></span>
+      <input type="range" id="heading" min="0" max="359" step="1"></label>
+    <label class="inline"><input type="checkbox" id="ballmove"> Ball auto-move (figure-8)</label>
+  </section>
+
+  <section>
+    <h2>Debug</h2>
+    <label class="inline"><input type="checkbox" id="dbg-anchors"> Anchors / pivots / bboxes</label>
+    <label class="inline"><input type="checkbox" id="dbg-grid"> World-coordinate grid (5 m)</label>
+    <label class="inline"><input type="checkbox" id="dbg-track"> Tracking-target marker</label>
+  </section>
+
+  <section>
+    <h2>Scenes</h2>
+    <div class="scenes">
+      <button data-scene="midfield">Midfield</button>
+      <button data-scene="attacking">Attacking third</button>
+      <button data-scene="touchline">Touchline</button>
+      <button data-scene="goalmouth">Goalmouth</button>
+      <button data-scene="dirtest">Direction test</button>
+      <button data-scene="locotest">Locomotion test</button>
+    </div>
+  </section>
+
+  <section id="readout"></section>
+</div>
+
+<script src="sandbox.js"></script>
+</body>
+</html>
