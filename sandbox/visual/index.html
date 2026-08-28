@@ -26,6 +26,15 @@
       <input type="range" id="fov" min="12" max="70" step="1"></label>
     <label>Look-target depth offset <span id="v-depthoff"></span>
       <input type="range" id="depthoff" min="-20" max="20" step="1"></label>
+    <label>Camera yaw <span id="v-yaw"></span>
+      <input type="range" id="yaw" min="-35" max="35" step="1"></label>
+    <div class="row" id="yaw-presets">
+      <button data-yaw="0">Yaw 0°</button>
+      <button data-yaw="10">+10°</button>
+      <button data-yaw="15">+15°</button>
+      <button data-yaw="20">+20°</button>
+      <button data-yaw="25">+25°</button>
+    </div>
     <label>Tracking smoothing <span id="v-smooth"></span>
       <input type="range" id="smooth" min="0" max="1.5" step="0.05"></label>
     <div class="row">

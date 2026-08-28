@@ -39,6 +39,7 @@ const DIRS = ["east", "south-east", "south", "south-west", "west", "north-west",
 const DEFAULTS = {
   height: 30, dist: 43, fov: 28, depthoff: 3, smooth: 0.35,
   pscale: 0.85, jogfps: 10, sprintfps: 12, rate: 1.0,
+  yaw: 0,   // additional unlocked visual parameter; 0 = pre-yaw behaviour
 };
 
 // ---------------------------------------------------------------- state
@@ -127,6 +128,10 @@ async function boot() {
   }));
   S.anims = anims;
   S.standTex = deriveStandMaterial(S.images.stand);
+  S.standPat = {
+    upper: ctx.createPattern(S.standTex.upper, "repeat"),
+    lower: ctx.createPattern(S.standTex.lower, "repeat"),
+  };
 
   buildGround();
   bindUI();
@@ -283,9 +288,12 @@ function buildGround() {
 }
 
 // ---------------------------------------------------------------- perspective camera
-// Basis rebuilt each frame from the physical controls. No yaw, no roll:
-// forward has no world-x component, so screen rows map affinely to world lines.
-const CAM = { C: null, f: null, u: null, fpx: 0, czTarget: 1, lookAngle: 0 };
+// Basis rebuilt each frame from the physical controls. Roll-free; YAW rotates
+// the horizontal viewing direction along the pitch (yaw 0 = looking straight
+// across at the opposite sideline — the pre-yaw behaviour, bit for bit).
+// Because the right vector stays horizontal (no roll), screen rows still map
+// affinely to straight world ground lines at any yaw.
+const CAM = { C: null, f: null, u: null, r: null, fpx: 0, czTarget: 1, lookAngle: 0 };
 
 function rebuildCamera() {
   const h = S.ui.height;
@@ -293,20 +301,31 @@ function rebuildCamera() {
   const T = { x: S.cam.x, y: 0, z: S.cam.z + S.ui.depthoff };
   const dz = T.z - C.z;                       // negative (looking toward far side)
   const len = Math.hypot(h, dz);
-  const f = { y: -h / len, z: dz / len };     // forward (unit, x component = 0)
-  const u = { y: -f.z, z: f.y };              // up = right × forward (unit)
-  CAM.C = C; CAM.f = f; CAM.u = u;
+  const yawR = (S.ui.yaw || 0) * Math.PI / 180;
+  const fy = -h / len, fh = -dz / len;        // vertical / horizontal forward parts
+  // true orientation change: rotate the horizontal forward about the vertical
+  // axis (positive yaw looks toward the +x / right-goal end)
+  const f = { x: fh * Math.sin(yawR), y: fy, z: -fh * Math.cos(yawR) };
+  const r = { x: -f.z / fh, y: 0, z: f.x / fh };          // right (horizontal)
+  const u = {                                              // up = right × forward
+    x: -r.z * f.y,
+    y: r.z * f.x - r.x * f.z,
+    z: r.x * f.y,
+  };
+  CAM.C = C; CAM.f = f; CAM.u = u; CAM.r = r;
   CAM.fpx = (cv.height / 2) / Math.tan((S.ui.fov * Math.PI / 180) / 2);
-  CAM.czTarget = -h * f.y + dz * f.z;         // depth of the look target
+  CAM.czTarget = len;                          // distance to look target (yaw-invariant
+                                               // so sprite scale never changes with yaw)
   CAM.lookAngle = Math.atan2(h, -dz) * 180 / Math.PI;
 }
 
 // Project a 3D world point (sim x, height above ground, sim y) -> screen px.
 function project3(wx, wy, wz) {
   const vx = wx - CAM.C.x, vy = wy - CAM.C.y, vz = wz - CAM.C.z;
-  const cy = vy * CAM.u.y + vz * CAM.u.z;
-  const cz = vy * CAM.f.y + vz * CAM.f.z;
-  return { x: cv.width / 2 + CAM.fpx * vx / cz, y: cv.height / 2 - CAM.fpx * cy / cz, d: cz };
+  const cx = vx * CAM.r.x + vz * CAM.r.z;
+  const cy = vx * CAM.u.x + vy * CAM.u.y + vz * CAM.u.z;
+  const cz = vx * CAM.f.x + vy * CAM.f.y + vz * CAM.f.z;
+  return { x: cv.width / 2 + CAM.fpx * cx / cz, y: cv.height / 2 - CAM.fpx * cy / cz, d: cz };
 }
 // Ground-plane shorthand (height 0).
 function project(wx, wz) { return project3(wx, 0, wz); }
@@ -480,30 +499,55 @@ function spriteScale() {
   return S.snap ? Math.max(1, Math.round(s)) : s;
 }
 
-// Perspective ground: one affine texture row per screen scanline (exact
-// homography for a no-roll camera). Nearest-neighbour, no smoothing.
+// Perspective ground. For a roll-free camera every screen row maps AFFINELY to
+// a straight world ground line (at any yaw), so the plane homography is
+// rendered as thin horizontal bands, each an affine texture map fitted exactly
+// to three of its corners (the fourth carries sub-pixel error at 3px bands).
+// Nearest-neighbour, no smoothing; not a screen-space shear of a finished map.
+function groundRowWorld(sy) {
+  // world endpoints of screen row sy at sx=0 and sx=W (ray/ground intersection)
+  const qy = (cv.height / 2 - sy) / CAM.fpx;
+  const dy = CAM.f.y + qy * CAM.u.y;               // ray vertical slope (r.y = 0)
+  if (dy >= -1e-6) return null;                    // at/above horizon
+  const lam = -CAM.C.y / dy;
+  const bx = CAM.f.x + qy * CAM.u.x, bz = CAM.f.z + qy * CAM.u.z;
+  const Ax = CAM.C.x + lam * bx, Az = CAM.C.z + lam * bz;   // centre of the row
+  const st = lam / CAM.fpx;                        // world step per screen px, along r
+  const hx = (cv.width / 2) * st * CAM.r.x, hz = (cv.width / 2) * st * CAM.r.z;
+  return { Lx: Ax - hx, Lz: Az - hz, Rx: Ax + hx, Rz: Az + hz };
+}
 function drawGroundPerspective() {
-  const W = cv.width, H = cv.height;
-  const h = CAM.C.y, zc = CAM.C.z, f = CAM.f, u = CAM.u, fpx = CAM.fpx;
+  const W = cv.width, H = cv.height, BH = 3;
   const gW = S.ground.width, gH = S.ground.height;
-  for (let sy = 0; sy < H; sy++) {
-    const s = (H / 2 - sy) / fpx;
-    const denom = u.z - s * f.z;
-    if (Math.abs(denom) < 1e-8) continue;
-    const z = zc + h * (u.y - s * f.y) / denom;          // world depth line for this row
-    if (z < APRON.y0 || z >= APRON.y1) continue;
-    const cz = -h * f.y + (z - zc) * f.z;                // camera depth of that line
-    if (cz < 0.5) continue;
-    const halfWm = (W / 2) * cz / fpx;
-    const xL = CAM.C.x - halfWm, xR = CAM.C.x + halfWm;  // world x visible on this row
-    let srcX = (xL - APRON.x0) * REF_ZOOM;
-    let srcW = (xR - xL) * REF_ZOOM;
-    let dstX = 0, dstW = W;
-    if (srcX < 0) { const cut = -srcX / srcW; dstX += cut * W; dstW -= cut * W; srcW += srcX; srcX = 0; }
-    if (srcX + srcW > gW) { const cut = (srcX + srcW - gW) / ((xR - xL) * REF_ZOOM); dstW -= cut * W; srcW = gW - srcX; }
-    if (srcW <= 0 || dstW <= 0) continue;
-    const srcY = Math.min(gH - 1, Math.max(0, Math.floor((z - APRON.y0) * REF_ZOOM)));
-    ctx.drawImage(S.ground, srcX, srcY, srcW, 1, dstX, sy, dstW, 1);
+  const tx = (x) => (x - APRON.x0) * REF_ZOOM, tz = (z) => (z - APRON.y0) * REF_ZOOM;
+  for (let sy = 0; sy < H; sy += BH) {
+    const b = Math.min(H, sy + BH);
+    const rt = groundRowWorld(sy), rb = groundRowWorld(b);
+    if (!rt || !rb) continue;
+    // affine fit: tex(T0,T1,T2) -> screen (0,sy), (W,sy), (0,b)
+    const T0x = tx(rt.Lx), T0y = tz(rt.Lz);
+    const T1x = tx(rt.Rx), T1y = tz(rt.Rz);
+    const T2x = tx(rb.Lx), T2y = tz(rb.Lz);
+    const u1x = T1x - T0x, u1y = T1y - T0y, u2x = T2x - T0x, u2y = T2y - T0y;
+    const det = u1x * u2y - u1y * u2x;
+    if (Math.abs(det) < 1e-9) continue;
+    const bh = b - sy;
+    const a = (W * u2y) / det, b2 = (-bh * u1y) / det;     // [v1=(W,0), v2=(0,bh)]
+    const c = (-W * u2x) / det, d = (bh * u1x) / det;
+    const e = 0 - (a * T0x + c * T0y);
+    const f2 = sy - (b2 * T0x + d * T0y);
+    // source subrect: tex bbox of the band quad, clamped to the texture
+    const T3x = tx(rb.Rx), T3y = tz(rb.Rz);
+    const bx0 = Math.max(0, Math.floor(Math.min(T0x, T1x, T2x, T3x)) - 2);
+    const bx1 = Math.min(gW, Math.ceil(Math.max(T0x, T1x, T2x, T3x)) + 2);
+    const by0 = Math.max(0, Math.floor(Math.min(T0y, T1y, T2y, T3y)) - 2);
+    const by1 = Math.min(gH, Math.ceil(Math.max(T0y, T1y, T2y, T3y)) + 2);
+    if (bx1 <= bx0 || by1 <= by0) continue;
+    ctx.save();
+    ctx.beginPath(); ctx.rect(0, sy, W, bh); ctx.clip();
+    ctx.setTransform(a, b2, c, d, e, f2);
+    ctx.drawImage(S.ground, bx0, by0, bx1 - bx0, by1 - by0, bx0, by0, bx1 - bx0, by1 - by0);
+    ctx.restore();
   }
 }
 
@@ -587,117 +631,152 @@ function drawMarkings() {
 // continuously with the derived PixelLab seating material. Parallax under
 // panning is therefore exact per row.
 
-// Fill one horizontal screen band [top..bot] textured at camera depth cz,
-// world-x-mapped (wraps seamlessly: the texture is pre-mirrored).
-function fillSeatBand(tex, top, bot, cz) {
-  const H = Math.ceil(bot) - Math.floor(top);
-  if (H <= 0 || bot < 0 || top > cv.height) return;
-  const pxm = CAM.fpx / cz;
-  const scale = pxm * (ENV.texWorldM / (tex.width / 2));   // screen px per texture px
-  const period = 2 * ENV.texWorldM;                        // world m per full (mirrored) texture
-  const xL = CAM.C.x - (cv.width / 2) * cz / CAM.fpx;
-  let u = (((xL % period) + period) % period) / period * tex.width;
-  let dx = 0;
-  while (dx < cv.width) {
-    const wpx = tex.width - u;
-    const dw = wpx * scale;
-    ctx.drawImage(tex, u, 0, wpx, tex.height, dx, Math.floor(top), dw + 0.75, H);
-    dx += dw; u = 0;
+// Stadium structures span this world-x range around the camera — wide enough
+// to cover any pan position at any yaw in the slider range. The range is
+// clipped so every projected point stays safely in front of the camera
+// (depth >= 0.8) even at extreme yaw.
+function envXRangeAt(h, z) {
+  let xL = CAM.C.x - 200, xR = CAM.C.x + 200;
+  const k = (h - CAM.C.y) * CAM.f.y + (z - CAM.C.z) * CAM.f.z;
+  const fx = CAM.f.x;
+  if (Math.abs(fx) > 1e-6) {
+    const xLim = CAM.C.x + (0.8 - k) / fx;
+    if (fx > 0) xL = Math.max(xL, xLim); else xR = Math.min(xR, xLim);
   }
+  return { xL, xR };
 }
-// Vertical aisle breaks: fixed world x positions cut through a band at depth cz.
-function cutAisles(top, bot, cz) {
-  const H = Math.ceil(bot) - Math.floor(top);
-  if (H <= 0) return;
-  const pxm = CAM.fpx / cz;
-  const halfWm = (cv.width / 2) * cz / CAM.fpx;
-  const k0 = Math.floor((CAM.C.x - halfWm - 6) / ENV.aisleEveryM);
-  const k1 = Math.ceil((CAM.C.x + halfWm - 6) / ENV.aisleEveryM);
-  ctx.fillStyle = ENV_COL.aisle;
-  for (let k = k0; k <= k1; k++) {
-    const wx = k * ENV.aisleEveryM + 6;
-    const sx = cv.width / 2 + CAM.fpx * (wx - CAM.C.x) / cz;
-    ctx.fillRect(Math.round(sx - ENV.aisleW * pxm / 2), Math.floor(top),
-      Math.max(1, Math.round(ENV.aisleW * pxm)), H);
+function envXRange2(hA, zA, hB, zB) {
+  const a = envXRangeAt(hA, zA), b = envXRangeAt(hB, zB);
+  return { xL: Math.max(a.xL, b.xL), xR: Math.min(a.xR, b.xR) };
+}
+
+// Fill the projected quad between two 3D horizontal edges (each constant h,z,
+// running along world x). Yaw-correct: all four corners are projected.
+function fillStructQuad(color, hA, zA, hB, zB) {
+  const { xL, xR } = envXRange2(hA, zA, hB, zB);
+  if (xL >= xR) return null;
+  const p = [project3(xL, hA, zA), project3(xR, hA, zA),
+             project3(xR, hB, zB), project3(xL, hB, zB)];
+  if (p.some(q => q.d < 0.5)) return null;
+  if (color) {
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.moveTo(p[0].x, p[0].y); ctx.lineTo(p[1].x, p[1].y);
+    ctx.lineTo(p[2].x, p[2].y); ctx.lineTo(p[3].x, p[3].y);
+    ctx.closePath(); ctx.fill();
   }
-}
-// Solid structural band between two 3D horizontal edges (each constant h,z).
-function fillStructBand(color, hA, zA, hB, zB) {
-  const a = project3(CAM.C.x, hA, zA), b = project3(CAM.C.x, hB, zB);
-  if (a.d < 0.5 || b.d < 0.5) return null;
-  const top = Math.min(a.y, b.y), bot = Math.max(a.y, b.y);
-  if (bot < 0 || top > cv.height) return { top, bot };
-  if (color) { ctx.fillStyle = color; ctx.fillRect(0, Math.floor(top), cv.width, Math.ceil(bot) - Math.floor(top)); }
-  return { top, bot };
+  return p;
 }
 function railLine(h, z, width = 2, color = ENV_COL.rail) {
-  const p = project3(CAM.C.x, h, z);
-  if (p.d < 0.5 || p.y < -4 || p.y > cv.height + 4) return;
-  ctx.fillStyle = color;
-  ctx.fillRect(0, Math.round(p.y) - Math.floor(width / 2), cv.width, width);
+  const { xL, xR } = envXRangeAt(h, z);
+  if (xL >= xR) return;
+  ctx.strokeStyle = color; ctx.lineWidth = width;
+  strokeSeg3(xL, h, z, xR, h, z);
+}
+
+// Seat-row quad textured with the derived (pre-mirrored) seating band.
+// Texture is anchored to WORLD x via an affine pattern transform fitted to
+// three quad corners, so it neither swims under panning nor repeats visibly;
+// the pattern's own repeat handles wrapping.
+function fillSeatQuad(patKey, hF, zF, hB, zB) {
+  const { xL, xR } = envXRange2(hF, zF, hB, zB);
+  if (xL >= xR) return;
+  const tex = S.standTex[patKey], pat = S.standPat[patKey];
+  const BL = project3(xL, hB, zB), BR = project3(xR, hB, zB);
+  const FL = project3(xL, hF, zF), FR = project3(xR, hF, zF);
+  if ([BL, BR, FL, FR].some(q => q.d < 0.5)) return;
+  const ppm = tex.width / (2 * ENV.texWorldM);            // texture px per world metre
+  const T0x = xL * ppm, T1x = xR * ppm;                   // tex x anchored at world x
+  const u1x = T1x - T0x, u2y = tex.height;                // tex basis (rows: y 0=back)
+  // affine: (T0x,0)->BL, (T1x,0)->BR, (T0x,texH)->FL
+  const a = (BR.x - BL.x) / u1x, b2 = (BR.y - BL.y) / u1x;
+  const c = (FL.x - BL.x) / u2y, d = (FL.y - BL.y) / u2y;
+  const e = BL.x - a * T0x, f2 = BL.y - b2 * T0x;
+  pat.setTransform(new DOMMatrix([a, b2, c, d, e, f2]));
+  ctx.fillStyle = pat;
+  ctx.beginPath();
+  ctx.moveTo(BL.x, BL.y); ctx.lineTo(BR.x, BR.y);
+  ctx.lineTo(FR.x, FR.y); ctx.lineTo(FL.x, FL.y);
+  ctx.closePath(); ctx.fill();
+}
+// Vertical aisle breaks at fixed world x, cut through one row quad.
+function cutAisles(hF, zF, hB, zB) {
+  const { xL, xR } = envXRange2(hF, zF, hB, zB);
+  if (xL >= xR) return;
+  ctx.fillStyle = ENV_COL.aisle;
+  const k0 = Math.ceil((xL - 6) / ENV.aisleEveryM), k1 = Math.floor((xR - 6) / ENV.aisleEveryM);
+  for (let k = k0; k <= k1; k++) {
+    const wx = k * ENV.aisleEveryM + 6, hw = ENV.aisleW / 2;
+    const p = [project3(wx - hw, hB, zB), project3(wx + hw, hB, zB),
+               project3(wx + hw, hF, zF), project3(wx - hw, hF, zF)];
+    if (p.some(q => q.d < 0.5)) continue;
+    if (p[0].x > cv.width + 40 || p[1].x < -40) continue;
+    ctx.beginPath();
+    ctx.moveTo(p[0].x, p[0].y); ctx.lineTo(p[1].x, p[1].y);
+    ctx.lineTo(p[2].x, p[2].y); ctx.lineTo(p[3].x, p[3].y);
+    ctx.closePath(); ctx.fill();
+  }
 }
 
 function drawStadium() {
-  // ---- raked tiers: seat-row bands from front (low/near) to back (high/deep)
+  // ---- raked tiers: seat-row quads from front (low/near) to back (high/deep)
   const tiers = [
     { rows: ENV.lowerRows, dz: ENV.lowerRowDepth, dh: ENV.lowerRowRise,
-      z0: ENV.standFrontZ, h0: ENV.frontWallH, tex: S.standTex.lower },
+      z0: ENV.standFrontZ, h0: ENV.frontWallH, pat: "lower" },
     { rows: ENV.upperRows, dz: ENV.upperRowDepth, dh: ENV.upperRowRise,
       z0: ENV.standFrontZ - ENV.lowerRows * ENV.lowerRowDepth - ENV.walkDepth,
-      h0: ENV.frontWallH + ENV.lowerRows * ENV.lowerRowRise + 1.0, tex: S.standTex.upper },
+      h0: ENV.frontWallH + ENV.lowerRows * ENV.lowerRowRise + 1.0, pat: "upper" },
   ];
   const backTier = tiers[tiers.length - 1];
   const topH = backTier.h0 + backTier.rows * backTier.dh;
   const topZ = backTier.z0 - backTier.rows * backTier.dz;
 
-  // dark backing + roof edge above the highest row (kills the void by design)
-  const bw = fillStructBand(ENV_COL.backing, topH, topZ, topH + ENV.backWallH, topZ);
-  if (bw && bw.top > 0) { ctx.fillStyle = "#101218"; ctx.fillRect(0, 0, cv.width, Math.floor(bw.top)); }
+  // dark backing above the highest row + interior fill above the roof line
+  const bw = fillStructQuad(ENV_COL.backing, topH, topZ, topH + ENV.backWallH, topZ);
+  if (bw) {                                     // fill up from the (sloped) roof edge
+    ctx.fillStyle = "#101218";
+    ctx.beginPath();
+    ctx.moveTo(bw[3].x, bw[3].y); ctx.lineTo(bw[2].x, bw[2].y);
+    ctx.lineTo(bw[2].x, -8); ctx.lineTo(bw[3].x, -8);
+    ctx.closePath(); ctx.fill();
+  }
   railLine(topH + ENV.backWallH, topZ, 3, ENV_COL.roofEdge);
 
-  // rows are drawn back-to-front so nearer rows overwrite deeper ones
+  // rows back-to-front so nearer rows overwrite deeper ones
   for (let t = tiers.length - 1; t >= 0; t--) {
     const tier = tiers[t];
     for (let i = tier.rows - 1; i >= 0; i--) {
-      const zF = tier.z0 - i * tier.dz, hF = tier.h0 + i * tier.dh;         // row front edge
-      const zB = zF - tier.dz, hB = hF + tier.dh;                            // row back edge
-      const a = project3(CAM.C.x, hF, zF), b = project3(CAM.C.x, hB, zB);
-      if (a.d < 0.5 || b.d < 0.5) continue;
-      const top = Math.min(a.y, b.y), bot = Math.max(a.y, b.y);
-      fillSeatBand(tier.tex, top, bot, a.d);
-      if (i % 2 === 0) {           // subtle alternate-row shade to read the rake
-        ctx.fillStyle = "rgba(0,0,0,0.08)";
-        ctx.fillRect(0, Math.floor(top), cv.width, Math.ceil(bot) - Math.floor(top));
-      }
-      cutAisles(top, bot, a.d);
+      const zF = tier.z0 - i * tier.dz, hF = tier.h0 + i * tier.dh;   // row front edge
+      const zB = zF - tier.dz, hB = hF + tier.dh;                      // row back edge
+      fillSeatQuad(tier.pat, hF, zF, hB, zB);
+      if (i % 2 === 0)                    // subtle alternate-row shade for the rake
+        fillStructQuad("rgba(0,0,0,0.08)", hF, zF, hB, zB);
+      cutAisles(hF, zF, hB, zB);
     }
-    // walkway + railing at the front of each tier
     railLine(tier.h0, tier.z0, 2);
   }
   // walkway slab between tiers
-  fillStructBand("#3a3a46",
+  fillStructQuad("#3a3a46",
     tiers[0].h0 + tiers[0].rows * tiers[0].dh, tiers[0].z0 - tiers[0].rows * tiers[0].dz,
     tiers[1].h0, tiers[1].z0 + 0.01);
   railLine(tiers[1].h0, tiers[1].z0 + 0.01, 2);
 
   // stand front wall (concourse face) below the first row
-  fillStructBand(ENV_COL.frontWall, 0, ENV.standFrontZ, ENV.frontWallH, ENV.standFrontZ);
+  fillStructQuad(ENV_COL.frontWall, 0, ENV.standFrontZ, ENV.frontWallH, ENV.standFrontZ);
   railLine(ENV.frontWallH, ENV.standFrontZ, 2);
 }
 
 // Pitch-side board-shaped boundary (no ads/text): a 1 m vertical face a few
 // metres behind the far touchline, panelled by world-x dividers.
 function drawFarBarrier() {
-  const band = fillStructBand(ENV_COL.board, 0, ENV.farBarrierZ, ENV.barrierH, ENV.farBarrierZ);
-  if (!band || band.bot < 0 || band.top > cv.height) return;
-  const p = project3(CAM.C.x, ENV.barrierH, ENV.farBarrierZ);
-  const cz = p.d, pxm = CAM.fpx / cz;
-  const halfWm = (cv.width / 2) * cz / CAM.fpx;
-  ctx.fillStyle = "rgba(255,255,255,0.10)";
-  const k0 = Math.floor((CAM.C.x - halfWm) / ENV.boardPanelM), k1 = Math.ceil((CAM.C.x + halfWm) / ENV.boardPanelM);
+  fillStructQuad(ENV_COL.board, 0, ENV.farBarrierZ, ENV.barrierH, ENV.farBarrierZ);
+  const { xL, xR } = envXRange2(0, ENV.farBarrierZ, ENV.barrierH, ENV.farBarrierZ);
+  if (xL >= xR) return;
+  ctx.strokeStyle = "rgba(255,255,255,0.10)"; ctx.lineWidth = 1;
+  const k0 = Math.ceil(xL / ENV.boardPanelM), k1 = Math.floor(xR / ENV.boardPanelM);
   for (let k = k0; k <= k1; k++) {
-    const sx = cv.width / 2 + CAM.fpx * (k * ENV.boardPanelM - CAM.C.x) / cz;
-    ctx.fillRect(Math.round(sx), Math.floor(band.top), 1, Math.ceil(band.bot) - Math.floor(band.top));
+    const wx = k * ENV.boardPanelM;
+    strokeSeg3(wx, 0, ENV.farBarrierZ, wx, ENV.barrierH, ENV.farBarrierZ);
   }
   railLine(ENV.barrierH, ENV.farBarrierZ, 2, ENV_COL.boardTop);
 }
@@ -705,8 +784,8 @@ function drawFarBarrier() {
 // Near-side context: only the top edge of the technical-area boundary, drawn
 // after entities (it is nearer than every player) — no giant foreground stand.
 function drawNearBarrier() {
-  const band = fillStructBand("#20262e", 0, ENV.nearBarrierZ, ENV.barrierH, ENV.nearBarrierZ);
-  if (band && band.top <= cv.height) railLine(ENV.barrierH, ENV.nearBarrierZ, 2, ENV_COL.boardTop);
+  fillStructQuad("#20262e", 0, ENV.nearBarrierZ, ENV.barrierH, ENV.nearBarrierZ);
+  railLine(ENV.barrierH, ENV.nearBarrierZ, 2, ENV_COL.boardTop);
 }
 
 // ---------------------------------------------------------------- goals V2
@@ -1018,7 +1097,7 @@ function drawReadout() {
     `camera   mode=${S.cam.mode}\n` +
     `         pos=(${S.cam.x.toFixed(1)}, ${S.ui.height.toFixed(0)}, ${(PITCH.h + S.ui.dist).toFixed(1)}) m\n` +
     `         look=(${S.cam.x.toFixed(1)}, 0, ${(S.cam.z + S.ui.depthoff).toFixed(1)}) m\n` +
-    `         look angle ${CAM.lookAngle.toFixed(1)}° down  fov ${S.ui.fov}°\n` +
+    `         look angle ${CAM.lookAngle.toFixed(1)}° down  yaw ${RANGE_FMT.yaw(S.ui.yaw)}  fov ${S.ui.fov}°\n` +
     `scale    ${pxPerMeter(CAM.czTarget).toFixed(1)} px/m @target  sprite×${spriteScale().toFixed(2)}${S.snap ? " (snapped)" : ""}\n` +
     `ball     (${S.ball.x.toFixed(1)}, ${S.ball.y.toFixed(1)}) m\n` +
     `test     heading=${Math.round(S.test.heading)}°  facing=${headingToDir(S.test.heading)}` +
@@ -1034,6 +1113,7 @@ function setHeadingUI() {
 const RANGE_FMT = {
   height: v => v.toFixed(0) + " m", dist: v => v.toFixed(0) + " m",
   fov: v => v.toFixed(0) + "°", depthoff: v => v.toFixed(0) + " m",
+  yaw: v => (v > 0 ? "+" : "") + v.toFixed(0) + "°",
   smooth: v => v.toFixed(2) + " s",
   pscale: v => "×" + v.toFixed(2), jogfps: v => v, sprintfps: v => v,
   rate: v => "×" + v.toFixed(2),
@@ -1106,6 +1186,14 @@ function bindUI() {
   document.getElementById("net-power").addEventListener("click", () => fire((gx, dir) => ({
     pos: { x: gx, h: 1.1, y: 33.5 }, vel: { x: dir * 30, h: 0.5, y: 1 }, strength: 1.0 })));
   document.getElementById("net-reset").addEventListener("click", resetNets);
+
+  // yaw calibration presets (test values only — nothing is locked)
+  for (const b of document.querySelectorAll("#yaw-presets button"))
+    b.addEventListener("click", () => {
+      S.ui.yaw = parseFloat(b.dataset.yaw);
+      document.getElementById("yaw").value = S.ui.yaw;
+      document.getElementById("v-yaw").textContent = RANGE_FMT.yaw(S.ui.yaw);
+    });
 
   const resize = () => { cv.width = cv.clientWidth; cv.height = cv.clientHeight; };
   window.addEventListener("resize", resize);
