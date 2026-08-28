@@ -42,12 +42,18 @@ sandbox fetches the manifest and frames over HTTP.)
   rate, pause, camera modes (static / ball / play), debug anchors / grid /
   tracking marker, and seven test scenes (incl. Camera calibration).
 
-- Stadium + goals (phase 3): the PixelLab grandstand strip renders as a
-  perspective-correct vertical wall at z = −8 m (mirror-tiled along x, seam-
-  free panning, scenery only); PixelLab goal art is an unwarped billboard
-  anchored to the authoritative goal centres (right goal mirrored at runtime,
-  baked grass chroma-stripped at load — stored originals untouched). Goal
-  geometry stays procedural; the red debug footprint appears with Anchors.
+- Stadium (composition v2): a geometry-first shell projected through the same
+  camera as the pitch — board-shaped pitch-side barrier (no ads), stand front
+  wall, raked lower + upper seating tiers rendered row-by-row at true 3D
+  positions, walkway, railings, dark backing and roof edge, near-side barrier
+  strip in front of gameplay. The frozen PixelLab stand strip is used ONLY as
+  texture material: two measured seat-row bands (its white strips excluded)
+  are pre-mirrored and mapped continuously across the seating with exact
+  per-row parallax. Aisle breaks at fixed world x cut through all rows.
+- Goals: procedural 3D — regulation 7.32×2.44 m posts/crossbar with 2 m net
+  depth, rear frame and lightweight net mesh, every point projected through
+  the perspective camera. The generated goal art is disabled for this camera
+  (front-facing; file + manifest record preserved).
 
 ## Status
 

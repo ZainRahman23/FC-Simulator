@@ -111,7 +111,8 @@ async function boot() {
 
   const jobs = framePaths(S.manifest);
   jobs.push({ key: ["sheet", "-", 0], path: ASSET_ROOT + S.manifest.grass_tileset.local_paths.sheet });
-  jobs.push({ key: ["goalart", "-", 0], path: ASSET_ROOT + S.manifest.goal_art.local_path });
+  // goal_art is deliberately NOT loaded: rejected for this camera (front-facing);
+  // the file and manifest record are preserved. Goals are procedural 3D now.
   jobs.push({ key: ["standart", "-", 0], path: ASSET_ROOT + S.manifest.stadium_art.local_path });
 
   let done = 0;
@@ -121,16 +122,11 @@ async function boot() {
     done++; pctEl.textContent = Math.round((done / jobs.length) * 100) + "%";
     const [kind, dir, idx] = j.key;
     if (kind === "sheet") { S.images.sheet = im; return; }
-    if (kind === "goalart") { S.images.goalRaw = im; return; }
     if (kind === "standart") { S.images.stand = im; return; }
     (anims[kind][dir] ||= [])[idx] = im;
   }));
   S.anims = anims;
-  // Derived presentation copies (stored originals untouched): strip the baked
-  // grass mound from the goal art (deterministic chroma rule), and mirror it
-  // for the right-hand goal instead of spending a second generation.
-  S.images.goalClean = chromaStripGreen(S.images.goalRaw);
-  S.images.goalMirror = mirrorCanvas(S.images.goalClean);
+  S.standTex = deriveStandMaterial(S.images.stand);
 
   buildGround();
   bindUI();
@@ -139,34 +135,46 @@ async function boot() {
   requestAnimationFrame(tick);
 }
 
-// ---------------------------------------------------------------- derived art
-// Goal art content bbox after the grass-strip pass (measured 2026-08-27; see
-// MANIFEST.json goal_art.content_bbox_after_grass_strip).
-const GOAL_ART = { x0: 8, x1: 129, y0: 46, y1: 149 };
-const GOAL_TARGET_H_M = 2.6;      // rendered goal height in player-metric terms
-const PLAYER_PX_PER_M = 52.8;     // measured: 95px idle content = 1.8 m
-const WALL_H_M = 12;              // stadium stand wall height (scenery only)
+// ---------------------------------------------------------------- environment
+// Stadium shell configuration — world metres, presentation only. Real-world
+// plausible dimensions so pitch / players / goals / architecture share scale.
+const ENV = {
+  farBarrierZ: -2.5, barrierH: 1.0,       // pitch-side board-shaped boundary (no ads)
+  boardPanelM: 6,                          // board panel divider spacing
+  standFrontZ: -5.0, frontWallH: 1.2,      // stand front wall behind the barrier
+  lowerRows: 16, lowerRowDepth: 0.8, lowerRowRise: 0.5,   // lower tier: ~12.8m deep, 8m rise
+  walkDepth: 1.6,                          // walkway between tiers
+  upperRows: 12, upperRowDepth: 0.8, upperRowRise: 0.65,  // upper tier: further ~7.8m rise
+  backWallH: 3.0,                          // structural wall above top row
+  aisleEveryM: 12, aisleW: 0.9,            // vertical aisle breaks through seating
+  nearBarrierZ: 70.5,                      // near-side technical-area boundary
+  texWorldM: 42,                           // world metres represented by one 400px texture width
+};
+// Structural palette sampled from the PixelLab stand art (measured 2026-08-27).
+const ENV_COL = {
+  backing: "#31313d", roofEdge: "#a9abb1", frontWall: "#908d91",
+  board: "#262c34", boardTop: "#5a636e", rail: "rgba(245,245,245,0.75)",
+  aisle: "rgba(24,24,30,0.8)",
+};
 
-function chromaStripGreen(img) {
-  const c = document.createElement("canvas");
-  c.width = img.width; c.height = img.height;
-  const cc = c.getContext("2d", { willReadFrequently: true });
-  cc.imageSmoothingEnabled = false;
-  cc.drawImage(img, 0, 0);
-  const id = cc.getImageData(0, 0, c.width, c.height), d = id.data;
-  for (let i = 0; i < d.length; i += 4)
-    if (d[i + 3] > 0 && d[i + 1] > d[i] + 20 && d[i + 1] > d[i + 2] + 20) d[i + 3] = 0;
-  cc.putImageData(id, 0, 0);
-  return c;
-}
-function mirrorCanvas(src) {
-  const c = document.createElement("canvas");
-  c.width = src.width; c.height = src.height;
-  const cc = c.getContext("2d");
-  cc.imageSmoothingEnabled = false;
-  cc.translate(src.width, 0); cc.scale(-1, 1);
-  cc.drawImage(src, 0, 0);
-  return c;
+// Deterministic derived material from the frozen stand strip: the two seating
+// bands (upper tier y42..59, lower tier y66..88 — measured; the art's solid
+// white top/bottom strips and railing rows are excluded by the crop). Each
+// band is pre-mirrored (A + flipped A) so horizontal wrapping is seamless by
+// construction. Stored original stays byte-untouched.
+function deriveStandMaterial(img) {
+  const band = (sy, sh) => {
+    const c = document.createElement("canvas");
+    c.width = img.width * 2; c.height = sh;
+    const cc = c.getContext("2d");
+    cc.imageSmoothingEnabled = false;
+    cc.drawImage(img, 0, sy, img.width, sh, 0, 0, img.width, sh);
+    cc.save(); cc.translate(img.width * 2, 0); cc.scale(-1, 1);
+    cc.drawImage(img, 0, sy, img.width, sh, 0, 0, img.width, sh);
+    cc.restore();
+    return c;
+  };
+  return { upper: band(42, 18), lower: band(66, 23) };
 }
 
 // ---------------------------------------------------------------- ground prerender
@@ -293,13 +301,15 @@ function rebuildCamera() {
   CAM.lookAngle = Math.atan2(h, -dz) * 180 / Math.PI;
 }
 
-// Project a ground-plane point (sim x, sim y) -> screen px. d = camera depth.
-function project(wx, wz) {
-  const vx = wx - CAM.C.x, vy = -CAM.C.y, vz = wz - CAM.C.z;
+// Project a 3D world point (sim x, height above ground, sim y) -> screen px.
+function project3(wx, wy, wz) {
+  const vx = wx - CAM.C.x, vy = wy - CAM.C.y, vz = wz - CAM.C.z;
   const cy = vy * CAM.u.y + vz * CAM.u.z;
   const cz = vy * CAM.f.y + vz * CAM.f.z;
   return { x: cv.width / 2 + CAM.fpx * vx / cz, y: cv.height / 2 - CAM.fpx * cy / cz, d: cz };
 }
+// Ground-plane shorthand (height 0).
+function project(wx, wz) { return project3(wx, 0, wz); }
 // px per metre (horizontal) at a given camera depth; constant sprite sizing
 // uses the look-target depth so framing controls stay coherent.
 function pxPerMeter(depth) { return CAM.fpx / depth; }
@@ -568,70 +578,213 @@ function drawMarkings() {
   }
 }
 
-// Stadium stand: a perspective-correct vertical wall on the plane z = APRON.y0
-// (outside the playing surface). For a planar wall at constant depth the
-// projection is a uniform scale, so one drawImage per tile is exact.
-// Mirror-tiling (alternate copies flipped) guarantees seamless panning.
-function drawStadium() {
-  const im = S.images.stand;
-  const zW = APRON.y0;
-  const czW = -CAM.C.y * CAM.f.y + (zW - CAM.C.z) * CAM.f.z;
-  if (czW < 0.5) return;
-  const k = CAM.fpx / czW;                       // px per metre at the wall
-  const baseY = Math.round(project(CAM.C.x, zW).y);
-  const hpx = Math.round(WALL_H_M * k);
-  if (baseY < 0) return;
-  const tileWm = im.width * WALL_H_M / im.height; // world metres per strip copy
-  const halfWm = (cv.width / 2) * czW / CAM.fpx;
-  const i0 = Math.floor((CAM.C.x - halfWm) / tileWm);
-  const i1 = Math.floor((CAM.C.x + halfWm) / tileWm);
-  for (let i = i0; i <= i1; i++) {
-    const sx = Math.floor(cv.width / 2 + CAM.fpx * (i * tileWm - CAM.C.x) / czW);
-    const w = Math.ceil(tileWm * k) + 1;         // 1px overlap kills rounding gaps
-    if (((i % 2) + 2) % 2 === 1) {
-      ctx.save(); ctx.translate(sx + w / 2, 0); ctx.scale(-1, 1);
-      ctx.drawImage(im, -w / 2, baseY - hpx, w, hpx); ctx.restore();
-    } else {
-      ctx.drawImage(im, sx, baseY - hpx, w, hpx);
-    }
+// ---------------------------------------------------------------- stadium shell
+// Geometry-first: every structural element is world geometry projected through
+// the same camera as the pitch. Constant-(height,depth) edges project to
+// horizontal screen lines (no-roll camera), so the raked seating renders as a
+// stack of per-row bands — each row at its own true 3D position, textured
+// continuously with the derived PixelLab seating material. Parallax under
+// panning is therefore exact per row.
+
+// Fill one horizontal screen band [top..bot] textured at camera depth cz,
+// world-x-mapped (wraps seamlessly: the texture is pre-mirrored).
+function fillSeatBand(tex, top, bot, cz) {
+  const H = Math.ceil(bot) - Math.floor(top);
+  if (H <= 0 || bot < 0 || top > cv.height) return;
+  const pxm = CAM.fpx / cz;
+  const scale = pxm * (ENV.texWorldM / (tex.width / 2));   // screen px per texture px
+  const period = 2 * ENV.texWorldM;                        // world m per full (mirrored) texture
+  const xL = CAM.C.x - (cv.width / 2) * cz / CAM.fpx;
+  let u = (((xL % period) + period) % period) / period * tex.width;
+  let dx = 0;
+  while (dx < cv.width) {
+    const wpx = tex.width - u;
+    const dw = wpx * scale;
+    ctx.drawImage(tex, u, 0, wpx, tex.height, dx, Math.floor(top), dw + 0.75, H);
+    dx += dw; u = 0;
   }
 }
+// Vertical aisle breaks: fixed world x positions cut through a band at depth cz.
+function cutAisles(top, bot, cz) {
+  const H = Math.ceil(bot) - Math.floor(top);
+  if (H <= 0) return;
+  const pxm = CAM.fpx / cz;
+  const halfWm = (cv.width / 2) * cz / CAM.fpx;
+  const k0 = Math.floor((CAM.C.x - halfWm - 6) / ENV.aisleEveryM);
+  const k1 = Math.ceil((CAM.C.x + halfWm - 6) / ENV.aisleEveryM);
+  ctx.fillStyle = ENV_COL.aisle;
+  for (let k = k0; k <= k1; k++) {
+    const wx = k * ENV.aisleEveryM + 6;
+    const sx = cv.width / 2 + CAM.fpx * (wx - CAM.C.x) / cz;
+    ctx.fillRect(Math.round(sx - ENV.aisleW * pxm / 2), Math.floor(top),
+      Math.max(1, Math.round(ENV.aisleW * pxm)), H);
+  }
+}
+// Solid structural band between two 3D horizontal edges (each constant h,z).
+function fillStructBand(color, hA, zA, hB, zB) {
+  const a = project3(CAM.C.x, hA, zA), b = project3(CAM.C.x, hB, zB);
+  if (a.d < 0.5 || b.d < 0.5) return null;
+  const top = Math.min(a.y, b.y), bot = Math.max(a.y, b.y);
+  if (bot < 0 || top > cv.height) return { top, bot };
+  if (color) { ctx.fillStyle = color; ctx.fillRect(0, Math.floor(top), cv.width, Math.ceil(bot) - Math.floor(top)); }
+  return { top, bot };
+}
+function railLine(h, z, width = 2, color = ENV_COL.rail) {
+  const p = project3(CAM.C.x, h, z);
+  if (p.d < 0.5 || p.y < -4 || p.y > cv.height + 4) return;
+  ctx.fillStyle = color;
+  ctx.fillRect(0, Math.round(p.y) - Math.floor(width / 2), cv.width, width);
+}
 
-// Goal artwork: unwarped billboard anchored to the authoritative goal centre,
-// scaled to player-metric height. Right goal is the mirrored derived copy.
-function drawGoalArt(side, s) {
-  const img = side ? S.images.goalMirror : S.images.goalClean;
-  const anchor = project(side ? 106.2 : -1.2, 34);
-  if (anchor.d < 0.5) return;
-  const gs = s * (GOAL_TARGET_H_M * PLAYER_PX_PER_M) / (GOAL_ART.y1 - GOAL_ART.y0 + 1);
-  const cx = (GOAL_ART.x0 + GOAL_ART.x1 + 1) / 2;
-  const cxm = side ? img.width - cx : cx;        // content centre in (mirrored) art coords
-  ctx.drawImage(img,
-    Math.round(anchor.x - cxm * gs),
-    Math.round(anchor.y - (GOAL_ART.y1 + 1) * gs),
-    Math.round(img.width * gs), Math.round(img.height * gs));
+function drawStadium() {
+  // ---- raked tiers: seat-row bands from front (low/near) to back (high/deep)
+  const tiers = [
+    { rows: ENV.lowerRows, dz: ENV.lowerRowDepth, dh: ENV.lowerRowRise,
+      z0: ENV.standFrontZ, h0: ENV.frontWallH, tex: S.standTex.lower },
+    { rows: ENV.upperRows, dz: ENV.upperRowDepth, dh: ENV.upperRowRise,
+      z0: ENV.standFrontZ - ENV.lowerRows * ENV.lowerRowDepth - ENV.walkDepth,
+      h0: ENV.frontWallH + ENV.lowerRows * ENV.lowerRowRise + 1.0, tex: S.standTex.upper },
+  ];
+  const backTier = tiers[tiers.length - 1];
+  const topH = backTier.h0 + backTier.rows * backTier.dh;
+  const topZ = backTier.z0 - backTier.rows * backTier.dz;
+
+  // dark backing + roof edge above the highest row (kills the void by design)
+  const bw = fillStructBand(ENV_COL.backing, topH, topZ, topH + ENV.backWallH, topZ);
+  if (bw && bw.top > 0) { ctx.fillStyle = "#101218"; ctx.fillRect(0, 0, cv.width, Math.floor(bw.top)); }
+  railLine(topH + ENV.backWallH, topZ, 3, ENV_COL.roofEdge);
+
+  // rows are drawn back-to-front so nearer rows overwrite deeper ones
+  for (let t = tiers.length - 1; t >= 0; t--) {
+    const tier = tiers[t];
+    for (let i = tier.rows - 1; i >= 0; i--) {
+      const zF = tier.z0 - i * tier.dz, hF = tier.h0 + i * tier.dh;         // row front edge
+      const zB = zF - tier.dz, hB = hF + tier.dh;                            // row back edge
+      const a = project3(CAM.C.x, hF, zF), b = project3(CAM.C.x, hB, zB);
+      if (a.d < 0.5 || b.d < 0.5) continue;
+      const top = Math.min(a.y, b.y), bot = Math.max(a.y, b.y);
+      fillSeatBand(tier.tex, top, bot, a.d);
+      if (i % 2 === 0) {           // subtle alternate-row shade to read the rake
+        ctx.fillStyle = "rgba(0,0,0,0.08)";
+        ctx.fillRect(0, Math.floor(top), cv.width, Math.ceil(bot) - Math.floor(top));
+      }
+      cutAisles(top, bot, a.d);
+    }
+    // walkway + railing at the front of each tier
+    railLine(tier.h0, tier.z0, 2);
+  }
+  // walkway slab between tiers
+  fillStructBand("#3a3a46",
+    tiers[0].h0 + tiers[0].rows * tiers[0].dh, tiers[0].z0 - tiers[0].rows * tiers[0].dz,
+    tiers[1].h0, tiers[1].z0 + 0.01);
+  railLine(tiers[1].h0, tiers[1].z0 + 0.01, 2);
+
+  // stand front wall (concourse face) below the first row
+  fillStructBand(ENV_COL.frontWall, 0, ENV.standFrontZ, ENV.frontWallH, ENV.standFrontZ);
+  railLine(ENV.frontWallH, ENV.standFrontZ, 2);
+}
+
+// Pitch-side board-shaped boundary (no ads/text): a 1 m vertical face a few
+// metres behind the far touchline, panelled by world-x dividers.
+function drawFarBarrier() {
+  const band = fillStructBand(ENV_COL.board, 0, ENV.farBarrierZ, ENV.barrierH, ENV.farBarrierZ);
+  if (!band || band.bot < 0 || band.top > cv.height) return;
+  const p = project3(CAM.C.x, ENV.barrierH, ENV.farBarrierZ);
+  const cz = p.d, pxm = CAM.fpx / cz;
+  const halfWm = (cv.width / 2) * cz / CAM.fpx;
+  ctx.fillStyle = "rgba(255,255,255,0.10)";
+  const k0 = Math.floor((CAM.C.x - halfWm) / ENV.boardPanelM), k1 = Math.ceil((CAM.C.x + halfWm) / ENV.boardPanelM);
+  for (let k = k0; k <= k1; k++) {
+    const sx = cv.width / 2 + CAM.fpx * (k * ENV.boardPanelM - CAM.C.x) / cz;
+    ctx.fillRect(Math.round(sx), Math.floor(band.top), 1, Math.ceil(band.bot) - Math.floor(band.top));
+  }
+  railLine(ENV.barrierH, ENV.farBarrierZ, 2, ENV_COL.boardTop);
+}
+
+// Near-side context: only the top edge of the technical-area boundary, drawn
+// after entities (it is nearer than every player) — no giant foreground stand.
+function drawNearBarrier() {
+  const band = fillStructBand("#20262e", 0, ENV.nearBarrierZ, ENV.barrierH, ENV.nearBarrierZ);
+  if (band && band.top <= cv.height) railLine(ENV.barrierH, ENV.nearBarrierZ, 2, ENV_COL.boardTop);
+}
+
+// ---------------------------------------------------------------- procedural 3D goals
+// Regulation 7.32 m x 2.44 m, ~2 m net depth. Presentation only — every point
+// projects through the perspective camera; scoring/collision authority is
+// elsewhere and unchanged. side 0 = left goal (net extends to x<0).
+function drawGoal3D(side) {
+  const gx = side ? 105 : 0, dir = side ? 1 : -1;
+  const yF = 34 - 3.66, yN = 34 + 3.66;            // far / near posts (world y)
+  const rearX = gx + dir * 2.0, rearTopX = gx + dir * 1.7, rearTopH = 1.9;
+  const seg3 = (x1, h1, z1, x2, h2, z2) => {
+    const a = project3(x1, h1, z1), b = project3(x2, h2, z2);
+    if (a.d < 0.5 || b.d < 0.5) return;
+    ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+  };
+
+  // net mesh first (frame draws over it)
+  ctx.strokeStyle = "rgba(235,235,235,0.35)";
+  ctx.lineWidth = 1;
+  const NY = 8, NX = 4;
+  for (let i = 0; i <= NY; i++) {                   // lines along the goal mouth axis
+    const y = yF + (yN - yF) * (i / NY);
+    seg3(gx, 2.44, y, rearTopX, rearTopH, y);       // top panel rib
+    seg3(rearTopX, rearTopH, y, rearX, 0, y);       // back panel rib
+  }
+  for (let j = 1; j < NX; j++) {                    // cross ribs
+    let t = j / NX;
+    seg3(gx + (rearTopX - gx) * t, 2.44 + (rearTopH - 2.44) * t, yF,
+         gx + (rearTopX - gx) * t, 2.44 + (rearTopH - 2.44) * t, yN);
+    seg3(rearTopX + (rearX - rearTopX) * t, rearTopH * (1 - t), yF,
+         rearTopX + (rearX - rearTopX) * t, rearTopH * (1 - t), yN);
+  }
+  for (const y of [yF, yN]) {                       // side panels: profile + light mesh
+    seg3(gx, 0, y, rearX, 0, y);
+    seg3(gx, 2.44, y, rearTopX, rearTopH, y);
+    seg3(rearTopX, rearTopH, y, rearX, 0, y);
+    seg3(gx, 1.2, y, rearX * 0.5 + rearTopX * 0.5, rearTopH * 0.5, y);
+    seg3(gx + dir * 0.9, 0, y, rearTopX, rearTopH, y);
+  }
+
+  // white frame: posts + crossbar (near post slightly heavier for depth)
+  ctx.strokeStyle = "rgba(250,250,250,0.96)";
+  ctx.lineWidth = 2.5;
+  seg3(gx, 0, yF, gx, 2.44, yF);                    // far post
+  ctx.lineWidth = 3;
+  seg3(gx, 0, yN, gx, 2.44, yN);                    // near post
+  seg3(gx, 2.44, yF, gx, 2.44, yN);                 // crossbar
+  // rear frame (grey, lighter weight)
+  ctx.strokeStyle = "rgba(200,200,205,0.8)";
+  ctx.lineWidth = 1.5;
+  seg3(rearTopX, rearTopH, yF, rearTopX, rearTopH, yN);
+  seg3(rearX, 0, yF, rearX, 0, yN);
 }
 
 function draw() {
   ctx.imageSmoothingEnabled = false;
-  ctx.fillStyle = "#0b0e12";
+  // restrained dark stadium-interior backdrop (no raw void)
+  const bg = ctx.createLinearGradient(0, 0, 0, cv.height);
+  bg.addColorStop(0, "#0a0b10"); bg.addColorStop(0.5, "#12141b"); bg.addColorStop(1, "#0b0e12");
+  ctx.fillStyle = bg;
   ctx.fillRect(0, 0, cv.width, cv.height);
 
-  drawStadium();
   drawGroundPerspective();
+  drawStadium();        // overwrites the far-apron sliver behind the stand front
+  drawFarBarrier();     // nearer than the stand — drawn over it
   drawMarkings();
   if (S.dbg.grid) drawGrid();
 
-  // painter's order over players + goal billboards (goals sort just behind
-  // the mouth line so keepers/attackers at y>=34 draw in front of the net)
+  // painter's order over players + procedural 3D goals (goals sort just
+  // behind the mouth line so keepers/attackers at y>=34 draw in front)
   const s = spriteScale();
   const ents = [
     ...S.players.map(p => ({ y: p.y, p })),
     { y: 33.5, goal: 0 }, { y: 33.5, goal: 1 },
   ].sort((a, b) => a.y - b.y);
   const order = [...S.players].sort((a, b) => a.y - b.y);
-  for (const e of ents) (e.p ? drawPlayer(e.p, s) : drawGoalArt(e.goal, s));
+  for (const e of ents) (e.p ? drawPlayer(e.p, s) : drawGoal3D(e.goal));
   drawBall();
+  drawNearBarrier();    // near-side boundary is in front of every entity
   if (S.dbg.anchors) for (const p of order) drawAnchors(p, s);
   if (S.dbg.track && S.cam.target) {
     const t = project(S.cam.target.x, S.cam.target.y);
