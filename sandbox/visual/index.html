@@ -18,13 +18,15 @@
 
   <section>
     <h2>Camera</h2>
-    <label>Tilt / depth compression <span id="v-tilt"></span>
-      <input type="range" id="tilt" min="0.45" max="1.00" step="0.01"></label>
-    <label>Zoom ×<span id="v-zoom"></span>
-      <input type="range" id="zoom" min="0.50" max="2.00" step="0.01"></label>
-    <label>Field coverage (view width, m) <span id="v-cov"></span>
-      <input type="range" id="cov" min="24" max="110" step="1"></label>
-    <label>Tracking smoothing (s) <span id="v-smooth"></span>
+    <label>Camera height <span id="v-height"></span>
+      <input type="range" id="height" min="8" max="60" step="1"></label>
+    <label>Sideline distance <span id="v-dist"></span>
+      <input type="range" id="dist" min="4" max="60" step="1"></label>
+    <label>FOV (vertical) <span id="v-fov"></span>
+      <input type="range" id="fov" min="12" max="70" step="1"></label>
+    <label>Look-target depth offset <span id="v-depthoff"></span>
+      <input type="range" id="depthoff" min="-20" max="20" step="1"></label>
+    <label>Tracking smoothing <span id="v-smooth"></span>
       <input type="range" id="smooth" min="0" max="1.5" step="0.05"></label>
     <div class="row">
       <label class="inline"><input type="radio" name="cammode" value="static" checked> Static</label>
@@ -78,6 +80,7 @@
       <button data-scene="goalmouth">Goalmouth</button>
       <button data-scene="dirtest">Direction test</button>
       <button data-scene="locotest">Locomotion test</button>
+      <button data-scene="camcal">Camera calibration</button>
     </div>
   </section>
 

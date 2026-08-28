@@ -29,11 +29,18 @@ sandbox fetches the manifest and frames over HTTP.)
 - 22 players from the frozen character (idle rotations, Jogging template + custom
   SE jog fill, Full Sprint), ground-anchored at canvas-centre + constant foot
   offset (`pivots.json`), nearest-neighbour only, no depth scaling.
-- FC-style high sideline broadcast camera: pure presentation transform;
-  `tilt` compresses the ground plane only, sprites are never distorted.
-- Live controls: tilt, zoom, field coverage, tracking smoothing, player scale,
-  jog/sprint FPS + playback rate, pause, camera modes (static / ball / play),
-  debug anchors / grid / tracking marker, and six test scenes.
+- TRUE PERSPECTIVE camera: sim coordinates (x, y) are points (x, 0, y) on a
+  flat 3D ground plane; a perspective camera sits above and outside the near
+  sideline (no yaw/roll — it pans by translating along the sideline) looking
+  diagonally down. Grass is scanline-homography projected; markings, goals and
+  the debug grid are vector geometry projected vertex-by-vertex through the
+  same camera (the centre circle becomes a true perspective conic). Player
+  sprites stay unwarped screen-facing billboards at their projected foot
+  point, constant screen size with depth, nearest-neighbour only.
+- Live controls: camera height, sideline distance, vertical FOV, look-target
+  depth offset, tracking smoothing, player scale, jog/sprint FPS + playback
+  rate, pause, camera modes (static / ball / play), debug anchors / grid /
+  tracking marker, and seven test scenes (incl. Camera calibration).
 
 ## Status
 

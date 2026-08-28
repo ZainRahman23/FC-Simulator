@@ -4,17 +4,30 @@
  * (addressed via MANIFEST.json, never hardcoded frame lists) and its own
  * fixture data. No engine code is imported and no simulation runs here.
  *
- * World space: metres. Pitch x∈[0,105] (goals left/right), y∈[0,68]
- * with y=0 the far touchline (top of screen). The camera is a pure
- * presentation transform: screen = (world - cam) * zoom, with the y axis
- * additionally compressed by `tilt` (FC-style high sideline broadcast look).
- * Sprites are drawn upright and undistorted; tilt applies to the ground
- * plane only. Sprites are never scaled by screen depth.
+ * CAMERA: true perspective projection of a flat 3D pitch. Authoritative
+ * simulator coordinates (x, y) are treated as points on the world ground
+ * plane: world = (x, 0, y), with y=0 the FAR touchline and y=68 the NEAR
+ * touchline. A virtual perspective camera sits above and outside the near
+ * sideline at (trackX, HEIGHT, 68 + SIDELINE_DIST), looking diagonally down
+ * at a target on the pitch. The camera pans by translating along the
+ * sideline (no yaw, no roll) — the conventional high broadcast/EA-FC-style
+ * gameplay view. Goals stay screen-left/right.
+ *
+ * All ground geometry passes through this one projection:
+ *  - grass texture: per-scanline homography resampling of the prerendered
+ *    plane (for a no-roll camera every screen row maps affinely to one
+ *    world line, so this is mathematically identical to projecting every
+ *    plane point — NOT an affine squash of a finished top-down image);
+ *  - markings/goals/grid: vector geometry projected vertex-by-vertex each
+ *    frame (world circles become true perspective conics).
+ * Player sprites remain unwarped, unsquashed, screen-facing billboards
+ * anchored at their projected foot point, nearest-neighbour only, constant
+ * screen size with depth.
  */
 "use strict";
 
 const ASSET_ROOT = "../../assets/visual_v1/";
-const REF_ZOOM = 32;            // px per metre at which tiles & sprites are 1:1 native
+const REF_ZOOM = 32;            // px per metre of the prerendered ground texture
 const SPRITE_M_PER_PX = 1 / REF_ZOOM;
 const PITCH = { w: 105, h: 68 };
 const GRASS_ZONE = { x0: -3, x1: 108, y0: -3, y1: 71 };   // pitch-grass texture zone (extends past lines)
@@ -22,7 +35,7 @@ const APRON = { x0: -8, x1: 113, y0: -8, y1: 76 };        // perimeter turf beyo
 const DIRS = ["east", "south-east", "south", "south-west", "west", "north-west", "north", "north-east"];
 
 const DEFAULTS = {
-  tilt: 0.75, zoom: 1.0, cov: 42, smooth: 0.35,
+  height: 24, dist: 20, fov: 26, depthoff: 0, smooth: 0.35,
   pscale: 1.0, jogfps: 10, sprintfps: 12, rate: 1.0,
 };
 
@@ -31,7 +44,7 @@ const S = {
   manifest: null, pivots: null, tilesMeta: null,
   images: {},          // path -> HTMLImageElement
   anims: null,         // {idle:{dir:[img]}, jog:{dir:[img...]}, sprint:{dir:[img...]}}
-  cam: { x: 52.5, y: 34, mode: "static" },
+  cam: { x: 52.5, z: 34, mode: "static", target: null },
   ui: { ...DEFAULTS },
   dbg: { anchors: false, grid: false, track: false },
   pause: false, snap: true,
@@ -40,7 +53,7 @@ const S = {
   ball: { x: 52.5, y: 34 },
   test: { state: "idle", autorot: false, heading: 90, ballmove: false, ramp: { t: 0 }, speed: 0 },
   time: 0,
-  ground: null,        // prerendered ground canvas @ REF_ZOOM px/m
+  ground: null,        // prerendered ground canvas @ REF_ZOOM px/m (grass + mowing only)
 };
 
 const cv = document.getElementById("view");
@@ -164,26 +177,21 @@ function extractPalette(bb) {
 }
 
 function buildGround() {
+  // Grass surface + mowing bands only. Markings/goals are vector geometry
+  // projected per frame so they pass through the perspective camera directly.
   const W = (APRON.x1 - APRON.x0) * REF_ZOOM, H = (APRON.y1 - APRON.y0) * REF_ZOOM;
   const g = document.createElement("canvas");
   g.width = W; g.height = H;
   const c = g.getContext("2d");
   c.imageSmoothingEnabled = false;
 
-  // world (m) -> ground-canvas px
   const gx = (x) => (x - APRON.x0) * REF_ZOOM;
   const gy = (y) => (y - APRON.y0) * REF_ZOOM;
-  const M = REF_ZOOM; // px per metre
+  const M = REF_ZOOM;
 
   // 1) Continuous grass surface synthesized from the frozen tileset's palettes.
-  //    Stamping the 32px tile per metre exposed its internal micro-stripes as a
-  //    high-frequency corduroy pattern, so instead we extract the pixel-art
-  //    palettes of the pure pitch tile (all-upper corners) and pure perimeter
-  //    tile (all-lower corners) — sliced strictly by metadata bounding_box —
-  //    and lay deterministic low-frequency value-noise over those exact colours.
-  //    Same colour family and pixel-art character, zero tile periodicity.
-  //    The frozen source PNGs are untouched; this is a derived presentation
-  //    texture local to the sandbox.
+  //    (Derived presentation texture; source PNGs untouched. See phase-2 notes:
+  //    per-metre tile stamping exposed the tile's internal micro-stripes.)
   const byCorners = {};
   for (const t of S.tilesMeta)
     byCorners[[t.corners.NW, t.corners.NE, t.corners.SW, t.corners.SE].join("|")] = t.bounding_box;
@@ -196,14 +204,11 @@ function buildGround() {
     const wy = APRON.y0 + py / M;
     for (let px = 0; px < W; px++) {
       const wx = APRON.x0 + px / M;
-      // signed distance to the pitch-grass zone edge (negative = inside);
-      // hash-dithered 1 m transition band instead of stamped Wang edge tiles
       const dist = Math.max(GRASS_ZONE.x0 - wx, wx - GRASS_ZONE.x1,
                             GRASS_ZONE.y0 - wy, wy - GRASS_ZONE.y1);
       let pal = palUpper;
       if (dist > 0.5) pal = palLower;
       else if (dist > -0.5) pal = (hash01(px, py) < 0.5 - dist) ? palUpper : palLower;
-      // broad tonal drift (~7 m), mid grain (~1.8 m), per-pixel speckle
       let n = 0.55 * vnoise(wx / 7, wy / 7)
             + 0.30 * vnoise(wx / 1.8 + 91.7, wy / 1.8 + 33.3)
             + 0.15 * hash01(px + 7349, py + 1201);
@@ -223,55 +228,42 @@ function buildGround() {
     c.fillRect(gx(x0), gy(GRASS_ZONE.y0), (x1 - x0) * M, (GRASS_ZONE.y1 - GRASS_ZONE.y0) * M);
     x = x1;
   }
-
-  // 3) Procedural markings (authoritative geometry — independent of the texture).
-  c.strokeStyle = "rgba(250,250,250,0.92)";
-  c.fillStyle = "rgba(250,250,250,0.92)";
-  c.lineWidth = 0.12 * M;
-  const line = (x0, y0, x1, y1) => { c.beginPath(); c.moveTo(gx(x0), gy(y0)); c.lineTo(gx(x1), gy(y1)); c.stroke(); };
-  const arc = (x, y, r, a0, a1) => { c.beginPath(); c.arc(gx(x), gy(y), r * M, a0, a1); c.stroke(); };
-  const spot = (x, y) => { c.beginPath(); c.arc(gx(x), gy(y), 0.22 * M, 0, Math.PI * 2); c.fill(); };
-
-  c.strokeRect(gx(0), gy(0), PITCH.w * M, PITCH.h * M);       // touch + goal lines
-  line(52.5, 0, 52.5, 68);                                     // halfway
-  arc(52.5, 34, 9.15, 0, Math.PI * 2);                         // centre circle
-  spot(52.5, 34);                                              // centre spot
-  for (const side of [0, 1]) {                                 // 0 = left, 1 = right
-    const sx = (x) => side ? 105 - x : x;
-    c.strokeRect(gx(sx(side ? 16.5 : 0)), gy(34 - 20.16), 16.5 * M * (side ? 1 : 1), 40.32 * M); // penalty area
-    c.strokeRect(gx(sx(side ? 5.5 : 0)), gy(34 - 9.16), 5.5 * M, 18.32 * M);                      // six-yard
-    spot(sx(11), 34);                                          // penalty spot
-    const t = Math.acos((16.5 - 11) / 9.15);                   // penalty arc (outside area only)
-    if (side === 0) arc(11, 34, 9.15, -t, t); else arc(94, 34, 9.15, Math.PI - t, Math.PI + t);
-  }
-  arc(0, 0, 1, 0, Math.PI / 2); arc(105, 0, 1, Math.PI / 2, Math.PI);          // corner arcs
-  arc(105, 68, 1, Math.PI, Math.PI * 1.5); arc(0, 68, 1, Math.PI * 1.5, Math.PI * 2);
-
-  // 4) Simple temporary goals (procedural — spatial/camera evaluation only).
-  c.lineWidth = 0.14 * M;
-  for (const side of [0, 1]) {
-    const gxl = side ? 105 : -2, x0 = side ? 105 : -2;
-    const yTop = 34 - 3.66, yBot = 34 + 3.66;
-    c.strokeStyle = "rgba(255,255,255,0.9)";
-    c.strokeRect(gx(x0), gy(yTop), 2 * M, 7.32 * M);
-    c.strokeStyle = "rgba(255,255,255,0.30)";                  // net impression
-    c.lineWidth = 0.04 * M;
-    for (let nx = 0.5; nx < 2; nx += 0.5) line(x0 + nx, yTop, x0 + nx, yBot);
-    for (let ny = yTop + 0.6; ny < yBot; ny += 0.6) line(x0, ny, x0 + 2, ny);
-    c.lineWidth = 0.14 * M;
-  }
   S.ground = g;
 }
 
-// ---------------------------------------------------------------- camera / projection
-function zoomPx() { return (cv.width / S.ui.cov) * S.ui.zoom; }   // px per metre
-function w2sx(wx) { return (wx - S.cam.x) * zoomPx() + cv.width / 2; }
-function w2sy(wy) { return (wy - S.cam.y) * zoomPx() * S.ui.tilt + cv.height / 2; }
+// ---------------------------------------------------------------- perspective camera
+// Basis rebuilt each frame from the physical controls. No yaw, no roll:
+// forward has no world-x component, so screen rows map affinely to world lines.
+const CAM = { C: null, f: null, u: null, fpx: 0, czTarget: 1, lookAngle: 0 };
+
+function rebuildCamera() {
+  const h = S.ui.height;
+  const C = { x: S.cam.x, y: h, z: PITCH.h + S.ui.dist };
+  const T = { x: S.cam.x, y: 0, z: S.cam.z + S.ui.depthoff };
+  const dz = T.z - C.z;                       // negative (looking toward far side)
+  const len = Math.hypot(h, dz);
+  const f = { y: -h / len, z: dz / len };     // forward (unit, x component = 0)
+  const u = { y: -f.z, z: f.y };              // up = right × forward (unit)
+  CAM.C = C; CAM.f = f; CAM.u = u;
+  CAM.fpx = (cv.height / 2) / Math.tan((S.ui.fov * Math.PI / 180) / 2);
+  CAM.czTarget = -h * f.y + dz * f.z;         // depth of the look target
+  CAM.lookAngle = Math.atan2(h, -dz) * 180 / Math.PI;
+}
+
+// Project a ground-plane point (sim x, sim y) -> screen px. d = camera depth.
+function project(wx, wz) {
+  const vx = wx - CAM.C.x, vy = -CAM.C.y, vz = wz - CAM.C.z;
+  const cy = vy * CAM.u.y + vz * CAM.u.z;
+  const cz = vy * CAM.f.y + vz * CAM.f.z;
+  return { x: cv.width / 2 + CAM.fpx * vx / cz, y: cv.height / 2 - CAM.fpx * cy / cz, d: cz };
+}
+// px per metre (horizontal) at a given camera depth; constant sprite sizing
+// uses the look-target depth so framing controls stay coherent.
+function pxPerMeter(depth) { return CAM.fpx / depth; }
 
 function camTarget() {
   if (S.cam.mode === "static") return { x: 52.5, y: 34 };
   if (S.cam.mode === "ball") return { x: S.ball.x, y: S.ball.y };
-  // play follow: weighted centre of ball + players within 18 m of the ball
   let sx = 0, sy = 0, n = 0;
   for (const p of S.players) {
     const d = Math.hypot(p.x - S.ball.x, p.y - S.ball.y);
@@ -284,15 +276,15 @@ function camTarget() {
 function updateCamera(dt) {
   const t = camTarget();
   S.cam.target = t;
-  // clamp so framing stays around the pitch
-  const hw = cv.width / 2 / zoomPx(), hh = cv.height / 2 / (zoomPx() * S.ui.tilt);
+  // clamp framing around the pitch using visible half-width at target depth
+  const hw = (cv.width / 2) * CAM.czTarget / CAM.fpx;
   const cl = (v, lo, hi) => (lo > hi ? (lo + hi) / 2 : Math.min(hi, Math.max(lo, v)));
   const tx = cl(t.x, Math.min(hw - 8, 52.5), Math.max(105 - hw + 8, 52.5));
-  const ty = cl(t.y, Math.min(hh - 8, 34), Math.max(68 - hh + 8, 34));
+  const tz = cl(t.y, 14, 54);
   const tau = S.ui.smooth;
   const k = tau <= 0.001 ? 1 : 1 - Math.exp(-dt / tau);
   S.cam.x += (tx - S.cam.x) * k;
-  S.cam.y += (ty - S.cam.y) * k;
+  S.cam.z += (tz - S.cam.z) * k;
 }
 
 // ---------------------------------------------------------------- fixtures (scenes)
@@ -338,7 +330,7 @@ const SCENES = {
   },
   goalmouth() {
     const ps = [
-      P(103.5, 34, 180, "idle", 1),                                   // GK on the line
+      P(103.5, 34, 180, "idle", 1),
       P(101, 28, 200, "idle", 1), P(100, 40, 160, "idle", 1),
       P(98, 32, 180, "jog", 1), P(98, 37, 180, "jog", 1),
       P(95, 25, 200, "jog", 1), P(95, 43, 160, "jog", 1), P(92, 34, 180, "idle", 1),
@@ -356,6 +348,15 @@ const SCENES = {
   locotest() {
     return { players: [P(35, 34, 0, "idle", 0, true)], ball: { x: 35, y: 38 }, ramp: true };
   },
+  camcal() {
+    // Perspective validation: full centre circle, halfway line, players at
+    // near / middle / far depth, both touchlines when framing permits.
+    const ps = [];
+    for (const y of [6, 20, 34, 48, 62])              // far -> near rows
+      for (const x of [40, 52.5, 65])
+        ps.push(P(x, y, x < 52 ? 0 : 180, y === 34 ? "jog" : "idle", x < 52 ? 0 : 1));
+    return { players: ps, ball: { x: 52.5, y: 34 }, grid: true };
+  },
 };
 
 function setScene(name) {
@@ -368,11 +369,12 @@ function setScene(name) {
   const auto = document.getElementById("autorot");
   auto.checked = !!sc.autorot;
   S.test.autorot = !!sc.autorot;
+  if (sc.grid) { S.dbg.grid = true; document.getElementById("dbg-grid").checked = true; }
   if (name === "locotest") {
     document.querySelector('input[name=tstate][value=ramp]').checked = true;
     S.test.state = "ramp"; S.test.ramp.t = 0;
   }
-  S.cam.x = 52.5; S.cam.y = 34;
+  S.cam.x = 52.5; S.cam.z = 34;
 }
 
 // ---------------------------------------------------------------- per-frame update
@@ -383,7 +385,6 @@ function update(dt) {
   const test = S.players.find(p => p.test);
 
   if (!S.pause) {
-    // test player behaviour
     if (test) {
       if (S.test.autorot) { S.test.heading = (S.test.heading + 15 * dt) % 360; setHeadingUI(); }
       test.heading = S.test.heading;
@@ -407,7 +408,6 @@ function update(dt) {
       S.ball.x = 52.5 + 25 * Math.sin(S.time * 0.35);
       S.ball.y = 34 + 16 * Math.sin(S.time * 0.7);
     }
-    // animation clocks
     for (const p of S.players) {
       if (p.state === "idle") { p.frame = 0; continue; }
       const fps = (p.state === "jog" ? S.ui.jogfps : S.ui.sprintfps) * S.ui.rate;
@@ -415,70 +415,194 @@ function update(dt) {
       p.frame = Math.floor(p.ft) % 8;
     }
   }
+  rebuildCamera();
   updateCamera(dt);
+  rebuildCamera();   // basis follows the smoothed position within the same frame
 }
 
 // ---------------------------------------------------------------- drawing
 function spriteScale() {
-  const s = (zoomPx() / REF_ZOOM) * S.ui.pscale;
+  const s = (pxPerMeter(CAM.czTarget) / REF_ZOOM) * S.ui.pscale;
   return S.snap ? Math.max(1, Math.round(s)) : s;
+}
+
+// Perspective ground: one affine texture row per screen scanline (exact
+// homography for a no-roll camera). Nearest-neighbour, no smoothing.
+function drawGroundPerspective() {
+  const W = cv.width, H = cv.height;
+  const h = CAM.C.y, zc = CAM.C.z, f = CAM.f, u = CAM.u, fpx = CAM.fpx;
+  const gW = S.ground.width, gH = S.ground.height;
+  for (let sy = 0; sy < H; sy++) {
+    const s = (H / 2 - sy) / fpx;
+    const denom = u.z - s * f.z;
+    if (Math.abs(denom) < 1e-8) continue;
+    const z = zc + h * (u.y - s * f.y) / denom;          // world depth line for this row
+    if (z < APRON.y0 || z >= APRON.y1) continue;
+    const cz = -h * f.y + (z - zc) * f.z;                // camera depth of that line
+    if (cz < 0.5) continue;
+    const halfWm = (W / 2) * cz / fpx;
+    const xL = CAM.C.x - halfWm, xR = CAM.C.x + halfWm;  // world x visible on this row
+    let srcX = (xL - APRON.x0) * REF_ZOOM;
+    let srcW = (xR - xL) * REF_ZOOM;
+    let dstX = 0, dstW = W;
+    if (srcX < 0) { const cut = -srcX / srcW; dstX += cut * W; dstW -= cut * W; srcW += srcX; srcX = 0; }
+    if (srcX + srcW > gW) { const cut = (srcX + srcW - gW) / ((xR - xL) * REF_ZOOM); dstW -= cut * W; srcW = gW - srcX; }
+    if (srcW <= 0 || dstW <= 0) continue;
+    const srcY = Math.min(gH - 1, Math.max(0, Math.floor((z - APRON.y0) * REF_ZOOM)));
+    ctx.drawImage(S.ground, srcX, srcY, srcW, 1, dstX, sy, dstW, 1);
+  }
+}
+
+// -- projected vector helpers (markings, goals, grid) --
+function strokeWorldPoly(pts, close) {
+  ctx.beginPath();
+  let started = false;
+  for (const [wx, wz] of pts) {
+    const p = project(wx, wz);
+    if (p.d < 0.5) { started = false; continue; }
+    if (!started) { ctx.moveTo(p.x, p.y); started = true; }
+    else ctx.lineTo(p.x, p.y);
+  }
+  if (close) ctx.closePath();
+  ctx.stroke();
+}
+function circlePts(cx, cz, r, a0 = 0, a1 = Math.PI * 2) {
+  const pts = [];
+  const n = Math.max(8, Math.ceil((a1 - a0) / (Math.PI / 45)));   // ~4° steps
+  for (let i = 0; i <= n; i++) {
+    const a = a0 + (a1 - a0) * (i / n);
+    pts.push([cx + r * Math.cos(a), cz + r * Math.sin(a)]);
+  }
+  return pts;
+}
+function fillWorldSpot(wx, wz, r) {
+  ctx.beginPath();
+  let first = true;
+  for (const [x, z] of circlePts(wx, wz, r)) {
+    const p = project(x, z);
+    if (p.d < 0.5) return;
+    if (first) { ctx.moveTo(p.x, p.y); first = false; } else ctx.lineTo(p.x, p.y);
+  }
+  ctx.closePath();
+  ctx.fill();
+}
+
+function drawMarkings() {
+  ctx.strokeStyle = "rgba(250,250,250,0.92)";
+  ctx.fillStyle = "rgba(250,250,250,0.92)";
+  ctx.lineWidth = 2;
+  ctx.lineJoin = "round";
+  const rect = (x, z, w, d) =>
+    strokeWorldPoly([[x, z], [x + w, z], [x + w, z + d], [x, z + d]], true);
+
+  rect(0, 0, PITCH.w, PITCH.h);                                   // touch + goal lines
+  strokeWorldPoly([[52.5, 0], [52.5, 68]]);                       // halfway line
+  strokeWorldPoly(circlePts(52.5, 34, 9.15));                     // centre circle (true conic)
+  fillWorldSpot(52.5, 34, 0.25);                                  // centre spot
+  for (const side of [0, 1]) {
+    const mx = (x) => side ? 105 - x : x;
+    rect(side ? 105 - 16.5 : 0, 34 - 20.16, 16.5, 40.32);         // penalty area
+    rect(side ? 105 - 5.5 : 0, 34 - 9.16, 5.5, 18.32);            // six-yard box
+    fillWorldSpot(mx(11), 34, 0.25);                              // penalty spot
+    const t = Math.acos((16.5 - 11) / 9.15);                      // arc outside the area
+    if (side === 0) strokeWorldPoly(circlePts(11, 34, 9.15, -t, t));
+    else strokeWorldPoly(circlePts(94, 34, 9.15, Math.PI - t, Math.PI + t));
+  }
+  strokeWorldPoly(circlePts(0, 0, 1, 0, Math.PI / 2));            // corner arcs
+  strokeWorldPoly(circlePts(105, 0, 1, Math.PI / 2, Math.PI));
+  strokeWorldPoly(circlePts(105, 68, 1, Math.PI, Math.PI * 1.5));
+  strokeWorldPoly(circlePts(0, 68, 1, Math.PI * 1.5, Math.PI * 2));
+
+  // temporary procedural goals (ground-plane footprint + simple posts)
+  for (const side of [0, 1]) {
+    const x0 = side ? 105 : -2;
+    const yT = 34 - 3.66, yB = 34 + 3.66;
+    ctx.strokeStyle = "rgba(255,255,255,0.9)";
+    ctx.lineWidth = 2.5;
+    strokeWorldPoly([[x0, yT], [x0 + 2, yT], [x0 + 2, yB], [x0, yB]], true);
+    ctx.strokeStyle = "rgba(255,255,255,0.30)";
+    ctx.lineWidth = 1;
+    for (let nx = 0.5; nx < 2; nx += 0.5) strokeWorldPoly([[x0 + nx, yT], [x0 + nx, yB]]);
+    for (let ny = yT + 0.6; ny < yB; ny += 0.6) strokeWorldPoly([[x0, ny], [x0 + 2, ny]]);
+    // posts: short vertical screen strokes at the goal-line corners
+    ctx.strokeStyle = "rgba(255,255,255,0.9)";
+    ctx.lineWidth = 3;
+    for (const yy of [yT, yB]) {
+      const p = project(side ? 105 : 0, yy);
+      if (p.d < 0.5) continue;
+      const hpx = 2.44 * pxPerMeter(CAM.czTarget);   // constant-size like sprites
+      ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x, p.y - hpx); ctx.stroke();
+    }
+  }
 }
 
 function draw() {
   ctx.imageSmoothingEnabled = false;
-  ctx.fillStyle = "#0e130e";
+  ctx.fillStyle = "#0b0e12";
   ctx.fillRect(0, 0, cv.width, cv.height);
 
-  // ground (prerendered @ REF_ZOOM), one nearest-neighbour blit with tilt compression
-  const z = zoomPx();
-  ctx.drawImage(S.ground,
-    Math.round(w2sx(APRON.x0)), Math.round(w2sy(APRON.y0)),
-    Math.round((APRON.x1 - APRON.x0) * z), Math.round((APRON.y1 - APRON.y0) * z * S.ui.tilt));
-
+  drawGroundPerspective();
+  drawMarkings();
   if (S.dbg.grid) drawGrid();
 
-  // ball shadow + players (painter's order by world y) + ball
   const order = [...S.players].sort((a, b) => a.y - b.y);
   const s = spriteScale();
   for (const p of order) drawPlayer(p, s);
   drawBall();
   if (S.dbg.anchors) for (const p of order) drawAnchors(p, s);
   if (S.dbg.track && S.cam.target) {
-    const x = w2sx(S.cam.target.x), y = w2sy(S.cam.target.y);
-    ctx.strokeStyle = "#ff5ce0"; ctx.lineWidth = 2;
-    ctx.strokeRect(x - 7, y - 7, 14, 14);
-    ctx.beginPath(); ctx.moveTo(x - 11, y); ctx.lineTo(x + 11, y);
-    ctx.moveTo(x, y - 11); ctx.lineTo(x, y + 11); ctx.stroke();
+    const t = project(S.cam.target.x, S.cam.target.y);
+    if (t.d > 0.5) {
+      ctx.strokeStyle = "#ff5ce0"; ctx.lineWidth = 2;
+      ctx.strokeRect(t.x - 7, t.y - 7, 14, 14);
+      ctx.beginPath(); ctx.moveTo(t.x - 11, t.y); ctx.lineTo(t.x + 11, t.y);
+      ctx.moveTo(t.x, t.y - 11); ctx.lineTo(t.x, t.y + 11); ctx.stroke();
+    }
   }
   drawReadout();
+}
+
+// local ground foreshortening (screen px per world metre in x and z) at a point
+function groundBasis(wx, wz) {
+  const p0 = project(wx, wz);
+  const px = project(wx + 0.5, wz), pz = project(wx, wz + 0.5);
+  return { p0, dxm: Math.abs(px.x - p0.x) * 2, dzm: Math.abs(pz.y - p0.y) * 2 };
 }
 
 function drawPlayer(p, s) {
   const dir = headingToDir(p.heading);
   const frames = S.anims[p.state][dir];
   const im = frames[p.state === "idle" ? 0 : p.frame % frames.length];
-  const ax = Math.round(w2sx(p.x)), ay = Math.round(w2sy(p.y));
+  const gb = groundBasis(p.x, p.y);
+  if (gb.p0.d < 0.5) return;
+  const ax = Math.round(gb.p0.x), ay = Math.round(gb.p0.y);
 
-  // ground contact: team ring + soft shadow (presentation only, PNGs untouched)
+  // ground contact: team ring + soft shadow, foreshortened by the local
+  // ground projection (presentation only, PNGs untouched)
+  const flat = gb.dxm > 0.01 ? gb.dzm / gb.dxm : 0.4;
   ctx.save();
   ctx.beginPath();
-  ctx.ellipse(ax, ay, 9 * s, 4 * s * S.ui.tilt + 1, 0, 0, Math.PI * 2);
+  ctx.ellipse(ax, ay, 9 * s, Math.max(1.5, 9 * s * flat), 0, 0, Math.PI * 2);
   ctx.fillStyle = "rgba(0,0,0,0.25)"; ctx.fill();
   ctx.lineWidth = Math.max(1, Math.round(s));
   ctx.strokeStyle = p.team === 0 ? "rgba(80,220,255,0.9)" : "rgba(255,225,70,0.9)";
   ctx.stroke();
   ctx.restore();
 
+  // unwarped, unsquashed screen-facing billboard; constant size with depth
   const w = im.width, h = im.height;
-  const foot = h / 2 + S.pivots.foot_offset_base128;   // canvas-centre pivot + constant foot offset
+  const foot = h / 2 + S.pivots.foot_offset_base128;
   ctx.drawImage(im, Math.round(ax - (w / 2) * s), Math.round(ay - foot * s),
     Math.round(w * s), Math.round(h * s));
 }
 
 function drawBall() {
-  const x = Math.round(w2sx(S.ball.x)), y = Math.round(w2sy(S.ball.y));
-  const r = Math.max(3, 0.16 * zoomPx());
-  ctx.beginPath(); ctx.ellipse(x, y + r * 0.9, r * 1.1, r * 0.5 * S.ui.tilt + 1, 0, 0, Math.PI * 2);
+  const gb = groundBasis(S.ball.x, S.ball.y);
+  if (gb.p0.d < 0.5) return;
+  const x = Math.round(gb.p0.x), y = Math.round(gb.p0.y);
+  const r = Math.max(3, 0.16 * pxPerMeter(CAM.czTarget));
+  const flat = gb.dxm > 0.01 ? gb.dzm / gb.dxm : 0.4;
+  ctx.beginPath(); ctx.ellipse(x, y + r * 0.9, r * 1.1, Math.max(1, r * 1.1 * flat), 0, 0, Math.PI * 2);
   ctx.fillStyle = "rgba(0,0,0,0.3)"; ctx.fill();
   ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2);
   ctx.fillStyle = "#f2f2f2"; ctx.fill();
@@ -491,7 +615,9 @@ function drawAnchors(p, s) {
   const dir = headingToDir(p.heading);
   const frames = S.anims[p.state][dir];
   const im = frames[p.state === "idle" ? 0 : p.frame % frames.length];
-  const ax = Math.round(w2sx(p.x)), ay = Math.round(w2sy(p.y));
+  const pr = project(p.x, p.y);
+  if (pr.d < 0.5) return;
+  const ax = Math.round(pr.x), ay = Math.round(pr.y);
   const w = im.width, h = im.height;
   const foot = h / 2 + S.pivots.foot_offset_base128;
   const bx = Math.round(ax - (w / 2) * s), by = Math.round(ay - foot * s);
@@ -501,41 +627,41 @@ function drawAnchors(p, s) {
   ctx.strokeStyle = "#ff4040";                                                   // world ground point
   ctx.beginPath(); ctx.moveTo(ax - 6, ay); ctx.lineTo(ax + 6, ay);
   ctx.moveTo(ax, ay - 6); ctx.lineTo(ax, ay + 6); ctx.stroke();
-  const px = ax, py = Math.round(by + (h / 2) * s);                              // canvas-centre pivot
-  ctx.fillStyle = "#ffd23c"; ctx.fillRect(px - 2, py - 2, 4, 4);
-  const hr = p.heading * Math.PI / 180;                                          // facing arrow
+  const px2 = ax, py2 = Math.round(by + (h / 2) * s);                            // canvas-centre pivot
+  ctx.fillStyle = "#ffd23c"; ctx.fillRect(px2 - 2, py2 - 2, 4, 4);
+  const hr = p.heading * Math.PI / 180;                                          // facing arrow (on ground)
+  const tip = project(p.x + Math.cos(hr) * 1.5, p.y + Math.sin(hr) * 1.5);
   ctx.strokeStyle = "#5cff8a"; ctx.lineWidth = 2;
-  ctx.beginPath(); ctx.moveTo(ax, ay);
-  ctx.lineTo(ax + Math.cos(hr) * 22, ay + Math.sin(hr) * 22 * S.ui.tilt); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(tip.x, tip.y); ctx.stroke();
   ctx.fillStyle = "#fff"; ctx.font = "11px monospace"; ctx.textAlign = "center";
   ctx.fillText(`${p.state} ${dir} f${p.state === "idle" ? 0 : p.frame % frames.length} ${im.width}×${im.height}`,
     ax, by - 4);
 }
 
 function drawGrid() {
-  const z = zoomPx();
   ctx.strokeStyle = "rgba(255,255,255,0.14)"; ctx.lineWidth = 1;
   ctx.fillStyle = "rgba(255,255,255,0.5)"; ctx.font = "10px monospace"; ctx.textAlign = "left";
   for (let x = 0; x <= 105; x += 5) {
-    const sx = Math.round(w2sx(x));
-    ctx.beginPath(); ctx.moveTo(sx, w2sy(0)); ctx.lineTo(sx, w2sy(68)); ctx.stroke();
-    ctx.fillText(String(x), sx + 2, w2sy(0) - 3);
+    strokeWorldPoly([[x, 0], [x, 68]]);
+    const p = project(x, 67);
+    if (p.d > 0.5) ctx.fillText(String(x), p.x + 2, p.y - 3);
   }
   for (let y = 0; y <= 68; y += 5) {
-    const sy = Math.round(w2sy(y));
-    ctx.beginPath(); ctx.moveTo(w2sx(0), sy); ctx.lineTo(w2sx(105), sy); ctx.stroke();
-    ctx.fillText(String(y), w2sx(0) - 22, sy + 3);
+    strokeWorldPoly([[0, y], [105, y]]);
+    const p = project(1, y);
+    if (p.d > 0.5) ctx.fillText(String(y), p.x - 20, p.y + 3);
   }
 }
 
 function drawReadout() {
   const el = document.getElementById("readout");
-  const z = zoomPx();
   el.textContent =
     `scene    ${S.scene}\n` +
-    `camera   mode=${S.cam.mode}  pos=(${S.cam.x.toFixed(1)}, ${S.cam.y.toFixed(1)}) m\n` +
-    `zoom     ${z.toFixed(1)} px/m  (native 1:1 at ${REF_ZOOM})\n` +
-    `sprite×  ${spriteScale().toFixed(2)}${S.snap ? " (snapped)" : ""}\n` +
+    `camera   mode=${S.cam.mode}\n` +
+    `         pos=(${S.cam.x.toFixed(1)}, ${S.ui.height.toFixed(0)}, ${(PITCH.h + S.ui.dist).toFixed(1)}) m\n` +
+    `         look=(${S.cam.x.toFixed(1)}, 0, ${(S.cam.z + S.ui.depthoff).toFixed(1)}) m\n` +
+    `         look angle ${CAM.lookAngle.toFixed(1)}° down  fov ${S.ui.fov}°\n` +
+    `scale    ${pxPerMeter(CAM.czTarget).toFixed(1)} px/m @target  sprite×${spriteScale().toFixed(2)}${S.snap ? " (snapped)" : ""}\n` +
     `ball     (${S.ball.x.toFixed(1)}, ${S.ball.y.toFixed(1)}) m\n` +
     `test     heading=${Math.round(S.test.heading)}°  facing=${headingToDir(S.test.heading)}` +
     (S.test.state === "ramp" ? `  speed=${S.test.speed.toFixed(1)} m/s` : "");
@@ -547,32 +673,35 @@ function setHeadingUI() {
   document.getElementById("v-heading").textContent = Math.round(S.test.heading);
 }
 
-function bindUI() {
-  const bindRange = (id, key, fmt = (v) => v) => {
-    const el = document.getElementById(id), out = document.getElementById("v-" + id);
+const RANGE_FMT = {
+  height: v => v.toFixed(0) + " m", dist: v => v.toFixed(0) + " m",
+  fov: v => v.toFixed(0) + "°", depthoff: v => v.toFixed(0) + " m",
+  smooth: v => v.toFixed(2) + " s",
+  pscale: v => "×" + v.toFixed(2), jogfps: v => v, sprintfps: v => v,
+  rate: v => "×" + v.toFixed(2),
+};
+
+function syncRanges() {
+  for (const key of Object.keys(RANGE_FMT)) {
+    const el = document.getElementById(key);
     el.value = S.ui[key];
-    out.textContent = fmt(S.ui[key]);
-    el.addEventListener("input", () => { S.ui[key] = parseFloat(el.value); out.textContent = fmt(S.ui[key]); });
-    return el;
-  };
-  bindRange("tilt", "tilt", v => v.toFixed(2));
-  bindRange("zoom", "zoom", v => v.toFixed(2));
-  bindRange("cov", "cov", v => v + " m");
-  bindRange("smooth", "smooth", v => v.toFixed(2));
-  bindRange("pscale", "pscale", v => v.toFixed(2));
-  bindRange("jogfps", "jogfps");
-  bindRange("sprintfps", "sprintfps");
-  bindRange("rate", "rate", v => v.toFixed(2));
+    document.getElementById("v-" + key).textContent = RANGE_FMT[key](S.ui[key]);
+  }
+}
+
+function bindUI() {
+  for (const key of Object.keys(RANGE_FMT)) {
+    const el = document.getElementById(key), out = document.getElementById("v-" + key);
+    el.addEventListener("input", () => {
+      S.ui[key] = parseFloat(el.value);
+      out.textContent = RANGE_FMT[key](S.ui[key]);
+    });
+  }
+  syncRanges();
 
   document.getElementById("reset").addEventListener("click", () => {
     S.ui = { ...DEFAULTS };
-    for (const [id, key, fmt] of [["tilt", "tilt", v => v.toFixed(2)], ["zoom", "zoom", v => v.toFixed(2)],
-      ["cov", "cov", v => v + " m"], ["smooth", "smooth", v => v.toFixed(2)],
-      ["pscale", "pscale", v => v.toFixed(2)], ["jogfps", "jogfps", v => v], ["sprintfps", "sprintfps", v => v],
-      ["rate", "rate", v => v.toFixed(2)]]) {
-      document.getElementById(id).value = S.ui[key];
-      document.getElementById("v-" + id).textContent = fmt(S.ui[key]);
-    }
+    syncRanges();
   });
 
   for (const r of document.querySelectorAll("input[name=cammode]"))
