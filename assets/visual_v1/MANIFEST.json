@@ -160,6 +160,27 @@
       "Scenery only: never occludes the pitch, players, or ball; drawn before the ground pass."
     ]
   },
+  "goal_art_v3_oblique": {
+    "acceptance": "PENDING_VISUAL_REVIEW (generated 2026-08-27 under explicit single-generation authorization; reference-image-guided)",
+    "tool": "create_image_pixflux (img2img: init_image = isolated goal crop from the user's EA-FC-style reference screenshot, strength 200)",
+    "model": "pixflux",
+    "pixellab_image_id": "da2989e6-01fb-4eb6-862d-bf18d9fe1149",
+    "seed": 73205,
+    "size": "64x68",
+    "sha256": "bd69b413df915e80d80b1a17948abd17e279aa13242a0189abbc979c1f86bfc7",
+    "generations_cost": 1,
+    "local_path": "originals/goal_da2989e6/goal_oblique_ref.png",
+    "reference_input": {
+      "local_path": "originals/goal_da2989e6/reference_input_isolated.png",
+      "sha256": "2618cb99f2d83a94c21f307c58e7c7d4b0f76cc9e44449602caadee7c2be31c5",
+      "derivation": "Goal region cropped from the supplied reference screenshot, background chroma-isolated (keep low-saturation light pixels), player fragment erased. The generation call used a 64x68 6-colour compressed copy of this (inline transport limits)."
+    },
+    "notes": [
+      "Correct high three-quarter oblique orientation achieved (matches reference spatial read): foreshortened mouth, dominant side net, roof + rear depth.",
+      "Known issues for review: greenish tint bled from the reference grass into the net; 64x68 output (init size adopted) limits cord detail; net reads as textured panels rather than crisp individual cords.",
+      "NOT integrated into the sandbox; the procedural Goal V3 remains the active presentation. Exactly one generation spent; no retry performed per instruction."
+    ]
+  },
   "integrity": {
     "lock_file": "HASHES.sha256",
     "verified": "2026-08-27",
