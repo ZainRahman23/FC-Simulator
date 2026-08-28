@@ -44,11 +44,14 @@ const RUNTIME_DEFAULTS = { zoom: 1.0, smooth: 0.35 };
 const JOG_FPS = 10, SPRINT_FPS = 12;
 const IDLE_MAX = 0.5, JOG_MAX = 5.2, TELEPORT = 12;
 
-// Goal V2.2 sprite (unmodified art; measured local geometry)
+// Goal V2.2 sprite (unmodified art). Front-post ground contacts re-measured
+// from the actual PNG pixels (2026-08-28): the far post continues below its
+// (30,182) joint knob to a ground stub at (44,194); the near post foot is at
+// (94,327). NOTE: img2img displaced the goal ~40-55px left of the source
+// photo's goal line, so photo-derived coordinates were invalid.
 const GOAL_SPRITE = {
   W: 312, H: 332,
-  baseL: [30, 182], baseR: [95, 325],
-  pivot: [62.5, 253.5], mouthHpx: 142,
+  footFar: [44, 194], footNear: [94, 327],
 };
 const GOAL_CFG = { scale: 1.0, mirrorL: true, mirrorR: false, offX: 0, offDepth: 0 };
 
@@ -674,16 +677,33 @@ function freezeProjection() {
   // ── frozen entity constants ──
   const pxPerM = PROJ.fpx / PROJ.czRef;                 // authored reference density
   const playerVScale = (pxPerM / REF_ZOOM) * S.author.pscale;
+  // One-time frozen goal calibration: least-squares translation + UNIFORM
+  // scale fitting the artwork's two measured front-post feet onto the frozen
+  // projected authoritative post feet. This is the optimal transform in the
+  // permitted class (no rotation/warp/anisotropy — artwork unchanged); the
+  // residual per post is recorded and displayed, not hidden. No per-frame
+  // correction exists: the result is a V-space constant.
   const goals = [0, 1].map(side => {
     const gx = side ? 105 : 0, out = side ? 1 : -1;
-    const A = vproj(gx + out * GOAL_CFG.offX, 34 + GOAL_CFG.offDepth);
-    const pb = vproj3(gx, 0, 34), pt = vproj3(gx, 2.44, 34);
-    const s = (Math.hypot(pt.x - pb.x, pt.y - pb.y) / GOAL_SPRITE.mouthHpx) * GOAL_CFG.scale;
     const mirrored = side ? GOAL_CFG.mirrorR : GOAL_CFG.mirrorL;
-    const px = mirrored ? GOAL_SPRITE.W - 1 - GOAL_SPRITE.pivot[0] : GOAL_SPRITE.pivot[0];
-    return { side, mirrored, s,
-             vx: A.x - px * s, vy: A.y - GOAL_SPRITE.pivot[1] * s,
-             sortY: 33.5 };
+    const mx = (p) => mirrored ? [GOAL_SPRITE.W - 1 - p[0], p[1]] : [p[0], p[1]];
+    const aF = mx(GOAL_SPRITE.footFar), aN = mx(GOAL_SPRITE.footNear);
+    const tF = vproj(gx + out * GOAL_CFG.offX, 30.34 + GOAL_CFG.offDepth);
+    const tN = vproj(gx + out * GOAL_CFG.offX, 37.66 + GOAL_CFG.offDepth);
+    const am = [(aF[0] + aN[0]) / 2, (aF[1] + aN[1]) / 2];
+    const tm = [(tF.x + tN.x) / 2, (tF.y + tN.y) / 2];
+    const c1 = [aF[0] - am[0], aF[1] - am[1]], c2 = [aN[0] - am[0], aN[1] - am[1]];
+    const d1 = [tF.x - tm[0], tF.y - tm[1]], d2 = [tN.x - tm[0], tN.y - tm[1]];
+    const s0 = (c1[0] * d1[0] + c1[1] * d1[1] + c2[0] * d2[0] + c2[1] * d2[1])
+             / (c1[0] ** 2 + c1[1] ** 2 + c2[0] ** 2 + c2[1] ** 2);
+    const s = s0 * GOAL_CFG.scale;
+    const T = [tm[0] - s * am[0], tm[1] - s * am[1]];      // trim scales about midpoint
+    const fFar = [s * aF[0] + T[0], s * aF[1] + T[1]];     // fitted feet (V-space)
+    const fNear = [s * aN[0] + T[0], s * aN[1] + T[1]];
+    return { side, mirrored, s, vx: T[0], vy: T[1], sortY: 33.5,
+             tF, tN, fFar, fNear,
+             eFar: Math.hypot(fFar[0] - tF.x, fFar[1] - tF.y),
+             eNear: Math.hypot(fNear[0] - tN.x, fNear[1] - tN.y) };
   });
   S.frozen = { back, ground, front, playerVScale, pxPerM, goals,
                author: { ...S.author },
@@ -826,33 +846,40 @@ function drawGoal(gz) {
     Math.round(GOAL_SPRITE.W * gz.s * z), Math.round(GOAL_SPRITE.H * gz.s * z));
 }
 function drawGoalGeoDebug(side) {
+  // Goal calibration debug: authoritative frozen geometry (red), the
+  // artwork's calibrated post feet (magenta), mouth midpoint (yellow), and
+  // the INDEPENDENT per-post pixel errors of the frozen calibration.
   const gx = side ? 105 : 0, dir = side ? 1 : -1;
   const seg = (aw, bw) => {
     const a = v2s(vproj3(...aw)), b = v2s(vproj3(...bw));
     ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
   };
   ctx.strokeStyle = "rgba(255,80,80,0.9)"; ctx.lineWidth = 1.5;
-  seg([gx, 0, 28], [gx, 0, 40]);
-  seg([gx, 0, 30.34], [gx + dir * 2, 0, 30.34]);
+  seg([gx, 0, 26], [gx, 0, 42]);                                 // goal line
+  seg([gx, 0, 30.34], [gx + dir * 2, 0, 30.34]);                 // net footprint
   seg([gx + dir * 2, 0, 30.34], [gx + dir * 2, 0, 37.66]);
   seg([gx + dir * 2, 0, 37.66], [gx, 0, 37.66]);
   ctx.lineWidth = 2;
-  seg([gx, 0, 30.34], [gx, 2.44, 30.34]);
+  seg([gx, 0, 30.34], [gx, 2.44, 30.34]);                        // authoritative frame
   seg([gx, 0, 37.66], [gx, 2.44, 37.66]);
   seg([gx, 2.44, 30.34], [gx, 2.44, 37.66]);
   const gz = S.frozen.goals[side];
-  const C = v2s(vproj(gx, 34));
-  ctx.fillStyle = "#ffd23c";
-  ctx.fillRect(C.x - 3, C.y - 3, 6, 6);
-  const px = gz.mirrored ? GOAL_SPRITE.W - 1 - GOAL_SPRITE.pivot[0] : GOAL_SPRITE.pivot[0];
+  const dot = (v, col, r = 4) => {
+    const p = v2s({ x: v[0] ?? v.x, y: v[1] ?? v.y });
+    ctx.fillStyle = col;
+    ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI * 2); ctx.fill();
+    return p;
+  };
+  dot(gz.tF, "#ff5050");                       // authoritative projected post feet
+  dot(gz.tN, "#ff5050");
+  dot(gz.fFar, "#ff5ce0");                     // artwork feet after frozen calibration
+  dot(gz.fNear, "#ff5ce0");
+  const mid = dot([(gz.fFar[0] + gz.fNear[0]) / 2, (gz.fFar[1] + gz.fNear[1]) / 2], "#ffd23c", 3);
   const z = S.camV.zoom;
-  const pmX = Math.round((gz.vx - S.camV.x) * z + cv.width / 2) + px * gz.s * z;
-  const pmY = Math.round((gz.vy - S.camV.y) * z + cv.height / 2) + GOAL_SPRITE.pivot[1] * gz.s * z;
-  ctx.fillStyle = "#40e0ff";
-  ctx.beginPath(); ctx.arc(pmX, pmY, 3, 0, Math.PI * 2); ctx.fill();
-  const err = Math.hypot(pmX - C.x, pmY - C.y);
   ctx.fillStyle = "#fff"; ctx.font = "11px monospace"; ctx.textAlign = "left";
-  ctx.fillText(`anchor err ${err.toFixed(2)}px (frozen calib; const/zoom)`, Math.min(cv.width - 240, Math.max(8, C.x + 16)), C.y - 12);
+  const tx0 = Math.min(cv.width - 300, Math.max(8, mid.x + 18));
+  ctx.fillText(`far-post err  ${gz.eFar.toFixed(2)}Vpx (${(gz.eFar * z).toFixed(1)}px @z${z.toFixed(2)})`, tx0, mid.y - 26);
+  ctx.fillText(`near-post err ${gz.eNear.toFixed(2)}Vpx (${(gz.eNear * z).toFixed(1)}px)  s=${gz.s.toFixed(3)} ${gz.mirrored ? "MIRROR" : "ORIG"}`, tx0, mid.y - 14);
 }
 function drawGrid() {
   ctx.strokeStyle = "rgba(255,255,255,0.14)"; ctx.lineWidth = 1;
