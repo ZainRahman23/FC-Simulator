@@ -181,6 +181,33 @@
       "NOT integrated into the sandbox; the procedural Goal V3 remains the active presentation. Exactly one generation spent; no retry performed per instruction."
     ]
   },
+  "goal_art_v2_oblique": {
+    "acceptance": "PENDING_VISUAL_REVIEW (generated 2026-08-27 under explicit single-generation authorization; full-resolution reference transport via sanctioned REST route)",
+    "tool": "PixelLab REST POST /v2/create-image-pixflux (img2img)",
+    "model": "pixflux",
+    "seed": 73205,
+    "init_image_strength": 200,
+    "size": "312x332",
+    "generations_cost": 1,
+    "usage_reported_by_api": { "type": "generations", "generations": 1.0 },
+    "local_paths": {
+      "original": "originals/goal_v2_oblique/goal_v2_original.png",
+      "derived_transparent": "originals/goal_v2_oblique/goal_v2_derived_transparent.png",
+      "reference_input": "originals/goal_v2_oblique/reference_input_312x332_grey.png"
+    },
+    "sha256": {
+      "original": "b9820703345fa5d396547f6d8631fce771e6d4fae76def06e9d13107dae6d70f",
+      "derived_transparent": "8ae9d287e94895826dfd085e4bf663410934f224fb3e324389191e632b3421aa",
+      "reference_input": "49d0b990a2d569917a7c4c47ffeda0a8fe9f729768059a8ef54eb04d2a3560e2"
+    },
+    "reference_preparation": "Same 156x166 screenshot crop as V1, re-isolated with a tighter keep rule, every kept pixel neutralized to luminance grey (zero green-dominant pixels), player fragment erased, LANCZOS-upscaled x2 to 312x332. No quantization; geometry/orientation untouched.",
+    "notes": [
+      "Accepted V1 oblique orientation preserved: foreshortened mouth, dominant side net, roof net, rear frame/net, rectangular box silhouette.",
+      "Net now resolves as individual cords with clear intersections; zero green contamination (verified per-pixel).",
+      "Raw API output has an opaque uniform grey background (the API's no_background removal only applies to canvases <= 200x200). The derived copy keys that grey (tolerance 14) making background AND net holes genuinely transparent, and erases two small stray artifacts right of the goal (x>=268). Original stored byte-untouched.",
+      "NOT integrated; procedural Goal V3 remains the active presentation. V1 (goal_art_v3_oblique record) preserved separately."
+    ]
+  },
   "integrity": {
     "lock_file": "HASHES.sha256",
     "verified": "2026-08-27",
