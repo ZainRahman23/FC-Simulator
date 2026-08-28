@@ -1,0 +1,70 @@
+{
+ "1 uncontested short reception": {
+  "detail": "recv 30/30, opp 0",
+  "ok": true
+ },
+ "2 pressured short reception": {
+  "detail": "recv 30/30 opp 0 out 0",
+  "ok": true
+ },
+ "3 moving receiver": {
+  "detail": "recv 30/30 opp 0",
+  "ok": true
+ },
+ "4 hard ground pass": {
+  "detail": "recv 30/30, mean q 0.58",
+  "ok": true
+ },
+ "5 weak underhit pass": {
+  "detail": "recv 30/30 opp 0 (marker may attack short ball)",
+  "ok": true
+ },
+ "6 through ball race": {
+  "detail": "covered by micro-gate B (parallel-lane pace race) \u2014 PASS",
+  "ok": true
+ },
+ "7 lane interception": {
+  "detail": "recv 0/30 opp 30 \u2014 lane defender must matter",
+  "ok": true
+ },
+ "8 shielded reception": {
+  "detail": "recv 30/30 opp 0",
+  "ok": true
+ },
+ "9 clean tackle (st=95)": {
+  "detail": "{'TACKLED': 24, 'PARTIAL': 6}",
+  "ok": null
+ },
+ "10 failed tackle (st=40)": {
+  "detail": "{'PARTIAL': 6, 'TACKLED': 24}",
+  "ok": null
+ },
+ "11 partial (st=70)": {
+  "detail": "{'TACKLED': 25, 'PARTIAL': 5}",
+  "ok": null
+ },
+ "9-11 tackle gradient": {
+  "detail": "TACKLED st95 24 > st40 24",
+  "ok": false
+ },
+ "12 take-on vs slow defender": {
+  "detail": "{'TACKLED': 10, 'PARTIAL': 20}",
+  "ok": false
+ },
+ "13 50/50 loose ball": {
+  "detail": "team0 13 team1 17 \u2014 both must win some",
+  "ok": true
+ },
+ "14 ricochet recovery": {
+  "detail": "resolved 30/30, total alternations 0",
+  "ok": true
+ },
+ "15 midfield melee": {
+  "detail": "mean resolve 1.0s, mean alternations 0.0, max 0",
+  "ok": true
+ },
+ "reception bc sweep 40/60/80/95": {
+  "detail": "clean-rate [(40, 0.98, 40), (60, 1.0, 40), (80, 1.0, 40), (95, 1.0, 40)]",
+  "ok": true
+ }
+}

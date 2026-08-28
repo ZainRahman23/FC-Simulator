@@ -1,0 +1,55 @@
+{
+ "world_min": 30.0,
+ "owner_changes_pm": 19.77,
+ "flips_pm": 11.97,
+ "cause_all": {
+  "intended_pass_reception": 149,
+  "adapter_artifact": 66,
+  "interception": 136,
+  "shield_contact_loss": 40,
+  "bad_first_touch": 14,
+  "loose_ball_race": 33,
+  "tackle_won": 63,
+  "takeon_contact": 24,
+  "uncontrolled_ricochet": 44,
+  "partial_tackle_deflection": 10,
+  "gk_interaction": 9,
+  "restart_transition": 5
+ },
+ "cause_flips": {
+  "adapter_artifact": 49,
+  "interception": 125,
+  "shield_contact_loss": 40,
+  "tackle_won": 50,
+  "takeon_contact": 15,
+  "partial_tackle_deflection": 10,
+  "uncontrolled_ricochet": 27,
+  "intended_pass_reception": 15,
+  "loose_ball_race": 16,
+  "gk_interaction": 8,
+  "restart_transition": 3,
+  "bad_first_touch": 1
+ },
+ "median_spell_s": 2.15,
+ "mean_spell_s": 4.97,
+ "spell_p25_p75_p90": [
+  0.55,
+  6.99,
+  14.2
+ ],
+ "spells_over_10s": 58,
+ "reflip_within_3s": 0.556,
+ "pingpong_team_ABA_4s": 114,
+ "pingpong_player_PQP_3s": 88,
+ "ball_time_share": {
+  "DEAD": 0.136,
+  "LOOSE": 0.119,
+  "IN_FLIGHT": 0.446,
+  "CONTROLLED": 0.271,
+  "CONTESTED": 0.028
+ },
+ "loose_events_pm": 13.6,
+ "melee_alt_pm": 20.93,
+ "label": "postC_prereq23",
+ "trace_hash": "385b2a9b50c3806e"
+}

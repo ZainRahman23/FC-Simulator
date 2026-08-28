@@ -1,0 +1,83 @@
+{
+ "hybrid": {
+  "seed": 789335328,
+  "mins": 90.0,
+  "goals": [
+   1,
+   2
+  ],
+  "budget_s": {
+   "dead": 676.0,
+   "flight": 2434.0,
+   "ctrl": 1615.0,
+   "loose": 675.0
+  },
+  "zone_ctrl_s": {
+   "H_mid": 416.0,
+   "A_mid": 229.0,
+   "A_final": 274.0,
+   "H_own": 286.0,
+   "H_final": 295.0,
+   "A_own": 114.0
+  },
+  "ft_spells": {
+   "n": 281,
+   "mean_s": 3.65,
+   "end_causes": {
+    "turnover": 219,
+    "recycled_back": 33,
+    "dead_ball": 29
+   }
+  },
+  "decisions": 3179,
+  "wake_mix": {
+   "RECEPTION": 1848,
+   "PRESSURE": 1096,
+   "cadence": 229,
+   "GK_DISTRIBUTION": 6
+  },
+  "action_mix": {
+   "CARRY": 831,
+   "PASS": 1601,
+   "DRIBBLE": 171,
+   "CLEAR": 401,
+   "SHIELD": 147,
+   "SHOOT": 28
+  },
+  "decision_interval_p50_p90": [
+   1.55,
+   105.45
+  ],
+  "repeat_within_1s": 1486,
+  "pressure_at_decisions_mean": 0.495,
+  "world_nearest_opp_median": {
+   "mid": 3.33,
+   "final": 3.37,
+   "own": 2.89
+  }
+ },
+ "native": {
+  "zone_carrier_s": {
+   "A_mid": 191,
+   "A_final": 420,
+   "H_own": 263,
+   "H_mid": 350,
+   "H_final": 549,
+   "A_own": 126
+  },
+  "pressure_by_zone_mean": {
+   "mid": 0.296,
+   "final": 0.453,
+   "own": 0.322
+  },
+  "active_s": 5207,
+  "dead_s": 193,
+  "clearances": 50,
+  "passes": 922,
+  "shots": 14,
+  "goals": [
+   2,
+   0
+  ]
+ }
+}

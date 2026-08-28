@@ -1,0 +1,94 @@
+{
+ "A_off": {
+  "decisions": 1398,
+  "share_pressure_gt_0.5": 0.904,
+  "score": [
+   1,
+   3
+  ],
+  "receptions": [
+   {
+    "class": "ALL",
+    "n": 385,
+    "wait_mean": 3.96,
+    "one_touch(<=1s)": 0.01,
+    "sep_at_reception": 4.27,
+    "sep_at_first_decision": 1.45,
+    "still_3m_at_decision": 0.132,
+    "pressure_at_decision": 0.64,
+    "turnover_within_4s": 0.478
+   },
+   {
+    "clean(p_ctrl>=0.93)": "n=0"
+   },
+   {
+    "class": "pressured(0.75-0.93)",
+    "n": 224,
+    "wait_mean": 4.13,
+    "one_touch(<=1s)": 0.009,
+    "sep_at_reception": 4.29,
+    "sep_at_first_decision": 1.46,
+    "still_3m_at_decision": 0.138,
+    "pressure_at_decision": 0.64,
+    "turnover_within_4s": 0.424
+   },
+   {
+    "class": "difficult(<0.75)",
+    "n": 161,
+    "wait_mean": 3.71,
+    "one_touch(<=1s)": 0.012,
+    "sep_at_reception": 4.24,
+    "sep_at_first_decision": 1.43,
+    "still_3m_at_decision": 0.124,
+    "pressure_at_decision": 0.64,
+    "turnover_within_4s": 0.553
+   }
+  ]
+ },
+ "A_on": {
+  "decisions": 2227,
+  "share_pressure_gt_0.5": 0.843,
+  "score": [
+   0,
+   0
+  ],
+  "receptions": [
+   {
+    "class": "ALL",
+    "n": 567,
+    "wait_mean": 1.7,
+    "one_touch(<=1s)": 0.409,
+    "sep_at_reception": 3.76,
+    "sep_at_first_decision": 3.09,
+    "still_3m_at_decision": 0.363,
+    "pressure_at_decision": 0.5,
+    "turnover_within_4s": 0.49
+   },
+   {
+    "clean(p_ctrl>=0.93)": "n=0"
+   },
+   {
+    "class": "pressured(0.75-0.93)",
+    "n": 331,
+    "wait_mean": 1.33,
+    "one_touch(<=1s)": 0.686,
+    "sep_at_reception": 4.32,
+    "sep_at_first_decision": 4.03,
+    "still_3m_at_decision": 0.498,
+    "pressure_at_decision": 0.42,
+    "turnover_within_4s": 0.414
+   },
+   {
+    "class": "difficult(<0.75)",
+    "n": 236,
+    "wait_mean": 2.23,
+    "one_touch(<=1s)": 0.021,
+    "sep_at_reception": 2.96,
+    "sep_at_first_decision": 1.77,
+    "still_3m_at_decision": 0.174,
+    "pressure_at_decision": 0.6,
+    "turnover_within_4s": 0.597
+   }
+  ]
+ }
+}

@@ -1,0 +1,139 @@
+{
+  "experiment": "attribute_quality_gap_no_upset_switch",
+  "samples": 16,
+  "minutes": 45,
+  "attribute_delta": 2.0,
+  "plan": "plans/end_to_end.json",
+  "favorite": {
+    "wins": 9,
+    "draws": 5,
+    "losses": 2,
+    "win_rate": 0.5625,
+    "mean_xg": 1.0091
+  },
+  "underdog": {
+    "wins": 2,
+    "draws": 5,
+    "losses": 9,
+    "win_rate": 0.125,
+    "mean_xg": 0.6863
+  },
+  "notes": [
+    "Only actual player attributes are shifted; OVR is untouched and unused by the match engine.",
+    "There is no upset/comeback switch. Underdog wins arise from the same event-level seeded randomness as every other match."
+  ],
+  "matches": [
+    {
+      "seed": 31200,
+      "favorite_score": 0,
+      "underdog_score": 0,
+      "favorite_xg": 1.0162,
+      "underdog_xg": 0.7137
+    },
+    {
+      "seed": 31201,
+      "favorite_score": 0,
+      "underdog_score": 2,
+      "favorite_xg": 0.4716,
+      "underdog_xg": 0.9813
+    },
+    {
+      "seed": 31202,
+      "favorite_score": 0,
+      "underdog_score": 3,
+      "favorite_xg": 1.1065,
+      "underdog_xg": 1.392
+    },
+    {
+      "seed": 31203,
+      "favorite_score": 2,
+      "underdog_score": 1,
+      "favorite_xg": 1.8909,
+      "underdog_xg": 0.524
+    },
+    {
+      "seed": 31204,
+      "favorite_score": 2,
+      "underdog_score": 0,
+      "favorite_xg": 1.0413,
+      "underdog_xg": 0.2865
+    },
+    {
+      "seed": 31205,
+      "favorite_score": 0,
+      "underdog_score": 0,
+      "favorite_xg": 1.0152,
+      "underdog_xg": 0.8263
+    },
+    {
+      "seed": 31206,
+      "favorite_score": 1,
+      "underdog_score": 0,
+      "favorite_xg": 0.9526,
+      "underdog_xg": 0.8366
+    },
+    {
+      "seed": 31207,
+      "favorite_score": 2,
+      "underdog_score": 0,
+      "favorite_xg": 0.6967,
+      "underdog_xg": 0.0663
+    },
+    {
+      "seed": 31208,
+      "favorite_score": 3,
+      "underdog_score": 0,
+      "favorite_xg": 0.1494,
+      "underdog_xg": 0.7051
+    },
+    {
+      "seed": 31209,
+      "favorite_score": 2,
+      "underdog_score": 0,
+      "favorite_xg": 1.3794,
+      "underdog_xg": 0.1707
+    },
+    {
+      "seed": 31210,
+      "favorite_score": 1,
+      "underdog_score": 0,
+      "favorite_xg": 1.3455,
+      "underdog_xg": 0.3493
+    },
+    {
+      "seed": 31211,
+      "favorite_score": 2,
+      "underdog_score": 1,
+      "favorite_xg": 1.3207,
+      "underdog_xg": 0.9473
+    },
+    {
+      "seed": 31212,
+      "favorite_score": 0,
+      "underdog_score": 0,
+      "favorite_xg": 0.1309,
+      "underdog_xg": 0.2844
+    },
+    {
+      "seed": 31213,
+      "favorite_score": 0,
+      "underdog_score": 0,
+      "favorite_xg": 1.3065,
+      "underdog_xg": 2.0986
+    },
+    {
+      "seed": 31214,
+      "favorite_score": 2,
+      "underdog_score": 0,
+      "favorite_xg": 1.0704,
+      "underdog_xg": 0.1313
+    },
+    {
+      "seed": 31215,
+      "favorite_score": 1,
+      "underdog_score": 1,
+      "favorite_xg": 1.2523,
+      "underdog_xg": 0.6671
+    }
+  ]
+}

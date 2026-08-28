@@ -1,0 +1,26 @@
+{
+  "formation": "4-2-3-1",
+  "tactics": {
+    "build_up_tempo": "PATIENT",
+    "passing_directness": "SHORT",
+    "progression_risk": "BALANCED",
+    "attacking_width": "BALANCED",
+    "chance_creation_focus": "CENTRAL",
+    "box_commitment": "BALANCED",
+    "after_winning_possession": "BALANCED",
+    "after_losing_possession": "REGROUP",
+    "defensive_block_height": "MID",
+    "pressing_intensity": "SELECTIVE",
+    "defensive_width": "BALANCED",
+    "marking_orientation": "HYBRID",
+    "defensive_line_behavior": "HOLD"
+  },
+  "instructions": {
+    "LDM": {"attack_role": "ANCHOR", "attack_effort": 35, "defense_role": "SCREEN", "defense_effort": 75},
+    "RDM": {"attack_role": "DEEP_PLAYMAKER", "attack_effort": 50, "defense_role": "HOLD_ZONE", "defense_effort": 60},
+    "LAM": {"attack_role": "WIDE_CREATOR", "attack_effort": 65, "defense_role": "TRACK_FULLBACK", "defense_effort": 45},
+    "CAM": {"attack_role": "CREATOR", "attack_effort": 70, "defense_role": "SCREEN_PIVOT", "defense_effort": 35},
+    "RAM": {"attack_role": "INSIDE_FORWARD", "attack_effort": 70, "defense_role": "TRACK_FULLBACK", "defense_effort": 45},
+    "ST": {"attack_role": "RUN_BEHIND", "attack_effort": 70, "defense_role": "STAY_HIGH", "defense_effort": 20}
+  }
+}

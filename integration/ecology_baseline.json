@@ -1,0 +1,53 @@
+{
+ "world_min": 30.0,
+ "owner_changes_pm": 37.23,
+ "flips_pm": 16.83,
+ "cause_all": {
+  "adapter_artifact": 530,
+  "loose_ball_race": 74,
+  "shield_contact_loss": 45,
+  "takeon_contact": 30,
+  "uncontrolled_ricochet": 87,
+  "interception": 123,
+  "bad_first_touch": 11,
+  "intended_pass_reception": 137,
+  "partial_tackle_deflection": 31,
+  "tackle_won": 41,
+  "gk_interaction": 5,
+  "restart_transition": 3
+ },
+ "cause_flips": {
+  "shield_contact_loss": 45,
+  "takeon_contact": 17,
+  "uncontrolled_ricochet": 65,
+  "interception": 120,
+  "adapter_artifact": 162,
+  "partial_tackle_deflection": 29,
+  "tackle_won": 30,
+  "loose_ball_race": 21,
+  "intended_pass_reception": 9,
+  "gk_interaction": 4,
+  "restart_transition": 3
+ },
+ "median_spell_s": 0.57,
+ "mean_spell_s": 3.55,
+ "spell_p25_p75_p90": [
+  0.15,
+  4.33,
+  10.45
+ ],
+ "spells_over_10s": 55,
+ "reflip_within_3s": 0.7,
+ "pingpong_team_ABA_4s": 226,
+ "pingpong_player_PQP_3s": 546,
+ "ball_time_share": {
+  "DEAD": 0.107,
+  "CONTROLLED": 0.381,
+  "UNCONTROLLED": 0.472,
+  "CONTESTED": 0.04
+ },
+ "loose_events_pm": 21.83,
+ "melee_alt_pm": 38.23,
+ "label": "baseline",
+ "trace_hash": "9e0363866c28b978"
+}

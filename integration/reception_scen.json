@@ -1,0 +1,34 @@
+{
+ "1 clean receive->dribble": {
+  "detail": "drift 0.8m t_move 0.0 reacq None kick 1.45 limbo 0.0",
+  "ok": true
+ },
+ "2 receive->pass": {
+  "detail": "drift 0.8m next-kick 1.45s limbo 0.0",
+  "ok": true
+ },
+ "3 one-touch layoff": {
+  "detail": "kick Nones contested ('bre_gen_rcb', 2.27) limbo 0.0",
+  "ok": true
+ },
+ "4 wall pass": {
+  "detail": "B release 0.53s lost None limbo 0.0",
+  "ok": true
+ },
+ "5 through-ball collection": {
+  "detail": "sp@touch 2.98 held True kick 1.42 limbo 0.1",
+  "ok": true
+ },
+ "6 bad touch contest": {
+  "detail": "drift 0.0 lost ('virgilvandijk', 0.8) kick None limbo 0.0",
+  "ok": true
+ },
+ "7 pressured reception": {
+  "detail": "t_move -0.0 kick 1.56 lost None limbo 0.0",
+  "ok": true
+ },
+ "8 static easy reception": {
+  "detail": "drift 0.8 reacq None limbo 0.0",
+  "ok": true
+ }
+}

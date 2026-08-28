@@ -1,0 +1,27 @@
+{
+  "tactics": {
+    "build_up_tempo": "PATIENT",
+    "passing_directness": "MIXED",
+    "progression_risk": "SECURE",
+    "attacking_width": "BALANCED",
+    "chance_creation_focus": "BALANCED",
+    "box_commitment": "CAUTIOUS",
+    "after_winning_possession": "SECURE",
+    "after_losing_possession": "REGROUP",
+    "defensive_block_height": "DEEP",
+    "pressing_intensity": "PASSIVE",
+    "defensive_width": "NARROW",
+    "marking_orientation": "ZONAL",
+    "defensive_line_behavior": "DROP"
+  },
+  "instructions": {
+    "LB": {"attack_role": "SUPPORT", "attack_effort": 25, "defense_role": "TUCK_IN", "defense_effort": 65},
+    "RB": {"attack_role": "SUPPORT", "attack_effort": 25, "defense_role": "TUCK_IN", "defense_effort": 65},
+    "CDM": {"attack_role": "ANCHOR", "attack_effort": 25, "defense_role": "SCREEN", "defense_effort": 70},
+    "LCM": {"attack_role": "CONTROLLER", "attack_effort": 40, "defense_role": "HOLD_ZONE", "defense_effort": 55},
+    "RCM": {"attack_role": "CONTROLLER", "attack_effort": 40, "defense_role": "HOLD_ZONE", "defense_effort": 55},
+    "LW": {"attack_role": "WIDE_CREATOR", "attack_effort": 45, "defense_role": "TUCK_IN", "defense_effort": 55},
+    "RW": {"attack_role": "WIDE_CREATOR", "attack_effort": 45, "defense_role": "TUCK_IN", "defense_effort": 55},
+    "ST": {"attack_role": "LINK", "attack_effort": 45, "defense_role": "STAY_HIGH", "defense_effort": 15}
+  }
+}

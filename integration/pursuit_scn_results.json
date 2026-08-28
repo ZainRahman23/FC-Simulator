@@ -1,0 +1,58 @@
+{
+ "1 clean long ball": {
+  "detail": "{'pred': (75.9, 34.0), 'winner': 'mohamedsalah', 'time': 2.1, 'max_out_m': 0}",
+  "ok": true
+ },
+ "2 underhit long": {
+  "detail": "{'pred': (68.1, 34.0), 'winner': 'mohamedsalah', 'time': 1.8, 'max_out_m': 0}",
+  "ok": true
+ },
+ "3 overhit long": {
+  "detail": "{'pred': (89.4, 34.0), 'winner': 'OUT', 'time': 3.2, 'max_out_m': 0}",
+  "ok": true
+ },
+ "4 first-bounce pursuit": {
+  "detail": "{'pred': (63.6, 24.0), 'winner': 'bre_gen_rb', 'time': 4.6, 'max_out_m': 0}",
+  "ok": true
+ },
+ "5 second-bounce pursuit": {
+  "detail": "{'pred': (67.4, 24.0), 'winner': 'bre_gen_rb', 'time': 5.7, 'max_out_m': 0}",
+  "ok": true
+ },
+ "6 defender first": {
+  "detail": "{'pred': (59.9, 42.0), 'winner': 'bre_gen_lcb', 'time': 1.4, 'max_out_m': 0}",
+  "ok": true
+ },
+ "7 attacker first": {
+  "detail": "{'pred': (55.5, 42.0), 'winner': 'mohamedsalah', 'time': 1.4, 'max_out_m': 0}",
+  "ok": true
+ },
+ "8 equal race": {
+  "detail": "{'pred': (58.5, 42.0), 'winner': 'mohamedsalah', 'time': 1.8, 'max_out_m': 0}",
+  "ok": true
+ },
+ "9 GK/sweeper claim": {
+  "detail": "winner alisson",
+  "ok": true
+ },
+ "10 out before reachable": {
+  "detail": "{'pred': (63.3, 0.2), 'winner': 'OUT', 'time': 0.8, 'max_out_m': 0}",
+  "ok": true
+ },
+ "11 cut before line": {
+  "detail": "{'pred': (62.7, 4.7), 'winner': 'codygakpo', 'time': 0.9, 'max_out_m': 0}",
+  "ok": true
+ },
+ "12 touchline pass": {
+  "detail": "{'pred': (67.0, 64.9), 'winner': 'conorbradley', 'time': 1.0, 'max_out_m': 0}",
+  "ok": true
+ },
+ "13 deflection retarget": {
+  "detail": "target moved 20.1m after deflection, winner bre_gen_rb",
+  "ok": true
+ },
+ "sweep sprint\u2192race wins": {
+  "detail": "{6.6: 0, 7.6: 4, 8.6: 4}",
+  "ok": true
+ }
+}

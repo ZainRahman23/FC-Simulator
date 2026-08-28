@@ -1,0 +1,302 @@
+{
+ "base": {
+  "tag": "base salah-v-rcb",
+  "emp": {
+   "BEAT": 0.0,
+   "PARTIAL": 0.388,
+   "RETAIN": 0.0,
+   "TACKLED": 0.6,
+   "LOOSE": 0.013
+  },
+  "tgt": {
+   "BEAT": 0.243,
+   "PARTIAL": 0.261,
+   "RETAIN": 0.173,
+   "TACKLED": 0.155,
+   "LOOSE": 0.168
+  }
+ },
+ "sweeps": {
+  "dribbling": [
+   {
+    "level": 40,
+    "tag": "dribbling=40",
+    "emp": {
+     "BEAT": 0.0,
+     "PARTIAL": 0.4,
+     "RETAIN": 0.0,
+     "TACKLED": 0.6,
+     "LOOSE": 0.0
+    },
+    "tgt": {
+     "BEAT": 0.142,
+     "PARTIAL": 0.197,
+     "RETAIN": 0.215,
+     "TACKLED": 0.319,
+     "LOOSE": 0.127
+    }
+   },
+   {
+    "level": 60,
+    "tag": "dribbling=60",
+    "emp": {
+     "BEAT": 0.04,
+     "PARTIAL": 0.36,
+     "RETAIN": 0.0,
+     "TACKLED": 0.6,
+     "LOOSE": 0.0
+    },
+    "tgt": {
+     "BEAT": 0.183,
+     "PARTIAL": 0.221,
+     "RETAIN": 0.21,
+     "TACKLED": 0.258,
+     "LOOSE": 0.129
+    }
+   },
+   {
+    "level": 80,
+    "tag": "dribbling=80",
+    "emp": {
+     "BEAT": 0.0,
+     "PARTIAL": 0.28,
+     "RETAIN": 0.0,
+     "TACKLED": 0.72,
+     "LOOSE": 0.0
+    },
+    "tgt": {
+     "BEAT": 0.26,
+     "PARTIAL": 0.252,
+     "RETAIN": 0.19,
+     "TACKLED": 0.173,
+     "LOOSE": 0.125
+    }
+   },
+   {
+    "level": 95,
+    "tag": "dribbling=95",
+    "emp": {
+     "BEAT": 0.0,
+     "PARTIAL": 0.32,
+     "RETAIN": 0.0,
+     "TACKLED": 0.68,
+     "LOOSE": 0.0
+    },
+    "tgt": {
+     "BEAT": 0.322,
+     "PARTIAL": 0.266,
+     "RETAIN": 0.17,
+     "TACKLED": 0.125,
+     "LOOSE": 0.117
+    }
+   }
+  ],
+  "tackling": [
+   {
+    "level": 40,
+    "tag": "tackling=40",
+    "emp": {
+     "BEAT": 0.02,
+     "PARTIAL": 0.74,
+     "RETAIN": 0.0,
+     "TACKLED": 0.24,
+     "LOOSE": 0.0
+    },
+    "tgt": {
+     "BEAT": 0.391,
+     "PARTIAL": 0.275,
+     "RETAIN": 0.157,
+     "TACKLED": 0.082,
+     "LOOSE": 0.096
+    }
+   },
+   {
+    "level": 60,
+    "tag": "tackling=60",
+    "emp": {
+     "BEAT": 0.0,
+     "PARTIAL": 0.68,
+     "RETAIN": 0.0,
+     "TACKLED": 0.32,
+     "LOOSE": 0.0
+    },
+    "tgt": {
+     "BEAT": 0.339,
+     "PARTIAL": 0.27,
+     "RETAIN": 0.169,
+     "TACKLED": 0.112,
+     "LOOSE": 0.11
+    }
+   },
+   {
+    "level": 80,
+    "tag": "tackling=80",
+    "emp": {
+     "BEAT": 0.0,
+     "PARTIAL": 0.44,
+     "RETAIN": 0.0,
+     "TACKLED": 0.56,
+     "LOOSE": 0.0
+    },
+    "tgt": {
+     "BEAT": 0.292,
+     "PARTIAL": 0.26,
+     "RETAIN": 0.179,
+     "TACKLED": 0.147,
+     "LOOSE": 0.123
+    }
+   },
+   {
+    "level": 95,
+    "tag": "tackling=95",
+    "emp": {
+     "BEAT": 0.0,
+     "PARTIAL": 0.28,
+     "RETAIN": 0.0,
+     "TACKLED": 0.72,
+     "LOOSE": 0.0
+    },
+    "tgt": {
+     "BEAT": 0.267,
+     "PARTIAL": 0.252,
+     "RETAIN": 0.182,
+     "TACKLED": 0.17,
+     "LOOSE": 0.129
+    }
+   }
+  ],
+  "reactions": [
+   {
+    "level": 40,
+    "tag": "reactions=40",
+    "emp": {
+     "BEAT": 1.0,
+     "PARTIAL": 0.0,
+     "RETAIN": 0.0,
+     "TACKLED": 0.0,
+     "LOOSE": 0.0
+    },
+    "tgt": {
+     "BEAT": 0.302,
+     "PARTIAL": 0.262,
+     "RETAIN": 0.177,
+     "TACKLED": 0.139,
+     "LOOSE": 0.12
+    }
+   },
+   {
+    "level": 60,
+    "tag": "reactions=60",
+    "emp": {
+     "BEAT": 0.44,
+     "PARTIAL": 0.3,
+     "RETAIN": 0.0,
+     "TACKLED": 0.26,
+     "LOOSE": 0.0
+    },
+    "tgt": {
+     "BEAT": 0.301,
+     "PARTIAL": 0.262,
+     "RETAIN": 0.177,
+     "TACKLED": 0.14,
+     "LOOSE": 0.12
+    }
+   },
+   {
+    "level": 80,
+    "tag": "reactions=80",
+    "emp": {
+     "BEAT": 0.0,
+     "PARTIAL": 0.46,
+     "RETAIN": 0.0,
+     "TACKLED": 0.54,
+     "LOOSE": 0.0
+    },
+    "tgt": {
+     "BEAT": 0.301,
+     "PARTIAL": 0.262,
+     "RETAIN": 0.177,
+     "TACKLED": 0.14,
+     "LOOSE": 0.12
+    }
+   },
+   {
+    "level": 95,
+    "tag": "reactions=95",
+    "emp": {
+     "BEAT": 0.0,
+     "PARTIAL": 0.32,
+     "RETAIN": 0.0,
+     "TACKLED": 0.68,
+     "LOOSE": 0.0
+    },
+    "tgt": {
+     "BEAT": 0.3,
+     "PARTIAL": 0.262,
+     "RETAIN": 0.177,
+     "TACKLED": 0.14,
+     "LOOSE": 0.12
+    }
+   }
+  ],
+  "pace": [
+   {
+    "vmax": 6.5,
+    "tag": "pace=6.5",
+    "emp": {
+     "BEAT": 0.0,
+     "PARTIAL": 0.42,
+     "RETAIN": 0.0,
+     "TACKLED": 0.58,
+     "LOOSE": 0.0
+    },
+    "tgt": {
+     "BEAT": 0.3,
+     "PARTIAL": 0.262,
+     "RETAIN": 0.177,
+     "TACKLED": 0.141,
+     "LOOSE": 0.12
+    }
+   },
+   {
+    "vmax": 7.5,
+    "tag": "pace=7.5",
+    "emp": {
+     "BEAT": 0.0,
+     "PARTIAL": 0.36,
+     "RETAIN": 0.0,
+     "TACKLED": 0.64,
+     "LOOSE": 0.0
+    },
+    "tgt": {
+     "BEAT": 0.299,
+     "PARTIAL": 0.262,
+     "RETAIN": 0.178,
+     "TACKLED": 0.141,
+     "LOOSE": 0.12
+    }
+   },
+   {
+    "vmax": 8.5,
+    "tag": "pace=8.5",
+    "emp": {
+     "BEAT": 0.0,
+     "PARTIAL": 0.36,
+     "RETAIN": 0.0,
+     "TACKLED": 0.64,
+     "LOOSE": 0.0
+    },
+    "tgt": {
+     "BEAT": 0.299,
+     "PARTIAL": 0.262,
+     "RETAIN": 0.178,
+     "TACKLED": 0.141,
+     "LOOSE": 0.12
+    }
+   }
+  ],
+  "dribbling_monotone": true,
+  "tackling_monotone": true,
+  "reactions_monotone": true
+ }
+}

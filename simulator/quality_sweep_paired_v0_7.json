@@ -1,0 +1,70 @@
+{
+  "experiment": "paired_actual_attribute_gap_sweep",
+  "seed_pairs_per_delta": 4,
+  "matches_per_delta": 8,
+  "minutes": 30,
+  "seed0": 34100,
+  "plan": "plans/end_to_end.json",
+  "paired_home_away": true,
+  "same_seed_set_for_every_delta": true,
+  "rows": [
+    {
+      "delta_each_side": 0.0,
+      "total_attribute_gap": 0.0,
+      "matches": 8,
+      "favorite_wins": 3,
+      "draws": 2,
+      "underdog_wins": 3,
+      "favorite_win_rate": 0.375,
+      "underdog_win_rate": 0.375,
+      "favorite_mean_xg": 0.5968,
+      "underdog_mean_xg": 0.5968,
+      "favorite_xg_share": 0.5
+    },
+    {
+      "delta_each_side": 1.0,
+      "total_attribute_gap": 2.0,
+      "matches": 8,
+      "favorite_wins": 3,
+      "draws": 5,
+      "underdog_wins": 0,
+      "favorite_win_rate": 0.375,
+      "underdog_win_rate": 0.0,
+      "favorite_mean_xg": 0.8994,
+      "underdog_mean_xg": 0.6512,
+      "favorite_xg_share": 0.5801
+    },
+    {
+      "delta_each_side": 2.0,
+      "total_attribute_gap": 4.0,
+      "matches": 8,
+      "favorite_wins": 2,
+      "draws": 5,
+      "underdog_wins": 1,
+      "favorite_win_rate": 0.25,
+      "underdog_win_rate": 0.125,
+      "favorite_mean_xg": 0.8823,
+      "underdog_mean_xg": 0.524,
+      "favorite_xg_share": 0.6274
+    },
+    {
+      "delta_each_side": 3.0,
+      "total_attribute_gap": 6.0,
+      "matches": 8,
+      "favorite_wins": 2,
+      "draws": 6,
+      "underdog_wins": 0,
+      "favorite_win_rate": 0.25,
+      "underdog_win_rate": 0.0,
+      "favorite_mean_xg": 0.8945,
+      "underdog_mean_xg": 0.3346,
+      "favorite_xg_share": 0.7278
+    }
+  ],
+  "integrity": [
+    "Only actual player attributes are shifted; OVR remains untouched and unused.",
+    "Every seed is played twice with the quality advantage swapped across HOME/AWAY.",
+    "No favorite, parity, upset, comeback, momentum, or result switch exists.",
+    "Underdog wins come from the same semantic keyed event randomness as every other result."
+  ]
+}

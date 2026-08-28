@@ -1,0 +1,76 @@
+{
+ "winger_open_diagonal": {
+  "chosen_dir": "cut_in",
+  "space": 1.0
+ },
+ "winger_inside_closed": {
+  "chosen_dir": "cut_in",
+  "space": 0.92
+ },
+ "shot_central_22m": {
+  "dist": 22.0,
+  "angle": 0.33,
+  "eligible": true,
+  "G": 1.0
+ },
+ "shot_central_28m_elite": {
+  "dist": 28.0,
+  "angle": 0.26,
+  "eligible": true,
+  "G": 0.696
+ },
+ "shot_central_28m_poor": {
+  "dist": 28.0,
+  "angle": 0.26,
+  "eligible": false,
+  "G": 0.0
+ },
+ "shot_38m_ordinary": {
+  "dist": 38.0,
+  "angle": 0.192,
+  "eligible": false,
+  "G": 0.0
+ },
+ "shot_halfway": {
+  "dist": 52.0,
+  "angle": 0.141,
+  "eligible": false,
+  "G": 0.0
+ },
+ "shot_corner_flag": {
+  "dist": 33.5,
+  "angle": 0.079,
+  "eligible": false,
+  "G": 0.0
+ },
+ "shot_38m_late_chasing": {
+  "dist": 38.0,
+  "angle": 0.192,
+  "eligible": false,
+  "G": 0.029
+ },
+ "corner_vs_passive": {
+  "engaged_after_s": 10,
+  "intensity": "PASSIVE"
+ },
+ "corner_vs_aggressive": {
+  "engaged_after_s": 3,
+  "intensity": "AGGRESSIVE"
+ },
+ "recovery_balanced_plan": {
+  "plan": "BALANCED",
+  "n_high": 3,
+  "n_duty": 1,
+  "outlet_spared": true
+ },
+ "recovery_counter_plan": {
+  "plan": "COUNTER",
+  "n_high": 3,
+  "n_duty": 1,
+  "outlet_spared": true
+ },
+ "break_intents": {
+  "RB": "OVERLAP",
+  "LCM": null
+ }
+}

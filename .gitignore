@@ -1,0 +1,49 @@
+# ── environments / caches / OS-editor junk ──
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+
+# ── runtime databases (live saves; the production DB is 772MB) ──
+data_rc/
+data_rc_anim*/
+*.db
+*.db-shm
+*.db-wal
+
+# ── local binary rollback snapshots (the repo is the rollback now) ──
+simulator/checkpoints/
+
+# ── regenerable heavy validation OUTPUT (the suites that produce these
+#    are committed; studies and small result summaries are committed) ──
+integration/trace_*.json
+integration/decisions_*.json
+integration/sequences_*.json
+integration/labels_*.json
+integration/events_*.json
+integration/contacts_*.json
+integration/wakes_*.json
+integration/authority_forensic.json
+integration/effmotion_dumps.json
+integration/reception_worst.json
+integration/*.out
+integration/prepursuit/__pycache__/
+integration/*/__pycache__/
+simulator/validation/out/
+simulator/validation/forensics/
+simulator/validation/cal3_audit/
+simulator/validation/pressing/
+simulator/validation/rforensic/*_trace*.json
+simulator/validation/rforensic/*_replay*.json
+
+# keep the deterministic fixture every suite depends on
+!simulator/validation/rforensic/mw08_start.json
+
+# ── secrets (none found; guard rails regardless) ──
+.env
+.env.*
+*.pem
+*.key
+credentials*
+secrets*

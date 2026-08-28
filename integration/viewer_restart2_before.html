@@ -1,0 +1,76 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>RestartG2 before</title>
+<style>body{margin:0;background:#0d1117;color:#dfe6ee;font:13px system-ui}
+#bar{padding:8px 12px;background:#161b22;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+#bar b{color:#7ee787}canvas{display:block;margin:0 auto}
+#seq{padding:6px 12px;background:#11151b;display:flex;gap:6px;flex-wrap:wrap}
+#seq button{font-size:11px}
+button,input,label{background:#21262d;color:#dfe6ee;border:1px solid #30363d;border-radius:6px;padding:4px 10px}
+label{display:inline-flex;gap:4px;align-items:center}</style></head>
+<body><div id="bar"><b>RESTART-GATE2 before — pursuit abort + circle occupancy, seed 789335328</b>
+<button id="pp">Pause</button><input id="spd" type="range" min="0.25" max="8" step="0.25" value="1" style="width:110px">
+<label><input type="checkbox" id="ovW" checked>wakes</label>
+<label><input type="checkbox" id="ovI">info</label>
+<span id="inf"></span></div>
+<div id="seq"></div>
+<canvas id="cv" width="1240" height="660"></canvas>
+<script>
+let TR=null, DEC=[], SEQ=[], i=0, paused=false, spd=1;
+fetch('trace_rg2_before.json').then(r=>r.json()).then(t=>{TR=t;});
+fetch('decisions_rg2_before.json').then(r=>r.json()).then(d=>{DEC=d;});
+fetch('sequences_rg2_before.json').then(r=>r.json()).then(s=>{SEQ=s;
+ const el=document.getElementById('seq');
+ for(const q of s){const b=document.createElement('button');
+   b.textContent=`${q.kind} @${Math.floor(q.t/60)}:${String(Math.floor(q.t%60)).padStart(2,'0')}`;
+   b.onclick=()=>{if(!TR)return; i=Math.max(0,TR.findIndex(f=>f.t>=q.t-4)); paused=false;};
+   el.appendChild(b);}});
+document.getElementById('pp').onclick=e=>{paused=!paused;e.target.textContent=paused?'Play':'Pause';};
+document.getElementById('spd').oninput=e=>{spd=+e.target.value;};
+const cv=document.getElementById('cv'),c=cv.getContext('2d');
+const SC=cv.width/107, ox=-1, oy=34-cv.height/SC/2;
+const X=x=>(x-ox)*SC, Y=y=>(y-oy)*SC;
+let acc=0,last=null,decIdx=0;
+function loop(ts){requestAnimationFrame(loop);
+ if(last===null){last=ts;return;} const el=(ts-last)/1000; last=ts;
+ if(!TR) return;
+ if(!paused){acc+=el*spd*10; while(acc>=1&&i<TR.length-1){i++;acc-=1;}}
+ const f=TR[i];
+ c.fillStyle='#17491f';c.fillRect(0,0,cv.width,cv.height);
+ for(let k=0;k<12;k++){c.fillStyle=k%2?'#1d5c33':'#195029';c.fillRect(X(k*105/12),Y(0),105/12*SC,68*SC);}
+ c.strokeStyle='rgba(255,255,255,.85)';c.lineWidth=2;
+ c.strokeRect(X(0),Y(0),105*SC,68*SC);
+ c.beginPath();c.moveTo(X(52.5),Y(0));c.lineTo(X(52.5),Y(68));c.stroke();
+ c.beginPath();c.arc(X(52.5),Y(34),9.15*SC,0,7);c.stroke();
+ c.strokeRect(X(0),Y(13.85),16.5*SC,40.3*SC);c.strokeRect(X(105-16.5),Y(13.85),16.5*SC,40.3*SC);
+ const b=f.b;
+ for(const p of f.p){
+   const home=!p[0].startsWith('bre')&&p[0]!=='igorthiago';
+   const h=1.85*SC;
+   c.fillStyle='rgba(0,0,0,.3)';c.beginPath();c.ellipse(X(p[1]),Y(p[2])+2,h*.2,h*.08,0,0,7);c.fill();
+   c.fillStyle=home?'#d33c47':'#f2f2f2';
+   c.beginPath();c.roundRect(X(p[1])-h*.15,Y(p[2])-h*.6,h*.3,h*.36,3);c.fill();
+   c.fillStyle='#e8b98a';c.beginPath();c.arc(X(p[1]),Y(p[2])-h*.7,h*.11,0,7);c.fill();
+   if(p[0]===b[4]){c.strokeStyle='#7ee787';c.beginPath();c.arc(X(p[1]),Y(p[2]),h*.32,0,7);c.stroke();}
+ }
+ c.fillStyle='rgba(0,0,0,.35)';c.beginPath();c.ellipse(X(b[0]),Y(b[1]),4,2.2,0,0,7);c.fill();
+ c.fillStyle='#fff';c.beginPath();c.arc(X(b[0]),Y(b[1])-b[2]*SC*.62,Math.max(3,SC*.18),0,7);c.fill();
+ // DEBUG OVERLAY: decision wakes (flash ring + reason for 1.2 s after each decision)
+ if(document.getElementById('ovW').checked&&DEC.length){
+   for(const d of DEC){
+     if(d.t>f.t) break;
+     if(f.t-d.t<1.2){
+       const pl=f.p.find(p=>p[0]===d.pid);
+       if(pl){const a=1-(f.t-d.t)/1.2;
+         c.strokeStyle=`rgba(255,215,0,${a})`;c.lineWidth=2;
+         c.beginPath();c.arc(X(pl[1]),Y(pl[2]),10+6*(f.t-d.t),0,7);c.stroke();
+         c.fillStyle=`rgba(255,235,120,${a})`;c.font='10px monospace';
+         c.fillText(`${d.why}→${d.action}`,X(pl[1])+10,Y(pl[2])-12);}
+     }}}
+ let info=` world ${f.t.toFixed(1)}s · match ${(f.t/60).toFixed(1)}' · score ${f.score[0]}–${f.score[1]} · ctrl ${b[4]||'—'} · ${f.restart||'open'}`;
+ if(document.getElementById('ovI').checked&&b[4]){
+   const lastd=[...DEC].reverse().find(d=>d.pid===b[4]&&d.t<=f.t);
+   if(lastd) info+=` · carrier last decision ${(f.t-lastd.t).toFixed(1)}s ago (${lastd.why})`;
+ }
+ document.getElementById('inf').textContent=info;
+}
+requestAnimationFrame(loop);
+</script></body></html>

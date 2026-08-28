@@ -1,0 +1,67 @@
+{
+  "tactics": {
+    "build_up_tempo": "QUICK",
+    "passing_directness": "DIRECT",
+    "progression_risk": "AMBITIOUS",
+    "attacking_width": "WIDE",
+    "chance_creation_focus": "VERTICAL",
+    "box_commitment": "COMMIT",
+    "after_winning_possession": "COUNTER",
+    "after_losing_possession": "COUNTERPRESS",
+    "defensive_block_height": "HIGH",
+    "pressing_intensity": "AGGRESSIVE",
+    "defensive_width": "BALANCED",
+    "marking_orientation": "HYBRID",
+    "defensive_line_behavior": "STEP_UP"
+  },
+  "instructions": {
+    "LB": {
+      "attack_role": "OVERLAP",
+      "attack_effort": 72,
+      "defense_role": "TRACK_RUNNER",
+      "defense_effort": 80
+    },
+    "RB": {
+      "attack_role": "OVERLAP",
+      "attack_effort": 72,
+      "defense_role": "TRACK_RUNNER",
+      "defense_effort": 80
+    },
+    "CDM": {
+      "attack_role": "ADVANCE_SUPPORT",
+      "attack_effort": 55,
+      "defense_role": "BALL_HUNT",
+      "defense_effort": 82
+    },
+    "LCM": {
+      "attack_role": "RUNNER",
+      "attack_effort": 72,
+      "defense_role": "PRESS",
+      "defense_effort": 75
+    },
+    "RCM": {
+      "attack_role": "RUNNER",
+      "attack_effort": 72,
+      "defense_role": "PRESS",
+      "defense_effort": 75
+    },
+    "LW": {
+      "attack_role": "INSIDE_FORWARD",
+      "attack_effort": 76,
+      "defense_role": "PRESS_FULLBACK",
+      "defense_effort": 65
+    },
+    "RW": {
+      "attack_role": "INSIDE_FORWARD",
+      "attack_effort": 76,
+      "defense_role": "PRESS_FULLBACK",
+      "defense_effort": 65
+    },
+    "ST": {
+      "attack_role": "RUN_BEHIND",
+      "attack_effort": 78,
+      "defense_role": "PRESS_CBS",
+      "defense_effort": 70
+    }
+  }
+}

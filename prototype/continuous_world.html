@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Touchline Continuous-World Prototype (Architecture B)</title>
+<style>
+  body{margin:0;background:#0d1117;color:#dfe6ee;font:13px system-ui}
+  #bar{padding:8px 12px;display:flex;gap:14px;align-items:center;background:#161b22}
+  #bar b{color:#7ee787}
+  canvas{display:block;margin:0 auto;background:#1d5c33}
+  #hud{padding:6px 12px;white-space:pre;font-family:ui-monospace,monospace;font-size:12px;color:#9fb3c8}
+  button,select{background:#21262d;color:#dfe6ee;border:1px solid #30363d;border-radius:6px;padding:4px 10px}
+</style>
+</head>
+<body>
+<div id="bar">
+  <b>ARCHITECTURE B PROTOTYPE</b>
+  <span>cal11 intentions &rarr; continuous physical world (60&nbsp;Hz, real-speed physics, no interpolation of positions)</span>
+  <select id="seg"><option value="segA">Segment A — buildup → Gakpo goal → kickoff</option>
+                   <option value="segB">Segment B — Salah take-on (BEAT) + chains</option></select>
+  <button id="restart">Restart</button>
+  <button id="pause">Pause</button>
+</div>
+<canvas id="cv" width="1180" height="700"></canvas>
+<div id="hud"></div>
+<script>
+/* ══════════════════════════════════════════════════════════════════════════
+   ISOLATED PROTOTYPE — not part of the Touchline app. cal11 stays the football
+   brain: its recorded decision stream (who acts, action, intended target,
+   outcome) is treated as INTENTIONS. A continuous physical world (players with
+   acceleration/deceleration, a ball with gravity/friction/bounce, contact-based
+   possession) executes those intentions through time. Physics constants and the
+   possession/kicker-exclusion/touch concepts follow the OpenSWOS reference
+   (MIT, (c) 2026 Grzegorz Korycki, github.com/angree/openswos) adapted to
+   metric units; all code original. Deterministic: fixed 60 Hz tick, zero RNG.
+   The world clock runs 1x (believable human/ball speeds); the DISPLAYED match
+   clock advances by schedule compression, never by faster physics.
+   ══════════════════════════════════════════════════════════════════════════ */
+const DT = 1/60;
+const P = {ACC: 5.5, DEC: 7.5, VMAX: 8.4, VBURST: 10.6, WALKR: 1.6};
+const B = {G: 9.81, MU: 4.6, MUAIR: 0.5, REST: 0.55, KEEP: 0.78, SETTLE: 1.0, CTRL: 1.0, GMAX: 4.5};
+const ONBALL = new Set(['PASS','CROSS','SHOT','CLEARANCE','GOAL_KICK','CARRY','DRIBBLE','TACKLE',
+                        'GROUND_DUEL','AERIAL_DUEL','SHIELD','RECOVERY','FREE_KICK','RESTART_POSSESSION','FOUL']);
+let DATA=null, W=null, paused=false;
+
+const wx = x => x*1.05, wy = y => y*0.68;   // rel -> meters (LIV home: no flip)
+
+function frameAt(frames, t){
+  let lo=0, hi=frames.length-1;
+  while(lo<hi){ const m=(lo+hi)>>1; if(frames[m][0]<t) lo=m+1; else hi=m; }
+  const b=frames[lo], a=frames[Math.max(0,lo-1)];
+  const al=a[0]===b[0]?0:Math.min(1,Math.max(0,(t-a[0])/(b[0]-a[0])));
+  return [a,b,al];
+}
+function authPos(seg, roster, pid, t){
+  const [a,b,al]=frameAt(seg.frames,t);
+  const k=roster.indexOf(pid); if(k<0) return null;
+  const pa=a[4][k], pb=b[4][k]; if(!pa||!pb) return null;
+  return {x:wx(pa[0]+(pb[0]-pa[0])*al), y:wy(pa[1]+(pb[1]-pa[1])*al), active:pa[3]};
+}
+function authBall(seg, t){
+  const [a,b,al]=frameAt(seg.frames,t);
+  return {x:wx(a[1]+(b[1]-a[1])*al), y:wy(a[2]+(b[2]-a[2])*al)};
+}
+
+function famOf(e){
+  const d=e.detail||{}, pt=d.pass_type, dist=d.distance_m||12;
+  if(e.event_type==='CROSS'||pt==='CROSS') return 'CROSS';
+  if(e.event_type==='CLEARANCE') return 'CLEAR';
+  if(e.event_type==='GOAL_KICK') return 'GKDIST';
+  if(e.event_type==='SHOT') return 'SHOT';
+  if(pt==='THROUGH') return 'THROUGH';
+  if(pt==='LONG'||pt==='AERIAL_LONG') return dist>22?'LOFT':'DRIVEN';
+  return 'SHORT';
+}
+/* real-world launch model per family (1x physics; loft solved by real gravity) */
+function launch(o, d, fam){
+  const D=Math.max(0.5,Math.hypot(d.x-o.x,d.y-o.y)), ux=(d.x-o.x)/D, uy=(d.y-o.y)/D;
+  let v0, vz=0;
+  if(fam==='LOFT'||fam==='CROSS'||fam==='CLEAR'||fam==='GKDIST'){
+    const T=Math.max(0.9, Math.min(2.6, D/13));       // hang time, real football
+    vz=B.G*T/2; v0=D/T;
+  } else {
+    const base={SHORT:15,DRIVEN:21,THROUGH:18,SHOT:27,CLEAR:20}[fam]||15;
+    v0=Math.max(base, Math.sqrt(2*B.MU*D)+2);
+  }
+  return {vx:ux*v0, vy:uy*v0, vz};
+}
+
+function makeWorld(segKey){
+  const seg=DATA[segKey];
+  const roster=DATA.roster, names=DATA.names;
+  const t0=seg.t0;
+  const sched=seg.events.filter(e=>ONBALL.has(e.event_type));
+  const w={seg, roster, names, sched, cur:0, simClock:t0, world:0, phase:'APPROACH',
+           phaseT:0, players:{}, flight:null, guidSum:0, guidN:0, kicks:0,
+           slipSum:0, netHold:0, beatT:null, sep:[], metrics:{spd:[],acc:[],ballspd:[],tp:0},
+           done:false, resetUntil:0};
+  const bw=authBall(seg,t0);
+  w.ball={x:bw.x,y:bw.y,z:0,vx:0,vy:0,vz:0,ctrl:null,excl:null,exclT:0,touchT:0};
+  for(const pid of roster){
+    const a=authPos(seg,roster,pid,t0);
+    if(a) w.players[pid]={x:a.x,y:a.y,vx:0,vy:0,face:0,active:a.active,team:(names[pid]||{}).team,
+                          name:(names[pid]||{}).name||pid, burst:0, stun:0, pvx:0, pvy:0};
+  }
+  w.cam={x:bw.x,y:bw.y};
+  return w;
+}
+
+function steer(p, tx, ty, vmax, rdt){
+  const dx=tx-p.x, dy=ty-p.y, d=Math.hypot(dx,dy);
+  let des_vx=0, des_vy=0;
+  if(d>0.15){
+    const sp=Math.min(vmax, d>P.WALKR? vmax : d*2.2);
+    des_vx=dx/d*sp; des_vy=dy/d*sp;
+  }
+  const ax=des_vx-p.vx, ay=des_vy-p.vy, am=Math.hypot(ax,ay);
+  const lim=(Math.hypot(des_vx,des_vy)<Math.hypot(p.vx,p.vy)?P.DEC:P.ACC)*rdt;
+  if(am>lim){ p.vx+=ax/am*lim; p.vy+=ay/am*lim; } else { p.vx=des_vx; p.vy=des_vy; }
+  p.x+=p.vx*rdt; p.y+=p.vy*rdt;
+  const v=Math.hypot(p.vx,p.vy);
+  if(v>0.5) p.face=Math.atan2(p.vy,p.vx);
+  return v;
+}
+
+function tick(w){
+  if(w.done) return;
+  const rdt=DT;
+  w.world+=rdt;
+  const e=w.sched[w.cur];
+  const ball=w.ball;
+  // ── intention execution state machine ──
+  if(e){
+    const actor=w.players[e.actor_id];
+    const d=e.detail||{};
+    const kinds=e.event_type;
+    if(w.phase==='APPROACH'){
+      // preconditions: actor physically at the ball (contact), ball controllable
+      if(kinds==='FREE_KICK'||kinds==='GOAL_KICK'||kinds==='RESTART_POSSESSION'||kinds==='FOUL'){
+        // authoritative placement family
+        const spot=authBall(w.seg, e.timestamp);
+        w.phase='RESTART'; w.phaseT=0; ball.resetTo=spot;
+        if(kinds==='RESTART_POSSESSION'){ w.resetUntil=w.world+6.0; }  // post-goal reorganization at REAL speed
+        else w.resetUntil=w.world+1.4;
+      } else if(actor){
+        const dd=Math.hypot(ball.x-actor.x, ball.y-actor.y);
+        const free = !w.flight && ball.z<1.2 && Math.hypot(ball.vx,ball.vy)<6;
+        if(dd<B.CTRL+0.4 && free){ w.phase='EXEC'; w.phaseT=0; }
+      } else { w.cur++; }  // actor unknown (sub etc.)
+    }
+    else if(w.phase==='EXEC'){
+      w.phaseT+=rdt;
+      switch(kinds){
+        case 'PASS': case 'CROSS': case 'SHOT': case 'CLEARANCE': case 'GOAL_KICK': {
+          if(w.phaseT>=0.25){   // windup/plant/strike
+            const fam=famOf(e);
+            let intended=null, actual=null;
+            if(d.intended) intended={x:wx(d.intended[0]), y:wy(d.intended[1])};
+            if(e.event_type==='CROSS'&&d.landing) actual={x:wx(d.landing[0]),y:wy(d.landing[1])};
+            else if(d.actual_target&&String(d.outcome||'').startsWith('COMPLETED')) actual={x:wx(d.actual_target[0]),y:wy(d.actual_target[1])};
+            else actual=authBall(w.seg, e.timestamp+1);
+            if(kinds==='SHOT'){
+              const oc=d.outcome;
+              actual={x:105.5, y:34+(oc==='MISS'?5.4:0)};
+              if(w.names[e.actor_id].team==='AWAY') actual.x=-0.5;
+              if(oc==='BLOCKED') actual={x:ball.x+(actual.x-ball.x)*0.2, y:ball.y+(34-ball.y)*0.2};
+            }
+            const aim=intended||actual;
+            const L=launch(ball, aim, fam);
+            ball.vx=L.vx; ball.vy=L.vy; ball.vz=L.vz; ball.ctrl=null;
+            ball.excl=e.actor_id; ball.exclT=w.world+0.45;
+            w.flight={to:actual, rec:(String(d.outcome||'').startsWith('COMPLETED')||String(d.outcome||'').startsWith('AERIAL'))?d.target_id:null,
+                      goal: kinds==='SHOT'&&d.outcome==='GOAL', started:w.world};
+            w.kicks++;
+            w.slipSum+=Math.max(0, w.world - (w.lastKickWorld||w.world) - Math.max(0,(e.timestamp-(w.lastKickSim||e.timestamp))));
+            w.lastKickWorld=w.world; w.lastKickSim=e.timestamp;
+            w.simClock=e.timestamp;
+            w.cur++; w.phase='APPROACH';
+          }
+          break;
+        }
+        case 'CARRY': {
+          // dribble toward the intention's destination via physical touches
+          const dest=authBall(w.seg, Math.min(e.timestamp, w.seg.t1));
+          ball.ctrl=e.actor_id;
+          const dd=Math.hypot(dest.x-ball.x,dest.y-ball.y);
+          if(dd<1.6){ w.simClock=e.timestamp; w.cur++; w.phase='APPROACH'; }
+          break;
+        }
+        case 'DRIBBLE': {
+          const dfd = Object.entries(w.names).find(([pid,n])=>n.name===d.defender);
+          const dp = dfd? w.players[dfd[0]] : null;
+          if(w.phaseT>=0.5){
+            if(d.outcome==='BEAT'){
+              actor.burst=w.world+1.6;
+              if(dp) dp.stun=w.world+1.15;   // pace-differential recovery, simplified deterministic
+              ball.ctrl=e.actor_id;
+              const a=actor.face; ball.vx=Math.cos(a)*9; ball.vy=Math.sin(a)*9;
+              w.beatT={t:w.world, att:e.actor_id, dfd:dfd?dfd[0]:null};
+            } else if(d.outcome==='TACKLED'&&dp){ ball.ctrl=dfd[0]; }
+            w.simClock=e.timestamp; w.cur++; w.phase='APPROACH';
+          }
+          break;
+        }
+        case 'RECOVERY': {
+          ball.ctrl=e.actor_id; w.simClock=e.timestamp; w.cur++; w.phase='APPROACH';
+          break;
+        }
+        default: {   // duels/shield: physical dwell at the contest
+          if(w.phaseT>=0.55){ w.simClock=e.timestamp; w.cur++; w.phase='APPROACH'; }
+        }
+      }
+    }
+    else if(w.phase==='RESTART'){
+      if(w.world>=w.resetUntil){
+        ball.x=ball.resetTo.x; ball.y=ball.resetTo.y; ball.z=0; ball.vx=ball.vy=ball.vz=0; // authoritative placement
+        w.simClock=e.timestamp; w.cur++; w.phase='APPROACH';
+      }
+    }
+  } else if(w.cur>=w.sched.length){ w.done=true; }
+
+  // ── players: continuous controllers toward cal11 structural intent ──
+  const eNow=w.sched[w.cur];
+  for(const pid of w.roster){
+    const p=w.players[pid]; if(!p||!p.active) continue;
+    p.pvx=p.vx; p.pvy=p.vy;
+    let tx, ty, vmax=P.VMAX;
+    const lookahead=Math.min(w.simClock+1.2, w.seg.t1);
+    const A=authPos(w.seg,w.roster,pid,lookahead);
+    tx=A?A.x:p.x; ty=A?A.y:p.y;
+    if(p.stun>w.world){ vmax=1.2; }                                  // beaten: physical recovery
+    if(p.burst>w.world){ vmax=P.VBURST; }                            // exploiting a beat
+    if(eNow&&eNow.actor_id===pid&&w.phase!=='RESTART'){
+      if(eNow.event_type==='CARRY'&&ball.ctrl===pid&&Math.hypot(ball.x-p.x,ball.y-p.y)<2.2){
+        const cd=authBall(w.seg, Math.min(eNow.timestamp, w.seg.t1));
+        tx=cd.x; ty=cd.y;                                        // dribble toward the intention's space
+      } else { tx=ball.x; ty=ball.y; }
+      vmax=P.VMAX;
+    }
+    if(w.flight&&w.flight.rec===pid){ tx=w.flight.to.x; ty=w.flight.to.y; }
+    if(ball.ctrl===pid){ const bd=Math.hypot(ball.x-p.x,ball.y-p.y); if(bd>1.1){ tx=ball.x; ty=ball.y; } }
+    const v=steer(p,tx,ty,vmax,rdt);
+    const acc=Math.hypot(p.vx-p.pvx,p.vy-p.pvy)/rdt;
+    if((w.world*60|0)%6===0){ w.metrics.spd.push(v); w.metrics.acc.push(acc); }
+  }
+  // ── ball physics: position ONLY via integration (+sanctioned restarts) ──
+  const px=ball.x, py=ball.y;
+  ball.x+=ball.vx*rdt; ball.y+=ball.vy*rdt; ball.z+=ball.vz*rdt;
+  if(ball.z>0) ball.vz-=B.G*rdt;
+  if(ball.z<=0){ if(ball.vz<0){ const r=-ball.vz*B.REST;
+      if(r<B.SETTLE) ball.vz=0; else { ball.vz=r; ball.vx*=B.KEEP; ball.vy*=B.KEEP; } }
+    ball.z=Math.max(0,ball.z); }
+  const bs=Math.hypot(ball.vx,ball.vy);
+  if(bs>0){ const mu=ball.z>0.05?B.MUAIR:B.MU; const ns=Math.max(0,bs-mu*rdt); ball.vx*=ns/bs; ball.vy*=ns/bs; }
+  if((w.world*60|0)%6===0) w.metrics.ballspd.push(Math.hypot(ball.vx,ball.vy));
+  if(Math.hypot(ball.x-px,ball.y-py)>3 && w.phase!=='RESTART') w.metrics.tp++;
+  // guidance: bounded steering toward the authoritative outcome point
+  if(w.flight){
+    const f=w.flight, dd=Math.hypot(f.to.x-ball.x,f.to.y-ball.y);
+    const sp=Math.hypot(ball.vx,ball.vy);
+    if(sp>1&&dd>0.4){
+      const tArr=dd/Math.max(3,sp);
+      const wantVx=(f.to.x-ball.x)/tArr, wantVy=(f.to.y-ball.y)/tArr;
+      let gx=(wantVx-ball.vx)/Math.max(0.2,tArr), gy=(wantVy-ball.vy)/Math.max(0.2,tArr);
+      const gm=Math.hypot(gx,gy);
+      const eff=Math.min(gm,B.GMAX);
+      if(gm>0.01){ ball.vx+=gx/gm*eff*rdt; ball.vy+=gy/gm*eff*rdt; w.guidSum+=eff*rdt; w.guidN++; }
+    }
+    if(f.goal&&ball.x>=105){ w.flight=null; ball.vx*=0.2; ball.vy*=0.2; w.netHold=w.world+1.6; }
+    else if(dd<1.2&&ball.z<1.3&&!f.goal){ if(f.rec){ ball.ctrl=f.rec;
+        const rp=w.players[f.rec]; if(rp){ ball.vx=ball.vx*0.15+rp.vx*0.6; ball.vy=ball.vy*0.15+rp.vy*0.6; } }
+      w.flight=null; }
+    else if(w.world-f.started>4){ w.flight=null; }
+  }
+  // control touches (never parented)
+  if(ball.ctrl&&w.players[ball.ctrl]){
+    const p=w.players[ball.ctrl];
+    const dd=Math.hypot(ball.x-p.x,ball.y-p.y);
+    const pv=Math.hypot(p.vx,p.vy);
+    ball.touchT-=rdt;
+    if(dd<0.95&&ball.touchT<=0&&!(ball.excl===ball.ctrl&&w.world<ball.exclT)){
+      let a=p.face;
+      const eC=w.sched[w.cur];
+      if(eC&&eC.event_type==='CARRY'&&eC.actor_id===ball.ctrl){
+        const cd=authBall(w.seg, Math.min(eC.timestamp, w.seg.t1));
+        a=Math.atan2(cd.y-ball.y, cd.x-ball.x);                  // touches aim at the carry destination
+      }
+      const knock=pv>5?pv+2.6:pv>2?pv+1.6:2.0;
+      ball.vx=Math.cos(a)*knock; ball.vy=Math.sin(a)*knock; ball.vz=0;
+      ball.touchT=pv>5?0.5:0.4;
+    } else if(dd>4.5){ ball.ctrl=null; }
+  }
+  // take-on separation tracking
+  if(w.beatT&&w.beatT.dfd){
+    const a=w.players[w.beatT.att], df=w.players[w.beatT.dfd];
+    if(a&&df&&w.world-w.beatT.t<5.2){
+      if(((w.world-w.beatT.t)*10|0)!==w.beatT.last){
+        w.beatT.last=(w.world-w.beatT.t)*10|0;
+        w.sep.push({dt:+(w.world-w.beatT.t).toFixed(1), sep:+Math.hypot(a.x-df.x,a.y-df.y).toFixed(2)});
+      }
+    } else if(w.world-w.beatT.t>=5.2) w.beatT=null;
+  }
+  // camera: SWOS slew, wide broadcast
+  const camT={x:Math.max(43,Math.min(62,ball.x)), y:Math.max(27,Math.min(41,ball.y))};
+  w.cam.x+=(camT.x-w.cam.x)/16; w.cam.y+=(camT.y-w.cam.y)/16;
+}
+
+/* ── drawing: simple original placeholder figures at classic top-down scale ── */
+function draw(w){
+  const cv=document.getElementById('cv'), c=cv.getContext('2d');
+  const SC=cv.width/86;                                    // ~86 m visible width
+  const ox=w.cam.x-43, oy=w.cam.y-cv.height/SC/2;
+  const X=x=>(x-ox)*SC, Y=y=>(y-oy)*SC;
+  c.fillStyle='#1d5c33'; c.fillRect(0,0,cv.width,cv.height);
+  for(let i=0;i<11;i++){ c.fillStyle=i%2?'#226b3c':'#1d5c33'; c.fillRect(X(i*105/11),Y(0),105/11*SC,68*SC); }
+  c.strokeStyle='rgba(255,255,255,.8)'; c.lineWidth=2;
+  c.strokeRect(X(0),Y(0),105*SC,68*SC);
+  c.beginPath(); c.moveTo(X(52.5),Y(0)); c.lineTo(X(52.5),Y(68)); c.stroke();
+  c.beginPath(); c.arc(X(52.5),Y(34),9.15*SC,0,7); c.stroke();
+  c.strokeRect(X(0),Y(13.85),16.5*SC,40.3*SC); c.strokeRect(X(105-16.5),Y(13.85),16.5*SC,40.3*SC);
+  c.strokeRect(X(0),Y(24.85),5.5*SC,18.3*SC); c.strokeRect(X(105-5.5),Y(24.85),5.5*SC,18.3*SC);
+  c.fillStyle='rgba(255,255,255,.6)'; c.fillRect(X(105),Y(34-3.66),4,7.32*SC); c.fillRect(X(0)-4,Y(34-3.66),4,7.32*SC);
+  const ent=Object.entries(w.players).filter(([,p])=>p.active).sort((a,b)=>a[1].y-b[1].y);
+  let ballDrawn=false;
+  for(const [pid,p] of ent){
+    if(!ballDrawn&&w.ball.z<=0.2&&p.y>w.ball.y){ drawBall(c,w,X,Y,SC); ballDrawn=true; }
+    const h=1.8*SC, liv=p.team==='HOME';
+    c.fillStyle='rgba(0,0,0,.3)'; c.beginPath(); c.ellipse(X(p.x),Y(p.y)+h*.04,h*.2,h*.08,0,0,7); c.fill();
+    const mirror=Math.cos(p.face)<0?-1:1;
+    c.save(); c.translate(X(p.x),Y(p.y)); c.scale(mirror,1);
+    const ph=Math.hypot(p.vx,p.vy)>0.6? Math.sin(w.world*9*Math.max(1,Math.hypot(p.vx,p.vy)/3)) : 0;
+    c.strokeStyle='#fff'; c.lineWidth=Math.max(1.5,h*.09); c.lineCap='round';
+    c.beginPath(); c.moveTo(-h*.05,-h*.28); c.lineTo(-h*.05+ph*h*.14,0); c.stroke();
+    c.beginPath(); c.moveTo(h*.05,-h*.28); c.lineTo(h*.05-ph*h*.14,0); c.stroke();
+    c.fillStyle=liv?'#d33c47':'#f2f2f2';
+    c.beginPath(); c.roundRect(-h*.16,-h*.62,h*.32,h*.36,3); c.fill();
+    c.fillStyle='#e8b98a'; c.beginPath(); c.arc(h*.02,-h*.72,h*.12,0,7); c.fill();
+    c.fillStyle='#2b2019'; c.beginPath(); c.arc(h*.01,-h*.74,h*.12,Math.PI,2*Math.PI); c.fill();
+    c.restore();
+    c.fillStyle='rgba(255,255,255,.75)'; c.font=`${Math.max(9,SC*.6)|0}px system-ui`; c.textAlign='center';
+    c.fillText((w.names[pid]||{}).name?shortN(w.names[pid].name):pid, X(p.x), Y(p.y)+h*.26);
+  }
+  if(!ballDrawn) drawBall(c,w,X,Y,SC);
+  const hud=document.getElementById('hud');
+  const comp=(w.simClock-w.seg.t0)/Math.max(0.1,w.world);
+  hud.textContent=
+    `WORLD ${w.world.toFixed(1)}s (physics 1x)   MATCH CLOCK ${Math.floor(w.simClock/60)}:${String(Math.floor(w.simClock%60)).padStart(2,'0')} `+
+    `(schedule compression ${comp.toFixed(2)}x)   intents ${w.cur}/${w.sched.length}${w.done?' — DONE':''}\n`+
+    `ball (${w.ball.x.toFixed(1)}, ${w.ball.y.toFixed(1)}) z ${w.ball.z.toFixed(2)}  |v| ${Math.hypot(w.ball.vx,w.ball.vy).toFixed(1)} m/s  `+
+    `ctrl ${w.ball.ctrl?(w.names[w.ball.ctrl]||{}).name:'—'}  ${w.flight?'IN FLIGHT':''}${w.netHold>w.world?' GOAL!':''}\n`+
+    `kicks ${w.kicks}  guidance avg ${(w.guidSum/Math.max(1,w.kicks)).toFixed(2)} m/s per pass (cap ${B.GMAX} m/s²)  ball teleports ${w.metrics.tp}`;
+}
+function drawBall(c,w,X,Y,SC){
+  const b=w.ball;
+  c.fillStyle='rgba(0,0,0,.35)'; c.beginPath(); c.ellipse(X(b.x),Y(b.y),SC*.22*(1+b.z*.05),SC*.12,0,0,7); c.fill();
+  c.fillStyle='#fff'; c.beginPath(); c.arc(X(b.x),Y(b.y)-b.z*SC*.62,Math.max(3,SC*.22)*(1+Math.min(.4,b.z*.04)),0,7); c.fill();
+  c.strokeStyle='rgba(0,0,0,.4)'; c.stroke();
+}
+function shortN(n){ const p=n.split(' '); return p[p.length-1]; }
+
+async function boot(){
+  DATA=await (await fetch('proto_data.json')).json();
+  W=makeWorld('segA');
+  document.getElementById('seg').onchange=e=>{ W=makeWorld(e.target.value); };
+  document.getElementById('restart').onclick=()=>{ W=makeWorld(document.getElementById('seg').value); };
+  document.getElementById('pause').onclick=()=>{ paused=!paused; };
+  let acc=0, last=null;
+  function loop(ts){
+    requestAnimationFrame(loop);
+    if(last===null){ last=ts; return; }
+    let el=Math.min(0.1,(ts-last)/1000); last=ts;
+    if(paused) return;
+    acc+=el;
+    while(acc>=DT){ tick(W); acc-=DT; }
+    draw(W);
+  }
+  requestAnimationFrame(loop);
+  window.W=()=>W; window.tickN=(n)=>{ for(let i=0;i<n;i++) tick(W); };  // harness hooks
+}
+boot();
+</script>
+</body>
+</html>

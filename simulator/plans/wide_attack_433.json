@@ -1,0 +1,28 @@
+{
+  "formation": "4-3-3",
+  "tactics": {
+    "build_up_tempo": "BALANCED",
+    "passing_directness": "MIXED",
+    "progression_risk": "BALANCED",
+    "attacking_width": "WIDE",
+    "chance_creation_focus": "WIDE",
+    "box_commitment": "COMMIT",
+    "after_winning_possession": "BALANCED",
+    "after_losing_possession": "REGROUP",
+    "defensive_block_height": "MID",
+    "pressing_intensity": "SELECTIVE",
+    "defensive_width": "BALANCED",
+    "marking_orientation": "HYBRID",
+    "defensive_line_behavior": "HOLD"
+  },
+  "instructions": {
+    "LB": {"attack_role": "OVERLAP", "attack_effort": 72, "defense_role": "TRACK_RUNNER", "defense_effort": 62},
+    "RB": {"attack_role": "OVERLAP", "attack_effort": 72, "defense_role": "TRACK_RUNNER", "defense_effort": 62},
+    "CDM": {"attack_role": "ANCHOR", "attack_effort": 32, "defense_role": "SCREEN", "defense_effort": 72},
+    "LCM": {"attack_role": "CREATOR", "attack_effort": 65, "defense_role": "HOLD_ZONE", "defense_effort": 55},
+    "RCM": {"attack_role": "RUNNER", "attack_effort": 72, "defense_role": "TRACK", "defense_effort": 58},
+    "LW": {"attack_role": "TOUCHLINE_WINGER", "attack_effort": 78, "defense_role": "TRACK_FULLBACK", "defense_effort": 48},
+    "RW": {"attack_role": "TOUCHLINE_WINGER", "attack_effort": 78, "defense_role": "TRACK_FULLBACK", "defense_effort": 48},
+    "ST": {"attack_role": "TARGET", "attack_effort": 70, "defense_role": "STAY_HIGH", "defense_effort": 18}
+  }
+}

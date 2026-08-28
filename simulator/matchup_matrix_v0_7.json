@@ -1,0 +1,74 @@
+{
+  "samples": 6,
+  "minutes": 30,
+  "seed0": 26000,
+  "per_90_minutes": {
+    "ultra_vs_ultra": {
+      "home_xg": 0.17,
+      "away_xg": 0.065,
+      "home_shots": 4.5,
+      "away_shots": 3.5,
+      "home_transition_shots": 0.0,
+      "away_transition_shots": 0.0,
+      "possession_changes": 139.0,
+      "home_goals": 0.5,
+      "away_goals": 0.0
+    },
+    "controlled_vs_controlled": {
+      "home_xg": 0.274,
+      "away_xg": 0.317,
+      "home_shots": 5.5,
+      "away_shots": 9.0,
+      "home_transition_shots": 0.0,
+      "away_transition_shots": 0.5,
+      "possession_changes": 308.5,
+      "home_goals": 1.0,
+      "away_goals": 0.0
+    },
+    "wide_attack_vs_ultra": {
+      "home_xg": 0.76,
+      "away_xg": 0.077,
+      "home_shots": 10.0,
+      "away_shots": 4.0,
+      "home_transition_shots": 0.0,
+      "away_transition_shots": 0.0,
+      "possession_changes": 223.0,
+      "home_goals": 0.5,
+      "away_goals": 0.0
+    },
+    "strong_wide_attack_vs_ultra": {
+      "home_xg": 0.509,
+      "away_xg": 0.013,
+      "home_shots": 9.0,
+      "away_shots": 1.0,
+      "home_transition_shots": 0.0,
+      "away_transition_shots": 0.0,
+      "possession_changes": 228.5,
+      "home_goals": 0.5,
+      "away_goals": 0.0
+    },
+    "extreme_open_vs_open": {
+      "home_xg": 1.559,
+      "away_xg": 1.925,
+      "home_shots": 14.0,
+      "away_shots": 16.5,
+      "home_transition_shots": 9.0,
+      "away_transition_shots": 5.5,
+      "possession_changes": 682.0,
+      "home_goals": 1.5,
+      "away_goals": 0.5
+    },
+    "extreme_open_vs_ultra_stress": {
+      "home_xg": 2.321,
+      "away_xg": 0.043,
+      "home_shots": 19.0,
+      "away_shots": 2.0,
+      "home_transition_shots": 2.5,
+      "away_transition_shots": 0.0,
+      "possession_changes": 383.0,
+      "home_goals": 1.5,
+      "away_goals": 0.0
+    }
+  },
+  "known_calibration_note": "The extreme_open_vs_ultra stress case remains too productive in v0.7; this file intentionally exposes that residual rather than hiding it with a scoring cap."
+}

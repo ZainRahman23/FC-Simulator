@@ -1,0 +1,48 @@
+{
+ "seed": 789335328,
+ "goals": [
+  5,
+  1
+ ],
+ "box_ctrl_s": {
+  "H": 15.7,
+  "A": 6.0
+ },
+ "box_occ_mean_when_ctrl": 2.07,
+ "entries": 24,
+ "entry_outcomes": {
+  "shot": 9,
+  "kept": 9,
+  "turnover": 6
+ },
+ "bx_authorizations": 360,
+ "bx_arrivals_in_box": 175,
+ "bx_kinds": {
+  "BOX_FAR": 100,
+  "BOX_CUTBACK": 117,
+  "BOX_SPOT": 67,
+  "BOX_NEAR": 76
+ },
+ "intent_deaths": {
+  "possession_lost": 181,
+  "occupied_or_other": 31,
+  "expired": 124,
+  "ball_regressed": 24
+ },
+ "box_receptions": 37,
+ "box_rec_latency_p50": 0.0,
+ "box_rec_actions": {
+  "PASS": 21,
+  "CARRY": 7,
+  "SHOOT": 7,
+  "SHIELD": 1,
+  "DRIBBLE": 1
+ },
+ "box_rec_whys": {
+  "RECEPTION": 24,
+  "IMPROVED": 8,
+  "PRESSURE": 3,
+  "SETTLED": 2
+ },
+ "shots": 15
+}

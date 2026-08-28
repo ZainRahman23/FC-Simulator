@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Touchline CFR Sandbox</title>
+<style>
+  body{margin:0;background:#0d1117;color:#dfe6ee;font:13px system-ui}
+  #bar{padding:8px 12px;display:flex;gap:10px;align-items:center;background:#161b22;flex-wrap:wrap}
+  #bar b{color:#7ee787}
+  canvas{display:block;margin:0 auto;background:#1d5c33;cursor:crosshair}
+  #hud{padding:6px 12px;white-space:pre;font-family:ui-monospace,monospace;font-size:12px;color:#9fb3c8;min-height:64px}
+  button,select,input{background:#21262d;color:#dfe6ee;border:1px solid #30363d;border-radius:6px;padding:4px 10px}
+  input{width:90px}
+</style>
+</head>
+<body>
+<div id="bar">
+  <b>CONTINUOUS FOOTBALL RUNTIME — SANDBOX</b>
+  <select id="scenario"></select>
+  <label>seed <input id="seed" value="42"></label>
+  <button id="restart">Restart</button>
+  <button id="pause">Pause</button>
+  <button id="cam">Camera: BROADCAST</button>
+  <button id="dbg">Debug: OFF</button>
+  <span id="score" style="color:#7ee787"></span>
+</div>
+<canvas id="cv" width="1240" height="740"></canvas>
+<div id="hud"></div>
+<script src="cfr.js"></script>
+<script src="scenarios.js"></script>
+<script>
+'use strict';
+bindScenarioHooks((w, kind, pid) => contact(w, kind, pid, 'scenario'), (w, p, corr) => carryTouches(w, p, corr));
+
+let world = null, paused = false, camMode = 'broadcast', debugOn = false;
+let cam = {x: 52.5, y: 34};
+let fps = {n:0, t0:performance.now(), v:0}, frameMs = {sum:0, n:0, p:[]};
+
+const sel = document.getElementById('scenario');
+for(const s of SCENARIOS){ const o = document.createElement('option'); o.value = s.id; o.textContent = s.name; sel.appendChild(o); }
+sel.value = 24;
+
+function reset(){
+  const seed = parseInt(document.getElementById('seed').value || '42', 10);
+  world = makeWorld(seed);
+  const sc = SCENARIOS.find(s => s.id == sel.value);
+  world._cues = []; world.scenarioTick = null;
+  sc.setup(world);
+  if(sc.cam === 'zoom') camMode = camMode === 'tactical' ? 'tactical' : 'broadcast';
+  cam = {x: world.ball.x, y: world.ball.y};
+  window.SB = {get world(){ return world; }, tickN: n => { for(let i=0;i<n;i++) tick(world); }, reset};
+}
+sel.onchange = reset;
+document.getElementById('restart').onclick = reset;
+document.getElementById('pause').onclick = e => { paused = !paused; e.target.textContent = paused ? 'Resume' : 'Pause'; };
+document.getElementById('cam').onclick = e => { camMode = camMode === 'broadcast' ? 'tactical' : 'broadcast'; e.target.textContent = 'Camera: ' + camMode.toUpperCase(); };
+document.getElementById('dbg').onclick = e => { debugOn = !debugOn; e.target.textContent = 'Debug: ' + (debugOn ? 'ON' : 'OFF'); };
+document.getElementById('cv').onclick = ev => {
+  const cv = ev.target, r = cv.getBoundingClientRect();
+  const {SC, ox, oy} = camXform(cv);
+  const mx = (ev.clientX - r.left) * (cv.width/r.width) / SC + ox, my = (ev.clientY - r.top) * (cv.height/r.height) / SC + oy;
+  let best = null, bd = 3;
+  for(const p of world.players){ const d = Math.hypot(p.x - mx, p.y - my); if(d < bd){ best = p.pid; bd = d; } }
+  world.selected = best;
+};
+
+function camXform(cv){
+  const visW = camMode === 'tactical' ? 107 : 80;
+  const SC = cv.width / visW;
+  return {SC, ox: cam.x - visW/2, oy: cam.y - cv.height/SC/2};
+}
+
+function stepCam(){
+  const b = world.ball;
+  let tx, ty;
+  if(camMode === 'tactical'){ tx = 52.5; ty = 34; }
+  else {
+    tx = clamp(b.x + b.vx*0.4, 34, 71);
+    ty = clamp(b.y + b.vy*0.4, 24, 44);
+  }
+  cam.x += (tx - cam.x)/16; cam.y += (ty - cam.y)/16;
+}
+
+function draw(){
+  const cv = document.getElementById('cv'), c = cv.getContext('2d');
+  const {SC, ox, oy} = camXform(cv);
+  const X = x => (x - ox)*SC, Y = y => (y - oy)*SC;
+  c.fillStyle = '#17491f'; c.fillRect(0, 0, cv.width, cv.height);
+  for(let i = 0; i < 12; i++){ c.fillStyle = i%2 ? '#1d5c33' : '#1a522c'.slice(0,7); c.fillStyle = i%2 ? '#1d5c33' : '#195029'; c.fillRect(X(i*105/12), Y(0), 105/12*SC, 68*SC); }
+  c.strokeStyle = 'rgba(255,255,255,.85)'; c.lineWidth = 2;
+  c.strokeRect(X(0), Y(0), 105*SC, 68*SC);
+  c.beginPath(); c.moveTo(X(52.5), Y(0)); c.lineTo(X(52.5), Y(68)); c.stroke();
+  c.beginPath(); c.arc(X(52.5), Y(34), 9.15*SC, 0, 7); c.stroke();
+  c.strokeRect(X(0), Y(13.85), 16.5*SC, 40.3*SC); c.strokeRect(X(105-16.5), Y(13.85), 16.5*SC, 40.3*SC);
+  c.strokeRect(X(0), Y(24.85), 5.5*SC, 18.3*SC); c.strokeRect(X(105-5.5), Y(24.85), 5.5*SC, 18.3*SC);
+  c.beginPath(); c.arc(X(11), Y(34), 2, 0, 7); c.fillStyle='rgba(255,255,255,.85)'; c.fill();
+  c.beginPath(); c.arc(X(94), Y(34), 2, 0, 7); c.fill();
+  // goals + nets
+  c.fillStyle = 'rgba(255,255,255,.5)';
+  c.fillRect(X(105), Y(34 - 3.66), 5, 7.32*SC); c.fillRect(X(0)-5, Y(34 - 3.66), 5, 7.32*SC);
+  // players (painter order)
+  const ent = world.players.slice().sort((a,b) => a.y - b.y);
+  let ballDrawn = false;
+  for(const p of ent){
+    if(!ballDrawn && world.ball.z <= 0.2 && p.y > world.ball.y){ drawBall(c, X, Y, SC); ballDrawn = true; }
+    drawPlayer(c, p, X, Y, SC);
+  }
+  if(!ballDrawn) drawBall(c, X, Y, SC);
+  document.getElementById('score').textContent =
+    `  ${world.score[0]} – ${world.score[1]}   world ${world.worldClock.toFixed(1)}s   ${world.restart.state !== 'OPEN' ? '⏸ ' + world.restart.state : ''}`;
+  const hud = document.getElementById('hud');
+  if(debugOn){
+    const b = world.ball;
+    const sp = world.selected !== null ? world.players[world.selected] : null;
+    hud.textContent =
+      `BALL  x ${b.x.toFixed(2)}  y ${b.y.toFixed(2)}  z ${b.z.toFixed(2)}   v ${Math.hypot(b.vx,b.vy).toFixed(2)},${b.vz.toFixed(2)} m/s   state ${b.state}${b.heldBy!==null?' HELD':''}   ctrl ${b.controller}   lastTouch ${b.lastTouch}\n` +
+      (sp ? `PLAYER ${sp.pid} (${sp.role} T${sp.team})  x ${sp.x.toFixed(1)} y ${sp.y.toFixed(1)}  v ${Math.hypot(sp.vx,sp.vy).toFixed(2)} m/s  facing ${(sp.facing*57.3).toFixed(0)}°  ${sp.loco}  contact ${sp.contact}\n` : `PLAYER — click a player to inspect\n`) +
+      `WORLD tick ${world.tick}  world ${world.worldClock.toFixed(2)}s  match ${world.matchClock.toFixed(1)}s  seed ${world.seed}  restart ${world.restart.state}\n` +
+      `PHYS  violations ${world.log.violations}  maxFrameMove ${world.log.maxJump.toFixed(2)}m  placements ${world.log.placements.length}  contacts ${world.log.contacts.length}  touches ${world.metrics.touches}   fps ${fps.v}`;
+  } else {
+    const last = world.log.contacts[world.log.contacts.length-1];
+    hud.textContent = `fps ${fps.v}   last contact: ${last ? last.kind + ' by ' + last.pid : '—'}   (click Debug for physics HUD; click a player to inspect)`;
+  }
+}
+function drawPlayer(c, p, X, Y, SC){
+  const h = 1.85 * SC;
+  const home = p.team === 0;
+  const shirt = home ? '#d33c47' : '#f5f5f5';
+  const shirt2 = home ? '#a92835' : '#cfd4da';
+  const shorts = home ? '#7c1420' : '#2a3b57';
+  const gk = p.role === 'GK';
+  c.save();
+  c.fillStyle = 'rgba(0,0,0,.3)'; c.beginPath(); c.ellipse(X(p.x), Y(p.y)+h*0.03, h*0.2, h*0.08, 0, 0, 7); c.fill();
+  const mirror = Math.cos(p.facing) < 0 ? -1 : 1;
+  c.translate(X(p.x), Y(p.y)); c.scale(mirror, 1);
+  const v = Math.hypot(p.vx, p.vy);
+  const ph = v > 0.5 ? Math.sin(p.gait) * Math.min(1, v/5) : 0;
+  c.strokeStyle = '#fff'; c.lineWidth = Math.max(1.4, h*0.085); c.lineCap = 'round';
+  const kick = p.contact === 'KICK_WINDUP' ? 0.9 : 0;
+  c.beginPath(); c.moveTo(-h*0.05, -h*0.28); c.lineTo(-h*0.05 + (ph + kick)*h*0.16, 0); c.stroke();
+  c.beginPath(); c.moveTo(h*0.05, -h*0.28); c.lineTo(h*0.05 - ph*h*0.15, 0); c.stroke();
+  c.fillStyle = gk ? (home ? '#3fae5a' : '#c98411') : shirt;
+  c.beginPath(); c.roundRect(-h*0.16, -h*0.62, h*0.32, h*0.36, 3); c.fill();
+  c.fillStyle = gk ? 'rgba(0,0,0,.25)' : shirt2; c.fillRect(-h*0.16, -h*0.62, h*0.32, h*0.05);
+  c.fillStyle = shorts; c.fillRect(-h*0.14, -h*0.30, h*0.28, h*0.09);
+  c.fillStyle = '#e8b98a'; c.beginPath(); c.arc(h*0.02, -h*0.72, h*0.115, 0, 7); c.fill();
+  c.fillStyle = '#2b2019'; c.beginPath(); c.arc(h*0.01, -h*0.74, h*0.115, Math.PI, 2*Math.PI); c.fill();
+  c.restore();
+  if(world.selected === p.pid){ c.strokeStyle = '#7ee787'; c.lineWidth = 2; c.beginPath(); c.arc(X(p.x), Y(p.y), h*0.34, 0, 7); c.stroke(); }
+}
+function drawBall(c, X, Y, SC){
+  const b = world.ball;
+  c.fillStyle = `rgba(0,0,0,${0.35 - Math.min(0.2, b.z*0.03)})`;
+  const shr = Math.max(2, SC*0.16) * (1 + Math.min(0.8, b.z*0.12));
+  c.beginPath(); c.ellipse(X(b.x), Y(b.y), shr, shr*0.55, 0, 0, 7); c.fill();
+  const bz = Y(b.y) - b.z * SC * 0.62;
+  const r = Math.max(3, SC*0.18) * (1 + Math.min(0.5, b.z*0.05));
+  c.fillStyle = '#fff'; c.beginPath(); c.arc(X(b.x), bz, r, 0, 7); c.fill();
+  c.strokeStyle = 'rgba(0,0,0,.4)'; c.lineWidth = 1; c.stroke();
+}
+
+let acc = 0, last = null;
+function loop(ts){
+  requestAnimationFrame(loop);
+  if(last === null){ last = ts; return; }
+  const t0 = performance.now();
+  let el = Math.min(0.1, (ts - last)/1000); last = ts;
+  if(!paused){
+    acc += el;
+    let guard = 0;
+    while(acc >= DT && guard++ < 8){ tick(world); acc -= DT; }
+    if(guard >= 8) acc = 0;                     // heavy frame: drop surplus, physics stays fixed-step
+  }
+  stepCam();
+  draw();
+  const ms = performance.now() - t0;
+  frameMs.sum += ms; frameMs.n++; frameMs.p.push(ms);
+  if(frameMs.p.length > 1800) frameMs.p.splice(0, 900);
+  fps.n++;
+  if(ts - fps.t0 > 1000){ fps.v = fps.n; fps.n = 0; fps.t0 = ts; }
+}
+window.perfStats = () => {
+  const p = frameMs.p.slice().sort((a,b)=>a-b);
+  return {avg: +(frameMs.sum/Math.max(1,frameMs.n)).toFixed(2),
+          p95: +(p[Math.floor(p.length*0.95)]||0).toFixed(2),
+          p99: +(p[Math.floor(p.length*0.99)]||0).toFixed(2), fps: fps.v};
+};
+reset();
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>

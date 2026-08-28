@@ -1,0 +1,222 @@
+{
+ "grid": [
+  {
+   "tag": "d10      fre",
+   "n": 100,
+   "conv": 0.51,
+   "xg": 0.391,
+   "err": 0.119,
+   "held": 0.22,
+   "out": 0.11,
+   "disp": 0.86
+  },
+  {
+   "tag": "d10      PRS",
+   "n": 100,
+   "conv": 0.29,
+   "xg": 0.294,
+   "err": -0.004,
+   "held": 0.38,
+   "out": 0.32,
+   "disp": 1.61
+  },
+  {
+   "tag": "d16      fre",
+   "n": 100,
+   "conv": 0.11,
+   "xg": 0.164,
+   "err": -0.054,
+   "held": 0.0,
+   "out": 0.18,
+   "disp": 0.84
+  },
+  {
+   "tag": "d16      PRS",
+   "n": 100,
+   "conv": 0.02,
+   "xg": 0.111,
+   "err": -0.091,
+   "held": 0.47,
+   "out": 0.29,
+   "disp": 1.61
+  },
+  {
+   "tag": "d22      fre",
+   "n": 100,
+   "conv": 0.0,
+   "xg": 0.069,
+   "err": -0.069,
+   "held": 0.94,
+   "out": 0.06,
+   "disp": 0.84
+  },
+  {
+   "tag": "d22      PRS",
+   "n": 100,
+   "conv": 0.0,
+   "xg": 0.046,
+   "err": -0.046,
+   "held": 0.86,
+   "out": 0.14,
+   "disp": 1.61
+  },
+  {
+   "tag": "d14+wide fre",
+   "n": 100,
+   "conv": 0.19,
+   "xg": 0.163,
+   "err": 0.027,
+   "held": 0.08,
+   "out": 0.11,
+   "disp": 0.84
+  },
+  {
+   "tag": "d14+wide PRS",
+   "n": 100,
+   "conv": 0.12,
+   "xg": 0.11,
+   "err": 0.01,
+   "held": 0.56,
+   "out": 0.22,
+   "disp": 1.61
+  }
+ ],
+ "fin_sweep": [
+  {
+   "level": 40,
+   "tag": "finishing=40",
+   "n": 100,
+   "conv": 0.12,
+   "xg": 0.221,
+   "err": -0.101,
+   "held": 0.11,
+   "out": 0.32,
+   "disp": 1.72
+  },
+  {
+   "level": 60,
+   "tag": "finishing=60",
+   "n": 100,
+   "conv": 0.16,
+   "xg": 0.221,
+   "err": -0.061,
+   "held": 0.04,
+   "out": 0.34,
+   "disp": 1.28
+  },
+  {
+   "level": 80,
+   "tag": "finishing=80",
+   "n": 100,
+   "conv": 0.22,
+   "xg": 0.221,
+   "err": -0.001,
+   "held": 0.0,
+   "out": 0.15,
+   "disp": 0.84
+  },
+  {
+   "level": 95,
+   "tag": "finishing=95",
+   "n": 100,
+   "conv": 0.3,
+   "xg": 0.221,
+   "err": 0.079,
+   "held": 0.0,
+   "out": 0.03,
+   "disp": 0.51
+  }
+ ],
+ "gk_reflex_sweep": [
+  {
+   "level": 40,
+   "tag": "gk_reflexes=40",
+   "n": 100,
+   "conv": 0.5,
+   "xg": 0.221,
+   "err": 0.279,
+   "held": 0.0,
+   "out": 0.16,
+   "disp": 0.84
+  },
+  {
+   "level": 60,
+   "tag": "gk_reflexes=60",
+   "n": 100,
+   "conv": 0.28,
+   "xg": 0.221,
+   "err": 0.059,
+   "held": 0.0,
+   "out": 0.16,
+   "disp": 0.84
+  },
+  {
+   "level": 80,
+   "tag": "gk_reflexes=80",
+   "n": 100,
+   "conv": 0.13,
+   "xg": 0.221,
+   "err": -0.091,
+   "held": 0.01,
+   "out": 0.15,
+   "disp": 0.84
+  },
+  {
+   "level": 95,
+   "tag": "gk_reflexes=95",
+   "n": 100,
+   "conv": 0.02,
+   "xg": 0.221,
+   "err": -0.201,
+   "held": 0.04,
+   "out": 0.16,
+   "disp": 0.84
+  }
+ ],
+ "gk_handling_sweep": [
+  {
+   "level": 40,
+   "tag": "gk_handling=40",
+   "n": 100,
+   "conv": 0.25,
+   "xg": 0.221,
+   "err": 0.029,
+   "held": 0.0,
+   "out": 0.17,
+   "disp": 0.84
+  },
+  {
+   "level": 60,
+   "tag": "gk_handling=60",
+   "n": 100,
+   "conv": 0.16,
+   "xg": 0.221,
+   "err": -0.061,
+   "held": 0.0,
+   "out": 0.17,
+   "disp": 0.84
+  },
+  {
+   "level": 80,
+   "tag": "gk_handling=80",
+   "n": 100,
+   "conv": 0.22,
+   "xg": 0.221,
+   "err": -0.001,
+   "held": 0.04,
+   "out": 0.2,
+   "disp": 0.84
+  },
+  {
+   "level": 95,
+   "tag": "gk_handling=95",
+   "n": 100,
+   "conv": 0.16,
+   "xg": 0.221,
+   "err": -0.061,
+   "held": 0.68,
+   "out": 0.16,
+   "disp": 0.84
+  }
+ ]
+}

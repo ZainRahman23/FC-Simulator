@@ -1,0 +1,38 @@
+{
+ "A short pass": {
+  "ok": true,
+  "detail": "kick@0.28 -> receiver control@1.4 (flight 1.12s), viol 0"
+ },
+ "B through ball": {
+  "ok": true,
+  "detail": "fast runner wins: hugoekitike; fast defender wins: bre_gen_rcb (arrival physical, pace-decided)"
+ },
+ "C take-on physics": {
+  "ok": true,
+  "detail": "fast att: sep grows to 9.98m and rising; slow att: peaks 10.64m then fast defender closes to 7.33m \u2014 consequence is pace-emergent"
+ },
+ "D cross": {
+  "ok": true,
+  "detail": "apex 5.0m, box contact: TOUCH_LOOSE by bre_gen_lcb"
+ },
+ "E shot": {
+  "ok": true,
+  "detail": "strike -> GOAL (physical outcome)"
+ },
+ "F+G press/tackle": {
+  "ok": true,
+  "detail": "tackle poke@1.77; possession flips without a physical contact: 0"
+ },
+ "H buildup": {
+  "ok": true,
+  "detail": "10 kicks, 9 receptions in 35s closed loop; 86% of players in motion while ball travels"
+ },
+ "I continuous runs": {
+  "ok": true,
+  "detail": "max per-tick step 0.14m (no snaps); top runner covered 176m in 40s \u2014 runs are physically travelled"
+ },
+ "J goal->kickoff": {
+  "ok": true,
+  "detail": "score [1, 0], sequence ['OPEN', 'GOAL', 'KICKOFF', 'OPEN']"
+ }
+}

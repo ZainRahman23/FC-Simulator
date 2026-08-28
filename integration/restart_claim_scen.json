@@ -1,0 +1,34 @@
+{
+ "1 throw-in occurs & thrower legality": {
+  "detail": "taker max out 0.74m (legal \u22642m)",
+  "ok": true
+ },
+ "2 non-throwers legal regions": {
+  "detail": "peak transit-out 0.00m (re-entry), out at release 0.00m",
+  "ok": true
+ },
+ "3 stale intents suspended at whistle": {
+  "detail": "0 live intents at whistle -> cleared",
+  "ok": true
+ },
+ "4 restart -> live -> ordinary play resumes": {
+  "detail": "kicks after resume: True",
+  "ok": true
+ },
+ "5 ball out during pursuit": {
+  "detail": "salah beyond line max 0.76m; restart=THROW_IN",
+  "ok": true
+ },
+ "6 teammate does not join claimant": {
+  "detail": "both-commanded-at-ball ticks: 0, winner codygakpo",
+  "ok": true
+ },
+ "7 near-equal candidates: single claim": {
+  "detail": "winner codygakpo, both-commanded ticks 5",
+  "ok": true
+ },
+ "8 hold without micro-twitch": {
+  "detail": "velocity reversals in 7s: 0",
+  "ok": true
+ }
+}

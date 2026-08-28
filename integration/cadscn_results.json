@@ -1,0 +1,38 @@
+{
+ "1 CB circulation [A]": {
+  "detail": "11 decisions in 20s, median interval 0.02s",
+  "ok": null
+ },
+ "1 CB circulation [D]": {
+  "detail": "11 decisions in 20s, median interval 0.02s",
+  "ok": null
+ },
+ "2 between lines A": {
+  "detail": "first decisions [(1.38, 'RECEPTION', 'CARRY'), (3.77, 'cadence', 'CARRY')]",
+  "ok": null
+ },
+ "2 between lines D": {
+  "detail": "first decisions [(2.65, 'SETTLED', 'CARRY'), (2.67, 'cadence', 'CARRY'), (2.68, 'cadence', 'CARRY')] (expect SETTLED after scan)",
+  "ok": true
+ },
+ "3 pressured winger": {
+  "detail": "A latency 0.0s [(0.45, 'RECEPTION', 'CARRY'), (0.45, 'PRESSURE', 'CARRY')] | D latency 0.0s [(0.45, 'RECEPTION', 'CARRY'), (1.8, 'IMPROVED', 'CARRY')] (one-touch must survive)",
+  "ok": true
+ },
+ "4 take-on interrupts": {
+  "detail": "A 0 | D 0 (decisions during active TAKE_ON)",
+  "ok": true
+ },
+ "5 box-run persistence after deep reception": {
+  "detail": "A adv {'hugoekitike': 2.4000000000000057, 'codygakpo': 9.899999999999991, 'conorbradley': -10.299999999999997} | D adv {'hugoekitike': 2.8000000000000114, 'codygakpo': 7.199999999999989, 'conorbradley': -7.8999999999999915}",
+  "ok": true
+ },
+ "11 low-block target churn (lcb, 12s)": {
+  "detail": "A 7 | D 7 (no jitter explosion)",
+  "ok": true
+ },
+ "12 recovery window": {
+  "detail": "RECOVER active 2.7s vs t_rec 2.8",
+  "ok": true
+ }
+}

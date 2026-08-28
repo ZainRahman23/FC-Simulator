@@ -1,0 +1,54 @@
+{
+ "T1 home throw y=0 line": {
+  "detail": "thrower out 0.45m, worst non 0.00m, exec 9.1s, resumed True",
+  "ok": true
+ },
+ "T2 home throw y=68 line": {
+  "detail": "thrower out 0.67m, worst non 0.00m, exec 5.4s, resumed True",
+  "ok": true
+ },
+ "T3 away throw y=0 line": {
+  "detail": "thrower out 0.31m, worst non 0.00m, exec 7.1s, resumed True",
+  "ok": true
+ },
+ "T4 away throw y=68 line": {
+  "detail": "thrower out 0.67m, worst non 0.00m, exec 8.9s, resumed True",
+  "ok": true
+ },
+ "T5 throw near own goal": {
+  "detail": "thrower out 0.68m, worst non 0.00m, exec 11.0s, resumed True",
+  "ok": true
+ },
+ "T6 throw near halfway": {
+  "detail": "thrower out 0.75m, worst non 0.00m, exec 7.5s, resumed True",
+  "ok": true
+ },
+ "T7 attacking-third throw": {
+  "detail": "thrower out 0.19m, worst non 0.00m, exec 6.8s, resumed True",
+  "ok": true
+ },
+ "T8 exit during pursuit": {
+  "detail": "whistle 0.43s, worst non-taker out at +5s 0.00m, cleared True",
+  "ok": true
+ },
+ "K1 opening kickoff (same machinery)": {
+  "detail": "READY reached True, half-violations 0, circle-violations 0, executed True",
+  "ok": true
+ },
+ "K2 home concedes -> away kickoff return": {
+  "detail": "ready True, half/circle 0/0, path/straight p50 1.03 p90 1.20, max-step 0.09m, kicked True",
+  "ok": true
+ },
+ "K3 away concedes -> home kickoff return": {
+  "detail": "ready True, half/circle 0/0, path/straight p50 1.04 p90 1.20, max-step 0.09m, kicked True",
+  "ok": true
+ },
+ "K4 hold-at-slot + resume 5s": {
+  "detail": "READY twitch flips 0, decisions in 5s 5, moving now 20",
+  "ok": true
+ },
+ "K5 repeated kickoffs no stale state": {
+  "detail": "3 cycles clean True",
+  "ok": true
+ }
+}

@@ -1,0 +1,45 @@
+{
+ "curve": [
+  {
+   "world_min": 2.5,
+   "mean": 86.8,
+   "min": 80.0
+  },
+  {
+   "world_min": 5.0,
+   "mean": 71.2,
+   "min": 57.6
+  },
+  {
+   "world_min": 7.5,
+   "mean": 59.7,
+   "min": 45.7
+  },
+  {
+   "world_min": 10.0,
+   "mean": 57.6,
+   "min": 43.2
+  },
+  {
+   "world_min": 12.5,
+   "mean": 40.6,
+   "min": 28.7
+  },
+  {
+   "world_min": 15.0,
+   "mean": 24.3,
+   "min": 6.2
+  }
+ ],
+ "bands": {
+  "walk<2": 0.37,
+  "jog2-4": 0.27,
+  "run4-5.5": 0.173,
+  "hsr5.5-7": 0.096,
+  "sprint>7": 0.091
+ },
+ "native": {
+  "native_full90_energy_min": 57.6,
+  "native_full90_energy_mean": 65.3
+ }
+}
