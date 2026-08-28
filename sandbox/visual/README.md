@@ -20,8 +20,12 @@ sandbox fetches the manifest and frames over HTTP.)
 - Regulation 105×68 m pitch: geometry and all markings are procedural
   (touchlines, goal lines, halfway, centre circle/spot, penalty areas, six-yard
   boxes, penalty spots/arcs, corner arcs) plus temporary procedural goals.
-- Grass is the frozen Wang tileset, sliced strictly by metadata `bounding_box`,
-  with pitch-scale alternating mowing bands. Texture only — never geometry.
+- Grass colours come from the frozen tileset: the pure pitch and perimeter
+  tiles (sliced strictly by metadata `bounding_box`) supply exact pixel-art
+  palettes, and the surface is deterministic low-frequency value-noise over
+  those palettes (no per-metre tile stamping, so no 32 px periodicity), with a
+  hash-dithered pitch/perimeter transition band and pitch-scale alternating
+  mowing bands on top. Texture only — never geometry; source PNGs untouched.
 - 22 players from the frozen character (idle rotations, Jogging template + custom
   SE jog fill, Full Sprint), ground-anchored at canvas-centre + constant foot
   offset (`pivots.json`), nearest-neighbour only, no depth scaling.

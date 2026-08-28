@@ -114,6 +114,55 @@ async function boot() {
 }
 
 // ---------------------------------------------------------------- ground prerender
+// Deterministic integer hash -> [0,1). Same output every load (no Math.random).
+function hash01(x, y) {
+  let n = (x | 0) * 374761393 + (y | 0) * 668265263;
+  n = (n ^ (n >>> 13)) * 1274126177;
+  n = n ^ (n >>> 16);
+  return (n >>> 0) / 4294967296;
+}
+// Smooth deterministic value noise on a unit lattice.
+function vnoise(x, y) {
+  const xi = Math.floor(x), yi = Math.floor(y), fx = x - xi, fy = y - yi;
+  const sx = fx * fx * (3 - 2 * fx), sy = fy * fy * (3 - 2 * fy);
+  const a = hash01(xi, yi), b = hash01(xi + 1, yi);
+  const cc = hash01(xi, yi + 1), dd = hash01(xi + 1, yi + 1);
+  return a + (b - a) * sx + (cc - a) * sy + (a - b - cc + dd) * sx * sy;
+}
+// Read one tile out of the frozen sheet (by its metadata bounding_box) and
+// return its exact pixel-art palette, luminance-sorted, with a pick(n) that
+// reproduces the tile's original colour proportions. Read-only: the source
+// sheet is only sampled, never modified.
+function extractPalette(bb) {
+  const t = document.createElement("canvas");
+  t.width = bb.width; t.height = bb.height;
+  const tc = t.getContext("2d", { willReadFrequently: true });
+  tc.imageSmoothingEnabled = false;
+  tc.drawImage(S.images.sheet, bb.x, bb.y, bb.width, bb.height, 0, 0, bb.width, bb.height);
+  const px = tc.getImageData(0, 0, bb.width, bb.height).data;
+  const counts = new Map();
+  for (let i = 0; i < px.length; i += 4) {
+    if (px[i + 3] < 128) continue;
+    const key = (px[i] << 16) | (px[i + 1] << 8) | px[i + 2];
+    counts.set(key, (counts.get(key) || 0) + 1);
+  }
+  const lum = (k) => 0.299 * (k >> 16 & 255) + 0.587 * (k >> 8 & 255) + 0.114 * (k & 255);
+  const entries = [...counts.entries()].sort((a, b) => lum(a[0]) - lum(b[0]));
+  const total = entries.reduce((s, e) => s + e[1], 0);
+  let acc = 0;
+  const cdf = entries.map(([k, n]) => {
+    acc += n;
+    return { cum: acc / total, rgb: [k >> 16 & 255, k >> 8 & 255, k & 255] };
+  });
+  return {
+    pick(n) {
+      if (n <= 0) return cdf[0].rgb;
+      for (const e of cdf) if (n <= e.cum) return e.rgb;
+      return cdf[cdf.length - 1].rgb;
+    },
+  };
+}
+
 function buildGround() {
   const W = (APRON.x1 - APRON.x0) * REF_ZOOM, H = (APRON.y1 - APRON.y0) * REF_ZOOM;
   const g = document.createElement("canvas");
@@ -126,25 +175,44 @@ function buildGround() {
   const gy = (y) => (y - APRON.y0) * REF_ZOOM;
   const M = REF_ZOOM; // px per metre
 
-  // 1) Wang-tiled grass. Corner label: inside GRASS_ZONE => "upper" (pitch grass),
-  //    else "lower" (perimeter turf). Tiles sliced strictly by metadata bounding_box.
-  const inZone = (x, y) =>
-    x >= GRASS_ZONE.x0 && x <= GRASS_ZONE.x1 && y >= GRASS_ZONE.y0 && y <= GRASS_ZONE.y1;
+  // 1) Continuous grass surface synthesized from the frozen tileset's palettes.
+  //    Stamping the 32px tile per metre exposed its internal micro-stripes as a
+  //    high-frequency corduroy pattern, so instead we extract the pixel-art
+  //    palettes of the pure pitch tile (all-upper corners) and pure perimeter
+  //    tile (all-lower corners) — sliced strictly by metadata bounding_box —
+  //    and lay deterministic low-frequency value-noise over those exact colours.
+  //    Same colour family and pixel-art character, zero tile periodicity.
+  //    The frozen source PNGs are untouched; this is a derived presentation
+  //    texture local to the sandbox.
   const byCorners = {};
   for (const t of S.tilesMeta)
     byCorners[[t.corners.NW, t.corners.NE, t.corners.SW, t.corners.SE].join("|")] = t.bounding_box;
-  for (let ty = APRON.y0; ty < APRON.y1; ty++) {
-    for (let tx = APRON.x0; tx < APRON.x1; tx++) {
-      const key = [
-        inZone(tx, ty) ? "upper" : "lower",
-        inZone(tx + 1, ty) ? "upper" : "lower",
-        inZone(tx, ty + 1) ? "upper" : "lower",
-        inZone(tx + 1, ty + 1) ? "upper" : "lower",
-      ].join("|");
-      const b = byCorners[key];
-      c.drawImage(S.images.sheet, b.x, b.y, b.width, b.height, gx(tx), gy(ty), M, M);
+  const palUpper = extractPalette(byCorners["upper|upper|upper|upper"]);
+  const palLower = extractPalette(byCorners["lower|lower|lower|lower"]);
+
+  const img = c.createImageData(W, H);
+  const d = img.data;
+  for (let py = 0; py < H; py++) {
+    const wy = APRON.y0 + py / M;
+    for (let px = 0; px < W; px++) {
+      const wx = APRON.x0 + px / M;
+      // signed distance to the pitch-grass zone edge (negative = inside);
+      // hash-dithered 1 m transition band instead of stamped Wang edge tiles
+      const dist = Math.max(GRASS_ZONE.x0 - wx, wx - GRASS_ZONE.x1,
+                            GRASS_ZONE.y0 - wy, wy - GRASS_ZONE.y1);
+      let pal = palUpper;
+      if (dist > 0.5) pal = palLower;
+      else if (dist > -0.5) pal = (hash01(px, py) < 0.5 - dist) ? palUpper : palLower;
+      // broad tonal drift (~7 m), mid grain (~1.8 m), per-pixel speckle
+      let n = 0.55 * vnoise(wx / 7, wy / 7)
+            + 0.30 * vnoise(wx / 1.8 + 91.7, wy / 1.8 + 33.3)
+            + 0.15 * hash01(px + 7349, py + 1201);
+      const col = pal.pick(n);
+      const o = (py * W + px) * 4;
+      d[o] = col[0]; d[o + 1] = col[1]; d[o + 2] = col[2]; d[o + 3] = 255;
     }
   }
+  c.putImageData(img, 0, 0);
 
   // 2) Pitch-scale mowing bands (14 bands across the 105 m length, extended over the zone).
   const bandW = PITCH.w / 14;
