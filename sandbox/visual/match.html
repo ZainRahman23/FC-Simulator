@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Touchline — Live Match Visual Preview</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="style.css">
+<style>
+  #hud { position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+         padding: 6px 14px; background: rgba(16,20,25,.85); border: 1px solid #394450;
+         border-radius: 6px; text-align: center; pointer-events: none; z-index: 4; }
+  #hud .score { font-size: 18px; color: #fff; }
+  #hud .sub { font-size: 11px; color: #93a3b5; }
+  #ticker { position: absolute; bottom: 30px; left: 8px; right: 320px; color: #aab8c6;
+            font-size: 11px; pointer-events: none; text-shadow: 0 1px 2px #000; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas id="view"></canvas>
+  <div id="loading">Loading frozen assets + starting deterministic match…<br><span id="loadpct">0%</span></div>
+  <div id="hud"><div class="score" id="hud-score">— 0 : 0 —</div>
+    <div class="sub" id="hud-sub">connecting…</div></div>
+  <div id="ticker"></div>
+  <div id="banner">LIVE MATCH VISUAL PREVIEW · engine authoritative, renderer read-only · camera UNLOCKED</div>
+</div>
+
+<div id="panel">
+  <h1>Match Visual Preview</h1>
+
+  <section>
+    <h2>Playback</h2>
+    <div class="row">
+      <button id="playpause">Pause</button>
+      <label class="inline">Speed
+        <select id="pbspeed">
+          <option value="0.5">0.5×</option>
+          <option value="1" selected>1×</option>
+          <option value="2">2×</option>
+          <option value="4">4×</option>
+          <option value="8">8×</option>
+        </select></label>
+    </div>
+    <div id="readout"></div>
+  </section>
+
+  <section>
+    <h2>Camera</h2>
+    <div class="row">
+      <label class="inline"><input type="radio" name="cammode" value="ball" checked> Ball follow</label>
+      <label class="inline"><input type="radio" name="cammode" value="play"> Play follow</label>
+      <label class="inline"><input type="radio" name="cammode" value="static"> Static</label>
+    </div>
+    <label>Camera height <span id="v-height"></span>
+      <input type="range" id="height" min="8" max="60" step="1"></label>
+    <label>Sideline distance <span id="v-dist"></span>
+      <input type="range" id="dist" min="4" max="60" step="1"></label>
+    <label>FOV (vertical) <span id="v-fov"></span>
+      <input type="range" id="fov" min="12" max="70" step="1"></label>
+    <label>Look-target depth offset <span id="v-depthoff"></span>
+      <input type="range" id="depthoff" min="-20" max="20" step="1"></label>
+    <label>Camera pitch <span id="v-pitch"></span>
+      <input type="range" id="pitch" min="12" max="45" step="1"></label>
+    <label>Camera yaw <span id="v-yaw"></span>
+      <input type="range" id="yaw" min="-35" max="35" step="1"></label>
+    <label>Tracking smoothing <span id="v-smooth"></span>
+      <input type="range" id="smooth" min="0" max="1.5" step="0.05"></label>
+    <label>Player scale <span id="v-pscale"></span>
+      <input type="range" id="pscale" min="0.5" max="3" step="0.05"></label>
+    <button id="reset">Reset to CAMERA_V1</button>
+  </section>
+
+  <section>
+    <h2>Debug (default off)</h2>
+    <label class="inline"><input type="checkbox" id="dbg-anchors"> Ground anchors / pivots</label>
+    <label class="inline"><input type="checkbox" id="dbg-ids"> Player IDs</label>
+    <label class="inline"><input type="checkbox" id="dbg-vel"> Velocity vectors</label>
+    <label class="inline"><input type="checkbox" id="dbg-state"> Animation state + facing + engine activity</label>
+    <label class="inline"><input type="checkbox" id="dbg-ball"> Ball world position</label>
+    <label class="inline"><input type="checkbox" id="dbg-track"> Camera tracking target</label>
+    <label class="inline"><input type="checkbox" id="dbg-goalgeo"> Goal authoritative geometry</label>
+    <label class="inline"><input type="checkbox" id="dbg-grid"> World grid (5 m)</label>
+  </section>
+</div>
+
+<script src="match.js"></script>
+</body>
+</html>

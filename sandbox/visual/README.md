@@ -83,6 +83,30 @@ The renderer owns all deformation state; the event can never influence
 authoritative ball physics or scoring. (`window.netImpact` is exposed for
 console testing.)
 
+## Live match visual preview (phase 4)
+
+Watches an ACTUAL simulator match (deterministic fixture, seed 20260827,
+Liverpool v Everton) through the accepted visual system. The engine remains
+fully authoritative: the viewer starts a match via the untouched Touchline
+API and consumes the server's read-only renderer keyframes
+(`advance {frames:true}` — per-second `[clock, ball, possession, players]`),
+interpolating between them for smooth playback. Nothing writes back.
+
+```sh
+.venv/bin/python server.py                    # 1) engine server (untouched)
+python3 sandbox/visual/serve_match.py         # 2) static + /api proxy
+# open http://127.0.0.1:8124/sandbox/visual/match.html
+```
+
+Determinism/neutrality: `python3 sandbox/visual/tools/verify_determinism.py`
+runs the fixture three times (frames on/on/off) and digest-compares score,
+event ledger, player stats, possession and all 5,400 keyframes.
+
+Goal V2.2 renders at both ends, anchored by its post-base points onto the
+projected authoritative 7.32 m mouth (mirrored for the far end); markings
+stay procedural. Net ripple is not wired in the preview — future connection:
+engine ball/net contact -> `netImpact(side, pos, vel, strength?)`.
+
 ## Status
 
 CAMERA UNLOCKED — VISUAL REVIEW REQUIRED. No values here are final; the point of
