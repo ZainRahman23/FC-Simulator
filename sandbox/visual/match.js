@@ -52,8 +52,12 @@ const GOAL_SPRITE = {
   mouthHpx: 138,                            // avg post length in art px == 2.44 m
 };
 // presentation-only goal-art calibration (renderer state; never touches
-// authoritative geometry)
-const GOAL_CFG = { scale: 1.0, mirrorL: false, mirrorR: true, offX: 0, offDepth: 0 };
+// authoritative geometry).
+// Orientation rule: the mouth faces INTO the pitch, net depth extends
+// outward behind the goal line. V2.2 was generated from a reference of the
+// RIGHT-end goal (mouth opening left toward the pitch, net receding away),
+// so the unmirrored art is the RIGHT goal and the mirror is the LEFT goal.
+const GOAL_CFG = { scale: 1.0, mirrorL: true, mirrorR: false, offX: 0, offDepth: 0 };
 
 const ENV = {
   farBarrierZ: -2.5, barrierH: 1.0, boardPanelM: 6,
@@ -702,9 +706,22 @@ function drawGoalGeoDebug(side) {
   ctx.moveTo(C.x, C.y - 7); ctx.lineTo(C.x, C.y + 7); ctx.stroke();
   const t = goalSpriteXform(side);
   if (!t) return;
-  dot([t.A.x, t.A.y], "#ffd23c", 3);                                  // sprite pivot
-  dot(t.map(...GOAL_SPRITE.baseL), "#ff5ce0", 4);                     // sprite post bases
-  dot(t.map(...GOAL_SPRITE.baseR), "#ff5ce0", 4);                     // after uniform scale
+  dot([t.A.x, t.A.y], "#ffd23c", 3);                                  // world anchor / sprite pivot
+  const p1 = t.map(...GOAL_SPRITE.baseL);                             // screen P1/P2 after
+  const p2 = t.map(...GOAL_SPRITE.baseR);                             // uniform scaling
+  dot(p1, "#ff5ce0", 4);
+  dot(p2, "#ff5ce0", 4);
+  // screen Pmouth as ACTUALLY DRAWN (includes the pixel-snap rounding of the
+  // blit) vs the projected authoritative mouth centre — must overlap
+  const w = GOAL_SPRITE.W * t.s;
+  const px = t.mirrored ? GOAL_SPRITE.W - 1 - GOAL_SPRITE.pivot[0] : GOAL_SPRITE.pivot[0];
+  const drawnPm = [Math.round(t.ox) + px * t.s, Math.round(t.oy) + GOAL_SPRITE.pivot[1] * t.s];
+  dot(drawnPm, "#40e0ff", 3);                                         // drawn Pmouth (cyan)
+  const err = Math.hypot(drawnPm[0] - C.x, drawnPm[1] - C.y);
+  ctx.fillStyle = "#fff"; ctx.font = "11px monospace"; ctx.textAlign = "left";
+  const tx0 = Math.min(cv.width - 250, Math.max(8, C.x + 20));
+  ctx.fillText(`P1(95,325) P2(222,320) Pm(158.5,322.5)`, tx0, C.y - 26);
+  ctx.fillText(`anchor err ${err.toFixed(2)}px  scale x${t.s.toFixed(3)}  ${t.mirrored ? "MIRROR" : "ORIG"}`, tx0, C.y - 14);
 }
 
 // ═══ players + ball ══════════════════════════════════════════════════════════
