@@ -17,46 +17,63 @@
 </style>
 </head>
 <body>
-<h1>Oblique goal — Reference | V1 | V2 (nearest-neighbour, checkerboard = transparent)</h1>
+<h1>Oblique goal — Reference | V2 | V2.1 (nearest-neighbour, checkerboard = transparent)</h1>
 <p class="note">Comparison fixture only — nothing here is integrated. The sandbox still renders
-procedural Goal V3. V2 status: PENDING_VISUAL_REVIEW.</p>
+procedural Goal V3. V2.1 status: PENDING_VISUAL_REVIEW (deterministic refinement,
+0 generations — rear pole removed, net rebuilt as a connected perspective-aware mesh).</p>
 
 <div class="row">
   <figure>
     <img src="../../assets/visual_v1/originals/goal_v2_oblique/reference_input_312x332_grey.png" width="312">
-    <figcaption>Reference input (isolated, grey-neutralized, 312×332)</figcaption>
-  </figure>
-  <figure>
-    <img src="../../assets/visual_v1/originals/goal_da2989e6/goal_oblique_ref.png" width="256">
-    <figcaption>V1 (64×68 shown ×4) — orientation proof, rejected</figcaption>
+    <figcaption>Original reference (isolated, grey-neutralized, 312×332)</figcaption>
   </figure>
   <figure>
     <img src="../../assets/visual_v1/originals/goal_v2_oblique/goal_v2_derived_transparent.png" width="312">
-    <figcaption>V2 derived transparent (312×332 native)</figcaption>
+    <figcaption>V2 (accepted geometry; noisy net + rear pole)</figcaption>
+  </figure>
+  <figure>
+    <img src="../../assets/visual_v1/originals/goal_v2_oblique/goal_v2_1_clean.png" width="312">
+    <figcaption>V2.1 — clean connected mesh, pole removed</figcaption>
   </figure>
 </div>
 
-<h2>V2 enlarged (×2)</h2>
+<h2>V2.1 enlarged (×2)</h2>
 <div class="row">
   <figure>
-    <img src="../../assets/visual_v1/originals/goal_v2_oblique/goal_v2_derived_transparent.png" width="624">
-    <figcaption>V2 ×2 — cord/intersection readability</figcaption>
+    <img src="../../assets/visual_v1/originals/goal_v2_oblique/goal_v2_1_clean.png" width="624">
+    <figcaption>V2.1 ×2 — cord continuity / intersections / no oversized holes</figcaption>
   </figure>
 </div>
 
-<h2>V2 at approximate gameplay scale</h2>
+<h2>V2.1 over pitch grass (frozen pure-pitch tile)</h2>
 <div class="row">
   <figure>
-    <img src="../../assets/visual_v1/originals/goal_v2_oblique/goal_v2_derived_transparent.png" width="94">
+    <img src="compare/goal_v21_on_grass.png" width="312">
+    <figcaption>Native, composited over grass</figcaption>
+  </figure>
+  <figure>
+    <img src="compare/goal_v21_on_grass.png" width="624">
+    <figcaption>×2 — net readability over grass</figcaption>
+  </figure>
+</div>
+
+<h2>V2.1 at approximate gameplay scale</h2>
+<div class="row">
+  <figure>
+    <img src="../../assets/visual_v1/originals/goal_v2_oblique/goal_v2_1_clean.png" width="94">
     <figcaption>≈30% (crossbar ≈ 2.44 m at CAMERA_V1 px/m)</figcaption>
   </figure>
   <figure>
-    <img src="../../assets/visual_v1/originals/goal_v2_oblique/goal_v2_derived_transparent.png" width="125">
+    <img src="../../assets/visual_v1/originals/goal_v2_oblique/goal_v2_1_clean.png" width="125">
     <figcaption>≈40% (closer framing)</figcaption>
   </figure>
   <figure>
-    <img src="../../assets/visual_v1/originals/goal_v2_oblique/goal_v2_original.png" width="156">
-    <figcaption>V2 raw original (opaque grey bg, ×0.5) — stored untouched</figcaption>
+    <img src="compare/goal_v21_on_grass.png" width="94">
+    <figcaption>≈30% over grass</figcaption>
+  </figure>
+  <figure>
+    <img src="../../assets/visual_v1/originals/goal_da2989e6/goal_oblique_ref.png" width="128">
+    <figcaption>V1 (64×68 ×2) — kept for the record</figcaption>
   </figure>
 </div>
 </body>

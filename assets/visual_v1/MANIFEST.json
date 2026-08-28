@@ -208,6 +208,27 @@
       "NOT integrated; procedural Goal V3 remains the active presentation. V1 (goal_art_v3_oblique record) preserved separately."
     ]
   },
+  "goal_art_v2_1_clean": {
+    "acceptance": "PENDING_VISUAL_REVIEW (derived 2026-08-27; 0 PixelLab generations)",
+    "derivation_method": "Deterministic reconstruction (option A): V2's accepted frame geometry measured from the art (8 corner points), external rear pole and stray artifacts omitted by construction, all net panels rebuilt as homography-mapped regular grids (roof 20x8, mouth 20x12, back 14x9 cells) with perspective-correct cell compression and subtle attachment-zero sag; frame redrawn along the measured members in V2's palette. Generator stored alongside for exact reproducibility.",
+    "based_on": "goal_art_v2_oblique (originals untouched)",
+    "size": "312x332",
+    "generations_cost": 0,
+    "local_paths": {
+      "asset": "originals/goal_v2_oblique/goal_v2_1_clean.png",
+      "generator": "originals/goal_v2_oblique/goal_v2_1_generator.py"
+    },
+    "sha256": {
+      "asset": "ee20ce30f129c50f5e8cad1d84eaa0ab41984830b68d360dc3d6e2b5b7bde36f",
+      "generator": "ba90c1fb8986688db4d4c6ce0f139dbdb370218ce9d892816f74d05e8a588399"
+    },
+    "notes": [
+      "Accepted V2 orientation/proportions preserved exactly (same measured corners).",
+      "Net topology is a true connected grid per panel — no broken cells, oversized holes, or texture noise; holes genuinely transparent.",
+      "Grid regularity lives in goal-space; the projective panel mapping produces the on-screen compression.",
+      "NOT integrated; procedural Goal V3 remains the active sandbox presentation."
+    ]
+  },
   "integrity": {
     "lock_file": "HASHES.sha256",
     "verified": "2026-08-27",
