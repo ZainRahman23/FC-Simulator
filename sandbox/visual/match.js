@@ -40,8 +40,20 @@ const JOG_FPS = 10, SPRINT_FPS = 12;
 // presentation speed thresholds (m/s) from authoritative displacement
 const IDLE_MAX = 0.5, JOG_MAX = 5.2, TELEPORT = 12;
 
-// Goal V2.2 sprite anchors: post-base points in sprite space (measured)
-const GOAL_SPRITE = { SN: [95, 325], SF: [222, 320], W: 312, H: 332 };
+// Goal V2.2 sprite: pre-rendered pixel art with its oblique perspective baked
+// in. It is a BILLBOARD like the player sprites: one world anchor, one
+// uniform scale, never warped/sheared/anisotropically fitted. The measured
+// points below define only its LOCAL pivot and debug markers.
+const GOAL_SPRITE = {
+  W: 312, H: 332,
+  baseL: [95, 325], baseR: [222, 320],      // front post ground contacts (art px)
+  topL: [105, 183], topR: [232, 186],       // front post tops (crossbar ends)
+  pivot: [158.5, 322.5],                    // mouth-centre ground contact
+  mouthHpx: 138,                            // avg post length in art px == 2.44 m
+};
+// presentation-only goal-art calibration (renderer state; never touches
+// authoritative geometry)
+const GOAL_CFG = { scale: 1.0, mirrorL: false, mirrorR: true, offX: 0, offDepth: 0 };
 
 const ENV = {
   farBarrierZ: -2.5, barrierH: 1.0, boardPanelM: 6,
@@ -636,37 +648,63 @@ function drawGrid() {
   for (let y = 0; y <= 68; y += 5) strokeWorldPoly([[0, y], [105, y]]);
 }
 
-// ═══ Goal V2.2 sprite placement (authoritative geometry anchored) ═══════════
-// The sprite is anchored by its two post-base points onto the projected
-// authoritative post bases (7.32 m mouth on the goal line). Uniform scale,
-// billboard, mirrored for whichever end needs the opposite handedness —
-// the art never redefines football geometry.
+// ═══ Goal V2.2 billboard (undeformed, like the player sprites) ══════════════
+// authoritative world anchor (goal mouth centre on the goal line, plus
+// renderer-only calibration offsets) -> camera projection -> translation +
+// ONE uniform scale -> intact sprite. Aspect ratio and internal pixel
+// geometry are exactly the PNG's. Scale reference: the sprite's average
+// front-post length (138 art px == the authoritative 2.44 m bar height) at
+// the same constant presentation depth used for player sprites, times the
+// live "goal visual scale" multiplier.
+function goalSpriteXform(side) {
+  const gx = side ? 105 : 0, out = side ? 1 : -1;
+  const anchorW = { x: gx + out * GOAL_CFG.offX, y: 34 + GOAL_CFG.offDepth };
+  const A = project(anchorW.x, anchorW.y);
+  if (A.d < 0.5) return null;
+  const s = (2.44 * (CAM.fpx / CAM.czTarget) / GOAL_SPRITE.mouthHpx) * GOAL_CFG.scale;
+  const mirrored = side ? GOAL_CFG.mirrorR : GOAL_CFG.mirrorL;
+  const px = mirrored ? GOAL_SPRITE.W - 1 - GOAL_SPRITE.pivot[0] : GOAL_SPRITE.pivot[0];
+  const py = GOAL_SPRITE.pivot[1];
+  return { A, s, mirrored,
+           ox: A.x - px * s, oy: A.y - py * s,
+           map: (mx, my) => {                       // art px -> screen (debug markers)
+             const ax = mirrored ? GOAL_SPRITE.W - 1 - mx : mx;
+             return [A.x + (ax - px) * s, A.y + (my - py) * s];
+           } };
+}
 function drawGoalSprite(side) {
-  const gx = side ? 105 : 0;
-  const PN = project(gx, 34 + 3.66);         // near post base (world)
-  const PF = project(gx, 34 - 3.66);         // far post base
-  if (PN.d < 0.5 || PF.d < 0.5) return;
-  if (Math.max(PN.x, PF.x) < -420 || Math.min(PN.x, PF.x) > cv.width + 420) return;
-  const [SNx, SNy] = GOAL_SPRITE.SN, [SFx, SFy] = GOAL_SPRITE.SF;
-  const dxp = PF.x - PN.x;
-  const mirrored = (dxp >= 0) !== (SFx - SNx >= 0);
-  const img = mirrored ? S.images.goal22m : S.images.goal22;
-  const sN = mirrored ? [GOAL_SPRITE.W - 1 - SNx, SNy] : [SNx, SNy];
-  const sF = mirrored ? [GOAL_SPRITE.W - 1 - SFx, SFy] : [SFx, SFy];
-  const s = Math.hypot(PF.x - PN.x, PF.y - PN.y) / Math.hypot(sF[0] - sN[0], sF[1] - sN[1]);
-  const ox = PN.x - sN[0] * s, oy = PN.y - sN[1] * s;
-  ctx.drawImage(img, Math.round(ox), Math.round(oy),
-    Math.round(GOAL_SPRITE.W * s), Math.round(GOAL_SPRITE.H * s));
+  const t = goalSpriteXform(side);
+  if (!t) return;
+  const w = GOAL_SPRITE.W * t.s, h = GOAL_SPRITE.H * t.s;
+  if (t.ox + w < -40 || t.ox > cv.width + 40) return;
+  const img = t.mirrored ? S.images.goal22m : S.images.goal22;
+  ctx.drawImage(img, Math.round(t.ox), Math.round(t.oy), Math.round(w), Math.round(h));
 }
 function drawGoalGeoDebug(side) {
   const gx = side ? 105 : 0, dir = side ? 1 : -1;
+  // authoritative geometry (invisible simulation truth)
   ctx.strokeStyle = "rgba(255,80,80,0.9)"; ctx.lineWidth = 1.5;
-  strokeWorldPoly([[gx, 30.34], [gx, 37.66]]);                       // mouth on goal line
+  strokeWorldPoly([[gx, 28], [gx, 40]]);                              // projected goal line
   strokeWorldPoly([[gx, 30.34], [gx + dir * 2, 30.34], [gx + dir * 2, 37.66], [gx, 37.66]], true);
-  ctx.strokeStyle = "rgba(255,80,80,0.9)"; ctx.lineWidth = 2;
+  ctx.lineWidth = 2;
   strokeSeg3(gx, 0, 30.34, gx, 2.44, 30.34);
   strokeSeg3(gx, 0, 37.66, gx, 2.44, 37.66);
   strokeSeg3(gx, 2.44, 30.34, gx, 2.44, 37.66);
+  const dot = (p, col, r = 3) => {
+    ctx.fillStyle = col;
+    ctx.beginPath(); ctx.arc(p[0] ?? p.x, p[1] ?? p.y, r, 0, Math.PI * 2); ctx.fill();
+  };
+  dot(project(gx, 30.34), "#ff5050", 4);                              // mouth endpoints
+  dot(project(gx, 37.66), "#ff5050", 4);
+  const C = project(gx, 34);
+  ctx.strokeStyle = "#ffd23c"; ctx.lineWidth = 2;                     // centre anchor
+  ctx.beginPath(); ctx.moveTo(C.x - 7, C.y); ctx.lineTo(C.x + 7, C.y);
+  ctx.moveTo(C.x, C.y - 7); ctx.lineTo(C.x, C.y + 7); ctx.stroke();
+  const t = goalSpriteXform(side);
+  if (!t) return;
+  dot([t.A.x, t.A.y], "#ffd23c", 3);                                  // sprite pivot
+  dot(t.map(...GOAL_SPRITE.baseL), "#ff5ce0", 4);                     // sprite post bases
+  dot(t.map(...GOAL_SPRITE.baseR), "#ff5ce0", 4);                     // after uniform scale
 }
 
 // ═══ players + ball ══════════════════════════════════════════════════════════
@@ -854,6 +892,22 @@ function bindUI() {
     document.getElementById("dbg-" + id).addEventListener("change", (e) => {
       S.dbg[id] = e.target.checked;
     });
+  // goal-art calibration (renderer-only; never touches authoritative geometry)
+  const gbind = (id, key, fmt) => {
+    const el = document.getElementById(id), out = document.getElementById("v-" + id);
+    el.value = GOAL_CFG[key]; out.textContent = fmt(GOAL_CFG[key]);
+    el.addEventListener("input", () => {
+      GOAL_CFG[key] = parseFloat(el.value);
+      out.textContent = fmt(GOAL_CFG[key]);
+    });
+  };
+  gbind("gscale", "scale", v => "×" + v.toFixed(2));
+  gbind("goffx", "offX", v => v.toFixed(2) + " m");
+  gbind("goffd", "offDepth", v => v.toFixed(2) + " m");
+  document.getElementById("gleft").addEventListener("change",
+    (e) => { GOAL_CFG.mirrorL = e.target.value === "mirror"; });
+  document.getElementById("gright").addEventListener("change",
+    (e) => { GOAL_CFG.mirrorR = e.target.value === "mirror"; });
   const resize = () => { cv.width = cv.clientWidth; cv.height = cv.clientHeight; };
   window.addEventListener("resize", resize);
   resize();
