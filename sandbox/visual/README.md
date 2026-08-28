@@ -83,19 +83,32 @@ The renderer owns all deformation state; the event can never influence
 authoritative ball physics or scoring. (`window.netImpact` is exposed for
 console testing.)
 
-## Live match visual preview — PCS-style frozen projection (phase 5)
+## Live match visual preview — RAIL CAMERA (approved architecture, frozen)
 
-The match renderer now uses the Pixel-Cup-Soccer-style architecture:
-simulator metres → ONE frozen authored projection (CAMERA_V1 pose) →
-coherent 2D visual world (V-space, prerendered into back/ground/front
-layers) → runtime camera = `screen = (V − camCentre)·zoom + viewportCentre`
-— a single pan + uniform zoom shared by pitch, markings, stadium, barriers,
-goals, players, ball and shadows. Perspective math exists only in the
-freeze step (authoring sliders re-freeze the world; they are not gameplay
-camera DOF). Goal V2.2 is calibrated once against the frozen world and is
-then an ordinary 2D scene member — no per-frame registration. Players have
-a stable authored V-space size (no presentation-depth scaling): zoom
-scales everything in exact tandem.
+The match renderer uses a physically translating camera rig: the single
+authored CAMERA_V1 pose (height 30 m, sideline distance 43 m, pitch 22°,
+yaw 0°, FOV 28°) whose ONLY runtime pose variable is longitudinal position
+along the touchline. Orientation, lens and the camera→target vector are
+invariant. Implementation uses the exact identity
+`render(pos0 + travel) == projectFixed(world − travel)`: every world point
+is shifted by −travel and projected through the byte-identical CAMERA_V1
+basis, then uniform zoom about screen centre. Pitch, markings, stadium,
+goals, players, ball and shadows all pass through this one shared
+projection per frame. Players keep a stable authored size; zoom scales
+everything in exact tandem.
+
+Goals (V2.2 world panels): the accepted V2.2 surgical artwork's three
+measured panels (mouth / roof / near-side net) are mapped once, at
+authoring time, by exact 4-point homographies onto the authoritative 3D
+goal quads — mouth plane ON the goal line spanning the 7.32 m mouth,
+2.0 m cage extending outward, right goal original art, left goal the
+geometric mirror. At runtime each panel is ordinary world geometry
+rendered as texture triangles through the same shared projection the goal
+line uses: zero goal-specific camera compensation, tracking, billboard
+fitting or scaling. Post feet sit exactly on the goal line at every rail
+position (`tools/validate_goal_rail.py`: 0.000000 px at rail 20/52.5/85 m,
+interior warp ≤ 0.68 px). The triangle corners are plain world points, so
+the future net-ripple (`netImpact` contract above) displaces them directly.
 
 ## Live match visual preview (phase 4)
 

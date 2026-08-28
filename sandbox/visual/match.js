@@ -41,7 +41,10 @@ const GOAL_SPRITE = {
   W: 312, H: 332,
   footFar: [44, 194], footNear: [94, 327],
 };
-const GOAL_CFG = { scale: 1.0, mirrorL: true, mirrorR: false, offX: 0, offDepth: 0 };
+// World-placement trims only (authoring). There is NO goal visual scale:
+// goal size comes from the regulation 7.32×2.44×2.0 m world geometry and
+// changes on screen only through the global zoom, like everything else.
+const GOAL_CFG = { mirrorL: true, mirrorR: false, offX: 0, offDepth: 0 };
 
 const ENV = {
   farBarrierZ: -2.5, barrierH: 1.0, boardPanelM: 6,
@@ -405,6 +408,7 @@ function recomputeAuthoring() {
     upper: ctx.createPattern(S.standTex.upper, "repeat"),
     lower: ctx.createPattern(S.standTex.lower, "repeat"),
   };
+  buildGoalPanels();
 }
 
 // ── per-frame painters (all world-space, all through sproj3) ──
@@ -665,6 +669,146 @@ function drawGroundPerspective() {
   }
 }
 
+// ═══ GOALS: V2.2 art as world-anchored textured panels ═══════════════════════
+// One-time authoring (at freeze time): the accepted V2.2 surgical artwork's
+// measured panels are mapped by exact 4-point homographies onto the
+// authoritative 3D goal quads — mouth plane ON the goal line spanning the
+// 7.32 m mouth, roof and near-side net over the 2.0 m cage extending
+// OUTWARD. At runtime each panel is ordinary world geometry rendered
+// through the SAME shared sproj3 the goal line and six-yard box use:
+// no goal-specific camera compensation, no tracking, no billboard fitting,
+// no goal-only scaling. Cells are texture triangles whose WORLD corners
+// are plain world points — the future net-ripple displaces those corners
+// exactly like the sandbox spring mesh (netImpact contract unchanged).
+function homog(srcPts, dstPts) {           // 4-point homography, returns (u,v)->[x,y]
+  const A = [];
+  for (let i = 0; i < 4; i++) {
+    const [x, y] = srcPts[i], [X, Y] = dstPts[i];
+    A.push([x, y, 1, 0, 0, 0, -X * x, -X * y, X]);
+    A.push([0, 0, 0, x, y, 1, -Y * x, -Y * y, Y]);
+  }
+  for (let i = 0; i < 8; i++) {
+    let p = i;
+    for (let r = i + 1; r < 8; r++) if (Math.abs(A[r][i]) > Math.abs(A[p][i])) p = r;
+    [A[i], A[p]] = [A[p], A[i]];
+    for (let r = 0; r < 8; r++) {
+      if (r === i || A[r][i] === 0) continue;
+      const f = A[r][i] / A[i][i];
+      for (let c = i; c < 9; c++) A[r][c] -= f * A[i][c];
+    }
+  }
+  const h = [];
+  for (let i = 0; i < 8; i++) h.push(A[i][8] / A[i][i]);
+  h.push(1);
+  return (x, y) => {
+    const d = h[6] * x + h[7] * y + h[8];
+    return [(h[0] * x + h[1] * y + h[2]) / d, (h[3] * x + h[4] * y + h[5]) / d];
+  };
+}
+// Measured V2.2 panel quads (right-goal orientation, art px) and their
+// authoritative world quads. Corner order is matched 1:1 art<->world.
+// u/v are the panel's parametric axes; ranges beyond [0,1] are outer
+// margins so net sag that bulges past the frame in the art is kept.
+const GOAL_ART_PANELS = [
+  { name: "roof",                       // u: front->rear (depth), v: far->near
+    art: [[42, 40], [168, 40], [232, 186], [105, 183]],
+    world: (gx, out) => [[gx, 2.44, 30.34], [gx + out * 2, 2.44, 30.34],
+                         [gx + out * 2, 2.44, 37.66], [gx, 2.44, 37.66]],
+    u0: -0.02, u1: 1.15, v0: -0.02, v1: 1.02 },
+  { name: "side",                       // u: front->rear (depth), v: top->ground
+    art: [[105, 183], [232, 186], [222, 320], [94, 327]],
+    world: (gx, out) => [[gx, 2.44, 37.66], [gx + out * 2, 2.44, 37.66],
+                         [gx + out * 2, 0, 37.66], [gx, 0, 37.66]],
+    u0: -0.02, u1: 1.15, v0: -0.02, v1: 1.0 },
+  { name: "mouth",                      // u: far->near post, v: crossbar->ground
+    art: [[42, 40], [105, 183], [94, 327], [44, 194]],
+    world: (gx, out) => [[gx, 2.44, 30.34], [gx, 2.44, 37.66],
+                         [gx, 0, 37.66], [gx, 0, 30.34]],
+    u0: -0.03, u1: 1.02, v0: -0.03, v1: 1.0 },
+];
+const GOAL_GRID = 3;                    // cells per panel axis (triangulated)
+function buildGoalPanels() {
+  const W = GOAL_SPRITE.W;
+  S.goalPanels = [0, 1].map(side => {
+    const gx = (side ? 105 : 0) + (side ? 1 : -1) * GOAL_CFG.offX;
+    const out = side ? 1 : -1;
+    const mirrored = side ? GOAL_CFG.mirrorR : GOAL_CFG.mirrorL;
+    const img = mirrored ? S.images.goal22m : S.images.goal22;
+    const panels = GOAL_ART_PANELS.map(P => {
+      const art = mirrored ? P.art.map(([x, y]) => [W - 1 - x, y]) : P.art;
+      const H = homog([[0, 0], [1, 0], [1, 1], [0, 1]], art);
+      const wq = P.world(gx, out);
+      const worldAt = (u, v) => {           // bilinear on the planar world rect
+        const [a, b, c, d] = wq;
+        return [
+          (1 - v) * ((1 - u) * a[0] + u * b[0]) + v * ((1 - u) * d[0] + u * c[0]),
+          (1 - v) * ((1 - u) * a[1] + u * b[1]) + v * ((1 - u) * d[1] + u * c[1]),
+          (1 - v) * ((1 - u) * a[2] + u * b[2]) + v * ((1 - u) * d[2] + u * c[2])
+            + GOAL_CFG.offDepth,
+        ];
+      };
+      // Grid lines ALWAYS include the exact panel edges (0 and 1) so panel
+      // corners — the post feet among them — are exact triangle vertices,
+      // never affine-interpolated. Margins become extra outer cells.
+      const lines = (lo, hi) => {
+        const L = [];
+        if (lo < 0) L.push(lo);
+        for (let k = 0; k <= GOAL_GRID; k++) L.push(k / GOAL_GRID);
+        if (hi > 1) L.push(hi);
+        return L;
+      };
+      const uL = lines(P.u0, P.u1), vL = lines(P.v0, P.v1);
+      const cells = [];
+      for (let i = 0; i < uL.length - 1; i++)
+        for (let j = 0; j < vL.length - 1; j++) {
+          const u0 = uL[i], u1 = uL[i + 1], v0 = vL[j], v1 = vL[j + 1];
+          cells.push({
+            artC: [H(u0, v0), H(u1, v0), H(u1, v1), H(u0, v1)],
+            worldC: [worldAt(u0, v0), worldAt(u1, v0),
+                     worldAt(u1, v1), worldAt(u0, v1)],
+          });
+        }
+      return { name: P.name, cells };
+    });
+    return { side, img, panels, sortY: 33.5 };
+  });
+}
+function drawTexTri(img, a0, a1, a2, s0, s1, s2) {
+  // affine texture triangle: exact art->screen on all 3 corners
+  const den = (a1[0] - a0[0]) * (a2[1] - a0[1]) - (a2[0] - a0[0]) * (a1[1] - a0[1]);
+  if (Math.abs(den) < 1e-9) return;
+  const m11 = ((s1.x - s0.x) * (a2[1] - a0[1]) - (s2.x - s0.x) * (a1[1] - a0[1])) / den;
+  const m21 = ((s2.x - s0.x) * (a1[0] - a0[0]) - (s1.x - s0.x) * (a2[0] - a0[0])) / den;
+  const m12 = ((s1.y - s0.y) * (a2[1] - a0[1]) - (s2.y - s0.y) * (a1[1] - a0[1])) / den;
+  const m22 = ((s2.y - s0.y) * (a1[0] - a0[0]) - (s1.y - s0.y) * (a2[0] - a0[0])) / den;
+  const dx = s0.x - m11 * a0[0] - m21 * a0[1];
+  const dy = s0.y - m12 * a0[0] - m22 * a0[1];
+  ctx.save();
+  ctx.beginPath();
+  ctx.moveTo(s0.x, s0.y); ctx.lineTo(s1.x, s1.y); ctx.lineTo(s2.x, s2.y);
+  ctx.closePath(); ctx.clip();
+  ctx.setTransform(m11, m12, m21, m22, dx, dy);
+  const bx0 = Math.max(0, Math.floor(Math.min(a0[0], a1[0], a2[0])) - 2);
+  const bx1 = Math.min(img.width, Math.ceil(Math.max(a0[0], a1[0], a2[0])) + 2);
+  const by0 = Math.max(0, Math.floor(Math.min(a0[1], a1[1], a2[1])) - 2);
+  const by1 = Math.min(img.height, Math.ceil(Math.max(a0[1], a1[1], a2[1])) + 2);
+  if (bx1 > bx0 && by1 > by0)
+    ctx.drawImage(img, bx0, by0, bx1 - bx0, by1 - by0, bx0, by0, bx1 - bx0, by1 - by0);
+  ctx.restore();
+}
+function drawGoal(goal) {
+  for (const panel of goal.panels)
+    for (const cell of panel.cells) {
+      const s = cell.worldC.map(w => sproj3(w[0], w[1], w[2]));
+      if (s.some(p => p.d < 0.5)) continue;
+      if (Math.max(s[0].x, s[1].x, s[2].x, s[3].x) < -20 ||
+          Math.min(s[0].x, s[1].x, s[2].x, s[3].x) > cv.width + 20) continue;
+      const a = cell.artC;
+      drawTexTri(goal.img, a[0], a[1], a[2], s[0], s[1], s[2]);
+      drawTexTri(goal.img, a[0], a[2], a[3], s[0], s[2], s[3]);
+    }
+}
+
 // ═══ runtime rig update (ONE pose variable: longitudinal position) ═══════════
 function rigTargetX(sample) {
   if (RIG.mode === "manual") return RIG.manualX;
@@ -802,15 +946,15 @@ function draw(sample, dt) {
     for (const p of sample.players) ents.push({ y: p.y, p });
     ents.push({ y: sample.ball.y, ball: sample.ball });
   }
-  // GOALS INTENTIONALLY HIDDEN during the rail-camera diagnostic; they will
-  // be re-baked/re-integrated once the rail behavior is approved.
+  for (const g of S.goalPanels) ents.push({ y: g.sortY, goal: g });
   ents.sort((a, b) => a.y - b.y);
   for (const e of ents) {
     if (e.p) drawPlayer(e.p, dt);
     else if (e.ball) drawBall(e.ball);
+    else drawGoal(e.goal);
   }
   if (S.dbg.goalgeo) { drawGoalGeoDebug(0); drawGoalGeoDebug(1); }
-  drawRailSquare();
+  if (S.dbg.cam) drawRailSquare();       // rail diagnostic overlay (toggleable)
   if (S.dbg.track) {
     const t = sproj(RIG.targetX, 34);
     ctx.strokeStyle = "#ff5ce0"; ctx.lineWidth = 2;
@@ -827,7 +971,7 @@ function drawReadout(sample) {
   const dvec = [tgt[0] - camPos[0], tgt[1] - camPos[1], tgt[2] - camPos[2]];
   el.textContent =
     `head     ${S.pb.head.toFixed(1)}s / buffered ${bufferedSeconds()}s${S.pb.finished ? " (FT)" : ""}\n` +
-    `RAIL CAMERA (goals hidden for diagnostic)\n` +
+    `RAIL CAMERA · goals: V2.2 world-panels (shared projection)\n` +
     `camera   (${camPos[0].toFixed(2)}, ${camPos[1]}, ${camPos[2]})\n` +
     `target   (${tgt[0].toFixed(2)}, ${tgt[1]}, ${tgt[2]})\n` +
     `tgt−cam  (${dvec[0].toFixed(2)}, ${dvec[1]}, ${dvec[2]})  [INVARIANT]\n` +
@@ -916,16 +1060,15 @@ function bindUI() {
     el.addEventListener("input", () => {
       GOAL_CFG[key] = parseFloat(el.value);
       out.textContent = fmt(GOAL_CFG[key]);
-      // goals hidden during the rail diagnostic — nothing to recalibrate
+      buildGoalPanels();                 // re-author the world panels
     });
   };
-  gbind("gscale", "scale", v => "×" + v.toFixed(2));
   gbind("goffx", "offX", v => v.toFixed(2) + " m");
   gbind("goffd", "offDepth", v => v.toFixed(2) + " m");
   document.getElementById("gleft").addEventListener("change",
-    (e) => { GOAL_CFG.mirrorL = e.target.value === "mirror"; });
+    (e) => { GOAL_CFG.mirrorL = e.target.value === "mirror"; buildGoalPanels(); });
   document.getElementById("gright").addEventListener("change",
-    (e) => { GOAL_CFG.mirrorR = e.target.value === "mirror"; });
+    (e) => { GOAL_CFG.mirrorR = e.target.value === "mirror"; buildGoalPanels(); });
   const resize = () => { cv.width = cv.clientWidth; cv.height = cv.clientHeight; };
   window.addEventListener("resize", resize);
   resize();
