@@ -467,6 +467,7 @@ function update(dt) {
       p.ft += dt * fps;
       p.frame = Math.floor(p.ft) % 8;
     }
+    stepNets(dt);
   }
   rebuildCamera();
   updateCamera(dt);
@@ -708,56 +709,177 @@ function drawNearBarrier() {
   if (band && band.top <= cv.height) railLine(ENV.barrierH, ENV.nearBarrierZ, 2, ENV_COL.boardTop);
 }
 
-// ---------------------------------------------------------------- procedural 3D goals
-// Regulation 7.32 m x 2.44 m, ~2 m net depth. Presentation only — every point
-// projects through the perspective camera; scoring/collision authority is
-// elsewhere and unchanged. side 0 = left goal (net extends to x<0).
-function drawGoal3D(side) {
+// ---------------------------------------------------------------- goals V2
+// Rectangular professional goal cage + deformable 3D net. Presentation only:
+// every point projects through the perspective camera; scoring/collision
+// authority is elsewhere and never influenced by anything here.
+//
+// FUTURE ENGINE CONTRACT (do not wire yet): when live integration is
+// authorized, the engine emits one presentation event per net contact:
+//   netImpact(side, pos, vel, strength?)
+//     side     0 = left goal (x=0), 1 = right goal (x=105)
+//     pos      ball/net contact point, world space {x, h, y}
+//              (x = pitch length m, h = height above ground m, y = pitch depth m)
+//     vel      incoming ball velocity {x, h, y} in m/s
+//     strength optional normalized 0..1; derived from |vel|/30 when omitted
+// The event is fire-and-forget; the renderer owns all deformation state.
+
+const GOAL = { W: 7.32, H: 2.44, REAR_H: 2.3, DEPTH: 2.0, yF: 34 - 3.66, yN: 34 + 3.66 };
+
+function makeGoalNet(side) {
   const gx = side ? 105 : 0, dir = side ? 1 : -1;
-  const yF = 34 - 3.66, yN = 34 + 3.66;            // far / near posts (world y)
-  const rearX = gx + dir * 2.0, rearTopX = gx + dir * 1.7, rearTopH = 1.9;
-  const seg3 = (x1, h1, z1, x2, h2, z2) => {
-    const a = project3(x1, h1, z1), b = project3(x2, h2, z2);
-    if (a.d < 0.5 || b.d < 0.5) return;
-    ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
-  };
+  const rearX = gx + dir * GOAL.DEPTH;
+  const sheets = [];
+  const vert = (bx, bh, by, pin) =>
+    ({ bx, bh, by, pin, ox: 0, oh: 0, oy: 0, vx: 0, vh: 0, vy: 0 });
 
-  // net mesh first (frame draws over it)
-  ctx.strokeStyle = "rgba(235,235,235,0.35)";
+  // Main sheet: top net + back net as one grid. Profile rows run
+  // crossbar -> rear crossbar (top panel) -> ground (back panel);
+  // columns run along the goal mouth. Rows 0 / TOPR / last and the two edge
+  // columns are attachments (crossbar, rear frame, ground, posts) => pinned.
+  const NY = 10, NTOP = 3, NBACK = 4, TOPR = NTOP;
+  const prof = [];
+  for (let i = 0; i <= NTOP; i++)
+    prof.push({ x: gx + dir * GOAL.DEPTH * i / NTOP, h: GOAL.H + (GOAL.REAR_H - GOAL.H) * i / NTOP });
+  for (let j = 1; j <= NBACK; j++)
+    prof.push({ x: rearX, h: GOAL.REAR_H * (1 - j / NBACK) });
+  const main = { nx: NY + 1, ny: prof.length, verts: [] };
+  for (let r = 0; r < prof.length; r++)
+    for (let c = 0; c <= NY; c++)
+      main.verts.push(vert(prof[r].x, prof[r].h, GOAL.yF + (GOAL.yN - GOAL.yF) * c / NY,
+        r === 0 || r === TOPR || r === prof.length - 1 || c === 0 || c === NY));
+  sheets.push(main);
+
+  // Side sheets (left/right side nets): depth x height grids at yF and yN,
+  // pinned along front post, rear post, ground and top edge.
+  for (const sy of [GOAL.yF, GOAL.yN]) {
+    const NSX = 4, NSY = 4, sh = { nx: NSX + 1, ny: NSY + 1, verts: [] };
+    for (let r = 0; r <= NSY; r++)
+      for (let c = 0; c <= NSX; c++) {
+        const hTop = GOAL.H + (GOAL.REAR_H - GOAL.H) * c / NSX;
+        sh.verts.push(vert(gx + dir * GOAL.DEPTH * c / NSX, hTop * r / NSY, sy,
+          c === 0 || c === NSX || r === 0 || r === NSY));
+      }
+    sheets.push(sh);
+  }
+  return { side, gx, dir, rearX, sheets, active: false };
+}
+const NETS = [makeGoalNet(0), makeGoalNet(1)];
+
+// Damped spring-mesh: each free vertex is pulled to rest (K), coupled to its
+// grid neighbours (KN — this propagates the ripple), and velocity-damped (C).
+// Semi-implicit Euler; energy gate puts the net to sleep at rest.
+const NET_K = 60, NET_KN = 90, NET_C = 5;
+function stepNet(net, dt) {
+  let e = 0;
+  for (const sh of net.sheets) {
+    const { nx, ny, verts } = sh;
+    for (let r = 0; r < ny; r++)
+      for (let c = 0; c < nx; c++) {
+        const v = verts[r * nx + c];
+        if (v.pin) continue;
+        let ax = -NET_K * v.ox, ah = -NET_K * v.oh, ay = -NET_K * v.oy;
+        let sx = 0, shh = 0, syy = 0, n = 0;
+        if (r > 0) { const u = verts[(r - 1) * nx + c]; sx += u.ox; shh += u.oh; syy += u.oy; n++; }
+        if (r < ny - 1) { const u = verts[(r + 1) * nx + c]; sx += u.ox; shh += u.oh; syy += u.oy; n++; }
+        if (c > 0) { const u = verts[r * nx + c - 1]; sx += u.ox; shh += u.oh; syy += u.oy; n++; }
+        if (c < nx - 1) { const u = verts[r * nx + c + 1]; sx += u.ox; shh += u.oh; syy += u.oy; n++; }
+        if (n) { ax += NET_KN * (sx / n - v.ox); ah += NET_KN * (shh / n - v.oh); ay += NET_KN * (syy / n - v.oy); }
+        ax -= NET_C * v.vx; ah -= NET_C * v.vh; ay -= NET_C * v.vy;
+        v.vx += ax * dt; v.vh += ah * dt; v.vy += ay * dt;
+        v.ox += v.vx * dt; v.oh += v.vh * dt; v.oy += v.vy * dt;
+        // taut-net cap: cord length limits stretch (~0.7 m), bleeding energy
+        const m = Math.hypot(v.ox, v.oh, v.oy);
+        if (m > 0.7) {
+          const k = 0.7 / m;
+          v.ox *= k; v.oh *= k; v.oy *= k;
+          v.vx *= 0.5; v.vh *= 0.5; v.vy *= 0.5;
+        }
+        e += v.vx * v.vx + v.vh * v.vh + v.vy * v.vy + v.ox * v.ox + v.oh * v.oh + v.oy * v.oy;
+      }
+  }
+  net.active = e > 1e-6;
+}
+function stepNets(dt) { for (const net of NETS) if (net.active) stepNet(net, dt); }
+
+// Presentation event (see FUTURE ENGINE CONTRACT above).
+function netImpact(side, pos, vel, strength) {
+  const net = NETS[side];
+  const speed = Math.hypot(vel.x, vel.h, vel.y) || 1;
+  const s = strength !== undefined ? Math.max(0, Math.min(1, strength))
+                                   : Math.min(1, speed / 30);
+  const dx = vel.x / speed, dh = vel.h / speed, dy = vel.y / speed;
+  // Presentation-tuned (validated headlessly): gentle ~6 cm peak bulge,
+  // power shot ~55 cm, ripple settles in ~1.5 s, zero residual.
+  const radius = 0.6 + 1.0 * s;            // localization: gentle = tight, power = wide
+  const impulse = 4 + 40 * s;              // m/s at the impact centre
+  for (const sh of net.sheets)
+    for (const v of sh.verts) {
+      if (v.pin) continue;
+      const d = Math.hypot(v.bx - pos.x, v.bh - pos.h, v.by - pos.y);
+      const f = Math.exp(-(d / radius) * (d / radius));
+      if (f < 0.01) continue;
+      v.vx += dx * impulse * f; v.vh += dh * impulse * f; v.vy += dy * impulse * f;
+    }
+  net.active = true;
+}
+function resetNets() {
+  for (const net of NETS) {
+    for (const sh of net.sheets)
+      for (const v of sh.verts) { v.ox = v.oh = v.oy = 0; v.vx = v.vh = v.vy = 0; }
+    net.active = false;
+  }
+}
+window.netImpact = netImpact;   // console/future-engine access; render state only
+
+function strokeSeg3(x1, h1, z1, x2, h2, z2) {
+  const a = project3(x1, h1, z1), b = project3(x2, h2, z2);
+  if (a.d < 0.5 || b.d < 0.5) return;
+  ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+}
+
+function drawGoal3D(side) {
+  const net = NETS[side];
+  const pc = project3(net.gx, 1.2, 34);
+  if (pc.d < 0.5 || pc.x < -400 || pc.x > cv.width + 400) return;
+
+  // net mesh (deformed vertex grid; subtle, less dominant than the frame)
+  ctx.strokeStyle = "rgba(228,228,234,0.32)";
   ctx.lineWidth = 1;
-  const NY = 8, NX = 4;
-  for (let i = 0; i <= NY; i++) {                   // lines along the goal mouth axis
-    const y = yF + (yN - yF) * (i / NY);
-    seg3(gx, 2.44, y, rearTopX, rearTopH, y);       // top panel rib
-    seg3(rearTopX, rearTopH, y, rearX, 0, y);       // back panel rib
-  }
-  for (let j = 1; j < NX; j++) {                    // cross ribs
-    let t = j / NX;
-    seg3(gx + (rearTopX - gx) * t, 2.44 + (rearTopH - 2.44) * t, yF,
-         gx + (rearTopX - gx) * t, 2.44 + (rearTopH - 2.44) * t, yN);
-    seg3(rearTopX + (rearX - rearTopX) * t, rearTopH * (1 - t), yF,
-         rearTopX + (rearX - rearTopX) * t, rearTopH * (1 - t), yN);
-  }
-  for (const y of [yF, yN]) {                       // side panels: profile + light mesh
-    seg3(gx, 0, y, rearX, 0, y);
-    seg3(gx, 2.44, y, rearTopX, rearTopH, y);
-    seg3(rearTopX, rearTopH, y, rearX, 0, y);
-    seg3(gx, 1.2, y, rearX * 0.5 + rearTopX * 0.5, rearTopH * 0.5, y);
-    seg3(gx + dir * 0.9, 0, y, rearTopX, rearTopH, y);
+  for (const sh of net.sheets) {
+    const pts = sh.verts.map(v => project3(v.bx + v.ox, v.bh + v.oh, v.by + v.oy));
+    ctx.beginPath();
+    for (let r = 0; r < sh.ny; r++)
+      for (let c = 0; c < sh.nx; c++) {
+        const p = pts[r * sh.nx + c];
+        c ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y);
+      }
+    for (let c = 0; c < sh.nx; c++)
+      for (let r = 0; r < sh.ny; r++) {
+        const p = pts[r * sh.nx + c];
+        r ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y);
+      }
+    ctx.stroke();
   }
 
-  // white frame: posts + crossbar (near post slightly heavier for depth)
+  // rectangular frame: rear cage (grey) then front posts/crossbar (white)
+  const { gx, rearX } = net, { yF, yN, H, REAR_H } = GOAL;
+  ctx.strokeStyle = "rgba(205,205,210,0.85)";
+  ctx.lineWidth = 1.5;
+  strokeSeg3(rearX, 0, yF, rearX, REAR_H, yF);      // rear verticals
+  strokeSeg3(rearX, 0, yN, rearX, REAR_H, yN);
+  strokeSeg3(rearX, REAR_H, yF, rearX, REAR_H, yN); // rear crossbar
+  strokeSeg3(rearX, 0, yF, rearX, 0, yN);           // rear ground bar
+  strokeSeg3(gx, 0, yF, rearX, 0, yF);              // side ground bars
+  strokeSeg3(gx, 0, yN, rearX, 0, yN);
+  strokeSeg3(gx, H, yF, rearX, REAR_H, yF);         // top side rails
+  strokeSeg3(gx, H, yN, rearX, REAR_H, yN);
   ctx.strokeStyle = "rgba(250,250,250,0.96)";
   ctx.lineWidth = 2.5;
-  seg3(gx, 0, yF, gx, 2.44, yF);                    // far post
+  strokeSeg3(gx, 0, yF, gx, H, yF);                 // far post
   ctx.lineWidth = 3;
-  seg3(gx, 0, yN, gx, 2.44, yN);                    // near post
-  seg3(gx, 2.44, yF, gx, 2.44, yN);                 // crossbar
-  // rear frame (grey, lighter weight)
-  ctx.strokeStyle = "rgba(200,200,205,0.8)";
-  ctx.lineWidth = 1.5;
-  seg3(rearTopX, rearTopH, yF, rearTopX, rearTopH, yN);
-  seg3(rearX, 0, yF, rearX, 0, yN);
+  strokeSeg3(gx, 0, yN, gx, H, yN);                 // near post
+  strokeSeg3(gx, H, yF, gx, H, yN);                 // crossbar
 }
 
 function draw() {
@@ -964,8 +1086,26 @@ function bindUI() {
     document.getElementById("v-heading").textContent = Math.round(S.test.heading);
   });
 
-  for (const b of document.querySelectorAll(".scenes button"))
+  for (const b of document.querySelectorAll(".scenes button[data-scene]"))
     b.addEventListener("click", () => setScene(b.dataset.scene));
+
+  // Net impact fixtures: synthetic events on the goal nearest the camera.
+  // These mimic the future engine event shape exactly (see contract).
+  const nearestSide = () => (S.cam.x >= 52.5 ? 1 : 0);
+  const fire = (mk) => {
+    const side = nearestSide(), gx = side ? 105 : 0, dir = side ? 1 : -1;
+    const t = mk(gx, dir);
+    netImpact(side, t.pos, t.vel, t.strength);
+  };
+  document.getElementById("net-centre").addEventListener("click", () => fire((gx, dir) => ({
+    pos: { x: gx, h: 1.2, y: 34 }, vel: { x: dir * 16, h: 0, y: 0 }, strength: 0.45 })));
+  document.getElementById("net-top").addEventListener("click", () => fire((gx, dir) => ({
+    pos: { x: gx, h: 2.15, y: 37.0 }, vel: { x: dir * 18, h: 1.5, y: 2 }, strength: 0.6 })));
+  document.getElementById("net-low").addEventListener("click", () => fire((gx, dir) => ({
+    pos: { x: gx, h: 0.35, y: 30.9 }, vel: { x: dir * 15, h: -1, y: -2 }, strength: 0.5 })));
+  document.getElementById("net-power").addEventListener("click", () => fire((gx, dir) => ({
+    pos: { x: gx, h: 1.1, y: 33.5 }, vel: { x: dir * 30, h: 0.5, y: 1 }, strength: 1.0 })));
+  document.getElementById("net-reset").addEventListener("click", resetNets);
 
   const resize = () => { cv.width = cv.clientWidth; cv.height = cv.clientHeight; };
   window.addEventListener("resize", resize);

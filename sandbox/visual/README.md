@@ -50,10 +50,30 @@ sandbox fetches the manifest and frames over HTTP.)
   texture material: two measured seat-row bands (its white strips excluded)
   are pre-mirrored and mapped continuously across the seating with exact
   per-row parallax. Aisle breaks at fixed world x cut through all rows.
-- Goals: procedural 3D — regulation 7.32×2.44 m posts/crossbar with 2 m net
-  depth, rear frame and lightweight net mesh, every point projected through
-  the perspective camera. The generated goal art is disabled for this camera
-  (front-facing; file + manifest record preserved).
+- Goals V2: rectangular procedural 3D cage — regulation 7.32×2.44 m front
+  frame, 2.0 m net depth, 2.3 m rear frame — plus a deformable spring-mesh
+  net (back/top as one 11×8 grid, two 5×5 side nets; attachments pinned).
+  Net impacts produce a localized bulge and damped outward ripple with no
+  permanent deformation (visual physics only; never affects scoring).
+  Developer buttons fire synthetic impacts; `Reset net` zeroes the mesh.
+  The generated goal art stays disabled (front-facing; file preserved).
+
+### Future engine contract (net ripple — do not wire yet)
+
+When live integration is authorized, the engine emits one fire-and-forget
+presentation event per ball/net contact:
+
+```js
+netImpact(side, pos, vel, strength?)
+// side     0 = left goal (x=0), 1 = right goal (x=105)
+// pos      contact point, world {x, h, y}  (pitch-x m, height m, pitch-y m)
+// vel      incoming ball velocity {x, h, y} in m/s
+// strength optional normalized 0..1; derived from |vel|/30 when omitted
+```
+
+The renderer owns all deformation state; the event can never influence
+authoritative ball physics or scoring. (`window.netImpact` is exposed for
+console testing.)
 
 ## Status
 
