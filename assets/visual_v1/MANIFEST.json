@@ -209,7 +209,7 @@
     ]
   },
   "goal_art_v2_1_clean": {
-    "acceptance": "PENDING_VISUAL_REVIEW (derived 2026-08-27; 0 PixelLab generations)",
+    "acceptance": "EXPERIMENTAL/REJECTED (2026-08-27 review: too sterile, loses PixelLab detailing; preserved as an experiment only — V2 is the visual master)",
     "derivation_method": "Deterministic reconstruction (option A): V2's accepted frame geometry measured from the art (8 corner points), external rear pole and stray artifacts omitted by construction, all net panels rebuilt as homography-mapped regular grids (roof 20x8, mouth 20x12, back 14x9 cells) with perspective-correct cell compression and subtle attachment-zero sag; frame redrawn along the measured members in V2's palette. Generator stored alongside for exact reproducibility.",
     "based_on": "goal_art_v2_oblique (originals untouched)",
     "size": "312x332",
@@ -226,6 +226,34 @@
       "Accepted V2 orientation/proportions preserved exactly (same measured corners).",
       "Net topology is a true connected grid per panel — no broken cells, oversized holes, or texture noise; holes genuinely transparent.",
       "Grid regularity lives in goal-space; the projective panel mapping produces the on-screen compression.",
+      "NOT integrated; procedural Goal V3 remains the active sandbox presentation."
+    ]
+  },
+  "goal_art_v2_2_surgical": {
+    "acceptance": "PENDING_VISUAL_REVIEW (derived 2026-08-27; 0 PixelLab generations; V2 is the accepted visual master)",
+    "derivation_method": "Surgical pixel repair of goal_v2_derived_transparent.png. Pole removal: mask-based transparency restore of the two external diagonal pole arms (left of the rear upright above the ground rail; left of the near post below it) and the detached right stub (right of the sagging roof edge) — 2,819 px cleared, no replacement structure. Net tears: four abnormal openings in the mouth net filled by clone-stamping the intact cell row directly above (offsets (0,-13)/(0,-14)) — 427 px ADDED into transparent gaps only; no existing art pixel modified. Everything outside the logged masks verified pixel-identical (0 differing px).",
+    "based_on": "goal_art_v2_oblique derived_transparent (V2 originals untouched)",
+    "size": "312x332",
+    "generations_cost": 0,
+    "changed_pixels": {
+      "total": 3246,
+      "pole_left": { "pixels": 2414, "bbox_xyxy": [0, 40, 90, 329] },
+      "stub_right": { "pixels": 405, "bbox_xyxy": [178, 59, 197, 115] },
+      "tear_A": { "pixels": 108, "bbox_xyxy": [119, 248, 131, 261] },
+      "tear_B": { "pixels": 64, "bbox_xyxy": [135, 249, 144, 261] },
+      "tear_C": { "pixels": 70, "bbox_xyxy": [147, 249, 155, 261] },
+      "tear_D": { "pixels": 185, "bbox_xyxy": [113, 275, 134, 289] }
+    },
+    "local_paths": {
+      "asset": "originals/goal_v2_oblique/goal_v2_2_surgical.png",
+      "surgery_report": "originals/goal_v2_oblique/goal_v2_2_surgery_report.json"
+    },
+    "sha256": {
+      "asset": "3c377434cc85058fdcaa01a94dbbc5f75d57db2383564401c25ee99aa1f7c8b8",
+      "surgery_report": "15bcb83766c260d5d45bf3e90cef8cf2c8ead0f446a698545859200dad539c9a"
+    },
+    "notes": [
+      "V2's artwork, silhouette, perspective, frame, net texture, sag and palette preserved exactly outside the repair masks.",
       "NOT integrated; procedural Goal V3 remains the active sandbox presentation."
     ]
   },
