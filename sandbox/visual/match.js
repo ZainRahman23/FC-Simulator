@@ -46,10 +46,11 @@ const IDLE_MAX = 0.5, JOG_MAX = 5.2, TELEPORT = 12;
 // points below define only its LOCAL pivot and debug markers.
 const GOAL_SPRITE = {
   W: 312, H: 332,
-  baseL: [95, 325], baseR: [222, 320],      // front post ground contacts (art px)
-  topL: [105, 183], topR: [232, 186],       // front post tops (crossbar ends)
-  pivot: [158.5, 322.5],                    // mouth-centre ground contact
-  mouthHpx: 138,                            // avg post length in art px == 2.44 m
+  // measured against the source photo's actual goal line (diagnosis 2026-08-27):
+  baseL: [30, 182], baseR: [95, 325],       // front FAR / NEAR post ground contacts
+  topL: [42, 40], topR: [105, 183],         // front post tops (crossbar runs between)
+  pivot: [62.5, 253.5],                     // (P1+P2)/2 — mouth-centre ground contact
+  mouthHpx: 142,                            // true front-post length in art px == 2.44 m
 };
 // presentation-only goal-art calibration (renderer state; never touches
 // authoritative geometry).
@@ -665,7 +666,13 @@ function goalSpriteXform(side) {
   const anchorW = { x: gx + out * GOAL_CFG.offX, y: 34 + GOAL_CFG.offDepth };
   const A = project(anchorW.x, anchorW.y);
   if (A.d < 0.5) return null;
-  const s = (2.44 * (CAM.fpx / CAM.czTarget) / GOAL_SPRITE.mouthHpx) * GOAL_CFG.scale;
+  // Uniform scale from the GOAL'S OWN projected world geometry at the live
+  // camera state: the authoritative 2.44 m post at this goal, divided by the
+  // artwork's measured 142 px post. The goal is a fixed world object — no
+  // player presentation-depth / constant-screen-size logic may enter here.
+  const pb = project3(gx, 0, 34), pt = project3(gx, 2.44, 34);
+  if (pt.d < 0.5) return null;
+  const s = (Math.hypot(pt.x - pb.x, pt.y - pb.y) / GOAL_SPRITE.mouthHpx) * GOAL_CFG.scale;
   const mirrored = side ? GOAL_CFG.mirrorR : GOAL_CFG.mirrorL;
   const px = mirrored ? GOAL_SPRITE.W - 1 - GOAL_SPRITE.pivot[0] : GOAL_SPRITE.pivot[0];
   const py = GOAL_SPRITE.pivot[1];
@@ -720,7 +727,7 @@ function drawGoalGeoDebug(side) {
   const err = Math.hypot(drawnPm[0] - C.x, drawnPm[1] - C.y);
   ctx.fillStyle = "#fff"; ctx.font = "11px monospace"; ctx.textAlign = "left";
   const tx0 = Math.min(cv.width - 250, Math.max(8, C.x + 20));
-  ctx.fillText(`P1(95,325) P2(222,320) Pm(158.5,322.5)`, tx0, C.y - 26);
+  ctx.fillText(`P1(${GOAL_SPRITE.baseL}) P2(${GOAL_SPRITE.baseR}) Pm(${GOAL_SPRITE.pivot})`, tx0, C.y - 26);
   ctx.fillText(`anchor err ${err.toFixed(2)}px  scale x${t.s.toFixed(3)}  ${t.mirrored ? "MIRROR" : "ORIG"}`, tx0, C.y - 14);
 }
 
