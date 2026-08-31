@@ -24,6 +24,21 @@ const APRON = { x0: -8, x1: 113, y0: -8, y1: 76 };
 const DIRS = ["east", "south-east", "south", "south-west", "west", "north-west", "north", "north-east"];
 const VIEW = { w: 1280, h: 720 };           // reference viewport defining V-space units
 
+// ═══ 2X DPR-AWARE BACKING STORE ══════════════════════════════════════════════
+// ONE authoritative backing-resolution factor. The canvas backing raster is
+// CSS size x RES while CSS/display dimensions are untouched, and the world
+// projection scales by RES — so normalized screen composition is IDENTICAL
+// (u = x/backW is RES-invariant by construction) and every world object
+// simply gains real raster samples. Capped at 2: the study showed 3x buys
+// little for 9x pixels, and 2 matches Retina DPR exactly (1:1 device px).
+// Pixel-art discipline: strokes quantize to PXQ backing px (= 1 CSS px), so
+// chunky edges survive; sprites keep nearest-neighbour sampling and now draw
+// from their sources at up to native resolution (players 128px -> ~123px).
+const RES = Math.min(window.devicePixelRatio || 1, 2);
+const PXQ = Math.max(1, Math.round(RES));   // stroke quantum (1 CSS px)
+const qw = (cssw) => Math.max(PXQ, Math.round(cssw * RES / PXQ) * PXQ);
+const uipx = (v) => Math.round(v * RES);    // HUD/debug sizes in backing px
+
 // CAMERA_V1 — the authored projection (frozen; sliders re-freeze, not animate)
 const AUTHOR_DEFAULTS = {
   height: 30, dist: 43, fov: 28, depthoff: 3, pitch: 22, yaw: 0, pscale: 0.85,
@@ -509,8 +524,8 @@ const RIG = { x: 52.5, mode: "ball", smooth: RUNTIME_DEFAULTS.smooth, lead: 0,
 let TRAVEL = 0;
 function sproj3(wx, wy, wz) {           // world → screen (rig-translated + zoom)
   const p = fproj3(wx - TRAVEL, wy, wz);
-  return { x: (p.x - VIEW.w / 2) * RIG.zoom + cv.width / 2,
-           y: (p.y - VIEW.h / 2) * RIG.zoom + cv.height / 2, d: p.d };
+  return { x: (p.x - VIEW.w / 2) * (RIG.zoom * RES) + cv.width / 2,
+           y: (p.y - VIEW.h / 2) * (RIG.zoom * RES) + cv.height / 2, d: p.d };
 }
 function sproj(wx, wz) { return sproj3(wx, 0, wz); }
 
@@ -595,7 +610,7 @@ function fillStructQuad(color, hA, zA, hB, zB) {
 function railLine(h, z, width = 2, color = ENV_COL.rail) {
   const { xL, xR } = envXRangeAt(h, z);
   if (xL >= xR) return;
-  ctx.strokeStyle = color; ctx.lineWidth = width;
+  ctx.strokeStyle = color; ctx.lineWidth = qw(width);
   strokeSeg3(xL, h, z, xR, h, z);
 }
 function fillSeatQuad(patKey, hF, zF, hB, zB) {
@@ -628,7 +643,7 @@ function cutAisles(hF, zF, hB, zB) {
     const p = [sproj3(wx - hw, hB, zB), sproj3(wx + hw, hB, zB),
                sproj3(wx + hw, hF, zF), sproj3(wx - hw, hF, zF)];
     if (p.some(q => q.d < 0.5)) continue;
-    if (p[0].x > cv.width + 40 || p[1].x < -40) continue;
+    if (p[0].x > cv.width + 40 * RES || p[1].x < -40 * RES) continue;
     ctx.beginPath();
     ctx.moveTo(p[0].x, p[0].y); ctx.lineTo(p[1].x, p[1].y);
     ctx.lineTo(p[2].x, p[2].y); ctx.lineTo(p[3].x, p[3].y);
@@ -677,7 +692,7 @@ function drawFarBarrier() {
   fillStructQuad(ENV_COL.board, 0, ENV.farBarrierZ, ENV.barrierH, ENV.farBarrierZ);
   const { xL, xR } = envXRange2(0, ENV.farBarrierZ, ENV.barrierH, ENV.farBarrierZ);
   if (xL >= xR) return;
-  ctx.strokeStyle = "rgba(255,255,255,0.10)"; ctx.lineWidth = 1;
+  ctx.strokeStyle = "rgba(255,255,255,0.10)"; ctx.lineWidth = PXQ;
   const k0 = Math.ceil(xL / ENV.boardPanelM), k1 = Math.floor(xR / ENV.boardPanelM);
   for (let k = k0; k <= k1; k++)
     strokeSeg3(k * ENV.boardPanelM, 0, ENV.farBarrierZ, k * ENV.boardPanelM, ENV.barrierH, ENV.farBarrierZ);
@@ -690,7 +705,7 @@ function drawNearBarrier() {
 function drawMarkings() {
   ctx.strokeStyle = "rgba(250,250,250,0.92)";
   ctx.fillStyle = "rgba(250,250,250,0.92)";
-  ctx.lineWidth = Math.max(1, 2 * RIG.zoom);
+  ctx.lineWidth = qw(2 * RIG.zoom);
   ctx.lineJoin = "round";
   const rect = (x, z, w, d) =>
     strokeWorldPoly([[x, z], [x + w, z], [x + w, z + d], [x, z + d]], true);
@@ -713,7 +728,7 @@ function drawMarkings() {
   strokeWorldPoly(circlePts(0, 68, 1, Math.PI * 1.5, Math.PI * 2));
 }
 function drawGrid() {
-  ctx.strokeStyle = "rgba(255,255,255,0.14)"; ctx.lineWidth = 1;
+  ctx.strokeStyle = "rgba(255,255,255,0.14)"; ctx.lineWidth = PXQ;
   for (let x = 0; x <= 105; x += 5) strokeWorldPoly([[x, 0], [x, 68]]);
   for (let y = 0; y <= 68; y += 5) strokeWorldPoly([[0, y], [105, y]]);
 }
@@ -723,9 +738,9 @@ function drawGrid() {
 // translates instead of panning.
 function drawRailSquare() {
   const cxm = RIG.x, cy = 34;
-  ctx.strokeStyle = "rgba(80,220,255,0.9)"; ctx.lineWidth = 2;
+  ctx.strokeStyle = "rgba(80,220,255,0.9)"; ctx.lineWidth = uipx(2);
   strokeWorldPoly([[cxm - 5, cy - 5], [cxm + 5, cy - 5], [cxm + 5, cy + 5], [cxm - 5, cy + 5]], true);
-  ctx.strokeStyle = "rgba(80,220,255,0.5)"; ctx.lineWidth = 1;
+  ctx.strokeStyle = "rgba(80,220,255,0.5)"; ctx.lineWidth = PXQ;
   strokeWorldPoly([[cxm - 5, cy], [cxm + 5, cy]]);
   strokeWorldPoly([[cxm, cy - 5], [cxm, cy + 5]]);
 }
@@ -738,7 +753,7 @@ function drawGroundPerspective() {
   const tx = (x) => (x + TRAVEL - APRON.x0) * REF_ZOOM;   // shifted → actual world
   const tz = (z) => (z - APRON.y0) * REF_ZOOM;
   const rowWorld = (sy) => {
-    const vy = (sy - cv.height / 2) / RIG.zoom + VIEW.h / 2;
+    const vy = (sy - cv.height / 2) / (RIG.zoom * RES) + VIEW.h / 2;
     const qy = (VIEW.h / 2 - vy) / PROJ.fpx;
     const dy = PROJ.f.y + qy * PROJ.u.y;
     if (dy >= -1e-6) return null;
@@ -747,7 +762,7 @@ function drawGroundPerspective() {
     const Ax = PROJ.C.x + lam * bx, Az = PROJ.C.z + lam * bz;
     const st = lam / PROJ.fpx;
     return (sx) => {
-      const vx = (sx - cv.width / 2) / RIG.zoom + VIEW.w / 2;
+      const vx = (sx - cv.width / 2) / (RIG.zoom * RES) + VIEW.w / 2;
       return { x: Ax + (vx - VIEW.w / 2) * st * PROJ.r.x,
                z: Az + (vx - VIEW.w / 2) * st * PROJ.r.z };
     };
@@ -969,14 +984,14 @@ function buildGoalNet(gx, out) {
 let NET_LAYERS = null;
 function drawGoalNet(goal) {
   const c0 = sproj3(goal.gx, 1.2, 34);   // whole-goal cull
-  if (c0.x < -900 || c0.x > cv.width + 900) return;
+  if (c0.x < -900 * RES || c0.x > cv.width + 900 * RES) return;
   if (!NET_LAYERS || NET_LAYERS[0].width !== cv.width || NET_LAYERS[0].height !== cv.height)
     NET_LAYERS = NET.levels.map(() => {
       const c = document.createElement("canvas");
       c.width = cv.width; c.height = cv.height;
       return c;
     });
-  const w = Math.max(1, Math.round(NET.cord * S.pxPerM * RIG.zoom));
+  const w = qw(NET.cord * S.pxPerM * RIG.zoom);
   const lctx = NET_LAYERS.map(c => {
     const x = c.getContext("2d");
     x.clearRect(0, 0, c.width, c.height);
@@ -1332,7 +1347,7 @@ function drawBallTest(dt) {
   const t = S.ballTest;
   if (!t) return;
   if (S.dbg.ball && t.trail.length > 1) {
-    ctx.strokeStyle = "rgba(255,210,60,0.55)"; ctx.lineWidth = 1;
+    ctx.strokeStyle = "rgba(255,210,60,0.55)"; ctx.lineWidth = PXQ;
     ctx.beginPath();
     for (let i = 0; i < t.trail.length; i++) {
       const q = sproj3(t.trail[i][0], t.trail[i][2], t.trail[i][1]);
@@ -1341,14 +1356,14 @@ function drawBallTest(dt) {
     ctx.stroke();
   }
   drawBallAt(t.p[0], t.p[1], t.p[2], Math.hypot(t.v[0], t.v[1]), dt);
-  ctx.fillStyle = "#ffd34d"; ctx.font = "bold 13px ui-monospace, monospace";
+  ctx.fillStyle = "#ffd34d"; ctx.font = "bold " + uipx(13) + "px ui-monospace, monospace";
   ctx.fillText((S.netSlow ? "[SLOW-MO 0.15x]  " : "") +
-    "BALL PHYSICS TEST \u2014 SYNTHETIC (" + t.label + ")", 14, cv.height - 52);
-  ctx.fillStyle = "#9fe8ff"; ctx.font = "12px ui-monospace, monospace";
+    "BALL PHYSICS TEST \u2014 SYNTHETIC (" + t.label + ")", uipx(14), cv.height - uipx(52));
+  ctx.fillStyle = "#9fe8ff"; ctx.font = uipx(12) + "px ui-monospace, monospace";
   ctx.fillText("pos " + t.p.map(v => v.toFixed(2)).join(" / ") +
     "   vel " + t.v.map(v => v.toFixed(2)).join(" / ") +
     "   speed " + Math.hypot(t.v[0], t.v[1], t.v[2]).toFixed(2) +
-    " m/s   grounded " + (t.grounded ? "yes" : "no"), 14, cv.height - 68);
+    " m/s   grounded " + (t.grounded ? "yes" : "no"), uipx(14), cv.height - uipx(68));
 }
 // ── BALL TRANSPORT TEST: plays the engine's scripted body sequence
 // (/api/balltest/sequence) through the real camera. Deterministic engine
@@ -1384,14 +1399,14 @@ function drawBallSeq(dt) {
     x += (tr[i + 1][1] - x) * f; y += (tr[i + 1][2] - y) * f; z += (tr[i + 1][3] - z) * f;
   }
   drawBallAt(x, y, z, 8, dt);
-  ctx.fillStyle = "#ffd34d"; ctx.font = "bold 13px ui-monospace, monospace";
+  ctx.fillStyle = "#ffd34d"; ctx.font = "bold " + uipx(13) + "px ui-monospace, monospace";
   ctx.fillText("BALL TRANSPORT TEST \u2014 ENGINE BODY SEQUENCE  (" + (q.idx + 1) + "/" +
-    q.actions.length + ": " + a.label + ")", 14, cv.height - 88);
-  ctx.fillStyle = "#9fe8ff"; ctx.font = "12px ui-monospace, monospace";
+    q.actions.length + ": " + a.label + ")", uipx(14), cv.height - uipx(88));
+  ctx.fillStyle = "#9fe8ff"; ctx.font = uipx(12) + "px ui-monospace, monospace";
   ctx.fillText("launch " + a.launch_speed + " m/s  (vh " + a.horizontal_speed +
     ", vz " + a.vz + ")   maxH " + a.max_height + " m   flight " + a.flight_s +
     " s   land (" + a.landing[0] + ", " + a.landing[1] + ")   1st bounce " +
-    a.first_bounce_h + " m", 14, cv.height - 104);
+    a.first_bounce_h + " m", uipx(14), cv.height - uipx(104));
 }
 let netAcc = 0;
 function netPhysUpdate(dtReal) {
@@ -1419,8 +1434,8 @@ function drawGoal(goal) {
     for (const cell of panel.cells) {
       const s = cell.worldC.map(w => sproj3(w[0], w[1], w[2]));
       if (s.some(p => p.d < 0.5)) continue;
-      if (Math.max(s[0].x, s[1].x, s[2].x, s[3].x) < -20 ||
-          Math.min(s[0].x, s[1].x, s[2].x, s[3].x) > cv.width + 20) continue;
+      if (Math.max(s[0].x, s[1].x, s[2].x, s[3].x) < -20 * RES ||
+          Math.min(s[0].x, s[1].x, s[2].x, s[3].x) > cv.width + 20 * RES) continue;
       const a = cell.artC;
       drawTexTri(panel.img, a[0], a[1], a[2], s[0], s[1], s[2]);
       drawTexTri(panel.img, a[0], a[2], a[3], s[0], s[2], s[3]);
@@ -1434,15 +1449,15 @@ function drawGoal(goal) {
 function drawGoalFrame(gx) {
   const pts = [sproj3(gx, 0, 30.34), sproj3(gx, 2.44, 30.34),
                sproj3(gx, 2.44, 37.66), sproj3(gx, 0, 37.66)];
-  if (pts.every(p => p.x < -20) || pts.every(p => p.x > cv.width + 20)) return;
-  const w = Math.max(3, Math.round(0.12 * S.pxPerM * RIG.zoom));
+  if (pts.every(p => p.x < -20 * RES) || pts.every(p => p.x > cv.width + 20 * RES)) return;
+  const w = qw(Math.max(3, 0.12 * S.pxPerM * RIG.zoom));
   ctx.lineJoin = "round"; ctx.lineCap = "round";
   ctx.beginPath();
   ctx.moveTo(pts[0].x, pts[0].y);
   for (let i = 1; i < 4; i++) ctx.lineTo(pts[i].x, pts[i].y);
   // pixel-art definition: solid 1px darker rim under an opaque white core —
   // fully covers any strand behind the members, corners join round and clean
-  ctx.strokeStyle = "#9aa19b"; ctx.lineWidth = w + 2; ctx.stroke();
+  ctx.strokeStyle = "#9aa19b"; ctx.lineWidth = w + 2 * PXQ; ctx.stroke();
   ctx.strokeStyle = "#fbfbf8"; ctx.lineWidth = w; ctx.stroke();
 }
 
@@ -1481,7 +1496,11 @@ function tick(ts) {
   updateRig(dt, sample);
   netPhysUpdate(S.netSlow ? dt * 0.15 : dt);   // key 0: slow motion (same
                                                // fixed steps, fewer per frame)
+  const __t0 = performance.now();
   draw(sample, dt);
+  const __ms = performance.now() - __t0;
+  (S.perfT ||= []).push(__ms);
+  if (S.perfT.length > 240) S.perfT.shift();
   if ((ts | 0) % 500 < 20) updateHUD();
   requestAnimationFrame(tick);
 }
@@ -1518,7 +1537,7 @@ function drawPlayer(p, dt) {
   const sp = sproj(p.x, p.y);
   if (sp.d < 0.5) return;
   const ax = Math.round(sp.x), ay = Math.round(sp.y);
-  const s = S.playerVScale * RIG.zoom;
+  const s = S.playerVScale * RIG.zoom * RES;
   const team = (S.pb.players[p.pid] || {}).team === "AWAY" ? 1 : 0;
   const flat = flattenAt(p.x, p.y);
   ctx.save();
@@ -1534,17 +1553,17 @@ function drawPlayer(p, dt) {
   ctx.drawImage(im, Math.round(ax - (w / 2) * s), Math.round(ay - foot * s),
     Math.round(w * s), Math.round(h * s));
   if (S.dbg.anchors) {
-    ctx.strokeStyle = "#ff4040"; ctx.lineWidth = 1;
+    ctx.strokeStyle = "#ff4040"; ctx.lineWidth = PXQ;
     ctx.beginPath(); ctx.moveTo(ax - 5, ay); ctx.lineTo(ax + 5, ay);
     ctx.moveTo(ax, ay - 5); ctx.lineTo(ax, ay + 5); ctx.stroke();
   }
   if (S.dbg.vel && p.speed > 0.2) {
     const tip = sproj(p.x + p.vx * 0.8, p.y + p.vy * 0.8);
-    ctx.strokeStyle = "#5cff8a"; ctx.lineWidth = 2;
+    ctx.strokeStyle = "#5cff8a"; ctx.lineWidth = uipx(2);
     ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(tip.x, tip.y); ctx.stroke();
   }
   if (S.dbg.ids || S.dbg.state) {
-    ctx.fillStyle = "#fff"; ctx.font = "10px monospace"; ctx.textAlign = "center";
+    ctx.fillStyle = "#fff"; ctx.font = uipx(10) + "px monospace"; ctx.textAlign = "center";
     let ty = ay - Math.round((im.height / 2 + 40) * s) - 4;
     if (S.dbg.ids) {
       const nm = (S.pb.players[p.pid] || {}).name || p.pid;
@@ -1581,7 +1600,7 @@ function drawBallAt(xw, yw, z, speed, dt) {
   const gpos = sproj3(xw, 0, yw);           // shadow stays on the pitch
   const bpos = sproj3(xw, z, yw);           // true projected height
   if (bpos.d < 0.5) return;
-  const r = Math.max(2, Math.round(BALL_VIS_R * S.pxPerM * RIG.zoom));
+  const r = Math.max(2, Math.round(BALL_VIS_R * S.pxPerM * RIG.zoom * RES));
   const flat = flattenAt(xw, yw);
   const sh = 1 / (1 + z * 0.55);            // higher ball: smaller, fainter
   ctx.beginPath();
@@ -1594,8 +1613,12 @@ function drawBallAt(xw, yw, z, speed, dt) {
   // (7-11 px native, 4 rotation phases) is drawn 1:1 — same world size,
   // same continuous theta, no resampling. At >=12 px the accepted
   // detailed 24x24 8-phase sprite renders exactly as before.
-  const dpx = 2 * BALL_VIS_R * S.pxPerM * RIG.zoom;
-  if (dpx < 12 && S.images.ballMicro) {
+  // dpx is the PROJECTED BACKING-RASTER diameter. Under the 2x store the
+  // 24x24 detailed master is genuinely resolvable at ordinary gameplay
+  // (zoom 1 -> ~9.4 backing px reads as a football per the density study),
+  // so the micro LOD now engages only for genuinely tiny far views.
+  const dpx = 2 * BALL_VIS_R * S.pxPerM * RIG.zoom * RES;
+  if (dpx < 7 && S.images.ballMicro) {
     const n = Math.max(7, Math.min(11, Math.round(dpx)));
     const m = S.images.ballMicro[n];
     const ph4 = ((Math.floor(_ballRot.th / (2 * Math.PI) * 4) % 4) + 4) % 4;
@@ -1614,7 +1637,7 @@ function drawBall(ball, dt) {
   drawBallAt(ball.x, ball.y, ball.z || 0, Math.hypot(ball.vx, ball.vy), dt);
   if (S.dbg.ball) {
     const sp = sproj3(ball.x, ball.z || 0, ball.y);
-    ctx.fillStyle = "#ffd23c"; ctx.font = "10px monospace"; ctx.textAlign = "center";
+    ctx.fillStyle = "#ffd23c"; ctx.font = uipx(10) + "px monospace"; ctx.textAlign = "center";
     ctx.fillText(`ball (${ball.x.toFixed(1)}, ${ball.y.toFixed(1)}, z ${(ball.z || 0).toFixed(2)}) m`,
                  sp.x, sp.y - 14);
     ctx.textAlign = "left";
@@ -1625,15 +1648,15 @@ function drawNetTestBall() {
   const t = S.netTest;
   if (!t) return;
   const p = sproj3(t.p[0], t.p[1], t.p[2]);
-  const r = Math.max(2.5, NETPHYS.ballR * S.pxPerM * RIG.zoom);
+  const r = Math.max(2.5, NETPHYS.ballR * S.pxPerM * RIG.zoom * RES);
   ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
   ctx.fillStyle = "#f4f4f0"; ctx.fill();
   ctx.lineWidth = Math.max(1, r * 0.22); ctx.strokeStyle = "#3a3d42"; ctx.stroke();
-  ctx.fillStyle = "#ffd34d"; ctx.font = "bold 13px ui-monospace, monospace";
+  ctx.fillStyle = "#ffd34d"; ctx.font = "bold " + uipx(13) + "px ui-monospace, monospace";
   ctx.fillText((S.netSlow ? "[SLOW-MO 0.15x]  " : "") +
     "NET PHYSICS TEST \u2014 SYNTHETIC BALL TRAJECTORY  " +
     "(test " + t.id + ": " + t.label + ", " + t.speed + " m/s, " + t.phase + ")",
-    14, cv.height - 14);
+    uipx(14), cv.height - uipx(14));
 }
 function drawNetPhysDebug() {
   const net = S.goalPanels[1] && S.goalPanels[1].net;
@@ -1651,24 +1674,24 @@ function drawNetPhysDebug() {
     if (dx * dx + dy * dy + dz * dz > 1e-4) {
       const q0 = sproj3(rest[j], rest[j + 1], rest[j + 2]);
       const q1 = sproj3(pos[j], pos[j + 1], pos[j + 2]);
-      ctx.strokeStyle = "rgba(0,240,255,0.85)"; ctx.lineWidth = 1;
+      ctx.strokeStyle = "rgba(0,240,255,0.85)"; ctx.lineWidth = PXQ;
       ctx.beginPath(); ctx.moveTo(q0.x, q0.y); ctx.lineTo(q1.x, q1.y); ctx.stroke();
     }
   }
   if (net.lastImpact) {
     const c = sproj3(net.lastImpact[0], net.lastImpact[1], net.lastImpact[2]);
-    ctx.strokeStyle = "#ff5ce0"; ctx.lineWidth = 2;
+    ctx.strokeStyle = "#ff5ce0"; ctx.lineWidth = uipx(2);
     ctx.beginPath(); ctx.moveTo(c.x - 7, c.y); ctx.lineTo(c.x + 7, c.y);
     ctx.moveTo(c.x, c.y - 7); ctx.lineTo(c.x, c.y + 7); ctx.stroke();
   }
-  ctx.fillStyle = "#9fe8ff"; ctx.font = "12px ui-monospace, monospace";
+  ctx.fillStyle = "#9fe8ff"; ctx.font = uipx(12) + "px ui-monospace, monospace";
   ctx.fillText("net: active=" + net.active + "  maxDisp=" +
     (net.maxDisp || 0).toFixed(3) + " m  KE=" + net.energy.toExponential(2),
-    14, cv.height - 32);
+    uipx(14), cv.height - uipx(32));
 }
 function drawGoalGeoDebug(side) {
   const gx = side ? 105 : 0, dir = side ? 1 : -1;
-  ctx.strokeStyle = "rgba(255,80,80,0.9)"; ctx.lineWidth = 1.5;
+  ctx.strokeStyle = "rgba(255,80,80,0.9)"; ctx.lineWidth = uipx(1.5);
   strokeWorldPoly([[gx, 26], [gx, 42]]);
   strokeWorldPoly([[gx, 30.34], [gx + dir * 2, 30.34], [gx + dir * 2, 37.66], [gx, 37.66]], true);
   ctx.lineWidth = 2;
@@ -1707,7 +1730,7 @@ function draw(sample, dt) {
   if (S.dbg.cam) drawRailSquare();       // rail diagnostic overlay (toggleable)
   if (S.dbg.track) {
     const t = sproj(RIG.targetX, 34);
-    ctx.strokeStyle = "#ff5ce0"; ctx.lineWidth = 2;
+    ctx.strokeStyle = "#ff5ce0"; ctx.lineWidth = uipx(2);
     ctx.strokeRect(t.x - 7, t.y - 7, 14, 14);
   }
   drawNearBarrier();
@@ -1729,7 +1752,12 @@ function drawReadout(sample) {
     `pitch ${a.pitch}°  yaw ${a.yaw}°  fov ${a.fov}°  zoom ×${RIG.zoom.toFixed(2)}\n` +
     `mode ${RIG.mode}  rig ${RIG.x.toFixed(2)}m  target ${RIG.targetX.toFixed(2)}m  lead ${RIG.lead.toFixed(1)}m\n` +
     (sample ? `ball     (${sample.ball.x.toFixed(1)}, ${sample.ball.y.toFixed(1)}) m\n` : "") +
-    `players  ${sample ? sample.players.length : 0} active`;
+    `players  ${sample ? sample.players.length : 0} active\n` +
+    (S.perfT && S.perfT.length > 30 ? (() => {
+      const a = [...S.perfT].sort((x, y) => x - y);
+      const mean = a.reduce((x, y) => x + y, 0) / a.length;
+      return `render   ${mean.toFixed(2)}ms mean / ${a[Math.floor(a.length * 0.95)].toFixed(2)}ms p95 · backing ${cv.width}x${cv.height} · RES ${RES}`;
+    })() : "");
 }
 
 // ═══ UI ══════════════════════════════════════════════════════════════════════
@@ -1832,7 +1860,7 @@ function bindUI() {
     (e) => { GOAL_CFG.mirrorL = e.target.value === "mirror"; buildGoalPanels(); });
   document.getElementById("gright").addEventListener("change",
     (e) => { GOAL_CFG.mirrorR = e.target.value === "mirror"; buildGoalPanels(); });
-  const resize = () => { cv.width = cv.clientWidth; cv.height = cv.clientHeight; };
+  const resize = () => { cv.width = Math.round(cv.clientWidth * RES); cv.height = Math.round(cv.clientHeight * RES); };
   window.addEventListener("resize", resize);
   resize();
 }
