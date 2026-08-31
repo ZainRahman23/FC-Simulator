@@ -71,5 +71,58 @@
   "sheet": "ball_sheet_24x8.png (192x24, phases left to right 0..7)",
   "master_raw": "ball_master_raw_24.png (pre-cleanup PixelLab master)"
  },
- "total_generations": 6
+ "total_generations": 6,
+ "round2_refinement": {
+  "reason": "first master rejected at close gameplay zoom: heavy dark ring, cross-like panels, too much dark mass, muddy",
+  "generations": [
+   {
+    "role": "round2 candidate N1 (SELECTED master)",
+    "tool": "create_image_pixen",
+    "job": "64f44033-bd0f-4119-ad88-7c3638f1f280",
+    "seed": 101,
+    "outline": "lineless",
+    "prompt": "bright white classic soccer ball, large clean white leather panels, three small black pentagon patches near the edges, very thin dark seam lines, no outline ring, soft minimal gray shading bottom right, tiny white highlight top left, perfectly round, crisp pixel art, transparent background"
+   },
+   {
+    "role": "N2 (runner-up: clean but sparse at 10px)",
+    "job": "95325c64-cdc3-49c4-8bd7-1c62a3d58aea",
+    "seed": 202
+   },
+   {
+    "role": "N3 (rejected: too minimal/asymmetric)",
+    "job": "07726358-e5a7-4af2-aa2e-003288f7f25d",
+    "seed": 303
+   },
+   {
+    "role": "N4 (runner-up: classic but busier seams)",
+    "job": "91d4b44f-9f02-4e72-89d3-4863ec77b1de",
+    "seed": 404
+   },
+   {
+    "role": "N5 (rejected: busier, edge artifact)",
+    "job": "f664f609-7eb9-4922-b81a-3b34ca6dfac5",
+    "seed": 555
+   },
+   {
+    "role": "N6 (rejected: moderate ring returns)",
+    "job": "8ec0dfc6-ebe4-4f68-84db-0cd35987bee2",
+    "seed": 666
+   },
+   {
+    "role": "rotation attempt 1 (REJECTED whole set: identity drifted darker, thicker rim, green pixel on f7)",
+    "tool": "animate_image",
+    "job": "6708eef5-f3b7-441e-be33-92b2c0282f84",
+    "seed": 101
+   },
+   {
+    "role": "rotation FINAL (accepted): master pinned as first AND last frame \u2014 loop interpolation held identity (luminance 119-128 stable)",
+    "tool": "animate_image",
+    "job": "9fb13f90-83ba-4fa0-864f-911ee9b679c8",
+    "seed": 7,
+    "frame_count": 8
+   }
+  ],
+  "manual_cleanup": "same deterministic pipeline: integer recentring, master silhouette mask enforced, hole fill, palette quantized (6 colours incl #101313 this time)",
+  "total_round2_generations": 8
+ }
 }
