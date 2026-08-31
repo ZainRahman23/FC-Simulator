@@ -806,7 +806,7 @@ const GOAL_ART_PANELS = [
     // post / rear upright / top rail / ground lines. Listed first so it draws
     // beneath the others: from the authored south rail (camera z>68) this
     // plane is always the goal's farthest surface.
-    netTex: true,
+    netTex: true, sag: "farside", gridU: 6, gridV: 8,
     art: [[0, 0], [121, 0], [121, 97], [0, 97]],
     world: (gx, out) => [[gx, 2.44, 30.34], [gx + out * 2, 2.44, 30.34],
                          [gx + out * 2, 0, 30.34], [gx, 0, 30.34]],
@@ -817,7 +817,7 @@ const GOAL_ART_PANELS = [
     // photographed through the side net) and read as a wedge. Samples the
     // wide goalNetTexRear weave. Drawn second: farther than roof/side/mouth
     // along every sight line, nearer than farside where they overlap.
-    rearTex: true,
+    rearTex: true, sag: "rear", gridU: 12, gridV: 8,
     art: [[0, 0], [433, 0], [433, 97], [0, 97]],
     world: (gx, out) => [[gx + out * 2, 2.44, 30.34], [gx + out * 2, 2.44, 37.66],
                          [gx + out * 2, 0, 37.66], [gx + out * 2, 0, 30.34]],
@@ -839,6 +839,27 @@ const GOAL_ART_PANELS = [
     u0: -0.03, u1: 1.02, v0: -0.03, v1: 1.0, mouthTex: true },
 ];
 const GOAL_GRID = 3;                    // cells per panel axis (triangulated)
+// Net rest-shape sag — the flexible net's RESTING geometry (the rigid cage
+// stays exact). One continuous field over the cage plan path s: far post
+// (s=0) -> rear-far corner (s=2) -> rear-near corner (s=9.32). Displacement
+// = amp*sin(pi*s/sEnd)*v^vExp along a face-inward direction that smoothstep-
+// rotates 90deg across the corner blend window, so the side sag flows
+// continuously around the rear-far corner (no pin there, no kink). Zero at
+// every pinned attachment: far post (s=0), all top rails (v=0), and the
+// rear<->near-side seam (s=sEnd; the near side keeps its baked art drape).
+// These sagged positions are the net's rest state: the future ball-impact
+// springs displace cell corners from here and relax back to here.
+const GOAL_SAG = { amp: 0.22, blend: 3.0, sEnd: 9.32, vExp: 1.5 };
+function goalNetSag(x, y, z, s, out) {
+  const v = 1 - y / 2.44;
+  if (s <= 0 || s >= GOAL_SAG.sEnd || v <= 0) return [x, y, z];
+  const m = GOAL_SAG.amp * Math.sin(Math.PI * s / GOAL_SAG.sEnd)
+          * Math.pow(v, GOAL_SAG.vExp);
+  const t = Math.min(1, Math.max(0, (s - (2 - GOAL_SAG.blend)) / (2 * GOAL_SAG.blend)));
+  const tt = t * t * (3 - 2 * t);
+  const phi = (Math.PI / 2) * (1 + tt);
+  return [x + m * out * Math.cos(phi), y, z + m * Math.sin(phi)];
+}
 function buildGoalPanels() {
   const W = GOAL_SPRITE.W;
   S.goalPanels = [0, 1].map(side => {
@@ -861,24 +882,29 @@ function buildGoalPanels() {
       const wq = P.world(gx, out);
       const worldAt = (u, v) => {           // bilinear on the planar world rect
         const [a, b, c, d] = wq;
-        return [
-          (1 - v) * ((1 - u) * a[0] + u * b[0]) + v * ((1 - u) * d[0] + u * c[0]),
-          (1 - v) * ((1 - u) * a[1] + u * b[1]) + v * ((1 - u) * d[1] + u * c[1]),
-          (1 - v) * ((1 - u) * a[2] + u * b[2]) + v * ((1 - u) * d[2] + u * c[2])
-            + GOAL_CFG.offDepth,
-        ];
+        let x = (1 - v) * ((1 - u) * a[0] + u * b[0]) + v * ((1 - u) * d[0] + u * c[0]);
+        let y = (1 - v) * ((1 - u) * a[1] + u * b[1]) + v * ((1 - u) * d[1] + u * c[1]);
+        let z = (1 - v) * ((1 - u) * a[2] + u * b[2]) + v * ((1 - u) * d[2] + u * c[2]);
+        if (P.sag) {                        // net rest-shape (cage stays exact)
+          const s = P.sag === "farside" ? 2 * u : 2 + 7.32 * u;
+          [x, y, z] = goalNetSag(x, y, z, s, out);
+        }
+        return [x, y, z + GOAL_CFG.offDepth];
       };
       // Grid lines ALWAYS include the exact panel edges (0 and 1) so panel
       // corners — the post feet among them — are exact triangle vertices,
-      // never affine-interpolated. Margins become extra outer cells.
-      const lines = (lo, hi) => {
+      // never affine-interpolated. Margins become extra outer cells. Sagged
+      // panels carry per-axis grids sized so the piecewise-linear mesh stays
+      // within 0.5 screen px of the continuous rest shape at close-up zoom.
+      const lines = (lo, hi, G) => {
         const L = [];
         if (lo < 0) L.push(lo);
-        for (let k = 0; k <= GOAL_GRID; k++) L.push(k / GOAL_GRID);
+        for (let k = 0; k <= G; k++) L.push(k / G);
         if (hi > 1) L.push(hi);
         return L;
       };
-      const uL = lines(P.u0, P.u1), vL = lines(P.v0, P.v1);
+      const uL = lines(P.u0, P.u1, P.gridU || GOAL_GRID);
+      const vL = lines(P.v0, P.v1, P.gridV || GOAL_GRID);
       const cells = [];
       for (let i = 0; i < uL.length - 1; i++)
         for (let j = 0; j < vL.length - 1; j++) {

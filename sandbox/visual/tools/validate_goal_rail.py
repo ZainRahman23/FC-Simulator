@@ -23,13 +23,13 @@ GOAL_SPRITE_W = 312
 GOAL_GRID = 3
 GOAL_ART_PANELS = [
     dict(name="farside",   # derived 121x97 net texture (goalNetTex), never mirrored
-         netTex=True,
+         netTex=True, sag="farside", gridU=6, gridV=8,
          art=[(0, 0), (121, 0), (121, 97), (0, 97)],
          world=lambda gx, out: [(gx, 2.44, 30.34), (gx + out * 2, 2.44, 30.34),
                                 (gx + out * 2, 0, 30.34), (gx, 0, 30.34)],
          u0=0, u1=1, v0=0, v1=1),
     dict(name="rear",     # derived 433x97 net texture (goalNetTexRear), never mirrored
-         netTex=True,
+         netTex=True, sag="rear", gridU=12, gridV=8,
          art=[(0, 0), (433, 0), (433, 97), (0, 97)],
          world=lambda gx, out: [(gx + out * 2, 2.44, 30.34), (gx + out * 2, 2.44, 37.66),
                                 (gx + out * 2, 0, 37.66), (gx + out * 2, 0, 30.34)],
@@ -101,8 +101,23 @@ def homog(src, dst):
     return H
 
 
-def grid_lines(lo, hi):
-    L = ([lo] if lo < 0 else []) + [k / GOAL_GRID for k in range(GOAL_GRID + 1)]
+GOAL_SAG = dict(amp=0.22, blend=3.0, sEnd=9.32, vExp=1.5)
+
+
+def goal_net_sag(x, y, z, s, out):
+    """Net rest-shape displacement (identical to match.js goalNetSag)."""
+    v = 1 - y / 2.44
+    if s <= 0 or s >= GOAL_SAG["sEnd"] or v <= 0:
+        return (x, y, z)
+    m = GOAL_SAG["amp"] * math.sin(math.pi * s / GOAL_SAG["sEnd"]) * v ** GOAL_SAG["vExp"]
+    t = min(1.0, max(0.0, (s - (2 - GOAL_SAG["blend"])) / (2 * GOAL_SAG["blend"])))
+    tt = t * t * (3 - 2 * t)
+    phi = (math.pi / 2) * (1 + tt)
+    return (x + m * out * math.cos(phi), y, z + m * math.sin(phi))
+
+
+def grid_lines(lo, hi, G=GOAL_GRID):
+    L = ([lo] if lo < 0 else []) + [k / G for k in range(G + 1)]
     if hi > 1:
         L.append(hi)
     return L
@@ -117,11 +132,16 @@ def build_goal(side, mirrored):
         H = homog([(0, 0), (1, 0), (1, 1), (0, 1)], art)
         aq, bq, cq, dq = P["world"](gx, out)
 
-        def worldAt(u, v, aq=aq, bq=bq, cq=cq, dq=dq):
-            return tuple(
+        def worldAt(u, v, aq=aq, bq=bq, cq=cq, dq=dq, sag=P.get("sag")):
+            w = tuple(
                 (1 - v) * ((1 - u) * aq[k] + u * bq[k]) + v * ((1 - u) * dq[k] + u * cq[k])
                 for k in range(3))
-        uL, vL = grid_lines(P["u0"], P["u1"]), grid_lines(P["v0"], P["v1"])
+            if sag:
+                s = 2 * u if sag == "farside" else 2 + 7.32 * u
+                w = goal_net_sag(w[0], w[1], w[2], s, out)
+            return w
+        uL = grid_lines(P["u0"], P["u1"], P.get("gridU", GOAL_GRID))
+        vL = grid_lines(P["v0"], P["v1"], P.get("gridV", GOAL_GRID))
         cells = []
         for i in range(len(uL) - 1):
             for j in range(len(vL) - 1):
