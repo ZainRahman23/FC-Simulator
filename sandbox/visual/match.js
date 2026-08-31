@@ -129,6 +129,8 @@ async function boot() {
   jobs.push({ key: ["goal22", "-", 0], path: ASSET_ROOT + S.manifest.goal_art_v2_2_surgical.local_paths.asset });
   jobs.push({ key: ["goalbake", "-", 0], path: ASSET_ROOT + "originals/goal_v2_oblique/goal_v2_3_frozen_bake.png" });
   jobs.push({ key: ["ballsheet", "-", 0], path: ASSET_ROOT + "originals/ball_pixellab/ball_sheet_24x8.png" });
+  for (const n of [7, 8, 9, 10, 11])
+    jobs.push({ key: ["ballmicro", String(n), 0], path: ASSET_ROOT + "originals/ball_pixellab/ball_micro_" + n + "_4ph.png" });
   let done = 0;
   const anims = { idle: {}, jog: {}, sprint: {} };
   await Promise.all(jobs.map(async (j) => {
@@ -140,6 +142,7 @@ async function boot() {
     if (kind === "goal22") { S.images.goal22 = im; return; }
     if (kind === "goalbake") { S.images.goalBake = im; return; }
     if (kind === "ballsheet") { S.images.ballSheet = im; return; }
+    if (kind === "ballmicro") { (S.images.ballMicro ||= {})[+dir] = im; return; }
     (anims[kind][dir] ||= [])[idx] = im;
   }));
   S.goalBakeMeta = await loadJSON(ASSET_ROOT + "originals/goal_v2_oblique/goal_v2_3_frozen_bake.json");
@@ -1584,8 +1587,24 @@ function drawBallAt(xw, yw, z, speed, dt) {
   ctx.beginPath();
   ctx.ellipse(Math.round(gpos.x), Math.round(gpos.y) + r * 0.7,
               r * 1.15 * sh, Math.max(1, r * 1.15 * flat * sh), 0, 0, Math.PI * 2);
-  ctx.fillStyle = "rgba(0,0,0," + (0.32 * sh).toFixed(3) + ")";
+  ctx.fillStyle = "rgba(0,0,0," + (0.22 * sh).toFixed(3) + ")";   // shadow B
   ctx.fill();
+  // BALL LOD by PROJECTED DIAMETER (not zoom labels): below ~12 px the
+  // 24x24 art cannot resolve, so an independently authored micro football
+  // (7-11 px native, 4 rotation phases) is drawn 1:1 — same world size,
+  // same continuous theta, no resampling. At >=12 px the accepted
+  // detailed 24x24 8-phase sprite renders exactly as before.
+  const dpx = 2 * BALL_VIS_R * S.pxPerM * RIG.zoom;
+  if (dpx < 12 && S.images.ballMicro) {
+    const n = Math.max(7, Math.min(11, Math.round(dpx)));
+    const m = S.images.ballMicro[n];
+    const ph4 = ((Math.floor(_ballRot.th / (2 * Math.PI) * 4) % 4) + 4) % 4;
+    if (m) {
+      ctx.drawImage(m, ph4 * n, 0, n, n,
+                    Math.round(bpos.x - n / 2), Math.round(bpos.y - n / 2), n, n);
+      return;
+    }
+  }
   const out = r * 2 + 2;
   if (S.images.ballSheet)
     ctx.drawImage(S.images.ballSheet, phase * BALL_SRC, 0, BALL_SRC, BALL_SRC,

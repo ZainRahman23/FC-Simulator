@@ -124,5 +124,29 @@
   ],
   "manual_cleanup": "same deterministic pipeline: integer recentring, master silhouette mask enforced, hole fill, palette quantized (6 colours incl #101313 this time)",
   "total_round2_generations": 8
+ },
+ "micro_lod": {
+  "measurement": "projected visual diameter = 2*0.13m*18.083px/m*zoom: ~4.7px at 1x, ~9.4px at 2x (old draw law floored to 6px / 12px) \u2014 1x collapse was representation, not artwork",
+  "pixellab_probes": [
+   {
+    "job": "6186e940-cb04-4d47-945d-7e485f28f618",
+    "seed": 21,
+    "verdict": "rejected: eye-like (white ring + black core)"
+   },
+   {
+    "job": "475ccacb-2620-40b7-b9c9-bfc7d9357337",
+    "seed": 88,
+    "verdict": "rejected: eye-like"
+   },
+   {
+    "job": "b7a95386-1fb9-4e4c-935b-65ecb13c15a6",
+    "seed": 144,
+    "verdict": "rejected: shapeless blob"
+   }
+  ],
+  "authoring": "PixelLab probes established the negative space (no eye, no ring); micro sprites then deterministically authored per the sanctioned fallback: white circular cluster + one dominant dark panel + one edge accent + shading crescent, palette = master palette subset",
+  "sizes": "7/8/9/10/11 px native, 4 rotation phases each (2/4/8-phase motion study: 2 flickers, 8 adds nothing at this resolution)",
+  "lod_rule": "projected-diameter based: <12px -> micro drawn 1:1 at nearest authored size (7..11); >=12px -> accepted 24x24 detailed 8-phase sprite; same continuous theta drives both (micro = floor(theta/2pi*4))",
+  "shadow": "variant B adopted: alpha 0.32 -> 0.22, footprint and (x,y,0) position unchanged"
  }
 }
