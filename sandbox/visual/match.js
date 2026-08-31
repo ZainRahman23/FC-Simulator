@@ -198,18 +198,20 @@ async function boot() {
   // side rails land on cord lines). Alternating cord shades run through the
   // whole band so parity is continuous too.
   const NET_A = "#e4e4de", NET_B = "#cecec8", NET_K = 75, NET_CORD = 2;
+  const NET_COLS = 51, NET_ROWS = 11;   // 0.222 m pitch (density study: the
+                                        // coarsest that reads as netting)
   const wrapW = Math.round(11.32 * NET_K), wrapH = Math.round(2.44 * NET_K);
   const wb = document.createElement("canvas");
   wb.width = wrapW; wb.height = wrapH;
   const wbx = wb.getContext("2d");
   wbx.imageSmoothingEnabled = false;
-  for (let k = 0; k <= 40; k++) {
+  for (let k = 0; k <= NET_COLS; k++) {
     wbx.fillStyle = k % 2 ? NET_A : NET_B;
-    wbx.fillRect(Math.min(wrapW - NET_CORD, Math.round(k * wrapW / 40)), 0, NET_CORD, wrapH);
+    wbx.fillRect(Math.min(wrapW - NET_CORD, Math.round(k * wrapW / NET_COLS)), 0, NET_CORD, wrapH);
   }
-  for (let j = 0; j <= 8; j++) {
+  for (let j = 0; j <= NET_ROWS; j++) {
     wbx.fillStyle = j % 2 ? NET_A : NET_B;
-    wbx.fillRect(0, Math.min(wrapH - NET_CORD, Math.round(j * wrapH / 8)), wrapW, NET_CORD);
+    wbx.fillRect(0, Math.min(wrapH - NET_CORD, Math.round(j * wrapH / NET_ROWS)), wrapW, NET_CORD);
   }
   S.images.goalNetWrap = wb;
   const roofW = Math.round(2.0 * NET_K), roofH = Math.round(7.32 * NET_K);
@@ -217,12 +219,13 @@ async function boot() {
   rn.width = roofW; rn.height = roofH;
   const rnx = rn.getContext("2d");
   rnx.imageSmoothingEnabled = false;
-  for (let j = 0; j <= 7; j++) {        // continues side-wall verticals
+  const NET_P = 11.32 / NET_COLS;
+  for (let j = 0; j * NET_P <= 2.0 + 1e-9; j++) {  // continues side-wall verticals
     rnx.fillStyle = j % 2 ? NET_A : NET_B;
-    rnx.fillRect(Math.min(roofW - NET_CORD, Math.round(j * (11.32 / 40) * NET_K)), 0, NET_CORD, roofH);
+    rnx.fillRect(Math.min(roofW - NET_CORD, Math.round(j * NET_P * NET_K)), 0, NET_CORD, roofH);
   }
-  for (let k = 8; k <= 33; k++) {       // continues rear-wall verticals
-    const y = Math.round((k * 11.32 / 40 - 2) * NET_K);
+  for (let k = Math.ceil(2.0 / NET_P); k <= NET_COLS; k++) {  // continues rear verticals
+    const y = Math.round((k * NET_P - 2) * NET_K);
     if (y >= 0 && y < roofH) {
       rnx.fillStyle = k % 2 ? NET_A : NET_B;
       rnx.fillRect(0, y, roofW, NET_CORD);
@@ -838,13 +841,13 @@ function homog(srcPts, dstPts) {           // 4-point homography, returns (u,v)-
 // Art panels (roof/side/mouth) carry only frame/rail/silhouette pixels.
 const GOAL_ART_PANELS = [
   { name: "farside",                    // u: front->rear (depth), v: top->ground
-    tex: "wrap", sag: "farside", gridU: 6, gridV: 8,
+    tex: "wrap", sag: "farside", gridU: 8, gridV: 10,
     art: [[0, 0], [150, 0], [150, 183], [0, 183]],
     world: (gx, out) => [[gx, 2.44, 30.34], [gx + out * 2, 2.44, 30.34],
                          [gx + out * 2, 0, 30.34], [gx, 0, 30.34]],
     u0: 0, u1: 1, v0: 0, v1: 1 },
   { name: "rear",                       // u: far->near (width), v: top->ground
-    tex: "wrap", sag: "rear", gridU: 12, gridV: 8,
+    tex: "wrap", sag: "rear", gridU: 16, gridV: 10,
     art: [[150, 0], [699, 0], [699, 183], [150, 183]],
     world: (gx, out) => [[gx + out * 2, 2.44, 30.34], [gx + out * 2, 2.44, 37.66],
                          [gx + out * 2, 0, 37.66], [gx + out * 2, 0, 30.34]],
@@ -862,7 +865,7 @@ const GOAL_ART_PANELS = [
                          [gx + out * 2, 2.44, 37.66], [gx, 2.44, 37.66]],
     u0: -0.02, u1: 1.15, v0: -0.02, v1: 1.02 },
   { name: "sideNet",                    // u: front->rear (depth), v: top->ground
-    tex: "wrap", sag: "side", gridU: 6, gridV: 8,
+    tex: "wrap", sag: "side", gridU: 8, gridV: 10,
     art: [[849, 0], [699, 0], [699, 183], [849, 183]],
     world: (gx, out) => [[gx, 2.44, 37.66], [gx + out * 2, 2.44, 37.66],
                          [gx + out * 2, 0, 37.66], [gx, 0, 37.66]],
@@ -873,7 +876,7 @@ const GOAL_ART_PANELS = [
     world: (gx, out) => [[gx, 2.44, 37.66], [gx + out * 2, 2.44, 37.66],
                          [gx + out * 2, 0, 37.66], [gx, 0, 37.66]],
     u0: -0.02, u1: 1.15, v0: -0.02, v1: 1.0,
-    sag: "side", gridU: 6, gridV: 8 },
+    sag: "side", gridU: 8, gridV: 10 },
   { name: "mouth",                      // u: far->near post, v: crossbar->ground
     tex: "mouthframe",
     art: [[42, 40], [105, 183], [94, 327], [44, 194]],
@@ -1013,13 +1016,12 @@ function drawGoalFrame(gx) {
   const pts = [sproj3(gx, 0, 30.34), sproj3(gx, 2.44, 30.34),
                sproj3(gx, 2.44, 37.66), sproj3(gx, 0, 37.66)];
   if (pts.every(p => p.x < -20) || pts.every(p => p.x > cv.width + 20)) return;
-  const w = Math.max(2, 0.12 * S.pxPerM * RIG.zoom);
+  const w = Math.max(2, Math.round(0.12 * S.pxPerM * RIG.zoom));
   ctx.lineJoin = "round"; ctx.lineCap = "round";
   ctx.beginPath();
   ctx.moveTo(pts[0].x, pts[0].y);
   for (let i = 1; i < 4; i++) ctx.lineTo(pts[i].x, pts[i].y);
-  ctx.strokeStyle = "#b9beb9"; ctx.lineWidth = w + 2; ctx.stroke();
-  ctx.strokeStyle = "#f7f7f4"; ctx.lineWidth = w; ctx.stroke();
+  ctx.strokeStyle = "#f6f6f3"; ctx.lineWidth = w; ctx.stroke();
 }
 
 // ═══ runtime rig update (ONE pose variable: longitudinal position) ═══════════
