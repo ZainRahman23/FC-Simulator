@@ -43,7 +43,7 @@ GOAL_ART_PANELS = [
          art=[(105, 183), (232, 186), (222, 320), (94, 327)],
          world=lambda gx, out: [(gx, 2.44, 37.66), (gx + out * 2, 2.44, 37.66),
                                 (gx + out * 2, 0, 37.66), (gx, 0, 37.66)],
-         u0=-0.02, u1=1.15, v0=-0.02, v1=1.0),
+         u0=-0.02, u1=1.15, v0=-0.02, v1=1.0, sag="side", gridU=6, gridV=8),
     dict(name="mouth",
          art=[(42, 40), (105, 183), (94, 327), (44, 194)],
          world=lambda gx, out: [(gx, 2.44, 30.34), (gx, 2.44, 37.66),
@@ -101,7 +101,7 @@ def homog(src, dst):
     return H
 
 
-GOAL_SAG = dict(amp=0.22, blend=3.0, sEnd=9.32, vExp=1.5)
+GOAL_SAG = dict(amp=0.22, blend=3.0, sEnd=11.32, vExp=1.5)
 
 
 def goal_net_sag(x, y, z, s, out):
@@ -110,9 +110,11 @@ def goal_net_sag(x, y, z, s, out):
     if s <= 0 or s >= GOAL_SAG["sEnd"] or v <= 0:
         return (x, y, z)
     m = GOAL_SAG["amp"] * math.sin(math.pi * s / GOAL_SAG["sEnd"]) * v ** GOAL_SAG["vExp"]
-    t = min(1.0, max(0.0, (s - (2 - GOAL_SAG["blend"])) / (2 * GOAL_SAG["blend"])))
-    tt = t * t * (3 - 2 * t)
-    phi = (math.pi / 2) * (1 + tt)
+
+    def ss(c):
+        t = min(1.0, max(0.0, (s - (c - GOAL_SAG["blend"])) / (2 * GOAL_SAG["blend"])))
+        return t * t * (3 - 2 * t)
+    phi = (math.pi / 2) * (1 + ss(2) + ss(9.32))
     return (x + m * out * math.cos(phi), y, z + m * math.sin(phi))
 
 
@@ -137,7 +139,8 @@ def build_goal(side, mirrored):
                 (1 - v) * ((1 - u) * aq[k] + u * bq[k]) + v * ((1 - u) * dq[k] + u * cq[k])
                 for k in range(3))
             if sag:
-                s = 2 * u if sag == "farside" else 2 + 7.32 * u
+                s = (2 * u if sag == "farside"
+                     else 2 + 7.32 * u if sag == "rear" else 11.32 - 2 * u)
                 w = goal_net_sag(w[0], w[1], w[2], s, out)
             return w
         uL = grid_lines(P["u0"], P["u1"], P.get("gridU", GOAL_GRID))

@@ -204,12 +204,17 @@ async function boot() {
     for (let tx = 0; tx < 19; tx++)
       rtx.drawImage(g, 120, 211, 24, 16, tx * 24, ty * 16, 24, 16);
   S.images.goalNetTexRear = rt;
-  // Near-side texture: the art with the baked BACK-NET composite cleared —
-  // the dense region between the near post and the drape's occlusion
-  // boundary is the back net photographed THROUGH the side net (2-layer
-  // bake); it now lives on the real rear panel, so the near side keeps only
-  // its translucent drape. Polygon is inset ~3 px from the post, rails and
-  // drape edge so every legitimate near-side cord/frame pixel survives.
+  // Near-side texture: the art with its ENTIRE interior net area replaced by
+  // the single-layer V2.2 weave. The interior was baked composite: back net
+  // photographed through the side net (dense, left) meeting the bare drape
+  // (bright, right) along an occlusion boundary — a diagonal that visually
+  // sliced the goal's back into a false triangle. The real rear panel now
+  // provides the back net; the interior of the near side becomes one
+  // uniform translucent veil. Kept byte-identical: the top/ground rails,
+  // both post columns, and everything beyond the rear upright — the outer
+  // drape bulge that forms the goal's accepted right-hand silhouette. The
+  // quad below is inset 3-5 px from those members so their pixels survive.
+  const SIDE_INT = [[108, 189], [228, 192], [218, 317], [98, 322]];
   const so = document.createElement("canvas");
   so.width = g.width; so.height = g.height;
   const soctx = so.getContext("2d");
@@ -217,19 +222,14 @@ async function boot() {
   soctx.drawImage(g, 0, 0);
   soctx.globalCompositeOperation = "destination-out";
   soctx.beginPath();
-  soctx.moveTo(108, 190); soctx.lineTo(126, 198); soctx.lineTo(147, 216);
-  soctx.lineTo(169, 240); soctx.lineTo(187, 264); soctx.lineTo(202, 290);
-  soctx.lineTo(213, 310); soctx.lineTo(217, 316); soctx.lineTo(98, 322);
+  soctx.moveTo(...SIDE_INT[0]); soctx.lineTo(...SIDE_INT[1]);
+  soctx.lineTo(...SIDE_INT[2]); soctx.lineTo(...SIDE_INT[3]);
   soctx.closePath(); soctx.fill();
-  // …then refill that region with the single-layer V2.2 weave: the near-side
-  // net itself is physically still there — only the baked back-net layer had
-  // to go (the real rear panel now provides it, visible through these holes).
   soctx.globalCompositeOperation = "source-over";
   soctx.save();
   soctx.beginPath();
-  soctx.moveTo(108, 190); soctx.lineTo(126, 198); soctx.lineTo(147, 216);
-  soctx.lineTo(169, 240); soctx.lineTo(187, 264); soctx.lineTo(202, 290);
-  soctx.lineTo(213, 310); soctx.lineTo(217, 316); soctx.lineTo(98, 322);
+  soctx.moveTo(...SIDE_INT[0]); soctx.lineTo(...SIDE_INT[1]);
+  soctx.lineTo(...SIDE_INT[2]); soctx.lineTo(...SIDE_INT[3]);
   soctx.closePath(); soctx.clip();
   for (let ty = 0; ty < 9; ty++)
     for (let tx = 0; tx < 6; tx++)
@@ -831,7 +831,8 @@ const GOAL_ART_PANELS = [
     art: [[105, 183], [232, 186], [222, 320], [94, 327]],
     world: (gx, out) => [[gx, 2.44, 37.66], [gx + out * 2, 2.44, 37.66],
                          [gx + out * 2, 0, 37.66], [gx, 0, 37.66]],
-    u0: -0.02, u1: 1.15, v0: -0.02, v1: 1.0, sideTex: true },
+    u0: -0.02, u1: 1.15, v0: -0.02, v1: 1.0, sideTex: true,
+    sag: "side", gridU: 6, gridV: 8 },
   { name: "mouth",                      // u: far->near post, v: crossbar->ground
     art: [[42, 40], [105, 183], [94, 327], [44, 194]],
     world: (gx, out) => [[gx, 2.44, 30.34], [gx, 2.44, 37.66],
@@ -840,24 +841,26 @@ const GOAL_ART_PANELS = [
 ];
 const GOAL_GRID = 3;                    // cells per panel axis (triangulated)
 // Net rest-shape sag — the flexible net's RESTING geometry (the rigid cage
-// stays exact). One continuous field over the cage plan path s: far post
-// (s=0) -> rear-far corner (s=2) -> rear-near corner (s=9.32). Displacement
-// = amp*sin(pi*s/sEnd)*v^vExp along a face-inward direction that smoothstep-
-// rotates 90deg across the corner blend window, so the side sag flows
-// continuously around the rear-far corner (no pin there, no kink). Zero at
-// every pinned attachment: far post (s=0), all top rails (v=0), and the
-// rear<->near-side seam (s=sEnd; the near side keeps its baked art drape).
-// These sagged positions are the net's rest state: the future ball-impact
+// stays exact). One continuous field over the FULL cage plan path s: far
+// post (0) -> rear-far corner (2) -> rear-near corner (9.32) -> near post
+// (11.32), so far side, rear and near side read as ONE hanging bag.
+// Displacement = amp*sin(pi*s/sEnd)*v^vExp along a face-inward direction
+// that smoothstep-rotates 90deg across each corner blend window: both rear
+// corners wrap continuously (no pin, no kink). Zero at every pinned
+// attachment: both posts (s=0, s=sEnd) and all top rails (v=0). These
+// sagged positions are the net's rest state: the future ball-impact
 // springs displace cell corners from here and relax back to here.
-const GOAL_SAG = { amp: 0.22, blend: 3.0, sEnd: 9.32, vExp: 1.5 };
+const GOAL_SAG = { amp: 0.22, blend: 3.0, sEnd: 11.32, vExp: 1.5 };
 function goalNetSag(x, y, z, s, out) {
   const v = 1 - y / 2.44;
   if (s <= 0 || s >= GOAL_SAG.sEnd || v <= 0) return [x, y, z];
   const m = GOAL_SAG.amp * Math.sin(Math.PI * s / GOAL_SAG.sEnd)
           * Math.pow(v, GOAL_SAG.vExp);
-  const t = Math.min(1, Math.max(0, (s - (2 - GOAL_SAG.blend)) / (2 * GOAL_SAG.blend)));
-  const tt = t * t * (3 - 2 * t);
-  const phi = (Math.PI / 2) * (1 + tt);
+  const ss = (c) => {
+    const t = Math.min(1, Math.max(0, (s - (c - GOAL_SAG.blend)) / (2 * GOAL_SAG.blend)));
+    return t * t * (3 - 2 * t);
+  };
+  const phi = (Math.PI / 2) * (1 + ss(2) + ss(9.32));
   return [x + m * out * Math.cos(phi), y, z + m * Math.sin(phi)];
 }
 function buildGoalPanels() {
@@ -886,7 +889,9 @@ function buildGoalPanels() {
         let y = (1 - v) * ((1 - u) * a[1] + u * b[1]) + v * ((1 - u) * d[1] + u * c[1]);
         let z = (1 - v) * ((1 - u) * a[2] + u * b[2]) + v * ((1 - u) * d[2] + u * c[2]);
         if (P.sag) {                        // net rest-shape (cage stays exact)
-          const s = P.sag === "farside" ? 2 * u : 2 + 7.32 * u;
+          const s = P.sag === "farside" ? 2 * u
+                  : P.sag === "rear" ? 2 + 7.32 * u
+                  : 11.32 - 2 * u;          // side: u runs front->rear
           [x, y, z] = goalNetSag(x, y, z, s, out);
         }
         return [x, y, z + GOAL_CFG.offDepth];
