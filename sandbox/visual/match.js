@@ -1335,6 +1335,49 @@ function drawBallTest(dt) {
     "   speed " + Math.hypot(t.v[0], t.v[1], t.v[2]).toFixed(2) +
     " m/s   grounded " + (t.grounded ? "yes" : "no"), 14, cv.height - 68);
 }
+// ── BALL TRANSPORT TEST: plays the engine's scripted body sequence
+// (/api/balltest/sequence) through the real camera. Deterministic engine
+// physics; the viewer only replays the returned track. Key T.
+async function startBallSeq() {
+  try {
+    const r = await fetch(API + "/balltest/sequence").then(x => x.json());
+    S.ballSeq = { actions: r.actions, idx: 0, t: -0.8, done: false };
+  } catch (e) { console.warn("balltest fetch failed", e); }
+}
+function ballSeqStep(dt) {
+  const q = S.ballSeq;
+  if (!q || q.done) return;
+  q.t += dt;
+  const a = q.actions[q.idx];
+  const last = a.track[a.track.length - 1][0];
+  if (q.t > last + 1.2) {
+    q.idx++; q.t = -0.8;
+    if (q.idx >= q.actions.length) { S.ballSeq = null; return; }
+  }
+}
+function drawBallSeq(dt) {
+  const q = S.ballSeq;
+  if (!q) return;
+  const a = q.actions[q.idx];
+  const tr = a.track;
+  const t = Math.max(0, q.t);
+  let i = 0;
+  while (i + 1 < tr.length && tr[i + 1][0] <= t) i++;
+  let x = tr[i][1], y = tr[i][2], z = tr[i][3];
+  if (i + 1 < tr.length) {
+    const f = Math.min(1, (t - tr[i][0]) / Math.max(1e-6, tr[i + 1][0] - tr[i][0]));
+    x += (tr[i + 1][1] - x) * f; y += (tr[i + 1][2] - y) * f; z += (tr[i + 1][3] - z) * f;
+  }
+  drawBallAt(x, y, z, 8, dt);
+  ctx.fillStyle = "#ffd34d"; ctx.font = "bold 13px ui-monospace, monospace";
+  ctx.fillText("BALL TRANSPORT TEST \u2014 ENGINE BODY SEQUENCE  (" + (q.idx + 1) + "/" +
+    q.actions.length + ": " + a.label + ")", 14, cv.height - 88);
+  ctx.fillStyle = "#9fe8ff"; ctx.font = "12px ui-monospace, monospace";
+  ctx.fillText("launch " + a.launch_speed + " m/s  (vh " + a.horizontal_speed +
+    ", vz " + a.vz + ")   maxH " + a.max_height + " m   flight " + a.flight_s +
+    " s   land (" + a.landing[0] + ", " + a.landing[1] + ")   1st bounce " +
+    a.first_bounce_h + " m", 14, cv.height - 104);
+}
 let netAcc = 0;
 function netPhysUpdate(dtReal) {
   netAcc = Math.min(netAcc + dtReal, NETPHYS.maxAcc);
@@ -1342,6 +1385,7 @@ function netPhysUpdate(dtReal) {
     netAcc -= NETPHYS.dt;
     const ball = netTestStep();
     ballTestStep();
+    ballSeqStep(NETPHYS.dt);
     for (const g of S.goalPanels || []) {
       if (!g.net) continue;
       const useBall = ball && g.side === 1 &&
@@ -1652,6 +1696,7 @@ function draw(sample, dt) {
   }
   drawNetTestBall();
   drawBallTest(dt);
+  drawBallSeq(dt);
   if (S.dbg.netphys) drawNetPhysDebug();
   if (S.dbg.goalgeo) { drawGoalGeoDebug(0); drawGoalGeoDebug(1); }
   if (S.dbg.cam) drawRailSquare();       // rail diagnostic overlay (toggleable)
@@ -1720,6 +1765,7 @@ function bindUI() {
   document.addEventListener("keydown", (e) => {
     if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "SELECT")) return;
     if (e.key === "0") S.netSlow = !S.netSlow;
+    if (e.key === "t") startBallSeq();
     if (e.key >= "6" && e.key <= "9") startBallTest(+e.key);
     else if (e.key === "c") startBallTest("c");
     if (e.key >= "1" && e.key <= "4") startNetTest(+e.key);

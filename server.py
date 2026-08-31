@@ -409,6 +409,71 @@ def config() -> dict[str, Any]:
             "allow_mock": APP_ENV != "production"}
 
 
+@app.get("/api/balltest/sequence")
+def balltest_sequence() -> dict[str, Any]:
+    """BALL TRANSPORT TEST — deterministic scripted kicks on a bare physical
+    body (engine transport, real camera playback in the viewer). No match,
+    no RNG, no persistence; players parked far away; pure step_ball physics.
+    """
+    from fc_simulator.world import Body, FAM, DT as WDT
+    import math as _m
+    body = Body([{"pid": "TA", "team": 0}, {"pid": "TB", "team": 1}])
+    for q in body.players.values():
+        q["x"], q["y"] = 2.0, 2.0
+    actions = [
+        ("5 m ground pass",      "SHORT",  (46.0, 34.0), (51.0, 34.0)),
+        ("15 m ground pass",     "DRIVEN", (42.0, 30.0), (57.0, 30.0)),
+        ("15 m lifted pass",     "LOFT",   (42.0, 38.0), (57.0, 38.0)),
+        ("25 m lofted pass",     "LOFT",   (40.0, 26.0), (65.0, 26.0)),
+        ("40 m long diagonal",   "LOFT",   (30.0, 14.0), (66.0, 46.0)),
+        ("high clearance",       "CLEAR",  (30.0, 34.0), (75.0, 34.0)),
+        ("driven cross",         "CROSS",  (80.0, 10.0), (96.0, 30.0)),
+        ("lofted cross",         "CROSS",  (78.0, 58.0), (98.0, 34.0)),
+        ("low shot",             "SHOT",   (97.0, 34.0), (105.0, 33.0)),
+        ("rising power shot",    "SHOT",   (81.0, 36.0), (105.0, 35.0)),
+    ]
+    out = []
+    for label, fam, (sx, sy), (tx, ty) in actions:
+        b = body.ball
+        b["x"], b["y"], b["z"] = sx, sy, 0.0
+        b["vx"] = b["vy"] = b["vz"] = 0.0
+        b["state"] = "ROLLING"; b["ctrl"] = None; b["held"] = None
+        body.kick("TA", tx, ty, fam)
+        v0h = _m.hypot(b["vx"], b["vy"]); vz0 = b["vz"]
+        track = [[0.0, round(b["x"], 2), round(b["y"], 2), round(b["z"], 3)]]
+        maxh = 0.0; land_t = None; land_xy = None; bounce_h = None
+        bounced = False; peak_after_bounce = 0.0
+        prev_air = b["z"] > 0 or b["vz"] > 0
+        t = 0.0
+        for i in range(int(6.0 / WDT)):
+            zb = b["z"]; vzb = b["vz"]
+            body.step_ball()
+            t += WDT
+            if vz0 > 0 and land_t is None and zb > 0 and b["z"] <= 0.0001 and b["vz"] >= 0:
+                land_t = t; land_xy = (round(b["x"], 2), round(b["y"], 2))
+                bounced = b["vz"] > 0
+            if land_t is not None and bounced:
+                peak_after_bounce = max(peak_after_bounce, b["z"])
+            maxh = max(maxh, b["z"])
+            if i % 6 == 5:
+                track.append([round(t, 3), round(b["x"], 2), round(b["y"], 2), round(b["z"], 3)])
+            sp = _m.hypot(b["vx"], b["vy"], b["vz"])
+            if sp < 0.05 and b["z"] <= 0.001:
+                track.append([round(t, 3), round(b["x"], 2), round(b["y"], 2), 0.0])
+                break
+        out.append({
+            "label": label, "family": fam,
+            "launch_speed": round(_m.hypot(v0h, vz0), 2),
+            "horizontal_speed": round(v0h, 2), "vz": round(vz0, 2),
+            "max_height": round(maxh, 2),
+            "flight_s": round(land_t, 2) if land_t else 0.0,
+            "landing": land_xy or (round(b["x"], 2), round(b["y"], 2)),
+            "first_bounce_h": round(peak_after_bounce, 2) if bounced else 0.0,
+            "track": track,
+        })
+    return {"label": "BALL TRANSPORT TEST — ENGINE BODY SEQUENCE", "actions": out}
+
+
 @app.post("/api/matches/start")
 def start_match(req: StartRequest) -> dict[str, Any]:
     if len(str(req.fixture_id)) > 128 or abs(int(req.seed)) > 2**62:
