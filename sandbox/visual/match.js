@@ -40,8 +40,13 @@ const qw = (cssw) => Math.max(PXQ, Math.round(cssw * RES / PXQ) * PXQ);
 const uipx = (v) => Math.round(v * RES);    // HUD/debug sizes in backing px
 
 // CAMERA_V1 — the authored projection (frozen; sliders re-freeze, not animate)
+// pscale 0.60 = 2X SCALE CALIBRATION: the 128px sprite body (100px opaque)
+// then implies a 1.88 m standing player (was 2.66 m at 0.85 — taller than
+// the 2.44 m goal). Drawn player/goal ratio 0.84 vs real 0.74: slight
+// pixel-art oversize kept for readability. BALL_VIS_R 0.15 m (visual only;
+// physical radius stays 0.11 m) = ball/player 16% vs real 12%.
 const AUTHOR_DEFAULTS = {
-  height: 30, dist: 43, fov: 28, depthoff: 3, pitch: 22, yaw: 0, pscale: 0.85,
+  height: 30, dist: 43, fov: 28, depthoff: 3, pitch: 22, yaw: 0, pscale: 0.60,
 };
 const RUNTIME_DEFAULTS = { zoom: 1.0, smooth: 0.35 };
 const JOG_FPS = 10, SPRINT_FPS = 12;
@@ -1578,7 +1583,7 @@ function drawPlayer(p, dt) {
 // readability calibration. Sprites are built per-pixel on tiny grids and
 // nearest-upscaled — no antialiasing, no raster asset. 4 spin phases give
 // perceivable rotation from travel distance (cosmetic, renderer-owned).
-const BALL_VIS_R = 0.13;
+const BALL_VIS_R = 0.15;
 // PIXELLAB ANIMATED BALL SPRITE: 8 authored rotational phases of one
 // football (assets/visual_v1/originals/ball_pixellab, 24x24 each, sheet
 // 192x24; see RECORD.json for full generation provenance). Runtime only
