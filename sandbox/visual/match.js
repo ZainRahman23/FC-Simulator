@@ -1102,7 +1102,7 @@ function drawTexTri(img, a0, a1, a2, s0, s1, s2) {
 // reaching the net, call netImpact(side, [x,y,z], [vx,vy,vz], strength)
 // from the playback event handling — same entry point the synthetic tests
 // use below. Nothing else needs to change.
-const NETPHYS = { dt: 1 / 240, k: 500, kd: 10, kAnchor: 25, damp: 3.5,
+const NETPHYS = { dt: 1 / 240, k: 2500, kd: 2, kAnchor: 3, damp: 1.5,
                   maxAcc: 0.12, settleE: 4e-5, ballR: 0.11 };
 function netActivate(net) { net.active = true; net.dirty = true; net.quiet = 0; }
 function netImpact(side, p, v, strength = 1) {
@@ -1214,7 +1214,7 @@ function netTestStep() {                   // advances WITH the fixed physics st
       if (t.p[0] > 108.5) t.phase = "done";
     }
   } else if (t.phase === "push") {
-    const dec = Math.exp(-dt / 0.045);     // net "catches" the ball
+    const dec = Math.exp(-dt / 0.05);      // net "catches" the ball
     t.v[0] *= dec; t.v[1] *= dec; t.v[2] *= dec;
     t.p[0] += t.v[0] * dt; t.p[1] += t.v[1] * dt; t.p[2] += t.v[2] * dt;
     if (Math.hypot(t.v[0], t.v[1], t.v[2]) < 1.3) {
@@ -1319,7 +1319,8 @@ function tick(ts) {
   ensureBuffer();
   const sample = sampleAt(pb.head);
   updateRig(dt, sample);
-  netPhysUpdate(dt);
+  netPhysUpdate(S.netSlow ? dt * 0.15 : dt);   // key 0: slow motion (same
+                                               // fixed steps, fewer per frame)
   draw(sample, dt);
   if ((ts | 0) % 500 < 20) updateHUD();
   requestAnimationFrame(tick);
@@ -1408,7 +1409,8 @@ function drawNetTestBall() {
   ctx.fillStyle = "#f4f4f0"; ctx.fill();
   ctx.lineWidth = Math.max(1, r * 0.22); ctx.strokeStyle = "#3a3d42"; ctx.stroke();
   ctx.fillStyle = "#ffd34d"; ctx.font = "bold 13px ui-monospace, monospace";
-  ctx.fillText("NET PHYSICS TEST \u2014 SYNTHETIC BALL TRAJECTORY  " +
+  ctx.fillText((S.netSlow ? "[SLOW-MO 0.15x]  " : "") +
+    "NET PHYSICS TEST \u2014 SYNTHETIC BALL TRAJECTORY  " +
     "(test " + t.id + ": " + t.label + ", " + t.speed + " m/s, " + t.phase + ")",
     14, cv.height - 14);
 }
@@ -1544,6 +1546,7 @@ function bindUI() {
   });
   document.addEventListener("keydown", (e) => {
     if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "SELECT")) return;
+    if (e.key === "0") S.netSlow = !S.netSlow;
     if (e.key >= "1" && e.key <= "4") startNetTest(+e.key);
     else if (e.key === "5") {
       startNetTest(1, NETTEST_POWERS[netTestPowerIdx]);
