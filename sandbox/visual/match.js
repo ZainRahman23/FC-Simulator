@@ -1545,47 +1545,138 @@ function drawPlayer(p, dt) {
 // nearest-upscaled — no antialiasing, no raster asset. 4 spin phases give
 // perceivable rotation from travel distance (cosmetic, renderer-owned).
 const BALL_VIS_R = 0.13;
-const _ballSprites = new Map();
-function ballSprite(rpx, phase) {
-  const key = rpx + "|" + phase;
+// Hand-authored native pixel football (BALL SPRITE POLISH). Two designs —
+// 15x15 and an independently authored 9x9 for small on-screen sizes — each
+// with four rotation phases of the SAME ball (pentagon + five seams + rim
+// nicks turning in 18-degree steps). Palette (5 entries):
+//   W #FFFFFF highlight   L #F3F4F1 leather   S #C9CDCA shade
+//   D #252A2A panel/seam  K #111414 deepest accent
+// Rendered 1:1 or at exact integer scales only — the projected size is
+// quantized to the nearest authored representation, so no resampling can
+// ever blur or drop pixels. Physical radius (0.11 m) is untouched.
+const BALL_PAL = { W: "#FFFFFF", L: "#F3F4F1", S: "#C9CDCA",
+                   D: "#252A2A", K: "#111414" };
+  const BALL_PX15 = [[
+      ".....LLLLL.....",
+      "...LLLLDLLLL...",
+      "..LLLLLLLLLLL..",
+      ".LLLLLLDLLLLLL.",
+      ".LLLWLLDLLLLLL.",
+      "LDLLLLLLLLLLLDS",
+      "LLLLDDLDLDDLSSS",
+      "LLLLLLDKDLLLSSS",
+      "LLLLLLLDLLLLSSS",
+      "LLLLLDLLLDLSSSS",
+      ".LLLLDLLLDLSSS.",
+      ".LLLLLLLLSSSSS.",
+      "..LLDLSSSSDSS..",
+      "...LLSSSSSSS...",
+      ".....SSSSS....."],[
+      ".....LLLLL.....",
+      "...LLLLLLDLL...",
+      "..LLLLLLLLLLL..",
+      ".LLLLLLLLLLLLL.",
+      ".LDLWLLLDLLLLL.",
+      "LLLLDDLLDLLLLSS",
+      "LLLLLLLDLLLLSSS",
+      "LLLLLLDKDLDDSDS",
+      "LLLLLLLDLLLLSSS",
+      "LLLLDDLLDLLSSSS",
+      ".LDLLLLLDLLSSS.",
+      ".LLLLLLLLSSSSS.",
+      "..LLLLSSSSSSS..",
+      "...LLSSSSDSS...",
+      ".....SSSSS....."],[
+      ".....LLLLL.....",
+      "...LLLLLLLLL...",
+      "..LLDLLLLLDLL..",
+      ".LLLLLLLLLLLLL.",
+      ".LLLWDLLLDLLLL.",
+      "LLLLLDLLLDLLLSS",
+      "LLLLLLLDLLLLSSS",
+      "LLLLLLDKDLLLSSS",
+      "LLLLDDLDLDDLSSS",
+      "LDLLLLLLLLLSSDS",
+      ".LLLLLLDLLLSSS.",
+      ".LLLLLLDLSSSSS.",
+      "..LLLLSSSSSSS..",
+      "...LLSSDSSSS...",
+      ".....SSSSS....."],[
+      ".....LLLLL.....",
+      "...LLDLLLLLL...",
+      "..LLLLLLLLLLL..",
+      ".LLLLLLLLLLLLL.",
+      ".LLLWLDLLLLLDL.",
+      "LLLLLLDLLDDLLSS",
+      "LLLLLLLDLLLLSSS",
+      "LDLDDLDKDLLLSSS",
+      "LLLLLLLDLLLLSSS",
+      "LLLLLLDLLDDSSSS",
+      ".LLLLLDLLLLSDS.",
+      ".LLLLLLLLSSSSS.",
+      "..LLLLSSSSSSS..",
+      "...LLDSSSSSS...",
+      ".....SSSSS....."]];
+  const BALL_PX9 = [[
+      "...LLL...",
+      "..LLLLL..",
+      ".LLWLLLL.",
+      "LLWLLLLLS",
+      "LLLLKDLSS",
+      "LDLLDLLDS",
+      ".LLLLLSS.",
+      "..LLSSS..",
+      "...SSS..."],[
+      "...LLL...",
+      "..LLLLL..",
+      ".LLWLLLL.",
+      "LLWLLLLLS",
+      "LDLLKDLSS",
+      "LLLLDLLSS",
+      ".LLLLLSD.",
+      "..LLSSS..",
+      "...SSS..."],[
+      "...LLL...",
+      "..LLLLL..",
+      ".DLWLLLL.",
+      "LLWLLLLLS",
+      "LLLLKDLSS",
+      "LLLLDLLSS",
+      ".LLLLLSS.",
+      "..LLSDS..",
+      "...SSS..."],[
+      "...LLL...",
+      "..DLLLL..",
+      ".LLWLLLL.",
+      "LLWLLLLLS",
+      "LLLLKDLSS",
+      "LLLLDLLSS",
+      ".LLLLLSS.",
+      "..LLDSS..",
+      "...SSS..."]];
+  const _ballSprites = new Map();
+function ballSprite(outPx, phase) {
+  let rows, scale;
+  if (outPx < 13) { rows = BALL_PX9[phase]; scale = 1; }
+  else if (outPx < 23) { rows = BALL_PX15[phase]; scale = 1; }
+  else if (outPx < 38) { rows = BALL_PX15[phase]; scale = 2; }
+  else { rows = BALL_PX15[phase]; scale = 3; }
+  const key = rows.length + "|" + phase + "|" + scale;
   let c = _ballSprites.get(key);
   if (c) return c;
-  const base = rpx >= 5 ? 15 : 9;             // design grid (odd, centered)
-  const cvs = document.createElement("canvas");
-  cvs.width = cvs.height = base;
-  const g = cvs.getContext("2d");
-  const img = g.createImageData(base, base);
-  const cx = (base - 1) / 2, R = (base - 1) / 2;
-  const blobs = [[0, 0]];                     // centre pentagon
-  for (let k = 0; k < 5; k++) {
-    const a = (phase * 22.5 + k * 72) * Math.PI / 180;
-    blobs.push([Math.cos(a) * R * 0.85, Math.sin(a) * R * 0.85]);
-  }
-  const br = base >= 15 ? 1.7 : 1.1;
-  for (let y = 0; y < base; y++)
-    for (let x = 0; x < base; x++) {
-      const dx = x - cx, dy = y - cx, d = Math.hypot(dx, dy);
-      const i = (y * base + x) * 4;
-      if (d > R + 0.35) continue;             // transparent outside
-      let col = [242, 242, 240, 255];         // white base
-      if (d > R - 0.75) col = [46, 49, 54, 255];          // dark rim
-      else {
-        for (const [bx, by] of blobs)
-          if (Math.hypot(dx - bx, dy - by) < br) { col = [52, 56, 62, 255]; break; }
-        if (col[0] > 200 && dx < -R * 0.25 && dy < -R * 0.25 && d < R * 0.8)
-          col = [255, 255, 255, 255];          // top-left highlight
-      }
-      img.data[i] = col[0]; img.data[i + 1] = col[1];
-      img.data[i + 2] = col[2]; img.data[i + 3] = col[3];
+  const n = rows.length;
+  c = document.createElement("canvas");
+  c.width = c.height = n * scale;
+  const g = c.getContext("2d");
+  for (let y = 0; y < n; y++)
+    for (let x = 0; x < n; x++) {
+      const ch = rows[y][x];
+      if (ch === ".") continue;
+      g.fillStyle = BALL_PAL[ch];
+      g.fillRect(x * scale, y * scale, scale, scale);
     }
-  g.putImageData(img, 0, 0);
-  const out = document.createElement("canvas");
-  out.width = out.height = rpx * 2 + 2;
-  const og = out.getContext("2d");
-  og.imageSmoothingEnabled = false;
-  og.drawImage(cvs, 0, 0, out.width, out.height);
-  _ballSprites.set(key, out);
-  return out;
+  _ballSprites.set(key, c);
+  return c;
 }
 let _ballSpin = 0;
 function drawBallAt(xw, yw, z, speed, dt) {
@@ -1602,7 +1693,7 @@ function drawBallAt(xw, yw, z, speed, dt) {
               r * 1.15 * sh, Math.max(1, r * 1.15 * flat * sh), 0, 0, Math.PI * 2);
   ctx.fillStyle = "rgba(0,0,0," + (0.32 * sh).toFixed(3) + ")";
   ctx.fill();
-  const spr = ballSprite(r, phase);
+  const spr = ballSprite(r * 2 + 2, phase);
   ctx.drawImage(spr, Math.round(bpos.x - spr.width / 2), Math.round(bpos.y - spr.height / 2));
 }
 function drawBall(ball, dt) {
