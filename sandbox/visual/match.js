@@ -917,17 +917,37 @@ function drawGoalNet(goal) {
   const pitchW = Math.sqrt(3) * NET.ell;
   for (const st of goal.net) {
     const prj = st.w.map(pt => sproj3(pt[0], pt[1], pt[2]));
-    for (let i = 0; i + 1 < prj.length; i++) {
-      const dpx = Math.hypot(prj[i + 1].x - prj[i].x, prj[i + 1].y - prj[i].y);
-      const dpar = Math.hypot(st.p[i + 1][0] - st.p[i][0],
-                              st.p[i + 1][1] - st.p[i][1]);
-      if (dpar < 1e-9) continue;
-      const a = Math.max(0.24, Math.min(1, (dpx / dpar) * pitchW / (3 * w)));
+    // Per-VERTEX density scale, averaged over adjacent segments and smoothed
+    // along the strand. Bucketing per raw segment made alternating zigzag
+    // orientations land in different alpha levels — a bright/dim dashing
+    // that read as holes. The smoothed metric varies slowly, so a strand
+    // keeps one level for long runs and every joint stays connected.
+    const n = prj.length;
+    const g = new Array(n);
+    for (let i = 0; i < n; i++) {
+      let sum = 0, cnt = 0;
+      for (const j of [i - 1, i]) {
+        if (j < 0 || j + 1 >= n) continue;
+        const dpar = Math.hypot(st.p[j + 1][0] - st.p[j][0], st.p[j + 1][1] - st.p[j][1]);
+        if (dpar < 1e-9) continue;
+        sum += Math.hypot(prj[j + 1].x - prj[j].x, prj[j + 1].y - prj[j].y) / dpar;
+        cnt++;
+      }
+      g[i] = cnt ? sum / cnt : 0;
+    }
+    for (let pass = 0; pass < 2; pass++)
+      for (let i = 1; i + 1 < n; i++) g[i] = (g[i - 1] + 2 * g[i] + g[i + 1]) / 4;
+    let cur = -1;
+    for (let i = 0; i + 1 < n; i++) {
+      const a = Math.max(0.32, Math.min(1,
+        Math.min(g[i], g[i + 1]) * pitchW / (3 * w)));
       let li = 0, best = 1e9;
       for (let k = 0; k < NET.levels.length; k++)
         if (Math.abs(NET.levels[k] - a) < best) { best = Math.abs(NET.levels[k] - a); li = k; }
-      lctx[li].moveTo(prj[i].x, prj[i].y);
+      if (li !== cur) { lctx[li].moveTo(prj[i].x, prj[i].y); cur = li; }
       lctx[li].lineTo(prj[i + 1].x, prj[i + 1].y);
+      // when the level changes mid-strand, re-anchor the new run at the
+      // shared vertex so the two runs always share raster pixels
     }
   }
   for (let k = 0; k < NET.levels.length; k++) {
@@ -1040,12 +1060,15 @@ function drawGoalFrame(gx) {
   const pts = [sproj3(gx, 0, 30.34), sproj3(gx, 2.44, 30.34),
                sproj3(gx, 2.44, 37.66), sproj3(gx, 0, 37.66)];
   if (pts.every(p => p.x < -20) || pts.every(p => p.x > cv.width + 20)) return;
-  const w = Math.max(2, Math.round(0.12 * S.pxPerM * RIG.zoom));
+  const w = Math.max(3, Math.round(0.12 * S.pxPerM * RIG.zoom));
   ctx.lineJoin = "round"; ctx.lineCap = "round";
   ctx.beginPath();
   ctx.moveTo(pts[0].x, pts[0].y);
   for (let i = 1; i < 4; i++) ctx.lineTo(pts[i].x, pts[i].y);
-  ctx.strokeStyle = "#f6f6f3"; ctx.lineWidth = w; ctx.stroke();
+  // pixel-art definition: solid 1px darker rim under an opaque white core —
+  // fully covers any strand behind the members, corners join round and clean
+  ctx.strokeStyle = "#9aa19b"; ctx.lineWidth = w + 2; ctx.stroke();
+  ctx.strokeStyle = "#fbfbf8"; ctx.lineWidth = w; ctx.stroke();
 }
 
 // ═══ runtime rig update (ONE pose variable: longitudinal position) ═══════════
