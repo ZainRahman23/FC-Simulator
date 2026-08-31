@@ -1543,7 +1543,13 @@ function drawPlayer(p, dt) {
   const sp = sproj(p.x, p.y);
   if (sp.d < 0.5) return;
   const ax = Math.round(sp.x), ay = Math.round(sp.y);
-  const s = S.playerVScale * RIG.zoom * RES;
+  // TRUE-DEPTH PERSPECTIVE: the fixed visual world-height player projects
+  // through the same camera as every other world object. playerVScale is
+  // calibrated at the reference depth czRef, so multiplying by czRef/sp.d
+  // (sp.d = the player's actual camera-space ground depth from sproj3)
+  // leaves the accepted pscale=0.60 size unchanged at czRef and scales it
+  // by true perspective everywhere else. No screen-Y heuristics, no clamps.
+  const s = S.playerVScale * (PROJ.czRef / sp.d) * RIG.zoom * RES;
   const team = (S.pb.players[p.pid] || {}).team === "AWAY" ? 1 : 0;
   const flat = flattenAt(p.x, p.y);
   ctx.save();
@@ -1606,12 +1612,18 @@ function drawBallAt(xw, yw, z, speed, dt) {
   const gpos = sproj3(xw, 0, yw);           // shadow stays on the pitch
   const bpos = sproj3(xw, z, yw);           // true projected height
   if (bpos.d < 0.5) return;
-  const r = Math.max(2, Math.round(BALL_VIS_R * S.pxPerM * RIG.zoom * RES));
+  // TRUE-DEPTH PERSPECTIVE: sprite radius from the ball's actual 3D
+  // camera-space depth (bpos.d — includes airborne height, so high balls
+  // nearing the camera plane scale correctly); shadow radius from the
+  // ground point's depth (gpos.d) so the shadow follows perspective at
+  // (x,y,0). BALL_VIS_R 0.19 keeps its accepted size at czRef exactly.
+  const r = Math.max(2, Math.round(BALL_VIS_R * (PROJ.fpx / bpos.d) * RIG.zoom * RES));
+  const rg = Math.max(2, Math.round(BALL_VIS_R * (PROJ.fpx / gpos.d) * RIG.zoom * RES));
   const flat = flattenAt(xw, yw);
   const sh = 1 / (1 + z * 0.55);            // higher ball: smaller, fainter
   ctx.beginPath();
-  ctx.ellipse(Math.round(gpos.x), Math.round(gpos.y) + r * 0.7,
-              r * 1.15 * sh, Math.max(1, r * 1.15 * flat * sh), 0, 0, Math.PI * 2);
+  ctx.ellipse(Math.round(gpos.x), Math.round(gpos.y) + rg * 0.7,
+              rg * 1.15 * sh, Math.max(1, rg * 1.15 * flat * sh), 0, 0, Math.PI * 2);
   ctx.fillStyle = "rgba(0,0,0," + (0.22 * sh).toFixed(3) + ")";   // shadow B
   ctx.fill();
   // BALL LOD by PROJECTED DIAMETER (not zoom labels): below ~12 px the
@@ -1619,11 +1631,11 @@ function drawBallAt(xw, yw, z, speed, dt) {
   // (7-11 px native, 4 rotation phases) is drawn 1:1 — same world size,
   // same continuous theta, no resampling. At >=12 px the accepted
   // detailed 24x24 8-phase sprite renders exactly as before.
-  // dpx is the PROJECTED BACKING-RASTER diameter. Under the 2x store the
-  // 24x24 detailed master is genuinely resolvable at ordinary gameplay
-  // (zoom 1 -> ~9.4 backing px reads as a football per the density study),
-  // so the micro LOD now engages only for genuinely tiny far views.
-  const dpx = 2 * BALL_VIS_R * S.pxPerM * RIG.zoom * RES;
+  // dpx is the TRUE-DEPTH projected backing-raster diameter (same depth
+  // the sprite draws at): near balls get the detailed 24px master, far
+  // balls legitimately engage the micro LOD when they genuinely project
+  // below 7 backing px.
+  const dpx = 2 * BALL_VIS_R * (PROJ.fpx / bpos.d) * RIG.zoom * RES;
   if (dpx < 7 && S.images.ballMicro) {
     const n = Math.max(7, Math.min(11, Math.round(dpx)));
     const m = S.images.ballMicro[n];
