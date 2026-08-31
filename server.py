@@ -32,6 +32,8 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from fc_simulator.engine import MatchEngine
+from fc_simulator.ballflight import BallFlight
+from fc_simulator.geometry import goal_center
 
 import bridge
 import store
@@ -41,6 +43,31 @@ from bridge import BridgeError
 _ACT_NAMES = ["standing", "walk", "jog", "high_speed_run", "sprint", "on_ball", "on_ball_evade",
               "carry", "dribble_burst", "dribble_partial", "sent_off"]
 _ACT_CODE = {n: k for k, n in enumerate(_ACT_NAMES)}
+
+
+def _facing_update(prev_deg, px, py, vx_m, vy_m, is_carrier, team_id):
+    """Deterministic presentation facing (degrees, renderer convention).
+
+    Priority: movement direction (with a dead zone and 20-degree hysteresis
+    so near-zero velocities never flicker) -> ball-carrier faces the goal his
+    team attacks -> idle default: face the attacked goal, DERIVED from the
+    authoritative geometry (goal_center), never from a hardcoded side.
+    RNG-free; pure function of authoritative state + previous facing.
+    """
+    import math as _m
+    sp = _m.hypot(vx_m, vy_m)
+    if sp >= 1.2:
+        tgt = _m.degrees(_m.atan2(vy_m, vx_m))
+    elif sp >= 0.6 and prev_deg is not None:
+        return prev_deg                       # dead zone: keep facing
+    else:
+        gc = goal_center(team_id)
+        tgt = _m.degrees(_m.atan2((gc.y - py) * 0.68, (gc.x - px) * 1.05))
+    if prev_deg is not None:
+        d = abs((tgt - prev_deg + 540.0) % 360.0 - 180.0)
+        if d < 20.0:
+            return prev_deg                   # hysteresis: ignore tiny swings
+    return round(tgt, 1)
 
 APP_VERSION = "0.1.0-rc2"  # cal6 action-choice package
 APP_ENV = os.environ.get("APP_ENV", "development")
@@ -372,6 +399,7 @@ def start_match(req: StartRequest) -> dict[str, Any]:
         store.create_match(match_id, req.save_id, req.fixture_id, int(req.seed),
                            start_json, VERSIONS)
         ACTIVE_MATCHES[match_id] = {"engine": engine, "lock": threading.Lock(),
+                                    "flight": BallFlight(), "facing": {},
                                     "meta": {"fixture_id": req.fixture_id,
                                              "seed": int(req.seed), "save_id": req.save_id}}
     _mlog(match_id, "MATCH_STARTED")
@@ -441,18 +469,40 @@ def advance_match(match_id: str, req: AdvanceRequest) -> dict[str, Any]:
                  for st in engine._team_states(tid, active_only=False)]
                 + [p.player_id for team in (engine.home, engine.away) for p in team.bench])
             ridx = {pid: k for k, pid in enumerate(roster)}
+            flight = s.setdefault("flight", BallFlight())
+            facing = s.setdefault("facing", {})
+            prev_pos = {}
+            for tid in ("HOME", "AWAY"):
+                for st in engine._team_states(tid, active_only=False):
+                    prev_pos[st.player.player_id] = (st.pos.x, st.pos.y)
             for _ in range(secs):
                 if engine.is_finished:
                     break
+                ev0 = len(engine.events)
                 engine.advance(1)
+                # authoritative z: deterministic 60 Hz flight from this
+                # second's events (read-only over the engine; zero RNG)
+                zsamp = flight.on_second(engine.events[ev0:])
                 row = [engine.clock, round(engine.ball.pos.x, 2), round(engine.ball.pos.y, 2),
                        1 if engine.possession_team == "HOME" else 0]
                 pl = [None] * len(roster)
+                carrier = engine.ball.controlling_player_id
                 for tid in ("HOME", "AWAY"):
                     for st in engine._team_states(tid, active_only=False):
-                        pl[ridx[st.player.player_id]] = [round(st.pos.x, 2), round(st.pos.y, 2),
-                                                          _ACT_CODE.get(st.current_activity, 0), 1 if st.active else 0]
+                        pid = st.player.player_id
+                        px0, py0 = prev_pos.get(pid, (st.pos.x, st.pos.y))
+                        f = _facing_update(facing.get(pid),
+                                           st.pos.x, st.pos.y,
+                                           (st.pos.x - px0) * 1.05, (st.pos.y - py0) * 0.68,
+                                           carrier == pid, tid)
+                        facing[pid] = f
+                        prev_pos[pid] = (st.pos.x, st.pos.y)
+                        pl[ridx[pid]] = [round(st.pos.x, 2), round(st.pos.y, 2),
+                                         _ACT_CODE.get(st.current_activity, 0), 1 if st.active else 0,
+                                         f]
                 row.append(pl)
+                row.append([round(flight.z, 3), round(flight.vz, 2),
+                            1 if flight.grounded else 0, zsamp])
                 frames.append(row)
         else:
             engine.advance(secs)
