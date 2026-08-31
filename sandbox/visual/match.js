@@ -156,6 +156,28 @@ async function boot() {
   mctx.imageSmoothingEnabled = false;
   mctx.translate(g.width, 0); mctx.scale(-1, 1); mctx.drawImage(g, 0, 0);
   S.images.goal22m = mc;
+  // Mouth-panel texture: the art with the through-the-mouth far-side-net
+  // triangle (art (42,40)-(105,183)-(44,194), inset 3 px so the crossbar and
+  // post pixels survive) cleared to transparent. Those pixels image the
+  // PERPENDICULAR far-side net; they now live on the dedicated farside panel,
+  // and clearing them here keeps that net from being drawn twice. Derived
+  // in-memory like goal22m — the V2.2 file stays byte-untouched.
+  const mo = document.createElement("canvas");
+  mo.width = g.width; mo.height = g.height;
+  const moctx = mo.getContext("2d");
+  moctx.imageSmoothingEnabled = false;
+  moctx.drawImage(g, 0, 0);
+  moctx.globalCompositeOperation = "destination-out";
+  moctx.beginPath();
+  moctx.moveTo(43, 43); moctx.lineTo(103, 181); moctx.lineTo(45, 191);
+  moctx.closePath(); moctx.fill();
+  S.images.goal22mouth = mo;
+  const mom = document.createElement("canvas");
+  mom.width = g.width; mom.height = g.height;
+  const momctx = mom.getContext("2d");
+  momctx.imageSmoothingEnabled = false;
+  momctx.translate(g.width, 0); momctx.scale(-1, 1); momctx.drawImage(mo, 0, 0);
+  S.images.goal22mouthM = mom;
 
   buildGroundTexture();
   recomputeAuthoring();               // authored CAMERA_V1 basis + constants
@@ -673,8 +695,8 @@ function drawGroundPerspective() {
 // One-time authoring (at freeze time): the accepted V2.2 surgical artwork's
 // measured panels are mapped by exact 4-point homographies onto the
 // authoritative 3D goal quads — mouth plane ON the goal line spanning the
-// 7.32 m mouth, roof and near-side net over the 2.0 m cage extending
-// OUTWARD. At runtime each panel is ordinary world geometry rendered
+// 7.32 m mouth, roof, near-side and far-side nets over the 2.0 m cage
+// extending OUTWARD. At runtime each panel is ordinary world geometry rendered
 // through the SAME shared sproj3 the goal line and six-yard box use:
 // no goal-specific camera compensation, no tracking, no billboard fitting,
 // no goal-only scaling. Cells are texture triangles whose WORLD corners
@@ -710,6 +732,20 @@ function homog(srcPts, dstPts) {           // 4-point homography, returns (u,v)-
 // u/v are the panel's parametric axes; ranges beyond [0,1] are outer
 // margins so net sag that bulges past the frame in the art is kept.
 const GOAL_ART_PANELS = [
+  { name: "farside",                    // u: front->rear (depth), v: top->ground
+    // The V2.2 art shows the far-side net only THROUGH the mouth, composited
+    // with the back net — there is no clean far-side source region. A goal's
+    // two side nets are physically identical, so the far side reuses the
+    // near-side source quad on the mirrored plane z=30.34. Listed first so it
+    // draws beneath the others: from the authored south rail (camera z>68)
+    // this plane is always the goal's farthest surface.
+    // v0 is 0 (not the side panel's -0.02): that margin grabs art from above
+    // the side rail; on the near side it hides inside the roof region, but
+    // here it would float above the roof's far edge and break the silhouette.
+    art: [[105, 183], [232, 186], [222, 320], [94, 327]],
+    world: (gx, out) => [[gx, 2.44, 30.34], [gx + out * 2, 2.44, 30.34],
+                         [gx + out * 2, 0, 30.34], [gx, 0, 30.34]],
+    u0: -0.02, u1: 1.15, v0: 0, v1: 1.0 },
   { name: "roof",                       // u: front->rear (depth), v: far->near
     art: [[42, 40], [168, 40], [232, 186], [105, 183]],
     world: (gx, out) => [[gx, 2.44, 30.34], [gx + out * 2, 2.44, 30.34],
@@ -724,7 +760,7 @@ const GOAL_ART_PANELS = [
     art: [[42, 40], [105, 183], [94, 327], [44, 194]],
     world: (gx, out) => [[gx, 2.44, 30.34], [gx, 2.44, 37.66],
                          [gx, 0, 37.66], [gx, 0, 30.34]],
-    u0: -0.03, u1: 1.02, v0: -0.03, v1: 1.0 },
+    u0: -0.03, u1: 1.02, v0: -0.03, v1: 1.0, mouthTex: true },
 ];
 const GOAL_GRID = 3;                    // cells per panel axis (triangulated)
 function buildGoalPanels() {
@@ -733,8 +769,11 @@ function buildGoalPanels() {
     const gx = (side ? 105 : 0) + (side ? 1 : -1) * GOAL_CFG.offX;
     const out = side ? 1 : -1;
     const mirrored = side ? GOAL_CFG.mirrorR : GOAL_CFG.mirrorL;
-    const img = mirrored ? S.images.goal22m : S.images.goal22;
     const panels = GOAL_ART_PANELS.map(P => {
+      // mouth uses the derived texture with the far-side triangle cleared
+      const img = P.mouthTex
+        ? (mirrored ? S.images.goal22mouthM : S.images.goal22mouth)
+        : (mirrored ? S.images.goal22m : S.images.goal22);
       const art = mirrored ? P.art.map(([x, y]) => [W - 1 - x, y]) : P.art;
       const H = homog([[0, 0], [1, 0], [1, 1], [0, 1]], art);
       const wq = P.world(gx, out);
@@ -768,9 +807,9 @@ function buildGoalPanels() {
                      worldAt(u1, v1), worldAt(u0, v1)],
           });
         }
-      return { name: P.name, cells };
+      return { name: P.name, img, cells };
     });
-    return { side, img, panels, sortY: 33.5 };
+    return { side, panels, sortY: 33.5 };
   });
 }
 function drawTexTri(img, a0, a1, a2, s0, s1, s2) {
@@ -804,8 +843,8 @@ function drawGoal(goal) {
       if (Math.max(s[0].x, s[1].x, s[2].x, s[3].x) < -20 ||
           Math.min(s[0].x, s[1].x, s[2].x, s[3].x) > cv.width + 20) continue;
       const a = cell.artC;
-      drawTexTri(goal.img, a[0], a[1], a[2], s[0], s[1], s[2]);
-      drawTexTri(goal.img, a[0], a[2], a[3], s[0], s[2], s[3]);
+      drawTexTri(panel.img, a[0], a[1], a[2], s[0], s[1], s[2]);
+      drawTexTri(panel.img, a[0], a[2], a[3], s[0], s[2], s[3]);
     }
 }
 

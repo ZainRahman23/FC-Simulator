@@ -22,6 +22,11 @@ AUTHOR = dict(height=30, dist=43, fov=28, depthoff=3, pitch=22, yaw=0)
 GOAL_SPRITE_W = 312
 GOAL_GRID = 3
 GOAL_ART_PANELS = [
+    dict(name="farside",   # reuses the near-side source quad on the z=30.34 plane
+         art=[(105, 183), (232, 186), (222, 320), (94, 327)],
+         world=lambda gx, out: [(gx, 2.44, 30.34), (gx + out * 2, 2.44, 30.34),
+                                (gx + out * 2, 0, 30.34), (gx, 0, 30.34)],
+         u0=-0.02, u1=1.15, v0=0, v1=1.0),
     dict(name="roof",
          art=[(42, 40), (168, 40), (232, 186), (105, 183)],
          world=lambda gx, out: [(gx, 2.44, 30.34), (gx + out * 2, 2.44, 30.34),
