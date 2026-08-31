@@ -24,13 +24,13 @@ GOAL_GRID = 3
 GOAL_ART_PANELS = [
     dict(name="farside",   # derived 121x97 net texture (goalNetTex), never mirrored
          netTex=True, sag="farside", gridU=6, gridV=8,
-         art=[(0, 0), (121, 0), (121, 97), (0, 97)],
+         art=[(0, 0), (143, 0), (143, 163), (0, 163)],
          world=lambda gx, out: [(gx, 2.44, 30.34), (gx + out * 2, 2.44, 30.34),
                                 (gx + out * 2, 0, 30.34), (gx, 0, 30.34)],
          u0=0, u1=1, v0=0, v1=1),
     dict(name="rear",     # derived 433x97 net texture (goalNetTexRear), never mirrored
          netTex=True, sag="rear", gridU=12, gridV=8,
-         art=[(0, 0), (433, 0), (433, 97), (0, 97)],
+         art=[(0, 0), (483, 0), (483, 163), (0, 163)],
          world=lambda gx, out: [(gx + out * 2, 2.44, 30.34), (gx + out * 2, 2.44, 37.66),
                                 (gx + out * 2, 0, 37.66), (gx + out * 2, 0, 30.34)],
          u0=0, u1=1, v0=0, v1=1),

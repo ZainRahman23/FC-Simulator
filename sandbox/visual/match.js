@@ -185,25 +185,31 @@ async function boot() {
   // perspective (none is baked in, unlike the composite art regions, whose
   // baked drape/occlusion made them unusable for this panel). Uniform weave,
   // so one unmirrored texture serves both goals. V2.2 file stays untouched.
-  const ft = document.createElement("canvas");
-  ft.width = 121; ft.height = 97;
-  const ftx = ft.getContext("2d");
-  ftx.imageSmoothingEnabled = false;
-  for (let ty = 0; ty < 7; ty++)
-    for (let tx = 0; tx < 6; tx++)
-      ftx.drawImage(g, 120, 211, 24, 16, tx * 24, ty * 16, 24, 16);
-  S.images.goalNetTex = ft;
-  // Rear-net texture: same weave tile over 433x97 — the rear plane is 7.32 m
-  // wide, so it needs its own width for cells to stay ~0.2 m world squares
-  // (433/12 cells ≈ 0.203 m each; cord lines on all four borders as above).
-  const rt = document.createElement("canvas");
-  rt.width = 433; rt.height = 97;
-  const rtx = rt.getContext("2d");
-  rtx.imageSmoothingEnabled = false;
-  for (let ty = 0; ty < 7; ty++)
-    for (let tx = 0; tx < 19; tx++)
-      rtx.drawImage(g, 120, 211, 24, 16, tx * 24, ty * 16, 24, 16);
-  S.images.goalNetTexRear = rt;
+  // Net textures: clean deterministic pixel-art weave (visual-fidelity pass).
+  // The V2.2 tile was noisy AI art whose gray antialiased cords plus 0.2 m
+  // cell pitch aliased into speckle at gameplay zoom. Replaced by a regular
+  // square-cord grid in V2.2's off-white palette: crisp 3 px cords, fully
+  // transparent openings, ~0.28-0.30 m world cells (readable at zoom 1,
+  // chunky-pixel-art at close-up), cords on all four borders so the mesh
+  // terminates on the frame lines. Alternating cord shades add fabric feel.
+  const NET_A = "#e8e8e2", NET_B = "#d6d6d0";
+  const buildNet = (cols, rows, cell, cord) => {
+    const c = document.createElement("canvas");
+    c.width = cols * cell + cord; c.height = rows * cell + cord;
+    const n = c.getContext("2d");
+    n.imageSmoothingEnabled = false;
+    for (let k = 0; k <= cols; k++) {
+      n.fillStyle = k % 2 ? NET_A : NET_B;
+      n.fillRect(k * cell, 0, cord, c.height);
+    }
+    for (let k = 0; k <= rows; k++) {
+      n.fillStyle = k % 2 ? NET_A : NET_B;
+      n.fillRect(0, k * cell, c.width, cord);
+    }
+    return c;
+  };
+  S.images.goalNetTex = buildNet(7, 8, 20, 3);        // side faces: 143x163
+  S.images.goalNetTexRear = buildNet(24, 8, 20, 3);   // rear face:  483x163
   // Near-side texture: the art with its ENTIRE interior net area replaced by
   // the single-layer V2.2 weave. The interior was baked composite: back net
   // photographed through the side net (dense, left) meeting the bare drape
@@ -231,9 +237,15 @@ async function boot() {
   soctx.moveTo(...SIDE_INT[0]); soctx.lineTo(...SIDE_INT[1]);
   soctx.lineTo(...SIDE_INT[2]); soctx.lineTo(...SIDE_INT[3]);
   soctx.closePath(); soctx.clip();
-  for (let ty = 0; ty < 9; ty++)
-    for (let tx = 0; tx < 6; tx++)
-      soctx.drawImage(g, 120, 211, 24, 16, 96 + tx * 24, 188 + ty * 16, 24, 16);
+  // clean cord grid in art space (matches the procedural net material)
+  for (let k = 0; k <= 7; k++) {
+    soctx.fillStyle = k % 2 ? "#e8e8e2" : "#d6d6d0";
+    soctx.fillRect(100 + k * 18, 186, 2, 138);
+  }
+  for (let k = 0; k <= 8; k++) {
+    soctx.fillStyle = k % 2 ? "#e8e8e2" : "#d6d6d0";
+    soctx.fillRect(94, 188 + k * 16, 138, 2);
+  }
   soctx.restore();
   S.images.goal22side = so;
   const som = document.createElement("canvas");
@@ -807,7 +819,7 @@ const GOAL_ART_PANELS = [
     // beneath the others: from the authored south rail (camera z>68) this
     // plane is always the goal's farthest surface.
     netTex: true, sag: "farside", gridU: 6, gridV: 8,
-    art: [[0, 0], [121, 0], [121, 97], [0, 97]],
+    art: [[0, 0], [143, 0], [143, 163], [0, 163]],
     world: (gx, out) => [[gx, 2.44, 30.34], [gx + out * 2, 2.44, 30.34],
                          [gx + out * 2, 0, 30.34], [gx, 0, 30.34]],
     u0: 0, u1: 1, v0: 0, v1: 1 },
@@ -818,7 +830,7 @@ const GOAL_ART_PANELS = [
     // wide goalNetTexRear weave. Drawn second: farther than roof/side/mouth
     // along every sight line, nearer than farside where they overlap.
     rearTex: true, sag: "rear", gridU: 12, gridV: 8,
-    art: [[0, 0], [433, 0], [433, 97], [0, 97]],
+    art: [[0, 0], [483, 0], [483, 163], [0, 163]],
     world: (gx, out) => [[gx + out * 2, 2.44, 30.34], [gx + out * 2, 2.44, 37.66],
                          [gx + out * 2, 0, 37.66], [gx + out * 2, 0, 30.34]],
     u0: 0, u1: 1, v0: 0, v1: 1 },
@@ -922,7 +934,7 @@ function buildGoalPanels() {
         }
       return { name: P.name, img, cells };
     });
-    return { side, panels, sortY: 33.5 };
+    return { side, panels, sortY: 33.5, gx };
   });
 }
 function drawTexTri(img, a0, a1, a2, s0, s1, s2) {
@@ -959,6 +971,23 @@ function drawGoal(goal) {
       drawTexTri(panel.img, a[0], a[1], a[2], s[0], s[1], s[2]);
       drawTexTri(panel.img, a[0], a[2], a[3], s[0], s[2], s[3]);
     }
+  drawGoalFrame(goal.gx);
+}
+// Front frame: posts + crossbar stroked as world geometry, solid and crisp
+// on top of the nets (physically the nearest goal structure to the camera).
+// Width follows the shared projection scale — real 0.12 m members — so the
+// frame reads strongest, art rails stay secondary, net cords finest.
+function drawGoalFrame(gx) {
+  const pts = [sproj3(gx, 0, 30.34), sproj3(gx, 2.44, 30.34),
+               sproj3(gx, 2.44, 37.66), sproj3(gx, 0, 37.66)];
+  if (pts.every(p => p.x < -20) || pts.every(p => p.x > cv.width + 20)) return;
+  const w = Math.max(2, 0.12 * S.pxPerM * RIG.zoom);
+  ctx.lineJoin = "round"; ctx.lineCap = "round";
+  ctx.beginPath();
+  ctx.moveTo(pts[0].x, pts[0].y);
+  for (let i = 1; i < 4; i++) ctx.lineTo(pts[i].x, pts[i].y);
+  ctx.strokeStyle = "#b9beb9"; ctx.lineWidth = w + 2; ctx.stroke();
+  ctx.strokeStyle = "#f7f7f4"; ctx.lineWidth = w; ctx.stroke();
 }
 
 // ═══ runtime rig update (ONE pose variable: longitudinal position) ═══════════
