@@ -534,6 +534,16 @@ function sproj3(wx, wy, wz) {           // world → screen (rig-translated + zo
            y: (p.y - VIEW.h / 2) * (RIG.zoom * RES) + cv.height / 2, d: p.d };
 }
 function sproj(wx, wz) { return sproj3(wx, 0, wz); }
+// BILLBOARD PERSPECTIVE COMPRESSION (sprites only — world projection is
+// untouched): apparent sprite size falls off with true camera depth as
+// (czRef/d)^DEPTH_ALPHA. alpha 1 = full physical perspective (visually
+// too aggressive for this pixel-art game), alpha 0 = rejected flat
+// billboards. 0.40 is the accepted stylized middle (near/far span 1.35x;
+// user-selected from the seven-candidate study). Player and ball MUST
+// share this exponent so their relative scale stays coherent. Sizes at
+// the reference depth czRef are exactly the accepted calibrations.
+const DEPTH_ALPHA = 0.40;
+function depthScale(d) { return Math.pow(PROJ.czRef / d, DEPTH_ALPHA); }
 
 function recomputeAuthoring() {
   buildFrozenBasis();
@@ -1543,13 +1553,12 @@ function drawPlayer(p, dt) {
   const sp = sproj(p.x, p.y);
   if (sp.d < 0.5) return;
   const ax = Math.round(sp.x), ay = Math.round(sp.y);
-  // TRUE-DEPTH PERSPECTIVE: the fixed visual world-height player projects
-  // through the same camera as every other world object. playerVScale is
-  // calibrated at the reference depth czRef, so multiplying by czRef/sp.d
-  // (sp.d = the player's actual camera-space ground depth from sproj3)
-  // leaves the accepted pscale=0.60 size unchanged at czRef and scales it
-  // by true perspective everywhere else. No screen-Y heuristics, no clamps.
-  const s = S.playerVScale * (PROJ.czRef / sp.d) * RIG.zoom * RES;
+  // COMPRESSED TRUE-DEPTH PERSPECTIVE: playerVScale is calibrated at the
+  // reference depth czRef; depthScale(sp.d) (sp.d = the player's actual
+  // camera-space ground depth from sproj3) leaves the accepted pscale=0.60
+  // size unchanged at czRef and applies the shared stylized depth falloff
+  // everywhere else. No screen-Y heuristics, no clamps.
+  const s = S.playerVScale * depthScale(sp.d) * RIG.zoom * RES;
   const team = (S.pb.players[p.pid] || {}).team === "AWAY" ? 1 : 0;
   const flat = flattenAt(p.x, p.y);
   ctx.save();
@@ -1612,13 +1621,14 @@ function drawBallAt(xw, yw, z, speed, dt) {
   const gpos = sproj3(xw, 0, yw);           // shadow stays on the pitch
   const bpos = sproj3(xw, z, yw);           // true projected height
   if (bpos.d < 0.5) return;
-  // TRUE-DEPTH PERSPECTIVE: sprite radius from the ball's actual 3D
-  // camera-space depth (bpos.d — includes airborne height, so high balls
-  // nearing the camera plane scale correctly); shadow radius from the
-  // ground point's depth (gpos.d) so the shadow follows perspective at
-  // (x,y,0). BALL_VIS_R 0.19 keeps its accepted size at czRef exactly.
-  const r = Math.max(2, Math.round(BALL_VIS_R * (PROJ.fpx / bpos.d) * RIG.zoom * RES));
-  const rg = Math.max(2, Math.round(BALL_VIS_R * (PROJ.fpx / gpos.d) * RIG.zoom * RES));
+  // COMPRESSED TRUE-DEPTH PERSPECTIVE: sprite radius from the ball's
+  // actual 3D camera-space depth (bpos.d — includes airborne height);
+  // shadow radius from the ground point's depth (gpos.d) so the shadow
+  // stays visually attached while its position remains the authoritative
+  // (x,y,0). Same shared depthScale law as players. BALL_VIS_R 0.19
+  // keeps its accepted size at czRef exactly.
+  const r = Math.max(2, Math.round(BALL_VIS_R * S.pxPerM * depthScale(bpos.d) * RIG.zoom * RES));
+  const rg = Math.max(2, Math.round(BALL_VIS_R * S.pxPerM * depthScale(gpos.d) * RIG.zoom * RES));
   const flat = flattenAt(xw, yw);
   const sh = 1 / (1 + z * 0.55);            // higher ball: smaller, fainter
   ctx.beginPath();
@@ -1635,7 +1645,7 @@ function drawBallAt(xw, yw, z, speed, dt) {
   // the sprite draws at): near balls get the detailed 24px master, far
   // balls legitimately engage the micro LOD when they genuinely project
   // below 7 backing px.
-  const dpx = 2 * BALL_VIS_R * (PROJ.fpx / bpos.d) * RIG.zoom * RES;
+  const dpx = 2 * BALL_VIS_R * S.pxPerM * depthScale(bpos.d) * RIG.zoom * RES;
   if (dpx < 7 && S.images.ballMicro) {
     const n = Math.max(7, Math.min(11, Math.round(dpx)));
     const m = S.images.ballMicro[n];
