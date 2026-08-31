@@ -22,11 +22,12 @@ AUTHOR = dict(height=30, dist=43, fov=28, depthoff=3, pitch=22, yaw=0)
 GOAL_SPRITE_W = 312
 GOAL_GRID = 3
 GOAL_ART_PANELS = [
-    dict(name="farside",   # reuses the near-side source quad on the z=30.34 plane
-         art=[(105, 183), (232, 186), (222, 320), (94, 327)],
+    dict(name="farside",   # derived 121x97 net texture (goalNetTex), never mirrored
+         netTex=True,
+         art=[(0, 0), (121, 0), (121, 97), (0, 97)],
          world=lambda gx, out: [(gx, 2.44, 30.34), (gx + out * 2, 2.44, 30.34),
                                 (gx + out * 2, 0, 30.34), (gx, 0, 30.34)],
-         u0=-0.02, u1=1.15, v0=0, v1=1.0),
+         u0=0, u1=1, v0=0, v1=1),
     dict(name="roof",
          art=[(42, 40), (168, 40), (232, 186), (105, 183)],
          world=lambda gx, out: [(gx, 2.44, 30.34), (gx + out * 2, 2.44, 30.34),
@@ -105,7 +106,8 @@ def build_goal(side, mirrored):
     gx, out = (105, 1) if side else (0, -1)
     panels = []
     for P in GOAL_ART_PANELS:
-        art = [(GOAL_SPRITE_W - 1 - x, y) for x, y in P["art"]] if mirrored else P["art"]
+        art = ([(GOAL_SPRITE_W - 1 - x, y) for x, y in P["art"]]
+               if mirrored and not P.get("netTex") else P["art"])
         H = homog([(0, 0), (1, 0), (1, 1), (0, 1)], art)
         aq, bq, cq, dq = P["world"](gx, out)
 
@@ -177,7 +179,7 @@ def main():
         for p in g["panels"]:
             P = next(q for q in GOAL_ART_PANELS if q["name"] == p["name"])
             art = ([(GOAL_SPRITE_W - 1 - x, y) for x, y in P["art"]]
-                   if g["side"] == 0 else P["art"])
+                   if g["side"] == 0 and not P.get("netTex") else P["art"])
             for (u, v), c in zip([(0, 0), (1, 0), (1, 1), (0, 1)], art):
                 m = p["H"](u, v)
                 worst = max(worst, math.hypot(m[0] - c[0], m[1] - c[1]))

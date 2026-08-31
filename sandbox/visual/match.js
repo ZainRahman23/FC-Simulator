@@ -178,6 +178,21 @@ async function boot() {
   momctx.imageSmoothingEnabled = false;
   momctx.translate(g.width, 0); momctx.scale(-1, 1); momctx.drawImage(mo, 0, 0);
   S.images.goal22mouthM = mom;
+  // Far-side net texture: V2.2's cleanest regular weave — the cord-aligned
+  // 24x16 px two-cell patch at art (120,211) — tiled over 121x97 so cord
+  // lines land exactly on all four borders. Mapped onto the farside world
+  // rect its cells become ~0.2 m squares; the shared projection supplies ALL
+  // perspective (none is baked in, unlike the composite art regions, whose
+  // baked drape/occlusion made them unusable for this panel). Uniform weave,
+  // so one unmirrored texture serves both goals. V2.2 file stays untouched.
+  const ft = document.createElement("canvas");
+  ft.width = 121; ft.height = 97;
+  const ftx = ft.getContext("2d");
+  ftx.imageSmoothingEnabled = false;
+  for (let ty = 0; ty < 7; ty++)
+    for (let tx = 0; tx < 6; tx++)
+      ftx.drawImage(g, 120, 211, 24, 16, tx * 24, ty * 16, 24, 16);
+  S.images.goalNetTex = ft;
 
   buildGroundTexture();
   recomputeAuthoring();               // authored CAMERA_V1 basis + constants
@@ -733,19 +748,20 @@ function homog(srcPts, dstPts) {           // 4-point homography, returns (u,v)-
 // margins so net sag that bulges past the frame in the art is kept.
 const GOAL_ART_PANELS = [
   { name: "farside",                    // u: front->rear (depth), v: top->ground
-    // The V2.2 art shows the far-side net only THROUGH the mouth, composited
-    // with the back net — there is no clean far-side source region. A goal's
-    // two side nets are physically identical, so the far side reuses the
-    // near-side source quad on the mirrored plane z=30.34. Listed first so it
-    // draws beneath the others: from the authored south rail (camera z>68)
-    // this plane is always the goal's farthest surface.
-    // v0 is 0 (not the side panel's -0.02): that margin grabs art from above
-    // the side rail; on the near side it hides inside the roof region, but
-    // here it would float above the roof's far edge and break the silhouette.
-    art: [[105, 183], [232, 186], [222, 320], [94, 327]],
+    // The V2.2 art has NO usable far-side source region: the far side appears
+    // only through the mouth, and every candidate area is a baked composite
+    // (drape folds, occlusion boundaries, back-net layering) that reads as a
+    // pinched wedge when transplanted. So this panel samples the derived
+    // goalNetTex — V2.2's own weave tiled into a regular mesh (see boot) —
+    // mapped edge-to-edge (no margins) so the net terminates exactly on the
+    // post / rear upright / top rail / ground lines. Listed first so it draws
+    // beneath the others: from the authored south rail (camera z>68) this
+    // plane is always the goal's farthest surface.
+    netTex: true,
+    art: [[0, 0], [121, 0], [121, 97], [0, 97]],
     world: (gx, out) => [[gx, 2.44, 30.34], [gx + out * 2, 2.44, 30.34],
                          [gx + out * 2, 0, 30.34], [gx, 0, 30.34]],
-    u0: -0.02, u1: 1.15, v0: 0, v1: 1.0 },
+    u0: 0, u1: 1, v0: 0, v1: 1 },
   { name: "roof",                       // u: front->rear (depth), v: far->near
     art: [[42, 40], [168, 40], [232, 186], [105, 183]],
     world: (gx, out) => [[gx, 2.44, 30.34], [gx + out * 2, 2.44, 30.34],
@@ -770,11 +786,15 @@ function buildGoalPanels() {
     const out = side ? 1 : -1;
     const mirrored = side ? GOAL_CFG.mirrorR : GOAL_CFG.mirrorL;
     const panels = GOAL_ART_PANELS.map(P => {
-      // mouth uses the derived texture with the far-side triangle cleared
-      const img = P.mouthTex
-        ? (mirrored ? S.images.goal22mouthM : S.images.goal22mouth)
-        : (mirrored ? S.images.goal22m : S.images.goal22);
-      const art = mirrored ? P.art.map(([x, y]) => [W - 1 - x, y]) : P.art;
+      // mouth uses the derived texture with the far-side triangle cleared;
+      // farside uses the derived net texture (own coordinate space, uniform
+      // weave — never mirrored)
+      const img = P.netTex ? S.images.goalNetTex
+        : P.mouthTex
+          ? (mirrored ? S.images.goal22mouthM : S.images.goal22mouth)
+          : (mirrored ? S.images.goal22m : S.images.goal22);
+      const art = (mirrored && !P.netTex)
+        ? P.art.map(([x, y]) => [W - 1 - x, y]) : P.art;
       const H = homog([[0, 0], [1, 0], [1, 1], [0, 1]], art);
       const wq = P.world(gx, out);
       const worldAt = (u, v) => {           // bilinear on the planar world rect
