@@ -1498,9 +1498,9 @@ function ballSprite(rpx, phase) {
   const blobs = [[0, 0]];                     // centre pentagon
   for (let k = 0; k < 5; k++) {
     const a = (phase * 22.5 + k * 72) * Math.PI / 180;
-    blobs.push([Math.cos(a) * R * 0.78, Math.sin(a) * R * 0.78]);
+    blobs.push([Math.cos(a) * R * 0.85, Math.sin(a) * R * 0.85]);
   }
-  const br = base >= 15 ? 2.1 : 1.2;
+  const br = base >= 15 ? 1.7 : 1.1;
   for (let y = 0; y < base; y++)
     for (let x = 0; x < base; x++) {
       const dx = x - cx, dy = y - cx, d = Math.hypot(dx, dy);
