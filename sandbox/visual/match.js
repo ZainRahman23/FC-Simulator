@@ -185,53 +185,6 @@ async function boot() {
   // perspective (none is baked in, unlike the composite art regions, whose
   // baked drape/occlusion made them unusable for this panel). Uniform weave,
   // so one unmirrored texture serves both goals. V2.2 file stays untouched.
-  // ONE net definition for every net-bearing surface. The wrap band is a
-  // single canvas covering the full attachment path far post -> rear-far ->
-  // rear-near -> near post (11.32 m = exactly 40 cells of 0.283 m; 8 rows of
-  // 0.305 m; 2 px cords at 75 px/m, transparent openings). The three wall
-  // faces each sample THEIR OWN S-range of this one canvas, so cords are
-  // literally the same texture continuing around both corners — no per-panel
-  // grids, no restarts. The roof canvas continues the same net: its
-  // depth-running cord lines sit at the rear wall's vertical-cord z
-  // positions and its width-running lines at the side walls' vertical-cord
-  // x positions (the 11.32 m path is an integer number of pitches, so both
-  // side rails land on cord lines). Alternating cord shades run through the
-  // whole band so parity is continuous too.
-  const NET_A = "#e4e4de", NET_B = "#cecec8", NET_K = 75, NET_CORD = 2;
-  const NET_COLS = 51, NET_ROWS = 11;   // 0.222 m pitch (density study: the
-                                        // coarsest that reads as netting)
-  const wrapW = Math.round(11.32 * NET_K), wrapH = Math.round(2.44 * NET_K);
-  const wb = document.createElement("canvas");
-  wb.width = wrapW; wb.height = wrapH;
-  const wbx = wb.getContext("2d");
-  wbx.imageSmoothingEnabled = false;
-  for (let k = 0; k <= NET_COLS; k++) {
-    wbx.fillStyle = k % 2 ? NET_A : NET_B;
-    wbx.fillRect(Math.min(wrapW - NET_CORD, Math.round(k * wrapW / NET_COLS)), 0, NET_CORD, wrapH);
-  }
-  for (let j = 0; j <= NET_ROWS; j++) {
-    wbx.fillStyle = j % 2 ? NET_A : NET_B;
-    wbx.fillRect(0, Math.min(wrapH - NET_CORD, Math.round(j * wrapH / NET_ROWS)), wrapW, NET_CORD);
-  }
-  S.images.goalNetWrap = wb;
-  const roofW = Math.round(2.0 * NET_K), roofH = Math.round(7.32 * NET_K);
-  const rn = document.createElement("canvas");
-  rn.width = roofW; rn.height = roofH;
-  const rnx = rn.getContext("2d");
-  rnx.imageSmoothingEnabled = false;
-  const NET_P = 11.32 / NET_COLS;
-  for (let j = 0; j * NET_P <= 2.0 + 1e-9; j++) {  // continues side-wall verticals
-    rnx.fillStyle = j % 2 ? NET_A : NET_B;
-    rnx.fillRect(Math.min(roofW - NET_CORD, Math.round(j * NET_P * NET_K)), 0, NET_CORD, roofH);
-  }
-  for (let k = Math.ceil(2.0 / NET_P); k <= NET_COLS; k++) {  // continues rear verticals
-    const y = Math.round((k * NET_P - 2) * NET_K);
-    if (y >= 0 && y < roofH) {
-      rnx.fillStyle = k % 2 ? NET_A : NET_B;
-      rnx.fillRect(0, y, roofW, NET_CORD);
-    }
-  }
-  S.images.goalNetRoof = rn;
   // Near-side texture: the art with its ENTIRE interior net area replaced by
   // the single-layer V2.2 weave. The interior was baked composite: back net
   // photographed through the side net (dense, left) meeting the bare drape
@@ -834,43 +787,14 @@ function homog(srcPts, dstPts) {           // 4-point homography, returns (u,v)-
 // authoritative world quads. Corner order is matched 1:1 art<->world.
 // u/v are the panel's parametric axes; ranges beyond [0,1] are outer
 // margins so net sag that bulges past the frame in the art is kept.
-// The three wall faces sample S-ranges of the ONE wrap-band net canvas
-// (px = S/11.32 * 849): farside S 0..2 -> x 0..150, rear S 2..9.32 ->
-// x 150..699, near side S 11.32..9.32 -> x 849..699 (u runs front->rear).
-// Cords, cell pitch, shade parity and sag all continue around both corners.
-// Art panels (roof/side/mouth) carry only frame/rail/silhouette pixels.
 const GOAL_ART_PANELS = [
-  { name: "farside",                    // u: front->rear (depth), v: top->ground
-    tex: "wrap", sag: "farside", gridU: 8, gridV: 10,
-    art: [[0, 0], [150, 0], [150, 183], [0, 183]],
-    world: (gx, out) => [[gx, 2.44, 30.34], [gx + out * 2, 2.44, 30.34],
-                         [gx + out * 2, 0, 30.34], [gx, 0, 30.34]],
-    u0: 0, u1: 1, v0: 0, v1: 1 },
-  { name: "rear",                       // u: far->near (width), v: top->ground
-    tex: "wrap", sag: "rear", gridU: 16, gridV: 10,
-    art: [[150, 0], [699, 0], [699, 183], [150, 183]],
-    world: (gx, out) => [[gx + out * 2, 2.44, 30.34], [gx + out * 2, 2.44, 37.66],
-                         [gx + out * 2, 0, 37.66], [gx + out * 2, 0, 30.34]],
-    u0: 0, u1: 1, v0: 0, v1: 1 },
-  { name: "roofNet",                    // u: front->rear (depth), v: far->near
-    tex: "roofnet", gridU: 3, gridV: 6,
-    art: [[0, 0], [150, 0], [150, 549], [0, 549]],
-    world: (gx, out) => [[gx, 2.44, 30.34], [gx + out * 2, 2.44, 30.34],
-                         [gx + out * 2, 2.44, 37.66], [gx, 2.44, 37.66]],
-    u0: 0, u1: 1, v0: 0, v1: 1 },
-  { name: "roof",                       // frame-only art (rails + silhouette)
+        { name: "roof",                       // frame-only art (rails + silhouette)
     tex: "roofframe",
     art: [[42, 40], [168, 40], [232, 186], [105, 183]],
     world: (gx, out) => [[gx, 2.44, 30.34], [gx + out * 2, 2.44, 30.34],
                          [gx + out * 2, 2.44, 37.66], [gx, 2.44, 37.66]],
     u0: -0.02, u1: 1.15, v0: -0.02, v1: 1.02 },
-  { name: "sideNet",                    // u: front->rear (depth), v: top->ground
-    tex: "wrap", sag: "side", gridU: 8, gridV: 10,
-    art: [[849, 0], [699, 0], [699, 183], [849, 183]],
-    world: (gx, out) => [[gx, 2.44, 37.66], [gx + out * 2, 2.44, 37.66],
-                         [gx + out * 2, 0, 37.66], [gx, 0, 37.66]],
-    u0: 0, u1: 1, v0: 0, v1: 1 },
-  { name: "side",                       // frame-only art (rails/posts/bulge)
+    { name: "side",                       // frame-only art (rails/posts/bulge)
     tex: "sideframe",
     art: [[105, 183], [232, 186], [222, 320], [94, 327]],
     world: (gx, out) => [[gx, 2.44, 37.66], [gx + out * 2, 2.44, 37.66],
@@ -908,6 +832,111 @@ function goalNetSag(x, y, z, s, out) {
   const phi = (Math.PI / 2) * (1 + ss(2) + ss(9.32));
   return [x + m * out * Math.cos(phi), y, z + m * Math.sin(phi)];
 }
+
+// ═══ STRAND NET: one hexagonal mesh wrapped over the whole cage ══════════════
+// The visible net is no longer a texture: it is the logical net itself —
+// honeycomb strands generated in the continuous net coordinate system
+// (S along the far-post -> rear -> near-post path, T down from the top
+// rails; the roof is the matching patch over the cage top), placed at their
+// sagged REST positions, projected through the shared sproj3 and stroked as
+// connected paths. Strands can never lose pixels mid-run (minimum 1 px
+// width), every vertical link starts and ends on chain vertices, and the
+// same node graph is the future ball-impact spring mesh. Where perspective
+// compresses the mesh below legibility, segments drop to quantized lower
+// alpha (coverage-correct translucent sheen instead of a solid white mass —
+// within one level, overdraw does not accumulate).
+const NET = { ell: 0.095, cord: 0.022, seg: 0.10, droop: 0.09,
+              col: "#e2e2dc", levels: [1, 0.68, 0.45, 0.28] };
+function hexStrands(A, B, ell) {         // honeycomb over [0,A]x[0,B]
+  const w2 = Math.sqrt(3) * ell / 2, rowp = 1.5 * ell;
+  const nrow = Math.floor(B / rowp) + 1, nk = Math.floor(A / w2) + 1;
+  const out = [];
+  for (let r = 0; r <= nrow; r++) {      // zigzag chains (continuous strands)
+    const pts = [];
+    for (let k = 0; k <= nk; k++)
+      pts.push([Math.min(A, k * w2),
+                Math.min(B, r * rowp + ((k + r) % 2 ? ell / 2 : 0))]);
+    out.push(pts);
+  }
+  for (let r = 0; r < nrow; r++)         // vertical links between chains
+    for (let k = 0; k <= nk; k++)
+      if ((k + r) % 2 === 1 && (r + 1) * rowp <= B + 1e-9)
+        out.push([[Math.min(A, k * w2), r * rowp + ell / 2],
+                  [Math.min(A, k * w2), (r + 1) * rowp]]);
+  return out;
+}
+function buildGoalNet(gx, out) {
+  const wallPt = (S, T) => {
+    let x, z;
+    if (S <= 2) { x = gx + out * S; z = 30.34; }
+    else if (S <= 9.32) { x = gx + out * 2; z = 30.34 + (S - 2); }
+    else { x = gx + out * (11.32 - S); z = 37.66; }
+    return goalNetSag(x, 2.44 - T, z, S, out);
+  };
+  const roofPt = (zp, xp) => [gx + out * xp,   // gentle fabric droop, rails pinned
+    2.44 - NET.droop * Math.sin(Math.PI * xp / 2) * Math.sin(Math.PI * zp / 7.32),
+    30.34 + zp];
+  const strands = [];
+  for (const pts of hexStrands(11.32, 2.44, NET.ell)) {
+    const w = [], p = [];
+    for (const [a, b] of pts) {
+      if (p.length) {                    // resample so sag curvature shows
+        const [a0, b0] = p[p.length - 1];
+        const n = Math.floor(Math.abs(a - a0) / NET.seg);
+        for (let t = 1; t <= n; t++) {
+          const aa = a0 + (a - a0) * t / (n + 1), bb = b0 + (b - b0) * t / (n + 1);
+          w.push(wallPt(aa, bb)); p.push([aa, bb]);
+        }
+      }
+      w.push(wallPt(a, b)); p.push([a, b]);
+    }
+    strands.push({ w, p });
+  }
+  for (const pts of hexStrands(7.32, 2.0, NET.ell))
+    strands.push({ w: pts.map(([a, b]) => roofPt(a, b)), p: pts });
+  return strands;
+}
+let NET_LAYERS = null;
+function drawGoalNet(goal) {
+  const c0 = sproj3(goal.gx, 1.2, 34);   // whole-goal cull
+  if (c0.x < -900 || c0.x > cv.width + 900) return;
+  if (!NET_LAYERS || NET_LAYERS[0].width !== cv.width || NET_LAYERS[0].height !== cv.height)
+    NET_LAYERS = NET.levels.map(() => {
+      const c = document.createElement("canvas");
+      c.width = cv.width; c.height = cv.height;
+      return c;
+    });
+  const w = Math.max(1, Math.round(NET.cord * S.pxPerM * RIG.zoom));
+  const lctx = NET_LAYERS.map(c => {
+    const x = c.getContext("2d");
+    x.clearRect(0, 0, c.width, c.height);
+    x.strokeStyle = NET.col; x.lineCap = "round"; x.lineWidth = w;
+    x.beginPath();
+    return x;
+  });
+  const pitchW = Math.sqrt(3) * NET.ell;
+  for (const st of goal.net) {
+    const prj = st.w.map(pt => sproj3(pt[0], pt[1], pt[2]));
+    for (let i = 0; i + 1 < prj.length; i++) {
+      const dpx = Math.hypot(prj[i + 1].x - prj[i].x, prj[i + 1].y - prj[i].y);
+      const dpar = Math.hypot(st.p[i + 1][0] - st.p[i][0],
+                              st.p[i + 1][1] - st.p[i][1]);
+      if (dpar < 1e-9) continue;
+      const a = Math.max(0.24, Math.min(1, (dpx / dpar) * pitchW / (3 * w)));
+      let li = 0, best = 1e9;
+      for (let k = 0; k < NET.levels.length; k++)
+        if (Math.abs(NET.levels[k] - a) < best) { best = Math.abs(NET.levels[k] - a); li = k; }
+      lctx[li].moveTo(prj[i].x, prj[i].y);
+      lctx[li].lineTo(prj[i + 1].x, prj[i + 1].y);
+    }
+  }
+  for (let k = 0; k < NET.levels.length; k++) {
+    lctx[k].stroke();
+    ctx.globalAlpha = NET.levels[k];
+    ctx.drawImage(NET_LAYERS[k], 0, 0);
+    ctx.globalAlpha = 1;
+  }
+}
 function buildGoalPanels() {
   const W = GOAL_SPRITE.W;
   S.goalPanels = [0, 1].map(side => {
@@ -915,19 +944,13 @@ function buildGoalPanels() {
     const out = side ? 1 : -1;
     const mirrored = side ? GOAL_CFG.mirrorR : GOAL_CFG.mirrorL;
     const panels = GOAL_ART_PANELS.map(P => {
-      // texture routing: net panels sample the shared procedural canvases
-      // (never mirrored — the weave is uniform, parity symmetric); frame
-      // panels use the derived art canvases (mirrored for the left goal)
-      const NETTEX = P.tex === "wrap" || P.tex === "roofnet";
-      const img = P.tex === "wrap" ? S.images.goalNetWrap
-        : P.tex === "roofnet" ? S.images.goalNetRoof
-        : P.tex === "sideframe" ? (mirrored ? S.images.goal22sideM : S.images.goal22side)
+      // frame-art textures only — the net itself is the strand system
+      const img = P.tex === "sideframe" ? (mirrored ? S.images.goal22sideM : S.images.goal22side)
         : P.tex === "roofframe" ? (mirrored ? S.images.goal22roofM : S.images.goal22roof)
         : P.tex === "mouthframe"
           ? (mirrored ? S.images.goal22mouthM : S.images.goal22mouth)
           : (mirrored ? S.images.goal22m : S.images.goal22);
-      const art = (mirrored && !NETTEX)
-        ? P.art.map(([x, y]) => [W - 1 - x, y]) : P.art;
+      const art = mirrored ? P.art.map(([x, y]) => [W - 1 - x, y]) : P.art;
       const H = homog([[0, 0], [1, 0], [1, 1], [0, 1]], art);
       const wq = P.world(gx, out);
       const worldAt = (u, v) => {           // bilinear on the planar world rect
@@ -969,7 +992,7 @@ function buildGoalPanels() {
         }
       return { name: P.name, img, cells };
     });
-    return { side, panels, sortY: 33.5, gx };
+    return { side, panels, sortY: 33.5, gx, net: buildGoalNet(gx, out) };
   });
 }
 function drawTexTri(img, a0, a1, a2, s0, s1, s2) {
@@ -996,6 +1019,7 @@ function drawTexTri(img, a0, a1, a2, s0, s1, s2) {
   ctx.restore();
 }
 function drawGoal(goal) {
+  drawGoalNet(goal);
   for (const panel of goal.panels)
     for (const cell of panel.cells) {
       const s = cell.worldC.map(w => sproj3(w[0], w[1], w[2]));
