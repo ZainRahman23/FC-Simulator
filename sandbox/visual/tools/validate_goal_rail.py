@@ -28,6 +28,12 @@ GOAL_ART_PANELS = [
          world=lambda gx, out: [(gx, 2.44, 30.34), (gx + out * 2, 2.44, 30.34),
                                 (gx + out * 2, 0, 30.34), (gx, 0, 30.34)],
          u0=0, u1=1, v0=0, v1=1),
+    dict(name="rear",     # derived 433x97 net texture (goalNetTexRear), never mirrored
+         netTex=True,
+         art=[(0, 0), (433, 0), (433, 97), (0, 97)],
+         world=lambda gx, out: [(gx + out * 2, 2.44, 30.34), (gx + out * 2, 2.44, 37.66),
+                                (gx + out * 2, 0, 37.66), (gx + out * 2, 0, 30.34)],
+         u0=0, u1=1, v0=0, v1=1),
     dict(name="roof",
          art=[(42, 40), (168, 40), (232, 186), (105, 183)],
          world=lambda gx, out: [(gx, 2.44, 30.34), (gx + out * 2, 2.44, 30.34),

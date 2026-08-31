@@ -193,6 +193,55 @@ async function boot() {
     for (let tx = 0; tx < 6; tx++)
       ftx.drawImage(g, 120, 211, 24, 16, tx * 24, ty * 16, 24, 16);
   S.images.goalNetTex = ft;
+  // Rear-net texture: same weave tile over 433x97 — the rear plane is 7.32 m
+  // wide, so it needs its own width for cells to stay ~0.2 m world squares
+  // (433/12 cells ≈ 0.203 m each; cord lines on all four borders as above).
+  const rt = document.createElement("canvas");
+  rt.width = 433; rt.height = 97;
+  const rtx = rt.getContext("2d");
+  rtx.imageSmoothingEnabled = false;
+  for (let ty = 0; ty < 7; ty++)
+    for (let tx = 0; tx < 19; tx++)
+      rtx.drawImage(g, 120, 211, 24, 16, tx * 24, ty * 16, 24, 16);
+  S.images.goalNetTexRear = rt;
+  // Near-side texture: the art with the baked BACK-NET composite cleared —
+  // the dense region between the near post and the drape's occlusion
+  // boundary is the back net photographed THROUGH the side net (2-layer
+  // bake); it now lives on the real rear panel, so the near side keeps only
+  // its translucent drape. Polygon is inset ~3 px from the post, rails and
+  // drape edge so every legitimate near-side cord/frame pixel survives.
+  const so = document.createElement("canvas");
+  so.width = g.width; so.height = g.height;
+  const soctx = so.getContext("2d");
+  soctx.imageSmoothingEnabled = false;
+  soctx.drawImage(g, 0, 0);
+  soctx.globalCompositeOperation = "destination-out";
+  soctx.beginPath();
+  soctx.moveTo(108, 190); soctx.lineTo(126, 198); soctx.lineTo(147, 216);
+  soctx.lineTo(169, 240); soctx.lineTo(187, 264); soctx.lineTo(202, 290);
+  soctx.lineTo(213, 310); soctx.lineTo(217, 316); soctx.lineTo(98, 322);
+  soctx.closePath(); soctx.fill();
+  // …then refill that region with the single-layer V2.2 weave: the near-side
+  // net itself is physically still there — only the baked back-net layer had
+  // to go (the real rear panel now provides it, visible through these holes).
+  soctx.globalCompositeOperation = "source-over";
+  soctx.save();
+  soctx.beginPath();
+  soctx.moveTo(108, 190); soctx.lineTo(126, 198); soctx.lineTo(147, 216);
+  soctx.lineTo(169, 240); soctx.lineTo(187, 264); soctx.lineTo(202, 290);
+  soctx.lineTo(213, 310); soctx.lineTo(217, 316); soctx.lineTo(98, 322);
+  soctx.closePath(); soctx.clip();
+  for (let ty = 0; ty < 9; ty++)
+    for (let tx = 0; tx < 6; tx++)
+      soctx.drawImage(g, 120, 211, 24, 16, 96 + tx * 24, 188 + ty * 16, 24, 16);
+  soctx.restore();
+  S.images.goal22side = so;
+  const som = document.createElement("canvas");
+  som.width = g.width; som.height = g.height;
+  const somctx = som.getContext("2d");
+  somctx.imageSmoothingEnabled = false;
+  somctx.translate(g.width, 0); somctx.scale(-1, 1); somctx.drawImage(so, 0, 0);
+  S.images.goal22sideM = som;
 
   buildGroundTexture();
   recomputeAuthoring();               // authored CAMERA_V1 basis + constants
@@ -762,6 +811,17 @@ const GOAL_ART_PANELS = [
     world: (gx, out) => [[gx, 2.44, 30.34], [gx + out * 2, 2.44, 30.34],
                          [gx + out * 2, 0, 30.34], [gx, 0, 30.34]],
     u0: 0, u1: 1, v0: 0, v1: 1 },
+  { name: "rear",                       // u: far->near (width), v: top->ground
+    // The true back-net plane at x = gx±2 — previously missing entirely: its
+    // imagery was baked inside the near-side source region (back net
+    // photographed through the side net) and read as a wedge. Samples the
+    // wide goalNetTexRear weave. Drawn second: farther than roof/side/mouth
+    // along every sight line, nearer than farside where they overlap.
+    rearTex: true,
+    art: [[0, 0], [433, 0], [433, 97], [0, 97]],
+    world: (gx, out) => [[gx + out * 2, 2.44, 30.34], [gx + out * 2, 2.44, 37.66],
+                         [gx + out * 2, 0, 37.66], [gx + out * 2, 0, 30.34]],
+    u0: 0, u1: 1, v0: 0, v1: 1 },
   { name: "roof",                       // u: front->rear (depth), v: far->near
     art: [[42, 40], [168, 40], [232, 186], [105, 183]],
     world: (gx, out) => [[gx, 2.44, 30.34], [gx + out * 2, 2.44, 30.34],
@@ -771,7 +831,7 @@ const GOAL_ART_PANELS = [
     art: [[105, 183], [232, 186], [222, 320], [94, 327]],
     world: (gx, out) => [[gx, 2.44, 37.66], [gx + out * 2, 2.44, 37.66],
                          [gx + out * 2, 0, 37.66], [gx, 0, 37.66]],
-    u0: -0.02, u1: 1.15, v0: -0.02, v1: 1.0 },
+    u0: -0.02, u1: 1.15, v0: -0.02, v1: 1.0, sideTex: true },
   { name: "mouth",                      // u: far->near post, v: crossbar->ground
     art: [[42, 40], [105, 183], [94, 327], [44, 194]],
     world: (gx, out) => [[gx, 2.44, 30.34], [gx, 2.44, 37.66],
@@ -786,14 +846,16 @@ function buildGoalPanels() {
     const out = side ? 1 : -1;
     const mirrored = side ? GOAL_CFG.mirrorR : GOAL_CFG.mirrorL;
     const panels = GOAL_ART_PANELS.map(P => {
-      // mouth uses the derived texture with the far-side triangle cleared;
-      // farside uses the derived net texture (own coordinate space, uniform
-      // weave — never mirrored)
+      // derived textures: farside/rear use the uniform weave canvases (own
+      // coordinate space, never mirrored); side has the baked back-net
+      // composite cleared; mouth has the far-side triangle cleared
       const img = P.netTex ? S.images.goalNetTex
+        : P.rearTex ? S.images.goalNetTexRear
+        : P.sideTex ? (mirrored ? S.images.goal22sideM : S.images.goal22side)
         : P.mouthTex
           ? (mirrored ? S.images.goal22mouthM : S.images.goal22mouth)
           : (mirrored ? S.images.goal22m : S.images.goal22);
-      const art = (mirrored && !P.netTex)
+      const art = (mirrored && !P.netTex && !P.rearTex)
         ? P.art.map(([x, y]) => [W - 1 - x, y]) : P.art;
       const H = homog([[0, 0], [1, 0], [1, 1], [0, 1]], art);
       const wq = P.world(gx, out);
