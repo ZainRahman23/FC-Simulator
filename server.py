@@ -32,8 +32,9 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from fc_simulator.engine import MatchEngine
-from fc_simulator.ballflight import BallFlight
 from fc_simulator.geometry import goal_center
+from fc_simulator.continuous import HybridLab, EX, EY
+from fc_simulator.worldflags import CAD_PROFILE
 
 import bridge
 import store
@@ -69,7 +70,7 @@ def _facing_update(prev_deg, px, py, vx_m, vy_m, is_carrier, team_id):
             return prev_deg                   # hysteresis: ignore tiny swings
     return round(tgt, 1)
 
-APP_VERSION = "0.1.0-rc2"  # cal6 action-choice package
+APP_VERSION = "0.2.0-world"  # continuous physical ball transport (Hybrid-C lab live)
 APP_ENV = os.environ.get("APP_ENV", "development")
 DATA_DIR = Path(os.environ.get("TOUCHLINE_DATA_DIR", str(ROOT / "data_rc")))
 MAX_SESSIONS = int(os.environ.get("TOUCHLINE_MAX_SESSIONS", "25"))
@@ -236,6 +237,47 @@ _APPLIERS = {"tactics": _apply_tactics, "instructions": _apply_instructions,
              "formation": _apply_formation, "substitution": _apply_substitution}
 
 
+def _make_lab(engine: MatchEngine) -> HybridLab:
+    """CONTINUOUS PHYSICAL BALL TRANSPORT (accepted Hybrid-C brain x body).
+
+    The calibrated brain keeps resolving football intent; the 60 Hz body
+    integrates a real (x, y, z) ball with launch families, gravity, bounce
+    and radius possession — passes travel through space over as many
+    authoritative seconds as physics needs, receivers must meet the ball,
+    and every player keeps moving underneath a flight. Chunked advance is
+    digest-identical to one-shot (verified), so incremental serving changes
+    nothing. RNG: the lab's keyed draws only; ball integration consumes
+    zero randomness.
+    """
+    lab = HybridLab(engine, cad=dict(CAD_PROFILE))
+    lab.body.restart = {"kind": "KICKOFF", "team": 0, "spot": (52.5, 34.0), "t": 0.0}
+    lab.feed_cursor = 0            # server-side cursor into lab.match_events
+    return lab
+
+
+def _ball_state_code(body) -> int:
+    b = body.ball
+    if b["ctrl"] is not None or b["held"] is not None:
+        return 0                   # CONTROLLED
+    if b["state"] == "AIRBORNE":
+        return 1                   # IN_FLIGHT
+    if b["state"] == "DEAD":
+        return 3
+    return 2                       # LOOSE
+
+
+def _lab_feed(lab) -> list[dict[str, Any]]:
+    out = []
+    evs = getattr(lab, "match_events", [])
+    while lab.feed_cursor < len(evs):
+        e = evs[lab.feed_cursor]; lab.feed_cursor += 1
+        out.append({"event_type": str(e.get("kind", "")),
+                    "minute": int(float(e.get("t", 0)) // 60),
+                    "timestamp": int(float(e.get("t", 0))),
+                    "player_id": e.get("pid")})
+    return out
+
+
 def _build_engine(start_request: dict[str, Any]) -> MatchEngine:
     home = bridge.build_team(start_request["home_team"], "HOME")
     away = bridge.build_team(start_request["away_team"], "AWAY")
@@ -255,7 +297,9 @@ def _recover_match(match_id: str) -> dict[str, Any] | None:
         return None
     if (row["engine_version"] != VERSIONS["engine"]
             or row["calibration_version"] != VERSIONS["calibration"]
-            or row["player_data_version"] != VERSIONS["player_data"]):
+            or row["player_data_version"] != VERSIONS["player_data"]
+            or row["app_version"] != APP_VERSION):   # transport change: pre-world
+                                                     # matches replay differently
         log.warning("MATCH_RECOVERY_REFUSED match=%s stored=%s/%s/%s running=%s/%s/%s",
                     match_id, row["engine_version"], row["calibration_version"],
                     row["player_data_version"], VERSIONS["engine"],
@@ -263,14 +307,17 @@ def _recover_match(match_id: str) -> dict[str, Any] | None:
         return None
     start_request = json.loads(row["start_request_json"])
     engine = _build_engine(start_request)
-    for cmd in store.commands(match_id):
+    lab = _make_lab(engine)                     # replay through the SAME
+    for cmd in store.commands(match_id):        # continuous transport
         target = int(cmd["sim_clock"])
         if target > engine.clock:
-            engine.advance(target - engine.clock)
+            lab.run(float(target - engine.clock))
         _APPLIERS[cmd["kind"]](engine, json.loads(cmd["payload_json"]))
     if row["last_clock"] > engine.clock:
-        engine.advance(row["last_clock"] - engine.clock)
-    session = {"engine": engine, "lock": threading.Lock(),
+        lab.run(float(row["last_clock"] - engine.clock))
+    engine.score["HOME"] = lab.body.score[0]
+    engine.score["AWAY"] = lab.body.score[1]
+    session = {"engine": engine, "lock": threading.Lock(), "lab": lab,
                "meta": {"fixture_id": row["fixture_id"], "seed": row["seed"],
                         "save_id": row["save_id"]}}
     with _SESSIONS_LOCK:
@@ -375,9 +422,11 @@ def start_match(req: StartRequest) -> dict[str, Any]:
     start_json = json.dumps(req.model_dump(), separators=(",", ":"))
 
     if req.mode == "full":
+        # instant mode uses the SAME continuous transport as watched matches
+        from fc_simulator.continuous import run_continuous
         store.create_match(match_id, req.save_id, req.fixture_id, int(req.seed),
                            start_json, VERSIONS, status="live")
-        result = engine.run()
+        result, _lab_full = run_continuous(engine)
         s = {"engine": engine, "meta": {"fixture_id": req.fixture_id,
                                         "seed": int(req.seed), "save_id": req.save_id}}
         payload = bridge.full_time_payload(engine, result)
@@ -399,7 +448,7 @@ def start_match(req: StartRequest) -> dict[str, Any]:
         store.create_match(match_id, req.save_id, req.fixture_id, int(req.seed),
                            start_json, VERSIONS)
         ACTIVE_MATCHES[match_id] = {"engine": engine, "lock": threading.Lock(),
-                                    "flight": BallFlight(), "facing": {},
+                                    "lab": _make_lab(engine),
                                     "meta": {"fixture_id": req.fixture_id,
                                              "seed": int(req.seed), "save_id": req.save_id}}
     _mlog(match_id, "MATCH_STARTED")
@@ -454,60 +503,60 @@ def advance_match(match_id: str, req: AdvanceRequest) -> dict[str, Any]:
     frames = None
     with s["lock"]:
         secs = max(1, min(600, int(req.seconds)))
+        lab = s.setdefault("lab", _make_lab(engine))
+        body = lab.body
         if req.frames and secs <= 120:
-            # Renderer keyframes: identical simulation path (advance(N) is
-            # internally a per-second loop), with read-only sampling of
-            # authoritative positions between seconds. No engine state, RNG
-            # or outcome is touched - neutrality is digest-verified in the
-            # renderer test suite.
+            # Renderer keyframes from the CONTINUOUS world: one row per
+            # authoritative second; the ball additionally carries 6
+            # sub-second (x, y, z) samples so kicks, flights and bounces
+            # appear exactly where the physical ball was. Sampling is
+            # read-only; chunked advance is digest-identical to one-shot.
             frames = []
-            # Stable full-squad roster: states + current bench is the constant
-            # full squad, so index order never shifts across batches and a
-            # substitute entering mid-batch is already indexed.
             roster = sorted(
                 [st.player.player_id for tid in ("HOME", "AWAY")
                  for st in engine._team_states(tid, active_only=False)]
                 + [p.player_id for team in (engine.home, engine.away) for p in team.bench])
             ridx = {pid: k for k, pid in enumerate(roster)}
-            flight = s.setdefault("flight", BallFlight())
-            facing = s.setdefault("facing", {})
-            prev_pos = {}
-            for tid in ("HOME", "AWAY"):
-                for st in engine._team_states(tid, active_only=False):
-                    prev_pos[st.player.player_id] = (st.pos.x, st.pos.y)
             for _ in range(secs):
                 if engine.is_finished:
                     break
-                ev0 = len(engine.events)
-                engine.advance(1)
-                # authoritative z: deterministic 60 Hz flight from this
-                # second's events (read-only over the engine; zero RNG)
-                zsamp = flight.on_second(engine.events[ev0:])
-                row = [engine.clock, round(engine.ball.pos.x, 2), round(engine.ball.pos.y, 2),
+                xs, ys, zs = [], [], []
+                for _k in range(6):
+                    lab.run(1.0 / 6.0)
+                    xs.append(round(EX(body.ball["x"]), 2))
+                    ys.append(round(EY(body.ball["y"]), 2))
+                    zs.append(round(body.ball["z"], 3))
+                engine.score["HOME"] = body.score[0]
+                engine.score["AWAY"] = body.score[1]
+                row = [engine.clock, xs[-1], ys[-1],
                        1 if engine.possession_team == "HOME" else 0]
                 pl = [None] * len(roster)
-                carrier = engine.ball.controlling_player_id
+                import math as _m
                 for tid in ("HOME", "AWAY"):
                     for st in engine._team_states(tid, active_only=False):
                         pid = st.player.player_id
-                        px0, py0 = prev_pos.get(pid, (st.pos.x, st.pos.y))
-                        f = _facing_update(facing.get(pid),
-                                           st.pos.x, st.pos.y,
-                                           (st.pos.x - px0) * 1.05, (st.pos.y - py0) * 0.68,
-                                           carrier == pid, tid)
-                        facing[pid] = f
-                        prev_pos[pid] = (st.pos.x, st.pos.y)
-                        pl[ridx[pid]] = [round(st.pos.x, 2), round(st.pos.y, 2),
-                                         _ACT_CODE.get(st.current_activity, 0), 1 if st.active else 0,
-                                         f]
+                        bp = body.players.get(pid)
+                        if bp is not None:
+                            px, py = round(EX(bp["x"]), 2), round(EY(bp["y"]), 2)
+                            face = round(_m.degrees(bp["facing"]), 1)
+                        else:
+                            px, py = round(st.pos.x, 2), round(st.pos.y, 2)
+                            face = 0.0
+                        pl[ridx[pid]] = [px, py,
+                                         _ACT_CODE.get(st.current_activity, 0),
+                                         1 if st.active else 0, face]
                 row.append(pl)
-                row.append([round(flight.z, 3), round(flight.vz, 2),
-                            1 if flight.grounded else 0, zsamp])
+                row.append([round(body.ball["z"], 3), round(body.ball["vz"], 2),
+                            1 if body.ball["z"] <= 0.001 and body.ball["vz"] == 0.0 else 0,
+                            zs, xs, ys, _ball_state_code(body)])
                 frames.append(row)
         else:
-            engine.advance(secs)
+            lab.run(float(secs))
+            engine.score["HOME"] = body.score[0]
+            engine.score["AWAY"] = body.score[1]
         result = engine.result() if engine.is_finished else None
         snap = bridge.match_snapshot(engine, max(0, int(req.last_event_index)))
+        snap["new_events"] = (snap.get("new_events") or []) + _lab_feed(lab)
         store.update_clock(match_id, engine.clock)
     if frames is not None:
         snap["frames"] = frames
