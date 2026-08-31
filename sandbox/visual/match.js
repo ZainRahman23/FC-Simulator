@@ -315,7 +315,19 @@ function sampleAt(head) {
   const ball = { x: (A[1] + (B[1] - A[1]) * t) * SIM2W.x,
                  y: (A[2] + (B[2] - A[2]) * t) * SIM2W.y,
                  vx: (B[1] - A[1]) * SIM2W.x / dt,
-                 vy: (B[2] - A[2]) * SIM2W.y / dt };
+                 vy: (B[2] - A[2]) * SIM2W.y / dt,
+                 z: 0, vz: 0, grounded: 1 };
+  // authoritative flight: row[5] = [zEnd, vzEnd, grounded, 6 sub-second z
+  // samples]; z within the A->B second is read from B's profile (bounces
+  // are engine data — nothing is derived renderer-side)
+  const FB = B[5];
+  if (FB) {
+    const seq = [A[5] ? A[5][0] : 0].concat(FB[3]);
+    const u = Math.max(0, Math.min(5.999, t * 6));
+    const i0 = Math.floor(u);
+    ball.z = seq[i0] + (seq[i0 + 1] - seq[i0]) * (u - i0);
+    ball.vz = FB[1]; ball.grounded = FB[2];
+  }
   const players = [];
   for (let k = 0; k < pb.roster.length; k++) {
     const a = A[4][k], b = B[4][k];
@@ -328,7 +340,8 @@ function sampleAt(head) {
     if (sp > TELEPORT) { x = t < 0.5 ? ax : bx; y = t < 0.5 ? ay : by; vx = 0; vy = 0; }
     else { x = ax + (bx - ax) * t; y = ay + (by - ay) * t; }
     players.push({ idx: k, pid: pb.roster[k], x, y, vx, vy,
-                   speed: Math.hypot(vx, vy), act: b[2], active: b[3] });
+                   speed: Math.hypot(vx, vy), act: b[2], active: b[3],
+                   face: b.length > 4 ? b[4] : undefined });
   }
   return { clock: A[0] + t * dt, ball, players };
 }
@@ -1235,12 +1248,83 @@ function netTestStep() {                   // advances WITH the fixed physics st
   return (t.phase === "push" || t.phase === "fly") ? { p: t.p, v: t.v } :
          (t.phase === "drop" || t.phase === "rest") ? { p: t.p, v: t.v } : null;
 }
+// ── BALL PHYSICS TEST — SYNTHETIC (renderer-only harness; labeled on
+// screen; never touches the match engine). Full 3D integrator at the same
+// fixed 240 Hz step as the net physics: real gravity, restitution 0.55,
+// 0.8 horizontal keep on bounce, rolling friction 4.2 m/s^2, settle
+// thresholds — the same physical model the authoritative flight layer and
+// the accepted world.py body use. Keys: 6 drop, 7 roll, 8 lofted pass,
+// 9 elevated shot, C high chip.
+const BALLTESTS = {
+  6: { label: "drop", p: [86, 34, 4.0], v: [0, 0, 0] },
+  7: { label: "rolling", p: [78, 34, 0], v: [9, 0, 0] },
+  8: { label: "lofted pass", p: [76, 30, 0], v: [11, 2.5, 6] },
+  9: { label: "elevated shot", p: [86, 34, 0], v: [24, 0.5, 2] },
+  c: { label: "high chip", p: [82, 34, 0], v: [7, 0, 8] },
+};
+function startBallTest(id) {
+  const T = BALLTESTS[id];
+  S.ballTest = { id, label: T.label, p: T.p.slice(), v: T.v.slice(),
+                 grounded: T.p[2] <= 0 && T.v[2] <= 0, age: 0, trail: [] };
+}
+function ballTestStep() {
+  const t = S.ballTest, dt = NETPHYS.dt;
+  if (!t) return;
+  t.age += dt;
+  const G = 9.81, REST = 0.55, KEEP = 0.8, MU = 4.2, SETTLE = 0.9;
+  if (!t.grounded) {
+    t.p[0] += t.v[0] * dt; t.p[1] += t.v[1] * dt; t.p[2] += t.v[2] * dt;
+    t.v[2] -= G * dt;
+    if (t.p[2] <= 0 && t.v[2] < 0) {
+      t.p[2] = 0;
+      const r = -t.v[2] * REST;
+      t.v[0] *= KEEP; t.v[1] *= KEEP;
+      if (r < SETTLE) { t.v[2] = 0; t.grounded = true; }
+      else t.v[2] = r;
+    }
+  } else {
+    const sp = Math.hypot(t.v[0], t.v[1]);
+    if (sp > 0.02) {
+      const ns = Math.max(0, sp - MU * dt);
+      t.v[0] *= ns / sp; t.v[1] *= ns / sp;
+      t.p[0] += t.v[0] * dt; t.p[1] += t.v[1] * dt;
+    } else { t.v[0] = t.v[1] = 0; }
+  }
+  if ((t.trail.length === 0 ||
+       Math.hypot(t.p[0] - t.trail[t.trail.length - 1][0],
+                  t.p[2] - t.trail[t.trail.length - 1][2]) > 0.12) && t.trail.length < 600)
+    t.trail.push(t.p.slice());
+  if (t.age > 9) S.ballTest = null;
+}
+function drawBallTest(dt) {
+  const t = S.ballTest;
+  if (!t) return;
+  if (S.dbg.ball && t.trail.length > 1) {
+    ctx.strokeStyle = "rgba(255,210,60,0.55)"; ctx.lineWidth = 1;
+    ctx.beginPath();
+    for (let i = 0; i < t.trail.length; i++) {
+      const q = sproj3(t.trail[i][0], t.trail[i][2], t.trail[i][1]);
+      if (i === 0) ctx.moveTo(q.x, q.y); else ctx.lineTo(q.x, q.y);
+    }
+    ctx.stroke();
+  }
+  drawBallAt(t.p[0], t.p[1], t.p[2], Math.hypot(t.v[0], t.v[1]), dt);
+  ctx.fillStyle = "#ffd34d"; ctx.font = "bold 13px ui-monospace, monospace";
+  ctx.fillText((S.netSlow ? "[SLOW-MO 0.15x]  " : "") +
+    "BALL PHYSICS TEST \u2014 SYNTHETIC (" + t.label + ")", 14, cv.height - 52);
+  ctx.fillStyle = "#9fe8ff"; ctx.font = "12px ui-monospace, monospace";
+  ctx.fillText("pos " + t.p.map(v => v.toFixed(2)).join(" / ") +
+    "   vel " + t.v.map(v => v.toFixed(2)).join(" / ") +
+    "   speed " + Math.hypot(t.v[0], t.v[1], t.v[2]).toFixed(2) +
+    " m/s   grounded " + (t.grounded ? "yes" : "no"), 14, cv.height - 68);
+}
 let netAcc = 0;
 function netPhysUpdate(dtReal) {
   netAcc = Math.min(netAcc + dtReal, NETPHYS.maxAcc);
   while (netAcc >= NETPHYS.dt) {
     netAcc -= NETPHYS.dt;
     const ball = netTestStep();
+    ballTestStep();
     for (const g of S.goalPanels || []) {
       if (!g.net) continue;
       const useBall = ball && g.side === 1 &&
@@ -1383,20 +1467,80 @@ function drawPlayer(p, dt) {
       ctx.fillText(`${vs.state}/${dir} ${p.speed.toFixed(1)}m/s [${S.pb.acts[p.act] || p.act}]`, ax, ty);
   }
 }
-function drawBall(ball) {
-  const sp = sproj(ball.x, ball.y);
-  if (sp.d < 0.5) return;
-  const x = Math.round(sp.x), y = Math.round(sp.y);
-  const r = Math.max(2, 0.16 * S.pxPerM * RIG.zoom);
-  const flat = flattenAt(ball.x, ball.y);
-  ctx.beginPath(); ctx.ellipse(x, y + r * 0.9, r * 1.1, Math.max(1, r * 1.1 * flat), 0, 0, Math.PI * 2);
-  ctx.fillStyle = "rgba(0,0,0,0.3)"; ctx.fill();
-  ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2);
-  ctx.fillStyle = "#f2f2f2"; ctx.fill();
-  ctx.lineWidth = 1; ctx.strokeStyle = "#333"; ctx.stroke();
+// ═══ BALL: procedural crisp pixel-art football + true height rendering ═════
+// Physical radius stays authoritative (0.11 m); the sprite uses its own
+// readability calibration. Sprites are built per-pixel on tiny grids and
+// nearest-upscaled — no antialiasing, no raster asset. 4 spin phases give
+// perceivable rotation from travel distance (cosmetic, renderer-owned).
+const BALL_VIS_R = 0.13;
+const _ballSprites = new Map();
+function ballSprite(rpx, phase) {
+  const key = rpx + "|" + phase;
+  let c = _ballSprites.get(key);
+  if (c) return c;
+  const base = rpx >= 5 ? 15 : 9;             // design grid (odd, centered)
+  const cvs = document.createElement("canvas");
+  cvs.width = cvs.height = base;
+  const g = cvs.getContext("2d");
+  const img = g.createImageData(base, base);
+  const cx = (base - 1) / 2, R = (base - 1) / 2;
+  const blobs = [[0, 0]];                     // centre pentagon
+  for (let k = 0; k < 5; k++) {
+    const a = (phase * 22.5 + k * 72) * Math.PI / 180;
+    blobs.push([Math.cos(a) * R * 0.78, Math.sin(a) * R * 0.78]);
+  }
+  const br = base >= 15 ? 2.1 : 1.2;
+  for (let y = 0; y < base; y++)
+    for (let x = 0; x < base; x++) {
+      const dx = x - cx, dy = y - cx, d = Math.hypot(dx, dy);
+      const i = (y * base + x) * 4;
+      if (d > R + 0.35) continue;             // transparent outside
+      let col = [242, 242, 240, 255];         // white base
+      if (d > R - 0.75) col = [46, 49, 54, 255];          // dark rim
+      else {
+        for (const [bx, by] of blobs)
+          if (Math.hypot(dx - bx, dy - by) < br) { col = [52, 56, 62, 255]; break; }
+        if (col[0] > 200 && dx < -R * 0.25 && dy < -R * 0.25 && d < R * 0.8)
+          col = [255, 255, 255, 255];          // top-left highlight
+      }
+      img.data[i] = col[0]; img.data[i + 1] = col[1];
+      img.data[i + 2] = col[2]; img.data[i + 3] = col[3];
+    }
+  g.putImageData(img, 0, 0);
+  const out = document.createElement("canvas");
+  out.width = out.height = rpx * 2 + 2;
+  const og = out.getContext("2d");
+  og.imageSmoothingEnabled = false;
+  og.drawImage(cvs, 0, 0, out.width, out.height);
+  _ballSprites.set(key, out);
+  return out;
+}
+let _ballSpin = 0;
+function drawBallAt(xw, yw, z, speed, dt) {
+  _ballSpin += (speed || 0) * (dt || 0);
+  const phase = Math.floor(_ballSpin * 2.2) % 4;
+  const gpos = sproj3(xw, 0, yw);             // shadow stays on the pitch
+  const bpos = sproj3(xw, z, yw);             // true projected height
+  if (bpos.d < 0.5) return;
+  const r = Math.max(2, Math.round(BALL_VIS_R * S.pxPerM * RIG.zoom));
+  const flat = flattenAt(xw, yw);
+  const sh = 1 / (1 + z * 0.55);              // higher ball: smaller, fainter
+  ctx.beginPath();
+  ctx.ellipse(Math.round(gpos.x), Math.round(gpos.y) + r * 0.7,
+              r * 1.15 * sh, Math.max(1, r * 1.15 * flat * sh), 0, 0, Math.PI * 2);
+  ctx.fillStyle = "rgba(0,0,0," + (0.32 * sh).toFixed(3) + ")";
+  ctx.fill();
+  const spr = ballSprite(r, phase);
+  ctx.drawImage(spr, Math.round(bpos.x - spr.width / 2), Math.round(bpos.y - spr.height / 2));
+}
+function drawBall(ball, dt) {
+  drawBallAt(ball.x, ball.y, ball.z || 0, Math.hypot(ball.vx, ball.vy), dt);
   if (S.dbg.ball) {
+    const sp = sproj3(ball.x, ball.z || 0, ball.y);
     ctx.fillStyle = "#ffd23c"; ctx.font = "10px monospace"; ctx.textAlign = "center";
-    ctx.fillText(`ball (${ball.x.toFixed(1)}, ${ball.y.toFixed(1)}) m`, x, y - r - 5);
+    ctx.fillText(`ball (${ball.x.toFixed(1)}, ${ball.y.toFixed(1)}, z ${(ball.z || 0).toFixed(2)}) m`,
+                 sp.x, sp.y - 14);
+    ctx.textAlign = "left";
   }
 }
 
@@ -1475,10 +1619,11 @@ function draw(sample, dt) {
   ents.sort((a, b) => a.y - b.y);
   for (const e of ents) {
     if (e.p) drawPlayer(e.p, dt);
-    else if (e.ball) drawBall(e.ball);
+    else if (e.ball) drawBall(e.ball, dt);
     else drawGoal(e.goal);
   }
   drawNetTestBall();
+  drawBallTest(dt);
   if (S.dbg.netphys) drawNetPhysDebug();
   if (S.dbg.goalgeo) { drawGoalGeoDebug(0); drawGoalGeoDebug(1); }
   if (S.dbg.cam) drawRailSquare();       // rail diagnostic overlay (toggleable)
@@ -1547,6 +1692,8 @@ function bindUI() {
   document.addEventListener("keydown", (e) => {
     if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "SELECT")) return;
     if (e.key === "0") S.netSlow = !S.netSlow;
+    if (e.key >= "6" && e.key <= "9") startBallTest(+e.key);
+    else if (e.key === "c") startBallTest("c");
     if (e.key >= "1" && e.key <= "4") startNetTest(+e.key);
     else if (e.key === "5") {
       startNetTest(1, NETTEST_POWERS[netTestPowerIdx]);
