@@ -1421,7 +1421,18 @@ function flattenAt(wx, wz) {
 function drawPlayer(p, dt) {
   const vs = viewState(p.idx);
   const st = p.speed < IDLE_MAX ? "idle" : p.speed < JOG_MAX ? "jog" : "sprint";
-  if (p.speed > 0.3) vs.heading = Math.atan2(p.vy, p.vx) * 180 / Math.PI;
+  // facing: moving players face actual movement (15-degree hysteresis kills
+  // frame-to-frame flicker near thresholds); idle players use the engine's
+  // authoritative facing (attacking-direction default, carrier/dead-zone
+  // rules applied server-side). No renderer-invented orientation.
+  if (st !== "idle" && p.speed > 0.5) {
+    const h = Math.atan2(p.vy, p.vx) * 180 / Math.PI;
+    const d = vs.heading === undefined ? 999 :
+      Math.abs(((h - vs.heading + 540) % 360) - 180);
+    if (d > 15) vs.heading = h;
+  } else if (p.face !== undefined) {
+    vs.heading = p.face;
+  }
   vs.state = st;
   if (st === "idle") vs.frame = 0;
   else { vs.ft += dt * (st === "jog" ? JOG_FPS : SPRINT_FPS); vs.frame = Math.floor(vs.ft) % 8; }
