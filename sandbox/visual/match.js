@@ -317,16 +317,33 @@ function sampleAt(head) {
                  vx: (B[1] - A[1]) * SIM2W.x / dt,
                  vy: (B[2] - A[2]) * SIM2W.y / dt,
                  z: 0, vz: 0, grounded: 1 };
-  // authoritative flight: row[5] = [zEnd, vzEnd, grounded, 6 sub-second z
-  // samples]; z within the A->B second is read from B's profile (bounces
-  // are engine data — nothing is derived renderer-side)
+  // authoritative continuous ball: row[5] = [z, vz, grounded, z6, x6, y6,
+  // state]. Position AND height within the A->B second come from the
+  // engine's sub-second track — kicks, flights and bounces appear exactly
+  // where the physical ball was. Nothing is derived renderer-side; a jump
+  // larger than physics allows is a dead-ball placement and is snapped,
+  // never interpolated.
   const FB = B[5];
   if (FB) {
-    const seq = [A[5] ? A[5][0] : 0].concat(FB[3]);
+    const zseq = [A[5] ? A[5][0] : 0].concat(FB[3]);
     const u = Math.max(0, Math.min(5.999, t * 6));
-    const i0 = Math.floor(u);
-    ball.z = seq[i0] + (seq[i0 + 1] - seq[i0]) * (u - i0);
-    ball.vz = FB[1]; ball.grounded = FB[2];
+    const i0 = Math.floor(u), f = u - i0;
+    ball.z = zseq[i0] + (zseq[i0 + 1] - zseq[i0]) * f;
+    ball.vz = FB[1]; ball.grounded = FB[2]; ball.state = FB[6];
+    if (FB[4]) {
+      const xseq = [A[1]].concat(FB[4]), yseq = [A[2]].concat(FB[5]);
+      const dxm = (xseq[i0 + 1] - xseq[i0]) * SIM2W.x;
+      const dym = (yseq[i0 + 1] - yseq[i0]) * SIM2W.y;
+      if (Math.hypot(dxm, dym) > 8) {          // placement: snap, don't glide
+        ball.x = (f < 0.5 ? xseq[i0] : xseq[i0 + 1]) * SIM2W.x;
+        ball.y = (f < 0.5 ? yseq[i0] : yseq[i0 + 1]) * SIM2W.y;
+        ball.vx = 0; ball.vy = 0;
+      } else {
+        ball.x = (xseq[i0] + (xseq[i0 + 1] - xseq[i0]) * f) * SIM2W.x;
+        ball.y = (yseq[i0] + (yseq[i0 + 1] - yseq[i0]) * f) * SIM2W.y;
+        ball.vx = dxm * 6; ball.vy = dym * 6;
+      }
+    }
   }
   const players = [];
   for (let k = 0; k < pb.roster.length; k++) {
