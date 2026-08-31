@@ -128,6 +128,7 @@ async function boot() {
   jobs.push({ key: ["standart", "-", 0], path: ASSET_ROOT + S.manifest.stadium_art.local_path });
   jobs.push({ key: ["goal22", "-", 0], path: ASSET_ROOT + S.manifest.goal_art_v2_2_surgical.local_paths.asset });
   jobs.push({ key: ["goalbake", "-", 0], path: ASSET_ROOT + "originals/goal_v2_oblique/goal_v2_3_frozen_bake.png" });
+  jobs.push({ key: ["ballsheet", "-", 0], path: ASSET_ROOT + "originals/ball_pixellab/ball_sheet_24x8.png" });
   let done = 0;
   const anims = { idle: {}, jog: {}, sprint: {} };
   await Promise.all(jobs.map(async (j) => {
@@ -138,6 +139,7 @@ async function boot() {
     if (kind === "standart") { S.images.stand = im; return; }
     if (kind === "goal22") { S.images.goal22 = im; return; }
     if (kind === "goalbake") { S.images.goalBake = im; return; }
+    if (kind === "ballsheet") { S.images.ballSheet = im; return; }
     (anims[kind][dir] ||= [])[idx] = im;
   }));
   S.goalBakeMeta = await loadJSON(ASSET_ROOT + "originals/goal_v2_oblique/goal_v2_3_frozen_bake.json");
@@ -1278,16 +1280,26 @@ const BALLTESTS = {
   8: { label: "lofted pass", p: [76, 30, 0], v: [11, 2.5, 6] },
   9: { label: "elevated shot", p: [86, 34, 0], v: [24, 0.5, 2] },
   c: { label: "high chip", p: [82, 34, 0], v: [7, 0, 8] },
+  v: { label: "SPIN SHOWCASE: rest, slow, normal, driven, loft, bounce, settle",
+       p: [30, 44, 0], v: [0, 0, 0],
+       script: [[1.0, [2.2, 0, 0]], [3.2, [8, 0, 0]], [5.4, [16, 0, 0]],
+                [7.6, [11, 0.5, 6.5]]] },
 };
 function startBallTest(id) {
   const T = BALLTESTS[id];
   S.ballTest = { id, label: T.label, p: T.p.slice(), v: T.v.slice(),
-                 grounded: T.p[2] <= 0 && T.v[2] <= 0, age: 0, trail: [] };
+                 grounded: T.p[2] <= 0 && T.v[2] <= 0, age: 0, trail: [],
+                 script: T.script ? T.script.map(e => [e[0], e[1].slice()]) : undefined };
 }
 function ballTestStep() {
   const t = S.ballTest, dt = NETPHYS.dt;
   if (!t) return;
   t.age += dt;
+  if (t.script)                       // showcase: scripted impulses on a timeline
+    while (t.script.length && t.age >= t.script[0][0]) {
+      const [, v] = t.script.shift();
+      t.v = v.slice(); t.grounded = t.v[2] <= 0;
+    }
   const G = 9.81, REST = 0.55, KEEP = 0.8, MU = 4.2, SETTLE = 0.9;
   if (!t.grounded) {
     t.p[0] += t.v[0] * dt; t.p[1] += t.v[1] * dt; t.p[2] += t.v[2] * dt;
@@ -1311,7 +1323,7 @@ function ballTestStep() {
        Math.hypot(t.p[0] - t.trail[t.trail.length - 1][0],
                   t.p[2] - t.trail[t.trail.length - 1][2]) > 0.12) && t.trail.length < 600)
     t.trail.push(t.p.slice());
-  if (t.age > 9) S.ballTest = null;
+  if (t.age > (t.script || t.id === "v" ? 16 : 9)) S.ballTest = null;
 }
 function drawBallTest(dt) {
   const t = S.ballTest;
@@ -1545,156 +1557,39 @@ function drawPlayer(p, dt) {
 // nearest-upscaled — no antialiasing, no raster asset. 4 spin phases give
 // perceivable rotation from travel distance (cosmetic, renderer-owned).
 const BALL_VIS_R = 0.13;
-// Hand-authored native pixel football (BALL SPRITE POLISH). Two designs —
-// 15x15 and an independently authored 9x9 for small on-screen sizes — each
-// with four rotation phases of the SAME ball (pentagon + five seams + rim
-// nicks turning in 18-degree steps). Palette (5 entries):
-//   W #FFFFFF highlight   L #F3F4F1 leather   S #C9CDCA shade
-//   D #252A2A panel/seam  K #111414 deepest accent
-// Rendered 1:1 or at exact integer scales only — the projected size is
-// quantized to the nearest authored representation, so no resampling can
-// ever blur or drop pixels. Physical radius (0.11 m) is untouched.
-const BALL_PAL = { W: "#FFFFFF", L: "#F3F4F1", S: "#C9CDCA",
-                   D: "#252A2A", K: "#111414" };
-  const BALL_PX15 = [[
-      ".....LLLLL.....",
-      "...LLLLDLLLL...",
-      "..LLLLLLLLLLL..",
-      ".LLLLLLDLLLLLL.",
-      ".LLLWLLDLLLLLL.",
-      "LDLLLLLLLLLLLDS",
-      "LLLLDDLDLDDLSSS",
-      "LLLLLLDKDLLLSSS",
-      "LLLLLLLDLLLLSSS",
-      "LLLLLDLLLDLSSSS",
-      ".LLLLDLLLDLSSS.",
-      ".LLLLLLLLSSSSS.",
-      "..LLDLSSSSDSS..",
-      "...LLSSSSSSS...",
-      ".....SSSSS....."],[
-      ".....LLLLL.....",
-      "...LLLLLLDLL...",
-      "..LLLLLLLLLLL..",
-      ".LLLLLLLLLLLLL.",
-      ".LDLWLLLDLLLLL.",
-      "LLLLDDLLDLLLLSS",
-      "LLLLLLLDLLLLSSS",
-      "LLLLLLDKDLDDSDS",
-      "LLLLLLLDLLLLSSS",
-      "LLLLDDLLDLLSSSS",
-      ".LDLLLLLDLLSSS.",
-      ".LLLLLLLLSSSSS.",
-      "..LLLLSSSSSSS..",
-      "...LLSSSSDSS...",
-      ".....SSSSS....."],[
-      ".....LLLLL.....",
-      "...LLLLLLLLL...",
-      "..LLDLLLLLDLL..",
-      ".LLLLLLLLLLLLL.",
-      ".LLLWDLLLDLLLL.",
-      "LLLLLDLLLDLLLSS",
-      "LLLLLLLDLLLLSSS",
-      "LLLLLLDKDLLLSSS",
-      "LLLLDDLDLDDLSSS",
-      "LDLLLLLLLLLSSDS",
-      ".LLLLLLDLLLSSS.",
-      ".LLLLLLDLSSSSS.",
-      "..LLLLSSSSSSS..",
-      "...LLSSDSSSS...",
-      ".....SSSSS....."],[
-      ".....LLLLL.....",
-      "...LLDLLLLLL...",
-      "..LLLLLLLLLLL..",
-      ".LLLLLLLLLLLLL.",
-      ".LLLWLDLLLLLDL.",
-      "LLLLLLDLLDDLLSS",
-      "LLLLLLLDLLLLSSS",
-      "LDLDDLDKDLLLSSS",
-      "LLLLLLLDLLLLSSS",
-      "LLLLLLDLLDDSSSS",
-      ".LLLLLDLLLLSDS.",
-      ".LLLLLLLLSSSSS.",
-      "..LLLLSSSSSSS..",
-      "...LLDSSSSSS...",
-      ".....SSSSS....."]];
-  const BALL_PX9 = [[
-      "...LLL...",
-      "..LLLLL..",
-      ".LLWLLLL.",
-      "LLWLLLLLS",
-      "LLLLKDLSS",
-      "LDLLDLLDS",
-      ".LLLLLSS.",
-      "..LLSSS..",
-      "...SSS..."],[
-      "...LLL...",
-      "..LLLLL..",
-      ".LLWLLLL.",
-      "LLWLLLLLS",
-      "LDLLKDLSS",
-      "LLLLDLLSS",
-      ".LLLLLSD.",
-      "..LLSSS..",
-      "...SSS..."],[
-      "...LLL...",
-      "..LLLLL..",
-      ".DLWLLLL.",
-      "LLWLLLLLS",
-      "LLLLKDLSS",
-      "LLLLDLLSS",
-      ".LLLLLSS.",
-      "..LLSDS..",
-      "...SSS..."],[
-      "...LLL...",
-      "..DLLLL..",
-      ".LLWLLLL.",
-      "LLWLLLLLS",
-      "LLLLKDLSS",
-      "LLLLDLLSS",
-      ".LLLLLSS.",
-      "..LLDSS..",
-      "...SSS..."]];
-  const _ballSprites = new Map();
-function ballSprite(outPx, phase) {
-  let rows, scale;
-  if (outPx < 13) { rows = BALL_PX9[phase]; scale = 1; }
-  else if (outPx < 23) { rows = BALL_PX15[phase]; scale = 1; }
-  else if (outPx < 38) { rows = BALL_PX15[phase]; scale = 2; }
-  else { rows = BALL_PX15[phase]; scale = 3; }
-  const key = rows.length + "|" + phase + "|" + scale;
-  let c = _ballSprites.get(key);
-  if (c) return c;
-  const n = rows.length;
-  c = document.createElement("canvas");
-  c.width = c.height = n * scale;
-  const g = c.getContext("2d");
-  for (let y = 0; y < n; y++)
-    for (let x = 0; x < n; x++) {
-      const ch = rows[y][x];
-      if (ch === ".") continue;
-      g.fillStyle = BALL_PAL[ch];
-      g.fillRect(x * scale, y * scale, scale, scale);
-    }
-  _ballSprites.set(key, c);
-  return c;
-}
-let _ballSpin = 0;
+// PIXELLAB ANIMATED BALL SPRITE: 8 authored rotational phases of one
+// football (assets/visual_v1/originals/ball_pixellab, 24x24 each, sheet
+// 192x24; see RECORD.json for full generation provenance). Runtime only
+// SELECTS among the discrete authored frames — never rotates the bitmap.
+// Visual rotation derives from authoritative physical motion:
+//   rolling:  omega = horizontal speed / physical radius (0.11 m),
+//             display-capped so phase stepping stays readable;
+//   airborne: the launch omega is retained through flight and bounce;
+//   at rest:  rotation stops and the last orientation is preserved.
+const BALL_FRAMES = 8, BALL_SRC = 24;
+const BALL_PHYS_R = 0.11;             // authoritative; never used for visuals sizing
+const BALL_OMEGA_MAX = 16;            // rad/s display cap (~2.5 rev/s legible)
+const _ballRot = { th: 0, om: 0 };
 function drawBallAt(xw, yw, z, speed, dt) {
-  _ballSpin += (speed || 0) * (dt || 0);
-  const phase = Math.floor(_ballSpin * 2.2) % 4;
-  const gpos = sproj3(xw, 0, yw);             // shadow stays on the pitch
-  const bpos = sproj3(xw, z, yw);             // true projected height
+  const grounded = z <= 0.02;
+  if (grounded) _ballRot.om = speed > 0.05 ? Math.min(speed / BALL_PHYS_R, BALL_OMEGA_MAX) : 0;
+  _ballRot.th += _ballRot.om * (dt || 0);   // airborne keeps its spin; bounce never resets
+  const phase = ((Math.floor(_ballRot.th / (2 * Math.PI) * BALL_FRAMES) % BALL_FRAMES) + BALL_FRAMES) % BALL_FRAMES;
+  const gpos = sproj3(xw, 0, yw);           // shadow stays on the pitch
+  const bpos = sproj3(xw, z, yw);           // true projected height
   if (bpos.d < 0.5) return;
   const r = Math.max(2, Math.round(BALL_VIS_R * S.pxPerM * RIG.zoom));
   const flat = flattenAt(xw, yw);
-  const sh = 1 / (1 + z * 0.55);              // higher ball: smaller, fainter
+  const sh = 1 / (1 + z * 0.55);            // higher ball: smaller, fainter
   ctx.beginPath();
   ctx.ellipse(Math.round(gpos.x), Math.round(gpos.y) + r * 0.7,
               r * 1.15 * sh, Math.max(1, r * 1.15 * flat * sh), 0, 0, Math.PI * 2);
   ctx.fillStyle = "rgba(0,0,0," + (0.32 * sh).toFixed(3) + ")";
   ctx.fill();
-  const spr = ballSprite(r * 2 + 2, phase);
-  ctx.drawImage(spr, Math.round(bpos.x - spr.width / 2), Math.round(bpos.y - spr.height / 2));
+  const out = r * 2 + 2;
+  if (S.images.ballSheet)
+    ctx.drawImage(S.images.ballSheet, phase * BALL_SRC, 0, BALL_SRC, BALL_SRC,
+                  Math.round(bpos.x - out / 2), Math.round(bpos.y - out / 2), out, out);
 }
 function drawBall(ball, dt) {
   drawBallAt(ball.x, ball.y, ball.z || 0, Math.hypot(ball.vx, ball.vy), dt);
@@ -1859,6 +1754,7 @@ function bindUI() {
     if (e.key === "t") startBallSeq();
     if (e.key >= "6" && e.key <= "9") startBallTest(+e.key);
     else if (e.key === "c") startBallTest("c");
+    else if (e.key === "v") startBallTest("v");
     if (e.key >= "1" && e.key <= "4") startNetTest(+e.key);
     else if (e.key === "5") {
       startNetTest(1, NETTEST_POWERS[netTestPowerIdx]);

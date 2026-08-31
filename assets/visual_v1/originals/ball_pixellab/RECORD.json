@@ -1,0 +1,75 @@
+{
+ "purpose": "PIXELLAB ANIMATED BALL SPRITE \u2014 original classic football, 8 rotational phases",
+ "reference_policy": "user reference used as visual inspiration only; original design generated",
+ "generations": [
+  {
+   "role": "candidate A (SELECTED master)",
+   "tool": "create_image_pixen",
+   "job": "62bcdfa3-d45c-4b1b-a910-8b56bb57fb43",
+   "size": "24x24",
+   "seed": 11,
+   "prompt": "classic black and white soccer ball, white leather with black pentagon panels and thin dark seams, spherical ball with soft gray shading on lower right, small bright highlight upper left, crisp clean pixel art sprite, transparent background"
+  },
+  {
+   "role": "candidate B (rejected: muddy grays, weaker panel language at distance)",
+   "tool": "create_image_pixen",
+   "job": "a7e178bd-ffe5-4b19-935d-e2bf856abebc",
+   "size": "24x24",
+   "seed": 77,
+   "prompt": "traditional football soccer ball sprite, mostly white with bold black pentagonal panels, strong spherical depth shading, selective outline, retro 16-bit sports game item, transparent background"
+  },
+  {
+   "role": "candidate C (runner-up: bolder cartoon panels, darker overall)",
+   "tool": "create_image_pixen",
+   "job": "e55a2318-1c96-4964-a1c6-7d0a8e8da704",
+   "size": "28x28",
+   "seed": 5,
+   "prompt": "classic white soccer football with black pentagon panels, subtle gray sphere shading, small highlight, crisp pixel art game sprite, transparent background"
+  },
+  {
+   "role": "candidate D (rejected: too dark/noisy at gameplay scale)",
+   "tool": "create_image_pixen",
+   "job": "00f285d2-3409-42fc-be02-d9d5d9da5f5d",
+   "size": "20x20",
+   "seed": 3,
+   "prompt": "tiny classic soccer ball icon, white with black pentagon panels, clean sphere shading, crisp pixel art, transparent background"
+  },
+  {
+   "role": "candidate E (rejected: oversized angular panels, beach-ball read)",
+   "tool": "create_image_pixflux",
+   "job": "51758ef3-e067-416e-8bae-8f2434b2d679",
+   "size": "32x32",
+   "seed": 42,
+   "forced_palette": [
+    "#FFFFFF",
+    "#F1F2EF",
+    "#D1D4D1",
+    "#A7ACA9",
+    "#252929",
+    "#101313"
+   ],
+   "prompt": "classic black and white soccer football, white leather panels with black pentagons connected by dark seams, spherical shading, small top-left highlight, crisp pixel art sprite"
+  },
+  {
+   "role": "rotation set (frames 0-7 of one revolution; PixelLab consistency via animate_image seeded from the selected master frame)",
+   "tool": "animate_image",
+   "job": "edb3062d-88a9-4d10-9fd3-536950ee3092",
+   "frame_count": 8,
+   "seed": 11,
+   "first_frame": "job 62bcdfa3 download URL",
+   "action": "soccer ball spinning in place around its vertical axis, black pentagon panels travelling smoothly around the sphere, one full revolution over the animation, ball stays perfectly centered with identical size every frame, no bouncing, no squashing, camera fixed"
+  }
+ ],
+ "manual_cleanup": [
+  "integer recentring of each frame to the master centroid (raw frames wandered +-1 px)",
+  "master silhouette alpha mask enforced on every frame (silhouette bit-identical across phases; killed two edge artifacts on frames 7-8)",
+  "interior holes filled from nearest opaque neighbour",
+  "palette quantized to the target set; final frames use 5 colours: #FFFFFF #F1F2EF #D1D4D1 #A7ACA9 #252929 (deepest #101313 unused after quantization)"
+ ],
+ "deliverables": {
+  "frames": "ball_rot_0..7.png (24x24)",
+  "sheet": "ball_sheet_24x8.png (192x24, phases left to right 0..7)",
+  "master_raw": "ball_master_raw_24.png (pre-cleanup PixelLab master)"
+ },
+ "total_generations": 6
+}
