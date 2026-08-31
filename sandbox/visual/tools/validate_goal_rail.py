@@ -22,24 +22,36 @@ AUTHOR = dict(height=30, dist=43, fov=28, depthoff=3, pitch=22, yaw=0)
 GOAL_SPRITE_W = 312
 GOAL_GRID = 3
 GOAL_ART_PANELS = [
-    dict(name="farside",   # derived 121x97 net texture (goalNetTex), never mirrored
+    dict(name="farside",   # samples wrap-band net canvas S 0..2 m, never mirrored
          netTex=True, sag="farside", gridU=6, gridV=8,
-         art=[(0, 0), (143, 0), (143, 163), (0, 163)],
+         art=[(0, 0), (150, 0), (150, 183), (0, 183)],
          world=lambda gx, out: [(gx, 2.44, 30.34), (gx + out * 2, 2.44, 30.34),
                                 (gx + out * 2, 0, 30.34), (gx, 0, 30.34)],
          u0=0, u1=1, v0=0, v1=1),
-    dict(name="rear",     # derived 433x97 net texture (goalNetTexRear), never mirrored
+    dict(name="rear",     # samples wrap-band net canvas S 2..9.32 m, never mirrored
          netTex=True, sag="rear", gridU=12, gridV=8,
-         art=[(0, 0), (483, 0), (483, 163), (0, 163)],
+         art=[(150, 0), (699, 0), (699, 183), (150, 183)],
          world=lambda gx, out: [(gx + out * 2, 2.44, 30.34), (gx + out * 2, 2.44, 37.66),
                                 (gx + out * 2, 0, 37.66), (gx + out * 2, 0, 30.34)],
          u0=0, u1=1, v0=0, v1=1),
-    dict(name="roof",
+    dict(name="roofNet",  # samples roof net canvas, never mirrored
+         netTex=True, gridU=3, gridV=6,
+         art=[(0, 0), (150, 0), (150, 549), (0, 549)],
+         world=lambda gx, out: [(gx, 2.44, 30.34), (gx + out * 2, 2.44, 30.34),
+                                (gx + out * 2, 2.44, 37.66), (gx, 2.44, 37.66)],
+         u0=0, u1=1, v0=0, v1=1),
+    dict(name="roof",     # frame-only art
          art=[(42, 40), (168, 40), (232, 186), (105, 183)],
          world=lambda gx, out: [(gx, 2.44, 30.34), (gx + out * 2, 2.44, 30.34),
                                 (gx + out * 2, 2.44, 37.66), (gx, 2.44, 37.66)],
          u0=-0.02, u1=1.15, v0=-0.02, v1=1.02),
-    dict(name="side",
+    dict(name="sideNet",  # samples wrap-band net canvas S 11.32..9.32 m, never mirrored
+         netTex=True, sag="side", gridU=6, gridV=8,
+         art=[(849, 0), (699, 0), (699, 183), (849, 183)],
+         world=lambda gx, out: [(gx, 2.44, 37.66), (gx + out * 2, 2.44, 37.66),
+                                (gx + out * 2, 0, 37.66), (gx, 0, 37.66)],
+         u0=0, u1=1, v0=0, v1=1),
+    dict(name="side",     # frame-only art
          art=[(105, 183), (232, 186), (222, 320), (94, 327)],
          world=lambda gx, out: [(gx, 2.44, 37.66), (gx + out * 2, 2.44, 37.66),
                                 (gx + out * 2, 0, 37.66), (gx, 0, 37.66)],

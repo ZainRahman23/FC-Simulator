@@ -185,31 +185,50 @@ async function boot() {
   // perspective (none is baked in, unlike the composite art regions, whose
   // baked drape/occlusion made them unusable for this panel). Uniform weave,
   // so one unmirrored texture serves both goals. V2.2 file stays untouched.
-  // Net textures: clean deterministic pixel-art weave (visual-fidelity pass).
-  // The V2.2 tile was noisy AI art whose gray antialiased cords plus 0.2 m
-  // cell pitch aliased into speckle at gameplay zoom. Replaced by a regular
-  // square-cord grid in V2.2's off-white palette: crisp 3 px cords, fully
-  // transparent openings, ~0.28-0.30 m world cells (readable at zoom 1,
-  // chunky-pixel-art at close-up), cords on all four borders so the mesh
-  // terminates on the frame lines. Alternating cord shades add fabric feel.
-  const NET_A = "#e8e8e2", NET_B = "#d6d6d0";
-  const buildNet = (cols, rows, cell, cord) => {
-    const c = document.createElement("canvas");
-    c.width = cols * cell + cord; c.height = rows * cell + cord;
-    const n = c.getContext("2d");
-    n.imageSmoothingEnabled = false;
-    for (let k = 0; k <= cols; k++) {
-      n.fillStyle = k % 2 ? NET_A : NET_B;
-      n.fillRect(k * cell, 0, cord, c.height);
+  // ONE net definition for every net-bearing surface. The wrap band is a
+  // single canvas covering the full attachment path far post -> rear-far ->
+  // rear-near -> near post (11.32 m = exactly 40 cells of 0.283 m; 8 rows of
+  // 0.305 m; 2 px cords at 75 px/m, transparent openings). The three wall
+  // faces each sample THEIR OWN S-range of this one canvas, so cords are
+  // literally the same texture continuing around both corners — no per-panel
+  // grids, no restarts. The roof canvas continues the same net: its
+  // depth-running cord lines sit at the rear wall's vertical-cord z
+  // positions and its width-running lines at the side walls' vertical-cord
+  // x positions (the 11.32 m path is an integer number of pitches, so both
+  // side rails land on cord lines). Alternating cord shades run through the
+  // whole band so parity is continuous too.
+  const NET_A = "#e4e4de", NET_B = "#cecec8", NET_K = 75, NET_CORD = 2;
+  const wrapW = Math.round(11.32 * NET_K), wrapH = Math.round(2.44 * NET_K);
+  const wb = document.createElement("canvas");
+  wb.width = wrapW; wb.height = wrapH;
+  const wbx = wb.getContext("2d");
+  wbx.imageSmoothingEnabled = false;
+  for (let k = 0; k <= 40; k++) {
+    wbx.fillStyle = k % 2 ? NET_A : NET_B;
+    wbx.fillRect(Math.min(wrapW - NET_CORD, Math.round(k * wrapW / 40)), 0, NET_CORD, wrapH);
+  }
+  for (let j = 0; j <= 8; j++) {
+    wbx.fillStyle = j % 2 ? NET_A : NET_B;
+    wbx.fillRect(0, Math.min(wrapH - NET_CORD, Math.round(j * wrapH / 8)), wrapW, NET_CORD);
+  }
+  S.images.goalNetWrap = wb;
+  const roofW = Math.round(2.0 * NET_K), roofH = Math.round(7.32 * NET_K);
+  const rn = document.createElement("canvas");
+  rn.width = roofW; rn.height = roofH;
+  const rnx = rn.getContext("2d");
+  rnx.imageSmoothingEnabled = false;
+  for (let j = 0; j <= 7; j++) {        // continues side-wall verticals
+    rnx.fillStyle = j % 2 ? NET_A : NET_B;
+    rnx.fillRect(Math.min(roofW - NET_CORD, Math.round(j * (11.32 / 40) * NET_K)), 0, NET_CORD, roofH);
+  }
+  for (let k = 8; k <= 33; k++) {       // continues rear-wall verticals
+    const y = Math.round((k * 11.32 / 40 - 2) * NET_K);
+    if (y >= 0 && y < roofH) {
+      rnx.fillStyle = k % 2 ? NET_A : NET_B;
+      rnx.fillRect(0, y, roofW, NET_CORD);
     }
-    for (let k = 0; k <= rows; k++) {
-      n.fillStyle = k % 2 ? NET_A : NET_B;
-      n.fillRect(0, k * cell, c.width, cord);
-    }
-    return c;
-  };
-  S.images.goalNetTex = buildNet(7, 8, 20, 3);        // side faces: 143x163
-  S.images.goalNetTexRear = buildNet(24, 8, 20, 3);   // rear face:  483x163
+  }
+  S.images.goalNetRoof = rn;
   // Near-side texture: the art with its ENTIRE interior net area replaced by
   // the single-layer V2.2 weave. The interior was baked composite: back net
   // photographed through the side net (dense, left) meeting the bare drape
@@ -231,29 +250,34 @@ async function boot() {
   soctx.moveTo(...SIDE_INT[0]); soctx.lineTo(...SIDE_INT[1]);
   soctx.lineTo(...SIDE_INT[2]); soctx.lineTo(...SIDE_INT[3]);
   soctx.closePath(); soctx.fill();
-  soctx.globalCompositeOperation = "source-over";
-  soctx.save();
-  soctx.beginPath();
-  soctx.moveTo(...SIDE_INT[0]); soctx.lineTo(...SIDE_INT[1]);
-  soctx.lineTo(...SIDE_INT[2]); soctx.lineTo(...SIDE_INT[3]);
-  soctx.closePath(); soctx.clip();
-  // clean cord grid in art space (matches the procedural net material)
-  for (let k = 0; k <= 7; k++) {
-    soctx.fillStyle = k % 2 ? "#e8e8e2" : "#d6d6d0";
-    soctx.fillRect(100 + k * 18, 186, 2, 138);
-  }
-  for (let k = 0; k <= 8; k++) {
-    soctx.fillStyle = k % 2 ? "#e8e8e2" : "#d6d6d0";
-    soctx.fillRect(94, 188 + k * 16, 138, 2);
-  }
-  soctx.restore();
-  S.images.goal22side = so;
+  S.images.goal22side = so;   // frame-only: rails/posts/outer bulge; net comes
+                              // from the shared wrap band sampled by sideNet
   const som = document.createElement("canvas");
   som.width = g.width; som.height = g.height;
   const somctx = som.getContext("2d");
   somctx.imageSmoothingEnabled = false;
   somctx.translate(g.width, 0); somctx.scale(-1, 1); somctx.drawImage(so, 0, 0);
   S.images.goal22sideM = som;
+  // Roof frame: the V2.2 roof art with its fuzzy interior cleared — keeps the
+  // organic rail edges (far top rail, rear top bar, near rail, crossbar edge)
+  // as the secondary frame; the roof MESH comes from goalNetRoof beneath.
+  const ro = document.createElement("canvas");
+  ro.width = g.width; ro.height = g.height;
+  const roctx = ro.getContext("2d");
+  roctx.imageSmoothingEnabled = false;
+  roctx.drawImage(g, 0, 0);
+  roctx.globalCompositeOperation = "destination-out";
+  roctx.beginPath();
+  roctx.moveTo(50, 47); roctx.lineTo(160, 47);
+  roctx.lineTo(222, 179); roctx.lineTo(110, 176);
+  roctx.closePath(); roctx.fill();
+  S.images.goal22roof = ro;
+  const rom = document.createElement("canvas");
+  rom.width = g.width; rom.height = g.height;
+  const romctx = rom.getContext("2d");
+  romctx.imageSmoothingEnabled = false;
+  romctx.translate(g.width, 0); romctx.scale(-1, 1); romctx.drawImage(ro, 0, 0);
+  S.images.goal22roofM = rom;
 
   buildGroundTexture();
   recomputeAuthoring();               // authored CAMERA_V1 basis + constants
@@ -807,49 +831,55 @@ function homog(srcPts, dstPts) {           // 4-point homography, returns (u,v)-
 // authoritative world quads. Corner order is matched 1:1 art<->world.
 // u/v are the panel's parametric axes; ranges beyond [0,1] are outer
 // margins so net sag that bulges past the frame in the art is kept.
+// The three wall faces sample S-ranges of the ONE wrap-band net canvas
+// (px = S/11.32 * 849): farside S 0..2 -> x 0..150, rear S 2..9.32 ->
+// x 150..699, near side S 11.32..9.32 -> x 849..699 (u runs front->rear).
+// Cords, cell pitch, shade parity and sag all continue around both corners.
+// Art panels (roof/side/mouth) carry only frame/rail/silhouette pixels.
 const GOAL_ART_PANELS = [
   { name: "farside",                    // u: front->rear (depth), v: top->ground
-    // The V2.2 art has NO usable far-side source region: the far side appears
-    // only through the mouth, and every candidate area is a baked composite
-    // (drape folds, occlusion boundaries, back-net layering) that reads as a
-    // pinched wedge when transplanted. So this panel samples the derived
-    // goalNetTex — V2.2's own weave tiled into a regular mesh (see boot) —
-    // mapped edge-to-edge (no margins) so the net terminates exactly on the
-    // post / rear upright / top rail / ground lines. Listed first so it draws
-    // beneath the others: from the authored south rail (camera z>68) this
-    // plane is always the goal's farthest surface.
-    netTex: true, sag: "farside", gridU: 6, gridV: 8,
-    art: [[0, 0], [143, 0], [143, 163], [0, 163]],
+    tex: "wrap", sag: "farside", gridU: 6, gridV: 8,
+    art: [[0, 0], [150, 0], [150, 183], [0, 183]],
     world: (gx, out) => [[gx, 2.44, 30.34], [gx + out * 2, 2.44, 30.34],
                          [gx + out * 2, 0, 30.34], [gx, 0, 30.34]],
     u0: 0, u1: 1, v0: 0, v1: 1 },
   { name: "rear",                       // u: far->near (width), v: top->ground
-    // The true back-net plane at x = gx±2 — previously missing entirely: its
-    // imagery was baked inside the near-side source region (back net
-    // photographed through the side net) and read as a wedge. Samples the
-    // wide goalNetTexRear weave. Drawn second: farther than roof/side/mouth
-    // along every sight line, nearer than farside where they overlap.
-    rearTex: true, sag: "rear", gridU: 12, gridV: 8,
-    art: [[0, 0], [483, 0], [483, 163], [0, 163]],
+    tex: "wrap", sag: "rear", gridU: 12, gridV: 8,
+    art: [[150, 0], [699, 0], [699, 183], [150, 183]],
     world: (gx, out) => [[gx + out * 2, 2.44, 30.34], [gx + out * 2, 2.44, 37.66],
                          [gx + out * 2, 0, 37.66], [gx + out * 2, 0, 30.34]],
     u0: 0, u1: 1, v0: 0, v1: 1 },
-  { name: "roof",                       // u: front->rear (depth), v: far->near
+  { name: "roofNet",                    // u: front->rear (depth), v: far->near
+    tex: "roofnet", gridU: 3, gridV: 6,
+    art: [[0, 0], [150, 0], [150, 549], [0, 549]],
+    world: (gx, out) => [[gx, 2.44, 30.34], [gx + out * 2, 2.44, 30.34],
+                         [gx + out * 2, 2.44, 37.66], [gx, 2.44, 37.66]],
+    u0: 0, u1: 1, v0: 0, v1: 1 },
+  { name: "roof",                       // frame-only art (rails + silhouette)
+    tex: "roofframe",
     art: [[42, 40], [168, 40], [232, 186], [105, 183]],
     world: (gx, out) => [[gx, 2.44, 30.34], [gx + out * 2, 2.44, 30.34],
                          [gx + out * 2, 2.44, 37.66], [gx, 2.44, 37.66]],
     u0: -0.02, u1: 1.15, v0: -0.02, v1: 1.02 },
-  { name: "side",                       // u: front->rear (depth), v: top->ground
+  { name: "sideNet",                    // u: front->rear (depth), v: top->ground
+    tex: "wrap", sag: "side", gridU: 6, gridV: 8,
+    art: [[849, 0], [699, 0], [699, 183], [849, 183]],
+    world: (gx, out) => [[gx, 2.44, 37.66], [gx + out * 2, 2.44, 37.66],
+                         [gx + out * 2, 0, 37.66], [gx, 0, 37.66]],
+    u0: 0, u1: 1, v0: 0, v1: 1 },
+  { name: "side",                       // frame-only art (rails/posts/bulge)
+    tex: "sideframe",
     art: [[105, 183], [232, 186], [222, 320], [94, 327]],
     world: (gx, out) => [[gx, 2.44, 37.66], [gx + out * 2, 2.44, 37.66],
                          [gx + out * 2, 0, 37.66], [gx, 0, 37.66]],
-    u0: -0.02, u1: 1.15, v0: -0.02, v1: 1.0, sideTex: true,
+    u0: -0.02, u1: 1.15, v0: -0.02, v1: 1.0,
     sag: "side", gridU: 6, gridV: 8 },
   { name: "mouth",                      // u: far->near post, v: crossbar->ground
+    tex: "mouthframe",
     art: [[42, 40], [105, 183], [94, 327], [44, 194]],
     world: (gx, out) => [[gx, 2.44, 30.34], [gx, 2.44, 37.66],
                          [gx, 0, 37.66], [gx, 0, 30.34]],
-    u0: -0.03, u1: 1.02, v0: -0.03, v1: 1.0, mouthTex: true },
+    u0: -0.03, u1: 1.02, v0: -0.03, v1: 1.0 },
 ];
 const GOAL_GRID = 3;                    // cells per panel axis (triangulated)
 // Net rest-shape sag — the flexible net's RESTING geometry (the rigid cage
@@ -882,16 +912,18 @@ function buildGoalPanels() {
     const out = side ? 1 : -1;
     const mirrored = side ? GOAL_CFG.mirrorR : GOAL_CFG.mirrorL;
     const panels = GOAL_ART_PANELS.map(P => {
-      // derived textures: farside/rear use the uniform weave canvases (own
-      // coordinate space, never mirrored); side has the baked back-net
-      // composite cleared; mouth has the far-side triangle cleared
-      const img = P.netTex ? S.images.goalNetTex
-        : P.rearTex ? S.images.goalNetTexRear
-        : P.sideTex ? (mirrored ? S.images.goal22sideM : S.images.goal22side)
-        : P.mouthTex
+      // texture routing: net panels sample the shared procedural canvases
+      // (never mirrored — the weave is uniform, parity symmetric); frame
+      // panels use the derived art canvases (mirrored for the left goal)
+      const NETTEX = P.tex === "wrap" || P.tex === "roofnet";
+      const img = P.tex === "wrap" ? S.images.goalNetWrap
+        : P.tex === "roofnet" ? S.images.goalNetRoof
+        : P.tex === "sideframe" ? (mirrored ? S.images.goal22sideM : S.images.goal22side)
+        : P.tex === "roofframe" ? (mirrored ? S.images.goal22roofM : S.images.goal22roof)
+        : P.tex === "mouthframe"
           ? (mirrored ? S.images.goal22mouthM : S.images.goal22mouth)
           : (mirrored ? S.images.goal22m : S.images.goal22);
-      const art = (mirrored && !P.netTex && !P.rearTex)
+      const art = (mirrored && !NETTEX)
         ? P.art.map(([x, y]) => [W - 1 - x, y]) : P.art;
       const H = homog([[0, 0], [1, 0], [1, 1], [0, 1]], art);
       const wq = P.world(gx, out);
