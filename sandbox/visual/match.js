@@ -69,6 +69,7 @@ const S = {
           target: null },
   dbg: { anchors: false, ids: false, vel: false, state: false,
          ball: false, track: false, goalgeo: false, grid: false, xform: false,
+         netphys: false,
          cam: true },
   groundTex: null,                     // 32px/m world texture (built once)
   frozen: null,                        // the frozen projection + layers + constants
@@ -876,25 +877,59 @@ function buildGoalNet(gx, out) {
   const roofPt = (zp, xp) => [gx + out * xp,   // gentle fabric droop, rails pinned
     2.44 - NET.droop * Math.sin(Math.PI * xp / 2) * Math.sin(Math.PI * zp / 7.32),
     30.34 + zp];
-  const strands = [];
-  for (const pts of hexStrands(11.32, 2.44, NET.ell)) {
-    const w = [], p = [];
+  // ── topology vertices are BOTH the render strand joints and the physics
+  // nodes: one graph, one truth. Pinned (inverse mass 0): wall band nodes on
+  // the posts (S=0 / S=11.32) and top rails (T=0); every roof edge node
+  // (crossbar, side rails, rear top bar). Everything else is movable fabric.
+  const idOf = new Map(), restA = [], invA = [];
+  const addNode = (surf, a, b) => {
+    const k = surf + "|" + a.toFixed(4) + "|" + b.toFixed(4);
+    let id = idOf.get(k);
+    if (id !== undefined) return id;
+    id = invA.length;
+    const pt = surf === 0 ? wallPt(a, b) : roofPt(a, b);
+    restA.push(pt[0], pt[1], pt[2]);
+    const pinned = surf === 0
+      ? (b < 1e-6 || a < 1e-6 || a > 11.32 - 1e-6)
+      : (a < 1e-6 || a > 7.32 - 1e-6 || b < 1e-6 || b > 2.0 - 1e-6);
+    invA.push(pinned ? 0 : 1);
+    idOf.set(k, id);
+    return id;
+  };
+  const springPairs = [], strands = [];
+  const addStrand = (surf, pts) => {
+    const sp = [];
+    let prevId = -1, prev = null;
     for (const [a, b] of pts) {
-      if (p.length) {                    // resample so sag curvature shows
-        const [a0, b0] = p[p.length - 1];
-        const n = Math.floor(Math.abs(a - a0) / NET.seg);
-        for (let t = 1; t <= n; t++) {
-          const aa = a0 + (a - a0) * t / (n + 1), bb = b0 + (b - b0) * t / (n + 1);
-          w.push(wallPt(aa, bb)); p.push([aa, bb]);
+      const id = addNode(surf, a, b);
+      if (prevId >= 0) {
+        springPairs.push(prevId, id);
+        if (surf === 0) {                // resample so sag curvature shows
+          const nseg = Math.floor(Math.abs(a - prev[0]) / NET.seg);
+          for (let t = 1; t <= nseg; t++) {
+            const f = t / (nseg + 1);
+            const aa = prev[0] + (a - prev[0]) * f, bb = prev[1] + (b - prev[1]) * f;
+            sp.push({ iA: prevId, iB: id, t: f, r: wallPt(aa, bb), par: [aa, bb] });
+          }
         }
       }
-      w.push(wallPt(a, b)); p.push([a, b]);
+      sp.push({ n: id, par: [a, b] });
+      prevId = id; prev = [a, b];
     }
-    strands.push({ w, p });
+    strands.push(sp);
+  };
+  for (const pts of hexStrands(11.32, 2.44, NET.ell)) addStrand(0, pts);
+  for (const pts of hexStrands(7.32, 2.0, NET.ell)) addStrand(1, pts);
+  const rest = Float64Array.from(restA);
+  const springs = Int32Array.from(springPairs);
+  const L0 = new Float64Array(springs.length / 2);
+  for (let i = 0; i < L0.length; i++) {
+    const a = springs[2 * i] * 3, b = springs[2 * i + 1] * 3;
+    L0[i] = Math.hypot(rest[b] - rest[a], rest[b + 1] - rest[a + 1], rest[b + 2] - rest[a + 2]);
   }
-  for (const pts of hexStrands(7.32, 2.0, NET.ell))
-    strands.push({ w: pts.map(([a, b]) => roofPt(a, b)), p: pts });
-  return strands;
+  return { rest, pos: Float64Array.from(rest), vel: new Float64Array(rest.length),
+           inv: Int8Array.from(invA), springs, L0, strands,
+           active: false, dirty: false, energy: 0, quiet: 0 };
 }
 let NET_LAYERS = null;
 function drawGoalNet(goal) {
@@ -915,8 +950,22 @@ function drawGoalNet(goal) {
     return x;
   });
   const pitchW = Math.sqrt(3) * NET.ell;
-  for (const st of goal.net) {
-    const prj = st.w.map(pt => sproj3(pt[0], pt[1], pt[2]));
+  const G = goal.net, pos = G.pos, restp = G.rest, live = G.dirty;
+  const ptPos = (pt) => {
+    if (pt.n !== undefined) {
+      const j = pt.n * 3;
+      return live ? sproj3(pos[j], pos[j + 1], pos[j + 2])
+                  : sproj3(restp[j], restp[j + 1], restp[j + 2]);
+    }
+    if (!live) return sproj3(pt.r[0], pt.r[1], pt.r[2]);
+    const a = pt.iA * 3, b = pt.iB * 3, t = pt.t;   // rest curve + lerped displacement
+    return sproj3(
+      pt.r[0] + (pos[a] - restp[a]) * (1 - t) + (pos[b] - restp[b]) * t,
+      pt.r[1] + (pos[a + 1] - restp[a + 1]) * (1 - t) + (pos[b + 1] - restp[b + 1]) * t,
+      pt.r[2] + (pos[a + 2] - restp[a + 2]) * (1 - t) + (pos[b + 2] - restp[b + 2]) * t);
+  };
+  for (const st of G.strands) {
+    const prj = st.map(ptPos);
     // Per-VERTEX density scale, averaged over adjacent segments and smoothed
     // along the strand. Bucketing per raw segment made alternating zigzag
     // orientations land in different alpha levels — a bright/dim dashing
@@ -928,7 +977,7 @@ function drawGoalNet(goal) {
       let sum = 0, cnt = 0;
       for (const j of [i - 1, i]) {
         if (j < 0 || j + 1 >= n) continue;
-        const dpar = Math.hypot(st.p[j + 1][0] - st.p[j][0], st.p[j + 1][1] - st.p[j][1]);
+        const dpar = Math.hypot(st[j + 1].par[0] - st[j].par[0], st[j + 1].par[1] - st[j].par[1]);
         if (dpar < 1e-9) continue;
         sum += Math.hypot(prj[j + 1].x - prj[j].x, prj[j + 1].y - prj[j].y) / dpar;
         cnt++;
@@ -1038,6 +1087,172 @@ function drawTexTri(img, a0, a1, a2, s0, s1, s2) {
     ctx.drawImage(img, bx0, by0, bx1 - bx0, by1 - by0, bx0, by0, bx1 - bx0, by1 - by0);
   ctx.restore();
 }
+// ═══ NET PHYSICS (renderer-only; deterministic fixed step) ═══════════════════
+// Mass-spring dynamics on the SAME node graph the strands render from.
+// Springs = every hex edge (structural, along the visible cords), rest
+// lengths taken from the authored sagged rest shape, plus a weak anchor
+// spring to the rest position representing the pre-tensioned gravity
+// equilibrium (the authored sag IS the equilibrium; gravity is baked into
+// it, so dynamics happen AROUND it and settle back to it exactly).
+// Integration: semi-implicit Euler at a fixed 240 Hz (framerate never
+// changes the result; the accumulator is clamped, never rescaled).
+// No randomness anywhere; the simulator and its RNG are untouched.
+//
+// FUTURE ENGINE HOOK: when the authoritative simulator reports a shot
+// reaching the net, call netImpact(side, [x,y,z], [vx,vy,vz], strength)
+// from the playback event handling — same entry point the synthetic tests
+// use below. Nothing else needs to change.
+const NETPHYS = { dt: 1 / 240, k: 500, kd: 10, kAnchor: 25, damp: 3.5,
+                  maxAcc: 0.12, settleE: 4e-5, ballR: 0.11 };
+function netActivate(net) { net.active = true; net.dirty = true; net.quiet = 0; }
+function netImpact(side, p, v, strength = 1) {
+  const net = S.goalPanels[side].net;
+  netActivate(net);
+  net.lastImpact = p.slice();
+  const R = 0.5;
+  for (let i = 0; i < net.inv.length; i++) {
+    if (!net.inv[i]) continue;
+    const j = i * 3;
+    const d = Math.hypot(net.pos[j] - p[0], net.pos[j + 1] - p[1], net.pos[j + 2] - p[2]);
+    if (d >= R) continue;
+    const w = (1 - d / R) * (1 - d / R) * 0.45 * strength;
+    net.vel[j] += v[0] * w; net.vel[j + 1] += v[1] * w; net.vel[j + 2] += v[2] * w;
+  }
+}
+function netPhysStep(net, ball) {          // ONE fixed 240 Hz substep
+  const { rest, pos, vel, inv, springs, L0 } = net, dt = NETPHYS.dt;
+  for (let sI = 0; sI < L0.length; sI++) {
+    const na = springs[2 * sI], nb = springs[2 * sI + 1];
+    const ia = na * 3, ib = nb * 3;
+    let dx = pos[ib] - pos[ia], dy = pos[ib + 1] - pos[ia + 1], dz = pos[ib + 2] - pos[ia + 2];
+    const L = Math.hypot(dx, dy, dz);
+    if (L < 1e-9) continue;
+    dx /= L; dy /= L; dz /= L;
+    const rel = (vel[ib] - vel[ia]) * dx + (vel[ib + 1] - vel[ia + 1]) * dy
+              + (vel[ib + 2] - vel[ia + 2]) * dz;
+    const f = (NETPHYS.k * (L - L0[sI]) + NETPHYS.kd * rel) * dt;
+    if (inv[na]) { vel[ia] += f * dx; vel[ia + 1] += f * dy; vel[ia + 2] += f * dz; }
+    if (inv[nb]) { vel[ib] -= f * dx; vel[ib + 1] -= f * dy; vel[ib + 2] -= f * dz; }
+  }
+  const dampf = Math.max(0, 1 - NETPHYS.damp * dt);
+  let e = 0, maxd = 0;
+  const R = ball ? NETPHYS.ballR + 0.02 : 0;
+  for (let i = 0; i < inv.length; i++) {
+    if (!inv[i]) continue;
+    const j = i * 3;
+    vel[j] = (vel[j] + NETPHYS.kAnchor * (rest[j] - pos[j]) * dt) * dampf;
+    vel[j + 1] = (vel[j + 1] + NETPHYS.kAnchor * (rest[j + 1] - pos[j + 1]) * dt) * dampf;
+    vel[j + 2] = (vel[j + 2] + NETPHYS.kAnchor * (rest[j + 2] - pos[j + 2]) * dt) * dampf;
+    pos[j] += vel[j] * dt; pos[j + 1] += vel[j + 1] * dt; pos[j + 2] += vel[j + 2] * dt;
+    if (pos[j + 1] < 0.005) { pos[j + 1] = 0.005; if (vel[j + 1] < 0) vel[j + 1] = 0; }
+    if (ball) {                            // kinematic sphere: ball carves the pocket
+      const ddx = pos[j] - ball.p[0], ddy = pos[j + 1] - ball.p[1], ddz = pos[j + 2] - ball.p[2];
+      const d = Math.hypot(ddx, ddy, ddz);
+      if (d < R && d > 1e-9) {
+        const push = (R - d) / d;
+        pos[j] += ddx * push; pos[j + 1] += ddy * push; pos[j + 2] += ddz * push;
+        const rv = (vel[j] - ball.v[0]) * ddx / d + (vel[j + 1] - ball.v[1]) * ddy / d
+                 + (vel[j + 2] - ball.v[2]) * ddz / d;
+        if (rv < 0) {
+          vel[j] -= rv * ddx / d; vel[j + 1] -= rv * ddy / d; vel[j + 2] -= rv * ddz / d;
+        }
+      }
+    }
+    const dsp = Math.hypot(pos[j] - rest[j], pos[j + 1] - rest[j + 1], pos[j + 2] - rest[j + 2]);
+    if (dsp > maxd) maxd = dsp;
+    e += vel[j] * vel[j] + vel[j + 1] * vel[j + 1] + vel[j + 2] * vel[j + 2];
+  }
+  net.energy = e; net.maxDisp = maxd;
+  if (!ball && e < NETPHYS.settleE) {
+    if (++net.quiet > 90) {                // settled: snap EXACTLY to rest
+      net.pos.set(net.rest); net.vel.fill(0);
+      net.active = false; net.dirty = false;
+    }
+  } else net.quiet = 0;
+}
+
+// ── NET PHYSICS TEST — SYNTHETIC BALL TRAJECTORY (renderer-only harness).
+// Keys 1-4 fire tests at the right goal; key 5 cycles slow/normal/power on
+// the central strike. Prescribed analytic ball path (never touches the
+// match engine); the net response is computed entirely by the springs.
+const NETTESTS = {
+  1: { p0: [96.0, 1.00, 34.0], aim: [107.35, 0.85, 34.0], v: 17, label: "central rear strike" },
+  2: { p0: [97.0, 0.90, 32.6], aim: [107.25, 0.28, 30.9], v: 15, label: "low far corner" },
+  3: { p0: [96.5, 1.20, 34.4], aim: [107.25, 2.15, 33.8], v: 15, label: "upper rear / roof" },
+  4: { p0: [99.0, 0.80, 35.2], aim: [106.20, 0.70, 37.95], v: 13, label: "inside side net" },
+};
+const NETTEST_POWERS = [7, 17, 27];
+let netTestPowerIdx = 1;
+function startNetTest(id, speed) {
+  const T = NETTESTS[id];
+  const d = [T.aim[0] - T.p0[0], T.aim[1] - T.p0[1], T.aim[2] - T.p0[2]];
+  const L = Math.hypot(d[0], d[1], d[2]);
+  const v = speed || T.v;
+  S.netTest = { id, label: T.label, speed: v,
+                p: T.p0.slice(), v: [d[0] / L * v, d[1] / L * v, d[2] / L * v],
+                phase: "fly", age: 0, contactAge: -1 };
+}
+function netTestStep() {                   // advances WITH the fixed physics step
+  const t = S.netTest, dt = NETPHYS.dt;
+  if (!t) return null;
+  t.age += dt;
+  if (t.phase === "fly") {
+    t.p[0] += t.v[0] * dt; t.p[1] += t.v[1] * dt; t.p[2] += t.v[2] * dt;
+    const net = S.goalPanels[1].net;       // contact check vs movable nodes
+    if (t.p[0] > 104.5) {
+      const R = NETPHYS.ballR + 0.06;
+      for (let i = 0; i < net.inv.length; i++) {
+        if (!net.inv[i]) continue;
+        const j = i * 3;
+        if (Math.hypot(net.pos[j] - t.p[0], net.pos[j + 1] - t.p[1],
+                       net.pos[j + 2] - t.p[2]) < R) {
+          t.phase = "push"; t.contactAge = t.age; t.vEntry = t.v.slice();
+          netImpact(1, t.p, t.v, Math.min(1.6, 0.35 + t.speed / 20));
+          break;
+        }
+      }
+      if (t.p[0] > 108.5) t.phase = "done";
+    }
+  } else if (t.phase === "push") {
+    const dec = Math.exp(-dt / 0.045);     // net "catches" the ball
+    t.v[0] *= dec; t.v[1] *= dec; t.v[2] *= dec;
+    t.p[0] += t.v[0] * dt; t.p[1] += t.v[1] * dt; t.p[2] += t.v[2] * dt;
+    if (Math.hypot(t.v[0], t.v[1], t.v[2]) < 1.3) {
+      t.phase = "drop";
+      t.v[0] = -0.18 * t.vEntry[0]; t.v[2] = -0.18 * t.vEntry[2]; t.v[1] = 0.4;
+    }
+  } else if (t.phase === "drop") {
+    t.v[1] -= 9.8 * dt;
+    t.p[0] += t.v[0] * dt; t.p[1] += t.v[1] * dt; t.p[2] += t.v[2] * dt;
+    t.v[0] *= (1 - 1.2 * dt); t.v[2] *= (1 - 1.2 * dt);
+    if (t.p[1] < NETPHYS.ballR) {
+      t.p[1] = NETPHYS.ballR;
+      if (Math.abs(t.v[1]) > 0.6) t.v[1] = -0.35 * t.v[1];
+      else { t.v[1] = 0; if (Math.hypot(t.v[0], t.v[2]) < 0.15) t.phase = "rest"; }
+    }
+  }
+  if (t.age > 7) S.netTest = null;
+  return (t.phase === "push" || t.phase === "fly") ? { p: t.p, v: t.v } :
+         (t.phase === "drop" || t.phase === "rest") ? { p: t.p, v: t.v } : null;
+}
+let netAcc = 0;
+function netPhysUpdate(dtReal) {
+  netAcc = Math.min(netAcc + dtReal, NETPHYS.maxAcc);
+  while (netAcc >= NETPHYS.dt) {
+    netAcc -= NETPHYS.dt;
+    const ball = netTestStep();
+    for (const g of S.goalPanels || []) {
+      if (!g.net) continue;
+      const useBall = ball && g.side === 1 &&
+        Math.abs(ball.p[0] - g.gx) < 3.5 ? ball : null;
+      if (g.net.active || useBall) {
+        if (useBall) netActivate(g.net);
+        netPhysStep(g.net, useBall);
+      }
+    }
+  }
+}
+
 function drawGoal(goal) {
   drawGoalNet(goal);
   for (const panel of goal.panels)
@@ -1104,6 +1319,7 @@ function tick(ts) {
   ensureBuffer();
   const sample = sampleAt(pb.head);
   updateRig(dt, sample);
+  netPhysUpdate(dt);
   draw(sample, dt);
   if ((ts | 0) % 500 < 20) updateHUD();
   requestAnimationFrame(tick);
@@ -1182,6 +1398,51 @@ function drawBall(ball) {
     ctx.fillText(`ball (${ball.x.toFixed(1)}, ${ball.y.toFixed(1)}) m`, x, y - r - 5);
   }
 }
+
+function drawNetTestBall() {
+  const t = S.netTest;
+  if (!t) return;
+  const p = sproj3(t.p[0], t.p[1], t.p[2]);
+  const r = Math.max(2.5, NETPHYS.ballR * S.pxPerM * RIG.zoom);
+  ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+  ctx.fillStyle = "#f4f4f0"; ctx.fill();
+  ctx.lineWidth = Math.max(1, r * 0.22); ctx.strokeStyle = "#3a3d42"; ctx.stroke();
+  ctx.fillStyle = "#ffd34d"; ctx.font = "bold 13px ui-monospace, monospace";
+  ctx.fillText("NET PHYSICS TEST \u2014 SYNTHETIC BALL TRAJECTORY  " +
+    "(test " + t.id + ": " + t.label + ", " + t.speed + " m/s, " + t.phase + ")",
+    14, cv.height - 14);
+}
+function drawNetPhysDebug() {
+  const net = S.goalPanels[1] && S.goalPanels[1].net;
+  if (!net) return;
+  const { rest, pos, inv } = net;
+  for (let i = 0; i < inv.length; i += 2) {
+    const j = i * 3;
+    if (!inv[i]) {
+      const q = sproj3(rest[j], rest[j + 1], rest[j + 2]);
+      ctx.fillStyle = "rgba(255,70,70,0.8)";
+      ctx.fillRect(q.x - 1.5, q.y - 1.5, 3, 3);
+      continue;
+    }
+    const dx = pos[j] - rest[j], dy = pos[j + 1] - rest[j + 1], dz = pos[j + 2] - rest[j + 2];
+    if (dx * dx + dy * dy + dz * dz > 1e-4) {
+      const q0 = sproj3(rest[j], rest[j + 1], rest[j + 2]);
+      const q1 = sproj3(pos[j], pos[j + 1], pos[j + 2]);
+      ctx.strokeStyle = "rgba(0,240,255,0.85)"; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(q0.x, q0.y); ctx.lineTo(q1.x, q1.y); ctx.stroke();
+    }
+  }
+  if (net.lastImpact) {
+    const c = sproj3(net.lastImpact[0], net.lastImpact[1], net.lastImpact[2]);
+    ctx.strokeStyle = "#ff5ce0"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(c.x - 7, c.y); ctx.lineTo(c.x + 7, c.y);
+    ctx.moveTo(c.x, c.y - 7); ctx.lineTo(c.x, c.y + 7); ctx.stroke();
+  }
+  ctx.fillStyle = "#9fe8ff"; ctx.font = "12px ui-monospace, monospace";
+  ctx.fillText("net: active=" + net.active + "  maxDisp=" +
+    (net.maxDisp || 0).toFixed(3) + " m  KE=" + net.energy.toExponential(2),
+    14, cv.height - 32);
+}
 function drawGoalGeoDebug(side) {
   const gx = side ? 105 : 0, dir = side ? 1 : -1;
   ctx.strokeStyle = "rgba(255,80,80,0.9)"; ctx.lineWidth = 1.5;
@@ -1215,6 +1476,8 @@ function draw(sample, dt) {
     else if (e.ball) drawBall(e.ball);
     else drawGoal(e.goal);
   }
+  drawNetTestBall();
+  if (S.dbg.netphys) drawNetPhysDebug();
   if (S.dbg.goalgeo) { drawGoalGeoDebug(0); drawGoalGeoDebug(1); }
   if (S.dbg.cam) drawRailSquare();       // rail diagnostic overlay (toggleable)
   if (S.dbg.track) {
@@ -1279,6 +1542,14 @@ function bindUI() {
     RIG.smooth = parseFloat(smEl.value);
     smOut.textContent = RIG.smooth.toFixed(2) + " s";
   });
+  document.addEventListener("keydown", (e) => {
+    if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "SELECT")) return;
+    if (e.key >= "1" && e.key <= "4") startNetTest(+e.key);
+    else if (e.key === "5") {
+      startNetTest(1, NETTEST_POWERS[netTestPowerIdx]);
+      netTestPowerIdx = (netTestPowerIdx + 1) % NETTEST_POWERS.length;
+    }
+  });
   document.getElementById("refreeze").addEventListener("click", recomputeAuthoring);
   document.getElementById("resetauthor").addEventListener("click", () => {
     S.author = { ...AUTHOR_DEFAULTS };
@@ -1298,7 +1569,7 @@ function bindUI() {
   document.getElementById("pbspeed").addEventListener("change", (e) => {
     S.pb.speed = parseFloat(e.target.value);
   });
-  for (const id of ["anchors", "ids", "vel", "state", "ball", "track", "goalgeo", "grid", "xform", "cam"])
+  for (const id of ["anchors", "ids", "vel", "state", "ball", "track", "goalgeo", "grid", "xform", "cam", "netphys"])
     document.getElementById("dbg-" + id)?.addEventListener("change", (e) => {
       S.dbg[id] = e.target.checked;
     });
