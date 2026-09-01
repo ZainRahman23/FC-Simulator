@@ -165,7 +165,8 @@ async function boot() {
     jobs.push({ key: ["shoot", "east", i],
                 path: ASSET_ROOT + "originals/character_31a11357/proto_anim/shoot/east/" + i + ".png" });
   // DRIBBLE ANIMATION V2: touch-library extras (ball-free, east)
-  for (const k of ["cc_4", "cc_5", "cc_6", "cc_7", "cut_5", "cut_6"])
+  for (const k of ["cc_4", "cc_5", "cc_6", "cc_7", "cut_5", "cut_6",
+                   "sr_0", "sr_1", "sr_2", "sr_6", "sr_7", "db_2", "db_4", "db_5"])
     jobs.push({ key: ["drib2", k, 0],
                 path: ASSET_ROOT + "originals/character_31a11357/proto_anim/dribble2/east/" + k + ".png" });
   await Promise.all(jobs.map(async (j) => {
@@ -1637,19 +1638,45 @@ const DRIB_LIB = {
   ST_D: { src: ["drib2", "cc_7"], dy: 0, cls: "stride" },
   ST_X: { src: ["dribble", 3], dy: 0, cls: "stride" },
   ST_Y: { src: ["dribble", 4], dy: 0, cls: "stride" },
+  // V2.1: long-reach sprint contacts (physics contacts ~0.73 m ahead at
+  // sprint; these reach +0.60..0.66 m) and drag-back turn coverage
+  SPR_A: { src: ["drib2", "sr_2"], foot: "R", cx: 103, cy: 115, dy: 2, cls: "contact", reach: "long" },
+  SPR_B: { src: ["drib2", "sr_7"], foot: "L", cx: 102, cy: 117, dy: 0, cls: "contact", reach: "long" },
+  SPR_C: { src: ["drib2", "sr_1"], foot: "R", cx: 100, cy: 118, dy: 0, cls: "contact", reach: "long" },
+  DRAG_A: { src: ["drib2", "db_4"], foot: "*", cx: 80, cy: 112, dy: 0, cls: "drag" },
+  DRAG_X: { src: ["drib2", "db_5"], foot: "*", cx: 80, cy: 112, dy: 3, cls: "drag" },
+  SPR_ST_A: { src: ["drib2", "sr_0"], dy: 0, cls: "stride" },
+  SPR_ST_B: { src: ["drib2", "sr_6"], dy: 3, cls: "stride" },
+  DB_ST: { src: ["drib2", "db_2"], dy: 0, cls: "stride" },
 };
 const DRIB_POOLS = {   // variant pools per foot x speed band (deterministic pick)
-  R: { slow: ["R_C", "R_B"], jog: ["R_B", "R_C", "R_A"], sprint: ["R_A", "R_B"] },
-  L: { slow: ["L_C", "L_B"], jog: ["L_B", "L_C", "L_A"], sprint: ["L_A", "L_B"] },
+  R: { slow: ["R_C", "R_B"], jog: ["R_B", "R_C", "R_A"], sprint: ["SPR_A", "SPR_C", "R_A"] },
+  L: { slow: ["L_C", "L_B"], jog: ["L_B", "L_C", "L_A"], sprint: ["SPR_B", "L_A", "L_B"] },
 };
 const DRIB_STRIDES = { slow: ["ST_C", "ST_D"], jog: ["ST_A", "ST_X", "ST_B", "ST_Y"],
-                       sprint: ["ST_A", "ST_B"] };
+                       sprint: ["SPR_ST_A", "SPR_ST_B"] };
 function drib2Img(pose) {
   const e = DRIB_LIB[pose];
   return e.src[0] === "dribble" ? (S.anims.dribble.east && S.anims.dribble.east[e.src[1]])
                                 : (S.images.drib2 && S.images.drib2[e.src[1]]);
 }
 // deterministic foot + variant selection at an authoritative touch
+function drib2Sector(t) {
+  // authoritative ball position in the carrier's intended-movement frame:
+  // along = ahead(+)/behind(-), lat = right(+)/left(-) of the corridor
+  const p = t.p, b = t.b;
+  const along = Math.cos(t.corr) * (b.x - p.x) + Math.sin(t.corr) * (b.y - p.y);
+  const lat = Math.cos(t.corr) * (b.y - p.y) - Math.sin(t.corr) * (b.x - p.x);
+  const a = Math.atan2(lat, along) * 180 / Math.PI;   // 0=FRONT, +90=RIGHT
+  const sec = a > -22.5 && a <= 22.5 ? "FRONT" :
+              a > 22.5 && a <= 67.5 ? "FRONT_RIGHT" :
+              a > 67.5 && a <= 112.5 ? "RIGHT" :
+              a > 112.5 && a <= 157.5 ? "BACK_RIGHT" :
+              a < -22.5 && a >= -67.5 ? "FRONT_LEFT" :
+              a < -67.5 && a >= -112.5 ? "LEFT" :
+              a < -112.5 && a >= -157.5 ? "BACK_LEFT" : "BACK";
+  return { sec, along, lat };
+}
 function drib2Pick(t, corrective, turnA) {
   const p = t.p, b = t.b;
   const pv = Math.hypot(p.vx, p.vy);
@@ -1662,8 +1689,11 @@ function drib2Pick(t, corrective, turnA) {
   else foot = t.lastFoot === "R" ? "L" : "R";                       // natural alternation
   t.lastFoot = foot;
   const turnClass = turnA > 1.9 ? 3 : turnA > 1.0 ? 2 : turnA > 0.52 ? 1 : 0;
+  const info = drib2Sector(t);
   let pose;
-  if (corrective && turnClass >= 2) pose = (t.touchN % 2) ? "CUT_P" : "CUT_X";
+  if (corrective && (info.sec.indexOf("BACK") === 0 || info.along < 0.08))
+    pose = "DRAG_A";                       // ball beside/behind: drag it through
+  else if (corrective && turnClass >= 2) pose = (t.touchN % 2) ? "CUT_P" : "CUT_X";
   else {
     // CONTACT MATCHING: ball's along-corridor offset in art px (53.33 art
     // px per world metre at the authored scale); prefer the pose whose
@@ -1676,12 +1706,17 @@ function drib2Pick(t, corrective, turnA) {
                                   Math.abs(DRIB_LIB[pool[0]].cx - aheadArt) + 4);
     pose = near[(t.touchN + turnClass) % near.length];
   }
-  return { foot, pose, band, turnClass };
+  return { foot, pose, band, turnClass, sector: info.sec };
 }
 // schedule contact pose at the touch instant + strides toward the next touch
 function drib2Schedule(t, pick, T) {
   const hold = Math.min(0.14, T * 0.45);
   const seq = [{ pose: pick.pose, until: t.now + hold }];
+  if (pick.pose === "DRAG_A") {            // drag-back plays its own exit
+    seq.push({ pose: "DRAG_X", until: t.now + hold + 0.14 });
+    seq.push({ pose: "DB_ST", until: t.now + Math.max(T, hold + 0.28) + 0.2 });
+    t.dribSeq = seq; return;
+  }
   const st = DRIB_STRIDES[pick.band];
   if (T - hold > 0.12) {
     const s1 = st[t.touchN % st.length], s2 = st[(t.touchN + 1) % st.length];
@@ -2010,6 +2045,7 @@ function drib2LogContact(t, pick) {
                 Math.hypot(p.vx, p.vy) < 6 ? "jog" : "sprint") : "?",
                 kind: t.touchInfo.kind, pose: pick.pose, foot: pick.foot,
                 px: +distPx.toFixed(1), radii: +(distPx / br).toFixed(2),
+                sector: pick.sector || "-",
                 turn: +(t.touchInfo.turn * 57.3).toFixed(0), n: t.touchN };
   (t.contactLog ||= []).push(rec);
   if (t.contactLog.length > 500) t.contactLog.shift();
