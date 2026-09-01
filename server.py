@@ -614,6 +614,19 @@ def advance_match(match_id: str, req: AdvanceRequest) -> dict[str, Any]:
                 row.append([round(body.ball["z"], 3), round(body.ball["vz"], 2),
                             1 if body.ball["z"] <= 0.001 and body.ball["vz"] == 0.0 else 0,
                             zs, xs, ys, _ball_state_code(body)])
+                # PLAYER PHYSICAL OCCUPANCY debug (row[6], additive): the
+                # solver's last-tick contact pairs and per-player desired vs
+                # resolved velocity + state, for the viewer's collision
+                # overlay. Read-only sampling of authoritative solver data.
+                occ_pl = [None] * len(roster)
+                for pid, bp in body.players.items():
+                    k = ridx.get(pid)
+                    if k is not None:
+                        occ_pl[k] = [round(bp.get("_dvx", 0.0), 2), round(bp.get("_dvy", 0.0), 2),
+                                     round(bp["vx"], 2), round(bp["vy"], 2), bp.get("occ", 0)]
+                row.append({"c": [[ridx.get(a, -1), ridx.get(b, -1), round(pen * 1000, 1)]
+                                  for a, b, pen in body.last_contacts],
+                            "p": occ_pl})
                 frames.append(row)
         else:
             lab.run(float(secs))

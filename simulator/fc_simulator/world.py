@@ -16,6 +16,18 @@ REST, KEEP, SETTLE = 0.55, 0.80, 1.0
 REACH, GK_REACH, EXCL = 0.9, 1.6, 0.45
 ACC, BRAKE = 4.8, 6.5
 
+# ── PLAYER PHYSICAL OCCUPANCY V1 ─────────────────────────────────────────────
+# Every player is a solid 2D disc on the pitch plane (torso/legs footprint,
+# NOT the visual sprite: rendering and physical occupancy are separate).
+# Measured baseline: the sprite torso reads ~0.43 m wide at the accepted
+# visual scale; radius 0.32 m gives a 0.64 m shoulder-to-shoulder centre
+# distance (harness-tested against 0.28/0.36). Uniform for GK and outfield
+# in V1 — attributes deliberately do NOT enter basic non-penetration.
+BODY_R = 0.32              # physical body radius, metres
+OCC_SKIN = 0.02            # contact detection band beyond touching
+OCC_ITERS = 8              # positional Jacobi iterations (multi-body mop-up)
+OCC_TOL = 0.005            # accepted numerical penetration tolerance, metres
+
 def clamp(v, lo, hi): return lo if v < lo else hi if v > hi else v
 
 def chase_point(p, ball):
@@ -86,6 +98,10 @@ class Body:
         self.gk_cb = None          # (gk, ball, rv) -> ('CATCH'|'PARRY'|'BEATEN', deflect_angle) or None
         self.score = [0, 0]
         self.trace = []
+        self.last_contacts = []
+        self.occ = {'pairs': 0, 'simult': 0, 'maxpen': 0.0, 'maxcorr': 0.0,
+                    'unresolved': 0, 'blockT': 0.0, 'slideT': 0.0,
+                    'ms': 0.0, 'ticks': 0, 'ties': 0, 'stuck': 0}
 
     # ── the only command surface ──
     def set_intent(self, pid, intent): self.intents[pid] = intent
@@ -136,8 +152,11 @@ class Body:
         step = lim*DT
         if am > step: p['vx'] += ax/am*step; p['vy'] += ay/am*step
         else: p['vx'], p['vy'] = dvx, dvy
-        p['x'] = clamp(p['x'] + p['vx']*DT, -2, W+2)
-        p['y'] = clamp(p['y'] + p['vy']*DT, -2, H+2)
+        # OCCUPANCY V1: locomote PROPOSES velocity (desired movement after
+        # accel/brake/turn limits); position is integrated in tick() under
+        # body-contact constraints. Tactical targets are never rewritten.
+        p['_dvx'], p['_dvy'] = p['vx'], p['vy']
+        p['_step'] = True
         v = math.hypot(p['vx'], p['vy'])
         want = math.atan2(p['vy'], p['vx']) if v > 0.7 else math.atan2(self.ball['y']-p['y'], self.ball['x']-p['x'])
         df = (want - p['facing'] + math.pi*3) % (2*math.pi) - math.pi
@@ -336,18 +355,149 @@ class Body:
             b['state'] = 'ROLLING'
             self._contact('DRIBBLE_TOUCH', p['pid'])
 
-    def separate(self):
+    def occupancy_step(self):
+        """PLAYER PHYSICAL OCCUPANCY V1 — deterministic, RNG-free.
+
+        Runs once per 60 Hz tick, after all locomote() proposals and before
+        anything consumes positions. Three phases:
+
+        1. VELOCITY PROJECTION (contact constraints, not elastic collision):
+           for every pair predicted to touch this step, each player loses
+           only the part of HIS OWN velocity that closes on the other,
+           clamped so he arrives exactly at contact (never inside it).
+           Tangential velocity is untouched -> sliding, shoulder-to-shoulder
+           running and routing around a blocker all emerge naturally; a
+           stationary blocker is never shoved (no momentum transfer).
+        2. INTEGRATION: players locomoted this tick step by their resolved
+           velocity (same world-bounds clamp locomote used).
+        3. POSITIONAL MOP-UP (Jacobi, OCC_ITERS): residual overlap from
+           multi-body convergence or external position writes is removed
+           half/half along each contact normal, corrections accumulated
+           then applied simultaneously (no iteration-order bias), then
+           re-clamped to world bounds. Exactly-coincident pairs use a
+           documented geometric tie-break: split along the perpendicular
+           of the outward direction from the pitch centre (team-neutral;
+           the pid-sorted lower player takes the negative side); the
+           occurrence count is instrumented and reported.
+
+        Contact does NOT touch possession, tackles, fouls or events.
+        """
+        import time as _time
+        t0 = _time.perf_counter()
         ps = sorted(self.players.values(), key=lambda p: p['pid'])
-        for i in range(len(ps)):
-            for j in range(i+1, len(ps)):
-                a, c = ps[i], ps[j]
-                dx, dy = c['x']-a['x'], c['y']-a['y']
+        n = len(ps)
+        o = self.occ
+        R2 = BODY_R * 2.0
+
+        # phase 1: predictive per-body velocity projection (two-phase apply)
+        for a in ps:
+            a.setdefault('_dvx', a['vx']); a.setdefault('_dvy', a['vy'])
+        resolved = []
+        for i in range(n):
+            a = ps[i]
+            vx, vy = a['vx'], a['vy']
+            for j in range(n):
+                if j == i: continue
+                c = ps[j]
+                dx, dy = c['x'] - a['x'], c['y'] - a['y']
                 d2 = dx*dx + dy*dy
-                mind = 0.42*2*1.05
-                if 1e-6 < d2 < mind*mind:
-                    d = math.sqrt(d2); push = (mind-d)/2
-                    ux, uy = dx/d, dy/d
-                    a['x'] -= ux*push; a['y'] -= uy*push; c['x'] += ux*push; c['y'] += uy*push
+                if d2 < 1e-12 or d2 > (R2 + OCC_SKIN + 0.30)**2: continue
+                d = math.sqrt(d2)
+                nx, ny = dx/d, dy/d
+                vn = vx*nx + vy*ny                    # own closing speed
+                if vn <= 0.0: continue
+                allowed = max(0.0, (d - R2) / DT)     # arrive AT contact, not inside
+                if vn > allowed:
+                    ex = vn - allowed
+                    vx -= ex*nx; vy -= ex*ny
+            resolved.append((vx, vy))
+        for a, (vx, vy) in zip(ps, resolved):
+            a['vx'], a['vy'] = vx, vy
+
+        # phase 2: integrate proposals
+        for a in ps:
+            if a.pop('_step', False):
+                a['x'] = clamp(a['x'] + a['vx']*DT, -2, W+2)
+                a['y'] = clamp(a['y'] + a['vy']*DT, -2, H+2)
+
+        # phase 3: positional mop-up (Jacobi)
+        maxcorr = 0.0
+        iters_used = 0
+        for it in range(OCC_ITERS):
+            iters_used = it + 1
+            corr = [[0.0, 0.0] for _ in range(n)]
+            worst = 0.0
+            for i in range(n):
+                a = ps[i]
+                for j in range(i+1, n):
+                    c = ps[j]
+                    dx, dy = c['x'] - a['x'], c['y'] - a['y']
+                    d2 = dx*dx + dy*dy
+                    if d2 >= R2*R2: continue
+                    if d2 < 1e-12:                     # geometric tie-break
+                        o['ties'] += 1
+                        bx, by = a['x'] - W/2, a['y'] - H/2
+                        bm = math.hypot(bx, by)
+                        ux, uy = (by/bm, -bx/bm) if bm > 1e-9 else (0.0, 1.0)
+                        d, pen = 0.0, R2
+                    else:
+                        d = math.sqrt(d2)
+                        ux, uy = dx/d, dy/d
+                        pen = R2 - d
+                    worst = max(worst, pen)
+                    h = pen * 0.5
+                    corr[i][0] -= ux*h; corr[i][1] -= uy*h
+                    corr[j][0] += ux*h; corr[j][1] += uy*h
+            if worst <= OCC_TOL: break
+            for i in range(n):
+                cx, cy = corr[i]
+                if cx or cy:
+                    maxcorr = max(maxcorr, math.hypot(cx, cy))
+                    ps[i]['x'] = clamp(ps[i]['x'] + cx, -2, W+2)
+                    ps[i]['y'] = clamp(ps[i]['y'] + cy, -2, H+2)
+
+        # contact bookkeeping + per-player state (free/sliding/blocked)
+        contacts = []
+        residual = 0.0
+        for i in range(n):
+            a = ps[i]
+            for j in range(i+1, n):
+                c = ps[j]
+                dx, dy = c['x'] - a['x'], c['y'] - a['y']
+                d = math.hypot(dx, dy)
+                if d < R2 + OCC_SKIN:
+                    pen = max(0.0, R2 - d)
+                    residual = max(residual, pen)
+                    contacts.append((a['pid'], c['pid'], pen))
+        for a in ps:
+            dvx, dvy = a.get('_dvx', 0.0), a.get('_dvy', 0.0)
+            dm = math.hypot(dvx, dvy); am = math.hypot(a['vx'], a['vy'])
+            if dm > 0.5 and am < 0.3*dm: a['occ'] = 2                 # blocked
+            elif dm > 0.3 and (abs(a['vx']-dvx) > 0.2 or abs(a['vy']-dvy) > 0.2):
+                a['occ'] = 1                                          # sliding
+            else: a['occ'] = 0
+            v = math.hypot(a['vx'], a['vy'])
+            a['loco'] = 'IDLE' if v < 0.3 else 'WALK' if v < 2 else \
+                        'JOG' if v < 4.5 else 'RUN' if v < 6.8 else 'SPRINT'
+        self.last_contacts = contacts
+        o['pairs'] += len(contacts)
+        o['simult'] = max(o['simult'], len(contacts))
+        o['maxpen'] = max(o['maxpen'], residual)
+        o['maxcorr'] = max(o['maxcorr'], maxcorr)
+        o['unresolved'] += 1 if residual > OCC_TOL else 0
+        o['blockT'] += DT * sum(1 for a in ps if a['occ'] == 2)
+        o['slideT'] += DT * sum(1 for a in ps if a['occ'] == 1)
+        o['ms'] += (_time.perf_counter() - t0) * 1000.0
+        o['ticks'] += 1
+        # stuck detection: wants to move, achieves almost nothing, for > 2 s
+        for a in ps:
+            dm = math.hypot(a.get('_dvx', 0.0), a.get('_dvy', 0.0))
+            if dm > 1.5 and math.hypot(a['vx'], a['vy']) < 0.15*dm:
+                a['_stuck'] = a.get('_stuck', 0.0) + DT
+                if a['_stuck'] > 2.0:
+                    o['stuck'] += 1; a['_stuck'] = 0.0
+            else:
+                a['_stuck'] = 0.0
 
     def out_check(self):
         b = self.ball
@@ -412,7 +562,7 @@ class Body:
     def tick(self, khash):
         """One 60 Hz step. Intent execution is driven by the adapter (lab.py)."""
         self.tick_n += 1; self.t += DT
-        self.separate()
+        self.occupancy_step()
         self.step_ball()
         self.interact(khash)
         self.out_check()

@@ -88,7 +88,7 @@ const S = {
   camV: { x: 0, y: 0, zoom: RUNTIME_DEFAULTS.zoom, zoomTarget: RUNTIME_DEFAULTS.zoom,
           mode: "ball", smooth: RUNTIME_DEFAULTS.smooth, lead: 0, manualX: 52.5,
           target: null },
-  dbg: { anchors: false, ids: false, vel: false, state: false,
+  dbg: { occ: false, anchors: false, ids: false, vel: false, state: false,
          ball: false, track: false, goalgeo: false, grid: false, xform: false,
          netphys: false,
          cam: true },
@@ -386,7 +386,7 @@ function sampleAt(head) {
                    speed: Math.hypot(vx, vy), act: b[2], active: b[3],
                    face: b.length > 4 ? b[4] : undefined });
   }
-  return { clock: A[0] + t * dt, ball, players };
+  return { clock: A[0] + t * dt, ball, players, occ: A[6] || null };
 }
 
 // ═══ world ground texture (32 px/m, camera-independent, built once) ══════════
@@ -1594,6 +1594,53 @@ function drawPlayer(p, dt) {
       ctx.fillText(`${vs.state}/${dir} ${p.speed.toFixed(1)}m/s [${S.pb.acts[p.act] || p.act}]`, ax, ty);
   }
 }
+// ═══ PLAYER PHYSICAL OCCUPANCY debug overlay (engine-authoritative data) ═════
+// Mirrors world.py BODY_R — keep in sync with the engine constant.
+const OCC_BODY_R = 0.32;
+function drawOccDebug(sample) {
+  const occ = sample.occ;
+  const byIdx = {};
+  for (const p of sample.players) byIdx[p.idx] = p;
+  for (const p of sample.players) {
+    const st = occ && occ.p && occ.p[p.idx] ? occ.p[p.idx][4] : 0;
+    ctx.strokeStyle = st === 2 ? "rgba(255,80,80,0.95)" :
+                      st === 1 ? "rgba(255,220,80,0.95)" : "rgba(200,200,200,0.55)";
+    ctx.lineWidth = PXQ;
+    ctx.beginPath();
+    for (let k = 0; k <= 14; k++) {
+      const a = k / 14 * Math.PI * 2;
+      const q = sproj3(p.x + OCC_BODY_R * Math.cos(a), 0, p.y + OCC_BODY_R * Math.sin(a));
+      if (k === 0) ctx.moveTo(q.x, q.y); else ctx.lineTo(q.x, q.y);
+    }
+    ctx.stroke();
+    if (occ && occ.p && occ.p[p.idx]) {
+      const [dvx, dvy, avx, avy] = occ.p[p.idx];
+      const o = sproj3(p.x, 0, p.y);
+      const dtip = sproj3(p.x + dvx * 0.6, 0, p.y + dvy * 0.6);
+      const atip = sproj3(p.x + avx * 0.6, 0, p.y + avy * 0.6);
+      ctx.strokeStyle = "rgba(255,220,80,0.9)"; ctx.lineWidth = PXQ;        // desired
+      ctx.beginPath(); ctx.moveTo(o.x, o.y); ctx.lineTo(dtip.x, dtip.y); ctx.stroke();
+      ctx.strokeStyle = "rgba(110,255,140,0.9)"; ctx.lineWidth = PXQ * 2;   // resolved
+      ctx.beginPath(); ctx.moveTo(o.x, o.y); ctx.lineTo(atip.x, atip.y); ctx.stroke();
+    }
+  }
+  if (occ && occ.c) for (const [ia, ic, penmm] of occ.c) {
+    const a = byIdx[ia], c = byIdx[ic];
+    if (!a || !c) continue;
+    const pa = sproj3(a.x, 0, a.y), pc = sproj3(c.x, 0, c.y);
+    ctx.strokeStyle = "rgba(255,90,90,0.9)"; ctx.lineWidth = PXQ;
+    ctx.beginPath(); ctx.moveTo(pa.x, pa.y); ctx.lineTo(pc.x, pc.y); ctx.stroke();
+    if (penmm > 0.5) {
+      ctx.fillStyle = "#ff9a9a"; ctx.font = uipx(9) + "px monospace"; ctx.textAlign = "center";
+      ctx.fillText(penmm.toFixed(1) + "mm", (pa.x + pc.x) / 2, (pa.y + pc.y) / 2 - 4);
+      ctx.textAlign = "left";
+    }
+  }
+  ctx.fillStyle = "#cfe8cf"; ctx.font = uipx(11) + "px ui-monospace, monospace";
+  ctx.fillText("OCCUPANCY DEBUG — circle 0.32 m body · yellow=desired v · green=resolved v · " +
+               "red ring=blocked, yellow ring=sliding · red link=contact (1 Hz sample)",
+               uipx(14), cv.height - uipx(70));
+}
 // ═══ BALL: procedural crisp pixel-art football + true height rendering ═════
 // Physical radius stays authoritative (0.11 m); the sprite uses its own
 // readability calibration. Sprites are built per-pixel on tiny grids and
@@ -1737,6 +1784,7 @@ function draw(sample, dt) {
   drawStadium();
   drawFarBarrier();
   drawMarkings();
+  if (S.dbg.occ && sample) drawOccDebug(sample);
   if (S.dbg.grid) drawGrid();
   const ents = [];
   if (sample) {
@@ -1855,7 +1903,7 @@ function bindUI() {
   document.getElementById("pbspeed").addEventListener("change", (e) => {
     S.pb.speed = parseFloat(e.target.value);
   });
-  for (const id of ["anchors", "ids", "vel", "state", "ball", "track", "goalgeo", "grid", "xform", "cam", "netphys"])
+  for (const id of ["anchors", "ids", "vel", "state", "ball", "track", "goalgeo", "grid", "xform", "cam", "netphys", "occ"])
     document.getElementById("dbg-" + id)?.addEventListener("change", (e) => {
       S.dbg[id] = e.target.checked;
     });
