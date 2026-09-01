@@ -1853,16 +1853,26 @@ function ptSelectFoot(t, tx, ty) {
   }
   return { foot: best, lat, dtg, tgt };
 }
-function ptKickEntry(tech, foot) {
-  // technique+foot -> sequence (deterministic fallback chain, gaps logged)
+function ptKickEntry(tech, foot, mirror) {
+  // technique+foot -> sequence (deterministic fallback chain, gaps logged).
+  // PREFERRED FOOT KICK ROUTING fix: the library is EAST-AUTHORED, so a
+  // mirrored (west) presentation flips which physical foot the art shows.
+  // To display the SELECTED foot facing west we must load the OPPOSITE
+  // foot's east art and mirror it (a mirrored right-foot kick looks
+  // left-footed). artFoot = the art actually loaded; the kick descriptor
+  // keeps the selected foot. fb marks technique/foot substitutions.
+  const artFoot = mirror ? (foot === "R" ? "L" : "R") : foot;
   const map = {
     "INSIDE": "INSIDE_", "INSIDE_FINISH": "INSIDE_",
-    "LACES": "LACES_", "LACES_POWER": foot === "R" ? "POWER_" : "LACES_",
+    "LACES": "LACES_", "LACES_POWER": artFoot === "R" ? "POWER_" : "LACES_",
     "OUTSIDE": "OUTSIDE_", "CHIP": "CHIP_",
   };
-  let key = (map[tech] || "LACES_") + foot;
-  if (!KICK_LIB[key]) key = (tech === "CHIP" ? "INSIDE_" : "LACES_") + foot;   // e.g. CHIP_L
-  return { key, e: KICK_LIB[key] };
+  const want = (map[tech] || "LACES_") + artFoot;
+  let key = want, fb = false;
+  if (!KICK_LIB[key]) { key = (tech === "CHIP" ? "INSIDE_" : "LACES_") + artFoot; fb = true; }
+  // LACES_POWER with left art foot has no dedicated power set: substitution
+  if (tech === "LACES_POWER" && artFoot === "L") fb = true;
+  return { key, e: KICK_LIB[key], artFoot, fb };
 }
 // ═══ SINGLE PLAYER ANIMATION PLAYTEST — isolated dev harness ═════════════════
 // Interactive one-player + authoritative-ball testbed ("Single Player Test"
@@ -1941,7 +1951,8 @@ function ptKick(fam, label, Dopt, force) {
     tech = "OUTSIDE";
   const pres = ptPresDir(t);
   const ew = pres === "east" || pres === "west";
-  const ent = ptKickEntry(tech, sel.foot);
+  const mirror = pres === "west";
+  const ent = ptKickEntry(tech, sel.foot, mirror);
   if (!ew || !ent.e) {                        // directional art gap: minimal delay
     t.kickFbN = (t.kickFbN || 0) + 1;
     t.kick = { t0: t.now, kickAt: t.now + 0.2, end: t.now + 0.45, fam, v0, vz,
@@ -1955,9 +1966,11 @@ function ptKick(fam, label, Dopt, force) {
     const kickAt = t.now + (ent.e.contact - f0) / ent.e.fps;
     t.kick = { t0: t.now, kickAt, end: t.now + (ent.e.n - f0) / ent.e.fps + 0.12, fam, v0, vz,
                dir: p.facing, kicked: false, tech, foot: sel.foot, f0,
-               key: ent.key, e: ent.e, mirror: pres === "west", label };
+               key: ent.key, e: ent.e, mirror, artFoot: ent.artFoot, fb: ent.fb, label };
   }
   t.kickInfo = { pfoot: t.pfoot || "R", foot: sel.foot, tech, fam,
+                 asset: ent.e ? ent.e.set || ent.e.legacy : "none",
+                 contactFoot: sel.foot, fb: ent.e ? ent.fb : true, noAnim: !ew || !ent.e,
                  tgtDeg: +(((p.facing * 57.296) % 360 + 360) % 360).toFixed(0) };
   t.last = label + " scheduled (" + tech + " " + sel.foot + ")";
 }
@@ -2460,9 +2473,11 @@ function drawPlaytest(dt) {
     uipx(14), cv.height - uipx(22));
   const ki = t.kickInfo || {};
   ctx.fillStyle = "#ffc4e0";
-  ctx.fillText(`KICK  preferred ${t.pfoot || "R"} (F toggles) · selected ${ki.foot || "-"} · ` +
-    `technique ${ki.tech || "-"} · action ${ki.fam || "-"} · target ${ki.tgtDeg !== undefined ? ki.tgtDeg + "°" : "-"} · ` +
-    `contact err ${ki.errR !== undefined ? ki.errR + "R" : "-"}`, uipx(14), cv.height - uipx(6));
+  // PREFERRED FOOT KICK ROUTING readout (explicit; persists after the kick)
+  ctx.fillText(`KICK  technique ${ki.tech || "-"} · PREFERRED ${t.pfoot || "R"} (F toggles) · SELECTED ${ki.foot || "-"} · ` +
+    `ASSET ${ki.asset || "-"} · CONTACT FOOT ${ki.contactFoot || "-"} · FALLBACK ${ki.fb === undefined ? "-" : ki.fb ? "YES" : "no"}` +
+    `${ki.noAnim ? " (NO-ANIM)" : ""} · action ${ki.fam || "-"} · contact err ${ki.errR !== undefined ? ki.errR + "R" : "-"}`,
+    uipx(14), cv.height - uipx(6));
   const ti = t.touchInfo || {};
   ctx.fillStyle = "#ffe9a8";
   ctx.fillText(`TOUCH  desired ${ti.sc !== undefined ? ti.sc.toFixed(2) : "-"} m · last dist ` +
