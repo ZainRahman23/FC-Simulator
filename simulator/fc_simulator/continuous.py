@@ -55,7 +55,8 @@ class Lab:
                 roster.append({'pid': st.player.player_id, 'team': tnum, 'gk': st.slot == 'GK',
                                'x': MX(st.pos.x), 'y': MY(st.pos.y),
                                'vmax': 6.3 + a.get('sprint_speed', 60)/100*2.6,
-                               'acc': 3.6 + a.get('acceleration', 60)/100*1.9})
+                               'acc': 3.6 + a.get('acceleration', 60)/100*1.9,
+                               'pfoot': str(getattr(st.player, 'preferred_foot', 'R'))[:1].upper()})
                 self.team_of[st.player.player_id] = tnum
         self.body = Body(roster)
         self.body.ball['x'], self.body.ball['y'] = 52.5, 34.0

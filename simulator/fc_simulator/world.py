@@ -95,6 +95,7 @@ class Body:
                 'pid': r['pid'], 'team': r['team'], 'gk': r.get('gk', False),
                 'x': r.get('x', 52.5), 'y': r.get('y', 34.0), 'vx': 0.0, 'vy': 0.0,
                 'facing': 0.0, 'vmax': r.get('vmax', 8.2), 'acc': r.get('acc', ACC),
+                'pfoot': r.get('pfoot', 'R'),
                 'touchT': 0.0, 'burst': 0.0, 'stun': 0.0, 'loco': 'IDLE'}
         self.ball = {'x': 52.5, 'y': 34.0, 'z': 0.0, 'vx': 0.0, 'vy': 0.0, 'vz': 0.0,
                      'ctrl': None, 'last': None, 'exclPid': None, 'exclT': 0.0, 'held': None,
@@ -136,6 +137,51 @@ class Body:
         b['vx'] = b['vy'] = b['vz'] = 0.0
         b['ctrl'] = None; b['held'] = None; b['state'] = 'DEAD'
 
+    @staticmethod
+    def kick_technique(fam, D, v0):
+        """Deterministic technique from football intent (KICK ANIMATION V2).
+        Presentation metadata only — physics is untouched."""
+        if fam in ('SHORT', 'CUTBACK', 'THROUGH'): return 'INSIDE'
+        if fam == 'DRIVEN': return 'LACES'
+        if fam in ('LOFT', 'CROSS'): return 'CHIP'
+        if fam in ('CLEAR', 'PUNT'): return 'LACES_POWER'
+        if fam == 'SHOT':
+            if D < 14.0: return 'INSIDE_FINISH'
+            return 'LACES_POWER' if v0 >= 29.0 else 'LACES'
+        return 'LACES'
+
+    @staticmethod
+    def select_kick_foot(p, bx, by, tx, ty):
+        """Deterministic kicking-foot selection: preferred foot is a strong
+        PREFERENCE, geometry can override (zero RNG).
+        Considers: preferred foot, ball side relative to the body line,
+        target side (opening the body), never forcing an awkward far-side
+        contact. Returns ('L'|'R', lat) where lat is the ball's signed
+        lateral offset (+ = player's right)."""
+        pf = p.get('pfoot', 'R')
+        v = math.hypot(p['vx'], p['vy'])
+        mv = math.atan2(p['vy'], p['vx']) if v > 0.7 else p['facing']
+        lat = math.cos(mv) * (by - p['y']) - math.sin(mv) * (bx - p['x'])
+        tgt = math.atan2(ty - p['y'], tx - p['x'])
+        dtg = (tgt - mv + math.pi * 3) % (2 * math.pi) - math.pi   # + = target right
+        best, bestScore = pf, -9.0
+        for foot, side in (('R', 1.0), ('L', -1.0)):
+            sc = 3.0 if foot == pf else 0.0
+            if lat * side > 0.12: sc += 2.0        # ball naturally on this side
+            if lat * side < -0.30: sc -= 2.5       # ball clearly on the other side
+            if dtg * side < -0.20: sc += 0.6       # body opens toward target
+            if sc > bestScore or (sc == bestScore and foot == pf):
+                best, bestScore = foot, sc
+        return best, lat
+
+    @staticmethod
+    def trivela_plausible(foot, lat, dtg):
+        """Outside-of-boot geometry: ball on the kicking-foot side and the
+        target lies OUTSIDE that foot (same side) by 15..50 deg — the angle
+        an inside-foot pass would need a big body-open to reach."""
+        side = 1.0 if foot == 'R' else -1.0
+        return lat * side > -0.05 and 0.26 < dtg * side < 0.88
+
     def kick(self, pid, tx, ty, fam):
         p, b = self.players[pid], self.ball
         D = max(0.5, dist(b['x'], b['y'], tx, ty))
@@ -147,6 +193,23 @@ class Body:
         b['exclPid'] = pid; b['exclT'] = self.t + EXCL
         self.last_kick_t = self.t
         self.last_kicker = pid
+        # KICK ANIMATION V2: renderer-facing descriptor (presentation only —
+        # nothing reads it back into physics)
+        v = math.hypot(p['vx'], p['vy'])
+        mv = math.atan2(p['vy'], p['vx']) if v > 0.7 else p['facing']
+        tgt = math.atan2(ty - p['y'], tx - p['x'])
+        dtg = (tgt - mv + math.pi * 3) % (2 * math.pi) - math.pi
+        foot, lat = Body.select_kick_foot(p, b['x'], b['y'], tx, ty)
+        tech = Body.kick_technique(fam, D, v0)
+        if tech in ('INSIDE', 'LACES') and Body.trivela_plausible(foot, lat, dtg):
+            tech = 'OUTSIDE'
+        self.last_kick_desc = {
+            't': self.t, 'pid': pid, 'family': fam, 'technique': tech,
+            'preferredFoot': p.get('pfoot', 'R'), 'selectedFoot': foot,
+            'ballLat': round(lat, 3), 'targetDir': round(tgt, 4),
+            'moveDir': round(mv, 4), 'turnToTarget': round(dtg, 4),
+            'launchSpeed': round(v0, 2), 'launchVz': round(vz, 2),
+        }
         self._contact('KICK:' + fam, pid, f'{v0:.1f} m/s')
 
     def locomote(self, p, tx, ty, speed):

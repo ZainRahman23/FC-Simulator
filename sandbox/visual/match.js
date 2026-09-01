@@ -164,6 +164,12 @@ async function boot() {
   for (let i = 0; i < 10; i++)
     jobs.push({ key: ["shoot", "east", i],
                 path: ASSET_ROOT + "originals/character_31a11357/proto_anim/shoot/east/" + i + ".png" });
+  // KICK ANIMATION V2: technique sequences (east; west mirrors, foot flips)
+  for (const [ks, kn] of [["in_R", 8], ["in_L", 8], ["la_R", 10], ["la_L", 10],
+                          ["ou_R", 8], ["ou_L", 8], ["ch_R", 8]])
+    for (let i = 0; i < kn; i++)
+      jobs.push({ key: ["kick", ks + "|" + i, 0],
+                  path: ASSET_ROOT + "originals/character_31a11357/proto_anim/kick/east/" + ks + "_" + i + ".png" });
   // DRIBBLE ANIMATION V3: directional touch libraries (n/ne/se/s; w/nw/sw mirror)
   for (const [d3, f3] of [["north", "n_dr_6.png"], ["north", "n_dr_5.png"], ["north", "n_dr_4.png"], ["north", "n_dr_2.png"], ["north", "n_sp_6.png"], ["north", "n_sp_4.png"], ["north", "n_dr_0.png"], ["north", "n_dr_1.png"], ["north", "n_dr_3.png"], ["north", "n_dr_7.png"], ["north-east", "ne_dr_6.png"], ["north-east", "ne_dr_0.png"], ["north-east", "ne_dr_5.png"], ["north-east", "ne_dr_1.png"], ["north-east", "ne_sp_2.png"], ["north-east", "ne_sp_1.png"], ["north-east", "ne_dr_2.png"], ["north-east", "ne_dr_3.png"], ["north-east", "ne_dr_4.png"], ["north-east", "ne_dr_7.png"], ["south-east", "se_dr_2.png"], ["south-east", "se_dr_1.png"], ["south-east", "se_dr_6.png"], ["south-east", "se_dr_7.png"], ["south-east", "se_sp_3.png"], ["south-east", "se_sp_4.png"], ["south-east", "se_dr_0.png"], ["south-east", "se_dr_3.png"], ["south-east", "se_dr_4.png"], ["south-east", "se_dr_5.png"], ["south", "s_dr_6.png"], ["south", "s_dr_7.png"], ["south", "s_dr_5.png"], ["south", "s_dr_3.png"], ["south", "s_sp_4.png"], ["south", "s_sp_2.png"], ["south", "s_dr_0.png"], ["south", "s_dr_1.png"], ["south", "s_dr_2.png"], ["south", "s_dr_4.png"]])
     jobs.push({ key: ["drib3", d3 + "|" + f3, 0],
@@ -184,6 +190,10 @@ async function boot() {
     if (kind === "ballsheet") { S.images.ballSheet = im; return; }
     if (kind === "ballmicro") { (S.images.ballMicro ||= {})[+dir] = im; return; }
     if (kind === "drib2") { (S.images.drib2 ||= {})[dir] = im; return; }
+    if (kind === "kick") {
+      const [ks, ki] = dir.split("|");
+      ((S.images.kick ||= {})[ks] ||= [])[+ki] = im; return;
+    }
     if (kind === "drib3") {
       const [d3, f3] = dir.split("|");
       ((S.images.drib3 ||= {})[d3] ||= {})[f3] = im; return;
@@ -1785,6 +1795,58 @@ function drib2Schedule(t, pick, T) {
   }
   t.dribSeq = seq;
 }
+// ═══ KICK ANIMATION V2 — technique library + deterministic foot selection ═══
+// Mirrors world.py Body.select_kick_foot / kick_technique / trivela_plausible
+// (presentation only; the engine's kick physics is untouched). East-authored;
+// west presents the mirror with flipped foot labels. contact = boot px in the
+// 140 canvas at the contact frame; kickAt = t0 + contact/fps.
+const KICK_LIB = {
+  INSIDE_R: { set: "in_R", n: 8, fps: 14, contact: 6, cx: 100, cy: 114 },
+  INSIDE_L: { set: "in_L", n: 8, fps: 14, contact: 7, cx: 99, cy: 116 },
+  LACES_R: { set: "la_R", n: 10, fps: 12, contact: 7, cx: 97, cy: 114 },
+  LACES_L: { set: "la_L", n: 10, fps: 12, contact: 7, cx: 98, cy: 113 },
+  POWER_R: { legacy: "shoot", n: 10, fps: 12, contact: 6, cx: 96, cy: 114 },
+  OUTSIDE_R: { set: "ou_R", n: 8, fps: 14, contact: 6, cx: 100, cy: 114 },
+  OUTSIDE_L: { set: "ou_L", n: 8, fps: 14, contact: 6, cx: 96, cy: 113 },
+  CHIP_R: { set: "ch_R", n: 8, fps: 14, contact: 5, cx: 86, cy: 112 },
+};
+function ptTech(fam, D, v0) {
+  if (fam === "SHORT" || fam === "CUTBACK" || fam === "THROUGH") return "INSIDE";
+  if (fam === "DRIVEN") return "LACES";
+  if (fam === "LOFT" || fam === "CROSS") return "CHIP";
+  if (fam === "CLEAR" || fam === "PUNT") return "LACES_POWER";
+  if (fam === "SHOT") return D < 14 ? "INSIDE_FINISH" : (v0 >= 29 ? "LACES_POWER" : "LACES");
+  return "LACES";
+}
+function ptSelectFoot(t, tx, ty) {
+  const p = t.p, b = t.b;
+  const pf = t.pfoot || "R";
+  const v = Math.hypot(p.vx, p.vy);
+  const mv = v > 0.7 ? Math.atan2(p.vy, p.vx) : p.facing;
+  const lat = Math.cos(mv) * (b.y - p.y) - Math.sin(mv) * (b.x - p.x);
+  const tgt = Math.atan2(ty - p.y, tx - p.x);
+  const dtg = ((tgt - mv) + Math.PI * 3) % (2 * Math.PI) - Math.PI;
+  let best = pf, bestScore = -9;
+  for (const [foot, side] of [["R", 1], ["L", -1]]) {
+    let sc = foot === pf ? 3.0 : 0.0;
+    if (lat * side > 0.12) sc += 2.0;
+    if (lat * side < -0.30) sc -= 2.5;
+    if (dtg * side < -0.20) sc += 0.6;
+    if (sc > bestScore || (sc === bestScore && foot === pf)) { best = foot; bestScore = sc; }
+  }
+  return { foot: best, lat, dtg, tgt };
+}
+function ptKickEntry(tech, foot) {
+  // technique+foot -> sequence (deterministic fallback chain, gaps logged)
+  const map = {
+    "INSIDE": "INSIDE_", "INSIDE_FINISH": "INSIDE_",
+    "LACES": "LACES_", "LACES_POWER": foot === "R" ? "POWER_" : "LACES_",
+    "OUTSIDE": "OUTSIDE_", "CHIP": "CHIP_",
+  };
+  let key = (map[tech] || "LACES_") + foot;
+  if (!KICK_LIB[key]) key = (tech === "CHIP" ? "INSIDE_" : "LACES_") + foot;   // e.g. CHIP_L
+  return { key, e: KICK_LIB[key] };
+}
 // ═══ SINGLE PLAYER ANIMATION PLAYTEST — isolated dev harness ═════════════════
 // Interactive one-player + authoritative-ball testbed ("Single Player Test"
 // button). ARCHITECTURE NOTE: the authoritative Body lives in Python
@@ -1804,7 +1866,9 @@ const PT_DT = 1 / 60;
 function ptFam(fam, D) {          // world.py FAM launch families (port)
   const c = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
   if (fam === "SHORT") return [c(Math.sqrt(2 * PT.MU_ROLL * D + 6.5 * 6.5), 8, 19), 0];
+  if (fam === "DRIVEN") return [c(Math.sqrt(2 * PT.MU_ROLL * D + 7.0 * 7.0), 14, 26), 0];
   if (fam === "LOFT") { const T = c(D / 16, 0.8, 2.2); return [D / T, PT.G * T / 2]; }
+  if (fam === "CLEAR") { const T = c(D / 11, 1.2, 2.6); return [D / T, PT.G * T / 2 * 1.15]; }
   return [c(24 + D * 0.3, 24, 31), c(0.5 + D * 0.06, 0.5, 2.2)];   // SHOT
 }
 function ptReset() {
@@ -1813,7 +1877,8 @@ function ptReset() {
   t.p = { x: 76.0, y: 34.0, vx: 0, vy: 0, facing: 0, touchT: 0 };
   t.b = { x: 76.8, y: 34.0, z: 0, vx: 0, vy: 0, vz: 0, ctrl: true, exclT: 0 };
   t.ctrlSince = 0;
-  t.shoot = null; t.net = null; t.touchN = 0;
+  t.shoot = null; t.kick = null; t.kickLog = t.kickLog || []; t.net = null; t.touchN = 0;
+  t.pfoot = t.pfoot || "R";
   t.dribT = 0; t.dribF0 = 0;
   t.last = "RESET";
 }
@@ -1837,24 +1902,44 @@ function ptExit() {
   if (btn) { btn.textContent = "Single Player Test"; btn.style.background = "#1d7a3d"; btn.style.borderColor = "#2fa35a"; }
 }
 function ptKick(fam, label) {
+  // KICK ANIMATION V2: every kick is SCHEDULED — technique + foot chosen
+  // deterministically, animation enters now, authoritative impulse fires
+  // exactly at the contact frame instant. Physics families untouched.
   const t = S.pt, p = t.p, b = t.b;
-  if (!b.ctrl || t.shoot) return;
-  const D = fam === "SHORT" ? 14 : fam === "LOFT" ? 22 : 20;
+  if (!b.ctrl || t.kick) return;
+  const D = arguments.length > 2 && arguments[2] ? arguments[2] :
+    (fam === "SHORT" ? 14 : fam === "LOFT" ? 22 : 20);
   const [v0, vz] = ptFam(fam, D);
-  b.vx = Math.cos(p.facing) * v0; b.vy = Math.sin(p.facing) * v0; b.vz = vz;
-  b.ctrl = false; b.exclT = t.now + PT.EXCL; p.touchT = 0;
-  t.last = label;
+  const tx = p.x + Math.cos(p.facing) * D, ty = p.y + Math.sin(p.facing) * D;
+  const sel = ptSelectFoot(t, tx, ty);
+  let tech = ptTech(fam, D, v0);
+  if ((tech === "INSIDE" || tech === "LACES") &&
+      ((sel.foot === "R" && sel.lat > -0.05 && sel.dtg > 0.26 && sel.dtg < 0.88) ||
+       (sel.foot === "L" && sel.lat < 0.05 && sel.dtg < -0.26 && sel.dtg > -0.88)))
+    tech = "OUTSIDE";
+  const pres = ptPresDir(t);
+  const ew = pres === "east" || pres === "west";
+  const ent = ptKickEntry(tech, sel.foot);
+  if (!ew || !ent.e) {                        // directional art gap: minimal delay
+    t.kickFbN = (t.kickFbN || 0) + 1;
+    t.kick = { t0: t.now, kickAt: t.now + 0.2, end: t.now + 0.45, fam, v0, vz,
+               dir: p.facing, kicked: false, tech, foot: sel.foot, noAnim: true, label };
+  } else {
+    // FIRST-TIME BRANCH (spec 22): a moving carrier skips the approach and
+    // enters at the plant -> swing -> contact tail; a stationary kick plays
+    // the full approach. The ball is never frozen or parented.
+    const pv0 = Math.hypot(p.vx, p.vy);
+    const f0 = pv0 > 2.0 ? Math.max(0, ent.e.contact - 3) : 0;
+    const kickAt = t.now + (ent.e.contact - f0) / ent.e.fps;
+    t.kick = { t0: t.now, kickAt, end: t.now + (ent.e.n - f0) / ent.e.fps + 0.12, fam, v0, vz,
+               dir: p.facing, kicked: false, tech, foot: sel.foot, f0,
+               key: ent.key, e: ent.e, mirror: pres === "west", label };
+  }
+  t.kickInfo = { pfoot: t.pfoot || "R", foot: sel.foot, tech, fam,
+                 tgtDeg: +(((p.facing * 57.296) % 360 + 360) % 360).toFixed(0) };
+  t.last = label + " scheduled (" + tech + " " + sel.foot + ")";
 }
-function ptShoot() {
-  const t = S.pt;
-  if (!t.b.ctrl || t.shoot) return;
-  // SYNC CONTRACT: the authoritative kick instant is scheduled first; the
-  // shoot animation enters NOW so its authored contact frame (6 @ 12 fps)
-  // is on screen exactly when the impulse fires. The ball stays controlled
-  // and untouched until that instant; the animation never moves it.
-  t.shoot = { t0: t.now, kickAt: t.now + SHOOT_CONTACT_FRAME / SHOOT_FPS, kicked: false };
-  t.last = "SHOOT scheduled";
-}
+function ptShoot() { ptKick("SHOT", "SHOT"); }
 function ptStep() {
   const t = S.pt;
   if (!t || !t.on) return;
@@ -1862,7 +1947,7 @@ function ptStep() {
   const p = t.p, b = t.b;
   // input -> desired velocity (kicker plants during the shoot animation)
   let dx = 0, dy = 0;
-  if (!t.shoot) {
+  if (!t.kick) {
     if (t.keys.up) dy -= 1;
     if (t.keys.down) dy += 1;
     if (t.keys.left) dx -= 1;
@@ -1871,7 +1956,7 @@ function ptStep() {
   const m = Math.hypot(dx, dy), spd = t.keys.sprint ? PT.VMAX : PT.RUNV;
   const inCorr = m > 0 ? Math.atan2(dy, dx) : null;   // desired input corridor
   let dvx = 0, dvy = 0;
-  if (m > 0 && b.ctrl && !t.shoot) {
+  if (m > 0 && b.ctrl && !t.kick) {
     // CARRY steering — the authoritative execution (continuous.py CARRY):
     // run THROUGH the ball toward a point 2 m along the desired corridor,
     // so touches and turns funnel the carrier onto the ball instead of a
@@ -1916,17 +2001,33 @@ function ptStep() {
   const rate = Math.max(4.0, Math.min(7.0, 7.0 - v * 0.30)) * PT_DT;  // athletic hips (V1)
   p.facing += Math.abs(df) <= rate ? df : Math.sign(df) * rate;
   // scheduled shot: impulse fires exactly at the contact instant
-  if (t.shoot) {
-    if (!t.shoot.kicked && t.now >= t.shoot.kickAt) {
-      t.shoot.kicked = true;
-      const sh = t.shoot;                    // ptKick clears ctrl; keep anim
-      const [v0, vz] = ptFam("SHOT", 20);
-      b.vx = Math.cos(p.facing) * v0; b.vy = Math.sin(p.facing) * v0; b.vz = vz;
-      b.ctrl = false; b.exclT = t.now + PT.EXCL;
-      t.last = "SHOT " + v0.toFixed(0) + " m/s";
-      t.shoot = sh;
+  if (t.kick) {
+    const k = t.kick;
+    if (!k.kicked && t.now >= k.kickAt) {
+      k.kicked = true;
+      // CONTACT: authoritative impulse along the direction frozen at the
+      // decision instant — physics families unchanged
+      b.vx = Math.cos(k.dir) * k.v0; b.vy = Math.sin(k.dir) * k.v0; b.vz = k.vz;
+      b.ctrl = false; b.exclT = t.now + PT.EXCL; p.touchT = 0;
+      t.last = k.label + " " + k.v0.toFixed(0) + " m/s (" + k.tech + " " + k.foot + ")";
+      if (k.e) {
+        const sp2 = sproj(p.x, p.y);
+        const scl2 = S.playerVScale * depthScale(sp2.d) * RIG.zoom * RES;
+        const fx = sp2.x + (k.mirror ? -(k.e.cx - 70) : (k.e.cx - 70)) * scl2;
+        const fy = sp2.y + (k.e.cy - 117) * scl2;
+        const bp2 = sproj3(b.x, b.z, b.y);
+        const br2 = Math.max(2, BALL_VIS_R * S.pxPerM * depthScale(bp2.d) * RIG.zoom * RES);
+        const dpx = Math.hypot(fx - bp2.x, fy - bp2.y);
+        const rec = { tech: k.tech, foot: k.foot, fam: k.fam,
+                      radii: +(dpx / br2).toFixed(2), px: +dpx.toFixed(1) };
+        (t.kickLog ||= []).push(rec);
+        t.kickInfo = Object.assign(t.kickInfo || {}, { errR: rec.radii });
+        t.dbgTouch = { fx, fy, bx: bp2.x, by: bp2.y, until: t.now + 0.6, rec:
+          { n: t.kickLog.length, foot: k.foot, pose: k.key || "-", kind: k.tech,
+            px: rec.px, radii: rec.radii, turn: 0 } };
+      }
     }
-    if (t.now >= t.shoot.t0 + 10 / SHOOT_FPS + 0.15) t.shoot = null;
+    if (t.now >= k.end) t.kick = null;
   }
   // carry (world.carry_touch port; solo pitch: no opponent shortening)
   if (b.ctrl) {
@@ -1939,7 +2040,8 @@ function ptStep() {
     if (d <= 0.95) t.ctrlState = "SECURE";
     else if (d <= 4.2 || sep < -0.3) t.ctrlState = (d > 2.6 && sep > 0.3) ? "ESCAPING" : "EXPOSED";
     else { b.ctrl = false; t.ctrlState = null; t.last = "LOOSE (escaped control envelope)"; }
-    if (b.ctrl && t.shoot) { b.vx = b.vy = b.vz = 0; }   // held for the strike
+    if (b.ctrl && t.kick) { /* wind-up: no carry touches; the ball keeps
+        rolling under normal physics until the authoritative contact */ }
     else if (b.ctrl) {
       p.touchT -= PT_DT;
       // CONTROLLED DRIBBLING V1 — mirror of world.py carry_touch: solved
@@ -2060,7 +2162,7 @@ function ptStep() {
       b.vx *= (1 - 1.2 * PT_DT); b.vy *= (1 - 1.2 * PT_DT);
       if (b.z <= 0.11) { b.z = 0.0; b.vz = 0; t.net = null; }
     }
-  } else if (!b.ctrl || !t.shoot) {
+  } else {
     if (!b.ctrl) {
       b.x += b.vx * PT_DT; b.y += b.vy * PT_DT; b.z += b.vz * PT_DT;
       if (b.z > 0) b.vz -= PT.G * PT_DT;
@@ -2149,11 +2251,13 @@ function ptView() {   // animation state + artwork choice (pure function)
   const t = S.pt, p = t.p;
   const spd = Math.hypot(p.vx, p.vy);
   const cosf = Math.cos(p.facing);
-  if (t.shoot) {
-    const f = Math.min(9, Math.floor((t.now - t.shoot.t0) * SHOOT_FPS));
-    const st = f < SHOOT_CONTACT_FRAME ? "SHOOT_APPROACH" :
-               f === SHOOT_CONTACT_FRAME ? "SHOOT_CONTACT" : "SHOOT_FOLLOWTHROUGH";
-    return { st, anim: "shoot", f, proto: true, mirror: cosf < -0.5 };
+  if (t.kick) {
+    const k = t.kick;
+    if (k.noAnim) return { st: "KICK", anim: "idle", f: 0, proto: false };
+    const f = Math.min(k.e.n - 1, (k.f0 || 0) + Math.floor((t.now - k.t0) * k.e.fps));
+    const st = f < k.e.contact ? "KICK_PREP" :
+               f === k.e.contact ? "KICK_CONTACT" : "KICK_FOLLOW";
+    return { st, kick: k, f, proto: true, mirror: k.mirror };
   }
   if (t.b.ctrl && spd > IDLE_MAX) {
     const pres = ptPresDir(t);
@@ -2211,6 +2315,12 @@ function drawPlaytest(dt) {
   ctx.restore();
   let im = null;
   let libDy = null;
+  if (view.kick) {
+    const k = view.kick;
+    im = k.e.legacy ? (S.anims[k.e.legacy].east && S.anims[k.e.legacy].east[view.f])
+                    : (S.images.kick && S.images.kick[k.e.set] && S.images.kick[k.e.set][view.f]);
+    libDy = 0;
+  }
   if (view.lib3) { im = S.images.drib3 && S.images.drib3[view.base] && S.images.drib3[view.base][view.e ? view.e.f : ""]; }
   if (view.lib3 && !im && view.lib3.f) im = S.images.drib3 && S.images.drib3[view.base] && S.images.drib3[view.base][view.lib3.f];
   if (view.lib3 && im) libDy = (view.lib3.dy || 0);
@@ -2250,8 +2360,8 @@ function drawPlaytest(dt) {
   // HUD readout
   const art = view.proto ? ("PROTOTYPE EAST ANIM" + (view.mirror ? " (MIRRORED WEST)" : ""))
                          : "FALLBACK directional art";
-  const cd = t.shoot && !t.shoot.kicked ? ("contact in " + (t.shoot.kickAt - t.now).toFixed(2) + " s")
-           : t.shoot ? "KICKED (follow-through)" : "-";
+  const cd = t.kick && !t.kick.kicked ? ("contact in " + (t.kick.kickAt - t.now).toFixed(2) + " s")
+           : t.kick ? "KICKED (follow-through)" : "-";
   ctx.textAlign = "center";
   ctx.fillStyle = "#ffd34d"; ctx.font = "bold " + uipx(20) + "px ui-monospace, monospace";
   ctx.fillText("SINGLE PLAYER TEST", cv.width / 2, uipx(78));
@@ -2278,6 +2388,11 @@ function drawPlaytest(dt) {
     `speed ${Math.hypot(p.vx, p.vy).toFixed(1)} m/s · turn ${t.inDir !== null && velDir !== null ?
       (Math.abs(((t.inDir - velDir) + Math.PI * 3) % (2 * Math.PI) - Math.PI) * 57.3).toFixed(0) : "-"}°`,
     uipx(14), cv.height - uipx(22));
+  const ki = t.kickInfo || {};
+  ctx.fillStyle = "#ffc4e0";
+  ctx.fillText(`KICK  preferred ${t.pfoot || "R"} (F toggles) · selected ${ki.foot || "-"} · ` +
+    `technique ${ki.tech || "-"} · action ${ki.fam || "-"} · target ${ki.tgtDeg !== undefined ? ki.tgtDeg + "°" : "-"} · ` +
+    `contact err ${ki.errR !== undefined ? ki.errR + "R" : "-"}`, uipx(14), cv.height - uipx(6));
   const ti = t.touchInfo || {};
   ctx.fillStyle = "#ffe9a8";
   ctx.fillText(`TOUCH  desired ${ti.sc !== undefined ? ti.sc.toFixed(2) : "-"} m · last dist ` +
@@ -2688,6 +2803,8 @@ function bindUI() {
       if (PT_KEYMAP[k]) { S.pt.keys[PT_KEYMAP[k]] = true; e.preventDefault(); }
       else if (k === "escape") ptExit();
       else if (k === "r") ptReset();
+      else if (k === "f") { S.pt.pfoot = (S.pt.pfoot === "L" ? "R" : "L");
+        S.pt.last = "PREFERRED FOOT -> " + S.pt.pfoot; }
       else if (k === "x") ptKick("SHORT", "SHORT PASS (no pass anim authored)");
       else if (k === "z") ptShoot();
       else if (k === "c") ptKick("LOFT", "LOFTED PASS (no pass anim authored)");

@@ -160,5 +160,62 @@
     "mirrors": "west<-east, north-west<-north-east, south-west<-south-east (accepted E->W precedent; foot labels flip with the mirror)",
     "metadata": "auto-measured (CONTACT_META.json): contact = grounded boot cluster nearest the expected ball line (dir-dependent target), sole+3 contact point, alignment dy",
     "reported_art_gaps": "diagonal + south SPRINT long-reach contacts (ball ~0.73 m ahead partly along the depth axis; art toe reach maxes ~77/140 art px) \u2014 candidates: (ne,se,s,sw,nw) x sprint; S<->N u-turn drag coverage"
+  },
+  "kick_v2_techniques": {
+    "date": "2026-09-01",
+    "mode": "v3 custom, east, ball-free; west = mirror (foot labels flip)",
+    "generations": [
+      {
+        "group": "905cad76",
+        "name": "kick_inside_R",
+        "cost": 2,
+        "accepted": "full 8f, contact f6"
+      },
+      {
+        "group": "55624f8a",
+        "name": "kick_inside_L",
+        "cost": 2,
+        "accepted": "full 8f, contact f7"
+      },
+      {
+        "group": "68d96801",
+        "name": "kick_laces_R",
+        "cost": 3,
+        "accepted": "full 10f, contact f7"
+      },
+      {
+        "group": "beefb723",
+        "name": "kick_laces_L",
+        "cost": 3,
+        "accepted": "full 10f, contact f7"
+      },
+      {
+        "group": "4369e603",
+        "name": "kick_outside_R (take 1)",
+        "cost": 2,
+        "rejected": "white puff/particle hallucinations on contact frames 5-6 (motion smear rule)"
+      },
+      {
+        "group": "c522c75b",
+        "name": "kick_outside_R2",
+        "cost": 2,
+        "accepted": "full 8f, contact f6 (clean retake)"
+      },
+      {
+        "group": "1235b423",
+        "name": "kick_outside_L",
+        "cost": 2,
+        "accepted": "full 8f, contact f6"
+      },
+      {
+        "group": "539c21e8",
+        "name": "kick_chip_R",
+        "cost": 2,
+        "accepted": "full 8f, contact f5 (stab-under), lift f6-7"
+      }
+    ],
+    "legacy_reuse": "proto_shoot_A_10f serves as the right-foot LACES_POWER extended variant",
+    "coverage": "E/W complete for both feet across INSIDE/LACES/OUTSIDE (+POWER R, CHIP R); CHIP_L falls back to INSIDE_L (reported); non-E/W presentations schedule a minimal no-anim kick (reported directional gap, next authoring wave)",
+    "total_generations_spent": 18
   }
 }
