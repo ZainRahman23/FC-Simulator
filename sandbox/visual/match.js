@@ -1700,7 +1700,10 @@ function ptStep() {
     // so touches and turns funnel the carrier onto the ball instead of a
     // parallel line 1 m beside it. Input stays the intent; this is the
     // same desired-vs-achievable movement split the engine uses.
-    const tx = b.x + Math.cos(inCorr) * 2, ty = b.y + Math.sin(inCorr) * 2;
+    const s0c = (b.x - p.x) * Math.cos(inCorr) + (b.y - p.y) * Math.sin(inCorr);
+    const dball = Math.hypot(b.x - p.x, b.y - p.y);
+    const tx = (s0c < 0.15 && dball > 0.55) ? b.x : b.x + Math.cos(inCorr) * 2;
+    const ty = (s0c < 0.15 && dball > 0.55) ? b.y : b.y + Math.sin(inCorr) * 2;
     const dd = Math.hypot(tx - p.x, ty - p.y);
     if (dd > 0.12) { dvx = (tx - p.x) / dd * spd; dvy = (ty - p.y) / dd * spd; }
   } else if (m > 0) { dvx = dx / m * spd; dvy = dy / m * spd; }
@@ -1751,31 +1754,47 @@ function ptStep() {
     if (b.ctrl && t.shoot) { b.vx = b.vy = b.vz = 0; }   // held for the strike
     else if (b.ctrl) {
       p.touchT -= PT_DT;
-      // carry corridor = the DESIRED INPUT direction (world.py CARRY passes
-      // the intent corridor, not the body's lagging facing) — touches
-      // respond to where the player WANTS to go, so turns redirect
+      // CONTROLLED DRIBBLING V1 — mirror of world.py carry_touch: solved
+      // impulse, speed curves T(v)/s_c(v), smooth turn factor, corrective
+      // early touches (0.10 s min spacing), settle behaviour at rest.
       const corr = inCorr !== null ? inCorr : p.facing;
-      // redirect touch (turn retention — mirror of world.py): sharp corridor
-      // change cuts the ball into the new direction immediately
-      let redirect = false;
-      if (d < 0.85 && p.touchT > 0) {
-        const bsp = Math.hypot(b.vx, b.vy);
-        const bdir = bsp > 0.5 ? Math.atan2(b.vy, b.vx) : Math.atan2(b.y - p.y, b.x - p.x);
-        if (Math.abs(((corr - bdir) + Math.PI * 3) % (2 * Math.PI) - Math.PI) > 1.0)
-          redirect = true;
-      }
-      if (d < 0.85 && (p.touchT <= 0 || redirect)) {
-        const pv = Math.hypot(p.vx, p.vy);
-        const knock = pv > 6 ? pv + 2.6 : pv > 3 ? pv + 1.5 : Math.max(2, pv + 1);
-        p.touchT = pv > 6 ? 0.5 : 0.38;
-        b.vx = Math.cos(corr) * knock; b.vy = Math.sin(corr) * knock; b.vz = 0;
-        // carry-touch event -> dribble-contact phase (authored touch frames
-        // 2 and 6 alternate feet; the ANIMATION follows the touch, never
-        // the other way round)
-        t.touchN++;
-        t.dribF0 = (t.touchN % 2) ? 2 : 6;
-        t.dribT = t.now;
-        t.last = "DRIBBLE TOUCH";
+      if (d <= 0.85) {
+        const pv = Math.hypot(p.vx, p.vy), bsp = Math.hypot(b.vx, b.vy);
+        const spacing = t.now - (t.lastTouchT !== undefined ? t.lastTouchT : -9);
+        if (pv < 0.4) {
+          if (bsp < 0.5 && d < 0.55) { p.touchT = 0; t.liveTurn = 0; }
+          else if (bsp < 0.5 && spacing >= 0.10) {
+            const ux = (p.x - b.x) / Math.max(d, 1e-9), uy = (p.y - b.y) / Math.max(d, 1e-9);
+            const u = Math.min(1.6, Math.sqrt(2 * PT.MU_ROLL * Math.max(0.05, d - 0.30)));
+            b.vx = ux * u; b.vy = uy * u; b.vz = 0;
+            p.touchT = 0.18; t.lastTouchT = t.now;
+            t.last = "SETTLE TOUCH";
+            t.touchInfo = { d, u, T: 0.18, sc: 0.30, turn: 0, kind: "SETTLE" };
+          }
+        } else {
+          const bdir = bsp > 0.5 ? Math.atan2(b.vy, b.vx) : Math.atan2(b.y - p.y, b.x - p.x);
+          const turnA = Math.abs(((corr - bdir) + Math.PI * 3) % (2 * Math.PI) - Math.PI);
+          t.liveTurn = turnA;
+          const corrective = turnA > 0.52 && spacing >= 0.10;
+          if (p.touchT <= 0 || corrective) {
+            const tt = Math.max(0, Math.min(1, (turnA - 0.52) / 1.40));
+            const tf = 1 - 0.7 * tt * tt * (3 - 2 * tt);
+            const T = Math.max(0.18, Math.min(0.48, 0.18 + 0.036 * pv));
+            const sc = Math.max(0.28, Math.min(0.75, 0.28 + 0.055 * pv)) * tf;
+            const ux = Math.cos(corr), uy = Math.sin(corr);
+            const s0 = (b.x - p.x) * ux + (b.y - p.y) * uy;
+            const pvA = Math.max(0, p.vx * ux + p.vy * uy);
+            let u = pvA + (sc - s0 + 0.5 * PT.MU_ROLL * T * T) / T;
+            u = Math.max(0.5, Math.min(pv + 3.5, u));
+            b.vx = ux * u; b.vy = uy * u; b.vz = 0;
+            p.touchT = T; t.lastTouchT = t.now;
+            t.touchN++;
+            t.dribF0 = (t.touchN % 2) ? 2 : 6;
+            t.dribT = t.now;
+            t.last = corrective ? "CORRECTIVE TOUCH" : "DRIBBLE TOUCH";
+            t.touchInfo = { d, u, T, sc, turn: turnA, kind: corrective ? "CORRECTIVE" : "NORMAL" };
+          }
+        }
       }
     }
   } else if (t.now >= b.exclT) {
@@ -1934,6 +1953,13 @@ function drawPlaytest(dt) {
   const bstate = t.net ? "IN_NET" : b.ctrl ? "CONTROLLED" :
                  (b.z > 0.05 || b.vz > 0.001) ? "IN_FLIGHT" : "LOOSE";
   const bfd = Math.hypot(p.x - b.x, p.y - b.y);
+  ctx.fillStyle = "#b7ffb7";
+  const ti = t.touchInfo || {};
+  ctx.fillStyle = "#ffe9a8";
+  ctx.fillText(`TOUCH  desired ${ti.sc !== undefined ? ti.sc.toFixed(2) : "-"} m · last dist ` +
+    `${ti.d !== undefined ? ti.d.toFixed(2) : "-"} m · interval ${ti.T !== undefined ? ti.T.toFixed(2) : "-"} s · ` +
+    `turn ${((t.liveTurn || 0) * 57.3).toFixed(0)}° · ${ti.kind || "-"} · timer ${Math.max(0, p.touchT).toFixed(2)}`,
+    uipx(14), cv.height - uipx(38));
   ctx.fillStyle = "#b7ffb7";
   ctx.fillText(`BALL STATE: ${bstate}` +
     (b.ctrl ? `   CARRIER: PLAYER 1   CONTROL TIME ${(t.now - t.ctrlSince).toFixed(1)} s` +

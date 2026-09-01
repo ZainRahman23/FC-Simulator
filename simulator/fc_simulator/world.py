@@ -405,41 +405,83 @@ class Body:
         return a
 
     def carry_touch(self, p, corridor, knock_scale=1.0):
+        """CONTROLLED DRIBBLING V1 — speed + turn responsive touches.
+
+        One continuous deterministic controller (zero RNG) for keyboard AND
+        AI carriers. Touches are SOLVED, not generic kicks: each contact
+        computes the impulse that places the ball at the contact separation
+        s_c ahead of the carrier when the next touch is due, under real
+        rolling friction. Speed curves (smooth, no mode thresholds):
+          cadence      T(v)  = clamp(0.18 + 0.036 v, 0.18, 0.48) s
+          contact sep  s_c(v)= clamp(0.28 + 0.055 v, 0.28, 0.75) m
+          knock        u     = v_along + (s_c - s0 + mu T^2/2) / T   (solved)
+        Mid-cycle excursion emerges physically: s_c + mu T^2/8 (~0.36 m walk,
+        ~0.49 jog, ~0.85 sprint). TURNS: the corridor is the carrier's
+        CURRENT movement intent; turn angle vs the ball line smoothly
+        shrinks s_c (x1.0 below 30 deg -> x0.3 at 110+ deg) and permits an
+        EARLY corrective touch (min spacing 0.10 s, ball in reach) — the
+        touch fully redirects the ball, killing obsolete-corridor velocity.
+        NEAR-STATIONARY: a settled ball at the feet is left alone (no
+        periodic kicking); a stopped ball out of stance range gets a soft
+        settle touch back toward the feet. Ball stays fully physical; every
+        displacement is a real contact. Ownership/possession semantics
+        untouched (update_control / challenge routing decide those).
+        """
         b = self.ball
         if b['ctrl'] != p['pid']: return
         d = dist(p['x'], p['y'], b['x'], b['y'])
         p['touchT'] -= DT
-        # (loss of control is decided centrally by update_control(): the old
-        # hard d>4.2 'ran away' here dropped possession mid-turn even while
-        # the carrier was recovering the ball)
-        # REDIRECT TOUCH (turn retention): a sharp change of carry corridor
-        # lets the carrier take his next touch immediately when the ball is
-        # at his feet, cutting it into the new direction instead of running
-        # past it and losing the envelope. Deterministic, zero RNG; straight
-        # carries keep the exact previous cadence (angle gate ~57 deg).
-        redirect = False
-        if d < 0.85 and p['touchT'] > 0:
-            a0 = corridor if corridor is not None else p['facing']
-            bsp = math.hypot(b['vx'], b['vy'])
-            bdir = math.atan2(b['vy'], b['vx']) if bsp > 0.5 else                 math.atan2(b['y'] - p['y'], b['x'] - p['x'])
-            if abs((a0 - bdir + math.pi*3) % (2*math.pi) - math.pi) > 1.0:
-                redirect = True
-        if d < 0.85 and (p['touchT'] <= 0 or redirect):
-            pv = math.hypot(p['vx'], p['vy'])
-            a = corridor if corridor is not None else p['facing']
-            # CLOSE CONTROL: with an opponent near, real carriers shorten their
-            # touches — the ball stays in the protected radius, not in the duel zone
-            oppd = min((dist(q['x'], q['y'], p['x'], p['y'])
-                        for q in self.players.values() if q['team'] != p['team']), default=99.0)
-            knock = (pv + 2.6 if pv > 6 else pv + 1.5 if pv > 3 else max(2.0, pv + 1.0)) * knock_scale
-            if oppd < 2.8:
-                knock = min(knock, pv * 0.85 + 0.8)
-                p['touchT'] = 0.28
+        if d > 0.85: return                 # ball not at the feet: no contact
+        pv = math.hypot(p['vx'], p['vy'])
+        bsp = math.hypot(b['vx'], b['vy'])
+        # ── near-stationary control: stand over the ball ──
+        if pv < 0.4:
+            if bsp < 0.5 and d < 0.55:
+                p['touchT'] = 0.0           # primed: first moving touch is instant
+                return
+            if bsp < 0.5 and self.t - p.get('_lastTouchT', -9.0) >= 0.10:
+                ux, uy = (p['x'] - b['x']) / max(d, 1e-9), (p['y'] - b['y']) / max(d, 1e-9)
+                u = min(1.6, math.sqrt(2 * MU_ROLL * max(0.05, d - 0.30)))
+                b['vx'], b['vy'], b['vz'] = ux * u, uy * u, 0.0
+                p['touchT'] = 0.18
+                p['_lastTouchT'] = self.t
+                self._contact('DRIBBLE_TOUCH', p['pid'], 'settle')
+                return
+            if bsp >= 0.5:
+                pass                        # moving ball at feet: trap via normal touch below
             else:
-                p['touchT'] = 0.5 if pv > 6 else 0.38
-            b['vx'], b['vy'], b['vz'] = math.cos(a)*knock, math.sin(a)*knock, 0.0
-            b['state'] = 'ROLLING'
-            self._contact('DRIBBLE_TOUCH', p['pid'])
+                return
+        a0 = corridor if corridor is not None else p['facing']
+        # turn angle: desired corridor vs the ball's current line
+        bdir = math.atan2(b['vy'], b['vx']) if bsp > 0.5 else             math.atan2(b['y'] - p['y'], b['x'] - p['x'])
+        turn = abs((a0 - bdir + math.pi * 3) % (2 * math.pi) - math.pi)
+        spacing = self.t - p.get('_lastTouchT', -9.0)
+        corrective = turn > 0.52 and spacing >= 0.10
+        if p['touchT'] > 0 and not corrective:
+            return
+        # smooth turn factor (smoothstep 30 deg..110 deg -> 1.0..0.3)
+        tt = clamp((turn - 0.52) / (1.92 - 0.52), 0.0, 1.0)
+        tf = 1.0 - 0.7 * tt * tt * (3 - 2 * tt)
+        T = clamp(0.18 + 0.036 * pv, 0.18, 0.48)
+        s_c = clamp(0.28 + 0.055 * pv, 0.28, 0.75) * tf
+        # CLOSE CONTROL: with an opponent near, shorten touches (as before)
+        oppd = min((dist(q['x'], q['y'], p['x'], p['y'])
+                    for q in self.players.values() if q['team'] != p['team']), default=99.0)
+        if oppd < 2.8:
+            s_c *= 0.7; T = min(T, 0.28)
+        ux, uy = math.cos(a0), math.sin(a0)
+        s0 = (b['x'] - p['x']) * ux + (b['y'] - p['y']) * uy
+        pv_along = max(0.0, p['vx'] * ux + p['vy'] * uy)
+        u = pv_along + (s_c - s0 + 0.5 * MU_ROLL * T * T) / T
+        u = clamp(u, 0.5, pv + 3.5)
+        if knock_scale > 1.0: u = min(u * knock_scale, pv + 3.5 * knock_scale)
+        b['vx'], b['vy'], b['vz'] = ux * u, uy * u, 0.0
+        b['state'] = 'ROLLING'
+        p['touchT'] = T
+        p['_lastTouchT'] = self.t
+        p['_lastTouch'] = (round(d, 3), round(u, 2), 'corrective' if corrective else 'normal',
+                           round(turn, 3), round(s_c, 3), round(T, 3))
+        self._contact('DRIBBLE_TOUCH', p['pid'], 'corrective' if corrective else '')
 
     def occupancy_step(self):
         """PLAYER PHYSICAL OCCUPANCY V1 — deterministic, RNG-free.

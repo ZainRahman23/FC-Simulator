@@ -43,11 +43,16 @@ def give(body, pid):
 
 
 def carry_step(body, pid, tx, ty, speed):
-    """The brain's CARRY execution: run through the ball toward the target."""
+    """The brain's CARRY execution: run through the ball toward the target,
+    collecting an overrun ball first (mirrors continuous.py)."""
     p = body.players[pid]
     b = body.ball
     corr = math.atan2(ty - p['y'], tx - p['x'])
-    body.locomote(p, b['x'] + math.cos(corr) * 2, b['y'] + math.sin(corr) * 2, speed)
+    s0 = (b['x'] - p['x']) * math.cos(corr) + (b['y'] - p['y']) * math.sin(corr)
+    if b['ctrl'] == pid and s0 < 0.15 and dist(p['x'], p['y'], b['x'], b['y']) > 0.55:
+        body.locomote(p, b['x'], b['y'], speed)
+    else:
+        body.locomote(p, b['x'] + math.cos(corr) * 2, b['y'] + math.sin(corr) * 2, speed)
     body.carry_touch(p, corr)
     body.tick(KH)
 
@@ -68,7 +73,9 @@ for i in range(480):
     maxd = max(maxd, dist(b.players['P1']['x'], b.players['P1']['y'],
                           b.ball['x'], b.ball['y']))
     if b.ball['ctrl'] != 'P1': drops += 1
-check("B", drops == 0 and maxd > 1.0, f"max touch distance {maxd:.2f} m, drops {drops}")
+# CONTROLLED DRIBBLING V1: sprint touches are longer than walk touches but
+# far shorter than the old ~1 m chain-of-passes (speed-dependent curve)
+check("B", drops == 0 and 0.5 < maxd < 1.3, f"max touch distance {maxd:.2f} m, drops {drops}")
 
 print("── C 90-degree turn: corridor redirects, no artificial runaway ──")
 b = mk([('P1', 0)]); b.players['P1'].update(x=45, y=40); give(b, 'P1')
