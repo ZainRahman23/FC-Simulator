@@ -1635,6 +1635,7 @@ function ptReset() {
   t.now = 0;
   t.p = { x: 76.0, y: 34.0, vx: 0, vy: 0, facing: 0, touchT: 0 };
   t.b = { x: 76.8, y: 34.0, z: 0, vx: 0, vy: 0, vz: 0, ctrl: true, exclT: 0 };
+  t.ctrlSince = 0;
   t.shoot = null; t.net = null; t.touchN = 0;
   t.dribT = 0; t.dribF0 = 0;
   t.last = "RESET";
@@ -1753,6 +1754,7 @@ function ptStep() {
     const rv = Math.hypot(b.vx - p.vx, b.vy - p.vy);
     if (d < PT.REACH && b.z < 1.4 && rv < 5.5) {
       b.ctrl = true;
+      t.ctrlSince = t.now;
       b.vx = p.vx * 0.7 + Math.cos(p.facing) * 1.1;
       b.vy = p.vy * 0.7 + Math.sin(p.facing) * 1.1;
       if (b.z > 0 && b.z < 1.6) b.vz = Math.min(b.vz, 0.4);
@@ -1897,6 +1899,15 @@ function drawPlaytest(dt) {
                `   ball ${Math.hypot(b.vx, b.vy).toFixed(1)} m/s  z ${b.z.toFixed(2)} m`,
                uipx(14), cv.height - uipx(86));
   ctx.fillText(`last action: ${t.last}   kick sync: ${cd}`, uipx(14), cv.height - uipx(70));
+  // authoritative possession readout (audit tooling): state is the ball's
+  // own ctrl/flight fields, never inferred from proximity
+  const bstate = t.net ? "IN_NET" : b.ctrl ? "CONTROLLED" :
+                 (b.z > 0.05 || b.vz > 0.001) ? "IN_FLIGHT" : "LOOSE";
+  const bfd = Math.hypot(p.x - b.x, p.y - b.y);
+  ctx.fillStyle = "#b7ffb7";
+  ctx.fillText(`BALL STATE: ${bstate}` +
+    (b.ctrl ? `   CARRIER: PLAYER 1   CONTROL TIME ${(t.now - t.ctrlSince).toFixed(1)} s` : "") +
+    `   BALL-TO-FOOT ${bfd.toFixed(2)} m`, uipx(14), cv.height - uipx(54));
 }
 // ═══ ANIMATION PROTOTYPE SHOWCASE (key P) — renderer-local, deterministic ═══
 // Synthetic test puppet demonstrating the explicit animation states
