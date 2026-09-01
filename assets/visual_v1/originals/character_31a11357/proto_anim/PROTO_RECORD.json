@@ -353,5 +353,11 @@
   "capability_finding": "v3 cannot hold static poses or articulate ankle-vs-shin rotation; pixen ignores foot-rotation edits and drifts sprite style. Foot-perspective problems at this resolution are hand-pixel work.",
   "result": "in4_R / in4_L (12f, 14 fps, contact f6 = locked hand-authored F3 frames; all other frames unchanged in3 motion). Contact timing 6/14 s unchanged. in2/in3 retained on disk, no longer loaded.",
   "total_generations_spent": 8
+ },
+ "power_v2_br5": {
+  "date": "2026-09-01",
+  "reason": "legacy POWER (proto shoot) rejected: toe-up chip-like follow-through, upright static body. Rebuilt through user-gated studies: P1-P4 (9 gens), P3R/P3R2/P3R3 (0 gens, hand boots), V2 A/B/C (9 gens), BR/BR2/BR3/BR4/BR5 (0 gens, frame surgery + hand boots).",
+  "total_generations_spent": 18,
+  "result": "pw_R installed as POWER_R (12f @15fps, contact f7, eased rootOff [0,5]). POWER_L still substitutes la_L (known gap)."
  }
 }

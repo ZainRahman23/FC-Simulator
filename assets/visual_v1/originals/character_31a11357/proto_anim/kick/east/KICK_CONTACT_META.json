@@ -54,6 +54,24 @@
     "f0-f5,f7-f11": "identical to in3_L (groups 50db374a / 2245f698 f1 / 02b99c51)",
     "f6": "manual pixel authoring on in3_L_6 (Lstrike f2 base): kicking boot region rows 104-115 redrawn in F3 language"
    }
+  },
+  "pw_R": {
+   "frames": 12,
+   "fps": 15,
+   "contact_frame": 7,
+   "contactSurface": "LACES",
+   "style": "POWER V2-BR5: V2-B whole-body kinetic chain (forward compression, braced plant, knee-lead, shin whip), locked ankle rel band \u00b17 deg through f7-f10, monotonic rising instep arc (f7 contact -> f10 peak), recovery from f11; contact-height presentation offset rootOff [0,5] eased 0.6/1/0.6/0.4/0.2/0 over f6-f11",
+   "instepContactPointPx": [
+    96,
+    111
+   ],
+   "targetDirection": "east",
+   "sequence": "f0-f5 approach/compression/load (V2-B), f6 T-1 load, f7 LACES CONTACT (BR3 boot restored, frozen), f8 mid extension (A-body, BR4 boot), f9 high extension (B-body, BR4 boot), f10 hand-authored peak (BR4 boot), f11 across-body recovery",
+   "provenance": {
+    "bodies": "v3 groups 52eb732d (V2-B), 3c2ec624 (V2-A f8), hand-authored peak f10",
+    "boots": "f7 = BR3 hand-locked boot (68->73 deg iterations, restored pixel-for-pixel per user); f8-f10 = BR4 volumetric repaints on locked orientations 36/-12/-26 deg; 16 px additions-only seam cleanup (verified 0 modified/removed)",
+    "studies": "P1-P4, P3R, P3R2, P3R3, V2 A/B/C, BR, BR2, BR3, BR4, BR5 \u2014 records in review_artifacts/power/"
+   }
   }
  },
  "supersedes": "in_R_*/in_L_* remain on disk for provenance but are no longer loaded; they read as a weaker laces drive (toe-forward knee-drive silhouette) and were rejected on visual technique review",
@@ -173,7 +191,8 @@
     "f5-f6": "v3 interpolation group 2245f698 frames 1,2",
     "f10-f11": "v3 interpolation group 02b99c51 frames 0,2"
    }
-  }
+  },
+  "POWER_R_legacy_shoot": "the original proto shoot 10f (toe-up follow-through) is no longer used by POWER_R; frames remain on disk as S.anims.shoot"
  },
  "alignment_note": "contact alignment solved art-side only: toe/face authored 2px toward the authoritative ball + technique-specific cx/cy anchors; ball physics, kick timing, player world position untouched"
 }

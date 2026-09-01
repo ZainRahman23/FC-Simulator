@@ -166,7 +166,7 @@ async function boot() {
                 path: ASSET_ROOT + "originals/character_31a11357/proto_anim/shoot/east/" + i + ".png" });
   // KICK ANIMATION V2: technique sequences (east; west mirrors, foot flips)
   for (const [ks, kn] of [["in4_R", 12], ["in4_L", 12], ["la_R", 10], ["la_L", 10],
-                          ["ou_R", 8], ["ou_L", 8], ["ch_R", 8]])
+                          ["ou_R", 8], ["ou_L", 8], ["ch_R", 8], ["pw_R", 12]])
     for (let i = 0; i < kn; i++)
       jobs.push({ key: ["kick", ks + "|" + i, 0],
                   path: ASSET_ROOT + "originals/character_31a11357/proto_anim/kick/east/" + ks + "_" + i + ".png" });
@@ -1822,7 +1822,13 @@ const KICK_LIB = {
   INSIDE_L: { set: "in4_L", n: 12, fps: 14, contact: 6, cx: 93, cy: 110, surface: "INSIDE" },
   LACES_R: { set: "la_R", n: 10, fps: 12, contact: 7, cx: 97, cy: 114, surface: "LACES" },
   LACES_L: { set: "la_L", n: 10, fps: 12, contact: 7, cx: 98, cy: 113, surface: "LACES" },
-  POWER_R: { legacy: "shoot", n: 10, fps: 12, contact: 6, cx: 96, cy: 114, surface: "LACES" },
+  // POWER V2-BR5 (user-approved): B-body kinetic chain, knee-lead -> shin
+  // whip, locked ankle (rel band ±7deg), monotonic rising instep arc with
+  // recovery deferred to f11. rootOff/rootEase = the tuned +3/+5/+3/+2/+1/0
+  // contact-height presentation offset (player down so the fixed ball nests
+  // at MID-LACES). Presentation-only; impulse/timing untouched.
+  POWER_R: { set: "pw_R", n: 12, fps: 15, contact: 7, cx: 96, cy: 111, surface: "LACES",
+             rootOff: [0, 5], rootEase: { 6: 0.6, 7: 1, 8: 0.6, 9: 0.4, 10: 0.2, 11: 0 } },
   OUTSIDE_R: { set: "ou_R", n: 8, fps: 14, contact: 6, cx: 100, cy: 114, surface: "OUTSIDE" },
   OUTSIDE_L: { set: "ou_L", n: 8, fps: 14, contact: 6, cx: 96, cy: 113, surface: "OUTSIDE" },
   CHIP_R: { set: "ch_R", n: 8, fps: 14, contact: 5, cx: 86, cy: 112, surface: "CHIP" },
