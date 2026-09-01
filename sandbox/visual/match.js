@@ -1692,8 +1692,18 @@ function ptStep() {
     if (t.keys.right) dx += 1;
   }
   const m = Math.hypot(dx, dy), spd = t.keys.sprint ? PT.VMAX : PT.RUNV;
+  const inCorr = m > 0 ? Math.atan2(dy, dx) : null;   // desired input corridor
   let dvx = 0, dvy = 0;
-  if (m > 0) { dvx = dx / m * spd; dvy = dy / m * spd; }
+  if (m > 0 && b.ctrl && !t.shoot) {
+    // CARRY steering — the authoritative execution (continuous.py CARRY):
+    // run THROUGH the ball toward a point 2 m along the desired corridor,
+    // so touches and turns funnel the carrier onto the ball instead of a
+    // parallel line 1 m beside it. Input stays the intent; this is the
+    // same desired-vs-achievable movement split the engine uses.
+    const tx = b.x + Math.cos(inCorr) * 2, ty = b.y + Math.sin(inCorr) * 2;
+    const dd = Math.hypot(tx - p.x, ty - p.y);
+    if (dd > 0.12) { dvx = (tx - p.x) / dd * spd; dvy = (ty - p.y) / dd * spd; }
+  } else if (m > 0) { dvx = dx / m * spd; dvy = dy / m * spd; }
   // world.locomote velocity limiter (ported verbatim)
   const cur = Math.hypot(p.vx, p.vy), des = Math.hypot(dvx, dvy);
   let lim = PT.ACC;
@@ -1730,15 +1740,35 @@ function ptStep() {
   // carry (world.carry_touch port; solo pitch: no opponent shortening)
   if (b.ctrl) {
     const d = Math.hypot(p.x - b.x, p.y - b.y);
-    if (d > 4.2) { b.ctrl = false; t.last = "LOOSE (ran away)"; }
-    else if (t.shoot) { b.vx = b.vy = b.vz = 0; }   // held for the strike
-    else {
+    // PERSISTENT POSSESSION (mirror of world.py update_control): SECURE at
+    // feet; EXPOSED inside the 4.2 m carry envelope or while actively
+    // closing; ESCAPING = separating beyond 2.6 m; explicit loss only when
+    // the ball escapes the envelope and the carrier is not recovering it.
+    const sep = ((b.x - p.x) * (b.vx - p.vx) + (b.y - p.y) * (b.vy - p.vy)) / Math.max(d, 1e-9);
+    if (d <= 0.95) t.ctrlState = "SECURE";
+    else if (d <= 4.2 || sep < -0.3) t.ctrlState = (d > 2.6 && sep > 0.3) ? "ESCAPING" : "EXPOSED";
+    else { b.ctrl = false; t.ctrlState = null; t.last = "LOOSE (escaped control envelope)"; }
+    if (b.ctrl && t.shoot) { b.vx = b.vy = b.vz = 0; }   // held for the strike
+    else if (b.ctrl) {
       p.touchT -= PT_DT;
-      if (d < 0.85 && p.touchT <= 0) {
+      // carry corridor = the DESIRED INPUT direction (world.py CARRY passes
+      // the intent corridor, not the body's lagging facing) — touches
+      // respond to where the player WANTS to go, so turns redirect
+      const corr = inCorr !== null ? inCorr : p.facing;
+      // redirect touch (turn retention — mirror of world.py): sharp corridor
+      // change cuts the ball into the new direction immediately
+      let redirect = false;
+      if (d < 0.85 && p.touchT > 0) {
+        const bsp = Math.hypot(b.vx, b.vy);
+        const bdir = bsp > 0.5 ? Math.atan2(b.vy, b.vx) : Math.atan2(b.y - p.y, b.x - p.x);
+        if (Math.abs(((corr - bdir) + Math.PI * 3) % (2 * Math.PI) - Math.PI) > 1.0)
+          redirect = true;
+      }
+      if (d < 0.85 && (p.touchT <= 0 || redirect)) {
         const pv = Math.hypot(p.vx, p.vy);
         const knock = pv > 6 ? pv + 2.6 : pv > 3 ? pv + 1.5 : Math.max(2, pv + 1);
         p.touchT = pv > 6 ? 0.5 : 0.38;
-        b.vx = Math.cos(p.facing) * knock; b.vy = Math.sin(p.facing) * knock; b.vz = 0;
+        b.vx = Math.cos(corr) * knock; b.vy = Math.sin(corr) * knock; b.vz = 0;
         // carry-touch event -> dribble-contact phase (authored touch frames
         // 2 and 6 alternate feet; the ANIMATION follows the touch, never
         // the other way round)
@@ -1906,7 +1936,8 @@ function drawPlaytest(dt) {
   const bfd = Math.hypot(p.x - b.x, p.y - b.y);
   ctx.fillStyle = "#b7ffb7";
   ctx.fillText(`BALL STATE: ${bstate}` +
-    (b.ctrl ? `   CARRIER: PLAYER 1   CONTROL TIME ${(t.now - t.ctrlSince).toFixed(1)} s` : "") +
+    (b.ctrl ? `   CARRIER: PLAYER 1   CONTROL TIME ${(t.now - t.ctrlSince).toFixed(1)} s` +
+              `   CONTROL: ${t.ctrlState || "-"}` : "") +
     `   BALL-TO-FOOT ${bfd.toFixed(2)} m`, uipx(14), cv.height - uipx(54));
 }
 // ═══ ANIMATION PROTOTYPE SHOWCASE (key P) — renderer-local, deterministic ═══

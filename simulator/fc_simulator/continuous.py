@@ -620,6 +620,12 @@ class HybridLab(Lab):
         if not steered:
             self.body.touch_cb = self.touch_model
             self.body.gk_cb = self.gk_model
+            # CHALLENGE ROUTING: an opponent reaching a CONTROLLED ball is a
+            # challenge opportunity, resolved by the SAME duel machinery the
+            # designated presser already uses (maybe_challenge: its own 0.9 s
+            # cooldown, cal11 challenge probability, seeded rng, exposure
+            # weighting by carrier-ball distance). No silent ownership swap.
+            self.body.challenge_cb = self.maybe_challenge
         else:
             self.body.gk_cb = self.gk_steered
         self.reception_log = []

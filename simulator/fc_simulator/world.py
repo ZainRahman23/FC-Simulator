@@ -96,6 +96,8 @@ class Body:
         self.last_kicker = None
         self.touch_cb = None       # (p, rv, z) -> ('CLEAN'|'HEAVY'|'LOOSE'|'DEFLECT', err_angle, err_len) or None
         self.gk_cb = None          # (gk, ball, rv) -> ('CATCH'|'PARRY'|'BEATEN', deflect_angle) or None
+        self.challenge_cb = None   # (defender_pid, carrier_pid) -> None; brain routes a
+                                   # controlled-ball contest into its duel machinery
         self.score = [0, 0]
         self.trace = []
         self.last_contacts = []
@@ -201,19 +203,118 @@ class Body:
         if d > allowed + 0.05: self.violations += 1
         self.maxjump = max(self.maxjump, d)
 
+    def update_control(self):
+        """PERSISTENT POSSESSION: deterministic control-retention test, zero RNG.
+
+        CONTROL OWNERSHIP (ball['ctrl']) persists across carry touches. This
+        evaluates, every tick, whether the carrier still genuinely controls
+        the ball, and publishes the diagnostic ball['ctrlState']:
+          SECURE   — ball at feet (d <= 0.95 m)
+          EXPOSED  — ball ahead/away (0.95 < d <= 4.2 m, the historic carry
+                     envelope) or beyond it but actively being recovered
+                     (closing at > 0.3 m/s)
+          ESCAPING — still owned, but d > 2.6 m and separating (> 0.3 m/s):
+                     the warning band before a genuine loss
+        EXPLICIT LOSS: d > 4.2 m and not closing -> LOOSE ('escaped control
+        envelope'). All other releases are explicit football events (kick,
+        failed/heavy/loose touch, deflection, tackle won/poked, take-on
+        knock, GK claim, out of play, dead ball).
+        Challengeability is separate: opponents reaching the ball route into
+        the brain's duel machinery regardless of this state (interact())."""
+        b = self.ball
+        if b['ctrl'] is None or b['state'] == 'DEAD' or b['held'] is not None:
+            b['ctrlState'] = None
+            return
+        p = self.players[b['ctrl']]
+        d = dist(p['x'], p['y'], b['x'], b['y'])
+        if d <= 0.95:
+            b['ctrlState'] = 'SECURE'
+            return
+        sep_rate = ((b['x'] - p['x']) * (b['vx'] - p['vx']) +
+                    (b['y'] - p['y']) * (b['vy'] - p['vy'])) / max(d, 1e-9)
+        if d <= 4.2 or sep_rate < -0.3:
+            b['ctrlState'] = 'ESCAPING' if (d > 2.6 and sep_rate > 0.3) else 'EXPOSED'
+            return
+        b['ctrl'] = None
+        b['ctrlState'] = None
+        self.ev('LOOSE_BALL', p['pid'], 'escaped control envelope')
+
+    def _gk_contest(self, p, khash, bd=None):
+        """In-box goalkeeper claim/parry — explicit release path (GK_CATCH /
+        GK_PARRY events), shared by loose balls and exposed controlled balls."""
+        b = self.ball
+        if bd is None: bd = dist(p['x'], p['y'], b['x'], b['y'])
+        rvx, rvy = b['vx'] - p['vx'], b['vy'] - p['vy']
+        rv = math.hypot(rvx, rvy)
+        if self.gk_cb is not None:
+            res = self.gk_cb(p, b, rv)
+            if res is not None:
+                kind, ang = res
+                if kind == 'CATCH':
+                    b['held'] = p['pid']; b['state'] = 'ROLLING'
+                    p['vx'] *= 0.2; p['vy'] *= 0.2      # secured: the keeper plants
+                    self._contact('GK_CATCH', p['pid']); self.ev('POSSESSION_CHANGE', p['pid'])
+                elif kind == 'PARRY':
+                    spd = rv*0.45
+                    b['vx'], b['vy'] = math.cos(ang)*spd, math.sin(ang)*spd
+                    b['vz'] = max(b['vz']*0.3, 1.5)
+                    b['exclPid'] = p['pid']; b['exclT'] = self.t + 0.4
+                    self._contact('GK_PARRY', p['pid']); self.ev('DEFLECTION', p['pid'])
+                # 'BEATEN': ball continues untouched
+                return
+        if rv >= 16 and bd > 0.8: return
+        if rv < 9:
+            b['held'] = p['pid']; b['state'] = 'ROLLING'
+            p['vx'] *= 0.2; p['vy'] *= 0.2              # secured: the keeper plants
+            self._contact('GK_CATCH', p['pid']); self.ev('POSSESSION_CHANGE', p['pid'])
+        else:
+            a = math.atan2(p['y']-b['y'], p['x']-b['x']) + math.pi + (khash(int(self.t*100), p['pid'], 7) - 0.5)
+            spd = rv*0.45
+            b['vx'], b['vy'] = math.cos(a)*spd, math.sin(a)*spd
+            b['vz'] = max(b['vz']*0.3, 1.5)
+            b['exclPid'] = p['pid']; b['exclT'] = self.t + 0.4
+            self._contact('GK_PARRY', p['pid']); self.ev('DEFLECTION', p['pid'])
+        return
+
     def interact(self, khash):
         b = self.ball
         if b['state'] == 'DEAD' or b['held'] is not None: return
+        if b['ctrl'] is not None:
+            # PERSISTENT POSSESSION + CHALLENGE ROUTING: a controlled ball is
+            # NEVER silently re-owned by proximity. The old at_feet>0.95 rule
+            # executed CONTROLLED(A) -> CONTROLLED(B) with no duel whenever a
+            # carry touch strayed past 0.95 m (measured churn: median spell
+            # 0.45 s, 16% of spells ended by passive steals). Now:
+            #   - an in-box GK reaching an EXPOSED controlled ball keeps the
+            #     explicit claim path (GK_CATCH / GK_PARRY events);
+            #   - any other opponent reaching the ball is a CHALLENGE
+            #     OPPORTUNITY routed to the brain's duel machinery
+            #     (challenge_cb -> maybe_challenge: its own cooldown, cal11
+            #     probabilities and seeded rng decide the outcome);
+            #   - teammates never passively take over a controlled ball
+            #     (a pass is kick -> LOOSE -> reception).
+            ctrl_p = self.players.get(b['ctrl'])
+            exposed = ctrl_p is None or                 dist(ctrl_p['x'], ctrl_p['y'], b['x'], b['y']) > 0.95
+            for p in sorted(self.players.values(), key=lambda q: q['pid']):
+                if p['pid'] == b['ctrl']: continue
+                if b['exclPid'] == p['pid'] and self.t < b['exclT']: continue
+                if p['stun'] > self.t and dist(p['x'], p['y'], b['x'], b['y']) > 0.35: continue
+                if ctrl_p is not None and p['team'] == ctrl_p['team']: continue
+                d = dist(p['x'], p['y'], b['x'], b['y'])
+                in_box = p['gk'] and ((p['team'] == 0 and b['x'] < 16.5) or
+                                      (p['team'] == 1 and b['x'] > W-16.5)) and abs(b['y']-34) < 20.15
+                if in_box and exposed and d < GK_REACH and b['z'] < 2.3:
+                    self._gk_contest(p, khash)
+                    return
+                if d < REACH and b['z'] < 1.4 and self.challenge_cb is not None:
+                    self.challenge_cb(p['pid'], b['ctrl'])
+                    if b['ctrl'] is None: return    # duel resolved: ball ran free
+            return
         best, bd = None, 1e9
-        ctrl_p = self.players.get(b['ctrl']) if b['ctrl'] is not None else None
-        at_feet = ctrl_p is not None and dist(ctrl_p['x'], ctrl_p['y'], b['x'], b['y']) < 0.95
         for p in self.players.values():
             if b['exclPid'] == p['pid'] and self.t < b['exclT']: continue
             # wrong-footed/stumbling: no active reach, only a body-block counts
             if p['stun'] > self.t and dist(p['x'], p['y'], b['x'], b['y']) > 0.35: continue
-            # a controlled ball at the owner's feet is not passively stealable:
-            # dislodging it takes a football action (challenge/poke), not overlap
-            if at_feet and p['pid'] != b['ctrl']: continue
             in_box = p['gk'] and ((p['team'] == 0 and b['x'] < 16.5) or (p['team'] == 1 and b['x'] > W-16.5)) and abs(b['y']-34) < 20.15
             reach = GK_REACH if in_box else REACH
             zmax = 2.3 if in_box else 1.4
@@ -221,41 +322,13 @@ class Body:
             if d < reach and b['z'] < zmax and d < bd: best, bd = p, d
         if best is None: return
         p = best
-        rvx, rvy = b['vx'] - p['vx'], b['vy'] - p['vy']
-        rv = math.hypot(rvx, rvy)
         in_box = p['gk'] and ((p['team'] == 0 and b['x'] < 16.5) or (p['team'] == 1 and b['x'] > W-16.5))
         if in_box:
-            if self.gk_cb is not None:
-                res = self.gk_cb(p, b, rv)
-                if res is not None:
-                    kind, ang = res
-                    if kind == 'CATCH':
-                        b['held'] = p['pid']; b['state'] = 'ROLLING'
-                        p['vx'] *= 0.2; p['vy'] *= 0.2      # secured: the keeper plants
-                        self._contact('GK_CATCH', p['pid']); self.ev('POSSESSION_CHANGE', p['pid'])
-                    elif kind == 'PARRY':
-                        spd = rv*0.45
-                        b['vx'], b['vy'] = math.cos(ang)*spd, math.sin(ang)*spd
-                        b['vz'] = max(b['vz']*0.3, 1.5)
-                        b['exclPid'] = p['pid']; b['exclT'] = self.t + 0.4
-                        self._contact('GK_PARRY', p['pid']); self.ev('DEFLECTION', p['pid'])
-                    # 'BEATEN': ball continues untouched
-                    return
-            if rv >= 16 and bd > 0.8: return
-            if rv < 9:
-                b['held'] = p['pid']; b['state'] = 'ROLLING'
-                p['vx'] *= 0.2; p['vy'] *= 0.2              # secured: the keeper plants
-                self._contact('GK_CATCH', p['pid']); self.ev('POSSESSION_CHANGE', p['pid'])
-            else:
-                a = math.atan2(p['y']-b['y'], p['x']-b['x']) + math.pi + (khash(int(self.t*100), p['pid'], 7) - 0.5)
-                spd = rv*0.45
-                b['vx'], b['vy'] = math.cos(a)*spd, math.sin(a)*spd
-                b['vz'] = max(b['vz']*0.3, 1.5)
-                b['exclPid'] = p['pid']; b['exclT'] = self.t + 0.4
-                self._contact('GK_PARRY', p['pid']); self.ev('DEFLECTION', p['pid'])
+            self._gk_contest(p, khash, bd)
             return
-        if b['ctrl'] == p['pid']: return
-        prev_team = self.players[b['ctrl']]['team'] if b['ctrl'] is not None else (self.players[b['last']]['team'] if b['last'] is not None else None)
+        rvx, rvy = b['vx'] - p['vx'], b['vy'] - p['vy']
+        rv = math.hypot(rvx, rvy)
+        prev_team = self.players[b['last']]['team'] if b['last'] is not None else None
         if self.touch_cb is not None:
             res = self.touch_cb(p, rv, b['z'])
             if res is not None:
@@ -336,9 +409,22 @@ class Body:
         if b['ctrl'] != p['pid']: return
         d = dist(p['x'], p['y'], b['x'], b['y'])
         p['touchT'] -= DT
-        if d > 4.2:
-            b['ctrl'] = None; self.ev('LOOSE_BALL', p['pid'], 'ran away'); return
-        if d < 0.85 and p['touchT'] <= 0:
+        # (loss of control is decided centrally by update_control(): the old
+        # hard d>4.2 'ran away' here dropped possession mid-turn even while
+        # the carrier was recovering the ball)
+        # REDIRECT TOUCH (turn retention): a sharp change of carry corridor
+        # lets the carrier take his next touch immediately when the ball is
+        # at his feet, cutting it into the new direction instead of running
+        # past it and losing the envelope. Deterministic, zero RNG; straight
+        # carries keep the exact previous cadence (angle gate ~57 deg).
+        redirect = False
+        if d < 0.85 and p['touchT'] > 0:
+            a0 = corridor if corridor is not None else p['facing']
+            bsp = math.hypot(b['vx'], b['vy'])
+            bdir = math.atan2(b['vy'], b['vx']) if bsp > 0.5 else                 math.atan2(b['y'] - p['y'], b['x'] - p['x'])
+            if abs((a0 - bdir + math.pi*3) % (2*math.pi) - math.pi) > 1.0:
+                redirect = True
+        if d < 0.85 and (p['touchT'] <= 0 or redirect):
             pv = math.hypot(p['vx'], p['vy'])
             a = corridor if corridor is not None else p['facing']
             # CLOSE CONTROL: with an opponent near, real carriers shorten their
@@ -564,6 +650,7 @@ class Body:
         self.tick_n += 1; self.t += DT
         self.occupancy_step()
         self.step_ball()
+        self.update_control()
         self.interact(khash)
         self.out_check()
         self.measure_workload()
