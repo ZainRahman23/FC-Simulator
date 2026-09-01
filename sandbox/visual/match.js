@@ -1647,7 +1647,7 @@ function ptEnter() {
   S.pt = { on: true, keys: {} };
   ptReset();
   const btn = document.getElementById("ptbtn");
-  if (btn) btn.textContent = "Exit Single Player Test";
+  if (btn) { btn.textContent = "Exit Single Player Test"; btn.style.background = "#8a2a2a"; btn.style.borderColor = "#b34b4b"; }
 }
 function ptExit() {
   if (S._ptPrevCam) {
@@ -1656,7 +1656,7 @@ function ptExit() {
   }
   S.pt = null;
   const btn = document.getElementById("ptbtn");
-  if (btn) btn.textContent = "Single Player Test";
+  if (btn) { btn.textContent = "Single Player Test"; btn.style.background = "#1d7a3d"; btn.style.borderColor = "#2fa35a"; }
 }
 function ptKick(fam, label) {
   const t = S.pt, p = t.p, b = t.b;
@@ -1884,8 +1884,12 @@ function drawPlaytest(dt) {
                          : "FALLBACK directional art";
   const cd = t.shoot && !t.shoot.kicked ? ("contact in " + (t.shoot.kickAt - t.now).toFixed(2) + " s")
            : t.shoot ? "KICKED (follow-through)" : "-";
+  ctx.textAlign = "center";
+  ctx.fillStyle = "#ffd34d"; ctx.font = "bold " + uipx(20) + "px ui-monospace, monospace";
+  ctx.fillText("SINGLE PLAYER TEST", cv.width / 2, uipx(78));
+  ctx.textAlign = "left";
   ctx.fillStyle = "#ffd34d"; ctx.font = "bold " + uipx(13) + "px ui-monospace, monospace";
-  ctx.fillText("PLAYER TEST — SINGLE PLAYER  (WASD/arrows move · Shift sprint · X pass · Z shoot · C loft · R reset)",
+  ctx.fillText("PLAYER TEST — SINGLE PLAYER  (WASD/arrows move · Shift sprint · X pass · Z shoot · C loft · R reset · Esc exit)",
                uipx(14), cv.height - uipx(120));
   ctx.fillStyle = "#9fe8ff"; ctx.font = uipx(12) + "px ui-monospace, monospace";
   ctx.fillText(`anim ${view.st}  f${view.f}   art: ${art}`, uipx(14), cv.height - uipx(102));
@@ -2290,6 +2294,7 @@ function bindUI() {
     if (S.pt && S.pt.on) {           // inside the playtest ALL keys belong to it
       const k = e.key.toLowerCase();
       if (PT_KEYMAP[k]) { S.pt.keys[PT_KEYMAP[k]] = true; e.preventDefault(); }
+      else if (k === "escape") ptExit();
       else if (k === "r") ptReset();
       else if (k === "x") ptKick("SHORT", "SHORT PASS (no pass anim authored)");
       else if (k === "z") ptShoot();

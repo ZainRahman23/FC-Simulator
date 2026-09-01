@@ -22,6 +22,12 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *a, **kw):
         super().__init__(*a, directory=str(ROOT), **kw)
 
+    def end_headers(self):
+        # dev preview: browsers must revalidate every load (stale cached
+        # match.html/match.js previously hid newly committed controls)
+        self.send_header("Cache-Control", "no-cache")
+        super().end_headers()
+
     def _proxy(self):
         length = int(self.headers.get("Content-Length") or 0)
         body = self.rfile.read(length) if length else None
