@@ -1,0 +1,28 @@
+{
+  "record": "ANIMATION PROTOTYPE V1 — PixelLab generation provenance",
+  "date": "2026-09-01",
+  "character_id": "31a11357-1d06-40c3-958e-5103d1fdd8cd",
+  "mode": "v3 custom (animate_character), east direction only, keep_first_frame=false",
+  "selected": {
+    "dribble": {
+      "group": "53380d1f-aff1-43d3-9cf8-1b6fcea4465b",
+      "name": "proto_dribble_C_noball",
+      "frames": 8, "canvas": "140x140", "cost_generations": 2,
+      "action_description": "jogging with short choppy steps and a low crouched stance, each foot alternately reaching forward to tap the ground ahead",
+      "why": "deliberately ball-free: the AUTHORITATIVE ball renders separately at the carrier's feet (engine carry_touch supplies real touch travel), so no baked ball can contradict physics"
+    },
+    "shoot": {
+      "group": "e355ecab-8d59-43eb-bc86-11f7c974ea2f",
+      "name": "proto_shoot_A_10f",
+      "frames": 10, "canvas": "140x140", "cost_generations": 3,
+      "contact_frame": 6,
+      "action_description": "powerful soccer kick with the right leg: stride in, plant the left foot firmly, right leg swings far back then whips forward low and hard, striking through, long follow-through with arms out for balance, then recover to standing"
+    }
+  },
+  "rejected": {
+    "dribble_A_existing_5fc20f4b": "pre-existing experimental group; oversized baked ball (~0.5 m) conflicts with authoritative-ball architecture",
+    "dribble_B_e41d8020": "baked ball floats at knee height, disappears in frame 7 (2 generations spent)",
+    "shoot_B_923baaf0": "baked BLUE ball (palette violation) floating at waist; head drift frame 4 (2 generations spent)"
+  },
+  "total_generations_spent": 9
+}

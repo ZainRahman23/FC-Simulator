@@ -88,6 +88,7 @@ const S = {
   camV: { x: 0, y: 0, zoom: RUNTIME_DEFAULTS.zoom, zoomTarget: RUNTIME_DEFAULTS.zoom,
           mode: "ball", smooth: RUNTIME_DEFAULTS.smooth, lead: 0, manualX: 52.5,
           target: null },
+  animTest: null,
   dbg: { occ: false, anchors: false, ids: false, vel: false, state: false,
          ball: false, track: false, goalgeo: false, grid: false, xform: false,
          netphys: false,
@@ -153,7 +154,16 @@ async function boot() {
   for (const n of [7, 8, 9, 10, 11])
     jobs.push({ key: ["ballmicro", String(n), 0], path: ASSET_ROOT + "originals/ball_pixellab/ball_micro_" + n + "_4ph.png" });
   let done = 0;
-  const anims = { idle: {}, jog: {}, sprint: {} };
+  const anims = { idle: {}, jog: {}, sprint: {}, dribble: {}, shoot: {} };
+  // ANIMATION PROTOTYPE V1 (east only): PixelLab dribble (8f, ball-free by
+  // design — the authoritative ball supplies real touch travel) and shoot
+  // (10f, contact frame 6). See proto_anim/PROTO_RECORD.json for provenance.
+  for (let i = 0; i < 8; i++)
+    jobs.push({ key: ["dribble", "east", i],
+                path: ASSET_ROOT + "originals/character_31a11357/proto_anim/dribble/east/" + i + ".png" });
+  for (let i = 0; i < 10; i++)
+    jobs.push({ key: ["shoot", "east", i],
+                path: ASSET_ROOT + "originals/character_31a11357/proto_anim/shoot/east/" + i + ".png" });
   await Promise.all(jobs.map(async (j) => {
     const im = await loadImage(j.path);
     done++; pctEl.textContent = Math.round((done / jobs.length) * 100) + "%";
@@ -1510,6 +1520,9 @@ function tick(ts) {
   ensureBuffer();
   const sample = sampleAt(pb.head);
   updateRig(dt, sample);
+  if (S.animTest) { let acc = (S._atAcc || 0) + (S.netSlow ? dt * 0.15 : dt);
+    while (acc >= NETPHYS.dt) { animTestStep(); acc -= NETPHYS.dt; }
+    S._atAcc = acc; }
   netPhysUpdate(S.netSlow ? dt * 0.15 : dt);   // key 0: slow motion (same
                                                // fixed steps, fewer per frame)
   const __t0 = performance.now();
@@ -1593,6 +1606,115 @@ function drawPlayer(p, dt) {
     if (S.dbg.state)
       ctx.fillText(`${vs.state}/${dir} ${p.speed.toFixed(1)}m/s [${S.pb.acts[p.act] || p.act}]`, ax, ty);
   }
+}
+// ═══ ANIMATION PROTOTYPE SHOWCASE (key P) — renderer-local, deterministic ═══
+// Synthetic test puppet demonstrating the explicit animation states
+//   IDLE / RUN / DRIBBLE / SHOOT_APPROACH / SHOOT_CONTACT / SHOOT_FOLLOWTHROUGH
+// on a fixed timeline. The puppet NEVER touches authoritative match state;
+// its ball is a synthetic visual (same deterministic physics constants as
+// the ball tests). SYNC ARCHITECTURE: the kick instant is scheduled first
+// (kickT); the shoot animation is entered at kickT - CONTACT_FRAME/SHOOT_FPS
+// so the authored contact frame is on screen exactly when the (synthetic)
+// kick impulse launches the ball — the same contract a real engine kick
+// event will use. Zero RNG: every timing below is a fixed constant.
+const ANIM_ALIGN = {   // per-frame vertical alignment, source px (draw-time
+  // translation only; frozen originals untouched). +down. Brings each
+  // frame's ground row into the accepted 115-119 band (anchor row 117).
+  dribble: [-2, -2, 0, 0, 0, 0, 0, 0],
+  shoot:   [0, 0, 0, 5, 5, 5, 5, 5, 5, 0],
+};
+const SHOOT_FPS = 12, DRIBBLE_FPS = 10, SHOOT_CONTACT_FRAME = 6;
+const AT = {           // timeline (seconds from test start; all fixed)
+  idle0: 0.0, run: 1.5, dribble: 4.0, approach: 7.6,
+  kickT: 7.6 + SHOOT_CONTACT_FRAME / SHOOT_FPS,          // 8.1
+  end: 12.0,
+  runFrom: 71.0, dribFrom: 79.75, strike: 87.5, y: 34.0,
+};
+function startAnimTest() {
+  S.animTest = { age: 0, ball: { p: [AT.dribFrom + 0.6, AT.y, 0], v: [0, 0, 0] },
+                 touches: 0, launched: false };
+}
+function animTestState(age) {
+  if (age < AT.run) return { st: "IDLE", anim: "idle", f: 0, x: AT.runFrom, moving: false };
+  if (age < AT.dribble) {
+    const u = age - AT.run;
+    return { st: "RUN", anim: "jog", f: Math.floor(u * JOG_FPS) % 8,
+             x: AT.runFrom + u * 3.5, moving: true };
+  }
+  if (age < AT.approach) {
+    const u = age - AT.dribble;
+    return { st: "DRIBBLE", anim: "dribble", f: Math.floor(u * DRIBBLE_FPS) % 8,
+             x: AT.dribFrom + u * 2.0, moving: true };
+  }
+  const u = age - AT.approach;
+  const f = Math.min(9, Math.floor(u * SHOOT_FPS));
+  const st = f < SHOOT_CONTACT_FRAME ? "SHOOT_APPROACH" :
+             f === SHOOT_CONTACT_FRAME ? "SHOOT_CONTACT" : "SHOOT_FOLLOWTHROUGH";
+  return { st, anim: "shoot", f, x: AT.strike - 0.55, moving: false };
+}
+function animTestStep() {
+  const t = S.animTest, dt = NETPHYS.dt;
+  if (!t) return;
+  t.age += dt;
+  const b = t.ball;
+  // dribble touches: fixed cadence, ball nudged ahead like carry_touch
+  if (t.age >= AT.dribble && t.age < AT.approach) {
+    const k = Math.floor((t.age - AT.dribble) / 0.4);       // a touch each 0.4 s
+    if (k > t.touches) { t.touches = k; b.v[0] = 3.1; }
+  }
+  if (t.age >= AT.approach && t.age < AT.kickT && !t.launched) {
+    b.p[0] = AT.strike; b.p[1] = AT.y; b.v[0] = b.v[1] = 0;  // teed for the strike
+  }
+  if (t.age >= AT.kickT && !t.launched) {                    // CONTACT: launch
+    t.launched = true;
+    b.v[0] = 19.0; b.v[1] = 0.4; b.v[2] = 2.4;
+  }
+  const G = 9.81, REST = 0.55, MU = 4.2, SETTLE = 0.9;       // ball-test constants
+  if (b.p[2] > 0 || b.v[2] > 0) {
+    b.p[0] += b.v[0] * dt; b.p[1] += b.v[1] * dt; b.p[2] += b.v[2] * dt;
+    b.v[2] -= G * dt;
+    if (b.p[2] <= 0 && b.v[2] < 0) {
+      b.p[2] = 0;
+      const r = -b.v[2] * REST;
+      if (r < SETTLE) b.v[2] = 0; else { b.v[2] = r; b.v[0] *= 0.8; b.v[1] *= 0.8; }
+    }
+  } else {
+    const sp = Math.hypot(b.v[0], b.v[1]);
+    if (sp > 0.02) {
+      const ns = Math.max(0, sp - MU * dt);
+      b.v[0] *= ns / sp; b.v[1] *= ns / sp;
+      b.p[0] += b.v[0] * dt; b.p[1] += b.v[1] * dt;
+    } else { b.v[0] = b.v[1] = 0; }
+  }
+  if (t.age > AT.end) S.animTest = null;
+}
+function drawAnimTest(dt) {
+  const t = S.animTest;
+  if (!t) return;
+  const v = animTestState(t.age);
+  const frames = S.anims[v.anim] && S.anims[v.anim].east;
+  const sp = sproj(v.x, AT.y);
+  const s = S.playerVScale * depthScale(sp.d) * RIG.zoom * RES;
+  const ax = Math.round(sp.x), ay = Math.round(sp.y);
+  ctx.save();
+  ctx.beginPath();
+  ctx.ellipse(ax, ay, 9 * s, Math.max(1.5, 9 * s * flattenAt(v.x, AT.y)), 0, 0, Math.PI * 2);
+  ctx.fillStyle = "rgba(0,0,0,0.25)"; ctx.fill();
+  ctx.restore();
+  if (frames && frames[v.f]) {
+    const im = frames[v.f];
+    const foot = im.height / 2 + S.pivots.foot_offset_base128;
+    const dy = (ANIM_ALIGN[v.anim] ? ANIM_ALIGN[v.anim][v.f] || 0 : 0) * s;
+    ctx.drawImage(im, Math.round(ax - (im.width / 2) * s),
+                  Math.round(ay - foot * s + dy),
+                  Math.round(im.width * s), Math.round(im.height * s));
+  }
+  drawBallAt(t.ball.p[0], t.ball.p[1], t.ball.p[2],
+             Math.hypot(t.ball.v[0], t.ball.v[1]), dt);
+  ctx.fillStyle = "#ffd34d"; ctx.font = "bold " + uipx(13) + "px ui-monospace, monospace";
+  ctx.fillText("ANIMATION PROTOTYPE — SYNTHETIC (" + v.st + "  frame " + v.f +
+    (t.age < AT.kickT ? "  kick in " + (AT.kickT - t.age).toFixed(2) + "s" : "  KICKED") + ")",
+    uipx(14), cv.height - uipx(88));
 }
 // ═══ PLAYER PHYSICAL OCCUPANCY debug overlay (engine-authoritative data) ═════
 // Mirrors world.py BODY_R — keep in sync with the engine constant.
@@ -1800,6 +1922,7 @@ function draw(sample, dt) {
   }
   drawNetTestBall();
   drawBallTest(dt);
+  drawAnimTest(dt);
   drawBallSeq(dt);
   if (S.dbg.netphys) drawNetPhysDebug();
   if (S.dbg.goalgeo) { drawGoalGeoDebug(0); drawGoalGeoDebug(1); }
@@ -1875,6 +1998,7 @@ function bindUI() {
     if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "SELECT")) return;
     if (e.key === "0") S.netSlow = !S.netSlow;
     if (e.key === "t") startBallSeq();
+    if (e.key === "p") startAnimTest();
     if (e.key >= "6" && e.key <= "9") startBallTest(+e.key);
     else if (e.key === "c") startBallTest("c");
     else if (e.key === "v") startBallTest("v");
