@@ -165,7 +165,7 @@ async function boot() {
     jobs.push({ key: ["shoot", "east", i],
                 path: ASSET_ROOT + "originals/character_31a11357/proto_anim/shoot/east/" + i + ".png" });
   // KICK ANIMATION V2: technique sequences (east; west mirrors, foot flips)
-  for (const [ks, kn] of [["in2_R", 12], ["in2_L", 12], ["la_R", 10], ["la_L", 10],
+  for (const [ks, kn] of [["in3_R", 12], ["in3_L", 12], ["la_R", 10], ["la_L", 10],
                           ["ou_R", 8], ["ou_L", 8], ["ch_R", 8]])
     for (let i = 0; i < kn; i++)
       jobs.push({ key: ["kick", ks + "|" + i, 0],
@@ -1803,11 +1803,14 @@ function drib2Schedule(t, pick, T) {
 // cx/cy = TECHNIQUE-SPECIFIC contact point on the 140 canvas: the boot
 // surface that strikes (INSIDE -> medial face, LACES -> instep, OUTSIDE ->
 // lateral face, CHIP -> under-toe), not the forward-most toe pixel.
-// KICK V2.0.1: in2_R/in2_L re-authored true side-foot sets (opened hip/knee,
-// ankle rotated ~90deg, medial face presented; strike + follow + recovery).
+// KICK V2.0.2: in3_R/in3_L READABLE OPEN-BOOT finesse-style side-foot sets
+// (candidate C, chosen at gameplay zoom): body opens, knee out, boot turned
+// ~90deg with the inside face exposed to the viewer, low sweep through the
+// ball, wrap-across follow-through, recovery. Metrics are diagnostic only;
+// visual review at gameplay scale is the acceptance gate.
 const KICK_LIB = {
-  INSIDE_R: { set: "in2_R", n: 12, fps: 14, contact: 6, cx: 101, cy: 111, surface: "INSIDE" },
-  INSIDE_L: { set: "in2_L", n: 12, fps: 14, contact: 6, cx: 97, cy: 108, surface: "INSIDE" },
+  INSIDE_R: { set: "in3_R", n: 12, fps: 14, contact: 6, cx: 99, cy: 100, surface: "INSIDE" },
+  INSIDE_L: { set: "in3_L", n: 12, fps: 14, contact: 6, cx: 97, cy: 110, surface: "INSIDE" },
   LACES_R: { set: "la_R", n: 10, fps: 12, contact: 7, cx: 97, cy: 114, surface: "LACES" },
   LACES_L: { set: "la_L", n: 10, fps: 12, contact: 7, cx: 98, cy: 113, surface: "LACES" },
   POWER_R: { legacy: "shoot", n: 10, fps: 12, contact: 6, cx: 96, cy: 114, surface: "LACES" },
@@ -1906,19 +1909,24 @@ function ptExit() {
   const btn = document.getElementById("ptbtn");
   if (btn) { btn.textContent = "Single Player Test"; btn.style.background = "#1d7a3d"; btn.style.borderColor = "#2fa35a"; }
 }
-function ptKick(fam, label) {
+function ptKick(fam, label, Dopt, force) {
   // KICK ANIMATION V2: every kick is SCHEDULED — technique + foot chosen
   // deterministically, animation enters now, authoritative impulse fires
   // exactly at the contact frame instant. Physics families untouched.
+  // `force` ({tech, foot}) is the V2.0.2 SHOWCASE override: playtest-only
+  // debug control that pins technique/foot for visual inspection. Ball
+  // physics still comes from the same ptFam family — nothing gameplay
+  // (match AI, engine, trivela geometry selection) reads this path.
   const t = S.pt, p = t.p, b = t.b;
   if (!b.ctrl || t.kick) return;
-  const D = arguments.length > 2 && arguments[2] ? arguments[2] :
-    (fam === "SHORT" ? 14 : fam === "LOFT" ? 22 : 20);
+  const D = Dopt || (fam === "SHORT" ? 14 : fam === "LOFT" ? 22 : 20);
   const [v0, vz] = ptFam(fam, D);
   const tx = p.x + Math.cos(p.facing) * D, ty = p.y + Math.sin(p.facing) * D;
-  const sel = ptSelectFoot(t, tx, ty);
-  let tech = ptTech(fam, D, v0);
-  if ((tech === "INSIDE" || tech === "LACES") &&
+  const sel = force && force.foot
+    ? { foot: force.foot, lat: 0, dtg: 0, tgt: p.facing }
+    : ptSelectFoot(t, tx, ty);
+  let tech = force && force.tech ? force.tech : ptTech(fam, D, v0);
+  if (!force && (tech === "INSIDE" || tech === "LACES") &&
       ((sel.foot === "R" && sel.lat > -0.05 && sel.dtg > 0.26 && sel.dtg < 0.88) ||
        (sel.foot === "L" && sel.lat < 0.05 && sel.dtg < -0.26 && sel.dtg > -0.88)))
     tech = "OUTSIDE";
@@ -1945,10 +1953,50 @@ function ptKick(fam, label) {
   t.last = label + " scheduled (" + tech + " " + sel.foot + ")";
 }
 function ptShoot() { ptKick("SHOT", "SHOT"); }
+// ═══ KICK V2.0.2 — TECHNIQUE SHOWCASE (playtest-only debug controls) ═══════
+// Keys 1-5 pin a technique directly (foot = preferred-foot toggle, F key);
+// key 6 runs the deterministic side-by-side sequence. These are inspection
+// controls: same ball families, same contact scheduling, zero gameplay use.
+const PT_SHOWCASE = {
+  "1": { tech: "INSIDE", fam: "SHORT", D: 14, label: "SHOWCASE INSIDE" },
+  "2": { tech: "LACES", fam: "DRIVEN", D: 20, label: "SHOWCASE LACES" },
+  "3": { tech: "LACES_POWER", fam: "CLEAR", D: 35, label: "SHOWCASE POWER LACES" },
+  "4": { tech: "OUTSIDE", fam: "SHORT", D: 14, label: "SHOWCASE TRIVELA/OUTSIDE" },
+  "5": { tech: "CHIP", fam: "LOFT", D: 22, label: "SHOWCASE CHIP" },
+};
+function ptShowcaseKick(k) {
+  const t = S.pt, c = PT_SHOWCASE[k];
+  if (!t || !c) return;
+  const foot = t.pfoot || "R";
+  ptKick(c.fam, c.label + " (" + foot + ")", c.D, { tech: c.tech, foot });
+}
+function ptShowcaseSeq() {
+  const t = S.pt;
+  if (!t || t.show) return;
+  t.show = { queue: ["1", "2", "3", "4", "5"], idx: 0, nextAt: t.now + 0.3 };
+  t.last = "SHOWCASE SEQUENCE: INSIDE > LACES > POWER > TRIVELA > CHIP";
+}
+function ptShowcaseStep(t) {
+  // advance the deterministic showcase: re-stage the same spot, same facing,
+  // same ball placement, fire the next technique after a short pause
+  const sh = t.show;
+  if (!sh || t.kick) return;
+  if (sh.idx >= sh.queue.length) { t.show = null; t.last = "SHOWCASE DONE"; return; }
+  if (t.now < sh.nextAt) return;
+  const p = t.p, b = t.b;
+  p.x = 84; p.y = 34; p.vx = 0; p.vy = 0; p.facing = 0;
+  const foot = t.pfoot || "R";
+  b.x = p.x + 0.42; b.y = p.y + (foot === "R" ? 0.12 : -0.12); b.z = 0;
+  b.vx = 0; b.vy = 0; b.vz = 0; b.ctrl = "PT";
+  ptShowcaseKick(sh.queue[sh.idx]);
+  sh.idx++;
+  sh.nextAt = t.now + 2.4;          // anim (<=1 s) + readable pause
+}
 function ptStep() {
   const t = S.pt;
   if (!t || !t.on) return;
   t.now += PT_DT;
+  ptShowcaseStep(t);               // V2.0.2 showcase sequencer (debug-only)
   const p = t.p, b = t.b;
   // input -> desired velocity (kicker plants during the shoot animation)
   let dx = 0, dy = 0;
@@ -2372,7 +2420,7 @@ function drawPlaytest(dt) {
   ctx.fillText("SINGLE PLAYER TEST", cv.width / 2, uipx(78));
   ctx.textAlign = "left";
   ctx.fillStyle = "#ffd34d"; ctx.font = "bold " + uipx(13) + "px ui-monospace, monospace";
-  ctx.fillText("PLAYER TEST — SINGLE PLAYER  (WASD/arrows move · Shift sprint · X pass · Z shoot · C loft · R reset · Esc exit)",
+  ctx.fillText("PLAYER TEST — SINGLE PLAYER  (WASD move · Shift sprint · X pass · Z shoot · C loft · F foot · R reset · Esc exit · SHOWCASE 1 inside 2 laces 3 power 4 trivela 5 chip 6 sequence)",
                uipx(14), cv.height - uipx(120));
   ctx.fillStyle = "#9fe8ff"; ctx.font = uipx(12) + "px ui-monospace, monospace";
   ctx.fillText(`anim ${view.st}  f${view.f}   art: ${art}`, uipx(14), cv.height - uipx(102));
@@ -2813,6 +2861,8 @@ function bindUI() {
       else if (k === "x") ptKick("SHORT", "SHORT PASS (no pass anim authored)");
       else if (k === "z") ptShoot();
       else if (k === "c") ptKick("LOFT", "LOFTED PASS (no pass anim authored)");
+      else if (PT_SHOWCASE[k]) ptShowcaseKick(k);     // 1-5 technique showcase
+      else if (k === "6") ptShowcaseSeq();            // side-by-side sequence
       return;
     }
     if (e.key === "0") S.netSlow = !S.netSlow;

@@ -280,5 +280,70 @@
   ],
   "total_generations_spent": 14,
   "result": "in2_R (12f, contact f6) and in2_L (12f, contact f6) at 14 fps; kick timing unchanged (contact offset 6/14 s = old INSIDE_R); technique-aware contact metadata in kick/east/KICK_CONTACT_META.json"
+ },
+ "kick_v2_0_2_readable_inside": {
+  "date": "2026-08-31",
+  "reason": "V2.0.1 in2 sets rejected by user at gameplay scale (still read as laces). V2.0.2: candidates authored at four exaggeration levels, compared at gameplay zoom; finesse-style candidate C selected (NOT the most conservative, per directive).",
+  "mode": "v3 custom + v3 keyframe interpolation, east, ball-free; west = mirror",
+  "candidates": [
+   {
+    "group": "e8c3b930",
+    "name": "kick_inside_R_v202_B pronounced",
+    "cost": 2,
+    "rejected": "readable wrap but weak contact window at gameplay zoom"
+   },
+   {
+    "group": "cd2b964e",
+    "name": "kick_inside_R_v202_C finesse",
+    "cost": 2,
+    "accepted": "most readable at 84px: leaned-back wrap, horizontal open boot"
+   },
+   {
+    "group": "3b68073f",
+    "name": "kick_inside_R_v202_D maximum",
+    "cost": 2,
+    "rejected": "poses readable but sequence order scrambled"
+   },
+   {
+    "group": "50db374a",
+    "name": "kick_inside_L_v202_C finesse",
+    "cost": 2,
+    "accepted": "coherent left-footed arc"
+   }
+  ],
+  "segments": [
+   {
+    "group": "8c1f80b5",
+    "name": "R strike (C f4->f5)",
+    "cost": 1,
+    "partial": "f0 used (pre-sweep); f1-f2 rejected: grass-swoosh hallucinations"
+   },
+   {
+    "group": "bd5e4c00",
+    "name": "R strike2 (C f4->f5, env words stripped)",
+    "cost": 1,
+    "accepted": "f0 = strike-through frame, clean"
+   },
+   {
+    "group": "36359094",
+    "name": "R recovery (C f7->f0)",
+    "cost": 1,
+    "accepted": "f0,f2 used"
+   },
+   {
+    "group": "2245f698",
+    "name": "L strike (LC f4->f5)",
+    "cost": 1,
+    "accepted": "f1 pre-sweep, f2 contact at ball (1.43R)"
+   },
+   {
+    "group": "02b99c51",
+    "name": "L recovery (LC f7->f0)",
+    "cost": 1,
+    "accepted": "f0,f2 used"
+   }
+  ],
+  "total_generations_spent": 13,
+  "result": "in3_R / in3_L (12f, 14 fps, contact f6 = same 6/14 s offset). in2 sets retained on disk, no longer loaded. Playtest gains showcase keys 1-5 (direct technique) and 6 (deterministic INSIDE>LACES>POWER>TRIVELA>CHIP sequence) \u2014 debug-only, zero gameplay reach."
  }
 }

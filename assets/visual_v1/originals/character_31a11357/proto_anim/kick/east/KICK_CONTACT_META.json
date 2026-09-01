@@ -1,8 +1,71 @@
 {
- "record": "KICK V2.0.1 \u2014 TRUE INSIDE-FOOT CONTACT (technique-aware contact metadata)",
+ "record": "KICK V2.0.2 \u2014 READABLE OPEN-BOOT INSIDE STRIKE (supersedes the V2.0.1 in2 sets, which the user rejected at gameplay scale as reading like a weaker laces kick)",
  "canvas": "140x140, anchor ground row 117, canvas center x 70",
  "metric_reference": "authoritative ball composited at (99,111) r5.0 px (~0.54 m ahead, BALL_VIS_R 0.19)",
  "sets": {
+  "in3_R": {
+   "frames": 12,
+   "fps": 14,
+   "contact_frame": 6,
+   "contactSurface": "INSIDE",
+   "style": "finesse/curling-style side-foot: body opens, knee outward, boot turned ~90deg with inside face exposed to viewer, low sweep, wrap-across follow-through",
+   "medialBootContactPointPx": [
+    99,
+    100
+   ],
+   "bootOrientation": {
+    "read": "boot fully sideways, broad inside face toward viewer/ball, heel leading",
+    "boot_patch_bbox": [
+     88,
+     94,
+     102,
+     98
+    ],
+    "centroid_to_ball_R": 3.08,
+    "note": "strike-through frame: boot passes just above ball center at the launch instant; readability chosen over minimal gap per V2.0.2 directive"
+   },
+   "targetDirection": "east",
+   "sequence": "approach/open f0-f3, load f4, low sweep f5, OPEN-BOOT STRIKE-THROUGH f6, wrap-across f7-f9, recovery f10-f11",
+   "provenance": {
+    "f0-f4,f7-f9": "v3 candidate C group cd2b964e (kick_inside_R_v202_C)",
+    "f5": "v3 interpolation group 8c1f80b5 frame 0 (clean; frames 1-2 of that segment rejected for grass-swoosh hallucinations)",
+    "f6": "v3 interpolation group bd5e4c00 (strike2) frame 0",
+    "f10-f11": "v3 interpolation group 36359094 frames 0,2"
+   }
+  },
+  "in3_L": {
+   "frames": 12,
+   "fps": 14,
+   "contact_frame": 6,
+   "contactSurface": "INSIDE",
+   "style": "left-footed finesse/curling-style side-foot, right foot planted",
+   "medialBootContactPointPx": [
+    97,
+    110
+   ],
+   "bootOrientation": {
+    "read": "left boot flat and low AT the ball, inside face presented; wrap rises after contact",
+    "boot_patch_bbox": [
+     83,
+     97,
+     102,
+     114
+    ],
+    "centroid_to_ball_R": 1.43
+   },
+   "targetDirection": "east",
+   "sequence": "approach/open f0-f3, load f4, low sweep f5, INSIDE CONTACT f6, wrap-across f7-f9, recovery f10-f11",
+   "provenance": {
+    "f0-f4,f7-f9": "v3 candidate group 50db374a (kick_inside_L_v202_C)",
+    "f5-f6": "v3 interpolation group 2245f698 frames 1,2",
+    "f10-f11": "v3 interpolation group 02b99c51 frames 0,2"
+   }
+  }
+ },
+ "supersedes": "in_R_*/in_L_* remain on disk for provenance but are no longer loaded; they read as a weaker laces drive (toe-forward knee-drive silhouette) and were rejected on visual technique review",
+ "orientation_rule": "INSIDE contact validation is boot-point distance AND opened-boot orientation (flat/horizontal patch, aspect >= 1.2, no toe-forward elongation at the ball line)",
+ "acceptance_rule": "metrics below are DIAGNOSTIC ONLY; the user's visual review at actual gameplay zoom is the final acceptance gate (V2.0.2 directive)",
+ "sets_superseded": {
   "in2_R": {
    "frames": 12,
    "fps": 14,
@@ -59,7 +122,5 @@
     "f8-f11": "v3 interpolation group 5d7cfb3c (f7->f0 recovery)"
    }
   }
- },
- "supersedes": "in_R_*/in_L_* remain on disk for provenance but are no longer loaded; they read as a weaker laces drive (toe-forward knee-drive silhouette) and were rejected on visual technique review",
- "orientation_rule": "INSIDE contact validation is boot-point distance AND opened-boot orientation (flat/horizontal patch, aspect >= 1.2, no toe-forward elongation at the ball line)"
+ }
 }
