@@ -1705,7 +1705,11 @@ function ptStep() {
     const tx = (s0c < 0.15 && dball > 0.55) ? b.x : b.x + Math.cos(inCorr) * 2;
     const ty = (s0c < 0.15 && dball > 0.55) ? b.y : b.y + Math.sin(inCorr) * 2;
     const dd = Math.hypot(tx - p.x, ty - p.y);
-    if (dd > 0.12) { dvx = (tx - p.x) / dd * spd; dvy = (ty - p.y) / dd * spd; }
+    // brake into unfinished turns (V1.1, mirrors continuous.py CARRY)
+    const ceS = t.corr !== undefined ?
+      Math.abs(((inCorr - t.corr) + Math.PI * 3) % (2 * Math.PI) - Math.PI) : 0;
+    const spdC = spd * Math.max(0.4, Math.min(1.0, 1.0 - 0.45 * ceS));
+    if (dd > 0.12) { dvx = (tx - p.x) / dd * spdC; dvy = (ty - p.y) / dd * spdC; }
   } else if (m > 0) { dvx = dx / m * spd; dvy = dy / m * spd; }
   // world.locomote velocity limiter (ported verbatim)
   const cur = Math.hypot(p.vx, p.vy), des = Math.hypot(dvx, dvy);
@@ -1757,7 +1761,14 @@ function ptStep() {
       // CONTROLLED DRIBBLING V1 — mirror of world.py carry_touch: solved
       // impulse, speed curves T(v)/s_c(v), smooth turn factor, corrective
       // early touches (0.10 s min spacing), settle behaviour at rest.
-      const corr = inCorr !== null ? inCorr : p.facing;
+      // CORRIDOR SLEW (V1.1 mirror): carry corridor rotates at 7 rad/s
+      const tgtC = inCorr !== null ? inCorr : p.facing;
+      if (t.corrT === undefined || t.now - t.corrT > 0.6) t.corr = tgtC;
+      const ceT = ((tgtC - t.corr) + Math.PI * 3) % (2 * Math.PI) - Math.PI;
+      const slew = 7.0 * PT_DT;
+      t.corr = ((t.corr + Math.max(-slew, Math.min(slew, ceT))) + Math.PI * 3) % (2 * Math.PI) - Math.PI;
+      t.corrT = t.now;
+      const corr = t.corr;
       if (d <= 0.85) {
         const pv = Math.hypot(p.vx, p.vy), bsp = Math.hypot(b.vx, b.vy);
         const spacing = t.now - (t.lastTouchT !== undefined ? t.lastTouchT : -9);
@@ -1786,7 +1797,9 @@ function ptStep() {
             const pvA = Math.max(0, p.vx * ux + p.vy * uy);
             let u = pvA + (sc - s0 + 0.5 * PT.MU_ROLL * T * T) / T;
             u = Math.max(0.5, Math.min(pv + 3.5, u));
-            b.vx = ux * u; b.vy = uy * u; b.vz = 0;
+            const rpx = b.vx - (b.vx * ux + b.vy * uy) * ux;
+            const rpy = b.vy - (b.vx * ux + b.vy * uy) * uy;
+            b.vx = ux * u + 0.15 * rpx; b.vy = uy * u + 0.15 * rpy; b.vz = 0;
             p.touchT = T; t.lastTouchT = t.now;
             t.touchN++;
             t.dribF0 = (t.touchN % 2) ? 2 : 6;
@@ -1801,7 +1814,17 @@ function ptStep() {
     // regain control: world.interact CLEAN branch (port), rv < 5.5
     const d = Math.hypot(p.x - b.x, p.y - b.y);
     const rv = Math.hypot(b.vx - p.vx, b.vy - p.vy);
-    if (d < PT.REACH && b.z < 1.4 && rv < 5.5) {
+    if (d < PT.REACH && b.z < 1.4 && rv >= 5.5 && rv < 12 &&
+        t.now - (t.looseT || -9) > 0.3) {
+      // too hot to control (world.interact TOUCH_LOOSE, deterministic mirror):
+      // the ball squirts ahead instead of ghosting through the player
+      const a = Math.atan2(b.vy - p.vy, b.vx - p.vx);
+      const spd2 = rv * 0.35;
+      b.vx = Math.cos(a) * spd2 + p.vx * 0.4;
+      b.vy = Math.sin(a) * spd2 + p.vy * 0.4;
+      b.exclT = t.now + 0.12; t.looseT = t.now;
+      t.last = "LOOSE TOUCH (too fast to control)";
+    } else if (d < PT.REACH && b.z < 1.4 && rv < 5.5) {
       b.ctrl = true;
       t.ctrlSince = t.now;
       b.vx = p.vx * 0.7 + Math.cos(p.facing) * 1.1;

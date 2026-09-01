@@ -266,15 +266,20 @@ class Lab:
                         body.intents[pid] = None
                 elif it['kind'] == 'CARRY':
                     corr = math.atan2(it['ty'] - p['y'], it['tx'] - p['x'])
+                    # brake into unfinished turns (V1.1): while the slewed
+                    # carry corridor still points away from the intent, the
+                    # carrier sheds speed via the EXISTING locomotion model
+                    cerr = abs((corr - p.get('_corr', corr) + math.pi * 3) % (2 * math.pi) - math.pi)
+                    cspd = p['vmax'] * 0.875 * clamp(1.0 - 0.45 * cerr, 0.4, 1.0)
                     s0 = (b['x'] - p['x']) * math.cos(corr) + (b['y'] - p['y']) * math.sin(corr)
                     if b['ctrl'] == pid and s0 < 0.15 and \
                        dist(p['x'], p['y'], b['x'], b['y']) > 0.55:
                         # overran the ball (tight turn): collect it before
                         # resuming the corridor — prevents parking 2 m past
                         # a ball that sits behind the carry line
-                        body.locomote(p, b['x'], b['y'], p['vmax']*0.875)
+                        body.locomote(p, b['x'], b['y'], cspd)
                     else:
-                        body.locomote(p, b['x'] + math.cos(corr)*2, b['y'] + math.sin(corr)*2, p['vmax']*0.875)
+                        body.locomote(p, b['x'] + math.cos(corr)*2, b['y'] + math.sin(corr)*2, cspd)
                     body.carry_touch(p, corr)
                 continue
             # everyone else: cal11 structural target at believable pace

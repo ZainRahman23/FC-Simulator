@@ -451,8 +451,21 @@ class Body:
                 pass                        # moving ball at feet: trap via normal touch below
             else:
                 return
-        a0 = corridor if corridor is not None else p['facing']
-        # turn angle: desired corridor vs the ball's current line
+        # CORRIDOR SLEW (V1.1): the carry corridor rotates toward the intent
+        # at 7 rad/s (90 deg in ~0.22 s) instead of jumping. Touches during a
+        # turn therefore send the ball THROUGH the carrier's braking arc —
+        # a hard chop at sprint parks the ball on his turning path, not at
+        # the apex metres behind his skid. Deterministic; resets when the
+        # carry lapses (>0.6 s without a carry tick).
+        tgt = corridor if corridor is not None else p['facing']
+        if self.t - p.get('_corrT', -9.0) > 0.6 or '_corr' not in p:
+            p['_corr'] = tgt
+        cerr = (tgt - p['_corr'] + math.pi * 3) % (2 * math.pi) - math.pi
+        rate = 7.0 * DT
+        p['_corr'] = ((p['_corr'] + clamp(cerr, -rate, rate)) + math.pi) % (2 * math.pi) - math.pi
+        p['_corrT'] = self.t
+        a0 = p['_corr']
+        # turn angle: slewed corridor vs the ball's current line
         bdir = math.atan2(b['vy'], b['vx']) if bsp > 0.5 else             math.atan2(b['y'] - p['y'], b['x'] - p['x'])
         turn = abs((a0 - bdir + math.pi * 3) % (2 * math.pi) - math.pi)
         spacing = self.t - p.get('_lastTouchT', -9.0)
@@ -475,7 +488,12 @@ class Body:
         u = pv_along + (s_c - s0 + 0.5 * MU_ROLL * T * T) / T
         u = clamp(u, 0.5, pv + 3.5)
         if knock_scale > 1.0: u = min(u * knock_scale, pv + 3.5 * knock_scale)
-        b['vx'], b['vy'], b['vz'] = ux * u, uy * u, 0.0
+        # physical impulse, not overwrite (V1.1): obsolete velocity is
+        # suppressed hard; a small transverse residual keeps the redirect
+        # continuous through the arc
+        rvx = b['vx'] - (b['vx'] * ux + b['vy'] * uy) * ux
+        rvy = b['vy'] - (b['vx'] * ux + b['vy'] * uy) * uy
+        b['vx'], b['vy'], b['vz'] = ux * u + 0.15 * rvx, uy * u + 0.15 * rvy, 0.0
         b['state'] = 'ROLLING'
         p['touchT'] = T
         p['_lastTouchT'] = self.t
