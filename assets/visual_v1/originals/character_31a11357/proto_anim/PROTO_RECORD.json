@@ -1,221 +1,284 @@
 {
-  "record": "ANIMATION PROTOTYPE V1 \u2014 PixelLab generation provenance",
-  "date": "2026-09-01",
-  "character_id": "31a11357-1d06-40c3-958e-5103d1fdd8cd",
-  "mode": "v3 custom (animate_character), east direction only, keep_first_frame=false",
-  "selected": {
-    "dribble": {
-      "group": "53380d1f-aff1-43d3-9cf8-1b6fcea4465b",
-      "name": "proto_dribble_C_noball",
-      "frames": 8,
-      "canvas": "140x140",
-      "cost_generations": 2,
-      "action_description": "jogging with short choppy steps and a low crouched stance, each foot alternately reaching forward to tap the ground ahead",
-      "why": "deliberately ball-free: the AUTHORITATIVE ball renders separately at the carrier's feet (engine carry_touch supplies real touch travel), so no baked ball can contradict physics"
-    },
-    "shoot": {
-      "group": "e355ecab-8d59-43eb-bc86-11f7c974ea2f",
-      "name": "proto_shoot_A_10f",
-      "frames": 10,
-      "canvas": "140x140",
-      "cost_generations": 3,
-      "contact_frame": 6,
-      "action_description": "powerful soccer kick with the right leg: stride in, plant the left foot firmly, right leg swings far back then whips forward low and hard, striking through, long follow-through with arms out for balance, then recover to standing"
-    }
+ "record": "ANIMATION PROTOTYPE V1 \u2014 PixelLab generation provenance",
+ "date": "2026-09-01",
+ "character_id": "31a11357-1d06-40c3-958e-5103d1fdd8cd",
+ "mode": "v3 custom (animate_character), east direction only, keep_first_frame=false",
+ "selected": {
+  "dribble": {
+   "group": "53380d1f-aff1-43d3-9cf8-1b6fcea4465b",
+   "name": "proto_dribble_C_noball",
+   "frames": 8,
+   "canvas": "140x140",
+   "cost_generations": 2,
+   "action_description": "jogging with short choppy steps and a low crouched stance, each foot alternately reaching forward to tap the ground ahead",
+   "why": "deliberately ball-free: the AUTHORITATIVE ball renders separately at the carrier's feet (engine carry_touch supplies real touch travel), so no baked ball can contradict physics"
   },
-  "rejected": {
-    "dribble_A_existing_5fc20f4b": "pre-existing experimental group; oversized baked ball (~0.5 m) conflicts with authoritative-ball architecture",
-    "dribble_B_e41d8020": "baked ball floats at knee height, disappears in frame 7 (2 generations spent)",
-    "shoot_B_923baaf0": "baked BLUE ball (palette violation) floating at waist; head drift frame 4 (2 generations spent)"
-  },
-  "total_generations_spent": 9,
-  "dribble2_touch_library": {
-    "date": "2026-09-01",
-    "mode": "v3 custom (animate_character), east, keep_first_frame=false, ball-free",
-    "generations": [
-      {
-        "group": "f7eed546-0381-4341-8fbb-3d2fffb8179a",
-        "name": "drib2_close_control",
-        "cost_generations": 2,
-        "action_description": "very tight close-control football dribbling on the spot, tiny choppy steps, feet staying close together under the hips, small soft inside-foot taps at ground level alternating feet, knees bent, compact stance",
-        "accepted_frames": [
-          "4 (compact stride)",
-          "5 (L compact contact)",
-          "6 (R compact contact)",
-          "7 (compact stride)"
-        ],
-        "rejected_frames": "0-3: dark forearm/hip artifact could read as a held prop (character-consistency rule)"
-      },
-      {
-        "group": "a66d3d7d-97bf-4d11-bd1b-ea947d344c63",
-        "name": "drib2_cut_plant",
-        "cost_generations": 2,
-        "action_description": "sharp cutting turn while running: plants one leg hard with deep knee bend, body leaning into the turn, the other foot sweeping across in front of the body at ground level, arms out for balance",
-        "accepted_frames": [
-          "5 (cut plant, deep knee bend)",
-          "6 (cut exit push-off)"
-        ],
-        "rejected_frames": "7: arm bulk/skin inconsistency; 0-4: rotation/walk frames held in reserve (scratchpad) for a future turn sequence"
-      }
-    ],
-    "library_note": "modular touch library = existing proto_dribble_C frames f0-f7 (contacts f1/f2=R reach, f6/f7=L reach, strides f0/f5, crossing f3/f4) + these 6 frames; metadata and deterministic selection live in match.js DRIB_LIB"
-  },
-  "dribble2_1_sprint_turn_coverage": {
-    "date": "2026-09-01",
-    "mode": "v3 custom, east, ball-free",
-    "generations": [
-      {
-        "group": "6f62622e-8e0b-4a0a-ab3b-6f40842eca7f",
-        "name": "drib21_sprint_reach",
-        "cost_generations": 2,
-        "accepted": [
-          "1 (SPR_C reach +0.60m)",
-          "2 (SPR_A reach +0.66m)",
-          "7 (SPR_B reach +0.64m)",
-          "0/6 (sprint entry/recovery strides)"
-        ],
-        "why": "physics sprint touch contacts ~0.73 m ahead; previous max authored reach 0.43 m"
-      },
-      {
-        "group": "d8ea6b68-1936-4b0e-b6c1-c937572c99ad",
-        "name": "drib21_dragback",
-        "cost_generations": 2,
-        "accepted": [
-          "4 (DRAG_A sole-on contact)",
-          "5 (DRAG_X pull-away exit)",
-          "2 (brake stride)"
-        ]
-      },
-      {
-        "group": "2fc93ce6-9307-4b51-acc1-c89a4591a43a",
-        "name": "drib21_side_inside",
-        "cost_generations": 2,
-        "accepted": [],
-        "rejected": "frames 4-5 foot at knee height (juggling read); frame 3 arms-back posture reads as a kick, not a control touch"
-      },
-      {
-        "group": "b55dde51-ec7c-4a68-adc2-3cf72190f604",
-        "name": "drib21_outside_cut",
-        "cost_generations": 2,
-        "accepted": [],
-        "rejected": "frames 1/3/4 contain cyan motion-streak hallucinations (foreign colour); clean frames read as plain walking"
-      }
-    ],
-    "total_generations_spent": 8
-  },
-  "dribble3_eight_direction": {
-    "date": "2026-09-01",
-    "mode": "v3 custom, ball-free, stage-gated (N/S then NE/SE)",
-    "generations": [
-      {
-        "group": "e8392127",
-        "name": "v3_drib_north",
-        "cost": 2,
-        "accepted": "contacts f2/f4/f5/f6 + strides"
-      },
-      {
-        "group": "6e585109",
-        "name": "v3_sprint_north",
-        "cost": 2,
-        "accepted": "f4/f6 sprint contacts"
-      },
-      {
-        "group": "31e05ec8",
-        "name": "v3_drib_south",
-        "cost": 2,
-        "accepted": "contacts f3/f5/f6/f7 + strides"
-      },
-      {
-        "group": "c78098fe",
-        "name": "v3_sprint_south",
-        "cost": 2,
-        "accepted": "f2/f4 sprint contacts"
-      },
-      {
-        "group": "2b3ea99d",
-        "name": "v3_drib_ne",
-        "cost": 2,
-        "accepted": "contacts f0/f1/f5/f6 + strides"
-      },
-      {
-        "group": "0e6284df",
-        "name": "v3_sprint_ne",
-        "cost": 2,
-        "accepted": "f1/f2 sprint contacts"
-      },
-      {
-        "group": "a753ff01",
-        "name": "v3_drib_se",
-        "cost": 2,
-        "accepted": "contacts f1/f2/f6/f7 + strides"
-      },
-      {
-        "group": "0f32debe",
-        "name": "v3_sprint_se",
-        "cost": 2,
-        "accepted": "f3/f4 sprint contacts"
-      }
-    ],
-    "total_generations_spent": 16,
-    "mirrors": "west<-east, north-west<-north-east, south-west<-south-east (accepted E->W precedent; foot labels flip with the mirror)",
-    "metadata": "auto-measured (CONTACT_META.json): contact = grounded boot cluster nearest the expected ball line (dir-dependent target), sole+3 contact point, alignment dy",
-    "reported_art_gaps": "diagonal + south SPRINT long-reach contacts (ball ~0.73 m ahead partly along the depth axis; art toe reach maxes ~77/140 art px) \u2014 candidates: (ne,se,s,sw,nw) x sprint; S<->N u-turn drag coverage"
-  },
-  "kick_v2_techniques": {
-    "date": "2026-09-01",
-    "mode": "v3 custom, east, ball-free; west = mirror (foot labels flip)",
-    "generations": [
-      {
-        "group": "905cad76",
-        "name": "kick_inside_R",
-        "cost": 2,
-        "accepted": "full 8f, contact f6"
-      },
-      {
-        "group": "55624f8a",
-        "name": "kick_inside_L",
-        "cost": 2,
-        "accepted": "full 8f, contact f7"
-      },
-      {
-        "group": "68d96801",
-        "name": "kick_laces_R",
-        "cost": 3,
-        "accepted": "full 10f, contact f7"
-      },
-      {
-        "group": "beefb723",
-        "name": "kick_laces_L",
-        "cost": 3,
-        "accepted": "full 10f, contact f7"
-      },
-      {
-        "group": "4369e603",
-        "name": "kick_outside_R (take 1)",
-        "cost": 2,
-        "rejected": "white puff/particle hallucinations on contact frames 5-6 (motion smear rule)"
-      },
-      {
-        "group": "c522c75b",
-        "name": "kick_outside_R2",
-        "cost": 2,
-        "accepted": "full 8f, contact f6 (clean retake)"
-      },
-      {
-        "group": "1235b423",
-        "name": "kick_outside_L",
-        "cost": 2,
-        "accepted": "full 8f, contact f6"
-      },
-      {
-        "group": "539c21e8",
-        "name": "kick_chip_R",
-        "cost": 2,
-        "accepted": "full 8f, contact f5 (stab-under), lift f6-7"
-      }
-    ],
-    "legacy_reuse": "proto_shoot_A_10f serves as the right-foot LACES_POWER extended variant",
-    "coverage": "E/W complete for both feet across INSIDE/LACES/OUTSIDE (+POWER R, CHIP R); CHIP_L falls back to INSIDE_L (reported); non-E/W presentations schedule a minimal no-anim kick (reported directional gap, next authoring wave)",
-    "total_generations_spent": 18
+  "shoot": {
+   "group": "e355ecab-8d59-43eb-bc86-11f7c974ea2f",
+   "name": "proto_shoot_A_10f",
+   "frames": 10,
+   "canvas": "140x140",
+   "cost_generations": 3,
+   "contact_frame": 6,
+   "action_description": "powerful soccer kick with the right leg: stride in, plant the left foot firmly, right leg swings far back then whips forward low and hard, striking through, long follow-through with arms out for balance, then recover to standing"
   }
+ },
+ "rejected": {
+  "dribble_A_existing_5fc20f4b": "pre-existing experimental group; oversized baked ball (~0.5 m) conflicts with authoritative-ball architecture",
+  "dribble_B_e41d8020": "baked ball floats at knee height, disappears in frame 7 (2 generations spent)",
+  "shoot_B_923baaf0": "baked BLUE ball (palette violation) floating at waist; head drift frame 4 (2 generations spent)"
+ },
+ "total_generations_spent": 9,
+ "dribble2_touch_library": {
+  "date": "2026-09-01",
+  "mode": "v3 custom (animate_character), east, keep_first_frame=false, ball-free",
+  "generations": [
+   {
+    "group": "f7eed546-0381-4341-8fbb-3d2fffb8179a",
+    "name": "drib2_close_control",
+    "cost_generations": 2,
+    "action_description": "very tight close-control football dribbling on the spot, tiny choppy steps, feet staying close together under the hips, small soft inside-foot taps at ground level alternating feet, knees bent, compact stance",
+    "accepted_frames": [
+     "4 (compact stride)",
+     "5 (L compact contact)",
+     "6 (R compact contact)",
+     "7 (compact stride)"
+    ],
+    "rejected_frames": "0-3: dark forearm/hip artifact could read as a held prop (character-consistency rule)"
+   },
+   {
+    "group": "a66d3d7d-97bf-4d11-bd1b-ea947d344c63",
+    "name": "drib2_cut_plant",
+    "cost_generations": 2,
+    "action_description": "sharp cutting turn while running: plants one leg hard with deep knee bend, body leaning into the turn, the other foot sweeping across in front of the body at ground level, arms out for balance",
+    "accepted_frames": [
+     "5 (cut plant, deep knee bend)",
+     "6 (cut exit push-off)"
+    ],
+    "rejected_frames": "7: arm bulk/skin inconsistency; 0-4: rotation/walk frames held in reserve (scratchpad) for a future turn sequence"
+   }
+  ],
+  "library_note": "modular touch library = existing proto_dribble_C frames f0-f7 (contacts f1/f2=R reach, f6/f7=L reach, strides f0/f5, crossing f3/f4) + these 6 frames; metadata and deterministic selection live in match.js DRIB_LIB"
+ },
+ "dribble2_1_sprint_turn_coverage": {
+  "date": "2026-09-01",
+  "mode": "v3 custom, east, ball-free",
+  "generations": [
+   {
+    "group": "6f62622e-8e0b-4a0a-ab3b-6f40842eca7f",
+    "name": "drib21_sprint_reach",
+    "cost_generations": 2,
+    "accepted": [
+     "1 (SPR_C reach +0.60m)",
+     "2 (SPR_A reach +0.66m)",
+     "7 (SPR_B reach +0.64m)",
+     "0/6 (sprint entry/recovery strides)"
+    ],
+    "why": "physics sprint touch contacts ~0.73 m ahead; previous max authored reach 0.43 m"
+   },
+   {
+    "group": "d8ea6b68-1936-4b0e-b6c1-c937572c99ad",
+    "name": "drib21_dragback",
+    "cost_generations": 2,
+    "accepted": [
+     "4 (DRAG_A sole-on contact)",
+     "5 (DRAG_X pull-away exit)",
+     "2 (brake stride)"
+    ]
+   },
+   {
+    "group": "2fc93ce6-9307-4b51-acc1-c89a4591a43a",
+    "name": "drib21_side_inside",
+    "cost_generations": 2,
+    "accepted": [],
+    "rejected": "frames 4-5 foot at knee height (juggling read); frame 3 arms-back posture reads as a kick, not a control touch"
+   },
+   {
+    "group": "b55dde51-ec7c-4a68-adc2-3cf72190f604",
+    "name": "drib21_outside_cut",
+    "cost_generations": 2,
+    "accepted": [],
+    "rejected": "frames 1/3/4 contain cyan motion-streak hallucinations (foreign colour); clean frames read as plain walking"
+   }
+  ],
+  "total_generations_spent": 8
+ },
+ "dribble3_eight_direction": {
+  "date": "2026-09-01",
+  "mode": "v3 custom, ball-free, stage-gated (N/S then NE/SE)",
+  "generations": [
+   {
+    "group": "e8392127",
+    "name": "v3_drib_north",
+    "cost": 2,
+    "accepted": "contacts f2/f4/f5/f6 + strides"
+   },
+   {
+    "group": "6e585109",
+    "name": "v3_sprint_north",
+    "cost": 2,
+    "accepted": "f4/f6 sprint contacts"
+   },
+   {
+    "group": "31e05ec8",
+    "name": "v3_drib_south",
+    "cost": 2,
+    "accepted": "contacts f3/f5/f6/f7 + strides"
+   },
+   {
+    "group": "c78098fe",
+    "name": "v3_sprint_south",
+    "cost": 2,
+    "accepted": "f2/f4 sprint contacts"
+   },
+   {
+    "group": "2b3ea99d",
+    "name": "v3_drib_ne",
+    "cost": 2,
+    "accepted": "contacts f0/f1/f5/f6 + strides"
+   },
+   {
+    "group": "0e6284df",
+    "name": "v3_sprint_ne",
+    "cost": 2,
+    "accepted": "f1/f2 sprint contacts"
+   },
+   {
+    "group": "a753ff01",
+    "name": "v3_drib_se",
+    "cost": 2,
+    "accepted": "contacts f1/f2/f6/f7 + strides"
+   },
+   {
+    "group": "0f32debe",
+    "name": "v3_sprint_se",
+    "cost": 2,
+    "accepted": "f3/f4 sprint contacts"
+   }
+  ],
+  "total_generations_spent": 16,
+  "mirrors": "west<-east, north-west<-north-east, south-west<-south-east (accepted E->W precedent; foot labels flip with the mirror)",
+  "metadata": "auto-measured (CONTACT_META.json): contact = grounded boot cluster nearest the expected ball line (dir-dependent target), sole+3 contact point, alignment dy",
+  "reported_art_gaps": "diagonal + south SPRINT long-reach contacts (ball ~0.73 m ahead partly along the depth axis; art toe reach maxes ~77/140 art px) \u2014 candidates: (ne,se,s,sw,nw) x sprint; S<->N u-turn drag coverage"
+ },
+ "kick_v2_techniques": {
+  "date": "2026-09-01",
+  "mode": "v3 custom, east, ball-free; west = mirror (foot labels flip)",
+  "generations": [
+   {
+    "group": "905cad76",
+    "name": "kick_inside_R",
+    "cost": 2,
+    "accepted": "full 8f, contact f6"
+   },
+   {
+    "group": "55624f8a",
+    "name": "kick_inside_L",
+    "cost": 2,
+    "accepted": "full 8f, contact f7"
+   },
+   {
+    "group": "68d96801",
+    "name": "kick_laces_R",
+    "cost": 3,
+    "accepted": "full 10f, contact f7"
+   },
+   {
+    "group": "beefb723",
+    "name": "kick_laces_L",
+    "cost": 3,
+    "accepted": "full 10f, contact f7"
+   },
+   {
+    "group": "4369e603",
+    "name": "kick_outside_R (take 1)",
+    "cost": 2,
+    "rejected": "white puff/particle hallucinations on contact frames 5-6 (motion smear rule)"
+   },
+   {
+    "group": "c522c75b",
+    "name": "kick_outside_R2",
+    "cost": 2,
+    "accepted": "full 8f, contact f6 (clean retake)"
+   },
+   {
+    "group": "1235b423",
+    "name": "kick_outside_L",
+    "cost": 2,
+    "accepted": "full 8f, contact f6"
+   },
+   {
+    "group": "539c21e8",
+    "name": "kick_chip_R",
+    "cost": 2,
+    "accepted": "full 8f, contact f5 (stab-under), lift f6-7"
+   }
+  ],
+  "legacy_reuse": "proto_shoot_A_10f serves as the right-foot LACES_POWER extended variant",
+  "coverage": "E/W complete for both feet across INSIDE/LACES/OUTSIDE (+POWER R, CHIP R); CHIP_L falls back to INSIDE_L (reported); non-E/W presentations schedule a minimal no-anim kick (reported directional gap, next authoring wave)",
+  "total_generations_spent": 18
+ },
+ "kick_v2_0_1_inside_redo": {
+  "date": "2026-08-31",
+  "reason": "INSIDE rejected on visual review: read as weaker LACES. Re-authored with explicit side-foot biomechanics prompts (opened hip/knee, ankle rotated ~90deg, medial face presented, compact low swing).",
+  "mode": "v3 custom + v3 keyframe interpolation, east, ball-free; west = mirror (foot labels flip)",
+  "generations": [
+   {
+    "group": "ab8fbe27",
+    "name": "kick_inside_R_v201_a",
+    "cost": 2,
+    "accepted": "f0-f5 approach/plant + f7 follow (contact window too high for strike frame alone)"
+   },
+   {
+    "group": "9d693e6b",
+    "name": "kick_inside_L_v201_a",
+    "cost": 2,
+    "accepted": "full 8f (f6/f7 reordered as contact/follow)"
+   },
+   {
+    "group": "d0a2c2e9",
+    "name": "kick_inside_R_v201_b",
+    "cost": 2,
+    "rejected": "over-damped: reads as walking, no discernible strike"
+   },
+   {
+    "group": "2f547af9",
+    "name": "kick_inside_R_v201_c",
+    "cost": 2,
+    "rejected": "identity violation: hallucinated yellow chest badge f3-f7"
+   },
+   {
+    "group": "807f6819",
+    "name": "kick_inside_R_v201_d",
+    "cost": 2,
+    "rejected": "strike geometry reversed (high leg extension before grounding)"
+   },
+   {
+    "group": "4dc45795",
+    "name": "kick_inside_R_v201_sweep (f5->f7)",
+    "cost": 1,
+    "accepted": "f1 = contact frame after removal of 44 isolated grass-green bg speckles (chroma test, 0 body px); f2 rejected (grass mound hallucination)"
+   },
+   {
+    "group": "137ee077",
+    "name": "kick_inside_R_v201_sweep2",
+    "cost": 1,
+    "rejected": "clean but eased high immediately; no low contact frame"
+   },
+   {
+    "group": "5d7cfb3c",
+    "name": "kick_inside_L_v201_recover (f7->f0)",
+    "cost": 1,
+    "accepted": "4f recovery"
+   },
+   {
+    "group": "f6f0458f",
+    "name": "kick_inside_R_v201_recover (f7->f0)",
+    "cost": 1,
+    "accepted": "4f recovery"
+   }
+  ],
+  "total_generations_spent": 14,
+  "result": "in2_R (12f, contact f6) and in2_L (12f, contact f6) at 14 fps; kick timing unchanged (contact offset 6/14 s = old INSIDE_R); technique-aware contact metadata in kick/east/KICK_CONTACT_META.json"
+ }
 }

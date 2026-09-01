@@ -165,7 +165,7 @@ async function boot() {
     jobs.push({ key: ["shoot", "east", i],
                 path: ASSET_ROOT + "originals/character_31a11357/proto_anim/shoot/east/" + i + ".png" });
   // KICK ANIMATION V2: technique sequences (east; west mirrors, foot flips)
-  for (const [ks, kn] of [["in_R", 8], ["in_L", 8], ["la_R", 10], ["la_L", 10],
+  for (const [ks, kn] of [["in2_R", 12], ["in2_L", 12], ["la_R", 10], ["la_L", 10],
                           ["ou_R", 8], ["ou_L", 8], ["ch_R", 8]])
     for (let i = 0; i < kn; i++)
       jobs.push({ key: ["kick", ks + "|" + i, 0],
@@ -1800,15 +1800,20 @@ function drib2Schedule(t, pick, T) {
 // (presentation only; the engine's kick physics is untouched). East-authored;
 // west presents the mirror with flipped foot labels. contact = boot px in the
 // 140 canvas at the contact frame; kickAt = t0 + contact/fps.
+// cx/cy = TECHNIQUE-SPECIFIC contact point on the 140 canvas: the boot
+// surface that strikes (INSIDE -> medial face, LACES -> instep, OUTSIDE ->
+// lateral face, CHIP -> under-toe), not the forward-most toe pixel.
+// KICK V2.0.1: in2_R/in2_L re-authored true side-foot sets (opened hip/knee,
+// ankle rotated ~90deg, medial face presented; strike + follow + recovery).
 const KICK_LIB = {
-  INSIDE_R: { set: "in_R", n: 8, fps: 14, contact: 6, cx: 100, cy: 114 },
-  INSIDE_L: { set: "in_L", n: 8, fps: 14, contact: 7, cx: 99, cy: 116 },
-  LACES_R: { set: "la_R", n: 10, fps: 12, contact: 7, cx: 97, cy: 114 },
-  LACES_L: { set: "la_L", n: 10, fps: 12, contact: 7, cx: 98, cy: 113 },
-  POWER_R: { legacy: "shoot", n: 10, fps: 12, contact: 6, cx: 96, cy: 114 },
-  OUTSIDE_R: { set: "ou_R", n: 8, fps: 14, contact: 6, cx: 100, cy: 114 },
-  OUTSIDE_L: { set: "ou_L", n: 8, fps: 14, contact: 6, cx: 96, cy: 113 },
-  CHIP_R: { set: "ch_R", n: 8, fps: 14, contact: 5, cx: 86, cy: 112 },
+  INSIDE_R: { set: "in2_R", n: 12, fps: 14, contact: 6, cx: 101, cy: 111, surface: "INSIDE" },
+  INSIDE_L: { set: "in2_L", n: 12, fps: 14, contact: 6, cx: 97, cy: 108, surface: "INSIDE" },
+  LACES_R: { set: "la_R", n: 10, fps: 12, contact: 7, cx: 97, cy: 114, surface: "LACES" },
+  LACES_L: { set: "la_L", n: 10, fps: 12, contact: 7, cx: 98, cy: 113, surface: "LACES" },
+  POWER_R: { legacy: "shoot", n: 10, fps: 12, contact: 6, cx: 96, cy: 114, surface: "LACES" },
+  OUTSIDE_R: { set: "ou_R", n: 8, fps: 14, contact: 6, cx: 100, cy: 114, surface: "OUTSIDE" },
+  OUTSIDE_L: { set: "ou_L", n: 8, fps: 14, contact: 6, cx: 96, cy: 113, surface: "OUTSIDE" },
+  CHIP_R: { set: "ch_R", n: 8, fps: 14, contact: 5, cx: 86, cy: 112, surface: "CHIP" },
 };
 function ptTech(fam, D, v0) {
   if (fam === "SHORT" || fam === "CUTBACK" || fam === "THROUGH") return "INSIDE";

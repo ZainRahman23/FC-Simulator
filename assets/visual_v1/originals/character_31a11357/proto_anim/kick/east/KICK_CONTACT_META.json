@@ -1,0 +1,65 @@
+{
+ "record": "KICK V2.0.1 \u2014 TRUE INSIDE-FOOT CONTACT (technique-aware contact metadata)",
+ "canvas": "140x140, anchor ground row 117, canvas center x 70",
+ "metric_reference": "authoritative ball composited at (99,111) r5.0 px (~0.54 m ahead, BALL_VIS_R 0.19)",
+ "sets": {
+  "in2_R": {
+   "frames": 12,
+   "fps": 14,
+   "contact_frame": 6,
+   "contactSurface": "INSIDE",
+   "medialBootContactPointPx": [
+    101,
+    111
+   ],
+   "bootOrientation": {
+    "read": "opened/horizontal, heel down, sole edge visible; toes rotated toward viewer (external rotation)",
+    "boot_patch_bbox": [
+     84,
+     100,
+     106,
+     118
+    ],
+    "patch_aspect_w_over_h": 1.21,
+    "centroid_to_ball_R": 0.59
+   },
+   "targetDirection": "east",
+   "sequence": "approach f0-f3, plant f4-f5, INSIDE CONTACT f6, follow-through f7 (boot stays open), recovery f8-f11",
+   "provenance": {
+    "f0-f5,f7": "v3 group ab8fbe27 (kick_inside_R_v201_a)",
+    "f6": "v3 interpolation group 4dc45795 (f5->f7 sweep) frame 1; 44 isolated grass-green background speckle px removed by chroma test (0 body px touched, verified)",
+    "f8-f11": "v3 interpolation group f6f0458f (f7->f0 recovery)"
+   }
+  },
+  "in2_L": {
+   "frames": 12,
+   "fps": 14,
+   "contact_frame": 6,
+   "contactSurface": "INSIDE",
+   "medialBootContactPointPx": [
+    97,
+    108
+   ],
+   "bootOrientation": {
+    "read": "opened/flat boot presented to ball, far-leg swing kept low",
+    "boot_patch_bbox": [
+     87,
+     97,
+     105,
+     109
+    ],
+    "patch_aspect_w_over_h": 1.46,
+    "centroid_to_ball_R": 1.69,
+    "medial_point_to_ball_R": 0.89
+   },
+   "targetDirection": "east",
+   "sequence": "approach f0-f4, plant f5, INSIDE CONTACT f6, follow-through f7, recovery f8-f11 (f6/f7 are source frames 7/6 of group 06b8cf71 reordered: strike-low then follow-high)",
+   "provenance": {
+    "f0-f7": "v3 group 9d693e6b (kick_inside_L_v201_a; anim 06b8cf71)",
+    "f8-f11": "v3 interpolation group 5d7cfb3c (f7->f0 recovery)"
+   }
+  }
+ },
+ "supersedes": "in_R_*/in_L_* remain on disk for provenance but are no longer loaded; they read as a weaker laces drive (toe-forward knee-drive silhouette) and were rejected on visual technique review",
+ "orientation_rule": "INSIDE contact validation is boot-point distance AND opened-boot orientation (flat/horizontal patch, aspect >= 1.2, no toe-forward elongation at the ball line)"
+}
