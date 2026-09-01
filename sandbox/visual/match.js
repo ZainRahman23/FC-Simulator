@@ -1810,8 +1810,15 @@ function drib2Schedule(t, pick, T) {
 // regenerate them. Every other frame is the accepted in3 motion (approach,
 // low sweep, wrap-across, recovery). Metrics diagnostic only; the user's
 // visual review at gameplay scale is the acceptance gate.
+// V2.0.4 H3 CONTACT GEOMETRY (user-selected): INSIDE_R draws with an EASED
+// PRESENTATION ROOT OFFSET (art px on the 140 canvas) that peaks at exactly
+// [+4,+13] on the locked contact frame — the G3 diagonal + H3 height that
+// nestles the FIXED authoritative ball into the center of the medial face.
+// Pure draw-time motion: physics, ball position and kick timing untouched;
+// normal depth order kept (ball in front). rootEase maps frame -> weight.
 const KICK_LIB = {
-  INSIDE_R: { set: "in4_R", n: 12, fps: 14, contact: 6, cx: 93, cy: 103, surface: "INSIDE" },
+  INSIDE_R: { set: "in4_R", n: 12, fps: 14, contact: 6, cx: 95, cy: 111, surface: "INSIDE",
+              rootOff: [4, 13], rootEase: { 3: 0.1, 4: 0.3, 5: 0.65, 6: 1, 7: 0.5, 8: 0.2, 9: 0.05 } },
   INSIDE_L: { set: "in4_L", n: 12, fps: 14, contact: 6, cx: 93, cy: 110, surface: "INSIDE" },
   LACES_R: { set: "la_R", n: 10, fps: 12, contact: 7, cx: 97, cy: 114, surface: "LACES" },
   LACES_L: { set: "la_L", n: 10, fps: 12, contact: 7, cx: 98, cy: 113, surface: "LACES" },
@@ -2362,7 +2369,15 @@ function drawPlaytest(dt) {
   if (t._ballBehind) drawBallAt(b.x, b.y, b.z, Math.hypot(b.vx, b.vy), dt);
   const sp = sproj(p.x, p.y);
   const s = S.playerVScale * depthScale(sp.d) * RIG.zoom * RES;
-  const ax = Math.round(sp.x), ay = Math.round(sp.y);
+  // KICK V2.0.4: eased presentation root offset (H3 geometry). Draw-only —
+  // the authoritative player/ball positions and kick physics never move.
+  let rDx = 0, rDy = 0;
+  if (view.kick && view.kick.e && view.kick.e.rootOff) {
+    const w = (view.kick.e.rootEase && view.kick.e.rootEase[view.f]) || 0;
+    rDx = view.kick.e.rootOff[0] * w * s;
+    rDy = view.kick.e.rootOff[1] * w * s;
+  }
+  const ax = Math.round(sp.x + (view.mirror ? -rDx : rDx)), ay = Math.round(sp.y + rDy);
   ctx.save();
   ctx.beginPath();
   ctx.ellipse(ax, ay, 9 * s, Math.max(1.5, 9 * s * flattenAt(p.x, p.y)), 0, 0, Math.PI * 2);
