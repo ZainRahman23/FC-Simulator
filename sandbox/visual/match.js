@@ -164,6 +164,10 @@ async function boot() {
   for (let i = 0; i < 10; i++)
     jobs.push({ key: ["shoot", "east", i],
                 path: ASSET_ROOT + "originals/character_31a11357/proto_anim/shoot/east/" + i + ".png" });
+  // DRIBBLE ANIMATION V3: directional touch libraries (n/ne/se/s; w/nw/sw mirror)
+  for (const [d3, f3] of [["north", "n_dr_6.png"], ["north", "n_dr_5.png"], ["north", "n_dr_4.png"], ["north", "n_dr_2.png"], ["north", "n_sp_6.png"], ["north", "n_sp_4.png"], ["north", "n_dr_0.png"], ["north", "n_dr_1.png"], ["north", "n_dr_3.png"], ["north", "n_dr_7.png"], ["north-east", "ne_dr_6.png"], ["north-east", "ne_dr_0.png"], ["north-east", "ne_dr_5.png"], ["north-east", "ne_dr_1.png"], ["north-east", "ne_sp_2.png"], ["north-east", "ne_sp_1.png"], ["north-east", "ne_dr_2.png"], ["north-east", "ne_dr_3.png"], ["north-east", "ne_dr_4.png"], ["north-east", "ne_dr_7.png"], ["south-east", "se_dr_2.png"], ["south-east", "se_dr_1.png"], ["south-east", "se_dr_6.png"], ["south-east", "se_dr_7.png"], ["south-east", "se_sp_3.png"], ["south-east", "se_sp_4.png"], ["south-east", "se_dr_0.png"], ["south-east", "se_dr_3.png"], ["south-east", "se_dr_4.png"], ["south-east", "se_dr_5.png"], ["south", "s_dr_6.png"], ["south", "s_dr_7.png"], ["south", "s_dr_5.png"], ["south", "s_dr_3.png"], ["south", "s_sp_4.png"], ["south", "s_sp_2.png"], ["south", "s_dr_0.png"], ["south", "s_dr_1.png"], ["south", "s_dr_2.png"], ["south", "s_dr_4.png"]])
+    jobs.push({ key: ["drib3", d3 + "|" + f3, 0],
+                path: ASSET_ROOT + "originals/character_31a11357/proto_anim/dribble3/" + d3 + "/" + f3 });
   // DRIBBLE ANIMATION V2: touch-library extras (ball-free, east)
   for (const k of ["cc_4", "cc_5", "cc_6", "cc_7", "cut_5", "cut_6",
                    "sr_0", "sr_1", "sr_2", "sr_6", "sr_7", "db_2", "db_4", "db_5"])
@@ -180,6 +184,10 @@ async function boot() {
     if (kind === "ballsheet") { S.images.ballSheet = im; return; }
     if (kind === "ballmicro") { (S.images.ballMicro ||= {})[+dir] = im; return; }
     if (kind === "drib2") { (S.images.drib2 ||= {})[dir] = im; return; }
+    if (kind === "drib3") {
+      const [d3, f3] = dir.split("|");
+      ((S.images.drib3 ||= {})[d3] ||= {})[f3] = im; return;
+    }
     (anims[kind][dir] ||= [])[idx] = im;
   }));
   S.goalBakeMeta = await loadJSON(ASSET_ROOT + "originals/goal_v2_oblique/goal_v2_3_frozen_bake.json");
@@ -1655,6 +1663,25 @@ const DRIB_POOLS = {   // variant pools per foot x speed band (deterministic pic
 };
 const DRIB_STRIDES = { slow: ["ST_C", "ST_D"], jog: ["ST_A", "ST_X", "ST_B", "ST_Y"],
                        sprint: ["SPR_ST_A", "SPR_ST_B"] };
+// V3: directional contact libraries (auto-measured metadata; see
+// dribble3/CONTACT_META.json). w/nw/sw present the mirrored e/ne/se art
+// (accepted E->W mirror precedent; foot labels flip with the mirror).
+const DRIB3 = {"north": {"contacts": [{"f": "n_dr_6.png", "foot": "L", "cx": 69, "cy": 123, "dy": 0, "spread": 0.8}, {"f": "n_dr_5.png", "foot": "L", "cx": 69, "cy": 123, "dy": 0, "spread": 1.3}, {"f": "n_dr_4.png", "foot": "L", "cx": 68, "cy": 117, "dy": 0, "spread": 1.9}, {"f": "n_dr_2.png", "foot": "R", "cx": 74, "cy": 121, "dy": 0, "spread": 4.2}], "sprs": [{"f": "n_sp_6.png", "foot": "R", "cx": 72, "cy": 118, "dy": 0}, {"f": "n_sp_4.png", "foot": "R", "cx": 72, "cy": 123, "dy": 0}], "strides": ["n_dr_0.png", "n_dr_1.png", "n_dr_3.png", "n_dr_7.png"]}, "north-east": {"contacts": [{"f": "ne_dr_6.png", "foot": "R", "cx": 81, "cy": 115, "dy": 5, "spread": 0.6}, {"f": "ne_dr_0.png", "foot": "L", "cx": 80, "cy": 123, "dy": 0, "spread": 2.3}, {"f": "ne_dr_5.png", "foot": "R", "cx": 75, "cy": 121, "dy": 0, "spread": 7.1}, {"f": "ne_dr_1.png", "foot": "R", "cx": 73, "cy": 126, "dy": 0, "spread": 8.9}], "sprs": [{"f": "ne_sp_2.png", "foot": "R", "cx": 74, "cy": 126, "dy": 0}, {"f": "ne_sp_1.png", "foot": "R", "cx": 73, "cy": 125, "dy": 0}], "strides": ["ne_dr_2.png", "ne_dr_3.png", "ne_dr_4.png", "ne_dr_7.png"]}, "south-east": {"contacts": [{"f": "se_dr_2.png", "foot": "L", "cx": 82, "cy": 118, "dy": 0, "spread": 0.4}, {"f": "se_dr_1.png", "foot": "R", "cx": 88, "cy": 117, "dy": 0, "spread": 6.4}, {"f": "se_dr_6.png", "foot": "L", "cx": 71, "cy": 122, "dy": 0, "spread": 11.2}, {"f": "se_dr_7.png", "foot": "L", "cx": 71, "cy": 125, "dy": 0, "spread": 11.3}], "sprs": [{"f": "se_sp_3.png", "foot": "L", "cx": 77, "cy": 119, "dy": 0}, {"f": "se_sp_4.png", "foot": "R", "cx": 68, "cy": 119, "dy": 0}], "strides": ["se_dr_0.png", "se_dr_3.png", "se_dr_4.png", "se_dr_5.png"]}, "south": {"contacts": [{"f": "s_dr_6.png", "foot": "R", "cx": 70, "cy": 125, "dy": 0, "spread": 0.3}, {"f": "s_dr_7.png", "foot": "L", "cx": 70, "cy": 120, "dy": 0, "spread": 0.3}, {"f": "s_dr_5.png", "foot": "R", "cx": 69, "cy": 124, "dy": 0, "spread": 1.3}, {"f": "s_dr_3.png", "foot": "R", "cx": 69, "cy": 115, "dy": 5, "spread": 1.4}], "sprs": [{"f": "s_sp_4.png", "foot": "L", "cx": 70, "cy": 122, "dy": 0}, {"f": "s_sp_2.png", "foot": "R", "cx": 68, "cy": 116, "dy": 0}], "strides": ["s_dr_0.png", "s_dr_1.png", "s_dr_2.png", "s_dr_4.png"]}};
+const DRIB3_MIRROR = { "west": "east", "north-west": "north-east", "south-west": "south-east" };
+function ptPresDir(t) {
+  // continuous facing -> nearest 8-direction presentation with 10-deg
+  // hysteresis so E<->NE boundaries do not flicker (visual quantisation
+  // only; locomotion stays continuous)
+  const deg = ((t.p.facing * 180 / Math.PI) % 360 + 360) % 360;
+  const cand = headingToDir(deg);
+  if (!t.presDir) { t.presDir = cand; return cand; }
+  if (cand !== t.presDir) {
+    const centre = DIRS.indexOf(t.presDir) * 45;
+    let dd = Math.abs(deg - centre); if (dd > 180) dd = 360 - dd;
+    if (dd > 32.5) t.presDir = cand;
+  }
+  return t.presDir;
+}
 function drib2Img(pose) {
   const e = DRIB_LIB[pose];
   return e.src[0] === "dribble" ? (S.anims.dribble.east && S.anims.dribble.east[e.src[1]])
@@ -1676,6 +1703,37 @@ function drib2Sector(t) {
               a < -67.5 && a >= -112.5 ? "LEFT" :
               a < -112.5 && a >= -157.5 ? "BACK_LEFT" : "BACK";
   return { sec, along, lat };
+}
+// V3: pick a directional contact entry (n/ne/se/s bases) — deterministic
+function drib3Pick(t, corrective, turnA, base, mirrored) {
+  const p = t.p, b = t.b;
+  const pv = Math.hypot(p.vx, p.vy);
+  const band = pv < 2.2 ? "slow" : pv < 6 ? "jog" : "sprint";
+  const lat0 = Math.cos(t.corr) * (b.y - p.y) - Math.sin(t.corr) * (b.x - p.x);
+  const lat = mirrored ? -lat0 : lat0;      // foot semantics flip with mirror
+  let foot;
+  if (corrective && turnA > 1.0) foot = lat >= 0 ? "R" : "L";
+  else if (Math.abs(lat0) > 0.25) foot = lat >= 0 ? "R" : "L";
+  else foot = t.lastFoot === "R" ? "L" : "R";
+  t.lastFoot = foot;
+  const L = DRIB3[base];
+  let pool = band === "sprint" ? L.sprs.slice() : L.contacts.slice();
+  if (band === "slow") pool.sort((a2, b2) => a2.spread - b2.spread);   // compact first
+  const footPool = pool.filter(e => e.foot === foot);
+  if (footPool.length) pool = footPool;                 // preference, not rule
+  const turnClass = turnA > 1.9 ? 3 : turnA > 1.0 ? 2 : turnA > 0.52 ? 1 : 0;
+  const e = pool[(t.touchN + turnClass) % pool.length];
+  return { entry: e, foot: e.foot, band, turnClass,
+           sector: drib2Sector(t).sec, pose: e.f.replace(".png", "") };
+}
+function drib3Schedule(t, pick, T, base) {
+  const hold = Math.min(0.14, T * 0.45);
+  const seq = [{ kind: "contact3", e: pick.entry, base, until: t.now + hold }];
+  // strides resolve at DRAW time from the CURRENT presentation, so a turn
+  // rotates through directional art between touches (no library popping)
+  seq.push({ kind: "stride3", i: t.touchN, until: t.now + hold + (T - hold) * 0.5 });
+  seq.push({ kind: "stride3", i: t.touchN + 1, until: t.now + T + 0.2 });
+  t.dribSeq = seq;
 }
 function drib2Pick(t, corrective, turnA) {
   const p = t.p, b = t.b;
@@ -1908,10 +1966,19 @@ function ptStep() {
             t.touchN++;
             t.last = "SETTLE TOUCH";
             t.touchInfo = { d, u, T: 0.18, sc: 0.30, turn: 0, kind: "SETTLE" };
-            const pk = drib2Pick(t, false, 0);
-            drib2Schedule(t, pk, 0.3);
-            t.touchInfo.foot = pk.foot; t.touchInfo.pose = pk.pose;
-            drib2LogContact(t, pk);
+            const presS = ptPresDir(t);
+            const baseS = DRIB3_MIRROR[presS] || presS;
+            if (DRIB3[baseS]) {
+              const pk = drib3Pick(t, false, 0, baseS, !!DRIB3_MIRROR[presS]);
+              drib3Schedule(t, pk, 0.3, baseS);
+              t.touchInfo.foot = pk.foot; t.touchInfo.pose = pk.pose;
+              drib3LogContact(t, pk, presS, baseS);
+            } else {
+              const pk = drib2Pick(t, false, 0);
+              drib2Schedule(t, pk, 0.3);
+              t.touchInfo.foot = pk.foot; t.touchInfo.pose = pk.pose;
+              drib2LogContact(t, pk);
+            }
           }
         } else {
           const bdir = bsp > 0.5 ? Math.atan2(b.vy, b.vx) : Math.atan2(b.y - p.y, b.x - p.x);
@@ -1935,11 +2002,20 @@ function ptStep() {
             t.touchN++;
             t.last = corrective ? "CORRECTIVE TOUCH" : "DRIBBLE TOUCH";
             t.touchInfo = { d, u, T, sc, turn: turnA, kind: corrective ? "CORRECTIVE" : "NORMAL" };
-            // DRIBBLE ANIMATION V2: physics event -> pose selection + schedule
-            const pick = drib2Pick(t, corrective, turnA);
-            drib2Schedule(t, pick, T);
-            t.touchInfo.foot = pick.foot; t.touchInfo.pose = pick.pose;
-            drib2LogContact(t, pick);
+            // DRIBBLE ANIMATION V2/V3: physics event -> pose selection
+            const presT = ptPresDir(t);
+            const baseT = DRIB3_MIRROR[presT] || presT;
+            if (DRIB3[baseT]) {
+              const pick = drib3Pick(t, corrective, turnA, baseT, !!DRIB3_MIRROR[presT]);
+              drib3Schedule(t, pick, T, baseT);
+              t.touchInfo.foot = pick.foot; t.touchInfo.pose = pick.pose;
+              drib3LogContact(t, pick, presT, baseT);
+            } else {
+              const pick = drib2Pick(t, corrective, turnA);
+              drib2Schedule(t, pick, T);
+              t.touchInfo.foot = pick.foot; t.touchInfo.pose = pick.pose;
+              drib2LogContact(t, pick);
+            }
           }
         }
       }
@@ -2051,6 +2127,24 @@ function drib2LogContact(t, pick) {
   if (t.contactLog.length > 500) t.contactLog.shift();
   t.dbgTouch = { fx, fy, bx: bp.x, by: bp.y, until: t.now + 0.5, rec };
 }
+function drib3LogContact(t, pick, pres, base) {
+  const e = pick.entry;
+  const p = t.p, b = t.b;
+  const sp = sproj(p.x, p.y);
+  const scl = S.playerVScale * depthScale(sp.d) * RIG.zoom * RES;
+  const mirror = !!DRIB3_MIRROR[pres];
+  const fx = sp.x + (mirror ? -(e.cx - 70) : (e.cx - 70)) * scl;
+  const fy = sp.y + (e.cy - 117 + (e.dy || 0)) * scl;
+  const bp = sproj3(b.x, b.z, b.y);
+  const br = Math.max(2, BALL_VIS_R * S.pxPerM * depthScale(bp.d) * RIG.zoom * RES);
+  const distPx = Math.hypot(fx - bp.x, fy - bp.y);
+  const rec = { band: pick.band, kind: t.touchInfo.kind, pose: pick.pose, foot: pick.foot,
+                dir: pres, px: +distPx.toFixed(1), radii: +(distPx / br).toFixed(2),
+                sector: pick.sector, turn: +(t.touchInfo.turn * 57.3).toFixed(0), n: t.touchN };
+  (t.contactLog ||= []).push(rec);
+  if (t.contactLog.length > 900) t.contactLog.shift();
+  t.dbgTouch = { fx, fy, bx: bp.x, by: bp.y, until: t.now + 0.5, rec };
+}
 function ptView() {   // animation state + artwork choice (pure function)
   const t = S.pt, p = t.p;
   const spd = Math.hypot(p.vx, p.vy);
@@ -2062,18 +2156,33 @@ function ptView() {   // animation state + artwork choice (pure function)
     return { st, anim: "shoot", f, proto: true, mirror: cosf < -0.5 };
   }
   if (t.b.ctrl && spd > IDLE_MAX) {
-    if (cosf > 0.5 || cosf < -0.5) {
-      // DRIBBLE ANIMATION V2: touch-scheduled pose sequence (physics-owned)
-      let pose = null;
-      if (t.dribSeq) {
-        for (const e2 of t.dribSeq) if (t.now <= e2.until) { pose = e2.pose; break; }
-        if (!pose) pose = t.dribSeq[t.dribSeq.length - 1].pose;
-      }
-      if (pose) return { st: "DRIBBLE", lib: pose, proto: true, mirror: cosf < -0.5 };
-      const f = Math.floor(t.now * DRIBBLE_FPS) % 8;
-      return { st: "DRIBBLE", anim: "dribble", f, proto: true, mirror: cosf < -0.5 };
+    const pres = ptPresDir(t);
+    const base = DRIB3_MIRROR[pres] || pres;
+    const mirror = !!DRIB3_MIRROR[pres];
+    let act = null;
+    if (t.dribSeq) {
+      for (const e2 of t.dribSeq) if (t.now <= e2.until) { act = e2; break; }
+      if (!act) act = t.dribSeq[t.dribSeq.length - 1];
     }
-    const f = Math.floor(t.now * JOG_FPS) % 8;    // no N/S dribble art yet
+    if (base === "east" || pres === "east" || pres === "west") {
+      // V2.1 east library (cuts/drags live here)
+      if (act && act.pose) return { st: "DRIBBLE", lib: act.pose, proto: true, mirror: pres === "west" };
+      if (act && act.kind === "contact3")   // touch happened under another presentation
+        return { st: "DRIBBLE", anim: "dribble", f: Math.floor(t.now * DRIBBLE_FPS) % 8, proto: true, mirror: pres === "west" };
+      const f = Math.floor(t.now * DRIBBLE_FPS) % 8;
+      return { st: "DRIBBLE", anim: "dribble", f, proto: true, mirror: pres === "west" };
+    }
+    if (DRIB3[base]) {
+      if (act && act.kind === "contact3")
+        return { st: "DRIBBLE", lib3: act.e, base: act.base, mirror, proto: true };
+      // strides: current presentation's dribble stride frames (touch-paced)
+      const strides = DRIB3[base].strides;
+      const i = act && act.kind === "stride3" ? act.i : Math.floor(t.now * DRIBBLE_FPS);
+      return { st: "DRIBBLE", lib3s: strides[((i % strides.length) + strides.length) % strides.length],
+               base, mirror, proto: true };
+    }
+    t.fbN = (t.fbN || 0) + 1;                     // fallback counter (report, §19)
+    const f = Math.floor(t.now * JOG_FPS) % 8;
     return { st: "DRIBBLE", anim: spd > JOG_MAX ? "sprint" : "jog", f, proto: false };
   }
   if (spd > IDLE_MAX) {
@@ -2089,6 +2198,9 @@ function drawPlaytest(dt) {
   const p = t.p, b = t.b;
   const view = ptView();
   const deg = ((p.facing * 180 / Math.PI) % 360 + 360) % 360;
+  // depth order: a ball north of the player is BEHIND him — draw it first
+  t._ballBehind = b.y < p.y - 0.05 && b.z < 1.6;
+  if (t._ballBehind) drawBallAt(b.x, b.y, b.z, Math.hypot(b.vx, b.vy), dt);
   const sp = sproj(p.x, p.y);
   const s = S.playerVScale * depthScale(sp.d) * RIG.zoom * RES;
   const ax = Math.round(sp.x), ay = Math.round(sp.y);
@@ -2098,15 +2210,21 @@ function drawPlaytest(dt) {
   ctx.fillStyle = "rgba(0,0,0,0.25)"; ctx.fill();
   ctx.restore();
   let im = null;
-  if (view.lib) im = drib2Img(view.lib);
-  else if (view.proto) im = S.anims[view.anim].east && S.anims[view.anim].east[view.f];
-  else {
-    const frames = S.anims[view.anim][headingToDir(deg)];
+  let libDy = null;
+  if (view.lib3) { im = S.images.drib3 && S.images.drib3[view.base] && S.images.drib3[view.base][view.e ? view.e.f : ""]; }
+  if (view.lib3 && !im && view.lib3.f) im = S.images.drib3 && S.images.drib3[view.base] && S.images.drib3[view.base][view.lib3.f];
+  if (view.lib3 && im) libDy = (view.lib3.dy || 0);
+  if (!im && view.lib3s) { im = S.images.drib3 && S.images.drib3[view.base] && S.images.drib3[view.base][view.lib3s]; libDy = 0; }
+  if (!im && view.lib) im = drib2Img(view.lib);
+  else if (!im && view.proto && view.anim) im = S.anims[view.anim].east && S.anims[view.anim].east[view.f];
+  else if (view.anim) {
+    const frames = S.anims[view.anim] && S.anims[view.anim][headingToDir(deg)];
     im = frames && frames[view.f % frames.length];
   }
   if (im) {
     const foot = im.height / 2 + S.pivots.foot_offset_base128;
-    const dy = view.lib ? (DRIB_LIB[view.lib].dy || 0) * s :
+    const dy = libDy !== null ? libDy * s :
+      view.lib ? (DRIB_LIB[view.lib].dy || 0) * s :
       (view.proto && ANIM_ALIGN[view.anim] ? (ANIM_ALIGN[view.anim][view.f] || 0) * s : 0);
     if (view.mirror) {
       ctx.save(); ctx.scale(-1, 1);
@@ -2118,7 +2236,7 @@ function drawPlaytest(dt) {
                     Math.round(im.width * s), Math.round(im.height * s));
     }
   }
-  drawBallAt(b.x, b.y, b.z, Math.hypot(b.vx, b.vy), dt);
+  if (!t._ballBehind) drawBallAt(b.x, b.y, b.z, Math.hypot(b.vx, b.vy), dt);
   if (S.dbg.dribsync && t.dbgTouch && t.now <= t.dbgTouch.until) {
     const g = t.dbgTouch;
     ctx.strokeStyle = "rgba(120,255,160,0.95)"; ctx.lineWidth = PXQ;

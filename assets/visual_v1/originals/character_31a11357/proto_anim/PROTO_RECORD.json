@@ -102,5 +102,63 @@
       }
     ],
     "total_generations_spent": 8
+  },
+  "dribble3_eight_direction": {
+    "date": "2026-09-01",
+    "mode": "v3 custom, ball-free, stage-gated (N/S then NE/SE)",
+    "generations": [
+      {
+        "group": "e8392127",
+        "name": "v3_drib_north",
+        "cost": 2,
+        "accepted": "contacts f2/f4/f5/f6 + strides"
+      },
+      {
+        "group": "6e585109",
+        "name": "v3_sprint_north",
+        "cost": 2,
+        "accepted": "f4/f6 sprint contacts"
+      },
+      {
+        "group": "31e05ec8",
+        "name": "v3_drib_south",
+        "cost": 2,
+        "accepted": "contacts f3/f5/f6/f7 + strides"
+      },
+      {
+        "group": "c78098fe",
+        "name": "v3_sprint_south",
+        "cost": 2,
+        "accepted": "f2/f4 sprint contacts"
+      },
+      {
+        "group": "2b3ea99d",
+        "name": "v3_drib_ne",
+        "cost": 2,
+        "accepted": "contacts f0/f1/f5/f6 + strides"
+      },
+      {
+        "group": "0e6284df",
+        "name": "v3_sprint_ne",
+        "cost": 2,
+        "accepted": "f1/f2 sprint contacts"
+      },
+      {
+        "group": "a753ff01",
+        "name": "v3_drib_se",
+        "cost": 2,
+        "accepted": "contacts f1/f2/f6/f7 + strides"
+      },
+      {
+        "group": "0f32debe",
+        "name": "v3_sprint_se",
+        "cost": 2,
+        "accepted": "f3/f4 sprint contacts"
+      }
+    ],
+    "total_generations_spent": 16,
+    "mirrors": "west<-east, north-west<-north-east, south-west<-south-east (accepted E->W precedent; foot labels flip with the mirror)",
+    "metadata": "auto-measured (CONTACT_META.json): contact = grounded boot cluster nearest the expected ball line (dir-dependent target), sole+3 contact point, alignment dy",
+    "reported_art_gaps": "diagonal + south SPRINT long-reach contacts (ball ~0.73 m ahead partly along the depth axis; art toe reach maxes ~77/140 art px) \u2014 candidates: (ne,se,s,sw,nw) x sprint; S<->N u-turn drag coverage"
   }
 }

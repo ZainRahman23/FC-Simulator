@@ -1,0 +1,361 @@
+{
+ "north": {
+  "jog": [
+   {
+    "frame": 6,
+    "set": "n_dr",
+    "foot": "L",
+    "cx": 69,
+    "cy": 123,
+    "dy": 0,
+    "spread": 0.8,
+    "tag": "jog",
+    "file": "n_dr_6.png"
+   },
+   {
+    "frame": 5,
+    "set": "n_dr",
+    "foot": "L",
+    "cx": 69,
+    "cy": 123,
+    "dy": 0,
+    "spread": 1.3,
+    "tag": "jog",
+    "file": "n_dr_5.png"
+   },
+   {
+    "frame": 4,
+    "set": "n_dr",
+    "foot": "L",
+    "cx": 68,
+    "cy": 117,
+    "dy": 0,
+    "spread": 1.9,
+    "tag": "jog",
+    "file": "n_dr_4.png"
+   },
+   {
+    "frame": 2,
+    "set": "n_dr",
+    "foot": "R",
+    "cx": 74,
+    "cy": 121,
+    "dy": 0,
+    "spread": 4.2,
+    "tag": "jog",
+    "file": "n_dr_2.png"
+   }
+  ],
+  "spr": [
+   {
+    "frame": 6,
+    "set": "n_sp",
+    "foot": "R",
+    "cx": 72,
+    "cy": 118,
+    "dy": 0,
+    "spread": 1.8,
+    "tag": "spr",
+    "file": "n_sp_6.png"
+   },
+   {
+    "frame": 4,
+    "set": "n_sp",
+    "foot": "R",
+    "cx": 72,
+    "cy": 123,
+    "dy": 0,
+    "spread": 1.9,
+    "tag": "spr",
+    "file": "n_sp_4.png"
+   }
+  ],
+  "strides": [
+   {
+    "frame": 0,
+    "file": "n_dr_0.png"
+   },
+   {
+    "frame": 1,
+    "file": "n_dr_1.png"
+   },
+   {
+    "frame": 3,
+    "file": "n_dr_3.png"
+   },
+   {
+    "frame": 7,
+    "file": "n_dr_7.png"
+   }
+  ]
+ },
+ "north-east": {
+  "jog": [
+   {
+    "frame": 6,
+    "set": "ne_dr",
+    "foot": "R",
+    "cx": 81,
+    "cy": 115,
+    "dy": 5,
+    "spread": 0.6,
+    "tag": "jog",
+    "file": "ne_dr_6.png"
+   },
+   {
+    "frame": 0,
+    "set": "ne_dr",
+    "foot": "L",
+    "cx": 80,
+    "cy": 123,
+    "dy": 0,
+    "spread": 2.3,
+    "tag": "jog",
+    "file": "ne_dr_0.png",
+    "relabelled": true
+   },
+   {
+    "frame": 5,
+    "set": "ne_dr",
+    "foot": "R",
+    "cx": 75,
+    "cy": 121,
+    "dy": 0,
+    "spread": 7.1,
+    "tag": "jog",
+    "file": "ne_dr_5.png"
+   },
+   {
+    "frame": 1,
+    "set": "ne_dr",
+    "foot": "R",
+    "cx": 73,
+    "cy": 126,
+    "dy": 0,
+    "spread": 8.9,
+    "tag": "jog",
+    "file": "ne_dr_1.png"
+   }
+  ],
+  "spr": [
+   {
+    "frame": 2,
+    "set": "ne_sp",
+    "foot": "R",
+    "cx": 74,
+    "cy": 126,
+    "dy": 0,
+    "tag": "spr",
+    "file": "ne_sp_2.png"
+   },
+   {
+    "frame": 1,
+    "set": "ne_sp",
+    "foot": "R",
+    "cx": 73,
+    "cy": 125,
+    "dy": 0,
+    "tag": "spr",
+    "file": "ne_sp_1.png"
+   }
+  ],
+  "strides": [
+   {
+    "frame": 2,
+    "file": "ne_dr_2.png"
+   },
+   {
+    "frame": 3,
+    "file": "ne_dr_3.png"
+   },
+   {
+    "frame": 4,
+    "file": "ne_dr_4.png"
+   },
+   {
+    "frame": 7,
+    "file": "ne_dr_7.png"
+   }
+  ]
+ },
+ "south-east": {
+  "jog": [
+   {
+    "frame": 2,
+    "set": "se_dr",
+    "foot": "L",
+    "cx": 82,
+    "cy": 118,
+    "dy": 0,
+    "spread": 0.4,
+    "tag": "jog",
+    "file": "se_dr_2.png"
+   },
+   {
+    "frame": 1,
+    "set": "se_dr",
+    "foot": "R",
+    "cx": 88,
+    "cy": 117,
+    "dy": 0,
+    "spread": 6.4,
+    "tag": "jog",
+    "file": "se_dr_1.png",
+    "relabelled": true
+   },
+   {
+    "frame": 6,
+    "set": "se_dr",
+    "foot": "L",
+    "cx": 71,
+    "cy": 122,
+    "dy": 0,
+    "spread": 11.2,
+    "tag": "jog",
+    "file": "se_dr_6.png"
+   },
+   {
+    "frame": 7,
+    "set": "se_dr",
+    "foot": "L",
+    "cx": 71,
+    "cy": 125,
+    "dy": 0,
+    "spread": 11.3,
+    "tag": "jog",
+    "file": "se_dr_7.png"
+   }
+  ],
+  "spr": [
+   {
+    "frame": 3,
+    "set": "se_sp",
+    "foot": "L",
+    "cx": 77,
+    "cy": 119,
+    "dy": 0,
+    "tag": "spr",
+    "file": "se_sp_3.png"
+   },
+   {
+    "frame": 4,
+    "set": "se_sp",
+    "foot": "R",
+    "cx": 68,
+    "cy": 119,
+    "dy": 0,
+    "tag": "spr",
+    "file": "se_sp_4.png"
+   }
+  ],
+  "strides": [
+   {
+    "frame": 0,
+    "file": "se_dr_0.png"
+   },
+   {
+    "frame": 3,
+    "file": "se_dr_3.png"
+   },
+   {
+    "frame": 4,
+    "file": "se_dr_4.png"
+   },
+   {
+    "frame": 5,
+    "file": "se_dr_5.png"
+   }
+  ]
+ },
+ "south": {
+  "jog": [
+   {
+    "frame": 6,
+    "set": "s_dr",
+    "foot": "R",
+    "cx": 70,
+    "cy": 125,
+    "dy": 0,
+    "spread": 0.3,
+    "tag": "jog",
+    "file": "s_dr_6.png"
+   },
+   {
+    "frame": 7,
+    "set": "s_dr",
+    "foot": "L",
+    "cx": 70,
+    "cy": 120,
+    "dy": 0,
+    "spread": 0.3,
+    "tag": "jog",
+    "file": "s_dr_7.png",
+    "relabelled": true
+   },
+   {
+    "frame": 5,
+    "set": "s_dr",
+    "foot": "R",
+    "cx": 69,
+    "cy": 124,
+    "dy": 0,
+    "spread": 1.3,
+    "tag": "jog",
+    "file": "s_dr_5.png"
+   },
+   {
+    "frame": 3,
+    "set": "s_dr",
+    "foot": "R",
+    "cx": 69,
+    "cy": 115,
+    "dy": 5,
+    "spread": 1.4,
+    "tag": "jog",
+    "file": "s_dr_3.png"
+   }
+  ],
+  "spr": [
+   {
+    "frame": 4,
+    "set": "s_sp",
+    "foot": "L",
+    "cx": 70,
+    "cy": 122,
+    "dy": 0,
+    "spread": 0.0,
+    "tag": "spr",
+    "file": "s_sp_4.png"
+   },
+   {
+    "frame": 2,
+    "set": "s_sp",
+    "foot": "R",
+    "cx": 68,
+    "cy": 116,
+    "dy": 0,
+    "spread": 1.8,
+    "tag": "spr",
+    "file": "s_sp_2.png"
+   }
+  ],
+  "strides": [
+   {
+    "frame": 0,
+    "file": "s_dr_0.png"
+   },
+   {
+    "frame": 1,
+    "file": "s_dr_1.png"
+   },
+   {
+    "frame": 2,
+    "file": "s_dr_2.png"
+   },
+   {
+    "frame": 4,
+    "file": "s_dr_4.png"
+   }
+  ]
+ }
+}
