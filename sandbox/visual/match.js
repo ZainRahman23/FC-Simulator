@@ -1622,6 +1622,8 @@ function drawPlayer(p, dt) {
 const PT = {  // world.py Body constants, ported verbatim — keep in sync
   G: 9.81, MU_ROLL: 4.2, MU_AIR: 0.8, REST: 0.55, KEEP: 0.80, SETTLE: 1.0,
   REACH: 0.9, EXCL: 0.45, ACC: 4.8, BRAKE: 6.5, VMAX: 8.2, RUNV: 5.0,
+  // PLAYER LOCOMOTION RESPONSIVENESS V1 (candidate A, world.py mirror)
+  ACC_GAIN: 8.5 / 4.8, BRAKE_PLANT: 12.0, ACC_LAT: 10.0, ACC_START: 9.5,
 };
 const PT_DT = 1 / 60;
 function ptFam(fam, D) {          // world.py FAM launch families (port)
@@ -1711,25 +1713,32 @@ function ptStep() {
     const spdC = spd * Math.max(0.4, Math.min(1.0, 1.0 - 0.45 * ceS));
     if (dd > 0.12) { dvx = (tx - p.x) / dd * spdC; dvy = (ty - p.y) / dd * spdC; }
   } else if (m > 0) { dvx = dx / m * spd; dvy = dy / m * spd; }
-  // world.locomote velocity limiter (ported verbatim)
-  const cur = Math.hypot(p.vx, p.vy), des = Math.hypot(dvx, dvy);
-  let lim = PT.ACC;
-  if (des < cur - 0.2) lim = PT.BRAKE;
-  else if (cur > 3 && des > 0.1) {
-    const turn = Math.abs(((Math.atan2(dvy, dvx) - Math.atan2(p.vy, p.vx)) + Math.PI * 3) % (2 * Math.PI) - Math.PI);
-    if (turn > 1.15) { lim = PT.BRAKE; dvx *= 0.15; dvy *= 0.15; }
-    else if (turn > 0.55) lim = PT.ACC * 0.7;
+  // world.locomote LOCOMOTION V1 limiter (direction-decomposed, mirror)
+  const cur = Math.hypot(p.vx, p.vy);
+  const ax = dvx - p.vx, ay = dvy - p.vy;
+  if (cur > 0.5) {
+    const uvx = p.vx / cur, uvy = p.vy / cur;
+    const aPar = ax * uvx + ay * uvy;
+    const aPx = ax - aPar * uvx, aPy = ay - aPar * uvy;
+    const aLat = Math.hypot(aPx, aPy);
+    const limPar = aPar >= 0 ? PT.ACC * PT.ACC_GAIN : PT.BRAKE_PLANT;
+    const fPar = Math.min(1, limPar * PT_DT / Math.max(1e-9, Math.abs(aPar)));
+    const fLat = Math.min(1, PT.ACC_LAT * PT_DT / Math.max(1e-9, aLat));
+    p.vx += aPar * fPar * uvx + aPx * fLat;
+    p.vy += aPar * fPar * uvy + aPy * fLat;
+  } else {
+    const am = Math.hypot(ax, ay), stp = Math.max(PT.ACC_START, PT.ACC * PT.ACC_GAIN) * PT_DT;
+    if (am > stp) { p.vx += ax / am * stp; p.vy += ay / am * stp; }
+    else { p.vx = dvx; p.vy = dvy; }
   }
-  const ax = dvx - p.vx, ay = dvy - p.vy, am = Math.hypot(ax, ay), stp = lim * PT_DT;
-  if (am > stp) { p.vx += ax / am * stp; p.vy += ay / am * stp; }
-  else { p.vx = dvx; p.vy = dvy; }
+  t.inDir = m > 0 ? inCorr : null;
   p.x = Math.max(-2, Math.min(107, p.x + p.vx * PT_DT));   // world bounds (ported)
   p.y = Math.max(-2, Math.min(70, p.y + p.vy * PT_DT));
   // facing (ported): faces velocity when moving, else the ball
   const v = Math.hypot(p.vx, p.vy);
   const want = v > 0.7 ? Math.atan2(p.vy, p.vx) : Math.atan2(b.y - p.y, b.x - p.x);
   const df = ((want - p.facing) + Math.PI * 3) % (2 * Math.PI) - Math.PI;
-  const rate = Math.max(1.5, Math.min(5.5, 5.5 - v * 0.45)) * PT_DT;
+  const rate = Math.max(4.0, Math.min(7.0, 7.0 - v * 0.30)) * PT_DT;  // athletic hips (V1)
   p.facing += Math.abs(df) <= rate ? df : Math.sign(df) * rate;
   // scheduled shot: impulse fires exactly at the contact instant
   if (t.shoot) {
@@ -1977,6 +1986,13 @@ function drawPlaytest(dt) {
                  (b.z > 0.05 || b.vz > 0.001) ? "IN_FLIGHT" : "LOOSE";
   const bfd = Math.hypot(p.x - b.x, p.y - b.y);
   ctx.fillStyle = "#b7ffb7";
+  const deg2 = (a) => a === null || a === undefined ? "-" : ((a * 57.296 % 360 + 360) % 360).toFixed(0);
+  const velDir = Math.hypot(p.vx, p.vy) > 0.3 ? Math.atan2(p.vy, p.vx) : null;
+  ctx.fillStyle = "#9fc4ff";
+  ctx.fillText(`LOCO  input ${deg2(t.inDir)}° · facing ${deg2(p.facing)}° · vel ${deg2(velDir)}° · ` +
+    `speed ${Math.hypot(p.vx, p.vy).toFixed(1)} m/s · turn ${t.inDir !== null && velDir !== null ?
+      (Math.abs(((t.inDir - velDir) + Math.PI * 3) % (2 * Math.PI) - Math.PI) * 57.3).toFixed(0) : "-"}°`,
+    uipx(14), cv.height - uipx(22));
   const ti = t.touchInfo || {};
   ctx.fillStyle = "#ffe9a8";
   ctx.fillText(`TOUCH  desired ${ti.sc !== undefined ? ti.sc.toFixed(2) : "-"} m · last dist ` +

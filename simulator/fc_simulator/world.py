@@ -15,6 +15,20 @@ MU_ROLL, MU_AIR = 4.2, 0.8
 REST, KEEP, SETTLE = 0.55, 0.80, 1.0
 REACH, GK_REACH, EXCL = 0.9, 1.6, 0.45
 ACC, BRAKE = 4.8, 6.5
+# ── PLAYER LOCOMOTION RESPONSIVENESS V1 (candidate A, direction-decomposed) ──
+# The old single-limit model (ACC 4.8 everywhere, BRAKE 6.5, desired vector
+# gutted x0.15 during turns) measured: sprint stop 5.1 m, jog 90-cut 1.12 s,
+# sprint 90-cut 1.88 s / 6.7 m overshoot, sprint reversal 2.45 s — 'tank'
+# feel. New model decomposes desired acceleration relative to current
+# velocity: forward / plant-brake / lateral-cut limits are separate, so a
+# 90-degree cut rotates the velocity vector under lateral acceleration with
+# a speed dip instead of decaying to zero first. Attribute spread preserved:
+# per-player forward accel = roster acc x ACC_GAIN (existing acceleration-
+# attribute scaling moves with the baseline; no new attribute effects).
+ACC_GAIN = 8.5 / 4.8       # neutral roster acc 4.8 -> 8.5 m/s^2 forward
+BRAKE_PLANT = 12.0         # active plant/brake (sprint stop ~0.67 s, 2.7 m)
+ACC_LAT = 10.0             # lateral/cutting acceleration
+ACC_START = 9.5            # explosive first steps from standstill
 
 # ── PLAYER PHYSICAL OCCUPANCY V1 ─────────────────────────────────────────────
 # Every player is a solid 2D disc on the pitch plane (torso/legs footprint,
@@ -141,19 +155,27 @@ class Body:
             d = dist(p['x'], p['y'], tx, ty)
             # physical arrival profile: never approach faster than you can brake
             # (fast players decelerate EARLY, like real footballers timing a run)
-            sp = min(speed, 0.4 + 0.92*math.sqrt(2*BRAKE*max(0.0, d)))
+            sp = min(speed, 0.4 + 0.92*math.sqrt(2*BRAKE_PLANT*max(0.0, d)))
             if d > 0.12: dvx, dvy = (tx - p['x'])/d*sp, (ty - p['y'])/d*sp
-        cur = math.hypot(p['vx'], p['vy']); des = math.hypot(dvx, dvy)
-        lim = p['acc']
-        if des < cur - 0.2: lim = BRAKE
-        elif cur > 3 and des > 0.1:
-            turn = abs((math.atan2(dvy, dvx) - math.atan2(p['vy'], p['vx']) + math.pi*3) % (2*math.pi) - math.pi)
-            if turn > 1.15: lim = BRAKE; dvx *= 0.15; dvy *= 0.15
-            elif turn > 0.55: lim = p['acc']*0.7
-        ax, ay = dvx - p['vx'], dvy - p['vy']; am = math.hypot(ax, ay)
-        step = lim*DT
-        if am > step: p['vx'] += ax/am*step; p['vy'] += ay/am*step
-        else: p['vx'], p['vy'] = dvx, dvy
+        cur = math.hypot(p['vx'], p['vy'])
+        ax, ay = dvx - p['vx'], dvy - p['vy']
+        if cur > 0.5:
+            # direction-decomposed limits: forward accel / plant brake /
+            # lateral cut applied to the components of the desired change
+            uvx, uvy = p['vx']/cur, p['vy']/cur
+            a_par = ax*uvx + ay*uvy
+            a_px, a_py = ax - a_par*uvx, ay - a_par*uvy
+            a_lat = math.hypot(a_px, a_py)
+            lim_par = p['acc']*ACC_GAIN if a_par >= 0 else BRAKE_PLANT
+            f_par = min(1.0, lim_par*DT / max(1e-9, abs(a_par)))
+            f_lat = min(1.0, ACC_LAT*DT / max(1e-9, a_lat))
+            p['vx'] += a_par*f_par*uvx + a_px*f_lat
+            p['vy'] += a_par*f_par*uvy + a_py*f_lat
+        else:
+            am = math.hypot(ax, ay)
+            stp = max(ACC_START, p['acc']*ACC_GAIN)*DT
+            if am > stp: p['vx'] += ax/am*stp; p['vy'] += ay/am*stp
+            else: p['vx'], p['vy'] = dvx, dvy
         # OCCUPANCY V1: locomote PROPOSES velocity (desired movement after
         # accel/brake/turn limits); position is integrated in tick() under
         # body-contact constraints. Tactical targets are never rewritten.
@@ -162,7 +184,7 @@ class Body:
         v = math.hypot(p['vx'], p['vy'])
         want = math.atan2(p['vy'], p['vx']) if v > 0.7 else math.atan2(self.ball['y']-p['y'], self.ball['x']-p['x'])
         df = (want - p['facing'] + math.pi*3) % (2*math.pi) - math.pi
-        rate = clamp(5.5 - v*0.45, 1.5, 5.5)*DT
+        rate = clamp(7.0 - v*0.30, 4.0, 7.0)*DT   # athletic hip rotation (V1)
         p['facing'] += df if abs(df) <= rate else math.copysign(rate, df)
         p['loco'] = 'IDLE' if v < 0.3 else 'WALK' if v < 2 else 'JOG' if v < 4.5 else 'RUN' if v < 6.8 else 'SPRINT'
 

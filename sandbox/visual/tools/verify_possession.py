@@ -120,12 +120,17 @@ car.update(x=50, y=34, vx=0, vy=0); dfd.update(x=52, y=34, vx=0, vy=0)
 body.ball.update({'x': 50.4, 'y': 34.0, 'z': 0, 'vx': 0, 'vy': 0, 'vz': 0,
                   'ctrl': car['pid'], 'state': 'ROLLING'})
 challenged = won = False
-for i in range(600):
-    body.locomote(dfd, 52, 34, 0.0)
-    p = car
-    corr = 0.0
-    body.locomote(p, body.ball['x'] + 2, 34, 4.5)
-    body.carry_touch(p, corr)
+for i in range(900):
+    # PRESSING defender (realistic duel window: he hunts the ball); the
+    # carrier tries to dribble past — CONTROLLED DRIBBLING V1 keeps the
+    # ball tight, so contested windows come from genuine pressure
+    body.locomote(dfd, body.ball['x'], body.ball['y'], 4.0)
+    if body.ball['ctrl'] == car['pid']:
+        corr = 0.0
+        body.locomote(car, body.ball['x'] + 2, 34, 4.5)
+        body.carry_touch(car, corr)
+    else:
+        body.locomote(car, body.ball['x'], body.ball['y'], 4.5)
     body.tick(KH)
     for e in body.events:
         if 'TACKLE' in e['kind']: challenged = True
