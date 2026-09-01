@@ -165,7 +165,7 @@ async function boot() {
     jobs.push({ key: ["shoot", "east", i],
                 path: ASSET_ROOT + "originals/character_31a11357/proto_anim/shoot/east/" + i + ".png" });
   // KICK ANIMATION V2: technique sequences (east; west mirrors, foot flips)
-  for (const [ks, kn] of [["in3_R", 12], ["in3_L", 12], ["la_R", 10], ["la_L", 10],
+  for (const [ks, kn] of [["in4_R", 12], ["in4_L", 12], ["la_R", 10], ["la_L", 10],
                           ["ou_R", 8], ["ou_L", 8], ["ch_R", 8]])
     for (let i = 0; i < kn; i++)
       jobs.push({ key: ["kick", ks + "|" + i, 0],
@@ -1803,14 +1803,16 @@ function drib2Schedule(t, pick, T) {
 // cx/cy = TECHNIQUE-SPECIFIC contact point on the 140 canvas: the boot
 // surface that strikes (INSIDE -> medial face, LACES -> instep, OUTSIDE ->
 // lateral face, CHIP -> under-toe), not the forward-most toe pixel.
-// KICK V2.0.2: in3_R/in3_L READABLE OPEN-BOOT finesse-style side-foot sets
-// (candidate C, chosen at gameplay zoom): body opens, knee out, boot turned
-// ~90deg with the inside face exposed to the viewer, low sweep through the
-// ball, wrap-across follow-through, recovery. Metrics are diagnostic only;
+// KICK V2.0.3: in4_R/in4_L carry the user-approved F3 FORESHORTENED contact
+// frames (hand-pixeled): lowered strike leg, boot shortened in screen-X and
+// deepened in screen-Y, toe toward the viewer, restrained medial facet.
+// The contact frames are locked pixel-for-pixel — no interpolation may
+// regenerate them. Every other frame is the accepted in3 motion (approach,
+// low sweep, wrap-across, recovery). Metrics diagnostic only; the user's
 // visual review at gameplay scale is the acceptance gate.
 const KICK_LIB = {
-  INSIDE_R: { set: "in3_R", n: 12, fps: 14, contact: 6, cx: 99, cy: 100, surface: "INSIDE" },
-  INSIDE_L: { set: "in3_L", n: 12, fps: 14, contact: 6, cx: 97, cy: 110, surface: "INSIDE" },
+  INSIDE_R: { set: "in4_R", n: 12, fps: 14, contact: 6, cx: 93, cy: 103, surface: "INSIDE" },
+  INSIDE_L: { set: "in4_L", n: 12, fps: 14, contact: 6, cx: 93, cy: 110, surface: "INSIDE" },
   LACES_R: { set: "la_R", n: 10, fps: 12, contact: 7, cx: 97, cy: 114, surface: "LACES" },
   LACES_L: { set: "la_L", n: 10, fps: 12, contact: 7, cx: 98, cy: 113, surface: "LACES" },
   POWER_R: { legacy: "shoot", n: 10, fps: 12, contact: 6, cx: 96, cy: 114, surface: "LACES" },

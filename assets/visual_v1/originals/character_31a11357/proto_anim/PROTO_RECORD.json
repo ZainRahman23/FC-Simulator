@@ -345,5 +345,13 @@
   ],
   "total_generations_spent": 13,
   "result": "in3_R / in3_L (12f, 14 fps, contact f6 = same 6/14 s offset). in2 sets retained on disk, no longer loaded. Playtest gains showcase keys 1-5 (direct technique) and 6 (deterministic INSIDE>LACES>POWER>TRIVELA>CHIP sequence) \u2014 debug-only, zero gameplay reach."
+ },
+ "kick_v2_0_3_f3_contact": {
+  "date": "2026-09-01",
+  "reason": "V2.0.2 in3 contact rejected live (boot still read as shin-aligned laces). Three user-gated manual pose studies followed: R2 axis/face families (rejected), R3 C-family shoe contours (C3/C3-LOW direction approved), R4 F-family foreshortening (F3 selected). V2.0.3 installs the F3-CLEAN contact frames.",
+  "mode": "MANUAL PIXEL AUTHORING ONLY \u2014 zero PixelLab generations in R3/R4/build; 8 gens spent in the R2 capability probe (4 v3 static-pose attempts, 4 pixen edits, all failed/rejected, documented in scratchpad posestudy/STUDY_RECORD.json)",
+  "capability_finding": "v3 cannot hold static poses or articulate ankle-vs-shin rotation; pixen ignores foot-rotation edits and drifts sprite style. Foot-perspective problems at this resolution are hand-pixel work.",
+  "result": "in4_R / in4_L (12f, 14 fps, contact f6 = locked hand-authored F3 frames; all other frames unchanged in3 motion). Contact timing 6/14 s unchanged. in2/in3 retained on disk, no longer loaded.",
+  "total_generations_spent": 8
  }
 }
