@@ -1520,6 +1520,9 @@ function tick(ts) {
   ensureBuffer();
   const sample = sampleAt(pb.head);
   updateRig(dt, sample);
+  if (S.pt && S.pt.on) { let pacc = (S._ptAcc || 0) + dt;
+    while (pacc >= PT_DT) { ptStep(); pacc -= PT_DT; }
+    S._ptAcc = pacc; }
   if (S.animTest) { let acc = (S._atAcc || 0) + (S.netSlow ? dt * 0.15 : dt);
     while (acc >= NETPHYS.dt) { animTestStep(); acc -= NETPHYS.dt; }
     S._atAcc = acc; }
@@ -1606,6 +1609,290 @@ function drawPlayer(p, dt) {
     if (S.dbg.state)
       ctx.fillText(`${vs.state}/${dir} ${p.speed.toFixed(1)}m/s [${S.pb.acts[p.act] || p.act}]`, ax, ty);
   }
+}
+// ═══ SINGLE PLAYER ANIMATION PLAYTEST — isolated dev harness ═════════════════
+// Interactive one-player + authoritative-ball testbed ("Single Player Test"
+// button). ARCHITECTURE NOTE: the authoritative Body lives in Python
+// (world.py) and has no realtime input channel, so this harness is a
+// VERBATIM PORT of its equations — locomote accel/brake/turn limits,
+// carry_touch cadence, interact CLEAN control branch, FAM kick families,
+// step_ball integration, same constants, same 60 Hz fixed step — exactly
+// as the accepted ball tests already port step_ball. Nothing here touches
+// match state (S.pb), match AI, or the engine.
+const PT = {  // world.py Body constants, ported verbatim — keep in sync
+  G: 9.81, MU_ROLL: 4.2, MU_AIR: 0.8, REST: 0.55, KEEP: 0.80, SETTLE: 1.0,
+  REACH: 0.9, EXCL: 0.45, ACC: 4.8, BRAKE: 6.5, VMAX: 8.2, RUNV: 5.0,
+};
+const PT_DT = 1 / 60;
+function ptFam(fam, D) {          // world.py FAM launch families (port)
+  const c = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+  if (fam === "SHORT") return [c(Math.sqrt(2 * PT.MU_ROLL * D + 6.5 * 6.5), 8, 19), 0];
+  if (fam === "LOFT") { const T = c(D / 16, 0.8, 2.2); return [D / T, PT.G * T / 2]; }
+  return [c(24 + D * 0.3, 24, 31), c(0.5 + D * 0.06, 0.5, 2.2)];   // SHOT
+}
+function ptReset() {
+  const t = S.pt;
+  t.now = 0;
+  t.p = { x: 76.0, y: 34.0, vx: 0, vy: 0, facing: 0, touchT: 0 };
+  t.b = { x: 76.8, y: 34.0, z: 0, vx: 0, vy: 0, vz: 0, ctrl: true, exclT: 0 };
+  t.shoot = null; t.net = null; t.touchN = 0;
+  t.dribT = 0; t.dribF0 = 0;
+  t.last = "RESET";
+}
+function ptEnter() {
+  S._ptPrevCam = { mode: RIG.mode, zoom: RIG.zoomTarget, mx: RIG.manualX };
+  S.pb.playing = false;
+  RIG.mode = "manual"; RIG.manualX = 88; RIG.x = 88; RIG.targetX = 88;
+  RIG.zoom = 1.25; RIG.zoomTarget = 1.25;
+  S.pt = { on: true, keys: {} };
+  ptReset();
+  const btn = document.getElementById("ptbtn");
+  if (btn) btn.textContent = "Exit Single Player Test";
+}
+function ptExit() {
+  if (S._ptPrevCam) {
+    RIG.mode = S._ptPrevCam.mode; RIG.zoomTarget = S._ptPrevCam.zoom;
+    RIG.manualX = S._ptPrevCam.mx;
+  }
+  S.pt = null;
+  const btn = document.getElementById("ptbtn");
+  if (btn) btn.textContent = "Single Player Test";
+}
+function ptKick(fam, label) {
+  const t = S.pt, p = t.p, b = t.b;
+  if (!b.ctrl || t.shoot) return;
+  const D = fam === "SHORT" ? 14 : fam === "LOFT" ? 22 : 20;
+  const [v0, vz] = ptFam(fam, D);
+  b.vx = Math.cos(p.facing) * v0; b.vy = Math.sin(p.facing) * v0; b.vz = vz;
+  b.ctrl = false; b.exclT = t.now + PT.EXCL; p.touchT = 0;
+  t.last = label;
+}
+function ptShoot() {
+  const t = S.pt;
+  if (!t.b.ctrl || t.shoot) return;
+  // SYNC CONTRACT: the authoritative kick instant is scheduled first; the
+  // shoot animation enters NOW so its authored contact frame (6 @ 12 fps)
+  // is on screen exactly when the impulse fires. The ball stays controlled
+  // and untouched until that instant; the animation never moves it.
+  t.shoot = { t0: t.now, kickAt: t.now + SHOOT_CONTACT_FRAME / SHOOT_FPS, kicked: false };
+  t.last = "SHOOT scheduled";
+}
+function ptStep() {
+  const t = S.pt;
+  if (!t || !t.on) return;
+  t.now += PT_DT;
+  const p = t.p, b = t.b;
+  // input -> desired velocity (kicker plants during the shoot animation)
+  let dx = 0, dy = 0;
+  if (!t.shoot) {
+    if (t.keys.up) dy -= 1;
+    if (t.keys.down) dy += 1;
+    if (t.keys.left) dx -= 1;
+    if (t.keys.right) dx += 1;
+  }
+  const m = Math.hypot(dx, dy), spd = t.keys.sprint ? PT.VMAX : PT.RUNV;
+  let dvx = 0, dvy = 0;
+  if (m > 0) { dvx = dx / m * spd; dvy = dy / m * spd; }
+  // world.locomote velocity limiter (ported verbatim)
+  const cur = Math.hypot(p.vx, p.vy), des = Math.hypot(dvx, dvy);
+  let lim = PT.ACC;
+  if (des < cur - 0.2) lim = PT.BRAKE;
+  else if (cur > 3 && des > 0.1) {
+    const turn = Math.abs(((Math.atan2(dvy, dvx) - Math.atan2(p.vy, p.vx)) + Math.PI * 3) % (2 * Math.PI) - Math.PI);
+    if (turn > 1.15) { lim = PT.BRAKE; dvx *= 0.15; dvy *= 0.15; }
+    else if (turn > 0.55) lim = PT.ACC * 0.7;
+  }
+  const ax = dvx - p.vx, ay = dvy - p.vy, am = Math.hypot(ax, ay), stp = lim * PT_DT;
+  if (am > stp) { p.vx += ax / am * stp; p.vy += ay / am * stp; }
+  else { p.vx = dvx; p.vy = dvy; }
+  p.x = Math.max(-2, Math.min(107, p.x + p.vx * PT_DT));   // world bounds (ported)
+  p.y = Math.max(-2, Math.min(70, p.y + p.vy * PT_DT));
+  // facing (ported): faces velocity when moving, else the ball
+  const v = Math.hypot(p.vx, p.vy);
+  const want = v > 0.7 ? Math.atan2(p.vy, p.vx) : Math.atan2(b.y - p.y, b.x - p.x);
+  const df = ((want - p.facing) + Math.PI * 3) % (2 * Math.PI) - Math.PI;
+  const rate = Math.max(1.5, Math.min(5.5, 5.5 - v * 0.45)) * PT_DT;
+  p.facing += Math.abs(df) <= rate ? df : Math.sign(df) * rate;
+  // scheduled shot: impulse fires exactly at the contact instant
+  if (t.shoot) {
+    if (!t.shoot.kicked && t.now >= t.shoot.kickAt) {
+      t.shoot.kicked = true;
+      const sh = t.shoot;                    // ptKick clears ctrl; keep anim
+      const [v0, vz] = ptFam("SHOT", 20);
+      b.vx = Math.cos(p.facing) * v0; b.vy = Math.sin(p.facing) * v0; b.vz = vz;
+      b.ctrl = false; b.exclT = t.now + PT.EXCL;
+      t.last = "SHOT " + v0.toFixed(0) + " m/s";
+      t.shoot = sh;
+    }
+    if (t.now >= t.shoot.t0 + 10 / SHOOT_FPS + 0.15) t.shoot = null;
+  }
+  // carry (world.carry_touch port; solo pitch: no opponent shortening)
+  if (b.ctrl) {
+    const d = Math.hypot(p.x - b.x, p.y - b.y);
+    if (d > 4.2) { b.ctrl = false; t.last = "LOOSE (ran away)"; }
+    else if (t.shoot) { b.vx = b.vy = b.vz = 0; }   // held for the strike
+    else {
+      p.touchT -= PT_DT;
+      if (d < 0.85 && p.touchT <= 0) {
+        const pv = Math.hypot(p.vx, p.vy);
+        const knock = pv > 6 ? pv + 2.6 : pv > 3 ? pv + 1.5 : Math.max(2, pv + 1);
+        p.touchT = pv > 6 ? 0.5 : 0.38;
+        b.vx = Math.cos(p.facing) * knock; b.vy = Math.sin(p.facing) * knock; b.vz = 0;
+        // carry-touch event -> dribble-contact phase (authored touch frames
+        // 2 and 6 alternate feet; the ANIMATION follows the touch, never
+        // the other way round)
+        t.touchN++;
+        t.dribF0 = (t.touchN % 2) ? 2 : 6;
+        t.dribT = t.now;
+        t.last = "DRIBBLE TOUCH";
+      }
+    }
+  } else if (t.now >= b.exclT) {
+    // regain control: world.interact CLEAN branch (port), rv < 5.5
+    const d = Math.hypot(p.x - b.x, p.y - b.y);
+    const rv = Math.hypot(b.vx - p.vx, b.vy - p.vy);
+    if (d < PT.REACH && b.z < 1.4 && rv < 5.5) {
+      b.ctrl = true;
+      b.vx = p.vx * 0.7 + Math.cos(p.facing) * 1.1;
+      b.vy = p.vy * 0.7 + Math.sin(p.facing) * 1.1;
+      if (b.z > 0 && b.z < 1.6) b.vz = Math.min(b.vz, 0.4);
+      p.touchT = 0.30;
+      t.last = "CONTROL";
+    }
+  }
+  // ball physics (world.step_ball port) + accepted net-catch behaviour
+  if (t.net) {
+    if (t.net.phase === "push") {
+      const dec = Math.exp(-PT_DT / 0.05);
+      b.vx *= dec; b.vy *= dec; b.vz *= dec;
+      b.x += b.vx * PT_DT; b.y += b.vy * PT_DT; b.z += b.vz * PT_DT;
+      if (Math.hypot(b.vx, b.vy, b.vz) < 1.3) {
+        t.net.phase = "drop";
+        b.vx = -0.18 * t.net.vE[0]; b.vy = -0.18 * t.net.vE[1]; b.vz = 0.4;
+      }
+    } else {
+      b.vz -= PT.G * PT_DT;
+      b.x += b.vx * PT_DT; b.y += b.vy * PT_DT; b.z += b.vz * PT_DT;
+      b.vx *= (1 - 1.2 * PT_DT); b.vy *= (1 - 1.2 * PT_DT);
+      if (b.z <= 0.11) { b.z = 0.0; b.vz = 0; t.net = null; }
+    }
+  } else if (!b.ctrl || !t.shoot) {
+    if (!b.ctrl) {
+      b.x += b.vx * PT_DT; b.y += b.vy * PT_DT; b.z += b.vz * PT_DT;
+      if (b.z > 0) b.vz -= PT.G * PT_DT;
+      if (b.z <= 0) {
+        if (b.vz < 0) {
+          const r = -b.vz * PT.REST;
+          if (r < PT.SETTLE) b.vz = 0;
+          else { b.vz = r; b.vx *= PT.KEEP; b.vy *= PT.KEEP; }
+        }
+        b.z = Math.max(0, b.z);
+      }
+      const sp2 = Math.hypot(b.vx, b.vy);
+      if (sp2 > 0) {
+        const mu = b.z > 0.05 ? PT.MU_AIR : PT.MU_ROLL;
+        const ns = Math.max(0, sp2 - mu * PT_DT);
+        b.vx *= ns / sp2; b.vy *= ns / sp2;
+      }
+      if (b.x > 104.0 && b.vx > 0) {         // right-goal net (accepted netTest detection)
+        if (b.x > 105 && Math.abs(b.y - 34) < 3.66 && b.z < 2.44 && t.last !== "GOAL!")
+          t.last = "GOAL!";
+        const net = S.goalPanels && S.goalPanels[1] && S.goalPanels[1].net;
+        if (net) {
+          const R = NETPHYS.ballR + 0.06;
+          for (let i = 0; i < net.inv.length; i++) {
+            if (!net.inv[i]) continue;
+            const j = i * 3;
+            if (Math.hypot(net.pos[j] - b.x, net.pos[j + 1] - b.z, net.pos[j + 2] - b.y) < R) {
+              t.net = { phase: "push", vE: [b.vx, b.vy, b.vz] };
+              netImpact(1, [b.x, b.z, b.y], [b.vx, b.vz, b.vy],
+                        Math.min(1.6, 0.35 + Math.hypot(b.vx, b.vy, b.vz) / 20));
+              break;
+            }
+          }
+        }
+      }
+    } else if (Math.hypot(b.vx, b.vy) > 0.02) {   // controlled rolling touch travel
+      b.x += b.vx * PT_DT; b.y += b.vy * PT_DT;
+      const sp2 = Math.hypot(b.vx, b.vy);
+      const ns = Math.max(0, sp2 - PT.MU_ROLL * PT_DT);
+      b.vx *= ns / sp2; b.vy *= ns / sp2;
+    }
+  }
+}
+function ptView() {   // animation state + artwork choice (pure function)
+  const t = S.pt, p = t.p;
+  const spd = Math.hypot(p.vx, p.vy);
+  const cosf = Math.cos(p.facing);
+  if (t.shoot) {
+    const f = Math.min(9, Math.floor((t.now - t.shoot.t0) * SHOOT_FPS));
+    const st = f < SHOOT_CONTACT_FRAME ? "SHOOT_APPROACH" :
+               f === SHOOT_CONTACT_FRAME ? "SHOOT_CONTACT" : "SHOOT_FOLLOWTHROUGH";
+    return { st, anim: "shoot", f, proto: true, mirror: cosf < -0.5 };
+  }
+  if (t.b.ctrl && spd > IDLE_MAX) {
+    if (cosf > 0.5 || cosf < -0.5) {
+      const f = ((t.dribF0 + Math.floor((t.now - t.dribT) * DRIBBLE_FPS)) % 8 + 8) % 8;
+      return { st: "DRIBBLE", anim: "dribble", f, proto: true, mirror: cosf < -0.5 };
+    }
+    const f = Math.floor(t.now * JOG_FPS) % 8;    // no N/S dribble art yet
+    return { st: "DRIBBLE", anim: spd > JOG_MAX ? "sprint" : "jog", f, proto: false };
+  }
+  if (spd > IDLE_MAX) {
+    const anim = spd > JOG_MAX ? "sprint" : "jog";
+    const f = Math.floor(t.now * (anim === "jog" ? JOG_FPS : SPRINT_FPS)) % 8;
+    return { st: "RUN", anim, f, proto: false };
+  }
+  return { st: "IDLE", anim: "idle", f: 0, proto: false };
+}
+function drawPlaytest(dt) {
+  const t = S.pt;
+  if (!t || !t.on) return;
+  const p = t.p, b = t.b;
+  const view = ptView();
+  const deg = ((p.facing * 180 / Math.PI) % 360 + 360) % 360;
+  const sp = sproj(p.x, p.y);
+  const s = S.playerVScale * depthScale(sp.d) * RIG.zoom * RES;
+  const ax = Math.round(sp.x), ay = Math.round(sp.y);
+  ctx.save();
+  ctx.beginPath();
+  ctx.ellipse(ax, ay, 9 * s, Math.max(1.5, 9 * s * flattenAt(p.x, p.y)), 0, 0, Math.PI * 2);
+  ctx.fillStyle = "rgba(0,0,0,0.25)"; ctx.fill();
+  ctx.restore();
+  let im = null;
+  if (view.proto) im = S.anims[view.anim].east && S.anims[view.anim].east[view.f];
+  else {
+    const frames = S.anims[view.anim][headingToDir(deg)];
+    im = frames && frames[view.f % frames.length];
+  }
+  if (im) {
+    const foot = im.height / 2 + S.pivots.foot_offset_base128;
+    const dy = view.proto && ANIM_ALIGN[view.anim] ? (ANIM_ALIGN[view.anim][view.f] || 0) * s : 0;
+    if (view.mirror) {
+      ctx.save(); ctx.scale(-1, 1);
+      ctx.drawImage(im, Math.round(-ax - (im.width / 2) * s), Math.round(ay - foot * s + dy),
+                    Math.round(im.width * s), Math.round(im.height * s));
+      ctx.restore();
+    } else {
+      ctx.drawImage(im, Math.round(ax - (im.width / 2) * s), Math.round(ay - foot * s + dy),
+                    Math.round(im.width * s), Math.round(im.height * s));
+    }
+  }
+  drawBallAt(b.x, b.y, b.z, Math.hypot(b.vx, b.vy), dt);
+  // HUD readout
+  const art = view.proto ? ("PROTOTYPE EAST ANIM" + (view.mirror ? " (MIRRORED WEST)" : ""))
+                         : "FALLBACK directional art";
+  const cd = t.shoot && !t.shoot.kicked ? ("contact in " + (t.shoot.kickAt - t.now).toFixed(2) + " s")
+           : t.shoot ? "KICKED (follow-through)" : "-";
+  ctx.fillStyle = "#ffd34d"; ctx.font = "bold " + uipx(13) + "px ui-monospace, monospace";
+  ctx.fillText("PLAYER TEST — SINGLE PLAYER  (WASD/arrows move · Shift sprint · X pass · Z shoot · C loft · R reset)",
+               uipx(14), cv.height - uipx(120));
+  ctx.fillStyle = "#9fe8ff"; ctx.font = uipx(12) + "px ui-monospace, monospace";
+  ctx.fillText(`anim ${view.st}  f${view.f}   art: ${art}`, uipx(14), cv.height - uipx(102));
+  ctx.fillText(`has ball ${b.ctrl ? "YES" : "no"}   player ${Math.hypot(p.vx, p.vy).toFixed(1)} m/s` +
+               `   ball ${Math.hypot(b.vx, b.vy).toFixed(1)} m/s  z ${b.z.toFixed(2)} m`,
+               uipx(14), cv.height - uipx(86));
+  ctx.fillText(`last action: ${t.last}   kick sync: ${cd}`, uipx(14), cv.height - uipx(70));
 }
 // ═══ ANIMATION PROTOTYPE SHOWCASE (key P) — renderer-local, deterministic ═══
 // Synthetic test puppet demonstrating the explicit animation states
@@ -1909,7 +2196,7 @@ function draw(sample, dt) {
   if (S.dbg.occ && sample) drawOccDebug(sample);
   if (S.dbg.grid) drawGrid();
   const ents = [];
-  if (sample) {
+  if (sample && !(S.pt && S.pt.on)) {
     for (const p of sample.players) ents.push({ y: p.y, p });
     ents.push({ y: sample.ball.y, ball: sample.ball });
   }
@@ -1924,6 +2211,7 @@ function draw(sample, dt) {
   drawBallTest(dt);
   drawAnimTest(dt);
   drawBallSeq(dt);
+  drawPlaytest(dt);
   if (S.dbg.netphys) drawNetPhysDebug();
   if (S.dbg.goalgeo) { drawGoalGeoDebug(0); drawGoalGeoDebug(1); }
   if (S.dbg.cam) drawRailSquare();       // rail diagnostic overlay (toggleable)
@@ -1994,8 +2282,20 @@ function bindUI() {
     RIG.smooth = parseFloat(smEl.value);
     smOut.textContent = RIG.smooth.toFixed(2) + " s";
   });
+  const PT_KEYMAP = { w: "up", arrowup: "up", s: "down", arrowdown: "down",
+                      a: "left", arrowleft: "left", d: "right", arrowright: "right",
+                      shift: "sprint" };
   document.addEventListener("keydown", (e) => {
     if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "SELECT")) return;
+    if (S.pt && S.pt.on) {           // inside the playtest ALL keys belong to it
+      const k = e.key.toLowerCase();
+      if (PT_KEYMAP[k]) { S.pt.keys[PT_KEYMAP[k]] = true; e.preventDefault(); }
+      else if (k === "r") ptReset();
+      else if (k === "x") ptKick("SHORT", "SHORT PASS (no pass anim authored)");
+      else if (k === "z") ptShoot();
+      else if (k === "c") ptKick("LOFT", "LOFTED PASS (no pass anim authored)");
+      return;
+    }
     if (e.key === "0") S.netSlow = !S.netSlow;
     if (e.key === "t") startBallSeq();
     if (e.key === "p") startAnimTest();
@@ -2007,6 +2307,16 @@ function bindUI() {
       startNetTest(1, NETTEST_POWERS[netTestPowerIdx]);
       netTestPowerIdx = (netTestPowerIdx + 1) % NETTEST_POWERS.length;
     }
+  });
+  document.addEventListener("keyup", (e) => {
+    if (S.pt && S.pt.on) {
+      const k = e.key.toLowerCase();
+      if (PT_KEYMAP[k]) S.pt.keys[PT_KEYMAP[k]] = false;
+    }
+  });
+  window.addEventListener("blur", () => { if (S.pt && S.pt.on) S.pt.keys = {}; });
+  document.getElementById("ptbtn")?.addEventListener("click", () => {
+    if (S.pt && S.pt.on) ptExit(); else ptEnter();
   });
   document.getElementById("refreeze").addEventListener("click", recomputeAuthoring);
   document.getElementById("resetauthor").addEventListener("click", () => {
