@@ -89,7 +89,7 @@ const S = {
           mode: "ball", smooth: RUNTIME_DEFAULTS.smooth, lead: 0, manualX: 52.5,
           target: null },
   animTest: null,
-  dbg: { occ: false, anchors: false, ids: false, vel: false, state: false,
+  dbg: { dribsync: false, occ: false, anchors: false, ids: false, vel: false, state: false,
          ball: false, track: false, goalgeo: false, grid: false, xform: false,
          netphys: false,
          cam: true },
@@ -164,6 +164,10 @@ async function boot() {
   for (let i = 0; i < 10; i++)
     jobs.push({ key: ["shoot", "east", i],
                 path: ASSET_ROOT + "originals/character_31a11357/proto_anim/shoot/east/" + i + ".png" });
+  // DRIBBLE ANIMATION V2: touch-library extras (ball-free, east)
+  for (const k of ["cc_4", "cc_5", "cc_6", "cc_7", "cut_5", "cut_6"])
+    jobs.push({ key: ["drib2", k, 0],
+                path: ASSET_ROOT + "originals/character_31a11357/proto_anim/dribble2/east/" + k + ".png" });
   await Promise.all(jobs.map(async (j) => {
     const im = await loadImage(j.path);
     done++; pctEl.textContent = Math.round((done / jobs.length) * 100) + "%";
@@ -174,6 +178,7 @@ async function boot() {
     if (kind === "goalbake") { S.images.goalBake = im; return; }
     if (kind === "ballsheet") { S.images.ballSheet = im; return; }
     if (kind === "ballmicro") { (S.images.ballMicro ||= {})[+dir] = im; return; }
+    if (kind === "drib2") { (S.images.drib2 ||= {})[dir] = im; return; }
     (anims[kind][dir] ||= [])[idx] = im;
   }));
   S.goalBakeMeta = await loadJSON(ASSET_ROOT + "originals/goal_v2_oblique/goal_v2_3_frozen_bake.json");
@@ -1610,6 +1615,83 @@ function drawPlayer(p, dt) {
       ctx.fillText(`${vs.state}/${dir} ${p.speed.toFixed(1)}m/s [${S.pb.acts[p.act] || p.act}]`, ax, ty);
   }
 }
+// ═══ DRIBBLE ANIMATION V2 — FOOT-SYNC TOUCH LIBRARY (east + mirrored west) ═══
+// Modular pose library: contacts (L/R x reach/normal/compact variants),
+// strides, and cut poses. PHYSICS OWNS TIMING: an authoritative carry-touch
+// event selects foot + variant deterministically (zero RNG) and schedules
+// the pose sequence toward the next expected touch. The animation never
+// moves the ball. contact point (cx,cy) = boot toe in 140-canvas art px;
+// dy = draw-time vertical alignment (originals untouched).
+const DRIB_LIB = {
+  R_A: { src: ["dribble", 1], foot: "R", cx: 96, cy: 111, dy: -2, cls: "contact" },
+  R_B: { src: ["dribble", 2], foot: "R", cx: 92, cy: 112, dy: 0,  cls: "contact" },
+  R_C: { src: ["drib2", "cc_6"], foot: "R", cx: 92, cy: 116, dy: 0, cls: "contact" },
+  L_A: { src: ["dribble", 6], foot: "L", cx: 96, cy: 116, dy: 0,  cls: "contact" },
+  L_B: { src: ["dribble", 7], foot: "L", cx: 95, cy: 118, dy: 0,  cls: "contact" },
+  L_C: { src: ["drib2", "cc_5"], foot: "L", cx: 86, cy: 116, dy: 0, cls: "contact" },
+  CUT_P: { src: ["drib2", "cut_5"], foot: "*", cx: 85, cy: 113, dy: 2, cls: "cut" },
+  CUT_X: { src: ["drib2", "cut_6"], foot: "*", cx: 95, cy: 110, dy: 5, cls: "cut" },
+  ST_A: { src: ["dribble", 0], dy: -2, cls: "stride" },
+  ST_B: { src: ["dribble", 5], dy: 0, cls: "stride" },
+  ST_C: { src: ["drib2", "cc_4"], dy: 0, cls: "stride" },
+  ST_D: { src: ["drib2", "cc_7"], dy: 0, cls: "stride" },
+  ST_X: { src: ["dribble", 3], dy: 0, cls: "stride" },
+  ST_Y: { src: ["dribble", 4], dy: 0, cls: "stride" },
+};
+const DRIB_POOLS = {   // variant pools per foot x speed band (deterministic pick)
+  R: { slow: ["R_C", "R_B"], jog: ["R_B", "R_C", "R_A"], sprint: ["R_A", "R_B"] },
+  L: { slow: ["L_C", "L_B"], jog: ["L_B", "L_C", "L_A"], sprint: ["L_A", "L_B"] },
+};
+const DRIB_STRIDES = { slow: ["ST_C", "ST_D"], jog: ["ST_A", "ST_X", "ST_B", "ST_Y"],
+                       sprint: ["ST_A", "ST_B"] };
+function drib2Img(pose) {
+  const e = DRIB_LIB[pose];
+  return e.src[0] === "dribble" ? (S.anims.dribble.east && S.anims.dribble.east[e.src[1]])
+                                : (S.images.drib2 && S.images.drib2[e.src[1]]);
+}
+// deterministic foot + variant selection at an authoritative touch
+function drib2Pick(t, corrective, turnA) {
+  const p = t.p, b = t.b;
+  const pv = Math.hypot(p.vx, p.vy);
+  const band = pv < 2.2 ? "slow" : pv < 6 ? "jog" : "sprint";
+  // ball side relative to the carry corridor (cross product sign)
+  const lat = Math.cos(t.corr) * (b.y - p.y) - Math.sin(t.corr) * (b.x - p.x);
+  let foot;
+  if (corrective && turnA > 1.0) foot = lat >= 0 ? "R" : "L";       // ball-side foot
+  else if (Math.abs(lat) > 0.25) foot = lat >= 0 ? "R" : "L";
+  else foot = t.lastFoot === "R" ? "L" : "R";                       // natural alternation
+  t.lastFoot = foot;
+  const turnClass = turnA > 1.9 ? 3 : turnA > 1.0 ? 2 : turnA > 0.52 ? 1 : 0;
+  let pose;
+  if (corrective && turnClass >= 2) pose = (t.touchN % 2) ? "CUT_P" : "CUT_X";
+  else {
+    // CONTACT MATCHING: ball's along-corridor offset in art px (53.33 art
+    // px per world metre at the authored scale); prefer the pose whose
+    // boot-contact zone is nearest, keep variety among near-equals (<=4 px)
+    const s0m = Math.cos(t.corr) * (b.x - p.x) + Math.sin(t.corr) * (b.y - p.y);
+    const aheadArt = 70 + s0m * (32 / 0.60);
+    const pool = DRIB_POOLS[foot][band].slice()
+      .sort((a2, b2) => Math.abs(DRIB_LIB[a2].cx - aheadArt) - Math.abs(DRIB_LIB[b2].cx - aheadArt));
+    const near = pool.filter(q => Math.abs(DRIB_LIB[q].cx - aheadArt) <=
+                                  Math.abs(DRIB_LIB[pool[0]].cx - aheadArt) + 4);
+    pose = near[(t.touchN + turnClass) % near.length];
+  }
+  return { foot, pose, band, turnClass };
+}
+// schedule contact pose at the touch instant + strides toward the next touch
+function drib2Schedule(t, pick, T) {
+  const hold = Math.min(0.14, T * 0.45);
+  const seq = [{ pose: pick.pose, until: t.now + hold }];
+  const st = DRIB_STRIDES[pick.band];
+  if (T - hold > 0.12) {
+    const s1 = st[t.touchN % st.length], s2 = st[(t.touchN + 1) % st.length];
+    seq.push({ pose: s1, until: t.now + hold + (T - hold) * 0.5 });
+    seq.push({ pose: s2, until: t.now + T + 0.2 });
+  } else {
+    seq.push({ pose: st[t.touchN % st.length], until: t.now + T + 0.2 });
+  }
+  t.dribSeq = seq;
+}
 // ═══ SINGLE PLAYER ANIMATION PLAYTEST — isolated dev harness ═════════════════
 // Interactive one-player + authoritative-ball testbed ("Single Player Test"
 // button). ARCHITECTURE NOTE: the authoritative Body lives in Python
@@ -1788,8 +1870,13 @@ function ptStep() {
             const u = Math.min(1.6, Math.sqrt(2 * PT.MU_ROLL * Math.max(0.05, d - 0.30)));
             b.vx = ux * u; b.vy = uy * u; b.vz = 0;
             p.touchT = 0.18; t.lastTouchT = t.now;
+            t.touchN++;
             t.last = "SETTLE TOUCH";
             t.touchInfo = { d, u, T: 0.18, sc: 0.30, turn: 0, kind: "SETTLE" };
+            const pk = drib2Pick(t, false, 0);
+            drib2Schedule(t, pk, 0.3);
+            t.touchInfo.foot = pk.foot; t.touchInfo.pose = pk.pose;
+            drib2LogContact(t, pk);
           }
         } else {
           const bdir = bsp > 0.5 ? Math.atan2(b.vy, b.vx) : Math.atan2(b.y - p.y, b.x - p.x);
@@ -1811,10 +1898,13 @@ function ptStep() {
             b.vx = ux * u + 0.15 * rpx; b.vy = uy * u + 0.15 * rpy; b.vz = 0;
             p.touchT = T; t.lastTouchT = t.now;
             t.touchN++;
-            t.dribF0 = (t.touchN % 2) ? 2 : 6;
-            t.dribT = t.now;
             t.last = corrective ? "CORRECTIVE TOUCH" : "DRIBBLE TOUCH";
             t.touchInfo = { d, u, T, sc, turn: turnA, kind: corrective ? "CORRECTIVE" : "NORMAL" };
+            // DRIBBLE ANIMATION V2: physics event -> pose selection + schedule
+            const pick = drib2Pick(t, corrective, turnA);
+            drib2Schedule(t, pick, T);
+            t.touchInfo.foot = pick.foot; t.touchInfo.pose = pick.pose;
+            drib2LogContact(t, pick);
           }
         }
       }
@@ -1903,6 +1993,28 @@ function ptStep() {
     }
   }
 }
+function drib2LogContact(t, pick) {
+  // CONTACT QUALITY METRIC: projected boot contact point vs authoritative
+  // ball centre at the touch instant (backing px and apparent ball radii)
+  const e = DRIB_LIB[pick.pose];
+  const p = t.p, b = t.b;
+  const sp = sproj(p.x, p.y);
+  const scl = S.playerVScale * depthScale(sp.d) * RIG.zoom * RES;
+  const mirror = Math.cos(p.facing) < -0.3;
+  const fx = sp.x + (mirror ? -(e.cx - 70) : (e.cx - 70)) * scl;
+  const fy = sp.y + (e.cy - 117 + (e.dy || 0)) * scl;
+  const bp = sproj3(b.x, b.z, b.y);
+  const br = Math.max(2, BALL_VIS_R * S.pxPerM * depthScale(bp.d) * RIG.zoom * RES);
+  const distPx = Math.hypot(fx - bp.x, fy - bp.y);
+  const rec = { band: t.touchInfo ? (Math.hypot(p.vx, p.vy) < 2.2 ? "slow" :
+                Math.hypot(p.vx, p.vy) < 6 ? "jog" : "sprint") : "?",
+                kind: t.touchInfo.kind, pose: pick.pose, foot: pick.foot,
+                px: +distPx.toFixed(1), radii: +(distPx / br).toFixed(2),
+                turn: +(t.touchInfo.turn * 57.3).toFixed(0), n: t.touchN };
+  (t.contactLog ||= []).push(rec);
+  if (t.contactLog.length > 500) t.contactLog.shift();
+  t.dbgTouch = { fx, fy, bx: bp.x, by: bp.y, until: t.now + 0.5, rec };
+}
 function ptView() {   // animation state + artwork choice (pure function)
   const t = S.pt, p = t.p;
   const spd = Math.hypot(p.vx, p.vy);
@@ -1915,7 +2027,14 @@ function ptView() {   // animation state + artwork choice (pure function)
   }
   if (t.b.ctrl && spd > IDLE_MAX) {
     if (cosf > 0.5 || cosf < -0.5) {
-      const f = ((t.dribF0 + Math.floor((t.now - t.dribT) * DRIBBLE_FPS)) % 8 + 8) % 8;
+      // DRIBBLE ANIMATION V2: touch-scheduled pose sequence (physics-owned)
+      let pose = null;
+      if (t.dribSeq) {
+        for (const e2 of t.dribSeq) if (t.now <= e2.until) { pose = e2.pose; break; }
+        if (!pose) pose = t.dribSeq[t.dribSeq.length - 1].pose;
+      }
+      if (pose) return { st: "DRIBBLE", lib: pose, proto: true, mirror: cosf < -0.5 };
+      const f = Math.floor(t.now * DRIBBLE_FPS) % 8;
       return { st: "DRIBBLE", anim: "dribble", f, proto: true, mirror: cosf < -0.5 };
     }
     const f = Math.floor(t.now * JOG_FPS) % 8;    // no N/S dribble art yet
@@ -1943,14 +2062,16 @@ function drawPlaytest(dt) {
   ctx.fillStyle = "rgba(0,0,0,0.25)"; ctx.fill();
   ctx.restore();
   let im = null;
-  if (view.proto) im = S.anims[view.anim].east && S.anims[view.anim].east[view.f];
+  if (view.lib) im = drib2Img(view.lib);
+  else if (view.proto) im = S.anims[view.anim].east && S.anims[view.anim].east[view.f];
   else {
     const frames = S.anims[view.anim][headingToDir(deg)];
     im = frames && frames[view.f % frames.length];
   }
   if (im) {
     const foot = im.height / 2 + S.pivots.foot_offset_base128;
-    const dy = view.proto && ANIM_ALIGN[view.anim] ? (ANIM_ALIGN[view.anim][view.f] || 0) * s : 0;
+    const dy = view.lib ? (DRIB_LIB[view.lib].dy || 0) * s :
+      (view.proto && ANIM_ALIGN[view.anim] ? (ANIM_ALIGN[view.anim][view.f] || 0) * s : 0);
     if (view.mirror) {
       ctx.save(); ctx.scale(-1, 1);
       ctx.drawImage(im, Math.round(-ax - (im.width / 2) * s), Math.round(ay - foot * s + dy),
@@ -1962,6 +2083,16 @@ function drawPlaytest(dt) {
     }
   }
   drawBallAt(b.x, b.y, b.z, Math.hypot(b.vx, b.vy), dt);
+  if (S.dbg.dribsync && t.dbgTouch && t.now <= t.dbgTouch.until) {
+    const g = t.dbgTouch;
+    ctx.strokeStyle = "rgba(120,255,160,0.95)"; ctx.lineWidth = PXQ;
+    ctx.beginPath(); ctx.moveTo(g.fx, g.fy); ctx.lineTo(g.bx, g.by); ctx.stroke();
+    ctx.fillStyle = "#8dffb0";
+    ctx.beginPath(); ctx.arc(g.fx, g.fy, 3 * PXQ, 0, Math.PI * 2); ctx.fill();
+    ctx.font = uipx(10) + "px monospace";
+    ctx.fillText(`#${g.rec.n} ${g.rec.foot} ${g.rec.pose} ${g.rec.kind} ` +
+      `${g.rec.px}px ${g.rec.radii}R turn ${g.rec.turn}°`, g.bx + 8, g.by - 8);
+  }
   // HUD readout
   const art = view.proto ? ("PROTOTYPE EAST ANIM" + (view.mirror ? " (MIRRORED WEST)" : ""))
                          : "FALLBACK directional art";
@@ -1997,7 +2128,7 @@ function drawPlaytest(dt) {
   ctx.fillStyle = "#ffe9a8";
   ctx.fillText(`TOUCH  desired ${ti.sc !== undefined ? ti.sc.toFixed(2) : "-"} m · last dist ` +
     `${ti.d !== undefined ? ti.d.toFixed(2) : "-"} m · interval ${ti.T !== undefined ? ti.T.toFixed(2) : "-"} s · ` +
-    `turn ${((t.liveTurn || 0) * 57.3).toFixed(0)}° · ${ti.kind || "-"} · timer ${Math.max(0, p.touchT).toFixed(2)}`,
+    `turn ${((t.liveTurn || 0) * 57.3).toFixed(0)}° · ${ti.kind || "-"} ${ti.foot || ""} ${ti.pose || ""} · timer ${Math.max(0, p.touchT).toFixed(2)}`,
     uipx(14), cv.height - uipx(38));
   ctx.fillStyle = "#b7ffb7";
   ctx.fillText(`BALL STATE: ${bstate}` +
@@ -2449,7 +2580,7 @@ function bindUI() {
   document.getElementById("pbspeed").addEventListener("change", (e) => {
     S.pb.speed = parseFloat(e.target.value);
   });
-  for (const id of ["anchors", "ids", "vel", "state", "ball", "track", "goalgeo", "grid", "xform", "cam", "netphys", "occ"])
+  for (const id of ["anchors", "ids", "vel", "state", "ball", "track", "goalgeo", "grid", "xform", "cam", "netphys", "occ", "dribsync"])
     document.getElementById("dbg-" + id)?.addEventListener("change", (e) => {
       S.dbg[id] = e.target.checked;
     });

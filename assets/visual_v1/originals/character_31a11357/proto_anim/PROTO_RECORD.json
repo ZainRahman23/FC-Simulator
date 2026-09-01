@@ -1,5 +1,5 @@
 {
-  "record": "ANIMATION PROTOTYPE V1 — PixelLab generation provenance",
+  "record": "ANIMATION PROTOTYPE V1 \u2014 PixelLab generation provenance",
   "date": "2026-09-01",
   "character_id": "31a11357-1d06-40c3-958e-5103d1fdd8cd",
   "mode": "v3 custom (animate_character), east direction only, keep_first_frame=false",
@@ -7,14 +7,18 @@
     "dribble": {
       "group": "53380d1f-aff1-43d3-9cf8-1b6fcea4465b",
       "name": "proto_dribble_C_noball",
-      "frames": 8, "canvas": "140x140", "cost_generations": 2,
+      "frames": 8,
+      "canvas": "140x140",
+      "cost_generations": 2,
       "action_description": "jogging with short choppy steps and a low crouched stance, each foot alternately reaching forward to tap the ground ahead",
       "why": "deliberately ball-free: the AUTHORITATIVE ball renders separately at the carrier's feet (engine carry_touch supplies real touch travel), so no baked ball can contradict physics"
     },
     "shoot": {
       "group": "e355ecab-8d59-43eb-bc86-11f7c974ea2f",
       "name": "proto_shoot_A_10f",
-      "frames": 10, "canvas": "140x140", "cost_generations": 3,
+      "frames": 10,
+      "canvas": "140x140",
+      "cost_generations": 3,
       "contact_frame": 6,
       "action_description": "powerful soccer kick with the right leg: stride in, plant the left foot firmly, right leg swings far back then whips forward low and hard, striking through, long follow-through with arms out for balance, then recover to standing"
     }
@@ -24,5 +28,36 @@
     "dribble_B_e41d8020": "baked ball floats at knee height, disappears in frame 7 (2 generations spent)",
     "shoot_B_923baaf0": "baked BLUE ball (palette violation) floating at waist; head drift frame 4 (2 generations spent)"
   },
-  "total_generations_spent": 9
+  "total_generations_spent": 9,
+  "dribble2_touch_library": {
+    "date": "2026-09-01",
+    "mode": "v3 custom (animate_character), east, keep_first_frame=false, ball-free",
+    "generations": [
+      {
+        "group": "f7eed546-0381-4341-8fbb-3d2fffb8179a",
+        "name": "drib2_close_control",
+        "cost_generations": 2,
+        "action_description": "very tight close-control football dribbling on the spot, tiny choppy steps, feet staying close together under the hips, small soft inside-foot taps at ground level alternating feet, knees bent, compact stance",
+        "accepted_frames": [
+          "4 (compact stride)",
+          "5 (L compact contact)",
+          "6 (R compact contact)",
+          "7 (compact stride)"
+        ],
+        "rejected_frames": "0-3: dark forearm/hip artifact could read as a held prop (character-consistency rule)"
+      },
+      {
+        "group": "a66d3d7d-97bf-4d11-bd1b-ea947d344c63",
+        "name": "drib2_cut_plant",
+        "cost_generations": 2,
+        "action_description": "sharp cutting turn while running: plants one leg hard with deep knee bend, body leaning into the turn, the other foot sweeping across in front of the body at ground level, arms out for balance",
+        "accepted_frames": [
+          "5 (cut plant, deep knee bend)",
+          "6 (cut exit push-off)"
+        ],
+        "rejected_frames": "7: arm bulk/skin inconsistency; 0-4: rotation/walk frames held in reserve (scratchpad) for a future turn sequence"
+      }
+    ],
+    "library_note": "modular touch library = existing proto_dribble_C frames f0-f7 (contacts f1/f2=R reach, f6/f7=L reach, strides f0/f5, crossing f3/f4) + these 6 frames; metadata and deterministic selection live in match.js DRIB_LIB"
+  }
 }
