@@ -1032,7 +1032,13 @@ function buildGoalNet(gx, out) {
            active: false, dirty: false, energy: 0, quiet: 0 };
 }
 let NET_LAYERS = null;
-function drawGoalNet(goal) {
+function drawGoalNet(goal, yLo, yHi) {
+  // GOAL FRAME V1: optional [yLo,yHi) window — the net is depth-sorted in
+  // world-y patches; each patch draws ONLY strand segments whose CURRENT
+  // (deformed) midpoint y falls in its window, so ball/net ordering follows
+  // the live geometry even while the net is displaced. Undefined window =
+  // whole net in one call (the pre-occlusion baseline path).
+  const winLo = yLo === undefined ? -1e9 : yLo, winHi = yHi === undefined ? 1e9 : yHi;
   const c0 = sproj3(goal.gx, 1.2, 34);   // whole-goal cull
   if (c0.x < -900 * RES || c0.x > cv.width + 900 * RES) return;
   if (!NET_LAYERS || NET_LAYERS[0].width !== cv.width || NET_LAYERS[0].height !== cv.height)
@@ -1042,30 +1048,63 @@ function drawGoalNet(goal) {
       return c;
     });
   const w = qw(NET.cord * S.pxPerM * RIG.zoom);
+  const pitchW = Math.sqrt(3) * NET.ell;
+  const G = goal.net, pos = G.pos, restp = G.rest, live = G.dirty;
+  const ptData = (pt) => {
+    if (pt.n !== undefined) {
+      const j = pt.n * 3;
+      const wy = live ? pos[j + 2] : restp[j + 2];
+      return { p: live ? sproj3(pos[j], pos[j + 1], pos[j + 2])
+                       : sproj3(restp[j], restp[j + 1], restp[j + 2]), wy };
+    }
+    if (!live) return { p: sproj3(pt.r[0], pt.r[1], pt.r[2]), wy: pt.r[2] };
+    const a = pt.iA * 3, b = pt.iB * 3, t = pt.t;   // rest curve + lerped displacement
+    const wy = pt.r[2] + (pos[a + 2] - restp[a + 2]) * (1 - t) + (pos[b + 2] - restp[b + 2]) * t;
+    return { p: sproj3(
+      pt.r[0] + (pos[a] - restp[a]) * (1 - t) + (pos[b] - restp[b]) * t,
+      pt.r[1] + (pos[a + 1] - restp[a + 1]) * (1 - t) + (pos[b + 1] - restp[b + 1]) * t,
+      wy), wy };
+  };
+  // pass 1: project + collect the bbox of the segments in this window.
+  // Projections are cached per frame — the five depth patches of one goal
+  // reuse one projection pass, so occlusion costs no extra projection work.
+  let strandData;
+  if (G._prjFrame === S.frameNo && G._prjZoom === RIG.zoom && G._prjX === RIG.x) {
+    strandData = G._prjCache;
+  } else {
+    strandData = G.strands.map(st => st.map(ptData));
+    G._prjCache = strandData; G._prjFrame = S.frameNo;
+    G._prjZoom = RIG.zoom; G._prjX = RIG.x;
+  }
+  let bx0 = 1e9, by0 = 1e9, bx1 = -1e9, by1 = -1e9, any = false;
+  for (const dat of strandData) {
+    for (let i = 0; i + 1 < dat.length; i++) {
+      const my = (dat[i].wy + dat[i + 1].wy) / 2;
+      if (my >= winLo && my < winHi) {
+        any = true;
+        for (const q of [dat[i].p, dat[i + 1].p]) {
+          bx0 = Math.min(bx0, q.x); bx1 = Math.max(bx1, q.x);
+          by0 = Math.min(by0, q.y); by1 = Math.max(by1, q.y);
+        }
+      }
+    }
+  }
+  if (!any) return;
+  const pad = w + 4 * RES;
+  const cx0 = Math.max(0, Math.floor(bx0 - pad)), cy0 = Math.max(0, Math.floor(by0 - pad));
+  const cx1 = Math.min(cv.width, Math.ceil(bx1 + pad)), cy1 = Math.min(cv.height, Math.ceil(by1 + pad));
+  if (cx1 <= cx0 || cy1 <= cy0) return;
   const lctx = NET_LAYERS.map(c => {
     const x = c.getContext("2d");
-    x.clearRect(0, 0, c.width, c.height);
+    x.clearRect(cx0, cy0, cx1 - cx0, cy1 - cy0);
     x.strokeStyle = NET.col; x.lineCap = "round"; x.lineWidth = w;
     x.beginPath();
     return x;
   });
-  const pitchW = Math.sqrt(3) * NET.ell;
-  const G = goal.net, pos = G.pos, restp = G.rest, live = G.dirty;
-  const ptPos = (pt) => {
-    if (pt.n !== undefined) {
-      const j = pt.n * 3;
-      return live ? sproj3(pos[j], pos[j + 1], pos[j + 2])
-                  : sproj3(restp[j], restp[j + 1], restp[j + 2]);
-    }
-    if (!live) return sproj3(pt.r[0], pt.r[1], pt.r[2]);
-    const a = pt.iA * 3, b = pt.iB * 3, t = pt.t;   // rest curve + lerped displacement
-    return sproj3(
-      pt.r[0] + (pos[a] - restp[a]) * (1 - t) + (pos[b] - restp[b]) * t,
-      pt.r[1] + (pos[a + 1] - restp[a + 1]) * (1 - t) + (pos[b + 1] - restp[b + 1]) * t,
-      pt.r[2] + (pos[a + 2] - restp[a + 2]) * (1 - t) + (pos[b + 2] - restp[b + 2]) * t);
-  };
-  for (const st of G.strands) {
-    const prj = st.map(ptPos);
+  for (let sI = 0; sI < G.strands.length; sI++) {
+    const st = G.strands[sI];
+    const dat = strandData[sI];
+    const prj = dat.map(q => q.p);
     // Per-VERTEX density scale, averaged over adjacent segments and smoothed
     // along the strand. Bucketing per raw segment made alternating zigzag
     // orientations land in different alpha levels — a bright/dim dashing
@@ -1093,6 +1132,8 @@ function drawGoalNet(goal) {
       let li = 0, best = 1e9;
       for (let k = 0; k < NET.levels.length; k++)
         if (Math.abs(NET.levels[k] - a) < best) { best = Math.abs(NET.levels[k] - a); li = k; }
+      const my = (dat[i].wy + dat[i + 1].wy) / 2;
+      if (my < winLo || my >= winHi) { cur = -1; continue; }
       if (li !== cur) { lctx[li].moveTo(prj[i].x, prj[i].y); cur = li; }
       lctx[li].lineTo(prj[i + 1].x, prj[i + 1].y);
       // when the level changes mid-strand, re-anchor the new run at the
@@ -1102,7 +1143,7 @@ function drawGoalNet(goal) {
   for (let k = 0; k < NET.levels.length; k++) {
     lctx[k].stroke();
     ctx.globalAlpha = NET.levels[k];
-    ctx.drawImage(NET_LAYERS[k], 0, 0);
+    ctx.drawImage(NET_LAYERS[k], cx0, cy0, cx1 - cx0, cy1 - cy0, cx0, cy0, cx1 - cx0, cy1 - cy0);
     ctx.globalAlpha = 1;
   }
 }
@@ -1478,10 +1519,15 @@ function netPhysUpdate(dtReal) {
   }
 }
 
-function drawGoal(goal) {
-  drawGoalNet(goal);
-  for (const panel of goal.panels)
+function drawGoalArtCells(goal, panelName, yLo, yHi) {
+  // one y-band of one art panel (cells classified by their world-y centre)
+  for (const panel of goal.panels) {
+    if (panelName && panel.name !== panelName) continue;
     for (const cell of panel.cells) {
+      if (yLo !== undefined) {
+        const my = (cell.worldC[0][2] + cell.worldC[1][2] + cell.worldC[2][2] + cell.worldC[3][2]) / 4;
+        if (my < yLo || my >= yHi) continue;
+      }
       const s = cell.worldC.map(w => sproj3(w[0], w[1], w[2]));
       if (s.some(p => p.d < 0.5)) continue;
       if (Math.max(s[0].x, s[1].x, s[2].x, s[3].x) < -20 * RES ||
@@ -1490,7 +1536,36 @@ function drawGoal(goal) {
       drawTexTri(panel.img, a[0], a[1], a[2], s[0], s[1], s[2]);
       drawTexTri(panel.img, a[0], a[2], a[3], s[0], s[2], s[3]);
     }
-  drawGoalFrame(goal.gx);
+  }
+}
+function drawGoal(goal) {   // pre-occlusion baseline: whole goal, one entity
+  drawGoalNet(goal);
+  drawGoalArtCells(goal);
+  if (!GOALFX.occlusion) drawGoalFrame(goal.gx);
+}
+// GOAL FRAME V1 depth members: the frame is drawn as individual world-space
+// strokes so each participates in the depth sort, WITHOUT clipping (clipping
+// far/foreshortened members produced degenerate band boundaries -> gaps).
+// A POST is at constant world-y, so it needs ONE depth and draws as a single
+// continuous stroke. Only the CROSSBAR spans y and is split for depth; its
+// segments OVERLAP their neighbours and share the exact endpoints of the
+// original path, so joints are seamless (no rings) and the corners meet the
+// posts. Same rim(#9aa19b)+core(#fbfbf8) style and 0.12 m width as the
+// single-path drawGoalFrame — visually one continuous rigid structure.
+function drawGoalFrameMember(pts, cap) {
+  // cap "round" for a member's TRUE ends (posts, whole bar ends); "butt" for
+  // internal crossbar-segment joints — colinear butt ends share endpoints and
+  // meet flush, so the segmented bar reads as one continuous straight member
+  // (round caps on foreshortened segments looked like beads).
+  const s = pts.map(w => sproj3(w[0], w[1], w[2]));
+  if (s.some(q => q.d < 0.5)) return;
+  if (s.every(q => q.x < -20 * RES) || s.every(q => q.x > cv.width + 20 * RES)) return;
+  const w = qw(Math.max(3, 0.12 * S.pxPerM * RIG.zoom));
+  ctx.lineJoin = "round"; ctx.lineCap = cap || "round";
+  ctx.beginPath(); ctx.moveTo(s[0].x, s[0].y);
+  for (let i = 1; i < s.length; i++) ctx.lineTo(s[i].x, s[i].y);
+  ctx.strokeStyle = "#9aa19b"; ctx.lineWidth = w + 2 * PXQ; ctx.stroke();
+  ctx.strokeStyle = "#fbfbf8"; ctx.lineWidth = w; ctx.stroke();
 }
 // Front frame: posts + crossbar stroked as world geometry, solid and crisp
 // on top of the nets (physically the nearest goal structure to the camera).
@@ -2000,6 +2075,150 @@ function ptCurveNaturalRange(v0, vz) {
   }
   return d;
 }
+// ═══ GOAL FRAME V1 CANDIDATES (review-gated: BOTH FLAGS DEFAULT OFF — with
+// them off, rendering and physics are byte-identical to the committed
+// baseline 96c7b67). Toggle from the console for live review:
+//   GOALFX.occlusion = true   depth-correct goal-frame layering
+//   GOALFX.collision = true   rigid swept post/crossbar collision
+// ────────────────────────────────────────────────────────────────────────────
+// Authoritative frame geometry (shared by BOTH parts, matching the drawn
+// frame exactly): mouth plane x = 0 / 105; posts at y 30.34 / 37.66 rising
+// z 0..2.44; crossbar along y at z 2.44. Members are 0.12 m round stock
+// (frameR 0.06) — the same width drawGoalFrame strokes.
+const GOALFX = {
+  occlusion: true,       // PART A — depth-correct goal-frame/net/actor ordering
+  collision: true,       // PART B — rigid swept post/crossbar collision
+  frameR: 0.06,          // member radius (m) — drawn width 0.12
+  ballR: 0.11,           // physical ball radius (world/NETPHYS authoritative)
+  e: 0.72,               // FINAL frame restitution (F2; hard/lively, < grass 0.55 adds no energy)
+  keepT: 0.95,           // tangential keep on frame contact (hard, low-friction)
+  spinKeep: 0.8,         // curve spin retained through a frame hit
+  barSegs: 8,            // crossbar depth-sort slices (PART A)
+  // net depth patches [yLo, yHi, sortY]: far side wall / back thirds / near
+  // side wall — segments classified by CURRENT deformed y each frame
+  // sortY of each patch sits just BEHIND its co-located frame member so the
+  // rigid mouth-plane frame (front edge of the whole net region) always wins
+  // over the net at the same screen column, while ball<->net ordering by y is
+  // preserved (shifts are < the ball-vs-net margins). Far band is pushed
+  // fully behind the far post (30.34) to stop it shredding the post.
+  netBands: [[-1e9, 31.2, 30.2], [31.2, 33.0, 32.0], [33.0, 34.9, 33.85],
+             [34.9, 36.8, 35.75], [36.8, 1e9, 37.4]],
+  artBands: [[-1e9, 32.8, 31.5], [32.8, 35.2, 34.0], [35.2, 1e9, 36.9]],
+};
+// synthetic frame-impact battery (key N cycles + fires; identical setups so
+// restitution candidates compare on the same impacts) — review tooling only
+const GOALFX_TESTS = [
+  { name: "SQUARE POST",        p: [98, 37.66, 0.3],  v: [24, 0, 1.5] },
+  { name: "INSIDE-POST GLANCE", p: [98, 37.42, 0.3],  v: [24, 0.6, 1.5] },
+  { name: "OUTSIDE-POST GLANCE",p: [98, 37.90, 0.3],  v: [24, -0.6, 1.5] },
+  { name: "CENTRAL CROSSBAR",   p: [100, 34, 2.20],   v: [24, 0, 2.17] },
+  { name: "UNDERSIDE CROSSBAR", p: [100, 34, 2.05],   v: [24, 0, 2.22] },
+  { name: "POWER 31 m/s POST",  p: [92, 37.66, 1.0],  v: [31, 0, 0] },
+];
+function ptFrameTestFire(t) {
+  t.frameTestIdx = ((t.frameTestIdx ?? -1) + 1) % GOALFX_TESTS.length;
+  const c = GOALFX_TESTS[t.frameTestIdx];
+  const b = t.b;
+  t.p.x = 92; t.p.y = 28; t.p.vx = 0; t.p.vy = 0;   // park clear of the flight
+  b.x = c.p[0]; b.y = c.p[1]; b.z = c.p[2];
+  b.vx = c.v[0]; b.vy = c.v[1]; b.vz = c.v[2];
+  b.ctrl = false; b.exclT = t.now + 5; b.curve = null; b.frameHit = null;
+  t.kick = null; t.net = null;
+  t.last = "FRAME TEST " + (t.frameTestIdx + 1) + "/6: " + c.name;
+}
+// swept sphere (ball centre, radius ballR) vs capsule (axis A->B, frameR):
+// earliest time-of-impact in [0,1] along the step displacement, or null.
+// Expanded-radius formulation: point vs capsule of radius frameR+ballR.
+function goalCapsuleTOI(p0, d, A, B, R) {
+  const ab = [B[0] - A[0], B[1] - A[1], B[2] - A[2]];
+  const ao = [p0[0] - A[0], p0[1] - A[1], p0[2] - A[2]];
+  const abd = ab[0] * d[0] + ab[1] * d[1] + ab[2] * d[2];
+  const abo = ab[0] * ao[0] + ab[1] * ao[1] + ab[2] * ao[2];
+  const ab2 = ab[0] * ab[0] + ab[1] * ab[1] + ab[2] * ab[2];
+  // infinite-cylinder part: components perpendicular to the axis
+  const dp = [d[0] - ab[0] * abd / ab2, d[1] - ab[1] * abd / ab2, d[2] - ab[2] * abd / ab2];
+  const op = [ao[0] - ab[0] * abo / ab2, ao[1] - ab[1] * abo / ab2, ao[2] - ab[2] * abo / ab2];
+  const a = dp[0] * dp[0] + dp[1] * dp[1] + dp[2] * dp[2];
+  const bq = 2 * (dp[0] * op[0] + dp[1] * op[1] + dp[2] * op[2]);
+  const c = op[0] * op[0] + op[1] * op[1] + op[2] * op[2] - R * R;
+  let best = null;
+  if (a > 1e-12) {
+    const disc = bq * bq - 4 * a * c;
+    if (disc >= 0) {
+      const t = (-bq - Math.sqrt(disc)) / (2 * a);
+      if (t >= 0 && t <= 1) {
+        const s = (abo + abd * t) / ab2;             // axis parameter at contact
+        if (s >= 0 && s <= 1) best = { t, s };
+      }
+    }
+  }
+  // end caps (spheres at A and B) — also the post/crossbar junction knobs
+  for (const [C, sc] of [[A, 0], [B, 1]]) {
+    const co = [p0[0] - C[0], p0[1] - C[1], p0[2] - C[2]];
+    const aa = d[0] * d[0] + d[1] * d[1] + d[2] * d[2];
+    if (aa < 1e-12) continue;
+    const bb = 2 * (d[0] * co[0] + d[1] * co[1] + d[2] * co[2]);
+    const cc = co[0] * co[0] + co[1] * co[1] + co[2] * co[2] - R * R;
+    const disc = bb * bb - 4 * aa * cc;
+    if (disc < 0) continue;
+    const t = (-bb - Math.sqrt(disc)) / (2 * aa);
+    if (t >= 0 && t <= 1 && (best === null || t < best.t)) best = { t, s: sc };
+  }
+  if (!best) return null;
+  const cp = [p0[0] + d[0] * best.t, p0[1] + d[1] * best.t, p0[2] + d[2] * best.t];
+  const ax = [A[0] + ab[0] * best.s, A[1] + ab[1] * best.s, A[2] + ab[2] * best.s];
+  const nl = Math.hypot(cp[0] - ax[0], cp[1] - ax[1], cp[2] - ax[2]) || 1e-9;
+  return { t: best.t, n: [(cp[0] - ax[0]) / nl, (cp[1] - ax[1]) / nl, (cp[2] - ax[2]) / nl],
+           point: [ax[0] + (cp[0] - ax[0]) * (GOALFX.frameR / (GOALFX.frameR + GOALFX.ballR)) / 1,
+                   ax[1], ax[2]], axisPt: ax };
+}
+function goalFrameCapsules() {
+  const caps = [];
+  for (const gx of [0, 105]) {
+    caps.push({ name: (gx ? "R" : "L") + "-farPost", A: [gx, 30.34, 0], B: [gx, 30.34, 2.44] });
+    caps.push({ name: (gx ? "R" : "L") + "-nearPost", A: [gx, 37.66, 0], B: [gx, 37.66, 2.44] });
+    caps.push({ name: (gx ? "R" : "L") + "-crossbar", A: [gx, 30.34, 2.44], B: [gx, 37.66, 2.44] });
+  }
+  return caps;
+}
+const GOAL_CAPSULES = goalFrameCapsules();
+// PART B step: advance the free ball over PT_DT with continuous collision
+// against the six frame capsules. Earliest TOI wins; velocity resolves into
+// normal (reversed by restitution e) + tangential (keepT) about the LOCAL
+// surface normal — every outcome (rebound out, deflect in, drop under the
+// bar) emerges from geometry, never from scripted cases. Deterministic.
+function ptGoalFrameStep(b) {
+  let rem = PT_DT;
+  for (let iter = 0; iter < 3 && rem > 1e-9; iter++) {
+    const p0 = [b.x, b.y, b.z];
+    const d = [b.vx * rem, b.vy * rem, b.vz * rem];
+    const R = GOALFX.frameR + GOALFX.ballR;
+    let hit = null, hc = null;
+    for (const cap of GOAL_CAPSULES) {
+      const h = goalCapsuleTOI(p0, d, cap.A, cap.B, R);
+      if (h && (hit === null || h.t < hit.t)) { hit = h; hc = cap; }
+    }
+    if (!hit) { b.x += d[0]; b.y += d[1]; b.z += d[2]; return; }
+    // advance to contact, resolve, continue the remainder of the step
+    b.x = p0[0] + d[0] * hit.t + hit.n[0] * 1e-4;
+    b.y = p0[1] + d[1] * hit.t + hit.n[1] * 1e-4;
+    b.z = p0[2] + d[2] * hit.t + hit.n[2] * 1e-4;
+    const n = hit.n;
+    const vn = b.vx * n[0] + b.vy * n[1] + b.vz * n[2];
+    if (vn < 0) {
+      const vIn = [b.vx, b.vy, b.vz];
+      const vt = [b.vx - vn * n[0], b.vy - vn * n[1], b.vz - vn * n[2]];
+      b.vx = vt[0] * GOALFX.keepT - GOALFX.e * vn * n[0];
+      b.vy = vt[1] * GOALFX.keepT - GOALFX.e * vn * n[1];
+      b.vz = vt[2] * GOALFX.keepT - GOALFX.e * vn * n[2];
+      if (b.curve) b.curve.s *= GOALFX.spinKeep;
+      b.frameHit = { cap: hc.name, t: S.pt ? S.pt.now : 0,
+                     point: [b.x - n[0] * GOALFX.ballR, b.y - n[1] * GOALFX.ballR, b.z - n[2] * GOALFX.ballR],
+                     n: n.slice(), vIn, vnIn: vn, vOut: [b.vx, b.vy, b.vz] };
+    }
+    rem *= (1 - hit.t);
+  }
+}
 function ptFam(fam, D) {          // world.py FAM launch families (port)
   const c = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
   if (fam === "SHORT") return [c(Math.sqrt(2 * PT.MU_ROLL * D + 6.5 * 6.5), 8, 19), 0];
@@ -2496,7 +2715,10 @@ function ptStep() {
     }
   } else {
     if (!b.ctrl) {
-      b.x += b.vx * PT_DT; b.y += b.vy * PT_DT; b.z += b.vz * PT_DT;
+      // GOAL FRAME V1 (gated): swept post/crossbar collision replaces the
+      // plain position advance; with the flag off this is byte-identical.
+      if (GOALFX.collision) ptGoalFrameStep(b);
+      else { b.x += b.vx * PT_DT; b.y += b.vy * PT_DT; b.z += b.vz * PT_DT; }
       if (b.z > 0) b.vz -= PT.G * PT_DT;
       if (b.z <= 0) {
         if (b.vz < 0) {
@@ -2528,8 +2750,22 @@ function ptStep() {
           b.curve.s *= 1 - (b.z > 0.05 ? PT_CURVE.decay : rollD) * PT_DT;
         }
       }
+      // GOAL FRAME V1 (gated): WHOLE-BALL goal crossing. The trailing-most
+      // point of the physical sphere relative to the goal-plane normal
+      // (+x right goal, -x left goal) must be beyond the plane: for the
+      // right goal that point is (b.x - ballR); left goal (b.x + ballR).
+      // Derived from the physical radius — never a tuned threshold, never
+      // sprite dimensions. Event ordering within the step is inherent: the
+      // swept frame TOI resolves any post/crossbar contact BEFORE the ball
+      // can advance across the plane, so a frame hit always precedes (and
+      // can prevent) the crossing; once the whole ball is across, later
+      // net/frame interaction cannot revoke the award (label latches).
+      if (GOALFX.collision && t.last !== "GOAL!") {
+        const rB = GOALFX.ballR, inMouth = Math.abs(b.y - 34) < 3.66 && b.z < 2.44;
+        if (inMouth && (b.x - rB > 105 || b.x + rB < 0)) t.last = "GOAL!";
+      }
       if (b.x > 104.0 && b.vx > 0) {         // right-goal net (accepted netTest detection)
-        if (b.x > 105 && Math.abs(b.y - 34) < 3.66 && b.z < 2.44 && t.last !== "GOAL!")
+        if (!GOALFX.collision && b.x > 105 && Math.abs(b.y - 34) < 3.66 && b.z < 2.44 && t.last !== "GOAL!")
           t.last = "GOAL!";
         const net = S.goalPanels && S.goalPanels[1] && S.goalPanels[1].net;
         if (net) {
@@ -2644,15 +2880,12 @@ function ptView() {   // animation state + artwork choice (pure function)
   }
   return { st: "IDLE", anim: "idle", f: 0, proto: false };
 }
-function drawPlaytest(dt) {
+function ptDrawPlayerSprite(dt) {
   const t = S.pt;
   if (!t || !t.on) return;
   const p = t.p, b = t.b;
   const view = ptView();
   const deg = ((p.facing * 180 / Math.PI) % 360 + 360) % 360;
-  // depth order: a ball north of the player is BEHIND him — draw it first
-  t._ballBehind = b.y < p.y - 0.05 && b.z < 1.6;
-  if (t._ballBehind) drawBallAt(b.x, b.y, b.z, Math.hypot(b.vx, b.vy), dt);
   const sp = sproj(p.x, p.y);
   const s = S.playerVScale * depthScale(sp.d) * RIG.zoom * RES;
   // KICK V2.0.4: eased presentation root offset (H3 geometry). Draw-only —
@@ -2702,7 +2935,21 @@ function drawPlaytest(dt) {
                     Math.round(im.width * s), Math.round(im.height * s));
     }
   }
-  if (!t._ballBehind) drawBallAt(b.x, b.y, b.z, Math.hypot(b.vx, b.vy), dt);
+}
+function drawPlaytest(dt) {
+  const t = S.pt;
+  if (!t || !t.on) return;
+  const p = t.p, b = t.b;
+  // GOAL FRAME V1 (gated): with depth-correct occlusion on, the player and
+  // ball sprites are drawn from the main depth-sorted entity loop instead
+  // of on top of everything; this block keeps the HUD/debug overlays only.
+  if (!GOALFX.occlusion) {
+    // depth order: a ball north of the player is BEHIND him — draw it first
+    t._ballBehind = b.y < p.y - 0.05 && b.z < 1.6;
+    if (t._ballBehind) drawBallAt(b.x, b.y, b.z, Math.hypot(b.vx, b.vy), dt);
+    ptDrawPlayerSprite(dt);
+    if (!t._ballBehind) drawBallAt(b.x, b.y, b.z, Math.hypot(b.vx, b.vy), dt);
+  }
   if (S.dbg.dribsync && t.dbgTouch && t.now <= t.dbgTouch.until) {
     const g = t.dbgTouch;
     ctx.strokeStyle = "rgba(120,255,160,0.95)"; ctx.lineWidth = PXQ;
@@ -2714,6 +2961,7 @@ function drawPlaytest(dt) {
       `${g.rec.px}px ${g.rec.radii}R turn ${g.rec.turn}°`, g.bx + 8, g.by - 8);
   }
   // HUD readout
+  const view = ptView();
   const art = view.proto ? ("PROTOTYPE EAST ANIM" + (view.mirror ? " (MIRRORED WEST)" : ""))
                          : "FALLBACK directional art";
   const cd = t.kick && !t.kick.kicked ? ("contact in " + (t.kick.kickAt - t.now).toFixed(2) + " s")
@@ -2773,6 +3021,12 @@ function drawPlaytest(dt) {
       tline = `TARGET: ${ki.tgtD}m (authoritative) · SOLVED DISTANCE: ${ki.tgtSolved}m · SETUP: ${ki.setupDeg}°`;
   }
   ctx.fillText(tline, uipx(14), cv.height - uipx(152));
+  // GOAL FRAME V1 review readout: active restitution candidate + last impact
+  ctx.fillStyle = "#ffd9a8";
+  const fh = t.b && t.b.frameHit;
+  ctx.fillText(`FRAME  rigid post/crossbar · e=${GOALFX.e.toFixed(2)} · N fires synthetic impact` +
+    (fh ? ` · last hit ${fh.cap}: in ${Math.hypot(...fh.vIn).toFixed(1)} -> out ${Math.hypot(...fh.vOut).toFixed(1)} m/s (n ${fh.n.map(v => v.toFixed(2)).join(",")})` : " · last hit -"),
+    uipx(14), cv.height - uipx(168));
   const ti = t.touchInfo || {};
   ctx.fillStyle = "#ffe9a8";
   ctx.fillText(`TOUCH  desired ${ti.sc !== undefined ? ti.sc.toFixed(2) : "-"} m · last dist ` +
@@ -3075,6 +3329,7 @@ function drawGoalGeoDebug(side) {
   strokeSeg3(gx, 2.44, 30.34, gx, 2.44, 37.66);
 }
 function draw(sample, dt) {
+  S.frameNo = (S.frameNo || 0) + 1;    // per-frame cache key (net projections)
   ctx.imageSmoothingEnabled = false;
   const bg = ctx.createLinearGradient(0, 0, 0, cv.height);
   bg.addColorStop(0, "#0a0b10"); bg.addColorStop(0.5, "#12141b"); bg.addColorStop(1, "#0b0e12");
@@ -3091,11 +3346,49 @@ function draw(sample, dt) {
     for (const p of sample.players) ents.push({ y: p.y, p });
     ents.push({ y: sample.ball.y, ball: sample.ball });
   }
-  for (const g of S.goalPanels) ents.push({ y: g.sortY, goal: g });
+  for (const g of S.goalPanels) {
+    if (!GOALFX.occlusion) { ents.push({ y: g.sortY, goal: g }); continue; }
+    // GOAL FRAME V1: the goal participates in world depth as PARTS —
+    // net strand patches (classified per segment by CURRENT deformed y, so
+    // ordering stays correct while the net displaces), art-panel y-bands,
+    // and continuous-path frame slices. Nearer geometry wins everywhere.
+    const gx = g.gx;
+    for (const [lo, hi, sy] of GOALFX.netBands)
+      ents.push({ y: sy, netPatch: { g, lo, hi } });
+    ents.push({ y: 37.66 - 0.001, artPart: { g, panel: "side", lo: -1e9, hi: 1e9 } });
+    // roof/mouth rail art is co-planar with the white frame, so it is banded
+    // with the SAME boundaries as the frame slices and biased to draw just
+    // BEFORE the frame in each band — the frame stays the nearest structure
+    // within its own depth band, exactly as in the single-path renderer.
+    // roof/mouth rail art in y-bands, each drawn just before the frame there
+    for (const [lo, hi, sy] of GOALFX.artBands)
+      for (const pn of ["roof", "mouth"])
+        ents.push({ y: sy - 0.001, artPart: { g, panel: pn, lo, hi } });
+    // posts: one continuous member each (constant y -> single depth), round caps
+    ents.push({ y: 30.34, frameMember: [[gx, 0, 30.34], [gx, 2.44, 30.34]], cap: "round" });
+    ents.push({ y: 37.66, frameMember: [[gx, 0, 37.66], [gx, 2.44, 37.66]], cap: "round" });
+    // crossbar: full-span colinear depth segments sharing endpoints, BUTT caps
+    // -> flush seamless joints; ends coincide with the post tops (clean corners)
+    const n = GOALFX.barSegs, y0 = 30.34, y1 = 37.66, step = (y1 - y0) / n;
+    for (let i = 0; i < n; i++)
+      ents.push({ y: y0 + step * (i + 0.5),
+                  frameMember: [[gx, 2.44, y0 + step * i], [gx, 2.44, y0 + step * (i + 1)]],
+                  cap: (i === 0 || i === n - 1) ? "round" : "butt" });
+  }
+  if (GOALFX.occlusion && S.pt && S.pt.on) {
+    // playtest sprites join the SAME depth sort instead of drawing on top
+    ents.push({ y: S.pt.p.y, ptP: true });
+    ents.push({ y: S.pt.b.y, ptB: true });
+  }
   ents.sort((a, b) => a.y - b.y);
   for (const e of ents) {
     if (e.p) drawPlayer(e.p, dt);
     else if (e.ball) drawBall(e.ball, dt);
+    else if (e.netPatch) drawGoalNet(e.netPatch.g, e.netPatch.lo, e.netPatch.hi);
+    else if (e.artPart) drawGoalArtCells(e.artPart.g, e.artPart.panel, e.artPart.lo, e.artPart.hi);
+    else if (e.frameMember) drawGoalFrameMember(e.frameMember, e.cap);
+    else if (e.ptP) ptDrawPlayerSprite(dt);
+    else if (e.ptB) { const b = S.pt.b; drawBallAt(b.x, b.y, b.z, Math.hypot(b.vx, b.vy), dt); }
     else drawGoal(e.goal);
   }
   drawNetTestBall();
@@ -3186,6 +3479,7 @@ function bindUI() {
       else if (k === "f") { S.pt.pfoot = (S.pt.pfoot === "L" ? "R" : "L");
         S.pt.last = "PREFERRED FOOT -> " + S.pt.pfoot; }
       else if (k === "6") ptShowcaseSeq();            // side-by-side sequence
+      else if (k === "n") ptFrameTestFire(S.pt);   // synthetic frame-impact tester (review tooling)
       else if (k === "g") {
         // REVIEW-ONLY preview-target cycle (sandbox test tooling — never a
         // production input): overrides only the synthetic preview distance

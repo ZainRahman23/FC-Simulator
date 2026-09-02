@@ -10,6 +10,10 @@ import math
 
 DT = 1/60.0
 W, H = 105.0, 68.0
+BALL_R = 0.11          # physical ball radius: out-of-play / goal decisions use
+                       # the WHOLE-BALL rule (trailing point of the sphere past
+                       # the plane), derived from this radius — never a tuned
+                       # threshold, symmetric for both goals/touchlines
 G = 9.81
 MU_ROLL, MU_AIR = 4.2, 0.8
 REST, KEEP, SETTLE = 0.55, 0.80, 1.0
@@ -734,11 +738,11 @@ class Body:
         b = self.ball
         if b['state'] == 'DEAD' or self.restart is not None: return
         last_team = self.players[b['last']]['team'] if b['last'] is not None else 0
-        if b['y'] < -0.1 or b['y'] > H + 0.1:
+        if b['y'] < -BALL_R or b['y'] > H + BALL_R:
             self.restart = {'kind': 'THROW_IN', 'team': 1-last_team,
                             'spot': (clamp(b['x'], 1, W-1), 0.0 if b['y'] < 0 else H), 't': 0.0}
             b['state'] = 'DEAD'; self.ev('BALL_OUT', None, 'throw-in')
-        elif b['x'] < -0.1 or b['x'] > W + 0.1:
+        elif b['x'] < -BALL_R or b['x'] > W + BALL_R:
             right = b['x'] > W
             in_mouth = abs(b['y']-34) < 3.66 and b['z'] < 2.44
             if in_mouth:
