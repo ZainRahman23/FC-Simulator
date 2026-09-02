@@ -1896,6 +1896,40 @@ const PT = {  // world.py Body constants, ported verbatim — keep in sync
   ACC_GAIN: 8.5 / 4.8, BRAKE_PLANT: 12.0, ACC_LAT: 10.0, ACC_START: 9.5,
 };
 const PT_DT = 1 / 60;
+// ═══ INSIDE_R BALL CURVE V1 — right-foot inside curl (technique-specific) ══
+// Minimal Magnus-style model: spin state stored on the ball at the
+// authoritative contact, resolved every flight step as a lateral
+// acceleration toward the LEFT perpendicular of the ball's CURRENT travel
+// direction (direction-invariant). Additive to the existing integration —
+// gravity, drag, bounce, timestep untouched. All coefficients named.
+const PT_CURVE = {
+  mode: "v2",        // "v1" = diagnosed constant-magnitude model | "v2" = velocity-dependent
+  base: 1.6,         // spin at tap charge
+  chargeGain: 4.4,   // additional spin at full charge
+  fPow: 1.5,         // spin = base + chargeGain * c^fPow (smooth, bounded)
+  airZ0: 0.05,       // airborne factor ramps from z=airZ0 ...
+  airZ1: 0.50,       // ... to full effect at z=airZ1 (smoothstep, not binary)
+  groundFrac: 0.15,  // grounded/rolling keeps this small fraction of the curl
+  decay: 0.30,       // spin decay per second in flight (progressive arc, no spiral)
+  rollDecay: 1.8,    // v1 rolling decay (the diagnosed 6x double penalty)
+  bounceKeep: 0.5,   // spin retained across a ground bounce
+  // ── V2: velocity-dependent curve, a = k * spin * |v_horizontal| toward
+  // travel-left. Bend-per-metre ~ k*s/v instead of the pathological s/v^2.
+  k: 0.055,
+  skimDecay: 0.6,    // v2 rolling decay: a brief skim no longer kills the spin
+  // ── V2 outside-in setup: INSIDE_R launch departs RIGHT of the intended
+  // target line by setup(c), then the spin swings it back left across it.
+  // APPROVED S1 ramp: smoothstep from setupC0 — grounded/low charge stays
+  // essentially straight, the outside->inside shape is already readable at
+  // c=.7 (4 deg) and strong at c=.8 (5.9 deg), full 8 deg at c=1.
+  setupMaxDeg: 8,
+  setupC0: 0.40,
+};
+function ptCurveSetupRad(c) {
+  const q = PT_CURVE;
+  const u = Math.max(0, Math.min(1, (c - q.setupC0) / (1 - q.setupC0)));
+  return (q.setupMaxDeg * Math.PI / 180) * (u * u * (3 - 2 * u));
+}
 function ptFam(fam, D) {          // world.py FAM launch families (port)
   const c = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
   if (fam === "SHORT") return [c(Math.sqrt(2 * PT.MU_ROLL * D + 6.5 * 6.5), 8, 19), 0];
@@ -1934,7 +1968,7 @@ function ptExit() {
   const btn = document.getElementById("ptbtn");
   if (btn) { btn.textContent = "Single Player Test"; btn.style.background = "#1d7a3d"; btn.style.borderColor = "#2fa35a"; }
 }
-function ptKick(fam, label, Dopt, force) {
+function ptKick(fam, label, Dopt, force, charge) {
   // KICK ANIMATION V2: every kick is SCHEDULED — technique + foot chosen
   // deterministically, animation enters now, authoritative impulse fires
   // exactly at the contact frame instant. Physics families untouched.
@@ -1945,7 +1979,7 @@ function ptKick(fam, label, Dopt, force) {
   const t = S.pt, p = t.p, b = t.b;
   if (!b.ctrl || t.kick) return;
   const D = Dopt || (fam === "SHORT" ? 14 : fam === "LOFT" ? 22 : 20);
-  const [v0, vz] = ptFam(fam, D);
+  let [v0, vz] = ptFam(fam, D);
   const tx = p.x + Math.cos(p.facing) * D, ty = p.y + Math.sin(p.facing) * D;
   const sel = force && force.foot
     ? { foot: force.foot, lat: 0, dtg: 0, tgt: p.facing }
@@ -1955,6 +1989,13 @@ function ptKick(fam, label, Dopt, force) {
       ((sel.foot === "R" && sel.lat > -0.05 && sel.dtg > 0.26 && sel.dtg < 0.88) ||
        (sel.foot === "L" && sel.lat < 0.05 && sel.dtg < -0.26 && sel.dtg > -0.88)))
     tech = "OUTSIDE";
+  // VARIABLE SHOT CHARGE V1: the charge stored at release replaces the
+  // family's nominal launch with the technique-specific curve value.
+  // Technique classification above intentionally used the family nominal.
+  if (charge) {
+    const L = ptChargeLaunch(tech, charge.c);
+    v0 = L.v0; vz = L.vz;
+  }
   const pres = ptPresDir(t);
   const ew = pres === "east" || pres === "west";
   const mirror = pres === "west";
@@ -1962,7 +2003,8 @@ function ptKick(fam, label, Dopt, force) {
   if (!ew || !ent.e) {                        // directional art gap: minimal delay
     t.kickFbN = (t.kickFbN || 0) + 1;
     t.kick = { t0: t.now, kickAt: t.now + 0.2, end: t.now + 0.45, fam, v0, vz,
-               dir: p.facing, kicked: false, tech, foot: sel.foot, noAnim: true, label };
+               dir: p.facing, kicked: false, tech, foot: sel.foot, noAnim: true, label,
+               charge: charge ? charge.c : null };
   } else {
     // FIRST-TIME BRANCH (spec 22): a moving carrier skips the approach and
     // enters at the plant -> swing -> contact tail; a stationary kick plays
@@ -1972,15 +2014,115 @@ function ptKick(fam, label, Dopt, force) {
     const kickAt = t.now + (ent.e.contact - f0) / ent.e.fps;
     t.kick = { t0: t.now, kickAt, end: t.now + (ent.e.n - f0) / ent.e.fps + 0.12, fam, v0, vz,
                dir: p.facing, kicked: false, tech, foot: sel.foot, f0,
-               key: ent.key, e: ent.e, mirror, artFoot: ent.artFoot, fb: ent.fb, label };
+               key: ent.key, e: ent.e, mirror, artFoot: ent.artFoot, fb: ent.fb, label,
+               charge: charge ? charge.c : null };
   }
   t.kickInfo = { pfoot: t.pfoot || "R", foot: sel.foot, tech, fam,
                  asset: ent.e ? ent.e.set || ent.e.legacy : "none",
                  contactFoot: sel.foot, fb: ent.e ? ent.fb : true, noAnim: !ew || !ent.e,
+                 holdMs: charge ? Math.round(charge.holdMs) : null,
+                 charge: charge ? +charge.c.toFixed(3) : null,
+                 v0: +v0.toFixed(2), vz: +vz.toFixed(2),
+                 elevDeg: +(Math.atan2(vz, v0) * 57.296).toFixed(1),
                  tgtDeg: +(((p.facing * 57.296) % 360 + 360) % 360).toFixed(0) };
   t.last = label + " scheduled (" + tech + " " + sel.foot + ")";
 }
 function ptShoot() { ptKick("SHOT", "SHOT"); }
+// ═══ VARIABLE SHOT CHARGE V1 — hold duration -> technique-specific launch ══
+// Playtest input feature: kick keys charge while held (sim-time, no RNG,
+// deterministic) and fire on release. The stored charge at release maps to
+// a launch vector through per-technique curves; animations, contact timing,
+// routing and ball physics are untouched. All constants live here.
+const KICK_CHARGE = {
+  // PER-TECHNIQUE charge timing: c = clamp(tapChargeMin, bias + hold/ms, 1).
+  // LACES is FC-style fast (full at 325ms: 75ms=0.25, 125=0.40, 175=0.55,
+  // 225=0.70, 275=0.85); POWER keeps 500ms; others temporarily keep 500ms.
+  // Tap floor small and universal; technique identity lives in the curves.
+  tapChargeMin: 0.10,
+  timing: {
+    LACES:   { bias: 0.025, ms: 1000 / 3 },
+    POWER:   { bias: 0.05,  ms: 500 },
+    INSIDE:  { bias: 0.05,  ms: 500 },
+    OUTSIDE: { bias: 0.05,  ms: 500 },
+    CHIP:    { bias: 0.05,  ms: 500 },
+  },
+  showcaseSeqCharge: 0.6, // key-6 deterministic sequence uses a fixed charge
+  // Two-phase (INSIDE/LACES/OUTSIDE): early charge mostly adds horizontal
+  // speed; past the knee a nonlinear late^p term adds strong lift.
+  //   H(c) = h0 + (h1-h0)*c + hLate*late^p
+  //   V(c) = v0 + (vKnee-v0)*c + vLate*late^p,  late = clamp((c-knee)/(1-knee))
+  // INSIDE late-charge loft: APPROVED L2. c<=loftC0 keeps the original
+  // two-phase vertical exactly; above it the vertical smoothly re-targets
+  // vzFull at c=1 (smoothstep blend, C1 at the join, horizontal untouched).
+  // Full charge: 20.0 m/s @ vz 8.50 -> ~23 deg, ~3.75 m peak.
+  INSIDE:  { h0: 8,  h1: 17, hLate: 3, v0: 0.4, vKnee: 2.0, vLate: 9,  knee: 0.45, p: 2.2,
+             loftC0: 0.75, vzFull: 8.5 },
+  // LACES vLate reduced 11 -> 7 (approved pending loft cut): full-charge
+  // vz 9.5 -> peak ~4.6 m instead of the rejected ~9.4 m balloon.
+  LACES:   { h0: 10, h1: 22, hLate: 4, v0: 0.5, vKnee: 2.5, vLate: 7,  knee: 0.45, p: 2.2 },
+  OUTSIDE: { h0: 9,  h1: 18, hLate: 3, v0: 0.5, vKnee: 2.2, vLate: 9,  knee: 0.48, p: 2.2 },
+  // POWER: magnitude scaling of ONE driven trajectory family. POWER starts
+  // POWERFUL: tap ~21 m/s, full ~31 m/s (highest conventional-shot ceiling);
+  // vz = v0 * ratio keeps the elevation EXACTLY constant (~15.2 deg, the
+  // approved driven family) at every charge — more power, never steeper.
+  POWER:   { hMin: 21, hMax: 31, ratio: 0.271, g: 1.15 },
+  // CHIP: range and loft both grow; loft slightly faster (vp > 1).
+  CHIP:    { h0: 5, h1: 14, v0: 4, v1: 11, vp: 1.25 },
+};
+function ptChargeLaunch(tech, c) {
+  const fam2 = (tech === "INSIDE" || tech === "INSIDE_FINISH") ? "INSIDE"
+             : tech === "LACES_POWER" ? "POWER"
+             : tech === "OUTSIDE" ? "OUTSIDE"
+             : tech === "CHIP" ? "CHIP" : "LACES";
+  const q = KICK_CHARGE[fam2];
+  if (fam2 === "POWER") {
+    const h = q.hMin + (q.hMax - q.hMin) * Math.pow(c, q.g);
+    return { v0: h, vz: h * q.ratio };
+  }
+  if (fam2 === "CHIP")
+    return { v0: q.h0 + (q.h1 - q.h0) * c, vz: q.v0 + (q.v1 - q.v0) * Math.pow(c, q.vp) };
+  const late = Math.max(0, Math.min(1, (c - q.knee) / (1 - q.knee)));
+  const lift = Math.pow(late, q.p);
+  const L = { v0: q.h0 + (q.h1 - q.h0) * c + q.hLate * lift,
+              vz: q.v0 + (q.vKnee - q.v0) * c + q.vLate * lift };
+  if (q.loftC0 != null && c > q.loftC0) {           // INSIDE L2 loft reshape
+    const t2 = (c - q.loftC0) / (1 - q.loftC0), w = t2 * t2 * (3 - 2 * t2);
+    L.vz += (q.vzFull - (q.v0 + (q.vKnee - q.v0) + q.vLate)) * w;
+  }
+  return L;
+}
+function ptKickSpec(k, t) {   // key -> chargeable kick descriptor
+  // chargeFam picks the per-technique timing (bias/ms) used while holding
+  if (k === "x") return { fam: "SHORT", label: "SHORT PASS", D: 14, chargeFam: "INSIDE" };
+  if (k === "z") return { fam: "SHOT", label: "SHOT", chargeFam: "LACES" };
+  if (k === "c") return { fam: "LOFT", label: "LOFTED PASS", D: 22, chargeFam: "CHIP" };
+  const s = PT_SHOWCASE[k];
+  if (s) {
+    const cf = s.tech === "LACES_POWER" ? "POWER"
+             : (s.tech === "INSIDE" || s.tech === "INSIDE_FINISH") ? "INSIDE"
+             : s.tech === "OUTSIDE" ? "OUTSIDE"
+             : s.tech === "CHIP" ? "CHIP" : "LACES";
+    return { fam: s.fam, label: s.label + " (" + (t.pfoot || "R") + ")", D: s.D,
+             force: { tech: s.tech, foot: t.pfoot || "R" }, chargeFam: cf };
+  }
+  return null;
+}
+function ptChargeValue(spec, holdMs) {
+  const tm = KICK_CHARGE.timing[spec.chargeFam] || KICK_CHARGE.timing.LACES;
+  return Math.max(KICK_CHARGE.tapChargeMin, Math.min(1, tm.bias + holdMs / tm.ms));
+}
+function ptChargeBegin(t, k, spec) {
+  if (t.kick || t.charge || !t.b.ctrl) return;
+  t.charge = { key: k, spec, t0: t.now };
+}
+function ptChargeRelease(t, k) {
+  const ch = t.charge;
+  if (!ch || ch.key !== k) return;
+  t.charge = null;
+  const holdMs = Math.max(0, (t.now - ch.t0) * 1000);
+  const c = ptChargeValue(ch.spec, holdMs);
+  ptKick(ch.spec.fam, ch.spec.label, ch.spec.D, ch.spec.force, { c, holdMs });
+}
 // ═══ KICK V2.0.2 — TECHNIQUE SHOWCASE (playtest-only debug controls) ═══════
 // Keys 1-5 pin a technique directly (foot = preferred-foot toggle, F key);
 // key 6 runs the deterministic side-by-side sequence. These are inspection
@@ -1993,10 +2135,13 @@ const PT_SHOWCASE = {
   "5": { tech: "CHIP", fam: "LOFT", D: 22, label: "SHOWCASE CHIP" },
 };
 function ptShowcaseKick(k) {
+  // used by the deterministic key-6 sequence: fixed charge, no hold
   const t = S.pt, c = PT_SHOWCASE[k];
   if (!t || !c) return;
   const foot = t.pfoot || "R";
-  ptKick(c.fam, c.label + " (" + foot + ")", c.D, { tech: c.tech, foot });
+  const cc = KICK_CHARGE.showcaseSeqCharge;
+  ptKick(c.fam, c.label + " (" + foot + ")", c.D, { tech: c.tech, foot },
+         { c: cc, holdMs: cc * KICK_CHARGE.fullChargeMs });
 }
 function ptShowcaseSeq() {
   const t = S.pt;
@@ -2015,7 +2160,7 @@ function ptShowcaseStep(t) {
   p.x = 84; p.y = 34; p.vx = 0; p.vy = 0; p.facing = 0;
   const foot = t.pfoot || "R";
   b.x = p.x + 0.42; b.y = p.y + (foot === "R" ? 0.12 : -0.12); b.z = 0;
-  b.vx = 0; b.vy = 0; b.vz = 0; b.ctrl = "PT";
+  b.vx = 0; b.vy = 0; b.vz = 0; b.ctrl = "PT"; b.curve = null;
   ptShowcaseKick(sh.queue[sh.idx]);
   sh.idx++;
   sh.nextAt = t.now + 2.4;          // anim (<=1 s) + readable pause
@@ -2088,7 +2233,17 @@ function ptStep() {
       k.kicked = true;
       // CONTACT: authoritative impulse along the direction frozen at the
       // decision instant — physics families unchanged
-      b.vx = Math.cos(k.dir) * k.v0; b.vy = Math.sin(k.dir) * k.v0; b.vz = k.vz;
+      // INSIDE_R CURVE: k.dir is the INTENDED TARGET direction. In V2 mode a
+      // right-foot inside strike launches rotated RIGHT by setup(c) (the
+      // open-body outside line); the in-flight spin then swings it back
+      // LEFT across the target line. V1 mode launches straight (no setup).
+      let launchDir = k.dir;
+      if ((k.tech === "INSIDE" || k.tech === "INSIDE_FINISH") && k.foot === "R") {
+        const cc = k.charge != null ? k.charge : 0.5;
+        if (PT_CURVE.mode === "v2") { k.setupRad = ptCurveSetupRad(cc); launchDir = k.dir + k.setupRad; }
+        b.curve = { s: PT_CURVE.base + PT_CURVE.chargeGain * Math.pow(cc, PT_CURVE.fPow), sgn: 1 };
+      } else b.curve = null;
+      b.vx = Math.cos(launchDir) * k.v0; b.vy = Math.sin(launchDir) * k.v0; b.vz = k.vz;
       b.ctrl = false; b.exclT = t.now + PT.EXCL; p.touchT = 0;
       t.last = k.label + " " + k.v0.toFixed(0) + " m/s (" + k.tech + " " + k.foot + ")";
       if (k.e) {
@@ -2219,6 +2374,7 @@ function ptStep() {
       t.last = "LOOSE TOUCH (too fast to control)";
     } else if (d < PT.REACH && b.z < 1.4 && rv < 5.5) {
       b.ctrl = true;
+      b.curve = null;                        // regaining control clears spin
       t.ctrlSince = t.now;
       b.vx = p.vx * 0.7 + Math.cos(p.facing) * 1.1;
       b.vy = p.vy * 0.7 + Math.sin(p.facing) * 1.1;
@@ -2252,6 +2408,7 @@ function ptStep() {
           const r = -b.vz * PT.REST;
           if (r < PT.SETTLE) b.vz = 0;
           else { b.vz = r; b.vx *= PT.KEEP; b.vy *= PT.KEEP; }
+          if (b.curve) b.curve.s *= PT_CURVE.bounceKeep;   // ground contact bleeds spin
         }
         b.z = Math.max(0, b.z);
       }
@@ -2260,6 +2417,21 @@ function ptStep() {
         const mu = b.z > 0.05 ? PT.MU_AIR : PT.MU_ROLL;
         const ns = Math.max(0, sp2 - mu * PT_DT);
         b.vx *= ns / sp2; b.vy *= ns / sp2;
+      }
+      // INSIDE_R CURVE V1: lateral accel toward the travel-left perpendicular,
+      // smoothly gated by how airborne the ball is; spin decays continuously.
+      if (b.curve && b.curve.s > 0.02) {
+        const spc = Math.hypot(b.vx, b.vy);
+        if (spc > 0.5) {
+          const u = Math.max(0, Math.min(1, (b.z - PT_CURVE.airZ0) / (PT_CURVE.airZ1 - PT_CURVE.airZ0)));
+          const air = PT_CURVE.groundFrac + (1 - PT_CURVE.groundFrac) * u * u * (3 - 2 * u);
+          const a = (PT_CURVE.mode === "v2" ? PT_CURVE.k * b.curve.s * spc
+                                            : b.curve.s) * air * b.curve.sgn;
+          const lx = b.vy / spc, ly = -b.vx / spc;   // left-perp of travel (pitch y grows south)
+          b.vx += lx * a * PT_DT; b.vy += ly * a * PT_DT;
+          const rollD = PT_CURVE.mode === "v2" ? PT_CURVE.skimDecay : PT_CURVE.rollDecay;
+          b.curve.s *= 1 - (b.z > 0.05 ? PT_CURVE.decay : rollD) * PT_DT;
+        }
       }
       if (b.x > 104.0 && b.vx > 0) {         // right-goal net (accepted netTest detection)
         if (b.x > 105 && Math.abs(b.y - 34) < 3.66 && b.z < 2.44 && t.last !== "GOAL!")
@@ -2484,6 +2656,14 @@ function drawPlaytest(dt) {
     `ASSET ${ki.asset || "-"} · CONTACT FOOT ${ki.contactFoot || "-"} · FALLBACK ${ki.fb === undefined ? "-" : ki.fb ? "YES" : "no"}` +
     `${ki.noAnim ? " (NO-ANIM)" : ""} · action ${ki.fam || "-"} · contact err ${ki.errR !== undefined ? ki.errR + "R" : "-"}`,
     uipx(14), cv.height - uipx(6));
+  // VARIABLE SHOT CHARGE readout: live while holding, stored after release
+  ctx.fillStyle = "#c9f0a8";
+  const liveC = t.charge ? ptChargeValue(t.charge.spec, (t.now - t.charge.t0) * 1000) : null;
+  ctx.fillText(t.charge
+    ? `CHARGE  holding ${t.charge.key.toUpperCase()} · ${((t.now - t.charge.t0) * 1000).toFixed(0)} ms · c=${liveC.toFixed(2)} (release to kick)`
+    : `CHARGE  last: hold ${ki.holdMs !== null && ki.holdMs !== undefined ? ki.holdMs + " ms" : "-"} · c=${ki.charge ?? "-"} · ` +
+      `v0 ${ki.v0 !== undefined ? ki.v0 + " m/s" : "-"} · vz ${ki.vz !== undefined ? ki.vz + " m/s" : "-"} · elev ${ki.elevDeg !== undefined ? ki.elevDeg + "°" : "-"}`,
+    uipx(14), cv.height - uipx(136));
   const ti = t.touchInfo || {};
   ctx.fillStyle = "#ffe9a8";
   ctx.fillText(`TOUCH  desired ${ti.sc !== undefined ? ti.sc.toFixed(2) : "-"} m · last dist ` +
@@ -2896,11 +3076,13 @@ function bindUI() {
       else if (k === "r") ptReset();
       else if (k === "f") { S.pt.pfoot = (S.pt.pfoot === "L" ? "R" : "L");
         S.pt.last = "PREFERRED FOOT -> " + S.pt.pfoot; }
-      else if (k === "x") ptKick("SHORT", "SHORT PASS (no pass anim authored)");
-      else if (k === "z") ptShoot();
-      else if (k === "c") ptKick("LOFT", "LOFTED PASS (no pass anim authored)");
-      else if (PT_SHOWCASE[k]) ptShowcaseKick(k);     // 1-5 technique showcase
       else if (k === "6") ptShowcaseSeq();            // side-by-side sequence
+      else {
+        // VARIABLE SHOT CHARGE V1: kick keys (x/z/c, showcase 1-5) begin
+        // charging on keydown and fire on keyup. Auto-repeat is ignored.
+        const spec = ptKickSpec(k, S.pt);
+        if (spec && !e.repeat) ptChargeBegin(S.pt, k, spec);
+      }
       return;
     }
     if (e.key === "0") S.netSlow = !S.netSlow;
@@ -2919,9 +3101,12 @@ function bindUI() {
     if (S.pt && S.pt.on) {
       const k = e.key.toLowerCase();
       if (PT_KEYMAP[k]) S.pt.keys[PT_KEYMAP[k]] = false;
+      else ptChargeRelease(S.pt, k);                  // charged kick fires here
     }
   });
-  window.addEventListener("blur", () => { if (S.pt && S.pt.on) S.pt.keys = {}; });
+  window.addEventListener("blur", () => {
+    if (S.pt && S.pt.on) { S.pt.keys = {}; S.pt.charge = null; }
+  });
   document.getElementById("ptbtn")?.addEventListener("click", () => {
     if (S.pt && S.pt.on) ptExit(); else ptEnter();
   });
