@@ -278,6 +278,20 @@ def _lab_feed(lab) -> list[dict[str, Any]]:
     return out
 
 
+def _full_event_stream(engine, lab) -> list[dict[str, Any]]:
+    """Canonical authoritative event stream for a completed continuous match,
+    shared by instant/full mode and the API-vs-direct parity test so both build
+    it identically: engine events (KICKOFF …) first, then the lab's authoritative
+    match-events (BEAT/FOUL/OFFSIDE) in time order, then FULL_TIME last. This is
+    exactly the order the live/advance path accumulates. FULL_TIME must already be
+    recorded on the engine (call engine.result() first)."""
+    lab_events = _lab_feed(lab)
+    eng_ev = [e.to_dict() for e in engine.events]
+    return ([e for e in eng_ev if e.get("event_type") != "FULL_TIME"]
+            + lab_events
+            + [e for e in eng_ev if e.get("event_type") == "FULL_TIME"])
+
+
 def _build_engine(start_request: dict[str, Any]) -> MatchEngine:
     home = bridge.build_team(start_request["home_team"], "HOME")
     away = bridge.build_team(start_request["away_team"], "AWAY")
@@ -491,13 +505,22 @@ def start_match(req: StartRequest) -> dict[str, Any]:
         from fc_simulator.continuous import run_continuous
         store.create_match(match_id, req.save_id, req.fixture_id, int(req.seed),
                            start_json, VERSIONS, status="live")
-        result, _lab_full = run_continuous(engine)
+        _result, _lab_full = run_continuous(engine)
+        # SYMMETRIC EVENT REPORTING: the authoritative football events the
+        # continuous engine generates live in the lab's match-event log. The
+        # live/advance path drains them (via _lab_feed) and records FULL_TIME;
+        # instant/full mode must expose the identical event stream so the two
+        # execution paths of the same seed are equivalent. Order matches the live
+        # accumulation: KICKOFF (and any engine events), then the lab match-events
+        # in time order, then FULL_TIME last.
+        result = engine.result()                 # records FULL_TIME into engine.events
+        payload = bridge.full_time_payload(engine, result)
+        payload["events"] = _full_event_stream(engine, _lab_full)
         s = {"engine": engine, "meta": {"fixture_id": req.fixture_id,
                                         "seed": int(req.seed), "save_id": req.save_id}}
-        payload = bridge.full_time_payload(engine, result)
         record = {"full_time": payload,
                   "final_snapshot": bridge.match_snapshot(engine, len(engine.events))}
-        ledger_json = json.dumps([e.to_dict() for e in engine.events], separators=(",", ":"))
+        ledger_json = json.dumps(payload["events"], separators=(",", ":"))
         store.complete_match(match_id, engine.score["HOME"], engine.score["AWAY"],
                              json.dumps(record, separators=(",", ":")), ledger_json)
         log.info("MATCH_COMPLETED match=%s save=%s fixture=%s seed=%s mode=full",
@@ -632,9 +655,15 @@ def advance_match(match_id: str, req: AdvanceRequest) -> dict[str, Any]:
             lab.run(float(secs))
             engine.score["HOME"] = body.score[0]
             engine.score["AWAY"] = body.score[1]
-        result = engine.result() if engine.is_finished else None
+        # Drain the lab's authoritative match-events FIRST (time order), then
+        # record FULL_TIME so it lands last in the stream — matching the order
+        # instant/full mode reports (KICKOFF, lab events, FULL_TIME). Reporting
+        # events is a pure read of already-simulated state; it does not advance
+        # or mutate physics.
+        lab_events = _lab_feed(lab)
+        result = engine.result() if engine.is_finished else None   # records FULL_TIME after lab events
         snap = bridge.match_snapshot(engine, max(0, int(req.last_event_index)))
-        snap["new_events"] = (snap.get("new_events") or []) + _lab_feed(lab)
+        snap["new_events"] = lab_events + (snap.get("new_events") or [])
         store.update_clock(match_id, engine.clock)
     if frames is not None:
         snap["frames"] = frames

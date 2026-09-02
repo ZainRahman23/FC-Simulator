@@ -85,6 +85,8 @@ class Lab:
         self._od_at_dec = {}
         self.restart_timer = 0.0
         self.expected_receiver = None   # (pid, team, valid_until): the called pass
+        self._req_time = 0.0            # cumulative requested seconds (chunk-invariant tick budget)
+        self.feed_cursor = 0           # cursor into match_events for symmetric event draining
 
     # ── brain sync: mirrored state + cal11's own movement targets ──
     def sync_targets(self):
@@ -392,8 +394,31 @@ class Lab:
 
     def run(self, seconds, trace_every=6):
         body = self.body
-        end_t = body.t + seconds
-        while body.t < end_t:
+        # CHUNK-INVARIANT TIME: the number of authoritative 60 Hz ticks executed
+        # is a deterministic function of the CUMULATIVE requested time, not of how
+        # the caller chunks it. The sub-tick remainder is carried across calls via
+        # the cumulative target, so run(a); run(b) executes exactly the same ticks
+        # as run(a + b). The loop is driven by body.tick_n (the authoritative
+        # integer tick counter), never by a float comparison against an
+        # accumulated body.t (which overshot end_t by up to one tick per call and
+        # so made the tick count depend on the caller's chunking).
+        self._req_time += seconds
+        target_tick = int(round(self._req_time / DT))
+        # Stop at the authoritative match end (is_finished == clock >= duration) so
+        # that full/instant and chunked/live drives terminate at the identical tick
+        # regardless of how time was requested. Without this, a fixed-seconds full
+        # run and an is_finished-terminated live run stop at different ticks.
+        while body.tick_n < target_tick and not self.eng.is_finished:
+            # Keep the engine's authoritative score in step with the physical
+            # scoreboard EVERY tick, inside the simulation, so game-state-aware
+            # decision logic (e.g. late-chasing shot-range desperation, which
+            # reads engine.score) behaves identically no matter how the caller
+            # chunks time. Previously the server copied body.score into
+            # engine.score only at chunk boundaries (live) or once at the end
+            # (full/one-shot), so the two paths diverged after a goal late in a
+            # match. Two int writes/tick; the scoreboard is not RNG or physics.
+            self.eng.score['HOME'] = body.score[0]
+            self.eng.score['AWAY'] = body.score[1]
             # wake-event scan (body -> brain)
             while self.ev_cursor < len(body.events):
                 e = body.events[self.ev_cursor]; self.ev_cursor += 1
@@ -1267,14 +1292,27 @@ class HybridLab(Lab):
 
 
 # ══════════════════ production entry (flag-gated from MatchEngine.run) ══════════════════
-def run_continuous(engine, seconds=5400.0, cad=None, trace_every=6):
+def run_continuous(engine, seconds=None, cad=None, trace_every=6):
     """Run the accepted Hybrid-C + cal12 architecture over a constructed
     MatchEngine. Returns (MatchResult-compatible result, adapter) — the
-    adapter carries trace/decisions/events for parity and replay tooling."""
+    adapter carries trace/decisions/events for parity and replay tooling.
+
+    With seconds=None (default) the match runs to its authoritative end
+    (engine.is_finished, i.e. clock >= config duration) — the same terminal
+    condition the live/advance path uses — so instant/full and watched/live
+    execution of the same seed terminate at the identical tick. A fixed
+    `seconds` may still be passed for bounded tooling runs."""
     from .worldflags import CAD_PROFILE
     L = HybridLab(engine, cad=(cad or dict(CAD_PROFILE)))
     L.body.restart = {'kind': 'KICKOFF', 'team': 0, 'spot': (52.5, 34.0), 't': 0.0}
-    L.run(seconds, trace_every=trace_every)
+    if seconds is None:
+        # advance in blocks; Lab.run stops each block at is_finished. The guard
+        # (duration + 10 min) bounds the loop against any clock stall.
+        cap = float((engine.config.duration_seconds or 5400) + 600)
+        while not engine.is_finished and L.body.t < cap:
+            L.run(600.0, trace_every=trace_every)
+    else:
+        L.run(seconds, trace_every=trace_every)
     engine.score['HOME'] = L.body.score[0]
     engine.score['AWAY'] = L.body.score[1]
     result = engine._build_result()
