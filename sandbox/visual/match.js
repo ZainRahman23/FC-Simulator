@@ -1338,7 +1338,38 @@ const NETV2 = {         // production net collision constants (V2)
   sub: 4,             // deterministic net substeps per 60Hz ball step under V2
   sweepStep: 0.04,    // swept path sampling (m) < ballR
   band: 0.03,         // extra detection margin (m) beyond ballR for resting contact
+  // ── V2.1 RIPPLE EXCITATION (decoupled from containment) ──────────────────
+  // Containment = reflection + depenetration in netV2Resolve (unchanged).
+  // Excitation = a broad, once-per-impact velocity kick fed to the movable
+  // nodes around the contact (in the ball's travel direction), scaled by the
+  // impact normal speed — the mass-spring net then propagates it as a wave.
+  // This is what V1's netImpact did over a 0.5 m radius; V2's tight 0.14 m
+  // normal-only injection lost it. APPROVED CANDIDATE C: a pronounced, broad,
+  // visible ripple; strength scales continuously with impact speed and the
+  // mass-spring net propagates + settles it. Containment (netV2Resolve) is
+  // decoupled and unaffected.
+  exciteR: 0.62,      // excitation radius (m)
+  exciteGain: 0.60,   // node velocity = travelDir * |vn| * exciteGain * w^2
 };
+// Broad ripple excitation: velocity kick to movable nodes within exciteR of the
+// membrane contact, along the ball's travel direction, ~|vn|*gain*w^2. Fired
+// ONCE per impact onset (not per substep) so it reads as a single traveling
+// wave, not a sustained shove. Never affects the ball -> containment untouched.
+function netExcite(net, cP, dir, speed) {
+  const R = NETV2.exciteR, gain = NETV2.exciteGain;
+  if (R <= 0 || gain <= 0 || speed <= 0) return;
+  netActivate(net);
+  const pos = net.pos, vel = net.vel, inv = net.inv, R2 = R * R;
+  for (let i = 0; i < inv.length; i++) {
+    if (!inv[i]) continue;
+    const j = i * 3;
+    const dx = pos[j] - cP[0], dy = pos[j + 1] - cP[1], dz = pos[j + 2] - cP[2];
+    const d2 = dx * dx + dy * dy + dz * dz;
+    if (d2 >= R2) continue;
+    const w = 1 - Math.sqrt(d2) / R, ww = w * w * speed * gain;
+    vel[j] += dir[0] * ww; vel[j + 1] += dir[1] * ww; vel[j + 2] += dir[2] * ww;
+  }
+}
 function netBBox(net) {
   if (net._bb) return net._bb;
   const p = net.rest; let x0 = 1e9, y0 = 1e9, z0 = 1e9, x1 = -1e9, y1 = -1e9, z1 = -1e9;
@@ -1404,6 +1435,10 @@ function netV2Resolve(net, P, Vn) {
         const j = near[n] * 3, w = near[n + 2] / sw;
         vel[j] += -nx * imp * w; vel[j + 1] += -ny * imp * w; vel[j + 2] += -nz * imp * w;
       }
+      // stash the impact for the broad ripple excitation (fired once per onset
+      // in netV2Collide): contact point on the membrane + normal impact speed
+      net._cvn = vn;
+      net._cP = [P[0] - nx * det, P[1] - ny * det, P[2] - nz * det];
     }
   }
   return true;
@@ -1424,7 +1459,10 @@ function netV2Collide(b, p0) {
     const dx = P1[0] - P0[0], dy = P1[1] - P0[1], dz = P1[2] - P0[2];
     const dist = Math.hypot(dx, dy, dz);
     const nsamp = Math.max(1, Math.ceil(dist / NETV2.sweepStep));
+    const vmag = Math.hypot(b.vx, b.vz, b.vy);   // ball travel dir (net space) for excitation
+    const vdir = vmag > 1e-6 ? [b.vx / vmag, b.vz / vmag, b.vy / vmag] : [0, 0, 0];
     let Vn = [b.vx, b.vz, b.vy], contacted = false, cInfo = null;
+    net._cvn = 0;
     for (let s = 1; s <= nsamp; s++) {          // swept: earliest contact wins
       const f = s / nsamp;
       const P = [P0[0] + dx * f, P0[1] + dy * f, P0[2] + dz * f];
@@ -1448,9 +1486,24 @@ function netV2Collide(b, p0) {
     }
     if (contacted) {
       b.netHit = { t: S.pt ? S.pt.now : 0, side: g.side };
-      net._ptV2 = true;
-      for (let s = 0; s < NETV2.sub; s++) netPhysStep(net, null);   // deterministic relax
-    }
+      // RIPPLE: broad excitation fired ONCE per impact onset (rising edge of a
+      // strong contact) so a hard shot sends a single traveling wave rather
+      // than a sustained shove. Uses the stashed contact point + impact speed.
+      if (net._cvn < -NETV2.impactMin && !b._netTouch)
+        netExcite(net, net._cP || [b.x, b.z, b.y], vdir, -net._cvn);
+      b._netTouch = true;
+    } else if (b._netTouch) b._netTouch = false;   // left contact -> re-arm onset
+  }
+  // Step EVERY active net in lockstep with the ball's fixed sim, whether or not
+  // the ball is currently touching it — so the membrane keeps rippling and
+  // settling after the ball leaves (the missing relaxation that made V2 look
+  // dead). Deterministic; netPhysUpdate skips _ptV2 nets to avoid double-step,
+  // and a settled net is handed back to it.
+  for (const g of S.goalPanels || []) {
+    const net = g.net; if (!net || !net.active) continue;
+    net._ptV2 = true;
+    for (let s = 0; s < NETV2.sub; s++) netPhysStep(net, null);
+    if (!net.active) net._ptV2 = false;
   }
 }
 
@@ -2379,6 +2432,7 @@ function ptReset() {
   t.pfoot = t.pfoot || "R";
   t.dribT = 0; t.dribF0 = 0;
   t.last = "RESET";
+  for (const g of S.goalPanels || []) if (g.net) g.net._ptV2 = false;   // hand nets back to netPhysUpdate
 }
 function ptEnter() {
   S._ptPrevCam = { mode: RIG.mode, zoom: RIG.zoomTarget, mx: RIG.manualX };
@@ -3181,7 +3235,8 @@ function drawPlaytest(dt) {
   // NET readout: continuous membrane contact status
   ctx.fillStyle = "#a8f0c4";
   const nh = t.b && t.b.netHit;
-  ctx.fillText(`NET  continuous membrane (swept, two-sided, persistent)` + (nh ? ` · last contact goal ${nh.side}` : ""),
+  ctx.fillText(`NET  continuous membrane (swept, two-sided, persistent, rippling)` +
+    (nh ? ` · last contact goal ${nh.side}` : ""),
     uipx(14), cv.height - uipx(184));
   const ti = t.touchInfo || {};
   ctx.fillStyle = "#ffe9a8";
