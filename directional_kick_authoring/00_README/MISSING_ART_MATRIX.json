@@ -1,0 +1,93 @@
+{
+ "missing_directions": [
+  "SE",
+  "S",
+  "SW",
+  "NW",
+  "N",
+  "NE"
+ ],
+ "per_technique": {
+  "INSIDE_R": {
+   "set": "in4_R",
+   "frames_each": 12,
+   "contact_frame": 6,
+   "directions_to_author": [
+    "SE",
+    "S",
+    "SW",
+    "NW",
+    "N",
+    "NE"
+   ],
+   "frames_to_author": 72,
+   "contact_frames_first": 6
+  },
+  "LACES_R": {
+   "set": "la_R",
+   "frames_each": 10,
+   "contact_frame": 7,
+   "directions_to_author": [
+    "SE",
+    "S",
+    "SW",
+    "NW",
+    "N",
+    "NE"
+   ],
+   "frames_to_author": 60,
+   "contact_frames_first": 6
+  },
+  "POWER_R": {
+   "set": "pw_R",
+   "frames_each": 12,
+   "contact_frame": 7,
+   "directions_to_author": [
+    "SE",
+    "S",
+    "SW",
+    "NW",
+    "N",
+    "NE"
+   ],
+   "frames_to_author": 72,
+   "contact_frames_first": 6
+  },
+  "OUTSIDE_R": {
+   "set": "ou_R",
+   "frames_each": 8,
+   "contact_frame": 6,
+   "directions_to_author": [
+    "SE",
+    "S",
+    "SW",
+    "NW",
+    "N",
+    "NE"
+   ],
+   "frames_to_author": 48,
+   "contact_frames_first": 6
+  },
+  "CHIP_R": {
+   "set": "ch_R",
+   "frames_each": 8,
+   "contact_frame": 5,
+   "directions_to_author": [
+    "SE",
+    "S",
+    "SW",
+    "NW",
+    "N",
+    "NE"
+   ],
+   "frames_to_author": 48,
+   "contact_frames_first": 6
+  }
+ },
+ "totals": {
+  "technique_direction_sets": 30,
+  "contact_frames": 30,
+  "full_frames": 300,
+  "note": "E authored (locked), W engine mirror \u2014 neither authored. 6 genuinely-missing directions x 5 techniques."
+ }
+}

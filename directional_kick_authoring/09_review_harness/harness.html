@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Directional Kick — Import Review Harness</title>
+<style>
+  :root { --bg:#14181c; --panel:#1c2126; --ink:#e6ebf0; --mut:#8b96a2; --acc:#2fc6ff; --good:#78e68c; --warn:#ffcf78; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:13px/1.4 ui-monospace,Menlo,Consolas,monospace; }
+  header { padding:10px 14px; background:var(--panel); border-bottom:1px solid #000; }
+  h1 { font-size:15px; margin:0 0 6px; }
+  .controls { display:flex; flex-wrap:wrap; gap:10px 16px; align-items:center; }
+  .controls label { color:var(--mut); }
+  select,input[type=text],button { background:#0f1317; color:var(--ink); border:1px solid #333; border-radius:4px; padding:4px 8px; font:inherit; }
+  button { cursor:pointer; }
+  button:hover { border-color:var(--acc); }
+  .grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; padding:14px; max-width:1200px; }
+  .cell { background:var(--panel); border:1px solid #000; border-radius:6px; padding:6px; }
+  .cell.contact { outline:2px solid var(--good); }
+  .cell h3 { margin:0 0 4px; font-size:12px; display:flex; justify-content:space-between; }
+  .cell .status { font-size:10px; color:var(--mut); }
+  canvas { image-rendering:pixelated; width:100%; height:auto; background:#23282e; display:block; border-radius:3px; }
+  .rl { color:var(--good); } .mut { color:var(--mut); } .warn { color:var(--warn); }
+  footer { padding:10px 14px; color:var(--mut); }
+  .frameinfo { font-size:11px; color:var(--warn); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Directional Kick — Import Review Harness <span class="mut">(tooling only — installs nothing)</span></h1>
+  <div class="controls">
+    <span><label>Technique</label> <select id="tech"></select></span>
+    <span><label>Frame</label> <input type="range" id="frame" min="0" max="11" value="7"><span id="fnum" class="frameinfo">f7</span></span>
+    <button id="step-">◀ step</button><button id="play">▶ play</button><button id="step+">step ▶</button>
+    <span><label><input type="checkbox" id="ball" checked> ball overlay</label></span>
+    <span><label><input type="checkbox" id="diag"> R/L diagnostic</label></span>
+    <span><label><input type="checkbox" id="pauseC" checked> pause on CONTACT</label></span>
+    <span><label>Scale</label> <select id="scale"><option value="3">enlarged 3×</option><option value="2">2×</option><option value="1">gameplay 1×</option><option value="5">5×</option></select></span>
+    <span><label>Returned-art base</label> <input type="text" id="base" size="34" placeholder="e.g. ../../returned_art (optional)"></span>
+    <button id="reload">reload art</button>
+  </div>
+</header>
+<div class="grid" id="grid"></div>
+<footer>
+  E = authored (locked). W = engine mirror of E. SE/S/SW/NW/N/NE = to author. Missing art falls back
+  to the registered idle <b>template</b> (grey outline note). Point “Returned-art base” at the artist’s
+  folder (served over the dev server) to review real sprites: <code>&lt;base&gt;/&lt;TECH&gt;/&lt;DIR&gt;/&lt;set&gt;_&lt;DIR&gt;_&lt;f&gt;.png</code>.
+</footer>
+<script>
+// ── authoritative config (mirrors 05_timing_specs/spec.json + 03 contact anchors) ──
+const TECH = {
+  POWER_R:  { set:"pw_R",  n:12, contact:7, cx:96, cy:111, surface:"LACES" },
+  INSIDE_R: { set:"in4_R", n:12, contact:6, cx:95, cy:111, surface:"INSIDE" },
+  LACES_R:  { set:"la_R",  n:10, contact:7, cx:97, cy:114, surface:"LACES" },
+  OUTSIDE_R:{ set:"ou_R",  n:8,  contact:6, cx:100,cy:114, surface:"OUTSIDE" },
+  CHIP_R:   { set:"ch_R",  n:8,  contact:5, cx:86, cy:112, surface:"CHIP" },
+};
+const DIRS = ["E","SE","S","SW","W","NW","N","NE"];
+const FACING = {E:"right profile",SE:"front-right ¾",S:"front",SW:"front-left ¾",W:"left profile (mirror)",NW:"back-left ¾",N:"back",NE:"back-right ¾"};
+const STATUS = {E:"AUTHORED",W:"MIRROR",SE:"author",S:"author",SW:"author",NW:"author",N:"author",NE:"author"};
+const CX=70, GROUND=117, BR=5, FY=0.5;
+const AHEAD = {E:[1,0],W:[-1,0],S:[0,1],N:[0,-1],SE:[.707,.707],SW:[-.707,.707],NE:[.707,-.707],NW:[-.707,-.707]};
+// physical-RIGHT (kicker) leg screen side per direction
+const RIGHT_SIDE = {S:"left",SE:"left",SW:"left",N:"right",NE:"right",NW:"right",E:"near",W:"far"};
+const EAST = "../../assets/visual_v1/originals/character_31a11357/proto_anim/kick/east/";
+const TPL  = "../01_templates/";
+
+function anchor(t,d){ const M=t.cx-CX, h=GROUND-t.cy, a=AHEAD[d]; return [CX+M*a[0], (GROUND-h)+M*FY*a[1]]; }
+
+function srcFor(techName, d, f){
+  const t=TECH[techName], base=document.getElementById("base").value.trim();
+  if(d==="E") return [EAST+`${t.set}_${f}.png`];               // authored east
+  if(base)    return [ `${base}/${techName}/${d}/${t.set}_${d}_${f}.png`, TPL+`${d}_template_clean.png` ];
+  return [ TPL+`${d}_template_clean.png` ];                      // no returned art yet -> template
+}
+
+const grid=document.getElementById("grid");
+const cells={};
+for(const d of DIRS){
+  const c=document.createElement("div"); c.className="cell"; c.id="cell-"+d;
+  c.innerHTML=`<h3><span>${d} <span class="mut">${FACING[d]}</span></span><span class="status">${STATUS[d]}</span></h3>
+    <canvas width="140" height="140"></canvas><div class="status" id="s-${d}"></div>`;
+  grid.appendChild(c); cells[d]={el:c, cv:c.querySelector("canvas"), st:c.querySelector("#s-"+d)};
+}
+
+const state={tech:"POWER_R", frame:7, playing:false, timer:null};
+function techInfo(){ return TECH[state.tech]; }
+
+function draw(){
+  const t=techInfo(); const showBall=document.getElementById("ball").checked;
+  const showDiag=document.getElementById("diag").checked; const sc=+document.getElementById("scale").value;
+  document.getElementById("fnum").textContent="f"+state.frame+(state.frame===t.contact?" ◀ CONTACT":"");
+  for(const d of DIRS){
+    const cell=cells[d]; const cv=cell.cv; cv.style.width=(140*sc)+"px";
+    const ctx=cv.getContext("2d"); ctx.imageSmoothingEnabled=false;
+    ctx.clearRect(0,0,140,140); ctx.fillStyle="#23282e"; ctx.fillRect(0,0,140,140);
+    cell.el.classList.toggle("contact", state.frame===t.contact);
+    const [src,fallback]=srcFor(state.tech,d,state.frame);
+    const img=new Image();
+    img.onload=()=>{ paint(ctx,img,d,t,showBall,showDiag); cell.st.innerHTML=noteFor(d,src); };
+    img.onerror=()=>{ if(fallback){ const im2=new Image(); im2.onload=()=>{paint(ctx,im2,d,t,showBall,showDiag); cell.st.innerHTML=`<span class="warn">template (no returned f${state.frame})</span>`;}; im2.src=fallback; }
+                      else cell.st.innerHTML=`<span class="warn">missing</span>`; };
+    img.src=src;
+  }
+}
+function paint(ctx,img,d,t,showBall,showDiag){
+  ctx.clearRect(0,0,140,140); ctx.fillStyle="#23282e"; ctx.fillRect(0,0,140,140);
+  ctx.drawImage(img,0,0,140,140);
+  if(showDiag){
+    ctx.strokeStyle="rgba(47,198,255,.5)"; ctx.beginPath(); ctx.moveTo(0,GROUND); ctx.lineTo(140,GROUND); ctx.moveTo(CX,0); ctx.lineTo(CX,140); ctx.stroke();
+    ctx.fillStyle="#78e68c"; ctx.font="8px monospace";
+    const rs=RIGHT_SIDE[d];
+    ctx.fillText("R=kicker("+rs+")",2,10);
+  }
+  if(showBall){
+    const [ax,ay]=anchor(t,d);
+    ctx.strokeStyle="#fff"; ctx.beginPath(); ctx.arc(ax,ay,BR,0,7); ctx.stroke();
+    ctx.strokeStyle="rgba(255,80,80,.8)"; ctx.beginPath(); ctx.arc(ax,ay,BR+2,0,7); ctx.stroke();
+  }
+}
+function noteFor(d,src){
+  if(d==="E") return `<span style="color:#78e68c">authored east</span>`;
+  if(src.startsWith(TPL)) return `<span class="warn">template (author me)</span>`;
+  return `<span style="color:#78e68c">returned art</span>`;
+}
+function setTech(name){ state.tech=name; const t=TECH[name];
+  const fr=document.getElementById("frame"); fr.max=t.n-1; if(state.frame>t.n-1) state.frame=t.contact; fr.value=state.frame; draw(); }
+function tick(){ const t=techInfo();
+  state.frame=(state.frame+1)%t.n; document.getElementById("frame").value=state.frame;
+  if(document.getElementById("pauseC").checked && state.frame===t.contact){ stop(); }
+  draw(); }
+function play(){ if(state.playing) return; state.playing=true; document.getElementById("play").textContent="❚❚ pause";
+  const fps = techInfo() && ({POWER_R:15,INSIDE_R:14,LACES_R:12,OUTSIDE_R:14,CHIP_R:14})[state.tech];
+  state.timer=setInterval(tick, 1000/fps); }
+function stop(){ state.playing=false; document.getElementById("play").textContent="▶ play"; clearInterval(state.timer); }
+
+// wire up
+const tsel=document.getElementById("tech");
+for(const k of Object.keys(TECH)){ const o=document.createElement("option"); o.value=k; o.textContent=k; tsel.appendChild(o); }
+tsel.onchange=e=>setTech(e.target.value);
+document.getElementById("frame").oninput=e=>{ stop(); state.frame=+e.target.value; draw(); };
+document.getElementById("step+").onclick=()=>{ stop(); state.frame=(state.frame+1)%techInfo().n; document.getElementById("frame").value=state.frame; draw(); };
+document.getElementById("step-").onclick=()=>{ stop(); state.frame=(state.frame-1+techInfo().n)%techInfo().n; document.getElementById("frame").value=state.frame; draw(); };
+document.getElementById("play").onclick=()=>{ state.playing?stop():play(); };
+for(const id of ["ball","diag","scale"]) document.getElementById(id).onchange=draw;
+document.getElementById("reload").onclick=draw;
+setTech("POWER_R");
+</script>
+</body>
+</html>

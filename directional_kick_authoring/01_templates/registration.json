@@ -1,0 +1,146 @@
+{
+ "E": {
+  "direction": "east",
+  "facing": "right profile",
+  "status": "AUTHORED \u2014 pixel-locked reference (do NOT redraw; see 02_east_references)",
+  "translate_dx_dy": [
+   6,
+   4
+  ],
+  "scale": 1.0,
+  "registered_bbox_x0x1y0y1": [
+   58,
+   82,
+   18,
+   117
+  ],
+  "center_x": 70,
+  "ground_row": 117
+ },
+ "SE": {
+  "direction": "south-east",
+  "facing": "front-right 3/4",
+  "status": "AUTHOR",
+  "translate_dx_dy": [
+   4,
+   4
+  ],
+  "scale": 1.0,
+  "registered_bbox_x0x1y0y1": [
+   46,
+   95,
+   18,
+   117
+  ],
+  "center_x": 70,
+  "ground_row": 117
+ },
+ "S": {
+  "direction": "south",
+  "facing": "front (toward camera)",
+  "status": "AUTHOR",
+  "translate_dx_dy": [
+   8,
+   8
+  ],
+  "scale": 1.0,
+  "registered_bbox_x0x1y0y1": [
+   46,
+   94,
+   22,
+   117
+  ],
+  "center_x": 70,
+  "ground_row": 117
+ },
+ "SW": {
+  "direction": "south-west",
+  "facing": "front-left 3/4",
+  "status": "AUTHOR",
+  "translate_dx_dy": [
+   9,
+   4
+  ],
+  "scale": 1.0,
+  "registered_bbox_x0x1y0y1": [
+   46,
+   94,
+   18,
+   117
+  ],
+  "center_x": 70,
+  "ground_row": 117
+ },
+ "W": {
+  "direction": "west",
+  "facing": "left profile",
+  "status": "MIRROR of east (existing runtime behavior; reference only)",
+  "translate_dx_dy": [
+   7,
+   4
+  ],
+  "scale": 1.0,
+  "registered_bbox_x0x1y0y1": [
+   58,
+   82,
+   18,
+   117
+  ],
+  "center_x": 70,
+  "ground_row": 117
+ },
+ "NW": {
+  "direction": "north-west",
+  "facing": "back-left 3/4",
+  "status": "AUTHOR",
+  "translate_dx_dy": [
+   10,
+   7
+  ],
+  "scale": 1.0,
+  "registered_bbox_x0x1y0y1": [
+   47,
+   94,
+   20,
+   117
+  ],
+  "center_x": 70,
+  "ground_row": 117
+ },
+ "N": {
+  "direction": "north",
+  "facing": "back (away from camera)",
+  "status": "AUTHOR",
+  "translate_dx_dy": [
+   6,
+   10
+  ],
+  "scale": 1.0,
+  "registered_bbox_x0x1y0y1": [
+   44,
+   95,
+   24,
+   117
+  ],
+  "center_x": 70,
+  "ground_row": 117
+ },
+ "NE": {
+  "direction": "north-east",
+  "facing": "back-right 3/4",
+  "status": "AUTHOR",
+  "translate_dx_dy": [
+   4,
+   7
+  ],
+  "scale": 1.0,
+  "registered_bbox_x0x1y0y1": [
+   47,
+   94,
+   20,
+   117
+  ],
+  "center_x": 70,
+  "ground_row": 117
+ }
+}

@@ -1,0 +1,150 @@
+{
+ "canvas": {
+  "width": 140,
+  "height": 140,
+  "ground_anchor_row": 117,
+  "center_x": 70,
+  "note": "Production sprite canvas. Player feet sit on ground_anchor_row; player centred on center_x. Same as approved east sets."
+ },
+ "ball": {
+  "east_contact_px": [
+   99,
+   111
+  ],
+  "radius_px": 5.0,
+  "BALL_VIS_R_m": 0.19,
+  "note": "Authoritative ball is composited SEPARATELY at gameplay-projected position; NEVER paint it into the sprite. East contact projects to (99,111) r5. Per-direction contact overlays are in 03_contact_overlays."
+ },
+ "directions_authoritative": [
+  "east",
+  "south-east",
+  "south",
+  "south-west",
+  "west",
+  "north-west",
+  "north",
+  "north-east"
+ ],
+ "facing_read": {
+  "east": "right profile",
+  "south-east": "front-right 3/4",
+  "south": "front (toward camera)",
+  "south-west": "front-left 3/4",
+  "west": "left profile",
+  "north-west": "back-left 3/4",
+  "north": "back (away)",
+  "north-east": "back-right 3/4",
+  "note": "The idle/locomotion rotation sprites are AUTHORITATIVE for facing if wording differs."
+ },
+ "status": {
+  "east": "AUTHORED (locked, pixel-for-pixel reference)",
+  "west": "MIRROR of east (existing behavior, reference only)",
+  "missing_to_author": [
+   "south-east",
+   "south",
+   "south-west",
+   "north-west",
+   "north",
+   "north-east"
+  ]
+ },
+ "techniques": {
+  "INSIDE_R": {
+   "set": "in4_R",
+   "frames": 12,
+   "fps": 14,
+   "contact_frame": 6,
+   "cx": 95,
+   "cy": 111,
+   "surface": "INSIDE",
+   "rootOff": [
+    4,
+    13
+   ],
+   "rootEase": {
+    "3": 0.1,
+    "4": 0.3,
+    "5": 0.65,
+    "6": 1,
+    "7": 0.5,
+    "8": 0.2,
+    "9": 0.05
+   },
+   "identity": "physical RIGHT foot strikes with the INSIDE (medial) surface; foreshortened medial boot facet; do NOT read as laces. Curve/target physics frozen."
+  },
+  "LACES_R": {
+   "set": "la_R",
+   "frames": 10,
+   "fps": 12,
+   "contact_frame": 7,
+   "cx": 97,
+   "cy": 114,
+   "surface": "LACES",
+   "rootOff": null,
+   "rootEase": null,
+   "identity": "physical RIGHT foot, LOCKED ankle, instep/LACES through the ball. Not inside, not outside."
+  },
+  "POWER_R": {
+   "set": "pw_R",
+   "frames": 12,
+   "fps": 15,
+   "contact_frame": 7,
+   "cx": 96,
+   "cy": 111,
+   "surface": "LACES",
+   "rootOff": [
+    0,
+    5
+   ],
+   "rootEase": {
+    "6": 0.6,
+    "7": 1,
+    "8": 0.6,
+    "9": 0.4,
+    "10": 0.2,
+    "11": 0
+   },
+   "identity": "hip -> knee lead -> shin through ball -> locked, MODERATELY PLANTAR-FLEXED boot -> MID-LACES contact; support foot grounded/braced; torso committed; arms counterbalance; NO jump-kick, NO toe-up, NO dangling ankle."
+  },
+  "OUTSIDE_R": {
+   "set": "ou_R",
+   "frames": 8,
+   "fps": 14,
+   "contact_frame": 6,
+   "cx": 100,
+   "cy": 114,
+   "surface": "OUTSIDE",
+   "rootOff": null,
+   "rootEase": null,
+   "identity": "physical RIGHT foot presents the OUTSIDE (lateral) striking surface (trivela). Not inside, not laces."
+  },
+  "CHIP_R": {
+   "set": "ch_R",
+   "frames": 8,
+   "fps": 14,
+   "contact_frame": 5,
+   "cx": 86,
+   "cy": 112,
+   "surface": "CHIP",
+   "rootOff": null,
+   "rootEase": null,
+   "identity": "physical RIGHT foot, LIFTING/UNDER-BALL contact (toe/instep slides under the ball); short/checked follow-through. Not a flat laces drive."
+  }
+ },
+ "hard_freeze": [
+  "approved east animations",
+  "west mirror behavior",
+  "gameplay fallback",
+  "shot physics",
+  "charge",
+  "curves",
+  "contact timing",
+  "KICK_LIB values",
+  "facing logic",
+  "foot selection",
+  "player movement",
+  "Goal Frame",
+  "Net Physics"
+ ],
+ "anatomy_rule": "Physical RIGHT leg is ALWAYS the kicker; physical LEFT leg is ALWAYS the support. This never changes with screen-left/right. Determine kicking leg from ANATOMY, never from screen position."
+}
