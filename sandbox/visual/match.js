@@ -1312,6 +1312,148 @@ function netPhysStep(net, ball) {          // ONE fixed 240 Hz substep
   } else net.quiet = 0;
 }
 
+// ═══ NET PHYSICS V2 — continuous, bidirectional, swept ball↔net collision ════
+// The production net collision: the deformable membrane as a real two-sided
+// collision surface (replacing the retired discrete node-proximity + scripted
+// catch, which leaked slow balls, tunneled fast ones, and was one-directional).
+//
+// The membrane is the existing mass-spring hex mesh (node graph unchanged,
+// material constants frozen). The ball collides against the CURRENT deformed
+// MOVABLE node cloud: node spacing (<=0.14 m) is smaller than the ball
+// diameter (0.22 m), so the sphere cannot slip between strands — the nearest
+// deformed node within ballR is a faithful membrane sample. Two-sided (normal
+// derived from ball-vs-membrane geometry, no triangle side rejection), swept
+// (path sampled finer than the ball radius -> no tunneling), and persistent
+// (residual penetration corrected every step -> no slow leak). Pinned frame-
+// edge nodes are excluded: the rigid frame capsules already cover that band,
+// so the seam has neither a hole nor a double impulse. Net stepped in lockstep
+// with the ball's fixed sim (deterministic). Goal status never consulted.
+const NETV2 = {         // production net collision constants (V2)
+  e: 0.12,            // ball<->net restitution (low = dead catch, ball dies in net)
+  keepT: 0.5,         // tangential velocity kept on a net contact
+  massRatio: 0.4,     // fraction of an IMPACT's normal momentum fed to the net
+  impactMin: 3.5,     // only impacts faster than this deform the net; a resting/
+                      // dropping ball injects nothing, so the membrane cannot run
+                      // away under sustained load (fixes roof sink/leak + rest)
+  sub: 4,             // deterministic net substeps per 60Hz ball step under V2
+  sweepStep: 0.04,    // swept path sampling (m) < ballR
+  band: 0.03,         // extra detection margin (m) beyond ballR for resting contact
+};
+function netBBox(net) {
+  if (net._bb) return net._bb;
+  const p = net.rest; let x0 = 1e9, y0 = 1e9, z0 = 1e9, x1 = -1e9, y1 = -1e9, z1 = -1e9;
+  for (let j = 0; j < p.length; j += 3) {
+    x0 = Math.min(x0, p[j]); x1 = Math.max(x1, p[j]);
+    y0 = Math.min(y0, p[j + 1]); y1 = Math.max(y1, p[j + 1]);
+    z0 = Math.min(z0, p[j + 2]); z1 = Math.max(z1, p[j + 2]);
+  }
+  const m = 0.7;   // deformation slack
+  return (net._bb = [x0 - m, y0 - m, z0 - m, x1 + m, y1 + m, z1 + m]);
+}
+// Resolve/depenetrate the ball (net-space P, velocity Vn) against the movable
+// membrane at its CURRENT deformed positions. Returns true on contact.
+// P/Vn are 3-arrays in net space (X, height, Y-depth). Mutates them + the net.
+function netV2Resolve(net, P, Vn) {
+  const R = NETV2.e >= 0 ? NETPHYS.ballR : NETPHYS.ballR; // (ballR; kept explicit)
+  const det = NETPHYS.ballR, reach = det + NETV2.band;
+  const pos = net.pos, vel = net.vel, inv = net.inv;
+  // gather movable nodes within reach; find nearest; accumulate outward normal
+  let nx = 0, ny = 0, nz = 0, dmin = 1e9, near = [], sw = 0;
+  for (let i = 0; i < inv.length; i++) {
+    if (!inv[i]) continue;                 // movable only (frame band = rigid)
+    const j = i * 3;
+    const dx = P[0] - pos[j], dy = P[1] - pos[j + 1], dz = P[2] - pos[j + 2];
+    const d2 = dx * dx + dy * dy + dz * dz;
+    if (d2 >= reach * reach) continue;
+    const d = Math.sqrt(d2) || 1e-9;
+    if (d < dmin) dmin = d;
+    const w = 1 - d / reach;               // proximity weight
+    nx += (dx / d) * w; ny += (dy / d) * w; nz += (dz / d) * w; sw += w;
+    near.push(i, d, w);
+  }
+  if (dmin >= det || sw < 1e-9) return false;   // no penetration
+  let nl = Math.hypot(nx, ny, nz);
+  if (nl < 1e-6) { nx = 0; ny = 1; nz = 0; nl = 1; }   // degenerate -> up
+  nx /= nl; ny /= nl; nz /= nl;                 // outward membrane normal (-> ball)
+  // depenetrate: push the ball out along N so the nearest node is exactly ballR
+  const pen = det - dmin;
+  P[0] += nx * pen; P[1] += ny * pen; P[2] += nz * pen;
+  // reflect relative to the local membrane velocity at the contact
+  let mvx = 0, mvy = 0, mvz = 0, mw = 0;
+  for (let n = 0; n < near.length; n += 3) {
+    const j = near[n] * 3, w = near[n + 2];
+    mvx += vel[j] * w; mvy += vel[j + 1] * w; mvz += vel[j + 2] * w; mw += w;
+  }
+  mvx /= mw; mvy /= mw; mvz /= mw;
+  const rvx = Vn[0] - mvx, rvy = Vn[1] - mvy, rvz = Vn[2] - mvz;
+  const vn = rvx * nx + rvy * ny + rvz * nz;    // relative normal speed
+  if (vn < 0) {                                 // approaching the membrane
+    const tvx = rvx - vn * nx, tvy = rvy - vn * ny, tvz = rvz - vn * nz;
+    // reflected relative velocity: damped tangential + restituted normal
+    const rx = tvx * NETV2.keepT - NETV2.e * vn * nx;
+    const ry = tvy * NETV2.keepT - NETV2.e * vn * ny;
+    const rz = tvz * NETV2.keepT - NETV2.e * vn * nz;
+    Vn[0] = rx + mvx; Vn[1] = ry + mvy; Vn[2] = rz + mvz;
+    // feed the removed normal momentum into the net (bulge inward, -N) — ONLY
+    // for real impacts; a slow/resting/dropping ball injects nothing so the
+    // membrane holds near its rest shape and cannot be pushed away underfoot.
+    if (-vn > NETV2.impactMin) {
+      netActivate(net);
+      const imp = -(1 + NETV2.e) * vn * NETV2.massRatio;   // >0
+      for (let n = 0; n < near.length; n += 3) {
+        const j = near[n] * 3, w = near[n + 2] / sw;
+        vel[j] += -nx * imp * w; vel[j + 1] += -ny * imp * w; vel[j + 2] += -nz * imp * w;
+      }
+    }
+  }
+  return true;
+}
+// Swept ball↔net for one 60Hz step: p0/p1 are WORLD pre/post positions.
+// Advances along the path finer than ballR, resolves at the earliest contact,
+// then keeps resolving residual penetration at the final position (persistent).
+function netV2Collide(b, p0) {
+  for (const g of S.goalPanels || []) {
+    const net = g.net; if (!net) continue;
+    // ball world (x,y,z) -> net space (X, height, Y-depth)
+    const P1 = [b.x, b.z, b.y], P0 = [p0.x, p0.z, p0.y];
+    const bb = netBBox(net);
+    const loX = Math.min(P0[0], P1[0]) - NETPHYS.ballR, hiX = Math.max(P0[0], P1[0]) + NETPHYS.ballR;
+    if (hiX < bb[0] || loX > bb[3]) continue;   // broad-phase reject (X)
+    const loY = Math.min(P0[2], P1[2]) - NETPHYS.ballR, hiY = Math.max(P0[2], P1[2]) + NETPHYS.ballR;
+    if (hiY < bb[2] || loY > bb[5]) continue;
+    const dx = P1[0] - P0[0], dy = P1[1] - P0[1], dz = P1[2] - P0[2];
+    const dist = Math.hypot(dx, dy, dz);
+    const nsamp = Math.max(1, Math.ceil(dist / NETV2.sweepStep));
+    let Vn = [b.vx, b.vz, b.vy], contacted = false, cInfo = null;
+    for (let s = 1; s <= nsamp; s++) {          // swept: earliest contact wins
+      const f = s / nsamp;
+      const P = [P0[0] + dx * f, P0[1] + dy * f, P0[2] + dz * f];
+      if (netV2Resolve(net, P, Vn)) {
+        // land the ball at the corrected contact, keep the resolved velocity,
+        // do not advance further this step (no tunneling past the membrane)
+        b.x = P[0]; b.z = P[1]; b.y = P[2];
+        b.vx = Vn[0]; b.vz = Vn[1]; b.vy = Vn[2];
+        contacted = true;
+        cInfo = { cap: g.gx ? "R-net" : "L-net", n: 0 };
+        break;
+      }
+    }
+    if (!contacted) {                            // persistent: resolve residual
+      const P = [b.x, b.z, b.y];
+      if (netV2Resolve(net, P, Vn)) {
+        b.x = P[0]; b.z = P[1]; b.y = P[2];
+        b.vx = Vn[0]; b.vz = Vn[1]; b.vy = Vn[2];
+        contacted = true;
+      }
+    }
+    if (contacted) {
+      b.netHit = { t: S.pt ? S.pt.now : 0, side: g.side };
+      net._ptV2 = true;
+      for (let s = 0; s < NETV2.sub; s++) netPhysStep(net, null);   // deterministic relax
+    }
+  }
+}
+
 // ── NET PHYSICS TEST — SYNTHETIC BALL TRAJECTORY (renderer-only harness).
 // Keys 1-4 fire tests at the right goal; key 5 cycles slow/normal/power on
 // the central strike. Prescribed analytic ball path (never touches the
@@ -1509,6 +1651,7 @@ function netPhysUpdate(dtReal) {
     ballSeqStep(NETPHYS.dt);
     for (const g of S.goalPanels || []) {
       if (!g.net) continue;
+      if (g.net._ptV2) continue;   // NET V2 steps this net in lockstep with ptStep
       const useBall = ball && g.side === 1 &&
         Math.abs(ball.p[0] - g.gx) < 3.5 ? ball : null;
       if (g.net.active || useBall) {
@@ -2714,6 +2857,7 @@ function ptStep() {
     }
   } else {
     if (!b.ctrl) {
+      const _p0 = { x: b.x, y: b.y, z: b.z };   // NET V2 swept: pre-advance pos
       // GOAL FRAME V1 (gated): swept post/crossbar collision replaces the
       // plain position advance; with the flag off this is byte-identical.
       if (GOALFX.collision) ptGoalFrameStep(b);
@@ -2760,27 +2904,35 @@ function ptStep() {
       // can prevent) the crossing; once the whole ball is across, later
       // net/frame interaction cannot revoke the award (label latches).
       if (GOALFX.collision && t.last !== "GOAL!") {
-        const rB = GOALFX.ballR, inMouth = Math.abs(b.y - 34) < 3.66 && b.z < 2.44;
-        if (inMouth && (b.x - rB > 105 || b.x + rB < 0)) t.last = "GOAL!";
-      }
-      if (b.x > 104.0 && b.vx > 0) {         // right-goal net (accepted netTest detection)
-        if (!GOALFX.collision && b.x > 105 && Math.abs(b.y - 34) < 3.66 && b.z < 2.44 && t.last !== "GOAL!")
-          t.last = "GOAL!";
-        const net = S.goalPanels && S.goalPanels[1] && S.goalPanels[1].net;
-        if (net) {
-          const R = NETPHYS.ballR + 0.06;
-          for (let i = 0; i < net.inv.length; i++) {
-            if (!net.inv[i]) continue;
-            const j = i * 3;
-            if (Math.hypot(net.pos[j] - b.x, net.pos[j + 1] - b.z, net.pos[j + 2] - b.y) < R) {
-              t.net = { phase: "push", vE: [b.vx, b.vy, b.vz] };
-              netImpact(1, [b.x, b.z, b.y], [b.vx, b.vz, b.vy],
-                        Math.min(1.6, 0.35 + Math.hypot(b.vx, b.vy, b.vz) / 20));
-              break;
-            }
-          }
+        // ── GOAL = a WHOLE-BALL MOUTH-CROSSING EVENT (continuous TOI) ──────
+        // A goal iff the entire physical ball passes from the field side to
+        // the goal side THROUGH the legal mouth aperture. We solve the in-step
+        // time-of-impact at which the ball's trailing-most point (centre ∓ rB
+        // along the plane normal) clears the authoritative goal plane, then
+        // require the WHOLE ball to fit the aperture AT THAT INSTANT: between
+        // the posts and beneath the crossbar, each with ball radius. It is a
+        // crossing EVENT, not a position/occupancy test — a ball on the sagging
+        // roof, above the bar, or outside a post never produces a valid
+        // crossing, so it is never a goal. Latched once true (a later net
+        // throw-back through the mouth cannot revoke it). Frame TOI resolves
+        // earlier in the step, so a post/bar rebound never reaches a crossing.
+        const rB = GOALFX.ballR;
+        const tr0R = _p0.x - rB, tr1R = b.x - rB;   // trailing pt vs right plane x=105
+        const tr0L = _p0.x + rB, tr1L = b.x + rB;   // trailing pt vs left plane x=0
+        let f = -1;
+        if (tr0R <= 105 && tr1R > 105) f = (105 - tr0R) / (tr1R - tr0R);
+        else if (tr0L >= 0 && tr1L < 0) f = tr0L / (tr0L - tr1L);
+        if (f >= 0 && f <= 1) {                      // crossing this step: check aperture at TOI
+          const yc = _p0.y + (b.y - _p0.y) * f, zc = _p0.z + (b.z - _p0.z) * f;
+          if (yc - rB >= 30.34 && yc + rB <= 37.66 && zc + rB <= 2.44 && zc >= 0)
+            t.last = "GOAL!";
         }
       }
+      // NET PHYSICS V2: continuous two-sided swept membrane collision. Runs
+      // for BOTH goals; goal status is never consulted (containment is purely
+      // the membrane). The old discrete node-proximity + scripted t.net catch
+      // is retired.
+      netV2Collide(b, _p0);
     } else if (Math.hypot(b.vx, b.vy) > 0.02) {   // controlled rolling touch travel
       b.x += b.vx * PT_DT; b.y += b.vy * PT_DT;
       const sp2 = Math.hypot(b.vx, b.vy);
@@ -3026,6 +3178,11 @@ function drawPlaytest(dt) {
   ctx.fillText(`FRAME  rigid post/crossbar · e=${GOALFX.e.toFixed(2)} · N fires synthetic impact` +
     (fh ? ` · last hit ${fh.cap}: in ${Math.hypot(...fh.vIn).toFixed(1)} -> out ${Math.hypot(...fh.vOut).toFixed(1)} m/s (n ${fh.n.map(v => v.toFixed(2)).join(",")})` : " · last hit -"),
     uipx(14), cv.height - uipx(168));
+  // NET readout: continuous membrane contact status
+  ctx.fillStyle = "#a8f0c4";
+  const nh = t.b && t.b.netHit;
+  ctx.fillText(`NET  continuous membrane (swept, two-sided, persistent)` + (nh ? ` · last contact goal ${nh.side}` : ""),
+    uipx(14), cv.height - uipx(184));
   const ti = t.touchInfo || {};
   ctx.fillStyle = "#ffe9a8";
   ctx.fillText(`TOUCH  desired ${ti.sc !== undefined ? ti.sc.toFixed(2) : "-"} m · last dist ` +
