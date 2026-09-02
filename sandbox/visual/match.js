@@ -2093,7 +2093,6 @@ const GOALFX = {
   e: 0.72,               // FINAL frame restitution (F2; hard/lively, < grass 0.55 adds no energy)
   keepT: 0.95,           // tangential keep on frame contact (hard, low-friction)
   spinKeep: 0.8,         // curve spin retained through a frame hit
-  barSegs: 8,            // crossbar depth-sort slices (PART A)
   // net depth patches [yLo, yHi, sortY]: far side wall / back thirds / near
   // side wall — segments classified by CURRENT deformed y each frame
   // sortY of each patch sits just BEHIND its co-located frame member so the
@@ -3364,16 +3363,21 @@ function draw(sample, dt) {
     for (const [lo, hi, sy] of GOALFX.artBands)
       for (const pn of ["roof", "mouth"])
         ents.push({ y: sy - 0.001, artPart: { g, panel: pn, lo, hi } });
-    // posts: one continuous member each (constant y -> single depth), round caps
-    ents.push({ y: 30.34, frameMember: [[gx, 0, 30.34], [gx, 2.44, 30.34]], cap: "round" });
+    // FRAME AS CONTINUOUS POLYLINES (single strokes -> zero internal seams,
+    // round JOINS at corners exactly like the original single-path
+    // drawGoalFrame). Per-segment crossbar rendering was the sole source of
+    // the dark-rim seam ticks AND the far-junction kink (two separate round
+    // CAPS meeting at an angle notched); diagnosed 2026-09-01, net/art/depth
+    // ruled out. The frame is the mouth-plane rigid structure, always in
+    // front of the net it fronts, so it sorts AFTER every net patch (max net
+    // sortY 37.4).
+    //   Member A = far post + crossbar as ONE path (clean round join at the
+    //   far-post/crossbar junction). Drawn at 37.5 (front of all net).
+    //   Member B = near post, its OWN depth (37.66) so a ball/player at the
+    //   near post still interleaves correctly (the approved occlusion case).
+    // The near junction is two round caps meeting (unchanged, already clean).
+    ents.push({ y: 37.5, frameMember: [[gx, 0, 30.34], [gx, 2.44, 30.34], [gx, 2.44, 37.66]], cap: "round" });
     ents.push({ y: 37.66, frameMember: [[gx, 0, 37.66], [gx, 2.44, 37.66]], cap: "round" });
-    // crossbar: full-span colinear depth segments sharing endpoints, BUTT caps
-    // -> flush seamless joints; ends coincide with the post tops (clean corners)
-    const n = GOALFX.barSegs, y0 = 30.34, y1 = 37.66, step = (y1 - y0) / n;
-    for (let i = 0; i < n; i++)
-      ents.push({ y: y0 + step * (i + 0.5),
-                  frameMember: [[gx, 2.44, y0 + step * i], [gx, 2.44, y0 + step * (i + 1)]],
-                  cap: (i === 0 || i === n - 1) ? "round" : "butt" });
   }
   if (GOALFX.occlusion && S.pt && S.pt.on) {
     // playtest sprites join the SAME depth sort instead of drawing on top
