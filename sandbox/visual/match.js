@@ -1915,20 +1915,90 @@ const PT_CURVE = {
   bounceKeep: 0.5,   // spin retained across a ground bounce
   // ── V2: velocity-dependent curve, a = k * spin * |v_horizontal| toward
   // travel-left. Bend-per-metre ~ k*s/v instead of the pathological s/v^2.
-  k: 0.055,
+  // k 0.22 = APPROVED X3 curve strength (user-selected after the C1-C3 and
+  // X1-X3 strength studies; the large solved setups are accepted).
+  k: 0.22,
   skimDecay: 0.6,    // v2 rolling decay: a brief skim no longer kills the spin
-  // ── V2 outside-in setup: INSIDE_R launch departs RIGHT of the intended
-  // target line by setup(c), then the spin swings it back left across it.
-  // APPROVED S1 ramp: smoothstep from setupC0 — grounded/low charge stays
-  // essentially straight, the outside->inside shape is already readable at
-  // c=.7 (4 deg) and strong at c=.8 (5.9 deg), full 8 deg at c=1.
-  setupMaxDeg: 8,
-  setupC0: 0.40,
 };
-function ptCurveSetupRad(c) {
-  const q = PT_CURVE;
-  const u = Math.max(0, Math.min(1, (c - q.setupC0) / (1 - q.setupC0)));
-  return (q.setupMaxDeg * Math.PI / 180) * (u * u * (3 - 2 * u));
+// ═══ INSIDE_R TARGET-SOLVED SETUP SURFACE (approved architecture) ═══════════
+// The launch departs RIGHT of the intended target line by a setup angle that
+// makes the free V2 curved trajectory re-cross the aim line AT the intended
+// target distance. Angles were solved OFFLINE by 20-iteration bisection on
+// this exact integrator (oracle in STUDY_RECORD_TARGETSOLVE_APPROX.json);
+// runtime is a clamped bilinear lookup — the ~22-simulation solver never
+// runs during gameplay, and nothing steers the ball after launch.
+//
+// PRODUCTION CONTRACT: real match play must pass the AUTHORITATIVE intended
+// target distance (engine Body.kick(pid, tx, ty, fam): D = dist(ball,
+// target), world.py:187) into the kick as tgtDist. The sandbox preview
+// proxy below must never enter real match gameplay.
+const PT_CURVE_SETUP = {
+  // APPROVED X3 SURFACE — oracle-solved (scan-and-refine on the real
+  // integrator, uncapped) against k 0.22 physics. The large angles are the
+  // honest target-solved results for the approved strong curvature.
+  // 11 x 13 nodes (densified so bilinear error stays within the approved
+  // lateral-accuracy band on X3's steeper surface).
+  c: [0.15, 0.3, 0.45, 0.6, 0.675, 0.7125, 0.75, 0.7875, 0.825, 0.9, 1.0], // charge nodes
+  d: [5, 7.5, 10, 12.5, 15, 17.5, 20, 22.5, 25, 27.5, 30, 32, 34], // target-distance nodes (m)
+  // solved setup DEGREES [charge row][distance col]; cells beyond a charge's
+  // solvable range repeat the max-range solve so interpolation stays smooth
+  deg: [[0.62, 0.88, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12, 1.12],
+        [0.88, 1.12, 1.38, 1.62, 1.62, 1.62, 1.62, 1.62, 1.62, 1.62, 1.62, 1.62, 1.62],
+        [1.00, 1.38, 1.62, 1.88, 2.12, 2.38, 2.38, 2.38, 2.38, 2.38, 2.38, 2.38, 2.38],
+        [2.12, 3.00, 3.50, 3.88, 4.12, 4.50, 4.50, 4.50, 4.50, 4.50, 4.50, 4.50, 4.50],
+        [4.62, 7.75, 9.75, 11.25, 12.25, 13.00, 13.62, 14.12, 14.12, 14.12, 14.12, 14.12, 14.12],
+        [5.75, 9.75, 13.38, 16.00, 17.88, 19.25, 20.38, 21.25, 21.25, 21.25, 21.25, 21.25, 21.25],
+        [6.38, 10.62, 14.75, 18.62, 21.50, 23.88, 25.75, 27.25, 28.38, 29.38, 29.38, 29.38, 29.38],
+        [6.88, 11.12, 15.38, 19.62, 23.62, 26.75, 29.50, 31.75, 33.62, 35.12, 36.38, 37.25, 37.25],
+        [7.12, 11.50, 15.88, 20.12, 24.50, 28.38, 31.62, 34.50, 37.00, 39.00, 40.62, 41.88, 42.88],
+        [7.62, 12.12, 16.50, 20.88, 25.38, 29.88, 34.25, 38.12, 41.62, 45.00, 47.88, 49.88, 51.62],
+        [8.38, 12.88, 17.50, 22.00, 26.50, 31.12, 35.75, 40.50, 45.25, 50.25, 55.25, 59.00, 62.50]],
+  // solvable range (m) per charge node: the farthest node distance where a
+  // free X3 trajectory can still arrive on the aim line (for strong curl the
+  // limit is holding the line, not raw carry). A target beyond it CLAMPS to
+  // the max-range solve; kick power is never increased for a distant target.
+  reach: [10.5, 13, 18, 18, 23, 23, 28, 32.5, 34.5, 34.5, 34.5],
+  reachMargin: 0.5,
+  previewCap: 30,   // sandbox preview target ceiling (m)
+};
+function ptCurveClampDist(c, D) {
+  // the lookup's reachability clamp, exposed for HUD reporting: identical
+  // math, no behavior of its own
+  const q = PT_CURVE_SETUP, CN = q.c, DN = q.d;
+  c = Math.max(CN[0], Math.min(CN[CN.length - 1], c));
+  let i = 0; while (i < CN.length - 2 && c > CN[i + 1]) i++;
+  const fc = (c - CN[i]) / (CN[i + 1] - CN[i]);
+  const dmax = Math.min(q.reach[i] + (q.reach[i + 1] - q.reach[i]) * fc - q.reachMargin,
+                        DN[DN.length - 1]);
+  return Math.max(DN[0], Math.min(dmax, D));
+}
+function ptCurveSetupLookupDeg(c, D) {
+  const q = PT_CURVE_SETUP, CN = q.c, DN = q.d;
+  D = ptCurveClampDist(c, D);
+  c = Math.max(CN[0], Math.min(CN[CN.length - 1], c));
+  let i = 0; while (i < CN.length - 2 && c > CN[i + 1]) i++;
+  const fc = (c - CN[i]) / (CN[i + 1] - CN[i]);
+  let j = 0; while (j < DN.length - 2 && D > DN[j + 1]) j++;
+  const fd = (D - DN[j]) / (DN[j + 1] - DN[j]);
+  const a = q.deg[i][j] + (q.deg[i][j + 1] - q.deg[i][j]) * fd;
+  const b = q.deg[i + 1][j] + (q.deg[i + 1][j + 1] - q.deg[i + 1][j]) * fd;
+  return a + (b - a) * fc;
+}
+// SANDBOX-ONLY preview target: the Single Player Test has no genuine target
+// intent (its legacy per-key D is NOT player aim), so for visualization the
+// preview target is the launch's natural first-ground carry, capped. This
+// synthetic value exists ONLY because the sandbox lacks target input — real
+// match gameplay must use the engine's authoritative dist(ball, target).
+function ptCurveNaturalRange(v0, vz) {
+  let z = 0, d = 0, h = v0, w = vz;
+  for (let i = 0; i < 60 * 6; i++) {   // same 60Hz Euler order as the flight
+    d += h * PT_DT; z += w * PT_DT;
+    if (z > 0) w -= PT.G * PT_DT;
+    if (i > 2 && z <= 0) break;
+    h = Math.max(0, h - (z > 0.05 ? PT.MU_AIR : PT.MU_ROLL) * PT_DT);
+    if (h < 0.3) break;
+  }
+  return d;
 }
 function ptFam(fam, D) {          // world.py FAM launch families (port)
   const c = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
@@ -1968,7 +2038,12 @@ function ptExit() {
   const btn = document.getElementById("ptbtn");
   if (btn) { btn.textContent = "Single Player Test"; btn.style.background = "#1d7a3d"; btn.style.borderColor = "#2fa35a"; }
 }
-function ptKick(fam, label, Dopt, force, charge) {
+function ptKick(fam, label, Dopt, force, charge, tgtDist) {
+  // tgtDist = AUTHORITATIVE intended target distance (m) for the target-
+  // solved INSIDE_R setup — the engine-integration path (world.py kicks
+  // carry dist(ball, target)). The legacy Dopt nominal is NOT player aim
+  // and is never used for setup. Sandbox callers omit tgtDist; the contact
+  // block then derives the documented preview-only proxy.
   // KICK ANIMATION V2: every kick is SCHEDULED — technique + foot chosen
   // deterministically, animation enters now, authoritative impulse fires
   // exactly at the contact frame instant. Physics families untouched.
@@ -2004,7 +2079,8 @@ function ptKick(fam, label, Dopt, force, charge) {
     t.kickFbN = (t.kickFbN || 0) + 1;
     t.kick = { t0: t.now, kickAt: t.now + 0.2, end: t.now + 0.45, fam, v0, vz,
                dir: p.facing, kicked: false, tech, foot: sel.foot, noAnim: true, label,
-               charge: charge ? charge.c : null };
+               charge: charge ? charge.c : null,
+               tgtD: tgtDist != null ? tgtDist : null };
   } else {
     // FIRST-TIME BRANCH (spec 22): a moving carrier skips the approach and
     // enters at the plant -> swing -> contact tail; a stationary kick plays
@@ -2015,7 +2091,8 @@ function ptKick(fam, label, Dopt, force, charge) {
     t.kick = { t0: t.now, kickAt, end: t.now + (ent.e.n - f0) / ent.e.fps + 0.12, fam, v0, vz,
                dir: p.facing, kicked: false, tech, foot: sel.foot, f0,
                key: ent.key, e: ent.e, mirror, artFoot: ent.artFoot, fb: ent.fb, label,
-               charge: charge ? charge.c : null };
+               charge: charge ? charge.c : null,
+               tgtD: tgtDist != null ? tgtDist : null };
   }
   t.kickInfo = { pfoot: t.pfoot || "R", foot: sel.foot, tech, fam,
                  asset: ent.e ? ent.e.set || ent.e.legacy : "none",
@@ -2233,14 +2310,32 @@ function ptStep() {
       k.kicked = true;
       // CONTACT: authoritative impulse along the direction frozen at the
       // decision instant — physics families unchanged
-      // INSIDE_R CURVE: k.dir is the INTENDED TARGET direction. In V2 mode a
-      // right-foot inside strike launches rotated RIGHT by setup(c) (the
-      // open-body outside line); the in-flight spin then swings it back
-      // LEFT across the target line. V1 mode launches straight (no setup).
+      // INSIDE_R CURVE (TARGET-SOLVED): k.dir is the INTENDED TARGET
+      // direction. A right-foot inside strike launches rotated RIGHT by the
+      // setup angle interpolated from PT_CURVE_SETUP for (charge, intended
+      // target distance); the free in-flight spin then swings the ball back
+      // LEFT to re-cross the aim line at the target. After this rotation the
+      // flight is completely free — no steering, no homing.
       let launchDir = k.dir;
       if ((k.tech === "INSIDE" || k.tech === "INSIDE_FINISH") && k.foot === "R") {
         const cc = k.charge != null ? k.charge : 0.5;
-        if (PT_CURVE.mode === "v2") { k.setupRad = ptCurveSetupRad(cc); launchDir = k.dir + k.setupRad; }
+        if (PT_CURVE.mode === "v2") {
+          let tgtD = k.tgtD;              // authoritative intended target distance
+          if (tgtD == null) {             // SANDBOX ONLY: synthetic preview target
+            // review override (key G) replaces only this synthetic preview
+            // distance; AUTO = natural-carry proxy. Never a production input.
+            tgtD = t.tgtOverride != null ? t.tgtOverride
+                 : Math.min(ptCurveNaturalRange(k.v0, k.vz), PT_CURVE_SETUP.previewCap);
+            k.tgtDPreview = tgtD;
+          }
+          const solvedD = ptCurveClampDist(cc, tgtD);   // reachability clamp (report only)
+          k.setupRad = ptCurveSetupLookupDeg(cc, tgtD) * Math.PI / 180;
+          launchDir = k.dir + k.setupRad;
+          t.kickInfo = Object.assign(t.kickInfo || {}, {
+            tgtD: +tgtD.toFixed(1), tgtPreview: k.tgtD == null,
+            tgtSolved: +solvedD.toFixed(1), tgtClamped: tgtD - solvedD > 0.05,
+            setupDeg: +(k.setupRad * 180 / Math.PI).toFixed(2) });
+        }
         b.curve = { s: PT_CURVE.base + PT_CURVE.chargeGain * Math.pow(cc, PT_CURVE.fPow), sgn: 1 };
       } else b.curve = null;
       b.vx = Math.cos(launchDir) * k.v0; b.vy = Math.sin(launchDir) * k.v0; b.vz = k.vz;
@@ -2664,6 +2759,20 @@ function drawPlaytest(dt) {
     : `CHARGE  last: hold ${ki.holdMs !== null && ki.holdMs !== undefined ? ki.holdMs + " ms" : "-"} · c=${ki.charge ?? "-"} · ` +
       `v0 ${ki.v0 !== undefined ? ki.v0 + " m/s" : "-"} · vz ${ki.vz !== undefined ? ki.vz + " m/s" : "-"} · elev ${ki.elevDeg !== undefined ? ki.elevDeg + "°" : "-"}`,
     uipx(14), cv.height - uipx(136));
+  // TARGET-SOLVED INSIDE_R readout: the preview target is a sandbox-only
+  // proxy (natural carry or the G-key review override) — NOT real aim input
+  ctx.fillStyle = "#a8d8f0";
+  const tgtMode = t.tgtOverride == null ? "AUTO" : t.tgtOverride + "m";
+  let tline = `PREVIEW TARGET: ${tgtMode} (G cycles AUTO/10/15/20/25/30 — sandbox review only)`;
+  if (ki.tgtD !== undefined) {
+    if (ki.tgtPreview && ki.tgtClamped)
+      tline += ` · TARGET ${ki.tgtD}m — UNREACHABLE AT THIS CHARGE — SOLVING AT MAX REACH ${ki.tgtSolved}m · SETUP: ${ki.setupDeg}°`;
+    else if (ki.tgtPreview)
+      tline += ` · SOLVED DISTANCE: ${ki.tgtSolved}m · SETUP: ${ki.setupDeg}°`;
+    else
+      tline = `TARGET: ${ki.tgtD}m (authoritative) · SOLVED DISTANCE: ${ki.tgtSolved}m · SETUP: ${ki.setupDeg}°`;
+  }
+  ctx.fillText(tline, uipx(14), cv.height - uipx(152));
   const ti = t.touchInfo || {};
   ctx.fillStyle = "#ffe9a8";
   ctx.fillText(`TOUCH  desired ${ti.sc !== undefined ? ti.sc.toFixed(2) : "-"} m · last dist ` +
@@ -3077,6 +3186,14 @@ function bindUI() {
       else if (k === "f") { S.pt.pfoot = (S.pt.pfoot === "L" ? "R" : "L");
         S.pt.last = "PREFERRED FOOT -> " + S.pt.pfoot; }
       else if (k === "6") ptShowcaseSeq();            // side-by-side sequence
+      else if (k === "g") {
+        // REVIEW-ONLY preview-target cycle (sandbox test tooling — never a
+        // production input): overrides only the synthetic preview distance
+        // fed to the INSIDE_R setup lookup. AUTO = natural-carry proxy.
+        const seq = [null, 10, 15, 20, 25, 30];
+        S.pt.tgtOverride = seq[(seq.indexOf(S.pt.tgtOverride ?? null) + 1) % seq.length];
+        S.pt.last = "PREVIEW TARGET -> " + (S.pt.tgtOverride == null ? "AUTO" : S.pt.tgtOverride + "m");
+      }
       else {
         // VARIABLE SHOT CHARGE V1: kick keys (x/z/c, showcase 1-5) begin
         // charging on keydown and fire on keyup. Auto-repeat is ignored.
