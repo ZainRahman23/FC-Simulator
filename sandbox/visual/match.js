@@ -2235,27 +2235,89 @@ const PT_CURVE_SETUP = {
   reachMargin: 0.5,
   previewCap: 30,   // sandbox preview target ceiling (m)
 };
+
+// ═══ TEMPORARY X3 CALIBRATION SELECTOR (REVIEW BUILD ONLY — key "[") ════════
+// Live A/B/C/D comparison of the INSIDE_R curve MAGNITUDE. Nothing else changes:
+// charge, launch speed, elevation, gravity, friction, bounce, frame, net, the
+// curvature accumulation/decay law and every goalkeeper system are untouched.
+// Because INSIDE_R is TARGET-SOLVED, each candidate carries its OWN setup surface,
+// re-solved with the same scan-and-refine procedure on the same node grid against
+// its own effective coefficient k*f — so A/B/C/D all aim at the same target and
+// only the route there differs. Candidate D re-uses the production surface and
+// f = 1, so selecting D is byte-identical to production.
+// Solved 2026-09-04; solver validated against the production surface at f = 1
+// (median 0.83 deg, and 0.000-0.6 m target error inside each candidate's reach).
+const PT_X3 = {
+  active: "B",                       // review default (user request): X3-B 0.55x
+  order: ["A", "B", "C", "D"],
+  cands: {
+    A: { f: 0.50, label: "X3-A 0.50×", deg:
+           [[0.48, 0.61, 0.70, 0.70, 0.70, 0.70, 0.70, 0.70, 0.70, 0.70, 0.70, 0.70, 0.70],
+            [0.64, 0.81, 0.95, 1.05, 1.05, 1.05, 1.05, 1.05, 1.05, 1.05, 1.05, 1.05, 1.05],
+            [0.92, 1.17, 1.33, 1.40, 1.40, 1.40, 1.40, 1.40, 1.40, 1.40, 1.40, 1.40, 1.40],
+            [1.95, 2.75, 3.24, 3.58, 3.83, 4.03, 4.20, 4.20, 4.20, 4.20, 4.20, 4.20, 4.20],
+            [2.94, 4.88, 6.33, 7.31, 8.03, 8.56, 8.97, 9.10, 9.10, 9.10, 9.10, 9.10, 9.10],
+            [3.21, 5.27, 7.25, 8.74, 9.86, 10.73, 11.41, 11.94, 12.25, 12.25, 12.25, 12.25, 12.25],
+            [3.42, 5.52, 7.59, 9.59, 11.17, 12.45, 13.53, 14.39, 15.09, 15.67, 16.10, 16.10, 16.10],
+            [3.57, 5.70, 7.80, 9.86, 11.86, 13.48, 14.89, 16.13, 17.15, 18.00, 18.71, 19.20, 19.60],
+            [3.65, 5.82, 7.95, 10.04, 12.09, 14.05, 15.67, 17.13, 18.47, 19.60, 20.57, 21.23, 21.82],
+            [3.79, 5.99, 8.17, 10.31, 12.41, 14.47, 16.50, 18.43, 20.10, 21.64, 23.10, 24.16, 25.11],
+            [3.98, 6.23, 8.45, 10.62, 12.77, 14.89, 16.98, 19.04, 21.07, 23.08, 25.06, 26.63, 28.13]],
+         reach: [9.4, 11.9, 11.2, 20, 20.9, 24.2, 29.6, 33.8, 34.8, 34.2, 34.3] },
+    B: { f: 0.55, label: "X3-B 0.55×", deg:
+           [[0.52, 0.67, 0.70, 0.70, 0.70, 0.70, 0.70, 0.70, 0.70, 0.70, 0.70, 0.70, 0.70],
+            [0.71, 0.89, 1.04, 1.05, 1.05, 1.05, 1.05, 1.05, 1.05, 1.05, 1.05, 1.05, 1.05],
+            [1.01, 1.28, 1.40, 1.40, 1.40, 1.40, 1.40, 1.40, 1.40, 1.40, 1.40, 1.40, 1.40],
+            [2.15, 3.03, 3.57, 3.94, 4.21, 4.43, 4.55, 4.55, 4.55, 4.55, 4.55, 4.55, 4.55],
+            [3.23, 5.37, 6.97, 8.05, 8.83, 9.42, 9.87, 10.15, 10.15, 10.15, 10.15, 10.15, 10.15],
+            [3.54, 5.80, 7.98, 9.62, 10.85, 11.81, 12.56, 13.14, 13.62, 13.65, 13.65, 13.65, 13.65],
+            [3.77, 6.08, 8.35, 10.56, 12.30, 13.71, 14.90, 15.85, 16.62, 17.26, 17.50, 17.50, 17.50],
+            [3.92, 6.27, 8.59, 10.86, 13.06, 14.85, 16.40, 17.77, 18.89, 19.83, 20.61, 21.15, 21.35],
+            [4.02, 6.40, 8.75, 11.05, 13.32, 15.49, 17.27, 18.88, 20.36, 21.61, 22.67, 23.40, 24.05],
+            [4.17, 6.60, 8.99, 11.35, 13.67, 15.96, 18.21, 20.34, 22.18, 23.89, 25.51, 26.68, 27.72],
+            [4.38, 6.86, 9.30, 11.70, 14.08, 16.42, 18.73, 21.02, 23.28, 25.52, 27.74, 29.50, 31.16]],
+         reach: [8.1, 10.1, 9, 19, 21.9, 25.1, 28.6, 32.8, 34.3, 34.6, 34.4] },
+    C: { f: 0.60, label: "X3-C 0.60×", deg:
+           [[0.57, 0.70, 0.70, 0.70, 0.70, 0.70, 0.70, 0.70, 0.70, 0.70, 0.70, 0.70, 0.70],
+            [0.77, 0.97, 1.14, 1.29, 1.40, 1.40, 1.40, 1.40, 1.40, 1.40, 1.40, 1.40, 1.40],
+            [1.10, 1.40, 1.60, 1.75, 1.75, 1.75, 1.75, 1.75, 1.75, 1.75, 1.75, 1.75, 1.75],
+            [2.34, 3.30, 3.89, 4.29, 4.59, 4.83, 4.90, 4.90, 4.90, 4.90, 4.90, 4.90, 4.90],
+            [3.53, 5.86, 7.60, 8.78, 9.64, 10.28, 10.77, 10.85, 10.85, 10.85, 10.85, 10.85, 10.85],
+            [3.86, 6.32, 8.71, 10.50, 11.85, 12.90, 13.71, 14.35, 14.70, 14.70, 14.70, 14.70, 14.70],
+            [4.11, 6.63, 9.12, 11.53, 13.43, 14.98, 16.27, 17.31, 18.15, 18.84, 19.25, 19.25, 19.25],
+            [4.28, 6.85, 9.38, 11.86, 14.27, 16.23, 17.93, 19.42, 20.65, 21.66, 22.52, 23.11, 23.45],
+            [4.39, 6.99, 9.55, 12.07, 14.56, 16.93, 18.89, 20.65, 22.27, 23.64, 24.79, 25.59, 26.29],
+            [4.55, 7.20, 9.82, 12.40, 14.94, 17.45, 19.93, 22.27, 24.29, 26.17, 27.94, 29.22, 30.37],
+            [4.78, 7.48, 10.15, 12.79, 15.39, 17.96, 20.51, 23.03, 25.53, 28.01, 30.47, 32.43, 34.26]],
+         reach: [7, 14.3, 12.4, 18.3, 20.5, 24.1, 29.2, 33.3, 34.9, 34.2, 34] },
+    D: { f: 1.00, label: "X3-D 1.00× PRODUCTION", deg: null, reach: null },   // null = the production surface
+  },
+};
+function ptX3() { return PT_X3.cands[PT_X3.active] || PT_X3.cands.D; }
+function ptX3K() { const c = ptX3(); return PT_CURVE.k * (c.f != null ? c.f : 1); }   // effective curve coefficient
+function ptX3Deg() { const c = ptX3(); return c.deg || PT_CURVE_SETUP.deg; }
+function ptX3Reach() { const c = ptX3(); return c.reach || PT_CURVE_SETUP.reach; }
 function ptCurveClampDist(c, D) {
   // the lookup's reachability clamp, exposed for HUD reporting: identical
   // math, no behavior of its own
-  const q = PT_CURVE_SETUP, CN = q.c, DN = q.d;
+  const q = PT_CURVE_SETUP, CN = q.c, DN = q.d, RE = ptX3Reach();
   c = Math.max(CN[0], Math.min(CN[CN.length - 1], c));
   let i = 0; while (i < CN.length - 2 && c > CN[i + 1]) i++;
   const fc = (c - CN[i]) / (CN[i + 1] - CN[i]);
-  const dmax = Math.min(q.reach[i] + (q.reach[i + 1] - q.reach[i]) * fc - q.reachMargin,
+  const dmax = Math.min(RE[i] + (RE[i + 1] - RE[i]) * fc - q.reachMargin,
                         DN[DN.length - 1]);
   return Math.max(DN[0], Math.min(dmax, D));
 }
 function ptCurveSetupLookupDeg(c, D) {
-  const q = PT_CURVE_SETUP, CN = q.c, DN = q.d;
+  const q = PT_CURVE_SETUP, CN = q.c, DN = q.d, DG = ptX3Deg();
   D = ptCurveClampDist(c, D);
   c = Math.max(CN[0], Math.min(CN[CN.length - 1], c));
   let i = 0; while (i < CN.length - 2 && c > CN[i + 1]) i++;
   const fc = (c - CN[i]) / (CN[i + 1] - CN[i]);
   let j = 0; while (j < DN.length - 2 && D > DN[j + 1]) j++;
   const fd = (D - DN[j]) / (DN[j + 1] - DN[j]);
-  const a = q.deg[i][j] + (q.deg[i][j + 1] - q.deg[i][j]) * fd;
-  const b = q.deg[i + 1][j] + (q.deg[i + 1][j + 1] - q.deg[i + 1][j]) * fd;
+  const a = DG[i][j] + (DG[i][j + 1] - DG[i][j]) * fd;
+  const b = DG[i + 1][j] + (DG[i + 1][j + 1] - DG[i + 1][j]) * fd;
   return a + (b - a) * fc;
 }
 // SANDBOX-ONLY preview target: the Single Player Test has no genuine target
@@ -2385,8 +2447,8 @@ const GOAL_CAPSULES = goalFrameCapsules();
 // normal (reversed by restitution e) + tangential (keepT) about the LOCAL
 // surface normal — every outcome (rebound out, deflect in, drop under the
 // bar) emerges from geometry, never from scripted cases. Deterministic.
-function ptGoalFrameStep(b) {
-  let rem = PT_DT;
+function ptGoalFrameStep(b, dt) {
+  let rem = dt != null ? dt : PT_DT;
   for (let iter = 0; iter < 3 && rem > 1e-9; iter++) {
     const p0 = [b.x, b.y, b.z];
     const d = [b.vx * rem, b.vy * rem, b.vz * rem];
@@ -2593,6 +2655,104 @@ function gkCoverageWindows(bx, by, kx, ky, coverHalf) {
   return { nearWin: winTowardN, farWin: winTowardF, aperture: hi - lo, aK, dA,
            largest: Math.max(winTowardN, winTowardF) };
 }
+// ═══ GK POSITIONING V2 — "FC-inspired" DISTANCE × ANGLE SURFACE (review A/B vs Q2.5) ═══
+// Solves depth and lateral TOGETHER from goal geometry instead of "depth = f(distance),
+// lateral = aperture correction". Three geometric quantities do all the work:
+//
+//   1. APERTURE BISECTOR  — the angle bisector of the ball→nearPost / ball→farPost rays
+//      (unchanged production helper gkAperture). The keeper always stands ON this ray, so
+//      he covers the two shooting windows equally; the bisector is naturally near-post
+//      biased for wide balls (angle-bisector theorem), which is where the lateral shift
+//      toward the near post comes from — no authored near-post bonus.
+//   2. CENTRAL DEPTH CURVE — how far off the line the keeper may come when the ball is
+//      dead central. This is the UNCHANGED production P4 curve, so central feel is preserved.
+//   3. TWO GEOMETRIC CEILINGS that cut that depth down as the angle sharpens:
+//        a) APERTURE RATIO: the ball's real aperture divided by the aperture a central ball
+//           would see at the same distance, raised to angleExp. Continuous, symmetric, 1.0
+//           dead centre, falling monotonically with angle.
+//        b) MOUTH CORRIDOR: advancing along an oblique bisector walks the keeper sideways;
+//           he may only advance as far as the point where the bisector ray leaves the
+//           goal-mouth corridor (the 7.32 m band in front of the goal, minus a body margin).
+//           This is what produces the near-post "retreat" at acute angles and the U-shaped
+//           family of positions — it is pure geometry, not a tuned angle table.
+//   plus  c) BALL CEILING: never advance past the ball's own distance from the goal line.
+//
+// Depth peaks centrally and falls to ~0 as the ball approaches the goal line, so the family
+// of set positions traces a shallow bowl around the mouth. Post-shot behaviour (SHOT/READ/
+// PREPARE/COMMIT/SAVE, M6), reach, reaction and every other keeper system are untouched.
+const GK_POS_FC = {
+  angleExp: 1.5,       // aperture-ratio exponent: how quickly angle suppresses depth (1 = linear in aperture)
+  bodyMargin: 0.30,    // the keeper's set position stays this far inside the posts (m)
+  ballMargin: 1.20,    // never closer to the goal line than (ball's distance from the line) − this (m)
+  minDepth: 0.40,      // never stand exactly on the line (m)
+  maxDepth: 7.00,      // absolute ceiling (m) — the P4 family's own maximum
+};
+const GK_POSMODEL = { active: "NEW", order: ["NEW", "OLD"],   // NEW = PRODUCTION (approved 2026-09-04); OLD = Q2.5 review control
+  label: { NEW: "NEW FC distance×angle surface (PRODUCTION)", OLD: "OLD Q2.5 (control)" } };
+// ── NORMAL SET DEPTH candidates (review A/B/C/D, key "="). These change ONLY the CENTRAL depth
+// the surface is allowed to reach; the approved geometry (aperture bisector, aperture-ratio
+// suppression, mouth-corridor ceiling, ball ceiling, lateral solution) transforms this baseline
+// unchanged, so the U shape is identical for every candidate. This is the ordinary shot-stopping
+// SET position — a 1v1 close/rush is a separate future decision state and is NOT implemented here.
+//   D0  the inherited P4 line: 7.0 → 3.2 m, LINEAR over 9…36 m (kept as the aggressive control)
+//   D1/D2/D3  one smooth curve, depth = dNear + (dFar − dNear)·smoothstep((d − nearD)/(farD − nearD)),
+//             flat at both ends, steepest in mid-range, and it PLATEAUS inside 8 m instead of
+//             exploding, so a close attacker does not become an automatic rush.
+const GK_SETDEPTH = {
+  active: "D2", order: ["D0", "D1", "D2", "D3"],
+  nearD: 8.0, farD: 30.0,                       // smoothstep span for D1..D3 (m from the goal centre)
+  cands: {
+    D0: { label: "D0 LEGACY P4 line (control)", p4: "P4" },
+    D1: { label: "D1 CONSERVATIVE",           dNear: 3.30, dFar: 1.55 },
+    D2: { label: "D2 BALANCED (PRODUCTION)",  dNear: 3.90, dFar: 2.05 },   // approved normal-SET baseline (2026-09-04)
+    D3: { label: "D3 MODERATELY AGGRESSIVE",  dNear: 4.45, dFar: 2.50 },
+  },
+};
+function gkCentralDepth(ballDist) {
+  const c = GK_SETDEPTH.cands[GK_SETDEPTH.active] || GK_SETDEPTH.cands.D2;
+  if (c.p4) {                                    // D0: the inherited linear P4 curve, unchanged
+    const D = GK_DEPTH_CANDS[c.p4] || GK_DEPTH_CANDS.P4;
+    const f = Math.max(0, Math.min(1, (ballDist - D.closeDist) / (D.farDist - D.closeDist)));
+    return D.maxDepth + (D.minDepth - D.maxDepth) * f;
+  }
+  const u = Math.max(0, Math.min(1, (ballDist - GK_SETDEPTH.nearD) / (GK_SETDEPTH.farD - GK_SETDEPTH.nearD)));
+  return c.dNear + (c.dFar - c.dNear) * (u * u * (3 - 2 * u));
+}
+// depth the bisector ray can reach before it leaves the goal-mouth corridor (m off the line)
+function gkCorridorCeiling(bx, by, aim) {
+  const M = GK_MOUTH, edge = (by >= M.centerY ? M.postB - GK_POS_FC.bodyMargin : M.postA + GK_POS_FC.bodyMargin);
+  const ux = Math.cos(aim), uy = Math.sin(aim);
+  if (Math.abs(uy) < 1e-6 || Math.abs(ux) < 1e-6) return Infinity;   // perpendicular ray: never leaves
+  const t = (edge - by) / uy;                                        // ray parameter at the corridor edge
+  if (t <= 0) return Infinity;                                       // moving away from that edge
+  const xEdge = bx + ux * t;
+  return M.lineX - xEdge;                                            // depth (off the line) at that point
+}
+function gkDesiredFC(bx, by, q) {
+  const M = GK_MOUTH, cx = M.lineX, P = GK_POS_FC;
+  const ap = gkAperture(bx, by);
+  const half = (M.postB - M.postA) / 2;
+  // 2 — central depth for this ball distance (NORMAL SET depth candidate, key "=")
+  const ballDist = Math.hypot(cx - bx, by - M.centerY);
+  const dCentral = gkCentralDepth(ballDist);
+  // 3a — aperture ratio: how much of a central ball's view this ball still has
+  const apCentral = 2 * Math.atan2(half, Math.max(0.5, ballDist));
+  const ratio = Math.max(0, Math.min(1, ap.aperture / Math.max(1e-6, apCentral)));
+  let depth = dCentral * Math.pow(ratio, P.angleExp);
+  // 3b/3c — geometric ceilings: the mouth corridor and the ball's own distance
+  depth = Math.min(depth, gkCorridorCeiling(bx, by, ap.bis), (cx - bx) - P.ballMargin, P.maxDepth);
+  depth = Math.max(P.minDepth, depth);
+  // 1 — stand on the aperture bisector at that depth
+  const ux = Math.cos(ap.bis);
+  const L = Math.abs(ux) > 1e-4 ? (cx - depth - bx) / ux : 0;
+  let kx = cx - depth, ky = by + Math.sin(ap.bis) * L;
+  // gk_positioning attribute: a poor keeper degrades toward the naive ball→centre line
+  const ncx = (cx - bx) || 1e-3, Ln = (cx - depth - bx) / ncx, ny = by + (M.centerY - by) * Ln;
+  ky = ny + (ky - ny) * q;
+  // hard invariant: the set position never leaves the mouth corridor
+  ky = Math.max(M.postA + P.bodyMargin, Math.min(M.postB - P.bodyMargin, ky));
+  return [kx, ky];
+}
 function gkDesiredQ(bx, by, q, Qc) {
   const M = GK_MOUTH, cx = M.lineX, ap = gkAperture(bx, by);
   // aim ANGLE starts on the bisector (equal-window optimum), then a near-post bias
@@ -2631,6 +2791,8 @@ function gkDesiredQ(bx, by, q, Qc) {
   return [kx, ky];
 }
 function gkPosition(t, bx, by, q) {
+  // REVIEW A/B: NEW = the FC-inspired distance x angle surface, OLD = Q2.5 exactly as before.
+  if (GK_POSMODEL.active === "NEW") return gkDesiredFC(bx, by, q);
   if (t && t.gkPosQ && GK_Q[t.gkPosQ]) return gkDesiredQ(bx, by, q, GK_Q[t.gkPosQ]);
   return gkDesired(bx, by, q);
 }
@@ -2674,6 +2836,18 @@ const GK_MOVE = {
   m6PrepMinInfo: 0.05,  // require at least this much reaction-elapsed settling before preparing (s)
 };
 function gkNorm01(a) { return Math.max(0, Math.min(1, (a - 20) / 70)); }   // 20..90 -> 0..1
+// bounded, monotone, mildly S-shaped attribute response for timing/handling quantities (extremes compressed,
+// mid-range differences matter most): 0.5·x + 0.5·smoothstep(x). The REACH envelope keeps the linear map so
+// the frozen K1/K2/K3 reach identities are unchanged.
+function gkShape01(a) { const x = gkNorm01(a); return 0.5 * x + 0.5 * x * x * (3 - 2 * x); }
+// live attribute lookup: a playtest override (t.gkAccel / t.gkSpeed / t.gkStrength) beats the keeper's own attrs.
+// Movement/strength are NOT part of the K bands — evaluation injects them explicitly (profiles), like height.
+function gkAttr(t, gk, name) {
+  if (t) { if (name === "acceleration" && t.gkAccel != null) return t.gkAccel;
+           if (name === "sprint_speed" && t.gkSpeed != null) return t.gkSpeed;
+           if (name === "strength" && t.gkStrength != null) return t.gkStrength; }
+  return gk.attrs[name];
+}
 // technique → launch family + nominal D (mirrors PT_SHOWCASE, so scenarios reuse
 // the identical charge-launch path as normal play)
 const GK_TECH_FAM = {
@@ -2745,7 +2919,7 @@ function ptGkMake() {
     x: c.defendGoalX - c.setDepth, y: c.goalCenterY,     // feet / root world pos
     vx: 0, vy: 0,
     facing: Math.PI,                                      // faces -x (out toward the field)
-    height: c.height_m,
+    height: c.height_m, weight: 80,                       // physical metadata (cm/kg live via t.gkHeight / t.gkWeight); weight never touches agility/pace/reach
     handZ: c.height_m * c.handReachFrac,                 // reach origin height
     bodyR: c.bodyR, armSpan: c.armSpan, standingReachZ: c.standingReachZ,
     reachLateral: c.reachLateral,                        // reserved (later stages)
@@ -2797,8 +2971,9 @@ function gkMove(gk) {
   // attributes ONLY (never gk_positioning). accel-limited dv preserves wrong-way
   // momentum; arrival braking settles the keeper (SET). No teleport/snap.
   const des = gk.desired, toX = des[0] - gk.x, toY = des[1] - gk.y, d = Math.hypot(toX, toY);
-  const vmax = GK_MOVE.vmaxBase + GK_MOVE.vmaxGain * gkNorm01(gk.attrs.sprint_speed);
-  const accel = GK_MOVE.accelBase + GK_MOVE.accelGain * gkNorm01(gk.attrs.acceleration);
+  const _t = (typeof S !== "undefined" && S.pt) || null;
+  const vmax = GK_MOVE.vmaxBase + GK_MOVE.vmaxGain * gkNorm01(gkAttr(_t, gk, "sprint_speed"));
+  const accel = GK_MOVE.accelBase + GK_MOVE.accelGain * gkNorm01(gkAttr(_t, gk, "acceleration"));
   const tgt = d < 1e-4 ? 0 : Math.min(vmax, Math.sqrt(2 * GK_MOVE.arriveBrake * d));
   const wvx = d < 1e-4 ? 0 : toX / d * tgt, wvy = d < 1e-4 ? 0 : toY / d * tgt;
   let dvx = wvx - gk.vx, dvy = wvy - gk.vy; const dvm = Math.hypot(dvx, dvy), lim = accel * PT_DT;
@@ -2828,6 +3003,10 @@ const GK_REACH = {
   selectPolicy: "S2",       // interception selection: S2 = earliest point reachable with margin (default); S3 = most comfortable (rejected: retreats); S1 = legacy (A/B, key ;)
   selectStrictNorm: 0.95,   // S2: a candidate counts as reachable only with this envelope margin (norm ≤ 0.95 ≈ 0.11 m inside the boundary); 0.95<norm≤1.10 is the marginal fallback band
   selectBackMax: 1.0,       // S2/S3: an interception may lie at most this far BEHIND the keeper's current feet (m) — no backward dive
+  handFwd: 0.30,            // the hand meets a ball this far AHEAD of the feet without a step (candidate floor + PREPARE depth allowance)
+  selectTimeFeasible: true, // S2: prefer the earliest strictly-reachable point the hand can ARRIVE at in time (GK_ACTION timing); fallback = earliest by envelope
+  feasGapFrac: 0.5,         // "arrives in time" = hand shortfall at ball arrival ≤ this × (handR + ballR) — prefers full-extension arrivals over grazes
+  lobTakeLower: true, lobSpare: 0.30,   // dropping ball met above the catch band → take the first feasible point inside it, if ≥ lobSpare s to spare (review toggle)
   predHorizon: 2.6, predMaxSteps: 170,  // forward predictor (curve decay/bounce bleed come from the real ball's PT_CURVE law)
   obsWindow: 6,             // observed-velocity samples used to estimate turn rate
   snapMs: [50, 100, 200, 300],   // prediction-evolution snapshot times after contact
@@ -2855,8 +3034,8 @@ function gkEnvNorm(env, L, z) {
   return Math.pow(Math.pow(Math.abs(lt), p) + Math.pow(Math.abs(vt), p), 1 / p);
 }
 function gkReactionLatency(t, gk) {
-  const r = gkNorm01(t.gkReflex != null ? t.gkReflex : gk.attrs.gk_reflexes);
-  return GK_REACH.reactionBase - GK_REACH.reactionReflexGain * r;   // continuous, no tiers, no RNG
+  const r = gkShape01(t.gkReflex != null ? t.gkReflex : gk.attrs.gk_reflexes);
+  return GK_REACH.reactionBase - GK_REACH.reactionReflexGain * r;   // continuous, bounded, monotone; no tiers, no RNG
 }
 function gkHeightM(t, gk) { return (t.gkHeight != null ? t.gkHeight : gk.height * 100) / 100; }
 function gkObserve(gk, t, b) {
@@ -2904,7 +3083,7 @@ function gkEstSpin(gk) {
     const air = gkCurveAir(q.z);
     // sign: the real law pushes along the LEFT-perp (vy, -vx)/|v|, which turns the heading atan2(vy,vx)
     // NEGATIVE for positive spin — so an observed heading rate w implies spin −w/(k·air) (v2) / −w·|v|/air (v1)
-    sum += (PT_CURVE.mode === "v2") ? -w / (PT_CURVE.k * air) : -w * sp / air; n++;
+    sum += (PT_CURVE.mode === "v2") ? -w / (ptX3K() * air) : -w * sp / air; n++;
   }
   return n ? sum / n : 0;
 }
@@ -2920,10 +3099,16 @@ function gkPredict(gk, b) {
   let px = b.x, py = b.y, pz = b.z, vx = b.vx, vy = b.vy, vz = b.vz;
   let sObs = gkEstSpin(gk);
   const dt = PT_DT, gx = GK_MOUTH.lineX;
-  const samples = [{ t: 0, x: px, y: py, z: pz }];
+  // TIME ORIGIN (integration pass, 2026-09-04): the keeper updates BEFORE the ball integrates in the same
+  // tick, so the ball state read here is where the ball was at the END of the previous tick — one dt
+  // behind the keeper's clock. Sample i therefore arrives at keeper time (i − 1)·dt, not i·dt. Stamping
+  // i·dt made every availableTime one tick optimistic: the keeper committed one tick late and the
+  // hand met the ball one smoothstep step short of the target (traced on a 12 m / 0.6 m reach: hand
+  // 0.20 m short at ball arrival where the prediction said 0.12 m).
+  const samples = [{ t: -dt, x: px, y: py, z: pz }];
   let crossing = null;
   for (let i = 1; i <= GK_REACH.predMaxSteps; i++) {
-    const t = i * dt;
+    const t = (i - 1) * dt;
     const px0 = px;
     px += vx * dt; py += vy * dt; pz += vz * dt;   // (1) advance (same as the real ball)
     if (pz > 0) vz -= PT.G * dt;                  // (2) gravity
@@ -2937,7 +3122,7 @@ function gkPredict(gk, b) {
       const spc = Math.hypot(vx, vy);
       if (spc > 0.5) {
         const air = gkCurveAir(pz);
-        const a = (PT_CURVE.mode === "v2" ? PT_CURVE.k * sObs * spc : sObs) * air;
+        const a = (PT_CURVE.mode === "v2" ? ptX3K() * sObs * spc : sObs) * air;   // same coefficient the ball is flying with
         const lx = vy / spc, ly = -vx / spc;
         vx += lx * a * dt; vy += ly * a * dt;
         const rollD = PT_CURVE.mode === "v2" ? PT_CURVE.skimDecay : PT_CURVE.rollDecay;
@@ -2954,7 +3139,7 @@ function gkPredict(gk, b) {
     }
     if (t > GK_REACH.predHorizon || (sp2 < 0.2 && pz < 0.05)) break;
   }
-  const w0 = -(PT_CURVE.mode === "v2" ? PT_CURVE.k * sObs * gkCurveAir(b.z) : (Math.hypot(b.vx, b.vy) > 0.5 ? sObs * gkCurveAir(b.z) / Math.hypot(b.vx, b.vy) : 0));   // heading rate implied now (HUD)
+  const w0 = -(PT_CURVE.mode === "v2" ? ptX3K() * sObs * gkCurveAir(b.z) : (Math.hypot(b.vx, b.vy) > 0.5 ? sObs * gkCurveAir(b.z) / Math.hypot(b.vx, b.vy) : 0));   // heading rate implied now (HUD)
   return { samples, crossing, turnRate: w0, spin: sObs };
 }
 const GK_TIERS = ["STANDING REACHABLE", "LOW-DIVE REACHABLE", "MEDIUM-DIVE REACHABLE",
@@ -2971,14 +3156,15 @@ function gkEvalPoint(t, gk, c, reactRemain) {
   const dxp = c.x - gk.x, dyp = c.y - gk.y, distH = Math.hypot(dxp, dyp) || 1e-6;
   const dirx = dxp / distH, diry = dyp / distH;
   const vAlong = gk.vx * dirx + gk.vy * diry;
-  const accel = GK_MOVE.accelBase + GK_MOVE.accelGain * gkNorm01(gk.attrs.acceleration);
-  const vmax = GK_MOVE.vmaxBase + GK_MOVE.vmaxGain * gkNorm01(gk.attrs.sprint_speed);
+  const accel = GK_MOVE.accelBase + GK_MOVE.accelGain * gkNorm01(gkAttr(t, gk, "acceleration"));
+  const vmax = GK_MOVE.vmaxBase + GK_MOVE.vmaxGain * gkNorm01(gkAttr(t, gk, "sprint_speed"));
   // RECONCILIATION (Part C): the keeper's feet only SPRINT during the pre-commit
   // phase; the final dive (time-to-extension for this ball's height band) is the
   // reach, not extra feet travel. So the eval credits feet for (availableTime -
   // diveTime), matching Stage-3 execution — not the full flight. This removes the
   // Stage-2/Stage-3 disagreement without buffing the keeper.
-  const diveTime = c.z < GK_REACH.lowBandZ ? 0.28 : c.z < GK_REACH.midBandZ ? 0.34 : 0.42;
+  const diveTime = GK_ACTION.model === "TIER" ? (c.z < GK_REACH.lowBandZ ? 0.28 : c.z < GK_REACH.midBandZ ? 0.34 : 0.42)
+                 : gkActionTime(t, gk, [c.x, c.y, c.z], vAlong).execT;
   const aT = Math.max(0, availableTime - diveTime); let v = vAlong, d = 0; const h = aT / 10;
   for (let k = 0; k < 10 && aT > 0; k++) { v = Math.max(-vmax, Math.min(vmax, v + accel * h)); d += v * h; }
   d = Math.min(d, distH);                        // feet cannot overshoot the point (may be negative if wrong-way)
@@ -3021,14 +3207,21 @@ function gkEvalPoint(t, gk, c, reactRemain) {
   else if (c.z >= hipZ && c.z <= shZ && dFootStand <= GK_BODY.torsoR + GOALFX.ballR + 0.10) surface = "BODY";
   // anything requiring lateral travel is a DIVE — led by the hand (matches Stage-3 first-contact)
   else surface = tier === "FINGERTIP-LIMIT" ? "FINGERTIP" : c.z < GK_REACH.lowBandZ ? "HAND-LOW" : c.z < GK_REACH.midBandZ ? "HAND-MED" : "HAND-HIGH";
+  // time feasibility: the hand, following the committed smoothstep over execT, must be within the contact
+  // tolerance of the point when the ball is there (an action that cannot finish is not a save option)
+  const execT = diveTime, Dh = Math.hypot(c.x - gk.x, c.y - gk.y, c.z - gk.handZ);
+  const arrivalGap = gkArrivalGap(Dh, execT, availableTime);
+  const handR = GK_HAND[t.gkHand] != null ? GK_HAND[t.gkHand] : GK_DIVE.handR;
+  const timeFeasible = availableTime > 0 && arrivalGap <= GK_REACH.feasGapFrac * (handR + GOALFX.ballR);   // hand well inside the contact tolerance, not grazing
   return { tier, surface, requiredSpan, diveSpanMax, standingArm: GK_REACH.standingArm, margin,
-           availableTime, feet: [fx, fy], vAlong, highReachZ, standingReachZ, point: c, env, norm, reachL: L };
+           availableTime, feet: [fx, fy], vAlong, highReachZ, standingReachZ, point: c, env, norm, reachL: L,
+           execT, arrivalGap, timeFeasible };
 }
 function gkReachEval(t, gk, reactRemain) {
   const pr = gk.predict; if (!pr) return { tier: "NO PREDICTION" };
   const cands = [];
   if (pr.crossing) cands.push({ x: GK_MOUTH.lineX, y: pr.crossing.y, z: pr.crossing.z, t: pr.crossing.t, where: "line", inMouth: pr.crossing.inMouth });
-  for (const s of pr.samples) if (s.x >= gk.x - 0.3 && s.x <= GK_MOUTH.lineX && s.t > 0) cands.push({ x: s.x, y: s.y, z: s.z, t: s.t, where: "pre-line" });
+  for (const s of pr.samples) if (s.x >= gk.x - GK_REACH.handFwd && s.x <= GK_MOUTH.lineX && s.t > 0) cands.push({ x: s.x, y: s.y, z: s.z, t: s.t, where: "pre-line" });
   if (!cands.length) return { tier: "NO PREDICTION" };
   const line = pr.crossing ? gkEvalPoint(t, gk, cands[0], reactRemain) : null;
   // Choose the EARLIEST physically reachable interception (item 7): meeting the ball
@@ -3056,7 +3249,7 @@ function gkReachEval(t, gk, reactRemain) {
   //        prediction a point 0.5–1.0 m deeper at norm 0.85–0.94 exists with time to spare. Falls back
   //        to S2's earliest strict point when nothing is time-feasible, then fingertip, then tier-rank.
   const pol = (t && t.gkSelect) || GK_REACH.selectPolicy;
-  let best = null, bestReach = null, bestFinger = null, bestComfort = null;
+  let best = null, bestReach = null, bestFinger = null, bestComfort = null, bestFeasible = null, bestEffort = null, bestLob = null;
   const earlier = (e, b) => !b || e.point.t < b.point.t - 1e-4 || (Math.abs(e.point.t - b.point.t) <= 1e-4 && e.margin > b.margin);
   const comfier = (e, b) => !b || e.norm < b.norm - 1e-4 || (Math.abs(e.norm - b.norm) <= 1e-4 && e.point.t < b.point.t);
   for (const c of cands) { const e = gkEvalPoint(t, gk, c, reactRemain);
@@ -3069,6 +3262,16 @@ function gkReachEval(t, gk, reactRemain) {
       if (pol === "S1") { if (earlier(e, bestReach)) bestReach = e; }
       else if (e.tier !== "FINGERTIP-LIMIT" && (pol === "S3" || e.norm <= GK_REACH.selectStrictNorm)) {
         if (earlier(e, bestReach)) bestReach = e;
+        // S2 time feasibility (integration pass): among strictly reachable points prefer the earliest the hand
+        // can actually ARRIVE at in time; the earliest-by-envelope point stays the fallback when none can
+        if (GK_REACH.selectTimeFeasible && e.timeFeasible && earlier(e, bestFeasible)) bestFeasible = e;
+        // LOB rule (integration pass): a DROPPING ball that the earliest point would meet above the catching band is
+        // taken at the first feasible point INSIDE the band instead — only with ample spare time (never on a fast
+        // shot; this is not the rejected comfort-seeking S3, which retreated on drives). The keeper waits under the
+        // lob and catches at chest/head height rather than fingertipping it at full stretch.
+        if (GK_REACH.lobTakeLower && e.timeFeasible && c.z <= GK_CONTACT.zComfortHi && c.z >= GK_CONTACT.zComfortLo && earlier(e, bestLob)) bestLob = e;
+        // no feasible point: the honest best effort is the point the hand gets CLOSEST to when the ball is there
+        if (GK_REACH.selectTimeFeasible && (!bestEffort || e.arrivalGap < bestEffort.arrivalGap - 1e-6)) bestEffort = e;
         if (pol === "S3") {
           const execT = (GK_DIVE.execTime[gkTierKey(e.tier)] || 0.3) * Math.max(GK_DIVE.execMinFrac, Math.min(1, e.norm));
           if (e.availableTime >= execT - 0.02 && comfier(e, bestComfort)) bestComfort = e;
@@ -3077,7 +3280,16 @@ function gkReachEval(t, gk, reactRemain) {
       else if (earlier(e, bestFinger)) bestFinger = e;
     }
   }
-  return { line, best: bestComfort || bestReach || bestFinger || best, inMouth: pr.crossing ? pr.crossing.inMouth : false };
+  // the lob rule only overrides when the earliest feasible point is ABOVE the catching band (a dropping ball) AND that
+  // earliest point still has ≥ lobSpare of slack (the keeper can afford to wait) — the slack is judged on the point he
+  // would otherwise take, so the choice is stable tick to tick
+  // The decision is LATCHED: it is taken while there is slack (READ/PREPARE) and then kept, because at the commit
+  // instant the earliest point's slack is by construction ~0 (commit fires when it runs out) — without the latch the
+  // keeper would abandon the lower point at the last tick and stretch for the high one after all.
+  let lobPick = (bestLob && bestFeasible && bestFeasible.point.z > GK_CONTACT.zComfortHi && bestLob.point.t > bestFeasible.point.t &&
+                 (bestFeasible.availableTime - bestFeasible.execT) >= GK_REACH.lobSpare) ? bestLob : null;
+  if (lobPick) gk.lobLatched = true; else if (gk.lobLatched && bestLob && !gk.committed) lobPick = bestLob;
+  return { line, best: bestComfort || lobPick || bestFeasible || bestEffort || bestReach || bestFinger || best, inMouth: pr.crossing ? pr.crossing.inMouth : false };
 }
 // ── Stage 3 committed movement / dive tiers + swept keeper->ball contact ─────
 let GK_COLLIDE = true;    // master keeper-collision switch (regression sets false -> byte-identical)
@@ -3089,16 +3301,98 @@ const GK_DIVE = {
   execMinFrac: 0.30,         // floor on the dive-duration scale for a short reflex reach (× the tier's full-dive execTime)
   // (the Stage-3 TEMPORARY eTemp / minClear neutral deflection is REMOVED — GK_CONTACT (Stage 4) owns the post-contact response)
   contactSubsteps: 12,       // swept-contact sub-sampling per tick (no tunnelling for POWER)
-  reContactExcl: 0.4,        // exclusion window after a keeper contact
+  reContactExcl: 0.05,       // per-VOLUME same-touch guard after a keeper contact (s); approach-direction test does the physical work — a rebound may hit him again
+  reContactMinGap: 0.03,     // no second contact of ANY volume within this of the last (the same touch is never processed twice)
+  pickupExcl: 0.4,           // player pickup exclusion after a keeper contact (s) — unchanged behaviour
   nearBox: 9.0,              // only test contact when the ball is within this x of the goal line
 };
+// ── SAVE-ACTION EXECUTION TIME (integration pass, 2026-09-04). How long the hand needs to reach a
+// point is built from the ACTUAL displacement and the mechanism that produces it — not a per-tier
+// constant. Two mechanisms act in parallel and the slower one sets the time:
+//   ARM  — the hand travels up to armReach (+ a torso lean) from its rest origin by arm motion alone:
+//          bounded hand acceleration / speed (fast; a small "very-short-time response" gain from reflexes).
+//   BODY — beyond that the shoulders must move: a load/crouch, then a leg-driven launch whose effective
+//          acceleration depends on DIRECTION — lateral drive (gk_diving), getting DOWN (gravity-assisted,
+//          gk_diving), getting UP (a jump against gravity, jumping).
+// This replaces `GK_DIVE.execTime[tier] × max(0.30, norm)`: that floor let a 0.6 m standing reach complete in
+// 0.036 s (a 17 m/s hand) and produced impossible instant contacts at 6–8 m, while a 1.8 m medium dive was
+// credited 0.27 s. Reference points (measured/literature): full-extension dive to contact ≈ 0.45–0.65 s;
+// arm-only block/reach ≈ 0.15–0.25 s; hand peak speed 6–10 m/s. Inferred: load time, drive accelerations.
+// `model: "TIER"` keeps the legacy constants selectable for A/B review.
+const GK_ACTION = {
+  model: "CAUSAL",                  // CAUSAL (default) | TIER (legacy per-tier constants)
+  armReach: 0.72,                   // hand travel by arm motion alone (= GK_CFG.armSpan)
+  leanReach: 0.25,                  // extra hand travel from a torso lean without moving the feet
+  handAccelBase: 52, handAccelReflexGain: 16,   // hand acceleration (m/s²) = base + gain·norm01(gk_reflexes)
+  handVmax: 8.0,                    // hand speed cap (m/s)
+  loadTime: 0.11, loadDivingGain: 0.04,         // crouch/load before a launch (s) = loadTime − gain·norm01(gk_diving); scales down for short shifts
+  loadFullAt: 0.5,                  // body shift (m) at which the full load time applies
+  latAccelBase: 8.0, latAccelGain: 6.0,         // lateral leg drive (m/s²) = base + gain·norm01(gk_diving)
+  downAccelBase: 8.0, downAccelGain: 6.0,       // getting DOWN (m/s²) = base + gain·norm01(gk_diving). Gravity assists the fall, but the hand
+                                                //   reaches ground level LAST (the torso must collapse first): net hand drive taken equal to the lateral
+                                                //   leg drive — INFERRED; empirical save maps put bottom corners at least as hard as mid-lateral
+  upAccelBase: 4.5, upAccelGain: 4.5,           // net upward drive against gravity (m/s²) = base + gain·norm01(jumping)
+  minExec: 0.06,                    // absolute floor (s): no zero-time action
+};
+function gkActionTime(t, gk, target, vAlong) {
+  // returns { execT, action, dArm, dBody, tArm, tBody } for the hand travelling from its rest origin
+  // (feet, handZ) to target; vAlong = current hand/root speed toward the target (a head start, ≥ 0)
+  const A = GK_ACTION;
+  const dx = target[0] - gk.x, dy = target[1] - gk.y, dz = target[2] - gk.handZ;
+  const lat = Math.hypot(dx, dy), D = Math.hypot(dx, dy, dz);
+  const v0 = Math.max(0, vAlong || 0);
+  const bang = (d, a, vmax) => {                   // accelerate from v0 (cap vmax) until the hand arrives — no braking, it meets the ball
+    if (d <= 1e-6) return 0;
+    const dAcc = Math.max(0, (vmax * vmax - v0 * v0) / (2 * a));
+    if (d <= dAcc) return (Math.sqrt(v0 * v0 + 2 * a * d) - v0) / a;
+    return (vmax - v0) / a + (d - dAcc) / vmax;
+  };
+  const rf = gkShape01(t.gkReflex != null ? t.gkReflex : gk.attrs.gk_reflexes);
+  const dv = gkShape01(t.gkDiving != null ? t.gkDiving : gk.attrs.gk_diving);
+  const jp = gkShape01(t.gkJump != null ? t.gkJump : gk.attrs.jumping);
+  const reach = A.armReach + A.leanReach;
+  const dArm = Math.min(D, reach), dBody = Math.max(0, D - reach);
+  const tArm = bang(dArm, A.handAccelBase + A.handAccelReflexGain * rf, A.handVmax);
+  let tBody = 0, action;
+  if (dBody <= 1e-6) action = D <= A.armReach ? "STANDING" : "LEAN";
+  else {
+    // direction weights PARTITION the displacement (lat + |dz| = the L1 path the body has to produce), so a
+    // diagonal (corner) reach gets the blended drive, never more than either axis alone
+    const l1 = lat + Math.abs(dz) || 1e-6;
+    const fl = lat / l1, fu = Math.max(0, dz) / l1, fd = Math.max(0, -dz) / l1;
+    const aEff = fl * (A.latAccelBase + A.latAccelGain * dv) + fu * (A.upAccelBase + A.upAccelGain * jp) + fd * (A.downAccelBase + A.downAccelGain * dv);
+    const load = (A.loadTime - A.loadDivingGain * dv) * Math.min(1, dBody / A.loadFullAt);
+    // launch from the head-start speed: dBody = v0·t + ½·a·t²
+    const tl = (Math.sqrt(v0 * v0 + 2 * aEff * dBody) - v0) / aEff;
+    tBody = load + tl;
+    action = target[2] < GK_REACH.lowBandZ ? "DIVE-LOW" : target[2] < GK_REACH.midBandZ ? "DIVE-MID" : "DIVE-HIGH";
+  }
+  const execT = Math.max(A.minExec, tArm, tBody);
+  return { execT, action, dArm, dBody, tArm, tBody, D, lat };
+}
+// execution time for a committed reach: causal model, or the legacy per-tier constant × reach fraction
+function gkExecTime(t, gk, tier, norm, target, vAlong) {
+  if (GK_ACTION.model === "TIER" || !target) {
+    const reachFrac = Math.max(GK_DIVE.execMinFrac, Math.min(1, norm));
+    return { execT: (GK_DIVE.execTime[gkTierKey(tier)] || 0.3) * reachFrac, action: gkTierKey(tier) };
+  }
+  return gkActionTime(t, gk, target, vAlong);
+}
+// hand shortfall at ball arrival if it follows the committed smoothstep to `target` over execT but only
+// `avail` seconds elapse: the action is time-feasible when this is inside the contact tolerance
+function gkArrivalGap(D, execT, avail) {
+  const u = Math.max(0, Math.min(1, avail / Math.max(1e-6, execT))), e = u * u * (3 - 2 * u);
+  return D * (1 - e);
+}
 // ── keeper ANATOMY (items I–J): distinct collision volumes that correspond to the
 // eventual visible keeper — NOT one giant capsule. The save surface EMERGES from
 // which volume the swept keeper→ball TOI reaches first (item J); geometry is never
 // inflated to manufacture a save (item M). Heights are fractions of live height.
 const GK_BODY = {
   torsoR: 0.20,              // torso half-width (~40 cm) — central block volume
-  hipFrac: 0.50,            // torso capsule bottom (z = hipFrac*height)
+  hipFrac: 0.44,            // torso capsule bottom (z = hipFrac*height). Overlaps the standing-leg capsules (top = thighFrac 0.48):
+                            //   the old 0.50 left a 4 cm hip gap where a square 22 m/s ball met only the capsule END caps, got an oblique
+                            //   normal and was stamped forward into the goal as a "BODY DEFLECTION" (integration pass trace, 8 m chest ball)
   shoulderFrac: 0.82,       // torso capsule top   (z = shoulderFrac*height)
   legR: 0.11,               // leg/foot radius (~22 cm)
   footSpread: 0.20,         // half stance width — each foot offset ±this in the lateral (y) from the root
@@ -3132,8 +3426,9 @@ function gkCoast(gk) {
 // M6 single prep step and the legacy SET-hold. Returns nothing; mutates gk.
 function gkDriveTo(gk, tx, ty, brake) {
   const toX = tx - gk.x, toY = ty - gk.y, d = Math.hypot(toX, toY);
-  const vmax = GK_MOVE.vmaxBase + GK_MOVE.vmaxGain * gkNorm01(gk.attrs.sprint_speed);
-  const accel = GK_MOVE.accelBase + GK_MOVE.accelGain * gkNorm01(gk.attrs.acceleration);
+  const _t = (typeof S !== "undefined" && S.pt) || null;
+  const vmax = GK_MOVE.vmaxBase + GK_MOVE.vmaxGain * gkNorm01(gkAttr(_t, gk, "sprint_speed"));
+  const accel = GK_MOVE.accelBase + GK_MOVE.accelGain * gkNorm01(gkAttr(_t, gk, "acceleration"));
   const tv = d < 1e-3 ? 0 : Math.min(vmax, Math.sqrt(2 * brake * d));
   const wvx = d < 1e-3 ? 0 : toX / d * tv, wvy = d < 1e-3 ? 0 : toY / d * tv;
   let dvx = wvx - gk.vx, dvy = wvy - gk.vy; const dvm = Math.hypot(dvx, dvy), lim = accel * PT_DT;
@@ -3157,10 +3452,10 @@ function gkTryCommit(t, gk, ev) {
   const reachable = norm <= 1.0;
   const tier = (L <= GK_REACH.standingArm && tp[2] <= env.standingReachZ && tp[2] >= env.comfortZ - GK_REACH.standingArm) ? "STANDING REACHABLE"
              : (tp[2] < GK_REACH.lowBandZ ? "LOW-DIVE REACHABLE" : tp[2] < GK_REACH.midBandZ ? "MEDIUM-DIVE REACHABLE" : "HIGH/FULL-STRETCH REACHABLE");
-  // dive DURATION scales with how far into the envelope the reach is (a short reflex
-  // reach completes faster than a full stretch). Duration only — no attribute buff.
-  const reachFrac = Math.max(GK_DIVE.execMinFrac, Math.min(1, norm));
-  const execT = (GK_DIVE.execTime[gkTierKey(tier)] || 0.3) * reachFrac;
+  // execution time from the ACTUAL hand displacement and mechanism (GK_ACTION; legacy: tier × reach fraction)
+  const dirx = tp[0] - gk.x, diry = tp[1] - gk.y, dl = Math.hypot(dirx, diry) || 1e-6;
+  const vAlong = (gk.vx * dirx + gk.vy * diry) / dl;
+  const ax = gkExecTime(t, gk, tier, norm, tp, vAlong), execT = ax.execT;
   if (ev.availableTime <= execT + GK_DIVE.commitBuffer && ev.availableTime > -0.2) {
     // committed hand target: the interception if reachable, else the farthest point ON
     // the envelope boundary toward the ball (best-effort stretch — will miss, shows reach).
@@ -3171,6 +3466,7 @@ function gkTryCommit(t, gk, ev) {
     }
     tz = Math.max(0, Math.min(env.highReachZ, tz));
     gk.committed = { t0: t.now, tier: reachable ? tier : "UNREACHABLE", execTime: execT, bestEffort: !reachable,
+      action: ax.action, actionDetail: { dArm: ax.dArm, dBody: ax.dBody, tArm: ax.tArm, tBody: ax.tBody },
       target: [tx, ty, tz], feet: [gk.x, gk.y], handOrigin: ho,
       reachMargin: +((1 - norm) * env.maxLat).toFixed(2), diveSpanMax: env.maxLat, envNorm: +norm.toFixed(3),
       tShotToReact: gk.latency, tReactToCommit: t.now - (gk.shotT0 + gk.latency), commitTime: t.now };
@@ -3221,9 +3517,18 @@ function gkStage3Move(t, gk, reactRemain) {
     const avail = ev ? ev.availableTime : 99;
     const infoElapsed = (t.now - (gk.shotT0 + gk.latency)) >= GK_MOVE.m6PrepMinInfo;
     if (!gk.prepared && cr && ev && ev.point && infoElapsed && (settled || avail <= GK_MOVE.m6PrepHorizon)) {
-      const _D = t.gkDepth || GK_DEPTH;
-      const wantX = Math.max(GK_MOUTH.lineX - _D.maxDepth, Math.min(GK_MOUTH.lineX - _D.minDepth, ev.point.x));
+      // ONE step toward where the FEET should stand to play the read. Laterally: under the read.
+      // In depth: only what the interception itself demands — the hand meets a ball up to
+      // GK_REACH.handFwd ahead of the feet without a step (the same allowance the candidate
+      // generation in gkReachEval uses), so a point inside that forward reach asks for NO forward
+      // step; a point behind the feet asks for a drop step toward it. Bounds are the keeper's own
+      // geometry (never a positioning-candidate depth band: the inherited P4 band's 3.2 m floor sat
+      // UPFIELD of the D2 SET position beyond ~17 m and commanded a 0.35–1.00 m forward hop —
+      // long-shot movement audit, 2026-09-04).
       const cap = GK_MOVE.m6PrepStepMax;
+      const dxp = ev.point.x - setX;                                            // + = the point is behind the feet (toward the line)
+      const needX = dxp < 0 ? Math.min(0, dxp + GK_REACH.handFwd) : dxp;
+      const wantX = Math.min(GK_MOUTH.lineX - GK_POS_FC.minDepth, setX + needX);
       const sx = Math.max(-cap, Math.min(cap, wantX - setX));
       const sy = Math.max(-cap, Math.min(cap, ev.point.y - setY));   // ONE step toward the read, capped & FROZEN
       gk.prepTarget = [setX + sx, setY + sy]; gk.prepared = true; gk.saveSide = Math.sign(ev.point.y - setY) || 0;
@@ -3280,7 +3585,8 @@ function gkTryContact(t, b) {
   // wins; the moving keeper geometry decides, we never pick a surface then move to it.
   // Returns a contact record (and mutates the ball) ONLY on a real intersection.
   const gk = t.gk;
-  if (!GK_COLLIDE || !gk || !gk.shotActive || gk.contacted) return null;
+  if (!GK_COLLIDE || !gk || !gk.shotActive) return null;
+  if (gk.lastContactT != null && t.now - gk.lastContactT < GK_DIVE.reContactMinGap) return null;   // never re-process the same touch
   if (b.x < GK_MOUTH.lineX - GK_DIVE.nearBox || !gk.handNow || !gk.handPrev) return null;
   const dt = PT_DT, K = GK_DIVE.contactSubsteps, br = GOALFX.ballR, H = gk.height;
   const p0 = [b.x, b.y, b.z], p1 = [b.x + b.vx * dt, b.y + b.vy * dt, b.z + b.vz * dt];
@@ -3300,13 +3606,22 @@ function gkTryContact(t, b) {
   ];
   if (gk.legTipNow && gk.legTipPrev) surf.push({ name: "LEGTIP", sphere: true, p0: gk.legTipPrev, p1: gk.legTipNow, R: GK_BODY.legR });
   let hit = null;
+  const exclVol = gk.lastContactByVol || {};
   for (let s = 1; s <= K && !hit; s++) {
     const f = s / K;
     const bx = p0[0] + (p1[0] - p0[0]) * f, by = p0[1] + (p1[1] - p0[1]) * f, bz = p0[2] + (p1[2] - p0[2]) * f;
     for (const su of surf) {
+      if (exclVol[su.name] != null && t.now - exclVol[su.name] < GK_DIVE.reContactExcl) continue;   // this volume just touched the ball; another volume (or a frame rebound later) may
       const kx = su.p0[0] + (su.p1[0] - su.p0[0]) * f, ky = su.p0[1] + (su.p1[1] - su.p0[1]) * f;
       const kz = su.sphere ? su.p0[2] + (su.p1[2] - su.p0[2]) * f : Math.max(su.zLo, Math.min(su.zHi, bz));
-      if (Math.hypot(bx - kx, by - ky, bz - kz) <= su.R + br) { hit = { su, f, ballPt: [bx, by, bz], keeperPt: [kx, ky, kz] }; break; }
+      if (Math.hypot(bx - kx, by - ky, bz - kz) <= su.R + br) {
+        // a collision needs APPROACH: ball velocity relative to the surface pointing into it. A ball already
+        // separating (just deflected, or overtaking a hand that follows it) is not struck again.
+        const svx = (su.p1[0] - su.p0[0]) / dt, svy = (su.p1[1] - su.p0[1]) / dt, svz = su.sphere ? (su.p1[2] - su.p0[2]) / dt : 0;
+        let nx = bx - kx, ny = by - ky, nz = bz - kz; const nl = Math.hypot(nx, ny, nz) || 1; nx /= nl; ny /= nl; nz /= nl;
+        const approach = (b.vx - svx) * nx + (b.vy - svy) * ny + (b.vz - svz) * nz;
+        if (approach >= 0) continue;
+        hit = { su, f, ballPt: [bx, by, bz], keeperPt: [kx, ky, kz] }; break; }
     }
   }
   if (!hit) return null;
@@ -3357,6 +3672,8 @@ const GK_CONTACT = {
   trajElev0: 25, trajElev1: 60,                       // steep incoming elevation (deg) degrades control (dipping / rising balls)
   // ── gk_handling (post-contact ONLY)
   secureSpeedBase: 10.0, secureSpeedGain: 9.0, secureSpeedBand: 9.0,   // body-relative speed absorbed into a secure hold: base + gain·h01 (+band fade)
+  secureStrengthGain: 2.0, weakHandStrengthGain: 3.0,                  // strength: +absorbed speed for a secure hold; +bounded impulse an un-braced hand can give (m/s)
+  ballMass: 0.43,                                                       // kg — body/leg/foot responses use the true two-body mass factor W/(W+m) (keeper weight is physical metadata)
   ctrlSpeed0Base: 14.0, ctrlSpeed0Gain: 6.0, ctrlSpeed1Base: 26.0, ctrlSpeed1Gain: 10.0, ctrlSpeedFloor: 0.15,   // parry control vs body-relative speed: full ≤ s0(h), floor ≥ s1(h) — a better handler steers faster balls
   catchThreshBase: 0.62, catchThreshGain: 0.17,   // catchScore needed for CATCH: base − gain·h01 (secure-catch tolerance)
   ctrlThreshBase: 0.55, ctrlThreshGain: 0.17,     // controlScore needed for CONTROLLED PARRY (marginal contacts stay useful)
@@ -3386,7 +3703,7 @@ function gkHandling(t, gk) { return t.gkHandling != null ? t.gkHandling : gk.att
 //   handVel  bounded velocity of the contacting surface (alignment is judged in ITS frame — the sweep geometry)
 //   rootVel  bounded body velocity (the speed the keeper must ABSORB is ball-vs-body: the hand gives)
 function gkContactQuality(t, gk, volume, ballPt, n, vIn, handVel, rootVel, u) {
-  const C = GK_CONTACT, h01 = gkNorm01(gkHandling(t, gk));
+  const C = GK_CONTACT, h01 = gkShape01(gkHandling(t, gk)), s01 = gkShape01(gkAttr(t, gk, "strength"));
   const cSet = C.setFloor + (1 - C.setFloor) * u * u;                          // arm extended & braced (u→1) vs met mid-swing / before commit
   const env = gkEnvelope(t, gk, gkHeightM(t, gk));
   const origin = gk.committed ? gk.committed.feet : [gk.x, gk.y];            // reach origin = feet at commit (exactly what Stage-3 commit measured)
@@ -3397,7 +3714,7 @@ function gkContactQuality(t, gk, volume, ballPt, n, vIn, handVel, rootVel, u) {
   const sin = Math.sqrt(Math.max(0, 1 - cos * cos));                                          // palm offset: 0 centre of palm … 1 extreme edge
   const cAlign = Math.max(0, Math.min(1, (cos - C.alignZero) / (1 - C.alignZero)));
   const vb = [vIn[0] - rootVel[0], vIn[1] - rootVel[1], vIn[2] - rootVel[2]]; const sRel = Math.hypot(vb[0], vb[1], vb[2]);
-  const vSecure = C.secureSpeedBase + C.secureSpeedGain * h01;
+  const vSecure = C.secureSpeedBase + C.secureSpeedGain * h01 + C.secureStrengthGain * s01;   // strength: absorbing a hard ball into a secure hold (bracing), never reach
   const cSpeedCatch = Math.max(0, Math.min(1, (vSecure + C.secureSpeedBand - sRel) / C.secureSpeedBand));
   const s0 = C.ctrlSpeed0Base + C.ctrlSpeed0Gain * h01, s1 = C.ctrlSpeed1Base + C.ctrlSpeed1Gain * h01;
   const cSpeedCtrl = Math.max(C.ctrlSpeedFloor, Math.min(1, (s1 - sRel) / (s1 - s0)));
@@ -3485,10 +3802,12 @@ function gkApplyContact(t, b, surface, ballPt, keeperPt, f, surfR, surfVel, volu
     const vt = [vr[0] - vn * nx, vr[1] - vn * ny, vr[2] - vn * nz];
     let dvn = vn < 0 ? -(1 + P.e) * vn : 0;                                  // braced surface: the approach is reversed with restitution
     if (P.jMax != null) {                                                    // un-braced surface: bounded impulse (fast balls leak through)
-      let jm = P.jMax + (P.jMaxHand || 0) * q.h01;
+      let jm = P.jMax + (P.jMaxHand || 0) * q.h01 + (key === "HAND_WEAK" ? C.weakHandStrengthGain * gkShape01(gkAttr(t, gk, "strength")) : 0);
       if (key === "HAND_WEAK") jm *= (1 + q.two) * (0.5 + 0.5 * q.cSet);      // bracing: two hands with the body behind, and an extended arm, hold far more than one unset hand
       dvn = Math.min(dvn, jm);
     }
+    if (key === "BODY" || key === "LEG" || key === "FOOT") {                // two-body normal collision: the keeper's mass W vs the ball (≈1 % effect; physical, not a bonus)
+      const W = (t.gkWeight != null ? t.gkWeight : (gk.weight || 80)); dvn *= W / (W + C.ballMass); }
     const vnOut = vn + dvn;
     vOut = [sv[0] + vnOut * nx + P.kt * vt[0], sv[1] + vnOut * ny + P.kt * vt[1], sv[2] + vnOut * nz + P.kt * vt[2]];
     if (push > 0 && pushDir) { vOut[0] += push * pushDir[0]; vOut[1] += push * pushDir[1]; vOut[2] += push * pushDir[2]; }
@@ -3501,14 +3820,16 @@ function gkApplyContact(t, b, surface, ballPt, keeperPt, f, surfR, surfVel, volu
     b.x = ballPt[0]; b.y = ballPt[1]; b.z = Math.max(GOALFX.ballR, ballPt[2]);
     b.vx = 0; b.vy = 0; b.vz = 0; b.held = "GK"; b.exclT = Infinity;     // keeper-owned: no integration / frame / crossing / net / player pickup
   } else {
-    const rem = (1 - f) * PT_DT;                                         // finish the tick's remaining travel with the new velocity
+    const rem = (1 - f) * PT_DT;                                         // the ball's remaining sub-tick: finished by the free-ball block (frame / ground / crossing / net)
     b.vx = vOut[0]; b.vy = vOut[1]; b.vz = vOut[2];
-    b.x = ballPt[0] + nx * C.separation + b.vx * rem; b.y = ballPt[1] + ny * C.separation + b.vy * rem;
-    b.z = Math.max(0, ballPt[2] + nz * C.separation + b.vz * rem);
-    b.exclT = t.now + GK_DIVE.reContactExcl;
+    b.x = ballPt[0] + nx * C.separation; b.y = ballPt[1] + ny * C.separation;
+    b.z = Math.max(0, ballPt[2] + nz * C.separation);
+    b.exclT = t.now + GK_DIVE.pickupExcl;                                // player pickup exclusion (unchanged)
+    var _remDt = rem;
   }
   b.curve = null;
   gk.contacted = true; gk.state = held ? "CATCH" : "CONTACT";
+  gk.lastContactT = t.now; (gk.lastContactByVol = gk.lastContactByVol || {})[vol] = t.now;   // re-contact exclusion is per VOLUME and short — a rebound may hit him again
   if (t.pauseAtContact) t.paused = true;                                  // review aid (key V): stop here, then '.' step / ',' slow-mo
   t.last = "GK " + outcome;
   const c = gk.committed || {}, P = C.surf[key];
@@ -3522,7 +3843,9 @@ function gkApplyContact(t, b, surface, ballPt, keeperPt, f, surfR, surfVel, volu
     tier: c.tier || "-", reachMarginAtCommit: c.reachMargin != null ? +c.reachMargin.toFixed(2) : null,
     tShotToReact: c.tShotToReact != null ? +c.tShotToReact.toFixed(3) : (gk.latency != null ? +gk.latency.toFixed(3) : null),
     tReactToCommit: c.tReactToCommit != null ? +c.tReactToCommit.toFixed(3) : null,
-    tCommitToContact: c.commitTime != null ? +(t.now - c.commitTime).toFixed(3) : null };
+    tCommitToContact: c.commitTime != null ? +(t.now - c.commitTime).toFixed(3) : null,
+    remDt: held ? null : _remDt, seq: (gk.contacts ? gk.contacts.length : 0) + 1 };
+  (gk.contacts = gk.contacts || []).push(gk.contact);
   return gk.contact;
 }
 // CATCH state: the securely held ball is keeper-owned. It rides the (still completing)
@@ -3548,7 +3871,7 @@ function ptGkUpdate(t) {
     gk.shotActive = true; gk.shotT0 = t.now;
     gk.latency = gkReactionLatency(t, gk);
     gk.atShot = { x: gk.x, y: gk.y, vx: gk.vx, vy: gk.vy };
-    gk.predHist = []; gk.committed = null; gk.contacted = false; gk.contact = null; gk._snapped = null;
+    gk.predHist = []; gk.committed = null; gk.contacted = false; gk.contact = null; gk.contacts = []; gk.lastContactT = null; gk.lastContactByVol = {}; gk._snapped = null; gk.lobLatched = false;
     gk.setPos = [gk.x, gk.y];                        // A) freeze SET at the shot instant — POSITION controller stops here
     gk.moveTarget = [gk.x, gk.y]; gk.moveReversals = 0; gk.preCommitDist = 0; gk._lastMoveSgn = null;
     gk.prepared = false; gk.prepTarget = null; gk.saveSide = 0; gk._crossHist = []; gk._mtDir = [0, 0]; gk.phase = "READ";
@@ -3820,14 +4143,27 @@ function ptDrawKeeper(dt) {
       lines = [
         "GK V1 (Stage 4 — CONTACT QUALITY: catch / parry / fingertip / block from geometry+timing; Stage 3 frozen)",
         "state " + gk.state + "   reflexes " + A(t.gkReflex) + " latency " + latMs + "ms   react-remain " + gk.reactRemain.toFixed(3) + "s",
-        "cap " + t.gkCap + (t.gkCap === "K1" ? "(REF)" : "") + "  posQ " + t.gkPosQ + " (" + (GK_Q[t.gkPosQ] ? GK_Q[t.gkPosQ].name : "-") + ")  hand " + t.gkHand + " ⌀" + ((GK_HAND[t.gkHand] != null ? GK_HAND[t.gkHand] : GK_DIVE.handR) * 200).toFixed(0) + "cm  handling " + A(t.gkHandling) + (t.pauseAtContact ? "  [pause-at-contact ON]" : ""),
+        "cap " + t.gkCap + (t.gkCap === "K1" ? "(REF)" : "") + "  height " + t.gkHeight + "cm  weight " + (t.gkWeight != null ? t.gkWeight : gk.weight) + "kg  refl " + A(t.gkReflex) + " div " + A(t.gkDiving) + " jump " + A(t.gkJump) + " hand " + A(t.gkHandling) + " str " + A(t.gkStrength != null ? t.gkStrength : gk.attrs.strength) + " acc " + A(gkAttr(t, gk, "acceleration")) + " spd " + A(gkAttr(t, gk, "sprint_speed")) +
+          "  pos " + GK_POSMODEL.active + "/" + GK_SETDEPTH.active + "  action " + GK_ACTION.model + "  hand " + t.gkHand + (t.pauseAtContact ? "  [pause-at-contact ON]" : ""),
         "policy " + t.gkMovePolicy + "  select " + (t.gkSelect || GK_REACH.selectPolicy) + "  PHASE " + (gk.phase || "-") + "   revs " + (gk.moveReversals || 0) + "  preCommit " + (gk.preCommitDist || 0).toFixed(2) + "m  expSurface " + (gk.reach && gk.reach.best ? gk.reach.best.surface : "-"),
+        // ── POST-SHOT MOVEMENT DIAGNOSTIC (read-only; long-shot movement audit).
+        // FORWARD + = upfield (toward the shooter, decreasing x); LATERAL + = +y.
+        "MOVE  PHASE " + (gk.phase || "-") + "  t+" + (t.now - gk.shotT0).toFixed(3) + "s" +
+          "  flightLeft " + (cr ? cr.t.toFixed(3) + "s" : "—") + "  usable " + (be ? be.availableTime.toFixed(3) + "s" : "—") +
+          "  SETdepth " + (gk.setPos ? (GK_MOUTH.lineX - gk.setPos[0]).toFixed(2) : "—") + "m  rootDepth " + (GK_MOUTH.lineX - gk.x).toFixed(2) + "m",
+        "MOVE  Δfwd " + (gk.setPos ? (gk.setPos[0] - gk.x).toFixed(3) : "—") + "m  Δlat " + (gk.setPos ? (gk.y - gk.setPos[1]).toFixed(3) : "—") +
+          "m   vFwd " + (-gk.vx).toFixed(2) + "  vLat " + gk.vy.toFixed(2) + " m/s" +
+          "   PREPtgt " + (gk.prepTarget ? "(" + gk.prepTarget[0].toFixed(2) + "," + gk.prepTarget[1].toFixed(2) + ")" : "—") +
+          "  COMMITtgt " + (cm ? "(" + cm.target[0].toFixed(2) + "," + cm.target[1].toFixed(2) + ",z" + cm.target[2].toFixed(2) + ")" : "—") +
+          "  dive ends t+" + (cm ? (cm.commitTime - gk.shotT0 + cm.execTime).toFixed(3) + "s" : "—"),
         "targets  SET(" + (gk.setPos ? gk.setPos[0].toFixed(1) + "," + gk.setPos[1].toFixed(1) : "-") + ")  predInt(" + (gk.predInt ? gk.predInt[0].toFixed(1) + "," + gk.predInt[1].toFixed(1) : "-") + ")  move(" + (gk.moveTarget ? gk.moveTarget[0].toFixed(1) + "," + gk.moveTarget[1].toFixed(1) : "-") + ")",
         "ball   (" + b.x.toFixed(2) + "," + b.y.toFixed(2) + "," + b.z.toFixed(2) + ") vel (" + b.vx.toFixed(1) + "," + b.vy.toFixed(1) + "," + b.vz.toFixed(1) + ")  obsTurn " + (gk.predict ? gk.predict.turnRate.toFixed(2) : "—"),
         "predicted crossing  " + (cr ? "y=" + cr.y.toFixed(2) + " z=" + cr.z.toFixed(2) + " in " + cr.t.toFixed(2) + "s  " + (cr.inMouth ? "IN MOUTH" : "off target") : "—"),
         "BEST reach " + (be ? be.tier + " reqSpan " + be.requiredSpan.toFixed(2) + "/" + be.diveSpanMax.toFixed(2) + " margin " + be.margin.toFixed(2) + " avail " + be.availableTime.toFixed(2) + "s" : "—"),
-        cm ? ("COMMITTED " + cm.tier + (cm.bestEffort ? " (best-effort)" : "") + " target(" + cm.target[0].toFixed(1) + "," + cm.target[1].toFixed(1) + ",z" + cm.target[2].toFixed(2) + ") diveU " + (gk.diveU || 0).toFixed(2) + " margin@commit " + (cm.reachMargin != null ? cm.reachMargin.toFixed(2) : "—"))
-           : "not committed yet (footwork/reacting)",
+        cm ? ("COMMITTED " + cm.tier + (cm.bestEffort ? " (best-effort)" : "") + "  ACTION " + (cm.action || "-") + " exec " + cm.execTime.toFixed(3) + "s" +
+              (cm.actionDetail ? " (arm " + cm.actionDetail.dArm.toFixed(2) + "m/" + cm.actionDetail.tArm.toFixed(2) + "s · body " + cm.actionDetail.dBody.toFixed(2) + "m/" + cm.actionDetail.tBody.toFixed(2) + "s)" : "") +
+              "  target(" + cm.target[0].toFixed(1) + "," + cm.target[1].toFixed(1) + ",z" + cm.target[2].toFixed(2) + ") diveU " + (gk.diveU || 0).toFixed(2) + " margin@commit " + (cm.reachMargin != null ? cm.reachMargin.toFixed(2) : "—"))
+           : "not committed yet (footwork/reacting)" + (be && be.execT != null ? "   sel action " + (be.timeFeasible ? "feasible" : "NOT feasible") + " execT " + be.execT.toFixed(3) + "s gap " + (be.arrivalGap != null ? be.arrivalGap.toFixed(2) : "-") + "m" : ""),
         ct ? ("CONTACT " + ct.surface + " toi " + ct.toiFrac + " pt(" + ct.point[0] + "," + ct.point[1] + "," + ct.point[2] + ") n[" + ct.respNormal + (ct.normalCorrected ? " leg-cyl" : "") + "] vIn[" + ct.vIn + "]->vOut[" + ct.vOut + "] |" + ct.speedOut + "|")
            : "no keeper contact " + (gk.contacted ? "" : "(ball passing / not reached)"),
         ct ? ("OUTCOME " + ct.outcome + (ct.held ? "  ● HELD (keeper-owned)" : "") + "   reachNorm " + ct.q.norm + " (margin " + ct.q.reachMargin + "m)  align " + ct.q.cos + " palm-off " + ct.q.sin + "  relV " + ct.q.sRel + "m/s (secure≤" + ct.q.vSecure + ")  2hands " + ct.q.two + "  balance " + ct.q.cBal + "  z/traj " + ct.q.cHeight)
@@ -4317,13 +4653,19 @@ function ptStep() {
       // STAGE 4: a securely CAUGHT ball is keeper-owned (rides the hands; no integration / frame / crossing / net while held).
       // STAGE 3: otherwise the swept keeper->ball TOI runs BEFORE frame/crossing/net. Null if no genuine contact -> existing physics run unchanged (byte-identical).
       const _kc = b.held === "GK" ? gkHeldBallStep(t, b) : gkTryContact(t, b);
-      if (!_kc) {
+      // INTEGRATION PASS (2026-09-04): a keeper contact no longer swallows the rest of the tick. The ball is
+      // placed at the contact point with its new velocity and then continues through the SAME frame / ground /
+      // friction / curve / crossing / net physics for the remaining sub-tick (dtB = the fraction after the TOI),
+      // so a deflection into a post or across the line inside the contact tick is resolved, never skipped.
+      // A held (caught) ball skips everything. No contact: dtB = PT_DT, byte-identical to before.
+      if (!b.held && (!_kc || _kc.remDt != null)) {
+      const dtB = _kc && _kc.remDt != null ? _kc.remDt : PT_DT;
       const _p0 = { x: b.x, y: b.y, z: b.z };   // NET V2 swept: pre-advance pos
       // GOAL FRAME V1 (gated): swept post/crossbar collision replaces the
       // plain position advance; with the flag off this is byte-identical.
-      if (GOALFX.collision) ptGoalFrameStep(b);
-      else { b.x += b.vx * PT_DT; b.y += b.vy * PT_DT; b.z += b.vz * PT_DT; }
-      if (b.z > 0) b.vz -= PT.G * PT_DT;
+      if (GOALFX.collision) ptGoalFrameStep(b, dtB);
+      else { b.x += b.vx * dtB; b.y += b.vy * dtB; b.z += b.vz * dtB; }
+      if (b.z > 0) b.vz -= PT.G * dtB;
       if (b.z <= 0) {
         if (b.vz < 0) {
           const r = -b.vz * PT.REST;
@@ -4336,7 +4678,7 @@ function ptStep() {
       const sp2 = Math.hypot(b.vx, b.vy);
       if (sp2 > 0) {
         const mu = b.z > 0.05 ? PT.MU_AIR : PT.MU_ROLL;
-        const ns = Math.max(0, sp2 - mu * PT_DT);
+        const ns = Math.max(0, sp2 - mu * dtB);
         b.vx *= ns / sp2; b.vy *= ns / sp2;
       }
       // INSIDE_R CURVE V1: lateral accel toward the travel-left perpendicular,
@@ -4346,12 +4688,12 @@ function ptStep() {
         if (spc > 0.5) {
           const u = Math.max(0, Math.min(1, (b.z - PT_CURVE.airZ0) / (PT_CURVE.airZ1 - PT_CURVE.airZ0)));
           const air = PT_CURVE.groundFrac + (1 - PT_CURVE.groundFrac) * u * u * (3 - 2 * u);
-          const a = (PT_CURVE.mode === "v2" ? PT_CURVE.k * b.curve.s * spc
+          const a = (PT_CURVE.mode === "v2" ? ptX3K() * b.curve.s * spc
                                             : b.curve.s) * air * b.curve.sgn;
           const lx = b.vy / spc, ly = -b.vx / spc;   // left-perp of travel (pitch y grows south)
-          b.vx += lx * a * PT_DT; b.vy += ly * a * PT_DT;
+          b.vx += lx * a * dtB; b.vy += ly * a * dtB;
           const rollD = PT_CURVE.mode === "v2" ? PT_CURVE.skimDecay : PT_CURVE.rollDecay;
-          b.curve.s *= 1 - (b.z > 0.05 ? PT_CURVE.decay : rollD) * PT_DT;
+          b.curve.s *= 1 - (b.z > 0.05 ? PT_CURVE.decay : rollD) * dtB;
         }
       }
       // GOAL FRAME V1 (gated): WHOLE-BALL goal crossing. The trailing-most
@@ -4394,7 +4736,7 @@ function ptStep() {
       // the membrane). The old discrete node-proximity + scripted t.net catch
       // is retired.
       netV2Collide(b, _p0);
-      }   // end if(!_kc): keeper did not intercept this tick
+      }   // end free-ball block (no keeper contact, or the remainder of a contact tick)
     } else if (Math.hypot(b.vx, b.vy) > 0.02) {   // controlled rolling touch travel
       b.x += b.vx * PT_DT; b.y += b.vy * PT_DT;
       const sp2 = Math.hypot(b.vx, b.vy);
@@ -4592,6 +4934,28 @@ function drawPlaytest(dt) {
                `   ball ${Math.hypot(b.vx, b.vy).toFixed(1)} m/s  z ${b.z.toFixed(2)} m`,
                uipx(14), cv.height - uipx(86));
   ctx.fillText(`last action: ${t.last}   kick sync: ${cd}`, uipx(14), cv.height - uipx(70));
+  {                                    // TEMPORARY review readouts (X3 curve + GK positioning/SET depth)
+    const prev = ctx.fillStyle, xc = ptX3();
+    const _gk = S.pt && S.pt.gk, _b = S.pt && S.pt.b, M = GK_MOUTH;
+    const _ang = _b ? Math.abs(Math.atan2(_b.y - M.centerY, M.lineX - _b.x)) * 180 / Math.PI : 0;
+    ctx.save();                                                     // own backdrop: these rows sit over the pitch
+    ctx.fillStyle = "rgba(0,0,0,0.55)";
+    ctx.fillRect(uipx(8), cv.height - uipx(260), uipx(720), uipx(72));
+    ctx.restore();
+    ctx.fillStyle = GK_POSMODEL.active === "NEW" ? "#b0ffd0" : "#ffd0a0";
+    ctx.fillText(`GK POSITION: ${GK_POSMODEL.active}   (${GK_POSMODEL.label[GK_POSMODEL.active]}   ] toggles)`,
+                 uipx(14), cv.height - uipx(248));
+    ctx.fillText(`SET DEPTH: ${GK_SETDEPTH.cands[GK_SETDEPTH.active].label}   (= cycles D0/D1/D2/D3)`,
+                 uipx(14), cv.height - uipx(232));
+    ctx.fillText(`depth = ${_gk ? (M.lineX - _gk.x).toFixed(2) : "-.--"} m      angle = ${_ang.toFixed(1)}\u00b0` +
+                 `      ball ${_b ? Math.hypot(M.lineX - _b.x, _b.y - M.centerY).toFixed(2) : "-.--"} m` +
+                 `      off-centre ${_gk ? (_gk.y - M.centerY).toFixed(2) : "-.--"} m`,
+                 uipx(14), cv.height - uipx(216));
+    ctx.fillStyle = PT_X3.active === "D" ? "#9fe8ff" : "#ffb0f0";
+    ctx.fillText(`INSIDE_R curve: ${xc.label}   k ${ptX3K().toFixed(4)}   ([ cycles A 0.50 / B 0.55 / C 0.60 / D 1.00 PROD)`,
+                 uipx(14), cv.height - uipx(200));
+    ctx.fillStyle = prev;
+  }
   // authoritative possession readout (audit tooling): state is the ball's
   // own ctrl/flight fields, never inferred from proximity
   const bstate = t.net ? "IN_NET" : b.ctrl ? "CONTROLLED" :
@@ -5120,6 +5484,19 @@ function bindUI() {
         ptGkScenario((cur == null || cur < first) ? first : first + ((cur - first + 1) % n4));
       }
       else if (k === "j") ptGkStudy(S.pt.gkStudyIdx == null ? 0 : S.pt.gkStudyIdx + 1);      // GK positioning-study cycle
+      else if (k === "=") {                                                                   // normal SET depth candidate (review): D0/D1/D2/D3
+        const O = GK_SETDEPTH.order; GK_SETDEPTH.active = O[(O.indexOf(GK_SETDEPTH.active) + 1) % O.length];
+        S.pt.last = "GK SET DEPTH -> " + GK_SETDEPTH.cands[GK_SETDEPTH.active].label;
+      }
+      else if (k === "]") {                                                                   // positioning model A/B (review): NEW surface vs OLD Q2.5
+        const O = GK_POSMODEL.order; GK_POSMODEL.active = O[(O.indexOf(GK_POSMODEL.active) + 1) % O.length];
+        S.pt.last = "GK POSITIONING MODEL -> " + GK_POSMODEL.label[GK_POSMODEL.active];
+      }
+      else if (k === "[") {                                                                   // TEMPORARY X3 curve-magnitude calibration (review only)
+        const O = PT_X3.order; PT_X3.active = O[(O.indexOf(PT_X3.active) + 1) % O.length];
+        const c = ptX3();
+        S.pt.last = "INSIDE_R CURVE -> " + c.label + "  (k " + ptX3K().toFixed(4) + ", target setup surface re-solved)";
+      }
       else if (k === "o") {                                                                   // gk_positioning LOW/MED/HIGH
         const L = [30, 60, 90], cur = L.indexOf(S.pt.gkPos);
         S.pt.gkPos = L[(cur + 1) % L.length];
