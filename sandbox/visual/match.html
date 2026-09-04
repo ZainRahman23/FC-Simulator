@@ -36,6 +36,9 @@
     <div style="font-size:11px;opacity:.75;margin:2px 0 0">Technique showcase (test-only): 1 INSIDE &middot; 2 LACES &middot; 3 POWER LACES &middot; 4 TRIVELA/OUTSIDE &middot; 5 CHIP &middot; 6 full sequence</div>
     <div style="font-size:11px;opacity:.75;margin:2px 0 0">G cycles INSIDE_R preview target (review only): AUTO &middot; 10 &middot; 15 &middot; 20 &middot; 25 &middot; 30 m</div>
     <div style="font-size:11px;opacity:.75;margin:2px 0 0">Goal-frame: rigid posts/crossbar (e=0.72) &middot; N fires the 6 synthetic post/crossbar impacts</div>
+    <div style="font-size:11px;opacity:.75;margin:2px 0 0">Goalkeeper V1 (Stage 3): K shots (incl. low-shot/foot-save battery) &middot; P positioning Q1..Q4 (aperture bisector, P4 depth) &middot; B pre-commit M6(READ→PREPARE→COMMIT)/M2..M5 &middot; E hand H1/H2/H3 &middot; L capability K1(reference)/K2/K3 &middot; O/I/U/Y/H attrs &middot; M pause &middot; , slow-mo &middot; . step-frame</div>
+    <div style="font-size:11px;opacity:.75;margin:2px 0 0">"Goalkeeper V1 debug" draws SET(green□)/predInt(cyan◇)/MOVE(orange✕)/COMMIT(pink★) &middot; anatomy: hand(white○)/torso(blue○)/feet(amber○)/lead-leg(orange○) &middot; PHASE + save surface (FOOT/LEG/BODY/HANDS)</div>
+    <div style="font-size:11px;opacity:.75;margin:2px 0 0">Goalkeeper V1 Stage 4 (CONTACT QUALITY, Stage 3 frozen): after a physical contact the outcome CATCH / CONTROLLED PARRY / WEAK PARRY / FINGERTIP / BODY BLOCK / FOOT SAVE / LEG SAVE comes from continuous contact geometry+timing (no save roll) &middot; ; cycles interception selection S2 (earliest point reachable with margin, default) / S3 (most comfortable — rejected) / S1 (legacy) &middot; Q cycles the Stage-4 acceptance battery (catch / hard-shot parry / foot / shin / body / lateral / full-stretch / fingertip post &amp; bar / spills / net / unreachable / handling probe / K2) &middot; T gk_handling LOW/MED/HIGH (post-contact only) &middot; V pause-at-contact (then . step-frame / , slow-mo / M resume) &middot; a CATCH is held by the keeper (no distribution yet)</div>
   </section>
 
   <section>
@@ -120,6 +123,7 @@
     <label class="inline"><input type="checkbox" id="dbg-netphys"> Net physics debug (nodes, pins, displacement, contact)</label>
     <label class="inline"><input type="checkbox" id="dbg-occ"> Player collision debug (bodies, desired/resolved v, contacts)</label>
     <label class="inline"><input type="checkbox" id="dbg-dribsync"> Dribble contact debug (boot-to-ball line at each touch)</label>
+    <label class="inline"><input type="checkbox" id="dbg-gk"> Goalkeeper V1 debug (state, position/velocity, reach ring, ball, timing)</label>
     <div style="font-size:11px;opacity:.75;margin:2px 0 4px">NET PHYSICS TEST (synthetic ball): keys 1 central &middot; 2 low corner &middot; 3 upper &middot; 4 side net &middot; 5 cycles slow/normal/power &middot; 0 toggles slow-motion</div>
     <div style="font-size:11px;opacity:.75;margin:2px 0 4px">BALL PHYSICS TEST (synthetic): keys 6 drop &middot; 7 roll &middot; 8 lofted &middot; 9 elevated shot &middot; C high chip (readout + trail via Ball debug) &middot; T engine transport sequence &middot; V ball spin showcase</div>
     <div style="font-size:11px;opacity:.75;margin:2px 0 4px">ANIMATION PROTOTYPE (synthetic): key P &mdash; idle &rarr; run &rarr; dribble &rarr; shoot with contact-synced kick (east-facing puppet near x=80)</div>
