@@ -4320,13 +4320,16 @@ const GK_ANIM = {
   fullStretchNorm: 0.90, fullStretchLatFrac: 0.60,   // FULL_STRETCH: envNorm ≥ 0.90 (or best effort) AND horizontal demand ≥ 0.60·maxLat
   footSaveLegFrac: 0.7,                        // FOOT_SAVE pre-contact: ankle-height ball beyond the stance within 70 % of the leg sweep
   standingBodyMax: 0.20,                       // body displacement beyond arm+lean (simulation dBody) up to this is a "tiny adjustment": feet stay planted, NO DIVE
+  collapseLatFrac: 0.65, collapseNormMax: 0.85, // LOW_COLLAPSE: low ball within this fraction of the lateral envelope and below this reach norm; beyond → AIRBORNE_DIVE (low-mid expression)
+  savePoseManifest: null, savePoseRoot: "",    // camera-space SAVE POSES (GOAL_LEFT / GOAL_RIGHT authored in the gameplay camera) — candidate manifest set by the review page
+  savePoseIK: true,                            // hand-led bounded placement of save poses (false = RAW authored placement, for the raw-vs-IK review)
   axisMismatchMaxDeg: 35,                      // pose rotation whose measured body axis is further than this from the projected save vector → AXIS_MISMATCH flag
   reviewOverride: null,                        // review page only: {kind, family, side, saveAngleDeg, dir, pos, label} — draw a chosen representation instead of the live state
 };
 const GK_ANIM_MIRROR = { east: "west", west: "east", "north-east": "north-west", "north-west": "north-east", "south-east": "south-west", "south-west": "south-east", north: "north", south: "south" };
-const GK_ANIM_DIVES = { LOW_COLLAPSE: 1, MEDIUM_DIVE: 1, HIGH_DIVE: 1, FULL_STRETCH: 1 };
+const GK_ANIM_DIVES = { LOW_COLLAPSE: 1, AIRBORNE_DIVE: 1, MEDIUM_DIVE: 1, HIGH_DIVE: 1, FULL_STRETCH: 1 };   // MEDIUM/HIGH/FULL_STRETCH: retired V1.1 labels (never produced by the classifier now)
 const GK_ANIM_SIDED = { SHUFFLE: 1, CROSSOVER: 1, NEAR_BODY_SAVE: 1, LOW_COLLAPSE: 1, MEDIUM_DIVE: 1, HIGH_DIVE: 1, FULL_STRETCH: 1, FOOT_SAVE: 1, HIGH_CATCH: 0, LOW_REACH: 1 };
-S.gkAnim = { loaded: false, manifest: null, states: {}, anchors: {}, clips: {}, poses: {}, cache: {}, cur: null, lastContact: null, perf: { n: 0, ms: 0, max: 0 }, log: [], odo: 0, prevRoot: null, flags: [], commit: null };
+S.gkAnim = { loaded: false, manifest: null, states: {}, anchors: {}, clips: {}, poses: {}, savePoses: {}, cache: {}, cur: null, lastContact: null, perf: { n: 0, ms: 0, max: 0 }, log: [], odo: 0, prevRoot: null, flags: [], commit: null };
 // per-shot / per-reset view state (never touches the simulation)
 function gkAnimResetView() { const A = S.gkAnim; if (!A) return; A.cur = null; A.lastContact = null; A.log = []; A.odo = 0; A.prevRoot = null; A.commit = null; }
 async function gkAnimLoadPoses(A, manifestUrl, root, candidate) {
@@ -4345,6 +4348,21 @@ async function gkAnimLoadPoses(A, manifestUrl, root, candidate) {
       axes[d] = lead ? { deg: Math.atan2(lead[1] - cy, lead[0] - cx) * 180 / Math.PI, len: best, lead, centre: [cx, cy] } : null;
     }
     A.poses[fam] = { family: fam, side: ps.side || "RIGHT", imgs, anchors, axes, candidate: candidate || !!ps.candidate, approved: !!ps.approved, id: ps.pixellab_state_id || null, note: ps.note || "" };
+  }
+}
+async function gkAnimLoadSavePoses(A, manifestUrl, root) {
+  const m = await loadJSON(manifestUrl); A.savePoseManifest = m;
+  for (const [fam, sides] of Object.entries(m.save_poses || {})) {
+    A.savePoses[fam] = A.savePoses[fam] || {};
+    for (const [side, spec] of Object.entries(sides)) {
+      A.savePoses[fam][side] = A.savePoses[fam][side] || {};
+      for (const [cls, smp] of Object.entries(spec.samples || {})) {
+        try {
+          const img = await loadImage(root + smp.path); let an = null; try { an = await loadJSON(root + smp.anchors); } catch (e) { an = null; }
+          A.savePoses[fam][side][cls] = { img, anchors: an, candidate: smp.candidate !== false && !smp.approved, approved: !!smp.approved, note: smp.note || "", id: smp.id || null };
+        } catch (e) { console.warn("save pose not loaded", fam, side, cls, e); }
+      }
+    }
   }
 }
 async function gkAnimLoad() {
@@ -4385,6 +4403,10 @@ async function gkAnimLoad() {
     A.byFamily = {}; for (const c of Object.values(A.clips)) for (const fam of (c.families || [c.family])) if (fam) A.byFamily[fam] = c;
     if (m.poses) await gkAnimLoadPoses(A, GK_ANIM.manifest, ASSET_ROOT, false);
     if (GK_ANIM.candidateManifest) { try { await gkAnimLoadPoses(A, GK_ANIM.candidateManifest, GK_ANIM.candidateRoot || "", true); } catch (e) { console.warn("GK candidate poses not loaded", e); } }
+    if (m.save_poses) await gkAnimLoadSavePoses(A, GK_ANIM.manifest, ASSET_ROOT);
+    // ?savePoses=1 (or =<manifest url>) loads the V1.2 camera-space save-pose CANDIDATES on the playtest page (review only; candidates are not assets)
+    try { const q = new URLSearchParams(location.search).get("savePoses"); if (q && !GK_ANIM.savePoseManifest) { const u = q === "1" ? "../../review_artifacts/gk_anim_v1_2/save_poses/GK_SAVE_POSES_CANDIDATES.json" : q; GK_ANIM.savePoseManifest = u; GK_ANIM.savePoseRoot = u.slice(0, u.lastIndexOf("/") + 1); } } catch (e) {}
+    if (GK_ANIM.savePoseManifest) { try { await gkAnimLoadSavePoses(A, GK_ANIM.savePoseManifest, GK_ANIM.savePoseRoot || ""); } catch (e) { console.warn("GK save poses not loaded", e); } }
     A.loaded = !!A.states.base;
   } catch (e) { console.warn("GK Animation V1: assets not loaded — placeholder keeper", e); A.loaded = false; }
 }
@@ -4448,7 +4470,10 @@ function gkAnimClassify(gk, c, facing) {
   const saveAngle = L > 1e-6 ? Math.atan2(dy, dx) * 180 / Math.PI : facing * 180 / Math.PI;
   const side = lat >= 0 ? "RIGHT" : "LEFT";
   const v0 = Math.hypot(gk.vx, gk.vy);
-  let family, sub = null, airborne = false;
+  let family, sub = null, airborne = false, expr = null;
+  // SAVE SIDE as seen through the gameplay camera: the goal line is world y; −y (north) projects up-left = GOAL_LEFT, +y (south) down-right = GOAL_RIGHT
+  const goalSide = dy < -1e-6 ? "GOAL_LEFT" : dy > 1e-6 ? "GOAL_RIGHT" : (lat >= 0 ? (fy > 0 ? "GOAL_RIGHT" : "GOAL_LEFT") : (fy > 0 ? "GOAL_LEFT" : "GOAL_RIGHT"));
+  const hClass = zH < GK_ANIM.zLow ? "LOW-MID" : zH < GK_ANIM.zMid ? "MID" : zH < GK_ANIM.zTop ? "HIGH" : "TOP";
   if (c.gather) family = "LOW_GATHER";
   else if (feetPlanted) {
     // A. STANDING / NEAR-BODY: feet stay planted (or one small adjustment); sub-visual by where the hands go
@@ -4460,12 +4485,16 @@ function gkAnimClassify(gk, c, facing) {
   } else {
     // a dive is required (body displacement beyond arm + lean)
     if (z <= GK_BODY.legExtendZ && Math.abs(lat) > GK_BODY.footSpread && Math.abs(lat) <= GK_BODY.footSpread + GK_ANIM.footSaveLegFrac * GK_BODY.legExtendMax && L < 0.5 * maxLat) { family = "FOOT_SAVE"; }
-    else if ((norm >= GK_ANIM.fullStretchNorm || c.bestEffort) && L >= GK_ANIM.fullStretchLatFrac * maxLat) { family = "FULL_STRETCH"; airborne = true; }
-    else if (zClass === "LOW") { family = "LOW_COLLAPSE"; airborne = L > 0.6 * maxLat; }
-    else if (zClass === "MID") { family = "MEDIUM_DIVE"; airborne = true; }
-    else { family = "HIGH_DIVE"; airborne = true; }
+    else if (zClass === "LOW" && L <= GK_ANIM.collapseLatFrac * maxLat && norm < GK_ANIM.collapseNormMax) { family = "LOW_COLLAPSE"; airborne = false; }
+    else {
+      // ONE continuous airborne family (Phase 7): the expression follows the simulation's demand, never a canned tier
+      family = "AIRBORNE_DIVE"; airborne = true;
+      const intensity = Math.max(0, Math.min(1, (norm - 0.45) / 0.55));
+      expr = { heightClass: hClass, intensity: +intensity.toFixed(3), latFrac: +(L / maxLat).toFixed(3), vertDemand: +dz.toFixed(3), depthDemand: +depth.toFixed(3), nearMax: norm >= GK_ANIM.fullStretchNorm || !!c.bestEffort, exec: +c.execTime.toFixed(3),
+               extension: +Math.min(1, 0.35 + 0.65 * intensity).toFixed(3), launch: +Math.max(0, Math.min(1, (dz + 0.3) / 1.2)).toFixed(3) };
+    }
   }
-  return { family, sub, side, saveAngle, saveDir: gkAnimDirFromAngle(saveAngle), lat: +lat.toFixed(3), depth: +depth.toFixed(3), dz: +dz.toFixed(3), z: +z.toFixed(3), zH: +zH.toFixed(3), zClass, L: +L.toFixed(3), norm: +norm.toFixed(3), maxLat: +maxLat.toFixed(2), exec: +c.execTime.toFixed(3), v0: +v0.toFixed(2), feetPlanted, airborne, dArm: +dArm.toFixed(3), dBody: +dBody.toFixed(3), action: act, tier: c.tier, bestEffort: !!c.bestEffort };
+  return { family, sub, side, goalSide, hClass, expr, saveAngle, saveDir: gkAnimDirFromAngle(saveAngle), lat: +lat.toFixed(3), depth: +depth.toFixed(3), dz: +dz.toFixed(3), z: +z.toFixed(3), zH: +zH.toFixed(3), zClass, L: +L.toFixed(3), norm: +norm.toFixed(3), maxLat: +maxLat.toFixed(2), exec: +c.execTime.toFixed(3), v0: +v0.toFixed(2), feetPlanted, airborne, dArm: +dArm.toFixed(3), dBody: +dBody.toFixed(3), action: act, tier: c.tier, bestEffort: !!c.bestEffort, dy: +dy.toFixed(3) };
 }
 // STATE MACHINE — a pure function of (simulation time, keeper state) plus the view odometer for loops and the commit-tick freeze
 function gkAnimUpdate(t, gk) {
@@ -4519,7 +4548,7 @@ function gkAnimUpdate(t, gk) {
       else if (family === "CHEST_CATCH" || family === "SUPPORTED_CATCH" || family === "HIGH_CATCH") { state = family; phase = u < 0.7 ? "hands-out" : "absorb"; arm = true; }
       else if (family === "NEAR_BODY_SAVE") { state = "NEAR_BODY_SAVE_" + side; phase = "reach"; arm = true; }
       else if (family === "FOOT_SAVE") { state = "FOOT_SAVE_" + side; phase = "leg out"; boot = true; arm = true; }
-      else { state = family + "_" + side; phase = u < GK_ANIM.loadPhase ? "load/push" : (u < 0.8 ? "extend" : "contact"); arm = true; }
+      else { state = family + "_" + cls.goalSide + (cls.expr ? " " + cls.expr.heightClass : ""); phase = u < GK_ANIM.loadPhase ? "load/push" : (u < 0.8 ? "extend" : "contact"); arm = true; }
       if (now >= execEnd && !isDive) phase = "wait at target";
       clipReq = { family: clipFamily, side, mode: "reach", k: u };
     } else if (isDive) {                                                  // LAND → RECOVER → SET
@@ -4535,12 +4564,18 @@ function gkAnimUpdate(t, gk) {
   }
   // resolve the art for the request: authored clip (live) → contact POSE (approved, or candidate when the review page asks)
   // → temporary representation (standing families) → DIAGNOSTIC figure (dive families: never a wrong dive)
-  let clip = null, pose = null, diagnostic = null;
+  let clip = null, pose = null, diagnostic = null, savePose = null;
   if (clipReq && A.byFamily) {
     const c = A.byFamily[clipReq.family];
     const r = c ? gkAnimResolve(c, dir, clipReq.side) : null;
     const isDiveFam = !!GK_ANIM_DIVES[clipReq.family];
-    if (r) {
+    // CAMERA-SPACE SAVE POSE (V1.2): authored for GOAL_LEFT / GOAL_RIGHT in the gameplay camera — no rotation, no mirror
+    const spFam = A.savePoses[clipReq.family], spSide = spFam && cls ? spFam[cls.goalSide] : null;
+    const spKey = cls && cls.expr ? cls.expr.heightClass : (clipReq.family === "LOW_COLLAPSE" ? "LOW" : null);
+    const spSample = spSide ? (spSide[spKey] || spSide.MID || spSide.LOW || Object.values(spSide)[0]) : null;
+    if (isDiveFam && spSample && clipReq.mode !== "loop" && clipReq.family !== "RECOVER") {
+      savePose = { family: clipReq.family, side: cls.goalSide, key: spKey, sample: spSample, mode: clipReq.mode, k: clipReq.k, candidate: spSample.candidate, showFrom: GK_ANIM.loadPhase, exact: !!spSide[spKey] }; temp = null;
+    } else if (r) {
       const v = r.v, n = v.frames.length; let pos = 0, cands = null;
       if (clipReq.mode === "loop") { const cyc = (A.odo / v.strideM) * n; pos = Math.floor(cyc) % n; if (r.reverse) pos = (n - 1 - pos + n) % n; }
       else if (clipReq.mode === "reach") {
@@ -4567,7 +4602,7 @@ function gkAnimUpdate(t, gk) {
     else temp = "no authored footwork frames for " + dir + ": SET pose + root motion";
   }
   const prev = A.cur;
-  A.cur = { state, family, side, u: +u.toFixed(3), phase, dir, temp, arm, boot, holdPose, speed, clip, pose, diagnostic, cls };
+  A.cur = { state, family, side, u: +u.toFixed(3), phase, dir, temp, arm, boot, holdPose, speed, clip, pose, diagnostic, savePose, cls };
   if (!prev || prev.state !== state) { A.log.push({ t: +now.toFixed(3), state, family, side }); if (A.log.length > 24) A.log.shift(); }
   return A.cur;
 }
@@ -4665,6 +4700,27 @@ function gkAnimDraw(t, gk, dt) {
     cur.frame = pos; cur.frameIdx = fr.idx; if (cur.clip.mode === "reach" && A.commit) A.commit.reachPos = Math.max(A.commit.reachPos || 0, pos);
     artLabel = cur.clip.name + "/" + v.dir + " f" + fr.idx + " (" + (pos + 1) + "/" + v.frames.length + ")" + (cur.clip.mirrored ? " mirrored" : "") + (cur.clip.retired ? " RETIRED-ART(review)" : "") + (cur.clip.sideApprox ? " SIDE-APPROX" : "") + (cur.clip.dirSteps ? " DIR-APPROX(" + cur.clip.dirSteps * 45 + "°)" : "") + (cur.clip.approx ? " [" + cur.clip.approx + "]" : "") + (ik ? " ik " + ik.from + "→" + ik.to : "") + (place && place.w > 0 ? " place raw " + place.rawErrPx + " corr " + place.corrPx + " res " + place.finalErrPx + "px" + (place.capped ? " WRONG_CLIP" : "") : "");
     if (cur.boot && gk.legTipNow && cur.clip.name.indexOf("foot") < 0) { const lt = sproj3(gk.legTipNow[0], gk.legTipNow[2], gk.legTipNow[1]); const mk = Math.max(2, Math.round(GK_ANIM.markerPx * s)); ctx.fillStyle = "#101010"; ctx.fillRect(Math.round(lt.x) - mk, Math.round(lt.y) - mk, 2 * mk, 2 * mk); }
+  } else if (cur.savePose) {
+    // ── CAMERA-SPACE SAVE POSE: drawn exactly where it was authored relative to the SET root (RAW), then hand-led bounded placement (IK)
+    const smp = cur.savePose.sample, an = smp.anchors || {}; const showPose = cur.u >= cur.savePose.showFrom || cur.savePose.mode !== "reach";
+    if (!showPose) {
+      const img = A.states.set ? A.states.set[cur.dir] : A.states.base[cur.dir], an0 = gkAnimAnchorsFor(A.states.set ? "set" : "base", cur.dir);
+      const blit = gkAnimBlit(img, false, an0 ? an0.content_cx : img.width / 2, an0 ? an0.foot_row : img.height / 2 + S.pivots.foot_offset_base128, s, sp.x, sp.y);
+      anchors = an0 ? { root: anchors.root, pelvis: blit.toScreen(an0.content_cx, an0.pelvis_row_est), head: an0.head ? blit.toScreen(an0.head[0], an0.head[1]) : null, shoulder: blit.toScreen(an0.content_cx, an0.shoulder_row_est) } : anchors;
+      artLabel = "SET/" + cur.dir + " (load) → save pose " + cur.savePose.family + " " + cur.savePose.side + " " + cur.savePose.key;
+    } else {
+      const img = smp.img, ax = an.root ? an.root[0] : img.width / 2, ay = an.root ? an.root[1] : img.height - 1;
+      const gl = an.gloves && an.gloves.length ? an.gloves : (an.lead_glove ? [an.lead_glove] : []);
+      const dx0 = Math.round(sp.x - ax * s), dy0 = Math.round(sp.y - ay * s);
+      const raw = gkAnimGloves(gl, (px, py) => ({ x: dx0 + Math.round(px * s), y: dy0 + Math.round(py * s) }), simHand, false);
+      const w = GK_ANIM.savePoseIK ? (cur.savePose.mode === "reach" ? wReach : 1) : 0;
+      place = gkAnimPlace(raw, simHand, w, s, cur.savePose.mode === "post" && A.commit ? A.commit.place : null);
+      if ((cur.savePose.mode === "hold" || (cur.savePose.mode === "reach" && cur.u >= 0.999)) && A.commit && place) A.commit.place = place;
+      const blit = gkAnimBlit(img, false, ax, ay, s, sp.x + place.dx, sp.y + place.dy);
+      anchors = { root: anchors.root, pelvis: an.pelvis ? blit.toScreen(an.pelvis[0], an.pelvis[1]) : null, head: an.head ? blit.toScreen(an.head[0], an.head[1]) : null, shoulder: an.shoulder ? blit.toScreen(an.shoulder[0], an.shoulder[1]) : null, handL: gl[0] ? blit.toScreen(gl[0][0], gl[0][1]) : null, handR: gl[1] ? blit.toScreen(gl[1][0], gl[1][1]) : null };
+      gloveScreen = gkAnimGloves(gl, blit.toScreen, simHand, false); if (gloveScreen && simHand) handScreen = { x: gloveScreen.x, y: gloveScreen.y };
+      artLabel = "SAVE POSE " + cur.savePose.family + " " + cur.savePose.side + " " + cur.savePose.key + (cur.savePose.exact ? "" : " (nearest sample)") + (cur.savePose.candidate ? " CANDIDATE" : " approved") + (place ? (GK_ANIM.savePoseIK ? " place raw " + place.rawErrPx + " corr " + place.corrPx + " res " + place.finalErrPx + "px" + (place.capped ? " WRONG_CLIP" : "") : " RAW (no IK) glove err " + place.rawErrPx + "px") : "");
+    }
   } else if (cur.pose) {
     // ── CONTACT POSE (8-rotation still) laid along the save vector; before loadPhase the SET rotation of the frozen facing
     const ps = cur.pose.ps; const showPose = cur.u >= cur.pose.showFrom || cur.pose.mode !== "reach";
@@ -4728,7 +4784,7 @@ function gkAnimDraw(t, gk, dt) {
     if (simSurf) {
       const sn = sproj3(simSurf[0], simSurf[2], simSurf[1]);
       let drawn;
-      if (isHand) { drawn = (cur.clip || cur.pose) ? (gloveScreen || null) : { x: sn.x, y: sn.y }; source = cur.clip ? "authored glove (" + cur.clip.name + " f" + cur.frameIdx + ") vs sim hand" : cur.pose ? "pose glove (" + cur.pose.family + "/" + cur.pose.dir + ") vs sim hand" : cur.diagnostic ? "diagnostic figure (glove = sim hand)" : "procedural glove vs sim hand"; }
+      if (isHand) { drawn = (cur.clip || cur.pose || cur.savePose) ? (gloveScreen || null) : { x: sn.x, y: sn.y }; source = cur.clip ? "authored glove (" + cur.clip.name + " f" + cur.frameIdx + ") vs sim hand" : cur.savePose ? "save pose glove (" + cur.savePose.family + " " + cur.savePose.side + " " + cur.savePose.key + ") vs sim hand" : cur.pose ? "pose glove (" + cur.pose.family + "/" + cur.pose.dir + ") vs sim hand" : cur.diagnostic ? "diagnostic figure (glove = sim hand)" : "procedural glove vs sim hand"; }
       else { drawn = { x: sn.x, y: sn.y }; source = cur.clip && cur.clip.name.indexOf("foot") >= 0 ? "authored foot-save frame; boot metric = sim leg tip" : "boot marker = sim leg tip"; }
       if (drawn) vis = { dx: drawn.x - sn.x, dy: drawn.y - sn.y };
     }
@@ -4740,6 +4796,7 @@ function gkAnimDraw(t, gk, dt) {
     const why = [];
     if (flagged) why.push("visual error beyond limit"); if (cur.diagnostic) why.push("ART_MISSING"); if (place && place.capped) why.push("WRONG_CLIP (correction capped)"); if (cur.clip && (cur.clip.sideApprox || cur.clip.dirSteps)) why.push("approximate direction/side art"); if (cur.pose && cur.pose.candidate) why.push("CANDIDATE pose");
     if (cur.pose && cur.pose.mismatchDeg != null && cur.pose.mismatchDeg > GK_ANIM.axisMismatchMaxDeg) { why.push("AXIS_MISMATCH " + cur.pose.mismatchDeg + "°"); A.lastContact.axisMismatchDeg = cur.pose.mismatchDeg; }
+    if (cur.savePose && cur.savePose.candidate) why.push("CANDIDATE save pose"); if (cur.savePose && !cur.savePose.exact) why.push("nearest height sample");
     if (why.length) { A.flags.push({ t: gk.contact.tickT, why: why.join("; "), rec: A.lastContact }); if (A.flags.length > 50) A.flags.shift(); }
   }
   A.perf.n++; const ms = performance.now() - t0; A.perf.ms += ms; if (ms > A.perf.max) A.perf.max = ms;
@@ -4756,6 +4813,15 @@ function gkAnimDrawReview(t, gk, sp, s, o) {
     res = gkAnimDebugPoseState(o.family, ang * 180 / Math.PI, o.side || "RIGHT", sp.x, sp.y, s, null, sv);
     const tip = sproj3(gk.x + Math.cos(ang) * lat, z, gk.y + Math.sin(ang) * lat); ctx.strokeStyle = "#ff4fd8"; ctx.lineWidth = Math.max(1, PXQ * 2); ctx.setLineDash([4, 3]); ctx.beginPath(); ctx.moveTo(sp.x, sp.y); ctx.lineTo(tip.x, tip.y); ctx.stroke(); ctx.setLineDash([]); ctx.fillStyle = "#ff4fd8"; ctx.beginPath(); ctx.arc(tip.x, tip.y, uipx(3), 0, Math.PI * 2); ctx.fill();
     if (res) label += "  POSE " + o.family + "/" + res.dir + (res.mirrored ? " mirrored" : "") + " body " + res.bodyDeg.toFixed(0) + "° vs save " + res.wantDeg + "° (Δ " + res.mismatchDeg + "°" + (res.mismatchDeg > GK_ANIM.axisMismatchMaxDeg ? " AXIS_MISMATCH" : "") + ")" + (res.candidate ? " CANDIDATE" : ""); }
+  else if (o.kind === "savepose" && A.savePoses[o.family] && A.savePoses[o.family][o.side]) {
+    const sides = A.savePoses[o.family][o.side]; const smp = sides[o.key] || sides.MID || Object.values(sides)[0]; const an = smp.anchors || {};
+    const ax = an.root ? an.root[0] : smp.img.width / 2, ay = an.root ? an.root[1] : smp.img.height - 1; const gl = an.gloves && an.gloves.length ? an.gloves : (an.lead_glove ? [an.lead_glove] : []);
+    let dx = 0, dy = 0, info = " RAW";
+    if (o.ik && o.simHand) { const dx0 = Math.round(sp.x - ax * s), dy0 = Math.round(sp.y - ay * s); const raw = gkAnimGloves(gl, (px, py) => ({ x: dx0 + Math.round(px * s), y: dy0 + Math.round(py * s) }), o.simHand, false); const pl = gkAnimPlace(raw, o.simHand, 1, s, null); dx = pl.dx; dy = pl.dy; info = " IK raw " + pl.rawErrPx + " corr " + pl.corrPx + " res " + pl.finalErrPx + "px" + (pl.capped ? " CAPPED" : ""); }
+    const blit = gkAnimBlit(smp.img, false, ax, ay, s, sp.x + dx, sp.y + dy); res = { gloves: gl.map(q => blit.toScreen(q[0], q[1])) };
+    label += "  SAVE POSE " + o.family + " " + o.side + " " + (o.key || "") + (smp.candidate ? " CANDIDATE" : "") + info;
+    if (o.target) { const tp = sproj3(o.target[0], o.target[2], o.target[1]); ctx.strokeStyle = "#ff4fd8"; ctx.lineWidth = Math.max(1, PXQ * 2); ctx.setLineDash([4, 3]); ctx.beginPath(); ctx.moveTo(sp.x, sp.y); ctx.lineTo(tp.x, tp.y); ctx.stroke(); ctx.setLineDash([]); ctx.strokeStyle = "#ffffff"; ctx.beginPath(); ctx.arc(tp.x, tp.y, uipx(4), 0, Math.PI * 2); ctx.stroke(); }
+  }
   else if (o.kind === "state") { const st = A.states[o.state || "set"] ? (o.state || "set") : "base"; const d = o.dir || headingToDir(gk.facing * 180 / Math.PI); const img = A.states[st][d], an = gkAnimAnchorsFor(st, d); gkAnimBlit(img, false, an ? an.content_cx : img.width / 2, an ? an.foot_row : img.height / 2 + S.pivots.foot_offset_base128, s, sp.x, sp.y); label += "  " + st.toUpperCase() + "/" + d; }
   else {
     const fam = o.family || "MEDIUM_DIVE", side = o.side || "RIGHT", ang = (o.saveAngleDeg != null ? o.saveAngleDeg : gk.facing * 180 / Math.PI + (side === "LEFT" ? -90 : 90)) * Math.PI / 180;
@@ -4767,7 +4833,7 @@ function gkAnimDrawReview(t, gk, sp, s, o) {
   }
   if (S.dbg.anim || o.showLabel !== false) { ctx.fillStyle = "rgba(0,0,0,0.6)"; ctx.font = uipx(10) + "px monospace"; const w = ctx.measureText(label).width + uipx(8); ctx.fillRect(uipx(6), uipx(64), w, uipx(16)); ctx.fillStyle = "#d8ffe8"; ctx.textAlign = "left"; ctx.fillText(label, uipx(10), uipx(76)); }
   if (res && res.gloves && S.dbg.anim) for (const g of res.gloves) { ctx.strokeStyle = "#38ff9a"; ctx.lineWidth = Math.max(1, PXQ); ctx.beginPath(); ctx.arc(g.x, g.y, uipx(4), 0, Math.PI * 2); ctx.stroke(); }
-  ctx.strokeStyle = "#ff4040"; ctx.lineWidth = Math.max(1, PXQ); ctx.beginPath(); ctx.arc(sp.x, sp.y, uipx(3), 0, Math.PI * 2); ctx.stroke();
+  if (S.dbg.anim) { ctx.strokeStyle = "#ff4040"; ctx.lineWidth = Math.max(1, PXQ); ctx.beginPath(); ctx.arc(sp.x, sp.y, uipx(3), 0, Math.PI * 2); ctx.stroke(); }
 }
 function gkAnimDebugPose(clipName, dir, side, pos, sx, sy, s, g) {
   const A = S.gkAnim, c = A.clips[clipName]; if (!c) return null;
@@ -4803,7 +4869,7 @@ function gkAnimOverlay(t, gk, cur, anchors, handScreen, s) {
   const lines = [
     "ANIM " + cur.state + (cur.family ? "  fam " + cur.family + "/" + cur.side : "") + "  phase " + cur.phase + "  u " + cur.u + "  odo " + A.odo.toFixed(2) + " m",
     "dir " + cur.dir + "  facing " + (gk.facing * 180 / Math.PI).toFixed(0) + "°  art " + cur.artLabel,
-    cls ? "SAVE VECTOR lat " + (cls.lat >= 0 ? "+" : "") + cls.lat + " depth " + (cls.depth >= 0 ? "+" : "") + cls.depth + " dz " + (cls.dz >= 0 ? "+" : "") + cls.dz + " m  z " + cls.z + " (" + cls.zClass + " " + cls.zH + "H)  L " + cls.L + " / maxLat " + cls.maxLat + "  norm " + cls.norm + "  exec " + cls.exec + " s  v0 " + cls.v0 + "  feet " + (cls.feetPlanted ? "PLANTED" : "DIVE") + (cls.airborne ? " AIRBORNE" : "") + "  sim " + cls.action + "/" + cls.tier + (cls.bestEffort ? " best-effort" : "") + "  → " + cls.family + " " + cls.side + "  saveDir " + cls.saveDir + " (" + cls.saveAngle.toFixed(0) + "°)" : "SAVE VECTOR —",
+    cls ? "SAVE VECTOR lat " + (cls.lat >= 0 ? "+" : "") + cls.lat + " depth " + (cls.depth >= 0 ? "+" : "") + cls.depth + " dz " + (cls.dz >= 0 ? "+" : "") + cls.dz + " m  z " + cls.z + " (" + cls.zClass + " " + cls.zH + "H)  L " + cls.L + " / maxLat " + cls.maxLat + "  norm " + cls.norm + "  exec " + cls.exec + " s  v0 " + cls.v0 + "  feet " + (cls.feetPlanted ? "PLANTED" : "DIVE") + (cls.airborne ? " AIRBORNE" : "") + "  sim " + cls.action + "/" + cls.tier + (cls.bestEffort ? " best-effort" : "") + "  → " + cls.family + " " + cls.goalSide + (cls.expr ? " [" + cls.expr.heightClass + " intensity " + cls.expr.intensity + " ext " + cls.expr.extension + " launch " + cls.expr.launch + (cls.expr.nearMax ? " NEAR-MAX" : "") + "]" : "") + "  (lead arm " + cls.side + ", facing " + cur.dir + ")" : "SAVE VECTOR —",
     "anchors: root(" + anchors.root.x + "," + anchors.root.y + ")" + (anchors.pelvis ? " pelvis(" + anchors.pelvis.x + "," + anchors.pelvis.y + ")" : "") + (anchors.head ? " head(" + anchors.head.x + "," + anchors.head.y + ")" : "") + (anchors.handL ? " hands(" + anchors.handL.x + "," + anchors.handL.y + (anchors.handR ? "|" + anchors.handR.x + "," + anchors.handR.y : "") + ")" : "") + (anchors.footL ? " feet(" + anchors.footL.x + "," + anchors.footL.y + (anchors.footR ? "|" + anchors.footR.x + "," + anchors.footR.y : "") + ")" : "") + (pl && pl.w > 0 ? "   placement raw " + pl.rawErrPx + " px → corr " + pl.corrPx + " px → residual " + pl.finalErrPx + " px" + (pl.capped ? " CAPPED/WRONG_CLIP" : "") : ""),
     "sim contact " + (gk.contact ? gk.contact.volume + " " + gk.contact.outcome + " @" + gk.contact.tickT : "—") + "   drawn glove " + (handScreen ? "(" + handScreen.x + "," + handScreen.y + ")" : "—") + "   visual error " + (lc ? lc.errPx + " px / " + lc.errM + " m" + (lc.flagged ? " FLAG" : "") + " (" + lc.source + "), touch gap " + lc.touchGapM + " m" : "—"),
     "perf keeper draw avg " + (A.perf.n ? (A.perf.ms / A.perf.n).toFixed(3) : "—") + " ms  max " + A.perf.max.toFixed(2) + " ms   slow-mo " + (S.pt.slow || 1) + "x   flags " + A.flags.length + "   log " + A.log.slice(-5).map(l => l.state + "@" + l.t).join(" → "),

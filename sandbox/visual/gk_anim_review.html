@@ -36,28 +36,28 @@
   <h1>GK Animation Review</h1>
   <div id="rv">
   <section>
-    <h2>Physics replay (real simulation, synthetic arrival)</h2>
-    <div class="row">Shooter direction (keeper facing):
-      <button data-facing="W" class="on">W</button><button data-facing="SW">SW</button><button data-facing="NW">NW</button><button data-facing="S">S</button><button data-facing="N">N</button></div>
-    <div class="row">Lead side: <button data-side="RIGHT" class="on">RIGHT</button><button data-side="LEFT">LEFT</button></div>
-    <label>Lateral displacement (m, keeper frame) <span id="rv-lat-v">1.20</span><input type="range" id="rv-lat" min="0" max="2.8" step="0.05" value="1.2"></label>
-    <label>Contact height (m) <span id="rv-z-v">1.00</span><input type="range" id="rv-z" min="0.05" max="2.4" step="0.05" value="1.0"></label>
-    <label>Depth (m, + toward shooter) <span id="rv-depth-v">0.00</span><input type="range" id="rv-depth" min="-0.6" max="1.0" step="0.05" value="0"></label>
-    <label>Ball speed (m/s) <span id="rv-v-v">16</span><input type="range" id="rv-v" min="6" max="30" step="1" value="16"></label>
-    <div class="row"><button id="rv-fire" style="font-weight:700">FIRE</button><button id="rv-refire">REPLAY same</button><label class="inline"><input type="checkbox" id="rv-loop"> auto-loop</label></div>
+    <h2>Save (two gameplay-camera directions)</h2>
+    <div class="row">SAVE SIDE: <button data-gside="GOAL_LEFT" class="on">GOAL LEFT (−goal line, far post)</button><button data-gside="GOAL_RIGHT">GOAL RIGHT (+goal line, near post)</button></div>
+    <label>CONTACT HEIGHT (m) <span id="rv-z-v">1.00</span><input type="range" id="rv-z" min="0.05" max="2.4" step="0.05" value="1.0"></label>
+    <label>LATERAL DEMAND (m along the goal line) <span id="rv-lat-v">1.50</span><input type="range" id="rv-lat" min="0" max="2.8" step="0.05" value="1.5"></label>
+    <label>REACH NORM (solves the lateral demand for this height) <span id="rv-norm-v">—</span><input type="range" id="rv-norm" min="0.2" max="1.2" step="0.02" value="0.7"></label>
+    <label>Depth (m, + toward shooter; debug) <span id="rv-depth-v">0.00</span><input type="range" id="rv-depth" min="-0.6" max="1.0" step="0.05" value="0"></label>
+    <label>Ball speed (m/s) <span id="rv-v-v">24</span><input type="range" id="rv-v" min="6" max="30" step="1" value="24"></label>
+    <div class="row">Keeper facing (debug — shooter bearing): <button data-facing="W" class="on">W</button><button data-facing="SW">SW</button><button data-facing="NW">NW</button><button data-facing="S">S</button><button data-facing="N">N</button></div>
+    <div class="row"><button id="rv-fire" style="font-weight:700">FIRE (real simulation)</button><button id="rv-refire">REPLAY same</button><label class="inline"><input type="checkbox" id="rv-loop"> auto-loop</label></div>
     <div class="row">Matrix presets: <button data-preset="0.4,0.3">S·LOW</button><button data-preset="1.2,0.3">M·LOW</button><button data-preset="2.0,0.3">L·LOW</button><button data-preset="0.4,1.0">S·MID</button><button data-preset="1.2,1.0">M·MID</button><button data-preset="2.0,1.0">L·MID</button><button data-preset="0.4,1.7">S·HIGH</button><button data-preset="1.2,1.7">M·HIGH</button><button data-preset="2.0,1.7">L·HIGH</button><button data-preset="0.4,2.2">S·TOP</button><button data-preset="1.2,2.2">M·TOP</button><button data-preset="2.0,2.2">L·TOP</button></div>
   </section>
   <section>
-    <h2>Art playback (no physics — the chosen representation at the keeper root)</h2>
+    <h2>Art playback (no physics — the chosen representation at the keeper root, SAVE SIDE above)</h2>
     <div class="row fam">
-      <button data-fam="SET">SET</button><button data-fam="LOW_GATHER">LOW GATHER</button><button data-fam="LOW_COLLAPSE">LOW COLLAPSE</button><button data-fam="MEDIUM_DIVE">MEDIUM DIVE</button><button data-fam="HIGH_DIVE">HIGH DIVE</button><button data-fam="FULL_STRETCH">FULL STRETCH</button><button data-fam="FOOT_SAVE">FOOT SAVE</button><button data-fam="LAND">LAND</button><button data-fam="RECOVER">RECOVER</button><button data-fam="SHUFFLE">SHUFFLE</button><button data-fam="CHEST_CATCH">CHEST CATCH</button><button data-fam="OFF">back to physics</button></div>
-    <label>Save angle relative to facing (°; +90 = pure RIGHT, −90 = pure LEFT, 0 = straight forward) <span id="rv-ang-v">+90</span><input type="range" id="rv-ang" min="-180" max="180" step="15" value="90"></label>
+      <button data-fam="SET">SET</button><button data-fam="LOW_GATHER">LOW GATHER</button><button data-fam="LOW_COLLAPSE">LOW COLLAPSE</button><button data-fam="AIRBORNE_DIVE">AIRBORNE DIVE</button><button data-fam="FOOT_SAVE">FOOT SAVE</button><button data-fam="LAND">LAND</button><button data-fam="RECOVER">RECOVER</button><button data-fam="SHUFFLE">SHUFFLE</button><button data-fam="CHEST_CATCH">CHEST CATCH</button><button data-fam="OFF">back to physics</button></div>
+    <div class="row">Save pose placement: <button data-ik="raw" class="on">RAW authored</button><button data-ik="ik">bounded IK</button> <span style="font-size:11px;opacity:.75">(AIRBORNE sample follows CONTACT HEIGHT: LOW-MID / MID / HIGH / TOP)</span></div>
     <div class="row">Clip frame: <button id="rv-prev">◀ frame</button><button id="rv-next">frame ▶</button><label class="inline"><input type="checkbox" id="rv-artplay" checked> play clip frames</label><span id="rv-frame-v"></span></div>
-    <div class="row">Art: <label class="inline"><input type="checkbox" id="rv-cand" checked> candidate contact poses</label><label class="inline"><input type="checkbox" id="rv-retired"> retired V1 dive clips (comparison)</label><label class="inline"><input type="checkbox" id="rv-diag" checked> diagnostic figure for missing art</label></div>
+    <div class="row">Art: <label class="inline"><input type="checkbox" id="rv-savepose" checked> V1.2 camera-space save poses (candidates)</label><label class="inline"><input type="checkbox" id="rv-cand"> V1.1 rotation candidates (comparison)</label><label class="inline"><input type="checkbox" id="rv-retired"> retired V1 clips (comparison)</label><label class="inline"><input type="checkbox" id="rv-diag" checked> diagnostic figure for missing art</label></div>
   </section>
   <section>
     <h2>Playback</h2>
-    <div class="row">Speed: <button data-speed="1" class="on">1×</button><button data-speed="0.5">0.5×</button><button data-speed="0.25">0.25×</button><button data-speed="0.1">0.1×</button><button id="rv-pause">Pause</button><button id="rv-step">Step 1 tick</button></div>
+    <div class="row">PLAYBACK SPEED: <button data-speed="1" class="on">1×</button><button data-speed="0.5">0.5×</button><button data-speed="0.25">0.25×</button><button data-speed="0.1">0.1×</button><button id="rv-pause">Pause</button><button id="rv-step">FRAME STEP (1 tick)</button></div>
     <div class="row"><label class="inline"><input type="checkbox" id="rv-overlay" checked> debug overlay</label><label class="inline"><input type="checkbox" id="rv-stick"> Stage-0 stick figure</label></div>
     <label>Camera rail (m) <span id="rv-rail-v">100.0</span><input type="range" id="rv-rail" min="92" max="106" step="0.5" value="100"></label>
     <label>Zoom <span id="rv-zoom-v">2.0</span><input type="range" id="rv-zoom" min="0.8" max="3" step="0.1" value="2"></label>
@@ -180,6 +180,6 @@
 </div>
 
 <script src="match.js?v=pt2"></script>
-<script src="gk_anim_review.js?v=1"></script>
+<script src="gk_anim_review.js?v=2"></script>
 </body>
 </html>

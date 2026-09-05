@@ -10,7 +10,7 @@ const URL = opt("--url", "http://127.0.0.1:8126/sandbox/visual/match.html"), OUT
 (async () => {
   const b = await puppeteer.launch({ executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", headless: "new", userDataDir: UDD, args: ["--no-sandbox"] });
   const p = await b.newPage(); await p.setViewport({ width: 1400, height: 900 }); const errs = []; p.on("pageerror", e => errs.push(e.message));
-  await p.goto(URL + "?r=" + Date.now(), { waitUntil: "domcontentloaded", timeout: 180000 });
+  await p.goto(URL + (URL.indexOf("?") >= 0 ? "&" : "?") + "r=" + Date.now(), { waitUntil: "domcontentloaded", timeout: 180000 });
   for (let i = 0; i < 900; i++) { const ok = await p.evaluate(() => { const el = document.getElementById("loading"); return !!(el && el.style.display === "none" && typeof ptEnter === "function"); }); if (ok) break; await new Promise(r => setTimeout(r, 100)); }
   const res = await p.evaluate((TICKS, ANIM) => {
     if (!(S.pt && S.pt.on)) ptEnter();
