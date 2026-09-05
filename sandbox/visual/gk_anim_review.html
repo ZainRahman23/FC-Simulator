@@ -56,6 +56,13 @@
     <div class="row">Art: <label class="inline"><input type="checkbox" id="rv-savepose" checked> V1.2 camera-space save poses (candidates)</label><label class="inline"><input type="checkbox" id="rv-cand"> V1.1 rotation candidates (comparison)</label><label class="inline"><input type="checkbox" id="rv-retired"> retired V1 clips (comparison)</label><label class="inline"><input type="checkbox" id="rv-diag" checked> diagnostic figure for missing art</label></div>
   </section>
   <section>
+    <h2>Locomotion presentation — facing / view direction only (not a save direction; GOAL_LEFT / GOAL_RIGHT are untouched)</h2>
+    <div class="row">IDLE / SET: <button data-loco="set:west">WEST</button><button data-loco="set:south-west">SOUTH-WEST</button><button data-loco="set:north-west">NORTH-WEST</button></div>
+    <div class="row">SHUFFLE: <button data-loco="shuffle:west">WEST</button><button data-loco="shuffle:south-west">SOUTH-WEST</button><button data-loco="shuffle:north-west">NORTH-WEST</button> <span style="font-size:11px;opacity:.75">(clip frames play at PLAYBACK SPEED; the readout names the resolved variant — exact, mirrored or DIR-APPROX)</span></div>
+    <div class="row">Transitions (0.7 s per facing, looping): <button data-locoseq="west,south-west,west">W → SW → W</button><button data-locoseq="west,north-west,west">W → NW → W</button><button data-locoseq="south-west,west">SW → W</button><button data-locoseq="north-west,west">NW → W</button> <label class="inline"><input type="checkbox" id="rv-loco-shuffle" checked> transition while shuffling</label> <button data-loco="off">back to physics</button></div>
+    <div id="rv-loco-read" style="font-size:11px;opacity:.85"></div>
+  </section>
+  <section>
     <h2>Playback</h2>
     <div class="row">PLAYBACK SPEED: <button data-speed="1" class="on">1×</button><button data-speed="0.5">0.5×</button><button data-speed="0.25">0.25×</button><button data-speed="0.1">0.1×</button><button id="rv-pause">Pause</button><button id="rv-step">FRAME STEP (1 tick)</button></div>
     <div class="row"><label class="inline"><input type="checkbox" id="rv-overlay" checked> debug overlay</label><label class="inline"><input type="checkbox" id="rv-stick"> Stage-0 stick figure</label></div>

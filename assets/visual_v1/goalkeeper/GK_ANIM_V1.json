@@ -304,6 +304,52 @@
      "ik": true,
      "frames": "originals/character_f4838361/anim/shuffle_right/south/{i}.png",
      "anchors": "goalkeeper/anchors/clips/shuffle_right_south.json"
+    },
+    {
+     "dir": "south-west",
+     "side": "RIGHT",
+     "use": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+     ],
+     "contact": 7,
+     "hold": 7,
+     "ground": "bottom",
+     "anchor": "pivot",
+     "stride_m": 0.9,
+     "note": "2026-09-05: same PixelLab group ba999c22 (v3, non-Pro), appended directions; SW/NW facing presentation only; ground=bottom keeps the feet on the root row (PixelLab varied the foot row by up to 10 px across this cycle)",
+     "ik": true,
+     "frames": "originals/character_f4838361/anim/shuffle_right/south-west/{i}.png",
+     "anchors": "goalkeeper/anchors/clips/shuffle_right_south-west.json"
+    },
+    {
+     "dir": "north-west",
+     "side": "RIGHT",
+     "use": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+     ],
+     "contact": 7,
+     "hold": 7,
+     "ground": "bottom",
+     "anchor": "pivot",
+     "stride_m": 0.9,
+     "note": "2026-09-05: same PixelLab group ba999c22 (v3, non-Pro), appended directions; SW/NW facing presentation only; ground=bottom keeps the feet on the root row (PixelLab varied the foot row by up to 10 px across this cycle)",
+     "ik": true,
+     "frames": "originals/character_f4838361/anim/shuffle_right/north-west/{i}.png",
+     "anchors": "goalkeeper/anchors/clips/shuffle_right_north-west.json"
     }
    ]
   },
