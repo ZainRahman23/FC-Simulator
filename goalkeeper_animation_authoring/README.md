@@ -37,6 +37,10 @@ Repeatable spec for producing animation clips of the **frozen** goalkeeper GK_BA
 4. Run `python3 sandbox/visual/tools/gk_anim/gk_build_manifest.py` (measures per-frame anchors, rewrites `GK_ANIM_V1.json`).
 5. Reload the match page → `S.gkAnim.clips` lists the clip; run the strips/pose-sheet tooling for review.
 
+## Animation V1.1 (2026-09-04): save art rebuilt from physical action
+
+The V1 side-view dive clips (low_collapse, medium_dive, high_dive) are RETIRED from live selection (`live: false` in the manifest; files kept for comparison). Replacement art starts from CONTACT poses generated as character states (`prompts/contact_pose_states.md`), reviewed on `sandbox/visual/gk_anim_review.html`, and only then animated. Canonical key poses per family (SET, LOAD, PUSH, EXTEND, CONTACT, DESCEND, LAND) reconstructed from the physical traces: `review_artifacts/gk_anim_v1_1/pose_specs/`.
+
 ## Files
 
 | file | action | status |
@@ -57,4 +61,4 @@ Repeatable spec for producing animation clips of the **frozen** goalkeeper GK_BA
 | `prompts/land.md` | LAND | needed (LAND uses the dive clip's last frames) |
 | `prompts/recover.md` | RECOVER | authored east + south via the PixelLab 'getting-up' template (group aac6752a); south frame 4 dropped (back of the head) |
 
-`RESULTS_LOG.md` records every generation made in this pass (ids, verdicts).
+`RESULTS_LOG.md` records every generation made (ids, verdicts); `prompts/contact_pose_states.md` the V1.1 pose-state route.

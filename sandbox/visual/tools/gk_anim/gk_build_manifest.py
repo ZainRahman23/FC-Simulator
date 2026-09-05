@@ -22,11 +22,11 @@ CLIP_TABLE = {
         variants=[V("east", "chest_catch/east", [1, 2, 3, 4, 5, 6, 7, 8], contact=3, hold=7, note="ball-free mime (PixelLab group c2e03d1b); gloves forward at frame 4, hug from frame 6"), V("south", "chest_catch/south", [1, 2, 3, 4, 5, 6, 7, 8], contact=4, hold=7, note="ball-free mime; arms wide 3-5, hands meet at 6, hug 7-8")]),
     "low_gather": dict(family="LOW_GATHER", kind="action", note="deep crouch, gloves to the ground, scoop and clutch",
         variants=[V("east", "low_gather/east", [1, 2, 3, 4, 5, 6, 7, 8], contact=3, hold=7, note="ball-free mime (PixelLab group 3f2dbaef); gloves at the ground 4-6, rise 7-8"), V("south", "low_gather/south", [1, 2, 3, 4, 5, 6, 7, 8], contact=4, hold=7, note="ball-free mime; gloves at the ground 5-6, rise 7-8")]),
-    "low_collapse": dict(family="LOW_COLLAPSE", families=["LOW_COLLAPSE", "FULL_STRETCH_LOW"], kind="action", note="collapse onto the near side, arms down to the ball",
+    "low_collapse": dict(live=False, retired_note="V1 side-view dive art REJECTED in live review 2026-09-04 (body along the forward axis, same pose at every height); kept for comparison only", family="LOW_COLLAPSE", families=["LOW_COLLAPSE", "FULL_STRETCH_LOW"], kind="action", note="collapse onto the near side, arms down to the ball",
         variants=[V("east", "low_collapse_right/east", [1, 2, 3, 4, 5, 6, 7, 8], contact=6, hold=7, side="RIGHT", note=SIDE_VIEW, ik="y")]),
-    "medium_dive": dict(family="MEDIUM_DIVE", families=["MEDIUM_DIVE", "FULL_STRETCH_MID"], kind="action", note="push off, body horizontal at hip height, arms leading",
+    "medium_dive": dict(live=False, retired_note="V1 side-view dive art REJECTED in live review 2026-09-04 (body along the forward axis, same pose at every height); kept for comparison only", family="MEDIUM_DIVE", families=["MEDIUM_DIVE", "FULL_STRETCH_MID"], kind="action", note="push off, body horizontal at hip height, arms leading",
         variants=[V("east", "medium_dive_right/east", [1, 2, 3, 4, 5, 6, 7, 8], contact=5, hold=7, side="RIGHT", note=SIDE_VIEW, ik="y")]),
-    "high_dive": dict(family="HIGH_DIVE", families=["HIGH_DIVE", "FULL_STRETCH_HIGH"], kind="action", note="full-stretch launch, arm high, lands on forearm/side",
+    "high_dive": dict(live=False, retired_note="V1 side-view dive art REJECTED in live review 2026-09-04 (body along the forward axis, same pose at every height); kept for comparison only", family="HIGH_DIVE", families=["HIGH_DIVE", "FULL_STRETCH_HIGH"], kind="action", note="full-stretch launch, arm high, lands on forearm/side",
         variants=[V("east", "high_dive_right/east", [1, 2, 3, 4, 5, 6, 7, 8], contact=6, hold=7, side="RIGHT", note=SIDE_VIEW, ik="y")]),
     "foot_save": dict(family="FOOT_SAVE", kind="action", note="upright reflex leg extension; frames 5-6 (high kick) dropped",
         variants=[V("east", "foot_save_right/east", [1, 2, 3, 4, 7, 8], contact=3, hold=3, side="RIGHT", note="side view: the leg extends forward on screen (the simulation leg tip is lateral); flagged", ik="y")]),
@@ -52,6 +52,6 @@ for name, row in CLIP_TABLE.items():
         anch = "%s/%s.json" % (ANCH, v["folder"].replace("/", "_"))
         subprocess.run([sys.executable, MEASURE, folder, os.path.join(ASSETS, anch)], check=True, stdout=subprocess.DEVNULL)
         variants.append({k: v[k] for k in ("dir", "side", "use", "contact", "hold", "ground", "anchor", "stride_m", "note", "ik") if v[k] is not None and v[k] != ""} | {"frames": "%s/%s/{i}.png" % (ANIM, v["folder"]), "anchors": anch})
-    clips[name] = {k: row[k] for k in ("family", "families", "kind", "note") if k in row} | {"variants": variants}
+    clips[name] = {k: row[k] for k in ("family", "families", "kind", "note", "live", "retired_note") if k in row} | {"variants": variants}
 man["clips"] = clips
 json.dump(man, open(man_path, "w"), indent=1); print("wrote", man_path, "clips", len(clips), "variants", sum(len(c["variants"]) for c in clips.values()))

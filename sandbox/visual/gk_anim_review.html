@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>GK Animation Review — Goalkeeper Animation V1.1</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="style.css">
+<style>
+  #hud { position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+         padding: 6px 14px; background: rgba(16,20,25,.85); border: 1px solid #394450;
+         border-radius: 6px; text-align: center; pointer-events: none; z-index: 4; }
+  #hud .score { font-size: 18px; color: #fff; }
+  #hud .sub { font-size: 11px; color: #93a3b5; }
+  #ticker { position: absolute; bottom: 30px; left: 8px; right: 320px; color: #aab8c6;
+            font-size: 11px; pointer-events: none; text-shadow: 0 1px 2px #000; }
+  #rv label { display:block; font-size:11px; margin:3px 0; }
+  #rv button { font-size:11px; padding:3px 6px; margin:2px 2px 2px 0; cursor:pointer; }
+  #rv button.on { background:#1d7a3d; color:#fff; border-color:#2fa35a; }
+  #rv .fam button { min-width:92px; }
+  #rv .row { display:flex; flex-wrap:wrap; gap:4px; align-items:center; }
+  #rv-read { font:11px/1.35 monospace; white-space:pre-wrap; background:#0d1116; border:1px solid #2b3540; padding:6px; margin-top:6px; color:#cfe8d8; max-height:260px; overflow:auto; }
+  details summary { cursor:pointer; font-size:12px; color:#9fb3c8; margin:8px 0; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas id="view"></canvas>
+  <div id="loading">Loading frozen assets + starting deterministic match…<br><span id="loadpct">0%</span></div>
+  <div id="hud"><div class="score" id="hud-score">— 0 : 0 —</div>
+    <div class="sub" id="hud-sub">connecting…</div></div>
+  <div id="ticker"></div>
+  <div id="banner">GK ANIMATION REVIEW · simulation authoritative, renderer read-only · art playback = no physics</div>
+</div>
+
+<div id="panel">
+  <h1>GK Animation Review</h1>
+  <div id="rv">
+  <section>
+    <h2>Physics replay (real simulation, synthetic arrival)</h2>
+    <div class="row">Shooter direction (keeper facing):
+      <button data-facing="W" class="on">W</button><button data-facing="SW">SW</button><button data-facing="NW">NW</button><button data-facing="S">S</button><button data-facing="N">N</button></div>
+    <div class="row">Lead side: <button data-side="RIGHT" class="on">RIGHT</button><button data-side="LEFT">LEFT</button></div>
+    <label>Lateral displacement (m, keeper frame) <span id="rv-lat-v">1.20</span><input type="range" id="rv-lat" min="0" max="2.8" step="0.05" value="1.2"></label>
+    <label>Contact height (m) <span id="rv-z-v">1.00</span><input type="range" id="rv-z" min="0.05" max="2.4" step="0.05" value="1.0"></label>
+    <label>Depth (m, + toward shooter) <span id="rv-depth-v">0.00</span><input type="range" id="rv-depth" min="-0.6" max="1.0" step="0.05" value="0"></label>
+    <label>Ball speed (m/s) <span id="rv-v-v">16</span><input type="range" id="rv-v" min="6" max="30" step="1" value="16"></label>
+    <div class="row"><button id="rv-fire" style="font-weight:700">FIRE</button><button id="rv-refire">REPLAY same</button><label class="inline"><input type="checkbox" id="rv-loop"> auto-loop</label></div>
+    <div class="row">Matrix presets: <button data-preset="0.4,0.3">S·LOW</button><button data-preset="1.2,0.3">M·LOW</button><button data-preset="2.0,0.3">L·LOW</button><button data-preset="0.4,1.0">S·MID</button><button data-preset="1.2,1.0">M·MID</button><button data-preset="2.0,1.0">L·MID</button><button data-preset="0.4,1.7">S·HIGH</button><button data-preset="1.2,1.7">M·HIGH</button><button data-preset="2.0,1.7">L·HIGH</button><button data-preset="0.4,2.2">S·TOP</button><button data-preset="1.2,2.2">M·TOP</button><button data-preset="2.0,2.2">L·TOP</button></div>
+  </section>
+  <section>
+    <h2>Art playback (no physics — the chosen representation at the keeper root)</h2>
+    <div class="row fam">
+      <button data-fam="SET">SET</button><button data-fam="LOW_GATHER">LOW GATHER</button><button data-fam="LOW_COLLAPSE">LOW COLLAPSE</button><button data-fam="MEDIUM_DIVE">MEDIUM DIVE</button><button data-fam="HIGH_DIVE">HIGH DIVE</button><button data-fam="FULL_STRETCH">FULL STRETCH</button><button data-fam="FOOT_SAVE">FOOT SAVE</button><button data-fam="LAND">LAND</button><button data-fam="RECOVER">RECOVER</button><button data-fam="SHUFFLE">SHUFFLE</button><button data-fam="CHEST_CATCH">CHEST CATCH</button><button data-fam="OFF">back to physics</button></div>
+    <label>Save angle relative to facing (°; +90 = pure RIGHT, −90 = pure LEFT, 0 = straight forward) <span id="rv-ang-v">+90</span><input type="range" id="rv-ang" min="-180" max="180" step="15" value="90"></label>
+    <div class="row">Clip frame: <button id="rv-prev">◀ frame</button><button id="rv-next">frame ▶</button><label class="inline"><input type="checkbox" id="rv-artplay" checked> play clip frames</label><span id="rv-frame-v"></span></div>
+    <div class="row">Art: <label class="inline"><input type="checkbox" id="rv-cand" checked> candidate contact poses</label><label class="inline"><input type="checkbox" id="rv-retired"> retired V1 dive clips (comparison)</label><label class="inline"><input type="checkbox" id="rv-diag" checked> diagnostic figure for missing art</label></div>
+  </section>
+  <section>
+    <h2>Playback</h2>
+    <div class="row">Speed: <button data-speed="1" class="on">1×</button><button data-speed="0.5">0.5×</button><button data-speed="0.25">0.25×</button><button data-speed="0.1">0.1×</button><button id="rv-pause">Pause</button><button id="rv-step">Step 1 tick</button></div>
+    <div class="row"><label class="inline"><input type="checkbox" id="rv-overlay" checked> debug overlay</label><label class="inline"><input type="checkbox" id="rv-stick"> Stage-0 stick figure</label></div>
+    <label>Camera rail (m) <span id="rv-rail-v">100.0</span><input type="range" id="rv-rail" min="92" max="106" step="0.5" value="100"></label>
+    <label>Zoom <span id="rv-zoom-v">2.0</span><input type="range" id="rv-zoom" min="0.8" max="3" step="0.1" value="2"></label>
+    <div id="rv-read">loading…</div>
+  </section>
+  </div>
+  <details><summary>Advanced — original match page controls (kept for the shared runtime)</summary>
+
+  <h1>Match Visual Preview</h1>
+
+  <section>
+    <button id="ptbtn" style="width:100%;padding:8px;font-weight:700;font-size:13px;
+      background:#1d7a3d;color:#fff;border:1px solid #2fa35a;border-radius:5px;cursor:pointer">
+      Single Player Test</button>
+    <div style="font-size:11px;opacity:.75;margin:4px 0 0">WASD / arrows move &middot; Shift sprint &middot; X short pass &middot; Z shoot &middot; C lofted pass &middot; F preferred foot &middot; R reset &middot; Esc exit</div>
+    <div style="font-size:11px;opacity:.75;margin:2px 0 0">Technique showcase (test-only): 1 INSIDE &middot; 2 LACES &middot; 3 POWER LACES &middot; 4 TRIVELA/OUTSIDE &middot; 5 CHIP &middot; 6 full sequence</div>
+    <div style="font-size:11px;opacity:.75;margin:2px 0 0">G cycles INSIDE_R preview target (review only): AUTO &middot; 10 &middot; 15 &middot; 20 &middot; 25 &middot; 30 m</div>
+    <div style="font-size:11px;opacity:.75;margin:2px 0 0"><b>NORMAL SET DEPTH (review only):</b> <b>=</b> cycles D0 CURRENT (aggressive) &middot; D1 CONSERVATIVE &middot; D2 BALANCED (default) &middot; D3 MODERATELY AGGRESSIVE. These change only how deep the CENTRE of the U is; the approved distance&times;angle geometry is identical for all four. This is ordinary shot-stopping SET depth &mdash; 1v1 rushing is a separate future state and is not implemented.</div>
+    <div style="font-size:11px;opacity:.75;margin:2px 0 0"><b>GK POSITIONING A/B (review only):</b> <b>]</b> toggles NEW (FC-inspired distance&times;angle surface, default) vs OLD Q2.5. Depth and lateral are solved together on the aperture bisector: central depth uses the unchanged P4 curve, then the aperture ratio and the goal-mouth corridor cut depth down as the angle sharpens, and the keeper can never advance past the ball or stand outside the posts. Post-shot behaviour (READ/PREPARE/COMMIT/SAVE), reach, reaction and Stage 4 are unchanged. Active model + set position are shown in the on-canvas readout.</div>
+    <div style="font-size:11px;opacity:.75;margin:2px 0 0"><b>TEMPORARY X3 curve calibration (review only):</b> <b>[</b> cycles INSIDE_R curve magnitude A 0.50&times; &middot; B 0.55&times; (default) &middot; C 0.60&times; &middot; D 1.00&times; PRODUCTION. Each candidate carries its own target-solved setup surface, so all four aim at the same target; only the route differs. Goalkeeper, all other techniques and every other physics system are unchanged. Active value is shown in the on-canvas readout.</div>
+    <div style="font-size:11px;opacity:.75;margin:2px 0 0">Goal-frame: rigid posts/crossbar (e=0.72) &middot; N fires the 6 synthetic post/crossbar impacts</div>
+    <div style="font-size:11px;opacity:.75;margin:2px 0 0">Goalkeeper V1 (Stage 3): K shots (incl. low-shot/foot-save battery) &middot; P positioning Q1..Q4 (aperture bisector, P4 depth) &middot; B pre-commit M6(READ→PREPARE→COMMIT)/M2..M5 &middot; E hand H1/H2/H3 &middot; L keeper profile K1(reference)/K2/K3/COURTOIS (diagnostic: our players.json ratings + real 199 cm/96 kg, no OVR; full keeper reset on change) &middot; O/I/U/Y/H attrs &middot; M pause &middot; , slow-mo &middot; . step-frame</div>
+    <div style="font-size:11px;opacity:.75;margin:2px 0 0">"Goalkeeper V1 debug" draws SET(green□)/predInt(cyan◇)/MOVE(orange✕)/COMMIT(pink★) &middot; anatomy: hand(white○)/torso(blue○)/feet(amber○)/lead-leg(orange○) &middot; PHASE + save surface (FOOT/LEG/BODY/HANDS)</div>
+    <div style="font-size:11px;opacity:.75;margin:2px 0 0">Goalkeeper V1 Stage 4 (CONTACT QUALITY, Stage 3 frozen): after a physical contact the outcome CATCH / SUPPORTED CATCH (hands backed by the chest) / CHEST CATCH / GATHER (low ball collected: hands set ahead of the feet, no lead leg) / CONTROLLED PARRY / WEAK PARRY / FINGERTIP / BODY BLOCK / FOOT SAVE / LEG SAVE comes from continuous contact geometry+timing (no save roll) &middot; ; cycles interception selection S2 (earliest point reachable with margin, default) / S3 (most comfortable — rejected) / S1 (legacy) &middot; Q cycles the Stage-4 acceptance battery (catch / hard-shot parry / foot / shin / body / lateral / full-stretch / fingertip post &amp; bar / spills / net / unreachable / handling probe / K2) &middot; T gk_handling LOW/MED/HIGH (post-contact only) &middot; V pause-at-contact (then . step-frame / , slow-mo / M resume) &middot; a CATCH is held by the keeper (no distribution yet)</div>
+  </section>
+
+  <section>
+    <h2>Playback</h2>
+    <div class="row">
+      <button id="playpause">Pause</button>
+      <label class="inline">Speed
+        <select id="pbspeed">
+          <option value="0.5">0.5×</option>
+          <option value="1" selected>1×</option>
+          <option value="2">2×</option>
+          <option value="4">4×</option>
+          <option value="8">8×</option>
+        </select></label>
+    </div>
+    <div id="readout"></div>
+  </section>
+
+  <section>
+    <h2>Runtime camera (pan + uniform zoom only)</h2>
+    <div class="row">
+      <label class="inline"><input type="radio" name="cammode" value="ball" checked> Ball follow</label>
+      <label class="inline"><input type="radio" name="cammode" value="play"> Play follow</label>
+      <label class="inline"><input type="radio" name="cammode" value="static"> Static</label>
+      <label class="inline"><input type="radio" name="cammode" value="manual"> Manual</label>
+    </div>
+    <label>Camera rail position (manual) <span id="v-camx"></span>
+      <input type="range" id="camx" min="0" max="105" step="0.5"></label>
+    <label>Zoom <span id="v-rzoom"></span>
+      <input type="range" id="rzoom" min="0.5" max="2" step="0.05"></label>
+    <label>Tracking smoothing <span id="v-smooth"></span>
+      <input type="range" id="smooth" min="0" max="1.5" step="0.05"></label>
+    <label>Tracking look-ahead <span id="v-lead"></span>
+      <input type="range" id="lead" min="0" max="10" step="0.5"></label>
+  </section>
+
+  <section>
+    <h2>Projection (authoring — changing RE-FREEZES the world)</h2>
+    <label>Camera height <span id="v-height"></span>
+      <input type="range" id="height" min="8" max="60" step="1"></label>
+    <label>Sideline distance <span id="v-dist"></span>
+      <input type="range" id="dist" min="4" max="60" step="1"></label>
+    <label>FOV (vertical) <span id="v-fov"></span>
+      <input type="range" id="fov" min="12" max="70" step="1"></label>
+    <label>Look-target depth offset <span id="v-depthoff"></span>
+      <input type="range" id="depthoff" min="-20" max="20" step="1"></label>
+    <label>Projection pitch <span id="v-pitch"></span>
+      <input type="range" id="pitch" min="12" max="45" step="1"></label>
+    <label>Projection yaw <span id="v-yaw"></span>
+      <input type="range" id="yaw" min="-35" max="35" step="1"></label>
+    <label>Player authored scale <span id="v-pscale"></span>
+      <input type="range" id="pscale" min="0.5" max="3" step="0.05"></label>
+    <div class="row">
+      <button id="refreeze">Apply projection (authoring)</button>
+      <button id="resetauthor">Reset to CAMERA_V1</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>Goal art (V2.2 world panels — size fixed by 7.32×2.44 m geometry)</h2>
+    <label>Goal X offset (outward, m) <span id="v-goffx"></span>
+      <input type="range" id="goffx" min="-2" max="2" step="0.05"></label>
+    <label>Goal depth offset (m) <span id="v-goffd"></span>
+      <input type="range" id="goffd" min="-2" max="2" step="0.05"></label>
+    <div class="row">
+      <label class="inline">Left goal:
+        <select id="gleft"><option value="orig">Original</option><option value="mirror" selected>Mirror</option></select></label>
+      <label class="inline">Right goal:
+        <select id="gright"><option value="orig" selected>Original</option><option value="mirror">Mirror</option></select></label>
+    </div>
+  </section>
+
+  <section>
+    <h2>Debug (default off)</h2>
+    <label class="inline"><input type="checkbox" id="dbg-anchors"> Ground anchors / pivots</label>
+    <label class="inline"><input type="checkbox" id="dbg-ids"> Player IDs</label>
+    <label class="inline"><input type="checkbox" id="dbg-vel"> Velocity vectors</label>
+    <label class="inline"><input type="checkbox" id="dbg-state"> Animation state + facing + engine activity</label>
+    <label class="inline"><input type="checkbox" id="dbg-ball"> Ball world position</label>
+    <label class="inline"><input type="checkbox" id="dbg-track"> Camera tracking target</label>
+    <label class="inline"><input type="checkbox" id="dbg-goalgeo"> Goal geometry debug (mouth, anchor, pivot, post bases)</label>
+    <label class="inline"><input type="checkbox" id="dbg-netphys"> Net physics debug (nodes, pins, displacement, contact)</label>
+    <label class="inline"><input type="checkbox" id="dbg-occ"> Player collision debug (bodies, desired/resolved v, contacts)</label>
+    <label class="inline"><input type="checkbox" id="dbg-dribsync"> Dribble contact debug (boot-to-ball line at each touch)</label>
+    <label class="inline"><input type="checkbox" id="dbg-gk"> Goalkeeper V1 debug (state, position/velocity, reach ring, ball, timing)</label>
+    <label class="inline"><input type="checkbox" id="dbg-anim"> GK Animation V1 debug (anim state/phase/family, anchors, sim contact vs anim target, visual error, perf)</label>
+    <label class="inline"><input type="checkbox" id="dbg-gkstick"> GK stick-figure diagnostic (Stage-0 placeholder drawn over the sprite)</label>
+    <div style="font-size:11px;opacity:.75;margin:2px 0 4px">NET PHYSICS TEST (synthetic ball): keys 1 central &middot; 2 low corner &middot; 3 upper &middot; 4 side net &middot; 5 cycles slow/normal/power &middot; 0 toggles slow-motion</div>
+    <div style="font-size:11px;opacity:.75;margin:2px 0 4px">BALL PHYSICS TEST (synthetic): keys 6 drop &middot; 7 roll &middot; 8 lofted &middot; 9 elevated shot &middot; C high chip (readout + trail via Ball debug) &middot; T engine transport sequence &middot; V ball spin showcase</div>
+    <div style="font-size:11px;opacity:.75;margin:2px 0 4px">ANIMATION PROTOTYPE (synthetic): key P &mdash; idle &rarr; run &rarr; dribble &rarr; shoot with contact-synced kick (east-facing puppet near x=80)</div>
+    <label class="inline"><input type="checkbox" id="dbg-grid"> World grid (5 m)</label>
+    <label class="inline"><input type="checkbox" id="dbg-xform"> Show camera transform equation</label>
+    <label class="inline"><input type="checkbox" id="dbg-cam" checked> Camera travel debug (ball/target/camera V, rig position)</label>
+  </section>
+  </details>
+</div>
+
+<script src="match.js?v=pt2"></script>
+<script src="gk_anim_review.js?v=1"></script>
+</body>
+</html>

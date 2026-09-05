@@ -18,3 +18,14 @@ Character: SET state `0808086b-027d-4114-a53a-efd11a8178f9` of GK_BASE_V1 `f4838
 | gk_dive_away_from_viewer | 3a06e040 | east | REJECTED: lying on the back with arms up, body still along screen x |
 
 Generations used this pass: ≈ 34 (17 direction jobs × 2). Sheets: `review_artifacts/gk_anim_v1/clips/`.
+
+## Animation V1.1 — 2026-09-04 (contact-pose candidates as character states)
+
+| state | id | verdict |
+|---|---|---|
+| Contact LOW_COLLAPSE R | e7573bd9-3208-40e8-a707-6cc331fcb929 | CANDIDATE — good collapse read; horizontal/descending body in every rotation |
+| Contact MEDIUM_DIVE R | f4017b8d-a214-4b08-8aa8-f63873ad701e | CANDIDATE — horizontal flying body; north rotation is a from-behind T-pose |
+| Contact HIGH_DIVE R | 7a3cf57d-e6ab-4403-9fd4-478f8efa8da6 | CANDIDATE — rising diagonal, glove high; clearly distinct from MEDIUM |
+| Contact FULL_STRETCH R | 7ba58feb-f648-4d07-bd52-5cfe27c4e73e | CANDIDATE — one straight line toes→fingertips; distinct from HIGH_DIVE |
+
+Live verdict on the V1 clips (user, 2026-09-04): dive clips rejected (same pose at every height, forward lunge); shuffle and getting-up kept. Generations used this pass: 4 states (≈ 80–160).

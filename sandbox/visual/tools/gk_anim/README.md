@@ -8,7 +8,11 @@ All tools read the simulation; none writes it. Puppeteer scripts need `PUPPETEER
 | `gk_measure_clip.py <clip_dir> <out.json> [--sheet out.png]` | per-frame anchors of an authored clip (gloves/lead glove/head/planted feet, baked displacement, airborne px) |
 | `gk_build_manifest.py` | declarative CLIP_TABLE → measures every clip → writes `assets/visual_v1/goalkeeper/GK_ANIM_V1.json` (tracked, generated: rerun after adding art) |
 | `gk_anim_gate.js --url … --anim on|off --out gate.json` + `gk_anim_gate_compare.py a.json b.json …` | simulation-neutrality gate: per-scenario trace hashes with the animation drawn every tick vs disabled vs a frozen page |
+| `gk_measure_pose.py <dir> <out.json> [--sheet]` | anchors for an 8-rotation POSE state (gloves anywhere, lead glove, body centre) — used by the runtime's screen-axis matching |
+| `gk_coord_audit.py <basis.json> <records.json> <anchors_dir> <manifest> <out>` | world→screen movement basis table, V1 simulated-vs-drawn displacement decomposition, axis diagrams (S / SW / W facings) |
 | `gk_anim_audit.py <strips_dir> <manifest>` | Phase-29 consistency audit from an `anim_strips.js` capture set (visual error, flags, facing continuity, root continuity, early contact pose, family vs contact surface) |
+
+Review page: `sandbox/visual/gk_anim_review.html` (+ `gk_anim_review.js`) — physics replay of synthetic keeper-frame arrivals and art playback of clips / candidate poses / diagnostics.
 
 Review harnesses kept with the review artifacts (scratch, not tracked): `anim_strips.js` (deterministic per-scenario capture strips + records), `strip_sheet.py`, `pose_sheet.js` (8-direction coverage sheet through the runtime's own resolver), `perf_probe.js`, `ik_debug.js`.
 
