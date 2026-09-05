@@ -323,10 +323,10 @@
      "ground": "bottom",
      "anchor": "pivot",
      "stride_m": 0.9,
-     "note": "2026-09-05: same PixelLab group ba999c22 (v3, non-Pro), appended directions; SW/NW facing presentation only; ground=bottom keeps the feet on the root row (PixelLab varied the foot row by up to 10 px across this cycle)",
+     "note": "2026-09-05 readiness calibration vs WEST: PixelLab group ba999c22 (v3) shuffle frames; frames 4-6 re-authored as a deep ready crouch and 7 as a slight one with edit_image_pixen (non-Pro, seed 7) so the cycle carries WEST's crouch/rise amplitude in this perspective (shuffle_right_crouch/); ground=bottom keeps the feet on the root row",
      "ik": true,
-     "frames": "originals/character_f4838361/anim/shuffle_right/south-west/{i}.png",
-     "anchors": "goalkeeper/anchors/clips/shuffle_right_south-west.json"
+     "frames": "originals/character_f4838361/anim/shuffle_right_crouch/south-west/{i}.png",
+     "anchors": "goalkeeper/anchors/clips/shuffle_right_crouch_south-west.json"
     },
     {
      "dir": "north-west",
@@ -335,18 +335,18 @@
       1,
       2,
       3,
-      4,
-      5,
       6,
       7,
-      8
+      8,
+      7,
+      6
      ],
      "contact": 7,
      "hold": 7,
      "ground": "bottom",
      "anchor": "pivot",
      "stride_m": 0.9,
-     "note": "2026-09-05: same PixelLab group ba999c22 (v3, non-Pro), appended directions; SW/NW facing presentation only; ground=bottom keeps the feet on the root row (PixelLab varied the foot row by up to 10 px across this cycle)",
+     "note": "2026-09-05 readiness calibration vs WEST: PixelLab group ba999c22 (v3) frames unchanged, re-sequenced 1,2,3,6,7,8,7,6 so the clip's own crouched frames 7-8 form the crouch phase (body 101\u219292\u2192101 px, WEST 100\u219290\u219297); ground=bottom keeps the feet on the root row",
      "ik": true,
      "frames": "originals/character_f4838361/anim/shuffle_right/north-west/{i}.png",
      "anchors": "goalkeeper/anchors/clips/shuffle_right_north-west.json"
