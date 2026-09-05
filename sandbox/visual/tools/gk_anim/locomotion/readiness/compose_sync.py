@@ -15,7 +15,7 @@ def cond(rows,i):
     if vmax<0.001: return "controller converged (|v| = 0): SET hold"
     if (dx*dx+dy*dy)**0.5<0.01: return "controller residual step (|v| %.3f, no travel)"%vmax
     return "moving (|v| %.2f m/s)"%vmax
-def phase(t): return "READINESS" if t<5 else ("BALL SLIDES 6 m ACROSS AND BACK — GENUINE FOOTWORK" if t<8 else "READINESS")
+def phase(t): return "READINESS" if t<5 else ("BALL SLIDES ACROSS AND BACK — GENUINE FOOTWORK" if t<8 else "READINESS")
 rowsets=[(tr,title)] if not trb else [(trb,blabel),(tr,title)]
 n=min(len([r for r in tr[d] if "file" in r]) for d in DIRS)
 frames=[]
