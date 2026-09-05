@@ -5,10 +5,9 @@
 //                   the keeper root with no physics (GK_ANIM.reviewOverride); RAW authored placement vs bounded IK.
 // Nothing here writes simulation state except firing the fixture and pausing/stepping the deterministic loop.
 (function () {
-  const RV = { loco: null, locoSeq: null, ready: "bob", readyT0: performance.now(), gside: "GOAL_LEFT", facing: "W", lat: 1.5, z: 1.0, depth: 0, v: 24, loop: false, family: null, ik: false, pos: 0, artPlay: true, fps: 10, lastSpec: null, t0: 0 };
+  const RV = { loco: null, locoSeq: null, readyT0: performance.now(), gside: "GOAL_LEFT", facing: "W", lat: 1.5, z: 1.0, depth: 0, v: 24, loop: false, family: null, ik: false, pos: 0, artPlay: true, fps: 10, lastSpec: null, t0: 0 };
   const FACING_DEG = { W: 180, SW: 135, NW: 225, S: 90, N: 270 };
   const CAND11 = { manifest: "../../review_artifacts/gk_anim_v1_1/poses/GK_POSES_CANDIDATES.json", root: "../../review_artifacts/gk_anim_v1_1/poses/" };
-  const READYRISE = { manifest: "../../review_artifacts/gk_readiness_candidate/READY_RISE_CANDIDATE.json", root: "../../review_artifacts/gk_readiness_candidate/" };
   const SAVEPOSES = { manifest: "../../review_artifacts/gk_anim_v1_2/save_poses/GK_SAVE_POSES_CANDIDATES.json", root: "../../review_artifacts/gk_anim_v1_2/save_poses/" };
   const $ = id => document.getElementById(id);
   function ready() { const el = $("loading"); return el && el.style.display === "none" && typeof ptEnter === "function" && S.gkAnim && S.gkAnim.loaded; }
@@ -53,8 +52,8 @@
   function locoOverride() {
     const L = RV.loco; if (!L) return;
     const clock = () => (performance.now() - RV.readyT0) / 1000;   // one continuous readiness clock — facing changes never reset the phase
-    if (L.kind === "idle") GK_ANIM.reviewOverride = { kind: "state", state: "base", dir: L.dir, living: true, flex: false, clock: clock(), label: "IDLE " + L.dir + " (presentation, live readiness loop)" };
-    else if (L.kind === "set") GK_ANIM.reviewOverride = { kind: "state", state: "set", dir: L.dir, living: RV.ready === "flex", flex: RV.ready === "flex", clock: clock(), label: "SET " + L.dir + (RV.ready === "flex" ? " (presentation, candidate flex loop)" : " (presentation, hold as live)") };
+    if (L.kind === "idle") GK_ANIM.reviewOverride = { kind: "state", state: "base", dir: L.dir, living: true, clock: clock(), label: "IDLE " + L.dir + " (presentation, live readiness loop)" };
+    else if (L.kind === "set") GK_ANIM.reviewOverride = { kind: "state", state: "set", dir: L.dir, living: false, clock: clock(), label: "SET " + L.dir + " (presentation, hold as live)" };
     else GK_ANIM.reviewOverride = { kind: "clip", clip: "shuffle", dir: L.dir, side: "RIGHT", pos: RV.pos, label: "SHUFFLE " + L.dir + " (presentation)" };
     const gk = S.pt && S.pt.gk; const el = $("rv-loco-read"); if (!gk || !el) return;
     const sp = sproj3(gk.x, 0, gk.y), sc = S.playerVScale * depthScale(sp.d) * RIG.zoom * RES; const an = gkAnimAnchorsFor("set", L.dir);
@@ -80,7 +79,6 @@
     $("rv-read").textContent = lines.join("\n");
   }
   function bind() {
-    document.querySelectorAll('input[name="rv-ready"]').forEach(r => r.onchange = () => { RV.ready = r.value; if (RV.loco) locoOverride(); });
     document.querySelectorAll("[data-loco]").forEach(b => b.onclick = () => { const v = b.dataset.loco; RV.family = null; setOn("[data-fam]", null); RV.locoSeq = null;
       if (v === "off") { RV.loco = null; setOn("[data-loco]", null); GK_ANIM.reviewOverride = null; $("rv-loco-read").textContent = ""; return; }
       const [kind, dir] = v.split(":"); RV.loco = { kind, dir }; setOn("[data-loco]", v); S.pt.paused = true; RV.pos = 0; locoOverride(); });
@@ -114,7 +112,6 @@
   }
   async function init() {
     if (!ready()) { setTimeout(init, 150); return; }
-    try { await gkAnimLoadReadyRise(S.gkAnim, READYRISE.manifest, READYRISE.root); } catch (e) { console.warn("readiness candidate frames not available", e); }
     try { await gkAnimLoadSavePoses(S.gkAnim, SAVEPOSES.manifest, SAVEPOSES.root); } catch (e) { console.warn("V1.2 save poses not available yet", e); }
     try { await gkAnimLoadPoses(S.gkAnim, CAND11.manifest, CAND11.root, true); } catch (e) { console.warn("V1.1 rotation candidates not available", e); }
     GK_ANIM.candidatePoses = false; GK_ANIM.diagnosticDives = true; GK_ANIM.savePoseIK = false;

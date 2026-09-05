@@ -1,0 +1,10 @@
+const NM=process.env.PUPPETEER_NODE_MODULES; if(NM) module.paths.unshift(NM);
+const puppeteer=require("puppeteer-core");
+(async()=>{const b=await puppeteer.launch({executablePath:"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",headless:"new",userDataDir:"chrome-probe-"+Date.now(),args:["--no-sandbox"]});
+const p=await b.newPage(); await p.setViewport({width:1400,height:900}); await p.goto("http://127.0.0.1:8126/sandbox/visual/match.html?r="+Date.now(),{waitUntil:"domcontentloaded",timeout:180000});
+for(let i=0;i<900;i++){const ok=await p.evaluate(()=>{const el=document.getElementById("loading");return !!(el&&el.style.display==="none"&&typeof ptEnter==="function"&&S.gkAnim&&S.gkAnim.loaded);});if(ok)break;await new Promise(r=>setTimeout(r,100));}
+const out=await p.evaluate(()=>{ if(!(S.pt&&S.pt.on))ptEnter(); ptReset(); S.pt.paused=true; GK_ANIM.reviewOverride=null; const deg=270,a=deg*Math.PI/180; ptGkFire({name:"P", origin:[101.7+Math.cos(a)*30, 34+Math.sin(a)*30], aim:[105,34], tech:"LACES", c:0.5, synth:{lat:0,z:1.0,v:0.001}}); S.pt.b.vx=0;S.pt.b.vy=0;S.pt.b.vz=0;S.pt.b.z=0;S.pt.kick=null;S.pt.gk.shotT0=null;S.pt.gk.shotActive=false; S.pt.paused=false; gkAnimResetView();
+  const rows=[]; for(let f=0;f<380;f++){ if(f===360){ S.pt.b.x+=6*(-Math.sin(a)); S.pt.b.y+=6*Math.cos(a); } ptStep(); const A=S.gkAnim, g=S.pt.gk; const pr=A.prevRoot?[A.prevRoot.x,A.prevRoot.y]:null, pn=A.prevNow; const disp=pr?Math.hypot(g.x-pr[0],g.y-pr[1]):null; const dtR=pn!=null?Math.max(S.pt.now-pn,1e-3):null;
+    gkAnimDraw(S.pt,S.pt.gk,1/60); if(f>=356) rows.push({f,t:+S.pt.now.toFixed(4),prevNow:pn!=null?+pn.toFixed(4):null,dtRoot:dtR!=null?+dtR.toFixed(4):null,prevRoot:pr&&pr.map(v=>+v.toFixed(4)),root:[+g.x.toFixed(4),+g.y.toFixed(4)],disp:disp!=null?+disp.toFixed(5):null,simV:+Math.hypot(g.vx,g.vy).toFixed(4),dispSpeed:(disp!=null&&dtR)?+(disp/dtR).toFixed(4):null,state:A.cur&&A.cur.state}); }
+  return rows; });
+for(const r of out) console.log(JSON.stringify(r)); await b.close();})();

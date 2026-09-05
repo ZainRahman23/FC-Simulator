@@ -4304,6 +4304,7 @@ const GK_ANIM = {
   diagnosticDives: true,                       // dive families without approved art → DIAGNOSTIC figure (never a wrong dive, never a standing sprite)
   idleBobPeriod: 3.6, idleBobPx: 1,           // IDLE living motion: 1 px breathing on a 3.6 s cycle (integer offsets only)
   idleFarM: 26,                                // ball farther than this (and not in flight at the keeper) → IDLE instead of SET
+  limitCycleIdleDirs: ["south-west", "north-west"], limitCycleWindowS: 0.25, limitCycleTravelM: 0.005,   // added facings: arrived + no net travel → stationary (see gkAnimUpdate)
   shuffleMinSpeed: 0.05, crossoverSpeed: 2.2,  // footwork classification
   strideM: 0.9,                                // loop clips: metres of ROOT travel per full cycle (odometer-driven: no moonwalking)
   loadPhase: 0.30,                             // dive families: LOAD/PUSH for u < loadPhase, then extension toward contact
@@ -4331,7 +4332,7 @@ const GK_ANIM_DIVES = { LOW_COLLAPSE: 1, AIRBORNE_DIVE: 1, MEDIUM_DIVE: 1, HIGH_
 const GK_ANIM_SIDED = { SHUFFLE: 1, CROSSOVER: 1, NEAR_BODY_SAVE: 1, LOW_COLLAPSE: 1, MEDIUM_DIVE: 1, HIGH_DIVE: 1, FULL_STRETCH: 1, FOOT_SAVE: 1, HIGH_CATCH: 0, LOW_REACH: 1 };
 S.gkAnim = { loaded: false, manifest: null, states: {}, anchors: {}, clips: {}, poses: {}, savePoses: {}, cache: {}, cur: null, lastContact: null, perf: { n: 0, ms: 0, max: 0 }, log: [], odo: 0, prevRoot: null, flags: [], commit: null };
 // per-shot / per-reset view state (never touches the simulation)
-function gkAnimResetView() { const A = S.gkAnim; if (!A) return; A.cur = null; A.lastContact = null; A.log = []; A.odo = 0; A.prevRoot = null; A.prevNow = null; A.commit = null; }
+function gkAnimResetView() { const A = S.gkAnim; if (!A) return; A.cur = null; A.lastContact = null; A.log = []; A.odo = 0; A.prevRoot = null; A.rootHist = null; A.commit = null; }
 async function gkAnimLoadPoses(A, manifestUrl, root, candidate) {
   const m = await loadJSON(manifestUrl);
   for (const [fam, ps] of Object.entries(m.poses || {})) {
@@ -4364,12 +4365,6 @@ async function gkAnimLoadSavePoses(A, manifestUrl, root) {
       }
     }
   }
-}
-// REVIEW ONLY: candidate "readiness rise" frames per direction ({frames: {dir: path}}) → A.states.readyRise
-async function gkAnimLoadReadyRise(A, manifestUrl, root) {
-  const m = await loadJSON(manifestUrl); A.states.readyRise = A.states.readyRise || {};
-  for (const [d, path] of Object.entries(m.frames || {})) { try { A.states.readyRise[d] = await loadImage(root + path); } catch (e) { console.warn("readiness frame not loaded", d, e); } }
-  A.readyRiseManifest = m;
 }
 async function gkAnimLoad() {
   const A = S.gkAnim;
@@ -4502,6 +4497,12 @@ function gkAnimClassify(gk, c, facing) {
   }
   return { family, sub, side, goalSide, hClass, expr, saveAngle, saveDir: gkAnimDirFromAngle(saveAngle), lat: +lat.toFixed(3), depth: +depth.toFixed(3), dz: +dz.toFixed(3), z: +z.toFixed(3), zH: +zH.toFixed(3), zClass, L: +L.toFixed(3), norm: +norm.toFixed(3), maxLat: +maxLat.toFixed(2), exec: +c.execTime.toFixed(3), v0: +v0.toFixed(2), feetPlanted, airborne, dArm: +dArm.toFixed(3), dBody: +dBody.toFixed(3), action: act, tier: c.tier, bestEffort: !!c.bestEffort, dy: +dy.toFixed(3) };
 }
+// net root travel between the newest sample and the newest sample at least `windowS` of SIMULATION time older (null until spanned)
+function gkAnimNetTravel(A, now, windowS) {
+  const h = A.rootHist; if (!h || h.length < 2) return null; let ref = null;
+  for (const smp of h) { if (smp.t <= now - windowS) ref = smp; else break; }
+  if (!ref) return null; const cur = h[h.length - 1]; return Math.hypot(cur.x - ref.x, cur.y - ref.y);
+}
 // STATE MACHINE — a pure function of (simulation time, keeper state) plus the view odometer for loops and the commit-tick freeze
 function gkAnimUpdate(t, gk) {
   const A = S.gkAnim, now = t.now, b = t.b;
@@ -4512,14 +4513,17 @@ function gkAnimUpdate(t, gk) {
   const frozen = gk.committed && A.commit ? A.commit : null;
   const dir = frozen ? frozen.dir : headingToDir(gk.facing * 180 / Math.PI);
   const gkF = frozen ? { x: gk.x, y: gk.y, facing: frozen.facing, height: gk.height, committed: gk.committed } : gk;
-  // Root speed for the footwork/idle decision = the speed the ROOT ACTUALLY TRAVELLED since the last animation update (read-only
-  // observation), never above the simulation's velocity variable. The positioning controller can report a residual velocity (e.g.
-  // 0.08 m/s for off-axis shooter bearings) while the root is stationary; classifying that as footwork froze a shuffle frame
-  // (odometer-driven loops do not advance without travel) instead of the IDLE readiness loop. Direction still uses gk.vx/vy.
-  const simSpeed = Math.hypot(gk.vx, gk.vy);
-  const dtRoot = A.prevNow != null ? Math.max(t.now - A.prevNow, 1e-3) : null;
-  const dispSpeed = (A.prevRoot && dtRoot != null) ? Math.hypot(gk.x - A.prevRoot.x, gk.y - A.prevRoot.y) / dtRoot : simSpeed;
-  const speed = Math.min(simSpeed, dispSpeed);
+  const speed = Math.hypot(gk.vx, gk.vy);                      // pre-existing decision input (unchanged for every pre-existing facing)
+  // ADDED FACINGS ONLY (south-west / north-west, 2026-09-05): for these shooter bearings the positioning controller settles into a
+  // ±0.7 mm limit cycle and keeps reporting ~0.08 m/s (its own state is SET = arrived) while the root goes nowhere; the pre-existing
+  // decision then shows footwork frames that cannot advance (odometer-driven) — a frozen keeper. Three explicit signals decide:
+  //   commanded locomotion  = the controller's state (TRACKING = still going somewhere; SET = arrived)
+  //   actual root locomotion = net root travel over the last 0.25 s of SIMULATION time (cadence-independent samples)
+  //   residual velocity      = |v| below the controller's own SET velocity threshold
+  // arrived + no net travel + residual velocity → stationary → IDLE/SET readiness. Genuine footwork (TRACKING, or ≥ 5 mm of net
+  // travel per 0.25 s — 0.05 m/s covers 12.5 mm) is untouched. Pre-existing facings keep their exact pre-dd15136 traces.
+  const netTravel = gkAnimNetTravel(A, t.now, GK_ANIM.limitCycleWindowS);
+  const stationaryLimitCycle = GK_ANIM.limitCycleIdleDirs.indexOf(dir) >= 0 && gk.state === "SET" && speed < GK_MOVE.setVelThresh && netTravel != null && netTravel < GK_ANIM.limitCycleTravelM;
   let state = "SET", family = null, side = null, u = 0, phase = "-", temp = null, arm = false, boot = false, holdPose = false, cls = null;
   let clipReq = null;       // {family, side, mode: "reach"|"hold"|"post"|"loop", k (0..1 within the mode)}
   const footwork = () => {
@@ -4535,7 +4539,7 @@ function gkAnimUpdate(t, gk) {
     return null;
   };
   if (!gk.shotActive && !gk.committed) {
-    if (speed > GK_ANIM.shuffleMinSpeed) { state = footwork(); phase = "loop"; clipReq = footworkClip(state); if (!clipReq) temp = "no authored footwork frames: SET pose + root motion"; }
+    if (speed > GK_ANIM.shuffleMinSpeed && !stationaryLimitCycle) { state = footwork(); phase = "loop"; clipReq = footworkClip(state); if (!clipReq) temp = "no authored footwork frames: SET pose + root motion"; }
     else {
       const far = b && b.ctrl && Math.hypot(b.x - gk.x, b.y - gk.y) > GK_ANIM.idleFarM;
       state = far ? "IDLE" : "SET"; phase = far ? "living" : "hold";
@@ -4685,7 +4689,8 @@ function gkAnimDrawDiagnostic(t, gk, cur, sp, s) {
 function gkAnimDraw(t, gk, dt) {
   const A = S.gkAnim; if (!A.loaded) return false;
   const t0 = performance.now();
-  if (A.prevRoot) A.odo += Math.hypot(gk.x - A.prevRoot.x, gk.y - A.prevRoot.y); A.prevRoot = { x: gk.x, y: gk.y }; A.prevNow = t.now;
+  if (A.prevRoot) A.odo += Math.hypot(gk.x - A.prevRoot.x, gk.y - A.prevRoot.y); A.prevRoot = { x: gk.x, y: gk.y };
+  { const h = A.rootHist || (A.rootHist = []), last = h[h.length - 1]; if (!last || t.now > last.t) { h.push({ t: t.now, x: gk.x, y: gk.y }); while (h.length && h[0].t < t.now - 0.6) h.shift(); } }   // sim-time-stamped root samples (added facings' limit-cycle test)
   const cur = gkAnimUpdate(t, gk);
   const sp = sproj3(gk.x, 0, gk.y); if (sp.d < 0.5) return true;
   const s = S.playerVScale * depthScale(sp.d) * RIG.zoom * RES;
@@ -4838,14 +4843,12 @@ function gkAnimDrawReview(t, gk, sp, s, o) {
   else if (o.kind === "state") {
     // presentation of a standing state. o.living reproduces the live IDLE readiness motion (same constants: idleBobPx on idleBobPeriod,
     // integer sprite-px offsets) on a continuous clock (o.clock seconds, else wall-clock) so a facing change never resets the phase.
-    // o.flex (candidate, review only): at the top of the cycle draw the direction's "readiness rise" frame instead of translating.
     const st = A.states[o.state || "set"] ? (o.state || "set") : "base"; const d = o.dir || headingToDir(gk.facing * 180 / Math.PI);
-    let img = A.states[st][d]; const an = gkAnimAnchorsFor(st, d);
+    const img = A.states[st][d]; const an = gkAnimAnchorsFor(st, d);
     const clock = o.clock != null ? o.clock : performance.now() / 1000; const phase = o.living ? (0.5 - 0.5 * Math.cos(2 * Math.PI * clock / GK_ANIM.idleBobPeriod)) : 0;
-    let dyPx = o.living ? Math.round(GK_ANIM.idleBobPx * phase) : 0; let flexUsed = false;
-    if (o.living && o.flex && A.states.readyRise && A.states.readyRise[d] && phase >= 0.5) { img = A.states.readyRise[d]; flexUsed = true; }
+    const dyPx = o.living ? Math.round(GK_ANIM.idleBobPx * phase) : 0;
     gkAnimBlit(img, false, an ? an.content_cx : img.width / 2, (an ? an.foot_row : img.height / 2 + S.pivots.foot_offset_base128) - dyPx, s, sp.x, sp.y);
-    label += "  " + st.toUpperCase() + "/" + d + (o.living ? " living phase " + phase.toFixed(2) + " dy " + dyPx + (flexUsed ? " FLEX-FRAME" : "") : " (hold)"); }
+    label += "  " + st.toUpperCase() + "/" + d + (o.living ? " living phase " + phase.toFixed(2) + " dy " + dyPx : " (hold)"); }
   else {
     const fam = o.family || "MEDIUM_DIVE", side = o.side || "RIGHT", ang = (o.saveAngleDeg != null ? o.saveAngleDeg : gk.facing * 180 / Math.PI + (side === "LEFT" ? -90 : 90)) * Math.PI / 180;
     const lat = o.lat != null ? o.lat : 1.5, z = o.z != null ? o.z : 1.0;
