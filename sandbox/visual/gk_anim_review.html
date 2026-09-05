@@ -57,7 +57,9 @@
   </section>
   <section>
     <h2>Locomotion presentation — facing / view direction only (not a save direction; GOAL_LEFT / GOAL_RIGHT are untouched)</h2>
-    <div class="row">IDLE / SET: <button data-loco="set:west">WEST</button><button data-loco="set:south-west">SOUTH-WEST</button><button data-loco="set:north-west">NORTH-WEST</button></div>
+    <div class="row">IDLE (ball far — the live readiness loop: base rotation + living bob, same clock for every facing): <button data-loco="idle:west">WEST</button><button data-loco="idle:south-west">SOUTH-WEST</button><button data-loco="idle:north-west">NORTH-WEST</button></div>
+    <div class="row">SET (ball near — live representation: SET rotation, hold): <button data-loco="set:west">WEST</button><button data-loco="set:south-west">SOUTH-WEST</button><button data-loco="set:north-west">NORTH-WEST</button></div>
+    <div class="row">Readiness motion: <label class="inline"><input type="radio" name="rv-ready" value="bob" checked> live: 1-px living bob (IDLE only)</label> <label class="inline"><input type="radio" name="rv-ready" value="flex"> candidate: knee/hip rise frame at the top of the same cycle, also on SET (review only, not live)</label></div>
     <div class="row">SHUFFLE: <button data-loco="shuffle:west">WEST</button><button data-loco="shuffle:south-west">SOUTH-WEST</button><button data-loco="shuffle:north-west">NORTH-WEST</button> <span style="font-size:11px;opacity:.75">(clip frames play at PLAYBACK SPEED; the readout names the resolved variant — exact, mirrored or DIR-APPROX)</span></div>
     <div class="row">Transitions (0.7 s per facing, looping): <button data-locoseq="west,south-west,west">W → SW → W</button><button data-locoseq="west,north-west,west">W → NW → W</button><button data-locoseq="south-west,west">SW → W</button><button data-locoseq="north-west,west">NW → W</button> <label class="inline"><input type="checkbox" id="rv-loco-shuffle" checked> transition while shuffling</label> <button data-loco="off">back to physics</button></div>
     <div id="rv-loco-read" style="font-size:11px;opacity:.85"></div>

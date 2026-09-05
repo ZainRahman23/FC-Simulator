@@ -5,9 +5,10 @@
 //                   the keeper root with no physics (GK_ANIM.reviewOverride); RAW authored placement vs bounded IK.
 // Nothing here writes simulation state except firing the fixture and pausing/stepping the deterministic loop.
 (function () {
-  const RV = { loco: null, locoSeq: null, gside: "GOAL_LEFT", facing: "W", lat: 1.5, z: 1.0, depth: 0, v: 24, loop: false, family: null, ik: false, pos: 0, artPlay: true, fps: 10, lastSpec: null, t0: 0 };
+  const RV = { loco: null, locoSeq: null, ready: "bob", readyT0: performance.now(), gside: "GOAL_LEFT", facing: "W", lat: 1.5, z: 1.0, depth: 0, v: 24, loop: false, family: null, ik: false, pos: 0, artPlay: true, fps: 10, lastSpec: null, t0: 0 };
   const FACING_DEG = { W: 180, SW: 135, NW: 225, S: 90, N: 270 };
   const CAND11 = { manifest: "../../review_artifacts/gk_anim_v1_1/poses/GK_POSES_CANDIDATES.json", root: "../../review_artifacts/gk_anim_v1_1/poses/" };
+  const READYRISE = { manifest: "../../review_artifacts/gk_readiness_candidate/READY_RISE_CANDIDATE.json", root: "../../review_artifacts/gk_readiness_candidate/" };
   const SAVEPOSES = { manifest: "../../review_artifacts/gk_anim_v1_2/save_poses/GK_SAVE_POSES_CANDIDATES.json", root: "../../review_artifacts/gk_anim_v1_2/save_poses/" };
   const $ = id => document.getElementById(id);
   function ready() { const el = $("loading"); return el && el.style.display === "none" && typeof ptEnter === "function" && S.gkAnim && S.gkAnim.loaded; }
@@ -51,7 +52,9 @@
   // ── LOCOMOTION PRESENTATION (facing/view only): SET state or SHUFFLE clip drawn for an explicit direction at the keeper root.
   function locoOverride() {
     const L = RV.loco; if (!L) return;
-    if (L.kind === "set") GK_ANIM.reviewOverride = { kind: "state", state: "set", dir: L.dir, label: "IDLE/SET " + L.dir + " (presentation)" };
+    const clock = () => (performance.now() - RV.readyT0) / 1000;   // one continuous readiness clock — facing changes never reset the phase
+    if (L.kind === "idle") GK_ANIM.reviewOverride = { kind: "state", state: "base", dir: L.dir, living: true, flex: false, clock: clock(), label: "IDLE " + L.dir + " (presentation, live readiness loop)" };
+    else if (L.kind === "set") GK_ANIM.reviewOverride = { kind: "state", state: "set", dir: L.dir, living: RV.ready === "flex", flex: RV.ready === "flex", clock: clock(), label: "SET " + L.dir + (RV.ready === "flex" ? " (presentation, candidate flex loop)" : " (presentation, hold as live)") };
     else GK_ANIM.reviewOverride = { kind: "clip", clip: "shuffle", dir: L.dir, side: "RIGHT", pos: RV.pos, label: "SHUFFLE " + L.dir + " (presentation)" };
     const gk = S.pt && S.pt.gk; const el = $("rv-loco-read"); if (!gk || !el) return;
     const sp = sproj3(gk.x, 0, gk.y), sc = S.playerVScale * depthScale(sp.d) * RIG.zoom * RES; const an = gkAnimAnchorsFor("set", L.dir);
@@ -77,11 +80,12 @@
     $("rv-read").textContent = lines.join("\n");
   }
   function bind() {
+    document.querySelectorAll('input[name="rv-ready"]').forEach(r => r.onchange = () => { RV.ready = r.value; if (RV.loco) locoOverride(); });
     document.querySelectorAll("[data-loco]").forEach(b => b.onclick = () => { const v = b.dataset.loco; RV.family = null; setOn("[data-fam]", null); RV.locoSeq = null;
       if (v === "off") { RV.loco = null; setOn("[data-loco]", null); GK_ANIM.reviewOverride = null; $("rv-loco-read").textContent = ""; return; }
       const [kind, dir] = v.split(":"); RV.loco = { kind, dir }; setOn("[data-loco]", v); S.pt.paused = true; RV.pos = 0; locoOverride(); });
     document.querySelectorAll("[data-locoseq]").forEach(b => b.onclick = () => { const dirs = b.dataset.locoseq.split(","); RV.family = null; setOn("[data-fam]", null); setOn("[data-loco]", null);
-      RV.locoSeq = { dirs, i: 0, t0: performance.now() }; RV.loco = { kind: $("rv-loco-shuffle").checked ? "shuffle" : "set", dir: dirs[0] }; S.pt.paused = true; RV.pos = 0; locoOverride(); });
+      RV.locoSeq = { dirs, i: 0, t0: performance.now() }; RV.loco = { kind: $("rv-loco-shuffle").checked ? "shuffle" : "idle", dir: dirs[0] }; S.pt.paused = true; RV.pos = 0; locoOverride(); });
     document.querySelectorAll("[data-gside]").forEach(b => b.onclick = () => { RV.gside = b.dataset.gside; setOn("[data-gside]", RV.gside); if (RV.family) updateOverride(); else fire(); });
     document.querySelectorAll("[data-facing]").forEach(b => b.onclick = () => { RV.facing = b.dataset.facing; setOn("[data-facing]", RV.facing); fire(); });
     document.querySelectorAll("[data-preset]").forEach(b => b.onclick = () => { const [l, z] = b.dataset.preset.split(",").map(Number); RV.lat = l; RV.z = z; $("rv-lat").value = l; $("rv-z").value = z; $("rv-lat-v").textContent = l.toFixed(2); $("rv-z-v").textContent = z.toFixed(2); normReadout(); if (RV.family) updateOverride(); else fire(); });
@@ -110,6 +114,7 @@
   }
   async function init() {
     if (!ready()) { setTimeout(init, 150); return; }
+    try { await gkAnimLoadReadyRise(S.gkAnim, READYRISE.manifest, READYRISE.root); } catch (e) { console.warn("readiness candidate frames not available", e); }
     try { await gkAnimLoadSavePoses(S.gkAnim, SAVEPOSES.manifest, SAVEPOSES.root); } catch (e) { console.warn("V1.2 save poses not available yet", e); }
     try { await gkAnimLoadPoses(S.gkAnim, CAND11.manifest, CAND11.root, true); } catch (e) { console.warn("V1.1 rotation candidates not available", e); }
     GK_ANIM.candidatePoses = false; GK_ANIM.diagnosticDives = true; GK_ANIM.savePoseIK = false;
@@ -123,6 +128,7 @@
       if (RV.family && RV.artPlay && GK_ANIM.reviewOverride && GK_ANIM.reviewOverride.kind === "clip") { const n = clipLen(); if (n && now - lastAdv > 1000 / (RV.fps * (S.pt.slow || 1))) { RV.pos = (RV.pos + 1) % n; lastAdv = now; updateOverride(); } }
       if (RV.loco) {
         if (RV.loco.kind === "shuffle" && RV.artPlay && S.gkAnim.clips.shuffle) { const r = gkAnimResolve(S.gkAnim.clips.shuffle, RV.loco.dir, "RIGHT"); const n = r ? r.v.frames.length : 0; if (n && now - lastAdv > 1000 / (RV.fps * (S.pt.slow || 1))) { RV.pos = (RV.pos + 1) % n; lastAdv = now; locoOverride(); } }
+        if (RV.loco.kind !== "shuffle" && GK_ANIM.reviewOverride && GK_ANIM.reviewOverride.living) locoOverride();
         if (RV.locoSeq && now - RV.locoSeq.t0 > 700) { RV.locoSeq.i = (RV.locoSeq.i + 1) % RV.locoSeq.dirs.length; RV.locoSeq.t0 = now; RV.loco.dir = RV.locoSeq.dirs[RV.locoSeq.i]; locoOverride(); }
       }
       if (!RV.family && RV.loop && S.pt && !S.pt.paused && (now - RV.t0) / 1000 * (S.pt.slow || 1) > 3.2) { $("rv-refire").onclick(); }

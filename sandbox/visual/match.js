@@ -4331,7 +4331,7 @@ const GK_ANIM_DIVES = { LOW_COLLAPSE: 1, AIRBORNE_DIVE: 1, MEDIUM_DIVE: 1, HIGH_
 const GK_ANIM_SIDED = { SHUFFLE: 1, CROSSOVER: 1, NEAR_BODY_SAVE: 1, LOW_COLLAPSE: 1, MEDIUM_DIVE: 1, HIGH_DIVE: 1, FULL_STRETCH: 1, FOOT_SAVE: 1, HIGH_CATCH: 0, LOW_REACH: 1 };
 S.gkAnim = { loaded: false, manifest: null, states: {}, anchors: {}, clips: {}, poses: {}, savePoses: {}, cache: {}, cur: null, lastContact: null, perf: { n: 0, ms: 0, max: 0 }, log: [], odo: 0, prevRoot: null, flags: [], commit: null };
 // per-shot / per-reset view state (never touches the simulation)
-function gkAnimResetView() { const A = S.gkAnim; if (!A) return; A.cur = null; A.lastContact = null; A.log = []; A.odo = 0; A.prevRoot = null; A.commit = null; }
+function gkAnimResetView() { const A = S.gkAnim; if (!A) return; A.cur = null; A.lastContact = null; A.log = []; A.odo = 0; A.prevRoot = null; A.prevNow = null; A.commit = null; }
 async function gkAnimLoadPoses(A, manifestUrl, root, candidate) {
   const m = await loadJSON(manifestUrl);
   for (const [fam, ps] of Object.entries(m.poses || {})) {
@@ -4364,6 +4364,12 @@ async function gkAnimLoadSavePoses(A, manifestUrl, root) {
       }
     }
   }
+}
+// REVIEW ONLY: candidate "readiness rise" frames per direction ({frames: {dir: path}}) → A.states.readyRise
+async function gkAnimLoadReadyRise(A, manifestUrl, root) {
+  const m = await loadJSON(manifestUrl); A.states.readyRise = A.states.readyRise || {};
+  for (const [d, path] of Object.entries(m.frames || {})) { try { A.states.readyRise[d] = await loadImage(root + path); } catch (e) { console.warn("readiness frame not loaded", d, e); } }
+  A.readyRiseManifest = m;
 }
 async function gkAnimLoad() {
   const A = S.gkAnim;
@@ -4506,7 +4512,14 @@ function gkAnimUpdate(t, gk) {
   const frozen = gk.committed && A.commit ? A.commit : null;
   const dir = frozen ? frozen.dir : headingToDir(gk.facing * 180 / Math.PI);
   const gkF = frozen ? { x: gk.x, y: gk.y, facing: frozen.facing, height: gk.height, committed: gk.committed } : gk;
-  const speed = Math.hypot(gk.vx, gk.vy);
+  // Root speed for the footwork/idle decision = the speed the ROOT ACTUALLY TRAVELLED since the last animation update (read-only
+  // observation), never above the simulation's velocity variable. The positioning controller can report a residual velocity (e.g.
+  // 0.08 m/s for off-axis shooter bearings) while the root is stationary; classifying that as footwork froze a shuffle frame
+  // (odometer-driven loops do not advance without travel) instead of the IDLE readiness loop. Direction still uses gk.vx/vy.
+  const simSpeed = Math.hypot(gk.vx, gk.vy);
+  const dtRoot = A.prevNow != null ? Math.max(t.now - A.prevNow, 1e-3) : null;
+  const dispSpeed = (A.prevRoot && dtRoot != null) ? Math.hypot(gk.x - A.prevRoot.x, gk.y - A.prevRoot.y) / dtRoot : simSpeed;
+  const speed = Math.min(simSpeed, dispSpeed);
   let state = "SET", family = null, side = null, u = 0, phase = "-", temp = null, arm = false, boot = false, holdPose = false, cls = null;
   let clipReq = null;       // {family, side, mode: "reach"|"hold"|"post"|"loop", k (0..1 within the mode)}
   const footwork = () => {
@@ -4672,7 +4685,7 @@ function gkAnimDrawDiagnostic(t, gk, cur, sp, s) {
 function gkAnimDraw(t, gk, dt) {
   const A = S.gkAnim; if (!A.loaded) return false;
   const t0 = performance.now();
-  if (A.prevRoot) A.odo += Math.hypot(gk.x - A.prevRoot.x, gk.y - A.prevRoot.y); A.prevRoot = { x: gk.x, y: gk.y };
+  if (A.prevRoot) A.odo += Math.hypot(gk.x - A.prevRoot.x, gk.y - A.prevRoot.y); A.prevRoot = { x: gk.x, y: gk.y }; A.prevNow = t.now;
   const cur = gkAnimUpdate(t, gk);
   const sp = sproj3(gk.x, 0, gk.y); if (sp.d < 0.5) return true;
   const s = S.playerVScale * depthScale(sp.d) * RIG.zoom * RES;
@@ -4822,7 +4835,17 @@ function gkAnimDrawReview(t, gk, sp, s, o) {
     label += "  SAVE POSE " + o.family + " " + o.side + " " + (o.key || "") + (smp.candidate ? " CANDIDATE" : "") + info;
     if (o.target) { const tp = sproj3(o.target[0], o.target[2], o.target[1]); ctx.strokeStyle = "#ff4fd8"; ctx.lineWidth = Math.max(1, PXQ * 2); ctx.setLineDash([4, 3]); ctx.beginPath(); ctx.moveTo(sp.x, sp.y); ctx.lineTo(tp.x, tp.y); ctx.stroke(); ctx.setLineDash([]); ctx.strokeStyle = "#ffffff"; ctx.beginPath(); ctx.arc(tp.x, tp.y, uipx(4), 0, Math.PI * 2); ctx.stroke(); }
   }
-  else if (o.kind === "state") { const st = A.states[o.state || "set"] ? (o.state || "set") : "base"; const d = o.dir || headingToDir(gk.facing * 180 / Math.PI); const img = A.states[st][d], an = gkAnimAnchorsFor(st, d); gkAnimBlit(img, false, an ? an.content_cx : img.width / 2, an ? an.foot_row : img.height / 2 + S.pivots.foot_offset_base128, s, sp.x, sp.y); label += "  " + st.toUpperCase() + "/" + d; }
+  else if (o.kind === "state") {
+    // presentation of a standing state. o.living reproduces the live IDLE readiness motion (same constants: idleBobPx on idleBobPeriod,
+    // integer sprite-px offsets) on a continuous clock (o.clock seconds, else wall-clock) so a facing change never resets the phase.
+    // o.flex (candidate, review only): at the top of the cycle draw the direction's "readiness rise" frame instead of translating.
+    const st = A.states[o.state || "set"] ? (o.state || "set") : "base"; const d = o.dir || headingToDir(gk.facing * 180 / Math.PI);
+    let img = A.states[st][d]; const an = gkAnimAnchorsFor(st, d);
+    const clock = o.clock != null ? o.clock : performance.now() / 1000; const phase = o.living ? (0.5 - 0.5 * Math.cos(2 * Math.PI * clock / GK_ANIM.idleBobPeriod)) : 0;
+    let dyPx = o.living ? Math.round(GK_ANIM.idleBobPx * phase) : 0; let flexUsed = false;
+    if (o.living && o.flex && A.states.readyRise && A.states.readyRise[d] && phase >= 0.5) { img = A.states.readyRise[d]; flexUsed = true; }
+    gkAnimBlit(img, false, an ? an.content_cx : img.width / 2, (an ? an.foot_row : img.height / 2 + S.pivots.foot_offset_base128) - dyPx, s, sp.x, sp.y);
+    label += "  " + st.toUpperCase() + "/" + d + (o.living ? " living phase " + phase.toFixed(2) + " dy " + dyPx + (flexUsed ? " FLEX-FRAME" : "") : " (hold)"); }
   else {
     const fam = o.family || "MEDIUM_DIVE", side = o.side || "RIGHT", ang = (o.saveAngleDeg != null ? o.saveAngleDeg : gk.facing * 180 / Math.PI + (side === "LEFT" ? -90 : 90)) * Math.PI / 180;
     const lat = o.lat != null ? o.lat : 1.5, z = o.z != null ? o.z : 1.0;
