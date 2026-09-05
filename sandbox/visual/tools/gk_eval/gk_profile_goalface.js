@@ -28,6 +28,14 @@ const CN=+opt("--chargeN",96), CMIN=+opt("--cmin",0.10), CMAX=+opt("--cmax",1.0)
 // studies only; recorded in meta.sets so a dataset can never be mistaken for production). --udd names the Chrome profile dir.
 const SETS=(opt("--set","")||"").split(",").map(x=>x.trim()).filter(Boolean).map(kv=>{ const i=kv.indexOf("="); return [kv.slice(0,i).trim(),kv.slice(i+1).trim()]; });
 const UDD=opt("--udd","chrome-pgf");
+// ── continuous-attribute tooling (attribute-system pass, 2026-09-05)
+//   --sweep "reflexes=40,50,60,70,80,90,99" [--base K1]   one attribute varied on a base profile, everything else held
+//   --dist 16 [--angle 30]     shooter placed `dist` m from the goal centre at `angle` degrees (0 = central; + = toward post B);
+//                              aims always span the goal mouth about its centre; D2 SET is solved from that shooter position
+//   --holdPositioning false    let gk_positioning vary with the profile (default: HELD at the production value, identical SET)
+//   --compact                  smaller per-shot records (first 3 contacts, no closest-approach / launch on keeper-ON runs)
+const BASE=opt("--base","K1"); const SWEEP=opt("--sweep",null); const DIST=opt("--dist",null)!=null?+opt("--dist",null):null; const ANGLE=+opt("--angle",0);
+const HOLDPOS=(opt("--holdPositioning","true")!=="false"); const COMPACT=args.includes("--compact");
 
 // ── KEEPER PROFILES ────────────────────────────────────────────────────────────────────────────────────
 // Every field is an individual attribute or a physical dimension. `ovr` is DESCRIPTIVE METADATA ONLY and is
@@ -56,7 +64,24 @@ const PROFILES = {
   K1_JMP:  { reflexes:45, diving:45, handling:45, jumping:68, height:183, weight:80, acceleration:68, speed:62, strength:72, positioning:72, ovr:null, note:"K1 + Courtois jumping" },
   K1_HGT:  { reflexes:45, diving:45, handling:45, jumping:48, height:199, weight:80, acceleration:68, speed:62, strength:72, positioning:72, ovr:null, note:"K1 + Courtois height (199)" },
   K1_HND:  { reflexes:45, diving:45, handling:95, jumping:48, height:183, weight:80, acceleration:68, speed:62, strength:72, positioning:72, ovr:null, note:"K1 + Courtois handling" },
+  K1_ACC40: { reflexes:45, diving:45, handling:45, jumping:48, height:183, weight:80, acceleration:40, speed:62, strength:72, positioning:72, ovr:null, note:"K1 with acceleration 40 (interaction grid base)" },
+  K1_ACC99: { reflexes:45, diving:45, handling:45, jumping:48, height:183, weight:80, acceleration:99, speed:62, strength:72, positioning:72, ovr:null, note:"K1 with acceleration 99 (interaction grid base)" },
+  // ── tier-free reference fixtures (attribute-system pass). Individual attributes only; the labels are conceptual quality
+  //    points (~60 / ~70 / ~80 / ~90+) for reading the ladder, never an input. POOR is the K1 anchor bundle verbatim.
+  POOR:    { reflexes:45, diving:45, handling:45, jumping:48, height:183, weight:80, acceleration:68, speed:62, strength:72, positioning:72, reactions:50, agility:55, ovr:null, note:"weak-keeper anchor (= K1 bundle)" },
+  AVERAGE: { reflexes:68, diving:68, handling:68, jumping:66, height:188, weight:83, acceleration:70, speed:63, strength:73, positioning:68, reactions:68, agility:60, ovr:null, note:"competent professional" },
+  GOOD:    { reflexes:78, diving:78, handling:78, jumping:74, height:190, weight:85, acceleration:72, speed:64, strength:74, positioning:78, reactions:78, agility:62, ovr:null, note:"strong" },
+  ELITE:   { reflexes:90, diving:90, handling:90, jumping:82, height:192, weight:88, acceleration:74, speed:65, strength:76, positioning:90, reactions:90, agility:64, ovr:null, note:"elite (human)" },
+  // ── style fixtures: similar conceptual quality, different shapes
+  TALL_SLOW:       { reflexes:72, diving:78, handling:78, jumping:72, height:200, weight:95, acceleration:50, speed:48, strength:80, positioning:78, reactions:72, agility:50, ovr:null, note:"200 cm, strong reach, moderate reflexes/acceleration" },
+  SHORT_EXPLOSIVE: { reflexes:92, diving:92, handling:70, jumping:88, height:183, weight:78, acceleration:88, speed:80, strength:66, positioning:78, reactions:90, agility:85, ovr:null, note:"183 cm, elite reflexes/diving/acceleration" },
+  HANDLER:         { reflexes:70, diving:70, handling:94, jumping:68, height:188, weight:84, acceleration:62, speed:58, strength:74, positioning:78, reactions:72, agility:60, ovr:null, note:"moderate physical, elite handling" },
+  STOPPER:         { reflexes:92, diving:92, handling:58, jumping:82, height:190, weight:86, acceleration:66, speed:60, strength:72, positioning:78, reactions:88, agility:66, ovr:null, note:"elite reflexes/diving, weak handling" },
 };
+let PROFS_EFFECTIVE=PROFS;
+if(SWEEP){ const [attr,vals]=SWEEP.split("="); const base=PROFILES[BASE]; if(!base) throw new Error("unknown --base "+BASE);
+  const names=[BASE]; for(const v of vals.split(",").map(Number)){ const nm=BASE+"__"+attr+"_"+v; PROFILES[nm]={...base,[attr]:v,ovr:null,note:BASE+" with "+attr+"="+v}; names.push(nm); }
+  PROFS_EFFECTIVE=names; }
 const NM=process.env.PUPPETEER_NODE_MODULES; if(NM) module.paths.unshift(NM);
 const puppeteer=require("puppeteer-core");
 const CHROME=process.env.CHROME_PATH||"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
@@ -74,7 +99,9 @@ const CHROME=process.env.CHROME_PATH||"/Applications/Google Chrome.app/Contents/
      actionModel:GK_ACTION.model,x3:PT_X3.active,x3k:+ptX3K().toFixed(4),collide:GK_COLLIDE,frameCollision:GOALFX.collision,
      gkAttrs:{...ptGkMake().attrs},reContactExcl:GK_DIVE.reContactExcl,hipFrac:GK_BODY.hipFrac,handR:GK_HAND[t.gkHand],ballR:GOALFX.ballR};
    // ── shooter: apex of the penalty arc (penalty spot 11 m from the line, arc radius 9.15 m — the drawn D)
-   const PEN_SPOT=11.0, ARC_R=9.15; const SX=M.lineX-(PEN_SPOT+ARC_R), SY=M.centerY;
+   const PEN_SPOT=11.0, ARC_R=9.15;
+   const DISTM=CFG.dist!=null?CFG.dist:(PEN_SPOT+ARC_R), ANG=(CFG.angle||0)*Math.PI/180;
+   const SX=M.lineX-DISTM*Math.cos(ANG), SY=M.centerY+DISTM*Math.sin(ANG);
    // SET solved ONCE with the PRODUCTION positioning inputs, then held for every profile
    const HOLD_POS = t.gkPos!=null?t.gkPos:ptGkMake().attrs.gk_positioning;
    const q=gkNorm01(HOLD_POS);
@@ -82,7 +109,7 @@ const CHROME=process.env.CHROME_PATH||"/Applications/Google Chrome.app/Contents/
    const geometry={shooter:[+SX.toFixed(3),SY],distToCentre:+Math.hypot(M.lineX-SX,M.centerY-SY).toFixed(3),distToLine:+(M.lineX-SX).toFixed(3),
      angleToPosts:[+(Math.atan2(M.postA-SY,M.lineX-SX)*180/Math.PI).toFixed(2),+(Math.atan2(M.postB-SY,M.lineX-SX)*180/Math.PI).toFixed(2)],
      aperture:+((Math.atan2(M.postB-SY,M.lineX-SX)-Math.atan2(M.postA-SY,M.lineX-SX))*180/Math.PI).toFixed(2),
-     set:[+SET[0].toFixed(3),+SET[1].toFixed(3)],setDepth:+(M.lineX-SET[0]).toFixed(3),posQ:q,posHeldAt:HOLD_POS};
+     set:[+SET[0].toFixed(3),+SET[1].toFixed(3)],setDepth:+(M.lineX-SET[0]).toFixed(3),posQ:q,posHeldAt:HOLD_POS,dist:DISTM,angleDeg:CFG.angle||0,holdPositioning:!!CFG.holdPositioning};
    function applyProfile(P){
      t.gkCap="manual";                                   // per-attribute override; no band re-assertion
      t.gkReflex=P.reflexes; t.gkDiving=P.diving; t.gkHandling=P.handling; t.gkJump=P.jumping;
@@ -145,14 +172,15 @@ const CHROME=process.env.CHROME_PATH||"/Applications/Google Chrome.app/Contents/
        else if(t.now>1.5) break; }
      const inFrame=!!(line&&!line.afterContact&&line.y-GOALFX.ballR>M.postA&&line.y+GOALFX.ballR<M.postB&&line.z+GOALFX.ballR<2.44&&line.z>=0);
      const rec={launch,line,plane,inFrame,bounces,zmax:+zmax.toFixed(3)};
-     if(!noKeeper&&collide){ Object.assign(rec,{commit,contacts,frame,goal,closest:closest.d<1e8?closest:null,
-       held:contacts.some(c=>c.held),endRoot:gk0?[+gk0.x.toFixed(3),+gk0.y.toFixed(3)]:null,latency:gk0&&gk0.latency!=null?+gk0.latency.toFixed(4):null}); }
+     if(!noKeeper&&collide){ Object.assign(rec,{commit,contacts:CFG.compact?contacts.slice(0,3):contacts,frame,goal,closest:(CFG.compact||closest.d>=1e8)?null:closest,
+       held:contacts.some(c=>c.held),endRoot:gk0?[+gk0.x.toFixed(3),+gk0.y.toFixed(3)]:null,latency:gk0&&gk0.latency!=null?+gk0.latency.toFixed(4):null});
+       if(CFG.compact){ delete rec.launch; delete rec.plane; delete rec.zmax; } }
      return rec; }
    // constants are top-level const/let bindings (not window properties): assign through indirect eval in the page's global scope
    const applied={}; for(const [k,v] of (CFG.sets||[])){ const num=Number(v); const val=(v!==""&&!isNaN(num))?num:v;
      (0,eval)(k+"="+JSON.stringify(val)+";"); applied[k]=(0,eval)(k); }
    const envsAfterSets={};
-   const aims=[]; for(let i=0;i<CFG.aimN;i++) aims.push(+(SY-CFG.aimSpan+2*CFG.aimSpan*i/(CFG.aimN-1)).toFixed(4));
+   const aims=[]; for(let i=0;i<CFG.aimN;i++) aims.push(+(M.centerY-CFG.aimSpan+2*CFG.aimSpan*i/(CFG.aimN-1)).toFixed(4));   // aims span the MOUTH about its centre (identical to the old SY-centred aims for a central shooter)
    const charges=[]; for(let j=0;j<CFG.chargeN;j++) charges.push(+(CFG.cmin+(CFG.cmax-CFG.cmin)*j/(CFG.chargeN-1)).toFixed(4));
    const envs={}; for(const nm of CFG.profileOrder) envs[nm]=envOf(CFG.profiles[nm]);
    const out={defaults,geometry,envs,sets:applied,reach:{envExp:GK_REACH.envExp,jumpModel:GK_REACH.jumpModel,latModel:GK_REACH.latModel,jumpReachBase:GK_REACH.jumpReachBase,jumpReachSpan:GK_REACH.jumpReachSpan,jumpReachExp:GK_REACH.jumpReachExp,latSpanBounded:GK_REACH.latSpanBounded,latSpanExp:GK_REACH.latSpanExp,jumpReachGain:GK_REACH.jumpReachGain,latSpanGain:GK_REACH.latSpanGain},
@@ -184,16 +212,16 @@ const CHROME=process.env.CHROME_PATH||"/Applications/Google Chrome.app/Contents/
      const qq=gkNorm01(t.gkPos); const s=gkPosition(t,SX,SY,qq); setChk[nm]=[+s[0].toFixed(4),+s[1].toFixed(4)]; }
    out.checks.setPerProfile=setChk;
    return out;
- },{families:FAMS,profiles:PROFILES,profileOrder:PROFS,aimN:AIMN,aimSpan:AIMSPAN,chargeN:CN,cmin:CMIN,cmax:CMAX,detN:DETN,holdPositioning:true,sets:SETS});
- const meta={generated:new Date().toISOString(),url:URL,sets:SETS,families:FAMS,profiles:PROFS,aimN:AIMN,aimSpan:AIMSPAN,chargeN:CN,cmin:CMIN,cmax:CMAX,
+ },{families:FAMS,profiles:PROFILES,profileOrder:PROFS_EFFECTIVE,aimN:AIMN,aimSpan:AIMSPAN,chargeN:CN,cmin:CMIN,cmax:CMAX,detN:DETN,holdPositioning:HOLDPOS,sets:SETS,dist:DIST,angle:ANGLE,compact:COMPACT});
+ const meta={generated:new Date().toISOString(),url:URL,sets:SETS,families:FAMS,profiles:PROFS_EFFECTIVE,sweep:SWEEP,base:BASE,dist:DIST,angle:ANGLE,holdPositioning:HOLDPOS,compact:COMPACT,aimN:AIMN,aimSpan:AIMSPAN,chargeN:CN,cmin:CMIN,cmax:CMAX,
    elapsedS:+((Date.now()-t0)/1000).toFixed(1),pageErrors:errs.slice(0,5)};
  fs.writeFileSync(OUT,JSON.stringify({meta,...data}));
  console.log("[pgf] defaults",JSON.stringify(data.defaults));
  console.log("[pgf] geometry",JSON.stringify(data.geometry));
- for(const nm of PROFS) console.log("[pgf] env",nm,JSON.stringify(data.envs[nm]));
+ for(const nm of PROFS_EFFECTIVE) console.log("[pgf] env",nm,JSON.stringify(data.envs[nm]));
  for(const fam of FAMS){ const F=data.families[fam]; const on=F.shots.filter(s=>s.on&&Object.keys(s.on).length);
    console.log(`[pgf] ${fam}: ${F.shots.length} shots, on-target ${on.length} (wide ${F.offTarget.wide}, over ${F.offTarget.over}, no crossing ${F.offTarget.noCrossing})`);
-   for(const nm of PROFS){ const c=on.filter(s=>s.on[nm].contacts.length).length, g=on.filter(s=>s.on[nm].goal).length, h=on.filter(s=>s.on[nm].held).length;
+   for(const nm of PROFS_EFFECTIVE){ const c=on.filter(s=>s.on[nm].contacts.length).length, g=on.filter(s=>s.on[nm].goal).length, h=on.filter(s=>s.on[nm].held).length;
      console.log(`        ${nm.padEnd(18)} contact ${(100*c/on.length).toFixed(1)}%  total save ${(100*(on.length-g)/on.length).toFixed(1)}%  catch|contact ${(100*h/Math.max(1,c)).toFixed(1)}%`); } }
  console.log("[pgf] checks",JSON.stringify(data.checks));
  console.log(`[pgf] elapsed ${meta.elapsedS} s errors ${errs.length}`);

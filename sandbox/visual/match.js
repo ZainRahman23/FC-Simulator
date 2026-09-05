@@ -2610,10 +2610,21 @@ const GK_DEPTH_CANDS = {
 // save modifier). reflexes->reaction, diving->reach span, height/jump->vertical reach.
 // Stage 4 adds `handling` (gk_handling) to each band: it acts ONLY after a physical contact
 // (catch security / parry control) and never on reach, reaction, positioning or movement.
+// ── KEEPER PROFILES (continuous-attribute pass, 2026-09-05). Every entry is a plain bundle of individual 1–99 attributes
+// plus physical metadata; the goalkeeper mechanics read ONLY these numbers through the same accessors every keeper uses.
+// A profile NAME has no mechanical meaning anywhere (K1/K2/K3 are debug fixtures kept for continuity; K1 is the weak-
+// keeper calibration anchor). Previously K1/K2/K3 listed only reflex/diving/height/jump/handling and silently inherited
+// acceleration 68 / sprint 62 / strength 72 / 80 kg from GK_CFG.attrs — those values are now written out explicitly
+// (behaviour identical). There is no OVR field on any engine profile.
 const GK_CAP = {
-  K1: { reflex: 45, diving: 45, height: 183, jump: 48, handling: 45 },   // ordinary (REFERENCE)
-  K2: { reflex: 72, diving: 72, height: 190, jump: 72, handling: 72 },   // strong
-  K3: { reflex: 92, diving: 92, height: 197, jump: 92, handling: 92 },   // elite (edge of plausible reach)
+  K1: { reflex: 45, diving: 45, height: 183, jump: 48, handling: 45, weight: 80, acceleration: 68, sprint_speed: 62, strength: 72 },   // weak-keeper ANCHOR fixture (= POOR)
+  K2: { reflex: 72, diving: 72, height: 190, jump: 72, handling: 72, weight: 80, acceleration: 68, sprint_speed: 62, strength: 72 },   // debug fixture
+  K3: { reflex: 92, diving: 92, height: 197, jump: 92, handling: 92, weight: 80, acceleration: 68, sprint_speed: 62, strength: 72 },   // debug fixture
+  // tier-free reference fixtures (conceptual ~60 / ~70 / ~80 / ~90+, labels only — attributes are all the engine sees)
+  POOR:    { reflex: 45, diving: 45, height: 183, jump: 48, handling: 45, weight: 80, acceleration: 68, sprint_speed: 62, strength: 72 },
+  AVERAGE: { reflex: 68, diving: 68, height: 188, jump: 66, handling: 68, weight: 83, acceleration: 70, sprint_speed: 63, strength: 73 },
+  GOOD:    { reflex: 78, diving: 78, height: 190, jump: 74, handling: 78, weight: 85, acceleration: 72, sprint_speed: 64, strength: 74 },
+  ELITE:   { reflex: 90, diving: 90, height: 192, jump: 82, handling: 90, weight: 88, acceleration: 74, sprint_speed: 65, strength: 76 },
   // DIAGNOSTIC / REVIEW ONLY — Thibaut Courtois as a REAL-PLAYER PHYSICAL PROFILE on OUR attribute scale.
   // Ratings source: this simulator's own player database (simulator/data/players.json, player p001) — NOT EA
   // FC 26. Physical metadata (height/weight) is his real stature from the same record. There is no OVR term
@@ -2626,7 +2637,7 @@ const GK_CAP = {
   //                  value (72) so a profile change never moves the D2 SET geometry.
   COURTOIS: { reflex: 96, diving: 91, height: 199, jump: 68, handling: 95,
               weight: 96, acceleration: 42, sprint_speed: 52, strength: 70,
-              positioning: 94, reactions: 94, agility: 63, ovr: 93, source: "simulator/data/players.json p001" },
+              positioning: 94, reactions: 94, agility: 63, source: "simulator/data/players.json p001 (OVR 93 in the record; not carried here, never read)" },
 };
 // ── Q positioning candidates: 2D aperture-based surface around P4 depth ──────
 // Position solves depth AND lateral TOGETHER on the ball->near/far-post aperture,
@@ -2855,10 +2866,21 @@ const GK_MOVE = {
   m6PrepStepMax: 1.0,   // hard cap on the SINGLE preparation step off the SET position (m) — not continuous tracking
   m6PrepMinInfo: 0.05,  // require at least this much reaction-elapsed settling before preparing (s)
 };
-function gkNorm01(a) { return Math.max(0, Math.min(1, (a - 20) / 70)); }   // 20..90 -> 0..1
+// ── ATTRIBUTE TRANSFORM (continuous-attribute pass, 2026-09-05). Linear (a − 20)/70 up to the knee, then a C¹ soft
+// saturation with diminishing returns — one map for every mechanical quantity, no tier steps, no discontinuity:
+//   x(a) = (a − 20)/70                                   a ≤ knee (75)          → identical to the old map (K1 45, K2 72 unchanged)
+//   x(a) = 1 − (1 − x_k)·exp(−(a − knee)/(70·(1 − x_k)))  a > knee               → slope continuous at the knee, x → 1 asymptotically
+// Old map: (a − 20)/70 clamped at 90 — 90, 92, 95 and 99 were all 1.0 (a 99 keeper was mechanically a 90 keeper, and the
+// slope jumped from 1/70 to 0 at 90). New values: 80 0.847 (was 0.857), 90 0.921 (was 1), 95 0.944, 99 0.957.
+const GK_ATTR_MAP = { knee: 75, floor: 20, span: 70 };
+function gkNorm01(a) {
+  const M = GK_ATTR_MAP, xk = (M.knee - M.floor) / M.span;
+  if (a <= M.knee) return Math.max(0, (a - M.floor) / M.span);
+  return 1 - (1 - xk) * Math.exp(-(a - M.knee) / (M.span * (1 - xk)));
+}
 // bounded, monotone, mildly S-shaped attribute response for timing/handling quantities (extremes compressed,
-// mid-range differences matter most): 0.5·x + 0.5·smoothstep(x). The REACH envelope keeps the linear map so
-// the frozen K1/K2/K3 reach identities are unchanged.
+// mid-range differences matter most): 0.5·x + 0.5·smoothstep(x) on the same soft-saturating x, so every quantity
+// keeps improving (slowly) all the way to 99.
 function gkShape01(a) { const x = gkNorm01(a); return 0.5 * x + 0.5 * x * x * (3 - 2 * x); }
 // live attribute lookup: a playtest override (t.gkAccel / t.gkSpeed / t.gkStrength) beats the keeper's own attrs.
 // Movement/strength are NOT part of the K bands — evaluation injects them explicitly (profiles), like height.
@@ -3027,7 +3049,8 @@ const GK_REACH = {
   // height and contracts toward floor and crossbar — no z-based save multiplier.
   comfortFrac: 0.62,        // comfortZ = height_m*comfortFrac — height of MAXIMUM lateral reach (~half goal)
   latSpanBase: 1.70, latSpanGain: 1.40, latHeightTerm: 0.60,  // maxLat = base + gain*norm01(gk_diving) + heightTerm*(h-1.75)
-  vertDownBase: 1.35, vertDownGain: 0.40,         // maxVertDown (getting down from comfortZ) = base + gain*norm01(gk_diving) — larger than up (falling low is easier than jumping high); true bottom CORNERS still hard via lateral coupling
+  vertDownBase: 1.35, vertDownGain: 0.40,         // maxVertDown (getting down from comfortZ) = (base + gain*norm01(gk_diving))·(h/vertDownRefH) — larger than up (falling low is easier than jumping high); true bottom CORNERS still hard via lateral coupling
+  vertDownRefH: 1.83,       // stature at which the down axis equals base + gain·dv (the K1 anchor); scales with h like the lateral height term
   vertUpFloor: 0.45,        // maxVertUp = max(this, highReachZ - comfortZ)
   envExp: 2.2,              // envelope exponent p (2=ellipse, >2=fuller mid-height superellipse)
   selectPolicy: "S2",       // interception selection: S2 = earliest point reachable with margin (default); S3 = most comfortable (rejected: retreats); S1 = legacy (A/B, key ;)
@@ -3061,7 +3084,11 @@ function gkEnvelope(t, gk, heightM) {
   const dv = gkNorm01(t.gkDiving != null ? t.gkDiving : gk.attrs.gk_diving);
   const maxLat = GK_REACH.latSpanBase + gkLatSpan(dv) + GK_REACH.latHeightTerm * (h - 1.75);
   const maxVertUp = Math.max(GK_REACH.vertUpFloor, highReachZ - comfortZ);
-  const maxVertDown = GK_REACH.vertDownBase + GK_REACH.vertDownGain * dv;
+  // DOWN axis scales with stature like every other anatomical length (continuous-attribute pass, 2026-09-05): without it the
+  // comfort height (0.62·h) rose with height while the get-down span did not, so a 200 cm keeper reached LESS along the
+  // ground (1.93 m ball-centre) than a 175 cm one (1.98 m) and graded the same low contact a fingertip instead of a parry.
+  // Anchored at the 183 cm reference: K1 unchanged; 200 cm → ×1.093.
+  const maxVertDown = (GK_REACH.vertDownBase + GK_REACH.vertDownGain * dv) * (h / GK_REACH.vertDownRefH);
   return { comfortZ, standingReachZ, highReachZ, handRestZ: h * GK_CFG.handReachFrac, maxLat, maxVertUp, maxVertDown };
 }
 // normalized coupled-envelope reach for a hand target at horizontal distance L (m)
@@ -3588,7 +3615,17 @@ function gkTryCommit(t, gk, ev) {
   const gather = !!ev.gather, lead = gather ? GK_GATHER.lead : 0;   // a gather commits early: hands down and set before the ball
   // a gather with time in hand lets the single M6 preparation step be decided first (step under the ball, then get down)
   if (gather && !gk.prepared && (t.gkMovePolicy || "M6") === "M6" && ev.availableTime > GK_MOVE.m6PrepHorizon) return;
-  if (ev.availableTime <= execT + GK_DIVE.commitBuffer + lead && ev.availableTime > -0.2) {
+  const thr = execT + GK_DIVE.commitBuffer + lead;
+  if (ev.availableTime <= thr && ev.availableTime > -0.2) {
+    // SUB-TICK COMMIT ORIGIN (continuous-attribute pass, 2026-09-05). The decision is evaluated once per 60 Hz tick, but
+    // the instant it became true lies inside the tick: at the READ end when the keeper is reaction-bound (the condition
+    // already held when the reaction elapsed), otherwise where the shrinking available time crossed the threshold. The
+    // action starts there (never before the READ end, never more than one tick back). Evaluating the origin only at tick
+    // boundaries made the reaction latency a 16.7 ms staircase: reflex ratings 90 and 99 were identical, 45 and 50 often
+    // identical, and no timing attribute could be continuous.
+    const readEnd = gk.shotT0 + gk.latency;
+    const cross = t.now - Math.max(0, thr - ev.availableTime);
+    const t0 = Math.max(readEnd, cross, t.now - PT_DT);
     // committed hand target: the interception if reachable, else the farthest point ON
     // the envelope boundary toward the ball (best-effort stretch — will miss, shows reach).
     let tx = tp[0], ty = tp[1], tz = tp[2];
@@ -3597,12 +3634,12 @@ function gkTryCommit(t, gk, ev) {
       tx = gk.x + dxl * s; ty = gk.y + dyl * s; tz = env.comfortZ + (tp[2] - env.comfortZ) * s;
     }
     tz = Math.max(0, Math.min(env.highReachZ, tz));
-    gk.committed = { t0: t.now, tier: reachable ? tier : "UNREACHABLE", execTime: execT, bestEffort: !reachable,
+    gk.committed = { t0, tier: reachable ? tier : "UNREACHABLE", execTime: execT, bestEffort: !reachable,
       action: gather ? "GATHER" : ax.action, gather, gatherSpeed: gather ? ev.gatherSpeed : null, gatherRel: gather ? ev.gatherRel : null, gatherSecure: gather ? ev.gatherSecure : null,
       actionDetail: { dArm: ax.dArm, dBody: ax.dBody, tArm: ax.tArm, tBody: ax.tBody },
       target: [tx, ty, tz], feet: [gk.x, gk.y], handOrigin: ho,
       reachMargin: +((1 - norm) * env.maxLat).toFixed(2), diveSpanMax: env.maxLat, envNorm: +norm.toFixed(3),
-      tShotToReact: gk.latency, tReactToCommit: t.now - (gk.shotT0 + gk.latency), commitTime: t.now };
+      tShotToReact: gk.latency, tReactToCommit: t0 - (gk.shotT0 + gk.latency), commitTime: t0, commitTick: t.now };
     gk.phase = "COMMIT";
   }
 }
@@ -4358,7 +4395,7 @@ function ptDrawKeeper(dt) {
       lines = [
         "GK V1 (Stage 4 — CONTACT QUALITY: catch / supported catch / chest catch / gather / parry / fingertip / block from geometry+timing; Stage 3 frozen)",
         "state " + gk.state + "   reflexes " + A(t.gkReflex) + " latency " + latMs + "ms   react-remain " + gk.reactRemain.toFixed(3) + "s",
-        "cap " + t.gkCap + (t.gkCap === "K1" ? "(REF)" : "") + "  height " + t.gkHeight + "cm  weight " + (t.gkWeight != null ? t.gkWeight : gk.weight) + "kg  refl " + A(t.gkReflex) + " div " + A(t.gkDiving) + " jump " + A(t.gkJump) + " hand " + A(t.gkHandling) + " str " + A(t.gkStrength != null ? t.gkStrength : gk.attrs.strength) + " acc " + A(gkAttr(t, gk, "acceleration")) + " spd " + A(gkAttr(t, gk, "sprint_speed")) +
+        "profile " + t.gkCap + "  height " + t.gkHeight + "cm  weight " + (t.gkWeight != null ? t.gkWeight : gk.weight) + "kg  refl " + A(t.gkReflex) + " div " + A(t.gkDiving) + " jump " + A(t.gkJump) + " hand " + A(t.gkHandling) + " str " + A(t.gkStrength != null ? t.gkStrength : gk.attrs.strength) + " acc " + A(gkAttr(t, gk, "acceleration")) + " spd " + A(gkAttr(t, gk, "sprint_speed")) +
           "  pos " + GK_POSMODEL.active + "/" + GK_SETDEPTH.active + "  action " + GK_ACTION.model + "  reach " + GK_REACH.jumpModel + "/" + GK_REACH.latModel + " p" + GK_REACH.envExp + "  hand " + t.gkHand + (t.pauseAtContact ? "  [pause-at-contact ON]" : ""),
         "policy " + t.gkMovePolicy + "  select " + (t.gkSelect || GK_REACH.selectPolicy) + "  PHASE " + (gk.phase || "-") + "   revs " + (gk.moveReversals || 0) + "  preCommit " + (gk.preCommitDist || 0).toFixed(2) + "m  expSurface " + (gk.reach && gk.reach.best ? gk.reach.best.surface : "-"),
         // ── POST-SHOT MOVEMENT DIAGNOSTIC (read-only; long-shot movement audit).
@@ -5756,7 +5793,7 @@ function bindUI() {
         S.pt.last = "GK HAND -> " + S.pt.gkHand + " (" + desc[S.pt.gkHand] + ", ⌀ " + dia + " cm, ball ⌀ 22 cm added separately)";
       }
       else if (k === "l") {                                                                    // keeper PROFILE: K1(reference)/K2/K3 + COURTOIS (diagnostic)
-        const L = ["K1", "K2", "K3", "COURTOIS"], cur = L.indexOf(S.pt.gkCap); S.pt.gkCap = L[(cur + 1) % L.length]; const c = GK_CAP[S.pt.gkCap];
+        const L = ["K1", "K2", "K3", "COURTOIS", "POOR", "AVERAGE", "GOOD", "ELITE"], cur = L.indexOf(S.pt.gkCap); S.pt.gkCap = L[(cur + 1) % L.length]; const c = GK_CAP[S.pt.gkCap];
         S.pt.gkReflex = c.reflex; S.pt.gkDiving = c.diving; S.pt.gkHeight = c.height; S.pt.gkJump = c.jump; S.pt.gkHandling = c.handling;
         S.pt.gkWeight = c.weight != null ? c.weight : null;                  // profile-carried physical/movement attributes;
         S.pt.gkAccel = c.acceleration != null ? c.acceleration : null;       // cleared for the bands that do not define them
@@ -5767,7 +5804,7 @@ function bindUI() {
         S.pt.gk = ptGkMake(); S.pt.gk.height = c.height / 100; S.pt.gk.handZ = S.pt.gk.height * GK_CFG.handReachFrac;
         const mv = c.acceleration != null ? "  acc " + c.acceleration + " spd " + c.sprint_speed + " str " + c.strength + " " + c.weight + "kg"
                                           : "  acc/spd/str = reference (band-constant)";
-        S.pt.last = "GK PROFILE -> " + S.pt.gkCap + (S.pt.gkCap === "K1" ? " (REFERENCE)" : S.pt.gkCap === "COURTOIS" ? " (DIAGNOSTIC — our players.json ratings + real stature; OVR is metadata only)" : " (comparison)") +
+        S.pt.last = "GK PROFILE -> " + S.pt.gkCap + (S.pt.gkCap === "K1" || S.pt.gkCap === "POOR" ? " (weak-keeper anchor fixture)" : S.pt.gkCap === "COURTOIS" ? " (our players.json ratings + real stature; no OVR)" : " (fixture — attributes only, the name means nothing)") +
           "  refl " + c.reflex + " dive " + c.diving + " h " + c.height + "cm jump " + c.jump + " handling " + c.handling + mv + "  [keeper fully reset]";
       }
       else if (k === "t") {                                                                    // gk_handling LOW/MED/HIGH — Stage 4 post-contact control ONLY
