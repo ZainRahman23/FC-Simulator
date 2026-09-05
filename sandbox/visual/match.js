@@ -4304,7 +4304,7 @@ const GK_ANIM = {
   diagnosticDives: true,                       // dive families without approved art → DIAGNOSTIC figure (never a wrong dive, never a standing sprite)
   idleBobPeriod: 3.6, idleBobPx: 1,           // IDLE living motion: 1 px breathing on a 3.6 s cycle (integer offsets only)
   idleFarM: 26,                                // ball farther than this (and not in flight at the keeper) → IDLE instead of SET
-  limitCycleIdleDirs: ["south-west", "north-west"], limitCycleWindowS: 0.25, limitCycleTravelM: 0.005,   // added facings: arrived + no net travel → stationary (see gkAnimUpdate)
+  footworkAuthoredOrderDirs: ["south-west", "north-west"],   // added facings: the footwork loop plays the authored variant in its authored order for BOTH sides (WEST's structure; see gkAnimUpdate)
   shuffleMinSpeed: 0.05, crossoverSpeed: 2.2,  // footwork classification
   strideM: 0.9,                                // loop clips: metres of ROOT travel per full cycle (odometer-driven: no moonwalking)
   loadPhase: 0.30,                             // dive families: LOAD/PUSH for u < loadPhase, then extension toward contact
@@ -4332,7 +4332,7 @@ const GK_ANIM_DIVES = { LOW_COLLAPSE: 1, AIRBORNE_DIVE: 1, MEDIUM_DIVE: 1, HIGH_
 const GK_ANIM_SIDED = { SHUFFLE: 1, CROSSOVER: 1, NEAR_BODY_SAVE: 1, LOW_COLLAPSE: 1, MEDIUM_DIVE: 1, HIGH_DIVE: 1, FULL_STRETCH: 1, FOOT_SAVE: 1, HIGH_CATCH: 0, LOW_REACH: 1 };
 S.gkAnim = { loaded: false, manifest: null, states: {}, anchors: {}, clips: {}, poses: {}, savePoses: {}, cache: {}, cur: null, lastContact: null, perf: { n: 0, ms: 0, max: 0 }, log: [], odo: 0, prevRoot: null, flags: [], commit: null };
 // per-shot / per-reset view state (never touches the simulation)
-function gkAnimResetView() { const A = S.gkAnim; if (!A) return; A.cur = null; A.lastContact = null; A.log = []; A.odo = 0; A.prevRoot = null; A.rootHist = null; A.commit = null; }
+function gkAnimResetView() { const A = S.gkAnim; if (!A) return; A.cur = null; A.lastContact = null; A.log = []; A.odo = 0; A.prevRoot = null; A.commit = null; }
 async function gkAnimLoadPoses(A, manifestUrl, root, candidate) {
   const m = await loadJSON(manifestUrl);
   for (const [fam, ps] of Object.entries(m.poses || {})) {
@@ -4498,11 +4498,8 @@ function gkAnimClassify(gk, c, facing) {
   return { family, sub, side, goalSide, hClass, expr, saveAngle, saveDir: gkAnimDirFromAngle(saveAngle), lat: +lat.toFixed(3), depth: +depth.toFixed(3), dz: +dz.toFixed(3), z: +z.toFixed(3), zH: +zH.toFixed(3), zClass, L: +L.toFixed(3), norm: +norm.toFixed(3), maxLat: +maxLat.toFixed(2), exec: +c.execTime.toFixed(3), v0: +v0.toFixed(2), feetPlanted, airborne, dArm: +dArm.toFixed(3), dBody: +dBody.toFixed(3), action: act, tier: c.tier, bestEffort: !!c.bestEffort, dy: +dy.toFixed(3) };
 }
 // net root travel between the newest sample and the newest sample at least `windowS` of SIMULATION time older (null until spanned)
-function gkAnimNetTravel(A, now, windowS) {
-  const h = A.rootHist; if (!h || h.length < 2) return null; let ref = null;
-  for (const smp of h) { if (smp.t <= now - windowS) ref = smp; else break; }
-  if (!ref) return null; const cur = h[h.length - 1]; return Math.hypot(cur.x - ref.x, cur.y - ref.y);
-}
+// side of the live variant authored exactly in this facing (no mirror), or null when the facing only has mirrored/approximate art
+function gkAnimAuthoredSide(clip, dir) { if (!clip) return null; for (const v of clip.variants) if (v.live && v.dir === dir && v.side) return v.side; return null; }
 // STATE MACHINE — a pure function of (simulation time, keeper state) plus the view odometer for loops and the commit-tick freeze
 function gkAnimUpdate(t, gk) {
   const A = S.gkAnim, now = t.now, b = t.b;
@@ -4513,17 +4510,17 @@ function gkAnimUpdate(t, gk) {
   const frozen = gk.committed && A.commit ? A.commit : null;
   const dir = frozen ? frozen.dir : headingToDir(gk.facing * 180 / Math.PI);
   const gkF = frozen ? { x: gk.x, y: gk.y, facing: frozen.facing, height: gk.height, committed: gk.committed } : gk;
-  const speed = Math.hypot(gk.vx, gk.vy);                      // pre-existing decision input (unchanged for every pre-existing facing)
-  // ADDED FACINGS ONLY (south-west / north-west, 2026-09-05): for these shooter bearings the positioning controller settles into a
-  // ±0.7 mm limit cycle and keeps reporting ~0.08 m/s (its own state is SET = arrived) while the root goes nowhere; the pre-existing
-  // decision then shows footwork frames that cannot advance (odometer-driven) — a frozen keeper. Three explicit signals decide:
-  //   commanded locomotion  = the controller's state (TRACKING = still going somewhere; SET = arrived)
-  //   actual root locomotion = net root travel over the last 0.25 s of SIMULATION time (cadence-independent samples)
-  //   residual velocity      = |v| below the controller's own SET velocity threshold
-  // arrived + no net travel + residual velocity → stationary → IDLE/SET readiness. Genuine footwork (TRACKING, or ≥ 5 mm of net
-  // travel per 0.25 s — 0.05 m/s covers 12.5 mm) is untouched. Pre-existing facings keep their exact pre-dd15136 traces.
-  const netTravel = gkAnimNetTravel(A, t.now, GK_ANIM.limitCycleWindowS);
-  const stationaryLimitCycle = GK_ANIM.limitCycleIdleDirs.indexOf(dir) >= 0 && gk.state === "SET" && speed < GK_MOVE.setVelThresh && netTravel != null && netTravel < GK_ANIM.limitCycleTravelM;
+  const speed = Math.hypot(gk.vx, gk.vy);                      // the decision input — identical for every facing
+  // FOOTWORK FRAME ORDER for the added facings (SOUTH-WEST / NORTH-WEST, 2026-09-05). Facts: at many ball positions the positioning
+  // controller never converges exactly — it settles into a ±0.7 mm step (|v| = accel·dt ≈ 0.084 m/s, its own state SET, no net travel)
+  // and the footwork decision (|v| > shuffleMinSpeed) keeps the shuffle loop advancing with the odometer at ≈ one frame per 1.4 s. That
+  // slow cycle IS the readiness motion seen in play for the pre-existing facings. Its LEFT/RIGHT flip-flop every tick is harmless for
+  // WEST because both sides resolve to the same mirrored-east frames in the same order. The SW/NW clips are authored in their own
+  // facing (side RIGHT), so the resolver's side approximation would play the cycle in REVERSE for LEFT — alternating authored and
+  // reversed order every tick (a 30 Hz two-frame flicker: the original "static" report) and popping at every braking reversal. For
+  // these facings the footwork loop therefore uses the authored variant in its authored order for both sides — WEST's structure.
+  // The decision itself (footwork / IDLE / SET) is untouched for every facing; nothing else is read or changed.
+  const pinFootworkOrder = (req) => { if (!req || GK_ANIM.footworkAuthoredOrderDirs.indexOf(dir) < 0) return req; const ex = gkAnimAuthoredSide(A.byFamily[req.family], dir); if (ex && req.side !== ex) { req.sidePinned = req.side; req.side = ex; } return req; };
   let state = "SET", family = null, side = null, u = 0, phase = "-", temp = null, arm = false, boot = false, holdPose = false, cls = null;
   let clipReq = null;       // {family, side, mode: "reach"|"hold"|"post"|"loop", k (0..1 within the mode)}
   const footwork = () => {
@@ -4539,13 +4536,13 @@ function gkAnimUpdate(t, gk) {
     return null;
   };
   if (!gk.shotActive && !gk.committed) {
-    if (speed > GK_ANIM.shuffleMinSpeed && !stationaryLimitCycle) { state = footwork(); phase = "loop"; clipReq = footworkClip(state); if (!clipReq) temp = "no authored footwork frames: SET pose + root motion"; }
+    if (speed > GK_ANIM.shuffleMinSpeed) { state = footwork(); phase = "loop"; clipReq = pinFootworkOrder(footworkClip(state)); if (!clipReq) temp = "no authored footwork frames: SET pose + root motion"; }
     else {
       const far = b && b.ctrl && Math.hypot(b.x - gk.x, b.y - gk.y) > GK_ANIM.idleFarM;
       state = far ? "IDLE" : "SET"; phase = far ? "living" : "hold";
     }
   } else if (!gk.committed) {                                             // READ / PREPARE (reaction elapsed, footwork toward the read)
-    if (speed > GK_ANIM.shuffleMinSpeed) { state = footwork(); phase = gk.phase === "PREPARE" ? "prepare" : "read"; clipReq = footworkClip(state); if (!clipReq) temp = "no authored footwork frames"; }
+    if (speed > GK_ANIM.shuffleMinSpeed) { state = footwork(); phase = gk.phase === "PREPARE" ? "prepare" : "read"; clipReq = pinFootworkOrder(footworkClip(state)); if (!clipReq) temp = "no authored footwork frames"; }
     else { state = "SET"; phase = gk.phase === "READ" ? "read (head tracks)" : "prepare"; }
   } else {
     const c = gk.committed; cls = frozen.cls; family = cls.family; side = cls.side; let clipFamily = family;
@@ -4604,7 +4601,7 @@ function gkAnimUpdate(t, gk) {
       }
       else if (clipReq.mode === "hold") { pos = v.hold; if (v.ik) { const floor = Math.min(v.contact, A.commit && A.commit.reachPos != null ? A.commit.reachPos : v.contact); cands = []; for (let q = floor; q < n; q++) cands.push(q); } }
       else { const span = n - 1 - v.contact; pos = span > 0 ? v.contact + Math.min(span, Math.max(1, Math.round(clipReq.k * span + 0.5))) : n - 1; if (c.kind === "recover") pos = Math.min(n - 1, Math.floor(clipReq.k * n)); }
-      clip = { name: c.name, kind: c.kind, v, pos: Math.max(0, Math.min(n - 1, pos)), cands, mirrored: r.mirrored, sideApprox: r.sideApprox, dirSteps: r.dirSteps, approx: clipReq.approx || null, mode: clipReq.mode, retired: r.retired };
+      clip = { name: c.name, kind: c.kind, v, pos: Math.max(0, Math.min(n - 1, pos)), cands, mirrored: r.mirrored, sideApprox: r.sideApprox || !!clipReq.sidePinned, dirSteps: r.dirSteps, approx: clipReq.approx || null, mode: clipReq.mode, retired: r.retired };
       temp = null;
     } else if (isDiveFam && A.poses[clipReq.family] && (A.poses[clipReq.family].approved || GK_ANIM.candidatePoses) && clipReq.mode !== "loop") {
       // CONTACT POSE (8-rotation still): laid along the SAVE VECTOR, hand-led (Part 4 / Part 12)
@@ -4690,7 +4687,6 @@ function gkAnimDraw(t, gk, dt) {
   const A = S.gkAnim; if (!A.loaded) return false;
   const t0 = performance.now();
   if (A.prevRoot) A.odo += Math.hypot(gk.x - A.prevRoot.x, gk.y - A.prevRoot.y); A.prevRoot = { x: gk.x, y: gk.y };
-  { const h = A.rootHist || (A.rootHist = []), last = h[h.length - 1]; if (!last || t.now > last.t) { h.push({ t: t.now, x: gk.x, y: gk.y }); while (h.length && h[0].t < t.now - 0.6) h.shift(); } }   // sim-time-stamped root samples (added facings' limit-cycle test)
   const cur = gkAnimUpdate(t, gk);
   const sp = sproj3(gk.x, 0, gk.y); if (sp.d < 0.5) return true;
   const s = S.playerVScale * depthScale(sp.d) * RIG.zoom * RES;
