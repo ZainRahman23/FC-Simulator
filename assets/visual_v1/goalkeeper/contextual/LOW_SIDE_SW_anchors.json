@@ -47,5 +47,7 @@
  "inventory_id": "GK_POSE_114",
  "source": "gk_anim_v1_1/poses/low_collapse/south-east.png",
  "original_label": "low_collapse/south-east",
- "description": "ground-level side save still; ORIGINAL orientation reaches to screen-left, MIRRORED (runtime transform) to screen-right"
+ "description": "ground-level side save still; ORIGINAL orientation reaches to screen-left, MIRRORED (runtime transform) to screen-right",
+ "pixel_scale": 0.86,
+ "pixel_scale_note": "measured against GK_BASE_V1 set/west.png by head geometry (blob box diagonal and PCA major axis of the head: face skin plus adjacent hair); the body-length measures used for the Pro dive art do not apply to these curled ground poses because their torsos are foreshortened"
 }

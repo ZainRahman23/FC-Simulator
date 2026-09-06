@@ -42,5 +42,7 @@
  "inventory_id": "GK_POSE_115",
  "source": "gk_anim_v1_1/poses/low_collapse/east.png",
  "original_label": "low_collapse/east",
- "description": "ground-level side save still; after the 2026-09-05 live review BOTH WEST variants draw MIRRORED. The x sign here was flipped with the drawn orientation; the GOAL_RIGHT variant carries reach_mirror=false in the manifest table so its selection reach vector stays what it was \u2014 the drawn orientation and the scoring reach are decoupled for that one row."
+ "description": "ground-level side save still; after the 2026-09-05 live review BOTH WEST variants draw MIRRORED. The x sign here was flipped with the drawn orientation; the GOAL_RIGHT variant carries reach_mirror=false in the manifest table so its selection reach vector stays what it was \u2014 the drawn orientation and the scoring reach are decoupled for that one row.",
+ "pixel_scale": 0.87,
+ "pixel_scale_note": "measured against GK_BASE_V1 set/west.png by head geometry (blob box diagonal and PCA major axis of the head: face skin plus adjacent hair); the body-length measures used for the Pro dive art do not apply to these curled ground poses because their torsos are foreshortened"
 }

@@ -4,7 +4,9 @@
 const NM=process.env.PUPPETEER_NODE_MODULES; if(NM) module.paths.unshift(NM);
 const puppeteer=require("puppeteer-core"); const fs=require("fs"); const path=require("path");
 const OUT=process.argv[2]||"pop"; fs.mkdirSync(OUT,{recursive:true});
-const CASE={lat:-2.0, z:1.45, v:25}, BODY_AXIS_PX=141.5, SET_HEIGHT_PX=102;   // measured stature of each art (head-to-toe / head-to-foot)
+// defaults: the north dive. `--low` traces a low ground save instead (its curled art has no meaningful stature, so the head is measured).
+const LOW=process.argv.includes("--low");
+const CASE=LOW?{lat:-1.4, z:0.25, v:22, deg:180}:{lat:-2.0, z:1.45, v:25, deg:180}, BODY_AXIS_PX=LOW?26:141.5, SET_HEIGHT_PX=LOW?22:102;   // stature, or head box height for the low poses
 (async()=>{const b=await puppeteer.launch({executablePath:"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",headless:"new",userDataDir:"chrome-pop-"+Date.now(),args:["--no-sandbox"]});
 const p=await b.newPage(); await p.setViewport({width:1400,height:900,deviceScaleFactor:1});
 await p.goto("http://127.0.0.1:8126/sandbox/visual/match.html?r="+Date.now(),{waitUntil:"domcontentloaded",timeout:180000});
@@ -18,7 +20,8 @@ const start=await p.evaluate((c)=>{ if(!(S.pt&&S.pt.on))ptEnter(); ptReset(); S.
   const q=sproj3(S.pt.gk.x,0,S.pt.gk.y); return {sp:[+q.x.toFixed(1),+q.y.toFixed(1)]}; }, CASE);
 const CLIP={x:Math.round(start.sp[0])-150, y:Math.round(start.sp[1])-170, width:300, height:230};
 const trace=[];
-for(let f=0; f<44; f++){
+const FRAMES=LOW?80:44;
+for(let f=0; f<FRAMES; f++){
   const st=await p.evaluate((k)=>{ ptStep(); gkAnimDraw(S.pt,S.pt.gk,1/60);
     const gk=S.pt.gk, cur=S.gkAnim.cur, sp=sproj3(gk.x,0,gk.y), s=S.playerVScale*depthScale(sp.d)*RIG.zoom*RES;
     const an=cur&&cur.savePose?(cur.savePose.sample.anchors||{}):null;
