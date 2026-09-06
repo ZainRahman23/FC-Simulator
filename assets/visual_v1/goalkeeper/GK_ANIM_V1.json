@@ -402,6 +402,7 @@
      "TIGHT_S_NEAR_TOP": {
       "path": "goalkeeper/contextual/TIGHT_S_NEAR_TOP.png",
       "anchors": "goalkeeper/contextual/TIGHT_S_NEAR_TOP_anchors.json",
+      "mirror": false,
       "approved": true,
       "candidate": false,
       "id": "GK_POSE_129",
@@ -410,6 +411,7 @@
      "TIGHT_S_FAR_TOP": {
       "path": "goalkeeper/contextual/TIGHT_S_FAR_TOP.png",
       "anchors": "goalkeeper/contextual/TIGHT_S_FAR_TOP_anchors.json",
+      "mirror": false,
       "approved": true,
       "candidate": false,
       "id": "GK_POSE_136",
@@ -418,6 +420,7 @@
      "TIGHT_N_NEAR_TOP": {
       "path": "goalkeeper/contextual/TIGHT_N_NEAR_TOP.png",
       "anchors": "goalkeeper/contextual/TIGHT_N_NEAR_TOP_anchors.json",
+      "mirror": false,
       "approved": true,
       "candidate": false,
       "id": "GK_POSE_132",
@@ -426,6 +429,7 @@
      "TIGHT_N_FAR_TOP": {
       "path": "goalkeeper/contextual/TIGHT_N_FAR_TOP.png",
       "anchors": "goalkeeper/contextual/TIGHT_N_FAR_TOP_anchors.json",
+      "mirror": false,
       "approved": true,
       "candidate": false,
       "id": "GK_POSE_133",
@@ -434,10 +438,65 @@
      "OVERHEAD_REACH_CW11": {
       "path": "goalkeeper/contextual/OVERHEAD_REACH_CW11.png",
       "anchors": "goalkeeper/contextual/OVERHEAD_REACH_CW11_anchors.json",
+      "mirror": false,
       "approved": true,
       "candidate": false,
       "id": "GK_POSE_148",
       "note": "ball above / over the keeper: upward reach with small lateral demand (V1.2 TOP GOAL_LEFT candidate rotated 11 degrees clockwise about its root, pure transform)"
+     },
+     "SW_LOW_LEFT": {
+      "path": "goalkeeper/contextual/LOW_SIDE_SW.png",
+      "anchors": "goalkeeper/contextual/LOW_SIDE_SW_anchors.json",
+      "mirror": false,
+      "approved": true,
+      "candidate": false,
+      "id": "GK_POSE_114",
+      "note": "SOUTH-WEST facing keeper, ground-level save to GOAL_LEFT (V1.1 low_collapse/south-east still, original orientation)"
+     },
+     "SW_LOW_RIGHT": {
+      "path": "goalkeeper/contextual/LOW_SIDE_SW.png",
+      "anchors": "goalkeeper/contextual/LOW_SIDE_SW_anchors.json",
+      "mirror": true,
+      "approved": true,
+      "candidate": false,
+      "id": "GK_POSE_114",
+      "note": "SOUTH-WEST facing keeper, ground-level save to GOAL_RIGHT (same still, mirrored)"
+     },
+     "W_LOW_LEFT": {
+      "path": "goalkeeper/contextual/LOW_SIDE_W.png",
+      "anchors": "goalkeeper/contextual/LOW_SIDE_W_anchors.json",
+      "mirror": false,
+      "approved": true,
+      "candidate": false,
+      "id": "GK_POSE_115",
+      "note": "WEST facing keeper, ground-level save to GOAL_LEFT (V1.1 low_collapse/east still, original orientation)"
+     },
+     "W_LOW_RIGHT": {
+      "path": "goalkeeper/contextual/LOW_SIDE_W.png",
+      "anchors": "goalkeeper/contextual/LOW_SIDE_W_anchors.json",
+      "mirror": true,
+      "approved": true,
+      "candidate": false,
+      "id": "GK_POSE_115",
+      "note": "WEST facing keeper, ground-level save to GOAL_RIGHT (same still, mirrored)"
+     },
+     "NW_LOW_LEFT": {
+      "path": "goalkeeper/contextual/LOW_SIDE_NW.png",
+      "anchors": "goalkeeper/contextual/LOW_SIDE_NW_anchors.json",
+      "mirror": false,
+      "approved": true,
+      "candidate": false,
+      "id": "GK_POSE_116",
+      "note": "NORTH-WEST facing keeper, ground-level save to GOAL_LEFT (V1.1 low_collapse/north-east still, original orientation)"
+     },
+     "NW_LOW_RIGHT": {
+      "path": "goalkeeper/contextual/LOW_SIDE_NW.png",
+      "anchors": "goalkeeper/contextual/LOW_SIDE_NW_anchors.json",
+      "mirror": true,
+      "approved": true,
+      "candidate": false,
+      "id": "GK_POSE_116",
+      "note": "NORTH-WEST facing keeper, ground-level save to GOAL_RIGHT (same still, mirrored)"
      }
     }
    }
@@ -456,6 +515,7 @@
    ],
    "path": "goalkeeper/contextual/TIGHT_S_NEAR_TOP.png",
    "anchors": "goalkeeper/contextual/TIGHT_S_NEAR_TOP_anchors.json",
+   "transform": "ORIGINAL",
    "reach_screen_unit": [
     0.3813,
     -0.9245
@@ -473,6 +533,7 @@
    ],
    "path": "goalkeeper/contextual/TIGHT_S_FAR_TOP.png",
    "anchors": "goalkeeper/contextual/TIGHT_S_FAR_TOP_anchors.json",
+   "transform": "ORIGINAL",
    "reach_screen_unit": [
     -0.411,
     -0.9116
@@ -490,6 +551,7 @@
    ],
    "path": "goalkeeper/contextual/TIGHT_N_NEAR_TOP.png",
    "anchors": "goalkeeper/contextual/TIGHT_N_NEAR_TOP_anchors.json",
+   "transform": "ORIGINAL",
    "reach_screen_unit": [
     0.3882,
     -0.9216
@@ -507,6 +569,7 @@
    ],
    "path": "goalkeeper/contextual/TIGHT_N_FAR_TOP.png",
    "anchors": "goalkeeper/contextual/TIGHT_N_FAR_TOP_anchors.json",
+   "transform": "ORIGINAL",
    "reach_screen_unit": [
     -0.3468,
     -0.9379
@@ -522,9 +585,124 @@
    ],
    "path": "goalkeeper/contextual/OVERHEAD_REACH_CW11.png",
    "anchors": "goalkeeper/contextual/OVERHEAD_REACH_CW11_anchors.json",
+   "transform": "ORIGINAL",
    "reach_screen_unit": [
     0.1169,
     -0.9931
+   ]
+  },
+  {
+   "id": "SW_LOW_LEFT",
+   "inventory_id": "GK_POSE_114",
+   "role": "low_side",
+   "facing_deg": 135,
+   "side": "GOAL_LEFT",
+   "mirror": false,
+   "height_classes": [
+    "LOW",
+    "LOW-MID"
+   ],
+   "path": "goalkeeper/contextual/LOW_SIDE_SW.png",
+   "anchors": "goalkeeper/contextual/LOW_SIDE_SW_anchors.json",
+   "transform": "ORIGINAL",
+   "reach_screen_unit": [
+    -0.914,
+    -0.406
+   ]
+  },
+  {
+   "id": "SW_LOW_RIGHT",
+   "inventory_id": "GK_POSE_114",
+   "role": "low_side",
+   "facing_deg": 135,
+   "side": "GOAL_RIGHT",
+   "mirror": true,
+   "height_classes": [
+    "LOW",
+    "LOW-MID"
+   ],
+   "path": "goalkeeper/contextual/LOW_SIDE_SW.png",
+   "anchors": "goalkeeper/contextual/LOW_SIDE_SW_anchors.json",
+   "transform": "MIRRORED",
+   "reach_screen_unit": [
+    0.914,
+    -0.406
+   ]
+  },
+  {
+   "id": "W_LOW_LEFT",
+   "inventory_id": "GK_POSE_115",
+   "role": "low_side",
+   "facing_deg": 180,
+   "side": "GOAL_LEFT",
+   "mirror": false,
+   "height_classes": [
+    "LOW",
+    "LOW-MID"
+   ],
+   "path": "goalkeeper/contextual/LOW_SIDE_W.png",
+   "anchors": "goalkeeper/contextual/LOW_SIDE_W_anchors.json",
+   "transform": "ORIGINAL",
+   "reach_screen_unit": [
+    -0.582,
+    -0.813
+   ]
+  },
+  {
+   "id": "W_LOW_RIGHT",
+   "inventory_id": "GK_POSE_115",
+   "role": "low_side",
+   "facing_deg": 180,
+   "side": "GOAL_RIGHT",
+   "mirror": true,
+   "height_classes": [
+    "LOW",
+    "LOW-MID"
+   ],
+   "path": "goalkeeper/contextual/LOW_SIDE_W.png",
+   "anchors": "goalkeeper/contextual/LOW_SIDE_W_anchors.json",
+   "transform": "MIRRORED",
+   "reach_screen_unit": [
+    0.582,
+    -0.813
+   ]
+  },
+  {
+   "id": "NW_LOW_LEFT",
+   "inventory_id": "GK_POSE_116",
+   "role": "low_side",
+   "facing_deg": -135,
+   "side": "GOAL_LEFT",
+   "mirror": false,
+   "height_classes": [
+    "LOW",
+    "LOW-MID"
+   ],
+   "path": "goalkeeper/contextual/LOW_SIDE_NW.png",
+   "anchors": "goalkeeper/contextual/LOW_SIDE_NW_anchors.json",
+   "transform": "ORIGINAL",
+   "reach_screen_unit": [
+    -0.683,
+    -0.731
+   ]
+  },
+  {
+   "id": "NW_LOW_RIGHT",
+   "inventory_id": "GK_POSE_116",
+   "role": "low_side",
+   "facing_deg": -135,
+   "side": "GOAL_RIGHT",
+   "mirror": true,
+   "height_classes": [
+    "LOW",
+    "LOW-MID"
+   ],
+   "path": "goalkeeper/contextual/LOW_SIDE_NW.png",
+   "anchors": "goalkeeper/contextual/LOW_SIDE_NW_anchors.json",
+   "transform": "MIRRORED",
+   "reach_screen_unit": [
+    0.683,
+    -0.731
    ]
   }
  ]

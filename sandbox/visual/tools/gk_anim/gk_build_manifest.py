@@ -65,15 +65,25 @@ CONTEXTUAL_POSES = [
     dict(id="TIGHT_N_NEAR_TOP", inventory_id="GK_POSE_132", role="tight_high", facing_deg=-90, post="near", height_classes=["HIGH", "TOP"], note="NORTH-facing keeper, tight attacker angle, high save to the near/top corner (V1.1 high_dive/north-east still)"),
     dict(id="TIGHT_N_FAR_TOP", inventory_id="GK_POSE_133", role="tight_high", facing_deg=-90, post="far", height_classes=["HIGH", "TOP"], note="NORTH-facing keeper, tight attacker angle, high save to the far/top corner (V1.1 high_dive/north still). Caveat on record: its glove reaches up-left on screen while a ball parked at the actual far top corner projects level-right; approved as-is, future art-replacement candidate"),
     dict(id="OVERHEAD_REACH_CW11", inventory_id="GK_POSE_148", role="overhead", height_classes=["HIGH", "TOP"], note="ball above / over the keeper: upward reach with small lateral demand (V1.2 TOP GOAL_LEFT candidate rotated 11 degrees clockwise about its root, pure transform)"),
+    # LOW / GROUND side saves (pose salvage 2, 2026-09-05): three V1.1 low_collapse stills chosen for their camera perspective, assigned by the keeper's
+    # facing at commit (SW / W / NW) and the classifier's goal side; the goal-right variants are the same file drawn MIRRORED (runtime transform,
+    # validated per side in the gameplay camera). Families LOW_COLLAPSE and low AIRBORNE_DIVE only — gathers, foot saves and standing saves keep their art.
+    dict(id="SW_LOW_LEFT", file="LOW_SIDE_SW", inventory_id="GK_POSE_114", role="low_side", facing_deg=135, side="GOAL_LEFT", mirror=False, height_classes=["LOW", "LOW-MID"], note="SOUTH-WEST facing keeper, ground-level save to GOAL_LEFT (V1.1 low_collapse/south-east still, original orientation)"),
+    dict(id="SW_LOW_RIGHT", file="LOW_SIDE_SW", inventory_id="GK_POSE_114", role="low_side", facing_deg=135, side="GOAL_RIGHT", mirror=True, height_classes=["LOW", "LOW-MID"], note="SOUTH-WEST facing keeper, ground-level save to GOAL_RIGHT (same still, mirrored)"),
+    dict(id="W_LOW_LEFT", file="LOW_SIDE_W", inventory_id="GK_POSE_115", role="low_side", facing_deg=180, side="GOAL_LEFT", mirror=False, height_classes=["LOW", "LOW-MID"], note="WEST facing keeper, ground-level save to GOAL_LEFT (V1.1 low_collapse/east still, original orientation)"),
+    dict(id="W_LOW_RIGHT", file="LOW_SIDE_W", inventory_id="GK_POSE_115", role="low_side", facing_deg=180, side="GOAL_RIGHT", mirror=True, height_classes=["LOW", "LOW-MID"], note="WEST facing keeper, ground-level save to GOAL_RIGHT (same still, mirrored)"),
+    dict(id="NW_LOW_LEFT", file="LOW_SIDE_NW", inventory_id="GK_POSE_116", role="low_side", facing_deg=-135, side="GOAL_LEFT", mirror=False, height_classes=["LOW", "LOW-MID"], note="NORTH-WEST facing keeper, ground-level save to GOAL_LEFT (V1.1 low_collapse/north-east still, original orientation)"),
+    dict(id="NW_LOW_RIGHT", file="LOW_SIDE_NW", inventory_id="GK_POSE_116", role="low_side", facing_deg=-135, side="GOAL_RIGHT", mirror=True, height_classes=["LOW", "LOW-MID"], note="NORTH-WEST facing keeper, ground-level save to GOAL_RIGHT (same still, mirrored)"),
 ]
 CTX_DIR = os.path.join(ASSETS, "goalkeeper", "contextual")
 samples, ctx_meta = {}, []
 for cp in CONTEXTUAL_POSES:
-    an_path = os.path.join(CTX_DIR, cp["id"] + "_anchors.json")
-    if not os.path.exists(os.path.join(CTX_DIR, cp["id"] + ".png")) or not os.path.exists(an_path): print("MISSING contextual pose", cp["id"]); continue
-    an = json.load(open(an_path))
-    samples[cp["id"]] = {"path": "goalkeeper/contextual/%s.png" % cp["id"], "anchors": "goalkeeper/contextual/%s_anchors.json" % cp["id"], "approved": True, "candidate": False, "id": cp["inventory_id"], "note": cp["note"]}
-    ctx_meta.append({k: v for k, v in cp.items() if k != "note"} | {"path": samples[cp["id"]]["path"], "anchors": samples[cp["id"]]["anchors"], "reach_screen_unit": an.get("reach_screen_unit")})
+    fname = cp.get("file", cp["id"]); an_path = os.path.join(CTX_DIR, fname + "_anchors.json")
+    if not os.path.exists(os.path.join(CTX_DIR, fname + ".png")) or not os.path.exists(an_path): print("MISSING contextual pose", cp["id"]); continue
+    an = json.load(open(an_path)); mirror = bool(cp.get("mirror", False)); reach = an.get("reach_screen_unit")
+    if mirror and reach: reach = [-reach[0], reach[1]]                                     # the horizontal mirror flips the authored reach
+    samples[cp["id"]] = {"path": "goalkeeper/contextual/%s.png" % fname, "anchors": "goalkeeper/contextual/%s_anchors.json" % fname, "mirror": mirror, "approved": True, "candidate": False, "id": cp["inventory_id"], "note": cp["note"]}
+    ctx_meta.append({k: v for k, v in cp.items() if k not in ("note", "file")} | {"path": samples[cp["id"]]["path"], "anchors": samples[cp["id"]]["anchors"], "transform": "MIRRORED" if mirror else "ORIGINAL", "reach_screen_unit": reach})
 man["save_poses"] = {"CONTEXTUAL": {"ANY": {"samples": samples}}}
 man["contextual_poses"] = ctx_meta
 json.dump(man, open(man_path, "w"), indent=1); print("wrote", man_path, "clips", len(clips), "variants", sum(len(c["variants"]) for c in clips.values()), "contextual poses", len(ctx_meta))

@@ -4360,7 +4360,7 @@ async function gkAnimLoadSavePoses(A, manifestUrl, root) {
       for (const [cls, smp] of Object.entries(spec.samples || {})) {
         try {
           const img = await loadImage(root + smp.path); let an = null; try { an = await loadJSON(root + smp.anchors); } catch (e) { an = null; }
-          A.savePoses[fam][side][cls] = { img, anchors: an, candidate: smp.candidate !== false && !smp.approved, approved: !!smp.approved, note: smp.note || "", id: smp.id || null };
+          A.savePoses[fam][side][cls] = { img, anchors: an, mirror: !!smp.mirror, candidate: smp.candidate !== false && !smp.approved, approved: !!smp.approved, note: smp.note || "", id: smp.id || null };
         } catch (e) { console.warn("save pose not loaded", fam, side, cls, e); }
       }
     }
@@ -4519,7 +4519,8 @@ function gkAnimAuthoredSide(clip, dir) { if (!clip) return null; for (const v of
 //             HIGH vertical + LOW lateral → OVERHEAD_REACH; HIGH vertical + HIGH lateral stays with the lateral full-stretch art.
 // A candidate wins only above minScore and only if it beats the default camera-space sample's own reach similarity.
 const GK_CTX = { tightMinDeg: 45, tightFullDeg: 65, overheadDzLo: 0.4, overheadDzHi: 0.8, overheadLatLo: 0.25, overheadLatHi: 0.5, minScore: 0.5,
-  families: { AIRBORNE_DIVE: 1, HIGH_CATCH: 1 } };   // families a salvaged still may represent: the airborne dive and the standing high reach (which has no authored art at all)
+  lowZHi: 0.45, lowZOff: 0.6,                                                          // low_side stills: full weight below z/H 0.45, gone by 0.6
+  families: { AIRBORNE_DIVE: 1, HIGH_CATCH: 1, LOW_COLLAPSE: 1 } };   // families a salvaged still may represent: the airborne dive and the standing high reach (which has no authored art at all)
 function gkAnimContextualPick(A, t, gk, cls, c, facing, defaultSample) {
   if (!A.contextual || !A.contextual.length || !cls || !c || !c.target) return null;
   const smooth = (x, a, b) => { const u = Math.max(0, Math.min(1, (x - a) / (b - a))); return u * u * (3 - 2 * u); };
@@ -4544,6 +4545,14 @@ function gkAnimContextualPick(A, t, gk, cls, c, facing, defaultSample) {
     if (cp.role === "tight_high") {
       const sReach = cosR(cp.reach_screen_unit), sFacing = Math.max(0, Math.cos((facingDeg - cp.facing_deg) * Math.PI / 180)), sTight = smooth(attackerDeg, GK_CTX.tightMinDeg, GK_CTX.tightFullDeg), sPost = cp.post === post ? 1 : 0;
       score = sTight * sFacing * (0.5 * sReach + 0.5 * sPost); why = "reach " + sReach.toFixed(2) + " facing " + sFacing.toFixed(2) + " tight " + sTight.toFixed(2) + " post " + sPost;
+    } else if (cp.role === "low_side") {
+      // ground-level side save (LOW_COLLAPSE, or an AIRBORNE_DIVE whose contact height class is LOW-MID): the keeper's own facing at commit
+      // picks the perspective family (SW / W / NW, smooth cosine), the classifier's goal side picks the ORIGINAL or MIRRORED orientation
+      // (validated per side in the gameplay camera), lowness fades the still out above z/H 0.45. Gathers and foot saves never reach here.
+      const famOK = cls.family === "LOW_COLLAPSE" || (cls.family === "AIRBORNE_DIVE" && hClass === "LOW-MID");
+      const sFacing = Math.max(0, Math.cos((facingAtCommitDeg - cp.facing_deg) * Math.PI / 180)), sLow = 1 - smooth(cls.zH, GK_CTX.lowZHi, GK_CTX.lowZOff), sSide = cls.goalSide === cp.side ? 1 : 0;
+      const sReach = cp.reach_screen_unit ? 0.5 * (1 + reach[0] * cp.reach_screen_unit[0] + reach[1] * cp.reach_screen_unit[1]) : 0.5;
+      score = famOK ? sFacing * sLow * sSide * (0.5 + 0.5 * sReach) : 0; why = "family " + (famOK ? "ok" : cls.family) + " facing " + sFacing.toFixed(2) + " low " + sLow.toFixed(2) + " side " + sSide + " reach " + sReach.toFixed(2);
     } else if (cp.role === "overhead") {
       // the overhead still is for the open/central ball over the keeper; at a tight attacker angle the tight-angle stills own the high reach
       const sVert = smooth(dz, GK_CTX.overheadDzLo, GK_CTX.overheadDzHi), sLat = 1 - smooth(latFrac, GK_CTX.overheadLatLo, GK_CTX.overheadLatHi), sReach = cosR(cp.reach_screen_unit), sOpen = 1 - smooth(attackerDeg, GK_CTX.tightMinDeg, GK_CTX.tightFullDeg);
@@ -4554,7 +4563,7 @@ function gkAnimContextualPick(A, t, gk, cls, c, facing, defaultSample) {
   }
   const baseline = defaultSample && defaultSample.anchors && defaultSample.anchors.root && defaultSample.anchors.lead_glove ? (() => { const r = defaultSample.anchors.root, g = defaultSample.anchors.lead_glove, dx = g[0] - r[0], dy = g[1] - r[1], n = Math.hypot(dx, dy) || 1e-6; return 0.5 * cosR([dx / n, dy / n]); })() : 0;
   const pick = best && best.score >= GK_CTX.minScore && best.score > baseline ? best : null;
-  return { pick: pick ? { id: pick.cp.id, inventory_id: pick.cp.inventory_id || null, sample: pick.cp.sample, score: +pick.score.toFixed(3), why: pick.why } : null, situation, scored, baseline: +baseline.toFixed(3) };
+  return { pick: pick ? { id: pick.cp.id, inventory_id: pick.cp.inventory_id || null, transform: pick.cp.sample && pick.cp.sample.mirror ? "MIRRORED" : "ORIGINAL", sample: pick.cp.sample, score: +pick.score.toFixed(3), why: pick.why } : null, situation, scored, baseline: +baseline.toFixed(3) };
 }
 // STATE MACHINE — a pure function of (simulation time, keeper state) plus the view odometer for loops and the commit-tick freeze
 function gkAnimUpdate(t, gk) {
@@ -4786,17 +4795,17 @@ function gkAnimDraw(t, gk, dt) {
       anchors = an0 ? { root: anchors.root, pelvis: blit.toScreen(an0.content_cx, an0.pelvis_row_est), head: an0.head ? blit.toScreen(an0.head[0], an0.head[1]) : null, shoulder: blit.toScreen(an0.content_cx, an0.shoulder_row_est) } : anchors;
       artLabel = "SET/" + cur.dir + " (load) → save pose " + cur.savePose.family + " " + cur.savePose.side + " " + cur.savePose.key;
     } else {
-      const img = smp.img, ax = an.root ? an.root[0] : img.width / 2, ay = an.root ? an.root[1] : img.height - 1;
+      const img = smp.img, ax = an.root ? an.root[0] : img.width / 2, ay = an.root ? an.root[1] : img.height - 1, mir = !!smp.mirror, mx = (px) => mir ? img.width - px : px;   // mirror = presentation transform (pose salvage)
       const gl = an.gloves && an.gloves.length ? an.gloves : (an.lead_glove ? [an.lead_glove] : []);
-      const dx0 = Math.round(sp.x - ax * s), dy0 = Math.round(sp.y - ay * s);
-      const raw = gkAnimGloves(gl, (px, py) => ({ x: dx0 + Math.round(px * s), y: dy0 + Math.round(py * s) }), simHand, false);
+      const dx0 = mir ? Math.round(sp.x - (img.width - ax) * s) : Math.round(sp.x - ax * s), dy0 = Math.round(sp.y - ay * s);
+      const raw = gkAnimGloves(gl, (px, py) => ({ x: dx0 + Math.round(mx(px) * s), y: dy0 + Math.round(py * s) }), simHand, false);
       const w = GK_ANIM.savePoseIK ? (cur.savePose.mode === "reach" ? wReach : 1) : 0;
       place = gkAnimPlace(raw, simHand, w, s, cur.savePose.mode === "post" && A.commit ? A.commit.place : null);
       if ((cur.savePose.mode === "hold" || (cur.savePose.mode === "reach" && cur.u >= 0.999)) && A.commit && place) A.commit.place = place;
-      const blit = gkAnimBlit(img, false, ax, ay, s, sp.x + place.dx, sp.y + place.dy);
+      const blit = gkAnimBlit(img, mir, ax, ay, s, sp.x + place.dx, sp.y + place.dy);
       anchors = { root: anchors.root, pelvis: an.pelvis ? blit.toScreen(an.pelvis[0], an.pelvis[1]) : null, head: an.head ? blit.toScreen(an.head[0], an.head[1]) : null, shoulder: an.shoulder ? blit.toScreen(an.shoulder[0], an.shoulder[1]) : null, handL: gl[0] ? blit.toScreen(gl[0][0], gl[0][1]) : null, handR: gl[1] ? blit.toScreen(gl[1][0], gl[1][1]) : null };
       gloveScreen = gkAnimGloves(gl, blit.toScreen, simHand, false); if (gloveScreen && simHand) handScreen = { x: gloveScreen.x, y: gloveScreen.y };
-      artLabel = "SAVE POSE " + (cur.savePose.contextual ? "CONTEXTUAL " + cur.savePose.key + " (score " + cur.savePose.contextual.score + ") " : cur.savePose.family + " " + cur.savePose.side + " " + cur.savePose.key) + (cur.savePose.exact ? "" : " (nearest sample)") + (cur.savePose.candidate ? " CANDIDATE" : " approved") + (place ? (GK_ANIM.savePoseIK ? " place raw " + place.rawErrPx + " corr " + place.corrPx + " res " + place.finalErrPx + "px" + (place.capped ? " WRONG_CLIP" : "") : " RAW (no IK) glove err " + place.rawErrPx + "px") : "");
+      artLabel = "SAVE POSE " + (cur.savePose.contextual ? "CONTEXTUAL " + cur.savePose.key + " (score " + cur.savePose.contextual.score + ") " : cur.savePose.family + " " + cur.savePose.side + " " + cur.savePose.key) + (mir ? " MIRRORED" : "") + (cur.savePose.exact ? "" : " (nearest sample)") + (cur.savePose.candidate ? " CANDIDATE" : " approved") + (place ? (GK_ANIM.savePoseIK ? " place raw " + place.rawErrPx + " corr " + place.corrPx + " res " + place.finalErrPx + "px" + (place.capped ? " WRONG_CLIP" : "") : " RAW (no IK) glove err " + place.rawErrPx + "px") : "");
     }
   } else if (cur.pose) {
     // ── CONTACT POSE (8-rotation still) laid along the save vector; before loadPhase the SET rotation of the frozen facing
@@ -4893,9 +4902,10 @@ function gkAnimDrawReview(t, gk, sp, s, o) {
   else if (o.kind === "savepose" && A.savePoses[o.family] && A.savePoses[o.family][o.side]) {
     const sides = A.savePoses[o.family][o.side]; const smp = sides[o.key] || sides.MID || Object.values(sides)[0]; const an = smp.anchors || {};
     const ax = an.root ? an.root[0] : smp.img.width / 2, ay = an.root ? an.root[1] : smp.img.height - 1; const gl = an.gloves && an.gloves.length ? an.gloves : (an.lead_glove ? [an.lead_glove] : []);
-    let dx = 0, dy = 0, info = " RAW";
-    if (o.ik && o.simHand) { const dx0 = Math.round(sp.x - ax * s), dy0 = Math.round(sp.y - ay * s); const raw = gkAnimGloves(gl, (px, py) => ({ x: dx0 + Math.round(px * s), y: dy0 + Math.round(py * s) }), o.simHand, false); const pl = gkAnimPlace(raw, o.simHand, 1, s, null); dx = pl.dx; dy = pl.dy; info = " IK raw " + pl.rawErrPx + " corr " + pl.corrPx + " res " + pl.finalErrPx + "px" + (pl.capped ? " CAPPED" : ""); }
-    const blit = gkAnimBlit(smp.img, false, ax, ay, s, sp.x + dx, sp.y + dy); res = { gloves: gl.map(q => blit.toScreen(q[0], q[1])) };
+    const mir = o.mirror != null ? !!o.mirror : !!smp.mirror, mx = (px) => mir ? smp.img.width - px : px;
+    let dx = 0, dy = 0, info = mir ? " RAW MIRRORED" : " RAW";
+    if (o.ik && o.simHand) { const dx0 = mir ? Math.round(sp.x - (smp.img.width - ax) * s) : Math.round(sp.x - ax * s), dy0 = Math.round(sp.y - ay * s); const raw = gkAnimGloves(gl, (px, py) => ({ x: dx0 + Math.round(mx(px) * s), y: dy0 + Math.round(py * s) }), o.simHand, false); const pl = gkAnimPlace(raw, o.simHand, 1, s, null); dx = pl.dx; dy = pl.dy; info = " IK raw " + pl.rawErrPx + " corr " + pl.corrPx + " res " + pl.finalErrPx + "px" + (pl.capped ? " CAPPED" : ""); }
+    const blit = gkAnimBlit(smp.img, mir, ax, ay, s, sp.x + dx, sp.y + dy); res = { gloves: gl.map(q => blit.toScreen(q[0], q[1])) };
     label += "  SAVE POSE " + o.family + " " + o.side + " " + (o.key || "") + (smp.candidate ? " CANDIDATE" : "") + info;
     if (o.target) { const tp = sproj3(o.target[0], o.target[2], o.target[1]); ctx.strokeStyle = "#ff4fd8"; ctx.lineWidth = Math.max(1, PXQ * 2); ctx.setLineDash([4, 3]); ctx.beginPath(); ctx.moveTo(sp.x, sp.y); ctx.lineTo(tp.x, tp.y); ctx.stroke(); ctx.setLineDash([]); ctx.strokeStyle = "#ffffff"; ctx.beginPath(); ctx.arc(tp.x, tp.y, uipx(4), 0, Math.PI * 2); ctx.stroke(); }
   }
@@ -4954,7 +4964,7 @@ function gkAnimOverlay(t, gk, cur, anchors, handScreen, s) {
   const ctxPick = cur.savePose && cur.savePose.contextual ? cur.savePose.contextual : null;
   const lines = [
     "ANIM " + cur.state + (cur.family ? "  fam " + cur.family + "/" + cur.side : "") + "  phase " + cur.phase + "  u " + cur.u + "  odo " + A.odo.toFixed(2) + " m",
-    "GK ANIM: " + (ctxPick ? ctxPick.id + "   source " + (ctxPick.inventory_id || "—") + "   score " + ctxPick.score + "   (" + ctxPick.why + ")" : (A.commit && A.commit.ctx ? "no contextual pose (best " + (A.commit.ctx.scored.length ? A.commit.ctx.scored.reduce((a, b) => b.score > a.score ? b : a).id + " " + A.commit.ctx.scored.reduce((a, b) => b.score > a.score ? b : a).score : "—") + ", baseline " + A.commit.ctx.baseline + ")" : "no contextual pose")),
+    "GK ANIM: " + (ctxPick ? ctxPick.id + "   source " + (ctxPick.inventory_id || "—") + "   transform " + (ctxPick.transform || "ORIGINAL") + "   score " + ctxPick.score + "   (" + ctxPick.why + ")" : (A.commit && A.commit.ctx ? "no contextual pose (best " + (A.commit.ctx.scored.length ? A.commit.ctx.scored.reduce((a, b) => b.score > a.score ? b : a).id + " " + A.commit.ctx.scored.reduce((a, b) => b.score > a.score ? b : a).score : "—") + ", baseline " + A.commit.ctx.baseline + ")" : "no contextual pose")),
     "dir " + cur.dir + "  facing " + (gk.facing * 180 / Math.PI).toFixed(0) + "°  art " + cur.artLabel,
     cls ? "SAVE VECTOR lat " + (cls.lat >= 0 ? "+" : "") + cls.lat + " depth " + (cls.depth >= 0 ? "+" : "") + cls.depth + " dz " + (cls.dz >= 0 ? "+" : "") + cls.dz + " m  z " + cls.z + " (" + cls.zClass + " " + cls.zH + "H)  L " + cls.L + " / maxLat " + cls.maxLat + "  norm " + cls.norm + "  exec " + cls.exec + " s  v0 " + cls.v0 + "  feet " + (cls.feetPlanted ? "PLANTED" : "DIVE") + (cls.airborne ? " AIRBORNE" : "") + "  sim " + cls.action + "/" + cls.tier + (cls.bestEffort ? " best-effort" : "") + "  → " + cls.family + " " + cls.goalSide + (cls.expr ? " [" + cls.expr.heightClass + " intensity " + cls.expr.intensity + " ext " + cls.expr.extension + " launch " + cls.expr.launch + (cls.expr.nearMax ? " NEAR-MAX" : "") + "]" : "") + "  (lead arm " + cls.side + ", facing " + cur.dir + ")" : "SAVE VECTOR —",
     "anchors: root(" + anchors.root.x + "," + anchors.root.y + ")" + (anchors.pelvis ? " pelvis(" + anchors.pelvis.x + "," + anchors.pelvis.y + ")" : "") + (anchors.head ? " head(" + anchors.head.x + "," + anchors.head.y + ")" : "") + (anchors.handL ? " hands(" + anchors.handL.x + "," + anchors.handL.y + (anchors.handR ? "|" + anchors.handR.x + "," + anchors.handR.y : "") + ")" : "") + (anchors.footL ? " feet(" + anchors.footL.x + "," + anchors.footL.y + (anchors.footR ? "|" + anchors.footR.x + "," + anchors.footR.y : "") + ")" : "") + (pl && pl.w > 0 ? "   placement raw " + pl.rawErrPx + " px → corr " + pl.corrPx + " px → residual " + pl.finalErrPx + " px" + (pl.capped ? " CAPPED/WRONG_CLIP" : "") : ""),
