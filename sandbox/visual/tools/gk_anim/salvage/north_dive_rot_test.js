@@ -7,7 +7,7 @@ const puppeteer=require("puppeteer-core"); const fs=require("fs"); const path=re
 const OUT=process.argv[2]||"rot_test"; fs.mkdirSync(OUT,{recursive:true});
 const MAN="/review_artifacts/gk_dive_north_v1/rotation_test/GK_DIVE_NORTH_ROTATION_TEST.json";
 const CASE={lat:-2.0, z:1.45, v:25};                      // AIRBORNE_DIVE, GOAL_LEFT (north), z 1.52 m, lateral 1.99 m
-const KEYS=["DIVE_N_RAW","DIVE_N_CW35","DIVE_N_CW45","DIVE_N_CW55"];
+const KEYS=["DIVE_N_RAW","DIVE_N_CW35","DIVE_N_CW45","DIVE_N_CW50","DIVE_N_CW55"];
 (async()=>{const b=await puppeteer.launch({executablePath:"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",headless:"new",userDataDir:"chrome-rot-"+Date.now(),args:["--no-sandbox"]});
 const p=await b.newPage(); await p.setViewport({width:1400,height:900,deviceScaleFactor:1});
 await p.goto("http://127.0.0.1:8126/sandbox/visual/match.html?savePoses="+encodeURIComponent(MAN)+"&r="+Date.now(),{waitUntil:"domcontentloaded",timeout:180000});

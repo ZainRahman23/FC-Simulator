@@ -497,6 +497,15 @@
       "candidate": false,
       "id": "GK_POSE_116",
       "note": "NORTH-WEST facing keeper, ground-level save to GOAL_RIGHT (same still, MIRRORED \u2014 first-build mapping restored per live review 2026-09-05)"
+     },
+     "DIVE_NORTH_MEDHIGH": {
+      "path": "goalkeeper/contextual/DIVE_NORTH_CW50.png",
+      "anchors": "goalkeeper/contextual/DIVE_NORTH_CW50_anchors.json",
+      "mirror": false,
+      "approved": true,
+      "candidate": false,
+      "id": "PRO_DIVE_NORTH_V1",
+      "note": "medium/high AIRBORNE_DIVE to GOAL_LEFT (north): raw Pro sprite rotated 50 deg CW as a presentation transform; no opposite-side variant exists, GOAL_RIGHT keeps the ART_MISSING diagnostic"
      }
     }
    }
@@ -703,6 +712,27 @@
    "reach_screen_unit": [
     0.683,
     -0.731
+   ]
+  },
+  {
+   "id": "DIVE_NORTH_MEDHIGH",
+   "inventory_id": "PRO_DIVE_NORTH_V1",
+   "role": "dive_north",
+   "facing_deg": 180,
+   "side": "GOAL_LEFT",
+   "mirror": false,
+   "height_classes": [
+    "MID",
+    "HIGH"
+   ],
+   "source_file": "sources/DIVE_NORTH_RAW.png",
+   "rotation_cw_deg": 50,
+   "path": "goalkeeper/contextual/DIVE_NORTH_CW50.png",
+   "anchors": "goalkeeper/contextual/DIVE_NORTH_CW50_anchors.json",
+   "transform": "ORIGINAL",
+   "reach_screen_unit": [
+    -0.13,
+    -0.991
    ]
   }
  ]

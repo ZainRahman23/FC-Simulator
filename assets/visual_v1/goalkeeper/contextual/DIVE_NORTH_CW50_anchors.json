@@ -1,0 +1,48 @@
+{
+ "root": [
+  29.4,
+  114.6
+ ],
+ "bbox": [
+  4,
+  4,
+  78,
+  177
+ ],
+ "gloves": [
+  [
+   17.1,
+   20.9,
+   186
+  ]
+ ],
+ "lead_glove": [
+  17.1,
+  20.9,
+  186,
+  0
+ ],
+ "head": [
+  43.2,
+  42.2
+ ],
+ "reach_screen_unit": [
+  -0.13,
+  -0.991
+ ],
+ "canvas": [
+  82,
+  181
+ ],
+ "source": "sources/DIVE_NORTH_RAW.png",
+ "rotation_cw_deg": 50,
+ "rotation_pivot_in_source": [
+  116.7,
+  100.4
+ ],
+ "root_offset_from_lead_glove_px": [
+  12.3,
+  93.7
+ ],
+ "description": "canonical medium/high airborne dive to the keeper's right (north / GOAL_LEFT). Live artwork = the preserved Pro sprite sources/DIVE_NORTH_RAW.png rotated 50 degrees clockwise about its hip/torso pivot, nearest-neighbour, expand, no redraw, no limb edit, no scaling, no warp (approved 2026-09-05 over 35/45/55). root is NOT the bottom-pixel convention, which assumes a grounded pose: it is offset from the lead glove so the drawn glove meets the simulation's contact point on a representative medium/high north dive (lateral 1.99 m, contact z 1.52 m) in the live camera; the runtime's bounded hand-led placement absorbs the rest."
+}

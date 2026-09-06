@@ -4553,6 +4553,15 @@ function gkAnimContextualPick(A, t, gk, cls, c, facing, defaultSample) {
       const sFacing = Math.max(0, Math.cos((facingAtCommitDeg - cp.facing_deg) * Math.PI / 180)), sLow = 1 - smooth(cls.zH, GK_CTX.lowZHi, GK_CTX.lowZOff), sSide = cls.goalSide === cp.side ? 1 : 0;
       const sReach = cp.reach_screen_unit ? 0.5 * (1 + reach[0] * cp.reach_screen_unit[0] + reach[1] * cp.reach_screen_unit[1]) : 0.5;
       score = famOK ? sFacing * sLow * sSide * (0.5 + 0.5 * sReach) : 0; why = "family " + (famOK ? "ok" : cls.family) + " facing " + sFacing.toFixed(2) + " low " + sLow.toFixed(2) + " side " + sSide + " reach " + sReach.toFixed(2);
+    } else if (cp.role === "dive_north") {
+      // canonical medium/high airborne dive to the keeper's right (north / GOAL_LEFT): the single authored contact pose for that family.
+      // The classifier's goal side must match (there is no opposite-side variant — a GOAL_RIGHT dive keeps the ART_MISSING diagnostic),
+      // the height-class gate above keeps it off low dives (the ground stills own those) and off TOP reaches (the tight/overhead stills do).
+      const famOK = cls.family === "AIRBORNE_DIVE";
+      const sFacing = Math.max(0, Math.cos((facingAtCommitDeg - cp.facing_deg) * Math.PI / 180)), sSide = cls.goalSide === cp.side ? 1 : 0;
+      const sReach = cp.reach_screen_unit ? 0.5 * (1 + reach[0] * cp.reach_screen_unit[0] + reach[1] * cp.reach_screen_unit[1]) : 0.5;
+      score = famOK ? sFacing * sSide * (0.5 + 0.5 * sReach) : 0;
+      why = "family " + (famOK ? "ok" : cls.family) + " facing " + sFacing.toFixed(2) + " side " + sSide + " reach " + sReach.toFixed(2);
     } else if (cp.role === "overhead") {
       // the overhead still is for the open/central ball over the keeper; at a tight attacker angle the tight-angle stills own the high reach
       const sVert = smooth(dz, GK_CTX.overheadDzLo, GK_CTX.overheadDzHi), sLat = 1 - smooth(latFrac, GK_CTX.overheadLatLo, GK_CTX.overheadLatHi), sReach = cosR(cp.reach_screen_unit), sOpen = 1 - smooth(attackerDeg, GK_CTX.tightMinDeg, GK_CTX.tightFullDeg);
