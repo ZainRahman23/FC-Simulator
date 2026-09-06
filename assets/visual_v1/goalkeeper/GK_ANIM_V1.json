@@ -506,6 +506,15 @@
       "candidate": false,
       "id": "PRO_DIVE_NORTH_V1",
       "note": "default contact pose for FAR / high-extension AIRBORNE_DIVE saves to GOAL_LEFT (the keeper's right), at every height class: raw Pro sprite rotated 50 deg CW as a presentation transform. Selected by the simulation's own envelope demand (norm), so an unreachable best-effort dive shows the full attempt. Ground-save actions stay LOW_COLLAPSE and keep the ground stills; the tight-angle and overhead stills keep their own cases by priority; no opposite-side variant exists, so GOAL_RIGHT keeps the ART_MISSING diagnostic"
+     },
+     "TOP_LEFT_CORNER": {
+      "path": "goalkeeper/contextual/TOP_LEFT_CORNER_CW50.png",
+      "anchors": "goalkeeper/contextual/TOP_LEFT_CORNER_CW50_anchors.json",
+      "mirror": false,
+      "approved": true,
+      "candidate": false,
+      "id": "PRO_DIVE_SOUTH_V1",
+      "note": "full-stretch top-corner save to GOAL_LEFT: the Pro sprite authored as a south dive attempt, salvaged and rotated 50 deg CW as a presentation transform; no opposite-side variant exists"
      }
     }
    }
@@ -746,6 +755,27 @@
    "reach_screen_unit": [
     -0.13,
     -0.991
+   ]
+  },
+  {
+   "id": "TOP_LEFT_CORNER",
+   "inventory_id": "PRO_DIVE_SOUTH_V1",
+   "role": "top_corner",
+   "priority": 2,
+   "facing_deg": 180,
+   "side": "GOAL_LEFT",
+   "mirror": false,
+   "height_classes": [
+    "TOP"
+   ],
+   "source_file": "sources/TOP_LEFT_CORNER_RAW.png",
+   "rotation_cw_deg": 50,
+   "path": "goalkeeper/contextual/TOP_LEFT_CORNER_CW50.png",
+   "anchors": "goalkeeper/contextual/TOP_LEFT_CORNER_CW50_anchors.json",
+   "transform": "ORIGINAL",
+   "reach_screen_unit": [
+    -0.09,
+    -0.996
    ]
   }
  ]

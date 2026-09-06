@@ -13,6 +13,9 @@ const CONTROLS=[
  {id:"CTRL_GROUND",   lat:-1.0, z:0.22, v:20, note:"low ball that stays a ground-save action"},
  {id:"CTRL_NEARBODY", lat:-0.3, z:1.05, v:22, note:"near-body save"},
  {id:"CTRL_OPPOSITE", lat: 2.4, z:1.40, v:24, note:"same far dive to GOAL_RIGHT (no art exists)"},
+ {id:"TOPLEFT_FULL",  lat:-1.9, z:1.90, v:26, note:"full-stretch top-left corner (the new pose's case)"},
+ {id:"TOPLEFT_UNREACH", lat:-2.3, z:2.15, v:26, note:"unreachable top-left corner attempt"},
+ {id:"TOP_CENTRAL",   lat:-0.4, z:2.10, v:24, note:"mostly vertical top ball, little lateral demand"},
 ];
 (async()=>{const b=await puppeteer.launch({executablePath:"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",headless:"new",userDataDir:"chrome-fdm-"+Date.now(),args:["--no-sandbox"]});
 const p=await b.newPage(); await p.setViewport({width:1400,height:900,deviceScaleFactor:1});

@@ -1,0 +1,63 @@
+{
+ "root": [
+  82.1,
+  177.2
+ ],
+ "bbox": [
+  4,
+  4,
+  111,
+  182
+ ],
+ "gloves": [
+  [
+   67.7,
+   18.7,
+   194
+  ],
+  [
+   14.2,
+   67.0,
+   116
+  ],
+  [
+   23.8,
+   73.0,
+   12
+  ]
+ ],
+ "lead_glove": [
+  67.7,
+  18.7,
+  194,
+  0
+ ],
+ "head": [
+  63.8,
+  59.5
+ ],
+ "reach_screen_unit": [
+  -0.09,
+  -0.996
+ ],
+ "canvas": [
+  115,
+  186
+ ],
+ "source": "sources/TOP_LEFT_CORNER_RAW.png",
+ "rotation_cw_deg": 50,
+ "rotation_pivot_in_source": [
+  104.0,
+  97.4
+ ],
+ "root_offset_from_lead_glove_px": [
+  14.4,
+  158.5
+ ],
+ "root_offset_base_px": [
+  10.4,
+  114.1
+ ],
+ "pixel_scale": 0.72,
+ "description": "far / full-stretch TOP-LEFT-CORNER airborne save (north top corner, the keeper's right in world terms). Live artwork = the preserved Pro sprite sources/TOP_LEFT_CORNER_RAW.png rotated 50 degrees clockwise about its hip/torso pivot, nearest-neighbour, no redraw, no limb edit, no scaling of the body, no warp (approved 2026-09-05 over RAW/35/45/55). The camera's top-corner target vector is (-0.13, -0.99), 97.7 degrees above the horizontal, which is why clockwise is the correct sense. root is offset from the lead glove so the drawn glove meets the simulation's contact point on a representative full-stretch top-corner save."
+}

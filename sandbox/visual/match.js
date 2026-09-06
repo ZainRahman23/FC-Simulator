@@ -4524,7 +4524,8 @@ function gkAnimAuthoredSide(clip, dir) { if (!clip) return null; for (const v of
 // A candidate wins only above minScore and only if it beats the default camera-space sample's own reach similarity.
 const GK_CTX = { tightMinDeg: 45, tightFullDeg: 65, overheadDzLo: 0.4, overheadDzHi: 0.8, overheadLatLo: 0.25, overheadLatHi: 0.5, minScore: 0.5,
   lowZHi: 0.45, lowZOff: 0.6,                                                          // low_side stills: full weight below z/H 0.45, gone by 0.6
-  farLo: 0.5, farHi: 0.8, farFloor: 0.6, diveGroundLo: 0.06, diveGroundHi: 0.22,     // dive_north fades out as the contact reaches the ground (z/H): its hands are drawn at head height, so a ball on the deck stays with the ground stills                                               // dive_north: the simulation's own envelope demand (norm = required span / reach envelope) weights the far-dive pose from farFloor
+  farLo: 0.5, farHi: 0.8, farFloor: 0.6, diveGroundLo: 0.06, diveGroundHi: 0.22,
+  stretchLo: 0.85, stretchHi: 1.0, cornerLatLo: 0.35, cornerLatHi: 0.6,                // top_corner: only a genuinely full-stretch TOP contact with real lateral demand     // dive_north fades out as the contact reaches the ground (z/H): its hands are drawn at head height, so a ball on the deck stays with the ground stills                                               // dive_north: the simulation's own envelope demand (norm = required span / reach envelope) weights the far-dive pose from farFloor
                                                                                        // (a modest but real dive) up to 1 (full stretch, or an unreachable best-effort attempt) — a preference weight, never an on/off gate
   families: { AIRBORNE_DIVE: 1, HIGH_CATCH: 1, LOW_COLLAPSE: 1 } };   // families a salvaged still may represent: the airborne dive and the standing high reach (which has no authored art at all)
 function gkAnimContextualPick(A, t, gk, cls, c, facing, defaultSample) {
@@ -4559,6 +4560,18 @@ function gkAnimContextualPick(A, t, gk, cls, c, facing, defaultSample) {
       const sFacing = Math.max(0, Math.cos((facingAtCommitDeg - cp.facing_deg) * Math.PI / 180)), sLow = 1 - smooth(cls.zH, GK_CTX.lowZHi, GK_CTX.lowZOff), sSide = cls.goalSide === cp.side ? 1 : 0;
       const sReach = cp.reach_screen_unit ? 0.5 * (1 + reach[0] * cp.reach_screen_unit[0] + reach[1] * cp.reach_screen_unit[1]) : 0.5;
       score = famOK ? sFacing * sLow * sSide * (0.5 + 0.5 * sReach) : 0; why = "family " + (famOK ? "ok" : cls.family) + " facing " + sFacing.toFixed(2) + " low " + sLow.toFixed(2) + " side " + sSide + " reach " + sReach.toFixed(2);
+    } else if (cp.role === "top_corner") {
+      // FAR / FULL-STRETCH TOP CORNER: the height class gate above already restricts this to TOP contacts. On top of that the simulation's
+      // own envelope demand must be at or near full stretch, the lateral demand must be real (a mostly-vertical reach stays with the
+      // overhead still) and the attack must not be from a tight angle (those keep the tight-angle stills). Ordinary medium/high dives,
+      // low saves and near-body saves never reach here.
+      const famOK = cls.family === "AIRBORNE_DIVE";
+      const sFacing = Math.max(0, Math.cos((facingAtCommitDeg - cp.facing_deg) * Math.PI / 180)), sSide = cls.goalSide === cp.side ? 1 : 0;
+      const sStretch = smooth(cls.norm, GK_CTX.stretchLo, GK_CTX.stretchHi), sLat = smooth(latFrac, GK_CTX.cornerLatLo, GK_CTX.cornerLatHi);
+      const sOpen = 1 - smooth(attackerDeg, GK_CTX.tightMinDeg, GK_CTX.tightFullDeg);
+      const sReach = cp.reach_screen_unit ? 0.5 * (1 + reach[0] * cp.reach_screen_unit[0] + reach[1] * cp.reach_screen_unit[1]) : 0.5;
+      score = famOK ? sFacing * sSide * sStretch * sLat * sOpen * (0.5 + 0.5 * sReach) : 0;
+      why = "family " + (famOK ? "ok" : cls.family) + " side " + sSide + " stretch " + sStretch.toFixed(2) + " (norm " + cls.norm + ") lat " + sLat.toFixed(2) + " open " + sOpen.toFixed(2) + " reach " + sReach.toFixed(2);
     } else if (cp.role === "dive_north") {
       // canonical medium/high airborne dive to the keeper's right (north / GOAL_LEFT): the single authored contact pose for that family.
       // The classifier's goal side must match (there is no opposite-side variant — a GOAL_RIGHT dive keeps the ART_MISSING diagnostic),

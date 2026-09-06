@@ -129,6 +129,16 @@ derive_rotated_pose("sources/DIVE_NORTH_RAW.png", "DIVE_NORTH_CW50", 50, (12.3, 
     "pose: it is offset from the lead glove so the drawn glove meets the simulation's contact point on a representative medium/high "
     "north dive (lateral 1.99 m, contact z 1.52 m) in the live camera; the runtime's bounded hand-led placement absorbs the rest.",
     body_scale=0.72)
+# TOP-LEFT CORNER (2026-09-05): the Pro sprite authored as a south attempt, salvaged as the far/full-stretch top-corner save. Body scale
+# 0.72 measured against GK_BASE_V1 the same way as the north dive (crown-to-toe body axis 138.6 px vs the standing sprite's 99.6 px = 0.719).
+# Root offset (canonical GK_BASE_V1 px) calibrated on a real full-stretch top-corner save: keeper root (102.37, 33.16), contact (102.21,
+# 32.13, 1.97), envelope demand 0.967.
+derive_rotated_pose("sources/TOP_LEFT_CORNER_RAW.png", "TOP_LEFT_CORNER_CW50", 50, (10.4, 114.1),
+    "far / full-stretch TOP-LEFT-CORNER airborne save (north top corner, the keeper's right in world terms). Live artwork = the preserved "
+    "Pro sprite sources/TOP_LEFT_CORNER_RAW.png rotated 50 degrees clockwise about its hip/torso pivot, nearest-neighbour, no redraw, no limb "
+    "edit, no scaling of the body, no warp (approved 2026-09-05 over RAW/35/45/55). The camera's top-corner target vector is (-0.13, -0.99), "
+    "97.7 degrees above the horizontal, which is why clockwise is the correct sense. root is offset from the lead glove so the drawn glove "
+    "meets the simulation's contact point on a representative full-stretch top-corner save.", body_scale=0.72)
 CONTEXTUAL_POSES = [
     dict(id="TIGHT_S_NEAR_TOP", inventory_id="GK_POSE_129", role="tight_high", priority=2, facing_deg=90, post="near", height_classes=["HIGH", "TOP"], note="SOUTH-facing keeper, tight attacker angle, high save to the near/top corner (V1.1 high_dive/south still)"),
     dict(id="TIGHT_S_FAR_TOP", inventory_id="GK_POSE_136", role="tight_high", priority=2, facing_deg=90, post="far", height_classes=["HIGH", "TOP"], note="SOUTH-facing keeper, tight attacker angle, high save to the far/top corner (V1.1 high_dive/south-west still)"),
@@ -149,6 +159,12 @@ CONTEXTUAL_POSES = [
     dict(id="DIVE_NORTH_MEDHIGH", file="DIVE_NORTH_CW50", inventory_id="PRO_DIVE_NORTH_V1", role="dive_north", facing_deg=180, side="GOAL_LEFT",
          mirror=False, height_classes=["LOW-MID", "MID", "HIGH", "TOP"], source_file="sources/DIVE_NORTH_RAW.png", rotation_cw_deg=50,
          note="default contact pose for FAR / high-extension AIRBORNE_DIVE saves to GOAL_LEFT (the keeper's right), at every height class: raw Pro sprite rotated 50 deg CW as a presentation transform. Selected by the simulation's own envelope demand (norm), so an unreachable best-effort dive shows the full attempt. Ground-save actions stay LOW_COLLAPSE and keep the ground stills; the tight-angle and overhead stills keep their own cases by priority; no opposite-side variant exists, so GOAL_RIGHT keeps the ART_MISSING diagnostic"),
+    # TOP-LEFT CORNER (2026-09-05): only for genuinely full-stretch TOP-height airborne saves to GOAL_LEFT with real lateral demand — the
+    # north far-dive pose keeps ordinary medium/high dives, the ground stills keep low saves, the overhead still keeps mostly-vertical
+    # reaches and the tight-angle stills keep their own cases (priority 2 + the openness term).
+    dict(id="TOP_LEFT_CORNER", file="TOP_LEFT_CORNER_CW50", inventory_id="PRO_DIVE_SOUTH_V1", role="top_corner", priority=2, facing_deg=180,
+         side="GOAL_LEFT", mirror=False, height_classes=["TOP"], source_file="sources/TOP_LEFT_CORNER_RAW.png", rotation_cw_deg=50,
+         note="full-stretch top-corner save to GOAL_LEFT: the Pro sprite authored as a south dive attempt, salvaged and rotated 50 deg CW as a presentation transform; no opposite-side variant exists"),
 ]
 CTX_DIR = os.path.join(ASSETS, "goalkeeper", "contextual")
 samples, ctx_meta = {}, []
