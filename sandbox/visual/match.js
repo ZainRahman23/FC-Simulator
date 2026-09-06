@@ -4649,7 +4649,30 @@ function gkAnimContextualPick(A, t, gk, cls, c, facing, defaultSample) {
     }
     if (fb) { pick = fb; fallback = true; }
   }
-  return { pick: pick ? { id: pick.cp.id, inventory_id: pick.cp.inventory_id || null, transform: pick.cp.sample && pick.cp.sample.mirror ? "MIRRORED" : "ORIGINAL", sample: pick.cp.sample, score: +pick.score.toFixed(3), why: pick.why, fallback } : null, situation, scored, baseline: +baseline.toFixed(3) };
+  // HARD SIDE FALLBACK (2026-09-06, from live free-play misses): the keeper-frame side of an airborne dive (the /LEFT or /RIGHT the
+  // overlay reports) is authoritative for the art. A far airborne MID/HIGH/TOP dive that no more specific approved pose won (the
+  // tight-angle, top-corner and SW stills keep their cases whenever they qualify) must never fall to the diagnostic through a facing
+  // cosine, a goal-side conversion or the threshold: it takes the generic far-dive sprite of its side — LEFT → the south far dive,
+  // RIGHT → the north far dive. A LOW-MID airborne dive takes the best-scoring ground / low-far still that serves it, then the same
+  // generic art. Presentation only (the simulated save is untouched); flagged FORCED in the reason and the art label.
+  let forced = false;
+  if (!pick && cls.family === "AIRBORNE_DIVE" && (cls.side === "LEFT" || cls.side === "RIGHT")) {
+    const wantRole = cls.side === "LEFT" ? "dive_south" : "dive_north";
+    let fb = null;
+    if (hClass === "LOW-MID") {
+      for (const cp of A.contextual) {
+        if (cp.role !== "low_side" && cp.role !== "low_far_dive") continue;
+        const sc = scored.find(q => q.id === cp.id);
+        if (sc && sc.score > 0 && (!fb || sc.score > fb.score)) fb = { cp, score: sc.score, why: sc.why + " FORCED (LOW-MID airborne dive, keeper-frame " + cls.side + ": best ground/low-far still serving the side)" };
+      }
+    }
+    if (!fb) {
+      const cp = A.contextual.find(c => c.role === wantRole);
+      if (cp) { const sc = scored.find(q => q.id === cp.id); fb = { cp, score: sc ? sc.score : 0, why: (sc ? sc.why : "gated") + " FORCED (keeper-frame " + cls.side + " far airborne dive: the side's generic far-dive art; no more specific approved pose qualified)" }; }
+    }
+    if (fb) { pick = { cp: fb.cp, score: fb.score, why: fb.why, prio: 0, qualifies: false }; forced = true; }
+  }
+  return { pick: pick ? { id: pick.cp.id, inventory_id: pick.cp.inventory_id || null, transform: pick.cp.sample && pick.cp.sample.mirror ? "MIRRORED" : "ORIGINAL", sample: pick.cp.sample, score: +pick.score.toFixed(3), why: pick.why, fallback, forced } : null, situation, scored, baseline: +baseline.toFixed(3) };
 }
 // STATE MACHINE — a pure function of (simulation time, keeper state) plus the view odometer for loops and the commit-tick freeze
 function gkAnimUpdate(t, gk) {
@@ -4895,7 +4918,7 @@ function gkAnimDraw(t, gk, dt) {
       const blit = gkAnimBlit(img, mir, ax, ay, ps, sp.x + place.dx, sp.y + place.dy);
       anchors = { root: anchors.root, pelvis: an.pelvis ? blit.toScreen(an.pelvis[0], an.pelvis[1]) : null, head: an.head ? blit.toScreen(an.head[0], an.head[1]) : null, shoulder: an.shoulder ? blit.toScreen(an.shoulder[0], an.shoulder[1]) : null, handL: gl[0] ? blit.toScreen(gl[0][0], gl[0][1]) : null, handR: gl[1] ? blit.toScreen(gl[1][0], gl[1][1]) : null };
       gloveScreen = gkAnimGloves(gl, blit.toScreen, simHand, false); if (gloveScreen && simHand) handScreen = { x: gloveScreen.x, y: gloveScreen.y };
-      artLabel = "SAVE POSE " + (cur.savePose.contextual ? "CONTEXTUAL " + cur.savePose.key + " (score " + cur.savePose.contextual.score + ") " : cur.savePose.family + " " + cur.savePose.side + " " + cur.savePose.key) + (mir ? " MIRRORED" : "") + (cur.savePose.exact ? "" : " (nearest sample)") + (cur.savePose.candidate ? " CANDIDATE" : " approved") + (place ? (GK_ANIM.savePoseIK ? " place raw " + place.rawErrPx + " corr " + place.corrPx + " res " + place.finalErrPx + "px" + (place.capped ? " WRONG_CLIP" : "") : " RAW (no IK) glove err " + place.rawErrPx + "px") : "");
+      artLabel = "SAVE POSE " + (cur.savePose.contextual ? "CONTEXTUAL " + cur.savePose.key + " (score " + cur.savePose.contextual.score + (cur.savePose.contextual.forced ? " FORCED-SIDE" : cur.savePose.contextual.fallback ? " FALLBACK" : "") + ") " : cur.savePose.family + " " + cur.savePose.side + " " + cur.savePose.key) + (mir ? " MIRRORED" : "") + (cur.savePose.exact ? "" : " (nearest sample)") + (cur.savePose.candidate ? " CANDIDATE" : " approved") + (place ? (GK_ANIM.savePoseIK ? " place raw " + place.rawErrPx + " corr " + place.corrPx + " res " + place.finalErrPx + "px" + (place.capped ? " WRONG_CLIP" : "") : " RAW (no IK) glove err " + place.rawErrPx + "px") : "");
     }
   } else if (cur.pose) {
     // ── CONTACT POSE (8-rotation still) laid along the save vector; before loadPhase the SET rotation of the frozen facing
