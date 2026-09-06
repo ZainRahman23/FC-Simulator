@@ -4525,7 +4525,9 @@ function gkAnimAuthoredSide(clip, dir) { if (!clip) return null; for (const v of
 const GK_CTX = { tightMinDeg: 45, tightFullDeg: 65, overheadDzLo: 0.4, overheadDzHi: 0.8, overheadLatLo: 0.25, overheadLatHi: 0.5, minScore: 0.5,
   lowZHi: 0.45, lowZOff: 0.6,                                                          // low_side stills: full weight below z/H 0.45, gone by 0.6
   farLo: 0.5, farHi: 0.8, farFloor: 0.6, diveGroundLo: 0.06, diveGroundHi: 0.22,
-  stretchLo: 0.85, stretchHi: 1.0, cornerLatLo: 0.35, cornerLatHi: 0.6, lowFarLo: 0.82, lowFarHi: 0.95,   // low_far_dive: only a low dive at or beyond full stretch                // top_corner: only a genuinely full-stretch TOP contact with real lateral demand     // dive_north fades out as the contact reaches the ground (z/H): its hands are drawn at head height, so a ball on the deck stays with the ground stills                                               // dive_north: the simulation's own envelope demand (norm = required span / reach envelope) weights the far-dive pose from farFloor
+  stretchLo: 0.85, stretchHi: 1.0, cornerLatLo: 0.35, cornerLatHi: 0.6, lowFarLo: 0.82, lowFarHi: 0.95,
+  farFallbackMin: 0.25,                                                                // far-dive fallback: the goal side's far-dive pose still takes an unclaimed MID/HIGH/TOP airborne dive down to this score (facing-only shortfall)
+  facingCorrectDeg: 90, farFacingCorrectDeg: 45,                                       // tracked facing further than this from the bearing to the shooter = the ball beside/behind the keeper, not a body turn → use the bearing (all roles / the far-dive poses)   // low_far_dive: only a low dive at or beyond full stretch                // top_corner: only a genuinely full-stretch TOP contact with real lateral demand     // dive_north fades out as the contact reaches the ground (z/H): its hands are drawn at head height, so a ball on the deck stays with the ground stills                                               // dive_north: the simulation's own envelope demand (norm = required span / reach envelope) weights the far-dive pose from farFloor
                                                                                        // (a modest but real dive) up to 1 (full stretch, or an unreachable best-effort attempt) — a preference weight, never an on/off gate
   families: { AIRBORNE_DIVE: 1, HIGH_CATCH: 1, LOW_COLLAPSE: 1 } };   // families a salvaged still may represent: the airborne dive and the standing high reach (which has no authored art at all)
 function gkAnimContextualPick(A, t, gk, cls, c, facing, defaultSample) {
@@ -4538,13 +4540,22 @@ function gkAnimContextualPick(A, t, gk, cls, c, facing, defaultSample) {
   const attackerDeg = Math.abs(Math.atan2(shooter[1] - GK_MOUTH.centerY, -(shooter[0] - GK_MOUTH.lineX)) * 180 / Math.PI);   // 0 = straight in front of goal, 90 = on the goal line
   // the keeper's presentation facing for these stills is the side the attack comes from: the bearing from the committed feet to the
   // shooter (at commit the frozen facing already tracks the ball, which on a far-post shot has crossed to the other side)
-  const facingDeg = Math.atan2(shooter[1] - c.feet[1], shooter[0] - c.feet[0]) * 180 / Math.PI, facingAtCommitDeg = facing * 180 / Math.PI, hClass = cls.expr ? cls.expr.heightClass : cls.zClass;
+  const facingDeg = Math.atan2(shooter[1] - c.feet[1], shooter[0] - c.feet[0]) * 180 / Math.PI, facingTrackedDeg = facing * 180 / Math.PI, hClass = cls.expr ? cls.expr.heightClass : cls.zClass;
+  // KEEPER ORIENTATION for the facing terms (2026-09-06): the frozen facing is the simulation's ball-tracking value. On a late best-effort
+  // dive or a rebound the ball is already beside/behind the keeper at commit, so that value points AWAY from the shooter (up to 180 deg
+  // off) — no body turns its back on a shot in the flight time, and every facing-based pose scored 0 (the live ART_MISSING cases). When the
+  // tracked facing is more than 90 deg from the bearing to the shooter, the keeper's orientation is the bearing; otherwise it is unchanged.
+  const facingMismatchDeg = Math.abs(((facingTrackedDeg - facingDeg + 540) % 360) - 180);
+  const facingCorrected = facingMismatchDeg > GK_CTX.facingCorrectDeg, facingAtCommitDeg = facingCorrected ? facingDeg : facingTrackedDeg;
+  // the two far-dive poses (the only art of their family per side) accept a tighter bound: past farFacingCorrectDeg the tracked value is
+  // the ball beside the keeper on a flank shot, not a body turn; the ground stills keep the wider bound so none of their picks move
+  const facingFarCorrected = facingMismatchDeg > GK_CTX.farFacingCorrectDeg, facingFarDeg = facingFarCorrected ? facingDeg : facingTrackedDeg;
   // near/far post = the side of the KEEPER the committed reach goes, relative to the shooter's side (the keeper at a tight angle already
   // stands at the near post; a reach straight above him or toward the shooter's side is "near", away from the shooter is "far")
   const shooterSide = Math.sign(shooter[1] - c.feet[1]), reachSide = Math.sign(c.target[1] - c.feet[1]);
   const post = shooterSide === 0 ? "centre" : (Math.abs(c.target[1] - c.feet[1]) < 0.3 || reachSide === shooterSide ? "near" : "far");
   const latFrac = cls.L / (c.diveSpanMax || 2.0), dz = cls.dz;
-  const situation = { reach: reach.map(v => +v.toFixed(3)), attackerDeg: +attackerDeg.toFixed(1), facingDeg: +facingDeg.toFixed(1), facingAtCommitDeg: +facingAtCommitDeg.toFixed(1), post, hClass, latFrac: +latFrac.toFixed(3), dz: +dz.toFixed(3) };
+  const situation = { reach: reach.map(v => +v.toFixed(3)), attackerDeg: +attackerDeg.toFixed(1), facingDeg: +facingDeg.toFixed(1), facingAtCommitDeg: +facingAtCommitDeg.toFixed(1), facingTrackedDeg: +facingTrackedDeg.toFixed(1), facingCorrected, facingFarDeg: +facingFarDeg.toFixed(1), facingFarCorrected, facingMismatchDeg: +facingMismatchDeg.toFixed(1), post, hClass, latFrac: +latFrac.toFixed(3), dz: +dz.toFixed(3) };
   let best = null; const scored = [];
   for (const cp of A.contextual) {
     if (cp.height_classes && cp.height_classes.indexOf(hClass) < 0) { scored.push({ id: cp.id, score: 0, why: "height " + hClass }); continue; }
@@ -4601,7 +4612,7 @@ function gkAnimContextualPick(A, t, gk, cls, c, facing, defaultSample) {
       // goal side it serves. The height-class gate above keeps them off low dives (the ground stills own those) and off TOP reaches
       // (the tight/overhead stills do).
       const famOK = cls.family === "AIRBORNE_DIVE";                                    // never LOW_COLLAPSE / gathers / planted saves — those keep their own art
-      const sFacing = Math.max(0, Math.cos((facingAtCommitDeg - cp.facing_deg) * Math.PI / 180)), sSide = cls.goalSide === cp.side ? 1 : 0;
+      const sFacing = Math.max(0, Math.cos((facingFarDeg - cp.facing_deg) * Math.PI / 180)), sSide = cls.goalSide === cp.side ? 1 : 0;
       // FAR / HIGH-EXTENSION: the simulation's own committed demand against the keeper's reach envelope (norm = required span / envelope).
       // A dive at or beyond full stretch — including an unreachable best-effort attempt — saturates the ramp, so the keeper is still shown
       // making the whole attempt. No shooter distance, no pitch coordinates.
@@ -4617,14 +4628,28 @@ function gkAnimContextualPick(A, t, gk, cls, c, facing, defaultSample) {
       score = sVert * sLat * sOpen * (0.5 + 0.5 * sReach); why = "vert " + sVert.toFixed(2) + " lat " + sLat.toFixed(2) + " open " + sOpen.toFixed(2) + " reach " + sReach.toFixed(2);
     }
     const prio = cp.priority != null ? cp.priority : 1;
-    scored.push({ id: cp.id, score: +score.toFixed(3), why, priority: prio });
+    scored.push({ id: cp.id, score: +score.toFixed(3), why, priority: prio, role: cp.role });
     const qualifies = score >= GK_CTX.minScore;
     const better = !best || (qualifies && !best.qualifies) || (qualifies === best.qualifies && (prio > best.prio || (prio === best.prio && score > best.score)));
     if (score > 0 && better) best = { cp, score, why, prio, qualifies };
   }
   const baseline = defaultSample && defaultSample.anchors && defaultSample.anchors.root && defaultSample.anchors.lead_glove ? (() => { const r = defaultSample.anchors.root, g = defaultSample.anchors.lead_glove, dx = g[0] - r[0], dy = g[1] - r[1], n = Math.hypot(dx, dy) || 1e-6; return 0.5 * cosR([dx / n, dy / n]); })() : 0;
-  const pick = best && best.score >= GK_CTX.minScore && best.score > baseline ? best : null;
-  return { pick: pick ? { id: pick.cp.id, inventory_id: pick.cp.inventory_id || null, transform: pick.cp.sample && pick.cp.sample.mirror ? "MIRRORED" : "ORIGINAL", sample: pick.cp.sample, score: +pick.score.toFixed(3), why: pick.why } : null, situation, scored, baseline: +baseline.toFixed(3) };
+  let pick = best && best.score >= GK_CTX.minScore && best.score > baseline ? best : null;
+  // FAR-DIVE FALLBACK (2026-09-06): an AIRBORNE_DIVE at MID/HIGH/TOP with no qualifying art keeps the goal side's far-dive pose when that
+  // pose is otherwise eligible (family, side, off the ground, some reach agreement) but fell under minScore only through the facing cosine —
+  // the keeper facing a flank shooter 30–65 deg off the pose's authored west. It is the family's only art for that side; the alternative
+  // is the diagnostic figure. Nothing changes for any case that already had a pick.
+  let fallback = false;
+  if (!pick && cls.family === "AIRBORNE_DIVE" && (hClass === "MID" || hClass === "HIGH" || hClass === "TOP")) {
+    let fb = null;
+    for (const cp of A.contextual) {
+      if (cp.role !== "dive_north" && cp.role !== "dive_south") continue;
+      const sc = scored.find(q => q.id === cp.id);
+      if (sc && sc.score >= GK_CTX.farFallbackMin && sc.score > baseline && (!fb || sc.score > fb.score)) fb = { cp, score: sc.score, why: sc.why + " FALLBACK (facing below minScore; the side's only far-dive art)", prio: 1, qualifies: false };
+    }
+    if (fb) { pick = fb; fallback = true; }
+  }
+  return { pick: pick ? { id: pick.cp.id, inventory_id: pick.cp.inventory_id || null, transform: pick.cp.sample && pick.cp.sample.mirror ? "MIRRORED" : "ORIGINAL", sample: pick.cp.sample, score: +pick.score.toFixed(3), why: pick.why, fallback } : null, situation, scored, baseline: +baseline.toFixed(3) };
 }
 // STATE MACHINE — a pure function of (simulation time, keeper state) plus the view odometer for loops and the commit-tick freeze
 function gkAnimUpdate(t, gk) {
