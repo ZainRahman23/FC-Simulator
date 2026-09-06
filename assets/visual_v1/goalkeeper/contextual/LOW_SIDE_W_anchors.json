@@ -32,7 +32,7 @@
   45.98290598290598
  ],
  "reach_screen_unit": [
-  -0.582,
+  0.582,
   -0.813
  ],
  "canvas": [
@@ -42,5 +42,5 @@
  "inventory_id": "GK_POSE_115",
  "source": "gk_anim_v1_1/poses/low_collapse/east.png",
  "original_label": "low_collapse/east",
- "description": "ground-level side save still; ORIGINAL orientation reaches to screen-left, MIRRORED (runtime transform) to screen-right"
+ "description": "ground-level side save still; horizontal sense corrected after the 2026-09-05 live review: the ORIGINAL orientation serves GOAL_RIGHT and the MIRRORED (runtime transform) one GOAL_LEFT. The x sign of reach_screen_unit was flipped with the drawn orientation, so each variant's post-transform reach vector \u2014 and therefore every selector score \u2014 is unchanged."
 }
