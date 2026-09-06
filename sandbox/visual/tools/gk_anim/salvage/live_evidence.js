@@ -31,6 +31,7 @@ for(const c of CASES){
       if(g.contact){ contact={outcome:g.contact.outcome, volume:g.contact.volume, tick:ticks}; break; }
       if(S.pt.paused) break;
       if(committed && S.pt.now >= committed.t0 + committed.execTime) break; }
+    S.pt.paused=true;   // hold the simulation exactly here while the frame and the overlay are captured (the page's own loop must not advance it)
     const gk=S.pt.gk, q=sproj3(gk.x,0,gk.y), bl=S.pt.b, bq=sproj3(bl.x,bl.z,bl.y), cur=S.gkAnim.cur;
     return {ticks, root:[+gk.x.toFixed(2),+gk.y.toFixed(2)], sp:[+q.x.toFixed(1),+q.y.toFixed(1)], ball:[+bl.x.toFixed(2),+bl.y.toFixed(2),+bl.z.toFixed(2)], ballSp:[+bq.x.toFixed(1),+bq.y.toFixed(1)], facingBeforeDeg:+(facing0*180/Math.PI).toFixed(1), facingBin:headingToDir(facing0*180/Math.PI),
       committed: committed?{target:committed.target.map(v=>+v.toFixed(2)), tier:committed.tier, action:committed.action}:null, cls: cls?{family:cls.family,hClass:cls.hClass,L:cls.L,dz:cls.dz}:null, ctx: ctx?{pick:ctx.pick&&{id:ctx.pick.id,inventory:ctx.pick.inventory_id,score:ctx.pick.score,why:ctx.pick.why}, situation:ctx.situation, scored:ctx.scored}:null, contact, liveState:cur&&cur.state, liveArt:cur&&cur.artLabel, drawnSavePose: cur&&cur.savePose?{key:cur.savePose.key, contextual:!!cur.savePose.contextual, candidate:cur.savePose.candidate}:null }; }, c);
