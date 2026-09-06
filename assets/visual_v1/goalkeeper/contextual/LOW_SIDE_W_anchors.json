@@ -42,5 +42,5 @@
  "inventory_id": "GK_POSE_115",
  "source": "gk_anim_v1_1/poses/low_collapse/east.png",
  "original_label": "low_collapse/east",
- "description": "ground-level side save still; horizontal sense corrected after the 2026-09-05 live review: the ORIGINAL orientation serves GOAL_RIGHT and the MIRRORED (runtime transform) one GOAL_LEFT. The x sign of reach_screen_unit was flipped with the drawn orientation, so each variant's post-transform reach vector \u2014 and therefore every selector score \u2014 is unchanged."
+ "description": "ground-level side save still; after the 2026-09-05 live review BOTH WEST variants draw MIRRORED. The x sign here was flipped with the drawn orientation; the GOAL_RIGHT variant carries reach_mirror=false in the manifest table so its selection reach vector stays what it was \u2014 the drawn orientation and the scoring reach are decoupled for that one row."
 }

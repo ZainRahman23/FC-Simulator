@@ -474,29 +474,29 @@
      "W_LOW_RIGHT": {
       "path": "goalkeeper/contextual/LOW_SIDE_W.png",
       "anchors": "goalkeeper/contextual/LOW_SIDE_W_anchors.json",
-      "mirror": false,
+      "mirror": true,
       "approved": true,
       "candidate": false,
       "id": "GK_POSE_115",
-      "note": "WEST facing keeper, ground-level save to GOAL_RIGHT (same still, ORIGINAL orientation \u2014 orientations swapped per live review 2026-09-05)"
+      "note": "WEST facing keeper, ground-level save to GOAL_RIGHT (same still, MIRRORED \u2014 live review 2026-09-05 kept BOTH west variants mirrored; reach_mirror=False keeps this row's selection reach vector at its approved value so no score moves)"
      },
      "NW_LOW_LEFT": {
+      "path": "goalkeeper/contextual/LOW_SIDE_NW.png",
+      "anchors": "goalkeeper/contextual/LOW_SIDE_NW_anchors.json",
+      "mirror": false,
+      "approved": true,
+      "candidate": false,
+      "id": "GK_POSE_116",
+      "note": "NORTH-WEST facing keeper, ground-level save to GOAL_LEFT (V1.1 low_collapse/north-east still, ORIGINAL orientation \u2014 first-build mapping restored per live review 2026-09-05)"
+     },
+     "NW_LOW_RIGHT": {
       "path": "goalkeeper/contextual/LOW_SIDE_NW.png",
       "anchors": "goalkeeper/contextual/LOW_SIDE_NW_anchors.json",
       "mirror": true,
       "approved": true,
       "candidate": false,
       "id": "GK_POSE_116",
-      "note": "NORTH-WEST facing keeper, ground-level save to GOAL_LEFT (V1.1 low_collapse/north-east still, MIRRORED \u2014 orientations swapped per live review 2026-09-05)"
-     },
-     "NW_LOW_RIGHT": {
-      "path": "goalkeeper/contextual/LOW_SIDE_NW.png",
-      "anchors": "goalkeeper/contextual/LOW_SIDE_NW_anchors.json",
-      "mirror": false,
-      "approved": true,
-      "candidate": false,
-      "id": "GK_POSE_116",
-      "note": "NORTH-WEST facing keeper, ground-level save to GOAL_RIGHT (same still, ORIGINAL orientation \u2014 orientations swapped per live review 2026-09-05)"
+      "note": "NORTH-WEST facing keeper, ground-level save to GOAL_RIGHT (same still, MIRRORED \u2014 first-build mapping restored per live review 2026-09-05)"
      }
     }
    }
@@ -654,14 +654,14 @@
    "role": "low_side",
    "facing_deg": 180,
    "side": "GOAL_RIGHT",
-   "mirror": false,
+   "mirror": true,
    "height_classes": [
     "LOW",
     "LOW-MID"
    ],
    "path": "goalkeeper/contextual/LOW_SIDE_W.png",
    "anchors": "goalkeeper/contextual/LOW_SIDE_W_anchors.json",
-   "transform": "ORIGINAL",
+   "transform": "MIRRORED",
    "reach_screen_unit": [
     0.582,
     -0.813
@@ -673,14 +673,14 @@
    "role": "low_side",
    "facing_deg": -135,
    "side": "GOAL_LEFT",
-   "mirror": true,
+   "mirror": false,
    "height_classes": [
     "LOW",
     "LOW-MID"
    ],
    "path": "goalkeeper/contextual/LOW_SIDE_NW.png",
    "anchors": "goalkeeper/contextual/LOW_SIDE_NW_anchors.json",
-   "transform": "MIRRORED",
+   "transform": "ORIGINAL",
    "reach_screen_unit": [
     -0.683,
     -0.731
@@ -692,14 +692,14 @@
    "role": "low_side",
    "facing_deg": -135,
    "side": "GOAL_RIGHT",
-   "mirror": false,
+   "mirror": true,
    "height_classes": [
     "LOW",
     "LOW-MID"
    ],
    "path": "goalkeeper/contextual/LOW_SIDE_NW.png",
    "anchors": "goalkeeper/contextual/LOW_SIDE_NW_anchors.json",
-   "transform": "ORIGINAL",
+   "transform": "MIRRORED",
    "reach_screen_unit": [
     0.683,
     -0.731
