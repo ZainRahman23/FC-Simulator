@@ -32,8 +32,8 @@ CLIP_TABLE = {
         variants=[V("east", "foot_save_right/east", [1, 2, 3, 4, 7, 8], contact=3, hold=3, side="RIGHT", note="side view: the leg extends forward on screen (the simulation leg tip is lateral); flagged", ik="y")]),
     "shuffle": dict(family="SHUFFLE", families=["SHUFFLE", "CROSSOVER"], kind="loop", note="crouched lateral shuffle cycle; odometer-driven (root travel), reversed for the other side where no mirror applies",
         variants=[V("east", "shuffle_right/east", [1, 2, 3, 4, 5, 6, 7, 8], contact=7, side="RIGHT", anchor="pivot", stride_m=0.9), V("south", "shuffle_right/south", [1, 2, 3, 4, 5, 6, 7, 8], contact=7, side="RIGHT", anchor="pivot", stride_m=0.9),
-                  V("south-west", "shuffle_right_crouch/south-west", [1, 2, 3, 4, 5, 6, 7, 8], contact=7, side="RIGHT", anchor="pivot", ground="bottom", stride_m=0.9, note="2026-09-05 readiness calibration vs WEST: PixelLab group ba999c22 (v3) shuffle frames; frames 4-6 re-authored as a deep ready crouch and 7 as a slight one with edit_image_pixen (non-Pro, seed 7) so the cycle carries WEST's crouch/rise amplitude in this perspective (shuffle_right_crouch/); ground=bottom keeps the feet on the root row"),
-                  V("north-west", "shuffle_right/north-west", [1, 2, 3, 6, 7, 8, 7, 6], contact=7, side="RIGHT", anchor="pivot", ground="bottom", stride_m=0.9, note="2026-09-05 readiness calibration vs WEST: PixelLab group ba999c22 (v3) frames unchanged, re-sequenced 1,2,3,6,7,8,7,6 so the clip's own crouched frames 7-8 form the crouch phase (body 101→92→101 px, WEST 100→90→97); ground=bottom keeps the feet on the root row")]),
+                  V("south-west", "shuffle_right/south-west", [1, 2, 3, 4, 5, 6, 7, 8], contact=7, side="RIGHT", anchor="pivot", ground="bottom", stride_m=0.9, note="PixelLab group ba999c22 (v3, non-Pro) original frames, authored order; the 2026-09-05 readiness-calibration crouch frames (shuffle_right_crouch/, template T1/T2) were REJECTED in live review and are no longer live — kept on disk as evidence; SW/NW stationary = quiet by decision; ground=bottom keeps the feet on the root row"),
+                  V("north-west", "shuffle_right/north-west", [1, 2, 3, 4, 5, 6, 7, 8], contact=7, side="RIGHT", anchor="pivot", ground="bottom", stride_m=0.9, note="PixelLab group ba999c22 (v3, non-Pro) original frames, authored order (the 2026-09-05 re-sequencing 1,2,3,6,7,8,7,6 was withdrawn with the SW crouch: SW/NW stationary = quiet by decision); ground=bottom keeps the feet on the root row")]),
     "recover": dict(family="RECOVER", kind="recover", note="PixelLab 'getting-up' template: sit → kneel → stand; ground = per-frame bottom row",
         variants=[V("east", "recover_getting_up/east", [0, 1, 2, 3, 4], contact=4, ground="bottom"), V("south", "recover_getting_up/south", [0, 1, 2, 3], contact=3, ground="bottom", note="frame 4 dropped (template shows the back of the head)")]),
 }
@@ -56,4 +56,24 @@ for name, row in CLIP_TABLE.items():
         variants.append({k: v[k] for k in ("dir", "side", "use", "contact", "hold", "ground", "anchor", "stride_m", "note", "ik") if v[k] is not None and v[k] != ""} | {"frames": "%s/%s/{i}.png" % (ANIM, v["folder"]), "anchors": anch})
     clips[name] = {k: row[k] for k in ("family", "families", "kind", "note", "live", "retired_note") if k in row} | {"variants": variants}
 man["clips"] = clips
-json.dump(man, open(man_path, "w"), indent=1); print("wrote", man_path, "clips", len(clips), "variants", sum(len(c["variants"]) for c in clips.values()))
+# CONTEXTUAL SAVE POSES (pose salvage, approved live 2026-09-05): salvaged inventory stills drawn through the camera-space save-pose path and
+# chosen by gkAnimContextualPick from the committed geometry (screen reach, facing, attacker tightness, near/far post, height class).
+# Files: assets/visual_v1/goalkeeper/contextual/<id>.png + <id>_anchors.json (root, gloves, lead_glove, head, reach_screen_unit measured).
+CONTEXTUAL_POSES = [
+    dict(id="TIGHT_S_NEAR_TOP", inventory_id="GK_POSE_129", role="tight_high", facing_deg=90, post="near", height_classes=["HIGH", "TOP"], note="SOUTH-facing keeper, tight attacker angle, high save to the near/top corner (V1.1 high_dive/south still)"),
+    dict(id="TIGHT_S_FAR_TOP", inventory_id="GK_POSE_136", role="tight_high", facing_deg=90, post="far", height_classes=["HIGH", "TOP"], note="SOUTH-facing keeper, tight attacker angle, high save to the far/top corner (V1.1 high_dive/south-west still)"),
+    dict(id="TIGHT_N_NEAR_TOP", inventory_id="GK_POSE_132", role="tight_high", facing_deg=-90, post="near", height_classes=["HIGH", "TOP"], note="NORTH-facing keeper, tight attacker angle, high save to the near/top corner (V1.1 high_dive/north-east still)"),
+    dict(id="TIGHT_N_FAR_TOP", inventory_id="GK_POSE_133", role="tight_high", facing_deg=-90, post="far", height_classes=["HIGH", "TOP"], note="NORTH-facing keeper, tight attacker angle, high save to the far/top corner (V1.1 high_dive/north still). Caveat on record: its glove reaches up-left on screen while a ball parked at the actual far top corner projects level-right; approved as-is, future art-replacement candidate"),
+    dict(id="OVERHEAD_REACH_CW11", inventory_id="GK_POSE_148", role="overhead", height_classes=["HIGH", "TOP"], note="ball above / over the keeper: upward reach with small lateral demand (V1.2 TOP GOAL_LEFT candidate rotated 11 degrees clockwise about its root, pure transform)"),
+]
+CTX_DIR = os.path.join(ASSETS, "goalkeeper", "contextual")
+samples, ctx_meta = {}, []
+for cp in CONTEXTUAL_POSES:
+    an_path = os.path.join(CTX_DIR, cp["id"] + "_anchors.json")
+    if not os.path.exists(os.path.join(CTX_DIR, cp["id"] + ".png")) or not os.path.exists(an_path): print("MISSING contextual pose", cp["id"]); continue
+    an = json.load(open(an_path))
+    samples[cp["id"]] = {"path": "goalkeeper/contextual/%s.png" % cp["id"], "anchors": "goalkeeper/contextual/%s_anchors.json" % cp["id"], "approved": True, "candidate": False, "id": cp["inventory_id"], "note": cp["note"]}
+    ctx_meta.append({k: v for k, v in cp.items() if k != "note"} | {"path": samples[cp["id"]]["path"], "anchors": samples[cp["id"]]["anchors"], "reach_screen_unit": an.get("reach_screen_unit")})
+man["save_poses"] = {"CONTEXTUAL": {"ANY": {"samples": samples}}}
+man["contextual_poses"] = ctx_meta
+json.dump(man, open(man_path, "w"), indent=1); print("wrote", man_path, "clips", len(clips), "variants", sum(len(c["variants"]) for c in clips.values()), "contextual poses", len(ctx_meta))

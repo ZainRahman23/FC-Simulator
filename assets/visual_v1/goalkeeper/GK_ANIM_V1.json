@@ -323,10 +323,10 @@
      "ground": "bottom",
      "anchor": "pivot",
      "stride_m": 0.9,
-     "note": "2026-09-05 readiness calibration vs WEST: PixelLab group ba999c22 (v3) shuffle frames; frames 4-6 re-authored as a deep ready crouch and 7 as a slight one with edit_image_pixen (non-Pro, seed 7) so the cycle carries WEST's crouch/rise amplitude in this perspective (shuffle_right_crouch/); ground=bottom keeps the feet on the root row",
+     "note": "PixelLab group ba999c22 (v3, non-Pro) original frames, authored order; the 2026-09-05 readiness-calibration crouch frames (shuffle_right_crouch/, template T1/T2) were REJECTED in live review and are no longer live \u2014 kept on disk as evidence; SW/NW stationary = quiet by decision; ground=bottom keeps the feet on the root row",
      "ik": true,
-     "frames": "originals/character_f4838361/anim/shuffle_right_crouch/south-west/{i}.png",
-     "anchors": "goalkeeper/anchors/clips/shuffle_right_crouch_south-west.json"
+     "frames": "originals/character_f4838361/anim/shuffle_right/south-west/{i}.png",
+     "anchors": "goalkeeper/anchors/clips/shuffle_right_south-west.json"
     },
     {
      "dir": "north-west",
@@ -335,18 +335,18 @@
       1,
       2,
       3,
+      4,
+      5,
       6,
       7,
-      8,
-      7,
-      6
+      8
      ],
      "contact": 7,
      "hold": 7,
      "ground": "bottom",
      "anchor": "pivot",
      "stride_m": 0.9,
-     "note": "2026-09-05 readiness calibration vs WEST: PixelLab group ba999c22 (v3) frames unchanged, re-sequenced 1,2,3,6,7,8,7,6 so the clip's own crouched frames 7-8 form the crouch phase (body 101\u219292\u2192101 px, WEST 100\u219290\u219297); ground=bottom keeps the feet on the root row",
+     "note": "PixelLab group ba999c22 (v3, non-Pro) original frames, authored order (the 2026-09-05 re-sequencing 1,2,3,6,7,8,7,6 was withdrawn with the SW crouch: SW/NW stationary = quiet by decision); ground=bottom keeps the feet on the root row",
      "ik": true,
      "frames": "originals/character_f4838361/anim/shuffle_right/north-west/{i}.png",
      "anchors": "goalkeeper/anchors/clips/shuffle_right_north-west.json"
@@ -394,5 +394,138 @@
     }
    ]
   }
- }
+ },
+ "save_poses": {
+  "CONTEXTUAL": {
+   "ANY": {
+    "samples": {
+     "TIGHT_S_NEAR_TOP": {
+      "path": "goalkeeper/contextual/TIGHT_S_NEAR_TOP.png",
+      "anchors": "goalkeeper/contextual/TIGHT_S_NEAR_TOP_anchors.json",
+      "approved": true,
+      "candidate": false,
+      "id": "GK_POSE_129",
+      "note": "SOUTH-facing keeper, tight attacker angle, high save to the near/top corner (V1.1 high_dive/south still)"
+     },
+     "TIGHT_S_FAR_TOP": {
+      "path": "goalkeeper/contextual/TIGHT_S_FAR_TOP.png",
+      "anchors": "goalkeeper/contextual/TIGHT_S_FAR_TOP_anchors.json",
+      "approved": true,
+      "candidate": false,
+      "id": "GK_POSE_136",
+      "note": "SOUTH-facing keeper, tight attacker angle, high save to the far/top corner (V1.1 high_dive/south-west still)"
+     },
+     "TIGHT_N_NEAR_TOP": {
+      "path": "goalkeeper/contextual/TIGHT_N_NEAR_TOP.png",
+      "anchors": "goalkeeper/contextual/TIGHT_N_NEAR_TOP_anchors.json",
+      "approved": true,
+      "candidate": false,
+      "id": "GK_POSE_132",
+      "note": "NORTH-facing keeper, tight attacker angle, high save to the near/top corner (V1.1 high_dive/north-east still)"
+     },
+     "TIGHT_N_FAR_TOP": {
+      "path": "goalkeeper/contextual/TIGHT_N_FAR_TOP.png",
+      "anchors": "goalkeeper/contextual/TIGHT_N_FAR_TOP_anchors.json",
+      "approved": true,
+      "candidate": false,
+      "id": "GK_POSE_133",
+      "note": "NORTH-facing keeper, tight attacker angle, high save to the far/top corner (V1.1 high_dive/north still). Caveat on record: its glove reaches up-left on screen while a ball parked at the actual far top corner projects level-right; approved as-is, future art-replacement candidate"
+     },
+     "OVERHEAD_REACH_CW11": {
+      "path": "goalkeeper/contextual/OVERHEAD_REACH_CW11.png",
+      "anchors": "goalkeeper/contextual/OVERHEAD_REACH_CW11_anchors.json",
+      "approved": true,
+      "candidate": false,
+      "id": "GK_POSE_148",
+      "note": "ball above / over the keeper: upward reach with small lateral demand (V1.2 TOP GOAL_LEFT candidate rotated 11 degrees clockwise about its root, pure transform)"
+     }
+    }
+   }
+  }
+ },
+ "contextual_poses": [
+  {
+   "id": "TIGHT_S_NEAR_TOP",
+   "inventory_id": "GK_POSE_129",
+   "role": "tight_high",
+   "facing_deg": 90,
+   "post": "near",
+   "height_classes": [
+    "HIGH",
+    "TOP"
+   ],
+   "path": "goalkeeper/contextual/TIGHT_S_NEAR_TOP.png",
+   "anchors": "goalkeeper/contextual/TIGHT_S_NEAR_TOP_anchors.json",
+   "reach_screen_unit": [
+    0.3813,
+    -0.9245
+   ]
+  },
+  {
+   "id": "TIGHT_S_FAR_TOP",
+   "inventory_id": "GK_POSE_136",
+   "role": "tight_high",
+   "facing_deg": 90,
+   "post": "far",
+   "height_classes": [
+    "HIGH",
+    "TOP"
+   ],
+   "path": "goalkeeper/contextual/TIGHT_S_FAR_TOP.png",
+   "anchors": "goalkeeper/contextual/TIGHT_S_FAR_TOP_anchors.json",
+   "reach_screen_unit": [
+    -0.411,
+    -0.9116
+   ]
+  },
+  {
+   "id": "TIGHT_N_NEAR_TOP",
+   "inventory_id": "GK_POSE_132",
+   "role": "tight_high",
+   "facing_deg": -90,
+   "post": "near",
+   "height_classes": [
+    "HIGH",
+    "TOP"
+   ],
+   "path": "goalkeeper/contextual/TIGHT_N_NEAR_TOP.png",
+   "anchors": "goalkeeper/contextual/TIGHT_N_NEAR_TOP_anchors.json",
+   "reach_screen_unit": [
+    0.3882,
+    -0.9216
+   ]
+  },
+  {
+   "id": "TIGHT_N_FAR_TOP",
+   "inventory_id": "GK_POSE_133",
+   "role": "tight_high",
+   "facing_deg": -90,
+   "post": "far",
+   "height_classes": [
+    "HIGH",
+    "TOP"
+   ],
+   "path": "goalkeeper/contextual/TIGHT_N_FAR_TOP.png",
+   "anchors": "goalkeeper/contextual/TIGHT_N_FAR_TOP_anchors.json",
+   "reach_screen_unit": [
+    -0.3468,
+    -0.9379
+   ]
+  },
+  {
+   "id": "OVERHEAD_REACH_CW11",
+   "inventory_id": "GK_POSE_148",
+   "role": "overhead",
+   "height_classes": [
+    "HIGH",
+    "TOP"
+   ],
+   "path": "goalkeeper/contextual/OVERHEAD_REACH_CW11.png",
+   "anchors": "goalkeeper/contextual/OVERHEAD_REACH_CW11_anchors.json",
+   "reach_screen_unit": [
+    0.1169,
+    -0.9931
+   ]
+  }
+ ]
 }

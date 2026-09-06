@@ -4528,13 +4528,15 @@ function gkAnimContextualPick(A, t, gk, cls, c, facing, defaultSample) {
   const cosR = (u) => u ? Math.max(0, reach[0] * u[0] + reach[1] * u[1]) : 0;
   const shooter = t.p ? [t.p.x, t.p.y] : [t.b.x, t.b.y];
   const attackerDeg = Math.abs(Math.atan2(shooter[1] - GK_MOUTH.centerY, -(shooter[0] - GK_MOUTH.lineX)) * 180 / Math.PI);   // 0 = straight in front of goal, 90 = on the goal line
-  const facingDeg = facing * 180 / Math.PI, hClass = cls.expr ? cls.expr.heightClass : cls.zClass;
+  // the keeper's presentation facing for these stills is the side the attack comes from: the bearing from the committed feet to the
+  // shooter (at commit the frozen facing already tracks the ball, which on a far-post shot has crossed to the other side)
+  const facingDeg = Math.atan2(shooter[1] - c.feet[1], shooter[0] - c.feet[0]) * 180 / Math.PI, facingAtCommitDeg = facing * 180 / Math.PI, hClass = cls.expr ? cls.expr.heightClass : cls.zClass;
   // near/far post = the side of the KEEPER the committed reach goes, relative to the shooter's side (the keeper at a tight angle already
   // stands at the near post; a reach straight above him or toward the shooter's side is "near", away from the shooter is "far")
   const shooterSide = Math.sign(shooter[1] - c.feet[1]), reachSide = Math.sign(c.target[1] - c.feet[1]);
   const post = shooterSide === 0 ? "centre" : (Math.abs(c.target[1] - c.feet[1]) < 0.3 || reachSide === shooterSide ? "near" : "far");
   const latFrac = cls.L / (c.diveSpanMax || 2.0), dz = cls.dz;
-  const situation = { reach: reach.map(v => +v.toFixed(3)), attackerDeg: +attackerDeg.toFixed(1), facingDeg: +facingDeg.toFixed(1), post, hClass, latFrac: +latFrac.toFixed(3), dz: +dz.toFixed(3) };
+  const situation = { reach: reach.map(v => +v.toFixed(3)), attackerDeg: +attackerDeg.toFixed(1), facingDeg: +facingDeg.toFixed(1), facingAtCommitDeg: +facingAtCommitDeg.toFixed(1), post, hClass, latFrac: +latFrac.toFixed(3), dz: +dz.toFixed(3) };
   let best = null; const scored = [];
   for (const cp of A.contextual) {
     if (cp.height_classes && cp.height_classes.indexOf(hClass) < 0) { scored.push({ id: cp.id, score: 0, why: "height " + hClass }); continue; }
@@ -4552,7 +4554,7 @@ function gkAnimContextualPick(A, t, gk, cls, c, facing, defaultSample) {
   }
   const baseline = defaultSample && defaultSample.anchors && defaultSample.anchors.root && defaultSample.anchors.lead_glove ? (() => { const r = defaultSample.anchors.root, g = defaultSample.anchors.lead_glove, dx = g[0] - r[0], dy = g[1] - r[1], n = Math.hypot(dx, dy) || 1e-6; return 0.5 * cosR([dx / n, dy / n]); })() : 0;
   const pick = best && best.score >= GK_CTX.minScore && best.score > baseline ? best : null;
-  return { pick: pick ? { id: pick.cp.id, sample: pick.cp.sample, score: +pick.score.toFixed(3), why: pick.why } : null, situation, scored, baseline: +baseline.toFixed(3) };
+  return { pick: pick ? { id: pick.cp.id, inventory_id: pick.cp.inventory_id || null, sample: pick.cp.sample, score: +pick.score.toFixed(3), why: pick.why } : null, situation, scored, baseline: +baseline.toFixed(3) };
 }
 // STATE MACHINE — a pure function of (simulation time, keeper state) plus the view odometer for loops and the commit-tick freeze
 function gkAnimUpdate(t, gk) {
@@ -4949,8 +4951,10 @@ function gkAnimOverlay(t, gk, cur, anchors, handScreen, s) {
     ax(0, 1, 0, "#ffd24a"); ax(1, 0, 0, "#7fd0ff"); ax(0, 0, 1, "#ffffff");                       // yellow = +y (goal line), blue = +x (depth), white = up
   }
   const lc = A.lastContact, cls = cur.cls, pl = cur.place;
+  const ctxPick = cur.savePose && cur.savePose.contextual ? cur.savePose.contextual : null;
   const lines = [
     "ANIM " + cur.state + (cur.family ? "  fam " + cur.family + "/" + cur.side : "") + "  phase " + cur.phase + "  u " + cur.u + "  odo " + A.odo.toFixed(2) + " m",
+    "GK ANIM: " + (ctxPick ? ctxPick.id + "   source " + (ctxPick.inventory_id || "—") + "   score " + ctxPick.score + "   (" + ctxPick.why + ")" : (A.commit && A.commit.ctx ? "no contextual pose (best " + (A.commit.ctx.scored.length ? A.commit.ctx.scored.reduce((a, b) => b.score > a.score ? b : a).id + " " + A.commit.ctx.scored.reduce((a, b) => b.score > a.score ? b : a).score : "—") + ", baseline " + A.commit.ctx.baseline + ")" : "no contextual pose")),
     "dir " + cur.dir + "  facing " + (gk.facing * 180 / Math.PI).toFixed(0) + "°  art " + cur.artLabel,
     cls ? "SAVE VECTOR lat " + (cls.lat >= 0 ? "+" : "") + cls.lat + " depth " + (cls.depth >= 0 ? "+" : "") + cls.depth + " dz " + (cls.dz >= 0 ? "+" : "") + cls.dz + " m  z " + cls.z + " (" + cls.zClass + " " + cls.zH + "H)  L " + cls.L + " / maxLat " + cls.maxLat + "  norm " + cls.norm + "  exec " + cls.exec + " s  v0 " + cls.v0 + "  feet " + (cls.feetPlanted ? "PLANTED" : "DIVE") + (cls.airborne ? " AIRBORNE" : "") + "  sim " + cls.action + "/" + cls.tier + (cls.bestEffort ? " best-effort" : "") + "  → " + cls.family + " " + cls.goalSide + (cls.expr ? " [" + cls.expr.heightClass + " intensity " + cls.expr.intensity + " ext " + cls.expr.extension + " launch " + cls.expr.launch + (cls.expr.nearMax ? " NEAR-MAX" : "") + "]" : "") + "  (lead arm " + cls.side + ", facing " + cur.dir + ")" : "SAVE VECTOR —",
     "anchors: root(" + anchors.root.x + "," + anchors.root.y + ")" + (anchors.pelvis ? " pelvis(" + anchors.pelvis.x + "," + anchors.pelvis.y + ")" : "") + (anchors.head ? " head(" + anchors.head.x + "," + anchors.head.y + ")" : "") + (anchors.handL ? " hands(" + anchors.handL.x + "," + anchors.handL.y + (anchors.handR ? "|" + anchors.handR.x + "," + anchors.handR.y : "") + ")" : "") + (anchors.footL ? " feet(" + anchors.footL.x + "," + anchors.footL.y + (anchors.footR ? "|" + anchors.footR.x + "," + anchors.footR.y : "") + ")" : "") + (pl && pl.w > 0 ? "   placement raw " + pl.rawErrPx + " px → corr " + pl.corrPx + " px → residual " + pl.finalErrPx + " px" + (pl.capped ? " CAPPED/WRONG_CLIP" : "") : ""),
