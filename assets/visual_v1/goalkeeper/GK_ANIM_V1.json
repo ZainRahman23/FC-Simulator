@@ -505,7 +505,7 @@
       "approved": true,
       "candidate": false,
       "id": "PRO_DIVE_NORTH_V1",
-      "note": "medium/high AIRBORNE_DIVE to GOAL_LEFT (north): raw Pro sprite rotated 50 deg CW as a presentation transform; no opposite-side variant exists, GOAL_RIGHT keeps the ART_MISSING diagnostic"
+      "note": "default contact pose for FAR / high-extension AIRBORNE_DIVE saves to GOAL_LEFT (the keeper's right), at every height class: raw Pro sprite rotated 50 deg CW as a presentation transform. Selected by the simulation's own envelope demand (norm), so an unreachable best-effort dive shows the full attempt. Ground-save actions stay LOW_COLLAPSE and keep the ground stills; the tight-angle and overhead stills keep their own cases by priority; no opposite-side variant exists, so GOAL_RIGHT keeps the ART_MISSING diagnostic"
      }
     }
    }
@@ -516,6 +516,7 @@
    "id": "TIGHT_S_NEAR_TOP",
    "inventory_id": "GK_POSE_129",
    "role": "tight_high",
+   "priority": 2,
    "facing_deg": 90,
    "post": "near",
    "height_classes": [
@@ -534,6 +535,7 @@
    "id": "TIGHT_S_FAR_TOP",
    "inventory_id": "GK_POSE_136",
    "role": "tight_high",
+   "priority": 2,
    "facing_deg": 90,
    "post": "far",
    "height_classes": [
@@ -552,6 +554,7 @@
    "id": "TIGHT_N_NEAR_TOP",
    "inventory_id": "GK_POSE_132",
    "role": "tight_high",
+   "priority": 2,
    "facing_deg": -90,
    "post": "near",
    "height_classes": [
@@ -570,6 +573,7 @@
    "id": "TIGHT_N_FAR_TOP",
    "inventory_id": "GK_POSE_133",
    "role": "tight_high",
+   "priority": 2,
    "facing_deg": -90,
    "post": "far",
    "height_classes": [
@@ -588,6 +592,7 @@
    "id": "OVERHEAD_REACH_CW11",
    "inventory_id": "GK_POSE_148",
    "role": "overhead",
+   "priority": 2,
    "height_classes": [
     "HIGH",
     "TOP"
@@ -722,8 +727,10 @@
    "side": "GOAL_LEFT",
    "mirror": false,
    "height_classes": [
+    "LOW-MID",
     "MID",
-    "HIGH"
+    "HIGH",
+    "TOP"
    ],
    "source_file": "sources/DIVE_NORTH_RAW.png",
    "rotation_cw_deg": 50,

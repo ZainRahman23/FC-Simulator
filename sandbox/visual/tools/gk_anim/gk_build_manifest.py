@@ -121,11 +121,11 @@ derive_rotated_pose("sources/DIVE_NORTH_RAW.png", "DIVE_NORTH_CW50", 50, (12.3, 
     "pose: it is offset from the lead glove so the drawn glove meets the simulation's contact point on a representative medium/high "
     "north dive (lateral 1.99 m, contact z 1.52 m) in the live camera; the runtime's bounded hand-led placement absorbs the rest.")
 CONTEXTUAL_POSES = [
-    dict(id="TIGHT_S_NEAR_TOP", inventory_id="GK_POSE_129", role="tight_high", facing_deg=90, post="near", height_classes=["HIGH", "TOP"], note="SOUTH-facing keeper, tight attacker angle, high save to the near/top corner (V1.1 high_dive/south still)"),
-    dict(id="TIGHT_S_FAR_TOP", inventory_id="GK_POSE_136", role="tight_high", facing_deg=90, post="far", height_classes=["HIGH", "TOP"], note="SOUTH-facing keeper, tight attacker angle, high save to the far/top corner (V1.1 high_dive/south-west still)"),
-    dict(id="TIGHT_N_NEAR_TOP", inventory_id="GK_POSE_132", role="tight_high", facing_deg=-90, post="near", height_classes=["HIGH", "TOP"], note="NORTH-facing keeper, tight attacker angle, high save to the near/top corner (V1.1 high_dive/north-east still)"),
-    dict(id="TIGHT_N_FAR_TOP", inventory_id="GK_POSE_133", role="tight_high", facing_deg=-90, post="far", height_classes=["HIGH", "TOP"], note="NORTH-facing keeper, tight attacker angle, high save to the far/top corner (V1.1 high_dive/north still). Caveat on record: its glove reaches up-left on screen while a ball parked at the actual far top corner projects level-right; approved as-is, future art-replacement candidate"),
-    dict(id="OVERHEAD_REACH_CW11", inventory_id="GK_POSE_148", role="overhead", height_classes=["HIGH", "TOP"], note="ball above / over the keeper: upward reach with small lateral demand (V1.2 TOP GOAL_LEFT candidate rotated 11 degrees clockwise about its root, pure transform)"),
+    dict(id="TIGHT_S_NEAR_TOP", inventory_id="GK_POSE_129", role="tight_high", priority=2, facing_deg=90, post="near", height_classes=["HIGH", "TOP"], note="SOUTH-facing keeper, tight attacker angle, high save to the near/top corner (V1.1 high_dive/south still)"),
+    dict(id="TIGHT_S_FAR_TOP", inventory_id="GK_POSE_136", role="tight_high", priority=2, facing_deg=90, post="far", height_classes=["HIGH", "TOP"], note="SOUTH-facing keeper, tight attacker angle, high save to the far/top corner (V1.1 high_dive/south-west still)"),
+    dict(id="TIGHT_N_NEAR_TOP", inventory_id="GK_POSE_132", role="tight_high", priority=2, facing_deg=-90, post="near", height_classes=["HIGH", "TOP"], note="NORTH-facing keeper, tight attacker angle, high save to the near/top corner (V1.1 high_dive/north-east still)"),
+    dict(id="TIGHT_N_FAR_TOP", inventory_id="GK_POSE_133", role="tight_high", priority=2, facing_deg=-90, post="far", height_classes=["HIGH", "TOP"], note="NORTH-facing keeper, tight attacker angle, high save to the far/top corner (V1.1 high_dive/north still). Caveat on record: its glove reaches up-left on screen while a ball parked at the actual far top corner projects level-right; approved as-is, future art-replacement candidate"),
+    dict(id="OVERHEAD_REACH_CW11", inventory_id="GK_POSE_148", role="overhead", priority=2, height_classes=["HIGH", "TOP"], note="ball above / over the keeper: upward reach with small lateral demand (V1.2 TOP GOAL_LEFT candidate rotated 11 degrees clockwise about its root, pure transform)"),
     # LOW / GROUND side saves (pose salvage 2, 2026-09-05): three V1.1 low_collapse stills chosen for their camera perspective, assigned by the keeper's
     # facing at commit (SW / W / NW) and the classifier's goal side; the second variant of each pair is the same file drawn MIRRORED (runtime transform; SW mirrors for GOAL_RIGHT, W and NW mirror for GOAL_LEFT after the 2026-09-05 live review,
     # validated per side in the gameplay camera). Families LOW_COLLAPSE and low AIRBORNE_DIVE only — gathers, foot saves and standing saves keep their art.
@@ -138,8 +138,8 @@ CONTEXTUAL_POSES = [
     # DIVE NORTH (2026-09-05): the one authored contact pose for a medium/high airborne dive to the keeper's right. Artwork is derived
     # above from the preserved raw sprite; the rotation is recorded here and in the anchors so the source can be replaced later.
     dict(id="DIVE_NORTH_MEDHIGH", file="DIVE_NORTH_CW50", inventory_id="PRO_DIVE_NORTH_V1", role="dive_north", facing_deg=180, side="GOAL_LEFT",
-         mirror=False, height_classes=["MID", "HIGH"], source_file="sources/DIVE_NORTH_RAW.png", rotation_cw_deg=50,
-         note="medium/high AIRBORNE_DIVE to GOAL_LEFT (north): raw Pro sprite rotated 50 deg CW as a presentation transform; no opposite-side variant exists, GOAL_RIGHT keeps the ART_MISSING diagnostic"),
+         mirror=False, height_classes=["LOW-MID", "MID", "HIGH", "TOP"], source_file="sources/DIVE_NORTH_RAW.png", rotation_cw_deg=50,
+         note="default contact pose for FAR / high-extension AIRBORNE_DIVE saves to GOAL_LEFT (the keeper's right), at every height class: raw Pro sprite rotated 50 deg CW as a presentation transform. Selected by the simulation's own envelope demand (norm), so an unreachable best-effort dive shows the full attempt. Ground-save actions stay LOW_COLLAPSE and keep the ground stills; the tight-angle and overhead stills keep their own cases by priority; no opposite-side variant exists, so GOAL_RIGHT keeps the ART_MISSING diagnostic"),
 ]
 CTX_DIR = os.path.join(ASSETS, "goalkeeper", "contextual")
 samples, ctx_meta = {}, []

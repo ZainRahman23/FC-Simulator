@@ -4516,10 +4516,16 @@ function gkAnimAuthoredSide(clip, dir) { if (!clip) return null; for (const v of
 //   post    = near/far post of the contact vs the shooter's side of the goal centre (tight_high only; centre = neither);
 //   height  = the classifier's height class must be one the pose was salvaged for;
 //   overhead: vertical demand (target above the standing hand) ramps up, lateral demand (L / maxLat) ramps the score down —
-//             HIGH vertical + LOW lateral → OVERHEAD_REACH; HIGH vertical + HIGH lateral stays with the lateral full-stretch art.
+//             HIGH vertical + LOW lateral → OVERHEAD_REACH; HIGH vertical + HIGH lateral stays with the lateral full-stretch art;
+//   far     = smoothstep of the simulation's committed envelope demand (norm = required span / reach envelope, 1 = full stretch,
+//             above 1 = unreachable best effort) — the far-dive pose's only distance measure (dive_north).
+// Roles carry a priority: the specialised stills (tight-angle, overhead) keep their own case whenever they qualify; the generalist
+// far-dive pose and the ground stills are ranked against each other by score.
 // A candidate wins only above minScore and only if it beats the default camera-space sample's own reach similarity.
 const GK_CTX = { tightMinDeg: 45, tightFullDeg: 65, overheadDzLo: 0.4, overheadDzHi: 0.8, overheadLatLo: 0.25, overheadLatHi: 0.5, minScore: 0.5,
   lowZHi: 0.45, lowZOff: 0.6,                                                          // low_side stills: full weight below z/H 0.45, gone by 0.6
+  farLo: 0.5, farHi: 0.8, farFloor: 0.6, diveGroundLo: 0.06, diveGroundHi: 0.22,     // dive_north fades out as the contact reaches the ground (z/H): its hands are drawn at head height, so a ball on the deck stays with the ground stills                                               // dive_north: the simulation's own envelope demand (norm = required span / reach envelope) weights the far-dive pose from farFloor
+                                                                                       // (a modest but real dive) up to 1 (full stretch, or an unreachable best-effort attempt) — a preference weight, never an on/off gate
   families: { AIRBORNE_DIVE: 1, HIGH_CATCH: 1, LOW_COLLAPSE: 1 } };   // families a salvaged still may represent: the airborne dive and the standing high reach (which has no authored art at all)
 function gkAnimContextualPick(A, t, gk, cls, c, facing, defaultSample) {
   if (!A.contextual || !A.contextual.length || !cls || !c || !c.target) return null;
@@ -4557,18 +4563,27 @@ function gkAnimContextualPick(A, t, gk, cls, c, facing, defaultSample) {
       // canonical medium/high airborne dive to the keeper's right (north / GOAL_LEFT): the single authored contact pose for that family.
       // The classifier's goal side must match (there is no opposite-side variant — a GOAL_RIGHT dive keeps the ART_MISSING diagnostic),
       // the height-class gate above keeps it off low dives (the ground stills own those) and off TOP reaches (the tight/overhead stills do).
-      const famOK = cls.family === "AIRBORNE_DIVE";
+      const famOK = cls.family === "AIRBORNE_DIVE";                                    // never LOW_COLLAPSE / gathers / planted saves — those keep their own art
       const sFacing = Math.max(0, Math.cos((facingAtCommitDeg - cp.facing_deg) * Math.PI / 180)), sSide = cls.goalSide === cp.side ? 1 : 0;
+      // FAR / HIGH-EXTENSION: the simulation's own committed demand against the keeper's reach envelope (norm = required span / envelope).
+      // A dive at or beyond full stretch — including an unreachable best-effort attempt — saturates the ramp, so the keeper is still shown
+      // making the whole attempt. No shooter distance, no pitch coordinates.
+      const far = (cls.expr && cls.expr.nearMax) || cls.bestEffort ? 1 : smooth(cls.norm, GK_CTX.farLo, GK_CTX.farHi);
+      const sFar = GK_CTX.farFloor + (1 - GK_CTX.farFloor) * far;                       // every real airborne dive keeps art; the far ones outrank the ground stills
       const sReach = cp.reach_screen_unit ? 0.5 * (1 + reach[0] * cp.reach_screen_unit[0] + reach[1] * cp.reach_screen_unit[1]) : 0.5;
-      score = famOK ? sFacing * sSide * (0.5 + 0.5 * sReach) : 0;
-      why = "family " + (famOK ? "ok" : cls.family) + " facing " + sFacing.toFixed(2) + " side " + sSide + " reach " + sReach.toFixed(2);
+      const sOffGround = smooth(cls.zH, GK_CTX.diveGroundLo, GK_CTX.diveGroundHi);      // a ball on the deck belongs to the ground stills whatever the extension
+      score = famOK ? sFacing * sSide * sFar * sOffGround * (0.5 + 0.5 * sReach) : 0;
+      why = "family " + (famOK ? "ok" : cls.family) + " facing " + sFacing.toFixed(2) + " side " + sSide + " far " + sFar.toFixed(2) + " (norm " + cls.norm + ") offGround " + sOffGround.toFixed(2) + " reach " + sReach.toFixed(2);
     } else if (cp.role === "overhead") {
       // the overhead still is for the open/central ball over the keeper; at a tight attacker angle the tight-angle stills own the high reach
       const sVert = smooth(dz, GK_CTX.overheadDzLo, GK_CTX.overheadDzHi), sLat = 1 - smooth(latFrac, GK_CTX.overheadLatLo, GK_CTX.overheadLatHi), sReach = cosR(cp.reach_screen_unit), sOpen = 1 - smooth(attackerDeg, GK_CTX.tightMinDeg, GK_CTX.tightFullDeg);
       score = sVert * sLat * sOpen * (0.5 + 0.5 * sReach); why = "vert " + sVert.toFixed(2) + " lat " + sLat.toFixed(2) + " open " + sOpen.toFixed(2) + " reach " + sReach.toFixed(2);
     }
-    scored.push({ id: cp.id, score: +score.toFixed(3), why });
-    if (score > (best ? best.score : 0)) best = { cp, score, why };
+    const prio = cp.priority != null ? cp.priority : 1;
+    scored.push({ id: cp.id, score: +score.toFixed(3), why, priority: prio });
+    const qualifies = score >= GK_CTX.minScore;
+    const better = !best || (qualifies && !best.qualifies) || (qualifies === best.qualifies && (prio > best.prio || (prio === best.prio && score > best.score)));
+    if (score > 0 && better) best = { cp, score, why, prio, qualifies };
   }
   const baseline = defaultSample && defaultSample.anchors && defaultSample.anchors.root && defaultSample.anchors.lead_glove ? (() => { const r = defaultSample.anchors.root, g = defaultSample.anchors.lead_glove, dx = g[0] - r[0], dy = g[1] - r[1], n = Math.hypot(dx, dy) || 1e-6; return 0.5 * cosR([dx / n, dy / n]); })() : 0;
   const pick = best && best.score >= GK_CTX.minScore && best.score > baseline ? best : null;
