@@ -13,7 +13,7 @@ contact = {"name": "F10_CONTACT", "phase": "CONTACT — DIVE_SOUTH_CW20 @ 0.85 (
 idx = next(i for i, f in enumerate(frames) if f["name"].startswith("F11")); frames.insert(idx, contact)
 def load(f):
     return Image.open(f.get("img_path") or f"{FR}/{f['name']}.png").convert("RGBA")
-CW, CH = 46 * Z, 62 * Z; RX, RY = CW // 2, CH - 4 * Z          # cell in screen px × Z; root at (RX, RY)
+CW, CH = 46 * Z, 70 * Z; RX, RY = CW // 2, CH - 14 * Z          # cell in screen px × Z; root at (RX, RY)
 def cell_gameplay(f):
     im = load(f); ps = S_LIVE * f["pixel_scale"]
     g = im.resize((max(1, round(im.width * ps)), max(1, round(im.height * ps))), Image.NEAREST)        # the renderer's raster

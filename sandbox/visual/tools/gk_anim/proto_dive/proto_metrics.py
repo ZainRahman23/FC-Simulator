@@ -63,6 +63,7 @@ for f in meta["frames"] + [None]:
     def P(*names): return sum((parts.get(n, []) for n in names), [])
     if "head" in parts:
         hb = bbox(parts["head"]); head_w, head_h = (hb[2] - hb[0]) * ps, (hb[3] - hb[1]) * ps
+        head_d = 2 * math.sqrt(len(parts["head"]) / math.pi) * ps                                # rotation-independent: area-equivalent diameter
         torso = P("torso", "torso_under"); tb = bbox(torso)
         # torso axis = shoulder→hip; for W_SET: near_upper pivot → pelvis pivot; for the contact rig: sleeve pivot → pelvis pivot
         if f is None or f["rig"] == "SOUTH_CW20":
@@ -78,16 +79,16 @@ for f in meta["frames"] + [None]:
         arm_t = thickness(P("near_upper") if f is not None and f["rig"] == "W_SET" else P("sleeve")) * ps
         thigh_t = thickness(P("far_thigh") if f is not None and f["rig"] == "W_SET" else P("thigh_2")) * ps
         shin_t = thickness(P("far_shin") if f is not None and f["rig"] == "W_SET" else P("shin_2")) * ps
-        rows.append((name, scale, head_w, head_h, shoulder_w, torso_len, torso_w, arm_t, thigh_t, shin_t, len(own) * ps * ps))
+        rows.append((name, scale, head_w, head_h, shoulder_w, torso_len, torso_w, arm_t, thigh_t, shin_t, len(own) * ps * ps, head_d))
     else:   # clip frames: colour-class based
         skin = parts.get("skin", []); dark = parts.get("dark", []); green = parts.get("green", [])
         top = min(p[1] for p in skin) if skin else 0; head = [p for p in skin + dark if p[1] < top + 22] if skin else []
         hb = bbox(head) if head else (0, 0, 0, 0); gb = bbox(green) if green else (0, 0, 0, 0)
-        rows.append((name + " (clip, colour-based: head box, shirt box)", scale, (hb[2] - hb[0]) * ps, (hb[3] - hb[1]) * ps, (gb[2] - gb[0]) * ps, (gb[3] - gb[1]) * ps, 0, 0, 0, 0, len(own) * ps * ps))
+        rows.append((name + " (clip, colour-based: head box, shirt box)", scale, (hb[2] - hb[0]) * ps, (hb[3] - hb[1]) * ps, (gb[2] - gb[0]) * ps, (gb[3] - gb[1]) * ps, 0, 0, 0, 0, len(own) * ps * ps, 2 * math.sqrt(max(1, len(head)) / math.pi) * ps))
 # order: keep chronological with the PNG after F09
 order = [r[0] for r in rows]; png = rows.pop(); idx = next(i for i, r in enumerate(rows) if r[0].startswith("F11")); rows.insert(idx, png)
 md = ["# Size / art-lineage continuity — screen px at the gameplay camera (sprite scale 0.4197 × body scale)", "",
       "head = bounding box of the head part (skin + hair); shoulder width = torso width across the shoulder line; torso = shoulder→hip length and width across the body axis; thickness = 2 × median distance-to-edge of the limb part; area = opaque sprite area on screen (px²).", "",
-      "| frame | body scale | head w × h | shoulder w | torso len | torso w | upper-arm thick | thigh thick | shin thick | area px² |", "|---|---|---|---|---|---|---|---|---|---|"]
-for r in rows: md.append(f"| {r[0]} | {r[1]} | {r[2]:.1f} × {r[3]:.1f} | {r[4]:.1f} | {r[5]:.1f} | {r[6]:.1f} | {r[7]:.1f} | {r[8]:.1f} | {r[9]:.1f} | {r[10]:.0f} |")
+      "| frame | body scale | head w × h (bbox, rotation-dependent) | head Ø (area-equiv.) | shoulder w | torso len (joint→joint) | torso w | upper-arm thick | thigh thick | shin thick | area px² |", "|---|---|---|---|---|---|---|---|---|---|---|"]
+for r in rows: md.append(f"| {r[0]} | {r[1]} | {r[2]:.1f} × {r[3]:.1f} | {r[11]:.1f} | {r[4]:.1f} | {r[5]:.1f} | {r[6]:.1f} | {r[7]:.1f} | {r[8]:.1f} | {r[9]:.1f} | {r[10]:.0f} |")
 open(OUT, "w").write("\n".join(md) + "\n"); print("\n".join(md[5:]))

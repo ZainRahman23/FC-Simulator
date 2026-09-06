@@ -34,11 +34,20 @@ for(let f=0; f<320; f++){
       // actual contact tick even when contact lands a tick or two after execEnd (endT moves when the contact is recorded)
       if(S.pt.now<endT+(S_.contactHold||0)){ if(u<S_.liveFrom){ const fr=pick(S_.frames,u); if(fr){ key=fr.key; mode="frame"; ik=!!fr.ik; ikW=fr.ikW!=null?fr.ikW:1; } } }
       else { const pf=pick(S_.postFrames, tl); if(pf){ key=pf.key; mode="post"; } } }
-    let off=null, ikPlace=null;
+    let off=null, ikPlace=null, pres=null;
     if(key){ const hn=gk.handNow?sproj3(gk.handNow[0],gk.handNow[2],gk.handNow[1]):null;
       // post-contact frames inherit the contact pose's frozen hand-led placement (exactly what the live LAND does with A.commit.place)
       const pfr=mode==="post"?pick(S_.postFrames, tl):null;
       if(pfr && pfr.carry && S.gkAnim.commit && S.gkAnim.commit.place){ const k=pfr.carry===true?1:+pfr.carry; off={dx:Math.round((S.gkAnim.commit.place.dx||0)*k), dy:Math.round((S.gkAnim.commit.place.dy||0)*k)}; }
+      // PRESENTATION ROOT (review prototype only, simulation untouched): after execEnd the simulation root is frozen, but the body still has
+      // its dive momentum. Continuation d(t) = V0·τ·(1−e^(−t/τ)) along the dive direction (feet → target on the ground), V0 = the root's mean
+      // dive speed (its travel ÷ execTime), τ = S_.pres.tau; from t = pres.tLand it eases back to 0 by pres.tEnd (the keeper walks back to
+      // his spot as he gets up, so the live SET at the simulation root is reached without a jump).
+      if(mode==="post" && S_.pres && c){ const P=S_.pres; const fx=c.feet[0], fy=c.feet[1]; const ex=gk.x-fx, ey=gk.y-fy; const trav=Math.hypot(ex,ey); const ux=trav>1e-6?ex/trav:0, uy=trav>1e-6?ey/trav:0;
+        const V0=trav/Math.max(1e-6,c.execTime); const dLand=V0*P.tau*(1-Math.exp(-P.tLand/P.tau));
+        let d; if(tl<=P.tLand) d=V0*P.tau*(1-Math.exp(-tl/P.tau)); else if(tl<P.tEnd) d=dLand*(0.5+0.5*Math.cos(Math.PI*(tl-P.tLand)/(P.tEnd-P.tLand))); else d=0;
+        const q0=sproj3(gk.x,0,gk.y), q1=sproj3(gk.x+ux*d,0,gk.y+uy*d); pres={dm:+d.toFixed(4), x:+(gk.x+ux*d).toFixed(4), y:+(gk.y+uy*d).toFixed(4), sx:+(q1.x-q0.x).toFixed(2), sy:+(q1.y-q0.y).toFixed(2), V0:+V0.toFixed(3)};
+        if(pfr && pfr.pres!==false){ off={dx:(off?off.dx:0)+Math.round(q1.x-q0.x), dy:(off?off.dy:0)+Math.round(q1.y-q0.y)}; } }
       GK_ANIM.reviewOverride={kind:"savepose", family:"CONTEXTUAL", side:"ANY", key, ik, ikW, simHand:hn, showLabel:false, dx:off?off.dx:0, dy:off?off.dy:0};
       if(ik && hn){ // reproduce the override's own bounded hand-led placement so the trace knows where the frame was drawn
         const smp=S.gkAnim.savePoses.CONTEXTUAL.ANY[key]; const an=smp.anchors||{}; const sp0=sproj3(gk.x,0,gk.y); const s0=S.playerVScale*depthScale(sp0.d)*RIG.zoom*RES; const ps=s0*(an.pixel_scale||1);
@@ -48,7 +57,7 @@ for(let f=0; f<320; f++){
     gkAnimDraw(S.pt,S.pt.gk,1/60);
     const cur=S.gkAnim.cur, sp=sproj3(gk.x,0,gk.y), bl=S.pt.b, bq=sproj3(bl.x,bl.z,bl.y), hn=gk.handNow?sproj3(gk.handNow[0],gk.handNow[2],gk.handNow[1]):null;
     return {now:+S.pt.now.toFixed(4), root:[+gk.x.toFixed(4),+gk.y.toFixed(4)], sp:[+sp.x.toFixed(2),+sp.y.toFixed(2)], handSp:hn?[+hn.x.toFixed(2),+hn.y.toFixed(2)]:null, ballSp:[+bq.x.toFixed(2),+bq.y.toFixed(2)], ball:[+bl.x.toFixed(3),+bl.y.toFixed(3),+bl.z.toFixed(3)],
-      u:u!=null?+u.toFixed(4):null, tl:tl!=null?+tl.toFixed(4):null, drawn:key||"LIVE", mode, ik, off, ikPlace, committed:!!c, state:gk.state, phase:gk.phase, contact:gk.contact?{tickT:gk.contact.tickT,outcome:gk.contact.outcome}:null,
+      u:u!=null?+u.toFixed(4):null, tl:tl!=null?+tl.toFixed(4):null, drawn:key||"LIVE", mode, ik, off, ikPlace, pres, committed:!!c, state:gk.state, phase:gk.phase, contact:gk.contact?{tickT:gk.contact.tickT,outcome:gk.contact.outcome}:null,
       anim:cur?{state:cur.state, phase:cur.phase, art:cur.artLabel, place:cur.place?{dx:cur.place.dx,dy:cur.place.dy,raw:cur.place.rawErrPx,res:cur.place.finalErrPx}:null}:null}; }, SCHED);
   await new Promise(r=>setTimeout(r,30));
   await p.screenshot({path:path.join(OUT,"new_"+String(f).padStart(3,"0")+".png"), clip:CLIP});

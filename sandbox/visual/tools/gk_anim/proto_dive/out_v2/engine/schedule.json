@@ -1,0 +1,161 @@
+{
+ "preFrames": [
+  {
+   "key": "F00",
+   "from": 0.0,
+   "to": 0.13
+  },
+  {
+   "key": "F01",
+   "from": 0.13,
+   "to": 0.22
+  },
+  {
+   "key": "F02",
+   "from": 0.22,
+   "to": 9.0
+  }
+ ],
+ "liveFrom": 0.95,
+ "contactHold": 0.05,
+ "frames": [
+  {
+   "key": "F03",
+   "from": 0.0,
+   "to": 0.1
+  },
+  {
+   "key": "F04",
+   "from": 0.1,
+   "to": 0.22
+  },
+  {
+   "key": "F05",
+   "from": 0.22,
+   "to": 0.29
+  },
+  {
+   "key": "F05b",
+   "from": 0.29,
+   "to": 0.36,
+   "ik": true,
+   "ikW": 0.25
+  },
+  {
+   "key": "F06",
+   "from": 0.36,
+   "to": 0.46,
+   "ik": true,
+   "ikW": 0.5
+  },
+  {
+   "key": "F07",
+   "from": 0.46,
+   "to": 0.57,
+   "ik": true,
+   "ikW": 0.75
+  },
+  {
+   "key": "F07b",
+   "from": 0.57,
+   "to": 0.68,
+   "ik": true
+  },
+  {
+   "key": "F08",
+   "from": 0.68,
+   "to": 0.82,
+   "ik": true
+  },
+  {
+   "key": "F09",
+   "from": 0.82,
+   "to": 0.95,
+   "ik": true
+  }
+ ],
+ "pres": {
+  "tau": 0.4,
+  "tLand": 0.55,
+  "tEnd": 1.05
+ },
+ "postFrames": [
+  {
+   "key": "F11",
+   "from": 0.05,
+   "to": 0.11,
+   "carry": true
+  },
+  {
+   "key": "F11b",
+   "from": 0.11,
+   "to": 0.17,
+   "carry": true
+  },
+  {
+   "key": "F12",
+   "from": 0.17,
+   "to": 0.23,
+   "carry": true
+  },
+  {
+   "key": "F12b",
+   "from": 0.23,
+   "to": 0.3,
+   "carry": true
+  },
+  {
+   "key": "F13",
+   "from": 0.3,
+   "to": 0.37,
+   "carry": true
+  },
+  {
+   "key": "F13b",
+   "from": 0.37,
+   "to": 0.45,
+   "carry": true
+  },
+  {
+   "key": "F14",
+   "from": 0.45,
+   "to": 0.55,
+   "carry": true
+  },
+  {
+   "key": "F15a",
+   "from": 0.55,
+   "to": 0.63,
+   "carry": 0.85
+  },
+  {
+   "key": "F15a2",
+   "from": 0.63,
+   "to": 0.71,
+   "carry": 0.7
+  },
+  {
+   "key": "F15a3",
+   "from": 0.71,
+   "to": 0.79,
+   "carry": 0.5
+  },
+  {
+   "key": "F15b",
+   "from": 0.79,
+   "to": 0.88,
+   "carry": 0.35
+  },
+  {
+   "key": "F16",
+   "from": 0.88,
+   "to": 0.97,
+   "carry": 0.15
+  },
+  {
+   "key": "F17",
+   "from": 0.97,
+   "to": 1.05
+  }
+ ]
+}

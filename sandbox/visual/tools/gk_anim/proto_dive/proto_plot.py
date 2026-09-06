@@ -29,6 +29,7 @@ t0 = cm["t0"]; execEnd = t0 + cm["execTime"]; contactT = tn["trace"][ct]["contac
 fig, ax = plt.subplots(3, 1, figsize=(13, 12), sharex=True)
 ts = [t["now"] for t in tn["trace"]]
 ax[0].plot(ts, [t["sp"][1] for t in tn["trace"]], "k-", lw=2, label="simulation root (screen y)")
+ax[0].plot(ts, [t["sp"][1] + t["pres"]["sy"] if t.get("pres") else float("nan") for t in tn["trace"]], "-", color="tab:orange", lw=2, label="PRESENTATION root (sim root + decaying momentum continuation; review only)")
 ax[0].plot(ts, [t["ballSp"][1] for t in tn["trace"]], "--", color="tab:red", label="ball (screen y)")
 for tag, tr, col, keyf in (("CURRENT", tc["trace"], "tab:gray", lambda t: "LIVE"), ("NEW", tn["trace"], "tab:blue", lambda t: t["drawn"])):
     D = [drawn(tr, t, keyf(t)) for t in tr]
@@ -39,6 +40,7 @@ for tag, tr, col, keyf in (("CURRENT", tc["trace"], "tab:gray", lambda t: "LIVE"
 ax[1].plot(ts, [t["handSp"][1] if t["handSp"] else float("nan") for t in tn["trace"]], "-", color="tab:green", label="simulation hand (screen y)")
 ax[1].plot(ts, [t["ballSp"][1] for t in tn["trace"]], "--", color="tab:red", label="ball (screen y)")
 ax[2].plot(ts, [t["sp"][1] for t in tn["trace"]], "k-", lw=2, label="simulation root (screen y)")
+ax[2].plot(ts, [t["sp"][1] + t["pres"]["sy"] if t.get("pres") else float("nan") for t in tn["trace"]], "-", color="tab:orange", lw=2, label="presentation root (screen y)")
 for a in ax:
     for x, lab, col in ((t0, "commit", "k"), (execEnd, "execEnd", "g"), (contactT, "contact", "r"), (tn["trace"][bs]["now"], "live SET", "b")): a.axvline(x, color=col, ls=":", lw=1)
     a.invert_yaxis(); a.legend(loc="lower left", fontsize=8); a.grid(alpha=0.3)
@@ -51,6 +53,7 @@ fig.tight_layout(); fig.savefig(f"{OUT}/ROOT_MOTION_CURRENT_VS_NEW.png", dpi=110
 # x as well (lateral / depth on screen)
 fig2, ax2 = plt.subplots(1, 1, figsize=(13, 4.5))
 ax2.plot(ts, [t["sp"][0] for t in tn["trace"]], "k-", lw=2, label="simulation root (screen x)")
+ax2.plot(ts, [t["sp"][0] + t["pres"]["sx"] if t.get("pres") else float("nan") for t in tn["trace"]], "-", color="tab:orange", lw=2, label="presentation root (screen x)")
 for tag, tr, col, keyf in (("CURRENT", tc["trace"], "tab:gray", lambda t: "LIVE"), ("NEW", tn["trace"], "tab:blue", lambda t: t["drawn"])):
     D = [drawn(tr, t, keyf(t)) for t in tr]
     ax2.plot([t["now"] for t in tr], [d["root"][0] for d in D], ".", ms=3, color=col, label=f"{tag} drawn root x"); ax2.plot([t["now"] for t in tr], [d.get("head", (float("nan"),))[0] for d in D], "x", ms=3, color=col, label=f"{tag} drawn head x")

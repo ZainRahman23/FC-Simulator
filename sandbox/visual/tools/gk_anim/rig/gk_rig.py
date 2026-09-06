@@ -82,7 +82,7 @@ class Rig:
         return leftovers
     def world(self, pose):
         """pose: {part: {"rot": deg, "dx": px, "dy": px}} → world matrices per part (source coords → canvas coords, before canvas offset)"""
-        M = {}
+        M = {}; R = {}                                   # M = full matrix (with the part's own scale, for its pixels); R = rigid frame handed to children
         def get(name):
             if name in M: return M[name]
             p = self.parts[name]; q = pose.get(name, {})
@@ -90,17 +90,21 @@ class Rig:
             sx, sy = q.get("sx", 1.0), q.get("sy", 1.0)                                          # optional non-uniform scale about the pivot (nearest-neighbour; foreshortening only)
             px, py = p.pivot
             scale = [[sx, 0, 0], [0, sy, 0], [0, 0, 1]]
-            local = mat_mul(mat_trans(px, py), mat_mul(mat_rot(rot), mat_mul(scale, mat_trans(-px, -py))))   # scale, then rotate, about own pivot
-            local = mat_mul(mat_trans(dx, dy), local)                                             # then translate
+            rigid = mat_mul(mat_trans(dx, dy), mat_mul(mat_trans(px, py), mat_mul(mat_rot(rot), mat_trans(-px, -py))))                    # rotate about own pivot, translate
+            local = mat_mul(mat_trans(dx, dy), mat_mul(mat_trans(px, py), mat_mul(mat_rot(rot), mat_mul(scale, mat_trans(-px, -py)))))   # + scale (this part's pixels only)
             if p.parent:
                 par = self.parts[p.parent]; at = p.attach or p.pivot
                 pe = pose.get(p.parent, {}).get("ext", 0)
                 if pe and par.bone:                                                                # parent bone extended → this child rides out along it
                     to = par.bone["to"]; L = math.hypot(to[0] - par.pivot[0], to[1] - par.pivot[1]) or 1.0
                     at = (at[0] + (to[0] - par.pivot[0]) / L * pe, at[1] + (to[1] - par.pivot[1]) / L * pe)
-                seat = mat_trans(at[0] - px, at[1] - py)                                           # put the pivot on the parent's attach point
-                M[name] = mat_mul(get(p.parent), mat_mul(seat, local))
-            else: M[name] = local
+                # a scaled (foreshortened) parent moves its attach points toward its pivot, but does NOT scale its children
+                qp = pose.get(p.parent, {}); psx, psy = qp.get("sx", 1.0), qp.get("sy", 1.0); ppx, ppy = par.pivot
+                at = (ppx + (at[0] - ppx) * psx, ppy + (at[1] - ppy) * psy)
+                seat = mat_trans(at[0] - px, at[1] - py)                                           # put the pivot on the parent's (scaled) attach point
+                get(p.parent); base = R[p.parent]
+                M[name] = mat_mul(base, mat_mul(seat, local)); R[name] = mat_mul(base, mat_mul(seat, rigid))
+            else: M[name] = local; R[name] = rigid
             return M[name]
         for n in self.order: get(n)
         return M
