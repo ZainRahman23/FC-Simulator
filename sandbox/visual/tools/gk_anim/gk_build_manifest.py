@@ -152,13 +152,15 @@ derive_rotated_pose("sources/SW_FAR_DIVE_RAW.png", "SW_FAR_DIVE", 0, (0, 0),
     "runtime-MIRRORED copy his physical RIGHT, as demonstrated on two matched real SW-facing far saves (reach vs the real save vector "
     "11.9 deg / 31.8 deg for the winning orientation in each).", body_scale=0.74, root_mode="bottom")
 # FAR / EXTREME LOW DIVE LEFT (2026-09-06): the Pro sprite that failed the south-perspective test, salvaged for far and best-effort LOW
-# airborne dives to the keeper's physical LEFT. No rotation: the raw pixels pass through, cropped and measured. Body scale 0.70 chosen in
-# live review over 0.60/0.65/0.75/0.79 (this sprite draws an oversized head and gloves, so the body-axis measure 0.79 reads too large).
-derive_rotated_pose("sources/LOW_DIVE_LEFT_RAW.png", "LOW_DIVE_LEFT", 0, (0, 0),
+# airborne dives to the keeper's physical LEFT. No rotation: the raw pixels pass through, cropped and measured. Body scale 0.65 (revised
+# from 0.70 in live review; this sprite draws an oversized head and gloves, so its body-axis measure of 0.79 reads too large). The root is
+# authored as the CANONICAL (GK_BASE_V1 px) offset from the lead glove that the 0.70 configuration had, so a change of body scale divides it
+# by the new scale and the drawn glove - the intended contact placement - stays exactly where it was.
+derive_rotated_pose("sources/LOW_DIVE_LEFT_RAW.png", "LOW_DIVE_LEFT", 0, (37.8, 23.8),
     "far / extreme LOW airborne dive to the keeper's physical LEFT. Live artwork = the preserved Pro sprite "
     "sources/LOW_DIVE_LEFT_RAW.png drawn MIRRORED, with no rotation, no limb edit, no warp; the mirrored orientation was the one that "
     "pointed the body at the ball in the live low-left test (35.8 deg from the real save vector on the far case, 18.3 deg on the "
-    "best-effort case, against 75.7 and 98.6 for the original).", body_scale=0.70, root_mode="bottom")
+    "best-effort case, against 75.7 and 98.6 for the original).", body_scale=0.65)
 CONTEXTUAL_POSES = [
     dict(id="TIGHT_S_NEAR_TOP", inventory_id="GK_POSE_129", role="tight_high", priority=2, facing_deg=90, post="near", height_classes=["HIGH", "TOP"], note="SOUTH-facing keeper, tight attacker angle, high save to the near/top corner (V1.1 high_dive/south still)"),
     dict(id="TIGHT_S_FAR_TOP", inventory_id="GK_POSE_136", role="tight_high", priority=2, facing_deg=90, post="far", height_classes=["HIGH", "TOP"], note="SOUTH-facing keeper, tight attacker angle, high save to the far/top corner (V1.1 high_dive/south-west still)"),
