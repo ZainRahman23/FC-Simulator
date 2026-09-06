@@ -1,0 +1,77 @@
+{
+ "root": [
+  43.6,
+  161.7
+ ],
+ "bbox": [
+  4,
+  4,
+  63,
+  110
+ ],
+ "gloves": [
+  [
+   50.7,
+   97.6,
+   122
+  ],
+  [
+   45.9,
+   81.9,
+   101
+  ]
+ ],
+ "lead_glove": [
+  50.7,
+  97.6,
+  122,
+  0
+ ],
+ "head": [
+  49.3,
+  63.1
+ ],
+ "reach_screen_unit": [
+  0.11,
+  -0.994
+ ],
+ "canvas": [
+  67,
+  114
+ ],
+ "source": "sources/SOUTH_V6_CLEAN.png",
+ "mirrored": true,
+ "rotation_cw_deg": 20,
+ "rotation_pivot_in_source": [
+  67.1,
+  71.6
+ ],
+ "pivot_in_canvas": [
+  19.0,
+  35.0
+ ],
+ "root_offset_from_lead_glove_px": [
+  -7.1,
+  64.1
+ ],
+ "root_offset_base_px": [
+  -6.0,
+  54.5
+ ],
+ "pixel_scale": 0.85,
+ "glove_split_boxes_in_mirrored_source": [
+  [
+   98,
+   0,
+   176,
+   113
+  ],
+  [
+   104,
+   113,
+   176,
+   176
+  ]
+ ],
+ "description": "canonical medium/high airborne dive to the keeper's left (south / GOAL_RIGHT). Live artwork = the preserved cleaned Pro sprite sources/SOUTH_V6_CLEAN.png mirrored horizontally and rotated 20 degrees clockwise about its hip/torso pivot as one rigid image, nearest-neighbour, expand, no redraw, no limb edit, no scaling of the art, no warp (15 deg at body scale 0.80 approved 2026-09-06 over 0/5/10; final visual adjustment the same day: 20 deg at body scale 0.85, re-derived from the same source with the same anchoring). root is offset from the lead (lower) glove so the drawn glove meets the simulation's contact point on the representative GOAL_RIGHT HIGH dive (lateral +2.0 m, contact z 1.45 m) in the live camera; the runtime's bounded hand-led placement absorbs the rest."
+}

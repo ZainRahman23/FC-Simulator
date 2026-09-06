@@ -209,14 +209,17 @@ def derive_mirrored_rotated_pose(src_rel, out_stem, cw_deg, root_from_lead_base,
 # DIVE SOUTH (2026-09-06): the GOAL_RIGHT far-dive counterpart of the north dive. Source chain, all preserved: sources/SOUTH_V6_RAW.png (the
 # Pro generation whose near-overhead camera and side roll the user locked as the SOUTH geometry) -> sources/SOUTH_V6_CLEAN.png (the manual
 # 76-pixel readability cleanup, RGB only, alpha byte-identical: tools/gk_anim/salvage/v6_manual_cleanup.py) -> live art = that cleaned
-# sprite MIRRORED horizontally and rotated 15 degrees clockwise about its hip pivot (approved 2026-09-06 over 0/5/10/15). Body scale 0.80
+# sprite MIRRORED horizontally and rotated clockwise about its hip pivot. 15 degrees at body scale 0.80 was approved 2026-09-06 over
+# 0/5/10/15; the user's FINAL visual adjustment the same day is 20 degrees at body scale 0.85 = DIVE_SOUTH_CW20, the live file, derived
+# below from the same source with the same anchoring (DIVE_SOUTH_CW15.* stays on disk as the approved-rotation record, unreferenced). Body scale
 # by head geometry against GK_BASE_V1 corrected with the body-calibrated Pro dives (DIVE_NORTH 0.72, SW_FAR_DIVE 0.74); the body-length
 # measures do not apply to this foreshortened pose. Root offset (canonical px) = the simulation's own root minus contact hand on the
 # representative GOAL_RIGHT HIGH dive (lateral +2.0 m, contact z 1.45 m): screen (-2.5, +22.9) px / sprite scale 0.4197.
-derive_mirrored_rotated_pose("sources/SOUTH_V6_CLEAN.png", "DIVE_SOUTH_CW15", 15, (-6.0, 54.5), 0.80, ((98, 0, 176, 113), (104, 113, 176, 176)), (104.6, 88.0),
+derive_mirrored_rotated_pose("sources/SOUTH_V6_CLEAN.png", "DIVE_SOUTH_CW20", 20, (-6.0, 54.5), 0.85, ((98, 0, 176, 113), (104, 113, 176, 176)), (104.6, 88.0),
     "canonical medium/high airborne dive to the keeper's left (south / GOAL_RIGHT). Live artwork = the preserved cleaned Pro sprite "
-    "sources/SOUTH_V6_CLEAN.png mirrored horizontally and rotated 15 degrees clockwise about its hip/torso pivot as one rigid image, "
-    "nearest-neighbour, expand, no redraw, no limb edit, no scaling of the art, no warp (approved 2026-09-06 over 0/5/10 at body scale 0.80). "
+    "sources/SOUTH_V6_CLEAN.png mirrored horizontally and rotated 20 degrees clockwise about its hip/torso pivot as one rigid image, "
+    "nearest-neighbour, expand, no redraw, no limb edit, no scaling of the art, no warp (15 deg at body scale 0.80 approved 2026-09-06 over "
+    "0/5/10; final visual adjustment the same day: 20 deg at body scale 0.85, re-derived from the same source with the same anchoring). "
     "root is offset from the lead (lower) glove so the drawn glove meets the simulation's contact point on the representative GOAL_RIGHT "
     "HIGH dive (lateral +2.0 m, contact z 1.45 m) in the live camera; the runtime's bounded hand-led placement absorbs the rest.")
 CONTEXTUAL_POSES = [
@@ -241,9 +244,9 @@ CONTEXTUAL_POSES = [
          note="default contact pose for FAR / high-extension AIRBORNE_DIVE saves to GOAL_LEFT (the keeper's right), at every height class: raw Pro sprite rotated 50 deg CW as a presentation transform. Selected by the simulation's own envelope demand (norm), so an unreachable best-effort dive shows the full attempt. Ground-save actions stay LOW_COLLAPSE and keep the ground stills; the tight-angle and overhead stills keep their own cases by priority; the GOAL_RIGHT counterpart is DIVE_SOUTH_MEDHIGH (2026-09-06)"),
     # DIVE SOUTH (2026-09-06): the GOAL_RIGHT counterpart of DIVE_NORTH_MEDHIGH — same role structure and weighting (facing, goal side, the
     # simulation's own envelope demand, the off-ground fade), opposite goal side. Artwork derived above from the preserved cleaned source.
-    dict(id="DIVE_SOUTH_MEDHIGH", file="DIVE_SOUTH_CW15", inventory_id="PRO_DIVE_SOUTH_V6", role="dive_south", facing_deg=180, side="GOAL_RIGHT",
-         mirror=False, height_classes=["LOW-MID", "MID", "HIGH", "TOP"], source_file="sources/SOUTH_V6_CLEAN.png", rotation_cw_deg=15, mirrored=True,
-         note="default contact pose for FAR / high-extension AIRBORNE_DIVE saves to GOAL_RIGHT (the keeper's left), at every height class: the cleaned SOUTH V6 Pro sprite mirrored and rotated 15 deg CW as a presentation transform, body scale 0.80. Selected exactly like the north pose by the simulation's own envelope demand (norm); ground-save actions stay LOW_COLLAPSE and keep the ground stills, the far low dive keeps LOW_DIVE_LEFT_FAR (priority 2), the tight-angle and overhead stills keep their cases by priority, and a SOUTH-WEST facing keeper keeps SW_FAR_DIVE_LEFT where its facing term wins"),
+    dict(id="DIVE_SOUTH_MEDHIGH", file="DIVE_SOUTH_CW20", inventory_id="PRO_DIVE_SOUTH_V6", role="dive_south", facing_deg=180, side="GOAL_RIGHT",
+         mirror=False, height_classes=["LOW-MID", "MID", "HIGH", "TOP"], source_file="sources/SOUTH_V6_CLEAN.png", rotation_cw_deg=20, mirrored=True,
+         note="default contact pose for FAR / high-extension AIRBORNE_DIVE saves to GOAL_RIGHT (the keeper's left), at every height class: the cleaned SOUTH V6 Pro sprite mirrored and rotated 20 deg CW as a presentation transform, body scale 0.85 (final visual adjustment 2026-09-06 from the approved 15 deg / 0.80). Selected exactly like the north pose by the simulation's own envelope demand (norm); ground-save actions stay LOW_COLLAPSE and keep the ground stills, the far low dive keeps LOW_DIVE_LEFT_FAR (priority 2), the tight-angle and overhead stills keep their cases by priority, and a SOUTH-WEST facing keeper keeps SW_FAR_DIVE_LEFT where its facing term wins"),
     # TOP-LEFT CORNER (2026-09-05): only for genuinely full-stretch TOP-height airborne saves to GOAL_LEFT with real lateral demand — the
     # north far-dive pose keeps ordinary medium/high dives, the ground stills keep low saves, the overhead still keeps mostly-vertical
     # reaches and the tight-angle stills keep their own cases (priority 2 + the openness term).
