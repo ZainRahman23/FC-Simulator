@@ -533,6 +533,15 @@
       "candidate": false,
       "id": "PRO_DIVE_SOUTH_V2",
       "note": "SOUTH-WEST facing keeper, far airborne dive to his physical RIGHT (same still drawn MIRRORED; 31.8 deg from the real save vector, the weaker of the two pairings)"
+     },
+     "LOW_DIVE_LEFT_FAR": {
+      "path": "goalkeeper/contextual/LOW_DIVE_LEFT.png",
+      "anchors": "goalkeeper/contextual/LOW_DIVE_LEFT_anchors.json",
+      "mirror": true,
+      "approved": true,
+      "candidate": false,
+      "id": "PRO_SOUTH_SIDEROLL",
+      "note": "far / extreme low airborne dive to the keeper's physical LEFT (the Pro south attempt, salvaged and drawn MIRRORED; ordinary ground-save actions keep the low stills)"
      }
     }
    }
@@ -834,6 +843,25 @@
    "reach_screen_unit": [
     -0.647,
     -0.762
+   ]
+  },
+  {
+   "id": "LOW_DIVE_LEFT_FAR",
+   "inventory_id": "PRO_SOUTH_SIDEROLL",
+   "role": "low_far_dive",
+   "priority": 2,
+   "keeper_side": "LEFT",
+   "mirror": true,
+   "height_classes": [
+    "LOW-MID"
+   ],
+   "source_file": "sources/LOW_DIVE_LEFT_RAW.png",
+   "path": "goalkeeper/contextual/LOW_DIVE_LEFT.png",
+   "anchors": "goalkeeper/contextual/LOW_DIVE_LEFT_anchors.json",
+   "transform": "MIRRORED",
+   "reach_screen_unit": [
+    0.846,
+    -0.533
    ]
   }
  ]

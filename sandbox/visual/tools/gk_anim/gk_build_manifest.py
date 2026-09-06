@@ -151,6 +151,14 @@ derive_rotated_pose("sources/SW_FAR_DIVE_RAW.png", "SW_FAR_DIVE", 0, (0, 0),
     "sources/SW_FAR_DIVE_RAW.png with no rotation, no limb edit, no warp; ORIGINAL serves a save to the keeper's physical LEFT and the "
     "runtime-MIRRORED copy his physical RIGHT, as demonstrated on two matched real SW-facing far saves (reach vs the real save vector "
     "11.9 deg / 31.8 deg for the winning orientation in each).", body_scale=0.74, root_mode="bottom")
+# FAR / EXTREME LOW DIVE LEFT (2026-09-06): the Pro sprite that failed the south-perspective test, salvaged for far and best-effort LOW
+# airborne dives to the keeper's physical LEFT. No rotation: the raw pixels pass through, cropped and measured. Body scale 0.70 chosen in
+# live review over 0.60/0.65/0.75/0.79 (this sprite draws an oversized head and gloves, so the body-axis measure 0.79 reads too large).
+derive_rotated_pose("sources/LOW_DIVE_LEFT_RAW.png", "LOW_DIVE_LEFT", 0, (0, 0),
+    "far / extreme LOW airborne dive to the keeper's physical LEFT. Live artwork = the preserved Pro sprite "
+    "sources/LOW_DIVE_LEFT_RAW.png drawn MIRRORED, with no rotation, no limb edit, no warp; the mirrored orientation was the one that "
+    "pointed the body at the ball in the live low-left test (35.8 deg from the real save vector on the far case, 18.3 deg on the "
+    "best-effort case, against 75.7 and 98.6 for the original).", body_scale=0.70, root_mode="bottom")
 CONTEXTUAL_POSES = [
     dict(id="TIGHT_S_NEAR_TOP", inventory_id="GK_POSE_129", role="tight_high", priority=2, facing_deg=90, post="near", height_classes=["HIGH", "TOP"], note="SOUTH-facing keeper, tight attacker angle, high save to the near/top corner (V1.1 high_dive/south still)"),
     dict(id="TIGHT_S_FAR_TOP", inventory_id="GK_POSE_136", role="tight_high", priority=2, facing_deg=90, post="far", height_classes=["HIGH", "TOP"], note="SOUTH-facing keeper, tight attacker angle, high save to the far/top corner (V1.1 high_dive/south-west still)"),
@@ -186,6 +194,11 @@ CONTEXTUAL_POSES = [
     dict(id="SW_FAR_DIVE_RIGHT", file="SW_FAR_DIVE", inventory_id="PRO_DIVE_SOUTH_V2", role="sw_far_dive", facing_deg=135, keeper_side="RIGHT",
          mirror=True, height_classes=["MID", "HIGH"], source_file="sources/SW_FAR_DIVE_RAW.png",
          note="SOUTH-WEST facing keeper, far airborne dive to his physical RIGHT (same still drawn MIRRORED; 31.8 deg from the real save vector, the weaker of the two pairings)"),
+    # FAR / EXTREME LOW DIVE LEFT (2026-09-06): only for AIRBORNE_DIVE at LOW-MID height, to the keeper's own LEFT, at or beyond a full
+    # stretch. Ordinary low saves stay LOW_COLLAPSE and keep the approved ground stills; this never touches them.
+    dict(id="LOW_DIVE_LEFT_FAR", file="LOW_DIVE_LEFT", inventory_id="PRO_SOUTH_SIDEROLL", role="low_far_dive", priority=2, keeper_side="LEFT",
+         mirror=True, height_classes=["LOW-MID"], source_file="sources/LOW_DIVE_LEFT_RAW.png",
+         note="far / extreme low airborne dive to the keeper's physical LEFT (the Pro south attempt, salvaged and drawn MIRRORED; ordinary ground-save actions keep the low stills)"),
 ]
 CTX_DIR = os.path.join(ASSETS, "goalkeeper", "contextual")
 samples, ctx_meta = {}, []

@@ -1,0 +1,63 @@
+{
+ "root": [
+  71.5,
+  83
+ ],
+ "bbox": [
+  4,
+  4,
+  140,
+  84
+ ],
+ "gloves": [
+  [
+   43.4,
+   51.4,
+   642
+  ],
+  [
+   18.9,
+   66.5,
+   246
+  ],
+  [
+   17.5,
+   49.0,
+   53
+  ]
+ ],
+ "lead_glove": [
+  17.5,
+  49.0,
+  53,
+  0
+ ],
+ "head": [
+  37.6,
+  24.1
+ ],
+ "reach_screen_unit": [
+  -0.846,
+  -0.533
+ ],
+ "canvas": [
+  144,
+  88
+ ],
+ "source": "sources/LOW_DIVE_LEFT_RAW.png",
+ "rotation_cw_deg": 0,
+ "rotation_pivot_in_source": [
+  120.3,
+  93.1
+ ],
+ "root_offset_from_lead_glove_px": [
+  54.0,
+  34.0
+ ],
+ "root_offset_base_px": [
+  0,
+  0
+ ],
+ "pixel_scale": 0.7,
+ "description": "far / extreme LOW airborne dive to the keeper's physical LEFT. Live artwork = the preserved Pro sprite sources/LOW_DIVE_LEFT_RAW.png drawn MIRRORED, with no rotation, no limb edit, no warp; the mirrored orientation was the one that pointed the body at the ball in the live low-left test (35.8 deg from the real save vector on the far case, 18.3 deg on the best-effort case, against 75.7 and 98.6 for the original)."
+}

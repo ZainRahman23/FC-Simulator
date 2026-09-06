@@ -4525,7 +4525,7 @@ function gkAnimAuthoredSide(clip, dir) { if (!clip) return null; for (const v of
 const GK_CTX = { tightMinDeg: 45, tightFullDeg: 65, overheadDzLo: 0.4, overheadDzHi: 0.8, overheadLatLo: 0.25, overheadLatHi: 0.5, minScore: 0.5,
   lowZHi: 0.45, lowZOff: 0.6,                                                          // low_side stills: full weight below z/H 0.45, gone by 0.6
   farLo: 0.5, farHi: 0.8, farFloor: 0.6, diveGroundLo: 0.06, diveGroundHi: 0.22,
-  stretchLo: 0.85, stretchHi: 1.0, cornerLatLo: 0.35, cornerLatHi: 0.6,                // top_corner: only a genuinely full-stretch TOP contact with real lateral demand     // dive_north fades out as the contact reaches the ground (z/H): its hands are drawn at head height, so a ball on the deck stays with the ground stills                                               // dive_north: the simulation's own envelope demand (norm = required span / reach envelope) weights the far-dive pose from farFloor
+  stretchLo: 0.85, stretchHi: 1.0, cornerLatLo: 0.35, cornerLatHi: 0.6, lowFarLo: 0.82, lowFarHi: 0.95,   // low_far_dive: only a low dive at or beyond full stretch                // top_corner: only a genuinely full-stretch TOP contact with real lateral demand     // dive_north fades out as the contact reaches the ground (z/H): its hands are drawn at head height, so a ball on the deck stays with the ground stills                                               // dive_north: the simulation's own envelope demand (norm = required span / reach envelope) weights the far-dive pose from farFloor
                                                                                        // (a modest but real dive) up to 1 (full stretch, or an unreachable best-effort attempt) — a preference weight, never an on/off gate
   families: { AIRBORNE_DIVE: 1, HIGH_CATCH: 1, LOW_COLLAPSE: 1 } };   // families a salvaged still may represent: the airborne dive and the standing high reach (which has no authored art at all)
 function gkAnimContextualPick(A, t, gk, cls, c, facing, defaultSample) {
@@ -4572,6 +4572,16 @@ function gkAnimContextualPick(A, t, gk, cls, c, facing, defaultSample) {
       const sReach = cp.reach_screen_unit ? 0.5 * (1 + reach[0] * cp.reach_screen_unit[0] + reach[1] * cp.reach_screen_unit[1]) : 0.5;
       score = famOK ? sFacing * sSide * sStretch * sLat * sOpen * (0.5 + 0.5 * sReach) : 0;
       why = "family " + (famOK ? "ok" : cls.family) + " side " + sSide + " stretch " + sStretch.toFixed(2) + " (norm " + cls.norm + ") lat " + sLat.toFixed(2) + " open " + sOpen.toFixed(2) + " reach " + sReach.toFixed(2);
+    } else if (cp.role === "low_far_dive") {
+      // FAR / EXTREME LOW DIVE: an AIRBORNE_DIVE whose contact is low (the height gate above) to the keeper's own side, at or beyond a
+      // full stretch. Ordinary low balls stay LOW_COLLAPSE — the simulation's own "this is a ground-save action" call — and keep the
+      // ground stills; a modest low dive falls below the stretch ramp and keeps them too.
+      const famOK = cls.family === "AIRBORNE_DIVE";
+      const sSide = cls.side === cp.keeper_side ? 1 : 0;
+      const sStretch = (cls.expr && cls.expr.nearMax) || cls.bestEffort ? 1 : smooth(cls.norm, GK_CTX.lowFarLo, GK_CTX.lowFarHi);
+      const sReach = cp.reach_screen_unit ? 0.5 * (1 + reach[0] * cp.reach_screen_unit[0] + reach[1] * cp.reach_screen_unit[1]) : 0.5;
+      score = famOK ? sSide * sStretch * (0.5 + 0.5 * sReach) : 0;
+      why = "family " + (famOK ? "ok" : cls.family) + " keeperSide " + cls.side + "/" + sSide + " stretch " + sStretch.toFixed(2) + " (norm " + cls.norm + ") reach " + sReach.toFixed(2);
     } else if (cp.role === "sw_far_dive") {
       // SOUTH-WEST facing far dive: matched on the keeper's OWN side (the classifier's keeper-frame RIGHT/LEFT), so it is independent of
       // where the goal happens to be. Same far/extension weighting and ground fade as the north far dive; the facing cosine hands ordinary
