@@ -87,8 +87,10 @@ class Rig:
             if name in M: return M[name]
             p = self.parts[name]; q = pose.get(name, {})
             rot, dx, dy = q.get("rot", 0), q.get("dx", 0), q.get("dy", 0)
+            sx, sy = q.get("sx", 1.0), q.get("sy", 1.0)                                          # optional non-uniform scale about the pivot (nearest-neighbour; foreshortening only)
             px, py = p.pivot
-            local = mat_mul(mat_trans(px, py), mat_mul(mat_rot(rot), mat_trans(-px, -py)))        # rotate about own pivot
+            scale = [[sx, 0, 0], [0, sy, 0], [0, 0, 1]]
+            local = mat_mul(mat_trans(px, py), mat_mul(mat_rot(rot), mat_mul(scale, mat_trans(-px, -py))))   # scale, then rotate, about own pivot
             local = mat_mul(mat_trans(dx, dy), local)                                             # then translate
             if p.parent:
                 par = self.parts[p.parent]; at = p.attach or p.pivot
@@ -107,23 +109,35 @@ class Rig:
         W, H = canvas; out = Image.new("RGBA", canvas, (0, 0, 0, 0)); op = out.load()
         M = self.world(pose)
         order = draw_order or sorted(self.order, key=lambda n: self.parts[n].z)
-        placed = {}
+        placed = {}; owner = {}
+        children = {n: [c for c in self.order if self.parts[c].parent == n] for n in self.order}
+        def posed(n):                                    # is this part (or any ancestor) away from rest? bones only matter then
+            while n:
+                q = pose.get(n, {})
+                if any(q.get(k) for k in ("rot", "dx", "dy", "ext")) or q.get("sx", 1) != 1 or q.get("sy", 1) != 1: return True
+                n = self.parts[n].parent
+            return False
         for name in order:
             if name in hide: continue
             p = self.parts[name]
             if not p.pixels: continue
             Mw = mat_mul(mat_trans(offset[0], offset[1]), M[name]); Mi = mat_inv(Mw)
-            if p.bone:                                   # capsule between the pivot and the distal point, under the part's own pixels
+            if p.bone and (posed(name) or any(posed(c) for c in children[name])):
+                # capsule between the pivot and the distal point, under the part's own pixels. It may only fill canvas pixels that are
+                # still empty or that belong to this part's own joint neighbours (parent / children) — never another part's pixels —
+                # and it is drawn only when the chain is posed away from rest, so the rest pose stays pixel-identical to the source.
                 to = p.bone["to"]; ext = pose.get(name, {}).get("ext", 0)
                 if ext:                                    # extend the bone beyond its distal point (the child part is translated to match)
                     L = math.hypot(to[0] - p.pivot[0], to[1] - p.pivot[1]) or 1.0
                     to = (to[0] + (to[0] - p.pivot[0]) / L * ext, to[1] + (to[1] - p.pivot[1]) / L * ext)
                 a = mat_apply(Mw, *p.pivot); b = mat_apply(Mw, *to); r = p.bone.get("w", 3) / 2.0; col = tuple(p.bone["rgba"])
+                allowed = {None, p.parent} | set(children[name])
                 for v in range(max(0, int(min(a[1], b[1]) - r - 1)), min(H, int(max(a[1], b[1]) + r + 2))):
                     for u in range(max(0, int(min(a[0], b[0]) - r - 1)), min(W, int(max(a[0], b[0]) + r + 2))):
+                        if owner.get((u, v)) not in allowed: continue
                         px_, py_ = u + 0.5, v + 0.5; abx, aby = b[0] - a[0], b[1] - a[1]; L2 = abx * abx + aby * aby
                         t = 0 if L2 == 0 else max(0, min(1, ((px_ - a[0]) * abx + (py_ - a[1]) * aby) / L2))
-                        if math.hypot(px_ - (a[0] + t * abx), py_ - (a[1] + t * aby)) <= r: op[u, v] = col
+                        if math.hypot(px_ - (a[0] + t * abx), py_ - (a[1] + t * aby)) <= r: op[u, v] = col; owner[(u, v)] = name
             xs = [x for x, _ in p.pixels]; ys = [y for _, y in p.pixels]
             corners = [mat_apply(Mw, cx, cy) for cx in (min(xs), max(xs) + 1) for cy in (min(ys), max(ys) + 1)]
             u0, u1 = int(math.floor(min(c[0] for c in corners))) - 1, int(math.ceil(max(c[0] for c in corners))) + 1
@@ -133,9 +147,28 @@ class Rig:
                 for u in range(max(0, u0), min(W, u1)):
                     sx, sy = mat_apply(Mi, u + 0.5, v + 0.5); ix, iy = int(math.floor(sx)), int(math.floor(sy))
                     if (ix, iy) in p.pixels:
-                        op[u, v] = p.src.px[ix, iy]; n += 1
+                        op[u, v] = p.src.px[ix, iy]; owner[(u, v)] = name; n += 1
             placed[name] = n
         return out, M
+    def owner_map(self, pose, canvas=(160, 200), offset=(0, 0), draw_order=None, hide=()):
+        """which part owns each rendered canvas pixel (same inverse mapping and order as render); for measurements"""
+        W, H = canvas; own = {}
+        M = self.world(pose)
+        order = draw_order or sorted(self.order, key=lambda n: self.parts[n].z)
+        for name in order:
+            if name in hide: continue
+            p = self.parts[name]
+            if not p.pixels: continue
+            Mw = mat_mul(mat_trans(offset[0], offset[1]), M[name]); Mi = mat_inv(Mw)
+            xs = [x for x, _ in p.pixels]; ys = [y for _, y in p.pixels]
+            corners = [mat_apply(Mw, cx, cy) for cx in (min(xs), max(xs) + 1) for cy in (min(ys), max(ys) + 1)]
+            u0, u1 = int(math.floor(min(c[0] for c in corners))) - 1, int(math.ceil(max(c[0] for c in corners))) + 1
+            v0, v1 = int(math.floor(min(c[1] for c in corners))) - 1, int(math.ceil(max(c[1] for c in corners))) + 1
+            for v in range(max(0, v0), min(H, v1)):
+                for u in range(max(0, u0), min(W, u1)):
+                    sx, sy = mat_apply(Mi, u + 0.5, v + 0.5); ix, iy = int(math.floor(sx)), int(math.floor(sy))
+                    if (ix, iy) in p.pixels: own[(u, v)] = name
+        return own
     def joint_screen(self, M, name, offset=(0, 0)):
         p = self.parts[name]; x, y = mat_apply(M[name], *p.pivot); return (x + offset[0], y + offset[1])
     def viz(self, pose=None, scale=6, canvas=(160, 200), offset=(0, 0), title=None):
