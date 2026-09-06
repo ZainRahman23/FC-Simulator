@@ -92,7 +92,7 @@ def _pose_landmarks(img):
     skin = pts["skin"]; top = min(q[1] for q in skin); head = [q for q in skin if q[1] < top + 22]
     return hip, gloves, [round(sum(q[0] for q in head) / len(head), 1), round(sum(q[1] for q in head) / len(head), 1)]
 
-def derive_rotated_pose(src_rel, out_stem, cw_deg, root_from_lead_base, note, body_scale=1.0):
+def derive_rotated_pose(src_rel, out_stem, cw_deg, root_from_lead_base, note, body_scale=1.0, root_mode="lead"):
     from PIL import Image
     import math
     src_path = os.path.join(ASSETS, "goalkeeper", "contextual", src_rel)
@@ -107,6 +107,8 @@ def derive_rotated_pose(src_rel, out_stem, cw_deg, root_from_lead_base, note, bo
     # the root calibration is authored in CANONICAL (GK_BASE_V1) sprite px; this art is drawn at body_scale, so its own offset is larger
     root_from_lead = (root_from_lead_base[0] / body_scale, root_from_lead_base[1] / body_scale)
     root = [round(lead[0] + root_from_lead[0], 1), round(lead[1] + root_from_lead[1], 1)]
+    if root_mode == "bottom":                      # the authored convention (content centre / bottom row), as tested for this pose
+        root = bottom_root; root_from_lead = (round(root[0] - lead[0], 1), round(root[1] - lead[1], 1))
     vx, vy = lead[0] - root[0], lead[1] - root[1]; n = math.hypot(vx, vy) or 1e-6
     an = {"root": root, "bbox": list(obb), "gloves": gloves, "lead_glove": lead + [0], "head": head,
           "reach_screen_unit": [round(vx / n, 3), round(vy / n, 3)], "canvas": list(out.size),
@@ -139,6 +141,16 @@ derive_rotated_pose("sources/TOP_LEFT_CORNER_RAW.png", "TOP_LEFT_CORNER_CW50", 5
     "edit, no scaling of the body, no warp (approved 2026-09-05 over RAW/35/45/55). The camera's top-corner target vector is (-0.13, -0.99), "
     "97.7 degrees above the horizontal, which is why clockwise is the correct sense. root is offset from the lead glove so the drawn glove "
     "meets the simulation's contact point on a representative full-stretch top-corner save.", body_scale=0.72)
+# SOUTH-WEST FAR DIVE (2026-09-05): the Pro sprite authored with a camera-derived pose guide, salvaged for SOUTH-WEST-facing far airborne
+# dives. No rotation (0 degrees): the raw pixels pass through, only cropped to content and measured. Body scale 0.74 measured against
+# GK_BASE_V1 by head geometry corrected with the north dive's known over-read (the raw body-axis measure over-reads for a foreshortened
+# pose: 0.761 raw, 0.740 head-minor corrected, 0.729 head-area corrected). Root = the authored bottom-centre convention, which is exactly
+# the placement the live mapping test was approved on.
+derive_rotated_pose("sources/SW_FAR_DIVE_RAW.png", "SW_FAR_DIVE", 0, (0, 0),
+    "far / high-extension airborne dive for a SOUTH-WEST facing keeper. Live artwork = the preserved Pro sprite "
+    "sources/SW_FAR_DIVE_RAW.png with no rotation, no limb edit, no warp; ORIGINAL serves a save to the keeper's physical LEFT and the "
+    "runtime-MIRRORED copy his physical RIGHT, as demonstrated on two matched real SW-facing far saves (reach vs the real save vector "
+    "11.9 deg / 31.8 deg for the winning orientation in each).", body_scale=0.74, root_mode="bottom")
 CONTEXTUAL_POSES = [
     dict(id="TIGHT_S_NEAR_TOP", inventory_id="GK_POSE_129", role="tight_high", priority=2, facing_deg=90, post="near", height_classes=["HIGH", "TOP"], note="SOUTH-facing keeper, tight attacker angle, high save to the near/top corner (V1.1 high_dive/south still)"),
     dict(id="TIGHT_S_FAR_TOP", inventory_id="GK_POSE_136", role="tight_high", priority=2, facing_deg=90, post="far", height_classes=["HIGH", "TOP"], note="SOUTH-facing keeper, tight attacker angle, high save to the far/top corner (V1.1 high_dive/south-west still)"),
@@ -165,6 +177,15 @@ CONTEXTUAL_POSES = [
     dict(id="TOP_LEFT_CORNER", file="TOP_LEFT_CORNER_CW50", inventory_id="PRO_DIVE_SOUTH_V1", role="top_corner", priority=2, facing_deg=180,
          side="GOAL_LEFT", mirror=False, height_classes=["TOP"], source_file="sources/TOP_LEFT_CORNER_RAW.png", rotation_cw_deg=50,
          note="full-stretch top-corner save to GOAL_LEFT: the Pro sprite authored as a south dive attempt, salvaged and rotated 50 deg CW as a presentation transform; no opposite-side variant exists"),
+    # SOUTH-WEST FAR DIVE (2026-09-05): matched on the keeper's OWN side (cls.side), not the camera's goal side, because the mapping was
+    # established from the simulation's keeper-frame classification. Far/high-extension AIRBORNE_DIVE only; the ground stills, tight-angle
+    # stills, overhead still, top-corner pose and the north far dive keep their own cases.
+    dict(id="SW_FAR_DIVE_LEFT", file="SW_FAR_DIVE", inventory_id="PRO_DIVE_SOUTH_V2", role="sw_far_dive", facing_deg=135, keeper_side="LEFT",
+         mirror=False, height_classes=["MID", "HIGH"], source_file="sources/SW_FAR_DIVE_RAW.png",
+         note="SOUTH-WEST facing keeper, far airborne dive to his physical LEFT (original orientation; validated live at 11.9 deg from the real save vector)"),
+    dict(id="SW_FAR_DIVE_RIGHT", file="SW_FAR_DIVE", inventory_id="PRO_DIVE_SOUTH_V2", role="sw_far_dive", facing_deg=135, keeper_side="RIGHT",
+         mirror=True, height_classes=["MID", "HIGH"], source_file="sources/SW_FAR_DIVE_RAW.png",
+         note="SOUTH-WEST facing keeper, far airborne dive to his physical RIGHT (same still drawn MIRRORED; 31.8 deg from the real save vector, the weaker of the two pairings)"),
 ]
 CTX_DIR = os.path.join(ASSETS, "goalkeeper", "contextual")
 samples, ctx_meta = {}, []

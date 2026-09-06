@@ -4572,6 +4572,19 @@ function gkAnimContextualPick(A, t, gk, cls, c, facing, defaultSample) {
       const sReach = cp.reach_screen_unit ? 0.5 * (1 + reach[0] * cp.reach_screen_unit[0] + reach[1] * cp.reach_screen_unit[1]) : 0.5;
       score = famOK ? sFacing * sSide * sStretch * sLat * sOpen * (0.5 + 0.5 * sReach) : 0;
       why = "family " + (famOK ? "ok" : cls.family) + " side " + sSide + " stretch " + sStretch.toFixed(2) + " (norm " + cls.norm + ") lat " + sLat.toFixed(2) + " open " + sOpen.toFixed(2) + " reach " + sReach.toFixed(2);
+    } else if (cp.role === "sw_far_dive") {
+      // SOUTH-WEST facing far dive: matched on the keeper's OWN side (the classifier's keeper-frame RIGHT/LEFT), so it is independent of
+      // where the goal happens to be. Same far/extension weighting and ground fade as the north far dive; the facing cosine hands ordinary
+      // west-facing dives back to that pose. Ground actions, gathers and planted saves never reach here.
+      const famOK = cls.family === "AIRBORNE_DIVE";
+      // the three-quarter SOUTH-WEST view is a narrow band: cubing the facing cosine keeps a west-facing dive (45 deg away) below minScore,
+      // so it stays with the north far-dive pose or the diagnostic exactly as before this pose existed
+      const cf = Math.max(0, Math.cos((facingAtCommitDeg - cp.facing_deg) * Math.PI / 180)), sFacing = cf * cf * cf, sSide = cls.side === cp.keeper_side ? 1 : 0;
+      const far = (cls.expr && cls.expr.nearMax) || cls.bestEffort ? 1 : smooth(cls.norm, GK_CTX.farLo, GK_CTX.farHi);
+      const sFar = GK_CTX.farFloor + (1 - GK_CTX.farFloor) * far, sOffGround = smooth(cls.zH, GK_CTX.diveGroundLo, GK_CTX.diveGroundHi);
+      const sReach = cp.reach_screen_unit ? 0.5 * (1 + reach[0] * cp.reach_screen_unit[0] + reach[1] * cp.reach_screen_unit[1]) : 0.5;
+      score = famOK ? sFacing * sSide * sFar * sOffGround * (0.5 + 0.5 * sReach) : 0;
+      why = "family " + (famOK ? "ok" : cls.family) + " facing " + sFacing.toFixed(2) + " keeperSide " + cls.side + "/" + sSide + " far " + sFar.toFixed(2) + " reach " + sReach.toFixed(2);
     } else if (cp.role === "dive_north") {
       // canonical medium/high airborne dive to the keeper's right (north / GOAL_LEFT): the single authored contact pose for that family.
       // The classifier's goal side must match (there is no opposite-side variant — a GOAL_RIGHT dive keeps the ART_MISSING diagnostic),

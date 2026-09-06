@@ -515,6 +515,24 @@
       "candidate": false,
       "id": "PRO_DIVE_SOUTH_V1",
       "note": "full-stretch top-corner save to GOAL_LEFT: the Pro sprite authored as a south dive attempt, salvaged and rotated 50 deg CW as a presentation transform; no opposite-side variant exists"
+     },
+     "SW_FAR_DIVE_LEFT": {
+      "path": "goalkeeper/contextual/SW_FAR_DIVE.png",
+      "anchors": "goalkeeper/contextual/SW_FAR_DIVE_anchors.json",
+      "mirror": false,
+      "approved": true,
+      "candidate": false,
+      "id": "PRO_DIVE_SOUTH_V2",
+      "note": "SOUTH-WEST facing keeper, far airborne dive to his physical LEFT (original orientation; validated live at 11.9 deg from the real save vector)"
+     },
+     "SW_FAR_DIVE_RIGHT": {
+      "path": "goalkeeper/contextual/SW_FAR_DIVE.png",
+      "anchors": "goalkeeper/contextual/SW_FAR_DIVE_anchors.json",
+      "mirror": true,
+      "approved": true,
+      "candidate": false,
+      "id": "PRO_DIVE_SOUTH_V2",
+      "note": "SOUTH-WEST facing keeper, far airborne dive to his physical RIGHT (same still drawn MIRRORED; 31.8 deg from the real save vector, the weaker of the two pairings)"
      }
     }
    }
@@ -776,6 +794,46 @@
    "reach_screen_unit": [
     -0.09,
     -0.996
+   ]
+  },
+  {
+   "id": "SW_FAR_DIVE_LEFT",
+   "inventory_id": "PRO_DIVE_SOUTH_V2",
+   "role": "sw_far_dive",
+   "facing_deg": 135,
+   "keeper_side": "LEFT",
+   "mirror": false,
+   "height_classes": [
+    "MID",
+    "HIGH"
+   ],
+   "source_file": "sources/SW_FAR_DIVE_RAW.png",
+   "path": "goalkeeper/contextual/SW_FAR_DIVE.png",
+   "anchors": "goalkeeper/contextual/SW_FAR_DIVE_anchors.json",
+   "transform": "ORIGINAL",
+   "reach_screen_unit": [
+    0.647,
+    -0.762
+   ]
+  },
+  {
+   "id": "SW_FAR_DIVE_RIGHT",
+   "inventory_id": "PRO_DIVE_SOUTH_V2",
+   "role": "sw_far_dive",
+   "facing_deg": 135,
+   "keeper_side": "RIGHT",
+   "mirror": true,
+   "height_classes": [
+    "MID",
+    "HIGH"
+   ],
+   "source_file": "sources/SW_FAR_DIVE_RAW.png",
+   "path": "goalkeeper/contextual/SW_FAR_DIVE.png",
+   "anchors": "goalkeeper/contextual/SW_FAR_DIVE_anchors.json",
+   "transform": "MIRRORED",
+   "reach_screen_unit": [
+    -0.647,
+    -0.762
    ]
   }
  ]
