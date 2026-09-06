@@ -92,7 +92,7 @@ def _pose_landmarks(img):
     skin = pts["skin"]; top = min(q[1] for q in skin); head = [q for q in skin if q[1] < top + 22]
     return hip, gloves, [round(sum(q[0] for q in head) / len(head), 1), round(sum(q[1] for q in head) / len(head), 1)]
 
-def derive_rotated_pose(src_rel, out_stem, cw_deg, root_from_lead, note):
+def derive_rotated_pose(src_rel, out_stem, cw_deg, root_from_lead_base, note, body_scale=1.0):
     from PIL import Image
     import math
     src_path = os.path.join(ASSETS, "goalkeeper", "contextual", src_rel)
@@ -104,22 +104,31 @@ def derive_rotated_pose(src_rel, out_stem, cw_deg, root_from_lead, note):
     _, gloves, head = _pose_landmarks(out)
     obb = out.getbbox(); bottom_root = [round((obb[0] + obb[2] - 1) / 2.0, 1), obb[3] - 1]
     lead = max(gloves, key=lambda g: (g[0] - bottom_root[0]) ** 2 + (g[1] - bottom_root[1]) ** 2)
+    # the root calibration is authored in CANONICAL (GK_BASE_V1) sprite px; this art is drawn at body_scale, so its own offset is larger
+    root_from_lead = (root_from_lead_base[0] / body_scale, root_from_lead_base[1] / body_scale)
     root = [round(lead[0] + root_from_lead[0], 1), round(lead[1] + root_from_lead[1], 1)]
     vx, vy = lead[0] - root[0], lead[1] - root[1]; n = math.hypot(vx, vy) or 1e-6
     an = {"root": root, "bbox": list(obb), "gloves": gloves, "lead_glove": lead + [0], "head": head,
           "reach_screen_unit": [round(vx / n, 3), round(vy / n, 3)], "canvas": list(out.size),
           "source": "sources/" + src_rel.split("/")[-1], "rotation_cw_deg": cw_deg, "rotation_pivot_in_source": [round(hip[0], 1), round(hip[1], 1)],
-          "root_offset_from_lead_glove_px": list(root_from_lead), "description": note}
+          "root_offset_from_lead_glove_px": [round(v, 1) for v in root_from_lead], "root_offset_base_px": list(root_from_lead_base),
+          "pixel_scale": body_scale, "description": note}
     d = os.path.join(ASSETS, "goalkeeper", "contextual")
     out.save(os.path.join(d, out_stem + ".png")); json.dump(an, open(os.path.join(d, out_stem + "_anchors.json"), "w"), indent=1)
-    print("derived", out_stem, out.size, "pivot", [round(v, 1) for v in hip], "root", root, "reach", an["reach_screen_unit"])
+    print("derived", out_stem, out.size, "pivot", [round(v, 1) for v in hip], "root", root, "reach", an["reach_screen_unit"], "body scale", body_scale)
 
+# BODY SCALE 0.72: measured from the goalkeeper's proportions, not the canvas. GK_BASE_V1 standing (set/west.png) is 102 px from head
+# top to feet = 1.83 m -> 55.7 px/m. The Pro dive art measures 141.5 px head-top-to-toe along the body axis (~78.6 px/m -> 0.721) and
+# 91.3 px head-top-to-hip against the standing sprite's 66.8 px (0.732); the two agree at ~0.72, so the same person is the same size in
+# both poses. (Its head is drawn smaller relative to the body than the stylised standing sprite's — that is the art styles differing,
+# and matching heads instead would leave the diving body a third too long.)
 derive_rotated_pose("sources/DIVE_NORTH_RAW.png", "DIVE_NORTH_CW50", 50, (12.3, 93.7),
     "canonical medium/high airborne dive to the keeper's right (north / GOAL_LEFT). Live artwork = the preserved Pro sprite "
     "sources/DIVE_NORTH_RAW.png rotated 50 degrees clockwise about its hip/torso pivot, nearest-neighbour, expand, no redraw, no limb "
     "edit, no scaling, no warp (approved 2026-09-05 over 35/45/55). root is NOT the bottom-pixel convention, which assumes a grounded "
     "pose: it is offset from the lead glove so the drawn glove meets the simulation's contact point on a representative medium/high "
-    "north dive (lateral 1.99 m, contact z 1.52 m) in the live camera; the runtime's bounded hand-led placement absorbs the rest.")
+    "north dive (lateral 1.99 m, contact z 1.52 m) in the live camera; the runtime's bounded hand-led placement absorbs the rest.",
+    body_scale=0.72)
 CONTEXTUAL_POSES = [
     dict(id="TIGHT_S_NEAR_TOP", inventory_id="GK_POSE_129", role="tight_high", priority=2, facing_deg=90, post="near", height_classes=["HIGH", "TOP"], note="SOUTH-facing keeper, tight attacker angle, high save to the near/top corner (V1.1 high_dive/south still)"),
     dict(id="TIGHT_S_FAR_TOP", inventory_id="GK_POSE_136", role="tight_high", priority=2, facing_deg=90, post="far", height_classes=["HIGH", "TOP"], note="SOUTH-facing keeper, tight attacker angle, high save to the far/top corner (V1.1 high_dive/south-west still)"),

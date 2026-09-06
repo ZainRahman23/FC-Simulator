@@ -4820,13 +4820,17 @@ function gkAnimDraw(t, gk, dt) {
       artLabel = "SET/" + cur.dir + " (load) → save pose " + cur.savePose.family + " " + cur.savePose.side + " " + cur.savePose.key;
     } else {
       const img = smp.img, ax = an.root ? an.root[0] : img.width / 2, ay = an.root ? an.root[1] : img.height - 1, mir = !!smp.mirror, mx = (px) => mir ? img.width - px : px;   // mirror = presentation transform (pose salvage)
+      // BODY SCALE: a still may be drawn at a different pixel density than GK_BASE_V1 (its own art, not its canvas). `pixel_scale` is the
+      // measured ratio of the keeper's body proportions to the standing sprite's, so the same person is the same size in every pose.
+      // Placement errors and the correction cap stay in canonical (GK_BASE_V1) sprite px, so corrMaxPx keeps its world meaning.
+      const ps = s * (an.pixel_scale || 1);
       const gl = an.gloves && an.gloves.length ? an.gloves : (an.lead_glove ? [an.lead_glove] : []);
-      const dx0 = mir ? Math.round(sp.x - (img.width - ax) * s) : Math.round(sp.x - ax * s), dy0 = Math.round(sp.y - ay * s);
-      const raw = gkAnimGloves(gl, (px, py) => ({ x: dx0 + Math.round(mx(px) * s), y: dy0 + Math.round(py * s) }), simHand, false);
+      const dx0 = mir ? Math.round(sp.x - (img.width - ax) * ps) : Math.round(sp.x - ax * ps), dy0 = Math.round(sp.y - ay * ps);
+      const raw = gkAnimGloves(gl, (px, py) => ({ x: dx0 + Math.round(mx(px) * ps), y: dy0 + Math.round(py * ps) }), simHand, false);
       const w = GK_ANIM.savePoseIK ? (cur.savePose.mode === "reach" ? wReach : 1) : 0;
       place = gkAnimPlace(raw, simHand, w, s, cur.savePose.mode === "post" && A.commit ? A.commit.place : null);
       if ((cur.savePose.mode === "hold" || (cur.savePose.mode === "reach" && cur.u >= 0.999)) && A.commit && place) A.commit.place = place;
-      const blit = gkAnimBlit(img, mir, ax, ay, s, sp.x + place.dx, sp.y + place.dy);
+      const blit = gkAnimBlit(img, mir, ax, ay, ps, sp.x + place.dx, sp.y + place.dy);
       anchors = { root: anchors.root, pelvis: an.pelvis ? blit.toScreen(an.pelvis[0], an.pelvis[1]) : null, head: an.head ? blit.toScreen(an.head[0], an.head[1]) : null, shoulder: an.shoulder ? blit.toScreen(an.shoulder[0], an.shoulder[1]) : null, handL: gl[0] ? blit.toScreen(gl[0][0], gl[0][1]) : null, handR: gl[1] ? blit.toScreen(gl[1][0], gl[1][1]) : null };
       gloveScreen = gkAnimGloves(gl, blit.toScreen, simHand, false); if (gloveScreen && simHand) handScreen = { x: gloveScreen.x, y: gloveScreen.y };
       artLabel = "SAVE POSE " + (cur.savePose.contextual ? "CONTEXTUAL " + cur.savePose.key + " (score " + cur.savePose.contextual.score + ") " : cur.savePose.family + " " + cur.savePose.side + " " + cur.savePose.key) + (mir ? " MIRRORED" : "") + (cur.savePose.exact ? "" : " (nearest sample)") + (cur.savePose.candidate ? " CANDIDATE" : " approved") + (place ? (GK_ANIM.savePoseIK ? " place raw " + place.rawErrPx + " corr " + place.corrPx + " res " + place.finalErrPx + "px" + (place.capped ? " WRONG_CLIP" : "") : " RAW (no IK) glove err " + place.rawErrPx + "px") : "");
@@ -4927,9 +4931,10 @@ function gkAnimDrawReview(t, gk, sp, s, o) {
     const sides = A.savePoses[o.family][o.side]; const smp = sides[o.key] || sides.MID || Object.values(sides)[0]; const an = smp.anchors || {};
     const ax = an.root ? an.root[0] : smp.img.width / 2, ay = an.root ? an.root[1] : smp.img.height - 1; const gl = an.gloves && an.gloves.length ? an.gloves : (an.lead_glove ? [an.lead_glove] : []);
     const mir = o.mirror != null ? !!o.mirror : !!smp.mirror, mx = (px) => mir ? smp.img.width - px : px;
+    const ps = s * (an.pixel_scale || 1);                                          // same body scale the live path uses
     let dx = 0, dy = 0, info = mir ? " RAW MIRRORED" : " RAW";
-    if (o.ik && o.simHand) { const dx0 = mir ? Math.round(sp.x - (smp.img.width - ax) * s) : Math.round(sp.x - ax * s), dy0 = Math.round(sp.y - ay * s); const raw = gkAnimGloves(gl, (px, py) => ({ x: dx0 + Math.round(mx(px) * s), y: dy0 + Math.round(py * s) }), o.simHand, false); const pl = gkAnimPlace(raw, o.simHand, 1, s, null); dx = pl.dx; dy = pl.dy; info = " IK raw " + pl.rawErrPx + " corr " + pl.corrPx + " res " + pl.finalErrPx + "px" + (pl.capped ? " CAPPED" : ""); }
-    const blit = gkAnimBlit(smp.img, mir, ax, ay, s, sp.x + dx, sp.y + dy); res = { gloves: gl.map(q => blit.toScreen(q[0], q[1])) };
+    if (o.ik && o.simHand) { const dx0 = mir ? Math.round(sp.x - (smp.img.width - ax) * ps) : Math.round(sp.x - ax * ps), dy0 = Math.round(sp.y - ay * ps); const raw = gkAnimGloves(gl, (px, py) => ({ x: dx0 + Math.round(mx(px) * ps), y: dy0 + Math.round(py * ps) }), o.simHand, false); const pl = gkAnimPlace(raw, o.simHand, 1, s, null); dx = pl.dx; dy = pl.dy; info = " IK raw " + pl.rawErrPx + " corr " + pl.corrPx + " res " + pl.finalErrPx + "px" + (pl.capped ? " CAPPED" : ""); }
+    const blit = gkAnimBlit(smp.img, mir, ax, ay, ps, sp.x + dx, sp.y + dy); res = { gloves: gl.map(q => blit.toScreen(q[0], q[1])) };
     label += "  SAVE POSE " + o.family + " " + o.side + " " + (o.key || "") + (smp.candidate ? " CANDIDATE" : "") + info;
     if (o.target) { const tp = sproj3(o.target[0], o.target[2], o.target[1]); ctx.strokeStyle = "#ff4fd8"; ctx.lineWidth = Math.max(1, PXQ * 2); ctx.setLineDash([4, 3]); ctx.beginPath(); ctx.moveTo(sp.x, sp.y); ctx.lineTo(tp.x, tp.y); ctx.stroke(); ctx.setLineDash([]); ctx.strokeStyle = "#ffffff"; ctx.beginPath(); ctx.arc(tp.x, tp.y, uipx(4), 0, Math.PI * 2); ctx.stroke(); }
   }
