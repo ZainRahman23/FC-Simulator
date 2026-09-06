@@ -4365,6 +4365,12 @@ async function gkAnimLoadSavePoses(A, manifestUrl, root) {
       }
     }
   }
+  // CONTEXTUAL POSES (pose salvage, 2026-09-05): salvaged stills with authored metadata (role, facing, near/far post, height classes,
+  // screen-space reach direction of the raised glove). Presentation candidates only; selected by gkAnimContextualPick from the
+  // simulation's committed geometry. Loaded only from a manifest that carries `contextual_poses` (review / candidate manifests).
+  if (m.contextual_poses && m.contextual_poses.length) {
+    A.contextual = m.contextual_poses.map(cp => ({ ...cp, sample: A.savePoses.CONTEXTUAL && A.savePoses.CONTEXTUAL.ANY ? A.savePoses.CONTEXTUAL.ANY[cp.id] : null })).filter(cp => cp.sample);
+  }
 }
 async function gkAnimLoad() {
   const A = S.gkAnim;
@@ -4500,6 +4506,54 @@ function gkAnimClassify(gk, c, facing) {
 // net root travel between the newest sample and the newest sample at least `windowS` of SIMULATION time older (null until spanned)
 // side of the live variant authored exactly in this facing (no mirror), or null when the facing only has mirrored/approximate art
 function gkAnimAuthoredSide(clip, dir) { if (!clip) return null; for (const v of clip.variants) if (v.live && v.dir === dir && v.side) return v.side; return null; }
+// CONTEXTUAL SAVE-POSE PICK (pose salvage, 2026-09-05). Art follows simulation: every input below is read from the committed action
+// (target, feet), the frozen facing, the shooter's position and the camera — nothing is written back. Continuous scores, no hard
+// angle switch: a salvaged still becomes the preferred art as the attack tightens and the requested reach resembles its authored reach.
+//   reach   = cosine between the desired SCREEN-space reach (feet → contact target through the gameplay camera) and the pose's
+//             authored root → raised-glove direction (metadata `reach_screen_unit`, y down);
+//   facing  = cosine of the keeper's frozen facing vs the pose's authored facing (tight_high poses only);
+//   tight   = smoothstep of |attacker angle off the goal-line normal| between tightMinDeg and tightFullDeg (tight_high only);
+//   post    = near/far post of the contact vs the shooter's side of the goal centre (tight_high only; centre = neither);
+//   height  = the classifier's height class must be one the pose was salvaged for;
+//   overhead: vertical demand (target above the standing hand) ramps up, lateral demand (L / maxLat) ramps the score down —
+//             HIGH vertical + LOW lateral → OVERHEAD_REACH; HIGH vertical + HIGH lateral stays with the lateral full-stretch art.
+// A candidate wins only above minScore and only if it beats the default camera-space sample's own reach similarity.
+const GK_CTX = { tightMinDeg: 45, tightFullDeg: 65, overheadDzLo: 0.4, overheadDzHi: 0.8, overheadLatLo: 0.25, overheadLatHi: 0.5, minScore: 0.5,
+  families: { AIRBORNE_DIVE: 1, HIGH_CATCH: 1 } };   // families a salvaged still may represent: the airborne dive and the standing high reach (which has no authored art at all)
+function gkAnimContextualPick(A, t, gk, cls, c, facing, defaultSample) {
+  if (!A.contextual || !A.contextual.length || !cls || !c || !c.target) return null;
+  const smooth = (x, a, b) => { const u = Math.max(0, Math.min(1, (x - a) / (b - a))); return u * u * (3 - 2 * u); };
+  const pf = sproj3(c.feet[0], 0, c.feet[1]), pt = sproj3(c.target[0], c.target[2], c.target[1]);
+  const rx = pt.x - pf.x, ry = pt.y - pf.y, rn = Math.hypot(rx, ry) || 1e-6, reach = [rx / rn, ry / rn];
+  const cosR = (u) => u ? Math.max(0, reach[0] * u[0] + reach[1] * u[1]) : 0;
+  const shooter = t.p ? [t.p.x, t.p.y] : [t.b.x, t.b.y];
+  const attackerDeg = Math.abs(Math.atan2(shooter[1] - GK_MOUTH.centerY, -(shooter[0] - GK_MOUTH.lineX)) * 180 / Math.PI);   // 0 = straight in front of goal, 90 = on the goal line
+  const facingDeg = facing * 180 / Math.PI, hClass = cls.expr ? cls.expr.heightClass : cls.zClass;
+  // near/far post = the side of the KEEPER the committed reach goes, relative to the shooter's side (the keeper at a tight angle already
+  // stands at the near post; a reach straight above him or toward the shooter's side is "near", away from the shooter is "far")
+  const shooterSide = Math.sign(shooter[1] - c.feet[1]), reachSide = Math.sign(c.target[1] - c.feet[1]);
+  const post = shooterSide === 0 ? "centre" : (Math.abs(c.target[1] - c.feet[1]) < 0.3 || reachSide === shooterSide ? "near" : "far");
+  const latFrac = cls.L / (c.diveSpanMax || 2.0), dz = cls.dz;
+  const situation = { reach: reach.map(v => +v.toFixed(3)), attackerDeg: +attackerDeg.toFixed(1), facingDeg: +facingDeg.toFixed(1), post, hClass, latFrac: +latFrac.toFixed(3), dz: +dz.toFixed(3) };
+  let best = null; const scored = [];
+  for (const cp of A.contextual) {
+    if (cp.height_classes && cp.height_classes.indexOf(hClass) < 0) { scored.push({ id: cp.id, score: 0, why: "height " + hClass }); continue; }
+    let score = 0, why = "";
+    if (cp.role === "tight_high") {
+      const sReach = cosR(cp.reach_screen_unit), sFacing = Math.max(0, Math.cos((facingDeg - cp.facing_deg) * Math.PI / 180)), sTight = smooth(attackerDeg, GK_CTX.tightMinDeg, GK_CTX.tightFullDeg), sPost = cp.post === post ? 1 : 0;
+      score = sTight * sFacing * (0.5 * sReach + 0.5 * sPost); why = "reach " + sReach.toFixed(2) + " facing " + sFacing.toFixed(2) + " tight " + sTight.toFixed(2) + " post " + sPost;
+    } else if (cp.role === "overhead") {
+      // the overhead still is for the open/central ball over the keeper; at a tight attacker angle the tight-angle stills own the high reach
+      const sVert = smooth(dz, GK_CTX.overheadDzLo, GK_CTX.overheadDzHi), sLat = 1 - smooth(latFrac, GK_CTX.overheadLatLo, GK_CTX.overheadLatHi), sReach = cosR(cp.reach_screen_unit), sOpen = 1 - smooth(attackerDeg, GK_CTX.tightMinDeg, GK_CTX.tightFullDeg);
+      score = sVert * sLat * sOpen * (0.5 + 0.5 * sReach); why = "vert " + sVert.toFixed(2) + " lat " + sLat.toFixed(2) + " open " + sOpen.toFixed(2) + " reach " + sReach.toFixed(2);
+    }
+    scored.push({ id: cp.id, score: +score.toFixed(3), why });
+    if (score > (best ? best.score : 0)) best = { cp, score, why };
+  }
+  const baseline = defaultSample && defaultSample.anchors && defaultSample.anchors.root && defaultSample.anchors.lead_glove ? (() => { const r = defaultSample.anchors.root, g = defaultSample.anchors.lead_glove, dx = g[0] - r[0], dy = g[1] - r[1], n = Math.hypot(dx, dy) || 1e-6; return 0.5 * cosR([dx / n, dy / n]); })() : 0;
+  const pick = best && best.score >= GK_CTX.minScore && best.score > baseline ? best : null;
+  return { pick: pick ? { id: pick.cp.id, sample: pick.cp.sample, score: +pick.score.toFixed(3), why: pick.why } : null, situation, scored, baseline: +baseline.toFixed(3) };
+}
 // STATE MACHINE — a pure function of (simulation time, keeper state) plus the view odometer for loops and the commit-tick freeze
 function gkAnimUpdate(t, gk) {
   const A = S.gkAnim, now = t.now, b = t.b;
@@ -4586,9 +4640,16 @@ function gkAnimUpdate(t, gk) {
     // CAMERA-SPACE SAVE POSE (V1.2): authored for GOAL_LEFT / GOAL_RIGHT in the gameplay camera — no rotation, no mirror
     const spFam = A.savePoses[clipReq.family], spSide = spFam && cls ? spFam[cls.goalSide] : null;
     const spKey = cls && cls.expr ? cls.expr.heightClass : (clipReq.family === "LOW_COLLAPSE" ? "LOW" : null);
-    const spSample = spSide ? (spSide[spKey] || spSide.MID || spSide.LOW || Object.values(spSide)[0]) : null;
-    if (isDiveFam && spSample && clipReq.mode !== "loop" && clipReq.family !== "RECOVER") {
-      savePose = { family: clipReq.family, side: cls.goalSide, key: spKey, sample: spSample, mode: clipReq.mode, k: clipReq.k, candidate: spSample.candidate, showFrom: GK_ANIM.loadPhase, exact: !!spSide[spKey] }; temp = null;
+    let spSample = spSide ? (spSide[spKey] || spSide.MID || spSide.LOW || Object.values(spSide)[0]) : null;
+    // CONTEXTUAL salvaged still (candidate manifests only): evaluated once per commit from the committed geometry, then frozen
+    let ctx = null;
+    if (A.contextual && frozen && GK_CTX.families[clipReq.family] && clipReq.mode !== "loop") {
+      if (A.commit.ctx === undefined) A.commit.ctx = gkAnimContextualPick(A, t, gk, cls, gk.committed, frozen.facing, spSample);
+      ctx = A.commit.ctx && A.commit.ctx.pick ? A.commit.ctx.pick : null;
+      if (ctx) spSample = ctx.sample;
+    }
+    if ((isDiveFam || ctx) && spSample && clipReq.mode !== "loop" && clipReq.family !== "RECOVER") {
+      savePose = { family: clipReq.family, side: cls.goalSide, key: ctx ? ctx.id : spKey, sample: spSample, mode: clipReq.mode, k: clipReq.k, candidate: spSample.candidate, showFrom: GK_ANIM.loadPhase, exact: ctx ? true : !!spSide[spKey], contextual: ctx || null }; temp = null;
     } else if (r) {
       const v = r.v, n = v.frames.length; let pos = 0, cands = null;
       if (clipReq.mode === "loop") { const cyc = (A.odo / v.strideM) * n; pos = Math.floor(cyc) % n; if (r.reverse) pos = (n - 1 - pos + n) % n; }
@@ -4733,7 +4794,7 @@ function gkAnimDraw(t, gk, dt) {
       const blit = gkAnimBlit(img, false, ax, ay, s, sp.x + place.dx, sp.y + place.dy);
       anchors = { root: anchors.root, pelvis: an.pelvis ? blit.toScreen(an.pelvis[0], an.pelvis[1]) : null, head: an.head ? blit.toScreen(an.head[0], an.head[1]) : null, shoulder: an.shoulder ? blit.toScreen(an.shoulder[0], an.shoulder[1]) : null, handL: gl[0] ? blit.toScreen(gl[0][0], gl[0][1]) : null, handR: gl[1] ? blit.toScreen(gl[1][0], gl[1][1]) : null };
       gloveScreen = gkAnimGloves(gl, blit.toScreen, simHand, false); if (gloveScreen && simHand) handScreen = { x: gloveScreen.x, y: gloveScreen.y };
-      artLabel = "SAVE POSE " + cur.savePose.family + " " + cur.savePose.side + " " + cur.savePose.key + (cur.savePose.exact ? "" : " (nearest sample)") + (cur.savePose.candidate ? " CANDIDATE" : " approved") + (place ? (GK_ANIM.savePoseIK ? " place raw " + place.rawErrPx + " corr " + place.corrPx + " res " + place.finalErrPx + "px" + (place.capped ? " WRONG_CLIP" : "") : " RAW (no IK) glove err " + place.rawErrPx + "px") : "");
+      artLabel = "SAVE POSE " + (cur.savePose.contextual ? "CONTEXTUAL " + cur.savePose.key + " (score " + cur.savePose.contextual.score + ") " : cur.savePose.family + " " + cur.savePose.side + " " + cur.savePose.key) + (cur.savePose.exact ? "" : " (nearest sample)") + (cur.savePose.candidate ? " CANDIDATE" : " approved") + (place ? (GK_ANIM.savePoseIK ? " place raw " + place.rawErrPx + " corr " + place.corrPx + " res " + place.finalErrPx + "px" + (place.capped ? " WRONG_CLIP" : "") : " RAW (no IK) glove err " + place.rawErrPx + "px") : "");
     }
   } else if (cur.pose) {
     // ── CONTACT POSE (8-rotation still) laid along the save vector; before loadPhase the SET rotation of the frozen facing
