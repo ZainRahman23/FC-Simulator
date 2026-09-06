@@ -1,0 +1,77 @@
+{
+ "root": [
+  49.5,
+  161.8
+ ],
+ "bbox": [
+  4,
+  4,
+  69,
+  106
+ ],
+ "gloves": [
+  [
+   57.0,
+   93.7,
+   122
+  ],
+  [
+   50.9,
+   78.3,
+   101
+  ]
+ ],
+ "lead_glove": [
+  57.0,
+  93.7,
+  122,
+  0
+ ],
+ "head": [
+  52.9,
+  59.1
+ ],
+ "reach_screen_unit": [
+  0.109,
+  -0.994
+ ],
+ "canvas": [
+  73,
+  110
+ ],
+ "source": "sources/SOUTH_V6_CLEAN.png",
+ "mirrored": true,
+ "rotation_cw_deg": 15,
+ "rotation_pivot_in_source": [
+  67.1,
+  71.6
+ ],
+ "pivot_in_canvas": [
+  20.2,
+  33.9
+ ],
+ "root_offset_from_lead_glove_px": [
+  -7.5,
+  68.1
+ ],
+ "root_offset_base_px": [
+  -6.0,
+  54.5
+ ],
+ "pixel_scale": 0.8,
+ "glove_split_boxes_in_mirrored_source": [
+  [
+   98,
+   0,
+   176,
+   113
+  ],
+  [
+   104,
+   113,
+   176,
+   176
+  ]
+ ],
+ "description": "canonical medium/high airborne dive to the keeper's left (south / GOAL_RIGHT). Live artwork = the preserved cleaned Pro sprite sources/SOUTH_V6_CLEAN.png mirrored horizontally and rotated 15 degrees clockwise about its hip/torso pivot as one rigid image, nearest-neighbour, expand, no redraw, no limb edit, no scaling of the art, no warp (approved 2026-09-06 over 0/5/10 at body scale 0.80). root is offset from the lead (lower) glove so the drawn glove meets the simulation's contact point on the representative GOAL_RIGHT HIGH dive (lateral +2.0 m, contact z 1.45 m) in the live camera; the runtime's bounded hand-led placement absorbs the rest."
+}

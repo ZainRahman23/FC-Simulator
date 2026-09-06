@@ -161,6 +161,64 @@ derive_rotated_pose("sources/LOW_DIVE_LEFT_RAW.png", "LOW_DIVE_LEFT", 0, (37.8, 
     "sources/LOW_DIVE_LEFT_RAW.png drawn MIRRORED, with no rotation, no limb edit, no warp; the mirrored orientation was the one that "
     "pointed the body at the ball in the live low-left test (35.8 deg from the real save vector on the far case, 18.3 deg on the "
     "best-effort case, against 75.7 and 98.6 for the original).", body_scale=0.60)
+
+def derive_mirrored_rotated_pose(src_rel, out_stem, cw_deg, root_from_lead_base, body_scale, glove_boxes, head_src, note):
+    """SOUTH V6 route: mirror the preserved source horizontally, rotate the whole sprite clockwise about the jersey/shorts-seam hip pivot
+    (nearest-neighbour, expand), crop to content (pad 4). Landmarks are measured on the MIRRORED source and carried through the identical
+    transform via a marker image, so the anchors are exactly those of the approved rotation test. The two gloves are split by authored
+    boxes (the builder's white-blob merge would fuse them); the lead glove is the lower, farther one along the reach. Root = lead glove +
+    the canonical GK_BASE_V1-px offset divided by the body scale, like the north dive."""
+    from PIL import Image
+    import math
+    src_path = os.path.join(ASSETS, "goalkeeper", "contextual", src_rel)
+    im = Image.open(src_path).convert("RGBA").transpose(Image.FLIP_LEFT_RIGHT); px = im.load(); W, H = im.size
+    hip, _, _ = _pose_landmarks(im)
+    white = [(x, y) for y in range(H) for x in range(W) if px[x, y][3] >= 128 and px[x, y][0] > 185 and px[x, y][1] > 185 and px[x, y][2] > 170]
+    (ax0, ay0, ax1, ay1), (bx0, by0, bx1, by1) = glove_boxes
+    A = [q for q in white if ax0 <= q[0] < ax1 and ay0 <= q[1] < ay1]; B = [q for q in white if bx0 <= q[0] < bx1 and by0 <= q[1] < by1]
+    cen = lambda pts: (sum(q[0] for q in pts) / len(pts), sum(q[1] for q in pts) / len(pts))
+    LM = {"hip": hip, "gloveA": cen(A), "gloveB": cen(B), "head": head_src}
+    COL = {"hip": (255, 0, 0, 255), "gloveA": (0, 0, 255, 255), "gloveB": (0, 255, 255, 255), "head": (255, 0, 255, 255)}
+    rot = im.rotate(-cw_deg, resample=Image.NEAREST, expand=True, center=hip)
+    mk = Image.new("RGBA", (W, H), (0, 0, 0, 0)); mp = mk.load()
+    for k, (x, y) in LM.items():
+        for dx in (-1, 0, 1):
+            for dy in (-1, 0, 1): mp[int(round(x)) + dx, int(round(y)) + dy] = COL[k]
+    mkr = mk.rotate(-cw_deg, resample=Image.NEAREST, expand=True, center=hip)
+    bb = rot.getbbox(); pad = 4
+    out = Image.new("RGBA", (bb[2] - bb[0] + 2 * pad, bb[3] - bb[1] + 2 * pad), (0, 0, 0, 0)); out.paste(rot.crop(bb), (pad, pad))
+    mko = Image.new("RGBA", out.size, (0, 0, 0, 0)); mko.paste(mkr.crop(bb), (pad, pad)); q = mko.load()
+    lm = {}
+    for k, c in COL.items():
+        pts = [(x, y) for y in range(mko.height) for x in range(mko.width) if q[x, y] == c]
+        lm[k] = (round(sum(t[0] for t in pts) / len(pts), 1), round(sum(t[1] for t in pts) / len(pts), 1))
+    lead = list(lm["gloveB"]); other = list(lm["gloveA"])
+    root_from_lead = (root_from_lead_base[0] / body_scale, root_from_lead_base[1] / body_scale)
+    root = [round(lead[0] + root_from_lead[0], 1), round(lead[1] + root_from_lead[1], 1)]
+    vx, vy = lead[0] - root[0], lead[1] - root[1]; n = math.hypot(vx, vy) or 1e-6
+    an = {"root": root, "bbox": list(out.getbbox()), "gloves": [lead + [len(B)], other + [len(A)]], "lead_glove": lead + [len(B), 0], "head": list(lm["head"]),
+          "reach_screen_unit": [round(vx / n, 3), round(vy / n, 3)], "canvas": list(out.size),
+          "source": "sources/" + src_rel.split("/")[-1], "mirrored": True, "rotation_cw_deg": cw_deg, "rotation_pivot_in_source": [round(hip[0], 1), round(hip[1], 1)],
+          "pivot_in_canvas": list(lm["hip"]), "root_offset_from_lead_glove_px": [round(root[0] - lead[0], 1), round(root[1] - lead[1], 1)],
+          "root_offset_base_px": list(root_from_lead_base), "pixel_scale": body_scale, "glove_split_boxes_in_mirrored_source": [list(glove_boxes[0]), list(glove_boxes[1])],
+          "description": note}
+    d = os.path.join(ASSETS, "goalkeeper", "contextual")
+    out.save(os.path.join(d, out_stem + ".png")); json.dump(an, open(os.path.join(d, out_stem + "_anchors.json"), "w"), indent=1)
+    print("derived", out_stem, out.size, "pivot", [round(v, 1) for v in hip], "root", root, "lead", lead, "reach", an["reach_screen_unit"], "body scale", body_scale)
+
+# DIVE SOUTH (2026-09-06): the GOAL_RIGHT far-dive counterpart of the north dive. Source chain, all preserved: sources/SOUTH_V6_RAW.png (the
+# Pro generation whose near-overhead camera and side roll the user locked as the SOUTH geometry) -> sources/SOUTH_V6_CLEAN.png (the manual
+# 76-pixel readability cleanup, RGB only, alpha byte-identical: tools/gk_anim/salvage/v6_manual_cleanup.py) -> live art = that cleaned
+# sprite MIRRORED horizontally and rotated 15 degrees clockwise about its hip pivot (approved 2026-09-06 over 0/5/10/15). Body scale 0.80
+# by head geometry against GK_BASE_V1 corrected with the body-calibrated Pro dives (DIVE_NORTH 0.72, SW_FAR_DIVE 0.74); the body-length
+# measures do not apply to this foreshortened pose. Root offset (canonical px) = the simulation's own root minus contact hand on the
+# representative GOAL_RIGHT HIGH dive (lateral +2.0 m, contact z 1.45 m): screen (-2.5, +22.9) px / sprite scale 0.4197.
+derive_mirrored_rotated_pose("sources/SOUTH_V6_CLEAN.png", "DIVE_SOUTH_CW15", 15, (-6.0, 54.5), 0.80, ((98, 0, 176, 113), (104, 113, 176, 176)), (104.6, 88.0),
+    "canonical medium/high airborne dive to the keeper's left (south / GOAL_RIGHT). Live artwork = the preserved cleaned Pro sprite "
+    "sources/SOUTH_V6_CLEAN.png mirrored horizontally and rotated 15 degrees clockwise about its hip/torso pivot as one rigid image, "
+    "nearest-neighbour, expand, no redraw, no limb edit, no scaling of the art, no warp (approved 2026-09-06 over 0/5/10 at body scale 0.80). "
+    "root is offset from the lead (lower) glove so the drawn glove meets the simulation's contact point on the representative GOAL_RIGHT "
+    "HIGH dive (lateral +2.0 m, contact z 1.45 m) in the live camera; the runtime's bounded hand-led placement absorbs the rest.")
 CONTEXTUAL_POSES = [
     dict(id="TIGHT_S_NEAR_TOP", inventory_id="GK_POSE_129", role="tight_high", priority=2, facing_deg=90, post="near", height_classes=["HIGH", "TOP"], note="SOUTH-facing keeper, tight attacker angle, high save to the near/top corner (V1.1 high_dive/south still)"),
     dict(id="TIGHT_S_FAR_TOP", inventory_id="GK_POSE_136", role="tight_high", priority=2, facing_deg=90, post="far", height_classes=["HIGH", "TOP"], note="SOUTH-facing keeper, tight attacker angle, high save to the far/top corner (V1.1 high_dive/south-west still)"),
@@ -180,7 +238,12 @@ CONTEXTUAL_POSES = [
     # above from the preserved raw sprite; the rotation is recorded here and in the anchors so the source can be replaced later.
     dict(id="DIVE_NORTH_MEDHIGH", file="DIVE_NORTH_CW50", inventory_id="PRO_DIVE_NORTH_V1", role="dive_north", facing_deg=180, side="GOAL_LEFT",
          mirror=False, height_classes=["LOW-MID", "MID", "HIGH", "TOP"], source_file="sources/DIVE_NORTH_RAW.png", rotation_cw_deg=50,
-         note="default contact pose for FAR / high-extension AIRBORNE_DIVE saves to GOAL_LEFT (the keeper's right), at every height class: raw Pro sprite rotated 50 deg CW as a presentation transform. Selected by the simulation's own envelope demand (norm), so an unreachable best-effort dive shows the full attempt. Ground-save actions stay LOW_COLLAPSE and keep the ground stills; the tight-angle and overhead stills keep their own cases by priority; no opposite-side variant exists, so GOAL_RIGHT keeps the ART_MISSING diagnostic"),
+         note="default contact pose for FAR / high-extension AIRBORNE_DIVE saves to GOAL_LEFT (the keeper's right), at every height class: raw Pro sprite rotated 50 deg CW as a presentation transform. Selected by the simulation's own envelope demand (norm), so an unreachable best-effort dive shows the full attempt. Ground-save actions stay LOW_COLLAPSE and keep the ground stills; the tight-angle and overhead stills keep their own cases by priority; the GOAL_RIGHT counterpart is DIVE_SOUTH_MEDHIGH (2026-09-06)"),
+    # DIVE SOUTH (2026-09-06): the GOAL_RIGHT counterpart of DIVE_NORTH_MEDHIGH — same role structure and weighting (facing, goal side, the
+    # simulation's own envelope demand, the off-ground fade), opposite goal side. Artwork derived above from the preserved cleaned source.
+    dict(id="DIVE_SOUTH_MEDHIGH", file="DIVE_SOUTH_CW15", inventory_id="PRO_DIVE_SOUTH_V6", role="dive_south", facing_deg=180, side="GOAL_RIGHT",
+         mirror=False, height_classes=["LOW-MID", "MID", "HIGH", "TOP"], source_file="sources/SOUTH_V6_CLEAN.png", rotation_cw_deg=15, mirrored=True,
+         note="default contact pose for FAR / high-extension AIRBORNE_DIVE saves to GOAL_RIGHT (the keeper's left), at every height class: the cleaned SOUTH V6 Pro sprite mirrored and rotated 15 deg CW as a presentation transform, body scale 0.80. Selected exactly like the north pose by the simulation's own envelope demand (norm); ground-save actions stay LOW_COLLAPSE and keep the ground stills, the far low dive keeps LOW_DIVE_LEFT_FAR (priority 2), the tight-angle and overhead stills keep their cases by priority, and a SOUTH-WEST facing keeper keeps SW_FAR_DIVE_LEFT where its facing term wins"),
     # TOP-LEFT CORNER (2026-09-05): only for genuinely full-stretch TOP-height airborne saves to GOAL_LEFT with real lateral demand — the
     # north far-dive pose keeps ordinary medium/high dives, the ground stills keep low saves, the overhead still keeps mostly-vertical
     # reaches and the tight-angle stills keep their own cases (priority 2 + the openness term).

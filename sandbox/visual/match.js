@@ -4595,10 +4595,11 @@ function gkAnimContextualPick(A, t, gk, cls, c, facing, defaultSample) {
       const sReach = cp.reach_screen_unit ? 0.5 * (1 + reach[0] * cp.reach_screen_unit[0] + reach[1] * cp.reach_screen_unit[1]) : 0.5;
       score = famOK ? sFacing * sSide * sFar * sOffGround * (0.5 + 0.5 * sReach) : 0;
       why = "family " + (famOK ? "ok" : cls.family) + " facing " + sFacing.toFixed(2) + " keeperSide " + cls.side + "/" + sSide + " far " + sFar.toFixed(2) + " reach " + sReach.toFixed(2);
-    } else if (cp.role === "dive_north") {
-      // canonical medium/high airborne dive to the keeper's right (north / GOAL_LEFT): the single authored contact pose for that family.
-      // The classifier's goal side must match (there is no opposite-side variant — a GOAL_RIGHT dive keeps the ART_MISSING diagnostic),
-      // the height-class gate above keeps it off low dives (the ground stills own those) and off TOP reaches (the tight/overhead stills do).
+    } else if (cp.role === "dive_north" || cp.role === "dive_south") {
+      // canonical medium/high airborne dive to the keeper's right (north / GOAL_LEFT) or, since 2026-09-06, its GOAL_RIGHT counterpart
+      // (dive_south): one authored contact pose per goal side, scored identically — the pose row's own `side` decides which classifier
+      // goal side it serves. The height-class gate above keeps them off low dives (the ground stills own those) and off TOP reaches
+      // (the tight/overhead stills do).
       const famOK = cls.family === "AIRBORNE_DIVE";                                    // never LOW_COLLAPSE / gathers / planted saves — those keep their own art
       const sFacing = Math.max(0, Math.cos((facingAtCommitDeg - cp.facing_deg) * Math.PI / 180)), sSide = cls.goalSide === cp.side ? 1 : 0;
       // FAR / HIGH-EXTENSION: the simulation's own committed demand against the keeper's reach envelope (norm = required span / envelope).

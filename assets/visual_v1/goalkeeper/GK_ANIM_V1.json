@@ -505,7 +505,16 @@
       "approved": true,
       "candidate": false,
       "id": "PRO_DIVE_NORTH_V1",
-      "note": "default contact pose for FAR / high-extension AIRBORNE_DIVE saves to GOAL_LEFT (the keeper's right), at every height class: raw Pro sprite rotated 50 deg CW as a presentation transform. Selected by the simulation's own envelope demand (norm), so an unreachable best-effort dive shows the full attempt. Ground-save actions stay LOW_COLLAPSE and keep the ground stills; the tight-angle and overhead stills keep their own cases by priority; no opposite-side variant exists, so GOAL_RIGHT keeps the ART_MISSING diagnostic"
+      "note": "default contact pose for FAR / high-extension AIRBORNE_DIVE saves to GOAL_LEFT (the keeper's right), at every height class: raw Pro sprite rotated 50 deg CW as a presentation transform. Selected by the simulation's own envelope demand (norm), so an unreachable best-effort dive shows the full attempt. Ground-save actions stay LOW_COLLAPSE and keep the ground stills; the tight-angle and overhead stills keep their own cases by priority; the GOAL_RIGHT counterpart is DIVE_SOUTH_MEDHIGH (2026-09-06)"
+     },
+     "DIVE_SOUTH_MEDHIGH": {
+      "path": "goalkeeper/contextual/DIVE_SOUTH_CW15.png",
+      "anchors": "goalkeeper/contextual/DIVE_SOUTH_CW15_anchors.json",
+      "mirror": false,
+      "approved": true,
+      "candidate": false,
+      "id": "PRO_DIVE_SOUTH_V6",
+      "note": "default contact pose for FAR / high-extension AIRBORNE_DIVE saves to GOAL_RIGHT (the keeper's left), at every height class: the cleaned SOUTH V6 Pro sprite mirrored and rotated 15 deg CW as a presentation transform, body scale 0.80. Selected exactly like the north pose by the simulation's own envelope demand (norm); ground-save actions stay LOW_COLLAPSE and keep the ground stills, the far low dive keeps LOW_DIVE_LEFT_FAR (priority 2), the tight-angle and overhead stills keep their cases by priority, and a SOUTH-WEST facing keeper keeps SW_FAR_DIVE_LEFT where its facing term wins"
      },
      "TOP_LEFT_CORNER": {
       "path": "goalkeeper/contextual/TOP_LEFT_CORNER_CW50.png",
@@ -782,6 +791,30 @@
    "reach_screen_unit": [
     -0.13,
     -0.991
+   ]
+  },
+  {
+   "id": "DIVE_SOUTH_MEDHIGH",
+   "inventory_id": "PRO_DIVE_SOUTH_V6",
+   "role": "dive_south",
+   "facing_deg": 180,
+   "side": "GOAL_RIGHT",
+   "mirror": false,
+   "height_classes": [
+    "LOW-MID",
+    "MID",
+    "HIGH",
+    "TOP"
+   ],
+   "source_file": "sources/SOUTH_V6_CLEAN.png",
+   "rotation_cw_deg": 15,
+   "mirrored": true,
+   "path": "goalkeeper/contextual/DIVE_SOUTH_CW15.png",
+   "anchors": "goalkeeper/contextual/DIVE_SOUTH_CW15_anchors.json",
+   "transform": "ORIGINAL",
+   "reach_screen_unit": [
+    0.109,
+    -0.994
    ]
   },
   {
