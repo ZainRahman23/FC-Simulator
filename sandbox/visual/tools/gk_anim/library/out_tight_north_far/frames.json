@@ -1,0 +1,1681 @@
+{
+ "canvas_set": [
+  160,
+  200
+ ],
+ "offset_set": [
+  16,
+  40
+ ],
+ "canvas_contact": null,
+ "offset_contact": null,
+ "frames": [
+  {
+   "name": "F00_READY",
+   "phase": "READY / SET",
+   "t": "t 0",
+   "rig": "NORTH_SET",
+   "pose": {},
+   "note": "GK_BASE_V1 SET/north, untouched",
+   "sources": [
+    "SET/north"
+   ],
+   "grounded": "both feet",
+   "pixel_scale": 1.0,
+   "root": [
+    80.0,
+    149
+   ],
+   "joints": {
+    "head": [
+     80.0,
+     76.0
+    ],
+    "far_glove": [
+     60.0,
+     105.0
+    ],
+    "far_fore": [
+     60.0,
+     90.0
+    ],
+    "far_upper": [
+     62.0,
+     77.0
+    ],
+    "near_glove": [
+     102.0,
+     104.0
+    ],
+    "near_fore": [
+     101.0,
+     90.0
+    ],
+    "near_upper": [
+     98.0,
+     77.0
+    ],
+    "far_thigh": [
+     70.0,
+     118.0
+    ],
+    "far_shin": [
+     68.0,
+     131.0
+    ],
+    "far_boot": [
+     66.0,
+     142.0
+    ],
+    "near_thigh": [
+     90.0,
+     118.0
+    ],
+    "near_shin": [
+     92.0,
+     131.0
+    ],
+    "near_boot": [
+     94.0,
+     142.0
+    ],
+    "pelvis": [
+     80.0,
+     108.0
+    ],
+    "torso": [
+     80.0,
+     104.0
+    ],
+    "torso_under": [
+     80.0,
+     104.0
+    ],
+    "shorts_under": [
+     80.0,
+     108.0
+    ]
+   },
+   "landmarks": {
+    "head": [
+     80.0,
+     76.0
+    ],
+    "lead_glove": [
+     102.0,
+     104.0
+    ],
+    "other_glove": [
+     60.0,
+     105.0
+    ],
+    "pelvis": [
+     80.0,
+     108.0
+    ],
+    "foot_L": [
+     66.0,
+     142.0
+    ],
+    "foot_R": [
+     94.0,
+     142.0
+    ],
+    "shoulder": [
+     98.0,
+     77.0
+    ]
+   },
+   "style": 0.0,
+   "screen": {
+    "head": [
+     0.0,
+     -30.6
+    ],
+    "lead_glove": [
+     9.2,
+     -18.9
+    ],
+    "other_glove": [
+     -8.4,
+     -18.5
+    ],
+    "pelvis": [
+     0.0,
+     -17.2
+    ],
+    "foot_L": [
+     -5.9,
+     -2.9
+    ],
+    "foot_R": [
+     5.9,
+     -2.9
+    ],
+    "shoulder": [
+     7.6,
+     -30.2
+    ]
+   }
+  },
+  {
+   "name": "F01_CROUCH",
+   "phase": "CROUCH / LOAD",
+   "t": "u 0.00\u20130.22",
+   "rig": "NORTH_SET",
+   "pose": {
+    "pelvis": {
+     "dy": 7
+    },
+    "torso": {
+     "rot": 0,
+     "sy": 0.96
+    },
+    "head": {
+     "rot": 0
+    },
+    "near_upper": {
+     "rot": -6
+    },
+    "near_fore": {
+     "rot": 0
+    },
+    "far_upper": {
+     "rot": 6
+    },
+    "far_fore": {
+     "rot": 0
+    },
+    "near_thigh": {
+     "rot": 35.29768928357499
+    },
+    "near_shin": {
+     "rot": -87.0775065492677
+    },
+    "near_boot": {
+     "rot": 51.77981726569271
+    },
+    "far_thigh": {
+     "rot": 44.28640458883898
+    },
+    "far_shin": {
+     "rot": -90.19487496168935
+    },
+    "far_boot": {
+     "rot": 45.908470372850374
+    },
+    "torso_under": {
+     "rot": 0,
+     "sy": 0.96
+    }
+   },
+   "note": "hips down 3 px, knees loaded, arms back",
+   "sources": [
+    "SET/north"
+   ],
+   "grounded": "both feet",
+   "pixel_scale": 1.0,
+   "root": [
+    80.0,
+    149
+   ],
+   "joints": {
+    "head": [
+     80.0,
+     84.1
+    ],
+    "far_glove": [
+     57.1,
+     112.7
+    ],
+    "far_fore": [
+     58.7,
+     97.8
+    ],
+    "far_upper": [
+     62.0,
+     85.1
+    ],
+    "near_glove": [
+     104.8,
+     111.5
+    ],
+    "near_fore": [
+     102.3,
+     97.7
+    ],
+    "near_upper": [
+     98.0,
+     85.1
+    ],
+    "far_thigh": [
+     70.0,
+     125.0
+    ],
+    "far_shin": [
+     59.5,
+     132.9
+    ],
+    "far_boot": [
+     66.0,
+     142.0
+    ],
+    "near_thigh": [
+     90.0,
+     125.0
+    ],
+    "near_shin": [
+     84.1,
+     136.8
+    ],
+    "near_boot": [
+     94.0,
+     142.0
+    ],
+    "pelvis": [
+     80.0,
+     115.0
+    ],
+    "torso": [
+     80.0,
+     111.0
+    ],
+    "torso_under": [
+     80.0,
+     111.0
+    ],
+    "shorts_under": [
+     80.0,
+     115.0
+    ]
+   },
+   "landmarks": {
+    "head": [
+     80.0,
+     84.1
+    ],
+    "lead_glove": [
+     104.8,
+     111.5
+    ],
+    "other_glove": [
+     57.1,
+     112.7
+    ],
+    "pelvis": [
+     80.0,
+     115.0
+    ],
+    "foot_L": [
+     66.0,
+     142.0
+    ],
+    "foot_R": [
+     94.0,
+     142.0
+    ],
+    "shoulder": [
+     98.0,
+     85.1
+    ]
+   },
+   "style": 0.0,
+   "screen": {
+    "head": [
+     0.0,
+     -27.2
+    ],
+    "lead_glove": [
+     10.4,
+     -15.7
+    ],
+    "other_glove": [
+     -9.6,
+     -15.2
+    ],
+    "pelvis": [
+     0.0,
+     -14.3
+    ],
+    "foot_L": [
+     -5.9,
+     -2.9
+    ],
+    "foot_R": [
+     5.9,
+     -2.9
+    ],
+    "shoulder": [
+     7.6,
+     -26.8
+    ]
+   }
+  },
+  {
+   "name": "F02_PUSH_far",
+   "phase": "PUSH UP",
+   "t": "u 0.22\u20130.45",
+   "rig": "NORTH_SET",
+   "pose": {
+    "pelvis": {
+     "dy": -2,
+     "dx": -1
+    },
+    "torso": {
+     "rot": -8,
+     "sy": 1.0
+    },
+    "head": {
+     "rot": 4
+    },
+    "near_upper": {
+     "rot": 70
+    },
+    "near_fore": {
+     "rot": 10
+    },
+    "far_upper": {
+     "rot": 70
+    },
+    "far_fore": {
+     "rot": 10
+    },
+    "near_thigh": {
+     "rot": -2.5432168944759947
+    },
+    "near_shin": {
+     "rot": 0.5254395169276376
+    },
+    "near_boot": {
+     "rot": 22.017777377548356
+    },
+    "far_thigh": {
+     "rot": 4.176619749825789
+    },
+    "far_shin": {
+     "rot": -14.181642174115904
+    },
+    "far_boot": {
+     "rot": 30.005022424290114
+    },
+    "torso_under": {
+     "rot": -8,
+     "sy": 1.0
+    }
+   },
+   "note": "driving up off both toes, trunk leaning to the post side, arms swinging up",
+   "sources": [
+    "SET/north"
+   ],
+   "grounded": "toes",
+   "pixel_scale": 1.0,
+   "root": [
+    80.0,
+    149
+   ],
+   "joints": {
+    "head": [
+     75.1,
+     74.3
+    ],
+    "far_glove": [
+     30.7,
+     86.7
+    ],
+    "far_fore": [
+     45.0,
+     82.1
+    ],
+    "far_upper": [
+     57.4,
+     77.8
+    ],
+    "near_glove": [
+     70.0,
+     86.8
+    ],
+    "near_fore": [
+     83.0,
+     81.5
+    ],
+    "near_upper": [
+     93.1,
+     72.8
+    ],
+    "far_thigh": [
+     69.0,
+     116.0
+    ],
+    "far_shin": [
+     66.1,
+     128.8
+    ],
+    "far_boot": [
+     66.0,
+     140.0
+    ],
+    "near_thigh": [
+     89.0,
+     116.0
+    ],
+    "near_shin": [
+     91.6,
+     128.9
+    ],
+    "near_boot": [
+     94.0,
+     139.8
+    ],
+    "pelvis": [
+     79.0,
+     106.0
+    ],
+    "torso": [
+     79.0,
+     102.0
+    ],
+    "torso_under": [
+     79.0,
+     102.0
+    ],
+    "shorts_under": [
+     79.0,
+     106.0
+    ]
+   },
+   "landmarks": {
+    "head": [
+     75.1,
+     74.3
+    ],
+    "lead_glove": [
+     70.0,
+     86.8
+    ],
+    "other_glove": [
+     30.7,
+     86.7
+    ],
+    "pelvis": [
+     79.0,
+     106.0
+    ],
+    "foot_L": [
+     66.0,
+     140.0
+    ],
+    "foot_R": [
+     94.0,
+     139.8
+    ],
+    "shoulder": [
+     93.1,
+     72.8
+    ]
+   },
+   "style": 0.0,
+   "screen": {
+    "head": [
+     -2.1,
+     -31.4
+    ],
+    "lead_glove": [
+     -4.2,
+     -26.1
+    ],
+    "other_glove": [
+     -20.7,
+     -26.1
+    ],
+    "pelvis": [
+     -0.4,
+     -18.0
+    ],
+    "foot_L": [
+     -5.9,
+     -3.8
+    ],
+    "foot_R": [
+     5.9,
+     -3.9
+    ],
+    "shoulder": [
+     5.5,
+     -32.0
+    ]
+   }
+  },
+  {
+   "name": "F03_RISING_far",
+   "phase": "RISING (airborne)",
+   "t": "u 0.45\u20130.70",
+   "rig": "NORTH_SET",
+   "pose": {
+    "pelvis": {
+     "dy": -8,
+     "dx": -2
+    },
+    "torso": {
+     "rot": -12,
+     "sy": 1.0
+    },
+    "head": {
+     "rot": 8
+    },
+    "near_upper": {
+     "rot": 150,
+     "ext": 2
+    },
+    "near_fore": {
+     "rot": 12,
+     "ext": 2
+    },
+    "far_upper": {
+     "rot": 150,
+     "ext": 2
+    },
+    "far_fore": {
+     "rot": 12,
+     "ext": 2
+    },
+    "near_thigh": {
+     "rot": -8,
+     "sy": 0.9
+    },
+    "near_shin": {
+     "rot": -24
+    },
+    "near_boot": {
+     "rot": 10
+    },
+    "far_thigh": {
+     "rot": -8,
+     "sy": 0.9
+    },
+    "far_shin": {
+     "rot": -24
+    },
+    "far_boot": {
+     "rot": 10
+    },
+    "torso_under": {
+     "rot": -12,
+     "sy": 1.0
+    }
+   },
+   "note": "airborne, arms nearly straight up toward the corner, legs tucking",
+   "sources": [
+    "SET/north"
+   ],
+   "grounded": "airborne",
+   "pixel_scale": 1.0,
+   "root": [
+    80.0,
+    149
+   ],
+   "joints": {
+    "head": [
+     72.2,
+     68.6
+    ],
+    "far_glove": [
+     38.0,
+     45.9
+    ],
+    "far_fore": [
+     46.5,
+     60.7
+    ],
+    "far_upper": [
+     54.8,
+     73.3
+    ],
+    "near_glove": [
+     68.4,
+     43.8
+    ],
+    "near_fore": [
+     77.4,
+     57.0
+    ],
+    "near_upper": [
+     90.0,
+     65.8
+    ],
+    "far_thigh": [
+     68.0,
+     110.0
+    ],
+    "far_shin": [
+     67.6,
+     121.9
+    ],
+    "far_boot": [
+     71.8,
+     132.3
+    ],
+    "near_thigh": [
+     88.0,
+     110.0
+    ],
+    "near_shin": [
+     91.6,
+     121.3
+    ],
+    "near_boot": [
+     99.1,
+     129.6
+    ],
+    "pelvis": [
+     78.0,
+     100.0
+    ],
+    "torso": [
+     78.0,
+     96.0
+    ],
+    "torso_under": [
+     78.0,
+     96.0
+    ],
+    "shorts_under": [
+     78.0,
+     100.0
+    ]
+   },
+   "landmarks": {
+    "head": [
+     72.2,
+     68.6
+    ],
+    "lead_glove": [
+     68.4,
+     43.8
+    ],
+    "other_glove": [
+     38.0,
+     45.9
+    ],
+    "pelvis": [
+     78.0,
+     100.0
+    ],
+    "foot_L": [
+     71.8,
+     132.3
+    ],
+    "foot_R": [
+     99.1,
+     129.6
+    ],
+    "shoulder": [
+     90.0,
+     65.8
+    ]
+   },
+   "style": 0.0,
+   "screen": {
+    "head": [
+     -3.3,
+     -33.7
+    ],
+    "lead_glove": [
+     -4.9,
+     -44.2
+    ],
+    "other_glove": [
+     -17.6,
+     -43.3
+    ],
+    "pelvis": [
+     -0.8,
+     -20.6
+    ],
+    "foot_L": [
+     -3.4,
+     -7.0
+    ],
+    "foot_R": [
+     8.0,
+     -8.1
+    ],
+    "shoulder": [
+     4.2,
+     -34.9
+    ]
+   }
+  },
+  {
+   "name": "F04_REACH_far",
+   "phase": "FULL REACH (bridge to the still)",
+   "t": "u 0.70\u20130.95",
+   "rig": "NORTH_SET",
+   "pose": {
+    "pelvis": {
+     "dy": -14,
+     "dx": -3
+    },
+    "torso": {
+     "rot": -16,
+     "sy": 1.02
+    },
+    "head": {
+     "rot": 12
+    },
+    "near_upper": {
+     "rot": 168,
+     "ext": 4
+    },
+    "near_fore": {
+     "rot": 6,
+     "ext": 3
+    },
+    "far_upper": {
+     "rot": 168,
+     "ext": 4
+    },
+    "far_fore": {
+     "rot": 6,
+     "ext": 3
+    },
+    "near_thigh": {
+     "rot": -12,
+     "sy": 0.88
+    },
+    "near_shin": {
+     "rot": -30
+    },
+    "near_boot": {
+     "rot": 12
+    },
+    "far_thigh": {
+     "rot": -12,
+     "sy": 0.88
+    },
+    "far_shin": {
+     "rot": -30
+    },
+    "far_boot": {
+     "rot": 12
+    },
+    "torso_under": {
+     "rot": -16,
+     "sy": 1.02
+    }
+   },
+   "note": "arms fully extended up to the corner, body stretched, legs trailing: the frame before the untouched still",
+   "sources": [
+    "SET/north"
+   ],
+   "grounded": "airborne",
+   "pixel_scale": 1.0,
+   "root": [
+    80.0,
+    149
+   ],
+   "joints": {
+    "head": [
+     69.1,
+     62.5
+    ],
+    "far_glove": [
+     39.7,
+     35.6
+    ],
+    "far_fore": [
+     46.4,
+     52.3
+    ],
+    "far_upper": [
+     52.1,
+     68.5
+    ],
+    "near_glove": [
+     67.8,
+     30.2
+    ],
+    "near_fore": [
+     75.3,
+     45.5
+    ],
+    "near_upper": [
+     86.7,
+     58.6
+    ],
+    "far_thigh": [
+     67.0,
+     104.0
+    ],
+    "far_shin": [
+     67.4,
+     115.6
+    ],
+    "far_boot": [
+     73.3,
+     125.1
+    ],
+    "near_thigh": [
+     87.0,
+     104.0
+    ],
+    "near_shin": [
+     91.3,
+     114.8
+    ],
+    "near_boot": [
+     100.2,
+     121.6
+    ],
+    "pelvis": [
+     77.0,
+     94.0
+    ],
+    "torso": [
+     77.0,
+     90.0
+    ],
+    "torso_under": [
+     77.0,
+     90.0
+    ],
+    "shorts_under": [
+     77.0,
+     94.0
+    ]
+   },
+   "landmarks": {
+    "head": [
+     69.1,
+     62.5
+    ],
+    "lead_glove": [
+     67.8,
+     30.2
+    ],
+    "other_glove": [
+     39.7,
+     35.6
+    ],
+    "pelvis": [
+     77.0,
+     94.0
+    ],
+    "foot_L": [
+     73.3,
+     125.1
+    ],
+    "foot_R": [
+     100.2,
+     121.6
+    ],
+    "shoulder": [
+     86.7,
+     58.6
+    ]
+   },
+   "style": 0.0,
+   "screen": {
+    "head": [
+     -4.6,
+     -36.3
+    ],
+    "lead_glove": [
+     -5.1,
+     -49.9
+    ],
+    "other_glove": [
+     -16.9,
+     -47.6
+    ],
+    "pelvis": [
+     -1.3,
+     -23.1
+    ],
+    "foot_L": [
+     -2.8,
+     -10.0
+    ],
+    "foot_R": [
+     8.5,
+     -11.5
+    ],
+    "shoulder": [
+     2.8,
+     -37.9
+    ]
+   }
+  },
+  {
+   "name": "F11_DESCENT_far",
+   "phase": "DESCENT",
+   "t": "+0.05\u20130.20 s",
+   "rig": "NORTH_SET",
+   "pose": {
+    "pelvis": {
+     "dy": -4,
+     "dx": -2
+    },
+    "torso": {
+     "rot": -8,
+     "sy": 1.0
+    },
+    "head": {
+     "rot": 4
+    },
+    "near_upper": {
+     "rot": 90
+    },
+    "near_fore": {
+     "rot": 10
+    },
+    "far_upper": {
+     "rot": 90
+    },
+    "far_fore": {
+     "rot": 10
+    },
+    "near_thigh": {
+     "rot": -4
+    },
+    "near_shin": {
+     "rot": -10
+    },
+    "near_boot": {
+     "rot": 0
+    },
+    "far_thigh": {
+     "rot": -4
+    },
+    "far_shin": {
+     "rot": -10
+    },
+    "far_boot": {
+     "rot": 0
+    },
+    "torso_under": {
+     "rot": -8,
+     "sy": 1.0
+    }
+   },
+   "note": "coming down, arms lowering, feet reaching for the pitch",
+   "sources": [
+    "SET/north"
+   ],
+   "grounded": "airborne",
+   "pixel_scale": 1.0,
+   "root": [
+    80.0,
+    149
+   ],
+   "joints": {
+    "head": [
+     74.1,
+     72.3
+    ],
+    "far_glove": [
+     28.3,
+     75.1
+    ],
+    "far_fore": [
+     43.3,
+     75.6
+    ],
+    "far_upper": [
+     56.4,
+     75.8
+    ],
+    "near_glove": [
+     65.6,
+     76.0
+    ],
+    "near_fore": [
+     79.6,
+     75.5
+    ],
+    "near_upper": [
+     92.1,
+     70.8
+    ],
+    "far_thigh": [
+     68.0,
+     114.0
+    ],
+    "far_shin": [
+     66.9,
+     127.1
+    ],
+    "far_boot": [
+     67.6,
+     138.3
+    ],
+    "near_thigh": [
+     88.0,
+     114.0
+    ],
+    "near_shin": [
+     90.9,
+     126.8
+    ],
+    "near_boot": [
+     95.5,
+     137.0
+    ],
+    "pelvis": [
+     78.0,
+     104.0
+    ],
+    "torso": [
+     78.0,
+     100.0
+    ],
+    "torso_under": [
+     78.0,
+     100.0
+    ],
+    "shorts_under": [
+     78.0,
+     104.0
+    ]
+   },
+   "landmarks": {
+    "head": [
+     74.1,
+     72.3
+    ],
+    "lead_glove": [
+     65.6,
+     76.0
+    ],
+    "other_glove": [
+     28.3,
+     75.1
+    ],
+    "pelvis": [
+     78.0,
+     104.0
+    ],
+    "foot_L": [
+     67.6,
+     138.3
+    ],
+    "foot_R": [
+     95.5,
+     137.0
+    ],
+    "shoulder": [
+     92.1,
+     70.8
+    ]
+   },
+   "style": 0.0,
+   "screen": {
+    "head": [
+     -2.5,
+     -32.2
+    ],
+    "lead_glove": [
+     -6.0,
+     -30.6
+    ],
+    "other_glove": [
+     -21.7,
+     -31.0
+    ],
+    "pelvis": [
+     -0.8,
+     -18.9
+    ],
+    "foot_L": [
+     -5.2,
+     -4.5
+    ],
+    "foot_R": [
+     6.5,
+     -5.0
+    ],
+    "shoulder": [
+     5.1,
+     -32.8
+    ]
+   }
+  },
+  {
+   "name": "F12_LAND_far",
+   "phase": "LAND (absorb)",
+   "t": "+0.20\u20130.45 s",
+   "rig": "NORTH_SET",
+   "pose": {
+    "pelvis": {
+     "dy": 8,
+     "dx": -1
+    },
+    "torso": {
+     "rot": -6,
+     "sy": 0.96
+    },
+    "head": {
+     "rot": 2
+    },
+    "near_upper": {
+     "rot": 30
+    },
+    "near_fore": {
+     "rot": 0
+    },
+    "far_upper": {
+     "rot": 30
+    },
+    "far_fore": {
+     "rot": 0
+    },
+    "near_thigh": {
+     "rot": 33.13955626422667
+    },
+    "near_shin": {
+     "rot": -91.75495812354302
+    },
+    "near_boot": {
+     "rot": 58.61540185931635
+    },
+    "far_thigh": {
+     "rot": 44.91012741218654
+    },
+    "far_shin": {
+     "rot": -98.00102982101241
+    },
+    "far_boot": {
+     "rot": 53.09090240882587
+    },
+    "torso_under": {
+     "rot": -6,
+     "sy": 0.96
+    }
+   },
+   "note": "both feet down, knees absorbing the landing, arms coming down",
+   "sources": [
+    "SET/north"
+   ],
+   "grounded": "both feet",
+   "pixel_scale": 1.0,
+   "root": [
+    80.0,
+    149
+   ],
+   "joints": {
+    "head": [
+     76.2,
+     85.3
+    ],
+    "far_glove": [
+     45.2,
+     112.9
+    ],
+    "far_fore": [
+     51.3,
+     99.2
+    ],
+    "far_upper": [
+     58.4,
+     88.1
+    ],
+    "near_glove": [
+     86.9,
+     110.6
+    ],
+    "near_fore": [
+     91.6,
+     97.4
+    ],
+    "near_upper": [
+     94.2,
+     84.3
+    ],
+    "far_thigh": [
+     69.0,
+     126.0
+    ],
+    "far_shin": [
+     58.4,
+     133.8
+    ],
+    "far_boot": [
+     66.0,
+     142.0
+    ],
+    "near_thigh": [
+     89.0,
+     126.0
+    ],
+    "near_shin": [
+     83.6,
+     138.0
+    ],
+    "near_boot": [
+     94.0,
+     142.0
+    ],
+    "pelvis": [
+     79.0,
+     116.0
+    ],
+    "torso": [
+     79.0,
+     112.0
+    ],
+    "torso_under": [
+     79.0,
+     112.0
+    ],
+    "shorts_under": [
+     79.0,
+     116.0
+    ]
+   },
+   "landmarks": {
+    "head": [
+     76.2,
+     85.3
+    ],
+    "lead_glove": [
+     86.9,
+     110.6
+    ],
+    "other_glove": [
+     45.2,
+     112.9
+    ],
+    "pelvis": [
+     79.0,
+     116.0
+    ],
+    "foot_L": [
+     66.0,
+     142.0
+    ],
+    "foot_R": [
+     94.0,
+     142.0
+    ],
+    "shoulder": [
+     94.2,
+     84.3
+    ]
+   },
+   "style": 0.0,
+   "screen": {
+    "head": [
+     -1.6,
+     -26.7
+    ],
+    "lead_glove": [
+     2.9,
+     -16.1
+    ],
+    "other_glove": [
+     -14.6,
+     -15.2
+    ],
+    "pelvis": [
+     -0.4,
+     -13.9
+    ],
+    "foot_L": [
+     -5.9,
+     -2.9
+    ],
+    "foot_R": [
+     5.9,
+     -2.9
+    ],
+    "shoulder": [
+     6.0,
+     -27.2
+    ]
+   }
+  },
+  {
+   "name": "F13_RECOVER_far",
+   "phase": "RECOVER",
+   "t": "+0.45\u20130.80 s",
+   "rig": "NORTH_SET",
+   "pose": {
+    "pelvis": {
+     "dy": 3
+    },
+    "torso": {
+     "rot": -2,
+     "sy": 0.98
+    },
+    "head": {
+     "rot": 0
+    },
+    "near_upper": {
+     "rot": 8
+    },
+    "near_fore": {
+     "rot": 0
+    },
+    "far_upper": {
+     "rot": 8
+    },
+    "far_fore": {
+     "rot": 0
+    },
+    "near_thigh": {
+     "rot": 24.06440695298396
+    },
+    "near_shin": {
+     "rot": -55.71571841154601
+    },
+    "near_boot": {
+     "rot": 31.65131145856205
+    },
+    "far_thigh": {
+     "rot": 28.140678162998746
+    },
+    "far_shin": {
+     "rot": -58.833086823967605
+    },
+    "far_boot": {
+     "rot": 30.69240866096886
+    },
+    "torso_under": {
+     "rot": -2,
+     "sy": 0.98
+    }
+   },
+   "note": "rising out of the crouch, hands settling",
+   "sources": [
+    "SET/north"
+   ],
+   "grounded": "both feet",
+   "pixel_scale": 1.0,
+   "root": [
+    80.0,
+    149
+   ],
+   "joints": {
+    "head": [
+     79.0,
+     79.6
+    ],
+    "far_glove": [
+     56.2,
+     108.8
+    ],
+    "far_fore": [
+     57.7,
+     93.9
+    ],
+    "far_upper": [
+     61.1,
+     81.2
+    ],
+    "near_glove": [
+     98.2,
+     107.2
+    ],
+    "near_fore": [
+     98.7,
+     93.2
+    ],
+    "near_upper": [
+     97.1,
+     79.9
+    ],
+    "far_thigh": [
+     70.0,
+     121.0
+    ],
+    "far_shin": [
+     62.1,
+     131.5
+    ],
+    "far_boot": [
+     66.0,
+     142.0
+    ],
+    "near_thigh": [
+     90.0,
+     121.0
+    ],
+    "near_shin": [
+     86.5,
+     133.7
+    ],
+    "near_boot": [
+     94.0,
+     142.0
+    ],
+    "pelvis": [
+     80.0,
+     111.0
+    ],
+    "torso": [
+     80.0,
+     107.0
+    ],
+    "torso_under": [
+     80.0,
+     107.0
+    ],
+    "shorts_under": [
+     80.0,
+     111.0
+    ]
+   },
+   "landmarks": {
+    "head": [
+     79.0,
+     79.6
+    ],
+    "lead_glove": [
+     98.2,
+     107.2
+    ],
+    "other_glove": [
+     56.2,
+     108.8
+    ],
+    "pelvis": [
+     80.0,
+     111.0
+    ],
+    "foot_L": [
+     66.0,
+     142.0
+    ],
+    "foot_R": [
+     94.0,
+     142.0
+    ],
+    "shoulder": [
+     97.1,
+     79.9
+    ]
+   },
+   "style": 0.0,
+   "screen": {
+    "head": [
+     -0.4,
+     -29.1
+    ],
+    "lead_glove": [
+     7.6,
+     -17.5
+    ],
+    "other_glove": [
+     -10.0,
+     -16.9
+    ],
+    "pelvis": [
+     0.0,
+     -15.9
+    ],
+    "foot_L": [
+     -5.9,
+     -2.9
+    ],
+    "foot_R": [
+     5.9,
+     -2.9
+    ],
+    "shoulder": [
+     7.2,
+     -29.0
+    ]
+   }
+  },
+  {
+   "name": "F17_READY",
+   "phase": "RETURN TO READY",
+   "t": "+0.80\u20131.05 s \u2192 live SET",
+   "rig": "NORTH_SET",
+   "pose": {},
+   "note": "GK_BASE_V1 SET/north, untouched",
+   "sources": [
+    "SET/north"
+   ],
+   "grounded": "both feet",
+   "pixel_scale": 1.0,
+   "root": [
+    80.0,
+    149
+   ],
+   "joints": {
+    "head": [
+     80.0,
+     76.0
+    ],
+    "far_glove": [
+     60.0,
+     105.0
+    ],
+    "far_fore": [
+     60.0,
+     90.0
+    ],
+    "far_upper": [
+     62.0,
+     77.0
+    ],
+    "near_glove": [
+     102.0,
+     104.0
+    ],
+    "near_fore": [
+     101.0,
+     90.0
+    ],
+    "near_upper": [
+     98.0,
+     77.0
+    ],
+    "far_thigh": [
+     70.0,
+     118.0
+    ],
+    "far_shin": [
+     68.0,
+     131.0
+    ],
+    "far_boot": [
+     66.0,
+     142.0
+    ],
+    "near_thigh": [
+     90.0,
+     118.0
+    ],
+    "near_shin": [
+     92.0,
+     131.0
+    ],
+    "near_boot": [
+     94.0,
+     142.0
+    ],
+    "pelvis": [
+     80.0,
+     108.0
+    ],
+    "torso": [
+     80.0,
+     104.0
+    ],
+    "torso_under": [
+     80.0,
+     104.0
+    ],
+    "shorts_under": [
+     80.0,
+     108.0
+    ]
+   },
+   "landmarks": {
+    "head": [
+     80.0,
+     76.0
+    ],
+    "lead_glove": [
+     102.0,
+     104.0
+    ],
+    "other_glove": [
+     60.0,
+     105.0
+    ],
+    "pelvis": [
+     80.0,
+     108.0
+    ],
+    "foot_L": [
+     66.0,
+     142.0
+    ],
+    "foot_R": [
+     94.0,
+     142.0
+    ],
+    "shoulder": [
+     98.0,
+     77.0
+    ]
+   },
+   "style": 0.0,
+   "screen": {
+    "head": [
+     0.0,
+     -30.6
+    ],
+    "lead_glove": [
+     9.2,
+     -18.9
+    ],
+    "other_glove": [
+     -8.4,
+     -18.5
+    ],
+    "pelvis": [
+     0.0,
+     -17.2
+    ],
+    "foot_L": [
+     -5.9,
+     -2.9
+    ],
+    "foot_R": [
+     5.9,
+     -2.9
+    ],
+    "shoulder": [
+     7.6,
+     -30.2
+    ]
+   }
+  }
+ ],
+ "family": "TIGHT",
+ "facing": "north",
+ "post": "far"
+}

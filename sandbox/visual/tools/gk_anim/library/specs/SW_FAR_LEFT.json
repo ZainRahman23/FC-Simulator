@@ -1,0 +1,181 @@
+{
+ "id": "SW_FAR_LEFT",
+ "asset_dir": "goalkeeper/sequences/SW_FAR_LEFT",
+ "pose": "SW_FAR_DIVE_LEFT",
+ "families": [
+  "AIRBORNE_DIVE"
+ ],
+ "heights": [
+  "MID",
+  "HIGH"
+ ],
+ "record": "SOUTH-WEST facing far dive to the keeper's LEFT (SW_FAR_DIVE @0.74, original): trunk from the south-west SET rig (the sprite shown at commit), Pro-part bridges and landing from the SW_FAR rig, get-up in the south-west view (2026-09-07)",
+ "liveFrom": 0.95,
+ "contactHold": 0.05,
+ "moderateBelow": 0.8,
+ "pres": {
+  "tau": 0.4,
+  "tLand": 0.55,
+  "tEnd": 1.05,
+  "note": "presentation-only root continuation after execEnd along the dive direction, eased back to the simulation root by tEnd"
+ },
+ "pre": [
+  [
+   "F01",
+   0.0,
+   0.05,
+   0.0
+  ],
+  [
+   "F02",
+   0.05,
+   0.1,
+   0.0
+  ],
+  [
+   "F03",
+   0.1,
+   0.16,
+   0.0
+  ],
+  [
+   "F04",
+   0.16,
+   0.25,
+   0.0
+  ],
+  [
+   "F05",
+   0.25,
+   0.31,
+   0.0
+  ],
+  [
+   "F05b",
+   0.31,
+   0.37,
+   0.25
+  ],
+  [
+   "F06",
+   0.37,
+   0.46,
+   0.5
+  ],
+  [
+   "F07",
+   0.46,
+   0.56,
+   0.75
+  ],
+  [
+   "F07b",
+   0.56,
+   0.65,
+   1.0
+  ],
+  [
+   "F07c",
+   0.65,
+   0.73,
+   1.0
+  ],
+  [
+   "F08",
+   0.73,
+   0.84,
+   1.0
+  ],
+  [
+   "F09",
+   0.84,
+   0.95,
+   1.0
+  ]
+ ],
+ "moderate": {
+  "F06": "F06m",
+  "F07": "F07m"
+ },
+ "post": [
+  [
+   "F11",
+   0.05,
+   0.11,
+   1.0
+  ],
+  [
+   "F11b",
+   0.11,
+   0.17,
+   1.0
+  ],
+  [
+   "F12",
+   0.17,
+   0.23,
+   1.0
+  ],
+  [
+   "F12b",
+   0.23,
+   0.3,
+   1.0
+  ],
+  [
+   "F13",
+   0.3,
+   0.37,
+   1.0
+  ],
+  [
+   "F13b",
+   0.37,
+   0.45,
+   1.0
+  ],
+  [
+   "F14",
+   0.45,
+   0.55,
+   1.0
+  ],
+  [
+   "F15a",
+   0.55,
+   0.63,
+   0.85
+  ],
+  [
+   "F15a2",
+   0.63,
+   0.71,
+   0.7
+  ],
+  [
+   "F15a3",
+   0.71,
+   0.79,
+   0.5
+  ],
+  [
+   "F15b",
+   0.79,
+   0.88,
+   0.35
+  ],
+  [
+   "F16",
+   0.88,
+   0.97,
+   0.15
+  ],
+  [
+   "F17",
+   0.97,
+   1.05,
+   0.0
+  ]
+ ],
+ "mirror_keys": []
+}

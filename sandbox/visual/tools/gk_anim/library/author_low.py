@@ -12,9 +12,11 @@ from author_base import Author, SetRig, ContactRig
 from rig_w_set import build as build_w
 from rig_set_dirs import build as build_dir
 facing = sys.argv[1]; OUT = sys.argv[2]; os.makedirs(OUT, exist_ok=True)
+import json
 if facing == "west": RS, _ = build_w(OUT)
 else: RS, _ = build_dir(facing, OUT)
-S = SetRig(RS, label="SET/" + facing)
+_an = json.load(open("assets/visual_v1/goalkeeper/anchors/set.json"))[facing]      # the live SET root of this facing (content_cx, foot_row)
+S = SetRig(RS, root=(_an["content_cx"], _an["foot_row"]), label="SET/" + facing, torso_vec=(RS.parts["head"].pivot[0] - RS.parts["torso"].pivot[0], RS.parts["head"].pivot[1] - RS.parts["torso"].pivot[1]))
 A = Author(S, None, OUT)                    # no contact rig: the still is the live pose
 NEAR, FAR = S.near_foot, S.far_foot
 # screen x of each foot relative to the pelvis pivot: which way is "toward the keeper's RIGHT (near)" on this facing

@@ -1,0 +1,102 @@
+{
+ "id": "TIGHT_S_NEAR",
+ "pose": "TIGHT_S_NEAR_TOP",
+ "families": [
+  "AIRBORNE_DIVE",
+  "HIGH_CATCH"
+ ],
+ "heights": [
+  "HIGH",
+  "TOP"
+ ],
+ "record": "tight-angle high save into the approved TIGHT_S_NEAR_TOP still (south-facing SET rig, 2026-09-07): crouch \u2192 push up \u2192 rising \u2192 full reach (bridge) \u2192 live still \u2192 descent \u2192 land \u2192 recover \u2192 SET; a shorter action than the far dives, no Pro-part bridge (same GK_BASE_V1 lineage)",
+ "liveFrom": 0.95,
+ "contactHold": 0.05,
+ "moderateBelow": 0.0,
+ "pres": {
+  "tau": 0.2,
+  "tLand": 0.3,
+  "tEnd": 1.05,
+  "note": "tight-angle jump: a short settle only"
+ },
+ "pre": [
+  {
+   "key": "F01_CROUCH",
+   "path": "goalkeeper/sequences/TIGHT_S_NEAR/F01_CROUCH.png",
+   "anchors": "goalkeeper/sequences/TIGHT_S_NEAR/F01_CROUCH_anchors.json",
+   "phase": "CROUCH / LOAD",
+   "from": 0.0,
+   "to": 0.22,
+   "ik": false,
+   "ikW": 0.0
+  },
+  {
+   "key": "F02_PUSH_near",
+   "path": "goalkeeper/sequences/TIGHT_S_NEAR/F02_PUSH_near.png",
+   "anchors": "goalkeeper/sequences/TIGHT_S_NEAR/F02_PUSH_near_anchors.json",
+   "phase": "PUSH UP",
+   "from": 0.22,
+   "to": 0.45,
+   "ik": false,
+   "ikW": 0.0
+  },
+  {
+   "key": "F03_RISING_near",
+   "path": "goalkeeper/sequences/TIGHT_S_NEAR/F03_RISING_near.png",
+   "anchors": "goalkeeper/sequences/TIGHT_S_NEAR/F03_RISING_near_anchors.json",
+   "phase": "RISING (airborne)",
+   "from": 0.45,
+   "to": 0.7,
+   "ik": true,
+   "ikW": 0.5
+  },
+  {
+   "key": "F04_REACH_near",
+   "path": "goalkeeper/sequences/TIGHT_S_NEAR/F04_REACH_near.png",
+   "anchors": "goalkeeper/sequences/TIGHT_S_NEAR/F04_REACH_near_anchors.json",
+   "phase": "FULL REACH (bridge to the still)",
+   "from": 0.7,
+   "to": 0.95,
+   "ik": true,
+   "ikW": 1.0
+  }
+ ],
+ "post": [
+  {
+   "key": "F11_DESCENT_near",
+   "path": "goalkeeper/sequences/TIGHT_S_NEAR/F11_DESCENT_near.png",
+   "anchors": "goalkeeper/sequences/TIGHT_S_NEAR/F11_DESCENT_near_anchors.json",
+   "phase": "DESCENT",
+   "from": 0.05,
+   "to": 0.2,
+   "carry": 0.8
+  },
+  {
+   "key": "F12_LAND_near",
+   "path": "goalkeeper/sequences/TIGHT_S_NEAR/F12_LAND_near.png",
+   "anchors": "goalkeeper/sequences/TIGHT_S_NEAR/F12_LAND_near_anchors.json",
+   "phase": "LAND (absorb)",
+   "from": 0.2,
+   "to": 0.45,
+   "carry": 0.4
+  },
+  {
+   "key": "F13_RECOVER_near",
+   "path": "goalkeeper/sequences/TIGHT_S_NEAR/F13_RECOVER_near.png",
+   "anchors": "goalkeeper/sequences/TIGHT_S_NEAR/F13_RECOVER_near_anchors.json",
+   "phase": "RECOVER",
+   "from": 0.45,
+   "to": 0.8,
+   "carry": 0.15
+  },
+  {
+   "key": "F17_READY",
+   "path": "goalkeeper/sequences/TIGHT_S_NEAR/F17_READY.png",
+   "anchors": "goalkeeper/sequences/TIGHT_S_NEAR/F17_READY_anchors.json",
+   "phase": "RETURN TO READY",
+   "from": 0.8,
+   "to": 1.05,
+   "carry": 0.0
+  }
+ ]
+}

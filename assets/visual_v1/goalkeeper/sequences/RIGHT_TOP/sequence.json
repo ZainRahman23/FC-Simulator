@@ -7,7 +7,7 @@
  "heights": [
   "TOP"
  ],
- "record": "full-stretch top-corner dive to the keeper's RIGHT (TOP_LEFT_CORNER_CW50 @ 0.72): shares the RIGHT_FAR trunk F01\u2013F07 (+moderate) and get-up F15a3\u2013F17; own base bridge F07b, Pro-part bridges F07c\u2013F09 and landing F11\u2013F15a2 from the corner rig (2026-09-07)",
+ "record": "full-stretch top-corner dive to the keeper's RIGHT (TOP_LEFT_CORNER_CW50 @ 0.72): shares the RIGHT_FAR trunk F01\u2013F07 (+moderate) and get-up F15a3\u2013F17; own base bridge F07b, Pro-part bridges F07c\u2013F09 and landing F11\u2013F15a2 from the corner rig (2026-09-07); 2026-09-07: anticipation F01\u2013F03 variants for the south-west and north-west facings",
  "liveFrom": 0.95,
  "contactHold": 0.05,
  "moderateBelow": 0.8,
@@ -24,6 +24,16 @@
    "anchors": "goalkeeper/sequences/RIGHT_FAR/F01_WEIGHT_SHIFT_anchors.json",
    "phase": "shared",
    "shared": true,
+   "byFacing": {
+    "south-west": {
+     "path": "goalkeeper/sequences/RIGHT_TOP/south-west/F01_WEIGHT_SHIFT.png",
+     "anchors": "goalkeeper/sequences/RIGHT_TOP/south-west/F01_WEIGHT_SHIFT_anchors.json"
+    },
+    "north-west": {
+     "path": "goalkeeper/sequences/RIGHT_TOP/north-west/F01_WEIGHT_SHIFT.png",
+     "anchors": "goalkeeper/sequences/RIGHT_TOP/north-west/F01_WEIGHT_SHIFT_anchors.json"
+    }
+   },
    "from": 0.0,
    "to": 0.05,
    "ik": false,
@@ -35,6 +45,16 @@
    "anchors": "goalkeeper/sequences/RIGHT_FAR/F02_CROUCH_anchors.json",
    "phase": "shared",
    "shared": true,
+   "byFacing": {
+    "south-west": {
+     "path": "goalkeeper/sequences/RIGHT_TOP/south-west/F02_CROUCH.png",
+     "anchors": "goalkeeper/sequences/RIGHT_TOP/south-west/F02_CROUCH_anchors.json"
+    },
+    "north-west": {
+     "path": "goalkeeper/sequences/RIGHT_TOP/north-west/F02_CROUCH.png",
+     "anchors": "goalkeeper/sequences/RIGHT_TOP/north-west/F02_CROUCH_anchors.json"
+    }
+   },
    "from": 0.05,
    "to": 0.1,
    "ik": false,
@@ -46,6 +66,16 @@
    "anchors": "goalkeeper/sequences/RIGHT_FAR/F03_PLANT_LOAD_anchors.json",
    "phase": "shared",
    "shared": true,
+   "byFacing": {
+    "south-west": {
+     "path": "goalkeeper/sequences/RIGHT_TOP/south-west/F03_PLANT_LOAD.png",
+     "anchors": "goalkeeper/sequences/RIGHT_TOP/south-west/F03_PLANT_LOAD_anchors.json"
+    },
+    "north-west": {
+     "path": "goalkeeper/sequences/RIGHT_TOP/north-west/F03_PLANT_LOAD.png",
+     "anchors": "goalkeeper/sequences/RIGHT_TOP/north-west/F03_PLANT_LOAD_anchors.json"
+    }
+   },
    "from": 0.1,
    "to": 0.16,
    "ik": false,

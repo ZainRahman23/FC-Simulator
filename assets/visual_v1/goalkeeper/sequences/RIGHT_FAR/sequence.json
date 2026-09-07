@@ -10,7 +10,7 @@
   "HIGH",
   "TOP"
  ],
- "record": "generic far airborne dive to the keeper's RIGHT (GOAL_LEFT / north = screen up-left), W-facing rig cut of the LEFT_FAR graph (2026-09-07); the contact keyframe is the live DIVE_NORTH_CW50 drawn by the save-pose path; LOW-MID contacts use it too because no low-far RIGHT still exists (NEW KEY ART REQUIRED)",
+ "record": "generic far airborne dive to the keeper's RIGHT (GOAL_LEFT / north = screen up-left), W-facing rig cut of the LEFT_FAR graph (2026-09-07); the contact keyframe is the live DIVE_NORTH_CW50 drawn by the save-pose path; LOW-MID contacts use it too because no low-far RIGHT still exists (NEW KEY ART REQUIRED); 2026-09-07: anticipation F01\u2013F03 variants for the south-west and north-west facings",
  "liveFrom": 0.95,
  "contactHold": 0.05,
  "moderateBelow": 0.8,
@@ -26,6 +26,16 @@
    "path": "goalkeeper/sequences/RIGHT_FAR/F01_WEIGHT_SHIFT.png",
    "anchors": "goalkeeper/sequences/RIGHT_FAR/F01_WEIGHT_SHIFT_anchors.json",
    "phase": "READ / WEIGHT SHIFT",
+   "byFacing": {
+    "south-west": {
+     "path": "goalkeeper/sequences/RIGHT_FAR/south-west/F01_WEIGHT_SHIFT.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/south-west/F01_WEIGHT_SHIFT_anchors.json"
+    },
+    "north-west": {
+     "path": "goalkeeper/sequences/RIGHT_FAR/north-west/F01_WEIGHT_SHIFT.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/north-west/F01_WEIGHT_SHIFT_anchors.json"
+    }
+   },
    "from": 0.0,
    "to": 0.05,
    "ik": false,
@@ -36,6 +46,16 @@
    "path": "goalkeeper/sequences/RIGHT_FAR/F02_CROUCH.png",
    "anchors": "goalkeeper/sequences/RIGHT_FAR/F02_CROUCH_anchors.json",
    "phase": "ANTICIPATION CROUCH",
+   "byFacing": {
+    "south-west": {
+     "path": "goalkeeper/sequences/RIGHT_FAR/south-west/F02_CROUCH.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/south-west/F02_CROUCH_anchors.json"
+    },
+    "north-west": {
+     "path": "goalkeeper/sequences/RIGHT_FAR/north-west/F02_CROUCH.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/north-west/F02_CROUCH_anchors.json"
+    }
+   },
    "from": 0.05,
    "to": 0.1,
    "ik": false,
@@ -46,6 +66,16 @@
    "path": "goalkeeper/sequences/RIGHT_FAR/F03_PLANT_LOAD.png",
    "anchors": "goalkeeper/sequences/RIGHT_FAR/F03_PLANT_LOAD_anchors.json",
    "phase": "PLANT / LOAD (deepest)",
+   "byFacing": {
+    "south-west": {
+     "path": "goalkeeper/sequences/RIGHT_FAR/south-west/F03_PLANT_LOAD.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/south-west/F03_PLANT_LOAD_anchors.json"
+    },
+    "north-west": {
+     "path": "goalkeeper/sequences/RIGHT_FAR/north-west/F03_PLANT_LOAD.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/north-west/F03_PLANT_LOAD_anchors.json"
+    }
+   },
    "from": 0.1,
    "to": 0.16,
    "ik": false,

@@ -1,0 +1,75 @@
+{
+ "id": "TIGHT_S_FAR",
+ "asset_dir": "goalkeeper/sequences/TIGHT_S_FAR",
+ "pose": "TIGHT_S_FAR_TOP",
+ "families": [
+  "AIRBORNE_DIVE",
+  "HIGH_CATCH"
+ ],
+ "heights": [
+  "HIGH",
+  "TOP"
+ ],
+ "record": "tight-angle high save into the approved TIGHT_S_FAR_TOP still (south-facing SET rig, 2026-09-07): crouch \u2192 push up \u2192 rising \u2192 full reach (bridge) \u2192 live still \u2192 descent \u2192 land \u2192 recover \u2192 SET; a shorter action than the far dives, no Pro-part bridge (same GK_BASE_V1 lineage)",
+ "liveFrom": 0.95,
+ "contactHold": 0.05,
+ "moderateBelow": 0.0,
+ "pres": {
+  "tau": 0.2,
+  "tLand": 0.3,
+  "tEnd": 1.05,
+  "note": "tight-angle jump: a short settle only"
+ },
+ "pre": [
+  [
+   "F01_CROUCH",
+   0.0,
+   0.22,
+   0.0
+  ],
+  [
+   "F02_PUSH_far",
+   0.22,
+   0.45,
+   0.0
+  ],
+  [
+   "F03_RISING_far",
+   0.45,
+   0.7,
+   0.5
+  ],
+  [
+   "F04_REACH_far",
+   0.7,
+   0.95,
+   1.0
+  ]
+ ],
+ "post": [
+  [
+   "F11_DESCENT_far",
+   0.05,
+   0.2,
+   0.8
+  ],
+  [
+   "F12_LAND_far",
+   0.2,
+   0.45,
+   0.4
+  ],
+  [
+   "F13_RECOVER_far",
+   0.45,
+   0.8,
+   0.15
+  ],
+  [
+   "F17_READY",
+   0.8,
+   1.05,
+   0.0
+  ]
+ ]
+}
