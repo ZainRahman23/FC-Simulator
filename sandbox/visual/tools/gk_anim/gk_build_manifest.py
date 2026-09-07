@@ -289,4 +289,12 @@ for cp in CONTEXTUAL_POSES:
     ctx_meta.append({k: v for k, v in cp.items() if k not in ("note", "file", "reach_mirror")} | {"path": samples[cp["id"]]["path"], "anchors": samples[cp["id"]]["anchors"], "transform": "MIRRORED" if mirror else "ORIGINAL", "reach_screen_unit": reach})
 man["save_poses"] = {"CONTEXTUAL": {"ANY": {"samples": samples}}}
 man["contextual_poses"] = ctx_meta
+# SEQUENCES (2026-09-06): full authored dive animations keyed to a contact pose. Each folder under goalkeeper/sequences/<ID>/ carries the
+# baked frames, per-frame anchors and a sequence.json (schedule in the simulation's own u before contact and seconds after endT,
+# hand-led weights, carried-placement factors, the presentation-root continuation). Written by tools/gk_anim/proto_dive/bake_sequence.py.
+SEQ_DIR = os.path.join(ASSETS, "goalkeeper", "sequences"); man["sequences"] = {}
+if os.path.isdir(SEQ_DIR):
+    for sid in sorted(os.listdir(SEQ_DIR)):
+        sj = os.path.join(SEQ_DIR, sid, "sequence.json")
+        if os.path.exists(sj): man["sequences"][sid] = json.load(open(sj)); print("sequence", sid, len(man["sequences"][sid]["pre"]), "pre +", len(man["sequences"][sid]["post"]), "post frames")
 json.dump(man, open(man_path, "w"), indent=1); print("wrote", man_path, "clips", len(clips), "variants", sum(len(c["variants"]) for c in clips.values()), "contextual poses", len(ctx_meta))

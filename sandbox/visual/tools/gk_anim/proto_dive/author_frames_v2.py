@@ -31,7 +31,7 @@ def pin(R, pose, name, target, off):
 HEAD = {"F01": (1.6, -33.2), "F02": (2.2, -32.2), "F03": (2.6, -31.2), "F04": (3.0, -31.6), "F05": (3.2, -32.0), "F05b": (3.4, -32.4),
         "F06": (3.6, -32.8), "F07": (3.8, -33.6), "F07b": (3.2, -34.6), "F08": (2.6, -35.0), "F09": (2.2, -35.2)}
 HIPS = {"F01": (1.8, -18.7), "F02": (2.3, -17.6), "F03": (2.8, -16.6), "F04": (2.9, -19.4), "F05": (2.4, -22.6), "F05b": (0.8, -25.6),
-        "F06": (-2.2, -27.6), "F07": (-4.4, -32.0), "F07b": (-5.3, -36.0), "F08": (-5.6, -39.0), "F09": (-5.8, -41.0)}
+        "F06": (-2.2, -27.6), "F07": (-4.4, -32.0), "F07b": (-5.3, -36.0), "F07c": (-5.45, -37.5), "F08": (-5.6, -39.0), "F09": (-5.8, -41.0)}
 def head_dir_from_shoulder(T): return None
 def set_frame(name, phase, t, pose, note, grounded, root_shift=(0, 0), sources=("SET/west",), style=0.0, clean=True, extra_landmarks=None):
     root = (ROOT_S[0] + OFF_S[0] + root_shift[0], ROOT_S[1] + OFF_S[1] + root_shift[1])
@@ -111,12 +111,19 @@ def flight(key, name, phase, t, A, k, ext, far_short, sx, head_scale, limb_sx, l
     set_frame(name, phase, t, finish(p), note, "airborne", root_shift=root_shift, style=style)
 flight("F05b", "F05b_LEAVING_GROUND", "LEAVING THE GROUND", "u 0.29–0.36", 86, 0.70, 2, 1, 0.92, 0.97, 0.94, ((6, -10, 4), (14, -22, 6)), 0.92, 0.40, (0, 3),
        "first airborne tick: both feet just off the pitch, legs hanging behind the hips (LEFT leg still nearly straight from the push, RIGHT knee bent), hips 3 px up, elbows 70 % open")
-flight("F06", "F06_EARLY_FLIGHT", "EARLY FLIGHT", "u 0.36–0.46", 80, 0.85, 3, 2, 0.88, 0.94, 0.90, ((28, -36, 6), (38, -46, 8)), 0.66, 0.55, (0, 3),
+flight("F06", "F06_EARLY_FLIGHT", "EARLY FLIGHT", "u 0.36–0.46", 80, 0.85, 3, 2, 0.88, 0.94, 0.90, ((40, -50, 6), (50, -60, 8)), 0.72, 0.55, (0, 3),
        "hands leading at the ball, torso rolling (width 0.88) as the hips rise; legs trailing straight behind the hips — pointing away from the camera, so short (0.66) with the knees folding")
-flight("F07", "F07_MID_FLIGHT", "MID FLIGHT", "u 0.46–0.57", 74, 1.0, 3, 4, 0.83, 0.90, 0.86, ((118, -104, 8), (126, -98, 10)), 0.60, 0.72, (0, 4),
+flight("F07", "F07_MID_FLIGHT", "MID FLIGHT", "u 0.46–0.57", 74, 1.0, 3, 4, 0.83, 0.90, 0.86, ((124, -84, 8), (132, -78, 10)), 0.70, 0.72, (0, 4),
        "arms straight at the ball, torso side-on (width 0.83, foreshortened), hips level with the head, legs folded tight behind/above the hips (0.60): the most compact moment of the dive")
-flight("F07b", "F07b_BRIDGE", "BRIDGE (contact proportions)", "u 0.57–0.68", 68, 1.0, 4, -3, 0.78, 0.86, 0.82, ((164, -30, 10), (172, -26, 12)), 0.86, 1.0, (0, 5),
+flight("F07b", "F07b_BRIDGE", "BRIDGE (contact proportions)", "u 0.57–0.68", 68, 1.0, 4, -3, 0.78, 0.86, 0.82, ((160, -34, 10), (168, -30, 12)), 0.84, 1.0, (0, 5),
        "the last GK_BASE_V1 frame with the contact art's head (0.86 → 7.0 px area-equivalent, like the Pro head), shoulder width (0.78), limb thickness (0.82), palette and thinned outlines; legs extending up-left into the contact angle, arms fully extended (+4 px) with the far arm reaching past the near one")
+
+# MODERATE-extension variants (envNorm < 0.8): the same trunk with the elbows less open and the legs more folded; they converge on the
+# same bridge frames, so a moderate far save develops less extension in flight than an extreme one.
+flight("F06", "F06m_EARLY_FLIGHT_MOD", "EARLY FLIGHT (moderate extension)", "u 0.37–0.46 (norm < 0.8)", 82, 0.70, 1, 2, 0.88, 0.94, 0.90, ((36, -56, 6), (46, -66, 8)), 0.66, 0.55, (0, 3),
+       "moderate variant: elbows 70 % open, arm reach +1 px, legs folded tighter (0.66)")
+flight("F07", "F07m_MID_FLIGHT_MOD", "MID FLIGHT (moderate extension)", "u 0.46–0.56 (norm < 0.8)", 76, 0.85, 2, 4, 0.83, 0.90, 0.86, ((118, -96, 8), (126, -90, 10)), 0.62, 0.72, (0, 4),
+       "moderate variant: elbows 85 % open, arm reach +2 px, legs folded (0.62)")
 
 # ───────────── contact rig (bridge, post-contact, landing) — hips pinned on HIPS[key] (rel. the ROOT the frame is drawn at)
 def contact_frame(key, name, phase, t, pose, note, grounded, rot, hips, out_style=0.0, head_screen=None):
@@ -131,10 +138,13 @@ def contact_frame(key, name, phase, t, pose, note, grounded, rot, hips, out_styl
     FRAMES.append({"name": name, "phase": phase, "t": t, "rig": "SOUTH_CW20", "pose": pose, "note": note, "sources": ["DIVE_SOUTH_CW20 (parts)"], "grounded": grounded, "pixel_scale": 0.85,
                    "root": [round(root[0], 1), round(root[1], 1)], "joints": j, "img": img, "landmarks": lm, "style": out_style})
 # rot is relative to the contact orientation (0 = contact). The arms stay on the ball while the body turns under them (sleeve +), legs at the contact angle.
-contact_frame("F08", "F08_BRIDGE_PRO", "BRIDGE (Pro parts, 14° short)", "u 0.68–0.82 (hand-led)",
+contact_frame("F07c", "F07c_BRIDGE_PRO_A", "BRIDGE (Pro parts, 22° short, 75 % outline)", "u 0.65–0.73 (hand-led)",
+    {"sleeve": {"rot": 42}, "glove_A": {"rot": -7}, "glove_B": {"rot": -10}, "thigh_1": {"rot": 18}, "shin_1": {"rot": 10}, "thigh_2": {"rot": 18}, "shin_2": {"rot": 12}, "torso": {"rot": -3}, "head": {"rot": 20}},
+    "the contact art's own components 22° short of the contact orientation with a 75 % outline — the first Pro-part frame, posed to match F07b's silhouette (arms at 83°, legs at the F07b angle, knees 10–12° bent)", "airborne", -22, HIPS["F07c"], out_style=0.75)
+contact_frame("F08", "F08_BRIDGE_PRO", "BRIDGE (Pro parts, 14° short)", "u 0.73–0.84 (hand-led)",
     {"sleeve": {"rot": 30}, "glove_A": {"rot": -5}, "glove_B": {"rot": -7}, "thigh_1": {"rot": 13}, "shin_1": {"rot": 6}, "thigh_2": {"rot": 13}, "shin_2": {"rot": 8}, "torso": {"rot": -2}, "head": {"rot": 14}},
     "the contact art's own components 14° short of the contact orientation with a 50 % outline (fading the base style out): arms 30° short of overhead, knees 6–8° bent, legs at the contact angle", "airborne", -14, HIPS["F08"], out_style=0.5)
-contact_frame("F09", "F09_FINAL_EXTENSION", "FINAL EXTENSION (bridge)", "u 0.82–0.95 (hand-led)",
+contact_frame("F09", "F09_FINAL_EXTENSION", "FINAL EXTENSION (bridge)", "u 0.84–0.95 (hand-led)",
     {"sleeve": {"rot": 14}, "glove_A": {"rot": -2}, "glove_B": {"rot": -3}, "thigh_1": {"rot": 5}, "shin_1": {"rot": 2}, "thigh_2": {"rot": 5}, "shin_2": {"rot": 2}, "torso": {"rot": -1}, "head": {"rot": 6}},
     "5° short of the contact orientation, arms 14° short, knees 2° short, 25 % outline: the last authored frame before the untouched contact PNG", "airborne", -5, HIPS["F09"], out_style=0.25)
 # post-contact / landing: authored around the PRESENTATION root (sim root + decaying momentum continuation, applied by the harness);
@@ -158,7 +168,7 @@ contact_frame("F14", "F14_ABSORB", "ABSORB IMPACT", "+0.45–0.55 s", {"sleeve":
 # foreshortening so the head rises above the hips instead of swinging round to the east.
 contact_frame("F15a", "F15a_PUSH_UP", "RECOVERY TURN (pushing up)", "+0.55–0.63 s", {"sleeve": {"rot": 100}, "glove_A": {"rot": 30}, "glove_B": {"rot": 36}, "thigh_1": {"rot": 16}, "shin_1": {"rot": -84}, "thigh_2": {"rot": 12}, "shin_2": {"rot": -78}, "torso": {"rot": -40, "sy": 0.72}, "head": {"rot": -30}},
     "upper body pushing up off the forearm/gloves (torso 40° up, foreshortened toward the camera), head turning to the play, knees drawn under", "hip + hands", -4, LAND["F15a"], out_style=0.35)
-contact_frame("F15a2", "F15a2_SITTING_UP", "SITTING UP", "+0.63–0.71 s", {"sleeve": {"rot": 160}, "glove_A": {"rot": 34}, "glove_B": {"rot": 40}, "thigh_1": {"rot": 22}, "shin_1": {"rot": -100}, "thigh_2": {"rot": 16}, "shin_2": {"rot": -96}, "torso": {"rot": -92, "sy": 0.80}, "head": {"rot": -26}},
+contact_frame("F15a2", "F15a2_SITTING_UP", "SITTING UP", "+0.63–0.71 s", {"sleeve": {"rot": 174}, "glove_A": {"rot": 30}, "glove_B": {"rot": 36}, "thigh_1": {"rot": 22}, "shin_1": {"rot": -100}, "thigh_2": {"rot": 16}, "shin_2": {"rot": -96}, "torso": {"rot": -92, "sy": 0.80}, "head": {"rot": -26}},
     "trunk upright to the knees, head above the hips, hands on the pitch: the last Pro-part frame (60 % outline)", "knees + hands", -6, LAND["F15a2"], out_style=0.6)
 
 # ───────────── recovery in the 3/4 camera from the SET rig (base lineage, style fading back in from the Pro look)
@@ -173,9 +183,9 @@ def kneel_frame(name, phase, t, pose, note, grounded, ground_screen, style):
     FRAMES.append({"name": name, "phase": phase, "t": t, "rig": "W_SET", "pose": pose, "note": note, "sources": ["SET/west (rig)"], "grounded": grounded, "pixel_scale": 1.0,
                    "root": [round(root[0], 1), round(root[1], 1)], "joints": j, "img": img, "landmarks": lm, "style": style})
 # F15a3 HALF KNEEL — SET rig: sitting back on the heel with the trunk still low, head coming up to the play; style 80 % toward the Pro look
-p = {"pelvis": {"dy": 31, "dx": -1}, "torso": {"rot": 20, "sy": 0.66, "sx": 0.9}, "head": {"rot": -16, "sx": 0.88, "sy": 0.88},
+p = {"pelvis": {"dy": 33, "dx": -1}, "torso": {"rot": 34, "sy": 0.58, "sx": 0.9}, "head": {"rot": -22, "sx": 0.88, "sy": 0.88},
      "far_thigh": {"rot": 22}, "far_shin": {"rot": -128, "sy": 0.8}, "far_boot": {"rot": 102}, "near_thigh": {"rot": -70, "sy": 0.9}, "near_shin": {"rot": 96}, "near_boot": {"rot": -14},
-     "near_upper": {"rot": 28, "sx": 0.9}, "near_fore": {"rot": 12, "sx": 0.9}, "far_upper": {"rot": 14, "sx": 0.9}, "far_fore": {"rot": -4, "sx": 0.9}}
+     "near_upper": {"rot": 44, "sx": 0.9}, "near_fore": {"rot": 16, "sx": 0.9}, "far_upper": {"rot": 22, "sx": 0.9}, "far_fore": {"rot": -2, "sx": 0.9}}
 kneel_frame("F15a3_HALF_KNEEL", "HALF KNEEL (trunk low)", "+0.71–0.79 s", p, "sitting back on the LEFT heel, RIGHT foot planted forward, trunk low (0.78) and just lifting, hands on the pitch/thigh; style 80 % toward the Pro look so it meets F15a2", "left knee/heel + right foot", (0.0, 0.0), style=0.8)
 # F15b KNEELING — LEFT knee down (shin folded back), RIGHT foot forward and planted, torso up, near hand pushing on the thigh
 p = {"pelvis": {"dy": 26, "dx": -2}, "torso": {"rot": 10, "sy": 0.96, "sx": 0.92}, "head": {"rot": -8, "sx": 0.92, "sy": 0.92},

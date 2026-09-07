@@ -4324,6 +4324,8 @@ const GK_ANIM = {
   collapseLatFrac: 0.65, collapseNormMax: 0.85, // LOW_COLLAPSE: low ball within this fraction of the lateral envelope and below this reach norm; beyond → AIRBORNE_DIVE (low-mid expression)
   savePoseManifest: null, savePoseRoot: "",    // camera-space SAVE POSES (GOAL_LEFT / GOAL_RIGHT authored in the gameplay camera) — candidate manifest set by the review page
   savePoseIK: true,                            // hand-led bounded placement of save poses (false = RAW authored placement, for the raw-vs-IK review)
+  sequences: true,                             // full authored dive SEQUENCES (2026-09-06, first: LEFT_FAR): the whole physical action around a contact pose; false = the contact-pose-only behaviour
+  seqShadowFollows: true,                      // the keeper's shadow follows the PRESENTATION root during a sequence's post-contact continuation (presentation only)
   axisMismatchMaxDeg: 35,                      // pose rotation whose measured body axis is further than this from the projected save vector → AXIS_MISMATCH flag
   reviewOverride: null,                        // review page only: {kind, family, side, saveAngleDeg, dir, pos, label} — draw a chosen representation instead of the live state
 };
@@ -4371,6 +4373,41 @@ async function gkAnimLoadSavePoses(A, manifestUrl, root) {
   if (m.contextual_poses && m.contextual_poses.length) {
     A.contextual = m.contextual_poses.map(cp => ({ ...cp, sample: A.savePoses.CONTEXTUAL && A.savePoses.CONTEXTUAL.ANY ? A.savePoses.CONTEXTUAL.ANY[cp.id] : null })).filter(cp => cp.sample);
   }
+  // SEQUENCES (2026-09-06): full authored dive animations keyed to a contact pose (baked component-rig frames + per-frame anchors).
+  // Presentation only: the schedule is read against the simulation's own commit/contact/execEnd; nothing here feeds the simulation.
+  A.sequences = A.sequences || {};
+  for (const [id, sq] of Object.entries(m.sequences || {})) {
+    try {
+      const one = async (e) => { const img = await loadImage(root + e.path), anchors = await loadJSON(root + e.anchors); const r = { ...e, img, anchors }; if (e.moderate) r.moderate = { img: await loadImage(root + e.moderate.path), anchors: await loadJSON(root + e.moderate.anchors) }; return r; };
+      const pre = [], post = [];
+      for (const e of sq.pre || []) pre.push(await one(e));
+      for (const e of sq.post || []) post.push(await one(e));
+      A.sequences[id] = { ...sq, pre, post };
+    } catch (e) { console.warn("GK sequence not loaded", id, e); }
+  }
+}
+// SEQUENCE PICK (once per commit): the sequence whose contact pose the selector chose, for its families / height classes.
+// variant "moderate" (envelope demand below moderateBelow) uses the less-extended flight frames; extreme saves use the full ones.
+function gkAnimSeqPick(A, cls, ctx, c) {
+  if (!A.sequences || !ctx || !cls) return null;
+  for (const sq of Object.values(A.sequences)) {
+    if (sq.pose !== ctx.id || (sq.families || []).indexOf(cls.family) < 0) continue;
+    const h = cls.expr ? cls.expr.heightClass : cls.zClass; if ((sq.heights || []).indexOf(h) < 0) continue;
+    const norm = cls.norm != null ? cls.norm : (c && c.envNorm != null ? c.envNorm : 1);
+    return { id: sq.id, def: sq, variant: norm < (sq.moderateBelow != null ? sq.moderateBelow : 0) ? "moderate" : "full", norm };
+  }
+  return null;
+}
+// PRESENTATION ROOT after execEnd (presentation only — the simulation root is frozen and untouched): the body keeps the dive's momentum,
+// d(t) = V0·tau·(1−e^(−t/tau)) along the dive direction (V0 = the root's mean dive speed = travel / execTime), then eases back to the
+// simulation root by tEnd so the live SET is reached without a jump. Returned in metres and as a screen offset.
+function gkAnimSeqPres(gk, c, P, tl) {
+  if (!P || !c || !c.feet) return null;
+  const ex = gk.x - c.feet[0], ey = gk.y - c.feet[1], trav = Math.hypot(ex, ey); if (trav < 1e-6) return null;
+  const ux = ex / trav, uy = ey / trav, V0 = trav / Math.max(1e-6, c.execTime), dLand = V0 * P.tau * (1 - Math.exp(-P.tLand / P.tau));
+  let d; if (tl <= P.tLand) d = V0 * P.tau * (1 - Math.exp(-tl / P.tau)); else if (tl < P.tEnd) d = dLand * (0.5 + 0.5 * Math.cos(Math.PI * (tl - P.tLand) / (P.tEnd - P.tLand))); else d = 0;
+  const q0 = sproj3(gk.x, 0, gk.y), q1 = sproj3(gk.x + ux * d, 0, gk.y + uy * d);
+  return { dm: d, x: gk.x + ux * d, y: gk.y + uy * d, sx: q1.x - q0.x, sy: q1.y - q0.y, V0 };
 }
 async function gkAnimLoad() {
   const A = S.gkAnim;
@@ -4695,7 +4732,7 @@ function gkAnimUpdate(t, gk) {
   // these facings the footwork loop therefore uses the authored variant in its authored order for both sides — WEST's structure.
   // The decision itself (footwork / IDLE / SET) is untouched for every facing; nothing else is read or changed.
   const pinFootworkOrder = (req) => { if (!req || GK_ANIM.footworkAuthoredOrderDirs.indexOf(dir) < 0) return req; const ex = gkAnimAuthoredSide(A.byFamily[req.family], dir); if (ex && req.side !== ex) { req.sidePinned = req.side; req.side = ex; } return req; };
-  let state = "SET", family = null, side = null, u = 0, phase = "-", temp = null, arm = false, boot = false, holdPose = false, cls = null;
+  let state = "SET", family = null, side = null, u = 0, phase = "-", temp = null, arm = false, boot = false, holdPose = false, cls = null, seqFrame = null, seqCtx = null;
   let clipReq = null;       // {family, side, mode: "reach"|"hold"|"post"|"loop", k (0..1 within the mode)}
   const footwork = () => {
     const g = gkAnimSide(gk, gk.x + gk.vx, gk.y + gk.vy);
@@ -4729,6 +4766,7 @@ function gkAnimUpdate(t, gk) {
     const isDive = !!GK_ANIM_DIVES[family];
     const execEnd = c.t0 + c.execTime;
     const endT = isDive ? Math.max(execEnd, contactT != null ? contactT : -1) : (contactT != null ? Math.max(execEnd, contactT) : Infinity);
+    seqCtx = { u, endT, c, held };                                        // the sequence frame is resolved after the pick (below)
     if (legSurf && now - contactT < GK_ANIM.footSaveHold) { const g = gkAnimSide(gkF, ct.point[0], ct.point[1]); side = g.lat >= 0 ? "RIGHT" : "LEFT"; family = "FOOT_SAVE"; state = "FOOT_SAVE_" + side; phase = "contact"; boot = true; clipReq = { family: "FOOT_SAVE", side, mode: "hold" }; }
     else if (held) { state = family === "LOW_GATHER" ? "LOW_GATHER" : (family === "CHEST_CATCH" || family === "SUPPORTED_CATCH" || family === "HIGH_CATCH") ? family : "CATCH_HOLD"; phase = "hold"; holdPose = true; arm = true; clipReq = { family: clipFamily, side, mode: "hold" }; }
     else if (now < endT) {                                                // the action is being executed (SAVE) or held at the target (wait)
@@ -4767,6 +4805,7 @@ function gkAnimUpdate(t, gk) {
       if (A.commit.ctx === undefined) A.commit.ctx = gkAnimContextualPick(A, t, gk, cls, gk.committed, frozen.facing, spSample);
       ctx = A.commit.ctx && A.commit.ctx.pick ? A.commit.ctx.pick : null;
       if (ctx) spSample = ctx.sample;
+      if (A.commit.seq === undefined) A.commit.seq = ctx ? gkAnimSeqPick(A, cls, ctx, gk.committed) : null;
     }
     if ((isDiveFam || ctx) && spSample && clipReq.mode !== "loop" && clipReq.family !== "RECOVER") {
       savePose = { family: clipReq.family, side: cls.goalSide, key: ctx ? ctx.id : spKey, sample: spSample, mode: clipReq.mode, k: clipReq.k, candidate: spSample.candidate, showFrom: GK_ANIM.loadPhase, exact: ctx ? true : !!spSide[spKey], contextual: ctx || null }; temp = null;
@@ -4796,8 +4835,22 @@ function gkAnimUpdate(t, gk) {
     } else if (clipReq.mode !== "loop") temp = "no authored " + clipReq.family + (clipReq.side ? "/" + clipReq.side : "") + " frames for " + dir + ": SET pose + procedural " + (boot ? "boot" : "glove") + " at the simulation " + (boot ? "leg tip" : "hand");
     else temp = "no authored footwork frames for " + dir + ": SET pose + root motion";
   }
+  // SEQUENCE frame for this tick (the pick is made once per commit in the resolve block above): pre-contact frames by the simulation's
+  // own u, the contact window (liveFrom → endT + contactHold) left to the untouched save-pose path, post-contact frames by seconds after endT
+  if (GK_ANIM.sequences && seqCtx && A.commit && A.commit.seq) {
+    const sq = A.commit.seq.def, tl = now - seqCtx.endT, uu = seqCtx.u;
+    // a contact of THIS action (its tick at/after the commit origin) hands the frame to the approved contact pose from the contact
+    // tick on: the ball can meet the moving hand a tick before full extension (u < liveFrom), and the frozen contact keyframe must
+    // sit on the actual contact tick, never on the last pre-contact frame (a stale contact from an earlier shot has tickT < t0;
+    // the contact exists only once it has happened, so its presence alone is the signal)
+    const ct = gk.contact, touched = !!(ct && ct.tickT != null && ct.tickT >= seqCtx.c.t0 - 1e-3);   // tickT is rounded to 3 dp: never compare it with now
+    if (now < seqCtx.endT + (sq.contactHold || 0)) { if (uu < sq.liveFrom && !touched) { const fr = sq.pre.find(x => uu >= x.from && uu < x.to); if (fr) seqFrame = { id: sq.id, key: fr.key, e: fr, mode: "pre", ikW: fr.ikW || 0 }; } }
+    else if (!seqCtx.held) { const pf = sq.post.find(x => tl >= x.from && tl < x.to); if (pf) seqFrame = { id: sq.id, key: pf.key, e: pf, mode: "post", carry: pf.carry != null ? pf.carry : 1, tl, pres: gkAnimSeqPres(gk, seqCtx.c, sq.pres, tl) }; }
+    // a CAUGHT ball (held by the keeper) keeps the untouched hold path: the landing/recovery frames would carry the drawn keeper away from
+    // the ball, which the simulation keeps in the frozen hand — a landing-with-ball continuation is future work
+  }
   const prev = A.cur;
-  A.cur = { state, family, side, u: +u.toFixed(3), phase, dir, temp, arm, boot, holdPose, speed, clip, pose, diagnostic, savePose, cls };
+  A.cur = { state, family, side, u: +u.toFixed(3), phase, dir, temp, arm, boot, holdPose, speed, clip, pose, diagnostic, savePose, cls, seq: seqFrame };
   if (!prev || prev.state !== state) { A.log.push({ t: +now.toFixed(3), state, family, side }); if (A.log.length > 24) A.log.shift(); }
   return A.cur;
 }
@@ -4872,12 +4925,33 @@ function gkAnimDraw(t, gk, dt) {
   const sp = sproj3(gk.x, 0, gk.y); if (sp.d < 0.5) return true;
   const s = S.playerVScale * depthScale(sp.d) * RIG.zoom * RES;
   const flat = flattenAt(gk.x, gk.y);
-  ctx.save(); ctx.beginPath(); ctx.ellipse(Math.round(sp.x), Math.round(sp.y), 9 * s, Math.max(1.5, 9 * s * flat), 0, 0, Math.PI * 2); ctx.fillStyle = "rgba(0,0,0,0.25)"; ctx.fill(); ctx.restore();
+  const shOff = (cur.seq && cur.seq.pres && GK_ANIM.seqShadowFollows) ? cur.seq.pres : null;     // the shadow stays under the PRESENTED keeper during the post-contact continuation
+  ctx.save(); ctx.beginPath(); ctx.ellipse(Math.round(sp.x + (shOff ? shOff.sx : 0)), Math.round(sp.y + (shOff ? shOff.sy : 0)), 9 * s, Math.max(1.5, 9 * s * flat), 0, 0, Math.PI * 2); ctx.fillStyle = "rgba(0,0,0,0.25)"; ctx.fill(); ctx.restore();
   if (GK_ANIM.reviewOverride) { gkAnimDrawReview(t, gk, sp, s, GK_ANIM.reviewOverride); return true; }
   let anchors = { root: { x: Math.round(sp.x), y: Math.round(sp.y) } }, handScreen = null, gloveScreen = null, ik = null, place = null, artLabel = "";
   const simHand = (cur.arm || cur.holdPose) && gk.handNow ? sproj3(gk.handNow[0], gk.handNow[2], gk.handNow[1]) : null;
   const wReach = cur.u >= GK_ANIM.loadPhase ? Math.min(1, (cur.u - GK_ANIM.loadPhase) / (1 - GK_ANIM.loadPhase)) : 0;
-  if (cur.clip) {
+  if (cur.seq) {
+    // ── SEQUENCE FRAME (full authored dive animation around a contact pose): drawn at the simulation root. Pre-contact frames use the
+    // same bounded hand-led placement as the save poses (weight ramping in over the flight); post-contact frames carry a fading share of
+    // the contact placement plus the presentation-root continuation. The contact window itself is the untouched save-pose path.
+    const sf = cur.seq, e = sf.e, useMod = sf.mode === "pre" && A.commit && A.commit.seq && A.commit.seq.variant === "moderate" && e.moderate;
+    const img = useMod ? e.moderate.img : e.img, an = (useMod ? e.moderate.anchors : e.anchors) || {};
+    const ax = an.root ? an.root[0] : img.width / 2, ay = an.root ? an.root[1] : img.height - 1, ps = s * (an.pixel_scale || 1);
+    const gl = an.gloves && an.gloves.length ? an.gloves : (an.lead_glove ? [an.lead_glove] : []);
+    let dx = 0, dy = 0;
+    if (sf.mode === "pre") {
+      if (sf.ikW > 0 && simHand && gl.length) { const dx0 = Math.round(sp.x - ax * ps), dy0 = Math.round(sp.y - ay * ps); const raw = gkAnimGloves(gl, (px, py) => ({ x: dx0 + Math.round(px * ps), y: dy0 + Math.round(py * ps) }), simHand, false); place = gkAnimPlace(raw, simHand, sf.ikW, s, null); dx = place.dx; dy = place.dy; }
+    } else {
+      const pl = A.commit && A.commit.place ? A.commit.place : null; const k = sf.carry;
+      dx = (pl ? Math.round((pl.dx || 0) * k) : 0) + (sf.pres ? Math.round(sf.pres.sx) : 0); dy = (pl ? Math.round((pl.dy || 0) * k) : 0) + (sf.pres ? Math.round(sf.pres.sy) : 0);
+    }
+    const blit = gkAnimBlit(img, false, ax, ay, ps, sp.x + dx, sp.y + dy);
+    anchors = { root: anchors.root, pelvis: an.pelvis ? blit.toScreen(an.pelvis[0], an.pelvis[1]) : null, head: an.head ? blit.toScreen(an.head[0], an.head[1]) : null, shoulder: an.shoulder ? blit.toScreen(an.shoulder[0], an.shoulder[1]) : null,
+      handL: gl[0] ? blit.toScreen(gl[0][0], gl[0][1]) : null, handR: gl[1] ? blit.toScreen(gl[1][0], gl[1][1]) : null, footL: an.foot_L ? blit.toScreen(an.foot_L[0], an.foot_L[1]) : null, footR: an.foot_R ? blit.toScreen(an.foot_R[0], an.foot_R[1]) : null };
+    gloveScreen = gl.length ? gkAnimGloves(gl, blit.toScreen, simHand, false) : null; if (gloveScreen && simHand) handScreen = { x: gloveScreen.x, y: gloveScreen.y };
+    artLabel = "SEQ " + sf.id + " " + sf.key + (useMod ? " (moderate)" : "") + (sf.mode === "pre" ? "  u " + cur.u.toFixed(2) + (sf.ikW ? " hand-led " + sf.ikW : "") : "  +" + sf.tl.toFixed(2) + " s" + (sf.pres ? " pres +" + sf.pres.dm.toFixed(2) + " m" : "") + " carry " + sf.carry);
+  } else if (cur.clip) {
     // ── AUTHORED FRAME: bounded frame-selection IK (nearest glove among allowed candidates) + hand-led translation (recorded, capped)
     const v = cur.clip.v; let pos = cur.clip.pos, best = null; const yOnly = v.ik === "y";
     const probe = (q) => { const fr = v.frames[q]; const W = fr.img.width; const dx = cur.clip.mirrored ? Math.round(sp.x - (W - fr.ax) * s) : Math.round(sp.x - fr.ax * s), dy = Math.round(sp.y - fr.ay * s); return gkAnimGloves(fr.meta.gloves || [], (px, py) => ({ x: dx + Math.round((cur.clip.mirrored ? W - px : px) * s), y: dy + Math.round(py * s) }), simHand, yOnly); };
