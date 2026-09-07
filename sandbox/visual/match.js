@@ -4931,7 +4931,7 @@ function gkAnimDraw(t, gk, dt) {
   const sp = sproj3(gk.x, 0, gk.y); if (sp.d < 0.5) return true;
   const s = S.playerVScale * depthScale(sp.d) * RIG.zoom * RES;
   const flat = flattenAt(gk.x, gk.y);
-  const shOff = (cur.seq && cur.seq.pres && GK_ANIM.seqShadowFollows) ? cur.seq.pres : null;     // the shadow stays under the PRESENTED keeper during the post-contact continuation
+  const shOff = (cur.seq && cur.seq.pres && GK_ANIM.seqShadowFollows) ? cur.seq.pres : ((GK_ANIM.reviewOverride && GK_ANIM.reviewOverride.shadow && GK_ANIM.seqShadowFollows) ? GK_ANIM.reviewOverride.shadow : null);     // the shadow stays under the PRESENTED keeper during the post-contact continuation (live sequence, or a review override carrying the same offset)
   ctx.save(); ctx.beginPath(); ctx.ellipse(Math.round(sp.x + (shOff ? shOff.sx : 0)), Math.round(sp.y + (shOff ? shOff.sy : 0)), 9 * s, Math.max(1.5, 9 * s * flat), 0, 0, Math.PI * 2); ctx.fillStyle = "rgba(0,0,0,0.25)"; ctx.fill(); ctx.restore();
   if (GK_ANIM.reviewOverride) { gkAnimDrawReview(t, gk, sp, s, GK_ANIM.reviewOverride); return true; }
   let anchors = { root: { x: Math.round(sp.x), y: Math.round(sp.y) } }, handScreen = null, gloveScreen = null, ik = null, place = null, artLabel = "";

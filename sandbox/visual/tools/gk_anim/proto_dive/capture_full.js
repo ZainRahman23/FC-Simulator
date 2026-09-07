@@ -48,7 +48,7 @@ for(let f=0; f<320; f++){
         let d; if(tl<=P.tLand) d=V0*P.tau*(1-Math.exp(-tl/P.tau)); else if(tl<P.tEnd) d=dLand*(0.5+0.5*Math.cos(Math.PI*(tl-P.tLand)/(P.tEnd-P.tLand))); else d=0;
         const q0=sproj3(gk.x,0,gk.y), q1=sproj3(gk.x+ux*d,0,gk.y+uy*d); pres={dm:+d.toFixed(4), x:+(gk.x+ux*d).toFixed(4), y:+(gk.y+uy*d).toFixed(4), sx:+(q1.x-q0.x).toFixed(2), sy:+(q1.y-q0.y).toFixed(2), V0:+V0.toFixed(3)};
         if(pfr && pfr.pres!==false){ off={dx:(off?off.dx:0)+Math.round(q1.x-q0.x), dy:(off?off.dy:0)+Math.round(q1.y-q0.y)}; } }
-      GK_ANIM.reviewOverride={kind:"savepose", family:"CONTEXTUAL", side:"ANY", key, ik, ikW, simHand:hn, showLabel:false, dx:off?off.dx:0, dy:off?off.dy:0};
+      GK_ANIM.reviewOverride={kind:"savepose", family:"CONTEXTUAL", side:"ANY", key, ik, ikW, simHand:hn, showLabel:false, dx:off?off.dx:0, dy:off?off.dy:0, shadow:(mode==="post"&&pres)?{sx:pres.sx, sy:pres.sy}:null};
       if(ik && hn){ // reproduce the override's own bounded hand-led placement so the trace knows where the frame was drawn
         const smp=S.gkAnim.savePoses.CONTEXTUAL.ANY[key]; const an=smp.anchors||{}; const sp0=sproj3(gk.x,0,gk.y); const s0=S.playerVScale*depthScale(sp0.d)*RIG.zoom*RES; const ps=s0*(an.pixel_scale||1);
         const ax=an.root[0], ay=an.root[1]; const gl=an.gloves&&an.gloves.length?an.gloves:[an.lead_glove]; const dx0=Math.round(sp0.x-ax*ps), dy0=Math.round(sp0.y-ay*ps);
