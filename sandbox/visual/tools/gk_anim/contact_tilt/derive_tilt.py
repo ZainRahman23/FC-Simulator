@@ -14,8 +14,8 @@ the source is the same rigid transform as rotating the live sprite by the tilt a
 Landmarks (hip pivot, head, feet, both gloves) are tracked through the rotation with a marker layer (the builder's own technique) and
 compared with the re-measured blobs. Rotation preserves foreshortening: nothing is scaled, warped or redrawn.
 
-  python3 derive_tilt.py <out_dir>
-    out_dir/variants/DIVE_NORTH_CW{50,45,40,35}.png, _anchors.json, _landmarks.json
+  python3 derive_tilt.py <out_dir> [cw list, default 50,45,40,35 (round 1); round 2 = 50,55,60,65]
+    out_dir/variants/DIVE_NORTH_CW{..}.png, _anchors.json, _landmarks.json
     out_dir/variants/manifest_cw{50,45,40,35}.json   review-only save-pose manifests (load with match.html?savePoses=<page-relative url>)
     out_dir/variants/derivation.json                  method proof: the CW50 variant is byte-identical to the live asset
 """
@@ -33,7 +33,8 @@ MANIFEST = os.path.join(ASSETS, "goalkeeper", "GK_ANIM_V1.json")
 ROOT_FROM_LEAD_BASE = (12.3, 93.7)     # canonical GK_BASE_V1 px, the live calibration
 BODY_SCALE = 0.72
 LIVE_CW = 50
-TILTS = [0, 5, 10, 15]                 # + = flatter (toward the dive direction) = fewer degrees CW from the source
+TILTS = [0, 5, 10, 15]                 # round 1 (rejected by the user: wrong direction): fewer degrees CW from the source
+CW_LIST = [LIVE_CW - k for k in TILTS]  # overridden by argv[2] (comma-separated CW degrees), e.g. 50,55,60,65 for round 2
 
 
 def _pose_landmarks(img):
@@ -117,7 +118,7 @@ def derive(im, cw, lm_src):
           "source": "sources/DIVE_NORTH_RAW.png", "rotation_cw_deg": cw, "rotation_pivot_in_source": [round(hip[0], 1), round(hip[1], 1)],
           "root_offset_from_lead_glove_px": [round(v, 1) for v in root_from_lead], "root_offset_base_px": list(ROOT_FROM_LEAD_BASE),
           "pixel_scale": BODY_SCALE,
-          "review_only": True, "tilt_from_live_deg": LIVE_CW - cw,
+          "review_only": True, "tilt_from_live_deg": LIVE_CW - cw, "delta_cw_from_live_deg": cw - LIVE_CW,
           "description": "CONTACT-ORIENTATION TEST variant: the preserved Pro sprite sources/DIVE_NORTH_RAW.png rotated %d degrees clockwise about its hip/torso "
                          "pivot (live = 50), nearest-neighbour, expand, no redraw, no limb edit, no scaling, no warp; anchors re-measured; root re-anchored "
                          "from the lead glove with the live offset so the lead glove meets the identical contact point. Not an asset." % cw}
@@ -129,14 +130,15 @@ def derive(im, cw, lm_src):
 
 def main():
     out_dir = sys.argv[1]; vd = os.path.join(out_dir, "variants"); os.makedirs(vd, exist_ok=True)
+    cw_list = [int(v) for v in sys.argv[2].split(",")] if len(sys.argv) > 2 else CW_LIST
     im = Image.open(SRC).convert("RGBA")
     lm_src = source_landmarks(im)
     print("source landmarks:", {k: (tuple(round(t, 1) for t in v) if k != "counts" else v) for k, v in lm_src.items()})
     live_an = json.load(open(LIVE_AN)); live_png = Image.open(LIVE_PNG).convert("RGBA")
     man = json.load(open(MANIFEST))
     proof = {}
-    for k in TILTS:
-        cw = LIVE_CW - k; stem = "DIVE_NORTH_CW%d" % cw
+    for cw in cw_list:
+        k = LIVE_CW - cw; stem = "DIVE_NORTH_CW%d" % cw
         out, an = derive(im, cw, lm_src)
         out.save(os.path.join(vd, stem + ".png")); json.dump(an, open(os.path.join(vd, stem + "_anchors.json"), "w"), indent=1)
         json.dump({"tilt": k, "cw": cw, **an["landmarks_canvas_px"], "check": an["landmark_check"]}, open(os.path.join(vd, stem + "_landmarks.json"), "w"), indent=1)
@@ -150,19 +152,19 @@ def main():
         samples = {}
         for pid, smp in man["save_poses"]["CONTEXTUAL"]["ANY"]["samples"].items():
             s2 = dict(smp)
-            if pid == "DIVE_NORTH_MEDHIGH": s2["path"] = stem + ".png"; s2["anchors"] = stem + "_anchors.json"; s2["note"] = (smp.get("note") or "") + " [CONTACT-ORIENTATION TEST %+d deg, CW %d, review only]" % (k, cw)
+            if pid == "DIVE_NORTH_MEDHIGH": s2["path"] = stem + ".png"; s2["anchors"] = stem + "_anchors.json"; s2["note"] = (smp.get("note") or "") + " [CONTACT-ORIENTATION TEST %+d deg CW from live, CW %d, review only]" % (cw - LIVE_CW, cw)
             else: s2["path"] = prefix + smp["path"]; s2["anchors"] = prefix + smp["anchors"]
             samples[pid] = s2
         ctx = []
         for cp in man["contextual_poses"]:
             c2 = dict(cp)                                     # selection metadata (reach_screen_unit, facing, classes) kept verbatim → pick/score unchanged
-            if cp["id"] == "DIVE_NORTH_MEDHIGH": c2["path"] = stem + ".png"; c2["anchors"] = stem + "_anchors.json"; c2["rotation_cw_deg"] = cw; c2["review_tilt_deg"] = k
+            if cp["id"] == "DIVE_NORTH_MEDHIGH": c2["path"] = stem + ".png"; c2["anchors"] = stem + "_anchors.json"; c2["rotation_cw_deg"] = cw; c2["review_delta_cw_deg"] = cw - LIVE_CW
             ctx.append(c2)
-        m2 = {"version": man.get("version"), "review_only": "CONTACT-ORIENTATION TEST %+d deg (CW %d) — presentation only; load with match.html?savePoses=<this file, page-relative>" % (k, cw),
+        m2 = {"version": man.get("version"), "review_only": "CONTACT-ORIENTATION TEST %+d deg CW from live (CW %d) — presentation only; load with match.html?savePoses=<this file, page-relative>" % (cw - LIVE_CW, cw),
               "save_poses": {"CONTEXTUAL": {"ANY": {"samples": samples}}}, "contextual_poses": ctx}
         json.dump(m2, open(os.path.join(vd, "manifest_cw%d.json" % cw), "w"), indent=1)
         print("variant", stem, "canvas", out.size, "lead", an["lead_glove"][:2], "root", an["root"], "hip", an["landmarks_canvas_px"]["hip"], "head", an["landmarks_canvas_px"]["head"], "feet", an["landmarks_canvas_px"]["feet"], "gloves", len(an["gloves"]), "check", an["landmark_check"])
-    json.dump({"source": os.path.relpath(SRC, ROOT), "live": os.path.relpath(LIVE_PNG, ROOT), "tilts": TILTS, "live_cw": LIVE_CW, "root_from_lead_base": ROOT_FROM_LEAD_BASE, "body_scale": BODY_SCALE,
+    json.dump({"source": os.path.relpath(SRC, ROOT), "live": os.path.relpath(LIVE_PNG, ROOT), "cw_list": cw_list, "live_cw": LIVE_CW, "root_from_lead_base": ROOT_FROM_LEAD_BASE, "body_scale": BODY_SCALE,
                "source_landmarks": {k: (list(v) if k != "counts" else v) for k, v in lm_src.items()}, **proof}, open(os.path.join(vd, "derivation.json"), "w"), indent=1)
 
 

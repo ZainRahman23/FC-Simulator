@@ -15,6 +15,8 @@ from PIL import Image, ImageDraw, ImageFont
 CAP, VAR, OUT = sys.argv[1], sys.argv[2], sys.argv[3]
 os.makedirs(OUT, exist_ok=True)
 CASES = [("CURRENT_plain", "CURRENT (live, 50° CW)", 0), ("CW45_tilt5", "+5° tilt (45° CW)", 5), ("CW40_tilt10", "+10° tilt (40° CW)", 10), ("CW35_tilt15", "+15° tilt (35° CW)", 15)]
+if os.path.exists(os.path.join(CAP, "cases.json")):            # [{"case": dir, "label": text, "delta": deg}] — round 2 uses CW deltas
+    CASES = [(c["case"], c["label"], c["delta"]) for c in json.load(open(os.path.join(CAP, "cases.json")))]
 try: FONT = ImageFont.truetype("/System/Library/Fonts/Menlo.ttc", 12); FONT_B = ImageFont.truetype("/System/Library/Fonts/Menlo.ttc", 14)
 except Exception: FONT = ImageFont.load_default(); FONT_B = FONT
 
@@ -124,7 +126,7 @@ def main():
         # row 4: numbers
         y3 = y2 + rowh[2]; pl = r["place"]
         lines = [r["label"],
-                 "%d° CW from source · tilt %+d°" % (r["rot"], r["tilt"]),
+                 "%d° CW from source · %+d° from live (CW positive)" % (r["rot"], r["rot"] - 50),
                  "torso hip→head   %5.1f°  Δdive %+5.1f  Δgoal %+5.1f" % (r["torso_deg"], r["torso_deg"] - r["target_deg"], r["torso_deg"] - r["goal_deg"]),
                  "body  feet→head  %5.1f°  Δdive %+5.1f" % (r["body_deg"], r["body_deg"] - r["target_deg"]),
                  "reach feet→glove %5.1f°  Δdive %+5.1f" % (r["reach_deg"], r["reach_deg"] - r["target_deg"]),
