@@ -6,7 +6,7 @@
 //   node capture_full.js <outdir> <manifest url path> <schedule json file> '<shot json>'
 const NM=process.env.PUPPETEER_NODE_MODULES; if(NM) module.paths.unshift(NM);
 const puppeteer=require("puppeteer-core"); const fs=require("fs"); const path=require("path");
-const OUT=process.argv[2]; const MAN=process.argv[3]; const SCHED=JSON.parse(fs.readFileSync(process.argv[4],"utf8")); const SHOT=JSON.parse(process.argv[5]); fs.mkdirSync(OUT,{recursive:true});
+const OUT=process.argv[2]; const MAN=process.argv[3]; const SCHED=JSON.parse(fs.readFileSync(process.argv[4],"utf8")); const SHOT=JSON.parse(process.argv[5]); const OFF=process.argv.includes("--off"); fs.mkdirSync(OUT,{recursive:true});
 (async()=>{const b=await puppeteer.launch({executablePath:"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",headless:"new",userDataDir:"chrome-pfull-"+Date.now(),args:["--no-sandbox"]});
 const p=await b.newPage(); await p.setViewport({width:1400,height:900,deviceScaleFactor:1});
 p.on("console", m=>{ if(/GK|save pose|not loaded/i.test(m.text())) console.log("console:", m.text().slice(0,200)); });
@@ -14,7 +14,7 @@ await p.goto("http://127.0.0.1:8126/sandbox/visual/match.html?savePoses="+encode
 for(let i=0;i<900;i++){const ok=await p.evaluate(()=>{const el=document.getElementById("loading");return !!(el&&el.style.display==="none"&&typeof ptEnter==="function"&&S.gkAnim&&S.gkAnim.loaded);});if(ok)break;await new Promise(r=>setTimeout(r,100));}
 const keys=await p.evaluate(()=>Object.keys((S.gkAnim.savePoses.CONTEXTUAL&&S.gkAnim.savePoses.CONTEXTUAL.ANY)||{}));
 console.log("candidate keys loaded:", keys.filter(k=>/^F\d/.test(k)).join(" "), "| live contextual:", await p.evaluate(()=>(S.gkAnim.contextual||[]).length));
-await p.evaluate(()=>{ if(!(S.pt&&S.pt.on))ptEnter(); ptReset(); S.pt.paused=true; S.dbg.anim=false; GK_ANIM.reviewOverride=null; }); await new Promise(r=>setTimeout(r,500));
+await p.evaluate((off)=>{ GK_ANIM.sequences=!off; }, OFF); await p.evaluate(()=>{ if(!(S.pt&&S.pt.on))ptEnter(); ptReset(); S.pt.paused=true; S.dbg.anim=false; GK_ANIM.reviewOverride=null; }); await new Promise(r=>setTimeout(r,500));
 await p.screenshot({path:path.join(OUT,"_warmup.png"),clip:{x:0,y:0,width:100,height:100}});
 const start=await p.evaluate((c)=>{ if(!(S.pt&&S.pt.on))ptEnter(); ptReset(); S.pt.paused=true; S.dbg.anim=false; GK_ANIM.reviewOverride=null; S.pt.slow=1; S.pt.pauseAtContact=false;
   ptGkFire({name:"PLACE", origin:c.origin, aim:[105,34], tech:"LACES", c:0.5, synth:{lat:0,z:1.0,v:0.001}}); S.pt.b.vx=0;S.pt.b.vy=0;S.pt.b.vz=0; S.pt.kick=null; S.pt.gk.shotT0=null; S.pt.gk.shotActive=false; ptStep(); ptStep();
