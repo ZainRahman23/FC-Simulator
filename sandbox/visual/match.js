@@ -4378,7 +4378,9 @@ async function gkAnimLoadSavePoses(A, manifestUrl, root) {
   A.sequences = A.sequences || {};
   for (const [id, sq] of Object.entries(m.sequences || {})) {
     try {
-      const one = async (e) => { const img = await loadImage(root + e.path), anchors = await loadJSON(root + e.anchors); const r = { ...e, img, anchors }; if (e.moderate) r.moderate = { img: await loadImage(root + e.moderate.path), anchors: await loadJSON(root + e.moderate.anchors) }; return r; };
+      const one = async (e) => { const img = await loadImage(root + e.path), anchors = await loadJSON(root + e.anchors); const r = { ...e, img, anchors }; if (e.moderate) r.moderate = { img: await loadImage(root + e.moderate.path), anchors: await loadJSON(root + e.moderate.anchors) };
+        if (e.byFacing) { r.byFacing = {}; for (const [d, v] of Object.entries(e.byFacing)) { const fv = { img: await loadImage(root + v.path), anchors: await loadJSON(root + v.anchors) }; if (v.moderate) fv.moderate = { img: await loadImage(root + v.moderate.path), anchors: await loadJSON(root + v.moderate.anchors) }; r.byFacing[d] = fv; } }
+        return r; };
       const pre = [], post = [];
       for (const e of sq.pre || []) pre.push(await one(e));
       for (const e of sq.post || []) post.push(await one(e));
@@ -4805,7 +4807,11 @@ function gkAnimUpdate(t, gk) {
       if (A.commit.ctx === undefined) A.commit.ctx = gkAnimContextualPick(A, t, gk, cls, gk.committed, frozen.facing, spSample);
       ctx = A.commit.ctx && A.commit.ctx.pick ? A.commit.ctx.pick : null;
       if (ctx) spSample = ctx.sample;
-      if (A.commit.seq === undefined) A.commit.seq = ctx ? gkAnimSeqPick(A, cls, ctx, gk.committed) : null;
+      if (A.commit.seq === undefined) { A.commit.seq = ctx ? gkAnimSeqPick(A, cls, ctx, gk.committed) : null;
+      // FACING VARIANTS (2026-09-07): a sequence may carry per-facing anticipation frames; the facing is the one the selector judged the
+      // keeper to present at commit (bearing-corrected), binned to the eight sprite facings, so the animation starts from the sprite he was showing
+      const fdeg = ctx && ctx.situation ? ctx.situation.facingAtCommitDeg : (frozen && frozen.facing != null ? frozen.facing * 180 / Math.PI : gk.facing * 180 / Math.PI);
+      A.commit.seqDir = headingToDir(fdeg); }
     }
     if ((isDiveFam || ctx) && spSample && clipReq.mode !== "loop" && clipReq.family !== "RECOVER") {
       savePose = { family: clipReq.family, side: cls.goalSide, key: ctx ? ctx.id : spKey, sample: spSample, mode: clipReq.mode, k: clipReq.k, candidate: spSample.candidate, showFrom: GK_ANIM.loadPhase, exact: ctx ? true : !!spSide[spKey], contextual: ctx || null }; temp = null;
@@ -4935,7 +4941,8 @@ function gkAnimDraw(t, gk, dt) {
     // ── SEQUENCE FRAME (full authored dive animation around a contact pose): drawn at the simulation root. Pre-contact frames use the
     // same bounded hand-led placement as the save poses (weight ramping in over the flight); post-contact frames carry a fading share of
     // the contact placement plus the presentation-root continuation. The contact window itself is the untouched save-pose path.
-    const sf = cur.seq, e = sf.e, useMod = sf.mode === "pre" && A.commit && A.commit.seq && A.commit.seq.variant === "moderate" && e.moderate;
+    const sf = cur.seq, e0 = sf.e, fv = e0.byFacing && A.commit && A.commit.seqDir ? e0.byFacing[A.commit.seqDir] : null, e = fv || e0;
+    const useMod = sf.mode === "pre" && A.commit && A.commit.seq && A.commit.seq.variant === "moderate" && e.moderate;
     const img = useMod ? e.moderate.img : e.img, an = (useMod ? e.moderate.anchors : e.anchors) || {};
     const ax = an.root ? an.root[0] : img.width / 2, ay = an.root ? an.root[1] : img.height - 1, ps = s * (an.pixel_scale || 1);
     const gl = an.gloves && an.gloves.length ? an.gloves : (an.lead_glove ? [an.lead_glove] : []);
@@ -4950,7 +4957,7 @@ function gkAnimDraw(t, gk, dt) {
     anchors = { root: anchors.root, pelvis: an.pelvis ? blit.toScreen(an.pelvis[0], an.pelvis[1]) : null, head: an.head ? blit.toScreen(an.head[0], an.head[1]) : null, shoulder: an.shoulder ? blit.toScreen(an.shoulder[0], an.shoulder[1]) : null,
       handL: gl[0] ? blit.toScreen(gl[0][0], gl[0][1]) : null, handR: gl[1] ? blit.toScreen(gl[1][0], gl[1][1]) : null, footL: an.foot_L ? blit.toScreen(an.foot_L[0], an.foot_L[1]) : null, footR: an.foot_R ? blit.toScreen(an.foot_R[0], an.foot_R[1]) : null };
     gloveScreen = gl.length ? gkAnimGloves(gl, blit.toScreen, simHand, false) : null; if (gloveScreen && simHand) handScreen = { x: gloveScreen.x, y: gloveScreen.y };
-    artLabel = "SEQ " + sf.id + " " + sf.key + (useMod ? " (moderate)" : "") + (sf.mode === "pre" ? "  u " + cur.u.toFixed(2) + (sf.ikW ? " hand-led " + sf.ikW : "") : "  +" + sf.tl.toFixed(2) + " s" + (sf.pres ? " pres +" + sf.pres.dm.toFixed(2) + " m" : "") + " carry " + sf.carry);
+    artLabel = "SEQ " + sf.id + " " + sf.key + (fv ? " [" + A.commit.seqDir + "]" : "") + (useMod ? " (moderate)" : "") + (sf.mode === "pre" ? "  u " + cur.u.toFixed(2) + (sf.ikW ? " hand-led " + sf.ikW : "") : "  +" + sf.tl.toFixed(2) + " s" + (sf.pres ? " pres +" + sf.pres.dm.toFixed(2) + " m" : "") + " carry " + sf.carry);
   } else if (cur.clip) {
     // ── AUTHORED FRAME: bounded frame-selection IK (nearest glove among allowed candidates) + hand-led translation (recorded, capped)
     const v = cur.clip.v; let pos = cur.clip.pos, best = null; const yOnly = v.ik === "y";

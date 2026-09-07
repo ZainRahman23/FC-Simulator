@@ -1169,6 +1169,559 @@
      "carry": 0.0
     }
    ]
+  },
+  "RIGHT_FAR": {
+   "id": "RIGHT_FAR",
+   "pose": "DIVE_NORTH_MEDHIGH",
+   "families": [
+    "AIRBORNE_DIVE"
+   ],
+   "heights": [
+    "LOW-MID",
+    "MID",
+    "HIGH",
+    "TOP"
+   ],
+   "record": "generic far airborne dive to the keeper's RIGHT (GOAL_LEFT / north = screen up-left), W-facing rig cut of the LEFT_FAR graph (2026-09-07); the contact keyframe is the live DIVE_NORTH_CW50 drawn by the save-pose path; LOW-MID contacts use it too because no low-far RIGHT still exists (NEW KEY ART REQUIRED)",
+   "liveFrom": 0.95,
+   "contactHold": 0.05,
+   "moderateBelow": 0.8,
+   "pres": {
+    "tau": 0.4,
+    "tLand": 0.55,
+    "tEnd": 1.05,
+    "note": "presentation-only root continuation after execEnd along the dive direction (up-left), eased back to the simulation root by tEnd"
+   },
+   "pre": [
+    {
+     "key": "F01",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F01_WEIGHT_SHIFT.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F01_WEIGHT_SHIFT_anchors.json",
+     "phase": "READ / WEIGHT SHIFT",
+     "from": 0.0,
+     "to": 0.05,
+     "ik": false,
+     "ikW": 0.0
+    },
+    {
+     "key": "F02",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F02_CROUCH.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F02_CROUCH_anchors.json",
+     "phase": "ANTICIPATION CROUCH",
+     "from": 0.05,
+     "to": 0.1,
+     "ik": false,
+     "ikW": 0.0
+    },
+    {
+     "key": "F03",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F03_PLANT_LOAD.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F03_PLANT_LOAD_anchors.json",
+     "phase": "PLANT / LOAD (deepest)",
+     "from": 0.1,
+     "to": 0.16,
+     "ik": false,
+     "ikW": 0.0
+    },
+    {
+     "key": "F04",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F04_PUSH_OFF.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F04_PUSH_OFF_anchors.json",
+     "phase": "EXPLOSIVE PUSH-OFF",
+     "from": 0.16,
+     "to": 0.25,
+     "ik": false,
+     "ikW": 0.0
+    },
+    {
+     "key": "F05",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F05_TOE_OFF.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F05_TOE_OFF_anchors.json",
+     "phase": "TOE-OFF (propelled)",
+     "from": 0.25,
+     "to": 0.31,
+     "ik": false,
+     "ikW": 0.0
+    },
+    {
+     "key": "F05b",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F05b_LEAVING_GROUND.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F05b_LEAVING_GROUND_anchors.json",
+     "phase": "LEAVING THE GROUND",
+     "from": 0.31,
+     "to": 0.37,
+     "ik": true,
+     "ikW": 0.25
+    },
+    {
+     "key": "F06",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F06_EARLY_FLIGHT.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F06_EARLY_FLIGHT_anchors.json",
+     "phase": "EARLY FLIGHT",
+     "from": 0.37,
+     "to": 0.46,
+     "ik": true,
+     "ikW": 0.5,
+     "moderate": {
+      "path": "goalkeeper/sequences/RIGHT_FAR/F06m_EARLY_FLIGHT_MOD.png",
+      "anchors": "goalkeeper/sequences/RIGHT_FAR/F06m_EARLY_FLIGHT_MOD_anchors.json"
+     }
+    },
+    {
+     "key": "F07",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F07_MID_FLIGHT.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F07_MID_FLIGHT_anchors.json",
+     "phase": "MID FLIGHT",
+     "from": 0.46,
+     "to": 0.56,
+     "ik": true,
+     "ikW": 0.75,
+     "moderate": {
+      "path": "goalkeeper/sequences/RIGHT_FAR/F07m_MID_FLIGHT_MOD.png",
+      "anchors": "goalkeeper/sequences/RIGHT_FAR/F07m_MID_FLIGHT_MOD_anchors.json"
+     }
+    },
+    {
+     "key": "F07b",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F07b_BRIDGE.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F07b_BRIDGE_anchors.json",
+     "phase": "BRIDGE (contact proportions)",
+     "from": 0.56,
+     "to": 0.65,
+     "ik": true,
+     "ikW": 1.0
+    },
+    {
+     "key": "F07c",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F07c_BRIDGE_PRO_A.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F07c_BRIDGE_PRO_A_anchors.json",
+     "phase": "BRIDGE (Pro parts, arms 24\u00b0 short, 75 % outline)",
+     "from": 0.65,
+     "to": 0.73,
+     "ik": true,
+     "ikW": 1.0
+    },
+    {
+     "key": "F08",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F08_BRIDGE_PRO.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F08_BRIDGE_PRO_anchors.json",
+     "phase": "BRIDGE (Pro parts, arms 14\u00b0 short)",
+     "from": 0.73,
+     "to": 0.84,
+     "ik": true,
+     "ikW": 1.0
+    },
+    {
+     "key": "F09",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F09_FINAL_EXTENSION.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F09_FINAL_EXTENSION_anchors.json",
+     "phase": "FINAL EXTENSION (bridge)",
+     "from": 0.84,
+     "to": 0.95,
+     "ik": true,
+     "ikW": 1.0
+    }
+   ],
+   "post": [
+    {
+     "key": "F11",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F11_POST_CONTACT.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F11_POST_CONTACT_anchors.json",
+     "phase": "POST-CONTACT (follow-through)",
+     "from": 0.05,
+     "to": 0.11,
+     "carry": 1.0
+    },
+    {
+     "key": "F11b",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F11b_APEX.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F11b_APEX_anchors.json",
+     "phase": "APEX",
+     "from": 0.11,
+     "to": 0.17,
+     "carry": 1.0
+    },
+    {
+     "key": "F12",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F12_DESCENT.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F12_DESCENT_anchors.json",
+     "phase": "DESCENT",
+     "from": 0.17,
+     "to": 0.23,
+     "carry": 1.0
+    },
+    {
+     "key": "F12b",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F12b_FALLING.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F12b_FALLING_anchors.json",
+     "phase": "FALLING",
+     "from": 0.23,
+     "to": 0.3,
+     "carry": 1.0
+    },
+    {
+     "key": "F13",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F13_GROUND_CONTACT.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F13_GROUND_CONTACT_anchors.json",
+     "phase": "FIRST GROUND CONTACT",
+     "from": 0.3,
+     "to": 0.37,
+     "carry": 1.0
+    },
+    {
+     "key": "F13b",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F13b_SETTLING.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F13b_SETTLING_anchors.json",
+     "phase": "SETTLING",
+     "from": 0.37,
+     "to": 0.45,
+     "carry": 1.0
+    },
+    {
+     "key": "F14",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F14_ABSORB.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F14_ABSORB_anchors.json",
+     "phase": "ABSORB IMPACT",
+     "from": 0.45,
+     "to": 0.55,
+     "carry": 1.0
+    },
+    {
+     "key": "F15a",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F15a_PUSH_UP.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F15a_PUSH_UP_anchors.json",
+     "phase": "RECOVERY TURN (pushing up)",
+     "from": 0.55,
+     "to": 0.63,
+     "carry": 0.85
+    },
+    {
+     "key": "F15a2",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F15a2_SITTING_UP.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F15a2_SITTING_UP_anchors.json",
+     "phase": "SITTING UP",
+     "from": 0.63,
+     "to": 0.71,
+     "carry": 0.7
+    },
+    {
+     "key": "F15a3",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F15a3_HALF_KNEEL.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F15a3_HALF_KNEEL_anchors.json",
+     "phase": "HALF KNEEL (trunk low)",
+     "from": 0.71,
+     "to": 0.79,
+     "carry": 0.5
+    },
+    {
+     "key": "F15b",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F15b_KNEELING.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F15b_KNEELING_anchors.json",
+     "phase": "KNEELING (one knee, one foot)",
+     "from": 0.79,
+     "to": 0.88,
+     "carry": 0.35
+    },
+    {
+     "key": "F16",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F16_RISING.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F16_RISING_anchors.json",
+     "phase": "RISING",
+     "from": 0.88,
+     "to": 0.97,
+     "carry": 0.15
+    },
+    {
+     "key": "F17",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F17_READY.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F17_READY_anchors.json",
+     "phase": "RETURN TO READY",
+     "from": 0.97,
+     "to": 1.05,
+     "carry": 0.0
+    }
+   ]
+  },
+  "RIGHT_TOP": {
+   "id": "RIGHT_TOP",
+   "pose": "TOP_LEFT_CORNER",
+   "families": [
+    "AIRBORNE_DIVE"
+   ],
+   "heights": [
+    "TOP"
+   ],
+   "record": "full-stretch top-corner dive to the keeper's RIGHT (TOP_LEFT_CORNER_CW50 @ 0.72): shares the RIGHT_FAR trunk F01\u2013F07 (+moderate) and get-up F15a3\u2013F17; own base bridge F07b, Pro-part bridges F07c\u2013F09 and landing F11\u2013F15a2 from the corner rig (2026-09-07)",
+   "liveFrom": 0.95,
+   "contactHold": 0.05,
+   "moderateBelow": 0.8,
+   "pres": {
+    "tau": 0.4,
+    "tLand": 0.55,
+    "tEnd": 1.05,
+    "note": "presentation-only root continuation after execEnd along the dive direction, eased back to the simulation root by tEnd"
+   },
+   "pre": [
+    {
+     "key": "F01",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F01_WEIGHT_SHIFT.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F01_WEIGHT_SHIFT_anchors.json",
+     "phase": "shared",
+     "shared": true,
+     "from": 0.0,
+     "to": 0.05,
+     "ik": false,
+     "ikW": 0.0
+    },
+    {
+     "key": "F02",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F02_CROUCH.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F02_CROUCH_anchors.json",
+     "phase": "shared",
+     "shared": true,
+     "from": 0.05,
+     "to": 0.1,
+     "ik": false,
+     "ikW": 0.0
+    },
+    {
+     "key": "F03",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F03_PLANT_LOAD.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F03_PLANT_LOAD_anchors.json",
+     "phase": "shared",
+     "shared": true,
+     "from": 0.1,
+     "to": 0.16,
+     "ik": false,
+     "ikW": 0.0
+    },
+    {
+     "key": "F04",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F04_PUSH_OFF.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F04_PUSH_OFF_anchors.json",
+     "phase": "shared",
+     "shared": true,
+     "from": 0.16,
+     "to": 0.25,
+     "ik": false,
+     "ikW": 0.0
+    },
+    {
+     "key": "F05",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F05_TOE_OFF.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F05_TOE_OFF_anchors.json",
+     "phase": "shared",
+     "shared": true,
+     "from": 0.25,
+     "to": 0.31,
+     "ik": false,
+     "ikW": 0.0
+    },
+    {
+     "key": "F05b",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F05b_LEAVING_GROUND.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F05b_LEAVING_GROUND_anchors.json",
+     "phase": "shared",
+     "shared": true,
+     "from": 0.31,
+     "to": 0.37,
+     "ik": true,
+     "ikW": 0.25
+    },
+    {
+     "key": "F06",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F06_EARLY_FLIGHT.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F06_EARLY_FLIGHT_anchors.json",
+     "phase": "shared",
+     "shared": true,
+     "from": 0.37,
+     "to": 0.46,
+     "ik": true,
+     "ikW": 0.5,
+     "moderate": {
+      "path": "goalkeeper/sequences/RIGHT_FAR/F06m_EARLY_FLIGHT_MOD.png",
+      "anchors": "goalkeeper/sequences/RIGHT_FAR/F06m_EARLY_FLIGHT_MOD_anchors.json"
+     }
+    },
+    {
+     "key": "F07",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F07_MID_FLIGHT.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F07_MID_FLIGHT_anchors.json",
+     "phase": "shared",
+     "shared": true,
+     "from": 0.46,
+     "to": 0.56,
+     "ik": true,
+     "ikW": 0.75,
+     "moderate": {
+      "path": "goalkeeper/sequences/RIGHT_FAR/F07m_MID_FLIGHT_MOD.png",
+      "anchors": "goalkeeper/sequences/RIGHT_FAR/F07m_MID_FLIGHT_MOD_anchors.json"
+     }
+    },
+    {
+     "key": "F07b",
+     "path": "goalkeeper/sequences/RIGHT_TOP/F07b_BRIDGE_TOP.png",
+     "anchors": "goalkeeper/sequences/RIGHT_TOP/F07b_BRIDGE_TOP_anchors.json",
+     "phase": "BRIDGE (corner proportions)",
+     "from": 0.56,
+     "to": 0.65,
+     "ik": true,
+     "ikW": 1.0
+    },
+    {
+     "key": "F07c",
+     "path": "goalkeeper/sequences/RIGHT_TOP/F07c_BRIDGE_PRO_A.png",
+     "anchors": "goalkeeper/sequences/RIGHT_TOP/F07c_BRIDGE_PRO_A_anchors.json",
+     "phase": "BRIDGE (Pro parts, arms 22\u00b0 short, 75 % outline)",
+     "from": 0.65,
+     "to": 0.73,
+     "ik": true,
+     "ikW": 1.0
+    },
+    {
+     "key": "F08",
+     "path": "goalkeeper/sequences/RIGHT_TOP/F08_BRIDGE_PRO.png",
+     "anchors": "goalkeeper/sequences/RIGHT_TOP/F08_BRIDGE_PRO_anchors.json",
+     "phase": "BRIDGE (Pro parts, arms 12\u00b0 short)",
+     "from": 0.73,
+     "to": 0.84,
+     "ik": true,
+     "ikW": 1.0
+    },
+    {
+     "key": "F09",
+     "path": "goalkeeper/sequences/RIGHT_TOP/F09_FINAL_EXTENSION.png",
+     "anchors": "goalkeeper/sequences/RIGHT_TOP/F09_FINAL_EXTENSION_anchors.json",
+     "phase": "FINAL EXTENSION (bridge)",
+     "from": 0.84,
+     "to": 0.95,
+     "ik": true,
+     "ikW": 1.0
+    }
+   ],
+   "post": [
+    {
+     "key": "F11",
+     "path": "goalkeeper/sequences/RIGHT_TOP/F11_POST_CONTACT.png",
+     "anchors": "goalkeeper/sequences/RIGHT_TOP/F11_POST_CONTACT_anchors.json",
+     "phase": "POST-CONTACT (follow-through)",
+     "from": 0.05,
+     "to": 0.11,
+     "carry": 1.0
+    },
+    {
+     "key": "F11b",
+     "path": "goalkeeper/sequences/RIGHT_TOP/F11b_APEX.png",
+     "anchors": "goalkeeper/sequences/RIGHT_TOP/F11b_APEX_anchors.json",
+     "phase": "APEX",
+     "from": 0.11,
+     "to": 0.17,
+     "carry": 1.0
+    },
+    {
+     "key": "F12",
+     "path": "goalkeeper/sequences/RIGHT_TOP/F12_DESCENT.png",
+     "anchors": "goalkeeper/sequences/RIGHT_TOP/F12_DESCENT_anchors.json",
+     "phase": "DESCENT",
+     "from": 0.17,
+     "to": 0.23,
+     "carry": 1.0
+    },
+    {
+     "key": "F12b",
+     "path": "goalkeeper/sequences/RIGHT_TOP/F12b_FALLING.png",
+     "anchors": "goalkeeper/sequences/RIGHT_TOP/F12b_FALLING_anchors.json",
+     "phase": "FALLING",
+     "from": 0.23,
+     "to": 0.3,
+     "carry": 1.0
+    },
+    {
+     "key": "F13",
+     "path": "goalkeeper/sequences/RIGHT_TOP/F13_GROUND_CONTACT.png",
+     "anchors": "goalkeeper/sequences/RIGHT_TOP/F13_GROUND_CONTACT_anchors.json",
+     "phase": "FIRST GROUND CONTACT",
+     "from": 0.3,
+     "to": 0.37,
+     "carry": 1.0
+    },
+    {
+     "key": "F13b",
+     "path": "goalkeeper/sequences/RIGHT_TOP/F13b_SETTLING.png",
+     "anchors": "goalkeeper/sequences/RIGHT_TOP/F13b_SETTLING_anchors.json",
+     "phase": "SETTLING",
+     "from": 0.37,
+     "to": 0.45,
+     "carry": 1.0
+    },
+    {
+     "key": "F14",
+     "path": "goalkeeper/sequences/RIGHT_TOP/F14_ABSORB.png",
+     "anchors": "goalkeeper/sequences/RIGHT_TOP/F14_ABSORB_anchors.json",
+     "phase": "ABSORB IMPACT",
+     "from": 0.45,
+     "to": 0.55,
+     "carry": 1.0
+    },
+    {
+     "key": "F15a",
+     "path": "goalkeeper/sequences/RIGHT_TOP/F15a_PUSH_UP.png",
+     "anchors": "goalkeeper/sequences/RIGHT_TOP/F15a_PUSH_UP_anchors.json",
+     "phase": "RECOVERY TURN (pushing up)",
+     "from": 0.55,
+     "to": 0.63,
+     "carry": 0.85
+    },
+    {
+     "key": "F15a2",
+     "path": "goalkeeper/sequences/RIGHT_TOP/F15a2_SITTING_UP.png",
+     "anchors": "goalkeeper/sequences/RIGHT_TOP/F15a2_SITTING_UP_anchors.json",
+     "phase": "SITTING UP",
+     "from": 0.63,
+     "to": 0.71,
+     "carry": 0.7
+    },
+    {
+     "key": "F15a3",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F15a3_HALF_KNEEL.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F15a3_HALF_KNEEL_anchors.json",
+     "phase": "shared",
+     "shared": true,
+     "from": 0.71,
+     "to": 0.79,
+     "carry": 0.5
+    },
+    {
+     "key": "F15b",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F15b_KNEELING.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F15b_KNEELING_anchors.json",
+     "phase": "shared",
+     "shared": true,
+     "from": 0.79,
+     "to": 0.88,
+     "carry": 0.35
+    },
+    {
+     "key": "F16",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F16_RISING.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F16_RISING_anchors.json",
+     "phase": "shared",
+     "shared": true,
+     "from": 0.88,
+     "to": 0.97,
+     "carry": 0.15
+    },
+    {
+     "key": "F17",
+     "path": "goalkeeper/sequences/RIGHT_FAR/F17_READY.png",
+     "anchors": "goalkeeper/sequences/RIGHT_FAR/F17_READY_anchors.json",
+     "phase": "shared",
+     "shared": true,
+     "from": 0.97,
+     "to": 1.05,
+     "carry": 0.0
+    }
+   ]
   }
  }
 }
