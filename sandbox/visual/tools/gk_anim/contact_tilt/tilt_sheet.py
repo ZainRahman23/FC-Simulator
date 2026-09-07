@@ -86,10 +86,11 @@ def main():
     W2 = (int(cx) - 62, int(cy) - 60, int(cx) + 62, int(cy) + 60)
     p1w, p1h = W1[2] - W1[0], W1[3] - W1[1]; p2w, p2h = (W2[2] - W2[0]) * Z, (W2[3] - W2[1]) * Z
     colw = max(p1w, p2w) + 16; margin = 10; rowh = [p1h + 30, p2h + 30, p2h + 30, 170]
-    sheet = Image.new("RGB", (colw * 4 + margin * 2, sum(rowh) + 60), (22, 22, 22)); D = ImageDraw.Draw(sheet)
-    D.text((margin, 8), "CONTACT-ORIENTATION TEST — approved NORTH far-dive contact sprite on the representative RIGHT save (same simulation, contact tick %d, root, ball, body scale 0.72, hand-led placement). Rigid NN rotation about the hip pivot, anchors re-measured, lead glove re-anchored to the identical contact point." % base["contactTick"], fill=(255, 255, 255), font=FONT_B)
-    D.text((margin, 28), "Row 1 gameplay scale (1x) in the real goal · Row 2 4x crop · Row 3 4x crop + contact geometry (red + sim root · yellow ○ sim hand = contact point · white ○ ball · cyan hip→head torso axis · blue feet→head · magenta feet→glove · orange take-off root→contact hand (projected dive line) · grey goal line · green ground track commit→contact)", fill=(200, 200, 200), font=FONT)
-    y0 = 64
+    sheet = Image.new("RGB", (colw * 4 + margin * 2, sum(rowh) + 80), (22, 22, 22)); D = ImageDraw.Draw(sheet)
+    D.text((margin, 6), "CONTACT-ORIENTATION TEST — approved NORTH far-dive contact sprite on the representative RIGHT save (same simulation, contact tick %d, root, ball, body scale 0.72, hand-led placement)." % base["contactTick"], fill=(255, 255, 255), font=FONT_B)
+    D.text((margin, 24), "Rigid nearest-neighbour rotation about the hip pivot, anchors re-measured after every rotation, lead glove re-anchored to the identical contact point. Nothing scaled, warped or redrawn.", fill=(255, 255, 255), font=FONT_B)
+    D.text((margin, 44), "Row 1 gameplay scale (1x) in the real goal · Row 2 4x crop · Row 3 4x crop + contact geometry (red + sim root · yellow ○ sim hand = contact point · white ○ ball · cyan hip→head torso axis · blue feet→head · magenta feet→glove · orange take-off root→contact hand (projected dive line) · grey goal line · green ground track commit→contact)", fill=(200, 200, 200), font=FONT)
+    y0 = 80
     for i, r in enumerate(data):
         x0 = margin + i * colw
         # row 1
@@ -132,7 +133,7 @@ def main():
                  "hip Δ (%+.1f,%+.1f)  feet Δ (%+.1f,%+.1f) live px" % (r["hip"][0] - base["hip"][0], r["hip"][1] - base["hip"][1], r["feet"][0] - base["feet"][0], r["feet"][1] - base["feet"][1]),
                  "pick %s %.3f · contact tick %d" % (r["pick"]["id"], r["pick"]["score"], r["contactTick"])]
         for k, t in enumerate(lines): D.text((x0, y3 + 6 + k * 16), t, fill=(255, 255, 255) if k else (255, 230, 120), font=FONT)
-    D.text((margin, 44), "angles = elevation toward screen-left (up = 90°) · refs: projected dive line (take-off root→contact hand) %.1f° · painted goal line %.1f° · ground track commit→contact %.1f° · body scale, root and placement unchanged" % (base["target_deg"], base["goal_deg"], base["track_deg"]), fill=(200, 200, 200), font=FONT)
+    D.text((margin, 60), "angles = elevation toward screen-left (up = 90°) · refs: projected dive line (take-off root→contact hand) %.1f° · painted goal line %.1f° · ground track commit→contact %.1f° · body scale, root and placement unchanged" % (base["target_deg"], base["goal_deg"], base["track_deg"]), fill=(200, 200, 200), font=FONT)
     sheet.save(os.path.join(OUT, "CONTACT_ORIENTATION_TEST_SHEET.png"))
     # separate strips for the user: 1x in the goal, and 4x clean
     strip1 = Image.new("RGB", (p1w * 4 + 30, p1h + 30), (22, 22, 22)); d1 = ImageDraw.Draw(strip1)
