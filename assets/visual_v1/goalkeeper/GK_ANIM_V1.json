@@ -499,13 +499,13 @@
       "note": "NORTH-WEST facing keeper, ground-level save to GOAL_RIGHT (same still, MIRRORED \u2014 first-build mapping restored per live review 2026-09-05)"
      },
      "DIVE_NORTH_MEDHIGH": {
-      "path": "goalkeeper/contextual/DIVE_NORTH_CW50.png",
-      "anchors": "goalkeeper/contextual/DIVE_NORTH_CW50_anchors.json",
+      "path": "goalkeeper/contextual/DIVE_NORTH_CW60.png",
+      "anchors": "goalkeeper/contextual/DIVE_NORTH_CW60_anchors.json",
       "mirror": false,
       "approved": true,
       "candidate": false,
       "id": "PRO_DIVE_NORTH_V1",
-      "note": "default contact pose for FAR / high-extension AIRBORNE_DIVE saves to GOAL_LEFT (the keeper's right), at every height class: raw Pro sprite rotated 50 deg CW as a presentation transform. Selected by the simulation's own envelope demand (norm), so an unreachable best-effort dive shows the full attempt. Ground-save actions stay LOW_COLLAPSE and keep the ground stills; the tight-angle and overhead stills keep their own cases by priority; the GOAL_RIGHT counterpart is DIVE_SOUTH_MEDHIGH (2026-09-06)"
+      "note": "default contact pose for FAR / high-extension AIRBORNE_DIVE saves to GOAL_LEFT (the keeper's right), at every height class: raw Pro sprite rotated 60 deg CW as a presentation transform (approved 2026-09-07; 50 deg was the 2026-09-05 approval, kept on disk unreferenced). Selected by the simulation's own envelope demand (norm), so an unreachable best-effort dive shows the full attempt. Ground-save actions stay LOW_COLLAPSE and keep the ground stills; the tight-angle and overhead stills keep their own cases by priority; the GOAL_RIGHT counterpart is DIVE_SOUTH_MEDHIGH (2026-09-06)"
      },
      "DIVE_SOUTH_MEDHIGH": {
       "path": "goalkeeper/contextual/DIVE_SOUTH_CW20.png",
@@ -784,9 +784,9 @@
     "TOP"
    ],
    "source_file": "sources/DIVE_NORTH_RAW.png",
-   "rotation_cw_deg": 50,
-   "path": "goalkeeper/contextual/DIVE_NORTH_CW50.png",
-   "anchors": "goalkeeper/contextual/DIVE_NORTH_CW50_anchors.json",
+   "rotation_cw_deg": 60,
+   "path": "goalkeeper/contextual/DIVE_NORTH_CW60.png",
+   "anchors": "goalkeeper/contextual/DIVE_NORTH_CW60_anchors.json",
    "transform": "ORIGINAL",
    "reach_screen_unit": [
     -0.13,

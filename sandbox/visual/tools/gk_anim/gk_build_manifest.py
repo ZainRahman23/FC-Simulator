@@ -124,12 +124,18 @@ def derive_rotated_pose(src_rel, out_stem, cw_deg, root_from_lead_base, note, bo
 # 91.3 px head-top-to-hip against the standing sprite's 66.8 px (0.732); the two agree at ~0.72, so the same person is the same size in
 # both poses. (Its head is drawn smaller relative to the body than the stylised standing sprite's — that is the art styles differing,
 # and matching heads instead would leave the diving body a third too long.)
-derive_rotated_pose("sources/DIVE_NORTH_RAW.png", "DIVE_NORTH_CW50", 50, (12.3, 93.7),
+# NORTH contact orientation: 50 deg CW was approved 2026-09-05 (over 35/45/55); on 2026-09-07 the user re-judged it against the RIGHT V2
+# dive sequence on the representative full-stretch RIGHT save and approved 60 deg CW (contact-orientation test rounds 1+2, review_artifacts/
+# gk_contact_tilt*, over 50/55/65). Same preserved source, same rigid nearest-neighbour rotation about the same measured hip/torso pivot,
+# same body scale, anchors re-measured, the same root offset from the lead glove (12.3, 93.7 canonical px) so the lead glove meets the
+# identical simulation contact point. DIVE_NORTH_CW50.* stays on disk as the previous-approval record, unreferenced (like DIVE_SOUTH_CW15).
+derive_rotated_pose("sources/DIVE_NORTH_RAW.png", "DIVE_NORTH_CW60", 60, (12.3, 93.7),
     "canonical medium/high airborne dive to the keeper's right (north / GOAL_LEFT). Live artwork = the preserved Pro sprite "
-    "sources/DIVE_NORTH_RAW.png rotated 50 degrees clockwise about its hip/torso pivot, nearest-neighbour, expand, no redraw, no limb "
-    "edit, no scaling, no warp (approved 2026-09-05 over 35/45/55). root is NOT the bottom-pixel convention, which assumes a grounded "
-    "pose: it is offset from the lead glove so the drawn glove meets the simulation's contact point on a representative medium/high "
-    "north dive (lateral 1.99 m, contact z 1.52 m) in the live camera; the runtime's bounded hand-led placement absorbs the rest.",
+    "sources/DIVE_NORTH_RAW.png rotated 60 degrees clockwise about its hip/torso pivot, nearest-neighbour, expand, no redraw, no limb "
+    "edit, no scaling, no warp (60 approved 2026-09-07 over 50/55/65 on the representative full-stretch RIGHT save; 50 was the 2026-09-05 "
+    "approval). root is NOT the bottom-pixel convention, which assumes a grounded pose: it is offset from the lead glove so the drawn glove "
+    "meets the simulation's contact point on a representative medium/high north dive (lateral 1.99 m, contact z 1.52 m) in the live camera; "
+    "the runtime's bounded hand-led placement absorbs the rest.",
     body_scale=0.72)
 # TOP-LEFT CORNER (2026-09-05): the Pro sprite authored as a south attempt, salvaged as the far/full-stretch top-corner save. Body scale
 # 0.72 measured against GK_BASE_V1 the same way as the north dive (crown-to-toe body axis 138.6 px vs the standing sprite's 99.6 px = 0.719).
@@ -239,9 +245,9 @@ CONTEXTUAL_POSES = [
     dict(id="NW_LOW_RIGHT", file="LOW_SIDE_NW", pixel_scale=0.86, inventory_id="GK_POSE_116", role="low_side", facing_deg=-135, side="GOAL_RIGHT", mirror=True, height_classes=["LOW", "LOW-MID"], note="NORTH-WEST facing keeper, ground-level save to GOAL_RIGHT (same still, MIRRORED — first-build mapping restored per live review 2026-09-05)"),
     # DIVE NORTH (2026-09-05): the one authored contact pose for a medium/high airborne dive to the keeper's right. Artwork is derived
     # above from the preserved raw sprite; the rotation is recorded here and in the anchors so the source can be replaced later.
-    dict(id="DIVE_NORTH_MEDHIGH", file="DIVE_NORTH_CW50", inventory_id="PRO_DIVE_NORTH_V1", role="dive_north", facing_deg=180, side="GOAL_LEFT",
-         mirror=False, height_classes=["LOW-MID", "MID", "HIGH", "TOP"], source_file="sources/DIVE_NORTH_RAW.png", rotation_cw_deg=50,
-         note="default contact pose for FAR / high-extension AIRBORNE_DIVE saves to GOAL_LEFT (the keeper's right), at every height class: raw Pro sprite rotated 50 deg CW as a presentation transform. Selected by the simulation's own envelope demand (norm), so an unreachable best-effort dive shows the full attempt. Ground-save actions stay LOW_COLLAPSE and keep the ground stills; the tight-angle and overhead stills keep their own cases by priority; the GOAL_RIGHT counterpart is DIVE_SOUTH_MEDHIGH (2026-09-06)"),
+    dict(id="DIVE_NORTH_MEDHIGH", file="DIVE_NORTH_CW60", inventory_id="PRO_DIVE_NORTH_V1", role="dive_north", facing_deg=180, side="GOAL_LEFT",
+         mirror=False, height_classes=["LOW-MID", "MID", "HIGH", "TOP"], source_file="sources/DIVE_NORTH_RAW.png", rotation_cw_deg=60,
+         note="default contact pose for FAR / high-extension AIRBORNE_DIVE saves to GOAL_LEFT (the keeper's right), at every height class: raw Pro sprite rotated 60 deg CW as a presentation transform (approved 2026-09-07; 50 deg was the 2026-09-05 approval, kept on disk unreferenced). Selected by the simulation's own envelope demand (norm), so an unreachable best-effort dive shows the full attempt. Ground-save actions stay LOW_COLLAPSE and keep the ground stills; the tight-angle and overhead stills keep their own cases by priority; the GOAL_RIGHT counterpart is DIVE_SOUTH_MEDHIGH (2026-09-06)"),
     # DIVE SOUTH (2026-09-06): the GOAL_RIGHT counterpart of DIVE_NORTH_MEDHIGH — same role structure and weighting (facing, goal side, the
     # simulation's own envelope demand, the off-ground fade), opposite goal side. Artwork derived above from the preserved cleaned source.
     dict(id="DIVE_SOUTH_MEDHIGH", file="DIVE_SOUTH_CW20", inventory_id="PRO_DIVE_SOUTH_V6", role="dive_south", facing_deg=180, side="GOAL_RIGHT",
