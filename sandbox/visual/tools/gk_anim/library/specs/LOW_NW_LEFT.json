@@ -1,0 +1,78 @@
+{
+ "id": "LOW_NW_LEFT",
+ "asset_dir": "goalkeeper/sequences/LOW_NW_LEFT",
+ "pose": "NW_LOW_LEFT",
+ "families": [
+  "LOW_COLLAPSE",
+  "AIRBORNE_DIVE"
+ ],
+ "heights": [
+  "LOW",
+  "LOW-MID"
+ ],
+ "record": "LOW / GROUND save into the approved NW_LOW_LEFT still (north-west-facing SET rig, 2026-09-07): weight shift + lower \u2192 lateral load \u2192 collapse/reach \u2192 still-shaped bridge \u2192 live still, hold (absorb/secure) \u2192 half kneel \u2192 kneel \u2192 rise \u2192 SET; no airborne phase (bridge mirrored to meet the still's mirrored orientation)",
+ "liveFrom": 0.95,
+ "contactHold": 0.25,
+ "moderateBelow": 0.0,
+ "pres": {
+  "tau": 0.15,
+  "tLand": 0.25,
+  "tEnd": 1.05,
+  "note": "ground save: a short momentum settle only"
+ },
+ "pre": [
+  [
+   "F01_LOWER",
+   0.0,
+   0.2,
+   0.0
+  ],
+  [
+   "F02_LOAD_L",
+   0.2,
+   0.45,
+   0.0
+  ],
+  [
+   "F03_COLLAPSE_L",
+   0.45,
+   0.7,
+   0.5
+  ],
+  [
+   "F04_BRIDGE_STILL",
+   0.7,
+   0.95,
+   1.0
+  ]
+ ],
+ "post": [
+  [
+   "F15a3_HALF_KNEEL_far",
+   0.25,
+   0.5,
+   0.6
+  ],
+  [
+   "F15b_KNEELING_far",
+   0.5,
+   0.72,
+   0.35
+  ],
+  [
+   "F16_RISING_far",
+   0.72,
+   0.92,
+   0.15
+  ],
+  [
+   "F17_READY",
+   0.92,
+   1.05,
+   0.0
+  ]
+ ],
+ "mirror_keys": [
+  "F04_BRIDGE_STILL"
+ ]
+}

@@ -11,7 +11,7 @@ from PIL import Image
 FR, SPEC = sys.argv[1], json.load(open(sys.argv[2]))
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "..", "..")); ASSETS = os.path.join(ROOT, "assets", "visual_v1")
 OUT = os.path.join(ASSETS, SPEC["asset_dir"]); os.makedirs(OUT, exist_ok=True)
-meta = json.load(open(f"{FR}/frames.json")); F = {f["name"].split("_")[0]: f for f in meta["frames"]}
+meta = json.load(open(f"{FR}/frames.json")); F = {f["name"].split("_")[0]: f for f in meta["frames"]}; F.update({f["name"]: f for f in meta["frames"]})
 MIRROR = bool(SPEC.get("mirror", False))
 def anchors_of(f, width):
     lm = f.get("landmarks") or {}; root = list(f["root"])
@@ -23,17 +23,19 @@ def anchors_of(f, width):
     for k in ("head", "pelvis", "shoulder", "foot_L", "foot_R"):
         if lm.get(k): an[k] = [X(lm[k][0]), lm[k][1]]
     return an
+MIRROR_KEYS = set(SPEC.get("mirror_keys") or [])
 def bake(key):
+    global MIRROR
     f = F[key]; src = f"{FR}/{f['name']}.png"; dst = f"{OUT}/{f['name']}.png"
-    im = Image.open(src).convert("RGBA")
+    im = Image.open(src).convert("RGBA"); saved = MIRROR; MIRROR = saved or (key in MIRROR_KEYS)
     if MIRROR: im = im.transpose(Image.FLIP_LEFT_RIGHT)
     im.save(dst)
-    an = anchors_of(f, im.width); an["canvas"] = list(im.size)
+    an = anchors_of(f, im.width); an["canvas"] = list(im.size); MIRROR = saved
     json.dump(an, open(f"{OUT}/{f['name']}_anchors.json", "w"), indent=1)
     return {"key": key, "path": f"{SPEC['asset_dir']}/{f['name']}.png", "anchors": f"{SPEC['asset_dir']}/{f['name']}_anchors.json", "phase": f["phase"]}
 def bake_from(frames_dir, key, subdir):
     """bake one frame from another authored set into asset_dir/<subdir>/ (per-facing variants)"""
-    meta2 = json.load(open(f"{frames_dir}/frames.json")); F2 = {f["name"].split("_")[0]: f for f in meta2["frames"]}
+    meta2 = json.load(open(f"{frames_dir}/frames.json")); F2 = {f["name"].split("_")[0]: f for f in meta2["frames"]}; F2.update({f["name"]: f for f in meta2["frames"]})
     f = F2[key]; src = f"{frames_dir}/{f['name']}.png"; od = f"{OUT}/{subdir}"; os.makedirs(od, exist_ok=True)
     im = Image.open(src).convert("RGBA")
     if MIRROR: im = im.transpose(Image.FLIP_LEFT_RIGHT)

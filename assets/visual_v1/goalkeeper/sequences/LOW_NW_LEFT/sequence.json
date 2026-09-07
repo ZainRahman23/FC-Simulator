@@ -1,0 +1,102 @@
+{
+ "id": "LOW_NW_LEFT",
+ "pose": "NW_LOW_LEFT",
+ "families": [
+  "LOW_COLLAPSE",
+  "AIRBORNE_DIVE"
+ ],
+ "heights": [
+  "LOW",
+  "LOW-MID"
+ ],
+ "record": "LOW / GROUND save into the approved NW_LOW_LEFT still (north-west-facing SET rig, 2026-09-07): weight shift + lower \u2192 lateral load \u2192 collapse/reach \u2192 still-shaped bridge \u2192 live still, hold (absorb/secure) \u2192 half kneel \u2192 kneel \u2192 rise \u2192 SET; no airborne phase (bridge mirrored to meet the still's mirrored orientation)",
+ "liveFrom": 0.95,
+ "contactHold": 0.25,
+ "moderateBelow": 0.0,
+ "pres": {
+  "tau": 0.15,
+  "tLand": 0.25,
+  "tEnd": 1.05,
+  "note": "ground save: a short momentum settle only"
+ },
+ "pre": [
+  {
+   "key": "F01_LOWER",
+   "path": "goalkeeper/sequences/LOW_NW_LEFT/F01_LOWER.png",
+   "anchors": "goalkeeper/sequences/LOW_NW_LEFT/F01_LOWER_anchors.json",
+   "phase": "WEIGHT SHIFT / LOWER COM",
+   "from": 0.0,
+   "to": 0.2,
+   "ik": false,
+   "ikW": 0.0
+  },
+  {
+   "key": "F02_LOAD_L",
+   "path": "goalkeeper/sequences/LOW_NW_LEFT/F02_LOAD_L.png",
+   "anchors": "goalkeeper/sequences/LOW_NW_LEFT/F02_LOAD_L_anchors.json",
+   "phase": "LATERAL LOAD",
+   "from": 0.2,
+   "to": 0.45,
+   "ik": false,
+   "ikW": 0.0
+  },
+  {
+   "key": "F03_COLLAPSE_L",
+   "path": "goalkeeper/sequences/LOW_NW_LEFT/F03_COLLAPSE_L.png",
+   "anchors": "goalkeeper/sequences/LOW_NW_LEFT/F03_COLLAPSE_L_anchors.json",
+   "phase": "COLLAPSE / REACH",
+   "from": 0.45,
+   "to": 0.7,
+   "ik": true,
+   "ikW": 0.5
+  },
+  {
+   "key": "F04_BRIDGE_STILL",
+   "path": "goalkeeper/sequences/LOW_NW_LEFT/F04_BRIDGE_STILL.png",
+   "anchors": "goalkeeper/sequences/LOW_NW_LEFT/F04_BRIDGE_STILL_anchors.json",
+   "phase": "BRIDGE (still shape)",
+   "from": 0.7,
+   "to": 0.95,
+   "ik": true,
+   "ikW": 1.0
+  }
+ ],
+ "post": [
+  {
+   "key": "F15a3_HALF_KNEEL_far",
+   "path": "goalkeeper/sequences/LOW_NW_LEFT/F15a3_HALF_KNEEL_far.png",
+   "anchors": "goalkeeper/sequences/LOW_NW_LEFT/F15a3_HALF_KNEEL_far_anchors.json",
+   "phase": "HALF KNEEL (trunk low)",
+   "from": 0.25,
+   "to": 0.5,
+   "carry": 0.6
+  },
+  {
+   "key": "F15b_KNEELING_far",
+   "path": "goalkeeper/sequences/LOW_NW_LEFT/F15b_KNEELING_far.png",
+   "anchors": "goalkeeper/sequences/LOW_NW_LEFT/F15b_KNEELING_far_anchors.json",
+   "phase": "KNEELING (one knee, one foot)",
+   "from": 0.5,
+   "to": 0.72,
+   "carry": 0.35
+  },
+  {
+   "key": "F16_RISING_far",
+   "path": "goalkeeper/sequences/LOW_NW_LEFT/F16_RISING_far.png",
+   "anchors": "goalkeeper/sequences/LOW_NW_LEFT/F16_RISING_far_anchors.json",
+   "phase": "RISING",
+   "from": 0.72,
+   "to": 0.92,
+   "carry": 0.15
+  },
+  {
+   "key": "F17_READY",
+   "path": "goalkeeper/sequences/LOW_NW_LEFT/F17_READY.png",
+   "anchors": "goalkeeper/sequences/LOW_NW_LEFT/F17_READY_anchors.json",
+   "phase": "RETURN TO READY",
+   "from": 0.92,
+   "to": 1.05,
+   "carry": 0.0
+  }
+ ]
+}

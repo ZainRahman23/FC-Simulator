@@ -121,12 +121,12 @@ class Author:
         meta = []
         for f in self.FRAMES:
             f["img"].save(os.path.join(self.OUT, f["name"] + ".png"))
-            R = self.S.R if f["rig"] == self.S.R.name else self.C.R; cv = self.S.canvas if R is self.S.R else self.C.canvas; off = self.S.off if R is self.S.R else self.C.off
+            R = self.S.R if (self.C is None or f["rig"] == self.S.R.name) else self.C.R; cv = self.S.canvas if R is self.S.R else self.C.canvas; off = self.S.off if R is self.S.R else self.C.off
             R.viz(f["pose"], scale=3, canvas=cv, offset=off, title=f["name"]).save(os.path.join(self.OUT, f["name"] + "_viz.png"))
-            ps = self.S.ps if f["pixel_scale"] == 1.0 else self.C.ps; rx, ry = f["root"]
+            ps = self.S.ps if (self.C is None or f["pixel_scale"] == 1.0) else self.C.ps; rx, ry = f["root"]
             f["screen"] = {k: (round((v[0] - rx) * ps, 1), round((v[1] - ry) * ps, 1)) for k, v in f["landmarks"].items()}
             meta.append({k: v for k, v in f.items() if k != "img"})
-        json.dump({"canvas_set": self.S.canvas, "offset_set": self.S.off, "canvas_contact": self.C.canvas, "offset_contact": self.C.off, "frames": meta, **(extra or {})}, open(os.path.join(self.OUT, "frames.json"), "w"), indent=1)
+        json.dump({"canvas_set": self.S.canvas, "offset_set": self.S.off, "canvas_contact": self.C.canvas if self.C else None, "offset_contact": self.C.off if self.C else None, "frames": meta, **(extra or {})}, open(os.path.join(self.OUT, "frames.json"), "w"), indent=1)
         print(f"{'frame':24s} {'head':>14s} {'lead glove':>14s} {'other glove':>14s} {'pelvis':>14s} {'foot L':>14s} {'foot R':>14s} {'shoulder':>14s}  (screen px rel. root)")
         for f in self.FRAMES:
             s = f["screen"]; print(f"{f['name']:24s} " + " ".join(f"{str(s.get(k, '')):>14s}" for k in ("head", "lead_glove", "other_glove", "pelvis", "foot_L", "foot_R", "shoulder")))
