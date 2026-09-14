@@ -6,8 +6,8 @@
 const NM=process.env.PUPPETEER_NODE_MODULES; if(NM) module.paths.unshift(NM);
 const puppeteer=require("puppeteer-core"); const fs=require("fs"); const path=require("path");
 const OUT=process.argv[2]||"freeplay"; const N=+(process.argv[3]||360); const SEED=+(process.argv[4]||7); const LEFT_FRAC=+(process.argv[5]||0.7); fs.mkdirSync(OUT,{recursive:true});
-// --off: the animation-OFF twin of a run (GK_ANIM.enabled=false and the per-tick gkAnimDraw calls made no-ops, exactly the gate's OFF mode); the
-// simulation trace of every shot must be identical to the ON run with the same seed.
+// --off: the sequences-OFF twin of a run (GK_ANIM.sequences=false, the same switch capture_full.js / right_geometry.js use): the keeper still
+// classifies and draws its save poses, only the authored dive/jump sequences are off; every shot's simulation trace must match the ON run.
 const OFF=process.argv.includes("--off");
 let s=SEED; const rnd=()=>{ s=(s*1103515245+12345)&0x7fffffff; return s/0x7fffffff; }; const pick=a=>a[Math.floor(rnd()*a.length)];
 const XS=[82,86,90,94,98,101], YS=[20,24,28,31,34,37,40,44,48];
@@ -22,7 +22,7 @@ async function openPage(){ if(b){ try{ await b.close(); }catch(e){} } b=await pu
   await p.goto((process.env.GK_PAGE||"http://127.0.0.1:8126/sandbox/visual/match.html")+"?r="+Date.now(),{waitUntil:"domcontentloaded",timeout:180000});
   for(let i=0;i<900;i++){const ok=await p.evaluate(()=>{const el=document.getElementById("loading");return !!(el&&el.style.display==="none"&&typeof ptEnter==="function"&&S.gkAnim&&S.gkAnim.loaded);});if(ok)break;await new Promise(r=>setTimeout(r,100));}
   await p.evaluate(()=>{ if(!(S.pt&&S.pt.on))ptEnter(); ptReset(); S.pt.paused=true; S.dbg.anim=false; GK_ANIM.reviewOverride=null; S.pt.pauseAtContact=false; S.pt.slow=1; });
-  if(OFF) await p.evaluate(()=>{ GK_ANIM.enabled=false; window.__gkAnimDrawOn=gkAnimDraw; gkAnimDraw=function(){ return false; }; });
+  if(OFF) await p.evaluate(()=>{ GK_ANIM.sequences=false; });
   await new Promise(r=>setTimeout(r,300)); await p.screenshot({path:path.join(OUT,"_warmup.png"),clip:{x:0,y:0,width:100,height:100}}); }
 (async()=>{await openPage();
 const rec=[];
