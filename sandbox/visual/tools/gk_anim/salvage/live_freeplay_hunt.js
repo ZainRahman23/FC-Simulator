@@ -5,7 +5,8 @@
 //   node live_freeplay_hunt.js <outdir> [shots] [seed]
 const NM=process.env.PUPPETEER_NODE_MODULES; if(NM) module.paths.unshift(NM);
 const puppeteer=require("puppeteer-core"); const fs=require("fs"); const path=require("path");
-const OUT=process.argv[2]||"freeplay"; const N=+(process.argv[3]||360); const SEED=+(process.argv[4]||7); const LEFT_FRAC=+(process.argv[5]||0.7); fs.mkdirSync(OUT,{recursive:true});
+const ARGS=process.argv.filter(a=>a!=="--off");   // flags never shift the positional arguments (an OFF twin must draw the identical shot list)
+const OUT=ARGS[2]||"freeplay"; const N=+(ARGS[3]||360); const SEED=+(ARGS[4]||7); const LEFT_FRAC=+(ARGS[5]||0.7); fs.mkdirSync(OUT,{recursive:true});
 // --off: the sequences-OFF twin of a run (GK_ANIM.sequences=false, the same switch capture_full.js / right_geometry.js use): the keeper still
 // classifies and draws its save poses, only the authored dive/jump sequences are off; every shot's simulation trace must match the ON run.
 const OFF=process.argv.includes("--off");
