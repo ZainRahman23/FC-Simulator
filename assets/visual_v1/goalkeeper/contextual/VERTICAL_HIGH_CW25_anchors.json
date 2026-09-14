@@ -1,0 +1,58 @@
+{
+ "root": [
+  41.0,
+  124.4
+ ],
+ "bbox": [
+  4,
+  4,
+  47,
+  131
+ ],
+ "gloves": [
+  [
+   33.1,
+   10.5,
+   76
+  ],
+  [
+   11.9,
+   65.9,
+   56
+  ]
+ ],
+ "lead_glove": [
+  33.1,
+  10.5,
+  76,
+  0
+ ],
+ "head": [
+  33.3,
+  41.8
+ ],
+ "reach_screen_unit": [
+  -0.069,
+  -0.998
+ ],
+ "canvas": [
+  51,
+  135
+ ],
+ "source": "sources/VERTICAL_HIGH_RAW.png",
+ "rotation_cw_deg": 25,
+ "rotation_pivot_in_source": [
+  29.8,
+  87.1
+ ],
+ "root_offset_from_lead_glove_px": [
+  7.9,
+  113.9
+ ],
+ "root_offset_base_px": [
+  7.9,
+  113.9
+ ],
+ "pixel_scale": 1.0,
+ "description": "vertical / overhead high save (HIGH_CATCH, ball above the keeper): the user's approved sprite (native grid recovered from the generator export, sources/VERTICAL_HIGH_RAW.png) rotated 25 degrees clockwise about its hip/torso pivot, nearest-neighbour, expand, no redraw, no limb edit, no scaling, no warp (approved 2026-09-13 at body scale 1.00). root = the planted position the keeper jumped from, offset from the raised glove so it meets the simulation's contact point on a representative overhead save (z 2.25 m); the jump sequence translates the body up to this pose, the runtime's bounded hand-led placement absorbs per-case differences."
+}

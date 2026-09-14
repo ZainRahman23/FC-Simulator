@@ -137,6 +137,23 @@ derive_rotated_pose("sources/DIVE_NORTH_RAW.png", "DIVE_NORTH_CW60", 60, (12.3, 
     "meets the simulation's contact point on a representative medium/high north dive (lateral 1.99 m, contact z 1.52 m) in the live camera; "
     "the runtime's bounded hand-led placement absorbs the rest.",
     body_scale=0.72)
+# VERTICAL HIGH SAVE (2026-09-13): the user's approved contact sprite for the vertical / overhead HIGH_CATCH save (ball directly or nearly
+# directly above the keeper). Source chain, all preserved: sources/VERTICAL_HIGH_UPLOAD_ORIGINAL.png (the generator export as delivered,
+# 1111x1416 RGB, opaque noisy background) -> sources/VERTICAL_HIGH_RAW.png (its native pixel grid recovered by
+# tools/gk_anim/salvage/extract_native_grid.py: block pitch/phase fit, block-median colours, background keyed; parameters in
+# sources/VERTICAL_HIGH_RAW_extraction.json; no redraw, no palette snap) -> live art = that sprite rotated 25 degrees clockwise about its
+# jersey/shorts-seam hip pivot, nearest-neighbour, expand, no redraw, no limb edit, no scaling, no warp (25 approved 2026-09-13 over
+# 0/5/10/15/20 and 20/25/30 on the representative overhead save V_OVER_0). Body scale 1.00 approved (body length 1.01 vs GK_BASE_V1; the
+# head/face measures over-read as they do for the Pro arts). Root: the PLANTED position the keeper jumped from — offset from the raised
+# (lead) glove so the drawn glove meets the simulation's contact point on V_OVER_0 (lat 0, z 2.25 m: hand (-3.3,-47.8) live px from the
+# root); the jump sequence carries the body from the planted root to this pose, the runtime's bounded hand-led placement absorbs the rest.
+derive_rotated_pose("sources/VERTICAL_HIGH_RAW.png", "VERTICAL_HIGH_CW25", 25, (7.9, 113.9),
+    "vertical / overhead high save (HIGH_CATCH, ball above the keeper): the user's approved sprite (native grid recovered from the "
+    "generator export, sources/VERTICAL_HIGH_RAW.png) rotated 25 degrees clockwise about its hip/torso pivot, nearest-neighbour, expand, "
+    "no redraw, no limb edit, no scaling, no warp (approved 2026-09-13 at body scale 1.00). root = the planted position the keeper jumped "
+    "from, offset from the raised glove so it meets the simulation's contact point on a representative overhead save (z 2.25 m); the "
+    "jump sequence translates the body up to this pose, the runtime's bounded hand-led placement absorbs per-case differences.",
+    body_scale=1.0)
 # TOP-LEFT CORNER (2026-09-05): the Pro sprite authored as a south attempt, salvaged as the far/full-stretch top-corner save. Body scale
 # 0.72 measured against GK_BASE_V1 the same way as the north dive (crown-to-toe body axis 138.6 px vs the standing sprite's 99.6 px = 0.719).
 # Root offset (canonical GK_BASE_V1 px) calibrated on a real full-stretch top-corner save: keeper root (102.37, 33.16), contact (102.21,
@@ -233,7 +250,10 @@ CONTEXTUAL_POSES = [
     dict(id="TIGHT_S_FAR_TOP", inventory_id="GK_POSE_136", role="tight_high", priority=2, facing_deg=90, post="far", height_classes=["HIGH", "TOP"], note="SOUTH-facing keeper, tight attacker angle, high save to the far/top corner (V1.1 high_dive/south-west still)"),
     dict(id="TIGHT_N_NEAR_TOP", inventory_id="GK_POSE_132", role="tight_high", priority=2, facing_deg=-90, post="near", height_classes=["HIGH", "TOP"], note="NORTH-facing keeper, tight attacker angle, high save to the near/top corner (V1.1 high_dive/north-east still)"),
     dict(id="TIGHT_N_FAR_TOP", inventory_id="GK_POSE_133", role="tight_high", priority=2, facing_deg=-90, post="far", height_classes=["HIGH", "TOP"], note="NORTH-facing keeper, tight attacker angle, high save to the far/top corner (V1.1 high_dive/north still). Caveat on record: its glove reaches up-left on screen while a ball parked at the actual far top corner projects level-right; approved as-is, future art-replacement candidate"),
-    dict(id="OVERHEAD_REACH_CW11", inventory_id="GK_POSE_148", role="overhead", priority=2, height_classes=["HIGH", "TOP"], note="ball above / over the keeper: upward reach with small lateral demand (V1.2 TOP GOAL_LEFT candidate rotated 11 degrees clockwise about its root, pure transform)"),
+    # OVERHEAD_REACH_CW11 (GK_POSE_148 rotated 11 deg) was the overhead role's art 2026-09-05 -> 2026-09-13; replaced by the user's vertical
+    # high-save sprite below; its files stay on disk as the previous/reference asset, unreferenced.
+    dict(id="VERTICAL_HIGH", file="VERTICAL_HIGH_CW25", inventory_id="USER_VERTICAL_HIGH_V1", role="overhead", priority=2, height_classes=["HIGH", "TOP"], source_file="sources/VERTICAL_HIGH_RAW.png", rotation_cw_deg=25,
+         note="ball above / over the keeper (HIGH_CATCH, small lateral demand, open attacker angle): the user's approved vertical high-save sprite rotated 25 deg CW, body scale 1.00 (2026-09-13). Same role, priority, heights and scoring as the OVERHEAD_REACH_CW11 still it replaces; the far dives, top-corner, tight-angle, SW and low stills keep their own cases"),
     # LOW / GROUND side saves (pose salvage 2, 2026-09-05): three V1.1 low_collapse stills chosen for their camera perspective, assigned by the keeper's
     # facing at commit (SW / W / NW) and the classifier's goal side; the second variant of each pair is the same file drawn MIRRORED (runtime transform; SW mirrors for GOAL_RIGHT, W and NW mirror for GOAL_LEFT after the 2026-09-05 live review,
     # validated per side in the gameplay camera). Families LOW_COLLAPSE and low AIRBORNE_DIVE only — gathers, foot saves and standing saves keep their art.

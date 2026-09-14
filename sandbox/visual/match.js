@@ -4403,6 +4403,13 @@ function gkAnimSeqPick(A, cls, ctx, c) {
 // PRESENTATION ROOT after execEnd (presentation only — the simulation root is frozen and untouched): the body keeps the dive's momentum,
 // d(t) = V0·tau·(1−e^(−t/tau)) along the dive direction (V0 = the root's mean dive speed = travel / execTime), then eases back to the
 // simulation root by tEnd so the live SET is reached without a jump. Returned in metres and as a screen offset.
+// a sequence keeps its commit context alive while it still has post-contact frames to draw (presentation only: the simulation's
+// own state is untouched; the legacy LAND/RECOVER/RISE timers still drive the state label). Without this a non-dive family's
+// sequence (the vertical jump's landing) would be cut off at riseDur.
+function gkAnimSeqPostPending(A, tl) {
+  const sq = A.commit && A.commit.seq && A.commit.seq.def; if (!GK_ANIM.sequences || !sq || !sq.post || !sq.post.length) return false;
+  return sq.post.some(p => tl < p.to);
+}
 function gkAnimSeqPres(gk, c, P, tl) {
   if (!P || !c || !c.feet) return null;
   const ex = gk.x - c.feet[0], ey = gk.y - c.feet[1], trav = Math.hypot(ex, ey); if (trav < 1e-6) return null;
@@ -4783,11 +4790,11 @@ function gkAnimUpdate(t, gk) {
       const tl = now - endT;
       if (tl < GK_ANIM.landDur) { state = "LAND"; phase = "land"; arm = tl < 0.15; clipReq = { family: clipFamily, side, mode: "post", k: tl / GK_ANIM.landDur }; }
       else if (tl < GK_ANIM.landDur + GK_ANIM.recoverDur) { state = "RECOVER"; phase = "rise"; const k = (tl - GK_ANIM.landDur) / GK_ANIM.recoverDur; clipReq = { family: "RECOVER", side, mode: "post", k }; }
-      else { state = "SET"; phase = "hold"; A.commit = null; }
+      else { state = "SET"; phase = "hold"; if (!gkAnimSeqPostPending(A, tl)) A.commit = null; }
     } else {                                                              // gather / chest / near-body / foot: RISE back to SET
       const tl = now - endT;
       if (tl < GK_ANIM.riseDur) { state = "RECOVER"; phase = "rise"; clipReq = { family: clipFamily, side, mode: "post", k: tl / GK_ANIM.riseDur }; }
-      else { state = "SET"; phase = "hold"; A.commit = null; }
+      else { state = "SET"; phase = "hold"; if (!gkAnimSeqPostPending(A, tl)) A.commit = null; }
     }
   }
   // resolve the art for the request: authored clip (live) → contact POSE (approved, or candidate when the review page asks)

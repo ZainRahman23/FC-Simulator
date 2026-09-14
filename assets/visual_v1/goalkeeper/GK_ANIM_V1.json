@@ -435,14 +435,14 @@
       "id": "GK_POSE_133",
       "note": "NORTH-facing keeper, tight attacker angle, high save to the far/top corner (V1.1 high_dive/north still). Caveat on record: its glove reaches up-left on screen while a ball parked at the actual far top corner projects level-right; approved as-is, future art-replacement candidate"
      },
-     "OVERHEAD_REACH_CW11": {
-      "path": "goalkeeper/contextual/OVERHEAD_REACH_CW11.png",
-      "anchors": "goalkeeper/contextual/OVERHEAD_REACH_CW11_anchors.json",
+     "VERTICAL_HIGH": {
+      "path": "goalkeeper/contextual/VERTICAL_HIGH_CW25.png",
+      "anchors": "goalkeeper/contextual/VERTICAL_HIGH_CW25_anchors.json",
       "mirror": false,
       "approved": true,
       "candidate": false,
-      "id": "GK_POSE_148",
-      "note": "ball above / over the keeper: upward reach with small lateral demand (V1.2 TOP GOAL_LEFT candidate rotated 11 degrees clockwise about its root, pure transform)"
+      "id": "USER_VERTICAL_HIGH_V1",
+      "note": "ball above / over the keeper (HIGH_CATCH, small lateral demand, open attacker angle): the user's approved vertical high-save sprite rotated 25 deg CW, body scale 1.00 (2026-09-13). Same role, priority, heights and scoring as the OVERHEAD_REACH_CW11 still it replaces; the far dives, top-corner, tight-angle, SW and low stills keep their own cases"
      },
      "SW_LOW_LEFT": {
       "path": "goalkeeper/contextual/LOW_SIDE_SW.png",
@@ -634,20 +634,22 @@
    ]
   },
   {
-   "id": "OVERHEAD_REACH_CW11",
-   "inventory_id": "GK_POSE_148",
+   "id": "VERTICAL_HIGH",
+   "inventory_id": "USER_VERTICAL_HIGH_V1",
    "role": "overhead",
    "priority": 2,
    "height_classes": [
     "HIGH",
     "TOP"
    ],
-   "path": "goalkeeper/contextual/OVERHEAD_REACH_CW11.png",
-   "anchors": "goalkeeper/contextual/OVERHEAD_REACH_CW11_anchors.json",
+   "source_file": "sources/VERTICAL_HIGH_RAW.png",
+   "rotation_cw_deg": 25,
+   "path": "goalkeeper/contextual/VERTICAL_HIGH_CW25.png",
+   "anchors": "goalkeeper/contextual/VERTICAL_HIGH_CW25_anchors.json",
    "transform": "ORIGINAL",
    "reach_screen_unit": [
-    0.1169,
-    -0.9931
+    -0.069,
+    -0.998
    ]
   },
   {
