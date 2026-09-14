@@ -31,13 +31,13 @@ class Author:
     def __init__(self, set_rig, contact_rig, out):
         self.S, self.C, self.OUT, self.FRAMES = set_rig, contact_rig, out, []; os.makedirs(out, exist_ok=True)
     # ── SET-rig frames ──────────────────────────────────────────────────────────────────────────────────────────────────────────
-    def set_frame(self, name, phase, t, pose, note, grounded, root_shift=(0, 0), style=0.0, clean=True, mirror_out=False):
+    def set_frame(self, name, phase, t, pose, note, grounded, root_shift=(0, 0), style=0.0, clean=True, mirror_out=False, palette=None, draw_order=None):
         S = self.S; root = (S.root[0] + S.off[0] + root_shift[0], S.root[1] + S.off[1] + root_shift[1])
         if "near_thigh" in pose and "near_thigh_edge" in S.R.parts: pose["near_thigh_edge"] = dict(pose["near_thigh"])
         if "torso" in pose and "torso_under" in S.R.parts: pose["torso_under"] = dict(pose["torso"])
-        img, M = S.R.render(pose, canvas=S.canvas, offset=S.off)
+        img, M = S.R.render(pose, canvas=S.canvas, offset=S.off, draw_order=draw_order)
         if clean: img = cleanup(img)
-        if style > 0: img = stylize(img, style)
+        if style > 0: img = stylize(img, style, palette) if palette else stylize(img, style)
         j = {n: tuple(round(v, 1) for v in joint(S.R, M, n, S.off)) for n in S.R.order}
         lm = {"head": j["head"], "lead_glove": j["near_glove"], "other_glove": j["far_glove"], "pelvis": j["pelvis"], "foot_L": j["far_boot"], "foot_R": j["near_boot"], "shoulder": j["near_upper"]}
         self.FRAMES.append({"name": name, "phase": phase, "t": t, "rig": S.R.name, "pose": pose, "note": note, "sources": [S.label], "grounded": grounded, "pixel_scale": 1.0,

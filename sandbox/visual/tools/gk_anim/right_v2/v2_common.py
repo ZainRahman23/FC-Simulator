@@ -35,12 +35,12 @@ def part_centroid(R, M, name, off):
 
 class V2:
     """one authoring session: SET rig + one contact rig, against one geometry"""
-    def __init__(self, geometry_json, out, contact_module, contact_lm, contact_canvas=(150, 260), contact_off=(34, 40), contact_label=None):
+    def __init__(self, geometry_json, out, contact_module, contact_lm, contact_canvas=(150, 260), contact_off=(34, 40), contact_label=None, contact_scale=0.72):
         self.GEO = json.load(open(geometry_json)); self.OUT = out; os.makedirs(out, exist_ok=True)
         import importlib; CM = importlib.import_module(contact_module)
         RS, _ = build_set(out); RC, _ = CM.build()
         self.S = SetRig(RS); self.RC = RC
-        self.C = ContactRig(RC, tuple(CM.ROOT), 0.72, contact_canvas, contact_off, contact_lm, contact_label or contact_module)
+        self.C = ContactRig(RC, tuple(CM.ROOT), contact_scale, contact_canvas, contact_off, contact_lm, contact_label or contact_module)
         self.A = Author(self.S, self.C, out)
         tr = self.GEO["trace"]; self.tr = tr; self.ct = self.GEO["committedTick"]; self.kt = self.GEO["contactTick"]; self.sp0 = tr[self.ct]["sp"]
         S = self.S; self.PS = S.ps; self.NEAR, self.FAR = S.near_foot, S.far_foot
@@ -85,7 +85,7 @@ class V2:
         r1 = math.degrees(th1 - rest1) - tor; r2 = math.degrees(th2 - rest2) - tor - r1
         pose[f"{side}_upper"] = {**pose.get(f"{side}_upper", {}), "rot": r1, "ext": ext}; pose[f"{side}_fore"] = {**pose.get(f"{side}_fore", {}), "rot": r2, "ext": ext}
         return pose
-    def base_frame(self, name, phase, u_from, u_to, head, hips, torso_sx, torso_sy, head_scale, leg_ext, arm_ext, gloves, elbow, near_leg, far_leg, style, note, grounded, head_look=0):
+    def base_frame(self, name, phase, u_from, u_to, head, hips, torso_sx, torso_sy, head_scale, leg_ext, arm_ext, gloves, elbow, near_leg, far_leg, style, note, grounded, head_look=0, palette=None, draw_order=None, anchor_parts=("near_glove", "far_glove"), near_elbow_back=True, far_elbow_back=True):
         """W-rig frame: hips/head from the screen paths (rel. the root at that u), gloves on authored arcs, feet pinned or trailing"""
         S, A, PS = self.S, self.A, self.PS
         um = 0.5 * (u_from + u_to); root_off, hand = self.at_u(um)
@@ -97,13 +97,13 @@ class V2:
             else: p[f"{leg}_thigh"] = {"rot": spec[1], "sy": spec[4] if len(spec) > 4 else 1.0}; p[f"{leg}_shin"] = {"rot": spec[2], "sy": spec[4] if len(spec) > 4 else 1.0}; p[f"{leg}_boot"] = {"rot": spec[3]}
             for part in (f"{leg}_thigh", f"{leg}_shin"): p[part]["ext"] = leg_ext
         gt, gtf = gloves
-        self.arm_to(p, (S.root[0] + gt[0] / PS, S.root[1] + gt[1] / PS), "near", elbow_back=True, ext=arm_ext)
-        self.arm_to(p, (S.root[0] + gtf[0] / PS, S.root[1] + gtf[1] / PS), "far", elbow_back=True, ext=arm_ext)
-        A.set_frame(name, phase, f"u {u_from:.2f}–{u_to:.2f}", p, note, grounded, style=style)
-        self._finish(u_from, u_to, hand, root_off, ("near_glove", "far_glove"), S.R, S.off)
+        self.arm_to(p, (S.root[0] + gt[0] / PS, S.root[1] + gt[1] / PS), "near", elbow_back=near_elbow_back, ext=arm_ext)
+        self.arm_to(p, (S.root[0] + gtf[0] / PS, S.root[1] + gtf[1] / PS), "far", elbow_back=far_elbow_back, ext=arm_ext)
+        A.set_frame(name, phase, f"u {u_from:.2f}–{u_to:.2f}", p, note, grounded, style=style, palette=palette, draw_order=draw_order)
+        self._finish(u_from, u_to, hand, root_off, tuple(anchor_parts), S.R, S.off)
         return p
     # ── contact-rig frames ──
-    def pro_frame(self, name, phase, u_from, u_to, pose, roll, out_style, note, hips, aim_arm="sleeve", aim_gloves=("glove_A", "glove_B"), lower_glove=None, anchor_k=0.0, sy_bounds=(0.85, 1.0), aim=True):
+    def pro_frame(self, name, phase, u_from, u_to, pose, roll, out_style, note, hips, aim_arm="sleeve", aim_gloves=("glove_A", "glove_B"), lower_glove=None, anchor_k=0.0, sy_bounds=(0.85, 1.0), aim=True, pin_anchor=True, max_aim_deg=None, post_time=False):
         """contact-rig frame: whole-body ROLL (pelvis rot, deg, + = clockwise on screen; the art itself is 0) and the hand-led anchor
         placed EXACTLY on the simulation hand for the frame's u, so the runtime has nothing to correct and drawn = authored.
         The anchor follows the live art's convention (centroid of ALL bright glove pixels, `aim_gloves`) blended toward the LOWER glove's
@@ -111,7 +111,7 @@ class V2:
         reach point with the second hand on it, and the two converge on the art's merged-blob anchor by the last frame. The arm part is
         aimed at the hand (rot) and foreshortened to the reach (sy, bounded); the remaining offset moves the whole figure (hips)."""
         A, C, R = self.A, self.C, self.RC
-        um = 0.5 * (u_from + u_to); root_off, hand = self.at_u(um)
+        um = 0.5 * (u_from + u_to); root_off, hand = ((0.0, 0.0), None) if post_time else self.at_u(um)
         pose = {k: dict(v) for k, v in pose.items()}; pose["pelvis"] = {**pose.get("pelvis", {}), "rot": roll}
         root = (C.root[0] + C.off[0], C.root[1] + C.off[1])
         def anchor_of(M):
@@ -125,25 +125,28 @@ class V2:
             M = R.world(q); g = anchor_of(M); sh = joint(R, M, aim_arm, C.off)
             return ((g[0] - root[0]) * C.ps, (g[1] - root[1]) * C.ps), ((sh[0] - root[0]) * C.ps, (sh[1] - root[1]) * C.ps)
         h = tuple(hips)
-        if aim:
+        if aim and hand is not None:
+            rot0 = pose.get(aim_arm, {}).get("rot", 0)
             for _ in range(4):
                 g, sh = measure(pose, h)
                 a_have = math.atan2(g[1] - sh[1], g[0] - sh[0]); a_want = math.atan2(hand[1] - sh[1], hand[0] - sh[0])
                 d_have = math.hypot(g[0] - sh[0], g[1] - sh[1]); d_want = math.hypot(hand[0] - sh[0], hand[1] - sh[1])
                 q = pose.setdefault(aim_arm, {}); q["rot"] = q.get("rot", 0) + math.degrees(a_want - a_have)
+                if max_aim_deg is not None: q["rot"] = max(rot0 - max_aim_deg, min(rot0 + max_aim_deg, q["rot"]))
                 q["sy"] = max(sy_bounds[0], min(sy_bounds[1], q.get("sy", 1.0) * (d_want / max(1e-6, d_have))))
-        for _ in range(3):                                   # whatever reach the bounded arm cannot cover moves the whole figure
-            g, sh = measure(pose, h); h = (h[0] + hand[0] - g[0], h[1] + hand[1] - g[1])
+        if pin_anchor and hand is not None:
+            for _ in range(3):                                   # whatever reach the bounded arm cannot cover moves the whole figure
+                g, sh = measure(pose, h); h = (h[0] + hand[0] - g[0], h[1] + hand[1] - g[1])
         g, sh = measure(pose, h)
         A.contact_frame(name, phase, f"u {u_from:.2f}–{u_to:.2f}", pose, note, "airborne", roll, h, out_style=out_style)
         M = R.world(A.FRAMES[-1]["pose"]); anc = anchor_of(M)
-        self._finish(u_from, u_to, hand, root_off, aim_gloves, R, C.off, roll=roll, hips=h, arm=dict(pose.get(aim_arm, {})), glove_err=(round(g[0] - hand[0], 2), round(g[1] - hand[1], 2)), anchor=anc, hips_shift=(round(h[0] - hips[0], 2), round(h[1] - hips[1], 2)))
+        self._finish(u_from, u_to, hand, root_off, aim_gloves, R, C.off, roll=roll, hips=h, arm=dict(pose.get(aim_arm, {})), glove_err=((round(g[0] - hand[0], 2), round(g[1] - hand[1], 2)) if hand is not None else None), anchor=anc, hips_shift=(round(h[0] - hips[0], 2), round(h[1] - hips[1], 2)))
         return pose
     def _finish(self, u_from, u_to, hand, root_off, glove_parts, R, off, roll=None, hips=None, arm=None, glove_err=None, anchor=None, hips_shift=None):
         f = self.A.FRAMES[-1]
         if anchor is None: M = R.world(f["pose"]); anchor = glove_blob_centroid(R, M, glove_parts, off)
         f["landmarks"]["lead_glove"] = (round(anchor[0], 1), round(anchor[1], 1)); f["landmarks"]["other_glove"] = (round(anchor[0], 1), round(anchor[1], 1))   # ONE anchor, blob-centroid convention like the live art
-        f["u"] = [u_from, u_to]; f["sim_hand"] = [round(hand[0], 1), round(hand[1], 1)]; f["root_off"] = [round(root_off[0], 1), round(root_off[1], 1)]
+        f["u"] = [u_from, u_to]; f["sim_hand"] = ([round(hand[0], 1), round(hand[1], 1)] if hand is not None else None); f["root_off"] = [round(root_off[0], 1), round(root_off[1], 1)]
         if roll is not None: f["roll_deg"] = roll
         if hips is not None: f["hips_rel_root"] = [round(hips[0], 2), round(hips[1], 2)]
         if arm is not None: f["arm_solved"] = {k: round(v, 2) for k, v in arm.items()}
