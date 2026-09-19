@@ -28,20 +28,20 @@ const GK_CLIP_FAR_DIVE = {
     [1.00, "load"],                                                                            // deepest load exactly at the commit tick (= pre[0])
   ],
   // ── COMMIT → FULL EXTENSION: the load is HELD through the plant, then hip → knee → ankle → toe extension with the foot planted ──
-  pre: [
+  pre: [   // _pelvis keys drive the pelvis only up to the PLANT (from there the launch plan owns it); later keys only shape the plant tangent
     [0.00, { name: "LOAD", _pelvis: [0.14, -0.36, 0.04], pelvis: [30, 0, -22], spine: [12, 0, -10], chest: [8, 0, -8], neck: [-8, 0, 6], head: [-12, 0, 8],   // deepest: knees ~65°, hips ~70°, torso 40° toward the dive
              thigh_R: [-78, 0, 36], shin_R: [118, 0, 0], foot_R: [-36, 0, 0], thigh_L: [-48, 0, -4], shin_L: [72, 0, 0], foot_L: [-22, 0, 0],
              upperArm_R: [-8, 0, 50], foreArm_R: [-30, 0, 0], hand_R: [-4, 0, 0], upperArm_L: [-56, 0, 4], foreArm_L: [-76, 0, 0], hand_L: [-8, 0, 0] }],
     [0.10, { name: "PLANT", _pelvis: [0.16, -0.36, 0.04], pelvis: [30, 0, -26], spine: [12, 0, -10], chest: [8, 0, -8], neck: [-8, 0, 6], head: [-12, 0, 8],  // held: save-side foot planted wide, weight over it
              thigh_R: [-78, 0, 40], shin_R: [118, 0, 0], foot_R: [-36, 0, 0], thigh_L: [-52, 0, 0], shin_L: [80, 0, 0], foot_L: [-24, 0, 0],
              upperArm_R: [-4, 0, 58], foreArm_R: [-26, 0, 0], hand_R: [-4, 0, 0], upperArm_L: [-60, 0, 14], foreArm_L: [-70, 0, 0], hand_L: [-8, 0, 0] }],
-    [0.19, { name: "PUSH_MID", _pelvis: [0.26, -0.18, 0.05], pelvis: [20, 0, -36], spine: [8, 0, -12], chest: [4, 0, -8], neck: [-6, 0, 8], head: [-10, 0, 10],   // hips and knees extending against the planted foot
+    [0.19, { name: "PUSH_MID", _pelvis: [0.18, -0.30, 0.05], pelvis: [20, 0, -36], spine: [8, 0, -12], chest: [4, 0, -8], neck: [-6, 0, 8], head: [-10, 0, 10],   // hips and knees extending against the planted foot
              thigh_R: [-42, 0, 44], shin_R: [66, 0, 0], foot_R: [-18, 0, 0], thigh_L: [-58, 0, 2], shin_L: [92, 0, 0], foot_L: [-12, 0, 0],
              upperArm_R: [-10, 0, 100], foreArm_R: [-22, 0, 0], hand_R: [-4, 0, 0], upperArm_L: [-60, 0, 44], foreArm_L: [-50, 0, 0], hand_L: [-6, 0, 0] }],
-    [0.26, { name: "PUSH_END", _pelvis: [0.34, 0.00, 0.05], pelvis: [10, 0, -46], spine: [4, 0, -12], chest: [2, 0, -8], neck: [-4, 0, 8], head: [-8, 0, 10],   // leg nearly straight, heel lifting
+    [0.26, { name: "PUSH_END", _pelvis: [0.22, -0.12, 0.05], pelvis: [10, 0, -46], spine: [4, 0, -12], chest: [2, 0, -8], neck: [-4, 0, 8], head: [-8, 0, 10],   // leg nearly straight, heel lifting
              thigh_R: [-12, 0, 40], shin_R: [20, 0, 0], foot_R: [0, 0, 0], toe_R: [-14, 0, 0], thigh_L: [-46, 0, 6], shin_L: [78, 0, 0], foot_L: [-6, 0, 0],
              upperArm_R: [-14, 0, 126], foreArm_R: [-18, 0, 0], hand_R: [-2, 0, 0], upperArm_L: [-60, 0, 66], foreArm_L: [-42, 0, 0], hand_L: [-6, 0, 0] }],
-    [0.31, { name: "TOE_OFF", _pelvis: [0.38, 0.14, 0.05], pelvis: [6, 0, -52], spine: [2, 0, -12], chest: [0, 0, -8], neck: [-4, 0, 8], head: [-8, 0, 10],     // on the toes: ankle extended, toe the last contact
+    [0.31, { name: "TOE_OFF", _pelvis: [0.26, 0.00, 0.05], pelvis: [6, 0, -52], spine: [2, 0, -12], chest: [0, 0, -8], neck: [-4, 0, 8], head: [-8, 0, 10],     // on the toes: ankle extended, toe the last contact
              thigh_R: [-4, 0, 34], shin_R: [8, 0, 0], foot_R: [14, 0, 0], toe_R: [-46, 0, 0], thigh_L: [-42, 0, 6], shin_L: [72, 0, 0], foot_L: [-6, 0, 0],
              upperArm_R: [-16, 0, 136], foreArm_R: [-18, 0, 0], hand_R: [-2, 0, 0], upperArm_L: [-60, 0, 76], foreArm_L: [-40, 0, 0], hand_L: [-6, 0, 0] }],
     [0.55, { name: "EARLY_FLIGHT", _pelvis: [0.42, 0.20, 0.04], pelvis: [2, 0, -64], spine: [0, 0, -14], chest: [0, 0, -10], neck: [-2, 0, 10], head: [-6, 0, 12],
@@ -60,10 +60,10 @@ const GK_CLIP_FAR_DIVE = {
     FOLLOW:  { pelvis: [0, 0, -18], spine: [2, 0, -10], chest: [2, 0, -8], neck: [2, 0, 8], head: [0, 0, 10],
                thigh_R: [-6, 0, 14], shin_R: [16, 0, 0], foot_R: [26, 0, 0], thigh_L: [-14, 0, 12], shin_L: [28, 0, 0], foot_L: [12, 0, 0],
                upperArm_R: [-6, 0, 160], foreArm_R: [-14, 0, 0], hand_R: [0, 0, 0], upperArm_L: [-36, 0, 120], foreArm_L: [-30, 0, 0], hand_L: [-2, 0, 0] },
-    DESCENT: { pelvis: [8, 0, -12], spine: [4, 0, -6], chest: [3, 0, -4], neck: [0, 0, 4], head: [-2, 0, 4],                             // legs reach for the pitch, arms come down
-               thigh_R: [-20, 0, 12], shin_R: [26, 0, 0], foot_R: [4, 0, 0], thigh_L: [-18, 0, -4], shin_L: [24, 0, 0], foot_L: [4, 0, 0],
+    DESCENT: { pelvis: [8, 0, -20], spine: [4, 0, -8], chest: [3, 0, -6], neck: [0, 0, 6], head: [-2, 0, 6],                             // legs reach for the pitch, arms come down
+               thigh_R: [-20, 0, 12], shin_R: [26, 0, 0], foot_R: [4, 0, 0], thigh_L: [-22, 0, -10], shin_L: [30, 0, 0], foot_L: [4, 0, 0],   // trailing leg lags the travel
                upperArm_R: [-30, 0, 96], foreArm_R: [-36, 0, 0], hand_R: [-4, 0, 0], upperArm_L: [-34, 0, 40], foreArm_L: [-48, 0, 0], hand_L: [-4, 0, 0] },
-    TOUCH:   { pelvis: [14, 0, -8], spine: [6, 0, -3], chest: [4, 0, -2], neck: [-4, 0, 2], head: [-6, 0, 2],                              // L1 feet meet the pitch, legs nearly straight
+    TOUCH:   { pelvis: [14, 0, -16], spine: [6, 0, -5], chest: [4, 0, -3], neck: [-4, 0, 3], head: [-6, 0, 3],                              // L1 feet meet the pitch, legs nearly straight
                thigh_R: [-14, 0, 14], shin_R: [20, 0, 0], foot_R: [-6, 0, 0], thigh_L: [-14, 0, -8], shin_L: [18, 0, 0], foot_L: [-4, 0, 0],
                upperArm_R: [-46, 0, 60], foreArm_R: [-30, 0, 0], hand_R: [-10, 0, 0], upperArm_L: [-40, 0, -6], foreArm_L: [-46, 0, 0], hand_L: [-8, 0, 0] },
     IMPACT:  { pelvis: [34, 0, -30], spine: [14, 0, -8], chest: [8, 0, -4], neck: [-8, 0, 2], head: [-10, 0, 2],                           // L2 knees collapse, body folds toward the save side, hand reaching for the pitch

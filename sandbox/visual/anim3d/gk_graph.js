@@ -10,15 +10,19 @@
 // projection of the pelvis (continuous by construction) and is reconciled to the simulation root during the get-up.
 const GK_GRAPH = {
   loadPhase: 0.30, toeOff: 0.31, unloadAt: 0.15,   // IK weight ramp start; plant-foot release; opposite-foot release (pre)
-  ikFadePost: 0.35, torsoAssistMaxDeg: 20, clavicleAssistMaxDeg: 10, lookMaxDeg: 55, presMaxM: 0.8,
+  ikFadePost: 0.35, torsoAssistMaxDeg: 20, clavicleAssistMaxDeg: 10, lookMaxDeg: 55, presMaxM: 2.5,
   authoredRollDeg: 72, reachLenH: 0.64, jumpMaxM: 0.55, pelvisMinY: 0.30,
   sideLandLo: 35, sideLandHi: 60,                  // body-axis angle from vertical (deg): ≤ lo land on the feet, ≥ hi land on the side
-  G: 9.81, vUpMax: 1.5, vLatMin: 0.3,
+  G: 9.81,
+  plantU: 0.10,           // the launch plan starts at the plant: from here the pelvis is ONE trajectory (push → arc → ground) until the settle
   // landing physics (feet-first vs side-first; blended by the body-axis angle). Heights in m for H 1.90, durations in s.
-  feet: { hTouch: 0.95, hImpact: 0.60, hGround: 0.28, impactT: 0.16, absorbT: 0.24, decel: 6.0, hold: 0.40, followFrac: 0.35 },
-  side: { hTouch: 0.62, hImpact: 0.40, hGround: 0.28, impactT: 0.14, absorbT: 0.30, decel: 4.0, hold: 0.45, followFrac: 0.30 },
+  // Ground deceleration is progressive along the travel direction: decelTouch while the first contact skids, decelImpact while the
+  // body hits and folds, then the slide's friction is whatever brings the remaining speed to zero by the end of the settle.
+  feet: { hTouch: 0.95, hImpact: 0.60, hGround: 0.28, impactT: 0.16, absorbT: 0.24, decelTouch: 1.5, decelImpact: 3.0, hold: 0.40, followFrac: 0.35 },
+  side: { hTouch: 0.62, hImpact: 0.40, hGround: 0.28, impactT: 0.14, absorbT: 0.30, decelTouch: 1.0, decelImpact: 2.5, hold: 0.45, followFrac: 0.30 },
   getup: { brace: 0.30, pushUp: 0.30, halfKneel: 0.35, crouch: 0.35, rise: 0.50 },
-  launchPos: 0.30,        // the solved launch/jump position takes over from the toe-off (before it the authored legs produce the height)
+  recon: { pushUp: 0.22, halfKneel: 0.50, crouch: 0.85 }, reconRefM: 0.8, reconSlowMax: 1.8,   // fraction of the stop → simulation-root offset recovered by the end of each supported stage (hips over the tucked feet, front-foot step, crouch step)
+  launchPos: 0.30,        // authored pelvis keys are used only before the plant (u < plantU); kept for the LOAD blend
 };
 // ── pose helpers ──────────────────────────────────────────────────────────────────────────────────────────────────────
 function stripMeta(p) { const o = {}; for (const k in p) if (k[0] !== "_" && k !== "name") o[k] = p[k]; return o; }
@@ -69,43 +73,71 @@ function gkGraphRedirect(pose, axis, u) {
   for (const bn of ["spine", "chest"]) if (pose[bn]) out[bn] = [pose[bn][0], pose[bn][1], pose[bn][2] * k];
   out._pelvis = V3.lerp(pose._pelvis || [0, 0, 0], axis.pelvisOff, wPos); out._wExt = wExt; out._wPos = wPos; return out;
 }
-// ── landing physics plan (closed form in seconds after endT; built once per commit from simulation facts only) ─────────
-function gkLandingPlan(desc, skel, clip, endPose, axis, sideL) {
-  const c = desc.commit, H = skel.H, w = axis.wSide, F = GK_GRAPH.feet, Sd = GK_GRAPH.side, G = GK_GRAPH.getup, mix = (a, b) => lerp(a, b, w), hs = H / 1.9;
-  const hip = 0.50 * H, pel = endPose._pelvis || [0, 0, 0];
-  const P0 = [pel[0], hip + pel[1], pel[2]];
-  const ex = desc.simRoot[0] - c.feet[0], ey = desc.simRoot[1] - c.feet[1], trav = Math.hypot(ex, ey);
-  const vLat = Math.max(GK_GRAPH.vLatMin, (trav / Math.max(1e-6, c.execTime)) * Math.sin(axis.theta * DEG) + 0.25);
-  const dirSign = pel[0] >= 0 ? 1 : -1;
-  const named = { set: sideL ? poseMirrorP(clip.set) : clip.set, setLow: sideL ? poseMirrorP(clip.setLow) : clip.setLow, reach: sideL ? poseMirrorP(clip.pre[clip.pre.length - 1][1]) : clip.pre[clip.pre.length - 1][1], load: sideL ? poseMirrorP(clip.pre[0][1]) : clip.pre[0][1] };
-  const hAt = (u) => { let p = gkSampleKeys(clip.pre, u, named); if (sideL) p = poseMirrorP(p); return hip + gkGraphRedirect(p, axis, u)._pelvis[1]; };
-  const vUp = Math.max(-1.0, Math.min(GK_GRAPH.vUpMax, (hAt(1) - hAt(0.85)) / (0.15 * Math.max(1e-6, c.execTime))));
-  const hTouch = mix(F.hTouch, Sd.hTouch) * hs, hImpact = mix(F.hImpact, Sd.hImpact) * hs, hGround = mix(F.hGround, Sd.hGround) * hs;
-  const impactT = mix(F.impactT, Sd.impactT), absorbT = mix(F.absorbT, Sd.absorbT), decel = mix(F.decel, Sd.decel), hold = mix(F.hold, Sd.hold);
-  let tTouch; { const A = -0.5 * GK_GRAPH.G, B = vUp, C = P0[1] - hTouch; const disc = B * B - 4 * A * C; tTouch = disc > 0 ? (-B - Math.sqrt(disc)) / (2 * A) : 0.02; if (!(tTouch > 0.02)) tTouch = 0.02; }
-  const tStop = vLat / decel, xTouch = vLat * tTouch, xStop = xTouch + vLat * tStop - 0.5 * decel * tStop * tStop;
-  const tImpact = tTouch + impactT, tAbsorb = tImpact + absorbT, tSettle = tAbsorb + hold;
-  const tBrace = tSettle + G.brace, tPush = tBrace + G.pushUp, tKneel = tPush + G.halfKneel, tCrouch = tKneel + G.crouch, tRise = tCrouch + G.rise;
-  const hBrace = clip.postFeet.BRACE._h * hs, hPush = clip.postFeet.PUSH_UP._h * hs, hKneel = clip.postFeet.HALF_KNEEL._h * hs, hCrouch = clip.postFeet.CROUCH._h * hs, hSet = hip + (clip.set._pelvis ? clip.set._pelvis[1] : 0);
-  return { w, P0, vLat, vUp, dirSign, hTouch, hImpact, hGround, hBrace, hPush, hKneel, hCrouch, hSet, decel, tTouch, tStop, xTouch, xStop, tImpact, tAbsorb, tSettle, tBrace, tPush, tKneel, tCrouch, tRise, hip };
+// ── launch + flight plan (world frame, built once at the plant from the authored crouch and the simulation's own facts) ──
+// The pelvis is ONE trajectory from the plant to the first ground contact: a constant-acceleration push (plant → toe-off) that
+// arrives at the toe-off with the flight's launch velocity, then a ballistic arc (constant horizontal velocity, gravity only)
+// that passes through the solved full-extension pelvis at execEnd. Ball contact lies on that arc and does not change it; the
+// simulation root's own easing to a stop is not followed (the body carries its momentum; reconciliation happens on the ground).
+function gkLaunchPlan(axisEnd, rootMEnd, W0, v0, tP, tT, tE) {
+  const g = GK_GRAPH.G, Pc = M4.transformPoint(rootMEnd, axisEnd.pelvis);
+  const Tp = Math.max(1e-3, tT - tP), D = Math.max(1e-3, tE - tT), den = D + Tp / 2;
+  const V = [(Pc[0] - W0[0] - v0[0] * Tp / 2) / den, 0, (Pc[2] - W0[2] - v0[2] * Tp / 2) / den];
+  const vUp = (Pc[1] - W0[1] - v0[1] * Tp / 2 + 0.5 * g * D * D) / den;
+  const Wt = [W0[0] + (v0[0] + V[0]) / 2 * Tp, W0[1] + (v0[1] + vUp) / 2 * Tp, W0[2] + (v0[2] + V[2]) / 2 * Tp];
+  const a = [(V[0] - v0[0]) / Tp, (vUp - v0[1]) / Tp, (V[2] - v0[2]) / Tp];
+  const tA = tT + Math.max(0, vUp / g), hA = Wt[1] + Math.max(0, vUp) ** 2 / (2 * g);
+  return { W0, v0, V, vUp, Wt, a, tP, tT, tE, tA, hA, Pc, vLat: Math.hypot(V[0], V[2]) };
 }
-// pelvis (character frame) + stage for tl seconds after endT. Lateral travel: ballistic carry, friction decel, then the get-up
-// moves the pelvis over its support points (front foot, stance) toward the simulation root — reconciliation THROUGH the recovery.
-function gkLandingState(plan, tl) {
-  const g = GK_GRAPH.G, P = plan; let h, x, stage, s;
-  const xAt = (t) => t <= P.tTouch ? P.vLat * t : (t - P.tTouch <= P.tStop ? P.xTouch + P.vLat * (t - P.tTouch) - 0.5 * P.decel * (t - P.tTouch) ** 2 : P.xStop);
-  const seg = (t0, t1) => clamp01((tl - t0) / Math.max(1e-6, t1 - t0));
-  if (tl < P.tTouch) { s = tl / P.tTouch; h = P.P0[1] + P.vUp * tl - 0.5 * g * tl * tl; x = xAt(tl); stage = s < GK_GRAPH.feet.followFrac ? "FOLLOW" : "DESCENT"; }
-  else if (tl < P.tImpact) { s = seg(P.tTouch, P.tImpact); h = lerp(P.hTouch, P.hImpact, smooth01(s)); x = xAt(tl); stage = "IMPACT"; }
-  else if (tl < P.tAbsorb) { s = seg(P.tImpact, P.tAbsorb); h = lerp(P.hImpact, P.hGround, smooth01(s)); x = xAt(tl); stage = "ABSORB"; }
-  else if (tl < P.tSettle) { s = seg(P.tAbsorb, P.tSettle); h = P.hGround; x = xAt(tl); stage = "SETTLE"; }
-  else if (tl < P.tBrace) { s = seg(P.tSettle, P.tBrace); h = lerp(P.hGround, P.hBrace, smooth01(s)); x = P.xStop; stage = "BRACE"; }
-  else if (tl < P.tPush) { s = seg(P.tBrace, P.tPush); h = lerp(P.hBrace, P.hPush, smooth01(s)); x = P.xStop; stage = "PUSH_UP"; }
-  else if (tl < P.tKneel) { s = seg(P.tPush, P.tKneel); h = lerp(P.hPush, P.hKneel, smooth01(Math.min(1, s / 0.35)));   /* the pelvis reaches kneel height ahead of the leg shapes so the kneeling knee never dips under the pitch */ x = P.xStop * lerp(1, 0.55, smooth01(Math.min(1, s / 0.6))); stage = "HALF_KNEEL"; }
-  else if (tl < P.tCrouch) { s = seg(P.tKneel, P.tCrouch); h = lerp(P.hKneel, P.hCrouch, smooth01(s)); x = P.xStop * lerp(0.55, 0.15, smooth01(s)); stage = "CROUCH"; }
-  else if (tl < P.tRise) { s = seg(P.tCrouch, P.tRise); h = lerp(P.hCrouch, P.hSet, smooth01(s)); x = P.xStop * 0.15 * (1 - smooth01(s)); stage = "RISE"; }
-  else { s = 1; h = P.hSet; x = 0; stage = "SET"; }
-  return { h, x, stage, s };
+function gkLaunchState(L, t) {                                    // world pelvis + velocity at absolute time t (push, then the arc — which continues past endT until the landing takes over)
+  const g = GK_GRAPH.G;
+  if (t <= L.tT) { const s = Math.max(0, t - L.tP); return { W: [L.W0[0] + L.v0[0] * s + 0.5 * L.a[0] * s * s, L.W0[1] + L.v0[1] * s + 0.5 * L.a[1] * s * s, L.W0[2] + L.v0[2] * s + 0.5 * L.a[2] * s * s], v: [L.v0[0] + L.a[0] * s, L.v0[1] + L.a[1] * s, L.v0[2] + L.a[2] * s], airborne: false }; }
+  const s = t - L.tT; return { W: [L.Wt[0] + L.V[0] * s, L.Wt[1] + L.vUp * s - 0.5 * g * s * s, L.Wt[2] + L.V[2] * s], v: [L.V[0], L.vUp - g * s, L.V[2]], airborne: true };
+}
+const hermite = (p0, v0, p1, v1, T, t) => { const x = clamp01(t / Math.max(1e-6, T)), x2 = x * x, x3 = x2 * x; return (2 * x3 - 3 * x2 + 1) * p0 + (x3 - 2 * x2 + x) * T * v0 + (-2 * x3 + 3 * x2) * p1 + (x3 - x2) * T * v1; };
+// ── landing plan (world frame, built once at endT from the launch plan and simulation facts) ──────────────────────────
+// Touchdown is where the arc reaches the touch height; the horizontal velocity there is the flight's; deceleration starts on the
+// ground and is progressive (skid → impact → slide → zero at the settle). The get-up then recovers the stop → simulation-root
+// offset over its support points (hips over the tucked feet, front-foot step, crouch step, rise).
+function gkLandingPlan(skel, clip, launch, axis, rootM) {
+  const H = skel.H, w = axis.wSide, F = GK_GRAPH.feet, Sd = GK_GRAPH.side, G = GK_GRAPH.getup, mix = (a, b) => lerp(a, b, w), hs = H / 1.9, g = GK_GRAPH.G;
+  const hip = 0.50 * H;
+  const hTouch = mix(F.hTouch, Sd.hTouch) * hs, hImpact = mix(F.hImpact, Sd.hImpact) * hs, hGround = mix(F.hGround, Sd.hGround) * hs;
+  const impactT = mix(F.impactT, Sd.impactT), absorbT = mix(F.absorbT, Sd.absorbT), hold = mix(F.hold, Sd.hold), d1 = mix(F.decelTouch, Sd.decelTouch), d2 = mix(F.decelImpact, Sd.decelImpact);
+  // touchdown: where the arc comes down to the touch height (never before endT — the reach is complete first)
+  const disc = launch.vUp * launch.vUp - 2 * g * (hTouch - launch.Wt[1]); const sT = disc >= 0 ? (launch.vUp + Math.sqrt(disc)) / g : Math.max(0, launch.vUp / g);
+  const tTouch = Math.max(launch.tE, launch.tT + sT); const St = gkLaunchState(launch, tTouch);
+  const Ht = [St.W[0], St.W[2]], vt = Math.hypot(launch.V[0], launch.V[2]), vz = St.v[1], u = vt > 1e-6 ? [launch.V[0] / vt, launch.V[2] / vt] : [1, 0];
+  // ground: progressive deceleration along the travel direction; the remaining speed after the body impact is bled off by the slide
+  const seg = (v0, d, T) => { const ts = d > 1e-6 ? Math.min(T, v0 / d) : T; return { v0, d, T, ts, x: v0 * ts - 0.5 * d * ts * ts, v1: Math.max(0, v0 - d * ts) }; };
+  const s1 = seg(vt, d1, impactT), s2 = seg(s1.v1, d2, absorbT), s3 = seg(s2.v1, s2.v1 / Math.max(1e-6, hold), hold);
+  const xStop = s1.x + s2.x + s3.x, Hstop = [Ht[0] + u[0] * xStop, Ht[1] + u[1] * xStop];
+  const tImpact = tTouch + impactT, tAbsorb = tImpact + absorbT, tSettle = tAbsorb + hold;
+  const inv = M4.invertRigid(rootM), sc = M4.transformPoint(inv, [Hstop[0], 0, Hstop[1]]);
+  const kT = Math.max(1, Math.min(GK_GRAPH.reconSlowMax, Math.hypot(sc[0], sc[2]) / GK_GRAPH.reconRefM));   // a long way back to the simulation root = more time for the supported stages (no lurching)
+  const tBrace = tSettle + G.brace, tPush = tBrace + G.pushUp, tKneel = tPush + G.halfKneel * kT, tCrouch = tKneel + G.crouch * kT, tRise = tCrouch + G.rise * kT;
+  const hBrace = clip.postFeet.BRACE._h * hs, hPush = clip.postFeet.PUSH_UP._h * hs, hKneel = clip.postFeet.HALF_KNEEL._h * hs, hCrouch = clip.postFeet.CROUCH._h * hs, hSet = hip + (clip.set._pelvis ? clip.set._pelvis[1] : 0);
+  const vMid = 0.5 * ((hImpact - hTouch) / impactT + (hGround - hImpact) / absorbT);      // vertical: the arrival speed is absorbed over impact + absorb (velocity-continuous), zero at the ground
+  const root = [rootM[12], rootM[14]];                                                      // simulation root (world x, z): stationary after endT; the get-up recovers the offset to it
+  return { w, hip, kT, hTouch, hImpact, hGround, hBrace, hPush, hKneel, hCrouch, hSet, tTouch, tImpact, tAbsorb, tSettle, tBrace, tPush, tKneel, tCrouch, tRise, Ht, u, vt, vz, vMid, segs: [s1, s2, s3], xStop, Hstop, root, stopC: [sc[0], sc[2]], dirSign: sc[0] >= 0 ? 1 : -1, launch, impactT, absorbT };
+}
+// pelvis (world: height h, horizontal H) + stage at absolute time t. Flight = the launch arc; ground = progressive decel; get-up =
+// the pelvis moves over its support points toward the simulation root — reconciliation THROUGH the recovery, never in the air.
+function gkLandingState(P, t) {
+  let h, H, stage, s; const seg = (t0, t1) => clamp01((t - t0) / Math.max(1e-6, t1 - t0)), R = GK_GRAPH.recon;
+  const ground = (tl) => { let x = 0, tt = tl; for (const sg of P.segs) { if (tt <= 0) break; const q = Math.min(tt, sg.ts); x += sg.v0 * q - 0.5 * sg.d * q * q; tt -= sg.T; } return x; };
+  const along = (x) => [P.Ht[0] + P.u[0] * x, P.Ht[1] + P.u[1] * x];
+  const recon = (f) => [lerp(P.Hstop[0], P.root[0], f), lerp(P.Hstop[1], P.root[1], f)];
+  if (t < P.tTouch) { s = seg(P.launch.tE, P.tTouch); const St = gkLaunchState(P.launch, t); h = St.W[1]; H = [St.W[0], St.W[2]]; stage = s < GK_GRAPH.feet.followFrac ? "FOLLOW" : "DESCENT"; }
+  else if (t < P.tImpact) { s = seg(P.tTouch, P.tImpact); h = hermite(P.hTouch, P.vz, P.hImpact, P.vMid, P.impactT, t - P.tTouch); H = along(ground(t - P.tTouch)); stage = "IMPACT"; }
+  else if (t < P.tAbsorb) { s = seg(P.tImpact, P.tAbsorb); h = hermite(P.hImpact, P.vMid, P.hGround, 0, P.absorbT, t - P.tImpact); H = along(ground(t - P.tTouch)); stage = "ABSORB"; }
+  else if (t < P.tSettle) { s = seg(P.tAbsorb, P.tSettle); h = P.hGround; H = along(ground(t - P.tTouch)); stage = "SETTLE"; }
+  else if (t < P.tBrace) { s = seg(P.tSettle, P.tBrace); h = lerp(P.hGround, P.hBrace, smooth01(s)); H = recon(0); stage = "BRACE"; }
+  else if (t < P.tPush) { s = seg(P.tBrace, P.tPush); h = lerp(P.hBrace, P.hPush, smooth01(s)); H = recon(R.pushUp * smooth01(s)); stage = "PUSH_UP"; }                 // hips drawn back over the tucked feet
+  else if (t < P.tKneel) { s = seg(P.tPush, P.tKneel); h = lerp(P.hPush, P.hKneel, smooth01(Math.min(1, s / 0.35)));   /* the pelvis reaches kneel height ahead of the leg shapes so the kneeling knee never dips under the pitch */ H = recon(lerp(R.pushUp, R.halfKneel, smooth01(Math.min(1, s / 0.6)))); stage = "HALF_KNEEL"; }
+  else if (t < P.tCrouch) { s = seg(P.tKneel, P.tCrouch); h = lerp(P.hKneel, P.hCrouch, smooth01(s)); H = recon(lerp(R.halfKneel, R.crouch, smooth01(s))); stage = "CROUCH"; }
+  else if (t < P.tRise) { s = seg(P.tCrouch, P.tRise); h = lerp(P.hCrouch, P.hSet, smooth01(s)); H = recon(lerp(R.crouch, 1, smooth01(s))); stage = "RISE"; }
+  else { s = 1; h = P.hSet; H = P.root; stage = "SET"; }
+  return { h, H, stage, s };
 }
 // ── main evaluation ───────────────────────────────────────────────────────────────────────────────────────────────────
 function gkGraphEvaluate(desc, clip, skel, state) {
@@ -135,7 +167,7 @@ function gkGraphEvaluate(desc, clip, skel, state) {
     if (dive) {
       pose = M(gkSampleKeys(clip.pre, u, named)); mode = "pre";
       phase = u < 0.10 ? "LOAD" : u < 0.19 ? "PLANT" : u < 0.27 ? "PUSH_OFF" : u < 0.34 ? "TOE_OFF" : (desc.contact && desc.contact.tickT >= c.t0 - 1e-3 ? "CONTACT" : (u < 0.55 ? "EARLY_FLIGHT" : u < 0.8 ? "MID_FLIGHT" : "FULL_EXTENSION")); sub = pose._name;
-      locks = { reach: 1 - smooth01(clamp01((u - 0.27) / (0.33 - 0.27))), other: 1 - smooth01(clamp01((u - 0.14) / (0.22 - 0.14))) };   // plant foot through LOAD/PLANT/PUSH, released over the toe-off; the other foot unloads during the push
+      locks = { reach: 1 - smooth01(clamp01((u - 0.40) / 0.10)), other: 1 - smooth01(clamp01((u - 0.14) / (0.22 - 0.14))) };   // plant foot held until the leg is fully extended (reach cap in the solve) — the toe leaves the pitch when the arc takes the hip out of reach; the other foot unloads during the push
     } else { pose = M(clip.set); phase = desc.family || "REACH"; authored = false; mode = "procedural"; }
     ikW = u >= GK_GRAPH.loadPhase ? clamp01((u - GK_GRAPH.loadPhase) / (1 - GK_GRAPH.loadPhase)) : 0;
     if (desc.contact && desc.contact.tickT >= c.t0 - 1e-3) ikW = 1;
@@ -146,14 +178,29 @@ function gkGraphEvaluate(desc, clip, skel, state) {
     else { pose = M(clip.set); phase = tl < 0.4 ? "RISE" : "SET"; authored = false; mode = "procedural"; }
     ikW = desc.held ? 1 : Math.max(0, 1 - tl / GK_GRAPH.ikFadePost);
   }
-  const g = { pose, phase, sub, clipT, ikW, rootM, facing, authored, mode, side: desc.side, reachHand: sideL ? "L" : "R", axis: null, locks, brace, landing: null, pres: { dx: 0, dy: 0, dm: 0 } };
+  const g = { pose, phase, sub, clipT, ikW, rootM, facing, authored, mode, side: desc.side, reachHand: sideL ? "L" : "R", axis: null, locks, brace, landing: null, flight: null, pres: { dx: 0, dy: 0, dm: 0 } };
+  const pelOff = skel.byName.pelvis.off, invRoot = M4.invertRigid(rootM);
+  const worldPelvis = (p) => M4.transformPoint(rootM, V3.add(pelOff, p._pelvis || [0, 0, 0]));
+  const setPelvisWorld = (p, W) => { p._pelvis = V3.sub(M4.transformPoint(invRoot, W), pelOff); };
   if (c && dive && authored) {
     const axis = gkGraphAxis(desc, rootM, skel); g.axis = axis;
-    if (mode === "pre") { g.pose = gkGraphRedirect(g.pose, axis, clipT); state.endPose = g.pose; state.endAxis = axis; state.plan = null; }
+    if (mode === "pre") {
+      g.pose = gkGraphRedirect(g.pose, axis, clipT); state.plan = null;
+      // launch plan at the plant: from here the pelvis follows ONE planned trajectory (push → toe-off → arc through the solved
+      // full-extension pelvis at execEnd → on through contact). Before the plant the authored crouch + the simulation root move it.
+      if (!state.launch && clipT >= GK_GRAPH.plantU) {
+        const W0 = worldPelvis(g.pose), pv = state.prevPel, v0 = pv && desc.now - pv.t > 1e-4 && desc.now - pv.t < 0.1 ? V3.scale(V3.sub(W0, pv.W), 1 / (desc.now - pv.t)) : [0, 0, 0];
+        const rootMEnd = gkRootMatrix(c.rootEnd ? c.rootEnd[0] : desc.simRoot[0], c.rootEnd ? c.rootEnd[1] : desc.simRoot[1], facing, 0), axisEnd = gkGraphAxis(desc, rootMEnd, skel);
+        state.launch = gkLaunchPlan(axisEnd, rootMEnd, W0, v0, desc.now, c.t0 + GK_GRAPH.toeOff * c.execTime, c.t0 + c.execTime);
+      }
+      if (state.launch) { const St = gkLaunchState(state.launch, desc.now); setPelvisWorld(g.pose, St.W); g.flight = St; }
+      state.endPose = g.pose; state.endAxis = axis;
+    }
     else if (mode === "post") {
-      const tl = clipT, endPose = state.endPose || gkGraphRedirect(M(gkSampleKeys(clip.pre, 1, named)), axis, 1), ax = state.endAxis || axis;
-      if (!state.plan) state.plan = gkLandingPlan(desc, skel, clip, endPose, ax, sideL);
-      const plan = state.plan, L = gkLandingState(plan, tl); g.landing = { plan, L };
+      const endPose = state.endPose || gkGraphRedirect(M(gkSampleKeys(clip.pre, 1, named)), axis, 1), ax = state.endAxis || axis;
+      if (!state.launch) { const W0 = worldPelvis(endPose); state.launch = gkLaunchPlan(ax, rootM, W0, [0, 0, 0], desc.now - 0.30, desc.now - 0.20, desc.now); }   // fallback (no plant tick was evaluated): a short arc from where the body is
+      if (!state.plan) state.plan = gkLandingPlan(skel, clip, state.launch, ax, rootM);
+      const plan = state.plan, L = gkLandingState(plan, desc.now); g.landing = { plan, L };
       const PF = clip.postFeet, PS = clip.postSide, w = plan.w;
       const K = (name) => poseLerpP(M(PF[name]), M(PS[name]), w);                              // landing style blend (feet ↔ side) by the body-axis angle
       const setP = M(clip.set); let shape;
@@ -167,14 +214,13 @@ function gkGraphEvaluate(desc, clip, skel, state) {
       else if (L.stage === "CROUCH") shape = gkSampleKeys([[0, K("HALF_KNEEL")], [1, K("CROUCH")]], smooth01(L.s), {});
       else if (L.stage === "RISE") shape = gkSampleKeys([[0, K("CROUCH")], [1, setP]], smooth01(L.s), {});
       else shape = setP;
-      const h = L.h;                                                                          // every stage's pelvis height is owned by the landing state (continuous)
-      const keepP0 = (L.stage === "FOLLOW" || L.stage === "DESCENT" || L.stage === "IMPACT" || L.stage === "ABSORB" || L.stage === "SETTLE" || L.stage === "BRACE" || L.stage === "PUSH_UP");
-      const p0x = keepP0 ? plan.P0[0] : L.stage === "HALF_KNEEL" ? plan.P0[0] * lerp(1, 0.55, smooth01(Math.min(1, L.s / 0.6))) : L.stage === "CROUCH" ? plan.P0[0] * lerp(0.55, 0.15, smooth01(L.s)) : L.stage === "RISE" ? plan.P0[0] * 0.15 * (1 - smooth01(L.s)) : 0;
-      shape._pelvis = [p0x + plan.dirSign * L.x, h - plan.hip, plan.P0[2] * (keepP0 ? 1 : 0)];
+      setPelvisWorld(shape, [L.H[0], L.h, L.H[1]]);                                          // every stage's pelvis position is owned by the landing state (position- and velocity-continuous)
+      if (L.stage === "FOLLOW" || L.stage === "DESCENT") g.flight = gkLaunchState(plan.launch, desc.now);
       g.pose = shape; g.phase = L.stage; g.sub = shape._name || L.stage;
       const feetStyle = w < 0.5, R = g.reachHand, O = R === "R" ? "L" : "R";
       if (L.stage === "FOLLOW" || L.stage === "DESCENT") locks = { R: 0, L: 0 };
-      else if (L.stage === "IMPACT" || L.stage === "ABSORB") locks = feetStyle ? { R: 1, L: 1, at: "touch" } : { R: 0, L: 0 };   // the feet stay where they landed while the body folds down
+      else if (L.stage === "IMPACT") locks = feetStyle ? { R: 1, L: 1, at: "touch" } : { R: 0, L: 0 };                        // the feet stay where they landed while the momentum carries the body over them
+      else if (L.stage === "ABSORB") locks = { R: 0, L: 0 };                                                                    // the body goes down onto the side and slides: the feet drag with it
       else if (L.stage === "SETTLE" || L.stage === "BRACE" || L.stage === "PUSH_UP") locks = { R: 1, L: 1, at: "tuck" };            // lying / bracing: feet drawn in behind the body, knees under (leg IK with a forward-up pole)
       else if (L.stage === "HALF_KNEEL") locks = { [R]: 1 - smooth01(Math.min(1, L.s / 0.6)), [O]: 1, at: "front" };   // the kneeling (save-side) foot stays on its tucked point and is released as the authored kneel takes over — no snap
       else locks = { R: 1, L: 1, at: "stance" };
@@ -187,7 +233,8 @@ function gkGraphEvaluate(desc, clip, skel, state) {
       else if (L.stage === "HALF_KNEEL") g.brace = { [R]: 1 - smooth01(bw(0.3, 0.9)), [O]: 1 - smooth01(bw(0.0, 0.5)) };
       else g.brace = null;
     }
-  } else { state.endPose = null; state.endAxis = null; state.plan = null; }
+  } else { state.endPose = null; state.endAxis = null; state.plan = null; state.launch = null; }
+  state.prevPel = { t: desc.now, W: worldPelvis(g.pose) };                                    // for the launch plan's velocity continuity at the plant
   return g;
 }
 // ── procedural pass: FK → ground clamp → torso assist → glove IK → foot locks (leg IK) → hand brace; presentation root ─
@@ -211,19 +258,22 @@ function gkGraphSolve(desc, g, skel, state) {
     const d = M4.mul(m2, M4.invertRigid(m)); const apply = (b) => { fk.world[b.idx] = M4.mul(d, fk.world[b.idx]); fk.joint[b.idx] = M4.origin(fk.world[b.idx]); fk.tip[b.idx] = M4.transformPoint(fk.world[b.idx], V3.scale(b.dir, b.len)); for (const c of b.children) apply(c); }; apply(fb);
   };
   const fwd = M4.transformDir(g.rootM, [0, 0, 1]);
-  const plantFeet = () => { for (const side of ["R", "L"]) { const st = state.feet[side]; const w = clamp01(want[side] || 0); if (st && st.locked && st.P && w > 0) { const hip = fk.joint[skel.byName["thigh_" + side].idx]; const kj = fk.joint[skel.byName["shin_" + side].idx], knee = [kj[0], Math.max(kj[1], 0.12), kj[2]]; const pole = V3.lerp(knee, [hip[0] + fwd[0] * 0.5, hip[1] + 0.3, hip[2] + fwd[2] * 0.5], w);   /* knees bend forward-up, never into the pitch; a fading lock keeps the authored bend plane */ const Pt = st.Pnow || st.P; const r = skelIK2(skel, fk, "thigh_" + side, "shin_" + side, "foot_" + side, Pt, w, pole, 0); flattenFoot(side, w); diag.feet[side] = { locked: true, w: +w.toFixed(2), residual: +r.residual.toFixed(3), P: Pt }; } } };
+  const legMax = skel.byName.thigh_R.len + skel.byName.shin_R.len;
+  const reachCap = (side, Pt) => { const hip = fk.joint[skel.byName["thigh_" + side].idx]; return 1 - smooth01((V3.dist(hip, Pt) - (legMax - 0.02)) / 0.08); };   // a planted foot stays planted only while the leg can reach it: release = full extension, never a timer
+  const plantFeet = () => { for (const side of ["R", "L"]) { const st = state.feet[side]; let w = clamp01(want[side] || 0); if (st && st.locked && st.P && w > 0) w = Math.min(w, reachCap(side, st.Pnow || st.P)); if (st && st.locked && st.P && w > 0) { const hip = fk.joint[skel.byName["thigh_" + side].idx]; const kj = fk.joint[skel.byName["shin_" + side].idx], knee = [kj[0], Math.max(kj[1], 0.12), kj[2]]; const pole = V3.lerp(knee, [hip[0] + fwd[0] * 0.5, hip[1] + 0.3, hip[2] + fwd[2] * 0.5], w);   /* knees bend forward-up, never into the pitch; a fading lock keeps the authored bend plane */ const Pt = st.Pnow || st.P; const r = skelIK2(skel, fk, "thigh_" + side, "shin_" + side, "foot_" + side, Pt, w, pole, 0); flattenFoot(side, w); diag.feet[side] = { locked: w > 0.05, w: +w.toFixed(2), residual: +r.residual.toFixed(3), P: Pt }; } } };
   for (const side of ["R", "L"]) {
     const fb = skel.byName["foot_" + side], ankle = fk.joint[fb.idx]; const w = clamp01(want[side] || 0); const st = state.feet[side] || { locked: false, P: null };
     if (w > 0 && (!st.locked || state.lockStage !== stage)) {
       let P;
-      if (L.at === "stance") { const spread = (side === "R" ? 1 : -1) * 0.20; P = M4.transformPoint(g.rootM, [spread + (g.landing ? g.landing.plan.dirSign * g.landing.plan.xStop * 0.15 : 0), ankleH, 0.02]); }
-      else if (L.at === "front" && g.landing) { const pl = g.landing.plan; if (side === h && st.P) P = st.P.slice(); else P = M4.transformPoint(g.rootM, [pl.P0[0] * 0.6 + pl.dirSign * pl.xStop * 0.6 + (side === "R" ? 1 : -1) * 0.14, ankleH, 0.12]); }   // half-kneel: the front foot plants toward the simulation root; the kneeling foot keeps its tucked point
-      else if (L.at === "tuck" && g.landing) { const pl = g.landing.plan, px = (pose._pelvis ? pose._pelvis[0] : 0); const bottom = side === h; P = M4.transformPoint(g.rootM, [px - pl.dirSign * (bottom ? 0.42 : 0.34), ankleH, bottom ? -0.10 : 0.16]); }   // lying / brace: feet tucked behind the hips
+      const sc = g.landing ? g.landing.plan.stopC : [0, 0], Rc = GK_GRAPH.recon;                // stop point (character frame); support points sit where the pelvis is heading in each stage
+      if (L.at === "stance") { const spread = (side === "R" ? 1 : -1) * 0.20; P = M4.transformPoint(g.rootM, [spread + sc[0] * (1 - Rc.crouch) * 0.7, ankleH, sc[1] * (1 - Rc.crouch) * 0.7 + 0.02]); }
+      else if (L.at === "front" && g.landing) { const f = 1 - Rc.halfKneel - 0.10; if (side === h && st.P) P = st.P.slice(); else P = M4.transformPoint(g.rootM, [sc[0] * f + (side === "R" ? 1 : -1) * 0.14, ankleH, sc[1] * f + 0.12]); }   // half-kneel: the front foot steps toward the simulation root, ahead of where the pelvis will be; the kneeling foot keeps its tucked point
+      else if (L.at === "tuck" && g.landing) { const pl = g.landing.plan, px = (pose._pelvis ? pose._pelvis[0] : 0), pz = (pose._pelvis ? pose._pelvis[2] : 0); const bottom = side === h; P = M4.transformPoint(g.rootM, [px - pl.dirSign * (bottom ? 0.42 : 0.34), ankleH, pz + (bottom ? -0.10 : 0.16)]); }   // lying / brace: feet tucked behind the hips
       else P = [ankle[0], ankleH, ankle[2]];
       if (st.locked && st.P) { st.from = st.P.slice(); st.fromT = desc.now; }                    // re-plant: blend from the previous plant point (no foot teleport)
       st.locked = true; st.P = P; st.since = desc.now;
     }
-    if (st.locked && st.from && st.fromT != null) { const bt = clamp01((desc.now - st.fromT) / 0.2); st.Pnow = V3.lerp(st.from, st.P, smooth01(bt)); if (bt >= 1) { st.from = null; st.Pnow = st.P; } } else st.Pnow = st.P;
+    if (st.locked && st.from && st.fromT != null) { const bt = clamp01((desc.now - st.fromT) / 0.2); st.Pnow = V3.lerp(st.from, st.P, smooth01(bt)); if (V3.dist(st.from, st.P) > 0.12) st.Pnow[1] += 0.10 * Math.sin(Math.PI * bt); /* a re-plant further than a shuffle is a STEP: the foot lifts over its move */ if (bt >= 1) { st.from = null; st.Pnow = st.P; } } else st.Pnow = st.P;
     if (w <= 0) st.locked = false;
     state.feet[side] = st;
     diag.feet[side] = { locked: false, w: 0, height: +(ankle[1] - ankleH).toFixed(3) };
@@ -234,8 +284,15 @@ function gkGraphSolve(desc, g, skel, state) {
   // clamp on the body core and legs only: hands/forearms are placed by the brace / glove IK (a hand authored below the pitch in a
   // rolled body frame must not lift the whole body), toes are flattened with their planted foot
   const CLAMP_SKIP = { hand_R: 1, hand_L: 1, foreArm_R: 1, foreArm_L: 1, upperArm_R: 1, upperArm_L: 1, clavicle_R: 1, clavicle_L: 1, toe_R: 1, toe_L: 1 };
-  let minY = 1e9, minB = null; for (const b of skel.bones) { if (!b.part || CLAMP_SKIP[b.name]) continue; const v = Math.min(fk.joint[b.idx][1] - b.rad * 0.6, fk.tip[b.idx][1] - b.rad * 0.6); if (v < minY) { minY = v; minB = b.name; } }
-  if (minY < 0) { pel.off[1] -= minY; diag.ground = +(-minY).toFixed(3); diag.groundBone = minB; fk = skelFK(skel, pose, g.rootM); plantFeet(); }
+  // a LEG below the pitch bends at the knee (foot floored by leg IK, authored bend plane kept); only the body core lifts the pelvis —
+  // the planned pelvis trajectory (push → arc → slide) must never be displaced by an authored leg poking through the ground
+  const floored = {}; const deepest = () => { let minY = 1e9, minB = null; for (const b of skel.bones) { if (!b.part || CLAMP_SKIP[b.name]) continue; const m = /^(thigh|shin|foot)_([RL])$/.exec(b.name); if (m && floored[m[2]]) continue; const v = Math.min(fk.joint[b.idx][1] - b.rad * 0.6, fk.tip[b.idx][1] - b.rad * 0.6); if (v < minY) { minY = v; minB = b.name; } } return { minY, minB }; };
+  for (let pass = 0; pass < 3; pass++) {
+    const { minY, minB } = deepest(); if (minY >= 0) break;
+    const m = /^(shin|foot)_([RL])$/.exec(minB);
+    if (m) { const side = m[2], fb = skel.byName["foot_" + side], ankle = fk.joint[fb.idx], kj = fk.joint[skel.byName["shin_" + side].idx]; const Pt = [ankle[0], Math.max(ankle[1] - minY, ankleH), ankle[2]]; skelIK2(skel, fk, "thigh_" + side, "shin_" + side, "foot_" + side, Pt, 1, [kj[0], Math.max(kj[1], 0.12), kj[2]], 0); floored[side] = true; diag.legFloor = (diag.legFloor || "") + side + ":" + (-minY).toFixed(2) + " "; if (diag.feet[side]) diag.feet[side].floored = true; continue; }
+    pel.off[1] -= minY; diag.ground = +(-minY).toFixed(3); diag.groundBone = minB; fk = skelFK(skel, pose, g.rootM); plantFeet(); break;
+  }
   // 3. torso / clavicle assist + glove IK toward the simulation hand
   const T = glW(desc.handTarget);
   if (g.ikW > 0) {
@@ -264,7 +321,7 @@ function gkGraphSolve(desc, g, skel, state) {
   // presentation root = ground projection of the pelvis (pitch frame); continuous by construction
   const pw = fk.joint[skel.byName.pelvis.idx]; const pr = pitchW([pw[0], 0, pw[2]]);
   let dx = pr[0] - desc.simRoot[0], dy = pr[1] - desc.simRoot[1]; const dm = Math.hypot(dx, dy);
-  if (dm > GK_GRAPH.presMaxM) { dx *= GK_GRAPH.presMaxM / dm; dy *= GK_GRAPH.presMaxM / dm; }
+  if (dm > GK_GRAPH.presMaxM) { dx *= GK_GRAPH.presMaxM / dm; dy *= GK_GRAPH.presMaxM / dm; }   // presMaxM is a sanity cap only (a full dive + slide legitimately carries the body well past the simulation root)
   g.pres = { dx, dy, dm: Math.min(dm, GK_GRAPH.presMaxM), x: desc.simRoot[0] + dx, y: desc.simRoot[1] + dy };
   return { fk, diag };
 }
