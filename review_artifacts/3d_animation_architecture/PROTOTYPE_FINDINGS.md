@@ -117,3 +117,49 @@ The capsule parts are a stand-in, not an architectural requirement. The 23-bone 
 - Only the feet-landing branch is exercised by this ball; the side-landing branch (hand/forearm → hip/shoulder → slide) is authored but unreviewed.
 - The get-up's step back toward the simulation root is a solved leg reach (feet planted under the final root), not a stepped walk; the residual glide during the rise is ≤ 0.29 m.
 - Push-off peak pelvis velocity ≈ 5 m/s over two ticks (explosive but on the high side); landing constants (touch height, absorb time, friction) are global, not per keeper.
+
+---
+
+# v3 — readable load / push-off / grounded landing / supported get-up (v2 rejected at visual review)
+
+Review page: `visual_review/VISUAL_REVIEW.html` (v3 section at the top). Deliverables: `visual_review/v3_01…v3_10*`. Per-tick trace of the reviewed capture: `verification/v3_lifecycle_trace_scenario42.json`.
+
+## Diagnosis of v2 (reproduced and measured before anything was changed)
+- **No readable wind-up / crouch / push-off.** The anticipation blended from SET toward a shallow LOAD key and the launch position (solved from the committed target) took over from the first commit tick, so the LOAD lasted one tick: pelvis 0.85 → 0.79 m, about one pixel of silhouette change at gameplay scale. The push-off was the same solved translation with the legs straightening underneath — no planted foot, no last grounded frame.
+- **No readable landing / get-up.** The "settle" pose was a kneel at 0.50 m pelvis height, which reads as standing at gameplay scale; the get-up was a direct blend from that kneel to SET, so the keeper appeared to teleport to standing. The lying keeper also swung round mid-recovery because the presentation facing followed the sprite resolver's commit snapshot, which is dropped when its own clip ends.
+
+## What changed (presentation only — `anim3d/gk_far_dive_clip.js`, `gk_graph.js`, `gk_backend.js`, `gk3d_backend.js`)
+- **Set crouch on the shooter's wind-up** (`desc.windup`, from the scheduled kick; production analogue = the KICK intent wind-up): pelvis 0.85 → 0.72 m by hip + knee + ankle flexion with both feet planted by leg IK (no whole-body translation).
+- **Anticipation inside the reaction latency:** REACT → WEIGHT SHIFT onto the save-side foot → LOAD. The load key is a real crouch: pelvis 0.58 m at tick 39 (0.27 m below SET), save-side knee 56°, torso leaning into the dive, opposite leg unloading, arms in counter-movement. The last anticipation key *is* the LOAD key, so the commit tick is continuous.
+- **Push-off:** LOAD → PLANT → PUSH (mid/end) → TOE-OFF keys drive hip → knee → ankle → toe extension while the save-side foot is held on its plant point by leg IK; the pelvis rises 0.63 → 1.10 m over ticks 41–46 with the foot still on the pitch, the heel lifts and the toe is the last contact. The solved launch position blends in only after the plant (from u = 0.30), so the crouch is real stored energy, not a translation. Last grounded frame tick 46, first airborne tick 47.
+- **Contact unchanged:** glove centre 4.9 cm from the simulation hand at tick 62.
+- **Fall and landing:** FOLLOW-THROUGH (pelvis peaks 1.51 m at tick 68) → ballistic DESCENT → first ground contact at tick 89 (feet: body axis 22° from vertical on this ball, so the feet touch first, legs nearly straight) → IMPACT (knees collapse) → ABSORB (hip to the pitch, save-side hand braces from tick 101) → SETTLED (ticks 113–136: pelvis 0.28 m, head 0.29 m, both feet and both hands on the pitch). Stage timings are the closed-form landing state (deterministic, seconds after execEnd).
+- **Get-up with support points:** BRACE (hands set, torso lifts) → PUSH TORSO UP (elbows extending, pelvis 0.28 → 0.46 m) → DRAW KNEE UNDER / HALF-KNEEL (front foot planted toward the simulation root; the kneeling foot keeps its tucked plant point and its lock fades out as the authored kneel takes over — the IK knee pole blends from forward-up to the authored bend plane with the lock weight, floored at the pitch) → CROUCH (both feet planted under the root) → RISE → SET at tick 245. No lying → SET interpolation anywhere.
+- **Root reconciliation** happens only through those support points: presentation root (ground projection of the solved pelvis) is 0.55 m from the simulation root while settled, 0.30 m in the half-kneel, 0.13 m in the crouch, 0.000 m at the final SET. Feet move only by re-plants blended over 0.2 s. Simulation root untouched.
+- **Presentation facing frozen for the whole committed action** (`state.facing` keyed by the commit tick).
+- **Foot-contact diagnostic:** the 3D backend label and the review player readout show `RIGHT FOOT: PLANTED/RELEASED · LEFT FOOT: PLANTED/RELEASED` (PLANTED = held on its world plant point by leg IK).
+- **Review-only holds:** the held-phase GIF pauses on SET, LOAD, DEEPEST CROUCH, PUSH, LAST GROUNDED FRAME, TOE-OFF, FLIGHT, CONTACT, DESCENT, FIRST GROUND CONTACT, SETTLED, BRACE, HALF-KNEEL, CROUCH, SET; the gameplay clip has no pauses (the graph has no hold states).
+
+## Frame-by-frame acceptance (checked on the captured frames, close zoom and gameplay camera)
+| check | result |
+|---|---|
+| knees visibly bend before take-off | yes — set crouch → load, knee 56° at tick 39 |
+| pelvis visibly drops | yes — 0.85 → 0.58 m (21 px at close zoom, 5 px at gameplay scale) |
+| planted leg visibly extends to launch | yes — ticks 43–46, foot held on the pitch while the pelvis rises 0.47 m |
+| recognisable last grounded frame | yes — tick 46 on the toe; airborne from 47 |
+| keeper visibly descends after contact | yes — 66 → 89, pelvis 1.51 → 0.94 m |
+| visibly contacts and settles on the pitch | yes — feet 89, hip down by 108, settled 113–136 (head 0.29 m) |
+| visibly braces and gets up | yes — hands on the pitch 101–182, torso up on the arms, knee under, half-kneel 173–193, crouch, rise |
+| no airborne / grounded → SET teleport | yes — every stage boundary blends; largest pelvis step outside push-off and impact is 3 cm |
+
+## Verification (final code)
+- Sprite vs SKELETAL_3D, all 43 scenarios × 260 ticks, keeper drawn every tick: **43/43 identical** (`verification/V3_GATE_COMPARE_sprite_vs_3d_all_scenarios.md`).
+- Animation OFF (nothing drawn) vs the 3D backend drawn every tick: final-tick keeper root / hand / ball / contact identical in all 43 scenarios (`verification/V3_GATE_COMPARE_animation_on_vs_off.md`).
+- Scenario 42: commit tick 38, contact tick 62 (t 1.050 s, HAND, WEAK PARRY), contact point, ball and simulation root unchanged.
+- Perf (headless, ANGLE Metal, 1/2-res target): 0.6 ms average per drawn tick across the gate.
+
+## Honest limits of v3
+- The settled pose on this feet-first ball is a curled heap (hip and shoulder down, knees folded) rather than a full side-lying stretch; the side-landing branch (axis > 60°) is authored but not exercised by this ball.
+- A 3 cm knee-under bump remains at ticks 179–181 (under one gameplay pixel): the blend from the lying push-up shape to the authored kneel briefly puts the kneeling knee below the pitch and the ground clamp lifts the body.
+- Push-off peak pelvis speed ≈ 6 m/s over four ticks (explosive, on the high side); landing / get-up timings are global constants, not per keeper.
+- Capsule mannequin; poses are hand-set in a single pass and will benefit from an animator.

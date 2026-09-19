@@ -15,11 +15,52 @@
  a{color:#6fd3ff}
 </style></head><body>
 <header>
- <h1>3D VERTICAL SLICE — VISUAL REVIEW · goalkeeper far dive, scenario 42 ("S4 K2 high tip-up") · v2 = complete SET→SET lifecycle (top), v1 = first slice (below)</h1>
+ <h1>3D VERTICAL SLICE — VISUAL REVIEW · goalkeeper far dive, scenario 42 ("S4 K2 high tip-up") · v3 = readable load / push-off / grounded landing / supported get-up (top) · v2 (rejected) and v1 below for history</h1>
  <p class="q">Question: does skeletal 3D give a substantially better foundation for motion than the sprite system while still being able to look like Touchline?</p>
  <p class="sub">One simulation (deterministic, zero RNG; commit tick 38, contact tick 62 = t 1.050 s, HAND · WEAK PARRY, execEnd tick 66) rendered three ways from the identical per-tick state. Simulation traces are hash-identical across backends (43/43 scenarios). Nothing was changed for this page: same clip, graph, IK and render options as committed. Sprite jersey/shorts/socks/gloves colours are matched on the 3D parts; no face, hair, kit or mesh polish was done on purpose.</p>
 </header>
 
+
+
+<section style="border:2px solid #ffd166;border-radius:8px;margin:18px 24px;padding:10px 18px;background:#1a1812">
+ <h2 style="margin-top:8px">v3 · READABLE LIFECYCLE — SET → load → push-off → flight → contact → fall → landing → get-up → SET (same simulation, same contact)</h2>
+ <p class="note"><b>Why v2 failed (measured before anything was changed):</b> the load lasted one tick (pelvis 0.85 → 0.79 m, ~1 px of silhouette change at gameplay scale) because the anticipation blended toward a shallow load and the launch position took over immediately; the "settle" was a kneel at 0.50 m pelvis height, which reads as standing; and the get-up was a lerp from that kneel to SET. <b>v3 replaces those with authored, measurable phases</b> (all numbers below are from the per-tick trace of this capture, <a href="../verification/v3_lifecycle_trace_scenario42.json">trace</a>): set crouch on the shooter's wind-up (pelvis 0.85 → 0.72 m, hips/knees/ankles flexing, feet planted) → REACT → WEIGHT SHIFT onto the save-side foot → <b>DEEPEST LOAD tick 39: pelvis 0.58 m, save-side knee 56°, torso leaning into the dive, opposite leg unloading</b> → PLANT → <b>PUSH-OFF 43–46: hip → knee → ankle → toe extension with the foot held on its plant point; pelvis 0.63 → 1.10 m while the foot is still on the pitch; heel lifts, toe is the last contact; LAST GROUNDED FRAME = tick 46, first airborne = 47</b> → flight → CONTACT tick 62 (glove 4.9 cm from the simulation hand, unchanged) → FOLLOW-THROUGH → DESCENT (ballistic, pelvis 1.51 → 0.94 m) → <b>FIRST GROUND CONTACT tick 89 (feet: the body axis is 22° from vertical on this ball, so the feet touch first)</b> → IMPACT (knees collapse) → ABSORB (hip to the pitch, hand braces from tick 101) → <b>SETTLED ticks 113–136: pelvis 0.28 m, head 0.29 m, both feet and both hands on the pitch</b> → BRACE (hands set, torso lifts) → PUSH TORSO UP on the arms → DRAW KNEE UNDER → HALF-KNEEL (front foot planted toward the simulation root, kneeling foot released as the kneel takes over) → CROUCH → RISE → SET tick 245 (presentation root back on the simulation root: 0.000 m). Presentation facing is frozen for the whole action (v2 swung the lying keeper round when the sprite resolver dropped its commit snapshot). Nothing in the simulation changed: gates below.</p>
+ <h2>v3 · 1 Synced player — sprite · v3 lifecycle · v3 + skeleton / IK / root / foot-contact overlays (true 60 fps, scrubbable; readout shows the foot-contact diagnostic)</h2>
+ <div class="ctl">
+  <button id="play3" class="on">Pause</button>
+  <span>speed</span><button data-sp="1" class="on sp3">1× (60 fps)</button><button data-sp="0.25" class="sp3">¼×</button><button data-sp="0.1" class="sp3">1/10×</button>
+  <span>view</span><button data-v="gp" class="on vw3">gameplay camera</button><button data-v="cl" class="vw3">close zoom 3.5</button>
+  <button id="step3">step +1 tick</button>
+  <span>jump</span><button class="jp3" data-k="39">DEEPEST LOAD</button><button class="jp3" data-k="46">LAST FOOT ON PITCH</button><button class="jp3" data-k="62">CONTACT</button><button class="jp3" data-k="89">FIRST GROUND CONTACT</button><button class="jp3" data-k="125">SETTLED</button><button class="jp3" data-k="149">BRACE</button><button class="jp3" data-k="189">HALF-KNEEL</button><button class="jp3" data-k="245">SET</button>
+  <input type="range" id="scrub3" min="0" max="255" value="0"><span id="ro3" class="ro"></span>
+ </div>
+ <div class="player" id="panels3"></div>
+ <h2>v3 · 2 Normal speed SET → SET (every tick, 20 ms) — sprite vs v3, gameplay camera and close zoom</h2>
+ <img class="sheet" src="v3_01_normal_speed_sprite_vs_v3.gif">
+ <h2>v3 · 3 4× slow motion — close zoom · close zoom + overlays · gameplay camera</h2>
+ <img class="sheet" src="v3_02_slowmo_4x.gif">
+ <h2>v3 · 4 Review-only held-phase playback (each named phase held 0.8 s; the gameplay clip has no pauses) — mannequin + overlays</h2>
+ <img class="sheet" src="v3_03_review_held_phases.gif">
+ <h2>v3 · 5 Complete pose sheet — 15 poses, each as mannequin (top) and skeleton overlay (bottom); every column is a real rendered tick</h2>
+ <div class="wide"><img class="sheet" src="v3_04_pose_sheet.png"></div>
+ <h2>v3 · 6 Take-off close-up &nbsp;·&nbsp; 7 Landing close-up &nbsp;·&nbsp; 8 Get-up close-up</h2>
+ <div class="wide"><img class="sheet" src="v3_05_takeoff_closeup.png"></div>
+ <div class="wide" style="margin-top:12px"><img class="sheet" src="v3_06_landing_closeup.png"></div>
+ <div class="wide" style="margin-top:12px"><img class="sheet" src="v3_07_getup_closeup.png"></div>
+ <h2>v3 · 9 Skeleton overlay animation strip (bones · IK targets · simulation root vs presentation root · foot contacts)</h2>
+ <div class="wide"><img class="sheet" src="v3_08_skeleton_overlay_strip.png"></div>
+ <h2>v3 · 10 Foot / ground contact timeline &nbsp;·&nbsp; 11 Presentation-root trajectory vs simulation root</h2>
+ <img class="sheet" src="v3_10_foot_ground_contact_timeline.png" style="max-width:1400px">
+ <img class="sheet" src="v3_09_presentation_root_trajectory.png" style="max-width:1400px;margin-top:12px">
+ <table style="margin-top:10px">
+  <tr><th>acceptance (checked frame by frame on these captures)</th><td>
+   knees visibly bend before take-off (set crouch → load, knee 56° at tick 39) ✔ &nbsp;·&nbsp; pelvis visibly drops (0.85 → 0.58 m, 21 px at close zoom, 5 px at gameplay scale) ✔ &nbsp;·&nbsp; planted leg visibly extends to launch (43–46, foot held on the pitch while the pelvis rises 0.47 m) ✔ &nbsp;·&nbsp; recognisable last grounded frame (tick 46, on the toe; overlay ring turns orange at 47) ✔ &nbsp;·&nbsp; keeper visibly descends after contact (66 → 89) ✔ &nbsp;·&nbsp; visibly contacts and settles on the pitch (feet 89, hip down by 108, settled 113–136 with head at 0.29 m) ✔ &nbsp;·&nbsp; visibly braces and gets up (hands on the pitch 101–182, torso up on the arms, knee under, half-kneel, crouch, rise) ✔ &nbsp;·&nbsp; no airborne/grounded → SET teleport (every stage boundary blends; largest pelvis step outside the push-off and the impact is 3 cm) ✔</td></tr>
+  <tr><th>neutrality</th><td>sprite vs SKELETAL_3D, all 43 scenarios × 260 ticks, keeper drawn every tick: <b>43/43 identical</b> (<a href="../verification/V3_GATE_COMPARE_sprite_vs_3d_all_scenarios.md">table</a>) · animation OFF vs 3D ON: <b>43/43 identical</b> (<a href="../verification/V3_GATE_COMPARE_animation_on_vs_off.md">table</a>) · scenario 42: commit tick 38, contact tick 62 (t 1.050 s), HAND · WEAK PARRY, contact point, ball and simulation root unchanged (simulation root 101.99/33.99 → 101.99/33.45 is the simulation's own dive travel, identical on both backends)</td></tr>
+  <tr><th>foot diagnostic</th><td>"RIGHT FOOT: PLANTED/RELEASED · LEFT FOOT: PLANTED/RELEASED" is drawn on the 3D backend's label (debug label on) and in the player readout above; PLANTED = the foot is held on its world plant point by leg IK (no sliding), RELEASED = the foot follows the authored leg. Last grounded frame before flight: tick 46; first ground contact after the save: tick 89</td></tr>
+  <tr><th>root contract</th><td>simulation root untouched; presentation root = ground projection of the solved pelvis; offset 0 at SET, grows through the lean/load (0.15 m at the deepest load, from the torso lean), 0.39 m at toe-off, 0.55 m while settled (the body lies where the momentum took it), reconciled to the simulation root only through the half-kneel (front foot planted toward it) → crouch (both feet under it) → rise; 0.000 m at the final SET. No sliding: feet move only by re-plants blended over 0.2 s</td></tr>
+  <tr><th>known limits (v3)</th><td>capsule mannequin, no face/kit/hair on purpose; the settled pose on this feet-first ball is a curled heap (hip and shoulder down, knees folded) rather than a full side-lying stretch — the side-landing branch (axis &gt; 60°) is authored but not exercised by this ball; a 3 cm knee-under bump remains at ticks 179–181 (under one gameplay pixel); push-off peak pelvis speed ≈ 6 m/s over four ticks (explosive, on the high side); landing / get-up timings are global constants</td></tr>
+ </table>
+</section>
 
 <section style="border:2px solid #38ff9a;border-radius:8px;margin:18px 24px;padding:10px 18px;background:#141a17">
  <h2 style="margin-top:8px">v2 · COMPLETE GOALKEEPER ACTION — SET → … → SET (same simulation, same contact work)</h2>
@@ -158,6 +199,31 @@
  document.getElementById("step2").onclick = () => { stop(); i = (i + 1) % N; draw(); };
  document.getElementById("toc2").onclick = () => { stop(); i = ticks.indexOf(62); draw(); };
  document.getElementById("totouch2").onclick = () => { stop(); i = ticks.indexOf(88); draw(); };
+ scrub.oninput = () => { stop(); i = +scrub.value; draw(); };
+ build(); requestAnimationFrame(tick);
+})();
+</script>
+
+<script>
+(async () => {
+ const FEET = ["PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PR-", "PR-", "PR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PP-", "PP-", "PR-", "PR-", "PR-", "PR-", "PR-", "PR-", "PR-", "PR-", "PR-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-"], PEL = [0.85, 0.85, 0.85, 0.84, 0.84, 0.84, 0.83, 0.83, 0.82, 0.82, 0.81, 0.8, 0.8, 0.79, 0.78, 0.78, 0.77, 0.76, 0.76, 0.75, 0.75, 0.74, 0.74, 0.74, 0.73, 0.73, 0.73, 0.73, 0.73, 0.73, 0.72, 0.71, 0.69, 0.67, 0.65, 0.63, 0.61, 0.6, 0.59, 0.58, 0.58, 0.63, 0.71, 0.8, 0.89, 0.99, 1.1, 1.14, 1.14, 1.15, 1.17, 1.2, 1.23, 1.26, 1.29, 1.33, 1.36, 1.39, 1.41, 1.43, 1.45, 1.47, 1.48, 1.49, 1.5, 1.5, 1.51, 1.51, 1.51, 1.51, 1.5, 1.5, 1.49, 1.47, 1.46, 1.44, 1.42, 1.4, 1.37, 1.34, 1.31, 1.28, 1.24, 1.2, 1.16, 1.11, 1.06, 1.01, 1.0, 0.94, 0.92, 0.88, 0.83, 0.77, 0.72, 0.67, 0.63, 0.61, 0.6, 0.59, 0.58, 0.56, 0.53, 0.5, 0.47, 0.44, 0.41, 0.37, 0.34, 0.32, 0.3, 0.29, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28, 0.29, 0.29, 0.29, 0.3, 0.31, 0.31, 0.32, 0.33, 0.33, 0.34, 0.34, 0.35, 0.35, 0.36, 0.36, 0.36, 0.36, 0.36, 0.37, 0.37, 0.38, 0.38, 0.39, 0.4, 0.41, 0.42, 0.43, 0.43, 0.44, 0.45, 0.45, 0.46, 0.46, 0.46, 0.46, 0.47, 0.48, 0.49, 0.5, 0.51, 0.52, 0.53, 0.55, 0.53, 0.52, 0.52, 0.52, 0.52, 0.52, 0.52, 0.52, 0.52, 0.52, 0.52, 0.52, 0.52, 0.52, 0.53, 0.53, 0.54, 0.55, 0.56, 0.56, 0.57, 0.58, 0.59, 0.6, 0.61, 0.62, 0.63, 0.64, 0.65, 0.65, 0.66, 0.66, 0.66, 0.66, 0.66, 0.66, 0.67, 0.67, 0.68, 0.69, 0.69, 0.7, 0.71, 0.72, 0.73, 0.73, 0.74, 0.75, 0.76, 0.77, 0.78, 0.79, 0.8, 0.81, 0.82, 0.82, 0.83, 0.84, 0.84, 0.84, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85];
+ const meta = await (await fetch("v3_player_meta.json")).json();
+ const ticks = meta.ticks, N = ticks.length, cols = meta.cols; const imgs = {};
+ for (const key of ["gp", "cl"]) for (const [v, s] of Object.entries(meta.sheets[key])) { const im = new Image(); im.src = s.file; await new Promise(r => { im.onload = r; im.onerror = r; }); imgs[key + "/" + v] = im; }
+ let view = "gp", i = 0, playing = true, speed = 1, acc = 0, last = performance.now();
+ const panels = document.getElementById("panels3"), ro = document.getElementById("ro3"), scrub = document.getElementById("scrub3"); scrub.max = N - 1;
+ const phase = (k) => { let p = "SET"; for (const [t, n] of meta.phases) if (k >= t) p = n; return p; };
+ const fl = (c) => c === "P" ? "PLANTED" : "RELEASED";
+ function build() { panels.innerHTML = ""; for (const [v, s] of Object.entries(meta.sheets[view])) { const w = document.createElement("div"); const c = document.createElement("canvas"); c.width = s.tile[0] * 2; c.height = s.tile[1] * 2; c.dataset.v = v; const l = document.createElement("div"); l.className = "sub"; l.textContent = s.label; w.appendChild(l); w.appendChild(c); panels.appendChild(w); } draw(); }
+ function draw() { for (const c of panels.querySelectorAll("canvas")) { const v = c.dataset.v, s = meta.sheets[view][v], im = imgs[view + "/" + v]; const ctx = c.getContext("2d"); ctx.imageSmoothingEnabled = false; ctx.clearRect(0, 0, c.width, c.height); if (im && im.width) ctx.drawImage(im, (i % cols) * s.tile[0], Math.floor(i / cols) * s.tile[1], s.tile[0], s.tile[1], 0, 0, c.width, c.height); }
+   const k = ticks[i], f = FEET[k] || "---"; ro.textContent = "tick " + k + "  t=" + (k / 60).toFixed(3) + " s  " + phase(k) + "  pelvis " + (PEL[k] || 0).toFixed(2) + " m  RIGHT FOOT: " + fl(f[0]) + "  LEFT FOOT: " + fl(f[1]) + (f[2] === "H" ? "  HAND ON PITCH" : "") + (k === 39 ? "  ← DEEPEST LOAD" : "") + (k === 46 ? "  ← LAST GROUNDED FRAME" : "") + (k === 62 ? "  ← CONTACT TICK" : "") + (k === 89 ? "  ← FIRST GROUND CONTACT" : ""); scrub.value = i; }
+ function tick(ts) { const dt = Math.min(0.1, (ts - last) / 1000); last = ts; if (playing) { acc += dt * speed; while (acc >= 1 / 60) { acc -= 1 / 60; i = (i + 1) % N; } draw(); } requestAnimationFrame(tick); }
+ const stop = () => { playing = false; document.getElementById("play3").textContent = "Play"; document.getElementById("play3").classList.remove("on"); };
+ document.getElementById("play3").onclick = (e) => { playing = !playing; e.target.textContent = playing ? "Pause" : "Play"; e.target.classList.toggle("on", playing); };
+ for (const b of document.querySelectorAll(".sp3")) b.onclick = () => { speed = +b.dataset.sp; document.querySelectorAll(".sp3").forEach(x => x.classList.toggle("on", x === b)); };
+ for (const b of document.querySelectorAll(".vw3")) b.onclick = () => { view = b.dataset.v; document.querySelectorAll(".vw3").forEach(x => x.classList.toggle("on", x === b)); build(); };
+ for (const b of document.querySelectorAll(".jp3")) b.onclick = () => { stop(); i = ticks.indexOf(+b.dataset.k); draw(); };
+ document.getElementById("step3").onclick = () => { stop(); i = (i + 1) % N; draw(); };
  scrub.oninput = () => { stop(); i = +scrub.value; draw(); };
  build(); requestAnimationFrame(tick);
 })();
