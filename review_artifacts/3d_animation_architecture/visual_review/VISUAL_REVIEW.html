@@ -15,7 +15,7 @@
  a{color:#6fd3ff}
 </style></head><body>
 <header>
- <h1>3D VERTICAL SLICE — VISUAL REVIEW · goalkeeper far dive, scenario 42 ("S4 K2 high tip-up") · v5 = get up where he landed, then step back (top) · v4 (flight and landing accepted; recovery rejected), v3, v2, v1 below for history</h1>
+ <h1>3D VERTICAL SLICE — VISUAL REVIEW · goalkeeper far dive, scenario 42 ("S4 K2 high tip-up") · v6 = lands on the right side and stays on it (top) · v5 (root fixed; pose flipped mid-settle), v4, v3, v2, v1 below</h1>
  <p class="q">Question: does skeletal 3D give a substantially better foundation for motion than the sprite system while still being able to look like Touchline?</p>
  <p class="sub">One simulation (deterministic, zero RNG; commit tick 38, contact tick 62 = t 1.050 s, HAND · WEAK PARRY, execEnd tick 66) rendered three ways from the identical per-tick state. Simulation traces are hash-identical across backends (43/43 scenarios). Nothing was changed for this page: same clip, graph, IK and render options as committed. Sprite jersey/shorts/socks/gloves colours are matched on the 3D parts; no face, hair, kit or mesh polish was done on purpose.</p>
 </header>
@@ -23,6 +23,25 @@
 
 
 
+
+
+<section style="border:2px solid #ffe36a;border-radius:8px;margin:18px 24px;padding:10px 18px;background:#1a1a12">
+ <h2 style="margin-top:8px">v6 · THE BODY THAT LANDS ON THE RIGHT SIDE GETS UP FROM THE RIGHT SIDE — mirror frozen at the commit, landed side measured from the skeleton, rotation continuity checked</h2>
+ <p class="note"><b>What the skeleton trace found (<a href="../verification/v6_skeleton_settle_to_brace.md">bone-by-bone table</a>):</b> the flip was not at SETTLE → BRACE and not in the recovery clip. At <b>tick 129</b> the sprite resolver's own state goes RECOVER → SET (it drops its commit snapshot when its clip ends); at <b>tick 130</b> it re-derives its <code>side</code> from the live ball — which is on the keeper's other side after the parry — and flips RIGHT → LEFT. The 3D graph mirrored every post-contact shape by that live side, so in one tick, mid-SETTLE, the authored pelvis roll went −82° → +82°, the right shoulder (0.06 m above the pitch) and the left (0.55 m) swapped, and the get-up then ran on the left side. Same class as the facing bug fixed in v3, for the mirror. <b>v6:</b> the mirror side is frozen for the whole committed action (keyed by the commit tick, like the facing); an explicit <b>landed side</b> is measured from the solved skeleton at the first SETTLE tick (which shoulder / hip is lower; FEET / FRONT / BACK otherwise) and is the recovery's mirror and support-side input — never the save direction, screen side, facing or simulation root (a mismatch with the landing chain is recorded, not flipped). Foot locks now fade out over 0.15 s instead of cutting, a new plant blends from where the foot actually was, and a step-length re-plant keeps the authored knee plane while the foot travels (this removed 54° / 91° thigh snaps that the new rotation check exposed at IMPACT → ABSORB and HALF-KNEEL → CROUCH). Flight, contact, descent, touchdown, slide and settle position are the v4/v5 values unchanged.</p>
+ <h2>v6 · 1 Normal speed, close zoom — DESCENT → TOUCHDOWN → SLIDE → SETTLE → BRACE → PUSH-UP → KNEEL (every tick, 20 ms; right panel: L / R shoulder and hip markers, pelvis and chest local axes, feet, roots, trail)</h2>
+ <img class="sheet" src="v6_01_normal_speed_descent_to_kneel.gif">
+ <h2>v6 · 2 4× slow motion, same window</h2>
+ <img class="sheet" src="v6_02_slowmo_4x_descent_to_kneel.gif">
+ <h2>v6 · 3 Frame strip every tick — SETTLE → BRACE (ticks 128–146), mannequin + markers</h2>
+ <div class="wide"><img class="sheet" src="v6_03_frame_strip_settle_to_brace_every_tick.png"></div>
+ <table style="margin-top:10px">
+  <tr><th>which shoulder is on the pitch</th><td>right shoulder at 0.06 m and right hip at 0.10 m (left 0.55 / 0.46 m) at SETTLE−2, SETTLE−1, the final SETTLE tick 137, the first BRACE tick 138, 139 and 140 — identical positions and orientations; pelvis roll −82° throughout; the brace then lifts the torso from that right-side pose (right shoulder 0.06 → 0.19 m by tick 148, pelvis roll −82° → −69°)</td></tr>
+  <tr><th>rotation continuity (development check, every boundary after contact)</th><td>angular difference of the world orientation of root / pelvis / chest / thighs / upper arms across each boundary, alongside the position and velocity checks; SETTLE → BRACE: 0.0° everywhere; largest anywhere after touchdown: thigh 21° when the front foot steps at HALF-KNEEL, 15° at CROUCH; root and pelvis never above 2.3°. A side / roll flip on any tick (not only boundaries) is also asserted. Table in the bone file above</td></tr>
+  <tr><th>landed side</th><td><code>LANDED RIGHT</code> measured at tick 114 from shoulder / hip heights; recovery mirror = RIGHT; frozen dive side = RIGHT; no mismatch</td></tr>
+  <tr><th>neutrality</th><td>sprite vs SKELETAL_3D, 43 scenarios × 260 ticks: <b>43/43 identical</b> (<a href="../verification/V6_GATE_COMPARE_sprite_vs_3d_all_scenarios.md">table</a>) · animation OFF vs 3D ON: <b>43/43 identical</b> (<a href="../verification/V6_GATE_COMPARE_animation_on_vs_off.md">table</a>)</td></tr>
+  <tr><th>frozen</th><td>load, push-off, flight, contact, post-contact trajectory, descent, touchdown position, slide, settled root position: unchanged (same trace as v5 through the settle)</td></tr>
+ </table>
+</section>
 
 <section style="border:2px solid #38e0ff;border-radius:8px;margin:18px 24px;padding:10px 18px;background:#12181a">
  <h2 style="margin-top:8px">v5 · GET UP WHERE HE LANDED, THEN STEP BACK — flight and landing untouched (v4), recovery split into GET-UP (in place) and REPOSITION (shuffle steps)</h2>

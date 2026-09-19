@@ -234,3 +234,28 @@ offset along the dive: +1.470 m from tick 114 (settle) to tick 245 (standing); R
 - The shuffle is brisk (2.4 m/s peak pelvis speed) and the trailing leg stretches for a few ticks before its own step because its lock is reach-capped; there is no authored stride, the body holds the SET pose with a bob.
 - SET arrives at tick 300 while the simulation's keeper is ready earlier; the presentation is late by ~0.9 s on this ball.
 - The remaining v4 limits (heap settle pose, modest trailing legs, side-landing branch unexercised) still apply.
+
+---
+
+# v6 — the body that lands on the right side gets up from the right side
+
+Review page: `visual_review/VISUAL_REVIEW.html` (v6 section at the top; focused DESCENT → KNEEL outputs only, 5 MB). Bone-by-bone trace: `verification/v6_skeleton_settle_to_brace.md`.
+
+## What the skeleton trace found
+- The flip was at **tick 130, mid-SETTLE**, not at SETTLE → BRACE, and not in the recovery clip: at tick 129 the sprite resolver's state goes RECOVER → SET (its commit snapshot is dropped when its own clip ends); at tick 130 it re-derives `cur.side` from the live ball — on the keeper's other side after the parry — and flips RIGHT → LEFT. The 3D graph mirrored every post-contact shape by that live side: pelvis roll −82° → +82°, shoulders swapped (right 0.06 m ↔ left 0.55 m) in one tick, and the get-up ran on the left.
+- Root position, facing and support points were continuous, which is why the root-only checks passed.
+
+## What changed (presentation only — `gk_graph.js`, `gk3d_backend.js`)
+- **Mirror side frozen for the committed action** (`state.side`, keyed by the commit tick, like the facing).
+- **Landed side as an explicit recovery input**: `gkLandedSide(skel, fk)` measures which shoulder / hip is lower at the first SETTLE tick (RIGHT / LEFT; FEET / FRONT / BACK otherwise). From the settle on, the recovery shapes and the support (brace) side use it; a mismatch with the landing chain is recorded (`state.recoveryMismatch`) rather than flipped — no separately authored branch exists yet.
+- **Rotation continuity assertions**: world-orientation angular difference of root / pelvis / chest / thighs / upper arms at every boundary after contact (fail above 5° root, 15° pelvis / chest), plus a per-tick side / roll-sign flip assertion while the body is down.
+- **Foot locks fade instead of cut** (release over 0.15 s; a new plant blends from the foot's solved position; a step-length re-plant keeps the authored knee plane while the foot travels). These removed the 54° / 91° thigh snaps the rotation check exposed at IMPACT → ABSORB and HALF-KNEEL → CROUCH.
+- **Markers**: L / R at shoulders and hips, pelvis and chest local axes (bones overlay); `LANDED <side>` on the label.
+
+## Result on scenario 42
+Right shoulder 0.06 m / right hip 0.10 m on the pitch at ticks 135–140 with identical orientations across SETTLE → BRACE (0.0° for every measured bone); pelvis roll −82° from the settle, lifting to −69° by tick 148 as the brace begins. No assertion fires. Flight, landing and settled root unchanged. Gates 43/43 both ways.
+
+## Honest limits of v6
+- The recovery for a landed side that differs from the dive side is not authored: it would be reported, and the landing-chain mirror kept.
+- `gkLandedSide` is a height heuristic (shoulder + hip tilt); it is measured once, at the settle.
+- Remaining v5 limits (brisk shuffle, no stride, late SET) still apply.
