@@ -4,12 +4,13 @@ const GK3D = {
   copies: 0,                    // review: draw N extra keepers (offset laterally) for the scaling measurement
   debug: { bones: false, ik: false, roots: false, feet: false, trail: false, label: false },
   trail: [],                    // review: presentation pelvis samples through the committed action (path, markers, velocity vectors)
+  asserts: [], prev: null,      // development checks: position / velocity discontinuity at every stage boundary after touchdown
   perf: { n: 0, ms: 0, max: 0, glDraws: 0 },
   lastContact: null, log: [],
   state: {},                    // presentation memory (plant lock, commit key) — reset per shot
   R: null, skel: null, skelH: 0,
 };
-function gk3dReset() { GK3D.state = {}; GK3D.trail = []; }
+function gk3dReset() { GK3D.state = {}; GK3D.trail = []; GK3D.asserts = []; GK3D.prev = null; }
 function gk3dDraw(t, gk, dt) {
   const A = S.gkAnim, t0 = performance.now();
   if (!GK3D.R) { GK3D.R = glCreateRenderer(); if (!GK3D.R) return gkAnimDraw(t, gk, dt); }
@@ -18,7 +19,7 @@ function gk3dDraw(t, gk, dt) {
   const desc = gkActionDescription(t, gk, cur);
   if (GK3D.skelH !== gk.height) { GK3D.skel = skelBuild(gk.height); GK3D.skelH = gk.height; }
   const skel = GK3D.skel, clip = GK_CLIP_FAR_DIVE;
-  if (!desc.commit && GK3D.state.commitKey != null) { GK3D.state = {}; GK3D.trail = []; }
+  if (!desc.commit && GK3D.state.commitKey != null) { GK3D.state = {}; GK3D.trail = []; GK3D.prev = null; }
   const g = gkGraphEvaluate(desc, clip, skel, GK3D.state);
   const sol = gkGraphSolve(desc, g, skel, GK3D.state);
   // head look-at (procedural, bounded): rotate neck+head toward the ball — applied by re-running FK on a few bones is costly; approximate by a post-hoc rotation of the head matrices
@@ -52,15 +53,29 @@ function gk3dDraw(t, gk, dt) {
     GK3D.lastContact = { tickT: gk.contact.tickT, outcome: gk.contact.outcome, volume: gk.contact.volume, phase: g.phase, u: desc.u, errPx: errPx != null ? +errPx.toFixed(1) : null, errM: errPx != null ? +(errPx / pxPerM).toFixed(3) : null, err3dM: errM3 != null ? +errM3.toFixed(3) : null, spritePx: errPx != null ? +(errPx / s).toFixed(1) : null, ik: sol.diag.ik, art: artLabel };
     A.lastContact = Object.assign({}, GK3D.lastContact, { state: cur.state, family: cur.family, side: cur.side, dir: cur.dir, cls: cur.cls, source: "3D glove centre vs sim hand", flagged: errPx != null && errPx / s > GK_ANIM.ikMaxPx });
   }
+  // continuity assertions (development): a stage change after touchdown must not relocate the body — root, pelvis and velocity checked at every boundary
+  {
+    const pw = sol.fk.joint[skel.byName.pelvis.idx], pr = [g.pres.x, g.pres.y], pv = GK3D.prev;
+    if (pv && desc.commit && g.mode === "post" && pv.stage !== g.phase && desc.now - pv.t < 0.1) {
+      const dRoot = Math.hypot(pr[0] - pv.pr[0], pr[1] - pv.pr[1]), dPel = V3.dist(pw, pv.pw), dt = desc.now - pv.t, vNow = V3.scale(V3.sub(pw, pv.pw), 1 / dt), dV = pv.v ? V3.len(V3.sub(vNow, pv.v)) : 0;
+      const expect = pv.v ? V3.scale(pv.v, dt) : [0, 0, 0], excess = V3.dist(V3.sub(pw, pv.pw), expect);   // displacement beyond what the previous velocity predicts = relocation
+      const bad = excess > 0.03 || dV > 1.5; const rec = { tick: Math.round(desc.now * 60), from: pv.stage, to: g.phase, dRoot: +dRoot.toFixed(3), dPelvis: +dPel.toFixed(3), excess: +excess.toFixed(3), dV: +dV.toFixed(2), bad };
+      GK3D.asserts.push(rec); if (bad) console.warn("[gk3d] discontinuity at stage boundary", rec);
+    }
+    const v = pv && desc.now - pv.t > 1e-4 && desc.now - pv.t < 0.1 ? V3.scale(V3.sub(pw, pv.pw), 1 / (desc.now - pv.t)) : null;
+    GK3D.prev = { t: desc.now, stage: g.phase, pr, pw: pw.slice(), v };
+  }
   // trail: one sample per drawn tick while committed (pelvis world position, stage, event markers)
   if (desc.commit) {
-    const T = GK3D.trail, has = (ev) => T.some(x => x.ev && x.ev.indexOf(ev) >= 0); const smp = { t: desc.now, W: sol.fk.joint[skel.byName.pelvis.idx].slice(), stage: g.phase, ev: null };
+    const T = GK3D.trail, has = (ev) => T.some(x => x.ev && x.ev.split("/").indexOf(ev) >= 0); const smp = { t: desc.now, W: sol.fk.joint[skel.byName.pelvis.idx].slice(), stage: g.phase, ev: null };
     const tag = (ev) => { smp.ev = smp.ev ? smp.ev + "/" + ev : ev; };
     const grounded = ["R", "L"].some(sd => sol.diag.feet[sd] && (sol.diag.feet[sd].locked || sol.diag.feet[sd].floored || (sol.diag.feet[sd].height != null && sol.diag.feet[sd].height < 0.02)));
     if (g.mode === "pre" && (g.phase === "TOE_OFF" || g.phase === "EARLY_FLIGHT" || g.phase === "MID_FLIGHT" || g.phase === "PUSH_OFF") && !grounded && !has("TOE-OFF")) { const prev = T[T.length - 1]; if (prev && !prev.ev) prev.ev = "TOE-OFF"; else tag("TOE-OFF"); }   // TOE-OFF = the last frame with a foot on the pitch
     if (gk.contact && !has("CONTACT")) tag("CONTACT");
     if (g.phase === "IMPACT" && !has("TOUCHDOWN")) tag("TOUCHDOWN");
     if (g.phase === "SETTLE" && !has("SETTLE")) tag("SETTLE");
+    if (g.phase === "REPOSITION" && !has("STAND")) tag("STAND");
+    if (g.phase === "SET" && has("STAND") && !has("SET")) tag("SET");
     if (!T.length || T[T.length - 1].t < desc.now) T.push(smp);
     if (!has("APEX") && has("TOE-OFF") && !has("TOUCHDOWN")) { let hi = null; for (const x of T) if (!hi || x.W[1] > hi.W[1]) hi = x; if (hi && hi !== smp && smp.W[1] < hi.W[1] - 0.01) hi.ev = hi.ev ? hi.ev + "/APEX" : "APEX"; }
   }
@@ -127,6 +142,13 @@ function gk3dDrawRoots(gk, g, sp, spp) {
   ctx.strokeStyle = "#c080ff"; ctx.beginPath(); ctx.arc(spp.x, spp.y, uipx(4), 0, Math.PI * 2); ctx.stroke();                                                                                  // presentation root (violet ring)
   if (g.pres.dm > 0.001) { ctx.strokeStyle = "rgba(192,128,255,0.8)"; ctx.beginPath(); ctx.moveTo(sp.x, sp.y); ctx.lineTo(spp.x, spp.y); ctx.stroke(); }
   if (gk.committed) { const f = gk.committed.feet, fs = sproj3(f[0], 0, f[1]); ctx.strokeStyle = "#39d98a"; ctx.strokeRect(fs.x - uipx(4), fs.y - uipx(4), uipx(8), uipx(8)); }              // feet at commit (green square)
+  // world-space direction test: DIVE direction (cyan, from the presentation root) and the SIMULATION ROOT → PRESENTATION ROOT vector (magenta) — a sign flip would show as these disagreeing
+  if (g.landing && g.landing.plan.launch) {
+    const V = g.landing.plan.launch.V, vn = Math.hypot(V[0], V[2]) || 1, dx = V[0] / vn * 0.6, dy = -V[2] / vn * 0.6, px = g.pres.x, py = g.pres.y;
+    const arrow = (a, b, col, text) => { ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = Math.max(1, PXQ * 1.5); ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); const an = Math.atan2(b.y - a.y, b.x - a.x), ah = uipx(5); ctx.beginPath(); ctx.moveTo(b.x, b.y); ctx.lineTo(b.x - ah * Math.cos(an - 0.5), b.y - ah * Math.sin(an - 0.5)); ctx.lineTo(b.x - ah * Math.cos(an + 0.5), b.y - ah * Math.sin(an + 0.5)); ctx.closePath(); ctx.fill(); ctx.font = uipx(8) + "px monospace"; ctx.fillText(text, b.x + uipx(3), b.y + uipx(3)); };
+    arrow(sproj3(px, 0, py), sproj3(px + dx, 0, py + dy), "#38e0ff", "DIVE");
+    if (g.pres.dm > 0.02) arrow(sp, spp, "#ff5ad6", "ROOT→PRES " + g.pres.dm.toFixed(2) + " m" + (g.pres.dm > 0.02 ? ((g.pres.dx * dx + g.pres.dy * dy) >= 0 ? " (dive side)" : " (OPPOSITE SIDE!)") : ""));
+  }
   ctx.restore();
 }
 GK_PRESENTATION.register("SKELETAL_3D", { draw: gk3dDraw, reset: gk3dReset, label: "skeletal 3D prototype" });
