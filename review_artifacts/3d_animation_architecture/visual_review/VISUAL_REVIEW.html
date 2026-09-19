@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Touchline — 3D vertical slice visual review</title>
+<style>
+ body{margin:0;background:#12151a;color:#d8dee6;font:14px/1.45 "SF Mono",Menlo,Consolas,monospace}
+ header{padding:18px 24px;border-bottom:1px solid #2a323c;background:#171c22}
+ h1{font-size:18px;margin:0 0 6px;color:#fff} h2{font-size:14px;text-transform:uppercase;letter-spacing:.08em;color:#ffdc78;margin:34px 0 8px}
+ .q{color:#38ff9a;font-size:15px;margin:0} .sub{color:#93a3b5;font-size:12px}
+ section{padding:6px 24px 10px} .note{color:#93a3b5;font-size:12px;margin:6px 0 10px;max-width:1500px}
+ img.sheet{max-width:100%;height:auto;image-rendering:pixelated;border:1px solid #2a323c;background:#0b0e12}
+ .wide{overflow-x:auto;padding-bottom:6px} .wide img{max-width:none}
+ .player{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-start} canvas{image-rendering:pixelated;border:1px solid #2a323c;background:#0b0e12}
+ .ctl{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:8px 0} button{background:#26303b;color:#d8dee6;border:1px solid #3a4550;border-radius:4px;padding:5px 10px;cursor:pointer;font:inherit} button.on{background:#3d5a76;border-color:#6fd3ff}
+ input[type=range]{width:520px} .ro{color:#ffdc78} .pref{color:#38ff9a}
+ table{border-collapse:collapse;font-size:12px} td,th{border:1px solid #2a323c;padding:4px 8px;text-align:left} th{color:#93a3b5}
+ a{color:#6fd3ff}
+</style></head><body>
+<header>
+ <h1>3D VERTICAL SLICE — VISUAL REVIEW · goalkeeper far dive, scenario 42 ("S4 K2 high tip-up")</h1>
+ <p class="q">Question: does skeletal 3D give a substantially better foundation for motion than the sprite system while still being able to look like Touchline?</p>
+ <p class="sub">One simulation (deterministic, zero RNG; commit tick 38, contact tick 62 = t 1.050 s, HAND · WEAK PARRY, execEnd tick 66) rendered three ways from the identical per-tick state. Simulation traces are hash-identical across backends (43/43 scenarios). Nothing was changed for this page: same clip, graph, IK and render options as committed. Sprite jersey/shorts/socks/gloves colours are matched on the 3D parts; no face, hair, kit or mesh polish was done on purpose.</p>
+</header>
+
+<section>
+ <h2>1 · Synced player — all three from the same timeline (true 60 fps, scrubbable)</h2>
+ <div class="ctl">
+  <button id="play" class="on">Pause</button>
+  <span>speed</span><button data-sp="1" class="on sp">1× (60 fps)</button><button data-sp="0.25" class="sp">¼×</button><button data-sp="0.1" class="sp">1/10×</button>
+  <span>view</span><button data-v="gp" class="on vw">gameplay camera</button><button data-v="cl" class="vw">close zoom 3.5</button>
+  <button id="step">step +1 tick</button><button id="toc">jump to CONTACT</button>
+  <input type="range" id="scrub" min="0" max="135" value="0"><span id="ro" class="ro"></span>
+ </div>
+ <div class="player" id="panels"></div>
+ <p class="note">Panels: CURRENT SPRITE · SKELETAL 3D normal stylised (1/1, outline) · SKELETAL 3D pixel/2.5D (1/2, outline, <span class="pref">preferred</span>) · (close zoom only) pixel + overlays. Frames are the headless captures used everywhere else on this page; the player just steps them in lock-step. Keys: space = play/pause, ← → = step.</p>
+</section>
+
+<section>
+ <h2>2 · GIFs</h2>
+ <p class="note">Normal speed: every tick, 20 ms frame delay (50 fps — the fastest GIF delay browsers honour; use the player above for exact 60 fps). Slow motion: every tick at 15 fps = 4× slower than real time.</p>
+ <div><b>01_normal_speed_3way.gif</b> — gameplay camera</div><img class="sheet" src="01_normal_speed_3way.gif">
+ <div style="margin-top:14px"><b>02_slowmo_4x_4way.gif</b> — close zoom, with the overlay version as a fourth column</div><img class="sheet" src="02_slowmo_4x_4way.gif">
+</section>
+
+<section>
+ <h2>3 · Frame strip at the major phases</h2>
+ <p class="note">SET → LOAD → PLANT → PUSH → FLIGHT → CONTACT → LAND → RECOVER → SET. Phase names are the 3D graph's; "PLANT" is the plant-foot lock window inside LOAD/PUSH (ticks 38–47). The sprite row plays the baked RIGHT_FAR sequence and the DIVE_NORTH contact still (flagged WRONG_CLIP by its own metric on this case).</p>
+ <div class="wide"><img class="sheet" src="03_phase_strip_4way.png"></div>
+</section>
+
+<section>
+ <h2>4 · Contact close-up (tick 62) &nbsp;·&nbsp; 5 · Landing close-up</h2>
+ <p class="note">Drawn glove vs simulation hand at the contact tick: sprite 38 sprite-px residual (placement capped at 12 px) · 3D 4.7 cm (2.6 screen px at zoom 3.5). The 3D body axis is solved from the committed target (22° from vertical → jump-tip, lands on the feet); the sprite plays a generic lateral far dive and lands on its side.</p>
+ <div class="wide"><img class="sheet" src="04_contact_closeup.png"></div>
+ <div class="wide" style="margin-top:12px"><img class="sheet" src="05_landing_closeup.png"></div>
+</section>
+
+<section>
+ <h2>6 · Overlays — skeleton · glove target / IK · simulation root vs presentation root</h2>
+ <div class="wide"><img class="sheet" src="06_overlays_skeleton_ik_roots.png"></div>
+ <p class="note">Root contract in numbers (same scenario): simulation root travels 0.57 m during the dive and is never written; presentation offset is 0 until execEnd, peaks 0.37 m at tick 99, is 0 again at tick 129 (SET).</p>
+ <img class="sheet" src="08_sim_root_vs_presentation_root_chart.png" style="max-width:1000px">
+</section>
+
+<section>
+ <h2>7 · Pixel / 2.5D render options at gameplay scale</h2>
+ <p class="note"><span class="pref">★ PREFERRED: 1/2 + outline</span> — closest texel density to the sprite art at gameplay zoom, silhouette still readable at ~35 px tall. 1/1 = smoother "3D medium" look (shown as the "normal stylised" column everywhere above); 1/3 breaks limbs apart at gameplay size. Option C (character-space fixed texel size) is wired but was not evaluated and is not shown.</p>
+ <div class="wide"><img class="sheet" src="07_render_options_gameplay_scale.png"></div>
+</section>
+
+<section>
+ <h2>8 · What is and is not being judged</h2>
+ <table>
+  <tr><th>judge</th><td>motion foundation: phases driven by the simulation's u / contact tick, glove on the simulation hand, body axis from the committed geometry, landing consistent with the action, root contract; and whether the pixel render still reads as Touchline next to the sprites at the real camera</td></tr>
+  <tr><th>do not judge yet</th><td>capsule "part" meshes, hand-set keys authored in one pass, no face/hair/kit detail, only the far-dive trunk authored (other families fall back to SET + procedural reach), no footwork clip, side-landing blend not reviewed on a lateral case</td></tr>
+  <tr><th>evidence</th><td><a href="../PROTOTYPE_FINDINGS.md">PROTOTYPE_FINDINGS.md</a> · <a href="../verification/GATE_COMPARE_sprite_vs_3d_all_scenarios.md">gate comparison (43/43 identical)</a> · <a href="../ARCHITECTURE_AUDIT.md">architecture audit</a></td></tr>
+ </table>
+</section>
+
+<script>
+(async () => {
+ const meta = await (await fetch("player_meta.json")).json();
+ const ticks = meta.ticks, N = ticks.length, cols = meta.cols;
+ const imgs = {};
+ for (const key of ["gp", "cl"]) for (const [v, s] of Object.entries(meta.sheets[key])) { const im = new Image(); im.src = s.file; await new Promise(r => { im.onload = r; im.onerror = r; }); imgs[key + "/" + v] = im; }
+ let view = "gp", i = 0, playing = true, speed = 1, acc = 0, last = performance.now();
+ const panels = document.getElementById("panels"), ro = document.getElementById("ro"), scrub = document.getElementById("scrub"); scrub.max = N - 1;
+ const phase = (k) => { let p = "SET"; for (const [t, n] of meta.phases) if (k >= t) p = n; return p + (k >= 38 && k < 47 ? " (plant foot locked)" : ""); };
+ function build() {
+  panels.innerHTML = "";
+  for (const [v, s] of Object.entries(meta.sheets[view])) { const w = document.createElement("div"); const c = document.createElement("canvas"); const sc = view === "gp" ? 2 : 2; c.width = s.tile[0] * sc; c.height = s.tile[1] * sc; c.dataset.v = v; const l = document.createElement("div"); l.className = "sub"; l.textContent = s.label; w.appendChild(l); w.appendChild(c); panels.appendChild(w); }
+  draw();
+ }
+ function draw() {
+  for (const c of panels.querySelectorAll("canvas")) { const v = c.dataset.v, s = meta.sheets[view][v], im = imgs[view + "/" + v]; const ctx = c.getContext("2d"); ctx.imageSmoothingEnabled = false; ctx.clearRect(0, 0, c.width, c.height); if (im && im.width) ctx.drawImage(im, (i % cols) * s.tile[0], Math.floor(i / cols) * s.tile[1], s.tile[0], s.tile[1], 0, 0, c.width, c.height); }
+  const k = ticks[i]; ro.textContent = "tick " + k + "  t=" + (k / 60).toFixed(3) + " s  " + phase(k) + (k === 62 ? "  ← CONTACT TICK" : ""); scrub.value = i;
+ }
+ function tick(ts) { const dt = Math.min(0.1, (ts - last) / 1000); last = ts; if (playing) { acc += dt * speed; while (acc >= 1 / 60) { acc -= 1 / 60; i = (i + 1) % N; } draw(); } requestAnimationFrame(tick); }
+ document.getElementById("play").onclick = (e) => { playing = !playing; e.target.textContent = playing ? "Pause" : "Play"; e.target.classList.toggle("on", playing); };
+ for (const b of document.querySelectorAll(".sp")) b.onclick = () => { speed = +b.dataset.sp; document.querySelectorAll(".sp").forEach(x => x.classList.toggle("on", x === b)); };
+ for (const b of document.querySelectorAll(".vw")) b.onclick = () => { view = b.dataset.v; document.querySelectorAll(".vw").forEach(x => x.classList.toggle("on", x === b)); build(); };
+ document.getElementById("step").onclick = () => { playing = false; document.getElementById("play").textContent = "Play"; i = (i + 1) % N; draw(); };
+ document.getElementById("toc").onclick = () => { playing = false; document.getElementById("play").textContent = "Play"; i = ticks.indexOf(62); draw(); };
+ scrub.oninput = () => { playing = false; document.getElementById("play").textContent = "Play"; i = +scrub.value; draw(); };
+ document.addEventListener("keydown", (e) => { if (e.key === " ") { e.preventDefault(); document.getElementById("play").click(); } if (e.key === "ArrowRight") { playing = false; i = (i + 1) % N; draw(); } if (e.key === "ArrowLeft") { playing = false; i = (i - 1 + N) % N; draw(); } });
+ build(); requestAnimationFrame(tick);
+})();
+</script>
+</body></html>
