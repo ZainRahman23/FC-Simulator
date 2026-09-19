@@ -15,10 +15,44 @@
  a{color:#6fd3ff}
 </style></head><body>
 <header>
- <h1>3D VERTICAL SLICE — VISUAL REVIEW · goalkeeper far dive, scenario 42 ("S4 K2 high tip-up")</h1>
+ <h1>3D VERTICAL SLICE — VISUAL REVIEW · goalkeeper far dive, scenario 42 ("S4 K2 high tip-up") · v2 = complete SET→SET lifecycle (top), v1 = first slice (below)</h1>
  <p class="q">Question: does skeletal 3D give a substantially better foundation for motion than the sprite system while still being able to look like Touchline?</p>
  <p class="sub">One simulation (deterministic, zero RNG; commit tick 38, contact tick 62 = t 1.050 s, HAND · WEAK PARRY, execEnd tick 66) rendered three ways from the identical per-tick state. Simulation traces are hash-identical across backends (43/43 scenarios). Nothing was changed for this page: same clip, graph, IK and render options as committed. Sprite jersey/shorts/socks/gloves colours are matched on the 3D parts; no face, hair, kit or mesh polish was done on purpose.</p>
 </header>
+
+
+<section style="border:2px solid #38ff9a;border-radius:8px;margin:18px 24px;padding:10px 18px;background:#141a17">
+ <h2 style="margin-top:8px">v2 · COMPLETE GOALKEEPER ACTION — SET → … → SET (same simulation, same contact work)</h2>
+ <p class="note">Same scenario 42, same simulation trace (gate: 43/43 scenarios identical sprite vs 3D, and animation OFF vs ON — see §v2·9). The dive/contact work is unchanged (glove 4.9 cm from the simulation hand at tick 62). New: anticipation inside the simulation's reaction latency (react → weight shift → crouch/load, feet planted by leg IK), plant → push-off → toe-off (on the toes) → flight, and after contact a physics-driven landing (ballistic follow-through, descent, first ground contact at standing height, absorb, settle to a knee with the hand braced — the body axis on this ball is 22° from vertical, so it lands on the feet), get-up (push up, knees under, crouch), rise, ready stance. Presentation root = ground projection of the pelvis, continuous, reconciled to the simulation root during the get-up. Cubic key interpolation throughout.</p>
+ <h2>v2 · 1 Synced player — sprite · previous 3D (v1) · complete lifecycle (v2) · v2 overlays</h2>
+ <div class="ctl">
+  <button id="play2" class="on">Pause</button>
+  <span>speed</span><button data-sp="1" class="on sp2">1× (60 fps)</button><button data-sp="0.25" class="sp2">¼×</button><button data-sp="0.1" class="sp2">1/10×</button>
+  <span>view</span><button data-v="gp" class="on vw2">gameplay camera</button><button data-v="cl" class="vw2">close zoom 3.5</button>
+  <button id="step2">step +1 tick</button><button id="toc2">jump to CONTACT</button><button id="totouch2">jump to TOUCHDOWN</button>
+  <input type="range" id="scrub2" min="0" max="185" value="0"><span id="ro2" class="ro"></span>
+ </div>
+ <div class="player" id="panels2"></div>
+ <h2>v2 · 2 Normal speed (every tick, 20 ms) &nbsp;·&nbsp; 3 4× slow motion</h2>
+ <img class="sheet" src="v2_01_normal_speed_sprite_v1_v2.gif"><br><img class="sheet" src="v2_02_slowmo_4x_sprite_v1_v2_overlays.gif" style="margin-top:12px">
+ <h2>v2 · 4 Key-pose strip (18 phases) — rows: sprite · v1 · v2 · v2 overlays</h2>
+ <div class="wide"><img class="sheet" src="v2_03_phase_strip.png"></div>
+ <h2>v2 · 5 Take-off close-up &nbsp;·&nbsp; 6 Landing close-up &nbsp;·&nbsp; 7 Get-up close-up</h2>
+ <div class="wide"><img class="sheet" src="v2_05_takeoff_closeup.png"></div>
+ <div class="wide" style="margin-top:12px"><img class="sheet" src="v2_06_landing_closeup.png"></div>
+ <div class="wide" style="margin-top:12px"><img class="sheet" src="v2_07_getup_closeup.png"></div>
+ <h2>v2 · 8 Skeleton / IK / root / foot-contact overlays</h2>
+ <div class="wide"><img class="sheet" src="v2_08_overlays_strip.png"></div>
+ <h2>v2 · 9 Simulation root vs presentation root · pelvis height · foot / ground contact</h2>
+ <img class="sheet" src="v2_09_sim_root_vs_presentation_root_plot.png" style="max-width:1400px">
+ <table style="margin-top:10px">
+  <tr><th>neutrality</th><td>sprite vs SKELETAL_3D, all 43 scenarios × 200 ticks, backend drawn every tick: <b>43/43 identical</b> (<a href="../verification/V2_GATE_COMPARE_sprite_vs_3d_all_scenarios.md">table</a>) · animation OFF vs ON: <b>43/43 identical</b> (<a href="../verification/V2_GATE_COMPARE_animation_off_vs_on.md">table</a>) · commit tick 38, contact tick 62, outcome WEAK PARRY, contact point, ball and simulation root unchanged</td></tr>
+  <tr><th>contact</th><td>glove centre 4.9 cm from the simulation hand at tick 62 (previous slice: 4.7 cm)</td></tr>
+  <tr><th>continuity</th><td>presentation-root offset: 0 at SET, ≤ 0.54 m, 0 again at the final SET; no discontinuity at any stage boundary (plot above); feet locked by leg IK through anticipation / load / plant / push (release over the toe-off), both feet re-locked at touchdown, front foot through the settle, both through get-up and rise</td></tr>
+  <tr><th>skeleton / skinning</th><td>the capsule parts are a stand-in, not an architectural requirement: the 23-bone skeleton (root → pelvis → spine → chest → neck → head; clavicle/upperArm/foreArm/hand ×2; thigh/shin/foot/toe ×2) is driven by rotation-only clips + a pelvis translation; a skinned humanoid mesh binds with <code>skelInverseBind()</code> / <code>skelSkinMatrices()</code> (bind = zero pose at the character's height); part material groups map to mesh material slots (kit, gloves, boots, skin, hair). Two things to keep in mind for real meshes, neither blocking: no twist bones (forearm/thigh twist) and the hair "bone" would become a mesh attachment</td></tr>
+  <tr><th>known limits (v2)</th><td>capsule mannequin (no face/hair/kit detail on purpose); the side-landing branch (body axis > 60°) is authored but not exercised by this ball; the get-up's step back toward the simulation root is a solved reach, not a stepped walk; landing sub-timings are physics constants, not tuned per keeper</td></tr>
+ </table>
+</section>
 
 <section>
  <h2>1 · Synced player — all three from the same timeline (true 60 fps, scrubbable)</h2>
@@ -101,6 +135,30 @@
  document.getElementById("toc").onclick = () => { playing = false; document.getElementById("play").textContent = "Play"; i = ticks.indexOf(62); draw(); };
  scrub.oninput = () => { playing = false; document.getElementById("play").textContent = "Play"; i = +scrub.value; draw(); };
  document.addEventListener("keydown", (e) => { if (e.key === " ") { e.preventDefault(); document.getElementById("play").click(); } if (e.key === "ArrowRight") { playing = false; i = (i + 1) % N; draw(); } if (e.key === "ArrowLeft") { playing = false; i = (i - 1 + N) % N; draw(); } });
+ build(); requestAnimationFrame(tick);
+})();
+</script>
+
+<script>
+(async () => {
+ const meta = await (await fetch("v2_player_meta.json")).json();
+ const ticks = meta.ticks, N = ticks.length, cols = meta.cols; const imgs = {};
+ for (const key of ["gp", "cl"]) for (const [v, s] of Object.entries(meta.sheets[key])) { const im = new Image(); im.src = s.file; await new Promise(r => { im.onload = r; im.onerror = r; }); imgs[key + "/" + v] = im; }
+ let view = "gp", i = 0, playing = true, speed = 1, acc = 0, last = performance.now();
+ const panels = document.getElementById("panels2"), ro = document.getElementById("ro2"), scrub = document.getElementById("scrub2"); scrub.max = N - 1;
+ const phase = (k) => { let p = "SET"; for (const [t, n] of meta.phases) if (k >= t) p = n; return p; };
+ function build() { panels.innerHTML = ""; for (const [v, s] of Object.entries(meta.sheets[view])) { const w = document.createElement("div"); const c = document.createElement("canvas"); c.width = s.tile[0] * 2; c.height = s.tile[1] * 2; c.dataset.v = v; const l = document.createElement("div"); l.className = "sub"; l.textContent = s.label; w.appendChild(l); w.appendChild(c); panels.appendChild(w); } draw(); }
+ function draw() { for (const c of panels.querySelectorAll("canvas")) { const v = c.dataset.v, s = meta.sheets[view][v], im = imgs[view + "/" + v]; const ctx = c.getContext("2d"); ctx.imageSmoothingEnabled = false; ctx.clearRect(0, 0, c.width, c.height); if (im && im.width) ctx.drawImage(im, (i % cols) * s.tile[0], Math.floor(i / cols) * s.tile[1], s.tile[0], s.tile[1], 0, 0, c.width, c.height); }
+   const k = ticks[i]; ro.textContent = "tick " + k + "  t=" + (k / 60).toFixed(3) + " s  " + phase(k) + (k === 62 ? "  ← CONTACT TICK" : "") + (k === 88 ? "  ← FIRST GROUND CONTACT" : ""); scrub.value = i; }
+ function tick(ts) { const dt = Math.min(0.1, (ts - last) / 1000); last = ts; if (playing) { acc += dt * speed; while (acc >= 1 / 60) { acc -= 1 / 60; i = (i + 1) % N; } draw(); } requestAnimationFrame(tick); }
+ const stop = () => { playing = false; document.getElementById("play2").textContent = "Play"; document.getElementById("play2").classList.remove("on"); };
+ document.getElementById("play2").onclick = (e) => { playing = !playing; e.target.textContent = playing ? "Pause" : "Play"; e.target.classList.toggle("on", playing); };
+ for (const b of document.querySelectorAll(".sp2")) b.onclick = () => { speed = +b.dataset.sp; document.querySelectorAll(".sp2").forEach(x => x.classList.toggle("on", x === b)); };
+ for (const b of document.querySelectorAll(".vw2")) b.onclick = () => { view = b.dataset.v; document.querySelectorAll(".vw2").forEach(x => x.classList.toggle("on", x === b)); build(); };
+ document.getElementById("step2").onclick = () => { stop(); i = (i + 1) % N; draw(); };
+ document.getElementById("toc2").onclick = () => { stop(); i = ticks.indexOf(62); draw(); };
+ document.getElementById("totouch2").onclick = () => { stop(); i = ticks.indexOf(88); draw(); };
+ scrub.oninput = () => { stop(); i = +scrub.value; draw(); };
  build(); requestAnimationFrame(tick);
 })();
 </script>

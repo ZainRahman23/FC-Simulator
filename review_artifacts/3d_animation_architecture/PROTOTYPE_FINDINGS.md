@@ -88,3 +88,32 @@ Pessimistic note: the SwiftShader path (no GPU) took 6 s for the first frame (sh
 ## Recommended next step (only after your review)
 
 If the direction is approved: (1) lift `buildActionDescription()` out of `gkAnimUpdate` so both backends consume it (mechanical, gate-checked); (2) author the second dive variant (low/lateral) and one catch family to test the graph's blend rules on a lateral case; (3) evaluate Option C texel parity and a kit palette swap; (4) only then decide on three.js/GLTF for real meshes.
+
+---
+
+# v2 — complete goalkeeper action SET → … → SET (same simulation, same contact work)
+
+Review page: `visual_review/VISUAL_REVIEW.html` (v2 section at the top). Deliverables: `visual_review/v2_01…v2_09*`.
+
+## What changed (presentation only — `anim3d/gk_far_dive_clip.js`, `gk_graph.js`, `ik.js`, `gk3d_backend.js`)
+- **Anticipation inside the simulation's reaction latency** (shot tick 27 → commit tick 38): REACT (head/arms, slight drop) → WEIGHT SHIFT toward the *predicted* crossing side (the keeper's own `gk.predict.crossing`, read-only) → LOAD (deep crouch, save-side leg loaded, opposite leg unloading, arms in counter-movement). The anticipation's last key *is* the LOAD key, so the commit tick is continuous. Both feet are planted by leg IK; the knees flex to the authored pelvis height instead of the pelvis being lifted.
+- **Launch** (commit → toe-off, u 0–0.31 of the simulation's execTime): LOAD → PLANT → PUSH-OFF → TOE-OFF (on the toes, toe bone bends) → EARLY / MID FLIGHT → FULL EXTENSION. The solved jump/launch position (body axis from the committed target) takes over only from the toe-off, so the stored-energy crouch is real. Plant foot locked through LOAD/PLANT/PUSH, released over the toe-off; the opposite foot releases as it unloads.
+- **Contact** unchanged: glove centre 4.9 cm from the simulation hand at tick 62 (IK weight ramps 0.30 → 1).
+- **Landing physics** (closed-form in seconds after execEnd, deterministic): pelvis follow-through with the body's lateral momentum (root mean dive speed × the axis' lateral share) and vertical velocity from the authored extension, ballistic descent under g, first ground contact when the pelvis reaches standing height (legs extended), spring/dip absorb to the settle height, friction settle, then the get-up. Landing style from the body-axis angle (feet ≤ 35°, side ≥ 60°, blended between); this ball (22°) lands on the feet and the momentum takes the keeper to the save-side knee with the hand braced on the pitch.
+- **Get-up**: settle (knee + hand brace) → push torso up → knees under → crouch → rise → ready stance. Both feet re-plant under the final root at the start of the get-up so the rise does not slide.
+- **Presentation root = ground projection of the pelvis** (continuous by construction), reconciled to the simulation root during get-up/rise: 0 at SET, max 0.54 m (settled), 0.000 at the final SET; no discontinuity at any stage boundary (`v2_09_…plot.png`).
+- Catmull-Rom sampling across keys (no linear pose interpolation); IK carries descendant bones (toe under a foot) and planted feet are flattened onto the pitch.
+
+## Verification (final code)
+- Sprite vs SKELETAL_3D, all 43 scenarios × 200 ticks, keeper drawn every tick: **43/43 identical** (`verification/V2_GATE_COMPARE_sprite_vs_3d_all_scenarios.md`).
+- Animation OFF (`GK_ANIM.enabled=false`, nothing drawn) vs the 3D backend drawn every tick: final-tick keeper root / hand / ball / contact identical in all 43 scenarios (`verification/V2_GATE_COMPARE_animation_off_vs_on.md`).
+- Scenario 42: commit tick 38, contact tick 62 (t 1.050 s, HAND, WEAK PARRY through), contact point and ball unchanged; simulation root unchanged.
+
+## Skeleton / skinning readiness (asked explicitly)
+The capsule parts are a stand-in, not an architectural requirement. The 23-bone skeleton is driven by rotation-only clips plus a pelvis translation; per-frame world matrices come from FK (IK / look-at edit world matrices only). A skinned humanoid mesh binds with `skelInverseBind(skel)` (bind = zero pose at the character's height) and `skelSkinMatrices(skel, fk, invBind)`; the material groups (skin, hair, shirt, shorts, socks, boots, gloves) map to mesh material slots, so body/face/hair/kit/gloves/boots customisation does not touch the graph. Nothing in the current skeleton blocks skinning; two items to add when real meshes arrive (not blockers): twist bones (forearm/thigh) for clean skin deformation, and turning the `hair` bone into a mesh attachment.
+
+## Honest limits of v2
+- Capsule mannequin; some poses are hand-set in a single pass (the settle/knee pose and the get-up will benefit from a real animator).
+- Only the feet-landing branch is exercised by this ball; the side-landing branch (hand/forearm → hip/shoulder → slide) is authored but unreviewed.
+- The get-up's step back toward the simulation root is a solved leg reach (feet planted under the final root), not a stepped walk; the residual glide during the rise is ≤ 0.29 m.
+- Push-off peak pelvis velocity ≈ 5 m/s over two ticks (explosive but on the high side); landing constants (touch height, absorb time, friction) are global, not per keeper.
