@@ -27,6 +27,25 @@
 
 <section style="border:2px solid #ffe36a;border-radius:8px;margin:18px 24px;padding:10px 18px;background:#1a1a12">
  <h2 style="margin-top:8px">v6 · THE BODY THAT LANDS ON THE RIGHT SIDE GETS UP FROM THE RIGHT SIDE — mirror frozen at the commit, landed side measured from the skeleton, rotation continuity checked</h2>
+ <div style="border:1px solid #ffe36a;border-radius:6px;padding:8px 12px;margin:6px 0 14px 0;background:#141410">
+  <h2 style="margin-top:4px">v6 · 0 CLEAN FULL-SPEED REVIEW — the current v6 exactly as it exists (commit 1db60c0), real gameplay timing, 60 fps, no holds, no slow motion, no overlays, no labels, preferred 1/2-target + outline render, SET → SET</h2>
+  <p class="note">A. GAMEPLAY CAMERA (left, the normal Touchline camera at 1:1) · B. CLEAN CLOSE-UP (right, close zoom 3.5 at 2× nearest, same timeline). Ticks 0–319 = 5.33 s: SET_CROUCH 0 · READ 28 · LOAD 35 · PLANT 41 · PUSH-OFF 43 · TOE-OFF 45 · FLIGHT 47 · CONTACT 62 · DESCENT 74 · TOUCHDOWN 90 · SLIDE/ABSORB 100 · SETTLE 114 · BRACE 138 · PUSH-UP 156 · HALF-KNEEL 174 · CROUCH 195 · RISE 216 · STAND/REPOSITION 246 · SET 300. The synced player below runs at a true 60 fps; the APNG files play at an exact 16.667 ms per frame in any modern browser (full colour); the GIF files are the same frames at the nearest GIF timing (17 ms nominal, GIF timing is 10 ms-quantised).</p>
+  <div class="ctl">
+   <button id="play6" class="on">Pause</button>
+   <button data-sp="1" class="on sp6">1× (60 fps)</button><button data-sp="0.5" class="sp6">½×</button><button data-sp="0.25" class="sp6">¼×</button>
+   <button id="step6">step +1 tick</button><button id="rst6">restart</button>
+   <input type="range" id="scrub6" min="0" max="319" value="0"><span id="ro6" class="ro"></span>
+  </div>
+  <div class="player" id="panels6"></div>
+  <p class="note"><b>Files:</b>
+   synchronized A | B: <a href="v6_00_clean_fullspeed_gameplay_and_closeup.png">v6_00_clean_fullspeed_gameplay_and_closeup.png</a> (APNG, 60 fps) · <a href="v6_00_clean_fullspeed_gameplay_and_closeup.gif">.gif</a> &nbsp;·&nbsp;
+   A alone: <a href="v6_00a_clean_fullspeed_gameplay_camera.png">v6_00a_clean_fullspeed_gameplay_camera.png</a> (APNG) · <a href="v6_00a_clean_fullspeed_gameplay_camera.gif">.gif</a> &nbsp;·&nbsp;
+   B alone: <a href="v6_00b_clean_fullspeed_closeup.png">v6_00b_clean_fullspeed_closeup.png</a> (APNG) · <a href="v6_00b_clean_fullspeed_closeup.gif">.gif</a></p>
+  <h2>A | B synchronized (APNG, loops)</h2>
+  <img class="sheet" src="v6_00_clean_fullspeed_gameplay_and_closeup.png">
+  <h2>A · gameplay camera (APNG, loops) &nbsp;·&nbsp; B · clean close-up (APNG, loops)</h2>
+  <img class="sheet" src="v6_00a_clean_fullspeed_gameplay_camera.png" style="vertical-align:top"> &nbsp; <img class="sheet" src="v6_00b_clean_fullspeed_closeup.png" style="vertical-align:top">
+ </div>
  <p class="note"><b>What the skeleton trace found (<a href="../verification/v6_skeleton_settle_to_brace.md">bone-by-bone table</a>):</b> the flip was not at SETTLE → BRACE and not in the recovery clip. At <b>tick 129</b> the sprite resolver's own state goes RECOVER → SET (it drops its commit snapshot when its clip ends); at <b>tick 130</b> it re-derives its <code>side</code> from the live ball — which is on the keeper's other side after the parry — and flips RIGHT → LEFT. The 3D graph mirrored every post-contact shape by that live side, so in one tick, mid-SETTLE, the authored pelvis roll went −82° → +82°, the right shoulder (0.06 m above the pitch) and the left (0.55 m) swapped, and the get-up then ran on the left side. Same class as the facing bug fixed in v3, for the mirror. <b>v6:</b> the mirror side is frozen for the whole committed action (keyed by the commit tick, like the facing); an explicit <b>landed side</b> is measured from the solved skeleton at the first SETTLE tick (which shoulder / hip is lower; FEET / FRONT / BACK otherwise) and is the recovery's mirror and support-side input — never the save direction, screen side, facing or simulation root (a mismatch with the landing chain is recorded, not flipped). Foot locks now fade out over 0.15 s instead of cutting, a new plant blends from where the foot actually was, and a step-length re-plant keeps the authored knee plane while the foot travels (this removed 54° / 91° thigh snaps that the new rotation check exposed at IMPACT → ABSORB and HALF-KNEEL → CROUCH). Flight, contact, descent, touchdown, slide and settle position are the v4/v5 values unchanged.</p>
  <h2>v6 · 1 Normal speed, close zoom — DESCENT → TOUCHDOWN → SLIDE → SETTLE → BRACE → PUSH-UP → KNEEL (every tick, 20 ms; right panel: L / R shoulder and hip markers, pelvis and chest local axes, feet, roots, trail)</h2>
  <img class="sheet" src="v6_01_normal_speed_descent_to_kneel.gif">
@@ -366,6 +385,27 @@
  for (const b of document.querySelectorAll(".vw5")) b.onclick = () => { view = b.dataset.v; document.querySelectorAll(".vw5").forEach(x => x.classList.toggle("on", x === b)); build(); };
  for (const b of document.querySelectorAll(".jp5")) b.onclick = () => { stop(); i = ticks.indexOf(+b.dataset.k); draw(); };
  document.getElementById("step5").onclick = () => { stop(); i = (i + 1) % N; draw(); };
+ scrub.oninput = () => { stop(); i = +scrub.value; draw(); };
+ build(); requestAnimationFrame(tick);
+})();
+</script>
+
+<script>
+(async () => {
+ const meta = await (await fetch("v6_00_player_meta.json")).json();
+ const ticks = meta.ticks, N = ticks.length, cols = meta.cols; const imgs = {};
+ for (const [v, s] of Object.entries(meta.sheets)) { const im = new Image(); im.src = s.file; await new Promise(r => { im.onload = r; im.onerror = r; }); imgs[v] = im; }
+ let i = 0, playing = true, speed = 1, acc = 0, last = performance.now();
+ const panels = document.getElementById("panels6"), ro = document.getElementById("ro6"), scrub = document.getElementById("scrub6"); scrub.max = N - 1;
+ function build() { panels.innerHTML = ""; for (const [v, s] of Object.entries(meta.sheets)) { const w = document.createElement("div"); const c = document.createElement("canvas"); const sc = v === "cl" ? 2 : 1; c.width = s.tile[0] * sc; c.height = s.tile[1] * sc; c.dataset.v = v; const l = document.createElement("div"); l.className = "sub"; l.textContent = s.label; w.appendChild(l); w.appendChild(c); panels.appendChild(w); } draw(); }
+ function draw() { for (const c of panels.querySelectorAll("canvas")) { const v = c.dataset.v, s = meta.sheets[v], im = imgs[v]; const ctx = c.getContext("2d"); ctx.imageSmoothingEnabled = false; ctx.clearRect(0, 0, c.width, c.height); if (im && im.width) ctx.drawImage(im, (i % cols) * s.tile[0], Math.floor(i / cols) * s.tile[1], s.tile[0], s.tile[1], 0, 0, c.width, c.height); }
+   const k = ticks[i]; ro.textContent = "tick " + k + "  t=" + (k / 60).toFixed(3) + " s"; scrub.value = i; }
+ function tick(ts) { const dt = Math.min(0.1, (ts - last) / 1000); last = ts; if (playing) { acc += dt * speed; while (acc >= 1 / 60) { acc -= 1 / 60; i = (i + 1) % N; } draw(); } requestAnimationFrame(tick); }
+ const stop = () => { playing = false; document.getElementById("play6").textContent = "Play"; document.getElementById("play6").classList.remove("on"); };
+ document.getElementById("play6").onclick = (e) => { playing = !playing; e.target.textContent = playing ? "Pause" : "Play"; e.target.classList.toggle("on", playing); };
+ for (const b of document.querySelectorAll(".sp6")) b.onclick = () => { speed = +b.dataset.sp; document.querySelectorAll(".sp6").forEach(x => x.classList.toggle("on", x === b)); };
+ document.getElementById("step6").onclick = () => { stop(); i = (i + 1) % N; draw(); };
+ document.getElementById("rst6").onclick = () => { i = 0; draw(); };
  scrub.oninput = () => { stop(); i = +scrub.value; draw(); };
  build(); requestAnimationFrame(tick);
 })();
