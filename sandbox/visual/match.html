@@ -129,6 +129,8 @@
     <label class="inline"><input type="checkbox" id="dbg-gk"> Goalkeeper V1 debug (state, position/velocity, reach ring, ball, timing)</label>
     <label class="inline"><input type="checkbox" id="dbg-anim"> GK Animation V1 debug (anim state/phase/family, anchors, sim contact vs anim target, visual error, perf)</label>
     <label class="inline"><input type="checkbox" id="dbg-gkstick"> GK stick-figure diagnostic (Stage-0 placeholder drawn over the sprite)</label>
+    <label class="inline">GK presentation backend (prototype, review only — key 8 cycles):
+      <select id="gk-backend"><option value="SPRITE" selected>SPRITE (approved)</option><option value="SKELETAL_3D">SKELETAL_3D (prototype)</option></select></label>
     <div style="font-size:11px;opacity:.75;margin:2px 0 4px">NET PHYSICS TEST (synthetic ball): keys 1 central &middot; 2 low corner &middot; 3 upper &middot; 4 side net &middot; 5 cycles slow/normal/power &middot; 0 toggles slow-motion</div>
     <div style="font-size:11px;opacity:.75;margin:2px 0 4px">BALL PHYSICS TEST (synthetic): keys 6 drop &middot; 7 roll &middot; 8 lofted &middot; 9 elevated shot &middot; C high chip (readout + trail via Ball debug) &middot; T engine transport sequence &middot; V ball spin showcase</div>
     <div style="font-size:11px;opacity:.75;margin:2px 0 4px">ANIMATION PROTOTYPE (synthetic): key P &mdash; idle &rarr; run &rarr; dribble &rarr; shoot with contact-synced kick (east-facing puppet near x=80)</div>
@@ -138,6 +140,7 @@
   </section>
 </div>
 
+<script src="anim3d/gk_backend.js"></script>
 <script src="match.js?v=pt2"></script>
 </body>
 </html>

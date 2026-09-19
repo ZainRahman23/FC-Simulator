@@ -5185,7 +5185,8 @@ function ptDrawKeeper(dt) {
   const t = S.pt, gk = t && t.gk; if (!gk) return;
   // GOALKEEPER ANIMATION V1: sprite view of the same keeper state (read-only). The Stage-0 diagnostic stick figure below is
   // kept for review (dbg "gkstick") and as the fallback when the GK assets are not loaded.
-  const spriteDrawn = GK_ANIM.enabled && gkAnimDraw(t, gk, dt);
+  // PRESENTATION BACKEND (prototype/3d-animation-pipeline): SPRITE (default, unchanged path) or SKELETAL_3D; see anim3d/gk_backend.js
+  const spriteDrawn = GK_ANIM.enabled && (typeof gkPresentationDraw === "function" ? gkPresentationDraw(t, gk, dt) : gkAnimDraw(t, gk, dt));
   if (spriteDrawn && !S.dbg.gkstick) return;
   // STAGE-0 PLACEHOLDER (deliberately simple diagnostic — NOT final art):
   // feet/root, body spine, head, hands/reach origin + rest spread, facing, state.
