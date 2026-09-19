@@ -2,7 +2,7 @@
 // Same simulation, same resolver (gkAnimUpdate → ActionDescription); only the drawing differs. Never writes gk/ball.
 const GK3D = {
   copies: 0,                    // review: draw N extra keepers (offset laterally) for the scaling measurement
-  debug: { bones: false, ik: false, roots: false, label: true },
+  debug: { bones: false, ik: false, roots: false, feet: false, label: false },
   perf: { n: 0, ms: 0, max: 0, glDraws: 0 },
   lastContact: null, log: [],
   state: {},                    // presentation memory (plant lock, commit key) — reset per shot
@@ -34,14 +34,14 @@ function gk3dDraw(t, gk, dt) {
   // composite at the keeper's depth slot: shadow at the PRESENTATION root, then the low-res layer scaled with nearest sampling
   const sp = sproj3(gk.x, 0, gk.y); if (sp.d < 0.5) return true;
   const s = S.playerVScale * depthScale(sp.d) * RIG.zoom * RES, flat = flattenAt(gk.x, gk.y);
-  const spp = sproj3(gk.x + g.pres.dx, 0, gk.y + g.pres.dy);
+  const spp = sproj3(g.pres.x != null ? g.pres.x : gk.x + g.pres.dx, 0, g.pres.y != null ? g.pres.y : gk.y + g.pres.dy);
   ctx.save(); ctx.beginPath(); ctx.ellipse(Math.round(spp.x), Math.round(spp.y), 9 * s, Math.max(1.5, 9 * s * flat), 0, 0, Math.PI * 2); ctx.fillStyle = "rgba(0,0,0,0.25)"; ctx.fill(); ctx.restore();
   ctx.save(); ctx.imageSmoothingEnabled = false; ctx.drawImage(out.canvas, 0, 0, out.w, out.h, 0, 0, cv.width, cv.height); ctx.restore();
   // drawn glove vs simulation hand (contact synchronisation metric, same units as the sprite backend)
   const P3 = (p) => sproj3(p[0], p[1], -p[2]);          // 3D world → screen
   const handC = sol.diag.ik ? sol.diag.ik.handCentre : sol.fk.tip[skel.byName["hand_" + g.reachHand].idx];
   const handScreen = P3(handC), simHand = gk.handNow ? sproj3(gk.handNow[0], gk.handNow[2], gk.handNow[1]) : null;
-  const artLabel = "3D " + clip.id + (g.side === "LEFT" ? " (mirrored)" : "") + " " + g.phase + (g.pose._name ? " [" + g.pose._name + "]" : "") + (g.clipT != null ? (g.mode === "post" ? "  +" + g.clipT.toFixed(2) + " s" : "  u " + g.clipT.toFixed(2)) : "") + (g.pres.dm ? "  pres +" + g.pres.dm.toFixed(2) + " m" : "") + (sol.diag.ik ? "  ik w " + sol.diag.ik.w + " res " + (sol.diag.ik.residual * 100).toFixed(1) + " cm" : "") + (g.axis ? "  axis " + g.axis.theta + "° side-land " + g.axis.wSide.toFixed(2) : "") + (sol.diag.plant ? "  plant w " + sol.diag.plant.w : "") + (sol.diag.torso ? "  torso +" + sol.diag.torso + "°" : "") + (g.authored ? "" : "  [family not authored: SET + procedural reach]");
+  const artLabel = "3D " + clip.id + (g.side === "LEFT" ? " (mirrored)" : "") + " " + g.phase + (g.sub && g.sub !== g.phase ? " [" + g.sub + "]" : "") + (g.clipT != null ? (g.mode === "post" ? "  +" + g.clipT.toFixed(2) + " s" : "  u " + g.clipT.toFixed(2)) : "") + (g.pres.dm ? "  pres +" + g.pres.dm.toFixed(2) + " m" : "") + (sol.diag.ik ? "  ik w " + sol.diag.ik.w + " res " + (sol.diag.ik.residual * 100).toFixed(1) + " cm" : "") + (g.axis ? "  axis " + g.axis.theta + "° side-land " + g.axis.wSide.toFixed(2) : "") + (g.landing ? "  h " + (g.landing.L.h != null ? g.landing.L.h.toFixed(2) : "keys") + " x " + g.landing.L.x.toFixed(2) + " s " + g.landing.L.s.toFixed(2) : "") + " feet R:" + (sol.diag.feet.R && sol.diag.feet.R.locked ? "LOCK" : "free") + " L:" + (sol.diag.feet.L && sol.diag.feet.L.locked ? "LOCK" : "free") + (sol.diag.plant ? "  plant w " + sol.diag.plant.w : "") + (sol.diag.torso ? "  torso +" + sol.diag.torso + "°" : "") + (g.authored ? "" : "  [family not authored: SET + procedural reach]");
   cur.artLabel = artLabel;
   if (gk.contact && (!GK3D.lastContact || GK3D.lastContact.tickT !== gk.contact.tickT)) {
     const cp = gk.contact.point, cs = sproj3(cp[0], cp[2], cp[1]);
@@ -55,6 +55,7 @@ function gk3dDraw(t, gk, dt) {
   if (GK3D.debug.bones || S.dbg.anim) gk3dDrawBones(skel, sol.fk, P3);
   if (GK3D.debug.ik || S.dbg.anim) gk3dDrawIK(sol, g, gk, P3, handScreen, simHand);
   if (GK3D.debug.roots || S.dbg.anim) gk3dDrawRoots(gk, g, sp, spp);
+  if (GK3D.debug.feet || S.dbg.anim) gk3dDrawFeet(skel, sol, P3);
   if (S.dbg.anim) { const anchors = { root: { x: Math.round(sp.x), y: Math.round(sp.y) }, pelvis: P3(sol.fk.joint[skel.byName.pelvis.idx]), head: P3(sol.fk.tip[skel.byName.head.idx]), shoulder: P3(sol.fk.tip[skel.byName.chest.idx]), handL: P3(sol.fk.tip[skel.byName.hand_L.idx]), handR: P3(sol.fk.tip[skel.byName.hand_R.idx]), footL: P3(sol.fk.tip[skel.byName.foot_L.idx]), footR: P3(sol.fk.tip[skel.byName.foot_R.idx]) }; gkAnimOverlay(t, gk, cur, anchors, handScreen, s); }
   if (GK3D.debug.label) { ctx.fillStyle = "#ffb0f0"; ctx.font = uipx(9) + "px monospace"; ctx.textAlign = "center"; const hp = P3(sol.fk.tip[skel.byName.head.idx]); ctx.fillText("SKELETAL_3D", hp.x, hp.y - uipx(12)); ctx.textAlign = "left"; }
   GK3D.perf.n++; const ms = performance.now() - t0; GK3D.perf.ms += ms; if (ms > GK3D.perf.max) GK3D.perf.max = ms; GK3D.perf.glDraws = out.draws; GK3D.perf.target = out.w + "x" + out.h + " (1/" + out.scale + ")";
@@ -74,6 +75,17 @@ function gk3dDrawIK(sol, g, gk, P3, handScreen, simHand) {
   if (sol.diag.plant && GK3D.state.plantAnkle) { const pa = P3(GK3D.state.plantAnkle); ctx.strokeStyle = "#ffa040"; ctx.lineWidth = Math.max(1, PXQ); ctx.strokeRect(pa.x - uipx(3), pa.y - uipx(3), uipx(6), uipx(6)); }
   ctx.restore();
 }
+function gk3dDrawFeet(skel, sol, P3) {
+  // foot / ground contact: green = planted (locked by leg IK at its world point), yellow = touching the pitch, orange = airborne; brace hands in white
+  ctx.save(); ctx.lineWidth = Math.max(1, PXQ);
+  for (const side of ["R", "L"]) {
+    const f = sol.diag.feet[side]; if (!f) continue; const tip = P3(sol.fk.tip[skel.byName["foot_" + side].idx]);
+    if (f.locked) { const p = P3(f.P); ctx.strokeStyle = "#38ff9a"; ctx.beginPath(); ctx.arc(p.x, p.y, uipx(5), 0, Math.PI * 2); ctx.stroke(); ctx.fillStyle = "#38ff9a"; ctx.fillRect(tip.x - 1, tip.y - 1, 3, 3); }
+    else { ctx.strokeStyle = f.height < 0.05 ? "#ffe36a" : "#ff9a3c"; ctx.beginPath(); ctx.arc(tip.x, tip.y, uipx(4), 0, Math.PI * 2); ctx.stroke(); }
+  }
+  for (const s of ["R", "L"]) { const b = sol.diag["brace_" + s]; if (b) { const p = P3(b.P); ctx.strokeStyle = "#ffffff"; ctx.strokeRect(p.x - uipx(3), p.y - uipx(3), uipx(6), uipx(6)); } }
+  ctx.restore();
+}
 function gk3dDrawRoots(gk, g, sp, spp) {
   ctx.save(); ctx.lineWidth = Math.max(1, PXQ);
   ctx.strokeStyle = "#ff4040"; ctx.beginPath(); ctx.moveTo(sp.x - uipx(6), sp.y); ctx.lineTo(sp.x + uipx(6), sp.y); ctx.moveTo(sp.x, sp.y - uipx(6)); ctx.lineTo(sp.x, sp.y + uipx(6)); ctx.stroke();      // simulation root (red cross)
@@ -83,4 +95,4 @@ function gk3dDrawRoots(gk, g, sp, spp) {
   ctx.restore();
 }
 GK_PRESENTATION.register("SKELETAL_3D", { draw: gk3dDraw, reset: gk3dReset, label: "skeletal 3D prototype" });
-document.addEventListener("DOMContentLoaded", () => { for (const k of ["bones", "ik", "roots"]) { const el = document.getElementById("dbg3d-" + k); if (el) el.addEventListener("change", () => { GK3D.debug[k] = el.checked; }); } });
+document.addEventListener("DOMContentLoaded", () => { for (const k of ["bones", "ik", "roots", "feet"]) { const el = document.getElementById("dbg3d-" + k); if (el) el.addEventListener("change", () => { GK3D.debug[k] = el.checked; }); } });

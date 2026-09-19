@@ -46,6 +46,11 @@ function gkActionDescription(t, gk, cur) {
     endT: (function () { if (!c) return null; const execEnd = c.t0 + c.execTime; return ct && ct.tickT != null ? Math.max(execEnd, ct.tickT) : execEnd; })(),
     now: t.now, held: !!(t.b && t.b.held === "GK"), ball: t.b ? [t.b.x, t.b.y, t.b.z] : null,
     shotActive: !!gk.shotActive, gkPhase: gk.phase || null, gkState: gk.state,
+    // pre-commit information the simulation already holds (read-only): shot instant, reaction latency, the evolving
+    // predicted crossing (lateral sign in the keeper's own frame, + = his right) and the single PREPARE step
+    shot: gk.shotActive && gk.shotT0 != null ? { t0: gk.shotT0, latency: gk.latency, tSince: t.now - gk.shotT0 } : null,
+    predLat: (function () { if (!gk.shotActive || !gk.predict || !gk.predict.crossing) return null; const cr = gk.predict.crossing; const rx = -Math.sin(gk.facing), ry = Math.cos(gk.facing); return (GK_MOUTH.lineX - gk.x) * rx + (cr.y - gk.y) * ry; })(),
+    prepared: !!gk.prepared, prepTarget: gk.prepTarget ? gk.prepTarget.slice() : null,
   };
 }
 document.addEventListener("DOMContentLoaded", () => {

@@ -33,6 +33,8 @@ function skelIK2(skel, fk, upperName, foreName, handName, target, w, poleHint, e
   const delta = M4.mul(fk.world[fo.idx], M4.invertRigid(fm));
   const hm2 = M4.mul(delta, hm); hm2[12] = Tw[0]; hm2[13] = Tw[1]; hm2[14] = Tw[2];
   fk.world[hd.idx] = hm2; fk.joint[hd.idx] = Tw; fk.tip[hd.idx] = M4.transformPoint(hm2, V3.scale(hd.dir, hd.len));
+  // descendants of the end bone (e.g. the toe under a foot) follow rigidly: world' = (new_end × inv(old_end)) × world
+  const dEnd = M4.mul(hm2, M4.invertRigid(hm)); const carry = (bone) => { for (const ch of bone.children) { fk.world[ch.idx] = M4.mul(dEnd, fk.world[ch.idx]); fk.joint[ch.idx] = M4.origin(fk.world[ch.idx]); fk.tip[ch.idx] = M4.transformPoint(fk.world[ch.idx], V3.scale(ch.dir, ch.len)); carry(ch); } }; carry(hd);
   const handCentre = M4.transformPoint(hm2, V3.scale(hd.dir, hd.len * (ef || 0.6)));
   return { reached, residual: V3.dist(ef ? handCentre : Tw, target), elbow: E, wrist: Tw, targetUsed: T, handCentre };
 }

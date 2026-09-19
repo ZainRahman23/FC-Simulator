@@ -58,3 +58,11 @@ function poseScale(a, s) { const p = {}; for (const k in a) p[k] = [a[k][0] * s,
 function poseAdd(a, b) { const p = {}; const keys = new Set([...Object.keys(a), ...Object.keys(b)]); for (const k of keys) { const x = a[k] || [0, 0, 0], y = b[k] || [0, 0, 0]; p[k] = [x[0] + y[0], x[1] + y[1], x[2] + y[2]]; } return p; }
 // mirror a pose across the character's sagittal plane: swap _L/_R bones, negate yaw and roll
 function poseMirror(a) { const p = {}; for (const k in a) { const m = k.endsWith("_R") ? k.slice(0, -2) + "_L" : k.endsWith("_L") ? k.slice(0, -2) + "_R" : k; const e = a[k]; p[m] = [e[0], -e[1], -e[2]]; } return p; }
+
+// ── SKINNING READINESS (architecture note, not used by the capsule prototype) ────────────────────────────────────────
+// The capsule parts are a stand-in: this skeleton is meant to drive a normal skinned humanoid mesh. A skinned mesh needs, per bone,
+// skinMatrix = boneWorld × inverseBind. Bind = the zero pose (all eulers 0) at height H; boneWorld is what skelFK returns every frame
+// (after IK / look-at, which only edit world matrices). Clips are rotation-only (plus pelvis translation), so retargeting to other
+// proportions changes only SKEL_DEF offsets/lengths; part material groups map to mesh material slots (kit / gloves / boots / skin / hair).
+function skelInverseBind(skel) { const fk = skelFK(skel, {}, M4.ident()); return fk.world.map(m => M4.invertRigid(m)); }
+function skelSkinMatrices(skel, fk, invBind) { return fk.world.map((m, i) => M4.mul(m, invBind[i])); }
