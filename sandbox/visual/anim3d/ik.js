@@ -13,8 +13,9 @@ function skelIK2(skel, fk, upperName, foreName, handName, target, w, poleHint, e
   let d = V3.dist(T, S); const maxR = a + b - 1e-4; const reached = d <= maxR; if (d > maxR) d = maxR; if (d < Math.abs(a - b) + 1e-4) d = Math.abs(a - b) + 1e-4;
   const dirST = V3.norm(V3.sub(T, S));
   // elbow bend plane: use the FK elbow's own offset from the S→T line as the pole (keeps the authored elbow direction), fall back to the hint
-  let pole = V3.sub(E0, V3.add(S, V3.scale(dirST, V3.dot(V3.sub(E0, S), dirST))));
-  if (V3.len(pole) < 0.02 && poleHint) pole = V3.sub(poleHint, V3.add(S, V3.scale(dirST, V3.dot(V3.sub(poleHint, S), dirST))));
+  // bend-plane pole: an explicit hint (e.g. knees forward-up for planted legs) wins; otherwise the FK joint's own offset from the S→T line
+  let pole = poleHint ? V3.sub(poleHint, V3.add(S, V3.scale(dirST, V3.dot(V3.sub(poleHint, S), dirST)))) : V3.sub(E0, V3.add(S, V3.scale(dirST, V3.dot(V3.sub(E0, S), dirST))));
+  if (V3.len(pole) < 0.02) pole = V3.sub(E0, V3.add(S, V3.scale(dirST, V3.dot(V3.sub(E0, S), dirST))));
   if (V3.len(pole) < 1e-4) pole = Math.abs(dirST[1]) < 0.9 ? [0, -1, 0] : [1, 0, 0];
   pole = V3.norm(pole);
   const cosA = clamp01((a * a + d * d - b * b) / (2 * a * d)); const alpha = Math.acos(Math.max(-1, Math.min(1, (a * a + d * d - b * b) / (2 * a * d))));

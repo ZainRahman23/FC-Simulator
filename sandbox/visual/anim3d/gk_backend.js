@@ -51,6 +51,9 @@ function gkActionDescription(t, gk, cur) {
     shot: gk.shotActive && gk.shotT0 != null ? { t0: gk.shotT0, latency: gk.latency, tSince: t.now - gk.shotT0 } : null,
     predLat: (function () { if (!gk.shotActive || !gk.predict || !gk.predict.crossing) return null; const cr = gk.predict.crossing; const rx = -Math.sin(gk.facing), ry = Math.cos(gk.facing); return (GK_MOUTH.lineX - gk.x) * rx + (cr.y - gk.y) * ry; })(),
     prepared: !!gk.prepared, prepTarget: gk.prepTarget ? gk.prepTarget.slice() : null,
+    // the shooter's visible wind-up: the playtest schedules the kick (t.kick.t0 → kickAt) before the impulse; a keeper drops into his
+    // set crouch as the striker plants (production analogue: the KICK intent's wind-up). Read-only; 0..1 progress, null when no kick is pending
+    windup: (t.kick && !t.kick.kicked && t.kick.kickAt > t.kick.t0) ? clamp01((t.now - t.kick.t0) / (t.kick.kickAt - t.kick.t0)) : null,
   };
 }
 document.addEventListener("DOMContentLoaded", () => {
