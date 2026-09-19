@@ -144,8 +144,23 @@ function gkLandingState(P, t) {
   return { h, H, stage, s, step };
 }
 // ── main evaluation ───────────────────────────────────────────────────────────────────────────────────────────────────
+// which anatomical side is against the pitch, from the solved skeleton (not from the save direction, facing or screen side)
+function gkLandedSide(skel, fk) {
+  const J = (n) => fk.joint[skel.byName[n].idx], T = (n) => fk.tip[skel.byName[n].idx];
+  const shL = J("upperArm_L")[1], shR = J("upperArm_R")[1], hipL = J("thigh_L")[1], hipR = J("thigh_R")[1], chest = J("chest")[1], pelvis = J("pelvis")[1], footL = T("foot_L")[1], footR = T("foot_R")[1];
+  const lowSh = Math.min(shL, shR), lowHip = Math.min(hipL, hipR);
+  if (lowSh > 0.55 && lowHip > 0.45) return "FEET";                                           // upright: nothing but the feet on the pitch
+  const tilt = (shL - shR) + (hipL - hipR);                                                   // positive = the right side is lower
+  if (Math.abs(tilt) < 0.12) return chest < pelvis ? "FRONT" : "BACK";
+  return tilt > 0 ? "RIGHT" : "LEFT";
+}
 function gkGraphEvaluate(desc, clip, skel, state) {
-  const c = desc.commit, sideL = desc.side === "LEFT";
+  const c = desc.commit;
+  // the SIDE (mirror of every authored shape) is frozen for the whole committed action, like the facing: the sprite resolver re-derives its
+  // side from the live ball once its own clip ends, which would mirror the lying body in one tick. Recovery selection additionally
+  // uses the LANDED side measured from the skeleton at the settle (state.landedSide), never the save direction.
+  const sk = c ? c.commitTick : null; if (state.sideKey !== sk) { state.sideKey = sk; state.side = c ? desc.side : null; state.landedSide = null; }
+  const sideL = c ? state.side === "LEFT" : desc.side === "LEFT";
   const named = { set: clip.set, setLow: clip.setLow, reach: clip.pre[clip.pre.length - 1][1], load: clip.pre[0][1] };
   const M = (p) => sideL ? poseMirrorP(p) : Object.assign({}, p, poseMeta(p));
   const dive = !!c && !desc.held && (desc.family === "AIRBORNE_DIVE" || desc.family === "LOW_COLLAPSE" || desc.family === "FOOT_SAVE");
@@ -182,7 +197,7 @@ function gkGraphEvaluate(desc, clip, skel, state) {
     else { pose = M(clip.set); phase = tl < 0.4 ? "RISE" : "SET"; authored = false; mode = "procedural"; }
     ikW = desc.held ? 1 : Math.max(0, 1 - tl / GK_GRAPH.ikFadePost);
   }
-  const g = { pose, phase, sub, clipT, ikW, rootM, facing, authored, mode, side: desc.side, reachHand: sideL ? "L" : "R", axis: null, locks, brace, landing: null, flight: null, pres: { dx: 0, dy: 0, dm: 0 } };
+  const g = { pose, phase, sub, clipT, ikW, rootM, facing, authored, mode, side: c ? state.side : desc.side, landedSide: state.landedSide || null, reachHand: sideL ? "L" : "R", axis: null, locks, brace, landing: null, flight: null, pres: { dx: 0, dy: 0, dm: 0 } };
   const pelOff = skel.byName.pelvis.off, invRoot = M4.invertRigid(rootM);
   const worldPelvis = (p) => M4.transformPoint(rootM, V3.add(pelOff, p._pelvis || [0, 0, 0]));
   const setPelvisWorld = (p, W) => { p._pelvis = V3.sub(M4.transformPoint(invRoot, W), pelOff); };
@@ -206,7 +221,13 @@ function gkGraphEvaluate(desc, clip, skel, state) {
       if (!state.plan) state.plan = gkLandingPlan(skel, clip, state.launch, ax, rootM);
       const plan = state.plan, L = gkLandingState(plan, desc.now); g.landing = { plan, L };
       const PF = clip.postFeet, PS = clip.postSide, w = plan.w;
-      const K = (name) => poseLerpP(M(PF[name]), M(PS[name]), w);                              // landing style blend (feet ↔ side) by the body-axis angle
+      // recovery mirror: from the settle on, the side the body actually lies on (measured at the settle); the landing chain keeps the
+      // dive-side mirror it flew with. A mismatch is reported (state.recoveryMismatch) — there is no separately authored branch for it yet
+      const recovering = !(L.stage === "FOLLOW" || L.stage === "DESCENT" || L.stage === "IMPACT" || L.stage === "ABSORB");
+      const recL = recovering && (state.landedSide === "LEFT" || state.landedSide === "RIGHT") ? state.landedSide === "LEFT" : sideL;
+      state.recoveryMismatch = recovering && (state.landedSide === "LEFT" || state.landedSide === "RIGHT") && recL !== sideL;
+      const MR = (p) => recL ? poseMirrorP(p) : Object.assign({}, p, poseMeta(p));
+      const K = (name) => poseLerpP(MR(PF[name]), MR(PS[name]), w);                            // landing style blend (feet ↔ side) by the body-axis angle
       const setP = M(clip.set); let shape;
       if (L.stage === "FOLLOW" || L.stage === "DESCENT") shape = gkSampleKeys([[0, endPose], [GK_GRAPH.feet.followFrac, K("FOLLOW")], [0.78, K("DESCENT")], [1, K("TOUCH")]], L.s, {});
       else if (L.stage === "IMPACT") shape = gkSampleKeys([[0, K("TOUCH")], [1, K("IMPACT")]], smooth01(L.s), {});
@@ -221,7 +242,7 @@ function gkGraphEvaluate(desc, clip, skel, state) {
       setPelvisWorld(shape, [L.H[0], L.h, L.H[1]]);                                          // every stage's pelvis position is owned by the landing state (position- and velocity-continuous)
       if (L.stage === "FOLLOW" || L.stage === "DESCENT") g.flight = gkLaunchState(plan.launch, desc.now);
       g.pose = shape; g.phase = L.stage; g.sub = shape._name || L.stage;
-      const feetStyle = w < 0.5, R = g.reachHand, O = R === "R" ? "L" : "R";
+      const feetStyle = w < 0.5, R = recovering ? (recL ? "L" : "R") : g.reachHand, O = R === "R" ? "L" : "R";   // support side = the side on the pitch
       if (L.stage === "FOLLOW" || L.stage === "DESCENT") locks = { R: 0, L: 0 };
       else if (L.stage === "IMPACT") locks = feetStyle ? { R: 1, L: 1, at: "touch" } : { R: 0, L: 0 };                        // the feet stay where they landed while the momentum carries the body over them
       else if (L.stage === "ABSORB") locks = { R: 0, L: 0 };                                                                    // the body goes down onto the side and slides: the feet drag with it
@@ -270,7 +291,7 @@ function gkGraphSolve(desc, g, skel, state) {
   const fwd = M4.transformDir(g.rootM, [0, 0, 1]);
   const legMax = skel.byName.thigh_R.len + skel.byName.shin_R.len;
   const reachCap = (side, Pt) => { const hip = fk.joint[skel.byName["thigh_" + side].idx]; return 1 - smooth01((V3.dist(hip, Pt) - (legMax - 0.02)) / 0.08); };   // a planted foot stays planted only while the leg can reach it: release = full extension, never a timer
-  const plantFeet = () => { for (const side of ["R", "L"]) { const st = state.feet[side]; let w = clamp01(want[side] || 0); if (st && st.locked && st.P && w > 0) w = Math.min(w, reachCap(side, st.Pnow || st.P)); if (st && st.locked && st.P && w > 0) { const hip = fk.joint[skel.byName["thigh_" + side].idx]; const kj = fk.joint[skel.byName["shin_" + side].idx], knee = [kj[0], Math.max(kj[1], 0.12), kj[2]]; const pole = V3.lerp(knee, [hip[0] + fwd[0] * 0.5, hip[1] + 0.3, hip[2] + fwd[2] * 0.5], w);   /* knees bend forward-up, never into the pitch; a fading lock keeps the authored bend plane */ const Pt = st.Pnow || st.P; const r = skelIK2(skel, fk, "thigh_" + side, "shin_" + side, "foot_" + side, Pt, w, pole, 0); flattenFoot(side, w); diag.feet[side] = { locked: w > 0.05, w: +w.toFixed(2), residual: +r.residual.toFixed(3), P: Pt }; } } };
+  const plantFeet = () => { for (const side of ["R", "L"]) { const st = state.feet[side]; let w = clamp01(want[side] || 0); if (st && st.locked && st.releaseT != null) w = Math.max(w, 1 - smooth01((desc.now - st.releaseT) / 0.15)) * (st.releaseW != null ? st.releaseW : 1);   /* releasing: fade the hold out */ if (st && st.locked && st.P && w > 0) w = Math.min(w, reachCap(side, st.Pnow || st.P)); if (st && st.locked && st.P && w > 0) { const hip = fk.joint[skel.byName["thigh_" + side].idx]; const kj = fk.joint[skel.byName["shin_" + side].idx], knee = [kj[0], Math.max(kj[1], 0.12), kj[2]]; const age = st.since != null ? smooth01(clamp01((desc.now - st.since) / 0.2)) : 1; const pole = V3.lerp(knee, [hip[0] + fwd[0] * 0.5, hip[1] + 0.3, hip[2] + fwd[2] * 0.5], w * age);   /* knees bend forward-up, never into the pitch; a fading or fresh lock keeps the authored bend plane (no knee flip on a new plant) */ const Pt = st.Pnow || st.P; const r = skelIK2(skel, fk, "thigh_" + side, "shin_" + side, "foot_" + side, Pt, w, pole, 0); flattenFoot(side, w); diag.feet[side] = { locked: w > 0.05, w: +w.toFixed(2), residual: +r.residual.toFixed(3), P: Pt }; } } };
   for (const side of ["R", "L"]) {
     const fb = skel.byName["foot_" + side], ankle = fk.joint[fb.idx]; const w = clamp01(want[side] || 0); const st = state.feet[side] || { locked: false, P: null };
     if (w > 0 && (!st.locked || state.lockStage !== stage)) {
@@ -282,11 +303,13 @@ function gkGraphSolve(desc, g, skel, state) {
       else if (L.at === "front" && g.landing) { if (side === h && st.P) P = st.P.slice(); else P = M4.transformPoint(g.rootM, [pc[0] + (side === "R" ? 1 : -1) * 0.14, ankleH, pc[2] + 0.30]); }   // half-kneel: the front foot plants ahead of the hips (forward), the kneeling foot keeps its tucked point
       else if (L.at === "tuck" && g.landing) { const pl = g.landing.plan, px = (pose._pelvis ? pose._pelvis[0] : 0), pz = (pose._pelvis ? pose._pelvis[2] : 0); const bottom = side === h; P = M4.transformPoint(g.rootM, [px - pl.dirSign * (bottom ? 0.42 : 0.34), ankleH, pz + (bottom ? -0.10 : 0.16)]); }   // lying / brace: feet tucked behind the hips
       else P = [ankle[0], ankleH, ankle[2]];
-      if (st.locked && st.P) { st.from = st.P.slice(); st.fromT = desc.now; }                    // re-plant: blend from the previous plant point (no foot teleport)
-      st.locked = true; st.P = P; st.since = desc.now;
+      st.from = (st.lastAnkle && st.lastT != null && desc.now - st.lastT < 0.1) ? st.lastAnkle.slice() : [ankle[0], ankle[1], ankle[2]]; st.fromT = desc.now;   // (re)plant: blend from where the foot actually was last frame (solved position) — never a foot teleport
+      if (!st.locked || V3.dist(st.from, P) > 0.12) st.since = desc.now;                       // bend plane blends from the authored knee for a NEW lock or a STEP (foot travelling from behind to under the body); a shuffle keeps its plane
+      st.locked = true; st.P = P; st.releaseT = null;
     }
     if (st.locked && st.from && st.fromT != null) { const bt = clamp01((desc.now - st.fromT) / 0.2); st.Pnow = V3.lerp(st.from, st.P, smooth01(bt)); if (V3.dist(st.from, st.P) > 0.12) st.Pnow[1] += 0.10 * Math.sin(Math.PI * bt); /* a re-plant further than a shuffle is a STEP: the foot lifts over its move */ if (bt >= 1) { st.from = null; st.Pnow = st.P; } } else st.Pnow = st.P;
-    if (w <= 0) st.locked = false;
+    if (w <= 0 && st.locked) { if (st.releaseT == null) { st.releaseT = desc.now; st.releaseW = st.lastW != null ? st.lastW : 1; } else if (desc.now - st.releaseT >= 0.15) { st.locked = false; st.releaseT = null; } }   // release = fade out, not a cut
+    if (w > 0) { st.releaseT = null; st.lastW = w; }
     state.feet[side] = st;
     diag.feet[side] = { locked: false, w: 0, height: +(ankle[1] - ankleH).toFixed(3) };
   }
@@ -329,6 +352,7 @@ function gkGraphSolve(desc, g, skel, state) {
       diag["brace_" + sd] = { w: +wb.toFixed(2), residual: +r.residual.toFixed(3), P: Pw };
     }
   }
+  for (const side of ["R", "L"]) { const st = state.feet[side]; if (st) { st.lastAnkle = fk.joint[skel.byName["foot_" + side].idx].slice(); st.lastT = desc.now; } }   // solved foot positions: the start point of any later (re)plant
   pel.off = savedOff;
   // presentation root = ground projection of the pelvis (pitch frame); continuous by construction
   const pw = fk.joint[skel.byName.pelvis.idx]; const pr = pitchW([pw[0], 0, pw[2]]);
