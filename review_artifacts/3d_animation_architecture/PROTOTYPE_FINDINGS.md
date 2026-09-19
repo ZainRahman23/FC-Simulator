@@ -163,3 +163,48 @@ Review page: `visual_review/VISUAL_REVIEW.html` (v3 section at the top). Deliver
 - A 3 cm knee-under bump remains at ticks 179–181 (under one gameplay pixel): the blend from the lying push-up shape to the authored kneel briefly puts the kneeling knee below the pitch and the ground clamp lifts the body.
 - Push-off peak pelvis speed ≈ 6 m/s over four ticks (explosive, on the high side); landing / get-up timings are global constants, not per keeper.
 - Capsule mannequin; poses are hand-set in a single pass and will benefit from an animator.
+
+---
+
+# v4 — momentum-continuous flight and landing (v3's post-contact trajectory rejected at visual review)
+
+Review page: `visual_review/VISUAL_REVIEW.html` (v4 section at the top). Deliverables: `visual_review/v4_01…v4_06*`, synced BEFORE/AFTER player. Trace: `verification/v4_lifecycle_trace_scenario42.json` (per tick: drawn pelvis, stage, flight velocity, plan, trajectory markers).
+
+## What was measured first (`v4_01_velocity_before_after.png`, left)
+- Presentation-root lateral velocity in the reviewed build: 3.1 m/s in the push-off, 2.1 m/s at toe-off, **decaying to −0.1 m/s by the contact tick**, a step to a constant 0.71 m/s at execEnd, zero 0.12 s after touchdown. Vertical: a 0.2 m body lift at toe-off and 0.06 m at touchdown from the ground clamp, a 0.28 m lift during the absorb.
+- Cause 1 — `gkGraphRedirect`: the flight pelvis was a blend toward a fixed solved offset in the frame of the simulation root. The simulation moves its root 45 % of the way to the target with a smoothstep and stops at execEnd; the body inherited that stop.
+- Cause 2 — `gkLandingPlan`: the landing started a fresh constant lateral velocity (`travel/execTime · sinθ + 0.25`), unrelated to the flight.
+- Cause 3 — `gkLandingState`: one constant deceleration to zero right after touchdown, no slide.
+- Cause 4 — the ground clamp lifted the whole body whenever an authored leg poked through the pitch, and foot locks released on a timer rather than at full extension; both displaced the root mid-flight.
+
+## What changed (presentation only — `gk_graph.js`, `gk_backend.js`, `gk3d_backend.js`, `gk_far_dive_clip.js`)
+- **One launch plan in world space, built at the plant** (`gkLaunchPlan` / `gkLaunchState`): constant-acceleration push from the plant (with the pelvis' measured velocity there) to the toe-off, arriving with the launch velocity; then a ballistic arc — constant horizontal velocity, gravity only — that passes through the solved full-extension pelvis at execEnd. The simulation root's end point is closed-form (`commit.rootEnd`, read from the simulation's own Stage-4 formula), so the arc is known at the plant. Contact is a point on the arc; the arc continues unchanged through and past execEnd until it reaches the touch height.
+- **Landing from the arc** (`gkLandingPlan` / `gkLandingState`): touchdown time and place are where the arc comes down; horizontal velocity there is the flight's; deceleration is progressive on the ground (skid 1.5 m/s² → body impact 3.0 m/s² → slide friction bringing the remainder to zero by the end of the settle); vertical velocity is absorbed with velocity-continuous height segments. Stage shapes unchanged apart from a slightly stronger lean and a trailing leg through the descent/touch keys.
+- **Reconciliation only through support points**: PUSH_UP draws the hips back over the tucked feet (22 % of the offset), HALF_KNEEL steps the front foot toward the simulation root (50 %), CROUCH plants both under it (85 %), RISE finishes; re-plants longer than a shuffle lift the foot over the move (a step); the three supported stages slow down with the distance to recover (×1.8 on this ball).
+- **Locks by reach, legs floored at the knee**: a planted foot stays planted while its leg can reach the plant point (toe-off = full extension), and a leg below the pitch bends (leg IK to the ground point) instead of lifting the body; only the body core can still lift the pelvis.
+- **Trail overlay** (`--dbg trail`, checkbox "presentation-root trajectory"): pelvis path, ground track, velocity vectors every 6 ticks and at the markers TOE-OFF (last foot on the pitch) / CONTACT / APEX / TOUCHDOWN / SETTLE, stacked labels with speeds.
+
+## Result on scenario 42 (`v4_01…`, right; trace)
+| where | lateral m/s | vertical m/s |
+|---|---|---|
+| plant (tick 41) | 1.0 | 0.7 |
+| toe-off (51, last foot on the pitch) | 1.57 | +3.8 → +3.1 |
+| contact − / + (61 / 63) | 1.57 / 1.57 | +1.4 / +1.1 |
+| execEnd (66) | 1.57 | +0.6 |
+| apex (70, 1.52 m) | 1.57 | 0 |
+| touchdown − / + (90 / 92) | 1.57 / 1.52 | −3.2 / −2.7 |
+| end of impact (100) | 1.33 | −1.8 |
+| end of absorb (114) | 0.61 | −0.1 |
+| settle end (138) | 0 | 0 |
+
+No velocity step larger than 0.05 m/s per tick at toe-off, contact, execEnd, touchdown or the start of the slide; no body lift anywhere in the flight or landing. Touchdown 0.36 m further along the dive than before; 0.59 m of ground travel; settled 1.47 m from the simulation root (0.55 m before); SET at tick 304 (246 before). Glove 6.4 cm from the simulation hand at contact (4.9 cm before).
+
+## Verification (final code)
+- Sprite vs SKELETAL_3D, 43 scenarios × 260 ticks, keeper drawn every tick: **43/43 identical** (`verification/V4_GATE_COMPARE_sprite_vs_3d_all_scenarios.md`); animation OFF vs 3D ON: 43/43 identical (`verification/V4_GATE_COMPARE_animation_on_vs_off.md`). Simulation root, ball, contact tick / point / outcome and reach untouched.
+
+## Honest limits of v4
+- At the fixed Touchline camera this dive runs along the goal line, i.e. in depth: a metre of travel is about 8 gameplay pixels up-screen. The continuation is unmistakable at close zoom and in the trail; at gameplay scale it reads as landing and settling further up the goal line.
+- The settled pose is still the feet-landing heap; the side-landing branch is authored but unexercised by this ball.
+- The trailing legs / continued torso rotation through the descent are authored keys with a modest lean, not simulated; a real dive would rotate further onto the side.
+- The half-kneel step toward the simulation root is long on this ball and reads as a lunge; the offset to recover (1.47 m) is what the arc physically produces given that the simulation's own root stops at 45 % of the way.
+- The kneeling foot's lock fades while the authored kneel takes over (residual up to 0.8 m at tiny weight), as in v3.
