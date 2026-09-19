@@ -208,3 +208,29 @@ No velocity step larger than 0.05 m/s per tick at toe-off, contact, execEnd, tou
 - The trailing legs / continued torso rotation through the descent are authored keys with a modest lean, not simulated; a real dive would rotate further onto the side.
 - The half-kneel step toward the simulation root is long on this ball and reads as a lunge; the offset to recover (1.47 m) is what the arc physically produces given that the simulation's own root stops at 45 % of the way.
 - The kneeling foot's lock fades while the authored kneel takes over (residual up to 0.8 m at tiny weight), as in v3.
+
+---
+
+# v5 — get up where he landed, then step back (v4 flight and landing accepted; its recovery rejected)
+
+Review page: `visual_review/VISUAL_REVIEW.html` (v5 section at the top). Deliverables: `visual_review/v5_01…v5_06*`, synced player. Transition trace: `verification/v5_transition_trace.md`. Per-tick trace: `verification/v5_lifecycle_trace_scenario42.json`.
+
+## What the trace found (before changing anything)
+- No sign flip, no local/world confusion, no mirroring: along the dive direction the presentation offset is +1.470 m at the last SETTLE tick (137) and +1.470 m at the first BRACE tick (138); simulation root, presentation root, pelvis (world and local) and all support points are identical across the boundary, and the ROOT→PRES vector stays on the dive side for the whole recovery.
+- What moved the body was the reconciliation v4 put inside the get-up: PUSH_UP pulled the hips 22 % of the offset toward the simulation root, HALF_KNEEL 50 %, CROUCH 85 % — 0.7 m of a lying / kneeling body sliding toward the root at up to 3 m/s, plus support points computed around the root (front foot 0.6 m ahead of the pelvis). At 60 fps that reads as the body jumping to the near side and getting up there.
+
+## What changed (presentation only — `gk_graph.js`, `gk3d_backend.js`)
+- **GET-UP in place**: BRACE, PUSH_UP, HALF_KNEEL, CROUCH and RISE hold the pelvis at the settled point; the settled pelvis is the recovery origin by construction. Support points (tuck, front foot, stance) are placed around the current pelvis, never around the simulation root. Recovery stage durations are the v3 constants again.
+- **REPOSITION** after standing: the offset is walked back with shuffle steps — `ceil(dist / 0.5)` steps of 0.30 s (three on this ball), one foot moves per step (lead foot toward the root, then the trailing foot closes, then the lead foot again), the lifted foot arcs 10 cm, the pelvis advances one step length per support change with a 3 cm bob, then SET on the simulation root.
+- **Direction test overlay** (roots overlay): cyan DIVE arrow from the presentation root, magenta SIMULATION ROOT → PRESENTATION ROOT arrow labelled with its length and "dive side" / "OPPOSITE SIDE!".
+- **Boundary assertions** (development): at every stage change after contact the backend records Δroot, Δpelvis, the displacement in excess of what the previous tick's velocity predicts, and Δvelocity (`GK3D.asserts`, console warning above 3 cm / 1.5 m/s). All 12 boundaries pass; SETTLE → BRACE is 0.000 m / 0.000 m / 0.02 m/s.
+- Trail markers STAND and SET added (SET's check previously matched "SETTLE" by substring).
+- Frozen: everything through the settle is the v4 trajectory — the per-tick trace up to tick 137 is identical.
+
+## Result on scenario 42
+offset along the dive: +1.470 m from tick 114 (settle) to tick 245 (standing); REPOSITION 246–299: 1.47 → 0.98 → 0.49 → 0.00 m over three steps (lead L foot 0.57 m, trailing R foot 0.98 m, lead L foot 0.57 m, plus a final 0.5 m stance adjust of the R foot at SET); SET at tick 300. Gates: sprite vs 3D 43/43 identical; animation OFF vs ON 43/43.
+
+## Honest limits of v5
+- The shuffle is brisk (2.4 m/s peak pelvis speed) and the trailing leg stretches for a few ticks before its own step because its lock is reach-capped; there is no authored stride, the body holds the SET pose with a bob.
+- SET arrives at tick 300 while the simulation's keeper is ready earlier; the presentation is late by ~0.9 s on this ball.
+- The remaining v4 limits (heap settle pose, modest trailing legs, side-landing branch unexercised) still apply.

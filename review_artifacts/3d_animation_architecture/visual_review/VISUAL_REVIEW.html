@@ -15,13 +15,49 @@
  a{color:#6fd3ff}
 </style></head><body>
 <header>
- <h1>3D VERTICAL SLICE — VISUAL REVIEW · goalkeeper far dive, scenario 42 ("S4 K2 high tip-up") · v4 = momentum-continuous flight and landing (top) · v3 (reviewed: post-contact trajectory rejected), v2, v1 below for history</h1>
+ <h1>3D VERTICAL SLICE — VISUAL REVIEW · goalkeeper far dive, scenario 42 ("S4 K2 high tip-up") · v5 = get up where he landed, then step back (top) · v4 (flight and landing accepted; recovery rejected), v3, v2, v1 below for history</h1>
  <p class="q">Question: does skeletal 3D give a substantially better foundation for motion than the sprite system while still being able to look like Touchline?</p>
  <p class="sub">One simulation (deterministic, zero RNG; commit tick 38, contact tick 62 = t 1.050 s, HAND · WEAK PARRY, execEnd tick 66) rendered three ways from the identical per-tick state. Simulation traces are hash-identical across backends (43/43 scenarios). Nothing was changed for this page: same clip, graph, IK and render options as committed. Sprite jersey/shorts/socks/gloves colours are matched on the 3D parts; no face, hair, kit or mesh polish was done on purpose.</p>
 </header>
 
 
 
+
+
+<section style="border:2px solid #38e0ff;border-radius:8px;margin:18px 24px;padding:10px 18px;background:#12181a">
+ <h2 style="margin-top:8px">v5 · GET UP WHERE HE LANDED, THEN STEP BACK — flight and landing untouched (v4), recovery split into GET-UP (in place) and REPOSITION (shuffle steps)</h2>
+ <p class="note"><b>What the trace found (§v5·7, transition table):</b> no sign flip and no positional jump. Along the dive direction the presentation offset is +1.470 m at the last SETTLE tick and +1.470 m at the first BRACE tick, with identical pelvis and support points; the ROOT→PRES vector stays on the dive side throughout. What moved the lying body in v4 was the reconciliation I had put <i>inside</i> the get-up: PUSH_UP pulled the hips 22 % of the way to the simulation root, HALF_KNEEL 50 %, CROUCH 85 % — 0.7 m of a lying / kneeling body sliding toward the root at up to 3 m/s, which reads as the body jumping to the near side. <b>v5 removes every trace of that:</b> BRACE, PUSH_UP, HALF_KNEEL, CROUCH and RISE all keep the pelvis at the settled point (<code>H = Hstop</code>), support points are placed around the current pelvis (never around the simulation root), and a new <b>REPOSITION</b> stage after standing walks the offset back with shuffle steps: one foot moves per step (lead foot, trailing foot, lead foot — 0.49 m per step, 0.30 s each, the lifted foot arcs 10 cm), the pelvis advances one step length per support change, and SET is reached at tick 300. Nothing in the simulation changed.</p>
+ <h2>v5 · 1 Normal speed, close zoom + gameplay — DESCENT → TOUCHDOWN → IMPACT → SLIDE → SETTLE → BRACE → GET-UP → STAND → REPOSITION → SET (every tick, 20 ms)</h2>
+ <img class="sheet" src="v5_01_normal_speed_closeup_descent_to_set.gif">
+ <h2>v5 · 2 4× slow motion — close zoom · + skeleton / feet / roots (DIVE and ROOT→PRES arrows) / trail</h2>
+ <img class="sheet" src="v5_02_slowmo_4x_closeup.gif">
+ <h2>v5 · 3 Presentation-root trail + simulation-root → presentation-root vector (gameplay camera and close zoom, 2× slow)</h2>
+ <img class="sheet" src="v5_03_trail_root_vector_gameplay.gif">
+ <h2>v5 · 4 Synced player — 3D v5 · + overlays (true 60 fps, scrubbable; readout: stage, offset along the dive, foot contacts)</h2>
+ <div class="ctl">
+  <button id="play5" class="on">Pause</button>
+  <span>speed</span><button data-sp="1" class="on sp5">1× (60 fps)</button><button data-sp="0.25" class="sp5">¼×</button><button data-sp="0.1" class="sp5">1/10×</button>
+  <span>view</span><button data-v="cl" class="on vw5">close zoom 3.5</button><button data-v="gp" class="vw5">gameplay camera</button>
+  <button id="step5">step +1 tick</button>
+  <span>jump</span><button class="jp5" data-k="91">TOUCHDOWN</button><button class="jp5" data-k="104">SLIDE</button><button class="jp5" data-k="120">SETTLE</button><button class="jp5" data-k="138">BRACE</button><button class="jp5" data-k="175">HALF-KNEEL</button><button class="jp5" data-k="246">STAND</button><button class="jp5" data-k="264">STEP 2</button><button class="jp5" data-k="300">SET</button>
+  <input type="range" id="scrub5" min="0" max="319" value="74"><span id="ro5" class="ro"></span>
+ </div>
+ <div class="player" id="panels5"></div>
+ <h2>v5 · 5 Frame strip every 2 ticks — SETTLE → BRACE → PUSH-UP → HALF-KNEEL start (mannequin + overlays)</h2>
+ <div class="wide"><img class="sheet" src="v5_04_frame_strip_settle_to_recovery_2tick.png"></div>
+ <h2>v5 · 6 Frame strip every 3 ticks — STAND → REPOSITION steps → SET (mannequin + support-foot overlays)</h2>
+ <div class="wide"><img class="sheet" src="v5_05_frame_strip_stand_to_set_3tick.png"></div>
+ <h2>v5 · 7 Trail and direction test stills · transition trace</h2>
+ <div class="wide"><img class="sheet" src="v5_06_trail_and_direction_stills.png"></div>
+ <table style="margin-top:10px">
+  <tr><th>transition trace (as requested)</th><td>full table for the reviewed v4 build and for v5 — stage/key, simulation root, presentation root, offset along the dive, pelvis world, support points, boundary assertions: <a href="../verification/v5_transition_trace.md">v5_transition_trace.md</a>. Facing frozen at the commit; dive-direction unit vector (pitch) = (−0.002, −1.000); recovery direction = (+0.002, +1.000)</td></tr>
+  <tr><th>continuity assertions (development check, every stage boundary after contact)</th><td>Δroot, Δpelvis, excess displacement beyond the previous tick's velocity, Δvelocity — all 12 boundaries pass; SETTLE → BRACE: Δroot 0.000 m, Δpelvis 0.000 m, Δv 0.02 m/s; RISE → REPOSITION: Δpelvis 0.001 m; REPOSITION → SET: excess 0.008 m, Δv 0.49 m/s. The check runs live in the backend (<code>GK3D.asserts</code>, console warning on a violation)</td></tr>
+  <tr><th>acceptance</th><td>dive along the goal line → land 1.47 m along it → lie there → brace there → get up there → stand there (offset +1.470 m unchanged from tick 114 to tick 245) → three shuffle steps back (1.47 → 0.98 → 0.49 → 0.00 m, one planted foot changes per step) → SET on the simulation root at tick 300. The magenta ROOT→PRES arrow and the cyan DIVE arrow point the same way in every frame from touchdown to SET (the label would read "OPPOSITE SIDE!" otherwise)</td></tr>
+  <tr><th>neutrality</th><td>sprite vs SKELETAL_3D, all 43 scenarios × 260 ticks: <b>43/43 identical</b> (<a href="../verification/V5_GATE_COMPARE_sprite_vs_3d_all_scenarios.md">table</a>) · animation OFF vs 3D ON: <b>43/43 identical</b> (<a href="../verification/V5_GATE_COMPARE_animation_on_vs_off.md">table</a>)</td></tr>
+  <tr><th>unchanged from v4 (frozen)</th><td>load, push-off, toe-off, flight arc, contact, post-contact momentum, descent, touchdown (tick 91), impact, slide, settle position (1.47 m): the per-tick trace through tick 137 is identical to v4's</td></tr>
+  <tr><th>known limits (v5)</th><td>the shuffle is brisk (2.4 m/s peak pelvis speed, 0.98 m stride for the trailing foot) and the trailing leg stretches for a few ticks before its step (reach-capped lock); the standing pose during the steps is the SET pose with a 3 cm bob, no authored stride; SET arrives at tick 300 (the simulation's keeper is ready earlier)</td></tr>
+ </table>
+</section>
 
 <section style="border:2px solid #ff5ad6;border-radius:8px;margin:18px 24px;padding:10px 18px;background:#1a121a">
  <h2 style="margin-top:8px">v4 · MOMENTUM-CONTINUOUS DIVE — one airborne arc through CONTACT, landing where the arc comes down, deceleration only on the ground</h2>
@@ -286,6 +322,31 @@
  for (const b of document.querySelectorAll(".vw4")) b.onclick = () => { view = b.dataset.v; document.querySelectorAll(".vw4").forEach(x => x.classList.toggle("on", x === b)); build(); };
  for (const b of document.querySelectorAll(".jp4")) b.onclick = () => { stop(); i = ticks.indexOf(+b.dataset.k); draw(); };
  document.getElementById("step4").onclick = () => { stop(); i = (i + 1) % N; draw(); };
+ scrub.oninput = () => { stop(); i = +scrub.value; draw(); };
+ build(); requestAnimationFrame(tick);
+})();
+</script>
+
+<script>
+(async () => {
+ const FEET = ["PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PR-", "PR-", "PR-", "PR-", "PR-", "PR-", "PR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "RR-", "PR-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "RR-", "RR-", "RR-", "RRH", "RRH", "RRH", "RRH", "RRH", "RRH", "RRH", "RRH", "RRH", "RRH", "RRH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PPH", "PR-", "PR-", "PR-", "PR-", "PR-", "PR-", "PR-", "PR-", "PR-", "PR-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-", "PP-"], OFF = [-0.0, -0.0, -0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.01, 0.02, 0.05, 0.07, 0.1, 0.11, 0.13, 0.14, 0.14, 0.15, 0.16, 0.17, 0.17, 0.17, 0.18, 0.18, 0.18, 0.18, 0.17, 0.17, 0.17, 0.16, 0.16, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.16, 0.17, 0.18, 0.19, 0.21, 0.24, 0.26, 0.29, 0.31, 0.34, 0.37, 0.39, 0.42, 0.45, 0.47, 0.5, 0.52, 0.55, 0.58, 0.6, 0.63, 0.65, 0.68, 0.71, 0.73, 0.76, 0.78, 0.81, 0.84, 0.86, 0.89, 0.92, 0.94, 0.97, 0.99, 1.01, 1.04, 1.06, 1.08, 1.11, 1.13, 1.15, 1.17, 1.19, 1.21, 1.23, 1.24, 1.26, 1.28, 1.29, 1.3, 1.32, 1.33, 1.34, 1.35, 1.36, 1.37, 1.38, 1.39, 1.4, 1.4, 1.41, 1.42, 1.42, 1.43, 1.44, 1.44, 1.45, 1.45, 1.45, 1.46, 1.46, 1.46, 1.46, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.47, 1.46, 1.45, 1.43, 1.4, 1.37, 1.33, 1.3, 1.26, 1.21, 1.17, 1.13, 1.1, 1.06, 1.03, 1.01, 0.99, 0.98, 0.98, 0.97, 0.96, 0.94, 0.91, 0.88, 0.84, 0.81, 0.77, 0.72, 0.68, 0.64, 0.61, 0.57, 0.54, 0.52, 0.5, 0.49, 0.49, 0.48, 0.47, 0.45, 0.42, 0.39, 0.35, 0.32, 0.28, 0.23, 0.19, 0.16, 0.12, 0.08, 0.05, 0.03, 0.01, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], EV = {"TOUCHDOWN": 91, "SETTLE": 115, "BRACE": 138, "STAND": 247, "SET": 300};
+ const meta = await (await fetch("v5_player_meta.json")).json();
+ const ticks = meta.ticks, N = ticks.length, cols = meta.cols; const imgs = {};
+ for (const key of ["gp", "cl"]) for (const [v, s] of Object.entries(meta.sheets[key])) { const im = new Image(); im.src = s.file; await new Promise(r => { im.onload = r; im.onerror = r; }); imgs[key + "/" + v] = im; }
+ let view = "cl", i = 74, playing = true, speed = 1, acc = 0, last = performance.now();
+ const panels = document.getElementById("panels5"), ro = document.getElementById("ro5"), scrub = document.getElementById("scrub5"); scrub.max = N - 1;
+ const phase = (k) => { let p = "SET"; for (const [t, n] of meta.phases) if (k >= t) p = n; return p; };
+ const fl = (c) => c === "P" ? "PLANTED" : "RELEASED";
+ function build() { panels.innerHTML = ""; for (const [v, s] of Object.entries(meta.sheets[view])) { const w = document.createElement("div"); const c = document.createElement("canvas"); c.width = s.tile[0] * 2; c.height = s.tile[1] * 2; c.dataset.v = v; const l = document.createElement("div"); l.className = "sub"; l.textContent = s.label; w.appendChild(l); w.appendChild(c); panels.appendChild(w); } draw(); }
+ function draw() { for (const c of panels.querySelectorAll("canvas")) { const v = c.dataset.v, s = meta.sheets[view][v], im = imgs[view + "/" + v]; const ctx = c.getContext("2d"); ctx.imageSmoothingEnabled = false; ctx.clearRect(0, 0, c.width, c.height); if (im && im.width) ctx.drawImage(im, (i % cols) * s.tile[0], Math.floor(i / cols) * s.tile[1], s.tile[0], s.tile[1], 0, 0, c.width, c.height); }
+   const k = ticks[i], f = FEET[k] || "---", evs = Object.entries(EV).filter(([n, t]) => t === k).map(([n]) => n); ro.textContent = "tick " + k + "  t=" + (k / 60).toFixed(3) + " s  " + phase(k) + "  offset along dive " + ((OFF[k] || 0) >= 0 ? "+" : "") + (OFF[k] || 0).toFixed(2) + " m  R FOOT: " + fl(f[0]) + "  L FOOT: " + fl(f[1]) + (f[2] === "H" ? "  HAND ON PITCH" : "") + (evs.length ? "  ← " + evs.join(" / ") : ""); scrub.value = i; }
+ function tick(ts) { const dt = Math.min(0.1, (ts - last) / 1000); last = ts; if (playing) { acc += dt * speed; while (acc >= 1 / 60) { acc -= 1 / 60; i = (i + 1) % N; } draw(); } requestAnimationFrame(tick); }
+ const stop = () => { playing = false; document.getElementById("play5").textContent = "Play"; document.getElementById("play5").classList.remove("on"); };
+ document.getElementById("play5").onclick = (e) => { playing = !playing; e.target.textContent = playing ? "Pause" : "Play"; e.target.classList.toggle("on", playing); };
+ for (const b of document.querySelectorAll(".sp5")) b.onclick = () => { speed = +b.dataset.sp; document.querySelectorAll(".sp5").forEach(x => x.classList.toggle("on", x === b)); };
+ for (const b of document.querySelectorAll(".vw5")) b.onclick = () => { view = b.dataset.v; document.querySelectorAll(".vw5").forEach(x => x.classList.toggle("on", x === b)); build(); };
+ for (const b of document.querySelectorAll(".jp5")) b.onclick = () => { stop(); i = ticks.indexOf(+b.dataset.k); draw(); };
+ document.getElementById("step5").onclick = () => { stop(); i = (i + 1) % N; draw(); };
  scrub.oninput = () => { stop(); i = +scrub.value; draw(); };
  build(); requestAnimationFrame(tick);
 })();
