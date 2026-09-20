@@ -15,7 +15,7 @@
  a{color:#6fd3ff}
 </style></head><body>
 <header>
- <h1>3D VERTICAL SLICE — VISUAL REVIEW · goalkeeper far dive, scenario 42 ("S4 K2 high tip-up") · v6 = lands on the right side and stays on it (top) · v5 (root fixed; pose flipped mid-settle), v4, v3, v2, v1 below</h1>
+ <h1>3D VERTICAL SLICE — VISUAL REVIEW · goalkeeper far dive, scenario 42 ("S4 K2 high tip-up") · v7 = the same v6 animation on a skinned humanoid character (top) · v6 (accepted), v5, v4, v3, v2, v1 below</h1>
  <p class="q">Question: does skeletal 3D give a substantially better foundation for motion than the sprite system while still being able to look like Touchline?</p>
  <p class="sub">One simulation (deterministic, zero RNG; commit tick 38, contact tick 62 = t 1.050 s, HAND · WEAK PARRY, execEnd tick 66) rendered three ways from the identical per-tick state. Simulation traces are hash-identical across backends (43/43 scenarios). Nothing was changed for this page: same clip, graph, IK and render options as committed. Sprite jersey/shorts/socks/gloves colours are matched on the 3D parts; no face, hair, kit or mesh polish was done on purpose.</p>
 </header>
@@ -24,6 +24,40 @@
 
 
 
+
+
+<section style="border:2px solid #38ff9a;border-radius:8px;margin:18px 24px;padding:10px 18px;background:#121a14">
+ <h2 style="margin-top:8px">v7 · SKINNED HUMANOID CHARACTER DRIVEN BY THE EXACT v6 ANIMATION — skeleton, skinning, pixel/2.5D read and customization test (nothing in the simulation, graph, timing, IK or roots changed)</h2>
+ <p class="note"><b>What was built:</b> a procedural skinned humanoid test body (head, neck, torso with shoulders, upper/lower arms, mitten gloves, pelvis, thighs, knees, calves, boots with heel and toe; green long-sleeve jersey, black shorts and socks, dark boots, white gloves) lofted from the skeleton's bind pose, 1 260 vertices / 2 156 triangles, linear-blend skinned on the GPU with up to 4 influences per vertex (two bones straddle each joint), one draw call. Bone matrices are world × inverse-bind straight from the v6 solve (glove IK, foot locks, look-at included). <b>The 23-bone hierarchy is used unchanged</b> — it was sufficient for this test and no twist bones were added; where that shows is listed under limits. The capsule mannequin stays available (<code>GL3D.character = "MANNEQUIN"</code>, page select "3D character"). Same render pipeline for both: the preferred 1/2-target pixel/2.5D pass with outline, or normal 3D (1/1, no outline, 6 bands). Perf: 0.55 ms average per drawn tick across the 43-scenario gate (mannequin: 0.46 ms), one draw instead of 22.</p>
+ <h2>v7 · 1 Mannequin V6 vs skinned-character V6 — gameplay camera, 60 fps (APNG exact timing; <a href="v7_01_mannequin_vs_skinned_gameplay_fullspeed.gif">GIF</a>)</h2>
+ <img class="sheet" src="v7_01_mannequin_vs_skinned_gameplay_fullspeed.png">
+ <h2>v7 · 2 Clean close-up, 60 fps — mannequin · skinned pixel/2.5D · skinned normal 3D (APNG; <a href="v7_02_closeup_fullspeed_mannequin_skinned_3d.gif">GIF</a>)</h2>
+ <img class="sheet" src="v7_02_closeup_fullspeed_mannequin_skinned_3d.png">
+ <h2>v7 · 3 4× slow motion, same three</h2>
+ <img class="sheet" src="v7_03_closeup_slowmo_4x.gif">
+ <h2>v7 · 4 Normal 3D vs pixel/2.5D — key frames (mannequin pixel below for reference)</h2>
+ <div class="wide"><img class="sheet" src="v7_04_normal3d_vs_pixel_keyframes.png"></div>
+ <h2>v7 · 5 Skeleton inside the mesh (normal 3D, 2× slow; bones, L/R markers, pelvis and chest axes)</h2>
+ <img class="sheet" src="v7_05_skeleton_inside_mesh_2x.gif">
+ <h2>v7 · 6 Deformation — crouch / load / push-off / toe-off (zoom 6)</h2>
+ <div class="wide"><img class="sheet" src="v7_06_deformation_crouch_takeoff.png"></div>
+ <h2>v7 · 7 Deformation — flight / full extension / contact / follow-through / descent (zoom 6)</h2>
+ <div class="wide"><img class="sheet" src="v7_07_deformation_extension_contact.png"></div>
+ <h2>v7 · 8 Deformation — landing / slide / settle / brace / kneel / stand (zoom 6)</h2>
+ <div class="wide"><img class="sheet" src="v7_08_deformation_landing_getup.png"></div>
+ <h2>v7 · 9 Customization — the SAME v6 animation asset driving five bodies: default · taller/longer-limbed · shorter/stockier · alternate skin tone · alternate jersey (pixel key frames, normal 3D key frames, gameplay 60 fps)</h2>
+ <div class="wide"><img class="sheet" src="v7_09_customization_pixel_keyframes.png"></div>
+ <div class="wide" style="margin-top:10px"><img class="sheet" src="v7_10_customization_normal3d_keyframes.png"></div>
+ <img class="sheet" src="v7_11_customization_gameplay_fullspeed.gif" style="margin-top:10px">
+ <table style="margin-top:10px">
+  <tr><th>the question</th><td><b>Yes, with one known weak spot.</b> The proven skeletal system drives a skinned, customizable footballer with no change to the animation, graph, IK, roots or timing, and through the fixed pixel/2.5D pass it reads as a Touchline character at gameplay scale (§1: same silhouette language as the sprite art — jersey block, dark shorts and socks, glove dots — and slimmer than the mannequin). Deformation through the v6 sequence: crouch, knee and hip flexion, explosive extension, elbow extension, glove reach, torso roll, ground contact, kneel and get-up are all clean; no candy-wrapper forearm (the reach has no forearm twist to expose it), no broken elbows, no collapsing knees, no detached gloves or boots. The weak spot is the <b>shoulder</b>: when the arm goes above the head the arm's deltoid cap reads as a ball sitting on the torso (§6 ticks 47–50, §7) — a single-bone clavicle/upper-arm blend with no shoulder corrective. Mesh self-intersection appears only in the authored heap at the settle (arms through the torso), which is the pose, not the skinning.</td></tr>
+  <tr><th>skeleton sufficiency</th><td>the 23-bone hierarchy is sufficient for this test and was not modified. Additions that would improve a production character, none required for the architecture: an upper-arm twist (the shoulder/deltoid volume when the arm is raised), a forearm twist (only matters once the glove rotates in the reach), a shoulder corrective or clavicle blend weight, and a second spine bone for smoother torso roll. All are additive leaf/intermediate bones; the clips are rotation-only so they would keep driving the graph unchanged</td></tr>
+  <tr><th>what is safe as a mesh/material change</th><td>skin tone, jersey / shorts / socks / boots / glove colours (palette per material group, §9 rows 4–5): identical motion, identical reach (6.4 cm glove residual, same as default), identical simulation. Mesh detail (face, hair, kit cut) is the same category: it lives on the skeleton, the graph never sees it</td></tr>
+  <tr><th>what needs retargeting</th><td>proportions. The clips retarget by construction (rotation-only + a pelvis offset), and the graph re-solves reach, plants and the arc for the new skeleton, so the tall and short bodies play the same v6 asset (§9 rows 2–3) — but three things are in metres, not in bone lengths: the authored pelvis offsets in the clip keys (crouch depth), the support-point offsets (tuck / stance / step 0.42 / 0.20 / 0.50 m) and the landing heights scaled by H only. Measured effect on the glove at contact: tall 1.4 cm, default 6.4 cm, short 14.8 cm residual (a 6 % shorter keeper cannot quite reach the simulation's hand point with this clip). A proportion change therefore needs either a per-height retarget of those metre constants or the simulation's own reach envelope tied to the keeper's height — an architecture note, not a blocker</td></tr>
+  <tr><th>neutrality</th><td>sprite vs SKELETAL_3D with the skinned character drawn every tick, all 43 scenarios × 260 ticks: <b>43/43 identical</b> (<a href="../verification/V7_GATE_COMPARE_sprite_vs_3d_all_scenarios.md">table</a>); animation OFF vs ON: 43/43 (<a href="../verification/V7_GATE_COMPARE_animation_on_vs_off.md">table</a>); all five variants share the identical simulation root and contact</td></tr>
+  <tr><th>external asset?</th><td>not needed for this proof; the local test body answers the architecture question. When a real character is wanted, look for: glTF 2.0 (.glb) with skinning, a humanoid rig whose joint set maps onto this hierarchy (pelvis, spine, chest, neck, head, clavicles, upper arms, forearms, hands, thighs, shins, feet, toes — extra twist / finger bones are fine, they can be parented to ours), Y-up, metres, T- or A-pose bind, ≤ 4 influences per vertex, materials split by kit part (jersey / shorts / socks / boots / gloves / skin / hair) so palette customization stays a material change, ~2–6 k triangles for this pixel scale, and a licence permitting redistribution in a game (CC0 / CC-BY or a bought game-asset licence; no editorial-only or non-commercial terms)</td></tr>
+ </table>
+</section>
 
 <section style="border:2px solid #ffe36a;border-radius:8px;margin:18px 24px;padding:10px 18px;background:#1a1a12">
  <h2 style="margin-top:8px">v6 · THE BODY THAT LANDS ON THE RIGHT SIDE GETS UP FROM THE RIGHT SIDE — mirror frozen at the commit, landed side measured from the skeleton, rotation continuity checked</h2>

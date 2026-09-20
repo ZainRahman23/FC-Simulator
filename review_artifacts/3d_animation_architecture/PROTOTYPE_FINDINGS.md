@@ -259,3 +259,26 @@ Right shoulder 0.06 m / right hip 0.10 m on the pitch at ticks 135–140 with id
 - The recovery for a landed side that differs from the dive side is not authored: it would be reported, and the landing-chain mirror kept.
 - `gkLandedSide` is a height heuristic (shoulder + hip tilt); it is measured once, at the settle.
 - Remaining v5 limits (brisk shuffle, no stride, late SET) still apply.
+
+---
+
+# v7 — the exact v6 animation on a skinned humanoid character
+
+Review page: `visual_review/VISUAL_REVIEW.html` (v7 section at the top). Deliverables `visual_review/v7_01…v7_11*`. Code: `anim3d/skin_mesh.js` (new), `gl_renderer.js` (skinned program + path), `skeleton.js` (`skelBuild(H, prop)`), `gk3d_backend.js` (variants, skin matrices), page selects, capture options `--character`, `--variant`.
+
+## What was built
+- A procedural skinned humanoid test body lofted from the skeleton's bind pose (elliptical cross-section tubes per limb chain, torso, neck, head; material per vertex; seams duplicated so flat parts don't sawtooth): 1 260 vertices, 2 156 triangles, 7 material groups. GPU linear-blend skinning, ≤ 4 influences, two bones across each joint; bone matrices = world × inverse-bind from the v6 solve (IK / look-at included). One draw call; 0.55 ms per drawn tick in the 43-scenario gate (mannequin 0.46 ms).
+- The 23-bone hierarchy is used unchanged; the mannequin remains a debug option (`GL3D.character`).
+- Proportion / appearance variants (`GK3D.variants`): default, taller/longer-limbed (+6 % H, legs +5 %, arms +7 %, girth −3 %), shorter/stockier (−6 % H, limbs −4 %, girth +14 %), alternate skin tone, alternate jersey. Presentation only; the simulation keeper is unchanged.
+
+## Findings
+- **Through the pixel/2.5D pass at gameplay scale the skinned body reads as a Touchline character** (same silhouette language as the sprite art) and is slimmer than the mannequin. Normal 3D is available for inspection.
+- **Deformation** through crouch, knee/hip flexion, explosive extension, elbow extension, glove reach, torso roll, ground contact, kneel and get-up is clean. No candy-wrapper forearm (the v6 reach carries no forearm twist that would expose it), no broken elbows, no collapsing knees, no detached gloves/boots.
+- **Weak spot: the shoulder.** With the arm raised above the head the arm's deltoid cap reads as a separate ball on the torso — a single clavicle/upper-arm blend with no corrective. Self-intersection appears only in the authored settle heap (arms through the torso): the pose, not the skinning.
+- **Skeleton sufficiency:** sufficient; not modified. Would improve a production character (all additive, clips unaffected): upper-arm twist, forearm twist, a shoulder corrective / clavicle weight, a second spine bone.
+- **Safe as mesh/material changes:** skin tone and all kit colours (identical motion and reach); mesh detail such as face, hair, kit cut.
+- **Needs retargeting:** proportions. Rotation-only clips and the graph's re-solve make the tall and short bodies play the same asset, but three things are in metres, not bone lengths — the clip's pelvis offsets (crouch depth), the support-point offsets (0.42 / 0.20 / 0.50 m) and the landing heights (scaled by H only). Measured glove residual at contact: tall 1.4 cm, default 6.4 cm, short 14.8 cm — a 6 % shorter keeper cannot quite reach the simulation's hand point with this clip. Fix path: per-height retarget of the metre constants, or tie the simulation's reach envelope to the keeper's height.
+- **Neutrality:** 43/43 identical both gates with the skinned character drawn every tick; all variants share the identical simulation root and contact.
+
+## External asset requirements (only if a real character is wanted; not needed for this proof)
+glTF 2.0 (.glb) with skinning; humanoid joint set mapping onto this hierarchy (extra twist / finger bones are fine, parented to ours); Y-up, metres, T- or A-pose bind; ≤ 4 influences per vertex; materials split by kit part (jersey / shorts / socks / boots / gloves / skin / hair); ~2–6 k triangles for this pixel scale; a licence permitting redistribution in a game (CC0 / CC-BY or a purchased game-asset licence; no editorial-only or non-commercial terms).
