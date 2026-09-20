@@ -2981,6 +2981,20 @@ const GK_SCENARIOS = [
   { name: "M3c SW-facing chest catch (from the south, synthK z 1.15)",   origin: [100, 42], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.05, z: 1.15, v: 15 } },
   { name: "M3c NW-facing chest catch (from the north, synthK z 1.2)",    origin: [100, 26], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: -0.05, z: 1.2, v: 15 } },
   { name: "M3c SSW-facing chest catch (from [96,40], synthK z 1.1)",     origin: [96, 40],  aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.0, z: 1.1, v: 14 } },
+  // ── GOALKEEPER DISTRIBUTION fixtures (v12): a secured catch followed by an AUTHORITATIVE release plan (sc.dist → GK_DIST) ──
+  // target = pitch point [x, y]; the keeper defends x = 105 facing −x, so y < 34 is on his RIGHT (right = (−sin f, cos f)); side/foot default to the target's side / R
+  { name: "D1 PUT DOWN central (chest catch → place ahead → free ball)",       origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.05, z: 1.15, v: 15 }, dist: { kind: "PUTDOWN" } },
+  { name: "D2 HAND ROLL RIGHT (target [96, 26], right hand)",                   origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.05, z: 1.15, v: 15 }, dist: { kind: "ROLL", target: [96, 26] } },
+  { name: "D2 HAND ROLL LEFT (target [96, 42], left hand)",                     origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: -0.05, z: 1.15, v: 15 }, dist: { kind: "ROLL", target: [96, 42] } },
+  { name: "D3 OVERARM THROW RIGHT (target [78, 24])",                           origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.05, z: 1.15, v: 15 }, dist: { kind: "THROW", target: [78, 24] } },
+  { name: "D3 OVERARM THROW LEFT (target [78, 44])",                            origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: -0.05, z: 1.15, v: 15 }, dist: { kind: "THROW", target: [78, 44] } },
+  { name: "D3 OVERARM THROW far, straight (target [62, 34])",                   origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.05, z: 1.15, v: 15 }, dist: { kind: "THROW", target: [62, 34] } },
+  { name: "D4 PUNT RIGHT foot (target [55, 34])",                               origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.05, z: 1.15, v: 15 }, dist: { kind: "PUNT", target: [55, 34], foot: "R" } },
+  { name: "D4 PUNT LEFT foot (target [55, 34])",                                origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: -0.05, z: 1.15, v: 15 }, dist: { kind: "PUNT", target: [55, 34], foot: "L" } },
+  { name: "D5 angled: SW-facing catch → PUT DOWN (body must turn to face out)", origin: [100, 42], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.05, z: 1.15, v: 15 }, dist: { kind: "PUTDOWN" } },
+  { name: "D5 angled: NW-facing catch → THROW to the far side (target [80, 46])", origin: [100, 26], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: -0.05, z: 1.2, v: 15 }, dist: { kind: "THROW", target: [80, 46] } },
+  { name: "D5 angled: SSW-facing catch → ROLL across (target [98, 42])",        origin: [96, 40],  aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.0, z: 1.1, v: 14 }, dist: { kind: "ROLL", target: [98, 42] } },
+  { name: "D5 angled: SW-facing catch → PUNT left foot (target [50, 30])",      origin: [100, 42], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.05, z: 1.15, v: 15 }, dist: { kind: "PUNT", target: [50, 30], foot: "L" } },
 ];
 function ptGkMake() {
   const c = GK_CFG;
@@ -4135,9 +4149,66 @@ function gkHeldBallStep(t, b) {
   b.vx = 0; b.vy = 0; b.vz = 0;
   return true;
 }
+// ═══ GOALKEEPER DISTRIBUTION (simulation-owned, 2026-09-20) ═══
+// A keeper-held ball (b.held === "GK") had no release: the hold was terminal until a scenario reset. This is the minimal
+// AUTHORITATIVE contract that decides and executes a release; animation only reads gk.dist and explains it.
+//   kind THROW   overarm: at tRelease the ball is at the release point (ahead / on the throwing side / shoulder height) with a
+//                flat ballistic arc to the target (horizontal speed vH, landing at z 0 at the target)
+//   kind ROLL    bowl: at tRelease the ball is at ground level ahead / beside the keeper, rolling toward the target (vz 0)
+//   kind PUNT    two authoritative moments: tDrop (the ball leaves the hands at the drop point, free-falls under the same
+//                physics as every ball) and tKick (foot contact at kickZ: the CLEAR launch family, ptFam, from the ball's position)
+//   kind PUTDOWN the ball is placed on the pitch ahead of the feet with a gentle roll; held cleared; the ordinary free-ball
+//                rules (player control / pickup exclusion) apply from that tick — the keeper entity has no dribbling mechanic
+// Decision: t.gkDist (scenario `dist` / tools) requests a kind + target; it starts once the ball has been secured for
+// GK_DIST.secureT. During the plan the keeper stands still and faces the target (authoritative facing); after the follow-through
+// the plan is cleared and normal positioning resumes. Deterministic: fixed durations, no randomness. Nothing here is read from
+// animation. Release / drop / kick events are recorded in gk.distEvents for validation.
+const GK_DIST = {
+  secureT: 1.00, secureTDown: 3.50, followT: 0.70,                                       // secure time after the catch before a release may start: standing catches 1.0 s; a diving / collapsing catch (the keeper is down) 3.5 s
+  THROW:   { prep: 0.90, vH: 17,  release: [0.85, 0.28, 1.78] },                      // [ahead, lateral toward the throwing side, height] in the keeper's frame; release beside / above the throwing shoulder with the arm extended forward-up
+  ROLL:    { prep: 1.00, v: 9,    release: [0.60, 0.22, 0.00] },                      // released ON the pitch (z 0 = the ball's ground rest height, the same convention as every rolling ball)
+  PUNT:    { prep: 0.75, drop: [0.55, 0.12, 1.05], kickZ: 0.45, fam: "CLEAR", D: 45, followT: 0.80, drift: 0.3 },   // the drop is the first authoritative moment; the KICK happens when the falling ball reaches kickZ (an event, predicted at the drop as tKick)
+  PUTDOWN: { prep: 0.85, release: [0.50, 0.00, 0.00], vFwd: 0.4, followT: 0.60 },
+  targets: { THROW: [78, 8], ROLL: [96, -6], PUNT: [55, 0], PUTDOWN: null },           // default targets [x, lateral offset from the keeper's y] for tools / fixtures without an explicit target
+};
+function gkDistKeeperPoint(gk, f, rel, sideSign) { const rx = -Math.sin(f), ry = Math.cos(f); return [gk.x + Math.cos(f) * rel[0] + rx * rel[1] * sideSign, gk.y + Math.sin(f) * rel[0] + ry * rel[1] * sideSign, rel[2]]; }
+function gkDistributionStart(t, gk, req) {
+  const K = GK_DIST[req.kind]; if (!K) return null;
+  const tgt = req.target || (GK_DIST.targets[req.kind] ? [GK_DIST.targets[req.kind][0], gk.y + GK_DIST.targets[req.kind][1]] : [gk.x - 3, gk.y]);
+  const f = Math.atan2(tgt[1] - gk.y, tgt[0] - gk.x);
+  // hand convention (no keeper handedness exists in the simulation): the hand on the target's side in the keeper's CURRENT frame; central → right
+  const rx0 = -Math.sin(gk.facing), ry0 = Math.cos(gk.facing), lat0 = (tgt[0] - gk.x) * rx0 + (tgt[1] - gk.y) * ry0;
+  const side = req.side || (lat0 < -0.05 ? "L" : "R"), foot = req.foot || "R", sg = side === "L" ? -1 : 1;
+  const d = { kind: req.kind, t0: t.now, facing: f, target: tgt.slice(), side, foot, released: false, kicked: false, done: false, events: [] };
+  const D = Math.hypot(tgt[0] - gk.x, tgt[1] - gk.y), ux = (tgt[0] - gk.x) / (D || 1), uy = (tgt[1] - gk.y) / (D || 1);
+  if (req.kind === "THROW") { d.tRelease = t.now + K.prep; d.release = gkDistKeeperPoint(gk, f, K.release, sg); const T = Math.max(0.3, D / K.vH); d.v0 = [ux * K.vH, uy * K.vH, (0 - d.release[2]) / T + PT.G * T / 2]; d.tEnd = d.tRelease + GK_DIST.followT; }
+  else if (req.kind === "ROLL") { d.tRelease = t.now + K.prep; d.release = gkDistKeeperPoint(gk, f, K.release, sg); d.v0 = [ux * K.v, uy * K.v, 0]; d.tEnd = d.tRelease + GK_DIST.followT; }
+  else if (req.kind === "PUTDOWN") { d.tRelease = t.now + K.prep; d.release = gkDistKeeperPoint(gk, f, K.release, sg); d.v0 = [ux * K.vFwd, uy * K.vFwd, 0]; d.tEnd = d.tRelease + K.followT; }
+  else if (req.kind === "PUNT") { const fs = foot === "L" ? -1 : 1; d.tDrop = t.now + K.prep; d.drop = gkDistKeeperPoint(gk, f, K.drop, fs); d.tKick = d.tDrop + Math.sqrt(2 * Math.max(0.01, K.drop[2] - K.kickZ) / PT.G); d.kickP = [d.drop[0] + ux * K.drift * (d.tKick - d.tDrop), d.drop[1] + uy * K.drift * (d.tKick - d.tDrop), K.kickZ]; const lv = ptFam(K.fam, Math.min(K.D, D)); d.vKick = [ux * lv[0], uy * lv[0], lv[1]]; d.tRelease = d.tDrop; d.release = d.drop; d.tEnd = d.tKick + K.followT; }   // tKick / kickP = the PREDICTED free-fall arrival at kickZ (the presentation aims the foot at it); the kick itself fires on the ball's own fall
+  // the commit record is KEPT through the plan (the possession lifecycle continues from it); cleared when the plan ends
+  gk.dist = d; gk.distEvents = gk.distEvents || []; gk.shotActive = false; gk._snapped = null; gk.state = "DISTRIBUTE:" + req.kind;
+  return d;
+}
+function gkDistributionStep(t) {
+  const gk = t.gk, b = t.b, d = gk.dist; if (!d) return false;
+  gk.facing = d.facing; gk.vx = 0; gk.vy = 0;                                                            // the keeper stands and faces the target while distributing (authoritative)
+  const ev = (name, extra) => { const e = Object.assign({ name, kind: d.kind, t: t.now, tick: Math.round(t.now * 60), ball: [b.x, b.y, b.z], v: [b.vx, b.vy, b.vz], root: [gk.x, gk.y], facing: d.facing, held: b.held || null }, extra || {}); d.events.push(e); gk.distEvents.push(e); return e; };
+  if (d.kind === "PUNT") {
+    if (!d.released && t.now >= d.tDrop - 1e-6 && b.held === "GK") { b.x = d.drop[0]; b.y = d.drop[1]; b.z = d.drop[2]; const ux = Math.cos(d.facing), uy = Math.sin(d.facing); b.vx = ux * GK_DIST.PUNT.drift; b.vy = uy * GK_DIST.PUNT.drift; b.vz = 0; b.held = null; b.ctrl = false; b.curve = null; b.exclT = d.tKick + 0.4; d.released = true; ev("DROP"); }
+    if (d.released && !d.kicked && !b.held && (b.z <= GK_DIST.PUNT.kickZ + 1e-6 || t.now >= d.tKick + 0.10)) { const pre = [b.x, b.y, b.z]; b.vx = d.vKick[0]; b.vy = d.vKick[1]; b.vz = d.vKick[2]; b.exclT = t.now + 0.4; d.kicked = true; d.tKickActual = t.now; d.kickActual = pre; ev("KICK", { foot: d.foot, predicted: d.kickP.slice(), predErr: +Math.hypot(pre[0] - d.kickP[0], pre[1] - d.kickP[1], pre[2] - d.kickP[2]).toFixed(3), predTickErr: +(t.now - d.tKick).toFixed(3) }); }   // FOOT CONTACT: the falling ball (its own physics) reaches kick height → the CLEAR launch is applied WHERE THE BALL IS (never moved to the prediction)
+  } else if (!d.released && t.now >= d.tRelease - 1e-6 && b.held === "GK") {
+    b.x = d.release[0]; b.y = d.release[1]; b.z = d.release[2]; b.vx = d.v0[0]; b.vy = d.v0[1]; b.vz = d.v0[2]; b.held = null; b.ctrl = false; b.curve = null; b.exclT = t.now + (d.kind === "PUTDOWN" ? 0.15 : 0.4); d.released = true; ev("RELEASE", { side: d.side });
+  }
+  if (t.now >= d.tEnd - 1e-6) { d.done = true; gk.distDone = d; gk.dist = null; gk.committed = null; gk.state = "SET"; }   // plan over: the commit record is released, normal positioning resumes
+  return true;
+}
 function ptGkUpdate(t) {
   const gk = t.gk; if (!gk) return;
   const b = t.b;
+  // GOALKEEPER DISTRIBUTION: a requested release starts once the caught ball has been secured; while a plan runs the keeper
+  // stands, faces the target and the plan owns the ball events (below); no positioning / shot logic
+  if (t.gkDist && !gk.dist && !gk.distDone && b.held === "GK" && gk.contact && t.now - gk.contact.tickT >= ((gk.contact.standing || (gk.committed && gk.committed.gather)) ? GK_DIST.secureT : GK_DIST.secureTDown) - 1e-6) gkDistributionStart(t, gk, t.gkDist);
+  if (gk.dist) { gk.height = gkHeightM(t, gk); gk.handZ = gk.height * GK_CFG.handReachFrac; gk.handPrev = gk.handNow || [gk.x, gk.y, gk.handZ]; gk.bodyPrev = gk.bodyNow || [gk.x, gk.y]; gkDistributionStep(t); gk.handNow = gk.handNow || [gk.x, gk.y, gk.handZ]; gk.bodyNow = [gk.x, gk.y]; gk.legTipNow = null; gk.depth = GK_MOUTH.lineX - gk.x; gk.predict = null; gk.reach = null; return; }
   gk.height = gkHeightM(t, gk); gk.handZ = gk.height * GK_CFG.handReachFrac;   // live height affects reach envelope + drawing
   gk.handPrev = gk.handNow || [gk.x, gk.y, gk.handZ];   // swept-contact geometry: last tick -> this tick
   gk.bodyPrev = gk.bodyNow || [gk.x, gk.y];
@@ -4151,6 +4222,7 @@ function ptGkUpdate(t) {
     gk.latency = gkReactionLatency(t, gk);
     gk.atShot = { x: gk.x, y: gk.y, vx: gk.vx, vy: gk.vy };
     gk.predHist = []; gk.committed = null; gk.contacted = false; gk.contact = null; gk.contacts = []; gk.lastContactT = null; gk.lastContactByVol = {}; gk._snapped = null; gk.lobLatched = false; gk.obsJitter = 0;
+    gk.dist = null; gk.distDone = null;                                                  // GOALKEEPER DISTRIBUTION: a new shot ends any plan (the ball is no longer his)
     gkAnimResetView();                              // GK Animation V1: per-shot view state (flags are kept for the review log)
     gk.setPos = [gk.x, gk.y];                        // A) freeze SET at the shot instant — POSITION controller stops here
     gk.moveTarget = [gk.x, gk.y]; gk.moveReversals = 0; gk.preCommitDist = 0; gk._lastMoveSgn = null;
@@ -4262,6 +4334,7 @@ function ptGkFire(sc, i, n) {
     t.gkReflex = cap.reflex; t.gkDiving = cap.diving; t.gkHeight = cap.height; t.gkJump = cap.jump; t.gkHandling = cap.handling;
   }
   t.now = 0; t.kick = null; t.shoot = null; t.net = null; t.pfoot = sc.foot || "R";
+  t.gkDist = sc.dist ? Object.assign({}, sc.dist) : null;                         // GOALKEEPER DISTRIBUTION request (kind / target / side / foot) for this fixture
   const facing = Math.atan2(sc.aim[1] - sc.origin[1], sc.aim[0] - sc.origin[0]);
   t.p = { x: sc.origin[0], y: sc.origin[1], vx: 0, vy: 0, facing, touchT: 0 };
   t.b = { x: sc.origin[0] + Math.cos(facing) * 0.3, y: sc.origin[1] + Math.sin(facing) * 0.3,

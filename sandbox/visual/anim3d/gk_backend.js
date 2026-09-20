@@ -59,6 +59,11 @@ function gkActionDescription(t, gk, cur) {
     // the shooter's visible wind-up: the playtest schedules the kick (t.kick.t0 → kickAt) before the impulse; a keeper drops into his
     // set crouch as the striker plants (production analogue: the KICK intent's wind-up). Read-only; 0..1 progress, null when no kick is pending
     windup: (t.kick && !t.kick.kicked && t.kick.kickAt > t.kick.t0) ? clamp01((t.now - t.kick.t0) / (t.kick.kickAt - t.kick.t0)) : null,
+    // GOALKEEPER DISTRIBUTION (simulation plan gk.dist, read-only): kind, the authoritative times (t0 / tRelease / tDrop / tKick predicted / tEnd), the
+    // authoritative release / drop / kick points (pitch frame), the authoritative facing and target, the hand / foot convention, and what has happened
+    dist: gk.dist ? { kind: gk.dist.kind, t0: gk.dist.t0, tRelease: gk.dist.tRelease, tDrop: gk.dist.tDrop != null ? gk.dist.tDrop : null, tKick: gk.dist.tKick != null ? gk.dist.tKick : null, tKickActual: gk.dist.tKickActual != null ? gk.dist.tKickActual : null, tEnd: gk.dist.tEnd,
+      release: gk.dist.release.slice(), drop: gk.dist.drop ? gk.dist.drop.slice() : null, kickP: gk.dist.kickP ? gk.dist.kickP.slice() : null, kickActual: gk.dist.kickActual ? gk.dist.kickActual.slice() : null, v0: gk.dist.v0 ? gk.dist.v0.slice() : (gk.dist.vKick ? gk.dist.vKick.slice() : null),
+      facing: gk.dist.facing, target: gk.dist.target.slice(), side: gk.dist.side, foot: gk.dist.foot, released: !!gk.dist.released, kicked: !!gk.dist.kicked, events: gk.dist.events.map(e => ({ name: e.name, t: e.t, tick: e.tick, ball: e.ball.slice(), v: e.v.slice(), held: e.held, side: e.side || null, foot: e.foot || null, predErr: e.predErr != null ? e.predErr : null, predTickErr: e.predTickErr != null ? e.predTickErr : null })) } : null,
   };
 }
 document.addEventListener("DOMContentLoaded", () => {

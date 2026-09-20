@@ -199,9 +199,83 @@ function gkGraphEvaluate(desc, clip, skel, state) {
   // the presentation facing is frozen for the whole committed action (the sprite resolver drops its own commit snapshot when its
   // clip ends, which would otherwise swing the lying keeper round to the live ball-tracking facing mid-recovery)
   const ck = c ? c.commitTick : null; if (state.facingKey !== ck) { state.facingKey = ck; state.facing = c ? desc.commitFacing : null; }
-  const facing = c ? state.facing : desc.facing;
-  const rootM = gkRootMatrix(desc.simRoot[0], desc.simRoot[1], facing, 0);
-  if (!c) {
+  let facing = c ? state.facing : desc.facing;
+  let rootM = gkRootMatrix(desc.simRoot[0], desc.simRoot[1], facing, 0);
+  let distG = null;
+  if (c && desc.dist) {
+    // ═══ DISTRIBUTION (v12): the simulation's release plan (desc.dist) drives a possession-graph continuation: the body starts from the pose it
+    // is in when the plan starts, turns to the authoritative facing, performs the authored action keyed on the plan's own times, and ends in
+    // the standing SET pose over the simulation root. The rendered ball follows an authored in-hand path that ENDS on the authoritative
+    // release / drop point at the release tick; from that tick the rendered ball is the simulation ball (never held, never re-parented).
+    const D = desc.dist;
+    if (!state.dist || state.dist.key !== D.t0) state.dist = { key: D.t0, from: state.lastPose ? Object.assign({}, state.lastPose, poseMeta(state.lastPose)) : M(clip.set), fromFacing: facing, ball0: state.lastBallPres ? state.lastBallPres.slice() : (desc.ball ? glW(desc.ball) : null), startPhase: state.lastPhase || null,
+      startDown: !!(state.lastMode === "post" && !(state.lastPhase === "SET" || state.lastPhase === "REPOSITION" || state.lastPhase === "RISE" || state.lastPhase === "CROUCH")),   // the plan started while the body was still on the ground / getting up (exposed: the simulation's secure time ran out before the presentation was standing)
+      v0: state.pelVel ? state.pelVel.slice() : [0, 0, 0], W0: state.lastWrists ? { R: state.lastWrists.R.slice(), L: state.lastWrists.L.slice() } : null, E0: state.lastElbows ? { R: state.lastElbows.R.slice(), L: state.lastElbows.L.slice() } : null, assist0: state.lastAssist || null };
+    const DS = state.dist, sel = gkSelectDistribution(D), dm = sel.motion, mirror = sel.mirror, rB = GK_GRAPH.ballVisR * hs;
+    const MD = (p) => HS(mirror ? poseMirrorP(p) : Object.assign({}, p, poseMeta(p)));
+    const wrapA = (a) => Math.atan2(Math.sin(a), Math.cos(a));
+    const prepT = Math.max(1e-3, D.tRelease - D.t0), turnT = Math.max(0.15, (dm ? dm.turnFrac : 0.3) * prepT);
+    const kTurn = smooth01(clamp01((desc.now - D.t0) / turnT));                                 // the body turns to the authoritative facing over the first part of the preparation (the simulation facing is already there)
+    facing = DS.fromFacing + wrapA(D.facing - DS.fromFacing) * kTurn; rootM = gkRootMatrix(desc.simRoot[0], desc.simRoot[1], facing, 0);
+    const invR = M4.invertRigid(rootM), lift = (P) => [P[0], Math.max(P[1], rB), P[2]];       // rendered ball centre never below its own radius (a ball ON the pitch: simulation z 0 = ground rest)
+    const isPunt = D.kind === "PUNT"; let seg, x;
+    if (desc.now < D.tRelease - 1e-9) { seg = "prep"; x = clamp01((desc.now - D.t0) / prepT); }
+    else if (isPunt && !D.kicked) { seg = "fall"; x = clamp01((desc.now - D.tDrop) / Math.max(1e-3, D.tKick - D.tDrop)); }   // the ball's own free fall (keyed on the predicted kick time; the kick fires on the ball itself)
+    else { const tK = isPunt ? (D.tKickActual != null ? D.tKickActual : D.tKick) : D.tRelease; seg = "post"; x = clamp01((desc.now - tK) / Math.max(1e-3, D.tEnd - tK)); }
+    const aux = (k, sx) => ({ ball: k._ball ? [k._ball[0] * (mirror ? -1 : 1) * hs, k._ball[1] * hs, k._ball[2] * hs] : null, hands: mirror ? [k._hL != null ? k._hL : 0, k._hR != null ? k._hR : 0, 0] : [k._hR != null ? k._hR : 0, k._hL != null ? k._hL : 0, 0] });
+    let hands = [0, 0], ballC = null, handAnchor = null, kick = null;
+    if (dm) {
+      const lastOf = (list) => list[list.length - 1][1];
+      const named = { set: M(clip.set) };
+      const res = (k) => typeof k === "string" ? named[k] : MD(k);
+      if (seg === "prep") {
+        const keys = [[0, DS.from]].concat(dm.prep.map(([u, k]) => [u, res(k)]));
+        pose = gkSampleKeys(keys, x, {}); sub = pose._name;
+        // rendered ball path: captured start → authored keys, the whole path shifted (linearly in u) so that it ends EXACTLY on the authoritative release / drop point
+        const relC = M4.transformPoint(invR, lift(glW(D.release))), b0 = DS.ball0 ? M4.transformPoint(invR, DS.ball0) : relC;
+        const aLast = aux(lastOf(dm.prep)).ball, delta = aLast ? V3.sub(relC, aLast) : [0, 0, 0];
+        const bk = [[0, { ball: b0, hands: [1, 1, 0] }]].concat(dm.prep.map(([u, k]) => { const a = aux(k); return [u, { ball: a.ball ? V3.add(a.ball, V3.scale(delta, u)) : relC, hands: a.hands }]; }));
+        const sa = gkSampleKeys(bk, x, {}); ballC = x >= 1 ? relC : sa.ball; hands = [clamp01(sa.hands[0]), clamp01(sa.hands[1])];
+        if (dm.handRelease) { const hr = dm.handRelease, hi = (mirror ? (hr.hand === "L" ? "R" : "L") : hr.hand) === "R" ? 0 : 1; hands[hi] = 1 - smooth01(clamp01((x - hr.from) / Math.max(1e-6, hr.to - hr.from))); }   // one-hand actions: the supporting hand leaves the ball over an explicit window (before the ball swings away from it)
+        DS.lastHands = hands.slice();
+      } else if (seg === "fall") {
+        const keys = [[0, res(lastOf(dm.prep))]].concat(dm.fall.map(([u, k]) => [u, res(k)]));
+        pose = gkSampleKeys(keys, x, {}); sub = pose._name;
+        const kOff = 1 - smooth01(clamp01((desc.now - D.tDrop) / (dm.handsOff || 0.12))); hands = [(DS.lastHands ? DS.lastHands[0] : 1) * kOff, (DS.lastHands ? DS.lastHands[1] : 1) * kOff]; handAnchor = lift(glW(D.drop));
+      } else {
+        const prevLast = isPunt ? (dm.fall ? lastOf(dm.fall) : lastOf(dm.prep)) : lastOf(dm.prep);
+        const keys = [[0, res(prevLast)]].concat(dm.post.map(([u, k]) => [u, res(k)]));
+        pose = gkSampleKeys(keys, x, {}); sub = pose._name;
+        const tRel = isPunt ? D.tDrop : D.tRelease, kOff = 1 - smooth01(clamp01((desc.now - tRel) / (dm.handsOff || 0.12)));
+        hands = [(DS.lastHands ? DS.lastHands[0] : 1) * kOff, (DS.lastHands ? DS.lastHands[1] : 1) * kOff]; handAnchor = lift(glW(isPunt ? D.drop : D.release));   // the hands come off the ball where it was released (a static anchor: never the flying ball)
+      }
+      if (isPunt && (seg === "fall" || seg === "post")) {                                    // the kicking leg: solved onto the FALLING simulation ball toward the (predicted) kick tick, held on the actual kick point briefly after the kick
+        const foot = mirror ? "L" : "R";
+        if (!D.kicked) { const w = seg === "fall" ? smooth01(clamp01((x - 0.40) / 0.60)) : 1; kick = { foot, p: desc.ball ? lift(glW(desc.ball)) : lift(glW(D.kickP)), w, live: true }; }
+        else { const w = 1 - smooth01(clamp01((desc.now - (D.tKickActual != null ? D.tKickActual : D.tKick)) / 0.12)); if (w > 0) kick = { foot, p: lift(glW(D.kickActual || D.kickP)), w, live: false }; }
+      }
+    } else { pose = DS.from; sub = "UNAUTHORED"; authored = false; }
+    { const tau = 0.08, dt0 = desc.now - D.t0 + 1 / 60, v0 = DS.v0 || [0, 0, 0]; if (V3.len(v0) > 0.05) { const fade = seg === "post" ? 1 - smooth01(x) : 1; const offW = V3.scale(v0, tau * (1 - Math.exp(-dt0 / tau)) * fade); const offC = M4.transformDir(invR, offW); pose._pelvis = V3.add(pose._pelvis || [0, 0, 0], offC); } }   // momentum-continuous start: the pelvis velocity the body had when the plan started decays over ~80 ms instead of stopping dead (a plan can start mid-step after a get-up); the resulting displacement is kept through the action and eased out over the follow-through (the body ends over the root)
+    phase = seg === "prep" ? "DIST_PREP" : seg === "fall" ? "DIST_FALL" : "DIST_FOLLOW"; clipT = x; mode = "dist"; ikW = 0;
+    // feet: world-fixed plants; explicit steps at the authored times (character-frame points → planted once in world space), otherwise the stance under the root; a turn re-plants a foot only when its plant has moved > 0.18 m from where the stance now wants it (one foot at a time)
+    { const pts = {}, keep = {}, hsp = hs; const stepsDone = {};
+      const stepList = dm && dm.steps ? dm.steps : []; const segIdx = { prep: 0, fall: 1, post: 2 }, curIdx = segIdx[seg];
+      for (const st of stepList) { const si = segIdx[st.phase]; if (si == null) continue; if (si < curIdx || (si === curIdx && st.at <= x + 1e-9)) stepsDone[mirror ? (st.foot === "R" ? "L" : "R") : st.foot] = st; }
+      const kickFoot = (isPunt && dm) ? (mirror ? "L" : "R") : null; let kickFree = false;
+      if (kickFoot && dm.kickFree) { const ki = segIdx[dm.kickFree.from]; kickFree = (curIdx > ki || (curIdx === ki && x >= dm.kickFree.at)) && !(stepsDone[kickFoot] && stepsDone[kickFoot].phase === "post"); }
+      const stepping = (sd) => { const st = state.feet && state.feet[sd]; return !!(st && st.from && st.fromT != null && desc.now - st.fromT < 0.2); };
+      locks = { R: 1, L: 1, at: "dist", pts, keep, keepAge: true };                                // a re-plant inside a plan keeps the bend-plane age (no knee-plane reset when a foot moves from a get-up step point to its stance point)
+      for (const sd of ["R", "L"]) {
+        if (sd === kickFoot && kickFree) { locks[sd] = 0; continue; }
+        const st = state.feet && state.feet[sd]; const s2 = stepsDone[sd]; const mx = s2 ? (mirror ? -s2.pt[0] : s2.pt[0]) : (sd === "R" ? 0.20 : -0.20);   // explicit steps are authored for the RIGHT convention; mirrored with the motion
+        const want = [mx * hsp, (s2 ? s2.pt[1] : 0.02) * hsp], wantW = M4.transformPoint(rootM, [want[0], 0.06 * skel.H, want[1]]);
+        const thresh = s2 ? 0.10 : 0.18;
+        if (!st || !st.P || !st.locked) pts[sd] = want; else if (V3.dist(st.P, wantW) > thresh && !stepping(sd === "R" ? "L" : "R")) pts[sd] = want; else keep[sd] = true;
+      }
+    }
+    distG = { kind: D.kind, seg, x, hands: { R: hands[0], L: hands[1] }, ballW: ballC ? M4.transformPoint(rootM, ballC) : null, handAnchor, kick, mirror, motion: dm ? dm.id : null, released: !!D.released, kicked: !!D.kicked, startDown: DS.startDown, startPhase: DS.startPhase, facingTurn: kTurn, release: lift(glW(D.release)), kIn: smooth01(clamp01((desc.now - D.t0) / 0.12)), W0: DS.W0, E0: DS.E0, assist0: DS.assist0 };
+    state.endPose = pose;
+  } else if (!c) {
     if (desc.shot && desc.shot.latency > 0) {                                                  // READ / PREPARE: react → weight shift → deep load inside the reaction latency
       const a = clamp01(desc.shot.tSince / desc.shot.latency); clipT = a;
       const predSideL = desc.predLat != null ? desc.predLat < 0 : false, known = desc.predLat != null;
@@ -264,7 +338,8 @@ function gkGraphEvaluate(desc, clip, skel, state) {
   const g = { pose, phase, sub, clipT, ikW, rootM, facing, authored, mode, motion: mkey, fallback: !!sel.fallback, side: c ? state.side : desc.side, landedSide: state.landedSide || null, reachHand: sideL ? "L" : "R", axis: null, locks, brace, landing: null, flight: null, pres: { dx: 0, dy: 0, dm: 0 },
     holdBall: (c && desc.held && desc.ball) ? desc.ball : null, holdW: 0, catchKind: !!(mo && mo.kind === "catch"), ballR: GK_GRAPH.ballVisR * (skel.H / GK_MOTION_H_REF),                                                          // a caught ball: both hands stay on the authoritative ball
     twoHands: !!(mo && (mo.twoHands || (mo.twoHandsLat != null && desc.cls && Math.abs(desc.cls.lat) <= mo.twoHandsLat))),
-    legTip: null };
+    legTip: null, dist: distG };
+  if (distG) { g.holdBall = null; g.holdW = 0; state.holdT0 = null; state.holdLast = null; }   // a distribution owns the rendered ball and the hands (the hold / cradle paths are off)
   { if (g.holdBall) { if (state.holdT0 == null) state.holdT0 = desc.now; state.holdLast = { p: g.holdBall.slice(), t: desc.now }; g.holdW = smooth01(clamp01((desc.now - state.holdT0) / 0.12)); }
     else { if (c && state.holdLast && desc.now - state.holdLast.t < 0.15) { g.holdBall = state.holdLast.p; g.holdW = 1 - smooth01((desc.now - state.holdLast.t) / 0.15); } else state.holdLast = null; if (!c || !desc.held) state.holdT0 = null; } }   // hands onto / off the ball: faded, never a snap
   { const legMotion = !!(mo && (mo.kind === "spread" || mo.kind === "collapse"));                                              // FOOT_SAVE / LOW_COLLAPSE: the leg meets the simulation's leg tip (same side of the hip as the authored leg). NOT the low dive: its authored trailing leg lies on the opposite side of the hip from the simulation's leg-tip model — chasing that tip swept the leg through the hip (documented); a leg-volume contact in a low dive is shown on the authored leg and the mismatch is exposed
@@ -364,7 +439,10 @@ function gkGraphEvaluate(desc, clip, skel, state) {
       if (st && st.P && V3.dist(st.P, wantW) > FW.stepLen * 0.5 * hs && !otherStepping) pts[sd] = want; else keep[sd] = true; }
     g.locks = { R: 1, L: 1, at: "walk", pts, keep }; g.phase = desc.state || "FOOTWORK"; g.mode = "footwork";
   }
+  { const Wn = worldPelvis(g.pose), pv = state.prevPel; state.pelVel = pv && desc.now - pv.t > 1e-4 && desc.now - pv.t < 0.1 ? V3.scale(V3.sub(Wn, pv.W), 1 / (desc.now - pv.t)) : [0, 0, 0]; }
   state.prevPel = { t: desc.now, W: worldPelvis(g.pose) };                                    // for the launch plan's velocity continuity at the plant
+  if (!distG) { state.lastPose = g.pose; state.lastPhase = g.phase; state.lastMode = g.mode; }   // the pose a distribution starts from (captured at the plan start)
+  if (!desc.dist && state.dist) state.dist = null;
   return g;
 }
 // ── procedural pass: FK → ground clamp → torso assist → glove IK → foot locks (leg IK) → hand brace; presentation root ─
@@ -411,7 +489,7 @@ function gkGraphSolve(desc, g, skel, state) {
       else P = [ankle[0], ankleH, ankle[2]];
       st.from = (st.lastAnkle && st.lastT != null && desc.now - st.lastT < 0.1) ? st.lastAnkle.slice() : [ankle[0], ankle[1], ankle[2]]; st.fromT = desc.now;   // (re)plant: blend from where the foot actually was last frame (solved position) — never a foot teleport
       st.drag = !!(follow && L.at === "tuck");                                                  // a dragging foot slides (no step lift, bend plane kept)
-      if (!st.drag && (!st.locked || V3.dist(st.from, P) > 0.12)) st.since = desc.now;         // bend plane blends from the authored knee for a NEW lock or a STEP (foot travelling from behind to under the body); a shuffle keeps its plane
+      if (!st.drag && (!st.locked || (V3.dist(st.from, P) > 0.12 && !L.keepAge))) st.since = desc.now;         // bend plane blends from the authored knee for a NEW lock or a STEP (foot travelling from behind to under the body); a shuffle keeps its plane; a distribution re-plant keeps its age
       st.locked = true; st.P = P; st.releaseT = null;
     }
     if (st.locked && st.from && st.fromT != null) { const bt = clamp01((desc.now - st.fromT) / 0.2); st.Pnow = V3.lerp(st.from, st.P, smooth01(bt)); if (!st.drag && V3.dist(st.from, st.P) > 0.12) st.Pnow[1] += 0.10 * Math.sin(Math.PI * bt); /* a re-plant further than a shuffle is a STEP: the foot lifts over its move */ if (bt >= 1) { st.from = null; st.Pnow = st.P; } } else st.Pnow = st.P;
@@ -439,7 +517,8 @@ function gkGraphSolve(desc, g, skel, state) {
   }
   // 3. torso / clavicle assist + glove IK toward the simulation hand
   const T = glW(desc.handTarget);
-  const cradleOn = g.catchKind && (g.twoHands || g.holdBall) && !(g.mode === "standing-post" && !desc.held && (state.cradle && state.cradle.released));   // a parry RELEASES the cradle by blending the arms back to the authored pose over the rise (never a cut)   // two-hand catch (pre-contact receive → held cradle): the arms are solved as ONE cradle below, never as two chains chasing points
+  const cradleOn = !g.dist && g.catchKind && (g.twoHands || g.holdBall) && !(g.mode === "standing-post" && !desc.held && (state.cradle && state.cradle.released));   // a parry RELEASES the cradle by blending the arms back to the authored pose over the rise (never a cut)   // two-hand catch (pre-contact receive → held cradle): the arms are solved as ONE cradle below, never as two chains chasing points
+  state.lastAssist = null;                                                                     // set below only on a tick that actually applies the torso / clavicle assist (a stale value must never be re-applied by a later plan start)
   if (g.ikW > 0 && !cradleOn) {
     const up = skel.byName[upper], fo = skel.byName[fore], hd = skel.byName[hand]; const S = fk.joint[up.idx]; const over = V3.dist(T, S) - (up.len + fo.len + 0.6 * hd.len);
     if (over > 0.01) {
@@ -447,7 +526,7 @@ function gkGraphSolve(desc, g, skel, state) {
       const a1 = Math.atan2(Sl[0] - Pj[0], Sl[1] - Pj[1]), a2 = Math.atan2(Tl[0] - Pj[0], Tl[1] - Pj[1]);
       let e = (a2 - a1) / DEG; e = Math.max(-GK_GRAPH.torsoAssistMaxDeg, Math.min(GK_GRAPH.torsoAssistMaxDeg, e)) * clamp01(over / 0.3) * g.ikW;
       const assist = { spine: [0, 0, -e * 0.5], chest: [0, 0, -e * 0.5], ["clavicle_" + h]: [0, 0, (h === "R" ? 1 : -1) * GK_GRAPH.clavicleAssistMaxDeg * clamp01(over / 0.3) * g.ikW] };
-      const p2 = poseAdd(pose, assist); p2._pelvis = pose._pelvis; diag.torso = +e.toFixed(1); fk = skelFK(skel, p2, g.rootM); plantFeet();
+      const p2 = poseAdd(pose, assist); p2._pelvis = pose._pelvis; diag.torso = +e.toFixed(1); fk = skelFK(skel, p2, g.rootM); plantFeet(); state.lastAssist = { e, h };
     }
     const rightW = M4.transformDir(g.rootM, [1, 0, 0]), splitOff = (g.catchKind && g.twoHands) ? g.ballR + GK_GRAPH.handOff : 0;   // a two-hand catch: each hand goes to ITS side of the ball line (never both to the centre)
     const Th = V3.add(T, V3.scale(rightW, (h === "R" ? 1 : -1) * splitOff));
@@ -538,9 +617,60 @@ function gkGraphSolve(desc, g, skel, state) {
     const mid = V3.lerp(res.R.handCentre, res.L.handCentre, 0.5); diag.ik = { w: +wR.toFixed(3), reached: true, residual: +V3.dist(mid, T).toFixed(3), wrist: res[h].W, handCentre: mid, target: T, cradle: true };
     if (g.holdBall) diag.ballPres = { p: Bp, r: rB, cradle: mid, wB: +sB.toFixed(2), handR: res.R.handCentre, handL: res.L.handCentre, pin };
   } else if (state.cradle && !g.catchKind) state.cradle = null;
+  // ── 8. DISTRIBUTION hands + kicking leg (v12): the hands hold the rendered ball on its authored path (two hands: on its sides, the cradle
+  //    anatomy; one hand: the ball at the end of the arm line, palm behind it) until the authoritative release tick; from that tick the hands
+  //    fade off a STATIC anchor at the release point (never the flying ball). The kicking leg's foot is solved onto the falling simulation ball.
+  if (g.dist) {
+    const Dd = g.dist, rB = g.ballR, hOff = GK_GRAPH.handOff, hsc = skel.H / GK_MOTION_H_REF, handLen = skel.byName.hand_R.len;
+    const CS = state.distArms || (state.distArms = { memR: {}, memL: {} });
+    const upW = [0, 1, 0], fwdW = M4.transformDir(g.rootM, [0, 0, 1]), rgt = rightW2;
+    const pelJ = fk.joint[skel.byName.pelvis.idx], chTip = fk.tip[skel.byName.chest.idx], chM = fk.world[skel.byName.chest.idx];
+    const cRight = V3.norm(M4.transformDir(chM, [1, 0, 0])), cUp = V3.norm(V3.sub(chTip, pelJ)), cFwd = V3.norm(V3.cross(cRight, cUp)), Ltor = V3.dist(chTip, pelJ);
+    const torso = (pt) => { const q = V3.sub(pt, pelJ), lat = V3.dot(q, cRight), dep = V3.dot(q, cFwd), ht = V3.dot(q, cUp); return Math.abs(lat) < 0.20 * hsc + 0.02 && dep > -0.13 * hsc && dep < 0.12 * hsc && ht > -0.05 && ht < Ltor + 0.06; };
+    const kIn = Dd.kIn != null ? Dd.kIn : 1;
+    if (Dd.assist0 && kIn < 1) {                                                                // a hold that used the torso / clavicle assist (dive / collapse holds): the assist decays over the first 120 ms instead of vanishing in one tick
+      const a0 = Dd.assist0, ea = a0.e * (1 - kIn); const assist = { spine: [0, 0, -ea * 0.5], chest: [0, 0, -ea * 0.5], ["clavicle_" + a0.h]: [0, 0, (a0.h === "R" ? 1 : -1) * GK_GRAPH.clavicleAssistMaxDeg * (1 - kIn)] };
+      const p2 = poseAdd(pose, assist); p2._pelvis = pose._pelvis; fk = skelFK(skel, p2, g.rootM); plantFeet(); diag.torso = +ea.toFixed(1);
+    }
+    const B = Dd.ballW || Dd.handAnchor; const two = Dd.hands.R > 0.5 && Dd.hands.L > 0.5; const resD = {};
+    if (B) for (const sd of ["R", "L"]) {
+      const w = clamp01(Dd.hands[sd]); if (w <= 0) continue;
+      const up = skel.byName["upperArm_" + sd], fo = skel.byName["foreArm_" + sd], hd = skel.byName["hand_" + sd], S0 = fk.joint[up.idx], sgn = sd === "R" ? 1 : -1;
+      const k2 = clamp01(Dd.hands[sd === "R" ? "L" : "R"]);                                     // how much the OTHER hand is on the ball: the wrist target blends between the two-hand (sides) and one-hand (end of the arm line) rules — a hand-over is never a target jump
+      const WbTwo = V3.add(B, V3.add(V3.scale(rgt, sgn * (rB + hOff + 0.6 * handLen)), V3.add(V3.scale(fwdW, 0.05), V3.scale(upW, -0.02))));
+      const n1 = V3.norm(V3.sub(B, S0)), WbOne = V3.sub(B, V3.scale(n1, rB + hOff + 0.6 * handLen));
+      const Wb = V3.lerp(WbOne, WbTwo, k2);
+      const pref = V3.norm(V3.lerp(V3.norm(V3.add(V3.scale(rgt, sgn * 0.9), V3.scale(upW, -0.35))), V3.norm(V3.add(V3.add(V3.scale(rgt, sgn * 0.75), V3.scale(upW, -0.55)), V3.scale(fwdW, -0.25))), k2));   // elbows out / down; a single throwing arm keeps its elbow outside
+      const r = skelCradleElbow(S0, Wb, up.len, fo.len, pref, torso, sd === "R" ? CS.memR : CS.memL, { maxUp: 0.05 * k2 + 1.0 * (1 - k2) });
+      const Ea = fk.joint[fo.idx], Wa = fk.joint[hd.idx];
+      let Ef = V3.lerp(Ea, r.E, w), Wf = V3.lerp(Wa, r.W, w);
+      if (kIn < 1 && Dd.W0 && Dd.E0) { Ef = V3.lerp(Dd.E0[sd], Ef, kIn); Wf = V3.lerp(Dd.W0[sd], Wf, kIn); }   // hand-over INTO the distribution grip: from where the arms actually were (last solved elbows / wrists) over 120 ms — never a cut between two solvers
+      const ac = skelAimChain(skel, fk, "upperArm_" + sd, "foreArm_" + sd, "hand_" + sd, Ef, Wf, B, 0.7 * w);
+      resD[sd] = { w: +w.toFixed(2), valid: r.valid, viol: r.viol, handCentre: ac.handCentre, surface: +(V3.dist(ac.handCentre, B) - rB).toFixed(3) };   // hand centre to the ball SURFACE (0 = touching)
+    }
+    diag.dist = { seg: Dd.seg, x: +Dd.x.toFixed(3), two, R: resD.R || null, L: resD.L || null, ball: Dd.ballW, anchor: Dd.handAnchor, violations: (resD.R && !resD.R.valid ? 1 : 0) + (resD.L && !resD.L.valid ? 1 : 0) + (Dd.ballW && torso(Dd.ballW) ? 1 : 0), ballIn: !!(Dd.ballW && torso(Dd.ballW)) };
+    if (Dd.ballW) diag.ballPres = { p: Dd.ballW, r: rB, cradle: Dd.ballW, wB: 1, handR: resD.R ? resD.R.handCentre : hc("R"), handL: resD.L ? resD.L.handCentre : hc("L"), dist: true };
+    if (Dd.kick && Dd.kick.w > 0) {                                                            // kicking foot: ankle solved so the laces meet the ball (ball centre − forward·(radius + half a foot) − a little down)
+      const K = Dd.kick, sd = K.foot, hipJ = fk.joint[skel.byName["thigh_" + sd].idx], fb = skel.byName["foot_" + sd], rF = fb.rad, fl = 0.65 * fb.len;
+      // the ball rests on the LACES: ankle target = ball − (foot radius + ball radius) along the laces normal − the contact length back along the foot's own
+      // direction. The foot's direction / laces normal are taken from the solved foot (two passes: the first with the current foot, the second with the foot as re-aimed by the leg IK)
+      let r = null, wl = 0, T2 = null;
+      for (let pass = 0; pass < 2; pass++) {
+        const ankJ = fk.joint[fb.idx], tipJ = fk.tip[fb.idx]; let fDir = V3.norm(V3.sub(tipJ, ankJ)); const side = V3.norm(V3.cross(fDir, upW)); let nUp = V3.norm(V3.cross(side, fDir)); if (nUp[1] < 0) nUp = V3.scale(nUp, -1);   // laces normal: perpendicular to the foot in its vertical plane, upward
+        T2 = V3.sub(V3.sub(K.p, V3.scale(nUp, rB + rF)), V3.scale(fDir, fl));
+        wl = K.w * (1 - smooth01((V3.dist(hipJ, T2) - (legMax - 0.02)) / 0.08));
+        if (wl <= 0) break;
+        r = skelIK2(skel, fk, "thigh_" + sd, "shin_" + sd, "foot_" + sd, T2, wl, [hipJ[0] + fwdW[0] * 0.5, hipJ[1] + 0.35, hipJ[2] + fwdW[2] * 0.5], 0, PM("leg_" + sd));
+      }
+      const ank = fk.joint[skel.byName["foot_" + sd].idx], tip = fk.tip[skel.byName["foot_" + sd].idx], contact = V3.lerp(ank, tip, 0.65);
+      diag.kick = { foot: sd, w: +wl.toFixed(2), residual: r ? +r.residual.toFixed(3) : null, surface: +(V3.dist(contact, K.p) - rB - rF).toFixed(3), target: K.p, contact, live: K.live };   // foot SURFACE to ball SURFACE (0 = touching; negative = the ball is inside the foot)
+    }
+  } else if (state.distArms) state.distArms = null;
+  state.lastBallPres = diag.ballPres ? diag.ballPres.p.slice() : null;
   pel.off = savedOff;
   state.lastWrists = { R: fk.joint[skel.byName.hand_R.idx].slice(), L: fk.joint[skel.byName.hand_L.idx].slice() };   // solved wrists this frame (the start of any later cradle hand-over)
-  const out = { fk, diag, ballPres: diag.ballPres || null, hands: { R: hc("R"), L: hc("L") }, elbows: { R: fk.joint[skel.byName.foreArm_R.idx], L: fk.joint[skel.byName.foreArm_L.idx] }, cradle: diag.cradle || null };
+  state.lastElbows = { R: fk.joint[skel.byName.foreArm_R.idx].slice(), L: fk.joint[skel.byName.foreArm_L.idx].slice() };
+  const out = { fk, diag, ballPres: diag.ballPres || null, hands: { R: hc("R"), L: hc("L") }, elbows: { R: fk.joint[skel.byName.foreArm_R.idx], L: fk.joint[skel.byName.foreArm_L.idx] }, cradle: diag.cradle || null, dist: diag.dist || null, kick: diag.kick || null };
   // presentation root = ground projection of the pelvis (pitch frame); continuous by construction
   const pw = fk.joint[skel.byName.pelvis.idx]; const pr = pitchW([pw[0], 0, pw[2]]);
   let dx = pr[0] - desc.simRoot[0], dy = pr[1] - desc.simRoot[1]; const dm = Math.hypot(dx, dy);

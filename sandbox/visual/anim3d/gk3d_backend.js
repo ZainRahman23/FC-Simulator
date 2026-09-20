@@ -2,7 +2,7 @@
 // Same simulation, same resolver (gkAnimUpdate → ActionDescription); only the drawing differs. Never writes gk/ball.
 const GK3D = {
   copies: 0,                    // review: draw N extra keepers (offset laterally) for the scaling measurement
-  debug: { bones: false, ik: false, roots: false, feet: false, trail: false, label: false, cradle: false },
+  debug: { bones: false, ik: false, roots: false, feet: false, trail: false, label: false, cradle: false, dist: false },
   trail: [],                    // review: presentation pelvis samples through the committed action (path, markers, velocity vectors)
   asserts: [], prev: null,      // development checks: position / velocity discontinuity at every stage boundary after touchdown
   perf: { n: 0, ms: 0, max: 0, glDraws: 0 },
@@ -20,7 +20,7 @@ const GK3D = {
     jersey2: { label: "alternate jersey colour", palette: { shirt: [0.98, 0.62, 0.08] } },
   },
 };
-function gk3dReset() { GK3D.state = {}; GK3D.trail = []; GK3D.asserts = []; GK3D.prev = null; GK3D.ballPres = null; GK3D.cradleFlags = []; GK3D.ballTrail = []; }
+function gk3dReset() { GK3D.state = {}; GK3D.trail = []; GK3D.asserts = []; GK3D.prev = null; GK3D.ballPres = null; GK3D.cradleFlags = []; GK3D.ballTrail = []; GK3D.distRecords = []; GK3D.distFlags = []; GK3D.presTrail = []; GK3D._distSeen = {}; }
 // The PRESENTATION ball: while the SKELETAL_3D backend is active and the authoritative ball is near the keeper (or keeper-owned), the ball
 // is rendered as real geometry in the keeper's 3D world / camera / depth buffer and the 2D ball sprite is not drawn. Pure predicate on
 // authoritative state (read only); the sprite backend never sees a change.
@@ -54,7 +54,8 @@ function gk3dDraw(t, gk, dt) {
   const chars = [{ skel, fk: sol.fk, palette: GK3D.palette, skinMats }];
   for (let i = 1; i <= GK3D.copies; i++) { const off = M4.translate(0, 0, (i % 2 ? 1 : -1) * Math.ceil(i / 2) * 1.2); const fk2 = { world: sol.fk.world.map(m => M4.mul(off, m)), joint: sol.fk.joint.map(p => M4.transformPoint(off, p)), tip: sol.fk.tip.map(p => M4.transformPoint(off, p)) }; const sm2 = new Float32Array(skel.bones.length * 16); skelSkinMatrices(skel, fk2, skel.invBind).forEach((m, i) => sm2.set(m, i * 16)); chars.push({ skel, fk: fk2, palette: GK3D.palette, skinMats: sm2 }); }
   // presentation ball: the authoritative ball converted to the 3D world; once the simulation says the keeper holds it, the solve's held-ball presentation transform (blend into the cradle)
-  const owns = gk3dOwnsBall(t), bSim = [t.b.x, t.b.y, t.b.z], ballP = sol.ballPres ? sol.ballPres.p : glW(bSim), ballR = g.ballR || GK_GRAPH.ballVisR;
+  const owns = gk3dOwnsBall(t), bSim = [t.b.x, t.b.y, t.b.z], ballR = g.ballR || GK_GRAPH.ballVisR, ballP = sol.ballPres ? sol.ballPres.p : glW(bSim);
+  ballP[1] = Math.max(ballP[1], ballR);                                                       // the rendered sphere rests ON the pitch (simulation z 0 = ground rest for every rolling ball); presentation only
   GK3D.ballPres = { p: pitchW(ballP), sim: bSim, r: ballR, held: !!desc.held, pres: !!sol.ballPres, wB: sol.ballPres ? sol.ballPres.wB : 0, hands: sol.hands, elbows: sol.elbows, drawn3d: owns };
   const out = glRenderCharacters(GK3D.R, chars, cv.width, cv.height, owns ? { ball: { p: ballP, r: ballR } } : {});
   if (owns) { const bg = sproj3(ballP[0], 0, -ballP[2]), bz = ballP[1], sh = 1 / (1 + bz * 0.55), rg = Math.max(2, Math.round(ballR * S.pxPerM * depthScale(bg.d) * RIG.zoom * RES)); ctx.save(); ctx.beginPath(); ctx.ellipse(Math.round(bg.x), Math.round(bg.y) + rg * 0.7, rg * 1.15 * sh, Math.max(1, rg * 1.15 * flattenAt(t.b.x, t.b.y) * sh), 0, 0, Math.PI * 2); ctx.fillStyle = "rgba(0,0,0," + (0.22 * sh).toFixed(3) + ")"; ctx.fill(); ctx.restore(); }   // ball shadow on the pitch (same law as the 2D ball)
@@ -84,12 +85,12 @@ function gk3dDraw(t, gk, dt) {
     const rotOf = (m) => [m[0], m[1], m[2], m[4], m[5], m[6], m[8], m[9], m[10]], angDeg = (a, b) => { const tr = a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3] + a[4] * b[4] + a[5] * b[5] + a[6] * b[6] + a[7] * b[7] + a[8] * b[8]; return Math.acos(Math.max(-1, Math.min(1, (tr - 1) / 2))) / DEG; };
     const rots = { root: rotOf(g.rootM), pelvis: rotOf(sol.fk.world[skel.byName.pelvis.idx]), chest: rotOf(sol.fk.world[skel.byName.chest.idx]), thigh_L: rotOf(sol.fk.world[skel.byName.thigh_L.idx]), thigh_R: rotOf(sol.fk.world[skel.byName.thigh_R.idx]), upperArm_L: rotOf(sol.fk.world[skel.byName.upperArm_L.idx]), upperArm_R: rotOf(sol.fk.world[skel.byName.upperArm_R.idx]) };
     const hR = sol.hands ? sol.hands.R : null, hL = sol.hands ? sol.hands.L : null;
-    if (pv && desc.commit && (g.mode === "post" || g.mode === "standing-post" || (g.mode === "standing" && pv.mode === "standing")) && pv.stage !== g.phase && desc.now - pv.t < 0.1) {
+    if (pv && desc.commit && (g.mode === "post" || g.mode === "standing-post" || g.mode === "dist" || (g.mode === "standing" && pv.mode === "standing")) && pv.stage !== g.phase && desc.now - pv.t < 0.1) {
       const dRoot = Math.hypot(pr[0] - pv.pr[0], pr[1] - pv.pr[1]), dPel = V3.dist(pw, pv.pw), dt = desc.now - pv.t, vNow = V3.scale(V3.sub(pw, pv.pw), 1 / dt), dV = pv.v ? V3.len(V3.sub(vNow, pv.v)) : 0;
       const expect = pv.v ? V3.scale(pv.v, dt) : [0, 0, 0], excess = V3.dist(V3.sub(pw, pv.pw), expect);   // displacement beyond what the previous velocity predicts = relocation
       const ang = {}; for (const k in rots) ang[k] = +angDeg(rots[k], pv.rots[k]).toFixed(1);   // angular difference (deg) of the world orientation across the boundary
       const dHandR = pv.hR && hR ? V3.dist(hR, pv.hR) : 0, dHandL = pv.hL && hL ? V3.dist(hL, pv.hL) : 0;   // catch → possession: the hands never jump at a stage boundary (ball hand-over, cradle, absorb, straighten, hold)
-      const handChk = g.mode === "standing-post";   // hands are checked across the possession stages (CONTACT → CRADLE → ABSORB → CONTROL → STRAIGHTEN → HOLD), not across an authored arm swing
+      const handChk = g.mode === "standing-post" || g.mode === "dist";   // hands are checked across the possession stages (CONTACT → CRADLE → ABSORB → CONTROL → STRAIGHTEN → HOLD) and the distribution stages, not across an authored arm swing
       const bad = excess > 0.03 || dV > 1.5 || ang.root > 5 || ang.pelvis > 15 || ang.chest > 15 || (handChk && (dHandR > 0.20 || dHandL > 0.20)); const rec = { tick: Math.round(desc.now * 60), from: pv.stage, to: g.phase, dRoot: +dRoot.toFixed(3), dPelvis: +dPel.toFixed(3), excess: +excess.toFixed(3), dV: +dV.toFixed(2), dHandR: +dHandR.toFixed(3), dHandL: +dHandL.toFixed(3), ang, bad };
       GK3D.asserts.push(rec); if (bad) console.warn("[gk3d] discontinuity at stage boundary", rec);
     }
@@ -122,6 +123,26 @@ function gk3dDraw(t, gk, dt) {
   if (sol.cradle) { const cr = sol.cradle; if (cr.violations > 0) (GK3D.cradleFlags || (GK3D.cradleFlags = [])).push({ tick: Math.round(desc.now * 60), phase: g.phase, mode: cr.mode, R: cr.R.viol, L: cr.L.viol, crossed: cr.crossed, ballIn: cr.ballIn }); }
   if (desc.ball) { const BT = GK3D.ballTrail || (GK3D.ballTrail = []); BT.push({ t: desc.now, p: glW(desc.ball), held: !!desc.held, contact: !!gk.contact }); if (BT.length > 90) BT.shift(); }
   if (GK3D.debug.cradle) gk3dDrawCradle(skel, sol, g, desc, gk, P3);
+  // DISTRIBUTION (v12): per-tick anatomy flags, the rendered-ball trail, and a validation record at every authoritative event (RELEASE / DROP / KICK):
+  // authoritative ball + velocity, rendered ball (this tick and the previous), hand / foot vs the ball, root, facing (simulation vs presentation), held flag
+  if (desc.dist) {
+    const PT2 = GK3D.presTrail || (GK3D.presTrail = []); if (sol.ballPres) PT2.push({ t: desc.now, p: sol.ballPres.p.slice() }); if (PT2.length > 120) PT2.shift();
+    if (sol.dist && sol.dist.violations > 0) (GK3D.distFlags || (GK3D.distFlags = [])).push({ tick: Math.round(desc.now * 60), kind: desc.dist.kind, seg: sol.dist.seg, R: sol.dist.R && sol.dist.R.viol, L: sol.dist.L && sol.dist.L.viol, ballIn: sol.dist.ballIn });
+    const seen = GK3D._distSeen || (GK3D._distSeen = {});
+    for (const e of desc.dist.events) { const key = desc.dist.t0 + ":" + e.name; if (seen[key]) continue; seen[key] = true;
+      const Bs = glW(e.ball);                                                                    // GK3D._prevBallP = the rendered ball of the PREVIOUS drawn tick (the last held frame at a release)
+      const side = desc.dist.side, hand = sol.hands[side], ho = sol.hands[side === "R" ? "L" : "R"];
+      const rec = { kind: desc.dist.kind, event: e.name, tick: e.tick, t: +e.t.toFixed(3), simBall: e.ball.map(v => +v.toFixed(3)), simV: e.v.map(v => +v.toFixed(2)), speed: +Math.hypot(e.v[0], e.v[1], e.v[2]).toFixed(2), outDir: +(Math.atan2(e.v[1], e.v[0]) * 180 / Math.PI).toFixed(1),
+        simRoot: [+gk.x.toFixed(3), +gk.y.toFixed(3)], presRoot: [+g.pres.x.toFixed(3), +g.pres.y.toFixed(3)], simFacing: +(desc.dist.facing * 180 / Math.PI).toFixed(1), presFacing: +(g.facing * 180 / Math.PI).toFixed(1), facingErr: +(Math.abs(Math.atan2(Math.sin(g.facing - desc.dist.facing), Math.cos(g.facing - desc.dist.facing))) * 180 / Math.PI).toFixed(1),
+        renderedBallNow: pitchW(ballP).map(v => +v.toFixed(3)), renderedBallPrevTick: GK3D._prevBallP ? pitchW(GK3D._prevBallP).map(v => +v.toFixed(3)) : null,
+        residualPrevTickM: GK3D._prevBallP ? +V3.dist(GK3D._prevBallP, [Bs[0], Math.max(Bs[1], ballR), Bs[2]]).toFixed(3) : null,     // rendered ball (last held tick) vs the authoritative release point
+        handSurfaceM: e.name === "KICK" ? null : +(V3.dist(hand, [Bs[0], Math.max(Bs[1], ballR), Bs[2]]) - ballR).toFixed(3), otherHandSurfaceM: e.name === "KICK" ? null : +(V3.dist(ho, [Bs[0], Math.max(Bs[1], ballR), Bs[2]]) - ballR).toFixed(3),
+        footSurfaceM: e.name === "KICK" && sol.kick ? sol.kick.surface : null, footIkResidualM: e.name === "KICK" && sol.kick ? sol.kick.residual : null, foot: e.foot || null, side: e.side || null,
+        held: e.held, heldNow: !!desc.held, predErr: e.predErr != null ? e.predErr : null, predTickErr: e.predTickErr != null ? e.predTickErr : null, phase: g.phase, sub: g.sub, startDown: !!(g.dist && g.dist.startDown), startPhase: g.dist ? g.dist.startPhase : null };
+      (GK3D.distRecords || (GK3D.distRecords = [])).push(rec); }
+  }
+  GK3D._prevBallP = ballP.slice();
+  if (GK3D.debug.dist && desc.dist) gk3dDrawDist(skel, sol, g, desc, gk, P3);
   if (S.dbg.anim) { const anchors = { root: { x: Math.round(sp.x), y: Math.round(sp.y) }, pelvis: P3(sol.fk.joint[skel.byName.pelvis.idx]), head: P3(sol.fk.tip[skel.byName.head.idx]), shoulder: P3(sol.fk.tip[skel.byName.chest.idx]), handL: P3(sol.fk.tip[skel.byName.hand_L.idx]), handR: P3(sol.fk.tip[skel.byName.hand_R.idx]), footL: P3(sol.fk.tip[skel.byName.foot_L.idx]), footR: P3(sol.fk.tip[skel.byName.foot_R.idx]) }; gkAnimOverlay(t, gk, cur, anchors, handScreen, s); }
   if (GK3D.debug.label) { ctx.fillStyle = "#ffb0f0"; ctx.font = uipx(9) + "px monospace"; ctx.textAlign = "center"; const hp = P3(sol.fk.tip[skel.byName.head.idx]); ctx.fillText("SKELETAL_3D", hp.x, hp.y - uipx(12)); ctx.textAlign = "left"; }
   GK3D.perf.n++; const ms = performance.now() - t0; GK3D.perf.ms += ms; if (ms > GK3D.perf.max) GK3D.perf.max = ms; GK3D.perf.glDraws = out.draws; GK3D.perf.target = out.w + "x" + out.h + " (1/" + out.scale + ")";
@@ -196,8 +217,25 @@ GK_PRESENTATION.register("SKELETAL_3D", { draw: gk3dDraw, reset: gk3dReset, labe
 document.addEventListener("DOMContentLoaded", () => {
   const ce = document.getElementById("gk3d-character"); if (ce) ce.addEventListener("change", () => { GL3D.character = ce.value; });
   const ve = document.getElementById("gk3d-variant"); if (ve) ve.addEventListener("change", () => { GK3D.variant = ve.value; });
-  for (const k of ["bones", "ik", "roots", "feet", "trail"]) { const el = document.getElementById("dbg3d-" + k); if (el) el.addEventListener("change", () => { GK3D.debug[k] = el.checked; }); } });
+  for (const k of ["bones", "ik", "roots", "feet", "trail", "cradle", "dist"]) { const el = document.getElementById("dbg3d-" + k); if (el) el.addEventListener("change", () => { GK3D.debug[k] = el.checked; }); } });
 
+// distribution debug view: authoritative target direction + release point, rendered-ball path, hand / foot targets, the plan's timeline
+function gk3dDrawDist(skel, sol, g, desc, gk, P3) {
+  const D = desc.dist, Dg = g.dist; ctx.save(); ctx.font = uipx(8) + "px monospace"; ctx.lineWidth = Math.max(1, PXQ);
+  const dot = (p, col, r) => { const q = P3(p); ctx.fillStyle = col; ctx.beginPath(); ctx.arc(q.x, q.y, uipx(r || 2.5), 0, Math.PI * 2); ctx.fill(); return q; };
+  const line = (a, b, col) => { const p = P3(a), q = P3(b); ctx.strokeStyle = col; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke(); };
+  const root = [gk.x, 0, -gk.y], dir = [Math.cos(D.facing), 0, -Math.sin(D.facing)];
+  line(root, V3.add(root, V3.scale(dir, 1.2)), "#38e0ff"); const qd = dot(V3.add(root, V3.scale(dir, 1.2)), "#38e0ff", 2.5); ctx.fillStyle = "#38e0ff"; ctx.fillText("target " + (D.facing * 180 / Math.PI).toFixed(0) + "°", qd.x + uipx(4), qd.y);
+  const rel = glW(D.release); rel[1] = Math.max(rel[1], g.ballR); const qr = P3(rel); ctx.strokeStyle = "#ffe36a"; ctx.beginPath(); ctx.arc(qr.x, qr.y, uipx(5), 0, Math.PI * 2); ctx.stroke(); ctx.fillStyle = "#ffe36a"; ctx.fillText((D.kind === "PUNT" ? "drop" : "release") + " t" + Math.round(D.tRelease * 60), qr.x + uipx(6), qr.y - uipx(4));
+  if (D.kickP) { const kp = glW(D.kickActual || D.kickP), qk = P3(kp); ctx.strokeStyle = "#ff9a3c"; ctx.beginPath(); ctx.arc(qk.x, qk.y, uipx(5), 0, Math.PI * 2); ctx.stroke(); ctx.fillStyle = "#ff9a3c"; ctx.fillText("kick " + (D.tKickActual != null ? "t" + Math.round(D.tKickActual * 60) : "pred t" + Math.round(D.tKick * 60)), qk.x + uipx(6), qk.y + uipx(8)); }
+  const PT2 = GK3D.presTrail || []; if (PT2.length > 1) { ctx.strokeStyle = "rgba(64,255,128,0.8)"; ctx.beginPath(); PT2.forEach((x, i) => { const p = P3(x.p); i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y); }); ctx.stroke(); }
+  const BT = GK3D.ballTrail || []; if (BT.length > 1) { ctx.strokeStyle = "rgba(255,255,255,0.5)"; ctx.beginPath(); BT.forEach((x, i) => { const p = P3(x.p); i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y); }); ctx.stroke(); }
+  const sd = sol.dist; if (sd) { for (const h of ["R", "L"]) if (sd[h]) { const bad = !sd[h].valid; const E = sol.fk.joint[skel.byName["foreArm_" + h].idx], W = sol.fk.joint[skel.byName["hand_" + h].idx], S0 = sol.fk.joint[skel.byName["upperArm_" + h].idx]; line(S0, E, bad ? "#ff4040" : "#4fc3ff"); line(E, W, bad ? "#ff4040" : "#4fc3ff"); dot(sd[h].handCentre, "#ffffff", 2); } if (sd.ball) { const q = dot(sd.ball, "#40ff80", 3); ctx.fillStyle = "#40ff80"; ctx.fillText("ball (pres)", q.x + uipx(5), q.y - uipx(3)); } }
+  if (sol.kick) { const q = dot(sol.kick.target, "#ff9a3c", 3); dot(sol.kick.contact, "#ffffff", 2.5); ctx.fillStyle = "#ff9a3c"; ctx.fillText("foot→ball " + (sol.kick.surface * 100).toFixed(1) + " cm w " + sol.kick.w, q.x + uipx(5), q.y + uipx(8)); }
+  const hp = P3(sol.fk.tip[skel.byName.head.idx]); ctx.fillStyle = sd && sd.violations ? "#ff4040" : "#40ff80";
+  ctx.fillText(D.kind + " " + (Dg ? Dg.seg + " " + Dg.x.toFixed(2) : "") + " hands R" + (Dg ? Dg.hands.R.toFixed(2) : "-") + " L" + (Dg ? Dg.hands.L.toFixed(2) : "-") + (sd && sd.R ? " R→ball " + (sd.R.surface * 100).toFixed(1) + " cm" : "") + (sd && sd.L ? " L→ball " + (sd.L.surface * 100).toFixed(1) + " cm" : "") + (D.released ? " RELEASED" : "") + (D.kicked ? " KICKED" : "") + (sd && sd.violations ? " VIOLATION " + sd.violations : ""), hp.x - uipx(40), hp.y - uipx(22));
+  ctx.restore();
+}
 // catch debug view: shoulders / elbows / wrists / hand centres, ball centre + hand targets, torso exclusion volume, receiving plane,
 // authoritative ball trajectory with the contact / held ticks, cradle centre and chest pin
 function gk3dDrawCradle(skel, sol, g, desc, gk, P3) {
