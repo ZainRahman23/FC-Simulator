@@ -14,6 +14,7 @@ const GL3D = {
   segments: 10,           // capsule radial segments (low-poly look)
   fixedTexelM: 0.055,     // Option C: metres per texel at the character (≈ one sprite art pixel: 1.88 m body / 100 px)
   mode: "B",              // "B" screen-aligned low-res | "C" character-space fixed texel density (render scale from depth)
+  character: "SKINNED",   // "SKINNED" = the skinned humanoid test character | "MANNEQUIN" = the capsule prototype (debug option)
 };
 function glCreateRenderer() {
   const cv3 = document.createElement("canvas"); cv3.width = 16; cv3.height = 16;
@@ -54,10 +55,28 @@ function glCreateRenderer() {
   }`;
   const mk = (t, s) => { const sh = gl.createShader(t); gl.shaderSource(sh, s); gl.compileShader(sh); if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(sh)); return sh; };
   const prog = (v, f) => { const p = gl.createProgram(); gl.attachShader(p, mk(gl.VERTEX_SHADER, v)); gl.attachShader(p, mk(gl.FRAGMENT_SHADER, f)); gl.linkProgram(p); if (!gl.getProgramParameter(p, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(p)); return p; };
-  const P = prog(VS, FS), PP = prog(PVS, PFS);
+  // skinned humanoid: GPU linear-blend skinning (4 influences), flat material part + dominant-bone id for the outline pass
+  const SVS = `#version 300 es
+  layout(location=0) in vec3 aPos; layout(location=1) in vec3 aNrm; layout(location=2) in float aPart; layout(location=3) in float aId; layout(location=4) in vec4 aBI; layout(location=5) in vec4 aBW;
+  uniform mat4 uView, uProj; uniform mat4 uBones[24];
+  out vec3 vN; out float vDepth; flat out float vPart; flat out float vId;
+  void main(){ mat4 sk = aBW.x * uBones[int(aBI.x)] + aBW.y * uBones[int(aBI.y)] + aBW.z * uBones[int(aBI.z)] + aBW.w * uBones[int(aBI.w)];
+    vec4 wp = sk * vec4(aPos, 1.0); vec4 vp = uView * wp; vN = normalize(mat3(sk) * aNrm); vDepth = -vp.z; vPart = aPart; vId = aId; gl_Position = uProj * vp; }`;
+  const SFS = `#version 300 es
+  precision mediump float; in vec3 vN; in float vDepth; flat in float vPart; flat in float vId;
+  uniform vec3 uPalette[7]; uniform vec3 uLight; uniform float uBands;
+  layout(location=0) out vec4 oColor; layout(location=1) out vec4 oId;
+  void main(){
+    float nl = max(0.0, dot(normalize(vN), normalize(uLight)));
+    float q = floor(nl * uBands + 0.35) / uBands; float shade = 0.55 + 0.45 * q;
+    oColor = vec4(uPalette[int(vPart + 0.5)] * shade, 1.0);
+    oId = vec4(vId / 255.0, vDepth / 400.0, 0.0, 1.0);
+  }`;
+  const P = prog(VS, FS), PP = prog(PVS, PFS), PS = prog(SVS, SFS);
   const U = (p, n) => gl.getUniformLocation(p, n);
   const R = { cv: cv3, gl, P, PP, u: { model: U(P, "uModel"), view: U(P, "uView"), proj: U(P, "uProj"), nrm: U(P, "uNrm"), color: U(P, "uColor"), light: U(P, "uLight"), bands: U(P, "uBands"), id: U(P, "uId") },
-              up: { col: U(PP, "uCol"), idt: U(PP, "uIdTex"), texel: U(PP, "uTexel"), outline: U(PP, "uOutline") }, meshes: new Map(), fbo: null, fboW: 0, fboH: 0, quad: null };
+              up: { col: U(PP, "uCol"), idt: U(PP, "uIdTex"), texel: U(PP, "uTexel"), outline: U(PP, "uOutline") },
+              PS, us: { view: U(PS, "uView"), proj: U(PS, "uProj"), bones: U(PS, "uBones"), palette: U(PS, "uPalette"), light: U(PS, "uLight"), bands: U(PS, "uBands") }, meshes: new Map(), fbo: null, fboW: 0, fboH: 0, quad: null };
   // fullscreen quad
   R.quad = gl.createVertexArray(); gl.bindVertexArray(R.quad); const qb = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, qb);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW); gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0); gl.bindVertexArray(null);
@@ -77,6 +96,15 @@ function glCapsule(R, len, rad) {
   const nb = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, nb); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(nrm), gl.STATIC_DRAW); gl.enableVertexAttribArray(1); gl.vertexAttribPointer(1, 3, gl.FLOAT, false, 0, 0);
   const ib = gl.createBuffer(); gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ib); gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(idx), gl.STATIC_DRAW);
   gl.bindVertexArray(null); const m = { vao, n: idx.length }; R.meshes.set(key, m); return m;
+}
+// skinned mesh VAO for a skeleton (built once per skeleton object from skinBuildMesh; cached on the skeleton)
+function glSkinnedMesh(R, skel) {
+  if (skel._glMesh && skel._glMesh.R === R) return skel._glMesh;
+  const gl = R.gl, m = skinBuildMesh(skel), vao = gl.createVertexArray(); gl.bindVertexArray(vao);
+  const buf = (loc, data, n) => { const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, n, gl.FLOAT, false, 0, 0); };
+  buf(0, m.pos, 3); buf(1, m.nrm, 3); buf(2, m.part, 1); buf(3, m.bid, 1); buf(4, m.bi, 4); buf(5, m.bw, 4);
+  const ib = gl.createBuffer(); gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ib); gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, m.idx, gl.STATIC_DRAW); gl.bindVertexArray(null);
+  skel._glMesh = { R, vao, n: m.idx.length, nVerts: m.nVerts, nTris: m.nTris }; return skel._glMesh;
 }
 function glEnsureTarget(R, w, h) {
   const gl = R.gl; if (R.fboW === w && R.fboH === h) return;
@@ -113,6 +141,15 @@ function glRenderCharacters(R, chars, cvW, cvH, opts) {
   let draws = 0;
   for (const ch of chars) {
     const skel = ch.skel, fk = ch.fk, pal = ch.palette || SKEL_PARTS;
+    if (GL3D.character === "SKINNED" && ch.skinMats && typeof skinBuildMesh === "function") {           // skinned humanoid: one draw, bone matrices = world × inverse bind (IK / look-at included)
+      const mesh = glSkinnedMesh(R, skel); gl.useProgram(R.PS);
+      gl.uniformMatrix4fv(R.us.view, false, cam.view); gl.uniformMatrix4fv(R.us.proj, false, cam.proj); gl.uniform3fv(R.us.light, V3.norm(GL3D.light)); gl.uniform1f(R.us.bands, GL3D.bands);
+      gl.uniformMatrix4fv(R.us.bones, false, ch.skinMats);
+      const palArr = new Float32Array(21); SKIN_PARTS.forEach((n, i) => { const c = pal[n] || SKEL_PARTS[n]; palArr[i * 3] = c[0]; palArr[i * 3 + 1] = c[1]; palArr[i * 3 + 2] = c[2]; }); gl.uniform3fv(R.us.palette, palArr);
+      gl.bindVertexArray(mesh.vao); gl.drawElements(gl.TRIANGLES, mesh.n, gl.UNSIGNED_SHORT, 0); draws++; gl.bindVertexArray(null);
+      gl.useProgram(R.P); gl.uniformMatrix4fv(R.u.view, false, cam.view); gl.uniformMatrix4fv(R.u.proj, false, cam.proj); gl.uniform3fv(R.u.light, V3.norm(GL3D.light)); gl.uniform1f(R.u.bands, GL3D.bands);
+      continue;
+    }
     for (const b of skel.bones) {
       if (!b.part || b.len <= 0) continue;
       const mesh = glCapsule(R, b.len, b.rad);

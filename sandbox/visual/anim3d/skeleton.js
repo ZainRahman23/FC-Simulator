@@ -34,13 +34,17 @@ const SKEL_DEF = [
   ["toe_L",      "foot_L",  [0, -0.03, 0.095],    [0, 0, 1],  0.04,  0.04,  "boots"],
 ];
 const DEG = Math.PI / 180;
-function skelBuild(H) {                  // bind skeleton for a character of height H (m); radii scale with H/1.88
-  const bones = [], byName = {};
+// prop (optional, retargeting test): { legs, arms, torso, width } — multipliers on the leg / arm / torso bone lengths and offsets and on
+// the girth. The clips are rotation-only so they drive any proportions unchanged; what DOES depend on metres is noted in the findings.
+function skelBuild(H, prop) {            // bind skeleton for a character of height H (m); radii scale with H/1.88
+  const pr = Object.assign({ legs: 1, arms: 1, torso: 1, width: 1 }, prop || {}); const bones = [], byName = {};
+  const grp = (n) => /^(thigh|shin|foot|toe)_/.test(n) ? pr.legs : /^(clavicle|upperArm|foreArm|hand)_/.test(n) ? pr.arms : (n === "spine" || n === "chest" || n === "neck") ? pr.torso : n === "pelvis" ? pr.legs : 1;
   for (const [name, parent, off, dir, len, rad, part] of SKEL_DEF) {
-    const b = { name, parent: parent ? byName[parent] : null, idx: bones.length, off: off.map(v => v * H), dir: V3.norm(dir), len: len * H, rad: rad * (H / 1.88), part, children: [] };
+    const k = grp(name), kOff = name === "pelvis" ? pr.legs : (parent && /^(thigh|shin|foot)_/.test(parent)) ? pr.legs : (parent && /^(clavicle|upperArm|foreArm)_/.test(parent)) ? pr.arms : (parent === "spine" || parent === "chest" || parent === "pelvis" && name === "spine") ? pr.torso : 1;
+    const b = { name, parent: parent ? byName[parent] : null, idx: bones.length, off: off.map(v => v * H * kOff), dir: V3.norm(dir), len: len * H * k, rad: rad * (H / 1.88) * pr.width, part, children: [] };
     bones.push(b); byName[name] = b; if (b.parent) b.parent.children.push(b);
   }
-  return { H, bones, byName, bindWidthM: 0.19 * H };
+  return { H, prop: pr, bones, byName, bindWidthM: 0.19 * H * pr.width };
 }
 // FK: pose (eulers deg per bone) + root matrix (character local → 3D world) → per-bone world matrices + joint/tip positions
 function skelFK(skel, pose, rootM) {

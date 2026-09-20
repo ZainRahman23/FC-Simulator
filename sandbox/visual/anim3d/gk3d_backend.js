@@ -8,7 +8,17 @@ const GK3D = {
   perf: { n: 0, ms: 0, max: 0, glDraws: 0 },
   lastContact: null, log: [],
   state: {},                    // presentation memory (plant lock, commit key) — reset per shot
-  R: null, skel: null, skelH: 0,
+  R: null, skel: null, skelH: 0, skelKey: "",
+  // appearance / proportion test variants (architecture check: the SAME clips + graph drive all of them). h = height multiplier on the
+  // simulation keeper's height (presentation only), prop = skeleton proportion multipliers, palette = material overrides.
+  variant: "default",
+  variants: {
+    default: { label: "default goalkeeper" },
+    tall:    { label: "taller / longer-limbed", h: 1.06, prop: { legs: 1.05, arms: 1.07, torso: 1.0, width: 0.97 } },
+    short:   { label: "shorter / stockier", h: 0.94, prop: { legs: 0.96, arms: 0.96, torso: 1.0, width: 1.14 } },
+    skin2:   { label: "alternate skin tone", palette: { skin: [0.42, 0.27, 0.18] } },
+    jersey2: { label: "alternate jersey colour", palette: { shirt: [0.98, 0.62, 0.08] } },
+  },
 };
 function gk3dReset() { GK3D.state = {}; GK3D.trail = []; GK3D.asserts = []; GK3D.prev = null; }
 function gk3dDraw(t, gk, dt) {
@@ -17,7 +27,8 @@ function gk3dDraw(t, gk, dt) {
   if (A.prevRoot) A.odo += Math.hypot(gk.x - A.prevRoot.x, gk.y - A.prevRoot.y); A.prevRoot = { x: gk.x, y: gk.y };
   const cur = gkAnimUpdate(t, gk);                       // shared semantic resolver (layer B)
   const desc = gkActionDescription(t, gk, cur);
-  if (GK3D.skelH !== gk.height) { GK3D.skel = skelBuild(gk.height); GK3D.skelH = gk.height; }
+  const V = GK3D.variants[GK3D.variant] || GK3D.variants.default, skelKey = gk.height + "|" + GK3D.variant;
+  if (GK3D.skelKey !== skelKey) { GK3D.skel = skelBuild(gk.height * (V.h || 1), V.prop); GK3D.skel.invBind = skelInverseBind(GK3D.skel); GK3D.skelH = gk.height; GK3D.skelKey = skelKey; GK3D.palette = Object.assign({}, SKEL_PARTS, V.palette || {}); }
   const skel = GK3D.skel, clip = GK_CLIP_FAR_DIVE;
   if (!desc.commit && GK3D.state.commitKey != null) { GK3D.state = {}; GK3D.trail = []; GK3D.prev = null; }
   const g = gkGraphEvaluate(desc, clip, skel, GK3D.state);
@@ -31,8 +42,9 @@ function gk3dDraw(t, gk, dt) {
     if (k > 0) { const axis = V3.norm(V3.cross(fwd, to)); if (V3.len(V3.cross(fwd, to)) > 1e-6) { const Rr = M4.axisAngle(axis, ang * k); for (const b of [hd, skel.byName.hair]) { const m = sol.fk.world[b.idx], o = M4.origin(m); const m2 = M4.mul(M4.translate(o[0], o[1], o[2]), M4.mul(Rr, M4.mul(M4.translate(-o[0], -o[1], -o[2]), m))); m2[12] = m[12]; m2[13] = m[13]; m2[14] = m[14]; sol.fk.world[b.idx] = m2; sol.fk.tip[b.idx] = M4.transformPoint(m2, V3.scale(b.dir, b.len)); } sol.diag.look = +(ang * k / DEG).toFixed(0); } }
   }
   // render (plus optional copies for the scaling test)
-  const chars = [{ skel, fk: sol.fk }];
-  for (let i = 1; i <= GK3D.copies; i++) { const off = M4.translate(0, 0, (i % 2 ? 1 : -1) * Math.ceil(i / 2) * 1.2); const fk2 = { world: sol.fk.world.map(m => M4.mul(off, m)), joint: sol.fk.joint.map(p => M4.transformPoint(off, p)), tip: sol.fk.tip.map(p => M4.transformPoint(off, p)) }; chars.push({ skel, fk: fk2 }); }
+  const skinMats = new Float32Array(skel.bones.length * 16); skelSkinMatrices(skel, sol.fk, skel.invBind).forEach((m, i) => skinMats.set(m, i * 16));   // world × inverse bind, after IK / look-at
+  const chars = [{ skel, fk: sol.fk, palette: GK3D.palette, skinMats }];
+  for (let i = 1; i <= GK3D.copies; i++) { const off = M4.translate(0, 0, (i % 2 ? 1 : -1) * Math.ceil(i / 2) * 1.2); const fk2 = { world: sol.fk.world.map(m => M4.mul(off, m)), joint: sol.fk.joint.map(p => M4.transformPoint(off, p)), tip: sol.fk.tip.map(p => M4.transformPoint(off, p)) }; const sm2 = new Float32Array(skel.bones.length * 16); skelSkinMatrices(skel, fk2, skel.invBind).forEach((m, i) => sm2.set(m, i * 16)); chars.push({ skel, fk: fk2, palette: GK3D.palette, skinMats: sm2 }); }
   const out = glRenderCharacters(GK3D.R, chars, cv.width, cv.height, {});
   // composite at the keeper's depth slot: shadow at the PRESENTATION root, then the low-res layer scaled with nearest sampling
   const sp = sproj3(gk.x, 0, gk.y); if (sp.d < 0.5) return true;
@@ -162,4 +174,7 @@ function gk3dDrawRoots(gk, g, sp, spp) {
   ctx.restore();
 }
 GK_PRESENTATION.register("SKELETAL_3D", { draw: gk3dDraw, reset: gk3dReset, label: "skeletal 3D prototype" });
-document.addEventListener("DOMContentLoaded", () => { for (const k of ["bones", "ik", "roots", "feet", "trail"]) { const el = document.getElementById("dbg3d-" + k); if (el) el.addEventListener("change", () => { GK3D.debug[k] = el.checked; }); } });
+document.addEventListener("DOMContentLoaded", () => {
+  const ce = document.getElementById("gk3d-character"); if (ce) ce.addEventListener("change", () => { GL3D.character = ce.value; });
+  const ve = document.getElementById("gk3d-variant"); if (ve) ve.addEventListener("change", () => { GK3D.variant = ve.value; });
+  for (const k of ["bones", "ik", "roots", "feet", "trail"]) { const el = document.getElementById("dbg3d-" + k); if (el) el.addEventListener("change", () => { GK3D.debug[k] = el.checked; }); } });
