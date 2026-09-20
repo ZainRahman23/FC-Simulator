@@ -2955,6 +2955,21 @@ const GK_SCENARIOS = [
   { stage4: true, name: "S4 unreachable rocket stays untouched",              origin: [95, 34], aim: [105, 30.7], tech: "LACES_POWER", c: 1.0 },
   { stage4: true, name: "S4 handling probe (synthetic lat 1.0 z 1.2 21 m/s — T cycles handling)", origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synth: { lat: 1.0, z: 1.2, v: 21 } },
   { stage4: true, name: "S4 K2 high tip-up (POWER 28 m/s under the bar)",     origin: [86, 34], aim: [105, 32.5], tech: "LACES_POWER", c: 0.66, band: "K2" },
+  // ── M3 MOTION-LIBRARY COVERAGE FIXTURES (2026-09-20): one deterministic case per skeletal motion family and per world facing.
+  // synthK offsets are in the KEEPER frame (positive lateral = his right); real kicks from off-centre origins turn the keeper to
+  // south-west / north-west / south / north facings. Outcomes are NOT scripted (Stage-3 TOI + Stage-4 quality as always).
+  { name: "M3 low dive LEFT, hand (synthK lat -1.4 z 0.35 15 m/s)",   origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: -1.4, z: 0.35, v: 15 } },
+  { name: "M3 low dive RIGHT, hand (synthK lat 1.4 z 0.35 15 m/s)",   origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 1.4, z: 0.35, v: 15 } },
+  { name: "M3 chest catch (synthK lat 0.05 z 1.15 15 m/s)",           origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.05, z: 1.15, v: 15 } },
+  { name: "M3 high ball, real chip (CHIP 0.55)",                       origin: [90, 34], aim: [105, 34], tech: "CHIP", c: 0.55 },   // a high central ball through the real kick path (the synthetic lob variants did not register as a shot from a fresh page)
+  { name: "M3 near-body LEFT (synthK lat -0.9 z 1.3 17 m/s)",         origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: -0.9, z: 1.3, v: 17 } },
+  { name: "M3 foot save RIGHT wide (synthK lat 0.55 z 0.05 14 m/s)",  origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.55, z: 0.05, v: 14 } },
+  { name: "M3 far dive LEFT TOP (synthK lat -1.6 z 2.0 18 m/s)",      origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: -1.6, z: 2.0, v: 18 } },
+  { name: "M3 SW-facing far dive (from the south)",                   origin: [100, 42], aim: [105, 31.5], tech: "LACES", c: 0.62 },
+  { name: "M3 NW-facing low dive (from the north)",                   origin: [100, 26], aim: [105, 36.2], tech: "LACES", c: 0.55, lowZ: true },
+  { name: "M3 S-facing tight angle, high across",                     origin: [104, 44], aim: [105, 33], tech: "LACES", c: 0.6 },
+  { name: "M3 N-facing tight angle, low across",                      origin: [104, 24], aim: [105, 35], tech: "LACES", c: 0.5, lowZ: true },
+  { name: "M3 moving keeper into a chest catch (gkv 0,-3)",           origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, gkv: [0, -3], synthK: { lat: 0, z: 1.2, v: 12 } },
 ];
 function ptGkMake() {
   const c = GK_CFG;

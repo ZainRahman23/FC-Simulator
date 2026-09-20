@@ -39,6 +39,7 @@ function gkActionDescription(t, gk, cur) {
     cls: cur.cls || null,                                           // classification (goalSide, heightClass, expr, saveAngle, norm, …)
     dir: cur.dir, commitFacing: frozen ? frozen.facing : gk.facing, facing: gk.facing,
     simRoot: [gk.x, gk.y], vel: [gk.vx, gk.vy], height: gk.height, handZ: gk.handZ,
+    legTip: gk.legTipNow ? gk.legTipNow.slice() : null,                           // the simulation's lead-leg tip during a low save (authoritative leg target)
     handTarget: gk.handNow ? gk.handNow.slice() : [gk.x, gk.y, gk.handZ],
     legTip: gk.legTipNow ? gk.legTipNow.slice() : null,
     commit: c ? { t0: c.t0, execTime: c.execTime, target: c.target.slice(), feet: c.feet.slice(), handOrigin: c.handOrigin.slice(), action: c.action, tier: c.tier, envNorm: c.envNorm, bestEffort: c.bestEffort, gather: !!c.gather, commitTick: c.commitTick,
