@@ -1,4 +1,4 @@
-# Goalkeeper skeletal MOTION LIBRARY — findings (v8, 2026-09-20)
+# Goalkeeper skeletal MOTION LIBRARY — findings (v8 + v9 FOOT_SAVE spread block, 2026-09-20)
 
 Branch `prototype/3d-animation-pipeline` (not pushed). Review page: `review_artifacts/gk_motion_library/GK_MOTION_LIBRARY_REVIEW.html`.
 Astra reference package: `review_artifacts/astra_gk_motion_reference/` (`INDEX.json`, `README.md`, one folder per canonical motion / facing).
@@ -28,7 +28,7 @@ classification only (family, height class, feet-planted, lateral offset), never 
 | FAR_DIVE | AIRBORNE_DIVE MID / HIGH / TOP | v6, frozen: plant, push, ballistic arc, side or feet landing, get-up chain, reposition steps | 42, 49 (mirror) |
 | LOW_DIVE | AIRBORNE_DIVE LOW-MID | low sideways launch, body horizontal at ≤ 82° roll (never inverted), pelvis solved to the lying height, hard stop on the pitch, same get-up chain | 43, 44, 10, 1, 50, 51 |
 | LOW_COLLAPSE | LOW_COLLAPSE | no flight: near leg folds, drop onto the hip, hands down together, leg to the simulation's leg tip | 32, 52, 53, 11 |
-| FOOT_SAVE | FOOT_SAVE | planted support leg, lead leg sweeps to the simulation's leg tip, retract | 19, 16, 48 |
+| FOOT_SAVE (v9 spread block) | FOOT_SAVE | emergency block: COM drops (0.70 → ~0.46 m), both hips abduct (saving thigh ~72°, far thigh ~60°, knees ~18° / ~30°), far foot steps out to a wide plant, arms wide and forward, chest open; saving foot on the simulation's leg tip; body commits onto the saving hip (side-sit) and recovers from the half-kneel — not a forward kick | 19, 16, 17, 55–60 |
 | NEAR_BODY | NEAR_BODY_SAVE | feet planted, one step out, torso lean, near-hand reach (two hands when central) | 41, 47 |
 | CHEST_CATCH | CHEST_CATCH / SUPPORTED_CATCH | hands out in front, ball into the chest, hug | 33, 45, 54 |
 | HIGH_CATCH | HIGH_CATCH | both hands over the head, toe rise / jump by the launch demand, bring down | 31, 46 |
@@ -51,6 +51,14 @@ variation (side, height, facing, held ball, two hands, reach distance) is a para
   deceleration; the two-hand reach hands over to the hold.
 - Leg-tip IK (FOOT_SAVE, LOW_COLLAPSE): the lead leg meets the simulation's leg tip when it is reachable (same reach cap as a planted
   foot); the last tip is cached through the landing. LOW_DIVE does NOT chase the leg tip (section 10).
+- FOOT_SAVE v9 (kind `spread`): keys setLow → DROP_LOAD (u 0.30) → HIP_OPEN (0.60) → SPREAD (1.0); the saving leg is free for the
+  leg-tip IK (pole forward-up), the far foot is planted ONCE in world space 0.55·hs beside the pelvis at u ≥ 0.25 (`fixed`: the
+  simulation root keeps sliding toward the ball, so the planted foot must not chase it — it ends ~0.8 m out as the body travels);
+  no wait at u = 1 (momentum carries the body down whether or not the ball arrives). Post: `gkGroundPlan` with `opt` — ABSORB
+  (0.25 s, hermite from the arrival pelvis velocity to the side-sit height 0.23 m, 0.12 m lateral travel bled to zero), SETTLE
+  (0.35 s, side-sit pose `mo.ground`, saving hand braced, saving foot stays where it is, far foot tucks), then the shared chain from
+  HALF_KNEEL (the extended leg folds under, the far foot steps in front), CROUCH, RISE, REPOSITION, SET. BRACE / PUSH_UP have zero
+  duration for the spread plan.
 - Footwork: proportional plant points, re-plant when a step target moves, knee bend plane blended in for new locks / steps; tucked
   feet follow a body that is still sliding at the settle (re-plant once the hips have slid > 15 cm past the planted feet; drag, no lift).
 - Solver (`ik.js`, `skelIK2`): per-chain bend-plane memory (degenerate plane → last frame's; the plane rotates ≤ 60° per solve),
@@ -76,27 +84,37 @@ Stage-boundary assertions: 0 flagged ticks in all 17 packaged fixtures; free pla
 ## 6. Contact validation (authoritative)
 
 Contact tick, point, volume and outcome come from `gk.contact`; the manifest records, per key frame, the simulation hand, leg tip,
-ball, glove residual (drawn glove centre → simulation hand) and leg residual. Free play (120 shots): HAND-volume contacts n = 23,
-glove residual median 5.6 cm, p90 15.5 cm, max 20 cm. Residuals are exposed, never hidden: a target the modeled arm cannot reach
-(short body, ball at the shoulder, ball inside the fold radius) shows as a residual in the manifest and the overlay frames.
+ball, glove residual (drawn glove centre → simulation hand) and leg residual. Free play seed 7 (120 shots, corrected record — see
+the tool note in section 8): 40 contacts, HAND-volume n = 37, glove residual median 6.0 cm, p90 22.8 cm, max 52 cm; seed 11 (160
+shots): 53 contacts, HAND n = 40, median 12.0 cm, p90 37 cm, max 64 cm. The large tail is real and exposed: hand targets the modeled
+arm cannot reach (short reach at full extension, ball at / inside the shoulder's fold radius, two-hand targets on a lateral ball) —
+never hidden by stretching. Residuals are in the manifest and the overlay frames.
 
 ## 7. Simulation neutrality
 
-55 deterministic fixtures × 260 ticks, per-tick simulation trace hashed (keeper root, velocity, hand, leg tip, ball position and
-velocity, held flag, phase / state, commit, contact): sprite backend vs SKELETAL_3D drawn every tick — 55 / 55 identical
-(`verification/GATE_sprite_vs_3d_55_fixtures.md`); animation OFF (nothing drawn) vs 3D ON — 55 / 55 identical final-tick root,
-hand, ball, held flag, contact volume / outcome (`verification/GATE_animation_off_vs_on_55_fixtures.md`).
+61 deterministic fixtures × 260 ticks, per-tick simulation trace hashed (keeper root, velocity, hand, leg tip, ball position and
+velocity, held flag, phase / state, commit, contact): sprite backend vs SKELETAL_3D drawn every tick — 61 / 61 identical
+(`verification/GATE_sprite_vs_3d_61_fixtures.md`); animation OFF (nothing drawn) vs 3D ON — 61 / 61 identical final-tick root,
+hand, ball, held flag, contact volume / outcome (`verification/GATE_animation_off_vs_on_61_fixtures.md`).
 
 ## 8. Free play (production path)
 
 `gk3d_freeplay.js --shots 120 --seed 7`: seeded shots through the real kick pipeline, one continuous keeper, 3D drawn every tick.
-114 committed, 67 contacts; families → motions: FAR_DIVE 71, LOW_DIVE 13, HIGH_CATCH 17, NEAR_BODY 6, GATHER 5, LOW_COLLAPSE 2;
+114 committed, 40 contacts; families → motions: FAR_DIVE 71, LOW_DIVE 13, HIGH_CATCH 17, NEAR_BODY 6, GATHER 5, LOW_COLLAPSE 2;
 all 8 facing octants; 0 fallback selections, 0 unauthored ticks, 0 dive side ≠ landed side. Continuity flags: 1 marginal
 (shot 74, LOW_DIVE that missed the ball, IMPACT → ABSORB Δv 1.52 m/s at the 1.5 threshold, excess 2.5 cm: the hip stopping on the
 pitch with almost no height left — a hard ground stop, not a relocation). The flags that the earlier runs raised (shots 5, 76, 93,
 116) were traced to their causes and resolved at the transition / solver level (review page, section "Landing and IK continuity").
-Record: `verification/FREEPLAY_3d_120_shots_seed7.json` (per shot: family, motion, side, landed side, facing, contact, residuals,
-phases, assertions).
+Tool correction (v9): the recorder accepted a contact record left over from the previous shot at the first tick of the next one; the
+v8 report's "67 contacts / median 5.6 cm" included those stale records. The recorder now accepts only contacts timestamped inside the
+shot; the corrected figures are the ones above (40 contacts) and the motion / continuity statistics are unchanged by the fix.
+Second seed for FOOT_SAVE coverage, `--shots 160 --seed 11`: 151 committed, 53 contacts, 0 fallbacks, 0 unauthored ticks, 0 side ≠
+landed; 2 marginal LOW_DIVE IMPACT → ABSORB flags (Δv 1.74 / 1.77 m/s, the same hard-ground-stop class); FOOT_SAVE→FOOT_SAVE 9
+events (shots 19, 44, 50, 53, 59, 95, 104, 127, 136; facings 74° to −177°): 5 are close-range LEG DEFLECTIONS where the simulation's
+standing leg blocked the ball before the commit (ticks 15–30, commit 28) and the spread develops after the ball has gone, 2 end in a
+HAND / GATHER as the blocked ball rolls to the hands, 1 is a FOOT DEFLECTION at the spread (leg residual 9.5 cm), 1 no contact.
+All 9 run the full spread lifecycle with no flags and land on the save side.
+Records: `verification/FREEPLAY_3d_120_shots_seed7.json`, `verification/FREEPLAY_3d_160_shots_seed11.json`.
 
 ## 9. Body proportions / reach
 
@@ -117,6 +135,24 @@ model); the drawn glove of a shorter body falls short of the authoritative hand 
 overshoots by 1–2 cm. This is exposed, not solved by stretching: the correct fix is per-body reach envelopes in the simulation (or
 authored per-proportion clip constants), which is a simulation decision, not an animation one.
 
+## 9b. FOOT_SAVE spread block — measurements (fixtures, v9)
+
+| fixture | side / facing | contact at u | leg residual at contact | pelvis at contact | feet apart | pelvis: commit → contact → +12 → +30 ticks |
+|---|---|---|---|---|---|---|
+| 19 wide R | RIGHT / 180° | 0.87 | 2.9 cm | 0.47 m | 1.22 m | 0.70 → 0.47 → 0.32 → 0.23 |
+| 16 close R | RIGHT / 180° | 0.94 | 8.2 cm | 0.44 m | 0.89 m | 0.70 → 0.44 → 0.27 → 0.23 |
+| 17 close L (mirror of 16) | LEFT / 180° | 0.94 | 8.2 cm | 0.44 m | 0.89 m | identical mirror |
+| 55 wide R | RIGHT / 180° | 0.88 | 2.7 cm | 0.46 m | 1.21 m | 0.70 → 0.46 → 0.30 → 0.23 |
+| 56 wide L (mirror) | LEFT / 180° | 0.88 | 2.5 cm | 0.46 m | 1.19 m | identical mirror |
+| 57 SW facing R | RIGHT / 131° | 0.28 | 14.2 cm | 0.63 m | 0.59 m | 0.70 → 0.63 → 0.51 → 0.25 |
+| 58 NW facing L (mirror) | LEFT / −131° | 0.28 | 14.2 cm | 0.63 m | 0.59 m | identical mirror |
+| 59 SSW facing R | RIGHT / 152° | 0.42 | 5.4 cm | 0.60 m | 0.69 m | 0.70 → 0.60 → 0.46 → 0.23 |
+| 60 NNW facing L (mirror) | LEFT / −152° | 0.42 | 5.4 cm | 0.60 m | 0.69 m | identical mirror |
+
+All nine: landed side = save side, 0 stage-boundary flags, mirrors bit-symmetric. Fixtures 57 / 58 are close-range reactions: the
+simulation's contact lands 7 ticks after the commit (u 0.28), while the keeper is still in DROP_LOAD — the block develops after the
+ball has gone (the standing-leg cylinder blocked it). That is the simulation's timing and is shown as is.
+
 ## 10. Remaining problems (honest list)
 
 1. LOW_DIVE with a leg-volume contact (2 of 13 low dives in free play): the simulation's leg-tip model lies on the opposite side of
@@ -132,6 +168,14 @@ authored per-proportion clip constants), which is a simulation decision, not an 
 6. Fixture 54 (moving keeper, synthetic shot) registers no shot on a fresh page (harness order dependence: the capability band pinned
    by fixture 42 persists on a page); it commits to a CHEST_CATCH in the ordered gates. Its package folder shows footwork only.
 7. Skinned rig shoulder deformation (v7 finding) — irrelevant to the motion reference, listed for completeness.
+8. FOOT_SAVE and the Touchline camera: at a straight facing the keeper's lateral axis runs into the camera, so the lateral spread
+   projects as depth (near foot low on screen, far foot high and partly occluded by the body; dark socks against the pitch hide it
+   further in the banded render). The 3D spread is real (feet ~1.2 m apart, pelvis 0.46 m) and reads as width at angled facings.
+   The spread is defined by the simulation's contact geometry and was NOT rotated toward the camera.
+9. FOOT_SAVE contact representation: the simulation's LEG+ / LEG- volumes are vertical standing-leg cylinders at ±0.20 m; the
+   spread shows the ball at the saving leg's shin / knee region (the foot itself sits on the simulation's leg tip, residual 2.5–8 cm on
+   the straight fixtures). A ball the simulation records on the standing-leg cylinder can therefore sit up to ~15 cm from the drawn
+   spread leg. Exposed, not faked.
 
 ## 11. Deferred to Astra (visual, not motion)
 
@@ -167,4 +211,6 @@ v6 regression: run the manifest for scenario 42 before and after a change and co
 - `bdfb222` prototype: goalkeeper skeletal MOTION LIBRARY — 8 canonical motions, deterministic selection, held ball, footwork
 - `fe08d2e` landing / IK continuity: one-way post phase, arrived-low hard stop, bend-plane memory + fold radius in the solver,
   hold hand-over, tuck plants follow a sliding body, rise-recovered drift, floored legs kept through a pelvis lift; free-play dump tool
-- (docs commit) review page, findings, Astra reference package, verification records
+- `fc77de1` docs: review page, findings, Astra reference package, verification records
+- `f57040b` FOOT_SAVE spread block: new motion kind `spread`, ground plan absorb / side-sit options, fixed world-space step-out
+  plant, fixtures 55–60, dedicated review section

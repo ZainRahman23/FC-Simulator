@@ -31,9 +31,9 @@
   "fixture": 19,
   "dir": "FOOT_SAVE",
   "family": "FOOT_SAVE",
-  "note": "planted: lead leg sweeps to the simulation's leg tip, support leg squats, retract",
+  "note": "SPREAD BLOCK (v9): COM drops, hips abduct both ways, far foot steps out wide, arms wide; saving foot on the simulation's leg tip; body commits onto the saving hip (side-sit) and recovers from the half-kneel",
   "contactTick": 72,
-  "keyFrames": 6
+  "keyFrames": 12
  },
  {
   "motion": "NEAR_BODY",
@@ -79,6 +79,78 @@
   "note": "long-barrier kneel, hands scoop, hug (held)",
   "contactTick": 88,
   "keyFrames": 4
+ },
+ {
+  "motion": "FOOT_SAVE",
+  "fixture": 16,
+  "dir": "FOOT_SAVE_16",
+  "family": "FOOT_SAVE close block RIGHT",
+  "note": "FOOT_SAVE close block RIGHT",
+  "contactTick": 72,
+  "keyFrames": 12
+ },
+ {
+  "motion": "FOOT_SAVE",
+  "fixture": 17,
+  "dir": "FOOT_SAVE_17",
+  "family": "FOOT_SAVE close block LEFT (mirror)",
+  "note": "FOOT_SAVE close block LEFT (mirror)",
+  "contactTick": 72,
+  "keyFrames": 12
+ },
+ {
+  "motion": "FOOT_SAVE",
+  "fixture": 55,
+  "dir": "FOOT_SAVE_55",
+  "family": "FOOT_SAVE wide block RIGHT",
+  "note": "FOOT_SAVE wide block RIGHT",
+  "contactTick": 72,
+  "keyFrames": 12
+ },
+ {
+  "motion": "FOOT_SAVE",
+  "fixture": 56,
+  "dir": "FOOT_SAVE_56",
+  "family": "FOOT_SAVE wide block LEFT (mirror)",
+  "note": "FOOT_SAVE wide block LEFT (mirror)",
+  "contactTick": 72,
+  "keyFrames": 12
+ },
+ {
+  "motion": "FOOT_SAVE",
+  "fixture": 57,
+  "dir": "FOOT_SAVE_57",
+  "family": "FOOT_SAVE SW-facing RIGHT (early contact)",
+  "note": "FOOT_SAVE SW-facing RIGHT (early contact)",
+  "contactTick": 34,
+  "keyFrames": 11
+ },
+ {
+  "motion": "FOOT_SAVE",
+  "fixture": 58,
+  "dir": "FOOT_SAVE_58",
+  "family": "FOOT_SAVE NW-facing LEFT (mirror)",
+  "note": "FOOT_SAVE NW-facing LEFT (mirror)",
+  "contactTick": 34,
+  "keyFrames": 11
+ },
+ {
+  "motion": "FOOT_SAVE",
+  "fixture": 59,
+  "dir": "FOOT_SAVE_59",
+  "family": "FOOT_SAVE SSW-facing RIGHT",
+  "note": "FOOT_SAVE SSW-facing RIGHT",
+  "contactTick": 38,
+  "keyFrames": 11
+ },
+ {
+  "motion": "FOOT_SAVE",
+  "fixture": 60,
+  "dir": "FOOT_SAVE_60",
+  "family": "FOOT_SAVE NNW-facing LEFT (mirror)",
+  "note": "FOOT_SAVE NNW-facing LEFT (mirror)",
+  "contactTick": 38,
+  "keyFrames": 11
  },
  {
   "motion": "FAR_DIVE",
