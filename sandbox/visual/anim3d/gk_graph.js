@@ -11,6 +11,7 @@
 const GK_GRAPH = {
   loadPhase: 0.30, toeOff: 0.31, unloadAt: 0.15,   // IK weight ramp start; plant-foot release; opposite-foot release (pre)
   ikFadePost: 0.35, torsoAssistMaxDeg: 20, clavicleAssistMaxDeg: 10, lookMaxDeg: 55, presMaxM: 2.5,
+  ballVisR: 0.11, handOff: 0.03, antUpZ: [0.45, 0.80],   // presentation ball radius = the PHYSICAL ball (GOALFX.ballR 0.11; the 2D sprite draws an exaggerated 0.19 for readability — hand / ball relationships are judged against the real size); hand-target offset outside the ball; predicted crossing height (m) below/above which the central anticipation is the crouch / the upright ready
   authoredRollDeg: 72, reachLenH: 0.64, jumpMaxM: 0.55, pelvisMinY: 0.30,
   sideLandLo: 35, sideLandHi: 60,                  // body-axis angle from vertical (deg): ≤ lo land on the feet, ≥ hi land on the side
   G: 9.81,
@@ -190,7 +191,7 @@ function gkGraphEvaluate(desc, clip, skel, state) {
   const mk = c ? c.commitTick : null; if (state.motionKey !== mk) { state.motionKey = mk; state.motionSel = c ? gkSelectMotion(desc) : { key: null, motion: null }; }   // the motion is chosen ONCE at the commit (a later leg contact must not re-select mid-action)
   const sel = state.motionSel, mkey = sel.key, mo = sel.motion; const hs = skel.H / GK_MOTION_H_REF;
   const preKeys = mkey === "LOW_DIVE" ? clip.pre.filter(k => k[0] <= GK_GRAPH.toeOff + 1e-6).concat(mo.preTail) : clip.pre;
-  const named = { set: clip.set, setLow: clip.setLow, reach: preKeys[preKeys.length - 1][1], load: clip.pre[0][1] };
+  const named = { set: clip.set, setLow: clip.setLow, reach: preKeys[preKeys.length - 1][1], load: clip.pre[0][1], readyUp: GK_MOTIONS.READY_UP };
   const HS = (q) => { q._pelvis = V3.scale(q._pelvis || [0, 0, 0], hs); return q; };                                        // authored pelvis offsets are metres @ H_REF → proportional to this skeleton
   const M = (p) => HS(sideL ? poseMirrorP(p) : Object.assign({}, p, poseMeta(p)));
   const dive = !!c && (mkey === "FAR_DIVE" || mkey === "LOW_DIVE");                                                          // a CAUGHT ball no longer leaves the dive lifecycle: the body lands holding it
@@ -207,7 +208,9 @@ function gkGraphEvaluate(desc, clip, skel, state) {
       let p = gkSampleKeys(clip.anticipation, known ? a : Math.min(a, 0.30), named);
       const pSide = HS(predSideL ? poseMirrorP(p) : Object.assign({}, p, poseMeta(p)));
       const kSide = known ? smooth01((Math.abs(desc.predLat) - GK_GRAPH.antSymLat[0]) / (GK_GRAPH.antSymLat[1] - GK_GRAPH.antSymLat[0])) : 0;   // a central ball: no side load, a symmetric ready crouch
-      pose = kSide >= 1 ? pSide : poseLerpP(gkSampleKeys([[0, "setLow"], [1, GK_MOTIONS.READY]], a, { setLow: M(clip.setLow) }), pSide, kSide);
+      const kUp = (known && desc.predZ != null) ? smooth01((desc.predZ - GK_GRAPH.antUpZ[0]) / (GK_GRAPH.antUpZ[1] - GK_GRAPH.antUpZ[0])) : 0;   // predicted crossing height: a catch-height ball is met UPRIGHT (sprite ready), a ground ball with the crouch
+      const symP = kSide >= 1 ? null : poseLerpP(gkSampleKeys([[0, "setLow"], [1, GK_MOTIONS.READY]], a, { setLow: M(clip.setLow) }), poseLerpP(M(clip.set), M(GK_MOTIONS.READY_UP), smooth01(a)), kUp);
+      pose = kSide >= 1 ? pSide : poseLerpP(symP, pSide, kSide);
       phase = a < 0.30 ? "READ" : kSide < 0.5 ? (desc.prepared ? "PREPARE" : "READY") : a < 0.65 ? "WEIGHT_SHIFT" : (desc.prepared ? "PREPARE" : "LOAD"); sub = pose._name; mode = "anticipation";
       locks = { R: 1, L: 1 };
     } else if (desc.windup != null) {                                                          // the striker's visible wind-up: drop into the set crouch (symmetric)
@@ -229,8 +232,8 @@ function gkGraphEvaluate(desc, clip, skel, state) {
       const oSide = sideL ? "R" : "L", hsp = skel.H / GK_MOTION_H_REF;
       const pp = pose._pelvis || [0, 0, 0];
       locks = u >= 0.25 ? { other: 1, reach: 0, at: "spread", fixed: true, pts: { [oSide]: [pp[0] + (oSide === "R" ? 1 : -1) * mo.stepOut * hsp, pp[2] + 0.02] } } : { other: 1, reach: 0 }; state.endPose = pose;   // ONE step out to a wide point beside the pelvis, planted in world space once (fixed: the simulation root keeps sliding toward the ball; the planted foot must not chase it)
-    } else if (mo && mo.kind === "standing") {                                                 // NEAR_BODY / CHEST_CATCH / HIGH_CATCH / GATHER: feet planted (one step out for the near-body reach)
-      pose = M(gkSampleKeys(mo.keys, u, named)); mode = "standing"; phase = mkey; sub = pose._name;
+    } else if (mo && (mo.kind === "standing" || mo.kind === "catch")) {                       // catch group (NEAR_BODY / CHEST_CATCH / HIGH_CATCH / GATHER): feet planted (one step out for the near-body reach); brace → arms receive
+      pose = M(gkSampleKeys(mo.keys, u, named)); mode = "standing"; phase = mo.kind === "catch" ? ((desc.contact && desc.contact.tickT >= c.t0 - 1e-3) ? "CONTACT" : u < 0.45 ? "BRACE" : "RECEIVE") : mkey; sub = pose._name;
       if (mkey === "HIGH_CATCH") { const launch = desc.cls && desc.cls.expr ? desc.cls.expr.launch : clamp01((c.target[2] - 1.12 * skel.H) / (0.30 * skel.H)); pose._pelvis[1] += mo.jumpM * hs * launch * smooth01(clamp01((u - 0.45) / 0.55)); state.jump = launch; }   // launch demand: the simulation's expression, else the target height above the standing overhead reach → toe rise / small jump
       locks = mkey === "NEAR_BODY" ? { other: 1, reach: 1, stepOut: mo.stepOut } : { R: 1, L: 1 }; state.endPose = pose;
     } else { pose = M(clip.set); phase = desc.family || "REACH"; authored = false; mode = "procedural"; }
@@ -242,10 +245,16 @@ function gkGraphEvaluate(desc, clip, skel, state) {
   } else {                                                                                     // after endT: landing physics + shapes → get-up → SET
     const tl = Math.max(0, desc.now - (state.postT0 != null ? state.postT0 : desc.endT)); clipT = tl; if (state.postT0 == null) state.postT0 = desc.endT;   // post time runs from the FIRST post tick (a contact that moves endT later does not restart it)
     if (dive || (mo && (mo.kind === "collapse" || mo.kind === "spread"))) { mode = "post"; }
-    else if (mo && mo.kind === "standing") {
+    else if (mo && (mo.kind === "standing" || mo.kind === "catch")) {
       const endP = M(mo.keys[mo.keys.length - 1][1]);
-      if (desc.held) { pose = poseLerpP(endP, M(mo.hold), smooth01(tl / GK_GRAPH.holdBlend)); phase = "HOLD"; sub = mo.hold.name; }
+      if (desc.held && mo.cradle) {                                                             // possession lifecycle (sprite catch language): CRADLE closes → ABSORB (arms yield) → CONTROL → STRAIGHTEN (knees / hips / spine extend) → HOLD (upright, stable)
+        const t1 = mo.cradleT, t2 = t1 + mo.absorbT, t3 = t2 + mo.controlT, t4 = t3 + mo.straightenT;
+        pose = gkSampleKeys([[0, endP], [t1, M(mo.cradle)], [t2, M(mo.absorb)], [t3, M(mo.absorb)], [t4, M(mo.hold)]], tl, {});
+        phase = tl < t1 ? "CRADLE" : tl < t2 ? "ABSORB" : tl < t3 ? "CONTROL" : tl < t4 ? "STRAIGHTEN" : "HOLD"; sub = pose._name; state.catchPost = { t1, t2, t3, t4 };
+      }
+      else if (desc.held) { pose = poseLerpP(endP, M(mo.hold), smooth01(tl / GK_GRAPH.holdBlend)); phase = "HOLD"; sub = mo.hold.name; }
       else { pose = poseLerpP(endP, M(clip.set), smooth01(tl / mo.riseT)); phase = tl < mo.riseT ? "RISE" : "SET"; sub = phase; }
+      if (mkey === "HIGH_CATCH" && state.jump) pose._pelvis[1] += mo.jumpM * hs * state.jump * (1 - smooth01(clamp01(tl / 0.30)));   // the jump carries into the post and lands over 0.30 s (the executing branch raised the pelvis by the launch demand; dropping it at the post cut was a 6–11 m/s pop)
       mode = "standing-post"; locks = { R: 1, L: 1, at: "stance" };
     }
     else { pose = M(clip.set); phase = tl < 0.4 ? "RISE" : "SET"; authored = false; mode = "procedural"; }
@@ -253,7 +262,7 @@ function gkGraphEvaluate(desc, clip, skel, state) {
     if (mo && mo.kind === "spread") ikW = 0;
   }
   const g = { pose, phase, sub, clipT, ikW, rootM, facing, authored, mode, motion: mkey, fallback: !!sel.fallback, side: c ? state.side : desc.side, landedSide: state.landedSide || null, reachHand: sideL ? "L" : "R", axis: null, locks, brace, landing: null, flight: null, pres: { dx: 0, dy: 0, dm: 0 },
-    holdBall: (c && desc.held && desc.ball) ? desc.ball : null, holdW: 0,                                                          // a caught ball: both hands stay on the authoritative ball
+    holdBall: (c && desc.held && desc.ball) ? desc.ball : null, holdW: 0, catchKind: !!(mo && mo.kind === "catch"), ballR: GK_GRAPH.ballVisR * (skel.H / GK_MOTION_H_REF),                                                          // a caught ball: both hands stay on the authoritative ball
     twoHands: !!(mo && (mo.twoHands || (mo.twoHandsLat != null && desc.cls && Math.abs(desc.cls.lat) <= mo.twoHandsLat))),
     legTip: null };
   { if (g.holdBall) { if (state.holdT0 == null) state.holdT0 = desc.now; state.holdLast = { p: g.holdBall.slice(), t: desc.now }; g.holdW = smooth01(clamp01((desc.now - state.holdT0) / 0.12)); }
@@ -439,8 +448,11 @@ function gkGraphSolve(desc, g, skel, state) {
       const assist = { spine: [0, 0, -e * 0.5], chest: [0, 0, -e * 0.5], ["clavicle_" + h]: [0, 0, (h === "R" ? 1 : -1) * GK_GRAPH.clavicleAssistMaxDeg * clamp01(over / 0.3) * g.ikW] };
       const p2 = poseAdd(pose, assist); p2._pelvis = pose._pelvis; diag.torso = +e.toFixed(1); fk = skelFK(skel, p2, g.rootM); plantFeet();
     }
-    const r = skelIK2(skel, fk, upper, fore, hand, T, g.ikW, null, 0.6, PMv("arm_" + h));
-    diag.ik = { w: +g.ikW.toFixed(3), reached: r.reached, residual: +r.residual.toFixed(3), wrist: r.wrist, handCentre: r.handCentre, target: T };
+    const rightW = M4.transformDir(g.rootM, [1, 0, 0]), splitOff = (g.catchKind && g.twoHands) ? g.ballR + GK_GRAPH.handOff : 0;   // a two-hand catch: each hand goes to ITS side of the ball line (never both to the centre)
+    const Th = V3.add(T, V3.scale(rightW, (h === "R" ? 1 : -1) * splitOff));
+    const poleH = g.catchKind ? V3.add(fk.joint[skel.byName[upper].idx], [rightW[0] * (h === "R" ? 0.5 : -0.5), -0.3, rightW[2] * (h === "R" ? 0.5 : -0.5)]) : null;   // catch arms: elbows out and down, never pinched inward
+    const r = skelIK2(skel, fk, upper, fore, hand, Th, g.ikW, poleH, 0.6, PMv("arm_" + h));
+    diag.ik = { w: +g.ikW.toFixed(3), reached: r.reached, residual: +r.residual.toFixed(3), wrist: r.wrist, handCentre: r.handCentre, target: T, split: splitOff };
   }
   // 4. hands on the pitch (impact / settle / brace / push-up): per-hand weights; the reaching hand lands beside the hip, the other in front of the chest
   if (g.brace) {
@@ -456,13 +468,26 @@ function gkGraphSolve(desc, g, skel, state) {
   // 5. lead-leg IK (FOOT_SAVE): the reach-side leg sweeps to the simulation's leg tip (authoritative), knee forward-up
   if (g.legTip && g.legTip.w > 0) { const T2 = glW(g.legTip.p), hipJ = fk.joint[skel.byName["thigh_" + h].idx], kJ = fk.joint[skel.byName["shin_" + h].idx]; const wl = g.legTip.w * (1 - smooth01((V3.dist(hipJ, T2) - (legMax - 0.02)) / 0.08)); g.legTip.w = wl;   /* a leg tip beyond the leg's reach is exposed (residual), never chased at full extension */ const pole = g.motion === "FOOT_SAVE" ? [hipJ[0] + fwd[0] * 0.4, hipJ[1] + 0.25, hipJ[2] + fwd[2] * 0.4] : [kJ[0], Math.max(kJ[1], 0.12), kJ[2]];   /* a lying body keeps its authored knee plane */ const r = wl > 0 ? skelIK2(skel, fk, "thigh_" + h, "shin_" + h, "foot_" + h, T2, wl, pole, 0.5, PM("leg_" + h)) : { residual: V3.dist(fk.tip[skel.byName["foot_" + h].idx], T2) }; diag.legTip = { w: +g.legTip.w.toFixed(2), residual: +r.residual.toFixed(3), target: T2 }; }
   // 6. a CAUGHT ball: both hands on the authoritative ball (the ball is never moved; the hands go to it)
-  if (g.twoHands && g.ikW > 0 && desc.commit && !g.legTip) { const w2 = g.ikW * 0.9 * (1 - g.holdW); if (w2 > 0) { const r = skelIK2(skel, fk, "upperArm_" + o, "foreArm_" + o, "hand_" + o, T, w2, null, 0.6, PM("arm_" + o)); diag.ik2 = { w: +w2.toFixed(2), residual: +r.residual.toFixed(3) }; } }   // two-hand saves: the second hand joins the reach (handed over to the hold as the ball is caught)
-  if (g.holdBall && g.holdW > 0) { const B = glW(g.holdBall); for (const sd of ["R", "L"]) { const r = skelIK2(skel, fk, "upperArm_" + sd, "foreArm_" + sd, "hand_" + sd, B, g.holdW, null, 0.6, PM("arm_" + sd)); diag["hold_" + sd] = +r.residual.toFixed(3); } diag.holdW = +g.holdW.toFixed(2); }
+  const rightW2 = M4.transformDir(g.rootM, [1, 0, 0]), armPole = (sd) => V3.add(fk.joint[skel.byName["upperArm_" + sd].idx], [rightW2[0] * (sd === "R" ? 0.5 : -0.5), -0.3, rightW2[2] * (sd === "R" ? 0.5 : -0.5)]);   // elbows out and down
+  const hc = (sd) => { const j = fk.joint[skel.byName["hand_" + sd].idx], t = fk.tip[skel.byName["hand_" + sd].idx]; return V3.lerp(j, t, 0.6); };
+  if (g.twoHands && g.ikW > 0 && desc.commit && !g.legTip) { const w2 = g.ikW * 0.9 * (1 - g.holdW); if (w2 > 0) { const off2 = g.catchKind ? g.ballR + GK_GRAPH.handOff : 0; const To = V3.add(T, V3.scale(rightW2, (o === "R" ? 1 : -1) * off2)); const r = skelIK2(skel, fk, "upperArm_" + o, "foreArm_" + o, "hand_" + o, To, w2, g.catchKind ? armPole(o) : null, 0.6, PM("arm_" + o)); diag.ik2 = { w: +w2.toFixed(2), residual: +r.residual.toFixed(3) }; } }   // two-hand saves: the second hand joins on ITS side of the ball line (handed over to the hold as the ball is caught)
+  if (g.catchKind && g.twoHands && diag.ik && g.ikW > 0) diag.ik.handCentre = V3.lerp(hc("R"), hc("L"), 0.5);   // two-hand catch: the contact metric is the midpoint of the two hands vs the simulation hand
+  // 6. a CAUGHT ball: PRESENTATION ball = the authoritative ball at the catch, blending (deterministically, over holdBlend) into the
+  //    cradle centre of the authored arms (midpoint of the authored hand centres); both hands are then solved onto THEIR side of that
+  //    rendered ball. The simulation ball is never moved: gk / ball state is read only. (Before possession the rendered ball is the simulation ball.)
+  if (g.holdBall && g.holdW > 0) {
+    const Bsim = glW(g.holdBall), cr = V3.lerp(hc("R"), hc("L"), 0.5), wB = smooth01(clamp01((desc.now - (state.holdT0 != null ? state.holdT0 : desc.now)) / GK_GRAPH.holdBlend));
+    const Bp = state.holdLast && state.holdLast.pres && !desc.held ? state.holdLast.pres : V3.lerp(Bsim, cr, wB); if (desc.held) state.holdLast.pres = Bp.slice();
+    const off = g.ballR + GK_GRAPH.handOff;
+    for (const sd of ["R", "L"]) { const Ts = V3.add(Bp, [rightW2[0] * (sd === "R" ? off : -off), -0.02, rightW2[2] * (sd === "R" ? off : -off)]); const r = skelIK2(skel, fk, "upperArm_" + sd, "foreArm_" + sd, "hand_" + sd, Ts, g.holdW, armPole(sd), 0.6, PM("arm_" + sd)); diag["hold_" + sd] = +r.residual.toFixed(3); }
+    diag.holdW = +g.holdW.toFixed(2); diag.ballPres = { p: Bp, r: g.ballR, cradle: cr, wB: +wB.toFixed(2), handR: hc("R"), handL: hc("L") };
+  }
   pel.off = savedOff;
+  const out = { fk, diag, ballPres: diag.ballPres || null, hands: { R: hc("R"), L: hc("L") }, elbows: { R: fk.joint[skel.byName.foreArm_R.idx], L: fk.joint[skel.byName.foreArm_L.idx] } };
   // presentation root = ground projection of the pelvis (pitch frame); continuous by construction
   const pw = fk.joint[skel.byName.pelvis.idx]; const pr = pitchW([pw[0], 0, pw[2]]);
   let dx = pr[0] - desc.simRoot[0], dy = pr[1] - desc.simRoot[1]; const dm = Math.hypot(dx, dy);
   if (dm > GK_GRAPH.presMaxM) { dx *= GK_GRAPH.presMaxM / dm; dy *= GK_GRAPH.presMaxM / dm; }   // presMaxM is a sanity cap only (a full dive + slide legitimately carries the body well past the simulation root)
   g.pres = { dx, dy, dm: Math.min(dm, GK_GRAPH.presMaxM), x: desc.simRoot[0] + dx, y: desc.simRoot[1] + dy };
-  return { fk, diag };
+  return out;
 }

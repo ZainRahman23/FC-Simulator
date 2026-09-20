@@ -98,6 +98,18 @@ function glCapsule(R, len, rad) {
   gl.bindVertexArray(null); const m = { vao, n: idx.length }; R.meshes.set(key, m); return m;
 }
 // skinned mesh VAO for a skeleton (built once per skeleton object from skinBuildMesh; cached on the skeleton)
+// UV sphere (low-poly) for the presentation ball; cached per radius
+function glSphere(R, rad) {
+  const key = "sph:" + rad.toFixed(3); if (R.meshes.has(key)) return R.meshes.get(key);
+  const gl = R.gl, N = 12, M = 8, pos = [], nrm = [], idx = [];
+  for (let j = 0; j <= M; j++) { const v = j / M, th = v * Math.PI; for (let i = 0; i <= N; i++) { const u = i / N, ph = u * Math.PI * 2; const x = Math.sin(th) * Math.cos(ph), y = Math.cos(th), z = Math.sin(th) * Math.sin(ph); pos.push(x * rad, y * rad, z * rad); nrm.push(x, y, z); } }
+  for (let j = 0; j < M; j++) for (let i = 0; i < N; i++) { const a = j * (N + 1) + i, b = a + N + 1; idx.push(a, b, a + 1, a + 1, b, b + 1); }
+  const vao = gl.createVertexArray(); gl.bindVertexArray(vao);
+  const vb = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, vb); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(pos), gl.STATIC_DRAW); gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 0, 0);
+  const nb = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, nb); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(nrm), gl.STATIC_DRAW); gl.enableVertexAttribArray(1); gl.vertexAttribPointer(1, 3, gl.FLOAT, false, 0, 0);
+  const ib = gl.createBuffer(); gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ib); gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(idx), gl.STATIC_DRAW);
+  gl.bindVertexArray(null); const m = { vao, n: idx.length }; R.meshes.set(key, m); return m;
+}
 function glSkinnedMesh(R, skel) {
   if (skel._glMesh && skel._glMesh.R === R) return skel._glMesh;
   const gl = R.gl, m = skinBuildMesh(skel), vao = gl.createVertexArray(); gl.bindVertexArray(vao);
@@ -160,6 +172,8 @@ function glRenderCharacters(R, chars, cvW, cvH, opts) {
       gl.bindVertexArray(mesh.vao); gl.drawElements(gl.TRIANGLES, mesh.n, gl.UNSIGNED_SHORT, 0); draws++;
     }
   }
+  // presentation ball (opts.ball = { p: 3D world position, r: radius, color? }): real geometry in the same world / camera / depth buffer as the keeper
+  if (opts && opts.ball) { const B = opts.ball, mesh = glSphere(R, B.r), model = M4.translate(B.p[0], B.p[1], B.p[2]); gl.uniformMatrix4fv(R.u.model, false, model); gl.uniformMatrix3fv(R.u.nrm, false, M4.normalMat3(model)); const col = B.color || [0.96, 0.96, 0.94]; gl.uniform3f(R.u.color, col[0], col[1], col[2]); gl.uniform1f(R.u.id, 250); gl.bindVertexArray(mesh.vao); gl.drawElements(gl.TRIANGLES, mesh.n, gl.UNSIGNED_SHORT, 0); draws++; }
   gl.bindVertexArray(null);
   // post pass → canvas (outline + copy)
   gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.viewport(0, 0, w, h); gl.disable(gl.DEPTH_TEST); gl.disable(gl.CULL_FACE);

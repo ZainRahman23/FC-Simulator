@@ -20,7 +20,15 @@ const GK3D = {
     jersey2: { label: "alternate jersey colour", palette: { shirt: [0.98, 0.62, 0.08] } },
   },
 };
-function gk3dReset() { GK3D.state = {}; GK3D.trail = []; GK3D.asserts = []; GK3D.prev = null; }
+function gk3dReset() { GK3D.state = {}; GK3D.trail = []; GK3D.asserts = []; GK3D.prev = null; GK3D.ballPres = null; }
+// The PRESENTATION ball: while the SKELETAL_3D backend is active and the authoritative ball is near the keeper (or keeper-owned), the ball
+// is rendered as real geometry in the keeper's 3D world / camera / depth buffer and the 2D ball sprite is not drawn. Pure predicate on
+// authoritative state (read only); the sprite backend never sees a change.
+GK3D.ballNearM = 3.0;
+function gk3dOwnsBall(t) {
+  t = t || S.pt; if (!t || !t.on || GK_PRESENTATION.backend !== "SKELETAL_3D" || !GK3D.R || !t.b || !t.gk) return false;
+  const b = t.b, gk = t.gk; return b.held === "GK" || Math.hypot(b.x - gk.x, b.y - gk.y) < GK3D.ballNearM;
+}
 function gk3dDraw(t, gk, dt) {
   const A = S.gkAnim, t0 = performance.now();
   if (!GK3D.R) { GK3D.R = glCreateRenderer(); if (!GK3D.R) return gkAnimDraw(t, gk, dt); }
@@ -45,7 +53,11 @@ function gk3dDraw(t, gk, dt) {
   const skinMats = new Float32Array(skel.bones.length * 16); skelSkinMatrices(skel, sol.fk, skel.invBind).forEach((m, i) => skinMats.set(m, i * 16));   // world × inverse bind, after IK / look-at
   const chars = [{ skel, fk: sol.fk, palette: GK3D.palette, skinMats }];
   for (let i = 1; i <= GK3D.copies; i++) { const off = M4.translate(0, 0, (i % 2 ? 1 : -1) * Math.ceil(i / 2) * 1.2); const fk2 = { world: sol.fk.world.map(m => M4.mul(off, m)), joint: sol.fk.joint.map(p => M4.transformPoint(off, p)), tip: sol.fk.tip.map(p => M4.transformPoint(off, p)) }; const sm2 = new Float32Array(skel.bones.length * 16); skelSkinMatrices(skel, fk2, skel.invBind).forEach((m, i) => sm2.set(m, i * 16)); chars.push({ skel, fk: fk2, palette: GK3D.palette, skinMats: sm2 }); }
-  const out = glRenderCharacters(GK3D.R, chars, cv.width, cv.height, {});
+  // presentation ball: the authoritative ball converted to the 3D world; once the simulation says the keeper holds it, the solve's held-ball presentation transform (blend into the cradle)
+  const owns = gk3dOwnsBall(t), bSim = [t.b.x, t.b.y, t.b.z], ballP = sol.ballPres ? sol.ballPres.p : glW(bSim), ballR = g.ballR || GK_GRAPH.ballVisR;
+  GK3D.ballPres = { p: pitchW(ballP), sim: bSim, r: ballR, held: !!desc.held, pres: !!sol.ballPres, wB: sol.ballPres ? sol.ballPres.wB : 0, hands: sol.hands, elbows: sol.elbows, drawn3d: owns };
+  const out = glRenderCharacters(GK3D.R, chars, cv.width, cv.height, owns ? { ball: { p: ballP, r: ballR } } : {});
+  if (owns) { const bg = sproj3(ballP[0], 0, -ballP[2]), bz = ballP[1], sh = 1 / (1 + bz * 0.55), rg = Math.max(2, Math.round(ballR * S.pxPerM * depthScale(bg.d) * RIG.zoom * RES)); ctx.save(); ctx.beginPath(); ctx.ellipse(Math.round(bg.x), Math.round(bg.y) + rg * 0.7, rg * 1.15 * sh, Math.max(1, rg * 1.15 * flattenAt(t.b.x, t.b.y) * sh), 0, 0, Math.PI * 2); ctx.fillStyle = "rgba(0,0,0," + (0.22 * sh).toFixed(3) + ")"; ctx.fill(); ctx.restore(); }   // ball shadow on the pitch (same law as the 2D ball)
   // composite at the keeper's depth slot: shadow at the PRESENTATION root, then the low-res layer scaled with nearest sampling
   const sp = sproj3(gk.x, 0, gk.y); if (sp.d < 0.5) return true;
   const s = S.playerVScale * depthScale(sp.d) * RIG.zoom * RES, flat = flattenAt(gk.x, gk.y);
@@ -71,17 +83,20 @@ function gk3dDraw(t, gk, dt) {
     const pw = sol.fk.joint[skel.byName.pelvis.idx], pr = [g.pres.x, g.pres.y], pv = GK3D.prev;
     const rotOf = (m) => [m[0], m[1], m[2], m[4], m[5], m[6], m[8], m[9], m[10]], angDeg = (a, b) => { const tr = a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3] + a[4] * b[4] + a[5] * b[5] + a[6] * b[6] + a[7] * b[7] + a[8] * b[8]; return Math.acos(Math.max(-1, Math.min(1, (tr - 1) / 2))) / DEG; };
     const rots = { root: rotOf(g.rootM), pelvis: rotOf(sol.fk.world[skel.byName.pelvis.idx]), chest: rotOf(sol.fk.world[skel.byName.chest.idx]), thigh_L: rotOf(sol.fk.world[skel.byName.thigh_L.idx]), thigh_R: rotOf(sol.fk.world[skel.byName.thigh_R.idx]), upperArm_L: rotOf(sol.fk.world[skel.byName.upperArm_L.idx]), upperArm_R: rotOf(sol.fk.world[skel.byName.upperArm_R.idx]) };
-    if (pv && desc.commit && g.mode === "post" && pv.stage !== g.phase && desc.now - pv.t < 0.1) {
+    const hR = sol.hands ? sol.hands.R : null, hL = sol.hands ? sol.hands.L : null;
+    if (pv && desc.commit && (g.mode === "post" || g.mode === "standing-post" || (g.mode === "standing" && pv.mode === "standing")) && pv.stage !== g.phase && desc.now - pv.t < 0.1) {
       const dRoot = Math.hypot(pr[0] - pv.pr[0], pr[1] - pv.pr[1]), dPel = V3.dist(pw, pv.pw), dt = desc.now - pv.t, vNow = V3.scale(V3.sub(pw, pv.pw), 1 / dt), dV = pv.v ? V3.len(V3.sub(vNow, pv.v)) : 0;
       const expect = pv.v ? V3.scale(pv.v, dt) : [0, 0, 0], excess = V3.dist(V3.sub(pw, pv.pw), expect);   // displacement beyond what the previous velocity predicts = relocation
       const ang = {}; for (const k in rots) ang[k] = +angDeg(rots[k], pv.rots[k]).toFixed(1);   // angular difference (deg) of the world orientation across the boundary
-      const bad = excess > 0.03 || dV > 1.5 || ang.root > 5 || ang.pelvis > 15 || ang.chest > 15; const rec = { tick: Math.round(desc.now * 60), from: pv.stage, to: g.phase, dRoot: +dRoot.toFixed(3), dPelvis: +dPel.toFixed(3), excess: +excess.toFixed(3), dV: +dV.toFixed(2), ang, bad };
+      const dHandR = pv.hR && hR ? V3.dist(hR, pv.hR) : 0, dHandL = pv.hL && hL ? V3.dist(hL, pv.hL) : 0;   // catch → possession: the hands never jump at a stage boundary (ball hand-over, cradle, absorb, straighten, hold)
+      const handChk = g.mode === "standing-post";   // hands are checked across the possession stages (CONTACT → CRADLE → ABSORB → CONTROL → STRAIGHTEN → HOLD), not across an authored arm swing
+      const bad = excess > 0.03 || dV > 1.5 || ang.root > 5 || ang.pelvis > 15 || ang.chest > 15 || (handChk && (dHandR > 0.20 || dHandL > 0.20)); const rec = { tick: Math.round(desc.now * 60), from: pv.stage, to: g.phase, dRoot: +dRoot.toFixed(3), dPelvis: +dPel.toFixed(3), excess: +excess.toFixed(3), dV: +dV.toFixed(2), dHandR: +dHandR.toFixed(3), dHandL: +dHandL.toFixed(3), ang, bad };
       GK3D.asserts.push(rec); if (bad) console.warn("[gk3d] discontinuity at stage boundary", rec);
     }
     const v = pv && desc.now - pv.t > 1e-4 && desc.now - pv.t < 0.1 ? V3.scale(V3.sub(pw, pv.pw), 1 / (desc.now - pv.t)) : null;
     // side / mirror continuity: any tick (not only boundaries) where the mirror or the pelvis roll sign flips while the body is down
     if (pv && desc.commit && g.mode === "post" && desc.now - pv.t < 0.1 && (pv.side !== g.side || (pv.roll != null && g.pose.pelvis && Math.abs(g.pose.pelvis[2]) > 30 && Math.sign(g.pose.pelvis[2]) !== Math.sign(pv.roll)))) { const rec = { tick: Math.round(desc.now * 60), from: pv.stage, to: g.phase, sideFlip: pv.side + "->" + g.side, roll: pv.roll + "->" + (g.pose.pelvis ? g.pose.pelvis[2] : null), ang: { pelvis: +angDeg(rots.pelvis, pv.rots.pelvis).toFixed(1) }, bad: true }; GK3D.asserts.push(rec); console.warn("[gk3d] side / roll flip", rec); }
-    GK3D.prev = { t: desc.now, stage: g.phase, pr, pw: pw.slice(), v, rots, side: g.side, roll: g.pose.pelvis ? g.pose.pelvis[2] : null };
+    GK3D.prev = { t: desc.now, stage: g.phase, mode: g.mode, pr, pw: pw.slice(), v, rots, side: g.side, roll: g.pose.pelvis ? g.pose.pelvis[2] : null, hR, hL };
   }
   // trail: one sample per drawn tick while committed (pelvis world position, stage, event markers)
   if (desc.commit) {

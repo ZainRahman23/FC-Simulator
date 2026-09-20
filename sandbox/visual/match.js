@@ -2977,6 +2977,10 @@ const GK_SCENARIOS = [
   { name: "M3b NW-facing foot save LEFT (from the north, aim 33.8)",   origin: [100, 26], aim: [105, 33.8],  tech: "LACES", c: 0.5,  lowZ: true },
   { name: "M3b SSW-facing foot save RIGHT (from [96,40], aim 33.9)",   origin: [96, 40],  aim: [105, 33.9],  tech: "LACES", c: 0.48, lowZ: true },
   { name: "M3b NNW-facing foot save LEFT (from [96,28], aim 34.1)",    origin: [96, 28],  aim: [105, 34.1],  tech: "LACES", c: 0.48, lowZ: true },
+  // ── M3c CATCH group coverage (2026-09-20): chest catches under angled world facings (synthK offsets are in the keeper frame) ──
+  { name: "M3c SW-facing chest catch (from the south, synthK z 1.15)",   origin: [100, 42], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.05, z: 1.15, v: 15 } },
+  { name: "M3c NW-facing chest catch (from the north, synthK z 1.2)",    origin: [100, 26], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: -0.05, z: 1.2, v: 15 } },
+  { name: "M3c SSW-facing chest catch (from [96,40], synthK z 1.1)",     origin: [96, 40],  aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.0, z: 1.1, v: 14 } },
 ];
 function ptGkMake() {
   const c = GK_CFG;
@@ -6393,6 +6397,7 @@ const BALL_PHYS_R = 0.11;             // authoritative; never used for visuals s
 const BALL_OMEGA_MAX = 16;            // rad/s display cap (~2.5 rev/s legible)
 const _ballRot = { th: 0, om: 0 };
 function drawBallAt(xw, yw, z, speed, dt) {
+  if (typeof gk3dOwnsBall === "function" && gk3dOwnsBall()) return;   // SKELETAL_3D backend renders the ball as 3D geometry near / in the keeper's hands (presentation only)
   const grounded = z <= 0.02;
   if (grounded) _ballRot.om = speed > 0.05 ? Math.min(speed / BALL_PHYS_R, BALL_OMEGA_MAX) : 0;
   _ballRot.th += _ballRot.om * (dt || 0);   // airborne keeps its spin; bounce never resets
