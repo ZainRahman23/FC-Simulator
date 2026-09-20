@@ -66,5 +66,5 @@
 | 63 M3c SSW-facing chest catch (from [96,40], synthK z 1.1) | b6dcd146d077848a | b6dcd146d077848a | 19/19 | 26/26 | yes |
 
 ALL IDENTICAL: YES
-SPRITE perf {'n': 16640, 'avgMs': 0.005841346099399603, 'maxMs': 1.4000000953674316, 'draws': None, 'target': None} errors []
-SKELETAL_3D perf {'n': 16640, 'avgMs': 1.4337860570647396, 'maxMs': 571.0999999046326, 'draws': 2, 'target': '550x450 (1/2)'} errors []
+SPRITE perf {'n': 16640, 'avgMs': 0.005390624830929133, 'maxMs': 1.0999999046325684, 'draws': None, 'target': None} errors []
+SKELETAL_3D perf {'n': 16640, 'avgMs': 1.4831129807262466, 'maxMs': 245, 'draws': 2, 'target': '550x450 (1/2)'} errors []

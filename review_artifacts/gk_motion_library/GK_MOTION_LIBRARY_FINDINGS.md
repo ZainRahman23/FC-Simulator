@@ -1,4 +1,4 @@
-# Goalkeeper skeletal MOTION LIBRARY — findings (v8 + v9 FOOT_SAVE spread block + v10 CATCH group, 2026-09-20)
+# Goalkeeper skeletal MOTION LIBRARY — findings (v8 + v9 FOOT_SAVE spread block + v10/v11 CATCH group, 2026-09-20)
 
 Branch `prototype/3d-animation-pipeline` (not pushed). Review page: `review_artifacts/gk_motion_library/GK_MOTION_LIBRARY_REVIEW.html`.
 Astra reference package: `review_artifacts/astra_gk_motion_reference/` (`INDEX.json`, `README.md`, one folder per canonical motion / facing).
@@ -220,6 +220,72 @@ into the post and lands over 0.30 s.
 hold 0.12–0.15 m (chest / high; surface at 0.11, target 0.14) and 0.09–0.11 m on the gathers (up to 2 cm inside the surface —
 listed below); hold residual vs the ideal side targets 7–9 cm (the hands sit on the surface at a slightly different angle).
 
+## 9d. CATCH group v11 — containment rebuild (v10 rejected on the slow-motion review)
+
+**Root cause of the v10 inverted / inside-chest arms.** For a chest or supported catch the simulation's contact point is at the
+chest (fixture 45: hand target 0.19 m in front of the chest joint; the ball surface 8 cm from the torso) and the held ball stays
+there. v10 rendered the ball at that point from the first held tick and solved each arm independently to a point on its surface: with
+the target that close to the shoulders, the two-bone solves folded the elbows back and down through the ribcage and the forearms
+crossed the torso — the hands reached the ball, every "elbow separation" number looked fine, and the arms were inside the chest.
+The v10 gather folded the torso 56° over a ball whose catch point lies inside the crouched body's depth.
+
+**Coordinated cradle solve (`ik.js`: `skelCradleElbow`, `skelAimChain`; `gk_graph.js` step 7).** For a two-hand catch the arms are
+not solved as two chains chasing two points. Each frame: (1) the wrist targets are computed for BOTH hands from one construction
+(receiving plane before possession, ball sides after); (2) each elbow is placed on its reach circle around the shoulder→wrist line by
+choosing among 36 deterministic samples the angle that best follows an out / down preference (`right·0.75 − up·0.55`, tucking
+`−fwd·0.25` once secured) subject to hard anatomy: the elbow, the upper-arm midpoint and the forearm midpoint must lie OUTSIDE the
+torso exclusion volume (pelvis → shoulders along the spine, ribcage half-width 0.20·hs + 0.02 clearance, depth −0.13 / +0.12·hs),
+the elbow may not rise above the shoulder (+5 cm), the elbow may not pass the back plane (−0.16·hs) — violations cost more than any
+preference gain; the previous frame's angle is kept when within 0.05 of the best (no side flips); (3) the chain is re-aimed to the
+chosen elbow and wrist and the hand curls from the forearm line toward the ball centre (palm on the surface; curl 0.35 receiving,
+0.7 holding); (4) the two hand centres are checked for crossing (left hand must stay on the left of the right hand along the
+keeper's lateral axis). Every violation is recorded per tick (`cradleFlags` in the manifest, `cradleViolations` per free-play shot)
+and drawn red in the cradle debug view.
+
+**Hands get around the ball before containment.** From u = 0.30 of the commit the wrists blend (over 0.20 of u) onto a RECEIVING
+PLANE: the authoritative hand target moved 0.28 m (0.20 m for a ball below 0.6 m) toward the incoming ball along the horizontal
+incoming direction (read from the authoritative ball each tick), split laterally by ball radius + 3 cm clearance + 0.6 hand length
++ 2 cm so the ball passes between them; low balls put the hands 0.6 radius below the line (palms under). The ball therefore enters
+an open basket whose back wall is the chest; nothing chases it.
+
+**Ball penetration prevented / ball path.** Before possession the rendered ball IS the authoritative ball. At the authoritative
+held tick the hands close from their receive positions onto the ball's sides over the CRADLE stage (0.12 s); the rendered ball stays
+at the catch point through CRADLE, then during ABSORB (0.20–0.24 s) it travels along a straight contained path from the catch point
+to the CHEST PIN — a point on the chest front (0.12·hs + radius + 1 cm ahead of the spine line) at the catch height clamped to the
+abdomen … upper-chest range, computed from the current torso every frame so it rides the straighten — while both wrists follow the
+same construction (the cradle moves with the ball). The rendered ball is clamped outside the torso volume at all times after
+possession; the clamp distance is exposed (`ballClamp`): 0 on the chest / high catches, 0.22 m on the gather lob (fixture 26) and
+0.14 m on the ground gather (fixture 9), where the simulation holds the ball inside the crouched body's depth — the discrepancy is
+shown, not hidden. The simulation ball is never written.
+
+**Chest pinning.** SECURE / STRAIGHTEN / HOLD keep the ball at the chest pin with the wrists on its sides, 4–7 cm forward of the
+centre (hands around the sides / front), elbows tucked beside the ribs by the preference term, never inside the volume; the chest is
+the rear support surface. Hold measurements (fixtures 45 / 33 / 47 / 46, 61–63): hands 0.15 m from the ball centre (surface 0.11 +
+0.03), hand separation 0.28 m, elbow separation 0.75–0.85 m, spine 13°, pelvis 0.85 m, constant to the end of the fixture.
+
+**Low gather (v11).** Its own keys: READY_UP → DROP (u 0.40: knees / hips flex, pelvis −0.26 m, torso 40°, head on the ball, hands
+lowering in front) → SCOOP (u 1.0: pelvis −0.44 m, torso 40° — NOT folded over the ball: the body stays behind it — shoulders forward,
+hands down and forward of the knees, palms open) → BASKET_CLOSE (cradle stage) → SECURE (ball clutched to the abdomen, still
+crouched, pelvis −0.38 m) → STRAIGHTEN (0.65 s) → HOLD. Measured (26 / 27 / 9): torso 40–41° through the scoop, pelvis 0.49 m at
+contact, knees 0.13–0.23 m high in front, hands 0.30–0.42 m high ahead of the knees at contact, 0 arm-in-torso violations, hold
+13° / 0.85 m.
+
+**Regression / free play (v11 code).** 64 / 64 fixtures identical sprite vs 3D and animation OFF vs ON; fixture 42 bit-identical
+(28 joints × 320 ticks); FOOT_SAVE fixtures 19 / 16 / 55 / 57 bit-identical to the v9 manifest (the cradle solver touches only the
+catch group). 32 packaged fixtures: 0 stage-boundary flags, 0 cradle violations. Free play seed 7 (120 shots): 114 committed, 40
+contacts, 15 held, 1 flag (known LOW_DIVE hard stop), 1 shot with cradle violations (shot 86, a one-hand NEAR_BODY catch, 8 ticks of
+upper-arm-in-torso during the hand-over from the single reach into the cradle). Seed 11 (160 shots): 151 committed, 53 contacts, 24
+held, 4 flags (two LOW_DIVE hard stops, the NEAR_BODY step-out plant at contact with excess 3.5 cm and hands within 10 cm, one
+HIGH_CATCH parry at the 1.5 m/s threshold), 3 shots with cradle violations (21 NEAR_BODY 4 ticks, 107 HIGH_CATCH 1 tick, 156 GATHER
+25 ticks: a moving keeper gathering with the ball beside the body). A parry now RELEASES the cradle by blending the arms back to the
+authored pose over the rise (v10's hand jump of 20–40 cm at CONTACT → RISE on parries is gone); a one-hand reach that becomes a catch
+hands over from the last solved wrists (v10 jumped 1.1 m there).
+
+**Visual inspection (close rig, 4× slow, cradle debug).** Chest catch 45 and gather 26 were inspected frame by frame with the
+overlay: arms blue (valid) on every tick, elbows outside the orange torso box, the ball entering the receive plane between the
+hands, the cradle closing behind it, the ball riding to the chest pin and staying there through the straighten; no forearm through
+the torso, no crossing, no elbow above the shoulder.
+
 ## 10. Remaining problems (honest list)
 
 1. LOW_DIVE with a leg-volume contact (2 of 13 low dives in free play): the simulation's leg-tip model lies on the opposite side of
@@ -239,12 +305,16 @@ listed below); hold residual vs the ideal side targets 7–9 cm (the hands sit o
    projects as depth (near foot low on screen, far foot high and partly occluded by the body; dark socks against the pitch hide it
    further in the banded render). The 3D spread is real (feet ~1.2 m apart, pelvis 0.46 m) and reads as width at angled facings.
    The spread is defined by the simulation's contact geometry and was NOT rotated toward the camera.
-10. CATCH: on the gathers the hands end 1–2 cm inside the rendered ball surface (0.09–0.11 m from the centre); the hold hands sit on
-   the surface but 7–9 cm from the ideal side points (the arm cannot reach the lateral point at the authored elbow-out angle).
+10. CATCH (gather): the simulation holds the gathered ball inside the crouched body's depth (0.07 m ahead of the root at hip height);
+   the rendered ball is clamped to the abdomen front (0.14–0.22 m ahead of the simulation ball while held) — a simulation body-model
+   limit, exposed as `ballClamp`.
 11. CATCH: the 3D presentation ball (0.11 m) is smaller than the 2D sprite ball (0.19 m); the size changes where the ball enters the
    3 m zone around the keeper. A game-wide decision (draw every ball at its physical size, or scale the 3D ball) is outside this task.
 12. CATCH: a two-hand catch reports a 10–11 cm contact residual by construction (the hands are split either side of the simulation's
    single hand point).
+13. CATCH (free play): the cradle selector still reports brief violations on one-hand NEAR_BODY catches (the hand-over from the single
+   reach) and on a moving keeper's gather with the ball beside the body (4 of ~40 catch commits over two seeds); they are recorded
+   per tick and drawn red in the cradle debug view.
 9. FOOT_SAVE contact representation: the simulation's LEG+ / LEG- volumes are vertical standing-leg cylinders at ±0.20 m; the
    spread shows the ball at the saving leg's shin / knee region (the foot itself sits on the simulation's leg tip, residual 2.5–8 cm on
    the straight fixtures). A ball the simulation records on the standing-leg cylinder can therefore sit up to ~15 cm from the drawn
@@ -291,3 +361,5 @@ v6 regression: run the manifest for scenario 42 before and after a change and co
   straighten, hold), height-aware anticipation, split hand targets with outward elbow poles, 3D presentation ball (WebGL sphere,
   `gk3dOwnsBall`), held-ball presentation transform, catch → hold continuity checks (hands), high-catch jump carried into the post,
   fixtures 61–63
+- `6c96f7e` CATCH containment: coordinated cradle solve with torso exclusion, receiving plane on the incoming line, contained
+  held-ball path with chest pin and torso clamp, low-gather language, cradle debug view, cradle violation records

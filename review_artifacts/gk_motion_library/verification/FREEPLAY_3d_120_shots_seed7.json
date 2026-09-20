@@ -39,11 +39,12 @@
   "fallbacks": 0,
   "unauthoredTicks": 0,
   "shotsWithBadAsserts": 1,
+  "shotsWithCradleViolations": 1,
   "gloveResidualHand": {
    "n": 37,
-   "median": 0.062,
-   "p90": 0.227,
-   "max": 0.441
+   "median": 0.229,
+   "p90": 0.417,
+   "max": 0.494
   },
   "heldByMotion": {
    "GATHER": 4,
@@ -155,6 +156,8 @@
    "presMax": 0.5,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -274,6 +277,8 @@
    "presMax": 1.03,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -393,6 +398,8 @@
    "presMax": 0.28,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -512,6 +519,8 @@
    "presMax": 0.85,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -631,6 +640,8 @@
    "presMax": 0.6,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -742,6 +753,8 @@
    "presMax": 1.01,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      102.097,
@@ -787,7 +800,7 @@
    "outcome": "GATHER",
    "volume": "HAND",
    "held": true,
-   "gloveRes": 0.227,
+   "gloveRes": 0.371,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
@@ -813,21 +826,23 @@
      "ABSORB"
     ],
     [
-     114,
+     115,
      "CONTROL"
     ],
     [
-     123,
+     124,
      "STRAIGHTEN"
     ],
     [
-     162,
+     163,
      "HOLD"
     ]
    ],
-   "presMax": 0.1,
-   "pelvisMin": 0.45,
+   "presMax": 0.05,
+   "pelvisMin": 0.49,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      102.095,
@@ -925,6 +940,8 @@
    "presMax": 0.35,
    "pelvisMin": 0.28,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      102.145,
@@ -1054,6 +1071,8 @@
    "presMax": 0.83,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -1173,6 +1192,8 @@
    "presMax": 1.26,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -1284,6 +1305,8 @@
    "presMax": 0.66,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      103.789,
@@ -1328,7 +1351,7 @@
    "outcome": "GATHER",
    "volume": "HAND",
    "held": true,
-   "gloveRes": 0.051,
+   "gloveRes": 0.417,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
@@ -1369,6 +1392,8 @@
    "presMax": 0.12,
    "pelvisMin": 0.72,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      100.918,
@@ -1498,6 +1523,8 @@
    "presMax": 1.08,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -1617,6 +1644,8 @@
    "presMax": 1.34,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -1651,7 +1680,7 @@
    "outcome": "GATHER",
    "volume": "HAND",
    "held": true,
-   "gloveRes": 0.17,
+   "gloveRes": 0.311,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
@@ -1677,21 +1706,23 @@
      "ABSORB"
     ],
     [
-     112,
+     113,
      "CONTROL"
     ],
     [
-     121,
+     122,
      "STRAIGHTEN"
     ],
     [
-     160,
+     161,
      "HOLD"
     ]
    ],
-   "presMax": 0.1,
-   "pelvisMin": 0.45,
+   "presMax": 0.05,
+   "pelvisMin": 0.49,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      102.79,
@@ -1821,6 +1852,8 @@
    "presMax": 0.32,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -1940,6 +1973,8 @@
    "presMax": 0.27,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -2059,6 +2094,8 @@
    "presMax": 1.46,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -2178,6 +2215,8 @@
    "presMax": 0.85,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -2212,7 +2251,7 @@
    "outcome": "BODY DEFLECTION",
    "volume": "TORSO",
    "held": false,
-   "gloveRes": 0.041,
+   "gloveRes": 0.197,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
@@ -2234,9 +2273,11 @@
      "SET"
     ]
    ],
-   "presMax": 0.1,
-   "pelvisMin": 0.45,
+   "presMax": 0.05,
+   "pelvisMin": 0.49,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      102.261,
@@ -2367,6 +2408,8 @@
    "presMax": 1.4,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -2486,6 +2529,8 @@
    "presMax": 0.89,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -2605,6 +2650,8 @@
    "presMax": 1.26,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -2716,6 +2763,8 @@
    "presMax": 0.7,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -2827,6 +2876,8 @@
    "presMax": 0.62,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -2946,6 +2997,8 @@
    "presMax": 0.29,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      102.56,
@@ -3075,6 +3128,8 @@
    "presMax": 0.74,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -3194,6 +3249,8 @@
    "presMax": 1.05,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -3313,6 +3370,8 @@
    "presMax": 1.28,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -3432,6 +3491,8 @@
    "presMax": 0.98,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -3551,6 +3612,8 @@
    "presMax": 1.24,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -3585,7 +3648,7 @@
    "outcome": "WEAK PARRY",
    "volume": "HAND",
    "held": false,
-   "gloveRes": 0.044,
+   "gloveRes": 0.253,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
@@ -3614,6 +3677,8 @@
    "presMax": 0.02,
    "pelvisMin": 0.82,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      102.498,
@@ -3743,6 +3808,8 @@
    "presMax": 1.07,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -3862,6 +3929,8 @@
    "presMax": 1.21,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -3896,7 +3965,7 @@
    "outcome": "CONTROLLED PARRY",
    "volume": "HAND",
    "held": false,
-   "gloveRes": 0.093,
+   "gloveRes": 0.2,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
@@ -3925,6 +3994,8 @@
    "presMax": 0.02,
    "pelvisMin": 0.82,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      103.375,
@@ -3969,7 +4040,7 @@
    "outcome": "WEAK PARRY",
    "volume": "HAND",
    "held": false,
-   "gloveRes": 0.023,
+   "gloveRes": 0.235,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
@@ -3998,6 +4069,8 @@
    "presMax": 0.02,
    "pelvisMin": 0.82,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      104.348,
@@ -4128,6 +4201,8 @@
    "presMax": 1.46,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -4162,7 +4237,7 @@
    "outcome": "CATCH",
    "volume": "HAND",
    "held": true,
-   "gloveRes": 0.075,
+   "gloveRes": 0.261,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
@@ -4203,6 +4278,8 @@
    "presMax": 0.12,
    "pelvisMin": 0.72,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      100.754,
@@ -4332,6 +4409,8 @@
    "presMax": 1.05,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      102.617,
@@ -4462,6 +4541,8 @@
    "presMax": 0.17,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -4581,6 +4662,8 @@
    "presMax": 0.86,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -4692,6 +4775,8 @@
    "presMax": 0.88,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -4803,6 +4888,8 @@
    "presMax": 0.62,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -4854,6 +4941,8 @@
    "presMax": 0.02,
    "pelvisMin": 0.83,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -4973,6 +5062,8 @@
    "presMax": 2.4,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      102.784,
@@ -5103,6 +5194,8 @@
    "presMax": 1.39,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -5222,6 +5315,8 @@
    "presMax": 0.69,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -5256,7 +5351,7 @@
    "outcome": "WEAK PARRY (through)",
    "volume": "HAND",
    "held": false,
-   "gloveRes": 0.035,
+   "gloveRes": 0.251,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
@@ -5285,6 +5380,8 @@
    "presMax": 0.02,
    "pelvisMin": 0.82,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      104.671,
@@ -5415,6 +5512,8 @@
    "presMax": 1.15,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -5534,6 +5633,8 @@
    "presMax": 0.47,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -5568,7 +5669,7 @@
    "outcome": "CATCH",
    "volume": "HAND",
    "held": true,
-   "gloveRes": 0.062,
+   "gloveRes": 0.25,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
@@ -5609,6 +5710,8 @@
    "presMax": 0.02,
    "pelvisMin": 0.79,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      103.151,
@@ -5739,6 +5842,8 @@
    "presMax": 0.91,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -5858,6 +5963,8 @@
    "presMax": 0.81,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -5977,6 +6084,8 @@
    "presMax": 0.66,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -6096,6 +6205,8 @@
    "presMax": 0.79,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -6130,7 +6241,7 @@
    "outcome": "CONTROLLED PARRY",
    "volume": "HAND",
    "held": false,
-   "gloveRes": 0.078,
+   "gloveRes": 0.31,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
@@ -6159,6 +6270,8 @@
    "presMax": 0.02,
    "pelvisMin": 0.82,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      102.851,
@@ -6289,6 +6402,8 @@
    "presMax": 0.81,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -6340,6 +6455,8 @@
    "presMax": 0.02,
    "pelvisMin": 0.83,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -6459,6 +6576,8 @@
    "presMax": 1.34,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -6578,6 +6697,8 @@
    "presMax": 1.03,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -6697,6 +6818,8 @@
    "presMax": 1.11,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -6808,6 +6931,8 @@
    "presMax": 0.64,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -6842,7 +6967,7 @@
    "outcome": "WEAK PARRY",
    "volume": "HAND",
    "held": false,
-   "gloveRes": 0.083,
+   "gloveRes": 0.274,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
@@ -6871,6 +6996,8 @@
    "presMax": 0.02,
    "pelvisMin": 0.82,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      104.425,
@@ -7000,6 +7127,8 @@
    "presMax": 1.47,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -7111,6 +7240,8 @@
    "presMax": 0.8,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -7230,6 +7361,8 @@
    "presMax": 1.08,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -7349,6 +7482,8 @@
    "presMax": 0.24,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      104.767,
@@ -7478,6 +7613,8 @@
    "presMax": 1.43,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -7597,6 +7734,8 @@
    "presMax": 0.68,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -7716,6 +7855,8 @@
    "presMax": 0.41,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -7849,6 +7990,8 @@
      "bad": true
     }
    ],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -7968,6 +8111,8 @@
    "presMax": 0.24,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      104.409,
@@ -8089,6 +8234,8 @@
    "presMax": 0.69,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      102.039,
@@ -8218,6 +8365,8 @@
    "presMax": 0.78,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -8252,7 +8401,7 @@
    "outcome": "CONTROLLED PARRY",
    "volume": "HAND",
    "held": false,
-   "gloveRes": 0.058,
+   "gloveRes": 0.249,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
@@ -8281,6 +8430,8 @@
    "presMax": 0.12,
    "pelvisMin": 0.72,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      102.992,
@@ -8325,7 +8476,7 @@
    "outcome": "GATHER",
    "volume": "HAND",
    "held": true,
-   "gloveRes": 0.049,
+   "gloveRes": 0.215,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
@@ -8351,21 +8502,23 @@
      "ABSORB"
     ],
     [
-     87,
+     88,
      "CONTROL"
     ],
     [
-     96,
+     97,
      "STRAIGHTEN"
     ],
     [
-     135,
+     136,
      "HOLD"
     ]
    ],
-   "presMax": 0.1,
-   "pelvisMin": 0.45,
+   "presMax": 0.05,
+   "pelvisMin": 0.49,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      102.061,
@@ -8495,6 +8648,8 @@
    "presMax": 1.3,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -8614,6 +8769,8 @@
    "presMax": 0.72,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -8733,6 +8890,8 @@
    "presMax": 0.65,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -8852,6 +9011,8 @@
    "presMax": 0.68,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      103.189,
@@ -8897,7 +9058,7 @@
    "outcome": "GATHER",
    "volume": "HAND",
    "held": true,
-   "gloveRes": 0.093,
+   "gloveRes": 0.26,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
@@ -8919,21 +9080,23 @@
      "ABSORB"
     ],
     [
-     128,
+     129,
      "CONTROL"
     ],
     [
-     137,
+     138,
      "STRAIGHTEN"
     ],
     [
-     176,
+     177,
      "HOLD"
     ]
    ],
-   "presMax": 0.1,
-   "pelvisMin": 0.45,
+   "presMax": 0.05,
+   "pelvisMin": 0.49,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      102.971,
@@ -9063,6 +9226,8 @@
    "presMax": 1.19,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -9097,7 +9262,7 @@
    "outcome": "CATCH",
    "volume": "HAND",
    "held": true,
-   "gloveRes": 0.009,
+   "gloveRes": 0.494,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
@@ -9138,6 +9303,24 @@
    "presMax": 0.12,
    "pelvisMin": 0.72,
    "asserts": [],
+   "cradleViolations": 8,
+   "cradleFirst": {
+    "tick": 49194,
+    "phase": "CONTACT",
+    "mode": "cradle",
+    "R": {
+     "elbow": false,
+     "upper": false,
+     "fore": false
+    },
+    "L": {
+     "elbow": false,
+     "upper": true,
+     "fore": false
+    },
+    "crossed": false,
+    "ballIn": false
+   },
    "sim": {
     "point": [
      103.527,
@@ -9268,6 +9451,8 @@
    "presMax": 2.06,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      102.952,
@@ -9341,6 +9526,8 @@
    "presMax": 0.12,
    "pelvisMin": 0.72,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      103.041,
@@ -9470,6 +9657,8 @@
    "presMax": 0.63,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -9589,6 +9778,8 @@
    "presMax": 0.58,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -9708,6 +9899,8 @@
    "presMax": 0.46,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -9827,6 +10020,8 @@
    "presMax": 1.17,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -9946,6 +10141,8 @@
    "presMax": 0.24,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      103.518,
@@ -10043,6 +10240,8 @@
    "presMax": 0.35,
    "pelvisMin": 0.28,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      101.634,
@@ -10164,6 +10363,8 @@
    "presMax": 0.66,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -10198,7 +10399,7 @@
    "outcome": "CATCH",
    "volume": "HAND",
    "held": true,
-   "gloveRes": 0.062,
+   "gloveRes": 0.25,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
@@ -10235,6 +10436,8 @@
    "presMax": 0.02,
    "pelvisMin": 0.79,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      101.824,
@@ -10364,6 +10567,8 @@
    "presMax": 0.86,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -10415,6 +10620,8 @@
    "presMax": 0.02,
    "pelvisMin": 0.83,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -10534,6 +10741,8 @@
    "presMax": 0.76,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      104.322,
@@ -10663,6 +10872,8 @@
    "presMax": 0.57,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      102.849,
@@ -10792,6 +11003,8 @@
    "presMax": 0.66,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -10911,6 +11124,8 @@
    "presMax": 0.98,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -10945,7 +11160,7 @@
    "outcome": "CATCH",
    "volume": "HAND",
    "held": true,
-   "gloveRes": 0.063,
+   "gloveRes": 0.418,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
@@ -10986,6 +11201,8 @@
    "presMax": 0.12,
    "pelvisMin": 0.72,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      102.254,
@@ -11031,7 +11248,7 @@
    "outcome": "CATCH",
    "volume": "HAND",
    "held": true,
-   "gloveRes": 0.058,
+   "gloveRes": 0.215,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
@@ -11068,6 +11285,8 @@
    "presMax": 0.02,
    "pelvisMin": 0.79,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      102.08,
@@ -11197,6 +11416,8 @@
    "presMax": 0.51,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -11316,6 +11537,8 @@
    "presMax": 1.15,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -11350,7 +11573,7 @@
    "outcome": "CONTROLLED PARRY",
    "volume": "HAND",
    "held": false,
-   "gloveRes": 0.034,
+   "gloveRes": 0.225,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
@@ -11375,6 +11598,8 @@
    "presMax": 0.02,
    "pelvisMin": 0.82,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      104.284,
@@ -11436,6 +11661,8 @@
    "presMax": 0.02,
    "pelvisMin": 0.83,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -11547,6 +11774,8 @@
    "presMax": 0.73,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -11666,6 +11895,8 @@
    "presMax": 0.98,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -11717,6 +11948,8 @@
    "presMax": 0.02,
    "pelvisMin": 0.83,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -11751,7 +11984,7 @@
    "outcome": "CONTROLLED PARRY",
    "volume": "HAND",
    "held": false,
-   "gloveRes": 0.014,
+   "gloveRes": 0.229,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
@@ -11780,6 +12013,8 @@
    "presMax": 0.02,
    "pelvisMin": 0.82,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      104.089,
@@ -11910,6 +12145,8 @@
    "presMax": 0.86,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -11944,7 +12181,7 @@
    "outcome": "CONTROLLED PARRY",
    "volume": "HAND",
    "held": false,
-   "gloveRes": 0.188,
+   "gloveRes": 0.304,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
@@ -11973,6 +12210,8 @@
    "presMax": 0.02,
    "pelvisMin": 0.82,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      102.217,
@@ -12094,6 +12333,8 @@
    "presMax": 0.27,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      102.775,
@@ -12224,6 +12465,8 @@
    "presMax": 0.74,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": null,
    "keeperReady": false,
    "shot": {
@@ -12339,6 +12582,8 @@
    "presMax": 0.81,
    "pelvisMin": 0.27,
    "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
    "sim": {
     "point": [
      104.323,
