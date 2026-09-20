@@ -10,7 +10,7 @@
 //                 inverted), both arms reaching down to the ball, side landing (forearm / hip), side get-up
 //   LOW_COLLAPSE  LOW_COLLAPSE                       — no flight: the near leg folds, the body drops onto the hip toward a low ball
 //                 within the lateral envelope, hands go down together; settle on the side → shared get-up
-//   FOOT_SAVE     FOOT_SAVE                          — planted: the lead leg sweeps out along the pitch to the simulation's leg tip,
+//   FOOT_SAVE     FOOT_SAVE                          — SPREAD BLOCK: COM drops, hips open, both legs spread laterally, the saving foot meets the simulation's leg tip,
 //                 the support leg squats, torso counter-leans; contact on the leg; leg retracts → SET
 //   NEAR_BODY     NEAR_BODY_SAVE                     — feet planted, one step out, torso lean, one- or two-hand reach → rise
 //   CHEST_CATCH   CHEST_CATCH / SUPPORTED_CATCH      — hands out in front, ball into the chest, absorb / hug when held
@@ -55,18 +55,27 @@ GK_MOTIONS.LOW_COLLAPSE = {
              upperArm_R: [-50, 0, 110], foreArm_R: [-30, 0, 0], hand_R: [-10, 0, 0], upperArm_L: [-70, 0, 60], foreArm_L: [-50, 0, 0], hand_L: [-8, 0, 0] }],
   ],
 };
-// ── FOOT_SAVE: planted; the lead (ball-side) leg sweeps out along the pitch, the support leg squats, torso counter-leans ──
+// ── FOOT_SAVE: SPREAD BLOCK — an emergency close-range block: the keeper drops his centre of mass, opens the hips and spreads BOTH
+// legs laterally (hip abduction, knees somewhat bent), arms wide, chest open to the shooter; the saving leg's foot meets the
+// simulation's leg tip (lateral, ankle height); the body then commits onto the saving-side hip (side-sit, hand on the pitch) and
+// recovers through the shared get-up chain from the half-kneel. NOT a forward kick: the saving leg abducts, it does not swing forward.
 GK_MOTIONS.FOOT_SAVE = {
-  id: "GK_FOOT_SAVE_R", kind: "foot", retractT: 0.35,
+  id: "GK_FOOT_SAVE_R", kind: "spread", stepOut: 0.55, absorbT: 0.25, hold: 0.35, travel: 0.12,
   keys: [
     [0.00, "setLow"],
-    [0.50, { name: "LEG_OUT_MID", _pelvis: [-0.06, -0.28, 0.02], pelvis: [14, 0, 8], spine: [6, 0, 8], chest: [4, 0, 6], neck: [-8, 0, -4], head: [-10, 0, -6],
-             thigh_R: [-20, 0, 45], shin_R: [30, 0, 0], foot_R: [-24, 0, 0], thigh_L: [-52, 0, -8], shin_L: [82, 0, 0], foot_L: [-30, 0, 0],
-             upperArm_R: [-30, 0, 50], foreArm_R: [-30, 0, 0], hand_R: [-6, 0, 0], upperArm_L: [-30, 0, -60], foreArm_L: [-30, 0, 0], hand_L: [-6, 0, 0] }],
-    [1.00, { name: "LEG_OUT", _pelvis: [-0.10, -0.32, 0.02], pelvis: [12, 0, 12], spine: [6, 0, 12], chest: [4, 0, 10], neck: [-8, 0, -6], head: [-10, 0, -8],
-             thigh_R: [-8, 0, 72], shin_R: [8, 0, 0], foot_R: [-30, 0, 0], thigh_L: [-56, 0, -10], shin_L: [88, 0, 0], foot_L: [-32, 0, 0],
-             upperArm_R: [-46, 0, 44], foreArm_R: [-22, 0, 0], hand_R: [-6, 0, 0], upperArm_L: [-24, 0, -66], foreArm_L: [-30, 0, 0], hand_L: [-6, 0, 0] }],   // near hand drops toward the ball, far arm out for balance
+    [0.30, { name: "DROP_LOAD", _pelvis: [0.00, -0.30, 0.02], pelvis: [24, 0, -3], spine: [10, 0, -1], chest: [6, 0, 0], neck: [-10, 0, 0], head: [-14, 0, 0],
+             thigh_R: [-50, 0, 26], shin_R: [72, 0, 0], foot_R: [-26, 0, 0], thigh_L: [-50, 0, -26], shin_L: [72, 0, 0], foot_L: [-26, 0, 0],
+             upperArm_R: [-20, 0, 48], foreArm_R: [-50, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [-20, 0, -48], foreArm_L: [-50, 0, 0], hand_L: [-8, 0, 0] }],   // COM drops, knees load, feet start to widen
+    [0.60, { name: "HIP_OPEN", _pelvis: [0.02, -0.36, 0.02], pelvis: [20, 0, -6], spine: [8, 0, -2], chest: [6, 0, 0], neck: [-12, 0, 0], head: [-14, 0, 0],
+             thigh_R: [-32, 0, 40], shin_R: [40, 0, 0], foot_R: [-22, 0, 0], thigh_L: [-36, 0, -38], shin_L: [50, 0, 0], foot_L: [-24, 0, 0],
+             upperArm_R: [-30, 0, 62], foreArm_R: [-30, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [-30, 0, -60], foreArm_L: [-30, 0, 0], hand_L: [-8, 0, 0] }],   // hips abduct both ways, the far foot steps out wide, arms open forward-out
+    [1.00, { name: "SPREAD", _pelvis: [0.06, -0.50, 0.02], pelvis: [16, 0, -10], spine: [6, 0, -4], chest: [4, 0, -2], neck: [-14, 0, 2], head: [-16, 0, 4],
+             thigh_R: [-14, 0, 72], shin_R: [18, 0, 0], foot_R: [-16, 0, 0], thigh_L: [-20, 0, -60], shin_L: [30, 0, 0], foot_L: [-16, 0, 0],
+             upperArm_R: [-38, 0, 84], foreArm_R: [-14, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [-38, 0, -80], foreArm_L: [-14, 0, 0], hand_L: [-8, 0, 0] }],   // pelvis 0.45 m, saving leg ~72° abducted, knee ~18° (foot on the simulation's tip), far leg ~60° abducted, knee ~30°, on its wide plant (feet ~1.9 m apart); torso low, chest open to the shooter, head up on the ball; arms wide and a little forward
   ],
+  ground: { name: "GROUND", _pelvis: [0.14, -0.71, 0.02], pelvis: [12, 0, -30], spine: [8, 0, -8], chest: [6, 0, -6], neck: [-4, 0, 2], head: [-6, 0, 4],   // side-sit on the saving hip: saving leg still extended along the pitch, far leg folded in, saving hand to the pitch
+            thigh_R: [-6, 0, 118], shin_R: [12, 0, 0], foot_R: [-10, 0, 0], thigh_L: [-70, 0, -24], shin_L: [110, 0, 0], foot_L: [-20, 0, 0],
+            upperArm_R: [-10, 0, 104], foreArm_R: [-24, 0, 0], hand_R: [-10, 0, 0], upperArm_L: [-60, 0, -36], foreArm_L: [-40, 0, 0], hand_L: [-8, 0, 0] },
 };
 // ── standing group (feet planted): keys over the execution u, a held pose for a caught ball, rise back to SET ──
 GK_MOTIONS.NEAR_BODY = {

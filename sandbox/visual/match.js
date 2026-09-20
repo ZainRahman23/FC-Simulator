@@ -2970,6 +2970,13 @@ const GK_SCENARIOS = [
   { name: "M3 S-facing tight angle, high across",                     origin: [104, 44], aim: [105, 33], tech: "LACES", c: 0.6 },
   { name: "M3 N-facing tight angle, low across",                      origin: [104, 24], aim: [105, 35], tech: "LACES", c: 0.5, lowZ: true },
   { name: "M3 moving keeper into a chest catch (gkv 0,-3)",           origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, gkv: [0, -3], synthK: { lat: 0, z: 1.2, v: 12 } },
+  // ── M3b FOOT_SAVE (spread block) coverage (2026-09-20): both sides, close (16 / 17) and wide leg blocks, angled world facings (real low LACES shots) ──
+  { name: "M3b foot save RIGHT wide (aim 33.2, lat +0.59)",            origin: [92, 34],  aim: [105, 33.2],  tech: "LACES", c: 0.42, lowZ: true },
+  { name: "M3b foot save LEFT wide (aim 34.78, lat -0.58)",            origin: [92, 34],  aim: [105, 34.78], tech: "LACES", c: 0.42, lowZ: true },
+  { name: "M3b SW-facing foot save RIGHT (from the south, aim 34.2)",  origin: [100, 42], aim: [105, 34.2],  tech: "LACES", c: 0.5,  lowZ: true },
+  { name: "M3b NW-facing foot save LEFT (from the north, aim 33.8)",   origin: [100, 26], aim: [105, 33.8],  tech: "LACES", c: 0.5,  lowZ: true },
+  { name: "M3b SSW-facing foot save RIGHT (from [96,40], aim 33.9)",   origin: [96, 40],  aim: [105, 33.9],  tech: "LACES", c: 0.48, lowZ: true },
+  { name: "M3b NNW-facing foot save LEFT (from [96,28], aim 34.1)",    origin: [96, 28],  aim: [105, 34.1],  tech: "LACES", c: 0.48, lowZ: true },
 ];
 function ptGkMake() {
   const c = GK_CFG;
