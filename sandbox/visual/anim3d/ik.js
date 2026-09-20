@@ -3,23 +3,39 @@
 // 2-bone analytic IK on world matrices (after FK): upper (shoulder→elbow), fore (elbow→wrist), reaching `target` (3D world) with weight w.
 // The chain is re-aimed by minimal rotations from its current FK directions (twist-preserving); bones are never scaled.
 // Returns { reached, residual (m), elbow, wrist, targetUsed }.
-function skelIK2(skel, fk, upperName, foreName, handName, target, w, poleHint, endFrac) {
+// `mem` (optional, per chain, persistent across frames): bend-plane memory. When the pole's perpendicular component is (nearly)
+// degenerate, or would reverse the joint's side of the chain line within one frame, the plane used last frame is kept — a knee or
+// elbow never flips sides between two frames.
+function skelIK2(skel, fk, upperName, foreName, handName, target, w, poleHint, endFrac, mem) {
   const up = skel.byName[upperName], fo = skel.byName[foreName], hd = skel.byName[handName];
   const S = fk.joint[up.idx], E0 = fk.joint[fo.idx], W0 = fk.joint[hd.idx];
   const a = up.len, b = fo.len;
   // the end effector is a point `endFrac` of the hand bone beyond the wrist (glove centre); aim the wrist short of the target along S→T
   const ef = endFrac == null ? 0 : endFrac; const dST0 = V3.norm(V3.sub(target, S)); const targetW = V3.sub(target, V3.scale(dST0, ef * hd.len));
+  // a target inside the chain's fold radius (closer to the root joint than a folded limb can bring its end effector) has no stable
+  // direction from the root — the solve releases toward the authored limb as the target approaches the root (weight fade), and the
+  // residual exposes the mismatch (the modeled arm / leg cannot fold onto a point at its own shoulder / hip)
+  const dMin = Math.max(Math.abs(a - b) + 0.02, 0.12 * (a + b)), dRaw = V3.dist(targetW, S); if (mem) mem.dRaw = +dRaw.toFixed(3); if (dRaw < dMin) w = clamp01(w) * (dRaw / dMin);   // fold radius = the folded chain's own minimum (|a−b| + 2 cm), never less than 12 % of the chain
   const T = V3.lerp(W0, targetW, clamp01(w));
   let d = V3.dist(T, S); const maxR = a + b - 1e-4; const reached = d <= maxR; if (d > maxR) d = maxR; if (d < Math.abs(a - b) + 1e-4) d = Math.abs(a - b) + 1e-4;
-  const dirST = V3.norm(V3.sub(T, S));
+  let dirST = V3.norm(V3.sub(T, S));
+  // near the fold radius the root→target direction turns fast for a small target motion: it is blended with last frame's direction
+  // (memory) by how deep inside the near-fold zone the target sits — continuous, deterministic, and exact again outside the zone
+  if (mem && mem.dir && dRaw < 2 * dMin) { const k = Math.max(0.15, dRaw / (2 * dMin)); const m = V3.add(V3.scale(dirST, k), V3.scale(mem.dir, 1 - k)); if (V3.len(m) > 1e-3) dirST = V3.norm(m); else dirST = mem.dir.slice(); }
+  if (mem) mem.dir = dirST.slice();
   // elbow bend plane: use the FK elbow's own offset from the S→T line as the pole (keeps the authored elbow direction), fall back to the hint
   // bend-plane pole: an explicit hint (e.g. knees forward-up for planted legs) wins; otherwise the FK joint's own offset from the S→T line
   let pole = poleHint ? V3.sub(poleHint, V3.add(S, V3.scale(dirST, V3.dot(V3.sub(poleHint, S), dirST)))) : V3.sub(E0, V3.add(S, V3.scale(dirST, V3.dot(V3.sub(E0, S), dirST))));
   if (V3.len(pole) < 0.02) pole = V3.sub(E0, V3.add(S, V3.scale(dirST, V3.dot(V3.sub(E0, S), dirST))));
+  if (mem && mem.v) { const pl = V3.len(pole), mp = V3.sub(mem.v, V3.scale(dirST, V3.dot(mem.v, dirST))); if (V3.len(mp) > 1e-3 && pl < 0.04) pole = mp; }   // degenerate plane: keep last frame's
   if (V3.len(pole) < 1e-4) pole = Math.abs(dirST[1]) < 0.9 ? [0, -1, 0] : [1, 0, 0];
   pole = V3.norm(pole);
+  if (mem && mem.v) {                                                                          // bounded plane rotation: the joint orbits the chain line toward the wanted plane at most maxStep per solve (a knee / elbow never flips sides in one frame)
+    const mp0 = V3.sub(mem.v, V3.scale(dirST, V3.dot(mem.v, dirST))); if (V3.len(mp0) > 1e-3) { const mp = V3.norm(mp0), cr = V3.cross(mp, pole), ang = Math.atan2(V3.dot(cr, dirST), V3.dot(mp, pole)), maxStep = 1.05; if (Math.abs(ang) > maxStep) { const st = ang > 0 ? maxStep : -maxStep, q = V3.cross(dirST, mp); pole = V3.norm(V3.add(V3.scale(mp, Math.cos(st)), V3.scale(q, Math.sin(st)))); } } }
+  if (mem) mem.v = pole;
   const cosA = clamp01((a * a + d * d - b * b) / (2 * a * d)); const alpha = Math.acos(Math.max(-1, Math.min(1, (a * a + d * d - b * b) / (2 * a * d))));
   const E = V3.add(S, V3.add(V3.scale(dirST, a * Math.cos(alpha)), V3.scale(pole, a * Math.sin(alpha))));
+  if (mem && mem.debug) mem.dbg = { S: S.map(v => +v.toFixed(3)), E0: E0.map(v => +v.toFixed(3)), W0: W0.map(v => +v.toFixed(3)), T: T.map(v => +v.toFixed(3)), d: +d.toFixed(3), alpha: +(alpha / DEG).toFixed(1), pole: pole.map(v => +v.toFixed(3)), E: E.map(v => +v.toFixed(3)), w: +w.toFixed(3), target: target.map(v => +v.toFixed(3)) };
   const Tw = V3.add(E, V3.scale(V3.norm(V3.sub(T, E)), b));
   // re-aim upper arm: rotate its world matrix so the FK elbow direction maps to the new one
   const rot = (bone, from, to) => { const m = fk.world[bone.idx]; const R = M4.fromTo(V3.norm(V3.sub(from, M4.origin(m))), V3.norm(V3.sub(to, M4.origin(m)))); const o = M4.origin(m); const m2 = M4.mul(M4.translate(o[0], o[1], o[2]), M4.mul(R, M4.mul(M4.translate(-o[0], -o[1], -o[2]), m))); return m2; };

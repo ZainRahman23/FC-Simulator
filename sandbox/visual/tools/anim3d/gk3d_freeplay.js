@@ -7,7 +7,7 @@
 const NM = process.env.PUPPETEER_NODE_MODULES; if (NM) module.paths.unshift(NM);
 const puppeteer = require("puppeteer-core"), fs = require("fs"), path = require("path");
 const a = process.argv, opt = (k, d) => { const i = a.indexOf(k); return i > 0 ? a[i + 1] : d; };
-const OUT = opt("--out", "freeplay3d"), N = +opt("--shots", 120), SEED = +opt("--seed", 7), URL = opt("--url", "http://127.0.0.1:8124/sandbox/visual/match.html"), UDD = opt("--udd", "chrome-fp3d");
+const OUT = opt("--out", "freeplay3d"), N = +opt("--shots", 120), SEED = +opt("--seed", 7), URL = opt("--url", "http://127.0.0.1:8124/sandbox/visual/match.html"), UDD = opt("--udd", "chrome-fp3d"), DUMP = opt("--dump", null) != null ? +opt("--dump") : null;   // --dump <i>: per-tick trace (phase, IK / lock weights, joint eulers) of ONE shot → dump_<i>.json
 fs.mkdirSync(OUT, { recursive: true });
 let s = SEED; const rnd = () => { s = (s * 1103515245 + 12345) & 0x7fffffff; return s / 0x7fffffff; }; const pick = (arr) => arr[Math.floor(rnd() * arr.length)];
 const XS = [82, 86, 90, 94, 98, 101, 103], YS = [20, 24, 28, 31, 34, 37, 40, 44, 48];
@@ -21,22 +21,23 @@ const SHOTS = []; for (let i = 0; i < N; i++) { const key = pick(KEYS); SHOTS.pu
   for (let i = 0; i < 900; i++) { const ok = await p.evaluate(() => { const el = document.getElementById("loading"); return !!(el && el.style.display === "none" && typeof ptEnter === "function"); }); if (ok) break; await new Promise(r => setTimeout(r, 100)); }
   await p.evaluate(() => { if (!(S.pt && S.pt.on)) ptEnter(); ptReset(); GK_PRESENTATION.set("SKELETAL_3D"); gkAnimResetView(); gk3dReset(); S.pt.paused = true; S.dbg.anim = false; S.pt.pauseAtContact = false; S.pt.slow = 1; });
   const rec = [];
-  for (const sh of SHOTS) {
+  for (const sh of SHOTS) { if (DUMP != null && sh.i > DUMP) break; sh.dump = sh.i === DUMP;
     const r = await p.evaluate((sh) => {
       const t = S.pt, A = S.gkAnim; const tm = KICK_CHARGE.timing[ptKickSpec(sh.key, t).chargeFam] || KICK_CHARGE.timing.LACES;
       const holdTicks = Math.round(Math.max(0, (sh.c - tm.bias) * tm.ms) / 1000 * 60), fac = Math.atan2(sh.aim[1] - sh.origin[1], sh.aim[0] - sh.origin[0]);
       t.keys = {}; t.charge = null; if (t.kick && t.kick.kicked === false) t.kick = null;
       t.p = { x: sh.origin[0], y: sh.origin[1], vx: 0, vy: 0, facing: fac, touchT: t.now };
       t.b = { x: sh.origin[0] + Math.cos(fac) * 0.3, y: sh.origin[1] + Math.sin(fac) * 0.3, z: 0, vx: 0, vy: 0, vz: 0, ctrl: true, exclT: 0 };
-      const step = () => { ptStep(); gkPresentationDraw(t, t.gk, 1 / 60); };
+      const step = () => { ptStep(); if (sh.dump && GK3D.state && GK3D.state.poleMem) for (const k in GK3D.state.poleMem) GK3D.state.poleMem[k].debug = true; gkPresentationDraw(t, t.gk, 1 / 60); };
       for (let k = 0; k < sh.settle; k++) step();
       if (!t.b.ctrl || t.kick) return { skipped: "no control / kick busy" };
       ptChargeBegin(t, sh.key, ptKickSpec(sh.key, t)); for (let k = 0; k < holdTicks; k++) step(); ptChargeRelease(t, sh.key);
       if (!t.kick) return { skipped: "kick not scheduled" };
       if (sh.run === "goal") t.keys = { right: true }; else if (sh.run === "side") t.keys = { down: true };
       let tick = 0, shotTick = null, commitTick = null, contactTick = null, unauth = 0, fallback = 0, motion = null, family = null, side = null, landed = null, gloveRes = null, legRes = null, facing = null, tier = null, action = null, hClass = null, outcome = null, volume = null, held = false, phases = [], lastPhase = null, presMax = 0, pelvisMin = 9, sim = null;
-      GK3D.asserts = [];
+      GK3D.asserts = []; const trace = [];
       while (tick < 480) { step(); tick++; const gk = t.gk, L = GK3D.last, g = L && L.g, cur = A.cur;
+        if (sh.dump && g && gk.committed) { const fk = L.sol.fk, e = (n) => { const m = fk.world[GK3D.skel.byName[n].idx]; return [m[0], m[1], m[2], m[4], m[5], m[6], m[8], m[9], m[10]].map(v => +v.toFixed(4)); };   /* world rotation (3×3) — the same quantity the continuity assertion compares */ trace.push({ tick, now: +t.now.toFixed(3), endT: A.cur && +A.cur.endT?.toFixed(3), u: g.clipT != null ? +g.clipT.toFixed(3) : null, mode: g.mode, phase: g.phase, sub: g.sub, stage: g.landing && g.landing.L.stage, s: g.landing && +g.landing.L.s.toFixed(3), ikW: +g.ikW.toFixed(2), legTip: g.legTip ? +g.legTip.w.toFixed(2) : null, hold: !!g.holdBall, two: g.twoHands, locks: g.locks, feet: L.sol.diag.feet, brace: g.brace, ik: L.sol.diag.ik, ik2: L.sol.diag.ik2, legTipD: L.sol.diag.legTip, pelvis: fk.joint[GK3D.skel.byName.pelvis.idx].map(v => +v.toFixed(3)), contact: !!gk.contact, posePelvis: g.pose._pelvis, rootM: Array.from(g.rootM).map(v => +v.toFixed(4)), pelOff: GK3D.skel.byName.pelvis.off, dirSign: g.landing && g.landing.plan.dirSign, hs: +(GK3D.skel.H / 1.9).toFixed(3), poles: JSON.parse(JSON.stringify(GK3D.state.poleMem || null)), torso: L.sol.diag.torso, ground: L.sol.diag.ground, groundBone: L.sol.diag.groundBone, legFloor: L.sol.diag.legFloor, J: Object.fromEntries(["shin_L", "foot_L", "shin_R", "foot_R", "foreArm_L", "hand_L", "foreArm_R", "hand_R"].map(n => [n, [fk.joint[GK3D.skel.byName[n].idx].map(v => +v.toFixed(3)), fk.tip[GK3D.skel.byName[n].idx].map(v => +v.toFixed(3))]])), ang: { thigh_L: e("thigh_L"), thigh_R: e("thigh_R"), upperArm_L: e("upperArm_L"), upperArm_R: e("upperArm_R") } }); }
         if (gk.shotActive && shotTick == null) shotTick = tick;
         if (gk.committed && commitTick == null) { commitTick = tick; facing = +(gk.facing * 180 / Math.PI).toFixed(1); tier = gk.committed.tier; action = gk.committed.action; family = cur && cur.family; hClass = cur && cur.cls && cur.cls.hClass; side = cur && cur.side; }
         if (g && gk.committed) { if (g.authored === false) unauth++; if (g.fallback) fallback++; if (g.motion) motion = g.motion; if (g.landedSide) landed = g.landedSide; if (g.phase !== lastPhase) { phases.push([tick, g.phase]); lastPhase = g.phase; } presMax = Math.max(presMax, g.pres.dm); if (L.sol) pelvisMin = Math.min(pelvisMin, L.sol.fk.joint[GK3D.skel.byName.pelvis.idx][1]); }
@@ -46,8 +47,9 @@ const SHOTS = []; for (let i = 0; i < N; i++) { const key = pick(KEYS); SHOTS.pu
         if (contactTick != null && tick > contactTick + 330) break;
       }
       t.keys = {};
-      return { shotTick, commitTick, contactTick, facing, tier, action, family, hClass, side, motion, landed, outcome, volume, held, gloveRes, legRes, unauth, fallback, phases: phases.slice(0, 30), presMax: +presMax.toFixed(2), pelvisMin: +pelvisMin.toFixed(2), asserts: GK3D.asserts.filter(x => x.bad).slice(0, 4), sim, keeperReady: !t.gk.committed };
+      return { trace: sh.dump ? trace : undefined, shotTick, commitTick, contactTick, facing, tier, action, family, hClass, side, motion, landed, outcome, volume, held, gloveRes, legRes, unauth, fallback, phases: phases.slice(0, 30), presMax: +presMax.toFixed(2), pelvisMin: +pelvisMin.toFixed(2), asserts: GK3D.asserts.filter(x => x.bad).slice(0, 4), sim, keeperReady: !t.gk.committed };
     }, sh);
+    if (r.trace) { fs.writeFileSync(path.join(OUT, "dump_" + sh.i + ".json"), JSON.stringify(r.trace, null, 1)); delete r.trace; }
     r.shot = sh; rec.push(r);
     if (r.contactTick != null && rec.length % 3 === 0) { try { await p.screenshot({ path: path.join(OUT, "shot_" + String(sh.i).padStart(3, "0") + ".png"), clip: { x: 600, y: 150, width: 500, height: 450 } }); r.frame = "shot_" + String(sh.i).padStart(3, "0") + ".png"; } catch (e) {} }
     if (sh.i % 20 === 19) console.log("shot", sh.i + 1, "/", N);
