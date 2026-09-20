@@ -1,4 +1,4 @@
-# Goalkeeper skeletal MOTION LIBRARY — findings (v8 + v9 FOOT_SAVE spread block, 2026-09-20)
+# Goalkeeper skeletal MOTION LIBRARY — findings (v8 + v9 FOOT_SAVE spread block + v10 CATCH group, 2026-09-20)
 
 Branch `prototype/3d-animation-pipeline` (not pushed). Review page: `review_artifacts/gk_motion_library/GK_MOTION_LIBRARY_REVIEW.html`.
 Astra reference package: `review_artifacts/astra_gk_motion_reference/` (`INDEX.json`, `README.md`, one folder per canonical motion / facing).
@@ -29,10 +29,10 @@ classification only (family, height class, feet-planted, lateral offset), never 
 | LOW_DIVE | AIRBORNE_DIVE LOW-MID | low sideways launch, body horizontal at ≤ 82° roll (never inverted), pelvis solved to the lying height, hard stop on the pitch, same get-up chain | 43, 44, 10, 1, 50, 51 |
 | LOW_COLLAPSE | LOW_COLLAPSE | no flight: near leg folds, drop onto the hip, hands down together, leg to the simulation's leg tip | 32, 52, 53, 11 |
 | FOOT_SAVE (v9 spread block) | FOOT_SAVE | emergency block: COM drops (0.70 → ~0.46 m), both hips abduct (saving thigh ~72°, far thigh ~60°, knees ~18° / ~30°), far foot steps out to a wide plant, arms wide and forward, chest open; saving foot on the simulation's leg tip; body commits onto the saving hip (side-sit) and recovers from the half-kneel — not a forward kick | 19, 16, 17, 55–60 |
-| NEAR_BODY | NEAR_BODY_SAVE | feet planted, one step out, torso lean, near-hand reach (two hands when central) | 41, 47 |
-| CHEST_CATCH | CHEST_CATCH / SUPPORTED_CATCH | hands out in front, ball into the chest, hug | 33, 45, 54 |
-| HIGH_CATCH | HIGH_CATCH | both hands over the head, toe rise / jump by the launch demand, bring down | 31, 46 |
-| GATHER | LOW_GATHER | long-barrier kneel, scoop, hug | 26 |
+| NEAR_BODY (catch group, v10) | NEAR_BODY_SAVE | one step out, torso lean, near-hand reach; a caught ball is cradled to the chest and the lean straightens | 41 |
+| CHEST_CATCH (catch group, v10) | CHEST_CATCH / SUPPORTED_CATCH | the sprite chest catch: upright ready, small brace, arms open wide (elbows OUT), hands forward at chest height at contact, forearms wrap, absorb, straighten, upright hold | 45, 33, 47, 54, 61–63 |
+| HIGH_CATCH (catch group, v10) | HIGH_CATCH | both hands up a ball's width apart, toe rise / jump; the secured ball is brought down to the chest; straighten; upright hold | 31, 46 |
+| GATHER (catch group, v10) | LOW_GATHER | the sprite low gather: deep crouch (not a kneel), gloves to the ground, scoop, clutch, rise to the upright hold | 26, 27, 9 |
 | READY / FOOTWORK | (anticipation, positioning) | symmetric ready crouch; odometer stepping driven by the simulation root velocity | 54, 11 |
 
 Why these and not more: the resolver already separates airborne from grounded and hand from leg contact; within the airborne dives
@@ -92,10 +92,10 @@ never hidden by stretching. Residuals are in the manifest and the overlay frames
 
 ## 7. Simulation neutrality
 
-61 deterministic fixtures × 260 ticks, per-tick simulation trace hashed (keeper root, velocity, hand, leg tip, ball position and
-velocity, held flag, phase / state, commit, contact): sprite backend vs SKELETAL_3D drawn every tick — 61 / 61 identical
-(`verification/GATE_sprite_vs_3d_61_fixtures.md`); animation OFF (nothing drawn) vs 3D ON — 61 / 61 identical final-tick root,
-hand, ball, held flag, contact volume / outcome (`verification/GATE_animation_off_vs_on_61_fixtures.md`).
+64 deterministic fixtures × 260 ticks, per-tick simulation trace hashed (keeper root, velocity, hand, leg tip, ball position and
+velocity, held flag, phase / state, commit, contact): sprite backend vs SKELETAL_3D drawn every tick — 64 / 64 identical
+(`verification/GATE_sprite_vs_3d_64_fixtures.md`); animation OFF (nothing drawn) vs 3D ON — 64 / 64 identical final-tick root,
+hand, ball, held flag, contact volume / outcome (`verification/GATE_animation_off_vs_on_64_fixtures.md`).
 
 ## 8. Free play (production path)
 
@@ -153,6 +153,73 @@ All nine: landed side = save side, 0 stage-boundary flags, mirrors bit-symmetric
 simulation's contact lands 7 ticks after the commit (u 0.28), while the keeper is still in DROP_LOAD — the block develops after the
 ball has gone (the standing-leg cylinder blocked it). That is the simulation's timing and is shown as is.
 
+## 9c. CATCH group v10 — what was wrong, the sprite reference, what changed
+
+**Old (v8) catch.** The standing catch keys started from the crouched SET_LOW (pelvis 22° + spine 10° + chest 6° = 38° total
+pitch) and folded further (HUG: 46°); at contact both hands were solved to the SAME point (the simulation hand, then the ball
+centre), so the elbows pinched inward and the forearms crossed through the ball; the HOLD pose kept the fold — the keeper stayed
+hunched over a ball drawn by the 2D sprite renderer, composited over the 3D character.
+
+**The production sprite catch** (`assets/visual_v1/goalkeeper/GK_ANIM_V1.json`, clip `chest_catch`, 8 frames, `use` 1–8; east
+contact frame 3 / hold frame 7, south contact 4 / hold 7): frame 1 upright ready (hands low in front, knees slightly bent), frame 2
+hands rise, frames 3–5 arms open wide with the ELBOWS OUT and the hands forward at chest height (contact), frame 6 the hands meet,
+frames 7–8 hug across the chest with the torso upright and the knees slightly bent. Clip `low_gather`: ready, crouch, gloves to the
+ground (frames 4–6, deep torso fold), rise (7–8) to an upright stance holding the ball at the chest. No sprite clip exists for
+HIGH_CATCH or NEAR_BODY_SAVE (the sprite backend uses save poses / the set pose).
+
+**v10 skeletal catch** (`gk_motion_library.js` catch group, kind `catch`): READY_UP (16° total pitch, pelvis 0.86 m) → BRACE
+(u < 0.45: knees flex, pelvis −5 cm, arms open wide, elbows out) → RECEIVE (hands forward on the ball line at chest height) →
+CONTACT (authoritative tick) → CRADLE (0.12 s: forearms wrap by shoulder horizontal adduction + elbow flexion) → ABSORB (0.20 s:
+elbows flex further, arms yield to the chest) → CONTROL (0.15 s) → STRAIGHTEN (0.50 s: knees / hips / spine extend) → HOLD (upright
+possession, stable). The anticipation before the commit is height-aware: a predicted central crossing above ~0.8 m is met from
+READY_UP, a ground ball from the crouch (authoritative prediction `gk.predict.crossing.z`).
+
+Spine pitch (pelvis + spine + chest, fixture 45 chest catch): ready 16° → brace / receive 20–21° → contact 21° → absorb 24–26° →
+control 26° → hold 13°. Pelvis height 0.86 → 0.78 (receive) → 0.77 (control) → 0.85 (hold). Elbow separation stays 0.73–0.85 m
+through the whole lifecycle (v8: the elbows met). Hand separation closes 1.1 m (receive) → 0.30 (cradle) → 0.25 (absorb) → 0.21
+(hold: both hands on the surface of a 0.11 m ball).
+
+**Cradle construction.** Two hand targets are derived from the ball: ball centre ± (0.11 + 0.03) m along the keeper's lateral
+axis, 2 cm below the centre; each arm is solved to ITS target with an outward-down elbow pole (shoulder + 0.5 m lateral − 0.3 m).
+Before possession the two-hand reach uses the same split around the simulation hand target, so the hands arrive either side of the
+ball line (the contact metric for two-hand catches is the midpoint of the hands vs the simulation hand: 10–11 cm on the chest
+catches, 4–6 cm on the gathers and the high catch).
+
+**Presentation ball.** `gl_renderer.js` renders a UV sphere (physical radius 0.11 m; the 2D sprite draws 0.19 m for readability)
+in the keeper's WebGL world / camera / depth buffer whenever `gk3dOwnsBall()` holds: the SKELETAL_3D backend is active and the
+authoritative ball is within 3 m of the keeper or keeper-owned; the 2D ball sprite returns early in that case (one line in
+`drawBallAt`). Its transform: before possession = the authoritative ball converted to world space; from the authoritative possession
+tick (`b.held === "GK"`) it blends over 0.30 s from the catch point into the cradle centre (midpoint of the AUTHORED hand centres),
+then follows the authored arms (bring-down, straighten, hold); the hands are then solved onto its surface. The simulation ball
+(`t.b`) is read only: never moved, parented, re-timed; the held flag, contact tick and outcome are the simulation's. Animation OFF /
+ON and sprite / 3D gates over all fixtures stay identical (section 7).
+
+**Held-ball state.** HOLD is a stable pose: the manifest shows identical spine pitch (13°), pelvis (0.85 m), ball position, hand
+and elbow positions from the first HOLD tick to the end of every held fixture (160+ ticks), no re-trigger, no return to an
+empty-handed READY while the simulation says held.
+
+**Differences.** CHEST_CATCH / SUPPORTED_CATCH / NEAR_BODY (caught): the lifecycle above (NEAR_BODY adds the step-out and lean,
+which straightens in ABSORB). HIGH_CATCH: hands start high (RISING → REACH_UP, jump from the launch demand), CRADLE overhead, the
+ABSORB stage is the bring-down (0.30 s) to the upper chest, then straighten / hold (spine −6° at the overhead contact → 22° at
+control → 13° hold; pelvis 0.93 → 0.80 → 0.85). GATHER: deep crouch (pelvis 0.45 m, 56° total pitch at contact, matching the
+sprite's fold at the ground), scoop-close, clutch to the belly, a longer straighten (0.65 s) to the same upright hold. Parries
+(no possession): RISE → SET as before.
+
+**Free play (recorder corrected, v10 code):** seed 7 (120 shots): 114 committed, 40 contacts, 15 held (GATHER 4, NEAR_BODY 4,
+HIGH_CATCH 3, LOW_COLLAPSE 2, FAR_DIVE 1, LOW_DIVE 1), 0 fallbacks, 0 unauthored ticks, 1 flag (the known LOW_DIVE hard ground
+stop, shot 74). Seed 11 (160 shots): 151 committed, 53 contacts, 24 held (GATHER 9, NEAR_BODY 4, LOW_DIVE 3, HIGH_CATCH 2, FOOT_SAVE
+2, LOW_COLLAPSE 2, FAR_DIVE 1, CHEST_CATCH 1), 0 fallbacks, 0 unauthored, 4 flags: two LOW_DIVE hard ground stops (Δv 1.74 / 1.77),
+one NEAR_BODY RECEIVE → CONTACT (excess 3.5 cm, Δv 2.1 m/s: the step-out plant landing at the contact tick), one HIGH_CATCH parry
+RECEIVE → RISE at exactly the 1.5 m/s threshold. Every held catch in both seeds runs CRADLE → ABSORB → CONTROL → STRAIGHTEN → HOLD
+with the hands within 20 cm per frame at every boundary. A pre-existing bug surfaced by the widened assertion and fixed in v10: a
+HIGH_CATCH jump's pelvis offset was dropped at the post cut (Δv 6–11 m/s on parried high balls in free play); the jump now carries
+into the post and lands over 0.30 s.
+
+**Measured (fixtures 45 / 33 / 47 chest, 46 high, 26 / 27 / 9 gather, 61–63 angled chest catches):** 0 stage-boundary flags including the new hand checks
+(both hands ≤ 20 cm per frame across CONTACT → CRADLE → ABSORB → CONTROL → STRAIGHTEN → HOLD); hand-to-ball-centre distance in the
+hold 0.12–0.15 m (chest / high; surface at 0.11, target 0.14) and 0.09–0.11 m on the gathers (up to 2 cm inside the surface —
+listed below); hold residual vs the ideal side targets 7–9 cm (the hands sit on the surface at a slightly different angle).
+
 ## 10. Remaining problems (honest list)
 
 1. LOW_DIVE with a leg-volume contact (2 of 13 low dives in free play): the simulation's leg-tip model lies on the opposite side of
@@ -172,6 +239,12 @@ ball has gone (the standing-leg cylinder blocked it). That is the simulation's t
    projects as depth (near foot low on screen, far foot high and partly occluded by the body; dark socks against the pitch hide it
    further in the banded render). The 3D spread is real (feet ~1.2 m apart, pelvis 0.46 m) and reads as width at angled facings.
    The spread is defined by the simulation's contact geometry and was NOT rotated toward the camera.
+10. CATCH: on the gathers the hands end 1–2 cm inside the rendered ball surface (0.09–0.11 m from the centre); the hold hands sit on
+   the surface but 7–9 cm from the ideal side points (the arm cannot reach the lateral point at the authored elbow-out angle).
+11. CATCH: the 3D presentation ball (0.11 m) is smaller than the 2D sprite ball (0.19 m); the size changes where the ball enters the
+   3 m zone around the keeper. A game-wide decision (draw every ball at its physical size, or scale the 3D ball) is outside this task.
+12. CATCH: a two-hand catch reports a 10–11 cm contact residual by construction (the hands are split either side of the simulation's
+   single hand point).
 9. FOOT_SAVE contact representation: the simulation's LEG+ / LEG- volumes are vertical standing-leg cylinders at ±0.20 m; the
    spread shows the ball at the saving leg's shin / knee region (the foot itself sits on the simulation's leg tip, residual 2.5–8 cm on
    the straight fixtures). A ball the simulation records on the standing-leg cylinder can therefore sit up to ~15 cm from the drawn
@@ -214,3 +287,7 @@ v6 regression: run the manifest for scenario 42 before and after a change and co
 - `fc77de1` docs: review page, findings, Astra reference package, verification records
 - `f57040b` FOOT_SAVE spread block: new motion kind `spread`, ground plan absorb / side-sit options, fixed world-space step-out
   plant, fixtures 55–60, dedicated review section
+- `7099645` CATCH group rebuilt from the production sprite catch: kind `catch` (READY_UP, brace, receive, cradle, absorb, control,
+  straighten, hold), height-aware anticipation, split hand targets with outward elbow poles, 3D presentation ball (WebGL sphere,
+  `gk3dOwnsBall`), held-ball presentation transform, catch → hold continuity checks (hands), high-catch jump carried into the post,
+  fixtures 61–63

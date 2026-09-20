@@ -40,45 +40,54 @@
   "fixture": 41,
   "dir": "NEAR_BODY",
   "family": "NEAR_BODY_SAVE",
-  "note": "feet planted, one step out, torso lean, near-hand reach (parry here)",
+  "note": "one step out, torso lean, near-hand reach; a caught ball is cradled to the chest (parry here: RISE -> SET)",
   "contactTick": 38,
   "keyFrames": 5
  },
  {
   "motion": "CHEST_CATCH",
-  "fixture": 33,
+  "fixture": 45,
   "dir": "CHEST_CATCH",
   "family": "CHEST_CATCH / SUPPORTED_CATCH",
-  "note": "hands out in front, ball into the chest, hug (held)",
-  "contactTick": 63,
-  "keyFrames": 4
+  "note": "v10 sprite-language catch: upright ready, brace, arms receive, cradle, absorb, control, straighten, upright hold (held)",
+  "contactTick": 54,
+  "keyFrames": 9
  },
  {
   "motion": "HIGH_CATCH",
   "fixture": 31,
   "dir": "HIGH_CATCH",
   "family": "HIGH_CATCH",
-  "note": "both hands up over the head, toe rise / jump by launch demand (parry here)",
+  "note": "both hands up, toe rise / jump by the launch demand; controlled parry here (RISE -> SET)",
   "contactTick": 51,
-  "keyFrames": 5
+  "keyFrames": 7
  },
  {
   "motion": "HIGH_CATCH_HELD",
   "fixture": 46,
   "dir": "HIGH_CATCH_HELD",
   "family": "HIGH_CATCH (caught)",
-  "note": "high central ball caught and brought down (held)",
+  "note": "high chip caught overhead, brought down to the chest, straighten, upright hold (held)",
   "contactTick": 92,
-  "keyFrames": 5
+  "keyFrames": 9
  },
  {
   "motion": "GATHER",
   "fixture": 26,
   "dir": "GATHER",
   "family": "LOW_GATHER",
-  "note": "long-barrier kneel, hands scoop, hug (held)",
+  "note": "v10 sprite-language gather: deep crouch, gloves to the ground, scoop, clutch, rise to the upright hold (held)",
   "contactTick": 88,
-  "keyFrames": 4
+  "keyFrames": 9
+ },
+ {
+  "motion": "CHEST_CATCH",
+  "fixture": 33,
+  "dir": "CHEST_CATCH_33",
+  "family": "CHEST_CATCH lateral supported catch (held)",
+  "note": "CHEST_CATCH lateral supported catch (held)",
+  "contactTick": 63,
+  "keyFrames": 8
  },
  {
   "motion": "FOOT_SAVE",

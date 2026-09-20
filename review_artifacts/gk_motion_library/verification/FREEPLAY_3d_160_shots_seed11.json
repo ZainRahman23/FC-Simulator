@@ -3,6 +3,7 @@
   "shots": 160,
   "committed": 151,
   "contacts": 53,
+  "held": 24,
   "familyMotion": {
    "LOW_GATHER\u2192GATHER": 10,
    "AIRBORNE_DIVE\u2192LOW_DIVE": 14,
@@ -39,25 +40,23 @@
   },
   "fallbacks": 0,
   "unauthoredTicks": 0,
-  "shotsWithBadAsserts": 2,
-  "sideNeLanded": 0,
+  "shotsWithBadAsserts": 4,
   "gloveResidualHand": {
    "n": 40,
-   "median": 0.12,
-   "p90": 0.37,
-   "max": 0.635
+   "median": 0.106,
+   "p90": 0.263,
+   "max": 0.567
   },
-  "footSaves": [
-   19,
-   44,
-   50,
-   53,
-   59,
-   95,
-   104,
-   127,
-   136
-  ]
+  "heldByMotion": {
+   "GATHER": 9,
+   "FAR_DIVE": 1,
+   "LOW_DIVE": 3,
+   "HIGH_CATCH": 2,
+   "NEAR_BODY": 4,
+   "LOW_COLLAPSE": 2,
+   "FOOT_SAVE": 2,
+   "CHEST_CATCH": 1
+  }
  },
  "shots": [
   {
@@ -75,22 +74,42 @@
    "outcome": "GATHER",
    "volume": "HAND",
    "held": true,
-   "gloveRes": 0.276,
+   "gloveRes": 0.237,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
    "phases": [
     [
      66,
-     "GATHER"
+     "BRACE"
+    ],
+    [
+     77,
+     "RECEIVE"
     ],
     [
      106,
+     "CRADLE"
+    ],
+    [
+     114,
+     "ABSORB"
+    ],
+    [
+     127,
+     "CONTROL"
+    ],
+    [
+     136,
+     "STRAIGHTEN"
+    ],
+    [
+     175,
      "HOLD"
     ]
    ],
-   "presMax": 0.09,
-   "pelvisMin": 0.43,
+   "presMax": 0.1,
+   "pelvisMin": 0.45,
    "asserts": [],
    "sim": {
     "point": [
@@ -136,22 +155,42 @@
    "outcome": "GATHER",
    "volume": "HAND",
    "held": true,
-   "gloveRes": 0.286,
+   "gloveRes": 0.18,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
    "phases": [
     [
      79,
-     "GATHER"
+     "BRACE"
+    ],
+    [
+     89,
+     "RECEIVE"
     ],
     [
      116,
+     "CRADLE"
+    ],
+    [
+     124,
+     "ABSORB"
+    ],
+    [
+     137,
+     "CONTROL"
+    ],
+    [
+     146,
+     "STRAIGHTEN"
+    ],
+    [
+     185,
      "HOLD"
     ]
    ],
-   "presMax": 0.09,
-   "pelvisMin": 0.43,
+   "presMax": 0.1,
+   "pelvisMin": 0.45,
    "asserts": [],
    "sim": {
     "point": [
@@ -282,6 +321,8 @@
      "dPelvis": 0.027,
      "excess": 0.03,
      "dV": 1.77,
+     "dHandR": 0.021,
+     "dHandL": 0.034,
      "ang": {
       "root": 0,
       "pelvis": 1.4,
@@ -685,14 +726,22 @@
    "outcome": "CONTROLLED PARRY",
    "volume": "HAND",
    "held": false,
-   "gloveRes": 0.635,
+   "gloveRes": 0.567,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
    "phases": [
     [
      67,
-     "NEAR_BODY"
+     "BRACE"
+    ],
+    [
+     71,
+     "RECEIVE"
+    ],
+    [
+     77,
+     "CONTACT"
     ],
     [
      78,
@@ -704,7 +753,7 @@
     ]
    ],
    "presMax": 0.12,
-   "pelvisMin": 0.66,
+   "pelvisMin": 0.72,
    "asserts": [],
    "sim": {
     "point": [
@@ -1337,22 +1386,46 @@
    "outcome": "GATHER",
    "volume": "HAND",
    "held": true,
-   "gloveRes": 0.236,
+   "gloveRes": 0.176,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
    "phases": [
     [
      85,
-     "GATHER"
+     "BRACE"
+    ],
+    [
+     95,
+     "RECEIVE"
+    ],
+    [
+     123,
+     "CONTACT"
     ],
     [
      124,
+     "CRADLE"
+    ],
+    [
+     131,
+     "ABSORB"
+    ],
+    [
+     144,
+     "CONTROL"
+    ],
+    [
+     153,
+     "STRAIGHTEN"
+    ],
+    [
+     192,
      "HOLD"
     ]
    ],
-   "presMax": 0.09,
-   "pelvisMin": 0.43,
+   "presMax": 0.1,
+   "pelvisMin": 0.45,
    "asserts": [],
    "sim": {
     "point": [
@@ -2132,22 +2205,42 @@
    "outcome": "CATCH",
    "volume": "HAND",
    "held": true,
-   "gloveRes": 0.054,
+   "gloveRes": 0.062,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
    "phases": [
     [
      78,
-     "HIGH_CATCH"
+     "BRACE"
+    ],
+    [
+     81,
+     "RECEIVE"
     ],
     [
      86,
+     "CRADLE"
+    ],
+    [
+     94,
+     "ABSORB"
+    ],
+    [
+     112,
+     "CONTROL"
+    ],
+    [
+     121,
+     "STRAIGHTEN"
+    ],
+    [
+     148,
      "HOLD"
     ]
    ],
    "presMax": 0.02,
-   "pelvisMin": 0.7,
+   "pelvisMin": 0.79,
    "asserts": [],
    "sim": {
     "point": [
@@ -2194,23 +2287,69 @@
    "outcome": "CATCH",
    "volume": "HAND",
    "held": true,
-   "gloveRes": 0.156,
+   "gloveRes": 0.106,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
    "phases": [
     [
      70,
-     "NEAR_BODY"
+     "BRACE"
+    ],
+    [
+     74,
+     "RECEIVE"
+    ],
+    [
+     78,
+     "CONTACT"
     ],
     [
      79,
+     "CRADLE"
+    ],
+    [
+     87,
+     "ABSORB"
+    ],
+    [
+     100,
+     "CONTROL"
+    ],
+    [
+     109,
+     "STRAIGHTEN"
+    ],
+    [
+     136,
      "HOLD"
     ]
    ],
    "presMax": 0.12,
-   "pelvisMin": 0.66,
-   "asserts": [],
+   "pelvisMin": 0.72,
+   "asserts": [
+    {
+     "tick": 12040,
+     "from": "RECEIVE",
+     "to": "CONTACT",
+     "dRoot": 0.011,
+     "dPelvis": 0.011,
+     "excess": 0.035,
+     "dV": 2.12,
+     "dHandR": 0.043,
+     "dHandL": 0.011,
+     "ang": {
+      "root": 0,
+      "pelvis": 0.7,
+      "chest": 0.7,
+      "thigh_L": 0.7,
+      "thigh_R": 5.1,
+      "upperArm_L": 1,
+      "upperArm_R": 5.1
+     },
+     "bad": true
+    }
+   ],
    "sim": {
     "point": [
      102.861,
@@ -2500,11 +2639,15 @@
    "phases": [
     [
      50,
-     "NEAR_BODY"
+     "BRACE"
+    ],
+    [
+     55,
+     "RECEIVE"
     ]
    ],
    "presMax": 0.12,
-   "pelvisMin": 0.66,
+   "pelvisMin": 0.72,
    "asserts": [],
    "sim": null,
    "keeperReady": false,
@@ -3009,22 +3152,42 @@
    "outcome": "GATHER",
    "volume": "HAND",
    "held": true,
-   "gloveRes": 0.344,
+   "gloveRes": 0.23,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
    "phases": [
     [
      61,
-     "GATHER"
+     "BRACE"
+    ],
+    [
+     72,
+     "RECEIVE"
     ],
     [
      100,
+     "CRADLE"
+    ],
+    [
+     108,
+     "ABSORB"
+    ],
+    [
+     121,
+     "CONTROL"
+    ],
+    [
+     130,
+     "STRAIGHTEN"
+    ],
+    [
+     169,
      "HOLD"
     ]
    ],
-   "presMax": 0.09,
-   "pelvisMin": 0.43,
+   "presMax": 0.1,
+   "pelvisMin": 0.45,
    "asserts": [],
    "sim": {
     "point": [
@@ -4371,14 +4534,22 @@
    "outcome": "CONTROLLED PARRY",
    "volume": "HAND",
    "held": false,
-   "gloveRes": 0.045,
+   "gloveRes": 0.051,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
    "phases": [
     [
      41,
-     "HIGH_CATCH"
+     "BRACE"
+    ],
+    [
+     45,
+     "RECEIVE"
+    ],
+    [
+     48,
+     "CONTACT"
     ],
     [
      50,
@@ -4390,7 +4561,7 @@
     ]
    ],
    "presMax": 0.02,
-   "pelvisMin": 0.71,
+   "pelvisMin": 0.82,
    "asserts": [],
    "sim": {
     "point": [
@@ -5140,14 +5311,22 @@
    "outcome": "WEAK PARRY (through)",
    "volume": "HAND",
    "held": false,
-   "gloveRes": 0.033,
+   "gloveRes": 0.035,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
    "phases": [
     [
      28,
-     "HIGH_CATCH"
+     "BRACE"
+    ],
+    [
+     32,
+     "RECEIVE"
+    ],
+    [
+     35,
+     "CONTACT"
     ],
     [
      38,
@@ -5159,7 +5338,7 @@
     ]
    ],
    "presMax": 0.02,
-   "pelvisMin": 0.71,
+   "pelvisMin": 0.82,
    "asserts": [],
    "sim": {
     "point": [
@@ -5212,11 +5391,15 @@
    "phases": [
     [
      28,
-     "NEAR_BODY"
+     "BRACE"
+    ],
+    [
+     32,
+     "RECEIVE"
     ]
    ],
    "presMax": 0.12,
-   "pelvisMin": 0.66,
+   "pelvisMin": 0.72,
    "asserts": [],
    "sim": null,
    "keeperReady": false,
@@ -5647,14 +5830,22 @@
    "outcome": "WEAK PARRY",
    "volume": "HAND",
    "held": false,
-   "gloveRes": 0.47,
+   "gloveRes": 0.389,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
    "phases": [
     [
      28,
-     "NEAR_BODY"
+     "BRACE"
+    ],
+    [
+     33,
+     "RECEIVE"
+    ],
+    [
+     38,
+     "CONTACT"
     ],
     [
      39,
@@ -5666,7 +5857,7 @@
     ]
    ],
    "presMax": 0.12,
-   "pelvisMin": 0.66,
+   "pelvisMin": 0.72,
    "asserts": [],
    "sim": {
     "point": [
@@ -6649,22 +6840,46 @@
    "outcome": "GATHER",
    "volume": "HAND",
    "held": true,
-   "gloveRes": 0.234,
+   "gloveRes": 0.199,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
    "phases": [
     [
      71,
-     "GATHER"
+     "BRACE"
+    ],
+    [
+     79,
+     "RECEIVE"
+    ],
+    [
+     104,
+     "CONTACT"
     ],
     [
      105,
+     "CRADLE"
+    ],
+    [
+     112,
+     "ABSORB"
+    ],
+    [
+     125,
+     "CONTROL"
+    ],
+    [
+     134,
+     "STRAIGHTEN"
+    ],
+    [
+     173,
      "HOLD"
     ]
    ],
-   "presMax": 0.09,
-   "pelvisMin": 0.43,
+   "presMax": 0.1,
+   "pelvisMin": 0.45,
    "asserts": [],
    "sim": {
     "point": [
@@ -6718,11 +6933,15 @@
    "phases": [
     [
      28,
-     "NEAR_BODY"
+     "BRACE"
+    ],
+    [
+     32,
+     "RECEIVE"
     ]
    ],
    "presMax": 0.12,
-   "pelvisMin": 0.66,
+   "pelvisMin": 0.72,
    "asserts": [],
    "sim": null,
    "keeperReady": false,
@@ -7345,14 +7564,22 @@
    "outcome": "WEAK PARRY (through)",
    "volume": "HAND",
    "held": false,
-   "gloveRes": 0.086,
+   "gloveRes": 0.092,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
    "phases": [
     [
      44,
-     "HIGH_CATCH"
+     "BRACE"
+    ],
+    [
+     49,
+     "RECEIVE"
+    ],
+    [
+     53,
+     "CONTACT"
     ],
     [
      55,
@@ -7364,7 +7591,7 @@
     ]
    ],
    "presMax": 0.02,
-   "pelvisMin": 0.71,
+   "pelvisMin": 0.82,
    "asserts": [],
    "sim": {
     "point": [
@@ -7759,22 +7986,46 @@
    "outcome": "CATCH",
    "volume": "HAND",
    "held": true,
-   "gloveRes": 0.065,
+   "gloveRes": 0.073,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
    "phases": [
     [
      84,
-     "HIGH_CATCH"
+     "BRACE"
+    ],
+    [
+     87,
+     "RECEIVE"
+    ],
+    [
+     92,
+     "CONTACT"
     ],
     [
      93,
+     "CRADLE"
+    ],
+    [
+     100,
+     "ABSORB"
+    ],
+    [
+     118,
+     "CONTROL"
+    ],
+    [
+     127,
+     "STRAIGHTEN"
+    ],
+    [
+     154,
      "HOLD"
     ]
    ],
    "presMax": 0.02,
-   "pelvisMin": 0.7,
+   "pelvisMin": 0.79,
    "asserts": [],
    "sim": {
     "point": [
@@ -8059,22 +8310,46 @@
    "outcome": "GATHER",
    "volume": "HAND",
    "held": true,
-   "gloveRes": 0.032,
+   "gloveRes": 0.028,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
    "phases": [
     [
      118,
-     "GATHER"
+     "BRACE"
+    ],
+    [
+     124,
+     "RECEIVE"
+    ],
+    [
+     147,
+     "CONTACT"
     ],
     [
      148,
+     "CRADLE"
+    ],
+    [
+     155,
+     "ABSORB"
+    ],
+    [
+     168,
+     "CONTROL"
+    ],
+    [
+     177,
+     "STRAIGHTEN"
+    ],
+    [
+     216,
      "HOLD"
     ]
    ],
-   "presMax": 0.09,
-   "pelvisMin": 0.43,
+   "presMax": 0.1,
+   "pelvisMin": 0.45,
    "asserts": [],
    "sim": {
     "point": [
@@ -9879,14 +10154,18 @@
    "outcome": "CONTROLLED PARRY",
    "volume": "HAND",
    "held": false,
-   "gloveRes": 0.201,
+   "gloveRes": 0.124,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
    "phases": [
     [
      51,
-     "HIGH_CATCH"
+     "BRACE"
+    ],
+    [
+     56,
+     "RECEIVE"
     ],
     [
      63,
@@ -9898,7 +10177,7 @@
     ]
    ],
    "presMax": 0.02,
-   "pelvisMin": 0.72,
+   "pelvisMin": 0.82,
    "asserts": [],
    "sim": {
     "point": [
@@ -9944,22 +10223,46 @@
    "outcome": "CATCH",
    "volume": "HAND",
    "held": true,
-   "gloveRes": 0.061,
+   "gloveRes": 0.071,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
    "phases": [
     [
      32,
-     "NEAR_BODY"
+     "BRACE"
+    ],
+    [
+     37,
+     "RECEIVE"
+    ],
+    [
+     44,
+     "CONTACT"
     ],
     [
      45,
+     "CRADLE"
+    ],
+    [
+     53,
+     "ABSORB"
+    ],
+    [
+     66,
+     "CONTROL"
+    ],
+    [
+     75,
+     "STRAIGHTEN"
+    ],
+    [
+     102,
      "HOLD"
     ]
    ],
    "presMax": 0.12,
-   "pelvisMin": 0.66,
+   "pelvisMin": 0.72,
    "asserts": [],
    "sim": {
     "point": [
@@ -10124,14 +10427,18 @@
    "outcome": "CONTROLLED PARRY",
    "volume": "HAND",
    "held": false,
-   "gloveRes": 0.022,
+   "gloveRes": 0.001,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
    "phases": [
     [
      44,
-     "HIGH_CATCH"
+     "BRACE"
+    ],
+    [
+     49,
+     "RECEIVE"
     ],
     [
      55,
@@ -10143,7 +10450,7 @@
     ]
    ],
    "presMax": 0.02,
-   "pelvisMin": 0.7,
+   "pelvisMin": 0.82,
    "asserts": [],
    "sim": {
     "point": [
@@ -10427,14 +10734,22 @@
    "outcome": "WEAK PARRY",
    "volume": "HAND",
    "held": false,
-   "gloveRes": 0.128,
+   "gloveRes": 0.129,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
    "phases": [
     [
      71,
-     "HIGH_CATCH"
+     "BRACE"
+    ],
+    [
+     76,
+     "RECEIVE"
+    ],
+    [
+     84,
+     "CONTACT"
     ],
     [
      85,
@@ -10446,7 +10761,7 @@
     ]
    ],
    "presMax": 0.02,
-   "pelvisMin": 0.71,
+   "pelvisMin": 0.82,
    "asserts": [],
    "sim": {
     "point": [
@@ -10492,14 +10807,18 @@
    "outcome": "WEAK PARRY",
    "volume": "HAND",
    "held": false,
-   "gloveRes": 0.189,
+   "gloveRes": 0.102,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
    "phases": [
     [
      28,
-     "HIGH_CATCH"
+     "BRACE"
+    ],
+    [
+     33,
+     "RECEIVE"
     ],
     [
      39,
@@ -10511,7 +10830,7 @@
     ]
    ],
    "presMax": 0.02,
-   "pelvisMin": 0.71,
+   "pelvisMin": 0.82,
    "asserts": [],
    "sim": {
     "point": [
@@ -10896,11 +11215,15 @@
    "phases": [
     [
      28,
-     "HIGH_CATCH"
+     "BRACE"
+    ],
+    [
+     32,
+     "RECEIVE"
     ]
    ],
    "presMax": 0.02,
-   "pelvisMin": 0.71,
+   "pelvisMin": 0.83,
    "asserts": [],
    "sim": null,
    "keeperReady": false,
@@ -11055,22 +11378,42 @@
    "outcome": "GATHER",
    "volume": "HAND",
    "held": true,
-   "gloveRes": 0.194,
+   "gloveRes": 0.129,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
    "phases": [
     [
      48,
-     "GATHER"
+     "BRACE"
+    ],
+    [
+     54,
+     "RECEIVE"
     ],
     [
      77,
+     "CRADLE"
+    ],
+    [
+     85,
+     "ABSORB"
+    ],
+    [
+     98,
+     "CONTROL"
+    ],
+    [
+     107,
+     "STRAIGHTEN"
+    ],
+    [
+     146,
      "HOLD"
     ]
    ],
-   "presMax": 0.09,
-   "pelvisMin": 0.43,
+   "presMax": 0.1,
+   "pelvisMin": 0.45,
    "asserts": [],
    "sim": {
     "point": [
@@ -11201,6 +11544,8 @@
      "dPelvis": 0.025,
      "excess": 0.029,
      "dV": 1.74,
+     "dHandR": 0.022,
+     "dHandL": 0.035,
      "ang": {
       "root": 0,
       "pelvis": 1.4,
@@ -11379,11 +11724,15 @@
    "phases": [
     [
      28,
-     "HIGH_CATCH"
+     "BRACE"
+    ],
+    [
+     31,
+     "RECEIVE"
     ]
    ],
    "presMax": 0.02,
-   "pelvisMin": 0.71,
+   "pelvisMin": 0.83,
    "asserts": [],
    "sim": null,
    "keeperReady": false,
@@ -11419,22 +11768,46 @@
    "outcome": "SUPPORTED CATCH",
    "volume": "HAND",
    "held": true,
-   "gloveRes": 0.091,
+   "gloveRes": 0.102,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
    "phases": [
     [
      72,
-     "CHEST_CATCH"
+     "BRACE"
+    ],
+    [
+     75,
+     "RECEIVE"
+    ],
+    [
+     79,
+     "CONTACT"
     ],
     [
      80,
+     "CRADLE"
+    ],
+    [
+     87,
+     "ABSORB"
+    ],
+    [
+     99,
+     "CONTROL"
+    ],
+    [
+     108,
+     "STRAIGHTEN"
+    ],
+    [
+     138,
      "HOLD"
     ]
    ],
-   "presMax": 0.04,
-   "pelvisMin": 0.68,
+   "presMax": 0.02,
+   "pelvisMin": 0.76,
    "asserts": [],
    "sim": {
     "point": [
@@ -11480,22 +11853,46 @@
    "outcome": "CATCH",
    "volume": "HAND",
    "held": true,
-   "gloveRes": 0.044,
+   "gloveRes": 0.043,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
    "phases": [
     [
      28,
-     "NEAR_BODY"
+     "BRACE"
+    ],
+    [
+     33,
+     "RECEIVE"
+    ],
+    [
+     40,
+     "CONTACT"
     ],
     [
      41,
+     "CRADLE"
+    ],
+    [
+     49,
+     "ABSORB"
+    ],
+    [
+     62,
+     "CONTROL"
+    ],
+    [
+     71,
+     "STRAIGHTEN"
+    ],
+    [
+     98,
      "HOLD"
     ]
    ],
    "presMax": 0.12,
-   "pelvisMin": 0.66,
+   "pelvisMin": 0.72,
    "asserts": [],
    "sim": {
     "point": [
@@ -11675,22 +12072,46 @@
    "outcome": "GATHER",
    "volume": "HAND",
    "held": true,
-   "gloveRes": 0.276,
+   "gloveRes": 0.234,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
    "phases": [
     [
      153,
-     "GATHER"
+     "BRACE"
+    ],
+    [
+     165,
+     "RECEIVE"
+    ],
+    [
+     188,
+     "CONTACT"
     ],
     [
      189,
+     "CRADLE"
+    ],
+    [
+     196,
+     "ABSORB"
+    ],
+    [
+     209,
+     "CONTROL"
+    ],
+    [
+     218,
+     "STRAIGHTEN"
+    ],
+    [
+     257,
      "HOLD"
     ]
    ],
-   "presMax": 0.09,
-   "pelvisMin": 0.43,
+   "presMax": 0.1,
+   "pelvisMin": 0.45,
    "asserts": [],
    "sim": {
     "point": [
@@ -13118,22 +13539,46 @@
    "outcome": "GATHER",
    "volume": "HAND",
    "held": true,
-   "gloveRes": 0.37,
+   "gloveRes": 0.228,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
    "phases": [
     [
      138,
-     "GATHER"
+     "BRACE"
+    ],
+    [
+     149,
+     "RECEIVE"
+    ],
+    [
+     174,
+     "CONTACT"
     ],
     [
      175,
+     "CRADLE"
+    ],
+    [
+     182,
+     "ABSORB"
+    ],
+    [
+     195,
+     "CONTROL"
+    ],
+    [
+     204,
+     "STRAIGHTEN"
+    ],
+    [
+     243,
      "HOLD"
     ]
    ],
-   "presMax": 0.09,
-   "pelvisMin": 0.43,
+   "presMax": 0.1,
+   "pelvisMin": 0.45,
    "asserts": [],
    "sim": {
     "point": [
@@ -13863,22 +14308,46 @@
    "outcome": "CATCH",
    "volume": "HAND",
    "held": true,
-   "gloveRes": 0.046,
+   "gloveRes": 0.057,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
    "phases": [
     [
      104,
-     "NEAR_BODY"
+     "BRACE"
+    ],
+    [
+     109,
+     "RECEIVE"
+    ],
+    [
+     116,
+     "CONTACT"
     ],
     [
      117,
+     "CRADLE"
+    ],
+    [
+     125,
+     "ABSORB"
+    ],
+    [
+     138,
+     "CONTROL"
+    ],
+    [
+     147,
+     "STRAIGHTEN"
+    ],
+    [
+     174,
      "HOLD"
     ]
    ],
    "presMax": 0.12,
-   "pelvisMin": 0.66,
+   "pelvisMin": 0.72,
    "asserts": [],
    "sim": {
     "point": [
@@ -13932,11 +14401,15 @@
    "phases": [
     [
      28,
-     "NEAR_BODY"
+     "BRACE"
+    ],
+    [
+     33,
+     "RECEIVE"
     ]
    ],
    "presMax": 0.12,
-   "pelvisMin": 0.66,
+   "pelvisMin": 0.72,
    "asserts": [],
    "sim": null,
    "keeperReady": false,
@@ -14328,11 +14801,15 @@
    "phases": [
     [
      28,
-     "NEAR_BODY"
+     "BRACE"
+    ],
+    [
+     33,
+     "RECEIVE"
     ]
    ],
    "presMax": 0.12,
-   "pelvisMin": 0.66,
+   "pelvisMin": 0.72,
    "asserts": [],
    "sim": null,
    "keeperReady": false,
@@ -14606,14 +15083,18 @@
    "outcome": "WEAK PARRY",
    "volume": "HAND",
    "held": false,
-   "gloveRes": 0.272,
+   "gloveRes": 0.159,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
    "phases": [
     [
      53,
-     "HIGH_CATCH"
+     "BRACE"
+    ],
+    [
+     58,
+     "RECEIVE"
     ],
     [
      64,
@@ -14625,8 +15106,30 @@
     ]
    ],
    "presMax": 0.02,
-   "pelvisMin": 0.71,
-   "asserts": [],
+   "pelvisMin": 0.82,
+   "asserts": [
+    {
+     "tick": 84713,
+     "from": "RECEIVE",
+     "to": "RISE",
+     "dRoot": 0,
+     "dPelvis": 0.001,
+     "excess": 0.025,
+     "dV": 1.5,
+     "dHandR": 0.002,
+     "dHandL": 0.004,
+     "ang": {
+      "root": 0,
+      "pelvis": 0.1,
+      "chest": 0.2,
+      "thigh_L": 0.8,
+      "thigh_R": 0.8,
+      "upperArm_L": 0.4,
+      "upperArm_R": 0.3
+     },
+     "bad": true
+    }
+   ],
    "sim": {
     "point": [
      101.56,
@@ -15266,14 +15769,22 @@
    "outcome": "FOOT SAVE",
    "volume": "LEG+",
    "held": false,
-   "gloveRes": 0.109,
+   "gloveRes": 0.104,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
    "phases": [
     [
      69,
-     "GATHER"
+     "BRACE"
+    ],
+    [
+     78,
+     "RECEIVE"
+    ],
+    [
+     101,
+     "CONTACT"
     ],
     [
      102,
@@ -15284,8 +15795,8 @@
      "SET"
     ]
    ],
-   "presMax": 0.09,
-   "pelvisMin": 0.43,
+   "presMax": 0.1,
+   "pelvisMin": 0.45,
    "asserts": [],
    "sim": {
     "point": [
@@ -15450,14 +15961,22 @@
    "outcome": "WEAK PARRY",
    "volume": "HAND",
    "held": false,
-   "gloveRes": 0.104,
+   "gloveRes": 0.106,
    "legRes": null,
    "unauth": 0,
    "fallback": 0,
    "phases": [
     [
      28,
-     "HIGH_CATCH"
+     "BRACE"
+    ],
+    [
+     33,
+     "RECEIVE"
+    ],
+    [
+     38,
+     "CONTACT"
     ],
     [
      40,
@@ -15469,7 +15988,7 @@
     ]
    ],
    "presMax": 0.02,
-   "pelvisMin": 0.71,
+   "pelvisMin": 0.82,
    "asserts": [],
    "sim": {
     "point": [
