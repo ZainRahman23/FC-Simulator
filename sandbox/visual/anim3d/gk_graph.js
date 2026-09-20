@@ -439,7 +439,8 @@ function gkGraphSolve(desc, g, skel, state) {
   }
   // 3. torso / clavicle assist + glove IK toward the simulation hand
   const T = glW(desc.handTarget);
-  if (g.ikW > 0) {
+  const cradleOn = g.catchKind && (g.twoHands || g.holdBall) && !(g.mode === "standing-post" && !desc.held && (state.cradle && state.cradle.released));   // a parry RELEASES the cradle by blending the arms back to the authored pose over the rise (never a cut)   // two-hand catch (pre-contact receive → held cradle): the arms are solved as ONE cradle below, never as two chains chasing points
+  if (g.ikW > 0 && !cradleOn) {
     const up = skel.byName[upper], fo = skel.byName[fore], hd = skel.byName[hand]; const S = fk.joint[up.idx]; const over = V3.dist(T, S) - (up.len + fo.len + 0.6 * hd.len);
     if (over > 0.01) {
       const inv = M4.invertRigid(g.rootM), Pj = M4.transformPoint(inv, fk.joint[skel.byName.pelvis.idx]), Sl = M4.transformPoint(inv, S), Tl = M4.transformPoint(inv, T);
@@ -470,20 +471,76 @@ function gkGraphSolve(desc, g, skel, state) {
   // 6. a CAUGHT ball: both hands on the authoritative ball (the ball is never moved; the hands go to it)
   const rightW2 = M4.transformDir(g.rootM, [1, 0, 0]), armPole = (sd) => V3.add(fk.joint[skel.byName["upperArm_" + sd].idx], [rightW2[0] * (sd === "R" ? 0.5 : -0.5), -0.3, rightW2[2] * (sd === "R" ? 0.5 : -0.5)]);   // elbows out and down
   const hc = (sd) => { const j = fk.joint[skel.byName["hand_" + sd].idx], t = fk.tip[skel.byName["hand_" + sd].idx]; return V3.lerp(j, t, 0.6); };
-  if (g.twoHands && g.ikW > 0 && desc.commit && !g.legTip) { const w2 = g.ikW * 0.9 * (1 - g.holdW); if (w2 > 0) { const off2 = g.catchKind ? g.ballR + GK_GRAPH.handOff : 0; const To = V3.add(T, V3.scale(rightW2, (o === "R" ? 1 : -1) * off2)); const r = skelIK2(skel, fk, "upperArm_" + o, "foreArm_" + o, "hand_" + o, To, w2, g.catchKind ? armPole(o) : null, 0.6, PM("arm_" + o)); diag.ik2 = { w: +w2.toFixed(2), residual: +r.residual.toFixed(3) }; } }   // two-hand saves: the second hand joins on ITS side of the ball line (handed over to the hold as the ball is caught)
+  if (!cradleOn && g.twoHands && g.ikW > 0 && desc.commit && !g.legTip) { const w2 = g.ikW * 0.9 * (1 - g.holdW); if (w2 > 0) { const off2 = g.catchKind ? g.ballR + GK_GRAPH.handOff : 0; const To = V3.add(T, V3.scale(rightW2, (o === "R" ? 1 : -1) * off2)); const r = skelIK2(skel, fk, "upperArm_" + o, "foreArm_" + o, "hand_" + o, To, w2, g.catchKind ? armPole(o) : null, 0.6, PM("arm_" + o)); diag.ik2 = { w: +w2.toFixed(2), residual: +r.residual.toFixed(3) }; } }   // two-hand saves: the second hand joins on ITS side of the ball line (handed over to the hold as the ball is caught)
   if (g.catchKind && g.twoHands && diag.ik && g.ikW > 0) diag.ik.handCentre = V3.lerp(hc("R"), hc("L"), 0.5);   // two-hand catch: the contact metric is the midpoint of the two hands vs the simulation hand
   // 6. a CAUGHT ball: PRESENTATION ball = the authoritative ball at the catch, blending (deterministically, over holdBlend) into the
   //    cradle centre of the authored arms (midpoint of the authored hand centres); both hands are then solved onto THEIR side of that
   //    rendered ball. The simulation ball is never moved: gk / ball state is read only. (Before possession the rendered ball is the simulation ball.)
-  if (g.holdBall && g.holdW > 0) {
+  if (!cradleOn && g.holdBall && g.holdW > 0) {
     const Bsim = glW(g.holdBall), cr = V3.lerp(hc("R"), hc("L"), 0.5), wB = smooth01(clamp01((desc.now - (state.holdT0 != null ? state.holdT0 : desc.now)) / GK_GRAPH.holdBlend));
     const Bp = state.holdLast && state.holdLast.pres && !desc.held ? state.holdLast.pres : V3.lerp(Bsim, cr, wB); if (desc.held) state.holdLast.pres = Bp.slice();
     const off = g.ballR + GK_GRAPH.handOff;
     for (const sd of ["R", "L"]) { const Ts = V3.add(Bp, [rightW2[0] * (sd === "R" ? off : -off), -0.02, rightW2[2] * (sd === "R" ? off : -off)]); const r = skelIK2(skel, fk, "upperArm_" + sd, "foreArm_" + sd, "hand_" + sd, Ts, g.holdW, armPole(sd), 0.6, PM("arm_" + sd)); diag["hold_" + sd] = +r.residual.toFixed(3); }
     diag.holdW = +g.holdW.toFixed(2); diag.ballPres = { p: Bp, r: g.ballR, cradle: cr, wB: +wB.toFixed(2), handR: hc("R"), handL: hc("L") };
   }
+  // ── 7. COORDINATED CRADLE (catch group, two hands): receiving plane ahead of the authoritative contact point on the incoming line,
+  //    both arms solved together around the ball with explicit anatomy (elbows out / down, outside the torso volume, hands on
+  //    opposing sides of the ball, palms curled onto it); after authoritative possession the rendered ball follows a contained path
+  //    catch point → pinned against the chest, and the cradle moves with it. Simulation state is read only.
+  if (cradleOn) {
+    const CS = state.cradle || (state.cradle = { memR: {}, memL: {} }); const rB = g.ballR, hOff = GK_GRAPH.handOff, hsc = skel.H / GK_MOTION_H_REF;
+    const upW = [0, 1, 0], fwdW = M4.transformDir(g.rootM, [0, 0, 1]), rgt = rightW2;
+    const pelJ = fk.joint[skel.byName.pelvis.idx], chTip = fk.tip[skel.byName.chest.idx], chM = fk.world[skel.byName.chest.idx];
+    const cRight = V3.norm(M4.transformDir(chM, [1, 0, 0])), cUp = V3.norm(V3.sub(chTip, pelJ)), cFwd = V3.norm(V3.cross(cRight, cUp)), Ltor = V3.dist(chTip, pelJ);
+    const torso = (pt) => { const q = V3.sub(pt, pelJ), lat = V3.dot(q, cRight), dep = V3.dot(q, cFwd), ht = V3.dot(q, cUp); return Math.abs(lat) < 0.20 * hsc + 0.02 && dep > -0.13 * hsc && dep < 0.12 * hsc && ht > -0.05 && ht < Ltor + 0.06; };   // torso exclusion volume (pelvis → shoulders, ribcage half-width + clearance)
+    const backPlane = (pt) => V3.dot(V3.sub(pt, pelJ), cFwd) < -0.16 * hsc;
+    const arm = (sd) => ({ up: skel.byName["upperArm_" + sd], fo: skel.byName["foreArm_" + sd], hd: skel.byName["hand_" + sd], S: fk.joint[skel.byName["upperArm_" + sd].idx], sgn: sd === "R" ? 1 : -1 });
+    const handLen = skel.byName.hand_R.len;
+    let modeC, wR = 1, Bp = null, sB = 0, pin = null, W = {}, Wrecv = null, Tc = null, dIn = null, dPlane = 0;
+    const tl = g.clipT != null && g.mode === "standing-post" ? g.clipT : 0, CP = state.catchPost || { t1: 0.12, t2: 0.32 };
+    // receiving plane: ahead of the authoritative contact point along the incoming ball line (the ball enters an OPEN basket; the chest is its back wall)
+    Tc = T; const bNow = desc.ball ? glW(desc.ball) : null; const dh = bNow ? [bNow[0] - Tc[0], 0, bNow[2] - Tc[2]] : null;
+    if (dh && V3.len(dh) > 0.05) CS.dIn = V3.norm(dh); dIn = CS.dIn || fwdW;
+    const low = Tc[1] < 0.6 * hsc; dPlane = (low ? 0.20 : 0.28) * hsc;
+    const recvW = (sd, sg) => V3.add(V3.add(Tc, V3.scale(dIn, dPlane)), V3.add(V3.scale(rgt, sg * (rB + hOff + 0.6 * handLen + 0.02)), V3.scale(upW, low ? -0.6 * rB : -0.02)));
+    let kRel = 0;                                                                              // parry release: 0 = cradle, 1 = authored arms
+    if (g.mode === "standing-post" && !g.holdBall) {                                            // no possession: the receiving hands come back to the authored arms over the rise (deterministic blend, no cut)
+      modeC = "release"; const mo2 = state.motionSel && state.motionSel.motion; kRel = smooth01(clamp01(tl / ((mo2 && mo2.riseT) || 0.4)));
+      if (!CS.Wrecv) CS.Wrecv = { R: fk.joint[arm("R").hd.idx].slice(), L: fk.joint[arm("L").hd.idx].slice() };
+      for (const sd of ["R", "L"]) W[sd] = V3.lerp(CS.Wrecv[sd], fk.joint[arm(sd).hd.idx], kRel);
+      if (kRel >= 1) CS.released = true;
+    } else if (!g.holdBall) {                                                                   // RECEIVE: hands ahead of the contact point on the line, either side of it (weight ramps in over u 0.30 → 0.50)
+      modeC = "receive"; wR = clamp01((desc.u == null ? 1 : desc.u) - 0.30) / 0.20; wR = smooth01(clamp01(wR)); if (desc.contact && desc.contact.tickT >= desc.commit.t0 - 1e-3) wR = 1;
+      for (const sd of ["R", "L"]) { const A = arm(sd); W[sd] = V3.lerp(fk.joint[A.hd.idx], recvW(sd, A.sgn), wR); }
+      CS.Wrecv = { R: W.R.slice(), L: W.L.slice() }; CS.Bcatch = null;
+    } else {                                                                                    // HELD: the ball is contained — CRADLE closes the hands from the receive plane onto the ball's sides, then the cradle carries the ball to the chest pin
+      modeC = tl < CP.t1 ? "cradle" : tl < CP.t2 ? "absorb" : "secure";
+      const Bsim = glW(g.holdBall); if (!CS.Bcatch) { CS.Bcatch = Bsim.slice(); CS.hRel = Math.max(0.30 * hsc, Math.min(Ltor - 0.05, V3.dot(V3.sub(Bsim, pelJ), cUp))); CS.Wrecv = CS.Wrecv || (state.lastWrists ? { R: state.lastWrists.R.slice(), L: state.lastWrists.L.slice() } : { R: fk.joint[arm("R").hd.idx].slice(), L: fk.joint[arm("L").hd.idx].slice() }); }   // a one-hand reach that becomes a catch hands over from where the hands actually WERE (last solved wrists), never from the authored pose
+      pin = V3.add(pelJ, V3.add(V3.scale(cUp, CS.hRel), V3.scale(cFwd, 0.12 * hsc + rB + 0.02)));                     // pinned against the chest front at the catch height (clamped to the abdomen … upper chest)
+      sB = tl < CP.t1 ? 0 : smooth01(clamp01((tl - CP.t1) / Math.max(1e-6, CP.t2 - CP.t1)));
+      Bp = V3.lerp(CS.Bcatch, pin, sB);                                                        // contained path: catch point → chest pin, the cradle moves with it
+      { const q = V3.sub(Bp, pelJ), dep = V3.dot(q, cFwd), ht = V3.dot(q, cUp), lat = V3.dot(q, cRight); const front = 0.12 * hsc + rB + 0.01;   // the rendered ball never passes through the torso: a catch point the simulation places inside the body's depth is pushed out to the front face (exposed as ballClamp)
+        if (Math.abs(lat) < 0.20 * hsc + 0.02 + rB && ht > -0.05 - rB && ht < Ltor + 0.06 + rB && dep < front && dep > -0.13 * hsc - rB) { CS.ballClamp = +(front - dep).toFixed(3); Bp = V3.add(Bp, V3.scale(cFwd, front - dep)); } else CS.ballClamp = 0; }
+      const tuck = smooth01(clamp01((tl - CP.t1) / Math.max(1e-6, CP.t2 - CP.t1)));
+      for (const sd of ["R", "L"]) { const A = arm(sd); const Wb = V3.add(Bp, V3.add(V3.scale(rgt, A.sgn * (rB + hOff + 0.6 * handLen)), V3.add(V3.scale(fwdW, 0.04 + 0.03 * tuck), V3.scale(upW, -0.02)))); const kc = tl < CP.t1 ? smooth01(clamp01(tl / CP.t1)) : 1; W[sd] = V3.lerp(CS.Wrecv[sd], Wb, kc); }
+    }
+    const res = {}; const tuckB = modeC === "secure" ? 1 : modeC === "absorb" ? sB : 0;
+    for (const sd of ["R", "L"]) {
+      const A = arm(sd); const pref = V3.norm(V3.add(V3.add(V3.scale(rgt, A.sgn * 0.75), V3.scale(upW, -0.55)), V3.scale(fwdW, -0.25 * tuckB)));   // elbows out and down; tucked a little back beside the ribs once secured
+      const r = skelCradleElbow(A.S, W[sd], A.up.len, A.fo.len, pref, torso, sd === "R" ? CS.memR : CS.memL, { maxUp: 0.05, backPlane });
+      const aim = Bp || V3.add(Tc, V3.scale(dIn, dPlane * 0.3)); const curl = g.holdBall ? 0.7 : 0.35 * (1 - kRel);
+      const Ea = fk.joint[A.fo.idx], Wa = fk.joint[A.hd.idx];                                    // authored chain (for the parry release blend)
+      const ac = skelAimChain(skel, fk, "upperArm_" + sd, "foreArm_" + sd, "hand_" + sd, kRel > 0 ? V3.lerp(r.E, Ea, kRel) : r.E, kRel > 0 ? V3.lerp(r.W, Wa, kRel) : r.W, aim, curl);
+      res[sd] = { E: r.E, W: r.W, valid: r.valid, viol: r.viol, theta: +r.theta.toFixed(2), handCentre: ac.handCentre };
+    }
+    const crossed = V3.dot(V3.sub(res.L.handCentre, res.R.handCentre), rgt) > 0;
+    diag.cradle = { mode: modeC, wR: +wR.toFixed(2), R: res.R, L: res.L, crossed, ballIn: Bp ? torso(Bp) : false, ballClamp: CS.ballClamp || 0, plane: { T: Tc, dIn, dPlane: +dPlane.toFixed(3) }, pin, Bp, sB: +sB.toFixed(2), torso: { pelvis: pelJ, top: chTip, right: cRight, fwd: cFwd, halfW: 0.20 * hsc + 0.02 }, violations: (res.R.valid ? 0 : 1) + (res.L.valid ? 0 : 1) + (crossed ? 1 : 0) + (Bp && torso(Bp) ? 1 : 0) };
+    const mid = V3.lerp(res.R.handCentre, res.L.handCentre, 0.5); diag.ik = { w: +wR.toFixed(3), reached: true, residual: +V3.dist(mid, T).toFixed(3), wrist: res[h].W, handCentre: mid, target: T, cradle: true };
+    if (g.holdBall) diag.ballPres = { p: Bp, r: rB, cradle: mid, wB: +sB.toFixed(2), handR: res.R.handCentre, handL: res.L.handCentre, pin };
+  } else if (state.cradle && !g.catchKind) state.cradle = null;
   pel.off = savedOff;
-  const out = { fk, diag, ballPres: diag.ballPres || null, hands: { R: hc("R"), L: hc("L") }, elbows: { R: fk.joint[skel.byName.foreArm_R.idx], L: fk.joint[skel.byName.foreArm_L.idx] } };
+  state.lastWrists = { R: fk.joint[skel.byName.hand_R.idx].slice(), L: fk.joint[skel.byName.hand_L.idx].slice() };   // solved wrists this frame (the start of any later cradle hand-over)
+  const out = { fk, diag, ballPres: diag.ballPres || null, hands: { R: hc("R"), L: hc("L") }, elbows: { R: fk.joint[skel.byName.foreArm_R.idx], L: fk.joint[skel.byName.foreArm_L.idx] }, cradle: diag.cradle || null };
   // presentation root = ground projection of the pelvis (pitch frame); continuous by construction
   const pw = fk.joint[skel.byName.pelvis.idx]; const pr = pitchW([pw[0], 0, pw[2]]);
   let dx = pr[0] - desc.simRoot[0], dy = pr[1] - desc.simRoot[1]; const dm = Math.hypot(dx, dy);

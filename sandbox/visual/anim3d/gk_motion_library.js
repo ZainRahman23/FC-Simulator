@@ -121,22 +121,22 @@ GK_MOTIONS.HIGH_CATCH = {
   hold: CATCH_HOLD,
 };
 GK_MOTIONS.GATHER = {
-  id: "GK_GATHER", kind: "catch", twoHands: true, riseT: 0.55, cradleT: 0.12, absorbT: 0.22, controlT: 0.15, straightenT: 0.65,                        // sprite low_gather: deep CROUCH (not a kneel), gloves to the ground, scoop, clutch, rise
+  id: "GK_GATHER", kind: "catch", twoHands: true, riseT: 0.55, cradleT: 0.12, absorbT: 0.24, controlT: 0.15, straightenT: 0.65,                        // sprite low_gather: READY → drop the COM, body behind the ball → hands down and FORWARD (in front of the knees) → scoop basket → ball into the body → secure → rise → upright hold
   keys: [
     [0.00, "readyUp"],
-    [0.50, { name: "CROUCH", _pelvis: [0, -0.34, 0.06], pelvis: [30, 0, 0], spine: [12, 0, 0], chest: [6, 0, 0], neck: [-12, 0, 0], head: [-14, 0, 0],
-             thigh_R: [-72, 0, 18], shin_R: [104, 0, 0], foot_R: [-34, 0, 0], thigh_L: [-72, 0, -18], shin_L: [104, 0, 0], foot_L: [-34, 0, 0],
-             upperArm_R: [-58, 0, 24], foreArm_R: [-34, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [-58, 0, -24], foreArm_L: [-34, 0, 0], hand_L: [-8, 0, 0] }],
-    [1.00, { name: "SCOOP", _pelvis: [0, -0.48, 0.10], pelvis: [36, 0, 0], spine: [14, 0, 0], chest: [6, 0, 0], neck: [-14, 0, 0], head: [-14, 0, 0],             // gloves to the ground in front of the feet, palms open
-             thigh_R: [-82, 0, 18], shin_R: [118, 0, 0], foot_R: [-38, 0, 0], thigh_L: [-82, 0, -18], shin_L: [118, 0, 0], foot_L: [-38, 0, 0],
-             upperArm_R: [-84, 0, 22], foreArm_R: [-12, 0, 0], hand_R: [-10, 0, 0], upperArm_L: [-84, 0, -22], foreArm_L: [-12, 0, 0], hand_L: [-10, 0, 0] }],
+    [0.40, { name: "DROP", _pelvis: [0, -0.26, 0.05], pelvis: [26, 0, 0], spine: [10, 0, 0], chest: [4, 0, 0], neck: [-14, 0, 0], head: [-14, 0, 0],                 // knees / hips flex, torso forward ~40°, head on the ball, hands lowering in front
+             thigh_R: [-64, 0, 16], shin_R: [88, 0, 0], foot_R: [-30, 0, 0], thigh_L: [-64, 0, -16], shin_L: [88, 0, 0], foot_L: [-30, 0, 0],
+             upperArm_R: [-48, 0, 26], foreArm_R: [-30, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [-48, 0, -26], foreArm_L: [-30, 0, 0], hand_L: [-8, 0, 0] }],
+    [1.00, { name: "SCOOP", _pelvis: [0, -0.44, 0.02], pelvis: [26, 0, 0], spine: [10, 0, 0], chest: [4, 0, 0], neck: [-16, 0, 0], head: [-14, 0, 0],   // the BODY stays behind the ball: hips low, torso ~40° (not folded over the ball), shoulders forward, hands down and forward of the knees               // deep but organised crouch: shoulders forward over the knees, hands down and forward of the knees, palms open to the ball, elbows outside the knees
+             thigh_R: [-84, 0, 18], shin_R: [116, 0, 0], foot_R: [-34, 0, 0], thigh_L: [-84, 0, -18], shin_L: [116, 0, 0], foot_L: [-34, 0, 0],
+             upperArm_R: [-76, 0, 28], foreArm_R: [-14, 0, 0], hand_R: [-12, 0, 0], upperArm_L: [-76, 0, -28], foreArm_L: [-14, 0, 0], hand_L: [-12, 0, 0] }],
   ],
-  cradle: { name: "SCOOP_CLOSE", _pelvis: [0, -0.48, 0.10], pelvis: [36, 0, 0], spine: [14, 0, 0], chest: [6, 0, 0], neck: [-14, 0, 0], head: [-14, 0, 0],        // hands close under / around the ball at the ground
-             thigh_R: [-82, 0, 18], shin_R: [118, 0, 0], foot_R: [-38, 0, 0], thigh_L: [-82, 0, -18], shin_L: [118, 0, 0], foot_L: [-38, 0, 0],
-             upperArm_R: [-80, -26, 24], foreArm_R: [-40, 0, 0], hand_R: [-10, 0, 0], upperArm_L: [-80, 26, -24], foreArm_L: [-40, 0, 0], hand_L: [-10, 0, 0] },
-  absorb: { name: "CLUTCH", _pelvis: [0, -0.40, 0.08], pelvis: [30, 0, 0], spine: [12, 0, 0], chest: [6, 0, 0], neck: [-10, 0, 0], head: [-12, 0, 0],            // ball clutched to the belly while still crouched
-             thigh_R: [-74, 0, 18], shin_R: [106, 0, 0], foot_R: [-34, 0, 0], thigh_L: [-74, 0, -18], shin_L: [106, 0, 0], foot_L: [-34, 0, 0],
-             upperArm_R: [-56, -30, 30], foreArm_R: [-108, 0, 0], hand_R: [-10, 0, 0], upperArm_L: [-56, 30, -30], foreArm_L: [-108, 0, 0], hand_L: [-10, 0, 0] },
+  cradle: { name: "BASKET_CLOSE", _pelvis: [0, -0.44, 0.02], pelvis: [26, 0, 0], spine: [10, 0, 0], chest: [4, 0, 0], neck: [-16, 0, 0], head: [-14, 0, 0],        // hands close under / around the ball, forearms form the basket
+             thigh_R: [-84, 0, 18], shin_R: [116, 0, 0], foot_R: [-34, 0, 0], thigh_L: [-84, 0, -18], shin_L: [116, 0, 0], foot_L: [-34, 0, 0],
+             upperArm_R: [-72, -22, 30], foreArm_R: [-40, 0, 0], hand_R: [-12, 0, 0], upperArm_L: [-72, 22, -30], foreArm_L: [-40, 0, 0], hand_L: [-12, 0, 0] },
+  absorb: { name: "SECURE", _pelvis: [0, -0.38, 0.02], pelvis: [24, 0, 0], spine: [9, 0, 0], chest: [4, 0, 0], neck: [-12, 0, 0], head: [-12, 0, 0],             // the scoop brings the ball up and back into the abdomen while still crouched
+             thigh_R: [-76, 0, 18], shin_R: [106, 0, 0], foot_R: [-32, 0, 0], thigh_L: [-76, 0, -18], shin_L: [106, 0, 0], foot_L: [-32, 0, 0],
+             upperArm_R: [-50, -28, 30], foreArm_R: [-104, 0, 0], hand_R: [-10, 0, 0], upperArm_L: [-50, 28, -30], foreArm_L: [-104, 0, 0], hand_L: [-10, 0, 0] },
   hold: CATCH_HOLD,
 };
 GK_MOTIONS.NEAR_BODY = {
