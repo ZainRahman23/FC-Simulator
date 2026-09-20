@@ -1,0 +1,473 @@
+[
+ {
+  "motion": "DIST_PUTDOWN",
+  "fixture": 64,
+  "dir": "DIST_PUTDOWN",
+  "note": "put the ball down: hips / knees flex, trunk folds, both hands carry the ball to the pitch 0.5 m ahead, hands open, rise",
+  "events": [
+   {
+    "name": "RELEASE",
+    "kind": "PUTDOWN",
+    "t": 2.749999999999995,
+    "tick": 165,
+    "ball": [
+     101.23911419045831,
+     33.95050303064262,
+     0
+    ],
+    "v": [
+     -0.4,
+     0,
+     0
+    ],
+    "root": [
+     101.73911419045831,
+     33.95050303064262
+    ],
+    "facing": 3.141592653589793,
+    "held": null,
+    "side": "R"
+   }
+  ],
+  "keyFrames": 6
+ },
+ {
+  "motion": "DIST_ROLL",
+  "fixture": 65,
+  "dir": "DIST_ROLL",
+  "note": "hand roll (bowl), RIGHT hand: ball to the rolling side, far hand leaves, backswing, long lunge, release ON the pitch, low follow-through",
+  "events": [
+   {
+    "name": "RELEASE",
+    "kind": "ROLL",
+    "t": 2.8999999999999946,
+    "tick": 174,
+    "ball": [
+     101.56631760002863,
+     33.3352458987572,
+     0
+    ],
+    "v": [
+     -5.267655997682281,
+     -7.2973831124644875,
+     0
+    ],
+    "root": [
+     101.73911419045831,
+     33.95050303064262
+    ],
+    "facing": -2.196040302536877,
+    "held": null,
+    "side": "R"
+   }
+  ],
+  "keyFrames": 7
+ },
+ {
+  "motion": "DIST_THROW",
+  "fixture": 67,
+  "dir": "DIST_THROW",
+  "note": "overarm throw, RIGHT hand: ball to the shoulder, front-foot step, wind-up (arm back, hips / shoulders turned), drive through, release forward-up, follow-through across, back foot steps up",
+  "events": [
+   {
+    "name": "RELEASE",
+    "kind": "THROW",
+    "t": 2.799999999999995,
+    "tick": 168,
+    "ball": [
+     101.06343551850685,
+     33.36368250248268,
+     1.78
+    ],
+    "v": [
+     -15.678389965963174,
+     -6.5717644567638995,
+     6.251212743141939
+    ],
+    "root": [
+     101.73911419045831,
+     33.95050303064262
+    ],
+    "facing": -2.744678348352077,
+    "held": null,
+    "side": "R"
+   }
+  ],
+  "keyFrames": 7
+ },
+ {
+  "motion": "DIST_PUNT",
+  "fixture": 70,
+  "dir": "DIST_PUNT",
+  "note": "kicked clearance, RIGHT foot: carry forward, plant step, DROP, backswing, kick through the falling ball at knee height (laces), high follow-through, land, settle",
+  "events": [
+   {
+    "name": "DROP",
+    "kind": "PUNT",
+    "t": 2.6499999999999955,
+    "tick": 159,
+    "ball": [
+     101.18898741830441,
+     33.83108555051711,
+     1.05
+    ],
+    "v": [
+     -0.2999998317763096,
+     0.0003177014100041186,
+     0
+    ],
+    "root": [
+     101.73911419045831,
+     33.95050303064262
+    ],
+    "facing": 3.1405336486918354,
+    "held": null
+   },
+   {
+    "name": "KICK",
+    "kind": "PUNT",
+    "t": 3.016666666666661,
+    "tick": 181,
+    "ball": [
+     101.13032078453479,
+     33.83114767879284,
+     0.42052500000000015
+    ],
+    "v": [
+     -17.3076826024794,
+     0.01832892750023565,
+     14.66595
+    ],
+    "root": [
+     101.73911419045831,
+     33.95050303064262
+    ],
+    "facing": 3.1405336486918354,
+    "held": null,
+    "foot": "R",
+    "predicted": [
+     101.08406286462302,
+     33.83119666617491,
+     0.45
+    ],
+    "predErr": 0.055,
+    "predTickErr": 0.017
+   }
+  ],
+  "keyFrames": 10
+ },
+ {
+  "motion": "DIST_ROLL",
+  "fixture": 66,
+  "dir": "DIST_ROLL_66",
+  "note": "LEFT hand (mirror)",
+  "events": [
+   {
+    "name": "RELEASE",
+    "kind": "ROLL",
+    "t": 2.8999999999999946,
+    "tick": 174,
+    "ball": [
+     101.56631760002863,
+     34.6647541012428,
+     0
+    ],
+    "v": [
+     -5.267655997682281,
+     7.2973831124644875,
+     0
+    ],
+    "root": [
+     101.73911419045831,
+     34.04949696935738
+    ],
+    "facing": 2.196040302536877,
+    "held": null,
+    "side": "L"
+   }
+  ],
+  "keyFrames": 7
+ },
+ {
+  "motion": "DIST_THROW",
+  "fixture": 68,
+  "dir": "DIST_THROW_68",
+  "note": "LEFT hand (mirror)",
+  "events": [
+   {
+    "name": "RELEASE",
+    "kind": "THROW",
+    "t": 2.799999999999995,
+    "tick": 168,
+    "ball": [
+     101.06343551850685,
+     34.63631749751732,
+     1.78
+    ],
+    "v": [
+     -15.678389965963174,
+     6.5717644567638995,
+     6.251212743141939
+    ],
+    "root": [
+     101.73911419045831,
+     34.04949696935738
+    ],
+    "facing": 2.744678348352077,
+    "held": null,
+    "side": "L"
+   }
+  ],
+  "keyFrames": 7
+ },
+ {
+  "motion": "DIST_THROW",
+  "fixture": 69,
+  "dir": "DIST_THROW_69",
+  "note": "far straight throw (40 m target)",
+  "events": [
+   {
+    "name": "RELEASE",
+    "kind": "THROW",
+    "t": 2.799999999999995,
+    "tick": 168,
+    "ball": [
+     100.88876609666275,
+     33.67156196271205,
+     1.78
+    ],
+    "v": [
+     -16.99998681320445,
+     0.021174297502863006,
+     10.704446331707144
+    ],
+    "root": [
+     101.73911419045831,
+     33.95050303064262
+    ],
+    "facing": 3.1403471063558057,
+    "held": null,
+    "side": "R"
+   }
+  ],
+  "keyFrames": 7
+ },
+ {
+  "motion": "DIST_PUNT",
+  "fixture": 71,
+  "dir": "DIST_PUNT_71",
+  "note": "LEFT foot (mirror)",
+  "events": [
+   {
+    "name": "DROP",
+    "kind": "PUNT",
+    "t": 2.6499999999999955,
+    "tick": 159,
+    "ball": [
+     101.18898741830441,
+     34.16891444948289,
+     1.05
+    ],
+    "v": [
+     -0.2999998317763096,
+     -0.0003177014100041186,
+     0
+    ],
+    "root": [
+     101.73911419045831,
+     34.04949696935738
+    ],
+    "facing": -3.1405336486918354,
+    "held": null
+   },
+   {
+    "name": "KICK",
+    "kind": "PUNT",
+    "t": 3.016666666666661,
+    "tick": 181,
+    "ball": [
+     101.13032078453479,
+     34.16885232120716,
+     0.42052500000000015
+    ],
+    "v": [
+     -17.3076826024794,
+     -0.01832892750023565,
+     14.66595
+    ],
+    "root": [
+     101.73911419045831,
+     34.04949696935738
+    ],
+    "facing": -3.1405336486918354,
+    "held": null,
+    "foot": "L",
+    "predicted": [
+     101.08406286462302,
+     34.16880333382509,
+     0.45
+    ],
+    "predErr": 0.055,
+    "predTickErr": 0.017
+   }
+  ],
+  "keyFrames": 10
+ },
+ {
+  "motion": "DIST_PUTDOWN",
+  "fixture": 72,
+  "dir": "DIST_PUTDOWN_72",
+  "note": "from a SW-facing catch: turn ~45\u00b0 then put down",
+  "events": [
+   {
+    "name": "RELEASE",
+    "kind": "PUTDOWN",
+    "t": 2.2333333333333303,
+    "tick": 134,
+    "ball": [
+     102.89443394755811,
+     37.18359745091909,
+     0
+    ],
+    "v": [
+     -0.4,
+     0,
+     0
+    ],
+    "root": [
+     103.39443394755811,
+     37.18359745091909
+    ],
+    "facing": 3.141592653589793,
+    "held": null,
+    "side": "R"
+   }
+  ],
+  "keyFrames": 6
+ },
+ {
+  "motion": "DIST_THROW",
+  "fixture": 73,
+  "dir": "DIST_THROW_73",
+  "note": "from a NW-facing catch: turn then throw to the far side",
+  "events": [
+   {
+    "name": "RELEASE",
+    "kind": "THROW",
+    "t": 2.28333333333333,
+    "tick": 137,
+    "ball": [
+     102.83387563285052,
+     31.51402305896589,
+     1.78
+    ],
+    "v": [
+     -14.259884223470117,
+     9.25503657114482,
+     6.962044447535995
+    ],
+    "root": [
+     103.39443394755811,
+     30.816402549080905
+    ],
+    "facing": 2.565902400753656,
+    "held": null,
+    "side": "L"
+   }
+  ],
+  "keyFrames": 7
+ },
+ {
+  "motion": "DIST_ROLL",
+  "fixture": 74,
+  "dir": "DIST_ROLL_74",
+  "note": "from a SSW-facing catch: turn then roll across (LEFT hand)",
+  "events": [
+   {
+    "name": "RELEASE",
+    "kind": "ROLL",
+    "t": 2.449999999999996,
+    "tick": 147,
+    "ball": [
+     101.72713942034522,
+     37.0501435615897,
+     0
+    ],
+    "v": [
+     -5.155009840111525,
+     7.377389345042957,
+     0
+    ],
+    "root": [
+     101.8904705590294,
+     36.43230625360633
+    ],
+    "facing": 2.1806882491451574,
+    "held": null,
+    "side": "L"
+   }
+  ],
+  "keyFrames": 7
+ },
+ {
+  "motion": "DIST_PUNT",
+  "fixture": 75,
+  "dir": "DIST_PUNT_75",
+  "note": "from a SW-facing catch: turn then punt, LEFT foot",
+  "events": [
+   {
+    "name": "DROP",
+    "kind": "PUNT",
+    "t": 2.1333333333333306,
+    "tick": 128,
+    "ball": [
+     102.83334459170773,
+     37.229190594607694,
+     1.05
+    ],
+    "v": [
+     -0.2973212271634643,
+     -0.04000109846006294,
+     0
+    ],
+    "root": [
+     103.39443394755811,
+     37.18359745091909
+    ],
+    "facing": -3.0078573696579354,
+    "held": null
+   },
+   {
+    "name": "KICK",
+    "kind": "PUNT",
+    "t": 2.499999999999996,
+    "tick": 150,
+    "ball": [
+     102.77520177395131,
+     37.2213681575755,
+     0.42052500000000015
+    ],
+    "v": [
+     -17.153147720969095,
+     -2.307755680388244,
+     14.66595
+    ],
+    "root": [
+     103.39443394755811,
+     37.18359745091909
+    ],
+    "facing": -3.0078573696579354,
+    "held": null,
+    "foot": "L",
+    "predicted": [
+     102.72935687652998,
+     37.21520026208705,
+     0.45
+    ],
+    "predErr": 0.055,
+    "predTickErr": 0.017
+   }
+  ],
+  "keyFrames": 10
+ }
+]

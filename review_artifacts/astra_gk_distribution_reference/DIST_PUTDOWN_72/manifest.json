@@ -1,0 +1,10188 @@
+{
+ "motion": "DIST_PUTDOWN",
+ "fixture": 72,
+ "fixtureName": "D5 angled: SW-facing catch \u2192 PUT DOWN (body must turn to face out)",
+ "note": "from a SW-facing catch: turn ~45\u00b0 then put down",
+ "camera": "Touchline CAMERA_V1 gameplay camera, 1:1 pixels; the 500x450 clip starts at viewport (600,150)",
+ "skeletonHeightM": 1.83,
+ "boneOrder": [
+  "root",
+  "pelvis",
+  "spine",
+  "chest",
+  "neck",
+  "head",
+  "hair",
+  "clavicle_R",
+  "upperArm_R",
+  "foreArm_R",
+  "hand_R",
+  "clavicle_L",
+  "upperArm_L",
+  "foreArm_L",
+  "hand_L",
+  "thigh_R",
+  "shin_R",
+  "foot_R",
+  "toe_R",
+  "thigh_L",
+  "shin_L",
+  "foot_L",
+  "toe_L"
+ ],
+ "commit": {
+  "t0": 0.25828474246841593,
+  "commitTick": 15,
+  "execTime": 0.10383758271701624,
+  "tier": "STANDING REACHABLE",
+  "action": "STANDING",
+  "target": [
+   103.259,
+   37.265,
+   1.172
+  ],
+  "feet": [
+   103.394,
+   37.157
+  ],
+  "handOrigin": [
+   103.394,
+   37.157,
+   1.427
+  ],
+  "envNorm": 0.08,
+  "bestEffort": false,
+  "gather": false
+ },
+ "contact": {
+  "tickT": 0.367,
+  "tick": 22,
+  "volume": "HAND",
+  "surface": "HANDS",
+  "outcome": "SUPPORTED CATCH",
+  "held": true,
+  "point": [
+   103.177,
+   37.382,
+   1.161
+  ],
+  "root": [
+   103.39,
+   37.18
+  ],
+  "twoHands": 1
+ },
+ "plan": {
+  "kind": "PUTDOWN",
+  "t0": 1.3833333333333333,
+  "tRelease": 2.2333333333333334,
+  "tDrop": null,
+  "tKick": null,
+  "tKickActual": null,
+  "tEnd": 2.8333333333333335,
+  "release": [
+   102.894,
+   37.184,
+   0
+  ],
+  "drop": null,
+  "kickP": null,
+  "kickActual": null,
+  "facingDeg": 180,
+  "target": [
+   100.394,
+   37.184
+  ],
+  "side": "R",
+  "foot": "R",
+  "done": true
+ },
+ "events": [
+  {
+   "name": "RELEASE",
+   "kind": "PUTDOWN",
+   "t": 2.2333333333333303,
+   "tick": 134,
+   "ball": [
+    102.89443394755811,
+    37.18359745091909,
+    0
+   ],
+   "v": [
+    -0.4,
+    0,
+    0
+   ],
+   "root": [
+    103.39443394755811,
+    37.18359745091909
+   ],
+   "facing": 3.141592653589793,
+   "held": null,
+   "side": "R"
+  }
+ ],
+ "releaseRecords": [
+  {
+   "kind": "PUTDOWN",
+   "event": "RELEASE",
+   "tick": 134,
+   "t": 2.233,
+   "simBall": [
+    102.894,
+    37.184,
+    0
+   ],
+   "simV": [
+    -0.4,
+    0,
+    0
+   ],
+   "speed": 0.4,
+   "outDir": 180,
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.375,
+    37.184
+   ],
+   "simFacing": 180,
+   "presFacing": 180,
+   "facingErr": 0,
+   "renderedBallNow": [
+    102.888,
+    37.184,
+    0.106
+   ],
+   "renderedBallPrevTick": [
+    102.894,
+    37.183,
+    0.115
+   ],
+   "residualPrevTickM": 0.009,
+   "handSurfaceM": 0.046,
+   "otherHandSurfaceM": 0.046,
+   "footSurfaceM": null,
+   "footIkResidualM": null,
+   "foot": null,
+   "side": "R",
+   "held": null,
+   "heldNow": false,
+   "predErr": null,
+   "predTickErr": null,
+   "phase": "DIST_FOLLOW",
+   "sub": "PLACE",
+   "startDown": false,
+   "startPhase": "HOLD"
+  }
+ ],
+ "anatomyFlags": [],
+ "worldFrame": "pitch x (east, goal line at x\u2248105), pitch y (north\u2192south), z up; metres; facing = world heading deg (atan2(dy, dx)); the keeper's RIGHT = (\u2212sin f, cos f)",
+ "conventions": "authored RIGHT-handed / right-footed; LEFT = mirror of the poses, the in-hand ball path and the hand roles; the hand is the one on the target's side of the keeper's frame at the plan start (central \u2192 right); the punt foot comes from the request (default right)",
+ "timing": "60 ticks / s; u = (now \u2212 t0) / (tRelease \u2212 t0) over the preparation, then the follow-through to tEnd; PUNT: DROP at tRelease, the KICK is the tick the falling ball reaches z 0.45 m (tKick = the prediction the foot aims at, tKickActual = the event)",
+ "keyFrames": [
+  {
+   "phase": "HOLD",
+   "tick": 82,
+   "timeS": 1.383,
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.389,
+    37.191
+   ],
+   "presOffsetM": 0.01,
+   "facingDeg": 126.192,
+   "held": true,
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": {
+    "p": [
+     103.197,
+     37.453,
+     1.237
+    ],
+    "r": 0.10594736842105264,
+    "held": true,
+    "pres": true,
+    "wB": 1,
+    "drawn3d": true
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.047,
+     "L": 0.047
+    },
+    "kick": null,
+    "violations": 0
+   },
+   "hands": {
+    "R": [
+     103.047,
+     37.427,
+     1.228
+    ],
+    "L": [
+     103.268,
+     37.588,
+     1.228
+    ]
+   },
+   "elbows": {
+    "R": [
+     102.935,
+     37.132,
+     1.147
+    ],
+    "L": [
+     103.583,
+     37.606,
+     1.147
+    ]
+   },
+   "feet": {
+    "R": true,
+    "L": true
+   },
+   "pelvisWorld": [
+    103.389,
+    37.191,
+    0.848
+   ],
+   "pose": {
+    "pelvis": [
+     8,
+     0,
+     0
+    ],
+    "spine": [
+     3,
+     0,
+     0
+    ],
+    "chest": [
+     2,
+     0,
+     0
+    ],
+    "neck": [
+     -8,
+     0,
+     0
+    ],
+    "head": [
+     -8,
+     0,
+     0
+    ],
+    "thigh_R": [
+     -30,
+     0,
+     14
+    ],
+    "shin_R": [
+     44,
+     0,
+     0
+    ],
+    "foot_R": [
+     -26,
+     0,
+     0
+    ],
+    "thigh_L": [
+     -30,
+     0,
+     -14
+    ],
+    "shin_L": [
+     44,
+     0,
+     0
+    ],
+    "foot_L": [
+     -26,
+     0,
+     0
+    ],
+    "upperArm_R": [
+     -38,
+     -28,
+     30
+    ],
+    "foreArm_R": [
+     -104,
+     0,
+     0
+    ],
+    "hand_R": [
+     -10,
+     0,
+     0
+    ],
+    "upperArm_L": [
+     -38,
+     28,
+     -30
+    ],
+    "foreArm_L": [
+     -104,
+     0,
+     0
+    ],
+    "hand_L": [
+     -10,
+     0,
+     0
+    ]
+   },
+   "joints": {
+    "root": [
+     103.394,
+     37.184,
+     0
+    ],
+    "pelvis": [
+     103.389,
+     37.191,
+     0.848
+    ],
+    "spine": [
+     103.38,
+     37.204,
+     0.956
+    ],
+    "chest": [
+     103.355,
+     37.238,
+     1.172
+    ],
+    "neck": [
+     103.321,
+     37.284,
+     1.422
+    ],
+    "head": [
+     103.316,
+     37.29,
+     1.513
+    ],
+    "hair": [
+     103.326,
+     37.278,
+     1.64
+    ],
+    "clavicle_R": [
+     103.282,
+     37.245,
+     1.386
+    ],
+    "upperArm_R": [
+     103.134,
+     37.137,
+     1.386
+    ],
+    "foreArm_R": [
+     102.935,
+     37.132,
+     1.147
+    ],
+    "hand_R": [
+     102.993,
+     37.39,
+     1.217
+    ],
+    "clavicle_L": [
+     103.37,
+     37.31,
+     1.386
+    ],
+    "upperArm_L": [
+     103.518,
+     37.418,
+     1.386
+    ],
+    "foreArm_L": [
+     103.583,
+     37.606,
+     1.147
+    ],
+    "hand_L": [
+     103.319,
+     37.629,
+     1.217
+    ],
+    "thigh_R": [
+     103.248,
+     37.089,
+     0.848
+    ],
+    "shin_R": [
+     103.11,
+     37.256,
+     0.466
+    ],
+    "foot_R": [
+     103.216,
+     37.102,
+     0.11
+    ],
+    "toe_R": [
+     103.089,
+     37.221,
+     0.055
+    ],
+    "thigh_L": [
+     103.529,
+     37.294,
+     0.848
+    ],
+    "shin_L": [
+     103.411,
+     37.477,
+     0.466
+    ],
+    "foot_L": [
+     103.527,
+     37.329,
+     0.11
+    ],
+    "toe_L": [
+     103.452,
+     37.486,
+     0.055
+    ],
+    "head_tip": [
+     103.323,
+     37.281,
+     1.732
+    ],
+    "hand_R_tip": [
+     103.083,
+     37.451,
+     1.235
+    ],
+    "hand_L_tip": [
+     103.234,
+     37.561,
+     1.235
+    ],
+    "foot_R_tip": [
+     103.089,
+     37.221,
+     0.055
+    ],
+    "foot_L_tip": [
+     103.451,
+     37.486,
+     0.055
+    ]
+   }
+  },
+  {
+   "phase": "LOWER",
+   "tick": 93,
+   "timeS": 1.567,
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.37,
+    37.191
+   ],
+   "presOffsetM": 0.026,
+   "facingDeg": 162.309,
+   "held": true,
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": {
+    "p": [
+     103.055,
+     37.363,
+     0.938
+    ],
+    "r": 0.10594736842105264,
+    "held": true,
+    "pres": true,
+    "wB": 1,
+    "drawn3d": true
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.216,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.04,
+     "L": 0.042
+    },
+    "kick": null,
+    "violations": 0
+   },
+   "hands": {
+    "R": [
+     102.967,
+     37.248,
+     0.919
+    ],
+    "L": [
+     103.046,
+     37.509,
+     0.914
+    ]
+   },
+   "elbows": {
+    "R": [
+     103.01,
+     36.924,
+     0.967
+    ],
+    "L": [
+     103.296,
+     37.683,
+     1.021
+    ]
+   },
+   "feet": {
+    "R": true,
+    "L": true
+   },
+   "pelvisWorld": [
+    103.37,
+    37.191,
+    0.763
+   ],
+   "pose": {
+    "pelvis": [
+     18.3,
+     0,
+     0
+    ],
+    "spine": [
+     8.3,
+     0,
+     0
+    ],
+    "chest": [
+     4.7,
+     0,
+     0
+    ],
+    "neck": [
+     -9.7,
+     0,
+     0
+    ],
+    "head": [
+     -11,
+     0,
+     0
+    ],
+    "thigh_R": [
+     -47.1,
+     0,
+     14.9
+    ],
+    "shin_R": [
+     64.7,
+     0,
+     0
+    ],
+    "foot_R": [
+     -27.8,
+     0,
+     0
+    ],
+    "thigh_L": [
+     -47.1,
+     0,
+     -14.9
+    ],
+    "shin_L": [
+     64.7,
+     0,
+     0
+    ],
+    "foot_L": [
+     -27.8,
+     0,
+     0
+    ],
+    "upperArm_R": [
+     -46.8,
+     -22.3,
+     26
+    ],
+    "foreArm_R": [
+     -67.3,
+     0,
+     0
+    ],
+    "hand_R": [
+     -9,
+     0,
+     0
+    ],
+    "upperArm_L": [
+     -46.8,
+     22.3,
+     -26
+    ],
+    "foreArm_L": [
+     -67.3,
+     0,
+     0
+    ],
+    "hand_L": [
+     -9,
+     0,
+     0
+    ]
+   },
+   "joints": {
+    "root": [
+     103.394,
+     37.184,
+     0
+    ],
+    "pelvis": [
+     103.37,
+     37.191,
+     0.763
+    ],
+    "spine": [
+     103.337,
+     37.202,
+     0.867
+    ],
+    "chest": [
+     103.243,
+     37.232,
+     1.063
+    ],
+    "neck": [
+     103.116,
+     37.272,
+     1.282
+    ],
+    "head": [
+     103.084,
+     37.283,
+     1.367
+    ],
+    "hair": [
+     103.07,
+     37.287,
+     1.495
+    ],
+    "clavicle_R": [
+     103.118,
+     37.214,
+     1.251
+    ],
+    "upperArm_R": [
+     103.062,
+     37.04,
+     1.251
+    ],
+    "foreArm_R": [
+     103.01,
+     36.924,
+     0.967
+    ],
+    "hand_R": [
+     102.946,
+     37.186,
+     0.918
+    ],
+    "clavicle_L": [
+     103.151,
+     37.319,
+     1.251
+    ],
+    "upperArm_L": [
+     103.206,
+     37.493,
+     1.251
+    ],
+    "foreArm_L": [
+     103.296,
+     37.683,
+     1.021
+    ],
+    "hand_L": [
+     103.068,
+     37.571,
+     0.918
+    ],
+    "thigh_R": [
+     103.317,
+     37.026,
+     0.763
+    ],
+    "shin_R": [
+     103.023,
+     37.149,
+     0.46
+    ],
+    "foot_R": [
+     103.216,
+     37.102,
+     0.11
+    ],
+    "toe_R": [
+     103.042,
+     37.112,
+     0.055
+    ],
+    "thigh_L": [
+     103.423,
+     37.357,
+     0.763
+    ],
+    "shin_L": [
+     103.235,
+     37.421,
+     0.371
+    ],
+    "foot_L": [
+     103.527,
+     37.329,
+     0.11
+    ],
+    "toe_L": [
+     103.385,
+     37.43,
+     0.055
+    ],
+    "head_tip": [
+     103.045,
+     37.295,
+     1.583
+    ],
+    "hand_R_tip": [
+     102.981,
+     37.29,
+     0.92
+    ],
+    "hand_L_tip": [
+     103.031,
+     37.467,
+     0.912
+    ],
+    "foot_R_tip": [
+     103.042,
+     37.112,
+     0.055
+    ],
+    "foot_L_tip": [
+     103.384,
+     37.43,
+     0.055
+    ]
+   }
+  },
+  {
+   "phase": "PLACE",
+   "tick": 119,
+   "timeS": 2,
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.364,
+    37.184
+   ],
+   "presOffsetM": 0.03,
+   "facingDeg": 180,
+   "held": true,
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": {
+    "p": [
+     102.882,
+     37.168,
+     0.297
+    ],
+    "r": 0.10594736842105264,
+    "held": true,
+    "pres": true,
+    "wB": 1,
+    "drawn3d": true
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.725,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.044,
+     "L": 0.044
+    },
+    "kick": null,
+    "violations": 0
+   },
+   "hands": {
+    "R": [
+     102.842,
+     37.028,
+     0.258
+    ],
+    "L": [
+     102.842,
+     37.307,
+     0.259
+    ]
+   },
+   "elbows": {
+    "R": [
+     102.882,
+     36.915,
+     0.542
+    ],
+    "L": [
+     102.879,
+     37.43,
+     0.541
+    ]
+   },
+   "feet": {
+    "R": true,
+    "L": true
+   },
+   "pelvisWorld": [
+    103.364,
+    37.184,
+    0.572
+   ],
+   "pose": {
+    "pelvis": [
+     39.8,
+     0,
+     0
+    ],
+    "spine": [
+     17.8,
+     0,
+     0
+    ],
+    "chest": [
+     11.6,
+     0,
+     0
+    ],
+    "neck": [
+     -15.4,
+     0,
+     0
+    ],
+    "head": [
+     -15.4,
+     0,
+     0
+    ],
+    "thigh_R": [
+     -80.9,
+     0,
+     17.2
+    ],
+    "shin_R": [
+     107.7,
+     0,
+     0
+    ],
+    "foot_R": [
+     -32.4,
+     0,
+     0
+    ],
+    "thigh_L": [
+     -80.9,
+     0,
+     -17.2
+    ],
+    "shin_L": [
+     107.7,
+     0,
+     0
+    ],
+    "foot_L": [
+     -32.4,
+     0,
+     0
+    ],
+    "upperArm_R": [
+     -61.3,
+     -11,
+     20.5
+    ],
+    "foreArm_R": [
+     -12.8,
+     0,
+     0
+    ],
+    "hand_R": [
+     -7.9,
+     0,
+     0
+    ],
+    "upperArm_L": [
+     -61.3,
+     11,
+     -20.5
+    ],
+    "foreArm_L": [
+     -12.8,
+     0,
+     0
+    ],
+    "hand_L": [
+     -7.9,
+     0,
+     0
+    ]
+   },
+   "joints": {
+    "root": [
+     103.394,
+     37.184,
+     0
+    ],
+    "pelvis": [
+     103.364,
+     37.184,
+     0.572
+    ],
+    "spine": [
+     103.294,
+     37.184,
+     0.656
+    ],
+    "chest": [
+     103.109,
+     37.184,
+     0.773
+    ],
+    "neck": [
+     102.869,
+     37.184,
+     0.864
+    ],
+    "head": [
+     102.795,
+     37.184,
+     0.918
+    ],
+    "hair": [
+     102.723,
+     37.184,
+     1.024
+    ],
+    "clavicle_R": [
+     102.903,
+     37.129,
+     0.851
+    ],
+    "upperArm_R": [
+     102.903,
+     36.946,
+     0.851
+    ],
+    "foreArm_R": [
+     102.882,
+     36.915,
+     0.542
+    ],
+    "hand_R": [
+     102.832,
+     36.966,
+     0.277
+    ],
+    "clavicle_L": [
+     102.903,
+     37.238,
+     0.851
+    ],
+    "upperArm_L": [
+     102.903,
+     37.421,
+     0.851
+    ],
+    "foreArm_L": [
+     102.879,
+     37.43,
+     0.541
+    ],
+    "hand_L": [
+     102.832,
+     37.37,
+     0.277
+    ],
+    "thigh_R": [
+     103.364,
+     37.01,
+     0.572
+    ],
+    "shin_R": [
+     103.013,
+     36.992,
+     0.309
+    ],
+    "foot_R": [
+     103.363,
+     36.993,
+     0.11
+    ],
+    "toe_R": [
+     103.202,
+     36.927,
+     0.055
+    ],
+    "thigh_L": [
+     103.364,
+     37.357,
+     0.572
+    ],
+    "shin_L": [
+     103.134,
+     37.318,
+     0.2
+    ],
+    "foot_L": [
+     103.527,
+     37.329,
+     0.11
+    ],
+    "toe_L": [
+     103.375,
+     37.414,
+     0.055
+    ],
+    "head_tip": [
+     102.659,
+     37.184,
+     1.09
+    ],
+    "hand_R_tip": [
+     102.848,
+     37.07,
+     0.246
+    ],
+    "hand_L_tip": [
+     102.848,
+     37.265,
+     0.246
+    ],
+    "foot_R_tip": [
+     103.201,
+     36.927,
+     0.055
+    ],
+    "foot_L_tip": [
+     103.374,
+     37.414,
+     0.055
+    ]
+   }
+  },
+  {
+   "phase": "RELEASE",
+   "tick": 134,
+   "timeS": 2.25,
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.375,
+    37.184
+   ],
+   "presOffsetM": 0.019,
+   "facingDeg": 180,
+   "held": false,
+   "ball": [
+    102.882,
+    37.184,
+    0
+   ],
+   "renderedBall": {
+    "p": [
+     102.882,
+     37.184,
+     0.106
+    ],
+    "r": 0.10594736842105264,
+    "held": false,
+    "pres": false,
+    "wB": 0,
+    "drawn3d": true
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.028,
+    "hands": {
+     "R": 0.966,
+     "L": 0.966
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.049,
+     "L": 0.049
+    },
+    "kick": null,
+    "violations": 0
+   },
+   "hands": {
+    "R": [
+     102.862,
+     37.032,
+     0.113
+    ],
+    "L": [
+     102.862,
+     37.335,
+     0.113
+    ]
+   },
+   "elbows": {
+    "R": [
+     102.88,
+     36.928,
+     0.416
+    ],
+    "L": [
+     102.88,
+     37.44,
+     0.416
+    ]
+   },
+   "feet": {
+    "R": true,
+    "L": true
+   },
+   "pelvisWorld": [
+    103.375,
+    37.184,
+    0.514
+   ],
+   "pose": {
+    "pelvis": [
+     45.5,
+     0,
+     0
+    ],
+    "spine": [
+     19.7,
+     0,
+     0
+    ],
+    "chest": [
+     13.7,
+     0,
+     0
+    ],
+    "neck": [
+     -17.9,
+     0,
+     0
+    ],
+    "head": [
+     -15.9,
+     0,
+     0
+    ],
+    "thigh_R": [
+     -89.3,
+     0,
+     17.9
+    ],
+    "shin_R": [
+     119.2,
+     0,
+     0
+    ],
+    "foot_R": [
+     -33.9,
+     0,
+     0
+    ],
+    "thigh_L": [
+     -89.3,
+     0,
+     -17.9
+    ],
+    "shin_L": [
+     119.2,
+     0,
+     0
+    ],
+    "foot_L": [
+     -33.9,
+     0,
+     0
+    ],
+    "upperArm_R": [
+     -62.4,
+     -7.7,
+     20.3
+    ],
+    "foreArm_R": [
+     -6.8,
+     0,
+     0
+    ],
+    "hand_R": [
+     -8,
+     0,
+     0
+    ],
+    "upperArm_L": [
+     -62.4,
+     7.7,
+     -20.3
+    ],
+    "foreArm_L": [
+     -6.8,
+     0,
+     0
+    ],
+    "hand_L": [
+     -8,
+     0,
+     0
+    ]
+   },
+   "joints": {
+    "root": [
+     103.394,
+     37.184,
+     0
+    ],
+    "pelvis": [
+     103.375,
+     37.184,
+     0.514
+    ],
+    "spine": [
+     103.297,
+     37.184,
+     0.591
+    ],
+    "chest": [
+     103.098,
+     37.184,
+     0.684
+    ],
+    "neck": [
+     102.846,
+     37.184,
+     0.733
+    ],
+    "head": [
+     102.766,
+     37.184,
+     0.777
+    ],
+    "hair": [
+     102.682,
+     37.184,
+     0.874
+    ],
+    "clavicle_R": [
+     102.882,
+     37.129,
+     0.726
+    ],
+    "upperArm_R": [
+     102.882,
+     36.946,
+     0.726
+    ],
+    "foreArm_R": [
+     102.88,
+     36.928,
+     0.416
+    ],
+    "hand_R": [
+     102.854,
+     36.977,
+     0.148
+    ],
+    "clavicle_L": [
+     102.882,
+     37.238,
+     0.726
+    ],
+    "upperArm_L": [
+     102.882,
+     37.421,
+     0.726
+    ],
+    "foreArm_L": [
+     102.88,
+     37.44,
+     0.416
+    ],
+    "hand_L": [
+     102.854,
+     37.39,
+     0.148
+    ],
+    "thigh_R": [
+     103.375,
+     37.01,
+     0.514
+    ],
+    "shin_R": [
+     103.001,
+     36.991,
+     0.286
+    ],
+    "foot_R": [
+     103.363,
+     36.993,
+     0.11
+    ],
+    "toe_R": [
+     103.203,
+     36.925,
+     0.055
+    ],
+    "thigh_L": [
+     103.375,
+     37.357,
+     0.514
+    ],
+    "shin_L": [
+     103.127,
+     37.311,
+     0.155
+    ],
+    "foot_L": [
+     103.527,
+     37.329,
+     0.11
+    ],
+    "toe_L": [
+     103.378,
+     37.419,
+     0.055
+    ],
+    "head_tip": [
+     102.549,
+     37.184,
+     0.745
+    ],
+    "hand_R_tip": [
+     102.867,
+     37.069,
+     0.09
+    ],
+    "hand_L_tip": [
+     102.867,
+     37.298,
+     0.09
+    ],
+    "foot_R_tip": [
+     103.202,
+     36.925,
+     0.055
+    ],
+    "foot_L_tip": [
+     103.377,
+     37.42,
+     0.055
+    ]
+   }
+  },
+  {
+   "phase": "RELEASE_RISE",
+   "tick": 142,
+   "timeS": 2.383,
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.374,
+    37.184
+   ],
+   "presOffsetM": 0.021,
+   "facingDeg": 180,
+   "held": false,
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": {
+    "p": [
+     102.872,
+     37.184,
+     0.106
+    ],
+    "r": 0.10594736842105264,
+    "held": false,
+    "pres": false,
+    "wB": 0,
+    "drawn3d": true
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.25,
+    "hands": {
+     "R": 0,
+     "L": 0
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": null,
+     "L": null
+    },
+    "kick": null,
+    "violations": 0
+   },
+   "hands": {
+    "R": [
+     103.071,
+     36.705,
+     0.297
+    ],
+    "L": [
+     103.071,
+     37.662,
+     0.297
+    ]
+   },
+   "elbows": {
+    "R": [
+     103.048,
+     36.825,
+     0.614
+    ],
+    "L": [
+     103.048,
+     37.542,
+     0.614
+    ]
+   },
+   "feet": {
+    "R": true,
+    "L": true
+   },
+   "pelvisWorld": [
+    103.374,
+    37.184,
+    0.563
+   ],
+   "pose": {
+    "pelvis": [
+     38.1,
+     0,
+     0
+    ],
+    "spine": [
+     15.9,
+     0,
+     0
+    ],
+    "chest": [
+     9.6,
+     0,
+     0
+    ],
+    "neck": [
+     -16.1,
+     0,
+     0
+    ],
+    "head": [
+     -15.1,
+     0,
+     0
+    ],
+    "thigh_R": [
+     -81.2,
+     0,
+     17
+    ],
+    "shin_R": [
+     109.8,
+     0,
+     0
+    ],
+    "foot_R": [
+     -32,
+     0,
+     0
+    ],
+    "thigh_L": [
+     -81.2,
+     0,
+     -17
+    ],
+    "shin_L": [
+     109.8,
+     0,
+     0
+    ],
+    "foot_L": [
+     -32,
+     0,
+     0
+    ],
+    "upperArm_R": [
+     -38.4,
+     -3.4,
+     25
+    ],
+    "foreArm_R": [
+     -17.1,
+     0,
+     0
+    ],
+    "hand_R": [
+     -7.9,
+     0,
+     0
+    ],
+    "upperArm_L": [
+     -38.4,
+     3.4,
+     -25
+    ],
+    "foreArm_L": [
+     -17.1,
+     0,
+     0
+    ],
+    "hand_L": [
+     -7.9,
+     0,
+     0
+    ]
+   },
+   "joints": {
+    "root": [
+     103.394,
+     37.184,
+     0
+    ],
+    "pelvis": [
+     103.374,
+     37.184,
+     0.563
+    ],
+    "spine": [
+     103.306,
+     37.184,
+     0.649
+    ],
+    "chest": [
+     103.128,
+     37.184,
+     0.779
+    ],
+    "neck": [
+     102.899,
+     37.184,
+     0.893
+    ],
+    "head": [
+     102.832,
+     37.184,
+     0.955
+    ],
+    "hair": [
+     102.771,
+     37.184,
+     1.068
+    ],
+    "clavicle_R": [
+     102.932,
+     37.129,
+     0.876
+    ],
+    "upperArm_R": [
+     102.932,
+     36.946,
+     0.876
+    ],
+    "foreArm_R": [
+     103.048,
+     36.825,
+     0.614
+    ],
+    "hand_R": [
+     103.074,
+     36.727,
+     0.359
+    ],
+    "clavicle_L": [
+     102.932,
+     37.238,
+     0.876
+    ],
+    "upperArm_L": [
+     102.932,
+     37.421,
+     0.876
+    ],
+    "foreArm_L": [
+     103.048,
+     37.542,
+     0.614
+    ],
+    "hand_L": [
+     103.074,
+     37.64,
+     0.359
+    ],
+    "thigh_R": [
+     103.374,
+     37.01,
+     0.563
+    ],
+    "shin_R": [
+     103.014,
+     36.992,
+     0.311
+    ],
+    "foot_R": [
+     103.363,
+     36.993,
+     0.11
+    ],
+    "toe_R": [
+     103.201,
+     36.928,
+     0.055
+    ],
+    "thigh_L": [
+     103.374,
+     37.357,
+     0.563
+    ],
+    "shin_L": [
+     103.134,
+     37.317,
+     0.197
+    ],
+    "foot_L": [
+     103.527,
+     37.329,
+     0.11
+    ],
+    "toe_L": [
+     103.375,
+     37.414,
+     0.055
+    ],
+    "head_tip": [
+     102.612,
+     37.184,
+     0.965
+    ],
+    "hand_R_tip": [
+     103.069,
+     36.691,
+     0.256
+    ],
+    "hand_L_tip": [
+     103.069,
+     37.676,
+     0.256
+    ],
+    "foot_R_tip": [
+     103.201,
+     36.928,
+     0.055
+    ],
+    "foot_L_tip": [
+     103.374,
+     37.414,
+     0.055
+    ]
+   }
+  },
+  {
+   "phase": "SET",
+   "tick": 160,
+   "timeS": 2.683,
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.386,
+    37.184
+   ],
+   "presOffsetM": 0.009,
+   "facingDeg": 180,
+   "held": false,
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": {
+    "p": [
+     102.872,
+     37.184,
+     0.106
+    ],
+    "r": 0.10594736842105264,
+    "held": false,
+    "pres": false,
+    "wB": 0,
+    "drawn3d": true
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.75,
+    "hands": {
+     "R": 0,
+     "L": 0
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": null,
+     "L": null
+    },
+    "kick": null,
+    "violations": 0
+   },
+   "hands": {
+    "R": [
+     102.942,
+     36.726,
+     0.725
+    ],
+    "L": [
+     102.942,
+     37.641,
+     0.725
+    ]
+   },
+   "elbows": {
+    "R": [
+     103.182,
+     36.813,
+     0.948
+    ],
+    "L": [
+     103.182,
+     37.554,
+     0.948
+    ]
+   },
+   "feet": {
+    "R": true,
+    "L": true
+   },
+   "pelvisWorld": [
+    103.386,
+    37.184,
+    0.74
+   ],
+   "pose": {
+    "pelvis": [
+     19.1,
+     0,
+     0
+    ],
+    "spine": [
+     8.2,
+     0,
+     0
+    ],
+    "chest": [
+     4.4,
+     0,
+     0
+    ],
+    "neck": [
+     -10.4,
+     0,
+     0
+    ],
+    "head": [
+     -11.7,
+     0,
+     0
+    ],
+    "thigh_R": [
+     -47.7,
+     0,
+     14.8
+    ],
+    "shin_R": [
+     66.8,
+     0,
+     0
+    ],
+    "foot_R": [
+     -27.5,
+     0,
+     0
+    ],
+    "thigh_L": [
+     -47.7,
+     0,
+     -14.8
+    ],
+    "shin_L": [
+     66.8,
+     0,
+     0
+    ],
+    "foot_L": [
+     -27.5,
+     0,
+     0
+    ],
+    "upperArm_R": [
+     -22,
+     0.5,
+     25.1
+    ],
+    "foreArm_R": [
+     -52.5,
+     0,
+     0
+    ],
+    "hand_R": [
+     -9.1,
+     0,
+     0
+    ],
+    "upperArm_L": [
+     -22,
+     -0.5,
+     -25.1
+    ],
+    "foreArm_L": [
+     -52.5,
+     0,
+     0
+    ],
+    "hand_L": [
+     -9.1,
+     0,
+     0
+    ],
+    "clavicle_R": [
+     0,
+     0,
+     0
+    ],
+    "clavicle_L": [
+     0,
+     0,
+     0
+    ]
+   },
+   "joints": {
+    "root": [
+     103.394,
+     37.184,
+     0
+    ],
+    "pelvis": [
+     103.386,
+     37.184,
+     0.74
+    ],
+    "spine": [
+     103.35,
+     37.184,
+     0.844
+    ],
+    "chest": [
+     103.249,
+     37.184,
+     1.039
+    ],
+    "neck": [
+     103.115,
+     37.184,
+     1.257
+    ],
+    "head": [
+     103.081,
+     37.184,
+     1.342
+    ],
+    "hair": [
+     103.069,
+     37.184,
+     1.47
+    ],
+    "clavicle_R": [
+     103.134,
+     37.129,
+     1.226
+    ],
+    "upperArm_R": [
+     103.134,
+     36.946,
+     1.226
+    ],
+    "foreArm_R": [
+     103.182,
+     36.813,
+     0.948
+    ],
+    "hand_R": [
+     102.994,
+     36.74,
+     0.763
+    ],
+    "clavicle_L": [
+     103.134,
+     37.238,
+     1.226
+    ],
+    "upperArm_L": [
+     103.134,
+     37.421,
+     1.226
+    ],
+    "foreArm_L": [
+     103.182,
+     37.554,
+     0.948
+    ],
+    "hand_L": [
+     102.994,
+     37.627,
+     0.763
+    ],
+    "thigh_R": [
+     103.386,
+     37.01,
+     0.74
+    ],
+    "shin_R": [
+     103.095,
+     36.996,
+     0.411
+    ],
+    "foot_R": [
+     103.363,
+     36.993,
+     0.11
+    ],
+    "toe_R": [
+     103.195,
+     36.946,
+     0.055
+    ],
+    "thigh_L": [
+     103.386,
+     37.357,
+     0.74
+    ],
+    "shin_L": [
+     103.199,
+     37.331,
+     0.343
+    ],
+    "foot_L": [
+     103.527,
+     37.329,
+     0.11
+    ],
+    "toe_L": [
+     103.363,
+     37.387,
+     0.055
+    ],
+    "head_tip": [
+     102.883,
+     37.184,
+     1.436
+    ],
+    "hand_R_tip": [
+     102.907,
+     36.717,
+     0.7
+    ],
+    "hand_L_tip": [
+     102.907,
+     37.65,
+     0.7
+    ],
+    "foot_R_tip": [
+     103.195,
+     36.946,
+     0.055
+    ],
+    "foot_L_tip": [
+     103.362,
+     37.387,
+     0.055
+    ]
+   }
+  }
+ ],
+ "loop": {
+  "file": "LOOP_gameplay_60fps.png",
+  "tickStart": 58,
+  "tickEnd": 206,
+  "fps": 60
+ },
+ "phaseTimeline": [
+  [
+   0,
+   "READ",
+   "SET"
+  ],
+  [
+   5,
+   "READY",
+   "SET"
+  ],
+  [
+   8,
+   "READY",
+   "READY_UP"
+  ],
+  [
+   15,
+   "BRACE",
+   "READY_UP"
+  ],
+  [
+   16,
+   "BRACE",
+   "OPEN"
+  ],
+  [
+   18,
+   "RECEIVE",
+   "OPEN"
+  ],
+  [
+   20,
+   "RECEIVE",
+   "RECEIVE"
+  ],
+  [
+   21,
+   "CONTACT",
+   "RECEIVE"
+  ],
+  [
+   22,
+   "CRADLE",
+   "RECEIVE"
+  ],
+  [
+   25,
+   "CRADLE",
+   "CRADLE"
+  ],
+  [
+   29,
+   "ABSORB",
+   "CRADLE"
+  ],
+  [
+   35,
+   "ABSORB",
+   "ABSORB"
+  ],
+  [
+   41,
+   "CONTROL",
+   "ABSORB"
+  ],
+  [
+   50,
+   "STRAIGHTEN",
+   "ABSORB"
+  ],
+  [
+   65,
+   "STRAIGHTEN",
+   "HOLD"
+  ],
+  [
+   80,
+   "HOLD",
+   "HOLD"
+  ],
+  [
+   82,
+   "DIST_PREP",
+   "HOLD"
+  ],
+  [
+   93,
+   "DIST_PREP",
+   "LOWER"
+  ],
+  [
+   119,
+   "DIST_PREP",
+   "PLACE"
+  ],
+  [
+   133,
+   "DIST_FOLLOW",
+   "PLACE"
+  ],
+  [
+   142,
+   "DIST_FOLLOW",
+   "RELEASE_RISE"
+  ],
+  [
+   160,
+   "DIST_FOLLOW",
+   "SET"
+  ],
+  [
+   169,
+   "SET",
+   null
+  ],
+  [
+   170,
+   "SHUFFLE_RIGHT",
+   null
+  ],
+  [
+   179,
+   "STEP_BACKWARD",
+   null
+  ],
+  [
+   211,
+   "STEP_FORWARD",
+   null
+  ],
+  [
+   213,
+   "SET",
+   null
+  ],
+  [
+   214,
+   "STEP_BACKWARD",
+   null
+  ],
+  [
+   215,
+   "SET",
+   null
+  ],
+  [
+   216,
+   "STEP_FORWARD",
+   null
+  ],
+  [
+   217,
+   "STEP_BACKWARD",
+   null
+  ],
+  [
+   218,
+   "SET",
+   null
+  ],
+  [
+   219,
+   "STEP_BACKWARD",
+   null
+  ],
+  [
+   220,
+   "STEP_FORWARD",
+   null
+  ],
+  [
+   222,
+   "STEP_BACKWARD",
+   null
+  ],
+  [
+   223,
+   "STEP_FORWARD",
+   null
+  ],
+  [
+   225,
+   "STEP_BACKWARD",
+   null
+  ],
+  [
+   226,
+   "STEP_FORWARD",
+   null
+  ],
+  [
+   227,
+   "STEP_BACKWARD",
+   null
+  ],
+  [
+   228,
+   "STEP_FORWARD",
+   null
+  ],
+  [
+   229,
+   "STEP_BACKWARD",
+   null
+  ],
+  [
+   230,
+   "SET",
+   null
+  ],
+  [
+   231,
+   "STEP_BACKWARD",
+   null
+  ],
+  [
+   232,
+   "STEP_FORWARD",
+   null
+  ],
+  [
+   234,
+   "STEP_BACKWARD",
+   null
+  ],
+  [
+   235,
+   "STEP_FORWARD",
+   null
+  ],
+  [
+   237,
+   "STEP_BACKWARD",
+   null
+  ],
+  [
+   238,
+   "STEP_FORWARD",
+   null
+  ],
+  [
+   239,
+   "STEP_BACKWARD",
+   null
+  ],
+  [
+   240,
+   "STEP_FORWARD",
+   null
+  ],
+  [
+   241,
+   "STEP_BACKWARD",
+   null
+  ],
+  [
+   242,
+   "SET",
+   null
+  ],
+  [
+   243,
+   "STEP_FORWARD",
+   null
+  ],
+  [
+   244,
+   "STEP_BACKWARD",
+   null
+  ],
+  [
+   246,
+   "STEP_FORWARD",
+   null
+  ],
+  [
+   247,
+   "STEP_BACKWARD",
+   null
+  ],
+  [
+   249,
+   "STEP_FORWARD",
+   null
+  ],
+  [
+   250,
+   "STEP_BACKWARD",
+   null
+  ],
+  [
+   251,
+   "STEP_FORWARD",
+   null
+  ],
+  [
+   252,
+   "STEP_BACKWARD",
+   null
+  ],
+  [
+   253,
+   "STEP_FORWARD",
+   null
+  ],
+  [
+   254,
+   "SET",
+   null
+  ]
+ ],
+ "perTick": [
+  {
+   "tick": 58,
+   "phase": "STRAIGHTEN",
+   "sub": "ABSORB",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.384,
+    37.197
+   ],
+   "facingDeg": 126.192,
+   "pelvisWorld": [
+    103.384,
+    37.197,
+    0.79
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.162,
+    37.501,
+    1.129
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     103.012,
+     37.475,
+     1.118
+    ],
+    "L": [
+     103.232,
+     37.636,
+     1.118
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 59,
+   "phase": "STRAIGHTEN",
+   "sub": "ABSORB",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.385,
+    37.197
+   ],
+   "facingDeg": 126.192,
+   "pelvisWorld": [
+    103.385,
+    37.197,
+    0.793
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.164,
+    37.499,
+    1.135
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     103.014,
+     37.473,
+     1.124
+    ],
+    "L": [
+     103.234,
+     37.634,
+     1.124
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 60,
+   "phase": "STRAIGHTEN",
+   "sub": "ABSORB",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.385,
+    37.197
+   ],
+   "facingDeg": 126.192,
+   "pelvisWorld": [
+    103.385,
+    37.197,
+    0.796
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.166,
+    37.496,
+    1.141
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     103.015,
+     37.47,
+     1.13
+    ],
+    "L": [
+     103.236,
+     37.632,
+     1.13
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 61,
+   "phase": "STRAIGHTEN",
+   "sub": "ABSORB",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.385,
+    37.196
+   ],
+   "facingDeg": 126.192,
+   "pelvisWorld": [
+    103.385,
+    37.196,
+    0.799
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.167,
+    37.494,
+    1.147
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     103.017,
+     37.468,
+     1.136
+    ],
+    "L": [
+     103.238,
+     37.629,
+     1.136
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 62,
+   "phase": "STRAIGHTEN",
+   "sub": "ABSORB",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.385,
+    37.196
+   ],
+   "facingDeg": 126.192,
+   "pelvisWorld": [
+    103.385,
+    37.196,
+    0.802
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.169,
+    37.492,
+    1.153
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     103.019,
+     37.465,
+     1.142
+    ],
+    "L": [
+     103.24,
+     37.627,
+     1.142
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 63,
+   "phase": "STRAIGHTEN",
+   "sub": "ABSORB",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.386,
+    37.196
+   ],
+   "facingDeg": 126.192,
+   "pelvisWorld": [
+    103.386,
+    37.196,
+    0.805
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.171,
+    37.489,
+    1.159
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     103.021,
+     37.463,
+     1.148
+    ],
+    "L": [
+     103.241,
+     37.624,
+     1.148
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 64,
+   "phase": "STRAIGHTEN",
+   "sub": "ABSORB",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.386,
+    37.195
+   ],
+   "facingDeg": 126.192,
+   "pelvisWorld": [
+    103.386,
+    37.195,
+    0.808
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.173,
+    37.486,
+    1.165
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     103.023,
+     37.46,
+     1.154
+    ],
+    "L": [
+     103.243,
+     37.621,
+     1.154
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 65,
+   "phase": "STRAIGHTEN",
+   "sub": "HOLD",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.386,
+    37.195
+   ],
+   "facingDeg": 126.192,
+   "pelvisWorld": [
+    103.386,
+    37.195,
+    0.812
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.175,
+    37.484,
+    1.171
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     103.025,
+     37.457,
+     1.16
+    ],
+    "L": [
+     103.245,
+     37.619,
+     1.16
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 66,
+   "phase": "STRAIGHTEN",
+   "sub": "HOLD",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.386,
+    37.195
+   ],
+   "facingDeg": 126.192,
+   "pelvisWorld": [
+    103.386,
+    37.195,
+    0.815
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.177,
+    37.481,
+    1.177
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     103.027,
+     37.455,
+     1.167
+    ],
+    "L": [
+     103.247,
+     37.616,
+     1.167
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 67,
+   "phase": "STRAIGHTEN",
+   "sub": "HOLD",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.387,
+    37.194
+   ],
+   "facingDeg": 126.192,
+   "pelvisWorld": [
+    103.387,
+    37.194,
+    0.818
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.179,
+    37.478,
+    1.183
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     103.029,
+     37.452,
+     1.173
+    ],
+    "L": [
+     103.249,
+     37.614,
+     1.173
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 68,
+   "phase": "STRAIGHTEN",
+   "sub": "HOLD",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.387,
+    37.194
+   ],
+   "facingDeg": 126.192,
+   "pelvisWorld": [
+    103.387,
+    37.194,
+    0.821
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.181,
+    37.476,
+    1.189
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     103.03,
+     37.45,
+     1.178
+    ],
+    "L": [
+     103.251,
+     37.611,
+     1.178
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 69,
+   "phase": "STRAIGHTEN",
+   "sub": "HOLD",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.387,
+    37.194
+   ],
+   "facingDeg": 126.192,
+   "pelvisWorld": [
+    103.387,
+    37.194,
+    0.824
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.182,
+    37.473,
+    1.194
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     103.032,
+     37.447,
+     1.184
+    ],
+    "L": [
+     103.253,
+     37.608,
+     1.184
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 70,
+   "phase": "STRAIGHTEN",
+   "sub": "HOLD",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.387,
+    37.193
+   ],
+   "facingDeg": 126.192,
+   "pelvisWorld": [
+    103.387,
+    37.193,
+    0.827
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.184,
+    37.471,
+    1.2
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     103.034,
+     37.444,
+     1.19
+    ],
+    "L": [
+     103.255,
+     37.606,
+     1.19
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 71,
+   "phase": "STRAIGHTEN",
+   "sub": "HOLD",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.387,
+    37.193
+   ],
+   "facingDeg": 126.192,
+   "pelvisWorld": [
+    103.387,
+    37.193,
+    0.83
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.186,
+    37.468,
+    1.205
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     103.036,
+     37.442,
+     1.195
+    ],
+    "L": [
+     103.257,
+     37.603,
+     1.195
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 72,
+   "phase": "STRAIGHTEN",
+   "sub": "HOLD",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.388,
+    37.193
+   ],
+   "facingDeg": 126.192,
+   "pelvisWorld": [
+    103.388,
+    37.193,
+    0.833
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.188,
+    37.466,
+    1.21
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     103.038,
+     37.44,
+     1.2
+    ],
+    "L": [
+     103.258,
+     37.601,
+     1.2
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 73,
+   "phase": "STRAIGHTEN",
+   "sub": "HOLD",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.388,
+    37.193
+   ],
+   "facingDeg": 126.192,
+   "pelvisWorld": [
+    103.388,
+    37.193,
+    0.835
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.189,
+    37.464,
+    1.215
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     103.039,
+     37.437,
+     1.205
+    ],
+    "L": [
+     103.26,
+     37.599,
+     1.205
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 74,
+   "phase": "STRAIGHTEN",
+   "sub": "HOLD",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.388,
+    37.192
+   ],
+   "facingDeg": 126.192,
+   "pelvisWorld": [
+    103.388,
+    37.192,
+    0.838
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.191,
+    37.462,
+    1.22
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     103.041,
+     37.435,
+     1.21
+    ],
+    "L": [
+     103.262,
+     37.597,
+     1.21
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 75,
+   "phase": "STRAIGHTEN",
+   "sub": "HOLD",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.388,
+    37.192
+   ],
+   "facingDeg": 126.192,
+   "pelvisWorld": [
+    103.388,
+    37.192,
+    0.84
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.192,
+    37.46,
+    1.224
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     103.042,
+     37.433,
+     1.214
+    ],
+    "L": [
+     103.263,
+     37.595,
+     1.214
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 76,
+   "phase": "STRAIGHTEN",
+   "sub": "HOLD",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.388,
+    37.192
+   ],
+   "facingDeg": 126.192,
+   "pelvisWorld": [
+    103.388,
+    37.192,
+    0.842
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.194,
+    37.458,
+    1.228
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     103.044,
+     37.431,
+     1.218
+    ],
+    "L": [
+     103.265,
+     37.593,
+     1.218
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 77,
+   "phase": "STRAIGHTEN",
+   "sub": "HOLD",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.388,
+    37.192
+   ],
+   "facingDeg": 126.192,
+   "pelvisWorld": [
+    103.388,
+    37.192,
+    0.844
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.195,
+    37.456,
+    1.231
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     103.045,
+     37.43,
+     1.222
+    ],
+    "L": [
+     103.266,
+     37.591,
+     1.222
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 78,
+   "phase": "STRAIGHTEN",
+   "sub": "HOLD",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.389,
+    37.192
+   ],
+   "facingDeg": 126.192,
+   "pelvisWorld": [
+    103.389,
+    37.192,
+    0.846
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.196,
+    37.455,
+    1.234
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     103.046,
+     37.428,
+     1.225
+    ],
+    "L": [
+     103.267,
+     37.59,
+     1.225
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 79,
+   "phase": "STRAIGHTEN",
+   "sub": "HOLD",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.389,
+    37.191
+   ],
+   "facingDeg": 126.192,
+   "pelvisWorld": [
+    103.389,
+    37.191,
+    0.847
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.197,
+    37.453,
+    1.237
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     103.047,
+     37.427,
+     1.227
+    ],
+    "L": [
+     103.268,
+     37.588,
+     1.227
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 80,
+   "phase": "HOLD",
+   "sub": "HOLD",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.389,
+    37.191
+   ],
+   "facingDeg": 126.192,
+   "pelvisWorld": [
+    103.389,
+    37.191,
+    0.848
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.197,
+    37.453,
+    1.237
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     103.047,
+     37.427,
+     1.228
+    ],
+    "L": [
+     103.268,
+     37.588,
+     1.228
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 81,
+   "phase": "HOLD",
+   "sub": "HOLD",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.389,
+    37.191
+   ],
+   "facingDeg": 126.192,
+   "pelvisWorld": [
+    103.389,
+    37.191,
+    0.848
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.197,
+    37.453,
+    1.237
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     103.047,
+     37.427,
+     1.228
+    ],
+    "L": [
+     103.268,
+     37.588,
+     1.228
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 82,
+   "phase": "DIST_PREP",
+   "sub": "HOLD",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.389,
+    37.191
+   ],
+   "facingDeg": 126.192,
+   "pelvisWorld": [
+    103.389,
+    37.191,
+    0.848
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.197,
+    37.453,
+    1.237
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     103.047,
+     37.427,
+     1.228
+    ],
+    "L": [
+     103.268,
+     37.588,
+     1.228
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.047,
+     "L": 0.047
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 83,
+   "phase": "DIST_PREP",
+   "sub": "HOLD",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.388,
+    37.192
+   ],
+   "facingDeg": 126.68,
+   "pelvisWorld": [
+    103.388,
+    37.192,
+    0.843
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.193,
+    37.452,
+    1.221
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     103.048,
+     37.426,
+     1.223
+    ],
+    "L": [
+     103.267,
+     37.588,
+     1.223
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.02,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.041,
+     "L": 0.049
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 84,
+   "phase": "DIST_PREP",
+   "sub": "HOLD",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.387,
+    37.193
+   ],
+   "facingDeg": 128.067,
+   "pelvisWorld": [
+    103.387,
+    37.193,
+    0.837
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.187,
+    37.451,
+    1.202
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     103.048,
+     37.423,
+     1.214
+    ],
+    "L": [
+     103.266,
+     37.586,
+     1.214
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.039,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.036,
+     "L": 0.051
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 85,
+   "phase": "DIST_PREP",
+   "sub": "HOLD",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.386,
+    37.193
+   ],
+   "facingDeg": 130.241,
+   "pelvisWorld": [
+    103.386,
+    37.193,
+    0.831
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.179,
+    37.449,
+    1.18
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     103.046,
+     37.418,
+     1.197
+    ],
+    "L": [
+     103.26,
+     37.585,
+     1.197
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.059,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.033,
+     "L": 0.052
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 86,
+   "phase": "DIST_PREP",
+   "sub": "HOLD",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.385,
+    37.194
+   ],
+   "facingDeg": 133.087,
+   "pelvisWorld": [
+    103.385,
+    37.194,
+    0.824
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.17,
+    37.447,
+    1.155
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     103.041,
+     37.407,
+     1.17
+    ],
+    "L": [
+     103.247,
+     37.583,
+     1.17
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.078,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.03,
+     "L": 0.051
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 87,
+   "phase": "DIST_PREP",
+   "sub": "HOLD",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.383,
+    37.194
+   ],
+   "facingDeg": 136.493,
+   "pelvisWorld": [
+    103.383,
+    37.194,
+    0.817
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.159,
+    37.443,
+    1.129
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     103.033,
+     37.39,
+     1.135
+    ],
+    "L": [
+     103.225,
+     37.581,
+     1.134
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.098,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.031,
+     "L": 0.047
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 88,
+   "phase": "DIST_PREP",
+   "sub": "HOLD",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.381,
+    37.194
+   ],
+   "facingDeg": 140.344,
+   "pelvisWorld": [
+    103.381,
+    37.194,
+    0.809
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.146,
+    37.437,
+    1.1
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     103.022,
+     37.369,
+     1.095
+    ],
+    "L": [
+     103.197,
+     37.577,
+     1.093
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.118,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.035,
+     "L": 0.043
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 89,
+   "phase": "DIST_PREP",
+   "sub": "HOLD",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.379,
+    37.194
+   ],
+   "facingDeg": 144.527,
+   "pelvisWorld": [
+    103.379,
+    37.194,
+    0.8
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.13,
+    37.428,
+    1.07
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     103.01,
+     37.346,
+     1.056
+    ],
+    "L": [
+     103.166,
+     37.57,
+     1.053
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.137,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.04,
+     "L": 0.041
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 90,
+   "phase": "DIST_PREP",
+   "sub": "HOLD",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.377,
+    37.194
+   ],
+   "facingDeg": 148.928,
+   "pelvisWorld": [
+    103.377,
+    37.194,
+    0.791
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.113,
+    37.416,
+    1.039
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     103,
+     37.326,
+     1.023
+    ],
+    "L": [
+     103.137,
+     37.56,
+     1.02
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.157,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.04,
+     "L": 0.041
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 91,
+   "phase": "DIST_PREP",
+   "sub": "HOLD",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.375,
+    37.194
+   ],
+   "facingDeg": 153.435,
+   "pelvisWorld": [
+    103.375,
+    37.194,
+    0.782
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.094,
+    37.402,
+    1.006
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.989,
+     37.302,
+     0.989
+    ],
+    "L": [
+     103.107,
+     37.547,
+     0.985
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.176,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.04,
+     "L": 0.042
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 92,
+   "phase": "DIST_PREP",
+   "sub": "HOLD",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.372,
+    37.193
+   ],
+   "facingDeg": 157.933,
+   "pelvisWorld": [
+    103.372,
+    37.193,
+    0.773
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.074,
+    37.384,
+    0.972
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.978,
+     37.276,
+     0.954
+    ],
+    "L": [
+     103.076,
+     37.53,
+     0.95
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.196,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.04,
+     "L": 0.042
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 93,
+   "phase": "DIST_PREP",
+   "sub": "LOWER",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.37,
+    37.191
+   ],
+   "facingDeg": 162.309,
+   "pelvisWorld": [
+    103.37,
+    37.191,
+    0.763
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.055,
+    37.363,
+    0.938
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.967,
+     37.248,
+     0.919
+    ],
+    "L": [
+     103.046,
+     37.509,
+     0.914
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.216,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.04,
+     "L": 0.042
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 94,
+   "phase": "DIST_PREP",
+   "sub": "LOWER",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.368,
+    37.19
+   ],
+   "facingDeg": 166.45,
+   "pelvisWorld": [
+    103.368,
+    37.19,
+    0.753
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.035,
+    37.34,
+    0.903
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.956,
+     37.22,
+     0.883
+    ],
+    "L": [
+     103.016,
+     37.485,
+     0.878
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.235,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.04,
+     "L": 0.042
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 95,
+   "phase": "DIST_PREP",
+   "sub": "LOWER",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.366,
+    37.189
+   ],
+   "facingDeg": 170.241,
+   "pelvisWorld": [
+    103.366,
+    37.189,
+    0.743
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    103.016,
+    37.316,
+    0.868
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.945,
+     37.19,
+     0.847
+    ],
+    "L": [
+     102.989,
+     37.459,
+     0.842
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.255,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.04,
+     "L": 0.042
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 96,
+   "phase": "DIST_PREP",
+   "sub": "LOWER",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.364,
+    37.187
+   ],
+   "facingDeg": 173.57,
+   "pelvisWorld": [
+    103.364,
+    37.187,
+    0.733
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.998,
+    37.291,
+    0.833
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.935,
+     37.162,
+     0.81
+    ],
+    "L": [
+     102.963,
+     37.433,
+     0.806
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.275,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.04,
+     "L": 0.042
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 97,
+   "phase": "DIST_PREP",
+   "sub": "LOWER",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.362,
+    37.186
+   ],
+   "facingDeg": 176.323,
+   "pelvisWorld": [
+    103.362,
+    37.186,
+    0.723
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.982,
+    37.268,
+    0.798
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.925,
+     37.135,
+     0.774
+    ],
+    "L": [
+     102.94,
+     37.407,
+     0.771
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.294,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.04,
+     "L": 0.042
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 98,
+   "phase": "DIST_PREP",
+   "sub": "LOWER",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.361,
+    37.185
+   ],
+   "facingDeg": 178.386,
+   "pelvisWorld": [
+    103.361,
+    37.185,
+    0.713
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.966,
+    37.246,
+    0.764
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.915,
+     37.111,
+     0.739
+    ],
+    "L": [
+     102.921,
+     37.384,
+     0.736
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.314,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.041,
+     "L": 0.042
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 99,
+   "phase": "DIST_PREP",
+   "sub": "LOWER",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.359,
+    37.184
+   ],
+   "facingDeg": 179.646,
+   "pelvisWorld": [
+    103.359,
+    37.184,
+    0.704
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.952,
+    37.228,
+    0.73
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.903,
+     37.092,
+     0.704
+    ],
+    "L": [
+     102.904,
+     37.365,
+     0.702
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.333,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.041,
+     "L": 0.042
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 100,
+   "phase": "DIST_PREP",
+   "sub": "LOWER",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.358,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.358,
+    37.184,
+    0.694
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.939,
+    37.214,
+    0.698
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.891,
+     37.078,
+     0.67
+    ],
+    "L": [
+     102.89,
+     37.351,
+     0.669
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.353,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.041,
+     "L": 0.042
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 101,
+   "phase": "DIST_PREP",
+   "sub": "LOWER",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.357,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.357,
+    37.184,
+    0.685
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.927,
+    37.204,
+    0.666
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.88,
+     37.067,
+     0.638
+    ],
+    "L": [
+     102.879,
+     37.34,
+     0.637
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.373,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.041,
+     "L": 0.042
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 102,
+   "phase": "DIST_PREP",
+   "sub": "LOWER",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.356,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.356,
+    37.184,
+    0.676
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.917,
+    37.194,
+    0.637
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.87,
+     37.058,
+     0.607
+    ],
+    "L": [
+     102.869,
+     37.331,
+     0.607
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.392,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.042,
+     "L": 0.042
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 103,
+   "phase": "DIST_PREP",
+   "sub": "LOWER",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.356,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.356,
+    37.184,
+    0.668
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.908,
+    37.186,
+    0.608
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.861,
+     37.05,
+     0.578
+    ],
+    "L": [
+     102.861,
+     37.323,
+     0.578
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.412,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.042,
+     "L": 0.042
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 104,
+   "phase": "DIST_PREP",
+   "sub": "LOWER",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.356,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.356,
+    37.184,
+    0.661
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.902,
+    37.181,
+    0.586
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.855,
+     37.044,
+     0.555
+    ],
+    "L": [
+     102.855,
+     37.318,
+     0.555
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.431,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.042,
+     "L": 0.042
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 105,
+   "phase": "DIST_PREP",
+   "sub": "LOWER",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.356,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.356,
+    37.184,
+    0.655
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.898,
+    37.177,
+    0.567
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.851,
+     37.04,
+     0.535
+    ],
+    "L": [
+     102.851,
+     37.314,
+     0.535
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.451,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.042,
+     "L": 0.042
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 106,
+   "phase": "DIST_PREP",
+   "sub": "LOWER",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.356,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.356,
+    37.184,
+    0.65
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.894,
+    37.174,
+    0.547
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.847,
+     37.037,
+     0.515
+    ],
+    "L": [
+     102.848,
+     37.311,
+     0.515
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.471,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.042,
+     "L": 0.042
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 107,
+   "phase": "DIST_PREP",
+   "sub": "LOWER",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.356,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.356,
+    37.184,
+    0.644
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.891,
+    37.171,
+    0.528
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.844,
+     37.034,
+     0.495
+    ],
+    "L": [
+     102.845,
+     37.308,
+     0.495
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.49,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.043,
+     "L": 0.042
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 108,
+   "phase": "DIST_PREP",
+   "sub": "LOWER",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.356,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.356,
+    37.184,
+    0.638
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.888,
+    37.169,
+    0.508
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.842,
+     37.031,
+     0.475
+    ],
+    "L": [
+     102.842,
+     37.306,
+     0.475
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.51,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.043,
+     "L": 0.042
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 109,
+   "phase": "DIST_PREP",
+   "sub": "LOWER",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.357,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.357,
+    37.184,
+    0.631
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.885,
+    37.167,
+    0.488
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.84,
+     37.029,
+     0.454
+    ],
+    "L": [
+     102.84,
+     37.304,
+     0.455
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.529,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.043,
+     "L": 0.042
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 110,
+   "phase": "DIST_PREP",
+   "sub": "LOWER",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.357,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.357,
+    37.184,
+    0.625
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.884,
+    37.165,
+    0.468
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.838,
+     37.028,
+     0.434
+    ],
+    "L": [
+     102.839,
+     37.303,
+     0.435
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.549,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.043,
+     "L": 0.043
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 111,
+   "phase": "DIST_PREP",
+   "sub": "LOWER",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.358,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.358,
+    37.184,
+    0.619
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.882,
+    37.164,
+    0.449
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.837,
+     37.027,
+     0.414
+    ],
+    "L": [
+     102.838,
+     37.302,
+     0.415
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.569,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.043,
+     "L": 0.043
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 112,
+   "phase": "DIST_PREP",
+   "sub": "LOWER",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.359,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.359,
+    37.184,
+    0.613
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.881,
+    37.164,
+    0.429
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.837,
+     37.026,
+     0.394
+    ],
+    "L": [
+     102.837,
+     37.302,
+     0.395
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.588,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.043,
+     "L": 0.043
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 113,
+   "phase": "DIST_PREP",
+   "sub": "LOWER",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.359,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.359,
+    37.184,
+    0.607
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.88,
+    37.164,
+    0.41
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.837,
+     37.025,
+     0.374
+    ],
+    "L": [
+     102.837,
+     37.302,
+     0.375
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.608,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.043,
+     "L": 0.043
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 114,
+   "phase": "DIST_PREP",
+   "sub": "LOWER",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.36,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.36,
+    37.184,
+    0.601
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.88,
+    37.164,
+    0.39
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.837,
+     37.025,
+     0.354
+    ],
+    "L": [
+     102.837,
+     37.302,
+     0.355
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.627,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.044,
+     "L": 0.043
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 115,
+   "phase": "DIST_PREP",
+   "sub": "LOWER",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.361,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.361,
+    37.184,
+    0.595
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.88,
+    37.164,
+    0.371
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.837,
+     37.026,
+     0.334
+    ],
+    "L": [
+     102.837,
+     37.302,
+     0.335
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.647,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.044,
+     "L": 0.043
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 116,
+   "phase": "DIST_PREP",
+   "sub": "LOWER",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.362,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.362,
+    37.184,
+    0.589
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.88,
+    37.165,
+    0.352
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.838,
+     37.026,
+     0.315
+    ],
+    "L": [
+     102.838,
+     37.303,
+     0.316
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.667,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.044,
+     "L": 0.043
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 117,
+   "phase": "DIST_PREP",
+   "sub": "LOWER",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.363,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.363,
+    37.184,
+    0.583
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.881,
+    37.165,
+    0.334
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.839,
+     37.027,
+     0.296
+    ],
+    "L": [
+     102.839,
+     37.304,
+     0.296
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.686,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.044,
+     "L": 0.044
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 118,
+   "phase": "DIST_PREP",
+   "sub": "LOWER",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.364,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.364,
+    37.184,
+    0.577
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.881,
+    37.167,
+    0.315
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.84,
+     37.027,
+     0.277
+    ],
+    "L": [
+     102.84,
+     37.306,
+     0.277
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.706,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.044,
+     "L": 0.044
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 119,
+   "phase": "DIST_PREP",
+   "sub": "PLACE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.364,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.364,
+    37.184,
+    0.572
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.882,
+    37.168,
+    0.297
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.842,
+     37.028,
+     0.258
+    ],
+    "L": [
+     102.842,
+     37.307,
+     0.259
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.725,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.044,
+     "L": 0.044
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 120,
+   "phase": "DIST_PREP",
+   "sub": "PLACE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.365,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.365,
+    37.184,
+    0.566
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.883,
+    37.169,
+    0.28
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.843,
+     37.029,
+     0.243
+    ],
+    "L": [
+     102.843,
+     37.309,
+     0.244
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.745,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.044,
+     "L": 0.044
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 121,
+   "phase": "DIST_PREP",
+   "sub": "PLACE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.366,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.366,
+    37.184,
+    0.561
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.884,
+    37.17,
+    0.263
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.845,
+     37.03,
+     0.229
+    ],
+    "L": [
+     102.845,
+     37.311,
+     0.231
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.765,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.044,
+     "L": 0.044
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 122,
+   "phase": "DIST_PREP",
+   "sub": "PLACE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.367,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.367,
+    37.184,
+    0.555
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.885,
+    37.172,
+    0.246
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.847,
+     37.031,
+     0.216
+    ],
+    "L": [
+     102.847,
+     37.313,
+     0.217
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.784,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.044,
+     "L": 0.044
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 123,
+   "phase": "DIST_PREP",
+   "sub": "PLACE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.368,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.368,
+    37.184,
+    0.55
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.887,
+    37.173,
+    0.23
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.848,
+     37.032,
+     0.203
+    ],
+    "L": [
+     102.848,
+     37.316,
+     0.204
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.804,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.043,
+     "L": 0.044
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 124,
+   "phase": "DIST_PREP",
+   "sub": "PLACE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.369,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.369,
+    37.184,
+    0.545
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.888,
+    37.175,
+    0.214
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.85,
+     37.033,
+     0.191
+    ],
+    "L": [
+     102.85,
+     37.318,
+     0.192
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.824,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.043,
+     "L": 0.044
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 125,
+   "phase": "DIST_PREP",
+   "sub": "PLACE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.37,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.37,
+    37.184,
+    0.54
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.889,
+    37.176,
+    0.199
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.851,
+     37.033,
+     0.179
+    ],
+    "L": [
+     102.851,
+     37.32,
+     0.18
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.843,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.043,
+     "L": 0.044
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 126,
+   "phase": "DIST_PREP",
+   "sub": "PLACE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.371,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.371,
+    37.184,
+    0.536
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.89,
+    37.178,
+    0.185
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.852,
+     37.034,
+     0.167
+    ],
+    "L": [
+     102.852,
+     37.322,
+     0.168
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.863,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.044,
+     "L": 0.044
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 127,
+   "phase": "DIST_PREP",
+   "sub": "PLACE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.372,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.372,
+    37.184,
+    0.531
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.891,
+    37.179,
+    0.171
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.854,
+     37.035,
+     0.157
+    ],
+    "L": [
+     102.854,
+     37.324,
+     0.157
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.882,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.044,
+     "L": 0.044
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 128,
+   "phase": "DIST_PREP",
+   "sub": "PLACE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.372,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.372,
+    37.184,
+    0.527
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.892,
+    37.18,
+    0.159
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.855,
+     37.036,
+     0.146
+    ],
+    "L": [
+     102.855,
+     37.326,
+     0.147
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.902,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.044,
+     "L": 0.044
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 129,
+   "phase": "DIST_PREP",
+   "sub": "PLACE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.373,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.373,
+    37.184,
+    0.523
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.893,
+    37.181,
+    0.146
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.856,
+     37.036,
+     0.137
+    ],
+    "L": [
+     102.856,
+     37.327,
+     0.137
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.922,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.044,
+     "L": 0.045
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 130,
+   "phase": "DIST_PREP",
+   "sub": "PLACE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.374,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.374,
+    37.184,
+    0.52
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.894,
+    37.182,
+    0.135
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.856,
+     37.036,
+     0.128
+    ],
+    "L": [
+     102.856,
+     37.328,
+     0.128
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.941,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.045,
+     "L": 0.045
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 131,
+   "phase": "DIST_PREP",
+   "sub": "PLACE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.374,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.374,
+    37.184,
+    0.516
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.894,
+    37.183,
+    0.124
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.857,
+     37.037,
+     0.119
+    ],
+    "L": [
+     102.857,
+     37.329,
+     0.119
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.961,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.045,
+     "L": 0.045
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 132,
+   "phase": "DIST_PREP",
+   "sub": "PLACE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.375,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.375,
+    37.184,
+    0.513
+   ],
+   "ball": [
+    103.259,
+    37.265,
+    1.172
+   ],
+   "renderedBall": [
+    102.894,
+    37.183,
+    0.115
+   ],
+   "held": true,
+   "hands": {
+    "R": [
+     102.857,
+     37.037,
+     0.112
+    ],
+    "L": [
+     102.857,
+     37.33,
+     0.112
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "prep",
+    "x": 0.98,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": false,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.046,
+     "L": 0.046
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 133,
+   "phase": "DIST_FOLLOW",
+   "sub": "PLACE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.375,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.375,
+    37.184,
+    0.51
+   ],
+   "ball": [
+    102.888,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.888,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.857,
+     37.036,
+     0.105
+    ],
+    "L": [
+     102.857,
+     37.331,
+     0.105
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0,
+    "hands": {
+     "R": 1,
+     "L": 1
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.046,
+     "L": 0.046
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 134,
+   "phase": "DIST_FOLLOW",
+   "sub": "PLACE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.375,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.375,
+    37.184,
+    0.514
+   ],
+   "ball": [
+    102.882,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.882,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.862,
+     37.032,
+     0.113
+    ],
+    "L": [
+     102.862,
+     37.335,
+     0.113
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.028,
+    "hands": {
+     "R": 0.966,
+     "L": 0.966
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.049,
+     "L": 0.049
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 135,
+   "phase": "DIST_FOLLOW",
+   "sub": "PLACE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.375,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.375,
+    37.184,
+    0.519
+   ],
+   "ball": [
+    102.878,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.878,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.875,
+     37.021,
+     0.123
+    ],
+    "L": [
+     102.875,
+     37.347,
+     0.123
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.056,
+    "hands": {
+     "R": 0.874,
+     "L": 0.874
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.059,
+     "L": 0.059
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 136,
+   "phase": "DIST_FOLLOW",
+   "sub": "PLACE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.375,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.375,
+    37.184,
+    0.524
+   ],
+   "ball": [
+    102.875,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.875,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.897,
+     36.998,
+     0.136
+    ],
+    "L": [
+     102.897,
+     37.369,
+     0.136
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.083,
+    "hands": {
+     "R": 0.741,
+     "L": 0.741
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.082,
+     "L": 0.082
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 137,
+   "phase": "DIST_FOLLOW",
+   "sub": "PLACE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.375,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.375,
+    37.184,
+    0.529
+   ],
+   "ball": [
+    102.873,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.873,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.928,
+     36.961,
+     0.153
+    ],
+    "L": [
+     102.928,
+     37.406,
+     0.153
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.111,
+    "hands": {
+     "R": 0.583,
+     "L": 0.583
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.124,
+     "L": 0.124
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 138,
+   "phase": "DIST_FOLLOW",
+   "sub": "PLACE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.375,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.375,
+    37.184,
+    0.535
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.964,
+     36.91,
+     0.176
+    ],
+    "L": [
+     102.964,
+     37.457,
+     0.176
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.139,
+    "hands": {
+     "R": 0.417,
+     "L": 0.417
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.185,
+     "L": 0.185
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 139,
+   "phase": "DIST_FOLLOW",
+   "sub": "PLACE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.374,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.374,
+    37.184,
+    0.541
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.002,
+     36.848,
+     0.203
+    ],
+    "L": [
+     103.002,
+     37.519,
+     0.203
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.167,
+    "hands": {
+     "R": 0.259,
+     "L": 0.259
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.26,
+     "L": 0.26
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 140,
+   "phase": "DIST_FOLLOW",
+   "sub": "PLACE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.374,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.374,
+    37.184,
+    0.548
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.036,
+     36.784,
+     0.234
+    ],
+    "L": [
+     103.036,
+     37.583,
+     0.234
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.194,
+    "hands": {
+     "R": 0.126,
+     "L": 0.126
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.337,
+     "L": 0.337
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 141,
+   "phase": "DIST_FOLLOW",
+   "sub": "PLACE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.374,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.374,
+    37.184,
+    0.555
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.063,
+     36.731,
+     0.267
+    ],
+    "L": [
+     103.063,
+     37.636,
+     0.267
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.222,
+    "hands": {
+     "R": 0.034,
+     "L": 0.034
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": 0.403,
+     "L": 0.403
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 142,
+   "phase": "DIST_FOLLOW",
+   "sub": "RELEASE_RISE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.374,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.374,
+    37.184,
+    0.563
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.071,
+     36.705,
+     0.297
+    ],
+    "L": [
+     103.071,
+     37.662,
+     0.297
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.25,
+    "hands": {
+     "R": 0,
+     "L": 0
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": null,
+     "L": null
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 143,
+   "phase": "DIST_FOLLOW",
+   "sub": "RELEASE_RISE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.374,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.374,
+    37.184,
+    0.571
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.081,
+     36.695,
+     0.326
+    ],
+    "L": [
+     103.081,
+     37.672,
+     0.326
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.278,
+    "hands": {
+     "R": 0,
+     "L": 0
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": null,
+     "L": null
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 144,
+   "phase": "DIST_FOLLOW",
+   "sub": "RELEASE_RISE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.374,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.374,
+    37.184,
+    0.579
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.09,
+     36.685,
+     0.354
+    ],
+    "L": [
+     103.09,
+     37.682,
+     0.354
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.306,
+    "hands": {
+     "R": 0,
+     "L": 0
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": null,
+     "L": null
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 145,
+   "phase": "DIST_FOLLOW",
+   "sub": "RELEASE_RISE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.374,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.374,
+    37.184,
+    0.588
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.097,
+     36.678,
+     0.381
+    ],
+    "L": [
+     103.097,
+     37.69,
+     0.381
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.333,
+    "hands": {
+     "R": 0,
+     "L": 0
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": null,
+     "L": null
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 146,
+   "phase": "DIST_FOLLOW",
+   "sub": "RELEASE_RISE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.374,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.374,
+    37.184,
+    0.597
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.103,
+     36.671,
+     0.407
+    ],
+    "L": [
+     103.103,
+     37.696,
+     0.407
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.361,
+    "hands": {
+     "R": 0,
+     "L": 0
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": null,
+     "L": null
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 147,
+   "phase": "DIST_FOLLOW",
+   "sub": "RELEASE_RISE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.374,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.374,
+    37.184,
+    0.606
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.106,
+     36.667,
+     0.432
+    ],
+    "L": [
+     103.106,
+     37.7,
+     0.432
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.389,
+    "hands": {
+     "R": 0,
+     "L": 0
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": null,
+     "L": null
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 148,
+   "phase": "DIST_FOLLOW",
+   "sub": "RELEASE_RISE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.375,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.375,
+    37.184,
+    0.615
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.106,
+     36.664,
+     0.455
+    ],
+    "L": [
+     103.106,
+     37.703,
+     0.455
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.417,
+    "hands": {
+     "R": 0,
+     "L": 0
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": null,
+     "L": null
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 149,
+   "phase": "DIST_FOLLOW",
+   "sub": "RELEASE_RISE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.375,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.375,
+    37.184,
+    0.624
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.103,
+     36.664,
+     0.476
+    ],
+    "L": [
+     103.103,
+     37.704,
+     0.476
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.444,
+    "hands": {
+     "R": 0,
+     "L": 0
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": null,
+     "L": null
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 150,
+   "phase": "DIST_FOLLOW",
+   "sub": "RELEASE_RISE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.376,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.376,
+    37.184,
+    0.633
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.097,
+     36.665,
+     0.492
+    ],
+    "L": [
+     103.097,
+     37.703,
+     0.492
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.472,
+    "hands": {
+     "R": 0,
+     "L": 0
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": null,
+     "L": null
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 151,
+   "phase": "DIST_FOLLOW",
+   "sub": "RELEASE_RISE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.376,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.376,
+    37.184,
+    0.641
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.089,
+     36.667,
+     0.509
+    ],
+    "L": [
+     103.089,
+     37.7,
+     0.509
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.5,
+    "hands": {
+     "R": 0,
+     "L": 0
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": null,
+     "L": null
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 152,
+   "phase": "DIST_FOLLOW",
+   "sub": "RELEASE_RISE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.377,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.377,
+    37.184,
+    0.651
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.077,
+     36.67,
+     0.527
+    ],
+    "L": [
+     103.077,
+     37.697,
+     0.527
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.528,
+    "hands": {
+     "R": 0,
+     "L": 0
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": null,
+     "L": null
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 153,
+   "phase": "DIST_FOLLOW",
+   "sub": "RELEASE_RISE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.378,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.378,
+    37.184,
+    0.661
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.064,
+     36.675,
+     0.546
+    ],
+    "L": [
+     103.064,
+     37.692,
+     0.546
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.556,
+    "hands": {
+     "R": 0,
+     "L": 0
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": null,
+     "L": null
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 154,
+   "phase": "DIST_FOLLOW",
+   "sub": "RELEASE_RISE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.379,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.379,
+    37.184,
+    0.672
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.048,
+     36.681,
+     0.566
+    ],
+    "L": [
+     103.048,
+     37.687,
+     0.566
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.583,
+    "hands": {
+     "R": 0,
+     "L": 0
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": null,
+     "L": null
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 155,
+   "phase": "DIST_FOLLOW",
+   "sub": "RELEASE_RISE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.38,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.38,
+    37.184,
+    0.683
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.031,
+     36.687,
+     0.588
+    ],
+    "L": [
+     103.031,
+     37.68,
+     0.588
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.611,
+    "hands": {
+     "R": 0,
+     "L": 0
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": null,
+     "L": null
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 156,
+   "phase": "DIST_FOLLOW",
+   "sub": "RELEASE_RISE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.381,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.381,
+    37.184,
+    0.694
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.013,
+     36.694,
+     0.612
+    ],
+    "L": [
+     103.013,
+     37.673,
+     0.612
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.639,
+    "hands": {
+     "R": 0,
+     "L": 0
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": null,
+     "L": null
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 157,
+   "phase": "DIST_FOLLOW",
+   "sub": "RELEASE_RISE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.382,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.382,
+    37.184,
+    0.705
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.995,
+     36.701,
+     0.638
+    ],
+    "L": [
+     102.995,
+     37.666,
+     0.638
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.667,
+    "hands": {
+     "R": 0,
+     "L": 0
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": null,
+     "L": null
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 158,
+   "phase": "DIST_FOLLOW",
+   "sub": "RELEASE_RISE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.383,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.383,
+    37.184,
+    0.717
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.977,
+     36.709,
+     0.665
+    ],
+    "L": [
+     102.977,
+     37.658,
+     0.665
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.694,
+    "hands": {
+     "R": 0,
+     "L": 0
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": null,
+     "L": null
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 159,
+   "phase": "DIST_FOLLOW",
+   "sub": "RELEASE_RISE",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.385,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.385,
+    37.184,
+    0.728
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.959,
+     36.718,
+     0.695
+    ],
+    "L": [
+     102.959,
+     37.649,
+     0.695
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.722,
+    "hands": {
+     "R": 0,
+     "L": 0
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": null,
+     "L": null
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 160,
+   "phase": "DIST_FOLLOW",
+   "sub": "SET",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.386,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.386,
+    37.184,
+    0.74
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.942,
+     36.726,
+     0.725
+    ],
+    "L": [
+     102.942,
+     37.641,
+     0.725
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.75,
+    "hands": {
+     "R": 0,
+     "L": 0
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": null,
+     "L": null
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 161,
+   "phase": "DIST_FOLLOW",
+   "sub": "SET",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.387,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.387,
+    37.184,
+    0.751
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.926,
+     36.735,
+     0.757
+    ],
+    "L": [
+     102.926,
+     37.633,
+     0.757
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.778,
+    "hands": {
+     "R": 0,
+     "L": 0
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": null,
+     "L": null
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 162,
+   "phase": "DIST_FOLLOW",
+   "sub": "SET",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.388,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.388,
+    37.184,
+    0.762
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.912,
+     36.743,
+     0.789
+    ],
+    "L": [
+     102.912,
+     37.624,
+     0.789
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.806,
+    "hands": {
+     "R": 0,
+     "L": 0
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": null,
+     "L": null
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 163,
+   "phase": "DIST_FOLLOW",
+   "sub": "SET",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.389,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.389,
+    37.184,
+    0.772
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.899,
+     36.751,
+     0.821
+    ],
+    "L": [
+     102.899,
+     37.616,
+     0.821
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.833,
+    "hands": {
+     "R": 0,
+     "L": 0
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": null,
+     "L": null
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 164,
+   "phase": "DIST_FOLLOW",
+   "sub": "SET",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.39,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.39,
+    37.184,
+    0.782
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.888,
+     36.758,
+     0.852
+    ],
+    "L": [
+     102.888,
+     37.609,
+     0.852
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.861,
+    "hands": {
+     "R": 0,
+     "L": 0
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": null,
+     "L": null
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 165,
+   "phase": "DIST_FOLLOW",
+   "sub": "SET",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.391,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.391,
+    37.184,
+    0.791
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.88,
+     36.765,
+     0.882
+    ],
+    "L": [
+     102.88,
+     37.602,
+     0.882
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.889,
+    "hands": {
+     "R": 0,
+     "L": 0
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": null,
+     "L": null
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 166,
+   "phase": "DIST_FOLLOW",
+   "sub": "SET",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.392,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.392,
+    37.184,
+    0.799
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.873,
+     36.772,
+     0.91
+    ],
+    "L": [
+     102.873,
+     37.595,
+     0.91
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.917,
+    "hands": {
+     "R": 0,
+     "L": 0
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": null,
+     "L": null
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 167,
+   "phase": "DIST_FOLLOW",
+   "sub": "SET",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.393,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.393,
+    37.184,
+    0.807
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.868,
+     36.777,
+     0.936
+    ],
+    "L": [
+     102.868,
+     37.59,
+     0.936
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.944,
+    "hands": {
+     "R": 0,
+     "L": 0
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": null,
+     "L": null
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 168,
+   "phase": "DIST_FOLLOW",
+   "sub": "SET",
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.394,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.394,
+    37.184,
+    0.813
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.865,
+     36.782,
+     0.959
+    ],
+    "L": [
+     102.865,
+     37.585,
+     0.959
+    ]
+   },
+   "dist": {
+    "kind": "PUTDOWN",
+    "seg": "post",
+    "x": 0.972,
+    "hands": {
+     "R": 0,
+     "L": 0
+    },
+    "released": true,
+    "kicked": false,
+    "handSurface": {
+     "R": null,
+     "L": null
+    },
+    "kick": null,
+    "violations": 0
+   }
+  },
+  {
+   "tick": 169,
+   "phase": "SET",
+   "sub": null,
+   "simRoot": [
+    103.394,
+    37.184
+   ],
+   "presRoot": [
+    103.394,
+    37.184
+   ],
+   "facingDeg": 180,
+   "pelvisWorld": [
+    103.394,
+    37.184,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.863,
+     36.786,
+     0.978
+    ],
+    "L": [
+     102.863,
+     37.582,
+     0.978
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 170,
+   "phase": "SHUFFLE_RIGHT",
+   "sub": null,
+   "simRoot": [
+    103.396,
+    37.181
+   ],
+   "presRoot": [
+    103.396,
+    37.181
+   ],
+   "facingDeg": 179.748,
+   "pelvisWorld": [
+    103.396,
+    37.181,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.865,
+     36.782,
+     0.977
+    ],
+    "L": [
+     102.867,
+     37.578,
+     0.989
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 171,
+   "phase": "SHUFFLE_RIGHT",
+   "sub": null,
+   "simRoot": [
+    103.399,
+    37.177
+   ],
+   "presRoot": [
+    103.399,
+    37.177
+   ],
+   "facingDeg": 179.247,
+   "pelvisWorld": [
+    103.399,
+    37.177,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.868,
+     36.778,
+     0.977
+    ],
+    "L": [
+     102.874,
+     37.574,
+     1
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 172,
+   "phase": "SHUFFLE_RIGHT",
+   "sub": null,
+   "simRoot": [
+    103.404,
+    37.17
+   ],
+   "presRoot": [
+    103.404,
+    37.17
+   ],
+   "facingDeg": 178.509,
+   "pelvisWorld": [
+    103.404,
+    37.17,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.87,
+     36.774,
+     0.977
+    ],
+    "L": [
+     102.885,
+     37.57,
+     1.011
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 173,
+   "phase": "SHUFFLE_RIGHT",
+   "sub": null,
+   "simRoot": [
+    103.41,
+    37.161
+   ],
+   "presRoot": [
+    103.41,
+    37.161
+   ],
+   "facingDeg": 177.545,
+   "pelvisWorld": [
+    103.41,
+    37.161,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.873,
+     36.771,
+     0.978
+    ],
+    "L": [
+     102.899,
+     37.565,
+     1.022
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 174,
+   "phase": "SHUFFLE_RIGHT",
+   "sub": null,
+   "simRoot": [
+    103.418,
+    37.149
+   ],
+   "presRoot": [
+    103.418,
+    37.149
+   ],
+   "facingDeg": 176.374,
+   "pelvisWorld": [
+    103.418,
+    37.149,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.875,
+     36.767,
+     0.979
+    ],
+    "L": [
+     102.917,
+     37.56,
+     1.033
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 175,
+   "phase": "SHUFFLE_RIGHT",
+   "sub": null,
+   "simRoot": [
+    103.428,
+    37.135
+   ],
+   "presRoot": [
+    103.428,
+    37.135
+   ],
+   "facingDeg": 175.017,
+   "pelvisWorld": [
+    103.428,
+    37.135,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.879,
+     36.763,
+     0.98
+    ],
+    "L": [
+     102.939,
+     37.554,
+     1.044
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 176,
+   "phase": "SHUFFLE_RIGHT",
+   "sub": null,
+   "simRoot": [
+    103.439,
+    37.119
+   ],
+   "presRoot": [
+    103.439,
+    37.119
+   ],
+   "facingDeg": 173.498,
+   "pelvisWorld": [
+    103.439,
+    37.119,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.883,
+     36.759,
+     0.983
+    ],
+    "L": [
+     102.963,
+     37.547,
+     1.056
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 177,
+   "phase": "SHUFFLE_RIGHT",
+   "sub": null,
+   "simRoot": [
+    103.452,
+    37.1
+   ],
+   "presRoot": [
+    103.452,
+    37.1
+   ],
+   "facingDeg": 171.846,
+   "pelvisWorld": [
+    103.452,
+    37.1,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.888,
+     36.754,
+     0.986
+    ],
+    "L": [
+     102.991,
+     37.539,
+     1.067
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 178,
+   "phase": "SHUFFLE_RIGHT",
+   "sub": null,
+   "simRoot": [
+    103.466,
+    37.08
+   ],
+   "presRoot": [
+    103.466,
+    37.08
+   ],
+   "facingDeg": 170.086,
+   "pelvisWorld": [
+    103.466,
+    37.08,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.895,
+     36.748,
+     0.989
+    ],
+    "L": [
+     103.022,
+     37.528,
+     1.079
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 179,
+   "phase": "STEP_BACKWARD",
+   "sub": null,
+   "simRoot": [
+    103.482,
+    37.057
+   ],
+   "presRoot": [
+    103.482,
+    37.057
+   ],
+   "facingDeg": 168.249,
+   "pelvisWorld": [
+    103.482,
+    37.057,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.903,
+     36.741,
+     0.994
+    ],
+    "L": [
+     103.056,
+     37.516,
+     1.09
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 180,
+   "phase": "STEP_BACKWARD",
+   "sub": null,
+   "simRoot": [
+    103.5,
+    37.031
+   ],
+   "presRoot": [
+    103.5,
+    37.031
+   ],
+   "facingDeg": 166.362,
+   "pelvisWorld": [
+    103.5,
+    37.031,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.913,
+     36.732,
+     0.999
+    ],
+    "L": [
+     103.093,
+     37.501,
+     1.102
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 181,
+   "phase": "STEP_BACKWARD",
+   "sub": null,
+   "simRoot": [
+    103.519,
+    37.003
+   ],
+   "presRoot": [
+    103.519,
+    37.003
+   ],
+   "facingDeg": 164.452,
+   "pelvisWorld": [
+    103.519,
+    37.003,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.926,
+     36.722,
+     1.006
+    ],
+    "L": [
+     103.133,
+     37.483,
+     1.113
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 182,
+   "phase": "STEP_BACKWARD",
+   "sub": null,
+   "simRoot": [
+    103.54,
+    36.973
+   ],
+   "presRoot": [
+    103.54,
+    36.973
+   ],
+   "facingDeg": 162.542,
+   "pelvisWorld": [
+    103.54,
+    36.973,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.941,
+     36.71,
+     1.012
+    ],
+    "L": [
+     103.174,
+     37.463,
+     1.124
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 183,
+   "phase": "STEP_BACKWARD",
+   "sub": null,
+   "simRoot": [
+    103.562,
+    36.941
+   ],
+   "presRoot": [
+    103.562,
+    36.941
+   ],
+   "facingDeg": 160.654,
+   "pelvisWorld": [
+    103.562,
+    36.941,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.958,
+     36.696,
+     1.019
+    ],
+    "L": [
+     103.218,
+     37.44,
+     1.133
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 184,
+   "phase": "STEP_BACKWARD",
+   "sub": null,
+   "simRoot": [
+    103.586,
+    36.907
+   ],
+   "presRoot": [
+    103.586,
+    36.907
+   ],
+   "facingDeg": 158.805,
+   "pelvisWorld": [
+    103.586,
+    36.907,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.975,
+     36.682,
+     1.024
+    ],
+    "L": [
+     103.26,
+     37.417,
+     1.133
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 185,
+   "phase": "STEP_BACKWARD",
+   "sub": null,
+   "simRoot": [
+    103.612,
+    36.87
+   ],
+   "presRoot": [
+    103.612,
+    36.87
+   ],
+   "facingDeg": 157.01,
+   "pelvisWorld": [
+    103.612,
+    36.87,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     102.996,
+     36.665,
+     1.029
+    ],
+    "L": [
+     103.304,
+     37.392,
+     1.133
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 186,
+   "phase": "STEP_BACKWARD",
+   "sub": null,
+   "simRoot": [
+    103.639,
+    36.83
+   ],
+   "presRoot": [
+    103.639,
+    36.83
+   ],
+   "facingDeg": 155.28,
+   "pelvisWorld": [
+    103.639,
+    36.83,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.018,
+     36.645,
+     1.034
+    ],
+    "L": [
+     103.349,
+     37.363,
+     1.132
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 187,
+   "phase": "STEP_BACKWARD",
+   "sub": null,
+   "simRoot": [
+    103.668,
+    36.789
+   ],
+   "presRoot": [
+    103.668,
+    36.789
+   ],
+   "facingDeg": 153.622,
+   "pelvisWorld": [
+    103.668,
+    36.789,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.043,
+     36.622,
+     1.038
+    ],
+    "L": [
+     103.395,
+     37.331,
+     1.132
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 188,
+   "phase": "STEP_BACKWARD",
+   "sub": null,
+   "simRoot": [
+    103.699,
+    36.745
+   ],
+   "presRoot": [
+    103.699,
+    36.745
+   ],
+   "facingDeg": 152.043,
+   "pelvisWorld": [
+    103.699,
+    36.745,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.07,
+     36.597,
+     1.042
+    ],
+    "L": [
+     103.442,
+     37.295,
+     1.131
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 189,
+   "phase": "STEP_BACKWARD",
+   "sub": null,
+   "simRoot": [
+    103.731,
+    36.699
+   ],
+   "presRoot": [
+    103.731,
+    36.699
+   ],
+   "facingDeg": 150.544,
+   "pelvisWorld": [
+    103.731,
+    36.699,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.1,
+     36.568,
+     1.046
+    ],
+    "L": [
+     103.49,
+     37.257,
+     1.131
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 190,
+   "phase": "STEP_BACKWARD",
+   "sub": null,
+   "simRoot": [
+    103.762,
+    36.654
+   ],
+   "presRoot": [
+    103.762,
+    36.654
+   ],
+   "facingDeg": 149.226,
+   "pelvisWorld": [
+    103.762,
+    36.654,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.129,
+     36.538,
+     1.049
+    ],
+    "L": [
+     103.536,
+     37.218,
+     1.13
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 191,
+   "phase": "STEP_BACKWARD",
+   "sub": null,
+   "simRoot": [
+    103.791,
+    36.611
+   ],
+   "presRoot": [
+    103.791,
+    36.611
+   ],
+   "facingDeg": 148.081,
+   "pelvisWorld": [
+    103.791,
+    36.611,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.158,
+     36.508,
+     1.052
+    ],
+    "L": [
+     103.578,
+     37.18,
+     1.129
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 192,
+   "phase": "STEP_BACKWARD",
+   "sub": null,
+   "simRoot": [
+    103.82,
+    36.57
+   ],
+   "presRoot": [
+    103.82,
+    36.57
+   ],
+   "facingDeg": 147.083,
+   "pelvisWorld": [
+    103.82,
+    36.57,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.185,
+     36.479,
+     1.055
+    ],
+    "L": [
+     103.617,
+     37.144,
+     1.128
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 193,
+   "phase": "STEP_BACKWARD",
+   "sub": null,
+   "simRoot": [
+    103.847,
+    36.531
+   ],
+   "presRoot": [
+    103.847,
+    36.531
+   ],
+   "facingDeg": 146.209,
+   "pelvisWorld": [
+    103.847,
+    36.531,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.212,
+     36.451,
+     1.057
+    ],
+    "L": [
+     103.654,
+     37.109,
+     1.128
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 194,
+   "phase": "STEP_BACKWARD",
+   "sub": null,
+   "simRoot": [
+    103.872,
+    36.495
+   ],
+   "presRoot": [
+    103.872,
+    36.495
+   ],
+   "facingDeg": 145.44,
+   "pelvisWorld": [
+    103.872,
+    36.495,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.237,
+     36.423,
+     1.059
+    ],
+    "L": [
+     103.688,
+     37.075,
+     1.127
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 195,
+   "phase": "STEP_BACKWARD",
+   "sub": null,
+   "simRoot": [
+    103.896,
+    36.46
+   ],
+   "presRoot": [
+    103.896,
+    36.46
+   ],
+   "facingDeg": 144.763,
+   "pelvisWorld": [
+    103.896,
+    36.46,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.26,
+     36.396,
+     1.06
+    ],
+    "L": [
+     103.719,
+     37.044,
+     1.127
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 196,
+   "phase": "STEP_BACKWARD",
+   "sub": null,
+   "simRoot": [
+    103.918,
+    36.428
+   ],
+   "presRoot": [
+    103.918,
+    36.428
+   ],
+   "facingDeg": 144.164,
+   "pelvisWorld": [
+    103.918,
+    36.428,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.282,
+     36.371,
+     1.062
+    ],
+    "L": [
+     103.748,
+     37.014,
+     1.126
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 197,
+   "phase": "STEP_BACKWARD",
+   "sub": null,
+   "simRoot": [
+    103.939,
+    36.398
+   ],
+   "presRoot": [
+    103.939,
+    36.398
+   ],
+   "facingDeg": 143.636,
+   "pelvisWorld": [
+    103.939,
+    36.398,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.302,
+     36.35,
+     1.058
+    ],
+    "L": [
+     103.773,
+     36.989,
+     1.118
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 198,
+   "phase": "STEP_BACKWARD",
+   "sub": null,
+   "simRoot": [
+    103.959,
+    36.37
+   ],
+   "presRoot": [
+    103.959,
+    36.37
+   ],
+   "facingDeg": 143.169,
+   "pelvisWorld": [
+    103.959,
+    36.37,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.319,
+     36.33,
+     1.054
+    ],
+    "L": [
+     103.795,
+     36.966,
+     1.108
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 199,
+   "phase": "STEP_BACKWARD",
+   "sub": null,
+   "simRoot": [
+    103.976,
+    36.344
+   ],
+   "presRoot": [
+    103.976,
+    36.344
+   ],
+   "facingDeg": 142.757,
+   "pelvisWorld": [
+    103.976,
+    36.344,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.335,
+     36.312,
+     1.049
+    ],
+    "L": [
+     103.815,
+     36.946,
+     1.098
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 200,
+   "phase": "STEP_BACKWARD",
+   "sub": null,
+   "simRoot": [
+    103.993,
+    36.32
+   ],
+   "presRoot": [
+    103.993,
+    36.32
+   ],
+   "facingDeg": 142.394,
+   "pelvisWorld": [
+    103.993,
+    36.32,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.349,
+     36.296,
+     1.044
+    ],
+    "L": [
+     103.833,
+     36.927,
+     1.088
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 201,
+   "phase": "STEP_BACKWARD",
+   "sub": null,
+   "simRoot": [
+    104.008,
+    36.298
+   ],
+   "presRoot": [
+    104.008,
+    36.298
+   ],
+   "facingDeg": 142.076,
+   "pelvisWorld": [
+    104.008,
+    36.298,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.362,
+     36.281,
+     1.039
+    ],
+    "L": [
+     103.849,
+     36.91,
+     1.078
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 202,
+   "phase": "STEP_BACKWARD",
+   "sub": null,
+   "simRoot": [
+    104.021,
+    36.279
+   ],
+   "presRoot": [
+    104.021,
+    36.279
+   ],
+   "facingDeg": 141.799,
+   "pelvisWorld": [
+    104.021,
+    36.279,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.373,
+     36.268,
+     1.034
+    ],
+    "L": [
+     103.864,
+     36.895,
+     1.068
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 203,
+   "phase": "STEP_BACKWARD",
+   "sub": null,
+   "simRoot": [
+    104.033,
+    36.262
+   ],
+   "presRoot": [
+    104.033,
+    36.262
+   ],
+   "facingDeg": 141.561,
+   "pelvisWorld": [
+    104.033,
+    36.262,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.383,
+     36.257,
+     1.028
+    ],
+    "L": [
+     103.876,
+     36.881,
+     1.058
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 204,
+   "phase": "STEP_BACKWARD",
+   "sub": null,
+   "simRoot": [
+    104.044,
+    36.247
+   ],
+   "presRoot": [
+    104.044,
+    36.247
+   ],
+   "facingDeg": 141.358,
+   "pelvisWorld": [
+    104.044,
+    36.247,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.392,
+     36.247,
+     1.022
+    ],
+    "L": [
+     103.887,
+     36.87,
+     1.048
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 205,
+   "phase": "STEP_BACKWARD",
+   "sub": null,
+   "simRoot": [
+    104.053,
+    36.234
+   ],
+   "presRoot": [
+    104.053,
+    36.234
+   ],
+   "facingDeg": 141.188,
+   "pelvisWorld": [
+    104.053,
+    36.234,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.399,
+     36.239,
+     1.016
+    ],
+    "L": [
+     103.896,
+     36.861,
+     1.038
+    ]
+   },
+   "dist": null
+  },
+  {
+   "tick": 206,
+   "phase": "STEP_BACKWARD",
+   "sub": null,
+   "simRoot": [
+    104.06,
+    36.223
+   ],
+   "presRoot": [
+    104.06,
+    36.223
+   ],
+   "facingDeg": 141.051,
+   "pelvisWorld": [
+    104.06,
+    36.223,
+    0.819
+   ],
+   "ball": [
+    102.872,
+    37.184,
+    0
+   ],
+   "renderedBall": [
+    102.872,
+    37.184,
+    0.106
+   ],
+   "held": false,
+   "hands": {
+    "R": [
+     103.405,
+     36.233,
+     1.009
+    ],
+    "L": [
+     103.903,
+     36.854,
+     1.027
+    ]
+   },
+   "dist": null
+  }
+ ]
+}
