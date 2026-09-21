@@ -1,0 +1,10090 @@
+{
+"record": "V6 fixture 42 ball: authoritative simulation ball position / velocity per tick, the presentation ball (rendered) and the ownership flag; radius = the physical 0.11 m; contact = the simulation's swept keeper\u2192ball resolution (tick 63, hand, weak parry through)",
+"ballRadiusM": 0.11,
+"physicalRadiusM": 0.11,
+"spriteVisualRadiusM_2D": 0.19,
+"ownershipRule": "the 3D renderer draws the ball (gk3dOwnsBall) when the SKELETAL_3D backend is active and the ball is held or within 3 m of the keeper; beyond that the 2D sprite ball draws (existing seam)",
+"restHeight": "simulation z 0 = a ball resting on the pitch; the rendered sphere centre is clamped to y = max(z, radius)",
+"contact": {
+"toiFrac": 0.75,
+"tickT": 1.05,
+"surface": "HANDS",
+"volume": "HAND",
+"outcome": "WEAK PARRY (through)",
+"held": false,
+"via": null,
+"handOnBall": null,
+"standing": false,
+"point": [
+101.874,
+32.747,
+2.671
+],
+"keeperPt": [
+101.985,
+32.791,
+2.628
+],
+"root": [
+101.99,
+33.45
+],
+"normal": [
+-0.874,
+-0.348,
+0.338
+],
+"respNormal": [
+-0.874,
+-0.348,
+0.338
+],
+"normalCorrected": false,
+"surfaceVertZ": 2.67,
+"surfaceVel": [
+0,
+-1.87,
+1.78
+],
+"vIn": [
+26.66,
+-2.11,
+1.81
+],
+"vOut": [
+5.03,
+-8.94,
+8.35
+],
+"speedOut": 13.23,
+"relSpeed": 26.76,
+"q": {
+"volume": "HAND",
+"norm": 0.937,
+"reachMargin": 0.171,
+"cos": 0.871,
+"sin": 0.491,
+"cAlign": 0.801,
+"sRel": 26.757,
+"vSecure": 18.682,
+"vSecureEff": 18.682,
+"u": 0.886,
+"cSet": 0.882,
+"support": 0,
+"corridor": 0,
+"zWin": 0,
+"handsOn": 1,
+"behind": 1,
+"latOff": 0.708,
+"ahead": 0.079,
+"stable": 1,
+"jitter": 0,
+"gather": false,
+"cSpeedCatch": 0.103,
+"cSpeedCtrl": 0.471,
+"Lbody": 0.712,
+"two": 0.184,
+"rootSp": 0.843,
+"cBal": 0.853,
+"z": 2.671,
+"cZ": 0.5,
+"elev": 3.884,
+"cTraj": 1,
+"cHeight": 0.5,
+"rCatch": 0.053,
+"rCtrl": 0.557,
+"catchScore": 0.004,
+"controlScore": 0.311,
+"catchThresh": 0.486,
+"ctrlThresh": 0.416,
+"fingertip": false,
+"h01": 0.789,
+"handling": 72
+},
+"resp": {
+"key": "HAND_WEAK",
+"e": 0.22,
+"kt": 0.85,
+"sv": [
+0,
+-0.84,
+0
+],
+"handVel": [
+0,
+-1.87,
+1.78
+],
+"push": 0,
+"pushDir": null,
+"tiltDeg": 0
+},
+"tier": "HIGH/FULL-STRETCH REACHABLE",
+"reachMarginAtCommit": 0.16,
+"tShotToReact": 0.158,
+"tReactToCommit": 0,
+"tCommitToContact": 0.409,
+"remDt": 0.004166666666666667,
+"seq": 1
+},
+"commit": {
+"t0": 0.6412687269193391,
+"tier": "HIGH/FULL-STRETCH REACHABLE",
+"execTime": 0.46129005372831744,
+"bestEffort": false,
+"action": "DIVE-HIGH",
+"gather": false,
+"gatherSpeed": null,
+"gatherRel": null,
+"gatherSecure": null,
+"actionDetail": {
+"dArm": 0.97,
+"dBody": 0.7660170336308731,
+"tArm": 0.18314271160089557,
+"tBody": 0.46129005372831744
+},
+"target": [
+101.98540404567194,
+32.737994417446956,
+2.6786808870303864
+],
+"feet": [
+101.98729089498006,
+33.995653526853154
+],
+"handOrigin": [
+101.98729089498006,
+33.995653526853154,
+1.482
+],
+"reachMargin": 0.16,
+"diveSpanMax": 2.71933201882683,
+"envNorm": 0.941,
+"tShotToReact": 0.1579353935860058,
+"tReactToCommit": 0,
+"commitTime": 0.6412687269193391,
+"commitTick": 0.6500000000000004
+},
+"rows": [
+{
+"tick": 0,
+"t": 0.01667,
+"ball": [
+86.29907,
+33.97639,
+0
+],
+"ballVel": [
+0,
+0,
+0
+],
+"held": false,
+"renderedBall": {
+"p": [
+86.29907,
+33.97639,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+512.858,
+427.333,
+82.653
+]
+},
+{
+"tick": 1,
+"t": 0.03333,
+"ball": [
+86.29907,
+33.97639,
+0
+],
+"ballVel": [
+0,
+0,
+0
+],
+"held": false,
+"renderedBall": {
+"p": [
+86.29907,
+33.97639,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+512.858,
+427.333,
+82.653
+]
+},
+{
+"tick": 2,
+"t": 0.05,
+"ball": [
+86.29907,
+33.97639,
+0
+],
+"ballVel": [
+0,
+0,
+0
+],
+"held": false,
+"renderedBall": {
+"p": [
+86.29907,
+33.97639,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+512.858,
+427.333,
+82.653
+]
+},
+{
+"tick": 3,
+"t": 0.06667,
+"ball": [
+86.29907,
+33.97639,
+0
+],
+"ballVel": [
+0,
+0,
+0
+],
+"held": false,
+"renderedBall": {
+"p": [
+86.29907,
+33.97639,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+512.858,
+427.333,
+82.653
+]
+},
+{
+"tick": 4,
+"t": 0.08333,
+"ball": [
+86.29907,
+33.97639,
+0
+],
+"ballVel": [
+0,
+0,
+0
+],
+"held": false,
+"renderedBall": {
+"p": [
+86.29907,
+33.97639,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+512.858,
+427.333,
+82.653
+]
+},
+{
+"tick": 5,
+"t": 0.1,
+"ball": [
+86.29907,
+33.97639,
+0
+],
+"ballVel": [
+0,
+0,
+0
+],
+"held": false,
+"renderedBall": {
+"p": [
+86.29907,
+33.97639,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+512.858,
+427.333,
+82.653
+]
+},
+{
+"tick": 6,
+"t": 0.11667,
+"ball": [
+86.29907,
+33.97639,
+0
+],
+"ballVel": [
+0,
+0,
+0
+],
+"held": false,
+"renderedBall": {
+"p": [
+86.29907,
+33.97639,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+512.858,
+427.333,
+82.653
+]
+},
+{
+"tick": 7,
+"t": 0.13333,
+"ball": [
+86.29907,
+33.97639,
+0
+],
+"ballVel": [
+0,
+0,
+0
+],
+"held": false,
+"renderedBall": {
+"p": [
+86.29907,
+33.97639,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+512.858,
+427.333,
+82.653
+]
+},
+{
+"tick": 8,
+"t": 0.15,
+"ball": [
+86.29907,
+33.97639,
+0
+],
+"ballVel": [
+0,
+0,
+0
+],
+"held": false,
+"renderedBall": {
+"p": [
+86.29907,
+33.97639,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+512.858,
+427.333,
+82.653
+]
+},
+{
+"tick": 9,
+"t": 0.16667,
+"ball": [
+86.29907,
+33.97639,
+0
+],
+"ballVel": [
+0,
+0,
+0
+],
+"held": false,
+"renderedBall": {
+"p": [
+86.29907,
+33.97639,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+512.858,
+427.333,
+82.653
+]
+},
+{
+"tick": 10,
+"t": 0.18333,
+"ball": [
+86.29907,
+33.97639,
+0
+],
+"ballVel": [
+0,
+0,
+0
+],
+"held": false,
+"renderedBall": {
+"p": [
+86.29907,
+33.97639,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+512.858,
+427.333,
+82.653
+]
+},
+{
+"tick": 11,
+"t": 0.2,
+"ball": [
+86.29907,
+33.97639,
+0
+],
+"ballVel": [
+0,
+0,
+0
+],
+"held": false,
+"renderedBall": {
+"p": [
+86.29907,
+33.97639,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+512.858,
+427.333,
+82.653
+]
+},
+{
+"tick": 12,
+"t": 0.21667,
+"ball": [
+86.29907,
+33.97639,
+0
+],
+"ballVel": [
+0,
+0,
+0
+],
+"held": false,
+"renderedBall": {
+"p": [
+86.29907,
+33.97639,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+512.858,
+427.333,
+82.653
+]
+},
+{
+"tick": 13,
+"t": 0.23333,
+"ball": [
+86.29907,
+33.97639,
+0
+],
+"ballVel": [
+0,
+0,
+0
+],
+"held": false,
+"renderedBall": {
+"p": [
+86.29907,
+33.97639,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+512.858,
+427.333,
+82.653
+]
+},
+{
+"tick": 14,
+"t": 0.25,
+"ball": [
+86.29907,
+33.97639,
+0
+],
+"ballVel": [
+0,
+0,
+0
+],
+"held": false,
+"renderedBall": {
+"p": [
+86.29907,
+33.97639,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+512.858,
+427.333,
+82.653
+]
+},
+{
+"tick": 15,
+"t": 0.26667,
+"ball": [
+86.29907,
+33.97639,
+0
+],
+"ballVel": [
+0,
+0,
+0
+],
+"held": false,
+"renderedBall": {
+"p": [
+86.29907,
+33.97639,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+512.858,
+427.333,
+82.653
+]
+},
+{
+"tick": 16,
+"t": 0.28333,
+"ball": [
+86.29907,
+33.97639,
+0
+],
+"ballVel": [
+0,
+0,
+0
+],
+"held": false,
+"renderedBall": {
+"p": [
+86.29907,
+33.97639,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+512.858,
+427.333,
+82.653
+]
+},
+{
+"tick": 17,
+"t": 0.3,
+"ball": [
+86.29907,
+33.97639,
+0
+],
+"ballVel": [
+0,
+0,
+0
+],
+"held": false,
+"renderedBall": {
+"p": [
+86.29907,
+33.97639,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+512.858,
+427.333,
+82.653
+]
+},
+{
+"tick": 18,
+"t": 0.31667,
+"ball": [
+86.29907,
+33.97639,
+0
+],
+"ballVel": [
+0,
+0,
+0
+],
+"held": false,
+"renderedBall": {
+"p": [
+86.29907,
+33.97639,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+512.858,
+427.333,
+82.653
+]
+},
+{
+"tick": 19,
+"t": 0.33333,
+"ball": [
+86.29907,
+33.97639,
+0
+],
+"ballVel": [
+0,
+0,
+0
+],
+"held": false,
+"renderedBall": {
+"p": [
+86.29907,
+33.97639,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+512.858,
+427.333,
+82.653
+]
+},
+{
+"tick": 20,
+"t": 0.35,
+"ball": [
+86.29907,
+33.97639,
+0
+],
+"ballVel": [
+0,
+0,
+0
+],
+"held": false,
+"renderedBall": {
+"p": [
+86.29907,
+33.97639,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+512.858,
+427.333,
+82.653
+]
+},
+{
+"tick": 21,
+"t": 0.36667,
+"ball": [
+86.29907,
+33.97639,
+0
+],
+"ballVel": [
+0,
+0,
+0
+],
+"held": false,
+"renderedBall": {
+"p": [
+86.29907,
+33.97639,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+512.858,
+427.333,
+82.653
+]
+},
+{
+"tick": 22,
+"t": 0.38333,
+"ball": [
+86.29907,
+33.97639,
+0
+],
+"ballVel": [
+0,
+0,
+0
+],
+"held": false,
+"renderedBall": {
+"p": [
+86.29907,
+33.97639,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+512.858,
+427.333,
+82.653
+]
+},
+{
+"tick": 23,
+"t": 0.4,
+"ball": [
+86.29907,
+33.97639,
+0
+],
+"ballVel": [
+0,
+0,
+0
+],
+"held": false,
+"renderedBall": {
+"p": [
+86.29907,
+33.97639,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+512.858,
+427.333,
+82.653
+]
+},
+{
+"tick": 24,
+"t": 0.41667,
+"ball": [
+86.29907,
+33.97639,
+0
+],
+"ballVel": [
+0,
+0,
+0
+],
+"held": false,
+"renderedBall": {
+"p": [
+86.29907,
+33.97639,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+512.858,
+427.333,
+82.653
+]
+},
+{
+"tick": 25,
+"t": 0.43333,
+"ball": [
+86.29907,
+33.97639,
+0
+],
+"ballVel": [
+0,
+0,
+0
+],
+"held": false,
+"renderedBall": {
+"p": [
+86.29907,
+33.97639,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+512.858,
+427.333,
+82.653
+]
+},
+{
+"tick": 26,
+"t": 0.45,
+"ball": [
+86.29907,
+33.97639,
+0
+],
+"ballVel": [
+0,
+0,
+0
+],
+"held": false,
+"renderedBall": {
+"p": [
+86.29907,
+33.97639,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+512.858,
+427.333,
+82.653
+]
+},
+{
+"tick": 27,
+"t": 0.46667,
+"ball": [
+86.29907,
+33.97639,
+0
+],
+"ballVel": [
+0,
+0,
+0
+],
+"held": false,
+"renderedBall": {
+"p": [
+86.29907,
+33.97639,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+512.858,
+427.333,
+82.653
+]
+},
+{
+"tick": 28,
+"t": 0.48333,
+"ball": [
+86.75102,
+33.94071,
+0.12286
+],
+"ballVel": [
+27.104,
+-2.14,
+7.208
+],
+"held": false,
+"renderedBall": {
+"p": [
+86.75102,
+33.94071,
+0.12286
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+522.722,
+424.55,
+82.64
+]
+},
+{
+"tick": 29,
+"t": 0.5,
+"ball": [
+87.20274,
+33.90505,
+0.24299
+],
+"ballVel": [
+27.09,
+-2.139,
+7.045
+],
+"held": false,
+"renderedBall": {
+"p": [
+87.20274,
+33.90505,
+0.24299
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+532.585,
+421.821,
+82.628
+]
+},
+{
+"tick": 30,
+"t": 0.51667,
+"ball": [
+87.65425,
+33.8694,
+0.3604
+],
+"ballVel": [
+27.077,
+-2.138,
+6.881
+],
+"held": false,
+"renderedBall": {
+"p": [
+87.65425,
+33.8694,
+0.3604
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+542.447,
+419.148,
+82.617
+]
+},
+{
+"tick": 31,
+"t": 0.53333,
+"ball": [
+88.10553,
+33.83377,
+0.47508
+],
+"ballVel": [
+27.064,
+-2.137,
+6.718
+],
+"held": false,
+"renderedBall": {
+"p": [
+88.10553,
+33.83377,
+0.47508
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+552.306,
+416.529,
+82.608
+]
+},
+{
+"tick": 32,
+"t": 0.55,
+"ball": [
+88.55659,
+33.79816,
+0.58704
+],
+"ballVel": [
+27.05,
+-2.136,
+6.554
+],
+"held": false,
+"renderedBall": {
+"p": [
+88.55659,
+33.79816,
+0.58704
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+562.162,
+413.966,
+82.599
+]
+},
+{
+"tick": 33,
+"t": 0.56667,
+"ball": [
+89.00743,
+33.76257,
+0.69628
+],
+"ballVel": [
+27.037,
+-2.135,
+6.391
+],
+"held": false,
+"renderedBall": {
+"p": [
+89.00743,
+33.76257,
+0.69628
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+572.015,
+411.458,
+82.591
+]
+},
+{
+"tick": 34,
+"t": 0.58333,
+"ball": [
+89.45805,
+33.727,
+0.80279
+],
+"ballVel": [
+27.024,
+-2.133,
+6.227
+],
+"held": false,
+"renderedBall": {
+"p": [
+89.45805,
+33.727,
+0.80279
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+581.865,
+409.005,
+82.584
+]
+},
+{
+"tick": 35,
+"t": 0.6,
+"ball": [
+89.90844,
+33.69144,
+0.90657
+],
+"ballVel": [
+27.01,
+-2.132,
+6.064
+],
+"held": false,
+"renderedBall": {
+"p": [
+89.90844,
+33.69144,
+0.90657
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+591.712,
+406.608,
+82.578
+]
+},
+{
+"tick": 36,
+"t": 0.61667,
+"ball": [
+90.35862,
+33.6559,
+1.00763
+],
+"ballVel": [
+26.997,
+-2.131,
+5.9
+],
+"held": false,
+"renderedBall": {
+"p": [
+90.35862,
+33.6559,
+1.00763
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+601.554,
+404.266,
+82.573
+]
+},
+{
+"tick": 37,
+"t": 0.63333,
+"ball": [
+90.80857,
+33.62038,
+1.10596
+],
+"ballVel": [
+26.984,
+-2.13,
+5.737
+],
+"held": false,
+"renderedBall": {
+"p": [
+90.80857,
+33.62038,
+1.10596
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+611.392,
+401.98,
+82.569
+]
+},
+{
+"tick": 38,
+"t": 0.65,
+"ball": [
+91.2583,
+33.58487,
+1.20157
+],
+"ballVel": [
+26.971,
+-2.129,
+5.573
+],
+"held": false,
+"renderedBall": {
+"p": [
+91.2583,
+33.58487,
+1.20157
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+621.225,
+399.75,
+82.566
+]
+},
+{
+"tick": 39,
+"t": 0.66667,
+"ball": [
+91.70781,
+33.54938,
+1.29445
+],
+"ballVel": [
+26.957,
+-2.128,
+5.41
+],
+"held": false,
+"renderedBall": {
+"p": [
+91.70781,
+33.54938,
+1.29445
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+631.053,
+397.576,
+82.564
+]
+},
+{
+"tick": 40,
+"t": 0.68333,
+"ball": [
+92.1571,
+33.51391,
+1.38461
+],
+"ballVel": [
+26.944,
+-2.127,
+5.246
+],
+"held": false,
+"renderedBall": {
+"p": [
+92.1571,
+33.51391,
+1.38461
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+640.875,
+395.457,
+82.563
+]
+},
+{
+"tick": 41,
+"t": 0.7,
+"ball": [
+92.60617,
+33.47846,
+1.47205
+],
+"ballVel": [
+26.931,
+-2.126,
+5.083
+],
+"held": false,
+"renderedBall": {
+"p": [
+92.60617,
+33.47846,
+1.47205
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+650.692,
+393.395,
+82.563
+]
+},
+{
+"tick": 42,
+"t": 0.71667,
+"ball": [
+93.05501,
+33.44303,
+1.55676
+],
+"ballVel": [
+26.917,
+-2.125,
+4.919
+],
+"held": false,
+"renderedBall": {
+"p": [
+93.05501,
+33.44303,
+1.55676
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+660.502,
+391.388,
+82.565
+]
+},
+{
+"tick": 43,
+"t": 0.73333,
+"ball": [
+93.50364,
+33.40761,
+1.63874
+],
+"ballVel": [
+26.904,
+-2.124,
+4.756
+],
+"held": false,
+"renderedBall": {
+"p": [
+93.50364,
+33.40761,
+1.63874
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+670.306,
+389.438,
+82.567
+]
+},
+{
+"tick": 44,
+"t": 0.75,
+"ball": [
+93.95204,
+33.37221,
+1.718
+],
+"ballVel": [
+26.891,
+-2.123,
+4.592
+],
+"held": false,
+"renderedBall": {
+"p": [
+93.95204,
+33.37221,
+1.718
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+680.103,
+387.544,
+82.57
+]
+},
+{
+"tick": 45,
+"t": 0.76667,
+"ball": [
+94.40022,
+33.33682,
+1.79453
+],
+"ballVel": [
+26.878,
+-2.122,
+4.429
+],
+"held": false,
+"renderedBall": {
+"p": [
+94.40022,
+33.33682,
+1.79453
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+689.892,
+385.707,
+82.574
+]
+},
+{
+"tick": 46,
+"t": 0.78333,
+"ball": [
+94.84818,
+33.30146,
+1.86834
+],
+"ballVel": [
+26.864,
+-2.121,
+4.265
+],
+"held": false,
+"renderedBall": {
+"p": [
+94.84818,
+33.30146,
+1.86834
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+699.674,
+383.926,
+82.579
+]
+},
+{
+"tick": 47,
+"t": 0.8,
+"ball": [
+95.29592,
+33.26611,
+1.93942
+],
+"ballVel": [
+26.851,
+-2.12,
+4.102
+],
+"held": false,
+"renderedBall": {
+"p": [
+95.29592,
+33.26611,
+1.93942
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+709.448,
+382.201,
+82.585
+]
+},
+{
+"tick": 48,
+"t": 0.81667,
+"ball": [
+95.74344,
+33.23078,
+2.00778
+],
+"ballVel": [
+26.838,
+-2.119,
+3.938
+],
+"held": false,
+"renderedBall": {
+"p": [
+95.74344,
+33.23078,
+2.00778
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+719.213,
+380.532,
+82.592
+]
+},
+{
+"tick": 49,
+"t": 0.83333,
+"ball": [
+96.19073,
+33.19547,
+2.07342
+],
+"ballVel": [
+26.824,
+-2.118,
+3.775
+],
+"held": false,
+"renderedBall": {
+"p": [
+96.19073,
+33.19547,
+2.07342
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+728.97,
+378.921,
+82.601
+]
+},
+{
+"tick": 50,
+"t": 0.85,
+"ball": [
+96.6378,
+33.16017,
+2.13633
+],
+"ballVel": [
+26.811,
+-2.117,
+3.611
+],
+"held": false,
+"renderedBall": {
+"p": [
+96.6378,
+33.16017,
+2.13633
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+738.718,
+377.365,
+82.61
+]
+},
+{
+"tick": 51,
+"t": 0.86667,
+"ball": [
+97.08466,
+33.1249,
+2.19651
+],
+"ballVel": [
+26.798,
+-2.116,
+3.448
+],
+"held": false,
+"renderedBall": {
+"p": [
+97.08466,
+33.1249,
+2.19651
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+748.456,
+375.866,
+82.62
+]
+},
+{
+"tick": 52,
+"t": 0.88333,
+"ball": [
+97.53129,
+33.08964,
+2.25397
+],
+"ballVel": [
+26.785,
+-2.115,
+3.284
+],
+"held": false,
+"renderedBall": {
+"p": [
+97.53129,
+33.08964,
+2.25397
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+758.185,
+374.424,
+82.631
+]
+},
+{
+"tick": 53,
+"t": 0.9,
+"ball": [
+97.97769,
+33.05439,
+2.3087
+],
+"ballVel": [
+26.771,
+-2.114,
+3.121
+],
+"held": false,
+"renderedBall": {
+"p": [
+97.97769,
+33.05439,
+2.3087
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+767.904,
+373.039,
+82.643
+]
+},
+{
+"tick": 54,
+"t": 0.91667,
+"ball": [
+98.42388,
+33.01917,
+2.36071
+],
+"ballVel": [
+26.758,
+-2.112,
+2.957
+],
+"held": false,
+"renderedBall": {
+"p": [
+98.42388,
+33.01917,
+2.36071
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+777.612,
+371.71,
+82.656
+]
+},
+{
+"tick": 55,
+"t": 0.93333,
+"ball": [
+98.86985,
+32.98396,
+2.40999
+],
+"ballVel": [
+26.745,
+-2.111,
+2.794
+],
+"held": false,
+"renderedBall": {
+"p": [
+98.86985,
+32.98396,
+2.40999
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+787.309,
+370.438,
+82.671
+]
+},
+{
+"tick": 56,
+"t": 0.95,
+"ball": [
+99.31559,
+32.94877,
+2.45655
+],
+"ballVel": [
+26.731,
+-2.11,
+2.63
+],
+"held": false,
+"renderedBall": {
+"p": [
+99.31559,
+32.94877,
+2.45655
+],
+"r": 0.11,
+"drawn3d": true,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+796.995,
+369.222,
+82.686
+]
+},
+{
+"tick": 57,
+"t": 0.96667,
+"ball": [
+99.76111,
+32.9136,
+2.50039
+],
+"ballVel": [
+26.718,
+-2.109,
+2.467
+],
+"held": false,
+"renderedBall": {
+"p": [
+99.76111,
+32.9136,
+2.50039
+],
+"r": 0.11,
+"drawn3d": true,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+806.669,
+368.064,
+82.702
+]
+},
+{
+"tick": 58,
+"t": 0.98333,
+"ball": [
+100.20642,
+32.87844,
+2.5415
+],
+"ballVel": [
+26.705,
+-2.108,
+2.303
+],
+"held": false,
+"renderedBall": {
+"p": [
+100.20642,
+32.87844,
+2.5415
+],
+"r": 0.11,
+"drawn3d": true,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+816.332,
+366.962,
+82.719
+]
+},
+{
+"tick": 59,
+"t": 1,
+"ball": [
+100.65149,
+32.8433,
+2.57988
+],
+"ballVel": [
+26.691,
+-2.107,
+2.14
+],
+"held": false,
+"renderedBall": {
+"p": [
+100.65149,
+32.8433,
+2.57988
+],
+"r": 0.11,
+"drawn3d": true,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+825.982,
+365.917,
+82.737
+]
+},
+{
+"tick": 60,
+"t": 1.01667,
+"ball": [
+101.09635,
+32.80818,
+2.61554
+],
+"ballVel": [
+26.678,
+-2.106,
+1.976
+],
+"held": false,
+"renderedBall": {
+"p": [
+101.09635,
+32.80818,
+2.61554
+],
+"r": 0.11,
+"drawn3d": true,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+835.62,
+364.928,
+82.757
+]
+},
+{
+"tick": 61,
+"t": 1.03333,
+"ball": [
+101.54099,
+32.77308,
+2.64847
+],
+"ballVel": [
+26.665,
+-2.105,
+1.813
+],
+"held": false,
+"renderedBall": {
+"p": [
+101.54099,
+32.77308,
+2.64847
+],
+"r": 0.11,
+"drawn3d": true,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+845.245,
+363.996,
+82.777
+]
+},
+{
+"tick": 62,
+"t": 1.05,
+"ball": [
+101.87776,
+32.70254,
+2.71268
+],
+"ballVel": [
+5.026,
+-8.939,
+8.311
+],
+"held": false,
+"renderedBall": {
+"p": [
+101.87776,
+32.70254,
+2.71268
+],
+"r": 0.11,
+"drawn3d": true,
+"pres": false
+},
+"isContactTick": true,
+"ballScreenPx": [
+852.437,
+362.166,
+82.818
+]
+},
+{
+"tick": 63,
+"t": 1.06667,
+"ball": [
+101.96152,
+32.55356,
+2.8512
+],
+"ballVel": [
+5.019,
+-8.927,
+8.148
+],
+"held": false,
+"renderedBall": {
+"p": [
+101.96152,
+32.55356,
+2.8512
+],
+"r": 0.11,
+"drawn3d": true,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+853.946,
+358.246,
+82.904
+]
+},
+{
+"tick": 64,
+"t": 1.08333,
+"ball": [
+102.04517,
+32.40477,
+2.987
+],
+"ballVel": [
+5.013,
+-8.916,
+7.984
+],
+"held": false,
+"renderedBall": {
+"p": [
+102.04517,
+32.40477,
+2.987
+],
+"r": 0.11,
+"drawn3d": true,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+855.446,
+354.392,
+82.991
+]
+},
+{
+"tick": 65,
+"t": 1.1,
+"ball": [
+102.12872,
+32.25617,
+3.12007
+],
+"ballVel": [
+5.006,
+-8.904,
+7.821
+],
+"held": false,
+"renderedBall": {
+"p": [
+102.12872,
+32.25617,
+3.12007
+],
+"r": 0.11,
+"drawn3d": true,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+856.938,
+350.604,
+83.079
+]
+},
+{
+"tick": 66,
+"t": 1.11667,
+"ball": [
+102.21215,
+32.10777,
+3.25041
+],
+"ballVel": [
+5,
+-8.893,
+7.657
+],
+"held": false,
+"renderedBall": {
+"p": [
+102.21215,
+32.10777,
+3.25041
+],
+"r": 0.11,
+"drawn3d": true,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+858.421,
+346.881,
+83.168
+]
+},
+{
+"tick": 67,
+"t": 1.13333,
+"ball": [
+102.29548,
+31.95956,
+3.37803
+],
+"ballVel": [
+4.993,
+-8.881,
+7.494
+],
+"held": false,
+"renderedBall": {
+"p": [
+102.29548,
+31.95956,
+3.37803
+],
+"r": 0.11,
+"drawn3d": true,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+859.895,
+343.223,
+83.258
+]
+},
+{
+"tick": 68,
+"t": 1.15,
+"ball": [
+102.37869,
+31.81154,
+3.50293
+],
+"ballVel": [
+4.986,
+-8.869,
+7.33
+],
+"held": false,
+"renderedBall": {
+"p": [
+102.37869,
+31.81154,
+3.50293
+],
+"r": 0.11,
+"drawn3d": true,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+861.361,
+339.631,
+83.348
+]
+},
+{
+"tick": 69,
+"t": 1.16667,
+"ball": [
+102.4618,
+31.66372,
+3.6251
+],
+"ballVel": [
+4.98,
+-8.858,
+7.167
+],
+"held": false,
+"renderedBall": {
+"p": [
+102.4618,
+31.66372,
+3.6251
+],
+"r": 0.11,
+"drawn3d": true,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+862.818,
+336.104,
+83.44
+]
+},
+{
+"tick": 70,
+"t": 1.18333,
+"ball": [
+102.5448,
+31.5161,
+3.74455
+],
+"ballVel": [
+4.973,
+-8.846,
+7.003
+],
+"held": false,
+"renderedBall": {
+"p": [
+102.5448,
+31.5161,
+3.74455
+],
+"r": 0.11,
+"drawn3d": true,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+864.267,
+332.641,
+83.532
+]
+},
+{
+"tick": 71,
+"t": 1.2,
+"ball": [
+102.62769,
+31.36866,
+3.86127
+],
+"ballVel": [
+4.967,
+-8.834,
+6.84
+],
+"held": false,
+"renderedBall": {
+"p": [
+102.62769,
+31.36866,
+3.86127
+],
+"r": 0.11,
+"drawn3d": true,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+865.706,
+329.244,
+83.625
+]
+},
+{
+"tick": 72,
+"t": 1.21667,
+"ball": [
+102.71047,
+31.22142,
+3.97526
+],
+"ballVel": [
+4.96,
+-8.823,
+6.676
+],
+"held": false,
+"renderedBall": {
+"p": [
+102.71047,
+31.22142,
+3.97526
+],
+"r": 0.11,
+"drawn3d": true,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+867.137,
+325.912,
+83.718
+]
+},
+{
+"tick": 73,
+"t": 1.23333,
+"ball": [
+102.79315,
+31.07437,
+4.08653
+],
+"ballVel": [
+4.954,
+-8.811,
+6.513
+],
+"held": false,
+"renderedBall": {
+"p": [
+102.79315,
+31.07437,
+4.08653
+],
+"r": 0.11,
+"drawn3d": true,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+868.559,
+322.644,
+83.813
+]
+},
+{
+"tick": 74,
+"t": 1.25,
+"ball": [
+102.87571,
+30.92752,
+4.19508
+],
+"ballVel": [
+4.947,
+-8.8,
+6.349
+],
+"held": false,
+"renderedBall": {
+"p": [
+102.87571,
+30.92752,
+4.19508
+],
+"r": 0.11,
+"drawn3d": true,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+869.972,
+319.441,
+83.909
+]
+},
+{
+"tick": 75,
+"t": 1.26667,
+"ball": [
+102.95816,
+30.78086,
+4.3009
+],
+"ballVel": [
+4.941,
+-8.788,
+6.186
+],
+"held": false,
+"renderedBall": {
+"p": [
+102.95816,
+30.78086,
+4.3009
+],
+"r": 0.11,
+"drawn3d": true,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+871.377,
+316.302,
+84.005
+]
+},
+{
+"tick": 76,
+"t": 1.28333,
+"ball": [
+103.04051,
+30.6344,
+4.40399
+],
+"ballVel": [
+4.934,
+-8.776,
+6.022
+],
+"held": false,
+"renderedBall": {
+"p": [
+103.04051,
+30.6344,
+4.40399
+],
+"r": 0.11,
+"drawn3d": true,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+872.773,
+313.228,
+84.102
+]
+},
+{
+"tick": 77,
+"t": 1.3,
+"ball": [
+103.12275,
+30.48812,
+4.50436
+],
+"ballVel": [
+4.928,
+-8.765,
+5.859
+],
+"held": false,
+"renderedBall": {
+"p": [
+103.12275,
+30.48812,
+4.50436
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+874.16,
+310.218,
+84.2
+]
+},
+{
+"tick": 78,
+"t": 1.31667,
+"ball": [
+103.20487,
+30.34205,
+4.60201
+],
+"ballVel": [
+4.921,
+-8.753,
+5.695
+],
+"held": false,
+"renderedBall": {
+"p": [
+103.20487,
+30.34205,
+4.60201
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+875.538,
+307.272,
+84.299
+]
+},
+{
+"tick": 79,
+"t": 1.33333,
+"ball": [
+103.28689,
+30.19616,
+4.69693
+],
+"ballVel": [
+4.915,
+-8.741,
+5.532
+],
+"held": false,
+"renderedBall": {
+"p": [
+103.28689,
+30.19616,
+4.69693
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+876.907,
+304.39,
+84.399
+]
+},
+{
+"tick": 80,
+"t": 1.35,
+"ball": [
+103.3688,
+30.05047,
+4.78912
+],
+"ballVel": [
+4.908,
+-8.73,
+5.368
+],
+"held": false,
+"renderedBall": {
+"p": [
+103.3688,
+30.05047,
+4.78912
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+878.268,
+301.571,
+84.499
+]
+},
+{
+"tick": 81,
+"t": 1.36667,
+"ball": [
+103.4506,
+29.90497,
+4.87859
+],
+"ballVel": [
+4.902,
+-8.718,
+5.205
+],
+"held": false,
+"renderedBall": {
+"p": [
+103.4506,
+29.90497,
+4.87859
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+879.62,
+298.817,
+84.601
+]
+},
+{
+"tick": 82,
+"t": 1.38333,
+"ball": [
+103.5323,
+29.75967,
+4.96534
+],
+"ballVel": [
+4.895,
+-8.707,
+5.041
+],
+"held": false,
+"renderedBall": {
+"p": [
+103.5323,
+29.75967,
+4.96534
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+880.963,
+296.126,
+84.703
+]
+},
+{
+"tick": 83,
+"t": 1.4,
+"ball": [
+103.61388,
+29.61456,
+5.04936
+],
+"ballVel": [
+4.888,
+-8.695,
+4.878
+],
+"held": false,
+"renderedBall": {
+"p": [
+103.61388,
+29.61456,
+5.04936
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+882.297,
+293.498,
+84.806
+]
+},
+{
+"tick": 84,
+"t": 1.41667,
+"ball": [
+103.69535,
+29.46965,
+5.13065
+],
+"ballVel": [
+4.882,
+-8.683,
+4.714
+],
+"held": false,
+"renderedBall": {
+"p": [
+103.69535,
+29.46965,
+5.13065
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+883.622,
+290.933,
+84.91
+]
+},
+{
+"tick": 85,
+"t": 1.43333,
+"ball": [
+103.77672,
+29.32492,
+5.20922
+],
+"ballVel": [
+4.875,
+-8.672,
+4.551
+],
+"held": false,
+"renderedBall": {
+"p": [
+103.77672,
+29.32492,
+5.20922
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+884.938,
+288.432,
+85.015
+]
+},
+{
+"tick": 86,
+"t": 1.45,
+"ball": [
+103.85798,
+29.1804,
+5.28507
+],
+"ballVel": [
+4.869,
+-8.66,
+4.387
+],
+"held": false,
+"renderedBall": {
+"p": [
+103.85798,
+29.1804,
+5.28507
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+886.246,
+285.993,
+85.12
+]
+},
+{
+"tick": 87,
+"t": 1.46667,
+"ball": [
+103.93912,
+29.03606,
+5.35819
+],
+"ballVel": [
+4.862,
+-8.648,
+4.224
+],
+"held": false,
+"renderedBall": {
+"p": [
+103.93912,
+29.03606,
+5.35819
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+887.544,
+283.617,
+85.227
+]
+},
+{
+"tick": 88,
+"t": 1.48333,
+"ball": [
+104.02016,
+28.89192,
+5.42859
+],
+"ballVel": [
+4.856,
+-8.637,
+4.06
+],
+"held": false,
+"renderedBall": {
+"p": [
+104.02016,
+28.89192,
+5.42859
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+888.834,
+281.304,
+85.334
+]
+},
+{
+"tick": 89,
+"t": 1.5,
+"ball": [
+104.10109,
+28.74797,
+5.49626
+],
+"ballVel": [
+4.849,
+-8.625,
+3.897
+],
+"held": false,
+"renderedBall": {
+"p": [
+104.10109,
+28.74797,
+5.49626
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+890.115,
+279.053,
+85.442
+]
+},
+{
+"tick": 90,
+"t": 1.51667,
+"ball": [
+104.18191,
+28.60422,
+5.5612
+],
+"ballVel": [
+4.843,
+-8.614,
+3.733
+],
+"held": false,
+"renderedBall": {
+"p": [
+104.18191,
+28.60422,
+5.5612
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+891.387,
+276.864,
+85.551
+]
+},
+{
+"tick": 91,
+"t": 1.53333,
+"ball": [
+104.26263,
+28.46066,
+5.62342
+],
+"ballVel": [
+4.836,
+-8.602,
+3.57
+],
+"held": false,
+"renderedBall": {
+"p": [
+104.26263,
+28.46066,
+5.62342
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+892.65,
+274.737,
+85.661
+]
+},
+{
+"tick": 92,
+"t": 1.55,
+"ball": [
+104.34323,
+28.31729,
+5.68292
+],
+"ballVel": [
+4.83,
+-8.59,
+3.406
+],
+"held": false,
+"renderedBall": {
+"p": [
+104.34323,
+28.31729,
+5.68292
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+893.904,
+272.673,
+85.771
+]
+},
+{
+"tick": 93,
+"t": 1.56667,
+"ball": [
+104.42372,
+28.17412,
+5.73969
+],
+"ballVel": [
+4.823,
+-8.579,
+3.243
+],
+"held": false,
+"renderedBall": {
+"p": [
+104.42372,
+28.17412,
+5.73969
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+895.149,
+270.669,
+85.883
+]
+},
+{
+"tick": 94,
+"t": 1.58333,
+"ball": [
+104.50411,
+28.03114,
+5.79373
+],
+"ballVel": [
+4.817,
+-8.567,
+3.079
+],
+"held": false,
+"renderedBall": {
+"p": [
+104.50411,
+28.03114,
+5.79373
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+896.385,
+268.728,
+85.995
+]
+},
+{
+"tick": 95,
+"t": 1.6,
+"ball": [
+104.58438,
+27.88836,
+5.84505
+],
+"ballVel": [
+4.81,
+-8.555,
+2.916
+],
+"held": false,
+"renderedBall": {
+"p": [
+104.58438,
+27.88836,
+5.84505
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+897.613,
+266.848,
+86.108
+]
+},
+{
+"tick": 96,
+"t": 1.61667,
+"ball": [
+104.66455,
+27.74576,
+5.89365
+],
+"ballVel": [
+4.804,
+-8.544,
+2.752
+],
+"held": false,
+"renderedBall": {
+"p": [
+104.66455,
+27.74576,
+5.89365
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+898.831,
+265.028,
+86.222
+]
+},
+{
+"tick": 97,
+"t": 1.63333,
+"ball": [
+104.74461,
+27.60337,
+5.93952
+],
+"ballVel": [
+4.797,
+-8.532,
+2.589
+],
+"held": false,
+"renderedBall": {
+"p": [
+104.74461,
+27.60337,
+5.93952
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+900.041,
+263.27,
+86.337
+]
+},
+{
+"tick": 98,
+"t": 1.65,
+"ball": [
+104.82456,
+27.46116,
+5.98266
+],
+"ballVel": [
+4.79,
+-8.521,
+2.425
+],
+"held": false,
+"renderedBall": {
+"p": [
+104.82456,
+27.46116,
+5.98266
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+901.241,
+261.573,
+86.453
+]
+},
+{
+"tick": 99,
+"t": 1.66667,
+"ball": [
+104.9044,
+27.31915,
+6.02308
+],
+"ballVel": [
+4.784,
+-8.509,
+2.262
+],
+"held": false,
+"renderedBall": {
+"p": [
+104.9044,
+27.31915,
+6.02308
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+902.433,
+259.936,
+86.569
+]
+},
+{
+"tick": 100,
+"t": 1.68333,
+"ball": [
+104.98413,
+27.17734,
+6.06078
+],
+"ballVel": [
+4.777,
+-8.497,
+2.098
+],
+"held": false,
+"renderedBall": {
+"p": [
+104.98413,
+27.17734,
+6.06078
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+903.616,
+258.36,
+86.687
+]
+},
+{
+"tick": 101,
+"t": 1.7,
+"ball": [
+105.06376,
+27.03571,
+6.09575
+],
+"ballVel": [
+4.771,
+-8.486,
+1.935
+],
+"held": false,
+"renderedBall": {
+"p": [
+105.06376,
+27.03571,
+6.09575
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+904.79,
+256.843,
+86.805
+]
+},
+{
+"tick": 102,
+"t": 1.71667,
+"ball": [
+105.14327,
+26.89428,
+6.12799
+],
+"ballVel": [
+4.764,
+-8.474,
+1.771
+],
+"held": false,
+"renderedBall": {
+"p": [
+105.14327,
+26.89428,
+6.12799
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+905.955,
+255.387,
+86.924
+]
+},
+{
+"tick": 103,
+"t": 1.73333,
+"ball": [
+105.22268,
+26.75305,
+6.15751
+],
+"ballVel": [
+4.758,
+-8.463,
+1.608
+],
+"held": false,
+"renderedBall": {
+"p": [
+105.22268,
+26.75305,
+6.15751
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+907.111,
+253.991,
+87.044
+]
+},
+{
+"tick": 104,
+"t": 1.75,
+"ball": [
+105.30197,
+26.61201,
+6.18431
+],
+"ballVel": [
+4.751,
+-8.451,
+1.444
+],
+"held": false,
+"renderedBall": {
+"p": [
+105.30197,
+26.61201,
+6.18431
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+908.258,
+252.654,
+87.165
+]
+},
+{
+"tick": 105,
+"t": 1.76667,
+"ball": [
+105.38116,
+26.47116,
+6.20838
+],
+"ballVel": [
+4.745,
+-8.439,
+1.281
+],
+"held": false,
+"renderedBall": {
+"p": [
+105.38116,
+26.47116,
+6.20838
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+909.397,
+251.376,
+87.286
+]
+},
+{
+"tick": 106,
+"t": 1.78333,
+"ball": [
+105.46024,
+26.3305,
+6.22973
+],
+"ballVel": [
+4.738,
+-8.428,
+1.117
+],
+"held": false,
+"renderedBall": {
+"p": [
+105.46024,
+26.3305,
+6.22973
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+910.526,
+250.158,
+87.409
+]
+},
+{
+"tick": 107,
+"t": 1.8,
+"ball": [
+105.53921,
+26.19004,
+6.24835
+],
+"ballVel": [
+4.732,
+-8.416,
+0.954
+],
+"held": false,
+"renderedBall": {
+"p": [
+105.53921,
+26.19004,
+6.24835
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+911.647,
+248.998,
+87.532
+]
+},
+{
+"tick": 108,
+"t": 1.81667,
+"ball": [
+105.61807,
+26.04978,
+6.26424
+],
+"ballVel": [
+4.725,
+-8.404,
+0.79
+],
+"held": false,
+"renderedBall": {
+"p": [
+105.61807,
+26.04978,
+6.26424
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+912.759,
+247.897,
+87.656
+]
+},
+{
+"tick": 109,
+"t": 1.83333,
+"ball": [
+105.69682,
+25.9097,
+6.27741
+],
+"ballVel": [
+4.719,
+-8.393,
+0.627
+],
+"held": false,
+"renderedBall": {
+"p": [
+105.69682,
+25.9097,
+6.27741
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+913.862,
+246.855,
+87.781
+]
+},
+{
+"tick": 110,
+"t": 1.85,
+"ball": [
+105.77546,
+25.76982,
+6.28786
+],
+"ballVel": [
+4.712,
+-8.381,
+0.463
+],
+"held": false,
+"renderedBall": {
+"p": [
+105.77546,
+25.76982,
+6.28786
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+914.956,
+245.871,
+87.907
+]
+},
+{
+"tick": 111,
+"t": 1.86667,
+"ball": [
+105.854,
+25.63014,
+6.29558
+],
+"ballVel": [
+4.706,
+-8.37,
+0.3
+],
+"held": false,
+"renderedBall": {
+"p": [
+105.854,
+25.63014,
+6.29558
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+916.041,
+244.945,
+88.033
+]
+},
+{
+"tick": 112,
+"t": 1.88333,
+"ball": [
+105.93242,
+25.49065,
+6.30057
+],
+"ballVel": [
+4.699,
+-8.358,
+0.136
+],
+"held": false,
+"renderedBall": {
+"p": [
+105.93242,
+25.49065,
+6.30057
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+917.117,
+244.077,
+88.161
+]
+},
+{
+"tick": 113,
+"t": 1.9,
+"ball": [
+106.01074,
+25.35135,
+6.30284
+],
+"ballVel": [
+4.692,
+-8.346,
+-0.027
+],
+"held": false,
+"renderedBall": {
+"p": [
+106.01074,
+25.35135,
+6.30284
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+918.185,
+243.266,
+88.289
+]
+},
+{
+"tick": 114,
+"t": 1.91667,
+"ball": [
+106.08895,
+25.21224,
+6.30239
+],
+"ballVel": [
+4.686,
+-8.335,
+-0.191
+],
+"held": false,
+"renderedBall": {
+"p": [
+106.08895,
+25.21224,
+6.30239
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+919.243,
+242.513,
+88.418
+]
+},
+{
+"tick": 115,
+"t": 1.93333,
+"ball": [
+106.16704,
+25.07333,
+6.29921
+],
+"ballVel": [
+4.679,
+-8.323,
+-0.354
+],
+"held": false,
+"renderedBall": {
+"p": [
+106.16704,
+25.07333,
+6.29921
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+920.293,
+241.817,
+88.548
+]
+},
+{
+"tick": 116,
+"t": 1.95,
+"ball": [
+106.24503,
+24.93462,
+6.2933
+],
+"ballVel": [
+4.673,
+-8.311,
+-0.518
+],
+"held": false,
+"renderedBall": {
+"p": [
+106.24503,
+24.93462,
+6.2933
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+921.334,
+241.178,
+88.679
+]
+},
+{
+"tick": 117,
+"t": 1.96667,
+"ball": [
+106.32291,
+24.79609,
+6.28467
+],
+"ballVel": [
+4.666,
+-8.3,
+-0.681
+],
+"held": false,
+"renderedBall": {
+"p": [
+106.32291,
+24.79609,
+6.28467
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+922.366,
+240.596,
+88.811
+]
+},
+{
+"tick": 118,
+"t": 1.98333,
+"ball": [
+106.40069,
+24.65776,
+6.27332
+],
+"ballVel": [
+4.66,
+-8.288,
+-0.845
+],
+"held": false,
+"renderedBall": {
+"p": [
+106.40069,
+24.65776,
+6.27332
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+923.39,
+240.07,
+88.943
+]
+},
+{
+"tick": 119,
+"t": 2,
+"ball": [
+106.47835,
+24.51963,
+6.25924
+],
+"ballVel": [
+4.653,
+-8.277,
+-1.008
+],
+"held": false,
+"renderedBall": {
+"p": [
+106.47835,
+24.51963,
+6.25924
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+924.404,
+239.6,
+89.077
+]
+},
+{
+"tick": 120,
+"t": 2.01667,
+"ball": [
+106.5559,
+24.38168,
+6.24243
+],
+"ballVel": [
+4.647,
+-8.265,
+-1.172
+],
+"held": false,
+"renderedBall": {
+"p": [
+106.5559,
+24.38168,
+6.24243
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+925.41,
+239.187,
+89.211
+]
+},
+{
+"tick": 121,
+"t": 2.03333,
+"ball": [
+106.63335,
+24.24393,
+6.2229
+],
+"ballVel": [
+4.64,
+-8.253,
+-1.335
+],
+"held": false,
+"renderedBall": {
+"p": [
+106.63335,
+24.24393,
+6.2229
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+926.407,
+238.829,
+89.346
+]
+},
+{
+"tick": 122,
+"t": 2.05,
+"ball": [
+106.71068,
+24.10638,
+6.20065
+],
+"ballVel": [
+4.634,
+-8.242,
+-1.499
+],
+"held": false,
+"renderedBall": {
+"p": [
+106.71068,
+24.10638,
+6.20065
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+927.395,
+238.526,
+89.482
+]
+},
+{
+"tick": 123,
+"t": 2.06667,
+"ball": [
+106.78791,
+23.96902,
+6.17567
+],
+"ballVel": [
+4.627,
+-8.23,
+-1.662
+],
+"held": false,
+"renderedBall": {
+"p": [
+106.78791,
+23.96902,
+6.17567
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+928.375,
+238.279,
+89.618
+]
+},
+{
+"tick": 124,
+"t": 2.08333,
+"ball": [
+106.86503,
+23.83185,
+6.14797
+],
+"ballVel": [
+4.621,
+-8.218,
+-1.826
+],
+"held": false,
+"renderedBall": {
+"p": [
+106.86503,
+23.83185,
+6.14797
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+929.346,
+238.087,
+89.756
+]
+},
+{
+"tick": 125,
+"t": 2.1,
+"ball": [
+106.94204,
+23.69488,
+6.11754
+],
+"ballVel": [
+4.614,
+-8.207,
+-1.989
+],
+"held": false,
+"renderedBall": {
+"p": [
+106.94204,
+23.69488,
+6.11754
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+930.308,
+237.949,
+89.894
+]
+},
+{
+"tick": 126,
+"t": 2.11667,
+"ball": [
+107.01894,
+23.5581,
+6.08438
+],
+"ballVel": [
+4.607,
+-8.195,
+-2.153
+],
+"held": false,
+"renderedBall": {
+"p": [
+107.01894,
+23.5581,
+6.08438
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+931.261,
+237.866,
+90.034
+]
+},
+{
+"tick": 127,
+"t": 2.13333,
+"ball": [
+107.09573,
+23.42151,
+6.0485
+],
+"ballVel": [
+4.601,
+-8.184,
+-2.316
+],
+"held": false,
+"renderedBall": {
+"p": [
+107.09573,
+23.42151,
+6.0485
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+932.206,
+237.837,
+90.174
+]
+},
+{
+"tick": 128,
+"t": 2.15,
+"ball": [
+107.17241,
+23.28512,
+6.0099
+],
+"ballVel": [
+4.594,
+-8.172,
+-2.48
+],
+"held": false,
+"renderedBall": {
+"p": [
+107.17241,
+23.28512,
+6.0099
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+933.142,
+237.863,
+90.315
+]
+},
+{
+"tick": 129,
+"t": 2.16667,
+"ball": [
+107.24899,
+23.14892,
+5.96857
+],
+"ballVel": [
+4.588,
+-8.16,
+-2.643
+],
+"held": false,
+"renderedBall": {
+"p": [
+107.24899,
+23.14892,
+5.96857
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+934.07,
+237.942,
+90.456
+]
+},
+{
+"tick": 130,
+"t": 2.18333,
+"ball": [
+107.32545,
+23.01291,
+5.92451
+],
+"ballVel": [
+4.581,
+-8.149,
+-2.807
+],
+"held": false,
+"renderedBall": {
+"p": [
+107.32545,
+23.01291,
+5.92451
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+934.988,
+238.074,
+90.599
+]
+},
+{
+"tick": 131,
+"t": 2.2,
+"ball": [
+107.40181,
+22.8771,
+5.87773
+],
+"ballVel": [
+4.575,
+-8.137,
+-2.97
+],
+"held": false,
+"renderedBall": {
+"p": [
+107.40181,
+22.8771,
+5.87773
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+935.898,
+238.26,
+90.742
+]
+},
+{
+"tick": 132,
+"t": 2.21667,
+"ball": [
+107.47805,
+22.74148,
+5.82823
+],
+"ballVel": [
+4.568,
+-8.125,
+-3.134
+],
+"held": false,
+"renderedBall": {
+"p": [
+107.47805,
+22.74148,
+5.82823
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+936.8,
+238.499,
+90.887
+]
+},
+{
+"tick": 133,
+"t": 2.23333,
+"ball": [
+107.55419,
+22.60606,
+5.776
+],
+"ballVel": [
+4.562,
+-8.114,
+-3.297
+],
+"held": false,
+"renderedBall": {
+"p": [
+107.55419,
+22.60606,
+5.776
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+937.693,
+238.79,
+91.032
+]
+},
+{
+"tick": 134,
+"t": 2.25,
+"ball": [
+107.63022,
+22.47083,
+5.72104
+],
+"ballVel": [
+4.555,
+-8.102,
+-3.461
+],
+"held": false,
+"renderedBall": {
+"p": [
+107.63022,
+22.47083,
+5.72104
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+938.577,
+239.134,
+91.178
+]
+},
+{
+"tick": 135,
+"t": 2.26667,
+"ball": [
+107.70614,
+22.33579,
+5.66336
+],
+"ballVel": [
+4.549,
+-8.091,
+-3.624
+],
+"held": false,
+"renderedBall": {
+"p": [
+107.70614,
+22.33579,
+5.66336
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+939.453,
+239.531,
+91.325
+]
+},
+{
+"tick": 136,
+"t": 2.28333,
+"ball": [
+107.78195,
+22.20095,
+5.60296
+],
+"ballVel": [
+4.542,
+-8.079,
+-3.788
+],
+"held": false,
+"renderedBall": {
+"p": [
+107.78195,
+22.20095,
+5.60296
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+940.32,
+239.979,
+91.472
+]
+},
+{
+"tick": 137,
+"t": 2.3,
+"ball": [
+107.85766,
+22.0663,
+5.53983
+],
+"ballVel": [
+4.536,
+-8.067,
+-3.951
+],
+"held": false,
+"renderedBall": {
+"p": [
+107.85766,
+22.0663,
+5.53983
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+941.179,
+240.478,
+91.621
+]
+},
+{
+"tick": 138,
+"t": 2.31667,
+"ball": [
+107.93325,
+21.93184,
+5.47397
+],
+"ballVel": [
+4.529,
+-8.056,
+-4.115
+],
+"held": false,
+"renderedBall": {
+"p": [
+107.93325,
+21.93184,
+5.47397
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+942.029,
+241.03,
+91.77
+]
+},
+{
+"tick": 139,
+"t": 2.33333,
+"ball": [
+108.00873,
+21.79758,
+5.40539
+],
+"ballVel": [
+4.523,
+-8.044,
+-4.278
+],
+"held": false,
+"renderedBall": {
+"p": [
+108.00873,
+21.79758,
+5.40539
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+942.87,
+241.632,
+91.92
+]
+},
+{
+"tick": 140,
+"t": 2.35,
+"ball": [
+108.08411,
+21.66351,
+5.33409
+],
+"ballVel": [
+4.516,
+-8.032,
+-4.442
+],
+"held": false,
+"renderedBall": {
+"p": [
+108.08411,
+21.66351,
+5.33409
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+943.704,
+242.285,
+92.071
+]
+},
+{
+"tick": 141,
+"t": 2.36667,
+"ball": [
+108.15938,
+21.52964,
+5.26006
+],
+"ballVel": [
+4.509,
+-8.021,
+-4.605
+],
+"held": false,
+"renderedBall": {
+"p": [
+108.15938,
+21.52964,
+5.26006
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+944.528,
+242.989,
+92.223
+]
+},
+{
+"tick": 142,
+"t": 2.38333,
+"ball": [
+108.23453,
+21.39596,
+5.18331
+],
+"ballVel": [
+4.503,
+-8.009,
+-4.769
+],
+"held": false,
+"renderedBall": {
+"p": [
+108.23453,
+21.39596,
+5.18331
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+945.345,
+243.743,
+92.376
+]
+},
+{
+"tick": 143,
+"t": 2.4,
+"ball": [
+108.30958,
+21.26247,
+5.10383
+],
+"ballVel": [
+4.496,
+-7.998,
+-4.932
+],
+"held": false,
+"renderedBall": {
+"p": [
+108.30958,
+21.26247,
+5.10383
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+946.153,
+244.548,
+92.529
+]
+},
+{
+"tick": 144,
+"t": 2.41667,
+"ball": [
+108.38452,
+21.12918,
+5.02162
+],
+"ballVel": [
+4.49,
+-7.986,
+-5.096
+],
+"held": false,
+"renderedBall": {
+"p": [
+108.38452,
+21.12918,
+5.02162
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+946.952,
+245.402,
+92.684
+]
+},
+{
+"tick": 145,
+"t": 2.43333,
+"ball": [
+108.45935,
+20.99608,
+4.93669
+],
+"ballVel": [
+4.483,
+-7.974,
+-5.259
+],
+"held": false,
+"renderedBall": {
+"p": [
+108.45935,
+20.99608,
+4.93669
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+947.743,
+246.305,
+92.839
+]
+},
+{
+"tick": 146,
+"t": 2.45,
+"ball": [
+108.53408,
+20.86317,
+4.84904
+],
+"ballVel": [
+4.477,
+-7.963,
+-5.423
+],
+"held": false,
+"renderedBall": {
+"p": [
+108.53408,
+20.86317,
+4.84904
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+948.526,
+247.258,
+92.995
+]
+},
+{
+"tick": 147,
+"t": 2.46667,
+"ball": [
+108.60869,
+20.73046,
+4.75866
+],
+"ballVel": [
+4.47,
+-7.951,
+-5.586
+],
+"held": false,
+"renderedBall": {
+"p": [
+108.60869,
+20.73046,
+4.75866
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+949.3,
+248.26,
+93.152
+]
+},
+{
+"tick": 148,
+"t": 2.48333,
+"ball": [
+108.68319,
+20.59794,
+4.66555
+],
+"ballVel": [
+4.464,
+-7.939,
+-5.75
+],
+"held": false,
+"renderedBall": {
+"p": [
+108.68319,
+20.59794,
+4.66555
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+950.066,
+249.311,
+93.31
+]
+},
+{
+"tick": 149,
+"t": 2.5,
+"ball": [
+108.75759,
+20.46562,
+4.56972
+],
+"ballVel": [
+4.457,
+-7.928,
+-5.913
+],
+"held": false,
+"renderedBall": {
+"p": [
+108.75759,
+20.46562,
+4.56972
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+950.824,
+250.41,
+93.468
+]
+},
+{
+"tick": 150,
+"t": 2.51667,
+"ball": [
+108.83188,
+20.33348,
+4.47117
+],
+"ballVel": [
+4.451,
+-7.916,
+-6.077
+],
+"held": false,
+"renderedBall": {
+"p": [
+108.83188,
+20.33348,
+4.47117
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+951.573,
+251.557,
+93.628
+]
+},
+{
+"tick": 151,
+"t": 2.53333,
+"ball": [
+108.90605,
+20.20155,
+4.36989
+],
+"ballVel": [
+4.444,
+-7.905,
+-6.24
+],
+"held": false,
+"renderedBall": {
+"p": [
+108.90605,
+20.20155,
+4.36989
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+952.315,
+252.752,
+93.788
+]
+},
+{
+"tick": 152,
+"t": 2.55,
+"ball": [
+108.98012,
+20.0698,
+4.26588
+],
+"ballVel": [
+4.438,
+-7.893,
+-6.404
+],
+"held": false,
+"renderedBall": {
+"p": [
+108.98012,
+20.0698,
+4.26588
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+953.048,
+253.995,
+93.949
+]
+},
+{
+"tick": 153,
+"t": 2.56667,
+"ball": [
+109.05408,
+19.93825,
+4.15915
+],
+"ballVel": [
+4.431,
+-7.881,
+-6.567
+],
+"held": false,
+"renderedBall": {
+"p": [
+109.05408,
+19.93825,
+4.15915
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+953.773,
+255.285,
+94.111
+]
+},
+{
+"tick": 154,
+"t": 2.58333,
+"ball": [
+109.12793,
+19.8069,
+4.0497
+],
+"ballVel": [
+4.425,
+-7.87,
+-6.731
+],
+"held": false,
+"renderedBall": {
+"p": [
+109.12793,
+19.8069,
+4.0497
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+954.489,
+256.622,
+94.274
+]
+},
+{
+"tick": 155,
+"t": 2.6,
+"ball": [
+109.20168,
+19.67573,
+3.93752
+],
+"ballVel": [
+4.418,
+-7.858,
+-6.894
+],
+"held": false,
+"renderedBall": {
+"p": [
+109.20168,
+19.67573,
+3.93752
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+955.198,
+258.006,
+94.438
+]
+},
+{
+"tick": 156,
+"t": 2.61667,
+"ball": [
+109.27531,
+19.54476,
+3.82261
+],
+"ballVel": [
+4.411,
+-7.847,
+-7.058
+],
+"held": false,
+"renderedBall": {
+"p": [
+109.27531,
+19.54476,
+3.82261
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+955.898,
+259.436,
+94.602
+]
+},
+{
+"tick": 157,
+"t": 2.63333,
+"ball": [
+109.34883,
+19.41399,
+3.70498
+],
+"ballVel": [
+4.405,
+-7.835,
+-7.221
+],
+"held": false,
+"renderedBall": {
+"p": [
+109.34883,
+19.41399,
+3.70498
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+956.59,
+260.913,
+94.767
+]
+},
+{
+"tick": 158,
+"t": 2.65,
+"ball": [
+109.42225,
+19.28341,
+3.58463
+],
+"ballVel": [
+4.398,
+-7.823,
+-7.385
+],
+"held": false,
+"renderedBall": {
+"p": [
+109.42225,
+19.28341,
+3.58463
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+957.274,
+262.435,
+94.934
+]
+},
+{
+"tick": 159,
+"t": 2.66667,
+"ball": [
+109.49556,
+19.15302,
+3.46155
+],
+"ballVel": [
+4.392,
+-7.812,
+-7.548
+],
+"held": false,
+"renderedBall": {
+"p": [
+109.49556,
+19.15302,
+3.46155
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+957.95,
+264.003,
+95.101
+]
+},
+{
+"tick": 160,
+"t": 2.68333,
+"ball": [
+109.56875,
+19.02283,
+3.33575
+],
+"ballVel": [
+4.385,
+-7.8,
+-7.712
+],
+"held": false,
+"renderedBall": {
+"p": [
+109.56875,
+19.02283,
+3.33575
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+958.618,
+265.617,
+95.268
+]
+},
+{
+"tick": 161,
+"t": 2.7,
+"ball": [
+109.64184,
+18.89283,
+3.20722
+],
+"ballVel": [
+4.379,
+-7.788,
+-7.875
+],
+"held": false,
+"renderedBall": {
+"p": [
+109.64184,
+18.89283,
+3.20722
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+959.278,
+267.275,
+95.437
+]
+},
+{
+"tick": 162,
+"t": 2.71667,
+"ball": [
+109.71482,
+18.76302,
+3.07596
+],
+"ballVel": [
+4.372,
+-7.777,
+-8.039
+],
+"held": false,
+"renderedBall": {
+"p": [
+109.71482,
+18.76302,
+3.07596
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+959.93,
+268.979,
+95.607
+]
+},
+{
+"tick": 163,
+"t": 2.73333,
+"ball": [
+109.78769,
+18.63341,
+2.94198
+],
+"ballVel": [
+4.366,
+-7.765,
+-8.202
+],
+"held": false,
+"renderedBall": {
+"p": [
+109.78769,
+18.63341,
+2.94198
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+960.574,
+270.727,
+95.777
+]
+},
+{
+"tick": 164,
+"t": 2.75,
+"ball": [
+109.86046,
+18.50399,
+2.80528
+],
+"ballVel": [
+4.359,
+-7.754,
+-8.366
+],
+"held": false,
+"renderedBall": {
+"p": [
+109.86046,
+18.50399,
+2.80528
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+961.21,
+272.519,
+95.948
+]
+},
+{
+"tick": 165,
+"t": 2.76667,
+"ball": [
+109.93311,
+18.37476,
+2.66585
+],
+"ballVel": [
+4.353,
+-7.742,
+-8.529
+],
+"held": false,
+"renderedBall": {
+"p": [
+109.93311,
+18.37476,
+2.66585
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+961.839,
+274.355,
+96.12
+]
+},
+{
+"tick": 166,
+"t": 2.78333,
+"ball": [
+110.00565,
+18.24573,
+2.52369
+],
+"ballVel": [
+4.346,
+-7.73,
+-8.693
+],
+"held": false,
+"renderedBall": {
+"p": [
+110.00565,
+18.24573,
+2.52369
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+962.459,
+276.235,
+96.293
+]
+},
+{
+"tick": 167,
+"t": 2.8,
+"ball": [
+110.07809,
+18.11689,
+2.37881
+],
+"ballVel": [
+4.34,
+-7.719,
+-8.856
+],
+"held": false,
+"renderedBall": {
+"p": [
+110.07809,
+18.11689,
+2.37881
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+963.071,
+278.158,
+96.467
+]
+},
+{
+"tick": 168,
+"t": 2.81667,
+"ball": [
+110.15041,
+17.98825,
+2.23121
+],
+"ballVel": [
+4.333,
+-7.707,
+-9.02
+],
+"held": false,
+"renderedBall": {
+"p": [
+110.15041,
+17.98825,
+2.23121
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+963.676,
+280.124,
+96.641
+]
+},
+{
+"tick": 169,
+"t": 2.83333,
+"ball": [
+110.22263,
+17.8598,
+2.08088
+],
+"ballVel": [
+4.327,
+-7.695,
+-9.183
+],
+"held": false,
+"renderedBall": {
+"p": [
+110.22263,
+17.8598,
+2.08088
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+964.273,
+282.134,
+96.817
+]
+},
+{
+"tick": 170,
+"t": 2.85,
+"ball": [
+110.29474,
+17.73154,
+1.92782
+],
+"ballVel": [
+4.32,
+-7.684,
+-9.347
+],
+"held": false,
+"renderedBall": {
+"p": [
+110.29474,
+17.73154,
+1.92782
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+964.862,
+284.185,
+96.993
+]
+},
+{
+"tick": 171,
+"t": 2.86667,
+"ball": [
+110.36674,
+17.60347,
+1.77204
+],
+"ballVel": [
+4.313,
+-7.672,
+-9.51
+],
+"held": false,
+"renderedBall": {
+"p": [
+110.36674,
+17.60347,
+1.77204
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+965.443,
+286.279,
+97.17
+]
+},
+{
+"tick": 172,
+"t": 2.88333,
+"ball": [
+110.43863,
+17.47561,
+1.61354
+],
+"ballVel": [
+4.307,
+-7.661,
+-9.674
+],
+"held": false,
+"renderedBall": {
+"p": [
+110.43863,
+17.47561,
+1.61354
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+966.016,
+288.415,
+97.348
+]
+},
+{
+"tick": 173,
+"t": 2.9,
+"ball": [
+110.51041,
+17.34793,
+1.45231
+],
+"ballVel": [
+4.3,
+-7.649,
+-9.837
+],
+"held": false,
+"renderedBall": {
+"p": [
+110.51041,
+17.34793,
+1.45231
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+966.582,
+290.593,
+97.527
+]
+},
+{
+"tick": 174,
+"t": 2.91667,
+"ball": [
+110.58209,
+17.22045,
+1.28835
+],
+"ballVel": [
+4.294,
+-7.637,
+-10.001
+],
+"held": false,
+"renderedBall": {
+"p": [
+110.58209,
+17.22045,
+1.28835
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+967.14,
+292.812,
+97.706
+]
+},
+{
+"tick": 175,
+"t": 2.93333,
+"ball": [
+110.65365,
+17.09316,
+1.12167
+],
+"ballVel": [
+4.287,
+-7.626,
+-10.164
+],
+"held": false,
+"renderedBall": {
+"p": [
+110.65365,
+17.09316,
+1.12167
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+967.691,
+295.072,
+97.887
+]
+},
+{
+"tick": 176,
+"t": 2.95,
+"ball": [
+110.7251,
+16.96606,
+0.95227
+],
+"ballVel": [
+4.281,
+-7.614,
+-10.328
+],
+"held": false,
+"renderedBall": {
+"p": [
+110.7251,
+16.96606,
+0.95227
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+968.234,
+297.373,
+98.068
+]
+},
+{
+"tick": 177,
+"t": 2.96667,
+"ball": [
+110.79645,
+16.83916,
+0.78014
+],
+"ballVel": [
+4.274,
+-7.602,
+-10.491
+],
+"held": false,
+"renderedBall": {
+"p": [
+110.79645,
+16.83916,
+0.78014
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+968.769,
+299.714,
+98.25
+]
+},
+{
+"tick": 178,
+"t": 2.98333,
+"ball": [
+110.86769,
+16.71246,
+0.60529
+],
+"ballVel": [
+4.268,
+-7.591,
+-10.655
+],
+"held": false,
+"renderedBall": {
+"p": [
+110.86769,
+16.71246,
+0.60529
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+969.297,
+302.096,
+98.433
+]
+},
+{
+"tick": 179,
+"t": 3,
+"ball": [
+110.93882,
+16.58594,
+0.42771
+],
+"ballVel": [
+4.261,
+-7.579,
+-10.818
+],
+"held": false,
+"renderedBall": {
+"p": [
+110.93882,
+16.58594,
+0.42771
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+969.817,
+304.517,
+98.617
+]
+},
+{
+"tick": 180,
+"t": 3.01667,
+"ball": [
+111.00984,
+16.45962,
+0.2474
+],
+"ballVel": [
+4.255,
+-7.568,
+-10.982
+],
+"held": false,
+"renderedBall": {
+"p": [
+111.00984,
+16.45962,
+0.2474
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+970.33,
+306.979,
+98.802
+]
+},
+{
+"tick": 181,
+"t": 3.03333,
+"ball": [
+111.08075,
+16.3335,
+0.06437
+],
+"ballVel": [
+4.248,
+-7.556,
+-11.145
+],
+"held": false,
+"renderedBall": {
+"p": [
+111.08075,
+16.3335,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+970.835,
+309.48,
+98.987
+]
+},
+{
+"tick": 182,
+"t": 3.05,
+"ball": [
+111.15155,
+16.20756,
+0
+],
+"ballVel": [
+3.364,
+-5.984,
+6.13
+],
+"held": false,
+"renderedBall": {
+"p": [
+111.15155,
+16.20756,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+971.526,
+309.907,
+99.128
+]
+},
+{
+"tick": 183,
+"t": 3.06667,
+"ball": [
+111.20762,
+16.10783,
+0.10217
+],
+"ballVel": [
+3.358,
+-5.972,
+5.966
+],
+"held": false,
+"renderedBall": {
+"p": [
+111.20762,
+16.10783,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+972.316,
+307.58,
+99.182
+]
+},
+{
+"tick": 184,
+"t": 3.08333,
+"ball": [
+111.26358,
+16.0083,
+0.20161
+],
+"ballVel": [
+3.351,
+-5.961,
+5.803
+],
+"held": false,
+"renderedBall": {
+"p": [
+111.26358,
+16.0083,
+0.20161
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+973.099,
+305.304,
+99.237
+]
+},
+{
+"tick": 185,
+"t": 3.1,
+"ball": [
+111.31943,
+15.90896,
+0.29832
+],
+"ballVel": [
+3.345,
+-5.949,
+5.639
+],
+"held": false,
+"renderedBall": {
+"p": [
+111.31943,
+15.90896,
+0.29832
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+973.876,
+303.079,
+99.293
+]
+},
+{
+"tick": 186,
+"t": 3.11667,
+"ball": [
+111.37517,
+15.80981,
+0.39231
+],
+"ballVel": [
+3.338,
+-5.937,
+5.476
+],
+"held": false,
+"renderedBall": {
+"p": [
+111.37517,
+15.80981,
+0.39231
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+974.647,
+300.905,
+99.35
+]
+},
+{
+"tick": 187,
+"t": 3.13333,
+"ball": [
+111.43081,
+15.71085,
+0.48358
+],
+"ballVel": [
+3.332,
+-5.926,
+5.312
+],
+"held": false,
+"renderedBall": {
+"p": [
+111.43081,
+15.71085,
+0.48358
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+975.411,
+298.782,
+99.408
+]
+},
+{
+"tick": 188,
+"t": 3.15,
+"ball": [
+111.48633,
+15.61209,
+0.57212
+],
+"ballVel": [
+3.325,
+-5.914,
+5.149
+],
+"held": false,
+"renderedBall": {
+"p": [
+111.48633,
+15.61209,
+0.57212
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+976.169,
+296.71,
+99.466
+]
+},
+{
+"tick": 189,
+"t": 3.16667,
+"ball": [
+111.54175,
+15.51353,
+0.65793
+],
+"ballVel": [
+3.318,
+-5.902,
+4.985
+],
+"held": false,
+"renderedBall": {
+"p": [
+111.54175,
+15.51353,
+0.65793
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+976.92,
+294.689,
+99.525
+]
+},
+{
+"tick": 190,
+"t": 3.18333,
+"ball": [
+111.59706,
+15.41515,
+0.74102
+],
+"ballVel": [
+3.312,
+-5.891,
+4.822
+],
+"held": false,
+"renderedBall": {
+"p": [
+111.59706,
+15.41515,
+0.74102
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+977.665,
+292.718,
+99.585
+]
+},
+{
+"tick": 191,
+"t": 3.2,
+"ball": [
+111.65225,
+15.31697,
+0.82139
+],
+"ballVel": [
+3.305,
+-5.879,
+4.658
+],
+"held": false,
+"renderedBall": {
+"p": [
+111.65225,
+15.31697,
+0.82139
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+978.403,
+290.798,
+99.646
+]
+},
+{
+"tick": 192,
+"t": 3.21667,
+"ball": [
+111.70734,
+15.21899,
+0.89903
+],
+"ballVel": [
+3.299,
+-5.868,
+4.495
+],
+"held": false,
+"renderedBall": {
+"p": [
+111.70734,
+15.21899,
+0.89903
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+979.135,
+288.93,
+99.708
+]
+},
+{
+"tick": 193,
+"t": 3.23333,
+"ball": [
+111.76232,
+15.1212,
+0.97394
+],
+"ballVel": [
+3.292,
+-5.856,
+4.331
+],
+"held": false,
+"renderedBall": {
+"p": [
+111.76232,
+15.1212,
+0.97394
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+979.861,
+287.111,
+99.771
+]
+},
+{
+"tick": 194,
+"t": 3.25,
+"ball": [
+111.8172,
+15.0236,
+1.04613
+],
+"ballVel": [
+3.286,
+-5.844,
+4.168
+],
+"held": false,
+"renderedBall": {
+"p": [
+111.8172,
+15.0236,
+1.04613
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+980.579,
+285.344,
+99.834
+]
+},
+{
+"tick": 195,
+"t": 3.26667,
+"ball": [
+111.87196,
+14.92619,
+1.1156
+],
+"ballVel": [
+3.279,
+-5.833,
+4.004
+],
+"held": false,
+"renderedBall": {
+"p": [
+111.87196,
+14.92619,
+1.1156
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+981.292,
+283.627,
+99.898
+]
+},
+{
+"tick": 196,
+"t": 3.28333,
+"ball": [
+111.92661,
+14.82898,
+1.18234
+],
+"ballVel": [
+3.273,
+-5.821,
+3.841
+],
+"held": false,
+"renderedBall": {
+"p": [
+111.92661,
+14.82898,
+1.18234
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+981.997,
+281.961,
+99.964
+]
+},
+{
+"tick": 197,
+"t": 3.3,
+"ball": [
+111.98116,
+14.73196,
+1.24635
+],
+"ballVel": [
+3.266,
+-5.809,
+3.677
+],
+"held": false,
+"renderedBall": {
+"p": [
+111.98116,
+14.73196,
+1.24635
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+982.697,
+280.345,
+100.029
+]
+},
+{
+"tick": 198,
+"t": 3.31667,
+"ball": [
+112.03559,
+14.63514,
+1.30764
+],
+"ballVel": [
+3.26,
+-5.798,
+3.514
+],
+"held": false,
+"renderedBall": {
+"p": [
+112.03559,
+14.63514,
+1.30764
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+983.389,
+278.779,
+100.096
+]
+},
+{
+"tick": 199,
+"t": 3.33333,
+"ball": [
+112.08992,
+14.53851,
+1.36621
+],
+"ballVel": [
+3.253,
+-5.786,
+3.35
+],
+"held": false,
+"renderedBall": {
+"p": [
+112.08992,
+14.53851,
+1.36621
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+984.076,
+277.264,
+100.164
+]
+},
+{
+"tick": 200,
+"t": 3.35,
+"ball": [
+112.14414,
+14.44208,
+1.42205
+],
+"ballVel": [
+3.247,
+-5.775,
+3.187
+],
+"held": false,
+"renderedBall": {
+"p": [
+112.14414,
+14.44208,
+1.42205
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+984.755,
+275.8,
+100.232
+]
+},
+{
+"tick": 201,
+"t": 3.36667,
+"ball": [
+112.19825,
+14.34583,
+1.47516
+],
+"ballVel": [
+3.24,
+-5.763,
+3.023
+],
+"held": false,
+"renderedBall": {
+"p": [
+112.19825,
+14.34583,
+1.47516
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+985.428,
+274.385,
+100.302
+]
+},
+{
+"tick": 202,
+"t": 3.38333,
+"ball": [
+112.25225,
+14.24978,
+1.52555
+],
+"ballVel": [
+3.233,
+-5.751,
+2.86
+],
+"held": false,
+"renderedBall": {
+"p": [
+112.25225,
+14.24978,
+1.52555
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+986.095,
+273.021,
+100.372
+]
+},
+{
+"tick": 203,
+"t": 3.4,
+"ball": [
+112.30614,
+14.15393,
+1.57322
+],
+"ballVel": [
+3.227,
+-5.74,
+2.696
+],
+"held": false,
+"renderedBall": {
+"p": [
+112.30614,
+14.15393,
+1.57322
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+986.755,
+271.707,
+100.443
+]
+},
+{
+"tick": 204,
+"t": 3.41667,
+"ball": [
+112.35992,
+14.05827,
+1.61816
+],
+"ballVel": [
+3.22,
+-5.728,
+2.533
+],
+"held": false,
+"renderedBall": {
+"p": [
+112.35992,
+14.05827,
+1.61816
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+987.408,
+270.442,
+100.515
+]
+},
+{
+"tick": 205,
+"t": 3.43333,
+"ball": [
+112.4136,
+13.9628,
+1.66037
+],
+"ballVel": [
+3.214,
+-5.716,
+2.369
+],
+"held": false,
+"renderedBall": {
+"p": [
+112.4136,
+13.9628,
+1.66037
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+988.055,
+269.228,
+100.588
+]
+},
+{
+"tick": 206,
+"t": 3.45,
+"ball": [
+112.46716,
+13.86753,
+1.69986
+],
+"ballVel": [
+3.207,
+-5.705,
+2.206
+],
+"held": false,
+"renderedBall": {
+"p": [
+112.46716,
+13.86753,
+1.69986
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+988.696,
+268.064,
+100.661
+]
+},
+{
+"tick": 207,
+"t": 3.46667,
+"ball": [
+112.52062,
+13.77245,
+1.73663
+],
+"ballVel": [
+3.201,
+-5.693,
+2.042
+],
+"held": false,
+"renderedBall": {
+"p": [
+112.52062,
+13.77245,
+1.73663
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+989.33,
+266.949,
+100.735
+]
+},
+{
+"tick": 208,
+"t": 3.48333,
+"ball": [
+112.57396,
+13.67756,
+1.77067
+],
+"ballVel": [
+3.194,
+-5.682,
+1.879
+],
+"held": false,
+"renderedBall": {
+"p": [
+112.57396,
+13.67756,
+1.77067
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+989.957,
+265.884,
+100.811
+]
+},
+{
+"tick": 209,
+"t": 3.5,
+"ball": [
+112.6272,
+13.58287,
+1.80198
+],
+"ballVel": [
+3.188,
+-5.67,
+1.715
+],
+"held": false,
+"renderedBall": {
+"p": [
+112.6272,
+13.58287,
+1.80198
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+990.578,
+264.869,
+100.887
+]
+},
+{
+"tick": 210,
+"t": 3.51667,
+"ball": [
+112.68033,
+13.48837,
+1.83057
+],
+"ballVel": [
+3.181,
+-5.658,
+1.552
+],
+"held": false,
+"renderedBall": {
+"p": [
+112.68033,
+13.48837,
+1.83057
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+991.192,
+263.904,
+100.964
+]
+},
+{
+"tick": 211,
+"t": 3.53333,
+"ball": [
+112.73335,
+13.39406,
+1.85644
+],
+"ballVel": [
+3.175,
+-5.647,
+1.388
+],
+"held": false,
+"renderedBall": {
+"p": [
+112.73335,
+13.39406,
+1.85644
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+991.799,
+262.987,
+101.041
+]
+},
+{
+"tick": 212,
+"t": 3.55,
+"ball": [
+112.78626,
+13.29995,
+1.87958
+],
+"ballVel": [
+3.168,
+-5.635,
+1.225
+],
+"held": false,
+"renderedBall": {
+"p": [
+112.78626,
+13.29995,
+1.87958
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+992.4,
+262.121,
+101.12
+]
+},
+{
+"tick": 213,
+"t": 3.56667,
+"ball": [
+112.83906,
+13.20603,
+1.89999
+],
+"ballVel": [
+3.162,
+-5.623,
+1.061
+],
+"held": false,
+"renderedBall": {
+"p": [
+112.83906,
+13.20603,
+1.89999
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+992.995,
+261.303,
+101.199
+]
+},
+{
+"tick": 214,
+"t": 3.58333,
+"ball": [
+112.89176,
+13.11231,
+1.91768
+],
+"ballVel": [
+3.155,
+-5.612,
+0.898
+],
+"held": false,
+"renderedBall": {
+"p": [
+112.89176,
+13.11231,
+1.91768
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+993.583,
+260.535,
+101.28
+]
+},
+{
+"tick": 215,
+"t": 3.6,
+"ball": [
+112.94434,
+13.01878,
+1.93265
+],
+"ballVel": [
+3.149,
+-5.6,
+0.734
+],
+"held": false,
+"renderedBall": {
+"p": [
+112.94434,
+13.01878,
+1.93265
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+994.164,
+259.815,
+101.361
+]
+},
+{
+"tick": 216,
+"t": 3.61667,
+"ball": [
+112.99682,
+12.92544,
+1.94489
+],
+"ballVel": [
+3.142,
+-5.589,
+0.571
+],
+"held": false,
+"renderedBall": {
+"p": [
+112.99682,
+12.92544,
+1.94489
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+994.739,
+259.145,
+101.443
+]
+},
+{
+"tick": 217,
+"t": 3.63333,
+"ball": [
+113.04919,
+12.8323,
+1.9544
+],
+"ballVel": [
+3.135,
+-5.577,
+0.407
+],
+"held": false,
+"renderedBall": {
+"p": [
+113.04919,
+12.8323,
+1.9544
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+995.307,
+258.523,
+101.526
+]
+},
+{
+"tick": 218,
+"t": 3.65,
+"ball": [
+113.10144,
+12.73935,
+1.96119
+],
+"ballVel": [
+3.129,
+-5.565,
+0.244
+],
+"held": false,
+"renderedBall": {
+"p": [
+113.10144,
+12.73935,
+1.96119
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+995.869,
+257.951,
+101.609
+]
+},
+{
+"tick": 219,
+"t": 3.66667,
+"ball": [
+113.15359,
+12.64659,
+1.96526
+],
+"ballVel": [
+3.122,
+-5.554,
+0.08
+],
+"held": false,
+"renderedBall": {
+"p": [
+113.15359,
+12.64659,
+1.96526
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+996.424,
+257.427,
+101.694
+]
+},
+{
+"tick": 220,
+"t": 3.68333,
+"ball": [
+113.20563,
+12.55403,
+1.9666
+],
+"ballVel": [
+3.116,
+-5.542,
+-0.083
+],
+"held": false,
+"renderedBall": {
+"p": [
+113.20563,
+12.55403,
+1.9666
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+996.973,
+256.951,
+101.779
+]
+},
+{
+"tick": 221,
+"t": 3.7,
+"ball": [
+113.25756,
+12.46166,
+1.96521
+],
+"ballVel": [
+3.109,
+-5.53,
+-0.247
+],
+"held": false,
+"renderedBall": {
+"p": [
+113.25756,
+12.46166,
+1.96521
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+997.515,
+256.524,
+101.865
+]
+},
+{
+"tick": 222,
+"t": 3.71667,
+"ball": [
+113.30939,
+12.36949,
+1.9611
+],
+"ballVel": [
+3.103,
+-5.519,
+-0.41
+],
+"held": false,
+"renderedBall": {
+"p": [
+113.30939,
+12.36949,
+1.9611
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+998.05,
+256.145,
+101.952
+]
+},
+{
+"tick": 223,
+"t": 3.73333,
+"ball": [
+113.3611,
+12.27751,
+1.95427
+],
+"ballVel": [
+3.096,
+-5.507,
+-0.574
+],
+"held": false,
+"renderedBall": {
+"p": [
+113.3611,
+12.27751,
+1.95427
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+998.579,
+255.815,
+102.04
+]
+},
+{
+"tick": 224,
+"t": 3.75,
+"ball": [
+113.4127,
+12.18572,
+1.94471
+],
+"ballVel": [
+3.09,
+-5.496,
+-0.737
+],
+"held": false,
+"renderedBall": {
+"p": [
+113.4127,
+12.18572,
+1.94471
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+999.102,
+255.533,
+102.129
+]
+},
+{
+"tick": 225,
+"t": 3.76667,
+"ball": [
+113.4642,
+12.09413,
+1.93242
+],
+"ballVel": [
+3.083,
+-5.484,
+-0.901
+],
+"held": false,
+"renderedBall": {
+"p": [
+113.4642,
+12.09413,
+1.93242
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+999.617,
+255.298,
+102.218
+]
+},
+{
+"tick": 226,
+"t": 3.78333,
+"ball": [
+113.51559,
+12.00273,
+1.91741
+],
+"ballVel": [
+3.077,
+-5.472,
+-1.064
+],
+"held": false,
+"renderedBall": {
+"p": [
+113.51559,
+12.00273,
+1.91741
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1000.127,
+255.112,
+102.309
+]
+},
+{
+"tick": 227,
+"t": 3.8,
+"ball": [
+113.56686,
+11.91152,
+1.89968
+],
+"ballVel": [
+3.07,
+-5.461,
+-1.228
+],
+"held": false,
+"renderedBall": {
+"p": [
+113.56686,
+11.91152,
+1.89968
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1000.63,
+254.973,
+102.4
+]
+},
+{
+"tick": 228,
+"t": 3.81667,
+"ball": [
+113.61803,
+11.82051,
+1.87922
+],
+"ballVel": [
+3.064,
+-5.449,
+-1.391
+],
+"held": false,
+"renderedBall": {
+"p": [
+113.61803,
+11.82051,
+1.87922
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1001.126,
+254.882,
+102.492
+]
+},
+{
+"tick": 229,
+"t": 3.83333,
+"ball": [
+113.66909,
+11.72969,
+1.85603
+],
+"ballVel": [
+3.057,
+-5.437,
+-1.555
+],
+"held": false,
+"renderedBall": {
+"p": [
+113.66909,
+11.72969,
+1.85603
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1001.616,
+254.838,
+102.585
+]
+},
+{
+"tick": 230,
+"t": 3.85,
+"ball": [
+113.72004,
+11.63907,
+1.83012
+],
+"ballVel": [
+3.051,
+-5.426,
+-1.718
+],
+"held": false,
+"renderedBall": {
+"p": [
+113.72004,
+11.63907,
+1.83012
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1002.099,
+254.842,
+102.678
+]
+},
+{
+"tick": 231,
+"t": 3.86667,
+"ball": [
+113.77089,
+11.54863,
+1.80149
+],
+"ballVel": [
+3.044,
+-5.414,
+-1.882
+],
+"held": false,
+"renderedBall": {
+"p": [
+113.77089,
+11.54863,
+1.80149
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1002.576,
+254.893,
+102.773
+]
+},
+{
+"tick": 232,
+"t": 3.88333,
+"ball": [
+113.82162,
+11.4584,
+1.77013
+],
+"ballVel": [
+3.037,
+-5.403,
+-2.045
+],
+"held": false,
+"renderedBall": {
+"p": [
+113.82162,
+11.4584,
+1.77013
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1003.046,
+254.991,
+102.868
+]
+},
+{
+"tick": 233,
+"t": 3.9,
+"ball": [
+113.87224,
+11.36835,
+1.73604
+],
+"ballVel": [
+3.031,
+-5.391,
+-2.209
+],
+"held": false,
+"renderedBall": {
+"p": [
+113.87224,
+11.36835,
+1.73604
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1003.51,
+255.136,
+102.965
+]
+},
+{
+"tick": 234,
+"t": 3.91667,
+"ball": [
+113.92276,
+11.2785,
+1.69923
+],
+"ballVel": [
+3.024,
+-5.379,
+-2.372
+],
+"held": false,
+"renderedBall": {
+"p": [
+113.92276,
+11.2785,
+1.69923
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1003.968,
+255.327,
+103.062
+]
+},
+{
+"tick": 235,
+"t": 3.93333,
+"ball": [
+113.97317,
+11.18885,
+1.6597
+],
+"ballVel": [
+3.018,
+-5.368,
+-2.536
+],
+"held": false,
+"renderedBall": {
+"p": [
+113.97317,
+11.18885,
+1.6597
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1004.419,
+255.566,
+103.16
+]
+},
+{
+"tick": 236,
+"t": 3.95,
+"ball": [
+114.02346,
+11.09938,
+1.61744
+],
+"ballVel": [
+3.011,
+-5.356,
+-2.699
+],
+"held": false,
+"renderedBall": {
+"p": [
+114.02346,
+11.09938,
+1.61744
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1004.863,
+255.851,
+103.259
+]
+},
+{
+"tick": 237,
+"t": 3.96667,
+"ball": [
+114.07365,
+11.01012,
+1.57246
+],
+"ballVel": [
+3.005,
+-5.345,
+-2.863
+],
+"held": false,
+"renderedBall": {
+"p": [
+114.07365,
+11.01012,
+1.57246
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1005.301,
+256.183,
+103.358
+]
+},
+{
+"tick": 238,
+"t": 3.98333,
+"ball": [
+114.12373,
+10.92104,
+1.52475
+],
+"ballVel": [
+2.998,
+-5.333,
+-3.026
+],
+"held": false,
+"renderedBall": {
+"p": [
+114.12373,
+10.92104,
+1.52475
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1005.733,
+256.56,
+103.459
+]
+},
+{
+"tick": 239,
+"t": 4,
+"ball": [
+114.1737,
+10.83216,
+1.47431
+],
+"ballVel": [
+2.992,
+-5.321,
+-3.19
+],
+"held": false,
+"renderedBall": {
+"p": [
+114.1737,
+10.83216,
+1.47431
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1006.158,
+256.984,
+103.56
+]
+},
+{
+"tick": 240,
+"t": 4.01667,
+"ball": [
+114.22356,
+10.74347,
+1.42115
+],
+"ballVel": [
+2.985,
+-5.31,
+-3.353
+],
+"held": false,
+"renderedBall": {
+"p": [
+114.22356,
+10.74347,
+1.42115
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1006.576,
+257.454,
+103.662
+]
+},
+{
+"tick": 241,
+"t": 4.03333,
+"ball": [
+114.27332,
+10.65498,
+1.36527
+],
+"ballVel": [
+2.979,
+-5.298,
+-3.517
+],
+"held": false,
+"renderedBall": {
+"p": [
+114.27332,
+10.65498,
+1.36527
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1006.989,
+257.97,
+103.765
+]
+},
+{
+"tick": 242,
+"t": 4.05,
+"ball": [
+114.32296,
+10.56668,
+1.30666
+],
+"ballVel": [
+2.972,
+-5.286,
+-3.68
+],
+"held": false,
+"renderedBall": {
+"p": [
+114.32296,
+10.56668,
+1.30666
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1007.394,
+258.531,
+103.869
+]
+},
+{
+"tick": 243,
+"t": 4.06667,
+"ball": [
+114.3725,
+10.47857,
+1.24532
+],
+"ballVel": [
+2.966,
+-5.275,
+-3.844
+],
+"held": false,
+"renderedBall": {
+"p": [
+114.3725,
+10.47857,
+1.24532
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1007.794,
+259.138,
+103.974
+]
+},
+{
+"tick": 244,
+"t": 4.08333,
+"ball": [
+114.42192,
+10.39066,
+1.18126
+],
+"ballVel": [
+2.959,
+-5.263,
+-4.007
+],
+"held": false,
+"renderedBall": {
+"p": [
+114.42192,
+10.39066,
+1.18126
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1008.187,
+259.791,
+104.079
+]
+},
+{
+"tick": 245,
+"t": 4.1,
+"ball": [
+114.47124,
+10.30294,
+1.11448
+],
+"ballVel": [
+2.953,
+-5.252,
+-4.171
+],
+"held": false,
+"renderedBall": {
+"p": [
+114.47124,
+10.30294,
+1.11448
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1008.573,
+260.488,
+104.185
+]
+},
+{
+"tick": 246,
+"t": 4.11667,
+"ball": [
+114.52045,
+10.21541,
+1.04497
+],
+"ballVel": [
+2.946,
+-5.24,
+-4.334
+],
+"held": false,
+"renderedBall": {
+"p": [
+114.52045,
+10.21541,
+1.04497
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1008.954,
+261.231,
+104.293
+]
+},
+{
+"tick": 247,
+"t": 4.13333,
+"ball": [
+114.56955,
+10.12808,
+0.97273
+],
+"ballVel": [
+2.939,
+-5.228,
+-4.498
+],
+"held": false,
+"renderedBall": {
+"p": [
+114.56955,
+10.12808,
+0.97273
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1009.328,
+262.019,
+104.401
+]
+},
+{
+"tick": 248,
+"t": 4.15,
+"ball": [
+114.61854,
+10.04094,
+0.89777
+],
+"ballVel": [
+2.933,
+-5.217,
+-4.661
+],
+"held": false,
+"renderedBall": {
+"p": [
+114.61854,
+10.04094,
+0.89777
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1009.695,
+262.851,
+104.509
+]
+},
+{
+"tick": 249,
+"t": 4.16667,
+"ball": [
+114.66742,
+9.954,
+0.82009
+],
+"ballVel": [
+2.926,
+-5.205,
+-4.825
+],
+"held": false,
+"renderedBall": {
+"p": [
+114.66742,
+9.954,
+0.82009
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1010.056,
+263.728,
+104.619
+]
+},
+{
+"tick": 250,
+"t": 4.18333,
+"ball": [
+114.71619,
+9.86725,
+0.73968
+],
+"ballVel": [
+2.92,
+-5.193,
+-4.988
+],
+"held": false,
+"renderedBall": {
+"p": [
+114.71619,
+9.86725,
+0.73968
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1010.411,
+264.65,
+104.73
+]
+},
+{
+"tick": 251,
+"t": 4.2,
+"ball": [
+114.76486,
+9.78069,
+0.65654
+],
+"ballVel": [
+2.913,
+-5.182,
+-5.152
+],
+"held": false,
+"renderedBall": {
+"p": [
+114.76486,
+9.78069,
+0.65654
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1010.76,
+265.615,
+104.841
+]
+},
+{
+"tick": 252,
+"t": 4.21667,
+"ball": [
+114.81341,
+9.69433,
+0.57068
+],
+"ballVel": [
+2.907,
+-5.17,
+-5.315
+],
+"held": false,
+"renderedBall": {
+"p": [
+114.81341,
+9.69433,
+0.57068
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1011.102,
+266.625,
+104.953
+]
+},
+{
+"tick": 253,
+"t": 4.23333,
+"ball": [
+114.86186,
+9.60816,
+0.4821
+],
+"ballVel": [
+2.9,
+-5.159,
+-5.479
+],
+"held": false,
+"renderedBall": {
+"p": [
+114.86186,
+9.60816,
+0.4821
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1011.438,
+267.679,
+105.066
+]
+},
+{
+"tick": 254,
+"t": 4.25,
+"ball": [
+114.9102,
+9.52218,
+0.39079
+],
+"ballVel": [
+2.894,
+-5.147,
+-5.642
+],
+"held": false,
+"renderedBall": {
+"p": [
+114.9102,
+9.52218,
+0.39079
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1011.768,
+268.776,
+105.18
+]
+},
+{
+"tick": 255,
+"t": 4.26667,
+"ball": [
+114.95843,
+9.4364,
+0.29675
+],
+"ballVel": [
+2.887,
+-5.135,
+-5.806
+],
+"held": false,
+"renderedBall": {
+"p": [
+114.95843,
+9.4364,
+0.29675
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1012.091,
+269.918,
+105.295
+]
+},
+{
+"tick": 256,
+"t": 4.28333,
+"ball": [
+115.00654,
+9.35081,
+0.19999
+],
+"ballVel": [
+2.881,
+-5.124,
+-5.969
+],
+"held": false,
+"renderedBall": {
+"p": [
+115.00654,
+9.35081,
+0.19999
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1012.408,
+271.102,
+105.411
+]
+},
+{
+"tick": 257,
+"t": 4.3,
+"ball": [
+115.05456,
+9.26541,
+0.10051
+],
+"ballVel": [
+2.874,
+-5.112,
+-6.133
+],
+"held": false,
+"renderedBall": {
+"p": [
+115.05456,
+9.26541,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1012.719,
+272.33,
+105.527
+]
+},
+{
+"tick": 258,
+"t": 4.31667,
+"ball": [
+115.10246,
+9.18021,
+0
+],
+"ballVel": [
+2.265,
+-4.029,
+3.373
+],
+"held": false,
+"renderedBall": {
+"p": [
+115.10246,
+9.18021,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1013.027,
+273.573,
+105.644
+]
+},
+{
+"tick": 259,
+"t": 4.33333,
+"ball": [
+115.14021,
+9.11307,
+0.05622
+],
+"ballVel": [
+2.258,
+-4.017,
+3.209
+],
+"held": false,
+"renderedBall": {
+"p": [
+115.14021,
+9.11307,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1013.491,
+272.322,
+105.685
+]
+},
+{
+"tick": 260,
+"t": 4.35,
+"ball": [
+115.17785,
+9.04612,
+0.10971
+],
+"ballVel": [
+2.252,
+-4.005,
+3.046
+],
+"held": false,
+"renderedBall": {
+"p": [
+115.17785,
+9.04612,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1013.949,
+271.118,
+105.727
+]
+},
+{
+"tick": 261,
+"t": 4.36667,
+"ball": [
+115.21538,
+8.97936,
+0.16047
+],
+"ballVel": [
+2.245,
+-3.994,
+2.882
+],
+"held": false,
+"renderedBall": {
+"p": [
+115.21538,
+8.97936,
+0.16047
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1014.401,
+269.961,
+105.77
+]
+},
+{
+"tick": 262,
+"t": 4.38333,
+"ball": [
+115.2528,
+8.9128,
+0.20851
+],
+"ballVel": [
+2.239,
+-3.982,
+2.719
+],
+"held": false,
+"renderedBall": {
+"p": [
+115.2528,
+8.9128,
+0.20851
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1014.848,
+268.85,
+105.814
+]
+},
+{
+"tick": 263,
+"t": 4.4,
+"ball": [
+115.29012,
+8.84643,
+0.25383
+],
+"ballVel": [
+2.232,
+-3.971,
+2.555
+],
+"held": false,
+"renderedBall": {
+"p": [
+115.29012,
+8.84643,
+0.25383
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1015.288,
+267.786,
+105.858
+]
+},
+{
+"tick": 264,
+"t": 4.41667,
+"ball": [
+115.32732,
+8.78026,
+0.29642
+],
+"ballVel": [
+2.226,
+-3.959,
+2.392
+],
+"held": false,
+"renderedBall": {
+"p": [
+115.32732,
+8.78026,
+0.29642
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1015.723,
+266.769,
+105.904
+]
+},
+{
+"tick": 265,
+"t": 4.43333,
+"ball": [
+115.36442,
+8.71427,
+0.33628
+],
+"ballVel": [
+2.219,
+-3.947,
+2.228
+],
+"held": false,
+"renderedBall": {
+"p": [
+115.36442,
+8.71427,
+0.33628
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1016.152,
+265.798,
+105.95
+]
+},
+{
+"tick": 266,
+"t": 4.45,
+"ball": [
+115.4014,
+8.64849,
+0.37342
+],
+"ballVel": [
+2.213,
+-3.936,
+2.065
+],
+"held": false,
+"renderedBall": {
+"p": [
+115.4014,
+8.64849,
+0.37342
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1016.574,
+264.874,
+105.997
+]
+},
+{
+"tick": 267,
+"t": 4.46667,
+"ball": [
+115.43828,
+8.58289,
+0.40784
+],
+"ballVel": [
+2.206,
+-3.924,
+1.901
+],
+"held": false,
+"renderedBall": {
+"p": [
+115.43828,
+8.58289,
+0.40784
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1016.991,
+263.996,
+106.045
+]
+},
+{
+"tick": 268,
+"t": 4.48333,
+"ball": [
+115.47505,
+8.51749,
+0.43953
+],
+"ballVel": [
+2.2,
+-3.912,
+1.738
+],
+"held": false,
+"renderedBall": {
+"p": [
+115.47505,
+8.51749,
+0.43953
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1017.402,
+263.165,
+106.094
+]
+},
+{
+"tick": 269,
+"t": 4.5,
+"ball": [
+115.51171,
+8.45228,
+0.46849
+],
+"ballVel": [
+2.193,
+-3.901,
+1.574
+],
+"held": false,
+"renderedBall": {
+"p": [
+115.51171,
+8.45228,
+0.46849
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1017.807,
+262.38,
+106.143
+]
+},
+{
+"tick": 270,
+"t": 4.51667,
+"ball": [
+115.54826,
+8.38727,
+0.49474
+],
+"ballVel": [
+2.187,
+-3.889,
+1.411
+],
+"held": false,
+"renderedBall": {
+"p": [
+115.54826,
+8.38727,
+0.49474
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1018.206,
+261.642,
+106.194
+]
+},
+{
+"tick": 271,
+"t": 4.53333,
+"ball": [
+115.58471,
+8.32245,
+0.51825
+],
+"ballVel": [
+2.18,
+-3.878,
+1.247
+],
+"held": false,
+"renderedBall": {
+"p": [
+115.58471,
+8.32245,
+0.51825
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1018.599,
+260.95,
+106.245
+]
+},
+{
+"tick": 272,
+"t": 4.55,
+"ball": [
+115.62104,
+8.25783,
+0.53904
+],
+"ballVel": [
+2.173,
+-3.866,
+1.084
+],
+"held": false,
+"renderedBall": {
+"p": [
+115.62104,
+8.25783,
+0.53904
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1018.986,
+260.304,
+106.297
+]
+},
+{
+"tick": 273,
+"t": 4.56667,
+"ball": [
+115.65727,
+8.19339,
+0.55711
+],
+"ballVel": [
+2.167,
+-3.854,
+0.92
+],
+"held": false,
+"renderedBall": {
+"p": [
+115.65727,
+8.19339,
+0.55711
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1019.367,
+259.705,
+106.35
+]
+},
+{
+"tick": 274,
+"t": 4.58333,
+"ball": [
+115.69338,
+8.12916,
+0.57245
+],
+"ballVel": [
+2.16,
+-3.843,
+0.757
+],
+"held": false,
+"renderedBall": {
+"p": [
+115.69338,
+8.12916,
+0.57245
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1019.742,
+259.152,
+106.404
+]
+},
+{
+"tick": 275,
+"t": 4.6,
+"ball": [
+115.72939,
+8.06511,
+0.58506
+],
+"ballVel": [
+2.154,
+-3.831,
+0.593
+],
+"held": false,
+"renderedBall": {
+"p": [
+115.72939,
+8.06511,
+0.58506
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1020.112,
+258.645,
+106.459
+]
+},
+{
+"tick": 276,
+"t": 4.61667,
+"ball": [
+115.76529,
+8.00126,
+0.59495
+],
+"ballVel": [
+2.147,
+-3.819,
+0.43
+],
+"held": false,
+"renderedBall": {
+"p": [
+115.76529,
+8.00126,
+0.59495
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1020.475,
+258.184,
+106.514
+]
+},
+{
+"tick": 277,
+"t": 4.63333,
+"ball": [
+115.80108,
+7.9376,
+0.60212
+],
+"ballVel": [
+2.141,
+-3.808,
+0.266
+],
+"held": false,
+"renderedBall": {
+"p": [
+115.80108,
+7.9376,
+0.60212
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1020.832,
+257.769,
+106.57
+]
+},
+{
+"tick": 278,
+"t": 4.65,
+"ball": [
+115.83676,
+7.87414,
+0.60656
+],
+"ballVel": [
+2.134,
+-3.796,
+0.103
+],
+"held": false,
+"renderedBall": {
+"p": [
+115.83676,
+7.87414,
+0.60656
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1021.184,
+257.4,
+106.628
+]
+},
+{
+"tick": 279,
+"t": 4.66667,
+"ball": [
+115.87233,
+7.81087,
+0.60827
+],
+"ballVel": [
+2.128,
+-3.785,
+-0.061
+],
+"held": false,
+"renderedBall": {
+"p": [
+115.87233,
+7.81087,
+0.60827
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1021.529,
+257.077,
+106.686
+]
+},
+{
+"tick": 280,
+"t": 4.68333,
+"ball": [
+115.90779,
+7.74779,
+0.60726
+],
+"ballVel": [
+2.121,
+-3.773,
+-0.224
+],
+"held": false,
+"renderedBall": {
+"p": [
+115.90779,
+7.74779,
+0.60726
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1021.869,
+256.799,
+106.744
+]
+},
+{
+"tick": 281,
+"t": 4.7,
+"ball": [
+115.94314,
+7.68491,
+0.60353
+],
+"ballVel": [
+2.115,
+-3.761,
+-0.388
+],
+"held": false,
+"renderedBall": {
+"p": [
+115.94314,
+7.68491,
+0.60353
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1022.203,
+256.568,
+106.804
+]
+},
+{
+"tick": 282,
+"t": 4.71667,
+"ball": [
+115.97839,
+7.62222,
+0.59707
+],
+"ballVel": [
+2.108,
+-3.75,
+-0.551
+],
+"held": false,
+"renderedBall": {
+"p": [
+115.97839,
+7.62222,
+0.59707
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1022.53,
+256.382,
+106.865
+]
+},
+{
+"tick": 283,
+"t": 4.73333,
+"ball": [
+116.01353,
+7.55973,
+0.58789
+],
+"ballVel": [
+2.102,
+-3.738,
+-0.715
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.01353,
+7.55973,
+0.58789
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1022.852,
+256.242,
+106.926
+]
+},
+{
+"tick": 284,
+"t": 4.75,
+"ball": [
+116.04855,
+7.49743,
+0.57598
+],
+"ballVel": [
+2.095,
+-3.726,
+-0.878
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.04855,
+7.49743,
+0.57598
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1023.168,
+256.147,
+106.988
+]
+},
+{
+"tick": 285,
+"t": 4.76667,
+"ball": [
+116.08347,
+7.43532,
+0.56134
+],
+"ballVel": [
+2.089,
+-3.715,
+-1.042
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.08347,
+7.43532,
+0.56134
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1023.478,
+256.098,
+107.051
+]
+},
+{
+"tick": 286,
+"t": 4.78333,
+"ball": [
+116.11828,
+7.3734,
+0.54398
+],
+"ballVel": [
+2.082,
+-3.703,
+-1.205
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.11828,
+7.3734,
+0.54398
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1023.782,
+256.094,
+107.115
+]
+},
+{
+"tick": 287,
+"t": 4.8,
+"ball": [
+116.15298,
+7.31168,
+0.5239
+],
+"ballVel": [
+2.075,
+-3.692,
+-1.369
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.15298,
+7.31168,
+0.5239
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1024.08,
+256.135,
+107.18
+]
+},
+{
+"tick": 288,
+"t": 4.81667,
+"ball": [
+116.18757,
+7.25016,
+0.50109
+],
+"ballVel": [
+2.069,
+-3.68,
+-1.532
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.18757,
+7.25016,
+0.50109
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1024.372,
+256.222,
+107.246
+]
+},
+{
+"tick": 289,
+"t": 4.83333,
+"ball": [
+116.22205,
+7.18882,
+0.47555
+],
+"ballVel": [
+2.062,
+-3.668,
+-1.696
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.22205,
+7.18882,
+0.47555
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1024.659,
+256.353,
+107.312
+]
+},
+{
+"tick": 290,
+"t": 4.85,
+"ball": [
+116.25643,
+7.12769,
+0.44729
+],
+"ballVel": [
+2.056,
+-3.657,
+-1.859
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.25643,
+7.12769,
+0.44729
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1024.939,
+256.53,
+107.379
+]
+},
+{
+"tick": 291,
+"t": 4.86667,
+"ball": [
+116.29069,
+7.06674,
+0.41631
+],
+"ballVel": [
+2.049,
+-3.645,
+-2.023
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.29069,
+7.06674,
+0.41631
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1025.213,
+256.752,
+107.447
+]
+},
+{
+"tick": 292,
+"t": 4.88333,
+"ball": [
+116.32485,
+7.00599,
+0.3826
+],
+"ballVel": [
+2.043,
+-3.633,
+-2.186
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.32485,
+7.00599,
+0.3826
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1025.482,
+257.018,
+107.516
+]
+},
+{
+"tick": 293,
+"t": 4.9,
+"ball": [
+116.35889,
+6.94543,
+0.34617
+],
+"ballVel": [
+2.036,
+-3.622,
+-2.35
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.35889,
+6.94543,
+0.34617
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1025.745,
+257.33,
+107.586
+]
+},
+{
+"tick": 294,
+"t": 4.91667,
+"ball": [
+116.39283,
+6.88507,
+0.30701
+],
+"ballVel": [
+2.03,
+-3.61,
+-2.513
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.39283,
+6.88507,
+0.30701
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1026.002,
+257.686,
+107.657
+]
+},
+{
+"tick": 295,
+"t": 4.93333,
+"ball": [
+116.42666,
+6.8249,
+0.26512
+],
+"ballVel": [
+2.023,
+-3.599,
+-2.677
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.42666,
+6.8249,
+0.26512
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1026.253,
+258.086,
+107.728
+]
+},
+{
+"tick": 296,
+"t": 4.95,
+"ball": [
+116.46038,
+6.76492,
+0.22051
+],
+"ballVel": [
+2.017,
+-3.587,
+-2.84
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.46038,
+6.76492,
+0.22051
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1026.498,
+258.531,
+107.801
+]
+},
+{
+"tick": 297,
+"t": 4.96667,
+"ball": [
+116.49399,
+6.70514,
+0.17318
+],
+"ballVel": [
+2.01,
+-3.575,
+-3.004
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.49399,
+6.70514,
+0.17318
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1026.737,
+259.021,
+107.874
+]
+},
+{
+"tick": 298,
+"t": 4.98333,
+"ball": [
+116.52749,
+6.64555,
+0.12312
+],
+"ballVel": [
+2.004,
+-3.564,
+-3.167
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.52749,
+6.64555,
+0.12312
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1026.97,
+259.555,
+107.948
+]
+},
+{
+"tick": 299,
+"t": 5,
+"ball": [
+116.56089,
+6.58615,
+0.07033
+],
+"ballVel": [
+1.997,
+-3.552,
+-3.331
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.56089,
+6.58615,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1027.198,
+260.133,
+108.023
+]
+},
+{
+"tick": 300,
+"t": 5.01667,
+"ball": [
+116.59417,
+6.52695,
+0.01482
+],
+"ballVel": [
+1.963,
+-3.491,
+-3.494
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.59417,
+6.52695,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1027.419,
+260.755,
+108.098
+]
+},
+{
+"tick": 301,
+"t": 5.03333,
+"ball": [
+116.62688,
+6.46876,
+0
+],
+"ballVel": [
+1.536,
+-2.732,
+1.922
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.62688,
+6.46876,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1027.702,
+260.724,
+108.158
+]
+},
+{
+"tick": 302,
+"t": 5.05,
+"ball": [
+116.65248,
+6.42323,
+0.03203
+],
+"ballVel": [
+1.502,
+-2.671,
+1.758
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.65248,
+6.42323,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1027.996,
+259.997,
+108.188
+]
+},
+{
+"tick": 303,
+"t": 5.06667,
+"ball": [
+116.67751,
+6.37872,
+0.06133
+],
+"ballVel": [
+1.495,
+-2.659,
+1.595
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.67751,
+6.37872,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1028.28,
+259.319,
+108.218
+]
+},
+{
+"tick": 304,
+"t": 5.08333,
+"ball": [
+116.70243,
+6.3344,
+0.08791
+],
+"ballVel": [
+1.489,
+-2.648,
+1.431
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.70243,
+6.3344,
+0.11
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1028.557,
+258.686,
+108.25
+]
+},
+{
+"tick": 305,
+"t": 5.1,
+"ball": [
+116.72724,
+6.29027,
+0.11177
+],
+"ballVel": [
+1.482,
+-2.636,
+1.268
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.72724,
+6.29027,
+0.11177
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1028.83,
+258.099,
+108.281
+]
+},
+{
+"tick": 306,
+"t": 5.11667,
+"ball": [
+116.75194,
+6.24634,
+0.1329
+],
+"ballVel": [
+1.475,
+-2.624,
+1.104
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.75194,
+6.24634,
+0.1329
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1029.096,
+257.556,
+108.314
+]
+},
+{
+"tick": 307,
+"t": 5.13333,
+"ball": [
+116.77653,
+6.2026,
+0.1513
+],
+"ballVel": [
+1.469,
+-2.613,
+0.941
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.77653,
+6.2026,
+0.1513
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1029.357,
+257.059,
+108.348
+]
+},
+{
+"tick": 308,
+"t": 5.15,
+"ball": [
+116.80101,
+6.15905,
+0.16698
+],
+"ballVel": [
+1.462,
+-2.601,
+0.777
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.80101,
+6.15905,
+0.16698
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1029.612,
+256.606,
+108.382
+]
+},
+{
+"tick": 309,
+"t": 5.16667,
+"ball": [
+116.82538,
+6.1157,
+0.17993
+],
+"ballVel": [
+1.456,
+-2.589,
+0.614
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.82538,
+6.1157,
+0.17993
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1029.861,
+256.199,
+108.418
+]
+},
+{
+"tick": 310,
+"t": 5.18333,
+"ball": [
+116.84965,
+6.07254,
+0.19016
+],
+"ballVel": [
+1.449,
+-2.578,
+0.45
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.84965,
+6.07254,
+0.19016
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1030.105,
+255.837,
+108.454
+]
+},
+{
+"tick": 311,
+"t": 5.2,
+"ball": [
+116.8738,
+6.02958,
+0.19767
+],
+"ballVel": [
+1.443,
+-2.566,
+0.287
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.8738,
+6.02958,
+0.19767
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1030.343,
+255.52,
+108.491
+]
+},
+{
+"tick": 312,
+"t": 5.21667,
+"ball": [
+116.89785,
+5.98681,
+0.20244
+],
+"ballVel": [
+1.436,
+-2.555,
+0.123
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.89785,
+5.98681,
+0.20244
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1030.575,
+255.247,
+108.529
+]
+},
+{
+"tick": 313,
+"t": 5.23333,
+"ball": [
+116.92179,
+5.94423,
+0.2045
+],
+"ballVel": [
+1.43,
+-2.543,
+-0.04
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.92179,
+5.94423,
+0.2045
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1030.802,
+255.02,
+108.568
+]
+},
+{
+"tick": 314,
+"t": 5.25,
+"ball": [
+116.94562,
+5.90185,
+0.20383
+],
+"ballVel": [
+1.423,
+-2.531,
+-0.204
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.94562,
+5.90185,
+0.20383
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1031.023,
+254.837,
+108.607
+]
+},
+{
+"tick": 315,
+"t": 5.26667,
+"ball": [
+116.96934,
+5.85966,
+0.20043
+],
+"ballVel": [
+1.417,
+-2.52,
+-0.367
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.96934,
+5.85966,
+0.20043
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1031.238,
+254.7,
+108.648
+]
+},
+{
+"tick": 316,
+"t": 5.28333,
+"ball": [
+116.99295,
+5.81766,
+0.19431
+],
+"ballVel": [
+1.41,
+-2.508,
+-0.531
+],
+"held": false,
+"renderedBall": {
+"p": [
+116.99295,
+5.81766,
+0.19431
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1031.448,
+254.607,
+108.689
+]
+},
+{
+"tick": 317,
+"t": 5.3,
+"ball": [
+117.01645,
+5.77586,
+0.18546
+],
+"ballVel": [
+1.404,
+-2.497,
+-0.694
+],
+"held": false,
+"renderedBall": {
+"p": [
+117.01645,
+5.77586,
+0.18546
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1031.652,
+254.559,
+108.731
+]
+},
+{
+"tick": 318,
+"t": 5.31667,
+"ball": [
+117.03984,
+5.73425,
+0.17389
+],
+"ballVel": [
+1.397,
+-2.485,
+-0.858
+],
+"held": false,
+"renderedBall": {
+"p": [
+117.03984,
+5.73425,
+0.17389
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1031.85,
+254.555,
+108.774
+]
+},
+{
+"tick": 319,
+"t": 5.33333,
+"ball": [
+117.06313,
+5.69284,
+0.1596
+],
+"ballVel": [
+1.391,
+-2.473,
+-1.021
+],
+"held": false,
+"renderedBall": {
+"p": [
+117.06313,
+5.69284,
+0.1596
+],
+"r": 0.11,
+"drawn3d": false,
+"pres": false
+},
+"isContactTick": false,
+"ballScreenPx": [
+1032.042,
+254.596,
+108.818
+]
+}
+]
+}

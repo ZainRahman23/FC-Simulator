@@ -1,0 +1,448 @@
+{
+  "manifest": "TouchlineSimulator Visual V1 \u2014 PixelLab asset freeze",
+  "branch": "visual-integration-v1",
+  "retrieval_date": "2026-08-27",
+  "retrieval_method": "non-generative HTTP GET of existing PixelLab assets (frame CDN + authenticated /mcp tileset endpoints); zero PixelLab generations spent",
+  "pixellab_generations_spent": 0,
+  "notes": [
+    "Original downloads live under originals/ and must never be resampled, recolored, antialiased, or otherwise altered.",
+    "Any runtime-packed representation must be derived into a separate directory, leaving originals/ byte-identical to HASHES.sha256.",
+    "Animated Idle intentionally does not exist for the MVP; static 8-direction rotations are the accepted Idle.",
+    "The experimental east-only Dribble/Carry animation (group 5fc20f4b-b01e-4443-88ed-7a5b5f187681) was intentionally NOT imported.",
+    "Animation frame canvases are larger than the 128x128 character base (motion padding, source-faithful): 140x140 for most directions, 144x144 for north-east/north-west in the v3 template groups. Frames are assumed pivot-centred per PixelLab convention; this must be validated visually in the renderer sandbox.",
+    "Signed/transient URLs and credentials are deliberately excluded; assets are addressed by PixelLab IDs only."
+  ],
+  "character": {
+    "pixellab_character_id": "31a11357-1d06-40c3-958e-5103d1fdd8cd",
+    "acceptance": "VERIFIED_ACCEPTED (user authorization, Visual V1 phase 1, 2026-08-27)",
+    "base_size": "128x128",
+    "directions": 8,
+    "view": "low top-down",
+    "state": "Idle",
+    "state_group_id": "6472488f-74f5-43ca-b3e2-7cc957bd0bf9"
+  },
+  "idle": {
+    "source": "static 8-direction rotations of character 31a11357-1d06-40c3-958e-5103d1fdd8cd (no animation group; rotations are part of the Idle state)",
+    "acceptance": "VERIFIED_ACCEPTED (static-by-design for MVP)",
+    "frame_count_per_direction": 1,
+    "canvas": "128x128",
+    "local_path": "originals/character_31a11357/idle/{direction}.png"
+  },
+  "jog": {
+    "acceptance": "VERIFIED_ACCEPTED (user directive: template Jogging group is the base; custom South-East group fills SE)",
+    "runtime_mapping": {
+      "north": {
+        "animation_group_id": "c1c58078-4bb5-40eb-a8cd-b7bc6961ff16",
+        "animation_id": "c4444b32-78bb-4ef7-a831-9c4a79e9ca98",
+        "canvas": "140x140",
+        "frames": 8
+      },
+      "north-east": {
+        "animation_group_id": "c1c58078-4bb5-40eb-a8cd-b7bc6961ff16",
+        "animation_id": "4337b79d-2ef0-4276-aefa-90a1ed4a1ebf",
+        "canvas": "144x144",
+        "frames": 8
+      },
+      "east": {
+        "animation_group_id": "c1c58078-4bb5-40eb-a8cd-b7bc6961ff16",
+        "animation_id": "73ac7d36-e783-46c6-9f23-e183d63e7921",
+        "canvas": "140x140",
+        "frames": 8
+      },
+      "south-east": {
+        "animation_group_id": "455013ba-72c0-412f-a5f1-49ab5c5a9dd0",
+        "animation_id": "9d65783f-0ee7-4d5a-a1b5-cdf9a3ce92d2",
+        "canvas": "140x140",
+        "frames": 8
+      },
+      "south": {
+        "animation_group_id": "c1c58078-4bb5-40eb-a8cd-b7bc6961ff16",
+        "animation_id": "c66a10ab-1bf5-4852-99b4-161aea4ae9b9",
+        "canvas": "140x140",
+        "frames": 8
+      },
+      "south-west": {
+        "animation_group_id": "c1c58078-4bb5-40eb-a8cd-b7bc6961ff16",
+        "animation_id": "ac63e259-a4d0-499a-ad15-b7e074b947ab",
+        "canvas": "140x140",
+        "frames": 8
+      },
+      "west": {
+        "animation_group_id": "c1c58078-4bb5-40eb-a8cd-b7bc6961ff16",
+        "animation_id": "c74b0011-69ef-40d5-a0ac-24cd3ee78a83",
+        "canvas": "140x140",
+        "frames": 8
+      },
+      "north-west": {
+        "animation_group_id": "c1c58078-4bb5-40eb-a8cd-b7bc6961ff16",
+        "animation_id": "f3b486c5-22b7-4ede-8509-e6e00fe7f161",
+        "canvas": "144x144",
+        "frames": 8
+      }
+    },
+    "base_group": {
+      "animation_group_id": "c1c58078-4bb5-40eb-a8cd-b7bc6961ff16",
+      "name": "Jogging",
+      "template": "v3:running",
+      "directions_provided": [
+        "north",
+        "north-east",
+        "east",
+        "south",
+        "south-west",
+        "west",
+        "north-west"
+      ],
+      "local_path": "originals/character_31a11357/jog/template_jogging_c1c58078/{direction}/{frame}.png"
+    },
+    "se_fill_group": {
+      "animation_group_id": "455013ba-72c0-412f-a5f1-49ab5c5a9dd0",
+      "name": "custom-South-East moderate football jog",
+      "template": "custom text prompt",
+      "direction_used_at_runtime": "south-east",
+      "local_path": "originals/character_31a11357/jog_variants/custom_se_455013ba/south-east/{frame}.png"
+    },
+    "preserved_variants_not_runtime": [
+      {
+        "animation_group_id": "455013ba-72c0-412f-a5f1-49ab5c5a9dd0",
+        "direction": "south-west",
+        "animation_id": "f5056d48-fe54-42e9-a3b9-ed48b59ec690",
+        "acceptance": "EXPERIMENTAL/PRESERVED \u2014 competing SW jog variant, superseded at runtime by template Jogging SW per user directive",
+        "local_path": "originals/character_31a11357/jog_variants/custom_se_455013ba/south-west/{frame}.png"
+      },
+      {
+        "animation_group_id": "6d125aab-7dd9-46d8-9d10-8a32b4a5abfd",
+        "direction": "east",
+        "animation_id": "a718cfb9-0f78-49ff-a9a0-8f95db4171cf",
+        "acceptance": "EXPERIMENTAL/PRESERVED \u2014 competing E jog variant, superseded at runtime by template Jogging E per user directive",
+        "local_path": "originals/character_31a11357/jog_variants/custom_ew_6d125aab/east/{frame}.png"
+      },
+      {
+        "animation_group_id": "6d125aab-7dd9-46d8-9d10-8a32b4a5abfd",
+        "direction": "west",
+        "animation_id": "5c7a4642-7228-455a-bb4c-1bb6ae7cdb21",
+        "acceptance": "EXPERIMENTAL/PRESERVED \u2014 competing W jog variant, superseded at runtime by template Jogging W per user directive",
+        "local_path": "originals/character_31a11357/jog_variants/custom_ew_6d125aab/west/{frame}.png"
+      }
+    ]
+  },
+  "sprint": {
+    "acceptance": "VERIFIED_ACCEPTED (user authorization, Visual V1 phase 1)",
+    "animation_group_id": "ed94f81a-6a8b-4309-a432-2d183c95e450",
+    "name": "Full Sprint",
+    "template": "v3:full sprinting",
+    "frames_per_direction": 8,
+    "local_path": "originals/character_31a11357/sprint/full_sprint_ed94f81a/{direction}/{frame}.png",
+    "per_direction": {
+      "north": {
+        "animation_id": "c9203877-7b48-4056-b07a-81410be9ae7c",
+        "canvas": "140x140"
+      },
+      "north-east": {
+        "animation_id": "dcd73e01-61f9-4c96-924b-3b6fd12ff5dd",
+        "canvas": "144x144"
+      },
+      "east": {
+        "animation_id": "4883bc0c-8a8b-430f-af14-9c35f0768d1e",
+        "canvas": "140x140"
+      },
+      "south-east": {
+        "animation_id": "3e92bb60-0980-493a-a2d9-61732c80f8e3",
+        "canvas": "140x140"
+      },
+      "south": {
+        "animation_id": "a9a2615f-7efe-47d5-9846-4309613afc4a",
+        "canvas": "140x140"
+      },
+      "south-west": {
+        "animation_id": "ccc44608-22ba-4484-8ac4-24fc22012984",
+        "canvas": "140x140"
+      },
+      "west": {
+        "animation_id": "555323c0-81e2-4f0d-bc88-e5be8aafddba",
+        "canvas": "140x140"
+      },
+      "north-west": {
+        "animation_id": "507fef78-4ae1-4941-bd5f-42eb9fdc404a",
+        "canvas": "144x144"
+      }
+    }
+  },
+  "grass_tileset": {
+    "acceptance": "VERIFIED_ACCEPTED (user authorization, Visual V1 phase 1)",
+    "pixellab_tileset_id": "1495fe3a-2420-4350-b487-709e41105ccb",
+    "type": "topdown Wang tileset",
+    "tiles": 16,
+    "tile_size": "32x32",
+    "sheet_size": "128x128",
+    "view": "high top-down",
+    "terrains": {
+      "lower": {
+        "description_short": "dark green stadium perimeter turf",
+        "base_tile_id": "f535f8a0-a8e6-470b-ad83-536e8f1a8bb9"
+      },
+      "upper": {
+        "description_short": "professional pitch grass with mowing variation",
+        "base_tile_id": "268c57f7-0b7a-4594-8309-eac7ab1c1aef"
+      }
+    },
+    "slicing_rule": "Slice the sheet using each tile's bounding_box from tileset_metadata.json ONLY. Never derive positions from wang_N names or original_position (produces banding, per PixelLab metadata warning).",
+    "scope_limitation": "Surface texture/material ONLY. This tileset does NOT define pitch geometry, white markings, boundaries, penalty areas, goals, or simulator coordinates. Authoritative geometry comes from the engine.",
+    "local_paths": {
+      "sheet": "originals/tileset_1495fe3a/tileset_sheet.png",
+      "metadata": "originals/tileset_1495fe3a/tileset_metadata.json"
+    }
+  },
+  "goal_art": {
+    "acceptance": "EXPERIMENTAL/REJECTED for Visual V1 presentation (2026-08-27 review: front-facing, unsuitable for the sideline perspective camera). File preserved; NOT loaded by the sandbox \u2014 goals are procedural 3D geometry.",
+    "tool": "create_image_pixflux",
+    "model": "pixflux",
+    "pixellab_image_id": "32ad92c2-1ac3-4ad9-ad16-212b452a3901",
+    "seed": 31415,
+    "size": "160x192",
+    "sha256": "82d1840e379a54392bb03bb414b3c9666b62ab0fef28f45eb12c6a1ee284bde1",
+    "generations_cost": 1,
+    "local_path": "originals/goal_32ad92c2/goal.png",
+    "content_bbox_after_grass_strip": {
+      "x0": 8,
+      "x1": 129,
+      "y0": 46,
+      "y1": 149
+    },
+    "derivation": [
+      "Original stored untouched. At sandbox load time a derived copy strips the baked grass mound with the deterministic chroma rule g>r+20 && g>b+20 (transparent).",
+      "Right-end goal is the same art mirrored horizontally at render time \u2014 no second generation.",
+      "Artwork is presentation only: authoritative goal geometry (7.32m mouth, 2.44m bar) stays procedural and unchanged by the art.",
+      "KNOWN LIMITATION flagged for review: the art is front-on (mouth toward viewer) while the true mouths open east/west; integrated as a stylized billboard scaled to player metric height. A side-profile goal would need a future authorized generation."
+    ]
+  },
+  "goal_art_rejected_candidate": {
+    "acceptance": "EXPERIMENTAL/REJECTED (2026-08-27 \u2014 corrective side-profile attempt still came out front-on and paler; attempt 1 kept as working art)",
+    "tool": "create_image_pixflux",
+    "model": "pixflux",
+    "pixellab_image_id": "5937b8e5-a0d6-45d9-b25b-a184c481351a",
+    "seed": 16180,
+    "size": "160x160",
+    "sha256": "bf38c5dc91ae41891f3e9bb6133baa92e3eb3b219b3c9b1bffa3cf2473678ab1",
+    "generations_cost": 1,
+    "local_path": "originals/goal_5937b8e5/goal_attempt2.png"
+  },
+  "stadium_art": {
+    "acceptance": "PENDING_VISUAL_REVIEW (generated 2026-08-27 under explicit phase-3 authorization)",
+    "tool": "create_image_pixflux",
+    "model": "pixflux",
+    "pixellab_image_id": "03aa33f8-fb36-4840-8185-b194b3b2bef6",
+    "seed": 27182,
+    "size": "400x112",
+    "sha256": "f3597f40e83aef99d72505e0fcfb819206aaf41dabcecab79fd7471f96e8ea41",
+    "generations_cost": 1,
+    "local_path": "originals/stadium_03aa33f8/stand_strip.png",
+    "derivation": [
+      "Rendered as a perspective-correct vertical wall on the plane z = -8 m (far apron edge), outside the playing surface.",
+      "Mirror-tiled along world x (alternate copies flipped) so left/right panning exposes no seams or gaps; one strip covers the whole visible environment.",
+      "Scenery only: never occludes the pitch, players, or ball; drawn before the ground pass."
+    ]
+  },
+  "goal_art_v3_oblique": {
+    "acceptance": "PENDING_VISUAL_REVIEW (generated 2026-08-27 under explicit single-generation authorization; reference-image-guided)",
+    "tool": "create_image_pixflux (img2img: init_image = isolated goal crop from the user's EA-FC-style reference screenshot, strength 200)",
+    "model": "pixflux",
+    "pixellab_image_id": "da2989e6-01fb-4eb6-862d-bf18d9fe1149",
+    "seed": 73205,
+    "size": "64x68",
+    "sha256": "bd69b413df915e80d80b1a17948abd17e279aa13242a0189abbc979c1f86bfc7",
+    "generations_cost": 1,
+    "local_path": "originals/goal_da2989e6/goal_oblique_ref.png",
+    "reference_input": {
+      "local_path": "originals/goal_da2989e6/reference_input_isolated.png",
+      "sha256": "2618cb99f2d83a94c21f307c58e7c7d4b0f76cc9e44449602caadee7c2be31c5",
+      "derivation": "Goal region cropped from the supplied reference screenshot, background chroma-isolated (keep low-saturation light pixels), player fragment erased. The generation call used a 64x68 6-colour compressed copy of this (inline transport limits)."
+    },
+    "notes": [
+      "Correct high three-quarter oblique orientation achieved (matches reference spatial read): foreshortened mouth, dominant side net, roof + rear depth.",
+      "Known issues for review: greenish tint bled from the reference grass into the net; 64x68 output (init size adopted) limits cord detail; net reads as textured panels rather than crisp individual cords.",
+      "NOT integrated into the sandbox; the procedural Goal V3 remains the active presentation. Exactly one generation spent; no retry performed per instruction."
+    ]
+  },
+  "goal_art_v2_oblique": {
+    "acceptance": "PENDING_VISUAL_REVIEW (generated 2026-08-27 under explicit single-generation authorization; full-resolution reference transport via sanctioned REST route)",
+    "tool": "PixelLab REST POST /v2/create-image-pixflux (img2img)",
+    "model": "pixflux",
+    "seed": 73205,
+    "init_image_strength": 200,
+    "size": "312x332",
+    "generations_cost": 1,
+    "usage_reported_by_api": {
+      "type": "generations",
+      "generations": 1.0
+    },
+    "local_paths": {
+      "original": "originals/goal_v2_oblique/goal_v2_original.png",
+      "derived_transparent": "originals/goal_v2_oblique/goal_v2_derived_transparent.png",
+      "reference_input": "originals/goal_v2_oblique/reference_input_312x332_grey.png"
+    },
+    "sha256": {
+      "original": "b9820703345fa5d396547f6d8631fce771e6d4fae76def06e9d13107dae6d70f",
+      "derived_transparent": "8ae9d287e94895826dfd085e4bf663410934f224fb3e324389191e632b3421aa",
+      "reference_input": "49d0b990a2d569917a7c4c47ffeda0a8fe9f729768059a8ef54eb04d2a3560e2"
+    },
+    "reference_preparation": "Same 156x166 screenshot crop as V1, re-isolated with a tighter keep rule, every kept pixel neutralized to luminance grey (zero green-dominant pixels), player fragment erased, LANCZOS-upscaled x2 to 312x332. No quantization; geometry/orientation untouched.",
+    "notes": [
+      "Accepted V1 oblique orientation preserved: foreshortened mouth, dominant side net, roof net, rear frame/net, rectangular box silhouette.",
+      "Net now resolves as individual cords with clear intersections; zero green contamination (verified per-pixel).",
+      "Raw API output has an opaque uniform grey background (the API's no_background removal only applies to canvases <= 200x200). The derived copy keys that grey (tolerance 14) making background AND net holes genuinely transparent, and erases two small stray artifacts right of the goal (x>=268). Original stored byte-untouched.",
+      "NOT integrated; procedural Goal V3 remains the active presentation. V1 (goal_art_v3_oblique record) preserved separately."
+    ]
+  },
+  "goal_art_v2_1_clean": {
+    "acceptance": "EXPERIMENTAL/REJECTED (2026-08-27 review: too sterile, loses PixelLab detailing; preserved as an experiment only \u2014 V2 is the visual master)",
+    "derivation_method": "Deterministic reconstruction (option A): V2's accepted frame geometry measured from the art (8 corner points), external rear pole and stray artifacts omitted by construction, all net panels rebuilt as homography-mapped regular grids (roof 20x8, mouth 20x12, back 14x9 cells) with perspective-correct cell compression and subtle attachment-zero sag; frame redrawn along the measured members in V2's palette. Generator stored alongside for exact reproducibility.",
+    "based_on": "goal_art_v2_oblique (originals untouched)",
+    "size": "312x332",
+    "generations_cost": 0,
+    "local_paths": {
+      "asset": "originals/goal_v2_oblique/goal_v2_1_clean.png",
+      "generator": "originals/goal_v2_oblique/goal_v2_1_generator.py"
+    },
+    "sha256": {
+      "asset": "ee20ce30f129c50f5e8cad1d84eaa0ab41984830b68d360dc3d6e2b5b7bde36f",
+      "generator": "ba90c1fb8986688db4d4c6ce0f139dbdb370218ce9d892816f74d05e8a588399"
+    },
+    "notes": [
+      "Accepted V2 orientation/proportions preserved exactly (same measured corners).",
+      "Net topology is a true connected grid per panel \u2014 no broken cells, oversized holes, or texture noise; holes genuinely transparent.",
+      "Grid regularity lives in goal-space; the projective panel mapping produces the on-screen compression.",
+      "NOT integrated; procedural Goal V3 remains the active sandbox presentation."
+    ]
+  },
+  "goal_art_v2_2_surgical": {
+    "acceptance": "PENDING_VISUAL_REVIEW (derived 2026-08-27; 0 PixelLab generations; V2 is the accepted visual master)",
+    "derivation_method": "Surgical pixel repair of goal_v2_derived_transparent.png. Pole removal: mask-based transparency restore of the two external diagonal pole arms (left of the rear upright above the ground rail; left of the near post below it) and the detached right stub (right of the sagging roof edge) \u2014 2,819 px cleared, no replacement structure. Net tears: four abnormal openings in the mouth net filled by clone-stamping the intact cell row directly above (offsets (0,-13)/(0,-14)) \u2014 427 px ADDED into transparent gaps only; no existing art pixel modified. Everything outside the logged masks verified pixel-identical (0 differing px).",
+    "based_on": "goal_art_v2_oblique derived_transparent (V2 originals untouched)",
+    "size": "312x332",
+    "generations_cost": 0,
+    "changed_pixels": {
+      "total": 3246,
+      "pole_left": {
+        "pixels": 2414,
+        "bbox_xyxy": [
+          0,
+          40,
+          90,
+          329
+        ]
+      },
+      "stub_right": {
+        "pixels": 405,
+        "bbox_xyxy": [
+          178,
+          59,
+          197,
+          115
+        ]
+      },
+      "tear_A": {
+        "pixels": 108,
+        "bbox_xyxy": [
+          119,
+          248,
+          131,
+          261
+        ]
+      },
+      "tear_B": {
+        "pixels": 64,
+        "bbox_xyxy": [
+          135,
+          249,
+          144,
+          261
+        ]
+      },
+      "tear_C": {
+        "pixels": 70,
+        "bbox_xyxy": [
+          147,
+          249,
+          155,
+          261
+        ]
+      },
+      "tear_D": {
+        "pixels": 185,
+        "bbox_xyxy": [
+          113,
+          275,
+          134,
+          289
+        ]
+      }
+    },
+    "local_paths": {
+      "asset": "originals/goal_v2_oblique/goal_v2_2_surgical.png",
+      "surgery_report": "originals/goal_v2_oblique/goal_v2_2_surgery_report.json"
+    },
+    "sha256": {
+      "asset": "3c377434cc85058fdcaa01a94dbbc5f75d57db2383564401c25ee99aa1f7c8b8",
+      "surgery_report": "15bcb83766c260d5d45bf3e90cef8cf2c8ead0f446a698545859200dad539c9a"
+    },
+    "notes": [
+      "V2's artwork, silhouette, perspective, frame, net texture, sag and palette preserved exactly outside the repair masks.",
+      "NOT integrated; procedural Goal V3 remains the active sandbox presentation."
+    ]
+  },
+  "goal_art_v2_3_frozen_bake": {
+    "acceptance": "PENDING_VISUAL_REVIEW (derived 2026-08-28; 0 PixelLab generations; authorized one-time authoring bake)",
+    "derivation_method": "Deterministic panel-projective rectification of goal_v2_2_surgical.png into the frozen CAMERA_V1 projection: three measured art panels (mouth plane, roof net, near-side net; back net rides as baked through-view content) homography-mapped onto the authoritative frozen box-goal faces (7.32x2.44m mouth on the goal line, 2.0m depth, rear 2.44m). Shared panel edges map to identical destination lines (seam-free); outer-edge margins preserve the sag silhouette; cord-preserving footprint sampling (max-alpha, structure-biased nearest) - no blur, no halos, no broken cords. Generator: sandbox/visual/tools/bake_goal_v22_frozen.py.",
+    "based_on": "goal_art_v2_2_surgical (V2.2 originals byte-untouched, verified)",
+    "size": "150x96",
+    "v_offset": [
+      1513,
+      276
+    ],
+    "generations_cost": 0,
+    "correspondence_errors_px": "all 8 structural points 0.0000 (exact by homography construction); runtime residual = pixel snap <= 0.71px, pan-invariant",
+    "valid_for_projection": {
+      "height": 30,
+      "dist": 43,
+      "fov": 28,
+      "depthoff": 3,
+      "pitch": 22,
+      "yaw": 0
+    },
+    "local_paths": {
+      "asset": "originals/goal_v2_oblique/goal_v2_3_frozen_bake.png",
+      "meta": "originals/goal_v2_oblique/goal_v2_3_frozen_bake.json"
+    },
+    "sha256": {
+      "asset": "c6cad0d8ca4195d84be837fe66796a9e440cdb0a711d6f1cb1bae492a9e9402f",
+      "meta": "00801627333d9829f7c784e2fc9920499322293ddf610e9751bc40d396326f7c"
+    },
+    "notes": [
+      "Left goal = horizontal mirror about V x=640 (the frozen projection is x-symmetric) - no separate artwork.",
+      "Runtime treats it as an ordinary rigid 2D scene member; zero per-frame goal-specific correction.",
+      "If the projection is re-authored with different parameters the viewer falls back to the rigid V2.2 fit and flags it."
+    ]
+  },
+  "integrity": {
+    "lock_file": "HASHES.sha256",
+    "verified": "2026-08-27",
+    "checks": "PNG signature, per-chunk CRC32, full IDAT zlib decompression, IHDR dimensions, RGBA-8 (color type 6) on all 161 PNGs; per-direction frame counts complete; zero errors"
+  },
+  "engine_boundary": "Visual integration consumes authoritative engine state read-only. No simulation file (decisions, movement physics, acceleration, stamina, possession, passing, reception, shooting, tackling, restarts, coordinates, timing) may be modified for visual reasons.",
+  "ball_pixellab_animated": {
+    "acceptance": "ACTIVE for Visual V1 presentation (2026-08-31): PIXELLAB ANIMATED BALL SPRITE \u2014 replaces all procedural/hand-authored ball drawing.",
+    "tool": "create_image_pixen (master, 24x24, seed 11) + animate_image (8-frame rotation, seed 11); 4 rejected candidates preserved",
+    "local_paths": {
+      "sheet": "originals/ball_pixellab/ball_sheet_24x8.png",
+      "frames": "originals/ball_pixellab/ball_rot_{0..7}.png",
+      "master_raw": "originals/ball_pixellab/ball_master_raw_24.png",
+      "record": "originals/ball_pixellab/RECORD.json"
+    },
+    "notes": [
+      "Deterministic cleanup only: integer recentring, master-silhouette mask enforcement, palette quantization to 5 colours (#FFFFFF #F1F2EF #D1D4D1 #A7ACA9 #252929).",
+      "Runtime selects among the 8 authored phases from physical motion (omega = speed / 0.11 m, display-capped); no bitmap rotation, no filtering.",
+      "Physical ball radius (0.11 m) untouched; visual calibration separate (BALL_VIS_R)."
+    ]
+  }
+}

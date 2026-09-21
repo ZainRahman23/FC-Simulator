@@ -1,0 +1,565 @@
+{
+ "record": "GK_BASE_V1 \u2014 canonical goalkeeper identity (frozen)",
+ "frozen_on": "2026-09-05",
+ "pixellab_character_id": "f4838361-d1db-460a-aa81-87b5b626ce5f",
+ "pixellab_group_id": "575e9e5b-2d74-4b31-9a6b-1d7175e7d4ac",
+ "generation": "PixelLab create_character, mode pro, size 128, view low top-down, style_character_id 31a11357-1d06-40c3-958e-5103d1fdd8cd (style only; identity, face, hair, build and kit specified fresh)",
+ "canvas": "128x128 RGBA per direction, pivot-centred like the outfield character",
+ "directions": [
+  "south",
+  "south-east",
+  "east",
+  "north-east",
+  "north",
+  "north-west",
+  "west",
+  "south-west"
+ ],
+ "local_path": "originals/character_f4838361/idle/{direction}.png",
+ "rule": "originals are never resampled, recoloured or edited; animation states/clips live in sibling folders and reference this record",
+ "sha256": {
+  "south": "3a094ee7a9c6a558e94e9ad7b7a29cb2ad6375d0427e9a5c5012d67df5e2c66c",
+  "south-east": "84293749a38ef7e347ac5f2cf75d6edaad6a66459591e9d49afd9990a92e174e",
+  "east": "8eb4c964cdf48fa1f88ddebd1c35a21a24f7b435b8b5ef67b5eb7e959bb2797c",
+  "north-east": "22ebe0f1ca5b6d339c239d1499eab89f7e40c8896fb536e4f4b39c259a3d2f9d",
+  "north": "68a758ca216d8e952a84b17ae67ff810912c2239063d5013fea4f75ec5285484",
+  "north-west": "44f3a749e00b11e060d925994f80ce4c1b58d65264d577c6d5d435303e72718b",
+  "west": "1e40cd39c2961954176601de10f71829652f50945c2a62b75df4de545c1c6d8c",
+  "south-west": "115091edb2a29ae8d845b44661cdb60c155ea36ff122f2d952439ed71eb0662f"
+ },
+ "measurements": {
+  "south": {
+   "bbox": [
+    40,
+    12,
+    87,
+    113
+   ],
+   "height_px": 102,
+   "width_px": 48,
+   "foot_row": 113,
+   "foot_offset_from_canvas_centre": 49.0,
+   "head": [
+    63.50657894736842,
+    25.394736842105264
+   ],
+   "hands": {
+    "screenLeft": [
+     43.18181818181818,
+     69.22727272727273
+    ],
+    "screenRight": [
+     83.48148148148148,
+     69.18518518518519
+    ]
+   },
+   "feet": {
+    "screenLeft": [
+     49.86915887850467,
+     113.0
+    ],
+    "screenRight": [
+     77.09433962264151,
+     113.0
+    ]
+   },
+   "pelvis_row_est": 65.03999999999999,
+   "shoulder_row_est": 39.540000000000006
+  },
+  "south-east": {
+   "bbox": [
+    43,
+    14,
+    85,
+    115
+   ],
+   "height_px": 102,
+   "width_px": 43,
+   "foot_row": 115,
+   "foot_offset_from_canvas_centre": 51.0,
+   "head": [
+    65.14285714285714,
+    27.92517006802721
+   ],
+   "hands": {
+    "screenLeft": [
+     48.073170731707314,
+     73.0
+    ],
+    "screenRight": [
+     81.57142857142857,
+     64.0
+    ]
+   },
+   "feet": {
+    "screenLeft": [
+     52.018348623853214,
+     115.0
+    ],
+    "screenRight": [
+     75.0,
+     106.0
+    ]
+   },
+   "pelvis_row_est": 67.03999999999999,
+   "shoulder_row_est": 41.540000000000006
+  },
+  "east": {
+   "bbox": [
+    52,
+    14,
+    74,
+    115
+   ],
+   "height_px": 102,
+   "width_px": 23,
+   "foot_row": 115,
+   "foot_offset_from_canvas_centre": 51.0,
+   "head": [
+    65.46979865771812,
+    27.879194630872483
+   ],
+   "hands": {
+    "screenLeft": [
+     61.285714285714285,
+     72.35714285714286
+    ],
+    "screenRight": [
+     65.075,
+     73.175
+    ]
+   },
+   "feet": {
+    "screenLeft": [
+     58.51578947368421,
+     115.0
+    ],
+    "screenRight": [
+     66.27586206896552,
+     115.0
+    ]
+   },
+   "pelvis_row_est": 67.03999999999999,
+   "shoulder_row_est": 41.540000000000006
+  },
+  "north-east": {
+   "bbox": [
+    43,
+    13,
+    85,
+    111
+   ],
+   "height_px": 99,
+   "width_px": 43,
+   "foot_row": 111,
+   "foot_offset_from_canvas_centre": 47.0,
+   "head": [
+    66.61842105263158,
+    28.57894736842105
+   ],
+   "hands": {
+    "screenLeft": [
+     46.38095238095238,
+     64.04761904761905
+    ],
+    "screenRight": [
+     81.70588235294117,
+     72.79411764705883
+    ]
+   },
+   "feet": {
+    "screenLeft": [
+     49.68421052631579,
+     104.0
+    ],
+    "screenRight": [
+     73.53237410071942,
+     111.0
+    ]
+   },
+   "pelvis_row_est": 64.48,
+   "shoulder_row_est": 39.730000000000004
+  },
+  "north": {
+   "bbox": [
+    40,
+    13,
+    87,
+    109
+   ],
+   "height_px": 97,
+   "width_px": 48,
+   "foot_row": 109,
+   "foot_offset_from_canvas_centre": 45.0,
+   "head": [
+    63.5,
+    29.5
+   ],
+   "hands": {
+    "screenLeft": [
+     42.9375,
+     69.625
+    ],
+    "screenRight": [
+     83.17647058823529,
+     70.88235294117646
+    ]
+   },
+   "feet": {
+    "screenLeft": [
+     50.041666666666664,
+     109.0
+    ],
+    "screenRight": [
+     76.9,
+     109.0
+    ]
+   },
+   "pelvis_row_est": 63.440000000000005,
+   "shoulder_row_est": 39.19
+  },
+  "north-west": {
+   "bbox": [
+    42,
+    13,
+    84,
+    111
+   ],
+   "height_px": 99,
+   "width_px": 43,
+   "foot_row": 111,
+   "foot_offset_from_canvas_centre": 47.0,
+   "head": [
+    60.1025641025641,
+    28.705128205128204
+   ],
+   "hands": {
+    "screenLeft": [
+     45.3125,
+     72.5
+    ],
+    "screenRight": [
+     80.73913043478261,
+     64.73913043478261
+    ]
+   },
+   "feet": {
+    "screenLeft": [
+     53.270833333333336,
+     111.0
+    ],
+    "screenRight": [
+     77.13157894736842,
+     104.0
+    ]
+   },
+   "pelvis_row_est": 64.48,
+   "shoulder_row_est": 39.730000000000004
+  },
+  "west": {
+   "bbox": [
+    53,
+    14,
+    75,
+    115
+   ],
+   "height_px": 102,
+   "width_px": 23,
+   "foot_row": 115,
+   "foot_offset_from_canvas_centre": 51.0,
+   "head": [
+    61.59060402684564,
+    27.83221476510067
+   ],
+   "hands": {
+    "screenLeft": [
+     61.064516129032256,
+     72.96774193548387
+    ],
+    "screenRight": [
+     65.04347826086956,
+     72.34782608695652
+    ]
+   },
+   "feet": {
+    "screenLeft": [
+     60.12244897959184,
+     115.0
+    ],
+    "screenRight": [
+     67.79591836734694,
+     115.0
+    ]
+   },
+   "pelvis_row_est": 67.03999999999999,
+   "shoulder_row_est": 41.540000000000006
+  },
+  "south-west": {
+   "bbox": [
+    42,
+    14,
+    84,
+    115
+   ],
+   "height_px": 102,
+   "width_px": 43,
+   "foot_row": 115,
+   "foot_offset_from_canvas_centre": 51.0,
+   "head": [
+    61.74025974025974,
+    28.064935064935064
+   ],
+   "hands": {
+    "screenLeft": [
+     45.392857142857146,
+     63.42857142857143
+    ],
+    "screenRight": [
+     79.25641025641026,
+     73.15384615384616
+    ]
+   },
+   "feet": {
+    "screenLeft": [
+     52.0,
+     106.0
+    ],
+    "screenRight": [
+     74.74038461538461,
+     115.0
+    ]
+   },
+   "pelvis_row_est": 67.03999999999999,
+   "shoulder_row_est": 41.540000000000006
+  }
+ },
+ "reference_outfield_idle": {
+  "south": {
+   "height_px": 96,
+   "foot_row": 109,
+   "foot_offset_from_canvas_centre": 45.0
+  },
+  "south-east": {
+   "height_px": 100,
+   "foot_row": 113,
+   "foot_offset_from_canvas_centre": 49.0
+  },
+  "east": {
+   "height_px": 100,
+   "foot_row": 113,
+   "foot_offset_from_canvas_centre": 49.0
+  },
+  "north-east": {
+   "height_px": 98,
+   "foot_row": 110,
+   "foot_offset_from_canvas_centre": 46.0
+  },
+  "north": {
+   "height_px": 94,
+   "foot_row": 107,
+   "foot_offset_from_canvas_centre": 43.0
+  },
+  "north-west": {
+   "height_px": 98,
+   "foot_row": 110,
+   "foot_offset_from_canvas_centre": 46.0
+  },
+  "west": {
+   "height_px": 100,
+   "foot_row": 113,
+   "foot_offset_from_canvas_centre": 49.0
+  },
+  "south-west": {
+   "height_px": 100,
+   "foot_row": 113,
+   "foot_offset_from_canvas_centre": 49.0
+  }
+ },
+ "scale_relationship": {
+  "pixel_scale": "identical (same pipeline, same canvas)",
+  "gk_height_px_south": 102,
+  "outfield_height_px_south": 96,
+  "ratio": 1.062,
+  "note": "the ratio (\u22481.05) is the intended stature difference (~192 vs 183 cm); the renderer must NOT rescale the GK to match the outfield pivot \u2014 it anchors his measured foot row instead"
+ },
+ "pivot": {
+  "rule": "foot anchor = measured foot_row per direction (bottom opaque row); the outfield rule (canvas centre + 47) would sink the GK 2\u20134 px into the ground",
+  "foot_offset_from_canvas_centre_per_direction": {
+   "south": 49.0,
+   "south-east": 51.0,
+   "east": 51.0,
+   "north-east": 47.0,
+   "north": 45.0,
+   "north-west": 47.0,
+   "west": 51.0,
+   "south-west": 51.0
+  }
+ },
+ "states": {
+  "idle": {
+   "character_id": "f4838361-d1db-460a-aa81-87b5b626ce5f",
+   "local_path": "originals/character_f4838361/idle/{direction}.png"
+  },
+  "set": {
+   "character_id": "0808086b-027d-4114-a53a-efd11a8178f9",
+   "local_path": "originals/character_f4838361/set/{direction}.png",
+   "status": "downloaded 2026-09-05",
+   "edit": "Goalkeeper SET stance (create_character_state on GK_BASE_V1, palette locked to the source)",
+   "sha256": {
+    "south": "a2933190c03b8e4b331040be8ed93ba71d861a0f49d55fad4601fc11d38cbda3",
+    "south-east": "f01cfa7fb554858205cbab2e9546bcb783bdfec166e5b46502c9e9ad85d44c0a",
+    "east": "648643ad229b3149e1606a1c26c845885caf53eadd08586b36df063c56ae9edf",
+    "north-east": "a7eb350b044cd26d4fa3abb03eaac50644bcd4178645053cea83721078c8d26e",
+    "north": "152fd3f88978bb5d4eb86cdcf8909b254c4ff8de146906638212704452e3f9f2",
+    "north-west": "e9739acfbe524a439edce75a2d523e1427682513d461c340495b3f5a574540a8",
+    "west": "707a1efbc01ca9091de81c5890215c73e19f60523ccd3ecc691895e5f36c866f",
+    "south-west": "96ec0c387f1a1cd3ef7e5195e05b1d1beb0612fd028efcc6ae9ca21b707f7216"
+   }
+  }
+ },
+ "animation_clips": {
+  "note": "Authored on the SET state (0808086b\u2026) of GK_BASE_V1 with PixelLab animate_character \u2014 identity-preserving derivations; frame 0 of each v3 clip is the SET reference pose. Frames live under originals/character_f4838361/anim/<clip>/<direction>/<i>.png; per-frame anchors under goalkeeper/anchors/clips/; playback table in goalkeeper/GK_ANIM_V1.json (generated by sandbox/visual/tools/gk_anim/gk_build_manifest.py).",
+  "clips": {
+   "chest_catch": {
+    "east": {
+     "frames": 9,
+     "canvas": null,
+     "sha256_frame0": "6b82aaa9cf02ff77",
+     "sha256_all": "e8d2f5632866df55"
+    },
+    "south": {
+     "frames": 9,
+     "canvas": null,
+     "sha256_frame0": "a0d75333414f1241",
+     "sha256_all": "82d57ae0ff78391b"
+    },
+    "pixellab": {
+     "group": "c2e03d1b-0b95-432e-8441-4244a2c4d42b",
+     "east": "a4064369-889c-4389-b308-de65c8d9d619",
+     "south": "7acdc015-0234-4837-b9ff-6e9fcdad427b",
+     "mode": "v3 custom, 8 frames + reference"
+    }
+   },
+   "foot_save_right": {
+    "east": {
+     "frames": 9,
+     "canvas": null,
+     "sha256_frame0": "6b82aaa9cf02ff77",
+     "sha256_all": "ba90dcc313ee2327"
+    },
+    "pixellab": {
+     "group": "965090b7-bbaf-4c55-93ac-8712813862c2",
+     "east": "cc61667f-d7b3-49a7-96ba-8e50b37fe19c",
+     "mode": "v3 custom, 8 frames + reference"
+    }
+   },
+   "high_dive_right": {
+    "east": {
+     "frames": 9,
+     "canvas": null,
+     "sha256_frame0": "6b82aaa9cf02ff77",
+     "sha256_all": "169fd0de4ef5df5b"
+    },
+    "pixellab": {
+     "group": "2a8b8cbd-faa8-4831-bb71-8fbf746e1acd",
+     "east": "1cc69df2-0640-4aa5-85d7-bdfea580630a",
+     "mode": "v3 custom, 8 frames + reference"
+    }
+   },
+   "low_collapse_right": {
+    "east": {
+     "frames": 9,
+     "canvas": null,
+     "sha256_frame0": "6b82aaa9cf02ff77",
+     "sha256_all": "e6fe7985f494e5ac"
+    },
+    "pixellab": {
+     "group": "872ea258-b9a7-4190-8c9b-df44aa22ef2f",
+     "east": "90aced4e-3a98-447e-8170-9dbaf4fe2495",
+     "mode": "v3 custom, 8 frames + reference"
+    }
+   },
+   "low_gather": {
+    "east": {
+     "frames": 9,
+     "canvas": null,
+     "sha256_frame0": "6b82aaa9cf02ff77",
+     "sha256_all": "2ddb72a20cd2b9ee"
+    },
+    "south": {
+     "frames": 9,
+     "canvas": null,
+     "sha256_frame0": "a0d75333414f1241",
+     "sha256_all": "46003375245d916d"
+    },
+    "pixellab": {
+     "group": "3f2dbaef-b5a6-482e-819d-de3fbe733372",
+     "east": "48051a23-9f74-4e87-8c50-93ffe132c785",
+     "south": "1fda63f9-a46f-438e-8646-127224458d76",
+     "mode": "v3 custom, 8 frames + reference"
+    }
+   },
+   "medium_dive_right": {
+    "east": {
+     "frames": 9,
+     "canvas": null,
+     "sha256_frame0": "6b82aaa9cf02ff77",
+     "sha256_all": "8adeb039c9f3b52b"
+    },
+    "pixellab": {
+     "group": "ccc434ed-6fa5-4274-820d-a3b435f9d077",
+     "east": "05792492-5159-4ac0-9b33-65e6a1d7101e",
+     "mode": "v3 custom, 8 frames + reference"
+    }
+   },
+   "recover_getting_up": {
+    "east": {
+     "frames": 5,
+     "canvas": null,
+     "sha256_frame0": "4190219b47137dc2",
+     "sha256_all": "2aefb2941038f0ac"
+    },
+    "south": {
+     "frames": 5,
+     "canvas": null,
+     "sha256_frame0": "8a86e9be3daf1d6f",
+     "sha256_all": "0d58175eefb86bff"
+    },
+    "pixellab": {
+     "group": "aac6752a-7d85-4fb5-bfa2-bac50abc5061",
+     "east": "bea12644-efbc-4f64-8f32-492bddb155f7",
+     "south": "e8fbad71-21e4-4b46-953f-a9d4e004869e",
+     "mode": "template 'getting-up', 5 frames"
+    }
+   },
+   "shuffle_right": {
+    "east": {
+     "frames": 9,
+     "canvas": null,
+     "sha256_frame0": "6b82aaa9cf02ff77",
+     "sha256_all": "1cf0f81688042b99"
+    },
+    "south": {
+     "frames": 9,
+     "canvas": null,
+     "sha256_frame0": "a0d75333414f1241",
+     "sha256_all": "fe41cc96092baeb9"
+    },
+    "pixellab": {
+     "group": "ba999c22-2345-4c3d-833b-aecb935eba88",
+     "east": "e299ca14-6cf8-4357-b8ad-26b88bc54268",
+     "south": "b4331120-fd79-4895-bc37-fd093cba630e",
+     "mode": "v3 custom, 8 frames + reference"
+    }
+   }
+  },
+  "rejected": {
+   "chest_catch (group d446b433), low_gather (group cbf8b433)": "first generations had a ball baked into the frames \u2014 replaced by the ball-free mimes; originals kept outside the repo",
+   "dive_toward_viewer (group b9ba4520), dive_away_from_viewer (group 3a06e040)": "experiment: PixelLab cannot draw the goal-line (screen-vertical) dive axis for the east/west facings \u2014 both came out as side-view forward dives; not used"
+  }
+ },
+ "frozen": {
+  "date": "2026-09-04",
+  "rule": "GK_BASE_V1 identity (face, hair, build, kit, gloves, 8 rotations) is frozen. New clips must be generated on the existing character states (idle f4838361\u2026 / set 0808086b\u2026) \u2014 never a new character."
+ }
+}
