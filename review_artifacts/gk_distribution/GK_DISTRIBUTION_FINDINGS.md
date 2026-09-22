@@ -210,3 +210,47 @@ the rendered-vs-authoritative residual and the held flag (v12).
 See the review page section 11 (v13): put-down depth is dictated by the ground release point; post-plan repositioning is the
 simulation's; glove thickness is a mesh property; punt contact 2.3 cm; throw arm speed is real; the v12 items (no keeper dribbling /
 locomotion with the ball, no sprite distribution art, the 3 m ball hand-over, drag on the throw range) stand.
+
+
+# v13.1 — two focused corrections (2026-09-22): PUT DOWN aftermath, THROW flight
+
+## v13.1.1 · PUT DOWN — why the keeper still backed away, and what changed
+
+Diagnosis (measured on fixture 64): the plan ends 0.60 s after the release; at that tick `gk.state` returned to SET and the
+simulation's goal-positioning controller (`gkPosition` / `gkMove`) resumed. With the ball 0.5 m in front of him it walked the
+keeper ~0.7 m back toward his set depth (root 101.74 → 102.42 over the next 0.5 s). That is the AUTHORITATIVE post-release state,
+not an authored retreat; the v13 presentation ends over the ball and the sim then moved the root. Change (simulation, explicit):
+- `GK_DIST.PUTDOWN.vFwd` 0.4 → 1.6 m/s: a gentle forward roll (the ball travels ~0.3 m under roll friction and stops ~0.8 m
+  ahead of the root) instead of a dead ball under the keeper.
+- BALL AT FEET (`ptGkUpdate`, positioning branch): after a PUT DOWN, while the ball is free, uncontrolled, ≤ 1.5 m/s and within
+  1.6 m, the keeper holds his position facing it (`gk.state = "BALL_AT_FEET"`, root static); the plan's end hands straight into
+  this state. No dribble controller exists for the keeper — the ball stays playable in front of him until another actor takes it or a
+  shot resets everything.
+- Presentation: the put-down follow-through ends in the upright READY_UP stance and the graph draws READY_UP (not the keeper's
+  set crouch) while the simulation reports BALL_AT_FEET.
+Measured: release tick 165, ball at rest 0.82 m ahead by tick ~190, keeper root unchanged through tick 400, facing the ball.
+
+## v13.1.2 · THROW — driven launch law (simulation, `GK_DIST.THROW`)
+
+Law "driven": speed v = the speed that reaches the requested target (range from the RELEASE point, 1.78 m high) at the minimum
+elevation θmin = 12°, capped at vMax = 24 m/s; if the cap binds the elevation rises just enough to reach the target (≤ 45°).
+Drag-free ballistic range with a 1.5 % gain for the simulation's linear air drag. Nothing acts on the ball after launch except the
+ordinary physics. The v12 law (fixed 17 m/s horizontal, vertical solved to land at the target) is kept as `law: "arc"` for the study.
+Measured on the real simulation (`throw_study.js`, authoritative ball paths; review page section 6):
+
+| fixture / target distance | law | release speed | elevation | apex | landing distance | miss | flight |
+|---|---|---|---|---|---|---|---|
+| 67 / 24.5 m | v12 arc | 18.0 m/s | 19.7° | 3.82 m | 24.85 m | 0.37 m | 1.52 s |
+| 67 / 24.5 m | driven 24 / 12° (chosen) | 21.4 m/s | 11.6° | 2.83 m | 24.94 m | 0.49 m | 1.22 s |
+| 69 / 38.5 m | v12 arc | 20.0 m/s | 31.8° | 7.71 m | 37.7 m | 0.92 m | 2.35 s |
+| 69 / 38.5 m | driven 24 / 12° (chosen) | 24.0 m/s | 17.9° | 4.72 m | 38.65 m | 0.31 m | 1.75 s |
+
+Candidates compared: vMax 22 / 10°, 24 / 12°, 24 / 15°, 26 / 12°, 24 / 20° (plot with release vectors, apex, distance, flight time
+in the review page). 24 m/s / 12° chosen: flat driven flight for throws up to ~26 m, a moderate rise only when the cap binds at
+long range; 26 m/s flattens the 40 m throw further but exceeds a plausible release speed. Body mechanics (v13) unchanged.
+
+## v13.1.3 · Regression
+
+Only the fixtures whose simulation legitimately changed differ from the v13 gate record: 64, 72, 79 (put-down) and 67, 68, 69, 73,
+77 (throw); the other 72 fixtures are byte-identical; sprite vs 3D identical on all 80; animation OFF vs ON identical; v6 / FOOT_SAVE /
+CHEST_CATCH manifests unchanged; free play seed 7 without distributions identical to the stored record.
