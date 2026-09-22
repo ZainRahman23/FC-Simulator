@@ -141,3 +141,72 @@ Tool: `gk3d_freeplay.js --dist [--frames]` (resumable shot loop; the authoritati
    ball so the contact residual is 0.9 cm regardless.
 8. Throw arc: 17 m/s horizontal with vz for the target lands the ball near the target only without air drag; the simulation's drag
    makes it fall short — the sim's decision, documented; the animation does not care.
+
+
+# v13 — distribution animation refinement pass (2026-09-22)
+
+Simulation contract UNCHANGED (release ticks / points, launch laws, secure times, possession logic, ball physics, target
+selection): the gates below prove the 76 pre-existing fixtures' simulation traces are byte-identical to the v12 record.
+Presentation only: authored skeletal motions + a ball / hand quality gate. No root / IK hacks: the arms are solved by the same
+cradle-elbow machinery, now with the ball excluded from the elbow choice; the rendered ball path still ends on the authoritative
+point at the authoritative tick; the punt foot still targets the live falling simulation ball.
+
+## v13.1 · What changed per action (`gk_motion_library.js`)
+
+- **PUT DOWN** — rebuilt as a quick ONE-HAND action (`DIST_PUTDOWN`, side from the hand convention; mirrored for the left). The
+  first 45 % of the simulation's 0.85 s preparation stays an upright one-hand carry (ball on the palm at the hip, elbow bent);
+  the visible action — hip hinge with knee flexion, the holding arm reaching the ball down just ahead, the hand opening from
+  underneath at the authoritative tick — is compressed into the second half, and the follow-through is a quick straighten OVER
+  the ball into an athletic stance (no steps, no backing away inside the plan). Visible action ≈ 0.85 s (v12 ≈ 1.45 s). The v12
+  two-handed placement is kept UNUSED as `SET_PIECE_PLACE_BALL`. Honest caveat: because the ball must be in the hand until the
+  authoritative point ON the pitch, the hand has to reach the ground — a deep knee bend with the trunk horizontal for ~0.2 s is
+  physically unavoidable for a one-hand release at that point; the simulation's preparation time was not changed (a shorter
+  PUTDOWN prep would be a simulation parameter change — documented, not done).
+- **ROLL** — palm-carried underarm roll: ball ON the palm at the hip (carry), the opposite foot steps toward the target, a
+  MODEST backswing with the ball resting on the palm (palm facing forward-up), a deep lunge with the trunk folded, the arm coming
+  down and forward close to the pitch, the ball rolling off the front of the palm at the authoritative point, low follow-through,
+  the trailing foot comes through, settle. The ball is never at the fingertips (the old "end of the arm line" rule is gone).
+- **THROW** — long, forceful: carry to the throwing palm at the shoulder, front-foot step, LARGE wind-up (arm back beyond the
+  shoulder line, elbow ~40° bent, hips + shoulders turned ~58° away, slight lean back, weight on the rear leg, free arm sighting
+  the target, eyes on it), hips unwind first (pelvis −16° past square at release), trunk follows, arm over the top, release
+  forward-up; then the arm continues hard down and across to the opposite hip, the trunk keeps rotating (−40°) and pitches forward
+  (~52°), the rear foot steps through, small rebalancing steps back over the root.
+- **PUNT** — lateral hip torque: ball carried in the KICKING-side palm; LOAD — weight and lean onto the support (left) leg, pelvis
+  turned 20–30° away, right hip opened with the knee folded behind, shoulders counter-rotated toward the target; the hand lets the
+  ball go into the strike path (authoritative DROP); the pelvis unwinds (hips lead), tall on the support leg, the leg swings through
+  the forward / lateral corridor to the laces contact on the falling simulation ball (authoritative KICK), then continues UP AND
+  ACROSS the body with the trunk rotating through and pitching forward; the kicking foot lands ahead-left; settle. Mirrored
+  correctly for a left-footed clearance (fixture 71, 75).
+
+## v13.2 · Ball / hand quality gate (`gk_graph.js` step 8; overlay `--dbg dist`; records `GK3D.distRecords[].handMetrics`)
+
+The ball is a 0.11 m sphere; the hand is 0.114 m long with a 0.03 m glove offset. ONE-HAND grip = the ball rests ON THE PALM: the
+palm point (mid-hand) sits at radius + glove from the centre along the palm normal and the hand is tangent to the ball, so the
+wrist is at √((r+g)² + (½·hand)²) = 0.151 m from the centre. The authored `_palm` direction is only a preference: it is projected
+perpendicular to the forearm (two passes, authored arm then solved arm) because the palm is parallel to the forearm, and the elbow
+choice excludes the ball (the elbow, upper-arm midpoint and forearm midpoint must stay outside it). TWO-HAND grip = the v11 cradle
+(hands on the sides) with the hand angle set each tick so the FINGERTIPS land exactly on the surface (+ glove). The hand-over
+blends the wrist target on the ball's surface (direction + distance from the centre), never through it, and carries the previous
+cradle anchors along with the ball for the first 120 ms. Per tick, for every hand that is firmly on the ball (weight > ¾):
+palm-to-surface (|palm − centre| − r − g), fingertip penetration, ball beyond the fingertips (near surface past the tips),
+wrist penetration, forearm intersection (proximal 60 %), and hand-centre cuts (a sudden jump > 0.16 m). The release records add
+the rendered-vs-authoritative residual and the held flag (v12).
+
+## v13.3 · Results
+
+- 16 fixtures (64–79; 76–79 are new front / ¾ view fixtures with targets toward the camera): 0 flagged ticks, 0 continuity
+  assertions; release records: rendered→authoritative 0.006–0.038 m, hand centre (0.6 along the hand) to surface 0.055–0.059 m, palm-to-surface
+  0.021–0.025 m (the palm point is the hand axis; the glove offset is 0.03), finger / wrist / forearm penetration 0, foot-to-surface at the
+  punt contact 0.023 m, facing error 0°.
+- Free play (production path) with distributions, seeds 7 and 11: see the review page section 9 and
+  `verification/FREEPLAY_distribution_summary_v13.json`.
+- Regression: SPRITE vs SKELETAL_3D identical on all 80 fixtures (260 ticks) and on the 16 distribution fixtures (300 ticks);
+  the 76 pre-existing fixtures byte-identical to the v12 gate record; animation OFF vs ON identical (80 fixtures); v6 fixture 42,
+  FOOT_SAVE 55–60 and CHEST_CATCH 45 manifests unchanged (0 differing joint samples); free play seed 7 without distributions
+  identical to the stored record.
+
+## v13.4 · Remaining issues
+
+See the review page section 11 (v13): put-down depth is dictated by the ground release point; post-plan repositioning is the
+simulation's; glove thickness is a mesh property; punt contact 2.3 cm; throw arm speed is real; the v12 items (no keeper dribbling /
+locomotion with the ball, no sprite distribution art, the 3 m ball hand-over, drag on the throw range) stand.
