@@ -254,3 +254,20 @@ long range; 26 m/s flattens the 40 m throw further but exceeds a plausible relea
 Only the fixtures whose simulation legitimately changed differ from the v13 gate record: 64, 72, 79 (put-down) and 67, 68, 69, 73,
 77 (throw); the other 72 fixtures are byte-identical; sprite vs 3D identical on all 80; animation OFF vs ON identical; v6 / FOOT_SAVE /
 CHEST_CATCH manifests unchanged; free play seed 7 without distributions identical to the stored record.
+
+
+## v13.1.4 · ARCHITECTURAL NOTE — the post-PUT-DOWN state is a future entry point into the SHARED player on-ball / dribble controller
+
+Contract of the state PUT DOWN now terminates into (`gk.state = "BALL_AT_FEET"`, `ptGkUpdate` positioning branch):
+- the ball is a FREE, uncontrolled ball (`b.held = null`, `b.ctrl = false`, ordinary physics, pickup exclusion 0.15 s) at rest
+  ~0.8 m in front of the keeper;
+- the keeper's authoritative root is static, upright / ready (presentation READY_UP), facing the ball; no automatic retreat, no
+  goal-positioning while the ball is slow (≤ 1.5 m/s) and within reach (1.6 m);
+- nothing goalkeeper-specific touches the ball: no GK dribble implementation, no presentation movement imitating one, no change
+  to the ball state or the distribution contract for it.
+
+Intended future behaviour (NOT implemented): once the general outfield on-ball / dribbling system exists, the goalkeeper enters
+THAT shared system from this state (the same controller a field player uses when a free ball is at his feet), and any keeper-
+specific transitions are decided at integration time. Until then the state holds as described; a shot resets everything as before.
+Do not build a bespoke GK dribble state; do not add temporary presentation locomotion; do not alter the authoritative ball to
+"support" dribbling. The present v13.1 end state already satisfies this contract — no re-render was needed for the note.

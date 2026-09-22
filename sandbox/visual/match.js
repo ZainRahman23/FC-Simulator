@@ -4281,6 +4281,9 @@ function ptGkUpdate(t) {
     // uncontrolled, slow and within reach he HOLDS his position facing it (the goal-positioning controller does not walk him back to his set depth).
     // Without this the positioning controller resumed at the plan's end and repositioned him ~0.7 m toward the goal (the "backing away"). The keeper entity still has
     // no dribble controller: the ball simply stays playable in front of him until another actor takes it or a shot resets everything.
+    // ARCHITECTURE (documented, not implemented): BALL_AT_FEET is the future ENTRY POINT into the general player on-ball / dribble controller — the same system an
+    // outfield player uses with a free ball at his feet. No goalkeeper-specific dribble state, no presentation locomotion imitating one, and no change to the ball
+    // state may be added here; keeper-specific transitions are decided when the shared system exists (see GK_DISTRIBUTION_FINDINGS.md § v13.1.4).
     const PD = GK_DIST.PUTDOWN, atFeet = !!(gk.distDone && gk.distDone.kind === "PUTDOWN" && !b.ctrl && !b.held && Math.hypot(b.x - gk.x, b.y - gk.y) <= PD.atFeetM && Math.hypot(b.vx, b.vy) <= PD.atFeetV);
     if (atFeet) { gk.vx = 0; gk.vy = 0; gk.desired = [gk.x, gk.y]; gk.setPos = [gk.x, gk.y]; gk.moveTarget = [gk.x, gk.y]; gk.posError = 0; gk.state = "BALL_AT_FEET"; gk.facing = Math.atan2(b.y - gk.y, b.x - gk.x); gk.depth = GK_MOUTH.lineX - gk.x; gk.predict = null; gk.reach = null; gk.handNow = gk.handNow || [gk.x, gk.y, gk.handZ]; gk.bodyNow = [gk.x, gk.y]; gk.legTipNow = null; return; }
     const q = gkNorm01(t.gkPos != null ? t.gkPos : gk.attrs.gk_positioning);
