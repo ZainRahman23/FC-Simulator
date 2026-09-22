@@ -165,8 +165,9 @@ GK_MOTIONS.NEAR_BODY = {
 // `_ball` = the rendered ball centre on its authored path (character frame, metres @ H_REF): the path is shifted so that it ends EXACTLY
 // on the authoritative release / drop point at the release tick; `_hR` / `_hL` = which hands are on the ball (1) or free (0).
 // Authored RIGHT-handed / right-footed; LEFT = mirror (poses, ball x, hand roles). Foot steps are world-fixed plants (pts) — no root sliding.
-GK_MOTIONS.DIST_PUTDOWN = {                                                                   // PUT DOWN: hips / knees flex, torso folds forward, both hands carry the ball down to the pitch ahead of the feet, release, rise
-  id: "GK_DIST_PUTDOWN", kind: "dist", symmetric: true, turnFrac: 0.35,
+GK_MOTIONS.SET_PIECE_PLACE_BALL = {                                                          // v12 two-handed ceremonial placement (deep squat, careful two-hand place, rise) — KEPT, UNUSED: too slow / deliberate for live play; a set-piece placement if ever needed
+  // (not selected by gkSelectDistribution; the live PUTDOWN is DIST_PUTDOWN below)
+  id: "GK_SET_PIECE_PLACE_BALL", kind: "dist", symmetric: true, turnFrac: 0.35,
   prep: [
     [0.42, { name: "LOWER", _pelvis: [0, -0.26, 0.04], _ball: [0, 0.62, 0.50], _hR: 1, _hL: 1, pelvis: [30, 0, 0], spine: [14, 0, 0], chest: [8, 0, 0], neck: [-12, 0, 0], head: [-14, 0, 0],
              thigh_R: [-66, 0, 16], shin_R: [88, 0, 0], foot_R: [-30, 0, 0], thigh_L: [-66, 0, -16], shin_L: [88, 0, 0], foot_L: [-30, 0, 0],
@@ -183,79 +184,98 @@ GK_MOTIONS.DIST_PUTDOWN = {                                                     
   ],
   handsOff: 0.15, steps: [],
 };
-GK_MOTIONS.DIST_ROLL = {                                                                      // HAND ROLL (bowl): ball to the rolling hand, backswing, a long lunge forward, the hand releases the ball ON the pitch ahead
-  id: "GK_DIST_ROLL_R", kind: "dist", turnFrac: 0.30,
-  prep: [
-    [0.30, { name: "CARRY", _pelvis: [0.02, -0.12, 0.00], _ball: [0.30, 1.00, 0.32], _hR: 1, _hL: 1, pelvis: [14, 8, -2], spine: [6, 4, 0], chest: [4, 2, 0], neck: [-10, -10, 0], head: [-10, -8, 0],   // the ball comes off the chest to the rolling side, the far hand still on it
-             thigh_R: [-36, 0, 16], shin_R: [50, 0, 0], foot_R: [-26, 0, 0], thigh_L: [-36, 0, -14], shin_L: [50, 0, 0], foot_L: [-26, 0, 0],
-             upperArm_R: [-20, -10, 36], foreArm_R: [-70, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [-50, 20, -26], foreArm_L: [-80, 0, 0], hand_L: [-8, 0, 0] }],
-    [0.58, { name: "BACKSWING", _pelvis: [0.04, -0.22, -0.04], _ball: [0.30, 0.95, -0.50], _hR: 1, _hL: 0, pelvis: [24, 22, -4], spine: [10, 12, -2], chest: [6, 8, 0], neck: [-14, -30, 0], head: [-12, -20, 0],   // one hand: the arm swings back, hips turn, knees load; the free arm points the way
-             thigh_R: [-44, 0, 18], shin_R: [64, 0, 0], foot_R: [-24, 0, 0], thigh_L: [-52, 0, -16], shin_L: [70, 0, 0], foot_L: [-26, 0, 0],
-             upperArm_R: [40, 0, 26], foreArm_R: [-14, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [-76, 0, -30], foreArm_L: [-24, 0, 0], hand_L: [-6, 0, 0] }],
-    [1.00, { name: "RELEASE_LOW", _pelvis: [0.02, -0.36, 0.20], _ball: [0.22, 0.11, 0.60], _hR: 1, _hL: 0, pelvis: [50, -6, 0], spine: [22, -4, 0], chest: [12, -2, 0], neck: [-20, 0, 0], head: [-16, 0, 0],   // deep lunge, trunk folded: the hand lets the ball go at pitch level ahead of the front foot
-             thigh_R: [-96, 0, 16], shin_R: [112, 0, 0], foot_R: [-30, 0, 0], thigh_L: [-26, 0, -14], shin_L: [40, 0, 0], foot_L: [24, 0, 0],
-             upperArm_R: [-62, 0, 14], foreArm_R: [-4, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [-24, 0, -46], foreArm_L: [-40, 0, 0], hand_L: [-6, 0, 0] }],
+GK_MOTIONS.DIST_PUTDOWN = {                                                                   // PUT DOWN (v13, live play): the ball is carried in ONE hand (palm up, at the hip), the keeper hinges at the hips with some knee flexion, reaches the ball down just ahead of himself and lets it go from underneath, then straightens into a playable stance OVER the ball (he put it there to play it: no backing away)
+  id: "GK_DIST_PUTDOWN_R", kind: "dist", turnFrac: 0.30, handsOff: 0.10, handRelease: { hand: "L", from: 0.06, to: 0.34 },
+  prep: [                                                                                     // the plan's preparation is 0.85 s (simulation); the visible action is compressed into its second half: 0–0.45 = the ball comes to one hand at the hip (upright), 0.45–1.0 = ONE compact hinge + lower + release
+    [0.45, { name: "CARRY_ONE", _pelvis: [0.00, -0.08, 0.02], _ball: [0.30, 1.03, 0.30], _palm: [-0.10, 0.74, 0.66], _hR: 1, _hL: 0, pelvis: [8, 4, 0], spine: [4, 2, 0], chest: [2, 0, 0], neck: [-10, 0, 0], head: [-12, 0, 0],   // upright; ball ON the right palm at hip height, elbow bent
+             thigh_R: [-30, 0, 14], shin_R: [42, 0, 0], foot_R: [-24, 0, 0], thigh_L: [-30, 0, -14], shin_L: [42, 0, 0], foot_L: [-24, 0, 0],
+             upperArm_R: [-10, -10, 24], foreArm_R: [-78, 0, 0], hand_R: [-10, 0, 0], upperArm_L: [-24, 0, -22], foreArm_L: [-40, 0, 0], hand_L: [-8, 0, 0] }],
+    [1.00, { name: "LOWER_RELEASE", _pelvis: [0.02, -0.50, 0.10], _ball: [0.00, 0.11, 0.50], _palm: [-0.10, 0.28, 0.95], _hR: 1, _hL: 0, pelvis: [50, -14, 0], spine: [24, -6, 0], chest: [16, -3, 0], neck: [-14, 0, 0], head: [-10, 0, 0],   // hips low (knees ~105°) + a full hip hinge (trunk ~horizontal), right shoulder turned in: the holding arm reaches the pitch 0.5 m ahead; the hand is UNDER the ball as it opens (the ball has to TOUCH the pitch at the authoritative point — a one-hand ground release needs the shoulder within an arm's length of it)
+             thigh_R: [-88, 0, 16], shin_R: [116, 0, 0], foot_R: [-32, 0, 0], thigh_L: [-88, 0, -16], shin_L: [116, 0, 0], foot_L: [-32, 0, 0],
+             upperArm_R: [-70, -8, 10], foreArm_R: [-6, 0, 0], hand_R: [-10, 0, 0], upperArm_L: [-30, 0, -34], foreArm_L: [-30, 0, 0], hand_L: [-8, 0, 0] }],
   ],
   post: [
-    [0.50, { name: "FOLLOW_LOW", _pelvis: [0.00, -0.26, 0.16], _hR: 0, _hL: 0, pelvis: [34, -4, 0], spine: [14, -2, 0], chest: [8, 0, 0], neck: [-18, 0, 0], head: [-14, 0, 0],                   // the arm follows through low along the roll line, the body starts to rise
-             thigh_R: [-80, 0, 16], shin_R: [96, 0, 0], foot_R: [-30, 0, 0], thigh_L: [-34, 0, -14], shin_L: [46, 0, 0], foot_L: [14, 0, 0],
-             upperArm_R: [-96, 0, 16], foreArm_R: [-10, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [-20, 0, -40], foreArm_L: [-40, 0, 0], hand_L: [-6, 0, 0] }],
+    [0.40, { name: "REBALANCE", _pelvis: [0.00, -0.14, 0.06], _hR: 0, _hL: 0, pelvis: [16, 0, 0], spine: [8, 0, 0], chest: [4, 0, 0], neck: [-12, 0, 0], head: [-12, 0, 0],                             // quick straighten over the ball: athletic stance, arms out, ready to take a touch
+             thigh_R: [-36, 0, 16], shin_R: [48, 0, 0], foot_R: [-24, 0, 0], thigh_L: [-36, 0, -16], shin_L: [48, 0, 0], foot_L: [-24, 0, 0],
+             upperArm_R: [-16, 0, 36], foreArm_R: [-40, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [-16, 0, -36], foreArm_L: [-40, 0, 0], hand_L: [-8, 0, 0] }],
     [1.00, "set"],
   ],
-  handsOff: 0.12, handRelease: { hand: "L", from: 0.28, to: 0.40 },                          // the far hand leaves the ball while it is still beside the hip (before the backswing carries it behind the body)
-  steps: [{ phase: "prep", at: 0.40, foot: "R", pt: [0.22, 0.48] }, { phase: "post", at: 0.55, foot: "L", pt: [-0.20, 0.30] }, { phase: "post", at: 0.85, foot: "R", pt: [0.20, 0.02] }, { phase: "post", at: 0.95, foot: "L", pt: [-0.20, 0.02] }],   // lunge onto the rolling-side foot, then step back to the stance over the root
+  steps: [],                                                                                  // feet stay: the keeper stands over / just behind the ball he has just put down
 };
-GK_MOTIONS.DIST_THROW = {                                                                     // OVERARM THROW: ball to the throwing hand, hips / shoulders open (wind-up, weight back), the opposite foot steps, the trunk rotates through and the arm comes over the top; release forward-up; follow through across the body; the back foot steps up
-  id: "GK_DIST_THROW_R", kind: "dist", turnFrac: 0.30,
+GK_MOTIONS.DIST_ROLL = {                                                                      // HAND ROLL (v13): the football is CARRIED and GUIDED in the palm — palm up at the hip, a step toward the target, a modest backswing with the ball resting on the palm, the arm comes down and forward close to the ground and the ball rolls off the palm; the opposite arm balances; the trunk and hips take part
+  id: "GK_DIST_ROLL_R", kind: "dist", turnFrac: 0.28, handsOff: 0.12, handRelease: { hand: "L", from: 0.04, to: 0.26 },
   prep: [
-    [0.30, { name: "CARRY", _pelvis: [0.04, -0.10, -0.02], _ball: [0.34, 1.35, 0.24], _hR: 1, _hL: 1, pelvis: [8, 10, 0], spine: [4, 6, 0], chest: [2, 4, 0], neck: [-10, -14, 0], head: [-10, -10, 0],   // the ball leaves the chest toward the throwing shoulder, both hands
-             thigh_R: [-30, 0, 16], shin_R: [42, 0, 0], foot_R: [-26, 0, 0], thigh_L: [-34, 0, -12], shin_L: [40, 0, 0], foot_L: [-22, 0, 0],
-             upperArm_R: [-30, -10, 40], foreArm_R: [-90, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [-60, 20, -22], foreArm_L: [-90, 0, 0], hand_L: [-8, 0, 0] }],
-    [0.58, { name: "WIND_UP", _pelvis: [0.06, -0.10, -0.06], _ball: [0.34, 1.25, -0.70], _hR: 1, _hL: 0, pelvis: [6, 22, 0], spine: [2, 14, 0], chest: [0, 8, 0], neck: [-8, -32, 0], head: [-8, -24, 0],   // one hand: the arm extends back at shoulder height, hips + shoulders turned away (~44°), weight on the back foot, the front foot stepped, the free arm sights the target
-             thigh_R: [-26, 0, 16], shin_R: [38, 0, 0], foot_R: [-26, 0, 0], thigh_L: [-44, 0, -12], shin_L: [28, 0, 0], foot_L: [-8, 0, 0],
-             upperArm_R: [76, 0, 44], foreArm_R: [-34, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [-100, 0, -26], foreArm_L: [-8, 0, 0], hand_L: [-6, 0, 0] }],
-    [1.00, { name: "RELEASE_OVER", _pelvis: [0.02, -0.10, 0.22], _ball: [0.28, 1.78, 0.85], _hR: 1, _hL: 0, pelvis: [10, -12, 0], spine: [8, -10, 0], chest: [6, -8, 0], neck: [-14, 16, 0], head: [-12, 12, 0],   // hips drive through (weight onto the front foot, pelvis 0.22 m forward), trunk rotated toward the target, the arm comes over the top: release forward-up at full arm extension
-             thigh_R: [-8, 0, 16], shin_R: [22, 0, 0], foot_R: [12, 0, 0], thigh_L: [-52, 0, -14], shin_L: [52, 0, 0], foot_L: [-26, 0, 0],
-             upperArm_R: [-135, 0, 18], foreArm_R: [-12, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [-16, 0, -30], foreArm_L: [-60, 0, 0], hand_L: [-6, 0, 0] }],
+    [0.26, { name: "CARRY", _pelvis: [0.00, -0.10, 0.02], _ball: [0.30, 1.03, 0.30], _palm: [-0.10, 0.74, 0.66], _hR: 1, _hL: 0, pelvis: [10, 6, 0], spine: [5, 3, 0], chest: [3, 0, 0], neck: [-10, -6, 0], head: [-10, -6, 0],   // ball ON the right palm at hip height, elbow bent, eyes on the target
+             thigh_R: [-32, 0, 14], shin_R: [44, 0, 0], foot_R: [-24, 0, 0], thigh_L: [-32, 0, -14], shin_L: [44, 0, 0], foot_L: [-24, 0, 0],
+             upperArm_R: [-10, -10, 24], foreArm_R: [-78, 0, 0], hand_R: [-10, 0, 0], upperArm_L: [-30, 0, -24], foreArm_L: [-50, 0, 0], hand_L: [-8, 0, 0] }],
+    [0.56, { name: "BACKSWING", _pelvis: [0.04, -0.18, 0.04], _ball: [0.34, 0.86, -0.14], _palm: [0.00, 0.45, 0.89], _hR: 1, _hL: 0, pelvis: [18, 14, -3], spine: [8, 8, -2], chest: [5, 4, 0], neck: [-14, -20, 0], head: [-12, -14, 0],   // step onto the front foot, trunk forward, hips a little open; the arm swings back MODESTLY with the ball resting on the palm (palm facing forward-up)
+             thigh_R: [-30, 0, 16], shin_R: [46, 0, 0], foot_R: [-20, 0, 0], thigh_L: [-56, 0, -14], shin_L: [52, 0, 0], foot_L: [-16, 0, 0],
+             upperArm_R: [30, 0, 16], foreArm_R: [-18, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [-64, 0, -28], foreArm_L: [-30, 0, 0], hand_L: [-6, 0, 0] }],
+    [1.00, { name: "RELEASE_LOW", _pelvis: [0.02, -0.56, 0.02], _ball: [0.22, 0.11, 0.60], _palm: [0.00, 0.34, 0.94], _hR: 1, _hL: 0, pelvis: [50, -8, 0], spine: [22, -4, 0], chest: [13, -2, 0], neck: [-20, 0, 0], head: [-14, 0, 0],   // very low: a deep lunge onto the front leg (rear leg extended behind), trunk ~horizontal — the arm comes through low and forward and the ball rolls off the palm ON the pitch (a ground release needs the shoulder within an arm's length of the pitch); the far arm balances behind
+             thigh_R: [20, 0, 14], shin_R: [15, 0, 0], foot_R: [30, 0, 0], thigh_L: [-100, 0, -12], shin_L: [110, 0, 0], foot_L: [-30, 0, 0],
+             upperArm_R: [-72, 0, 12], foreArm_R: [-4, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [-6, 0, -52], foreArm_L: [-30, 0, 0], hand_L: [-6, 0, 0] }],
   ],
   post: [
-    [0.45, { name: "FOLLOW_ACROSS", _pelvis: [-0.02, -0.16, 0.26], _hR: 0, _hL: 0, pelvis: [20, -26, 4], spine: [12, -14, 2], chest: [8, -8, 0], neck: [-14, 20, 0], head: [-12, 14, 0],                // the arm follows through down and across the body, the trunk keeps rotating, the back foot begins to come up
-             thigh_R: [-6, 0, 16], shin_R: [30, 0, 0], foot_R: [16, 0, 0], thigh_L: [-60, 0, -14], shin_L: [60, 0, 0], foot_L: [-26, 0, 0],
-             upperArm_R: [-40, 0, -10], foreArm_R: [-30, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [10, 0, -34], foreArm_L: [-40, 0, 0], hand_L: [-6, 0, 0] }],
+    [0.45, { name: "FOLLOW_LOW", _pelvis: [0.00, -0.34, 0.22], _hR: 0, _hL: 0, pelvis: [36, -6, 0], spine: [14, -2, 0], chest: [8, 0, 0], neck: [-18, 0, 0], head: [-14, 0, 0],                       // the arm follows through forward-up along the roll line, the body starts to rise
+             thigh_R: [-10, 0, 14], shin_R: [30, 0, 0], foot_R: [10, 0, 0], thigh_L: [-64, 0, -12], shin_L: [74, 0, 0], foot_L: [-26, 0, 0],
+             upperArm_R: [-110, 0, 16], foreArm_R: [-14, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [-16, 0, -40], foreArm_L: [-36, 0, 0], hand_L: [-6, 0, 0] }],
     [1.00, "set"],
   ],
-  handsOff: 0.10, handRelease: { hand: "L", from: 0.25, to: 0.37 },                          // the supporting hand leaves the ball at the shoulder, before the wind-up takes it back
-  steps: [{ phase: "prep", at: 0.22, foot: "L", pt: [-0.22, 0.42] }, { phase: "post", at: 0.40, foot: "R", pt: [0.22, 0.30] }, { phase: "post", at: 0.75, foot: "L", pt: [-0.20, 0.02] }, { phase: "post", at: 0.92, foot: "R", pt: [0.20, 0.02] }],   // the opposite foot steps toward the target for the wind-up; after the release the back foot steps up, then both settle to the stance over the root
+  steps: [{ phase: "prep", at: 0.30, foot: "L", pt: [-0.22, 0.46] }, { phase: "post", at: 0.45, foot: "R", pt: [0.20, 0.30] }, { phase: "post", at: 0.75, foot: "L", pt: [-0.20, 0.02] }, { phase: "post", at: 0.92, foot: "R", pt: [0.20, 0.02] }],   // the OPPOSITE foot steps toward the target for the lunge; the trailing foot comes through; settle over the root
 };
-GK_MOTIONS.DIST_PUNT = {                                                                      // KICKED CLEARANCE (punt): the ball is carried forward in both hands, the plant foot steps, the hands DROP the ball (authoritative moment 1); the kicking leg swings from a backswing through the falling ball at knee height (authoritative moment 2, the leg tip meets the simulation ball) and follows through high
-  id: "GK_DIST_PUNT_R", kind: "dist", turnFrac: 0.30,
+GK_MOTIONS.DIST_THROW = {                                                                     // OVERARM THROW (v13, long and forceful): ball to the throwing palm at the shoulder, the front foot steps toward the target, a LARGE wind-up (arm well back beyond the shoulder line, hips + shoulders turned ~60° away, weight back on the rear leg, free arm sighting the target), the hips unwind first, the trunk follows, the arm accelerates over the top; release forward-up; the arm continues hard down and across the body, the trunk rotates through and pitches forward, the rear foot steps through; small rebalancing steps
+  id: "GK_DIST_THROW_R", kind: "dist", turnFrac: 0.26, handsOff: 0.10, handRelease: { hand: "L", from: 0.04, to: 0.24 },
   prep: [
-    [0.45, { name: "CARRY_FWD", _pelvis: [0, -0.08, 0.06], _ball: [0.10, 1.15, 0.36], _hR: 1, _hL: 1, pelvis: [8, 0, 0], spine: [4, 0, 0], chest: [2, 0, 0], neck: [-12, 0, 0], head: [-14, 0, 0],       // both hands take the ball forward and off the chest, a step in
-             thigh_R: [-30, 0, 14], shin_R: [42, 0, 0], foot_R: [-24, 0, 0], thigh_L: [-40, 0, -14], shin_L: [44, 0, 0], foot_L: [-22, 0, 0],
-             upperArm_R: [-50, -16, 22], foreArm_R: [-50, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [-50, 16, -22], foreArm_L: [-50, 0, 0], hand_L: [-8, 0, 0] }],
-    [1.00, { name: "DROP", _pelvis: [0, -0.10, 0.12], _ball: [0.12, 1.05, 0.55], _hR: 1, _hL: 1, pelvis: [10, 0, 0], spine: [4, 0, 0], chest: [2, 0, 0], neck: [-16, 0, 0], head: [-18, 0, 0],           // arms extended forward at waist height, the plant foot forward: the hands open and let the ball fall
-             thigh_R: [-30, 0, 14], shin_R: [40, 0, 0], foot_R: [-20, 0, 0], thigh_L: [-46, 0, -14], shin_L: [46, 0, 0], foot_L: [-20, 0, 0],
-             upperArm_R: [-60, -10, 20], foreArm_R: [-30, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [-60, 10, -20], foreArm_L: [-30, 0, 0], hand_L: [-8, 0, 0] }],
-  ],
-  fall: [                                                                                     // between the DROP and the KICK (the ball's own free fall, ~0.35 s): backswing → the leg swings through
-    [0.45, { name: "BACKSWING", _pelvis: [-0.04, -0.04, 0.14], _hR: 0, _hL: 0, pelvis: [12, 0, 4], spine: [6, 0, 2], chest: [4, 0, 0], neck: [-18, 0, 0], head: [-16, 0, 0],   // tall on the plant leg (hip ~0.93 m): the kicking leg swings back, knee folded
-             thigh_R: [26, 0, 10], shin_R: [80, 0, 0], foot_R: [20, 0, 0], thigh_L: [-14, 0, -12], shin_L: [16, 0, 0], foot_L: [-22, 0, 0],
-             upperArm_R: [-30, 0, 40], foreArm_R: [-30, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [-60, 0, -56], foreArm_L: [-40, 0, 0], hand_L: [-8, 0, 0] }],
-    [1.00, { name: "KICK", _pelvis: [-0.06, -0.04, 0.18], _hR: 0, _hL: 0, pelvis: [12, 0, 6], spine: [8, 0, 4], chest: [4, 0, 2], neck: [-18, 0, 0], head: [-14, 0, 0],                               // contact: the leg swings through the ball at knee height ahead of the plant foot (knee ~35° flexed, foot plantar-flexed: laces under the ball); the foot is solved onto the simulation ball
-             thigh_R: [-50, 0, 10], shin_R: [30, 0, 0], foot_R: [32, 0, 0], thigh_L: [-12, 0, -12], shin_L: [14, 0, 0], foot_L: [-20, 0, 0],
-             upperArm_R: [-20, 0, 50], foreArm_R: [-30, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [-56, 0, -60], foreArm_L: [-40, 0, 0], hand_L: [-8, 0, 0] }],
+    [0.24, { name: "CARRY", _pelvis: [0.02, -0.10, 0.00], _ball: [0.42, 1.28, 0.30], _palm: [-0.20, 0.62, 0.76], _hR: 1, _hL: 0, pelvis: [8, 8, 0], spine: [4, 4, 0], chest: [2, 2, 0], neck: [-10, -10, 0], head: [-10, -8, 0],   // ball ON the right palm at chest / shoulder height, elbow bent
+             thigh_R: [-30, 0, 14], shin_R: [42, 0, 0], foot_R: [-24, 0, 0], thigh_L: [-32, 0, -14], shin_L: [40, 0, 0], foot_L: [-22, 0, 0],
+             upperArm_R: [-30, -10, 34], foreArm_R: [-96, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [-40, 0, -20], foreArm_L: [-60, 0, 0], hand_L: [-8, 0, 0] }],
+    [0.56, { name: "WIND_UP", _pelvis: [0.06, -0.12, -0.12], _ball: [0.38, 1.46, -0.72], _palm: [0.10, 0.42, 0.90], _hR: 1, _hL: 0, pelvis: [2, 28, 0], spine: [-6, 18, 0], chest: [-4, 12, 0], neck: [-6, -44, 0], head: [-6, -30, 0],   // LARGE load: hips + shoulders ~58° away from the target, slight lean back, weight onto the rear (right) leg, front foot stepped; the arm well back beyond the shoulder line (elbow ~40° bent, ball resting on the palm facing the target); free arm points the way; eyes on the target
+             thigh_R: [-24, 0, 16], shin_R: [42, 0, 0], foot_R: [-22, 0, 0], thigh_L: [-38, 0, -12], shin_L: [22, 0, 0], foot_L: [-6, 0, 0],
+             upperArm_R: [80, 0, 60], foreArm_R: [-40, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [-112, 0, -16], foreArm_L: [-8, 0, 0], hand_L: [-6, 0, 0] }],
+    [1.00, { name: "RELEASE_OVER", _pelvis: [0.00, -0.10, 0.16], _ball: [0.28, 1.78, 0.85], _palm: [0.00, 0.35, 0.94], _hR: 1, _hL: 0, pelvis: [10, -16, 0], spine: [10, -6, 0], chest: [6, 0, 0], neck: [-14, 16, 0], head: [-12, 12, 0],   // hips have unwound past square and driven forward (weight onto the front leg, pelvis 0.26 m forward), the trunk has followed, the arm comes over the top: release forward-up at extension, palm facing the target; the free arm pulls down and back
+             thigh_R: [-2, 0, 16], shin_R: [30, 0, 0], foot_R: [18, 0, 0], thigh_L: [-52, 0, -14], shin_L: [48, 0, 0], foot_L: [-26, 0, 0],
+             upperArm_R: [-140, 0, 16], foreArm_R: [-10, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [16, 0, -34], foreArm_L: [-50, 0, 0], hand_L: [-6, 0, 0] }],
   ],
   post: [
-    [0.22, { name: "FOLLOW_HIGH", _pelvis: [-0.06, -0.02, 0.22], _hR: 0, _hL: 0, pelvis: [2, 0, 6], spine: [-2, 0, 4], chest: [-2, 0, 2], neck: [-14, 0, 0], head: [-12, 0, 0],                        // the kicking leg follows through high (~0.2 s after contact), the trunk opens
-             thigh_R: [-96, 0, 10], shin_R: [24, 0, 0], foot_R: [36, 0, 0], thigh_L: [-8, 0, -12], shin_L: [10, 0, 0], foot_L: [-30, 0, 0],
-             upperArm_R: [-10, 0, 60], foreArm_R: [-20, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [-30, 0, -70], foreArm_L: [-30, 0, 0], hand_L: [-8, 0, 0] }],
-    [0.55, { name: "LAND", _pelvis: [-0.02, -0.08, 0.26], _hR: 0, _hL: 0, pelvis: [10, 0, 2], spine: [4, 0, 2], chest: [2, 0, 0], neck: [-12, 0, 0], head: [-12, 0, 0],                               // the kicking leg comes down ahead, the body settles onto it
-             thigh_R: [-36, 0, 12], shin_R: [30, 0, 0], foot_R: [-10, 0, 0], thigh_L: [-20, 0, -12], shin_L: [30, 0, 0], foot_L: [-24, 0, 0],
-             upperArm_R: [-20, 0, 34], foreArm_R: [-40, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [-30, 0, -40], foreArm_L: [-40, 0, 0], hand_L: [-8, 0, 0] }],
+    [0.32, { name: "FOLLOW_ACROSS", _pelvis: [-0.04, -0.18, 0.34], _hR: 0, _hL: 0, pelvis: [26, -40, 4], spine: [16, -16, 2], chest: [10, -10, 0], neck: [-16, 26, 0], head: [-12, 18, 0],                // the arm continues hard down and ACROSS to the opposite hip, the trunk keeps rotating and pitches forward (~52°), the rear foot comes through
+             thigh_R: [-30, 0, 14], shin_R: [46, 0, 0], foot_R: [-10, 0, 0], thigh_L: [-52, 0, -14], shin_L: [56, 0, 0], foot_L: [-26, 0, 0],
+             upperArm_R: [-34, 0, -44], foreArm_R: [-46, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [20, 0, -36], foreArm_L: [-40, 0, 0], hand_L: [-6, 0, 0] }],
+    [0.66, { name: "RECOVER", _pelvis: [-0.02, -0.12, 0.20], _hR: 0, _hL: 0, pelvis: [14, -12, 0], spine: [8, -4, 0], chest: [4, 0, 0], neck: [-12, 6, 0], head: [-12, 4, 0],                             // the momentum is dissipated: the body straightens, arms relax
+             thigh_R: [-34, 0, 16], shin_R: [46, 0, 0], foot_R: [-24, 0, 0], thigh_L: [-34, 0, -16], shin_L: [46, 0, 0], foot_L: [-24, 0, 0],
+             upperArm_R: [-14, 0, 26], foreArm_R: [-46, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [-14, 0, -26], foreArm_L: [-46, 0, 0], hand_L: [-6, 0, 0] }],
     [1.00, "set"],
   ],
-  handsOff: 0.12, kickFoot: "R", kickFree: { from: "prep", at: 0.85 },                        // the kicking foot is free from the end of the carry (backswing) until it re-plants in the follow-through
-  steps: [{ phase: "prep", at: 0.50, foot: "L", pt: [-0.20, 0.34] }, { phase: "post", at: 0.50, foot: "R", pt: [0.22, 0.40] }, { phase: "post", at: 0.80, foot: "L", pt: [-0.20, 0.02] }, { phase: "post", at: 0.95, foot: "R", pt: [0.20, 0.02] }],
+  steps: [{ phase: "prep", at: 0.26, foot: "L", pt: [-0.24, 0.50] }, { phase: "post", at: 0.30, foot: "R", pt: [0.16, 0.56] }, { phase: "post", at: 0.68, foot: "L", pt: [-0.20, 0.02] }, { phase: "post", at: 0.90, foot: "R", pt: [0.20, 0.02] }],   // front foot steps toward the target for the wind-up; the rear foot STEPS THROUGH after the release; small rebalancing steps back over the root
+};
+GK_MOTIONS.DIST_PUNT = {                                                                      // KICKED CLEARANCE (v13, right foot): the ball is carried in the kicking-side palm; LATERAL LOAD — weight and lean onto the LEFT / support side, pelvis turned away, right hip opened, shoulders counter-rotated; the hand lets the ball go INTO the strike path (authoritative DROP); the pelvis unwinds, the right leg swings through a forward / lateral corridor to a laces contact (authoritative KICK on the falling simulation ball), then continues UP AND ACROSS the body; the trunk responds; the leg lands ahead-left; rebalance
+  id: "GK_DIST_PUNT_R", kind: "dist", turnFrac: 0.28, handsOff: 0.12, handRelease: { hand: "L", from: 0.04, to: 0.30 },
+  prep: [
+    [0.40, { name: "CARRY_R", _pelvis: [0.00, -0.08, 0.06], _ball: [0.30, 1.06, 0.30], _palm: [-0.10, 0.74, 0.66], _hR: 1, _hL: 0, pelvis: [8, 6, 2], spine: [4, 2, 1], chest: [2, 0, 0], neck: [-12, -4, 0], head: [-14, -4, 0],   // ball ON the right palm at waist height, a small step in
+             thigh_R: [-30, 0, 14], shin_R: [42, 0, 0], foot_R: [-24, 0, 0], thigh_L: [-38, 0, -14], shin_L: [44, 0, 0], foot_L: [-22, 0, 0],
+             upperArm_R: [-24, -10, 28], foreArm_R: [-70, 0, 0], hand_R: [-10, 0, 0], upperArm_L: [-30, 0, -30], foreArm_L: [-50, 0, 0], hand_L: [-8, 0, 0] }],
+    [1.00, { name: "LOAD_DROP", _pelvis: [-0.12, -0.10, 0.10], _ball: [0.12, 1.05, 0.55], _palm: [0.05, 0.86, 0.50], _hR: 1, _hL: 0, pelvis: [8, 20, 8], spine: [4, 8, 4], chest: [2, -6, 2], neck: [-14, -14, -4], head: [-14, -10, -4],   // LATERAL LOAD: weight and a lean onto the LEFT leg (knee flexed), pelvis turned away (right hip back and OPEN), shoulders counter-rotated toward the target; the right hand presents the ball ahead of the right hip and lets it go from underneath (DROP)
+             thigh_R: [24, 0, 30], shin_R: [58, 0, 0], foot_R: [16, 0, 0], thigh_L: [-26, 0, -10], shin_L: [32, 0, 0], foot_L: [-22, 0, 0],
+             upperArm_R: [-52, -10, 30], foreArm_R: [-24, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [-46, 0, -56], foreArm_L: [-36, 0, 0], hand_L: [-8, 0, 0] }],
+  ],
+  fall: [                                                                                     // the ball's own free fall (~0.35 s): the backswing completes, then the pelvis unwinds and the leg swings through
+    [0.42, { name: "BACKSWING", _pelvis: [-0.14, -0.08, 0.06], _hR: 0, _hL: 0, pelvis: [10, 30, 10], spine: [6, 6, 4], chest: [2, -12, 2], neck: [-16, -20, -6], head: [-14, -14, -6],   // full lateral load: pelvis 30° away, lean onto the support side, right hip open with the knee folded behind; shoulders held back toward the target
+             thigh_R: [38, 0, 40], shin_R: [76, 0, 0], foot_R: [20, 0, 0], thigh_L: [-22, 0, -12], shin_L: [26, 0, 0], foot_L: [-22, 0, 0],
+             upperArm_R: [20, 0, 46], foreArm_R: [-30, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [-70, 0, -40], foreArm_L: [-30, 0, 0], hand_L: [-8, 0, 0] }],
+    [1.00, { name: "KICK", _pelvis: [-0.06, -0.04, 0.14], _hR: 0, _hL: 0, pelvis: [12, -6, 4], spine: [10, -10, 2], chest: [4, -8, 0], neck: [-18, 4, -2], head: [-14, 2, -2],   // the pelvis has UNWOUND (hips lead), tall on the support leg, the right leg swings through the forward / lateral corridor: laces meet the falling ball (the foot is solved onto the simulation ball); the arms counter (right back-out, left across)
+             thigh_R: [-60, 0, 14], shin_R: [20, 0, 0], foot_R: [32, 0, 0], thigh_L: [-10, 0, -12], shin_L: [12, 0, 0], foot_L: [-20, 0, 0],
+             upperArm_R: [10, 0, 58], foreArm_R: [-30, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [-60, 0, -24], foreArm_L: [-40, 0, 0], hand_L: [-8, 0, 0] }],
+  ],
+  post: [
+    [0.22, { name: "FOLLOW_ACROSS", _pelvis: [-0.02, -0.02, 0.24], _hR: 0, _hL: 0, pelvis: [4, -30, 0], spine: [12, -16, 0], chest: [6, -10, 0], neck: [-14, 12, 0], head: [-12, 8, 0],                 // the kicking leg continues UP and ACROSS the body, the pelvis and trunk rotate through with it and the trunk pitches forward
+             thigh_R: [-90, 0, -18], shin_R: [20, 0, 0], foot_R: [36, 0, 0], thigh_L: [-8, 0, -12], shin_L: [10, 0, 0], foot_L: [-30, 0, 0],
+             upperArm_R: [-36, 0, -30], foreArm_R: [-30, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [24, 0, -44], foreArm_L: [-30, 0, 0], hand_L: [-8, 0, 0] }],
+    [0.55, { name: "LAND", _pelvis: [0.00, -0.10, 0.28], _hR: 0, _hL: 0, pelvis: [12, -12, 0], spine: [6, -4, 0], chest: [2, 0, 0], neck: [-12, 4, 0], head: [-12, 2, 0],                              // the kicking foot lands ahead and across, the body settles onto it
+             thigh_R: [-36, 0, 4], shin_R: [30, 0, 0], foot_R: [-10, 0, 0], thigh_L: [-22, 0, -12], shin_L: [30, 0, 0], foot_L: [-24, 0, 0],
+             upperArm_R: [-20, 0, 30], foreArm_R: [-40, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [-30, 0, -36], foreArm_L: [-40, 0, 0], hand_L: [-8, 0, 0] }],
+    [1.00, "set"],
+  ],
+  kickFoot: "R", kickFree: { from: "prep", at: 0.60 },                                       // the kicking foot is free from the lateral load (backswing) until it lands in the follow-through
+  steps: [{ phase: "prep", at: 0.45, foot: "L", pt: [-0.22, 0.30] }, { phase: "post", at: 0.50, foot: "R", pt: [0.04, 0.44] }, { phase: "post", at: 0.80, foot: "L", pt: [-0.20, 0.02] }, { phase: "post", at: 0.95, foot: "R", pt: [0.20, 0.02] }],   // support foot steps in; the kicking foot lands ahead-left (across); settle over the root
 };
 // symmetric READY crouch (anticipation for a central LOW ball: no side load); a central ball at hand height anticipates READY_UP instead
 GK_MOTIONS.READY = { name: "READY", _pelvis: [0, -0.27, 0.03], pelvis: [24, 0, 0], spine: [10, 0, 0], chest: [6, 0, 0], neck: [-10, 0, 0], head: [-14, 0, 0],
@@ -270,7 +290,7 @@ function gkSelectDistribution(dist) {
   if (!dist) return { key: null, motion: null, mirror: false };
   const key = dist.kind === "PUTDOWN" ? "DIST_PUTDOWN" : dist.kind === "ROLL" ? "DIST_ROLL" : dist.kind === "THROW" ? "DIST_THROW" : dist.kind === "PUNT" ? "DIST_PUNT" : null;
   const mo = key ? GK_MOTIONS[key] : null;
-  const mirror = !!mo && !mo.symmetric && (dist.kind === "PUNT" ? dist.foot === "L" : dist.side === "L");   // hand / foot convention from the simulation: authored RIGHT, mirrored for LEFT
+  const mirror = !!mo && !mo.symmetric && (dist.kind === "PUNT" ? dist.foot === "L" : dist.side === "L");   // v13: PUTDOWN is one-handed too (side from the simulation's hand convention)   // hand / foot convention from the simulation: authored RIGHT, mirrored for LEFT
   return { key, motion: mo, mirror };
 }
 function gkSelectMotion(desc) {

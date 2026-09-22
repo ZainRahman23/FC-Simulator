@@ -222,8 +222,8 @@ function gkGraphEvaluate(desc, clip, skel, state) {
     if (desc.now < D.tRelease - 1e-9) { seg = "prep"; x = clamp01((desc.now - D.t0) / prepT); }
     else if (isPunt && !D.kicked) { seg = "fall"; x = clamp01((desc.now - D.tDrop) / Math.max(1e-3, D.tKick - D.tDrop)); }   // the ball's own free fall (keyed on the predicted kick time; the kick fires on the ball itself)
     else { const tK = isPunt ? (D.tKickActual != null ? D.tKickActual : D.tKick) : D.tRelease; seg = "post"; x = clamp01((desc.now - tK) / Math.max(1e-3, D.tEnd - tK)); }
-    const aux = (k, sx) => ({ ball: k._ball ? [k._ball[0] * (mirror ? -1 : 1) * hs, k._ball[1] * hs, k._ball[2] * hs] : null, hands: mirror ? [k._hL != null ? k._hL : 0, k._hR != null ? k._hR : 0, 0] : [k._hR != null ? k._hR : 0, k._hL != null ? k._hL : 0, 0] });
-    let hands = [0, 0], ballC = null, handAnchor = null, kick = null;
+    const aux = (k, sx) => ({ ball: k._ball ? [k._ball[0] * (mirror ? -1 : 1) * hs, k._ball[1] * hs, k._ball[2] * hs] : null, hands: mirror ? [k._hL != null ? k._hL : 0, k._hR != null ? k._hR : 0, 0] : [k._hR != null ? k._hR : 0, k._hL != null ? k._hL : 0, 0], palm: k._palm ? [k._palm[0] * (mirror ? -1 : 1), k._palm[1], k._palm[2]] : [0, 1, 0] });   // _palm: the direction from the supporting wrist to the ball centre (a ball resting ON the palm), character frame
+    let hands = [0, 0], ballC = null, handAnchor = null, kick = null, palmC = [0, 1, 0];
     if (dm) {
       const lastOf = (list) => list[list.length - 1][1];
       const named = { set: M(clip.set) };
@@ -234,20 +234,20 @@ function gkGraphEvaluate(desc, clip, skel, state) {
         // rendered ball path: captured start → authored keys, the whole path shifted (linearly in u) so that it ends EXACTLY on the authoritative release / drop point
         const relC = M4.transformPoint(invR, lift(glW(D.release))), b0 = DS.ball0 ? M4.transformPoint(invR, DS.ball0) : relC;
         const aLast = aux(lastOf(dm.prep)).ball, delta = aLast ? V3.sub(relC, aLast) : [0, 0, 0];
-        const bk = [[0, { ball: b0, hands: [1, 1, 0] }]].concat(dm.prep.map(([u, k]) => { const a = aux(k); return [u, { ball: a.ball ? V3.add(a.ball, V3.scale(delta, u)) : relC, hands: a.hands }]; }));
-        const sa = gkSampleKeys(bk, x, {}); ballC = x >= 1 ? relC : sa.ball; hands = [clamp01(sa.hands[0]), clamp01(sa.hands[1])];
+        const bk = [[0, { ball: b0, hands: [1, 1, 0], palm: aux(dm.prep[0][1]).palm }]].concat(dm.prep.map(([u, k]) => { const a = aux(k); return [u, { ball: a.ball ? V3.add(a.ball, V3.scale(delta, u)) : relC, hands: a.hands, palm: a.palm }]; }));
+        const sa = gkSampleKeys(bk, x, {}); ballC = x >= 1 ? relC : sa.ball; hands = [clamp01(sa.hands[0]), clamp01(sa.hands[1])]; palmC = V3.len(sa.palm) > 1e-3 ? V3.norm(sa.palm) : [0, 1, 0]; DS.lastPalm = palmC.slice();
         if (dm.handRelease) { const hr = dm.handRelease, hi = (mirror ? (hr.hand === "L" ? "R" : "L") : hr.hand) === "R" ? 0 : 1; hands[hi] = 1 - smooth01(clamp01((x - hr.from) / Math.max(1e-6, hr.to - hr.from))); }   // one-hand actions: the supporting hand leaves the ball over an explicit window (before the ball swings away from it)
         DS.lastHands = hands.slice();
       } else if (seg === "fall") {
         const keys = [[0, res(lastOf(dm.prep))]].concat(dm.fall.map(([u, k]) => [u, res(k)]));
         pose = gkSampleKeys(keys, x, {}); sub = pose._name;
-        const kOff = 1 - smooth01(clamp01((desc.now - D.tDrop) / (dm.handsOff || 0.12))); hands = [(DS.lastHands ? DS.lastHands[0] : 1) * kOff, (DS.lastHands ? DS.lastHands[1] : 1) * kOff]; handAnchor = lift(glW(D.drop));
+        const kOff = 1 - smooth01(clamp01((desc.now - D.tDrop) / (dm.handsOff || 0.12))); hands = [(DS.lastHands ? DS.lastHands[0] : 1) * kOff, (DS.lastHands ? DS.lastHands[1] : 1) * kOff]; handAnchor = lift(glW(D.drop)); palmC = DS.lastPalm || palmC;
       } else {
         const prevLast = isPunt ? (dm.fall ? lastOf(dm.fall) : lastOf(dm.prep)) : lastOf(dm.prep);
         const keys = [[0, res(prevLast)]].concat(dm.post.map(([u, k]) => [u, res(k)]));
         pose = gkSampleKeys(keys, x, {}); sub = pose._name;
         const tRel = isPunt ? D.tDrop : D.tRelease, kOff = 1 - smooth01(clamp01((desc.now - tRel) / (dm.handsOff || 0.12)));
-        hands = [(DS.lastHands ? DS.lastHands[0] : 1) * kOff, (DS.lastHands ? DS.lastHands[1] : 1) * kOff]; handAnchor = lift(glW(isPunt ? D.drop : D.release));   // the hands come off the ball where it was released (a static anchor: never the flying ball)
+        hands = [(DS.lastHands ? DS.lastHands[0] : 1) * kOff, (DS.lastHands ? DS.lastHands[1] : 1) * kOff]; handAnchor = lift(glW(isPunt ? D.drop : D.release)); palmC = DS.lastPalm || palmC;   // the hands come off the ball where it was released (a static anchor: never the flying ball)
       }
       if (isPunt && (seg === "fall" || seg === "post")) {                                    // the kicking leg: solved onto the FALLING simulation ball toward the (predicted) kick tick, held on the actual kick point briefly after the kick
         const foot = mirror ? "L" : "R";
@@ -273,7 +273,7 @@ function gkGraphEvaluate(desc, clip, skel, state) {
         if (!st || !st.P || !st.locked) pts[sd] = want; else if (V3.dist(st.P, wantW) > thresh && !stepping(sd === "R" ? "L" : "R")) pts[sd] = want; else keep[sd] = true;
       }
     }
-    distG = { kind: D.kind, seg, x, hands: { R: hands[0], L: hands[1] }, ballW: ballC ? M4.transformPoint(rootM, ballC) : null, handAnchor, kick, mirror, motion: dm ? dm.id : null, released: !!D.released, kicked: !!D.kicked, startDown: DS.startDown, startPhase: DS.startPhase, facingTurn: kTurn, release: lift(glW(D.release)), kIn: smooth01(clamp01((desc.now - D.t0) / 0.12)), W0: DS.W0, E0: DS.E0, assist0: DS.assist0 };
+    distG = { kind: D.kind, seg, x, hands: { R: hands[0], L: hands[1] }, ballW: ballC ? M4.transformPoint(rootM, ballC) : null, handAnchor, kick, mirror, palmW: V3.norm(M4.transformDir(rootM, palmC)), motion: dm ? dm.id : null, released: !!D.released, kicked: !!D.kicked, startDown: DS.startDown, startPhase: DS.startPhase, facingTurn: kTurn, release: lift(glW(D.release)), kIn: smooth01(clamp01((desc.now - D.t0) / 0.12)), W0: DS.W0, E0: DS.E0, ball0W: DS.ball0, assist0: DS.assist0 };
     state.endPose = pose;
   } else if (!c) {
     if (desc.shot && desc.shot.latency > 0) {                                                  // READ / PREPARE: react → weight shift → deep load inside the reaction latency
@@ -633,22 +633,54 @@ function gkGraphSolve(desc, g, skel, state) {
       const p2 = poseAdd(pose, assist); p2._pelvis = pose._pelvis; fk = skelFK(skel, p2, g.rootM); plantFeet(); diag.torso = +ea.toFixed(1);
     }
     const B = Dd.ballW || Dd.handAnchor; const two = Dd.hands.R > 0.5 && Dd.hands.L > 0.5; const resD = {};
+    // BALL / HAND QUALITY GATE (v13): the ball is a physical sphere of radius rB supported by a hand of length handLen. ONE-HAND grip = the ball
+    // rests ON THE PALM: palm point P (mid-hand) with the ball centre B = P + n̂·rB along the palm normal, the hand direction tangent to the
+    // ball, so the wrist sits at √(rB² + (½·hand)²) from the centre in the authored `_palm` direction (never at the fingertips, never behind
+    // them). TWO-HAND grip = the v11 cradle (hands on the ball's sides). Every active hand is measured: palm-to-surface, fingertip
+    // penetration, ball beyond the fingertips, wrist penetration, forearm intersection, hand-centre jump per tick.
+    const dPalm = Math.sqrt((rB + hOff) * (rB + hOff) + 0.25 * handLen * handLen), rFore = skel.byName.foreArm_R.rad;   // palm point (mid-hand) at rB + glove thickness (hOff) from the ball centre, hand tangent → wrist at √((rB+hOff)² + (½·hand)²)
+    const segDist = (P, A, Bq) => { const ab = V3.sub(Bq, A), t = clamp01(V3.dot(V3.sub(P, A), ab) / Math.max(1e-9, V3.dot(ab, ab))); return V3.dist(P, V3.add(A, V3.scale(ab, t))); };
+    const lastHC = state.distLastHC || {};
     if (B) for (const sd of ["R", "L"]) {
       const w = clamp01(Dd.hands[sd]); if (w <= 0) continue;
       const up = skel.byName["upperArm_" + sd], fo = skel.byName["foreArm_" + sd], hd = skel.byName["hand_" + sd], S0 = fk.joint[up.idx], sgn = sd === "R" ? 1 : -1;
-      const k2 = clamp01(Dd.hands[sd === "R" ? "L" : "R"]);                                     // how much the OTHER hand is on the ball: the wrist target blends between the two-hand (sides) and one-hand (end of the arm line) rules — a hand-over is never a target jump
+      const k2 = clamp01(Dd.hands[sd === "R" ? "L" : "R"]);                                     // how much the OTHER hand is on the ball: the wrist target blends between the two-hand (sides) and the one-hand (palm) rule — a hand-over is never a target jump
       const WbTwo = V3.add(B, V3.add(V3.scale(rgt, sgn * (rB + hOff + 0.6 * handLen)), V3.add(V3.scale(fwdW, 0.05), V3.scale(upW, -0.02))));
-      const n1 = V3.norm(V3.sub(B, S0)), WbOne = V3.sub(B, V3.scale(n1, rB + hOff + 0.6 * handLen));
-      const Wb = V3.lerp(WbOne, WbTwo, k2);
-      const pref = V3.norm(V3.lerp(V3.norm(V3.add(V3.scale(rgt, sgn * 0.9), V3.scale(upW, -0.35))), V3.norm(V3.add(V3.add(V3.scale(rgt, sgn * 0.75), V3.scale(upW, -0.55)), V3.scale(fwdW, -0.25))), k2));   // elbows out / down; a single throwing arm keeps its elbow outside
-      const r = skelCradleElbow(S0, Wb, up.len, fo.len, pref, torso, sd === "R" ? CS.memR : CS.memL, { maxUp: 0.05 * k2 + 1.0 * (1 - k2) });
-      const Ea = fk.joint[fo.idx], Wa = fk.joint[hd.idx];
+      const uPalm0 = Dd.palmW && V3.len(Dd.palmW) > 1e-3 ? V3.norm(Dd.palmW) : upW;
+      const pref = V3.norm(V3.lerp(V3.norm(V3.add(V3.scale(rgt, sgn * 0.9), V3.scale(upW, -0.35))), V3.norm(V3.add(V3.add(V3.scale(rgt, sgn * 0.75), V3.scale(upW, -0.55)), V3.scale(fwdW, -0.25))), k2));   // elbows out / down; a single supporting arm keeps its elbow outside
+      const ballIn = (pt) => V3.dist(pt, B) < rB + 0.25 * rFore + 0.01;                        // the elbow, the upper-arm midpoint and the forearm midpoint must stay OUTSIDE the ball (a palm-supported ball must not have the forearm passing through it)
+      const Ea = fk.joint[fo.idx], Wa = fk.joint[hd.idx], dHa = V3.norm(V3.sub(fk.tip[hd.idx], Wa));
+      // the PALM is parallel to the forearm, so the wrist→ball direction must be PERPENDICULAR to the forearm: the authored `_palm` preference is projected onto the
+      // plane ⊥ the forearm (authored arm first, then the solved arm — two passes); the ball then rests on the palm plane and the forearm cannot pass through it
+      let r = null, Wb = null, uPalm = uPalm0, dFore = V3.norm(V3.sub(Wa, Ea));
+      for (let pass = 0; pass < 2; pass++) {
+        let uP = V3.sub(uPalm0, V3.scale(dFore, V3.dot(uPalm0, dFore))); if (V3.len(uP) < 0.05) uP = V3.sub(upW, V3.scale(dFore, dFore[1])); uPalm = V3.norm(uP);
+        const WbOne = V3.sub(B, V3.scale(uPalm, dPalm));
+        { const dTwo = V3.sub(WbTwo, B), dOne = V3.sub(WbOne, B); const dir = V3.lerp(V3.norm(dOne), V3.norm(dTwo), k2); Wb = V3.add(B, V3.scale(V3.len(dir) > 1e-4 ? V3.norm(dir) : V3.norm(dOne), (1 - k2) * V3.len(dOne) + k2 * V3.len(dTwo))); }   // hand-over blend ON the ball's surface (direction + distance from the centre), never a straight line through the ball
+        r = skelCradleElbow(S0, Wb, up.len, fo.len, pref, (pt) => torso(pt) || ballIn(pt), sd === "R" ? CS.memR : CS.memL, { maxUp: 0.05 * k2 + 1.0 * (1 - k2) });
+        dFore = V3.norm(V3.sub(r.W, r.E));
+      }
       let Ef = V3.lerp(Ea, r.E, w), Wf = V3.lerp(Wa, r.W, w);
-      if (kIn < 1 && Dd.W0 && Dd.E0) { Ef = V3.lerp(Dd.E0[sd], Ef, kIn); Wf = V3.lerp(Dd.W0[sd], Wf, kIn); }   // hand-over INTO the distribution grip: from where the arms actually were (last solved elbows / wrists) over 120 ms — never a cut between two solvers
-      const ac = skelAimChain(skel, fk, "upperArm_" + sd, "foreArm_" + sd, "hand_" + sd, Ef, Wf, B, 0.7 * w);
-      resD[sd] = { w: +w.toFixed(2), valid: r.valid, viol: r.viol, handCentre: ac.handCentre, surface: +(V3.dist(ac.handCentre, B) - rB).toFixed(3) };   // hand centre to the ball SURFACE (0 = touching)
+      if (kIn < 1 && Dd.W0 && Dd.E0) { const carry = Dd.ball0W && Dd.ballW ? V3.sub(Dd.ballW, Dd.ball0W) : [0, 0, 0]; Ef = V3.lerp(V3.add(Dd.E0[sd], carry), Ef, kIn); Wf = V3.lerp(V3.add(Dd.W0[sd], carry), Wf, kIn); }   // hand-over INTO the distribution grip: from where the arms actually were (last solved elbows / wrists, carried along with the ball's own displacement) over 120 ms — never a cut between two solvers
+      // hand direction: one hand → tangent to the ball at the palm (the authored hand direction projected onto the plane ⊥ wrist→ball); two hands → the cradle curl; blended by k2 through the hand-over
+      let handDir = null;
+      { const uW = V3.norm(V3.sub(B, Wf)), dW = V3.dist(B, Wf); let t = V3.sub(dHa, V3.scale(uW, V3.dot(dHa, uW))); if (V3.len(t) < 0.05) t = V3.sub(fwdW, V3.scale(uW, V3.dot(fwdW, uW))); const dT = V3.norm(t);
+        const cS = Math.max(-1, Math.min(1, (dW * dW + handLen * handLen - (rB + hOff) * (rB + hOff)) / (2 * dW * handLen))), sS = Math.sqrt(Math.max(0, 1 - cS * cS));   // exact fingertip-on-surface angle for the ACTUAL wrist distance this tick
+        const dSideDir = V3.norm(V3.add(V3.scale(uW, cS), V3.scale(dT, sS))); handDir = V3.norm(V3.lerp(dT, dSideDir, k2)); }   // one hand: tangent to the ball at the palm; sides grip: the exact fingertip-on-surface angle off the centre line, curled toward the tangent
+      const ac = skelAimChain(skel, fk, "upperArm_" + sd, "foreArm_" + sd, "hand_" + sd, Ef, Wf, B, 0.7 * w, handDir ? V3.lerp(dHa, handDir, w) : null);
+      // metrics (physical hand: wrist W, fingertips F, palm point P at mid-hand)
+      const Wn = fk.joint[hd.idx], Fn = fk.tip[hd.idx], dHn = V3.norm(V3.sub(Fn, Wn)), Pn = V3.lerp(Wn, Fn, 0.5), En = fk.joint[fo.idx];
+      // beyond-fingers = the ball's NEAR surface lies past the fingertips along the hand (the ball hangs off the fingertips instead of sitting on the palm / against the fingers);
+      // forearm = the ball centre inside the forearm's clearance along its proximal 70 % (the wrist end is legitimately within a radius of a palm-supported ball)
+      const m = { palmSurface: +(V3.dist(Pn, B) - rB - hOff).toFixed(3), fingerPen: +Math.max(0, rB + hOff - V3.dist(Fn, B)).toFixed(3), ballBeyondFingers: +(V3.dot(V3.sub(B, Wn), dHn) - handLen - rB).toFixed(3), wristPen: +Math.max(0, rB + hOff - V3.dist(Wn, B)).toFixed(3), foreArmPen: +Math.max(0, rB + 0.25 * rFore - segDist(B, En, V3.lerp(En, Wn, 0.6))).toFixed(3), handJump: lastHC[sd] ? +V3.dist(ac.handCentre, lastHC[sd]).toFixed(3) : 0, grip: k2 >= 0.5 ? "sides" : "palm" };
+      const prevJump = lastHC[sd + "_j"] != null ? lastHC[sd + "_j"] : m.handJump;
+      const bad = []; if (Dd.ballW && w > 0.75) { if (k2 < 0.25 && Math.abs(m.palmSurface) > 0.03) bad.push("palm-off-ball"); if (m.fingerPen > 0.02) bad.push("finger-penetration"); if (m.ballBeyondFingers > 0.02) bad.push("ball-beyond-fingers"); if (m.wristPen > 0.015) bad.push("wrist-penetration"); if (m.foreArmPen > 0.01) bad.push("forearm-intersection"); if (m.handJump > 0.16 && m.handJump > 3 * prevJump + 0.02) bad.push("hand-jump"); } m.bad = bad;   // a hand that is ON the ball (w > ¾; a hand at w ≤ ¾ is letting go / arriving); a jump is a CUT only when it is sudden (a whipping throw arm moves 0.2 m/tick smoothly)   // judged only while the rendered ball is in the hands (after the release the hands fade off a static anchor); a hand-centre jump > 0.16 m in one tick (~10 m/s) is a cut, not a swing
+      resD[sd] = { w: +w.toFixed(2), valid: r.valid, viol: r.viol, handCentre: ac.handCentre, wrist: Wn, tip: Fn, palm: Pn, surface: +(V3.dist(ac.handCentre, B) - rB).toFixed(3), metrics: m };   // surface: hand centre to the ball SURFACE (0 = touching)
+      lastHC[sd] = ac.handCentre.slice(); lastHC[sd + "_j"] = m.handJump;
     }
-    diag.dist = { seg: Dd.seg, x: +Dd.x.toFixed(3), two, R: resD.R || null, L: resD.L || null, ball: Dd.ballW, anchor: Dd.handAnchor, violations: (resD.R && !resD.R.valid ? 1 : 0) + (resD.L && !resD.L.valid ? 1 : 0) + (Dd.ballW && torso(Dd.ballW) ? 1 : 0), ballIn: !!(Dd.ballW && torso(Dd.ballW)) };
+    state.distLastHC = lastHC;
+    const badN = (resD.R ? resD.R.metrics.bad.length : 0) + (resD.L ? resD.L.metrics.bad.length : 0);
+    diag.dist = { seg: Dd.seg, x: +Dd.x.toFixed(3), two, R: resD.R || null, L: resD.L || null, ball: Dd.ballW, anchor: Dd.handAnchor, violations: (resD.R && !resD.R.valid ? 1 : 0) + (resD.L && !resD.L.valid ? 1 : 0) + (Dd.ballW && torso(Dd.ballW) ? 1 : 0) + badN, ballIn: !!(Dd.ballW && torso(Dd.ballW)), handBad: badN };
     if (Dd.ballW) diag.ballPres = { p: Dd.ballW, r: rB, cradle: Dd.ballW, wB: 1, handR: resD.R ? resD.R.handCentre : hc("R"), handL: resD.L ? resD.L.handCentre : hc("L"), dist: true };
     if (Dd.kick && Dd.kick.w > 0) {                                                            // kicking foot: ankle solved so the laces meet the ball (ball centre − forward·(radius + half a foot) − a little down)
       const K = Dd.kick, sd = K.foot, hipJ = fk.joint[skel.byName["thigh_" + sd].idx], fb = skel.byName["foot_" + sd], rF = fb.rad, fl = 0.65 * fb.len;
@@ -665,7 +697,7 @@ function gkGraphSolve(desc, g, skel, state) {
       const ank = fk.joint[skel.byName["foot_" + sd].idx], tip = fk.tip[skel.byName["foot_" + sd].idx], contact = V3.lerp(ank, tip, 0.65);
       diag.kick = { foot: sd, w: +wl.toFixed(2), residual: r ? +r.residual.toFixed(3) : null, surface: +(V3.dist(contact, K.p) - rB - rF).toFixed(3), target: K.p, contact, live: K.live };   // foot SURFACE to ball SURFACE (0 = touching; negative = the ball is inside the foot)
     }
-  } else if (state.distArms) state.distArms = null;
+  } else if (state.distArms) { state.distArms = null; state.distLastHC = null; }
   state.lastBallPres = diag.ballPres ? diag.ballPres.p.slice() : null;
   pel.off = savedOff;
   state.lastWrists = { R: fk.joint[skel.byName.hand_R.idx].slice(), L: fk.joint[skel.byName.hand_L.idx].slice() };   // solved wrists this frame (the start of any later cradle hand-over)

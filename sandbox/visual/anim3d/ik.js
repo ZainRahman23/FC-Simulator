@@ -58,7 +58,7 @@ function skelIK2(skel, fk, upperName, foreName, handName, target, w, poleHint, e
 
 // ── CRADLE SOLVE (catches): both arms as ONE coordinated basket around the ball, explicit anatomy — never two chains chasing points ──
 // Re-aim a 3-bone chain (upper → fore → hand) to an EXPLICIT elbow E and wrist W (world), the hand curling toward aimPt (the ball).
-function skelAimChain(skel, fk, upperName, foreName, handName, E, W, aimPt, curl) {
+function skelAimChain(skel, fk, upperName, foreName, handName, E, W, aimPt, curl, handDir) {   // handDir (optional, unit): an explicit hand direction (wrist → fingertips) instead of the curl blend — a palm-supported ball
   const up = skel.byName[upperName], fo = skel.byName[foreName], hd = skel.byName[handName];
   const S = fk.joint[up.idx], E0 = fk.joint[fo.idx];
   const rot = (bone, from, to) => { const m = fk.world[bone.idx]; const o = M4.origin(m); const R = M4.fromTo(V3.norm(V3.sub(from, o)), V3.norm(V3.sub(to, o))); return M4.mul(M4.translate(o[0], o[1], o[2]), M4.mul(R, M4.mul(M4.translate(-o[0], -o[1], -o[2]), m))); };
@@ -68,7 +68,7 @@ function skelAimChain(skel, fk, upperName, foreName, handName, E, W, aimPt, curl
   const hm = fk.world[hd.idx]; const delta = M4.mul(fk.world[fo.idx], M4.invertRigid(fm)); const hm2 = M4.mul(delta, hm); hm2[12] = W[0]; hm2[13] = W[1]; hm2[14] = W[2];
   fk.world[hd.idx] = hm2; fk.joint[hd.idx] = W;
   // wrist: the hand curls from the forearm line toward the ball (palm on the surface) — bounded by `curl` (0 = straight, 1 = fully at the ball)
-  const tip0 = M4.transformPoint(hm2, V3.scale(hd.dir, hd.len)); const dF = V3.norm(V3.sub(W, E)), dB = V3.norm(V3.sub(aimPt, W)); let dH = V3.norm(V3.add(V3.scale(dF, 1 - curl), V3.scale(dB, curl))); if (V3.len(dH) < 1e-6) dH = dF;
+  const tip0 = M4.transformPoint(hm2, V3.scale(hd.dir, hd.len)); const dF = V3.norm(V3.sub(W, E)), dB = V3.norm(V3.sub(aimPt, W)); let dH = handDir ? V3.norm(handDir) : V3.norm(V3.add(V3.scale(dF, 1 - curl), V3.scale(dB, curl))); if (V3.len(dH) < 1e-6) dH = dF;
   const tip1 = V3.add(W, V3.scale(dH, hd.len)); fk.world[hd.idx] = rot(hd, tip0, tip1); fk.tip[hd.idx] = tip1;
   const dEnd = M4.mul(fk.world[hd.idx], M4.invertRigid(hm)); const carry = (bone) => { for (const ch of bone.children) { fk.world[ch.idx] = M4.mul(dEnd, fk.world[ch.idx]); fk.joint[ch.idx] = M4.origin(fk.world[ch.idx]); fk.tip[ch.idx] = M4.transformPoint(fk.world[ch.idx], V3.scale(ch.dir, ch.len)); carry(ch); } }; carry(hd);
   return { elbow: E, wrist: W, handCentre: V3.lerp(W, tip1, 0.6) };

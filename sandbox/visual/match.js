@@ -2995,6 +2995,11 @@ const GK_SCENARIOS = [
   { name: "D5 angled: NW-facing catch → THROW to the far side (target [80, 46])", origin: [100, 26], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: -0.05, z: 1.2, v: 15 }, dist: { kind: "THROW", target: [80, 46] } },
   { name: "D5 angled: SSW-facing catch → ROLL across (target [98, 42])",        origin: [96, 40],  aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.0, z: 1.1, v: 14 }, dist: { kind: "ROLL", target: [98, 42] } },
   { name: "D5 angled: SW-facing catch → PUNT left foot (target [50, 30])",      origin: [100, 42], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.05, z: 1.15, v: 15 }, dist: { kind: "PUNT", target: [50, 30], foot: "L" } },
+  // v13 review fixtures: targets toward the SOUTH touchline so the keeper faces the camera (front / ¾ view of the lateral load, hip opening, rotation and cross-body follow-through)
+  { name: "D6 front view: PUNT right foot toward the camera (target [96, 60])",  origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.05, z: 1.15, v: 15 }, dist: { kind: "PUNT", target: [96, 60], foot: "R" } },
+  { name: "D6 front view: THROW toward the camera (target [92, 58])",           origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.05, z: 1.15, v: 15 }, dist: { kind: "THROW", target: [92, 58] } },
+  { name: "D6 front view: ROLL toward the camera (target [99, 50])",            origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.05, z: 1.15, v: 15 }, dist: { kind: "ROLL", target: [99, 50] } },
+  { name: "D6 front view: PUT DOWN facing the camera (target [101, 60])",       origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.05, z: 1.15, v: 15 }, dist: { kind: "PUTDOWN", target: [101, 60] } },
 ];
 function ptGkMake() {
   const c = GK_CFG;
