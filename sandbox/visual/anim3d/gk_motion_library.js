@@ -198,7 +198,7 @@ GK_MOTIONS.DIST_PUTDOWN = {                                                     
     [0.40, { name: "REBALANCE", _pelvis: [0.00, -0.14, 0.06], _hR: 0, _hL: 0, pelvis: [16, 0, 0], spine: [8, 0, 0], chest: [4, 0, 0], neck: [-12, 0, 0], head: [-12, 0, 0],                             // quick straighten over the ball: athletic stance, arms out, ready to take a touch
              thigh_R: [-36, 0, 16], shin_R: [48, 0, 0], foot_R: [-24, 0, 0], thigh_L: [-36, 0, -16], shin_L: [48, 0, 0], foot_L: [-24, 0, 0],
              upperArm_R: [-16, 0, 36], foreArm_R: [-40, 0, 0], hand_R: [-8, 0, 0], upperArm_L: [-16, 0, -36], foreArm_L: [-40, 0, 0], hand_L: [-8, 0, 0] }],
-    [1.00, "set"],
+    [1.00, "readyUp"],                                                                        // ends upright behind the ball (the BALL_AT_FEET stance the simulation then holds), not in the keeper's set crouch
   ],
   steps: [],                                                                                  // feet stay: the keeper stands over / just behind the ball he has just put down
 };

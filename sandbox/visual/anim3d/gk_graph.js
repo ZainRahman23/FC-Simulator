@@ -226,7 +226,7 @@ function gkGraphEvaluate(desc, clip, skel, state) {
     let hands = [0, 0], ballC = null, handAnchor = null, kick = null, palmC = [0, 1, 0];
     if (dm) {
       const lastOf = (list) => list[list.length - 1][1];
-      const named = { set: M(clip.set) };
+      const named = { set: M(clip.set), readyUp: M(GK_MOTIONS.READY_UP) };
       const res = (k) => typeof k === "string" ? named[k] : MD(k);
       if (seg === "prep") {
         const keys = [[0, DS.from]].concat(dm.prep.map(([u, k]) => [u, res(k)]));
@@ -289,7 +289,8 @@ function gkGraphEvaluate(desc, clip, skel, state) {
       locks = { R: 1, L: 1 };
     } else if (desc.windup != null) {                                                          // the striker's visible wind-up: drop into the set crouch (symmetric)
       const w = smooth01(desc.windup); pose = poseLerpP(M(clip.set), M(clip.setLow), w); phase = "SET_CROUCH"; sub = pose._name; mode = "setlow"; clipT = w; locks = { R: 1, L: 1 };
-    } else { pose = M(clip.set); phase = desc.state; mode = "set"; locks = { R: 1, L: 1 }; }
+    } else if (desc.gkState === "BALL_AT_FEET") { pose = M(GK_MOTIONS.READY_UP); phase = "BALL_AT_FEET"; mode = "set"; locks = { R: 1, L: 1 }; }   // after a put-down: upright, balanced over the ball at his feet (the simulation holds him there facing it), not the keeper's set crouch
+    else { pose = M(clip.set); phase = desc.state; mode = "set"; locks = { R: 1, L: 1 }; }
   } else if ((desc.now < desc.endT && state.postT0 == null && !(dive && state.launch && desc.now >= state.launch.tE - 1e-6)) || (!state.plan && !dive && mo && mo.kind !== "spread" && !desc.contact && !desc.held)) {   // a spread block never waits: its momentum carries the body to the ground whether or not the ball arrives   // a dive's execution ends at the planned arrival (launch.tE) even when a contact extends endT: the landing plan owns the pelvis from there   // commit → full extension; non-dive motions WAIT at the target (u = 1) until the ball arrives; the post phase is ONE-WAY (a late contact that moves endT never re-enters the execution)
     const u = clamp01(desc.u); clipT = u;
     if (desc.now >= desc.endT) phase = "WAIT";

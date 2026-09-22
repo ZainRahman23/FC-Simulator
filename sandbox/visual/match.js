@@ -4170,10 +4170,13 @@ function gkHeldBallStep(t, b) {
 // animation. Release / drop / kick events are recorded in gk.distEvents for validation.
 const GK_DIST = {
   secureT: 1.00, secureTDown: 3.50, followT: 0.70,                                       // secure time after the catch before a release may start: standing catches 1.0 s; a diving / collapsing catch (the keeper is down) 3.5 s
-  THROW:   { prep: 0.90, vH: 17,  release: [0.85, 0.28, 1.78] },                      // [ahead, lateral toward the throwing side, height] in the keeper's frame; release beside / above the throwing shoulder with the arm extended forward-up
+  THROW:   { prep: 0.90, release: [0.85, 0.28, 1.78], law: "driven", vMax: 24, thetaMinDeg: 12, vH: 17, rangeGain: 1.015 },   // [ahead, lateral toward the throwing side, height] in the keeper's frame; release beside / above the throwing shoulder with the arm extended forward-up.
+                                                                                              // launch law "driven" (v13.1): throw speed = the speed that reaches the target at the minimum elevation (θmin), capped at vMax; if the cap binds, the
+                                                                                              // elevation rises just enough to reach the target (drag-free ballistic from the release height; rangeGain compensates the simulation's air drag).
+                                                                                              // law "arc" = the v12 law (fixed horizontal speed vH, vertical component chosen to land at the target) — kept for the comparison study only
   ROLL:    { prep: 1.00, v: 9,    release: [0.60, 0.22, 0.00] },                      // released ON the pitch (z 0 = the ball's ground rest height, the same convention as every rolling ball)
   PUNT:    { prep: 0.75, drop: [0.55, 0.12, 1.05], kickZ: 0.45, fam: "CLEAR", D: 45, followT: 0.80, drift: 0.3 },   // the drop is the first authoritative moment; the KICK happens when the falling ball reaches kickZ (an event, predicted at the drop as tKick)
-  PUTDOWN: { prep: 0.85, release: [0.50, 0.00, 0.00], vFwd: 0.4, followT: 0.60 },
+  PUTDOWN: { prep: 0.85, release: [0.50, 0.00, 0.00], vFwd: 1.6, followT: 0.60, atFeetM: 1.6, atFeetV: 1.5 },   // v13.1: a gentle forward roll (1.6 m/s → the ball rolls ~0.3 m further and stops ~0.8 m ahead: immediately playable), then BALL_AT_FEET (below)
   targets: { THROW: [78, 8], ROLL: [96, -6], PUNT: [55, 0], PUTDOWN: null },           // default targets [x, lateral offset from the keeper's y] for tools / fixtures without an explicit target
 };
 function gkDistKeeperPoint(gk, f, rel, sideSign) { const rx = -Math.sin(f), ry = Math.cos(f); return [gk.x + Math.cos(f) * rel[0] + rx * rel[1] * sideSign, gk.y + Math.sin(f) * rel[0] + ry * rel[1] * sideSign, rel[2]]; }
@@ -4186,7 +4189,15 @@ function gkDistributionStart(t, gk, req) {
   const side = req.side || (lat0 < -0.05 ? "L" : "R"), foot = req.foot || "R", sg = side === "L" ? -1 : 1;
   const d = { kind: req.kind, t0: t.now, facing: f, target: tgt.slice(), side, foot, released: false, kicked: false, done: false, events: [] };
   const D = Math.hypot(tgt[0] - gk.x, tgt[1] - gk.y), ux = (tgt[0] - gk.x) / (D || 1), uy = (tgt[1] - gk.y) / (D || 1);
-  if (req.kind === "THROW") { d.tRelease = t.now + K.prep; d.release = gkDistKeeperPoint(gk, f, K.release, sg); const T = Math.max(0.3, D / K.vH); d.v0 = [ux * K.vH, uy * K.vH, (0 - d.release[2]) / T + PT.G * T / 2]; d.tEnd = d.tRelease + GK_DIST.followT; }
+  if (req.kind === "THROW") { d.tRelease = t.now + K.prep; d.release = gkDistKeeperPoint(gk, f, K.release, sg); d.tEnd = d.tRelease + GK_DIST.followT;
+    if (K.law === "arc") { const T = Math.max(0.3, D / K.vH); d.v0 = [ux * K.vH, uy * K.vH, (0 - d.release[2]) / T + PT.G * T / 2]; d.launch = { law: "arc", vH: K.vH, T }; }
+    else {                                                                                   // "driven": range R (from release height h) at elevation θ and speed v: R = v cosθ (v sinθ + √(v² sin²θ + 2 g h)) / g
+      const g = PT.G, h = d.release[2], Drel = Math.hypot(tgt[0] - d.release[0], tgt[1] - d.release[1]), R = Drel * (K.rangeGain || 1), thMin = (K.thetaMinDeg || 12) * Math.PI / 180;   // range from the RELEASE point (0.85 m ahead of the root)
+      const rangeAt = (v, th) => v * Math.cos(th) * (v * Math.sin(th) + Math.sqrt(v * v * Math.sin(th) * Math.sin(th) + 2 * g * h)) / g;
+      let lo = 1, hi = K.vMax, v = K.vMax; for (let i = 0; i < 40; i++) { const mid = (lo + hi) / 2; if (rangeAt(mid, thMin) >= R) hi = mid; else lo = mid; } v = Math.min(K.vMax, hi);   // the speed that reaches R at θmin
+      let th = thMin; if (rangeAt(v, thMin) < R - 1e-3) { let a = thMin, b2 = Math.PI / 4; for (let i = 0; i < 40; i++) { const mid = (a + b2) / 2; if (rangeAt(v, mid) >= R) b2 = mid; else a = mid; } th = Math.min(Math.PI / 4, b2); }   // the cap binds: raise the elevation just enough (≤ 45°)
+      d.v0 = [ux * v * Math.cos(th), uy * v * Math.cos(th), v * Math.sin(th)]; d.launch = { law: "driven", v: +v.toFixed(3), thetaDeg: +(th * 180 / Math.PI).toFixed(2), R, apexM: +(h + (v * Math.sin(th)) ** 2 / (2 * g)).toFixed(3) };
+    } }
   else if (req.kind === "ROLL") { d.tRelease = t.now + K.prep; d.release = gkDistKeeperPoint(gk, f, K.release, sg); d.v0 = [ux * K.v, uy * K.v, 0]; d.tEnd = d.tRelease + GK_DIST.followT; }
   else if (req.kind === "PUTDOWN") { d.tRelease = t.now + K.prep; d.release = gkDistKeeperPoint(gk, f, K.release, sg); d.v0 = [ux * K.vFwd, uy * K.vFwd, 0]; d.tEnd = d.tRelease + K.followT; }
   else if (req.kind === "PUNT") { const fs = foot === "L" ? -1 : 1; d.tDrop = t.now + K.prep; d.drop = gkDistKeeperPoint(gk, f, K.drop, fs); d.tKick = d.tDrop + Math.sqrt(2 * Math.max(0.01, K.drop[2] - K.kickZ) / PT.G); d.kickP = [d.drop[0] + ux * K.drift * (d.tKick - d.tDrop), d.drop[1] + uy * K.drift * (d.tKick - d.tDrop), K.kickZ]; const lv = ptFam(K.fam, Math.min(K.D, D)); d.vKick = [ux * lv[0], uy * lv[0], lv[1]]; d.tRelease = d.tDrop; d.release = d.drop; d.tEnd = d.tKick + K.followT; }   // tKick / kickP = the PREDICTED free-fall arrival at kickZ (the presentation aims the foot at it); the kick itself fires on the ball's own fall
@@ -4204,7 +4215,7 @@ function gkDistributionStep(t) {
   } else if (!d.released && t.now >= d.tRelease - 1e-6 && b.held === "GK") {
     b.x = d.release[0]; b.y = d.release[1]; b.z = d.release[2]; b.vx = d.v0[0]; b.vy = d.v0[1]; b.vz = d.v0[2]; b.held = null; b.ctrl = false; b.curve = null; b.exclT = t.now + (d.kind === "PUTDOWN" ? 0.15 : 0.4); d.released = true; ev("RELEASE", { side: d.side });
   }
-  if (t.now >= d.tEnd - 1e-6) { d.done = true; gk.distDone = d; gk.dist = null; gk.committed = null; gk.state = "SET"; }   // plan over: the commit record is released, normal positioning resumes
+  if (t.now >= d.tEnd - 1e-6) { d.done = true; gk.distDone = d; gk.dist = null; gk.committed = null; gk.state = d.kind === "PUTDOWN" ? "BALL_AT_FEET" : "SET"; }   // plan over: the commit record is released, normal positioning resumes (a put-down goes straight to the BALL_AT_FEET hold, re-evaluated every tick)
   return true;
 }
 function ptGkUpdate(t) {
@@ -4266,6 +4277,12 @@ function ptGkUpdate(t) {
   } else {
     // STAGE 1 positioning (unchanged) — active pre-shot / between shots
     if (gk.shotActive && b.ctrl) { gk.shotActive = false; gk._snapped = null; gk.committed = null; }   // ball re-controlled: reset
+    // BALL AT FEET (v13.1, simulation-owned): after a PUT DOWN the keeper has deliberately placed the ball at his own feet to play it — while that ball is free,
+    // uncontrolled, slow and within reach he HOLDS his position facing it (the goal-positioning controller does not walk him back to his set depth).
+    // Without this the positioning controller resumed at the plan's end and repositioned him ~0.7 m toward the goal (the "backing away"). The keeper entity still has
+    // no dribble controller: the ball simply stays playable in front of him until another actor takes it or a shot resets everything.
+    const PD = GK_DIST.PUTDOWN, atFeet = !!(gk.distDone && gk.distDone.kind === "PUTDOWN" && !b.ctrl && !b.held && Math.hypot(b.x - gk.x, b.y - gk.y) <= PD.atFeetM && Math.hypot(b.vx, b.vy) <= PD.atFeetV);
+    if (atFeet) { gk.vx = 0; gk.vy = 0; gk.desired = [gk.x, gk.y]; gk.setPos = [gk.x, gk.y]; gk.moveTarget = [gk.x, gk.y]; gk.posError = 0; gk.state = "BALL_AT_FEET"; gk.facing = Math.atan2(b.y - gk.y, b.x - gk.x); gk.depth = GK_MOUTH.lineX - gk.x; gk.predict = null; gk.reach = null; gk.handNow = gk.handNow || [gk.x, gk.y, gk.handZ]; gk.bodyNow = [gk.x, gk.y]; gk.legTipNow = null; return; }
     const q = gkNorm01(t.gkPos != null ? t.gkPos : gk.attrs.gk_positioning);
     gk.q = q; gk.desired = gkPosition(t, b.x, b.y, q); gkMove(gk);
     gk.setPos = gk.desired.slice(); gk.predInt = null; gk.moveTarget = gk.desired.slice();   // pre-shot: SET is the live desired
