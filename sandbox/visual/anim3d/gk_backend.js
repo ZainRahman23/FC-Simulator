@@ -72,6 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const sel = document.getElementById("gk-backend");
   if (sel) sel.addEventListener("change", () => GK_PRESENTATION.set(sel.value));
   if (want) { const tryLater = () => { if (!GK_PRESENTATION.set(want)) setTimeout(tryLater, 200); }; tryLater(); }
+  const qc = new URLSearchParams(location.search).get("gkChar"); if (qc && typeof GL3D !== "undefined") { GL3D.character = qc.toUpperCase(); const ce = document.getElementById("gk3d-character"); if (ce) ce.value = GL3D.character; if (GL3D.character === "COURTOIS" && typeof gkCharLoad === "function") gkCharLoad("COURTOIS").catch(() => {}); }
   document.addEventListener("keydown", (e) => {
     if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "SELECT")) return;
     if (typeof S !== "undefined" && S.pt && S.pt.on && e.key === "8") { const n = GK_PRESENTATION.cycle(); S.pt.last = "GK PRESENTATION BACKEND -> " + n; }

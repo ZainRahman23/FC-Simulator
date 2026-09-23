@@ -19,6 +19,7 @@ fs.mkdirSync(OUT, { recursive: true });
     if (ZOOM) { RIG.zoom = ZOOM; RIG.zoomTarget = ZOOM; } if (CAMX) { RIG.manualX = CAMX; RIG.x = CAMX; RIG.targetX = CAMX; TRAVEL = CAMX - 52.5; }
     ptReset(); ptGkScenario(IDX); gkAnimResetView(); if (typeof gk3dReset === "function") gk3dReset(); S.pt.paused = true; window.__k = 0;
   }, IDX, BACKEND, DBG, COPIES, PIXEL, ZOOM, CAMX, OUTLINE, BANDS, CHARACTER, VARIANT);
+  if (CHARACTER === "COURTOIS") { for (let i = 0; i < 900; i++) { const st = await p.evaluate(() => (typeof GK_CHAR !== "undefined" && GK_CHAR.get("COURTOIS")) ? (GK_CHAR.get("COURTOIS").status === "idle" ? (gkCharLoad("COURTOIS"), "loading") : GK_CHAR.get("COURTOIS").status) : "missing"); if (st === "ready" || st === "error" || st === "missing") { console.log("character", st); if (st !== "ready") { const err = await p.evaluate(() => (typeof GK_CHAR !== "undefined" && GK_CHAR.get("COURTOIS")) ? String(GK_CHAR.get("COURTOIS").error || "") : "no registry"); console.error("CHARACTER NOT LOADED:", st, err, "console:", errs.slice(0, 5)); await b.close(); process.exit(2); } break; } await new Promise(r => setTimeout(r, 100)); } }   // finished character: wait for the asset before the first frame
   const maxT = Math.max(...TICKS); const rec = [];
   for (let k = 0; k <= maxT; k++) {
     const info = await p.evaluate((k, want) => {

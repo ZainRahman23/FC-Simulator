@@ -20,6 +20,12 @@ const GK3D = {
     jersey2: { label: "alternate jersey colour", palette: { shirt: [0.98, 0.62, 0.08] } },
   },
 };
+// review / Mixed compositor hook: re-render the LAST solved frame's character (+ ball) layer at an arbitrary pixel density in its render-ROI; returns the layer as a PNG data URL with its logical placement
+function gk3dRenderLayer(density) {
+  const e = typeof GK_CHAR !== "undefined" ? GK_CHAR.get("COURTOIS") : null, L = GK3D.lastLayer; if (!e || e.status !== "ready" || !L || !GK3D.R) return null;
+  const out = gkCharRender(GK3D.R, e, L.skinMats, L.roi, density, cv.width, cv.height, RES, L.ballP ? { p: L.ballP, r: L.ballR } : null);
+  return { png: out.canvas.toDataURL("image/png"), roi: L.roi, w: out.w, h: out.h, density, ss: out.ss, draws: out.draws };
+}
 function gk3dReset() { GK3D.state = {}; GK3D.trail = []; GK3D.asserts = []; GK3D.prev = null; GK3D.ballPres = null; GK3D.cradleFlags = []; GK3D.ballTrail = []; GK3D.distRecords = []; GK3D.distFlags = []; GK3D.presTrail = []; GK3D._distSeen = {}; }
 // The PRESENTATION ball: while the SKELETAL_3D backend is active and the authoritative ball is near the keeper (or keeper-owned), the ball
 // is rendered as real geometry in the keeper's 3D world / camera / depth buffer and the 2D ball sprite is not drawn. Pure predicate on
@@ -35,8 +41,13 @@ function gk3dDraw(t, gk, dt) {
   if (A.prevRoot) A.odo += Math.hypot(gk.x - A.prevRoot.x, gk.y - A.prevRoot.y); A.prevRoot = { x: gk.x, y: gk.y };
   const cur = gkAnimUpdate(t, gk);                       // shared semantic resolver (layer B)
   const desc = gkActionDescription(t, gk, cur);
-  const V = GK3D.variants[GK3D.variant] || GK3D.variants.default, skelKey = gk.height + "|" + GK3D.variant;
-  if (GK3D.skelKey !== skelKey) { GK3D.skel = skelBuild(gk.height * (V.h || 1), V.prop); GK3D.skel.invBind = skelInverseBind(GK3D.skel); GK3D.skelH = gk.height; GK3D.skelKey = skelKey; GK3D.palette = Object.assign({}, SKEL_PARTS, V.palette || {}); }
+  // FINISHED CHARACTER (Courtois): the approved GLB's exact tall rig replaces the height-built test skeleton — same hierarchy / joint order, the asset's inverse binds,
+  // world scale 1 (the roster's 199 cm is metadata, never a scale). Until the asset has loaded the test character keeps drawing (the load is async and presentation-only).
+  const charEntry = (typeof GK_CHAR !== "undefined" && GL3D.character === "COURTOIS") ? GK_CHAR.get("COURTOIS") : null;
+  if (charEntry && charEntry.status === "idle") gkCharLoad("COURTOIS").catch(() => {});
+  const useChar = !!(charEntry && charEntry.status === "ready");
+  const V = GK3D.variants[GK3D.variant] || GK3D.variants.default, skelKey = useChar ? "COURTOIS" : gk.height + "|" + GK3D.variant;
+  if (GK3D.skelKey !== skelKey) { if (useChar) { GK3D.skel = gkCharSkeleton(charEntry); GK3D.palette = SKEL_PARTS; } else { GK3D.skel = skelBuild(gk.height * (V.h || 1), V.prop); GK3D.skel.invBind = skelInverseBind(GK3D.skel); GK3D.palette = Object.assign({}, SKEL_PARTS, V.palette || {}); } GK3D.skelH = gk.height; GK3D.skelKey = skelKey; GK3D.state = {}; GK3D.prev = null; }
   const skel = GK3D.skel, clip = GK_CLIP_FAR_DIVE;
   if (!desc.commit && GK3D.state.commitKey != null) { GK3D.state = {}; GK3D.trail = []; GK3D.prev = null; }
   const g = gkGraphEvaluate(desc, clip, skel, GK3D.state);
@@ -57,14 +68,19 @@ function gk3dDraw(t, gk, dt) {
   const owns = gk3dOwnsBall(t), bSim = [t.b.x, t.b.y, t.b.z], ballR = g.ballR || GK_GRAPH.ballVisR, ballP = sol.ballPres ? sol.ballPres.p : glW(bSim);
   ballP[1] = Math.max(ballP[1], ballR);                                                       // the rendered sphere rests ON the pitch (simulation z 0 = ground rest for every rolling ball); presentation only
   GK3D.ballPres = { p: pitchW(ballP), sim: bSim, r: ballR, held: !!desc.held, pres: !!sol.ballPres, wB: sol.ballPres ? sol.ballPres.wB : 0, hands: sol.hands, elbows: sol.elbows, drawn3d: owns };
-  const out = glRenderCharacters(GK3D.R, chars, cv.width, cv.height, owns ? { ball: { p: ballP, r: ballR } } : {});
+  let out;
+  if (useChar) {                                                                              // finished character: C treatment in a render-ROI at the canvas density (Mixed review tools re-render the same frame at density 4 via gk3dRenderLayer)
+    const roi = gkCharROI(sol.fk, skel, owns ? ballP : null, cv.width, cv.height, RES, 0.45);
+    out = gkCharRender(GK3D.R, charEntry, skinMats, roi, RES, cv.width, cv.height, RES, owns ? { p: ballP, r: ballR } : null); out.char = true;
+    GK3D.lastLayer = { skinMats, ballP: owns ? ballP.slice() : null, ballR, roi };
+  } else out = glRenderCharacters(GK3D.R, chars, cv.width, cv.height, owns ? { ball: { p: ballP, r: ballR } } : {});
   if (owns) { const bg = sproj3(ballP[0], 0, -ballP[2]), bz = ballP[1], sh = 1 / (1 + bz * 0.55), rg = Math.max(2, Math.round(ballR * S.pxPerM * depthScale(bg.d) * RIG.zoom * RES)); ctx.save(); ctx.beginPath(); ctx.ellipse(Math.round(bg.x), Math.round(bg.y) + rg * 0.7, rg * 1.15 * sh, Math.max(1, rg * 1.15 * flattenAt(t.b.x, t.b.y) * sh), 0, 0, Math.PI * 2); ctx.fillStyle = "rgba(0,0,0," + (0.22 * sh).toFixed(3) + ")"; ctx.fill(); ctx.restore(); }   // ball shadow on the pitch (same law as the 2D ball)
   // composite at the keeper's depth slot: shadow at the PRESENTATION root, then the low-res layer scaled with nearest sampling
   const sp = sproj3(gk.x, 0, gk.y); if (sp.d < 0.5) return true;
   const s = S.playerVScale * depthScale(sp.d) * RIG.zoom * RES, flat = flattenAt(gk.x, gk.y);
   const spp = sproj3(g.pres.x != null ? g.pres.x : gk.x + g.pres.dx, 0, g.pres.y != null ? g.pres.y : gk.y + g.pres.dy);
   ctx.save(); ctx.beginPath(); ctx.ellipse(Math.round(spp.x), Math.round(spp.y), 9 * s, Math.max(1.5, 9 * s * flat), 0, 0, Math.PI * 2); ctx.fillStyle = "rgba(0,0,0,0.25)"; ctx.fill(); ctx.restore();
-  ctx.save(); ctx.imageSmoothingEnabled = false; ctx.drawImage(out.canvas, 0, 0, out.w, out.h, 0, 0, cv.width, cv.height); ctx.restore();
+  if (!GK3D.hideCharacter) { ctx.save(); ctx.imageSmoothingEnabled = false; if (out.char) ctx.drawImage(out.canvas, 0, 0, out.w, out.h, out.roi.x * RES, out.roi.y * RES, out.roi.w * RES, out.roi.h * RES); else ctx.drawImage(out.canvas, 0, 0, out.w, out.h, 0, 0, cv.width, cv.height); ctx.restore(); }   // hideCharacter: review compositor (environment pass without the character layer)
   // drawn glove vs simulation hand (contact synchronisation metric, same units as the sprite backend)
   const P3 = (p) => sproj3(p[0], p[1], -p[2]);          // 3D world → screen
   const handC = sol.diag.ik ? sol.diag.ik.handCentre : sol.fk.tip[skel.byName["hand_" + g.reachHand].idx];
