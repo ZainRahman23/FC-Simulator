@@ -1,0 +1,6572 @@
+{
+  "schema": "touchline.claude-gk-character-handoff.v1",
+  "taskType": "read-only extraction and packaging; no integration implemented",
+  "pathRoot": "ZIP root is authoritative completed touchline-v6 package-relative layout, not the root of Claude separate repository.",
+  "target": {
+    "id": "courtois",
+    "name": "Thibaut Courtois",
+    "variant": "TRUE_PROPORTION_CORRECTED_HAIR",
+    "notSubstitute": "courtois-shared"
+  },
+  "provenance": {
+    "completedSourceRootLabel": "finished-gameplay/touchline-v6",
+    "actionSnapshotBranch": "prototype/3d-animation-pipeline",
+    "actionSnapshotCommit": "2c80700",
+    "snapshotSource": "scene-density/environment/README_ENVIRONMENT.md",
+    "claudeCurrentBranch": "not available in this workspace; compare before merging",
+    "upstreamMapping": {
+      "packagePrefix": "scene-density/environment/",
+      "stripPrefixWhenComparingToUpstream": true
+    },
+    "noAssetsRebuilt": true,
+    "noRendersProduced": true,
+    "noSimulationRun": true,
+    "noPush": true,
+    "frozenChecks": {
+      "src/player-morphology.js": true,
+      "src/framebuffer-renderer.js": true,
+      "src/renderer.js": true,
+      "morphology/runtime-courtois.json": true,
+      "morphology/configurations.json": true,
+      "assets/morphology/Touchline_Player_courtois.glb": true,
+      "assets/morphology/Touchline_Player_courtois-shared.glb": true,
+      "head-refinement/runtime-anchor.json": true,
+      "data/motion_v6_fixture42_right_full.json": true,
+      "data/motion_v6_fixture42_variant_tall_full.json": true,
+      "hair-readability/scene-background.png": true,
+      "hair-readability/scene-foreground.png": true,
+      "rosterCourtoisGLBDuplicateMatches": true,
+      "correctedHeadCacheMatches": true
+    }
+  },
+  "authoritativeAssets": {
+    "bakedModel": "assets/morphology/Touchline_Player_courtois.glb",
+    "headFaceHairVertexData": "morphology/runtime-courtois.json",
+    "characterEntry": "src/player-morphology.js",
+    "characterConfigurations": "morphology/configurations.json",
+    "tallRig": "data/skeleton_v6_variant_tall.json",
+    "baseSkeletonDependency": "data/motion_v6_fixture42_right_full.json",
+    "baseHeadDependency": "head-refinement/runtime-anchor.json",
+    "integrationI23": "src/integrated-character.js",
+    "shouldersS3": "src/shoulder-character.js",
+    "lowerBodyL2": "src/lower-body-character.js",
+    "gloveGeometry": "src/face-character.js",
+    "jerseySocksBootBase": "src/character-v3.js",
+    "headIntegration": "src/refined-character.js",
+    "kitAtlasFinisher": "tools/morphology/kit.cjs",
+    "materialsAtlas": "src/art-textures.js",
+    "rasterizer": "src/framebuffer-renderer.js"
+  },
+  "characterConfiguration": {
+    "existingConfigurationVerbatim": {
+      "label": "Courtois / tall rig",
+      "head": "courtois",
+      "rig": "tall",
+      "kit": "madrid-blue",
+      "shortSleeve": true,
+      "morphology": {
+        "shoulderShift": 0.016,
+        "deltoid": 0.77,
+        "upperArm": 0.73,
+        "forearm": 0.79,
+        "chestWidth": 0.82,
+        "chestDepth": 0.83,
+        "waist": 0.82,
+        "pelvis": 0.87,
+        "glute": 0.79,
+        "thigh": 0.78,
+        "calf": 0.83,
+        "neck": 0.91
+      }
+    },
+    "height": {
+      "rigH_M": 2.014,
+      "rigDefinition": {
+        "label": "taller / longer-limbed",
+        "h": 1.06,
+        "prop": {
+          "legs": 1.05,
+          "arms": 1.07,
+          "torso": 1,
+          "width": 0.97
+        }
+      },
+      "measuredGLBBindHeightM": 2.0094869136810303,
+      "uniformWorldScale": 1,
+      "userRosterMetadataHeightCm": 199,
+      "metadataSource": "User prior roster brief, preserved here as metadata; not present in Courtois configuration and not a scale input."
+    },
+    "weight": {
+      "kg": 96,
+      "source": "User prior roster brief; metadata only",
+      "drivesGeometry": false,
+      "existingCourtoisConfigField": false
+    },
+    "locks": {
+      "I23": {
+        "headScale": 1.1,
+        "dropM": 0.024,
+        "placement": "shorten",
+        "neckShape": 1,
+        "traps": 1
+      },
+      "S3": {
+        "shiftMm": 12,
+        "capReduction": 0.2,
+        "chestReduction": 0.065,
+        "slopeMm": 20
+      },
+      "L2": {
+        "anatomy": 1,
+        "hem": 0.714,
+        "ease": 0.016,
+        "curve": 0.012
+      }
+    },
+    "head": {
+      "runtimeAsset": "morphology/runtime-courtois.json",
+      "sourceBase": "head-refinement/runtime-anchor.json",
+      "parameters": {
+        "width": 0.945,
+        "faceLength": 1.09,
+        "noseProjection": 0.006,
+        "bridgeProjection": 0.003,
+        "chinDrop": 0.007,
+        "chinProjection": 0.0035,
+        "jawTaper": 0.004,
+        "earProjection": 0.002,
+        "browLower": 0.0015,
+        "hairSweep": 0.012,
+        "hairLift": 0.012,
+        "stubble": 0.57
+      },
+      "parameterAuthority": "tools/morphology/build-head.py CFG; JSON is recorded output, not read by generator",
+      "palette": {
+        "name": "Courtois study",
+        "skin": "#c79c83",
+        "lip": "#a9766a",
+        "cheek": "#c68b79",
+        "hair": "#24201e",
+        "hairLight": "#413730",
+        "iris": "#58584d",
+        "hairStyle": "sweep",
+        "description": "Defined cheek planes, athletic jaw, warm olive skin, dark crop"
+      },
+      "internalCoordinates": "Z up; face towards negative Y; converted by refined-character.js"
+    },
+    "hair": {
+      "asset": "morphology/runtime-courtois.json",
+      "part": "Hair / crop",
+      "glbMaterial": "refined_hair_59",
+      "verticesInRuntimePart": 13825,
+      "correctionSource": "tools/morphology/hair-readability.py",
+      "appliedBy": "tools/morphology/build-head.py",
+      "alreadyApplied": true,
+      "applyAgain": false,
+      "colours": {
+        "darkRGB": [
+          36,
+          32,
+          29
+        ],
+        "shortRGB": [
+          65,
+          55,
+          47
+        ]
+      },
+      "broadFadeRingRange": [
+        0.72,
+        1.0
+      ],
+      "crownTransitionLocalZ": [
+        0.211,
+        0.248
+      ],
+      "note": "Part label crop is historical; current approved swept crown and continuous side mass are the stored geometry, not a separately selectable hair file."
+    },
+    "facialHair": {
+      "stubble": 0.57,
+      "source": "tools/morphology/build-head.py",
+      "representation": "Deterministic vertex-colour field on the sculpted skin; no separate beard mesh/texture file."
+    },
+    "bodySkinPaletteHardcoded": {
+      "skin": "#c79c83",
+      "skinShadow": "#88695a",
+      "skinLight": "#efd0b6"
+    },
+    "kitEquipmentStyleHardcoded": {
+      "shirt": "#19badc",
+      "shirtDark": "#087fb4",
+      "shorts": "#14aacd",
+      "socks": "#13aed0",
+      "trim": "#ddde53",
+      "gloveLatex": "#edece5",
+      "glovePad": "#e3e4df",
+      "cuff": "#d4d6d3",
+      "boots": "#ece7db",
+      "sole": "#bdd352",
+      "ink": "#172f42",
+      "number": "1",
+      "design": "stripe"
+    },
+    "kitAtlasHardcoded": {
+      "base": "#19badc",
+      "navy": "#203575",
+      "secondary": "#088dbd",
+      "accent": "#e5dd59",
+      "name": "COURTOIS",
+      "number": "1",
+      "shirtSleeves": "short",
+      "gloves": true,
+      "source": "tools/morphology/kit.cjs"
+    },
+    "materialInterpretation": {
+      "glbMaterials": "geometry.materials contains all 29 exact exported definitions",
+      "metallic": 0,
+      "roughness": 1,
+      "doubleSided": true,
+      "vertexColours": "GLB COLOR_0 for refined parts is linearized from stored 8-bit head vertex colours; software C shader operates on those 8-bit colours directly. Match colour space deliberately."
+    },
+    "hardcodedSources": [
+      "src/player-morphology.js",
+      "src/shoulder-character.js",
+      "src/lower-body-character.js",
+      "src/integrated-character.js",
+      "src/face-character.js",
+      "src/character-v3.js",
+      "tools/morphology/build-head.py",
+      "tools/morphology/hair-readability.py",
+      "tools/morphology/kit.cjs"
+    ]
+  },
+  "skeleton": {
+    "metadata": {
+      "variant": "tall",
+      "definition": {
+        "label": "taller / longer-limbed",
+        "h": 1.06,
+        "prop": {
+          "legs": 1.05,
+          "arms": 1.07,
+          "torso": 1,
+          "width": 0.97
+        }
+      },
+      "H": 2.014,
+      "prop": {
+        "legs": 1.05,
+        "arms": 1.07,
+        "torso": 1,
+        "width": 0.97
+      },
+      "bindWidthM": 0.37118019999999996
+    },
+    "bones": [
+      {
+        "name": "root",
+        "index": 0,
+        "parent": null,
+        "offsetLocal": [
+          0,
+          0,
+          0
+        ],
+        "bindDirLocal": [
+          0,
+          1,
+          0
+        ],
+        "lengthM": 0,
+        "radiusM": 0,
+        "part": null,
+        "children": [
+          "pelvis"
+        ],
+        "sharedOffsetLocal": [
+          0,
+          0,
+          0
+        ],
+        "sharedLengthM": 0,
+        "bindOriginM": [
+          0,
+          0,
+          0
+        ],
+        "bindLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "bindWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "glbInverseBindMatrixFloat32": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.0,
+          -0.0,
+          -0.0,
+          1.0
+        ],
+        "glbDefaultNodeLocalMatrix": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "glbDefaultNodeWorldMatrix": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "name": "pelvis",
+        "index": 1,
+        "parent": "root",
+        "offsetLocal": [
+          0,
+          1.05735,
+          0
+        ],
+        "bindDirLocal": [
+          0,
+          1,
+          0
+        ],
+        "lengthM": 0.12688,
+        "radiusM": 0.17665,
+        "part": "shorts",
+        "children": [
+          "spine",
+          "thigh_R",
+          "thigh_L"
+        ],
+        "sharedOffsetLocal": [
+          0,
+          0.95,
+          0
+        ],
+        "sharedLengthM": 0.114,
+        "bindOriginM": [
+          0.0,
+          1.05735,
+          0.0
+        ],
+        "bindLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          1.05735,
+          0.0,
+          1.0
+        ],
+        "bindWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          1.05735,
+          0.0,
+          1.0
+        ],
+        "glbInverseBindMatrixFloat32": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.0,
+          -1.0573500394821167,
+          -0.0,
+          1.0
+        ],
+        "glbDefaultNodeLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          1.05735,
+          0.0,
+          1.0
+        ],
+        "glbDefaultNodeWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          1.05735,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "spine",
+        "index": 2,
+        "parent": "pelvis",
+        "offsetLocal": [
+          0,
+          0.12084,
+          0
+        ],
+        "bindDirLocal": [
+          0,
+          1,
+          0
+        ],
+        "lengthM": 0.24168,
+        "radiusM": 0.17665,
+        "part": "shirt",
+        "children": [
+          "chest"
+        ],
+        "sharedOffsetLocal": [
+          0,
+          0.114,
+          0
+        ],
+        "sharedLengthM": 0.228,
+        "bindOriginM": [
+          0.0,
+          1.17819,
+          0.0
+        ],
+        "bindLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.12084,
+          0.0,
+          1.0
+        ],
+        "bindWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          1.17819,
+          0.0,
+          1.0
+        ],
+        "glbInverseBindMatrixFloat32": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.0,
+          -1.178189992904663,
+          -0.0,
+          1.0
+        ],
+        "glbDefaultNodeLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.12084000000000006,
+          0.0,
+          1.0
+        ],
+        "glbDefaultNodeWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          1.17819,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "chest",
+        "index": 3,
+        "parent": "spine",
+        "offsetLocal": [
+          0,
+          0.24168,
+          0
+        ],
+        "bindDirLocal": [
+          0,
+          1,
+          0
+        ],
+        "lengthM": 0.28196,
+        "radiusM": 0.19744,
+        "part": "shirt",
+        "children": [
+          "neck",
+          "clavicle_R",
+          "clavicle_L"
+        ],
+        "sharedOffsetLocal": [
+          0,
+          0.228,
+          0
+        ],
+        "sharedLengthM": 0.266,
+        "bindOriginM": [
+          0.0,
+          1.41987,
+          0.0
+        ],
+        "bindLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.24168,
+          0.0,
+          1.0
+        ],
+        "bindWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          1.41987,
+          0.0,
+          1.0
+        ],
+        "glbInverseBindMatrixFloat32": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.0,
+          -1.4198700189590454,
+          -0.0,
+          1.0
+        ],
+        "glbDefaultNodeLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.2416799999999999,
+          0.0,
+          1.0
+        ],
+        "glbDefaultNodeWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          1.41987,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "neck",
+        "index": 4,
+        "parent": "chest",
+        "offsetLocal": [
+          0,
+          0.28196,
+          0
+        ],
+        "bindDirLocal": [
+          0,
+          1,
+          0
+        ],
+        "lengthM": 0.1007,
+        "radiusM": 0.06235,
+        "part": "skin",
+        "children": [
+          "head"
+        ],
+        "sharedOffsetLocal": [
+          0,
+          0.266,
+          0
+        ],
+        "sharedLengthM": 0.095,
+        "bindOriginM": [
+          0.0,
+          1.70183,
+          0.0
+        ],
+        "bindLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.28196,
+          0.0,
+          1.0
+        ],
+        "bindWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          1.70183,
+          0.0,
+          1.0
+        ],
+        "glbInverseBindMatrixFloat32": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.0,
+          -1.7018300294876099,
+          -0.0,
+          1.0
+        ],
+        "glbDefaultNodeLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.28196,
+          0.0,
+          1.0
+        ],
+        "glbDefaultNodeWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          1.70183,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "head",
+        "index": 5,
+        "parent": "neck",
+        "offsetLocal": [
+          0,
+          0.1007,
+          0
+        ],
+        "bindDirLocal": [
+          0,
+          1,
+          0
+        ],
+        "lengthM": 0.24168,
+        "radiusM": 0.13509,
+        "part": "skin",
+        "children": [
+          "hair"
+        ],
+        "sharedOffsetLocal": [
+          0,
+          0.095,
+          0
+        ],
+        "sharedLengthM": 0.228,
+        "bindOriginM": [
+          0.0,
+          1.80253,
+          0.0
+        ],
+        "bindLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.1007,
+          0.0,
+          1.0
+        ],
+        "bindWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          1.80253,
+          0.0,
+          1.0
+        ],
+        "glbInverseBindMatrixFloat32": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.0,
+          -1.80253005027771,
+          -0.0,
+          1.0
+        ],
+        "glbDefaultNodeLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.10070000000000001,
+          0.0,
+          1.0
+        ],
+        "glbDefaultNodeWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          1.80253,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "hair",
+        "index": 6,
+        "parent": "head",
+        "offsetLocal": [
+          0,
+          0.14098,
+          -0.01007
+        ],
+        "bindDirLocal": [
+          0,
+          1,
+          0
+        ],
+        "lengthM": 0.1007,
+        "radiusM": 0.13821,
+        "part": "hair",
+        "children": [],
+        "sharedOffsetLocal": [
+          0,
+          0.133,
+          -0.0095
+        ],
+        "sharedLengthM": 0.095,
+        "bindOriginM": [
+          0.0,
+          1.9435099999999998,
+          -0.01007
+        ],
+        "bindLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.14098,
+          -0.01007,
+          1.0
+        ],
+        "bindWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          1.9435099999999998,
+          -0.01007,
+          1.0
+        ],
+        "glbInverseBindMatrixFloat32": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.0,
+          -1.9435100555419922,
+          0.01006999984383583,
+          1.0
+        ],
+        "glbDefaultNodeLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.14097999999999988,
+          -0.01007,
+          1.0
+        ],
+        "glbDefaultNodeWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          1.9435099999999998,
+          -0.01007,
+          1.0
+        ]
+      },
+      {
+        "name": "clavicle_R",
+        "index": 7,
+        "parent": "chest",
+        "offsetLocal": [
+          0.06042,
+          0.24168,
+          0
+        ],
+        "bindDirLocal": [
+          1,
+          0,
+          0
+        ],
+        "lengthM": 0.2155,
+        "radiusM": 0.05196,
+        "part": "shirt",
+        "children": [
+          "upperArm_R"
+        ],
+        "sharedOffsetLocal": [
+          0.057,
+          0.228,
+          0
+        ],
+        "sharedLengthM": 0.19,
+        "bindOriginM": [
+          0.06042,
+          1.66155,
+          0.0
+        ],
+        "bindLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.06042,
+          0.24168,
+          0.0,
+          1.0
+        ],
+        "bindWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.06042,
+          1.66155,
+          0.0,
+          1.0
+        ],
+        "glbInverseBindMatrixFloat32": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.060419999063014984,
+          -1.6615500450134277,
+          -0.0,
+          1.0
+        ],
+        "glbDefaultNodeLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.06042,
+          0.24168000000000012,
+          0.0,
+          1.0
+        ],
+        "glbDefaultNodeWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.06042,
+          1.66155,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "upperArm_R",
+        "index": 8,
+        "parent": "clavicle_R",
+        "offsetLocal": [
+          0.2155,
+          0,
+          0
+        ],
+        "bindDirLocal": [
+          0,
+          -1,
+          0
+        ],
+        "lengthM": 0.36635,
+        "radiusM": 0.07274,
+        "part": "shirt",
+        "children": [
+          "foreArm_R"
+        ],
+        "sharedOffsetLocal": [
+          0.19,
+          0,
+          0
+        ],
+        "sharedLengthM": 0.323,
+        "bindOriginM": [
+          0.27592,
+          1.66155,
+          0.0
+        ],
+        "bindLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.2155,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "bindWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.27592,
+          1.66155,
+          0.0,
+          1.0
+        ],
+        "glbInverseBindMatrixFloat32": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.27592000365257263,
+          -1.6615500450134277,
+          -0.0,
+          1.0
+        ],
+        "glbDefaultNodeLocalMatrix": [
+          0.9928086358538663,
+          0.11971220728891936,
+          0.0,
+          0.0,
+          -0.11971220728891936,
+          0.9928086358538663,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.2155,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "glbDefaultNodeWorldMatrix": [
+          0.9928086358538663,
+          0.11971220728891936,
+          0.0,
+          0.0,
+          -0.11971220728891936,
+          0.9928086358538663,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.27592,
+          1.66155,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "foreArm_R",
+        "index": 9,
+        "parent": "upperArm_R",
+        "offsetLocal": [
+          0,
+          -0.36635,
+          0
+        ],
+        "bindDirLocal": [
+          0,
+          -1,
+          0
+        ],
+        "lengthM": 0.32325,
+        "radiusM": 0.06235,
+        "part": "shirt",
+        "children": [
+          "hand_R"
+        ],
+        "sharedOffsetLocal": [
+          0,
+          -0.323,
+          0
+        ],
+        "sharedLengthM": 0.285,
+        "bindOriginM": [
+          0.27592,
+          1.2952000000000001,
+          0.0
+        ],
+        "bindLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          -0.36635,
+          0.0,
+          1.0
+        ],
+        "bindWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.27592,
+          1.2952000000000001,
+          0.0,
+          1.0
+        ],
+        "glbInverseBindMatrixFloat32": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.27592000365257263,
+          -1.295199990272522,
+          -0.0,
+          1.0
+        ],
+        "glbDefaultNodeLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.9915618937147881,
+          -0.12963414261969486,
+          0.0,
+          0.0,
+          0.12963414261969486,
+          0.9915618937147881,
+          0.0,
+          0.0,
+          -0.36634999999999995,
+          0.0,
+          1.0
+        ],
+        "glbDefaultNodeWorldMatrix": [
+          0.9928086358538663,
+          0.11971220728891936,
+          0.0,
+          0.0,
+          -0.11870206296017814,
+          0.984431211063655,
+          -0.12963414261969486,
+          0.0,
+          -0.015518789353010248,
+          0.1287018962943448,
+          0.9915618937147881,
+          0.0,
+          0.3197765671402956,
+          1.2978345562549363,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "hand_R",
+        "index": 10,
+        "parent": "foreArm_R",
+        "offsetLocal": [
+          0,
+          -0.32325,
+          0
+        ],
+        "bindDirLocal": [
+          0,
+          -1,
+          0
+        ],
+        "lengthM": 0.1293,
+        "radiusM": 0.07274,
+        "part": "gloves",
+        "children": [],
+        "sharedOffsetLocal": [
+          0,
+          -0.285,
+          0
+        ],
+        "sharedLengthM": 0.114,
+        "bindOriginM": [
+          0.27592,
+          0.9719500000000001,
+          0.0
+        ],
+        "bindLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          -0.32325,
+          0.0,
+          1.0
+        ],
+        "bindWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.27592,
+          0.9719500000000001,
+          0.0,
+          1.0
+        ],
+        "glbInverseBindMatrixFloat32": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.27592000365257263,
+          -0.9719499945640564,
+          -0.0,
+          1.0
+        ],
+        "glbDefaultNodeLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.9995500337489877,
+          0.029995500202495695,
+          0.0,
+          0.0,
+          -0.02999550020249568,
+          0.9995500337489878,
+          0.0,
+          0.0,
+          -0.32325000000000004,
+          -2.7755575615628914e-17,
+          1.0
+        ],
+        "glbDefaultNodeWorldMatrix": [
+          0.9928086358538663,
+          0.11971220728891936,
+          0.0,
+          0.0,
+          -0.11911414488710123,
+          0.9878487279985918,
+          -0.09983341664682814,
+          0.0,
+          -0.011951278667986147,
+          0.09911547819376815,
+          0.995004165278026,
+          0.0,
+          0.3581470089921732,
+          0.9796171672786098,
+          0.04190423660181634,
+          1.0
+        ]
+      },
+      {
+        "name": "clavicle_L",
+        "index": 11,
+        "parent": "chest",
+        "offsetLocal": [
+          -0.06042,
+          0.24168,
+          0
+        ],
+        "bindDirLocal": [
+          -1,
+          0,
+          0
+        ],
+        "lengthM": 0.2155,
+        "radiusM": 0.05196,
+        "part": "shirt",
+        "children": [
+          "upperArm_L"
+        ],
+        "sharedOffsetLocal": [
+          -0.057,
+          0.228,
+          0
+        ],
+        "sharedLengthM": 0.19,
+        "bindOriginM": [
+          -0.06042,
+          1.66155,
+          0.0
+        ],
+        "bindLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.06042,
+          0.24168,
+          0.0,
+          1.0
+        ],
+        "bindWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.06042,
+          1.66155,
+          0.0,
+          1.0
+        ],
+        "glbInverseBindMatrixFloat32": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.060419999063014984,
+          -1.6615500450134277,
+          -0.0,
+          1.0
+        ],
+        "glbDefaultNodeLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.06042,
+          0.24168000000000012,
+          0.0,
+          1.0
+        ],
+        "glbDefaultNodeWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.06042,
+          1.66155,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "upperArm_L",
+        "index": 12,
+        "parent": "clavicle_L",
+        "offsetLocal": [
+          -0.2155,
+          0,
+          0
+        ],
+        "bindDirLocal": [
+          0,
+          -1,
+          0
+        ],
+        "lengthM": 0.36635,
+        "radiusM": 0.05715,
+        "part": "shirt",
+        "children": [
+          "foreArm_L"
+        ],
+        "sharedOffsetLocal": [
+          -0.19,
+          0,
+          0
+        ],
+        "sharedLengthM": 0.323,
+        "bindOriginM": [
+          -0.27592,
+          1.66155,
+          0.0
+        ],
+        "bindLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.2155,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "bindWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.27592,
+          1.66155,
+          0.0,
+          1.0
+        ],
+        "glbInverseBindMatrixFloat32": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.27592000365257263,
+          -1.6615500450134277,
+          -0.0,
+          1.0
+        ],
+        "glbDefaultNodeLocalMatrix": [
+          0.9928086358538663,
+          -0.11971220728891936,
+          0.0,
+          0.0,
+          0.11971220728891936,
+          0.9928086358538663,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.2155,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "glbDefaultNodeWorldMatrix": [
+          0.9928086358538663,
+          -0.11971220728891936,
+          0.0,
+          0.0,
+          0.11971220728891936,
+          0.9928086358538663,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.27592,
+          1.66155,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "foreArm_L",
+        "index": 13,
+        "parent": "upperArm_L",
+        "offsetLocal": [
+          0,
+          -0.36635,
+          0
+        ],
+        "bindDirLocal": [
+          0,
+          -1,
+          0
+        ],
+        "lengthM": 0.32325,
+        "radiusM": 0.06235,
+        "part": "shirt",
+        "children": [
+          "hand_L"
+        ],
+        "sharedOffsetLocal": [
+          0,
+          -0.323,
+          0
+        ],
+        "sharedLengthM": 0.285,
+        "bindOriginM": [
+          -0.27592,
+          1.2952000000000001,
+          0.0
+        ],
+        "bindLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          -0.36635,
+          0.0,
+          1.0
+        ],
+        "bindWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.27592,
+          1.2952000000000001,
+          0.0,
+          1.0
+        ],
+        "glbInverseBindMatrixFloat32": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.27592000365257263,
+          -1.295199990272522,
+          -0.0,
+          1.0
+        ],
+        "glbDefaultNodeLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.9915618937147881,
+          -0.12963414261969486,
+          0.0,
+          0.0,
+          0.12963414261969486,
+          0.9915618937147881,
+          0.0,
+          0.0,
+          -0.36634999999999995,
+          0.0,
+          1.0
+        ],
+        "glbDefaultNodeWorldMatrix": [
+          0.9928086358538663,
+          -0.11971220728891936,
+          0.0,
+          0.0,
+          0.11870206296017814,
+          0.984431211063655,
+          -0.12963414261969486,
+          0.0,
+          0.015518789353010248,
+          0.1287018962943448,
+          0.9915618937147881,
+          0.0,
+          -0.3197765671402956,
+          1.2978345562549363,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "hand_L",
+        "index": 14,
+        "parent": "foreArm_L",
+        "offsetLocal": [
+          0,
+          -0.32325,
+          0
+        ],
+        "bindDirLocal": [
+          0,
+          -1,
+          0
+        ],
+        "lengthM": 0.1293,
+        "radiusM": 0.07274,
+        "part": "gloves",
+        "children": [],
+        "sharedOffsetLocal": [
+          0,
+          -0.285,
+          0
+        ],
+        "sharedLengthM": 0.114,
+        "bindOriginM": [
+          -0.27592,
+          0.9719500000000001,
+          0.0
+        ],
+        "bindLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          -0.32325,
+          0.0,
+          1.0
+        ],
+        "bindWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.27592,
+          0.9719500000000001,
+          0.0,
+          1.0
+        ],
+        "glbInverseBindMatrixFloat32": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.27592000365257263,
+          -0.9719499945640564,
+          -0.0,
+          1.0
+        ],
+        "glbDefaultNodeLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.9995500337489877,
+          0.029995500202495695,
+          0.0,
+          0.0,
+          -0.02999550020249568,
+          0.9995500337489878,
+          0.0,
+          0.0,
+          -0.32325000000000004,
+          -2.7755575615628914e-17,
+          1.0
+        ],
+        "glbDefaultNodeWorldMatrix": [
+          0.9928086358538663,
+          -0.11971220728891936,
+          0.0,
+          0.0,
+          0.11911414488710123,
+          0.9878487279985918,
+          -0.09983341664682814,
+          0.0,
+          0.011951278667986147,
+          0.09911547819376815,
+          0.995004165278026,
+          0.0,
+          -0.3581470089921732,
+          0.9796171672786098,
+          0.04190423660181634,
+          1.0
+        ]
+      },
+      {
+        "name": "thigh_R",
+        "index": 15,
+        "parent": "pelvis",
+        "offsetLocal": [
+          0.19133,
+          0,
+          0
+        ],
+        "bindDirLocal": [
+          0,
+          -1,
+          0
+        ],
+        "lengthM": 0.50753,
+        "radiusM": 0.09872,
+        "part": "shorts",
+        "children": [
+          "shin_R"
+        ],
+        "sharedOffsetLocal": [
+          0.1805,
+          0,
+          0
+        ],
+        "sharedLengthM": 0.456,
+        "bindOriginM": [
+          0.19133,
+          1.05735,
+          0.0
+        ],
+        "bindLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.19133,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "bindWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.19133,
+          1.05735,
+          0.0,
+          1.0
+        ],
+        "glbInverseBindMatrixFloat32": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.19133000075817108,
+          -1.0573500394821167,
+          -0.0,
+          1.0
+        ],
+        "glbDefaultNodeLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.19133,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "glbDefaultNodeWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.19133,
+          1.05735,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "shin_R",
+        "index": 16,
+        "parent": "thigh_R",
+        "offsetLocal": [
+          0,
+          -0.50753,
+          0
+        ],
+        "bindDirLocal": [
+          0,
+          -1,
+          0
+        ],
+        "lengthM": 0.46523,
+        "radiusM": 0.07794,
+        "part": "socks",
+        "children": [
+          "foot_R"
+        ],
+        "sharedOffsetLocal": [
+          0,
+          -0.456,
+          0
+        ],
+        "sharedLengthM": 0.418,
+        "bindOriginM": [
+          0.19133,
+          0.54982,
+          0.0
+        ],
+        "bindLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          -0.50753,
+          0.0,
+          1.0
+        ],
+        "bindWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.19133,
+          0.54982,
+          0.0,
+          1.0
+        ],
+        "glbInverseBindMatrixFloat32": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.19133000075817108,
+          -0.5498200058937073,
+          -0.0,
+          1.0
+        ],
+        "glbDefaultNodeLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          -0.50753,
+          0.0,
+          1.0
+        ],
+        "glbDefaultNodeWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.19133,
+          0.54982,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "foot_R",
+        "index": 17,
+        "parent": "shin_R",
+        "offsetLocal": [
+          0,
+          -0.46523,
+          0
+        ],
+        "bindDirLocal": [
+          0,
+          -0.29998,
+          0.95394
+        ],
+        "lengthM": 0.21147,
+        "radiusM": 0.06235,
+        "part": "boots",
+        "children": [
+          "toe_R"
+        ],
+        "sharedOffsetLocal": [
+          0,
+          -0.418,
+          0
+        ],
+        "sharedLengthM": 0.19,
+        "bindOriginM": [
+          0.19133,
+          0.08459,
+          0.0
+        ],
+        "bindLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          -0.46523,
+          0.0,
+          1.0
+        ],
+        "bindWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.19133,
+          0.08459,
+          0.0,
+          1.0
+        ],
+        "glbInverseBindMatrixFloat32": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.19133000075817108,
+          -0.08459000289440155,
+          -0.0,
+          1.0
+        ],
+        "glbDefaultNodeLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          -0.46523,
+          0.0,
+          1.0
+        ],
+        "glbDefaultNodeWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.19133,
+          0.08459,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "toe_R",
+        "index": 18,
+        "parent": "foot_R",
+        "offsetLocal": [
+          0,
+          -0.06344,
+          0.2009
+        ],
+        "bindDirLocal": [
+          0,
+          0,
+          1
+        ],
+        "lengthM": 0.08459,
+        "radiusM": 0.04157,
+        "part": "boots",
+        "children": [],
+        "sharedOffsetLocal": [
+          0,
+          -0.057,
+          0.1805
+        ],
+        "sharedLengthM": 0.076,
+        "bindOriginM": [
+          0.19133,
+          0.021150000000000002,
+          0.2009
+        ],
+        "bindLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          -0.06344,
+          0.2009,
+          1.0
+        ],
+        "bindWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.19133,
+          0.021150000000000002,
+          0.2009,
+          1.0
+        ],
+        "glbInverseBindMatrixFloat32": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.19133000075817108,
+          -0.021150000393390656,
+          -0.20090000331401825,
+          1.0
+        ],
+        "glbDefaultNodeLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          -0.06344,
+          0.2009,
+          1.0
+        ],
+        "glbDefaultNodeWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.19133,
+          0.021150000000000002,
+          0.2009,
+          1.0
+        ]
+      },
+      {
+        "name": "thigh_L",
+        "index": 19,
+        "parent": "pelvis",
+        "offsetLocal": [
+          -0.19133,
+          0,
+          0
+        ],
+        "bindDirLocal": [
+          0,
+          -1,
+          0
+        ],
+        "lengthM": 0.50753,
+        "radiusM": 0.08833,
+        "part": "shorts",
+        "children": [
+          "shin_L"
+        ],
+        "sharedOffsetLocal": [
+          -0.1805,
+          0,
+          0
+        ],
+        "sharedLengthM": 0.456,
+        "bindOriginM": [
+          -0.19133,
+          1.05735,
+          0.0
+        ],
+        "bindLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.19133,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "bindWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.19133,
+          1.05735,
+          0.0,
+          1.0
+        ],
+        "glbInverseBindMatrixFloat32": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.19133000075817108,
+          -1.0573500394821167,
+          -0.0,
+          1.0
+        ],
+        "glbDefaultNodeLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.19133,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "glbDefaultNodeWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.19133,
+          1.05735,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "shin_L",
+        "index": 20,
+        "parent": "thigh_L",
+        "offsetLocal": [
+          0,
+          -0.50753,
+          0
+        ],
+        "bindDirLocal": [
+          0,
+          -1,
+          0
+        ],
+        "lengthM": 0.46523,
+        "radiusM": 0.07794,
+        "part": "socks",
+        "children": [
+          "foot_L"
+        ],
+        "sharedOffsetLocal": [
+          0,
+          -0.456,
+          0
+        ],
+        "sharedLengthM": 0.418,
+        "bindOriginM": [
+          -0.19133,
+          0.54982,
+          0.0
+        ],
+        "bindLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          -0.50753,
+          0.0,
+          1.0
+        ],
+        "bindWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.19133,
+          0.54982,
+          0.0,
+          1.0
+        ],
+        "glbInverseBindMatrixFloat32": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.19133000075817108,
+          -0.5498200058937073,
+          -0.0,
+          1.0
+        ],
+        "glbDefaultNodeLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          -0.50753,
+          0.0,
+          1.0
+        ],
+        "glbDefaultNodeWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.19133,
+          0.54982,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "foot_L",
+        "index": 21,
+        "parent": "shin_L",
+        "offsetLocal": [
+          0,
+          -0.46523,
+          0
+        ],
+        "bindDirLocal": [
+          0,
+          -0.29998,
+          0.95394
+        ],
+        "lengthM": 0.21147,
+        "radiusM": 0.06235,
+        "part": "boots",
+        "children": [
+          "toe_L"
+        ],
+        "sharedOffsetLocal": [
+          0,
+          -0.418,
+          0
+        ],
+        "sharedLengthM": 0.19,
+        "bindOriginM": [
+          -0.19133,
+          0.08459,
+          0.0
+        ],
+        "bindLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          -0.46523,
+          0.0,
+          1.0
+        ],
+        "bindWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.19133,
+          0.08459,
+          0.0,
+          1.0
+        ],
+        "glbInverseBindMatrixFloat32": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.19133000075817108,
+          -0.08459000289440155,
+          -0.0,
+          1.0
+        ],
+        "glbDefaultNodeLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          -0.46523,
+          0.0,
+          1.0
+        ],
+        "glbDefaultNodeWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.19133,
+          0.08459,
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "name": "toe_L",
+        "index": 22,
+        "parent": "foot_L",
+        "offsetLocal": [
+          0,
+          -0.06344,
+          0.2009
+        ],
+        "bindDirLocal": [
+          0,
+          0,
+          1
+        ],
+        "lengthM": 0.08459,
+        "radiusM": 0.04157,
+        "part": "boots",
+        "children": [],
+        "sharedOffsetLocal": [
+          0,
+          -0.057,
+          0.1805
+        ],
+        "sharedLengthM": 0.076,
+        "bindOriginM": [
+          -0.19133,
+          0.021150000000000002,
+          0.2009
+        ],
+        "bindLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          -0.06344,
+          0.2009,
+          1.0
+        ],
+        "bindWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.19133,
+          0.021150000000000002,
+          0.2009,
+          1.0
+        ],
+        "glbInverseBindMatrixFloat32": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.19133000075817108,
+          -0.021150000393390656,
+          -0.20090000331401825,
+          1.0
+        ],
+        "glbDefaultNodeLocalMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          -0.06344,
+          0.2009,
+          1.0
+        ],
+        "glbDefaultNodeWorldMatrix": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          -0.19133,
+          0.021150000000000002,
+          0.2009,
+          1.0
+        ]
+      }
+    ],
+    "matrixLayout": "column-major arrays; column vectors; parentWorld * local; metres",
+    "characterAxes": {
+      "+X": "keeper right",
+      "+Y": "up",
+      "+Z": "forward",
+      "handedness": "right-handed"
+    },
+    "simulationToRender": "[pitchX,pitchY,height] -> [pitchX,height,-pitchY]",
+    "serializedMotionPositions": "ball, renderedBall.p, simHandTarget, bones.joint/tip are pitch coordinates; bones.world matrices are render world coordinates.",
+    "rootBasis": "columns right=[-sin(f),0,-cos(f)], up=[0,1,0], forward=[cos(f),0,-sin(f)], translation=[simX,dz,-simY]; f radians",
+    "jointRotationConvention": "pose [pitch,yaw,roll] degrees; M4.euler = Ry * Rx * Rz; local=T(offset)*rotation",
+    "glbDefaultNodePoseIsBindPose": false,
+    "bindRest": "zero local rotations and summed serialized offsets",
+    "glbDefaultConstructionPose": "upper arms +/-0.12 rad Z, forearms -0.13 rad X, hands +0.03 rad X; all else zero",
+    "skinRuleSource": "sum(weight * boneWorld * weight.local); weight.local=bindPosition-bindOrigin",
+    "skinRuleGLB": "sum(weight * jointWorld * inverseBind * POSITION), with mesh/root transforms applied exactly once",
+    "skinWeights": "JOINTS_0 uint16 VEC4; WEIGHTS_0 float32 VEC4; max 3 nonzero; no morph targets or facial bones",
+    "gloveFrames": {
+      "R": {
+        "palmNormalBind": [
+          -1,
+          0,
+          0
+        ],
+        "fingerAxis": [
+          0,
+          -1,
+          0
+        ],
+        "thumbAxis": [
+          0,
+          0,
+          1
+        ]
+      },
+      "L": {
+        "palmNormalBind": [
+          1,
+          0,
+          0
+        ],
+        "fingerAxis": [
+          0,
+          -1,
+          0
+        ],
+        "thumbAxis": [
+          0,
+          0,
+          1
+        ]
+      },
+      "namedSocketsExist": false
+    }
+  },
+  "geometry": {
+    "path": "assets/morphology/Touchline_Player_courtois.glb",
+    "sha256": "cfd70a3ad37089079911da23de56ddfcf2a1aeb38aacdfc73b6238902a32b76d",
+    "bytes": 22135988,
+    "gltfVersion": 2,
+    "boundsBindM": {
+      "min": [
+        -0.3322199881076813,
+        -0.009850000031292439,
+        -0.1380911022424698
+      ],
+      "max": [
+        0.3322199881076813,
+        1.9996368885040283,
+        0.2964000105857849
+      ],
+      "size": [
+        0.6644399762153625,
+        2.0094869136810303,
+        0.4344910979270935
+      ]
+    },
+    "boundsDefaultNodePoseM": {
+      "min": [
+        -0.4172766718714951,
+        -0.009850000424683092,
+        -0.13809109915589313
+      ],
+      "max": [
+        0.4172766718714951,
+        1.9996368382263183,
+        0.29640000727176663
+      ],
+      "size": [
+        0.8345533437429902,
+        2.0094868386510014,
+        0.43449110642765976
+      ]
+    },
+    "verticesUnindexed": 306504,
+    "uniquePositionCountFloat32": 51939,
+    "triangles": 102168,
+    "skinCount": 1,
+    "jointCount": 23,
+    "primitiveCount": 29,
+    "materialCount": 29,
+    "attributesBytes": 22068288,
+    "positiveInfluenceCounts": {
+      "1": 274190,
+      "2": 30510,
+      "3": 1804
+    },
+    "maxWeightSumError": 1.1920928955078125e-07,
+    "maxJointIndex": 22,
+    "animations": 0,
+    "images": [
+      {
+        "bufferView": 0,
+        "mimeType": "image/png",
+        "bytes": 27185,
+        "width": 512,
+        "height": 512,
+        "rgba8Bytes": 1048576,
+        "sha256": "9fccd0b379604f0670e633f7c7b5b0ac9d662ec40e42387f2af87c8d70c2dc77"
+      }
+    ],
+    "materials": [
+      {
+        "name": "skin",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.7803921568627451,
+            0.611764705882353,
+            0.5137254901960784,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 1
+        },
+        "doubleSided": true
+      },
+      {
+        "name": "jersey",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "baseColorTexture": {
+            "index": 0
+          },
+          "metallicFactor": 0,
+          "roughnessFactor": 1
+        },
+        "doubleSided": true
+      },
+      {
+        "name": "clothDark",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.03137254901960784,
+            0.4980392156862745,
+            0.7058823529411765,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 1
+        },
+        "doubleSided": true
+      },
+      {
+        "name": "clothStitch",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.13333333333333333,
+            0.5411764705882353,
+            0.6588235294117647,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 1
+        },
+        "doubleSided": true
+      },
+      {
+        "name": "trim",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.8666666666666667,
+            0.8705882352941177,
+            0.3254901960784314,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 1
+        },
+        "doubleSided": true
+      },
+      {
+        "name": "shorts",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "baseColorTexture": {
+            "index": 0
+          },
+          "metallicFactor": 0,
+          "roughnessFactor": 1
+        },
+        "doubleSided": true
+      },
+      {
+        "name": "shortsBase",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.0784313725490196,
+            0.6666666666666666,
+            0.803921568627451,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 1
+        },
+        "doubleSided": true
+      },
+      {
+        "name": "sock",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "baseColorTexture": {
+            "index": 0
+          },
+          "metallicFactor": 0,
+          "roughnessFactor": 1
+        },
+        "doubleSided": true
+      },
+      {
+        "name": "boot",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "baseColorTexture": {
+            "index": 0
+          },
+          "metallicFactor": 0,
+          "roughnessFactor": 1
+        },
+        "doubleSided": true
+      },
+      {
+        "name": "sole",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.7411764705882353,
+            0.8274509803921568,
+            0.3215686274509804,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 1
+        },
+        "doubleSided": true
+      },
+      {
+        "name": "glove",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.9294117647058824,
+            0.9254901960784314,
+            0.8980392156862745,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 1
+        },
+        "doubleSided": true
+      },
+      {
+        "name": "cuff",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.8313725490196079,
+            0.8392156862745098,
+            0.8274509803921568,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 1
+        },
+        "doubleSided": true
+      },
+      {
+        "name": "ink",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.09019607843137255,
+            0.1843137254901961,
+            0.25882352941176473,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 1
+        },
+        "doubleSided": true
+      },
+      {
+        "name": "latexPanel",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.8901960784313725,
+            0.8941176470588236,
+            0.8588235294117647,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 1
+        },
+        "doubleSided": true
+      },
+      {
+        "name": "gearRubber",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.8901960784313725,
+            0.8941176470588236,
+            0.8745098039215686,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 1
+        },
+        "doubleSided": true
+      },
+      {
+        "name": "padLight",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.8862745098039215,
+            0.8901960784313725,
+            0.7372549019607844,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 1
+        },
+        "doubleSided": true
+      },
+      {
+        "name": "refined_skin_48",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 1
+        },
+        "doubleSided": true
+      },
+      {
+        "name": "refined_eye_49",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 1
+        },
+        "doubleSided": true
+      },
+      {
+        "name": "refined_eye_50",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 1
+        },
+        "doubleSided": true
+      },
+      {
+        "name": "refined_iris_51",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 1
+        },
+        "doubleSided": true
+      },
+      {
+        "name": "refined_eye_52",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 1
+        },
+        "doubleSided": true
+      },
+      {
+        "name": "refined_eye_53",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 1
+        },
+        "doubleSided": true
+      },
+      {
+        "name": "refined_eye_54",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 1
+        },
+        "doubleSided": true
+      },
+      {
+        "name": "refined_iris_55",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 1
+        },
+        "doubleSided": true
+      },
+      {
+        "name": "refined_eye_56",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 1
+        },
+        "doubleSided": true
+      },
+      {
+        "name": "refined_hair_57",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 1
+        },
+        "doubleSided": true
+      },
+      {
+        "name": "refined_hair_58",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 1
+        },
+        "doubleSided": true
+      },
+      {
+        "name": "refined_hair_59",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 1
+        },
+        "doubleSided": true
+      },
+      {
+        "name": "madridNavy",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.12549019607843137,
+            0.20784313725490197,
+            0.4588235294117647,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 1
+        },
+        "doubleSided": true
+      }
+    ],
+    "samplers": [
+      {
+        "magFilter": 9729,
+        "minFilter": 9987,
+        "wrapS": 33071,
+        "wrapT": 33071
+      }
+    ],
+    "primitives": [
+      {
+        "materialIndex": 0,
+        "material": "skin",
+        "vertexCount": 21312,
+        "triangles": 7104,
+        "boundsM": [
+          [
+            -0.3241100013256073,
+            0.41069620847702026,
+            -0.08765872567892075
+          ],
+          [
+            0.3241100013256073,
+            1.4517210721969604,
+            0.09750919044017792
+          ]
+        ],
+        "attributes": {
+          "POSITION": 0,
+          "NORMAL": 1,
+          "TEXCOORD_0": 2,
+          "JOINTS_0": 3,
+          "WEIGHTS_0": 4,
+          "COLOR_0": 5
+        },
+        "indexed": false
+      },
+      {
+        "materialIndex": 1,
+        "material": "jersey",
+        "vertexCount": 5664,
+        "triangles": 1888,
+        "boundsM": [
+          [
+            -0.20686709880828857,
+            1.0891499519348145,
+            -0.12699000537395477
+          ],
+          [
+            0.20686709880828857,
+            1.7145500183105469,
+            0.12699000537395477
+          ]
+        ],
+        "attributes": {
+          "POSITION": 6,
+          "NORMAL": 7,
+          "TEXCOORD_0": 8,
+          "JOINTS_0": 9,
+          "WEIGHTS_0": 10,
+          "COLOR_0": 11
+        },
+        "indexed": false
+      },
+      {
+        "materialIndex": 2,
+        "material": "clothDark",
+        "vertexCount": 3456,
+        "triangles": 1152,
+        "boundsM": [
+          [
+            -0.3190110921859741,
+            0.08579828590154648,
+            -0.10577999800443649
+          ],
+          [
+            0.3190110921859741,
+            1.6451243162155151,
+            0.1459999978542328
+          ]
+        ],
+        "attributes": {
+          "POSITION": 12,
+          "NORMAL": 13,
+          "TEXCOORD_0": 14,
+          "JOINTS_0": 15,
+          "WEIGHTS_0": 16,
+          "COLOR_0": 17
+        },
+        "indexed": false
+      },
+      {
+        "materialIndex": 3,
+        "material": "clothStitch",
+        "vertexCount": 384,
+        "triangles": 128,
+        "boundsM": [
+          [
+            -0.294050395488739,
+            1.4795478582382202,
+            0.032938241958618164
+          ],
+          [
+            0.294050395488739,
+            1.6297698020935059,
+            0.05846390128135681
+          ]
+        ],
+        "attributes": {
+          "POSITION": 18,
+          "NORMAL": 19,
+          "TEXCOORD_0": 20,
+          "JOINTS_0": 21,
+          "WEIGHTS_0": 22,
+          "COLOR_0": 23
+        },
+        "indexed": false
+      },
+      {
+        "materialIndex": 4,
+        "material": "trim",
+        "vertexCount": 3360,
+        "triangles": 1120,
+        "boundsM": [
+          [
+            -0.3322199881076813,
+            0.10379298776388168,
+            -0.05086394026875496
+          ],
+          [
+            0.3322199881076813,
+            0.9632499814033508,
+            0.11819999665021896
+          ]
+        ],
+        "attributes": {
+          "POSITION": 24,
+          "NORMAL": 25,
+          "TEXCOORD_0": 26,
+          "JOINTS_0": 27,
+          "WEIGHTS_0": 28,
+          "COLOR_0": 29
+        },
+        "indexed": false
+      },
+      {
+        "materialIndex": 5,
+        "material": "shorts",
+        "vertexCount": 2388,
+        "triangles": 796,
+        "boundsM": [
+          [
+            -0.2803148627281189,
+            0.7913585901260376,
+            -0.1144324541091919
+          ],
+          [
+            0.034794751554727554,
+            0.9147664904594421,
+            0.11577858775854111
+          ]
+        ],
+        "attributes": {
+          "POSITION": 30,
+          "NORMAL": 31,
+          "TEXCOORD_0": 32,
+          "JOINTS_0": 33,
+          "WEIGHTS_0": 34,
+          "COLOR_0": 35
+        },
+        "indexed": false
+      },
+      {
+        "materialIndex": 6,
+        "material": "shortsBase",
+        "vertexCount": 18924,
+        "triangles": 6308,
+        "boundsM": [
+          [
+            -0.277927428483963,
+            0.7913585901260376,
+            -0.1380911022424698
+          ],
+          [
+            0.2803148627281189,
+            1.1177699565887451,
+            0.11628980934619904
+          ]
+        ],
+        "attributes": {
+          "POSITION": 36,
+          "NORMAL": 37,
+          "TEXCOORD_0": 38,
+          "JOINTS_0": 39,
+          "WEIGHTS_0": 40,
+          "COLOR_0": 41
+        },
+        "indexed": false
+      },
+      {
+        "materialIndex": 7,
+        "material": "sock",
+        "vertexCount": 2016,
+        "triangles": 672,
+        "boundsM": [
+          [
+            -0.25690001249313354,
+            0.11035265028476715,
+            -0.08299999684095383
+          ],
+          [
+            0.25690001249313354,
+            0.4362949728965759,
+            0.06307999789714813
+          ]
+        ],
+        "attributes": {
+          "POSITION": 42,
+          "NORMAL": 43,
+          "TEXCOORD_0": 44,
+          "JOINTS_0": 45,
+          "WEIGHTS_0": 46,
+          "COLOR_0": 47
+        },
+        "indexed": false
+      },
+      {
+        "materialIndex": 8,
+        "material": "boot",
+        "vertexCount": 2592,
+        "triangles": 864,
+        "boundsM": [
+          [
+            -0.26833000779151917,
+            0.004472000058740377,
+            -0.07999999821186066
+          ],
+          [
+            0.26833000779151917,
+            0.1425900012254715,
+            0.2924000024795532
+          ]
+        ],
+        "attributes": {
+          "POSITION": 48,
+          "NORMAL": 49,
+          "TEXCOORD_0": 50,
+          "JOINTS_0": 51,
+          "WEIGHTS_0": 52,
+          "COLOR_0": 53
+        },
+        "indexed": false
+      },
+      {
+        "materialIndex": 9,
+        "material": "sole",
+        "vertexCount": 2664,
+        "triangles": 888,
+        "boundsM": [
+          [
+            -0.270330011844635,
+            -0.009850000031292439,
+            -0.08100000023841858
+          ],
+          [
+            0.2693299949169159,
+            0.019589999690651894,
+            0.2964000105857849
+          ]
+        ],
+        "attributes": {
+          "POSITION": 54,
+          "NORMAL": 55,
+          "TEXCOORD_0": 56,
+          "JOINTS_0": 57,
+          "WEIGHTS_0": 58,
+          "COLOR_0": 59
+        },
+        "indexed": false
+      },
+      {
+        "materialIndex": 10,
+        "material": "glove",
+        "vertexCount": 14064,
+        "triangles": 4688,
+        "boundsM": [
+          [
+            -0.3089199960231781,
+            0.7807217240333557,
+            -0.06700000166893005
+          ],
+          [
+            0.3089199960231781,
+            0.9429500102996826,
+            0.10299615561962128
+          ]
+        ],
+        "attributes": {
+          "POSITION": 60,
+          "NORMAL": 61,
+          "TEXCOORD_0": 62,
+          "JOINTS_0": 63,
+          "WEIGHTS_0": 64,
+          "COLOR_0": 65
+        },
+        "indexed": false
+      },
+      {
+        "materialIndex": 11,
+        "material": "cuff",
+        "vertexCount": 1356,
+        "triangles": 452,
+        "boundsM": [
+          [
+            -0.3299199938774109,
+            0.09459000080823898,
+            -0.07900000363588333
+          ],
+          [
+            0.3299199938774109,
+            0.9609500169754028,
+            0.054242029786109924
+          ]
+        ],
+        "attributes": {
+          "POSITION": 66,
+          "NORMAL": 67,
+          "TEXCOORD_0": 68,
+          "JOINTS_0": 69,
+          "WEIGHTS_0": 70,
+          "COLOR_0": 71
+        },
+        "indexed": false
+      },
+      {
+        "materialIndex": 12,
+        "material": "ink",
+        "vertexCount": 2400,
+        "triangles": 800,
+        "boundsM": [
+          [
+            -0.24232999980449677,
+            0.1035899966955185,
+            -0.06400000303983688
+          ],
+          [
+            0.24232999980449677,
+            0.1315884292125702,
+            0.031969983130693436
+          ]
+        ],
+        "attributes": {
+          "POSITION": 72,
+          "NORMAL": 73,
+          "TEXCOORD_0": 74,
+          "JOINTS_0": 75,
+          "WEIGHTS_0": 76,
+          "COLOR_0": 77
+        },
+        "indexed": false
+      },
+      {
+        "materialIndex": 13,
+        "material": "latexPanel",
+        "vertexCount": 672,
+        "triangles": 224,
+        "boundsM": [
+          [
+            -0.2837596535682678,
+            0.8631542921066284,
+            -0.043302569538354874
+          ],
+          [
+            0.2837596535682678,
+            0.9142966270446777,
+            0.09473811089992523
+          ]
+        ],
+        "attributes": {
+          "POSITION": 78,
+          "NORMAL": 79,
+          "TEXCOORD_0": 80,
+          "JOINTS_0": 81,
+          "WEIGHTS_0": 82,
+          "COLOR_0": 83
+        },
+        "indexed": false
+      },
+      {
+        "materialIndex": 14,
+        "material": "gearRubber",
+        "vertexCount": 1524,
+        "triangles": 508,
+        "boundsM": [
+          [
+            -0.32392001152038574,
+            0.8049499988555908,
+            -0.05999999865889549
+          ],
+          [
+            0.32392001152038574,
+            0.9809499979019165,
+            0.05999999865889549
+          ]
+        ],
+        "attributes": {
+          "POSITION": 84,
+          "NORMAL": 85,
+          "TEXCOORD_0": 86,
+          "JOINTS_0": 87,
+          "WEIGHTS_0": 88,
+          "COLOR_0": 89
+        },
+        "indexed": false
+      },
+      {
+        "materialIndex": 15,
+        "material": "padLight",
+        "vertexCount": 288,
+        "triangles": 96,
+        "boundsM": [
+          [
+            -0.3123193383216858,
+            0.8674818277359009,
+            -0.059399817138910294
+          ],
+          [
+            0.3123193383216858,
+            0.9303798079490662,
+            0.059399817138910294
+          ]
+        ],
+        "attributes": {
+          "POSITION": 90,
+          "NORMAL": 91,
+          "TEXCOORD_0": 92,
+          "JOINTS_0": 93,
+          "WEIGHTS_0": 94,
+          "COLOR_0": 95
+        },
+        "indexed": false
+      },
+      {
+        "materialIndex": 16,
+        "material": "refined_skin_48",
+        "vertexCount": 105552,
+        "triangles": 35184,
+        "boundsM": [
+          [
+            -0.09100683778524399,
+            1.672701120376587,
+            -0.0893479511141777
+          ],
+          [
+            0.09100683778524399,
+            1.9776406288146973,
+            0.15113745629787445
+          ]
+        ],
+        "attributes": {
+          "POSITION": 96,
+          "NORMAL": 97,
+          "TEXCOORD_0": 98,
+          "JOINTS_0": 99,
+          "WEIGHTS_0": 100,
+          "COLOR_0": 101
+        },
+        "indexed": false
+      },
+      {
+        "materialIndex": 17,
+        "material": "refined_eye_49",
+        "vertexCount": 8928,
+        "triangles": 2976,
+        "boundsM": [
+          [
+            -0.04641655460000038,
+            1.8581544160842896,
+            0.07533904165029526
+          ],
+          [
+            -0.014948161318898201,
+            1.8905278444290161,
+            0.11173401772975922
+          ]
+        ],
+        "attributes": {
+          "POSITION": 102,
+          "NORMAL": 103,
+          "TEXCOORD_0": 104,
+          "JOINTS_0": 105,
+          "WEIGHTS_0": 106,
+          "COLOR_0": 107
+        },
+        "indexed": false
+      },
+      {
+        "materialIndex": 18,
+        "material": "refined_eye_50",
+        "vertexCount": 2304,
+        "triangles": 768,
+        "boundsM": [
+          [
+            -0.037859007716178894,
+            1.8653079271316528,
+            0.10853329300880432
+          ],
+          [
+            -0.023523159325122833,
+            1.8811372518539429,
+            0.11175933480262756
+          ]
+        ],
+        "attributes": {
+          "POSITION": 108,
+          "NORMAL": 109,
+          "TEXCOORD_0": 110,
+          "JOINTS_0": 111,
+          "WEIGHTS_0": 112,
+          "COLOR_0": 113
+        },
+        "indexed": false
+      },
+      {
+        "materialIndex": 19,
+        "material": "refined_iris_51",
+        "vertexCount": 2304,
+        "triangles": 768,
+        "boundsM": [
+          [
+            -0.03733983635902405,
+            1.8659003973007202,
+            0.10901832580566406
+          ],
+          [
+            -0.02404274046421051,
+            1.8805872201919556,
+            0.11181479692459106
+          ]
+        ],
+        "attributes": {
+          "POSITION": 114,
+          "NORMAL": 115,
+          "TEXCOORD_0": 116,
+          "JOINTS_0": 117,
+          "WEIGHTS_0": 118,
+          "COLOR_0": 119
+        },
+        "indexed": false
+      },
+      {
+        "materialIndex": 20,
+        "material": "refined_eye_52",
+        "vertexCount": 2304,
+        "triangles": 768,
+        "boundsM": [
+          [
+            -0.033600930124521255,
+            1.8701369762420654,
+            0.11117678135633469
+          ],
+          [
+            -0.02778332494199276,
+            1.8765743970870972,
+            0.11188016086816788
+          ]
+        ],
+        "attributes": {
+          "POSITION": 120,
+          "NORMAL": 121,
+          "TEXCOORD_0": 122,
+          "JOINTS_0": 123,
+          "WEIGHTS_0": 124,
+          "COLOR_0": 125
+        },
+        "indexed": false
+      },
+      {
+        "materialIndex": 21,
+        "material": "refined_eye_53",
+        "vertexCount": 8928,
+        "triangles": 2976,
+        "boundsM": [
+          [
+            0.014948161318898201,
+            1.8581544160842896,
+            0.07533904165029526
+          ],
+          [
+            0.04641655460000038,
+            1.8905278444290161,
+            0.11173401772975922
+          ]
+        ],
+        "attributes": {
+          "POSITION": 126,
+          "NORMAL": 127,
+          "TEXCOORD_0": 128,
+          "JOINTS_0": 129,
+          "WEIGHTS_0": 130,
+          "COLOR_0": 131
+        },
+        "indexed": false
+      },
+      {
+        "materialIndex": 22,
+        "material": "refined_eye_54",
+        "vertexCount": 2304,
+        "triangles": 768,
+        "boundsM": [
+          [
+            0.023523159325122833,
+            1.8653079271316528,
+            0.10853329300880432
+          ],
+          [
+            0.037859007716178894,
+            1.8811372518539429,
+            0.11175933480262756
+          ]
+        ],
+        "attributes": {
+          "POSITION": 132,
+          "NORMAL": 133,
+          "TEXCOORD_0": 134,
+          "JOINTS_0": 135,
+          "WEIGHTS_0": 136,
+          "COLOR_0": 137
+        },
+        "indexed": false
+      },
+      {
+        "materialIndex": 23,
+        "material": "refined_iris_55",
+        "vertexCount": 2304,
+        "triangles": 768,
+        "boundsM": [
+          [
+            0.02404274046421051,
+            1.8659003973007202,
+            0.10901832580566406
+          ],
+          [
+            0.03733983635902405,
+            1.8805872201919556,
+            0.11181479692459106
+          ]
+        ],
+        "attributes": {
+          "POSITION": 138,
+          "NORMAL": 139,
+          "TEXCOORD_0": 140,
+          "JOINTS_0": 141,
+          "WEIGHTS_0": 142,
+          "COLOR_0": 143
+        },
+        "indexed": false
+      },
+      {
+        "materialIndex": 24,
+        "material": "refined_eye_56",
+        "vertexCount": 2304,
+        "triangles": 768,
+        "boundsM": [
+          [
+            0.02778332494199276,
+            1.8701369762420654,
+            0.11117678135633469
+          ],
+          [
+            0.033600930124521255,
+            1.8765743970870972,
+            0.11188016086816788
+          ]
+        ],
+        "attributes": {
+          "POSITION": 144,
+          "NORMAL": 145,
+          "TEXCOORD_0": 146,
+          "JOINTS_0": 147,
+          "WEIGHTS_0": 148,
+          "COLOR_0": 149
+        },
+        "indexed": false
+      },
+      {
+        "materialIndex": 25,
+        "material": "refined_hair_57",
+        "vertexCount": 768,
+        "triangles": 256,
+        "boundsM": [
+          [
+            -0.057684071362018585,
+            1.8889356851577759,
+            0.09923793375492096
+          ],
+          [
+            -0.01299284491688013,
+            1.8996353149414062,
+            0.12352369725704193
+          ]
+        ],
+        "attributes": {
+          "POSITION": 150,
+          "NORMAL": 151,
+          "TEXCOORD_0": 152,
+          "JOINTS_0": 153,
+          "WEIGHTS_0": 154,
+          "COLOR_0": 155
+        },
+        "indexed": false
+      },
+      {
+        "materialIndex": 26,
+        "material": "refined_hair_58",
+        "vertexCount": 768,
+        "triangles": 256,
+        "boundsM": [
+          [
+            0.01299284491688013,
+            1.8889356851577759,
+            0.09923793375492096
+          ],
+          [
+            0.057684071362018585,
+            1.8996353149414062,
+            0.12352369725704193
+          ]
+        ],
+        "attributes": {
+          "POSITION": 156,
+          "NORMAL": 157,
+          "TEXCOORD_0": 158,
+          "JOINTS_0": 159,
+          "WEIGHTS_0": 160,
+          "COLOR_0": 161
+        },
+        "indexed": false
+      },
+      {
+        "materialIndex": 27,
+        "material": "refined_hair_59",
+        "vertexCount": 82368,
+        "triangles": 27456,
+        "boundsM": [
+          [
+            -0.07880253344774246,
+            1.8384366035461426,
+            -0.09128109365701675
+          ],
+          [
+            0.07880253344774246,
+            1.9996368885040283,
+            0.11470044404268265
+          ]
+        ],
+        "attributes": {
+          "POSITION": 162,
+          "NORMAL": 163,
+          "TEXCOORD_0": 164,
+          "JOINTS_0": 165,
+          "WEIGHTS_0": 166,
+          "COLOR_0": 167
+        },
+        "indexed": false
+      },
+      {
+        "materialIndex": 28,
+        "material": "madridNavy",
+        "vertexCount": 2304,
+        "triangles": 768,
+        "boundsM": [
+          [
+            -0.3313562870025635,
+            1.4165605306625366,
+            -0.05638359859585762
+          ],
+          [
+            0.3313562870025635,
+            1.731510043144226,
+            0.06184360012412071
+          ]
+        ],
+        "attributes": {
+          "POSITION": 168,
+          "NORMAL": 169,
+          "TEXCOORD_0": 170,
+          "JOINTS_0": 171,
+          "WEIGHTS_0": 172,
+          "COLOR_0": 173
+        },
+        "indexed": false
+      }
+    ],
+    "attachments": {
+      "hand_R": {
+        "rigidVertices": 9906,
+        "influencedVertices": 9906,
+        "rigidLocalBoundsM": {
+          "min": [
+            -0.04800000421524048,
+            -0.19122827596664438,
+            -0.06700000166893005
+          ],
+          "max": [
+            0.056299988107681276,
+            0.008999997901916412,
+            0.10299615561962128
+          ],
+          "size": [
+            0.10429999232292175,
+            0.2002282738685608,
+            0.16999615728855133
+          ]
+        },
+        "influencedBindWorldBoundsM": {
+          "min": [
+            0.22791999578475952,
+            0.7807217240333557,
+            -0.06700000166893005
+          ],
+          "max": [
+            0.3322199881076813,
+            0.9809499979019165,
+            0.10299615561962128
+          ],
+          "size": [
+            0.10429999232292175,
+            0.2002282738685608,
+            0.16999615728855133
+          ]
+        },
+        "note": "Bounds are not authored contact sockets; triangle vertices are duplicated in GLB."
+      },
+      "hand_L": {
+        "rigidVertices": 9906,
+        "influencedVertices": 9906,
+        "rigidLocalBoundsM": {
+          "min": [
+            -0.056299988107681276,
+            -0.19122827596664438,
+            -0.06700000166893005
+          ],
+          "max": [
+            0.04800000421524048,
+            0.008999997901916412,
+            0.10299615561962128
+          ],
+          "size": [
+            0.10429999232292175,
+            0.2002282738685608,
+            0.16999615728855133
+          ]
+        },
+        "influencedBindWorldBoundsM": {
+          "min": [
+            -0.3322199881076813,
+            0.7807217240333557,
+            -0.06700000166893005
+          ],
+          "max": [
+            -0.22791999578475952,
+            0.9809499979019165,
+            0.10299615561962128
+          ],
+          "size": [
+            0.10429999232292175,
+            0.2002282738685608,
+            0.16999615728855133
+          ]
+        },
+        "note": "Bounds are not authored contact sockets; triangle vertices are duplicated in GLB."
+      },
+      "foot_R": {
+        "rigidVertices": 3572,
+        "influencedVertices": 4236,
+        "rigidLocalBoundsM": {
+          "min": [
+            -0.07900000287771225,
+            -0.0879999998883903,
+            -0.08100000023841858
+          ],
+          "max": [
+            0.0779999949169159,
+            0.0580000012254715,
+            0.1459999978542328
+          ],
+          "size": [
+            0.15699999779462814,
+            0.1460000011138618,
+            0.22699999809265137
+          ]
+        },
+        "influencedBindWorldBoundsM": {
+          "min": [
+            0.11232999712228775,
+            -0.0034099998883903027,
+            -0.08100000023841858
+          ],
+          "max": [
+            0.2693299949169159,
+            0.14738640189170837,
+            0.2567879855632782
+          ],
+          "size": [
+            0.15700000524520874,
+            0.15079639852046967,
+            0.3377879858016968
+          ]
+        },
+        "note": "Bounds are not authored contact sockets; triangle vertices are duplicated in GLB."
+      },
+      "foot_L": {
+        "rigidVertices": 3572,
+        "influencedVertices": 4236,
+        "rigidLocalBoundsM": {
+          "min": [
+            -0.07900001184463501,
+            -0.0879999998883903,
+            -0.08100000023841858
+          ],
+          "max": [
+            0.07800000085115433,
+            0.0580000012254715,
+            0.1459999978542328
+          ],
+          "size": [
+            0.15700001269578934,
+            0.1460000011138618,
+            0.22699999809265137
+          ]
+        },
+        "influencedBindWorldBoundsM": {
+          "min": [
+            -0.270330011844635,
+            -0.0034099998883903027,
+            -0.08100000023841858
+          ],
+          "max": [
+            -0.11332999914884567,
+            0.14738640189170837,
+            0.2567879855632782
+          ],
+          "size": [
+            0.15700000524520874,
+            0.15079639852046967,
+            0.3377879858016968
+          ]
+        },
+        "note": "Bounds are not authored contact sockets; triangle vertices are duplicated in GLB."
+      },
+      "toe_R": {
+        "rigidVertices": 702,
+        "influencedVertices": 1030,
+        "rigidLocalBoundsM": {
+          "min": [
+            -0.04299999697685242,
+            -0.03100000003129244,
+            0.01649999949932099
+          ],
+          "max": [
+            0.04299999849319458,
+            0.017000001317262647,
+            0.09550001058578492
+          ],
+          "size": [
+            0.085999995470047,
+            0.04800000134855509,
+            0.07900001108646393
+          ]
+        },
+        "influencedBindWorldBoundsM": {
+          "min": [
+            0.11632999777793884,
+            -0.009850000031292439,
+            0.17611999809741974
+          ],
+          "max": [
+            0.2693299949169159,
+            0.06469199806451797,
+            0.2964000105857849
+          ],
+          "size": [
+            0.15299999713897705,
+            0.07454200088977814,
+            0.12028001248836517
+          ]
+        },
+        "note": "Bounds are not authored contact sockets; triangle vertices are duplicated in GLB."
+      },
+      "toe_L": {
+        "rigidVertices": 702,
+        "influencedVertices": 1030,
+        "rigidLocalBoundsM": {
+          "min": [
+            -0.04299999849319458,
+            -0.03100000003129244,
+            0.01649999949932099
+          ],
+          "max": [
+            0.04299999697685242,
+            0.017000001317262647,
+            0.09550001058578492
+          ],
+          "size": [
+            0.085999995470047,
+            0.04800000134855509,
+            0.07900001108646393
+          ]
+        },
+        "influencedBindWorldBoundsM": {
+          "min": [
+            -0.2663300037384033,
+            -0.009850000031292439,
+            0.17611999809741974
+          ],
+          "max": [
+            -0.11332999914884567,
+            0.06469199806451797,
+            0.2964000105857849
+          ],
+          "size": [
+            0.15299999713897705,
+            0.07454200088977814,
+            0.12028001248836517
+          ]
+        },
+        "note": "Bounds are not authored contact sockets; triangle vertices are duplicated in GLB."
+      },
+      "head": {
+        "rigidVertices": 215878,
+        "influencedVertices": 217074,
+        "rigidLocalBoundsM": {
+          "min": [
+            -0.09100683778524399,
+            -0.06582767704010006,
+            -0.09128109365701675
+          ],
+          "max": [
+            0.09100683778524399,
+            0.19710688850402835,
+            0.15113745629787445
+          ],
+          "size": [
+            0.18201367557048798,
+            0.2629345655441284,
+            0.2424185499548912
+          ]
+        },
+        "influencedBindWorldBoundsM": {
+          "min": [
+            -0.09100683778524399,
+            1.714329481124878,
+            -0.09128109365701675
+          ],
+          "max": [
+            0.09100683778524399,
+            1.9996368885040283,
+            0.15113745629787445
+          ],
+          "size": [
+            0.18201367557048798,
+            0.2853074073791504,
+            0.2424185574054718
+          ]
+        },
+        "note": "Bounds are not authored contact sockets; triangle vertices are duplicated in GLB."
+      },
+      "neck": {
+        "rigidVertices": 0,
+        "influencedVertices": 8138,
+        "rigidLocalBoundsM": null,
+        "influencedBindWorldBoundsM": {
+          "min": [
+            -0.12253172695636749,
+            1.6722257137298584,
+            -0.0743260383605957
+          ],
+          "max": [
+            0.12253172695636749,
+            1.7365058660507202,
+            0.08206988871097565
+          ],
+          "size": [
+            0.24506345391273499,
+            0.06428015232086182,
+            0.15639592707157135
+          ]
+        },
+        "note": "Bounds are not authored contact sockets; triangle vertices are duplicated in GLB."
+      }
+    },
+    "inverseBindOriginMaxErrorM": 5.5541992338703494e-08,
+    "glbExtras": {
+      "configuration": {
+        "label": "Courtois / tall rig",
+        "head": "courtois",
+        "rig": "tall",
+        "kit": "madrid-blue",
+        "shortSleeve": true,
+        "morphology": {
+          "shoulderShift": 0.016,
+          "deltoid": 0.77,
+          "upperArm": 0.73,
+          "forearm": 0.79,
+          "chestWidth": 0.82,
+          "chestDepth": 0.83,
+          "waist": 0.82,
+          "pelvis": 0.87,
+          "glute": 0.79,
+          "thigh": 0.78,
+          "calf": 0.83,
+          "neck": 0.91
+        }
+      },
+      "rigContract": "Existing tall skeleton, static proof. Not frozen-V6 compatible.",
+      "canonicalRenderer": "src/framebuffer-renderer.js",
+      "note": "Neutral construction pose. Rendering in external viewers differs from the frozen C treatment."
+    }
+  },
+  "renderer": {
+    "name": "Mixed / C Native-output Refined",
+    "environmentDensity": 2,
+    "characterDensity": 4,
+    "logicalSceneCrop": [
+      600,
+      150,
+      500,
+      450
+    ],
+    "outputWH": [
+      2000,
+      1800
+    ],
+    "baseCanvasWH": [
+      1100,
+      900
+    ],
+    "environmentFullCanvasWH": [
+      2200,
+      1800
+    ],
+    "environmentCropWH": [
+      1000,
+      900
+    ],
+    "characterWindowOriginLogical": [
+      774,
+      316
+    ],
+    "characterLayerWH": [
+      640,
+      576
+    ],
+    "characterLayerOutputXY": [
+      696,
+      664
+    ],
+    "worldScale": 1,
+    "cameraFile": "data/camera_v1.json",
+    "cameraRigExample": {
+      "rigX": 88,
+      "travel": 35.5,
+      "zoom": 1.25
+    },
+    "cameraAuthored": {
+      "height": 30,
+      "dist": 43,
+      "fov": 28,
+      "depthoff": 3,
+      "pitch": 22,
+      "yaw": 0,
+      "pscale": 0.6
+    },
+    "projection": {
+      "fpx": 1443.8811360729042,
+      "cp": 0.9271838545667874,
+      "sp": 0.374606593415912,
+      "formula": "x=p.x-rigX; y=p.y-30; z=-p.z-111; d=-sp*y-cp*z; k=fpx*zoom; screen=[550+k*x/d,450-k*(cp*y-sp*z)/d]"
+    },
+    "rasterOptions": {
+      "density": 4,
+      "refined": true
+    },
+    "internalSoftCelTreatment": "B",
+    "lightUnnormalized": [
+      -0.42,
+      0.72,
+      -0.54
+    ],
+    "sampleOffsets": [
+      [
+        0.25,
+        0.25
+      ],
+      [
+        0.75,
+        0.25
+      ],
+      [
+        0.25,
+        0.75
+      ],
+      [
+        0.75,
+        0.75
+      ]
+    ],
+    "samplesPerOutputPixel": 4,
+    "historyOrTAA": false,
+    "expandedOutlinePixels": 0,
+    "fractionalCoverageInkBlend": "0.08*(1-alpha)",
+    "textureFilter": "bilinear in fixed atlas region; software path has no mipmap selection",
+    "environmentFinalUpscale": "nearest 2x",
+    "characterComposite": "native 1:1 premultiplied-coverage resolve to straight RGBA, then Canvas alpha over",
+    "order": [
+      "environment behind keeper + ground shadow",
+      "native output character",
+      "environment foreground including separately rendered ball"
+    ],
+    "sharedCharacterBallDepthInApprovedOfflineMixed": false,
+    "shadow": "source ground ellipse at row.presRoot, alpha .25; no new shadow map",
+    "caveats": [
+      "Old gl/camera renderer settings are not approved C.",
+      "Original GLB PBR appearance in generic viewers is not the approved shader.",
+      "Offline environment comes partly from source textures/baked goal; density is rerasterization of projected source, not extra geometry detail.",
+      "Static distant 2000x650 band was historically frozen to accepted Mixed to eliminate Canvas warm-up variance."
+    ]
+  },
+  "animationImplementation": {
+    "simulation": {
+      "path": "scene-density/environment/sandbox/visual/match.js",
+      "functions": [
+        "ptStep",
+        "ptGkUpdate",
+        "gkTryCommit",
+        "gkTryContact",
+        "gkApplyContact",
+        "gkHeldBallStep",
+        "gkDistributionStart",
+        "gkDistributionStep"
+      ],
+      "frozen": true,
+      "declarationLines": {
+        "ptStep": 5669,
+        "ptGkUpdate": 4205,
+        "gkTryCommit": 3644,
+        "gkTryContact": 3812,
+        "gkApplyContact": 4038,
+        "gkHeldBallStep": 4146,
+        "gkDistributionStart": 4175,
+        "gkDistributionStep": 4192
+      }
+    },
+    "description": {
+      "path": "scene-density/environment/sandbox/visual/anim3d/gk_backend.js",
+      "functions": [
+        "gkActionDescription",
+        "gkPresentationDraw"
+      ],
+      "declarationLines": {
+        "gkActionDescription": 34,
+        "gkPresentationDraw": 25
+      }
+    },
+    "semanticResolver": {
+      "path": "scene-density/environment/sandbox/visual/match.js",
+      "functions": [
+        "gkAnimUpdate"
+      ],
+      "declarationLines": {
+        "gkAnimUpdate": 4823
+      }
+    },
+    "motionSelection": {
+      "path": "scene-density/environment/sandbox/visual/anim3d/gk_motion_library.js",
+      "functions": [
+        "gkSelectMotion",
+        "gkSelectDistribution"
+      ],
+      "constants": [
+        "GK_MOTIONS",
+        "GK_MOTION_H_REF"
+      ],
+      "declarationLines": {
+        "gkSelectMotion": 276,
+        "gkSelectDistribution": 269,
+        "GK_MOTIONS": 26,
+        "GK_MOTION_H_REF": 25
+      }
+    },
+    "farDive": {
+      "path": "scene-density/environment/sandbox/visual/anim3d/gk_far_dive_clip.js",
+      "constants": [
+        "GK_CLIP_FAR_DIVE"
+      ],
+      "declarationLines": {
+        "GK_CLIP_FAR_DIVE": 9
+      }
+    },
+    "graph": {
+      "path": "scene-density/environment/sandbox/visual/anim3d/gk_graph.js",
+      "functions": [
+        "gkGraphEvaluate",
+        "gkGraphSolve",
+        "gkRootMatrix",
+        "glW",
+        "pitchW",
+        "gkGraphAxis",
+        "gkLaunchPlan",
+        "gkLandingPlan",
+        "gkGroundPlan"
+      ],
+      "declarationLines": {
+        "gkGraphEvaluate": 183,
+        "gkGraphSolve": 449,
+        "gkRootMatrix": 53,
+        "glW": 59,
+        "pitchW": 60,
+        "gkGraphAxis": 62,
+        "gkLaunchPlan": 91,
+        "gkLandingPlan": 111,
+        "gkGroundPlan": 139
+      }
+    },
+    "skeleton": {
+      "path": "scene-density/environment/sandbox/visual/anim3d/skeleton.js",
+      "functions": [
+        "skelBuild",
+        "skelFK",
+        "skelInverseBind",
+        "skelSkinMatrices"
+      ],
+      "declarationLines": {
+        "skelBuild": 39,
+        "skelFK": 50,
+        "skelInverseBind": 71,
+        "skelSkinMatrices": 72
+      }
+    },
+    "ik": {
+      "path": "scene-density/environment/sandbox/visual/anim3d/ik.js",
+      "functions": [
+        "skelIK2",
+        "skelAimChain",
+        "skelCradleElbow"
+      ],
+      "declarationLines": {
+        "skelIK2": 9,
+        "skelAimChain": 61,
+        "skelCradleElbow": 81
+      }
+    },
+    "backend": {
+      "path": "scene-density/environment/sandbox/visual/anim3d/gk3d_backend.js",
+      "functions": [
+        "gk3dDraw",
+        "gk3dReset",
+        "gk3dOwnsBall"
+      ],
+      "declarationLines": {
+        "gk3dDraw": 32,
+        "gk3dReset": 23,
+        "gk3dOwnsBall": 28
+      }
+    },
+    "temporaryMesh": {
+      "path": "scene-density/environment/sandbox/visual/anim3d/skin_mesh.js",
+      "functions": [
+        "skinBuildMesh"
+      ],
+      "status": "Replace display mesh only; not final art.",
+      "declarationLines": {
+        "skinBuildMesh": 8
+      }
+    },
+    "temporaryRenderer": {
+      "path": "scene-density/environment/sandbox/visual/anim3d/gl_renderer.js",
+      "functions": [
+        "glSkinnedMesh",
+        "glRenderCharacters",
+        "glCamera"
+      ],
+      "status": "Animation GPU plumbing; seven-colour shader is not approved C.",
+      "declarationLines": {
+        "glSkinnedMesh": 113,
+        "glRenderCharacters": 145,
+        "glCamera": 133
+      }
+    },
+    "character": {
+      "path": "src/player-morphology.js",
+      "functions": [
+        "build",
+        "tallTransfer",
+        "mass",
+        "shortSleeves",
+        "rebind"
+      ],
+      "declarationLines": {
+        "build": 86,
+        "tallTransfer": 76,
+        "mass": 53,
+        "shortSleeves": 14,
+        "rebind": 13
+      }
+    },
+    "approvedRasterizer": {
+      "path": "src/framebuffer-renderer.js",
+      "functions": [
+        "compile",
+        "renderFinal"
+      ],
+      "declarationLines": {
+        "compile": 7,
+        "renderFinal": 58
+      }
+    },
+    "projection": {
+      "path": "src/renderer.js",
+      "functions": [
+        "project",
+        "tx"
+      ],
+      "declarationLines": {
+        "project": 7,
+        "tx": 4
+      }
+    },
+    "mixedCompositor": {
+      "path": "tools/morphology/gameplay.cjs",
+      "note": "True-height motion deliberately throws; tall row 0 only.",
+      "declarationLines": {}
+    }
+  },
+  "v6Comparison": {
+    "presRoot": {
+      "differentRows": 299,
+      "firstIndex": 1,
+      "firstValues": [
+        [
+          101.987,
+          33.99566
+        ],
+        [
+          101.98698,
+          33.99566
+        ]
+      ],
+      "maxDistanceM": 0.34917679204093405
+    },
+    "simRoot": {
+      "differentRows": 0,
+      "firstIndex": null
+    },
+    "ball": {
+      "differentRows": 0,
+      "firstIndex": null
+    },
+    "ballVel": {
+      "differentRows": 0,
+      "firstIndex": null
+    },
+    "renderedBall": {
+      "differentRows": 320,
+      "firstIndex": 0,
+      "firstValues": [
+        {
+          "p": [
+            86.29907,
+            33.97639,
+            0.11
+          ],
+          "r": 0.11,
+          "drawn3d": false,
+          "pres": false
+        },
+        {
+          "p": [
+            86.29907,
+            33.97639,
+            0.1166
+          ],
+          "r": 0.11659999999999998,
+          "drawn3d": false,
+          "pres": false
+        }
+      ]
+    },
+    "phase": {
+      "differentRows": 31,
+      "firstIndex": 73,
+      "firstValues": [
+        "FOLLOW",
+        "DESCENT"
+      ]
+    },
+    "t": {
+      "differentRows": 0,
+      "firstIndex": null
+    },
+    "tick": {
+      "differentRows": 0,
+      "firstIndex": null
+    },
+    "camera": {
+      "differentRows": 0,
+      "firstIndex": null
+    },
+    "isContactTick": {
+      "differentRows": 0,
+      "firstIndex": null
+    },
+    "simHandTarget": {
+      "differentRows": 0,
+      "firstIndex": null
+    },
+    "rootMatrix": {
+      "differentRows": 0,
+      "firstIndex": null
+    },
+    "poseEulersDeg": {
+      "differentRows": 182,
+      "firstIndex": 38,
+      "firstValues": [
+        {
+          "pelvis": [
+            30.15,
+            0,
+            -26.65
+          ],
+          "spine": [
+            12.06,
+            0,
+            -8.42
+          ],
+          "chest": [
+            8.06,
+            0,
+            -6.75
+          ],
+          "neck": [
+            -8.03,
+            0,
+            5.97
+          ],
+          "head": [
+            -12.03,
+            0,
+            7.97
+          ],
+          "thigh_R": [
+            -78.53,
+            0,
+            36.51
+          ],
+          "shin_R": [
+            118.76,
+            0,
+            0
+          ],
+          "foot_R": [
+            -36.26,
+            0,
+            0
+          ],
+          "thigh_L": [
+            -48.48,
+            0,
+            -3.46
+          ],
+          "shin_L": [
+            72.96,
+            0,
+            0
+          ],
+          "foot_L": [
+            -22.46,
+            0,
+            0
+          ],
+          "upperArm_R": [
+            -7.34,
+            0,
+            50.52
+          ],
+          "foreArm_R": [
+            -29.49,
+            0,
+            0
+          ],
+          "hand_R": [
+            -4,
+            0,
+            0
+          ],
+          "upperArm_L": [
+            -56.57,
+            0,
+            4.98
+          ],
+          "foreArm_L": [
+            -75.44,
+            0,
+            0
+          ],
+          "hand_L": [
+            -8.03,
+            0,
+            0
+          ]
+        },
+        {
+          "pelvis": [
+            30.15,
+            0,
+            -26.96
+          ],
+          "spine": [
+            12.06,
+            0,
+            -8.46
+          ],
+          "chest": [
+            8.06,
+            0,
+            -6.79
+          ],
+          "neck": [
+            -8.03,
+            0,
+            5.97
+          ],
+          "head": [
+            -12.03,
+            0,
+            7.97
+          ],
+          "thigh_R": [
+            -78.53,
+            0,
+            36.51
+          ],
+          "shin_R": [
+            118.76,
+            0,
+            0
+          ],
+          "foot_R": [
+            -36.26,
+            0,
+            0
+          ],
+          "thigh_L": [
+            -48.48,
+            0,
+            -3.46
+          ],
+          "shin_L": [
+            72.96,
+            0,
+            0
+          ],
+          "foot_L": [
+            -22.46,
+            0,
+            0
+          ],
+          "upperArm_R": [
+            -7.34,
+            0,
+            50.52
+          ],
+          "foreArm_R": [
+            -29.49,
+            0,
+            0
+          ],
+          "hand_R": [
+            -4,
+            0,
+            0
+          ],
+          "upperArm_L": [
+            -56.57,
+            0,
+            4.98
+          ],
+          "foreArm_L": [
+            -75.44,
+            0,
+            0
+          ],
+          "hand_L": [
+            -8.03,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    "simFacingDeg": {
+      "differentRows": 0,
+      "firstIndex": null
+    },
+    "renderedBallPosition": {
+      "differentRows": 42,
+      "first": [
+        0,
+        [
+          86.29907,
+          33.97639,
+          0.11
+        ],
+        [
+          86.29907,
+          33.97639,
+          0.1166
+        ]
+      ],
+      "maxDistanceM": 0.006599999999999995
+    },
+    "renderedBallRadius": {
+      "shared": [
+        0.11
+      ],
+      "tall": [
+        0.11659999999999998
+      ]
+    },
+    "contact": {
+      "shared": {
+        "toiFrac": 0.75,
+        "tickT": 1.05,
+        "surface": "HANDS",
+        "volume": "HAND",
+        "outcome": "WEAK PARRY (through)",
+        "held": false,
+        "via": null,
+        "handOnBall": null,
+        "standing": false,
+        "point": [
+          101.874,
+          32.747,
+          2.671
+        ],
+        "keeperPt": [
+          101.985,
+          32.791,
+          2.628
+        ],
+        "root": [
+          101.99,
+          33.45
+        ],
+        "normal": [
+          -0.874,
+          -0.348,
+          0.338
+        ],
+        "respNormal": [
+          -0.874,
+          -0.348,
+          0.338
+        ],
+        "normalCorrected": false,
+        "surfaceVertZ": 2.67,
+        "surfaceVel": [
+          0,
+          -1.87,
+          1.78
+        ],
+        "vIn": [
+          26.66,
+          -2.11,
+          1.81
+        ],
+        "vOut": [
+          5.03,
+          -8.94,
+          8.35
+        ],
+        "speedOut": 13.23,
+        "relSpeed": 26.76,
+        "q": {
+          "volume": "HAND",
+          "norm": 0.937,
+          "reachMargin": 0.171,
+          "cos": 0.871,
+          "sin": 0.491,
+          "cAlign": 0.801,
+          "sRel": 26.757,
+          "vSecure": 18.682,
+          "vSecureEff": 18.682,
+          "u": 0.886,
+          "cSet": 0.882,
+          "support": 0,
+          "corridor": 0,
+          "zWin": 0,
+          "handsOn": 1,
+          "behind": 1,
+          "latOff": 0.708,
+          "ahead": 0.079,
+          "stable": 1,
+          "jitter": 0,
+          "gather": false,
+          "cSpeedCatch": 0.103,
+          "cSpeedCtrl": 0.471,
+          "Lbody": 0.712,
+          "two": 0.184,
+          "rootSp": 0.843,
+          "cBal": 0.853,
+          "z": 2.671,
+          "cZ": 0.5,
+          "elev": 3.884,
+          "cTraj": 1,
+          "cHeight": 0.5,
+          "rCatch": 0.053,
+          "rCtrl": 0.557,
+          "catchScore": 0.004,
+          "controlScore": 0.311,
+          "catchThresh": 0.486,
+          "ctrlThresh": 0.416,
+          "fingertip": false,
+          "h01": 0.789,
+          "handling": 72
+        },
+        "resp": {
+          "key": "HAND_WEAK",
+          "e": 0.22,
+          "kt": 0.85,
+          "sv": [
+            0,
+            -0.84,
+            0
+          ],
+          "handVel": [
+            0,
+            -1.87,
+            1.78
+          ],
+          "push": 0,
+          "pushDir": null,
+          "tiltDeg": 0
+        },
+        "tier": "HIGH/FULL-STRETCH REACHABLE",
+        "reachMarginAtCommit": 0.16,
+        "tShotToReact": 0.158,
+        "tReactToCommit": 0,
+        "tCommitToContact": 0.409,
+        "remDt": 0.004166666666666667,
+        "seq": 1
+      },
+      "tall": {
+        "toiFrac": 0.75,
+        "tickT": 1.05,
+        "surface": "HANDS",
+        "volume": "HAND",
+        "outcome": "WEAK PARRY (through)",
+        "held": false,
+        "via": null,
+        "handOnBall": null,
+        "standing": false,
+        "point": [
+          101.874,
+          32.747,
+          2.671
+        ],
+        "keeperPt": [
+          101.985,
+          32.791,
+          2.628
+        ],
+        "root": [
+          101.99,
+          33.45
+        ],
+        "normal": [
+          -0.874,
+          -0.348,
+          0.338
+        ],
+        "respNormal": [
+          -0.874,
+          -0.348,
+          0.338
+        ],
+        "normalCorrected": false,
+        "surfaceVertZ": 2.67,
+        "surfaceVel": [
+          0,
+          -1.87,
+          1.78
+        ],
+        "vIn": [
+          26.66,
+          -2.11,
+          1.81
+        ],
+        "vOut": [
+          5.03,
+          -8.94,
+          8.35
+        ],
+        "speedOut": 13.23,
+        "relSpeed": 26.76,
+        "q": {
+          "volume": "HAND",
+          "norm": 0.937,
+          "reachMargin": 0.171,
+          "cos": 0.871,
+          "sin": 0.491,
+          "cAlign": 0.801,
+          "sRel": 26.757,
+          "vSecure": 18.682,
+          "vSecureEff": 18.682,
+          "u": 0.886,
+          "cSet": 0.882,
+          "support": 0,
+          "corridor": 0,
+          "zWin": 0,
+          "handsOn": 1,
+          "behind": 1,
+          "latOff": 0.708,
+          "ahead": 0.079,
+          "stable": 1,
+          "jitter": 0,
+          "gather": false,
+          "cSpeedCatch": 0.103,
+          "cSpeedCtrl": 0.471,
+          "Lbody": 0.712,
+          "two": 0.184,
+          "rootSp": 0.843,
+          "cBal": 0.853,
+          "z": 2.671,
+          "cZ": 0.5,
+          "elev": 3.884,
+          "cTraj": 1,
+          "cHeight": 0.5,
+          "rCatch": 0.053,
+          "rCtrl": 0.557,
+          "catchScore": 0.004,
+          "controlScore": 0.311,
+          "catchThresh": 0.486,
+          "ctrlThresh": 0.416,
+          "fingertip": false,
+          "h01": 0.789,
+          "handling": 72
+        },
+        "resp": {
+          "key": "HAND_WEAK",
+          "e": 0.22,
+          "kt": 0.85,
+          "sv": [
+            0,
+            -0.84,
+            0
+          ],
+          "handVel": [
+            0,
+            -1.87,
+            1.78
+          ],
+          "push": 0,
+          "pushDir": null,
+          "tiltDeg": 0
+        },
+        "tier": "HIGH/FULL-STRETCH REACHABLE",
+        "reachMarginAtCommit": 0.16,
+        "tShotToReact": 0.158,
+        "tReactToCommit": 0,
+        "tCommitToContact": 0.409,
+        "remDt": 0.004166666666666667,
+        "seq": 1
+      },
+      "contactFrameIndices": [
+        62
+      ]
+    }
+  },
+  "contactContract": {
+    "simulationImmutable": true,
+    "animationMayWriteSimulation": false,
+    "physicalBallRadiusM": 0.11,
+    "observedTallPresentationBallRadiusM": 0.1166,
+    "handCentreProxyM": 0.07758,
+    "palmSupportSocket": null,
+    "ground": "simulation rolling ball height=0, rendered centre clamp >=physical radius; feet solve ankle/sole independently",
+    "releaseTick": "actual simulation event tick, not elapsed animation frame; exact event records preferred over rounded summaries",
+    "existingSnapshotVisualBallOverride": "held/cradle/pre-release can set sol.ballPres without changing t.b; never treat it as authoritative or expand the policy during integration",
+    "reachPolicy": "Unreachable authoritative contact exposes residual; do not move ball/root, change result, scale limbs or reschedule event to hide it."
+  },
+  "scenarioIndexSnapshot": {
+    "0": "central ground",
+    "1": "low corner",
+    "2": "high corner",
+    "3": "near post",
+    "4": "far post",
+    "5": "close POWER",
+    "6": "long POWER",
+    "7": "curved INSIDE_R",
+    "8": "CHIP",
+    "9": "keeper set (centre)",
+    "10": "keeper mispositioned",
+    "11": "keeper already moving",
+    "12": "future max-reach",
+    "13": "legal under-bar top corner",
+    "14": "medium-height far side",
+    "15": "rocket top corner (unreachable)",
+    "16": "at left foot (low)",
+    "17": "at right foot (low)",
+    "18": "between legs (low)",
+    "19": "20cm outside L foot",
+    "20": "20cm outside R foot",
+    "21": "ankle-height low corner",
+    "22": "close POWER at feet",
+    "23": "low INSIDE_R at foot",
+    "24": "just beyond foot (hand)",
+    "25": "beyond both -> goal",
+    "26": "S4 easy central catch (CHIP lob into the hands)",
+    "27": "S4 chest gather (CHIP, hands+chest)",
+    "28": "S4 central hard shot parry (LACES 24 m/s)",
+    "29": "S4 low foot save (20 cm outside R foot)",
+    "30": "S4 shin block (synthetic lat 0.4 z 0.4 18 m/s)",
+    "31": "S4 body block (POWER 26 m/s at the chest)",
+    "32": "S4 comfortable lateral hand save (LACES 19 m/s)",
+    "33": "S4 lateral catch (synthetic lat 1.2 z 1.3 13 m/s)",
+    "34": "S4 full-extension controlled parry (norm ~0.96)",
+    "35": "S4 fingertip around the post (LACES 15 m/s)",
+    "36": "S4 fingertip over the bar (synthetic lat 1.4 z 2.45 17 m/s)",
+    "37": "S4 awkward spill \u2014 weak parry (POWER 27 m/s)",
+    "38": "S4 awkward spill \u2014 body block into the D",
+    "39": "S4 fingertip deflection into the net (synthetic lat 2.02 z 1.2 21 m/s)",
+    "40": "S4 unreachable rocket stays untouched",
+    "41": "S4 handling probe (synthetic lat 1.0 z 1.2 21 m/s \u2014 T cycles handling)",
+    "42": "S4 K2 high tip-up (POWER 28 m/s under the bar)",
+    "43": "M3 low dive LEFT, hand (synthK lat -1.4 z 0.35 15 m/s)",
+    "44": "M3 low dive RIGHT, hand (synthK lat 1.4 z 0.35 15 m/s)",
+    "45": "M3 chest catch (synthK lat 0.05 z 1.15 15 m/s)",
+    "46": "M3 high ball, real chip (CHIP 0.55)",
+    "47": "M3 near-body LEFT (synthK lat -0.9 z 1.3 17 m/s)",
+    "48": "M3 foot save RIGHT wide (synthK lat 0.55 z 0.05 14 m/s)",
+    "49": "M3 far dive LEFT TOP (synthK lat -1.6 z 2.0 18 m/s)",
+    "50": "M3 SW-facing far dive (from the south)",
+    "51": "M3 NW-facing low dive (from the north)",
+    "52": "M3 S-facing tight angle, high across",
+    "53": "M3 N-facing tight angle, low across",
+    "54": "M3 moving keeper into a chest catch (gkv 0,-3)",
+    "55": "M3b foot save RIGHT wide (aim 33.2, lat +0.59)",
+    "56": "M3b foot save LEFT wide (aim 34.78, lat -0.58)",
+    "57": "M3b SW-facing foot save RIGHT (from the south, aim 34.2)",
+    "58": "M3b NW-facing foot save LEFT (from the north, aim 33.8)",
+    "59": "M3b SSW-facing foot save RIGHT (from [96,40], aim 33.9)",
+    "60": "M3b NNW-facing foot save LEFT (from [96,28], aim 34.1)",
+    "61": "M3c SW-facing chest catch (from the south, synthK z 1.15)",
+    "62": "M3c NW-facing chest catch (from the north, synthK z 1.2)",
+    "63": "M3c SSW-facing chest catch (from [96,40], synthK z 1.1)",
+    "64": "D1 PUT DOWN central (chest catch \u2192 place ahead \u2192 free ball)",
+    "65": "D2 HAND ROLL RIGHT (target [96, 26], right hand)",
+    "66": "D2 HAND ROLL LEFT (target [96, 42], left hand)",
+    "67": "D3 OVERARM THROW RIGHT (target [78, 24])",
+    "68": "D3 OVERARM THROW LEFT (target [78, 44])",
+    "69": "D3 OVERARM THROW far, straight (target [62, 34])",
+    "70": "D4 PUNT RIGHT foot (target [55, 34])",
+    "71": "D4 PUNT LEFT foot (target [55, 34])",
+    "72": "D5 angled: SW-facing catch \u2192 PUT DOWN (body must turn to face out)",
+    "73": "D5 angled: NW-facing catch \u2192 THROW to the far side (target [80, 46])",
+    "74": "D5 angled: SSW-facing catch \u2192 ROLL across (target [98, 42])",
+    "75": "D5 angled: SW-facing catch \u2192 PUNT left foot (target [50, 30])"
+  },
+  "smallestVerticalSlice": {
+    "standingCatchAndPutdownScenario": 64,
+    "v6DiveScenario": 42,
+    "v6MirrorScenario": 49,
+    "note": "42 is a weak parry, not a catch. 64 supplies possession/release test. Resolve scenarios by name in a changed upstream list."
+  },
+  "externalDependencies": {
+    "bakedGLB": "Any conformant glTF 2.0 skinned-mesh loader plus approved C shader/material adapter; no Node/Python at shipped runtime required.",
+    "proceduralNode": "Node CommonJS plus @napi-rs/canvas 0.1.100 observed; CODEX_PRIMARY_RUNTIME_NODE_MODULES points at directory containing package. Kit uses system generic serif/sans fonts, so regeneration on another font stack is not promised byte-identical.",
+    "headGeneratorPython": "Python 3 standard library only; existing Anchor runtime mesh is required. No Blender required for current head generation/export closure.",
+    "browserGates": "puppeteer-core + Chrome + existing complete host page; included scripts hard-code macOS Chrome path; adapt launcher configuration only on other OS.",
+    "offlineEnvironment": "@napi-rs/canvas; only directly loaded environment inputs included. Full sprite/page assets and engine intentionally omitted."
+  },
+  "dependencyPolicy": {
+    "A": "Required runtime/source or integration source context; baked and procedural paths are alternatives, not two shipped copies.",
+    "B": "Generation/build/presentation reference; not needed when shipping existing GLB.",
+    "C": "Useful validation fixtures/tools; not player runtime.",
+    "D": "Four optional existing visual references only.",
+    "E": "Explicitly excluded legacy, duplicate, roster and review files."
+  },
+  "dependencies": [
+    {
+      "path": "assets/morphology/Touchline_Player_courtois.glb",
+      "category": "A.baked_runtime",
+      "role": "Approved corrected true-proportion model; preferred existing asset for integration; only one copy.",
+      "bytes": 22135988,
+      "sha256": "cfd70a3ad37089079911da23de56ddfcf2a1aeb38aacdfc73b6238902a32b76d"
+    },
+    {
+      "path": "data/ball_trajectory_v6_fixture42.json",
+      "category": "C.validation_fixture",
+      "role": "Existing frozen fixture/provenance; historical scope is documented in handoff.",
+      "bytes": 96932,
+      "sha256": "6a4fc754c1472cdc35b896830068366facab28b77fb34d85546856eeb13d5f46"
+    },
+    {
+      "path": "data/camera_v1.json",
+      "category": "C.validation_fixture",
+      "role": "Existing frozen fixture/provenance; historical scope is documented in handoff.",
+      "bytes": 3582,
+      "sha256": "fd2cf4890a0967149a65528ed4a008f40223862e6ea9241da6fa9f35d437d7f5"
+    },
+    {
+      "path": "data/motion_v6_fixture42_right_full.json",
+      "category": "A.runtime_source",
+      "role": "Direct CommonJS dependency of src/player-morphology.js",
+      "bytes": 2265150,
+      "sha256": "9f72c8244722406b24237e6c0bcce2f06df7f17050e78f2751b97bcac1bf0639"
+    },
+    {
+      "path": "data/motion_v6_fixture42_variant_tall_full.json",
+      "category": "C.validation_fixture",
+      "role": "Existing frozen fixture/provenance; historical scope is documented in handoff.",
+      "bytes": 2274745,
+      "sha256": "fac04536d909da5b460a1af1a04fc7d0f5948423c3477b240aa1d30a73f406cc"
+    },
+    {
+      "path": "data/motion_v6_fixture49_left_mirror_full.json",
+      "category": "C.validation_fixture",
+      "role": "Existing frozen fixture/provenance; historical scope is documented in handoff.",
+      "bytes": 2276163,
+      "sha256": "eb1bdd2c01478b76720cf7558ea578eb9372ad52797ee4ada917d26753f1dd38"
+    },
+    {
+      "path": "data/skeleton_v6_default_H1.90.json",
+      "category": "C.validation_fixture",
+      "role": "Existing frozen fixture/provenance; historical scope is documented in handoff.",
+      "bytes": 17966,
+      "sha256": "226aeb438619f142ed2c8dcf124a0b4c18baa43183b8bd3b97cdaa7d11ffdd66"
+    },
+    {
+      "path": "data/skeleton_v6_variant_tall.json",
+      "category": "A.runtime_source",
+      "role": "Direct CommonJS dependency of src/player-morphology.js",
+      "bytes": 9238,
+      "sha256": "d699d296e4a36d8f00a645995d99b336badb4aadadf7ebd1dbfc05083c0a2070"
+    },
+    {
+      "path": "hair-readability/Touchline_Courtois_Hair_Facings.png",
+      "category": "D.optional_visual_reference",
+      "role": "Existing image, copied unchanged; no new renders.",
+      "bytes": 88527,
+      "sha256": "7ad0d7ff3d9b561c43b3750288489138b5d0f63e2893c0ecb0bcf53febe1b0bf"
+    },
+    {
+      "path": "hair-readability/tall-yaw0-corrected-game.png",
+      "category": "D.optional_visual_reference",
+      "role": "Existing image, copied unchanged; no new renders.",
+      "bytes": 443678,
+      "sha256": "885918025cfb9b43374d5c793865334103752141be52d5c9c9ed53a565c3ffaa"
+    },
+    {
+      "path": "hair-readability/tall-yaw0-corrected-inspection.png",
+      "category": "D.optional_visual_reference",
+      "role": "Existing image, copied unchanged; no new renders.",
+      "bytes": 329336,
+      "sha256": "071dcd9ebd919526a8fa4507d362dd042e13f35ccfc77581f7013a2c00c103d3"
+    },
+    {
+      "path": "hair-readability/tall-yaw0-corrected-player-exact.png",
+      "category": "D.optional_visual_reference",
+      "role": "Existing image, copied unchanged; no new renders.",
+      "bytes": 11593,
+      "sha256": "e83dee2ff873a851ca1fc72b2a7169588e4416ef29da913bf142694f612f9a45"
+    },
+    {
+      "path": "hair-readability/validation.json",
+      "category": "C.validation_fixture",
+      "role": "Existing frozen fixture/provenance; historical scope is documented in handoff.",
+      "bytes": 6821,
+      "sha256": "4df1924063eb9ffef68274df66067b98876fc6b413a29a977d7cfabf8bec0df6"
+    },
+    {
+      "path": "handoff/verify_package.py",
+      "category": "C.validation_tool",
+      "role": "New read-only package integrity checker, not a character/animation implementation.",
+      "bytes": 2851,
+      "sha256": "509dd88bd84f3d00c36271bed6db3f936bc982fb2724b6f6c1dbb01c0d0c2a55"
+    },
+    {
+      "path": "head-refinement/runtime-anchor.json",
+      "category": "A.runtime_source",
+      "role": "Direct CommonJS dependency of src/player-morphology.js",
+      "bytes": 3266596,
+      "sha256": "21b983a0cb1d1a7f5ad3f95162c019d8939443b214ba65c1da4601aed7cef0b2"
+    },
+    {
+      "path": "morphology/configurations.json",
+      "category": "A.runtime_source",
+      "role": "Direct CommonJS dependency of src/player-morphology.js",
+      "bytes": 1338,
+      "sha256": "deb82bf2a318828f8011aa5c82c18106f75130394298028726b0a00156c63c0a"
+    },
+    {
+      "path": "morphology/delivery-validation.json",
+      "category": "C.validation_fixture",
+      "role": "Existing frozen fixture/provenance; historical scope is documented in handoff.",
+      "bytes": 5093,
+      "sha256": "6be1d0a6e37ec3d315cf1792fab0699c7106e6b22885ee40ed0b365718e29586"
+    },
+    {
+      "path": "morphology/head-parameters.json",
+      "category": "B.generation_source",
+      "role": "Recorded parameters; build-head.py currently hard-codes equivalent CFG, does not read this JSON.",
+      "bytes": 279,
+      "sha256": "ee599fbd818f46ee7d2bdcab4148d2a7b882cc48d3a06a8edc594e09ea4f78a8"
+    },
+    {
+      "path": "morphology/runtime-courtois.json",
+      "category": "A.runtime_source",
+      "role": "Direct CommonJS dependency of src/player-morphology.js",
+      "bytes": 4428543,
+      "sha256": "41a97300fba2644a1fdcb509ccc3549976d4feeb584f9a26c5b205bd00b375d3"
+    },
+    {
+      "path": "roster/frozen-inputs.json",
+      "category": "C.validation_fixture",
+      "role": "Existing frozen fixture/provenance; historical scope is documented in handoff.",
+      "bytes": 1315,
+      "sha256": "73395e0ab81ee75ae7325a80f4853c5c8e9bbe2089a86425e7e66e7d1a86a251"
+    },
+    {
+      "path": "scene-density/environment/README_ENVIRONMENT.md",
+      "category": "C.provenance",
+      "role": "Original snapshot provenance; its full-page setup refers to the original larger source package, not this minimal subset.",
+      "bytes": 6153,
+      "sha256": "216b93c7bafc07d1a49965e62228ae9d67c535b8a5b84eef3f60d71664931643"
+    },
+    {
+      "path": "scene-density/environment/assets/visual_v1/MANIFEST.json",
+      "category": "A.environment_support",
+      "role": "Required by offline environment harness; unused sprite entries intentionally not packaged.",
+      "bytes": 22786,
+      "sha256": "eedc179e4c5b0af035ae7468985e420cd0a80c00fde9d293cd0f1751a213efde"
+    },
+    {
+      "path": "scene-density/environment/assets/visual_v1/originals/ball_pixellab/ball_micro_10_4ph.png",
+      "category": "A.environment_support",
+      "role": "Exact directly loaded environment.cjs input; no historical character sprites.",
+      "bytes": 248,
+      "sha256": "168d3448b50add61fdaee19cc79cd2a95841d48d36a3d7aa1726806300fa22f0"
+    },
+    {
+      "path": "scene-density/environment/assets/visual_v1/originals/ball_pixellab/ball_micro_11_4ph.png",
+      "category": "A.environment_support",
+      "role": "Exact directly loaded environment.cjs input; no historical character sprites.",
+      "bytes": 248,
+      "sha256": "c3a1cf1930c5a22f127707e0c561cb6dc076443f2d466eae41e9795c0e745c88"
+    },
+    {
+      "path": "scene-density/environment/assets/visual_v1/originals/ball_pixellab/ball_micro_7_4ph.png",
+      "category": "A.environment_support",
+      "role": "Exact directly loaded environment.cjs input; no historical character sprites.",
+      "bytes": 192,
+      "sha256": "680b6cb8a9b9c9617fadc8b5a8f88341349b6e3d4aab26fb2d5f31eecf8a2874"
+    },
+    {
+      "path": "scene-density/environment/assets/visual_v1/originals/ball_pixellab/ball_micro_8_4ph.png",
+      "category": "A.environment_support",
+      "role": "Exact directly loaded environment.cjs input; no historical character sprites.",
+      "bytes": 228,
+      "sha256": "a421cf6fbf655744920a15f651b6708f24e5984f36f0378fb054072fd158b4f9"
+    },
+    {
+      "path": "scene-density/environment/assets/visual_v1/originals/ball_pixellab/ball_micro_9_4ph.png",
+      "category": "A.environment_support",
+      "role": "Exact directly loaded environment.cjs input; no historical character sprites.",
+      "bytes": 237,
+      "sha256": "b1f287e57c860ccd5ade13ef6ff0193b373eb4213b34313c2c61e5b97700567e"
+    },
+    {
+      "path": "scene-density/environment/assets/visual_v1/originals/ball_pixellab/ball_sheet_24x8.png",
+      "category": "A.environment_support",
+      "role": "Exact directly loaded environment.cjs input; no historical character sprites.",
+      "bytes": 1859,
+      "sha256": "61d16878d16f09086a52d51085c0b9afcfa2bbdc7bd1cc513f998823af9c9a71"
+    },
+    {
+      "path": "scene-density/environment/assets/visual_v1/originals/goal_v2_oblique/goal_v2_2_surgical.png",
+      "category": "A.environment_support",
+      "role": "Exact directly loaded environment.cjs input; no historical character sprites.",
+      "bytes": 66064,
+      "sha256": "3c377434cc85058fdcaa01a94dbbc5f75d57db2383564401c25ee99aa1f7c8b8"
+    },
+    {
+      "path": "scene-density/environment/assets/visual_v1/originals/goal_v2_oblique/goal_v2_3_frozen_bake.json",
+      "category": "A.environment_support",
+      "role": "Exact directly loaded environment.cjs input; no historical character sprites.",
+      "bytes": 1750,
+      "sha256": "00801627333d9829f7c784e2fc9920499322293ddf610e9751bc40d396326f7c"
+    },
+    {
+      "path": "scene-density/environment/assets/visual_v1/originals/goal_v2_oblique/goal_v2_3_frozen_bake.png",
+      "category": "A.environment_support",
+      "role": "Exact directly loaded environment.cjs input; no historical character sprites.",
+      "bytes": 9036,
+      "sha256": "c6cad0d8ca4195d84be837fe66796a9e440cdb0a711d6f1cb1bae492a9e9402f"
+    },
+    {
+      "path": "scene-density/environment/assets/visual_v1/originals/stadium_03aa33f8/stand_strip.png",
+      "category": "A.environment_support",
+      "role": "Exact directly loaded environment.cjs input; no historical character sprites.",
+      "bytes": 26331,
+      "sha256": "f3597f40e83aef99d72505e0fcfb819206aaf41dabcecab79fd7471f96e8ea41"
+    },
+    {
+      "path": "scene-density/environment/assets/visual_v1/originals/tileset_1495fe3a/tileset_metadata.json",
+      "category": "A.environment_support",
+      "role": "Exact directly loaded environment.cjs input; no historical character sprites.",
+      "bytes": 7943,
+      "sha256": "3604338a309235e54ec51d8e42e0abe1a6c0bca348d5e5cb5fddd3d58f06427a"
+    },
+    {
+      "path": "scene-density/environment/assets/visual_v1/originals/tileset_1495fe3a/tileset_sheet.png",
+      "category": "A.environment_support",
+      "role": "Exact directly loaded environment.cjs input; no historical character sprites.",
+      "bytes": 5458,
+      "sha256": "8809fdc9e22386ce8466ca0942d2de8e0f236e12b13d6e75abc142c5a1037db7"
+    },
+    {
+      "path": "scene-density/environment/sandbox/visual/anim3d/gk3d_backend.js",
+      "category": "A.action_snapshot",
+      "role": "Existing animation/IK/backend/temporary rendering source context.",
+      "bytes": 37808,
+      "sha256": "07410f90cc250f56118135dc96627b37ce5c439e7be4d8034470b6d5404fdb4f"
+    },
+    {
+      "path": "scene-density/environment/sandbox/visual/anim3d/gk_backend.js",
+      "category": "A.action_snapshot",
+      "role": "Existing animation/IK/backend/temporary rendering source context.",
+      "bytes": 8155,
+      "sha256": "f1d307541698d96b506654ade0904f6e6bf0e7a747921d4c8ebb70d98e3071a1"
+    },
+    {
+      "path": "scene-density/environment/sandbox/visual/anim3d/gk_far_dive_clip.js",
+      "category": "A.action_snapshot",
+      "role": "Existing animation/IK/backend/temporary rendering source context.",
+      "bytes": 17179,
+      "sha256": "db738fe7be14dda2371a20a5793334b029962052d8fd35ea5b95087995a8ce82"
+    },
+    {
+      "path": "scene-density/environment/sandbox/visual/anim3d/gk_graph.js",
+      "category": "A.action_snapshot",
+      "role": "Existing animation/IK/backend/temporary rendering source context.",
+      "bytes": 93491,
+      "sha256": "5dca8375a68ee582374a8075e3600622e4ee6a2b1591bb8299033443e52f99a8"
+    },
+    {
+      "path": "scene-density/environment/sandbox/visual/anim3d/gk_motion_library.js",
+      "category": "A.action_snapshot",
+      "role": "Existing animation/IK/backend/temporary rendering source context.",
+      "bytes": 38136,
+      "sha256": "457133d3db3c194f4c84ed2022e7bd107ed73d0082af826b5d37bd4bd742d38b"
+    },
+    {
+      "path": "scene-density/environment/sandbox/visual/anim3d/gl_renderer.js",
+      "category": "A.action_snapshot",
+      "role": "Existing animation/IK/backend/temporary rendering source context.",
+      "bytes": 17652,
+      "sha256": "0793177404bfca5fb5f7612392f7b887c0bef4dce37a91c770715357a19d8c88"
+    },
+    {
+      "path": "scene-density/environment/sandbox/visual/anim3d/ik.js",
+      "category": "A.action_snapshot",
+      "role": "Existing animation/IK/backend/temporary rendering source context.",
+      "bytes": 12006,
+      "sha256": "7186294621fa05535bc8bbcea3eac1c60eb871b898a2b9ef413d48b019b25034"
+    },
+    {
+      "path": "scene-density/environment/sandbox/visual/anim3d/m4.js",
+      "category": "A.action_snapshot",
+      "role": "Existing animation/IK/backend/temporary rendering source context.",
+      "bytes": 4033,
+      "sha256": "fcbe559ea04796f2179c49f5d1623cf01d0268a48689547f5f3d4d3c7b29f1b2"
+    },
+    {
+      "path": "scene-density/environment/sandbox/visual/anim3d/skeleton.js",
+      "category": "A.action_snapshot",
+      "role": "Existing animation/IK/backend/temporary rendering source context.",
+      "bytes": 7145,
+      "sha256": "92ce29d32e0be1511b45c2b214128452396888ee5fc3ee7d6f4a5421a3dd7134"
+    },
+    {
+      "path": "scene-density/environment/sandbox/visual/anim3d/skin_mesh.js",
+      "category": "A.action_snapshot",
+      "role": "Existing animation/IK/backend/temporary rendering source context.",
+      "bytes": 8648,
+      "sha256": "131343e1e322858cd9619fa5af0d3084868ce63cb38789199001b0f3acf3fbd3"
+    },
+    {
+      "path": "scene-density/environment/sandbox/visual/match.js",
+      "category": "A.action_snapshot",
+      "role": "Read-only reference of simulation, shared action resolver, camera and scene. Merge against Claude current branch; do not replace it.",
+      "bytes": 500065,
+      "sha256": "8f59a255e5652220f823a3b65bc3681a6bb269cbd4a76f75ada9fa34337268c2"
+    },
+    {
+      "path": "scene-density/environment/sandbox/visual/tools/anim3d/gk3d_export_motion.js",
+      "category": "C.validation_tool",
+      "role": "Run later against full current host repository; browser harness uses a macOS Chrome path.",
+      "bytes": 8933,
+      "sha256": "b417596b2182c460ff332fb7ff9a5c4f8ba369b9bfa65ee3e728fdaacdd814df"
+    },
+    {
+      "path": "scene-density/environment/sandbox/visual/tools/anim3d/gk3d_gate.js",
+      "category": "C.validation_tool",
+      "role": "Run later against full current host repository; browser harness uses a macOS Chrome path.",
+      "bytes": 4514,
+      "sha256": "6fb818b23bc494f94b0f4ffb40f0e8dbb67d2af970d83ea308dd0c8a53bb0f92"
+    },
+    {
+      "path": "scene-density/environment/sandbox/visual/tools/anim3d/gk3d_gate_compare.py",
+      "category": "C.validation_tool",
+      "role": "Run later against full current host repository; browser harness uses a macOS Chrome path.",
+      "bytes": 1175,
+      "sha256": "bc2c2ce8b4e728c26bad3206110a219f66def09fff87147400f7a42e98a0aa4a"
+    },
+    {
+      "path": "scene-density/environment/sandbox/visual/tools/anim3d/gk_motion_manifest.js",
+      "category": "C.validation_tool",
+      "role": "Run later against full current host repository; browser harness uses a macOS Chrome path.",
+      "bytes": 7386,
+      "sha256": "252a0bb87fff9979260014ce339cc38ba73ee374e48ace484c2ffc03f92275fa"
+    },
+    {
+      "path": "scene-density/validation.json",
+      "category": "C.validation_fixture",
+      "role": "Existing frozen fixture/provenance; historical scope is documented in handoff.",
+      "bytes": 1524,
+      "sha256": "e673c04a45d477ee6aed3c7419d38daba399bd01aff0c60ae7a9831d6ee4253e"
+    },
+    {
+      "path": "src/art-textures.js",
+      "category": "A.runtime_source",
+      "role": "Direct CommonJS dependency of src/framebuffer-renderer.js",
+      "bytes": 7933,
+      "sha256": "8b922199756b650da034dd4712b14612237df3fe948a6f643663ec027c51b662"
+    },
+    {
+      "path": "src/canonical-character.js",
+      "category": "A.runtime_source",
+      "role": "Direct CommonJS dependency of src/player-morphology.js",
+      "bytes": 346,
+      "sha256": "3155b23006ad06675e9d4516708bf26443492e592f937d2101ecd1f99eb40c1a"
+    },
+    {
+      "path": "src/character-v3.js",
+      "category": "A.runtime_source",
+      "role": "Direct CommonJS dependency of src/face-character.js",
+      "bytes": 24323,
+      "sha256": "1aba48e0a00a8ca1cea74471b6470b16f678403ba175e8ea3260ca6a1e96eeca"
+    },
+    {
+      "path": "src/face-artwork.js",
+      "category": "A.runtime_source",
+      "role": "Direct CommonJS dependency of src/framebuffer-renderer.js",
+      "bytes": 2189,
+      "sha256": "be0f0a737314b520eb4254acc2c7380b5bf5fbb11d0d5c903cd1f1ee5b48c2e2"
+    },
+    {
+      "path": "src/face-character.js",
+      "category": "A.runtime_source",
+      "role": "Direct CommonJS dependency of src/refined-character.js",
+      "bytes": 21234,
+      "sha256": "5f7a106464ac7aa4688be3686aff8110504731fc6adf2fe38933343201cab28c"
+    },
+    {
+      "path": "src/framebuffer-renderer.js",
+      "category": "A.runtime_source",
+      "role": "Approved C material, projection and four-sample raster path.",
+      "bytes": 10532,
+      "sha256": "01f2dc4a5741f49a1e572a5326addf4bda3e071977c2b4e146a66a3c434e5ee0"
+    },
+    {
+      "path": "src/integrated-character.js",
+      "category": "A.runtime_source",
+      "role": "Direct CommonJS dependency of src/shoulder-character.js",
+      "bytes": 6393,
+      "sha256": "ad127921dcf6c83ff3fb0e1efaf6c3e111f1659d25e655f407e8c41c45c1f1f0"
+    },
+    {
+      "path": "src/lower-body-character.js",
+      "category": "A.runtime_source",
+      "role": "Direct CommonJS dependency of src/canonical-character.js",
+      "bytes": 12230,
+      "sha256": "e9a7ff2d4b99d720429aad07914b02093dd160b05a7cf5eaaaa71bc8d6847541"
+    },
+    {
+      "path": "src/player-morphology.js",
+      "category": "A.runtime_source",
+      "role": "Canonical Courtois procedural entry; do not call build during this audit.",
+      "bytes": 8189,
+      "sha256": "f7aaf2cd666a232e3b08cbacb875bf5da9c4225909491cb7047e45bb0ead3ecd"
+    },
+    {
+      "path": "src/refined-character.js",
+      "category": "A.runtime_source",
+      "role": "Direct CommonJS dependency of src/integrated-character.js",
+      "bytes": 2879,
+      "sha256": "4e310e081cad0e3299d953d8974549b44cdd543428ffa064db24334ebcc291cb"
+    },
+    {
+      "path": "src/renderer.js",
+      "category": "A.runtime_source",
+      "role": "Direct CommonJS dependency of src/framebuffer-renderer.js",
+      "bytes": 5038,
+      "sha256": "8eb9e9905e48e991ed431ce030363aabbc3c67058f3f6b42057fec125b901a81"
+    },
+    {
+      "path": "src/shoulder-character.js",
+      "category": "A.runtime_source",
+      "role": "Direct CommonJS dependency of src/lower-body-character.js",
+      "bytes": 3040,
+      "sha256": "f964c084ab0f861c36d062170a276f7649ad42cbd585cc8a1e9fa607fd32db0f"
+    },
+    {
+      "path": "tools/morphology/build-head.py",
+      "category": "B.generation_source",
+      "role": "Reproduction provenance only; do not run or overwrite approved output.",
+      "bytes": 3456,
+      "sha256": "96cadc91eb2707ae716a8ee43e79958e8960047802032d6845414d7a1846afe7"
+    },
+    {
+      "path": "tools/morphology/export.cjs",
+      "category": "B.generation_source",
+      "role": "Reproduction provenance only; do not run or overwrite approved output.",
+      "bytes": 6143,
+      "sha256": "df0eae032f0a7c71778d36dc676b07b28346589ea6eea221c88664cca1873ab3"
+    },
+    {
+      "path": "tools/morphology/gameplay.cjs",
+      "category": "B.presentation_reference",
+      "role": "Existing compositor/harness implementation; entry scripts write output if run, not executed by audit.",
+      "bytes": 3330,
+      "sha256": "4baef544879a861c189ad511827b72467482a9ee878a27f96e7371af67b4f9bd"
+    },
+    {
+      "path": "tools/morphology/hair-readability.py",
+      "category": "B.generation_source",
+      "role": "Reproduction provenance only; do not run or overwrite approved output.",
+      "bytes": 1990,
+      "sha256": "d2f2c64daaf5aec5b5da9718cbae31ff55fca6ae8295fe2b8f9ea157d3a2a49f"
+    },
+    {
+      "path": "tools/morphology/kit.cjs",
+      "category": "A.runtime_source",
+      "role": "Required atlas finishing step for procedural character path.",
+      "bytes": 3140,
+      "sha256": "aee90dee3dacad8cad82348909edd409deb2de2ceb36062685e4e6d5900291b4"
+    },
+    {
+      "path": "tools/png.cjs",
+      "category": "B.generation_source",
+      "role": "Direct CommonJS dependency of tools/morphology/export.cjs",
+      "bytes": 2329,
+      "sha256": "90b16a9a367e2ca897601956b8aee290a60f8b870d72fedfa41b281d4d78357d"
+    },
+    {
+      "path": "tools/scene-density/environment.cjs",
+      "category": "B.presentation_reference",
+      "role": "Direct CommonJS dependency of tools/morphology/gameplay.cjs",
+      "bytes": 3353,
+      "sha256": "d6f758760447989225df99ec42fb656214d9a9a0d82d16bfe0f4c118a724ba2e"
+    },
+    {
+      "path": "tools/scene-density/render.cjs",
+      "category": "B.presentation_reference",
+      "role": "Existing compositor/harness implementation; entry scripts write output if run, not executed by audit.",
+      "bytes": 4181,
+      "sha256": "eb6313177b88b898f1a30416c85672cc512b057a7b4965888541353fe6502af3"
+    }
+  ],
+  "excluded": [
+    {
+      "path": "assets/morphology/Touchline_Player_courtois-shared.glb",
+      "reason": "Shared-rig fallback, not true Courtois."
+    },
+    {
+      "path": "roster/models/Touchline_Player_courtois.glb",
+      "reason": "Byte-identical duplicate of approved GLB."
+    },
+    {
+      "path": "hair-readability/runtime-courtois-corrected.json",
+      "reason": "Byte-identical duplicate of authoritative current head."
+    },
+    {
+      "path": "hair-readability/runtime-courtois-before.json",
+      "reason": "Rejected pre-correction hair."
+    },
+    {
+      "path": "hair-readability/build-head-before.py",
+      "reason": "Superseded generator."
+    },
+    {
+      "path": "reference/source_snapshot",
+      "reason": "Older/incomplete action snapshot, use embedded environment snapshot instead."
+    },
+    {
+      "path": "roster/players.json",
+      "reason": "Other 19 players; not edited or needed for Courtois integration."
+    },
+    {
+      "path": "roster/models",
+      "reason": "Other roster exports/duplicate Courtois; not needed."
+    },
+    {
+      "path": "tools/morphology/freeze-background.py",
+      "reason": "Historical review stabilization utility; not a runtime compositor."
+    }
+  ],
+  "validationPerformedThisHandoff": [
+    "GLB parsed and all bounds/weights/binds read without rebuilding.",
+    "Frozen file SHA-256 comparisons passed.",
+    "Saved default/tall V6 rows compared without running animation.",
+    "Dependency source paths and literal CommonJS imports checked.",
+    "ZIP extraction and per-file checksums verified by separate verification step."
+  ],
+  "notValidatedThisHandoff": [
+    "No new motion or render was run.",
+    "No integrated true-height distribution or dive has been implemented/validated here.",
+    "No access to Claude separate active branch.",
+    "No mesh-surface contact tolerances are currently configured or certified; proposed gates in handoff are future acceptance targets."
+  ],
+  "handoffDocument": {
+    "path": "CLAUDE_GK_CHARACTER_INTEGRATION_HANDOFF.md",
+    "bytes": 56210,
+    "sha256": "9fdd371e3e655066e756a1b79c39c474efaac591cc098d463697ced1aff30162"
+  },
+  "packageContents": {
+    "dependencyFiles": 70,
+    "plusRootDocuments": [
+      "CLAUDE_GK_CHARACTER_INTEGRATION_HANDOFF.md",
+      "CLAUDE_GK_CHARACTER_MANIFEST.json"
+    ],
+    "totalFiles": 72,
+    "dependencyBytes": 38714365,
+    "note": "Manifest does not contain its own hash or ZIP hash to avoid circular checksums. Archive CRC and independent extraction verified outside the manifest."
+  },
+  "documentPathAudit": [
+    {
+      "path": "scene-density/environment",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "handoff/verify_package.py",
+      "included": true,
+      "existsInCompletedSource": false
+    },
+    {
+      "path": "assets/morphology/Touchline_Player_courtois.glb",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "morphology/runtime-courtois.json",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "src/player-morphology.js",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "morphology/configurations.json",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "data/skeleton_v6_variant_tall.json",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "data/motion_v6_fixture42_right_full.json",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "data/skeleton_v6_default_H1.90.json",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "src/canonical-character.js",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "src/integrated-character.js",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "src/shoulder-character.js",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "src/shoulder-character.js",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "src/lower-body-character.js",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "src/refined-character.js",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "src/face-character.js",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "src/character-v3.js",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "head-refinement/runtime-anchor.json",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "tools/morphology/build-head.py",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "morphology/head-parameters.json",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "tools/morphology/hair-readability.py",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "tools/morphology/kit.cjs",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "src/art-textures.js",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "src/face-artwork.js",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "src/framebuffer-renderer.js",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "src/renderer.js",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "tools/morphology/gameplay.cjs",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "tools/scene-density/environment.cjs",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "tools/scene-density/render.cjs",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "tools/morphology/export.cjs",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "roster/models/Touchline_Player_courtois.glb",
+      "included": false,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "assets/morphology/Touchline_Player_courtois-shared.glb",
+      "included": false,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "hair-readability/runtime-courtois-before.json",
+      "included": false,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "hair-readability/build-head-before.py",
+      "included": false,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "hair-readability/runtime-courtois-corrected.json",
+      "included": false,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "reference/source_snapshot",
+      "included": false,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "scene-density/environment/sandbox/visual/anim3d/gk_graph.js",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "src/refined-character.js",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "src/face-character.js",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "scene-density/environment/sandbox/visual/anim3d/gk_graph.js",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "tools/morphology/gameplay.cjs",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "scene-density/environment/sandbox/visual",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "scene-density/environment/sandbox/visual/match.js",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "scene-density/environment/sandbox/visual/anim3d/gk_backend.js",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "scene-density/environment/sandbox/visual/anim3d/gk_motion_library.js",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "scene-density/environment/sandbox/visual/anim3d/gk_far_dive_clip.js",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "scene-density/environment/sandbox/visual/anim3d/gk_graph.js",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "scene-density/environment/sandbox/visual/anim3d/skeleton.js",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "scene-density/environment/sandbox/visual/anim3d/ik.js",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "scene-density/environment/sandbox/visual/anim3d/gk3d_backend.js",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "src/player-morphology.js",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "src/framebuffer-renderer.js",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "src/renderer.js",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "tools/morphology/gameplay.cjs",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "data/camera_v1.json",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "src/renderer.js",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "tools/morphology/freeze-background.py",
+      "included": false,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "scene-density/environment/sandbox/visual/tools/anim3d/gk3d_gate.js",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "scene-density/environment/sandbox/visual/tools/anim3d/gk3d_gate_compare.py",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "scene-density/environment/sandbox/visual/tools/anim3d/gk_motion_manifest.js",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "scene-density/environment/sandbox/visual/tools/anim3d/gk3d_export_motion.js",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "hair-readability/validation.json",
+      "included": true,
+      "existsInCompletedSource": true
+    },
+    {
+      "path": "morphology/delivery-validation.json",
+      "included": true,
+      "existsInCompletedSource": true
+    }
+  ]
+}
