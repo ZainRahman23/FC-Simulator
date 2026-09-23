@@ -1,0 +1,664 @@
+{
+ "motion": "RUN",
+ "char": "courtois",
+ "fpsCap": null,
+ "dpr": 2,
+ "runs": [
+  {
+   "label": "pop",
+   "n": 1,
+   "secs": 30,
+   "samples": [
+    {
+     "mode": "bench",
+     "motion": "RUN",
+     "actors": 1,
+     "frames": 474,
+     "seconds": 15,
+     "fps": 31.6,
+     "rafIntervalMs": 31.64,
+     "rafIntervalP95": 33.4,
+     "fpsCap": null,
+     "ms": {
+      "simMean": 0.003,
+      "animMean": 0.123,
+      "animP95": 0.2,
+      "submitMean": 0.105,
+      "submitP95": 0.2,
+      "gpuMean": 2.109,
+      "gpuP95": 2.754,
+      "ofFrameMean": 0.243,
+      "pageDrawMean": 5.13,
+      "pageDrawP95": 5.8
+     },
+     "draws": 1,
+     "meshes": 1,
+     "verts": 306504,
+     "tris": 102168,
+     "bones": 23,
+     "memMB": {
+      "first": 54.1,
+      "last": 36,
+      "max": 58.4
+     },
+     "canvas": [
+      2400,
+      1900
+     ],
+     "gpuTimer": true
+    },
+    {
+     "mode": "bench",
+     "motion": "RUN",
+     "actors": 1,
+     "frames": 947,
+     "seconds": 30,
+     "fps": 31.6,
+     "rafIntervalMs": 31.72,
+     "rafIntervalP95": 33.4,
+     "fpsCap": null,
+     "ms": {
+      "simMean": 0.002,
+      "animMean": 0.126,
+      "animP95": 0.2,
+      "submitMean": 0.097,
+      "submitP95": 0.2,
+      "gpuMean": 2.104,
+      "gpuP95": 2.735,
+      "ofFrameMean": 0.237,
+      "pageDrawMean": 5.142,
+      "pageDrawP95": 5.9
+     },
+     "draws": 1,
+     "meshes": 1,
+     "verts": 306504,
+     "tris": 102168,
+     "bones": 23,
+     "memMB": {
+      "first": 54.1,
+      "last": 59.8,
+      "max": 59.8
+     },
+     "canvas": [
+      2400,
+      1900
+     ],
+     "gpuTimer": true
+    }
+   ],
+   "errors": []
+  },
+  {
+   "label": "pop",
+   "n": 2,
+   "secs": 30,
+   "samples": [
+    {
+     "mode": "bench",
+     "motion": "RUN",
+     "actors": 2,
+     "frames": 464,
+     "seconds": 15,
+     "fps": 30.9,
+     "rafIntervalMs": 32.33,
+     "rafIntervalP95": 33.4,
+     "fpsCap": null,
+     "ms": {
+      "simMean": 0.002,
+      "animMean": 0.094,
+      "animP95": 0.2,
+      "submitMean": 0.165,
+      "submitP95": 0.3,
+      "gpuMean": 2.49,
+      "gpuP95": 3.169,
+      "ofFrameMean": 0.268,
+      "pageDrawMean": 4.605,
+      "pageDrawP95": 5
+     },
+     "draws": 2,
+     "meshes": 2,
+     "verts": 613008,
+     "tris": 204336,
+     "bones": 46,
+     "memMB": {
+      "first": 50.7,
+      "last": 47.8,
+      "max": 50.7
+     },
+     "canvas": [
+      2400,
+      1900
+     ],
+     "gpuTimer": true
+    },
+    {
+     "mode": "bench",
+     "motion": "RUN",
+     "actors": 2,
+     "frames": 928,
+     "seconds": 30,
+     "fps": 30.9,
+     "rafIntervalMs": 32.33,
+     "rafIntervalP95": 33.4,
+     "fpsCap": null,
+     "ms": {
+      "simMean": 0.001,
+      "animMean": 0.091,
+      "animP95": 0.2,
+      "submitMean": 0.164,
+      "submitP95": 0.3,
+      "gpuMean": 2.514,
+      "gpuP95": 3.198,
+      "ofFrameMean": 0.262,
+      "pageDrawMean": 4.549,
+      "pageDrawP95": 5.1
+     },
+     "draws": 2,
+     "meshes": 2,
+     "verts": 613008,
+     "tris": 204336,
+     "bones": 46,
+     "memMB": {
+      "first": 50.7,
+      "last": 54.7,
+      "max": 66.3
+     },
+     "canvas": [
+      2400,
+      1900
+     ],
+     "gpuTimer": true
+    }
+   ],
+   "errors": []
+  },
+  {
+   "label": "pop",
+   "n": 5,
+   "secs": 30,
+   "samples": [
+    {
+     "mode": "bench",
+     "motion": "RUN",
+     "actors": 5,
+     "frames": 430,
+     "seconds": 15,
+     "fps": 28.7,
+     "rafIntervalMs": 34.88,
+     "rafIntervalP95": 50,
+     "fpsCap": null,
+     "ms": {
+      "simMean": 0.004,
+      "animMean": 0.152,
+      "animP95": 0.2,
+      "submitMean": 0.203,
+      "submitP95": 0.3,
+      "gpuMean": 3.648,
+      "gpuP95": 4.405,
+      "ofFrameMean": 0.365,
+      "pageDrawMean": 4.688,
+      "pageDrawP95": 4.9
+     },
+     "draws": 5,
+     "meshes": 5,
+     "verts": 1532520,
+     "tris": 510840,
+     "bones": 115,
+     "memMB": {
+      "first": 56.5,
+      "last": 56.2,
+      "max": 56.5
+     },
+     "canvas": [
+      2400,
+      1900
+     ],
+     "gpuTimer": true
+    },
+    {
+     "mode": "bench",
+     "motion": "RUN",
+     "actors": 5,
+     "frames": 857,
+     "seconds": 30,
+     "fps": 28.6,
+     "rafIntervalMs": 35.03,
+     "rafIntervalP95": 50,
+     "fpsCap": null,
+     "ms": {
+      "simMean": 0.003,
+      "animMean": 0.146,
+      "animP95": 0.2,
+      "submitMean": 0.2,
+      "submitP95": 0.3,
+      "gpuMean": 3.644,
+      "gpuP95": 4.4,
+      "ofFrameMean": 0.354,
+      "pageDrawMean": 4.677,
+      "pageDrawP95": 4.9
+     },
+     "draws": 5,
+     "meshes": 5,
+     "verts": 1532520,
+     "tris": 510840,
+     "bones": 115,
+     "memMB": {
+      "first": 56.5,
+      "last": 43.1,
+      "max": 56.5
+     },
+     "canvas": [
+      2400,
+      1900
+     ],
+     "gpuTimer": true
+    }
+   ],
+   "errors": []
+  },
+  {
+   "label": "pop",
+   "n": 11,
+   "secs": 30,
+   "samples": [
+    {
+     "mode": "bench",
+     "motion": "RUN",
+     "actors": 11,
+     "frames": 373,
+     "seconds": 15,
+     "fps": 24.9,
+     "rafIntervalMs": 40.26,
+     "rafIntervalP95": 50.1,
+     "fpsCap": null,
+     "ms": {
+      "simMean": 0.005,
+      "animMean": 0.294,
+      "animP95": 0.4,
+      "submitMean": 0.268,
+      "submitP95": 0.4,
+      "gpuMean": 5.899,
+      "gpuP95": 6.712,
+      "ofFrameMean": 0.573,
+      "pageDrawMean": 4.928,
+      "pageDrawP95": 5.3
+     },
+     "draws": 11,
+     "meshes": 11,
+     "verts": 3371544,
+     "tris": 1123848,
+     "bones": 253,
+     "memMB": {
+      "first": 48.2,
+      "last": 63.9,
+      "max": 63.9
+     },
+     "canvas": [
+      2400,
+      1900
+     ],
+     "gpuTimer": true
+    },
+    {
+     "mode": "bench",
+     "motion": "RUN",
+     "actors": 11,
+     "frames": 746,
+     "seconds": 30,
+     "fps": 24.9,
+     "rafIntervalMs": 40.22,
+     "rafIntervalP95": 50.1,
+     "fpsCap": null,
+     "ms": {
+      "simMean": 0.004,
+      "animMean": 0.295,
+      "animP95": 0.4,
+      "submitMean": 0.263,
+      "submitP95": 0.3,
+      "gpuMean": 5.879,
+      "gpuP95": 6.619,
+      "ofFrameMean": 0.569,
+      "pageDrawMean": 4.896,
+      "pageDrawP95": 5.3
+     },
+     "draws": 11,
+     "meshes": 11,
+     "verts": 3371544,
+     "tris": 1123848,
+     "bones": 253,
+     "memMB": {
+      "first": 48.2,
+      "last": 66.9,
+      "max": 66.9
+     },
+     "canvas": [
+      2400,
+      1900
+     ],
+     "gpuTimer": true
+    }
+   ],
+   "errors": []
+  },
+  {
+   "label": "pop",
+   "n": 22,
+   "secs": 30,
+   "samples": [
+    {
+     "mode": "bench",
+     "motion": "RUN",
+     "actors": 22,
+     "frames": 299,
+     "seconds": 15,
+     "fps": 19.9,
+     "rafIntervalMs": 50.22,
+     "rafIntervalP95": 50.1,
+     "fpsCap": null,
+     "ms": {
+      "simMean": 0.014,
+      "animMean": 0.521,
+      "animP95": 0.8,
+      "submitMean": 0.389,
+      "submitP95": 0.5,
+      "gpuMean": 10.039,
+      "gpuP95": 10.937,
+      "ofFrameMean": 0.929,
+      "pageDrawMean": 5.253,
+      "pageDrawP95": 5.7
+     },
+     "draws": 22,
+     "meshes": 22,
+     "verts": 6743088,
+     "tris": 2247696,
+     "bones": 506,
+     "memMB": {
+      "first": 59.7,
+      "last": 42.9,
+      "max": 59.7
+     },
+     "canvas": [
+      2400,
+      1900
+     ],
+     "gpuTimer": true
+    },
+    {
+     "mode": "bench",
+     "motion": "RUN",
+     "actors": 22,
+     "frames": 598,
+     "seconds": 30,
+     "fps": 19.9,
+     "rafIntervalMs": 50.22,
+     "rafIntervalP95": 50.1,
+     "fpsCap": null,
+     "ms": {
+      "simMean": 0.009,
+      "animMean": 0.519,
+      "animP95": 0.8,
+      "submitMean": 0.385,
+      "submitP95": 0.5,
+      "gpuMean": 10.051,
+      "gpuP95": 10.938,
+      "ofFrameMean": 0.92,
+      "pageDrawMean": 5.242,
+      "pageDrawP95": 5.7
+     },
+     "draws": 22,
+     "meshes": 22,
+     "verts": 6743088,
+     "tris": 2247696,
+     "bones": 506,
+     "memMB": {
+      "first": 59.7,
+      "last": 50.4,
+      "max": 67.8
+     },
+     "canvas": [
+      2400,
+      1900
+     ],
+     "gpuTimer": true
+    }
+   ],
+   "errors": []
+  },
+  {
+   "label": "sustained",
+   "n": 11,
+   "secs": 90,
+   "samples": [
+    {
+     "mode": "bench",
+     "motion": "RUN",
+     "actors": 11,
+     "frames": 373,
+     "seconds": 15,
+     "fps": 24.9,
+     "rafIntervalMs": 40.17,
+     "rafIntervalP95": 50.1,
+     "fpsCap": null,
+     "ms": {
+      "simMean": 0.005,
+      "animMean": 0.303,
+      "animP95": 0.4,
+      "submitMean": 0.266,
+      "submitP95": 0.3,
+      "gpuMean": 5.827,
+      "gpuP95": 6.556,
+      "ofFrameMean": 0.58,
+      "pageDrawMean": 4.831,
+      "pageDrawP95": 5.3
+     },
+     "draws": 11,
+     "meshes": 11,
+     "verts": 3371544,
+     "tris": 1123848,
+     "bones": 253,
+     "memMB": {
+      "first": 55.6,
+      "last": 58.5,
+      "max": 58.5
+     },
+     "canvas": [
+      2400,
+      1900
+     ],
+     "gpuTimer": true
+    },
+    {
+     "mode": "bench",
+     "motion": "RUN",
+     "actors": 11,
+     "frames": 746,
+     "seconds": 30,
+     "fps": 24.9,
+     "rafIntervalMs": 40.19,
+     "rafIntervalP95": 50.1,
+     "fpsCap": null,
+     "ms": {
+      "simMean": 0.004,
+      "animMean": 0.299,
+      "animP95": 0.4,
+      "submitMean": 0.26,
+      "submitP95": 0.3,
+      "gpuMean": 5.835,
+      "gpuP95": 6.561,
+      "ofFrameMean": 0.569,
+      "pageDrawMean": 4.844,
+      "pageDrawP95": 5.2
+     },
+     "draws": 11,
+     "meshes": 11,
+     "verts": 3371544,
+     "tris": 1123848,
+     "bones": 253,
+     "memMB": {
+      "first": 55.6,
+      "last": 69.5,
+      "max": 69.5
+     },
+     "canvas": [
+      2400,
+      1900
+     ],
+     "gpuTimer": true
+    },
+    {
+     "mode": "bench",
+     "motion": "RUN",
+     "actors": 11,
+     "frames": 1118,
+     "seconds": 45,
+     "fps": 24.8,
+     "rafIntervalMs": 40.3,
+     "rafIntervalP95": 50.1,
+     "fpsCap": null,
+     "ms": {
+      "simMean": 0.004,
+      "animMean": 0.293,
+      "animP95": 0.4,
+      "submitMean": 0.259,
+      "submitP95": 0.3,
+      "gpuMean": 5.852,
+      "gpuP95": 6.572,
+      "ofFrameMean": 0.562,
+      "pageDrawMean": 4.821,
+      "pageDrawP95": 5.2
+     },
+     "draws": 11,
+     "meshes": 11,
+     "verts": 3371544,
+     "tris": 1123848,
+     "bones": 253,
+     "memMB": {
+      "first": 55.6,
+      "last": 35.4,
+      "max": 69.5
+     },
+     "canvas": [
+      2400,
+      1900
+     ],
+     "gpuTimer": true
+    },
+    {
+     "mode": "bench",
+     "motion": "RUN",
+     "actors": 11,
+     "frames": 1490,
+     "seconds": 60,
+     "fps": 24.8,
+     "rafIntervalMs": 40.36,
+     "rafIntervalP95": 50.1,
+     "fpsCap": null,
+     "ms": {
+      "simMean": 0.004,
+      "animMean": 0.291,
+      "animP95": 0.4,
+      "submitMean": 0.258,
+      "submitP95": 0.3,
+      "gpuMean": 5.861,
+      "gpuP95": 6.625,
+      "ofFrameMean": 0.558,
+      "pageDrawMean": 4.847,
+      "pageDrawP95": 5.3
+     },
+     "draws": 11,
+     "meshes": 11,
+     "verts": 3371544,
+     "tris": 1123848,
+     "bones": 253,
+     "memMB": {
+      "first": 55.6,
+      "last": 38.8,
+      "max": 69.5
+     },
+     "canvas": [
+      2400,
+      1900
+     ],
+     "gpuTimer": true
+    },
+    {
+     "mode": "bench",
+     "motion": "RUN",
+     "actors": 11,
+     "frames": 1861,
+     "seconds": 75,
+     "fps": 24.8,
+     "rafIntervalMs": 40.33,
+     "rafIntervalP95": 50.1,
+     "fpsCap": null,
+     "ms": {
+      "simMean": 0.003,
+      "animMean": 0.287,
+      "animP95": 0.4,
+      "submitMean": 0.257,
+      "submitP95": 0.3,
+      "gpuMean": 5.867,
+      "gpuP95": 6.64,
+      "ofFrameMean": 0.553,
+      "pageDrawMean": 4.828,
+      "pageDrawP95": 5.2
+     },
+     "draws": 11,
+     "meshes": 11,
+     "verts": 3371544,
+     "tris": 1123848,
+     "bones": 253,
+     "memMB": {
+      "first": 55.6,
+      "last": 41.8,
+      "max": 69.5
+     },
+     "canvas": [
+      2400,
+      1900
+     ],
+     "gpuTimer": true
+    },
+    {
+     "mode": "bench",
+     "motion": "RUN",
+     "actors": 11,
+     "frames": 2233,
+     "seconds": 90,
+     "fps": 24.8,
+     "rafIntervalMs": 40.39,
+     "rafIntervalP95": 50.1,
+     "fpsCap": null,
+     "ms": {
+      "simMean": 0.003,
+      "animMean": 0.282,
+      "animP95": 0.4,
+      "submitMean": 0.257,
+      "submitP95": 0.3,
+      "gpuMean": 5.876,
+      "gpuP95": 6.673,
+      "ofFrameMean": 0.547,
+      "pageDrawMean": 4.843,
+      "pageDrawP95": 5.3
+     },
+     "draws": 11,
+     "meshes": 11,
+     "verts": 3371544,
+     "tris": 1123848,
+     "bones": 253,
+     "memMB": {
+      "first": 55.6,
+      "last": 58.6,
+      "max": 69.5
+     },
+     "canvas": [
+      2400,
+      1900
+     ],
+     "gpuTimer": true
+    }
+   ],
+   "errors": []
+  }
+ ]
+}

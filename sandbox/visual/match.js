@@ -35,6 +35,7 @@ const VIEW = { w: 1280, h: 720 };           // reference viewport defining V-spa
 // chunky edges survive; sprites keep nearest-neighbour sampling and now draw
 // from their sources at up to native resolution (players 128px -> ~123px).
 const RES = Math.min(window.devicePixelRatio || 1, 2);
+const FPS_CAP_PARAM = (() => { try { const v = new URLSearchParams(location.search).get("fps"); return v ? +v : null; } catch (e) { return null; } })();   // ?fps=60 → presentation frame cap (see tick)
 const PXQ = Math.max(1, Math.round(RES));   // stroke quantum (1 CSS px)
 const qw = (cssw) => Math.max(PXQ, Math.round(cssw * RES / PXQ) * PXQ);
 const uipx = (v) => Math.round(v * RES);    // HUD/debug sizes in backing px
@@ -1828,6 +1829,10 @@ function tick(ts) {
   netPhysUpdate(S.netSlow ? dt * 0.15 : dt);   // key 0: slow motion (same
                                                // fixed steps, fewer per frame)
   const __t0 = performance.now();
+  if (S.fpsCap == null && FPS_CAP_PARAM) S.fpsCap = FPS_CAP_PARAM;
+  S.frameStat = S.frameStat || { n: 0, drawn: 0, t0: __t0, intervals: [] }; const __fs = S.frameStat; __fs.n++; __fs.intervals.push(ts - (__fs.lastTs || ts)); if (__fs.intervals.length > 600) __fs.intervals.shift(); __fs.lastTs = ts;   // frame-pacing statistics (rAF cadence)
+  if (S.fpsCap && __fs.lastDrawTs != null && (ts - __fs.lastDrawTs) < (1000 / S.fpsCap) - 2) { requestAnimationFrame(tick); return; }   // presentation frame cap (?fps=60): the display may run at 120 Hz; the simulation stepping above is unaffected
+  __fs.lastDrawTs = ts; __fs.drawn++;
   draw(sample, dt);
   const __ms = performance.now() - __t0;
   (S.perfT ||= []).push(__ms);

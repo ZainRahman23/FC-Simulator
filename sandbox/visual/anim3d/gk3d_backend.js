@@ -24,7 +24,8 @@ const GK3D = {
 function gk3dRenderLayer(density) {
   const e = typeof GK_CHAR !== "undefined" ? GK_CHAR.get("COURTOIS") : null, L = GK3D.lastLayer; if (!e || e.status !== "ready" || !L || !GK3D.R) return null;
   const out = gkCharRender(GK3D.R, e, L.skinMats, L.roi, density, cv.width, cv.height, RES, L.ballP ? { p: L.ballP, r: L.ballR } : null);
-  return { png: out.canvas.toDataURL("image/png"), roi: L.roi, w: out.w, h: out.h, density, ss: out.ss, draws: out.draws };
+  let c = out.canvas; if (c.width !== out.w || c.height !== out.h) { c = document.createElement("canvas"); c.width = out.w; c.height = out.h; c.getContext("2d").drawImage(out.canvas, 0, 0, out.w, out.h, 0, 0, out.w, out.h); }   // grow-only GL canvas: the layer is its top-left w×h
+  return { png: c.toDataURL("image/png"), roi: L.roi, w: out.w, h: out.h, density, ss: out.ss, draws: out.draws };
 }
 function gk3dReset() { GK3D.state = {}; GK3D.trail = []; GK3D.asserts = []; GK3D.prev = null; GK3D.ballPres = null; GK3D.cradleFlags = []; GK3D.ballTrail = []; GK3D.distRecords = []; GK3D.distFlags = []; GK3D.presTrail = []; GK3D._distSeen = {}; }
 // The PRESENTATION ball: while the SKELETAL_3D backend is active and the authoritative ball is near the keeper (or keeper-owned), the ball

@@ -15,6 +15,7 @@ function skinBuildMesh(skel) {
   const ring = (c, a, ru, rv, pt, ws) => {
     const u0 = Math.abs(a[0]) < 0.9 ? [1, 0, 0] : [0, 0, 1], v = V3.norm(V3.cross(u0, a)), u = V3.norm(V3.cross(a, v));
     const base = pos.length / 3, tot = ws.reduce((q, x) => q + x[1], 0), dom = ws.reduce((m, x) => x[1] > m[1] ? x : m, ws[0]);
+    if (skel.girth) { const gv = skel.girth[dom[0].name]; if (gv != null) { const gu = Array.isArray(gv) ? gv[0] : gv, gvv = Array.isArray(gv) ? gv[1] : gv; ru = ru * gu; rv = rv * gvv; } }   // morphology: per-bone girth (outfield rig); absent for the goalkeeper test character
     for (let i = 0; i <= N; i++) { const t = i / N * Math.PI * 2, cu = Math.cos(t), sv = Math.sin(t);
       pos.push(c[0] + (u[0] * cu * ru + v[0] * sv * rv) * s, c[1] + (u[1] * cu * ru + v[1] * sv * rv) * s, c[2] + (u[2] * cu * ru + v[2] * sv * rv) * s);
       part.push(PI[pt]); bid.push(dom[0].idx + 1);

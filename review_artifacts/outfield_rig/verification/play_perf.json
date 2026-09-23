@@ -1,0 +1,138 @@
+[
+ {
+  "label": "playable Mixed (as shipped)",
+  "rafHz": 30.6,
+  "rafMs": 32.69,
+  "rafP95": 33.4,
+  "framesSeen": 612,
+  "framesDrawn": 612,
+  "fpsCap": null,
+  "pageDrawMs": 6.15,
+  "pageDrawP95": 6.9,
+  "keeperMs": 0,
+  "keeperP95": 0,
+  "gkPerf": {
+   "n": 612,
+   "avg": 0.39,
+   "draws": 2,
+   "target": "78x122 (1/undefined)"
+  },
+  "compositeMs": 0.49,
+  "hudMs": 0.077,
+  "mixed": true,
+  "merged": true,
+  "canvas": [
+   2400,
+   1900
+  ],
+  "layer": {
+   "w": 156,
+   "h": 244,
+   "dens": 4,
+   "draws": 2
+  },
+  "mem": 46.5
+ },
+ {
+  "label": "playable Mixed + ?fps=60",
+  "rafHz": 30.6,
+  "rafMs": 32.67,
+  "rafP95": 33.4,
+  "framesSeen": 612,
+  "framesDrawn": 612,
+  "fpsCap": 60,
+  "pageDrawMs": 6.13,
+  "pageDrawP95": 6.7,
+  "keeperMs": 0,
+  "keeperP95": 0,
+  "gkPerf": {
+   "n": 612,
+   "avg": 0.37,
+   "draws": 2,
+   "target": "78x122 (1/undefined)"
+  },
+  "compositeMs": 0.47,
+  "hudMs": 0.073,
+  "mixed": true,
+  "merged": true,
+  "canvas": [
+   2400,
+   1900
+  ],
+  "layer": {
+   "w": 156,
+   "h": 244,
+   "dens": 4,
+   "draws": 2
+  },
+  "mem": 49.8
+ },
+ {
+  "label": "playable, Mixed OFF (page canvas)",
+  "rafHz": 31.7,
+  "rafMs": 31.58,
+  "rafP95": 33.4,
+  "framesSeen": 634,
+  "framesDrawn": 634,
+  "fpsCap": null,
+  "pageDrawMs": 5.71,
+  "pageDrawP95": 6.3,
+  "keeperMs": 0,
+  "keeperP95": 0,
+  "gkPerf": {
+   "n": 634,
+   "avg": 0.41,
+   "draws": 2,
+   "target": "78x122 (1/undefined)"
+  },
+  "compositeMs": 0,
+  "hudMs": 0.086,
+  "mixed": false,
+  "merged": true,
+  "canvas": [
+   2400,
+   1900
+  ],
+  "layer": {
+   "w": 148,
+   "h": 244,
+   "dens": 4,
+   "draws": 1
+  },
+  "mem": 71.7
+ },
+ {
+  "label": "playable Mixed, per-primitive draws (?gkMerged=0)",
+  "rafHz": 30.8,
+  "rafMs": 32.47,
+  "rafP95": 33.4,
+  "framesSeen": 616,
+  "framesDrawn": 616,
+  "fpsCap": null,
+  "pageDrawMs": 6.13,
+  "pageDrawP95": 6.8,
+  "keeperMs": 0,
+  "keeperP95": 0,
+  "gkPerf": {
+   "n": 616,
+   "avg": 0.39,
+   "draws": 30,
+   "target": "78x122 (1/undefined)"
+  },
+  "compositeMs": 0.49,
+  "hudMs": 0.073,
+  "mixed": true,
+  "merged": false,
+  "canvas": [
+   2400,
+   1900
+  ],
+  "layer": {
+   "w": 156,
+   "h": 244,
+   "dens": 4,
+   "draws": 30
+  },
+  "mem": 56.1
+ }
+]

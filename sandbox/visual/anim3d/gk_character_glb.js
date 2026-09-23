@@ -15,6 +15,8 @@ const GK_CHAR = {
   // Approved C treatment constants (src/framebuffer-renderer.js): light (render-world, normalized), Soft Cel tone, skin palette, ink
   lightWorld: [-0.42, 0.72, -0.54],
   skin: { base: [0xc7, 0x9c, 0x83], shadow: [0x88, 0x69, 0x5a], light: [0xef, 0xd0, 0xb6] }, ink: [0x17, 0x2f, 0x42],
+  growOnly: (new URLSearchParams(location.search).get("gkGrow") || "1") !== "0",                   // grow-only render targets / canvas (no per-frame reallocation; ?gkGrow=0 restores the exact-size path)
+  merged: (new URLSearchParams(location.search).get("gkMerged") || "1") !== "0",                 // draw-call batching (one draw for the 29 primitives; verified pixel-identical — ?gkMerged=0 restores the per-primitive path)
   ssaa: 2,                                                                                     // 2×2 fixed sub-pixel samples per output pixel: (0.25,0.25) (0.75,0.25) (0.25,0.75) (0.75,0.75) = the approved four-sample resolve
 };
 GK_CHAR.define("COURTOIS", "../../assets/characters/courtois/Touchline_Player_courtois.glb", "../../assets/characters/courtois/courtois_rig.json");
@@ -94,11 +96,11 @@ function gkCharGL(R, entry) {
   }`;
   // resolve: 2×2 box of the supersampled layer (four fixed sub-pixel positions) → coverage alpha; inward ink contour at fractional coverage; premultiplied output
   const RVS = `#version 300 es
-  layout(location=0) in vec2 aP; out vec2 vUv; void main(){ vUv = aP * 0.5 + 0.5; gl_Position = vec4(aP, 0.0, 1.0); }`;
+  layout(location=0) in vec2 aP; out vec2 vUv0; void main(){ vUv0 = aP * 0.5 + 0.5; gl_Position = vec4(aP, 0.0, 1.0); }`;
   const RFS = `#version 300 es
-  precision highp float; in vec2 vUv; uniform sampler2D uSrc; uniform vec2 uTexel; uniform vec3 uInk; out vec4 o;
+  precision highp float; in vec2 vUv0; uniform sampler2D uSrc; uniform vec2 uTexel; uniform vec3 uInk; uniform vec2 uScale; out vec4 o;
   void main(){
-    vec4 s = vec4(0.0);
+    vec4 s = vec4(0.0); vec2 vUv = vUv0 * uScale;
     s += texture(uSrc, vUv + uTexel * vec2(-0.5, -0.5)); s += texture(uSrc, vUv + uTexel * vec2(0.5, -0.5)); s += texture(uSrc, vUv + uTexel * vec2(-0.5, 0.5)); s += texture(uSrc, vUv + uTexel * vec2(0.5, 0.5));
     float a = s.a / 4.0; if (a <= 0.0) { o = vec4(0.0); return; }
     vec3 c = s.rgb / s.a;                                                                // covered-sample mean (the reference accumulates colour × alpha)
@@ -108,13 +110,30 @@ function gkCharGL(R, entry) {
   const mk = (t, s) => { const sh = gl.createShader(t); gl.shaderSource(sh, s); gl.compileShader(sh); if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(sh)); return sh; };
   const prog = (v, f) => { const p = gl.createProgram(); gl.attachShader(p, mk(gl.VERTEX_SHADER, v)); gl.attachShader(p, mk(gl.FRAGMENT_SHADER, f)); gl.linkProgram(p); if (!gl.getProgramParameter(p, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(p)); return p; };
   const P = prog(VS, FS), PR = prog(RVS, RFS), U = (p, n) => gl.getUniformLocation(p, n);
-  const G = { R, P, PR, u: { view: U(P, "uView"), proj: U(P, "uProj"), post: U(P, "uPost"), bones: U(P, "uBones"), cls: U(P, "uClass"), base: U(P, "uBase"), atlas: U(P, "uAtlas"), light: U(P, "uLight"), skinShadow: U(P, "uSkinShadow"), skinLight: U(P, "uSkinLight"), skinBase: U(P, "uSkinBase") }, ur: { src: U(PR, "uSrc"), texel: U(PR, "uTexel"), ink: U(PR, "uInk") }, prims: [], tex: null, fbo: null, fboW: 0, fboH: 0, fboR: null, fboRW: 0, fboRH: 0 };
+  // MERGED path (draw-call batching, verified pixel-identical): all 29 primitives share one program and one VAO; the material index rides as a
+  // per-vertex attribute and selects the class / base colour from uniform arrays — the fragment math is the same source text with the two
+  // per-primitive uniforms replaced by flat varyings
+  const VSM = VS.replace("layout(location=5) in vec4 aCol;", "layout(location=5) in vec4 aCol; layout(location=6) in float aMat;").replace("out vec3 vN;", "uniform int uClsArr[32]; uniform vec3 uBaseArr[32]; flat out int vCls; flat out vec3 vBase; out vec3 vN;").replace("vUv = aUv; vCol = aCol;", "vUv = aUv; vCol = aCol; int mi = int(aMat + 0.5); vCls = uClsArr[mi]; vBase = uBaseArr[mi];");
+  const FSM = FS.replace("uniform int uClass; uniform vec3 uBase;", "flat in int vCls; flat in vec3 vBase;").split("uClass").join("vCls").split("uBase").join("vBase");
+  const PM = prog(VSM, FSM);
+  const G = { R, P, PR, PM, um: { view: U(PM, "uView"), proj: U(PM, "uProj"), post: U(PM, "uPost"), bones: U(PM, "uBones"), clsArr: U(PM, "uClsArr"), baseArr: U(PM, "uBaseArr"), atlas: U(PM, "uAtlas"), light: U(PM, "uLight"), skinShadow: U(PM, "uSkinShadow"), skinLight: U(PM, "uSkinLight"), skinBase: U(PM, "uSkinBase") }, merged: null, u: { view: U(P, "uView"), proj: U(P, "uProj"), post: U(P, "uPost"), bones: U(P, "uBones"), cls: U(P, "uClass"), base: U(P, "uBase"), atlas: U(P, "uAtlas"), light: U(P, "uLight"), skinShadow: U(P, "uSkinShadow"), skinLight: U(P, "uSkinLight"), skinBase: U(P, "uSkinBase") }, ur: { src: U(PR, "uSrc"), texel: U(PR, "uTexel"), ink: U(PR, "uInk"), scale: U(PR, "uScale") }, prims: [], tex: null, fbo: null, fboW: 0, fboH: 0, fboR: null, fboRW: 0, fboRH: 0 };
   // texture: RGBA8, bilinear, no mipmaps, clamp (software reference: bilinear within the atlas, no mip selection)
   G.tex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, G.tex); gl.pixelStorei(gl.UNPACK_COLORSPACE_CONVERSION_WEBGL, gl.NONE); gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false); gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
   if (entry.asset.image) gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA8, gl.RGBA, gl.UNSIGNED_BYTE, entry.asset.image); else gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA8, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 255, 255, 255]));
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
   const classOf = (m) => { const n = m.name; if (n === "skin") return 1; if (n.startsWith("refined_eye") || n.startsWith("refined_iris")) return 3; if (n.startsWith("refined_")) return 2; if (n === "glove" || n === "latexPanel" || n === "latexLight") return 4; if (n === "gearRubber") return 5; if (n === "ink") return 6; if (m.pbrMetallicRoughness && m.pbrMetallicRoughness.baseColorTexture) return 8; return 0; };
+  if (GK_CHAR.merged) {                                                                    // one VAO for the whole character (+ material index per vertex); class / base arrays in primitive order
+    const prims = entry.asset.prims, n = prims.reduce((s, p) => s + p.pos.count, 0); const cat = (key, k) => { const out = new Float32Array(n * k); let o = 0; for (const p of prims) { out.set(p[key].data, o); o += p[key].data.length; } return out; };
+    const jo = new Uint16Array(n * 4); { let o = 0; for (const p of prims) { jo.set(p.joints.data, o); o += p.joints.data.length; } } const mat = new Float32Array(n); { let o = 0; prims.forEach((p, i) => { mat.fill(i, o, o + p.pos.count); o += p.pos.count; }); }
+    const vao = gl.createVertexArray(); gl.bindVertexArray(vao);
+    const buf = (loc, arr, k, integer) => { const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, arr, gl.STATIC_DRAW); gl.enableVertexAttribArray(loc); if (integer) gl.vertexAttribIPointer(loc, k, gl.UNSIGNED_SHORT, 0, 0); else gl.vertexAttribPointer(loc, k, gl.FLOAT, false, 0, 0); };
+    buf(0, cat("pos", 3), 3); buf(1, cat("nrm", 3), 3); buf(2, cat("uv", 2), 2); buf(3, jo, 4, true); buf(4, cat("weights", 4), 4); buf(5, cat("color", 4), 4); buf(6, mat, 1); gl.bindVertexArray(null);
+    const cls = new Int32Array(32), base = new Float32Array(96); prims.forEach((p, i) => { cls[i] = classOf(p.material); const bc = (p.material.pbrMetallicRoughness && p.material.pbrMetallicRoughness.baseColorFactor) || [1, 1, 1, 1]; base[i * 3] = bc[0]; base[i * 3 + 1] = bc[1]; base[i * 3 + 2] = bc[2]; });
+    cls[31] = 7; base[93] = 0xf2 / 255; base[94] = 0xf0 / 255; base[95] = 0xd5 / 255;               // slot 31 = the presentation ball
+    G.merged = { vao, n, cls, base, prims: prims.length };
+  }
   for (const p of entry.asset.prims) {
+    if (G.merged) { G.prims.push({ n: p.pos.count, cls: classOf(p.material), name: p.material.name }); continue; }
     const vao = gl.createVertexArray(); gl.bindVertexArray(vao);
     const buf = (loc, arr, n, integer) => { const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, arr, gl.STATIC_DRAW); gl.enableVertexAttribArray(loc); if (integer) gl.vertexAttribIPointer(loc, n, gl.UNSIGNED_SHORT, 0, 0); else gl.vertexAttribPointer(loc, n, gl.FLOAT, false, 0, 0); };
     buf(0, p.pos.data, 3); buf(1, p.nrm.data, 3); buf(2, p.uv.data, 2); buf(3, p.joints.data, 4, true); buf(4, p.weights.data, 4); buf(5, p.color.data, 4); gl.bindVertexArray(null);
@@ -131,11 +150,15 @@ function gkCharGL(R, entry) {
   entry.gl = G; return G;
 }
 function gkCharTargets(G, w, h, ss) {
+  if (GK_CHAR.growOnly) { const up = (v) => Math.ceil(v / 64) * 64; const W0 = w * ss, H0 = h * ss; if (!(G.fbo && G.fboW >= W0 && G.fboH >= H0 && G.fboR && G.fboRW >= w && G.fboRH >= h)) { const wA = up(Math.max(w, G.fboRW || 0)), hA = up(Math.max(h, G.fboRH || 0)); return gkCharTargetsAlloc(G, wA, hA, ss); } return; }
+  return gkCharTargetsAlloc(G, w, h, ss);
+}
+function gkCharTargetsAlloc(G, w, h, ss) {
   const gl = G.R.gl; const W = w * ss, H = h * ss;
   if (G.fboW !== W || G.fboH !== H) { const tex = () => { const t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA8, W, H, 0, gl.RGBA, gl.UNSIGNED_BYTE, null); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE); return t; };
     if (G.fbo) { gl.deleteFramebuffer(G.fbo); gl.deleteTexture(G.texC); gl.deleteRenderbuffer(G.rbD); }
     G.texC = tex(); G.rbD = gl.createRenderbuffer(); gl.bindRenderbuffer(gl.RENDERBUFFER, G.rbD); gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT24, W, H);
-    G.fbo = gl.createFramebuffer(); gl.bindFramebuffer(gl.FRAMEBUFFER, G.fbo); gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, G.texC, 0); gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, G.rbD); gl.bindFramebuffer(gl.FRAMEBUFFER, null); G.fboW = W; G.fboH = H; }
+    G.fbo = gl.createFramebuffer(); gl.bindFramebuffer(gl.FRAMEBUFFER, G.fbo); gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, G.texC, 0); gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, G.rbD); gl.bindFramebuffer(gl.FRAMEBUFFER, null); G.fboW = W; G.fboH = H; G.allocs = (G.allocs || 0) + 1; }
   if (G.fboRW !== w || G.fboRH !== h) { if (G.fboR) { gl.deleteFramebuffer(G.fboR); gl.deleteTexture(G.texR); } G.texR = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, G.texR); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA8, w, h, 0, gl.RGBA, gl.UNSIGNED_BYTE, null); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
     G.fboR = gl.createFramebuffer(); gl.bindFramebuffer(gl.FRAMEBUFFER, G.fboR); gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, G.texR, 0); gl.bindFramebuffer(gl.FRAMEBUFFER, null); G.fboRW = w; G.fboRH = h; }
 }
@@ -149,22 +172,34 @@ function gkCharRender(R, entry, skinMats, roi, density, cvW, cvH, RESv, ball) {
   const Wl = cvW / RESv, Hl = cvH / RESv, sx = Wl / roi.w, sy = Hl / roi.h, tx = (Wl - 2 * roi.x) / roi.w - 1, ty = 1 - (Hl - 2 * roi.y) / roi.h;
   const post = M4.ident(); post[0] = sx; post[5] = sy; post[12] = tx; post[13] = ty;
   gl.bindFramebuffer(gl.FRAMEBUFFER, G.fbo); gl.viewport(0, 0, w * ss, h * ss); gl.enable(gl.DEPTH_TEST); gl.depthFunc(gl.LESS); gl.disable(gl.BLEND); gl.disable(gl.CULL_FACE);   // materials are double-sided
+  const grown = G.fboW !== w * ss || G.fboH !== h * ss; if (grown) { gl.enable(gl.SCISSOR_TEST); gl.scissor(0, 0, w * ss, h * ss); }   // grow-only targets: only the ROI sub-rectangle is cleared / drawn
   gl.clearColor(0, 0, 0, 0); gl.clearDepth(1); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+  let draws = 0;
+  if (G.merged) {                                                                                // MERGED: one draw for the character (+ one for the ball)
+    const u = G.um; gl.useProgram(G.PM); gl.uniformMatrix4fv(u.view, false, cam.view); gl.uniformMatrix4fv(u.proj, false, cam.proj); gl.uniformMatrix4fv(u.post, false, post);
+    gl.uniform3fv(u.light, V3.norm(GK_CHAR.lightWorld)); gl.uniform3fv(u.skinShadow, GK_CHAR.skin.shadow); gl.uniform3fv(u.skinLight, GK_CHAR.skin.light); gl.uniform3fv(u.skinBase, GK_CHAR.skin.base);
+    gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, G.tex); gl.uniform1i(u.atlas, 0); gl.uniform1iv(u.clsArr, G.merged.cls); gl.uniform3fv(u.baseArr, G.merged.base);
+    gl.uniformMatrix4fv(u.bones, false, skinMats); gl.bindVertexArray(G.merged.vao); gl.drawArrays(gl.TRIANGLES, 0, G.merged.n); draws++;
+    if (ball) { const bm = new Float32Array(24 * 16); const m = M4.translate(ball.p[0], ball.p[1], ball.p[2]); m[0] = m[5] = m[10] = ball.r; bm.set(m, 0); gl.uniformMatrix4fv(u.bones, false, bm); gl.bindVertexArray(G.ball.vao); gl.vertexAttrib1f(6, 31); gl.drawArrays(gl.TRIANGLES, 0, G.ball.n); draws++; }
+    gl.bindVertexArray(null);
+  } else {
   gl.useProgram(G.P); gl.uniformMatrix4fv(G.u.view, false, cam.view); gl.uniformMatrix4fv(G.u.proj, false, cam.proj); gl.uniformMatrix4fv(G.u.post, false, post);
   gl.uniform3fv(G.u.light, V3.norm(GK_CHAR.lightWorld)); gl.uniform3fv(G.u.skinShadow, GK_CHAR.skin.shadow); gl.uniform3fv(G.u.skinLight, GK_CHAR.skin.light); gl.uniform3fv(G.u.skinBase, GK_CHAR.skin.base);
   gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, G.tex); gl.uniform1i(G.u.atlas, 0);
   gl.uniformMatrix4fv(G.u.bones, false, skinMats);
-  let draws = 0; for (const p of G.prims) { gl.uniform1i(G.u.cls, p.cls); gl.uniform3fv(G.u.base, p.base); gl.bindVertexArray(p.vao); gl.drawArrays(gl.TRIANGLES, 0, p.n); draws++; }
+  for (const p of G.prims) { gl.uniform1i(G.u.cls, p.cls); gl.uniform3fv(G.u.base, p.base); gl.bindVertexArray(p.vao); gl.drawArrays(gl.TRIANGLES, 0, p.n); draws++; }
   if (ball) { const bm = new Float32Array(24 * 16); const m = M4.translate(ball.p[0], ball.p[1], ball.p[2]); m[0] = m[5] = m[10] = ball.r; bm.set(m, 0); gl.uniformMatrix4fv(G.u.bones, false, bm); gl.uniform1i(G.u.cls, 7); gl.uniform3f(G.u.base, 0xf2 / 255, 0xf0 / 255, 0xd5 / 255); gl.bindVertexArray(G.ball.vao); gl.drawArrays(gl.TRIANGLES, 0, G.ball.n); draws++; }
   gl.bindVertexArray(null);
+  }
   // resolve pass → layer texture at `density`
-  gl.bindFramebuffer(gl.FRAMEBUFFER, G.fboR); gl.viewport(0, 0, w, h); gl.disable(gl.DEPTH_TEST); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
-  gl.useProgram(G.PR); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, G.texC); gl.uniform1i(G.ur.src, 0); gl.uniform2f(G.ur.texel, 1 / (w * ss), 1 / (h * ss)); gl.uniform3f(G.ur.ink, GK_CHAR.ink[0] / 255, GK_CHAR.ink[1] / 255, GK_CHAR.ink[2] / 255);
+  gl.bindFramebuffer(gl.FRAMEBUFFER, G.fboR); gl.viewport(0, 0, w, h); if (grown) gl.scissor(0, 0, w, h); gl.disable(gl.DEPTH_TEST); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
+  gl.useProgram(G.PR); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, G.texC); gl.uniform1i(G.ur.src, 0); gl.uniform2f(G.ur.texel, 1 / G.fboW, 1 / G.fboH); gl.uniform2f(G.ur.scale, (w * ss) / G.fboW, (h * ss) / G.fboH); gl.uniform3f(G.ur.ink, GK_CHAR.ink[0] / 255, GK_CHAR.ink[1] / 255, GK_CHAR.ink[2] / 255);   // the resolve samples the ROI sub-rectangle of the (possibly larger) source
   gl.bindVertexArray(R.quad); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); gl.bindVertexArray(null);
-  // copy to the shared canvas (the renderer's canvas is what the backend composites from)
-  R.cv.width = w; R.cv.height = h; gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.viewport(0, 0, w, h); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
-  gl.useProgram(R.PP); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, G.texR); gl.uniform1i(R.up.col, 0); gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, G.texR); gl.uniform1i(R.up.idt, 1); gl.uniform2f(R.up.texel, 1 / w, 1 / h); gl.uniform1f(R.up.outline, 0);
-  gl.bindVertexArray(R.quad); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); gl.bindVertexArray(null);
+  // copy to the shared canvas (the renderer's canvas is what the backend composites from; grow-only: the layer sits in the top-left w×h of the canvas)
+  if (R.cv.width < w || R.cv.height < h || !GK_CHAR.growOnly) { R.cv.width = GK_CHAR.growOnly ? Math.max(R.cv.width, Math.ceil(w / 64) * 64) : w; R.cv.height = GK_CHAR.growOnly ? Math.max(R.cv.height, Math.ceil(h / 64) * 64) : h; }
+  const y0 = R.cv.height - h; gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.viewport(0, y0, w, h); if (grown || R.cv.width !== w || R.cv.height !== h) { gl.enable(gl.SCISSOR_TEST); gl.scissor(0, y0, w, h); } gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);   // top-left of the canvas in 2D terms
+  gl.useProgram(R.PP); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, G.texR); gl.uniform1i(R.up.col, 0); gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, G.texR); gl.uniform1i(R.up.idt, 1); gl.uniform2f(R.up.texel, 1 / w, 1 / h); gl.uniform1f(R.up.outline, 0); gl.uniform2f(R.up.scale, w / G.fboRW, h / G.fboRH);
+  gl.bindVertexArray(R.quad); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); gl.bindVertexArray(null); gl.disable(gl.SCISSOR_TEST);
   return { canvas: R.cv, w, h, roi, draws, density, ss };
 }
 // ROI around the character: the projected joints / tips (screen, backing px) plus a margin in metres at the keeper's depth; clamped to the canvas

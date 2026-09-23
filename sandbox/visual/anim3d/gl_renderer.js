@@ -37,10 +37,11 @@ function glCreateRenderer() {
     oId = vec4(uId / 255.0, vDepth / 400.0, 0.0, 1.0);
   }`;
   const PVS = `#version 300 es
-  layout(location=0) in vec2 aP; out vec2 vUv; void main(){ vUv = aP * 0.5 + 0.5; gl_Position = vec4(aP, 0.0, 1.0); }`;
+  layout(location=0) in vec2 aP; out vec2 vUv0; void main(){ vUv0 = aP * 0.5 + 0.5; gl_Position = vec4(aP, 0.0, 1.0); }`;
   const PFS = `#version 300 es
-  precision mediump float; in vec2 vUv; uniform sampler2D uCol, uIdTex; uniform vec2 uTexel; uniform float uOutline; out vec4 o;
+  precision mediump float; in vec2 vUv0; uniform sampler2D uCol, uIdTex; uniform vec2 uTexel; uniform float uOutline; uniform vec2 uScale; out vec4 o;
   void main(){
+    vec2 vUv = vUv0 * uScale;                                                          // uScale: the source may be a grow-only texture larger than the layer (character program); (1,1) otherwise
     vec4 c = texture(uCol, vUv); vec4 id = texture(uIdTex, vUv);
     if (c.a <= 0.0) { o = vec4(0.0); return; }
     bool edge = false;
@@ -75,7 +76,7 @@ function glCreateRenderer() {
   const P = prog(VS, FS), PP = prog(PVS, PFS), PS = prog(SVS, SFS);
   const U = (p, n) => gl.getUniformLocation(p, n);
   const R = { cv: cv3, gl, P, PP, u: { model: U(P, "uModel"), view: U(P, "uView"), proj: U(P, "uProj"), nrm: U(P, "uNrm"), color: U(P, "uColor"), light: U(P, "uLight"), bands: U(P, "uBands"), id: U(P, "uId") },
-              up: { col: U(PP, "uCol"), idt: U(PP, "uIdTex"), texel: U(PP, "uTexel"), outline: U(PP, "uOutline") },
+              up: { col: U(PP, "uCol"), idt: U(PP, "uIdTex"), texel: U(PP, "uTexel"), outline: U(PP, "uOutline"), scale: U(PP, "uScale") },
               PS, us: { view: U(PS, "uView"), proj: U(PS, "uProj"), bones: U(PS, "uBones"), palette: U(PS, "uPalette"), light: U(PS, "uLight"), bands: U(PS, "uBands") }, meshes: new Map(), fbo: null, fboW: 0, fboH: 0, quad: null };
   // fullscreen quad
   R.quad = gl.createVertexArray(); gl.bindVertexArray(R.quad); const qb = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, qb);
@@ -180,7 +181,7 @@ function glRenderCharacters(R, chars, cvW, cvH, opts) {
   gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
   gl.useProgram(R.PP); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, R.texC); gl.uniform1i(R.up.col, 0);
   gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, R.texI); gl.uniform1i(R.up.idt, 1);
-  gl.uniform2f(R.up.texel, 1 / w, 1 / h); gl.uniform1f(R.up.outline, GL3D.outline ? 1 : 0);
+  gl.uniform2f(R.up.texel, 1 / w, 1 / h); gl.uniform1f(R.up.outline, GL3D.outline ? 1 : 0); gl.uniform2f(R.up.scale, 1, 1);
   gl.bindVertexArray(R.quad); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); gl.bindVertexArray(null);
   return { canvas: R.cv, w, h, draws, scale: k };
 }

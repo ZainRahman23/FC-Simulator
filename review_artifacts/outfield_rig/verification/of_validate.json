@@ -1,0 +1,1292 @@
+{
+ "bodies": {
+  "SHORT_COMPACT": {
+   "rig": {
+    "id": "SHORT_COMPACT",
+    "H": 1.66,
+    "checks": {
+     "bones23": {
+      "ok": true,
+      "v": 23
+     },
+     "finite": {
+      "ok": true,
+      "v": true
+     },
+     "inverseBindIdentity": {
+      "ok": true,
+      "v": 0
+     },
+     "anklesAtAnkleHeight": {
+      "ok": true,
+      "v": [
+       0.07622450590133667,
+       0.07622450590133667,
+       0.07622448979591837
+      ]
+     },
+     "toeNearGround": {
+      "ok": true,
+      "v": 0.025408178567886353
+     },
+     "heightMatches": {
+      "ok": true,
+      "v": 1.6599999634100466
+     },
+     "leftRightSymmetry": {
+      "ok": true,
+      "v": 0
+     },
+     "jointOrderShared": {
+      "ok": true,
+      "v": true
+     },
+     "legLengthPositive": {
+      "ok": true,
+      "v": 0.4387755102040816
+     },
+     "shoulderWidth": {
+      "ok": true,
+      "v": 0.45734694600105286
+     }
+    },
+    "ok": true,
+    "summary": {
+     "legLen": 0.728,
+     "armLen": 0.525,
+     "hipY": 0.805,
+     "shoulderW": 0.457,
+     "femurTibia": 1.098,
+     "torso": 0.474,
+     "headTop": 1.66
+    }
+   },
+   "mesh": {
+    "verts": 1395,
+    "tris": 2408
+   },
+   "bindSignature": {
+    "thigh": 0.3811,
+    "shin": 0.3472,
+    "upperArm": 0.2795,
+    "foreArm": 0.2456,
+    "torso": 0.5759,
+    "shoulders": 0.4573,
+    "hips": 0.3557,
+    "pelvisY": 0.8046
+   },
+   "motions": {
+    "STAND": {
+     "slideMax": 0,
+     "floatMax": 0,
+     "penMax": 0.0029,
+     "kneeMin": 156.2,
+     "elbowMin": 174,
+     "jumpMax": 0,
+     "overReachMax": 0,
+     "stretchMax": 1.291,
+     "groundLiftMax": 0,
+     "legFloor": 0,
+     "sigDrift": 0,
+     "plantResMax": 0.0029,
+     "nan": false,
+     "strideMean": null,
+     "gait": null
+    },
+    "READY": {
+     "slideMax": 0,
+     "floatMax": 0,
+     "penMax": 0,
+     "kneeMin": 103.4,
+     "elbowMin": 120,
+     "jumpMax": 0,
+     "overReachMax": 0,
+     "stretchMax": 1.789,
+     "groundLiftMax": 0,
+     "legFloor": 0,
+     "sigDrift": 0,
+     "plantResMax": 0,
+     "nan": false,
+     "strideMean": null,
+     "gait": null
+    },
+    "WALK": {
+     "slideMax": 0.1193,
+     "floatMax": 0.1605,
+     "penMax": 0.0296,
+     "kneeMin": 135.4,
+     "elbowMin": 155,
+     "jumpMax": 0.1785,
+     "overReachMax": 0,
+     "stretchMax": 1.494,
+     "groundLiftMax": 0.0314,
+     "legFloor": 128,
+     "sigDrift": 0.0001,
+     "plantResMax": 0.1916,
+     "nan": false,
+     "strideMean": 0.929,
+     "gait": {
+      "stride": 0.464,
+      "cadence": 3.018,
+      "A": 20.25
+     }
+    },
+    "RUN": {
+     "slideMax": 0.0578,
+     "floatMax": 0.0314,
+     "penMax": 0.0215,
+     "kneeMin": 102,
+     "elbowMin": 100,
+     "jumpMax": 0.2802,
+     "overReachMax": 0.0582,
+     "stretchMax": 1.777,
+     "groundLiftMax": 0,
+     "legFloor": 90,
+     "sigDrift": 0.0001,
+     "plantResMax": 0.0582,
+     "nan": false,
+     "strideMean": 1.875,
+     "gait": {
+      "stride": 0.937,
+      "cadence": 6.405,
+      "A": 34
+     }
+    },
+    "TURN": {
+     "slideMax": 0.1347,
+     "floatMax": 0.1351,
+     "penMax": 0.0323,
+     "kneeMin": 133.3,
+     "elbowMin": 155,
+     "jumpMax": 0.1811,
+     "overReachMax": 0.0337,
+     "stretchMax": 1.523,
+     "groundLiftMax": 0.0307,
+     "legFloor": 129,
+     "sigDrift": 0.0001,
+     "plantResMax": 0.1553,
+     "nan": false,
+     "strideMean": 0.911,
+     "gait": {
+      "stride": 0.425,
+      "cadence": 2.822,
+      "A": 18.5
+     }
+    },
+    "SINGLE_LEG": {
+     "slideMax": 0,
+     "floatMax": 0,
+     "penMax": 0,
+     "kneeMin": 88,
+     "elbowMin": 140,
+     "jumpMax": 0,
+     "overReachMax": 0,
+     "stretchMax": 1.855,
+     "groundLiftMax": 0,
+     "legFloor": 0,
+     "sigDrift": 0,
+     "plantResMax": 0,
+     "nan": false,
+     "strideMean": null,
+     "gait": null
+    },
+    "PUNT": {
+     "slideMax": 0,
+     "floatMax": 0,
+     "penMax": 0.0029,
+     "kneeMin": 156.2,
+     "elbowMin": 174,
+     "jumpMax": 0,
+     "overReachMax": 0,
+     "stretchMax": 1.291,
+     "groundLiftMax": 0,
+     "legFloor": 0,
+     "sigDrift": 0,
+     "plantResMax": 0.0029,
+     "nan": false,
+     "strideMean": null,
+     "gait": {
+      "stride": 0.187,
+      "cadence": 0,
+      "A": 8
+     }
+    }
+   }
+  },
+  "SHORT_LEAN": {
+   "rig": {
+    "id": "SHORT_LEAN",
+    "H": 1.7,
+    "checks": {
+     "bones23": {
+      "ok": true,
+      "v": 23
+     },
+     "finite": {
+      "ok": true,
+      "v": true
+     },
+     "inverseBindIdentity": {
+      "ok": true,
+      "v": 0
+     },
+     "anklesAtAnkleHeight": {
+      "ok": true,
+      "v": [
+       0.07688441872596741,
+       0.07688441872596741,
+       0.07688442211055277
+      ]
+     },
+     "toeNearGround": {
+      "ok": true,
+      "v": 0.025628138333559036
+     },
+     "heightMatches": {
+      "ok": true,
+      "v": 1.6999999772364172
+     },
+     "leftRightSymmetry": {
+      "ok": true,
+      "v": 0
+     },
+     "jointOrderShared": {
+      "ok": true,
+      "v": true
+     },
+     "legLengthPositive": {
+      "ok": true,
+      "v": 0.4723618090452262
+     },
+     "shoulderWidth": {
+      "ok": true,
+      "v": 0.4271356761455536
+     }
+    },
+    "ok": true,
+    "summary": {
+     "legLen": 0.803,
+     "armLen": 0.554,
+     "hipY": 0.88,
+     "shoulderW": 0.427,
+     "femurTibia": 1.089,
+     "torso": 0.427,
+     "headTop": 1.7
+    }
+   },
+   "mesh": {
+    "verts": 1395,
+    "tris": 2408
+   },
+   "bindSignature": {
+    "thigh": 0.4186,
+    "shin": 0.3844,
+    "upperArm": 0.2939,
+    "foreArm": 0.2597,
+    "torso": 0.5296,
+    "shoulders": 0.4271,
+    "hips": 0.3007,
+    "pelvisY": 0.8799
+   },
+   "motions": {
+    "STAND": {
+     "slideMax": 0,
+     "floatMax": 0,
+     "penMax": 0.0032,
+     "kneeMin": 156.3,
+     "elbowMin": 174,
+     "jumpMax": 0,
+     "overReachMax": 0,
+     "stretchMax": 1.2,
+     "groundLiftMax": 0,
+     "legFloor": 0,
+     "sigDrift": 0,
+     "plantResMax": 0.0032,
+     "nan": false,
+     "strideMean": null,
+     "gait": null
+    },
+    "READY": {
+     "slideMax": 0,
+     "floatMax": 0,
+     "penMax": 0,
+     "kneeMin": 103.5,
+     "elbowMin": 120,
+     "jumpMax": 0,
+     "overReachMax": 0,
+     "stretchMax": 1.543,
+     "groundLiftMax": 0,
+     "legFloor": 0,
+     "sigDrift": 0,
+     "plantResMax": 0,
+     "nan": false,
+     "strideMean": null,
+     "gait": null
+    },
+    "WALK": {
+     "slideMax": 0.1427,
+     "floatMax": 0.1799,
+     "penMax": 0.0344,
+     "kneeMin": 136.9,
+     "elbowMin": 155,
+     "jumpMax": 0.1501,
+     "overReachMax": 0,
+     "stretchMax": 1.342,
+     "groundLiftMax": 0.0144,
+     "legFloor": 136,
+     "sigDrift": 0,
+     "plantResMax": 0.2223,
+     "nan": false,
+     "strideMean": 1.026,
+     "gait": {
+      "stride": 0.511,
+      "cadence": 2.738,
+      "A": 20.25
+     }
+    },
+    "RUN": {
+     "slideMax": 0.0724,
+     "floatMax": 0.0832,
+     "penMax": 0.0162,
+     "kneeMin": 102,
+     "elbowMin": 100,
+     "jumpMax": 0.2787,
+     "overReachMax": 0,
+     "stretchMax": 1.537,
+     "groundLiftMax": 0,
+     "legFloor": 84,
+     "sigDrift": 0,
+     "plantResMax": 0.1103,
+     "nan": false,
+     "strideMean": 2.064,
+     "gait": {
+      "stride": 1.033,
+      "cadence": 5.809,
+      "A": 34
+     }
+    },
+    "TURN": {
+     "slideMax": 0.1568,
+     "floatMax": 0.1456,
+     "penMax": 0.0359,
+     "kneeMin": 134.7,
+     "elbowMin": 155,
+     "jumpMax": 0.191,
+     "overReachMax": 0.0281,
+     "stretchMax": 1.337,
+     "groundLiftMax": 0.0196,
+     "legFloor": 138,
+     "sigDrift": 0,
+     "plantResMax": 0.1849,
+     "nan": false,
+     "strideMean": 0.99,
+     "gait": {
+      "stride": 0.469,
+      "cadence": 2.56,
+      "A": 18.5
+     }
+    },
+    "SINGLE_LEG": {
+     "slideMax": 0,
+     "floatMax": 0,
+     "penMax": 0,
+     "kneeMin": 88,
+     "elbowMin": 140,
+     "jumpMax": 0,
+     "overReachMax": 0,
+     "stretchMax": 1.585,
+     "groundLiftMax": 0,
+     "legFloor": 0,
+     "sigDrift": 0,
+     "plantResMax": 0,
+     "nan": false,
+     "strideMean": null,
+     "gait": null
+    },
+    "PUNT": {
+     "slideMax": 0,
+     "floatMax": 0,
+     "penMax": 0.0032,
+     "kneeMin": 156.3,
+     "elbowMin": 174,
+     "jumpMax": 0,
+     "overReachMax": 0,
+     "stretchMax": 1.2,
+     "groundLiftMax": 0,
+     "legFloor": 0,
+     "sigDrift": 0,
+     "plantResMax": 0.0032,
+     "nan": false,
+     "strideMean": null,
+     "gait": {
+      "stride": 0.206,
+      "cadence": 0,
+      "A": 8
+     }
+    }
+   }
+  },
+  "AVG_LEAN": {
+   "rig": {
+    "id": "AVG_LEAN",
+    "H": 1.8,
+    "checks": {
+     "bones23": {
+      "ok": true,
+      "v": 23
+     },
+     "finite": {
+      "ok": true,
+      "v": true
+     },
+     "inverseBindIdentity": {
+      "ok": true,
+      "v": 0
+     },
+     "anklesAtAnkleHeight": {
+      "ok": true,
+      "v": [
+       0.08140704035758972,
+       0.08140704035758972,
+       0.0814070351758794
+      ]
+     },
+     "toeNearGround": {
+      "ok": true,
+      "v": 0.027135685086250305
+     },
+     "heightMatches": {
+      "ok": true,
+      "v": 1.8000001371805392
+     },
+     "leftRightSymmetry": {
+      "ok": true,
+      "v": 0
+     },
+     "jointOrderShared": {
+      "ok": true,
+      "v": true
+     },
+     "legLengthPositive": {
+      "ok": true,
+      "v": 0.4623115577889447
+     },
+     "shoulderWidth": {
+      "ok": true,
+      "v": 0.4703517556190491
+     }
+    },
+    "ok": true,
+    "summary": {
+     "legLen": 0.832,
+     "armLen": 0.579,
+     "hipY": 0.914,
+     "shoulderW": 0.47,
+     "femurTibia": 1.091,
+     "torso": 0.47,
+     "headTop": 1.8
+    }
+   },
+   "mesh": {
+    "verts": 1395,
+    "tris": 2408
+   },
+   "bindSignature": {
+    "thigh": 0.4342,
+    "shin": 0.398,
+    "upperArm": 0.3075,
+    "foreArm": 0.2714,
+    "torso": 0.5789,
+    "shoulders": 0.4704,
+    "hips": 0.3437,
+    "pelvisY": 0.9136
+   },
+   "motions": {
+    "STAND": {
+     "slideMax": 0,
+     "floatMax": 0,
+     "penMax": 0.0033,
+     "kneeMin": 156.3,
+     "elbowMin": 174,
+     "jumpMax": 0,
+     "overReachMax": 0,
+     "stretchMax": 1.219,
+     "groundLiftMax": 0,
+     "legFloor": 0,
+     "sigDrift": 0,
+     "plantResMax": 0.0033,
+     "nan": false,
+     "strideMean": null,
+     "gait": null
+    },
+    "READY": {
+     "slideMax": 0,
+     "floatMax": 0,
+     "penMax": 0,
+     "kneeMin": 103.5,
+     "elbowMin": 120,
+     "jumpMax": 0,
+     "overReachMax": 0,
+     "stretchMax": 1.597,
+     "groundLiftMax": 0,
+     "legFloor": 0,
+     "sigDrift": 0,
+     "plantResMax": 0,
+     "nan": false,
+     "strideMean": null,
+     "gait": null
+    },
+    "WALK": {
+     "slideMax": 0.1496,
+     "floatMax": 0.182,
+     "penMax": 0.0349,
+     "kneeMin": 136.8,
+     "elbowMin": 155,
+     "jumpMax": 0.1724,
+     "overReachMax": 0,
+     "stretchMax": 1.376,
+     "groundLiftMax": 0.0164,
+     "legFloor": 133,
+     "sigDrift": 0.0001,
+     "plantResMax": 0.2336,
+     "nan": false,
+     "strideMean": 1.059,
+     "gait": {
+      "stride": 0.53,
+      "cadence": 2.642,
+      "A": 20.25
+     }
+    },
+    "RUN": {
+     "slideMax": 0.0721,
+     "floatMax": 0.0699,
+     "penMax": 0.0154,
+     "kneeMin": 102,
+     "elbowMin": 100,
+     "jumpMax": 0.2824,
+     "overReachMax": 0,
+     "stretchMax": 1.591,
+     "groundLiftMax": 0,
+     "legFloor": 85,
+     "sigDrift": 0.0001,
+     "plantResMax": 0.0999,
+     "nan": false,
+     "strideMean": 2.14,
+     "gait": {
+      "stride": 1.07,
+      "cadence": 5.606,
+      "A": 34
+     }
+    },
+    "TURN": {
+     "slideMax": 0.1856,
+     "floatMax": 0.1411,
+     "penMax": 0.0365,
+     "kneeMin": 133.9,
+     "elbowMin": 155,
+     "jumpMax": 0.2443,
+     "overReachMax": 0.0414,
+     "stretchMax": 1.39,
+     "groundLiftMax": 0.0216,
+     "legFloor": 135,
+     "sigDrift": 0.0001,
+     "plantResMax": 0.2088,
+     "nan": false,
+     "strideMean": 1.034,
+     "gait": {
+      "stride": 0.486,
+      "cadence": 2.47,
+      "A": 18.5
+     }
+    },
+    "SINGLE_LEG": {
+     "slideMax": 0,
+     "floatMax": 0,
+     "penMax": 0,
+     "kneeMin": 88,
+     "elbowMin": 140,
+     "jumpMax": 0,
+     "overReachMax": 0,
+     "stretchMax": 1.645,
+     "groundLiftMax": 0,
+     "legFloor": 0,
+     "sigDrift": 0,
+     "plantResMax": 0,
+     "nan": false,
+     "strideMean": null,
+     "gait": null
+    },
+    "PUNT": {
+     "slideMax": 0,
+     "floatMax": 0,
+     "penMax": 0.0033,
+     "kneeMin": 156.3,
+     "elbowMin": 174,
+     "jumpMax": 0,
+     "overReachMax": 0,
+     "stretchMax": 1.219,
+     "groundLiftMax": 0,
+     "legFloor": 0,
+     "sigDrift": 0,
+     "plantResMax": 0.0033,
+     "nan": false,
+     "strideMean": null,
+     "gait": {
+      "stride": 0.213,
+      "cadence": 0,
+      "A": 8
+     }
+    }
+   }
+  },
+  "AVG_ATHLETIC": {
+   "rig": {
+    "id": "AVG_ATHLETIC",
+    "H": 1.83,
+    "checks": {
+     "bones23": {
+      "ok": true,
+      "v": 23
+     },
+     "finite": {
+      "ok": true,
+      "v": true
+     },
+     "inverseBindIdentity": {
+      "ok": true,
+      "v": 0
+     },
+     "anklesAtAnkleHeight": {
+      "ok": true,
+      "v": [
+       0.08113303780555725,
+       0.08113303780555725,
+       0.08113300492610837
+      ]
+     },
+     "toeNearGround": {
+      "ok": true,
+      "v": 0.02704436704516411
+     },
+     "heightMatches": {
+      "ok": true,
+      "v": 1.8299999949732437
+     },
+     "leftRightSymmetry": {
+      "ok": true,
+      "v": 0
+     },
+     "jointOrderShared": {
+      "ok": true,
+      "v": true
+     },
+     "legLengthPositive": {
+      "ok": true,
+      "v": 0.4729064039408866
+     },
+     "shoulderWidth": {
+      "ok": true,
+      "v": 0.522857129573822
+     }
+    },
+    "ok": true,
+    "summary": {
+     "legLen": 0.865,
+     "armLen": 0.577,
+     "hipY": 0.947,
+     "shoulderW": 0.523,
+     "femurTibia": 1.087,
+     "torso": 0.469,
+     "headTop": 1.83
+    }
+   },
+   "mesh": {
+    "verts": 1395,
+    "tris": 2408
+   },
+   "bindSignature": {
+    "thigh": 0.4507,
+    "shin": 0.4147,
+    "upperArm": 0.3065,
+    "foreArm": 0.2704,
+    "torso": 0.5769,
+    "shoulders": 0.5229,
+    "hips": 0.3534,
+    "pelvisY": 0.9466
+   },
+   "motions": {
+    "STAND": {
+     "slideMax": 0,
+     "floatMax": 0,
+     "penMax": 0.0034,
+     "kneeMin": 156.3,
+     "elbowMin": 174,
+     "jumpMax": 0,
+     "overReachMax": 0,
+     "stretchMax": 1.264,
+     "groundLiftMax": 0,
+     "legFloor": 0,
+     "sigDrift": 0,
+     "plantResMax": 0.0034,
+     "nan": false,
+     "strideMean": null,
+     "gait": null
+    },
+    "READY": {
+     "slideMax": 0,
+     "floatMax": 0,
+     "penMax": 0,
+     "kneeMin": 103.5,
+     "elbowMin": 120,
+     "jumpMax": 0,
+     "overReachMax": 0,
+     "stretchMax": 1.712,
+     "groundLiftMax": 0,
+     "legFloor": 0,
+     "sigDrift": 0,
+     "plantResMax": 0,
+     "nan": false,
+     "strideMean": null,
+     "gait": null
+    },
+    "WALK": {
+     "slideMax": 0.1601,
+     "floatMax": 0.1965,
+     "penMax": 0.0362,
+     "kneeMin": 137.5,
+     "elbowMin": 155,
+     "jumpMax": 0.1551,
+     "overReachMax": 0,
+     "stretchMax": 1.448,
+     "groundLiftMax": 0.0088,
+     "legFloor": 140,
+     "sigDrift": 0,
+     "plantResMax": 0.2483,
+     "nan": false,
+     "strideMean": 1.103,
+     "gait": {
+      "stride": 0.551,
+      "cadence": 2.54,
+      "A": 20.25
+     }
+    },
+    "RUN": {
+     "slideMax": 0.0732,
+     "floatMax": 0.0525,
+     "penMax": 0.0151,
+     "kneeMin": 102,
+     "elbowMin": 100,
+     "jumpMax": 0.282,
+     "overReachMax": 0,
+     "stretchMax": 1.688,
+     "groundLiftMax": 0,
+     "legFloor": 84,
+     "sigDrift": 0,
+     "plantResMax": 0.085,
+     "nan": false,
+     "strideMean": 1.858,
+     "gait": {
+      "stride": 1.113,
+      "cadence": 5.391,
+      "A": 34
+     }
+    },
+    "TURN": {
+     "slideMax": 0.1813,
+     "floatMax": 0.1575,
+     "penMax": 0.0374,
+     "kneeMin": 135,
+     "elbowMin": 155,
+     "jumpMax": 0.2358,
+     "overReachMax": 0.0362,
+     "stretchMax": 1.443,
+     "groundLiftMax": 0.0109,
+     "legFloor": 138,
+     "sigDrift": 0.0001,
+     "plantResMax": 0.209,
+     "nan": false,
+     "strideMean": 1.081,
+     "gait": {
+      "stride": 0.505,
+      "cadence": 2.375,
+      "A": 18.5
+     }
+    },
+    "SINGLE_LEG": {
+     "slideMax": 0,
+     "floatMax": 0,
+     "penMax": 0,
+     "kneeMin": 88,
+     "elbowMin": 140,
+     "jumpMax": 0,
+     "overReachMax": 0,
+     "stretchMax": 1.77,
+     "groundLiftMax": 0,
+     "legFloor": 0,
+     "sigDrift": 0,
+     "plantResMax": 0,
+     "nan": false,
+     "strideMean": null,
+     "gait": null
+    },
+    "PUNT": {
+     "slideMax": 0,
+     "floatMax": 0,
+     "penMax": 0.0034,
+     "kneeMin": 156.3,
+     "elbowMin": 174,
+     "jumpMax": 0,
+     "overReachMax": 0,
+     "stretchMax": 1.264,
+     "groundLiftMax": 0,
+     "legFloor": 0,
+     "sigDrift": 0,
+     "plantResMax": 0.0034,
+     "nan": false,
+     "strideMean": null,
+     "gait": {
+      "stride": 0.222,
+      "cadence": 0,
+      "A": 8
+     }
+    }
+   }
+  },
+  "TALL_LEAN": {
+   "rig": {
+    "id": "TALL_LEAN",
+    "H": 1.96,
+    "checks": {
+     "bones23": {
+      "ok": true,
+      "v": 23
+     },
+     "finite": {
+      "ok": true,
+      "v": true
+     },
+     "inverseBindIdentity": {
+      "ok": true,
+      "v": 0
+     },
+     "anklesAtAnkleHeight": {
+      "ok": true,
+      "v": [
+       0.08563101291656494,
+       0.08563101291656494,
+       0.08563106796116503
+      ]
+     },
+     "toeNearGround": {
+      "ok": true,
+      "v": 0.028543632477521896
+     },
+     "heightMatches": {
+      "ok": true,
+      "v": 1.9599999862504236
+     },
+     "leftRightSymmetry": {
+      "ok": true,
+      "v": 0
+     },
+     "jointOrderShared": {
+      "ok": true,
+      "v": true
+     },
+     "legLengthPositive": {
+      "ok": true,
+      "v": 0.4902912621359222
+     },
+     "shoulderWidth": {
+      "ok": true,
+      "v": 0.4947572648525238
+     }
+    },
+    "ok": true,
+    "summary": {
+     "legLen": 0.961,
+     "armLen": 0.647,
+     "hipY": 1.047,
+     "shoulderW": 0.495,
+     "femurTibia": 1.061,
+     "torso": 0.476,
+     "headTop": 1.96
+    }
+   },
+   "mesh": {
+    "verts": 1395,
+    "tris": 2408
+   },
+   "bindSignature": {
+    "thigh": 0.4948,
+    "shin": 0.4662,
+    "upperArm": 0.3425,
+    "foreArm": 0.3045,
+    "torso": 0.5899,
+    "shoulders": 0.4948,
+    "hips": 0.3425,
+    "pelvisY": 1.0466
+   },
+   "motions": {
+    "STAND": {
+     "slideMax": 0,
+     "floatMax": 0,
+     "penMax": 0.0038,
+     "kneeMin": 156.3,
+     "elbowMin": 174,
+     "jumpMax": 0,
+     "overReachMax": 0,
+     "stretchMax": 1.194,
+     "groundLiftMax": 0,
+     "legFloor": 0,
+     "sigDrift": 0,
+     "plantResMax": 0.0038,
+     "nan": false,
+     "strideMean": null,
+     "gait": null
+    },
+    "READY": {
+     "slideMax": 0,
+     "floatMax": 0,
+     "penMax": 0,
+     "kneeMin": 103.6,
+     "elbowMin": 120,
+     "jumpMax": 0,
+     "overReachMax": 0,
+     "stretchMax": 1.526,
+     "groundLiftMax": 0,
+     "legFloor": 0,
+     "sigDrift": 0,
+     "plantResMax": 0,
+     "nan": false,
+     "strideMean": null,
+     "gait": null
+    },
+    "WALK": {
+     "slideMax": 0.1905,
+     "floatMax": 0.2198,
+     "penMax": 0.0408,
+     "kneeMin": 138.3,
+     "elbowMin": 155,
+     "jumpMax": 0.0743,
+     "overReachMax": 0,
+     "stretchMax": 1.32,
+     "groundLiftMax": 0,
+     "legFloor": 144,
+     "sigDrift": 0,
+     "plantResMax": 0.2899,
+     "nan": false,
+     "strideMean": 1.22,
+     "gait": {
+      "stride": 0.612,
+      "cadence": 2.288,
+      "A": 20.25
+     }
+    },
+    "RUN": {
+     "slideMax": 0.0862,
+     "floatMax": 0.0898,
+     "penMax": 0.0152,
+     "kneeMin": 102,
+     "elbowMin": 100,
+     "jumpMax": 0.2884,
+     "overReachMax": 0,
+     "stretchMax": 1.523,
+     "groundLiftMax": 0,
+     "legFloor": 78,
+     "sigDrift": 0,
+     "plantResMax": 0.1217,
+     "nan": false,
+     "strideMean": 2.468,
+     "gait": {
+      "stride": 1.236,
+      "cadence": 4.855,
+      "A": 34
+     }
+    },
+    "TURN": {
+     "slideMax": 0.2208,
+     "floatMax": 0.1811,
+     "penMax": 0.0415,
+     "kneeMin": 136.2,
+     "elbowMin": 155,
+     "jumpMax": 0.1571,
+     "overReachMax": 0.0387,
+     "stretchMax": 1.342,
+     "groundLiftMax": 0.0084,
+     "legFloor": 137,
+     "sigDrift": 0,
+     "plantResMax": 0.2487,
+     "nan": false,
+     "strideMean": 1.2,
+     "gait": {
+      "stride": 0.561,
+      "cadence": 2.139,
+      "A": 18.5
+     }
+    },
+    "SINGLE_LEG": {
+     "slideMax": 0,
+     "floatMax": 0,
+     "penMax": 0,
+     "kneeMin": 88,
+     "elbowMin": 140,
+     "jumpMax": 0,
+     "overReachMax": 0,
+     "stretchMax": 1.567,
+     "groundLiftMax": 0,
+     "legFloor": 0,
+     "sigDrift": 0,
+     "plantResMax": 0,
+     "nan": false,
+     "strideMean": null,
+     "gait": null
+    },
+    "PUNT": {
+     "slideMax": 0,
+     "floatMax": 0,
+     "penMax": 0.0038,
+     "kneeMin": 156.3,
+     "elbowMin": 174,
+     "jumpMax": 0,
+     "overReachMax": 0,
+     "stretchMax": 1.194,
+     "groundLiftMax": 0,
+     "legFloor": 0,
+     "sigDrift": 0,
+     "plantResMax": 0.0038,
+     "nan": false,
+     "strideMean": null,
+     "gait": {
+      "stride": 0.246,
+      "cadence": 0,
+      "A": 8
+     }
+    }
+   }
+  },
+  "TALL_POWER": {
+   "rig": {
+    "id": "TALL_POWER",
+    "H": 2,
+    "checks": {
+     "bones23": {
+      "ok": true,
+      "v": 23
+     },
+     "finite": {
+      "ok": true,
+      "v": true
+     },
+     "inverseBindIdentity": {
+      "ok": true,
+      "v": 0
+     },
+     "anklesAtAnkleHeight": {
+      "ok": true,
+      "v": [
+       0.08737856149673462,
+       0.08737856149673462,
+       0.087378640776699
+      ]
+     },
+     "toeNearGround": {
+      "ok": true,
+      "v": 0.029126133769750595
+     },
+     "heightMatches": {
+      "ok": true,
+      "v": 2.000000012731089
+     },
+     "leftRightSymmetry": {
+      "ok": true,
+      "v": 0
+     },
+     "jointOrderShared": {
+      "ok": true,
+      "v": true
+     },
+     "legLengthPositive": {
+      "ok": true,
+      "v": 0.4708737864077669
+     },
+     "shoulderWidth": {
+      "ok": true,
+      "v": 0.5825242400169373
+     }
+    },
+    "ok": true,
+    "summary": {
+     "legLen": 0.942,
+     "armLen": 0.621,
+     "hipY": 1.029,
+     "shoulderW": 0.583,
+     "femurTibia": 1.064,
+     "torso": 0.524,
+     "headTop": 2
+    }
+   },
+   "mesh": {
+    "verts": 1395,
+    "tris": 2408
+   },
+   "bindSignature": {
+    "thigh": 0.4854,
+    "shin": 0.4563,
+    "upperArm": 0.3301,
+    "foreArm": 0.2913,
+    "torso": 0.6408,
+    "shoulders": 0.5825,
+    "hips": 0.4078,
+    "pelvisY": 1.0291
+   },
+   "motions": {
+    "STAND": {
+     "slideMax": 0,
+     "floatMax": 0,
+     "penMax": 0.0037,
+     "kneeMin": 156.3,
+     "elbowMin": 174,
+     "jumpMax": 0,
+     "overReachMax": 0,
+     "stretchMax": 1.27,
+     "groundLiftMax": 0,
+     "legFloor": 0,
+     "sigDrift": 0,
+     "plantResMax": 0.0037,
+     "nan": false,
+     "strideMean": null,
+     "gait": null
+    },
+    "READY": {
+     "slideMax": 0,
+     "floatMax": 0,
+     "penMax": 0,
+     "kneeMin": 103.6,
+     "elbowMin": 120,
+     "jumpMax": 0,
+     "overReachMax": 0,
+     "stretchMax": 1.723,
+     "groundLiftMax": 0,
+     "legFloor": 0,
+     "sigDrift": 0,
+     "plantResMax": 0,
+     "nan": false,
+     "strideMean": null,
+     "gait": null
+    },
+    "WALK": {
+     "slideMax": 0.1826,
+     "floatMax": 0.2177,
+     "penMax": 0.0386,
+     "kneeMin": 137.8,
+     "elbowMin": 155,
+     "jumpMax": 0.0735,
+     "overReachMax": 0,
+     "stretchMax": 1.443,
+     "groundLiftMax": 0,
+     "legFloor": 150,
+     "sigDrift": 0,
+     "plantResMax": 0.2782,
+     "nan": false,
+     "strideMean": 1.202,
+     "gait": {
+      "stride": 0.6,
+      "cadence": 2.334,
+      "A": 20.25
+     }
+    },
+    "RUN": {
+     "slideMax": 0.0784,
+     "floatMax": 0.0347,
+     "penMax": 0.0141,
+     "kneeMin": 102,
+     "elbowMin": 100,
+     "jumpMax": 0.2887,
+     "overReachMax": 0,
+     "stretchMax": 1.71,
+     "groundLiftMax": 0,
+     "legFloor": 79,
+     "sigDrift": 0,
+     "plantResMax": 0.0784,
+     "nan": false,
+     "strideMean": 2.181,
+     "gait": {
+      "stride": 1.211,
+      "cadence": 4.954,
+      "A": 34
+     }
+    },
+    "TURN": {
+     "slideMax": 0.2324,
+     "floatMax": 0.1774,
+     "penMax": 0.0399,
+     "kneeMin": 135.3,
+     "elbowMin": 155,
+     "jumpMax": 0.2545,
+     "overReachMax": 0.0497,
+     "stretchMax": 1.443,
+     "groundLiftMax": 0.0154,
+     "legFloor": 136,
+     "sigDrift": 0,
+     "plantResMax": 0.2576,
+     "nan": false,
+     "strideMean": 1.189,
+     "gait": {
+      "stride": 0.55,
+      "cadence": 2.182,
+      "A": 18.5
+     }
+    },
+    "SINGLE_LEG": {
+     "slideMax": 0,
+     "floatMax": 0,
+     "penMax": 0,
+     "kneeMin": 88,
+     "elbowMin": 140,
+     "jumpMax": 0,
+     "overReachMax": 0,
+     "stretchMax": 1.783,
+     "groundLiftMax": 0,
+     "legFloor": 0,
+     "sigDrift": 0,
+     "plantResMax": 0,
+     "nan": false,
+     "strideMean": null,
+     "gait": null
+    },
+    "PUNT": {
+     "slideMax": 0,
+     "floatMax": 0,
+     "penMax": 0.0037,
+     "kneeMin": 156.3,
+     "elbowMin": 174,
+     "jumpMax": 0,
+     "overReachMax": 0,
+     "stretchMax": 1.27,
+     "groundLiftMax": 0,
+     "legFloor": 0,
+     "sigDrift": 0,
+     "plantResMax": 0.0037,
+     "nan": false,
+     "strideMean": null,
+     "gait": {
+      "stride": 0.241,
+      "cadence": 0,
+      "A": 8
+     }
+    }
+   }
+  }
+ },
+ "motions": [
+  "STAND",
+  "READY",
+  "WALK",
+  "RUN",
+  "TURN",
+  "SINGLE_LEG",
+  "PUNT"
+ ],
+ "ticks": 240
+}
