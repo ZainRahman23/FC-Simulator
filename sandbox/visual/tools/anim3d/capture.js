@@ -18,6 +18,11 @@ fs.mkdirSync(OUT, { recursive: true });
     if (typeof GK3D !== "undefined") GK3D.copies = COPIES; if (PIXEL && typeof GL3D !== "undefined") GL3D.pixelScale = PIXEL; if (OUTLINE !== "" && typeof GL3D !== "undefined") GL3D.outline = OUTLINE === "1"; if (BANDS && typeof GL3D !== "undefined") GL3D.bands = +BANDS;
     if (ZOOM) { RIG.zoom = ZOOM; RIG.zoomTarget = ZOOM; } if (CAMX) { RIG.manualX = CAMX; RIG.x = CAMX; RIG.targetX = CAMX; TRAVEL = CAMX - 52.5; }
     if (PRESET === "broken") { GK_GRAPH.flightCap = false; GK_IK_MIN_ELBOW_DEG = 0; }
+    if (PRESET === "auth") Object.assign(GK_GRAPH.dbg, { noRedirect: true, noLaunch: true, noAssist: true, noIK: true });      // layer isolation (review): authored keys + simulation root only
+    if (PRESET === "redir") Object.assign(GK_GRAPH.dbg, { noLaunch: true, noAssist: true, noIK: true });                        // + axis redirect
+    if (PRESET === "launch") Object.assign(GK_GRAPH.dbg, { noAssist: true, noIK: true });                                       // + launch / landing plan pelvis
+    if (PRESET === "noik") Object.assign(GK_GRAPH.dbg, { noIK: true });
+    if (PRESET === "before") GK_GRAPH.lateralRule = false;                                                                      // review: the far-lateral regime rules off (the previous resolver behaviour)                                                          // + torso assist, no glove IK
     if (BAND) S.pt.gkCap = BAND;
     ptReset(); if (ADHOC) { S.pt.gkScenario = null; ptGkFire(ADHOC, 0, 1); } else ptGkScenario(IDX); gkAnimResetView(); if (typeof gk3dReset === "function") gk3dReset(); S.pt.paused = true; window.__k = 0;
   }, IDX, BACKEND, DBG, COPIES, PIXEL, ZOOM, CAMX, OUTLINE, BANDS, CHARACTER, VARIANT, ADHOC, PRESET, BAND);

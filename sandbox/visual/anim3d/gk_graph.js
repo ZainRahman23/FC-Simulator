@@ -12,7 +12,7 @@ const GK_GRAPH = {
   loadPhase: 0.30, toeOff: 0.31, unloadAt: 0.15,   // IK weight ramp start; plant-foot release; opposite-foot release (pre)
   ikFadePost: 0.35, torsoAssistMaxDeg: 20, clavicleAssistMaxDeg: 10, lookMaxDeg: 55, presMaxM: 2.5,
   ballVisR: 0.11, handOff: 0.03, antUpZ: [0.45, 0.80],   // presentation ball radius = the PHYSICAL ball (GOALFX.ballR 0.11; the 2D sprite draws an exaggerated 0.19 for readability — hand / ball relationships are judged against the real size); hand-target offset outside the ball; predicted crossing height (m) below/above which the central anticipation is the crouch / the upright ready
-  authoredRollDeg: 72, reachLenH: 0.64, jumpMaxM: 0.55, pelvisMinY: 0.30, followRiseM: 0.03, flightCap: true, capBlendT: 0.05,   // flightCap: review switch only (false reproduces the unbounded continuation for before/after captures) · followRiseM: after execEnd the flight may rise at most this much above the higher of the contact pelvis and the jump ceiling (the accepted v6 follow-through: 42's arc peaks 2 cm above its contact pelvis)
+  authoredRollDeg: 72, reachLenH: 0.64, jumpMaxM: 0.55, pelvisMinY: 0.30, followRiseM: 0.03, flightCap: true, capBlendT: 0.05, dbg: { noRedirect: false, noLaunch: false, noAssist: false, noIK: false }, lateralRule: true,   // lateralRule: the far-LATERAL dive regime (body axis ≥ sideLandHi) — proportional roll, no torso assist toward the target, fall-timed landing; false = the previous behaviour (review before/after)   // dbg.*: review switches isolating the procedural layers (authored motion only when all are set)   // flightCap: review switch only (false reproduces the unbounded continuation for before/after captures) · followRiseM: after execEnd the flight may rise at most this much above the higher of the contact pelvis and the jump ceiling (the accepted v6 follow-through: 42's arc peaks 2 cm above its contact pelvis)
   sideLandLo: 35, sideLandHi: 60,                  // body-axis angle from vertical (deg): ≤ lo land on the feet, ≥ hi land on the side
   G: 9.81,
   plantU: 0.10,           // the launch plan starts at the plant: from here the pelvis is ONE trajectory (push → arc → ground) until the settle
@@ -74,11 +74,15 @@ function gkGraphAxis(desc, rootM, skel, lowMode) {
   const sign = Tl[0] >= 0 ? 1 : -1, wSide = clamp01((theta - GK_GRAPH.sideLandLo) / (GK_GRAPH.sideLandHi - GK_GRAPH.sideLandLo));
   return { theta: +theta.toFixed(1), d, pelvis: P, pelvisOff: [P[0], P[1] - hipY, P[2]], sign, wSide, targetLocal: Tl };
 }
-function gkGraphRedirect(pose, axis, u, rollMax) {
+function gkGraphRedirect(pose, axis, u, rollMax, lateral) {
   const roll = pose.pelvis ? pose.pelvis[2] : 0, wExt = clamp01(Math.abs(roll) / GK_GRAPH.authoredRollDeg);
   const wPos = u == null ? wExt : smooth01(clamp01((u - GK_GRAPH.launchPos) / (1 - GK_GRAPH.launchPos)));               // the solved jump/launch position takes over from the toe-off; LOAD/PLANT/PUSH keep the authored crouch (feet can stay planted)
   const thetaR = rollMax != null ? Math.min(axis.theta, rollMax) : axis.theta;                                             // LOW dives: the body goes horizontal at most (a keeper never inverts); the arms reach the rest
-  const out = Object.assign({}, pose); out.pelvis = [pose.pelvis ? pose.pelvis[0] : 0, pose.pelvis ? pose.pelvis[1] : 0, lerp(roll, -axis.sign * thetaR, wExt)];
+  // FAR-LATERAL regime (body axis ≥ sideLandHi): the authored roll CURVE is scaled to the target axis (roll = theta · authored fraction), so the
+  // trunk inclines in the authored proportion — most of it in flight — instead of the lerp toward the full axis, which adds up to 72·f·(1−f)
+  // degrees of roll during the push (the body was horizontal before it left the ground). The approved high-dive rule is unchanged below the regime.
+  const rollOut = lateral ? -axis.sign * thetaR * wExt : lerp(roll, -axis.sign * thetaR, wExt);
+  const out = Object.assign({}, pose); out.pelvis = [pose.pelvis ? pose.pelvis[0] : 0, pose.pelvis ? pose.pelvis[1] : 0, rollOut];
   const k = lerp(1, Math.min(1.4, axis.theta / GK_GRAPH.authoredRollDeg), wExt);
   for (const bn of ["spine", "chest"]) if (pose[bn]) out[bn] = [pose[bn][0], pose[bn][1], pose[bn][2] * k];
   out._pelvis = V3.lerp(pose._pelvis || [0, 0, 0], axis.pelvisOff, wPos); out._wExt = wExt; out._wPos = wPos; return out;
@@ -121,11 +125,11 @@ const hermite = (p0, v0, p1, v1, T, t) => { const x = clamp01(t / Math.max(1e-6,
 // Touchdown is where the arc reaches the touch height; the horizontal velocity there is the flight's; deceleration starts on the
 // ground and is progressive (skid → impact → slide → zero at the settle). The get-up then recovers the stop → simulation-root
 // offset over its support points (hips over the tucked feet, front-foot step, crouch step, rise).
-function gkLandingPlan(skel, clip, launch, axis, rootM, held) {
+function gkLandingPlan(skel, clip, launch, axis, rootM, held, lateral) {
   const H = skel.H, w = axis.wSide, F = GK_GRAPH.feet, Sd = GK_GRAPH.side, G = GK_GRAPH.getup, mix = (a, b) => lerp(a, b, w), hs = H / 1.9, g = GK_GRAPH.G, hd = held ? GK_GRAPH.holdDecel : 1;
   const hip = 0.50 * H;
   let hTouch = mix(F.hTouch, Sd.hTouch) * hs, hImpact = mix(F.hImpact, Sd.hImpact) * hs; const hGround = mix(F.hGround, Sd.hGround) * hs;
-  let impactT = mix(F.impactT, Sd.impactT); const absorbT = mix(F.absorbT, Sd.absorbT), hold = mix(F.hold, Sd.hold), d1 = mix(F.decelTouch, Sd.decelTouch) * hd, d2 = mix(F.decelImpact, Sd.decelImpact) * hd;
+  let impactT = mix(F.impactT, Sd.impactT); let lateralAbsorb = null; const absorbT0 = mix(F.absorbT, Sd.absorbT), hold = mix(F.hold, Sd.hold), d1 = mix(F.decelTouch, Sd.decelTouch) * hd, d2 = mix(F.decelImpact, Sd.decelImpact) * hd;
   // touchdown: where the arc comes down to the touch height (never before endT — the reach is complete first)
   const disc = launch.vUp * launch.vUp - 2 * g * (hTouch - launch.Wt[1]); const sT = disc >= 0 ? (launch.vUp + Math.sqrt(disc)) / g : Math.max(0, launch.vUp / g);
   let tTouch = Math.max(launch.tE, launch.tT + sT); const hEnd = gkLaunchState(launch, launch.tE).W[1];
@@ -133,6 +137,15 @@ function gkLandingPlan(skel, clip, launch, axis, rootM, held) {
   const arrivedLow = hEnd < hTouch || (tTouch - launch.tE) < 0.02; if (hEnd < hTouch) { tTouch = launch.tE; hTouch = hEnd; hImpact = Math.min(hImpact, hEnd); }   // no descent stage (arrival at / below the touch height): impact / absorb continue from the arrival height and the arrival POSE
   const St = gkLaunchState(launch, tTouch);
   const Ht = [St.W[0], St.W[2]], vt = Math.hypot(launch.V[0], launch.V[2]), vz = St.v[1], u = vt > 1e-6 ? [launch.V[0] / vt, launch.V[2] / vt] : [1, 0];
+  let lateralVMid = null;
+  if (lateral && !arrivedLow) {                                                                     // far-lateral regime: the hip is stopped by ONE uniform deceleration from the arrival speed to rest at the ground height (a = v²/2Δh) — the
+    const dh = hTouch - hGround, vv = Math.max(0, -vz);                                             // impact / absorb split falls where that profile crosses the impact height, so the two hermite stages reproduce the quadratic exactly (no velocity
+    if (vv > 0.3 && dh > 0.02) {                                                                    // kink at the boundary). Only ever FASTER than the authored tempo (a slow arrival keeps the authored durations): the hip is not floated down.
+      const a = vv * vv / (2 * dh), Tu = 2 * dh / vv;
+      if (Tu < impactT + absorbT0) { const vImp = Math.sqrt(Math.max(0, vv * vv - 2 * a * (hTouch - hImpact))); impactT = Math.max(0.03, (vv - vImp) / a); lateralAbsorb = Math.max(0.05, vImp / a); lateralVMid = -vImp; }
+    }
+  }
+  const absorbT = lateralAbsorb != null ? lateralAbsorb : absorbT0;
   let lowStop = false;                                                                              // LOW arrival still falling: the hip stops on the pitch over the height that is left — uniform deceleration to the ground height (a hard, monotonic landing; never a dip below the ground height and a bounce back up)
   if (arrivedLow && vz < -0.3 && hEnd > hGround + 0.01) { hImpact = hGround; impactT = Math.min(impactT, Math.max(0.03, 2 * (hEnd - hGround) / -vz)); lowStop = true; }
   // ground: progressive deceleration along the travel direction; the remaining speed after the body impact is bled off by the slide
@@ -145,7 +158,7 @@ function gkLandingPlan(skel, clip, launch, axis, rootM, held) {
   // REPOSITION: once standing, the offset to the simulation root is walked back with shuffle steps (alternating feet, one re-plant per step)
   const Rp = GK_GRAPH.repo, dist = Math.hypot(sc[0], sc[2]), nSteps = dist > Rp.minDist * hs ? Math.ceil(dist / (Rp.stepLen * hs)) : 0, tRepo = tRise + nSteps * Rp.stepT, lead = sc[0] >= 0 ? "L" : "R";
   const hBrace = clip.postFeet.BRACE._h * hs, hPush = clip.postFeet.PUSH_UP._h * hs, hKneel = clip.postFeet.HALF_KNEEL._h * hs, hCrouch = clip.postFeet.CROUCH._h * hs, hSet = hip + (clip.set._pelvis ? clip.set._pelvis[1] : 0);
-  const vMid = lowStop ? 0 : 0.5 * ((hImpact - hTouch) / impactT + (hGround - hImpact) / absorbT);      // vertical: the arrival speed is absorbed over impact + absorb (velocity-continuous), zero at the ground
+  const vMid = lowStop ? 0 : (lateralVMid != null ? lateralVMid : 0.5 * ((hImpact - hTouch) / impactT + (hGround - hImpact) / absorbT));      // vertical: the arrival speed is absorbed over impact + absorb (velocity-continuous), zero at the ground
   const root = [rootM[12], rootM[14]];                                                      // simulation root (world x, z): stationary after endT; the get-up recovers the offset to it
   return { w, hip, nSteps, tRepo, lead, dist, arrivedLow, lowStop, hTouch, hImpact, hGround, hBrace, hPush, hKneel, hCrouch, hSet, tTouch, tImpact, tAbsorb, tSettle, tBrace, tPush, tKneel, tCrouch, tRise, Ht, u, vt, vz, vMid, segs: [s1, s2, s3], xStop, Hstop, root, stopC: [sc[0], sc[2]], dirSign: sc[0] >= 0 ? 1 : -1, launch, impactT, absorbT };
 }
@@ -215,6 +228,7 @@ function gkGraphEvaluate(desc, clip, skel, state) {
   const ck = c ? c.commitTick : null; if (state.facingKey !== ck) { state.facingKey = ck; state.facing = c ? desc.commitFacing : null; }
   let facing = c ? state.facing : desc.facing;
   let rootM = gkRootMatrix(desc.simRoot[0], desc.simRoot[1], facing, 0);
+  if (state.lateralKey !== mk) { state.lateralKey = mk; const ax0 = (c && mkey === "FAR_DIVE" && GK_GRAPH.lateralRule) ? gkGraphAxis(desc, rootM, skel, false) : null; state.lateral = !!(ax0 && ax0.wSide >= 1 - 1e-6); }   // far-lateral regime: decided ONCE at the commit from the committed target's body axis (≥ sideLandHi → a side-landing lateral dive)
   let distG = null;
   if (c && desc.dist) {
     // ═══ DISTRIBUTION (v12): the simulation's release plan (desc.dist) drives a possession-graph continuation: the body starts from the pose it
@@ -348,6 +362,7 @@ function gkGraphEvaluate(desc, clip, skel, state) {
     }
     else { pose = M(clip.set); phase = tl < 0.4 ? "RISE" : "SET"; authored = false; mode = "procedural"; }
     ikW = desc.held ? 1 : Math.max(0, 1 - tl / GK_GRAPH.ikFadePost);
+    if (state.lateral && !desc.held && state.plan && state.plan.launch) { const tf = Math.max(0.12, state.plan.tImpact - state.plan.launch.tE); ikW *= 1 - smooth01(clamp01(tl / tf)); }   // far-lateral regime: the reach is over at the execution end — the glove IK is out by the IMPACT stage (an arm still pulled toward a target 1–2 m away while the body lands folded the elbow to its limit and flipped its bend plane); the authored landing keys place the arm (bridge / brace)
     if (mo && mo.kind === "spread") ikW = 0;
   }
   const g = { pose, phase, sub, clipT, ikW, rootM, facing, authored, mode, motion: mkey, fallback: !!sel.fallback, side: c ? state.side : desc.side, landedSide: state.landedSide || null, reachHand: sideL ? "L" : "R", axis: null, locks, brace, landing: null, flight: null, pres: { dx: 0, dy: 0, dm: 0 },
@@ -369,7 +384,7 @@ function gkGraphEvaluate(desc, clip, skel, state) {
   if (c && authored && (dive || (mo && (mo.kind === "collapse" || mo.kind === "spread")))) {
     const axis = dive ? gkGraphAxis(desc, rootM, skel, mkey === "LOW_DIVE") : null; g.axis = axis; const rollMax = mo ? mo.rollMax : null;
     if (mode === "pre") {
-      g.pose = gkGraphRedirect(g.pose, axis, clipT, rollMax); state.plan = null;
+      g.poseRaw = g.pose; g.pose = GK_GRAPH.dbg.noRedirect ? (function () { const q = Object.assign({}, g.pose); q._pelvis = V3.scale(g.pose._pelvis || [0, 0, 0], 1); return q; })() : gkGraphRedirect(g.pose, axis, clipT, rollMax, state.lateral); state.plan = null;
       // launch plan at the plant: from here the pelvis follows ONE planned trajectory (push → toe-off → arc through the solved
       // full-extension pelvis at execEnd → on through contact). Before the plant the authored crouch + the simulation root move it.
       if (!state.launch && clipT >= GK_GRAPH.plantU) {
@@ -377,11 +392,12 @@ function gkGraphEvaluate(desc, clip, skel, state) {
         const rootMEnd = gkRootMatrix(c.rootEnd ? c.rootEnd[0] : desc.simRoot[0], c.rootEnd ? c.rootEnd[1] : desc.simRoot[1], facing, 0), axisEnd = gkGraphAxis(desc, rootMEnd, skel, mkey === "LOW_DIVE");
         state.launch = gkLaunchPlan(axisEnd, rootMEnd, W0, v0, desc.now, c.t0 + GK_GRAPH.toeOff * c.execTime, c.t0 + c.execTime, 0.50 * skel.H + GK_GRAPH.jumpMaxM * ((desc.cls && desc.cls.expr) ? desc.cls.expr.launch : 1));
       }
-      if (state.launch) { const St = gkLaunchState(state.launch, desc.now); setPelvisWorld(g.pose, St.W); g.flight = St; }
+      g.poseRedirected = Object.assign({}, g.pose, { _pelvis: (g.pose._pelvis || [0, 0, 0]).slice() });
+      if (state.launch && !GK_GRAPH.dbg.noLaunch) { const St = gkLaunchState(state.launch, desc.now); setPelvisWorld(g.pose, St.W); g.flight = St; }
       state.endPose = g.pose; state.endAxis = axis;
     }
     else if (mode === "post") {
-      const endPose = state.endPose || (dive ? gkGraphRedirect(M(gkSampleKeys(preKeys, 1, named)), axis, 1, rollMax) : M(mo.keys[mo.keys.length - 1][1])), ax = state.endAxis || axis;
+      const endPose = state.endPose || (dive ? gkGraphRedirect(M(gkSampleKeys(preKeys, 1, named)), axis, 1, rollMax, state.lateral) : M(mo.keys[mo.keys.length - 1][1])), ax = state.endAxis || axis;
       if (dive && !state.launch) { const W0 = worldPelvis(endPose); state.launch = gkLaunchPlan(ax, rootM, W0, [0, 0, 0], desc.now - 0.30, desc.now - 0.20, desc.now, 0.50 * skel.H + GK_GRAPH.jumpMaxM * ((desc.cls && desc.cls.expr) ? desc.cls.expr.launch : 1)); }   // fallback (no plant tick was evaluated): a short arc from where the body is
       if (!state.plan) {
         let opt = null;
@@ -390,7 +406,7 @@ function gkGraphEvaluate(desc, clip, skel, state) {
           const sg = sideL ? -1 : 1, hsp = skel.H / GK_MOTION_H_REF, ux = [rootM[0] * sg, rootM[2] * sg], ul = Math.hypot(ux[0], ux[1]) || 1;
           opt = { absorbT: mo.absorbT, hold: mo.hold, hGround: 0.50 * skel.H + mo.ground._pelvis[1] * hsp, v0y: Math.min(0, v0y), dir: [ux[0] / ul, ux[1] / ul], travel: mo.travel * hsp };
         }
-        state.plan = dive ? gkLandingPlan(skel, clip, state.launch, ax, rootM, desc.held) : gkGroundPlan(skel, clip, worldPelvis(endPose), rootM, desc.now, opt);
+        state.plan = dive ? gkLandingPlan(skel, clip, state.launch, ax, rootM, desc.held, state.lateral) : gkGroundPlan(skel, clip, worldPelvis(endPose), rootM, desc.now, opt);
       }
       const plan = state.plan, L = gkLandingState(plan, desc.now); g.landing = { plan, L };
       const PF = clip.postFeet, PS = clip.postSide, w = plan.w;
@@ -544,13 +560,13 @@ function gkGraphSolve(desc, g, skel, state) {
   const T = glW(desc.handTarget);
   const cradleOn = !g.dist && g.catchKind && (g.twoHands || g.holdBall) && !(g.mode === "standing-post" && !desc.held && (state.cradle && state.cradle.released));   // a parry RELEASES the cradle by blending the arms back to the authored pose over the rise (never a cut)   // two-hand catch (pre-contact receive → held cradle): the arms are solved as ONE cradle below, never as two chains chasing points
   state.lastAssist = null;                                                                     // set below only on a tick that actually applies the torso / clavicle assist (a stale value must never be re-applied by a later plan start)
-  if (g.ikW > 0 && !cradleOn) {
+  if (g.ikW > 0 && !cradleOn && !GK_GRAPH.dbg.noIK) {
     const up = skel.byName[upper], fo = skel.byName[fore], hd = skel.byName[hand]; const S = fk.joint[up.idx]; const over = V3.dist(T, S) - (up.len + fo.len + 0.6 * hd.len);
-    if (over > 0.01) {
+    if (over > 0.01 && !GK_GRAPH.dbg.noAssist) {
       const inv = M4.invertRigid(g.rootM), Pj = M4.transformPoint(inv, fk.joint[skel.byName.pelvis.idx]), Sl = M4.transformPoint(inv, S), Tl = M4.transformPoint(inv, T);
       const a1 = Math.atan2(Sl[0] - Pj[0], Sl[1] - Pj[1]), a2 = Math.atan2(Tl[0] - Pj[0], Tl[1] - Pj[1]);
-      let e = (a2 - a1) / DEG; e = Math.max(-GK_GRAPH.torsoAssistMaxDeg, Math.min(GK_GRAPH.torsoAssistMaxDeg, e)) * clamp01(over / 0.3) * g.ikW;
-      const assist = { spine: [0, 0, -e * 0.5], chest: [0, 0, -e * 0.5], ["clavicle_" + h]: [0, 0, (h === "R" ? 1 : -1) * GK_GRAPH.clavicleAssistMaxDeg * clamp01(over / 0.3) * g.ikW] };
+      let e = (a2 - a1) / DEG; e = Math.max(-GK_GRAPH.torsoAssistMaxDeg, Math.min(GK_GRAPH.torsoAssistMaxDeg, e)) * clamp01(over / 0.3) * g.ikW; if (state.lateral) e = 0;   // far-lateral dive: the trunk is not bent toward an out-of-reach target (the reach is the arm's; the residual stays)
+      const assist = { spine: [0, 0, -e * 0.5], chest: [0, 0, -e * 0.5], ["clavicle_" + h]: [0, 0, (h === "R" ? 1 : -1) * GK_GRAPH.clavicleAssistMaxDeg * clamp01(over / 0.3) * g.ikW * (state.lateral ? 0 : 1)] };
       const p2 = poseAdd(pose, assist); p2._pelvis = pose._pelvis; diag.torso = +e.toFixed(1); fk = skelFK(skel, p2, g.rootM); elbowLimit(); plantFeet(); if (FCf) floorPass(); state.lastAssist = { e, h };
     }
     const rightW = M4.transformDir(g.rootM, [1, 0, 0]), splitOff = (g.catchKind && g.twoHands) ? g.ballR + GK_GRAPH.handOff : 0;   // a two-hand catch: each hand goes to ITS side of the ball line (never both to the centre)
