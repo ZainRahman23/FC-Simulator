@@ -42,7 +42,7 @@ function gkActionDescription(t, gk, cur) {
     legTip: gk.legTipNow ? gk.legTipNow.slice() : null,                           // the simulation's lead-leg tip during a low save (authoritative leg target)
     handTarget: gk.handNow ? gk.handNow.slice() : [gk.x, gk.y, gk.handZ],
     legTip: gk.legTipNow ? gk.legTipNow.slice() : null,
-    commit: c ? { t0: c.t0, execTime: c.execTime, target: c.target.slice(), feet: c.feet.slice(), handOrigin: c.handOrigin.slice(), action: c.action, tier: c.tier, envNorm: c.envNorm, bestEffort: c.bestEffort, gather: !!c.gather, commitTick: c.commitTick,
+    commit: c ? { t0: c.t0, execTime: c.execTime, target: c.target.slice(), feet: c.feet.slice(), handOrigin: c.handOrigin.slice(), action: c.action, tier: c.tier, envNorm: c.envNorm, bestEffort: c.bestEffort, gather: !!c.gather, commitTick: c.commitTick, ballPoint: c.ballPoint ? c.ballPoint.slice() : null, reachMargin: c.reachMargin, maxLat: c.diveSpanMax,
       // where the simulation's own root move ends (its Stage-4 formula at u = 1: feet + footFrac·(target − feet)); read-only, lets the
       // presentation plan one continuous airborne arc that passes through the solved full-extension pelvis at execEnd
       rootEnd: (function () { const standing = c.tier === "STANDING REACHABLE" && !c.gather; const ffx = c.gather ? GK_GATHER.footFrac : standing ? 0 : GK_DIVE.footFrac; const ffy = c.gather ? GK_GATHER.footFrac : standing ? GK_DIVE.footFracStandingLat : GK_DIVE.footFrac; return [c.feet[0] + (c.target[0] - c.feet[0]) * ffx, c.feet[1] + (c.target[1] - c.feet[1]) * ffy]; })() } : null,

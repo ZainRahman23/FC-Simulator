@@ -57,3 +57,26 @@ def build(made):
 {media("a1_6", "strip")}{media("a1_6", "overlay")}<div class=row>{media("a1_6", "gif", 440, "mirror LEFT — ¼ speed")}</div>
 {ident}{media("2", "sheet")}{media("2", "overlay")}
 """
+
+def build2(made2):
+    LG = layers(S + "/layers_armG_courtois.json"); LGT = layers(S + "/layers_armG_test.json"); LGA = layers(S + "/layers_armG_adhoc.json"); LF = layers(S + "/layers_armF_courtois.json"); LI = layers(S + "/layers_brace_courtois.json")
+    def media(tag, key, w=None, cap=""):
+        p = made2.get(tag, {}).get(key)
+        return f'<figure><img src="{p}"{" style=\"max-width:%dpx\"" % w if w else ""}><figcaption>{esc(cap)}</figcaption></figure>' if p else f"<p class=note>[{tag} {key}: not captured]</p>"
+    c2 = made2.get("2", {})
+    return f"""
+<h2 id=arm2>11. Third pass — general arm self-collision / IK quality (recovery brace, low dives, collapses, catches)</h2>
+<div class=verdict><b>What was found, per residual.</b>
+<ol><li><b>Brace arm through the chest in the recovery (−10 … −19 cm, every dive)</b> — not the bend plane: the top hand's ground brace target was placed from the ROOT frame (0.18·hs toward the dive side, 0.36·hs "forward") which, for a body lying on its side, lands UNDER the body at the chest plane; the arm reached it through the ribcage (residual 5 cm). Fixed for the arm-clear regimes: the top-hand target is now a ground point in front of the CHEST NORMAL (0.38·hs) and toward the head along the body axis (0.30·hs); the bend plane is untouched. Fixture 15 SETTLE / BRACE / PUSH_UP: −10.3 / −18.9 / −16.6 → +4.6 / +6.1 / +2.0 cm; fixture 13, the low dive (4) and the collapse (34 / 51) likewise (table). The approved high-dive FAR_DIVE (fixtures 2 / 42) keeps its authored brace — frozen controls, reported.</li>
+<li><b>Low-dive / collapse authored arms (−15 … −18 cm pre-branch on the survey)</b> — the LOW_DIVE shares the V6 pre keys (same trailing-arm sweep): the trailing-arm yaw rule now applies to LOW_DIVE and LOW_COLLAPSE too (fixture 4 TOE_OFF −17.6 → +1.1; 51 GROUND −5.7 → +5.5). The low-dive tail (FULL_EXTENSION_LOW / ABSORB) keeps −4.7 / −7.8 cm of trailing forearm at the head model: its tail keys fold the arm over the head at the reach — authored, reported.</li>
+<li><b>Two-forearm overlap at the two-hand convergence (fixture 15, −4.2 cm for ~3 ticks)</b> — measured to be the REACH forearm crossing over the trailing one (hands 17 cm apart, elbows on opposite sides); a hand-separation feedback on the trailing yaw was tried and had no effect (removed). Reported.</li>
+<li><b>"Reach arm through the head" on left dives (39, 14, the mirror)</b> — two different things: (a) on cross-body reaches the straight reach arm passes ~10 cm from the head centre (target-line geometry, −1 … −9 cm against the 10 cm head sphere, present identically before this work); (b) fixtures 39 and the fixture-15 mirror are dive CATCHES at this band: the simulation keeps the HELD ball at the catch point (1.26 m) while the body lands, and the two-hand hold blends both hands onto the authored hand midpoint of the lying keys — above the head — so the arms wrap over the head through the landing and recovery. A chest-hold cradle was tried (both hands onto a ball at the chest of the lying body) and made it worse (both upper arms through the chest with the world-frame elbow poles); reverted. A dive-catch cradle for a lying body is a separate design — <b>known limitation, reported</b>.</li></ol>
+Symmetry check: the mirrored poses are exact (arm eulers of a right dive and its left mirror agree to 0.1°); every left / right difference above traces to the hold path or the target-line geometry, not to the resolver.</div>
+<h3>Clearance by phase [cm] — final code (recovery included)</h3>
+{table([("15 AFTER (Courtois)", LG.get("15"), "L"), ("13 AFTER (Courtois)", LG.get("13"), "L"), ("14 AFTER (Courtois, left dive)", LG.get("14"), "R"), ("4 far post — LOW DIVE (Courtois)", LG.get("4"), "R"), ("51 NW-facing low dive — COLLAPSE (Courtois)", LG.get("51"), "R"), ("34 controlled parry — COLLAPSE (Courtois)", LG.get("34"), "L"), ("39 fingertip / CATCH at this band (Courtois)", LG.get("39"), "R"), ("fixture-15 mirror LEFT (CATCH at this band)", LGA.get("adhoc6"), "R"), ("15 AFTER (test rig)", LGT.get("15"), "L"), ("4 LOW DIVE (test rig)", LGT.get("4"), "R"), ("34 COLLAPSE (test rig)", LGT.get("34"), "L"), ("42 V6 control (test rig, unchanged)", LGT.get("42"), "L"), ("2 control (Courtois, unchanged)", LG.get("2"), "L")])}
+{media("15", "rec")}{media("15", "ov")}<div class=row>{media("15", "gif", 440, "fixture 15 recovery AFTER — ¼ speed")}</div>{media("15", "test")}
+{media("4", "sheet")}{media("4", "ov")}<div class=row>{media("4", "gif_before", 440, "fixture 4 low dive BEFORE — ¼ speed")}{media("4", "gif", 440, "fixture 4 low dive AFTER — ¼ speed")}</div>
+{media("34", "sheet")}
+{media("39", "sheet")}<div class=row>{media("39", "gif", 440, "fixture 39 — dive catch, the held-ball hold on a lying body (known limitation) ¼ speed")}</div>
+<p>Fixture 2 (control): <b class={'ok' if c2.get('identical') == c2.get('n') and c2 else 'bad'}>{c2.get('identical', '?')} of {c2.get('n', '?')} close-rig frames pixel-identical</b> to the previous pass.</p>
+"""

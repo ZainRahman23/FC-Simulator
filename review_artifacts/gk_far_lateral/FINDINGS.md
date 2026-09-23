@@ -1,4 +1,4 @@
-# Goalkeeper far-LATERAL dive — findings (2026-09-23; arm-transition pass appended in §7)
+# Goalkeeper far-LATERAL dive — findings (2026-09-23; arm-transition pass §7, reachability contract §8, general arm self-collision §9)
 
 Review page: `GK_FAR_LATERAL_REVIEW.html` (media in `media/`, inputs / tools in `verification/`).
 Scope: fixtures 13 and 15 (visually questionable / wrong after the far-dive safety fix), fixture 2 as the control. Nothing from the
@@ -138,3 +138,56 @@ made the bottom arm worse and was not kept) — outside this pass.
 ticks unchanged, torso assist 0 in the regime, landing tempo and IK release by IMPACT unchanged (the same landing stage ticks), no
 NaN, survey flip / assertion totals unchanged, feet / sole metrics unchanged; the survey now also records `selfColMin` /
 `selfColMinPre` per fixture as the standing self-collision gate.
+
+## 8. Reachability contract before the dive solver (clearly unreachable shots no longer launch the keeper)
+
+**Cause.** The simulation commits a save action on every shot it predicts, including balls outside its envelope: a *best-effort*
+commit whose hand target is projected onto the envelope boundary toward the ball, with an execution time from its action-time
+model. The presentation fitted a ballistic arc THROUGH the solved full-extension pelvis at execution end whatever that window was —
+for a corner-flag shot (envelope norm 3.4, 7 m short, exec 1.24 s) the fit needs 4.3 m/s upward and the hip went to 2.21 m; "clearly
+over the bar" (norm 1.34, 1 m short) lifted it to 1.57 m. The impossible target was fed into the fit; the earlier flight cap only
+bounded the continuation after execution end.
+
+**Change (presentation only).** The simulation's commit / target / contact / ball are untouched; an additive diagnostic field
+`ballPoint` (the raw predicted interception) is added to the commit record and passed through the description (the neutrality
+gate hashes action / t0 / target / commit tick / contact only — all identical). `gkReachClass` (gk_graph.js) decides ONCE at the
+commit, from the skeleton and the physical state — not attributes, not identity:
+- simulation-reachable commit → **REACHABLE**: the normal solver, unchanged;
+- best-effort commit → physical shortfall = distance from the raw interception to the hand reach (0.64·H) from a pelvis anywhere
+  between the ground-hip floor (0.30 m) and standing hip + 0.55 m above the simulation's own end root, with 0.15·H of hip
+  displacement beyond the feet; shortfall ≤ 0.30·H → **MARGINAL** (the full-extension attempt runs and misses naturally; its launch
+  fit is bounded at 3.7 m/s BEFORE the fit — the exec-end pelvis is lowered to what that launch reaches at execution end); beyond →
+  **CLEARLY UNREACHABLE**: no dive solver, no launch plan, no glove IK — the initiation (load → plant, 15 % of the window) starts and
+  is aborted, the body comes back up while the feet step with the simulation's own root travel (footwork odometer) and the head keeps
+  tracking the ball; then a recovery to the set.
+A taller keeper has a larger envelope (band 0.60 m at H 2.01, 0.55 m at H 1.83); the band is the one tunable (`GK_GRAPH.reach`).
+
+**Matrix (band COURTOIS, Courtois / test rig).** reachable top corner → REACHABLE, contact, vUp 2.3; just-outside top corner →
+simulation-reachable at the fingertips (norm 0.948), contact; fast wide (norm 1.08, −0.23 m) → MARGINAL, dive, no launch change;
+high wide medium (1.14) → MARGINAL; clearly over the bar (1.34, shortfall +0.80 m) → CLEAR, no launch (hip 1.06 m, was 1.57);
+clearly wide of the post (1.6) → CLEAR; corner flag (3.4) → CLEAR (hip 1.06, was 2.21); slow wide → met on the feet by the
+simulation (no save action on one side, a reachable dive on the other); mirrors identical. Controls: fixture 2 is MARGINAL below the
+3.7 m/s bound (unchanged), 42 / 13 / 15 / 14 / 39 / 36 / 40 simulation-reachable (unchanged). At the default K1 band, fixture 15's
+own predicted interception is 3 m short (norm 2.33): it is a restrained reaction there — consistent with the simulation's judgement;
+at the reviewed COURTOIS band it stays a genuine attempt.
+
+## 9. General arm self-collision / IK quality (third pass)
+
+Measured with the self-collision gate through every phase incl. the recovery, both rigs, both sides:
+- **Recovery brace arm** (−10 … −19 cm on every dive): the top hand's ground brace target was placed from the ROOT frame (0.18·hs
+  toward the dive side, 0.36·hs "forward"), which for a body lying on its side lands UNDER the body at the chest plane — the arm
+  reached it through the ribcage (residual 5 cm). Not the bend plane (a pole hint changed nothing). Fixed in the arm-clear regimes:
+  the top-hand target is a ground point in front of the CHEST NORMAL (0.38·hs) and toward the head along the body axis (0.30·hs).
+  Fixture 15 SETTLE / BRACE / PUSH_UP −10.3 / −18.9 / −16.6 → +4.6 / +6.1 / +2.0 cm; 13, 14, 4, 34, 51 likewise.
+- **Low dives / collapses**: the trailing-arm yaw rule and the brace target now also apply to LOW_DIVE (shares the V6 pre keys) and
+  LOW_COLLAPSE: fixture 4 TOE_OFF −17.6 → +1.1 cm, 51 GROUND −5.7 → +5.5. The low-dive tail keys fold the trailing forearm over the
+  head at the reach (−4.7 / −7.8 cm at FULL_EXTENSION_LOW / ABSORB) — authored, reported.
+- **Two-forearm overlap** at the two-hand convergence (15: −4.2 cm, ~3 ticks): the REACH forearm crossing the trailing one; a
+  hand-separation feedback on the trailing yaw had no effect and was removed. Reported.
+- **Left-dive "reach arm through the head"** (39, 14, the mirror): the mirrored poses are exact (eulers agree to 0.1°). (a) On
+  cross-body reaches the straight reach arm passes ~10 cm from the head centre (target-line geometry, pre-existing). (b) 39 and the
+  fixture-15 mirror are dive CATCHES at this band: the simulation keeps the HELD ball at the catch point (1.26 m) while the body
+  lands and the two-hand hold blends both hands onto the authored hand midpoint of the lying keys — above the head — so the arms
+  wrap over the head through the landing. A chest-hold cradle was tried and made it worse (both upper arms through the chest with
+  world-frame elbow poles); reverted. A dive-catch cradle for a lying body is a separate design — known limitation.
+- The approved high-dive FAR_DIVE (fixtures 2 / 42) keeps its authored arms and brace: pixel-identical / byte-identical controls.

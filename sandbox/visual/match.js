@@ -3688,7 +3688,7 @@ function gkTryCommit(t, gk, ev) {
     gk.committed = { t0, tier: reachable ? tier : "UNREACHABLE", execTime: execT, bestEffort: !reachable,
       action: gather ? "GATHER" : ax.action, gather, gatherSpeed: gather ? ev.gatherSpeed : null, gatherRel: gather ? ev.gatherRel : null, gatherSecure: gather ? ev.gatherSecure : null,
       actionDetail: { dArm: ax.dArm, dBody: ax.dBody, tArm: ax.tArm, tBody: ax.tBody },
-      target: [tx, ty, tz], feet: [gk.x, gk.y], handOrigin: ho,
+      target: [tx, ty, tz], feet: [gk.x, gk.y], handOrigin: ho, ballPoint: [tp[0], tp[1], tp[2]],   // ballPoint: the raw predicted interception (read-only diagnostic for the presentation's reachability classification; the committed target above is authoritative)
       reachMargin: +((1 - norm) * env.maxLat).toFixed(2), diveSpanMax: env.maxLat, envNorm: +norm.toFixed(3),
       tShotToReact: gk.latency, tReactToCommit: t0 - (gk.shotT0 + gk.latency), commitTime: t0, commitTick: t.now };
     gk.phase = "COMMIT";
