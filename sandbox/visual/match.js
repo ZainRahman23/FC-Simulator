@@ -2177,6 +2177,21 @@ const PT = {  // world.py Body constants, ported verbatim — keep in sync
   // OUTFIELD LOCOMOTION V1 harness gears: desired-speed INTENT only (the limiter above is untouched); keys.walk / keys.jog are
   // set by the ?ofPlay harness (Q / E held) — the GK playtest and the plain playtest never set them, so their law is unchanged
   WALKV: 1.5, JOGV: 3.0,
+  // DRIBBLING V1 — the simulation's own stride clock and boot plan. Leg length is a player attribute (a reference body by default); the
+  // gait law here is the SAME one the skeletal presentation plays, so the boots the simulation reasons about are the boots you see.
+  LEG_REF: 0.865, IDLE_V: 0.18, SETTLE_CAD: 1.6, REST_PHASE: [0.08, 0.58],
+  TOUCH_WIN: 0.20,      // s: how far EITHER SIDE of the law's nominal touch time the gate may look for a boot. It must span about one
+                        // half-stride, or only one foot's window is ever reachable and the touch locks onto that foot for ever. A touch can
+                        // only happen when a boot is actually there, so the realised period quantises to half-strides around T(v).
+  TOUCH_EARLY: 0.20,    // s: how far BEFORE the nominal due time the gate may already fire on a passing boot. The search is symmetric
+                        // about the due time so both boots' windows compete — a forward-only search locks onto one foot for ever.
+  BOOT_GRACE: 0.10,     // x legLen added to the boot reach before a contact is called implausible
+  TOUCH_MIN_HS: 0.55,   // a touch may not follow another closer than this many HALF-STRIDES: with no foot available there is no touch.
+                        // Without it, arming early re-arms the gate the tick after a touch and it fires twice in a row.
+  SAME_FOOT: 0.35,      // score penalty for touching twice running with the same boot. With a touch period that is not a whole number of
+                        // half-strides, the nearest-window rule has a stable fixed point on EITHER foot and would lock there for ever.
+                        // A standing leg carries the body while the other plays the ball, so alternation is the physical default — but a
+                        // ball sitting to one side, a cut, or a settle can outweigh this and produce consecutive same-foot touches.
 };
 const PT_DT = 1 / 60;
 // ═══ INSIDE_R BALL CURVE V1 — right-foot inside curl (technique-specific) ══
@@ -2499,12 +2514,15 @@ function ptFam(fam, D) {          // world.py FAM launch families (port)
 function ptReset() {
   const t = S.pt;
   t.now = 0;
-  t.p = { x: 76.0, y: 34.0, vx: 0, vy: 0, facing: 0, touchT: 0 };
+  t.p = { x: 76.0, y: 34.0, vx: 0, vy: 0, facing: 0, touchT: 0, legLen: (t.p && t.p.legLen) || PT.LEG_REF, gaitPhase: 0.08, gaitSettled: true };
   t.b = { x: 76.8, y: 34.0, z: 0, vx: 0, vy: 0, vz: 0, ctrl: true, exclT: 0 };
   t.ctrlSince = 0;
   t.shoot = null; t.kick = null; t.kickLog = t.kickLog || []; t.net = null; t.touchN = 0;
   t.pfoot = t.pfoot || "R";
-  t.dribT = 0; t.dribF0 = 0;
+  t.dribT = 0; t.dribF0 = 0; t.touchPlan = null; t.touchLog = []; t.lastTouch = null; t.lastTouchFoot = null; t.tickN = 0;
+  // carry run-state: these persisted across a reset, so the corridor and the touch clock started from the PREVIOUS run's values and the
+  // first seconds after R were not reproducible (t.now restarts at 0, so a stale t.corrT / t.lastTouchT reads as far in the future).
+  t.corr = undefined; t.corrT = undefined; t.lastTouchT = undefined; t.ctrlState = null; t.looseT = undefined; t.liveTurn = 0; t.dribSeq = null;
   t.last = "RESET";
   t.gk = ptGkMake();               // Goalkeeper V1 entity (always present in the playtest)
   t.gkScenario = null;             // null = free play (not in a shot scenario)
@@ -5699,6 +5717,104 @@ function ptShowcaseStep(t) {
   sh.idx++;
   sh.nextAt = t.now + 2.4;          // anim (<=1 s) + readable pause
 }
+// ═══ AUTHORITATIVE STRIDE CLOCK + BOOT PLAN (DRIBBLING V1) ══════════════════════════════════════════════════════════════════════════
+// The simulation keeps its own gait phase and its own idea of where both boots are. This is what makes a dribble touch able to happen
+// through a real foot WITHOUT handing the decision to the renderer: the phase law and the boot plan are shared with the presentation
+// (ofBootPlan in of_loco.js), so animation ON and animation OFF see identical boots and produce identical touches.
+// Nothing here is random and nothing here reads presentation state.
+function ptGaitStep(t, v) {
+  t.tickN = (t.tickN || 0) + 1;
+  const p = t.p, legLen = p.legLen || PT.LEG_REF;
+  const P = (typeof ofLocoParams === "function") ? ofLocoParams(v) : { step: 1.0, stance: 0.45 };
+  const step = P.step * legLen, cadence = step > 1e-6 ? v / step : 0;
+  if (p.gaitPhase === undefined) { p.gaitPhase = 0.08; p.gaitSettled = true; }
+  if (v > PT.IDLE_V) { p.gaitPhase = (p.gaitPhase + PT_DT * cadence / 2) % 1; p.gaitSettled = false; }
+  else if (!p.gaitSettled) {                                                                      // settle to a double-support phase, as the presentation does
+    const r0 = PT.REST_PHASE, cand = r0.map(r => ((r - p.gaitPhase) % 1 + 1) % 1), k = cand[0] < cand[1] ? 0 : 1;
+    const adv = PT_DT * PT.SETTLE_CAD / 2;
+    if (cand[k] <= adv) { p.gaitPhase = r0[k]; p.gaitSettled = true; } else p.gaitPhase = (p.gaitPhase + adv) % 1;
+  }
+  const dir = v > 0.3 ? Math.atan2(p.vy, p.vx) : p.facing, dx = Math.cos(dir), dy = Math.sin(dir);
+  const prev = t.boots;
+  t.boots = (typeof ofBootPlan === "function")
+    ? ofBootPlan(p.gaitPhase, P.stance, legLen, p.x, p.y, dx, dy)
+    : { R: { x: p.x, y: p.y, ahead: 0, u: 0, planted: true }, L: { x: p.x, y: p.y, ahead: 0, u: 0.5, planted: true } };
+  for (const sd of ["R", "L"]) {                                                                  // boot world velocity (finite difference, same 60 Hz step)
+    const c = t.boots[sd], q = prev && prev[sd];
+    c.vx = q ? (c.x - q.x) / PT_DT : 0; c.vy = q ? (c.y - q.y) / PT_DT : 0;
+    c.v = Math.hypot(c.vx, c.vy);
+    c.win = (typeof ofBootWindow === "function") ? ofBootWindow(p.gaitPhase, sd === "R" ? 0 : 0.5) : 1;
+  }
+  t.gait = { phase: p.gaitPhase, cadence, step, stance: P.stance, gait: P.gait, settled: p.gaitSettled, dir, legLen };
+}
+// ═══ TOUCH REALISATION (DRIBBLING V1) ══════════════════════════════════════════════════════════════════════════════════════════════
+// The carry law still decides EVERYTHING about the touch: whether possession holds, whether a touch is due, the corridor, the impulse.
+// All this adds is WHEN inside a small window the authorised touch happens, and WHICH boot does it — both computed from the authoritative
+// boot plan, never from the renderer. If no boot can plausibly reach the ball inside the window the touch still fires on the deadline and
+// is recorded as UNREALISED, so the carry model's own escape and loss behaviour is never rescued cosmetically.
+const PT_BALL_R = 0.11;
+function ptBootReach(t) { const B = (typeof OF_BOOT !== "undefined") ? OF_BOOT.reach : 0.30; return B * (t.p.legLen || PT.LEG_REF); }
+// Look ahead over the permitted window and score every (boot, tick) opportunity. Deterministic; no randomness anywhere.
+function ptTouchSelect(t, corr, corrective) {
+  const p = t.p, b = t.b, legLen = p.legLen || PT.LEG_REF, reach = ptBootReach(t) + PT_BALL_R;
+  const P = (typeof ofLocoParams === "function") ? ofLocoParams(Math.hypot(p.vx, p.vy)) : { step: 1, stance: 0.45 };
+  const step = P.step * legLen, cad = step > 1e-6 ? Math.hypot(p.vx, p.vy) / step : 0;
+  const dueIn = Math.max(0, p.touchT || 0);                                                        // s until the law's nominal touch time
+  const maxK = corrective ? 3 : Math.round((dueIn + PT.TOUCH_WIN) / PT_DT);                         // never past the deadline
+  const dirA = Math.hypot(p.vx, p.vy) > 0.3 ? Math.atan2(p.vy, p.vx) : p.facing;
+  const dx = Math.cos(dirA), dy = Math.sin(dirA);
+  const latBall = -(b.x - p.x) * dy + (b.y - p.y) * dx;                                            // + = the ball lies to the player's LEFT
+  const turn = ((corr - dirA) + Math.PI * 3) % (2 * Math.PI) - Math.PI;                            // + = the intended touch turns LEFT
+  let best = null;
+  for (let k = 0; k <= maxK; k++) {
+    const ph = (p.gaitPhase + k * PT_DT * cad / 2) % 1;                                            // the stride clock, advanced
+    const rx = p.x + p.vx * k * PT_DT, ry = p.y + p.vy * k * PT_DT;                                // the root, advanced (constant velocity)
+    const bs = Math.hypot(b.vx, b.vy), decay = Math.max(0, bs - PT.MU_ROLL * k * PT_DT);           // the ball, rolled on
+    const bf = bs > 1e-6 ? (bs + decay) / 2 * k * PT_DT / bs : 0;
+    const bx = b.x + b.vx * bf, by = b.y + b.vy * bf;
+    const boots = (typeof ofBootPlan === "function") ? ofBootPlan(ph, P.stance, legLen, rx, ry, dx, dy) : null;
+    if (!boots) break;
+    for (const sd of ["R", "L"]) {
+      const bo = boots[sd], win = (typeof ofBootWindow === "function") ? ofBootWindow(ph, sd === "R" ? 0 : 0.5) : 1;
+      if (win <= 0) continue;                                                                      // this boot is nowhere near its own plant
+      const gap = Math.hypot(bo.x - bx, bo.y - by) - reach;                                        // <= 0 means the boot can meet the ball
+      let sc = 0;
+      sc -= Math.max(0, gap) * 4.0;                                                                // out of reach is the dominant penalty
+      sc += win * 0.9;                                                                             // prefer the boot at its own plant
+      sc -= k * 0.055;                                                                             // prefer sooner: the law's timing is the baseline
+      const side = sd === "L" ? 1 : -1;
+      sc += Math.max(-0.5, Math.min(0.5, latBall * side * 1.6)) * 0.8;                             // a ball on one side favours that side's boot
+      sc += Math.max(-0.4, Math.min(0.4, turn * side * -0.5)) * 0.9;                               // an inside cut is made with the OUTSIDE boot
+      if (bo.planted) sc -= 1.20;                                                                  // the ball is played by the FREE foot: a boot already bearing weight cannot be moved to it
+      if (t.lastTouchFoot === sd) sc -= PT.SAME_FOOT;                                              // alternation is the default, not a rule
+      if (t.pfoot && sd === t.pfoot) sc += 0.10;                                                   // a small preferred-foot bias; the weak foot stays usable
+      if (!best || sc > best.sc) best = { sc: +sc.toFixed(4), k, foot: sd, gap: +gap.toFixed(4), win: +win.toFixed(3),
+        point: [+bx.toFixed(4), +by.toFixed(4)], boot: [+bo.x.toFixed(4), +bo.y.toFixed(4)], planted: bo.planted,
+        late: +(k * PT_DT - dueIn).toFixed(4) };
+    }
+  }
+  if (!best) return { k: 0, foot: t.pfoot || "R", gap: 99, win: 0, unrealisable: true };            // no boot window at all inside the horizon
+  return best;
+}
+// Gate the authorised touch: fire now, wait for the planned boot, or fire on the deadline as an unrealised touch.
+function ptTouchGate(t, due, corrective, corr) {
+  const p = t.p, pl = t.touchPlan;
+  // a touch cannot come round faster than a boot does
+  const cad = (t.gait && t.gait.cadence) || 0;
+  const minGap = cad > 0.2 ? PT.TOUCH_MIN_HS / cad : 0.12;
+  if (t.lastTouchT !== undefined && t.now - t.lastTouchT < minGap) { if (!pl) return null; }
+  if (pl) {
+    if (!t.b.ctrl) { t.touchPlan = null; return null; }                                            // possession went away while waiting
+    if (t.tickN >= pl.fire) { t.touchPlan = null; return Object.assign({}, pl, { waited: +((t.tickN - pl.made) / 60).toFixed(4) }); }
+    return null;
+  }
+  if (!due) return null;
+  const plan = ptTouchSelect(t, corr, corrective);
+  if (plan.unrealisable) return Object.assign({}, plan, { waited: 0, k: 0 });                       // fire anyway; the law stays in charge
+  if (plan.k <= 0) return Object.assign({}, plan, { waited: 0 });
+  t.touchPlan = Object.assign({}, plan, { made: t.tickN, fire: t.tickN + plan.k });
+  return null;
+}
 function ptStep() {
   const t = S.pt;
   if (!t || !t.on) return;
@@ -5761,6 +5877,7 @@ function ptStep() {
   const df = ((want - p.facing) + Math.PI * 3) % (2 * Math.PI) - Math.PI;
   const rate = Math.max(4.0, Math.min(7.0, 7.0 - v * 0.30)) * PT_DT;  // athletic hips (V1)
   p.facing += Math.abs(df) <= rate ? df : Math.sign(df) * rate;
+  ptGaitStep(t, v);                                        // AUTHORITATIVE stride clock + boot plan (see ptGaitStep)
   // scheduled shot: impulse fires exactly at the contact instant
   if (t.kick) {
     const k = t.kick;
@@ -5828,7 +5945,7 @@ function ptStep() {
     const sep = ((b.x - p.x) * (b.vx - p.vx) + (b.y - p.y) * (b.vy - p.vy)) / Math.max(d, 1e-9);
     if (d <= 0.95) t.ctrlState = "SECURE";
     else if (d <= 4.2 || sep < -0.3) t.ctrlState = (d > 2.6 && sep > 0.3) ? "ESCAPING" : "EXPOSED";
-    else { b.ctrl = false; t.ctrlState = null; t.last = "LOOSE (escaped control envelope)"; }
+    else { b.ctrl = false; t.ctrlState = null; t.touchPlan = null; t.last = "LOOSE (escaped control envelope)"; }
     if (b.ctrl && t.kick) { /* wind-up: no carry touches; the ball keeps
         rolling under normal physics until the authoritative contact */ }
     else if (b.ctrl) {
@@ -5857,6 +5974,20 @@ function ptStep() {
             t.touchN++;
             t.last = "SETTLE TOUCH";
             t.touchInfo = { d, u, T: 0.18, sc: 0.30, turn: 0, kind: "SETTLE" };
+            // a settle happens at walking pace or at rest, where both boots are near the ball: the nearer free boot plays it. Same
+            // instrumentation as a carry touch so the presentation can realise it and the review can score it.
+            { let pick = t.pfoot || "R", bd = 1e9;
+              for (const sd of ["R", "L"]) { const bo = t.boots && t.boots[sd]; if (!bo) continue;
+                const q = Math.hypot(bo.x - b.x, bo.y - b.y) + (bo.planted ? 0.25 : 0) + (t.lastTouchFoot === sd ? 0.10 : 0);
+                if (q < bd) { bd = q; pick = sd; } }
+              const bo = t.boots && t.boots[pick];
+              t.touchInfo.foot = pick; t.touchInfo.waited = 0; t.touchInfo.late = 0; t.touchInfo.planned = false;
+              t.touchInfo.gap = bo ? +(Math.hypot(bo.x - b.x, bo.y - b.y) - ptBootReach(t) - PT_BALL_R).toFixed(4) : null;
+              t.touchInfo.phase = +(p.gaitPhase || 0).toFixed(3); t.touchInfo.bootPlan = bo ? [+bo.x.toFixed(4), +bo.y.toFixed(4)] : null;
+              t.touchInfo.point = [b.x, b.y]; t.touchInfo.bootReal = t.touchInfo.gap;
+              t.lastTouchFoot = pick;
+              t.lastTouch = Object.assign({ tick: t.tickN, t: +t.now.toFixed(4) }, t.touchInfo);
+              (t.touchLog ||= []).push(t.lastTouch); if (t.touchLog.length > 400) t.touchLog.shift(); }
             const presS = ptPresDir(t);
             const baseS = DRIB3_MIRROR[presS] || presS;
             if (DRIB3[baseS]) {
@@ -5876,7 +6007,10 @@ function ptStep() {
           const turnA = Math.abs(((corr - bdir) + Math.PI * 3) % (2 * Math.PI) - Math.PI);
           t.liveTurn = turnA;
           const corrective = turnA > 0.52 && spacing >= 0.10;
-          if (p.touchT <= 0 || corrective) {
+          // DRIBBLING V1: the touch is authorised exactly as before; the gate only chooses WHEN inside a bounded window and WHICH boot.
+          const earlyS = Math.min(PT.TOUCH_EARLY, 0.45 * Math.max(0.18, Math.min(0.48, 0.18 + 0.036 * pv)));
+          const go = ptTouchGate(t, p.touchT <= earlyS || corrective, corrective, corr);
+          if (go) {
             const tt = Math.max(0, Math.min(1, (turnA - 0.52) / 1.40));
             const tf = 1 - 0.7 * tt * tt * (3 - 2 * tt);
             const T = Math.max(0.18, Math.min(0.48, 0.18 + 0.036 * pv));
@@ -5889,22 +6023,36 @@ function ptStep() {
             const rpx = b.vx - (b.vx * ux + b.vy * uy) * ux;
             const rpy = b.vy - (b.vx * ux + b.vy * uy) * uy;
             b.vx = ux * u + 0.15 * rpx; b.vy = uy * u + 0.15 * rpy; b.vz = 0;
-            p.touchT = T; t.lastTouchT = t.now;
+            // the next touch is due T after the law's PREVIOUS nominal time, not T after this one. Without that correction an early fire
+            // pulls the schedule earlier every time and the touch rate ratchets up to one per half-stride.
+            p.touchT = Math.max(0.05, T - (go.late || 0)); t.lastTouchT = t.now;
             t.touchN++;
             t.last = corrective ? "CORRECTIVE TOUCH" : "DRIBBLE TOUCH";
             t.touchInfo = { d, u, T, sc, turn: turnA, kind: corrective ? "CORRECTIVE" : "NORMAL" };
-            // DRIBBLE ANIMATION V2/V3: physics event -> pose selection
+            // the realisation facts: which boot the simulation chose, how long the authorised touch waited for it, and how far that boot
+            // was from the ball surface when it fired. `unrealisable` marks a touch no boot could reach inside the window.
+            const bo = t.boots && t.boots[go.foot];
+            t.touchInfo.foot = go.foot; t.touchInfo.waited = go.waited; t.touchInfo.gap = go.gap; t.touchInfo.late = go.late;
+            t.lastTouchFoot = go.foot;
+            t.touchInfo.win = go.win; t.touchInfo.planned = go.k > 0; t.touchInfo.unrealisable = !!go.unrealisable;
+            t.touchInfo.bootPlan = go.boot || (bo ? [+bo.x.toFixed(4), +bo.y.toFixed(4)] : null);
+            t.touchInfo.point = go.point || [b.x, b.y];
+            t.touchInfo.phase = +(p.gaitPhase || 0).toFixed(3);
+            t.touchInfo.bootReal = bo ? +Math.hypot(bo.x - b.x, bo.y - b.y).toFixed(4) : null;
+            t.lastTouch = Object.assign({ tick: t.tickN, t: +t.now.toFixed(4) }, t.touchInfo);
+            (t.touchLog ||= []).push(t.lastTouch); if (t.touchLog.length > 400) t.touchLog.shift();
+            // DRIBBLE ANIMATION V2/V3: pose selection (SPRITE presentation only — the skeletal harness uses t.lastTouch)
             const presT = ptPresDir(t);
             const baseT = DRIB3_MIRROR[presT] || presT;
             if (DRIB3[baseT]) {
               const pick = drib3Pick(t, corrective, turnA, baseT, !!DRIB3_MIRROR[presT]);
               drib3Schedule(t, pick, T, baseT);
-              t.touchInfo.foot = pick.foot; t.touchInfo.pose = pick.pose;
+              t.touchInfo.pose = pick.pose;                                          // the FOOT is the simulation's (go.foot), not the sprite library's
               drib3LogContact(t, pick, presT, baseT);
             } else {
               const pick = drib2Pick(t, corrective, turnA);
               drib2Schedule(t, pick, T);
-              t.touchInfo.foot = pick.foot; t.touchInfo.pose = pick.pose;
+              t.touchInfo.pose = pick.pose;                                          // the FOOT is the simulation's (go.foot), not the sprite library's
               drib2LogContact(t, pick);
             }
           }
