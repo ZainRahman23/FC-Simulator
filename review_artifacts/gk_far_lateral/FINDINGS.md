@@ -1,4 +1,4 @@
-# Goalkeeper far-LATERAL dive — findings (2026-09-23)
+# Goalkeeper far-LATERAL dive — findings (2026-09-23; arm-transition pass appended in §7)
 
 Review page: `GK_FAR_LATERAL_REVIEW.html` (media in `media/`, inputs / tools in `verification/`).
 Scope: fixtures 13 and 15 (visually questionable / wrong after the far-dive safety fix), fixture 2 as the control. Nothing from the
@@ -95,3 +95,46 @@ reached on the feet by the simulation (LEAN / NEAR_BODY) — no dive — so they
 
 Tools: `sandbox/visual/tools/anim3d/capture.js --preset before|auth|redir|launch|noik --band COURTOIS`, `verification/probe_layers.js`,
 `verification/lat_plots.py` (per-tick layer plots), `verification/build_lat_review.py` + `build_lat_html.py`.
+
+## 7. Second pass — arm-through-abdomen collapse at load / take-off (fixtures 13, 15)
+
+Scope: arm / upper-body transition only. The far-lateral body / root / flight / landing correction of §2 is unchanged (fixture 2 and
+V6 42 byte-identical; the close-rig frames of fixture 2 are pixel-identical to the previous pass).
+
+**Where it begins and which layer.** Measured per resolver layer with approximate self-collision volumes (torso: abdomen / chest
+capsules whose axis ends 9 cm below the shoulder line, a neck capsule, a head sphere; upper arms from 35 % down the bone, forearms,
+hands; radii at H 2.0: abdomen 0.125, chest 0.145, neck 0.06, head 0.10, upper arm 0.045, forearm 0.040, hand 0.035 m, scaled by
+H/2). `gkSelfCollision` in gk_graph.js (per tick, `diag.selfCol`, drawn by `--dbg arms`), mirrored offline by
+`verification/arm_gate.py`; the two agree to the millimetre. The trailing (top) arm's clearance goes negative at PUSH_MID (tick 41,
+−2.6 cm), reaches −11 cm at TOE_OFF (−19 cm against a plain chest capsule) and stays negative through EARLY_FLIGHT; it is IDENTICAL in
+the authored, redirected, planned and final layers, on both rigs (Courtois H 2.014 / test H 1.83) and for both dive sides. So: the
+**authored V6 arm path**, not retargeting, not the clavicle / shoulder keys (0), not the bend plane, not the reach IK, not the
+SET → LOAD interpolation (LOAD / PLANT are +6 to +10 cm clear). Mechanism: the trailing upperArm key goes from z −30° (abducted) to
+z +14 / +44 / +76 (PUSH_END / TOE_OFF / EARLY_FLIGHT) and +140 at the reach with an x flexion of −60°; the rig's euler order is
+Ry·Rx·Rz, and a vector already lateral after Rz is invariant under Rx — the flexion cannot lift a crossing arm in front of the chest,
+so the upper arm sweeps through the chest and the elbow then passes over the neck / behind the head into the authored reach pose.
+The same path exists in the approved fixture 2 / V6 42 (−11 cm at their toe-off); those are below the regime and were not touched.
+
+**Correction** (far-lateral regime only, trailing arm only): `gkLateralArmClear` sets the trailing upper arm's bone yaw (Ry — the
+horizontal adduction the rig applies last) from the authored frontal-plane adduction z alone: smooth rise over z 25 → 85° to 55°,
+easing to 50° above z 100°; the authored adduction is soft-capped at z 85° (slope 0.2) so the trailing hand stays on ITS side of
+the reach hand (side-by-side two-hand reach, never crossed over the reach arm). Elevation / elbow / hand keys untouched (authored
+shoulder–elbow character kept); phase-aware (a pure function of the key value — zero at READY / LOAD, zero again as the keys close),
+bounded (≤ 55°), deterministic, mirrored by the pose mirror for left dives, applied in the pre and landing branches. One pole hint
+for the REACH arm's glove IK in the regime (elbow forward and toward the pitch while the simulation hand target is still inside
+the reach) stops the reach forearm sweeping through the trailing forearm as the hands converge. Nothing else.
+
+**Result** (min clearance by phase, cm; CURRENT → AFTER, Courtois): PUSH_MID −2.6 → +3.9, PUSH_END −9.5 → +6.6, TOE_OFF −11.4 → +6.8,
+EARLY_FLIGHT −8.2 → +5.9, MID_FLIGHT +0.4 → +5.8, FULL_EXTENSION +0.3 → +5.8, FOLLOW −1.8 → +6.0, DESCENT −8.5 → +5.9, IMPACT −11.7 →
++5.8, ABSORB −11.6 → +6.4 (fixture 15; fixture 13, the test rig and the left mirror within ±1 cm of these). Residual flags reported,
+not hidden: (a) the REACH arm's upper arm brushes the head sphere at the reach on fixture 13 (−1.2 … −4.1 cm, FULL_EXTENSION →
+DESCENT) and on the left mirror (−1.5 … −6 cm through the landing) — the straight reach arm alongside the head, an IK / authored
+reach-arm placement outside the trailing-arm scope; (b) the two forearms overlap by up to 4 cm for ~3 ticks at the two-hand
+convergence on fixture 15 (wrists 17–21 cm apart); (c) the recovery stages SETTLE → PUSH_UP carry the pre-existing brace-arm
+placement of the authored landing keys + brace IK bend plane (−10 … −19 cm on every dive incl. fixtures 2 / 42; a brace pole hint
+made the bottom arm worse and was not kept) — outside this pass.
+
+**Preserved / regression**: gates all identical (sprite / off / test / Courtois), manifests byte-identical, outcomes and contact
+ticks unchanged, torso assist 0 in the regime, landing tempo and IK release by IMPACT unchanged (the same landing stage ticks), no
+NaN, survey flip / assertion totals unchanged, feet / sole metrics unchanged; the survey now also records `selfColMin` /
+`selfColMinPre` per fixture as the standing self-collision gate.

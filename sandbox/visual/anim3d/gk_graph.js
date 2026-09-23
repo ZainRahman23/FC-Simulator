@@ -12,7 +12,10 @@ const GK_GRAPH = {
   loadPhase: 0.30, toeOff: 0.31, unloadAt: 0.15,   // IK weight ramp start; plant-foot release; opposite-foot release (pre)
   ikFadePost: 0.35, torsoAssistMaxDeg: 20, clavicleAssistMaxDeg: 10, lookMaxDeg: 55, presMaxM: 2.5,
   ballVisR: 0.11, handOff: 0.03, antUpZ: [0.45, 0.80],   // presentation ball radius = the PHYSICAL ball (GOALFX.ballR 0.11; the 2D sprite draws an exaggerated 0.19 for readability — hand / ball relationships are judged against the real size); hand-target offset outside the ball; predicted crossing height (m) below/above which the central anticipation is the crouch / the upright ready
-  authoredRollDeg: 72, reachLenH: 0.64, jumpMaxM: 0.55, pelvisMinY: 0.30, followRiseM: 0.03, flightCap: true, capBlendT: 0.05, dbg: { noRedirect: false, noLaunch: false, noAssist: false, noIK: false }, lateralRule: true,   // lateralRule: the far-LATERAL dive regime (body axis ≥ sideLandHi) — proportional roll, no torso assist toward the target, fall-timed landing; false = the previous behaviour (review before/after)   // dbg.*: review switches isolating the procedural layers (authored motion only when all are set)   // flightCap: review switch only (false reproduces the unbounded continuation for before/after captures) · followRiseM: after execEnd the flight may rise at most this much above the higher of the contact pelvis and the jump ceiling (the accepted v6 follow-through: 42's arc peaks 2 cm above its contact pelvis)
+  authoredRollDeg: 72, reachLenH: 0.64, jumpMaxM: 0.55, pelvisMinY: 0.30, followRiseM: 0.03, flightCap: true, capBlendT: 0.05, dbg: { noRedirect: false, noLaunch: false, noAssist: false, noIK: false, noArmClear: false }, lateralRule: true,
+  armClear: { zIn: [25, 85], maxDeg: 55, zHi: [100, 130], maxDegHigh: 50, zOut: [999, 1000], foreArmRelax: 0, zCap: 85, zCapSlope: 0.2, reachPole: [0.35, -0.35] },   // reachPole: [forward, world-up] offset (m) of the reach arm's IK elbow pole from the shoulder in the lateral regime   // far-lateral regime, trailing (top) arm: horizontal adduction (bone yaw) as a function of the authored frontal-plane adduction z — smooth rise over zIn to maxDeg (the arm crosses IN FRONT of the chest, not through it), rising to maxDegHigh over zHi (at the reach the arm passes in front of the face, not behind the head); zOut = optional fade back to the authored yaw (off)
+  selfCol: { abd: 0.125, chest: 0.145, chestTop: 0.09, neck: 0.06, neckLen: 0.11, head: 0.10, uarm: 0.045, farm: 0.040, hand: 0.035, flag: -0.02 },   // approximate self-collision volumes (m at H 2.0, scaled by H/2): abdomen / chest capsules (the chest axis ends chestTop below the shoulder line so its top sits at the trapezius, not 14 cm above the shoulders), neck capsule, head sphere; diagnostic / regression gate only — penetration beyond `flag` is reported
+   // lateralRule: the far-LATERAL dive regime (body axis ≥ sideLandHi) — proportional roll, no torso assist toward the target, fall-timed landing; false = the previous behaviour (review before/after)   // dbg.*: review switches isolating the procedural layers (authored motion only when all are set)   // flightCap: review switch only (false reproduces the unbounded continuation for before/after captures) · followRiseM: after execEnd the flight may rise at most this much above the higher of the contact pelvis and the jump ceiling (the accepted v6 follow-through: 42's arc peaks 2 cm above its contact pelvis)
   sideLandLo: 35, sideLandHi: 60,                  // body-axis angle from vertical (deg): ≤ lo land on the feet, ≥ hi land on the side
   G: 9.81,
   plantU: 0.10,           // the launch plan starts at the plant: from here the pelvis is ONE trajectory (push → arc → ground) until the settle
@@ -125,6 +128,39 @@ const hermite = (p0, v0, p1, v1, T, t) => { const x = clamp01(t / Math.max(1e-6,
 // Touchdown is where the arc reaches the touch height; the horizontal velocity there is the flight's; deceleration starts on the
 // ground and is progressive (skid → impact → slide → zero at the settle). The get-up then recovers the stop → simulation-root
 // offset over its support points (hips over the tucked feet, front-foot step, crouch step, rise).
+// FAR-LATERAL trailing arm: the V6 keys swing the non-reaching arm from abducted (z −30) to across the body (z +76, then up to +140 at the
+// reach) with an x flexion of −60; the rig's euler order is Ry·Rx·Rz, and a vector already lateral (after Rz) is invariant under Rx, so
+// the flexion cannot lift a crossing arm in front of the chest — the upper arm sweeps THROUGH the chest from PUSH_MID to EARLY_FLIGHT
+// (−19 cm at toe-off on both rigs). A bone yaw (Ry, applied last) is the horizontal adduction that carries the same arm in front of the
+// chest; it is set from the authored z alone (phase-aware, bounded, zero at the ready pose and at the two-hand reach), so the authored
+// elevation / elbow bend are kept. Applied only in the lateral regime (fixture 2 / V6 42 untouched). The arm keys carry no authored yaw.
+function gkLateralArmClear(pose, sideL) {
+  const A = GK_GRAPH.armClear, u = sideL ? "upperArm_R" : "upperArm_L", e = pose[u]; if (!e) return pose;
+  const z0 = Math.abs(e[2]), z = z0 > A.zCap ? A.zCap + (z0 - A.zCap) * A.zCapSlope : z0;   // soft cap on the frontal-plane adduction: the trailing hand stays on ITS side of the reach hand (side-by-side two-hand reach), it does not cross over the reach arm
+  const amp = lerp(A.maxDeg, A.maxDegHigh, smooth01(clamp01((z - A.zHi[0]) / (A.zHi[1] - A.zHi[0]))));
+  const off = amp * smooth01(clamp01((z - A.zIn[0]) / (A.zIn[1] - A.zIn[0]))) * (1 - smooth01(clamp01((z - A.zOut[0]) / (A.zOut[1] - A.zOut[0]))));
+  pose[u] = [e[0], (sideL ? 1 : -1) * off, Math.sign(e[2] || 1) * z]; pose._armClear = off;
+  const f = sideL ? "foreArm_R" : "foreArm_L", fe = pose[f]; if (fe && A.foreArmRelax > 0) { const wr = A.foreArmRelax * smooth01(clamp01((z - A.zHi[0]) / (A.zHi[1] - A.zHi[0]))); pose[f] = [fe[0] * (1 - wr), fe[1], fe[2]]; }   // optional: a straighter trailing forearm at the reach (its hand goes toward the ball instead of folding over the reach arm)
+  return pose;
+}
+// approximate self-collision gate: torso capsules (abdomen pelvis→45 % to the shoulder line, chest 45 %→shoulder line) vs upper arms (from
+// 35 % down the bone), forearms and hands; clearance = distance − radii (negative = penetration). Diagnostic / regression only.
+function gkSelfCollision(skel, fk, reachHand) {
+  const C = GK_GRAPH.selfCol, hs = skel.H / 2.0, J = (n) => fk.joint[skel.byName[n].idx], T = (n) => fk.tip[skel.byName[n].idx];
+  const pel = J("pelvis"), sm = V3.scale(V3.add(J("upperArm_R"), J("upperArm_L")), 0.5), up = V3.norm(V3.sub(sm, pel)), mid = V3.lerp(pel, sm, 0.45);
+  const chestEnd = V3.sub(sm, V3.scale(up, C.chestTop * hs)), neckEnd = V3.add(sm, V3.scale(up, C.neckLen * hs)), headC = V3.add(neckEnd, V3.scale(up, C.head * hs));
+  const torso = [["abdomen", pel, mid, C.abd * hs], ["chest", mid, chestEnd, C.chest * hs], ["neck", sm, neckEnd, C.neck * hs], ["head", headC, headC, C.head * hs]];
+  const segDist = (p1, q1, p2, q2) => { const d1 = V3.sub(q1, p1), d2 = V3.sub(q2, p2), r = V3.sub(p1, p2), a = V3.dot(d1, d1), e = V3.dot(d2, d2), f = V3.dot(d2, r); let sc, tc;
+    if (a < 1e-9 && e < 1e-9) return V3.len(r); if (a < 1e-9) { sc = 0; tc = clamp01(f / e); } else { const c = V3.dot(d1, r); if (e < 1e-9) { tc = 0; sc = clamp01(-c / a); } else { const b = V3.dot(d1, d2), den = a * e - b * b; sc = den > 1e-12 ? clamp01((b * f - c * e) / den) : 0; tc = (b * sc + f) / e; if (tc < 0) { tc = 0; sc = clamp01(-c / a); } else if (tc > 1) { tc = 1; sc = clamp01((b - c) / a); } } }
+    return V3.dist(V3.add(p1, V3.scale(d1, sc)), V3.add(p2, V3.scale(d2, tc))); };
+  const arms = {}, out = {};
+  for (const h of ["R", "L"]) { const sh = J("upperArm_" + h), el = J("foreArm_" + h), wr = J("hand_" + h), tip = T("hand_" + h);
+    arms[h] = [["uarm", V3.lerp(sh, el, 0.35), el, C.uarm * hs], ["farm", el, wr, C.farm * hs], ["hand", wr, tip, C.hand * hs]];
+    let best = 9, pair = null; for (const [an, p, q, r] of arms[h]) for (const [tn, tp, tq, tr] of torso) { const c = segDist(p, q, tp, tq) - r - tr; if (c < best) { best = c; pair = an + "-" + tn; } }
+    out[h] = { c: +best.toFixed(3), pair }; }
+  let best = 9, pair = null; for (const [an, p, q, r] of arms.R.slice(1)) for (const [bn, p2, q2, r2] of arms.L.slice(1)) { const c = segDist(p, q, p2, q2) - r - r2; if (c < best) { best = c; pair = an + "R-" + bn + "L"; } }
+  out.RL = { c: +best.toFixed(3), pair }; out.min = Math.min(out.R.c, out.L.c, out.RL.c); out.trail = reachHand === "R" ? "L" : "R"; out.capsules = { torso, arms }; return out;
+}
 function gkLandingPlan(skel, clip, launch, axis, rootM, held, lateral) {
   const H = skel.H, w = axis.wSide, F = GK_GRAPH.feet, Sd = GK_GRAPH.side, G = GK_GRAPH.getup, mix = (a, b) => lerp(a, b, w), hs = H / 1.9, g = GK_GRAPH.G, hd = held ? GK_GRAPH.holdDecel : 1;
   const hip = 0.50 * H;
@@ -393,6 +429,7 @@ function gkGraphEvaluate(desc, clip, skel, state) {
         state.launch = gkLaunchPlan(axisEnd, rootMEnd, W0, v0, desc.now, c.t0 + GK_GRAPH.toeOff * c.execTime, c.t0 + c.execTime, 0.50 * skel.H + GK_GRAPH.jumpMaxM * ((desc.cls && desc.cls.expr) ? desc.cls.expr.launch : 1));
       }
       g.poseRedirected = Object.assign({}, g.pose, { _pelvis: (g.pose._pelvis || [0, 0, 0]).slice() });
+      if (state.lateral && !GK_GRAPH.dbg.noArmClear) gkLateralArmClear(g.pose, sideL);
       if (state.launch && !GK_GRAPH.dbg.noLaunch) { const St = gkLaunchState(state.launch, desc.now); setPelvisWorld(g.pose, St.W); g.flight = St; }
       state.endPose = g.pose; state.endAxis = axis;
     }
@@ -435,6 +472,7 @@ function gkGraphEvaluate(desc, clip, skel, state) {
       setPelvisWorld(shape, [L.H[0], L.h, L.H[1]]);                                          // every stage's pelvis position is owned by the landing state (position- and velocity-continuous)
       if ((L.stage === "FOLLOW" || L.stage === "DESCENT") && plan.launch) g.flight = gkLaunchState(plan.launch, desc.now);
       g.pose = shape; g.phase = L.stage; g.sub = shape._name || L.stage;
+      if (state.lateral && !GK_GRAPH.dbg.noArmClear) gkLateralArmClear(g.pose, sideL);   // the trailing arm's yaw is a pure function of its authored z: the same rule carries the descent / brace arm in front of the chest (the brace hand targets are ground points from the root, unchanged)
       const feetStyle = w < 0.5, R = recovering ? (recL ? "L" : "R") : g.reachHand, O = R === "R" ? "L" : "R";   // support side = the side on the pitch
       if (L.stage === "FOLLOW" || L.stage === "DESCENT") locks = { R: 0, L: 0 };
       else if (L.stage === "IMPACT") locks = feetStyle ? { R: 1, L: 1, at: "touch" } : { R: 0, L: 0 };                        // the feet stay where they landed while the momentum carries the body over them
@@ -571,7 +609,9 @@ function gkGraphSolve(desc, g, skel, state) {
     }
     const rightW = M4.transformDir(g.rootM, [1, 0, 0]), splitOff = (g.catchKind && g.twoHands) ? g.ballR + GK_GRAPH.handOff : 0;   // a two-hand catch: each hand goes to ITS side of the ball line (never both to the centre)
     const Th = V3.add(T, V3.scale(rightW, (h === "R" ? 1 : -1) * splitOff));
-    const poleH = g.catchKind ? V3.add(fk.joint[skel.byName[upper].idx], [rightW[0] * (h === "R" ? 0.5 : -0.5), -0.3, rightW[2] * (h === "R" ? 0.5 : -0.5)]) : null;   // catch arms: elbows out and down, never pinched inward
+    const fwdW = M4.transformDir(g.rootM, [0, 0, 1]);
+    const poleH = g.catchKind ? V3.add(fk.joint[skel.byName[upper].idx], [rightW[0] * (h === "R" ? 0.5 : -0.5), -0.3, rightW[2] * (h === "R" ? 0.5 : -0.5)])   // catch arms: elbows out and down, never pinched inward
+      : state.lateral ? V3.add(fk.joint[skel.byName[upper].idx], [fwdW[0] * GK_GRAPH.armClear.reachPole[0], GK_GRAPH.armClear.reachPole[1], fwdW[2] * GK_GRAPH.armClear.reachPole[0]]) : null;   // far-lateral regime: the reach elbow folds forward and toward the pitch (away from the face and from the trailing arm) while the target is still inside the reach; the approved dives keep the authored bend plane
     const r = skelIK2(skel, fk, upper, fore, hand, Th, g.ikW, poleH, 0.6, PMv("arm_" + h));
     diag.ik = { w: +g.ikW.toFixed(3), reached: r.reached, residual: +r.residual.toFixed(3), wrist: r.wrist, handCentre: r.handCentre, target: T, split: splitOff };
   }
@@ -770,6 +810,7 @@ function gkGraphSolve(desc, g, skel, state) {
   pel.off = savedOff;
   state.lastWrists = { R: fk.joint[skel.byName.hand_R.idx].slice(), L: fk.joint[skel.byName.hand_L.idx].slice() };   // solved wrists this frame (the start of any later cradle hand-over)
   state.lastElbows = { R: fk.joint[skel.byName.foreArm_R.idx].slice(), L: fk.joint[skel.byName.foreArm_L.idx].slice() };
+  diag.selfCol = gkSelfCollision(skel, fk, g.reachHand);
   const out = { fk, diag, ballPres: diag.ballPres || null, hands: { R: hc("R"), L: hc("L") }, elbows: { R: fk.joint[skel.byName.foreArm_R.idx], L: fk.joint[skel.byName.foreArm_L.idx] }, cradle: diag.cradle || null, dist: diag.dist || null, kick: diag.kick || null };
   // presentation root = ground projection of the pelvis (pitch frame); continuous by construction
   const pw = fk.joint[skel.byName.pelvis.idx]; const pr = pitchW([pw[0], 0, pw[2]]);

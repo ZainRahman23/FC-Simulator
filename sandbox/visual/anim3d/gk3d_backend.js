@@ -2,7 +2,7 @@
 // Same simulation, same resolver (gkAnimUpdate → ActionDescription); only the drawing differs. Never writes gk/ball.
 const GK3D = {
   copies: 0,                    // review: draw N extra keepers (offset laterally) for the scaling measurement
-  debug: { bones: false, ik: false, roots: false, feet: false, trail: false, label: false, cradle: false, dist: false },
+  debug: { bones: false, ik: false, roots: false, feet: false, trail: false, label: false, cradle: false, dist: false, arms: false },
   trail: [],                    // review: presentation pelvis samples through the committed action (path, markers, velocity vectors)
   asserts: [], prev: null,      // development checks: position / velocity discontinuity at every stage boundary after touchdown
   perf: { n: 0, ms: 0, max: 0, glDraws: 0 },
@@ -140,6 +140,7 @@ function gk3dDraw(t, gk, dt) {
   if (sol.cradle) { const cr = sol.cradle; if (cr.violations > 0) (GK3D.cradleFlags || (GK3D.cradleFlags = [])).push({ tick: Math.round(desc.now * 60), phase: g.phase, mode: cr.mode, R: cr.R.viol, L: cr.L.viol, crossed: cr.crossed, ballIn: cr.ballIn }); }
   if (desc.ball) { const BT = GK3D.ballTrail || (GK3D.ballTrail = []); BT.push({ t: desc.now, p: glW(desc.ball), held: !!desc.held, contact: !!gk.contact }); if (BT.length > 90) BT.shift(); }
   if (GK3D.debug.cradle) gk3dDrawCradle(skel, sol, g, desc, gk, P3);
+  if (GK3D.debug.arms && sol.diag.selfCol) gk3dDrawArms(sol.diag.selfCol, P3);
   // DISTRIBUTION (v12): per-tick anatomy flags, the rendered-ball trail, and a validation record at every authoritative event (RELEASE / DROP / KICK):
   // authoritative ball + velocity, rendered ball (this tick and the previous), hand / foot vs the ball, root, facing (simulation vs presentation), held flag
   if (desc.dist) {
@@ -213,6 +214,16 @@ function gk3dDrawFeet(skel, sol, P3) {
     else { ctx.strokeStyle = f.height < 0.05 ? "#ffe36a" : "#ff9a3c"; ctx.beginPath(); ctx.arc(tip.x, tip.y, uipx(4), 0, Math.PI * 2); ctx.stroke(); }
   }
   for (const s of ["R", "L"]) { const b = sol.diag["brace_" + s]; if (b) { const p = P3(b.P); ctx.strokeStyle = "#ffffff"; ctx.strokeRect(p.x - uipx(3), p.y - uipx(3), uipx(6), uipx(6)); } }
+  ctx.restore();
+}
+// self-collision capsules (review): torso (abdomen / chest) in white, arm segments coloured by their clearance to the torso (green ≥ 2 cm,
+// yellow 0–2 cm, red = penetration); shoulder / elbow / wrist rings; the clearance numbers in the corner
+function gk3dDrawArms(sc, P3) {
+  ctx.save(); ctx.lineWidth = Math.max(1, PXQ); const cap = (p, q, r, col) => { const a = P3(p), b = P3(q); ctx.strokeStyle = col; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+    const rp = Math.max(1, Math.abs(P3(V3.add(p, [r, 0, 0])).x - a.x)); ctx.beginPath(); ctx.arc(a.x, a.y, rp, 0, Math.PI * 2); ctx.stroke(); ctx.beginPath(); ctx.arc(b.x, b.y, rp, 0, Math.PI * 2); ctx.stroke(); };
+  for (const [, p, q, r] of sc.capsules.torso) cap(p, q, r, "rgba(255,255,255,0.85)");
+  for (const h of ["R", "L"]) { const c = sc[h].c, col = c < 0 ? "#ff3b3b" : c < 0.02 ? "#ffe36a" : "#38ff9a"; for (const [, p, q, r] of sc.capsules.arms[h]) cap(p, q, r, col); }
+  ctx.fillStyle = "#ffffff"; ctx.font = uipx(9) + "px Menlo, monospace"; ctx.fillText("arm→torso R " + (sc.R.c * 100).toFixed(1) + " cm (" + sc.R.pair + ")  L " + (sc.L.c * 100).toFixed(1) + " cm (" + sc.L.pair + ")  R↔L " + (sc.RL.c * 100).toFixed(1) + " cm", uipx(4), uipx(24));
   ctx.restore();
 }
 function gk3dDrawRoots(gk, g, sp, spp) {
