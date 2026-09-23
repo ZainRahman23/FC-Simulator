@@ -8,7 +8,7 @@
 // the player, the camera rail following the player's x. Diagnostics (foot contacts, plant residuals, gait state, root vs presentation
 // root, timing split) are on the HUD and in OFPLAY.rec (per tick, deterministic). Optional extra runners (deterministic laps, the same
 // locomotion) for the scaling test. The ball is parked far away at boot (a fixture set-up, like the goalkeeper fixtures) and ignored.
-const OFPLAY = { on: false, body: "AVG_ATHLETIC", actor: null, mixed: true, follow: true, dbg: { feet: true, roots: true, hud: true }, rec: [], recMax: 3600, runners: [], panel: null, out: null, octx: null, perf: { sim: [], anim: [], skin: [], render: [], comp: [] }, R: null, lastTick: -1, view: null };
+const OFPLAY = { on: false, body: "AVG_ATHLETIC", actor: null, mixed: true, follow: true, dbg: { feet: true, roots: true, hud: true, ball: true }, rec: [], recMax: 3600, runners: [], panel: null, out: null, octx: null, perf: { sim: [], anim: [], skin: [], render: [], comp: [] }, R: null, lastTick: -1, view: null };
 function ofPlayWanted() { return new URLSearchParams(location.search).get("ofPlay") === "1"; }
 function ofPlayMakeActor(bodyId, p) {
   const a = ofActorMake(bodyId, p.x, p.y, p.facing); a.motion = "LOCO"; a.loco = ofLocoMake(); a.state = { feet: {} }; a.sim = { x: p.x, y: p.y, vx: 0, vy: 0, facing: p.facing }; return a;
@@ -19,7 +19,9 @@ function ofPlayInstall() {
   // 1. per simulation tick: solve the presentation from the authoritative player (after the playtest stepped it). Deterministic: one solve per 60 Hz step.
   const _step = ptStep; ptStep = function () {
     const t0 = performance.now(); _step(); const tS = performance.now() - t0; const t = S.pt; if (!t || !t.on || !OFPLAY.actor) return;
-    const p = t.p, a = OFPLAY.actor; a.x = p.x; a.y = p.y; a.facing = p.facing; a.speed = Math.hypot(p.vx, p.vy); a.sim = { x: p.x, y: p.y, vx: p.vx, vy: p.vy, facing: p.facing };
+    const p = t.p, a = OFPLAY.actor; a.x = p.x; a.y = p.y; a.facing = p.facing; a.speed = Math.hypot(p.vx, p.vy); a.sim = { x: p.x, y: p.y, vx: p.vx, vy: p.vy, facing: p.facing, gaitPhase: p.gaitPhase, gaitSettled: p.gaitSettled };   // the stride clock comes from the simulation
+    if (OFPLAY.animOff) { OFPLAY.perf.sim.push(tS); return; }                                     // REGRESSION HOOK: skip the whole skeletal layer, leave the simulation running
+    ofPlayTouchLink(t, a);                                                                        // the simulation's scheduled / fired touch -> a bounded boot reach
     const t1 = performance.now(); ofActorTick(a, PT_DT, t.now);
     for (const r of OFPLAY.runners) { ofPlayRunnerStep(r, t.now); ofActorTick(r, PT_DT, t.now); }
     const tA = performance.now() - t1;                                                            // ALL rigs (the player and every runner), so the figure scales with the load on screen
@@ -49,8 +51,27 @@ function ofPlayRecord(t, a) {
     loco: L, feet: d.feet, knee: d.knee, elbow: d.elbow, jump: d.jump, jerk: d.jerk || 0, ground: d.ground, drop: d.pelvisDrop || 0, pres: [+pel[0].toFixed(4), +pel[1].toFixed(4), +(-pel[2]).toFixed(4)] };
   OFPLAY.rec.push(rec); if (OFPLAY.rec.length > OFPLAY.recMax) OFPLAY.rec.shift();
 }
+// The SIMULATION decides the foot, the tick and the contact point. This only converts that into the 3D point the boot should meet: the
+// ball's near surface at ball height. Nothing here can change the touch, the ball or the player.
+function ofPlayTouchLink(t, a) {
+  const BR = 0.11, lead = 0.10;
+  // Aim at the point on the ball's surface facing the boot that will actually play it, measured from the RENDERED toe when there is one
+  // (the simulation's planned boot is only a predictor). Without this the boot drives on through the ball centre.
+  const surf = (bx, by, foot) => {
+    let ux = -1, uy = 0;
+    const ft = a.sol && a.sol.diag.feet[foot];
+    const from = ft && ft.toe ? { x: ft.toe[0], y: -ft.toe[2] } : (t.boots && t.boots[foot]);
+    if (from) { const dx = from.x - bx, dy = from.y - by, m = Math.hypot(dx, dy); if (m > 1e-6) { ux = dx / m; uy = dy / m; } }
+    const r = BR + 0.015;                                                                         // stop at the surface, not in the middle
+    return [bx + ux * r, BR, -(by + uy * r)];                                                     // 3D world: [x, height, -pitchY]
+  };
+  const pl = t.touchPlan;
+  if (pl) { a.touch = { foot: pl.foot, at: t.now + (pl.fire - t.tickN) * PT_DT, p: surf(pl.point[0], pl.point[1], pl.foot), lead }; return; }
+  const lt = t.lastTouch;
+  if (lt && lt.tick === t.tickN && lt.foot) a.touch = { foot: lt.foot, at: t.now, p: surf(t.b.x, t.b.y, lt.foot), lead };
+}
 function ofPlayDraw(dt) {
-  const t = S.pt, p = t.p, a = OFPLAY.actor; if (!a.sol) return;
+  const t = S.pt, p = t.p, a = OFPLAY.actor; if (OFPLAY.animOff || !a.sol) return;
   const t0 = performance.now();
   // skin matrices (world × inverse bind) — computed by ofActorTick; extra runners too
   const chars = [{ skel: a.skel, fk: a.sol.fk, skinMats: a.skinMats, palette: SKEL_PARTS }]; for (const r of OFPLAY.runners) if (r.sol) chars.push({ skel: r.skel, fk: r.sol.fk, skinMats: r.skinMats, palette: OFPLAY_KIT_B });
@@ -72,8 +93,32 @@ function ofPlayOverlay(a, p) {                                                  
   const sp = sproj3(p.x, 0, p.y); ctx.strokeStyle = "#ff4040"; ctx.beginPath(); ctx.moveTo(sp.x - uipx(5), sp.y); ctx.lineTo(sp.x + uipx(5), sp.y); ctx.moveTo(sp.x, sp.y - uipx(5)); ctx.lineTo(sp.x, sp.y + uipx(5)); ctx.stroke();
   const pel = a.sol.fk.joint[a.skel.byName.pelvis.idx], pg = sproj3(pel[0], 0, -pel[2]); ctx.strokeStyle = "#c080ff"; ctx.beginPath(); ctx.arc(pg.x, pg.y, uipx(4), 0, Math.PI * 2); ctx.stroke();
   const fx = Math.cos(p.facing), fy = Math.sin(p.facing), fp = sproj3(p.x + fx * 0.6, 0, p.y + fy * 0.6); ctx.strokeStyle = "#ffffff"; ctx.beginPath(); ctx.moveTo(sp.x, sp.y); ctx.lineTo(fp.x, fp.y); ctx.stroke();   // facing
+  if (OFPLAY.dbg.ball) ofPlayBallOverlay(a, p);
   const v = Math.hypot(p.vx, p.vy); if (v > 0.1) { const vp = sproj3(p.x + p.vx / v * (0.4 + v * 0.1), 0, p.y + p.vy / v * (0.4 + v * 0.1)); ctx.strokeStyle = "#8ab4f8"; ctx.beginPath(); ctx.moveTo(sp.x, sp.y); ctx.lineTo(vp.x, vp.y); ctx.stroke(); }   // velocity
   ctx.restore();
+}
+// DRIBBLE DIAGNOSTICS: the simulation's boot plan, the boot the next touch is assigned to, the contact point, and the line from the
+// rendered boot to the ball so a right-foot touch can be seen to be made by the right boot.
+function ofPlayBallOverlay(a, p) {
+  const t = S.pt, b = t.b; if (!b) return;
+  const P = (x, y, z) => sproj3(x, z || 0, y);
+  if (t.boots) for (const sd of ["R", "L"]) {                                                   // where the SIMULATION thinks each boot is
+    const bo = t.boots[sd], q = P(bo.x, bo.y); ctx.strokeStyle = bo.planted ? "#4a7a5a" : "#7ad6a0";
+    ctx.beginPath(); ctx.arc(q.x, q.y, uipx(2.5), 0, Math.PI * 2); ctx.stroke();
+  }
+  const pl = t.touchPlan, lt = t.lastTouch && (t.tickN - t.lastTouch.tick) < 18 ? t.lastTouch : null;
+  const act = pl || lt; if (!act) return;
+  const foot = act.foot, pt = act.point || [b.x, b.y];
+  const cp = P(pt[0], pt[1]); ctx.strokeStyle = pl ? "#ffe36a" : "#ff5ad0"; ctx.lineWidth = Math.max(1, PXQ * 1.5);
+  ctx.beginPath(); ctx.arc(cp.x, cp.y, uipx(4.5), 0, Math.PI * 2); ctx.stroke();                 // the CONTACT POINT the simulation chose
+  const f = a.sol.diag.feet[foot];
+  if (f && f.toe) { const tp = sproj3(f.toe[0], f.toe[1], -f.toe[2]);                            // the RENDERED boot that must make it
+    ctx.beginPath(); ctx.moveTo(tp.x, tp.y); ctx.lineTo(cp.x, cp.y); ctx.stroke();
+    ctx.beginPath(); ctx.arc(tp.x, tp.y, uipx(5.5), 0, Math.PI * 2); ctx.stroke();
+    ctx.fillStyle = pl ? "#ffe36a" : "#ff5ad0"; ctx.font = (uipx(9) | 0) + "px Menlo, monospace";
+    const d = Math.hypot(f.toe[0] - b.x, -f.toe[2] - b.y) - 0.11;
+    ctx.fillText(foot + (pl ? " next" : " touch") + "  " + (d * 100).toFixed(0) + "cm", tp.x + uipx(7), tp.y - uipx(6)); }
+  ctx.lineWidth = Math.max(1, PXQ);
 }
 function ofPlayComposite() {                                                                    // Mixed: environment nearest ×2 of the page's native pass; the characters re-rendered at 2·RES inside their ROI (one layer px per output px), the view following the player
   const t = S.pt; if (!OFPLAY.out || !OFPLAY.lastChars) return; const out = OFPLAY.out, octx = OFPLAY.octx; out.style.display = "block";
@@ -97,13 +142,21 @@ function ofPlayKeys() {
     else if (k === "h") { OFPLAY.dbg.hud = !OFPLAY.dbg.hud; if (OFPLAY.panel) OFPLAY.panel.style.display = OFPLAY.dbg.hud ? "block" : "none"; }
     else if (k === "1") ofPlaySetBody("SHORT_LEAN"); else if (k === "2") ofPlaySetBody("AVG_ATHLETIC"); else if (k === "3") ofPlaySetBody("TALL_LEAN"); else if (k === "4") ofPlaySetBody("SHORT_COMPACT"); else if (k === "5") ofPlaySetBody("AVG_LEAN"); else if (k === "6") ofPlaySetBody("TALL_POWER");
     else if (k === "n") ofPlaySetRunners(OFPLAY.runners.length ? 0 : 10); else if (k === "b") ofPlaySetRunners(OFPLAY.runners.length >= 21 ? 0 : 21);
+    else if (k === "j") {                                                                         // put a LOOSE ball 3 m ahead and run onto it
+      const t = S.pt, f = t.p.facing; t.b.x = t.p.x + Math.cos(f) * 3; t.b.y = t.p.y + Math.sin(f) * 3; t.b.z = 0;
+      t.b.vx = 0; t.b.vy = 0; t.b.vz = 0; t.b.ctrl = false; t.b.exclT = 0; t.b.held = null; t.b.curve = null;
+      t.touchPlan = null; t.lastTouch = null; t.lastTouchFoot = null; t.ctrlState = null; t.p.touchT = 0;
+      t.last = "BALL -> loose, 3 m ahead";
+    }
+    else if (k === "k") { OFPLAY.dbg.ball = !OFPLAY.dbg.ball; S.pt.last = "DRIBBLE MARKERS -> " + (OFPLAY.dbg.ball ? "ON" : "OFF"); }
     else return;
     e.preventDefault(); e.stopImmediatePropagation();
   }, true);
   window.addEventListener("keyup", (e) => { if (!OFPLAY.on || !S.pt) return; const k = e.key.toLowerCase(); if (k === "q" || k === "e") { S.pt.keys[k === "q" ? "walk" : "jog"] = false; e.preventDefault(); e.stopImmediatePropagation(); } }, true);
   window.addEventListener("blur", () => { if (S.pt && S.pt.keys) { S.pt.keys.walk = false; S.pt.keys.jog = false; } });
 }
-function ofPlaySetBody(id) { const p = S.pt.p; OFPLAY.body = id; OFPLAY.actor = ofPlayMakeActor(id, p); S.pt.last = "BODY -> " + id + " (H " + OF_BODIES[id].H + " m)"; }
+// leg length is a PLAYER attribute: selecting a body also tells the simulation which boots to plan with
+function ofPlaySetBody(id) { const p = S.pt.p; OFPLAY.body = id; OFPLAY.actor = ofPlayMakeActor(id, p); p.legLen = OFPLAY.actor.skel.legLen; S.pt.last = "BODY -> " + id + " (H " + OF_BODIES[id].H + " m)"; }
 function ofPlayDom() {
   const css = document.createElement("style"); css.textContent = `
   #ofplay-out{position:fixed;left:0;top:0;width:100vw;height:100vh;z-index:5;image-rendering:pixelated;background:#0b0e12;display:none}
@@ -113,8 +166,22 @@ function ofPlayDom() {
   const out = document.createElement("canvas"); out.id = "ofplay-out"; document.body.appendChild(out); OFPLAY.out = out; OFPLAY.octx = out.getContext("2d");
   const p = document.createElement("div"); p.id = "ofplay-panel"; document.body.appendChild(p); OFPLAY.panel = p;
   p.innerHTML = `<h3>OUTFIELD LOCOMOTION V1 — live test</h3><div class="dim">simulation decides (the playtest's own player law) · animation presents · no ball</div><div id="ofplay-status"></div>
-  <h3>keys</h3><div class="dim">W A S D / arrows move · hold Q walk (1.5 m/s) · hold E jog (3.0) · nothing = run (5.0) · Shift sprint (8.2) · 1 short (1.70) · 2 average (1.83) · 3 tall (1.96) · 4 short-compact (1.66) · 5 average-lean (1.80) · 6 tall-power (2.00) · N 10 extra runners · B 21 extra runners · X Mixed / page view · G follow · V foot / root markers · H hud · R reset · M pause · , slow-mo · . step</div>
+  <h3>keys</h3><div class="dim">W A S D / arrows move · hold Q walk (1.5 m/s) · hold E jog (3.0) · nothing = run (5.0) · Shift sprint (8.2) · 1 short (1.70) · 2 average (1.83) · 3 tall (1.96) · 4 short-compact (1.66) · 5 average-lean (1.80) · 6 tall-power (2.00) · J loose ball ahead · K dribble markers · N 10 extra runners · B 21 extra runners · X Mixed / page view · G follow · V foot / root markers · H hud · R reset · M pause · , slow-mo · . step</div>
   <h3>markers</h3><div class="dim"><span class="ok">green</span> planted (ankle lock) · <span style="color:#ffe36a">yellow</span> toe pivot · <span style="color:#7fd0ff">blue</span> stepping · <span style="color:#ff9a3c">orange</span> swing · red cross = authoritative root · violet ring = presentation pelvis · white = facing · blue = velocity</div>`;
+}
+function ofPlayBallHud(a) {
+  const t = S.pt, b = t.b; if (!b) return "ball        (none)";
+  const bs = Math.hypot(b.vx, b.vy), dPB = Math.hypot(t.p.x - b.x, t.p.y - b.y);
+  const pl = t.touchPlan, lt = t.lastTouch;
+  const boot = (f) => { const ft = a.sol.diag.feet[f]; return ft && ft.toe ? (Math.hypot(ft.toe[0] - b.x, -ft.toe[2] - b.y) - 0.11) : null; };
+  const L1 = `ball        ${b.ctrl ? (t.ctrlState || "CARRIED") : "LOOSE"}  ${bs.toFixed(2)} m/s  ${dPB.toFixed(2)} m ahead  phase ${(t.p.gaitPhase || 0).toFixed(2)}`;
+  const nx = pl ? `NEXT ${pl.foot} in ${((pl.fire - t.tickN) / 60 * 1000) | 0} ms  plan gap ${(pl.gap * 100).toFixed(0)} cm` :
+             (b.ctrl ? `next touch in ${Math.max(0, (t.p.touchT || 0) * 1000) | 0} ms` : "no possession");
+  const rc = a.sol.diag.reach || {};
+  const rr = ["R", "L"].filter(f => rc[f]).map(f => `${f} ${rc[f].skipped ? rc[f].skipped : ((rc[f].applied * 100).toFixed(0) + "cm" + (rc[f].capped ? "*" : ""))}`).join("  ");
+  const bd = ["R", "L"].map(f => { const q = boot(f); return f + " " + (q == null ? "-" : (q * 100).toFixed(0) + "cm"); }).join("  ");
+  const L3 = lt ? `last touch  ${lt.foot} ${lt.kind}  late ${((lt.late || 0) * 1000) | 0} ms  boot-ball ${lt.bootReal != null ? (lt.bootReal * 100).toFixed(0) + " cm" : "-"}${lt.unrealisable ? "  UNREALISED" : ""}` : "last touch  -";
+  return `${L1}\ntouch       ${nx}\nboot→ball   ${bd}${rr ? "   reach " + rr : ""}\n${L3}`;
 }
 function ofPlayHud() {
   const p = OFPLAY.panel; if (!p) return; const t = S.pt, a = OFPLAY.actor; if (!t || !t.on || !a || !a.sol) return; const L = a.loco.diag, d = a.sol.diag, pl = t.p;
@@ -129,6 +196,7 @@ gait        ${L.gait}  (${L.lo}→${L.hi} ${L.t})  phase ${L.phase.toFixed(2)}  
 lean        ${L.lean}°  roll ${L.roll}°  pelvis drop ${((d.pelvisDrop || 0) * 100).toFixed(1)} cm  ground lift ${((d.ground || 0) * 100).toFixed(1)} cm  pop ${((d.jerk || 0) * 100).toFixed(1)} cm/tick
 ${foot("R")}
 ${foot("L")}
+${ofPlayBallHud(a)}
 knees       R ${d.knee.R}° L ${d.knee.L}°   elbows R ${d.elbow.R}° L ${d.elbow.L}°
 runners     ${OFPLAY.runners.length}   rigs ${1 + OFPLAY.runners.length}
 timing      sim ${mean(OFPLAY.perf.sim).toFixed(2)} ms  anim+IK ${mean(OFPLAY.perf.anim).toFixed(2)} ms  skin ${mean(OFPLAY.perf.skin).toFixed(2)} ms  render ${mean(OFPLAY.perf.render).toFixed(2)} ms  composite ${mean(OFPLAY.perf.comp).toFixed(2)} ms  page draw ${S.perfT && S.perfT.length ? mean(S.perfT).toFixed(1) : "-"} ms
@@ -143,7 +211,7 @@ function ofPlayBoot() {
     const t = S.pt; t.b.x = 3; t.b.y = 3; t.b.ctrl = false; t.b.vx = 0; t.b.vy = 0;                    // fixture set-up: the ball parked in the corner (no ball in this test); the player stays where the playtest puts him
     t.p.x = 70; t.p.y = 34; t.p.facing = 0; if (t.gk) { t.gk.x = 104.5; t.gk.y = 34; }
     OFPLAY.body = (q.get("body") || "AVG_ATHLETIC").toUpperCase(); if (!OF_BODIES[OFPLAY.body]) OFPLAY.body = "AVG_ATHLETIC";
-    OFPLAY.actor = ofPlayMakeActor(OFPLAY.body, t.p); ofPlayInstall(); if (q.get("runners")) ofPlaySetRunners(+q.get("runners"));
+    OFPLAY.actor = ofPlayMakeActor(OFPLAY.body, t.p); t.p.legLen = OFPLAY.actor.skel.legLen; ofPlayInstall(); if (q.get("runners")) ofPlaySetRunners(+q.get("runners"));
     RIG.mode = "manual"; RIG.smooth = 0.25; t.last = "OUTFIELD LOCOMOTION — W A S D / arrows, Shift sprint";
   };
   tryStart();

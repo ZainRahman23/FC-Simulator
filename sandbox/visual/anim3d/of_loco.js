@@ -101,6 +101,43 @@ function ofLocoGroundPelvis(skel, pose, R, L) {
 }
 function ofPoseLerp(a, b, t) { const p = {}; const keys = new Set([...Object.keys(a), ...Object.keys(b)]); for (const k of keys) { if (k[0] === "_" || k === "name") continue; const x = a[k] || [0, 0, 0], y = b[k] || [0, 0, 0]; p[k] = [lerp(x[0], y[0], t), lerp(x[1], y[1], t), lerp(x[2], y[2], t)]; } p._pelvis = V3.lerp(a._pelvis || [0, 0, 0], b._pelvis || [0, 0, 0], t); return p; }
 const OF_IDLE = { name: "IDLE", pelvis: [3, 0, 0], spine: [2, 0, 0], chest: [1, 0, 0], neck: [-3, 0, 0], head: [-3, 0, 0], thigh_R: [-4, 0, 4], shin_R: [7, 0, 0], foot_R: [-3, 0, 0], thigh_L: [-4, 0, -4], shin_L: [7, 0, 0], foot_L: [-3, 0, 0], upperArm_R: [-4, 0, 9], upperArm_L: [-4, 0, -9], foreArm_R: [-24, 0, 0], foreArm_L: [-24, 0, 0], hand_R: [-6, 0, 0], hand_L: [-6, 0, 0], _pelvis: [0, -0.02, 0] };
+// ══ SHARED BOOT PLAN ═══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+// Where each boot is on the ground for a given stride phase, as a pure function of (phase, stance fraction, leg length). This is the ONE
+// place that answers it, so the SIMULATION can decide which foot may touch the ball and when, and the PRESENTATION renders the same feet.
+// Fitted to the rendered locomotion: inside the contact window (the boot near its own plant) it predicts the rendered ankle to a mean of
+// 3.3 cm, p95 7.0 cm. The longitudinal offset is leg-limited, not stride-limited — hip flexion/extension caps it at the same multiple of
+// leg length in every gait. RIGHT plants at phase 0, LEFT at 0.5.
+const OF_BOOT = {
+  fwd: 0.33,            // x legLen: the boot's forward offset from the root at its own plant (furthest ahead)
+  rear: -0.52,          // x legLen: its offset at toe-off (furthest behind)
+  lat: 0.198,           // x legLen: half the stance width, R positive to the player's right
+  reach: 0.30,          // x legLen: how far from the ankle a boot can plausibly meet a ball (boot length + a small stretch)
+  winBack: 0.14,        // contact window, in cycles BEFORE the plant (late swing: the boot is coming forward and down)
+  winFwd: 0.03,         // and after it (early stance). Kept short: past its plant the boot is bearing weight and cannot be moved.
+};
+function ofBootAhead(u, p0, stance) {                                                             // longitudinal offset in LEG LENGTHS
+  const up = (((u - p0) % 1) + 1) % 1, B = OF_BOOT;
+  if (up < stance) return B.fwd + (B.rear - B.fwd) * (up / stance);                               // stance: the boot is fixed, the root runs past it
+  return B.rear + (B.fwd - B.rear) * smooth01((up - stance) / (1 - stance));                      // swing: forward again to the next plant
+}
+// Both boots in PITCH coordinates for a root at (x, y) travelling along dir (unit). `planted` mirrors the gait's own stance test.
+function ofBootPlan(phase, stance, legLen, x, y, dirX, dirY) {
+  const lx = -dirY, ly = dirX, out = {};                                                          // the player's LEFT in the pitch plane
+  for (const sd of ["R", "L"]) {
+    const p0 = sd === "R" ? 0 : 0.5, ah = ofBootAhead(phase, p0, stance) * legLen;
+    const side = (sd === "R" ? -1 : 1) * OF_BOOT.lat * legLen;                                    // R is to the player's right = -left
+    const up = (((phase - p0) % 1) + 1) % 1;
+    out[sd] = { x: x + dirX * ah + lx * side, y: y + dirY * ah + ly * side, ahead: ah, u: up, planted: up < stance };
+  }
+  return out;
+}
+// Is this boot inside its contact window (late swing through early stance), and how central is it in that window (1 at the plant)?
+function ofBootWindow(phase, p0) {
+  const up = (((phase - p0) % 1) + 1) % 1, B = OF_BOOT;
+  const d = up > 0.5 ? up - 1 : up;                                                               // signed cycles from the plant
+  if (d < -B.winBack || d > B.winFwd) return 0;
+  return 1 - Math.abs(d) / (d < 0 ? B.winBack : B.winFwd);
+}
 // ── per-actor locomotion state + one tick: authoritative { x, y, vx, vy, facing } (pitch frame) → pose, root matrix, plant requests, diagnostics ──
 function ofLocoMake() { return { phase: 0.08, lean: 0, roll: 0, prevV: null, prevT: null, settled: true, idleW: 1, moveDir: null, twist: 0, P: null, feet: {}, diag: {} }; }
 function ofLocoTick(skel, L, sim, dt, now) {
@@ -130,7 +167,10 @@ function ofLocoTick(skel, L, sim, dt, now) {
   // phase: advances by the cadence of THIS body's stride at the authoritative speed; below the idle speed it settles to a double-support phase
   const step = P.step * skel.legLen, cadence = step > 1e-6 ? v / step : 0;
   const moving = v > G.idleV;
-  if (moving) { L.phase = (L.phase + dt * cadence / 2) % 1; L.settled = false; }
+  // THE SIMULATION OWNS THE STRIDE CLOCK when it publishes one (ptGaitStep): the boots the dribble law reasons about and the boots drawn
+  // here are then the same boots by construction, and animation ON / OFF cannot diverge. Standalone scenes keep the local accumulator.
+  if (sim.gaitPhase != null) { L.phase = sim.gaitPhase; L.settled = !!sim.gaitSettled; }
+  else if (moving) { L.phase = (L.phase + dt * cadence / 2) % 1; L.settled = false; }
   else if (!L.settled) { const r0 = G.restPhase, cand = r0.map(r => ((r - L.phase) % 1 + 1) % 1), k = cand[0] < cand[1] ? 0 : 1, ahead = cand[k]; const adv = dt * G.settleCadence / 2; if (ahead <= adv) { L.phase = r0[k]; L.settled = true; } else L.phase = (L.phase + adv) % 1; }
   const wGait = smooth01(clamp01((v - G.idleV * 0.5) / (G.idleBlendV - G.idleV * 0.5)));                                 // idle stance ↔ gait pose
   L.idleW = 1 - wGait;

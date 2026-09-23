@@ -8,7 +8,7 @@
 // follows the simulation root exactly (no presentation root offset in locomotion), the planted foot is locked in the world and the leg
 // IK explains the displacement; when the simulation moves faster than the gait's stride × cadence can explain, the residual (foot slide
 // or leg over-reach) is EXPOSED in the diagnostics, never hidden by moving the root.
-const OF_GAIT = { walkA: 22, runA: 34, walkKnee: 38, runKnee: 78, walkSpeed: 1.6, runSpeed: 5.5, stanceFrac: 0.5, plantBlendT: 0.08, releaseT: 0.07, settleT: 0.05, stanceReach: 0.978, kneePlaneStep: 0.18, plantY: 0.03, plantWaitT: 0.09, maxDrop: 0.14, dropRate: 1.2, groundRate: 1.5, relSpeed: 6.0, relTmax: 0.26, divergeM: 0.35, armSwingWalk: 22, armSwingRun: 42, bobWalk: 0.012, bobRun: 0.035, leanRun: 10 };
+const OF_GAIT = { walkA: 22, runA: 34, walkKnee: 38, runKnee: 78, walkSpeed: 1.6, runSpeed: 5.5, stanceFrac: 0.5, plantBlendT: 0.08, releaseT: 0.07, settleT: 0.05, stanceReach: 0.978, kneePlaneStep: 0.18, reachMax: 0.20, reachT: 0.12, plantY: 0.03, plantWaitT: 0.09, maxDrop: 0.14, dropRate: 1.2, groundRate: 1.5, relSpeed: 6.0, relTmax: 0.26, divergeM: 0.35, armSwingWalk: 22, armSwingRun: 42, bobWalk: 0.012, bobRun: 0.035, leanRun: 10 };
 const OF_STAND = { name: "STAND", pelvis: [0, 0, 0], spine: [0, 0, 0], chest: [0, 0, 0], upperArm_R: [0, 0, 8], upperArm_L: [0, 0, -8], foreArm_R: [-6, 0, 0], foreArm_L: [-6, 0, 0], _pelvis: [0, 0, 0] };
 const OF_READY = { name: "READY", _pelvis: [0, -0.20, 0.02], pelvis: [22, 0, 0], spine: [8, 0, 0], chest: [4, 0, 0], neck: [-8, 0, 0], head: [-12, 0, 0], thigh_R: [-44, 0, 10], shin_R: [58, 0, 0], foot_R: [-14, 0, 0], thigh_L: [-44, 0, -10], shin_L: [58, 0, 0], foot_L: [-14, 0, 0], upperArm_R: [-20, 0, 30], foreArm_R: [-60, 0, 0], upperArm_L: [-20, 0, -30], foreArm_L: [-60, 0, 0] };   // athletic stance authored @ H_REF legs (pelvis offset = metres @ OF_H_REF leg length)
 const OF_SINGLE_LEG = { name: "SINGLE_LEG", _pelvis: [0.04, -0.06, 0], pelvis: [12, 0, -6], spine: [6, 0, 4], chest: [4, 0, 2], thigh_R: [-8, 0, 6], shin_R: [16, 0, 0], foot_R: [-8, 0, 0], thigh_L: [-84, 0, -8], shin_L: [92, 0, 0], foot_L: [20, 0, 0], upperArm_R: [-30, 0, 40], foreArm_R: [-40, 0, 0], upperArm_L: [-20, 0, -40], foreArm_L: [-30, 0, 0] };   // planted RIGHT leg, LEFT knee lifted
@@ -44,7 +44,7 @@ function ofStance(u, sd) { const ph = ((sd === "R" ? u : u + 0.5) % 1 + 1) % 1; 
 //    the body core → diagnostics (slide, float, penetration, over-reach, knee angle, discontinuity). Never moves the root.
 function ofSolve(skel, pose, rootM, plants, state, opts) {
   const pel = skel.byName.pelvis, saved = pel.off.slice(); const pd = pose._pelvis || [0, 0, 0]; pel.off = [saved[0] + pd[0], saved[1] + pd[1], saved[2] + pd[2]];
-  let fk = skelFK(skel, pose, rootM); const diag = { feet: {}, ground: 0, knee: {}, elbow: {}, jump: 0 }; const ankleH = skel.ankleH;
+  let fk = skelFK(skel, pose, rootM); const diag = { feet: {}, ground: 0, knee: {}, elbow: {}, jump: 0, reach: {} }; const ankleH = skel.ankleH;
   const lockLeg = (sd, P, w, keepPlane) => { const st = state.feet[sd]; const kj = fk.joint[skel.byName["shin_" + sd].idx], hip = fk.joint[skel.byName["thigh_" + sd].idx], fwd = M4.transformDir(rootM, [0, 0, 1]);
     // a PLANTED leg takes the forward-knee pole; a SWING leg being nudged by the ground clamp keeps its own authored bend plane (pole null) —
     // forcing a swing leg onto the planted pole re-poses the whole leg, so a 5 mm floor correction would flip the knee by ~100°
@@ -137,6 +137,26 @@ function ofSolve(skel, pose, rootM, plants, state, opts) {
       diag.feet[sd] = { locked: true, contact: !rel && !st.step && st.w >= 0.999, w: +st.w.toFixed(2), mode: st.step ? "step" : rel ? "release" : st.mode, s: st.s, slide: +V3.dist(cur, ref).toFixed(4), residual: +r.residual.toFixed(4), overReach: r.reached ? 0 : +r.residual.toFixed(4), soleY: +(a2[1] - ankleH).toFixed(4), toeY: +t2[1].toFixed(4), P: (st.mode === "toe" ? st.T : st.P).slice(), ankle: a2.slice(), toe: t2.slice() }; }
     else { const t2 = fk.tip[skel.byName["toe_" + sd].idx]; diag.feet[sd] = { locked: false, contact: false, mode: "swing", s: st.s, soleY: +(ankle[1] - ankleH).toFixed(4), toeY: +t2[1].toFixed(4), ankle: ankle.slice(), toe: t2.slice() }; }
   }
+  // ── BALL REACH (DRIBBLING V1, presentation only) ─────────────────────────────────────────────────────────────────────────────────
+  // The simulation has already decided that THIS boot touches the ball at THIS tick. All that happens here is a bounded correction that
+  // puts the boot on the ball so the touch can be seen. It never moves the root, never moves the ball, never touches a PLANTED foot, and
+  // never exceeds reachMax; if the ball is further away than that the correction saturates and the miss is reported, not hidden.
+  for (const sd of ["R", "L"]) {
+    const req = plants[sd], st = state.feet[sd];
+    if (!req || typeof req !== "object" || !req.reach) continue;
+    const want = req.reach.p, w = clamp01(req.reach.w || 0);
+    if (w <= 0.001) continue;
+    if (st && st.locked && st.w > 0.5 && st.rel == null) { diag.reach[sd] = { skipped: "planted" }; continue; }   // the support foot is never dragged
+    const fb = skel.byName["foot_" + sd], tb = skel.byName["toe_" + sd];
+    const dvec = V3.sub(fk.tip[tb.idx], fk.joint[fb.idx]);                                        // current toe-tip offset from the ankle
+    const cur = fk.joint[fb.idx], P0 = V3.sub(want, dvec);                                        // ankle target that puts the TOE on the wanted point
+    const off = V3.sub(P0, cur), need = V3.len(off), cap = OF_GAIT.reachMax * skel.legLen;
+    const P = need > cap ? V3.add(cur, V3.scale(off, cap / need)) : P0;
+    const r = lockLeg(sd, P, w, true);                                                            // keepPlane: a swing leg keeps its own bend plane (no knee flip)
+    const t2 = fk.tip[tb.idx];
+    diag.reach[sd] = { want: +need.toFixed(4), applied: +Math.min(need, cap).toFixed(4), capped: need > cap, w: +w.toFixed(2),
+                       residual: +V3.dist(t2, want).toFixed(4), overReach: r.reached ? 0 : +r.residual.toFixed(4) };
+  }
   // ground clamp: nothing of the body core / legs below the pitch (the toe of a swinging foot is the usual offender — the leg is lifted at the knee, the core only if a bone is under)
   // SLEW (same reason as the pelvis drop): a one-tick body lift moves every joint, and the hands furthest of all; a few cm of transient
   // penetration reads better than a pop. The lift also decays back to zero once nothing is under the pitch.
@@ -174,7 +194,14 @@ function ofActorTick(a, dt, now) {
     pose = gp.v < 0.05 ? ofRetargetPelvis(a.skel, OF_STAND) : ofGaitPose(a.skel, gp, a.phase); plants = gp.v < 0.05 ? { R: true, L: true } : { R: ofStance(a.phase, "R"), L: ofStance(a.phase, "L") }; a.gait = gp;
   } else {                                                                                       // LOCOMOTION V1 (of_loco.js): IDLE / WALK / JOG / RUN / SPRINT from the authoritative velocity, facing and acceleration
     const sim = a.sim || { x: a.x, y: a.y, vx: Math.cos(a.facing) * a.speed, vy: Math.sin(a.facing) * a.speed, facing: a.facing };
-    const lo = ofLocoTick(a.skel, a.loco || (a.loco = ofLocoMake()), sim, dt, now); pose = lo.pose; plants = lo.plants; a.gait = { cadence: lo.P.step > 0 ? Math.hypot(sim.vx, sim.vy) / (lo.P.step * a.skel.legLen) : 0, stanceFrac: lo.P.stance, stride: lo.P.step * a.skel.legLen, A: lo.P.hipFlex, run: lo.P.idx >= 2 }; a.legYaw = lo.legYaw;
+    const lo = ofLocoTick(a.skel, a.loco || (a.loco = ofLocoMake()), sim, dt, now); pose = lo.pose; plants = lo.plants;
+    // a touch the SIMULATION has scheduled (or just fired): ease the chosen boot onto the ball across the plan, hold briefly, then release
+    if (a.touch && plants[a.touch.foot] && typeof plants[a.touch.foot] === "object") {
+      const T = a.touch, dtc = now - T.at;                                                        // <0 before the touch, >0 after
+      const ramp = dtc < 0 ? clamp01(1 + dtc / Math.max(0.03, T.lead || OF_GAIT.reachT)) : 1 - clamp01(dtc / OF_GAIT.reachT);
+      if (ramp > 0.001) plants[a.touch.foot].reach = { p: T.p, w: ramp };
+      if (dtc > OF_GAIT.reachT) a.touch = null;
+    } a.gait = { cadence: lo.P.step > 0 ? Math.hypot(sim.vx, sim.vy) / (lo.P.step * a.skel.legLen) : 0, stanceFrac: lo.P.stance, stride: lo.P.step * a.skel.legLen, A: lo.P.hipFlex, run: lo.P.idx >= 2 }; a.legYaw = lo.legYaw;
   }
   if (a.legYaw != null && a.motion !== "LOCO_V0") { const rm = gkRootMatrix(a.x, a.y, a.legYaw, 0); for (let i = 0; i < 16; i++) rootM[i] = rm[i]; }   // the legs play along the movement direction; the trunk twist toward the facing is in the pose
   const sol = ofSolve(a.skel, pose, rootM, plants, a.state, { now, dt, stanceT: a.gait && a.gait.cadence > 0 ? (a.gait.stanceFrac || OF_GAIT.stanceFrac) * 2 / a.gait.cadence : null }); a.pose = pose; a.rootM = rootM; a.sol = sol;
