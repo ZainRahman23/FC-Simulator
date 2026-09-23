@@ -581,6 +581,9 @@ table.market th.num{text-align:right}
   .corner.tl{left:8px;top:8px} .corner.tr{right:8px;top:8px}
 }
 </style>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="coach-match.css">
+<link rel="stylesheet" href="coach-career.css">
 </head>
 <body>
 <div id="app"></div>
@@ -6654,8 +6657,15 @@ window.TOUCHLINE = {
   DETAILED_PLAYER_PROFILES, ATTRIBUTE_PROFILES, PLAYERS
 };
 
-boot();
+/* Coach MVP modules (web/coach-*.js) load after this script and wrap globals.
+   boot() waits for DOMContentLoaded so every module has registered its
+   overrides first; modules chain post-boot work on TL.booted. */
+window.TL = window.TL || {hooks: {}, bus: new EventTarget()};
+TL.booted = new Promise(resolve =>
+  document.addEventListener('DOMContentLoaded', () => resolve(boot())));
 
 </script>
+<script src="coach-match.js"></script>
+<script src="coach-career.js"></script>
 </body>
 </html>
