@@ -6,6 +6,7 @@
 // `mem` (optional, per chain, persistent across frames): bend-plane memory. When the pole's perpendicular component is (nearly)
 // degenerate, or would reverse the joint's side of the chain line within one frame, the plane used last frame is kept — a knee or
 // elbow never flips sides between two frames.
+let GK_IK_MIN_ELBOW_DEG = 30;   // (review tools may set 0 to reproduce the unbounded fold)                                                                  // minimum included elbow angle (anatomical fold limit of the arm chain)
 function skelIK2(skel, fk, upperName, foreName, handName, target, w, poleHint, endFrac, mem) {
   const up = skel.byName[upperName], fo = skel.byName[foreName], hd = skel.byName[handName];
   const S = fk.joint[up.idx], E0 = fk.joint[fo.idx], W0 = fk.joint[hd.idx];
@@ -18,6 +19,9 @@ function skelIK2(skel, fk, upperName, foreName, handName, target, w, poleHint, e
   const dMin = Math.max(Math.abs(a - b) + 0.02, 0.12 * (a + b)), dRaw = V3.dist(targetW, S); if (mem) mem.dRaw = +dRaw.toFixed(3); if (dRaw < dMin) w = clamp01(w) * (dRaw / dMin);   // fold radius = the folded chain's own minimum (|a−b| + 2 cm), never less than 12 % of the chain
   const T = V3.lerp(W0, targetW, clamp01(w));
   let d = V3.dist(T, S); const maxR = a + b - 1e-4; const reached = d <= maxR; if (d > maxR) d = maxR; if (d < Math.abs(a - b) + 1e-4) d = Math.abs(a - b) + 1e-4;
+  // ANATOMICAL FOLD LIMIT (arms): an elbow cannot close past its minimum included angle — a target nearer the shoulder than the folded chain's own
+  // reach is met at that fold (the hand stops short of it; the residual exposes the miss) instead of the two bones collapsing onto each other
+  let folded = false; if (/^upperArm_/.test(upperName)) { const dFold = Math.sqrt(Math.max(0, a * a + b * b - 2 * a * b * Math.cos(GK_IK_MIN_ELBOW_DEG * Math.PI / 180))); if (d < dFold) { d = dFold; folded = true; } }
   let dirST = V3.norm(V3.sub(T, S));
   // near the fold radius the root→target direction turns fast for a small target motion: it is blended with last frame's direction
   // (memory) by how deep inside the near-fold zone the target sits — continuous, deterministic, and exact again outside the zone
@@ -36,7 +40,8 @@ function skelIK2(skel, fk, upperName, foreName, handName, target, w, poleHint, e
   const cosA = clamp01((a * a + d * d - b * b) / (2 * a * d)); const alpha = Math.acos(Math.max(-1, Math.min(1, (a * a + d * d - b * b) / (2 * a * d))));
   const E = V3.add(S, V3.add(V3.scale(dirST, a * Math.cos(alpha)), V3.scale(pole, a * Math.sin(alpha))));
   if (mem && mem.debug) mem.dbg = { S: S.map(v => +v.toFixed(3)), E0: E0.map(v => +v.toFixed(3)), W0: W0.map(v => +v.toFixed(3)), T: T.map(v => +v.toFixed(3)), d: +d.toFixed(3), alpha: +(alpha / DEG).toFixed(1), pole: pole.map(v => +v.toFixed(3)), E: E.map(v => +v.toFixed(3)), w: +w.toFixed(3), target: target.map(v => +v.toFixed(3)) };
-  const Tw = V3.add(E, V3.scale(V3.norm(V3.sub(T, E)), b));
+  const Tf = folded ? V3.add(S, V3.scale(dirST, d)) : T;                                        // fold-limited: the forearm aims at the point the limited chain can reach on the shoulder→target line (never back past the fold toward the shoulder)
+  const Tw = V3.add(E, V3.scale(V3.norm(V3.sub(Tf, E)), b));
   // re-aim upper arm: rotate its world matrix so the FK elbow direction maps to the new one
   const rot = (bone, from, to) => { const m = fk.world[bone.idx]; const R = M4.fromTo(V3.norm(V3.sub(from, M4.origin(m))), V3.norm(V3.sub(to, M4.origin(m)))); const o = M4.origin(m); const m2 = M4.mul(M4.translate(o[0], o[1], o[2]), M4.mul(R, M4.mul(M4.translate(-o[0], -o[1], -o[2]), m))); return m2; };
   fk.world[up.idx] = rot(up, E0, E); fk.tip[up.idx] = E;

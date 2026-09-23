@@ -12,7 +12,7 @@ const GK_GRAPH = {
   loadPhase: 0.30, toeOff: 0.31, unloadAt: 0.15,   // IK weight ramp start; plant-foot release; opposite-foot release (pre)
   ikFadePost: 0.35, torsoAssistMaxDeg: 20, clavicleAssistMaxDeg: 10, lookMaxDeg: 55, presMaxM: 2.5,
   ballVisR: 0.11, handOff: 0.03, antUpZ: [0.45, 0.80],   // presentation ball radius = the PHYSICAL ball (GOALFX.ballR 0.11; the 2D sprite draws an exaggerated 0.19 for readability — hand / ball relationships are judged against the real size); hand-target offset outside the ball; predicted crossing height (m) below/above which the central anticipation is the crouch / the upright ready
-  authoredRollDeg: 72, reachLenH: 0.64, jumpMaxM: 0.55, pelvisMinY: 0.30,
+  authoredRollDeg: 72, reachLenH: 0.64, jumpMaxM: 0.55, pelvisMinY: 0.30, followRiseM: 0.03, flightCap: true, capBlendT: 0.05,   // flightCap: review switch only (false reproduces the unbounded continuation for before/after captures) · followRiseM: after execEnd the flight may rise at most this much above the higher of the contact pelvis and the jump ceiling (the accepted v6 follow-through: 42's arc peaks 2 cm above its contact pelvis)
   sideLandLo: 35, sideLandHi: 60,                  // body-axis angle from vertical (deg): ≤ lo land on the feet, ≥ hi land on the side
   G: 9.81,
   plantU: 0.10,           // the launch plan starts at the plant: from here the pelvis is ONE trajectory (push → arc → ground) until the settle
@@ -88,19 +88,32 @@ function gkGraphRedirect(pose, axis, u, rollMax) {
 // arrives at the toe-off with the flight's launch velocity, then a ballistic arc (constant horizontal velocity, gravity only)
 // that passes through the solved full-extension pelvis at execEnd. Ball contact lies on that arc and does not change it; the
 // simulation root's own easing to a stop is not followed (the body carries its momentum; reconciliation happens on the ground).
-function gkLaunchPlan(axisEnd, rootMEnd, W0, v0, tP, tT, tE) {
+function gkLaunchPlan(axisEnd, rootMEnd, W0, v0, tP, tT, tE, hCeil) {
   const g = GK_GRAPH.G, Pc = M4.transformPoint(rootMEnd, axisEnd.pelvis);
   const Tp = Math.max(1e-3, tT - tP), D = Math.max(1e-3, tE - tT), den = D + Tp / 2;
   const V = [(Pc[0] - W0[0] - v0[0] * Tp / 2) / den, 0, (Pc[2] - W0[2] - v0[2] * Tp / 2) / den];
   const vUp = (Pc[1] - W0[1] - v0[1] * Tp / 2 + 0.5 * g * D * D) / den;
   const Wt = [W0[0] + (v0[0] + V[0]) / 2 * Tp, W0[1] + (v0[1] + vUp) / 2 * Tp, W0[2] + (v0[2] + V[2]) / 2 * Tp];
   const a = [(V[0] - v0[0]) / Tp, (vUp - v0[1]) / Tp, (V[2] - v0[2]) / Tp];
-  const tA = tT + Math.max(0, vUp / g), hA = Wt[1] + Math.max(0, vUp) ** 2 / (2 * g);
-  return { W0, v0, V, vUp, Wt, a, tP, tT, tE, tA, hA, Pc, vLat: Math.hypot(V[0], V[2]) };
+  // BOUNDED FLIGHT (presentation): the arc is FITTED through the solved contact pelvis at execEnd whatever the simulation's exec time — a very short
+  // exec (a fast high tip) fits an unphysical launch velocity (fixture 36: 6.5 m/s ≈ a 2 m jump) and the momentum continuation after execEnd then
+  // carries the body far above / past the contact (2.8 m pelvis, 2.5 m from the root). After execEnd the pelvis may rise at most followRiseM above
+  // the higher of the contact pelvis and the jump ceiling (standing hip + jumpMaxM·launch): the vertical velocity at execEnd is capped to the value
+  // that peaks there; the horizontal velocity is unchanged; an uncapped arc keeps the original (bit-identical) plan. Reach is never extended.
+  const vE = vUp - g * D, hCap = hCeil == null ? null : Math.max(Pc[1], hCeil) + GK_GRAPH.followRiseM, vCap = hCap == null ? null : Math.sqrt(Math.max(0, 2 * g * (hCap - Pc[1])));
+  const capped = GK_GRAPH.flightCap !== false && vCap != null && vE > vCap + 1e-9, vPost = capped ? vCap : vE;
+  const Tb = capped ? GK_GRAPH.capBlendT : 0, hBase = capped ? Pc[1] + (vE - vPost) * Tb / 2 : Pc[1];   // the excess vertical velocity is bled off linearly over capBlendT (velocity-continuous at execEnd); after it the segment is ballistic with vPost from hBase
+  const tA = capped ? tE + Math.max(0, vPost) / g : tT + Math.max(0, vUp / g), hA = capped ? hBase + Math.max(0, vPost) ** 2 / (2 * g) : Wt[1] + Math.max(0, vUp) ** 2 / (2 * g);
+  return { W0, v0, V, vUp, Wt, a, tP, tT, tE, tA, hA, Pc, vLat: Math.hypot(V[0], V[2]), capped, vPost, vE, hCap, hCeil, Tb, hBase };
 }
 function gkLaunchState(L, t) {                                    // world pelvis + velocity at absolute time t (push, then the arc — which continues past endT until the landing takes over)
   const g = GK_GRAPH.G;
   if (t <= L.tT) { const s = Math.max(0, t - L.tP); return { W: [L.W0[0] + L.v0[0] * s + 0.5 * L.a[0] * s * s, L.W0[1] + L.v0[1] * s + 0.5 * L.a[1] * s * s, L.W0[2] + L.v0[2] * s + 0.5 * L.a[2] * s * s], v: [L.v0[0] + L.a[0] * s, L.v0[1] + L.a[1] * s, L.v0[2] + L.a[2] * s], airborne: false }; }
+  if (L.capped && t > L.tE) {                                                                    // bounded continuation from the contact pelvis: excess velocity bled off over Tb, then ballistic with vPost
+    const s = t - L.tE, dv = L.vE - L.vPost, Tb = L.Tb;
+    if (s < Tb) return { W: [L.Pc[0] + L.V[0] * s, L.Pc[1] + L.vPost * s - 0.5 * g * s * s + dv * (s - s * s / (2 * Tb)), L.Pc[2] + L.V[2] * s], v: [L.V[0], L.vPost - g * s + dv * (1 - s / Tb), L.V[2]], airborne: true, capped: true };
+    return { W: [L.Pc[0] + L.V[0] * s, L.hBase + L.vPost * s - 0.5 * g * s * s, L.Pc[2] + L.V[2] * s], v: [L.V[0], L.vPost - g * s, L.V[2]], airborne: true, capped: true };
+  }
   const s = t - L.tT; return { W: [L.Wt[0] + L.V[0] * s, L.Wt[1] + L.vUp * s - 0.5 * g * s * s, L.Wt[2] + L.V[2] * s], v: [L.V[0], L.vUp - g * s, L.V[2]], airborne: true };
 }
 const hermite = (p0, v0, p1, v1, T, t) => { const x = clamp01(t / Math.max(1e-6, T)), x2 = x * x, x3 = x2 * x; return (2 * x3 - 3 * x2 + 1) * p0 + (x3 - 2 * x2 + x) * T * v0 + (-2 * x3 + 3 * x2) * p1 + (x3 - x2) * T * v1; };
@@ -116,6 +129,7 @@ function gkLandingPlan(skel, clip, launch, axis, rootM, held) {
   // touchdown: where the arc comes down to the touch height (never before endT — the reach is complete first)
   const disc = launch.vUp * launch.vUp - 2 * g * (hTouch - launch.Wt[1]); const sT = disc >= 0 ? (launch.vUp + Math.sqrt(disc)) / g : Math.max(0, launch.vUp / g);
   let tTouch = Math.max(launch.tE, launch.tT + sT); const hEnd = gkLaunchState(launch, launch.tE).W[1];
+  if (launch.capped) { const d2 = launch.vPost * launch.vPost - 2 * g * (hTouch - launch.hBase); const s2 = d2 >= 0 ? (launch.vPost + Math.sqrt(d2)) / g : Math.max(0, launch.vPost / g); tTouch = Math.max(launch.tE, launch.tE + s2); }   // bounded continuation: touchdown from the capped segment (the blend adds (vE−vPost)·Tb/2 to the ballistic base height)
   const arrivedLow = hEnd < hTouch || (tTouch - launch.tE) < 0.02; if (hEnd < hTouch) { tTouch = launch.tE; hTouch = hEnd; hImpact = Math.min(hImpact, hEnd); }   // no descent stage (arrival at / below the touch height): impact / absorb continue from the arrival height and the arrival POSE
   const St = gkLaunchState(launch, tTouch);
   const Ht = [St.W[0], St.W[2]], vt = Math.hypot(launch.V[0], launch.V[2]), vz = St.v[1], u = vt > 1e-6 ? [launch.V[0] / vt, launch.V[2] / vt] : [1, 0];
@@ -361,14 +375,14 @@ function gkGraphEvaluate(desc, clip, skel, state) {
       if (!state.launch && clipT >= GK_GRAPH.plantU) {
         const W0 = worldPelvis(g.pose), pv = state.prevPel, v0 = pv && desc.now - pv.t > 1e-4 && desc.now - pv.t < 0.1 ? V3.scale(V3.sub(W0, pv.W), 1 / (desc.now - pv.t)) : [0, 0, 0];
         const rootMEnd = gkRootMatrix(c.rootEnd ? c.rootEnd[0] : desc.simRoot[0], c.rootEnd ? c.rootEnd[1] : desc.simRoot[1], facing, 0), axisEnd = gkGraphAxis(desc, rootMEnd, skel, mkey === "LOW_DIVE");
-        state.launch = gkLaunchPlan(axisEnd, rootMEnd, W0, v0, desc.now, c.t0 + GK_GRAPH.toeOff * c.execTime, c.t0 + c.execTime);
+        state.launch = gkLaunchPlan(axisEnd, rootMEnd, W0, v0, desc.now, c.t0 + GK_GRAPH.toeOff * c.execTime, c.t0 + c.execTime, 0.50 * skel.H + GK_GRAPH.jumpMaxM * ((desc.cls && desc.cls.expr) ? desc.cls.expr.launch : 1));
       }
       if (state.launch) { const St = gkLaunchState(state.launch, desc.now); setPelvisWorld(g.pose, St.W); g.flight = St; }
       state.endPose = g.pose; state.endAxis = axis;
     }
     else if (mode === "post") {
       const endPose = state.endPose || (dive ? gkGraphRedirect(M(gkSampleKeys(preKeys, 1, named)), axis, 1, rollMax) : M(mo.keys[mo.keys.length - 1][1])), ax = state.endAxis || axis;
-      if (dive && !state.launch) { const W0 = worldPelvis(endPose); state.launch = gkLaunchPlan(ax, rootM, W0, [0, 0, 0], desc.now - 0.30, desc.now - 0.20, desc.now); }   // fallback (no plant tick was evaluated): a short arc from where the body is
+      if (dive && !state.launch) { const W0 = worldPelvis(endPose); state.launch = gkLaunchPlan(ax, rootM, W0, [0, 0, 0], desc.now - 0.30, desc.now - 0.20, desc.now, 0.50 * skel.H + GK_GRAPH.jumpMaxM * ((desc.cls && desc.cls.expr) ? desc.cls.expr.launch : 1)); }   // fallback (no plant tick was evaluated): a short arc from where the body is
       if (!state.plan) {
         let opt = null;
         if (mo && mo.kind === "spread") {                                                      // spread block: the body commits onto the saving hip — absorb (velocity-continuous descent + a little lateral travel), side-sit, then the chain from the half-kneel
@@ -452,7 +466,10 @@ function gkGraphSolve(desc, g, skel, state) {
   const pd = pose._pelvis || [0, 0, 0]; pel.off = [savedOff[0] + pd[0], savedOff[1] + pd[1], savedOff[2] + pd[2]];
   const h = g.reachHand, o = h === "R" ? "L" : "R", hand = "hand_" + h, fore = "foreArm_" + h, upper = "upperArm_" + h;
   let fk = skelFK(skel, pose, g.rootM);
-  const diag = { plant: null, ground: 0, torso: 0, ik: null, look: 0, feet: {} };
+  const diag = { plant: null, ground: 0, torso: 0, ik: null, look: 0, feet: {}, jointLimit: null };
+  const elbowLimit = () => { for (const sd of ["R", "L"]) { const up = skel.byName["upperArm_" + sd], fo = skel.byName["foreArm_" + sd], hd = skel.byName["hand_" + sd]; const S0 = fk.joint[up.idx], E0 = fk.joint[fo.idx], W0 = fk.joint[hd.idx]; const u1 = V3.norm(V3.sub(S0, E0)), u2 = V3.norm(V3.sub(W0, E0)); const ang = Math.acos(Math.max(-1, Math.min(1, V3.dot(u1, u2)))), minA = GK_IK_MIN_ELBOW_DEG * DEG;
+    if (ang < minA - 1e-6) { let ax = V3.cross(u2, u1); if (V3.len(ax) < 1e-6) ax = V3.cross(u1, Math.abs(u1[1]) < 0.9 ? [0, 1, 0] : [1, 0, 0]); ax = V3.norm(ax); const Rr = M4.axisAngle(ax, -(minA - ang)); const m2 = M4.mul(M4.translate(E0[0], E0[1], E0[2]), M4.mul(Rr, M4.mul(M4.translate(-E0[0], -E0[1], -E0[2]), fk.world[fo.idx]))); const dlt = M4.mul(m2, M4.invertRigid(fk.world[fo.idx])); const apply = (bn) => { fk.world[bn.idx] = M4.mul(dlt, fk.world[bn.idx]); fk.joint[bn.idx] = M4.origin(fk.world[bn.idx]); fk.tip[bn.idx] = M4.transformPoint(fk.world[bn.idx], V3.scale(bn.dir, bn.len)); for (const c2 of bn.children) apply(c2); }; apply(fo); fk.tip[up.idx] = fk.joint[fo.idx]; (diag.jointLimit || (diag.jointLimit = {}))["elbow_" + sd] = +((minA - ang) / DEG).toFixed(1); } } };   // ELBOW JOINT LIMIT (presentation): an authored key folding the elbow past its anatomical minimum is opened to that minimum in its own bend plane
+  elbowLimit();
   const ankleH = skel.contact && skel.contact.foot ? skel.contact.foot.soleBelowAnkleM : 0.06 * skel.H;   // ankle height with the foot flat: measured from the finished sole (Courtois) or the test mesh's proxy
   // 1. foot contacts FIRST: locked feet are held at their world plant point by leg IK (no sliding; the knees flex to the authored
   //    pelvis height instead of the pelvis being lifted). Locks are (re)planted at stage changes.
@@ -520,7 +537,7 @@ function gkGraphSolve(desc, g, skel, state) {
     const m = /^(shin|foot)_([RL])$/.exec(minB);
     if (!m && lifted) break;
     if (m) { const side = m[2], fb = skel.byName["foot_" + side], ankle = fk.joint[fb.idx], kj = fk.joint[skel.byName["shin_" + side].idx]; const Pt = [ankle[0], Math.max(ankle[1] - minY, ankleH), ankle[2]]; skelIK2(skel, fk, "thigh_" + side, "shin_" + side, "foot_" + side, Pt, 1, [kj[0], Math.max(kj[1], 0.12), kj[2]], 0, PMv("leg_" + side)); floored[side] = (floored[side] || 0) + 1; diag.legFloor = (diag.legFloor || "") + side + ":" + (-minY).toFixed(2) + " "; if (diag.feet[side]) diag.feet[side].floored = true; continue; }
-    pel.off[1] -= minY; diag.ground = +(-minY).toFixed(3); diag.groundBone = minB; fk = skelFK(skel, pose, g.rootM); plantFeet(); lifted = true; for (const k in floored) delete floored[k];   // the lift re-runs FK: the legs are floored again below (never lost)
+    pel.off[1] -= minY; diag.ground = +(-minY).toFixed(3); diag.groundBone = minB; fk = skelFK(skel, pose, g.rootM); elbowLimit(); plantFeet(); lifted = true; for (const k in floored) delete floored[k];   // the lift re-runs FK: the legs are floored again below (never lost)
   } };
   floorPass();
   // 3. torso / clavicle assist + glove IK toward the simulation hand
@@ -534,7 +551,7 @@ function gkGraphSolve(desc, g, skel, state) {
       const a1 = Math.atan2(Sl[0] - Pj[0], Sl[1] - Pj[1]), a2 = Math.atan2(Tl[0] - Pj[0], Tl[1] - Pj[1]);
       let e = (a2 - a1) / DEG; e = Math.max(-GK_GRAPH.torsoAssistMaxDeg, Math.min(GK_GRAPH.torsoAssistMaxDeg, e)) * clamp01(over / 0.3) * g.ikW;
       const assist = { spine: [0, 0, -e * 0.5], chest: [0, 0, -e * 0.5], ["clavicle_" + h]: [0, 0, (h === "R" ? 1 : -1) * GK_GRAPH.clavicleAssistMaxDeg * clamp01(over / 0.3) * g.ikW] };
-      const p2 = poseAdd(pose, assist); p2._pelvis = pose._pelvis; diag.torso = +e.toFixed(1); fk = skelFK(skel, p2, g.rootM); plantFeet(); if (FCf) floorPass(); state.lastAssist = { e, h };
+      const p2 = poseAdd(pose, assist); p2._pelvis = pose._pelvis; diag.torso = +e.toFixed(1); fk = skelFK(skel, p2, g.rootM); elbowLimit(); plantFeet(); if (FCf) floorPass(); state.lastAssist = { e, h };
     }
     const rightW = M4.transformDir(g.rootM, [1, 0, 0]), splitOff = (g.catchKind && g.twoHands) ? g.ballR + GK_GRAPH.handOff : 0;   // a two-hand catch: each hand goes to ITS side of the ball line (never both to the centre)
     const Th = V3.add(T, V3.scale(rightW, (h === "R" ? 1 : -1) * splitOff));
@@ -638,7 +655,7 @@ function gkGraphSolve(desc, g, skel, state) {
     const kIn = Dd.kIn != null ? Dd.kIn : 1;
     if (Dd.assist0 && kIn < 1) {                                                                // a hold that used the torso / clavicle assist (dive / collapse holds): the assist decays over the first 120 ms instead of vanishing in one tick
       const a0 = Dd.assist0, ea = a0.e * (1 - kIn); const assist = { spine: [0, 0, -ea * 0.5], chest: [0, 0, -ea * 0.5], ["clavicle_" + a0.h]: [0, 0, (a0.h === "R" ? 1 : -1) * GK_GRAPH.clavicleAssistMaxDeg * (1 - kIn)] };
-      const p2 = poseAdd(pose, assist); p2._pelvis = pose._pelvis; fk = skelFK(skel, p2, g.rootM); plantFeet(); if (FCf) floorPass(); diag.torso = +ea.toFixed(1);
+      const p2 = poseAdd(pose, assist); p2._pelvis = pose._pelvis; fk = skelFK(skel, p2, g.rootM); elbowLimit(); plantFeet(); if (FCf) floorPass(); diag.torso = +ea.toFixed(1);
     }
     const B = Dd.ballW || Dd.handAnchor; const two = Dd.hands.R > 0.5 && Dd.hands.L > 0.5; const resD = {};
     // BALL / HAND QUALITY GATE (v13): the ball is a physical sphere of radius rB supported by a hand of length handLen. ONE-HAND grip = the ball
