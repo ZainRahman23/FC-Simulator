@@ -138,8 +138,12 @@ for all three bodies. Maximum absolute difference: <span class="ok">0</span>.</l
 <li><b>Determinism</b> — the same run twice gives bit-identical joint world positions. Maximum absolute difference: <span class="ok">0</span>. No NaN.</li>
 <li><b>No presentation RNG</b> — no <code>Math.random</code>, <code>Date.now</code> or <code>performance.now</code> anywhere in the pose path.
 The harness calls <code>performance.now</code> only to fill its own timing panel.</li>
-<li><b>Goalkeeper work</b> — untouched. The locomotion lives in outfield files; the one shared file changed is the IK, where a per-chain
-knee-plane bound was added behind an opt-in field that only the outfield leg solve sets, so the goalkeeper path is byte-identical.</li>
+<li><b>Goalkeeper work</b> — untouched, and proved so rather than argued. The frozen reference dive (fixture 42) was captured from a
+git worktree at commit <code>7fcf310</code> and from this branch head, 320 ticks by 23 bones with the per-tick authoritative facts and every
+bone pose and joint world position. The two 723 KB manifests are <span class="ok">bit-identical</span>, SHA-256
+<code>1d8b9ed1a67e0781c23bd771d037ba94...</code> on both sides. The locomotion lives in outfield files; the one shared solver file changed is
+the IK, where a per-chain bend-plane bound was added behind an opt-in field that only the outfield leg solve sets. The renderer change is a
+new function only, and the two constants added to the player law are read from keys the goalkeeper playtest never sets.</li>
 <li><b>Camera</b> — unchanged. The harness only sets the existing manual rail target, exactly as the goalkeeper playtest does.</li>
 </ul>
 
