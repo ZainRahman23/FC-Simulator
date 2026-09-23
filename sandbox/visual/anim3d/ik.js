@@ -34,8 +34,8 @@ function skelIK2(skel, fk, upperName, foreName, handName, target, w, poleHint, e
   if (mem && mem.v) { const pl = V3.len(pole), mp = V3.sub(mem.v, V3.scale(dirST, V3.dot(mem.v, dirST))); if (V3.len(mp) > 1e-3 && pl < 0.04) pole = mp; }   // degenerate plane: keep last frame's
   if (V3.len(pole) < 1e-4) pole = Math.abs(dirST[1]) < 0.9 ? [0, -1, 0] : [1, 0, 0];
   pole = V3.norm(pole);
-  if (mem && mem.v) {                                                                          // bounded plane rotation: the joint orbits the chain line toward the wanted plane at most maxStep per solve (a knee / elbow never flips sides in one frame)
-    const mp0 = V3.sub(mem.v, V3.scale(dirST, V3.dot(mem.v, dirST))); if (V3.len(mp0) > 1e-3) { const mp = V3.norm(mp0), cr = V3.cross(mp, pole), ang = Math.atan2(V3.dot(cr, dirST), V3.dot(mp, pole)), maxStep = 1.05; if (Math.abs(ang) > maxStep) { const st = ang > 0 ? maxStep : -maxStep, q = V3.cross(dirST, mp); pole = V3.norm(V3.add(V3.scale(mp, Math.cos(st)), V3.scale(q, Math.sin(st)))); } } }
+  if (mem && mem.v) {                                                                          // bounded plane rotation: the joint orbits the chain line toward the wanted plane at most maxStep per solve (a knee / elbow never flips sides in one frame); mem.maxPlane tightens it per chain (planted legs: a near-straight knee's plane is ill-conditioned and would swing)
+    const mp0 = V3.sub(mem.v, V3.scale(dirST, V3.dot(mem.v, dirST))); if (V3.len(mp0) > 1e-3) { const mp = V3.norm(mp0), cr = V3.cross(mp, pole), ang = Math.atan2(V3.dot(cr, dirST), V3.dot(mp, pole)), maxStep = mem.maxPlane != null ? mem.maxPlane : 1.05; if (Math.abs(ang) > maxStep) { const st = ang > 0 ? maxStep : -maxStep, q = V3.cross(dirST, mp); pole = V3.norm(V3.add(V3.scale(mp, Math.cos(st)), V3.scale(q, Math.sin(st)))); } } }
   if (mem) mem.v = pole;
   const cosA = clamp01((a * a + d * d - b * b) / (2 * a * d)); const alpha = Math.acos(Math.max(-1, Math.min(1, (a * a + d * d - b * b) / (2 * a * d))));
   const E = V3.add(S, V3.add(V3.scale(dirST, a * Math.cos(alpha)), V3.scale(pole, a * Math.sin(alpha))));
