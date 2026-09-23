@@ -142,11 +142,16 @@ function ofPlayKeys() {
     else if (k === "h") { OFPLAY.dbg.hud = !OFPLAY.dbg.hud; if (OFPLAY.panel) OFPLAY.panel.style.display = OFPLAY.dbg.hud ? "block" : "none"; }
     else if (k === "1") ofPlaySetBody("SHORT_LEAN"); else if (k === "2") ofPlaySetBody("AVG_ATHLETIC"); else if (k === "3") ofPlaySetBody("TALL_LEAN"); else if (k === "4") ofPlaySetBody("SHORT_COMPACT"); else if (k === "5") ofPlaySetBody("AVG_LEAN"); else if (k === "6") ofPlaySetBody("TALL_POWER");
     else if (k === "n") ofPlaySetRunners(OFPLAY.runners.length ? 0 : 10); else if (k === "b") ofPlaySetRunners(OFPLAY.runners.length >= 21 ? 0 : 21);
-    else if (k === "j") {                                                                         // put a LOOSE ball 3 m ahead and run onto it
-      const t = S.pt, f = t.p.facing; t.b.x = t.p.x + Math.cos(f) * 3; t.b.y = t.p.y + Math.sin(f) * 3; t.b.z = 0;
-      t.b.vx = 0; t.b.vy = 0; t.b.vz = 0; t.b.ctrl = false; t.b.exclT = 0; t.b.held = null; t.b.curve = null;
-      t.touchPlan = null; t.lastTouch = null; t.lastTouchFoot = null; t.ctrlState = null; t.p.touchT = 0;
-      t.last = "BALL -> loose, 3 m ahead";
+    else if (k === "j" || k === "l") {
+      // J: the ball AT YOUR FEET, already carried — start dribbling immediately. L: a LOOSE ball 4 m ahead to run onto.
+      // Ahead means along the way you are actually going; at rest the idle facing points at the old ball, which is never where you want it.
+      const t = S.pt, v = Math.hypot(t.p.vx, t.p.vy);
+      const dir = v > 0.5 ? Math.atan2(t.p.vy, t.p.vx) : t.p.facing, loose = k === "l", d = loose ? 4 : 0.9;
+      t.b.x = t.p.x + Math.cos(dir) * d; t.b.y = t.p.y + Math.sin(dir) * d; t.b.z = 0;
+      t.b.vx = loose ? 0 : t.p.vx; t.b.vy = loose ? 0 : t.p.vy; t.b.vz = 0;
+      t.b.ctrl = !loose; t.b.exclT = 0; t.b.held = null; t.b.curve = null;
+      t.touchPlan = null; t.lastTouch = null; t.lastTouchFoot = null; t.ctrlState = null; t.p.touchT = 0; t.lastTouchT = undefined;
+      t.last = loose ? "BALL -> loose, 4 m ahead (run onto it)" : "BALL -> at your feet (carrying)";
     }
     else if (k === "k") { OFPLAY.dbg.ball = !OFPLAY.dbg.ball; S.pt.last = "DRIBBLE MARKERS -> " + (OFPLAY.dbg.ball ? "ON" : "OFF"); }
     else return;
@@ -166,7 +171,7 @@ function ofPlayDom() {
   const out = document.createElement("canvas"); out.id = "ofplay-out"; document.body.appendChild(out); OFPLAY.out = out; OFPLAY.octx = out.getContext("2d");
   const p = document.createElement("div"); p.id = "ofplay-panel"; document.body.appendChild(p); OFPLAY.panel = p;
   p.innerHTML = `<h3>OUTFIELD LOCOMOTION V1 — live test</h3><div class="dim">simulation decides (the playtest's own player law) · animation presents · no ball</div><div id="ofplay-status"></div>
-  <h3>keys</h3><div class="dim">W A S D / arrows move · hold Q walk (1.5 m/s) · hold E jog (3.0) · nothing = run (5.0) · Shift sprint (8.2) · 1 short (1.70) · 2 average (1.83) · 3 tall (1.96) · 4 short-compact (1.66) · 5 average-lean (1.80) · 6 tall-power (2.00) · J loose ball ahead · K dribble markers · N 10 extra runners · B 21 extra runners · X Mixed / page view · G follow · V foot / root markers · H hud · R reset · M pause · , slow-mo · . step</div>
+  <h3>keys</h3><div class="dim">W A S D / arrows move · hold Q walk (1.5 m/s) · hold E jog (3.0) · nothing = run (5.0) · Shift sprint (8.2) · 1 short (1.70) · 2 average (1.83) · 3 tall (1.96) · 4 short-compact (1.66) · 5 average-lean (1.80) · 6 tall-power (2.00) · J ball at your feet · L loose ball ahead · K dribble markers · N 10 extra runners · B 21 extra runners · X Mixed / page view · G follow · V foot / root markers · H hud · R reset · M pause · , slow-mo · . step</div>
   <h3>markers</h3><div class="dim"><span class="ok">green</span> planted (ankle lock) · <span style="color:#ffe36a">yellow</span> toe pivot · <span style="color:#7fd0ff">blue</span> stepping · <span style="color:#ff9a3c">orange</span> swing · red cross = authoritative root · violet ring = presentation pelvis · white = facing · blue = velocity</div>`;
 }
 function ofPlayBallHud(a) {
