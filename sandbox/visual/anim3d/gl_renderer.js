@@ -142,6 +142,44 @@ function glCamera(cvW, cvH) {
   const proj = new Float32Array(16); proj[0] = fx; proj[5] = fy; proj[10] = -(F + N) / (F - N); proj[11] = -1; proj[14] = -2 * F * N / (F - N);
   return { view, proj };
 }
+// ROI render of skinned characters at an arbitrary density (the Mixed composition): the characters are drawn into a GROW-ONLY target
+// (allocated to the next multiple of 64, never re-created per frame) with the viewport / scissor set to the ROI size, the projection
+// offset so the canvas sub-rectangle roi (canvas px / RESv) maps to the target, and the post pass samples the exact sub-rectangle.
+function glRenderCharactersROI(R, chars, roi, density, cvW, cvH, RESv) {
+  const gl = R.gl, w = Math.max(2, Math.round(roi.w * density)), h = Math.max(2, Math.round(roi.h * density));
+  const gw = Math.ceil(w / 64) * 64, gh = Math.ceil(h / 64) * 64;
+  if (!R.roi || R.roi.w < gw || R.roi.h < gh) {                                                    // grow only
+    const W = Math.max(gw, R.roi ? R.roi.w : 0), Hh = Math.max(gh, R.roi ? R.roi.h : 0); const old = R.roi; R.roi = { w: W, h: Hh };
+    if (old) { gl.deleteFramebuffer(old.fbo); gl.deleteTexture(old.texC); gl.deleteTexture(old.texI); gl.deleteRenderbuffer(old.rbD); }
+    const tex = () => { const t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, W, Hh, 0, gl.RGBA, gl.UNSIGNED_BYTE, null); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE); return t; };
+    R.roi.texC = tex(); R.roi.texI = tex(); R.roi.rbD = gl.createRenderbuffer(); gl.bindRenderbuffer(gl.RENDERBUFFER, R.roi.rbD); gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16, W, Hh);
+    R.roi.fbo = gl.createFramebuffer(); gl.bindFramebuffer(gl.FRAMEBUFFER, R.roi.fbo); gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, R.roi.texC, 0); gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT1, gl.TEXTURE_2D, R.roi.texI, 0); gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, R.roi.rbD); gl.drawBuffers([gl.COLOR_ATTACHMENT0, gl.COLOR_ATTACHMENT1]); gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+    if (!R.roiCv) { R.roiCv = document.createElement("canvas"); } R.roiCv.width = W; R.roiCv.height = Hh;
+  }
+  // camera: the full-canvas projection, offset / scaled so the ROI fills the viewport (clip.x' = (clip.x − cx)·sx …)
+  const cam = glCamera(cvW, cvH), proj = new Float32Array(cam.proj);
+  const sx = cvW / (roi.w * RESv), sy = cvH / (roi.h * RESv), cxn = ((roi.x + roi.w / 2) * RESv / cvW) * 2 - 1, cyn = 1 - ((roi.y + roi.h / 2) * RESv / cvH) * 2;
+  const T = M4.ident(); T[0] = sx; T[5] = sy; T[12] = -cxn * sx; T[13] = -cyn * sy; const proj2 = M4.mul(T, proj);
+  gl.bindFramebuffer(gl.FRAMEBUFFER, R.roi.fbo); gl.viewport(0, 0, w, h); gl.enable(gl.SCISSOR_TEST); gl.scissor(0, 0, w, h); gl.enable(gl.DEPTH_TEST); gl.disable(gl.BLEND); gl.enable(gl.CULL_FACE); gl.cullFace(gl.BACK);
+  gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT); gl.disable(gl.SCISSOR_TEST);
+  let draws = 0; const mesh0 = null;
+  gl.useProgram(R.PS); gl.uniformMatrix4fv(R.us.view, false, cam.view); gl.uniformMatrix4fv(R.us.proj, false, proj2); gl.uniform3fv(R.us.light, V3.norm(GL3D.light)); gl.uniform1f(R.us.bands, GL3D.bands);
+  for (const ch of chars) {
+    if (!ch.skinMats) continue; const mesh = glSkinnedMesh(R, ch.skel); const pal = ch.palette || SKEL_PARTS;
+    gl.uniformMatrix4fv(R.us.bones, false, ch.skinMats);
+    const palArr = new Float32Array(21); SKIN_PARTS.forEach((n, i) => { const c = pal[n] || SKEL_PARTS[n]; palArr[i * 3] = c[0]; palArr[i * 3 + 1] = c[1]; palArr[i * 3 + 2] = c[2]; }); gl.uniform3fv(R.us.palette, palArr);
+    gl.bindVertexArray(mesh.vao); gl.drawElements(gl.TRIANGLES, mesh.n, gl.UNSIGNED_SHORT, 0); draws++; gl.bindVertexArray(null);
+  }
+  // post pass (outline + copy) into the ROI-sized region of the (grow-only) ROI canvas
+  const cvo = R.roiCv; if (R.cvRoiGl == null) { R.cvRoiGl = R.cv; }
+  gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+  if (R.cv.width < w || R.cv.height < h) { R.cv.width = Math.max(R.cv.width, gw); R.cv.height = Math.max(R.cv.height, gh); R.fboW = -1; }   // the GL canvas itself is grow-only too
+  gl.viewport(0, R.cv.height - h, w, h); gl.disable(gl.DEPTH_TEST); gl.disable(gl.CULL_FACE); gl.enable(gl.SCISSOR_TEST); gl.scissor(0, R.cv.height - h, w, h); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT); gl.disable(gl.SCISSOR_TEST);
+  gl.useProgram(R.PP); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, R.roi.texC); gl.uniform1i(R.up.col, 0); gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, R.roi.texI); gl.uniform1i(R.up.idt, 1);
+  gl.uniform2f(R.up.texel, 1 / R.roi.w, 1 / R.roi.h); gl.uniform1f(R.up.outline, GL3D.outline ? 1 : 0); gl.uniform2f(R.up.scale, w / R.roi.w, h / R.roi.h);
+  gl.bindVertexArray(R.quad); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); gl.bindVertexArray(null);
+  return { canvas: R.cv, w, h, draws, srcY: R.cv.height - h };
+}
 // draw a list of characters: [{ skel, fk, tint? }], each bone → capsule with its part material; returns composite-ready canvas
 function glRenderCharacters(R, chars, cvW, cvH, opts) {
   const gl = R.gl, k = Math.max(1, GL3D.pixelScale), w = Math.max(2, Math.round(cvW / k)), h = Math.max(2, Math.round(cvH / k));

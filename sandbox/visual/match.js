@@ -2174,6 +2174,9 @@ const PT = {  // world.py Body constants, ported verbatim — keep in sync
   REACH: 0.9, EXCL: 0.45, ACC: 4.8, BRAKE: 6.5, VMAX: 8.2, RUNV: 5.0,
   // PLAYER LOCOMOTION RESPONSIVENESS V1 (candidate A, world.py mirror)
   ACC_GAIN: 8.5 / 4.8, BRAKE_PLANT: 12.0, ACC_LAT: 10.0, ACC_START: 9.5,
+  // OUTFIELD LOCOMOTION V1 harness gears: desired-speed INTENT only (the limiter above is untouched); keys.walk / keys.jog are
+  // set by the ?ofPlay harness (Q / E held) — the GK playtest and the plain playtest never set them, so their law is unchanged
+  WALKV: 1.5, JOGV: 3.0,
 };
 const PT_DT = 1 / 60;
 // ═══ INSIDE_R BALL CURVE V1 — right-foot inside curl (technique-specific) ══
@@ -5711,7 +5714,7 @@ function ptStep() {
     if (t.keys.left) dx -= 1;
     if (t.keys.right) dx += 1;
   }
-  const m = Math.hypot(dx, dy), spd = t.keys.sprint ? PT.VMAX : PT.RUNV;
+  const m = Math.hypot(dx, dy), spd = t.keys.sprint ? PT.VMAX : t.keys.walk ? PT.WALKV : t.keys.jog ? PT.JOGV : PT.RUNV;
   const inCorr = m > 0 ? Math.atan2(dy, dx) : null;   // desired input corridor
   let dvx = 0, dvy = 0;
   if (m > 0 && b.ctrl && !t.kick) {
