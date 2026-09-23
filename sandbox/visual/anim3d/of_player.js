@@ -21,6 +21,7 @@ function ofPlayInstall() {
     const t0 = performance.now(); _step(); const tS = performance.now() - t0; const t = S.pt; if (!t || !t.on || !OFPLAY.actor) return;
     const p = t.p, a = OFPLAY.actor; a.x = p.x; a.y = p.y; a.facing = p.facing; a.speed = Math.hypot(p.vx, p.vy); a.sim = { x: p.x, y: p.y, vx: p.vx, vy: p.vy, facing: p.facing, gaitPhase: p.gaitPhase, gaitSettled: p.gaitSettled };   // the stride clock comes from the simulation
     if (OFPLAY.animOff) { OFPLAY.perf.sim.push(tS); return; }                                     // REGRESSION HOOK: skip the whole skeletal layer, leave the simulation running
+    ofPlayKickLink(t, a);                                                                         // the simulation's scheduled SHOT -> kick pose + striking-boot reach
     ofPlayTouchLink(t, a);                                                                        // the simulation's scheduled / fired touch -> a bounded boot reach
     const t1 = performance.now(); ofActorTick(a, PT_DT, t.now);
     for (const r of OFPLAY.runners) { ofPlayRunnerStep(r, t.now); ofActorTick(r, PT_DT, t.now); }
@@ -53,6 +54,24 @@ function ofPlayRecord(t, a) {
 }
 // The SIMULATION decides the foot, the tick and the contact point. This only converts that into the 3D point the boot should meet: the
 // ball's near surface at ball height. Nothing here can change the touch, the ball or the player.
+// SHOOTING V1. ptKick has already fixed the family, the striking foot and kickAt; this only gives the presentation the contact point.
+// Before the strike it tracks the live authoritative ball; at kickAt it FREEZES, because after that the ball is gone and the follow-through
+// must swing through where the ball WAS, not chase it. Nothing here can move the ball or change the shot.
+function ofPlayKickLink(t, a) {
+  const k = t.kick;
+  if (!k) { a.kick = null; a.kickBall = null; a.kickRec = null; return; }
+  a.kick = k;
+  const BR = 0.11, foot = k.foot === "L" ? "L" : "R";
+  if (t.now < k.kickAt) {
+    const b = t.b; let ux = -1, uy = 0;
+    const ft = a.sol && a.sol.diag.feet[foot];
+    const from = ft && ft.toe ? { x: ft.toe[0], y: -ft.toe[2] } : (t.boots && t.boots[foot]);
+    if (from) { const dx = from.x - b.x, dy = from.y - b.y, m = Math.hypot(dx, dy); if (m > 1e-6) { ux = dx / m; uy = dy / m; } }
+    const r = BR + 0.015;
+    a.kickBall = [b.x + ux * r, BR, -(b.y + uy * r)];
+    a.kickContact = [b.x, b.y];
+  } else if (!a.kickFrozen || a.kickFrozen !== k) { a.kickFrozen = k; }                           // keep the last pre-contact point for the swing-through
+}
 function ofPlayTouchLink(t, a) {
   const BR = 0.11, lead = 0.10;
   // Aim at the point on the ball's surface facing the boot that will actually play it, measured from the RENDERED toe when there is one
@@ -84,6 +103,15 @@ function ofPlayDraw(dt) {
   OFPLAY.lastChars = chars; OFPLAY.perf.render.push(tR); OFPLAY.perf.skin.push(performance.now() - t0 - tR);
   if (OFPLAY.dbg.feet || OFPLAY.dbg.roots) ofPlayOverlay(a, p);
 }
+// SHOOTING V1 test controls. These map straight onto the EXISTING authoritative techniques and launch families — no new simulation
+// concepts. Hold to charge, release to strike, exactly as the playtest's own kick keys do.
+const OFPLAY_SHOTS = {
+  "1": { tech: "INSIDE",      fam: "SHORT",  D: 14, chargeFam: "INSIDE",  label: "INSIDE / CURL" },
+  "2": { tech: "LACES",       fam: "DRIVEN", D: 20, chargeFam: "LACES",   label: "NORMAL" },
+  "3": { tech: "LACES_POWER", fam: "CLEAR",  D: 35, chargeFam: "POWER",   label: "POWER" },
+  "4": { tech: "CHIP",        fam: "LOFT",   D: 22, chargeFam: "CHIP",    label: "CHIP" },
+  "5": { tech: "OUTSIDE",     fam: "SHORT",  D: 14, chargeFam: "OUTSIDE", label: "TRIVELA / OUTSIDE" },
+};
 const OFPLAY_KIT_B = Object.assign({}, SKEL_PARTS, { shirt: [0.92, 0.25, 0.20] });
 function ofPlayOverlay(a, p) {                                                                  // diagnostics on the page canvas: foot contact markers (green planted / yellow toe pivot / orange swing), plant points, authoritative root (red) vs presentation pelvis ground point (violet)
   const P3 = (q) => sproj3(q[0], q[1], -q[2]); ctx.save(); ctx.lineWidth = Math.max(1, PXQ);
@@ -140,8 +168,11 @@ function ofPlayKeys() {
     else if (k === "g") { OFPLAY.follow = !OFPLAY.follow; }
     else if (k === "v") { OFPLAY.dbg.feet = !OFPLAY.dbg.feet; OFPLAY.dbg.roots = OFPLAY.dbg.feet; }
     else if (k === "h") { OFPLAY.dbg.hud = !OFPLAY.dbg.hud; if (OFPLAY.panel) OFPLAY.panel.style.display = OFPLAY.dbg.hud ? "block" : "none"; }
-    else if (k === "1") ofPlaySetBody("SHORT_LEAN"); else if (k === "2") ofPlaySetBody("AVG_ATHLETIC"); else if (k === "3") ofPlaySetBody("TALL_LEAN"); else if (k === "4") ofPlaySetBody("SHORT_COMPACT"); else if (k === "5") ofPlaySetBody("AVG_LEAN"); else if (k === "6") ofPlaySetBody("TALL_POWER");
-    else if (k === "n") ofPlaySetRunners(OFPLAY.runners.length ? 0 : 10); else if (k === "b") ofPlaySetRunners(OFPLAY.runners.length >= 21 ? 0 : 21);
+    else if (OFPLAY_SHOTS[k]) { const sp = OFPLAY_SHOTS[k]; if (!S.pt.charge && !S.pt.kick && S.pt.b.ctrl)
+      ptChargeBegin(S.pt, k, { fam: sp.fam, label: sp.label, D: sp.D, chargeFam: sp.chargeFam,
+                               force: { tech: sp.tech, foot: S.pt.pfoot || "R" } }); }
+    else if (k === "6") { const o = OF_BODY_ORDER, i = (o.indexOf(OFPLAY.body) + 1) % o.length; ofPlaySetBody(o[i]); }
+    else if (k === "n") ofPlaySetRunners(OFPLAY.runners.length === 0 ? 10 : OFPLAY.runners.length < 21 ? 21 : 0);
     else if (k === "j" || k === "l") {
       // J: the ball AT YOUR FEET, already carried — start dribbling immediately. L: a LOOSE ball 4 m ahead to run onto.
       // Ahead means along the way you are actually going; at rest the idle facing points at the old ball, which is never where you want it.
@@ -157,7 +188,9 @@ function ofPlayKeys() {
     else return;
     e.preventDefault(); e.stopImmediatePropagation();
   }, true);
-  window.addEventListener("keyup", (e) => { if (!OFPLAY.on || !S.pt) return; const k = e.key.toLowerCase(); if (k === "q" || k === "e") { S.pt.keys[k === "q" ? "walk" : "jog"] = false; e.preventDefault(); e.stopImmediatePropagation(); } }, true);
+  window.addEventListener("keyup", (e) => { if (!OFPLAY.on || !S.pt) return; const k = e.key.toLowerCase();
+    if (k === "q" || k === "e") { S.pt.keys[k === "q" ? "walk" : "jog"] = false; e.preventDefault(); e.stopImmediatePropagation(); }
+    else if (OFPLAY_SHOTS[k]) { ptChargeRelease(S.pt, k); e.preventDefault(); e.stopImmediatePropagation(); } }, true);
   window.addEventListener("blur", () => { if (S.pt && S.pt.keys) { S.pt.keys.walk = false; S.pt.keys.jog = false; } });
 }
 // leg length is a PLAYER attribute: selecting a body also tells the simulation which boots to plan with

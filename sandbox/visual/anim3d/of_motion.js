@@ -150,7 +150,7 @@ function ofSolve(skel, pose, rootM, plants, state, opts) {
     const fb = skel.byName["foot_" + sd], tb = skel.byName["toe_" + sd];
     const dvec = V3.sub(fk.tip[tb.idx], fk.joint[fb.idx]);                                        // current toe-tip offset from the ankle
     const cur = fk.joint[fb.idx], P0 = V3.sub(want, dvec);                                        // ankle target that puts the TOE on the wanted point
-    const off = V3.sub(P0, cur), need = V3.len(off), cap = OF_GAIT.reachMax * skel.legLen;
+    const off = V3.sub(P0, cur), need = V3.len(off), cap = (req.reach.cap || OF_GAIT.reachMax) * skel.legLen;
     const P = need > cap ? V3.add(cur, V3.scale(off, cap / need)) : P0;
     const r = lockLeg(sd, P, w, true);                                                            // keepPlane: a swing leg keeps its own bend plane (no knee flip)
     const t2 = fk.tip[tb.idx];
@@ -195,8 +195,28 @@ function ofActorTick(a, dt, now) {
   } else {                                                                                       // LOCOMOTION V1 (of_loco.js): IDLE / WALK / JOG / RUN / SPRINT from the authoritative velocity, facing and acceleration
     const sim = a.sim || { x: a.x, y: a.y, vx: Math.cos(a.facing) * a.speed, vy: Math.sin(a.facing) * a.speed, facing: a.facing };
     const lo = ofLocoTick(a.skel, a.loco || (a.loco = ofLocoMake()), sim, dt, now); pose = lo.pose; plants = lo.plants;
+    // ── SHOOTING V1: a shot the SIMULATION has scheduled. The kick pose cross-fades over the locomotion, the PLANT foot is braced by the
+    // ordinary contact solve and the STRIKING foot is freed and reached onto the authoritative ball so the boot meets it at kickAt.
+    if (a.kick && typeof ofKickTick === "function" && now >= a.kick.t0 - 0.001 && now <= a.kick.end + OF_KICK.blendOut) {
+      const kk = ofKickTick(a.skel, a.kickS || (a.kickS = ofKickMake()), a.kick, now);
+      const inW = clamp01((now - a.kick.t0) / OF_KICK.blendIn);
+      const outW = 1 - clamp01((now - a.kick.end) / OF_KICK.blendOut);
+      const w = Math.min(inW, outW);
+      if (w > 0.001) {
+        pose = ofPoseLerp(pose, kk.pose, w); pose.name = kk.pose.name;
+        const sf = kk.foot, pf = sf === "R" ? "L" : "R";
+        if (w > 0.35) {
+          plants[sf] = { want: false };                                                           // the striking leg swings: never locked
+          plants[pf] = { want: true, mode: "ankle", s: 0.4 };                                     // the plant leg is braced through the strike
+          const dtc = now - a.kick.kickAt;
+          const ramp = dtc <= 0 ? smooth01(clamp01(1 + dtc / 0.11)) : 1 - clamp01(dtc / 0.07);               // reach the ball AT contact, release straight after
+          if (a.kickBall && ramp > 0.001) plants[sf].reach = { p: a.kickBall, w: ramp * w, cap: OF_KICK.reachMax };
+        }
+        a.kickW = w;
+      }
+    } else a.kickW = 0;
     // a touch the SIMULATION has scheduled (or just fired): ease the chosen boot onto the ball across the plan, hold briefly, then release
-    if (a.touch && plants[a.touch.foot] && typeof plants[a.touch.foot] === "object") {
+    if (!a.kickW && a.touch && plants[a.touch.foot] && typeof plants[a.touch.foot] === "object") {
       const T = a.touch, dtc = now - T.at;                                                        // <0 before the touch, >0 after
       const ramp = dtc < 0 ? clamp01(1 + dtc / Math.max(0.03, T.lead || OF_GAIT.reachT)) : 1 - clamp01(dtc / OF_GAIT.reachT);
       if (ramp > 0.001) plants[a.touch.foot].reach = { p: T.p, w: ramp };
