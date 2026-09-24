@@ -12,7 +12,7 @@ const SCEN = {
   recv_moving:    { ticks: 220, drill: two(70, 30, E, "szoboszlai", { ai: { mode: "SCRIPT", path: [{ t: 0, x: 70, y: 38, v: 2.2 }] } }), cmds: [{ at: 10, do: "passTo", to: 1, rel: [0, 2.2] }] },
   recv_meet:      { ticks: 220, drill: two(72, 35, E, "james", { ai: { mode: "SUPPORT" } }), cmds: [{ at: 20, do: "pass", fam: "SHORT", toward: 1 }] },
   recv_directional: { ticks: 260, drill: two(70, 34, E, "vinicius"), cmds: [{ at: 20, do: "passTo", to: 1 }], keys: [{ from: 60, to: 150, keys: { up: true } }, { from: 150, to: 260, keys: { up: true, jog: true } }] },
-  recv_running:   { ticks: 260, drill: two(66, 30, 0, "vinicius", { ai: { mode: "SUPPORT" } }), cmds: [{ at: 20, do: "pass", fam: "THROUGH", dir: -0.25 }], keys: [{ from: 120, to: 260, keys: { right: true } }] },
+  recv_running:   { ticks: 260, drill: two(53, 29, 0, "vinicius", { ai: { mode: "SUPPORT" } }), cmds: [{ at: 20, do: "passTo", fam: "THROUGH", to: 1, rel: [16, -1] }], keys: [{ from: 150, to: 260, keys: { right: true } }] },
   recv_stretch:   { ticks: 200, drill: two(70, 34, E, "gabriel"), cmds: [{ at: 20, do: "passTo", to: 1, rel: [0, 0.42] }] },
   recv_unreachable: { ticks: 200, drill: two(70, 34, E, "gabriel"), cmds: [{ at: 20, do: "passTo", to: 1, rel: [0, 1.25] }] },
   recv_behind:    { ticks: 220, drill: two(68, 34, 0, "szoboszlai", { ai: { mode: "SCRIPT", path: [{ t: 0, x: 90, y: 34, v: 5.5 }] } }), cmds: [{ at: 20, do: "passTo", to: 1, rel: [0, 0] }] },

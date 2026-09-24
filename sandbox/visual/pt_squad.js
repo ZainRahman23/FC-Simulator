@@ -42,9 +42,11 @@ const PT_RECV = {
   wSoon: 0.02, wStretch: 3.0, wPlanted: 0.8, wSide: 0.8, wTurn: 0.45, wPref: 0.15, wKeep: 0.20,
   // NEUTRAL REFERENCE PROFILE (continuous.py touch_model inputs). Future attribute work replaces these per player — nothing else changes.
   ref: { ball_control: 65, technique: 65, composure: 65, standing_tackle: 50, reactions: 65 },
-  cushionV: 1.1,        // world.py interact CLEAN: the ball kept a step in front, along the cushion direction
+  cushionV: 1.1,
+  faceHoldT: 0.45,      // s: after a controlled first touch the receiver faces the push direction (not the ball's position) this long        // world.py interact CLEAN: the ball kept a step in front, along the cushion direction
   meetV: 3.0,           // m/s: a receiver coming to meet an ordinary pass (a jog)
   runV: 7.0,            // m/s: a receiver running onto a through ball
+  runThrough: 3.0,      // m: ... aims this far past where he meets it, so he takes it in stride
   supportV: 3.0,        // m/s: support movement
   directionalDeg: 35,   // a first touch pushed further than this from the facing is a DIRECTIONAL touch (presentation fact)
   runningV: 2.5,        // m/s: a reception at this speed or more is a RUNNING TAKE (presentation fact)
@@ -61,7 +63,7 @@ function ptSqCtx(spec, i) {
   const legLen = spec.legLen || PT.LEG_REF;
   return { idx: i, name: spec.name || ("P" + (i + 1)), team: spec.team || 0, char: spec.char || null,
     ai: Object.assign({ mode: "HOLD" }, spec.ai || {}), home: spec.home || [spec.x, spec.y], mark: spec.mark != null ? spec.mark : null,
-    assist: false, stunT: 0,
+    assist: false, stunT: 0, vPrev: null, faceHold: null,
     p: { x: spec.x, y: spec.y, vx: spec.vx || 0, vy: spec.vy || 0, facing: spec.facing || 0, touchT: 0, legLen, gaitPhase: 0.08, gaitSettled: true },
     kick: null, kickInfo: null, kickLog: [], touchPlan: null, dribSeq: null, dbgTouch: null, ctrlState: null, touchN: 0, touchLog: [], touchInfo: null,
     presDir: undefined, liveTurn: 0, lastTouchT: undefined, lastTouchFoot: null, lastTouch: null, lastFoot: undefined, corr: undefined, contactLog: undefined,
@@ -134,11 +136,20 @@ function ptSquadIntents(t) {
     // ordinary slow-facing law points at the ball's POSITION, which whips the body round as the ball arrives just beside him
     const bs = Math.hypot(b.vx, b.vy);
     c.faceDir = b.owner == null && bs > 1.0 && ((ps && !ps.done && ps.to === i) || c.recvPlan) ? Math.atan2(-b.vy, -b.vx) : null;
+    // just after a controlled first touch he faces the way he pushed it (the ball rolls off the side of the receiving boot; chasing its
+    // position swung the whole body ~90° and back within a few ticks)
+    if (c.faceHold && b.owner === i && t.now < c.faceHold.until) c.faceDir = c.faceHold.dir; else if (c.faceHold && t.now >= c.faceHold.until) c.faceHold = null;
     if (c.assist && (b.owner != null || !ps || ps.done || ps.to !== i)) c.assist = false;          // the assist ends with the pass (received, lost, or another ball)
     if (i === Q.active && !c.assist) continue;                                                  // you drive this one
     if (b.owner === i) continue;                                                                // an AI carrier holds (the carry law settles the ball)
     const incoming = ps && !ps.done && ps.to === i;
-    if (incoming && b.owner == null) { c.aiGoal = c.ai.mode === "HOLD" ? (c.assist ? { x: p.x, y: p.y, v: 0 } : null) : ptRecvGoal(t, c, ps.fam === "THROUGH" ? PT_RECV.runV : (c.ai.meetV != null ? c.ai.meetV : PT_RECV.meetV)); continue; }
+    if (incoming && b.owner == null) {
+      c.aiGoal = c.ai.mode === "HOLD" ? (c.assist ? { x: p.x, y: p.y, v: 0 } : null) : ptRecvGoal(t, c, ps.fam === "THROUGH" ? PT_RECV.runV : (c.ai.meetV != null ? c.ai.meetV : PT_RECV.meetV));
+      // a THROUGH ball is run ONTO: the goal lies beyond the meeting point along the ball's line, so he arrives in stride (a running take)
+      // instead of pulling up on the spot and waiting for it
+      const bs = Math.hypot(b.vx, b.vy), ahead = (p.x - b.x) * b.vx + (p.y - b.y) * b.vy > 0;   // already ahead of the ball on its line: let it come
+      if (c.aiGoal && ps.fam === "THROUGH" && bs > 0.5 && !ahead) { c.aiGoal.x += b.vx / bs * PT_RECV.runThrough; c.aiGoal.y += b.vy / bs * PT_RECV.runThrough; }
+      continue; }
     if (incoming && ps.fam === "THROUGH" && b.owner === ps.from) { c.aiGoal = { x: ps.target[0], y: ps.target[1], v: PT_RECV.runV }; continue; }   // the run starts with the decision
     const m = c.ai.mode;
     if (m === "SUPPORT") {                                                                      // a home slot shifted toward the ball; a dead band so nobody jitters
@@ -192,25 +203,31 @@ function ptSquadReceive(t) {
 function ptRecvPlan(t, c) {
   const R = PT_RECV, Q = t.squad, P = Q.pred, p = c.p, leg = p.legLen || PT.LEG_REF, v = Math.hypot(p.vx, p.vy);
   const G = (typeof ofLocoParams === "function") ? ofLocoParams(v) : { step: 1, stance: 0.45 };
-  const step = G.step * leg, cad = step > 1e-6 ? v / step : 0, settled = !!p.gaitSettled || v <= R.standV;   // slow = standing: either foot can be lifted
+  // a receiver BRAKING into position (the arrival profile) is predicted to keep braking: his speed, position, stride clock and whether he is
+  // STANDING are evaluated per look-ahead tick. Without this the plan switched model (and foot) the tick he dropped below standV.
+  const decel = c.vPrev != null ? Math.max(0, Math.min(PT.BRAKE_PLANT, (c.vPrev - v) / PT_DT)) : 0; c.vPrev = v;
+  const vAt = (k) => Math.max(0, v - decel * k * PT_DT), sAt = (k) => (v + vAt(k)) / 2 * k * PT_DT;   // speed and distance covered by tick k
+  const ux = v > 1e-6 ? p.vx / v : 0, uy = v > 1e-6 ? p.vy / v : 0;
+  const step = G.step * leg, settledNow = !!p.gaitSettled || v <= R.standV;
   const dirA = v > 0.3 ? Math.atan2(p.vy, p.vx) : p.facing, dx = Math.cos(dirA), dy = Math.sin(dirA), lx = -dy, ly = dx;
   const fx = Math.cos(p.facing), fy = Math.sin(p.facing);
   const reachD = R.reach * leg + PT_BALL_R, comfD = R.comfort * leg + PT_BALL_R, lat = (typeof OF_BOOT !== "undefined" ? OF_BOOT.lat : 0.198) * leg;
   const F = { R: { k: -1, d: 1e9, km: -1, dm: 1e9 }, L: { k: -1, d: 1e9, km: -1, dm: 1e9 } };
   const K = Math.min(R.horizon, Q.predN - 1);
   const bootAt = (k, sd, out) => {                                                              // the boot at tick k (null when it cannot play the ball)
-    const ph = settled ? p.gaitPhase : (p.gaitPhase + k * PT_DT * cad / 2) % 1, p0 = sd === "R" ? 0 : 0.5, up = (((ph - p0) % 1) + 1) % 1;
+    const settled = settledNow || vAt(k) <= R.standV, cadK = step > 1e-6 ? (v + vAt(k)) / 2 / step : 0;
+    const ph = settled ? p.gaitPhase : (p.gaitPhase + k * PT_DT * cadK / 2) % 1, p0 = sd === "R" ? 0 : 0.5, up = (((ph - p0) % 1) + 1) % 1;
     // a MOVING player plays the ball with a boot coming through (late swing to early stance) — mid-swing it is high and behind, and in
     // mid-stance it bears his weight. A settled player can lift either foot from his stance.
     if (!settled) { const dc = up > 0.5 ? up - 1 : up; if (dc < -R.winBack || dc > R.winFwd) return null; }
-    const rx = p.x + p.vx * k * PT_DT, ry = p.y + p.vy * k * PT_DT;
+    const rx = p.x + ux * sAt(k), ry = p.y + uy * sAt(k);
     // LATERAL SIDE: the RIGHT boot is on (−dirY, dirX) — the side the rig renders it on, and world.py's own convention (select_kick_foot:
     // + = right). The shared boot plan (ofBootPlan, Dribbling V1) has this sign MIRRORED; it is left untouched so Dribbling V1's outcomes do
     // not move, and this planner uses the rig-correct side (measured: facing E / W / S the rendered right ankle is on this side, ±1 cm).
     const ah = settled ? R.idleAhead * leg : (typeof ofBootAhead === "function" ? ofBootAhead(ph, p0, G.stance) : 0) * leg, side = (sd === "R" ? 1 : -1) * (settled ? R.idleLat * leg : lat);
-    out[0] = rx + dx * ah + lx * side; out[1] = ry + dy * ah + ly * side; out[2] = rx; out[3] = ry; out[4] = !settled && up < G.stance && up > R.winFwd ? 1 : 0; return out;
+    out[0] = rx + dx * ah + lx * side; out[1] = ry + dy * ah + ly * side; out[2] = rx; out[3] = ry; out[4] = !settled && up < G.stance && up > R.winFwd ? 1 : 0; out[5] = settled ? 1 : 0; return out;
   };
-  const A0 = [0, 0, 0, 0, 0], A1 = [0, 0, 0, 0, 0];
+  const A0 = [0, 0, 0, 0, 0, 0], A1 = [0, 0, 0, 0, 0, 0];
   for (let k = 0; k < K; k++) {
     for (const sd of ["R", "L"]) {
       const f = F[sd]; if (f.k >= 0) continue;
@@ -218,22 +235,25 @@ function ptRecvPlan(t, c) {
       // continuous closest approach over the tick (a fast ball crosses the reach zone between two samples)
       const r0x = a0[0] - P[3 * k], r0y = a0[1] - P[3 * k + 1], r1x = a1[0] - P[3 * k + 3], r1y = a1[1] - P[3 * k + 4], ddx = r1x - r0x, ddy = r1y - r0y, dd = ddx * ddx + ddy * ddy;
       const sm = dd > 1e-12 ? Math.max(0, Math.min(1, -(r0x * ddx + r0y * ddy) / dd)) : 0, dmin = Math.hypot(r0x + sm * ddx, r0y + sm * ddy);
-      const kf = sm > 0.5 ? k + 1 : k, A = kf === k ? a0 : a1, bx = P[3 * kf], by = P[3 * kf + 1], bz = P[3 * kf + 2];
+      // the contact tick: comfort-zone ENTRY (already inside at tick k → k, entered during the tick → k + 1); a stretch is taken at the
+      // closest approach. (Firing at the closest approach of a ball that is still coming in postponed the contact every tick until the
+      // ball was under the boot.)
+      const d0 = Math.hypot(r0x, r0y), kf = d0 <= comfD ? k : dmin <= comfD ? k + 1 : (sm > 0.5 ? k + 1 : k), A = kf === k ? a0 : a1, bx = P[3 * kf], by = P[3 * kf + 1], bz = P[3 * kf + 2];
       if (bz > R.zMax) continue;
       if ((bx - A[2]) * fx + (by - A[3]) * fy < R.behind * leg) continue;                        // behind the body line
       const d = Math.hypot(A[0] - bx, A[1] - by);
-      if (dmin <= comfD) { f.k = kf; f.d = d; f.boot = [A[0], A[1]]; f.ball = [bx, by, bz]; f.planted = !!A[4]; }
-      else if (dmin <= reachD && dmin < f.dm) { f.km = kf; f.dm = dmin; f.md = d; f.mboot = [A[0], A[1]]; f.mball = [bx, by, bz]; f.mplanted = !!A[4]; }
+      if (dmin <= comfD) { f.k = kf; f.d = d; f.boot = [A[0], A[1]]; f.ball = [bx, by, bz]; f.planted = !!A[4]; f.standing = !!A[5]; }
+      else if (dmin <= reachD && dmin < f.dm) { f.km = kf; f.dm = dmin; f.md = d; f.mboot = [A[0], A[1]]; f.mball = [bx, by, bz]; f.mplanted = !!A[4]; f.mstanding = !!A[5]; }
     }
     if (F.R.k >= 0 && F.L.k >= 0) break;
   }
   let best = null;
   const inc = Math.hypot(t.b.vx, t.b.vy) > 0.3 ? Math.atan2(t.b.vy, t.b.vx) : null;
   for (const sd of ["R", "L"]) {
-    const f = F[sd]; let k = f.k, d = f.d, boot = f.boot, ball = f.ball, planted = f.planted, stretch = false;
-    if (k < 0) { if (f.km < 0) continue; k = f.km; d = f.md; boot = f.mboot; ball = f.mball; planted = f.mplanted; stretch = true; }
+    const f = F[sd]; let k = f.k, d = f.d, boot = f.boot, ball = f.ball, planted = f.planted, standing = f.standing, stretch = false;
+    if (k < 0) { if (f.km < 0) continue; k = f.km; d = f.md; boot = f.mboot; ball = f.mball; planted = f.mplanted; standing = f.mstanding; stretch = true; }
     const side = sd === "R" ? 1 : -1;
-    const rx = p.x + p.vx * k * PT_DT, ry = p.y + p.vy * k * PT_DT;
+    const rx = p.x + ux * sAt(k), ry = p.y + uy * sAt(k);
     const latBall = -(ball[0] - rx) * fy + (ball[1] - ry) * fx;                                  // + = the ball arrives on the player's RIGHT (rig / world.py convention)
     let sc = -k * R.wSoon - Math.max(0, (stretch ? f.dm : d) - comfD) * R.wStretch;
     if (planted) sc -= R.wPlanted;                                                              // a boot bearing weight has to be unloaded first
@@ -243,7 +263,7 @@ function ptRecvPlan(t, c) {
     }
     if (sd === (c.pfoot || "R")) sc += R.wPref;                                                  // preferred foot: a bias, not a rule
     if (c.recvPlan && c.recvPlan.foot === sd) sc += R.wKeep;                                    // a plan does not flip-flop tick to tick
-    if (!best || sc > best.sc) best = { foot: sd, k, d: +d.toFixed(4), gap: +(d - comfD).toFixed(4), stretch, planted, sc: +sc.toFixed(4),
+    if (!best || sc > best.sc) best = { foot: sd, k, standing, d: +d.toFixed(4), gap: +(d - comfD).toFixed(4), stretch, planted, sc: +sc.toFixed(4),
       ball: [+ball[0].toFixed(4), +ball[1].toFixed(4), +ball[2].toFixed(4)], boot: [+boot[0].toFixed(4), +boot[1].toFixed(4)],
       at: +(t.now + k * PT_DT).toFixed(4), fireTick: Q.tick + k };
   }
@@ -282,7 +302,7 @@ function ptRecvResolve(t, i, pl) {
     dir = c.inDir != null ? c.inDir : p.facing;
     b.vx = p.vx * 0.7 + Math.cos(dir) * PT_RECV.cushionV; b.vy = p.vy * 0.7 + Math.sin(dir) * PT_RECV.cushionV;
     if (b.z > 0 && b.z < 1.6) b.vz = Math.min(b.vz, 0.4);
-    b.owner = i; b.curve = null; p.touchT = 0.30; c.ctrlSince = t.now; c.touchPlan = null; c.lastTouchFoot = pl.foot; c.lastTouchT = t.now;
+    b.owner = i; b.curve = null; p.touchT = 0.30; c.faceHold = { dir, until: t.now + PT_RECV.faceHoldT }; c.ctrlSince = t.now; c.touchPlan = null; c.lastTouchFoot = pl.foot; c.lastTouchT = t.now;
     const v = Math.hypot(p.vx, p.vy);
     style = v >= PT_RECV.runningV ? "RUNNING" : Math.abs(ptWrap(dir - p.facing)) * 180 / Math.PI > PT_RECV.directionalDeg ? "DIRECTIONAL" : "CUSHION";
   } else {

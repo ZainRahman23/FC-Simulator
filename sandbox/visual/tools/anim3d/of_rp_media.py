@@ -11,7 +11,7 @@ def main():
     crop = [int(v) for v in sys.argv[5].split(",")] if len(sys.argv) > 5 else None
     scale = float(sys.argv[6]) if len(sys.argv) > 6 else 0.5
     os.makedirs(out, exist_ok=True)
-    files = sorted(glob.glob(os.path.join(src, scen + "_t*.png")))
+    files = sorted(glob.glob(os.path.join(src, scen + "_t*.png")) + glob.glob(os.path.join(src, scen + "_t*.jpg")))
     if not files: print("no frames", scen); return
     tick = lambda f: int(f.rsplit("_t", 1)[1][:3])
     def load(f):

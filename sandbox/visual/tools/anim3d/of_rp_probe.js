@@ -8,14 +8,15 @@ const NM = process.env.PUPPETEER_NODE_MODULES; if (NM) module.paths.unshift(NM);
 const puppeteer = require("puppeteer-core"), fs = require("fs"), path = require("path");
 const a = process.argv, opt = (k, d) => { const i = a.indexOf(k); return i > 0 ? a[i + 1] : d; };
 const OUT = opt("--out", "rp_probe"), VIEW = opt("--view", "mixed"), ZOOM = +opt("--zoom", 0), EVERY = +opt("--every", 1), ANIMOFF = opt("--anim", "on") === "off";
-const OVERLAY = opt("--overlay", "on"), CHARS = opt("--chars", "on") !== "off", URL = opt("--url", "http://127.0.0.1:8124/sandbox/visual/match.html");
+const FMT = opt("--fmt", "png"), DPR = +opt("--dpr", 2), RECVOFF = opt("--recv", "on") === "off", CAST = opt("--cast", ""), OVERLAY = opt("--overlay", "on"), CHARS = opt("--chars", "on") !== "off", URL = opt("--url", "http://127.0.0.1:8124/sandbox/visual/match.html");
 const FR = opt("--frames", "").split(",").filter(Boolean).flatMap(x => { const m = x.match(/^(\d+)-(\d+)$/); return m ? Array.from({ length: +m[2] - +m[1] + 1 }, (_, i) => +m[1] + i) : [+x]; });
 const SC = require("./of_rp_scenarios.js");
+const FRAMES_ALL = opt("--frames", "") === "all";
 const NAMES = opt("--scen", "ab").split(",").flatMap(n => n === "all" ? Object.keys(SC.SCEN) : [n]);
 (async () => {
   fs.mkdirSync(OUT, { recursive: true });
   const b = await puppeteer.launch({ executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", headless: "new", userDataDir: opt("--udd", "chrome-rpprobe"), args: ["--no-sandbox"] });
-  const p = await b.newPage(); await p.setViewport({ width: 1500, height: 950, deviceScaleFactor: FR.length ? 2 : 1 });
+  const p = await b.newPage(); await p.setViewport({ width: 1500, height: 950, deviceScaleFactor: FR.length ? DPR : 1 });
   const errs = []; p.on("pageerror", e => errs.push(String(e).slice(0, 300)));
   await p.goto(URL + "?ofPlay=1&fps=60&r=" + Date.now(), { waitUntil: "load", timeout: 180000 });
   for (let i = 0; i < 900; i++) { if (await p.evaluate(() => typeof OFPLAY !== "undefined" && OFPLAY.on && OFPLAY.actor && OFPLAY.actor.sol)) break; await new Promise(r => setTimeout(r, 100)); }
@@ -24,17 +25,18 @@ const NAMES = opt("--scen", "ab").split(",").flatMap(n => n === "all" ? Object.k
   const results = {};
   for (const name of NAMES) {
     const S0 = SC.SCEN[name]; if (!S0) { console.error("unknown scenario", name); continue; }
-    await p.evaluate((S0, VIEW, ZOOM, ANIMOFF, CHARS, OVERLAY) => {
+    await p.evaluate((S0, VIEW, ZOOM, ANIMOFF, CHARS, OVERLAY, CAST, RECVOFF) => {
       const D = JSON.parse(JSON.stringify(S0.drill)); if (!CHARS) for (const q of D.players) q.char = null;
-      ofSquadStart("probe", D); OFPLAY.animOff = ANIMOFF;
+      if (CAST) for (const q of D.players) if (!q.team) { if (CAST === "generic") q.char = null; else q.char = CAST; }
+      ofSquadStart("probe", D); OFPLAY.animOff = ANIMOFF; OF_RECV.enabled = !RECVOFF;
       for (let i = 0; i < D.players.length; i++) { const id = D.players[i].char; const e = id && OF_CHAR.get(id);          // ready characters: build the actor now (no async gap)
         if (e && e.status === "ready") { const c = S.pt.squad.ctx[i]; const ac = ofPlayMakeActor(e.skel, c.p); ac.char = e; ac.team = c.team; ac.palette = c.team ? OFPLAY_KIT_B : SKEL_PARTS; OFSQ.actors[i] = ac; } }
       OFPLAY.actor = OFSQ.actors[S.pt.squad.active];
       OFPLAY.mixed = VIEW !== "page"; OFPLAY.dbg.hud = VIEW === "mixed"; if (OFPLAY.panel) OFPLAY.panel.style.display = VIEW === "mixed" ? "block" : "none";
       if (ZOOM) { RIG.zoomTarget = ZOOM; RIG.zoom = ZOOM; }
       OFSQ.cam = null; if (OVERLAY === "off") { OFSQ.names = false; OFPLAY.dbg.feet = false; OFPLAY.dbg.roots = false; OFPLAY.dbg.ball = false; OFPLAY.dbg.hud = false; if (OFPLAY.panel) OFPLAY.panel.style.display = "none"; OFSQ.overlay = false; } else OFSQ.overlay = true;
-    }, S0, VIEW, ZOOM, ANIMOFF, CHARS, OVERLAY);
-    const trace = [];
+    }, S0, VIEW, ZOOM, ANIMOFF, CHARS, OVERLAY, CAST, RECVOFF);
+    const trace = [], pres = [];
     for (let k = 0; k < S0.ticks; k++) {
       const cmd = (S0.cmds || []).filter(c => c.at === k), keys = SC.keysAt(S0, k);
       const row = await p.evaluate((keys, cmd, k) => {
@@ -53,13 +55,16 @@ const NAMES = opt("--scen", "ab").split(",").flatMap(n => n === "all" ? Object.k
         return [k, b.x, b.y, b.z, b.vx, b.vy, b.owner == null ? -1 : b.owner, Q.active].concat(...Q.ctx.map(c => [c.p.x, c.p.y, c.p.vx, c.p.vy, c.p.facing]));
       }, keys, cmd, k);
       trace.push(row);
-      if (FR.includes(k) && k % EVERY === 0) {
+      if (!ANIMOFF) pres.push(await p.evaluate((k) => [k].concat(...OFSQ.actors.map(a => { const d = a.sol ? a.sol.diag : null; if (!d) return [0, 0, 0];
+        let sl = 0; for (const sd of ["R", "L"]) { const f = d.feet[sd]; if (f && f.contact && f.slide != null) sl = Math.max(sl, f.slide); }
+        return [+(d.jerk || 0).toFixed(4), +sl.toFixed(4), +(d.jump || 0).toFixed(4)]; })), k));
+      if ((FRAMES_ALL || FR.includes(k)) && k % EVERY === 0) {
         const el = VIEW === "page" ? (await p.$("canvas#c") || await p.$("canvas")) : await p.$("#ofplay-out");
-        await el.screenshot({ path: path.join(OUT, `${name}_t${String(k).padStart(3, "0")}.png`) });
+        await el.screenshot(FMT === "jpg" ? { path: path.join(OUT, `${name}_t${String(k).padStart(3, "0")}.jpg`), type: "jpeg", quality: 88 } : { path: path.join(OUT, `${name}_t${String(k).padStart(3, "0")}.png`) });
       }
     }
     const res = await p.evaluate(() => ({ events: S.pt.squad.events, recv: OFSQ.recvRecs, pass: OFSQ.passRecs, chars: OFSQ.actors.map(a => a.char ? a.char.id : "generic") }));
-    res.trace = trace; results[name] = res;
+    res.trace = trace; res.pres = pres; results[name] = res;
     const R = res.recv.map(r => `${r.name}:${r.foot}:${r.style}:${r.outcome}:${(r.surf * 100).toFixed(1)}cm${r.reachCapped ? "*" : ""}`).join(" ");
     const P = res.pass.map(r => `${r.name}:${r.tech}:${r.foot}:${(r.surf * 100).toFixed(1)}cm`).join(" ");
     console.log(name.padEnd(22), "recv", R || "-", " | pass", P || "-", " | ev", res.events.filter(e => /RECEPTION|OUT_OF_REACH|LOOSE/.test(e.kind)).map(e => e.kind + (e.outcome ? ":" + e.outcome : "")).join(","));

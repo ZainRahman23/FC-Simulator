@@ -98,7 +98,10 @@ function ofSolve(skel, pose, rootM, plants, state, opts) {
       // leg can never float). Planting while the authored foot is still 10 cm up would either hover it or teleport it down.
       if (want && !st.locked) { if (st.wantT == null) st.wantT = now; }
       else if (!want) st.wantT = null;
-      if (want && !st.locked && (ankle[1] - ankleH <= OF_GAIT.plantY || now - st.wantT >= OF_GAIT.plantWaitT)) { st.locked = true; st.mode = "ankle"; st.T = null; st.step = null; st.P = [ankle[0], ankleH, ankle[2]]; st.t0 = now - TB; st.rel = null; st.y0 = ankle[1]; st.yT = now; st.pt0 = now; }   // the plant point = the authored foot projected to the pitch, where the foot IS (the authored cycle lands it on the pitch; the lock is immediate — at 8 m/s a two-tick blend is 25 cm of slide)
+      // RECEIVING V1 (opt-in `fromLast`): a boot that was being REACHED is planted where it actually was last tick — the authored ankle can be
+      // 30 cm from it, and planting there teleported the foot. Every other plant request keeps the authored-ankle rule unchanged.
+      const src = req && typeof req === "object" && req.fromLast && st.lastA ? st.lastA : ankle;
+      if (want && !st.locked && (src[1] - ankleH <= OF_GAIT.plantY || now - st.wantT >= OF_GAIT.plantWaitT)) { st.locked = true; st.mode = "ankle"; st.T = null; st.step = null; st.P = [src[0], ankleH, src[2]]; st.t0 = now - TB; st.rel = null; st.y0 = src[1]; st.yT = now; st.pt0 = now; }   // the plant point = the authored foot projected to the pitch, where the foot IS (the authored cycle lands it on the pitch; the lock is immediate — at 8 m/s a two-tick blend is 25 cm of slide)
       if (!want && st.locked && st.rel == null) beginRelease(sd, st);
       // DIVERGENCE: the cycle has taken the foot a long way from the plant (a reversal / a hard turn). Let go NOW, while the offset is still
       // something the leg can absorb — waiting until the plant is at full stretch leaves an offset no hand-over can carry continuously.

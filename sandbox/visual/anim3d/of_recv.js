@@ -13,17 +13,22 @@
 // If the plan disappears (the ball never came within reach) the reach that had started is let go: the attempted stretch is visible and
 // the ball runs on. Nothing here writes the ball, the player or possession; nothing is random.
 const OF_RECV = {
+  enabled: true,        // review / diagnosis switch: false skips the receiving layer only (the rest of the presentation runs as usual)
   prepT: 0.32,          // s before the authoritative contact that the body starts to prepare
   leadT: 0.16,          // s over which the receiving boot is reached onto the contact point
   holdT: 0.07,          // s the boot stays with the ball after the contact (cushion / guide)
   outT: 0.22,           // s back to the locomotion
   freeV: 1.2,           // m/s: at or below this the reception is a STANDING one (receiving foot unloaded, the other braced) = PT_RECV.standV
   reachCap: 0.42,       // × legLen: the kicks' cap — the boot may be corrected this far; beyond, it saturates and the residual shows
-  lostT: 0.22,          // s to let go of a reach whose plan disappeared (the ball went out of reach) or switched feet
+  lostT: 0.22,
+  bornT: 0.07,          // s: the shortest ramp-in of a receiving action that appears late (the plan switched foot / came late)          // s to let go of a reach whose plan disappeared (the ball went out of reach) or switched feet
   surfH: 0.085,         // m: height of the contact on the ball's side (the boot's inside face against the sphere)
   eps: 0.004,           // m: the boot face stops this far outside the ball surface
   ballR: 0.11,
   crouch: 0.025,        // × legLen: the pelvis drop of a standing reception (the support knee gives)
+  downT: 0.08,          // s: after the hold a STANDING receiver sets the receiving boot down where it is (the contact solve plants it)
+  downY: 0.035,         // m: the inside-face height the boot is lowered to (the sole on the pitch)
+  moveOutT: 0.30,       // s: a MOVING receiver's boot hands back to the gait over this long (the stride carries it on)
 };
 // pose DELTAS for a RIGHT-foot reception (mirrored for the left). Yaw terms of the receiving leg scale with `open`.
 OF_RECV.DELTA = { thigh_R: [-14, 18, 5], shin_R: [16, 0, 0], foot_R: [-10, 30, 0], thigh_L: [-6, 0, 0], shin_L: [10, 0, 0],
@@ -44,8 +49,10 @@ function ofRecvAim(bx, by, bz, rvx, rvy, from) {
 function ofRecvOne(a, R, pose, plants, now, fade) {
   const O = OF_RECV, dtc = now - R.at;
   let wP = dtc < 0 ? smooth01(clamp01(1 + dtc / O.prepT)) : dtc < O.holdT ? 1 : 1 - smooth01(clamp01((dtc - O.holdT) / O.outT));
-  let wR = dtc < 0 ? smooth01(clamp01(1 + dtc / O.leadT)) : dtc < O.holdT ? 1 : 1 - smooth01(clamp01((dtc - O.holdT) / (O.outT * 0.6)));
-  wP *= fade; wR *= fade; R.wP = wP; R.wR = wR;
+  const post = R.fired && dtc > O.holdT;
+  let wR = dtc < 0 ? smooth01(clamp01(1 + dtc / O.leadT)) : !post ? 1 : R.standing ? 1 : 1 - smooth01(clamp01((dtc - O.holdT) / O.moveOutT));
+  const born = smooth01(clamp01((now - (R.t0 != null ? R.t0 : -1e9)) / O.bornT));             // a late plan (or a switched foot) never snaps its reach in
+  wP *= fade * born; wR *= fade * born; R.wP = wP; R.wR = wR;
   if (wP < 0.001 && wR < 0.001) return pose;
   const sd = R.foot, other = sd === "R" ? "L" : "R", mir = sd === "L", open = O.OPEN[R.style] != null ? O.OPEN[R.style] : 1;
   const q = Object.assign({}, pose);
@@ -55,14 +62,16 @@ function ofRecvOne(a, R, pose, plants, now, fade) {
     q[ks] = [base[0] + d[0] * wP, base[1] + d[1] * yawK * sg * wP, base[2] + d[2] * sg * wP];
   }
   if (R.standing) { const pd = (q._pelvis || [0, 0, 0]).slice(); pd[1] -= O.crouch * a.skel.legLen * wP; q._pelvis = pd; }
-  if (R.standing && wP > 0.3) { plants[sd] = { want: false }; plants[other] = { want: true, mode: "ankle", s: 0.4 }; }   // unload the receiving foot, brace the other
+  if (R.standing && post) { plants[sd] = { want: true, mode: "ankle", s: 0.3, fromLast: true }; plants[other] = { want: true, mode: "ankle", s: 0.4 }; }   // SET IT DOWN: both feet on the pitch; the stance logic steps it home afterwards
+  else if (R.standing && wP > 0.3) { plants[sd] = { want: false }; plants[other] = { want: true, mode: "ankle", s: 0.4 }; }   // unload the receiving foot, brace the other
   else if (!R.standing && wR > 0.25 && plants[sd] && plants[sd].want) plants[sd] = { want: false };                    // moving: a boot still bearing weight is lifted off
   if (wR > 0.001 && R.p) { const pr = plants[sd] && typeof plants[sd] === "object" ? plants[sd] : (plants[sd] = { want: false });
-    pr.reach = { p: R.p, w: wR, cap: O.reachCap, iters: 4, surf: "inside" }; }
+    const down = R.standing && post ? smooth01(clamp01((dtc - O.holdT) / O.downT)) : 0;                                // lowered onto the pitch where it is (a planted boot is never reached)
+    pr.reach = { p: down > 0 ? [R.p[0], lerp(R.p[1], O.downY, down), R.p[2]] : R.p, w: wR, cap: O.reachCap, iters: 4, surf: "inside" }; }
   return q;
 }
 function ofRecvApply(a, pose, plants, now) {
-  const O = OF_RECV;
+  const O = OF_RECV; if (!O.enabled) return pose;
   if (a.recvPrev) { const f = 1 - clamp01((now - a.recvPrev.lost) / O.lostT); if (f <= 0) a.recvPrev = null; else pose = ofRecvOne(a, a.recvPrev, pose, plants, now, f); }
   const R = a.recv; if (!R) return pose;
   if (R.lost != null) { const f = 1 - clamp01((now - R.lost) / O.lostT); if (f <= 0) { a.recv = null; return pose; } return ofRecvOne(a, R, pose, plants, now, f); }
@@ -90,7 +99,8 @@ function ofRecvLink(t, a, tick) {
     if (R0 && R0.foot !== pl.foot && R0.lost == null) { a.recvPrev = R0; R0.lost = t.now; }
     const R = a.recv = (R0 && R0.foot === pl.foot && R0.lost == null) ? R0 : { t0: t.now, foot: pl.foot };
     const g = ofRecvAim(pl.ball[0], pl.ball[1], pl.ball[2], b.vx - p.vx, b.vy - p.vy, from(pl.foot));
-    Object.assign(R, { at: pl.at, fired: false, lost: null, stretch: pl.stretch, planted: pl.planted, standing, style: standing ? "CUSHION" : "RUNNING", p: g.p, u: g.u, plan: pl });
+    const st2 = pl.standing != null ? pl.standing : standing;                                   // the simulation's own standing / moving model at the planned contact
+    Object.assign(R, { at: pl.at, fired: false, lost: null, stretch: pl.stretch, planted: pl.planted, standing: st2, style: st2 ? "CUSHION" : "RUNNING", p: g.p, u: g.u, plan: pl });
     return;
   }
   if (R0 && !R0.fired && R0.lost == null) R0.lost = t.now;                                       // the plan vanished: the ball is out of reach — let go
