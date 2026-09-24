@@ -1,0 +1,2013 @@
+{
+ "characters": [
+  {
+   "id": "cucurella",
+   "name": "Marc Cucurella",
+   "heightCm": 175,
+   "weightKg": 68,
+   "H": 1.75,
+   "hipY": 0.9123157293120078,
+   "legLen": 0.8243157293120078,
+   "ankleH": 0.08799999999999997,
+   "verts": 102288,
+   "tris": 173932,
+   "parts": 55,
+   "meshBytes": 8430512,
+   "rigBytes": 27793,
+   "atlasBytes": 17494,
+   "gpuVertex": 6137280,
+   "gpuIndex": 2087184,
+   "gpuTex": 1048576,
+   "studTipY": -4.5102810375396984e-17,
+   "soleBottomY": 0.011999999999999959,
+   "provenance": [
+    {
+     "name": "lower_anatomy",
+     "triangleCount": 8832,
+     "vertexCount": 4591,
+     "packageDeclared": {
+      "vertexCount": 4495,
+      "triangleCount": 8832,
+      "note": "vertex count only: this build duplicates vertices that straddle a material seam, so a part references more of them"
+     }
+    }
+   ],
+   "hairWarnings": [
+    {
+     "code": "HAIR_HAS_NON_HEAD_INFLUENCES",
+     "bones": [
+      "neck",
+      "chest"
+     ],
+     "action": "Preserve current approved weights for baseline comparison. Treat these vertices as hair, not body. Head-follow/secondary-motion policy needs an explicit integration decision; no reweighting is performed here."
+    }
+   ]
+  },
+  {
+   "id": "gabriel",
+   "name": "Gabriel Magalh\u00e3es",
+   "heightCm": 190,
+   "weightKg": 78,
+   "H": 1.9,
+   "hipY": 1.012324466056232,
+   "legLen": 0.9243244660562321,
+   "ankleH": 0.08799999999999997,
+   "verts": 57828,
+   "tris": 97772,
+   "parts": 54,
+   "meshBytes": 4760072,
+   "rigBytes": 27124,
+   "atlasBytes": 17221,
+   "gpuVertex": 3469680,
+   "gpuIndex": 1173264,
+   "gpuTex": 1048576,
+   "studTipY": -4.5102810375396984e-17,
+   "soleBottomY": 0.011999999999999959,
+   "provenance": [
+    {
+     "name": "lower_anatomy",
+     "triangleCount": 8832,
+     "vertexCount": 4591,
+     "packageDeclared": {
+      "vertexCount": 4495,
+      "triangleCount": 8832,
+      "note": "vertex count only: this build duplicates vertices that straddle a material seam, so a part references more of them"
+     }
+    }
+   ],
+   "hairWarnings": []
+  },
+  {
+   "id": "osimhen",
+   "name": "Victor Osimhen",
+   "heightCm": 185,
+   "weightKg": 78,
+   "H": 1.85,
+   "hipY": 0.9806896657156668,
+   "legLen": 0.8926896657156669,
+   "ankleH": 0.08799999999999997,
+   "verts": 72497,
+   "tris": 122002,
+   "parts": 56,
+   "meshBytes": 5960310,
+   "rigBytes": 27984,
+   "atlasBytes": 14831,
+   "gpuVertex": 4349820,
+   "gpuIndex": 1464024,
+   "gpuTex": 1048576,
+   "studTipY": -4.5102810375396984e-17,
+   "soleBottomY": 0.011999999999999959,
+   "provenance": [
+    {
+     "name": "refined_Equipment / orbital-nasal protection",
+     "triangleCount": 1830,
+     "vertexCount": 1168,
+     "packageDeclared": {
+      "vertexCount": 1168,
+      "triangleCount": 1837,
+      "note": "environment-dependent tessellation: the same vertex set triangulated differently (bounds and skin weights identical)"
+     }
+    },
+    {
+     "name": "lower_anatomy",
+     "triangleCount": 8832,
+     "vertexCount": 4591,
+     "packageDeclared": {
+      "vertexCount": 4495,
+      "triangleCount": 8832,
+      "note": "vertex count only: this build duplicates vertices that straddle a material seam, so a part references more of them"
+     }
+    }
+   ],
+   "hairWarnings": []
+  },
+  {
+   "id": "szoboszlai",
+   "name": "Dominik Szoboszlai",
+   "heightCm": 186,
+   "weightKg": 74,
+   "H": 1.86,
+   "hipY": 0.983622811138493,
+   "legLen": 0.8956228111384931,
+   "ankleH": 0.08799999999999997,
+   "verts": 57828,
+   "tris": 97772,
+   "parts": 54,
+   "meshBytes": 4760072,
+   "rigBytes": 27160,
+   "atlasBytes": 27903,
+   "gpuVertex": 3469680,
+   "gpuIndex": 1173264,
+   "gpuTex": 1048576,
+   "studTipY": -4.5102810375396984e-17,
+   "soleBottomY": 0.011999999999999959,
+   "provenance": [
+    {
+     "name": "lower_anatomy",
+     "triangleCount": 8832,
+     "vertexCount": 4591,
+     "packageDeclared": {
+      "vertexCount": 4495,
+      "triangleCount": 8832,
+      "note": "vertex count only: this build duplicates vertices that straddle a material seam, so a part references more of them"
+     }
+    }
+   ],
+   "hairWarnings": []
+  },
+  {
+   "id": "vinicius",
+   "name": "Vin\u00edcius J\u00fanior",
+   "heightCm": 176,
+   "weightKg": 73,
+   "H": 1.76,
+   "hipY": 0.9216152648776572,
+   "legLen": 0.8336152648776572,
+   "ankleH": 0.08799999999999997,
+   "verts": 71328,
+   "tris": 120172,
+   "parts": 55,
+   "meshBytes": 5865872,
+   "rigBytes": 27395,
+   "atlasBytes": 15355,
+   "gpuVertex": 4279680,
+   "gpuIndex": 1442064,
+   "gpuTex": 1048576,
+   "studTipY": -4.5102810375396984e-17,
+   "soleBottomY": 0.011999999999999959,
+   "provenance": [
+    {
+     "name": "lower_anatomy",
+     "triangleCount": 8832,
+     "vertexCount": 4591,
+     "packageDeclared": {
+      "vertexCount": 4495,
+      "triangleCount": 8832,
+      "note": "vertex count only: this build duplicates vertices that straddle a material seam, so a part references more of them"
+     }
+    }
+   ],
+   "hairWarnings": []
+  },
+  {
+   "id": "james",
+   "name": "Reece James",
+   "heightCm": 182,
+   "weightKg": 82,
+   "H": 1.82,
+   "hipY": 0.9454980517372529,
+   "legLen": 0.8574980517372529,
+   "ankleH": 0.08799999999999997,
+   "verts": 71328,
+   "tris": 120172,
+   "parts": 55,
+   "meshBytes": 5865872,
+   "rigBytes": 27406,
+   "atlasBytes": 12970,
+   "gpuVertex": 4279680,
+   "gpuIndex": 1442064,
+   "gpuTex": 1048576,
+   "studTipY": -4.5102810375396984e-17,
+   "soleBottomY": 0.011999999999999959,
+   "provenance": [
+    {
+     "name": "lower_anatomy",
+     "triangleCount": 8832,
+     "vertexCount": 4591,
+     "packageDeclared": {
+      "vertexCount": 4495,
+      "triangleCount": 8832,
+      "note": "vertex count only: this build duplicates vertices that straddle a material seam, so a part references more of them"
+     }
+    }
+   ],
+   "hairWarnings": []
+  }
+ ],
+ "locomotion": {
+  "cucurella": {
+   "H": 1.75,
+   "legLen": 0.824,
+   "scenarios": 13,
+   "phaseJumps": 0,
+   "nan": false,
+   "penMax": 0.0417,
+   "jerkMax": 0.8451,
+   "byGait": {
+    "IDLE": {
+     "max": 0.0224,
+     "p95": 0.0067,
+     "mean": 0.0014
+    },
+    "WALK": {
+     "max": 0.0058,
+     "p95": 0.0037,
+     "mean": 0.0003
+    },
+    "JOG": {
+     "max": 0.0003,
+     "p95": 0,
+     "mean": 0
+    },
+    "RUN": {
+     "max": 0.0005,
+     "p95": 0.0002,
+     "mean": 0
+    },
+    "SPRINT": {
+     "max": 0,
+     "p95": 0,
+     "mean": 0
+    }
+   }
+  },
+  "gabriel": {
+   "H": 1.9,
+   "legLen": 0.924,
+   "scenarios": 13,
+   "phaseJumps": 0,
+   "nan": false,
+   "penMax": 0.0187,
+   "jerkMax": 0.8493,
+   "byGait": {
+    "IDLE": {
+     "max": 0.0214,
+     "p95": 0.0052,
+     "mean": 0.0011
+    },
+    "WALK": {
+     "max": 0.0252,
+     "p95": 0,
+     "mean": 0.0001
+    },
+    "JOG": {
+     "max": 0,
+     "p95": 0,
+     "mean": 0
+    },
+    "RUN": {
+     "max": 0.0004,
+     "p95": 0,
+     "mean": 0
+    },
+    "SPRINT": {
+     "max": 0,
+     "p95": 0,
+     "mean": 0
+    }
+   }
+  },
+  "osimhen": {
+   "H": 1.85,
+   "legLen": 0.893,
+   "scenarios": 13,
+   "phaseJumps": 0,
+   "nan": false,
+   "penMax": 0.0214,
+   "jerkMax": 0.9053,
+   "byGait": {
+    "IDLE": {
+     "max": 0.0215,
+     "p95": 0.0061,
+     "mean": 0.0012
+    },
+    "WALK": {
+     "max": 0.0037,
+     "p95": 0.0024,
+     "mean": 0.0002
+    },
+    "JOG": {
+     "max": 0.0045,
+     "p95": 0.0045,
+     "mean": 0.0003
+    },
+    "RUN": {
+     "max": 0.0005,
+     "p95": 0,
+     "mean": 0
+    },
+    "SPRINT": {
+     "max": 0,
+     "p95": 0,
+     "mean": 0
+    }
+   }
+  },
+  "szoboszlai": {
+   "H": 1.86,
+   "legLen": 0.896,
+   "scenarios": 13,
+   "phaseJumps": 0,
+   "nan": false,
+   "penMax": 0.0202,
+   "jerkMax": 0.9008,
+   "byGait": {
+    "IDLE": {
+     "max": 0.0212,
+     "p95": 0.006,
+     "mean": 0.0012
+    },
+    "WALK": {
+     "max": 0.0106,
+     "p95": 0.004,
+     "mean": 0.0007
+    },
+    "JOG": {
+     "max": 0.0056,
+     "p95": 0.0056,
+     "mean": 0.0004
+    },
+    "RUN": {
+     "max": 0.0004,
+     "p95": 0,
+     "mean": 0
+    },
+    "SPRINT": {
+     "max": 0,
+     "p95": 0,
+     "mean": 0
+    }
+   }
+  },
+  "vinicius": {
+   "H": 1.76,
+   "legLen": 0.834,
+   "scenarios": 13,
+   "phaseJumps": 0,
+   "nan": false,
+   "penMax": 0.0299,
+   "jerkMax": 0.8218,
+   "byGait": {
+    "IDLE": {
+     "max": 0.0232,
+     "p95": 0.0135,
+     "mean": 0.002
+    },
+    "WALK": {
+     "max": 0.0133,
+     "p95": 0.0085,
+     "mean": 0.001
+    },
+    "JOG": {
+     "max": 0.0004,
+     "p95": 0.0004,
+     "mean": 0.0001
+    },
+    "RUN": {
+     "max": 0.0005,
+     "p95": 0.0002,
+     "mean": 0
+    },
+    "SPRINT": {
+     "max": 0,
+     "p95": 0,
+     "mean": 0
+    }
+   }
+  },
+  "james": {
+   "H": 1.82,
+   "legLen": 0.857,
+   "scenarios": 13,
+   "phaseJumps": 0,
+   "nan": false,
+   "penMax": 0.0185,
+   "jerkMax": 0.7687,
+   "byGait": {
+    "IDLE": {
+     "max": 0.0253,
+     "p95": 0.0064,
+     "mean": 0.0013
+    },
+    "WALK": {
+     "max": 0.0058,
+     "p95": 0.0026,
+     "mean": 0.0002
+    },
+    "JOG": {
+     "max": 0.0001,
+     "p95": 0.0001,
+     "mean": 0
+    },
+    "RUN": {
+     "max": 0.0004,
+     "p95": 0.0001,
+     "mean": 0
+    },
+    "SPRINT": {
+     "max": 0,
+     "p95": 0,
+     "mean": 0
+    }
+   }
+  }
+ },
+ "dribbling": {
+  "byChar": {
+   "cucurella": {
+    "walk": {
+     "label": "WALK 1.5 m/s",
+     "touches": 7,
+     "realised": 6,
+     "measured": 7,
+     "mean": 0.03548571428571428,
+     "max": 0.1016
+    },
+    "jog": {
+     "label": "JOG 3.0 m/s",
+     "touches": 16,
+     "realised": 16,
+     "measured": 16,
+     "mean": 0.05278125,
+     "max": 0.0732
+    },
+    "run": {
+     "label": "RUN 5.0 m/s",
+     "touches": 15,
+     "realised": 14,
+     "measured": 15,
+     "mean": 0.030486666666666665,
+     "max": 0.1062
+    },
+    "turn": {
+     "label": "90 deg turn at run",
+     "touches": 15,
+     "realised": 12,
+     "measured": 15,
+     "mean": 0.07798,
+     "max": 0.3812
+    },
+    "stop": {
+     "label": "run, release, settle",
+     "touches": 8,
+     "realised": 7,
+     "measured": 8,
+     "mean": 0.034025,
+     "max": 0.1062
+    }
+   },
+   "gabriel": {
+    "walk": {
+     "label": "WALK 1.5 m/s",
+     "touches": 7,
+     "realised": 7,
+     "measured": 7,
+     "mean": 0.03755714285714286,
+     "max": 0.0928
+    },
+    "jog": {
+     "label": "JOG 3.0 m/s",
+     "touches": 16,
+     "realised": 15,
+     "measured": 16,
+     "mean": 0.08675625,
+     "max": 0.1059
+    },
+    "run": {
+     "label": "RUN 5.0 m/s",
+     "touches": 15,
+     "realised": 15,
+     "measured": 15,
+     "mean": 0.043346666666666665,
+     "max": 0.0857
+    },
+    "turn": {
+     "label": "90 deg turn at run",
+     "touches": 15,
+     "realised": 12,
+     "measured": 15,
+     "mean": 0.09076666666666666,
+     "max": 0.362
+    },
+    "stop": {
+     "label": "run, release, settle",
+     "touches": 8,
+     "realised": 8,
+     "measured": 8,
+     "mean": 0.0457375,
+     "max": 0.0857
+    }
+   },
+   "osimhen": {
+    "walk": {
+     "label": "WALK 1.5 m/s",
+     "touches": 7,
+     "realised": 7,
+     "measured": 7,
+     "mean": 0.03622857142857143,
+     "max": 0.0949
+    },
+    "jog": {
+     "label": "JOG 3.0 m/s",
+     "touches": 16,
+     "realised": 16,
+     "measured": 16,
+     "mean": 0.0749375,
+     "max": 0.0928
+    },
+    "run": {
+     "label": "RUN 5.0 m/s",
+     "touches": 15,
+     "realised": 15,
+     "measured": 15,
+     "mean": 0.037386666666666665,
+     "max": 0.0909
+    },
+    "turn": {
+     "label": "90 deg turn at run",
+     "touches": 15,
+     "realised": 12,
+     "measured": 15,
+     "mean": 0.08502666666666667,
+     "max": 0.3689
+    },
+    "stop": {
+     "label": "run, release, settle",
+     "touches": 8,
+     "realised": 8,
+     "measured": 8,
+     "mean": 0.040175,
+     "max": 0.0909
+    }
+   },
+   "szoboszlai": {
+    "walk": {
+     "label": "WALK 1.5 m/s",
+     "touches": 7,
+     "realised": 7,
+     "measured": 7,
+     "mean": 0.03542857142857143,
+     "max": 0.0938
+    },
+    "jog": {
+     "label": "JOG 3.0 m/s",
+     "touches": 16,
+     "realised": 16,
+     "measured": 16,
+     "mean": 0.07465625000000001,
+     "max": 0.0927
+    },
+    "run": {
+     "label": "RUN 5.0 m/s",
+     "touches": 15,
+     "realised": 15,
+     "measured": 15,
+     "mean": 0.036333333333333336,
+     "max": 0.0893
+    },
+    "turn": {
+     "label": "90 deg turn at run",
+     "touches": 15,
+     "realised": 13,
+     "measured": 15,
+     "mean": 0.08424000000000001,
+     "max": 0.3696
+    },
+    "stop": {
+     "label": "run, release, settle",
+     "touches": 8,
+     "realised": 8,
+     "measured": 8,
+     "mean": 0.0391125,
+     "max": 0.0893
+    }
+   },
+   "vinicius": {
+    "walk": {
+     "label": "WALK 1.5 m/s",
+     "touches": 7,
+     "realised": 6,
+     "measured": 7,
+     "mean": 0.037942857142857146,
+     "max": 0.1028
+    },
+    "jog": {
+     "label": "JOG 3.0 m/s",
+     "touches": 16,
+     "realised": 16,
+     "measured": 16,
+     "mean": 0.05955625,
+     "max": 0.0744
+    },
+    "run": {
+     "label": "RUN 5.0 m/s",
+     "touches": 15,
+     "realised": 14,
+     "measured": 15,
+     "mean": 0.03516,
+     "max": 0.1063
+    },
+    "turn": {
+     "label": "90 deg turn at run",
+     "touches": 15,
+     "realised": 11,
+     "measured": 15,
+     "mean": 0.08151333333333333,
+     "max": 0.3759
+    },
+    "stop": {
+     "label": "run, release, settle",
+     "touches": 8,
+     "realised": 7,
+     "measured": 8,
+     "mean": 0.0385375,
+     "max": 0.1063
+    }
+   },
+   "james": {
+    "walk": {
+     "label": "WALK 1.5 m/s",
+     "touches": 7,
+     "realised": 6,
+     "measured": 7,
+     "mean": 0.04505714285714286,
+     "max": 0.1068
+    },
+    "jog": {
+     "label": "JOG 3.0 m/s",
+     "touches": 16,
+     "realised": 16,
+     "measured": 16,
+     "mean": 0.0779,
+     "max": 0.0933
+    },
+    "run": {
+     "label": "RUN 5.0 m/s",
+     "touches": 15,
+     "realised": 14,
+     "measured": 15,
+     "mean": 0.04862666666666667,
+     "max": 0.1077
+    },
+    "turn": {
+     "label": "90 deg turn at run",
+     "touches": 15,
+     "realised": 11,
+     "measured": 15,
+     "mean": 0.09326666666666666,
+     "max": 0.3615
+    },
+    "stop": {
+     "label": "run, release, settle",
+     "touches": 8,
+     "realised": 7,
+     "measured": 8,
+     "mean": 0.0514875,
+     "max": 0.1077
+    }
+   }
+  },
+  "total": 366,
+  "realised": 337,
+  "median": 0.0423,
+  "mean": 0.05894508196721311,
+  "p95": 0.1068
+ },
+ "legSweep": [
+  {
+   "legLen": 0.8,
+   "touches": 8,
+   "spacingTicks": 25.857142857142858,
+   "mean": 0.0637375,
+   "max": 0.124
+  },
+  {
+   "legLen": 0.824,
+   "touches": 7,
+   "spacingTicks": 26.666666666666668,
+   "mean": 0.08594285714285714,
+   "max": 0.1969
+  },
+  {
+   "legLen": 0.865,
+   "touches": 7,
+   "spacingTicks": 28.0,
+   "mean": 0.028499999999999998,
+   "max": 0.046
+  },
+  {
+   "legLen": 0.9,
+   "touches": 7,
+   "spacingTicks": 28.833333333333332,
+   "mean": 0.08281428571428572,
+   "max": 0.1373
+  },
+  {
+   "legLen": 0.924,
+   "touches": 7,
+   "spacingTicks": 29.0,
+   "mean": 0.08361428571428572,
+   "max": 0.2097
+  }
+ ],
+ "legSweepProportional": [
+  {
+   "legLen": 0.8,
+   "mean": 0.0765625,
+   "max": 0.124
+  },
+  {
+   "legLen": 0.824,
+   "mean": 0.08965714285714287,
+   "max": 0.198
+  },
+  {
+   "legLen": 0.865,
+   "mean": 0.028499999999999998,
+   "max": 0.046
+  },
+  {
+   "legLen": 0.9,
+   "mean": 0.08055714285714287,
+   "max": 0.14
+  },
+  {
+   "legLen": 0.924,
+   "mean": 0.07724285714285715,
+   "max": 0.2081
+  }
+ ],
+ "equipment": {
+  "cucurella": {
+   "name": "Marc Cucurella",
+   "H": 1.75,
+   "parts": {
+    "hair": {
+     "vertices": 58615,
+     "influences": [
+      "chest",
+      "head",
+      "neck"
+     ],
+     "headOnly": false,
+     "scen": {
+      "sprint": {
+       "rigidMaxM": 0.03723,
+       "travelPerTickM": 0.18429,
+       "scalpGrowM": 0.00623,
+       "scalpSinkM": 0.0069
+      },
+      "run_brake": {
+       "rigidMaxM": 0.02789,
+       "travelPerTickM": 0.15496,
+       "scalpGrowM": 0.00472,
+       "scalpSinkM": 0.0051
+      },
+      "turn_sharp": {
+       "rigidMaxM": 0.02797,
+       "travelPerTickM": 0.15496,
+       "scalpGrowM": 0.00473,
+       "scalpSinkM": 0.00512
+      },
+      "walk": {
+       "rigidMaxM": 0.0146,
+       "travelPerTickM": 0.08646,
+       "scalpGrowM": 0.0025,
+       "scalpSinkM": 0.00261
+      },
+      "kick:INSIDE": {
+       "rigidMaxM": 0.02789,
+       "travelPerTickM": 0.15496,
+       "scalpGrowM": 0.00472,
+       "scalpSinkM": 0.0051
+      },
+      "kick:LACES": {
+       "rigidMaxM": 0.02789,
+       "travelPerTickM": 0.15496,
+       "scalpGrowM": 0.00472,
+       "scalpSinkM": 0.0051
+      },
+      "kick:LACES_POWER": {
+       "rigidMaxM": 0.02789,
+       "travelPerTickM": 0.15496,
+       "scalpGrowM": 0.00472,
+       "scalpSinkM": 0.0051
+      },
+      "kick:OUTSIDE": {
+       "rigidMaxM": 0.02789,
+       "travelPerTickM": 0.15496,
+       "scalpGrowM": 0.00472,
+       "scalpSinkM": 0.0051
+      },
+      "kick:CHIP": {
+       "rigidMaxM": 0.02789,
+       "travelPerTickM": 0.15496,
+       "scalpGrowM": 0.00472,
+       "scalpSinkM": 0.0051
+      }
+     }
+    }
+   },
+   "hairWarnings": [
+    {
+     "code": "HAIR_HAS_NON_HEAD_INFLUENCES",
+     "bones": [
+      "neck",
+      "chest"
+     ],
+     "action": "Preserve current approved weights for baseline comparison. Treat these vertices as hair, not body. Head-follow/secondary-motion policy needs an explicit integration decision; no reweighting is performed here."
+    }
+   ]
+  },
+  "gabriel": {
+   "name": "Gabriel Magalh\u00e3es",
+   "H": 1.9,
+   "parts": {
+    "hair": {
+     "vertices": 14155,
+     "influences": [
+      "head"
+     ],
+     "headOnly": true,
+     "scen": {
+      "sprint": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.22188,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "run_brake": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.14115,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "turn_sharp": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.14115,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "walk": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.06825,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "kick:INSIDE": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.14115,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "kick:LACES": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.14115,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "kick:LACES_POWER": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.14115,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "kick:OUTSIDE": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.14115,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "kick:CHIP": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.14115,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      }
+     }
+    }
+   },
+   "hairWarnings": []
+  },
+  "osimhen": {
+   "name": "Victor Osimhen",
+   "H": 1.85,
+   "parts": {
+    "hair": {
+     "vertices": 27655,
+     "influences": [
+      "head"
+     ],
+     "headOnly": true,
+     "scen": {
+      "sprint": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.22299,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "run_brake": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.13384,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "turn_sharp": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.13384,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "walk": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.07427,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "kick:INSIDE": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.13384,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "kick:LACES": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.13384,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "kick:LACES_POWER": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.13384,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "kick:OUTSIDE": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.13384,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "kick:CHIP": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.13384,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      }
+     }
+    },
+    "face-protection": {
+     "vertices": 1168,
+     "influences": [
+      "head"
+     ],
+     "headOnly": true,
+     "scen": {
+      "sprint": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.22299,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "run_brake": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.13387,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "turn_sharp": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.13387,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "walk": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.0743,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "kick:INSIDE": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.13387,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "kick:LACES": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.13387,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "kick:LACES_POWER": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.13387,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "kick:OUTSIDE": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.13387,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "kick:CHIP": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.13387,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      }
+     }
+    }
+   },
+   "hairWarnings": []
+  },
+  "szoboszlai": {
+   "name": "Dominik Szoboszlai",
+   "H": 1.86,
+   "parts": {
+    "hair": {
+     "vertices": 14155,
+     "influences": [
+      "head"
+     ],
+     "headOnly": true,
+     "scen": {
+      "sprint": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.22498,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "run_brake": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.13918,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "turn_sharp": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.13918,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "walk": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.07354,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "kick:INSIDE": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.13918,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "kick:LACES": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.13918,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "kick:LACES_POWER": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.13918,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "kick:OUTSIDE": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.13918,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "kick:CHIP": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.13918,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      }
+     }
+    }
+   },
+   "hairWarnings": []
+  },
+  "vinicius": {
+   "name": "Vin\u00edcius J\u00fanior",
+   "H": 1.76,
+   "parts": {
+    "hair": {
+     "vertices": 27655,
+     "influences": [
+      "head"
+     ],
+     "headOnly": true,
+     "scen": {
+      "sprint": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.21357,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "run_brake": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.13145,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "turn_sharp": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.13757,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "walk": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.08546,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "kick:INSIDE": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.13145,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "kick:LACES": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.13145,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "kick:LACES_POWER": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.13145,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "kick:OUTSIDE": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.13145,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "kick:CHIP": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.13145,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      }
+     }
+    }
+   },
+   "hairWarnings": []
+  },
+  "james": {
+   "name": "Reece James",
+   "H": 1.82,
+   "parts": {
+    "hair": {
+     "vertices": 27655,
+     "influences": [
+      "head"
+     ],
+     "headOnly": true,
+     "scen": {
+      "sprint": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.21456,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "run_brake": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.1368,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "turn_sharp": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.16062,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "walk": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.0838,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "kick:INSIDE": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.1368,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "kick:LACES": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.1368,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "kick:LACES_POWER": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.1368,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "kick:OUTSIDE": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.1368,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      },
+      "kick:CHIP": {
+       "rigidMaxM": 0,
+       "travelPerTickM": 0.1368,
+       "scalpGrowM": 0,
+       "scalpSinkM": 0
+      }
+     }
+    }
+   },
+   "hairWarnings": []
+  }
+ },
+ "shooting": {
+  "generic": {
+   "1R": {
+    "surf": 0.0148,
+    "tech": "INSIDE",
+    "fam": "SHORT",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 17.13886499328744,
+    "vz": 5.346594979862436,
+    "reachWant": 0.2712,
+    "reachApplied": 0.2712,
+    "capped": false,
+    "reachResidual": 0.0003,
+    "errs": 0
+   },
+   "2R": {
+    "surf": -0.0319,
+    "tech": "LACES",
+    "fam": "DRIVEN",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 26,
+    "vz": 9.5,
+    "reachWant": 0.1922,
+    "reachApplied": 0.1922,
+    "capped": false,
+    "reachResidual": 0.002,
+    "errs": 0
+   },
+   "3R": {
+    "surf": -0.0327,
+    "tech": "LACES_POWER",
+    "fam": "CLEAR",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 29.295293651757824,
+    "vz": 7.939024579626371,
+    "reachWant": 0.1727,
+    "reachApplied": 0.1727,
+    "capped": false,
+    "reachResidual": 0.0013,
+    "errs": 0
+   },
+   "4R": {
+    "surf": 0.0122,
+    "tech": "CHIP",
+    "fam": "LOFT",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 12.649999999999974,
+    "vz": 9.713098306954894,
+    "reachWant": 0.1622,
+    "reachApplied": 0.1622,
+    "capped": false,
+    "reachResidual": 0.0472,
+    "errs": 0
+   },
+   "5R": {
+    "surf": 0.0151,
+    "tech": "OUTSIDE",
+    "fam": "SHORT",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 18.068919285926423,
+    "vz": 6.201757857779343,
+    "reachWant": 0.262,
+    "reachApplied": 0.262,
+    "capped": false,
+    "reachResidual": 0.0037,
+    "errs": 0
+   }
+  },
+  "cucurella": {
+   "1R": {
+    "surf": 0.2015,
+    "tech": "INSIDE",
+    "fam": "SHORT",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 17.13886499328744,
+    "vz": 5.346594979862436,
+    "reachWant": 0.2643,
+    "reachApplied": 0.2643,
+    "capped": false,
+    "reachResidual": 0.0021,
+    "errs": 0
+   },
+   "2R": {
+    "surf": 0.0916,
+    "tech": "LACES",
+    "fam": "DRIVEN",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 26,
+    "vz": 9.5,
+    "reachWant": 0.1524,
+    "reachApplied": 0.1524,
+    "capped": false,
+    "reachResidual": 0.0044,
+    "errs": 0
+   },
+   "3R": {
+    "surf": 0.0558,
+    "tech": "LACES_POWER",
+    "fam": "CLEAR",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 29.295293651757824,
+    "vz": 7.939024579626371,
+    "reachWant": 0.1873,
+    "reachApplied": 0.1873,
+    "capped": false,
+    "reachResidual": 0.0039,
+    "errs": 0
+   },
+   "4R": {
+    "surf": 0.0768,
+    "tech": "CHIP",
+    "fam": "LOFT",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 12.649999999999974,
+    "vz": 9.713098306954894,
+    "reachWant": 0.1414,
+    "reachApplied": 0.1414,
+    "capped": false,
+    "reachResidual": 0.005,
+    "errs": 0
+   },
+   "5R": {
+    "surf": 0.1777,
+    "tech": "OUTSIDE",
+    "fam": "SHORT",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 18.068919285926423,
+    "vz": 6.201757857779343,
+    "reachWant": 0.2342,
+    "reachApplied": 0.2342,
+    "capped": false,
+    "reachResidual": 0.0022,
+    "errs": 0
+   },
+   "1L": {
+    "surf": 0.2015,
+    "tech": "INSIDE",
+    "fam": "SHORT",
+    "simFoot": "L",
+    "plant": "R",
+    "v0": 17.13886499328744,
+    "vz": 5.346594979862436,
+    "reachWant": 0.2643,
+    "reachApplied": 0.2643,
+    "capped": false,
+    "reachResidual": 0.0021,
+    "errs": 0
+   },
+   "2L": {
+    "surf": 0.0916,
+    "tech": "LACES",
+    "fam": "DRIVEN",
+    "simFoot": "L",
+    "plant": "R",
+    "v0": 26,
+    "vz": 9.5,
+    "reachWant": 0.1524,
+    "reachApplied": 0.1524,
+    "capped": false,
+    "reachResidual": 0.0044,
+    "errs": 0
+   },
+   "3L": {
+    "surf": 0.0692,
+    "tech": "LACES_POWER",
+    "fam": "CLEAR",
+    "simFoot": "L",
+    "plant": "R",
+    "v0": 29.295293651757824,
+    "vz": 7.939024579626371,
+    "reachWant": 0.1834,
+    "reachApplied": 0.1834,
+    "capped": false,
+    "reachResidual": 0.0042,
+    "errs": 0
+   },
+   "4L": {
+    "surf": 0.0768,
+    "tech": "CHIP",
+    "fam": "LOFT",
+    "simFoot": "L",
+    "plant": "R",
+    "v0": 12.649999999999974,
+    "vz": 9.713098306954894,
+    "reachWant": 0.1414,
+    "reachApplied": 0.1414,
+    "capped": false,
+    "reachResidual": 0.005,
+    "errs": 0
+   },
+   "5L": {
+    "surf": 0.1777,
+    "tech": "OUTSIDE",
+    "fam": "SHORT",
+    "simFoot": "L",
+    "plant": "R",
+    "v0": 18.068919285926423,
+    "vz": 6.201757857779343,
+    "reachWant": 0.2342,
+    "reachApplied": 0.2342,
+    "capped": false,
+    "reachResidual": 0.0022,
+    "errs": 0
+   }
+  },
+  "gabriel": {
+   "1R": {
+    "surf": 0.211,
+    "tech": "INSIDE",
+    "fam": "SHORT",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 17.13886499328744,
+    "vz": 5.346594979862436,
+    "reachWant": 0.2818,
+    "reachApplied": 0.2818,
+    "capped": false,
+    "reachResidual": 0.0015,
+    "errs": 0
+   },
+   "2R": {
+    "surf": 0.0916,
+    "tech": "LACES",
+    "fam": "DRIVEN",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 26,
+    "vz": 9.5,
+    "reachWant": 0.1465,
+    "reachApplied": 0.1465,
+    "capped": false,
+    "reachResidual": 0.003,
+    "errs": 0
+   },
+   "3R": {
+    "surf": 0.069,
+    "tech": "LACES_POWER",
+    "fam": "CLEAR",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 29.295293651757824,
+    "vz": 7.939024579626371,
+    "reachWant": 0.2024,
+    "reachApplied": 0.2024,
+    "capped": false,
+    "reachResidual": 0.0029,
+    "errs": 0
+   },
+   "4R": {
+    "surf": 0.0862,
+    "tech": "CHIP",
+    "fam": "LOFT",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 12.649999999999974,
+    "vz": 9.713098306954894,
+    "reachWant": 0.1635,
+    "reachApplied": 0.1635,
+    "capped": false,
+    "reachResidual": 0.0051,
+    "errs": 0
+   },
+   "5R": {
+    "surf": 0.2038,
+    "tech": "OUTSIDE",
+    "fam": "SHORT",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 18.068919285926423,
+    "vz": 6.201757857779343,
+    "reachWant": 0.2695,
+    "reachApplied": 0.2695,
+    "capped": false,
+    "reachResidual": 0.0014,
+    "errs": 0
+   },
+   "1L": {
+    "surf": 0.211,
+    "tech": "INSIDE",
+    "fam": "SHORT",
+    "simFoot": "L",
+    "plant": "R",
+    "v0": 17.13886499328744,
+    "vz": 5.346594979862436,
+    "reachWant": 0.2818,
+    "reachApplied": 0.2818,
+    "capped": false,
+    "reachResidual": 0.0015,
+    "errs": 0
+   },
+   "2L": {
+    "surf": 0.0916,
+    "tech": "LACES",
+    "fam": "DRIVEN",
+    "simFoot": "L",
+    "plant": "R",
+    "v0": 26,
+    "vz": 9.5,
+    "reachWant": 0.1465,
+    "reachApplied": 0.1465,
+    "capped": false,
+    "reachResidual": 0.003,
+    "errs": 0
+   },
+   "3L": {
+    "surf": 0.0728,
+    "tech": "LACES_POWER",
+    "fam": "CLEAR",
+    "simFoot": "L",
+    "plant": "R",
+    "v0": 29.295293651757824,
+    "vz": 7.939024579626371,
+    "reachWant": 0.1914,
+    "reachApplied": 0.1914,
+    "capped": false,
+    "reachResidual": 0.0027,
+    "errs": 0
+   },
+   "4L": {
+    "surf": 0.0863,
+    "tech": "CHIP",
+    "fam": "LOFT",
+    "simFoot": "L",
+    "plant": "R",
+    "v0": 12.649999999999974,
+    "vz": 9.713098306954894,
+    "reachWant": 0.1635,
+    "reachApplied": 0.1635,
+    "capped": false,
+    "reachResidual": 0.0051,
+    "errs": 0
+   },
+   "5L": {
+    "surf": 0.2038,
+    "tech": "OUTSIDE",
+    "fam": "SHORT",
+    "simFoot": "L",
+    "plant": "R",
+    "v0": 18.068919285926423,
+    "vz": 6.201757857779343,
+    "reachWant": 0.2695,
+    "reachApplied": 0.2695,
+    "capped": false,
+    "reachResidual": 0.0014,
+    "errs": 0
+   }
+  },
+  "osimhen": {
+   "1R": {
+    "surf": 0.2066,
+    "tech": "INSIDE",
+    "fam": "SHORT",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 17.13886499328744,
+    "vz": 5.346594979862436,
+    "reachWant": 0.2749,
+    "reachApplied": 0.2749,
+    "capped": false,
+    "reachResidual": 0.0017,
+    "errs": 0
+   },
+   "2R": {
+    "surf": 0.0899,
+    "tech": "LACES",
+    "fam": "DRIVEN",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 26,
+    "vz": 9.5,
+    "reachWant": 0.1466,
+    "reachApplied": 0.1466,
+    "capped": false,
+    "reachResidual": 0.0034,
+    "errs": 0
+   },
+   "3R": {
+    "surf": 0.0629,
+    "tech": "LACES_POWER",
+    "fam": "CLEAR",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 29.295293651757824,
+    "vz": 7.939024579626371,
+    "reachWant": 0.1959,
+    "reachApplied": 0.1959,
+    "capped": false,
+    "reachResidual": 0.0031,
+    "errs": 0
+   },
+   "4R": {
+    "surf": 0.0819,
+    "tech": "CHIP",
+    "fam": "LOFT",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 12.649999999999974,
+    "vz": 9.713098306954894,
+    "reachWant": 0.1556,
+    "reachApplied": 0.1556,
+    "capped": false,
+    "reachResidual": 0.0039,
+    "errs": 0
+   },
+   "5R": {
+    "surf": 0.194,
+    "tech": "OUTSIDE",
+    "fam": "SHORT",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 18.068919285926423,
+    "vz": 6.201757857779343,
+    "reachWant": 0.2571,
+    "reachApplied": 0.2571,
+    "capped": false,
+    "reachResidual": 0.0016,
+    "errs": 0
+   }
+  },
+  "szoboszlai": {
+   "1R": {
+    "surf": 0.2053,
+    "tech": "INSIDE",
+    "fam": "SHORT",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 17.13886499328744,
+    "vz": 5.346594979862436,
+    "reachWant": 0.274,
+    "reachApplied": 0.274,
+    "capped": false,
+    "reachResidual": 0.0016,
+    "errs": 0
+   },
+   "2R": {
+    "surf": 0.0884,
+    "tech": "LACES",
+    "fam": "DRIVEN",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 26,
+    "vz": 9.5,
+    "reachWant": 0.1453,
+    "reachApplied": 0.1453,
+    "capped": false,
+    "reachResidual": 0.0033,
+    "errs": 0
+   },
+   "3R": {
+    "surf": 0.0617,
+    "tech": "LACES_POWER",
+    "fam": "CLEAR",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 29.295293651757824,
+    "vz": 7.939024579626371,
+    "reachWant": 0.1951,
+    "reachApplied": 0.1951,
+    "capped": false,
+    "reachResidual": 0.0031,
+    "errs": 0
+   },
+   "4R": {
+    "surf": 0.0807,
+    "tech": "CHIP",
+    "fam": "LOFT",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 12.649999999999974,
+    "vz": 9.713098306954894,
+    "reachWant": 0.155,
+    "reachApplied": 0.155,
+    "capped": false,
+    "reachResidual": 0.0041,
+    "errs": 0
+   },
+   "5R": {
+    "surf": 0.1931,
+    "tech": "OUTSIDE",
+    "fam": "SHORT",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 18.068919285926423,
+    "vz": 6.201757857779343,
+    "reachWant": 0.2568,
+    "reachApplied": 0.2568,
+    "capped": false,
+    "reachResidual": 0.0015,
+    "errs": 0
+   }
+  },
+  "vinicius": {
+   "1R": {
+    "surf": 0.2064,
+    "tech": "INSIDE",
+    "fam": "SHORT",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 17.13886499328744,
+    "vz": 5.346594979862436,
+    "reachWant": 0.2697,
+    "reachApplied": 0.2697,
+    "capped": false,
+    "reachResidual": 0.0021,
+    "errs": 0
+   },
+   "2R": {
+    "surf": 0.0951,
+    "tech": "LACES",
+    "fam": "DRIVEN",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 26,
+    "vz": 9.5,
+    "reachWant": 0.1545,
+    "reachApplied": 0.1545,
+    "capped": false,
+    "reachResidual": 0.0043,
+    "errs": 0
+   },
+   "3R": {
+    "surf": 0.061,
+    "tech": "LACES_POWER",
+    "fam": "CLEAR",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 29.295293651757824,
+    "vz": 7.939024579626371,
+    "reachWant": 0.192,
+    "reachApplied": 0.192,
+    "capped": false,
+    "reachResidual": 0.0036,
+    "errs": 0
+   },
+   "4R": {
+    "surf": 0.0815,
+    "tech": "CHIP",
+    "fam": "LOFT",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 12.649999999999974,
+    "vz": 9.713098306954894,
+    "reachWant": 0.1469,
+    "reachApplied": 0.1469,
+    "capped": false,
+    "reachResidual": 0.0031,
+    "errs": 0
+   },
+   "5R": {
+    "surf": 0.1843,
+    "tech": "OUTSIDE",
+    "fam": "SHORT",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 18.068919285926423,
+    "vz": 6.201757857779343,
+    "reachWant": 0.2409,
+    "reachApplied": 0.2409,
+    "capped": false,
+    "reachResidual": 0.0021,
+    "errs": 0
+   }
+  },
+  "james": {
+   "1R": {
+    "surf": 0.2203,
+    "tech": "INSIDE",
+    "fam": "SHORT",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 17.13886499328744,
+    "vz": 5.346594979862436,
+    "reachWant": 0.2846,
+    "reachApplied": 0.2846,
+    "capped": false,
+    "reachResidual": 0.0022,
+    "errs": 0
+   },
+   "2R": {
+    "surf": 0.1056,
+    "tech": "LACES",
+    "fam": "DRIVEN",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 26,
+    "vz": 9.5,
+    "reachWant": 0.1614,
+    "reachApplied": 0.1614,
+    "capped": false,
+    "reachResidual": 0.0042,
+    "errs": 0
+   },
+   "3R": {
+    "surf": 0.0757,
+    "tech": "LACES_POWER",
+    "fam": "CLEAR",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 29.295293651757824,
+    "vz": 7.939024579626371,
+    "reachWant": 0.2052,
+    "reachApplied": 0.2052,
+    "capped": false,
+    "reachResidual": 0.0031,
+    "errs": 0
+   },
+   "4R": {
+    "surf": 0.0946,
+    "tech": "CHIP",
+    "fam": "LOFT",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 12.649999999999974,
+    "vz": 9.713098306954894,
+    "reachWant": 0.1617,
+    "reachApplied": 0.1617,
+    "capped": false,
+    "reachResidual": 0.0016,
+    "errs": 0
+   },
+   "5R": {
+    "surf": 0.2023,
+    "tech": "OUTSIDE",
+    "fam": "SHORT",
+    "simFoot": "R",
+    "plant": "L",
+    "v0": 18.068919285926423,
+    "vz": 6.201757857779343,
+    "reachWant": 0.259,
+    "reachApplied": 0.259,
+    "capped": false,
+    "reachResidual": 0.002,
+    "errs": 0
+   }
+  }
+ },
+ "rendererFixes": [
+  {
+   "id": "face-winding",
+   "file": "sandbox/visual/anim3d/of_char_gl.js",
+   "symptom": "characters drawn inside-out: kit lettering mirrored, the shirt's back panel on the chest",
+   "cause": "Astra's triangles are CCW from outside; this engine's camera transform reverses winding in screen space, so under frontFace(CCW) the FRONT faces were culled",
+   "evidence": "98.8% of osimhen's 122,002 triangles have (v1-v0)x(v2-v0) along the outward normal; a geometric outwardness test agrees for every part group",
+   "fix": "frontFace(CW) around the character draw, previous state restored; back-face culling kept on"
+  },
+  {
+   "id": "depth-precision",
+   "file": "sandbox/visual/anim3d/gl_renderer.js",
+   "symptom": "hair and face protection vanished behind the head, leaving only their silhouette rims",
+   "cause": "DEPTH_COMPONENT16 cannot separate concentric shells at pitch-camera distance; the hair cap sits a measured 5.9 mm outside the scalp, so draw order decided",
+   "evidence": "along-ray comparison cap vs scalp: mean +5.9 mm, 91% outside; a diagnostic painting hair magenta and visor cyan showed only the rims surviving",
+   "fix": "DEPTH_COMPONENT24 on both character render targets"
+  }
+ ],
+ "performance": {
+  "note": "headless software GL (SwiftShader); the render column is the rasteriser, not the characters",
+  "rows": [
+   {
+    "rigs": 1,
+    "sim": [
+     0.09,
+     0.2
+    ],
+    "anim": [
+     0.23,
+     0.4
+    ],
+    "skin": [
+     0.05,
+     0.1
+    ],
+    "render": [
+     25.99,
+     28.6
+    ],
+    "composite": [
+     6.32,
+     8.6
+    ],
+    "draws": 1
+   },
+   {
+    "rigs": 6,
+    "sim": [
+     0.08,
+     0.2
+    ],
+    "anim": [
+     0.69,
+     1.2
+    ],
+    "skin": [
+     0.04,
+     0.1
+    ],
+    "render": [
+     25.3,
+     27.1
+    ],
+    "composite": [
+     6.31,
+     8.3
+    ],
+    "draws": 6
+   },
+   {
+    "rigs": 22,
+    "sim": [
+     0.05,
+     0.1
+    ],
+    "anim": [
+     1.93,
+     2.7
+    ],
+    "skin": [
+     0.07,
+     0.2
+    ],
+    "render": [
+     23.72,
+     25.8
+    ],
+    "composite": [
+     6.95,
+     9.0
+    ],
+    "draws": 22
+   }
+  ],
+  "roiTarget": {
+   "w": 3008,
+   "h": 1920,
+   "growOnly": true
+  },
+  "errors": 0
+ }
+}

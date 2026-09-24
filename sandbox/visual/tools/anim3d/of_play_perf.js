@@ -7,13 +7,16 @@ const NM = process.env.PUPPETEER_NODE_MODULES; if (NM) module.paths.unshift(NM);
 const puppeteer = require("puppeteer-core"), fs = require("fs");
 const a = process.argv, opt = (k, d) => { const i = a.indexOf(k); return i > 0 ? a[i + 1] : d; };
 const OUT = opt("--out", "of_perf.json"), BALL = a.indexOf("--ball") > 0, RUNNERS = opt("--runners", "0,10,21").split(",").map(Number), TICKS = +opt("--ticks", 400);
-const URL = opt("--url", "http://127.0.0.1:8124/sandbox/visual/match.html");
+const URL = opt("--url", "http://127.0.0.1:8124/sandbox/visual/match.html"), CHAR = opt("--character", "");
 (async () => {
   const b = await puppeteer.launch({ executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", headless: "new", userDataDir: opt("--udd", "chrome-ofperf"), args: ["--no-sandbox", "--use-gl=angle", "--enable-unsafe-swiftshader"] });
   const p = await b.newPage(); await p.setViewport({ width: 1500, height: 950, deviceScaleFactor: 2 });
   const errs = []; p.on("pageerror", e => errs.push(String(e).slice(0, 200)));
   await p.goto(URL + "?ofPlay=1&fps=60&body=AVG_ATHLETIC&r=" + Date.now(), { waitUntil: "load", timeout: 180000 });
   for (let i = 0; i < 600; i++) { if (await p.evaluate(() => typeof OFPLAY !== "undefined" && OFPLAY.on && OFPLAY.actor && OFPLAY.actor.sol)) break; await new Promise(r => setTimeout(r, 100)); }
+  // a real character measures the REAL cost: its own skeleton drives the solve and its own geometry is what the GPU skins and draws
+  if (CHAR) { const ok = await p.evaluate(async (id) => { try { await ofCharLoad(id); ofPlaySetCharacter(id); await new Promise(r => setTimeout(r, 300)); return OFPLAY.charId === id; } catch (e) { return String(e); } }, CHAR);
+    if (ok !== true) { console.error("character load failed:", ok); process.exit(3); } }
   const rows = [];
   for (const n of RUNNERS) {
     await p.evaluate((n, BALL) => { S.pt.paused = true; OFPLAY.mixed = true; ofPlaySetRunners(n);

@@ -1,38 +1,38 @@
 {
  "classification": "DERIVED RUNTIME ASSET — regenerate with tools/anim3d/of_char_build.js; canonical storage is the portable record + shared library",
  "schema": "touchline.outfield-runtime-rig.v1",
- "playerId": "cucurella",
+ "playerId": "vinicius",
  "identity": {
-  "name": "Marc Cucurella",
-  "heightCm": 175,
-  "weightKg": 68
+  "name": "Vinícius Júnior",
+  "heightCm": 176,
+  "weightKg": 73
  },
- "configSha256": "1124bd80abcafe0468705114f0f999b963e45c4f9f1d432beef4c1489a63e26a",
+ "configSha256": "21fe34f6932aed17cc81f8d1c48e9248afb1e43f7b201b45a549baefffe2691b",
  "appearanceTarget": "mixed",
  "units": "metres",
  "coordinateSystem": "character-local Y-up, +Z forward, _R on +X, right-handed",
  "matrixLayout": "column-major",
- "H": 1.75,
- "hipHeightM": 0.9123157293120078,
+ "H": 1.76,
+ "hipHeightM": 0.9216152648776572,
  "segments": {
   "R": {
-   "hipToKneeM": 0.43007777181496065,
-   "kneeToAnkleM": 0.39423795749704715,
-   "legHipToAnkleChainM": 0.8243157293120078,
-   "shoulderToElbowM": 0.30859594594594597,
-   "elbowToWristM": 0.27229054054054036,
-   "armShoulderToWristChainM": 0.5808864864864863
+   "hipToKneeM": 0.43492970341442994,
+   "kneeToAnkleM": 0.3986855614632273,
+   "legHipToAnkleChainM": 0.8336152648776572,
+   "shoulderToElbowM": 0.31281764324324324,
+   "elbowToWristM": 0.2760155675675674,
+   "armShoulderToWristChainM": 0.5888332108108106
   },
   "L": {
-   "hipToKneeM": 0.43007777181496065,
-   "kneeToAnkleM": 0.39423795749704715,
-   "legHipToAnkleChainM": 0.8243157293120078,
-   "shoulderToElbowM": 0.30859594594594597,
-   "elbowToWristM": 0.27229054054054036,
-   "armShoulderToWristChainM": 0.5808864864864863
+   "hipToKneeM": 0.43492970341442994,
+   "kneeToAnkleM": 0.3986855614632273,
+   "legHipToAnkleChainM": 0.8336152648776572,
+   "shoulderToElbowM": 0.31281764324324324,
+   "elbowToWristM": 0.2760155675675674,
+   "armShoulderToWristChainM": 0.5888332108108106
   }
  },
- "legLenM": 0.8243157293120078,
+ "legLenM": 0.8336152648776572,
  "ankleHeightM": 0.08799999999999997,
  "ground": {
   "reference": "lowest stud tips",
@@ -44,12 +44,12 @@
  "feet": {
   "R": {
    "ankle": [
-    0.14660405892572995,
+    0.15249633468293125,
     0.08799999999999997,
     0
    ],
    "toe": [
-    0.14660405892572995,
+    0.15249633468293125,
     0.030999999999999972,
     0.1805
    ],
@@ -57,24 +57,24 @@
    "soleBottomY": 0.011999999999999959,
    "soleTopY": 0.022999999999999955,
    "footwearMin": [
-    0.06964910440657603,
+    0.0734982334373472,
     -4.5102810375396984e-17,
-    -0.0807372972972973
+    -0.08076356756756757
    ],
    "footwearMax": [
-    0.22258490009654017,
-    0.14270287448523616,
-    0.27510486486486485
+    0.23049445996338136,
+    0.14332000613604587,
+    0.2751943783783784
    ]
   },
   "L": {
    "ankle": [
-    -0.14660405892572995,
+    -0.15249633468293125,
     0.08799999999999997,
     0
    ],
    "toe": [
-    -0.14660405892572995,
+    -0.15249633468293125,
     0.030999999999999972,
     0.1805
    ],
@@ -82,14 +82,14 @@
    "soleBottomY": 0.011999999999999959,
    "soleTopY": 0.022999999999999955,
    "footwearMin": [
-    -0.2235590134448839,
+    -0.23149443592851532,
     -4.5102810375396984e-17,
-    -0.0807372972972973
+    -0.08076356756756757
    ],
    "footwearMax": [
-    -0.07062321775491974,
-    0.14270287448523616,
-    0.27510486486486485
+    -0.07449820940248117,
+    0.14332000613604587,
+    0.2751943783783784
    ]
   }
  },
@@ -113,7 +113,7 @@
     1,
     0
    ],
-   "lengthM": 0.912316,
+   "lengthM": 0.921615,
    "radiusM": 0.02,
    "part": "shirt"
   },
@@ -123,12 +123,12 @@
    "parent": "root",
    "offsetLocal": [
     0,
-    0.9123157293120078,
+    0.9216152648776572,
     0
    ],
    "bindOrigin": [
     0,
-    0.9123157293120078,
+    0.9216152648776572,
     0
    ],
    "bindDirLocal": [
@@ -136,8 +136,8 @@
     1,
     0
    ],
-   "lengthM": 0.107519,
-   "radiusM": 0.1146,
+   "lengthM": 0.107443,
+   "radiusM": 0.1218,
    "part": "shirt"
   },
   {
@@ -146,12 +146,12 @@
    "parent": "pelvis",
    "offsetLocal": [
     0,
-    0.10751944295374016,
+    0.1074431085509957,
     0
    ],
    "bindOrigin": [
     0,
-    1.019835172265748,
+    1.029058373428653,
     0
    ],
    "bindDirLocal": [
@@ -159,8 +159,8 @@
     1,
     0
    ],
-   "lengthM": 0.215039,
-   "radiusM": 0.1051,
+   "lengthM": 0.214886,
+   "radiusM": 0.11,
    "part": "shirt"
   },
   {
@@ -169,12 +169,12 @@
    "parent": "spine",
    "offsetLocal": [
     0,
-    0.21503888590748033,
+    0.21488621710199096,
     0
    ],
    "bindOrigin": [
     0,
-    1.2348740581732283,
+    1.2439445905306439,
     0
    ],
    "bindDirLocal": [
@@ -182,8 +182,8 @@
     1,
     0
    ],
-   "lengthM": 0.250879,
-   "radiusM": 0.0648,
+   "lengthM": 0.250701,
+   "radiusM": 0.0968,
    "part": "shirt"
   },
   {
@@ -192,12 +192,12 @@
    "parent": "chest",
    "offsetLocal": [
     0,
-    0.2508787002253936,
+    0.25070058661898953,
     0
    ],
    "bindOrigin": [
     0,
-    1.4857527583986219,
+    1.4946451771496334,
     0
    ],
    "bindDirLocal": [
@@ -205,8 +205,8 @@
     1,
     0
    ],
-   "lengthM": 0.091817,
-   "radiusM": 0.0579,
+   "lengthM": 0.092054,
+   "radiusM": 0.0552,
    "part": "skin"
   },
   {
@@ -215,21 +215,21 @@
    "parent": "neck",
    "offsetLocal": [
     0,
-    0.09181742635137802,
+    0.09205430315036689,
     0
    ],
    "bindOrigin": [
     0,
-    1.5775701847499999,
+    1.5866994803000003,
     0
    ],
    "bindDirLocal": [
     0,
-    0.997381016601139,
-    -0.07232639714293972
+    0.9974073016415316,
+    -0.0719630087764453
    ],
-   "lengthM": 0.131349,
-   "radiusM": 0.0949,
+   "lengthM": 0.132012,
+   "radiusM": 0.087,
    "part": "skin"
   },
   {
@@ -238,12 +238,12 @@
    "parent": "head",
    "offsetLocal": [
     0,
-    0.13100500000000004,
+    0.13166999999999995,
     -0.0095
    ],
    "bindOrigin": [
     0,
-    1.70857518475,
+    1.7183694803000003,
     -0.0095
    ],
    "bindDirLocal": [
@@ -260,13 +260,13 @@
    "name": "clavicle_R",
    "parent": "chest",
    "offsetLocal": [
-    0.05552446085559208,
-    0.21503888590748033,
+    0.0569986300126366,
+    0.21488621710199096,
     0
    ],
    "bindOrigin": [
-    0.05552446085559208,
-    1.4499129440807086,
+    0.0569986300126366,
+    1.4588308076326348,
     0
    ],
    "bindDirLocal": [
@@ -274,7 +274,7 @@
     0,
     0
    ],
-   "lengthM": 0.185082,
+   "lengthM": 0.189995,
    "radiusM": 0.02,
    "part": "shirt"
   },
@@ -283,13 +283,13 @@
    "name": "upperArm_R",
    "parent": "clavicle_R",
    "offsetLocal": [
-    0.18508153618530693,
+    0.18999543337545532,
     0,
     0
    ],
    "bindOrigin": [
-    0.24060599704089902,
-    1.4499129440807086,
+    0.24699406338809193,
+    1.4588308076326348,
     0
    ],
    "bindDirLocal": [
@@ -297,8 +297,8 @@
     -1,
     0
    ],
-   "lengthM": 0.308596,
-   "radiusM": 0.0495,
+   "lengthM": 0.312818,
+   "radiusM": 0.0598,
    "part": "shirt"
   },
   {
@@ -307,12 +307,12 @@
    "parent": "upperArm_R",
    "offsetLocal": [
     0,
-    -0.30859594594594597,
+    -0.31281764324324324,
     0
    ],
    "bindOrigin": [
-    0.24060599704089902,
-    1.1413169981347626,
+    0.24699406338809193,
+    1.1460131643893916,
     0
    ],
    "bindDirLocal": [
@@ -320,8 +320,8 @@
     -1,
     0
    ],
-   "lengthM": 0.272291,
-   "radiusM": 0.0337,
+   "lengthM": 0.276016,
+   "radiusM": 0.036,
    "part": "shirt"
   },
   {
@@ -330,21 +330,21 @@
    "parent": "foreArm_R",
    "offsetLocal": [
     0,
-    -0.27229054054054036,
+    -0.2760155675675674,
     0
    ],
    "bindOrigin": [
-    0.24060599704089902,
-    0.8690264575942223,
+    0.24699406338809193,
+    0.8699975968218242,
     0
    ],
    "bindDirLocal": [
-    -0.33513422770345325,
-    -0.9399786632822006,
-    0.06422742401667327
+    -0.3281325131507675,
+    -0.9424929596953842,
+    0.06353010890905356
    ],
-   "lengthM": 0.162626,
-   "radiusM": 0.0494,
+   "lengthM": 0.164411,
+   "radiusM": 0.0488,
    "part": "skin"
   },
   {
@@ -352,13 +352,13 @@
    "name": "clavicle_L",
    "parent": "chest",
    "offsetLocal": [
-    -0.05552446085559208,
-    0.21503888590748033,
+    -0.0569986300126366,
+    0.21488621710199096,
     0
    ],
    "bindOrigin": [
-    -0.05552446085559208,
-    1.4499129440807086,
+    -0.0569986300126366,
+    1.4588308076326348,
     0
    ],
    "bindDirLocal": [
@@ -366,7 +366,7 @@
     0,
     0
    ],
-   "lengthM": 0.185082,
+   "lengthM": 0.189995,
    "radiusM": 0.02,
    "part": "shirt"
   },
@@ -375,13 +375,13 @@
    "name": "upperArm_L",
    "parent": "clavicle_L",
    "offsetLocal": [
-    -0.18508153618530693,
+    -0.18999543337545532,
     0,
     0
    ],
    "bindOrigin": [
-    -0.24060599704089902,
-    1.4499129440807086,
+    -0.24699406338809193,
+    1.4588308076326348,
     0
    ],
    "bindDirLocal": [
@@ -389,8 +389,8 @@
     -1,
     0
    ],
-   "lengthM": 0.308596,
-   "radiusM": 0.0491,
+   "lengthM": 0.312818,
+   "radiusM": 0.0593,
    "part": "shirt"
   },
   {
@@ -399,12 +399,12 @@
    "parent": "upperArm_L",
    "offsetLocal": [
     0,
-    -0.30859594594594597,
+    -0.31281764324324324,
     0
    ],
    "bindOrigin": [
-    -0.24060599704089902,
-    1.1413169981347626,
+    -0.24699406338809193,
+    1.1460131643893916,
     0
    ],
    "bindDirLocal": [
@@ -412,8 +412,8 @@
     -1,
     0
    ],
-   "lengthM": 0.272291,
-   "radiusM": 0.0337,
+   "lengthM": 0.276016,
+   "radiusM": 0.036,
    "part": "shirt"
   },
   {
@@ -422,21 +422,21 @@
    "parent": "foreArm_L",
    "offsetLocal": [
     0,
-    -0.27229054054054036,
+    -0.2760155675675674,
     0
    ],
    "bindOrigin": [
-    -0.24060599704089902,
-    0.8690264575942223,
+    -0.24699406338809193,
+    0.8699975968218242,
     0
    ],
    "bindDirLocal": [
-    0.33513422770345325,
-    -0.9399786632822006,
-    0.06422742401667327
+    0.3281325131507675,
+    -0.9424929596953842,
+    0.06353010890905356
    ],
-   "lengthM": 0.162626,
-   "radiusM": 0.0493,
+   "lengthM": 0.164411,
+   "radiusM": 0.0487,
    "part": "skin"
   },
   {
@@ -444,13 +444,13 @@
    "name": "thigh_R",
    "parent": "pelvis",
    "offsetLocal": [
-    0.14660405892572995,
+    0.15249633468293125,
     0,
     0
    ],
    "bindOrigin": [
-    0.14660405892572995,
-    0.9123157293120078,
+    0.15249633468293125,
+    0.9216152648776572,
     0
    ],
    "bindDirLocal": [
@@ -458,8 +458,8 @@
     -1,
     0
    ],
-   "lengthM": 0.430078,
-   "radiusM": 0.0846,
+   "lengthM": 0.43493,
+   "radiusM": 0.0941,
    "part": "shorts"
   },
   {
@@ -468,12 +468,12 @@
    "parent": "thigh_R",
    "offsetLocal": [
     0,
-    -0.43007777181496065,
+    -0.43492970341442994,
     0
    ],
    "bindOrigin": [
-    0.14660405892572995,
-    0.4822379574970471,
+    0.15249633468293125,
+    0.4866855614632273,
     0
    ],
    "bindDirLocal": [
@@ -481,8 +481,8 @@
     -1,
     0
    ],
-   "lengthM": 0.394238,
-   "radiusM": 0.0517,
+   "lengthM": 0.398686,
+   "radiusM": 0.0564,
    "part": "socks"
   },
   {
@@ -491,11 +491,11 @@
    "parent": "shin_R",
    "offsetLocal": [
     0,
-    -0.39423795749704715,
+    -0.3986855614632273,
     0
    ],
    "bindOrigin": [
-    0.14660405892572995,
+    0.15249633468293125,
     0.08799999999999997,
     0
    ],
@@ -505,7 +505,7 @@
     0.9535826651341417
    ],
    "lengthM": 0.189286,
-   "radiusM": 0.0731,
+   "radiusM": 0.0737,
    "part": "boots"
   },
   {
@@ -518,17 +518,17 @@
     0.1805
    ],
    "bindOrigin": [
-    0.14660405892572995,
+    0.15249633468293125,
     0.030999999999999972,
     0.1805
    ],
    "bindDirLocal": [
     0,
-    -0.19690355685172498,
-    0.9804228624930875
+    -0.19672463281145933,
+    0.9804587797787301
    ],
-   "lengthM": 0.096494,
-   "radiusM": 0.0615,
+   "lengthM": 0.096582,
+   "radiusM": 0.062,
    "part": "boots"
   },
   {
@@ -536,13 +536,13 @@
    "name": "thigh_L",
    "parent": "pelvis",
    "offsetLocal": [
-    -0.14660405892572995,
+    -0.15249633468293125,
     0,
     0
    ],
    "bindOrigin": [
-    -0.14660405892572995,
-    0.9123157293120078,
+    -0.15249633468293125,
+    0.9216152648776572,
     0
    ],
    "bindDirLocal": [
@@ -550,8 +550,8 @@
     -1,
     0
    ],
-   "lengthM": 0.430078,
-   "radiusM": 0.0852,
+   "lengthM": 0.43493,
+   "radiusM": 0.0947,
    "part": "shorts"
   },
   {
@@ -560,12 +560,12 @@
    "parent": "thigh_L",
    "offsetLocal": [
     0,
-    -0.43007777181496065,
+    -0.43492970341442994,
     0
    ],
    "bindOrigin": [
-    -0.14660405892572995,
-    0.4822379574970471,
+    -0.15249633468293125,
+    0.4866855614632273,
     0
    ],
    "bindDirLocal": [
@@ -573,8 +573,8 @@
     -1,
     0
    ],
-   "lengthM": 0.394238,
-   "radiusM": 0.0517,
+   "lengthM": 0.398686,
+   "radiusM": 0.0564,
    "part": "socks"
   },
   {
@@ -583,11 +583,11 @@
    "parent": "shin_L",
    "offsetLocal": [
     0,
-    -0.39423795749704715,
+    -0.3986855614632273,
     0
    ],
    "bindOrigin": [
-    -0.14660405892572995,
+    -0.15249633468293125,
     0.08799999999999997,
     0
    ],
@@ -597,7 +597,7 @@
     0.9535826651341417
    ],
    "lengthM": 0.189286,
-   "radiusM": 0.0731,
+   "radiusM": 0.0737,
    "part": "boots"
   },
   {
@@ -610,87 +610,87 @@
     0.1805
    ],
    "bindOrigin": [
-    -0.14660405892572995,
+    -0.15249633468293125,
     0.030999999999999972,
     0.1805
    ],
    "bindDirLocal": [
     0,
-    -0.19690355685172498,
-    0.9804228624930875
+    -0.19672463281145933,
+    0.9804587797787301
    ],
-   "lengthM": 0.096494,
-   "radiusM": 0.0615,
+   "lengthM": 0.096582,
+   "radiusM": 0.062,
    "part": "boots"
   }
  ],
  "mesh": {
-  "vertexCount": 102288,
-  "originalVertexCount": 102048,
-  "triangleCount": 173932,
+  "vertexCount": 71328,
+  "originalVertexCount": 71088,
+  "triangleCount": 120172,
   "unreferencedVertices": 6609,
   "materialSeamDuplicates": 240,
   "byteOrder": "little-endian",
   "layout": {
    "positions": {
     "byteOffset": 0,
-    "byteLength": 1227456,
+    "byteLength": 855936,
     "elementType": "Float32Array",
-    "elementCount": 306864
+    "elementCount": 213984
    },
    "normals": {
-    "byteOffset": 1227456,
-    "byteLength": 1227456,
+    "byteOffset": 855936,
+    "byteLength": 855936,
     "elementType": "Float32Array",
-    "elementCount": 306864
+    "elementCount": 213984
    },
    "uvAtlas": {
-    "byteOffset": 2454912,
-    "byteLength": 818304,
+    "byteOffset": 1711872,
+    "byteLength": 570624,
     "elementType": "Float32Array",
-    "elementCount": 204576
+    "elementCount": 142656
    },
    "baseColor": {
-    "byteOffset": 3273216,
-    "byteLength": 306864,
+    "byteOffset": 2282496,
+    "byteLength": 213984,
     "elementType": "Uint8Array",
-    "elementCount": 306864
+    "elementCount": 213984
    },
    "shadeClass": {
-    "byteOffset": 3580080,
-    "byteLength": 102288,
+    "byteOffset": 2496480,
+    "byteLength": 71328,
     "elementType": "Uint8Array",
-    "elementCount": 102288
+    "elementCount": 71328
    },
    "joints": {
-    "byteOffset": 3682368,
-    "byteLength": 818304,
+    "byteOffset": 2567808,
+    "byteLength": 570624,
     "elementType": "Uint16Array",
-    "elementCount": 409152
+    "elementCount": 285312
    },
    "weights": {
-    "byteOffset": 4500672,
-    "byteLength": 1636608,
+    "byteOffset": 3138432,
+    "byteLength": 1141248,
     "elementType": "Float32Array",
-    "elementCount": 409152
+    "elementCount": 285312
    },
    "indices": {
-    "byteOffset": 6137280,
-    "byteLength": 2087184,
+    "byteOffset": 4279680,
+    "byteLength": 1442064,
     "elementType": "Uint32Array",
-    "elementCount": 521796
+    "elementCount": 360516
    },
    "inverseBinds": {
-    "byteOffset": 8224464,
+    "byteOffset": 5721744,
     "byteLength": 1472,
     "elementType": "Float32Array",
     "elementCount": 368
    },
    "vertexMaterials": {
-    "byteOffset": 8225936,
-    "byteLength": 204576,
+    "byteOffset": 5723216,
+    "byteLength": 142656,
     "elementType": "Uint16Array",
-    "elementCount": 102288
+    "elementCount": 71328
    }
   }
  },
@@ -705,19 +705,19 @@
   "tone": "0.24 + 0.36*smoothstep(0.25,0.48,lum) + 0.36*smoothstep(0.57,0.85,lum)",
   "skin": [
    [
-    196,
-    142,
-    107
+    131,
+    83,
+    54
    ],
    [
-    129,
-    94,
-    71
+    86,
+    55,
+    36
    ],
    [
-    229,
-    166,
-    125
+    153,
+    97,
+    63
    ]
   ],
   "classes": "bit0 = textured (sample atlas at uvAtlas); bits1+ = 0 default, 1 skin, 2 refined vertex colour, 3 emissive"
@@ -726,18 +726,18 @@
   {
    "name": "skin",
    "rgb": [
-    196,
-    142,
-    107
+    131,
+    83,
+    54
    ],
    "region": null
   },
   {
    "name": "face",
    "rgb": [
-    196,
-    142,
-    107
+    131,
+    83,
+    54
    ],
    "region": [
     0,
@@ -758,18 +758,18 @@
   {
    "name": "skinShadow",
    "rgb": [
-    129,
-    94,
-    71
+    86,
+    55,
+    36
    ],
    "region": null
   },
   {
    "name": "skinLight",
    "rgb": [
-    229,
-    166,
-    125
+    153,
+    97,
+    63
    ],
    "region": null
   },
@@ -785,9 +785,9 @@
   {
    "name": "hair",
    "rgb": [
-    42,
-    27,
-    21
+    24,
+    23,
+    19
    ],
    "region": [
     384,
@@ -799,27 +799,27 @@
   {
    "name": "hairMass",
    "rgb": [
-    42,
-    27,
-    21
+    24,
+    23,
+    19
    ],
    "region": null
   },
   {
    "name": "hairFade",
    "rgb": [
-    42,
-    27,
-    21
+    24,
+    23,
+    19
    ],
    "region": null
   },
   {
    "name": "hairLight",
    "rgb": [
-    117,
-    69,
-    43
+    41,
+    34,
+    27
    ],
    "region": null
   },
@@ -1013,63 +1013,63 @@
   {
    "name": "faceSurface",
    "rgb": [
-    196,
-    142,
-    107
+    131,
+    83,
+    54
    ],
    "region": null
   },
   {
    "name": "faceBase",
    "rgb": [
-    196,
-    142,
-    107
+    131,
+    83,
+    54
    ],
    "region": null
   },
   {
    "name": "faceShadow",
    "rgb": [
-    171,
-    124,
-    93
+    114,
+    72,
+    47
    ],
    "region": null
   },
   {
    "name": "faceLight",
    "rgb": [
-    204,
-    148,
-    111
+    136,
+    86,
+    56
    ],
    "region": null
   },
   {
    "name": "lipTop",
    "rgb": [
-    166,
-    113,
-    87
+    146,
+    96,
+    72
    ],
    "region": null
   },
   {
    "name": "lipBottom",
    "rgb": [
-    180,
-    124,
-    96
+    153,
+    100,
+    73
    ],
    "region": null
   },
   {
    "name": "mouthLine",
    "rgb": [
-    102,
-    72,
-    57
+    79,
+    51,
+    37
    ],
    "region": null
   },
@@ -1112,36 +1112,36 @@
   {
    "name": "browMass",
    "rgb": [
-    45,
-    30,
-    24
+    29,
+    27,
+    22
    ],
    "region": null
   },
   {
    "name": "facialHair",
    "rgb": [
-    111,
-    79,
-    60
+    72,
+    50,
+    35
    ],
    "region": null
   },
   {
    "name": "hairDeep",
    "rgb": [
-    38,
-    28,
-    22
+    23,
+    25,
+    21
    ],
    "region": null
   },
   {
    "name": "hairRidge",
    "rgb": [
-    62,
-    38,
-    27
+    29,
+    26,
+    21
    ],
    "region": null
   },
@@ -1647,14 +1647,12 @@
    ]
   },
   {
-   "name": "refined_Hair / long-curls accessories",
+   "name": "refined_Hair / coils accessories",
    "category": "hair",
-   "vertexCount": 44460,
-   "triangleCount": 76160,
+   "vertexCount": 13500,
+   "triangleCount": 22400,
    "bones": [
-    "head",
-    "neck",
-    "chest"
+    "head"
    ]
   },
   {
@@ -1872,14 +1870,5 @@
    ]
   }
  ],
- "hairWarnings": [
-  {
-   "code": "HAIR_HAS_NON_HEAD_INFLUENCES",
-   "bones": [
-    "neck",
-    "chest"
-   ],
-   "action": "Preserve current approved weights for baseline comparison. Treat these vertices as hair, not body. Head-follow/secondary-motion policy needs an explicit integration decision; no reweighting is performed here."
-  }
- ]
+ "hairWarnings": []
 }

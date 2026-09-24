@@ -9,21 +9,22 @@ const NM = process.env.PUPPETEER_NODE_MODULES; if (NM) module.paths.unshift(NM);
 const puppeteer = require("puppeteer-core"), fs = require("fs");
 const a = process.argv, opt = (k, d) => { const i = a.indexOf(k); return i > 0 ? a[i + 1] : d; };
 const OUT = opt("--out", "of_ball.json"), BALLX = +opt("--ballx", 66), STOPAT = +opt("--stopat", 0), REVAT = +opt("--revat", 0), GEAR = opt("--gear", "run"), TICKS = +opt("--ticks", 260), TURN = +opt("--turn", 0), BODY = opt("--body", "AVG_ATHLETIC");
-const CHAR = opt("--character", "");
+const CHAR = opt("--character", ""), CHARSIM = a.includes("--charsim"), LEGLEN = +opt("--leglen", 0);   // --charsim: the selected character's morphology also drives the player law (leg length -> stride clock)
 const URL = opt("--url", "http://127.0.0.1:8124/sandbox/visual/match.html"), SHOTS = opt("--shots", ""), ZOOM = +opt("--zoom", 0);
 (async () => {
   const b = await puppeteer.launch({ executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", headless: "new", userDataDir: opt("--udd", "chrome-ofball"), args: ["--no-sandbox"] });
   const p = await b.newPage(); await p.setViewport({ width: 1500, height: 950, deviceScaleFactor: 2 });
   const errs = []; p.on("pageerror", e => errs.push(String(e).slice(0, 220)));
-  await p.goto(URL + `?ofPlay=1&fps=60&body=${BODY}&r=` + Date.now(), { waitUntil: "load", timeout: 180000 });
+  await p.goto(URL + `?ofPlay=1&fps=60&body=${BODY}${CHARSIM ? "&charSim=1" : ""}&r=` + Date.now(), { waitUntil: "load", timeout: 180000 });
   for (let i = 0; i < 600; i++) { if (await p.evaluate(() => typeof OFPLAY !== "undefined" && OFPLAY.on && OFPLAY.actor && OFPLAY.actor.sol)) break; await new Promise(r => setTimeout(r, 100)); }
   // fixture: player at rest, a STATIONARY LOOSE ball 6 m ahead on the running line. Nothing else touched.
-  await p.evaluate((BODY, BALLX) => {
+  await p.evaluate((BODY, BALLX, LEGLEN) => {
     S.pt.paused = true; OFPLAY.mixed = false;
     const t = S.pt; t.p.x = 60; t.p.y = 34; t.p.vx = 0; t.p.vy = 0; t.p.facing = 0; t.p.touchT = 0;
     t.b.x = BALLX; t.b.y = 34; t.b.z = 0; t.b.vx = 0; t.b.vy = 0; t.b.vz = 0; t.b.ctrl = false; t.b.exclT = 0; t.b.held = null;
+    if (LEGLEN) t.p.legLen = LEGLEN;
     t.touchN = 0; t.lastTouchT = undefined; t.touchInfo = null; t.ctrlState = null; t.gk.x = 104.5; t.gk.y = 34;
-  }, BODY, BALLX);
+  }, BODY, BALLX, LEGLEN);
   if (CHAR) { const ok = await p.evaluate(async (id) => { try { await ofCharLoad(id); ofPlaySetCharacter(id); await new Promise(r => setTimeout(r, 200)); return OFPLAY.charId === id; } catch (e) { return String(e); } }, CHAR);
     if (ok !== true) { console.error("character load failed:", ok); process.exit(3); } }
   if (SHOTS) { fs.mkdirSync(SHOTS, { recursive: true }); await p.evaluate((Z) => { OFPLAY.mixed = true; OFPLAY.dbg.feet = true; OFPLAY.dbg.roots = true; OFPLAY.dbg.hud = false; if (OFPLAY.panel) OFPLAY.panel.style.display = "none"; if (Z) { RIG.zoom = Z; RIG.zoomTarget = Z; } }, ZOOM); }

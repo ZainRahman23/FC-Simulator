@@ -5,18 +5,21 @@
 // gait transitions seen, cadence / stride, phase continuity (no resets), self-intersection proxies (elbow / knee angles).
 //   node of_loco_validate.js --out <json> [--bodies SHORT_LEAN,AVG_ATHLETIC,TALL_LEAN]
 const fs = require("fs"), path = require("path"), vm = require("vm");
-const a = process.argv, opt = (k, d) => { const i = a.indexOf(k); return i > 0 ? a[i + 1] : d; }; const OUT = opt("--out", "of_loco_validate.json"), BODIES = opt("--bodies", "SHORT_LEAN,AVG_ATHLETIC,TALL_LEAN").split(",");
+const a = process.argv, opt = (k, d) => { const i = a.indexOf(k); return i > 0 ? a[i + 1] : d; }; const OUT = opt("--out", "of_loco_validate.json"), BODIES = opt("--bodies", "SHORT_LEAN,AVG_ATHLETIC,TALL_LEAN").split(",").filter(Boolean);
+// real characters validate through the SAME code path: of_character.js turns a rig.json into a runtime skeleton, and ofActorMake takes it
+const CHARS = opt("--characters", "").split(",").filter(Boolean);
+const CHAR_RIGS = {}; for (const id of CHARS) CHAR_RIGS[id] = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../../../../assets/characters/outfield", id, "rig.json"), "utf8"));
 const ROOT = path.resolve(__dirname, "../../anim3d");
 const ctx = { console, Math, performance: { now: () => Date.now() }, Float32Array, Int32Array, Uint16Array, Map, Set, Object, Array, Number, JSON };
 ctx.window = ctx; vm.createContext(ctx);
-for (const f of ["m4.js", "skeleton.js", "skin_mesh.js", "ik.js", "gk_motion_library.js", "of_rig.js", "of_motion.js", "of_loco.js"]) vm.runInContext(fs.readFileSync(path.join(ROOT, f), "utf8"), ctx, { filename: f });
+for (const f of ["m4.js", "skeleton.js", "skin_mesh.js", "ik.js", "gk_motion_library.js", "of_rig.js", "of_motion.js", "of_loco.js", "of_character.js"]) vm.runInContext(fs.readFileSync(path.join(ROOT, f), "utf8"), ctx, { filename: f });
 vm.runInContext(`
   if (typeof clamp01 === "undefined") globalThis.clamp01 = (x) => Math.max(0, Math.min(1, x));
   if (typeof lerp === "undefined") globalThis.lerp = (a, b, t) => a + (b - a) * t;
   if (typeof smooth01 === "undefined") globalThis.smooth01 = (x) => { x = Math.max(0, Math.min(1, x)); return x * x * (3 - 2 * x); };
   if (typeof gkRootMatrix === "undefined") globalThis.gkRootMatrix = function (px, py, f, dz) { const m = M4.ident(); const right = [-Math.sin(f), 0, -Math.cos(f)], up = [0, 1, 0], fwd = [Math.cos(f), 0, -Math.sin(f)]; m[0] = right[0]; m[1] = right[1]; m[2] = right[2]; m[4] = up[0]; m[5] = up[1]; m[6] = up[2]; m[8] = fwd[0]; m[9] = fwd[1]; m[10] = fwd[2]; m[12] = px; m[13] = dz || 0; m[14] = -py; return m; };
 `, ctx);
-const R = vm.runInContext(`(function (BODIES) {
+const R = vm.runInContext(`(function (BODIES, CHAR_RIGS) {
   const PT = { ACC: 4.8, BRAKE: 6.5, VMAX: 8.2, RUNV: 5.0, WALKV: 1.5, JOGV: 3.0, ACC_GAIN: 8.5 / 4.8, BRAKE_PLANT: 12.0, ACC_LAT: 10.0, ACC_START: 9.5 }, DT = 1 / 60;
   // the ported world.py locomotion law (match.js ptStep) — authoritative mover for the validation
   function simStep(p, keys) {
@@ -48,10 +51,12 @@ const R = vm.runInContext(`(function (BODIES) {
     walk_slow:  { secs: 6, keys: (t) => K({ right: (Math.floor(t * 60) % 6) < 2 }) },           // a walk-speed profile: the intent pulses so the law's velocity averages ~1.3 m/s (the playtest has no walk speed; the presentation must still read as a walk)
   };
   const report = { bodies: {}, scenarios: Object.keys(SCEN) };
-  for (const id of BODIES) {
-    const skel = ofBuildSkeleton(OF_BODIES[id]); const body = { H: skel.H, legLen: +skel.legLen.toFixed(3), scenarios: {} };
+  for (const id of BODIES.concat(Object.keys(CHAR_RIGS))) {
+    const isChar = !!CHAR_RIGS[id];
+    const skel = isChar ? ofCharSkeleton({ rig: CHAR_RIGS[id] }) : ofBuildSkeleton(OF_BODIES[id]);
+    const body = { H: skel.H, legLen: +skel.legLen.toFixed(3), real: isChar, name: isChar ? CHAR_RIGS[id].identity.name : id, scenarios: {} };
     for (const sn of report.scenarios) {
-      const sc = SCEN[sn]; const act = ofActorMake(id, 60, 34, 0); act.motion = "LOCO"; const p = { x: 60, y: 34, vx: 0, vy: 0, facing: 0 }; let t = 0;
+      const sc = SCEN[sn]; const act = ofActorMake(isChar ? skel : id, 60, 34, 0); act.motion = "LOCO"; const p = { x: 60, y: 34, vx: 0, vy: 0, facing: 0 }; let t = 0;
       const perGait = {}; const G = (g) => perGait[g] || (perGait[g] = { n: 0, slide: [], relMax: 0, pen: 0, hover: 0, kneeMin: 999, kneeMax: 0, elbowMin: 999, jumpMax: 0, jumpP95: [], jerkMax: 0, jerkP95: [], toeTicks: 0, stepTicks: 0 });
       const m = { ticks: 0, gaits: [], phaseJumps: 0, vMax: 0, leanMin: 0, leanMax: 0, rootVsPres: 0, nan: false, jumpMax: 0, transitions: [], strides: [] }; let lastGait = null, lastPhase = null, lastPlant = { R: null, L: null };
       for (let k = 0; k < sc.secs * 60; k++) {
@@ -75,7 +80,7 @@ const R = vm.runInContext(`(function (BODIES) {
     report.bodies[id] = body;
   }
   return report;
-})(${JSON.stringify(BODIES)})`, ctx);
+})(${JSON.stringify(BODIES)}, ${JSON.stringify(CHAR_RIGS)})`, ctx);
 fs.writeFileSync(OUT, JSON.stringify(R, null, 1));
 for (const id of Object.keys(R.bodies)) { const b = R.bodies[id]; console.log(id, "H", b.H, "leg", b.legLen);
   for (const sn of R.scenarios) { const m = b.scenarios[sn]; const pg = Object.entries(m.perGait).map(([g, q]) => `${g}:${q.n}t contact-slide max ${q.slide ? (q.slide.max * 100).toFixed(1) : "-"} p95 ${q.slide ? (q.slide.p95 * 100).toFixed(1) : "-"} mean ${q.slide ? (q.slide.mean * 100).toFixed(1) : "-"}cm rel ${(q.relMax * 100).toFixed(1)} pen ${(q.pen * 100).toFixed(1)} hover ${(q.hover * 100).toFixed(1)} knee ${q.kneeMin}-${q.kneeMax} pop p95 ${(q.jerkP95 * 100).toFixed(1)} max ${(q.jerkMax * 100).toFixed(1)}`).join(" | ");

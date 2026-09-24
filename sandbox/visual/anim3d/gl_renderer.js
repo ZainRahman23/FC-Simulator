@@ -124,7 +124,7 @@ function glEnsureTarget(R, w, h) {
   R.cv.width = w; R.cv.height = h;
   if (R.fbo) { gl.deleteFramebuffer(R.fbo); gl.deleteTexture(R.texC); gl.deleteTexture(R.texI); gl.deleteRenderbuffer(R.rbD); }
   const tex = () => { const t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, w, h, 0, gl.RGBA, gl.UNSIGNED_BYTE, null); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE); return t; };
-  R.texC = tex(); R.texI = tex(); R.rbD = gl.createRenderbuffer(); gl.bindRenderbuffer(gl.RENDERBUFFER, R.rbD); gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16, w, h);
+  R.texC = tex(); R.texI = tex(); R.rbD = gl.createRenderbuffer(); gl.bindRenderbuffer(gl.RENDERBUFFER, R.rbD); gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT24, w, h);
   R.fbo = gl.createFramebuffer(); gl.bindFramebuffer(gl.FRAMEBUFFER, R.fbo);
   gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, R.texC, 0); gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT1, gl.TEXTURE_2D, R.texI, 0);
   gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, R.rbD); gl.drawBuffers([gl.COLOR_ATTACHMENT0, gl.COLOR_ATTACHMENT1]);
@@ -152,7 +152,7 @@ function glRenderCharactersROI(R, chars, roi, density, cvW, cvH, RESv) {
     const W = Math.max(gw, R.roi ? R.roi.w : 0), Hh = Math.max(gh, R.roi ? R.roi.h : 0); const old = R.roi; R.roi = { w: W, h: Hh };
     if (old) { gl.deleteFramebuffer(old.fbo); gl.deleteTexture(old.texC); gl.deleteTexture(old.texI); gl.deleteRenderbuffer(old.rbD); }
     const tex = () => { const t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, W, Hh, 0, gl.RGBA, gl.UNSIGNED_BYTE, null); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE); return t; };
-    R.roi.texC = tex(); R.roi.texI = tex(); R.roi.rbD = gl.createRenderbuffer(); gl.bindRenderbuffer(gl.RENDERBUFFER, R.roi.rbD); gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16, W, Hh);
+    R.roi.texC = tex(); R.roi.texI = tex(); R.roi.rbD = gl.createRenderbuffer(); gl.bindRenderbuffer(gl.RENDERBUFFER, R.roi.rbD); gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT24, W, Hh);
     R.roi.fbo = gl.createFramebuffer(); gl.bindFramebuffer(gl.FRAMEBUFFER, R.roi.fbo); gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, R.roi.texC, 0); gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT1, gl.TEXTURE_2D, R.roi.texI, 0); gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, R.roi.rbD); gl.drawBuffers([gl.COLOR_ATTACHMENT0, gl.COLOR_ATTACHMENT1]); gl.bindFramebuffer(gl.FRAMEBUFFER, null);
     if (!R.roiCv) { R.roiCv = document.createElement("canvas"); } R.roiCv.width = W; R.roiCv.height = Hh;
   }

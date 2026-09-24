@@ -9,7 +9,7 @@ const a = process.argv, opt = (k, d) => { const i = a.indexOf(k); return i > 0 ?
 const OUT = opt("--out", "of_shot.json"), SHOT = opt("--shot", "2"), FOOT = opt("--foot", "R"), APP = opt("--approach", "stand");
 const BODY = opt("--body", "AVG_ATHLETIC"), HOLD = +opt("--hold", 400), TICKS = +opt("--ticks", 170);
 const SHOTS = opt("--shots", ""), EVERY = +opt("--every", 3), ZOOM = +opt("--zoom", 3);
-const CHAR = opt("--character", "");
+const CHAR = opt("--character", ""), CHARSIM = a.includes("--charsim");   // --charsim also publishes the real body's leg length to the player law (NOT the accepted default)
 const URL = opt("--url", "http://127.0.0.1:8124/sandbox/visual/match.html");
 (async () => {
   const b = await puppeteer.launch({ executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", headless: "new", userDataDir: opt("--udd", "chrome-ofshot"), args: ["--no-sandbox"] });
@@ -20,14 +20,17 @@ const URL = opt("--url", "http://127.0.0.1:8124/sandbox/visual/match.html");
   if (CHAR) { const ok = await p.evaluate(async (id) => { try { await ofCharLoad(id); ofPlaySetCharacter(id); await new Promise(r => setTimeout(r, 200)); return OFPLAY.charId === id; } catch (e) { return String(e); } }, CHAR);
     if (ok !== true) { console.error("character load failed:", ok); process.exit(3); } }
   if (SHOTS) { fs.mkdirSync(SHOTS, { recursive: true }); await p.evaluate((Z) => { OFPLAY.mixed = true; OFPLAY.dbg.feet = true; OFPLAY.dbg.hud = false; if (OFPLAY.panel) OFPLAY.panel.style.display = "none"; if (Z) { RIG.zoom = Z; RIG.zoomTarget = Z; } }, ZOOM); }
-  await p.evaluate((FOOT, APP) => {
+  await p.evaluate((FOOT, APP, CHAR, CHARSIM) => {
     S.pt.paused = true; ptReset();
     const t = S.pt; t.pfoot = FOOT;
     t.p.x = 78; t.p.y = 34; t.p.vx = 0; t.p.vy = 0; t.p.facing = 0; t.p.touchT = 0; t.p.gaitPhase = 0.08; t.p.gaitSettled = true;
-    t.p.legLen = (OFPLAY.actor && OFPLAY.actor.skel.legLen) || PT.LEG_REF;
+    // SIMULATION NEUTRALITY. A generic test body IS a simulation attribute and publishes its leg length (that is what ofPlaySetBody
+    // does). A real character is PRESENTATION: selecting one must not move the stride clock, so the law keeps the reference leg unless
+    // --charsim explicitly asks for the opt-in. Publishing it here would have made every character's shot a different simulation.
+    t.p.legLen = (CHAR && !CHARSIM) ? PT.LEG_REF : ((OFPLAY.actor && OFPLAY.actor.skel.legLen) || PT.LEG_REF);
     t.b.x = 78.48; t.b.y = 34 + (FOOT === "R" ? 0.16 : -0.16); t.b.z = 0; t.b.vx = 0; t.b.vy = 0; t.b.vz = 0; t.b.ctrl = true; t.b.exclT = 0; t.b.held = null;
     t.gk.x = 104.5; t.gk.y = 34;
-  }, FOOT, APP);
+  }, FOOT, APP, CHAR, CHARSIM);
   const rows = []; const K = { stand: {}, walk: { walk: true, right: true }, jog: { jog: true, right: true }, run: { right: true }, dribble: { right: true } }[APP] || {};
   const approachTicks = APP === "stand" ? 10 : 90, holdTicks = Math.round(HOLD / 1000 * 60);
   for (let k = 0; k < TICKS; k++) {

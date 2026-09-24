@@ -83,6 +83,13 @@ function ofCharDraw(R, entry, skinMats, view, proj) {
   gl.uniform3fv(P.u.light, entry.rig.shading.light);
   gl.uniform3fv(P.u.skinBase, G.skinBase); gl.uniform3fv(P.u.skinShadow, G.skinShadow); gl.uniform3fv(P.u.skinLight, G.skinLight);
   gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, G.tex); gl.uniform1i(P.u.atlas, 0);
+  // FACE WINDING. Astra's triangles are CCW seen from outside (verified against the shipped per-vertex normals: 98.8% of osimhen's
+  // 122k triangles have (v1-v0)x(v2-v0) along the outward normal). This engine's camera transform reverses winding in screen space,
+  // so the pipeline's own meshes are drawn with frontFace(CCW) and Astra's need frontFace(CW). Without this the BACK faces survive
+  // culling: you see the inside of the far side of the shirt, which reads as mirrored lettering and a front/back swap.
+  const prevFront = gl.getParameter(gl.FRONT_FACE);
+  gl.frontFace(gl.CW);
   gl.bindVertexArray(G.vao); gl.drawElements(gl.TRIANGLES, G.count, gl.UNSIGNED_INT, 0); gl.bindVertexArray(null);
+  gl.frontFace(prevFront);
   return 1;
 }

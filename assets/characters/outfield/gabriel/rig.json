@@ -1650,7 +1650,7 @@
   {
    "name": "lower_anatomy",
    "category": "lower-body-and-shorts",
-   "vertexCount": 4495,
+   "vertexCount": 4591,
    "triangleCount": 8832,
    "bones": [
     "pelvis",
@@ -1658,7 +1658,12 @@
     "thigh_L",
     "shin_R",
     "shin_L"
-   ]
+   ],
+   "packageDeclared": {
+    "vertexCount": 4495,
+    "triangleCount": 8832,
+    "note": "vertex count only: this build duplicates vertices that straddle a material seam, so a part references more of them"
+   }
   },
   {
    "name": "lower_shorts",

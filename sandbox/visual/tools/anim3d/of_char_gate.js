@@ -10,7 +10,7 @@
 //   node of_char_gate.js [--ids cucurella,gabriel] [--pkg <package dir>]
 const fs = require("fs"), path = require("path"), vm = require("vm");
 const a = process.argv, opt = (k, d) => { const i = a.indexOf(k); return i > 0 ? a[i + 1] : d; };
-const IDS = opt("--ids", "cucurella,gabriel").split(",").filter(Boolean);
+const IDS = opt("--ids", "cucurella,gabriel,osimhen,szoboszlai,vinicius,james").split(",").filter(Boolean);
 const PKG = opt("--pkg", "");
 const ROOT = path.join(__dirname, "../../anim3d"), ASSETS = path.join(__dirname, "../../../../assets/characters/outfield");
 const ctx = { console, Math, performance: { now: () => 0 }, Float32Array, Int32Array, Uint8Array, Uint16Array, Uint32Array, Map, Set, Object, Array, Number, JSON };

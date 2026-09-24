@@ -46,6 +46,21 @@ function ofPlaySetRunners(n) {
   OFPLAY.runners = []; const p = S.pt.p;
   for (let i = 0; i < n; i++) { const id = OF_BODY_ORDER[i % OF_BODY_ORDER.length]; const r = ofPlayMakeActor(id, { x: p.x + 4 + (i % 4) * 3, y: p.y - 6 + Math.floor(i / 4) * 4, facing: 0 }); r.lap = { cx: r.x, cy: r.y, r: 2.6 + (i % 3) * 0.7, w: (2.0 + (i % 4) * 1.6) / (2.6 + (i % 3) * 0.7), ph: i * 0.9 }; OFPLAY.runners.push(r); }
 }
+// A squad of REAL characters. Every loaded character is reused by reference — one set of GPU buffers and one atlas per PLAYER, not per
+// runner — so this measures what 22 real bodies actually cost, not what 22 copies of them would.
+function ofPlaySetCharRunners(n) {
+  const ids = OF_CHAR.order.filter(id => { const e = OF_CHAR.get(id); return e && e.status === "ready"; });
+  if (!ids.length) { ofPlaySetRunners(n); return; }
+  OFPLAY.runners = []; const p = S.pt.p;
+  for (let i = 0; i < n; i++) {
+    const ent = OF_CHAR.get(ids[i % ids.length]);
+    const r = ofPlayMakeActor(ent.skel, { x: p.x + 4 + (i % 4) * 3, y: p.y - 6 + Math.floor(i / 4) * 4, facing: 0 });
+    r.char = ent;
+    r.lap = { cx: r.x, cy: r.y, r: 2.6 + (i % 3) * 0.7, w: (2.0 + (i % 4) * 1.6) / (2.6 + (i % 3) * 0.7), ph: i * 0.9 };
+    OFPLAY.runners.push(r);
+  }
+  S.pt.last = "SQUAD -> " + n + " real characters (" + ids.length + " distinct, shared by reference)";
+}
 function ofPlayRecord(t, a) {
   const d = a.sol.diag, L = a.loco.diag, fk = a.sol.fk, pel = fk.joint[a.skel.byName.pelvis.idx];
   const rec = { tick: Math.round(t.now * 60), t: +t.now.toFixed(4), x: +t.p.x.toFixed(4), y: +t.p.y.toFixed(4), vx: +t.p.vx.toFixed(4), vy: +t.p.vy.toFixed(4), facing: +t.p.facing.toFixed(4), keys: Object.keys(t.keys).filter(k => t.keys[k]).join("+"),
@@ -93,7 +108,7 @@ function ofPlayDraw(dt) {
   const t = S.pt, p = t.p, a = OFPLAY.actor; if (OFPLAY.animOff || !a.sol) return;
   const t0 = performance.now();
   // skin matrices (world × inverse bind) — computed by ofActorTick; extra runners too
-  const chars = [{ skel: a.skel, fk: a.sol.fk, skinMats: a.skinMats, palette: SKEL_PARTS, char: OFPLAY.charEntry }]; for (const r of OFPLAY.runners) if (r.sol) chars.push({ skel: r.skel, fk: r.sol.fk, skinMats: r.skinMats, palette: OFPLAY_KIT_B });
+  const chars = [{ skel: a.skel, fk: a.sol.fk, skinMats: a.skinMats, palette: SKEL_PARTS, char: OFPLAY.charEntry }]; for (const r of OFPLAY.runners) if (r.sol) chars.push({ skel: r.skel, fk: r.sol.fk, skinMats: r.skinMats, palette: OFPLAY_KIT_B, char: r.char || null });
   const t1 = performance.now(); const prev = GL3D.character; GL3D.character = "SKINNED"; const out = glRenderCharacters(OFPLAY.R, chars, cv.width, cv.height, {}); GL3D.character = prev; const tR = performance.now() - t1;
   // shadow at the authoritative root, then the layer (page canvas at the canvas density)
   const sp = sproj3(p.x, 0, p.y); const s = S.playerVScale * depthScale(sp.d) * RIG.zoom * RES, flat = flattenAt(p.x, p.y);
@@ -173,7 +188,12 @@ function ofPlayKeys() {
                                force: { tech: sp.tech, foot: S.pt.pfoot || "R" } }); }
     else if (k === "6") { const o = OF_BODY_ORDER, i = (o.indexOf(OFPLAY.body) + 1) % o.length; ofPlaySetCharacter(null); ofPlaySetBody(o[i]); }
     else if (k === "c") ofPlayCycleCharacter(e.shiftKey ? -1 : 1);
-    else if (k === "n") ofPlaySetRunners(OFPLAY.runners.length === 0 ? 10 : OFPLAY.runners.length < 21 ? 21 : 0);
+    else if (k === "n") {
+      // A squad. With a real character selected the squad is made of REAL characters (shared by reference), so what you see at 22 is
+      // what 22 real players cost; with the generic test body it stays the generic runners the locomotion work was measured on.
+      const n = OFPLAY.runners.length === 0 ? 10 : OFPLAY.runners.length < 21 ? 21 : 0;
+      if (OFPLAY.charId) ofPlaySetCharRunners(n); else ofPlaySetRunners(n);
+    }
     else if (k === "j" || k === "l") {
       // J: the ball AT YOUR FEET, already carried — start dribbling immediately. L: a LOOSE ball 4 m ahead to run onto.
       // Ahead means along the way you are actually going; at rest the idle facing points at the old ball, which is never where you want it.
@@ -247,6 +267,17 @@ function ofPlayBallHud(a) {
   const L3 = lt ? `last touch  ${lt.foot} ${lt.kind}  late ${((lt.late || 0) * 1000) | 0} ms  boot-ball ${lt.bootReal != null ? (lt.bootReal * 100).toFixed(0) + " cm" : "-"}${lt.unrealisable ? "  UNREALISED" : ""}` : "last touch  -";
   return `${L1}\ntouch       ${nx}\nboot→ball   ${bd}${rr ? "   reach " + rr : ""}\n${L3}`;
 }
+// The identity line. With a real character selected it names the PLAYER — the stature and mass are his own, read from his rig, not
+// from a generic body preset — and states whether his morphology is presentation-only or is also driving the simulation.
+function ofPlayWho(a) {
+  const e = OFPLAY.charEntry, L = a.loco.diag, k = a.kick;
+  const act = k ? "KICK " + (k.tech || "") + " — " + ((ofKickFam(k.tech) || {}).label || "") + " (" + k.foot + " foot)"
+            : (S.pt.b && S.pt.b.ctrl) ? "CARRY " + (L.wGait < 0.5 ? "IDLE" : L.gait) : L.wGait < 0.5 ? "IDLE" : L.gait;
+  const who = e ? `${e.rig.identity.name}   ${e.rig.identity.heightCm} cm / ${e.rig.identity.weightKg} kg`
+                : `generic test body ${OFPLAY.body}   H ${(a.skel.H * 100).toFixed(0)} cm`;
+  return `player      ${who}   leg ${a.skel.legLen.toFixed(3)} m   ${e ? (OFPLAY.charDrivesSim ? "morphology DRIVES SIM" : "presentation only") : ""}
+action      ${act}   touches ${S.pt.touchN || 0}   ${S.pt.ctrlState || ""}`;
+}
 function ofPlayHud() {
   const p = OFPLAY.panel; if (!p) return; const t = S.pt, a = OFPLAY.actor; if (!t || !t.on || !a || !a.sol) return; const L = a.loco.diag, d = a.sol.diag, pl = t.p;
   const mean = (v) => v.length ? (v.reduce((x, y) => x + y, 0) / v.length) : 0; const f2 = (v) => (+v).toFixed(2);
@@ -254,7 +285,7 @@ function ofPlayHud() {
   const foot = (sd) => { const f = d.feet[sd]; return f ? `${sd} ${f.mode.padEnd(7)} ${f.contact ? "PLANT slide " + (f.slide * 100).toFixed(1).padStart(4) + "cm" : "                "} sole ${(f.soleY * 100).toFixed(1).padStart(5)}cm${f.s != null ? " s " + f.s.toFixed(2) : ""}` : sd + " -"; };
   const fs = S.frameStat; const iv = fs && fs.intervals.length ? fs.intervals.slice(-120) : null;
   p.querySelector("#ofplay-status").textContent =
-`body        ${OFPLAY.body}  H ${a.skel.H.toFixed(2)} m  leg ${a.skel.legLen.toFixed(3)} m
+`${ofPlayWho(a)}
 sim         x ${f2(pl.x)} y ${f2(pl.y)}  v ${f2(L.v)} m/s  a‖ ${L.aPar.toFixed(1)}  facing ${L.facing}°  legs ${L.legYaw}°  twist ${L.twist}°
 gait        ${L.gait}  (${L.lo}→${L.hi} ${L.t})  phase ${L.phase.toFixed(2)}  cadence ${L.cadence} steps/s  step ${L.step} m  wGait ${L.wGait}${L.settled ? "  SETTLED" : ""}${L.reverse ? "  BACKPEDAL" : ""}
 lean        ${L.lean}°  roll ${L.roll}°  pelvis drop ${((d.pelvisDrop || 0) * 100).toFixed(1)} cm  ground lift ${((d.ground || 0) * 100).toFixed(1)} cm  pop ${((d.jerk || 0) * 100).toFixed(1)} cm/tick

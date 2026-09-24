@@ -125,6 +125,12 @@ function build(id) {
                  footwearMin: f.footwearBoundsBindM.min, footwearMax: f.footwearBoundsBindM.max };
   }
   const attach = JSON.parse(fs.readFileSync(path.join(PKG, "derived", id, "attachments.json")));
+  const builtParts = new Map();                                                                   // triangles and referenced vertices per part, AS CONSTRUCTED HERE
+  for (const t of mesh.tris) {
+    let e = builtParts.get(t.part); if (!e) builtParts.set(t.part, e = { tris: 0, vs: new Set() });
+    e.tris++; for (const i of t.v) e.vs.add(i);
+  }
+  for (const e of builtParts.values()) e.verts = e.vs.size;
   A.uvAtlas = uvA; A.baseColor = baseCol; A.shadeClass = cls; A.vertexMaterials = vmat;
   let offset = 0; const layout = {};
   const order = ["positions", "normals", "uvAtlas", "baseColor", "shadeClass", "joints", "weights", "indices", "inverseBinds", "vertexMaterials"];
@@ -157,8 +163,22 @@ function build(id) {
                classes: "bit0 = textured (sample atlas at uvAtlas); bits1+ = 0 default, 1 skin, 2 refined vertex colour, 3 emissive" },
     materials: mesh.materials.map((m, i) => { const c = compiled.materials[i] || {}; return { name: m.name, rgb: c.rgb || null, region: c.region || null }; }),
     atlas: { file: "atlas.png", width: 512, height: 512 },
-    parts: attach.parts.map(p => ({ name: p.name, category: p.category, vertexCount: p.vertexCount, triangleCount: p.triangleCount,
-                                    bones: Object.keys(p.bones || {}), blended: p.blendedVertexCount != null ? p.blendedVertexCount : undefined })),
+    // The part table describes the geometry THIS BUILD PACKS, counted from the constructed mesh — not the package's derived
+    // attachments.json, which was generated in Astra's own environment. The two agree everywhere except one part (see below), and a
+    // table that disagreed with mesh.bin would be a trap for anyone sizing buffers or auditing draw counts from it.
+    parts: attach.parts.map(p => {
+      const c = builtParts.get(p.name) || { tris: 0, verts: 0 };
+      const e = { name: p.name, category: p.category, vertexCount: c.verts, triangleCount: c.tris,
+                  bones: Object.keys(p.bones || {}), blended: p.blendedVertexCount != null ? p.blendedVertexCount : undefined };
+      // Provenance for a part that does not match the shipped derived manifest. Two distinct, benign causes, named apart rather than
+      // reconciled: the package's manifest is DERIVED, not canonical, and this build draws its own counts.
+      if (c.tris !== p.triangleCount || c.verts !== p.vertexCount)
+        e.packageDeclared = { vertexCount: p.vertexCount, triangleCount: p.triangleCount,
+          note: c.tris !== p.triangleCount
+            ? "environment-dependent tessellation: the same vertex set triangulated differently (bounds and skin weights identical)"
+            : "vertex count only: this build duplicates vertices that straddle a material seam, so a part references more of them" };
+      return e;
+    }),
     hairWarnings: (JSON.parse(fs.readFileSync(path.join(PKG, "derived", id, "construction-check.json"))).hairWarnings) || [],
   };
   fs.writeFileSync(path.join(dir, "rig.json"), JSON.stringify(rig, null, 1));

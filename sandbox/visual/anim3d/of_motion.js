@@ -154,15 +154,20 @@ function ofSolve(skel, pose, rootM, plants, state, opts) {
     // strike, a trivela) it leaves the boot short by a long way, and how short depends on the body's hip width and leg length. Iterating
     // the same solve removes that body dependence entirely — it is the geometry that is wrong, not the proportions.
     let r = null, need = 0, capped = false;
+    const cur0 = fk.joint[fb.idx].slice();                                                        // where the boot started: the cap is a TOTAL displacement, not a per-pass one
     for (let it = 0; it < (req.reach.iters || 1); it++) {
       const dvec = V3.sub(fk.tip[tb.idx], fk.joint[fb.idx]);                                      // toe-tip offset from the ankle, re-read each pass
-      const cur = fk.joint[fb.idx], P0 = V3.sub(want, dvec);
-      const off = V3.sub(P0, cur), d = V3.len(off);
+      const P0 = V3.sub(want, dvec);
+      const off = V3.sub(P0, cur0), d = V3.len(off);
       if (it === 0) need = d;
-      const P = d > cap ? V3.add(cur, V3.scale(off, cap / d)) : P0;
-      if (d > cap) capped = true;
+      // A capped request is one the leg cannot satisfy. Pass 0 has no alternative and takes the clamped aim; a LATER pass that
+      // turns out unreachable is abandoned, keeping the pass that did reach — re-aiming the ankle from a foot that has since
+      // rotated walks the tip away from the ball. Iterate only while the target is reachable.
+      if (d > cap && it > 0) { capped = true; break; }
+      const P = d > cap ? V3.add(cur0, V3.scale(off, cap / d)) : P0;
       r = lockLeg(sd, P, w, true);                                                                // keepPlane: a swing leg keeps its own bend plane (no knee flip)
-      if (d < 0.004) break;
+      if (d > cap) { capped = true; break; }
+      if (V3.dist(fk.tip[tb.idx], want) < 0.004) break;
     }
     const t2 = fk.tip[tb.idx];
     diag.reach[sd] = { want: +need.toFixed(4), applied: +Math.min(need, cap).toFixed(4), capped, w: +w.toFixed(2),
@@ -223,7 +228,7 @@ function ofActorTick(a, dt, now) {
           plants[pf] = { want: true, mode: "ankle", s: 0.4 };                                     // the plant leg is braced through the strike
           const dtc = now - a.kick.kickAt;
           const ramp = dtc <= 0 ? smooth01(clamp01(1 + dtc / 0.11)) : 1 - clamp01(dtc / 0.07);               // reach the ball AT contact, release straight after
-          if (a.kickBall && ramp > 0.001) plants[sf].reach = { p: a.kickBall, w: ramp * w, cap: OF_KICK.reachMax, iters: 3 };
+          if (a.kickBall && ramp > 0.001) plants[sf].reach = { p: a.kickBall, w: ramp * w, cap: OF_KICK.reachMax, iters: 4 };
         }
         a.kickW = w;
       }
@@ -232,7 +237,7 @@ function ofActorTick(a, dt, now) {
     if (!a.kickW && a.touch && plants[a.touch.foot] && typeof plants[a.touch.foot] === "object") {
       const T = a.touch, dtc = now - T.at;                                                        // <0 before the touch, >0 after
       const ramp = dtc < 0 ? clamp01(1 + dtc / Math.max(0.03, T.lead || OF_GAIT.reachT)) : 1 - clamp01(dtc / OF_GAIT.reachT);
-      if (ramp > 0.001) plants[a.touch.foot].reach = { p: T.p, w: ramp };
+      if (ramp > 0.001) plants[a.touch.foot].reach = { p: T.p, w: ramp, iters: 4 };
       if (dtc > OF_GAIT.reachT) a.touch = null;
     } a.gait = { cadence: lo.P.step > 0 ? Math.hypot(sim.vx, sim.vy) / (lo.P.step * a.skel.legLen) : 0, stanceFrac: lo.P.stance, stride: lo.P.step * a.skel.legLen, A: lo.P.hipFlex, run: lo.P.idx >= 2 }; a.legYaw = lo.legYaw;
   }

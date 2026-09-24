@@ -8,7 +8,7 @@
 const NM = process.env.PUPPETEER_NODE_MODULES; if (NM) module.paths.unshift(NM);
 const puppeteer = require("puppeteer-core"), fs = require("fs");
 const a = process.argv, opt = (k, d) => { const i = a.indexOf(k); return i > 0 ? a[i + 1] : d; };
-const IDS = opt("--ids", "cucurella,gabriel").split(",").filter(Boolean), TICKS = +opt("--ticks", 320);
+const IDS = opt("--ids", "cucurella,gabriel,osimhen,szoboszlai,vinicius,james").split(",").filter(Boolean), TICKS = +opt("--ticks", 320);
 const URL = opt("--url", "http://127.0.0.1:8124/sandbox/visual/match.html"), OUT = opt("--out", "");
 (async () => {
   const b = await puppeteer.launch({ executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", headless: "new", userDataDir: opt("--udd", "chrome-charreg"), args: ["--no-sandbox", "--use-gl=angle", "--enable-unsafe-swiftshader"] });
