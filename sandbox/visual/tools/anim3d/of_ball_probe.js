@@ -9,6 +9,7 @@ const NM = process.env.PUPPETEER_NODE_MODULES; if (NM) module.paths.unshift(NM);
 const puppeteer = require("puppeteer-core"), fs = require("fs");
 const a = process.argv, opt = (k, d) => { const i = a.indexOf(k); return i > 0 ? a[i + 1] : d; };
 const OUT = opt("--out", "of_ball.json"), BALLX = +opt("--ballx", 66), STOPAT = +opt("--stopat", 0), REVAT = +opt("--revat", 0), GEAR = opt("--gear", "run"), TICKS = +opt("--ticks", 260), TURN = +opt("--turn", 0), BODY = opt("--body", "AVG_ATHLETIC");
+const CHAR = opt("--character", "");
 const URL = opt("--url", "http://127.0.0.1:8124/sandbox/visual/match.html"), SHOTS = opt("--shots", ""), ZOOM = +opt("--zoom", 0);
 (async () => {
   const b = await puppeteer.launch({ executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", headless: "new", userDataDir: opt("--udd", "chrome-ofball"), args: ["--no-sandbox"] });
@@ -23,6 +24,8 @@ const URL = opt("--url", "http://127.0.0.1:8124/sandbox/visual/match.html"), SHO
     t.b.x = BALLX; t.b.y = 34; t.b.z = 0; t.b.vx = 0; t.b.vy = 0; t.b.vz = 0; t.b.ctrl = false; t.b.exclT = 0; t.b.held = null;
     t.touchN = 0; t.lastTouchT = undefined; t.touchInfo = null; t.ctrlState = null; t.gk.x = 104.5; t.gk.y = 34;
   }, BODY, BALLX);
+  if (CHAR) { const ok = await p.evaluate(async (id) => { try { await ofCharLoad(id); ofPlaySetCharacter(id); await new Promise(r => setTimeout(r, 200)); return OFPLAY.charId === id; } catch (e) { return String(e); } }, CHAR);
+    if (ok !== true) { console.error("character load failed:", ok); process.exit(3); } }
   if (SHOTS) { fs.mkdirSync(SHOTS, { recursive: true }); await p.evaluate((Z) => { OFPLAY.mixed = true; OFPLAY.dbg.feet = true; OFPLAY.dbg.roots = true; OFPLAY.dbg.hud = false; if (OFPLAY.panel) OFPLAY.panel.style.display = "none"; if (Z) { RIG.zoom = Z; RIG.zoomTarget = Z; } }, ZOOM); }
   const rows = await p.evaluate((TICKS, GEAR, TURN, STOPAT, REVAT) => {
     const out = []; const t = S.pt;

@@ -177,7 +177,9 @@ function ofSolve(skel, pose, rootM, plants, state, opts) {
   pel.off = saved; return { fk, diag };
 }
 // one diagnostic actor: authoritative state (root x/y on the pitch, facing, speed) is INPUT; the actor holds only presentation state
-function ofActorMake(bodyId, x, y, facing) { const m = OF_BODIES[bodyId]; const skel = ofBuildSkeleton(m); return { body: bodyId, skel, x, y, facing, speed: 0, phase: 0, state: { feet: {} }, motion: "STAND", turnFrom: null }; }
+// `bodyId` may instead be a ready SKELETON (a real character's own bind): the whole runtime is driven by the skeleton object, so a real
+// player body needs no separate animation path — same gait, same contact solve, same kick families, its own proportions.
+function ofActorMake(bodyId, x, y, facing) { const skel = (bodyId && bodyId.bones) ? bodyId : ofBuildSkeleton(OF_BODIES[bodyId]); return { body: (bodyId && bodyId.bones) ? (bodyId.character || "character") : bodyId, skel, x, y, facing, speed: 0, phase: 0, state: { feet: {} }, motion: "STAND", turnFrom: null }; }
 // evaluate one tick: motion + retarget + solve. dt is the authoritative fixed step; the caller advanced x / y / facing / speed (the "simulation")
 function ofActorTick(a, dt, now) {
   const rootM = gkRootMatrix(a.x, a.y, a.facing, 0); let pose, plants = { R: false, L: false };

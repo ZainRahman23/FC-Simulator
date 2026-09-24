@@ -165,7 +165,14 @@ function glRenderCharactersROI(R, chars, roi, density, cvW, cvH, RESv) {
   let draws = 0; const mesh0 = null;
   gl.useProgram(R.PS); gl.uniformMatrix4fv(R.us.view, false, cam.view); gl.uniformMatrix4fv(R.us.proj, false, proj2); gl.uniform3fv(R.us.light, V3.norm(GL3D.light)); gl.uniform1f(R.us.bands, GL3D.bands);
   for (const ch of chars) {
-    if (!ch.skinMats) continue; const mesh = glSkinnedMesh(R, ch.skel); const pal = ch.palette || SKEL_PARTS;
+    if (!ch.skinMats) continue;
+    // a REAL character (Astra outfield asset) draws itself with its own program and atlas; everything else here is unchanged
+    if (ch.char && ch.char.status === "ready" && typeof ofCharDraw === "function") {
+      draws += ofCharDraw(R, ch.char, ch.skinMats, cam.view, proj2);
+      gl.useProgram(R.PS); gl.uniformMatrix4fv(R.us.view, false, cam.view); gl.uniformMatrix4fv(R.us.proj, false, proj2);
+      gl.uniform3fv(R.us.light, V3.norm(GL3D.light)); gl.uniform1f(R.us.bands, GL3D.bands); continue;
+    }
+    const mesh = glSkinnedMesh(R, ch.skel); const pal = ch.palette || SKEL_PARTS;
     gl.uniformMatrix4fv(R.us.bones, false, ch.skinMats);
     const palArr = new Float32Array(21); SKIN_PARTS.forEach((n, i) => { const c = pal[n] || SKEL_PARTS[n]; palArr[i * 3] = c[0]; palArr[i * 3 + 1] = c[1]; palArr[i * 3 + 2] = c[2]; }); gl.uniform3fv(R.us.palette, palArr);
     gl.bindVertexArray(mesh.vao); gl.drawElements(gl.TRIANGLES, mesh.n, gl.UNSIGNED_SHORT, 0); draws++; gl.bindVertexArray(null);

@@ -8,7 +8,7 @@
 // the player, the camera rail following the player's x. Diagnostics (foot contacts, plant residuals, gait state, root vs presentation
 // root, timing split) are on the HUD and in OFPLAY.rec (per tick, deterministic). Optional extra runners (deterministic laps, the same
 // locomotion) for the scaling test. The ball is parked far away at boot (a fixture set-up, like the goalkeeper fixtures) and ignored.
-const OFPLAY = { on: false, body: "AVG_ATHLETIC", actor: null, mixed: true, follow: true, dbg: { feet: true, roots: true, hud: true, ball: true }, rec: [], recMax: 3600, runners: [], panel: null, out: null, octx: null, perf: { sim: [], anim: [], skin: [], render: [], comp: [] }, R: null, lastTick: -1, view: null };
+const OFPLAY = { on: false, body: "AVG_ATHLETIC", actor: null, mixed: true, follow: true, charId: null, charEntry: null, dbg: { feet: true, roots: true, hud: true, ball: true }, rec: [], recMax: 3600, runners: [], panel: null, out: null, octx: null, perf: { sim: [], anim: [], skin: [], render: [], comp: [] }, R: null, lastTick: -1, view: null };
 function ofPlayWanted() { return new URLSearchParams(location.search).get("ofPlay") === "1"; }
 function ofPlayMakeActor(bodyId, p) {
   const a = ofActorMake(bodyId, p.x, p.y, p.facing); a.motion = "LOCO"; a.loco = ofLocoMake(); a.state = { feet: {} }; a.sim = { x: p.x, y: p.y, vx: 0, vy: 0, facing: p.facing }; return a;
@@ -93,7 +93,7 @@ function ofPlayDraw(dt) {
   const t = S.pt, p = t.p, a = OFPLAY.actor; if (OFPLAY.animOff || !a.sol) return;
   const t0 = performance.now();
   // skin matrices (world × inverse bind) — computed by ofActorTick; extra runners too
-  const chars = [{ skel: a.skel, fk: a.sol.fk, skinMats: a.skinMats, palette: SKEL_PARTS }]; for (const r of OFPLAY.runners) if (r.sol) chars.push({ skel: r.skel, fk: r.sol.fk, skinMats: r.skinMats, palette: OFPLAY_KIT_B });
+  const chars = [{ skel: a.skel, fk: a.sol.fk, skinMats: a.skinMats, palette: SKEL_PARTS, char: OFPLAY.charEntry }]; for (const r of OFPLAY.runners) if (r.sol) chars.push({ skel: r.skel, fk: r.sol.fk, skinMats: r.skinMats, palette: OFPLAY_KIT_B });
   const t1 = performance.now(); const prev = GL3D.character; GL3D.character = "SKINNED"; const out = glRenderCharacters(OFPLAY.R, chars, cv.width, cv.height, {}); GL3D.character = prev; const tR = performance.now() - t1;
   // shadow at the authoritative root, then the layer (page canvas at the canvas density)
   const sp = sproj3(p.x, 0, p.y); const s = S.playerVScale * depthScale(sp.d) * RIG.zoom * RES, flat = flattenAt(p.x, p.y);
@@ -171,7 +171,8 @@ function ofPlayKeys() {
     else if (OFPLAY_SHOTS[k]) { const sp = OFPLAY_SHOTS[k]; if (!S.pt.charge && !S.pt.kick && S.pt.b.ctrl)
       ptChargeBegin(S.pt, k, { fam: sp.fam, label: sp.label, D: sp.D, chargeFam: sp.chargeFam,
                                force: { tech: sp.tech, foot: S.pt.pfoot || "R" } }); }
-    else if (k === "6") { const o = OF_BODY_ORDER, i = (o.indexOf(OFPLAY.body) + 1) % o.length; ofPlaySetBody(o[i]); }
+    else if (k === "6") { const o = OF_BODY_ORDER, i = (o.indexOf(OFPLAY.body) + 1) % o.length; ofPlaySetCharacter(null); ofPlaySetBody(o[i]); }
+    else if (k === "c") ofPlayCycleCharacter(e.shiftKey ? -1 : 1);
     else if (k === "n") ofPlaySetRunners(OFPLAY.runners.length === 0 ? 10 : OFPLAY.runners.length < 21 ? 21 : 0);
     else if (k === "j" || k === "l") {
       // J: the ball AT YOUR FEET, already carried — start dribbling immediately. L: a LOOSE ball 4 m ahead to run onto.
@@ -193,6 +194,26 @@ function ofPlayKeys() {
     else if (OFPLAY_SHOTS[k]) { ptChargeRelease(S.pt, k); e.preventDefault(); e.stopImmediatePropagation(); } }, true);
   window.addEventListener("blur", () => { if (S.pt && S.pt.keys) { S.pt.keys.walk = false; S.pt.keys.jog = false; } });
 }
+// ── REAL CHARACTERS (Astra outfield package) ────────────────────────────────────────────────────────────────────────────────────
+// Selecting a character rebuilds the actor on THAT player's own bind and morphology. Nothing about the simulation changes: the
+// character is presentation, so the same authoritative inputs must produce the same authoritative outcomes whoever is selected.
+function ofPlaySetCharacter(id) {
+  if (!id) { OFPLAY.charId = null; OFPLAY.charEntry = null; ofPlaySetBody(OFPLAY.body); S.pt.last = "CHARACTER -> generic test body"; return; }
+  const e = OF_CHAR.get(id); if (!e) return;
+  S.pt.last = "CHARACTER -> loading " + id + " ...";
+  ofCharLoad(id).then((ent) => {
+    const p = S.pt.p;
+    OFPLAY.charId = id; OFPLAY.charEntry = ent;
+    OFPLAY.actor = ofPlayMakeActor(ent.skel, p);
+    p.legLen = ent.skel.legLen;                                                 // leg length is a PLAYER attribute the simulation plans boots with
+    S.pt.last = "CHARACTER -> " + ent.rig.identity.name + "  " + ent.rig.identity.heightCm + " cm / " + ent.rig.identity.weightKg + " kg";
+  }).catch(err => { S.pt.last = "CHARACTER load failed: " + err; });
+}
+function ofPlayCycleCharacter(dir) {
+  const o = OF_CHAR.order, i = OFPLAY.charId ? o.indexOf(OFPLAY.charId) : -1;
+  const n = i + (dir || 1);
+  ofPlaySetCharacter(n < 0 || n >= o.length ? null : o[n]);
+}
 // leg length is a PLAYER attribute: selecting a body also tells the simulation which boots to plan with
 function ofPlaySetBody(id) { const p = S.pt.p; OFPLAY.body = id; OFPLAY.actor = ofPlayMakeActor(id, p); p.legLen = OFPLAY.actor.skel.legLen; S.pt.last = "BODY -> " + id + " (H " + OF_BODIES[id].H + " m)"; }
 function ofPlayDom() {
@@ -204,7 +225,7 @@ function ofPlayDom() {
   const out = document.createElement("canvas"); out.id = "ofplay-out"; document.body.appendChild(out); OFPLAY.out = out; OFPLAY.octx = out.getContext("2d");
   const p = document.createElement("div"); p.id = "ofplay-panel"; document.body.appendChild(p); OFPLAY.panel = p;
   p.innerHTML = `<h3>OUTFIELD LOCOMOTION V1 — live test</h3><div class="dim">simulation decides (the playtest's own player law) · animation presents · no ball</div><div id="ofplay-status"></div>
-  <h3>keys</h3><div class="dim">W A S D / arrows move · hold Q walk (1.5 m/s) · hold E jog (3.0) · nothing = run (5.0) · Shift sprint (8.2) · 1 short (1.70) · 2 average (1.83) · 3 tall (1.96) · 4 short-compact (1.66) · 5 average-lean (1.80) · 6 tall-power (2.00) · J ball at your feet · L loose ball ahead · K dribble markers · N 10 extra runners · B 21 extra runners · X Mixed / page view · G follow · V foot / root markers · H hud · R reset · M pause · , slow-mo · . step</div>
+  <h3>keys</h3><div class="dim">W A S D / arrows move · hold Q walk (1.5 m/s) · hold E jog (3.0) · nothing = run (5.0) · Shift sprint (8.2) · 1 short (1.70) · 2 average (1.83) · 3 tall (1.96) · 4 short-compact (1.66) · 5 average-lean (1.80) · 6 tall-power (2.00) · C cycle the six real characters (shift+C back) · J ball at your feet · L loose ball ahead · K dribble markers · N 10 extra runners · B 21 extra runners · X Mixed / page view · G follow · V foot / root markers · H hud · R reset · M pause · , slow-mo · . step</div>
   <h3>markers</h3><div class="dim"><span class="ok">green</span> planted (ankle lock) · <span style="color:#ffe36a">yellow</span> toe pivot · <span style="color:#7fd0ff">blue</span> stepping · <span style="color:#ff9a3c">orange</span> swing · red cross = authoritative root · violet ring = presentation pelvis · white = facing · blue = velocity</div>`;
 }
 function ofPlayBallHud(a) {

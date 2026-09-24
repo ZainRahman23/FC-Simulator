@@ -9,6 +9,7 @@ const a = process.argv, opt = (k, d) => { const i = a.indexOf(k); return i > 0 ?
 const OUT = opt("--out", "of_shot.json"), SHOT = opt("--shot", "2"), FOOT = opt("--foot", "R"), APP = opt("--approach", "stand");
 const BODY = opt("--body", "AVG_ATHLETIC"), HOLD = +opt("--hold", 400), TICKS = +opt("--ticks", 170);
 const SHOTS = opt("--shots", ""), EVERY = +opt("--every", 3), ZOOM = +opt("--zoom", 3);
+const CHAR = opt("--character", "");
 const URL = opt("--url", "http://127.0.0.1:8124/sandbox/visual/match.html");
 (async () => {
   const b = await puppeteer.launch({ executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", headless: "new", userDataDir: opt("--udd", "chrome-ofshot"), args: ["--no-sandbox"] });
@@ -16,6 +17,8 @@ const URL = opt("--url", "http://127.0.0.1:8124/sandbox/visual/match.html");
   const errs = []; p.on("pageerror", e => errs.push(String(e).slice(0, 220)));
   await p.goto(URL + `?ofPlay=1&fps=60&body=${BODY}&r=` + Date.now(), { waitUntil: "load", timeout: 180000 });
   for (let i = 0; i < 600; i++) { if (await p.evaluate(() => typeof OFPLAY !== "undefined" && OFPLAY.on && OFPLAY.actor && OFPLAY.actor.sol)) break; await new Promise(r => setTimeout(r, 100)); }
+  if (CHAR) { const ok = await p.evaluate(async (id) => { try { await ofCharLoad(id); ofPlaySetCharacter(id); await new Promise(r => setTimeout(r, 200)); return OFPLAY.charId === id; } catch (e) { return String(e); } }, CHAR);
+    if (ok !== true) { console.error("character load failed:", ok); process.exit(3); } }
   if (SHOTS) { fs.mkdirSync(SHOTS, { recursive: true }); await p.evaluate((Z) => { OFPLAY.mixed = true; OFPLAY.dbg.feet = true; OFPLAY.dbg.hud = false; if (OFPLAY.panel) OFPLAY.panel.style.display = "none"; if (Z) { RIG.zoom = Z; RIG.zoomTarget = Z; } }, ZOOM); }
   await p.evaluate((FOOT, APP) => {
     S.pt.paused = true; ptReset();
