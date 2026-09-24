@@ -740,7 +740,7 @@ function weekPasses(mw){
   const c = S.career;
   for(const pl of clubPool()){
     const cur = condOf(pl.id);
-    c.cond[pl.id] = Math.round(Math.min(100, cur + 28));
+    c.cond[pl.id] = Math.round(Math.min(100, cur + 12 + 0.55 * (100 - cur)));
   }
   for(const [pid, inj] of Object.entries(c.injuries)){
     if(inj.mw === mw) continue;             // picked up this week: "out N" means N matches missed
@@ -1212,7 +1212,7 @@ function ftLeagueHTML(f){
         ${rep.board.warn ? `<div class="cc-note ${c.board.confidence < 35 ? 'bad' : 'good'}">${esc(rep.board.warn)}</div>` : ''}</div>
       <div class="cc-ftc"><span class="cc-k">MEDICAL</span>
         ${rep.injuries.length ? rep.injuries.map(i => `<div class="cc-note bad">⚕ <b>${esc(shortName(i.name))}</b> — ${esc(i.type)}, out ${i.weeks} week${i.weeks > 1 ? 's' : ''}</div>`).join('') : '<div class="cc-small good">No new injuries.</div>'}
-        ${rep.tired.length ? `<div class="cc-small">Leggy after this: ${rep.tired.map(t => `${esc(shortName(t.name))} <b style="color:${condColor(t.cond)}">${t.cond}%</b>`).join(', ')} <span class="cc-muted">(they recover about 28% by next week)</span></div>` : ''}</div>
+        ${rep.tired.length ? `<div class="cc-small">Leggy after this: ${rep.tired.map(t => `${esc(shortName(t.name))} <b style="color:${condColor(t.cond)}">${t.cond}%</b>`).join(', ')} <span class="cc-muted">(most of it comes back by next week)</span></div>` : ''}</div>
       <div class="cc-ftc"><span class="cc-k">DEVELOPMENT & FORM</span>
         ${rep.dev.map(d => `<div class="cc-note good">↑ ${esc(d.text)}</div>`).join('')}
         ${rep.motm ? `<div class="cc-small">Your best player: <b>${esc(shortName(rep.motm.name))}</b> ${rep.motm.rating.toFixed(1)}</div>` : ''}
@@ -1748,6 +1748,9 @@ const PHILO = {
   'Counter Attack':['Sit deep and break at speed when you win it.', 1],
   'End-to-End':['Everyone attacks, everyone presses. Chaos in both boxes.', 2]
 };
+Object.assign(PRESETS['High Press'], {pressingIntensity: 'Aggressive', markingOrientation: 'Hybrid', boxCommitment: 'Balanced'});
+Object.assign(PRESETS['Possession'], {pressingIntensity: 'Selective'});
+Object.assign(PRESETS['End-to-End'], {boxCommitment: 'Balanced', markingOrientation: 'Hybrid', pressingIntensity: 'Selective'});
 const _rtp = window.renderTacticsPanel;
 window.renderTacticsPanel = function(){
   const r = _rtp.apply(this, arguments);
@@ -1933,11 +1936,12 @@ window.submitOffer = function(pid){
    and any matchweek whose other fixtures never landed is re-simulated
    (deterministic seeds → the same results). */
 async function recoverResults(){
-  if(!S.season || S.match) return;
+  if(!S.season) return;
+  const busy = !!S.match;
   const h = (typeof getActiveMatchHandle === 'function') ? getActiveMatchHandle() : null;
   const played = new Set();
   // only the fixture you're up to can have been played without being recorded
-  for(const f of [nextLivFixture()].filter(Boolean)){
+  for(const f of (busy ? [] : [nextLivFixture()].filter(Boolean))){
     if(S.season.results[f.id] || (h && h.fixtureId === f.id)) continue;
     let row;
     try{ row = await api(`/matches/lookup?soft=1&save_id=${encodeURIComponent(SAVE_ID)}&fixture_id=${encodeURIComponent(f.id)}`); }
@@ -1958,7 +1962,7 @@ async function recoverResults(){
   for(const f of livFixtures()){
     if(!S.season.results[f.id] || played.has(f.id)) continue;
     const missing = S.season.fixtures.some(x => x.mw === f.mw && !S.season.results[x.id]);
-    if(missing){ await simulateOthers(f); S.season.standings = computeStandings(); }
+    if(missing){ await simulateOthers(f); S.season.standings = computeStandings(); played.add('round:' + f.mw); }
   }
   if(played.size){ saveState(); renderTopBar(); if(S.ui.view === 'home') renderHome(); }
 }

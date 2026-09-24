@@ -1510,6 +1510,11 @@ window.renderFullTimeView = function(wrap, m){
   safe(() => {
     const cm = C(m), f = S.matchFixture || {};
     wrap.classList.add('cm-ft');
+    if(m.pastReview){                     // reopened from Results: analysis only
+      const ban = wrap.querySelector('#ccFt'); if(ban) ban.remove();
+      wrap.querySelectorAll('button[onclick^="continueSeason"]').forEach(b => {
+        b.textContent = '← Back to results'; b.setAttribute('onclick', "S.match=null;S.matchFixture=null;show('results')"); });
+    }
     const board = wrap.querySelector('.board');
     const sp = wrap.querySelector('#simProgress'); if(sp && prog) sp.innerHTML = prog;
     // scorers under the score line

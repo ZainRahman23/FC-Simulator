@@ -3068,6 +3068,8 @@ async function kickOff(){
     home: condenseSide(req.home_team), away: condenseSide(req.away_team)};
   S.match = makeLiveMatch(snap);
   setActiveMatchHandle(snap.match_id, fixture.id);
+  // the pre-kickoff plan must survive a reload (it is what the next fixture starts from)
+  try{ localStorage.setItem('touchline:base', JSON.stringify({matchId: snap.match_id, base: S.base})); }catch(e){}
   renderMatch(); renderPitch();
   clearInterval(matchTimer);
   matchTimer = setInterval(tick, TICK_MS);
@@ -3138,6 +3140,8 @@ async function resumeActiveMatch(){
     S.matchFixture = fixture;
     S.match = makeLiveMatch(snap);
     S.match.status = 'paused';        // resume paused; the manager presses play
+    try{ const b = JSON.parse(localStorage.getItem('touchline:base') || 'null');
+         if(b && b.matchId === h.matchId && b.base) S.base = b.base; }catch(e){}
     show('match'); renderMatch();
     toast('Reconnected to your live match');
     return true;
