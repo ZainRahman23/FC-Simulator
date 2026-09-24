@@ -78,6 +78,30 @@ OF_KICK.FAM = {
 // technique (simulation) -> family (presentation)
 OF_KICK.TECH = { INSIDE: "INSIDE", INSIDE_FINISH: "INSIDE", LACES: "LACES", LACES_POWER: "POWER", OUTSIDE: "OUTSIDE", CHIP: "CHIP" };
 function ofKickFam(tech) { return OF_KICK.FAM[OF_KICK.TECH[tech] || "LACES"]; }
+// ── PASSING V1: the pass families are the SAME recovered actions with less commitment ────────────────────────────────────────────
+// A pass is not a shot aimed at a team-mate. It keeps its family's contact instant (so the simulation's kickAt, taken from the same
+// recovered rhythm, still lands on the authored contact) but every joint's excursion away from the contact pose — backswing, trunk
+// load, arm counter-rotation, follow-through — is scaled down by the pass's commitment. An inside-foot pass also opens the hip and turns
+// the foot out further so the INSIDE of the boot is square to the target (the contact is taken on that face, see of_player).
+OF_KICK.PASS = {
+  commit: { SHORT: 0.55, THROUGH: 0.62, CUTBACK: 0.55, DRIVEN: 0.80 },                           // x the shot family's excursions
+  open: { INSIDE: { thigh_R: [0, 14, 0], foot_R: [0, 20, 0] } },                                   // extra at contact (bell around it), right-foot frame
+  openW: 0.22,                                                                                     // bell width (u)
+  cache: {},
+};
+function ofKickPassFam(kick) {
+  const base = ofKickFam(kick.tech), s = OF_KICK.PASS.commit[kick.fam] != null ? OF_KICK.PASS.commit[kick.fam] : 0.6, key = base.id + ":" + s;
+  if (OF_KICK.PASS.cache[key]) return OF_KICK.PASS.cache[key];
+  const C = ofKickPose(base, base.c, "R"), add = OF_KICK.PASS.open[base.id] || {};
+  const keys = base.keys.map(([u, P]) => {
+    const q = {}, names = new Set([...Object.keys(P), ...Object.keys(C)]), bell = Math.exp(-(((u - base.c) / OF_KICK.PASS.openW) ** 2));
+    for (const n of names) { const a = P[n] || [0, 0, 0], c = C[n] || [0, 0, 0], d = add[n] || [0, 0, 0];
+      q[n] = [c[0] + (a[0] - c[0]) * s + d[0] * bell, c[1] + (a[1] - c[1]) * s + d[1] * bell, c[2] + (a[2] - c[2]) * s + d[2] * bell]; }
+    return [u, q];
+  });
+  const fam = Object.assign({}, base, { id: "PASS_" + base.id, label: "pass (" + base.label + ", commitment " + s + ")", keys, commit: s });
+  OF_KICK.PASS.cache[key] = fam; return fam;
+}
 // Mirror an authored RIGHT-foot pose for a LEFT-foot strike: swap the R/L joints and negate yaw and roll. Straight mirroring is valid for
 // the sagittal families; the two SURFACE families need their foot yaw preserved in sign relative to the striking side, which the swap
 // already gives (the medial face of the left boot faces the other way in world, which is what a left-footed curl actually does).
@@ -106,7 +130,7 @@ function ofKickPose(fam, u, foot) {
 // Both scales are reported and clamped; a schedule outside the clamp is flagged rather than silently distorted.
 function ofKickMake() { return { on: false, fam: null, foot: "R", warpIn: 1, warpOut: 1, diag: {} }; }
 function ofKickTick(skel, K, kick, now) {
-  const fam = ofKickFam(kick.tech), foot = kick.foot === "L" ? "L" : "R";
+  const fam = kick.aim ? ofKickPassFam(kick) : ofKickFam(kick.tech), foot = kick.foot === "L" ? "L" : "R";   // an AIMED kick is a pass
   const pre = Math.max(1e-3, kick.kickAt - kick.t0), post = Math.max(1e-3, kick.end - kick.kickAt);
   const natPre = fam.secs * fam.c, natPost = fam.secs * (1 - fam.c);
   const wIn = clamp01((pre / natPre - OF_KICK.warpMin) / (OF_KICK.warpMax - OF_KICK.warpMin)) * 0 + Math.max(OF_KICK.warpMin, Math.min(OF_KICK.warpMax, pre / natPre));

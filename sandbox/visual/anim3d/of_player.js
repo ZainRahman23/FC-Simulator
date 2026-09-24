@@ -19,6 +19,9 @@ function ofPlayInstall() {
   // 1. per simulation tick: solve the presentation from the authoritative player (after the playtest stepped it). Deterministic: one solve per 60 Hz step.
   const _step = ptStep; ptStep = function () {
     const t0 = performance.now(); _step(); const tS = performance.now() - t0; const t = S.pt; if (!t || !t.on || !OFPLAY.actor) return;
+    if (t.squad && typeof OFSQ !== "undefined" && OFSQ.on) {                                      // RECEIVING + PASSING V1: every squad player's actor from his own context
+      OFPLAY.perf.sim.push(tS); if (OFPLAY.animOff) return;
+      const t1 = performance.now(); ofSquadPresent(t); OFPLAY.perf.anim.push(performance.now() - t1); for (const k in OFPLAY.perf) if (OFPLAY.perf[k].length > 600) OFPLAY.perf[k].shift(); return; }
     const p = t.p, a = OFPLAY.actor; a.x = p.x; a.y = p.y; a.facing = p.facing; a.speed = Math.hypot(p.vx, p.vy); a.sim = { x: p.x, y: p.y, vx: p.vx, vy: p.vy, facing: p.facing, gaitPhase: p.gaitPhase, gaitSettled: p.gaitSettled };   // the stride clock comes from the simulation
     if (OFPLAY.animOff) { OFPLAY.perf.sim.push(tS); return; }                                     // REGRESSION HOOK: skip the whole skeletal layer, leave the simulation running
     ofPlayKickLink(t, a);                                                                         // the simulation's scheduled SHOT -> kick pose + striking-boot reach
@@ -33,10 +36,10 @@ function ofPlayInstall() {
   const _sprite = ptDrawPlayerSprite; ptDrawPlayerSprite = function (dt) { if (!OFPLAY.actor) return _sprite(dt); ofPlayDraw(dt); };
   // 3. camera rail follows the player's x (the playtest rig is "manual"; the rail eases with RIG.smooth); the Mixed view follows in the canvas
   const _draw = draw; draw = function (sample, dt) {
-    if (S.pt && S.pt.on && OFPLAY.follow) { RIG.manualX = Math.max(0, Math.min(105, S.pt.p.x)); }
+    if (S.pt && S.pt.on && OFPLAY.follow) { RIG.manualX = Math.max(0, Math.min(105, S.pt.squad && typeof ofSquadFocus === "function" && OFSQ.cam ? OFSQ.cam[0] : S.pt.p.x)); }
     _draw(sample, dt); if (OFPLAY.mixed) ofPlayComposite(); else if (OFPLAY.out) OFPLAY.out.style.display = "none"; if (OFPLAY.dbg.hud) ofPlayHud();
   };
-  ofPlayDom(); ofPlayKeys();
+  ofPlayDom(); if (typeof ofSquadKeys === "function") { ofSquadKeys(); ofSquadInstrument(); } ofPlayKeys();
 }
 function ofPlayRunnerStep(r, now) {                                                            // extra runners: a deterministic lap mover stands in for their simulation (INPUT to the presentation)
   const L = r.lap, ang = L.ph + now * L.w, nx = L.cx + Math.cos(ang) * L.r, ny = L.cy + Math.sin(ang) * L.r; const vx = (nx - r.x) * 60, vy = (ny - r.y) * 60;
@@ -77,8 +80,15 @@ function ofPlayKickLink(t, a) {
   if (!k) { a.kick = null; a.kickBall = null; a.kickRec = null; return; }
   a.kick = k;
   const BR = 0.11, foot = k.foot === "L" ? "L" : "R";
-  if (t.now < k.kickAt) {
-    const b = t.b; let ux = -1, uy = 0;
+  if (t.now < k.kickAt && k.aim) {                                                               // PASSING V1: a pass is struck on the ball's far side from the TARGET —
+    const b = t.b, dx = k.aim.x - b.x, dy = k.aim.y - b.y, m = Math.hypot(dx, dy) || 1, ux = dx / m, uy = dy / m;   // with the INSIDE (or, for a trivela, the OUTSIDE) of
+    if (k.tech === "INSIDE" || k.tech === "INSIDE_FINISH" || k.tech === "OUTSIDE") {              // the boot; a driven pass with the laces like a shot
+      const R = typeof OF_RECV !== "undefined" ? OF_RECV : { surfH: 0.085, ballR: 0.11, eps: 0.004 }, dz = R.surfH - (Math.max(0, b.z) + BR), h = Math.sqrt(Math.max(0, (BR + R.eps) ** 2 - dz * dz));
+      a.kickBall = [b.x - ux * h, R.surfH, -(b.y - uy * h)]; a.kickSurf = k.tech === "OUTSIDE" ? "outside" : "inside";
+    } else { const r = BR + 0.015; a.kickBall = [b.x - ux * r, BR, -(b.y - uy * r)]; a.kickSurf = null; }
+    a.kickContact = [b.x, b.y];
+  } else if (t.now < k.kickAt) {
+    const b = t.b; let ux = -1, uy = 0; a.kickSurf = null;
     const ft = a.sol && a.sol.diag.feet[foot];
     const from = ft && ft.toe ? { x: ft.toe[0], y: -ft.toe[2] } : (t.boots && t.boots[foot]);
     if (from) { const dx = from.x - b.x, dy = from.y - b.y, m = Math.hypot(dx, dy); if (m > 1e-6) { ux = dx / m; uy = dy / m; } }
@@ -108,11 +118,13 @@ function ofPlayDraw(dt) {
   const t = S.pt, p = t.p, a = OFPLAY.actor; if (OFPLAY.animOff || !a.sol) return;
   const t0 = performance.now();
   // skin matrices (world × inverse bind) — computed by ofActorTick; extra runners too
-  const chars = [{ skel: a.skel, fk: a.sol.fk, skinMats: a.skinMats, palette: SKEL_PARTS, char: OFPLAY.charEntry }]; for (const r of OFPLAY.runners) if (r.sol) chars.push({ skel: r.skel, fk: r.sol.fk, skinMats: r.skinMats, palette: OFPLAY_KIT_B, char: r.char || null });
+  const sq = t.squad && typeof OFSQ !== "undefined" && OFSQ.on;
+  const chars = sq ? ofSquadChars() : [{ skel: a.skel, fk: a.sol.fk, skinMats: a.skinMats, palette: SKEL_PARTS, char: OFPLAY.charEntry }]; for (const r of OFPLAY.runners) if (r.sol) chars.push({ skel: r.skel, fk: r.sol.fk, skinMats: r.skinMats, palette: OFPLAY_KIT_B, char: r.char || null });
   const t1 = performance.now(); const prev = GL3D.character; GL3D.character = "SKINNED"; const out = glRenderCharacters(OFPLAY.R, chars, cv.width, cv.height, {}); GL3D.character = prev; const tR = performance.now() - t1;
   // shadow at the authoritative root, then the layer (page canvas at the canvas density)
   const sp = sproj3(p.x, 0, p.y); const s = S.playerVScale * depthScale(sp.d) * RIG.zoom * RES, flat = flattenAt(p.x, p.y);
   ctx.save(); ctx.beginPath(); ctx.ellipse(Math.round(sp.x), Math.round(sp.y), 9 * s, Math.max(1.5, 9 * s * flat), 0, 0, Math.PI * 2); ctx.fillStyle = "rgba(0,0,0,0.25)"; ctx.fill(); ctx.restore();
+  if (sq) for (const c of t.squad.ctx) { if (c.p === p) continue; const q = sproj3(c.p.x, 0, c.p.y); ctx.save(); ctx.beginPath(); ctx.ellipse(Math.round(q.x), Math.round(q.y), 9 * s, Math.max(1.5, 9 * s * flat), 0, 0, Math.PI * 2); ctx.fillStyle = "rgba(0,0,0,0.25)"; ctx.fill(); ctx.restore(); }
   for (const r of OFPLAY.runners) { const q = sproj3(r.x, 0, r.y); ctx.save(); ctx.beginPath(); ctx.ellipse(Math.round(q.x), Math.round(q.y), 9 * s, Math.max(1.5, 9 * s * flat), 0, 0, Math.PI * 2); ctx.fillStyle = "rgba(0,0,0,0.25)"; ctx.fill(); ctx.restore(); }
   if (!OFPLAY.mixed) { ctx.save(); ctx.imageSmoothingEnabled = false; ctx.drawImage(out.canvas, 0, 0, out.w, out.h, 0, 0, cv.width, cv.height); ctx.restore(); }
   OFPLAY.lastChars = chars; OFPLAY.perf.render.push(tR); OFPLAY.perf.skin.push(performance.now() - t0 - tR);
@@ -137,6 +149,7 @@ function ofPlayOverlay(a, p) {                                                  
   const pel = a.sol.fk.joint[a.skel.byName.pelvis.idx], pg = sproj3(pel[0], 0, -pel[2]); ctx.strokeStyle = "#c080ff"; ctx.beginPath(); ctx.arc(pg.x, pg.y, uipx(4), 0, Math.PI * 2); ctx.stroke();
   const fx = Math.cos(p.facing), fy = Math.sin(p.facing), fp = sproj3(p.x + fx * 0.6, 0, p.y + fy * 0.6); ctx.strokeStyle = "#ffffff"; ctx.beginPath(); ctx.moveTo(sp.x, sp.y); ctx.lineTo(fp.x, fp.y); ctx.stroke();   // facing
   if (OFPLAY.dbg.ball) ofPlayBallOverlay(a, p);
+  if (S.pt.squad && typeof ofSquadOverlay === "function") ofSquadOverlay();
   const v = Math.hypot(p.vx, p.vy); if (v > 0.1) { const vp = sproj3(p.x + p.vx / v * (0.4 + v * 0.1), 0, p.y + p.vy / v * (0.4 + v * 0.1)); ctx.strokeStyle = "#8ab4f8"; ctx.beginPath(); ctx.moveTo(sp.x, sp.y); ctx.lineTo(vp.x, vp.y); ctx.stroke(); }   // velocity
   ctx.restore();
 }
@@ -166,7 +179,7 @@ function ofPlayBallOverlay(a, p) {
 function ofPlayComposite() {                                                                    // Mixed: environment nearest ×2 of the page's native pass; the characters re-rendered at 2·RES inside their ROI (one layer px per output px), the view following the player
   const t = S.pt; if (!OFPLAY.out || !OFPLAY.lastChars) return; const out = OFPLAY.out, octx = OFPLAY.octx; out.style.display = "block";
   const W = Math.round(out.clientWidth * RES), H = Math.round(out.clientHeight * RES); if (out.width !== W || out.height !== H) { out.width = W; out.height = H; }
-  const Z = 2; let cx = cv.width / 2, cy = cv.height / 2; if (OFPLAY.follow && t && t.p) { const sp = sproj3(t.p.x, 0, t.p.y); cx = sp.x; cy = sp.y - 40 * RES; }
+  const Z = 2; let cx = cv.width / 2, cy = cv.height / 2; if (OFPLAY.follow && t && t.p) { const f = t.squad && typeof ofSquadFocus === "function" ? ofSquadFocus(t) : [t.p.x, t.p.y]; const sp = sproj3(f[0], 0, f[1]); cx = sp.x; cy = sp.y - 40 * RES; }
   const sw = W / Z, sh = H / Z; let sx = Math.round(cx - sw / 2), sy = Math.round(cy - sh / 2); sx = Math.max(0, Math.min(cv.width - sw, sx)); sy = Math.max(0, Math.min(cv.height - sh, sy)); OFPLAY.view = { sx, sy, sw, sh, Z };
   const t0 = performance.now(); octx.imageSmoothingEnabled = false; octx.fillStyle = "#0b0e12"; octx.fillRect(0, 0, W, H); octx.drawImage(cv, sx, sy, sw, sh, 0, 0, W, H);
   // characters at 2·RES in a ROI around the visible ones (the ROI is clipped to the view; grow-only GL targets)
@@ -251,6 +264,7 @@ function ofPlayDom() {
   const p = document.createElement("div"); p.id = "ofplay-panel"; document.body.appendChild(p); OFPLAY.panel = p;
   p.innerHTML = `<h3>OUTFIELD LOCOMOTION V1 — live test</h3><div class="dim">simulation decides (the playtest's own player law) · animation presents · no ball</div><div id="ofplay-status"></div>
   <h3>keys</h3><div class="dim">W A S D / arrows move · hold Q walk (1.5 m/s) · hold E jog (3.0) · nothing = run (5.0) · Shift sprint (8.2) · 1 short (1.70) · 2 average (1.83) · 3 tall (1.96) · 4 short-compact (1.66) · 5 average-lean (1.80) · 6 tall-power (2.00) · C cycle the six real characters (shift+C back) · J ball at your feet · L loose ball ahead · K dribble markers · N 10 extra runners · B 21 extra runners · X Mixed / page view · G follow · V foot / root markers · H hud · R reset · M pause · , slow-mo · . step</div>
+  <h3>receiving + passing V1</h3><div class="dim">7 two players (A &harr; B) · 8 passing triangle · 9 three v two passive lane shadows · Space short pass · O driven pass · I through pass (direction keys choose the receiver, else your facing; control follows the ball to the receiver — the keys you hold as it arrives direct his first touch) · Tab switch player · T auto-switch · P preferred foot · 1-5 shots · J ball to your player · R restart drill · U names · Esc leave the drill</div>
   <h3>markers</h3><div class="dim"><span class="ok">green</span> planted (ankle lock) · <span style="color:#ffe36a">yellow</span> toe pivot · <span style="color:#7fd0ff">blue</span> stepping · <span style="color:#ff9a3c">orange</span> swing · red cross = authoritative root · violet ring = presentation pelvis · white = facing · blue = velocity</div>`;
 }
 function ofPlayBallHud(a) {
@@ -296,7 +310,7 @@ knees       R ${d.knee.R}° L ${d.knee.L}°   elbows R ${d.elbow.R}° L ${d.elbo
 runners     ${OFPLAY.runners.length}   rigs ${1 + OFPLAY.runners.length}
 timing      sim ${mean(OFPLAY.perf.sim).toFixed(2)} ms  anim+IK ${mean(OFPLAY.perf.anim).toFixed(2)} ms  skin ${mean(OFPLAY.perf.skin).toFixed(2)} ms  render ${mean(OFPLAY.perf.render).toFixed(2)} ms  composite ${mean(OFPLAY.perf.comp).toFixed(2)} ms  page draw ${S.perfT && S.perfT.length ? mean(S.perfT).toFixed(1) : "-"} ms
 frames      ${iv ? "rAF " + (1000 / mean(iv)).toFixed(0) + " Hz  drawn " + fs.drawn + "/" + fs.n + (S.fpsCap ? "  cap " + S.fpsCap : "  no cap (?fps=60)") : "-"}   view ${OFPLAY.mixed ? "MIXED ×2 / character density " + (2 * RES) + (OFPLAY.lastLayer ? " (" + OFPLAY.lastLayer.w + "×" + OFPLAY.lastLayer.h + ")" : "") : "page canvas"}
-last        ${t.last || ""}`;
+last        ${t.last || ""}${t.squad && typeof ofSquadHud === "function" ? "\n" + ofSquadHud() : ""}`;
 }
 function ofPlayBoot() {
   if (!ofPlayWanted()) return; const q = new URLSearchParams(location.search);
@@ -308,6 +322,7 @@ function ofPlayBoot() {
     OFPLAY.body = (q.get("body") || "AVG_ATHLETIC").toUpperCase(); if (!OF_BODIES[OFPLAY.body]) OFPLAY.body = "AVG_ATHLETIC";
     OFPLAY.actor = ofPlayMakeActor(OFPLAY.body, t.p); t.p.legLen = OFPLAY.actor.skel.legLen; ofPlayInstall(); if (q.get("runners")) ofPlaySetRunners(+q.get("runners"));
     RIG.mode = "manual"; RIG.smooth = 0.25; t.last = "OUTFIELD LOCOMOTION — W A S D / arrows, Shift sprint";
+    if (q.get("squad") && typeof ofSquadStart === "function") ofSquadStart(q.get("squad"));   // RECEIVING + PASSING V1 live drill
   };
   tryStart();
 }

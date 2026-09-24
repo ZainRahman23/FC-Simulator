@@ -2507,6 +2507,8 @@ function ptFam(fam, D) {          // world.py FAM launch families (port)
   const c = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
   if (fam === "SHORT") return [c(Math.sqrt(2 * PT.MU_ROLL * D + 6.5 * 6.5), 8, 19), 0];
   if (fam === "DRIVEN") return [c(Math.sqrt(2 * PT.MU_ROLL * D + 7.0 * 7.0), 14, 26), 0];
+  if (fam === "THROUGH") return [c(Math.sqrt(2 * PT.MU_ROLL * D + 4.0 * 4.0), 10, 24), 0];   // weighted into space, dies ~2 m past (world.py FAM)
+  if (fam === "CUTBACK") return [c(Math.sqrt(2 * PT.MU_ROLL * D + 6.0 * 6.0), 9, 18), 0];
   if (fam === "LOFT") { const T = c(D / 16, 0.8, 2.2); return [D / T, PT.G * T / 2]; }
   if (fam === "CLEAR") { const T = c(D / 11, 1.2, 2.6); return [D / T, PT.G * T / 2 * 1.15]; }
   return [c(24 + D * 0.3, 24, 31), c(0.5 + D * 0.06, 0.5, 2.2)];   // SHOT
@@ -2524,6 +2526,7 @@ function ptReset() {
   // first seconds after R were not reproducible (t.now restarts at 0, so a stale t.corrT / t.lastTouchT reads as far in the future).
   t.corr = undefined; t.corrT = undefined; t.lastTouchT = undefined; t.ctrlState = null; t.looseT = undefined; t.liveTurn = 0; t.dribSeq = null;
   t.last = "RESET";
+  t.squad = null;                  // RECEIVING + PASSING V1: squad play is set up explicitly (pt_squad.js ptSquadSetup), never inherited by a reset
   t.gk = ptGkMake();               // Goalkeeper V1 entity (always present in the playtest)
   t.gkScenario = null;             // null = free play (not in a shot scenario)
   t.gkStudy = null;                // positioning-study mode off
@@ -5513,7 +5516,7 @@ function ptDrawKeeper(dt) {
     }
   }
 }
-function ptKick(fam, label, Dopt, force, charge, tgtDist) {
+function ptKick(fam, label, Dopt, force, charge, tgtDist, aim) {
   // tgtDist = AUTHORITATIVE intended target distance (m) for the target-
   // solved INSIDE_R setup — the engine-integration path (world.py kicks
   // carry dist(ball, target)). The legacy Dopt nominal is NOT player aim
@@ -5528,6 +5531,7 @@ function ptKick(fam, label, Dopt, force, charge, tgtDist) {
   // (match AI, engine, trivela geometry selection) reads this path.
   const t = S.pt, p = t.p, b = t.b;
   if (!b.ctrl || t.kick) return;
+  if (aim) return ptKickAimed(t, fam, label, aim);                 // RECEIVING + PASSING V1: a pass to a point the simulation chose
   const D = Dopt || (fam === "SHORT" ? 14 : fam === "LOFT" ? 22 : 20);
   let [v0, vz] = ptFam(fam, D);
   const tx = p.x + Math.cos(p.facing) * D, ty = p.y + Math.sin(p.facing) * D;
@@ -5821,6 +5825,15 @@ function ptStep() {
   t.now += PT_DT;
   if (t.gkStudy && t.gkStudy.active) { ptGkStudyStep(t); ptGkUpdate(t); return; }  // GK positioning study (kinematic ball) — isolated from shots
   ptShowcaseStep(t);               // V2.0.2 showcase sequencer (debug-only)
+  // RECEIVING + PASSING V1: the tick is three phases — every player, then the keeper, then the ball. Single-player play runs exactly
+  // the code it always ran, in the same order; squad play (several outfield players, one ball) runs the SAME per-player law for each.
+  if (t.squad) { ptSquadStep(t); return; }
+  ptPlayerStep(t);
+  ptGkUpdate(t);   // GK V1 Stage 3: keeper perceives/commits/MOVES before the ball advances, so the swept keeper->ball TOI competes in physical order
+  ptBallStep(t);
+}
+// one field player's tick: input / intent -> movement -> facing -> stride clock -> scheduled kick -> carry -> (single-player) regain
+function ptPlayerStep(t) {
   const p = t.p, b = t.b;
   // input -> desired velocity (kicker plants during the shoot animation)
   let dx = 0, dy = 0;
@@ -5850,6 +5863,18 @@ function ptStep() {
     const spdC = spd * Math.max(0.4, Math.min(1.0, 1.0 - 0.45 * ceS));
     if (dd > 0.12) { dvx = (tx - p.x) / dd * spdC; dvy = (ty - p.y) / dd * spdC; }
   } else if (m > 0) { dvx = dx / m * spd; dvy = dy / m * spd; }
+  if (t.aiGoal && !t.kick && !b.ctrl) {                             // RECEIVING + PASSING V1: off-ball intent of a squad player — the desired velocity
+    const g = t.aiGoal, dg = Math.hypot(g.x - p.x, g.y - p.y);      // toward a goal point with world.locomote's arrival profile (never approach faster
+    const sp = Math.min(g.v, 0.4 + 0.92 * Math.sqrt(2 * PT.BRAKE_PLANT * Math.max(0, dg)));   // than you can brake); the limiter below is unchanged
+    dvx = dg > 0.12 ? (g.x - p.x) / dg * sp : 0; dvy = dg > 0.12 ? (g.y - p.y) / dg * sp : 0;
+  }
+  if (t.kick && t.kick.aim && !t.kick.kicked && typeof PT_RECV !== "undefined") {   // RECEIVING + PASSING V1: an aimed pass's wind-up APPROACHES the ball
+    const k = t.kick, ux = Math.cos(k.dir), uy = Math.sin(k.dir), leg = p.legLen || PT.LEG_REF, sd = k.foot === "L" ? -1 : 1;   // (world.py KICK intent) to the spot behind
+    const gx = b.x - ux * PT_RECV.approachBack * leg + uy * sd * PT_RECV.approachSide * leg, gy = b.y - uy * PT_RECV.approachBack * leg - ux * sd * PT_RECV.approachSide * leg;   // it on the target (his left = (uy, −ux), rig convention)
+    const cx = (gx - p.x) / PT_RECV.approachTau, cy = (gy - p.y) / PT_RECV.approachTau, cm = Math.hypot(cx, cy), cl = Math.min(1, PT_RECV.approachV / Math.max(1e-9, cm));   // line, to the non-striking side,
+    dvx = b.vx + cx * cl; dvy = b.vy + cy * cl;                                                 // keeping pace with the ball
+
+  }
   // world.locomote LOCOMOTION V1 limiter (direction-decomposed, mirror)
   const cur = Math.hypot(p.vx, p.vy);
   const ax = dvx - p.vx, ay = dvy - p.vy;
@@ -5873,7 +5898,9 @@ function ptStep() {
   p.y = Math.max(-2, Math.min(70, p.y + p.vy * PT_DT));
   // facing (ported): faces velocity when moving, else the ball
   const v = Math.hypot(p.vx, p.vy);
-  const want = v > 0.7 ? Math.atan2(p.vy, p.vx) : Math.atan2(b.y - p.y, b.x - p.x);
+  const want = (t.kick && t.kick.aim && !t.kick.kicked) ? Math.atan2(t.kick.aim.y - p.y, t.kick.aim.x - p.x)   // aimed pass wind-up: turn to the target
+             : (t.faceDir != null && v <= 0.7) ? t.faceDir                                             // squad receiver: face the ball's incoming line, not its position
+             : v > 0.7 ? Math.atan2(p.vy, p.vx) : Math.atan2(b.y - p.y, b.x - p.x);
   const df = ((want - p.facing) + Math.PI * 3) % (2 * Math.PI) - Math.PI;
   const rate = Math.max(4.0, Math.min(7.0, 7.0 - v * 0.30)) * PT_DT;  // athletic hips (V1)
   p.facing += Math.abs(df) <= rate ? df : Math.sign(df) * rate;
@@ -5892,6 +5919,11 @@ function ptStep() {
       // LEFT to re-cross the aim line at the target. After this rotation the
       // flight is completely free — no steering, no homing.
       let launchDir = k.dir;
+      if (k.aim) {                                                   // RECEIVING + PASSING V1: world.py Body.kick — D, v0, vz and the direction from the
+        const D = Math.max(0.5, Math.hypot(k.aim.x - b.x, k.aim.y - b.y));   // ball's own position at the contact instant; no curl setup on a pass
+        const L = ptFam(k.fam, D); k.v0 = L[0]; k.vz = L[1]; k.aimD = D;
+        launchDir = Math.atan2(k.aim.y - b.y, k.aim.x - b.x); k.launchDir = launchDir; b.curve = null;
+      } else
       if ((k.tech === "INSIDE" || k.tech === "INSIDE_FINISH") && k.foot === "R") {
         const cc = k.charge != null ? k.charge : 0.5;
         if (PT_CURVE.mode === "v2") {
@@ -6059,7 +6091,7 @@ function ptStep() {
         }
       }
     }
-  } else if (t.now >= b.exclT) {
+  } else if (!t.squad && t.now >= b.exclT) {
     // regain control: world.interact CLEAN branch (port), rv < 5.5
     const d = Math.hypot(p.x - b.x, p.y - b.y);
     const rv = Math.hypot(b.vx - p.vx, b.vy - p.vy);
@@ -6084,7 +6116,10 @@ function ptStep() {
       t.last = "CONTROL";
     }
   }
-  ptGkUpdate(t);   // GK V1 Stage 3: keeper perceives/commits/MOVES before the ball advances, so the swept keeper->ball TOI competes in physical order
+}
+// the authoritative ball: keeper contact, frame, ground, friction, curve, goal crossing, net (world.step_ball port)
+function ptBallStep(t) {
+  const b = t.b;
   // ball physics (world.step_ball port) + accepted net-catch behaviour
   if (t.net) {
     if (t.net.phase === "push") {

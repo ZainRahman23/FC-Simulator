@@ -161,7 +161,8 @@ function ofSolve(skel, pose, rootM, plants, state, opts) {
     let r = null, need = 0, capped = false;
     const cur0 = fk.joint[fb.idx].slice();                                                        // where the boot started: the cap is a TOTAL displacement, not a per-pass one
     for (let it = 0; it < (req.reach.iters || 1); it++) {
-      const dvec = V3.sub(fk.tip[tb.idx], fk.joint[fb.idx]);                                      // toe-tip offset from the ankle, re-read each pass
+      const dvec = req.reach.surf ? V3.sub(ofBootSurfacePoint(skel, fk, sd, req.reach.surf), fk.joint[fb.idx])   // RECEIVING + PASSING V1: a named boot SURFACE (the
+                                  : V3.sub(fk.tip[tb.idx], fk.joint[fb.idx]);                     // inside of the foot) instead of the toe tip; otherwise the toe-tip offset from the ankle, re-read each pass
       const P0 = V3.sub(want, dvec);
       const off = V3.sub(P0, cur0), d = V3.len(off);
       if (it === 0) need = d;
@@ -172,9 +173,9 @@ function ofSolve(skel, pose, rootM, plants, state, opts) {
       const P = d > cap ? V3.add(cur0, V3.scale(off, cap / d)) : P0;
       r = lockLeg(sd, P, w, true);                                                                // keepPlane: a swing leg keeps its own bend plane (no knee flip)
       if (d > cap) { capped = true; break; }
-      if (V3.dist(fk.tip[tb.idx], want) < 0.004) break;
+      if (V3.dist(req.reach.surf ? ofBootSurfacePoint(skel, fk, sd, req.reach.surf) : fk.tip[tb.idx], want) < 0.004) break;
     }
-    const t2 = fk.tip[tb.idx];
+    const t2 = req.reach.surf ? ofBootSurfacePoint(skel, fk, sd, req.reach.surf) : fk.tip[tb.idx];
     diag.reach[sd] = { want: +need.toFixed(4), applied: +Math.min(need, cap).toFixed(4), capped, w: +w.toFixed(2),
                        residual: +V3.dist(t2, want).toFixed(4), overReach: r.reached ? 0 : +r.residual.toFixed(4) };
   }
@@ -202,6 +203,17 @@ function ofSolve(skel, pose, rootM, plants, state, opts) {
     diag.jump = +mx.toFixed(4); diag.jumpBone = mi >= 0 && skel.bones[mi] ? skel.bones[mi].name : null;
     diag.jerk = +jk.toFixed(4); diag.jerkBone = ji >= 0 && skel.bones[ji] ? skel.bones[ji].name : null; state.prevDJ = state.dj.slice(); } state.prevJL = JL; }   // discontinuity: joint motion in the ROOT frame (the authoritative displacement is not a jump)
   pel.off = saved; return { fk, diag };
+}
+// ── BOOT CONTACT SURFACES (RECEIVING + PASSING V1) ───────────────────────────────────────────────────────────────────────────────
+// A first touch and an ordinary pass are made with the INSIDE of the foot, not the toe. The medial face is taken on the foot bone itself
+// (ankle → toe joint), a little behind the middle of the foot, offset to the big-toe side by half the boot's width — in the foot's own
+// frame, so it follows whatever the foot is doing. The binds are translation-only, so the foot's local +X is the character's right: the
+// medial side of a RIGHT boot is local −X, of a LEFT boot local +X. "outside" is the opposite face. Nothing else uses a surface.
+const OF_BOOT_SURF = { along: 0.45, halfW: 0.042 };
+function ofBootSurfacePoint(skel, fk, sd, surf) {
+  const fb = skel.byName["foot_" + sd], tb = skel.byName["toe_" + sd], A = fk.joint[fb.idx], T = fk.joint[tb.idx];
+  const lat = V3.norm(M4.transformDir(fk.world[fb.idx], [1, 0, 0])), medial = (sd === "R" ? -1 : 1) * (surf === "outside" ? -1 : 1);
+  return V3.add(V3.add(A, V3.scale(V3.sub(T, A), OF_BOOT_SURF.along)), V3.scale(lat, medial * OF_BOOT_SURF.halfW));
 }
 // one diagnostic actor: authoritative state (root x/y on the pitch, facing, speed) is INPUT; the actor holds only presentation state
 // `bodyId` may instead be a ready SKELETON (a real character's own bind): the whole runtime is driven by the skeleton object, so a real
@@ -239,7 +251,7 @@ function ofActorTick(a, dt, now) {
           plants[pf] = { want: true, mode: "ankle", s: 0.4 };                                     // the plant leg is braced through the strike
           const dtc = now - a.kick.kickAt;
           const ramp = dtc <= 0 ? smooth01(clamp01(1 + dtc / 0.11)) : 1 - clamp01(dtc / 0.07);               // reach the ball AT contact, release straight after
-          if (a.kickBall && ramp > 0.001) plants[sf].reach = { p: a.kickBall, w: ramp * w, cap: OF_KICK.reachMax, iters: 4 };
+          if (a.kickBall && ramp > 0.001) plants[sf].reach = { p: a.kickBall, w: ramp * w, cap: OF_KICK.reachMax, iters: 4, surf: a.kickSurf || undefined };   // surf: an aimed inside-foot pass meets the ball with the INSIDE of the boot
         }
         a.kickW = w;
       }
@@ -250,7 +262,13 @@ function ofActorTick(a, dt, now) {
       const ramp = dtc < 0 ? clamp01(1 + dtc / Math.max(0.03, T.lead || OF_GAIT.reachT)) : 1 - clamp01(dtc / OF_GAIT.reachT);
       if (ramp > 0.001) plants[a.touch.foot].reach = { p: T.p, w: ramp, iters: 4 };
       if (dtc > OF_GAIT.reachT) a.touch = null;
-    } a.gait = { cadence: lo.P.step > 0 ? Math.hypot(sim.vx, sim.vy) / (lo.P.step * a.skel.legLen) : 0, stanceFrac: lo.P.stance, stride: lo.P.step * a.skel.legLen, A: lo.P.hipFlex, run: lo.P.idx >= 2 }; a.legYaw = lo.legYaw;
+    }
+    // RECEIVING V1: a reception the SIMULATION has planned (or just made) — prepare, meet the ball with the inside of the chosen boot, release
+    if (!a.kickW && (a.recv || a.recvPrev) && typeof ofRecvApply === "function") pose = ofRecvApply(a, pose, plants, now);
+    a.gait = { cadence: lo.P.step > 0 ? Math.hypot(sim.vx, sim.vy) / (lo.P.step * a.skel.legLen) : 0, stanceFrac: lo.P.stance, stride: lo.P.step * a.skel.legLen, A: lo.P.hipFlex, run: lo.P.idx >= 2 }; a.legYaw = lo.legYaw;
+    // PASSING V1: an AIMED pass is struck along the simulation's facing (which turns to the target through the wind-up at the athletic
+    // turn rate), not along the running legs — blended by the kick weight so neither the entry nor the exit can snap
+    if (a.kickW > 0 && a.kick && a.kick.aim) { const d = Math.atan2(Math.sin(sim.facing - a.legYaw), Math.cos(sim.facing - a.legYaw)); a.legYaw += d * a.kickW; }
   }
   if (a.legYaw != null && a.motion !== "LOCO_V0") { const rm = gkRootMatrix(a.x, a.y, a.legYaw, 0); for (let i = 0; i < 16; i++) rootM[i] = rm[i]; }   // the legs play along the movement direction; the trunk twist toward the facing is in the pose
   const sol = ofSolve(a.skel, pose, rootM, plants, a.state, { now, dt, stanceT: a.gait && a.gait.cadence > 0 ? (a.gait.stanceFrac || OF_GAIT.stanceFrac) * 2 / a.gait.cadence : null }); a.pose = pose; a.rootM = rootM; a.sol = sol;
