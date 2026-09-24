@@ -40,6 +40,14 @@ class _BenchCondition:
 
     def __call__(self, team_id, outgoing, incoming, target_slot=None,
                  reason="FATIGUE_PERFORMANCE_DISCIPLINE"):
+        # Crash guard (engine unchanged): the coach AI's red-card restructure
+        # can name the dismissed player's slot after a formation change has
+        # removed it (e.g. CDM after a switch to 4-2-3-1) -> KeyError. Such a
+        # sub goes into the outgoing player's own slot instead.
+        if target_slot is not None:
+            from fc_simulator.formations import FORMATIONS as _F
+            if target_slot not in _F.get(self.engine.teams[team_id].formation_name, {}):
+                target_slot = None
         MatchEngine._make_substitution(self.engine, team_id, outgoing, incoming,
                                        target_slot=target_slot, reason=reason)
         st = self.engine.states.get(incoming.player_id)
@@ -68,8 +76,7 @@ def build_engine(start_request: dict[str, Any]) -> MatchEngine:
                   for side_key in ("home_team", "away_team")
                   for p in (start_request[side_key].get("bench") or [])
                   if p and p.get("cond") is not None and float(p["cond"]) < 100.0}
-    if bench_cond:
-        engine._make_substitution = _BenchCondition(engine, bench_cond)
+    engine._make_substitution = _BenchCondition(engine, bench_cond)   # always: also the slot guard
     return engine
 
 

@@ -166,7 +166,7 @@ def test_one_click_action_applies_at_presented_second(match):
         st = _st(pg)
         if st["modal"]:
             pg.wait_for_timeout(1500)       # assistant cards load
-            if pg.locator("#cmMoment .cm-act:not([disabled])").count():
+            if pg.locator("#cmMoment .cm-act:not([disabled]):not(.resume)").count():
                 got = "modal"
                 break
             pg.evaluate("CM.resume()")
@@ -175,7 +175,7 @@ def test_one_click_action_applies_at_presented_second(match):
     if not got:                             # the same one-click cards live in the ASSISTANT tab
         pg.evaluate("CM.closeMoment(); if(S.match.status === 'live') togglePlay(); setSideTab('assistant')")
         pg.wait_for_timeout(2500)
-        if pg.locator("#cmAsst .cm-act:not([disabled])").count():
+        if pg.locator("#cmAsst .cm-act:not([disabled]):not(.resume)").count():
             got = "tab"
     presented = pg.evaluate("Math.floor(CM._presS())")
     ahead = pg.evaluate("S.match.clockSeconds")
@@ -183,7 +183,7 @@ def test_one_click_action_applies_at_presented_second(match):
         _shot(pg, "t_moment.png")
         with pg.expect_response(lambda r: any(k in r.url for k in ("/substitution", "/tactics", "/instructions"))
                                 and r.request.method == "POST") as ri:
-            pg.locator(("#cmMoment" if got == "modal" else "#cmAsst") + " .cm-act:not([disabled])").first.click()
+            pg.locator(("#cmMoment" if got == "modal" else "#cmAsst") + " .cm-act:not([disabled]):not(.resume)").first.click()
     else:   # no assistant action came up: use the existing tactics path (same api() wrapper)
         pg.evaluate("CM.closeMoment(); if(S.match.htActive) startSecondHalf(); if(S.match.status === 'live') togglePlay()")
         assert pg.evaluate("isLiveMatch()"), _st(pg)
@@ -206,7 +206,7 @@ def test_one_click_action_applies_at_presented_second(match):
     # ledger truncated to the rewind point; the command's own event(s) come with the next advance
     assert after["idx"] == after["n"] and out["event_count"] - 3 <= after["n"] <= out["event_count"], (after, out.get("event_count"))
     assert after["dec"] >= 1
-    assert any("Your call" in t for t in after["feed"]), after["feed"]
+    assert any("YOUR CALL" in t for t in after["feed"]), after["feed"]
     if got:
         assert "applied at" in after["toast"]
         assert pg.locator(("#cmMoment" if got == "modal" else "#cmAsst") + " .cm-act.done").count() >= 1

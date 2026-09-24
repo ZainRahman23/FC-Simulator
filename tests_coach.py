@@ -59,36 +59,44 @@ SUB = {"team": "HOME", "player_off": "mohamedsalah", "player_on": "liv_gen_st_01
 
 # ── 5.1 exact-minute management ─────────────────────────────────────────────
 def test_rewind_at_clock_equals_fresh_replay(client):
-    # rewound path: server runs ahead to 20:00, manager decides "at" 14:10
+    # rewound path: server runs ahead to 20:00, manager decides "at" 16:40 (inside the reveal grace)
     a = start(client, 501, minutes=30, fixture="fx-rw-a")
     for _ in range(4):
         client.post(f"/api/matches/{a}/advance", json={"seconds": 300, "frames": False})
-    r = client.post(f"/api/matches/{a}/tactics", json=dict(TAC, at_clock=850))
+    r = client.post(f"/api/matches/{a}/tactics", json=dict(TAC, at_clock=1000))
     assert r.status_code == 200, r.text
     j = r.json()
-    assert j["rewound_to"] == 850 and j["clock_seconds"] == 850
-    assert j["snapshot"]["clock_seconds"] == 850 and j["snapshot"]["new_events"] == []
+    assert j["rewound_to"] == 1000 and j["clock_seconds"] == 1000
+    assert j["snapshot"]["clock_seconds"] == 1000 and j["snapshot"]["new_events"] == []
     assert j["event_count"] == j["snapshot"]["event_count"]
-    assert all(e.timestamp <= 850 for e in server.ACTIVE_MATCHES[a]["engine"].events)
+    assert all(e.timestamp <= 1000 for e in server.ACTIVE_MATCHES[a]["engine"].events)
     # with frames (per-second path, facing reset) up to a second decision
     client.post(f"/api/matches/{a}/advance", json={"seconds": 120, "frames": True})
-    r = client.post(f"/api/matches/{a}/substitution", json=dict(SUB, at_clock=900))
-    assert r.status_code == 200 and r.json()["rewound_to"] == 900
+    r = client.post(f"/api/matches/{a}/substitution", json=dict(SUB, at_clock=1050))
+    assert r.status_code == 200 and r.json()["rewound_to"] == 1050
     # constraint: can't go back before the last command
-    r = client.post(f"/api/matches/{a}/tactics", json=dict(TAC, at_clock=880))
+    r = client.post(f"/api/matches/{a}/tactics", json=dict(TAC, at_clock=1030))
     assert r.status_code == 400
     ft_a = seek(client, a, 1800)
     assert "full_time" in ft_a
     # fresh path: same decisions applied live at the same clocks
     b = start(client, 501, minutes=30, fixture="fx-rw-b")
-    seek(client, b, 850)
+    seek(client, b, 1000)
     assert client.post(f"/api/matches/{b}/tactics", json=TAC).json()["rewound_to"] is None
-    seek(client, b, 900)
+    seek(client, b, 1050)
     client.post(f"/api/matches/{b}/substitution", json=SUB)
     ft_b = seek(client, b, 1800)
     assert ft_a["full_time"]["score"] == ft_b["full_time"]["score"]
     assert digest(store.ledger(a)) == digest(store.ledger(b))
-    assert [(c["sim_clock"], c["kind"]) for c in store.commands(a)] == [(850, "tactics"), (900, "substitution")]
+    assert [(c["sim_clock"], c["kind"]) for c in store.commands(a)] == [(1000, "tactics"), (1050, "substitution")]
+
+
+def test_reveal_floor_blocks_peek_and_takeover_lock(client):
+    m = start(client, 503, minutes=40, fixture="fx-peek")
+    seek(client, m, 1500)                         # the client has now "seen" 25:00
+    r = client.post(f"/api/matches/{m}/tactics", json=dict(TAC, at_clock=1100))
+    assert r.status_code == 400 and "already been played" in r.json()["detail"]
+    assert client.post(f"/api/matches/{m}/tactics", json=dict(TAC, at_clock=1300)).status_code == 200
 
 
 def test_rewind_constraints_and_failed_command_changes_nothing(client):
@@ -142,13 +150,13 @@ def test_seek_forward_and_back(client):
     f = seek(client, m, 600)
     assert f["clock_seconds"] == 600 and f["rewound_to"] is None and len(f["new_events"]) == f["event_count"]
     ev600 = [e for e in f["new_events"]]
-    seek(client, m, 1100)
+    seek(client, m, 850)                                        # peek 250 s ahead (within the reveal grace)
     b = seek(client, m, 600, last=0)
     assert b["rewound_to"] == 600 and b["clock_seconds"] == 600
     assert digest(b["new_events"]) == digest(ev600)          # same past, exactly
     f2 = seek(client, m, 1100, last=b["event_count"])
     assert f2["clock_seconds"] == 1100 and all(e["timestamp"] > 600 for e in f2["new_events"])
-    assert client.post(f"/api/matches/{m}/seek", json={"to_clock": 0}).status_code == 400   # > 15' back
+    assert client.post(f"/api/matches/{m}/seek", json={"to_clock": 0}).status_code == 400   # already played
     ft = seek(client, m, 99999)
     assert ft["status"] == "ft" and "full_time" in ft
 
@@ -332,7 +340,7 @@ def test_scenario_find_start_and_challenge(client):
     assert sc["state"]["score"][0] - sc["state"]["score"][1] == -1
     assert "Anfield" in sc["title"] and sc["teams"] == {"you": "Everton", "them": "Liverpool"}
     assert sc["brief"].startswith("0–1 down on the hour.")
-    assert [s["stars"] for s in sc["objective"]["stars"]] == [3, 2, 1]
+    assert [s["stars"] for s in sc["objective"]["stars"]] == [3, 2]
     # deterministic + stable id (also across a fresh search: drop the stored row)
     assert client.post("/api/scenarios/find", json=body).json() == sc
     with store._conn() as c:
@@ -358,7 +366,7 @@ def test_scenario_find_start_and_challenge(client):
     res = client.post(f"/api/challenges/{sc['scenario_id']}/submit", json=sub)
     assert res.status_code == 200, res.text
     rj = res.json()
-    expect = 3 if gf > ga else 2 if gf == ga else 1 if gf - ga == -1 else 0
+    expect = 3 if gf > ga else 2 if gf == ga else 0
     assert rj["stars"] == expect and rj["score"] == [gf, ga] and rj["rank"] == 1
     assert rj["total"] == 1 and rj["best"] is True
     # foreign match ids are rejected

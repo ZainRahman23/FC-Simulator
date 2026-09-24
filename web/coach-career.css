@@ -43,7 +43,7 @@
 .pw.cc-injured .card{filter:grayscale(.7)}
 
 /* generated player card (no art) */
-.card.cc-gcard{width:84%;aspect-ratio:.66;margin:7% 8% 6.7%;border-radius:9% 9% 14% 14%/6% 6% 10% 10%;overflow:hidden;--cw2:calc(var(--cw,100px)*.86);
+.card.cc-gcard{width:76%;aspect-ratio:.72;margin:12% 12% 12%;border-radius:9% 9% 14% 14%/6% 6% 10% 10%;overflow:hidden;--cw2:calc(var(--cw,100px)*.86);
   background:linear-gradient(160deg,color-mix(in srgb,var(--kit) 70%,#fff 8%) 0%,color-mix(in srgb,var(--kit) 55%,#0a0f1a) 58%,#0b111c 100%);
   box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.18),0 6px 16px rgba(0,0,0,.35);color:#fff;font-family:var(--disp)}
 .card.cc-gcard::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(115deg,rgba(255,255,255,.05) 0 6%,transparent 6% 12%);display:block;left:0;top:0;width:100%;height:100%;border-radius:0}
@@ -309,3 +309,20 @@
 #tableBody.cc-tl .cc-leaders{grid-template-columns:1fr;margin-top:0}
 #tableBody.cc-tl>.cc-small{grid-column:1/-1}
 @media (max-width:1180px){ #tableBody.cc-tl{display:block} #tableBody.cc-tl .cc-leaders{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:16px} }
+
+.cc-offer-stance,.cc-offer-res{border-radius:10px;padding:10px 12px;margin:0 0 12px;font-size:13px;line-height:1.45;border:1px solid rgba(255,255,255,.08)}
+.cc-offer-res{margin-top:12px}
+.cc-offer-stance.good,.cc-offer-res.good{background:rgba(46,204,113,.10);border-color:rgba(46,204,113,.35)}
+.cc-offer-stance.warn,.cc-offer-res.warn{background:rgba(241,196,15,.10);border-color:rgba(241,196,15,.35)}
+.cc-offer-stance.bad,.cc-offer-res.bad{background:rgba(231,76,60,.10);border-color:rgba(231,76,60,.35)}
+.cc-rot{font-size:12.5px;color:var(--good);margin:-4px 0 10px;line-height:1.5}.cc-rot-k{color:var(--muted)}
+/* narrow laptops: the nav must fit (Challenges was clipped at 1024px) */
+@media (max-width: 1180px){
+  .navtab{padding-left:8px!important;padding-right:8px!important;font-size:13px!important}
+  #engineStatus{display:none!important}
+}
+@media (max-width: 1060px){
+  .navtabs{overflow-x:auto;scrollbar-width:none;flex:1 1 auto;min-width:0}
+  .navtabs::-webkit-scrollbar{display:none}
+  .navtab{padding-left:6px!important;padding-right:6px!important;font-size:12.5px!important}
+}

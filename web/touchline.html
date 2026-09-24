@@ -2567,7 +2567,7 @@ function openManager(){
     <div class="tgroup"><h4>SELECTION</h4>
       <p style="margin-bottom:10px">${startingIds().length}/11 starters · ${S.current.bench.length} on the bench${oop?` · <span style="color:var(--bad)">${oop} out of position</span>`:''}</p>
       ${isLiveMatch()
-        ? `<p style="color:var(--dim);font-size:12.5px">Match in progress — the XI changes only by substitution or formation change. FC Simulator v0.7 owns the live state.</p>`
+        ? `<p style="color:var(--dim);font-size:12.5px">Match in progress — the XI changes only by substitution or formation change. Changes happen through substitutions, shape and tactics.</p>`
         : `<div style="display:flex;gap:8px;flex-wrap:wrap">
         <button class="btn sec sm" onclick="autoFill()">Auto-pick best XI</button>
         <button class="btn sec sm" onclick="fillBench()">Fill bench (7)</button>
@@ -2803,7 +2803,7 @@ async function checkEngineHealth(){
   if(!had && ENGINE_HEALTH && S.ui.view === 'match' && S.matchFixture && !S.match) renderMatch();
   const el = $('#engineStatus');
   if(el) el.innerHTML = ENGINE_HEALTH
-    ? `<span style="color:var(--good)">●</span> ${esc(ENGINE_HEALTH.engine)} v${esc(ENGINE_HEALTH.engine_version)}`
+    ? `<span style="color:var(--good)" title="${esc(ENGINE_HEALTH.engine)} v${esc(ENGINE_HEALTH.engine_version)}">●</span> Online`
     : `<span style="color:var(--bad)">●</span> ENGINE OFFLINE`;
   return ENGINE_HEALTH;
 }
@@ -3041,7 +3041,7 @@ async function kickOff(){
   if(!fixture || S.match) return;
   if(ENGINE_MODE === 'mock') return mockKickOff();
   if(!SUPPORTED_ENGINE_FORMATIONS.includes(S.current.formationId)){
-    toast(`${curForm().name} is not yet supported by FC Simulator v0.7 — use 4-3-3, 4-2-3-1 or 4-1-4-1.`);
+    toast(`${curForm().name} isn't available in matches yet — use 4-3-3, 4-2-3-1 or 4-1-4-1.`);
     return;
   }
   if(startingIds().length < 11){ toast('You need 11 starters to kick off.'); return; }
@@ -3258,13 +3258,13 @@ function renderMatch(){
         </div>
         <div style="display:flex;gap:8px;justify-content:center;margin-top:16px;flex-wrap:wrap">
           <button class="btn pri" style="flex:0 0 auto;padding:12px 28px" ${online ? '' : 'disabled style="opacity:.5"'} onclick="kickOff()">Kick off</button>
-          <button class="btn sec" onclick="show('squad')">Touchline</button>
+          <button class="btn sec" onclick="show('squad')">Edit team &amp; tactics</button>
           <button class="btn sec" onclick="S.matchFixture=null;show('schedule')">Back</button>
         </div>
         ${!online ? `<p style="color:var(--bad);margin:12px 0 0;font-size:13px">Match engine unavailable.
           Start the Touchline server (<code>python server.py</code>) and try again.</p>` : ''}
         ${!SUPPORTED_ENGINE_FORMATIONS.includes(S.current.formationId) ? `<p style="color:var(--warn);margin:12px 0 0;font-size:13px">
-          ${curForm().name} is not yet supported by FC Simulator v0.7 — use 4-3-3, 4-2-3-1 or 4-1-4-1.</p>` : ''}
+          ${curForm().name} isn't available in matches yet — use 4-3-3, 4-2-3-1 or 4-1-4-1.</p>` : ''}
         ${startingIds().length < 11 ? `<p style="color:var(--warn);margin:12px 0 0;font-size:13px">Only ${startingIds().length} of 11 selected.</p>` : ''}
       </div>`;
     return;
@@ -3303,7 +3303,7 @@ function buildLiveShell(wrap, m){
           </div>
         </div>
         <div style="display:flex;gap:8px">
-          <button class="btn sec sm" style="flex:1" onclick="show('squad')">Touchline (tactics & subs)</button>
+          <button class="btn sec sm" style="flex:1" onclick="show('squad')">Tactics &amp; subs</button>
           <button class="btn sec sm" onclick="abandonMatch()">Abandon</button>
         </div>
       </div>
@@ -5675,7 +5675,7 @@ function updateHtPanel(m){
       adjust tactics or make substitutions from the Touchline, then restart.</div>
     <div style="display:flex;gap:8px;justify-content:center;margin-top:12px">
       <button class="btn pri" style="flex:0 0 auto;padding:10px 24px" onclick="startSecondHalf()">Start second half</button>
-      <button class="btn sec" onclick="show('squad')">Touchline</button>
+      <button class="btn sec" onclick="show('squad')">Edit team &amp; tactics</button>
     </div></div>`;
 }
 
@@ -5695,7 +5695,7 @@ function renderFullTimeView(wrap, m){
   wrap.innerHTML = `
     <div class="board">
       <div style="font-family:var(--cond);letter-spacing:.18em;font-size:12px;color:var(--dim)">
-        MATCHWEEK ${f.mw} · FULL TIME · ${esc(m.engine.name)} v${esc(m.engine.engine_version)}</div>
+        MATCHWEEK ${f.mw} · FULL TIME</div>
       <div class="scoreline">
         <div class="tm">${clubName(f.home)}</div>
         <div class="sc">${m.score[0]}<span style="color:var(--dim);margin:0 6px">–</span>${m.score[1]}</div>
@@ -6461,7 +6461,7 @@ function toggleBench(){
 function renderTopBar(){
   const el = $('#recordLabel'); if(!el || !S.season) return;
   const row = livRow();
-  el.textContent = `MW ${S.season.matchweek} · P${row.pos} · ${row.w}W ${row.d}D ${row.l}L · ${row.pts}pts`;
+  el.textContent = row.p ? `MW ${S.season.matchweek} · ${row.pos}${['th','st','nd','rd'][(row.pos % 100 > 10 && row.pos % 100 < 14) ? 0 : (row.pos % 10 < 4 ? row.pos % 10 : 0)]} · ${row.w}W ${row.d}D ${row.l}L · ${row.pts}pts` : `MW ${S.season.matchweek} · season starts`;
 }
 
 /* Card size follows the space left over after the dock. */

@@ -147,7 +147,10 @@ function makeAttrs(r, pos, target){
     const arch = ARCHETYPES[sk] ? pick(r, ARCHETYPES[sk]) : null;
     for(const k of ATTR_KEYS){
       if(GK_KEYS.includes(k)){ a[k] = 7 + r() * 8; continue; }
-      a[k] = target + (base[k] ?? -8) + ((arch && arch[1][k]) || 0) + gauss(r) * 3.6;
+      // position flavour at half amplitude: the engine was calibrated on
+      // well-rounded 75s; full-strength shapes (e.g. CB pace 60 vs winger 85)
+      // turned every mismatch into a rout
+      a[k] = target + 0.5 * ((base[k] ?? -8) + ((arch && arch[1][k]) || 0)) + gauss(r) * 2.4;
     }
     a._arch = arch ? arch[0] : null;
   }
@@ -177,7 +180,11 @@ function makeName(r){
 function makeFictional(clubId, idx, pos, target, role){
   const r = rngFor(`squad|${clubId}|${idx}|${pos}`);
   const age = role === 'youth' ? 17 + Math.floor(r() * 4) : ageFor(r);
-  let tgt = target + gauss(r) * 2.4 + (role === 'first' ? 1.5 : role === 'youth' ? -5 : -2.5);
+  // The engine was calibrated on 75-rated squads and is very sensitive to
+  // attribute gaps (a 6-point squad gap produced 0-11s), so club tiers are
+  // compressed around 75 and the per-player spread is kept tight.
+  const tierAdj = 76.5 + (target - 74) * 0.4;
+  let tgt = tierAdj + gauss(r) * 1.6 + (role === 'first' ? 1 : role === 'youth' ? -4 : -1.5);
   if(age >= 32) tgt -= 1;
   tgt = Math.round(clamp(tgt, 55, 90));
   const {a, arch} = makeAttrs(r, pos, tgt);
@@ -330,6 +337,22 @@ function serializePristine(pl){
   return s;
 }
 /* opts: {pristine, cond:(pid)=>0-100, formation, tactics} */
+/* AI clubs play their identity in its calibrated range. The engine's own
+   notes flag the extreme presets (Relentless press, man-marking, full box
+   commitment) as an over-productive tail — AI sides using them turned
+   routine fixtures into 0-11s. The manager can still pick the extremes. */
+function cpuTactics(plan){
+  // identity = how they build and where they defend; the high-risk dials
+  // (press intensity, marking, box commitment, line behaviour, transitions)
+  // stay in the calibrated band
+  const P0 = PRESETS[plan] || PRESETS['Balanced'], t = {...PRESETS['Balanced']};
+  for(const k of ['buildUpTempo', 'passingDirectness', 'attackingWidth', 'chanceCreationFocus',
+                  'defensiveBlockHeight', 'defensiveWidth', 'afterWinningPossession']) t[k] = P0[k];
+  t.pressingIntensity = {Relentless: 'Aggressive', Aggressive: 'Selective'}[P0.pressingIntensity] || P0.pressingIntensity;
+  if(P0.defensiveBlockHeight === 'Deep') t.defensiveLineBehavior = 'Drop';
+  return t;
+}
+CC.cpuTactics = cpuTactics;
 function buildSide(clubId, pool, opts = {}){
   const club = clubById(clubId);
   const formation = opts.formation || shapeFor(clubId);
@@ -350,12 +373,12 @@ function cpuCond(pid){
   return 86 + (hashStr(`${(S.season || {}).seed}|${pid}|${mw}|cpucond`) % 15);
 }
 window.cpuSideForRequest = function(clubId){
-  return buildSide(clubId, playersForClub(clubId), {cond: cpuCond});
+  return buildSide(clubId, playersForClub(clubId), {cond: cpuCond, tactics: cpuTactics(clubById(clubId).plan)});
 };
 window.clubFormation = function(clubId){ return shapeFor(clubId); };
 const _clubLines = window.clubLines;
 window.clubLines = function(clubId){ const o = _clubLines.apply(this, arguments);
-  o.tactics = {...(PRESETS[clubById(clubId).plan] || PRESETS['Balanced'])}; return o; };
+  o.tactics = cpuTactics(clubById(clubId).plan); return o; };
 
 /* club strength = average OVR of the XI the builder would pick */
 const _strCache = {};
@@ -491,7 +514,19 @@ function enforceAvailability(){
     const inj = injuryOf(pid);
     st.starters[sl.id] = rep ? rep.id : null;
     if(rep){ const bi = st.bench.indexOf(rep.id); if(bi > -1) st.bench.splice(bi, 1); instrFor(rep.id, sl.position); }
-    notes.push(`${shortName(P(pid).name)} (${inj.type}, ${inj.weeks} wk${inj.weeks > 1 ? 's' : ''}) is out — ${rep ? shortName(rep.name) + ' comes into the XI at ' + sl.position : 'no fit replacement'}`);
+    notes.push(`${shortName(P(pid).name)} (${inj.type === 'Suspended' ? 'suspended' : inj.type + ', ' + inj.weeks + ' wk' + (inj.weeks > 1 ? 's' : '')}) is out — ${rep ? shortName(rep.name) + ' comes into the XI at ' + sl.position : 'no fit replacement'}`);
+  }
+  // any empty slot (e.g. a player lost from the live XI) is filled, and said so
+  for(const sl of f.slots){
+    if(st.starters[sl.id]) continue;
+    const used = new Set(Object.values(st.starters).filter(Boolean));
+    const cands = clubPool().filter(p => !used.has(p.id) && !isInjured(p.id) && (sl.position === 'GK') === (p.pos === 'GK'));
+    cands.sort((x, y) => slotScore(y, sl.position) - slotScore(x, sl.position));
+    const r = cands[0]; if(!r) continue;
+    st.starters[sl.id] = r.id;
+    const bi = st.bench.indexOf(r.id); if(bi > -1) st.bench.splice(bi, 1);
+    instrFor(r.id, sl.position);
+    notes.push(`${sl.position} was empty — ${shortName(r.name)} goes in`);
   }
   if(notes.length && st.bench.length < 7) _fillBenchQuiet();
   return notes;
@@ -500,10 +535,23 @@ function _fillBenchQuiet(){ hideInjured(() => { const st = S.current; const pool
   if(!st.bench.some(id => P(id).pos === 'GK')){ const gk = pool.find(p => p.pos === 'GK'); if(gk) st.bench.push(gk.id); }
   for(const p of pool){ if(st.bench.length >= 7) break; if(!isUsed(p.id)) st.bench.push(p.id); } }); }
 CC.enforceAvailability = enforceAvailability;
+function startersBelow(th){
+  if(!S.current) return 0;
+  return curForm().slots.filter(sl => { const pid = S.current.starters[sl.id]; return pid && condOf(pid) < th; }).length;
+}
+/* In a career only your own players can be picked (buy them first). */
+function blockIfRival(pid){
+  const pl = P(pid);
+  if(!pl || !S.career || isLiveMatch() || (S.matchFixture && S.matchFixture.exhibition)) return false;
+  if(pl.clubId === LIV) return false;
+  toast(`${shortName(pl.name)} plays for ${clubById(pl.clubId) ? clubById(pl.clubId).shortName : 'another club'} — make an offer on the Transfers screen first.`);
+  return true;
+}
 function blockIfInjured(pid){
   if(!isInjured(pid)) return false;
   const inj = injuryOf(pid);
-  toast(`${shortName(P(pid).name)} is injured (${inj.type}) — back in ${inj.weeks} week${inj.weeks > 1 ? 's' : ''}.`);
+  toast(inj.type === 'Suspended' ? `${shortName(P(pid).name)} is suspended for this match.`
+    : `${shortName(P(pid).name)} is injured (${inj.type}) — back in ${inj.weeks} week${inj.weeks > 1 ? 's' : ''}.`);
   return true;
 }
 function tiredWarn(pid){
@@ -511,10 +559,10 @@ function tiredWarn(pid){
   if(c < 70) setTimeout(() => toast(`Heads up: ${shortName(P(pid).name)} is at ${Math.round(c)}% condition — he will fade early.`), 30);
 }
 const _putInSlot = window.putInSlot, _addToBench = window.addToBench, _pickPlayer = window.pickPlayer;
-window.putInSlot = function(slotId, pid){ if(pid && !isLiveMatch() && blockIfInjured(pid)) return; return _putInSlot.apply(this, arguments); };
-window.addToBench = function(pid){ if(pid && !isLiveMatch() && blockIfInjured(pid)) return; return _addToBench.apply(this, arguments); };
+window.putInSlot = function(slotId, pid){ if(pid && !isLiveMatch() && (blockIfRival(pid) || blockIfInjured(pid))) return; return _putInSlot.apply(this, arguments); };
+window.addToBench = function(pid){ if(pid && !isLiveMatch() && (blockIfRival(pid) || blockIfInjured(pid))) return; return _addToBench.apply(this, arguments); };
 window.pickPlayer = function(pid){
-  if(blockIfInjured(pid)) return;
+  if(blockIfRival(pid) || blockIfInjured(pid)) return;
   if(S.ui.pickSlot) tiredWarn(pid);
   return _pickPlayer.apply(this, arguments);
 };
@@ -559,6 +607,13 @@ function expectationFor(f){
   return {...o, verdict, short, opp, home};
 }
 CC.expectationFor = expectationFor;
+/* One outlook everywhere (pre-match, home, board): from the same odds. */
+function outlookText(f){
+  const o = expectationFor(f);
+  return o.exp >= 2.2 ? "You're clear favourites." : o.exp >= 1.75 ? 'You should have the edge.'
+    : o.exp >= 1.3 ? 'Evenly matched.' : o.exp >= 0.9 ? "They're stronger on paper." : 'A big underdog game — a draw would be a good result.';
+}
+CC.outlookText = outlookText;
 
 /* ═══ 4. AFTER THE MATCH — condition, injuries, form, development, board ═ */
 const INJURY_TYPES = [
@@ -648,15 +703,20 @@ function careerAfterMatch(f, m){
     if(mins <= 0) continue;
     const start = kick[pid] ?? condOf(pid);
     const drain = Math.max(0, start - (ps.energy ?? start));
-    c.cond[pid] = Math.round(clamp(start - drain - 4, 10, 100));
+    c.cond[pid] = Math.round(clamp(start - drain * 0.9 - 3, 10, 100));
     const st = c.stats[pid] = c.stats[pid] || {apps: 0, mins: 0, g: 0, as: 0, rsum: 0};
     st.apps++; st.mins += mins; st.g += ps.goals || 0; st.as += ps.assists || 0; st.rsum += ps.rating || 6;
     const fm = c.form[pid] = c.form[pid] || []; fm.push(r1(ps.rating || 6)); if(fm.length > 5) fm.shift();
     if(!motm || ps.rating > motm.rating) motm = {pid, name: ps.name, rating: ps.rating};
-    const inj = rollInjury(pid, mins, ps.energy ?? 70, key);
+    if((ps.cards || [0, 0])[1] > 0 && !c.injuries[pid]){          // red card → one-match ban
+      c.injuries[pid] = {type: 'Suspended', weeks: 1, since: f.id, mw: f.mw};
+      rep.injuries.push({pid, name: P(pid).name, type: 'Suspended', weeks: 1});
+      c.notices.unshift({kind: 'injury', pid, text: `${shortName(P(pid).name)} is suspended for the next match (red card).`, mw: f.mw});
+    }
+    const inj = c.injuries[pid] ? null : rollInjury(pid, mins, ps.energy ?? 70, key);
     if(inj){ c.injuries[pid] = {...inj, since: f.id, mw: f.mw};
       rep.injuries.push({pid, name: P(pid).name, ...inj});
-      c.notices.unshift({kind: 'injury', pid, text: `${shortName(P(pid).name)} picked up a ${inj.type.toLowerCase()} — out for ${inj.weeks} week${inj.weeks > 1 ? 's' : ''}.`, mw: f.mw}); }
+      c.notices.unshift({kind: 'injury', pid, text: `${shortName(P(pid).name)} picked up ${/^[aeiou]/i.test(inj.type) ? 'an' : 'a'} ${inj.type.toLowerCase()} — out for ${inj.weeks} week${inj.weeks > 1 ? 's' : ''}.`, mw: f.mw}); }
     if(c.cond[pid] < 62) rep.tired.push({pid, name: P(pid).name, cond: c.cond[pid]});
     const d = developPlayer(pid, mins, ps.rating || 6, key);
     if(d){ rep.dev.push(d); c.notices.unshift({kind: 'dev', pid, text: d.text, mw: f.mw}); }
@@ -680,9 +740,10 @@ function weekPasses(mw){
   const c = S.career;
   for(const pl of clubPool()){
     const cur = condOf(pl.id);
-    c.cond[pl.id] = Math.round(Math.min(100, cur + 30));
+    c.cond[pl.id] = Math.round(Math.min(100, cur + 28));
   }
   for(const [pid, inj] of Object.entries(c.injuries)){
+    if(inj.mw === mw) continue;             // picked up this week: "out N" means N matches missed
     inj.weeks -= 1;
     if(inj.weeks <= 0){
       delete c.injuries[pid];
@@ -813,13 +874,18 @@ window.finalizeFixture = function(){
 CC.isFinalizing = () => !!_finalizing;
 const _startFixture = window.startFixture;
 window.startFixture = function(fid){
+  CC.lastRotation = null;
   if(_finalizing){ toast('Results from around the league are still coming in…'); _finalizing.then(() => window.startFixture(fid)); return; }
   return _startFixture.apply(this, arguments);
 };
 window.continueSeason = function(){
   const f = S.matchFixture;
   if(f && f.exhibition && f.scenario){ endExhibition(); return; }
+  // in-match changes were for that match: next fixture starts from your plan
+  const hadChanges = S.base && S.changes && S.changes.length;
+  if(S.base && !(f && f.exhibition)) S.current = JSON.parse(JSON.stringify(S.base));
   S.match = null; S.matchFixture = null; S.changes = []; S.base = null;
+  if(hadChanges) setTimeout(() => toast('In-match changes reset — you’re back on your pre-match plan.'), 250);
   const notes = enforceAvailability(); if(notes.length){ saveState(); setTimeout(() => toast(notes[0]), 300); }
   if(S.career && S.career.sacked) return show('gameover');
   if(S.career && S.career.seasonEnd && !S.career.seasonEnd.done) return show('season');
@@ -992,7 +1058,7 @@ function renderScoutInto(f){
   }
   const d = _scout.data;
   el.innerHTML = `
-    <div class="cc-outlook">${esc(d.outlook || '')}</div>
+    <div class="cc-outlook">${esc(outlookText(f))}</div>
     <div class="cc-style"><b>${esc(formationOf(d.formation || shapeFor(opp.id)).name)}</b> · ${esc(opp.plan)} — they ${esc(d.style || 'play a balanced game')}.</div>
     <h5>LINE STRENGTHS <span class="cc-legend"><i class="you"></i>You <i class="them"></i>${esc(opp.abbreviation)}</span></h5>
     ${strengthRows(d)}
@@ -1018,21 +1084,27 @@ CC.applyPlan = function(i){
 };
 CC.undoPlan = function(){ if(!CC._undoTac) return; S.current.tactics = CC._undoTac; CC._undoTac = null; saveState(); renderMatch(); };
 CC.rotateTired = function(){
-  const st = S.current, f = curForm(), swaps = [];
+  const st = S.current, f = curForm(), swaps = [], kept = [];
   for(const sl of f.slots){
-    const pid = st.starters[sl.id]; if(!pid || condOf(pid) >= 72) continue;
+    const pid = st.starters[sl.id]; if(!pid) continue;
+    const c0 = condOf(pid); if(c0 >= 75) continue;
     const used = new Set(Object.values(st.starters).filter(Boolean));
-    const cand = clubPool().filter(p => !used.has(p.id) && !isInjured(p.id) && condOf(p.id) >= 85 && (sl.position === 'GK') === (p.pos === 'GK'))
+    const cand = clubPool().filter(p => !used.has(p.id) && !isInjured(p.id) && condOf(p.id) >= Math.max(80, c0 + 15)
+        && (sl.position === 'GK') === (p.pos === 'GK'))
       .sort((a, b) => slotScore(b, sl.position) - slotScore(a, sl.position))[0];
-    if(!cand || slotScore(P(pid), sl.position) - slotScore(cand, sl.position) > 7) continue;
+    // the more tired he is, the bigger the quality drop worth taking
+    const allowed = 7 + (75 - c0) * 0.5;
+    if(!cand || slotScore(P(pid), sl.position) - slotScore(cand, sl.position) > allowed){
+      kept.push(`${shortName(P(pid).name)} (${Math.round(c0)}%)`); continue; }
     const bi = st.bench.indexOf(cand.id); if(bi > -1) st.bench.splice(bi, 1);
     st.starters[sl.id] = cand.id; instrFor(cand.id, sl.position);
-    if(!st.bench.includes(pid)) st.bench.push(pid);
-    swaps.push(`${shortName(cand.name)} for ${shortName(P(pid).name)}`);
+    if(!st.bench.includes(pid)) st.bench.unshift(pid);
+    swaps.push(`${shortName(cand.name)} in for ${shortName(P(pid).name)} (${Math.round(c0)}%)`);
   }
   while(st.bench.length > 7) st.bench.pop();
   saveState();
-  toast(swaps.length ? `Rotated: ${swaps.join(', ')}` : 'No fresher like-for-like options — keep your XI or pick manually.');
+  CC.lastRotation = {swaps, kept};
+  toast(swaps.length ? `Rested ${swaps.length}: ${swaps.join(', ')}` : 'No fresher like-for-like options — pick manually on the team screen.');
   renderMatch();
 };
 function readiness(){
@@ -1057,7 +1129,7 @@ TL.hooks.prematchHTML = function(f){
   const sideSub = id => id === LIV ? `${curForm().name} · ${esc(activePlanName())}` : `${formationOf(shapeFor(id)).name} · ${esc(clubById(id).plan)}`;
   const R = readiness();
   const pct = v => Math.round(v * 100);
-  const canRotate = R.rows.some(r => r.c < 72);
+  const canRotate = R.rows.some(r => r.c < 75);
   return `<div class="cc-pre">
     <div class="board cc-prehead">
       <div class="cc-kicker">PREMIER LEAGUE · MATCHWEEK ${f.mw} · ${esc(f.date)} · ${home ? 'ANFIELD' : 'AWAY AT ' + esc(opp.shortName.toUpperCase())}${ENGINE_MODE === 'mock' ? ' · <b style="color:var(--warn)">MOCK ENGINE (DEV)</b>' : ''}</div>
@@ -1074,11 +1146,11 @@ TL.hooks.prematchHTML = function(f){
       </div>
       <div class="cc-actions">
         <button class="btn pri" style="flex:0 0 auto;padding:12px 30px" ${online ? '' : 'disabled style="opacity:.5"'} onclick="kickOff()">Kick off</button>
-        <button class="btn sec" onclick="show('squad')">Touchline</button>
+        <button class="btn sec" onclick="show('squad')">Edit team &amp; tactics</button>
         <button class="btn sec" onclick="S.matchFixture=null;show('schedule')">Back</button>
       </div>
       ${!online ? `<p class="cc-err">Match engine unavailable. Start the Touchline server (<code>python server.py</code>) and try again.</p>` : ''}
-      ${!SUPPORTED_ENGINE_FORMATIONS.includes(S.current.formationId) ? `<p class="cc-warnp">${curForm().name} is not supported by FC Simulator v0.7 — switch to 4-3-3, 4-2-3-1 or 4-1-4-1 on the Touchline.</p>` : ''}
+      ${!SUPPORTED_ENGINE_FORMATIONS.includes(S.current.formationId) ? `<p class="cc-warnp">${curForm().name} isn't available in matches yet — switch to 4-3-3, 4-2-3-1 or 4-1-4-1 on the team screen.</p>` : ''}
       ${startingIds().length < 11 ? `<p class="cc-warnp">Only ${startingIds().length} of 11 selected.</p>` : ''}
     </div>
     <div class="cc-pregrid">
@@ -1086,9 +1158,10 @@ TL.hooks.prematchHTML = function(f){
       <div class="cc-col">
         <section class="cc-panel"><h4>SUGGESTED PLAN</h4><div id="ccPlan"></div></section>
         <section class="cc-panel"><h4>YOUR SQUAD <span class="cc-h-r">${canRotate ? `<button class="btn sec sm" onclick="CC.rotateTired()">Rest tired players</button>` : ''}</span></h4>
+          ${CC.lastRotation ? `<div class="cc-rot">${CC.lastRotation.swaps.length ? '✓ ' + esc(CC.lastRotation.swaps.join(' · ')) : ''}${CC.lastRotation.kept.length ? `<div class="cc-rot-k">Kept (no fresher like-for-like): ${esc(CC.lastRotation.kept.join(', '))}</div>` : ''}</div>` : ''}
           ${notes.map(n => `<div class="cc-note bad">⚕ ${esc(n)}</div>`).join('')}
           ${R.warns.slice(0, 5).map(w => `<div class="cc-note ${w.lvl}">${esc(w.text)}</div>`).join('')}
-          ${!notes.length && !R.warns.length ? '<div class="cc-note good">Everyone is fit, fresh and in position.</div>' : ''}
+          ${!notes.length && !R.warns.length ? (startersBelow(85) ? '' : '<div class="cc-note good">Everyone is fit, fresh and in position.</div>') : ''}
           <div class="cc-xi">${R.rows.map(r => `<div class="cc-xirow"><span class="pos">${esc(r.sl.position)}</span>
             <span class="nm">${esc(shortName(r.pl.name))}${r.fit === 'out' ? ' <em class="bad">OOP</em>' : ''}</span>
             ${formBadge(r.pl.id)}${condBar(r.pl.id)}<span class="pc" style="color:${condColor(r.c)}">${Math.round(r.c)}%</span></div>`).join('')}</div>
@@ -1134,12 +1207,12 @@ function ftLeagueHTML(f){
   return `<div class="cc-ftb" id="ccFt">
     <div class="cc-ftgrid">
       <div class="cc-ftc"><span class="cc-k">BOARD</span>
-        <div class="cc-big ${mcls}">${c.board.confidence}<small>/100</small> <span class="cc-delta ${b.delta >= 0 ? 'good' : 'bad'}">${b.delta >= 0 ? '▲ +' : '▼ '}${b.delta}</span></div>
-        <div class="cc-small">${esc(mood)} — ${esc(b.why.charAt(0).toLowerCase() + b.why.slice(1))}</div>
+        <div class="cc-big ${mcls}">${c.board.confidence}<small>/100</small> <span class="cc-delta ${b.delta >= 0 ? 'good' : 'bad'}">${b.delta > 0 ? '▲ +' : b.delta < 0 ? '▼ ' : '● '}${b.delta}</span></div>
+        <div class="cc-small">${esc(b.delta >= 3 ? 'The board liked that' : b.delta <= -3 ? 'The board is disappointed' : 'The board noted it')} — ${esc(b.why.charAt(0).toLowerCase() + b.why.slice(1))} <span class="cc-muted">Overall: ${esc(mood.toLowerCase())}.</span></div>
         ${rep.board.warn ? `<div class="cc-note ${c.board.confidence < 35 ? 'bad' : 'good'}">${esc(rep.board.warn)}</div>` : ''}</div>
       <div class="cc-ftc"><span class="cc-k">MEDICAL</span>
         ${rep.injuries.length ? rep.injuries.map(i => `<div class="cc-note bad">⚕ <b>${esc(shortName(i.name))}</b> — ${esc(i.type)}, out ${i.weeks} week${i.weeks > 1 ? 's' : ''}</div>`).join('') : '<div class="cc-small good">No new injuries.</div>'}
-        ${rep.tired.length ? `<div class="cc-small">Leggy after this: ${rep.tired.map(t => `${esc(shortName(t.name))} <b style="color:${condColor(t.cond)}">${t.cond}%</b>`).join(', ')} <span class="cc-muted">(+30 recovery by next week)</span></div>` : ''}</div>
+        ${rep.tired.length ? `<div class="cc-small">Leggy after this: ${rep.tired.map(t => `${esc(shortName(t.name))} <b style="color:${condColor(t.cond)}">${t.cond}%</b>`).join(', ')} <span class="cc-muted">(they recover about 28% by next week)</span></div>` : ''}</div>
       <div class="cc-ftc"><span class="cc-k">DEVELOPMENT & FORM</span>
         ${rep.dev.map(d => `<div class="cc-note good">↑ ${esc(d.text)}</div>`).join('')}
         ${rep.motm ? `<div class="cc-small">Your best player: <b>${esc(shortName(rep.motm.name))}</b> ${rep.motm.rating.toFixed(1)}</div>` : ''}
@@ -1215,10 +1288,10 @@ TL.hooks.afterFullTime = async function(m){
 
 /* ═══ 9. EXHIBITIONS & CHALLENGES ═══════════════════════════════════════ */
 const KIND_INFO = {
-  chase:{name:'The Chase', blurb:'One down at the hour. Find the equaliser — and maybe the winner.', stars:['Win','Draw','Lose by one']},
+  chase:{name:'The Chase', blurb:'One down at the hour. Find the equaliser — and maybe the winner.', stars:['Win','Draw','—']},
   comeback:{name:'The Comeback', blurb:'Two down after 55 minutes. The crowd is restless.', stars:['Win','Draw','Lose by one']},
   protect:{name:'Hold the Line', blurb:'One up with twenty to go. See it out — or kill it off.', stars:['Win by 2+','Win','Draw']},
-  tenmen:{name:'Ten Men', blurb:'A red card has left you a man short. Stay in it.', stars:['Win','Draw','Lose by one']},
+  tenmen:{name:'Ten Men', blurb:'A red card has left you a man short. Stay in it.', stars:['Win','Draw','—']},
   deadlock:{name:'Break the Deadlock', blurb:'0–0 at 65 and they have had the better chances.', stars:['Win','—','Draw']}
 };
 const KINDS = ['chase','comeback','protect','tenmen','deadlock'];
@@ -1235,7 +1308,7 @@ CC.dailySpec = dailySpec;
 /* Canonical Liverpool (pristine data, never your modified squad). */
 function canonicalLiverpool(){
   const pool = pristineClubPool(LIV);
-  return buildSide(LIV, pool, {pristine: true, formation: '433', tactics: PRESETS['High Press']});
+  return buildSide(LIV, pool, {pristine: true, formation: '433', tactics: cpuTactics('High Press')});
 }
 function scenarioRequest(spec){
   const liv = canonicalLiverpool();
@@ -1375,7 +1448,7 @@ function briefingHTML(key, ent, big){
   const two = a => Array.isArray(a) ? a.map(v => typeof v === 'number' && !Number.isInteger(v) ? v.toFixed(2) : v).join('–') : '—';
   return `<div class="cc-brief">
     <div class="cc-brief-h"><div><div class="cc-btitle">${esc(sc.title || KIND_INFO[ent.spec.kind].name)}</div>
-      <div class="cc-small cc-muted">Liverpool ${ent.spec.livHome ? 'v' : 'at'} ${esc(opp.name)} · canonical squads, same seed for everyone${sc.fallback ? ` · <span class="warn" title="No ${esc(KIND_INFO[ent.spec.kind].name)} moment in today's seeds, so the engine picked the closest chase">today's ${esc(KIND_INFO[ent.spec.kind].name)} became a chase</span>` : ''}</div></div>
+      <div class="cc-small cc-muted">Liverpool ${ent.spec.livHome ? 'v' : 'at'} ${esc(opp.name)} · everyone plays the same squads and the same match${sc.fallback && sc.kind !== ent.spec.kind ? ` · <span class="warn" title="No ${esc(KIND_INFO[ent.spec.kind].name)} moment turned up in today's matches, so you get the closest chase instead">no ${esc(KIND_INFO[ent.spec.kind].name)} today — it's The Chase instead</span>` : ''}</div></div>
       ${best ? `<div class="cc-best" title="Your best">${starStr(best.stars)}<small>${best.score[0]}–${best.score[1]}</small></div>` : ''}</div>
     <p class="cc-btext">${esc(sc.brief || KIND_INFO[ent.spec.kind].blurb)}</p>
     <div class="cc-state"><div><span class="cc-k">MINUTE</span><b>${min}'</b></div><div><span class="cc-k">SCORE</span><b>${two(st.score)}</b></div>
@@ -1439,9 +1512,11 @@ function scoutTeaser(nf){
   const d = _scout.data && _scout.key && _scout.key.startsWith(nf.id + '|') ? _scout.data : null;
   const ls = clubStrength(LIV), os = clubStrength(opp.id);
   if(d){ const kp = (d.key_players || [])[0];
-    return `${esc(d.outlook || '')} ${kp ? `Watch <b>${esc(shortName(kp.name))}</b> (${esc(kp.why)}).` : ''}`; }
-  const top = playersForClub(opp.id).sort((a, b) => b.ovr - a.ovr)[0];
-  return `${esc(opp.shortName)} set up ${esc(formationOf(shapeFor(opp.id)).name)} with ${/^[aeiou]/i.test(opp.plan) ? 'an' : 'a'} ${esc(opp.plan.toLowerCase())} approach. Strength ${os.toFixed(1)} v your ${ls.toFixed(1)}${top ? ` · danger man <b>${esc(shortName(top.name))}</b> (${top.ovr})` : ''}.`;
+    return `${esc(outlookText(nf))} ${kp ? `Watch <b>${esc(shortName(kp.name))}</b> (${esc(kp.why)}).` : ''}`; }
+  // the same report the pre-match screen shows: fetch it, then re-render home
+  if(!_scout.loading && !CC._teaserFetch){ CC._teaserFetch = true;
+    loadScout(nf).then(() => { CC._teaserFetch = false; if(S.ui.view === 'home') renderHome(); }).catch(() => { CC._teaserFetch = false; }); }
+  return `${esc(outlookText(nf))} ${esc(opp.shortName)} set up ${esc(formationOf(shapeFor(opp.id)).name)} with ${/^[aeiou]/i.test(opp.plan) ? 'an' : 'a'} ${esc(opp.plan.toLowerCase())} approach. Your analysts are finishing the report…`;
 }
 const _renderHome = window.renderHome;
 window.renderHome = function(){
@@ -1502,7 +1577,7 @@ function renderHomeCC(el){
         ${nf ? `<div class="cc-nf"><span class="clubdot" style="background:${clubById(nf.home).color}"></span>${esc(clubName(nf.home))} <small>vs</small>
           <span class="clubdot" style="background:${clubById(nf.away).color}"></span>${esc(clubName(nf.away))}</div>
           <div class="cc-small cc-muted">MW ${nf.mw} · ${esc(nf.date)} · ${nf.home === LIV ? 'Anfield' : 'away'}</div>
-          <div class="cc-expline"><span class="cc-k">BOARD EXPECTS</span> <b>${ex.short}</b> <span class="cc-muted">(${ex.exp.toFixed(1)} pts)</span></div>
+          <div class="cc-expline"><span class="cc-k">BOARD EXPECTS</span> <b>${ex.short}</b> <span class="cc-muted" title="Average points the board expects from this fixture (win = 3, draw = 1)">(about ${ex.exp.toFixed(1)} of 3 points)</span></div>
           <div class="cc-teaser">${scoutTeaser(nf)}</div>
           <button class="btn pri sm" style="margin-top:10px;flex:0 0 auto;padding:9px 20px" onclick="startFixture('${nf.id}')">Prepare match →</button>`
         : `<div class="cc-small">No fixtures left this season.</div>`}
@@ -1521,14 +1596,14 @@ function renderHomeCC(el){
       <section class="cc-panel"><h4>SQUAD ALERTS</h4>
         ${inj.length ? inj.map(([pid, i]) => `<div class="cc-alert"><span class="cc-injb">${i.weeks}w</span><b>${esc(shortName(P(pid).name))}</b> <span class="cc-muted">${esc(i.type)}</span>
           <span class="cc-rec"><i style="width:${Math.round(100 * (1 - i.weeks / (i.total || i.weeks)))}%"></i></span></div>`).join('') : '<div class="cc-small good">No injuries.</div>'}
-        ${tired.length ? `<div class="cc-k" style="margin-top:8px">NEEDS A REST</div>${tired.slice(0, 4).map(p => `<div class="cc-alert"><b>${esc(shortName(p.name))}</b> ${condBar(p.id, '70px')} <span style="color:${condColor(condOf(p.id))}">${Math.round(condOf(p.id))}%</span></div>`).join('')}` : '<div class="cc-small good" style="margin-top:6px">Squad condition is good.</div>'}
+        ${tired.length ? `<div class="cc-k" style="margin-top:8px">NEEDS A REST</div>${tired.slice(0, 4).map(p => `<div class="cc-alert"><b>${esc(shortName(p.name))}</b> ${condBar(p.id, '70px')} <span style="color:${condColor(condOf(p.id))}">${Math.round(condOf(p.id))}%</span></div>`).join('')}` : (startersBelow(85) ? `<div class="cc-small" style="margin-top:6px;color:var(--warn)">${startersBelow(85)} starters below 85% — consider rotating.</div>` : '<div class="cc-small good" style="margin-top:6px">Squad condition is good.</div>')}
         ${hot.length ? `<div class="cc-k" style="margin-top:8px">IN FORM</div><div class="cc-small">${hot.map(x => `${esc(shortName(x.p.name))} ${formBadge(x.p.id)} <b>${x.t.avg.toFixed(1)}</b>`).join(' · ')}</div>` : ''}
       </section>
       <section class="cc-panel"><h4>LAST RESULT</h4>
         ${last ? `<div class="cc-nf">${esc(clubName(last.home))} <b class="cc-res ${pts.l}">${S.season.results[last.id].score.join('–')}</b> ${esc(clubName(last.away))}</div>
           <div class="cc-small cc-muted">MW ${last.mw}${b.history.length && b.history[b.history.length - 1].fid === last.id ? ` · board ${b.history[b.history.length - 1].delta >= 0 ? '+' : ''}${b.history[b.history.length - 1].delta}` : ''}</div>
           ${scorers.length ? `<div class="cc-small" style="margin-top:6px">Top scorers: ${scorers.map(([pid, n]) => `${esc(shortName(P(pid).name))} <b>${n}</b>`).join(' · ')}</div>` : ''}
-          <button class="btn sec sm" style="margin-top:10px" onclick="openResult('${last.id}')">Match review →</button>` : '<div class="cc-small cc-muted">Your first match is waiting.</div>'}
+          <button class="btn sec sm" style="margin-top:10px" onclick="(window.CM && CM.openPast) ? CM.openPast('${last.id}') : openResult('${last.id}')">Match review →</button>` : '<div class="cc-small cc-muted">Your first match is waiting.</div>'}
       </section>
       <section class="cc-panel cc-dailyc"><h4>TOUCHLINE DAILY</h4>
         <div class="cc-nf">${esc(dinfo ? dinfo.title : KIND_INFO[ds.kind].name)} <small>v ${esc(clubById(ds.opp).shortName)}</small></div>
@@ -1540,7 +1615,7 @@ function renderHomeCC(el){
         ${c.notices.length ? c.notices.slice(0, 6).map(n => `<div class="cc-newsi ${n.kind}"><span>${n.mw ? 'MW' + n.mw : ''}</span>${esc(n.text)}</div>`).join('') : '<div class="cc-small cc-muted">Injuries, player development and board news will appear here.</div>'}
       </section>
       <section class="cc-panel"><h4>CLUB FINANCES</h4>
-        <div class="cc-small">Transfer budget <b>${fmtM(S.finance.transferBudget)}</b> · wage bill <b>${fmtM(financeSnapshot().weeklyK / 1000)}/wk</b> · SCR <b>${Math.round(financeSnapshot().scr * 100)}%</b></div>
+        <div class="cc-small">Transfer budget <b>${fmtM(S.finance.transferBudget)}</b> · wage bill <b>${fmtM(financeSnapshot().weeklyK / 1000)}/wk</b> · <span title="Squad cost ratio: wages + transfer amortisation as a share of revenue. Keep it under ~70%.">wages/revenue</span> <b>${Math.round(financeSnapshot().scr * 100)}%</b></div>
         <button class="cc-link" onclick="show('finances')">Finances →</button> <button class="cc-link" onclick="show('transfers')">Transfers →</button>
       </section>
     </div>`;
@@ -1651,6 +1726,12 @@ window.show = function(v){
   const r = _show.apply(this, arguments.length ? [v, ...[].slice.call(arguments, 1)] : arguments);
   if(v === 'squad' && S.career && !isLiveMatch() && !(S.matchFixture && S.matchFixture.exhibition)){
     const notes = enforceAvailability(); if(notes.length){ renderPitch(); saveState(); toast(notes[0]); } }
+  // squad screen opened from match prep: a way back
+  let pill = document.getElementById('ccPrepPill');
+  const wantPill = v === 'squad' && S.matchFixture && !S.match;
+  if(wantPill && !pill){ pill = document.createElement('button'); pill.id = 'ccPrepPill'; pill.className = 'cm-pill';
+    pill.onclick = () => show('match'); document.body.appendChild(pill); }
+  if(pill){ if(wantPill) pill.innerHTML = `<i></i>MATCH PREP · ${esc(clubName(S.matchFixture.home))} v ${esc(clubName(S.matchFixture.away))} <b>← Back to match prep</b>`; else pill.remove(); }
   if(v === 'challenges') renderChallenges();
   if(v === 'season') renderSeasonView();
   if(v === 'gameover') renderGameOver();
@@ -1663,7 +1744,7 @@ const PHILO = {
   'Controlled':['Patient, short and wide. Keep the ball, wait for the opening.', 0],
   'Possession':['Dominate the ball, counterpress, squeeze high.', 1],
   'High Press':['Relentless pressing, quick vertical attacks.', 2],
-  'Low Block':['Deep and compact, go direct. Frustrate stronger sides.', 0],
+  'Low Block':['Deep and compact, go direct. You concede territory and shots — best for protecting a lead.', 0],
   'Counter Attack':['Sit deep and break at speed when you win it.', 1],
   'End-to-End':['Everyone attacks, everyone presses. Chaos in both boxes.', 2]
 };
@@ -1802,4 +1883,89 @@ function postBoot(){
   renderTopBar();
 }
 CC.postBoot = postBoot;
+
+/* ── transfer offers: say what the club wants and answer clearly ───────── */
+VALUATION.potFactor = 0.06;            // young high-potential players cost more
+window.openOffer = function(pid){
+  const pl = P(pid);
+  const stance = interestFor(pl), ask = askingPrice(pl);
+  const club = clubById(pl.clubId);
+  $('#drawerTitle').textContent = `Offer — ${pl.name}`;
+  $('#drawerSub').textContent = `${club.name} · estimated value ${fmtM(playerValue(pl))}`;
+  const stanceTxt = stance === 'Unavailable' ? `${club.shortName} won't sell him at any price this window.`
+    : stance === 'Uncertain' ? `${club.shortName} would rather keep him — expect to pay a premium (about ${fmtM(ask)}).`
+    : `${club.shortName} are willing to sell for around ${fmtM(ask)}.`;
+  $('#drawerBody').innerHTML = `
+    <div class="cc-offer-stance ${stance === 'Unavailable' ? 'bad' : stance === 'Uncertain' ? 'warn' : 'good'}">${esc(stanceTxt)}</div>
+    <label class="flabel">TRANSFER FEE (£m)</label>
+    <input class="finput" id="offFee" type="number" min="0" step="0.5" value="${ask}" ${stance === 'Unavailable' ? 'disabled' : ''}>
+    <label class="flabel">ADD-ONS (£m) <span style="opacity:.6">— count half toward their valuation</span></label>
+    <input class="finput" id="offAddons" type="number" min="0" step="0.5" value="0" ${stance === 'Unavailable' ? 'disabled' : ''}>
+    <div class="impact"><h5>CONTEXT</h5>
+      <div class="tprow"><span>Transfer budget</span><b>${fmtM(S.finance.transferBudget)}</b></div>
+      <div class="tprow"><span>Their asking price</span><b>${stance === 'Unavailable' ? 'not for sale' : fmtM(ask)}</b></div>
+    </div>
+    <div id="offResult"></div>`;
+  $('#drawerFoot').innerHTML = `
+    <button class="btn sec" onclick="openTransferProfile('${pid}')">Back</button>
+    <button class="btn pri" onclick="submitOffer('${pid}')" ${stance === 'Unavailable' ? 'disabled style="opacity:.45"' : ''}>Submit offer</button>`;
+};
+window.submitOffer = function(pid){
+  const pl = P(pid), club = clubById(pl.clubId);
+  const fee = +$('#offFee').value || 0, addons = +$('#offAddons').value || 0;
+  const out = msg => { const el = $('#offResult'); if(el) el.innerHTML = msg; };
+  if(interestFor(pl) === 'Unavailable') return out(`<div class="cc-offer-res bad">${esc(club.shortName)} aren't selling.</div>`);
+  if(fee + addons > S.finance.transferBudget)
+    return out(`<div class="cc-offer-res bad">That's beyond your transfer budget (${fmtM(S.finance.transferBudget)}).</div>`);
+  const ask = askingPrice(pl), worth = fee + addons * 0.5;
+  if(worth < ask){
+    const gap = Math.max(0.5, Math.round((ask - worth) * 2) / 2);
+    return out(`<div class="cc-offer-res warn"><b>${esc(club.shortName)} reject the offer.</b> They're about ${fmtM(gap)} short of what they want (${fmtM(ask)}).</div>`);
+  }
+  out(`<div class="cc-offer-res good"><b>Fee agreed!</b> Now agree personal terms with ${esc(shortName(pl.name))}.</div>`);
+  setTimeout(() => openContract(pid, fee, addons), 700);
+};
+
+/* ── result recovery: the server is the source of truth ──────────────────
+   A result can only be lost in the browser (crash/reload/network before
+   finalize ran). On boot, any Liverpool fixture the server has finished for
+   this save is re-imported and processed exactly like a normal full time,
+   and any matchweek whose other fixtures never landed is re-simulated
+   (deterministic seeds → the same results). */
+async function recoverResults(){
+  if(!S.season || S.match) return;
+  const h = (typeof getActiveMatchHandle === 'function') ? getActiveMatchHandle() : null;
+  const played = new Set();
+  // only the fixture you're up to can have been played without being recorded
+  for(const f of [nextLivFixture()].filter(Boolean)){
+    if(S.season.results[f.id] || (h && h.fixtureId === f.id)) continue;
+    let row;
+    try{ row = await api(`/matches/lookup?soft=1&save_id=${encodeURIComponent(SAVE_ID)}&fixture_id=${encodeURIComponent(f.id)}`); }
+    catch(e){ continue; }                          // 404: never played
+    if(!row || row.status !== 'ft') continue;
+    let snap;
+    try{ snap = await api(`/matches/${row.match_id}`); }catch(e){ continue; }
+    if(!snap || !snap.full_time) continue;
+    S.matchFixture = f;
+    S.match = {matchId: row.match_id, status: 'ft', fullTime: snap.full_time, recovered: true};
+    S.changes = []; S.matchKickoff = null;
+    try{ await window.finalizeFixture(); }
+    finally{ S.match = null; S.matchFixture = null; }
+    played.add(f.id);
+    toast(`Recovered your result: ${clubName(f.home)} ${snap.full_time.score.home}–${snap.full_time.score.away} ${clubName(f.away)}`);
+  }
+  // matchweeks where Liverpool played but the rest of the round is missing
+  for(const f of livFixtures()){
+    if(!S.season.results[f.id] || played.has(f.id)) continue;
+    const missing = S.season.fixtures.some(x => x.mw === f.mw && !S.season.results[x.id]);
+    if(missing){ await simulateOthers(f); S.season.standings = computeStandings(); }
+  }
+  if(played.size){ saveState(); renderTopBar(); if(S.ui.view === 'home') renderHome(); }
+}
+CC.recoverResults = recoverResults;
+TL.booted.then(() => setTimeout(async () => {
+  try{ await recoverResults(); }catch(e){ console.warn('recover', e); }
+  // prefetch today's Daily so "Play today's challenge" opens instantly
+  try{ const spec = dailySpec(localDate()); if(!S.match) findScenario(spec); }catch(e){}
+}, 600));
 })();

@@ -45,7 +45,7 @@ def _minute(t: int) -> int:
     return max(1, (int(t) + 59) // 60)
 
 
-_PARTICLES = {"van", "von", "de", "der", "den", "da", "di", "dos", "das", "del", "della", "le", "la", "ten", "ter"}
+_PARTICLES = {"mac", "mc", "st", "al", "el", "van", "von", "de", "der", "den", "da", "di", "dos", "das", "del", "della", "le", "la", "ten", "ter"}
 
 
 def _short(name: str | None) -> str:
@@ -259,7 +259,7 @@ def player_evidence(ev: list[dict], pid: str, name: str) -> dict[str, int]:
                 elif d.get("outcome") in ("INTERCEPTED", "RECEIVER_DENIED"):
                     c["passes_cut_out"] += 1
             elif et == "DRIBBLE":
-                if d.get("outcome") in ("TACKLED", "LOOSE"):
+                if d.get("outcome") == "LOOSE":        # TACKLED is counted via TACKLE below
                     c["dispossessed"] += 1
                 elif d.get("outcome") in ("BEAT", "PARTIAL"):
                     c["dribbles_won"] += 1
@@ -338,8 +338,12 @@ def live_insights(ctx: dict[str, Any]) -> list[dict[str, Any]]:
                     "title": title, "text": text, "why": why,
                     "actions": [a for a in (actions or []) if a]})
 
+    fresh = {str(c["payload"].get("player_on")) for c in mine_cmds
+             if c["kind"] == "substitution" and now - int(c["sim_clock"]) < 15 * 60}
+    reds_mine = sum(1 for p in players.values() if p["team"] == team and p["cards"][1] > 0)
+
     def sub_for(pid, label_fmt="Bring on {on}"):
-        if subs_left <= 0:
+        if subs_left <= 0 or pid in fresh:        # never undo a sub you just made
             return None
         p = players[pid]
         b = best_replacement(p["slot"], bench, used_bench)
@@ -366,12 +370,13 @@ def live_insights(ctx: dict[str, Any]) -> list[dict[str, Any]]:
             loss = _pace_loss(energy)
             title = (f"{_short(p['name'])} is running on empty" if energy < 52
                      else f"{_short(p['name'])} is tiring")
-            add("fatigue", 3 if energy < 48 else 2, title,
+            sev = 3 if energy < 50 else 2
+            add("fatigue", sev, title,
                 f"{p['name']} is down to {energy:.0f}% energy — he's lost about {loss}% of his "
                 f"acceleration and a fresh player would win those races."
                 + (f" {others} more {'is' if others == 1 else 'are'} fading too." if others > 0 else ""),
                 why=f"Energy {energy:.0f}% ({p['slot']}) · {subs_left} subs left",
-                actions=acts, key=f"fatigue:{pid}")
+                actions=acts, key=f"fatigue:{pid}:{sev}")   # escalation = a new moment
 
     # 2. card risk — a booked player who keeps fouling (FOUL actor = offender)
     fouls = Counter(e.get("actor_id") for e in ev if e["event_type"] == "FOUL")
@@ -384,7 +389,8 @@ def live_insights(ctx: dict[str, Any]) -> list[dict[str, Any]]:
                 acts.append(_instr_action(f"Calm {_short(p['name'])} down", pid, ins,
                                           defense_effort=max(30, ins["defense_effort"] - 25)))
             add("card_risk", 3 if n >= 3 else 2, f"{_short(p['name'])} is walking a tightrope",
-                f"Booked, and {n} fouls so far — one more mistimed challenge and you're down to ten.",
+                f"Booked, and {n} fouls so far — one more mistimed challenge and you're down to "
+                f"{'nine' if reds_mine else 'ten'}.",
                 why=f"Yellow card · {n} fouls", actions=acts, key=f"card:{pid}")
             break
 
@@ -555,6 +561,12 @@ def live_insights(ctx: dict[str, Any]) -> list[dict[str, Any]]:
         add("star", 1, f"{_short(players[pid]['name'])} is running the show",
             f"Rated {r:.1f} — keep getting him on the ball.", why=f"Rating {r:.1f}", key=f"star:{pid}")
 
+    # one voice: when chasing, don't also counsel caution (and vice versa)
+    kinds = {i["kind"] for i in out}
+    if "chase" in kinds:
+        out = [i for i in out if i["kind"] not in ("pressure", "protect")]
+    elif "protect" in kinds:
+        out = [i for i in out if i["kind"] not in ("drought",)]
     out.sort(key=lambda i: -i["severity"])
     return out
 
@@ -644,12 +656,17 @@ def change_impacts(events: list[dict], commands: list[dict], team: str, now: int
         if before_s < 120:
             continue
         before = _per15(window_metrics(events, team, start, c0), before_s)
-        after = _per15(window_metrics(events, team, c1, end), after_s) if after_s >= 60 else None
-        verdict, text = "pending", "Too early to judge — give it a few minutes."
-        if after is not None and after_s >= 240:
+        after = _per15(window_metrics(events, team, c1, end), after_s) if after_s >= 300 else None
+        verdict, text = "pending", "Too early to judge — give it ten minutes."
+        if after is not None and after_s >= 600:
             d_for = after["xg_for"] - before["xg_for"]
             d_against = after["xg_against"] - before["xg_against"]
-            net = d_for - d_against
+            # judge by what the change was for: protecting a lead is about
+            # conceding less, chasing a game is about creating more
+            lead = sum(1 if e.get("team_id") == team else -1 for e in events
+                       if e["event_type"] == "GOAL" and e["timestamp"] <= c0)
+            w_for, w_against = (0.5, 1.5) if lead > 0 else (1.5, 0.5) if lead < 0 else (1.0, 1.0)
+            net = w_for * d_for - w_against * d_against
             if net >= 0.12:
                 verdict = "better"
             elif net <= -0.12:
@@ -697,7 +714,7 @@ def review(ft: dict[str, Any], team: str, commands: list[dict], team_names: dict
         verdict = ("An unlucky defeat" if dx >= 0.4 else "Beaten fair and square" if dx <= -0.4
                    else "A game that could have gone either way")
     else:
-        verdict = ("Two points dropped" if dx >= 0.5 else "A point gained" if dx <= -0.5
+        verdict = ("The better side, but only a point" if dx >= 0.5 else "A point gained" if dx <= -0.5
                    else "A fair draw")
     process = (f"xG {xf:.2f}–{xa:.2f}. You scored {gs} from {xf:.2f} expected"
                f"{' — clinical' if gs - xf >= 0.8 else ' — wasteful' if xf - gs >= 0.8 else ''}; "
@@ -713,7 +730,8 @@ def review(ft: dict[str, Any], team: str, commands: list[dict], team_names: dict
             moments.append({"minute": _minute(e["timestamp"]), "kind": "goal_for" if mine else "goal_against",
                             "text": f"{_short(e.get('actor_name'))} scores"
                                     + (f" (assist {_short(d.get('assist'))})" if d.get("assist") else "")
-                                    + f" — {d.get('xg', 0):.2f} xG chance"})
+                                    + (" — from the penalty spot" if d.get("penalty") or d.get("shot_type") == "PENALTY"
+                                       or not d.get("xg") else f" — {d.get('xg', 0):.2f} xG chance")})
         elif et == "SHOT" and float(d.get("xg", 0)) >= 0.3 and d.get("outcome") != "GOAL":
             mine = e.get("team_id") == team
             how = {"MISS": "misses", "BLOCKED": "is blocked", "SAVED_PARRIED": "is denied by the keeper",
@@ -724,6 +742,8 @@ def review(ft: dict[str, Any], team: str, commands: list[dict], team_names: dict
             mine = e.get("team_id") == team
             moments.append({"minute": _minute(e["timestamp"]), "kind": "red_for" if mine else "red_against",
                             "text": f"{_short(e.get('actor_name'))} is sent off"})
+        elif et == "PENALTY" and any(g["event_type"] == "GOAL" and abs(g["timestamp"] - e["timestamp"]) <= 5 for g in ev):
+            continue                                   # the GOAL line already tells it
         elif et == "PENALTY":
             moments.append({"minute": _minute(e["timestamp"]), "kind": "penalty",
                             "text": f"Penalty — {_short(e.get('actor_name'))} {'scores' if d.get('outcome') == 'GOAL' else 'fails to score'}"})
@@ -992,12 +1012,10 @@ STADIUMS = {
 }
 
 SCENARIO_STARS = {
-    "chase": [{"stars": 3, "label": "Win"}, {"stars": 2, "label": "Draw"},
-              {"stars": 1, "label": "Lose by one"}],
+    "chase": [{"stars": 3, "label": "Win"}, {"stars": 2, "label": "Draw"}],
     "comeback": [{"stars": 3, "label": "Win"}, {"stars": 2, "label": "Draw"},
                  {"stars": 1, "label": "Lose by one"}],
-    "tenmen": [{"stars": 3, "label": "Win"}, {"stars": 2, "label": "Draw"},
-               {"stars": 1, "label": "Lose by one"}],
+    "tenmen": [{"stars": 3, "label": "Win"}, {"stars": 2, "label": "Draw"}],
     "protect": [{"stars": 3, "label": "Win by two or more"}, {"stars": 2, "label": "Win"},
                 {"stars": 1, "label": "Draw"}],
     "deadlock": [{"stars": 3, "label": "Win"}, {"stars": 1, "label": "Draw"}],
@@ -1034,7 +1052,13 @@ def _goal_clause(goals: list[dict], team: str) -> str:
     if len(theirs) == 1:
         g = theirs[0]
         return f"{_short(g.get('name'))}'s {_ordinal(g['minute'])}-minute goal is the difference"
-    names = " and ".join(f"{_short(g.get('name'))} ({g['minute']}')" for g in theirs[:2])
+    by: dict[str, list[int]] = {}
+    for g in theirs:
+        by.setdefault(_short(g.get("name")), []).append(int(g["minute"]))
+    if len(by) == 1:
+        (who, mins), = by.items()
+        return f"{who} has scored {'twice' if len(mins) == 2 else f'{len(mins)} times'} ({', '.join(f'{m}’' for m in mins)})"
+    names = " and ".join(f"{who} ({', '.join(f'{m}’' for m in mins)})" for who, mins in list(by.items())[:2])
     return f"{names} have done the damage"
 
 
@@ -1099,6 +1123,12 @@ def scenario_card(scenario_id: str, kind: str, seed: int, takeover_clock: int,
             title = f"Take charge {venue}"
             brief = (f"It's {score_txt} on the hour against {them}. {they(False)} "
                      "Thirty minutes to make it yours.")
+    if kind != "tenmen":
+        for r in (st.get("sent_off") or []):
+            if r.get("team") == team:
+                brief += f" And you're down to ten — {_short(r.get('name'))} has been sent off."
+            else:
+                brief += f" {them} are down to ten: {_short(r.get('name'))} has been sent off."
     brief = " ".join(brief.split())
     return {"scenario_id": scenario_id, "kind": kind, "seed": int(seed),
             "takeover_clock": int(takeover_clock), "title": title, "brief": brief,

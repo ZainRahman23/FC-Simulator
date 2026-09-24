@@ -135,8 +135,8 @@ def test_squads_distinct_and_tiered(server, browser):
     assert r["dup"] == 0 and r["flat"] == 0
     assert r["names"], "fictional names must be unique"
     s = r["strength"]
-    assert min(s["MCI"], s["ARS"], s["LIV"]) > max(s["SUN"], s["BUR"], s["LEE"]) + 7, s
-    assert r["cbDef"] > r["wDef"] + 20 and r["wPace"] > r["cbPace"] + 8 and r["gkDiv"] > r["stGk"] + 40
+    assert min(s["MCI"], s["ARS"], s["LIV"]) > max(s["SUN"], s["BUR"], s["LEE"]) + 5, s   # tiered, but compressed (engine sensitivity)
+    assert r["cbDef"] > r["wDef"] + 10 and r["wPace"] > r["cbPace"] + 8 and r["gkDiv"] > r["stGk"] + 40
     assert len({g[1] for g in r["livGen"]}) > 3, "Liverpool fillers are no longer flat 75s"
     assert r["inList"] >= 18 and r["market"] > 200
     assert r["imgs"] == 0, "no art <img> requested for players without card art"
@@ -148,7 +148,7 @@ def test_cpu_formations_vary(server, browser):
     pg = Page(browser, server)
     r = pg.js("""() => CLUBS.filter(c => c.id !== 'LIV').map(c => { const s = cpuSideForRequest(c.id);
       return {id: c.id, f: s.formation, n: Object.values(s.lineup).filter(Boolean).length, b: s.bench.length,
-        gk: s.lineup.GK && s.lineup.GK.pos, bgk: s.bench.some(p => p.pos === 'GK'), tac: JSON.stringify(s.tactics) === JSON.stringify(PRESETS[c.plan]),
+        gk: s.lineup.GK && s.lineup.GK.pos, bgk: s.bench.some(p => p.pos === 'GK'), tac: JSON.stringify(s.tactics) === JSON.stringify(CC.cpuTactics(c.plan)),
         cond: Object.values(s.lineup).every(p => p.cond >= 80 && p.cond <= 100)}; })""")
     forms = {x["f"] for x in r}
     assert forms <= {"433", "4231", "4141"} and len(forms) == 3
@@ -174,7 +174,7 @@ def test_prematch_scouting_apply(server, browser):
         assert pg.js("Object.keys(S.current.tactics).length") == 13
         assert pg.page.locator("#ccPlan button:has-text('Applied')").count() >= 1
     # Back / Touchline buttons are live
-    pg.page.locator(".cc-actions button:has-text('Touchline')").click()
+    pg.page.locator(".cc-actions button:has-text('Edit team')").click()
     assert pg.js("S.ui.view") == "squad"
     assert pg.close() == []
 

@@ -118,6 +118,11 @@ RECENT_FT: dict[str, dict[str, Any]] = {}
 _SESSIONS_LOCK = threading.Lock()
 REWIND_TTL_S = 20 * 60          # finished sessions stay rewindable this long
 MAX_REWIND_S = 15 * 60          # at_clock >= engine.clock - MAX_REWIND_S
+# Anti-peek floor: the client pre-fetches ahead of what it shows (up to ~5
+# match-minutes at 8x), so a decision may land that far behind the furthest
+# clock the server has revealed (via /advance or a forward /seek) — never
+# further. Stops "watch the goal, rewind, change it".
+REVEAL_GRACE_S = 300
 CP_EVERY = 60
 
 
@@ -447,7 +452,7 @@ def _new_session(engine: MatchEngine, request: dict[str, Any], meta: dict[str, A
                  cps: list[tuple] | None = None, lab: Any = None) -> dict[str, Any]:
     s = {"engine": engine, "lock": threading.Lock(), "lab": lab, "meta": meta,
          "request": request, "commands": list(commands or []), "cps": list(cps or []),
-         "finished": False}
+         "finished": False, "revealed": engine.clock}
     if not cps:
         _cp_take(s)
     return s
@@ -540,12 +545,24 @@ def engine_duration(req: dict[str, Any]) -> int:
     return int((req.get("config") or {}).get("duration_seconds", 90 * 60))
 
 
+def _reveal(s: dict[str, Any]) -> None:
+    s["revealed"] = max(int(s.get("revealed", 0)), int(s["engine"].clock))
+
+
 def _check_rewind(s: dict[str, Any], to_clock: int) -> None:
     eng = s["engine"]
     last = max((int(c["sim_clock"]) for c in s["commands"]), default=0)
     dur = eng.config.duration_seconds
+    takeover = int((s.get("request") or {}).get("takeover_clock") or 0)
     if to_clock < 0 or to_clock >= dur:
         raise HTTPException(400, f"at_clock must be between 0 and {dur - 1}.")
+    if to_clock < takeover:
+        raise HTTPException(400, "You took charge at "
+                                 f"{takeover // 60}' — nothing before that can be changed.")
+    floor = int(s.get("revealed", eng.clock)) - REVEAL_GRACE_S
+    if to_clock < floor:
+        raise HTTPException(400, "That moment has already been played — decisions apply "
+                                 "at the minute you're watching.")
     if to_clock < last:
         raise HTTPException(400, f"Can't go back before the last change ({last // 60}:{last % 60:02d}).")
     if to_clock < eng.clock - MAX_REWIND_S:
@@ -812,6 +829,7 @@ def start_match(req: StartRequest) -> dict[str, Any]:
                      "fixture_id": req.fixture_id or f"scenario:{row['scenario_id']}"})
         body.pop("start_clock", None)
         start_clock = int(row["takeover_clock"])
+        body["takeover_clock"] = start_clock
     else:
         if req.fixture_id is None or req.seed is None or not req.home_team or not req.away_team:
             raise HTTPException(400, "fixture_id, seed, home_team and away_team are required "
@@ -821,6 +839,8 @@ def start_match(req: StartRequest) -> dict[str, Any]:
             if body.get(k) is None:
                 body.pop(k, None)
         start_clock = int(req.start_clock or 0) if req.mode != "full" else 0
+        if start_clock:
+            body["takeover_clock"] = start_clock
     if len(str(body["fixture_id"])) > 128 or abs(int(body["seed"])) > 2**62:
         raise HTTPException(400, "Invalid fixture_id or seed")
     try:
@@ -871,10 +891,14 @@ def start_match(req: StartRequest) -> dict[str, Any]:
 
 
 @app.get("/api/matches/lookup")
-def lookup_match(save_id: str, fixture_id: str) -> dict[str, Any]:
-    """Authoritative persisted identity of a completed match (debug UX)."""
+def lookup_match(save_id: str, fixture_id: str, soft: bool = False) -> dict[str, Any]:
+    """Authoritative persisted identity of a completed match (debug UX; and
+    the client's boot-time result recovery, which asks with soft=1 so an
+    unplayed fixture is a normal answer rather than a 404)."""
     row = store.find_match(save_id, fixture_id)
     if not row:
+        if soft:
+            return {"match_id": None, "status": None, "fixture_id": fixture_id}
         raise HTTPException(404, "No persisted match for that save/fixture")
     out = {k: row[k] for k in ("match_id", "save_id", "fixture_id", "seed", "status",
                                "app_version", "engine_version", "calibration_version",
@@ -963,6 +987,7 @@ def advance_match(match_id: str, req: AdvanceRequest) -> dict[str, Any]:
         lab_events: list[dict[str, Any]] = []
         if not CONTINUOUS:
             frames, roster = _native_advance(s, engine, secs, bool(req.frames))
+            _reveal(s)
         else:
             lab = s.setdefault("lab", _make_lab(engine))
             body = lab.body
@@ -1112,6 +1137,7 @@ def seek_match(match_id: str, req: SeekRequest) -> dict[str, Any]:
             rewound = to
         elif to > eng.clock and not s.get("finished"):
             _advance_plain(s, to - eng.clock)
+            _reveal(s)
             store.update_clock(match_id, eng.clock)
             if eng.is_finished:
                 result = eng.result()
@@ -1339,7 +1365,15 @@ def decision_lab(match_id: str, req: DecisionLabRequest) -> dict[str, Any]:
         w_out, wo_out, exact = outs[st:st + K], outs[st + K:st + 2 * K], outs[st + 2 * K]
         w, wo = _arm_stats(w_out, team), _arm_stats(wo_out, team)
         delta = round(w["exp_points"] - wo["exp_points"], 2)
-        verdict = "helped" if delta >= 0.25 else "hurt" if delta <= -0.25 else "no clear effect"
+        # paired samples (same reseeds in both arms): the standard error of
+        # the mean per-seed difference says how sure the verdict can be
+        diffs = [_points(a["score"][team], a["score"][other]) - _points(b["score"][team], b["score"][other])
+                 for a, b in zip(w_out, wo_out)]
+        md = sum(diffs) / max(1, len(diffs))
+        se = (sum((x - md) ** 2 for x in diffs) / max(1, len(diffs) - 1)) ** 0.5 / max(1, len(diffs)) ** 0.5
+        se = round(se, 2)
+        clear = abs(delta) >= max(0.25, 1.5 * se)
+        verdict = ("helped" if delta > 0 else "hurt") if clear else "no clear effect"
         ex = [exact["score"][team], exact["score"][other]]
         mins = max(1, round((engine_duration(tl["request"]) - c0) / 60))
         what = "your change" if len(groups[gi]) == 1 else "your changes"
@@ -1347,13 +1381,14 @@ def decision_lab(match_id: str, req: DecisionLabRequest) -> dict[str, Any]:
         tail = {"helped": " — it made a real difference.",
                 "hurt": " — standing pat would have served you better.",
                 "no clear effect": " — too close to call."}[verdict]
-        text = (f"Across {K} replays of the last {mins} minutes, {what} {verb} "
-                f"{w['exp_points']:.1f} points on average vs {wo['exp_points']:.1f} standing pat{tail}")
+        text = (f"Across {K} replays of the last {mins} minutes, {what} from {coach._minute(c0)}' on {verb} "
+                f"{w['exp_points']:.1f} points on average vs {wo['exp_points']:.1f} standing pat "
+                f"(±{se:.1f}){tail}")
         decisions.append({"index": gi, "minute": coach._minute(c0), "clock": c0,
                           "label": glabels[gi],
                           "actual": {"score": actual, "points": _points(*actual)},
                           "exact_without": {"score": ex, "points": _points(*ex)},
-                          "with": w, "without": wo, "delta_points": delta,
+                          "with": w, "without": wo, "delta_points": delta, "delta_se": se,
                           "verdict": verdict, "text": text})
     return {"samples": K, "team": team, "decision_count": len(groups), "decisions": decisions}
 
@@ -1374,6 +1409,9 @@ def branch_match(match_id: str, req: BranchRequest) -> dict[str, Any]:
         raise HTTPException(400, f"at_clock must be between 0 and {dur - 1}")
     if at > tl["clock"]:
         raise HTTPException(400, "Can't branch from a moment the match hasn't reached yet.")
+    takeover = int(tl["request"].get("takeover_clock") or 0)
+    if at < takeover:
+        raise HTTPException(400, f"You took charge at {takeover // 60}' — rehearse from then on.")
     body = dict(tl["request"])
     body["mode"] = "live"
     body["fixture_id"] = f"{row['fixture_id']}#branch"
@@ -1430,10 +1468,18 @@ def _scenario_holds(kind: str, st: dict[str, Any], team: str) -> bool:
     return False
 
 
+def _stand_pat_stars(kind: str, final: dict[str, Any], team: str) -> int:
+    """Stars a manager would earn by changing nothing (the unmanaged match
+    with the scenario seed IS the stand-pat future). Challenges are only
+    chosen where doing nothing isn't already a good answer."""
+    other = coach.opp(team)
+    return _scenario_stars(kind, final["score"][team], final["score"][other])
+
+
 def _scenario_hash(request: dict[str, Any], team: str, kind: str, base_seed: int) -> str:
     canon = {k: v for k, v in request.items() if k not in ("seed", "save_id", "mode", "scenario_id",
                                                            "start_clock")}
-    blob = json.dumps({"request": canon, "team": team, "kind": kind, "base_seed": int(base_seed)},
+    blob = json.dumps({"v": 2, "request": canon, "team": team, "kind": kind, "base_seed": int(base_seed)},
                       sort_keys=True, separators=(",", ":"))
     return hashlib.blake2b(blob.encode(), digest_size=8).hexdigest()
 
@@ -1469,13 +1515,14 @@ def find_scenario(req: ScenarioFindRequest) -> dict[str, Any]:
     if got:
         return json.loads(got["result_json"])
     t0 = time.time()
-    clocks = sorted({SCENARIO_KINDS[kind], SCENARIO_KINDS["chase"]})
+    dur = engine_duration(body)
+    clocks = sorted({SCENARIO_KINDS[kind], SCENARIO_KINDS["chase"], dur})
     kc = clocks.index(SCENARIO_KINDS[kind])
     # every candidate is queued at once (full pool utilisation, no chunk
     # barriers); results are consumed strictly in seed order and the queue is
     # cancelled as soon as the lowest qualifying seed is known — so the answer
     # is independent of worker timing.
-    ex = labsim.pool()
+    ex = labsim.bg_pool()          # never starve league batches / Decision Lab
     futs = [ex.submit(labsim.sim_states, dict(body, seed=int(req.base_seed) + i), clocks)
             for i in range(SCENARIO_MAX_CANDIDATES)]
     states: list[list[dict[str, Any]]] = []
@@ -1484,7 +1531,7 @@ def find_scenario(req: ScenarioFindRequest) -> dict[str, Any]:
         for i, f in enumerate(futs):
             out = f.result()
             states.append(out)
-            if _scenario_holds(kind, out[kc], team):
+            if _scenario_holds(kind, out[kc], team) and _stand_pat_stars(kind, out[-1], team) <= 1:
                 chosen = (i, kind, out[kc])
                 break
     finally:
@@ -1494,9 +1541,13 @@ def find_scenario(req: ScenarioFindRequest) -> dict[str, Any]:
     if fallback:
         ci = clocks.index(SCENARIO_KINDS["chase"])
         other = coach.opp(team)
-        for i, out in enumerate(states):
-            if _scenario_holds("chase", out[ci], team):
-                chosen = (i, "chase", out[ci])
+        for strict in (True, False):
+            for i, out in enumerate(states):
+                if _scenario_holds("chase", out[ci], team) and (
+                        not strict or _stand_pat_stars("chase", out[-1], team) <= 1):
+                    chosen = (i, "chase", out[ci])
+                    break
+            if chosen is not None:
                 break
         if chosen is None:        # never trails: take the tightest game at the hour
             i = min(range(len(states)), key=lambda j: (states[j][ci]["score"][team]
@@ -1523,7 +1574,9 @@ def _scenario_stars(kind: str, gf: int, ga: int) -> int:
         return 3 if d >= 2 else 2 if d == 1 else 1 if d == 0 else 0
     if kind == "deadlock":
         return 3 if d > 0 else 1 if d == 0 else 0
-    return 3 if d > 0 else 2 if d == 0 else 1 if d == -1 else 0
+    if kind == "comeback":
+        return 3 if d > 0 else 2 if d == 0 else 1 if d == -1 else 0
+    return 3 if d > 0 else 2 if d == 0 else 0         # chase, tenmen
 
 
 def _leaderboard(scenario_id: str) -> list[dict[str, Any]]:
@@ -1545,6 +1598,8 @@ def submit_challenge(scenario_id: str, req: ChallengeSubmitRequest) -> dict[str,
     if not row:
         raise HTTPException(404, "No persisted record for that match ID")
     sreq = json.loads(row["start_request_json"])
+    if sreq.get("branch_of"):
+        raise HTTPException(400, "Rehearsals don't count — submit the match you played for real.")
     if sreq.get("scenario_id") != scenario_id or int(row["seed"]) != int(sc["seed"]):
         raise HTTPException(400, "That match wasn't played from this scenario.")
     if row["status"] != "ft":

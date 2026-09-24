@@ -77,10 +77,17 @@ function coachUI(){
   if(!S.coachUI){
     let saved = {};
     try{ saved = JSON.parse(localStorage.getItem(PREF_KEY) || '{}') || {}; }catch(e){}
-    S.coachUI = Object.assign({autoPause: 'moments'}, saved);
+    S.coachUI = Object.assign({autoPause: 'moments', cam: 'wide'}, saved);
   }
   if(!['moments', 'goals', 'off'].includes(S.coachUI.autoPause)) S.coachUI.autoPause = 'moments';
   return S.coachUI;
+}
+/* Camera: a coach reads the whole shape ("wide"), or follows the ball. */
+function applyCam(){ const w = coachUI().cam !== 'follow'; if(AnimR2 && AnimR2.cam) AnimR2.cam.mode = w ? 'tactical' : 'gameplay'; }
+function toggleCam(){
+  coachUI().cam = coachUI().cam === 'follow' ? 'wide' : 'follow';
+  try{ localStorage.setItem(PREF_KEY, JSON.stringify(S.coachUI)); }catch(e){}
+  applyCam(); refreshControls(true);
 }
 function setAutoPause(mode){
   coachUI().autoPause = mode;
@@ -189,7 +196,7 @@ function recordDecision(m, kind, body, before, r, at){
   const label = decisionLabel(kind, body, before);
   const d = {clock, minute: minuteOf(clock), kind, label};
   cm.decisions.push(d);
-  cm.localLines.push({clock, type: 'you', text: `Your call — ${label}`, local: true});
+  cm.localLines.push({clock, type: 'you', text: label, local: true});
   cm.insAt = -1e9;                                // re-read the game (impact tracking)
   emit('match:decision', {kind, minute: d.minute, label, clock});
 }
@@ -391,7 +398,11 @@ function commentary(e, ctx){
       return rel >= 70 ? L('att', `Free kick to ${side} in a dangerous position${d.taker ? ` — ${short(d.taker)} stands over it` : ''}`) : null;
     }
     case 'CORNER': return L('shot', `Corner to ${side}${nm ? ` — ${short(nm)} to take` : ''}`);
-    case 'OFFSIDE': return nm ? L('shot', `${nm} is caught offside`) : null;
+    case 'OFFSIDE': {                                  // mention it, don't narrate every flag
+      const cmx = S.match && S.match._cm; if(!nm) return null;
+      if(cmx){ const last = cmx.lastOff ?? -1e9; if(e.timestamp - last < 360 && e.timestamp >= last) return null; cmx.lastOff = e.timestamp; }
+      return L('shot', `${nm} is caught offside`);
+    }
     case 'GK_HIGH_BALL_MISS': return nm ? L('att', `${nm} flaps at a cross — danger in the box!`) : null;
     case 'SUBSTITUTION':
       if(mine && ctx) return null;                 // your own change is logged as "Your call"
@@ -422,7 +433,7 @@ window.presentEvent = e => safe(() => commentary(e, null), null);
 function feedRow(l){
   const div = document.createElement('div');
   div.className = 'ev cm-ev ' + l.type;
-  div.innerHTML = `<div class="min">${l.min}'</div><div class="txt">${l.type === 'you' ? '<b class="cm-youtag">YOU</b>' : ''}${esc(l.text)}</div>`;
+  div.innerHTML = `<div class="min">${l.min}'</div><div class="txt">${l.type === 'you' ? '<b class="cm-youtag">YOUR CALL</b> ' : ''}${esc(l.text)}</div>`;
   return div;
 }
 window.updateFeedList = function(m){
@@ -430,7 +441,7 @@ window.updateFeedList = function(m){
   const cm = C(m), s = presS(m);
   if(cm.feedDirty || !list.dataset.cm){
     list.innerHTML = ''; list.dataset.cm = '1';
-    cm.feedPtr = 0; cm.localPtr = 0; cm.feedDirty = false;
+    cm.feedPtr = 0; cm.localPtr = 0; cm.feedDirty = false; cm.lastOff = null;
     cm.feedCtx = {score: {HOME: 0, AWAY: 0}, reds: {}, lastBox: {}};
   }
   const add = [];
@@ -484,11 +495,12 @@ function controlsHTML(m){
     <span class="cm-sep"></span>
     <button class="spdbtn cm-next" ${late ? 'disabled' : ''} onclick="CM.nextMoment()" title="Skip ahead to just before the next key moment">⏭ Next moment</button>
     <button class="spdbtn cm-simft" ${late ? 'disabled' : ''} onclick="CM.confirmSimFT()" title="Simulate the rest of the match">⏩ Sim to full time</button>
-    <span class="cm-sep"></span>${autoPauseSeg()}`;
+    <span class="cm-sep"></span>${autoPauseSeg()}
+    <button class="spdbtn cm-cam" onclick="CM.toggleCam()" title="Wide shows the whole shape; Follow tracks the ball">${coachUI().cam === 'follow' ? '🎥 Follow' : '🗺 Wide'}</button>`;
 }
 function ctrlSig(m){
   const cm = C(m), s = presS(m);
-  return [m.htActive, m.status, S.ui.matchSpeed || 1, cm.busy, cm.busyLabel, coachUI().autoPause, s >= FULL - 30].join('|');
+  return [m.htActive, m.status, S.ui.matchSpeed || 1, cm.busy, cm.busyLabel, coachUI().autoPause, coachUI().cam, s >= FULL - 30].join('|');
 }
 function refreshControls(force){
   const m = S.match, el = $('#cmCtrl'); if(!m || !el) return;
@@ -534,7 +546,7 @@ window.updateMatchHeader = function(m){
   const ch = el.querySelector('#cmChip');
   if(ch){ ch.className = 'statuschip ' + status; if(ch.textContent !== chip) ch.textContent = chip; }
   const strip = el.querySelector('#cmStrip');
-  const stripHTML = `<div class="st"><em>POSS</em>${Math.round(st.poss.home)}–${Math.round(st.poss.away)}</div>
+  const stripHTML = `<div class="st"><em>POSS</em>${Math.round(st.poss.home)}–${100 - Math.round(st.poss.home)}</div>
       <div class="st"><em>xG</em>${f2(H.xg)}–${f2(A.xg)}</div>
       <div class="st"><em>SHOTS</em>${H.shots}–${A.shots}</div>
       <div class="st"><em>ON TARGET</em>${H.sot}–${A.sot}</div>`;
@@ -575,7 +587,7 @@ window.buildLiveShell = function(wrap, m){
     const fl = wrap.querySelector('#feedList'); if(fl) delete fl.dataset.cm;
     // the side column's "Touchline" button reads better with the new tools
     const tb = [...wrap.querySelectorAll('.sidecol .btn')].find(b => /Touchline/.test(b.textContent));
-    if(tb){ tb.textContent = 'Open Touchline'; tb.title = 'Tactics, shape and substitutions'; }
+    if(tb){ tb.textContent = 'Tactics & subs'; tb.title = 'Tactics, shape and substitutions'; }
     const cm0 = C(m);
     if(cm0 && cm0.origin){
       const ab = [...wrap.querySelectorAll('.sidecol .btn')].find(b => /Abandon/.test(b.textContent));
@@ -639,7 +651,7 @@ function insightCard(m, i, opts = {}){
   const cm = C(m);
   const acts = (i.actions || []).map((a, k) => {
     const key = actionKey(m, a), done = cm.applied[key];
-    return `<button class="cm-act ${done ? 'done' : ''}" ${done || !isLiveMatch() ? 'disabled' : ''}
+    return `<button class="cm-act ${done ? 'done' : ''} ${a.type === 'resume' ? 'resume' : ''}" ${done || !isLiveMatch() ? 'disabled' : ''}
       onclick="CM.applyAction(this, '${esc(i.id)}', ${k})" title="${esc(a.summary || a.note || '')}">${done ? `✓ ${esc(a.label)} · ${done}'` : esc(a.label)}</button>`;
   }).join('');
   return `<div class="cm-ins sev${i.severity}" data-id="${esc(i.id)}">
@@ -651,7 +663,7 @@ function insightCard(m, i, opts = {}){
 const VERD = {better: ['good', 'Better'], worse: ['bad', 'Worse'], neutral: ['mid', 'No change'], pending: ['pend', 'Too early'],
   helped: ['good', 'Helped'], hurt: ['bad', 'Hurt'], 'no clear effect': ['mid', 'No clear effect']};
 const chip = v => { const [c, l] = VERD[v] || ['mid', v]; return `<span class="cm-chip ${c}">${esc(l)}</span>`; };
-function impactCard(im, heading){
+function impactCard(im, heading, opts = {}){
   const b = im.before || {}, a = im.after;
   const row = (lab, k, fmt, goodUp) => {
     if(!a) return '';
@@ -660,7 +672,10 @@ function impactCard(im, heading){
     return `<div class="cm-imrow"><span>${lab}</span><b>${fmt(bv)}</b><i>→</i><b class="${cls}">${fmt(av)}</b></div>`;
   };
   return `<div class="cm-imp">
-    <div class="cm-imp-h"><span>${heading || `Since your change at ${im.minute}'`}</span>${chip(im.verdict)}</div>
+    <div class="cm-imp-h"><span>${heading || `Since your change at ${im.minute}'`}</span>${
+      opts.lab ? chip(opts.lab.verdict) + `<em class="cm-dim"> Decision Lab</em>`
+      : opts.review ? `<span class="cm-chip pend" title="The before/after pattern only — the Decision Lab gives the verdict">Pattern only</span>`
+      : `<span class="cm-dim" style="font-size:11px">early read</span> ${chip(im.verdict)}`}</div>
     <div class="cm-imp-l">${esc(im.label)}</div>
     ${a ? `<div class="cm-imtab"><div class="cm-imrow hd"><span>per 15'</span><b>before</b><i></i><b>after</b></div>
       ${row('Chances created (xG)', 'xg_for', f2, true)}${row('Chances conceded (xG)', 'xg_against', f2, false)}
@@ -790,18 +805,56 @@ function momentLede(m, mo){
 }
 function situationHTML(m){
   const s = presS(m), me = myTeam(), st = statsAt(m, s);
-  const w = windowAt(m, me, Math.max(0, s - 900), s);
+  const w0 = windowAt(m, me, Math.max(0, s - 900), s);
+  const hm = me === 'HOME';
+  const w = {xg_for: hm ? w0.xg_for : w0.xg_against, xg_against: hm ? w0.xg_against : w0.xg_for,
+             shots_for: hm ? w0.shots_for : w0.shots_against, shots_against: hm ? w0.shots_against : w0.shots_for,
+             box_for: hm ? w0.box_for : w0.box_against, box_against: hm ? w0.box_against : w0.box_for,
+             possession: hm ? w0.possession : Math.round(100 - w0.possession)};
   return `<div class="cm-sit">
     <div class="cm-sit-sc"><span>${esc(homeName())}</span><b>${st.score.HOME}–${st.score.AWAY}</b><span>${esc(awayName())}</span><em>${clockStr(s)}</em></div>
     <div class="cm-sit-w"><em>LAST 15'</em>
       <span>xG <b>${f2(w.xg_for)}</b>–<b>${f2(w.xg_against)}</b></span>
       <span>Shots <b>${w.shots_for}</b>–<b>${w.shots_against}</b></span>
       <span>Box entries <b>${w.box_for}</b>–<b>${w.box_against}</b></span>
-      <span>Possession <b>${w.possession}%</b></span></div>
+      <span>Possession <b>${w.possession}–${Math.round(100 - w.possession)}</b></span></div>
     ${momentumBlock(m, s, {h: 46, decisions: C(m).decisions})}</div>`;
 }
+/* A goal or red card asks a question — offer the two answers as one-click calls. */
+function choiceInsight(m, mo){
+  const e = mo.event || {}, st = statsAt(m, presS(m)).score, me = myTeam();
+  const lead = st[me] - st[other(me)], mine = isMine(e.team_id);
+  const T = {...(S.current && S.current.tactics || {})};
+  const tac = (label, ch, summary) => ({type: 'tactics', label, tactics: {...T, ...ch}, summary});
+  const stay = label => ({type: 'resume', label});
+  const safe = {defensiveBlockHeight: T.defensiveBlockHeight === 'High' ? 'Mid' : 'Deep', buildUpTempo: 'Patient',
+                progressionRisk: 'Secure', afterWinningPossession: 'Secure', boxCommitment: 'Cautious'};
+  const bold = {boxCommitment: 'Commit', progressionRisk: 'Ambitious', buildUpTempo: 'Quick', afterLosingPossession: 'Counterpress'};
+  let title, text, actions;
+  if(mo.kind === 'goal'){
+    if(mine && lead > 0){ title = 'Your call'; text = 'Kill the game with a second, or protect what you have?';
+      actions = [stay('Stay on the front foot'), tac('See it out', safe, 'deeper block, patient and secure')]; }
+    else if(mine){ title = 'Your call'; text = 'The momentum is with you — go for the next one?';
+      actions = [tac('Go for the next one', bold, 'commit bodies, take risks, counterpress'), stay('Keep the shape')]; }
+    else if(lead < 0){ title = 'Your call'; text = 'Chase it now, or keep calm and trust the plan?';
+      actions = [tac('Respond — go for it', bold, 'commit bodies, take risks, counterpress'), stay('Stay calm')]; }
+    else { title = 'Your call'; text = lead > 0 ? 'Still ahead. Tighten up, or keep playing your game?' : 'Level again. Respond, or settle it down?';
+      actions = lead > 0 ? [tac('Tighten up', safe, 'deeper block, patient and secure'), stay('Keep playing')]
+                         : [tac('Go and win it', bold, 'commit bodies, take risks'), stay('Settle it down')]; }
+  } else if(mo.kind === 'red'){
+    if(mine){ title = 'Your call'; text = 'Ten men: get compact and hard to beat, or keep your shape and ride it out?';
+      actions = [tac('Get compact', {defensiveWidth: 'Narrow', defensiveBlockHeight: T.defensiveBlockHeight === 'High' ? 'Mid' : 'Deep',
+                   pressingIntensity: 'Selective', afterLosingPossession: 'Regroup'}, 'narrow, deeper, regroup'), stay('Ride it out')]; }
+    else { title = 'Your call'; text = 'They are a man down. Push the advantage?';
+      actions = [tac('Press the advantage', {pressingIntensity: 'Aggressive', attackingWidth: 'Wide', boxCommitment: 'Commit'},
+                   'press harder, stretch them wide, commit bodies'), stay('Stay patient')]; }
+  } else return null;
+  return {id: `choice:${mo.kind}:${mo.clock || presS(m) | 0}`, kind: 'choice', severity: 2, title, text, why: '', actions};
+}
+setInterval(() => { if(S.match && S.ui.view === 'match') applyCam(); }, 1000);
 function openMoment(m, mo){
   closeMoment();
+  if((mo.kind === 'goal' || mo.kind === 'red') && !mo.choice) mo.choice = choiceInsight(m, mo);
   const cm = C(m);
   cm.moment = mo;
   const el = document.createElement('div');
@@ -813,7 +866,7 @@ function openMoment(m, mo){
     ${situationHTML(m)}
     <div class="cm-mo-cards" id="cmMoCards"><div class="cm-empty"><i class="cm-spin"></i> The assistant is reading the game…</div></div>
     <div class="cm-mo-f">
-      <button class="btn sec sm" onclick="CM.openTouchline()">Open Touchline</button>
+      <button class="btn sec sm" onclick="CM.openTouchline()">Tactics &amp; subs</button>
       ${autoPauseSeg()}
       <button class="btn pri cm-resume" onclick="CM.resume()">Resume ▶</button>
     </div></div>`;
@@ -824,7 +877,8 @@ function openMoment(m, mo){
     let list = (I && I.insights) || [];
     if(mo.kind === 'insight' && !list.some(i => i.id === mo.insight.id)) list = [mo.insight, ...list];
     if(mo.kind === 'insight') list = [list.find(i => i.id === mo.insight.id), ...list.filter(i => i.id !== mo.insight.id)];
-    list = list.slice(0, 4);
+    // one voice, few loaded calls: the question's answers first, then at most one more read
+    list = mo.choice ? [mo.choice, ...list.filter(i => i.severity >= 2).slice(0, 1)] : list.slice(0, 2);
     const imps = withLabels(m, (I && I.impacts) || []).slice(-1);
     box.innerHTML = (list.length ? list.map(i => insightCard(m, i)).join('')
       : `<div class="cm-empty">${I ? 'No red flags from the assistant — trust the plan, or make your own call on the Touchline.' : 'The assistant is unavailable right now — the Touchline is still yours.'}</div>`)
@@ -852,9 +906,11 @@ function showGoalBanner(m, e){
 async function applyAction(btn, insId, k){
   const m = S.match; if(!m || !isLiveMatch()) return;
   const cm = C(m);
-  const pool = [...((cm.insights && cm.insights.insights) || []), ...(cm.moment && cm.moment.insight ? [cm.moment.insight] : [])];
+  const pool = [...((cm.insights && cm.insights.insights) || []), ...(cm.moment && cm.moment.insight ? [cm.moment.insight] : []),
+                ...(cm.moment && cm.moment.choice ? [cm.moment.choice] : [])];
   const ins = pool.find(i => i.id === insId); if(!ins) return;
   const a = (ins.actions || [])[k]; if(!a) return;
+  if(a.type === 'resume'){ CM.resume(); return; }
   if(btn){ btn.disabled = true; btn.classList.add('work'); btn.textContent = 'Applying…'; }
   await waitFor(() => !mgmtPending && !advanceInFlight);
   mgmtPending = true;
@@ -909,10 +965,10 @@ window.updateHtPanel = function(m){
       <div><h3>HALF TIME</h3>
         <div class="cm-ht-sc">${esc(homeName())} <b>${st.score.HOME} – ${st.score.AWAY}</b> ${esc(awayName())}</div>
         <div class="cm-ht-st"><span>xG <b>${f2(H.xg)}–${f2(A.xg)}</b></span><span>Shots <b>${H.shots}–${A.shots}</b></span>
-          <span>On target <b>${H.sot}–${A.sot}</b></span><span>Possession <b>${Math.round(st.poss.home)}–${Math.round(st.poss.away)}</b></span></div>
+          <span>On target <b>${H.sot}–${A.sot}</b></span><span>Possession <b>${Math.round(st.poss.home)}–${100 - Math.round(st.poss.home)}</b></span></div>
         ${momentumBlock(m, s, {h: 40, decisions: cm.decisions})}
         <div class="cm-ht-btns"><button class="btn pri" onclick="startSecondHalf()">Start second half ▶</button>
-          <button class="btn sec" onclick="show('squad')">Open Touchline</button></div>
+          <button class="btn sec" onclick="show('squad')">Tactics &amp; subs</button></div>
       </div>
       <div class="cm-ht-read"><div class="cm-asst-h">ASSISTANT'S HALF-TIME READ</div>
         ${I ? (ins.length ? ins.map(i => insightCard(m, i)).join('') : `<div class="cm-empty">No alarms at the break. The plan is working — or at least, not failing.</div>`)
@@ -1002,7 +1058,7 @@ async function nextMoment(){
     let target = findTarget(m, s0);
     const stopAt = s0 < HALF ? HALF : FULL;
     while(!target && m.clockSeconds < stopAt && !cm.serverFT){
-      const to = Math.min(stopAt, m.clockSeconds + 300);
+      const to = Math.min(stopAt, m.clockSeconds + 240);   // stay inside the server's 300 s reveal grace
       if(!(await seekTo(m, to))) break;
       target = findTarget(m, s0);
       if(S.match !== m) return;
@@ -1036,16 +1092,21 @@ async function nextMoment(){
 function confirmSimFT(){
   const m = S.match; if(!m || !isLiveMatch()) return;
   closeMoment();
+  if(m.status === 'live'){ togglePlay(); C(m).resumeOnCancel = true; }
   const el = document.createElement('div');
   el.id = 'cmMoment'; el.className = 'cm-modal';
   el.innerHTML = `<div class="cm-mo cm-confirm" role="dialog" aria-label="Simulate to full time">
     <div class="cm-mo-k">SIM TO FULL TIME</div>
     <h2 class="cm-mo-t">Leave the touchline?</h2>
     <div class="cm-mo-l">The rest of the match (${clockStr(presS(m))} → 90:00) is simulated with your current plan. You won't be able to make changes.</div>
-    <div class="cm-mo-f"><button class="btn sec" onclick="CM.closeMoment()">Keep watching</button>
+    <div class="cm-mo-f"><button class="btn sec" onclick="CM.cancelSimFT()">Keep watching</button>
       <button class="btn pri cm-go" onclick="CM.simToFT()">Sim to full time ⏩</button></div></div>`;
-  el.addEventListener('click', ev => { if(ev.target === el) closeMoment(); });
+  el.addEventListener('click', ev => { if(ev.target === el) cancelSimFT(); });
   document.body.appendChild(el);
+}
+function cancelSimFT(){
+  const m = S.match; closeMoment();
+  if(m && C(m).resumeOnCancel && m.status === 'paused'){ C(m).resumeOnCancel = false; togglePlay(); }
 }
 async function simToFT(){
   const m = S.match; closeMoment(); if(!m || !isLiveMatch()) return;
@@ -1311,7 +1372,8 @@ function reviewHTML(m){
           : `<div class="cm-empty">A quiet game — no big swings.</div>`}
       </section>
       <section><h4>YOUR DECISIONS</h4>
-        ${decs.length ? decs.map(im => impactCard(im, `${im.minute}'`)).join('')
+        ${decs.length ? decs.map(im => impactCard(im, `${im.minute}'`, {review: true,
+            lab: ((cm.lab && cm.lab.items) || []).find(d => d && d.minute === im.minute)})).join('')
           : `<div class="cm-empty">${cm.decisions.length ? 'Your changes came too early to measure a before/after — see the Decision Lab.' : 'You didn\'t change anything. Sometimes that\'s the right call — the Decision Lab can only test decisions you make.'}</div>`}
         ${decs.length ? `<button class="btn sec sm cm-tolab" onclick="CM.ftTab('lab')">Test them in the Decision Lab →</button>` : ''}
       </section>
@@ -1334,7 +1396,7 @@ function normMom(rows){
 async function runLab(m){
   const cm = C(m);
   if(cm.lab && (cm.lab.running || cm.lab.done)) return;
-  cm.lab = {running: true, done: false, items: [], total: null, error: null, next: 0, samples: 12};
+  cm.lab = {running: true, done: false, items: [], total: null, error: null, next: 0, samples: 16};
   const L = cm.lab;
   const rerender = () => { if(S.match === m && m.status === 'ft' && cm.ftTab === 'lab') renderLabPane(m); };
   rerender();
@@ -1344,7 +1406,7 @@ async function runLab(m){
       rerender();
       let r;
       try{
-        r = await _api(`/matches/${m.matchId}/decision-lab`, {method: 'POST', body: {team: myTeam(), samples: 12, index: i}});
+        r = await _api(`/matches/${m.matchId}/decision-lab`, {method: 'POST', body: {team: myTeam(), samples: 16, index: i}});
       }catch(e){
         if(/index must be/i.test(e.message)) break;   // past the last decision (or none at all)
         throw e;
@@ -1441,6 +1503,8 @@ function replayHTML(m){
 
 const _ftView = window.renderFullTimeView;
 window.renderFullTimeView = function(wrap, m){
+  // a resumed/recovered match has no pre-kickoff snapshot (S.base isn't saved)
+  if(!S.base && S.current) S.base = JSON.parse(JSON.stringify(S.current));
   const prog = $('#simProgress') ? $('#simProgress').innerHTML : '';
   const r = _ftView.apply(this, arguments);
   safe(() => {
@@ -1535,8 +1599,39 @@ function exitRehearsal(){
 }
 
 /* ── public surface for inline handlers ─────────────────────────────────── */
+/* ═══ PAST MATCHES: reopen Review / Decision Lab / Replay from Results ═════ */
+async function openPast(fid){
+  const f = S.season && S.season.fixtures.find(x => x.id === fid), r = f && S.season.results[fid];
+  if(!r || !r.matchId) return toast('No stored analysis for that match.');
+  if(isLiveMatch()) return toast('Finish your live match first.');
+  if(typeof closeAll === 'function') closeAll();
+  let snap;
+  try{ snap = await api(`/matches/${r.matchId}`); }catch(e){ return toast('Could not load that match: ' + e.message); }
+  if(!snap || !snap.full_time) return toast('That match has no stored full-time record.');
+  S.matchFixture = f;
+  const m = makeLiveMatch(snap);
+  m.status = 'ft'; m.fullTime = snap.full_time; m.pastReview = true;
+  m.events = (snap.full_time.events || []).slice(); m.eventIndex = m.events.length;
+  S.match = m;
+  const cm = C(m);
+  Object.assign(cm, {serverFT: true, ftPresented: true, finalizeCalled: true, finalizeDone: true, ftTab: 'review'});
+  if(!S.base && S.current) S.base = JSON.parse(JSON.stringify(S.current));
+  show('match');
+  fetchReview(m);
+}
+const _openResult = window.openResult;
+window.openResult = function(fid){
+  const r = _openResult.apply(this, arguments);
+  safe(() => {
+    const res = S.season.results[fid], foot = $('#drawerFoot');
+    if(res && res.matchId && foot && !foot.querySelector('.cm-past'))
+      foot.insertAdjacentHTML('afterbegin', `<button class="btn sec cm-past" onclick="CM.openPast('${esc(fid)}')">Review · Decision Lab · Replay →</button>`);
+  });
+  return r;
+};
+
 window.CM = {
-  setAutoPause, nextMoment, confirmSimFT, simToFT, closeMoment,
+  setAutoPause, nextMoment, confirmSimFT, cancelSimFT, simToFT, closeMoment, openPast, toggleCam,
   applyAction,
   resume(){ const m = S.match; closeMoment(); if(m && m.status === 'paused' && !m.htActive) togglePlay(); },
   openTouchline(){ closeMoment(); show('squad'); },

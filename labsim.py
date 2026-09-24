@@ -47,6 +47,30 @@ class _Inline(Executor):
 _POOL_LOCK = __import__("threading").Lock()
 
 
+_BG_POOL: Executor | None = None
+
+
+def bg_pool() -> Executor:
+    """A small separate pool for long background searches (scenario finding),
+    so a Daily Challenge prefetch can never make a matchweek wait."""
+    global _BG_POOL
+    with _POOL_LOCK:
+        if _BG_POOL is None:
+            n = worker_count()
+            if n == 0:
+                _BG_POOL = _Inline()
+            else:
+                import multiprocessing as mp
+                try:
+                    ctx = mp.get_context("forkserver")
+                    ctx.set_forkserver_preload(["__main__", "labsim"])
+                except ValueError:
+                    ctx = mp.get_context("spawn")
+                _BG_POOL = ProcessPoolExecutor(max_workers=max(1, min(4, n // 3)), mp_context=ctx,
+                                               initializer=_worker_init, initargs=(os.getpid(),))
+        return _BG_POOL
+
+
 def pool() -> Executor:
     """Lazily created worker pool. ``forkserver`` with this module preloaded:
     workers fork from a clean single-threaded server that already imported
