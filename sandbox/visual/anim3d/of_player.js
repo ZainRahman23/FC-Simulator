@@ -8,7 +8,7 @@
 // the player, the camera rail following the player's x. Diagnostics (foot contacts, plant residuals, gait state, root vs presentation
 // root, timing split) are on the HUD and in OFPLAY.rec (per tick, deterministic). Optional extra runners (deterministic laps, the same
 // locomotion) for the scaling test. The ball is parked far away at boot (a fixture set-up, like the goalkeeper fixtures) and ignored.
-const OFPLAY = { on: false, body: "AVG_ATHLETIC", actor: null, mixed: true, follow: true, charId: null, charEntry: null, dbg: { feet: true, roots: true, hud: true, ball: true }, rec: [], recMax: 3600, runners: [], panel: null, out: null, octx: null, perf: { sim: [], anim: [], skin: [], render: [], comp: [] }, R: null, lastTick: -1, view: null };
+const OFPLAY = { on: false, body: "AVG_ATHLETIC", actor: null, mixed: true, follow: true, charId: null, charEntry: null, charDrivesSim: (new URLSearchParams(location.search).get("charSim") === "1"), dbg: { feet: true, roots: true, hud: true, ball: true }, rec: [], recMax: 3600, runners: [], panel: null, out: null, octx: null, perf: { sim: [], anim: [], skin: [], render: [], comp: [] }, R: null, lastTick: -1, view: null };
 function ofPlayWanted() { return new URLSearchParams(location.search).get("ofPlay") === "1"; }
 function ofPlayMakeActor(bodyId, p) {
   const a = ofActorMake(bodyId, p.x, p.y, p.facing); a.motion = "LOCO"; a.loco = ofLocoMake(); a.state = { feet: {} }; a.sim = { x: p.x, y: p.y, vx: 0, vy: 0, facing: p.facing }; return a;
@@ -205,8 +205,13 @@ function ofPlaySetCharacter(id) {
     const p = S.pt.p;
     OFPLAY.charId = id; OFPLAY.charEntry = ent;
     OFPLAY.actor = ofPlayMakeActor(ent.skel, p);
-    p.legLen = ent.skel.legLen;                                                 // leg length is a PLAYER attribute the simulation plans boots with
-    S.pt.last = "CHARACTER -> " + ent.rig.identity.name + "  " + ent.rig.identity.heightCm + " cm / " + ent.rig.identity.weightKg + " kg";
+    // SIMULATION NEUTRALITY. Choosing a character is PRESENTATION. The simulation's own leg length (which its stride clock and boot plan
+    // consume) is therefore left alone by default, so identical authoritative inputs give identical authoritative outcomes whoever is
+    // selected. Publishing the real body's leg length is a deliberate, visible opt-in, not something character selection does silently:
+    // it WOULD change the touch schedule and the boot plan, which is a design decision about whether the simulation consumes morphology.
+    if (OFPLAY.charDrivesSim) p.legLen = ent.skel.legLen;
+    S.pt.last = "CHARACTER -> " + ent.rig.identity.name + "  " + ent.rig.identity.heightCm + " cm / " + ent.rig.identity.weightKg + " kg"
+              + (OFPLAY.charDrivesSim ? "  [morphology drives the simulation: leg " + ent.skel.legLen.toFixed(3) + " m]" : "  [presentation only]");
   }).catch(err => { S.pt.last = "CHARACTER load failed: " + err; });
 }
 function ofPlayCycleCharacter(dir) {

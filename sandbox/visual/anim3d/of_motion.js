@@ -148,13 +148,24 @@ function ofSolve(skel, pose, rootM, plants, state, opts) {
     if (w <= 0.001) continue;
     if (st && st.locked && st.w > 0.5 && st.rel == null) { diag.reach[sd] = { skipped: "planted" }; continue; }   // the support foot is never dragged
     const fb = skel.byName["foot_" + sd], tb = skel.byName["toe_" + sd];
-    const dvec = V3.sub(fk.tip[tb.idx], fk.joint[fb.idx]);                                        // current toe-tip offset from the ankle
-    const cur = fk.joint[fb.idx], P0 = V3.sub(want, dvec);                                        // ankle target that puts the TOE on the wanted point
-    const off = V3.sub(P0, cur), need = V3.len(off), cap = (req.reach.cap || OF_GAIT.reachMax) * skel.legLen;
-    const P = need > cap ? V3.add(cur, V3.scale(off, cap / need)) : P0;
-    const r = lockLeg(sd, P, w, true);                                                            // keepPlane: a swing leg keeps its own bend plane (no knee flip)
+    const cap = (req.reach.cap || OF_GAIT.reachMax) * skel.legLen;
+    // The ankle target that puts the TOE on the wanted point depends on the foot's CURRENT orientation, and solving the leg changes that
+    // orientation. One shot converges only when the foot points roughly along the leg; with an open or turned-in foot (an inside-foot
+    // strike, a trivela) it leaves the boot short by a long way, and how short depends on the body's hip width and leg length. Iterating
+    // the same solve removes that body dependence entirely — it is the geometry that is wrong, not the proportions.
+    let r = null, need = 0, capped = false;
+    for (let it = 0; it < (req.reach.iters || 1); it++) {
+      const dvec = V3.sub(fk.tip[tb.idx], fk.joint[fb.idx]);                                      // toe-tip offset from the ankle, re-read each pass
+      const cur = fk.joint[fb.idx], P0 = V3.sub(want, dvec);
+      const off = V3.sub(P0, cur), d = V3.len(off);
+      if (it === 0) need = d;
+      const P = d > cap ? V3.add(cur, V3.scale(off, cap / d)) : P0;
+      if (d > cap) capped = true;
+      r = lockLeg(sd, P, w, true);                                                                // keepPlane: a swing leg keeps its own bend plane (no knee flip)
+      if (d < 0.004) break;
+    }
     const t2 = fk.tip[tb.idx];
-    diag.reach[sd] = { want: +need.toFixed(4), applied: +Math.min(need, cap).toFixed(4), capped: need > cap, w: +w.toFixed(2),
+    diag.reach[sd] = { want: +need.toFixed(4), applied: +Math.min(need, cap).toFixed(4), capped, w: +w.toFixed(2),
                        residual: +V3.dist(t2, want).toFixed(4), overReach: r.reached ? 0 : +r.residual.toFixed(4) };
   }
   // ground clamp: nothing of the body core / legs below the pitch (the toe of a swinging foot is the usual offender — the leg is lifted at the knee, the core only if a bone is under)
@@ -212,7 +223,7 @@ function ofActorTick(a, dt, now) {
           plants[pf] = { want: true, mode: "ankle", s: 0.4 };                                     // the plant leg is braced through the strike
           const dtc = now - a.kick.kickAt;
           const ramp = dtc <= 0 ? smooth01(clamp01(1 + dtc / 0.11)) : 1 - clamp01(dtc / 0.07);               // reach the ball AT contact, release straight after
-          if (a.kickBall && ramp > 0.001) plants[sf].reach = { p: a.kickBall, w: ramp * w, cap: OF_KICK.reachMax };
+          if (a.kickBall && ramp > 0.001) plants[sf].reach = { p: a.kickBall, w: ramp * w, cap: OF_KICK.reachMax, iters: 3 };
         }
         a.kickW = w;
       }
