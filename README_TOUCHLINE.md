@@ -28,3 +28,34 @@ Optional URL flags: `?debug=1` (match-engine debug panel), `?engine=mock` (dev-o
 ## Tests
     .venv/bin/python -m pytest tests_integration.py -q     # integration (18)
     cd simulator && ../.venv/bin/python -m pytest -q       # v0.7 core (53)
+
+## Coach MVP (branch `claude/coach-mvp`)
+
+    pip install -r requirements.txt && python server.py      # http://127.0.0.1:8000
+
+Engine: the server now defaults to the **native** v0.7 engine
+(`TOUCHLINE_ENGINE=native`) — full event ledger, stats, ratings, ~2.7 s per
+instant match. The continuous Hybrid-C lab is still available with
+`TOUCHLINE_ENGINE=continuous` (the new coaching endpoints return 501 there).
+
+What's new (spec: `docs/COACH_MVP_SPEC.md`):
+- **Live coaching loop** (`web/coach-match.js`): spoiler-free feed/score/stats
+  gated to what you see; key-moment auto-pause (goals, reds, urgent assistant
+  reads, 60'/75' window) with one-click actions; decisions apply at the exact
+  second on screen (deterministic rewind); momentum; 1×–8×, ⏭ next moment,
+  sim to FT; full-time Review, **Decision Lab** (paired alternate futures with
+  and without your calls, ± uncertainty) and **Replay from…** rehearsals.
+- **Career & modes** (`web/coach-career.js`): distinct fictional squads for
+  every club (real players untouched), varied AI shapes/styles, one-call league
+  matchweeks, pre-match scouting with apply-able plans, board confidence,
+  condition carry-over, injuries/suspensions, form, development, season
+  rollover, onboarding, **Challenges** (seeded daily + scenario library with a
+  server-verified leaderboard).
+- **Backend**: `management.py` (one decision path), `labsim.py` (parallel
+  workers), `coach.py` (insights, impacts, review, scouting), new endpoints in
+  `server.py` (§5 of the spec).
+
+Tests:
+
+    python -m pytest tests_integration.py tests_rc.py tests_coach.py -q   # 49, ~4 min
+    python -m pytest tests_ui -q                                         # 12 browser tests (Playwright + Chrome)
