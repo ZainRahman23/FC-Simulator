@@ -19,6 +19,9 @@ const URL = opt("--url", "http://127.0.0.1:8124/sandbox/visual/match.html");
   for (let i = 0; i < 600; i++) { if (await p.evaluate(() => typeof OFPLAY !== "undefined" && OFPLAY.on && OFPLAY.actor && OFPLAY.actor.sol)) break; await new Promise(r => setTimeout(r, 100)); }
   if (CHAR) { const ok = await p.evaluate(async (id) => { try { await ofCharLoad(id); ofPlaySetCharacter(id); await new Promise(r => setTimeout(r, 200)); return OFPLAY.charId === id; } catch (e) { return String(e); } }, CHAR);
     if (ok !== true) { console.error("character load failed:", ok); process.exit(3); } }
+  // Without --shots this probe measures GEOMETRY, not pixels: the numbers come from the contact solve, which runs in ptStep's hook.
+  // The Mixed character render is a software-GL pass over a 3000x1900 layer and dominates the run time, so skip it when nothing is captured.
+  if (!SHOTS) await p.evaluate(() => { OFPLAY.mixed = false; OFPLAY.dbg.hud = false; if (OFPLAY.panel) OFPLAY.panel.style.display = "none"; });
   if (SHOTS) { fs.mkdirSync(SHOTS, { recursive: true }); await p.evaluate((Z) => { OFPLAY.mixed = true; OFPLAY.dbg.feet = true; OFPLAY.dbg.hud = false; if (OFPLAY.panel) OFPLAY.panel.style.display = "none"; if (Z) { RIG.zoom = Z; RIG.zoomTarget = Z; } }, ZOOM); }
   await p.evaluate((FOOT, APP, CHAR, CHARSIM) => {
     S.pt.paused = true; ptReset();
@@ -51,13 +54,14 @@ const URL = opt("--url", "http://127.0.0.1:8124/sandbox/visual/match.html");
                  soleY: f.soleY, dBall: +Math.hypot(T[0] - bx, T[1] - by).toFixed(4), surf: +(Math.hypot(T[0] - bx, T[1] - by) - 0.11).toFixed(4),
                  vel: 0, reach: (d.reach && d.reach[sd]) || null }; };
       const pel = fk.joint[sk.byName.pelvis.idx];
-      return { tick: k, t: +t.now.toFixed(4), phase, ball0: b0,
+        const kbW = a.kickBall ? [a.kickBall[0], -a.kickBall[2], a.kickBall[1]] : null;   // the PRESENTATION's requested contact point, in pitch coords
+      return { tick: k, t: +t.now.toFixed(4), phase, ball0: b0, kickBall: kbW ? kbW.map(v => +v.toFixed(4)) : null,
         ball: { x: +t.b.x.toFixed(4), y: +t.b.y.toFixed(4), z: +t.b.z.toFixed(4), vx: +t.b.vx.toFixed(4), vy: +t.b.vy.toFixed(4), vz: +t.b.vz.toFixed(4), ctrl: t.b.ctrl },
         player: { x: +t.p.x.toFixed(4), y: +t.p.y.toFixed(4), v: +Math.hypot(t.p.vx, t.p.vy).toFixed(3), facing: +t.p.facing.toFixed(4) },
         pelvis: [+pel[0].toFixed(4), +(-pel[2]).toFixed(4)],
         kick: kk ? { tech: kk.tech, fam: kk.fam, foot: kk.foot, t0: +kk.t0.toFixed(4), kickAt: +kk.kickAt.toFixed(4), end: +kk.end.toFixed(4), kicked: !!kk.kicked, v0: kk.v0, vz: kk.vz, charge: kk.charge } : null,
         fired: !!(kk && kk.kicked && kb && !kb.kicked), kickDiag: (a.kickS && a.kickS.diag) || null, kickW: +(a.kickW || 0).toFixed(3),
-        R: F("R"), L: F("L"), strike: foot, plantF: pf, knee: d.knee, elbow: d.elbow, jerk: d.jerk, ground: d.ground, drop: d.pelvisDrop || 0,
+        R: F("R"), L: F("L"), strike: foot, plantF: pf, knee: d.knee, elbow: d.elbow, jerk: d.jerk, ground: d.ground, legFloor: d.legFloor || null, drop: d.pelvisDrop || 0,
         gait: a.loco.diag.gait, phaseU: a.loco.diag.phase, last: t.last };
     }, k, K, phase, SHOT, phase === "charge" && k === approachTicks, phase === "fire" && k === approachTicks + holdTicks);
     rows.push(row);
@@ -77,5 +81,8 @@ const URL = opt("--url", "http://127.0.0.1:8124/sandbox/visual/match.html");
     console.log(`  ball v ${Math.hypot(fire.ball0.vx,fire.ball0.vy).toFixed(2)} -> ${v1.toFixed(2)} m/s  vz ${fire.ball.vz.toFixed(2)}   anim u ${kd.u} (contact ${kd.contactU})  warp in ${kd.warpIn} out ${kd.warpOut}${kd.warped?" CLAMPED":""}`);
     console.log(`  knees R ${fire.knee.R} L ${fire.knee.L}   pop ${(fire.jerk*100).toFixed(1)} cm`);
   }
-  await b.close();
+  // The output is already written. Chrome's graceful close can hang for minutes under load with a software-GL context, which stalls any
+  // batch that runs these back to back — so bound it, then leave regardless.
+  await Promise.race([b.close(), new Promise(r => setTimeout(r, 4000))]).catch(() => {});
+  process.exit(0);
 })();

@@ -141,6 +141,11 @@ function ofSolve(skel, pose, rootM, plants, state, opts) {
   // The simulation has already decided that THIS boot touches the ball at THIS tick. All that happens here is a bounded correction that
   // puts the boot on the ball so the touch can be seen. It never moves the root, never moves the ball, never touches a PLANTED foot, and
   // never exceeds reachMax; if the ball is further away than that the correction saturates and the miss is reported, not hidden.
+  // SHOOTING V1.1. The reach is a FUNCTION, not a one-shot pass, because the ground clamp below rebuilds FK from the pose and would
+  // otherwise discard it. A locked leg is re-applied after that rebuild; a reaching leg is deliberately UNLOCKED (the striking leg swings),
+  // so before this it was simply thrown away — on a real body, where a standing ground lift is live every tick, that cost up to 26 cm of
+  // boot-to-ball while the reach itself was reporting a 2 mm residual. The generic test body never showed it: its lift is zero.
+  const applyReach = () => {
   for (const sd of ["R", "L"]) {
     const req = plants[sd], st = state.feet[sd];
     if (!req || typeof req !== "object" || !req.reach) continue;
@@ -173,15 +178,21 @@ function ofSolve(skel, pose, rootM, plants, state, opts) {
     diag.reach[sd] = { want: +need.toFixed(4), applied: +Math.min(need, cap).toFixed(4), capped, w: +w.toFixed(2),
                        residual: +V3.dist(t2, want).toFixed(4), overReach: r.reached ? 0 : +r.residual.toFixed(4) };
   }
+  };
+  applyReach();
   // ground clamp: nothing of the body core / legs below the pitch (the toe of a swinging foot is the usual offender — the leg is lifted at the knee, the core only if a bone is under)
   // SLEW (same reason as the pelvis drop): a one-tick body lift moves every joint, and the hands furthest of all; a few cm of transient
   // penetration reads better than a pop. The lift also decays back to zero once nothing is under the pitch.
   const slewLift = (want) => { const dt2 = Math.max(1 / 240, Math.min(0.1, opts.dt || 1 / 60)), gl = OF_GAIT.groundRate * dt2, g0 = state.groundPrev || 0;
     const v = Math.max(0, Math.max(g0 - gl, Math.min(g0 + gl, want))); state.groundPrev = v; return v; };
   let minY = 1e9, minB = null; for (const b of skel.bones) { if (!b.part || /^(hand|foreArm|upperArm|clavicle)_/.test(b.name)) continue; const mm = /^(foot|toe)_([RL])$/.exec(b.name); const stt = mm && state.feet[mm[2]]; const tol = mm ? (stt && stt.locked && stt.mode === "toe" ? -0.04 : 0.01) : b.rad * 0.6; const v = Math.min(fk.joint[b.idx][1], fk.tip[b.idx][1]) - tol; if (v < minY) { minY = v; minB = b.name; } }   // a pivoting toe sits at ground level by design (its own margin); other feet 1 cm
+  // SHOOTING V1.1. The STRIKING leg is exempt from the leg-floor re-solve. Its pose is an authored strike whose boot legitimately grazes
+  // the turf at contact, and its placement has just been solved against the ball; re-solving that leg to lift its ankle discards the contact
+  // placement wholesale — on real boots (longer toe, 88 mm ankle) that cost up to 26 cm of boot-to-ball. The body-wide slewed lift below
+  // still applies, so nothing is left under the pitch; only the leg that is mid-strike keeps the placement it was given.
   if (minY < 0) { const m = /^(shin|foot|toe)_([RL])$/.exec(minB); if (m && !(state.feet[m[2]] && state.feet[m[2]].locked)) { const sd = m[2], ankle = fk.joint[skel.byName["foot_" + sd].idx]; lockLeg(sd, [ankle[0], ankle[1] - minY, ankle[2]], 1, true); diag.legFloor = (diag.legFloor || "") + sd + ":" + (-minY).toFixed(3) + " "; } else { const lift = slewLift(-minY);
-      pel.off[1] += lift; diag.ground = +lift.toFixed(4); fk = skelFK(skel, pose, rootM); for (const sd of ["R", "L"]) { const st = state.feet[sd]; if (st && st.locked && st.w > 0) applyLeg(sd); } } }
-  if (!(minY < 0) && (state.groundPrev || 0) > 1e-6) { const lift = slewLift(0); if (lift > 1e-6) { pel.off[1] += lift; diag.ground = +lift.toFixed(4); fk = skelFK(skel, pose, rootM); for (const sd of ["R", "L"]) { const st = state.feet[sd]; if (st && st.locked && st.w > 0) applyLeg(sd); } } else state.groundPrev = 0; }
+      pel.off[1] += lift; diag.ground = +lift.toFixed(4); fk = skelFK(skel, pose, rootM); for (const sd of ["R", "L"]) { const st = state.feet[sd]; if (st && st.locked && st.w > 0) applyLeg(sd); } applyReach(); } }
+  if (!(minY < 0) && (state.groundPrev || 0) > 1e-6) { const lift = slewLift(0); if (lift > 1e-6) { pel.off[1] += lift; diag.ground = +lift.toFixed(4); fk = skelFK(skel, pose, rootM); for (const sd of ["R", "L"]) { const st = state.feet[sd]; if (st && st.locked && st.w > 0) applyLeg(sd); } applyReach(); } else state.groundPrev = 0; }
   for (const sd of ["R", "L"]) { const f = diag.feet[sd]; const a2 = fk.joint[skel.byName["foot_" + sd].idx], t2 = fk.tip[skel.byName["toe_" + sd].idx]; f.soleY = +(a2[1] - ankleH).toFixed(4); f.toeY = +t2[1].toFixed(4); f.ankle = a2.slice(); f.toe = t2.slice(); if (f.locked && f.P) { const st = state.feet[sd]; const ref = st.mode === "toe" ? [st.T[0], 0, st.T[2]] : [st.P[0], 0, st.P[2]], cur = st.mode === "toe" ? [t2[0], 0, t2[2]] : [a2[0], 0, a2[2]]; f.slide = +V3.dist(cur, ref).toFixed(4); } state.feet[sd].lastA = a2.slice(); state.feet[sd].lastT = t2.slice(); }   // the foot facts are the FINAL ones (after the ground clamp / leg floor); lastA/lastT are what the release hands to the swing
   // joint diagnostics: knee / elbow included angles (limits), and the per-tick joint jump (discontinuity detector: max joint displacement vs last tick)
   for (const sd of ["R", "L"]) { const J = (n) => fk.joint[skel.byName[n].idx]; const ang = (a, b, c) => Math.acos(Math.max(-1, Math.min(1, V3.dot(V3.norm(V3.sub(a, b)), V3.norm(V3.sub(c, b)))))) / DEG; diag.knee[sd] = +ang(J("thigh_" + sd), J("shin_" + sd), J("foot_" + sd)).toFixed(1); diag.elbow[sd] = +ang(J("upperArm_" + sd), J("foreArm_" + sd), J("hand_" + sd)).toFixed(1); }
