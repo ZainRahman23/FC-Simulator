@@ -10,6 +10,7 @@ def main():
     src, probe, out, scen = sys.argv[1:5]
     crop = [int(v) for v in sys.argv[5].split(",")] if len(sys.argv) > 5 else None
     scale = float(sys.argv[6]) if len(sys.argv) > 6 else 0.5
+    mode = sys.argv[7] if len(sys.argv) > 7 else "all"                     # normal | slow | all
     os.makedirs(out, exist_ok=True)
     files = sorted(glob.glob(os.path.join(src, scen + "_t*.png")) + glob.glob(os.path.join(src, scen + "_t*.jpg")))
     if not files: print("no frames", scen); return
@@ -23,9 +24,9 @@ def main():
     frames = {tick(f): f for f in files}
     ks = sorted(frames)
     # normal speed: every 2nd tick at 30 fps; slow motion around the first contact: every tick at 15 fps
-    norm = [load(frames[k]) for k in ks if k % 2 == 0]
-    norm[0].save(os.path.join(out, scen + "_normal.webp"), save_all=True, append_images=norm[1:], duration=33, loop=0, quality=62, method=4)
-    for i, c in enumerate(sorted(set(contacts))):
+    norm = [load(frames[k]) for k in ks if k % 2 == 0] if mode != "slow" else []
+    if norm: norm[0].save(os.path.join(out, scen + "_normal.webp"), save_all=True, append_images=norm[1:], duration=33, loop=0, quality=62, method=4)
+    for i, c in enumerate(sorted(set(contacts)) if mode != "normal" else []):
         win = [k for k in ks if c - 24 <= k <= c + 20]
         if not win: continue
         slow = [load(frames[k]) for k in win]

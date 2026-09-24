@@ -262,7 +262,7 @@ function ofPlayDom() {
   #ofplay-status{white-space:pre;font-size:11px;background:#0f1114;border:1px solid #2a2d33;padding:6px;margin:4px 0}`; document.head.appendChild(css);
   const out = document.createElement("canvas"); out.id = "ofplay-out"; document.body.appendChild(out); OFPLAY.out = out; OFPLAY.octx = out.getContext("2d");
   const p = document.createElement("div"); p.id = "ofplay-panel"; document.body.appendChild(p); OFPLAY.panel = p;
-  p.innerHTML = `<h3>OUTFIELD LOCOMOTION V1 — live test</h3><div class="dim">simulation decides (the playtest's own player law) · animation presents · no ball</div><div id="ofplay-status"></div>
+  p.innerHTML = `<h3>OUTFIELD RUNTIME — live test (locomotion · dribbling · shooting · receiving + passing)</h3><div class="dim">simulation decides (the playtest's own player law) · animation presents · no ball</div><div id="ofplay-status"></div>
   <h3>keys</h3><div class="dim">W A S D / arrows move · hold Q walk (1.5 m/s) · hold E jog (3.0) · nothing = run (5.0) · Shift sprint (8.2) · 1 short (1.70) · 2 average (1.83) · 3 tall (1.96) · 4 short-compact (1.66) · 5 average-lean (1.80) · 6 tall-power (2.00) · C cycle the six real characters (shift+C back) · J ball at your feet · L loose ball ahead · K dribble markers · N 10 extra runners · B 21 extra runners · X Mixed / page view · G follow · V foot / root markers · H hud · R reset · M pause · , slow-mo · . step</div>
   <h3>receiving + passing V1</h3><div class="dim">7 two players (A &harr; B) · 8 passing triangle · 9 three v two passive lane shadows · Space short pass · O driven pass · I through pass (direction keys choose the receiver, else your facing; control follows the ball to the receiver — the keys you hold as it arrives direct his first touch) · Tab switch player · T auto-switch · P preferred foot · 1-5 shots · J ball to your player · R restart drill · U names · Esc leave the drill</div>
   <h3>markers</h3><div class="dim"><span class="ok">green</span> planted (ankle lock) · <span style="color:#ffe36a">yellow</span> toe pivot · <span style="color:#7fd0ff">blue</span> stepping · <span style="color:#ff9a3c">orange</span> swing · red cross = authoritative root · violet ring = presentation pelvis · white = facing · blue = velocity</div>`;
@@ -284,7 +284,7 @@ function ofPlayBallHud(a) {
 // The identity line. With a real character selected it names the PLAYER — the stature and mass are his own, read from his rig, not
 // from a generic body preset — and states whether his morphology is presentation-only or is also driving the simulation.
 function ofPlayWho(a) {
-  const e = OFPLAY.charEntry, L = a.loco.diag, k = a.kick;
+  const e = S.pt && S.pt.squad ? (a.char || null) : OFPLAY.charEntry, L = a.loco.diag, k = a.kick;   // squad play: the player you control
   const act = k ? "KICK " + (k.tech || "") + " — " + ((ofKickFam(k.tech) || {}).label || "") + " (" + k.foot + " foot)"
             : (S.pt.b && S.pt.b.ctrl) ? "CARRY " + (L.wGait < 0.5 ? "IDLE" : L.gait) : L.wGait < 0.5 ? "IDLE" : L.gait;
   const who = e ? `${e.rig.identity.name}   ${e.rig.identity.heightCm} cm / ${e.rig.identity.weightKg} kg`
