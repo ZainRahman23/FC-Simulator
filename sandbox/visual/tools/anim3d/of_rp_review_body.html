@@ -116,4 +116,28 @@ ul{padding-left:20px}li{margin:3px 0}
 <li>No aerial passing, chest / thigh control, headers or volleys (V1 scope). A ball above 0.45 m is not received with the foot.</li>
 <li>The hard-reversal "roulette" is untouched.</li>
 </ul>
+<h2>12 · Receiving V1.1 — transition quality <span class="dim">(added after V1; the V1 evidence above is unchanged)</span></h2>
+<div class="lede">V1.1 is a presentation-only pass. The simulation is untouched: every squad fixture's authoritative trace and event log is identical to V1, animation ON / OFF is identical, and every pre-existing scenario is authoritative- and pose-identical to <code>baseline/outfield-runtime-v1</code>. What changed is how the receiving action enters, holds and leaves the body.</div>
+<h3>Correction to the V1 report</h3>
+<p>V1 attributed the one-touch return miss (<code>chain_recv_pass</code>, 12–14 cm) to the passer's own follow-through blocking the receiving action. That was wrong: the passer's kick record had ended ~100 ticks before the return arrived. The measured sequence is: the simulation's reception plan for the passer appears while he comes to meet the ball, <i>drops out</i> for 17 ticks while he accelerates, reappears only 9 ticks before contact, and switches from the moving to the standing model as he brakes — the contact point moves and the boot then needed 43–52 cm of correction against the kicks' 35 cm bound. The same late / switching plan, not an action-scheduling conflict, is what the fixes below address.</p>
+<h3>What was changed, and why each is generic</h3>
+<ul>
+<li><b>Tracking reach</b> (the main fix). The receiving correction is now a continuous <i>offset</i> on top of the foot the locomotion is already moving: each tick it closes its remaining gap to the target linearly over the time left to the authoritative contact, follows the ball through the hold, and decays the same way at the exit. It cannot step, whatever the plan does, and the gait's own limb speed stays underneath it. (V1 ramped a weight toward a target that re-planned — up to 66 cm/tick at the receiving knee.)</li>
+<li><b>Bend-plane memory</b> of the receiving leg is carried only from the previous tick and bounded <i>per tick</i> (a stale memory dragged the knee 41 cm the first tick a reach engaged; several solves in one tick compounded the bound).</li>
+<li><b>Soft extension limit</b>: the reach target's hip distance is compressed smoothly above 93 % of the leg, so the knee never locks straight (near full extension a two-bone solve flips the knee by tens of degrees per millimetre).</li>
+<li><b>Standing treatment only for a standing body</b>, decided once when the action begins: bracing the other foot, the support-knee give, the pelvis lean and the crouch no longer act on a body still in its stride (a braced swing foot, a flipped support knee).</li>
+<li><b>Standing exit</b>: the receiving boot comes back under the body (its offset returns to zero) and is set down through the contact solve's own height settle — V1 planted a near-straight leg out in front, which released and re-locked. A DIRECTIONAL touch hands the boot to the gait instead (he is about to move).</li>
+<li><b>Planting a boot that carries (or just carried) a receiving offset where it actually is</b>, keeping its own bend plane — the gait and the idle stance otherwise planted it at the pre-reach position.</li>
+<li><b>Plan hold</b>: while the authoritative pass is still coming to this player and the ball is free, a plan that drops out holds the action instead of dropping and restarting it; the plan's standing / moving flag is latched (it flickered tick to tick while he braked).</li>
+<li><b>Receiving reach bound</b> 0.42 → 0.62 leg lengths: the 0.42 bound was the kicks' small boot correction; a receiving boot mid-stride can be half a metre from a contact point in front, a normal leg motion. The anatomical guard is the soft extension limit.</li>
+</ul>
+{{V11}}
+<h3>Gates (V1.1)</h3>
+<h4>Authoritative: V1 vs V1.1, every squad fixture (trace + event log)</h4><pre>{{V11_V1}}</pre>
+<h4>Animation ON / OFF</h4><pre>{{V11_ONOFF}}</pre>
+<h4>Determinism</h4><pre>{{V11_DET}}</pre>
+<h4>Frozen baseline (locomotion, Dribbling V1, Shooting V1.1 — authoritative trace and every final joint position)</h4><pre>{{V11_BASE}}</pre>
+<h3>Remaining (V1.1)</h3>
+<ul>{{V11_REMAIN}}</ul>
+
 </div></body></html>

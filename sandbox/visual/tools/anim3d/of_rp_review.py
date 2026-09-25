@@ -1,5 +1,5 @@
 """RECEIVING + PASSING V1 — build the review page from the final probe dumps, the gates, the body matrix and the media.
-    python3 of_rp_review.py <final dir> <out dir>
+    python3 of_rp_review.py <final dir> <out dir> [<v1.1 dir> <v1 attribution dir> v11]
 """
 import sys, os, json, html
 
@@ -56,5 +56,13 @@ body = body.replace("{{MATRIX}}", mrows).replace("{{PERF}}", prow)
 body = body.replace("{{GATE_ONOFF}}", esc(rd("gate_onoff.txt"))).replace("{{GATE_DET}}", esc(rd("gate_det.txt"))).replace("{{GATE_BASE}}", esc(rd("gate_baseline.txt"))).replace("{{MATRIX_TXT}}", esc(rd("matrix.txt"))).replace("{{POPS}}", pops())
 import re
 body = re.sub(r"\{\{MEDIA:([a-z_A-Z]+)\|([^}]*)\}\}", lambda m: media(m.group(1), m.group(2)), body)
+if len(sys.argv) > 5:                                                                       # V1.1 section: <v11 dir> <attribution dir>
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("v11", os.path.join(os.path.dirname(__file__), "of_rp_review_v11.py")); m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+    V = sys.argv[3]
+    body = body.replace("{{V11}}", m.section(V, sys.argv[4], F))
+    rv = lambda p: esc(open(os.path.join(V, p)).read()) if os.path.exists(os.path.join(V, p)) else "(missing)"
+    body = body.replace("{{V11_V1}}", rv("gate_v1_vs_v11.txt")).replace("{{V11_ONOFF}}", rv("gate_onoff.txt")).replace("{{V11_DET}}", rv("gate_det.txt")).replace("{{V11_BASE}}", rv("gate_baseline.txt"))
+    body = body.replace("{{V11_REMAIN}}", open(os.path.join(V, "remaining.html")).read() if os.path.exists(os.path.join(V, "remaining.html")) else "")
 open(os.path.join(OUT, "index.html"), "w").write(body)
 print("wrote", os.path.join(OUT, "index.html"))

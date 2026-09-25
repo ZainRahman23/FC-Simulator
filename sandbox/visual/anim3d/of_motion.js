@@ -49,8 +49,23 @@ function ofSolve(skel, pose, rootM, plants, state, opts) {
     // a PLANTED leg takes the forward-knee pole; a SWING leg being nudged by the ground clamp keeps its own authored bend plane (pole null) —
     // forcing a swing leg onto the planted pole re-poses the whole leg, so a 5 mm floor correction would flip the knee by ~100°
     const pole = keepPlane ? null : [hip[0] + fwd[0] * 0.5, Math.max(kj[1], hip[1] - 0.2), hip[2] + fwd[2] * 0.5];
-    const mem = keepPlane ? (st.memF || (st.memF = {})) : st.mem; mem.maxPlane = OF_GAIT.kneePlaneStep;   // a planted leg near full extension has an ill-conditioned knee plane: bound how far it may orbit per tick
-    const r = skelIK2(skel, fk, "thigh_" + sd, "shin_" + sd, "foot_" + sd, P, w, pole, 0, mem); return r; };
+    // RECEIVING V1.1: keepPlane "track" — the bend-plane memory is only carried from the PREVIOUS tick's solve of the same kind; a memory
+    // left over from an earlier use would drag the knee toward a stale plane (a 41 cm knee jump the first tick a reach engaged)
+    let mem;
+    if (keepPlane === "track") {
+      if (!(st.memTnow >= now - 1.5 / 60)) st.memT = {};
+      mem = st.memT || (st.memT = {});
+      // the plane bound is PER TICK: every solve of this leg within a tick (tracking pass, ground-clamp re-application, contact
+      // convergence) is bounded against the plane the tick started with — otherwise the bound compounded (a 31 cm knee jump in one tick)
+      if (st.memTnow !== now) mem.vTick = mem.v ? mem.v.slice() : null; else if (mem.vTick) mem.v = mem.vTick.slice();
+      st.memTnow = now; }
+    else mem = keepPlane ? (st.memF || (st.memF = {})) : st.mem;
+    mem.maxPlane = OF_GAIT.kneePlaneStep;   // a planted leg near full extension has an ill-conditioned knee plane: bound how far it may orbit per tick
+    const r = skelIK2(skel, fk, "thigh_" + sd, "shin_" + sd, "foot_" + sd, P, w, pole, 0, mem);
+    // V1.1: a solve in the receiving leg's own plane keeps the leg's OTHER memories current — the planted-leg one (a plant held in its own
+    // plane) and the swing-leg one the ground clamp's leg-floor correction uses (left stale, the next floor nudge dragged the knee 43 cm)
+    if (keepPlane === "track" && mem.v) { if (st.locked && st.mem) st.mem.v = mem.v.slice(); (st.memF || (st.memF = {})).v = mem.v.slice(); }
+    return r; };
   const aimToe = (sd, T, w) => {                                                                  // TOE pivot: rotate the foot about the (solved) ankle so its toe tip lands on the locked toe point — the heel rises with the authored plantar-flexion, the toe stays put
     const fb = skel.byName["foot_" + sd], tb = skel.byName["toe_" + sd], m = fk.world[fb.idx], o = M4.origin(m); const cur = V3.sub(fk.tip[tb.idx], o), des = V3.sub(T, o); if (V3.len(cur) < 1e-5 || V3.len(des) < 1e-5) return;
     const cn = V3.norm(cur), dn = V3.norm(des), ang = Math.acos(Math.max(-1, Math.min(1, V3.dot(cn, dn)))); if (ang < 1e-4) return; const ax = V3.cross(cn, dn); if (V3.len(ax) < 1e-6) return; const R = M4.axisAngle(V3.norm(ax), ang * w);
@@ -90,7 +105,8 @@ function ofSolve(skel, pose, rootM, plants, state, opts) {
       // lets the locked foot be dragged round. Replant on the turned ANGLE as well.
       const fwd0 = M4.transformDir(rootM, [0, 0, 1]);
       const turned = () => { if (!st.fwd) return false; const c = st.fwd[0] * fwd0[0] + st.fwd[2] * fwd0[2]; return Math.acos(Math.max(-1, Math.min(1, c))) > LC.replantDeg * Math.PI / 180; };
-      if (!st.locked && !st.step) { st.locked = true; st.mode = "ankle"; st.T = null; st.rel = null; const far = V3.dist([ankle[0], 0, ankle[2]], [D[0], 0, D[2]]) > LC.replantM; st.P = [ankle[0], ankleH, ankle[2]]; st.t0 = now - TB; st.fwd = fwd0.slice(); if (far) st.step = { from: st.P.slice(), to: D, t0: now, T: LC.stepT }; }
+      const carriedS = st.track && (V3.len(st.track.off) > 1e-4 || now - (st.track.lastT || -9) < 0.25), srcS = carriedS && st.lastA ? st.lastA : ankle;   // V1.1: a boot still carrying a receiving offset is planted where it IS
+      if (!st.locked && !st.step) { st.kp = !!carriedS; st.locked = true; st.mode = "ankle"; st.T = null; st.rel = null; const far = V3.dist([srcS[0], 0, srcS[2]], [D[0], 0, D[2]]) > LC.replantM; st.P = [srcS[0], ankleH, srcS[2]]; st.t0 = now - TB; st.fwd = fwd0.slice(); if (far) st.step = { from: st.P.slice(), to: D, t0: now, T: LC.stepT }; }
       else if (st.locked && !st.step && st.rel == null && (V3.dist([st.P[0], 0, st.P[2]], [D[0], 0, D[2]]) > LC.replantM || turned()) && !(other && other.step)) { st.step = { from: st.P.slice(), to: D, t0: now, T: LC.stepT }; st.fwd = fwd0.slice(); }
       else if (st.step) st.step.to = D;                                                          // the stance point follows the facing while the step is in the air
     } else {
@@ -100,15 +116,18 @@ function ofSolve(skel, pose, rootM, plants, state, opts) {
       else if (!want) st.wantT = null;
       // RECEIVING V1 (opt-in `fromLast`): a boot that was being REACHED is planted where it actually was last tick — the authored ankle can be
       // 30 cm from it, and planting there teleported the foot. Every other plant request keeps the authored-ankle rule unchanged.
-      const src = req && typeof req === "object" && req.fromLast && st.lastA ? st.lastA : ankle;
-      if (want && !st.locked && (src[1] - ankleH <= OF_GAIT.plantY || now - st.wantT >= OF_GAIT.plantWaitT)) { st.locked = true; st.mode = "ankle"; st.T = null; st.step = null; st.P = [src[0], ankleH, src[2]]; st.t0 = now - TB; st.rel = null; st.y0 = src[1]; st.yT = now; st.pt0 = now; }   // the plant point = the authored foot projected to the pitch, where the foot IS (the authored cycle lands it on the pitch; the lock is immediate — at 8 m/s a two-tick blend is 25 cm of slide)
+      // V1.1: the same applies to any boot still carrying a receiving tracking offset — the gait planting it at the authored ankle and
+      // dropping the offset snapped the reached boot back (the knee pops in the moving hold / exit phases)
+      const carried = st.track && (V3.len(st.track.off) > 1e-4 || now - (st.track.lastT || -9) < 0.25);   // carrying (or just carried) a receiving offset
+      const src = req && typeof req === "object" && (req.fromLast || carried) && st.lastA ? st.lastA : ankle;
+      if (want && !st.locked && (src[1] - ankleH <= OF_GAIT.plantY || now - st.wantT >= OF_GAIT.plantWaitT)) { st.kp = !!(req && req.fromLast) || !!carried; st.locked = true; st.mode = "ankle"; st.T = null; st.step = null; st.P = [src[0], ankleH, src[2]]; st.t0 = now - TB; st.rel = null; st.y0 = src[1]; st.yT = now; st.pt0 = now; }   // the plant point = the authored foot projected to the pitch, where the foot IS (the authored cycle lands it on the pitch; the lock is immediate — at 8 m/s a two-tick blend is 25 cm of slide)
       if (!want && st.locked && st.rel == null) beginRelease(sd, st);
       // DIVERGENCE: the cycle has taken the foot a long way from the plant (a reversal / a hard turn). Let go NOW, while the offset is still
       // something the leg can absorb — waiting until the plant is at full stretch leaves an offset no hand-over can carry continuously.
       else if (want && st.locked && st.rel == null && !st.step && V3.dist(st.lastA || ankle, ankle) > OF_GAIT.divergeM * skel.legLen) beginRelease(sd, st);
     }
     if (st.step) { const k = clamp01((now - st.step.t0) / st.step.T); const P = V3.lerp(st.step.from, st.step.to, smooth01(k)); P[1] = ankleH + LC.stepLift * skel.legLen * Math.sin(Math.PI * k); st.P = P; st.w = 1; if (k >= 1) { st.P = st.step.to.slice(); st.step = null; st.t0 = now - TB; } }
-    if (st.locked && st.rel != null && now - st.rel >= (st.relT || TBo)) { st.locked = false; st.P = null; st.rel = null; st.relOff = null; st.relAx = null; st.relAng = 0; st.relT = null; st.mode = "ankle"; st.T = null; }
+    if (st.locked && st.rel != null && now - st.rel >= (st.relT || TBo)) { st.kp = false; st.locked = false; st.P = null; st.rel = null; st.relOff = null; st.relAx = null; st.relAng = 0; st.relT = null; st.mode = "ankle"; st.T = null; }
     if (st.locked && mode === "toe" && st.mode !== "toe" && st.rel == null && !st.step) { st.mode = "toe"; const tp = st.lastT || toeTip; st.T = [tp[0], Math.max(0.005, Math.min(tp[1], 0.03)), tp[2]]; }   // the pivot is where the toe ACTUALLY is (last tick, flattened + clamped), not where the authored pose puts it — otherwise the foot snaps by the flatten correction   // late stance: the TOE is the pivot — the heel rises with the authored plantar-flexion, the toe stays put
     if (!st.step) st.w = st.locked ? (st.rel == null ? clamp01((now - st.t0) / TB) : 1) : 0;
     st.s = req && typeof req === "object" ? req.s : null;
@@ -127,7 +146,7 @@ function ofSolve(skel, pose, rootM, plants, state, opts) {
   const applyLeg = (sd) => { const st = state.feet[sd]; const rel = st.rel != null && st.relOff, tip0 = fk.tip[skel.byName["toe_" + sd].idx];
     const Pe = effP(sd, st);
     const kS = st.yT != null ? smooth01(clamp01((now - st.yT) / OF_GAIT.settleT)) : 1;              // heel strike → forefoot roll: the sole reaches the pitch over the settle, it does not snap flat in one tick
-    const r = lockLeg(sd, Pe, st.w);
+    const r = lockLeg(sd, Pe, st.w, st.kp ? "track" : undefined);   // V1.1: a boot planted out of a reach keeps its own bend plane (no knee re-plane at the hand-over)
     if (rel) { if (!st.step && st.relAx && st.relAng > 1e-4) { const a2 = fk.joint[skel.byName["foot_" + sd].idx], t2 = fk.tip[skel.byName["toe_" + sd].idx], v = V3.sub(t2, a2);
         if (V3.len(v) > 1e-5) aimToe(sd, V3.add(a2, M4.transformDir(M4.axisAngle(st.relAx, st.relAng * (1 - relK(st))), v)), 1); } }
     else if (st.mode === "toe") { if (!st.step) aimToe(sd, st.T, 1); } else if (!st.step) flatten(sd, st.w * kS);
@@ -154,7 +173,36 @@ function ofSolve(skel, pose, rootM, plants, state, opts) {
     if (!req || typeof req !== "object" || !req.reach) continue;
     const want = req.reach.p, w = clamp01(req.reach.w || 0);
     if (w <= 0.001) continue;
-    if (st && st.locked && st.w > 0.5 && st.rel == null) { diag.reach[sd] = { skipped: "planted" }; continue; }   // the support foot is never dragged
+    if (st && st.locked && st.w > 0.5 && st.rel == null) { if (st.track) st.track.off = [0, 0, 0]; diag.reach[sd] = { skipped: "planted" }; continue; }   // the support foot is never dragged
+    // RECEIVING V1.1 — TRACKING REACH (opt-in `track`). The correction is a continuous OFFSET added to the foot the locomotion is already
+    // moving: each tick it closes its remaining gap to the target linearly over the time left to the authoritative contact (then follows,
+    // then decays the same way at the exit). It never steps, whatever the plan does, and the gait's own limb speed is kept underneath it.
+    // Weight ramps against a moving target made the reached leg jump up to 66 cm/tick at the knee. Evaluated once per tick (the ground
+    // clamp's re-application reuses the same offset).
+    if (req.reach.track) {
+      const fb = skel.byName["foot_" + sd], tb = skel.byName["toe_" + sd], T = req.reach.track, cap = (req.reach.cap || OF_GAIT.reachMax) * skel.legLen;
+      const tr = st.track || (st.track = { off: [0, 0, 0], at: -1 }), cur0 = fk.joint[fb.idx].slice(), dt = Math.max(1 / 240, Math.min(0.1, opts.dt || 1 / 60));
+      let des = [0, 0, 0], need = 0;
+      if (T.mode === "to") { const dvec = V3.sub(req.reach.surf ? ofBootSurfacePoint(skel, fk, sd, req.reach.surf) : fk.tip[tb.idx], fk.joint[fb.idx]);
+        des = V3.sub(V3.sub(want, dvec), cur0); need = V3.len(des); if (need > cap) des = V3.scale(des, cap / need); }
+      if (tr.at !== now) {                                                                        // advance once per tick
+        if (T.mode === "hold") {} else { const k = Math.min(1, dt / Math.max(dt, T.tLeft)); tr.off = V3.add(tr.off, V3.scale(V3.sub(des, tr.off), k)); }
+        tr.at = now; if (V3.len(tr.off) > 1e-4) tr.lastT = now; }
+      let r = null;
+      // SOFT EXTENSION LIMIT: two-bone IK near full extension is ill-conditioned (a millimetre of target moves the knee by tens of degrees:
+      // measured straight↔135° flips tick to tick). The target's hip distance is compressed smoothly (C1) above 93 % of the leg so the
+      // knee never locks straight; a shortfall shows in the contact residual instead of as a snapping knee.
+      const soft = (P) => { const hip = fk.joint[skel.byName["thigh_" + sd].idx], v = V3.sub(P, hip), d = V3.len(v), L0 = OF_TRACK.softStart * skel.legLen, L1 = OF_TRACK.softMax * skel.legLen;
+        if (d <= L0 || d < 1e-6) return P; const d2 = L0 + (L1 - L0) * Math.tanh((d - L0) / (L1 - L0)); return V3.add(hip, V3.scale(v, d2 / d)); };
+      if (V3.len(tr.off) > 1e-5) { r = lockLeg(sd, soft(V3.add(cur0, tr.off)), 1, "track");
+        if (T.mode === "to" && T.exact && need <= cap) for (let it = 0; it < 3; it++) {           // AT the contact tick only: converge the face exactly
+          const dv = V3.sub(req.reach.surf ? ofBootSurfacePoint(skel, fk, sd, req.reach.surf) : fk.tip[tb.idx], fk.joint[fb.idx]), P = V3.sub(want, dv);
+          if (V3.dist(P, cur0) > cap) break; const Ps = soft(P); r = lockLeg(sd, Ps, 1, "track"); tr.off = V3.sub(P, cur0); if (Ps !== P) break; } }
+      const t2 = req.reach.surf ? ofBootSurfacePoint(skel, fk, sd, req.reach.surf) : fk.tip[tb.idx];
+      diag.reach[sd] = { want: +need.toFixed(4), applied: +V3.len(tr.off).toFixed(4), capped: need > cap, w: 1, track: T.mode, tLeft: +T.tLeft.toFixed(3),
+                         residual: T.mode === "to" ? +V3.dist(t2, want).toFixed(4) : null, overReach: r && !r.reached ? +r.residual.toFixed(4) : 0 };
+      continue;
+    }
     const fb = skel.byName["foot_" + sd], tb = skel.byName["toe_" + sd];
     const cap = (req.reach.cap || OF_GAIT.reachMax) * skel.legLen;
     // The ankle target that puts the TOE on the wanted point depends on the foot's CURRENT orientation, and solving the leg changes that
@@ -207,6 +255,7 @@ function ofSolve(skel, pose, rootM, plants, state, opts) {
     diag.jerk = +jk.toFixed(4); diag.jerkBone = ji >= 0 && skel.bones[ji] ? skel.bones[ji].name : null; state.prevDJ = state.dj.slice(); } state.prevJL = JL; }   // discontinuity: joint motion in the ROOT frame (the authoritative displacement is not a jump)
   pel.off = saved; return { fk, diag };
 }
+const OF_TRACK = { softStart: 0.93, softMax: 0.985 };   // RECEIVING V1.1: tracking-reach soft extension limit (× legLen, hip → ankle)
 // ── BOOT CONTACT SURFACES (RECEIVING + PASSING V1) ───────────────────────────────────────────────────────────────────────────────
 // A first touch and an ordinary pass are made with the INSIDE of the foot, not the toe. The medial face is taken on the foot bone itself
 // (ankle → toe joint), a little behind the middle of the foot, offset to the big-toe side by half the boot's width — in the foot's own
@@ -268,6 +317,7 @@ function ofActorTick(a, dt, now) {
     }
     // RECEIVING V1: a reception the SIMULATION has planned (or just made) — prepare, meet the ball with the inside of the chosen boot, release
     if (!a.kickW && (a.recv || a.recvPrev) && typeof ofRecvApply === "function") pose = ofRecvApply(a, pose, plants, now);
+    else if (typeof ofRecvTail === "function") { if (a.kickW && (a.recv || a.recvPrev)) { a.recv = null; a.recvPrev = null; } ofRecvTail(a, plants, now, !!a.kickW); }   // V1.1: a kick takes over — any receiving offset decays under it
     a.gait = { cadence: lo.P.step > 0 ? Math.hypot(sim.vx, sim.vy) / (lo.P.step * a.skel.legLen) : 0, stanceFrac: lo.P.stance, stride: lo.P.step * a.skel.legLen, A: lo.P.hipFlex, run: lo.P.idx >= 2 }; a.legYaw = lo.legYaw;
     // PASSING V1: an AIMED pass is struck along the simulation's facing (which turns to the target through the wind-up at the athletic
     // turn rate), not along the running legs — blended by the kick weight so neither the entry nor the exit can snap

@@ -8,7 +8,7 @@ const NM = process.env.PUPPETEER_NODE_MODULES; if (NM) module.paths.unshift(NM);
 const puppeteer = require("puppeteer-core"), fs = require("fs"), path = require("path");
 const a = process.argv, opt = (k, d) => { const i = a.indexOf(k); return i > 0 ? a[i + 1] : d; };
 const OUT = opt("--out", "rp_probe"), VIEW = opt("--view", "mixed"), ZOOM = +opt("--zoom", 0), EVERY = +opt("--every", 1), ANIMOFF = opt("--anim", "on") === "off";
-const FMT = opt("--fmt", "png"), DPR = +opt("--dpr", 2), RECVOFF = opt("--recv", "on") === "off", CAST = opt("--cast", ""), OVERLAY = opt("--overlay", "on"), CHARS = opt("--chars", "on") !== "off", URL = opt("--url", "http://127.0.0.1:8124/sandbox/visual/match.html");
+const LAYERS = opt("--layers", ""), JOINTS = a.indexOf("--joints") > 0, FMT = opt("--fmt", "png"), DPR = +opt("--dpr", 2), RECVOFF = opt("--recv", "on") === "off", CAST = opt("--cast", ""), OVERLAY = opt("--overlay", "on"), CHARS = opt("--chars", "on") !== "off", URL = opt("--url", "http://127.0.0.1:8124/sandbox/visual/match.html");
 const FR = opt("--frames", "").split(",").filter(Boolean).flatMap(x => { const m = x.match(/^(\d+)-(\d+)$/); return m ? Array.from({ length: +m[2] - +m[1] + 1 }, (_, i) => +m[1] + i) : [+x]; });
 const SC = require("./of_rp_scenarios.js");
 const FRAMES_ALL = opt("--frames", "") === "all";
@@ -25,18 +25,19 @@ const NAMES = opt("--scen", "ab").split(",").flatMap(n => n === "all" ? Object.k
   const results = {};
   for (const name of NAMES) {
     const S0 = SC.SCEN[name]; if (!S0) { console.error("unknown scenario", name); continue; }
-    await p.evaluate((S0, VIEW, ZOOM, ANIMOFF, CHARS, OVERLAY, CAST, RECVOFF) => {
+    await p.evaluate((S0, VIEW, ZOOM, ANIMOFF, CHARS, OVERLAY, CAST, RECVOFF, LAYERS) => {
       const D = JSON.parse(JSON.stringify(S0.drill)); if (!CHARS) for (const q of D.players) q.char = null;
       if (CAST) for (const q of D.players) if (!q.team) { if (CAST === "generic") q.char = null; else q.char = CAST; }
       ofSquadStart("probe", D); OFPLAY.animOff = ANIMOFF; OF_RECV.enabled = !RECVOFF;
+      if (LAYERS) { const l = LAYERS.split(","); OF_RECV.layers = { pose: l.includes("pose"), plants: l.includes("plants"), reach: l.includes("reach") }; } else OF_RECV.layers = { pose: true, plants: true, reach: true };
       for (let i = 0; i < D.players.length; i++) { const id = D.players[i].char; const e = id && OF_CHAR.get(id);          // ready characters: build the actor now (no async gap)
         if (e && e.status === "ready") { const c = S.pt.squad.ctx[i]; const ac = ofPlayMakeActor(e.skel, c.p); ac.char = e; ac.team = c.team; ac.palette = c.team ? OFPLAY_KIT_B : SKEL_PARTS; OFSQ.actors[i] = ac; } }
       OFPLAY.actor = OFSQ.actors[S.pt.squad.active];
       OFPLAY.mixed = VIEW !== "page"; OFPLAY.dbg.hud = VIEW === "mixed"; if (OFPLAY.panel) OFPLAY.panel.style.display = VIEW === "mixed" ? "block" : "none";
       if (ZOOM) { RIG.zoomTarget = ZOOM; RIG.zoom = ZOOM; }
       OFSQ.cam = null; if (OVERLAY === "off") { OFSQ.names = false; OFPLAY.dbg.feet = false; OFPLAY.dbg.roots = false; OFPLAY.dbg.ball = false; OFPLAY.dbg.hud = false; if (OFPLAY.panel) OFPLAY.panel.style.display = "none"; OFSQ.overlay = false; } else OFSQ.overlay = true;
-    }, S0, VIEW, ZOOM, ANIMOFF, CHARS, OVERLAY, CAST, RECVOFF);
-    const trace = [], pres = [];
+    }, S0, VIEW, ZOOM, ANIMOFF, CHARS, OVERLAY, CAST, RECVOFF, LAYERS);
+    const trace = [], pres = [], joints = [];
     for (let k = 0; k < S0.ticks; k++) {
       const cmd = (S0.cmds || []).filter(c => c.at === k), keys = SC.keysAt(S0, k);
       const row = await p.evaluate((keys, cmd, k) => {
@@ -55,6 +56,10 @@ const NAMES = opt("--scen", "ab").split(",").flatMap(n => n === "all" ? Object.k
         return [k, b.x, b.y, b.z, b.vx, b.vy, b.owner == null ? -1 : b.owner, Q.active].concat(...Q.ctx.map(c => [c.p.x, c.p.y, c.p.vx, c.p.vy, c.p.facing]));
       }, keys, cmd, k);
       trace.push(row);
+      if (JOINTS && !ANIMOFF) joints.push(await p.evaluate((k) => [k].concat(OFSQ.actors.map(a => {        // per-joint pop (root frame), per actor
+        if (!a.sol || !a.rootM) return null; const inv = M4.invertRigid(a.rootM), JL = a.sol.fk.joint.map(q => M4.transformPoint(inv, q)), out = [];
+        for (let j = 0; j < JL.length; j++) { const dv = a._pjL ? V3.sub(JL[j], a._pjL[j]) : [0, 0, 0]; out.push(a._pdv ? +V3.len(V3.sub(dv, a._pdv[j])).toFixed(4) : 0); (a._pdvN || (a._pdvN = []))[j] = dv; }
+        a._pjL = JL; a._pdv = a._pdvN.slice(); return out; })), k));
       if (!ANIMOFF) pres.push(await p.evaluate((k) => [k].concat(...OFSQ.actors.map(a => { const d = a.sol ? a.sol.diag : null; if (!d) return [0, 0, 0];
         let sl = 0; for (const sd of ["R", "L"]) { const f = d.feet[sd]; if (f && f.contact && f.slide != null) sl = Math.max(sl, f.slide); }
         return [+(d.jerk || 0).toFixed(4), +sl.toFixed(4), +(d.jump || 0).toFixed(4)]; })), k));
@@ -64,7 +69,7 @@ const NAMES = opt("--scen", "ab").split(",").flatMap(n => n === "all" ? Object.k
       }
     }
     const res = await p.evaluate(() => ({ events: S.pt.squad.events, recv: OFSQ.recvRecs, pass: OFSQ.passRecs, chars: OFSQ.actors.map(a => a.char ? a.char.id : "generic") }));
-    res.trace = trace; res.pres = pres; results[name] = res;
+    res.trace = trace; res.pres = pres; if (JOINTS) { res.joints = joints; res.jointNames = await p.evaluate(() => OFSQ.actors[0].skel.bones.map(b => b.name)); } results[name] = res;
     const R = res.recv.map(r => `${r.name}:${r.foot}:${r.style}:${r.outcome}:${(r.surf * 100).toFixed(1)}cm${r.reachCapped ? "*" : ""}`).join(" ");
     const P = res.pass.map(r => `${r.name}:${r.tech}:${r.foot}:${(r.surf * 100).toFixed(1)}cm`).join(" ");
     console.log(name.padEnd(22), "recv", R || "-", " | pass", P || "-", " | ev", res.events.filter(e => /RECEPTION|OUT_OF_REACH|LOOSE/.test(e.kind)).map(e => e.kind + (e.outcome ? ":" + e.outcome : "")).join(","));
