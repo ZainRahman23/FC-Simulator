@@ -52,7 +52,10 @@ function ofAutoPre() {
   const b = t.b, now = t.now;
   // read what the simulation reported since the last tick
   for (; OFAUTO.lastEv < Q.events.length; OFAUTO.lastEv++) {
-    const e = Q.events[OFAUTO.lastEv], c = OFAUTO.cur; if (!c || c.done) continue;
+    const e = Q.events[OFAUTO.lastEv], c = OFAUTO.cur;
+    if (/^HANDOFF_/.test(e.kind)) { (OFAUTO.handoffs || (OFAUTO.handoffs = [])).push(Object.assign({ pattern: OFAUTO_PATTERNS[OFAUTO.pattern].id, fam: OFAUTO.fam }, e));
+      if (e.kind === "HANDOFF_START" && OFAUTO.contra) OFAUTO.contraUntil = { pid: e.pid, until: now + 0.5 }; }
+    if (!c || c.done) continue;
     if (e.kind === "PASS" && e.pid === c.from) c.kicked = e.tick;
     else if (e.kind === "OUT_OF_REACH" && e.pid === c.to) c.planLost = (c.planLost || 0) + 1;
     else if (e.kind === "RECEPTION") {
@@ -77,6 +80,9 @@ function ofAutoPre() {
   if (b.owner == null) return;
   const o = b.owner; if (o !== Q.active) ptSquadSwitch(t, o);
   const own = Q.ctx[o]; t.keys = {};
+  if (OFAUTO.contraUntil && OFAUTO.contraUntil.pid === o && now < OFAUTO.contraUntil.until) {   // test mode: CONTRADICTORY input right after a moving reception
+    const a8 = Math.round(Math.atan2(-(b.y - own.p.y), -(b.x - own.p.x)) / (Math.PI / 4)) * (Math.PI / 4), cx = Math.cos(a8), cy = Math.sin(a8);
+    t.keys = { right: cx > 0.38, left: cx < -0.38, down: cy > 0.38, up: cy < -0.38 }; return; }
   // the player's own input while he has the ball: if it is not at his feet, steer toward it (8-way, jog) — what a person does after a running
   // take. OFAUTO.collect = false gives NO input instead, to measure the finding this demo exposed: after some receptions the owner stops while
   // the first touch leaves the ball out of carry range, and nothing brings them back together (possession stays his, EXPOSED).

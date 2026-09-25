@@ -430,4 +430,17 @@ BASELINE GATE PASS — every pre-existing scenario is authoritative- and pose-id
 <li><b>Not fixed, recorded for later</b>: Dribbling V1's shared boot plan (<code>ofBootPlan</code>) is laterally mirrored relative to the rig.</li>
 </ul>
 
+<h2>13 · V1.1 post-reception hand-off fix</h2>
+<p><b>Found with the auto pass/receive demo.</b> After a clean reception on the move, the valid running first touch carries the ball on (2.1–6 m/s), the automatic receiving movement ends, and — with no direction held at that exact moment — the receiver braked to a stop. The ball came to rest 0.9–2.9 m ahead: outside the carry law's 0.85 m touch range, inside the 4.2 m possession envelope, so possession stayed his (EXPOSED) and nothing reunited them.</p>
+<p><b>Fix (simulation, squad play only, bounded).</b> A clean reception by a receiver moving at or above the reception model's standing threshold, with the first touch carrying the ball ahead of him, continues his movement intent toward his own ball through the <i>normal input path</i> (the ordinary carry steering and Dribbling V1 touches do the collecting): never faster than his speed at contact and, by world.locomote's arrival principle, never faster than he can brake to stand with the ball at his feet. It ends when player and ball are at rest together (ball ≤ 0.55 m, the settle range), the moment a movement key is held, on a kick, if possession is lost under the existing rules, or after 1.5 s. Heavy / loose / deflected touches never start it; reach, touch range, possession envelope, pass targeting and pass physics are unchanged.</p>
+<table><thead><tr><th class="l">auto demo, 12 runs × 3600 ticks (4 patterns × SHORT / DRIVEN / THROUGH)</th><th>V1.1 before</th><th>with the hand-off</th></tr></thead><tbody>
+<tr><td>stranded possession, no player input</td><td class="bad">22</td><td class="ok">0</td></tr>
+<tr><td>failed receptions</td><td>0</td><td>0</td></tr>
+<tr><td>hand-offs (no input): ended COLLECTED / by the next pass (kick) / by the 1.5 s bound</td><td>—</td><td>53 / 12 / 0</td></tr>
+<tr><td>longest hand-off: time / distance travelled</td><td>—</td><td>1.13 s / 3.9 m</td></tr>
+<tr><td>ball distance at the end of the hand-off (max)</td><td>0.9–2.9 m left behind</td><td class="ok">0.58 m (inside Dribbling V1 range)</td></tr>
+<tr><td>manual directional input (demo steering counts as input)</td><td>—</td><td>12 hand-offs overridden by input (median 25 ticks after reception)</td></tr>
+<tr><td>contradictory input held immediately after reception</td><td>—</td><td>26 / 26 hand-offs cancelled on the first tick; the player follows the input (no automatic recovery)</td></tr>
+</tbody></table>
+<p><b>Gates.</b> Every squad fixture: authoritative trace and pass / reception / possession events identical to <code>baseline/receiving-passing-v1.1</code> (27/27; the only addition is the diagnostic hand-off record in <code>recv_running</code>, cancelled by the fixture's held key). Heavy, deflected and unreachable receptions unchanged. Animation ON / OFF 27/27, determinism 27/27, <code>baseline/outfield-runtime-v1</code> 60/60 authoritative- and pose-identical (locomotion, Dribbling V1, Shooting V1.1).</p>
 </div></body></html>

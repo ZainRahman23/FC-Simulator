@@ -5843,7 +5843,18 @@ function ptPlayerStep(t) {
     if (t.keys.left) dx -= 1;
     if (t.keys.right) dx += 1;
   }
-  const m = Math.hypot(dx, dy), spd = t.keys.sprint ? PT.VMAX : t.keys.walk ? PT.WALKV : t.keys.jog ? PT.JOGV : PT.RUNV;
+  // RECEIVING + PASSING V1.1 — POST-RECEPTION HAND-OFF (squad play only; `t.handoff` is never set in single-player play). After a clean
+  // reception on the move, the receiver's movement intent continues toward his own first-touch ball until the ordinary carry law has touched
+  // it (collection done). It is an INTENT fed through the normal input path — the carry steering and Dribbling V1 touches do the collecting,
+  // at his own contact speed — and it ends the moment a movement key is held, on a kick, if possession is lost, or after a hard time bound.
+  let hSpd = null;
+  if (t.handoff && !t.handoff.end) { const h = t.handoff;
+    if (dx || dy) h.end = "INPUT"; else if (t.kick) h.end = "KICK"; else if (!b.ctrl) h.end = "LOST"; else if (t.now > h.until) h.end = "TIMEOUT";
+    // toward his own ball, never faster than his contact speed, and — world.locomote's arrival principle — never faster than he can brake to
+    // stand with it at his feet: a collection ends at rest with the ball, it does not run on through it (that is a dribble, and needs input)
+    if (!h.end) { dx = b.x - p.x; dy = b.y - p.y; const dB = Math.hypot(dx, dy);
+      hSpd = Math.min(h.v, 0.4 + 0.92 * Math.sqrt(2 * PT.BRAKE_PLANT * Math.max(0, dB - PT_RECV.handoffStand))); h.active = (h.active || 0) + 1; } }
+  const m = Math.hypot(dx, dy), spd = hSpd != null ? hSpd : t.keys.sprint ? PT.VMAX : t.keys.walk ? PT.WALKV : t.keys.jog ? PT.JOGV : PT.RUNV;
   const inCorr = m > 0 ? Math.atan2(dy, dx) : null;   // desired input corridor
   let dvx = 0, dvy = 0;
   if (m > 0 && b.ctrl && !t.kick) {

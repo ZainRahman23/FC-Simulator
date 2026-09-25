@@ -43,6 +43,8 @@ const PT_RECV = {
   // NEUTRAL REFERENCE PROFILE (continuous.py touch_model inputs). Future attribute work replaces these per player — nothing else changes.
   ref: { ball_control: 65, technique: 65, composure: 65, standing_tackle: 50, reactions: 65 },
   cushionV: 1.1,
+  handoffT: 1.5,        // s: V1.1 hand-off — hard bound on the post-reception movement intent toward his own first-touch ball
+  handoffStand: 0.35,   // m: ... which arrives to stand with the ball this far in front (inside the carry law's settle range, 0.55)
   faceHoldT: 0.45,      // s: after a controlled first touch the receiver faces the push direction (not the ball's position) this long        // world.py interact CLEAN: the ball kept a step in front, along the cushion direction
   meetV: 3.0,           // m/s: a receiver coming to meet an ordinary pass (a jog)
   runV: 7.0,            // m/s: a receiver running onto a through ball
@@ -54,7 +56,7 @@ const PT_RECV = {
 // per-player fields of the playtest context (everything ptPlayerStep and the sprite schedulers write on `t`)
 const PT_SQ_KEYS = ["p", "kick", "kickInfo", "kickLog", "touchPlan", "dribSeq", "dbgTouch", "ctrlState", "touchN", "touchLog", "touchInfo",
   "presDir", "liveTurn", "lastTouchT", "lastTouchFoot", "lastTouch", "lastFoot", "corr", "contactLog", "charge", "tickN", "looseT", "inDir",
-  "gait", "ctrlSince", "corrT", "boots", "pfoot", "kickFbN", "fbN", "dribT", "dribF0", "aiGoal", "recvPlan", "lastRecv", "faceDir"];
+  "gait", "ctrlSince", "corrT", "boots", "pfoot", "kickFbN", "fbN", "dribT", "dribF0", "aiGoal", "recvPlan", "lastRecv", "faceDir", "handoff"];
 const PT_SQ_NOKEYS = Object.freeze({});
 function ptSqIn(t, c) { for (const k of PT_SQ_KEYS) t[k] = c[k]; }
 function ptSqOut(t, c) { for (const k of PT_SQ_KEYS) c[k] = t[k]; }
@@ -68,7 +70,7 @@ function ptSqCtx(spec, i) {
     kick: null, kickInfo: null, kickLog: [], touchPlan: null, dribSeq: null, dbgTouch: null, ctrlState: null, touchN: 0, touchLog: [], touchInfo: null,
     presDir: undefined, liveTurn: 0, lastTouchT: undefined, lastTouchFoot: null, lastTouch: null, lastFoot: undefined, corr: undefined, contactLog: undefined,
     charge: null, tickN: 0, looseT: undefined, inDir: null, gait: null, ctrlSince: 0, corrT: undefined, boots: null, pfoot: spec.pfoot || "R",
-    kickFbN: 0, fbN: 0, dribT: 0, dribF0: 0, aiGoal: null, recvPlan: null, lastRecv: null, faceDir: null };
+    kickFbN: 0, fbN: 0, dribT: 0, dribF0: 0, aiGoal: null, recvPlan: null, lastRecv: null, faceDir: null, handoff: null };
 }
 // ── set up a squad fixture: players (their authoritative state), who has the ball, who you control ────────────────────────────────
 // spec = { players: [{ x, y, facing, team, name, ai, home, mark, pfoot, legLen, char }], owner: index | null, active: index,
@@ -101,6 +103,11 @@ function ptSquadStep(t) {
     if (t.kick && t.kick.kicked && !kicked0) ptSquadOnKick(t, i, t.kick);
     else if (b.ctrl) b.owner = i;
     else if (b.owner === i) { b.owner = null; ptSquadEvent(t, { kind: "LOOSE", pid: i, note: t.last }); }
+    const h = t.handoff;                                                                          // V1.1 hand-off bookkeeping (ends at the first carry touch)
+    // collected = at rest together: the ball inside the carry law's settle range, neither moving — from here the ordinary settle law keeps it
+    if (h && !h.end && Math.hypot(b.x - t.p.x, b.y - t.p.y) <= 0.55 && Math.hypot(t.p.vx, t.p.vy) < 0.4 && Math.hypot(b.vx - t.p.vx, b.vy - t.p.vy) < 0.5) h.end = "COLLECTED";
+    if (h && h.end) { ptSquadEvent(t, { kind: "HANDOFF_END", pid: i, reason: h.end, dur: +(t.now - h.t0).toFixed(3), travelled: +Math.hypot(t.p.x - h.x0, t.p.y - h.y0).toFixed(3),
+                                         ballDist: +Math.hypot(b.x - t.p.x, b.y - t.p.y).toFixed(3), d0: +h.d0.toFixed(3), ticks: h.active || 0 }); t.handoff = null; }
     ptSqOut(t, c);
   }
   t.keys = human;
@@ -302,7 +309,12 @@ function ptRecvResolve(t, i, pl) {
     dir = c.inDir != null ? c.inDir : p.facing;
     b.vx = p.vx * 0.7 + Math.cos(dir) * PT_RECV.cushionV; b.vy = p.vy * 0.7 + Math.sin(dir) * PT_RECV.cushionV;
     if (b.z > 0 && b.z < 1.6) b.vz = Math.min(b.vz, 0.4);
-    b.owner = i; b.curve = null; p.touchT = 0.30; c.faceHold = { dir, until: t.now + PT_RECV.faceHoldT }; c.ctrlSince = t.now; c.touchPlan = null; c.lastTouchFoot = pl.foot; c.lastTouchT = t.now;
+    b.owner = i; b.curve = null; p.touchT = 0.30; c.faceHold = { dir, until: t.now + PT_RECV.faceHoldT };
+    // V1.1 HAND-OFF: received ON THE MOVE with the first touch carrying the ball on ahead of him — his movement continues toward his own
+    // ball until the carry law has collected it (see ptPlayerStep). Only a CLEAN touch starts it; a heavy / loose touch has no possession.
+    { const pv = Math.hypot(p.vx, p.vy), ahead = b.vx * p.vx + b.vy * p.vy > 0;
+      c.handoff = pv >= PT_RECV.standV && ahead ? { t0: t.now, until: t.now + PT_RECV.handoffT, v: Math.min(PT.VMAX, pv), x0: p.x, y0: p.y, d0: Math.hypot(b.x - p.x, b.y - p.y) } : null;
+      if (c.handoff) ptSquadEvent(t, { kind: "HANDOFF_START", pid: i, v: +pv.toFixed(3), push: +Math.hypot(b.vx, b.vy).toFixed(3) }); } c.ctrlSince = t.now; c.touchPlan = null; c.lastTouchFoot = pl.foot; c.lastTouchT = t.now;
     const v = Math.hypot(p.vx, p.vy);
     style = v >= PT_RECV.runningV ? "RUNNING" : Math.abs(ptWrap(dir - p.facing)) * 180 / Math.PI > PT_RECV.directionalDeg ? "DIRECTIONAL" : "CUSHION";
   } else {
