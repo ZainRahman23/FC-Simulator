@@ -109,7 +109,7 @@ pass        ${ps ? (ps.pending ? "winding up " : ps.done ? "done " : "in flight 
 last pass   ${lp ? lp.name + " " + lp.fam + " " + lp.tech + " " + lp.foot + "  boot(" + lp.surfName + ")-ball " + (lp.surf * 100).toFixed(1) + " cm  plant " + (lp.plantContact ? "LOCKED" : lp.plantMode) + (lp.warp && lp.warp.warped ? "  WARP-CLAMPED" : "") : "-"}
 last recv   ${lr ? lr.name + " " + lr.foot + " " + lr.style + " " + lr.outcome + "  inside-ball " + (lr.surf * 100).toFixed(1) + " cm  reach " + ((lr.reachApplied || 0) * 100).toFixed(0) + "cm" + (lr.reachCapped ? " CAPPED" : "") + "  plant " + (lr.plantContact ? "LOCKED" : lr.plantMode) + "  rv " + lr.sim.rv.toFixed(1) : "-"}
 events      ${ev}
-squad cost  receive plan ${mean(OFSQ.perf.plan).toFixed(3)} ms  presentation ${mean(OFSQ.perf.pres).toFixed(2)} ms (${Q.ctx.length} rigs)`;
+squad cost  receive plan ${mean(OFSQ.perf.plan).toFixed(3)} ms  presentation ${mean(OFSQ.perf.pres).toFixed(2)} ms (${Q.ctx.length} rigs)${typeof ofAutoHud === "function" && ofAutoHud() ? "\n" + ofAutoHud() : ""}`;
 }
 // ── temporary controls (capture phase, only while a squad drill runs) ──────────────────────────────────────────────────────────
 function ofSquadKeys() {
