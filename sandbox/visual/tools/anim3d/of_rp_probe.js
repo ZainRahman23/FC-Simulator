@@ -10,6 +10,7 @@ const a = process.argv, opt = (k, d) => { const i = a.indexOf(k); return i > 0 ?
 const OUT = opt("--out", "rp_probe"), VIEW = opt("--view", "mixed"), ZOOM = +opt("--zoom", 0), EVERY = +opt("--every", 1), ANIMOFF = opt("--anim", "on") === "off";
 const LAYERS = opt("--layers", ""), JOINTS = a.indexOf("--joints") > 0, FMT = opt("--fmt", "png"), DPR = +opt("--dpr", 2), RECVOFF = opt("--recv", "on") === "off", CAST = opt("--cast", ""), OVERLAY = opt("--overlay", "on"), CHARS = opt("--chars", "on") !== "off", URL = opt("--url", "http://127.0.0.1:8124/sandbox/visual/match.html");
 const FR = opt("--frames", "").split(",").filter(Boolean).flatMap(x => { const m = x.match(/^(\d+)-(\d+)$/); return m ? Array.from({ length: +m[2] - +m[1] + 1 }, (_, i) => +m[1] + i) : [+x]; });
+const PRE = opt("--pre", "");   // DEFENDING V1.1: a page expression run after each drill set-up (e.g. a presentation variant switch)
 const SC = require(opt("--scenfile", "./of_rp_scenarios.js"));   // DEFENDING V1: --scenfile ./of_def_scenarios.js
 const FRAMES_ALL = opt("--frames", "") === "all";
 const NAMES = opt("--scen", "ab").split(",").flatMap(n => n === "all" ? Object.keys(SC.SCEN) : [n]);
@@ -20,7 +21,7 @@ const NAMES = opt("--scen", "ab").split(",").flatMap(n => n === "all" ? Object.k
   const errs = []; p.on("pageerror", e => errs.push(String(e).slice(0, 300)));
   await p.goto(URL + "?ofPlay=1&fps=60&r=" + Date.now(), { waitUntil: "load", timeout: 180000 });
   for (let i = 0; i < 900; i++) { if (await p.evaluate(() => typeof OFPLAY !== "undefined" && OFPLAY.on && OFPLAY.actor && OFPLAY.actor.sol)) break; await new Promise(r => setTimeout(r, 100)); }
-  await p.evaluate(() => { S.pt.paused = true; });
+  await p.evaluate((PRE) => { S.pt.paused = true; window.__PRE = PRE; }, PRE);
   if (CHARS) await p.evaluate(async () => { for (const id of OF_CHAR.order) { try { await ofCharLoad(id); } catch (e) {} } });   // load every real character once (sequential)
   const results = {};
   for (const name of NAMES) {
@@ -28,7 +29,7 @@ const NAMES = opt("--scen", "ab").split(",").flatMap(n => n === "all" ? Object.k
     await p.evaluate((S0, VIEW, ZOOM, ANIMOFF, CHARS, OVERLAY, CAST, RECVOFF, LAYERS) => {
       const D = JSON.parse(JSON.stringify(S0.drill)); if (!CHARS) for (const q of D.players) q.char = null;
       if (CAST) for (const q of D.players) if (!q.team) { if (CAST === "generic") q.char = null; else q.char = CAST; }
-      ofSquadStart("probe", D); window.__watch = []; window.__dbg = []; OFPLAY.animOff = ANIMOFF; OF_RECV.enabled = !RECVOFF;
+      ofSquadStart("probe", D); window.__watch = []; window.__dbg = []; if (window.__PRE) eval(window.__PRE); OFPLAY.animOff = ANIMOFF; OF_RECV.enabled = !RECVOFF;
       if (LAYERS) { const l = LAYERS.split(","); OF_RECV.layers = { pose: l.includes("pose"), plants: l.includes("plants"), reach: l.includes("reach") }; } else OF_RECV.layers = { pose: true, plants: true, reach: true };
       for (let i = 0; i < D.players.length; i++) { const id = D.players[i].char; const e = id && OF_CHAR.get(id);          // ready characters: build the actor now (no async gap)
         if (e && e.status === "ready") { const c = S.pt.squad.ctx[i]; const ac = ofPlayMakeActor(e.skel, c.p); ac.char = e; ac.team = c.team; ac.palette = c.team ? OFPLAY_KIT_B : SKEL_PARTS; OFSQ.actors[i] = ac; } }

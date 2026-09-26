@@ -108,16 +108,67 @@
 <div class="grid">{{MEDIA:sl_win_normal.webp|slide tackle, real time: launch, slide, contact, ground, get-up}}{{MEDIA:sl_win_slow.webp|the same, 0.25× slow motion}}</div>
 <div class="grid">{{MEDIA:sl_loose_strip.jpg|slide onto a loose ball}}{{MEDIA:sl_late_strip.jpg|late slide: the ball has gone, MISS — a long commitment on the ground}}</div>
 
-<h3>Slide biomechanics</h3>
-<p>The ground key poses (slide, sit, kneel, crouch) are <b>solved, not hand-set</b>: target knee, ankle and hand positions for a body on the pitch, fitted through the rig's own forward kinematics with anatomical bounds (hip rotation ≤ 50°, abduction ≤ 45°, knee 0–140°).</p>
-<ul>
-<li><b>The slide.</b> Pelvis reclined 60° and rolled onto the non-tackling hip. The tackling leg runs along the pitch, knee ≈ 150° (never locked straight). The other leg is bent with its foot braced beside the tackling knee. The trailing hand is on the pitch (hand ≈ 0–3 cm off the turf in the fit). The trunk is curled over the ball.</li>
-<li><b>Lowering onto the pitch.</b> Every body is lowered by exactly the amount that puts its lowest point on the pitch, measured per tick on that body. Short and tall characters therefore both lie on the ground.</li>
-<li><b>Direction.</b> The body's yaw turns onto the slide direction through the 0.10 s wind-up, rather than lagging behind at the locomotion's leg-turn rate.</li>
-<li><b>Get-up.</b> Slide → sit (knees up, both hands back) → kneel (one knee down, other foot planted) → crouch → locomotion, timed to the simulation's own ground and get-up windows.</li>
-</ul>
-<div class="grid">{{MEDIA:sl_win_ground.jpg|on the ground, then sitting up}}{{MEDIA:sl_win_getup.jpg|kneel → crouch → back into the run}}</div>
+<h3>Slide biomechanics (V1.1, see section 6b)</h3>
+<p>The ground key poses are <b>solved, not hand-set</b>: target knee, ankle, hand and head positions, fitted through the rig's own forward kinematics with anatomical bounds (hip rotation ≤ 50°, abduction ≤ 50°, knee 0–140°) and "nothing through the pitch". The normal slide lies side-on on the tucked-leg hip: one tackling leg along the pitch, the other folded under it, the tucked-side hand braced, the chest up and the head watching the ball. Every body is lowered by exactly the amount that puts its lowest point on the pitch. The body's yaw turns onto the slide through the wind-up, and a per-body presentation offset lays the rendered tackling leg on the simulation's leg line. The get-up rolls onto the tucked knee with the tackling foot planted (kneel), then crouch, then locomotion, timed to the simulation's ground and get-up windows.</p>
+<div class="grid">{{MEDIA:sl_win_ground.jpg|revised slide: on the ground after the challenge}}{{MEDIA:sl_win_getup.jpg|revised get-up: tucked knee + tackling foot → crouch → run}}</div>
 
+<h2>6b · Slide-tackle biomechanics review (V1.1)</h2>
+<h3>What the research says</h3>
+<p>Sources: coaching manuals and technique guides (Human Kinetics <i>Soccer</i> three basic tackles; Soccer Coach Weekly; Coaching American Soccer; Holliston SC <i>Teaching the Slide Tackle</i>; Online Soccer Academy); encyclopedic and technical summaries (Encyclopedia.com <i>Soccer Tackling Mechanics</i>; Wikipedia <i>Sliding tackle</i>); and IFAB Law 12 for the reckless and two-footed boundary. They agree on one shape, with small variations by purpose.</p>
+<table><thead><tr><th class="l">aspect</th><th class="l">ordinary controlled slide tackle</th></tr></thead><tbody>
+<tr><td>approach</td><td class="l">from the side or diagonally, across the carrier's path, never from behind; running alongside until the lead foot can overtake the ball, ideally when the ball is a touch away from him</td></tr>
+<tr><td>which body side is on the ground</td><td class="l"><b>one hip / the outer thigh of the tucked leg</b> (the leg nearest the carrier "sinks down and curls beneath the seat"). The slider is side-on, not sitting on both buttocks.</td></tr>
+<tr><td>hips / torso</td><td class="l">hips rolled onto the tucked side and twisted, "drawing up the far side"; torso bent at the waist and turned to the ball, not lying flat on the back; eyes on the ball</td></tr>
+<tr><td>tackling leg</td><td class="l">ONE leg, the far one, extended but "slightly bent", swept across the ball's path (the "sweep"); timing: horizontal when the foot reaches the ball</td></tr>
+<tr><td>tackling foot</td><td class="l">ankle locked, toes forward; <b>laces / instep</b> to clear it or the <b>inside, hooked</b> (curled back) to trap it; contact at the ball's centre to upper half; <b>never studs up</b></td></tr>
+<tr><td>trailing leg</td><td class="l">knee bent ≈ 90°, <b>tucked under the extended leg's thigh</b> ("the lower part of the tucked leg under the upper thigh of the extended leg"); the two knees stay close; used afterwards to push back up</td></tr>
+<tr><td>arms</td><td class="l">out for balance; the tucked-side hand goes to the pitch for support</td></tr>
+<tr><td>after contact / recovery</td><td class="l">roll toward the stomach or tackling side with the momentum and back onto the tackling foot, pushing with the tucked leg: up at once</td></tr>
+<tr><td>purpose variants</td><td class="l"><b>clearance / poke</b>: laces, the ball kicked away. <b>Hook</b>: inside of a hooked foot, a wider sweep. <b>Block</b> (a shot or cross coming across): the same one-leg-out / one-leg-under shape, more front-on, the blocking leg held at ball height ("like sliding into second base"). <b>Last-ditch</b>: the same shape at full stretch and flatter. All of them are one extended leg plus one tucked leg.</td></tr>
+<tr><td>two-footed / studs exposed</td><td class="l">both legs thrust at the opponent with the soles forward is a <b>lunge</b>. Law 12: a two-footed lunge that endangers an opponent is serious foul play (a sending-off) even if the ball is won. It is not a technique variant.</td></tr>
+</tbody></table>
+<h3>What was wrong with the V1 pose, measured at the authoritative contact tick</h3>
+{{SLIDE_DIAG}}
+<p>The cause is the <b>pose data</b>, in combination:</p>
+<ul>
+<li>a square, supine pelvis (sitting on both buttocks facing the attacker);</li>
+<li>a knee-up trailing leg whose foot is planted ahead beside the tackling leg (a second foot forward, knees close together);</li>
+<li>a tackling foot whose sole faces the ball (studs forward).</li>
+</ul>
+<p>It is not caused by mirroring (both sides read the same), IK, or contact targeting (the reach correction is a few centimetres). The V1 fit kept the pelvis square: with a square pelvis the researched tuck needed more than 50° of hip rotation, so the solver fell back to a knee-up brace. That braced leg is what reads as "both feet forward".</p>
+<h3>What changed</h3>
+<ul>
+<li><b>New normal slide key pose.</b> Solved with the pelvis free, targeting the researched posture:
+<ul>
+<li>tucked-side hip 16 cm lower than the other (lying on it);</li>
+<li>tackling leg along the pitch, knee ≈ 160°, sole facing down and sideways (laces / instep toward the ball);</li>
+<li>trailing leg folded under the tackling thigh;</li>
+<li>tucked-side hand on the pitch, free arm out, chest up, head up.</li>
+</ul></li>
+<li><b>Leg alignment.</b> A per-body presentation offset (yaw plus pelvis shift, measured once per body and side) lays the rendered knee→toe line on the simulation's leg line. The root is untouched.</li>
+<li><b>Get-up.</b> The "sit up" step is dropped: slide → kneel on the tucked knee with the tackling foot planted → crouch → up.</li>
+<li><b>V1 pose retained</b> as the <b>review-only</b> presentation variant <code>OF_DEF.slide.variant = "reckless_v1"</code>. It is never selected in play and never mixed in. Because it is presentation only, it cannot change reach, timing or success.</li>
+<li><b>What a future foul system needs.</b> A reckless two-footed challenge would have to be a <b>simulation</b> decision (a challenge intent), recorded as a fact alongside the existing ones: from behind, closing speed, ball-first or man-first, tackle quality. That is not built now.</li>
+</ul>
+<p><b>Vocabulary.</b> One parameterised normal slide covers the researched purposes, because all of them share the one-leg-out, one-leg-under shape. The simulation already varies the direction, speed, distance and contact point, and the tracking reach adapts the boot. A separate block or last-ditch pose would need a simulation reason (a different contact geometry), which V1 does not have. So no more variants were made.</p>
+<h3>Before / after at identical authoritative states</h3>
+<p>The simulation is the same, so every frame pair below shows the same tick of the same slide: the same root, the same ball, the same outcome.</p>
+{{MEDIA:slide_ba_views_sl_win.jpg|contact tick, left-foot slide: side · front · three-quarter · top. Top row V1, bottom row V1.1}}
+{{MEDIA:slide_ba_views_sl_left.jpg|contact tick, right-foot slide (the mirror case)}}
+{{MEDIA:slide_ba_game_sl_win.jpg|gameplay camera, left foot: launch → contact → ground → get-up (V1 top, V1.1 bottom)}}
+{{MEDIA:slide_ba_game_sl_left.jpg|gameplay camera, right foot}}
+{{MEDIA:slide_new_phases.jpg|V1.1 through the phases (side and three-quarter): launch, early slide, approach, contact, after contact, ground slide, ground, get-up}}
+{{MEDIA:slide_old_phases.jpg|V1 through the same phases (retained as the reckless_v1 review variant)}}
+{{MEDIA:slide_mirror.jpg|left / right mirror at the contact tick}}
+<div class="grid">{{MEDIA:slide_new_normal.webp|V1.1, real time}}{{MEDIA:slide_old_normal.webp|V1, real time (same authoritative slide)}}</div>
+<div class="grid">{{MEDIA:slide_new_slow.webp|V1.1, 0.25× slow motion through the contact}}{{MEDIA:slide_new_right_normal.webp|V1.1, right-foot slide, real time}}</div>
+<h3>Situations with the revised slide (the simulation is unchanged)</h3>
+{{MEDIA:slide_new_sl_loose.jpg|clean win on a loose ball}}
+{{MEDIA:slide_new_sl_late.jpg|miss: a late slide, the ball has gone — long commitment, get-up}}
+{{MEDIA:slide_new_sl_early.jpg|early challenge: launched from 6 m, dies short of the ball}}
+{{MEDIA:slide_new_sl_from_behind.jpg|from behind: the leg meets the carrier's legs first and stops (man first, no ball)}}
+<h3>Rendered contact residuals, before / after</h3>
+{{SLIDE_RES}}
 <h2>7 · Bodies and contact</h2>
 <ul>
 <li><b>Occupancy.</b> <code>world.py</code> PLAYER PHYSICAL OCCUPANCY V1 is ported for defending drills: 0.32 m discs, closing velocity removed, positional Jacobi mop-up (8 iterations, 5 mm tolerance). A jockeying or lunging defender cannot walk into the carrier, and a defender behind the carrier cannot get at a ball the carrier's body shields. That is the retention fixtures' out-of-reach result.</li>
@@ -185,6 +236,7 @@
 <tr><td>small-sided 1v1 / 2v2 / 3v3, 2 min each: ON vs OFF</td><td class="l">{{GATE_SSG}}</td></tr>
 <tr><td>small-sided: determinism</td><td class="l">{{GATE_SSGD}}</td></tr>
 <tr><td>auto defending demo, 7 patterns × 60 s: ON vs OFF</td><td class="l">{{GATE_DEMO}}</td></tr>
+{{GATE_D1}}
 </tbody></table>
 {{GATE_DETAIL}}
 

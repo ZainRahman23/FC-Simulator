@@ -15,7 +15,7 @@ const OF_DEF = {
   enabled: true,
   jockeyT: 0.18,        // s: jockey posture blend
   stand: { inT: 0.10, holdT: 0.10, outT: 0.28, trackT: 0.20, cap: 0.70, surfH: 0.085, eps: 0.004 },
-  slide: { dropT: 0.12, clear: 0.012, outT: 0.30, trackT: 0.15, holdT: 0.06, cap: 0.20, reach: true },
+  slide: { dropT: 0.12, clear: 0.012, outT: 0.30, trackT: 0.15, holdT: 0.06, cap: 0.20, reach: true, variant: "normal" },
   ballR: 0.11,
 };
 // poses are authored for a RIGHT-foot action; the left one is the mirror (swap sides, negate yaw / roll and the lateral pelvis offset)
@@ -29,6 +29,8 @@ OF_DEF.LUNGE = { _pelvis: [0, -0.15, 0.06], pelvis: [16, 0, 0], spine: [8, 0, 0]
 // crouching on the pitch, fitted through this rig's own FK with anatomical bounds (hip rotation ≤ 50°, abduction ≤ 45°, knee 0–140°).
 // The pelvis height is not authored: at run time every body is lowered by exactly what puts its lowest point on the pitch.
 OF_DEF.SLIDE = { _pelvis: [0, 0, -0.06], pelvis: [-60, 0, 12], spine: [24, 0, -4], chest: [12, 0, -2], neck: [18, 0, 0], head: [16, 0, 0], thigh_R: [-27.5, 2, -16], shin_R: [9, 0, 0], foot_R: [16.8, 0, 0], thigh_L: [-70.3, 9.8, -11.8], shin_L: [106.8, 0, 0], foot_L: [15.5, 0, 0], upperArm_L: [61.3, 6.3, 0], foreArm_L: [-78, 0, 0], upperArm_R: [-56, 0, 56], foreArm_R: [-40, 0, 0] };
+// NORMAL slide (V1.1, from the slide-tackle research): side-on on the tucked-leg hip / outer thigh, one tackling leg along the pitch
+OF_DEF.SLIDE2 = { _pelvis: [0, 0, 0], pelvis: [-46, -40.8, 46.5], spine: [40.8, 35, -11.5], chest: [35, -10.8, 20], neck: [34, 29.8, -15], head: [6, -30, 10], thigh_R: [-30.8, -50, 13.5], shin_R: [26, 0, 0], foot_R: [50, 25, -15], thigh_L: [-19.6, -50, 18.5], shin_L: [140, 0, 0], foot_L: [50, 25, 13], upperArm_L: [20.8, -18.8, -15.3], foreArm_L: [-53.3, 0, 0], upperArm_R: [-38.3, -0.3, 24.5], foreArm_R: [-86.8, 0, 0] };
 OF_DEF.SIT = { _pelvis: [0, 0, -0.08], pelvis: [-30, 0, 5], spine: [28, 0, 0], chest: [12, 0, 0], neck: [6, 0, 0], head: [4, 0, 0], thigh_R: [-98.5, -11.5, 6], shin_R: [96.3, 0, 0], foot_R: [27.3, 0, 0], thigh_L: [-104, -3.8, 3.8], shin_L: [108, 0, 0], foot_L: [20, 0, 0], upperArm_L: [20.3, 14.5, 0], foreArm_L: [-17.5, 0, 0], upperArm_R: [15.8, -34, 0], foreArm_R: [-17.3, 0, 0] };
 OF_DEF.KNEEL = { _pelvis: [0, 0, 0], pelvis: [10, 0, 0], spine: [14, 0, 0], chest: [6, 0, 0], neck: [-8, 0, 0], head: [-8, 0, 0], thigh_R: [-93.3, -4.3, 0], shin_R: [99.3, 0, 0], foot_R: [-21.5, 0, 0], thigh_L: [-5.3, 0, 5], shin_L: [90.5, 0, 0], foot_L: [45, 0, 0], upperArm_L: [-24, 0, -26], foreArm_L: [-40, 0, 0], upperArm_R: [-16.5, 6, 0], foreArm_R: [-76.8, 0, 0] };
 OF_DEF.CROUCH = { _pelvis: [0, 0, 0], pelvis: [22, 0, 0], spine: [8, 0, 0], chest: [4, 0, 0], neck: [-8, 0, 0], head: [-10, 0, 0], thigh_R: [-61.3, -3, 0], shin_R: [78.5, 0, 0], foot_R: [-40, 0, 0], thigh_L: [-58, 3.3, 0], shin_L: [77.5, 0, 0], foot_L: [-40, 0, 0], upperArm_L: [-20, 0, -30], foreArm_L: [-50, 0, 0], upperArm_R: [-20, 0, 30], foreArm_R: [-50, 0, 0] };
@@ -100,13 +102,34 @@ function ofDefStand(a, A, pose, plants, now, legK) {
   return q;
 }
 function ofDefKeyPose(P, sd) { return ofDefSide(P, sd); }
+// ALIGNMENT (V1.1): the simulation's tackling leg is a capsule along the slide, legFrom…reachAhead × leg ahead of the root and legLat × leg to
+// the tackling side. The side-on body cannot put its leg exactly there by joint angles alone (the hip is where the body lies), so the
+// whole body is turned and shifted by a small PRESENTATION offset — measured once per body and tackling side — that lays the rendered
+// knee→toe line on the simulation's line. The authoritative root never moves; the offset is the same kind the lunge's pelvis shift is.
+function ofDefLegAlign(skel, P, sd) {
+  const C = skel._defAlign || (skel._defAlign = {}); if (C[sd]) return C[sd];
+  const G = PT_DEF.slide, leg = skel.legLen, sg = sd === "R" ? 1 : -1, pel = skel.byName.pelvis, base = pel.off.slice();
+  const meas = (yaw, ox, oz) => { pel.off = [base[0] + ox, base[1], base[2] + oz]; const fk = skelFK(skel, P, gkRootMatrix(0, 0, yaw, 0)); pel.off = base;
+    const K = fk.joint[skel.byName["shin_" + sd].idx], T = fk.tip[skel.byName["toe_" + sd].idx];
+    return { kF: K[0], kR: -K[2], tF: T[0], tR: -T[2] }; };                                     // pitch frame at travel 0: forward = x, rig-right = −z
+  let yaw = 0;
+  for (let it = 0; it < 6; it++) { const m = meas(yaw, 0, 0), phi = Math.atan2(m.tR - m.kR, m.tF - m.kF), m2 = meas(yaw + 0.01, 0, 0), phi2 = Math.atan2(m2.tR - m2.kR, m2.tF - m2.kF);
+    const dphi = (phi2 - phi) / 0.01; if (Math.abs(dphi) < 1e-6) break; yaw -= phi / dphi; }
+  let ox = 0, oz = 0;
+  for (let it = 0; it < 4; it++) { const m = meas(yaw, ox, oz), eF = G.reachAhead * leg - m.tF, eR = sg * G.legLat * leg - (m.tR + m.kR) / 2;
+    const mx = meas(yaw, ox + 0.01, oz), mz = meas(yaw, ox, oz + 0.01);
+    const a11 = (mx.tF - m.tF) / 0.01, a12 = (mz.tF - m.tF) / 0.01, a21 = ((mx.tR + mx.kR) - (m.tR + m.kR)) / 0.02, a22 = ((mz.tR + mz.kR) - (m.tR + m.kR)) / 0.02, det = a11 * a22 - a12 * a21;
+    if (Math.abs(det) < 1e-9) break; ox += (eF * a22 - a12 * eR) / det; oz += (a11 * eR - a21 * eF) / det; }
+  return (C[sd] = { yaw, ox, oz });
+}
 function ofDefSlide(a, A, pose, plants, now, rootM) {
   const O = OF_DEF.slide, sd = A.foot, G = PT_DEF.slide;
   // the timeline: launch → (the simulation's) slide → ground → get-up → recovery (the simulation's own windows)
   let P, w = 1, phase;
-  const S = ofDefKeyPose(OF_DEF.SLIDE, sd);
+  const V1 = O.variant === "reckless_v1", S = ofDefKeyPose(V1 ? OF_DEF.SLIDE : OF_DEF.SLIDE2, sd);
   if (A.getup0 == null || now < A.getup0) { phase = now < A.launchAt ? "LAUNCH" : A.stopAt == null ? "SLIDE" : "GROUND"; P = S; w = smooth01(clamp01((now - A.t0) / (G.windT + O.dropT))); }
-  else if (now < A.getup1) { phase = "GETUP"; const u = (now - A.getup0) / (A.getup1 - A.getup0), K = [[0, S], [0.34, ofDefKeyPose(OF_DEF.SIT, sd)], [0.68, ofDefKeyPose(OF_DEF.KNEEL, sd)], [1, ofDefKeyPose(OF_DEF.CROUCH, sd)]];
+  else if (now < A.getup1) { phase = "GETUP"; const u = (now - A.getup0) / (A.getup1 - A.getup0), K = V1 ? [[0, S], [0.34, ofDefKeyPose(OF_DEF.SIT, sd)], [0.68, ofDefKeyPose(OF_DEF.KNEEL, sd)], [1, ofDefKeyPose(OF_DEF.CROUCH, sd)]]
+      : [[0, S], [0.45, ofDefKeyPose(OF_DEF.KNEEL, sd)], [1, ofDefKeyPose(OF_DEF.CROUCH, sd)]];   // normal: roll up onto the tucked knee + tackling foot, then up
     let k = 0; while (k < K.length - 2 && u > K[k + 1][0]) k++; P = ofDefLerpPose(K[k][1], K[k + 1][1], smooth01(clamp01((u - K[k][0]) / (K[k + 1][0] - K[k][0])))); }
   else { phase = "RECOVER"; P = ofDefKeyPose(OF_DEF.CROUCH, sd); w = 1 - smooth01(clamp01((now - A.getup1) / (A.rec1 - A.getup1 + O.outT))); if (w <= 0.001) { a.defA = null; a.defYaw = null; return pose; } }
   A.phase = phase;
@@ -115,7 +138,10 @@ function ofDefSlide(a, A, pose, plants, now, rootM) {
   if (phase !== "RECOVER") { const k = smooth01(clamp01((now - A.t0) / Math.max(1e-3, A.launchAt - A.t0))), dy = Math.atan2(Math.sin(A.dir - A.yaw0), Math.cos(A.dir - A.yaw0)); a.defYaw = A.yaw0 + dy * k; }
   else a.defYaw = null;
   // lower the body ONTO the pitch: measure the authored pose's lowest core / leg point and drop the pelvis by exactly that (per body)
-  const P0 = Object.assign({}, P, { _pelvis: [P._pelvis ? P._pelvis[0] : 0, 0, P._pelvis ? P._pelvis[2] : 0] });
+  // the leg alignment, weighted by how much of the slide pose is on (full while sliding / on the ground, handed back through the get-up)
+  const AL = V1 ? null : ofDefLegAlign(a.skel, S, sd), wA = !AL ? 0 : phase === "RECOVER" ? 0 : phase === "GETUP" ? 1 - smooth01(clamp01((now - A.getup0) / (0.45 * (A.getup1 - A.getup0)))) : w;
+  const P0 = Object.assign({}, P, { _pelvis: [(P._pelvis ? P._pelvis[0] : 0) + (AL ? AL.ox * wA : 0), 0, (P._pelvis ? P._pelvis[2] : 0) + (AL ? AL.oz * wA : 0)] });
+  if (AL && a.defYaw != null) a.defYaw += AL.yaw * wA;
   const fk = skelFK(a.skel, P0, rootM); let minY = 1e9;
   for (const b of a.skel.bones) { if (!b.part || b.name === "root" || b.name === "hair" || /^(hand|foreArm|upperArm|clavicle)_/.test(b.name)) continue; const v = Math.min(fk.joint[b.idx][1], fk.tip[b.idx][1]) - (/^(foot|toe)_/.test(b.name) ? 0.01 : b.rad * 0.6); if (v < minY) minY = v; }
   const drop = Math.max(0, minY - O.clear);

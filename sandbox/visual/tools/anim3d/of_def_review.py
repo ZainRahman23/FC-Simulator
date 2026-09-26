@@ -5,6 +5,8 @@ import sys, json, os, subprocess, statistics
 from collections import Counter
 
 G, M, OUT = sys.argv[1:4]
+AO = lambda k, d=None: sys.argv[sys.argv.index(k) + 1] if k in sys.argv else d
+GB, MV = AO("--before"), AO("--views")   # V1.1: the committed-V1 gate run (before) and the slide review media
 HERE = os.path.dirname(os.path.abspath(__file__))
 J = lambda p: json.load(open(os.path.join(G, p)))
 def run(*a):
@@ -23,6 +25,46 @@ g_det = run("of_rp_regress.js", f"{G}/def_on/probe.json", f"{G}/def_on2/probe.js
 g_ssg = run("of_def_tracediff.js", f"{G}/ssg_on.json", f"{G}/ssg_off.json").splitlines()
 g_ssgd = run("of_def_tracediff.js", f"{G}/ssg_on.json", f"{G}/ssg_on2.json").splitlines()
 g_demo = run("of_def_tracediff.js", f"{G}/demo_on.json", f"{G}/demo_off.json").splitlines()
+
+g_d1 = [run("of_rp_regress.js", f"{G}/d1_def/probe.json", f"{G}/def_on/probe.json").splitlines(), run("of_def_tracediff.js", f"{G}/d1_ssg.json", f"{G}/ssg_on.json").splitlines(), run("of_def_tracediff.js", f"{G}/d1_demo.json", f"{G}/demo_on.json").splitlines()] if os.path.exists(f"{G}/d1_def/probe.json") else None
+
+def slide_diag():
+    if not MV: return ""
+    rows = [("hips: yaw off square to the travel (0° = square) / roll (+ = tucked side down)", lambda g: f'{180 - abs(g["hipYaw"]):.0f}° / {abs(g["hipRoll"]):.0f}°'),
+            ("trunk pitch (− = leaning back) / chest yaw", lambda g: f'{g["trunkPitch"]:.0f}° / {g["chestYaw"]:.0f}°'),
+            ("tackling knee included angle", lambda g: None), ("trailing knee included angle", lambda g: None),
+            ("tackling sole normal: forward component (studs at the ball)", lambda g: None), ("knee separation / foot separation (m)", lambda g: f'{g["kneeSep"]:.2f} / {g["footSep"]:.2f}'),
+            ("trailing ankle: ahead of the pelvis (m) — a second foot forward?", lambda g: None), ("lowest body parts (on the pitch)", lambda g: ", ".join(x.split(":")[0] for x in g["lowest"][:4]))]
+    h = '<table><thead><tr><th class="l">at the contact tick (tick 67)</th><th class="l">V1, left foot</th><th class="l">V1.1, left foot</th><th class="l">V1, right foot</th><th class="l">V1.1, right foot</th></tr></thead><tbody>'
+    cells = {}
+    for var in ["views_old", "views_new"]:
+        for scen in ["sl_win", "sl_left"]:
+            v = json.load(open(os.path.join(MV, var, "views.json")))["all"][scen]["67"]; g = v["diag"]; sd = v["foot"]; tr = "R" if sd == "L" else "L"
+            cells[(var, scen)] = {0: rows[0][1](g), 1: rows[1][1](g), 2: f'{g["knee" + sd]:.0f}°', 3: f'{g["knee" + tr]:.0f}°', 4: f'{g["sole" + sd]["fwd"]:+.2f}', 5: rows[5][1](g), 6: f'{g["ankle" + tr][0]:+.2f}', 7: rows[7][1](g)}
+    for i, (name, _) in enumerate(rows):
+        h += f'<tr><td>{name}</td>' + "".join(f'<td class="l">{cells[(var, scen)][i]}</td>' for scen in ["sl_win", "sl_left"] for var in ["views_old", "views_new"]) + "</tr>"
+    return h + "</tbody></table>"
+
+def slide_res():
+    if not GB: return ""
+    def fx(gdir):
+        P2 = json.load(open(os.path.join(gdir, "def_on/probe.json")))["results"]; out = {}
+        for k in ["sl_win", "sl_left", "sl_loose"]:
+            d = P2[k].get("def") or []; out[k] = d[0] if d else None
+        D2 = json.load(open(os.path.join(gdir, "demo_on.json")))["out"]
+        for k in ["slide_win", "slide_miss"]:
+            out[k] = [r["residual"] for r in D2[k]["demoResults"] if r.get("residual") and r.get("tackle") and r["tackle"].get("out") != "MISS"]
+        return out
+    B, A = fx(GB), fx(G)
+    h = '<table><thead><tr><th class="l">slide contact</th><th>V1 rendered leg–ball (cm)</th><th>V1 tackling knee°</th><th>V1.1 rendered leg–ball (cm)</th><th>V1.1 tackling knee°</th><th class="l">outcome (identical)</th></tr></thead><tbody>'
+    for k in ["sl_win", "sl_left", "sl_loose"]:
+        b, a = B[k], A[k]
+        h += f'<tr><td>{k}</td><td>{cm(b["legSurf"]) if b else "-"}</td><td>{b["knee"] if b else "-"}</td><td>{cm(a["legSurf"]) if a else "-"}</td><td>{a["knee"] if a else "-"}</td><td class="l">{a["out"] if a else "-"}</td></tr>'
+    for k in ["slide_win", "slide_miss"]:
+        b, a = B[k], A[k]; f = lambda L: f'{statistics.median(x["leg"] * 100 for x in L):.1f} median, {min(x["leg"] * 100 for x in L):.1f} … {max(x["leg"] * 100 for x in L):.1f}' if L else "-"
+        kn = lambda L: f'{statistics.median(x["knee"] for x in L):.0f}' if L else "-"
+        h += f'<tr><td>demo {k} ({len(a)} contacts)</td><td>{f(b)}</td><td>{kn(b)}</td><td>{f(a)}</td><td>{kn(a)}</td><td class="l">identical traces (gate 6)</td></tr>'
+    return h + "</tbody></table><p class=\"dim\">leg–ball: the rendered shin and boot capsules against the ball surface at the authoritative contact tick (negative = the capsule overlaps the ball). V1.1 lays the leg along the simulation's leg line: it touches, sometimes overlaps by a few centimetres, and never floats short, with the knee bent (≈160°, not locked straight).</p>"
 
 # ── defending fixtures ───────────────────────────────────────────────────────────────────────────────────────────────────────
 P = J("def_on/probe.json")["results"]
@@ -159,6 +201,8 @@ fill = {
     "{{STAND_TABLE}}": stand_table(), "{{SLIDE_TABLE}}": slide_table(), "{{JOCKEY_TABLE}}": jockey_table(), "{{FOUL_TABLE}}": foul_table(),
     "{{DEMO_TABLE}}": demo_table2(), "{{SSG_TABLE}}": ssg_tab,
     "{{CHAIN_D8}}": chain_html("D8", chains["D8"], ["A1", "A2", "D1", "D2"]), "{{CHAIN_D9}}": chain_html("D9", chains["D9"], ["A1", "A2", "A3", "D1", "D2", "D3"]),
+    "{{SLIDE_DIAG}}": slide_diag(), "{{SLIDE_RES}}": slide_res(),
+    "{{GATE_D1}}": "".join(f'<tr><td>{n}</td><td class="l">{verdict(x[-1])}</td></tr>' for n, x in zip(["defending fixtures: Defending V1 (57c6539) vs the slide revision — authoritative trace + events", "small-sided 1v1 / 2v2 / 3v3: V1 vs V1.1", "auto defending demos: V1 vs V1.1"], g_d1)) if g_d1 else "",
     "{{PERF}}": "".join(f'<tr><td>{k}</td><td>{v[2]:.3f}</td><td>{v[3]:.2f}</td><td>{v[0]:.3f}</td><td>{v[1]:.2f}</td></tr>' for k, v in perf.items()),
 }
 for k, v in fill.items(): body = body.replace(k, v)
