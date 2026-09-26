@@ -1,0 +1,259 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Defending V1 Review</title><style>
+:root{--bg:#0e1116;--pane:#151a21;--ink:#e8e6e0;--dim:#9aa4b2;--acc:#ffd54a;--ok:#48e08a;--bad:#ff6b6b;--line:#242b35}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:32px 16px 90px}
+h1{font-size:25px;margin:0 0 6px;letter-spacing:-.01em}h2{font-size:17px;margin:38px 0 10px;color:var(--acc);border-bottom:1px solid var(--line);padding-bottom:6px}
+h3{font-size:14px;margin:22px 0 6px;color:#cfd6e0}
+p,li{color:#cdd4de}.dim{color:var(--dim)}code,kbd{font-family:ui-monospace,Menlo,monospace;font-size:12.5px}
+kbd{background:#1e242d;border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:1px 6px;color:#fff}
+.lede{background:var(--pane);border:1px solid var(--line);border-left:3px solid var(--acc);padding:14px 16px;border-radius:0 8px 8px 0;margin:16px 0}
+.url{background:#101720;border:1px solid #27424f;border-radius:8px;padding:14px 16px;margin:14px 0}
+.url code{color:#7fd0ff;word-break:break-all}
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:12.5px;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:5px 9px;text-align:right;white-space:nowrap}
+th{background:#1a212a;color:#b9c2ce;font-weight:600}
+td:first-child,th:first-child,td.l,th.l{text-align:left}
+tbody tr:nth-child(odd){background:#12171e}
+.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:#ffb454}
+figure{margin:12px 0 22px}figure img{width:100%;height:auto;border:1px solid var(--line);border-radius:7px;background:#16301a;display:block}
+figcaption{color:var(--dim);font-size:12.5px;margin-top:7px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:820px){.grid{grid-template-columns:1fr}}
+pre{background:#0f1318;border:1px solid var(--line);border-radius:6px;padding:10px;overflow-x:auto;font-size:11.5px;color:#cdd4de}
+ul{padding-left:20px}li{margin:3px 0}
+
+.chain{list-style:none;padding-left:0;columns:2;column-gap:28px;font-size:12.5px}@media(max-width:820px){.chain{columns:1}}.chain li{margin:2px 0;break-inside:avoid}
+.pill{display:inline-block;border:1px solid var(--line);border-radius:12px;padding:1px 9px;margin:2px 4px 2px 0;font-size:12px;background:#121820}
+</style></head><body><div class="wrap"><h1>Touchline — Defending V1</h1>
+<p class="dim">branch <code>prototype/3d-animation-pipeline</code> · built on <code>baseline/possession-v1.1-handoff</code> (a30ddab) · frozen controls <code>baseline/outfield-runtime-v1</code>, <code>baseline/shooting-v1</code>, <code>baseline/receiving-passing-v1.1</code>, <code>baseline/possession-v1.1-handoff</code> untouched · local only, nothing pushed</p>
+<div class="lede">A carrier dribbles at you. You <b>jockey</b> (face him, side-step, back off) and pick your moment. A <b>standing tackle</b> is a short lunge with a real contact tick: the tackling boot either reaches the ball or it doesn't. When it does, the recovered match law decides clean win, 50-50 poke or beaten. A <b>slide</b> is a genuine commitment. The body launches at its own pace and decelerates along the pitch; the leg sweeps ahead and meets the ball, or the attacker's legs, or nothing. Then the player is on the ground and has to get up. The simulation decides all of it. The skeleton shows the body doing what was decided, and the rendered boot or leg is measured against the ball at the contact tick.</div>
+<div class="url"><b>Play:</b> <code>http://127.0.0.1:8124/sandbox/visual/match.html?ofPlay=1&amp;fps=60&amp;squad=D8</code><br>
+<span class="dim"><kbd>Shift</kbd>+<kbd>7</kbd> 1 v 1, you defend · <kbd>Shift</kbd>+<kbd>8</kbd> 2 v 2 small-sided · <kbd>Shift</kbd>+<kbd>9</kbd> 3 v 3 small-sided. Without the ball: <kbd>Z</kbd> (hold) jockey · <kbd>Space</kbd> standing tackle · <kbd>F</kbd> slide tackle (aimed by the direction keys you hold, otherwise at the ball) · move with WASD / arrows, <kbd>Shift</kbd> sprint, <kbd>Q</kbd>/<kbd>E</kbd> walk/jog. <kbd>Tab</kbd> switches player (take the attacker and dribble at the AI defender) · <kbd>R</kbd> restart · <kbd>U</kbd> names · <kbd>Esc</kbd> leave the drill. <kbd>Shift</kbd>+<kbd>Y</kbd> starts the auto defending demo (<kbd>Shift</kbd>+<kbd>B</kbd> next pattern, <kbd>-</kbd> 0.25× slow motion). <kbd>H</kbd> HUD, <kbd>V</kbd> feet/roots. With the ball, every existing attacking control is unchanged (<kbd>Space</kbd> pass, <kbd>O</kbd>/<kbd>I</kbd>, <kbd>1</kbd>–<kbd>5</kbd> shots, <kbd>Z</kbd> shot). The receiving drills <kbd>7</kbd>/<kbd>8</kbd>/<kbd>9</kbd> and the auto pass demo <kbd>Y</kbd> are unchanged.</span></div>
+
+<h2>1 · Audit: what the authoritative simulation already owned, and what Defending V1 needed</h2>
+<table><thead><tr><th class="l">mechanic</th><th class="l">already in the Python match model</th><th class="l">in the JS playtest before V1</th><th class="l">Defending V1</th></tr></thead><tbody>
+<tr><td>tackle result</td><td class="l"><code>continuous.py maybe_challenge</code>: tq = 0.55·standing_tackle + 0.25·reactions + exposure·0.35 − (0.30·strength + 0.20·balance)(1 − 0.5·exposure) + noise; WON &gt; 0.30 &gt; POKE (50-50) &gt; −0.05 &gt; MISS</td><td class="l">none</td><td class="l"><b>ported unchanged in shape</b> (reference profile, the noise slot named and set to 0). It is now reached only through a <b>physical contact</b>. Contact-geometry terms: stretch, from behind, the shin instead of the boot.</td></tr>
+<tr><td>tackle reach</td><td class="l">any challenge within 1.35 m of the ball re-aims it (no body, no boot)</td><td class="l">—</td><td class="l">a boot at a contact tick: hip-side reach for the standing tackle, a swept leg capsule for the slide</td></tr>
+<tr><td>slide</td><td class="l">none (one challenge law for all)</td><td class="l">—</td><td class="l">authoritative slide motion (launch from own pace, uniform deceleration, ground, get-up)</td></tr>
+<tr><td>jockey / containment</td><td class="l"><code>route_defense</code> positions (goal-side), <code>_defender_challenge_probability</code> decides WHETHER to challenge</td><td class="l">passive SHADOW lane-standers only</td><td class="l">a movement mode (facing held on the carrier, capped speed) for you and the AI</td></tr>
+<tr><td>bodies</td><td class="l"><code>world.py occupancy_step</code>: 0.32 m discs, closing velocity removed + positional Jacobi mop-up (no possession effects)</td><td class="l">none (players passed through each other)</td><td class="l">ported for the defending drills; a sliding leg that meets a standing body stops</td></tr>
+<tr><td>fouls</td><td class="l"><code>_adjudicate_foul</code> logit (aggression, standing_tackle, awareness, pressure, tq, from_behind, desperation, contact kind) + cards + restarts</td><td class="l">none</td><td class="l"><b>not called</b> (no referee in the playtest); every challenge <b>records the facts</b> that logit consumes, plus contact order</td></tr>
+<tr><td>interception</td><td class="l">hostile <code>touch_model</code></td><td class="l">the boot-realised reception (V1.1) with its hostile branch</td><td class="l">reused unchanged (no radius, no teleport)</td></tr>
+<tr><td>stun / recovery</td><td class="l">failed stab: 0.55 s stun; carrier exclusion windows</td><td class="l">reception stun only</td><td class="l">recovery windows per action (standing 0.30 / 0.55 s, slide ground 0.25 s + get-up 0.85 s + 0.35 s at reduced pace)</td></tr>
+</tbody></table>
+
+<h2>2 · Scope</h2>
+<p><b>Included:</b></p>
+<ul>
+<li>jockey (manual and AI);</li>
+<li>standing tackle (WON / POKE / BEATEN / MISS);</li>
+<li>slide tackle (WON / POKE / GLANCE / MISS), with ground slide, get-up and recovery;</li>
+<li>body occupancy;</li>
+<li>slide-into-body contact;</li>
+<li>foul facts;</li>
+<li>interceptions through the existing reception law;</li>
+<li>the loose-ball aftermath through the existing reception and carry laws;</li>
+<li>attribute architecture;</li>
+<li>live harness, auto demos, and the 1v1 / 2v2 / 3v3 small-sided drills.</li>
+</ul>
+<p><b>Deferred:</b></p>
+<ul>
+<li>team tactics and pressing schemes, offside;</li>
+<li>a referee (calls, cards, advantage);</li>
+<li>injury, ragdoll, trips and falls for the tackled player;</li>
+<li>shoulder-to-shoulder duels and shielding as an action;</li>
+<li>aerial duels;</li>
+<li>any goalkeeper change;</li>
+<li>attribute tuning;</li>
+<li>a tackle-avoidance AI for carriers.</li>
+</ul>
+
+<h2>3 · Architecture</h2>
+<ul>
+<li><code>pt_defend.js</code> (SIMULATION) is active only when the drill is flagged <code>defending</code>. Every other squad fixture, and all single-player play, runs byte-identically (section 12).
+<ul>
+<li>Hooks: one movement override in <code>ptPlayerStep</code> (a jockey speed cap and facing, the lunge's desired velocity, the slide's own velocity, input locked during actions).</li>
+<li>After every player has moved: occupancy, then all defensive contacts due this tick, then receptions and the ball.</li>
+</ul></li>
+<li><code>anim3d/of_defend.js</code> (PRESENTATION) reads each player's action, result and plan, and never writes the simulation.
+<ul>
+<li>Its link is only called for defending drills.</li>
+<li>With the animation OFF the simulation runs on bit-identically (section 12).</li>
+</ul></li>
+<li><code>anim3d/of_defdemo.js</code> is the auto defending demo: inputs only.</li>
+<li><code>of_squad.js</code> holds the drills, keys, HUD and overlay; <code>of_player.js</code> the key legend and demo hooks.</li>
+</ul>
+
+<h2>4 · Jockey</h2>
+<p>Hold <kbd>Z</kbd> without the ball. The facing is held on the carrier (or the loose ball) at every speed, and the desired speed is capped at 2.6 m/s. The ordinary locomotion limiter and gait do the rest: side-steps, and the back-pedal when moving away from the facing. The posture is a presentation delta over the locomotion (lower hips, wider base, trunk over the ball, arms out), slewed in over 0.18 s. It is not magnetic: you move him. The AI press contains goal-side at 1.7 m and steps in to 0.95 m the longer it is engaged. When beaten it turns and runs (no jockey) and may slide.</p>
+<table><thead><tr><th class="l">fixture</th><th class="l">defender</th><th class="l">attacker does</th><th>ticks jockeying</th><th>mean speed (m/s)</th><th>max speed</th><th>facing error to carrier, mean°</th><th>distance to ball: min / mean (m)</th><th class="l">challenge</th></tr></thead><tbody><tr><td>jk_stationary</td><td class="l">gabriel</td><td class="l">stands on the ball</td><td>150</td><td>0.00</td><td>0.00</td><td>0.0</td><td>2.21 / 2.21</td><td class="l">none</td></tr><tr><td>jk_walk</td><td class="l">gabriel</td><td class="l">walks at him</td><td>220</td><td>2.50</td><td>2.60</td><td>0.0</td><td>5.56 / 7.48</td><td class="l">none</td></tr><tr><td>jk_dribble</td><td class="l">cucurella</td><td class="l">jogs at him (dribbling)</td><td>240</td><td>2.51</td><td>2.60</td><td>0.0</td><td>6.00 / 6.86</td><td class="l">none</td></tr><tr><td>jk_lateral</td><td class="l">vinicius</td><td class="l">walks, then cuts right, then left</td><td>240</td><td>1.69</td><td>2.60</td><td>0.8</td><td>0.91 / 1.78</td><td class="l">none</td></tr><tr><td>jk_accel</td><td class="l">osimhen</td><td class="l">walks, then sprints past</td><td>240</td><td>2.51</td><td>2.60</td><td>3.8</td><td>0.00 / 4.31</td><td class="l">none</td></tr><tr><td>jk_to_tackle</td><td class="l">gabriel</td><td class="l">walks at him; he tackles when it is close</td><td>220</td><td>0.08</td><td>1.60</td><td>11.2</td><td>0.14 / 2.15</td><td class="l">STAND BEATEN</td></tr><tr><td>jk_to_sprint</td><td class="l">cucurella</td><td class="l">walks, then sprints; he releases the jockey and sprints</td><td>240</td><td>4.17</td><td>8.20</td><td>35.9</td><td>0.60 / 2.26</td><td class="l">none</td></tr></tbody></table>
+<div class="grid"><figure><img src="img/jk_lateral_strip.jpg" loading="lazy"><figcaption>jockey against a carrier who cuts right then left: side-steps holding the facing on him</figcaption></figure><figure><img src="img/jk_dribble_strip.jpg" loading="lazy"><figcaption>jockey backing off a dribbling carrier</figcaption></figure></div>
+<div class="grid"><figure><img src="img/jk_lateral_normal.webp" loading="lazy"><figcaption>jockey, lateral cuts, real time</figcaption></figure><figure><img src="img/jk_to_sprint_normal.webp" loading="lazy"><figcaption>jockey released into a sprint when the carrier accelerates away</figcaption></figure></div>
+
+<h2>5 · Standing tackle</h2>
+<p><kbd>Space</kbd> without the ball. The simulation decides everything below; the rendered boot then meets the ball within a couple of centimetres when it reached, and falls visibly short when it did not.</p>
+<ul>
+<li><b>Tackling foot.</b> The one on the ball's side of his body line (rig-correct right = (−dirY, dirX)). There is no preferred-foot rule.</li>
+<li><b>Wind-up.</b> A 0.20 s lunge: the desired velocity goes toward the ball at up to 1.6 m/s, through the ordinary limiter.</li>
+<li><b>Contact tick.</b> The ball is measured from the tackling-side hip on the ground.
+<ul>
+<li>In reach (≤ 0.72 × leg, not behind him, ≤ 0.45 m high) → the tackle quality law.</li>
+<li>Out of reach → MISS, with the reason recorded (OUT_OF_REACH / BEHIND_HIM / TOO_HIGH).</li>
+</ul></li>
+<li><b>Contact-geometry terms.</b> Stretch beyond 60 % of reach costs up to −0.25. Tackling from behind the carrier costs −0.20.</li>
+<li><b>Ball result.</b> WON: blocked and dragged toward the tackler's feet, and he collects it through the reception law. POKE: knocked away at 4 m/s, and the carrier is excluded 0.35 s. BEATEN: the carrier keeps it.</li>
+<li><b>Recovery.</b> 0.30 s after a contact, 0.55 s after a miss or a beaten tackle, at reduced pace.</li>
+</ul>
+<table><thead><tr><th class="l">fixture</th><th class="l">defender</th><th>foot</th><th class="l">outcome</th><th>hip–ball (m)</th><th>reach (m)</th><th>along</th><th>exposure</th><th>q</th><th>from behind</th><th>rel. v</th><th>rendered inside-face–ball (cm)</th><th>rendered leg–ball (cm)</th><th>tackling knee°</th><th>support plant</th></tr></thead><tbody><tr><td>st_comfort</td><td class="l">gabriel</td><td>R</td><td class="l warn">POKE</td><td>0.5217</td><td>0.6228</td><td>0.514</td><td>0.1</td><td>0.1919</td><td>no</td><td>1.6</td><td>-0.4</td><td>-5.1</td><td>111.8</td><td>ankle locked</td></tr><tr><td>st_marginal</td><td class="l">gabriel</td><td>R</td><td class="l bad">MISS (OUT_OF_REACH)</td><td>0.8367</td><td>0.6228</td><td>0.832</td><td>-</td><td>-</td><td>-</td><td>1.6</td><td>9.9</td><td>8.3</td><td>158.1</td><td>ankle locked</td></tr><tr><td>st_just_out</td><td class="l">gabriel</td><td>R</td><td class="l bad">MISS (OUT_OF_REACH)</td><td>1.0351</td><td>0.6228</td><td>1.031</td><td>-</td><td>-</td><td>-</td><td>1.6</td><td>26.0</td><td>24.2</td><td>159.8</td><td>ankle locked</td></tr><tr><td>st_far</td><td class="l">gabriel</td><td>R</td><td class="l bad">MISS (OUT_OF_REACH)</td><td>1.6125</td><td>0.6228</td><td>1.61</td><td>-</td><td>-</td><td>-</td><td>1.6</td><td>79.9</td><td>77.3</td><td>160.1</td><td>ankle locked</td></tr><tr><td>st_left_foot</td><td class="l">cucurella</td><td>L</td><td class="l warn">POKE</td><td>0.6015</td><td>0.6228</td><td>0.595</td><td>0.1</td><td>0.1117</td><td>no</td><td>1.6</td><td>0.5</td><td>-1.2</td><td>137.2</td><td>ankle locked</td></tr><tr><td>st_right_foot</td><td class="l">cucurella</td><td>R</td><td class="l warn">POKE</td><td>0.6015</td><td>0.6228</td><td>0.595</td><td>0.1</td><td>0.1117</td><td>no</td><td>1.6</td><td>0.5</td><td>-1.2</td><td>137.2</td><td>ankle locked</td></tr><tr><td>st_toward</td><td class="l">osimhen</td><td>R</td><td class="l warn">POKE</td><td>0.5197</td><td>0.6228</td><td>0.512</td><td>0.063</td><td>0.1752</td><td>no</td><td>3.091</td><td>-0.5</td><td>-4.9</td><td>112.9</td><td>ankle locked</td></tr><tr><td>st_across</td><td class="l">vinicius</td><td colspan="13" class="l dim">no challenge issued (the ball never came within the fixture's trigger distance)</td></tr><tr><td>st_from_behind</td><td class="l">gabriel</td><td>L</td><td class="l bad">MISS (OUT_OF_REACH)</td><td>0.8591</td><td>0.6228</td><td>0.855</td><td>-</td><td>-</td><td>-</td><td>0.266</td><td>11.3</td><td>9.9</td><td>158.5</td><td>swing</td></tr><tr><td>st_from_side</td><td class="l">cucurella</td><td>R</td><td class="l bad">MISS (OUT_OF_REACH)</td><td>0.9119</td><td>0.6228</td><td>0.908</td><td>-</td><td>-</td><td>-</td><td>2.194</td><td>20.4</td><td>19.3</td><td>159.7</td><td>ankle locked</td></tr><tr><td>st_tight_ball</td><td class="l">vinicius</td><td>L</td><td class="l warn">POKE</td><td>0.5451</td><td>0.6228</td><td>0.54</td><td>0.104</td><td>0.0282</td><td>no</td><td>1.115</td><td>0.3</td><td>-6.2</td><td>104.4</td><td>ankle locked</td></tr><tr><td>jk_to_tackle</td><td class="l">gabriel</td><td>R</td><td class="l warn">BEATEN</td><td>0.7227</td><td>0.6228</td><td>0.718</td><td>0</td><td>-0.0599</td><td>no</td><td>3.081</td><td>3.0</td><td>1.7</td><td>153.5</td><td>ankle locked</td></tr></tbody></table>
+<p class="dim">"inside-face–ball" is the boot's medial surface point against the ball's surface at the contact tick, after the complete solve (the receiving metric). "leg–ball" is the rendered shin and boot capsules against the ball. The reach is a tracking reach with the soft extension limit, so a miss shows the leg short of the ball, never a hyperextended knee.</p>
+<div class="grid"><figure><img src="img/st_comfort_strip.jpg" loading="lazy"><figcaption>comfortable reach, right foot: POKE (the ball sits 10 cm off the carrier, low exposure)</figcaption></figure><figure><img src="img/st_left_foot_strip.jpg" loading="lazy"><figcaption>ball on his left: left foot</figcaption></figure></div>
+<div class="grid"><figure><img src="img/st_marginal_strip.jpg" loading="lazy"><figcaption>just beyond reach: MISS, the boot falls short (≈10 cm)</figcaption></figure><figure><img src="img/st_comfort_slow.webp" loading="lazy"><figcaption>standing tackle, 0.25× slow motion</figcaption></figure></div>
+
+<h2>6 · Slide tackle</h2>
+<p><kbd>F</kbd> without the ball. The slide's travel is not animated: it emerges from launch speed and deceleration. The ball's result comes from the same quality law as the standing tackle, reached only through the leg meeting the ball.</p>
+<ul>
+<li><b>Movement (authoritative).</b>
+<ul>
+<li>Wind-up 0.10 s: momentum carries, input is locked.</li>
+<li>Launch at v0 = clamp(own speed + 1, 4.2, 7.5) m/s along the aimed direction.</li>
+<li>Uniform deceleration of 5.5 m/s², so the distance follows from his pace (about 1.6–5 m).</li>
+<li>Then 0.25 s on the ground, a 0.85 s get-up, and 0.35 s at reduced pace. No receptions while on the ground.</li>
+</ul></li>
+<li><b>Contact.</b>
+<ul>
+<li>The tackling leg is a capsule from 0.46 to 1.12 × leg ahead of the root, 0.11 × leg to its side. These dimensions are taken from the rendered slide body.</li>
+<li>It extends over the first 0.12 s after launch.</li>
+<li>It is swept against the moving ball in 4 sub-steps per tick.</li>
+</ul></li>
+<li><b>Result.</b> The quality law (+0.10 for a slide, −0.30 from behind, −0.15 if the ball meets the shin rather than the boot) → WON (cleared along the slide at 0.6 × slide speed + 1.5 m/s) / POKE (deflected) / GLANCE (the carrier rides it).</li>
+<li><b>Body contact.</b> If the leg meets the carrier's body, that is recorded with its tick and whether the ball came first, and the slide stops there: a leg cannot slide through a standing player.</li>
+<li><b>Plan.</b> A read-only look-ahead of the same sweep, like the reception plan. The presentation uses it to track the boot onto the coming contact.</li>
+</ul>
+<table><thead><tr><th class="l">fixture</th><th class="l">defender</th><th>foot</th><th class="l">outcome</th><th>launch v0</th><th>slide v at contact</th><th>distance slid (m)</th><th>contact tick</th><th>leg point</th><th>q</th><th>from behind</th><th class="l">body contact</th><th>closest miss (m)</th><th>rendered leg–ball (cm)</th><th>tackling knee°</th></tr></thead><tbody><tr><td>sl_win</td><td class="l">gabriel</td><td>L</td><td class="l ok">WON</td><td>7.5</td><td>6.767</td><td>1.553</td><td>67</td><td>1</td><td>0.3556</td><td>no</td><td class="l">none</td><td>-</td><td>-2.2</td><td>149.6</td></tr><tr><td>sl_early</td><td class="l">osimhen</td><td>R</td><td class="l bad">MISS</td><td>4.2</td><td>-</td><td>1.9</td><td>-</td><td>-</td><td>-</td><td>-</td><td class="l">none</td><td>5.201</td><td>-</td><td>-</td></tr><tr><td>sl_late</td><td class="l">cucurella</td><td>R</td><td class="l bad">MISS</td><td>6.733</td><td>-</td><td>4.656</td><td>-</td><td>-</td><td>-</td><td>-</td><td class="l">none</td><td>1.925</td><td>-</td><td>-</td></tr><tr><td>sl_from_behind</td><td class="l">vinicius</td><td>L</td><td class="l bad">MISS</td><td>7.5</td><td>-</td><td>1.547</td><td>-</td><td>-</td><td>-</td><td>-</td><td class="l">tick 85 (MAN FIRST)</td><td>0.556</td><td>-</td><td>-</td></tr><tr><td>sl_left</td><td class="l">gabriel</td><td>R</td><td class="l ok">WON</td><td>7.5</td><td>6.767</td><td>1.553</td><td>67</td><td>1</td><td>0.3556</td><td>no</td><td class="l">tick 110 (after the ball)</td><td>-</td><td>-2.2</td><td>149.6</td></tr><tr><td>sl_loose</td><td class="l">osimhen</td><td>L</td><td class="l ok">WON</td><td>7.5</td><td>6.125</td><td>1.953</td><td>89</td><td>1</td><td>1</td><td>no</td><td class="l">none</td><td>-</td><td>-0.7</td><td>150.5</td></tr></tbody></table>
+<div class="grid"><figure><img src="img/sl_win_strip.jpg" loading="lazy"><figcaption>slide across the carrier's path, left foot: WON (ball first); the leg then meets his legs and the slide stops</figcaption></figure><figure><img src="img/sl_from_behind_strip.jpg" loading="lazy"><figcaption>slide from behind: the leg meets the carrier's legs FIRST — no ball, man first (the foul facts)</figcaption></figure></div>
+<div class="grid"><figure><img src="img/sl_win_normal.webp" loading="lazy"><figcaption>slide tackle, real time: launch, slide, contact, ground, get-up</figcaption></figure><figure><img src="img/sl_win_slow.webp" loading="lazy"><figcaption>the same, 0.25× slow motion</figcaption></figure></div>
+<div class="grid"><figure><img src="img/sl_loose_strip.jpg" loading="lazy"><figcaption>slide onto a loose ball</figcaption></figure><figure><img src="img/sl_late_strip.jpg" loading="lazy"><figcaption>late slide: the ball has gone, MISS — a long commitment on the ground</figcaption></figure></div>
+
+<h3>Slide biomechanics</h3>
+<p>The ground key poses (slide, sit, kneel, crouch) are <b>solved, not hand-set</b>: target knee, ankle and hand positions for a body on the pitch, fitted through the rig's own forward kinematics with anatomical bounds (hip rotation ≤ 50°, abduction ≤ 45°, knee 0–140°).</p>
+<ul>
+<li><b>The slide.</b> Pelvis reclined 60° and rolled onto the non-tackling hip. The tackling leg runs along the pitch, knee ≈ 150° (never locked straight). The other leg is bent with its foot braced beside the tackling knee. The trailing hand is on the pitch (hand ≈ 0–3 cm off the turf in the fit). The trunk is curled over the ball.</li>
+<li><b>Lowering onto the pitch.</b> Every body is lowered by exactly the amount that puts its lowest point on the pitch, measured per tick on that body. Short and tall characters therefore both lie on the ground.</li>
+<li><b>Direction.</b> The body's yaw turns onto the slide direction through the 0.10 s wind-up, rather than lagging behind at the locomotion's leg-turn rate.</li>
+<li><b>Get-up.</b> Slide → sit (knees up, both hands back) → kneel (one knee down, other foot planted) → crouch → locomotion, timed to the simulation's own ground and get-up windows.</li>
+</ul>
+<div class="grid"><figure><img src="img/sl_win_ground.jpg" loading="lazy"><figcaption>on the ground, then sitting up</figcaption></figure><figure><img src="img/sl_win_getup.jpg" loading="lazy"><figcaption>kneel → crouch → back into the run</figcaption></figure></div>
+
+<h2>7 · Bodies and contact</h2>
+<ul>
+<li><b>Occupancy.</b> <code>world.py</code> PLAYER PHYSICAL OCCUPANCY V1 is ported for defending drills: 0.32 m discs, closing velocity removed, positional Jacobi mop-up (8 iterations, 5 mm tolerance). A jockeying or lunging defender cannot walk into the carrier, and a defender behind the carrier cannot get at a ball the carrier's body shields. That is the retention fixtures' out-of-reach result.</li>
+<li><b>Not modelled in V1 (deferred).</b> No ragdoll, no trip or fall, no push-off. A slide that reaches the carrier's body stops. Upper bodies can still brush visually in close contests (limbs are not collided).</li>
+</ul>
+
+<h2>8 · Foul facts (recorded, never called)</h2>
+<p>The playtest has no referee, so nothing is decided from these. Every challenge records what <code>continuous.py _adjudicate_foul</code> consumes, plus what a future referee would need.</p>
+<ul>
+<li><b>Recorded, matching the logit's inputs.</b> <code>tq</code> (the tackle quality), <code>from_behind</code>, the contact kind (standing / slide tackle vs body contact), and the closing speed that feeds the card severity.</li>
+<li><b>Recorded for location.</b> The carrier's position (penalty box or not), with every player's position in the trace (the goal-side count).</li>
+<li><b>Engine-owned.</b> Aggression, standing tackle and awareness are the profile's. <code>pressure</code> and <code>desperation</code> are the engine's own.</li>
+<li><b>Beyond the Python model.</b> The ball contact tick against the opponent contact tick (ball first / man first), the tackling foot, the contact point and the relative velocity.</li>
+</ul>
+<table><thead><tr><th class="l">fixture</th><th class="l">type</th><th class="l">outcome</th><th>ball contact tick</th><th>opponent contact tick</th><th class="l">order</th><th>from behind</th><th>closing speed (m/s)</th><th>q (tq)</th><th class="l">location (attacker)</th></tr></thead><tbody><tr><td>st_from_behind</td><td class="l">STAND</td><td class="l">MISS</td><td>-</td><td>32</td><td class="l bad">MAN, NO BALL</td><td>-</td><td>0.266</td><td>None</td><td class="l">[60.689, 34]</td></tr><tr><td>st_from_side</td><td class="l">STAND</td><td class="l">MISS</td><td>-</td><td>47</td><td class="l bad">MAN, NO BALL</td><td>-</td><td>2.194</td><td>None</td><td class="l">[61.064, 34]</td></tr><tr><td>sl_from_behind</td><td class="l">SLIDE</td><td class="l">MISS</td><td>-</td><td>85</td><td class="l bad">MAN, NO BALL</td><td>yes</td><td>4.042</td><td>-</td><td class="l">[63.766, 34]</td></tr><tr><td>sl_left</td><td class="l">SLIDE</td><td class="l">WON</td><td>67</td><td>110</td><td class="l ">ball first</td><td>no</td><td>9.267</td><td>0.3556</td><td class="l">[62, 39.134]</td></tr><tr><td>jk_to_tackle</td><td class="l">STAND</td><td class="l">BEATEN</td><td>158</td><td>158</td><td class="l ">ball first</td><td>no</td><td>3.081</td><td>-0.0599</td><td class="l">[59.839, 34]</td></tr></tbody></table>
+
+<h2>9 · Interceptions and the loose ball</h2>
+<ul>
+<li>A defender in a passing lane receives through the V1.1 boot-realised reception, with its hostile outcome branch. There is no radius, no teleport and no new law. The auto demo's "intercept" pattern and the small-sided games show interceptions and loose touches.</li>
+<li>After a WON or POKE the ball is simply free. The nearest player of each team goes for it (AI), and whoever's boot meets it first takes it through the reception law.</li>
+<li>The dispossessed carrier is excluded for continuous.py's windows (0.5 s after a clean win, 0.35 s after a poke). Otherwise possession contests flow with no reset.</li>
+</ul>
+
+<h2>10 · Attributes (architecture only)</h2>
+<ul>
+<li>Every attribute enters through <code>ptDefAttrs</code> (the reference profile = 60 everywhere) and <code>ptDefK</code>, a decision factor that is exactly 1 at the reference. Nothing is tuned; no OVR.</li>
+<li><b>Standing Tackle / Sliding Tackle / Reactions.</b> The tackle quality law, as continuous.py.</li>
+<li><b>Strength / Balance.</b> The carrier's resistance in the same law.</li>
+<li><b>Defensive Awareness.</b> The AI containment distance.</li>
+<li><b>Aggression.</b> The AI's exposure threshold for challenging.</li>
+<li><b>Interceptions.</b> Reserved in the profile; the reception law's hostile branch is where it will enter.</li>
+<li><b>Agility / Acceleration.</b> Through the existing locomotion limiter, unchanged.</li>
+<li>The retention fixture's carrier uses strength and balance of 80–90, which is why it takes a tight ball from behind as BEATEN.</li>
+</ul>
+
+<h2>11 · Auto defending demo and small-sided proof</h2>
+<p><kbd>Shift</kbd>+<kbd>Y</kbd>. Each pattern repeats a situation, using only held keys and the two action requests, with a deterministic per-attempt variation of the starting positions. Listed below: what the input tried, what the simulation decided, and where the rendered leg was at the contact tick.</p>
+<table><thead><tr><th class="l">pattern</th><th class="l">the input tries to…</th><th>attempts</th><th class="l">what the simulation decided (→ ball 1.5 s later)</th><th>rendered leg–ball (cm) median / max |·|</th><th>rendered inside-face–ball (cm) median</th></tr></thead><tbody><tr><td>jockey</td><td class="l">contain: jockey goal-side, no challenge</td><td>9</td><td class="l">9× contained (no challenge) → A</td><td>-</td><td>-</td></tr><tr><td>stand_win</td><td class="l">standing tackle when the ball is exposed and in reach</td><td>8</td><td class="l">8× STAND WON → D</td><td>-0.4 / 2.4</td><td>2.9</td></tr><tr><td>stand_miss</td><td class="l">standing tackle launched from too far (out of reach)</td><td>17</td><td class="l">17× STAND MISS (OUT_OF_REACH) → A</td><td>-</td><td>-</td></tr><tr><td>retention</td><td class="l">standing tackle from behind on a walking carrier (his body is between)</td><td>20</td><td class="l">14× STAND BEATEN → A<br>6× STAND MISS (OUT_OF_REACH) → A</td><td>-3.1 / 6.4</td><td>0.5</td></tr><tr><td>slide_win</td><td class="l">slide across the carrier's path, timed to meet the ball</td><td>12</td><td class="l">9× SLIDE WON → A<br>3× contained (no challenge) → A</td><td>4.2 / 7.5</td><td>18.1</td></tr><tr><td>slide_miss</td><td class="l">slide launched from too far, straight at where the ball IS (no lead)</td><td>15</td><td class="l">13× SLIDE MISS → A<br>2× SLIDE WON → A</td><td>0.9 / 0.9</td><td>16.7</td></tr><tr><td>intercept</td><td class="l">step into the passing lane (the reception law decides)</td><td>21</td><td class="l">16× INTERCEPTED (LOOSE) → LOOSE<br>5× no contact → B</td><td>-</td><td>-</td></tr></tbody></table>
+<h3>Small-sided games (the AI plays both sides, deterministically)</h3>
+<ul>
+<li><b>The rules the AI plays.</b>
+<ul>
+<li>The carrier dribbles at the other end and passes (through the normal pass path) when pressed and a lane is clear.</li>
+<li>Team-mates support ahead and to the side.</li>
+<li>The nearest defender presses (contain, step in, jockey, tackle an exposed ball; slide when beaten). The others cover lanes.</li>
+<li>Loose balls are chased by the nearest player of each team.</li>
+</ul></li>
+<li><b>Restarts.</b> Carrying the ball over the far line, or the ball leaving the box, is a logged restart. That is the only reset.</li>
+</ul>
+<table><thead><tr><th class="l">drill</th><th>seconds</th><th>passes</th><th>receptions (clean / heavy-loose)</th><th>tackles: stand W/P/B/M</th><th>slides W/P/G/M</th><th>body contacts (man first)</th><th>possession changes</th><th>receptions of an opponent&#39;s ball (interceptions / recoveries)</th><th>line restarts</th></tr></thead><tbody><tr><td>D7</td><td>120</td><td>0</td><td>19 / 0</td><td>14/5/0/1</td><td>0/0/0/4</td><td>4 (4)</td><td>8</td><td>5</td><td>6</td></tr><tr><td>D8</td><td>120</td><td>4</td><td>18 / 4</td><td>7/7/0/5</td><td>0/0/0/0</td><td>0 (0)</td><td>8</td><td>11</td><td>3</td></tr><tr><td>D9</td><td>120</td><td>14</td><td>24 / 3</td><td>2/8/0/5</td><td>1/0/0/1</td><td>1 (1)</td><td>2</td><td>12</td><td>5</td></tr></tbody></table>
+<h3>2 v 2 — the first minute of play, from the simulation's event log</h3>
+<ul class="chain"><li><span class="dim">  2.23 s</span> A1 passes (SHORT) → A2</li><li><span class="dim">  3.00 s</span> D2 first touch LOOSE</li><li><span class="dim">  3.25 s</span> D2 first touch CLEAN</li><li><span class="dim">  3.25 s</span> <b>D2 has the ball</b></li><li><span class="dim">  4.23 s</span> <b>A2 stand tackle → POKE</b> q 0.1674</li><li><span class="dim">  4.73 s</span> D2 first touch CLEAN</li><li><span class="dim">  4.73 s</span> <b>D2 has the ball</b></li><li><span class="dim">  8.82 s</span> <b>A2 stand tackle → WON</b> q 0.3735</li><li><span class="dim">  8.82 s</span> A2 first touch CLEAN</li><li><span class="dim">  8.82 s</span> <b>A2 has the ball</b></li><li><span class="dim"> 17.57 s</span> <b>D2 stand tackle → MISS</b> (OUT_OF_REACH)</li><li><span class="dim"> 21.42 s</span> <b>D2 stand tackle → WON</b> q 0.3066</li><li><span class="dim"> 21.60 s</span> D2 first touch CLEAN</li><li><span class="dim"> 21.60 s</span> <b>D2 has the ball</b></li><li><span class="dim"> 22.27 s</span> <b>A2 stand tackle → POKE</b> q 0.2744</li><li><span class="dim"> 22.63 s</span> D2 first touch CLEAN</li><li><span class="dim"> 22.63 s</span> <b>D2 has the ball</b></li><li><span class="dim"> 34.72 s</span> <b>D2 carries it over the line</b></li><li><span class="dim"> 35.73 s</span> restart — team A (A1)</li><li><span class="dim"> 37.97 s</span> A1 passes (SHORT) → A2</li><li><span class="dim"> 38.73 s</span> D2 first touch LOOSE</li><li><span class="dim"> 38.98 s</span> D2 first touch CLEAN</li><li><span class="dim"> 38.98 s</span> <b>D2 has the ball</b></li><li><span class="dim"> 40.03 s</span> <b>A2 stand tackle → POKE</b> q 0.1268</li><li><span class="dim"> 40.80 s</span> D2 first touch CLEAN</li><li><span class="dim"> 40.80 s</span> <b>D2 has the ball</b></li><li><span class="dim"> 44.70 s</span> <b>A2 stand tackle → WON</b> q 0.3752</li><li><span class="dim"> 44.70 s</span> A2 first touch CLEAN</li><li><span class="dim"> 44.70 s</span> <b>A2 has the ball</b></li><li><span class="dim"> 53.17 s</span> <b>D2 stand tackle → MISS</b> (OUT_OF_REACH)</li><li><span class="dim"> 57.00 s</span> <b>D2 stand tackle → WON</b> q 0.3236</li><li><span class="dim"> 57.17 s</span> D2 first touch CLEAN</li><li><span class="dim"> 57.17 s</span> <b>D2 has the ball</b></li><li><span class="dim"> 57.83 s</span> <b>A2 stand tackle → POKE</b> q 0.2573</li><li><span class="dim"> 58.25 s</span> D2 first touch CLEAN</li><li><span class="dim"> 58.25 s</span> <b>D2 has the ball</b></li><li><span class="dim"> 69.28 s</span> <b>A2 stand tackle → MISS</b> (OUT_OF_REACH)</li><li><span class="dim"> 70.02 s</span> <b>D2 carries it over the line</b></li><li><span class="dim"> 71.03 s</span> restart — team A (A1)</li><li><span class="dim"> 73.27 s</span> A1 passes (SHORT) → A2</li><li><span class="dim"> 74.03 s</span> D2 first touch LOOSE</li><li><span class="dim"> 74.28 s</span> D2 first touch CLEAN</li><li><span class="dim"> 74.28 s</span> <b>D2 has the ball</b></li><li><span class="dim"> 75.33 s</span> <b>A2 stand tackle → POKE</b> q 0.1268</li><li><span class="dim"> 76.10 s</span> D2 first touch CLEAN</li><li><span class="dim"> 76.10 s</span> <b>D2 has the ball</b></li><li><span class="dim"> 80.00 s</span> <b>A2 stand tackle → WON</b> q 0.3752</li><li><span class="dim"> 80.00 s</span> A2 first touch CLEAN</li></ul>
+<div class="grid"><figure><img src="img/ssg_2v2_normal.webp" loading="lazy"><figcaption>2 v 2 small-sided, real time</figcaption></figure><figure><img src="img/ssg_3v3_normal.webp" loading="lazy"><figcaption>3 v 3 small-sided, real time</figcaption></figure></div>
+<h3>3 v 3</h3>
+<ul class="chain"><li><span class="dim">  2.63 s</span> A1 passes (SHORT) → A2</li><li><span class="dim">  3.37 s</span> A2 first touch CLEAN</li><li><span class="dim">  3.37 s</span> <b>A2 has the ball</b></li><li><span class="dim">  3.95 s</span> A2 passes (SHORT) → A3</li><li><span class="dim">  5.03 s</span> A3 first touch CLEAN</li><li><span class="dim">  5.03 s</span> <b>A3 has the ball</b></li><li><span class="dim">  6.07 s</span> A3 passes (SHORT) → A2</li><li><span class="dim">  7.03 s</span> A2 first touch CLEAN</li><li><span class="dim">  7.03 s</span> <b>A2 has the ball</b></li><li><span class="dim"> 12.85 s</span> <b>D2 stand tackle → POKE</b> q 0.0021</li><li><span class="dim"> 13.58 s</span> A2 first touch CLEAN</li><li><span class="dim"> 13.58 s</span> <b>A2 has the ball</b></li><li><span class="dim"> 13.90 s</span> D2 slide meets A2's body (man first)</li><li><span class="dim"> 13.90 s</span> <b>D2 slide tackle → MISS</b></li><li><span class="dim"> 18.28 s</span> <b>A2 carries it over the line</b></li><li><span class="dim"> 19.30 s</span> restart — team D (D1)</li><li><span class="dim"> 22.05 s</span> D1 passes (SHORT) → D3</li><li><span class="dim"> 22.60 s</span> A3 first touch LOOSE</li><li><span class="dim"> 22.87 s</span> A3 first touch CLEAN</li><li><span class="dim"> 22.87 s</span> <b>A3 has the ball</b></li><li><span class="dim"> 24.05 s</span> <b>D3 stand tackle → POKE</b> q 0.0437</li><li><span class="dim"> 24.42 s</span> A3 first touch CLEAN</li><li><span class="dim"> 24.42 s</span> <b>A3 has the ball</b></li><li><span class="dim"> 29.25 s</span> <b>D3 stand tackle → POKE</b> q 0.0182</li><li><span class="dim"> 30.05 s</span> A3 first touch CLEAN</li><li><span class="dim"> 30.05 s</span> <b>A3 has the ball</b></li><li><span class="dim"> 31.18 s</span> <b>D1 stand tackle → WON</b> q 0.3808</li><li><span class="dim"> 31.18 s</span> D1 first touch CLEAN</li><li><span class="dim"> 31.18 s</span> <b>D1 has the ball</b></li><li><span class="dim"> 33.13 s</span> <b>A1 stand tackle → POKE</b> q 0.2754</li><li><span class="dim"> 33.50 s</span> D1 first touch CLEAN</li><li><span class="dim"> 33.50 s</span> <b>D1 has the ball</b></li><li><span class="dim"> 47.42 s</span> <b>A1 stand tackle → WON</b> q 0.3366</li><li><span class="dim"> 47.93 s</span> D1 first touch CLEAN</li><li><span class="dim"> 47.93 s</span> <b>D1 has the ball</b></li><li><span class="dim"> 48.75 s</span> <b>A1 stand tackle → MISS</b> (BEHIND_HIM)</li><li><span class="dim"> 53.08 s</span> <b>D1 carries it over the line</b></li><li><span class="dim"> 54.10 s</span> restart — team A (A1)</li><li><span class="dim"> 56.73 s</span> A1 passes (SHORT) → A2</li><li><span class="dim"> 57.47 s</span> A2 first touch CLEAN</li><li><span class="dim"> 57.47 s</span> <b>A2 has the ball</b></li><li><span class="dim"> 58.05 s</span> A2 passes (SHORT) → A3</li><li><span class="dim"> 59.13 s</span> A3 first touch CLEAN</li><li><span class="dim"> 59.13 s</span> <b>A3 has the ball</b></li><li><span class="dim"> 60.17 s</span> A3 passes (SHORT) → A2</li><li><span class="dim"> 61.15 s</span> A2 first touch CLEAN</li><li><span class="dim"> 61.15 s</span> <b>A2 has the ball</b></li><li><span class="dim"> 66.95 s</span> <b>D2 stand tackle → MISS</b> (OUT_OF_REACH)</li></ul>
+
+<h2>12 · Regression and neutrality gates</h2>
+<table><thead><tr><th class="l">gate</th><th class="l">result</th></tr></thead><tbody>
+<tr><td>60 single-player scenarios vs <code>baseline/outfield-runtime-v1</code> (authoritative + every rendered joint)</td><td class="l"><span class="ok">BASELINE GATE PASS — every pre-existing scenario is authoritative- and pose-identical to baseline/outfield-runtime-v1</span></td></tr>
+<tr><td>27 squad fixtures vs <code>baseline/possession-v1.1-handoff</code> — authoritative trace + events</td><td class="l"><span class="ok">GATE PASS — receiving and passing presentation explain the authoritative outcome, they never change it</span></td></tr>
+<tr><td>27 squad fixtures vs <code>baseline/possession-v1.1-handoff</code> — presentation fingerprint + reception / pass contact records</td><td class="l"><span class="ok">presentation: 27 fixtures compared — PRESENTATION IDENTICAL</span></td></tr>
+<tr><td>auto pass / receive, 4 patterns × SHORT / DRIVEN / THROUGH, 30 s each, vs <code>baseline/possession-v1.1-handoff</code></td><td class="l"><span class="ok">TRACE GATE PASS</span></td></tr>
+<tr><td>defending fixtures: animation ON vs OFF</td><td class="l"><span class="ok">GATE PASS — receiving and passing presentation explain the authoritative outcome, they never change it</span></td></tr>
+<tr><td>defending fixtures: determinism (ON twice)</td><td class="l"><span class="ok">GATE PASS — receiving and passing presentation explain the authoritative outcome, they never change it</span></td></tr>
+<tr><td>small-sided 1v1 / 2v2 / 3v3, 2 min each: ON vs OFF</td><td class="l"><span class="ok">TRACE GATE PASS</span></td></tr>
+<tr><td>small-sided: determinism</td><td class="l"><span class="ok">TRACE GATE PASS</span></td></tr>
+<tr><td>auto defending demo, 7 patterns × 60 s: ON vs OFF</td><td class="l"><span class="ok">TRACE GATE PASS</span></td></tr>
+</tbody></table>
+<pre>D7             ticks 7200 trace max|d| 0  events identical (126) IDENTICAL
+D8             ticks 7200 trace max|d| 0  events identical (108) IDENTICAL
+D9             ticks 7200 trace max|d| 0  events identical (143) IDENTICAL
+TRACE GATE PASS
+
+jockey         ticks 3600 trace max|d| 0  events identical (0) IDENTICAL
+stand_win      ticks 3600 trace max|d| 0  events identical (32) IDENTICAL
+stand_miss     ticks 3600 trace max|d| 0  events identical (36) IDENTICAL
+retention      ticks 3600 trace max|d| 0  events identical (40) IDENTICAL
+slide_win      ticks 3600 trace max|d| 0  events identical (62) IDENTICAL
+slide_miss     ticks 3600 trace max|d| 0  events identical (46) IDENTICAL
+intercept      ticks 3600 trace max|d| 0  events identical (68) IDENTICAL
+TRACE GATE PASS
+
+SHORT:stationary ticks 1800 trace max|d| 0  events - IDENTICAL
+SHORT:moving   ticks 1800 trace max|d| 0  events - IDENTICAL
+SHORT:triangle ticks 1800 trace max|d| 0  events - IDENTICAL
+SHORT:path     ticks 1800 trace max|d| 0  events - IDENTICAL
+DRIVEN:stationary ticks 1800 trace max|d| 0  events - IDENTICAL
+DRIVEN:moving  ticks 1800 trace max|d| 0  events - IDENTICAL
+DRIVEN:triangle ticks 1800 trace max|d| 0  events - IDENTICAL
+DRIVEN:path    ticks 1800 trace max|d| 0  events - IDENTICAL
+THROUGH:stationary ticks 1800 trace max|d| 0  events - IDENTICAL
+THROUGH:moving ticks 1800 trace max|d| 0  events - IDENTICAL
+THROUGH:triangle ticks 1800 trace max|d| 0  events - IDENTICAL
+THROUGH:path   ticks 1800 trace max|d| 0  events - IDENTICAL
+TRACE GATE PASS</pre>
+
+<h2>13 · Performance (headless Chrome, ms per 60 Hz tick, whole tick)</h2>
+<table><thead><tr><th class="l">drill</th><th>simulation only (anim OFF): mean</th><th>max</th><th>simulation + every rig solved: mean</th><th>max</th></tr></thead><tbody><tr><td>D7</td><td>0.024</td><td>2.00</td><td>0.252</td><td>3.10</td></tr><tr><td>D8</td><td>0.039</td><td>1.10</td><td>0.463</td><td>2.70</td></tr><tr><td>D9</td><td>0.062</td><td>2.00</td><td>0.658</td><td>4.00</td></tr></tbody></table>
+<p class="dim">The defending simulation's own share is shown live in the HUD (<code>defending sim … ms</code>). The rig cost per player is the existing skeletal runtime's; the slide adds one forward-kinematics pass per sliding player per tick (ground measurement).</p>
+
+<h2>14 · Limitations and next</h2>
+<ul>
+<li><b>No trip or fall for the tackled player</b> (deferred with ragdolls). A slide that meets his legs stops; he carries on.</li>
+<li><b>Limb-to-limb contact</b> is not collided: arms and upper bodies can brush through each other in close contests. Body discs cannot overlap.</li>
+<li><b>Slide leg residual</b> is 1–8 cm at the contact tick. At ≈6 m/s the leg moves 10 cm per tick, so sub-tick contacts are rendered at the tick's final state. The standing tackle's inside face is within ≈3 cm.</li>
+<li><b>AI.</b> The AI is deliberately simple:
+<ul>
+<li>no tackle-avoidance by carriers;</li>
+<li>the presser tackles on a fixed exposure threshold;</li>
+<li>the slide rule fires when beaten and 1.2–2.6 m from the ball.</li>
+</ul></li>
+<li><b>Recorded for later, not fixed.</b> Dribbling V1's shared boot plan (<code>ofBootPlan</code>) is laterally mirrored relative to the rig. The known receive → shot hold residual from V1.1 also remains.</li>
+</ul>
+</div></body></html>

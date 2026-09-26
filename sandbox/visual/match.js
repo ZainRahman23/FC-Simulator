@@ -5886,6 +5886,13 @@ function ptPlayerStep(t) {
     dvx = b.vx + cx * cl; dvy = b.vy + cy * cl;                                                 // keeping pace with the ball
 
   }
+  // DEFENDING V1 (squad defending drills only; null everywhere else): an action locks input, a lunge / jockey feeds the desired velocity
+  const defO = t.squad && typeof ptDefMotion === "function" ? ptDefMotion(t) : null;
+  if (defO) {
+    if (defO.lock) { dvx = 0; dvy = 0; }
+    if (defO.vDes) { dvx = defO.vDes[0]; dvy = defO.vDes[1]; }
+    if (defO.vmax) { const dm = Math.hypot(dvx, dvy); if (dm > defO.vmax) { dvx *= defO.vmax / dm; dvy *= defO.vmax / dm; } }
+  }
   // world.locomote LOCOMOTION V1 limiter (direction-decomposed, mirror)
   const cur = Math.hypot(p.vx, p.vy);
   const ax = dvx - p.vx, ay = dvy - p.vy;
@@ -5904,12 +5911,14 @@ function ptPlayerStep(t) {
     if (am > stp) { p.vx += ax / am * stp; p.vy += ay / am * stp; }
     else { p.vx = dvx; p.vy = dvy; }
   }
-  t.inDir = m > 0 ? inCorr : null;
+  if (defO && defO.v) { p.vx = defO.v[0]; p.vy = defO.v[1]; }   // DEFENDING V1: the slide's own authoritative velocity (launch, uniform deceleration)
+  t.inDir = m > 0 && !(defO && defO.lock) ? inCorr : null;
   p.x = Math.max(-2, Math.min(107, p.x + p.vx * PT_DT));   // world bounds (ported)
   p.y = Math.max(-2, Math.min(70, p.y + p.vy * PT_DT));
   // facing (ported): faces velocity when moving, else the ball
   const v = Math.hypot(p.vx, p.vy);
-  const want = (t.kick && t.kick.aim && !t.kick.kicked) ? Math.atan2(t.kick.aim.y - p.y, t.kick.aim.x - p.x)   // aimed pass wind-up: turn to the target
+  const want = (defO && defO.facing != null) ? defO.facing                                              // DEFENDING V1: jockey / tackle facing at any speed
+             : (t.kick && t.kick.aim && !t.kick.kicked) ? Math.atan2(t.kick.aim.y - p.y, t.kick.aim.x - p.x)   // aimed pass wind-up: turn to the target
              : (t.faceDir != null && v <= 0.7) ? t.faceDir                                             // squad receiver: face the ball's incoming line, not its position
              : v > 0.7 ? Math.atan2(p.vy, p.vx) : Math.atan2(b.y - p.y, b.x - p.x);
   const df = ((want - p.facing) + Math.PI * 3) % (2 * Math.PI) - Math.PI;
@@ -6814,14 +6823,12 @@ function drawGoalGeoDebug(side) {
 function draw(sample, dt) {
   S.frameNo = (S.frameNo || 0) + 1;    // per-frame cache key (net projections)
   ctx.imageSmoothingEnabled = false;
-  const bg = ctx.createLinearGradient(0, 0, 0, cv.height);
-  bg.addColorStop(0, "#0a0b10"); bg.addColorStop(0.5, "#12141b"); bg.addColorStop(1, "#0b0e12");
-  ctx.fillStyle = bg;
+  ctx.fillStyle = "#284a31"; // Quiet empty surround for the pitch/character art direction.
   ctx.fillRect(0, 0, cv.width, cv.height);
   drawGroundPerspective();
-  drawStadium();
-  drawFarBarrier();
+  // Stadium and barriers retired from the active presentation.
   drawMarkings();
+  if (typeof CornerFlags !== "undefined") CornerFlags.draw(ctx, sproj3, typeof FLAG_TIME === "number" ? FLAG_TIME : performance.now() / 1000, "far");
   if (S.dbg.occ && sample) drawOccDebug(sample);
   if (S.dbg.grid) drawGrid();
   const ents = [];
@@ -6894,7 +6901,7 @@ function draw(sample, dt) {
     ctx.strokeStyle = "#ff5ce0"; ctx.lineWidth = uipx(2);
     ctx.strokeRect(t.x - 7, t.y - 7, 14, 14);
   }
-  drawNearBarrier();
+  if (typeof CornerFlags !== "undefined" && !(typeof OFPLAY !== "undefined" && OFPLAY.on && OFPLAY.mixed)) CornerFlags.draw(ctx, sproj3, typeof FLAG_TIME === "number" ? FLAG_TIME : performance.now() / 1000, "near");
   drawReadout(sample);
 }
 function drawReadout(sample) {

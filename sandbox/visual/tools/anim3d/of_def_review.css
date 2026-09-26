@@ -1,0 +1,25 @@
+
+:root{--bg:#0e1116;--pane:#151a21;--ink:#e8e6e0;--dim:#9aa4b2;--acc:#ffd54a;--ok:#48e08a;--bad:#ff6b6b;--line:#242b35}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:32px 16px 90px}
+h1{font-size:25px;margin:0 0 6px;letter-spacing:-.01em}h2{font-size:17px;margin:38px 0 10px;color:var(--acc);border-bottom:1px solid var(--line);padding-bottom:6px}
+h3{font-size:14px;margin:22px 0 6px;color:#cfd6e0}
+p,li{color:#cdd4de}.dim{color:var(--dim)}code,kbd{font-family:ui-monospace,Menlo,monospace;font-size:12.5px}
+kbd{background:#1e242d;border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:1px 6px;color:#fff}
+.lede{background:var(--pane);border:1px solid var(--line);border-left:3px solid var(--acc);padding:14px 16px;border-radius:0 8px 8px 0;margin:16px 0}
+.url{background:#101720;border:1px solid #27424f;border-radius:8px;padding:14px 16px;margin:14px 0}
+.url code{color:#7fd0ff;word-break:break-all}
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:12.5px;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:5px 9px;text-align:right;white-space:nowrap}
+th{background:#1a212a;color:#b9c2ce;font-weight:600}
+td:first-child,th:first-child,td.l,th.l{text-align:left}
+tbody tr:nth-child(odd){background:#12171e}
+.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:#ffb454}
+figure{margin:12px 0 22px}figure img{width:100%;height:auto;border:1px solid var(--line);border-radius:7px;background:#16301a;display:block}
+figcaption{color:var(--dim);font-size:12.5px;margin-top:7px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:820px){.grid{grid-template-columns:1fr}}
+pre{background:#0f1318;border:1px solid var(--line);border-radius:6px;padding:10px;overflow-x:auto;font-size:11.5px;color:#cdd4de}
+ul{padding-left:20px}li{margin:3px 0}
+
+.chain{list-style:none;padding-left:0;columns:2;column-gap:28px;font-size:12.5px}@media(max-width:820px){.chain{columns:1}}.chain li{margin:2px 0;break-inside:avoid}
+.pill{display:inline-block;border:1px solid var(--line);border-radius:12px;padding:1px 9px;margin:2px 4px 2px 0;font-size:12px;background:#121820}

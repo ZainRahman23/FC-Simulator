@@ -19,10 +19,11 @@ function ofPlayInstall() {
   // 1. per simulation tick: solve the presentation from the authoritative player (after the playtest stepped it). Deterministic: one solve per 60 Hz step.
   const _step = ptStep; ptStep = function () {
     if (typeof ofAutoPre === "function") ofAutoPre();                                            // AUTO PASS demo (inputs only; inert unless switched on)
+    if (typeof ofDefPre === "function") ofDefPre();                                              // AUTO DEFEND demo (inputs only; inert unless switched on)
     const t0 = performance.now(); _step(); const tS = performance.now() - t0; const t = S.pt; if (!t || !t.on || !OFPLAY.actor) return;
     if (t.squad && typeof OFSQ !== "undefined" && OFSQ.on) {                                      // RECEIVING + PASSING V1: every squad player's actor from his own context
       OFPLAY.perf.sim.push(tS); if (OFPLAY.animOff) return;
-      const t1 = performance.now(); ofSquadPresent(t); OFPLAY.perf.anim.push(performance.now() - t1); if (typeof ofAutoPost === "function") ofAutoPost(); for (const k in OFPLAY.perf) if (OFPLAY.perf[k].length > 600) OFPLAY.perf[k].shift(); return; }
+      const t1 = performance.now(); ofSquadPresent(t); OFPLAY.perf.anim.push(performance.now() - t1); if (typeof ofAutoPost === "function") ofAutoPost(); if (typeof ofDefPost === "function") ofDefPost(); for (const k in OFPLAY.perf) if (OFPLAY.perf[k].length > 600) OFPLAY.perf[k].shift(); return; }
     const p = t.p, a = OFPLAY.actor; a.x = p.x; a.y = p.y; a.facing = p.facing; a.speed = Math.hypot(p.vx, p.vy); a.sim = { x: p.x, y: p.y, vx: p.vx, vy: p.vy, facing: p.facing, gaitPhase: p.gaitPhase, gaitSettled: p.gaitSettled };   // the stride clock comes from the simulation
     if (OFPLAY.animOff) { OFPLAY.perf.sim.push(tS); return; }                                     // REGRESSION HOOK: skip the whole skeletal layer, leave the simulation running
     ofPlayKickLink(t, a);                                                                         // the simulation's scheduled SHOT -> kick pose + striking-boot reach
@@ -187,6 +188,7 @@ function ofPlayComposite() {                                                    
   const roi = { x: sx / RES, y: sy / RES, w: sw / RES, h: sh / RES }; const prev = GL3D.character; GL3D.character = "SKINNED";
   const lay = glRenderCharactersROI(OFPLAY.R, OFPLAY.lastChars, roi, Z * RES, cv.width, cv.height, RES); GL3D.character = prev;
   octx.drawImage(lay.canvas, 0, 0, lay.w, lay.h, 0, 0, lay.w, lay.h); OFPLAY.lastLayer = { w: lay.w, h: lay.h, draws: lay.draws };
+  if (typeof CornerFlags !== "undefined") CornerFlags.compositeNear(octx, sproj3, typeof FLAG_TIME === "number" ? FLAG_TIME : performance.now() / 1000, OFPLAY.view, cv);
   OFPLAY.perf.comp.push(performance.now() - t0);
 }
 function ofPlayKeys() {
@@ -266,6 +268,7 @@ function ofPlayDom() {
   p.innerHTML = `<h3>OUTFIELD RUNTIME — live test (locomotion · dribbling · shooting · receiving + passing)</h3><div class="dim">simulation decides (the playtest's own player law) · animation presents · no ball</div><div id="ofplay-status"></div>
   <h3>keys</h3><div class="dim">W A S D / arrows move · hold Q walk (1.5 m/s) · hold E jog (3.0) · nothing = run (5.0) · Shift sprint (8.2) · 1 short (1.70) · 2 average (1.83) · 3 tall (1.96) · 4 short-compact (1.66) · 5 average-lean (1.80) · 6 tall-power (2.00) · C cycle the six real characters (shift+C back) · J ball at your feet · L loose ball ahead · K dribble markers · N 10 extra runners · B 21 extra runners · X Mixed / page view · G follow · V foot / root markers · H hud · R reset · M pause · , slow-mo · . step</div>
   <h3>receiving + passing V1</h3><div class="dim"><b>Y auto pass/receive demo</b> (B next pattern · = family · - slow) · 7 two players (A &harr; B) · 8 passing triangle · 9 three v two passive lane shadows · Space short pass · O driven pass · I through pass (direction keys choose the receiver, else your facing; control follows the ball to the receiver — the keys you hold as it arrives direct his first touch) · Tab switch player · T auto-switch · P preferred foot · 1-5 shots · J ball to your player · R restart drill · U names · Esc leave the drill</div>
+  <h3>defending V1</h3><div class="dim"><b>Shift+7</b> 1 v 1 (you defend) · <b>Shift+8</b> 2 v 2 small-sided · <b>Shift+9</b> 3 v 3 small-sided · without the ball: <b>Z hold</b> jockey (face the carrier, controlled side-steps / back-pedal) · <b>Space</b> standing tackle · <b>F</b> slide tackle (direction keys aim it, else at the ball) · Tab switch player (e.g. take the attacker) · R restart · <b>Shift+Y</b> auto defending demo (Shift+B next pattern · - slow) · with the ball every attacking control is unchanged</div>
   <h3>markers</h3><div class="dim"><span class="ok">green</span> planted (ankle lock) · <span style="color:#ffe36a">yellow</span> toe pivot · <span style="color:#7fd0ff">blue</span> stepping · <span style="color:#ff9a3c">orange</span> swing · red cross = authoritative root · violet ring = presentation pelvis · white = facing · blue = velocity</div>`;
 }
 function ofPlayBallHud(a) {

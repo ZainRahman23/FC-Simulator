@@ -64,7 +64,7 @@ const ptWrap = (a) => Math.atan2(Math.sin(a), Math.cos(a));
 function ptSqCtx(spec, i) {
   const legLen = spec.legLen || PT.LEG_REF;
   return { idx: i, name: spec.name || ("P" + (i + 1)), team: spec.team || 0, char: spec.char || null,
-    ai: Object.assign({ mode: "HOLD" }, spec.ai || {}), home: spec.home || [spec.x, spec.y], mark: spec.mark != null ? spec.mark : null,
+    ai: Object.assign({ mode: "HOLD" }, spec.ai || {}), attrs: spec.attrs || null, home: spec.home || [spec.x, spec.y], mark: spec.mark != null ? spec.mark : null,
     assist: false, stunT: 0, vPrev: null, faceHold: null,
     p: { x: spec.x, y: spec.y, vx: spec.vx || 0, vy: spec.vy || 0, facing: spec.facing || 0, touchT: 0, legLen, gaitPhase: 0.08, gaitSettled: true },
     kick: null, kickInfo: null, kickLog: [], touchPlan: null, dribSeq: null, dbgTouch: null, ctrlState: null, touchN: 0, touchLog: [], touchInfo: null,
@@ -94,9 +94,10 @@ function ptSquadStep(t) {
   Q.tick++;
   ptSqOut(t, Q.ctx[Q.active]);                                                                  // the resting state holds the controlled player's context
   ptSquadIntents(t);                                                                            // off-ball intent, from the state at the start of the tick
+  if (Q.spec.defending) { ptDefIntents(t); ptDefQueued(t); }                                    // DEFENDING V1 (defending drills only): AI roles + queued actions
   for (let i = 0; i < Q.ctx.length; i++) {
-    const c = Q.ctx[i]; ptSqIn(t, c);
-    t.keys = i === Q.active ? human : PT_SQ_NOKEYS;                                             // an ASSISTED receiver's keys are his first-touch intent only (aiGoal moves him)
+    const c = Q.ctx[i]; ptSqIn(t, c); Q.cur = i;
+    t.keys = i === Q.active && !Q.humanAi ? human : (c.aiKeys || PT_SQ_NOKEYS);                               // an ASSISTED receiver's keys are his first-touch intent only (aiGoal moves him)
     b.ctrl = b.owner === i;
     const kicked0 = !!(t.kick && t.kick.kicked);
     ptPlayerStep(t);
@@ -111,6 +112,7 @@ function ptSquadStep(t) {
     ptSqOut(t, c);
   }
   t.keys = human;
+  if (Q.spec.defending) { ptDefOccupancy(t); ptDefResolve(t); }                                 // DEFENDING V1: bodies, then every tackle contact due this tick
   if (b.owner == null && !b.held) ptSquadReceive(t);
   else for (const c of Q.ctx) c.recvPlan = null;
   if (Q.pendingActive != null) { Q.active = Q.pendingActive; Q.pendingActive = null; }
@@ -147,7 +149,7 @@ function ptSquadIntents(t) {
     // position swung the whole body ~90° and back within a few ticks)
     if (c.faceHold && b.owner === i && t.now < c.faceHold.until) c.faceDir = c.faceHold.dir; else if (c.faceHold && t.now >= c.faceHold.until) c.faceHold = null;
     if (c.assist && (b.owner != null || !ps || ps.done || ps.to !== i)) c.assist = false;          // the assist ends with the pass (received, lost, or another ball)
-    if (i === Q.active && !c.assist) continue;                                                  // you drive this one
+    if (i === Q.active && !c.assist && !Q.humanAi) continue;                                   // you drive this one (humanAi: headless runs hand him to the AI)
     if (b.owner === i) continue;                                                                // an AI carrier holds (the carry law settles the ball)
     const incoming = ps && !ps.done && ps.to === i;
     if (incoming && b.owner == null) {

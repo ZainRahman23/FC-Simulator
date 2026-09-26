@@ -10,13 +10,13 @@ const a = process.argv, opt = (k, d) => { const i = a.indexOf(k); return i > 0 ?
 const OUT = opt("--out", "rp_probe"), VIEW = opt("--view", "mixed"), ZOOM = +opt("--zoom", 0), EVERY = +opt("--every", 1), ANIMOFF = opt("--anim", "on") === "off";
 const LAYERS = opt("--layers", ""), JOINTS = a.indexOf("--joints") > 0, FMT = opt("--fmt", "png"), DPR = +opt("--dpr", 2), RECVOFF = opt("--recv", "on") === "off", CAST = opt("--cast", ""), OVERLAY = opt("--overlay", "on"), CHARS = opt("--chars", "on") !== "off", URL = opt("--url", "http://127.0.0.1:8124/sandbox/visual/match.html");
 const FR = opt("--frames", "").split(",").filter(Boolean).flatMap(x => { const m = x.match(/^(\d+)-(\d+)$/); return m ? Array.from({ length: +m[2] - +m[1] + 1 }, (_, i) => +m[1] + i) : [+x]; });
-const SC = require("./of_rp_scenarios.js");
+const SC = require(opt("--scenfile", "./of_rp_scenarios.js"));   // DEFENDING V1: --scenfile ./of_def_scenarios.js
 const FRAMES_ALL = opt("--frames", "") === "all";
 const NAMES = opt("--scen", "ab").split(",").flatMap(n => n === "all" ? Object.keys(SC.SCEN) : [n]);
 (async () => {
   fs.mkdirSync(OUT, { recursive: true });
   const b = await puppeteer.launch({ executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", headless: "new", userDataDir: opt("--udd", "chrome-rpprobe"), args: ["--no-sandbox"] });
-  const p = await b.newPage(); await p.setViewport({ width: 1500, height: 950, deviceScaleFactor: FR.length ? DPR : 1 });
+  const p = await b.newPage(); await p.setCacheEnabled(false); await p.setViewport({ width: 1500, height: 950, deviceScaleFactor: FR.length ? DPR : 1 });
   const errs = []; p.on("pageerror", e => errs.push(String(e).slice(0, 300)));
   await p.goto(URL + "?ofPlay=1&fps=60&r=" + Date.now(), { waitUntil: "load", timeout: 180000 });
   for (let i = 0; i < 900; i++) { if (await p.evaluate(() => typeof OFPLAY !== "undefined" && OFPLAY.on && OFPLAY.actor && OFPLAY.actor.sol)) break; await new Promise(r => setTimeout(r, 100)); }
@@ -28,7 +28,7 @@ const NAMES = opt("--scen", "ab").split(",").flatMap(n => n === "all" ? Object.k
     await p.evaluate((S0, VIEW, ZOOM, ANIMOFF, CHARS, OVERLAY, CAST, RECVOFF, LAYERS) => {
       const D = JSON.parse(JSON.stringify(S0.drill)); if (!CHARS) for (const q of D.players) q.char = null;
       if (CAST) for (const q of D.players) if (!q.team) { if (CAST === "generic") q.char = null; else q.char = CAST; }
-      ofSquadStart("probe", D); OFPLAY.animOff = ANIMOFF; OF_RECV.enabled = !RECVOFF;
+      ofSquadStart("probe", D); window.__watch = []; window.__dbg = []; OFPLAY.animOff = ANIMOFF; OF_RECV.enabled = !RECVOFF;
       if (LAYERS) { const l = LAYERS.split(","); OF_RECV.layers = { pose: l.includes("pose"), plants: l.includes("plants"), reach: l.includes("reach") }; } else OF_RECV.layers = { pose: true, plants: true, reach: true };
       for (let i = 0; i < D.players.length; i++) { const id = D.players[i].char; const e = id && OF_CHAR.get(id);          // ready characters: build the actor now (no async gap)
         if (e && e.status === "ready") { const c = S.pt.squad.ctx[i]; const ac = ofPlayMakeActor(e.skel, c.p); ac.char = e; ac.team = c.team; ac.palette = c.team ? OFPLAY_KIT_B : SKEL_PARTS; OFSQ.actors[i] = ac; } }
@@ -49,7 +49,13 @@ const NAMES = opt("--scen", "ab").split(",").flatMap(n => n === "all" ? Object.k
           else if (c.do === "shot") { const sp = OFPLAY_SHOTS[c.key || "2"]; ptChargeBegin(t, c.key || "2", { fam: sp.fam, label: sp.label, D: sp.D, chargeFam: sp.chargeFam, force: { tech: sp.tech, foot: t.pfoot || "R" } }); t._shotRel = { key: c.key || "2", at: k + (c.hold || 20) }; }
           else if (c.do === "pfoot") { t.pfoot = c.foot; }
           else if (c.do === "attrs") { t.squad.ctx[c.pid].attrs = c.attrs; }
+          else if (c.do === "humanAi") t.squad.humanAi = true;                                     // DEFENDING V1 media: the AI also plays the player you control
+          else if (c.do === "stand") ptDefStand(t, t.squad.active);                                 // DEFENDING V1 commands (the same requests the keys make)
+          else if (c.do === "slide") ptDefSlide(t, t.squad.active, c.dir != null ? c.dir : null);
         }
+        for (const c of (window.__watch || [])) if (!c.fired && k >= c.at) { const me = t.squad.ctx[t.squad.active].p, dB = Math.hypot(t.b.x - me.x, t.b.y - me.y);   // DEFENDING V1: press when the ball is within d (a person's timing)
+          if (dB <= c.d) { c.fired = k; if (c.do === "standWhen") ptDefStand(t, t.squad.active); else ptDefSlide(t, t.squad.active, c.dir != null ? c.dir : ptDefSlideAim(t, t.squad.ctx[t.squad.active])); } }
+        for (const c of cmd) if (c.do === "standWhen" || c.do === "slideWhen") (window.__watch || (window.__watch = [])).push(Object.assign({}, c));
         if (t._shotRel && t._shotRel.at === k) { ptChargeRelease(t, t._shotRel.key); t._shotRel = null; }
         ptStep(); updateRig(1 / 60, null); draw(null, 1 / 60);
         const Q = t.squad, b = t.b;
@@ -68,10 +74,13 @@ const NAMES = opt("--scen", "ab").split(",").flatMap(n => n === "all" ? Object.k
         await el.screenshot(FMT === "jpg" ? { path: path.join(OUT, `${name}_t${String(k).padStart(3, "0")}.jpg`), type: "jpeg", quality: 88 } : { path: path.join(OUT, `${name}_t${String(k).padStart(3, "0")}.png`) });
       }
     }
-    const res = await p.evaluate(() => ({ events: S.pt.squad.events, recv: OFSQ.recvRecs, pass: OFSQ.passRecs, chars: OFSQ.actors.map(a => a.char ? a.char.id : "generic") }));
+    const res = await p.evaluate(() => ({ dbg: window.__dbg, events: S.pt.squad.events, recv: OFSQ.recvRecs, pass: OFSQ.passRecs, def: OFSQ.defRecs || [], chars: OFSQ.actors.map(a => a.char ? a.char.id : "generic") }));
     res.trace = trace; res.pres = pres; if (JOINTS) { res.joints = joints; res.jointNames = await p.evaluate(() => OFSQ.actors[0].skel.bones.map(b => b.name)); } results[name] = res;
     const R = res.recv.map(r => `${r.name}:${r.foot}:${r.style}:${r.outcome}:${(r.surf * 100).toFixed(1)}cm${r.reachCapped ? "*" : ""}`).join(" ");
     const P = res.pass.map(r => `${r.name}:${r.tech}:${r.foot}:${(r.surf * 100).toFixed(1)}cm`).join(" ");
+    const DF = (res.def || []).map(r => `${r.name}:${r.kind}:${r.foot}:${r.out}:${(r.insideSurf * 100).toFixed(1)}/${(r.legSurf * 100).toFixed(1)}cm`).join(" ");
+    const TK = res.events.filter(e => e.kind === "TACKLE").map(e => `${e.type}:${e.out}${e.why ? "(" + e.why + ")" : ""}${e.q != null ? " q" + e.q : ""}`).join(",");
+    if (DF || TK) console.log(name.padEnd(22), "def", DF || "-", " | tackles", TK || "-");
     console.log(name.padEnd(22), "recv", R || "-", " | pass", P || "-", " | ev", res.events.filter(e => /RECEPTION|OUT_OF_REACH|LOOSE/.test(e.kind)).map(e => e.kind + (e.outcome ? ":" + e.outcome : "")).join(","));
   }
   fs.writeFileSync(path.join(OUT, "probe.json"), JSON.stringify({ results, errors: errs, anim: !ANIMOFF, chars: CHARS }));

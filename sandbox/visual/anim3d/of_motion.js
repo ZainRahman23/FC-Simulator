@@ -316,9 +316,11 @@ function ofActorTick(a, dt, now) {
       if (dtc > OF_GAIT.reachT) a.touch = null;
     }
     // RECEIVING V1: a reception the SIMULATION has planned (or just made) — prepare, meet the ball with the inside of the chosen boot, release
-    if (!a.kickW && (a.recv || a.recvPrev) && typeof ofRecvApply === "function") pose = ofRecvApply(a, pose, plants, now);
+    if (!a.kickW && !a.defA && (a.recv || a.recvPrev) && typeof ofRecvApply === "function") pose = ofRecvApply(a, pose, plants, now);
     else if (typeof ofRecvTail === "function") { if (a.kickW && (a.recv || a.recvPrev)) { a.recv = null; a.recvPrev = null; } ofRecvTail(a, plants, now, !!a.kickW); }   // V1.1: a kick takes over — any receiving offset decays under it
-    a.gait = { cadence: lo.P.step > 0 ? Math.hypot(sim.vx, sim.vy) / (lo.P.step * a.skel.legLen) : 0, stanceFrac: lo.P.stance, stride: lo.P.step * a.skel.legLen, A: lo.P.hipFlex, run: lo.P.idx >= 2 }; a.legYaw = lo.legYaw;
+    // DEFENDING V1: the jockey posture / a tackle the SIMULATION has scheduled (of_defend.js; inert unless a defending drill links it)
+    if ((a.defA || a.jockeyOn || a.jkW) && typeof ofDefApply === "function") pose = ofDefApply(a, pose, plants, now, rootM);
+    a.gait = { cadence: lo.P.step > 0 ? Math.hypot(sim.vx, sim.vy) / (lo.P.step * a.skel.legLen) : 0, stanceFrac: lo.P.stance, stride: lo.P.step * a.skel.legLen, A: lo.P.hipFlex, run: lo.P.idx >= 2 }; a.legYaw = a.defYaw != null ? a.defYaw : lo.legYaw;   // DEFENDING V1: a slide owns the body's yaw (it is launched along the slide, not along the run)
     // PASSING V1: an AIMED pass is struck along the simulation's facing (which turns to the target through the wind-up at the athletic
     // turn rate), not along the running legs — blended by the kick weight so neither the entry nor the exit can snap
     if (a.kickW > 0 && a.kick && a.kick.aim) { const d = Math.atan2(Math.sin(sim.facing - a.legYaw), Math.cos(sim.facing - a.legYaw)); a.legYaw += d * a.kickW; }
