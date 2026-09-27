@@ -64,6 +64,21 @@ function ofRxBasis(rel, u) {
   for (const [k, wk] of [["F", wF / W], ["B", wB / W], ["S", wS / W]]) { if (wk < 1e-3) continue; const b = pick(k); acc = acc ? ofDefLerpPose(acc, b.P, wk / (tw + wk)) : b.P; tw += wk; }
   return { P: acc, w: u <= OF_RX.midAt ? smooth01(u / OF_RX.midAt) : 1 };
 }
+// SLIDE CONTACT GEOMETRY V1.2 — the slider who brought him down, as GROUND: his rendered seat / trunk / legs (capsules from his last solved
+// pose). A falling body is lowered onto whichever is higher, the pitch or the top of those capsules — so a faller goes over the slider and a body
+// that comes down on him lies on him (presentation of the simulation's LANDED_ON / OVER facts; never read by the simulation)
+function ofRxTerrain(r) {
+  if (r.byTackler == null || typeof OFSQ === "undefined" || !S.pt || !S.pt.squad) return null; const c = S.pt.squad.ctx[r.byTackler], ac = OFSQ.actors[r.byTackler];
+  if (!c || !c.def || c.def.kind !== "SLIDE" || c.def.rule !== "far" || !ac || !ac.sol) return null;
+  const fk = ac.sol.fk, sk = ac.skel, J = (n) => fk.joint[sk.byName[n].idx];
+  return [[J("pelvis"), J("neck"), 0.15], [J("thigh_R"), J("shin_R"), 0.075], [J("shin_R"), J("foot_R"), 0.055], [J("thigh_L"), J("shin_L"), 0.075], [J("shin_L"), J("foot_L"), 0.055]];
+}
+function ofRxTerrainAt(TR, q) {                                                                        // the highest capsule top under the point (world: y up)
+  let h = 0;
+  for (const [A, B, rc] of TR) { const dx = B[0] - A[0], dz = B[2] - A[2], L = dx * dx + dz * dz, s = L > 1e-9 ? Math.max(0, Math.min(1, ((q[0] - A[0]) * dx + (q[2] - A[2]) * dz) / L)) : 0;
+    const px = A[0] + dx * s, pz = A[2] + dz * s, py = A[1] + (B[1] - A[1]) * s, dh = Math.hypot(q[0] - px, q[2] - pz); if (dh < rc) h = Math.max(h, py + Math.sqrt(rc * rc - dh * dh)); }
+  return h;
+}
 function ofRxFall(a, X, r, pose, plants, now, rootM) {
   const O = OF_RX, azH = r.azHead != null ? r.azHead : r.az, rel = Math.atan2(Math.sin(azH - a.facing), Math.cos(azH - a.facing));   // the way the BODY rotates (not where it travels)
   let target, w;
@@ -75,8 +90,11 @@ function ofRxFall(a, X, r, pose, plants, now, rootM) {
     let k = 0; while (k < K.length - 2 && u > K[k + 1][0]) k++; target = ofDefLerpPose(K[k][1], K[k + 1][1], smooth01(clamp01((u - K[k][0]) / (K[k + 1][0] - K[k][0])))); w = u > 0.9 ? 1 - smooth01((u - 0.9) / 0.1) * 0.6 : 1; }
   // lower the body by its measured lowest point (staged contacts follow from the rotating pose)
   const P0 = Object.assign({}, target, { _pelvis: [0, 0, 0] }), fk = skelFK(a.skel, P0, rootM); let minY = 1e9;
-  for (const b of a.skel.bones) { if (!b.part || b.name === "root" || b.name === "hair" || /^(hand|foreArm|upperArm|clavicle)_/.test(b.name)) continue; const v = Math.min(fk.joint[b.idx][1], fk.tip[b.idx][1]) - (/^(foot|toe)_/.test(b.name) ? 0.01 : b.rad * 0.6); if (v < minY) minY = v; }
-  P0._pelvis[1] = -Math.max(0, minY - O.clear);
+  const TR = ofRxTerrain(r);                                                                            // V1.2: the slider's body under him is ground too (he goes OVER it / lies ON it)
+  for (const b of a.skel.bones) { if (!b.part || b.name === "root" || b.name === "hair" || /^(hand|foreArm|upperArm|clavicle)_/.test(b.name)) continue; const rr = /^(foot|toe)_/.test(b.name) ? 0.01 : b.rad * 0.6;
+    const J0 = fk.joint[b.idx], J1 = fk.tip[b.idx], ns = TR ? 4 : 1;
+    for (let k = 0; k <= ns; k++) { const q = ns === 1 ? (k ? J1 : J0) : V3.add(J0, V3.scale(V3.sub(J1, J0), k / ns)); const v = q[1] - (TR ? ofRxTerrainAt(TR, q) : 0) - rr; if (v < minY) minY = v; } }
+  P0._pelvis[1] = TR ? -(minY - O.clear) : -Math.max(0, minY - O.clear);                              // V1.2: a slider under him may RAISE him (over / onto the body)
   plants.R = { want: false }; plants.L = { want: false };
   return ofDefLerpPose(pose, P0, w);
 }

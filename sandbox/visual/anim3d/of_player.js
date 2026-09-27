@@ -21,6 +21,7 @@ function ofPlayInstall() {
     if (typeof ofAutoPre === "function") ofAutoPre();                                            // AUTO PASS demo (inputs only; inert unless switched on)
     if (typeof ofDefPre === "function") ofDefPre();                                              // AUTO DEFEND demo (inputs only; inert unless switched on)
     if (typeof ofRxdPre === "function") ofRxdPre();                                              // TACKLED-PLAYER demo (inputs only; inert unless switched on)
+    if (typeof ofSgdPre === "function") ofSgdPre();                                              // SLIDE CONTACT GEOMETRY V1.2 side-on demo (inputs only; inert unless switched on)
     const t0 = performance.now(); _step(); const tS = performance.now() - t0; const t = S.pt; if (!t || !t.on || !OFPLAY.actor) return;
     if (t.squad && typeof OFSQ !== "undefined" && OFSQ.on) {                                      // RECEIVING + PASSING V1: every squad player's actor from his own context
       OFPLAY.perf.sim.push(tS); if (OFPLAY.animOff) return;

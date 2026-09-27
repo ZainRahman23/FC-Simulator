@@ -20,7 +20,25 @@ const PT_DEF = {
   bodyR: 0.32, occIters: 8, occTol: 0.005,                    // world.py OCCUPANCY V1
   jockeyV: 2.6,                                                // m/s: desired-speed cap while jockeying (a side-shuffle / back-pedal)
   stand: { windT: 0.20, lungeV: 1.6, reach: 0.72, behind: -0.10, zMax: 0.45, recoverWin: 0.30, recoverFail: 0.55, recoverV: 1.2, cooldown: 0.9 },
-  slide: { windT: 0.10, vAdd: 1.0, vMin: 4.2, vMax: 7.5, decel: 5.5, reachAhead: 1.12, legFrom: 0.46, legLat: 0.11, extT: 0.12, footR: 0.08, sub: 4, planTicks: 12, zMax: 0.40, groundT: 0.25, getupT: 0.85, recoverV: 1.2, recoverT: 0.35, contactVmin: 1.0 },
+  slide: { windT: 0.10, vAdd: 1.0, vMin: 4.2, vMax: 7.5, decel: 5.5, reachAhead: 1.12, legFrom: 0.46, legLat: 0.11, extT: 0.12, footR: 0.08, sub: 4, planTicks: 12, zMax: 0.40, groundT: 0.25, getupT: 0.85, recoverV: 1.2, recoverT: 0.35, contactVmin: 1.0,
+    // SLIDE CONTACT GEOMETRY V1.2 — the researched side-on slide (chase → drop → sweep): the NEAR leg (the ball's side) leads, sinks and curls
+    // under the seat — he slides on that hip / outer thigh — and the FAR leg is the tackling leg, swinging round in a wide sweep ACROSS his body
+    // toward the ball. rule "far" = V1.2; rule "near" = the V1 geometry (near leg straight along the slide), kept only as the diagnostic
+    // counterfactual. The sweep is a fixed kinematic law after the drop (a commitment, never aimed at the ball): th0 → th1 toward the tucked
+    // side, starting t0 after the launch and lasting T; its amplitude is th1 when the ball is genuinely BESIDE the slide line (SWEEP) and
+    // block1 when it is on the line (BLOCK, the straight block slide — the same top leg, barely coming across). Lying on the near hip puts the
+    // top (far) hip nearly over the pelvis: hipF behind the root and hipLat toward the tackling side. pelvisK: the body turns with the sweep.
+    rule: "far", sweep: { hipF: -0.08, hipLat: 0.05, th0: 0.0, th1: 1.31, block1: 0.30, sweepLat: 0.35, t0: 0.04, T: 0.20, pelvisK: 0.30 },   // pelvisK: the body turns with the sweep (hip rotation drives it)
+    // swept ball contact: sub-steps so that neither the leg's points nor the ball move more than `step` relative to each other per sub-step
+    ccd: { minSub: 4, maxSub: 32, step: 0.035 },
+    // the tackling boot's contact radius about the leg's axis: the rendered boot's half-thickness (V1: 0.08), so a V1.2 contact is a touch you see
+    footR12: 0.05,
+    // the far leg's reach, hip → toe tip, as the rendered Astra leg + boot measures it swept out on the pitch (1.16 m for a 0.865 m leg); V1's
+    // reachAhead matched V1's straight near-leg pose
+    reachAhead12: 1.25,
+    // the ball's response to the leg (contact point + normal + the leg's own velocity there): the leg's effective mass against the ball's,
+    // restitution by technique (a hook / sweep-through carries the ball with the foot; a poke knocks it away), Coulomb-limited tangential drag
+    ball: { mBall: 0.43, legMassFrac: 0.0755, e: { WON: 0.15, POKE: 0.50 }, muT: 0.30, glanceV: 1.0 } },
   // continuous.py §9 thresholds and weights (execution quality); `noise` is the seeded draw slot (0 = neutral reference execution)
   q: { won: 0.30, poke: -0.05, behind: -0.20, stretchFrom: 0.60, stretch: -0.25, slideBonus: 0.10, slideBehind: -0.30, shin: -0.15 },
   ref: { standing_tackle: 60, sliding_tackle: 60, reactions: 60, strength: 60, balance: 60, defensive_awareness: 60, interceptions: 60, aggression: 60 },
@@ -80,13 +98,44 @@ function ptDefSlide(t, i, dirIn) {
   const p = c.p, v = Math.hypot(p.vx, p.vy);
   let dir = dirIn;
   if (dir == null) { const lead = 0.30; dir = Math.atan2(b.y + b.vy * lead - p.y, b.x + b.vx * lead - p.x); }   // toward where the ball will be
-  const fx = Math.cos(dir), fy = Math.sin(dir), lat = (b.x - p.x) * (-fy) + (b.y - p.y) * fx;
   const v0 = Math.max(S.vMin, Math.min(S.vMax, v + S.vAdd));                                     // launch speed from HIS OWN pace
-  c.def = { kind: "SLIDE", x0: p.x, y0: p.y, t0: now, launchAt: now + S.windT, dir, v0, vNow: v0, foot: lat >= 0 ? "R" : "L", stopAt: null, contact: null, oppContact: null, rootPrev: null, ballPrev: null };
+  const G = ptDefSlideSide(t, c, p.x, p.y, dir);
+  c.def = { kind: "SLIDE", x0: p.x, y0: p.y, t0: now, launchAt: now + S.windT, dir, v0, vNow: v0, foot: G.foot, tuck: G.tuck, tech: G.tech, th1: G.th1, rule: G.rule, geo: G.geo,
+    stopAt: null, contact: null, oppContact: null, rootPrev: null, ballPrev: null, tauPrev: null };
   c.defCool = now + S.windT + v0 / S.decel + S.groundT + S.getupT + S.recoverT;
   c.stunT = Math.max(c.stunT || 0, now + S.windT + v0 / S.decel + S.groundT + S.getupT);         // on the ground: no reception until he is back on his feet
-  ptSquadEvent(t, { kind: "TACKLE_START", pid: i, type: "SLIDE", foot: c.def.foot, v0: +v0.toFixed(3), dir: +dir.toFixed(4) });
+  ptSquadEvent(t, Object.assign({ kind: "TACKLE_START", pid: i, type: "SLIDE", foot: c.def.foot, v0: +v0.toFixed(3), dir: +dir.toFixed(4) }, G.rule === "far" ? { tuck: G.tuck, tech: G.tech, geo: G.geo } : {}));
   return c.def;
+}
+// SLIDE CONTACT GEOMETRY V1.2 — the technique from the geometry at the launch (world frame; RIGHT of a direction (fx, fy) is (−fy, fx), +y toward
+// the camera — verified on the rendered rig). The ball's side of the slide line (where it will be in 0.30 s: the carrier's pace if carried) is
+// the NEAR side: that leg tucks and he drops on that hip; the FAR leg tackles, sweeping across toward the ball. Tie (ball on the line within
+// 5 cm): the nearest opponent's side, else right. SWEEP when the ball is beside the line (≥ sweepLat), BLOCK when it is on it.
+function ptDefSlideSide(t, c, px, py, dir) {
+  const S = PT_DEF.slide, W = S.sweep, b = t.b, Q = t.squad, fx = Math.cos(dir), fy = Math.sin(dir), lead = 0.30;
+  const own = b.owner != null ? Q.ctx[b.owner] : null, bvx = own ? own.p.vx : b.vx, bvy = own ? own.p.vy : b.vy;
+  if (S.rule === "near") { const lat = (b.x - px) * (-fy) + (b.y - py) * fx, foot = lat >= 0 ? "R" : "L"; return { rule: "near", foot, tuck: foot === "R" ? "L" : "R", tech: "V1", th1: 0, geo: null }; }
+  const qx = b.x + bvx * lead, qy = b.y + bvy * lead, lat = (qx - px) * (-fy) + (qy - py) * fx, fwd = (qx - px) * fx + (qy - py) * fy;
+  let sd = lat;
+  if (Math.abs(lat) < 0.05) { let best = null, bd = 4.0; for (const o of Q.ctx) if (o.team !== c.team) { const d = Math.hypot(o.p.x - px, o.p.y - py); if (d < bd) { bd = d; best = o; } }
+    sd = best ? (best.p.x - px) * (-fy) + (best.p.y - py) * fx : 1; if (Math.abs(sd) < 1e-6) sd = 1; }
+  const tuck = sd >= 0 ? "R" : "L", foot = tuck === "R" ? "L" : "R", tech = Math.abs(lat) >= W.sweepLat ? "SWEEP" : "BLOCK";
+  // the facts of the geometry (recorded, never an input to the contact law): which side of the carrier he is on, the approach angle
+  let side = null, approach = null; if (own && own.team !== c.team) { const q = own.p, cv = Math.hypot(q.vx, q.vy), cd = cv > 0.5 ? Math.atan2(q.vy, q.vx) : q.facing, cfx = Math.cos(cd), cfy = Math.sin(cd);
+    side = (px - q.x) * (-cfy) + (py - q.y) * cfx >= 0 ? "CARRIER_RIGHT" : "CARRIER_LEFT"; approach = +((Math.atan2(Math.sin(dir - cd), Math.cos(dir - cd))) * 180 / Math.PI).toFixed(1); }
+  return { rule: "far", foot, tuck, tech, th1: tech === "SWEEP" ? W.th1 : W.block1, geo: { ballLat: +lat.toFixed(3), ballFwd: +fwd.toFixed(3), side, approach } };
+}
+// the tackling leg's capsule (knee → toe, on the pitch) at root (x, y) and τ seconds after the launch, with its hip, direction, sweep angle and
+// sweep rate. rule "near" reproduces the V1 leg exactly (straight along the slide, legLat to the tackling side).
+function ptDefSlideLeg(d, x, y, tau, leg) {
+  const S = PT_DEF.slide, W = S.sweep, fx = Math.cos(d.dir), fy = Math.sin(d.dir), rx = -fy, ry = fx, sgF = d.foot === "R" ? 1 : -1, lo = S.legLat * leg;
+  const ext = Math.max(0, Math.min(1, tau / S.extT)), k0r = S.legFrom * leg, k1r = (S.legFrom + ((d.rule === "far" ? S.reachAhead12 : S.reachAhead) - S.legFrom) * ext) * leg;
+  if (d.rule !== "far") { const hx = x + rx * sgF * lo, hy = y + ry * sgF * lo; return { hx, hy, ax: hx + fx * k0r, ay: hy + fy * k0r, ex: hx + fx * k1r, ey: hy + fy * k1r, ux: fx, uy: fy, th: 0, om: 0, px: 0, py: 0 }; }
+  const hx = x + fx * W.hipF + rx * sgF * W.hipLat, hy = y + fy * W.hipF + ry * sgF * W.hipLat, s = Math.max(0, Math.min(1, (tau - W.t0) / W.T));
+  const th = W.th0 + (d.th1 - W.th0) * s * s * (3 - 2 * s), om = s > 0 && s < 1 ? (d.th1 - W.th0) * 6 * s * (1 - s) / W.T : 0;
+  const tx = -rx * sgF, ty = -ry * sgF, c = Math.cos(th), sn = Math.sin(th), ux = fx * c + tx * sn, uy = fy * c + ty * sn, px = -fx * sn + tx * c, py = -fy * sn + ty * c;   // u(θ) and ∂u/∂θ (toward the tucked side)
+  const k0 = k0r - W.hipF, k1 = k1r - W.hipF;
+  return { hx, hy, ax: hx + ux * k0, ay: hy + uy * k0, ex: hx + ux * k1, ey: hy + uy * k1, ux, uy, th, om, px, py };
 }
 // where to aim a slide launched now (an AIMING aid for the AI / demos / fixtures — what a skilled player would aim at; it is an input,
 // never part of the contact law): candidate directions are swept, the slide's own kinematics (wind-up, launch speed, uniform deceleration)
@@ -94,17 +143,23 @@ function ptDefSlide(t, i, dirIn) {
 function ptDefSlidePlan(t, c) {
   const S = PT_DEF.slide, p = c.p, b = t.b, Q = t.squad, leg = p.legLen || PT.LEG_REF, v0 = Math.max(S.vMin, Math.min(S.vMax, Math.hypot(p.vx, p.vy) + S.vAdd));
   const own = b.owner != null ? Q.ctx[b.owner] : null, op = own && own.team !== c.team ? own.p : null;
-  const bvx = own ? own.p.vx : b.vx, bvy = own ? own.p.vy : b.vy, k0 = S.legFrom * leg, k1 = S.reachAhead * leg, R = PT_BALL_R + S.footR, BR = PT_DEF.bodyR + 0.05;
+  const bvx = own ? own.p.vx : b.vx, bvy = own ? own.p.vy : b.vy, R = PT_BALL_R + (S.rule === "far" ? S.footR12 : S.footR), BR = PT_DEF.bodyR + 0.05;
   const base = Math.atan2(b.y - p.y, b.x - p.x); let best = base, bg = 1e9, clean = null, cs = 1e9;
+  const far = S.rule === "far", CLR = 0.55;                                                            // V1.2: body past the carrier (0.16 body + 0.32 disc + a hand's width)
   for (let da = -70; da <= 70; da += 1) {
-    const dir = base + da * Math.PI / 180, fx = Math.cos(dir), fy = Math.sin(dir); let x = p.x + p.vx * S.windT, y = p.y + p.vy * S.windT, v = v0, tt = S.windT, g = 1e9, hitB = null, hitM = null;
+    const dir = base + da * Math.PI / 180, fx = Math.cos(dir), fy = Math.sin(dir); let x = p.x + p.vx * S.windT, y = p.y + p.vy * S.windT, v = v0, tt = S.windT, g = 1e9, hitB = null, hitM = null, clr = 1e9, lowB = true;
+    const G = ptDefSlideSide(t, c, p.x, p.y, dir), d = { dir, foot: G.foot, th1: G.th1, rule: G.rule };
     while (v > 0 && tt < 2.0) { x += fx * v * PT_DT; y += fy * v * PT_DT; v = Math.max(0, v - S.decel * PT_DT); tt += PT_DT;
-      const ax = x + fx * k0, ay = y + fy * k0, ex = x + fx * k1, ey = y + fy * k1, qx = b.x + bvx * tt, qy = b.y + bvy * tt, gb = ptSegDist(qx, qy, ax, ay, ex, ey);
-      g = Math.min(g, gb); if (hitB == null && gb <= R) hitB = tt;
-      if (op && hitM == null && ptSegDist(op.x + op.vx * tt, op.y + op.vy * tt, x, y, ex, ey) < BR) hitM = tt;
+      const L = far ? ptDefSlideLeg(d, x, y, tt - S.windT, leg) : { ax: x + fx * S.legFrom * leg, ay: y + fy * S.legFrom * leg, ex: x + fx * S.reachAhead * leg, ey: y + fy * S.reachAhead * leg };   // V1: the aid's straight leg
+      const qx = b.x + bvx * tt, qy = b.y + bvy * tt, gb = ptSegDist(qx, qy, L.ax, L.ay, L.ex, L.ey);   // how deep the LOWER leg (knee → boot) passes the ball
+      g = Math.min(g, gb); if (hitB == null && (far ? ptSegDist(qx, qy, L.hx, L.hy, L.ex, L.ey) : gb) <= R) { hitB = tt; if (far && gb > R) lowB = false; }   // V1.2: a first touch on the thigh is not a clean aim
+      if (op) { const ox = op.x + op.vx * tt, oy = op.y + op.vy * tt;
+        if (hitM == null && (far ? Math.min(ptSegDist(ox, oy, L.hx, L.hy, L.ex, L.ey), ptSegDist(ox, oy, x - fx * 0.35, y - fy * 0.35, x + fx * 0.25, y + fy * 0.25)) : ptSegDist(ox, oy, x, y, L.ex, L.ey)) < BR) hitM = tt;
+        if (far && hitB != null) clr = Math.min(clr, ptSegDist(ox, oy, x - fx * 0.35, y - fy * 0.35, x + fx * 0.25, y + fy * 0.25)); }
       if (hitM != null && hitB == null) break; }                                                    // the leg would stop on his body before the ball
     const sc = g + Math.abs(da) * 0.0005; if (sc < bg) { bg = sc; best = dir; }
-    if (hitB != null && (hitM == null || hitB <= hitM) && sc < cs) { cs = sc; clean = dir; } }   // the deepest ball-first contact, not a grazing one
+    const cc = sc + (far && op ? 0.5 * Math.max(0, CLR - clr) : 0);                                     // V1.2: among ball-first lines, the one whose BODY passes beside him
+    if (hitB != null && lowB && (hitM == null || hitB <= hitM) && cc < cs) { cs = cc; clean = dir; } }   // the deepest ball-first contact, not a grazing one
   return { dir: clean != null ? clean : best, ballFirst: clean != null, gap: bg };
 }
 function ptDefSlideAim(t, c) { return ptDefSlidePlan(t, c).dir; }
@@ -168,6 +223,7 @@ function ptDefResolve(t) {
       ptSquadEvent(t, Object.assign({ kind: "TACKLE", pid: i, type: "STAND", foot: d.foot, carrier: carrierIdx }, d.result));
       if (out === "WON" || out === "POKE") { if (Q.pass) Q.pass.done = true; }
     }
+    if (d.kind === "SLIDE" && d.rule === "far" && now >= d.launchAt && (d.vNow > 0 || d.stopAt === now || (d.stopAt != null && !d.contact))) { ptDefSlideBall(t, i, c, d, carrierIdx, carrier); continue; }   // (a slide stopped by a body after this tick's resolution still closes as a MISS)
     if (d.kind === "SLIDE" && now >= d.launchAt && d.vNow > 0 || (d.kind === "SLIDE" && d.stopAt === now)) {
       // the tackling LEG, extended ahead of the sliding body (shin → boot, a capsule), swept against the moving ball through the tick
       const fx = Math.cos(d.dir), fy = Math.sin(d.dir), side = d.foot === "R" ? 1 : -1, S = PT_DEF.slide, lo = S.legLat * leg, lx = -fy * side * lo, ly = fx * side * lo;
@@ -205,10 +261,77 @@ function ptDefResolve(t) {
       // TACKLED-PLAYER V1: the body contact is now the segment-level contact model (pt_react.js ptRxStep) — the leg meets his feet / shins /
       // knees, the sliding body meets his legs — and its impulse slows the slide instead of a disc test stopping it dead
       d.rootPrev = [p.x, p.y]; d.ballPrev = [b.x, b.y];
-      if (d.stopAt === now && !d.contact) { ptSquadEvent(t, { kind: "TACKLE", pid: i, type: "SLIDE", foot: d.foot, out: "MISS", carrier: carrierIdx, contactTick: null, minGap: d.minGap != null ? +d.minGap.toFixed(3) : null, minGapTick: d.minGapAt, slideV0: +d.v0.toFixed(2), dir: +d.dir.toFixed(3), slideDist: +Math.hypot(p.x - d.x0, p.y - d.y0).toFixed(3) }); d.contact = { out: "MISS" }; }
+      if (d.stopAt != null && d.stopAt <= now && !d.contact) { ptSquadEvent(t, { kind: "TACKLE", pid: i, type: "SLIDE", foot: d.foot, out: "MISS", carrier: carrierIdx, contactTick: null, minGap: d.minGap != null ? +d.minGap.toFixed(3) : null, minGapTick: d.minGapAt, slideV0: +d.v0.toFixed(2), dir: +d.dir.toFixed(3), slideDist: +Math.hypot(p.x - d.x0, p.y - d.y0).toFixed(3) }); d.contact = { out: "MISS" }; }
     }
   }
 }
+// ── SLIDE CONTACT GEOMETRY V1.2: the sweeping leg against the ball, swept through the tick, and the ball's physical response ─────────────
+// Time frame: at this point of the tick every player has moved (root: previous → now) and the ball has NOT yet stepped (it moves b → b + v·dt
+// after this). The leg (root, sweep angle) and the ball are interpolated over the same interval with enough sub-steps that neither moves more
+// than ccd.step relative to the other per sub-step, so a fast foot or a fast ball cannot cross between ticks unseen. At the first touching
+// sub-step u the ball's new velocity follows from the contact: point, normal, the LEG'S OWN velocity there (slide + sweep), restitution by the
+// authoritative outcome, Coulomb-limited tangential drag. The ball is then placed so that the rest of the tick runs with the new velocity from
+// the contact point (the keeper contact's convention). The OUTCOME category is the unchanged quality law's.
+function ptDefSlideBall(t, i, c, d, carrierIdx, carrier) {
+  const Q = t.squad, b = t.b, now = t.now, p = c.p, S = PT_DEF.slide, leg = p.legLen || PT.LEG_REF, R = PT_BALL_R, tau = now - d.launchAt;
+  const tau0 = d.tauPrev != null ? d.tauPrev : tau, r0 = d.rootPrev || [p.x, p.y];
+  const L1 = ptDefSlideLeg(d, p.x, p.y, tau, leg); d.sweepA = L1.th;
+  if (!d.contact && d.rootPrev && b.z <= S.zMax) {
+    const L0 = ptDefSlideLeg(d, r0[0], r0[1], tau0, leg), bdx = b.vx * PT_DT, bdy = b.vy * PT_DT;
+    const rel = Math.max(Math.hypot(L1.ex - L0.ex - bdx, L1.ey - L0.ey - bdy), Math.hypot(L1.ax - L0.ax - bdx, L1.ay - L0.ay - bdy)), C = S.ccd;
+    const n = Math.max(C.minSub, Math.min(C.maxSub, Math.ceil(rel / C.step)));
+    let hit = null;
+    for (let k = 1; k <= n && !hit; k++) { const u = k / n, L = ptDefSlideLeg(d, r0[0] + (p.x - r0[0]) * u, r0[1] + (p.y - r0[1]) * u, tau0 + (tau - tau0) * u, leg), qx = b.x + bdx * u, qy = b.y + bdy * u;
+      const dx = L.ex - L.hx, dy = L.ey - L.hy, L2 = dx * dx + dy * dy, s1 = L2 > 1e-12 ? Math.max(0, Math.min(1, ((qx - L.hx) * dx + (qy - L.hy) * dy) / L2)) : 0, cx = L.hx + dx * s1, cy = L.hy + dy * s1, dd = Math.hypot(qx - cx, qy - cy);
+      const lk = Math.hypot(L.ax - L.hx, L.ay - L.hy), lt = Math.sqrt(L2), al = (s1 * lt - lk) / Math.max(1e-6, lt - lk);   // along the knee → toe part (< 0: the thigh)
+      if (dd <= R + (al < 0 ? 0.085 : S.footR12)) hit = { u, n, L, qx, qy, al, cx, cy, dd }; }
+    { const g = ptSegDist(b.x, b.y, L1.hx, L1.hy, L1.ex, L1.ey) - R - S.footR12; if (d.minGap == null || g < d.minGap) { d.minGap = g; d.minGapAt = Q.tick; } }   // diagnostic: how close the leg came
+    if (hit) {
+      const { u, L } = hit, behind = ptDefBehind(c, carrier), q = ptDefQuality(t, c, "SLIDE", carrier, PT_DEF.q.slideBonus + (behind ? PT_DEF.q.slideBehind : 0) + (hit.al < 0.5 ? PT_DEF.q.shin : 0));
+      const out = q.tq > PT_DEF.q.won ? "WON" : q.tq > PT_DEF.q.poke ? "POKE" : "GLANCE";
+      // contact normal (horizontal, leg → ball centre); degenerate: the leg's sweep direction (toward the tucked side)
+      let nx = hit.qx - hit.cx, ny = hit.qy - hit.cy, nm = Math.hypot(nx, ny); if (nm < 1e-5) { nx = L.px; ny = L.py; nm = Math.hypot(nx, ny) || 1; } nx /= nm; ny /= nm;
+      // the leg's velocity at the contact point: the root's + the sweep's (ω × distance from the hip along ∂u/∂θ)
+      const rvx = (p.x - r0[0]) / PT_DT, rvy = (p.y - r0[1]) / PT_DT, arm = Math.hypot(hit.cx - L.hx, hit.cy - L.hy), lvx = rvx + L.om * arm * L.px, lvy = rvy + L.om * arm * L.py;
+      const B = S.ball, bIn = [b.vx, b.vy], vrx = lvx - b.vx, vry = lvy - b.vy, vn = vrx * nx + vry * ny, tvx = vrx - vn * nx, tvy = vry - vn * ny, vt = Math.hypot(tvx, tvy);
+      const pre = { x: hit.qx, y: hit.qy, z: b.z, vx: b.vx, vy: b.vy }, vS = Math.hypot(p.vx, p.vy);
+      let vx = b.vx, vy = b.vy, e = null, dvn = 0, dvt = 0;
+      if (out === "WON" || out === "POKE") { const mL = B.legMassFrac * (c.massKg || 75), mEff = mL / (mL + B.mBall); e = B.e[out];
+        dvn = (1 + e) * Math.max(0, vn) * mEff; dvt = vt > 1e-6 ? Math.min(B.muT * dvn, 0.4 * vt) : 0;
+        vx += dvn * nx + (vt > 1e-6 ? dvt * tvx / vt : 0); vy += dvn * ny + (vt > 1e-6 ? dvt * tvy / vt : 0);
+        const vOld = [b.vx, b.vy]; ptDefApplyV(t, i, c, out, vx, vy, carrierIdx);
+        b.x += (vOld[0] - b.vx) * PT_DT * u; b.y += (vOld[1] - b.vy) * PT_DT * u; }                  // the rest of the tick from the contact point with the new velocity
+      else { dvn = B.glanceV; b.vx += nx * B.glanceV; b.vy += ny * B.glanceV; }                         // a glancing touch: the carrier rides it (the carry law decides)
+      // spin: a ground ball rolls (ω = v / r) before; the tangential impulse adds a spin about the vertical (hollow sphere I = ⅔ m r²). RECORDED only —
+      // the playtest ball carries no spin state, and a rolling ball re-establishes rolling on the pitch
+      const spinIn = +(Math.hypot(bIn[0], bIn[1]) / R).toFixed(2), spinZ = +(1.5 * dvt / R * Math.sign(nx * tvy - ny * tvx || 1)).toFixed(2), spinOut = +(Math.hypot(b.vx, b.vy) / R).toFixed(2);
+      const region = hit.al >= 0.72 ? "FOOT" : hit.al >= 0.15 ? "SHIN" : hit.al >= 0 ? "KNEE" : "THIGH", sub = +u.toFixed(4);
+      d.contact = { out, q: +q.tq.toFixed(4), expose: +q.expose.toFixed(3), behind, legAt: +hit.al.toFixed(3), region, sub, subN: hit.n, point: [+pre.x.toFixed(4), +pre.y.toFixed(4), +pre.z.toFixed(4)],
+        legPoint: [+hit.cx.toFixed(4), +hit.cy.toFixed(4)], boot: [+L.ex.toFixed(4), +L.ey.toFixed(4)], normal: [+nx.toFixed(4), +ny.toFixed(4)], sweepTh: +L.th.toFixed(4), sweepOm: +L.om.toFixed(3),
+        vLeg: [+lvx.toFixed(3), +lvy.toFixed(3)], vRelN: +vn.toFixed(3), vRelT: +vt.toFixed(3), e, dvn: +dvn.toFixed(3), dvt: +dvt.toFixed(3), spinIn, spinZ, spinOut, sep: +(hit.dd - R - (hit.al < 0 ? 0.085 : S.footR12)).toFixed(4),
+        contactTick: Q.tick, slideV: +vS.toFixed(3), slideDist: +Math.hypot(p.x - d.x0, p.y - d.y0).toFixed(3), vIn: [+pre.vx.toFixed(3), +pre.vy.toFixed(3)], vOut: [+b.vx.toFixed(3), +b.vy.toFixed(3)],
+        attacker: carrier ? [+carrier.p.x.toFixed(3), +carrier.p.y.toFixed(3)] : null, relV: carrier ? +Math.hypot(p.vx - carrier.p.vx, p.vy - carrier.p.vy).toFixed(3) : null, tech: d.tech, tuck: d.tuck };
+      ptSquadEvent(t, Object.assign({ kind: "TACKLE", pid: i, type: "SLIDE", foot: d.foot, carrier: carrierIdx, ballFirst: d.oppContact == null, oppContactTick: d.oppContact }, d.contact));
+      ptRxManifoldAdd(d, { kind: "BALL", tick: Q.tick, sub: u, region, point: d.contact.point, normal: d.contact.normal, out });
+      if ((out === "WON" || out === "POKE") && Q.pass) Q.pass.done = true;
+    }
+  }
+  // the PLAN (information only — never an input to the contact law): where and when the leg will meet the ball if nothing changes, for the
+  // presentation to reach onto (the ball's point, the root, the sweep angle then)
+  d.plan = null;
+  if (!d.contact && d.vNow > 0) { const own = b.owner != null ? Q.ctx[b.owner].p : null, bvx = own ? own.vx : b.vx, bvy = own ? own.vy : b.vy; let x = p.x, y = p.y, v = d.vNow;
+    for (let k = 1; k <= S.planTicks && v > 0; k++) { x += Math.cos(d.dir) * v * PT_DT; y += Math.sin(d.dir) * v * PT_DT; v = Math.max(0, v - S.decel * PT_DT); const qx = b.x + bvx * k * PT_DT, qy = b.y + bvy * k * PT_DT;
+      const L = ptDefSlideLeg(d, x, y, tau + k * PT_DT, leg);
+      if (ptSegDist(qx, qy, L.hx, L.hy, L.ex, L.ey) <= R + S.footR12) { d.plan = { at: now + k * PT_DT, ball: [qx, qy, b.z], root: [x, y], th: L.th }; break; } } }
+  d.rootPrev = [p.x, p.y]; d.ballPrev = [b.x, b.y]; d.tauPrev = tau;
+  if (d.stopAt != null && d.stopAt <= now && !d.contact) { ptSquadEvent(t, { kind: "TACKLE", pid: i, type: "SLIDE", foot: d.foot, out: "MISS", carrier: carrierIdx, contactTick: null, minGap: d.minGap != null ? +d.minGap.toFixed(3) : null, minGapTick: d.minGapAt, slideV0: +d.v0.toFixed(2), dir: +d.dir.toFixed(3), slideDist: +Math.hypot(p.x - d.x0, p.y - d.y0).toFixed(3), tech: d.tech, tuck: d.tuck }); d.contact = { out: "MISS" }; }
+}
+function ptDefApplyV(t, i, c, out, vx, vy, carrierIdx) {                                          // V1.2: the authoritative WON / POKE bookkeeping with a physical velocity
+  const b = t.b; b.vx = vx; b.vy = vy; b.vz = 0; b.curve = null; b.owner = null; b.lastTeam = c.team;
+  if (carrierIdx != null) { b.exclPid = carrierIdx; b.exclT = t.now + (out === "WON" ? 0.5 : 0.35); }
+}
+// the challenge's bounded contact history (ball and bodies, in order) — the facts a future referee reads; never an input to anything else
+function ptRxManifoldAdd(d, e) { const M = d.manifold || (d.manifold = []); if (M.length >= 12) return false; e.n = M.length + 1; M.push(e); return true; }
 function ptSegDist(px, py, ax, ay, bx, by) { const dx = bx - ax, dy = by - ay, L = dx * dx + dy * dy, s = L > 1e-12 ? Math.max(0, Math.min(1, ((px - ax) * dx + (py - ay) * dy) / L)) : 0; return Math.hypot(ax + s * dx - px, ay + s * dy - py); }
 // closest approach of two points moving linearly over the same interval (the boot and the ball within one tick)
 function ptSegSeg(a0x, a0y, a1x, a1y, b0x, b0y, b1x, b1y) { const r0x = a0x - b0x, r0y = a0y - b0y, dx = (a1x - a0x) - (b1x - b0x), dy = (a1y - a0y) - (b1y - b0y), dd = dx * dx + dy * dy;
@@ -218,7 +341,7 @@ function ptDefOccupancy(t) {
   if (!ptDefOn(t)) return;
   // TACKLED-PLAYER V1: a body that is ON THE PITCH (a launched slide, a fallen player) is not a standing disc — legs interact with it through the
   // contact model (pt_react.js) and, once it lies still, through its body capsule (ptRxOccupancy)
-  const low = typeof ptRxMotion === "function" ? t.squad.ctx.map(c => (c.def && c.def.kind === "SLIDE" && t.now >= c.def.launchAt) || (c.react && c.react.kind === "FALL" && t.now >= c.react.tFall)) : null;
+  const low = typeof ptRxMotion === "function" ? t.squad.ctx.map(c => (c.def && c.def.kind === "SLIDE" && t.now >= c.def.launchAt && !(c.def.rule === "far" && c.def.stopAt != null && t.now >= c.def.stopAt + PT_DEF.slide.groundT)) || (c.react && c.react.kind === "FALL" && t.now >= c.react.tFall)) : null;   // V1.2: kneeling / getting up he is a standing body again
   const ps = t.squad.ctx.map(c => c.p), n = ps.length, R2 = PT_DEF.bodyR * 2;
   for (let i = 0; i < n; i++) { const a = ps[i]; for (let j = 0; j < n; j++) { if (j === i || (low && (low[i] || low[j]))) continue; const c = ps[j];
     const dx = c.x - a.x, dy = c.y - a.y, d = Math.hypot(dx, dy); if (d < 1e-9 || d > R2 + 0.32) continue;

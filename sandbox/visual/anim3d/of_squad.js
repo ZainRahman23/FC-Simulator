@@ -154,8 +154,8 @@ function ofSquadDefHud(Q) {
   const DEFK = typeof OFDEF !== "undefined" && typeof ofDefHud === "function" ? ofDefHud() : "";
   const pc = Q.events.slice().reverse().find(e => e.kind === "PLAYER_CONTACT");
   const l4 = pc ? `  player hit  ${nm(pc.attacker)} by ${nm(pc.tackler)} ${pc.type}: ${pc.prim} → ${pc.seg} (${pc.segPlanted ? "weight-bearing" : pc.segPlanted === false ? "swinging" : "body"}, ${pc.stride})  vn ${pc.vn}  J ${pc.J}  support ${pc.supportLost ? "LOST" : "kept"}  error ${pc.e0} / step ${pc.rc} m  → ${pc.react || pc.cls}${pc.family ? " " + pc.family : ""}  ${pc.order}` : "";
-  const RXD = typeof ofRxdHud === "function" ? ofRxdHud() : "";
-  return [l1, l2, l3, l4, RXD, "controls    Z hold jockey · Space stand tackle · F slide · Tab switch · R restart · Shift+Y auto defend", DEFK].filter(Boolean).join("\n");
+  const RXD = typeof ofRxdHud === "function" ? ofRxdHud() : "", SGD = typeof ofSgdHud === "function" ? ofSgdHud() : "", V12 = typeof ofDefV12Hud === "function" ? ofDefV12Hud(Q, nm) : "";
+  return [l1, l2, l3, l4, V12, RXD, SGD, "controls    Z hold jockey · Space stand tackle · F slide · Tab switch · R restart · Shift+Y auto defend · Shift+T tackled-player demo · Shift+G side-on slide demo", DEFK].filter(Boolean).join("\n");
 }
 // ── temporary controls (capture phase, only while a squad drill runs) ──────────────────────────────────────────────────────────
 function ofSquadKeys() {
