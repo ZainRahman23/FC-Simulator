@@ -36,6 +36,7 @@ function ptDefOn(t) { return !!(t.squad && t.squad.spec && t.squad.spec.defendin
 function ptDefMotion(t) {
   if (!ptDefOn(t)) return null;
   const Q = t.squad, c = Q.ctx[Q.cur], d = c.def, p = t.p, b = t.b, now = t.now, S = PT_DEF.slide, T = PT_DEF.stand;
+  if (c.react && typeof ptRxMotion === "function") { const rx = ptRxMotion(t, c); if (rx) return rx; }   // TACKLED-PLAYER V1: a reaction owns his movement
   if (d && d.kind === "SLIDE") {
     if (now < d.launchAt) return { lock: true, v: [p.vx, p.vy], facing: d.dir };                 // the drop into the slide: no new input, his momentum carries
     if (d.vNow > 0) {                                                                              // SLIDING: authoritative uniform deceleration
@@ -201,12 +202,8 @@ function ptDefResolve(t) {
         for (let k = 1; k <= S.planTicks && v > 0; k++) { x += fx * v * PT_DT; y += fy * v * PT_DT; v = Math.max(0, v - S.decel * PT_DT); const qx = b.x + bvx * k * PT_DT, qy = b.y + bvy * k * PT_DT;
           const kk = (S.legFrom + (S.reachAhead - S.legFrom) * Math.max(0, Math.min(1, (now + k * PT_DT - d.launchAt) / S.extT))) * leg;
           if (ptSegDist(qx, qy, x + fx * k0 + lx, y + fy * k0 + ly, x + fx * kk + lx, y + fy * kk + ly) <= R + S.footR) { d.plan = { at: now + k * PT_DT, ball: [qx, qy, b.z], root: [x, y] }; break; } } }
-      // the sliding leg against the carrier's body (the opponent-contact FACT): capsule root → boot vs his disc
-      if (carrier && d.oppContact == null && ptSegDist(carrier.p.x, carrier.p.y, p.x, p.y, bx, by) < PT_DEF.bodyR + 0.05) {
-        d.oppContact = Q.tick; ptSquadEvent(t, { kind: "TACKLE_BODY_CONTACT", pid: i, type: "SLIDE", on: carrierIdx, ballFirst: !!d.contact, tick: Q.tick, slideV: +Math.hypot(p.vx, p.vy).toFixed(3), behind: ptDefBehind(c, carrier), relV: +Math.hypot(p.vx - carrier.p.vx, p.vy - carrier.p.vy).toFixed(3), attacker: [+carrier.p.x.toFixed(3), +carrier.p.y.toFixed(3)] });
-        // the sliding leg has met a standing body: it cannot slide THROUGH him — the slide stops here (no trip / fall in V1)
-        if (d.vNow > 0) { d.vNow = 0; d.stopAt = now; p.vx = 0; p.vy = 0; }
-      }
+      // TACKLED-PLAYER V1: the body contact is now the segment-level contact model (pt_react.js ptRxStep) — the leg meets his feet / shins /
+      // knees, the sliding body meets his legs — and its impulse slows the slide instead of a disc test stopping it dead
       d.rootPrev = [p.x, p.y]; d.ballPrev = [b.x, b.y];
       if (d.stopAt === now && !d.contact) { ptSquadEvent(t, { kind: "TACKLE", pid: i, type: "SLIDE", foot: d.foot, out: "MISS", carrier: carrierIdx, contactTick: null, minGap: d.minGap != null ? +d.minGap.toFixed(3) : null, minGapTick: d.minGapAt, slideV0: +d.v0.toFixed(2), dir: +d.dir.toFixed(3), slideDist: +Math.hypot(p.x - d.x0, p.y - d.y0).toFixed(3) }); d.contact = { out: "MISS" }; }
     }
@@ -219,14 +216,17 @@ function ptSegSeg(a0x, a0y, a1x, a1y, b0x, b0y, b1x, b1y) { const r0x = a0x - b0
 // ── OCCUPANCY (world.py PLAYER PHYSICAL OCCUPANCY V1, ported): closing velocity removed, then a positional Jacobi mop-up ─────────
 function ptDefOccupancy(t) {
   if (!ptDefOn(t)) return;
+  // TACKLED-PLAYER V1: a body that is ON THE PITCH (a launched slide, a fallen player) is not a standing disc — legs interact with it through the
+  // contact model (pt_react.js) and, once it lies still, through its body capsule (ptRxOccupancy)
+  const low = typeof ptRxMotion === "function" ? t.squad.ctx.map(c => (c.def && c.def.kind === "SLIDE" && t.now >= c.def.launchAt) || (c.react && c.react.kind === "FALL" && t.now >= c.react.tFall)) : null;
   const ps = t.squad.ctx.map(c => c.p), n = ps.length, R2 = PT_DEF.bodyR * 2;
-  for (let i = 0; i < n; i++) { const a = ps[i]; for (let j = 0; j < n; j++) { if (j === i) continue; const c = ps[j];
+  for (let i = 0; i < n; i++) { const a = ps[i]; for (let j = 0; j < n; j++) { if (j === i || (low && (low[i] || low[j]))) continue; const c = ps[j];
     const dx = c.x - a.x, dy = c.y - a.y, d = Math.hypot(dx, dy); if (d < 1e-9 || d > R2 + 0.32) continue;
     const nx = dx / d, ny = dy / d, vn = a.vx * nx + a.vy * ny; if (vn <= 0) continue; const allowed = Math.max(0, (d - R2) / PT_DT);
     if (vn > allowed) { a.vx -= (vn - allowed) * nx; a.vy -= (vn - allowed) * ny; } } }
   for (let it = 0; it < PT_DEF.occIters; it++) {
     const corr = ps.map(() => [0, 0]); let worst = 0;
-    for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) { const a = ps[i], c = ps[j], dx = c.x - a.x, dy = c.y - a.y, d2 = dx * dx + dy * dy; if (d2 >= R2 * R2) continue;
+    for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) { if (low && (low[i] || low[j])) continue; const a = ps[i], c = ps[j], dx = c.x - a.x, dy = c.y - a.y, d2 = dx * dx + dy * dy; if (d2 >= R2 * R2) continue;
       let ux, uy, pen; if (d2 < 1e-12) { ux = 0; uy = 1; pen = R2; } else { const d = Math.sqrt(d2); ux = dx / d; uy = dy / d; pen = R2 - d; }
       worst = Math.max(worst, pen); corr[i][0] -= ux * pen / 2; corr[i][1] -= uy * pen / 2; corr[j][0] += ux * pen / 2; corr[j][1] += uy * pen / 2; }
     if (worst <= PT_DEF.occTol) break;
@@ -261,7 +261,7 @@ function ptDefIntents(t) {
   for (let i = 0; i < Q.ctx.length; i++) {
     const c = Q.ctx[i], p = c.p, m = c.ai.mode; c.aiJockey = false; c.aiKeys = null;
     if (i === Q.active && !c.assist && !Q.humanAi) continue;
-    if (m === "HOLD" || c.def) continue;
+    if (m === "HOLD" || m === "SCRIPT" || c.def) continue;                                         // SCRIPT: review fixtures follow their own path
     const attackX = ptDefAttack(Q, c.team), ownX = ptDefAttack(Q, 1 - c.team), cy = bx ? 0.5 * (bx[2] + bx[3]) : 34;
     if (carrierIdx === i) {                                                                           // AI CARRIER: dribble at the line; pass when pressed and a lane is clear
       if (m !== "DRIBBLE" && m !== "SSG") continue;

@@ -64,9 +64,9 @@ const ptWrap = (a) => Math.atan2(Math.sin(a), Math.cos(a));
 function ptSqCtx(spec, i) {
   const legLen = spec.legLen || PT.LEG_REF;
   return { idx: i, name: spec.name || ("P" + (i + 1)), team: spec.team || 0, char: spec.char || null,
-    ai: Object.assign({ mode: "HOLD" }, spec.ai || {}), attrs: spec.attrs || null, home: spec.home || [spec.x, spec.y], mark: spec.mark != null ? spec.mark : null,
+    ai: Object.assign({ mode: "HOLD" }, spec.ai || {}), attrs: spec.attrs || null, massKg: spec.massKg || null, react: null, home: spec.home || [spec.x, spec.y], mark: spec.mark != null ? spec.mark : null,
     assist: false, stunT: 0, vPrev: null, faceHold: null,
-    p: { x: spec.x, y: spec.y, vx: spec.vx || 0, vy: spec.vy || 0, facing: spec.facing || 0, touchT: 0, legLen, gaitPhase: 0.08, gaitSettled: true },
+    p: { x: spec.x, y: spec.y, vx: spec.vx || 0, vy: spec.vy || 0, facing: spec.facing || 0, touchT: 0, legLen, gaitPhase: spec.gaitPhase != null ? spec.gaitPhase : 0.08, gaitSettled: spec.gaitPhase == null },
     kick: null, kickInfo: null, kickLog: [], touchPlan: null, dribSeq: null, dbgTouch: null, ctrlState: null, touchN: 0, touchLog: [], touchInfo: null,
     presDir: undefined, liveTurn: 0, lastTouchT: undefined, lastTouchFoot: null, lastTouch: null, lastFoot: undefined, corr: undefined, contactLog: undefined,
     charge: null, tickN: 0, looseT: undefined, inDir: null, gait: null, ctrlSince: 0, corrT: undefined, boots: null, pfoot: spec.pfoot || "R",
@@ -112,7 +112,7 @@ function ptSquadStep(t) {
     ptSqOut(t, c);
   }
   t.keys = human;
-  if (Q.spec.defending) { ptDefOccupancy(t); ptDefResolve(t); }                                 // DEFENDING V1: bodies, then every tackle contact due this tick
+  if (Q.spec.defending) { ptDefOccupancy(t); ptDefResolve(t); if (typeof ptRxStep === "function") { ptRxStep(t); ptRxOccupancy(t); } }   // + TACKLED-PLAYER V1: body contacts, reactions, bodies on the pitch                                 // DEFENDING V1: bodies, then every tackle contact due this tick
   if (b.owner == null && !b.held) ptSquadReceive(t);
   else for (const c of Q.ctx) c.recvPlan = null;
   if (Q.pendingActive != null) { Q.active = Q.pendingActive; Q.pendingActive = null; }

@@ -1,0 +1,182 @@
+<h1>Touchline — Tackled Player Reactions V1</h1>
+<p class="dim">branch <code>prototype/3d-animation-pipeline</code> · built on <code>baseline/defending-v1.1-slide</code> (cdb0735) · frozen controls <code>baseline/outfield-runtime-v1</code>, <code>baseline/possession-v1.1-handoff</code>, <code>baseline/defending-v1.1-slide</code> untouched · local only, nothing pushed</p>
+<div class="lede">A challenge that reaches the attacker's legs now matters. The simulation finds which part of him was hit (foot, shin, knee, thigh, body) and whether that leg was carrying his weight. From the relative velocity and both players' recorded weights it works out the impulse. It then asks the balance question real players answer: <b>can he get a foot down where his momentum is taking him, in the time he has?</b> The answer is a continuum: nothing; a corrected step; a stumble of several steps; or a fall. For a fall, it decides the direction his body travels, the way it rotates, when he meets the pitch, how far he slides, and how he gets up. The presentation solves the skeleton around those facts. Nothing is picked from a list of falls, and nothing is random.</div>
+<div class="url"><b>Play:</b> <code>http://127.0.0.1:8124/sandbox/visual/match.html?ofPlay=1&amp;fps=60&amp;squad=D7</code><br>
+<span class="dim"><kbd>Shift</kbd>+<kbd>7</kbd>/<kbd>8</kbd>/<kbd>9</kbd> the defending drills. Without the ball: <kbd>Z</kbd> jockey, <kbd>Space</kbd> standing tackle, <kbd>F</kbd> slide. <kbd>Tab</kbd> takes the attacker. Any challenge that meets his legs produces the reaction the contact causes. <b><kbd>Shift</kbd>+<kbd>T</kbd> tackled-player demo</b> (<kbd>Shift</kbd>+<kbd>N</kbd> next case, <kbd>-</kbd> 0.25×) runs the counterfactual pairs below back to back. <kbd>Shift</kbd>+<kbd>Y</kbd> is the defending demo. The HUD's "player hit" line shows the contact, the balance numbers and the reaction.</span></div>
+
+<h2>1 · What the research says</h2>
+<ul>
+<li><b>Balance is not decided by being touched.</b> A walker or runner stays up while he can put a foot beyond his <i>extrapolated centre of mass</i> (Hof: position + velocity / √(g/l), the "capture point") in the time he has. The margin of stability is the distance by which that holds. A perturbation matters through what it does to the capture point, the support, and the time until the next support.</li>
+<li><b>Support state changes the outcome of the same contact</b> (trip studies, Eng, Winter &amp; Patla 1994):
+<ul>
+<li>An obstacle met early in the swing is usually cleared by <i>elevating</i> the foot.</li>
+<li>Late in the swing it is handled by <i>lowering</i> the foot early, with a short step.</li>
+<li>If the stepping cannot keep up, the result is the forward trip.</li>
+<li>A weight-bearing foot taken away removes the support itself.</li>
+</ul></li>
+<li><b>Direction.</b>
+<ul>
+<li>Trips fall forward, with hands, forearms and knees taking the impact.</li>
+<li>Backward falls come from the feet being driven forward (slips, feet swept from behind) and land on the hip and pelvis.</li>
+<li>Sideways perturbations are met with a side-step or a crossover. The crossover extends the base poorly, so strong lateral loss produces hip and shoulder falls.</li>
+</ul></li>
+<li><b>Running.</b> At sprint pace the ground contact is about 0.10–0.12 s, flight about 0.12 s, and 4.5–5 steps/s. A sprinter is airborne almost half the time, and his momentum dominates where he ends up.</li>
+<li><b>Genuine versus theatrical falls</b> (Morris &amp; Lewis 2010). A genuine fall is <i>continuous with the moment of contact</i>, <i>proportional</i> to it and <i>spatially aligned</i> with where it happened. Dives show a delay, exaggeration and misalignment. A causal model has to produce the former by construction.</li>
+</ul>
+<p class="dim">Sources: Hof 2008 (extrapolated centre of mass); Eng, Winter &amp; Patla 1994 (trip recovery strategies); fall-direction and arrest-strategy studies; lateral-perturbation stepping studies; sprint spatiotemporal studies; Morris &amp; Lewis 2010 (<i>Tackling diving</i>). I studied written biomechanics and coaching sources, not match video.</p>
+
+<h2>2 · Contact facts: reused and added</h2>
+<table><thead><tr><th class="l">already authoritative (reused)</th><th class="l">added (authoritative, per contact)</th></tr></thead><tbody>
+<tr><td class="l">tackle type, the ball contact (tick, sub-step, point, outcome), tackle quality, from-behind, closing speed, carrier position, possession outcome, the slide's own motion, stride clock <code>p.gaitPhase</code> and the gait's stance fraction</td>
+<td class="l">
+<ul>
+<li>tackler primitive (slide leg / sliding body / standing-tackle foot) and the attacker segment (foot, shin, thigh per leg, pelvis, torso);</li>
+<li>contact point, normal, penetration, sub-step;</li>
+<li>relative velocity (normal and tangential);</li>
+<li>support state (R / L planted), stride (single / double / airborne), stride phase;</li>
+<li>whether the struck leg bears weight;</li>
+<li>both masses (recorded weights);</li>
+<li>impulse J, the planted foot's friction capacity, foot displacement, support lost, swing-landing shift and delay, ΔV of the centre of mass, spin, tip;</li>
+<li>time to the next support, capture-point error, per-step correction, growth per step, error trace, vertical drop against capacity, collapse, obstacle;</li>
+<li>the reaction and its trajectory;</li>
+<li>ball / man order (ball-first / simultaneous / man-first / no ball).</li>
+</ul></td></tr>
+</tbody></table>
+
+<h2>3 · The model (simulation, <code>pt_react.js</code>)</h2>
+<h3>Body</h3>
+<p>The attacker's legs are rebuilt from the authoritative stride clock with rig-correct sides (the known Dribbling mirror in <code>ofBootPlan</code> is not used here and not fixed).</p>
+<ul>
+<li><b>Foot position.</b> Along the travel from the gait's own longitudinal law.</li>
+<li><b>Swing-foot height.</b> A lift curve, 0.10 m walking to 0.34 m sprinting.</li>
+<li><b>Knee.</b> By two-link geometry.</li>
+</ul>
+<p>Capsules: foot r 0.05, shin 0.06, thigh 0.08, pelvis 0.15, torso 0.17. Each exists because it changes a reaction: foot and shin tell a sweep from a clip, and the thigh changes transmission. The segment velocity is the stride law's own finite difference, so a foot in mid-stance is still and a foot arriving at heel strike carries its swing velocity.</p>
+<h3>Contact</h3>
+<p>The tackler's primitives are swept against the segments in 4 sub-steps per tick, and the first overlap is the contact:</p>
+<ul>
+<li>the slide's leg (the Defending leg capsule);</li>
+<li>the sliding body on the pitch;</li>
+<li>a standing tackle's sweeping foot at its contact tick.</li>
+</ul>
+<p>It is event-driven: only while a challenge is live and within 2.6 m of an opponent.</p>
+<h3>Impulse</h3>
+<p><code>J = m_red · v_n</code>, with <code>m_red = m_T·m_S/(m_T+m_S)</code>. The effective struck mass <code>m_S</code> is:</p>
+<ul>
+<li>for a swing-leg segment, its own mass (foot 1.45 %, shank + foot 6.1 %, whole leg 16.1 % of body mass; Dempster / Winter);</li>
+<li>for a weight-bearing leg, half the body, coupled through the stance column.</li>
+</ul>
+<p>The masses are the players' <b>recorded weights</b> (<code>identity.weightKg</code>; 75 kg when absent). The impulse is then routed:</p>
+<ul>
+<li>A planted foot moves only by what exceeds its friction capacity <code>μ·(weight on it)·t_c</code> (μ 0.65, t_c 0.05 s). Displaced ≥ 0.18 m, its support is lost.</li>
+<li>A swing foot's landing is pushed off course and, if struck by the tackler's body or leg, delayed.</li>
+<li>The centre of mass receives the fraction the segment transmits (foot 0.12, shin 0.25, thigh 0.55, body 1).</li>
+<li><b>Spin</b> about the vertical comes from the lever arm and the tangential component.</li>
+<li><b>Tip</b> about a horizontal axis is (COM height − contact height) × J / (m·k²), k² 0.16 m². The struck part goes with the blow; the head and trunk go the other way.</li>
+<li>The tackler receives the opposite impulse: his slide slows, and may continue under the stride.</li>
+</ul>
+<h3>Balance</h3>
+<p>This is the linear inverted pendulum, ω = √(g / COM height). The capture-point error at the first possible support combines four things:</p>
+<ul>
+<li>ΔV amplified by e^(ω·t_support);</li>
+<li>the support moved under him;</li>
+<li>the landing shifted or delayed;</li>
+<li>a body on the pitch where the next foot would land, which that step must clear.</li>
+</ul>
+<p>How the steps absorb it:</p>
+<ul>
+<li>A step corrects up to <i>r</i> in the error's direction, anisotropic in the body frame: forward 0.42, back 0.20, outward 0.30, crossover 0.12 × leg.</li>
+<li>What it cannot absorb grows by e^(ω·T_step) until the next step. <b>Recovered in one step → CORRECTION; in several → STUMBLE; outgrows the steps → FALL.</b></li>
+<li>Vertically, a swept stance leg loses its remaining push-off. The drop until the other foot takes the weight is compared with what a landing leg absorbs (0.14 × leg). Beyond that is a <b>collapse</b>, whatever the horizontal error.</li>
+</ul>
+<h3>Fall</h3>
+<ul>
+<li><b>Travel direction.</b> Where the capture point escapes the support, plus the momentum.</li>
+<li><b>Body rotation.</b> The topple, against the tip.</li>
+<li><b>Timing.</b> An inverted-pendulum topple from the actual offset and velocity; a collapse is ballistic.</li>
+<li><b>Horizontal motion.</b> The root carries the momentum, lands, slides with ground friction (μ 0.9) and stops.</li>
+<li><b>Landing family.</b> From the rotation relative to his facing: FRONT, SIDE (mirrored) or BACK.</li>
+<li><b>Recovery.</b> Its time follows the family.</li>
+</ul>
+<h3>Possession</h3>
+<p>A fall releases the ball: LOOSE, under its own physics, so anyone can collect it, including him once he is up. A stumble suspends his carry touches until he is balanced, while the envelope law still applies. There is no dead-ball reset. He cannot receive while down.</p>
+<h3>Bodies</h3>
+<p>A launched slide and a fallen player are no longer standing discs:</p>
+<ul>
+<li>legs meet the moving slide through the contact model;</li>
+<li>a body lying still is a capsule standing players are kept out of;</li>
+<li>a faller in the air goes over a tackler on the pitch, not through him.</li>
+</ul>
+<h3>Attributes (hooks only, neutral)</h3>
+<ul>
+<li><b>Balance</b> scales the friction capacity and the drop capacity.</li>
+<li><b>Agility</b> scales the step correction.</li>
+<li><b>Strength</b> scales the impulse he absorbs.</li>
+<li>Every factor is exactly 1 at the reference profile. No OVR.</li>
+</ul>
+
+<h2>4 · Presentation (<code>anim3d/of_react.js</code>)</h2>
+<ul>
+<li><b>Correction / stumble.</b> Over the locomotion, which plays the simulation's braked and redirected velocity:
+<ul>
+<li>trunk lean toward the balance error, arms out, and the knees giving, in proportion to the error and decaying step by step;</li>
+<li>the struck swing leg is pulled the way it was hit;</li>
+<li>a body on the pitch in his path makes the next step a raised one.</li>
+</ul></li>
+<li><b>Fall.</b> A continuous blend of a forward, a side (mirrored) and a backward basis, each a mid-fall and a landed key pose. It is weighted by the rotation direction relative to his body, recomputed every tick as he spins, and advanced by the simulation's own topple timeline.
+<ul>
+<li>The body is lowered by its measured lowest point every tick, so hands, knees, hip and shoulder meet the pitch in the order the rotating pose brings them down.</li>
+<li>The protective arms are part of each basis.</li>
+<li>The body's yaw is the simulation's facing, including the spin.</li>
+</ul></li>
+<li><b>Recovery.</b>
+<ul>
+<li>Face down: hands and knees → kneel → crouch.</li>
+<li>On a side: roll to hands and knees → kneel → crouch.</li>
+<li>On the back: sit up → kneel → crouch.</li>
+<li>Timed to the simulation's windows and blended from wherever the body is.</li>
+</ul></li>
+<li><b>Key poses are solved, not hand-set.</b> Seven basis poses are fitted through the rig's forward kinematics with anatomical bounds; the get-up reuses the slide's kneel and crouch. No ragdoll: the measurements below show a deterministic hybrid is enough for V1.</li>
+</ul>
+
+<h2>5 · Counterfactuals: one causal variable changes</h2>
+<p>Each pair is two deterministic fixtures that differ in <b>one</b> input. Everything shown is the simulation's own record of that contact.</p>
+{{PAIRS}}
+
+<h2>6 · More situations</h2>
+{{SINGLES}}
+
+<h2>7 · The contact matrix</h2>
+<p>A runner without the ball and a defender running on a line launch a slide timed to reach him. Swept: runner speed, slide direction, stride phase at contact, lateral offset. This shows a continuum, not canned reactions.</p>
+{{MATRIX}}
+
+<h2>8 · Regression, neutrality, determinism</h2>
+{{GATES}}
+<h3>Against <code>baseline/defending-v1.1-slide</code>: every difference is explained by the new model</h3>
+<p>A fixture is <b>IDENTICAL</b>, or an <b>EXPECTED CHANGE</b>. An expected change means the authoritative trace first diverges either at or after a player-body contact (the new reaction state and what follows from it), or while a launched slide is within 1.2 m of an opponent. The latter is the one intended change before contact: a sliding body is no longer a standing disc. The events before the divergence must be identical, and anything else fails.</p>
+{{RXDEF}}
+<p>The small-sided games and the defending demos, compared the same way:</p>
+{{RXSSG}}
+
+<h2>9 · Performance</h2>
+<p>Measured separately:</p>
+<ul>
+<li>contact detection;</li>
+<li>balance and reaction planning;</li>
+<li>bodies on the pitch;</li>
+<li>disc occupancy;</li>
+<li>the reaction skeleton solve, including its ground measurement.</li>
+</ul>
+<p>Measured at 2, 6 and 22 players (the 11 v 11 fixture <code>?squad=D22</code>), simulation only and simulation with every rig. Players not in a contact event cost nothing beyond a distance check.</p>
+{{PERF}}
+
+<h2>10 · Limitations and next</h2>
+<ul>
+<li>Contact regions are what V1 challenges can physically reach: ground slides and standing-tackle feet meet feet and shins. Knee, thigh and body contacts are modelled, since their transmission and tip differ, but they are rare with these challenges.</li>
+<li><b>Near-graze contacts are sensitive</b> by nature. A centimetre decides whether a foot is caught square or brushed. Review pairs were chosen where neighbouring geometry gives the same contact.</li>
+<li>No full ragdoll. The fall is a solved directional basis on an authoritative trajectory. Arms and limbs are not collided with other bodies; the tackled player's own legs do not interact with the tackler's body while falling.</li>
+<li>The tackler's own balance is not modelled beyond losing speed (V1 slides are already on the ground).</li>
+<li>Single-contact model: the first contact of a challenge resolves it. A second body contact in the same challenge is not re-evaluated.</li>
+<li>Foul facts: ball / man order, tackle quality, from-behind, closing speed and the contacted segment are recorded for the future referee. No call is made.</li>
+<li><b>Recorded, not fixed.</b> Dribbling V1's <code>ofBootPlan</code> lateral mirror.</li>
+</ul>

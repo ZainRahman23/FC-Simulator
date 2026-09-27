@@ -161,19 +161,22 @@
 <script src="corner-flags.js"></script>
 <script src="match.js?v=pt2"></script>
 <script src="pt_squad.js"></script>
-<script src="pt_defend.js"></script>   <!-- DEFENDING V1: jockey / standing tackle / slide tackle / occupancy (simulation), inert outside defending drills -->   <!-- RECEIVING + PASSING V1: squad play on the playtest (simulation), inert unless a squad is set up -->
+<script src="pt_defend.js"></script>   <!-- DEFENDING V1: jockey / standing tackle / slide tackle / occupancy (simulation), inert outside defending drills -->
+<script src="pt_react.js"></script>   <!-- TACKLED-PLAYER V1: contact / balance / fall (simulation), inert outside defending drills -->
 <script src="anim3d/gk_playtest.js"></script>
 <script src="anim3d/of_rig.js"></script>
 <script src="anim3d/of_motion.js"></script>
 <script src="anim3d/of_loco.js"></script>
 <script src="anim3d/of_kick.js"></script>
 <script src="anim3d/of_recv.js"></script>
-<script src="anim3d/of_defend.js"></script>   <!-- DEFENDING V1: jockey / tackle / slide presentation (inert unless a defending drill runs) -->   <!-- RECEIVING V1: first-touch presentation (inert unless a squad drill runs) -->
+<script src="anim3d/of_defend.js"></script>   <!-- DEFENDING V1: jockey / tackle / slide presentation (inert unless a defending drill runs) -->
+<script src="anim3d/of_react.js"></script>   <!-- TACKLED-PLAYER V1: stumble / fall / ground / recovery presentation (inert unless a defending drill runs) -->
 <script src="anim3d/of_character.js"></script>
 <script src="anim3d/of_char_gl.js"></script>
 <script src="anim3d/of_squad.js"></script>
 <script src="anim3d/of_autopass.js"></script>
-<script src="anim3d/of_defdemo.js"></script>   <!-- AUTO DEFEND demo (playtest instrumentation, inputs only): Shift+Y on/off, Shift+B pattern, - slow -->   <!-- AUTO PASS / RECEIVE demo (playtest instrumentation, inputs only): Y on/off, B pattern, = family, - slow -->   <!-- RECEIVING + PASSING V1: live multi-player harness, ?ofPlay=1&squad=7|8|9 -->
+<script src="anim3d/of_defdemo.js"></script>   <!-- AUTO DEFEND demo (playtest instrumentation, inputs only): Shift+Y on/off, Shift+B pattern, - slow -->
+<script src="anim3d/of_rxdemo.js"></script>   <!-- TACKLED-PLAYER demo (inputs only): Shift+T on/off, Shift+N next case, - slow -->
 <script src="anim3d/of_player.js"></script>   <!-- playable outfield locomotion test: active only with ?ofPlay=1 -->
 <script src="anim3d/of_scene.js"></script>   <!-- outfield rig foundation: line-up / benchmark scene, active only with ?ofScene= -->   <!-- playable Courtois test harness: active only with ?gkPlay=1 -->
 </body>

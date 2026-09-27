@@ -35,4 +35,18 @@ echo -n "SSG determinism "; node of_def_tracediff.js $OUT/ssg_on.json $OUT/ssg_o
 node of_def_run.js --demo jockey,stand_win,stand_miss,retention,slide_win,slide_miss,intercept --ticks 3600 --out $OUT/demo_on.json --udd $U/h1 > $OUT/demo_on.log 2>&1
 node of_def_run.js --demo jockey,stand_win,stand_miss,retention,slide_win,slide_miss,intercept --ticks 3600 --anim off --out $OUT/demo_off.json --udd $U/h2 > $OUT/demo_off.log 2>&1
 echo -n "demos ON/OFF    "; node of_def_tracediff.js $OUT/demo_on.json $OUT/demo_off.json | tail -1
+echo "== 6. TACKLED-PLAYER V1: reaction fixtures ON/OFF + determinism; defending fixtures / games / demos vs baseline/defending-v1.1-slide (contact-aware)"
+X=http://127.0.0.1:8133/sandbox/visual/match.html
+node of_rp_probe.js --scenfile ./of_react_scenarios.js --scen all --out $OUT/rx_on --udd $U/r1 > $OUT/rx_on.log 2>&1
+node of_rp_probe.js --scenfile ./of_react_scenarios.js --scen all --anim off --out $OUT/rx_off --udd $U/r2 > $OUT/rx_off.log 2>&1
+node of_rp_probe.js --scenfile ./of_react_scenarios.js --scen all --out $OUT/rx_on2 --udd $U/r3 > $OUT/rx_on2.log 2>&1
+echo -n "reactions ON/OFF      "; node of_rp_regress.js $OUT/rx_on/probe.json $OUT/rx_off/probe.json | tail -1
+echo -n "reactions determinism "; node of_rp_regress.js $OUT/rx_on/probe.json $OUT/rx_on2/probe.json | tail -1
+node of_rp_probe.js --scenfile ./of_def_scenarios.js --scen $DEF --url $X --out $OUT/tag_def --udd $U/t1 > $OUT/tag_def.log 2>&1
+node of_rx_gate.js $OUT/tag_def/probe.json $OUT/def_on/probe.json > $OUT/rx_gate_def.txt; tail -1 $OUT/rx_gate_def.txt
+node of_def_run.js --drill D7,D8,D9 --ticks 7200 --url $X --out $OUT/tag_ssg.json --udd $U/t2 > $OUT/tag_ssg.log 2>&1
+node of_rx_gate_run.js $OUT/tag_ssg.json $OUT/ssg_on.json > $OUT/rx_gate_ssg.txt; tail -1 $OUT/rx_gate_ssg.txt
+node of_def_run.js --demo jockey,stand_win,stand_miss,retention,slide_win,slide_miss,intercept --ticks 3600 --url $X --out $OUT/tag_demo.json --udd $U/t3 > $OUT/tag_demo.log 2>&1
+node of_rx_gate_run.js $OUT/tag_demo.json $OUT/demo_on.json > $OUT/rx_gate_demo.txt; tail -1 $OUT/rx_gate_demo.txt
+node of_rx_perf.js --ticks 3600 --out $OUT/perf.json --udd $U/p1 > $OUT/perf.txt 2>&1; cat $OUT/perf.txt
 echo GATES_DONE

@@ -6000,6 +6000,8 @@ function ptPlayerStep(t) {
     else { b.ctrl = false; t.ctrlState = null; t.touchPlan = null; t.last = "LOOSE (escaped control envelope)"; }
     if (b.ctrl && t.kick) { /* wind-up: no carry touches; the ball keeps
         rolling under normal physics until the authoritative contact */ }
+    else if (b.ctrl && t.squad && t.squad.spec.defending && t.squad.ctx[t.squad.cur] && t.squad.ctx[t.squad.cur].react && t.squad.ctx[t.squad.cur].react.carryHold) {
+      /* TACKLED-PLAYER V1: a stumbling carrier makes no touches until he is balanced; the ball rolls on (the envelope law still applies) */ }
     else if (b.ctrl) {
       p.touchT -= PT_DT;
       // CONTROLLED DRIBBLING V1 — mirror of world.py carry_touch: solved

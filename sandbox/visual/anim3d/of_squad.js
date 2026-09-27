@@ -7,6 +7,9 @@
 // It never writes the simulation; with OFPLAY.animOff the whole layer is skipped and the simulation runs on, bit-identical.
 const OFSQ = { on: false, drill: null, actors: [], recvRecs: [], passRecs: [], names: true, perf: { plan: [], pres: [] }, lastRecvTick: -1, cam: null };
 // drills: authoritative fixtures (positions, facings, who has the ball, off-ball intent). Characters are presentation only.
+// the players' RECORDED weights (assets/characters/outfield/*/rig.json identity.weightKg) — physical metadata the simulation's contact
+// response uses (TACKLED-PLAYER V1); a drill may set massKg explicitly, a generic body takes the 75 kg reference
+const OFSQ_MASS = { cucurella: 68, gabriel: 78, james: 82, osimhen: 78, szoboszlai: 74, vinicius: 73 };
 const OFSQ_DRILLS = {
   "7": { label: "TWO PLAYERS — A <-> B", center: [63, 34], owner: 0, active: 0, players: [
     { name: "A", x: 57, y: 34, facing: 0, char: "cucurella", ai: { mode: "SUPPORT" } },
@@ -37,11 +40,15 @@ const OFSQ_DRILLS = {
     { name: "D1", team: 1, x: 72, y: 34, facing: Math.PI, char: "gabriel", ai: { mode: "SSG", gear: "jog" } },
     { name: "D2", team: 1, x: 74, y: 25, facing: Math.PI, char: "cucurella", ai: { mode: "SSG", gear: "jog" } },
     { name: "D3", team: 1, x: 74, y: 43, facing: Math.PI, char: "osimhen", ai: { mode: "SSG", gear: "jog" } }] },
+  // performance fixture (?squad=D22): 11 v 11 in a large box, everyone on the small-sided AI — the 22-player cost of defending + reactions
+  "D22": { label: "11 v 11 performance fixture", defending: true, box: [8, 97, 3, 65], center: [52, 34], owner: 0, active: 11, autoSwitch: false,
+    players: [[20, 34], [30, 12], [30, 26], [30, 42], [30, 56], [42, 18], [42, 34], [42, 50], [52, 22], [52, 46], [58, 34]].map(([x, y], i) => ({ name: "A" + (i + 1), team: 0, x, y, facing: 0, char: ["vinicius", "szoboszlai", "james"][i % 3], ai: { mode: "SSG", gear: "jog" } }))
+      .concat([[88, 34], [78, 12], [78, 26], [78, 42], [78, 56], [66, 18], [66, 34], [66, 50], [60, 24], [60, 44], [62, 34]].map(([x, y], i) => ({ name: "D" + (i + 1), team: 1, x, y, facing: Math.PI, char: ["gabriel", "cucurella", "osimhen"][i % 3], ai: { mode: "SSG", gear: "jog" } }))) },
 };
 function ofSquadWanted() { return new URLSearchParams(location.search).get("squad"); }
 function ofSquadStart(key, specOverride) {
   const D = specOverride || OFSQ_DRILLS[key]; if (!D) return;
-  const spec = { players: D.players.map(p => Object.assign({}, p, { home: p.home || [p.x, p.y] })), owner: D.owner, active: D.active, autoSwitch: D.autoSwitch !== false, center: D.center || [60, 34], ball: D.ball, defending: !!D.defending, box: D.box || null };
+  const spec = { players: D.players.map(p => Object.assign({}, p, { home: p.home || [p.x, p.y], massKg: p.massKg || (p.char && OFSQ_MASS[p.char]) || null })), owner: D.owner, active: D.active, autoSwitch: D.autoSwitch !== false, center: D.center || [60, 34], ball: D.ball, defending: !!D.defending, box: D.box || null };
   const Q = ptSquadSetup(spec); Q.spec.center = spec.center;
   OFSQ.on = true; OFSQ.drill = key; OFSQ.recvRecs = []; OFSQ.passRecs = []; OFSQ.defRecs = []; OFSQ.lastRecvTick = -1;
   OFSQ.actors = Q.ctx.map((c, i) => ofSquadMakeActor(D.players[i], c));
@@ -64,6 +71,7 @@ function ofSquadPresent(t) {
     a.sim = { x: p.x, y: p.y, vx: p.vx, vy: p.vy, facing: p.facing, gaitPhase: p.gaitPhase, gaitSettled: p.gaitSettled };
     ofPlayKickLink(t, a); ofPlayTouchLink(t, a); ofRecvLink(t, a, Q.tick);
     if (Q.spec.defending && typeof ofDefLink === "function") ofDefLink(t, a, c, Q.tick);          // DEFENDING V1 (defending drills only)
+    if (Q.spec.defending && typeof ofRxLink === "function") { ofRxLink(t, a, c); if (a.rx && a.rx.src && a.rx.src.kind === "FALL" && t.now >= a.rx.src.tFall && !a.rx.done) a.defYaw = p.facing; else if (a.rx && !a.defA) a.defYaw = null; }   // TACKLED-PLAYER V1
     ofActorTick(a, PT_DT, t.now);
     if (a.defMeasure) { const A = a.defMeasure; a.defMeasure = null; const m = ofDefMeasure(a, A);
       const rec = Object.assign({ tick: Q.tick, t: +t.now.toFixed(4), pid: i, name: c.name, char: a.char ? a.char.id : "generic", sim: A.res }, m);
@@ -144,7 +152,10 @@ function ofSquadDefHud(Q) {
   const l2 = ld ? `  rendered   ${ld.name} ${ld.kind} ${ld.foot}: inside-face–ball ${(ld.insideSurf * 100).toFixed(1)} cm  leg–ball ${(ld.legSurf * 100).toFixed(1)} cm  knee ${ld.knee}°${ld.reachCapped ? "  REACH CAPPED" : ""}` : "";
   const l3 = bc ? `  body contact ${nm(bc.pid)} on ${nm(bc.on)} tick ${bc.tick} — ${bc.ballFirst ? "ball first" : "MAN FIRST"} (facts for the foul model; no call in the playtest)` : "";
   const DEFK = typeof OFDEF !== "undefined" && typeof ofDefHud === "function" ? ofDefHud() : "";
-  return [l1, l2, l3, "controls    Z hold jockey · Space stand tackle · F slide · Tab switch · R restart · Shift+Y auto defend", DEFK].filter(Boolean).join("\n");
+  const pc = Q.events.slice().reverse().find(e => e.kind === "PLAYER_CONTACT");
+  const l4 = pc ? `  player hit  ${nm(pc.attacker)} by ${nm(pc.tackler)} ${pc.type}: ${pc.prim} → ${pc.seg} (${pc.segPlanted ? "weight-bearing" : pc.segPlanted === false ? "swinging" : "body"}, ${pc.stride})  vn ${pc.vn}  J ${pc.J}  support ${pc.supportLost ? "LOST" : "kept"}  error ${pc.e0} / step ${pc.rc} m  → ${pc.react || pc.cls}${pc.family ? " " + pc.family : ""}  ${pc.order}` : "";
+  const RXD = typeof ofRxdHud === "function" ? ofRxdHud() : "";
+  return [l1, l2, l3, l4, RXD, "controls    Z hold jockey · Space stand tackle · F slide · Tab switch · R restart · Shift+Y auto defend", DEFK].filter(Boolean).join("\n");
 }
 // ── temporary controls (capture phase, only while a squad drill runs) ──────────────────────────────────────────────────────────
 function ofSquadKeys() {

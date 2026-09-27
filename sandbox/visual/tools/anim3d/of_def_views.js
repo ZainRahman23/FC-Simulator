@@ -7,7 +7,7 @@ const puppeteer = require("puppeteer-core"), fs = require("fs"), path = require(
 const a = process.argv, opt = (k, d) => { const i = a.indexOf(k); return i > 0 ? a[i + 1] : d; };
 const SC = require(opt("--scenfile", "./of_def_scenarios.js")), NAMES = opt("--scen", "sl_win").split(","), OUT = opt("--out", "def_views");
 const TICKS = opt("--ticks", "").split(",").filter(Boolean).map(Number), VIEWS = opt("--views", "side,front,tq").split(","), SIZE = +opt("--size", 520), DIST = +opt("--dist", 3.2);
-const PRE = opt("--pre", "");   // page expression evaluated after the drill is set up (e.g. a presentation variant switch)
+const PRE = opt("--pre", ""), FOCUS = opt("--focus", "");   // --focus <player index>: orbit around that player (default: the one you control)   // page expression evaluated after the drill is set up (e.g. a presentation variant switch)
 (async () => {
   fs.mkdirSync(OUT, { recursive: true });
   const b = await puppeteer.launch({ executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", headless: "new", userDataDir: opt("--udd", "chrome-defviews"), args: ["--no-sandbox"] });
@@ -56,20 +56,20 @@ const PRE = opt("--pre", "");   // page expression evaluated after the drill is 
       if (PRE) eval(PRE); }, S0.drill, PRE);
     const last = Math.max(...TICKS, 0); all[name] = {};
     for (let k = 0; k <= last; k++) {
-      const r = await p.evaluate((keys, cmd, k, want, VIEWS, SIZE, DIST) => {
+      const r = await p.evaluate((keys, cmd, k, want, VIEWS, SIZE, DIST, FOCUS) => {
         const t = S.pt; t.keys = Object.assign({ up: false, down: false, left: false, right: false, sprint: false, walk: false, jog: false }, keys);
         for (const c of (window.__watch || [])) if (!c.fired && k >= c.at) { const me = t.squad.ctx[t.squad.active].p, dB = Math.hypot(t.b.x - me.x, t.b.y - me.y); if (dB <= c.d) { c.fired = k; if (c.do === "standWhen") ptDefStand(t, t.squad.active); else ptDefSlide(t, t.squad.active, c.dir != null ? c.dir : ptDefSlideAim(t, t.squad.ctx[t.squad.active])); } }
         for (const c of cmd) { if (c.do === "standWhen" || c.do === "slideWhen") window.__watch.push(Object.assign({}, c)); else if (c.do === "stand") ptDefStand(t, t.squad.active); else if (c.do === "slide") ptDefSlide(t, t.squad.active, c.dir); else if (c.do === "humanAi") t.squad.humanAi = true; }
         ptStep();
         if (!want) return null;
-        const Q = t.squad, i = Q.active, c = Q.ctx[i], a = OFSQ.actors[i], d = c.def || {}, dir = d.dir != null ? d.dir : c.p.facing;
+        const Q = t.squad, i = FOCUS !== "" ? +FOCUS : Q.active, c = Q.ctx[i], a = OFSQ.actors[i], d = c.def || {}, dir = d.dir != null ? d.dir : c.p.facing;
         const C = [c.p.x, 0.45, -c.p.y], fwd = [Math.cos(dir), 0, -Math.sin(dir)], lat = V3.cross(fwd, [0, 1, 0]);
         const cams = { side: V3.add(C, V3.add(V3.scale(lat, -DIST), [0, 0.5, 0])), sideR: V3.add(C, V3.add(V3.scale(lat, DIST), [0, 0.5, 0])), front: V3.add(C, V3.add(V3.scale(fwd, DIST), [0, 0.7, 0])),
           tq: V3.add(C, V3.add(V3.add(V3.scale(fwd, DIST * 0.7), V3.scale(lat, -DIST * 0.7)), [0, 1.0, 0])), rear: V3.add(C, V3.add(V3.scale(fwd, -DIST), [0, 0.9, 0])), top: V3.add(C, [0.01, DIST * 1.3, 0]) };
         const tgt = V3.add(C, V3.scale(fwd, 0.35)), ball = [t.b.x, Math.max(0, t.b.z) + 0.11, -t.b.y], imgs = {};
         for (const v of VIEWS) imgs[v] = window.__viewRender(cams[v], v === "top" ? V3.add(tgt, [0, -0.45, 0]) : tgt, SIZE, SIZE, 38, ball);
         return { k, phase: a.defA ? a.defA.phase : null, foot: d.foot || null, v: +Math.hypot(c.p.vx, c.p.vy).toFixed(2), diag: window.__poseDiag(a, dir), imgs, events: Q.events.filter(e => e.tick === Q.tick && /TACKLE/.test(e.kind)).map(e => e.kind + ":" + (e.out || "")) };
-      }, SC.keysAt(S0, k), (S0.cmds || []).filter(c => c.at === k), k, TICKS.includes(k), VIEWS, SIZE, DIST);
+      }, SC.keysAt(S0, k), (S0.cmds || []).filter(c => c.at === k), k, TICKS.includes(k), VIEWS, SIZE, DIST, FOCUS);
       if (r) { for (const v in r.imgs) fs.writeFileSync(path.join(OUT, `${name}_t${String(k).padStart(3, "0")}_${v}.png`), Buffer.from(r.imgs[v].split(",")[1], "base64")); delete r.imgs; all[name][k] = r; }
     }
   }
