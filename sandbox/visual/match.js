@@ -44,9 +44,8 @@ const uipx = (v) => Math.round(v * RES);    // HUD/debug sizes in backing px
 // pscale 0.60 = 2X SCALE CALIBRATION: the 128px sprite body (100px opaque)
 // then implies a 1.88 m standing player (was 2.66 m at 0.85 — taller than
 // the 2.44 m goal). Drawn player/goal ratio 0.84 vs real 0.74: slight
-// pixel-art oversize kept for readability. BALL_VIS_R 0.19 m (visual only;
-// physical radius stays 0.11 m; selected from the six-candidate boot-
-// reference study) = 6.9 CSS px diameter at zoom 1.
+// player calibration retained. Ball artwork now follows the plain physics
+// sphere at 0.11 m radius, without the former sprite enlargement.
 const AUTHOR_DEFAULTS = {
   height: 30, dist: 43, fov: 28, depthoff: 3, pitch: 22, yaw: 0, pscale: 0.60,
 };
@@ -480,49 +479,43 @@ function deriveStandMaterial(img) {
   };
   return { upper: band(42, 18), lower: band(66, 23) };
 }
+// Mowing boundaries follow goal area (5.5 m), spot (11 m), penalty area
+// (16.5 m), halfway and their opposite-end counterparts. Six-metre bands
+// fill the space between boxes; the field and markings remain 105 × 68 m.
+const PITCH_BANDS = [0,5.5,11,16.5,22.5,28.5,34.5,40.5,46.5,52.5,58.5,64.5,70.5,76.5,82.5,88.5,94,99.5,105];
 function buildGroundTexture() {
-  const W = (APRON.x1 - APRON.x0) * REF_ZOOM, H = (APRON.y1 - APRON.y0) * REF_ZOOM;
-  const g = document.createElement("canvas");
-  g.width = W; g.height = H;
-  const c = g.getContext("2d");
-  c.imageSmoothingEnabled = false;
-  const gx = (x) => (x - APRON.x0) * REF_ZOOM;
-  const gy = (y) => (y - APRON.y0) * REF_ZOOM;
-  const M = REF_ZOOM;
-  const byCorners = {};
-  for (const t of S.tilesMeta)
-    byCorners[[t.corners.NW, t.corners.NE, t.corners.SW, t.corners.SE].join("|")] = t.bounding_box;
-  const palUpper = extractPalette(byCorners["upper|upper|upper|upper"]);
-  const palLower = extractPalette(byCorners["lower|lower|lower|lower"]);
-  const img = c.createImageData(W, H);
-  const d = img.data;
-  for (let py = 0; py < H; py++) {
-    const wy = APRON.y0 + py / M;
-    for (let px = 0; px < W; px++) {
-      const wx = APRON.x0 + px / M;
-      const dist = Math.max(GRASS_ZONE.x0 - wx, wx - GRASS_ZONE.x1,
-                            GRASS_ZONE.y0 - wy, wy - GRASS_ZONE.y1);
-      let pal = palUpper;
-      if (dist > 0.5) pal = palLower;
-      else if (dist > -0.5) pal = (hash01(px, py) < 0.5 - dist) ? palUpper : palLower;
-      let n = 0.55 * vnoise(wx / 7, wy / 7)
-            + 0.30 * vnoise(wx / 1.8 + 91.7, wy / 1.8 + 33.3)
-            + 0.15 * hash01(px + 7349, py + 1201);
-      const col = pal.pick(n);
-      const o = (py * W + px) * 4;
-      d[o] = col[0]; d[o + 1] = col[1]; d[o + 2] = col[2]; d[o + 3] = 255;
+  const W=(APRON.x1-APRON.x0)*REF_ZOOM,H=(APRON.y1-APRON.y0)*REF_ZOOM;
+  const g=document.createElement('canvas');g.width=W;g.height=H;
+  const c=g.getContext('2d'),img=c.createImageData(W,H),d=img.data,M=REF_ZOOM;
+  // Keep the original tile-art greens with the refined, low-amplitude grain.
+  // Palette extraction and texture generation happen only at setup.
+  const byCorners={};
+  for(const t of S.tilesMeta)
+    byCorners[[t.corners.NW,t.corners.NE,t.corners.SW,t.corners.SE].join('|')]=t.bounding_box;
+  const turf=extractPalette(byCorners['upper|upper|upper|upper']).pick(.5);
+  const outside=extractPalette(byCorners['lower|lower|lower|lower']).pick(.5);
+  const runoff=turf.map((v,k)=>v*.65+outside[k]*.35);
+  const smooth=t=>{t=Math.max(0,Math.min(1,t));return t*t*(3-2*t)};
+  for(let py=0;py<H;py++){
+    const y=APRON.y0+(py+.5)/M;
+    for(let px=0;px<W;px++){
+      const x=APRON.x0+(px+.5)/M;
+      const edge=Math.max(-x,x-PITCH.w,-y,y-PITCH.h);
+      const cut=Math.max(GRASS_ZONE.x0-x,x-GRASS_ZONE.x1,GRASS_ZONE.y0-y,y-GRASS_ZONE.y1);
+      const fieldMix=smooth((edge-.12)/1.4),outerMix=smooth((cut+.3)/.65);
+      const grain=(hash01(px+7349,py+1201)-.5)*2.4;
+      const nap=(vnoise(x/.38,y/1.8)-.5)*1.8;
+      const variation=(vnoise(x/12,y/12)-.5)*2;
+      const o=4*(py*W+px);
+      for(let k=0;k<3;k++){
+        const lawn=turf[k]+(runoff[k]-turf[k])*fieldMix;
+        const base=lawn+(outside[k]-lawn)*outerMix;
+        d[o+k]=Math.round(base+grain+nap+variation);
+      }
+      d[o+3]=255;
     }
   }
-  c.putImageData(img, 0, 0);
-  const bandW = PITCH.w / 14;
-  for (let x = GRASS_ZONE.x0; x < GRASS_ZONE.x1; x += 0.0001) {
-    const k = Math.floor(x / bandW + 1e-9);
-    const x0 = Math.max(GRASS_ZONE.x0, k * bandW), x1 = Math.min(GRASS_ZONE.x1, (k + 1) * bandW);
-    c.fillStyle = ((k % 2 + 2) % 2) === 0 ? "rgba(255,255,255,0.055)" : "rgba(0,0,0,0.05)";
-    c.fillRect(gx(x0), gy(GRASS_ZONE.y0), (x1 - x0) * M, (GRASS_ZONE.y1 - GRASS_ZONE.y0) * M);
-    x = x1;
-  }
-  S.groundTex = g;
+  c.putImageData(img,0,0);S.groundTex=g;S.pitchMowing=true;
 }
 
 // ═══ RAIL CAMERA ARCHITECTURE ════════════════════════════════════════════════
@@ -755,8 +748,8 @@ function drawNearBarrier() {
   railLine(ENV.barrierH, ENV.nearBarrierZ, 2, ENV_COL.boardTop);
 }
 function drawMarkings() {
-  ctx.strokeStyle = "rgba(250,250,250,0.92)";
-  ctx.fillStyle = "rgba(250,250,250,0.92)";
+  ctx.strokeStyle = "#f4f4ee";
+  ctx.fillStyle = "#f4f4ee";
   ctx.lineWidth = qw(2 * RIG.zoom);
   ctx.lineJoin = "round";
   const rect = (x, z, w, d) =>
@@ -847,6 +840,22 @@ function drawGroundPerspective() {
     ctx.setTransform(a, b2, c, d, e, f2);
     ctx.drawImage(S.groundTex, bx0, by0, bx1 - bx0, by1 - by0, bx0, by0, bx1 - bx0, by1 - by0);
     ctx.restore();
+  }
+  drawPitchMowing();
+}
+
+function drawPitchMowing() {
+  if(!S.pitchMowing)return;
+  // Two batched polygon fills keep stripe edges on the exact same projected
+  // world lines as the markings. Avoid scanline-warp stair-stepping.
+  for(let parity=0;parity<2;parity++){
+    ctx.beginPath();
+    for(let i=parity;i<PITCH_BANDS.length-1;i+=2){
+      const q=[[PITCH_BANDS[i],0],[PITCH_BANDS[i+1],0],[PITCH_BANDS[i+1],PITCH.h],[PITCH_BANDS[i],PITCH.h]].map(([x,y])=>sproj(x,y));
+      if(q.some(p=>p.d<.5))continue;
+      ctx.moveTo(q[0].x,q[0].y);for(let j=1;j<4;j++)ctx.lineTo(q[j].x,q[j].y);ctx.closePath();
+    }
+    ctx.fillStyle=parity?'rgba(0,0,0,.05)':'rgba(255,255,255,.055)';ctx.fill();
   }
 }
 
@@ -1643,7 +1652,7 @@ function drawBallTest(dt) {
     }
     ctx.stroke();
   }
-  drawBallAt(t.p[0], t.p[1], t.p[2], Math.hypot(t.v[0], t.v[1]), dt);
+  drawBallAt(t.p[0], t.p[1], t.p[2], Math.hypot(t.v[0], t.v[1]), dt, {key:t,x:t.p[0],y:t.p[1],z:t.p[2],vx:t.v[0],vy:t.v[1]});
   ctx.fillStyle = "#ffd34d"; ctx.font = "bold " + uipx(13) + "px ui-monospace, monospace";
   ctx.fillText((S.netSlow ? "[SLOW-MO 0.15x]  " : "") +
     "BALL PHYSICS TEST \u2014 SYNTHETIC (" + t.label + ")", uipx(14), cv.height - uipx(52));
@@ -1686,7 +1695,9 @@ function drawBallSeq(dt) {
     const f = Math.min(1, (t - tr[i][0]) / Math.max(1e-6, tr[i + 1][0] - tr[i][0]));
     x += (tr[i + 1][1] - x) * f; y += (tr[i + 1][2] - y) * f; z += (tr[i + 1][3] - z) * f;
   }
-  drawBallAt(x, y, z, 8, dt);
+  const next=tr[Math.min(i+1,tr.length-1)], span=next[0]-tr[i][0];
+  const vx=span>0?(next[1]-tr[i][1])/span:0, vy=span>0?(next[2]-tr[i][2])/span:0;
+  drawBallAt(x, y, z, Math.hypot(vx,vy), dt, {key:a,x,y,z,vx,vy});
   ctx.fillStyle = "#ffd34d"; ctx.font = "bold " + uipx(13) + "px ui-monospace, monospace";
   ctx.fillText("BALL TRANSPORT TEST \u2014 ENGINE BODY SEQUENCE  (" + (q.idx + 1) + "/" +
     q.actions.length + ": " + a.label + ")", uipx(14), cv.height - uipx(88));
@@ -6411,9 +6422,9 @@ function drawPlaytest(dt) {
   if (!GOALFX.occlusion) {
     // depth order: a ball north of the player is BEHIND him — draw it first
     t._ballBehind = b.y < p.y - 0.05 && b.z < 1.6;
-    if (t._ballBehind) drawBallAt(b.x, b.y, b.z, Math.hypot(b.vx, b.vy), dt);
+    if (t._ballBehind) drawBallAt(b.x, b.y, b.z, Math.hypot(b.vx, b.vy), dt, b);
     ptDrawPlayerSprite(dt);
-    if (!t._ballBehind) drawBallAt(b.x, b.y, b.z, Math.hypot(b.vx, b.vy), dt);
+    if (!t._ballBehind) drawBallAt(b.x, b.y, b.z, Math.hypot(b.vx, b.vy), dt, b);
   }
   if (S.dbg.dribsync && t.dbgTouch && t.now <= t.dbgTouch.until) {
     const g = t.dbgTouch;
@@ -6635,7 +6646,7 @@ function drawAnimTest(dt) {
                   Math.round(im.width * s), Math.round(im.height * s));
   }
   drawBallAt(t.ball.p[0], t.ball.p[1], t.ball.p[2],
-             Math.hypot(t.ball.v[0], t.ball.v[1]), dt);
+             Math.hypot(t.ball.v[0], t.ball.v[1]), dt, {key:t.ball,x:t.ball.p[0],y:t.ball.p[1],z:t.ball.p[2],vx:t.ball.v[0],vy:t.ball.v[1]});
   ctx.fillStyle = "#ffd34d"; ctx.font = "bold " + uipx(13) + "px ui-monospace, monospace";
   ctx.fillText("ANIMATION PROTOTYPE — SYNTHETIC (" + v.st + "  frame " + v.f +
     (t.age < AT.kickT ? "  kick in " + (AT.kickT - t.age).toFixed(2) + "s" : "  KICKED") + ")",
@@ -6689,25 +6700,16 @@ function drawOccDebug(sample) {
                uipx(14), cv.height - uipx(70));
 }
 // ═══ BALL: procedural crisp pixel-art football + true height rendering ═════
-// Physical radius stays authoritative (0.11 m); the sprite uses its own
-// readability calibration. Sprites are built per-pixel on tiny grids and
-// nearest-upscaled — no antialiasing, no raster asset. 4 spin phases give
-// perceivable rotation from travel distance (cosmetic, renderer-owned).
-const BALL_VIS_R = 0.19;
-// PIXELLAB ANIMATED BALL SPRITE: 8 authored rotational phases of one
-// football (assets/visual_v1/originals/ball_pixellab, 24x24 each, sheet
-// 192x24; see RECORD.json for full generation provenance). Runtime only
-// SELECTS among the discrete authored frames — never rotates the bitmap.
-// Visual rotation derives from authoritative physical motion:
-//   rolling:  omega = horizontal speed / physical radius (0.11 m),
-//             display-capped so phase stepping stays readable;
-//   airborne: the launch omega is retained through flight and bounce;
-//   at rest:  rotation stops and the last orientation is preserved.
+// Surface art uses the plain white physics sphere: 0.11 m radius, no readability enlargement.
+const BALL_VIS_R = TouchlineBall.radius;
+// Legacy sprite constants retained for existing debug hooks. Ball art uses continuous sphere rotation.
 const BALL_FRAMES = 8, BALL_SRC = 24;
-const BALL_PHYS_R = 0.11;             // authoritative; never used for visuals sizing
+const BALL_PHYS_R = 0.11;             // authoritative; shared by contact geometry and surface art
 const BALL_OMEGA_MAX = 16;            // rad/s display cap (~2.5 rev/s legible)
 const _ballRot = { th: 0, om: 0 };
-function drawBallAt(xw, yw, z, speed, dt) {
+// Original authored sprite, retained verbatim for visual comparison.
+const ORIGINAL_SPRITE_R = 0.19;
+function drawOriginalSpriteBallAt(xw, yw, z, speed, dt) {
   if (typeof gk3dOwnsBall === "function" && gk3dOwnsBall()) return;   // SKELETAL_3D backend renders the ball as 3D geometry near / in the keeper's hands (presentation only)
   const grounded = z <= 0.02;
   if (grounded) _ballRot.om = speed > 0.05 ? Math.min(speed / BALL_PHYS_R, BALL_OMEGA_MAX) : 0;
@@ -6720,10 +6722,10 @@ function drawBallAt(xw, yw, z, speed, dt) {
   // actual 3D camera-space depth (bpos.d — includes airborne height);
   // shadow radius from the ground point's depth (gpos.d) so the shadow
   // stays visually attached while its position remains the authoritative
-  // (x,y,0). Same shared depthScale law as players. BALL_VIS_R 0.19
+  // (x,y,0). Same shared depthScale law as players. ORIGINAL_SPRITE_R 0.19
   // keeps its accepted size at czRef exactly.
-  const r = Math.max(2, Math.round(BALL_VIS_R * S.pxPerM * depthScale(bpos.d) * RIG.zoom * RES));
-  const rg = Math.max(2, Math.round(BALL_VIS_R * S.pxPerM * depthScale(gpos.d) * RIG.zoom * RES));
+  const r = Math.max(2, Math.round(ORIGINAL_SPRITE_R * S.pxPerM * depthScale(bpos.d) * RIG.zoom * RES));
+  const rg = Math.max(2, Math.round(ORIGINAL_SPRITE_R * S.pxPerM * depthScale(gpos.d) * RIG.zoom * RES));
   const flat = flattenAt(xw, yw);
   const sh = 1 / (1 + z * 0.55);            // higher ball: smaller, fainter
   ctx.beginPath();
@@ -6740,7 +6742,7 @@ function drawBallAt(xw, yw, z, speed, dt) {
   // the sprite draws at): near balls get the detailed 24px master, far
   // balls legitimately engage the micro LOD when they genuinely project
   // below 7 backing px.
-  const dpx = 2 * BALL_VIS_R * S.pxPerM * depthScale(bpos.d) * RIG.zoom * RES;
+  const dpx = 2 * ORIGINAL_SPRITE_R * S.pxPerM * depthScale(bpos.d) * RIG.zoom * RES;
   if (dpx < 7 && S.images.ballMicro) {
     const n = Math.max(7, Math.min(11, Math.round(dpx)));
     const m = S.images.ballMicro[n];
@@ -6756,8 +6758,20 @@ function drawBallAt(xw, yw, z, speed, dt) {
     ctx.drawImage(S.images.ballSheet, phase * BALL_SRC, 0, BALL_SRC, BALL_SRC,
                   Math.round(bpos.x - out / 2), Math.round(bpos.y - out / 2), out, out);
 }
+function drawBallAt(xw, yw, z, speed, dt, motion) {
+  if(TouchlineBall.getDesign()==='sprite')return drawOriginalSpriteBallAt(xw,yw,z,speed,dt);
+  if (typeof gk3dOwnsBall === "function" && gk3dOwnsBall()) return;
+  const point=sproj3(xw,Math.max(0,z)+TouchlineBall.radius,yw),ground=sproj3(xw,0,yw);
+  if(point.d<.5)return;
+  // Match the 3D character camera: projected metres use focal length / camera depth.
+  const radius=BALL_VIS_R*PROJ.fpx/point.d*RIG.zoom*RES;
+  const m=motion||{x:xw,y:yw,z,vx:speed,vy:0};
+  TouchlineBall.draw(ctx,{point,ground,radius,flat:flattenAt(xw,yw),
+    basis:{r:[PROJ.r.x,PROJ.r.y,PROJ.r.z],u:[PROJ.u.x,PROJ.u.y,PROJ.u.z],f:[PROJ.f.x,PROJ.f.y,PROJ.f.z]},
+    key:m.key||motion||'legacy-ball',motion:m,dt:dt||0,frame:S.frameNo});
+}
 function drawBall(ball, dt) {
-  drawBallAt(ball.x, ball.y, ball.z || 0, Math.hypot(ball.vx, ball.vy), dt);
+  drawBallAt(ball.x, ball.y, ball.z || 0, Math.hypot(ball.vx, ball.vy), dt, {...ball,key:'match-ball'});
   if (S.dbg.ball) {
     const sp = sproj3(ball.x, ball.z || 0, ball.y);
     ctx.fillStyle = "#ffd23c"; ctx.font = uipx(10) + "px monospace"; ctx.textAlign = "center";
@@ -6823,13 +6837,15 @@ function drawGoalGeoDebug(side) {
   strokeSeg3(gx, 2.44, 30.34, gx, 2.44, 37.66);
 }
 function draw(sample, dt) {
+  if (typeof TouchlineRain !== "undefined") TouchlineRain.step(dt);
   S.frameNo = (S.frameNo || 0) + 1;    // per-frame cache key (net projections)
   ctx.imageSmoothingEnabled = false;
   ctx.fillStyle = "#284a31"; // Quiet empty surround for the pitch/character art direction.
   ctx.fillRect(0, 0, cv.width, cv.height);
   drawGroundPerspective();
-  // Stadium and barriers retired from the active presentation.
+  if (typeof TouchlineStadium !== "undefined") { TouchlineStadium.ground(ctx, sproj3); TouchlineStadium.draw(ctx, sproj3, "far"); }
   drawMarkings();
+  if (typeof TouchlineRain !== "undefined") TouchlineRain.ground(ctx, sproj3, RES);
   if (typeof CornerFlags !== "undefined") CornerFlags.draw(ctx, sproj3, typeof FLAG_TIME === "number" ? FLAG_TIME : performance.now() / 1000, "far");
   if (S.dbg.occ && sample) drawOccDebug(sample);
   if (S.dbg.grid) drawGrid();
@@ -6886,7 +6902,7 @@ function draw(sample, dt) {
     else if (e.artPart) drawGoalArtCells(e.artPart.g, e.artPart.panel, e.artPart.lo, e.artPart.hi);
     else if (e.frameMember) drawGoalFrameMember(e.frameMember, e.cap);
     else if (e.ptP) ptDrawPlayerSprite(dt);
-    else if (e.ptB) { const b = S.pt.b; drawBallAt(b.x, b.y, b.z, Math.hypot(b.vx, b.vy), dt); }
+    else if (e.ptB) { const b = S.pt.b; drawBallAt(b.x, b.y, b.z, Math.hypot(b.vx, b.vy), dt, b); }
     else if (e.ptGk) ptDrawKeeper(dt);
     else drawGoal(e.goal);
   }
@@ -6903,7 +6919,9 @@ function draw(sample, dt) {
     ctx.strokeStyle = "#ff5ce0"; ctx.lineWidth = uipx(2);
     ctx.strokeRect(t.x - 7, t.y - 7, 14, 14);
   }
+  if (typeof TouchlineRain !== "undefined" && !(typeof OFPLAY !== "undefined" && OFPLAY.on && OFPLAY.mixed)) TouchlineRain.air(ctx, sproj3, RES);
   if (typeof CornerFlags !== "undefined" && !(typeof OFPLAY !== "undefined" && OFPLAY.on && OFPLAY.mixed)) CornerFlags.draw(ctx, sproj3, typeof FLAG_TIME === "number" ? FLAG_TIME : performance.now() / 1000, "near");
+  if (typeof TouchlineStadium !== "undefined" && !(typeof OFPLAY !== "undefined" && OFPLAY.on && OFPLAY.mixed)) TouchlineStadium.draw(ctx, sproj3, "near");
   drawReadout(sample);
 }
 function drawReadout(sample) {

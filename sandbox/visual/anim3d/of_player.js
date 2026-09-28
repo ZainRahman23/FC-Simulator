@@ -190,7 +190,9 @@ function ofPlayComposite() {                                                    
   const roi = { x: sx / RES, y: sy / RES, w: sw / RES, h: sh / RES }; const prev = GL3D.character; GL3D.character = "SKINNED";
   const lay = glRenderCharactersROI(OFPLAY.R, OFPLAY.lastChars, roi, Z * RES, cv.width, cv.height, RES); GL3D.character = prev;
   octx.drawImage(lay.canvas, 0, 0, lay.w, lay.h, 0, 0, lay.w, lay.h); OFPLAY.lastLayer = { w: lay.w, h: lay.h, draws: lay.draws };
+  if (typeof TouchlineRain !== "undefined") TouchlineRain.air(octx, sproj3, RES, OFPLAY.view);
   if (typeof CornerFlags !== "undefined") CornerFlags.compositeNear(octx, sproj3, typeof FLAG_TIME === "number" ? FLAG_TIME : performance.now() / 1000, OFPLAY.view, cv);
+  if (typeof TouchlineStadium !== "undefined") TouchlineStadium.compositeNear(octx, sproj3, OFPLAY.view, cv);
   OFPLAY.perf.comp.push(performance.now() - t0);
 }
 function ofPlayKeys() {
