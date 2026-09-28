@@ -220,4 +220,6 @@ page = tmpl.replace("%%SIDE%%", sec_side).replace("%%BALL%%", sec_ball).replace(
 page = page.replace("%%SLIDEGATE%%", "<pre>" + esc(rd("slide_gate_def.txt")) + "\n\n" + esc(rd("slide_gate_slide.txt")) + "\n\n" + esc(rd("slide_gate_react.txt")) + "</pre>")
 for key, fn in (("%%STOP%%", "review_stop.html"), ("%%LIMITS%%", "review_limits.html")):   # the verdicts, written after the runs (hand-written, from the numbers above)
     p = os.path.join(HERE, fn); page = page.replace(key, open(p).read() if os.path.exists(p) else "<p class='dim'>(pending)</p>")
+p13 = os.path.join(OUT, "section13.html")                                                        # the body-interaction follow-up (of_slide_review13.py), at the top
+if os.path.exists(p13): page = page.replace('<h2>0 · Stop conditions</h2>', open(p13).read() + '\n<h2>0 · Stop conditions</h2>', 1)
 open(os.path.join(OUT, "index.html"), "w").write(page); print("wrote", os.path.join(OUT, "index.html"), len(page))

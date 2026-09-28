@@ -47,9 +47,11 @@ function ofRxStumble(a, X, r, pose, now, w) {
   add("thigh_R", [-O.dipDeg * 0.5 * decay * sev, 0, 0]); add("thigh_L", [-O.dipDeg * 0.5 * decay * sev, 0, 0]); add("shin_R", [O.dipDeg * decay * sev, 0, 0]); add("shin_L", [O.dipDeg * decay * sev, 0, 0]);   // the knees give: a lowered centre of mass for the corrective steps
   add("neck", [-lean * 0.3, 0, 0]);
   add("upperArm_R", [-arm * 0.3, 0, arm]); add("upperArm_L", [-arm * 0.3, 0, -arm]); add("foreArm_R", [-arm * 0.4, 0, 0]); add("foreArm_L", [-arm * 0.4, 0, 0]);
-  // the struck SWING leg is pulled the way it was hit (hip ab/adduction + knee), for the contact's own short time
+  // the struck SWING leg is pulled the way it was hit (hip ab/adduction + knee), for the contact's own short time. The rig's thigh z-rotation moves
+  // the knee the SAME world way on both legs (measured: −z → toward his left for thigh_R and thigh_L), so no per-side sign — V1 mirrored it for
+  // the left leg and pulled a struck left leg INTO the tackler (cf_left: knee 15 cm toward the slider, 22 cm into his trunk)
   if (rec.segPlanted === false && rec.seg && /_[RL]$/.test(rec.seg)) { const sd = rec.seg.slice(-1), n = rec.normal, nR = -n[0] * fy + n[1] * fx, k = Math.exp(-dt / O.clipT) * clamp01(dt / 0.03);
-    add("thigh_" + sd, [-8 * k, 0, (sd === "R" ? 1 : -1) * nR * O.clipDeg * k]); add("shin_" + sd, [22 * k, 0, 0]); }
+    add("thigh_" + sd, [-8 * k, 0, nR * O.clipDeg * k]); add("shin_" + sd, [22 * k, 0, 0]); }
   // a body on the pitch in his path: the first step is a raised one (hip + knee flexion on the leg that swings next)
   if (rec.obstacle > 0 && dt < Tst * 1.2) { const sd = rec.support && rec.support.R ? "L" : "R", k = Math.sin(Math.PI * clamp01(dt / (Tst * 1.2)));
     add("thigh_" + sd, [-O.stepOverDeg * k, 0, 0]); add("shin_" + sd, [O.stepOverDeg * 1.6 * k, 0, 0]); }
@@ -70,8 +72,10 @@ function ofRxBasis(rel, u) {
 function ofRxTerrain(r) {
   if (r.byTackler == null || typeof OFSQ === "undefined" || !S.pt || !S.pt.squad) return null; const c = S.pt.squad.ctx[r.byTackler], ac = OFSQ.actors[r.byTackler];
   if (!c || !c.def || c.def.kind !== "SLIDE" || c.def.rule !== "far" || !ac || !ac.sol) return null;
+  if (c.def.stopAt != null && S.pt.now >= c.def.stopAt + PT_DEF.slide.groundT) return null;           // he is getting up: no longer a surface to lie on
   const fk = ac.sol.fk, sk = ac.skel, J = (n) => fk.joint[sk.byName[n].idx];
-  return [[J("pelvis"), J("neck"), 0.15], [J("thigh_R"), J("shin_R"), 0.075], [J("shin_R"), J("foot_R"), 0.055], [J("thigh_L"), J("shin_L"), 0.075], [J("shin_L"), J("foot_L"), 0.055]];
+  // what a body comes DOWN on: his seat, trunk and legs (the faller's trunk is laid on them; his legs over the slider's legs are a tangle, not a raise)
+  return [[J("pelvis"), J("neck"), 0.15], [J("thigh_R"), J("shin_R"), 0.075], [J("shin_R"), J("foot_R"), 0.055], [J("thigh_L"), J("shin_L"), 0.075], [J("shin_L"), J("foot_L"), 0.055]];   // (his trunk too: a body falling over him comes down on his back / shoulders — only the faller's TRUNK rests on this terrain)
 }
 function ofRxTerrainAt(TR, q) {                                                                        // the highest capsule top under the point (world: y up)
   let h = 0;
@@ -92,8 +96,8 @@ function ofRxFall(a, X, r, pose, plants, now, rootM) {
   const P0 = Object.assign({}, target, { _pelvis: [0, 0, 0] }), fk = skelFK(a.skel, P0, rootM); let minY = 1e9;
   const TR = ofRxTerrain(r);                                                                            // V1.2: the slider's body under him is ground too (he goes OVER it / lies ON it)
   for (const b of a.skel.bones) { if (!b.part || b.name === "root" || b.name === "hair" || /^(hand|foreArm|upperArm|clavicle)_/.test(b.name)) continue; const rr = /^(foot|toe)_/.test(b.name) ? 0.01 : b.rad * 0.6;
-    const J0 = fk.joint[b.idx], J1 = fk.tip[b.idx], ns = TR ? 4 : 1;
-    for (let k = 0; k <= ns; k++) { const q = ns === 1 ? (k ? J1 : J0) : V3.add(J0, V3.scale(V3.sub(J1, J0), k / ns)); const v = q[1] - (TR ? ofRxTerrainAt(TR, q) : 0) - rr; if (v < minY) minY = v; } }
+    const J0 = fk.joint[b.idx], J1 = fk.tip[b.idx], trunk = /^(pelvis|spine|chest|neck|head)$/.test(b.name), ns = TR && trunk ? 4 : 1;   // only his TRUNK rests on the slider (legs over legs is a tangle, not a raise)
+    for (let k = 0; k <= ns; k++) { const q = ns === 1 ? (k ? J1 : J0) : V3.add(J0, V3.scale(V3.sub(J1, J0), k / ns)); const v = q[1] - (TR && trunk ? ofRxTerrainAt(TR, q) : 0) - rr; if (v < minY) minY = v; } }
   P0._pelvis[1] = TR ? -(minY - O.clear) : -Math.max(0, minY - O.clear);                              // V1.2: a slider under him may RAISE him (over / onto the body)
   plants.R = { want: false }; plants.L = { want: false };
   return ofDefLerpPose(pose, P0, w);

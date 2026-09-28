@@ -33,9 +33,10 @@ const PT_DEF = {
     ccd: { minSub: 4, maxSub: 32, step: 0.035 },
     // the tackling boot's contact radius about the leg's axis: the rendered boot's half-thickness (V1: 0.08), so a V1.2 contact is a touch you see
     footR12: 0.05,
-    // the far leg's reach, hip → toe tip, as the rendered Astra leg + boot measures it swept out on the pitch (1.16 m for a 0.865 m leg); V1's
-    // reachAhead matched V1's straight near-leg pose
-    reachAhead12: 1.25,
+    // the far leg's reach, hip → toe tip, as far as the rendered Astra leg + boot actually gets under the contact-tracking IK (whose soft extension
+    // limit holds the ankle ≤ 0.985 × leg): 1.12 m for a 0.865 m leg, measured (V1.2 had 1.25 = the untracked pose, 1.16 m); V1's reachAhead
+    // matched V1's straight near-leg pose
+    reachAhead12: 1.20,
     // the ball's response to the leg (contact point + normal + the leg's own velocity there): the leg's effective mass against the ball's,
     // restitution by technique (a hook / sweep-through carries the ball with the foot; a poke knocks it away), Coulomb-limited tangential drag
     ball: { mBall: 0.43, legMassFrac: 0.0755, e: { WON: 0.15, POKE: 0.50 }, muT: 0.30, glanceV: 1.0 } },
@@ -59,7 +60,8 @@ function ptDefMotion(t) {
     if (now < d.launchAt) return { lock: true, v: [p.vx, p.vy], facing: d.dir };                 // the drop into the slide: no new input, his momentum carries
     if (d.vNow > 0) {                                                                              // SLIDING: authoritative uniform deceleration
       const v = d.vNow; d.vNow = Math.max(0, d.vNow - S.decel * PT_DT); if (d.vNow === 0) d.stopAt = now;
-      return { lock: true, v: [Math.cos(d.dir) * v, Math.sin(d.dir) * v], facing: d.dir };
+      let lx = 0, ly = 0; if (d.vLat) { lx = -Math.sin(d.dir) * d.vLat; ly = Math.cos(d.dir) * d.vLat; const dv = S.decel * PT_DT; d.vLat = Math.abs(d.vLat) <= dv ? 0 : d.vLat - Math.sign(d.vLat) * dv; }   // V1.2: a sideways deflection from a body contact, decaying with ground friction
+      return { lock: true, v: [Math.cos(d.dir) * v + lx, Math.sin(d.dir) * v + ly], facing: d.dir };
     }
     if (now < d.stopAt + S.groundT + S.getupT) return { lock: true, v: [0, 0], facing: d.dir };   // on the ground, then getting up
     if (now < d.stopAt + S.groundT + S.getupT + S.recoverT) return { vmax: S.recoverV };           // back on his feet, not yet at pace
@@ -347,10 +349,14 @@ function ptDefOccupancy(t) {
     const dx = c.x - a.x, dy = c.y - a.y, d = Math.hypot(dx, dy); if (d < 1e-9 || d > R2 + 0.32) continue;
     const nx = dx / d, ny = dy / d, vn = a.vx * nx + a.vy * ny; if (vn <= 0) continue; const allowed = Math.max(0, (d - R2) / PT_DT);
     if (vn > allowed) { a.vx -= (vn - allowed) * nx; a.vy -= (vn - allowed) * ny; } } }
+  // V1.2: a slider getting up out of a pile is a standing body again, but the mop-up against him is rate-limited (≤ PT_REACT.getupOut m/s) — he
+  // shuffles clear as he rises, never pops
+  const rising = typeof PT_REACT !== "undefined" ? t.squad.ctx.map(c => !!(c.def && c.def.kind === "SLIDE" && c.def.rule === "far" && c.def.stopAt != null && t.now >= c.def.stopAt + PT_DEF.slide.groundT)) : null;
   for (let it = 0; it < PT_DEF.occIters; it++) {
     const corr = ps.map(() => [0, 0]); let worst = 0;
     for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) { if (low && (low[i] || low[j])) continue; const a = ps[i], c = ps[j], dx = c.x - a.x, dy = c.y - a.y, d2 = dx * dx + dy * dy; if (d2 >= R2 * R2) continue;
       let ux, uy, pen; if (d2 < 1e-12) { ux = 0; uy = 1; pen = R2; } else { const d = Math.sqrt(d2); ux = dx / d; uy = dy / d; pen = R2 - d; }
+      if (rising && (rising[i] || rising[j])) pen = Math.min(pen, PT_REACT.getupOut * PT_DT / PT_DEF.occIters);
       worst = Math.max(worst, pen); corr[i][0] -= ux * pen / 2; corr[i][1] -= uy * pen / 2; corr[j][0] += ux * pen / 2; corr[j][1] += uy * pen / 2; }
     if (worst <= PT_DEF.occTol) break;
     for (let i = 0; i < n; i++) { ps[i].x += corr[i][0]; ps[i].y += corr[i][1]; }

@@ -232,7 +232,7 @@ function ofDefSlide(a, A, pose, plants, now, rootM) {
     else if (A.rule !== "far" && A.plan && A.plan.at - now <= T) { tgt = aimAt(A.plan.ball[0], A.plan.ball[1], A.plan.ball[2], A.plan.root[0], A.plan.root[1]); track = tgt ? { mode: "to", tLeft: Math.max(1 / 60, A.plan.at - now) } : { mode: "zero", tLeft: 0.1 }; }
     else if (A.rule === "far" && A.src && now >= A.launchAt && (A.src.vNow > 0 || A.src.stopAt === now)) {   // V1.2: through the sweep the boot's INSIDE face FOLLOWS the simulation leg's sweep-side
       // surface (its axis + footR12 toward the sweep) at the boot's part of the leg — at a contact that surface is exactly the ball's surface
-      const L = ptDefSlideLeg(A.src, a.x, a.y, now - A.launchAt, a.skel.legLen), r12 = PT_DEF.slide.footR12, dm = Math.min(1.04 * a.skel.legLen, Math.hypot(L.ex - L.hx, L.ey - L.hy) - 0.12);   // the mid-boot: 1.04 × leg from the hip
+      const L = ptDefSlideLeg(A.src, a.x, a.y, now - A.launchAt, a.skel.legLen), r12 = PT_DEF.slide.footR12, dm = Math.min(1.12 * a.skel.legLen, Math.hypot(L.ex - L.hx, L.ey - L.hy) - 0.15);   // the mid-boot: 0.15 m inside the leg's toe end (≤ the leg's reachable 1.12 × leg)
       const qx = L.hx + L.ux * dm, qy = L.hy + L.uy * dm;
       // the LEADING face: the leg point's own velocity (the slide's + the sweep's) perpendicular to the leg — the sweep side while it sweeps, the forward face as it rakes on
       const arm = Math.hypot(qx - L.hx, qy - L.hy), vx = A.src.vNow * Math.cos(A.dir) + L.om * arm * L.px, vy = A.src.vNow * Math.sin(A.dir) + L.om * arm * L.py, vp = vx * L.ux + vy * L.uy;

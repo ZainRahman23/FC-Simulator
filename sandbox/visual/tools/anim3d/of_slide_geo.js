@@ -62,8 +62,8 @@ function analyse(res) {
         ptStep(); updateRig(1 / 60, null); draw(null, 1 / 60);
         const Q = t.squad, bl = t.b, W = (v) => [+v[0].toFixed(4), +(-v[2]).toFixed(4), +v[1].toFixed(4)];   // rig (x, h, −y) → pitch (x, y, h)
         const P = Q.ctx.map(c => { const d = c.def, r = c.react; return { x: +c.p.x.toFixed(4), y: +c.p.y.toFixed(4), vx: +c.p.vx.toFixed(3), vy: +c.p.vy.toFixed(3), f: +c.p.facing.toFixed(4),
-          def: d ? { kind: d.kind, foot: d.foot, tuck: d.tuck || null, tech: d.tech || null, dir: d.dir, vNow: d.vNow, launchAt: d.launchAt, stopAt: d.stopAt, sweep: d.sweepA != null ? +d.sweepA.toFixed(4) : null, contact: d.contact ? d.contact.out : null, manifold: d.manifold ? JSON.parse(JSON.stringify(d.manifold)) : null } : null,
-          react: r ? { kind: r.kind, tGround: r.tGround, family: r.family } : null }; });
+          def: d ? { kind: d.kind, foot: d.foot, tuck: d.tuck || null, tech: d.tech || null, dir: d.dir, vNow: d.vNow, launchAt: d.launchAt, stopAt: d.stopAt, sweep: d.sweepA != null ? +d.sweepA.toFixed(4) : null, vLat: d.vLat != null ? +d.vLat.toFixed(3) : null, contact: d.contact ? d.contact.out : null, manifold: d.manifold ? JSON.parse(JSON.stringify(d.manifold)) : null } : null,
+          react: r ? { kind: r.kind, tGround: r.tGround, tFall: r.tFall, family: r.family, push: r.push ? r.push.map(v => +v.toFixed(3)) : null } : null }; });
         const J = OFSQ.actors.map(ac => { if (!ac || !ac.sol || OFPLAY.animOff) return null; const fk = ac.sol.fk, sk = ac.skel, o = {};
           for (const n of JN) { const bn = sk.byName[n]; if (bn) o[n] = W(fk.joint[bn.idx]); }
           for (const n of ["head", "toe_R", "toe_L", "hand_R", "hand_L"]) { const bn = sk.byName[n]; if (bn) o["tip:" + n] = W(fk.tip[bn.idx]); } return o; });

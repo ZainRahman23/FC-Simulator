@@ -32,10 +32,10 @@ const SCEN = {
   sw_right_late:   chase(0.90, { d: 1.2 }),
   // early: too far back — the slide dies short (a clean miss, no phantom collision)
   sw_right_early:  chase(0.90, { d: 3.6 }),
-  // the COUNTERFACTUAL pair (of_slide_cf_grid.js): 0.60 m to the side, the slide angled 10° in — the V1 near-leg and the V1.2 far-leg geometry
-  // both reach the SAME outcome (POKE → the attacker corrects), both sides; run with --pre 'PT_DEF.slide.rule="near"' for A
-  cf_right:        Object.assign(chase(0.60, { dir: -10 * E / 180 }), { ticks: 200 }),
-  cf_left:         Object.assign(chase(-0.60, { dir: 10 * E / 180 }), { ticks: 200 }),
+  // the COUNTERFACTUAL pair (of_slide_cf_grid.js, real characters): 0.75 m to the side, the slide angled 20° in — a line that CONVERGES across the
+  // carrier; the V1 near-leg and the V1.2 far-leg geometry reach the SAME outcome (POKE) on both sides; run with --pre 'PT_DEF.slide.rule="near"' for A
+  cf_right:        Object.assign(chase(0.75, { dir: -20 * E / 180 }), { ticks: 200 }),
+  cf_left:         Object.assign(chase(-0.75, { dir: 20 * E / 180 }), { ticks: 200 }),
   // GLANCING: the same side-on sweep, a weak slide tackler (sliding_tackle / reactions 30) against a strong, balanced carrier (95): the unchanged quality law gives a glancing touch — he rides it
   sw_glance:       chase(-0.90, { aextra: { attrs: { strength: 95, balance: 95 } }, dextra: { attrs: { sliding_tackle: 30, reactions: 30 } } }),
   // BLOCK: head-on, the ball on the slide line — the straight block slide (the same top leg, barely coming across): a poke along the line

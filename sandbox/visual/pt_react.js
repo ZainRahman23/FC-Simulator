@@ -43,6 +43,10 @@ const PT_REACT = {
   neg: 0.03, maxSteps: 4,
   fallTheta: 1.25, groundMu: 0.9, restT: 0.35,                 // rad at which the body meets the pitch; sliding friction on the pitch; lie still after stopping
   recoverT: { FRONT: 1.15, SIDE: 1.05, BACK: 1.30 }, stumbleBrake: 0.72,
+  // SLIDE CONTACT GEOMETRY V1.2 — bounded NON-PENETRATION while a slide is in contact with a player still on his feet (or in his failing steps):
+  // the closing velocity along the contact normal plus a separating bias (≤ biasMax, gain biasK per m of penetration past slop) is removed,
+  // shared by the recorded masses — the slider loses speed and is deflected sideways, the player is pushed (pushT: its decay)
+  slop: 0.01, biasK: 12.0, biasMax: 2.5, pushT: 0.12, latMax: 2.0, getupOut: 1.0, overrunPen: 0.04, overrunTicks: 3, turnMax: 0.10,
   ref: { balance: 60, strength: 60, agility: 60, reactions: 60 },
 };
 const PT_RX_PERF = { detect: 0, detectN: 0, resolve: 0, resolveN: 0, occ: 0, ticks: 0, pairs: 0 };   // cost accounting (timing only; never read by the simulation)
@@ -102,9 +106,12 @@ function ptRxTacklerPrims(c, dt, standSweep) {
     const L = L0, sgT = sgT0, tx = -fy * sgT, ty = fx * sgT, arm = 0.5 * (Math.hypot(L.ax - L.hx, L.ay - L.hy) + Math.hypot(L.ex - L.hx, L.ey - L.hy));
     out.push({ prim: "LEG", a: [L.ax, L.ay, 0.12], b: [L.ex, L.ey, 0.12], r: 0.07, v: [p.vx + L.om * arm * L.px, p.vy + L.om * arm * L.py] });
     out.push({ prim: "THIGH", a: [L.hx, L.hy, 0.17], b: [L.ax, L.ay, 0.13], r: 0.085, v: [p.vx + L.om * 0.5 * Math.hypot(L.ax - L.hx, L.ay - L.hy) * L.px, p.vy + L.om * 0.5 * Math.hypot(L.ax - L.hx, L.ay - L.hy) * L.py] });
-    out.push({ prim: "TUCK", a: [x - fx * 0.10 + tx * 0.10, y - fy * 0.10 + ty * 0.10, 0.10], b: [x + fx * 0.34 + tx * 0.05, y + fy * 0.34 + ty * 0.05, 0.08], r: 0.08, v: [p.vx, p.vy] });
-    out.push({ prim: "BODY", a: [x - fx * 0.13, y - fy * 0.13, 0.20], b: [x + fx * 0.05 + tx * 0.05, y + fy * 0.05 + ty * 0.05, 0.16], r: 0.16, v: [p.vx, p.vy] });
-    out.push({ prim: "TRUNK", a: [x - fx * 0.16, y - fy * 0.16, 0.36], b: [x - fx * 0.27, y - fy * 0.27, 0.72], r: 0.15, v: [p.vx, p.vy] });
+    // RE-MEASURED on the rendered V1.2 pose (root frame: forward, toward the TUCKED side, height — of_slide_geo.js, sw_right / cf_left): he lies on the
+    // near hip, so seat, trunk and the tucked leg sit TOWARD the tucked side; the tucked shin folds back under the seat
+    out.push({ prim: "TUCK", a: [x + fx * -0.1 + tx * 0.22, y + fy * -0.1 + ty * 0.22, 0.14], b: [x + fx * 0.38 + tx * 0.24, y + fy * 0.38 + ty * 0.24, 0.08], r: 0.08, v: [p.vx, p.vy] });
+    out.push({ prim: "TUCKSHIN", a: [x + fx * 0.38 + tx * 0.24, y + fy * 0.38 + ty * 0.24, 0.08], b: [x + fx * 0.05 + tx * -0.05, y + fy * 0.05 + ty * -0.05, 0.06], r: 0.06, v: [p.vx, p.vy] });
+    out.push({ prim: "BODY", a: [x + fx * -0.14 + tx * 0.08, y + fy * -0.14 + ty * 0.08, 0.22], b: [x + fx * 0.04 + tx * 0.12, y + fy * 0.04 + ty * 0.12, 0.17], r: 0.16, v: [p.vx, p.vy] });
+    out.push({ prim: "TRUNK", a: [x + fx * -0.1 + tx * 0.09, y + fy * -0.1 + ty * 0.09, 0.36], b: [x + fx * -0.2 + tx * 0.15, y + fy * -0.2 + ty * 0.15, 0.86], r: 0.15, v: [p.vx, p.vy] });
   } else if (d && d.kind === "SLIDE") {
     const S = PT_DEF.slide, fx = Math.cos(d.dir), fy = Math.sin(d.dir), sg = d.foot === "R" ? 1 : -1, lo = S.legLat * leg, lx = -fy * sg * lo, ly = fx * sg * lo;
     const x = p.x + p.vx * dt, y = p.y + p.vy * dt, ext = Math.max(0, Math.min(1, (d.launchT != null ? d.launchT : 0) / S.extT)), k1 = (S.legFrom + (S.reachAhead - S.legFrom) * ext) * leg;
@@ -128,7 +135,7 @@ function ptRxDetect(t, ci, ai, standSweep) {
   return null;
 }
 // ── 3 + 4. IMPULSE and BALANCE: turn a contact into the attacker's authoritative reaction ─────────────────────────────────────────────
-function ptRxResolve(t, ci, ai, hit, ballOrder) {
+function ptRxResolve(t, ci, ai, hit, ballOrder, overrun) {                                          // overrun (V1.2): the struck planted foot is carried away by the slider's body
   const R = PT_REACT, Q = t.squad, c = Q.ctx[ci], a = Q.ctx[ai], now = t.now, B = hit.B, leg = B.leg, g = R.g;
   const mA = ptRxMass(a), mT = ptRxMass(c), sg = hit.sg, pr = hit.pr, legSt = sg.sd ? B.legs[sg.sd] : null;
   // contact normal: horizontal, from the tackler's primitive to the struck segment (the tackler's travel direction if degenerate)
@@ -147,7 +154,7 @@ function ptRxResolve(t, ci, ai, hit, ballOrder) {
   const bothPlanted = B.legs.R.planted && B.legs.L.planted, wShare = sg.sd && legSt.planted ? (bothPlanted ? 0.5 : 1) : 0;
   const Jfric = R.mu * wShare * mA * g * R.contactT * ptRxK(a, "balance", 0.5), footM = (R.mFrac.shin + R.mFrac.foot) * mA;
   let sweep = 0, blockedT = 0, landShift = [0, 0], supportLost = false;
-  if (sg.sd && legSt.planted) { const excess = Math.max(0, J * (sg.seg === "thigh" ? 0.4 : 1) - Jfric); sweep = Math.min(0.8, excess / footM * 0.08); supportLost = sweep >= R.sweepLost; }
+  if (sg.sd && legSt.planted) { const excess = Math.max(0, J * (sg.seg === "thigh" ? 0.4 : 1) - Jfric); sweep = Math.min(0.8, excess / footM * 0.08); if (overrun) sweep = Math.max(sweep, R.sweepLost); supportLost = sweep >= R.sweepLost; }
   else if (sg.sd) { const vFoot = J / (R.mFrac[sg.seg] * mA); const tRem = Math.max(0.02, (1 - legSt.sw) * (1 - B.stance) / Math.max(0.5, B.cad) * 2);   // the rest of this swing (s)
     landShift = [nx * Math.min(0.7, vFoot * tRem * 0.35), ny * Math.min(0.7, vFoot * tRem * 0.35)]; blockedT = pr.prim === "BODY" || pr.prim === "LEG" ? Math.min(0.25, 0.04 + vn * 0.02) : 0; }
   // (b) centre of mass: the share the struck segment transmits; (c) spin about the vertical from the lever arm (tangential component)
@@ -245,6 +252,90 @@ function ptRxStart(t, ai, R0) {
   if (b.owner === ai) { b.owner = null; ptSquadEvent(t, { kind: "LOOSE", pid: ai, note: "fell (tackled)" }); }
   ptSquadEvent(t, Object.assign({ kind: "PLAYER_CONTACT", react: "FALL", az: +az.toFixed(3), azHead: +azHead.toFixed(3), family, tGround: +tGround.toFixed(3), tUp: +tUp.toFixed(3), slide: +(vg * tSlide / 2).toFixed(3) }, rec));
 }
+// V1.2 NON-PENETRATION (bounded to an active contact of a slide with a player on his feet): the DEEPEST current RIGID pair (see below) of the slider's
+// parts against his stride-clock segments; relative normal velocity (slider part − his segment) along n (slider → him); what is needed to stop closing
+// and separate at the bias rate is shared by their masses — the slider's share slows his slide (along its direction) and deflects it (across it), the
+// player's share is a push on his reaction's steps (or, with no reaction running, on his own velocity). Velocities only: nothing is moved.
+function ptRxNonPen(t, c, d, a, j, V) {
+  const R = PT_REACT, B = ptRxBody(a, 0, R.footLenV12), segs = ptRxSegments(B), prims = ptRxTacklerPrims(c, 0, null);
+  // only RIGID body-to-body contacts: his seat / trunk / tucked leg against the player's pelvis, trunk, a thigh or a weight-bearing leg (his body is there), or
+  // anything against the pelvis / trunk. The sweeping leg against legs, and any contact with a SWINGING limb, is the tackle itself — the impulse /
+  // reaction model's (sweep, trip, the foot lifted over), not a wall
+  const BODYP = { BODY: 1, TRUNK: 1, TUCK: 1, TUCKSHIN: 1 };
+  let best = null; for (const pr of prims) for (const sg of segs) { const rigid = !sg.sd || (BODYP[pr.prim] && (sg.planted || sg.seg === "thigh")); if (!rigid) continue;   // a thigh is heavy and on his pelvis
+    const cc = ptRxSegSeg3(pr.a, pr.b, sg.a, sg.b), pen = pr.r + sg.r - cc.d; if (pen > R.slop && (!best || pen > best.pen)) best = { pen, pr, sg, cc }; }
+  // OVERRUN: the slider's body UNDER him — a weight-bearing leg it sits on cannot be pushed clear (the foot is planted: moving his body does not move
+  // it), and a slider travelling with him keeps its body under his; held there (> overrunPen for overrunTicks) his support is gone: that contact is
+  // re-resolved with the support LOST, through the same balance law (normally he goes over the slider). Once per victim.
+  // trapped: any RIGID part of him (a planted leg, a thigh, pelvis, trunk) held on the slider's body; a planted leg is preferred as the one carried away
+  let trapped = null; for (const pr of prims) { if (!BODYP[pr.prim]) continue; for (const sg of segs) { if (sg.sd && !sg.planted && sg.seg !== "thigh") continue; const cc = ptRxSegSeg3(pr.a, pr.b, sg.a, sg.b), pen = pr.r + sg.r - cc.d;
+    if (pen > R.overrunPen && (!trapped || (sg.planted && !trapped.sg.planted) || (!!sg.planted === !!trapped.sg.planted && pen > trapped.pen))) trapped = { pen, pr, sg, cc }; } }
+  V.np = V.np || { n: 0, max: 0, trap: 0 }; V.np.trap = trapped ? V.np.trap + 1 : 0;
+  if (trapped && V.np.trap >= R.overrunTicks && !V.overrun && !(a.react && a.react.kind === "FALL")) { V.overrun = t.squad.tick;
+    const B0 = ptRxBody(a, 0, R.footLenV12), hit = { sub: 4, B: Object.assign(B0, { dtSub: 0 }), pr: trapped.pr, sg: trapped.sg, cc: trapped.cc, pen: trapped.pen };
+    const R0 = ptRxResolve(t, t.squad.ctx.indexOf(c), j, hit, "NO_BALL", true); R0.rec.took = "OVERRUN"; R0.rec.seq = (V.n || 0) + 1;
+    ptRxManifoldAdd(d, { kind: "OVERRUN", tick: t.squad.tick, on: j, prim: trapped.pr.prim, seg: trapped.sg.name, cls: R0.cls });
+    if ((PT_RX_RANK[R0.cls] || 0) >= (a.react ? PT_RX_RANK[a.react.kind] || 0 : 0)) { ptRxStart(t, j, R0); if (a.react) a.react.byTackler = t.squad.ctx.indexOf(c); }   // ptRxStart logs it
+    else ptSquadEvent(t, Object.assign({ kind: "PLAYER_CONTACT_ABSORBED", react: a.react ? a.react.kind : null }, R0.rec, { cls: R0.cls })); }
+  if (!best) return;
+  // the separating direction: from the slider's BODY AXIS (his seat / trunk line on the pitch) to the player — the closest-point normal of two deeply
+  // interpenetrated capsules can point the wrong way (a foot already under the seat would be driven further through)
+  let [nx, ny] = ptRxAxisNormal(c, d, a);
+  // his segment's own velocity: a weight-bearing leg pivots over its planted foot (foot still, shin half, thigh most of the body's); body parts move with him
+  const kv = !best.sg.sd ? 1 : best.sg.planted ? ({ foot: 0, shin: 0.5, thigh: 0.8 })[best.sg.seg] : 1, svx = a.p.vx * kv, svy = a.p.vy * kv;
+  const vc = (best.pr.v[0] - svx) * nx + (best.pr.v[1] - svy) * ny, bias = Math.min(R.biasMax, R.biasK * (best.pen - R.slop)), need = vc + bias;
+  if (need <= 0) return;
+  // a rigid, SUSTAINED contact couples the two bodies: the correction is shared by their recorded masses (the impact itself was the impulse law's)
+  const onGround = d.vNow <= 0, mA = ptRxMass(a), mT = ptRxMass(c), J = onGround ? need * mA : need / (1 / mA + 1 / mT);   // a slider stopped on the pitch does not move (ground friction): he takes it all
+  const fx = Math.cos(d.dir), fy = Math.sin(d.dir);
+  // the slider: along its direction (its slide speed cannot go negative) and across it (a sideways deflection, friction decays it)
+  const dT = J / mT, along = -(nx * fx + ny * fy) * dT, across = -(nx * -fy + ny * fx) * dT;
+  if (!onGround) { d.vNow = Math.max(0, d.vNow + along); if (d.vNow === 0 && d.stopAt == null) d.stopAt = t.now;
+    d.vLat = Math.max(-R.latMax, Math.min(R.latMax, (d.vLat || 0) + across)); }
+  // the player: a push on his steps
+  const dA = J / mA, r = a.react;
+  if (r && (r.kind !== "FALL" || t.now < r.tGround)) r.push = [(r.push ? r.push[0] : 0) + nx * dA, (r.push ? r.push[1] : 0) + ny * dA];
+  else if (!r) { a.p.vx += nx * dA; a.p.vy += ny * dA; }
+  V.np.n++; V.np.max = Math.max(V.np.max, best.pen);
+  if (V.np.n === 1) ptRxManifoldAdd(d, { kind: "NONPEN", tick: t.squad.tick, on: j, prim: best.pr.prim, seg: best.sg.name, pen: +best.pen.toFixed(3), vc: +vc.toFixed(3) });
+
+}
+function ptRxAxisNormal(c, d, a) {                                                                  // unit vector from the slider's seat / trunk line to the player's root
+  const Z = ptRxSeat(d, c.p.x, c.p.y), dx = Z[2] - Z[0], dy = Z[3] - Z[1], L = dx * dx + dy * dy, u = L > 1e-9 ? Math.max(0, Math.min(1, ((a.p.x - Z[0]) * dx + (a.p.y - Z[1]) * dy) / L)) : 0;
+  let nx = a.p.x - (Z[0] + dx * u), ny = a.p.y - (Z[1] + dy * u), m = Math.hypot(nx, ny);
+  if (m < 1e-4) { const sg = d.tuck === "R" ? 1 : -1; nx = -Math.sin(d.dir) * sg; ny = Math.cos(d.dir) * sg; m = 1; }                // on the axis: toward the tucked side (where he is)
+  return [nx / m, ny / m];
+}
+function ptRxFallerBody(a, r, now) {                                                                  // the falling body (pitch frame): legs F→P, trunk P→H
+  const u = Math.max(0, Math.min(1, (now - r.tFall) / Math.max(1e-3, r.tGround - r.tFall))), ph = u * Math.PI / 2, k = (a.p.legLen || PT.LEG_REF) / PT.LEG_REF;
+  const az = r.azHead != null ? r.azHead : r.az, hx = Math.cos(az), hy = Math.sin(az), p = a.p;
+  const P = [p.x, p.y, (0.95 - 0.72 * u) * k], H = [P[0] + hx * 0.8 * k * Math.sin(ph), P[1] + hy * 0.8 * k * Math.sin(ph), P[2] + 0.75 * k * Math.cos(ph)], F = [p.x - hx * 0.55 * k * u, p.y - hy * 0.55 * k * u, 0.10];
+  return [{ a: F, b: P, r: 0.12, part: "legs" }, { a: P, b: H, r: 0.16, part: "trunk" }];
+}
+function ptRxNonPenAir(t, c, d, a, j, V, r) {
+  // a player whose feet are going out from under him is not shoved along: the SLIDER is stopped against his body (its closing speed along its slide
+  // removed), and HE is steered off the slider — the part of his fall travel driving into it removed, plus a separating push at the bias rate
+  const R = PT_REACT, now = t.now, Q = t.squad; let best = null;
+  for (const pr of ptRxTacklerPrims(c, 0, null)) { if (!(pr.prim === "TRUNK" || pr.prim === "BODY" || pr.prim === "TUCK" || pr.prim === "TUCKSHIN")) continue;
+    for (const fb of ptRxFallerBody(a, r, now)) { const cc = ptRxSegSeg3(pr.a, pr.b, fb.a, fb.b), pen = pr.r + fb.r - cc.d; if (pen > R.slop && (!best || pen > best.pen)) best = { pen, cc, pr, fb }; } }
+  if (!best) return;
+  const [nx, ny] = ptRxAxisNormal(c, d, a);                                                          // n: slider's body axis → him
+  const k = nx * Math.cos(d.dir) + ny * Math.sin(d.dir);                                               // > 0: the slide drives into him
+  if (k > 0 && d.vNow > 0) { d.vNow = d.vNow * (1 - Math.min(1, k)); if (d.vNow < 0.05) { d.vNow = 0; if (d.stopAt == null) d.stopAt = now; }
+    if (!V.blockedAir) { V.blockedAir = Q.tick; ptRxManifoldAdd(d, { kind: "SLIDER_BLOCKED_BY_FALLER", tick: Q.tick, on: j, part: best.fb.part, pen: +best.pen.toFixed(3) }); } }
+  const vr = (r.v[0] - c.p.vx) * nx + (r.v[1] - c.p.vy) * ny;                                         // < 0: his travel drives into the slider
+  if (vr < 0) r.v = [r.v[0] - vr * nx, r.v[1] - vr * ny];
+  // the separation (bias rate) shared by mass: he is pushed off, the slider is deflected sideways (a falling body landing on his upper body moves him too)
+  const bias = Math.min(R.biasMax, R.biasK * (best.pen - R.slop)), mA = ptRxMass(a), mT = ptRxMass(c), sA = mT / (mA + mT), sT = mA / (mA + mT);
+  r.push = [(r.push ? r.push[0] : 0) + nx * bias * sA * 0.25, (r.push ? r.push[1] : 0) + ny * bias * sA * 0.25];   // decaying push (≈ its share of the bias over the decay)
+  if (d.vNow > 0) d.vLat = Math.max(-R.latMax, Math.min(R.latMax, (d.vLat || 0) - (nx * -Math.sin(d.dir) + ny * Math.cos(d.dir)) * bias * sT));
+  if (!V.caught) { V.caught = Q.tick; ptRxManifoldAdd(d, { kind: "FALLER_STEERED", tick: Q.tick, on: j, part: best.fb.part, pen: +best.pen.toFixed(3), dv: +Math.max(0, -vr).toFixed(3) }); }
+  // his TRUNK toppling into the slider's upper body: the fall ROTATES around it — the head direction's component toward the slider is removed, at a
+  // bounded turn rate (the presentation's directional basis follows the head direction continuously)
+  if (best.fb.part === "trunk") { const az = r.azHead != null ? r.azHead : r.az, hx = Math.cos(az), hy = Math.sin(az), into = -(hx * nx + hy * ny);
+    if (into > 0) { const tx = hx + into * nx, ty = hy + into * ny, want = Math.hypot(tx, ty) > 1e-3 ? Math.atan2(ty, tx) : az + Math.PI / 2, dA = Math.atan2(Math.sin(want - az), Math.cos(want - az));
+      r.azHead = az + Math.max(-R.turnMax, Math.min(R.turnMax, dA)); if (!V.deflected) { V.deflected = Q.tick; ptRxManifoldAdd(d, { kind: "FALL_DEFLECTED", tick: Q.tick, on: j, from: +az.toFixed(3) }); } } }
+}
 // SLIDE CONTACT GEOMETRY V1.2 — a fallen player against the body of the slider who brought him down (V1.2 slides only): the slider's seat /
 // tucked leg / sweeping leg as a capsule on the pitch. At the first tick on the ground: if his centre of mass comes down ON it he lies over it
 // (r.onBody — the presentation lays him on it); otherwise, while he slides, the component of his slide INTO it is removed (a velocity
@@ -257,30 +348,20 @@ function ptRxGroundBody(t, c, r) {
   if (MF && !MF.groundBlock) { MF.groundBlock = Q.tick; ptRxManifoldAdd(d, { kind: "GROUND_BLOCK", tick: Q.tick, on: c.idx, pen: +G.pen.toFixed(3) }); }
   return { nx: -G.nx, ny: -G.ny, vx: s.p.vx, vy: s.p.vy };                                              // from the slider's body to him
 }
+// the V1.2 slider's seat + reclined trunk on the pitch as a 2D segment (re-measured: toward the tucked side), for the bodies-on-the-pitch tests
+function ptRxSeat(d, x, y) { const fx = Math.cos(d.dir), fy = Math.sin(d.dir), sg = d.tuck === "R" ? 1 : -1, tx = -fy * sg * 0.10, ty = fx * sg * 0.10;
+  return [x - fx * 0.35 + tx, y - fy * 0.35 + ty, x + fx * 0.25 + tx, y + fy * 0.25 + ty]; }
 // the fallen player's lying capsule (his feet → head along the fall) against the slider's low body (seat / tucked leg) and sweeping leg on the pitch:
 // penetration and the normal from the faller to the slider (closest pair), 2D
 function ptRxLyingPair(s, d, c, r) {
   const q = s.p, p = c.p, leg = q.legLen || PT.LEG_REF, fx = Math.cos(d.dir), fy = Math.sin(d.dir), L = ptDefSlideLeg(d, q.x, q.y, t_now_cache - d.launchAt, leg);
   const ax = Math.cos(r.az), ay = Math.sin(r.az), A0 = [p.x - ax * 0.55, p.y - ay * 0.55], A1 = [p.x + ax * 0.85, p.y + ay * 0.85];
   let best = null;
-  for (const [B0, B1, rb] of [[[q.x - fx * 0.35, q.y - fy * 0.35], [q.x + fx * 0.25, q.y + fy * 0.25], 0.16], [[L.hx, L.hy], [L.ex, L.ey], 0.08]]) {
+  const Z = ptRxSeat(d, q.x, q.y);
+  for (const [B0, B1, rb] of [[[Z[0], Z[1]], [Z[2], Z[3]], 0.16], [[L.hx, L.hy], [L.ex, L.ey], 0.08]]) {
     const cc = ptRxSegSeg3([A0[0], A0[1], 0], [A1[0], A1[1], 0], [B0[0], B0[1], 0], [B1[0], B1[1], 0]), pen = 0.16 + rb - cc.d;
     if (!best || pen > best.pen) { let nx = cc.Q[0] - cc.P[0], ny = cc.Q[1] - cc.P[1]; const m = Math.hypot(nx, ny) || 1; best = { pen, nx: nx / m, ny: ny / m }; } }
   return best;
-}
-// SLIDE CONTACT GEOMETRY V1.2 — a player still ON HIS FEET after a contact (correcting / stumbling) against the V1.2 slider that hit him: his
-// corrective steps cannot carry him THROUGH the slider's seat / tucked leg / sweeping leg — the part of his step velocity driving into them is removed
-// (a velocity constraint, never a displacement; the capture-point steps otherwise go on as the balance model planned them)
-function ptRxStepBody(t, c, r) {
-  if (r.byTackler == null) return null; const Q = t.squad, s = Q.ctx[r.byTackler], d = s && s.def; if (!d || d.kind !== "SLIDE" || d.rule !== "far" || t.now < d.launchAt) return null;
-  const q = s.p, p = c.p, fx = Math.cos(d.dir), fy = Math.sin(d.dir), L = ptDefSlideLeg(d, q.x, q.y, t.now - d.launchAt, q.legLen || PT.LEG_REF);
-  let best = null;
-  for (const [ax, ay, bx, by, R2] of [[q.x - fx * 0.35, q.y - fy * 0.35, q.x + fx * 0.25, q.y + fy * 0.25, 0.40], [L.hx, L.hy, L.ex, L.ey, 0.26]]) {
-    const dx = bx - ax, dy = by - ay, LL = dx * dx + dy * dy, u = LL > 1e-9 ? Math.max(0, Math.min(1, ((p.x - ax) * dx + (p.y - ay) * dy) / LL)) : 0, ex = p.x - (ax + dx * u), ey = p.y - (ay + dy * u), dd = Math.hypot(ex, ey);
-    if (dd < R2 && dd > 1e-6 && (!best || R2 - dd > best.pen)) best = { pen: R2 - dd, nx: ex / dd, ny: ey / dd }; }
-  if (!best) return null; const MF = d.mf && d.mf[c.idx];
-  if (MF && !MF.stepAround) { MF.stepAround = Q.tick; ptRxManifoldAdd(d, { kind: "STEPS_AROUND", tick: Q.tick, on: c.idx, pen: +best.pen.toFixed(3) }); }
-  return { nx: best.nx, ny: best.ny, vx: q.vx, vy: q.vy };
 }
 // movement override for a reacting player (called from ptDefMotion): null when there is nothing to do
 function ptRxMotion(t, c) {
@@ -290,12 +371,13 @@ function ptRxMotion(t, c) {
     const k = Math.floor((now - r.t0) / r.Tstep), br = Math.pow(R.stumbleBrake, r.kind === "STUMBLE" ? k + 1 : 0.3);   // each corrective step brakes
     const em = Math.hypot(r.err[0], r.err[1]) || 1, pull = Math.min(1.5, em * 3);
     let vx = r.v0[0] * br + r.err[0] / em * pull * (1 - br), vy = r.v0[1] * br + r.err[1] / em * pull * (1 - br);
-    const G = ptRxStepBody(t, c, r); if (G) { const vr = (vx - G.vx) * G.nx + (vy - G.vy) * G.ny; if (vr < 0) { vx -= vr * G.nx; vy -= vr * G.ny; } }   // V1.2: his steps go around / over the slider, not through him
+    if (r.push) { vx += r.push[0]; vy += r.push[1]; const k = Math.exp(-PT_DT / PT_REACT.pushT); r.push = [r.push[0] * k, r.push[1] * k]; }   // V1.2: the contact constraint's push (the slider's body in his way), decaying
     return { lock: true, v: [vx, vy], facing: Math.atan2(vy, vx), react: true };
   }
   if (r.kind === "FALL") {
     if (now >= r.tUp) { c.react = null; return { vmax: 1.5 }; }
-    if (now < r.tGround) return { lock: true, v: r.v, facing: r.facing0 + r.spin * (now - r.t0) * 0.5, react: true };
+    if (now < r.tGround) { let v = r.v; if (r.push) { v = [r.v[0] + r.push[0], r.v[1] + r.push[1]]; const k = Math.exp(-PT_DT / PT_REACT.pushT); r.push = [r.push[0] * k, r.push[1] * k]; }
+      return { lock: true, v, facing: r.facing0 + r.spin * (now - r.t0) * 0.5, react: true }; }
     if (now < r.tStop) { const k = Math.max(0, 1 - (now - r.tGround) / Math.max(1e-3, r.tStop - r.tGround)); let vx = r.v[0] * k, vy = r.v[1] * k;
       const G = ptRxGroundBody(t, c, r); if (G) { const vr = (vx - G.vx) * G.nx + (vy - G.vy) * G.ny; if (vr < 0) { vx -= vr * G.nx; vy -= vr * G.ny; } }   // V1.2: he cannot slide THROUGH the slider on the pitch
       return { lock: true, v: [vx, vy], facing: null, react: true }; }
@@ -348,7 +430,7 @@ function ptRxStep(t) {
 const PT_RX_RANK = { NEGLIGIBLE: 0, CORRECTION: 1, STUMBLE: 2, FALL: 3 };
 function ptRxSlideManifold(t, i, c, d) {
   const Q = t.squad, now = t.now;
-  if (now < d.launchAt || d.vNow <= 0 && d.stopAt !== now) return;
+  if (now < d.launchAt || d.vNow <= 0 && d.stopAt != null && now >= d.stopAt + PT_DEF.slide.groundT) return;   // his travel AND his time on the pitch (until the get-up)
   d.launchT = now - d.launchAt; const MF = d.mf || (d.mf = {});
   for (let j = 0; j < Q.ctx.length; j++) {
     const a = Q.ctx[j]; if (j === i || a.team === c.team) continue;
@@ -356,23 +438,15 @@ function ptRxSlideManifold(t, i, c, d) {
     const V = MF[j] || (MF[j] = { n: 0, keys: {}, last: -99, over: false }), r = a.react;
     if (r && r.kind === "FALL" && now >= r.tFall) {                                                   // falling / fallen: not a standing body (before tFall he is still on his feet, taking the steps that fail)
       if (!V.over && now < r.tGround && Math.hypot(c.p.x - a.p.x, c.p.y - a.p.y) < 1.2) { V.over = true; ptRxManifoldAdd(d, { kind: "OVER", tick: Q.tick, on: j }); }
-      // FALLING (in the air): his body tips from his feet toward where his head goes; the slider's seat / trunk cannot slide on through his legs
-      // and hips — it is stopped against them (he goes over the top of the slider)
-      if (now < r.tGround && now >= r.tFall && d.vNow > 0) { const u = Math.max(0, Math.min(1, (now - r.tFall) / Math.max(1e-3, r.tGround - r.tFall))), ph = u * Math.PI / 2, Lb = 1.55 * (a.p.legLen || PT.LEG_REF) / PT.LEG_REF;
-        const hx = Math.cos(r.azHead != null ? r.azHead : r.az), hy = Math.sin(r.azHead != null ? r.azHead : r.az), F0 = [a.p.x, a.p.y, 0.1], F1 = [a.p.x + hx * Lb * Math.sin(ph), a.p.y + hy * Lb * Math.sin(ph), 0.1 + Lb * Math.cos(ph)];
-        let hit = null; for (const pr of ptRxTacklerPrims(c, 0, null)) { if (pr.prim !== "TRUNK" && pr.prim !== "BODY") continue; const cc = ptRxSegSeg3(pr.a, pr.b, F0, F1), pen = pr.r + 0.14 - cc.d; if (pen > 0 && (!hit || pen > hit.pen)) hit = { pen, cc }; }
-        if (hit) { let nx = hit.cc.P[0] - hit.cc.Q[0], ny = hit.cc.P[1] - hit.cc.Q[1]; const m = Math.hypot(nx, ny) || 1; nx /= m; ny /= m; const k = -(Math.cos(d.dir) * nx + Math.sin(d.dir) * ny);   // n: faller → slider
-          if (k > 0) { d.vNow = d.vNow * (1 - Math.min(1, k)); if (d.vNow < 0.05) { d.vNow = 0; if (d.stopAt == null) d.stopAt = now; } if (!V.blockedAir) { V.blockedAir = Q.tick; ptRxManifoldAdd(d, { kind: "SLIDER_BLOCKED_BY_FALLER", tick: Q.tick, on: j, pen: +hit.pen.toFixed(3) }); } }
-          // and HE is caught by the slider's body: the part of his fall travel driving into it is removed (he comes down on him, not through him)
-          const vr = (r.v[0] - c.p.vx) * nx + (r.v[1] - c.p.vy) * ny;
-          if (vr > 0) { r.v = [r.v[0] - vr * nx, r.v[1] - vr * ny]; if (!V.caught) { V.caught = Q.tick; ptRxManifoldAdd(d, { kind: "FALLER_CAUGHT", tick: Q.tick, on: j, dv: +vr.toFixed(3) }); } } } }
-      // a body already ON the pitch: the slide cannot pass through it — the slider's closing speed against the lying capsule is removed
-      if (now >= r.tGround && d.vNow > 0) { t_now_cache = now; const G = ptRxLyingPair(c, d, a, r); if (G && G.pen > 0) { const k = -(Math.cos(d.dir) * G.nx + Math.sin(d.dir) * G.ny);   // n: faller → slider; k > 0: sliding INTO him
-          if (k > 0) { d.vNow = d.vNow * (1 - Math.min(1, k)); if (d.vNow < 0.05) { d.vNow = 0; if (d.stopAt == null) d.stopAt = now; }
-            if (!V.blocked) { V.blocked = Q.tick; ptRxManifoldAdd(d, { kind: "SLIDER_BLOCKED", tick: Q.tick, on: j, pen: +G.pen.toFixed(3) }); } } } }
+      // FALLING (in the air): his body as the fall presentation carries it — pelvis over his root, lowering as he topples; head going where his head
+      // goes; legs trailing — against the slider's seat / trunk / tucked leg: the same bounded NON-PENETRATION as on his feet (closing velocity +
+      // separating bias, shared by their masses): the slider is slowed / deflected, the faller's travel is pushed — he comes down on / beside the
+      // slider, not through him
+      if (now < r.tGround && now >= r.tFall) ptRxNonPenAir(t, c, d, a, j, V, r);
       continue; }
     const tD = ptRxNow(), hit = ptRxDetect(t, i, j, null); PT_RX_PERF.detect += ptRxNow() - tD; PT_RX_PERF.detectN++;
     if (!hit) continue;
+    ptRxNonPen(t, c, d, a, j, V);                                                                     // V1.2: the bodies in contact cannot keep driving into each other
     const key = hit.pr.prim + ":" + (hit.sg.sd || "TRUNK"), seen = V.keys[key];
     const bt = d.contact && d.contact.contactTick != null ? d.contact.contactTick * 4 + (d.contact.sub ? Math.round(d.contact.sub * 4) : 4) : null, mt = Q.tick * 4 + hit.sub;
     const order = bt == null ? "NO_BALL" : Math.abs(bt - mt) <= 4 ? "SIMULTANEOUS" : bt < mt ? "BALL_FIRST" : "MAN_FIRST";
@@ -402,8 +476,8 @@ function ptRxLying(c) {
   const d = c.def, r = c.react, p = c.p, leg = p.legLen || PT.LEG_REF;
   if (d && d.kind === "SLIDE" && d.rule === "far" && d.launchAt != null && t_now_cache >= d.launchAt && d.vNow <= 0) {   // V1.2: the seat / reclined trunk and the swept leg where they lie
     if (d.stopAt != null && t_now_cache >= d.stopAt + PT_DEF.slide.groundT) return null;           // getting up: a standing body (disc occupancy)
-    const fx = Math.cos(d.dir), fy = Math.sin(d.dir), L = ptDefSlideLeg(d, p.x, p.y, t_now_cache - d.launchAt, leg);
-    return [[p.x - fx * 0.35, p.y - fy * 0.35, p.x + fx * 0.25, p.y + fy * 0.25, PT_DEF.bodyR + 0.14], [L.hx, L.hy, L.ex, L.ey, 0.30]]; }
+    const L = ptDefSlideLeg(d, p.x, p.y, t_now_cache - d.launchAt, leg), Z = ptRxSeat(d, p.x, p.y);
+    return [[Z[0], Z[1], Z[2], Z[3], PT_DEF.bodyR + 0.14], [L.hx, L.hy, L.ex, L.ey, 0.30]]; }
   if (d && d.kind === "SLIDE" && d.launchAt != null && t_now_cache >= d.launchAt && d.vNow <= 0) {   /* a slide still moving is handled by the contact model, not pushed aside */ const fx = Math.cos(d.dir), fy = Math.sin(d.dir); return [p.x - fx * 0.35, p.y - fy * 0.35, p.x + fx * 0.9 * leg, p.y + fy * 0.9 * leg]; }
   if (r && r.kind === "FALL" && t_now_cache >= r.tGround) { const fx = Math.cos(r.az), fy = Math.sin(r.az); return [p.x - fx * 0.55, p.y - fy * 0.55, p.x + fx * 0.85, p.y + fy * 0.85]; }
   return null;
@@ -412,14 +486,18 @@ let t_now_cache = 0;
 function ptRxOccupancy(t) {
   const Q = t.squad; if (!Q.spec.defending) return; t_now_cache = t.now; const tO = ptRxNow(); PT_RX_PERF.ticks++;
   const R2 = PT_DEF.bodyR + 0.14;
-  for (const L of Q.ctx) { const seg0 = ptRxLying(L); if (!seg0) continue; const segs = Array.isArray(seg0[0]) ? seg0 : [seg0.concat([R2])];   // V1.2 bodies: several capsules
+  for (const L of Q.ctx) { const seg0 = ptRxLying(L); if (!seg0) continue; const segs = Array.isArray(seg0[0]) ? seg0 : [seg0.concat([R2])], slid = Array.isArray(seg0[0]);   // V1.2 bodies: several capsules
     for (const o of Q.ctx) { if (o === L || ptRxLying(o)) continue;
       if (o.react && o.react.kind === "FALL" && t.now < o.react.tGround) continue;                  // a faller in the air goes OVER the body on the pitch
-      if (L.react && L.react.byTackler != null && Q.ctx[L.react.byTackler] === o) continue;
+      const ownTackler = L.react && L.react.byTackler != null && Q.ctx[L.react.byTackler] === o, v12 = ownTackler && o.def && o.def.kind === "SLIDE" && o.def.rule === "far";
+      if (ownTackler && !v12) continue;                                                                // V1: a faller and his own tackler are not kept apart
+      // V1.2: a slider getting up from under the player he brought down shuffles out from under him — the mop-up rate-limited (≤ PT_REACT.getupOut m/s)
       for (const seg of segs) { const RR = seg[4];
       const p = o.p, dx = seg[2] - seg[0], dy = seg[3] - seg[1], LL = dx * dx + dy * dy, s = LL > 1e-9 ? Math.max(0, Math.min(1, ((p.x - seg[0]) * dx + (p.y - seg[1]) * dy) / LL)) : 0;
       const qx = seg[0] + dx * s, qy = seg[1] + dy * s, ex = p.x - qx, ey = p.y - qy, d = Math.hypot(ex, ey); if (d >= RR || d < 1e-6) continue;
-      const nx = ex / d, ny = ey / d, pen = RR - d; p.x += nx * pen; p.y += ny * pen; const vn = p.vx * nx + p.vy * ny; if (vn < 0) { p.vx -= vn * nx; p.vy -= vn * ny; } } } }
+      // V1.2: a slider that has just come to rest is not a wall that appears around a player already beside / over him — he is moved off at the
+      // non-penetration bias rate (≤ biasMax m/s), never popped the whole overlap in one tick (sl_loose: 38 cm in a tick at the stop)
+      const nx = ex / d, ny = ey / d, pen = v12 ? Math.min(RR - d, PT_REACT.getupOut * PT_DT) : slid ? Math.min(RR - d, PT_REACT.biasMax * PT_DT) : RR - d; p.x += nx * pen; p.y += ny * pen; const vn = p.vx * nx + p.vy * ny; if (vn < 0) { p.vx -= vn * nx; p.vy -= vn * ny; } } } }
   PT_RX_PERF.occ += ptRxNow() - tO;
 }
 if (typeof module !== "undefined" && module.exports) module.exports = { PT_REACT };
