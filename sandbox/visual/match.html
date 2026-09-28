@@ -29,6 +29,16 @@
   <h1>Match Visual Preview</h1>
 
   <section>
+    <label for="weather">Weather</label>
+    <select id="weather" onchange="TouchlineRain.setWeather(this.value)" style="width:100%;margin-bottom:8px"><option value="rain">Rain</option><option value="light">Light rain</option><option value="off">Dry</option></select>
+    <label for="ball-design">Match ball design</label>
+    <select id="ball-design" onchange="TouchlineBall.setDesign(this.value)" style="width:100%;margin-bottom:8px">
+      <option value="classic">Classic · white / charcoal</option>
+      <option value="trionda">Trionda · 2026 simplified</option>
+      <option value="yellow">Yellow · simple</option>
+      <option value="sprite">Original sprite · original size</option>
+      <option value="plain">Plain physics reference</option>
+    </select>
     <button id="ptbtn" style="width:100%;padding:8px;font-weight:700;font-size:13px;
       background:#1d7a3d;color:#fff;border:1px solid #2fa35a;border-radius:5px;cursor:pointer">
       Single Player Test</button>
@@ -158,7 +168,10 @@
 <script src="anim3d/gk_motion_library.js"></script>
 <script src="anim3d/gk_graph.js"></script>
 <script src="anim3d/gk3d_backend.js"></script>
-<script src="corner-flags.js"></script>
+<script src="ball-art.js"></script>
+<script>document.getElementById("ball-design").value=TouchlineBall.getDesign();</script>
+<script src="corner-flags.js"></script><script src="stadium-art.js"></script><script src="rain.js"></script>
+<script>document.getElementById("weather").value=TouchlineRain.getWeather();</script>
 <script src="match.js?v=pt2"></script>
 <script src="pt_squad.js"></script>
 <script src="pt_defend.js"></script>   <!-- DEFENDING V1: jockey / standing tackle / slide tackle / occupancy (simulation), inert outside defending drills -->
