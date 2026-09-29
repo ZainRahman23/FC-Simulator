@@ -1,0 +1,12617 @@
+{
+ "summary": {
+  "shots": 120,
+  "committed": 114,
+  "contacts": 40,
+  "held": 15,
+  "familyMotion": {
+   "AIRBORNE_DIVE\u2192FAR_DIVE": 71,
+   "AIRBORNE_DIVE\u2192LOW_DIVE": 13,
+   "LOW_GATHER\u2192GATHER": 5,
+   "LOW_COLLAPSE\u2192LOW_COLLAPSE": 2,
+   "NEAR_BODY_SAVE\u2192NEAR_BODY": 6,
+   "HIGH_CATCH\u2192HIGH_CATCH": 17
+  },
+  "facings45": {
+   "180": 12,
+   "135": 21,
+   "-135": 28,
+   "-45": 5,
+   "-180": 16,
+   "90": 16,
+   "-90": 7,
+   "45": 6,
+   "0": 3
+  },
+  "outcomes": {
+   "CONTROLLED PARRY": 11,
+   "GATHER": 8,
+   "CATCH": 7,
+   "BODY DEFLECTION": 1,
+   "WEAK PARRY": 4,
+   "FINGERTIP (through)": 3,
+   "WEAK PARRY (through)": 2,
+   "LEG DEFLECTION": 1,
+   "CONTROLLED PARRY (through)": 1,
+   "BODY BLOCK": 1,
+   "FINGERTIP": 1
+  },
+  "fallbacks": 0,
+  "unauthoredTicks": 0,
+  "shotsWithBadAsserts": 1,
+  "shotsWithCradleViolations": 1,
+  "gloveResidualHand": {
+   "n": 37,
+   "median": 0.229,
+   "p90": 0.417,
+   "max": 0.494
+  },
+  "heldByMotion": {
+   "GATHER": 4,
+   "LOW_COLLAPSE": 2,
+   "FAR_DIVE": 1,
+   "NEAR_BODY": 4,
+   "HIGH_CATCH": 3,
+   "LOW_DIVE": 1
+  }
+ },
+ "shots": [
+  {
+   "shotTick": 22,
+   "commitTick": 37,
+   "contactTick": null,
+   "facing": 175.1,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     37,
+     "LOAD"
+    ],
+    [
+     43,
+     "PLANT"
+    ],
+    [
+     48,
+     "PUSH_OFF"
+    ],
+    [
+     52,
+     "TOE_OFF"
+    ],
+    [
+     56,
+     "EARLY_FLIGHT"
+    ],
+    [
+     67,
+     "MID_FLIGHT"
+    ],
+    [
+     81,
+     "FULL_EXTENSION"
+    ],
+    [
+     92,
+     "FOLLOW"
+    ],
+    [
+     96,
+     "DESCENT"
+    ],
+    [
+     102,
+     "IMPACT"
+    ],
+    [
+     112,
+     "ABSORB"
+    ],
+    [
+     126,
+     "SETTLE"
+    ],
+    [
+     150,
+     "BRACE"
+    ],
+    [
+     168,
+     "PUSH_UP"
+    ],
+    [
+     186,
+     "HALF_KNEEL"
+    ],
+    [
+     207,
+     "CROUCH"
+    ],
+    [
+     228,
+     "RISE"
+    ],
+    [
+     258,
+     "REPOSITION"
+    ],
+    [
+     294,
+     "SET"
+    ]
+   ],
+   "presMax": 0.5,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 0,
+    "origin": [
+     90,
+     34
+    ],
+    "aim": [
+     105,
+     37.5
+    ],
+    "key": "5",
+    "c": 0.736,
+    "settle": 120,
+    "run": "side",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 12,
+   "commitTick": 27,
+   "contactTick": null,
+   "facing": 150.7,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "RIGHT",
+   "motion": "FAR_DIVE",
+   "landed": "RIGHT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     27,
+     "LOAD"
+    ],
+    [
+     31,
+     "PLANT"
+    ],
+    [
+     35,
+     "PUSH_OFF"
+    ],
+    [
+     38,
+     "TOE_OFF"
+    ],
+    [
+     41,
+     "EARLY_FLIGHT"
+    ],
+    [
+     49,
+     "MID_FLIGHT"
+    ],
+    [
+     59,
+     "FULL_EXTENSION"
+    ],
+    [
+     67,
+     "FOLLOW"
+    ],
+    [
+     72,
+     "DESCENT"
+    ],
+    [
+     79,
+     "IMPACT"
+    ],
+    [
+     89,
+     "ABSORB"
+    ],
+    [
+     103,
+     "SETTLE"
+    ],
+    [
+     127,
+     "BRACE"
+    ],
+    [
+     145,
+     "PUSH_UP"
+    ],
+    [
+     163,
+     "HALF_KNEEL"
+    ],
+    [
+     184,
+     "CROUCH"
+    ],
+    [
+     205,
+     "RISE"
+    ],
+    [
+     235,
+     "REPOSITION"
+    ],
+    [
+     289,
+     "SET"
+    ]
+   ],
+   "presMax": 1.03,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 1,
+    "origin": [
+     82,
+     48
+    ],
+    "aim": [
+     105,
+     31.8
+    ],
+    "key": "z",
+    "c": 0.677,
+    "settle": 40,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": -150,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "LOAD"
+    ],
+    [
+     33,
+     "PLANT"
+    ],
+    [
+     37,
+     "PUSH_OFF"
+    ],
+    [
+     41,
+     "TOE_OFF"
+    ],
+    [
+     44,
+     "EARLY_FLIGHT"
+    ],
+    [
+     54,
+     "MID_FLIGHT"
+    ],
+    [
+     67,
+     "FULL_EXTENSION"
+    ],
+    [
+     76,
+     "FOLLOW"
+    ],
+    [
+     80,
+     "DESCENT"
+    ],
+    [
+     88,
+     "IMPACT"
+    ],
+    [
+     98,
+     "ABSORB"
+    ],
+    [
+     112,
+     "SETTLE"
+    ],
+    [
+     136,
+     "BRACE"
+    ],
+    [
+     154,
+     "PUSH_UP"
+    ],
+    [
+     172,
+     "HALF_KNEEL"
+    ],
+    [
+     193,
+     "CROUCH"
+    ],
+    [
+     214,
+     "RISE"
+    ],
+    [
+     244,
+     "REPOSITION"
+    ],
+    [
+     262,
+     "SET"
+    ]
+   ],
+   "presMax": 0.28,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 2,
+    "origin": [
+     82,
+     20
+    ],
+    "aim": [
+     105,
+     35.4
+    ],
+    "key": "2",
+    "c": 0.962,
+    "settle": 40,
+    "run": "goal",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 29,
+   "commitTick": 48,
+   "contactTick": null,
+   "facing": -25.4,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "RIGHT",
+   "motion": "FAR_DIVE",
+   "landed": "RIGHT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     48,
+     "LOAD"
+    ],
+    [
+     53,
+     "PLANT"
+    ],
+    [
+     59,
+     "PUSH_OFF"
+    ],
+    [
+     63,
+     "TOE_OFF"
+    ],
+    [
+     68,
+     "EARLY_FLIGHT"
+    ],
+    [
+     80,
+     "MID_FLIGHT"
+    ],
+    [
+     95,
+     "FULL_EXTENSION"
+    ],
+    [
+     107,
+     "FOLLOW"
+    ],
+    [
+     109,
+     "DESCENT"
+    ],
+    [
+     113,
+     "IMPACT"
+    ],
+    [
+     122,
+     "ABSORB"
+    ],
+    [
+     138,
+     "SETTLE"
+    ],
+    [
+     163,
+     "BRACE"
+    ],
+    [
+     181,
+     "PUSH_UP"
+    ],
+    [
+     199,
+     "HALF_KNEEL"
+    ],
+    [
+     220,
+     "CROUCH"
+    ],
+    [
+     241,
+     "RISE"
+    ],
+    [
+     271,
+     "REPOSITION"
+    ],
+    [
+     307,
+     "SET"
+    ]
+   ],
+   "presMax": 0.85,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 3,
+    "origin": [
+     98,
+     34
+    ],
+    "aim": [
+     105,
+     31.8
+    ],
+    "key": "z",
+    "c": 0.925,
+    "settle": 120,
+    "run": "side",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 29,
+   "commitTick": 44,
+   "contactTick": null,
+   "facing": 162.6,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     44,
+     "LOAD"
+    ],
+    [
+     49,
+     "PLANT"
+    ],
+    [
+     53,
+     "PUSH_OFF"
+    ],
+    [
+     56,
+     "TOE_OFF"
+    ],
+    [
+     60,
+     "EARLY_FLIGHT"
+    ],
+    [
+     69,
+     "MID_FLIGHT"
+    ],
+    [
+     81,
+     "FULL_EXTENSION"
+    ],
+    [
+     90,
+     "FOLLOW"
+    ],
+    [
+     94,
+     "DESCENT"
+    ],
+    [
+     102,
+     "IMPACT"
+    ],
+    [
+     112,
+     "ABSORB"
+    ],
+    [
+     126,
+     "SETTLE"
+    ],
+    [
+     150,
+     "BRACE"
+    ],
+    [
+     168,
+     "PUSH_UP"
+    ],
+    [
+     186,
+     "HALF_KNEEL"
+    ],
+    [
+     207,
+     "CROUCH"
+    ],
+    [
+     228,
+     "RISE"
+    ],
+    [
+     258,
+     "REPOSITION"
+    ],
+    [
+     294,
+     "SET"
+    ]
+   ],
+   "presMax": 0.6,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 4,
+    "origin": [
+     82,
+     40
+    ],
+    "aim": [
+     105,
+     36.3
+    ],
+    "key": "z",
+    "c": 0.904,
+    "settle": 40,
+    "run": "side",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 26,
+   "commitTick": 71,
+   "contactTick": 99,
+   "facing": -176.6,
+   "tier": "LOW-DIVE REACHABLE",
+   "action": "DIVE-LOW",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "LOW-MID",
+   "side": "RIGHT",
+   "motion": "LOW_DIVE",
+   "landed": "RIGHT",
+   "outcome": "CONTROLLED PARRY",
+   "volume": "HAND",
+   "held": false,
+   "gloveRes": 0.034,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     71,
+     "LOAD"
+    ],
+    [
+     74,
+     "PLANT"
+    ],
+    [
+     76,
+     "PUSH_OFF"
+    ],
+    [
+     78,
+     "TOE_OFF"
+    ],
+    [
+     80,
+     "EARLY_FLIGHT"
+    ],
+    [
+     86,
+     "MID_FLIGHT"
+    ],
+    [
+     93,
+     "FULL_EXTENSION"
+    ],
+    [
+     99,
+     "IMPACT"
+    ],
+    [
+     101,
+     "ABSORB"
+    ],
+    [
+     119,
+     "SETTLE"
+    ],
+    [
+     146,
+     "BRACE"
+    ],
+    [
+     164,
+     "PUSH_UP"
+    ],
+    [
+     182,
+     "HALF_KNEEL"
+    ],
+    [
+     203,
+     "CROUCH"
+    ],
+    [
+     224,
+     "RISE"
+    ],
+    [
+     254,
+     "REPOSITION"
+    ],
+    [
+     308,
+     "SET"
+    ]
+   ],
+   "presMax": 1.01,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     102.097,
+     30.878,
+     0.281
+    ],
+    "root": [
+     102.39,
+     31.89
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 5,
+    "origin": [
+     82,
+     31
+    ],
+    "aim": [
+     105,
+     31
+    ],
+    "key": "1",
+    "c": 0.864,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   },
+   "frame": "shot_005.png"
+  },
+  {
+   "shotTick": 26,
+   "commitTick": 55,
+   "contactTick": 93,
+   "facing": 145.1,
+   "tier": "LOW-DIVE REACHABLE",
+   "action": "GATHER",
+   "family": "LOW_GATHER",
+   "hClass": "LOW-MID",
+   "side": "RIGHT",
+   "motion": "GATHER",
+   "landed": null,
+   "outcome": "GATHER",
+   "volume": "HAND",
+   "held": true,
+   "gloveRes": 0.371,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     55,
+     "BRACE"
+    ],
+    [
+     65,
+     "RECEIVE"
+    ],
+    [
+     93,
+     "CONTACT"
+    ],
+    [
+     94,
+     "CRADLE"
+    ],
+    [
+     101,
+     "ABSORB"
+    ],
+    [
+     115,
+     "CONTROL"
+    ],
+    [
+     124,
+     "STRAIGHTEN"
+    ],
+    [
+     163,
+     "HOLD"
+    ]
+   ],
+   "presMax": 0.05,
+   "pelvisMin": 0.49,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     102.095,
+     36.175,
+     0
+    ],
+    "root": [
+     102.29,
+     36.07
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 6,
+    "origin": [
+     90,
+     44
+    ],
+    "aim": [
+     105,
+     34.6
+    ],
+    "key": "1",
+    "c": 0.68,
+    "settle": 120,
+    "run": "goal",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 36,
+   "commitTick": 67,
+   "contactTick": 84,
+   "facing": 148.3,
+   "tier": "LOW-DIVE REACHABLE",
+   "action": "DIVE-LOW",
+   "family": "LOW_COLLAPSE",
+   "hClass": "LOW-MID",
+   "side": "RIGHT",
+   "motion": "LOW_COLLAPSE",
+   "landed": "RIGHT",
+   "outcome": "GATHER",
+   "volume": "HAND",
+   "held": true,
+   "gloveRes": 0.3,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     67,
+     "LOAD"
+    ],
+    [
+     73,
+     "DROP"
+    ],
+    [
+     79,
+     "GROUND"
+    ],
+    [
+     85,
+     "SETTLE"
+    ],
+    [
+     113,
+     "BRACE"
+    ],
+    [
+     131,
+     "PUSH_UP"
+    ],
+    [
+     149,
+     "HALF_KNEEL"
+    ],
+    [
+     170,
+     "CROUCH"
+    ],
+    [
+     191,
+     "RISE"
+    ],
+    [
+     221,
+     "REPOSITION"
+    ],
+    [
+     239,
+     "SET"
+    ]
+   ],
+   "presMax": 0.35,
+   "pelvisMin": 0.28,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     102.145,
+     36.389,
+     0.134
+    ],
+    "root": [
+     102.43,
+     36.23
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 7,
+    "origin": [
+     90,
+     44
+    ],
+    "aim": [
+     105,
+     34.6
+    ],
+    "key": "2",
+    "c": 0.677,
+    "settle": 40,
+    "run": "goal",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 36,
+   "commitTick": 51,
+   "contactTick": null,
+   "facing": -52.1,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-MID",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "MID",
+   "side": "RIGHT",
+   "motion": "FAR_DIVE",
+   "landed": "RIGHT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     51,
+     "LOAD"
+    ],
+    [
+     55,
+     "PLANT"
+    ],
+    [
+     59,
+     "PUSH_OFF"
+    ],
+    [
+     63,
+     "TOE_OFF"
+    ],
+    [
+     66,
+     "EARLY_FLIGHT"
+    ],
+    [
+     75,
+     "MID_FLIGHT"
+    ],
+    [
+     86,
+     "FULL_EXTENSION"
+    ],
+    [
+     95,
+     "FOLLOW"
+    ],
+    [
+     97,
+     "DESCENT"
+    ],
+    [
+     102,
+     "IMPACT"
+    ],
+    [
+     110,
+     "ABSORB"
+    ],
+    [
+     128,
+     "SETTLE"
+    ],
+    [
+     155,
+     "BRACE"
+    ],
+    [
+     173,
+     "PUSH_UP"
+    ],
+    [
+     191,
+     "HALF_KNEEL"
+    ],
+    [
+     212,
+     "CROUCH"
+    ],
+    [
+     233,
+     "RISE"
+    ],
+    [
+     263,
+     "REPOSITION"
+    ],
+    [
+     299,
+     "SET"
+    ]
+   ],
+   "presMax": 0.83,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 8,
+    "origin": [
+     98,
+     28
+    ],
+    "aim": [
+     105,
+     30.5
+    ],
+    "key": "2",
+    "c": 0.796,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": -133.1,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "LOAD"
+    ],
+    [
+     32,
+     "PLANT"
+    ],
+    [
+     35,
+     "PUSH_OFF"
+    ],
+    [
+     38,
+     "TOE_OFF"
+    ],
+    [
+     41,
+     "EARLY_FLIGHT"
+    ],
+    [
+     49,
+     "MID_FLIGHT"
+    ],
+    [
+     58,
+     "FULL_EXTENSION"
+    ],
+    [
+     66,
+     "FOLLOW"
+    ],
+    [
+     70,
+     "DESCENT"
+    ],
+    [
+     78,
+     "IMPACT"
+    ],
+    [
+     88,
+     "ABSORB"
+    ],
+    [
+     102,
+     "SETTLE"
+    ],
+    [
+     126,
+     "BRACE"
+    ],
+    [
+     144,
+     "PUSH_UP"
+    ],
+    [
+     162,
+     "HALF_KNEEL"
+    ],
+    [
+     183,
+     "CROUCH"
+    ],
+    [
+     204,
+     "RISE"
+    ],
+    [
+     234,
+     "REPOSITION"
+    ],
+    [
+     288,
+     "SET"
+    ]
+   ],
+   "presMax": 1.26,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 9,
+    "origin": [
+     94,
+     20
+    ],
+    "aim": [
+     105,
+     36.3
+    ],
+    "key": "3",
+    "c": 0.521,
+    "settle": 120,
+    "run": "side",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 76,
+   "contactTick": 96,
+   "facing": 125.9,
+   "tier": "HIGH/FULL-STRETCH REACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "HIGH",
+   "side": "RIGHT",
+   "motion": "FAR_DIVE",
+   "landed": "RIGHT",
+   "outcome": "CATCH",
+   "volume": "HAND",
+   "held": true,
+   "gloveRes": 0.166,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     76,
+     "LOAD"
+    ],
+    [
+     78,
+     "PLANT"
+    ],
+    [
+     79,
+     "PUSH_OFF"
+    ],
+    [
+     81,
+     "TOE_OFF"
+    ],
+    [
+     82,
+     "EARLY_FLIGHT"
+    ],
+    [
+     86,
+     "MID_FLIGHT"
+    ],
+    [
+     91,
+     "FULL_EXTENSION"
+    ],
+    [
+     95,
+     "IMPACT"
+    ],
+    [
+     105,
+     "ABSORB"
+    ],
+    [
+     119,
+     "SETTLE"
+    ],
+    [
+     144,
+     "BRACE"
+    ],
+    [
+     162,
+     "PUSH_UP"
+    ],
+    [
+     180,
+     "HALF_KNEEL"
+    ],
+    [
+     201,
+     "CROUCH"
+    ],
+    [
+     222,
+     "RISE"
+    ],
+    [
+     252,
+     "REPOSITION"
+    ],
+    [
+     288,
+     "SET"
+    ]
+   ],
+   "presMax": 0.66,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     103.789,
+     34.604,
+     1.889
+    ],
+    "root": [
+     103.86,
+     35.17
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 10,
+    "origin": [
+     98,
+     48
+    ],
+    "aim": [
+     105,
+     31.8
+    ],
+    "key": "5",
+    "c": 0.64,
+    "settle": 120,
+    "run": "goal",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 29,
+   "contactTick": 41,
+   "facing": -174.7,
+   "tier": "STANDING REACHABLE",
+   "action": "DIVE-LOW",
+   "family": "NEAR_BODY_SAVE",
+   "hClass": "LOW-MID",
+   "side": "LEFT",
+   "motion": "NEAR_BODY",
+   "landed": null,
+   "outcome": "GATHER",
+   "volume": "HAND",
+   "held": true,
+   "gloveRes": 0.417,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     29,
+     "BRACE"
+    ],
+    [
+     34,
+     "RECEIVE"
+    ],
+    [
+     41,
+     "CONTACT"
+    ],
+    [
+     42,
+     "CRADLE"
+    ],
+    [
+     50,
+     "ABSORB"
+    ],
+    [
+     63,
+     "CONTROL"
+    ],
+    [
+     72,
+     "STRAIGHTEN"
+    ],
+    [
+     99,
+     "HOLD"
+    ]
+   ],
+   "presMax": 0.12,
+   "pelvisMin": 0.72,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     100.918,
+     33.376,
+     0.539
+    ],
+    "root": [
+     101.35,
+     33
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 12,
+    "origin": [
+     94,
+     31
+    ],
+    "aim": [
+     105,
+     34
+    ],
+    "key": "1",
+    "c": 0.702,
+    "settle": 120,
+    "run": "side",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": -124.8,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "LOAD"
+    ],
+    [
+     32,
+     "PLANT"
+    ],
+    [
+     36,
+     "PUSH_OFF"
+    ],
+    [
+     40,
+     "TOE_OFF"
+    ],
+    [
+     43,
+     "EARLY_FLIGHT"
+    ],
+    [
+     52,
+     "MID_FLIGHT"
+    ],
+    [
+     62,
+     "FULL_EXTENSION"
+    ],
+    [
+     71,
+     "FOLLOW"
+    ],
+    [
+     75,
+     "DESCENT"
+    ],
+    [
+     81,
+     "IMPACT"
+    ],
+    [
+     91,
+     "ABSORB"
+    ],
+    [
+     105,
+     "SETTLE"
+    ],
+    [
+     129,
+     "BRACE"
+    ],
+    [
+     147,
+     "PUSH_UP"
+    ],
+    [
+     165,
+     "HALF_KNEEL"
+    ],
+    [
+     186,
+     "CROUCH"
+    ],
+    [
+     207,
+     "RISE"
+    ],
+    [
+     237,
+     "REPOSITION"
+    ],
+    [
+     291,
+     "SET"
+    ]
+   ],
+   "presMax": 1.08,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 13,
+    "origin": [
+     98,
+     20
+    ],
+    "aim": [
+     105,
+     37
+    ],
+    "key": "3",
+    "c": 0.812,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 12,
+   "commitTick": 27,
+   "contactTick": null,
+   "facing": -155.1,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "HIGH",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     27,
+     "LOAD"
+    ],
+    [
+     31,
+     "PLANT"
+    ],
+    [
+     34,
+     "PUSH_OFF"
+    ],
+    [
+     37,
+     "TOE_OFF"
+    ],
+    [
+     40,
+     "EARLY_FLIGHT"
+    ],
+    [
+     48,
+     "MID_FLIGHT"
+    ],
+    [
+     58,
+     "FULL_EXTENSION"
+    ],
+    [
+     66,
+     "FOLLOW"
+    ],
+    [
+     69,
+     "DESCENT"
+    ],
+    [
+     76,
+     "IMPACT"
+    ],
+    [
+     84,
+     "ABSORB"
+    ],
+    [
+     102,
+     "SETTLE"
+    ],
+    [
+     128,
+     "BRACE"
+    ],
+    [
+     146,
+     "PUSH_UP"
+    ],
+    [
+     164,
+     "HALF_KNEEL"
+    ],
+    [
+     185,
+     "CROUCH"
+    ],
+    [
+     206,
+     "RISE"
+    ],
+    [
+     236,
+     "REPOSITION"
+    ],
+    [
+     290,
+     "SET"
+    ]
+   ],
+   "presMax": 1.34,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 14,
+    "origin": [
+     90,
+     24
+    ],
+    "aim": [
+     105,
+     34
+    ],
+    "key": "1",
+    "c": 0.91,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 12,
+   "commitTick": 58,
+   "contactTick": 91,
+   "facing": 148.8,
+   "tier": "LOW-DIVE REACHABLE",
+   "action": "GATHER",
+   "family": "LOW_GATHER",
+   "hClass": "LOW-MID",
+   "side": "RIGHT",
+   "motion": "GATHER",
+   "landed": null,
+   "outcome": "GATHER",
+   "volume": "HAND",
+   "held": true,
+   "gloveRes": 0.311,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     58,
+     "BRACE"
+    ],
+    [
+     66,
+     "RECEIVE"
+    ],
+    [
+     91,
+     "CONTACT"
+    ],
+    [
+     92,
+     "CRADLE"
+    ],
+    [
+     99,
+     "ABSORB"
+    ],
+    [
+     113,
+     "CONTROL"
+    ],
+    [
+     122,
+     "STRAIGHTEN"
+    ],
+    [
+     161,
+     "HOLD"
+    ]
+   ],
+   "presMax": 0.05,
+   "pelvisMin": 0.49,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     102.79,
+     34.08,
+     0.114
+    ],
+    "root": [
+     102.99,
+     34.08
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 15,
+    "origin": [
+     82,
+     48
+    ],
+    "aim": [
+     105,
+     32.6
+    ],
+    "key": "2",
+    "c": 0.788,
+    "settle": 120,
+    "run": "side",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 12,
+   "commitTick": 27,
+   "contactTick": null,
+   "facing": 90.9,
+   "tier": "MEDIUM-DIVE REACHABLE",
+   "action": "DIVE-MID",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "MID",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     27,
+     "LOAD"
+    ],
+    [
+     30,
+     "PLANT"
+    ],
+    [
+     32,
+     "PUSH_OFF"
+    ],
+    [
+     35,
+     "TOE_OFF"
+    ],
+    [
+     37,
+     "EARLY_FLIGHT"
+    ],
+    [
+     42,
+     "MID_FLIGHT"
+    ],
+    [
+     49,
+     "FULL_EXTENSION"
+    ],
+    [
+     55,
+     "FOLLOW"
+    ],
+    [
+     59,
+     "DESCENT"
+    ],
+    [
+     66,
+     "IMPACT"
+    ],
+    [
+     74,
+     "ABSORB"
+    ],
+    [
+     92,
+     "SETTLE"
+    ],
+    [
+     119,
+     "BRACE"
+    ],
+    [
+     137,
+     "PUSH_UP"
+    ],
+    [
+     155,
+     "HALF_KNEEL"
+    ],
+    [
+     176,
+     "CROUCH"
+    ],
+    [
+     197,
+     "RISE"
+    ],
+    [
+     227,
+     "REPOSITION"
+    ],
+    [
+     245,
+     "SET"
+    ]
+   ],
+   "presMax": 0.32,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 16,
+    "origin": [
+     103,
+     28
+    ],
+    "aim": [
+     105,
+     31.8
+    ],
+    "key": "1",
+    "c": 0.798,
+    "settle": 120,
+    "run": "side",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 12,
+   "commitTick": 27,
+   "contactTick": null,
+   "facing": 103.6,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "RIGHT",
+   "motion": "FAR_DIVE",
+   "landed": "RIGHT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     27,
+     "LOAD"
+    ],
+    [
+     31,
+     "PLANT"
+    ],
+    [
+     35,
+     "PUSH_OFF"
+    ],
+    [
+     38,
+     "TOE_OFF"
+    ],
+    [
+     41,
+     "EARLY_FLIGHT"
+    ],
+    [
+     50,
+     "MID_FLIGHT"
+    ],
+    [
+     61,
+     "FULL_EXTENSION"
+    ],
+    [
+     70,
+     "FOLLOW"
+    ],
+    [
+     75,
+     "DESCENT"
+    ],
+    [
+     84,
+     "IMPACT"
+    ],
+    [
+     93,
+     "ABSORB"
+    ],
+    [
+     108,
+     "SETTLE"
+    ],
+    [
+     132,
+     "BRACE"
+    ],
+    [
+     150,
+     "PUSH_UP"
+    ],
+    [
+     168,
+     "HALF_KNEEL"
+    ],
+    [
+     189,
+     "CROUCH"
+    ],
+    [
+     210,
+     "RISE"
+    ],
+    [
+     240,
+     "REPOSITION"
+    ],
+    [
+     258,
+     "SET"
+    ]
+   ],
+   "presMax": 0.27,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 17,
+    "origin": [
+     103,
+     44
+    ],
+    "aim": [
+     105,
+     34
+    ],
+    "key": "5",
+    "c": 0.858,
+    "settle": 120,
+    "run": "goal",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 12,
+   "commitTick": 27,
+   "contactTick": null,
+   "facing": 96,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     27,
+     "LOAD"
+    ],
+    [
+     31,
+     "PLANT"
+    ],
+    [
+     34,
+     "PUSH_OFF"
+    ],
+    [
+     37,
+     "TOE_OFF"
+    ],
+    [
+     40,
+     "EARLY_FLIGHT"
+    ],
+    [
+     48,
+     "MID_FLIGHT"
+    ],
+    [
+     57,
+     "FULL_EXTENSION"
+    ],
+    [
+     64,
+     "FOLLOW"
+    ],
+    [
+     68,
+     "DESCENT"
+    ],
+    [
+     75,
+     "IMPACT"
+    ],
+    [
+     84,
+     "ABSORB"
+    ],
+    [
+     100,
+     "SETTLE"
+    ],
+    [
+     126,
+     "BRACE"
+    ],
+    [
+     144,
+     "PUSH_UP"
+    ],
+    [
+     162,
+     "HALF_KNEEL"
+    ],
+    [
+     183,
+     "CROUCH"
+    ],
+    [
+     204,
+     "RISE"
+    ],
+    [
+     234,
+     "REPOSITION"
+    ],
+    [
+     306,
+     "SET"
+    ]
+   ],
+   "presMax": 1.46,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 18,
+    "origin": [
+     94,
+     31
+    ],
+    "aim": [
+     105,
+     36.3
+    ],
+    "key": "z",
+    "c": 0.959,
+    "settle": 40,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 12,
+   "commitTick": 27,
+   "contactTick": null,
+   "facing": -133.5,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "RIGHT",
+   "motion": "FAR_DIVE",
+   "landed": "RIGHT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     27,
+     "LOAD"
+    ],
+    [
+     31,
+     "PLANT"
+    ],
+    [
+     35,
+     "PUSH_OFF"
+    ],
+    [
+     38,
+     "TOE_OFF"
+    ],
+    [
+     41,
+     "EARLY_FLIGHT"
+    ],
+    [
+     50,
+     "MID_FLIGHT"
+    ],
+    [
+     60,
+     "FULL_EXTENSION"
+    ],
+    [
+     68,
+     "FOLLOW"
+    ],
+    [
+     73,
+     "DESCENT"
+    ],
+    [
+     81,
+     "IMPACT"
+    ],
+    [
+     91,
+     "ABSORB"
+    ],
+    [
+     105,
+     "SETTLE"
+    ],
+    [
+     129,
+     "BRACE"
+    ],
+    [
+     147,
+     "PUSH_UP"
+    ],
+    [
+     165,
+     "HALF_KNEEL"
+    ],
+    [
+     186,
+     "CROUCH"
+    ],
+    [
+     207,
+     "RISE"
+    ],
+    [
+     237,
+     "REPOSITION"
+    ],
+    [
+     273,
+     "SET"
+    ]
+   ],
+   "presMax": 0.85,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 19,
+    "origin": [
+     90,
+     20
+    ],
+    "aim": [
+     105,
+     31
+    ],
+    "key": "3",
+    "c": 0.797,
+    "settle": 40,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 12,
+   "commitTick": 87,
+   "contactTick": 113,
+   "facing": -152.5,
+   "tier": "STANDING REACHABLE",
+   "action": "GATHER",
+   "family": "LOW_GATHER",
+   "hClass": "LOW-MID",
+   "side": "LEFT",
+   "motion": "GATHER",
+   "landed": null,
+   "outcome": "BODY DEFLECTION",
+   "volume": "TORSO",
+   "held": false,
+   "gloveRes": 0.197,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     87,
+     "BRACE"
+    ],
+    [
+     92,
+     "RECEIVE"
+    ],
+    [
+     113,
+     "RISE"
+    ],
+    [
+     146,
+     "SET"
+    ]
+   ],
+   "presMax": 0.05,
+   "pelvisMin": 0.49,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     102.261,
+     33.072,
+     0.61
+    ],
+    "root": [
+     102.48,
+     33.15
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 20,
+    "origin": [
+     86,
+     24
+    ],
+    "aim": [
+     105,
+     34.6
+    ],
+    "key": "5",
+    "c": 0.721,
+    "settle": 40,
+    "run": "side",
+    "dump": false
+   },
+   "frame": "shot_020.png"
+  },
+  {
+   "shotTick": 12,
+   "commitTick": 27,
+   "contactTick": null,
+   "facing": -157.2,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     27,
+     "LOAD"
+    ],
+    [
+     31,
+     "PLANT"
+    ],
+    [
+     34,
+     "PUSH_OFF"
+    ],
+    [
+     37,
+     "TOE_OFF"
+    ],
+    [
+     40,
+     "EARLY_FLIGHT"
+    ],
+    [
+     47,
+     "MID_FLIGHT"
+    ],
+    [
+     56,
+     "FULL_EXTENSION"
+    ],
+    [
+     64,
+     "FOLLOW"
+    ],
+    [
+     68,
+     "DESCENT"
+    ],
+    [
+     75,
+     "IMPACT"
+    ],
+    [
+     84,
+     "ABSORB"
+    ],
+    [
+     100,
+     "SETTLE"
+    ],
+    [
+     125,
+     "BRACE"
+    ],
+    [
+     143,
+     "PUSH_UP"
+    ],
+    [
+     161,
+     "HALF_KNEEL"
+    ],
+    [
+     182,
+     "CROUCH"
+    ],
+    [
+     203,
+     "RISE"
+    ],
+    [
+     233,
+     "REPOSITION"
+    ],
+    [
+     287,
+     "SET"
+    ]
+   ],
+   "presMax": 1.4,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 21,
+    "origin": [
+     98,
+     24
+    ],
+    "aim": [
+     105,
+     37
+    ],
+    "key": "3",
+    "c": 0.601,
+    "settle": 120,
+    "run": "goal",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 12,
+   "commitTick": 27,
+   "contactTick": null,
+   "facing": 136,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "RIGHT",
+   "motion": "FAR_DIVE",
+   "landed": "RIGHT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     27,
+     "LOAD"
+    ],
+    [
+     32,
+     "PLANT"
+    ],
+    [
+     36,
+     "PUSH_OFF"
+    ],
+    [
+     40,
+     "TOE_OFF"
+    ],
+    [
+     44,
+     "EARLY_FLIGHT"
+    ],
+    [
+     54,
+     "MID_FLIGHT"
+    ],
+    [
+     67,
+     "FULL_EXTENSION"
+    ],
+    [
+     77,
+     "FOLLOW"
+    ],
+    [
+     79,
+     "DESCENT"
+    ],
+    [
+     85,
+     "IMPACT"
+    ],
+    [
+     94,
+     "ABSORB"
+    ],
+    [
+     109,
+     "SETTLE"
+    ],
+    [
+     133,
+     "BRACE"
+    ],
+    [
+     151,
+     "PUSH_UP"
+    ],
+    [
+     169,
+     "HALF_KNEEL"
+    ],
+    [
+     190,
+     "CROUCH"
+    ],
+    [
+     211,
+     "RISE"
+    ],
+    [
+     241,
+     "REPOSITION"
+    ],
+    [
+     277,
+     "SET"
+    ]
+   ],
+   "presMax": 0.89,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 23,
+    "origin": [
+     94,
+     48
+    ],
+    "aim": [
+     105,
+     30.5
+    ],
+    "key": "z",
+    "c": 0.834,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 12,
+   "commitTick": 27,
+   "contactTick": null,
+   "facing": -77.9,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "RIGHT",
+   "motion": "FAR_DIVE",
+   "landed": "RIGHT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     27,
+     "LOAD"
+    ],
+    [
+     31,
+     "PLANT"
+    ],
+    [
+     35,
+     "PUSH_OFF"
+    ],
+    [
+     39,
+     "TOE_OFF"
+    ],
+    [
+     42,
+     "EARLY_FLIGHT"
+    ],
+    [
+     51,
+     "MID_FLIGHT"
+    ],
+    [
+     61,
+     "FULL_EXTENSION"
+    ],
+    [
+     70,
+     "FOLLOW"
+    ],
+    [
+     73,
+     "DESCENT"
+    ],
+    [
+     79,
+     "IMPACT"
+    ],
+    [
+     89,
+     "ABSORB"
+    ],
+    [
+     104,
+     "SETTLE"
+    ],
+    [
+     129,
+     "BRACE"
+    ],
+    [
+     147,
+     "PUSH_UP"
+    ],
+    [
+     165,
+     "HALF_KNEEL"
+    ],
+    [
+     186,
+     "CROUCH"
+    ],
+    [
+     207,
+     "RISE"
+    ],
+    [
+     237,
+     "REPOSITION"
+    ],
+    [
+     291,
+     "SET"
+    ]
+   ],
+   "presMax": 1.26,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 24,
+    "origin": [
+     101,
+     37
+    ],
+    "aim": [
+     105,
+     30.5
+    ],
+    "key": "5",
+    "c": 0.848,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 12,
+   "commitTick": 27,
+   "contactTick": null,
+   "facing": -127.6,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-LOW",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "LOW-MID",
+   "side": "LEFT",
+   "motion": "LOW_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     27,
+     "LOAD"
+    ],
+    [
+     31,
+     "PLANT"
+    ],
+    [
+     35,
+     "PUSH_OFF"
+    ],
+    [
+     39,
+     "TOE_OFF"
+    ],
+    [
+     42,
+     "EARLY_FLIGHT"
+    ],
+    [
+     52,
+     "MID_FLIGHT"
+    ],
+    [
+     63,
+     "FULL_EXTENSION"
+    ],
+    [
+     72,
+     "IMPACT"
+    ],
+    [
+     74,
+     "ABSORB"
+    ],
+    [
+     92,
+     "SETTLE"
+    ],
+    [
+     119,
+     "BRACE"
+    ],
+    [
+     137,
+     "PUSH_UP"
+    ],
+    [
+     155,
+     "HALF_KNEEL"
+    ],
+    [
+     176,
+     "CROUCH"
+    ],
+    [
+     197,
+     "RISE"
+    ],
+    [
+     227,
+     "REPOSITION"
+    ],
+    [
+     263,
+     "SET"
+    ]
+   ],
+   "presMax": 0.7,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 25,
+    "origin": [
+     101,
+     24
+    ],
+    "aim": [
+     105,
+     37
+    ],
+    "key": "1",
+    "c": 0.73,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 36,
+   "commitTick": 51,
+   "contactTick": null,
+   "facing": -149.9,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-LOW",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "LOW-MID",
+   "side": "RIGHT",
+   "motion": "LOW_DIVE",
+   "landed": "RIGHT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     51,
+     "LOAD"
+    ],
+    [
+     55,
+     "PLANT"
+    ],
+    [
+     59,
+     "PUSH_OFF"
+    ],
+    [
+     62,
+     "TOE_OFF"
+    ],
+    [
+     65,
+     "EARLY_FLIGHT"
+    ],
+    [
+     73,
+     "MID_FLIGHT"
+    ],
+    [
+     84,
+     "FULL_EXTENSION"
+    ],
+    [
+     92,
+     "IMPACT"
+    ],
+    [
+     94,
+     "ABSORB"
+    ],
+    [
+     112,
+     "SETTLE"
+    ],
+    [
+     139,
+     "BRACE"
+    ],
+    [
+     157,
+     "PUSH_UP"
+    ],
+    [
+     175,
+     "HALF_KNEEL"
+    ],
+    [
+     196,
+     "CROUCH"
+    ],
+    [
+     217,
+     "RISE"
+    ],
+    [
+     247,
+     "REPOSITION"
+    ],
+    [
+     283,
+     "SET"
+    ]
+   ],
+   "presMax": 0.62,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 27,
+    "origin": [
+     86,
+     24
+    ],
+    "aim": [
+     105,
+     31
+    ],
+    "key": "2",
+    "c": 0.799,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 22,
+   "commitTick": 106,
+   "contactTick": 136,
+   "facing": 167.1,
+   "tier": "MEDIUM-DIVE REACHABLE",
+   "action": "DIVE-MID",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "MID",
+   "side": "RIGHT",
+   "motion": "FAR_DIVE",
+   "landed": "RIGHT",
+   "outcome": "CONTROLLED PARRY",
+   "volume": "HAND",
+   "held": false,
+   "gloveRes": 0.097,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     106,
+     "LOAD"
+    ],
+    [
+     109,
+     "PLANT"
+    ],
+    [
+     112,
+     "PUSH_OFF"
+    ],
+    [
+     114,
+     "TOE_OFF"
+    ],
+    [
+     116,
+     "EARLY_FLIGHT"
+    ],
+    [
+     122,
+     "MID_FLIGHT"
+    ],
+    [
+     130,
+     "FULL_EXTENSION"
+    ],
+    [
+     136,
+     "FOLLOW"
+    ],
+    [
+     139,
+     "DESCENT"
+    ],
+    [
+     144,
+     "IMPACT"
+    ],
+    [
+     152,
+     "ABSORB"
+    ],
+    [
+     170,
+     "SETTLE"
+    ],
+    [
+     197,
+     "BRACE"
+    ],
+    [
+     215,
+     "PUSH_UP"
+    ],
+    [
+     233,
+     "HALF_KNEEL"
+    ],
+    [
+     254,
+     "CROUCH"
+    ],
+    [
+     275,
+     "RISE"
+    ],
+    [
+     305,
+     "REPOSITION"
+    ],
+    [
+     323,
+     "SET"
+    ]
+   ],
+   "presMax": 0.29,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     102.56,
+     32.379,
+     1.33
+    ],
+    "root": [
+     102.82,
+     33.26
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 28,
+    "origin": [
+     82,
+     44
+    ],
+    "aim": [
+     105,
+     31
+    ],
+    "key": "5",
+    "c": 0.895,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 29,
+   "commitTick": 44,
+   "contactTick": null,
+   "facing": 46.9,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-MID",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "MID",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     44,
+     "LOAD"
+    ],
+    [
+     50,
+     "PLANT"
+    ],
+    [
+     55,
+     "PUSH_OFF"
+    ],
+    [
+     60,
+     "TOE_OFF"
+    ],
+    [
+     64,
+     "EARLY_FLIGHT"
+    ],
+    [
+     76,
+     "MID_FLIGHT"
+    ],
+    [
+     91,
+     "FULL_EXTENSION"
+    ],
+    [
+     103,
+     "FOLLOW"
+    ],
+    [
+     105,
+     "DESCENT"
+    ],
+    [
+     109,
+     "IMPACT"
+    ],
+    [
+     117,
+     "ABSORB"
+    ],
+    [
+     135,
+     "SETTLE"
+    ],
+    [
+     162,
+     "BRACE"
+    ],
+    [
+     180,
+     "PUSH_UP"
+    ],
+    [
+     198,
+     "HALF_KNEEL"
+    ],
+    [
+     219,
+     "CROUCH"
+    ],
+    [
+     240,
+     "RISE"
+    ],
+    [
+     270,
+     "REPOSITION"
+    ],
+    [
+     306,
+     "SET"
+    ]
+   ],
+   "presMax": 0.74,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 29,
+    "origin": [
+     98,
+     31
+    ],
+    "aim": [
+     105,
+     35.4
+    ],
+    "key": "z",
+    "c": 0.322,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": -134.6,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "LOAD"
+    ],
+    [
+     33,
+     "PLANT"
+    ],
+    [
+     37,
+     "PUSH_OFF"
+    ],
+    [
+     41,
+     "TOE_OFF"
+    ],
+    [
+     44,
+     "EARLY_FLIGHT"
+    ],
+    [
+     54,
+     "MID_FLIGHT"
+    ],
+    [
+     66,
+     "FULL_EXTENSION"
+    ],
+    [
+     75,
+     "FOLLOW"
+    ],
+    [
+     78,
+     "DESCENT"
+    ],
+    [
+     83,
+     "IMPACT"
+    ],
+    [
+     93,
+     "ABSORB"
+    ],
+    [
+     108,
+     "SETTLE"
+    ],
+    [
+     133,
+     "BRACE"
+    ],
+    [
+     151,
+     "PUSH_UP"
+    ],
+    [
+     169,
+     "HALF_KNEEL"
+    ],
+    [
+     190,
+     "CROUCH"
+    ],
+    [
+     211,
+     "RISE"
+    ],
+    [
+     241,
+     "REPOSITION"
+    ],
+    [
+     295,
+     "SET"
+    ]
+   ],
+   "presMax": 1.05,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 30,
+    "origin": [
+     94,
+     20
+    ],
+    "aim": [
+     105,
+     37.5
+    ],
+    "key": "z",
+    "c": 0.519,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": 90.6,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "HIGH",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "LOAD"
+    ],
+    [
+     32,
+     "PLANT"
+    ],
+    [
+     36,
+     "PUSH_OFF"
+    ],
+    [
+     39,
+     "TOE_OFF"
+    ],
+    [
+     42,
+     "EARLY_FLIGHT"
+    ],
+    [
+     51,
+     "MID_FLIGHT"
+    ],
+    [
+     62,
+     "FULL_EXTENSION"
+    ],
+    [
+     70,
+     "FOLLOW"
+    ],
+    [
+     74,
+     "DESCENT"
+    ],
+    [
+     80,
+     "IMPACT"
+    ],
+    [
+     88,
+     "ABSORB"
+    ],
+    [
+     106,
+     "SETTLE"
+    ],
+    [
+     132,
+     "BRACE"
+    ],
+    [
+     150,
+     "PUSH_UP"
+    ],
+    [
+     168,
+     "HALF_KNEEL"
+    ],
+    [
+     189,
+     "CROUCH"
+    ],
+    [
+     210,
+     "RISE"
+    ],
+    [
+     240,
+     "REPOSITION"
+    ],
+    [
+     294,
+     "SET"
+    ]
+   ],
+   "presMax": 1.28,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 31,
+    "origin": [
+     94,
+     34
+    ],
+    "aim": [
+     105,
+     37.5
+    ],
+    "key": "3",
+    "c": 0.826,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": -63.4,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-MID",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "HIGH",
+   "side": "RIGHT",
+   "motion": "FAR_DIVE",
+   "landed": "RIGHT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "LOAD"
+    ],
+    [
+     33,
+     "PLANT"
+    ],
+    [
+     37,
+     "PUSH_OFF"
+    ],
+    [
+     41,
+     "TOE_OFF"
+    ],
+    [
+     45,
+     "EARLY_FLIGHT"
+    ],
+    [
+     55,
+     "MID_FLIGHT"
+    ],
+    [
+     68,
+     "FULL_EXTENSION"
+    ],
+    [
+     78,
+     "FOLLOW"
+    ],
+    [
+     80,
+     "DESCENT"
+    ],
+    [
+     85,
+     "IMPACT"
+    ],
+    [
+     93,
+     "ABSORB"
+    ],
+    [
+     111,
+     "SETTLE"
+    ],
+    [
+     138,
+     "BRACE"
+    ],
+    [
+     156,
+     "PUSH_UP"
+    ],
+    [
+     174,
+     "HALF_KNEEL"
+    ],
+    [
+     195,
+     "CROUCH"
+    ],
+    [
+     216,
+     "RISE"
+    ],
+    [
+     246,
+     "REPOSITION"
+    ],
+    [
+     300,
+     "SET"
+    ]
+   ],
+   "presMax": 0.98,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 32,
+    "origin": [
+     101,
+     40
+    ],
+    "aim": [
+     105,
+     34
+    ],
+    "key": "3",
+    "c": 0.452,
+    "settle": 40,
+    "run": "goal",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 29,
+   "commitTick": 44,
+   "contactTick": null,
+   "facing": -163.4,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "RIGHT",
+   "motion": "FAR_DIVE",
+   "landed": "RIGHT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     44,
+     "LOAD"
+    ],
+    [
+     48,
+     "PLANT"
+    ],
+    [
+     51,
+     "PUSH_OFF"
+    ],
+    [
+     54,
+     "TOE_OFF"
+    ],
+    [
+     56,
+     "EARLY_FLIGHT"
+    ],
+    [
+     64,
+     "MID_FLIGHT"
+    ],
+    [
+     73,
+     "FULL_EXTENSION"
+    ],
+    [
+     80,
+     "FOLLOW"
+    ],
+    [
+     85,
+     "DESCENT"
+    ],
+    [
+     92,
+     "IMPACT"
+    ],
+    [
+     102,
+     "ABSORB"
+    ],
+    [
+     116,
+     "SETTLE"
+    ],
+    [
+     141,
+     "BRACE"
+    ],
+    [
+     159,
+     "PUSH_UP"
+    ],
+    [
+     177,
+     "HALF_KNEEL"
+    ],
+    [
+     198,
+     "CROUCH"
+    ],
+    [
+     219,
+     "RISE"
+    ],
+    [
+     249,
+     "REPOSITION"
+    ],
+    [
+     303,
+     "SET"
+    ]
+   ],
+   "presMax": 1.24,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 33,
+    "origin": [
+     82,
+     28
+    ],
+    "aim": [
+     105,
+     31.8
+    ],
+    "key": "z",
+    "c": 0.482,
+    "settle": 120,
+    "run": "goal",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": 37,
+   "facing": 141.1,
+   "tier": "STANDING REACHABLE",
+   "action": "LEAN",
+   "family": "HIGH_CATCH",
+   "hClass": "TOP",
+   "side": "RIGHT",
+   "motion": "HIGH_CATCH",
+   "landed": null,
+   "outcome": "WEAK PARRY",
+   "volume": "HAND",
+   "held": false,
+   "gloveRes": 0.253,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "BRACE"
+    ],
+    [
+     33,
+     "RECEIVE"
+    ],
+    [
+     37,
+     "CONTACT"
+    ],
+    [
+     39,
+     "RISE"
+    ],
+    [
+     66,
+     "SET"
+    ]
+   ],
+   "presMax": 0.02,
+   "pelvisMin": 0.82,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     102.498,
+     36.275,
+     2.253
+    ],
+    "root": [
+     102.64,
+     36.41
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 34,
+    "origin": [
+     94,
+     44
+    ],
+    "aim": [
+     105,
+     34
+    ],
+    "key": "z",
+    "c": 0.652,
+    "settle": 120,
+    "run": "goal",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 54,
+   "contactTick": null,
+   "facing": 105.7,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     54,
+     "LOAD"
+    ],
+    [
+     57,
+     "PLANT"
+    ],
+    [
+     59,
+     "PUSH_OFF"
+    ],
+    [
+     62,
+     "TOE_OFF"
+    ],
+    [
+     64,
+     "EARLY_FLIGHT"
+    ],
+    [
+     70,
+     "MID_FLIGHT"
+    ],
+    [
+     78,
+     "FULL_EXTENSION"
+    ],
+    [
+     84,
+     "FOLLOW"
+    ],
+    [
+     92,
+     "DESCENT"
+    ],
+    [
+     106,
+     "IMPACT"
+    ],
+    [
+     115,
+     "ABSORB"
+    ],
+    [
+     130,
+     "SETTLE"
+    ],
+    [
+     154,
+     "BRACE"
+    ],
+    [
+     172,
+     "PUSH_UP"
+    ],
+    [
+     190,
+     "HALF_KNEEL"
+    ],
+    [
+     211,
+     "CROUCH"
+    ],
+    [
+     232,
+     "RISE"
+    ],
+    [
+     262,
+     "REPOSITION"
+    ],
+    [
+     316,
+     "SET"
+    ]
+   ],
+   "presMax": 1.07,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 35,
+    "origin": [
+     101,
+     48
+    ],
+    "aim": [
+     105,
+     34.6
+    ],
+    "key": "5",
+    "c": 0.744,
+    "settle": 40,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": 117.6,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "LOAD"
+    ],
+    [
+     32,
+     "PLANT"
+    ],
+    [
+     35,
+     "PUSH_OFF"
+    ],
+    [
+     38,
+     "TOE_OFF"
+    ],
+    [
+     41,
+     "EARLY_FLIGHT"
+    ],
+    [
+     49,
+     "MID_FLIGHT"
+    ],
+    [
+     59,
+     "FULL_EXTENSION"
+    ],
+    [
+     66,
+     "FOLLOW"
+    ],
+    [
+     70,
+     "DESCENT"
+    ],
+    [
+     77,
+     "IMPACT"
+    ],
+    [
+     87,
+     "ABSORB"
+    ],
+    [
+     102,
+     "SETTLE"
+    ],
+    [
+     126,
+     "BRACE"
+    ],
+    [
+     144,
+     "PUSH_UP"
+    ],
+    [
+     162,
+     "HALF_KNEEL"
+    ],
+    [
+     183,
+     "CROUCH"
+    ],
+    [
+     204,
+     "RISE"
+    ],
+    [
+     234,
+     "REPOSITION"
+    ],
+    [
+     288,
+     "SET"
+    ]
+   ],
+   "presMax": 1.21,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 36,
+    "origin": [
+     94,
+     44
+    ],
+    "aim": [
+     105,
+     37.5
+    ],
+    "key": "z",
+    "c": 0.974,
+    "settle": 40,
+    "run": "goal",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 33,
+   "contactTick": 43,
+   "facing": -114.4,
+   "tier": "HIGH/FULL-STRETCH REACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "HIGH_CATCH",
+   "hClass": "TOP",
+   "side": "RIGHT",
+   "motion": "HIGH_CATCH",
+   "landed": null,
+   "outcome": "CONTROLLED PARRY",
+   "volume": "HAND",
+   "held": false,
+   "gloveRes": 0.2,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     33,
+     "BRACE"
+    ],
+    [
+     37,
+     "RECEIVE"
+    ],
+    [
+     43,
+     "CONTACT"
+    ],
+    [
+     44,
+     "RISE"
+    ],
+    [
+     71,
+     "SET"
+    ]
+   ],
+   "presMax": 0.02,
+   "pelvisMin": 0.82,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     103.375,
+     31.211,
+     2.056
+    ],
+    "root": [
+     103.59,
+     31.82
+    ]
+   },
+   "keeperReady": true,
+   "shot": {
+    "i": 37,
+    "origin": [
+     98,
+     20
+    ],
+    "aim": [
+     105,
+     34.6
+    ],
+    "key": "z",
+    "c": 0.324,
+    "settle": 40,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": 38,
+   "facing": -107,
+   "tier": "STANDING REACHABLE",
+   "action": "LEAN",
+   "family": "HIGH_CATCH",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "HIGH_CATCH",
+   "landed": null,
+   "outcome": "WEAK PARRY",
+   "volume": "HAND",
+   "held": false,
+   "gloveRes": 0.235,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "BRACE"
+    ],
+    [
+     33,
+     "RECEIVE"
+    ],
+    [
+     38,
+     "CONTACT"
+    ],
+    [
+     39,
+     "RISE"
+    ],
+    [
+     66,
+     "SET"
+    ]
+   ],
+   "presMax": 0.02,
+   "pelvisMin": 0.82,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     104.348,
+     31.216,
+     2.247
+    ],
+    "root": [
+     104.44,
+     31.4
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 38,
+    "origin": [
+     101,
+     20
+    ],
+    "aim": [
+     105,
+     33.4
+    ],
+    "key": "z",
+    "c": 0.642,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   },
+   "frame": "shot_038.png"
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": -175.3,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "LOAD"
+    ],
+    [
+     31,
+     "PLANT"
+    ],
+    [
+     35,
+     "PUSH_OFF"
+    ],
+    [
+     37,
+     "TOE_OFF"
+    ],
+    [
+     40,
+     "EARLY_FLIGHT"
+    ],
+    [
+     47,
+     "MID_FLIGHT"
+    ],
+    [
+     56,
+     "FULL_EXTENSION"
+    ],
+    [
+     63,
+     "FOLLOW"
+    ],
+    [
+     67,
+     "DESCENT"
+    ],
+    [
+     75,
+     "IMPACT"
+    ],
+    [
+     84,
+     "ABSORB"
+    ],
+    [
+     100,
+     "SETTLE"
+    ],
+    [
+     125,
+     "BRACE"
+    ],
+    [
+     143,
+     "PUSH_UP"
+    ],
+    [
+     161,
+     "HALF_KNEEL"
+    ],
+    [
+     182,
+     "CROUCH"
+    ],
+    [
+     203,
+     "RISE"
+    ],
+    [
+     233,
+     "REPOSITION"
+    ],
+    [
+     305,
+     "SET"
+    ]
+   ],
+   "presMax": 1.46,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 39,
+    "origin": [
+     86,
+     31
+    ],
+    "aim": [
+     105,
+     36.3
+    ],
+    "key": "2",
+    "c": 0.889,
+    "settle": 40,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 26,
+   "commitTick": 41,
+   "contactTick": 49,
+   "facing": -174.3,
+   "tier": "STANDING REACHABLE",
+   "action": "LEAN",
+   "family": "NEAR_BODY_SAVE",
+   "hClass": "MID",
+   "side": "RIGHT",
+   "motion": "NEAR_BODY",
+   "landed": null,
+   "outcome": "CATCH",
+   "volume": "HAND",
+   "held": true,
+   "gloveRes": 0.261,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     41,
+     "BRACE"
+    ],
+    [
+     45,
+     "RECEIVE"
+    ],
+    [
+     49,
+     "CONTACT"
+    ],
+    [
+     51,
+     "CRADLE"
+    ],
+    [
+     59,
+     "ABSORB"
+    ],
+    [
+     73,
+     "CONTROL"
+    ],
+    [
+     82,
+     "STRAIGHTEN"
+    ],
+    [
+     109,
+     "HOLD"
+    ]
+   ],
+   "presMax": 0.12,
+   "pelvisMin": 0.72,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     100.754,
+     33.309,
+     1.226
+    ],
+    "root": [
+     101.18,
+     33.81
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 40,
+    "origin": [
+     94,
+     34
+    ],
+    "aim": [
+     105,
+     31
+    ],
+    "key": "1",
+    "c": 0.83,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 29,
+   "commitTick": 45,
+   "contactTick": 78,
+   "facing": -155.6,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "RIGHT",
+   "motion": "FAR_DIVE",
+   "landed": "RIGHT",
+   "outcome": "FINGERTIP (through)",
+   "volume": "HAND",
+   "held": false,
+   "gloveRes": 0.074,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     45,
+     "LOAD"
+    ],
+    [
+     49,
+     "PLANT"
+    ],
+    [
+     51,
+     "PUSH_OFF"
+    ],
+    [
+     54,
+     "TOE_OFF"
+    ],
+    [
+     56,
+     "EARLY_FLIGHT"
+    ],
+    [
+     63,
+     "MID_FLIGHT"
+    ],
+    [
+     71,
+     "FULL_EXTENSION"
+    ],
+    [
+     77,
+     "FOLLOW"
+    ],
+    [
+     84,
+     "DESCENT"
+    ],
+    [
+     97,
+     "IMPACT"
+    ],
+    [
+     107,
+     "ABSORB"
+    ],
+    [
+     121,
+     "SETTLE"
+    ],
+    [
+     145,
+     "BRACE"
+    ],
+    [
+     163,
+     "PUSH_UP"
+    ],
+    [
+     181,
+     "HALF_KNEEL"
+    ],
+    [
+     202,
+     "CROUCH"
+    ],
+    [
+     223,
+     "RISE"
+    ],
+    [
+     253,
+     "REPOSITION"
+    ],
+    [
+     307,
+     "SET"
+    ]
+   ],
+   "presMax": 1.05,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     102.617,
+     31.709,
+     2.619
+    ],
+    "root": [
+     102.83,
+     32.44
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 41,
+    "origin": [
+     82,
+     24
+    ],
+    "aim": [
+     105,
+     32.6
+    ],
+    "key": "3",
+    "c": 0.583,
+    "settle": 120,
+    "run": "side",
+    "dump": false
+   },
+   "frame": "shot_041.png"
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": 115.3,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "LOAD"
+    ],
+    [
+     34,
+     "PLANT"
+    ],
+    [
+     39,
+     "PUSH_OFF"
+    ],
+    [
+     44,
+     "TOE_OFF"
+    ],
+    [
+     48,
+     "EARLY_FLIGHT"
+    ],
+    [
+     60,
+     "MID_FLIGHT"
+    ],
+    [
+     74,
+     "FULL_EXTENSION"
+    ],
+    [
+     86,
+     "FOLLOW"
+    ],
+    [
+     90,
+     "DESCENT"
+    ],
+    [
+     96,
+     "IMPACT"
+    ],
+    [
+     106,
+     "ABSORB"
+    ],
+    [
+     120,
+     "SETTLE"
+    ],
+    [
+     144,
+     "BRACE"
+    ],
+    [
+     162,
+     "PUSH_UP"
+    ],
+    [
+     180,
+     "HALF_KNEEL"
+    ],
+    [
+     201,
+     "CROUCH"
+    ],
+    [
+     222,
+     "RISE"
+    ],
+    [
+     252,
+     "REPOSITION"
+    ],
+    [
+     270,
+     "SET"
+    ]
+   ],
+   "presMax": 0.17,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 42,
+    "origin": [
+     98,
+     48
+    ],
+    "aim": [
+     105,
+     37.5
+    ],
+    "key": "5",
+    "c": 0.866,
+    "settle": 120,
+    "run": "goal",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 29,
+   "commitTick": 44,
+   "contactTick": null,
+   "facing": 171.4,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     44,
+     "LOAD"
+    ],
+    [
+     49,
+     "PLANT"
+    ],
+    [
+     53,
+     "PUSH_OFF"
+    ],
+    [
+     57,
+     "TOE_OFF"
+    ],
+    [
+     60,
+     "EARLY_FLIGHT"
+    ],
+    [
+     71,
+     "MID_FLIGHT"
+    ],
+    [
+     83,
+     "FULL_EXTENSION"
+    ],
+    [
+     93,
+     "FOLLOW"
+    ],
+    [
+     95,
+     "DESCENT"
+    ],
+    [
+     101,
+     "IMPACT"
+    ],
+    [
+     110,
+     "ABSORB"
+    ],
+    [
+     125,
+     "SETTLE"
+    ],
+    [
+     149,
+     "BRACE"
+    ],
+    [
+     167,
+     "PUSH_UP"
+    ],
+    [
+     185,
+     "HALF_KNEEL"
+    ],
+    [
+     206,
+     "CROUCH"
+    ],
+    [
+     227,
+     "RISE"
+    ],
+    [
+     257,
+     "REPOSITION"
+    ],
+    [
+     293,
+     "SET"
+    ]
+   ],
+   "presMax": 0.86,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 43,
+    "origin": [
+     86,
+     34
+    ],
+    "aim": [
+     105,
+     37.5
+    ],
+    "key": "z",
+    "c": 0.755,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": 24.3,
+   "tier": "LOW-DIVE REACHABLE",
+   "action": "DIVE-LOW",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "LOW-MID",
+   "side": "LEFT",
+   "motion": "LOW_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "LOAD"
+    ],
+    [
+     31,
+     "PLANT"
+    ],
+    [
+     34,
+     "PUSH_OFF"
+    ],
+    [
+     36,
+     "TOE_OFF"
+    ],
+    [
+     38,
+     "EARLY_FLIGHT"
+    ],
+    [
+     44,
+     "MID_FLIGHT"
+    ],
+    [
+     52,
+     "FULL_EXTENSION"
+    ],
+    [
+     58,
+     "IMPACT"
+    ],
+    [
+     61,
+     "ABSORB"
+    ],
+    [
+     79,
+     "SETTLE"
+    ],
+    [
+     106,
+     "BRACE"
+    ],
+    [
+     124,
+     "PUSH_UP"
+    ],
+    [
+     142,
+     "HALF_KNEEL"
+    ],
+    [
+     163,
+     "CROUCH"
+    ],
+    [
+     184,
+     "RISE"
+    ],
+    [
+     214,
+     "REPOSITION"
+    ],
+    [
+     250,
+     "SET"
+    ]
+   ],
+   "presMax": 0.88,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 44,
+    "origin": [
+     101,
+     40
+    ],
+    "aim": [
+     105,
+     36.3
+    ],
+    "key": "1",
+    "c": 0.764,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 26,
+   "commitTick": 41,
+   "contactTick": null,
+   "facing": 39.2,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-LOW",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "LOW-MID",
+   "side": "LEFT",
+   "motion": "LOW_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     41,
+     "LOAD"
+    ],
+    [
+     46,
+     "PLANT"
+    ],
+    [
+     51,
+     "PUSH_OFF"
+    ],
+    [
+     56,
+     "TOE_OFF"
+    ],
+    [
+     59,
+     "EARLY_FLIGHT"
+    ],
+    [
+     71,
+     "MID_FLIGHT"
+    ],
+    [
+     84,
+     "FULL_EXTENSION"
+    ],
+    [
+     95,
+     "IMPACT"
+    ],
+    [
+     97,
+     "ABSORB"
+    ],
+    [
+     115,
+     "SETTLE"
+    ],
+    [
+     142,
+     "BRACE"
+    ],
+    [
+     160,
+     "PUSH_UP"
+    ],
+    [
+     178,
+     "HALF_KNEEL"
+    ],
+    [
+     199,
+     "CROUCH"
+    ],
+    [
+     220,
+     "RISE"
+    ],
+    [
+     250,
+     "REPOSITION"
+    ],
+    [
+     286,
+     "SET"
+    ]
+   ],
+   "presMax": 0.62,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 45,
+    "origin": [
+     98,
+     34
+    ],
+    "aim": [
+     105,
+     34.6
+    ],
+    "key": "1",
+    "c": 0.693,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": -100.3,
+   "tier": "STANDING REACHABLE",
+   "action": "LEAN",
+   "family": "HIGH_CATCH",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "HIGH_CATCH",
+   "landed": null,
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "BRACE"
+    ],
+    [
+     33,
+     "RECEIVE"
+    ]
+   ],
+   "presMax": 0.02,
+   "pelvisMin": 0.83,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 46,
+    "origin": [
+     103,
+     20
+    ],
+    "aim": [
+     105,
+     33.4
+    ],
+    "key": "z",
+    "c": 0.733,
+    "settle": 40,
+    "run": "side",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 52,
+   "contactTick": 63,
+   "facing": -148.4,
+   "tier": "HIGH/FULL-STRETCH REACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": "WEAK PARRY",
+   "volume": "HAND",
+   "held": false,
+   "gloveRes": 0.016,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     52,
+     "LOAD"
+    ],
+    [
+     53,
+     "PLANT"
+    ],
+    [
+     54,
+     "PUSH_OFF"
+    ],
+    [
+     55,
+     "TOE_OFF"
+    ],
+    [
+     56,
+     "EARLY_FLIGHT"
+    ],
+    [
+     58,
+     "MID_FLIGHT"
+    ],
+    [
+     60,
+     "FULL_EXTENSION"
+    ],
+    [
+     62,
+     "FOLLOW"
+    ],
+    [
+     87,
+     "DESCENT"
+    ],
+    [
+     132,
+     "IMPACT"
+    ],
+    [
+     142,
+     "ABSORB"
+    ],
+    [
+     156,
+     "SETTLE"
+    ],
+    [
+     180,
+     "BRACE"
+    ],
+    [
+     198,
+     "PUSH_UP"
+    ],
+    [
+     216,
+     "HALF_KNEEL"
+    ],
+    [
+     237,
+     "CROUCH"
+    ],
+    [
+     258,
+     "RISE"
+    ],
+    [
+     288,
+     "REPOSITION"
+    ],
+    [
+     378,
+     "SET"
+    ]
+   ],
+   "presMax": 2.4,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     102.784,
+     33.604,
+     2.476
+    ],
+    "root": [
+     103.04,
+     33.38
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 47,
+    "origin": [
+     86,
+     20
+    ],
+    "aim": [
+     105,
+     35.4
+    ],
+    "key": "z",
+    "c": 0.522,
+    "settle": 120,
+    "run": "side",
+    "dump": false
+   },
+   "frame": "shot_047.png"
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": 109.1,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "LOAD"
+    ],
+    [
+     31,
+     "PLANT"
+    ],
+    [
+     34,
+     "PUSH_OFF"
+    ],
+    [
+     37,
+     "TOE_OFF"
+    ],
+    [
+     40,
+     "EARLY_FLIGHT"
+    ],
+    [
+     47,
+     "MID_FLIGHT"
+    ],
+    [
+     55,
+     "FULL_EXTENSION"
+    ],
+    [
+     62,
+     "FOLLOW"
+    ],
+    [
+     67,
+     "DESCENT"
+    ],
+    [
+     76,
+     "IMPACT"
+    ],
+    [
+     86,
+     "ABSORB"
+    ],
+    [
+     100,
+     "SETTLE"
+    ],
+    [
+     124,
+     "BRACE"
+    ],
+    [
+     142,
+     "PUSH_UP"
+    ],
+    [
+     160,
+     "HALF_KNEEL"
+    ],
+    [
+     181,
+     "CROUCH"
+    ],
+    [
+     202,
+     "RISE"
+    ],
+    [
+     232,
+     "REPOSITION"
+    ],
+    [
+     286,
+     "SET"
+    ]
+   ],
+   "presMax": 1.39,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 48,
+    "origin": [
+     98,
+     48
+    ],
+    "aim": [
+     105,
+     37.5
+    ],
+    "key": "3",
+    "c": 0.789,
+    "settle": 120,
+    "run": "goal",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 29,
+   "commitTick": 48,
+   "contactTick": null,
+   "facing": 26.3,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     48,
+     "LOAD"
+    ],
+    [
+     54,
+     "PLANT"
+    ],
+    [
+     59,
+     "PUSH_OFF"
+    ],
+    [
+     64,
+     "TOE_OFF"
+    ],
+    [
+     68,
+     "EARLY_FLIGHT"
+    ],
+    [
+     81,
+     "MID_FLIGHT"
+    ],
+    [
+     96,
+     "FULL_EXTENSION"
+    ],
+    [
+     108,
+     "FOLLOW"
+    ],
+    [
+     110,
+     "DESCENT"
+    ],
+    [
+     114,
+     "IMPACT"
+    ],
+    [
+     124,
+     "ABSORB"
+    ],
+    [
+     138,
+     "SETTLE"
+    ],
+    [
+     162,
+     "BRACE"
+    ],
+    [
+     180,
+     "PUSH_UP"
+    ],
+    [
+     198,
+     "HALF_KNEEL"
+    ],
+    [
+     219,
+     "CROUCH"
+    ],
+    [
+     240,
+     "RISE"
+    ],
+    [
+     270,
+     "REPOSITION"
+    ],
+    [
+     306,
+     "SET"
+    ]
+   ],
+   "presMax": 0.69,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 49,
+    "origin": [
+     98,
+     34
+    ],
+    "aim": [
+     105,
+     36.3
+    ],
+    "key": "z",
+    "c": 0.805,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": 35,
+   "facing": 97.5,
+   "tier": "STANDING REACHABLE",
+   "action": "LEAN",
+   "family": "HIGH_CATCH",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "HIGH_CATCH",
+   "landed": null,
+   "outcome": "WEAK PARRY (through)",
+   "volume": "HAND",
+   "held": false,
+   "gloveRes": 0.251,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "BRACE"
+    ],
+    [
+     32,
+     "RECEIVE"
+    ],
+    [
+     35,
+     "CONTACT"
+    ],
+    [
+     38,
+     "RISE"
+    ],
+    [
+     65,
+     "SET"
+    ]
+   ],
+   "presMax": 0.02,
+   "pelvisMin": 0.82,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     104.671,
+     37.474,
+     2.143
+    ],
+    "root": [
+     104.59,
+     37.36
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 50,
+    "origin": [
+     103,
+     48
+    ],
+    "aim": [
+     105,
+     35.4
+    ],
+    "key": "z",
+    "c": 0.659,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   },
+   "frame": "shot_050.png"
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": -173,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "LOAD"
+    ],
+    [
+     32,
+     "PLANT"
+    ],
+    [
+     36,
+     "PUSH_OFF"
+    ],
+    [
+     39,
+     "TOE_OFF"
+    ],
+    [
+     42,
+     "EARLY_FLIGHT"
+    ],
+    [
+     51,
+     "MID_FLIGHT"
+    ],
+    [
+     61,
+     "FULL_EXTENSION"
+    ],
+    [
+     70,
+     "FOLLOW"
+    ],
+    [
+     73,
+     "DESCENT"
+    ],
+    [
+     79,
+     "IMPACT"
+    ],
+    [
+     88,
+     "ABSORB"
+    ],
+    [
+     104,
+     "SETTLE"
+    ],
+    [
+     129,
+     "BRACE"
+    ],
+    [
+     147,
+     "PUSH_UP"
+    ],
+    [
+     165,
+     "HALF_KNEEL"
+    ],
+    [
+     186,
+     "CROUCH"
+    ],
+    [
+     207,
+     "RISE"
+    ],
+    [
+     237,
+     "REPOSITION"
+    ],
+    [
+     291,
+     "SET"
+    ]
+   ],
+   "presMax": 1.15,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 51,
+    "origin": [
+     98,
+     24
+    ],
+    "aim": [
+     105,
+     37.5
+    ],
+    "key": "z",
+    "c": 0.807,
+    "settle": 120,
+    "run": "side",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 29,
+   "commitTick": 44,
+   "contactTick": null,
+   "facing": -174.8,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     44,
+     "LOAD"
+    ],
+    [
+     48,
+     "PLANT"
+    ],
+    [
+     52,
+     "PUSH_OFF"
+    ],
+    [
+     55,
+     "TOE_OFF"
+    ],
+    [
+     58,
+     "EARLY_FLIGHT"
+    ],
+    [
+     66,
+     "MID_FLIGHT"
+    ],
+    [
+     76,
+     "FULL_EXTENSION"
+    ],
+    [
+     84,
+     "FOLLOW"
+    ],
+    [
+     89,
+     "DESCENT"
+    ],
+    [
+     99,
+     "IMPACT"
+    ],
+    [
+     109,
+     "ABSORB"
+    ],
+    [
+     123,
+     "SETTLE"
+    ],
+    [
+     147,
+     "BRACE"
+    ],
+    [
+     165,
+     "PUSH_UP"
+    ],
+    [
+     183,
+     "HALF_KNEEL"
+    ],
+    [
+     204,
+     "CROUCH"
+    ],
+    [
+     225,
+     "RISE"
+    ],
+    [
+     255,
+     "REPOSITION"
+    ],
+    [
+     273,
+     "SET"
+    ]
+   ],
+   "presMax": 0.47,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 52,
+    "origin": [
+     82,
+     31
+    ],
+    "aim": [
+     105,
+     35.4
+    ],
+    "key": "z",
+    "c": 0.867,
+    "settle": 120,
+    "run": "goal",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 79,
+   "contactTick": 87,
+   "facing": -137.7,
+   "tier": "STANDING REACHABLE",
+   "action": "STANDING",
+   "family": "HIGH_CATCH",
+   "hClass": "HIGH",
+   "side": "RIGHT",
+   "motion": "HIGH_CATCH",
+   "landed": null,
+   "outcome": "CATCH",
+   "volume": "HAND",
+   "held": true,
+   "gloveRes": 0.25,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     79,
+     "BRACE"
+    ],
+    [
+     82,
+     "RECEIVE"
+    ],
+    [
+     87,
+     "CONTACT"
+    ],
+    [
+     88,
+     "CRADLE"
+    ],
+    [
+     95,
+     "ABSORB"
+    ],
+    [
+     113,
+     "CONTROL"
+    ],
+    [
+     122,
+     "STRAIGHTEN"
+    ],
+    [
+     149,
+     "HOLD"
+    ]
+   ],
+   "presMax": 0.02,
+   "pelvisMin": 0.79,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     103.151,
+     32.319,
+     1.962
+    ],
+    "root": [
+     103.25,
+     32.41
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 53,
+    "origin": [
+     94,
+     24
+    ],
+    "aim": [
+     105,
+     34
+    ],
+    "key": "5",
+    "c": 0.586,
+    "settle": 120,
+    "run": "goal",
+    "dump": false
+   },
+   "frame": "shot_053.png"
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": -151.3,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "LOAD"
+    ],
+    [
+     33,
+     "PLANT"
+    ],
+    [
+     37,
+     "PUSH_OFF"
+    ],
+    [
+     41,
+     "TOE_OFF"
+    ],
+    [
+     44,
+     "EARLY_FLIGHT"
+    ],
+    [
+     54,
+     "MID_FLIGHT"
+    ],
+    [
+     66,
+     "FULL_EXTENSION"
+    ],
+    [
+     76,
+     "FOLLOW"
+    ],
+    [
+     79,
+     "DESCENT"
+    ],
+    [
+     84,
+     "IMPACT"
+    ],
+    [
+     94,
+     "ABSORB"
+    ],
+    [
+     108,
+     "SETTLE"
+    ],
+    [
+     133,
+     "BRACE"
+    ],
+    [
+     151,
+     "PUSH_UP"
+    ],
+    [
+     169,
+     "HALF_KNEEL"
+    ],
+    [
+     190,
+     "CROUCH"
+    ],
+    [
+     211,
+     "RISE"
+    ],
+    [
+     241,
+     "REPOSITION"
+    ],
+    [
+     277,
+     "SET"
+    ]
+   ],
+   "presMax": 0.91,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 54,
+    "origin": [
+     82,
+     20
+    ],
+    "aim": [
+     105,
+     37
+    ],
+    "key": "3",
+    "c": 0.707,
+    "settle": 40,
+    "run": "side",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": 146.6,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "RIGHT",
+   "motion": "FAR_DIVE",
+   "landed": "RIGHT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "LOAD"
+    ],
+    [
+     32,
+     "PLANT"
+    ],
+    [
+     36,
+     "PUSH_OFF"
+    ],
+    [
+     40,
+     "TOE_OFF"
+    ],
+    [
+     43,
+     "EARLY_FLIGHT"
+    ],
+    [
+     52,
+     "MID_FLIGHT"
+    ],
+    [
+     63,
+     "FULL_EXTENSION"
+    ],
+    [
+     72,
+     "FOLLOW"
+    ],
+    [
+     76,
+     "DESCENT"
+    ],
+    [
+     84,
+     "IMPACT"
+    ],
+    [
+     94,
+     "ABSORB"
+    ],
+    [
+     108,
+     "SETTLE"
+    ],
+    [
+     132,
+     "BRACE"
+    ],
+    [
+     150,
+     "PUSH_UP"
+    ],
+    [
+     168,
+     "HALF_KNEEL"
+    ],
+    [
+     189,
+     "CROUCH"
+    ],
+    [
+     210,
+     "RISE"
+    ],
+    [
+     240,
+     "REPOSITION"
+    ],
+    [
+     276,
+     "SET"
+    ]
+   ],
+   "presMax": 0.81,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 55,
+    "origin": [
+     86,
+     48
+    ],
+    "aim": [
+     105,
+     31.8
+    ],
+    "key": "z",
+    "c": 0.783,
+    "settle": 120,
+    "run": "goal",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 29,
+   "commitTick": 44,
+   "contactTick": null,
+   "facing": -168.2,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "RIGHT",
+   "motion": "FAR_DIVE",
+   "landed": "RIGHT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     44,
+     "LOAD"
+    ],
+    [
+     49,
+     "PLANT"
+    ],
+    [
+     54,
+     "PUSH_OFF"
+    ],
+    [
+     58,
+     "TOE_OFF"
+    ],
+    [
+     61,
+     "EARLY_FLIGHT"
+    ],
+    [
+     72,
+     "MID_FLIGHT"
+    ],
+    [
+     85,
+     "FULL_EXTENSION"
+    ],
+    [
+     95,
+     "FOLLOW"
+    ],
+    [
+     98,
+     "DESCENT"
+    ],
+    [
+     104,
+     "IMPACT"
+    ],
+    [
+     114,
+     "ABSORB"
+    ],
+    [
+     128,
+     "SETTLE"
+    ],
+    [
+     152,
+     "BRACE"
+    ],
+    [
+     170,
+     "PUSH_UP"
+    ],
+    [
+     188,
+     "HALF_KNEEL"
+    ],
+    [
+     209,
+     "CROUCH"
+    ],
+    [
+     230,
+     "RISE"
+    ],
+    [
+     260,
+     "REPOSITION"
+    ],
+    [
+     296,
+     "SET"
+    ]
+   ],
+   "presMax": 0.66,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 56,
+    "origin": [
+     82,
+     31
+    ],
+    "aim": [
+     105,
+     31
+    ],
+    "key": "z",
+    "c": 0.969,
+    "settle": 120,
+    "run": "goal",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 29,
+   "commitTick": 44,
+   "contactTick": null,
+   "facing": -32,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-MID",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "MID",
+   "side": "RIGHT",
+   "motion": "FAR_DIVE",
+   "landed": "RIGHT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     44,
+     "LOAD"
+    ],
+    [
+     50,
+     "PLANT"
+    ],
+    [
+     55,
+     "PUSH_OFF"
+    ],
+    [
+     59,
+     "TOE_OFF"
+    ],
+    [
+     63,
+     "EARLY_FLIGHT"
+    ],
+    [
+     75,
+     "MID_FLIGHT"
+    ],
+    [
+     89,
+     "FULL_EXTENSION"
+    ],
+    [
+     100,
+     "FOLLOW"
+    ],
+    [
+     102,
+     "DESCENT"
+    ],
+    [
+     106,
+     "IMPACT"
+    ],
+    [
+     114,
+     "ABSORB"
+    ],
+    [
+     132,
+     "SETTLE"
+    ],
+    [
+     159,
+     "BRACE"
+    ],
+    [
+     177,
+     "PUSH_UP"
+    ],
+    [
+     195,
+     "HALF_KNEEL"
+    ],
+    [
+     216,
+     "CROUCH"
+    ],
+    [
+     237,
+     "RISE"
+    ],
+    [
+     267,
+     "REPOSITION"
+    ],
+    [
+     303,
+     "SET"
+    ]
+   ],
+   "presMax": 0.79,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 57,
+    "origin": [
+     98,
+     34
+    ],
+    "aim": [
+     105,
+     31.8
+    ],
+    "key": "z",
+    "c": 0.391,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 29,
+   "commitTick": 82,
+   "contactTick": 90,
+   "facing": -150,
+   "tier": "STANDING REACHABLE",
+   "action": "STANDING",
+   "family": "HIGH_CATCH",
+   "hClass": "HIGH",
+   "side": "LEFT",
+   "motion": "HIGH_CATCH",
+   "landed": null,
+   "outcome": "CONTROLLED PARRY",
+   "volume": "HAND",
+   "held": false,
+   "gloveRes": 0.31,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     82,
+     "BRACE"
+    ],
+    [
+     85,
+     "RECEIVE"
+    ],
+    [
+     90,
+     "CONTACT"
+    ],
+    [
+     91,
+     "RISE"
+    ],
+    [
+     118,
+     "SET"
+    ]
+   ],
+   "presMax": 0.02,
+   "pelvisMin": 0.82,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     102.851,
+     33.236,
+     1.667
+    ],
+    "root": [
+     103.27,
+     33.31
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 59,
+    "origin": [
+     82,
+     20
+    ],
+    "aim": [
+     105,
+     34.6
+    ],
+    "key": "z",
+    "c": 0.377,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   },
+   "frame": "shot_059.png"
+  },
+  {
+   "shotTick": 29,
+   "commitTick": 44,
+   "contactTick": null,
+   "facing": -163.1,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "RIGHT",
+   "motion": "FAR_DIVE",
+   "landed": "RIGHT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     44,
+     "LOAD"
+    ],
+    [
+     49,
+     "PLANT"
+    ],
+    [
+     53,
+     "PUSH_OFF"
+    ],
+    [
+     57,
+     "TOE_OFF"
+    ],
+    [
+     60,
+     "EARLY_FLIGHT"
+    ],
+    [
+     70,
+     "MID_FLIGHT"
+    ],
+    [
+     81,
+     "FULL_EXTENSION"
+    ],
+    [
+     91,
+     "FOLLOW"
+    ],
+    [
+     94,
+     "DESCENT"
+    ],
+    [
+     100,
+     "IMPACT"
+    ],
+    [
+     110,
+     "ABSORB"
+    ],
+    [
+     124,
+     "SETTLE"
+    ],
+    [
+     148,
+     "BRACE"
+    ],
+    [
+     166,
+     "PUSH_UP"
+    ],
+    [
+     184,
+     "HALF_KNEEL"
+    ],
+    [
+     205,
+     "CROUCH"
+    ],
+    [
+     226,
+     "RISE"
+    ],
+    [
+     256,
+     "REPOSITION"
+    ],
+    [
+     292,
+     "SET"
+    ]
+   ],
+   "presMax": 0.81,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 60,
+    "origin": [
+     86,
+     31
+    ],
+    "aim": [
+     105,
+     31
+    ],
+    "key": "z",
+    "c": 0.998,
+    "settle": 40,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": -90.3,
+   "tier": "STANDING REACHABLE",
+   "action": "LEAN",
+   "family": "HIGH_CATCH",
+   "hClass": "TOP",
+   "side": "RIGHT",
+   "motion": "HIGH_CATCH",
+   "landed": null,
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "BRACE"
+    ],
+    [
+     33,
+     "RECEIVE"
+    ]
+   ],
+   "presMax": 0.02,
+   "pelvisMin": 0.83,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 61,
+    "origin": [
+     101,
+     24
+    ],
+    "aim": [
+     105,
+     31.8
+    ],
+    "key": "2",
+    "c": 0.963,
+    "settle": 40,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": 108.6,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-MID",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "HIGH",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "LOAD"
+    ],
+    [
+     32,
+     "PLANT"
+    ],
+    [
+     35,
+     "PUSH_OFF"
+    ],
+    [
+     38,
+     "TOE_OFF"
+    ],
+    [
+     41,
+     "EARLY_FLIGHT"
+    ],
+    [
+     49,
+     "MID_FLIGHT"
+    ],
+    [
+     59,
+     "FULL_EXTENSION"
+    ],
+    [
+     66,
+     "FOLLOW"
+    ],
+    [
+     70,
+     "DESCENT"
+    ],
+    [
+     76,
+     "IMPACT"
+    ],
+    [
+     85,
+     "ABSORB"
+    ],
+    [
+     103,
+     "SETTLE"
+    ],
+    [
+     130,
+     "BRACE"
+    ],
+    [
+     148,
+     "PUSH_UP"
+    ],
+    [
+     166,
+     "HALF_KNEEL"
+    ],
+    [
+     187,
+     "CROUCH"
+    ],
+    [
+     208,
+     "RISE"
+    ],
+    [
+     238,
+     "REPOSITION"
+    ],
+    [
+     292,
+     "SET"
+    ]
+   ],
+   "presMax": 1.34,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 62,
+    "origin": [
+     98,
+     44
+    ],
+    "aim": [
+     105,
+     35.4
+    ],
+    "key": "1",
+    "c": 0.869,
+    "settle": 120,
+    "run": "side",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": 133.2,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "LOAD"
+    ],
+    [
+     32,
+     "PLANT"
+    ],
+    [
+     36,
+     "PUSH_OFF"
+    ],
+    [
+     39,
+     "TOE_OFF"
+    ],
+    [
+     42,
+     "EARLY_FLIGHT"
+    ],
+    [
+     51,
+     "MID_FLIGHT"
+    ],
+    [
+     62,
+     "FULL_EXTENSION"
+    ],
+    [
+     70,
+     "FOLLOW"
+    ],
+    [
+     74,
+     "DESCENT"
+    ],
+    [
+     80,
+     "IMPACT"
+    ],
+    [
+     89,
+     "ABSORB"
+    ],
+    [
+     104,
+     "SETTLE"
+    ],
+    [
+     128,
+     "BRACE"
+    ],
+    [
+     146,
+     "PUSH_UP"
+    ],
+    [
+     164,
+     "HALF_KNEEL"
+    ],
+    [
+     185,
+     "CROUCH"
+    ],
+    [
+     206,
+     "RISE"
+    ],
+    [
+     236,
+     "REPOSITION"
+    ],
+    [
+     290,
+     "SET"
+    ]
+   ],
+   "presMax": 1.03,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 63,
+    "origin": [
+     90,
+     48
+    ],
+    "aim": [
+     105,
+     37.5
+    ],
+    "key": "z",
+    "c": 0.502,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": 127.5,
+   "tier": "HIGH/FULL-STRETCH REACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "LOAD"
+    ],
+    [
+     30,
+     "PLANT"
+    ],
+    [
+     32,
+     "PUSH_OFF"
+    ],
+    [
+     33,
+     "TOE_OFF"
+    ],
+    [
+     34,
+     "EARLY_FLIGHT"
+    ],
+    [
+     38,
+     "MID_FLIGHT"
+    ],
+    [
+     43,
+     "FULL_EXTENSION"
+    ],
+    [
+     47,
+     "FOLLOW"
+    ],
+    [
+     56,
+     "DESCENT"
+    ],
+    [
+     74,
+     "IMPACT"
+    ],
+    [
+     84,
+     "ABSORB"
+    ],
+    [
+     98,
+     "SETTLE"
+    ],
+    [
+     122,
+     "BRACE"
+    ],
+    [
+     140,
+     "PUSH_UP"
+    ],
+    [
+     158,
+     "HALF_KNEEL"
+    ],
+    [
+     179,
+     "CROUCH"
+    ],
+    [
+     200,
+     "RISE"
+    ],
+    [
+     230,
+     "REPOSITION"
+    ],
+    [
+     284,
+     "SET"
+    ]
+   ],
+   "presMax": 1.11,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 64,
+    "origin": [
+     98,
+     31
+    ],
+    "aim": [
+     105,
+     35.4
+    ],
+    "key": "5",
+    "c": 0.847,
+    "settle": 120,
+    "run": "side",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": -147.9,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-LOW",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "LOW-MID",
+   "side": "LEFT",
+   "motion": "LOW_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "LOAD"
+    ],
+    [
+     32,
+     "PLANT"
+    ],
+    [
+     36,
+     "PUSH_OFF"
+    ],
+    [
+     40,
+     "TOE_OFF"
+    ],
+    [
+     43,
+     "EARLY_FLIGHT"
+    ],
+    [
+     52,
+     "MID_FLIGHT"
+    ],
+    [
+     63,
+     "FULL_EXTENSION"
+    ],
+    [
+     71,
+     "IMPACT"
+    ],
+    [
+     73,
+     "ABSORB"
+    ],
+    [
+     91,
+     "SETTLE"
+    ],
+    [
+     118,
+     "BRACE"
+    ],
+    [
+     136,
+     "PUSH_UP"
+    ],
+    [
+     154,
+     "HALF_KNEEL"
+    ],
+    [
+     175,
+     "CROUCH"
+    ],
+    [
+     196,
+     "RISE"
+    ],
+    [
+     226,
+     "REPOSITION"
+    ],
+    [
+     262,
+     "SET"
+    ]
+   ],
+   "presMax": 0.64,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 65,
+    "origin": [
+     94,
+     24
+    ],
+    "aim": [
+     105,
+     37
+    ],
+    "key": "1",
+    "c": 0.761,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": 37,
+   "facing": 108.3,
+   "tier": "HIGH/FULL-STRETCH REACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "HIGH_CATCH",
+   "hClass": "TOP",
+   "side": "RIGHT",
+   "motion": "HIGH_CATCH",
+   "landed": null,
+   "outcome": "WEAK PARRY",
+   "volume": "HAND",
+   "held": false,
+   "gloveRes": 0.274,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "BRACE"
+    ],
+    [
+     33,
+     "RECEIVE"
+    ],
+    [
+     37,
+     "CONTACT"
+    ],
+    [
+     39,
+     "RISE"
+    ],
+    [
+     66,
+     "SET"
+    ]
+   ],
+   "presMax": 0.02,
+   "pelvisMin": 0.82,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     104.425,
+     36.527,
+     2.385
+    ],
+    "root": [
+     104.48,
+     36.59
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 66,
+    "origin": [
+     101,
+     48
+    ],
+    "aim": [
+     105,
+     34.6
+    ],
+    "key": "3",
+    "c": 0.788,
+    "settle": 40,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 29,
+   "commitTick": 44,
+   "contactTick": null,
+   "facing": -96.7,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "HIGH",
+   "side": "RIGHT",
+   "motion": "FAR_DIVE",
+   "landed": "RIGHT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     44,
+     "LOAD"
+    ],
+    [
+     48,
+     "PLANT"
+    ],
+    [
+     51,
+     "PUSH_OFF"
+    ],
+    [
+     54,
+     "TOE_OFF"
+    ],
+    [
+     57,
+     "EARLY_FLIGHT"
+    ],
+    [
+     65,
+     "MID_FLIGHT"
+    ],
+    [
+     74,
+     "FULL_EXTENSION"
+    ],
+    [
+     82,
+     "FOLLOW"
+    ],
+    [
+     85,
+     "DESCENT"
+    ],
+    [
+     92,
+     "IMPACT"
+    ],
+    [
+     101,
+     "ABSORB"
+    ],
+    [
+     118,
+     "SETTLE"
+    ],
+    [
+     145,
+     "BRACE"
+    ],
+    [
+     163,
+     "PUSH_UP"
+    ],
+    [
+     181,
+     "HALF_KNEEL"
+    ],
+    [
+     202,
+     "CROUCH"
+    ],
+    [
+     223,
+     "RISE"
+    ],
+    [
+     253,
+     "REPOSITION"
+    ],
+    [
+     325,
+     "SET"
+    ]
+   ],
+   "presMax": 1.47,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 67,
+    "origin": [
+     94,
+     31
+    ],
+    "aim": [
+     105,
+     30.5
+    ],
+    "key": "z",
+    "c": 0.699,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 42,
+   "contactTick": null,
+   "facing": 51.5,
+   "tier": "LOW-DIVE REACHABLE",
+   "action": "DIVE-LOW",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "LOW-MID",
+   "side": "RIGHT",
+   "motion": "LOW_DIVE",
+   "landed": "RIGHT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     42,
+     "LOAD"
+    ],
+    [
+     45,
+     "PLANT"
+    ],
+    [
+     48,
+     "PUSH_OFF"
+    ],
+    [
+     51,
+     "TOE_OFF"
+    ],
+    [
+     53,
+     "EARLY_FLIGHT"
+    ],
+    [
+     60,
+     "MID_FLIGHT"
+    ],
+    [
+     69,
+     "FULL_EXTENSION"
+    ],
+    [
+     76,
+     "IMPACT"
+    ],
+    [
+     78,
+     "ABSORB"
+    ],
+    [
+     96,
+     "SETTLE"
+    ],
+    [
+     123,
+     "BRACE"
+    ],
+    [
+     141,
+     "PUSH_UP"
+    ],
+    [
+     159,
+     "HALF_KNEEL"
+    ],
+    [
+     180,
+     "CROUCH"
+    ],
+    [
+     201,
+     "RISE"
+    ],
+    [
+     231,
+     "REPOSITION"
+    ],
+    [
+     267,
+     "SET"
+    ]
+   ],
+   "presMax": 0.8,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 68,
+    "origin": [
+     103,
+     28
+    ],
+    "aim": [
+     105,
+     30.5
+    ],
+    "key": "1",
+    "c": 0.758,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": 167.8,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "RIGHT",
+   "motion": "FAR_DIVE",
+   "landed": "RIGHT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "LOAD"
+    ],
+    [
+     32,
+     "PLANT"
+    ],
+    [
+     36,
+     "PUSH_OFF"
+    ],
+    [
+     40,
+     "TOE_OFF"
+    ],
+    [
+     43,
+     "EARLY_FLIGHT"
+    ],
+    [
+     52,
+     "MID_FLIGHT"
+    ],
+    [
+     63,
+     "FULL_EXTENSION"
+    ],
+    [
+     71,
+     "FOLLOW"
+    ],
+    [
+     75,
+     "DESCENT"
+    ],
+    [
+     81,
+     "IMPACT"
+    ],
+    [
+     90,
+     "ABSORB"
+    ],
+    [
+     105,
+     "SETTLE"
+    ],
+    [
+     130,
+     "BRACE"
+    ],
+    [
+     148,
+     "PUSH_UP"
+    ],
+    [
+     166,
+     "HALF_KNEEL"
+    ],
+    [
+     187,
+     "CROUCH"
+    ],
+    [
+     208,
+     "RISE"
+    ],
+    [
+     238,
+     "REPOSITION"
+    ],
+    [
+     292,
+     "SET"
+    ]
+   ],
+   "presMax": 1.08,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 69,
+    "origin": [
+     86,
+     40
+    ],
+    "aim": [
+     105,
+     31
+    ],
+    "key": "z",
+    "c": 0.411,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 55,
+   "contactTick": 75,
+   "facing": 96.5,
+   "tier": "HIGH/FULL-STRETCH REACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": "CONTROLLED PARRY",
+   "volume": "HAND",
+   "held": false,
+   "gloveRes": 0.011,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     55,
+     "LOAD"
+    ],
+    [
+     57,
+     "PLANT"
+    ],
+    [
+     59,
+     "PUSH_OFF"
+    ],
+    [
+     60,
+     "TOE_OFF"
+    ],
+    [
+     62,
+     "EARLY_FLIGHT"
+    ],
+    [
+     66,
+     "MID_FLIGHT"
+    ],
+    [
+     70,
+     "FULL_EXTENSION"
+    ],
+    [
+     74,
+     "FOLLOW"
+    ],
+    [
+     88,
+     "DESCENT"
+    ],
+    [
+     113,
+     "IMPACT"
+    ],
+    [
+     122,
+     "ABSORB"
+    ],
+    [
+     137,
+     "SETTLE"
+    ],
+    [
+     161,
+     "BRACE"
+    ],
+    [
+     179,
+     "PUSH_UP"
+    ],
+    [
+     197,
+     "HALF_KNEEL"
+    ],
+    [
+     218,
+     "CROUCH"
+    ],
+    [
+     239,
+     "RISE"
+    ],
+    [
+     269,
+     "REPOSITION"
+    ],
+    [
+     287,
+     "SET"
+    ]
+   ],
+   "presMax": 0.24,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     104.767,
+     37.665,
+     2.664
+    ],
+    "root": [
+     104.69,
+     37.52
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 70,
+    "origin": [
+     103,
+     48
+    ],
+    "aim": [
+     105,
+     36.3
+    ],
+    "key": "5",
+    "c": 0.585,
+    "settle": 120,
+    "run": "goal",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": 155.9,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "RIGHT",
+   "motion": "FAR_DIVE",
+   "landed": "RIGHT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "LOAD"
+    ],
+    [
+     32,
+     "PLANT"
+    ],
+    [
+     35,
+     "PUSH_OFF"
+    ],
+    [
+     38,
+     "TOE_OFF"
+    ],
+    [
+     40,
+     "EARLY_FLIGHT"
+    ],
+    [
+     48,
+     "MID_FLIGHT"
+    ],
+    [
+     57,
+     "FULL_EXTENSION"
+    ],
+    [
+     64,
+     "FOLLOW"
+    ],
+    [
+     68,
+     "DESCENT"
+    ],
+    [
+     75,
+     "IMPACT"
+    ],
+    [
+     85,
+     "ABSORB"
+    ],
+    [
+     100,
+     "SETTLE"
+    ],
+    [
+     125,
+     "BRACE"
+    ],
+    [
+     143,
+     "PUSH_UP"
+    ],
+    [
+     161,
+     "HALF_KNEEL"
+    ],
+    [
+     182,
+     "CROUCH"
+    ],
+    [
+     203,
+     "RISE"
+    ],
+    [
+     233,
+     "REPOSITION"
+    ],
+    [
+     287,
+     "SET"
+    ]
+   ],
+   "presMax": 1.43,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 71,
+    "origin": [
+     98,
+     40
+    ],
+    "aim": [
+     105,
+     30.5
+    ],
+    "key": "5",
+    "c": 0.424,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": 85.8,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "HIGH",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "LOAD"
+    ],
+    [
+     35,
+     "PLANT"
+    ],
+    [
+     40,
+     "PUSH_OFF"
+    ],
+    [
+     46,
+     "TOE_OFF"
+    ],
+    [
+     50,
+     "EARLY_FLIGHT"
+    ],
+    [
+     64,
+     "MID_FLIGHT"
+    ],
+    [
+     80,
+     "FULL_EXTENSION"
+    ],
+    [
+     94,
+     "FOLLOW"
+    ],
+    [
+     95,
+     "DESCENT"
+    ],
+    [
+     99,
+     "IMPACT"
+    ],
+    [
+     107,
+     "ABSORB"
+    ],
+    [
+     125,
+     "SETTLE"
+    ],
+    [
+     152,
+     "BRACE"
+    ],
+    [
+     170,
+     "PUSH_UP"
+    ],
+    [
+     188,
+     "HALF_KNEEL"
+    ],
+    [
+     209,
+     "CROUCH"
+    ],
+    [
+     230,
+     "RISE"
+    ],
+    [
+     260,
+     "REPOSITION"
+    ],
+    [
+     296,
+     "SET"
+    ]
+   ],
+   "presMax": 0.68,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 72,
+    "origin": [
+     103,
+     28
+    ],
+    "aim": [
+     105,
+     37.5
+    ],
+    "key": "3",
+    "c": 0.936,
+    "settle": 120,
+    "run": "goal",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": 136.1,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "LOAD"
+    ],
+    [
+     31,
+     "PLANT"
+    ],
+    [
+     34,
+     "PUSH_OFF"
+    ],
+    [
+     37,
+     "TOE_OFF"
+    ],
+    [
+     39,
+     "EARLY_FLIGHT"
+    ],
+    [
+     45,
+     "MID_FLIGHT"
+    ],
+    [
+     53,
+     "FULL_EXTENSION"
+    ],
+    [
+     60,
+     "FOLLOW"
+    ],
+    [
+     67,
+     "DESCENT"
+    ],
+    [
+     80,
+     "IMPACT"
+    ],
+    [
+     90,
+     "ABSORB"
+    ],
+    [
+     104,
+     "SETTLE"
+    ],
+    [
+     128,
+     "BRACE"
+    ],
+    [
+     146,
+     "PUSH_UP"
+    ],
+    [
+     164,
+     "HALF_KNEEL"
+    ],
+    [
+     185,
+     "CROUCH"
+    ],
+    [
+     206,
+     "RISE"
+    ],
+    [
+     236,
+     "REPOSITION"
+    ],
+    [
+     254,
+     "SET"
+    ]
+   ],
+   "presMax": 0.41,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 73,
+    "origin": [
+     90,
+     48
+    ],
+    "aim": [
+     105,
+     35.4
+    ],
+    "key": "3",
+    "c": 0.734,
+    "settle": 120,
+    "run": "goal",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": -176,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-LOW",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "LOW-MID",
+   "side": "LEFT",
+   "motion": "LOW_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "LOAD"
+    ],
+    [
+     32,
+     "PLANT"
+    ],
+    [
+     36,
+     "PUSH_OFF"
+    ],
+    [
+     40,
+     "TOE_OFF"
+    ],
+    [
+     43,
+     "EARLY_FLIGHT"
+    ],
+    [
+     52,
+     "MID_FLIGHT"
+    ],
+    [
+     63,
+     "FULL_EXTENSION"
+    ],
+    [
+     72,
+     "IMPACT"
+    ],
+    [
+     74,
+     "ABSORB"
+    ],
+    [
+     92,
+     "SETTLE"
+    ],
+    [
+     119,
+     "BRACE"
+    ],
+    [
+     137,
+     "PUSH_UP"
+    ],
+    [
+     155,
+     "HALF_KNEEL"
+    ],
+    [
+     176,
+     "CROUCH"
+    ],
+    [
+     197,
+     "RISE"
+    ],
+    [
+     227,
+     "REPOSITION"
+    ],
+    [
+     263,
+     "SET"
+    ]
+   ],
+   "presMax": 0.58,
+   "pelvisMin": 0.27,
+   "asserts": [
+    {
+     "tick": 42430,
+     "from": "IMPACT",
+     "to": "ABSORB",
+     "dRoot": 0.021,
+     "dPelvis": 0.023,
+     "excess": 0.025,
+     "dV": 1.52,
+     "dHandR": 0.02,
+     "dHandL": 0.041,
+     "ang": {
+      "root": 0,
+      "pelvis": 1.5,
+      "chest": 4.2,
+      "thigh_L": 18.3,
+      "thigh_R": 4.2,
+      "upperArm_L": 10.4,
+      "upperArm_R": 8.6
+     },
+     "bad": true
+    }
+   ],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 74,
+    "origin": [
+     90,
+     31
+    ],
+    "aim": [
+     105,
+     37.5
+    ],
+    "key": "2",
+    "c": 0.521,
+    "settle": 120,
+    "run": "side",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 42,
+   "contactTick": 19,
+   "facing": -59.7,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-LOW",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "MID",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": "LEG DEFLECTION",
+   "volume": "LEG+",
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     42,
+     "LOAD"
+    ],
+    [
+     51,
+     "PLANT"
+    ],
+    [
+     60,
+     "PUSH_OFF"
+    ],
+    [
+     68,
+     "TOE_OFF"
+    ],
+    [
+     75,
+     "EARLY_FLIGHT"
+    ],
+    [
+     96,
+     "MID_FLIGHT"
+    ],
+    [
+     120,
+     "FULL_EXTENSION"
+    ],
+    [
+     140,
+     "FOLLOW"
+    ],
+    [
+     141,
+     "DESCENT"
+    ],
+    [
+     143,
+     "IMPACT"
+    ],
+    [
+     151,
+     "ABSORB"
+    ],
+    [
+     169,
+     "SETTLE"
+    ],
+    [
+     196,
+     "BRACE"
+    ],
+    [
+     214,
+     "PUSH_UP"
+    ],
+    [
+     232,
+     "HALF_KNEEL"
+    ],
+    [
+     253,
+     "CROUCH"
+    ],
+    [
+     274,
+     "RISE"
+    ],
+    [
+     304,
+     "REPOSITION"
+    ],
+    [
+     322,
+     "SET"
+    ]
+   ],
+   "presMax": 0.24,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     104.409,
+     37.394,
+     0.68
+    ],
+    "root": [
+     104.34,
+     37
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 75,
+    "origin": [
+     103,
+     40
+    ],
+    "aim": [
+     105,
+     36.3
+    ],
+    "key": "z",
+    "c": 0.582,
+    "settle": 120,
+    "run": "goal",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 36,
+   "commitTick": 87,
+   "contactTick": 119,
+   "facing": -173.3,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-LOW",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "LOW-MID",
+   "side": "RIGHT",
+   "motion": "LOW_DIVE",
+   "landed": "RIGHT",
+   "outcome": "FINGERTIP (through)",
+   "volume": "HAND",
+   "held": false,
+   "gloveRes": 0.076,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     87,
+     "LOAD"
+    ],
+    [
+     90,
+     "PLANT"
+    ],
+    [
+     93,
+     "PUSH_OFF"
+    ],
+    [
+     95,
+     "TOE_OFF"
+    ],
+    [
+     98,
+     "EARLY_FLIGHT"
+    ],
+    [
+     104,
+     "MID_FLIGHT"
+    ],
+    [
+     112,
+     "FULL_EXTENSION"
+    ],
+    [
+     119,
+     "IMPACT"
+    ],
+    [
+     121,
+     "ABSORB"
+    ],
+    [
+     139,
+     "SETTLE"
+    ],
+    [
+     166,
+     "BRACE"
+    ],
+    [
+     184,
+     "PUSH_UP"
+    ],
+    [
+     202,
+     "HALF_KNEEL"
+    ],
+    [
+     223,
+     "CROUCH"
+    ],
+    [
+     244,
+     "RISE"
+    ],
+    [
+     274,
+     "REPOSITION"
+    ],
+    [
+     310,
+     "SET"
+    ]
+   ],
+   "presMax": 0.69,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     102.039,
+     31.386,
+     0
+    ],
+    "root": [
+     102.35,
+     32.29
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 76,
+    "origin": [
+     82,
+     34
+    ],
+    "aim": [
+     105,
+     31
+    ],
+    "key": "2",
+    "c": 0.632,
+    "settle": 40,
+    "run": "side",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 29,
+   "commitTick": 44,
+   "contactTick": null,
+   "facing": -147.3,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "RIGHT",
+   "motion": "FAR_DIVE",
+   "landed": "RIGHT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     44,
+     "LOAD"
+    ],
+    [
+     49,
+     "PLANT"
+    ],
+    [
+     53,
+     "PUSH_OFF"
+    ],
+    [
+     57,
+     "TOE_OFF"
+    ],
+    [
+     61,
+     "EARLY_FLIGHT"
+    ],
+    [
+     71,
+     "MID_FLIGHT"
+    ],
+    [
+     83,
+     "FULL_EXTENSION"
+    ],
+    [
+     93,
+     "FOLLOW"
+    ],
+    [
+     96,
+     "DESCENT"
+    ],
+    [
+     102,
+     "IMPACT"
+    ],
+    [
+     111,
+     "ABSORB"
+    ],
+    [
+     126,
+     "SETTLE"
+    ],
+    [
+     150,
+     "BRACE"
+    ],
+    [
+     168,
+     "PUSH_UP"
+    ],
+    [
+     186,
+     "HALF_KNEEL"
+    ],
+    [
+     207,
+     "CROUCH"
+    ],
+    [
+     228,
+     "RISE"
+    ],
+    [
+     258,
+     "REPOSITION"
+    ],
+    [
+     294,
+     "SET"
+    ]
+   ],
+   "presMax": 0.78,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 77,
+    "origin": [
+     86,
+     24
+    ],
+    "aim": [
+     105,
+     30.5
+    ],
+    "key": "3",
+    "c": 0.828,
+    "settle": 120,
+    "run": "goal",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 43,
+   "contactTick": 55,
+   "facing": -131.1,
+   "tier": "STANDING REACHABLE",
+   "action": "LEAN",
+   "family": "NEAR_BODY_SAVE",
+   "hClass": "LOW-MID",
+   "side": "LEFT",
+   "motion": "NEAR_BODY",
+   "landed": null,
+   "outcome": "CONTROLLED PARRY",
+   "volume": "HAND",
+   "held": false,
+   "gloveRes": 0.249,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     43,
+     "BRACE"
+    ],
+    [
+     48,
+     "RECEIVE"
+    ],
+    [
+     55,
+     "CONTACT"
+    ],
+    [
+     56,
+     "RISE"
+    ],
+    [
+     80,
+     "SET"
+    ]
+   ],
+   "presMax": 0.12,
+   "pelvisMin": 0.72,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     102.992,
+     31.444,
+     0.622
+    ],
+    "root": [
+     103.38,
+     31.57
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 78,
+    "origin": [
+     94,
+     20
+    ],
+    "aim": [
+     105,
+     34
+    ],
+    "key": "2",
+    "c": 0.779,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 40,
+   "contactTick": 66,
+   "facing": -154.1,
+   "tier": "STANDING REACHABLE",
+   "action": "GATHER",
+   "family": "LOW_GATHER",
+   "hClass": "LOW-MID",
+   "side": "LEFT",
+   "motion": "GATHER",
+   "landed": null,
+   "outcome": "GATHER",
+   "volume": "HAND",
+   "held": true,
+   "gloveRes": 0.215,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     40,
+     "BRACE"
+    ],
+    [
+     45,
+     "RECEIVE"
+    ],
+    [
+     66,
+     "CONTACT"
+    ],
+    [
+     67,
+     "CRADLE"
+    ],
+    [
+     74,
+     "ABSORB"
+    ],
+    [
+     88,
+     "CONTROL"
+    ],
+    [
+     97,
+     "STRAIGHTEN"
+    ],
+    [
+     136,
+     "HOLD"
+    ]
+   ],
+   "presMax": 0.05,
+   "pelvisMin": 0.49,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     102.061,
+     32.334,
+     0.592
+    ],
+    "root": [
+     102.27,
+     32.35
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 79,
+    "origin": [
+     90,
+     24
+    ],
+    "aim": [
+     105,
+     33.4
+    ],
+    "key": "1",
+    "c": 0.8,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 36,
+   "commitTick": 51,
+   "contactTick": null,
+   "facing": 151.5,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-MID",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "HIGH",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     51,
+     "LOAD"
+    ],
+    [
+     55,
+     "PLANT"
+    ],
+    [
+     58,
+     "PUSH_OFF"
+    ],
+    [
+     61,
+     "TOE_OFF"
+    ],
+    [
+     63,
+     "EARLY_FLIGHT"
+    ],
+    [
+     71,
+     "MID_FLIGHT"
+    ],
+    [
+     80,
+     "FULL_EXTENSION"
+    ],
+    [
+     87,
+     "FOLLOW"
+    ],
+    [
+     91,
+     "DESCENT"
+    ],
+    [
+     97,
+     "IMPACT"
+    ],
+    [
+     105,
+     "ABSORB"
+    ],
+    [
+     123,
+     "SETTLE"
+    ],
+    [
+     150,
+     "BRACE"
+    ],
+    [
+     168,
+     "PUSH_UP"
+    ],
+    [
+     186,
+     "HALF_KNEEL"
+    ],
+    [
+     207,
+     "CROUCH"
+    ],
+    [
+     228,
+     "RISE"
+    ],
+    [
+     258,
+     "REPOSITION"
+    ],
+    [
+     312,
+     "SET"
+    ]
+   ],
+   "presMax": 1.3,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 80,
+    "origin": [
+     90,
+     40
+    ],
+    "aim": [
+     105,
+     37
+    ],
+    "key": "2",
+    "c": 0.833,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 29,
+   "commitTick": 44,
+   "contactTick": null,
+   "facing": -159.3,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     44,
+     "LOAD"
+    ],
+    [
+     49,
+     "PLANT"
+    ],
+    [
+     53,
+     "PUSH_OFF"
+    ],
+    [
+     56,
+     "TOE_OFF"
+    ],
+    [
+     59,
+     "EARLY_FLIGHT"
+    ],
+    [
+     69,
+     "MID_FLIGHT"
+    ],
+    [
+     80,
+     "FULL_EXTENSION"
+    ],
+    [
+     89,
+     "FOLLOW"
+    ],
+    [
+     94,
+     "DESCENT"
+    ],
+    [
+     101,
+     "IMPACT"
+    ],
+    [
+     111,
+     "ABSORB"
+    ],
+    [
+     125,
+     "SETTLE"
+    ],
+    [
+     149,
+     "BRACE"
+    ],
+    [
+     167,
+     "PUSH_UP"
+    ],
+    [
+     185,
+     "HALF_KNEEL"
+    ],
+    [
+     206,
+     "CROUCH"
+    ],
+    [
+     227,
+     "RISE"
+    ],
+    [
+     257,
+     "REPOSITION"
+    ],
+    [
+     293,
+     "SET"
+    ]
+   ],
+   "presMax": 0.72,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 81,
+    "origin": [
+     82,
+     24
+    ],
+    "aim": [
+     105,
+     36.3
+    ],
+    "key": "z",
+    "c": 0.821,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": 74.2,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "HIGH",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "LOAD"
+    ],
+    [
+     35,
+     "PLANT"
+    ],
+    [
+     41,
+     "PUSH_OFF"
+    ],
+    [
+     46,
+     "TOE_OFF"
+    ],
+    [
+     51,
+     "EARLY_FLIGHT"
+    ],
+    [
+     65,
+     "MID_FLIGHT"
+    ],
+    [
+     82,
+     "FULL_EXTENSION"
+    ],
+    [
+     95,
+     "FOLLOW"
+    ],
+    [
+     97,
+     "DESCENT"
+    ],
+    [
+     101,
+     "IMPACT"
+    ],
+    [
+     110,
+     "ABSORB"
+    ],
+    [
+     128,
+     "SETTLE"
+    ],
+    [
+     155,
+     "BRACE"
+    ],
+    [
+     173,
+     "PUSH_UP"
+    ],
+    [
+     191,
+     "HALF_KNEEL"
+    ],
+    [
+     212,
+     "CROUCH"
+    ],
+    [
+     233,
+     "RISE"
+    ],
+    [
+     263,
+     "REPOSITION"
+    ],
+    [
+     299,
+     "SET"
+    ]
+   ],
+   "presMax": 0.65,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 82,
+    "origin": [
+     98,
+     28
+    ],
+    "aim": [
+     105,
+     36.3
+    ],
+    "key": "3",
+    "c": 0.767,
+    "settle": 40,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 80,
+   "contactTick": 101,
+   "facing": 134.1,
+   "tier": "HIGH/FULL-STRETCH REACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": "CONTROLLED PARRY",
+   "volume": "HAND",
+   "held": false,
+   "gloveRes": 0.038,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     80,
+     "LOAD"
+    ],
+    [
+     82,
+     "PLANT"
+    ],
+    [
+     84,
+     "PUSH_OFF"
+    ],
+    [
+     85,
+     "TOE_OFF"
+    ],
+    [
+     87,
+     "EARLY_FLIGHT"
+    ],
+    [
+     91,
+     "MID_FLIGHT"
+    ],
+    [
+     96,
+     "FULL_EXTENSION"
+    ],
+    [
+     100,
+     "FOLLOW"
+    ],
+    [
+     111,
+     "DESCENT"
+    ],
+    [
+     131,
+     "IMPACT"
+    ],
+    [
+     140,
+     "ABSORB"
+    ],
+    [
+     155,
+     "SETTLE"
+    ],
+    [
+     179,
+     "BRACE"
+    ],
+    [
+     197,
+     "PUSH_UP"
+    ],
+    [
+     215,
+     "HALF_KNEEL"
+    ],
+    [
+     236,
+     "CROUCH"
+    ],
+    [
+     257,
+     "RISE"
+    ],
+    [
+     287,
+     "REPOSITION"
+    ],
+    [
+     323,
+     "SET"
+    ]
+   ],
+   "presMax": 0.68,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     103.189,
+     37.713,
+     2.578
+    ],
+    "root": [
+     103.23,
+     37.27
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 83,
+    "origin": [
+     90,
+     48
+    ],
+    "aim": [
+     105,
+     36.3
+    ],
+    "key": "5",
+    "c": 0.739,
+    "settle": 40,
+    "run": "none",
+    "dump": false
+   },
+   "frame": "shot_083.png"
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 66,
+   "contactTick": 107,
+   "facing": -127.5,
+   "tier": "LOW-DIVE REACHABLE",
+   "action": "GATHER",
+   "family": "LOW_GATHER",
+   "hClass": "LOW-MID",
+   "side": "RIGHT",
+   "motion": "GATHER",
+   "landed": null,
+   "outcome": "GATHER",
+   "volume": "HAND",
+   "held": true,
+   "gloveRes": 0.26,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     66,
+     "BRACE"
+    ],
+    [
+     78,
+     "RECEIVE"
+    ],
+    [
+     107,
+     "CRADLE"
+    ],
+    [
+     115,
+     "ABSORB"
+    ],
+    [
+     129,
+     "CONTROL"
+    ],
+    [
+     138,
+     "STRAIGHTEN"
+    ],
+    [
+     177,
+     "HOLD"
+    ]
+   ],
+   "presMax": 0.05,
+   "pelvisMin": 0.49,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     102.971,
+     28.971,
+     0.604
+    ],
+    "root": [
+     103.15,
+     29.45
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 84,
+    "origin": [
+     94,
+     20
+    ],
+    "aim": [
+     105,
+     31
+    ],
+    "key": "5",
+    "c": 0.418,
+    "settle": 120,
+    "run": "goal",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 76,
+   "contactTick": null,
+   "facing": 142,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     76,
+     "LOAD"
+    ],
+    [
+     79,
+     "PLANT"
+    ],
+    [
+     81,
+     "PUSH_OFF"
+    ],
+    [
+     84,
+     "TOE_OFF"
+    ],
+    [
+     86,
+     "EARLY_FLIGHT"
+    ],
+    [
+     92,
+     "MID_FLIGHT"
+    ],
+    [
+     100,
+     "FULL_EXTENSION"
+    ],
+    [
+     106,
+     "FOLLOW"
+    ],
+    [
+     114,
+     "DESCENT"
+    ],
+    [
+     128,
+     "IMPACT"
+    ],
+    [
+     137,
+     "ABSORB"
+    ],
+    [
+     152,
+     "SETTLE"
+    ],
+    [
+     176,
+     "BRACE"
+    ],
+    [
+     194,
+     "PUSH_UP"
+    ],
+    [
+     212,
+     "HALF_KNEEL"
+    ],
+    [
+     233,
+     "CROUCH"
+    ],
+    [
+     254,
+     "RISE"
+    ],
+    [
+     284,
+     "REPOSITION"
+    ],
+    [
+     338,
+     "SET"
+    ]
+   ],
+   "presMax": 1.19,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 85,
+    "origin": [
+     90,
+     48
+    ],
+    "aim": [
+     105,
+     36.3
+    ],
+    "key": "5",
+    "c": 0.803,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 84,
+   "contactTick": 95,
+   "facing": -135.2,
+   "tier": "MEDIUM-DIVE REACHABLE",
+   "action": "LEAN",
+   "family": "NEAR_BODY_SAVE",
+   "hClass": "HIGH",
+   "side": "LEFT",
+   "motion": "NEAR_BODY",
+   "landed": null,
+   "outcome": "CATCH",
+   "volume": "HAND",
+   "held": true,
+   "gloveRes": 0.494,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     84,
+     "BRACE"
+    ],
+    [
+     89,
+     "RECEIVE"
+    ],
+    [
+     95,
+     "CONTACT"
+    ],
+    [
+     96,
+     "CRADLE"
+    ],
+    [
+     104,
+     "ABSORB"
+    ],
+    [
+     117,
+     "CONTROL"
+    ],
+    [
+     126,
+     "STRAIGHTEN"
+    ],
+    [
+     153,
+     "HOLD"
+    ]
+   ],
+   "presMax": 0.12,
+   "pelvisMin": 0.72,
+   "asserts": [],
+   "cradleViolations": 8,
+   "cradleFirst": {
+    "tick": 49194,
+    "phase": "CONTACT",
+    "mode": "cradle",
+    "R": {
+     "elbow": false,
+     "upper": false,
+     "fore": false
+    },
+    "L": {
+     "elbow": false,
+     "upper": true,
+     "fore": false
+    },
+    "crossed": false,
+    "ballIn": false
+   },
+   "sim": {
+    "point": [
+     103.527,
+     32.87,
+     1.629
+    ],
+    "root": [
+     103.74,
+     32.6
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 86,
+    "origin": [
+     98,
+     20
+    ],
+    "aim": [
+     105,
+     36.3
+    ],
+    "key": "5",
+    "c": 0.609,
+    "settle": 120,
+    "run": "goal",
+    "dump": false
+   },
+   "frame": "shot_086.png"
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 49,
+   "contactTick": 65,
+   "facing": -148,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "RIGHT",
+   "motion": "FAR_DIVE",
+   "landed": "RIGHT",
+   "outcome": "FINGERTIP (through)",
+   "volume": "HAND",
+   "held": false,
+   "gloveRes": 0.06,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     49,
+     "LOAD"
+    ],
+    [
+     50,
+     "PLANT"
+    ],
+    [
+     52,
+     "PUSH_OFF"
+    ],
+    [
+     53,
+     "TOE_OFF"
+    ],
+    [
+     54,
+     "EARLY_FLIGHT"
+    ],
+    [
+     57,
+     "MID_FLIGHT"
+    ],
+    [
+     61,
+     "FULL_EXTENSION"
+    ],
+    [
+     64,
+     "FOLLOW"
+    ],
+    [
+     81,
+     "DESCENT"
+    ],
+    [
+     113,
+     "IMPACT"
+    ],
+    [
+     123,
+     "ABSORB"
+    ],
+    [
+     137,
+     "SETTLE"
+    ],
+    [
+     161,
+     "BRACE"
+    ],
+    [
+     179,
+     "PUSH_UP"
+    ],
+    [
+     197,
+     "HALF_KNEEL"
+    ],
+    [
+     218,
+     "CROUCH"
+    ],
+    [
+     239,
+     "RISE"
+    ],
+    [
+     269,
+     "REPOSITION"
+    ],
+    [
+     359,
+     "SET"
+    ]
+   ],
+   "presMax": 2.06,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     102.952,
+     31.478,
+     2.732
+    ],
+    "root": [
+     103.2,
+     31.93
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 87,
+    "origin": [
+     82,
+     20
+    ],
+    "aim": [
+     105,
+     32.6
+    ],
+    "key": "3",
+    "c": 0.655,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": 38,
+   "facing": -134.7,
+   "tier": "STANDING REACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "NEAR_BODY_SAVE",
+   "hClass": "TOP",
+   "side": "RIGHT",
+   "motion": "NEAR_BODY",
+   "landed": null,
+   "outcome": "WEAK PARRY (through)",
+   "volume": "HAND",
+   "held": false,
+   "gloveRes": 0.441,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "BRACE"
+    ],
+    [
+     33,
+     "RECEIVE"
+    ],
+    [
+     38,
+     "CONTACT"
+    ],
+    [
+     39,
+     "RISE"
+    ],
+    [
+     63,
+     "SET"
+    ]
+   ],
+   "presMax": 0.12,
+   "pelvisMin": 0.72,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     103.041,
+     31.069,
+     2.185
+    ],
+    "root": [
+     102.65,
+     31.42
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 88,
+    "origin": [
+     94,
+     24
+    ],
+    "aim": [
+     105,
+     32.6
+    ],
+    "key": "z",
+    "c": 0.576,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": -175,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "LOAD"
+    ],
+    [
+     35,
+     "PLANT"
+    ],
+    [
+     40,
+     "PUSH_OFF"
+    ],
+    [
+     46,
+     "TOE_OFF"
+    ],
+    [
+     50,
+     "EARLY_FLIGHT"
+    ],
+    [
+     64,
+     "MID_FLIGHT"
+    ],
+    [
+     81,
+     "FULL_EXTENSION"
+    ],
+    [
+     94,
+     "FOLLOW"
+    ],
+    [
+     96,
+     "DESCENT"
+    ],
+    [
+     99,
+     "IMPACT"
+    ],
+    [
+     108,
+     "ABSORB"
+    ],
+    [
+     124,
+     "SETTLE"
+    ],
+    [
+     150,
+     "BRACE"
+    ],
+    [
+     168,
+     "PUSH_UP"
+    ],
+    [
+     186,
+     "HALF_KNEEL"
+    ],
+    [
+     207,
+     "CROUCH"
+    ],
+    [
+     228,
+     "RISE"
+    ],
+    [
+     258,
+     "REPOSITION"
+    ],
+    [
+     294,
+     "SET"
+    ]
+   ],
+   "presMax": 0.63,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 89,
+    "origin": [
+     90,
+     28
+    ],
+    "aim": [
+     105,
+     35.4
+    ],
+    "key": "1",
+    "c": 0.984,
+    "settle": 40,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 60,
+   "contactTick": null,
+   "facing": 147.8,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     60,
+     "LOAD"
+    ],
+    [
+     63,
+     "PLANT"
+    ],
+    [
+     66,
+     "PUSH_OFF"
+    ],
+    [
+     69,
+     "TOE_OFF"
+    ],
+    [
+     72,
+     "EARLY_FLIGHT"
+    ],
+    [
+     79,
+     "MID_FLIGHT"
+    ],
+    [
+     88,
+     "FULL_EXTENSION"
+    ],
+    [
+     96,
+     "FOLLOW"
+    ],
+    [
+     102,
+     "DESCENT"
+    ],
+    [
+     113,
+     "IMPACT"
+    ],
+    [
+     123,
+     "ABSORB"
+    ],
+    [
+     137,
+     "SETTLE"
+    ],
+    [
+     161,
+     "BRACE"
+    ],
+    [
+     179,
+     "PUSH_UP"
+    ],
+    [
+     197,
+     "HALF_KNEEL"
+    ],
+    [
+     218,
+     "CROUCH"
+    ],
+    [
+     239,
+     "RISE"
+    ],
+    [
+     269,
+     "REPOSITION"
+    ],
+    [
+     305,
+     "SET"
+    ]
+   ],
+   "presMax": 0.58,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 90,
+    "origin": [
+     90,
+     44
+    ],
+    "aim": [
+     105,
+     34.6
+    ],
+    "key": "5",
+    "c": 0.802,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 29,
+   "commitTick": 44,
+   "contactTick": null,
+   "facing": 177.9,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     44,
+     "LOAD"
+    ],
+    [
+     48,
+     "PLANT"
+    ],
+    [
+     52,
+     "PUSH_OFF"
+    ],
+    [
+     55,
+     "TOE_OFF"
+    ],
+    [
+     57,
+     "EARLY_FLIGHT"
+    ],
+    [
+     66,
+     "MID_FLIGHT"
+    ],
+    [
+     76,
+     "FULL_EXTENSION"
+    ],
+    [
+     84,
+     "FOLLOW"
+    ],
+    [
+     89,
+     "DESCENT"
+    ],
+    [
+     99,
+     "IMPACT"
+    ],
+    [
+     109,
+     "ABSORB"
+    ],
+    [
+     123,
+     "SETTLE"
+    ],
+    [
+     147,
+     "BRACE"
+    ],
+    [
+     165,
+     "PUSH_UP"
+    ],
+    [
+     183,
+     "HALF_KNEEL"
+    ],
+    [
+     204,
+     "CROUCH"
+    ],
+    [
+     225,
+     "RISE"
+    ],
+    [
+     255,
+     "REPOSITION"
+    ],
+    [
+     273,
+     "SET"
+    ]
+   ],
+   "presMax": 0.46,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 91,
+    "origin": [
+     82,
+     34
+    ],
+    "aim": [
+     105,
+     35.4
+    ],
+    "key": "z",
+    "c": 0.853,
+    "settle": 40,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 22,
+   "commitTick": 37,
+   "contactTick": null,
+   "facing": 173.7,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "RIGHT",
+   "motion": "FAR_DIVE",
+   "landed": "RIGHT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     37,
+     "LOAD"
+    ],
+    [
+     41,
+     "PLANT"
+    ],
+    [
+     45,
+     "PUSH_OFF"
+    ],
+    [
+     48,
+     "TOE_OFF"
+    ],
+    [
+     51,
+     "EARLY_FLIGHT"
+    ],
+    [
+     59,
+     "MID_FLIGHT"
+    ],
+    [
+     69,
+     "FULL_EXTENSION"
+    ],
+    [
+     77,
+     "FOLLOW"
+    ],
+    [
+     81,
+     "DESCENT"
+    ],
+    [
+     87,
+     "IMPACT"
+    ],
+    [
+     97,
+     "ABSORB"
+    ],
+    [
+     112,
+     "SETTLE"
+    ],
+    [
+     137,
+     "BRACE"
+    ],
+    [
+     155,
+     "PUSH_UP"
+    ],
+    [
+     173,
+     "HALF_KNEEL"
+    ],
+    [
+     194,
+     "CROUCH"
+    ],
+    [
+     215,
+     "RISE"
+    ],
+    [
+     245,
+     "REPOSITION"
+    ],
+    [
+     299,
+     "SET"
+    ]
+   ],
+   "presMax": 1.17,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 92,
+    "origin": [
+     94,
+     37
+    ],
+    "aim": [
+     105,
+     30.5
+    ],
+    "key": "5",
+    "c": 0.498,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": 53,
+   "facing": 130.6,
+   "tier": "MEDIUM-DIVE REACHABLE",
+   "action": "DIVE-MID",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "MID",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": "CONTROLLED PARRY (through)",
+   "volume": "HAND",
+   "held": false,
+   "gloveRes": 0.1,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "LOAD"
+    ],
+    [
+     31,
+     "PLANT"
+    ],
+    [
+     33,
+     "PUSH_OFF"
+    ],
+    [
+     36,
+     "TOE_OFF"
+    ],
+    [
+     38,
+     "EARLY_FLIGHT"
+    ],
+    [
+     43,
+     "MID_FLIGHT"
+    ],
+    [
+     50,
+     "FULL_EXTENSION"
+    ],
+    [
+     53,
+     "CONTACT"
+    ],
+    [
+     56,
+     "FOLLOW"
+    ],
+    [
+     59,
+     "DESCENT"
+    ],
+    [
+     65,
+     "IMPACT"
+    ],
+    [
+     73,
+     "ABSORB"
+    ],
+    [
+     91,
+     "SETTLE"
+    ],
+    [
+     118,
+     "BRACE"
+    ],
+    [
+     136,
+     "PUSH_UP"
+    ],
+    [
+     154,
+     "HALF_KNEEL"
+    ],
+    [
+     175,
+     "CROUCH"
+    ],
+    [
+     196,
+     "RISE"
+    ],
+    [
+     226,
+     "SET"
+    ]
+   ],
+   "presMax": 0.24,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     103.518,
+     37.938,
+     1.163
+    ],
+    "root": [
+     103.07,
+     37.1
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 93,
+    "origin": [
+     94,
+     44
+    ],
+    "aim": [
+     105,
+     35.4
+    ],
+    "key": "1",
+    "c": 0.807,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 26,
+   "commitTick": 67,
+   "contactTick": 85,
+   "facing": -175,
+   "tier": "LOW-DIVE REACHABLE",
+   "action": "DIVE-LOW",
+   "family": "LOW_COLLAPSE",
+   "hClass": "LOW-MID",
+   "side": "RIGHT",
+   "motion": "LOW_COLLAPSE",
+   "landed": "RIGHT",
+   "outcome": "GATHER",
+   "volume": "HAND",
+   "held": true,
+   "gloveRes": 0.059,
+   "legRes": 0.164,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     67,
+     "LOAD"
+    ],
+    [
+     73,
+     "DROP"
+    ],
+    [
+     79,
+     "GROUND"
+    ],
+    [
+     86,
+     "SETTLE"
+    ],
+    [
+     114,
+     "BRACE"
+    ],
+    [
+     132,
+     "PUSH_UP"
+    ],
+    [
+     150,
+     "HALF_KNEEL"
+    ],
+    [
+     171,
+     "CROUCH"
+    ],
+    [
+     192,
+     "RISE"
+    ],
+    [
+     222,
+     "REPOSITION"
+    ],
+    [
+     240,
+     "SET"
+    ]
+   ],
+   "presMax": 0.35,
+   "pelvisMin": 0.28,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     101.634,
+     31.749,
+     0.116
+    ],
+    "root": [
+     101.93,
+     32.27
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 94,
+    "origin": [
+     86,
+     31
+    ],
+    "aim": [
+     105,
+     31.8
+    ],
+    "key": "1",
+    "c": 0.79,
+    "settle": 120,
+    "run": "goal",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": -134.6,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-LOW",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "LOW-MID",
+   "side": "RIGHT",
+   "motion": "LOW_DIVE",
+   "landed": "RIGHT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "LOAD"
+    ],
+    [
+     32,
+     "PLANT"
+    ],
+    [
+     36,
+     "PUSH_OFF"
+    ],
+    [
+     39,
+     "TOE_OFF"
+    ],
+    [
+     42,
+     "EARLY_FLIGHT"
+    ],
+    [
+     50,
+     "MID_FLIGHT"
+    ],
+    [
+     60,
+     "FULL_EXTENSION"
+    ],
+    [
+     69,
+     "IMPACT"
+    ],
+    [
+     71,
+     "ABSORB"
+    ],
+    [
+     89,
+     "SETTLE"
+    ],
+    [
+     116,
+     "BRACE"
+    ],
+    [
+     134,
+     "PUSH_UP"
+    ],
+    [
+     152,
+     "HALF_KNEEL"
+    ],
+    [
+     173,
+     "CROUCH"
+    ],
+    [
+     194,
+     "RISE"
+    ],
+    [
+     224,
+     "REPOSITION"
+    ],
+    [
+     260,
+     "SET"
+    ]
+   ],
+   "presMax": 0.66,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 95,
+    "origin": [
+     90,
+     20
+    ],
+    "aim": [
+     105,
+     30.5
+    ],
+    "key": "2",
+    "c": 0.727,
+    "settle": 120,
+    "run": "goal",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 22,
+   "commitTick": 88,
+   "contactTick": 96,
+   "facing": 163.2,
+   "tier": "STANDING REACHABLE",
+   "action": "STANDING",
+   "family": "HIGH_CATCH",
+   "hClass": "HIGH",
+   "side": "RIGHT",
+   "motion": "HIGH_CATCH",
+   "landed": null,
+   "outcome": "CATCH",
+   "volume": "HAND",
+   "held": true,
+   "gloveRes": 0.25,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     88,
+     "BRACE"
+    ],
+    [
+     91,
+     "RECEIVE"
+    ],
+    [
+     96,
+     "CRADLE"
+    ],
+    [
+     104,
+     "ABSORB"
+    ],
+    [
+     122,
+     "CONTROL"
+    ],
+    [
+     131,
+     "STRAIGHTEN"
+    ],
+    [
+     158,
+     "HOLD"
+    ]
+   ],
+   "presMax": 0.02,
+   "pelvisMin": 0.79,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     101.824,
+     36.374,
+     1.962
+    ],
+    "root": [
+     101.96,
+     36.34
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 96,
+    "origin": [
+     90,
+     40
+    ],
+    "aim": [
+     105,
+     35.4
+    ],
+    "key": "5",
+    "c": 0.598,
+    "settle": 40,
+    "run": "goal",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": 54.2,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "HIGH",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "LOAD"
+    ],
+    [
+     34,
+     "PLANT"
+    ],
+    [
+     39,
+     "PUSH_OFF"
+    ],
+    [
+     44,
+     "TOE_OFF"
+    ],
+    [
+     48,
+     "EARLY_FLIGHT"
+    ],
+    [
+     60,
+     "MID_FLIGHT"
+    ],
+    [
+     75,
+     "FULL_EXTENSION"
+    ],
+    [
+     86,
+     "FOLLOW"
+    ],
+    [
+     89,
+     "DESCENT"
+    ],
+    [
+     93,
+     "IMPACT"
+    ],
+    [
+     101,
+     "ABSORB"
+    ],
+    [
+     119,
+     "SETTLE"
+    ],
+    [
+     146,
+     "BRACE"
+    ],
+    [
+     164,
+     "PUSH_UP"
+    ],
+    [
+     182,
+     "HALF_KNEEL"
+    ],
+    [
+     203,
+     "CROUCH"
+    ],
+    [
+     224,
+     "RISE"
+    ],
+    [
+     254,
+     "REPOSITION"
+    ],
+    [
+     290,
+     "SET"
+    ]
+   ],
+   "presMax": 0.86,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 97,
+    "origin": [
+     98,
+     28
+    ],
+    "aim": [
+     105,
+     34.6
+    ],
+    "key": "z",
+    "c": 0.939,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": 180,
+   "tier": "STANDING REACHABLE",
+   "action": "STANDING",
+   "family": "HIGH_CATCH",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "HIGH_CATCH",
+   "landed": null,
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "BRACE"
+    ],
+    [
+     32,
+     "RECEIVE"
+    ]
+   ],
+   "presMax": 0.02,
+   "pelvisMin": 0.83,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 98,
+    "origin": [
+     98,
+     31
+    ],
+    "aim": [
+     105,
+     34
+    ],
+    "key": "5",
+    "c": 0.706,
+    "settle": 120,
+    "run": "side",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": 27,
+   "facing": 132.2,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": "BODY BLOCK",
+   "volume": "TORSO",
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "LOAD"
+    ],
+    [
+     31,
+     "PLANT"
+    ],
+    [
+     33,
+     "PUSH_OFF"
+    ],
+    [
+     35,
+     "TOE_OFF"
+    ],
+    [
+     37,
+     "EARLY_FLIGHT"
+    ],
+    [
+     43,
+     "MID_FLIGHT"
+    ],
+    [
+     49,
+     "FULL_EXTENSION"
+    ],
+    [
+     55,
+     "FOLLOW"
+    ],
+    [
+     64,
+     "DESCENT"
+    ],
+    [
+     80,
+     "IMPACT"
+    ],
+    [
+     90,
+     "ABSORB"
+    ],
+    [
+     104,
+     "SETTLE"
+    ],
+    [
+     128,
+     "BRACE"
+    ],
+    [
+     146,
+     "PUSH_UP"
+    ],
+    [
+     164,
+     "HALF_KNEEL"
+    ],
+    [
+     185,
+     "CROUCH"
+    ],
+    [
+     206,
+     "RISE"
+    ],
+    [
+     236,
+     "REPOSITION"
+    ],
+    [
+     272,
+     "SET"
+    ]
+   ],
+   "presMax": 0.76,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     104.322,
+     36.994,
+     1.602
+    ],
+    "root": [
+     104.44,
+     36.78
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 99,
+    "origin": [
+     103,
+     44
+    ],
+    "aim": [
+     105,
+     33.4
+    ],
+    "key": "z",
+    "c": 0.801,
+    "settle": 40,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 56,
+   "contactTick": 73,
+   "facing": -151,
+   "tier": "HIGH/FULL-STRETCH REACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": "CONTROLLED PARRY",
+   "volume": "HAND",
+   "held": false,
+   "gloveRes": 0.026,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     56,
+     "LOAD"
+    ],
+    [
+     57,
+     "PLANT"
+    ],
+    [
+     59,
+     "PUSH_OFF"
+    ],
+    [
+     60,
+     "TOE_OFF"
+    ],
+    [
+     61,
+     "EARLY_FLIGHT"
+    ],
+    [
+     65,
+     "MID_FLIGHT"
+    ],
+    [
+     69,
+     "FULL_EXTENSION"
+    ],
+    [
+     72,
+     "FOLLOW"
+    ],
+    [
+     86,
+     "DESCENT"
+    ],
+    [
+     113,
+     "IMPACT"
+    ],
+    [
+     122,
+     "ABSORB"
+    ],
+    [
+     137,
+     "SETTLE"
+    ],
+    [
+     161,
+     "BRACE"
+    ],
+    [
+     179,
+     "PUSH_UP"
+    ],
+    [
+     197,
+     "HALF_KNEEL"
+    ],
+    [
+     218,
+     "CROUCH"
+    ],
+    [
+     239,
+     "RISE"
+    ],
+    [
+     269,
+     "REPOSITION"
+    ],
+    [
+     305,
+     "SET"
+    ]
+   ],
+   "presMax": 0.57,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     102.849,
+     32.147,
+     2.574
+    ],
+    "root": [
+     103.14,
+     32.22
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 100,
+    "origin": [
+     82,
+     20
+    ],
+    "aim": [
+     105,
+     33.4
+    ],
+    "key": "2",
+    "c": 0.919,
+    "settle": 120,
+    "run": "side",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": -7.7,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-MID",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "MID",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "LOAD"
+    ],
+    [
+     33,
+     "PLANT"
+    ],
+    [
+     37,
+     "PUSH_OFF"
+    ],
+    [
+     41,
+     "TOE_OFF"
+    ],
+    [
+     45,
+     "EARLY_FLIGHT"
+    ],
+    [
+     55,
+     "MID_FLIGHT"
+    ],
+    [
+     68,
+     "FULL_EXTENSION"
+    ],
+    [
+     78,
+     "FOLLOW"
+    ],
+    [
+     80,
+     "DESCENT"
+    ],
+    [
+     84,
+     "IMPACT"
+    ],
+    [
+     92,
+     "ABSORB"
+    ],
+    [
+     110,
+     "SETTLE"
+    ],
+    [
+     137,
+     "BRACE"
+    ],
+    [
+     155,
+     "PUSH_UP"
+    ],
+    [
+     173,
+     "HALF_KNEEL"
+    ],
+    [
+     194,
+     "CROUCH"
+    ],
+    [
+     215,
+     "RISE"
+    ],
+    [
+     245,
+     "REPOSITION"
+    ],
+    [
+     281,
+     "SET"
+    ]
+   ],
+   "presMax": 0.66,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 101,
+    "origin": [
+     103,
+     37
+    ],
+    "aim": [
+     105,
+     37.5
+    ],
+    "key": "z",
+    "c": 0.683,
+    "settle": 40,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": 107.4,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-MID",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "MID",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "LOAD"
+    ],
+    [
+     32,
+     "PLANT"
+    ],
+    [
+     37,
+     "PUSH_OFF"
+    ],
+    [
+     40,
+     "TOE_OFF"
+    ],
+    [
+     43,
+     "EARLY_FLIGHT"
+    ],
+    [
+     53,
+     "MID_FLIGHT"
+    ],
+    [
+     64,
+     "FULL_EXTENSION"
+    ],
+    [
+     73,
+     "FOLLOW"
+    ],
+    [
+     75,
+     "DESCENT"
+    ],
+    [
+     80,
+     "IMPACT"
+    ],
+    [
+     88,
+     "ABSORB"
+    ],
+    [
+     106,
+     "SETTLE"
+    ],
+    [
+     133,
+     "BRACE"
+    ],
+    [
+     151,
+     "PUSH_UP"
+    ],
+    [
+     169,
+     "HALF_KNEEL"
+    ],
+    [
+     190,
+     "CROUCH"
+    ],
+    [
+     211,
+     "RISE"
+    ],
+    [
+     241,
+     "REPOSITION"
+    ],
+    [
+     295,
+     "SET"
+    ]
+   ],
+   "presMax": 0.98,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 103,
+    "origin": [
+     98,
+     31
+    ],
+    "aim": [
+     105,
+     37.5
+    ],
+    "key": "1",
+    "c": 0.852,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 78,
+   "contactTick": 89,
+   "facing": -158.9,
+   "tier": "MEDIUM-DIVE REACHABLE",
+   "action": "LEAN",
+   "family": "NEAR_BODY_SAVE",
+   "hClass": "MID",
+   "side": "LEFT",
+   "motion": "NEAR_BODY",
+   "landed": null,
+   "outcome": "CATCH",
+   "volume": "HAND",
+   "held": true,
+   "gloveRes": 0.418,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     78,
+     "BRACE"
+    ],
+    [
+     83,
+     "RECEIVE"
+    ],
+    [
+     89,
+     "CONTACT"
+    ],
+    [
+     90,
+     "CRADLE"
+    ],
+    [
+     98,
+     "ABSORB"
+    ],
+    [
+     111,
+     "CONTROL"
+    ],
+    [
+     120,
+     "STRAIGHTEN"
+    ],
+    [
+     147,
+     "HOLD"
+    ]
+   ],
+   "presMax": 0.12,
+   "pelvisMin": 0.72,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     102.254,
+     33.229,
+     1.436
+    ],
+    "root": [
+     102.5,
+     32.88
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 104,
+    "origin": [
+     94,
+     24
+    ],
+    "aim": [
+     105,
+     36.3
+    ],
+    "key": "5",
+    "c": 0.55,
+    "settle": 120,
+    "run": "side",
+    "dump": false
+   },
+   "frame": "shot_104.png"
+  },
+  {
+   "shotTick": 26,
+   "commitTick": 83,
+   "contactTick": 91,
+   "facing": 174.1,
+   "tier": "STANDING REACHABLE",
+   "action": "STANDING",
+   "family": "HIGH_CATCH",
+   "hClass": "HIGH",
+   "side": "LEFT",
+   "motion": "HIGH_CATCH",
+   "landed": null,
+   "outcome": "CATCH",
+   "volume": "HAND",
+   "held": true,
+   "gloveRes": 0.215,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     83,
+     "BRACE"
+    ],
+    [
+     87,
+     "RECEIVE"
+    ],
+    [
+     91,
+     "CRADLE"
+    ],
+    [
+     99,
+     "ABSORB"
+    ],
+    [
+     117,
+     "CONTROL"
+    ],
+    [
+     126,
+     "STRAIGHTEN"
+    ],
+    [
+     153,
+     "HOLD"
+    ]
+   ],
+   "presMax": 0.02,
+   "pelvisMin": 0.79,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     102.08,
+     34.512,
+     1.83
+    ],
+    "root": [
+     102.53,
+     34.45
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 105,
+    "origin": [
+     82,
+     31
+    ],
+    "aim": [
+     105,
+     32.6
+    ],
+    "key": "1",
+    "c": 0.958,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 29,
+   "commitTick": 44,
+   "contactTick": null,
+   "facing": -158.4,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     44,
+     "LOAD"
+    ],
+    [
+     48,
+     "PLANT"
+    ],
+    [
+     52,
+     "PUSH_OFF"
+    ],
+    [
+     55,
+     "TOE_OFF"
+    ],
+    [
+     57,
+     "EARLY_FLIGHT"
+    ],
+    [
+     66,
+     "MID_FLIGHT"
+    ],
+    [
+     76,
+     "FULL_EXTENSION"
+    ],
+    [
+     84,
+     "FOLLOW"
+    ],
+    [
+     89,
+     "DESCENT"
+    ],
+    [
+     99,
+     "IMPACT"
+    ],
+    [
+     109,
+     "ABSORB"
+    ],
+    [
+     123,
+     "SETTLE"
+    ],
+    [
+     147,
+     "BRACE"
+    ],
+    [
+     165,
+     "PUSH_UP"
+    ],
+    [
+     183,
+     "HALF_KNEEL"
+    ],
+    [
+     204,
+     "CROUCH"
+    ],
+    [
+     225,
+     "RISE"
+    ],
+    [
+     255,
+     "REPOSITION"
+    ],
+    [
+     291,
+     "SET"
+    ]
+   ],
+   "presMax": 0.51,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 106,
+    "origin": [
+     82,
+     24
+    ],
+    "aim": [
+     105,
+     35.4
+    ],
+    "key": "z",
+    "c": 0.81,
+    "settle": 120,
+    "run": "goal",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": 152.1,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "RIGHT",
+   "motion": "FAR_DIVE",
+   "landed": "RIGHT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "LOAD"
+    ],
+    [
+     32,
+     "PLANT"
+    ],
+    [
+     36,
+     "PUSH_OFF"
+    ],
+    [
+     39,
+     "TOE_OFF"
+    ],
+    [
+     42,
+     "EARLY_FLIGHT"
+    ],
+    [
+     51,
+     "MID_FLIGHT"
+    ],
+    [
+     61,
+     "FULL_EXTENSION"
+    ],
+    [
+     70,
+     "FOLLOW"
+    ],
+    [
+     73,
+     "DESCENT"
+    ],
+    [
+     79,
+     "IMPACT"
+    ],
+    [
+     89,
+     "ABSORB"
+    ],
+    [
+     104,
+     "SETTLE"
+    ],
+    [
+     128,
+     "BRACE"
+    ],
+    [
+     146,
+     "PUSH_UP"
+    ],
+    [
+     164,
+     "HALF_KNEEL"
+    ],
+    [
+     185,
+     "CROUCH"
+    ],
+    [
+     206,
+     "RISE"
+    ],
+    [
+     236,
+     "REPOSITION"
+    ],
+    [
+     290,
+     "SET"
+    ]
+   ],
+   "presMax": 1.15,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 107,
+    "origin": [
+     94,
+     44
+    ],
+    "aim": [
+     105,
+     31
+    ],
+    "key": "z",
+    "c": 0.622,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": 37,
+   "facing": 100.9,
+   "tier": "STANDING REACHABLE",
+   "action": "STANDING",
+   "family": "HIGH_CATCH",
+   "hClass": "TOP",
+   "side": "RIGHT",
+   "motion": "HIGH_CATCH",
+   "landed": null,
+   "outcome": "CONTROLLED PARRY",
+   "volume": "HAND",
+   "held": false,
+   "gloveRes": 0.225,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "BRACE"
+    ],
+    [
+     32,
+     "RECEIVE"
+    ],
+    [
+     37,
+     "RISE"
+    ],
+    [
+     64,
+     "SET"
+    ]
+   ],
+   "presMax": 0.02,
+   "pelvisMin": 0.82,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     104.284,
+     37.603,
+     2.001
+    ],
+    "root": [
+     104.6,
+     37.39
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 108,
+    "origin": [
+     103,
+     48
+    ],
+    "aim": [
+     105,
+     31.8
+    ],
+    "key": "z",
+    "c": 0.477,
+    "settle": 120,
+    "run": "side",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": -117.5,
+   "tier": "HIGH/FULL-STRETCH REACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "HIGH_CATCH",
+   "hClass": "TOP",
+   "side": "RIGHT",
+   "motion": "HIGH_CATCH",
+   "landed": null,
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "BRACE"
+    ],
+    [
+     36,
+     "RECEIVE"
+    ]
+   ],
+   "presMax": 0.02,
+   "pelvisMin": 0.83,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 109,
+    "origin": [
+     98,
+     20
+    ],
+    "aim": [
+     105,
+     33.4
+    ],
+    "key": "z",
+    "c": 0.904,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 48,
+   "contactTick": null,
+   "facing": -70.4,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-LOW",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "LOW-MID",
+   "side": "LEFT",
+   "motion": "LOW_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     48,
+     "LOAD"
+    ],
+    [
+     53,
+     "PLANT"
+    ],
+    [
+     58,
+     "PUSH_OFF"
+    ],
+    [
+     62,
+     "TOE_OFF"
+    ],
+    [
+     66,
+     "EARLY_FLIGHT"
+    ],
+    [
+     78,
+     "MID_FLIGHT"
+    ],
+    [
+     92,
+     "FULL_EXTENSION"
+    ],
+    [
+     103,
+     "IMPACT"
+    ],
+    [
+     105,
+     "ABSORB"
+    ],
+    [
+     123,
+     "SETTLE"
+    ],
+    [
+     150,
+     "BRACE"
+    ],
+    [
+     168,
+     "PUSH_UP"
+    ],
+    [
+     186,
+     "HALF_KNEEL"
+    ],
+    [
+     207,
+     "CROUCH"
+    ],
+    [
+     228,
+     "RISE"
+    ],
+    [
+     258,
+     "REPOSITION"
+    ],
+    [
+     294,
+     "SET"
+    ]
+   ],
+   "presMax": 0.73,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 110,
+    "origin": [
+     103,
+     44
+    ],
+    "aim": [
+     105,
+     37
+    ],
+    "key": "3",
+    "c": 0.912,
+    "settle": 40,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 29,
+   "commitTick": 44,
+   "contactTick": null,
+   "facing": 2.9,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     44,
+     "LOAD"
+    ],
+    [
+     49,
+     "PLANT"
+    ],
+    [
+     53,
+     "PUSH_OFF"
+    ],
+    [
+     57,
+     "TOE_OFF"
+    ],
+    [
+     60,
+     "EARLY_FLIGHT"
+    ],
+    [
+     70,
+     "MID_FLIGHT"
+    ],
+    [
+     82,
+     "FULL_EXTENSION"
+    ],
+    [
+     92,
+     "FOLLOW"
+    ],
+    [
+     95,
+     "DESCENT"
+    ],
+    [
+     100,
+     "IMPACT"
+    ],
+    [
+     109,
+     "ABSORB"
+    ],
+    [
+     124,
+     "SETTLE"
+    ],
+    [
+     149,
+     "BRACE"
+    ],
+    [
+     167,
+     "PUSH_UP"
+    ],
+    [
+     185,
+     "HALF_KNEEL"
+    ],
+    [
+     206,
+     "CROUCH"
+    ],
+    [
+     227,
+     "RISE"
+    ],
+    [
+     257,
+     "REPOSITION"
+    ],
+    [
+     311,
+     "SET"
+    ]
+   ],
+   "presMax": 0.98,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 111,
+    "origin": [
+     101,
+     31
+    ],
+    "aim": [
+     105,
+     30.5
+    ],
+    "key": "3",
+    "c": 0.902,
+    "settle": 40,
+    "run": "goal",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 28,
+   "contactTick": null,
+   "facing": 77.7,
+   "tier": "HIGH/FULL-STRETCH REACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "HIGH_CATCH",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "HIGH_CATCH",
+   "landed": null,
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     28,
+     "BRACE"
+    ],
+    [
+     34,
+     "RECEIVE"
+    ]
+   ],
+   "presMax": 0.02,
+   "pelvisMin": 0.83,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 112,
+    "origin": [
+     101,
+     40
+    ],
+    "aim": [
+     105,
+     37
+    ],
+    "key": "5",
+    "c": 0.752,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 29,
+   "contactTick": 40,
+   "facing": 108.7,
+   "tier": "STANDING REACHABLE",
+   "action": "LEAN",
+   "family": "HIGH_CATCH",
+   "hClass": "TOP",
+   "side": "RIGHT",
+   "motion": "HIGH_CATCH",
+   "landed": null,
+   "outcome": "CONTROLLED PARRY",
+   "volume": "HAND",
+   "held": false,
+   "gloveRes": 0.229,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     29,
+     "BRACE"
+    ],
+    [
+     33,
+     "RECEIVE"
+    ],
+    [
+     40,
+     "CONTACT"
+    ],
+    [
+     41,
+     "RISE"
+    ],
+    [
+     68,
+     "SET"
+    ]
+   ],
+   "presMax": 0.02,
+   "pelvisMin": 0.82,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     104.089,
+     36.724,
+     2.14
+    ],
+    "root": [
+     104.42,
+     36.59
+    ]
+   },
+   "keeperReady": true,
+   "shot": {
+    "i": 113,
+    "origin": [
+     101,
+     48
+    ],
+    "aim": [
+     105,
+     33.4
+    ],
+    "key": "3",
+    "c": 0.477,
+    "settle": 40,
+    "run": "none",
+    "dump": false
+   },
+   "frame": "shot_113.png"
+  },
+  {
+   "shotTick": 29,
+   "commitTick": 44,
+   "contactTick": null,
+   "facing": 19.8,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-MID",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "MID",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     44,
+     "LOAD"
+    ],
+    [
+     49,
+     "PLANT"
+    ],
+    [
+     54,
+     "PUSH_OFF"
+    ],
+    [
+     59,
+     "TOE_OFF"
+    ],
+    [
+     62,
+     "EARLY_FLIGHT"
+    ],
+    [
+     74,
+     "MID_FLIGHT"
+    ],
+    [
+     87,
+     "FULL_EXTENSION"
+    ],
+    [
+     98,
+     "FOLLOW"
+    ],
+    [
+     100,
+     "DESCENT"
+    ],
+    [
+     104,
+     "IMPACT"
+    ],
+    [
+     113,
+     "ABSORB"
+    ],
+    [
+     131,
+     "SETTLE"
+    ],
+    [
+     158,
+     "BRACE"
+    ],
+    [
+     176,
+     "PUSH_UP"
+    ],
+    [
+     194,
+     "HALF_KNEEL"
+    ],
+    [
+     215,
+     "CROUCH"
+    ],
+    [
+     236,
+     "RISE"
+    ],
+    [
+     266,
+     "REPOSITION"
+    ],
+    [
+     302,
+     "SET"
+    ]
+   ],
+   "presMax": 0.86,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 114,
+    "origin": [
+     98,
+     34
+    ],
+    "aim": [
+     105,
+     35.4
+    ],
+    "key": "3",
+    "c": 0.574,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 29,
+   "commitTick": 68,
+   "contactTick": 78,
+   "facing": 162.9,
+   "tier": "STANDING REACHABLE",
+   "action": "DIVE-HIGH",
+   "family": "HIGH_CATCH",
+   "hClass": "TOP",
+   "side": "LEFT",
+   "motion": "HIGH_CATCH",
+   "landed": null,
+   "outcome": "CONTROLLED PARRY",
+   "volume": "HAND",
+   "held": false,
+   "gloveRes": 0.304,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     68,
+     "BRACE"
+    ],
+    [
+     72,
+     "RECEIVE"
+    ],
+    [
+     78,
+     "CONTACT"
+    ],
+    [
+     79,
+     "RISE"
+    ],
+    [
+     106,
+     "SET"
+    ]
+   ],
+   "presMax": 0.02,
+   "pelvisMin": 0.82,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     102.217,
+     35.957,
+     2.318
+    ],
+    "root": [
+     102.67,
+     35.51
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 115,
+    "origin": [
+     82,
+     40
+    ],
+    "aim": [
+     105,
+     35.4
+    ],
+    "key": "3",
+    "c": 0.446,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 77,
+   "contactTick": 107,
+   "facing": -149.8,
+   "tier": "LOW-DIVE REACHABLE",
+   "action": "DIVE-LOW",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "LOW-MID",
+   "side": "LEFT",
+   "motion": "LOW_DIVE",
+   "landed": "LEFT",
+   "outcome": "GATHER",
+   "volume": "HAND",
+   "held": true,
+   "gloveRes": 0.228,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     77,
+     "LOAD"
+    ],
+    [
+     80,
+     "PLANT"
+    ],
+    [
+     82,
+     "PUSH_OFF"
+    ],
+    [
+     85,
+     "TOE_OFF"
+    ],
+    [
+     87,
+     "EARLY_FLIGHT"
+    ],
+    [
+     93,
+     "MID_FLIGHT"
+    ],
+    [
+     101,
+     "FULL_EXTENSION"
+    ],
+    [
+     107,
+     "IMPACT"
+    ],
+    [
+     109,
+     "ABSORB"
+    ],
+    [
+     127,
+     "SETTLE"
+    ],
+    [
+     154,
+     "BRACE"
+    ],
+    [
+     172,
+     "PUSH_UP"
+    ],
+    [
+     190,
+     "HALF_KNEEL"
+    ],
+    [
+     211,
+     "CROUCH"
+    ],
+    [
+     232,
+     "RISE"
+    ],
+    [
+     262,
+     "REPOSITION"
+    ],
+    [
+     280,
+     "SET"
+    ]
+   ],
+   "presMax": 0.27,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     102.775,
+     34.391,
+     0
+    ],
+    "root": [
+     103.05,
+     33.92
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 116,
+    "origin": [
+     86,
+     20
+    ],
+    "aim": [
+     105,
+     36.3
+    ],
+    "key": "2",
+    "c": 0.612,
+    "settle": 40,
+    "run": "none",
+    "dump": false
+   },
+   "frame": "shot_116.png"
+  },
+  {
+   "shotTick": 26,
+   "commitTick": 41,
+   "contactTick": null,
+   "facing": 167.3,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-MID",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "MID",
+   "side": "LEFT",
+   "motion": "FAR_DIVE",
+   "landed": "LEFT",
+   "outcome": null,
+   "volume": null,
+   "held": false,
+   "gloveRes": null,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     41,
+     "LOAD"
+    ],
+    [
+     46,
+     "PLANT"
+    ],
+    [
+     50,
+     "PUSH_OFF"
+    ],
+    [
+     54,
+     "TOE_OFF"
+    ],
+    [
+     57,
+     "EARLY_FLIGHT"
+    ],
+    [
+     67,
+     "MID_FLIGHT"
+    ],
+    [
+     79,
+     "FULL_EXTENSION"
+    ],
+    [
+     88,
+     "FOLLOW"
+    ],
+    [
+     90,
+     "DESCENT"
+    ],
+    [
+     94,
+     "IMPACT"
+    ],
+    [
+     103,
+     "ABSORB"
+    ],
+    [
+     121,
+     "SETTLE"
+    ],
+    [
+     148,
+     "BRACE"
+    ],
+    [
+     166,
+     "PUSH_UP"
+    ],
+    [
+     184,
+     "HALF_KNEEL"
+    ],
+    [
+     205,
+     "CROUCH"
+    ],
+    [
+     226,
+     "RISE"
+    ],
+    [
+     256,
+     "REPOSITION"
+    ],
+    [
+     292,
+     "SET"
+    ]
+   ],
+   "presMax": 0.74,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": null,
+   "keeperReady": false,
+   "shot": {
+    "i": 117,
+    "origin": [
+     90,
+     34
+    ],
+    "aim": [
+     105,
+     37
+    ],
+    "key": "1",
+    "c": 0.831,
+    "settle": 120,
+    "run": "none",
+    "dump": false
+   }
+  },
+  {
+   "shotTick": 13,
+   "commitTick": 34,
+   "contactTick": 70,
+   "facing": -103.6,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-LOW",
+   "family": "AIRBORNE_DIVE",
+   "hClass": "LOW-MID",
+   "side": "LEFT",
+   "motion": "LOW_DIVE",
+   "landed": "LEFT",
+   "outcome": "FINGERTIP",
+   "volume": "HAND",
+   "held": false,
+   "gloveRes": 0.088,
+   "legRes": null,
+   "unauth": 0,
+   "fallback": 0,
+   "phases": [
+    [
+     34,
+     "LOAD"
+    ],
+    [
+     38,
+     "PLANT"
+    ],
+    [
+     41,
+     "PUSH_OFF"
+    ],
+    [
+     44,
+     "TOE_OFF"
+    ],
+    [
+     46,
+     "EARLY_FLIGHT"
+    ],
+    [
+     54,
+     "MID_FLIGHT"
+    ],
+    [
+     63,
+     "FULL_EXTENSION"
+    ],
+    [
+     70,
+     "CONTACT"
+    ],
+    [
+     71,
+     "IMPACT"
+    ],
+    [
+     73,
+     "ABSORB"
+    ],
+    [
+     91,
+     "SETTLE"
+    ],
+    [
+     118,
+     "BRACE"
+    ],
+    [
+     136,
+     "PUSH_UP"
+    ],
+    [
+     154,
+     "HALF_KNEEL"
+    ],
+    [
+     175,
+     "CROUCH"
+    ],
+    [
+     196,
+     "RISE"
+    ],
+    [
+     226,
+     "REPOSITION"
+    ],
+    [
+     262,
+     "SET"
+    ]
+   ],
+   "presMax": 0.81,
+   "pelvisMin": 0.27,
+   "asserts": [],
+   "cradleViolations": 0,
+   "cradleFirst": null,
+   "sim": {
+    "point": [
+     104.323,
+     32.11,
+     0
+    ],
+    "root": [
+     104.54,
+     31.31
+    ]
+   },
+   "keeperReady": false,
+   "shot": {
+    "i": 118,
+    "origin": [
+     103,
+     20
+    ],
+    "aim": [
+     105,
+     37.5
+    ],
+    "key": "1",
+    "c": 0.645,
+    "settle": 40,
+    "run": "goal",
+    "dump": false
+   }
+  }
+ ]
+}

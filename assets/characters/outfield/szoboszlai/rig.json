@@ -1,0 +1,1856 @@
+{
+ "classification": "DERIVED RUNTIME ASSET — regenerate with tools/anim3d/of_char_build.js; canonical storage is the portable record + shared library",
+ "schema": "touchline.outfield-runtime-rig.v1",
+ "playerId": "szoboszlai",
+ "identity": {
+  "name": "Dominik Szoboszlai",
+  "heightCm": 186,
+  "weightKg": 74
+ },
+ "configSha256": "3c36b022dbbb75263a2ba116c4d511bf44ca134ed94302969072674a9cb882c0",
+ "appearanceTarget": "mixed",
+ "units": "metres",
+ "coordinateSystem": "character-local Y-up, +Z forward, _R on +X, right-handed",
+ "matrixLayout": "column-major",
+ "H": 1.86,
+ "hipHeightM": 0.983622811138493,
+ "segments": {
+  "R": {
+   "hipToKneeM": 0.46728146668095294,
+   "kneeToAnkleM": 0.42834134445754013,
+   "legHipToAnkleChainM": 0.8956228111384931,
+   "shoulderToElbowM": 0.32864289729729723,
+   "elbowToWristM": 0.28997902702702694,
+   "armShoulderToWristChainM": 0.6186219243243242
+  },
+  "L": {
+   "hipToKneeM": 0.46728146668095294,
+   "kneeToAnkleM": 0.42834134445754013,
+   "legHipToAnkleChainM": 0.8956228111384931,
+   "shoulderToElbowM": 0.32864289729729723,
+   "elbowToWristM": 0.28997902702702694,
+   "armShoulderToWristChainM": 0.6186219243243242
+  }
+ },
+ "legLenM": 0.8956228111384931,
+ "ankleHeightM": 0.08799999999999997,
+ "ground": {
+  "reference": "lowest stud tips",
+  "studTipY": -4.5102810375396984e-17,
+  "soleBottomY": 0.011999999999999959,
+  "soleTopY": 0.022999999999999955,
+  "note": "Ground is the lowest stud tip (y~0). The rubber sole bottom sits ~12 mm above it; the ankle joint 88 mm; the toe joint 31 mm."
+ },
+ "feet": {
+  "R": {
+   "ankle": [
+    0.15458758183301702,
+    0.08799999999999997,
+    0
+   ],
+   "toe": [
+    0.15458758183301702,
+    0.030999999999999972,
+    0.1805
+   ],
+   "studTipY": -4.5102810375396984e-17,
+   "soleBottomY": 0.011999999999999959,
+   "soleTopY": 0.022999999999999955,
+   "footwearMin": [
+    0.07502784916325582,
+    -4.5102810375396984e-17,
+    -0.08102627027027028
+   ],
+   "footwearMax": [
+    0.23314022927911038,
+    0.14743492339362993,
+    0.2760895135135135
+   ]
+  },
+  "L": {
+   "ankle": [
+    -0.15458758183301702,
+    0.08799999999999997,
+    0
+   ],
+   "toe": [
+    -0.15458758183301702,
+    0.030999999999999972,
+    0.1805
+   ],
+   "studTipY": -4.5102810375396984e-17,
+   "soleBottomY": 0.011999999999999959,
+   "soleTopY": 0.022999999999999955,
+   "footwearMin": [
+    -0.23414731450277823,
+    -4.5102810375396984e-17,
+    -0.08102627027027028
+   ],
+   "footwearMax": [
+    -0.07603493438692369,
+    0.14743492339362993,
+    0.2760895135135135
+   ]
+  }
+ },
+ "bones": [
+  {
+   "index": 0,
+   "name": "root",
+   "parent": null,
+   "offsetLocal": [
+    0,
+    0,
+    0
+   ],
+   "bindOrigin": [
+    0,
+    0,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    1,
+    0
+   ],
+   "lengthM": 0.983623,
+   "radiusM": 0.02,
+   "part": "shirt"
+  },
+  {
+   "index": 1,
+   "name": "pelvis",
+   "parent": "root",
+   "offsetLocal": [
+    0,
+    0.983622811138493,
+    0
+   ],
+   "bindOrigin": [
+    0,
+    0.983622811138493,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    1,
+    0
+   ],
+   "lengthM": 0.114306,
+   "radiusM": 0.1218,
+   "part": "shirt"
+  },
+  {
+   "index": 2,
+   "name": "spine",
+   "parent": "pelvis",
+   "offsetLocal": [
+    0,
+    0.11430564253447972,
+    0
+   ],
+   "bindOrigin": [
+    0,
+    1.0979284536729728,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    1,
+    0
+   ],
+   "lengthM": 0.228611,
+   "radiusM": 0.112,
+   "part": "shirt"
+  },
+  {
+   "index": 3,
+   "name": "chest",
+   "parent": "spine",
+   "offsetLocal": [
+    0,
+    0.22861128506895945,
+    0
+   ],
+   "bindOrigin": [
+    0,
+    1.3265397387419322,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    1,
+    0
+   ],
+   "lengthM": 0.266713,
+   "radiusM": 0.0953,
+   "part": "shirt"
+  },
+  {
+   "index": 4,
+   "name": "neck",
+   "parent": "chest",
+   "offsetLocal": [
+    0,
+    0.2667131659137858,
+    0
+   ],
+   "bindOrigin": [
+    0,
+    1.593252904655718,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    1,
+    0
+   ],
+   "lengthM": 0.094318,
+   "radiusM": 0.0548,
+   "part": "skin"
+  },
+  {
+   "index": 5,
+   "name": "head",
+   "parent": "neck",
+   "offsetLocal": [
+    0,
+    0.094317605144282,
+    0
+   ],
+   "bindOrigin": [
+    0,
+    1.6875705098,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    0.997381016601139,
+    -0.07232639714293972
+   ],
+   "lengthM": 0.131349,
+   "radiusM": 0.0854,
+   "part": "skin"
+  },
+  {
+   "index": 6,
+   "name": "hair",
+   "parent": "head",
+   "offsetLocal": [
+    0,
+    0.13100500000000004,
+    -0.0095
+   ],
+   "bindOrigin": [
+    0,
+    1.8185755098,
+    -0.0095
+   ],
+   "bindDirLocal": [
+    0,
+    1,
+    0
+   ],
+   "lengthM": 0,
+   "radiusM": 0.02,
+   "part": "hair"
+  },
+  {
+   "index": 7,
+   "name": "clavicle_R",
+   "parent": "chest",
+   "offsetLocal": [
+    0.05740385774906821,
+    0.22861128506895922,
+    0
+   ],
+   "bindOrigin": [
+    0.05740385774906821,
+    1.5551510238108914,
+    0
+   ],
+   "bindDirLocal": [
+    1,
+    0,
+    0
+   ],
+   "lengthM": 0.191346,
+   "radiusM": 0.02,
+   "part": "shirt"
+  },
+  {
+   "index": 8,
+   "name": "upperArm_R",
+   "parent": "clavicle_R",
+   "offsetLocal": [
+    0.19134619249689405,
+    0,
+    0
+   ],
+   "bindOrigin": [
+    0.24875005024596225,
+    1.5551510238108914,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    -1,
+    0
+   ],
+   "lengthM": 0.328643,
+   "radiusM": 0.0528,
+   "part": "shirt"
+  },
+  {
+   "index": 9,
+   "name": "foreArm_R",
+   "parent": "upperArm_R",
+   "offsetLocal": [
+    0,
+    -0.32864289729729723,
+    0
+   ],
+   "bindOrigin": [
+    0.24875005024596225,
+    1.2265081265135942,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    -1,
+    0
+   ],
+   "lengthM": 0.289979,
+   "radiusM": 0.035,
+   "part": "shirt"
+  },
+  {
+   "index": 10,
+   "name": "hand_R",
+   "parent": "foreArm_R",
+   "offsetLocal": [
+    0,
+    -0.28997902702702694,
+    0
+   ],
+   "bindOrigin": [
+    0.24875005024596225,
+    0.9365290994865673,
+    0
+   ],
+   "bindDirLocal": [
+    -0.3107076015672864,
+    -0.9485551443703427,
+    0.06085987526164008
+   ],
+   "lengthM": 0.171624,
+   "radiusM": 0.0483,
+   "part": "skin"
+  },
+  {
+   "index": 11,
+   "name": "clavicle_L",
+   "parent": "chest",
+   "offsetLocal": [
+    -0.05740385774906821,
+    0.22861128506895922,
+    0
+   ],
+   "bindOrigin": [
+    -0.05740385774906821,
+    1.5551510238108914,
+    0
+   ],
+   "bindDirLocal": [
+    -1,
+    0,
+    0
+   ],
+   "lengthM": 0.191346,
+   "radiusM": 0.02,
+   "part": "shirt"
+  },
+  {
+   "index": 12,
+   "name": "upperArm_L",
+   "parent": "clavicle_L",
+   "offsetLocal": [
+    -0.19134619249689405,
+    0,
+    0
+   ],
+   "bindOrigin": [
+    -0.24875005024596225,
+    1.5551510238108914,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    -1,
+    0
+   ],
+   "lengthM": 0.328643,
+   "radiusM": 0.0523,
+   "part": "shirt"
+  },
+  {
+   "index": 13,
+   "name": "foreArm_L",
+   "parent": "upperArm_L",
+   "offsetLocal": [
+    0,
+    -0.32864289729729723,
+    0
+   ],
+   "bindOrigin": [
+    -0.24875005024596225,
+    1.2265081265135942,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    -1,
+    0
+   ],
+   "lengthM": 0.289979,
+   "radiusM": 0.035,
+   "part": "shirt"
+  },
+  {
+   "index": 14,
+   "name": "hand_L",
+   "parent": "foreArm_L",
+   "offsetLocal": [
+    0,
+    -0.28997902702702694,
+    0
+   ],
+   "bindOrigin": [
+    -0.24875005024596225,
+    0.9365290994865673,
+    0
+   ],
+   "bindDirLocal": [
+    0.3107076015672864,
+    -0.9485551443703427,
+    0.06085987526164008
+   ],
+   "lengthM": 0.171624,
+   "radiusM": 0.0482,
+   "part": "skin"
+  },
+  {
+   "index": 15,
+   "name": "thigh_R",
+   "parent": "pelvis",
+   "offsetLocal": [
+    0.15458758183301702,
+    0,
+    0
+   ],
+   "bindOrigin": [
+    0.15458758183301702,
+    0.983622811138493,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    -1,
+    0
+   ],
+   "lengthM": 0.467281,
+   "radiusM": 0.0876,
+   "part": "shorts"
+  },
+  {
+   "index": 16,
+   "name": "shin_R",
+   "parent": "thigh_R",
+   "offsetLocal": [
+    0,
+    -0.46728146668095294,
+    0
+   ],
+   "bindOrigin": [
+    0.15458758183301702,
+    0.5163413444575401,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    -1,
+    0
+   ],
+   "lengthM": 0.428341,
+   "radiusM": 0.0545,
+   "part": "socks"
+  },
+  {
+   "index": 17,
+   "name": "foot_R",
+   "parent": "shin_R",
+   "offsetLocal": [
+    0,
+    -0.42834134445754013,
+    0
+   ],
+   "bindOrigin": [
+    0.15458758183301702,
+    0.08799999999999997,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    -0.3011313679370973,
+    0.9535826651341417
+   ],
+   "lengthM": 0.189286,
+   "radiusM": 0.0739,
+   "part": "boots"
+  },
+  {
+   "index": 18,
+   "name": "toe_R",
+   "parent": "foot_R",
+   "offsetLocal": [
+    0,
+    -0.056999999999999995,
+    0.1805
+   ],
+   "bindOrigin": [
+    0.15458758183301702,
+    0.030999999999999972,
+    0.1805
+   ],
+   "bindDirLocal": [
+    0,
+    -0.19495276547011506,
+    0.9808126320738096
+   ],
+   "lengthM": 0.09746,
+   "radiusM": 0.0628,
+   "part": "boots"
+  },
+  {
+   "index": 19,
+   "name": "thigh_L",
+   "parent": "pelvis",
+   "offsetLocal": [
+    -0.15458758183301702,
+    0,
+    0
+   ],
+   "bindOrigin": [
+    -0.15458758183301702,
+    0.983622811138493,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    -1,
+    0
+   ],
+   "lengthM": 0.467281,
+   "radiusM": 0.0882,
+   "part": "shorts"
+  },
+  {
+   "index": 20,
+   "name": "shin_L",
+   "parent": "thigh_L",
+   "offsetLocal": [
+    0,
+    -0.46728146668095294,
+    0
+   ],
+   "bindOrigin": [
+    -0.15458758183301702,
+    0.5163413444575401,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    -1,
+    0
+   ],
+   "lengthM": 0.428341,
+   "radiusM": 0.0545,
+   "part": "socks"
+  },
+  {
+   "index": 21,
+   "name": "foot_L",
+   "parent": "shin_L",
+   "offsetLocal": [
+    0,
+    -0.42834134445754013,
+    0
+   ],
+   "bindOrigin": [
+    -0.15458758183301702,
+    0.08799999999999997,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    -0.3011313679370973,
+    0.9535826651341417
+   ],
+   "lengthM": 0.189286,
+   "radiusM": 0.0739,
+   "part": "boots"
+  },
+  {
+   "index": 22,
+   "name": "toe_L",
+   "parent": "foot_L",
+   "offsetLocal": [
+    0,
+    -0.056999999999999995,
+    0.1805
+   ],
+   "bindOrigin": [
+    -0.15458758183301702,
+    0.030999999999999972,
+    0.1805
+   ],
+   "bindDirLocal": [
+    0,
+    -0.19495276547011506,
+    0.9808126320738096
+   ],
+   "lengthM": 0.09746,
+   "radiusM": 0.0628,
+   "part": "boots"
+  }
+ ],
+ "mesh": {
+  "vertexCount": 57828,
+  "originalVertexCount": 57588,
+  "triangleCount": 97772,
+  "unreferencedVertices": 6609,
+  "materialSeamDuplicates": 240,
+  "byteOrder": "little-endian",
+  "layout": {
+   "positions": {
+    "byteOffset": 0,
+    "byteLength": 693936,
+    "elementType": "Float32Array",
+    "elementCount": 173484
+   },
+   "normals": {
+    "byteOffset": 693936,
+    "byteLength": 693936,
+    "elementType": "Float32Array",
+    "elementCount": 173484
+   },
+   "uvAtlas": {
+    "byteOffset": 1387872,
+    "byteLength": 462624,
+    "elementType": "Float32Array",
+    "elementCount": 115656
+   },
+   "baseColor": {
+    "byteOffset": 1850496,
+    "byteLength": 173484,
+    "elementType": "Uint8Array",
+    "elementCount": 173484
+   },
+   "shadeClass": {
+    "byteOffset": 2023980,
+    "byteLength": 57828,
+    "elementType": "Uint8Array",
+    "elementCount": 57828
+   },
+   "joints": {
+    "byteOffset": 2081808,
+    "byteLength": 462624,
+    "elementType": "Uint16Array",
+    "elementCount": 231312
+   },
+   "weights": {
+    "byteOffset": 2544432,
+    "byteLength": 925248,
+    "elementType": "Float32Array",
+    "elementCount": 231312
+   },
+   "indices": {
+    "byteOffset": 3469680,
+    "byteLength": 1173264,
+    "elementType": "Uint32Array",
+    "elementCount": 293316
+   },
+   "inverseBinds": {
+    "byteOffset": 4642944,
+    "byteLength": 1472,
+    "elementType": "Float32Array",
+    "elementCount": 368
+   },
+   "vertexMaterials": {
+    "byteOffset": 4644416,
+    "byteLength": 115656,
+    "elementType": "Uint16Array",
+    "elementCount": 57828
+   }
+  }
+ },
+ "shading": {
+  "model": "Astra framebuffer-renderer treatment B (Soft Cel), Mixed light",
+  "light": [
+   -0.42,
+   0.72,
+   -0.54
+  ],
+  "lum": "0.12 + 0.72*max(0,n.l) + 0.16*(0.45 + 0.55*max(0,n.y))",
+  "tone": "0.24 + 0.36*smoothstep(0.25,0.48,lum) + 0.36*smoothstep(0.57,0.85,lum)",
+  "skin": [
+   [
+    199,
+    152,
+    120
+   ],
+   [
+    131,
+    100,
+    79
+   ],
+   [
+    233,
+    178,
+    140
+   ]
+  ],
+  "classes": "bit0 = textured (sample atlas at uvAtlas); bits1+ = 0 default, 1 skin, 2 refined vertex colour, 3 emissive"
+ },
+ "materials": [
+  {
+   "name": "skin",
+   "rgb": [
+    199,
+    152,
+    120
+   ],
+   "region": null
+  },
+  {
+   "name": "face",
+   "rgb": [
+    199,
+    152,
+    120
+   ],
+   "region": [
+    0,
+    384,
+    256,
+    128
+   ]
+  },
+  {
+   "name": "lip",
+   "rgb": [
+    153,
+    101,
+    79
+   ],
+   "region": null
+  },
+  {
+   "name": "skinShadow",
+   "rgb": [
+    131,
+    100,
+    79
+   ],
+   "region": null
+  },
+  {
+   "name": "skinLight",
+   "rgb": [
+    233,
+    178,
+    140
+   ],
+   "region": null
+  },
+  {
+   "name": "earInner",
+   "rgb": [
+    187,
+    122,
+    94
+   ],
+   "region": null
+  },
+  {
+   "name": "hair",
+   "rgb": [
+    51,
+    42,
+    37
+   ],
+   "region": [
+    384,
+    384,
+    128,
+    128
+   ]
+  },
+  {
+   "name": "hairMass",
+   "rgb": [
+    51,
+    42,
+    37
+   ],
+   "region": null
+  },
+  {
+   "name": "hairFade",
+   "rgb": [
+    51,
+    42,
+    37
+   ],
+   "region": null
+  },
+  {
+   "name": "hairLight",
+   "rgb": [
+    75,
+    60,
+    49
+   ],
+   "region": null
+  },
+  {
+   "name": "eyeWhite",
+   "rgb": [
+    238,
+    232,
+    221
+   ],
+   "region": null
+  },
+  {
+   "name": "iris",
+   "rgb": [
+    75,
+    67,
+    51
+   ],
+   "region": null
+  },
+  {
+   "name": "pupil",
+   "rgb": [
+    33,
+    48,
+    46
+   ],
+   "region": null
+  },
+  {
+   "name": "glint",
+   "rgb": [
+    238,
+    232,
+    221
+   ],
+   "region": null
+  },
+  {
+   "name": "jersey",
+   "rgb": [
+    173,
+    38,
+    58
+   ],
+   "region": [
+    0,
+    0,
+    512,
+    256
+   ]
+  },
+  {
+   "name": "clothDark",
+   "rgb": [
+    150,
+    35,
+    50
+   ],
+   "region": null
+  },
+  {
+   "name": "clothFold",
+   "rgb": [
+    117,
+    39,
+    49
+   ],
+   "region": null
+  },
+  {
+   "name": "clothStitch",
+   "rgb": [
+    161,
+    59,
+    71
+   ],
+   "region": null
+  },
+  {
+   "name": "trim",
+   "rgb": [
+    238,
+    232,
+    221
+   ],
+   "region": null
+  },
+  {
+   "name": "shorts",
+   "rgb": [
+    173,
+    38,
+    58
+   ],
+   "region": [
+    0,
+    256,
+    256,
+    128
+   ]
+  },
+  {
+   "name": "shortsBase",
+   "rgb": [
+    173,
+    38,
+    58
+   ],
+   "region": null
+  },
+  {
+   "name": "sock",
+   "rgb": [
+    173,
+    38,
+    58
+   ],
+   "region": [
+    256,
+    256,
+    128,
+    128
+   ]
+  },
+  {
+   "name": "boot",
+   "rgb": [
+    232,
+    236,
+    229
+   ],
+   "region": [
+    384,
+    256,
+    128,
+    128
+   ]
+  },
+  {
+   "name": "sole",
+   "rgb": [
+    179,
+    182,
+    176
+   ],
+   "region": null
+  },
+  {
+   "name": "glove",
+   "rgb": [
+    235,
+    233,
+    223
+   ],
+   "region": null
+  },
+  {
+   "name": "glovePad",
+   "rgb": [
+    221,
+    223,
+    212
+   ],
+   "region": [
+    256,
+    384,
+    128,
+    128
+   ]
+  },
+  {
+   "name": "cuff",
+   "rgb": [
+    238,
+    232,
+    221
+   ],
+   "region": null
+  },
+  {
+   "name": "ink",
+   "rgb": [
+    33,
+    48,
+    46
+   ],
+   "region": null
+  },
+  {
+   "name": "faceSurface",
+   "rgb": [
+    199,
+    152,
+    120
+   ],
+   "region": null
+  },
+  {
+   "name": "faceBase",
+   "rgb": [
+    199,
+    152,
+    120
+   ],
+   "region": null
+  },
+  {
+   "name": "faceShadow",
+   "rgb": [
+    173,
+    132,
+    104
+   ],
+   "region": null
+  },
+  {
+   "name": "faceLight",
+   "rgb": [
+    207,
+    158,
+    125
+   ],
+   "region": null
+  },
+  {
+   "name": "lipTop",
+   "rgb": [
+    167,
+    116,
+    91
+   ],
+   "region": null
+  },
+  {
+   "name": "lipBottom",
+   "rgb": [
+    182,
+    129,
+    101
+   ],
+   "region": null
+  },
+  {
+   "name": "mouthLine",
+   "rgb": [
+    104,
+    75,
+    61
+   ],
+   "region": null
+  },
+  {
+   "name": "eyeSclera",
+   "rgb": [
+    223,
+    221,
+    205
+   ],
+   "region": null
+  },
+  {
+   "name": "eyeIris",
+   "rgb": [
+    75,
+    67,
+    51
+   ],
+   "region": null
+  },
+  {
+   "name": "eyePupil",
+   "rgb": [
+    32,
+    44,
+    41
+   ],
+   "region": null
+  },
+  {
+   "name": "eyeCatch",
+   "rgb": [
+    239,
+    237,
+    219
+   ],
+   "region": null
+  },
+  {
+   "name": "browMass",
+   "rgb": [
+    53,
+    44,
+    38
+   ],
+   "region": null
+  },
+  {
+   "name": "facialHair",
+   "rgb": [
+    118,
+    92,
+    74
+   ],
+   "region": null
+  },
+  {
+   "name": "hairDeep",
+   "rgb": [
+    45,
+    40,
+    35
+   ],
+   "region": null
+  },
+  {
+   "name": "hairRidge",
+   "rgb": [
+    57,
+    47,
+    40
+   ],
+   "region": null
+  },
+  {
+   "name": "latexPanel",
+   "rgb": [
+    226,
+    226,
+    215
+   ],
+   "region": null
+  },
+  {
+   "name": "latexLight",
+   "rgb": [
+    237,
+    236,
+    227
+   ],
+   "region": null
+  },
+  {
+   "name": "gearSeam",
+   "rgb": [
+    159,
+    165,
+    157
+   ],
+   "region": null
+  },
+  {
+   "name": "gearRubber",
+   "rgb": [
+    221,
+    223,
+    212
+   ],
+   "region": null
+  },
+  {
+   "name": "padLight",
+   "rgb": [
+    225,
+    225,
+    214
+   ],
+   "region": null
+  },
+  {
+   "name": "refined_skin_48",
+   "rgb": [
+    255,
+    255,
+    255
+   ],
+   "region": null
+  },
+  {
+   "name": "refined_eye_49",
+   "rgb": [
+    255,
+    255,
+    255
+   ],
+   "region": null
+  },
+  {
+   "name": "refined_eye_50",
+   "rgb": [
+    255,
+    255,
+    255
+   ],
+   "region": null
+  },
+  {
+   "name": "refined_iris_51",
+   "rgb": [
+    255,
+    255,
+    255
+   ],
+   "region": null
+  },
+  {
+   "name": "refined_eye_52",
+   "rgb": [
+    255,
+    255,
+    255
+   ],
+   "region": null
+  },
+  {
+   "name": "refined_eye_53",
+   "rgb": [
+    255,
+    255,
+    255
+   ],
+   "region": null
+  },
+  {
+   "name": "refined_eye_54",
+   "rgb": [
+    255,
+    255,
+    255
+   ],
+   "region": null
+  },
+  {
+   "name": "refined_iris_55",
+   "rgb": [
+    255,
+    255,
+    255
+   ],
+   "region": null
+  },
+  {
+   "name": "refined_eye_56",
+   "rgb": [
+    255,
+    255,
+    255
+   ],
+   "region": null
+  },
+  {
+   "name": "refined_hair_57",
+   "rgb": [
+    255,
+    255,
+    255
+   ],
+   "region": null
+  },
+  {
+   "name": "refined_hair_58",
+   "rgb": [
+    255,
+    255,
+    255
+   ],
+   "region": null
+  },
+  {
+   "name": "refined_hair_59",
+   "rgb": [
+    255,
+    255,
+    255
+   ],
+   "region": null
+  },
+  {
+   "name": "rosterCollar",
+   "rgb": [
+    238,
+    232,
+    221
+   ],
+   "region": null
+  },
+  {
+   "name": "rosterHem",
+   "rgb": [
+    238,
+    232,
+    221
+   ],
+   "region": null
+  },
+  {
+   "name": "rosterSleeve",
+   "rgb": [
+    173,
+    38,
+    58
+   ],
+   "region": null
+  }
+ ],
+ "atlas": {
+  "file": "atlas.png",
+  "width": 512,
+  "height": 512
+ },
+ "parts": [
+  {
+   "name": "jersey",
+   "category": "shirt",
+   "vertexCount": 1044,
+   "triangleCount": 1888,
+   "bones": [
+    "pelvis",
+    "spine",
+    "chest",
+    "clavicle_L",
+    "clavicle_R",
+    "neck"
+   ]
+  },
+  {
+   "name": "hem",
+   "category": "shirt",
+   "vertexCount": 68,
+   "triangleCount": 128,
+   "bones": [
+    "pelvis"
+   ]
+  },
+  {
+   "name": "sleeve_R",
+   "category": "shirt",
+   "vertexCount": 296,
+   "triangleCount": 400,
+   "bones": [
+    "upperArm_R",
+    "chest"
+   ]
+  },
+  {
+   "name": "sock_R",
+   "category": "socks",
+   "vertexCount": 176,
+   "triangleCount": 336,
+   "bones": [
+    "shin_R",
+    "foot_R"
+   ]
+  },
+  {
+   "name": "boot_R",
+   "category": "boots",
+   "vertexCount": 227,
+   "triangleCount": 432,
+   "bones": [
+    "foot_R",
+    "toe_R"
+   ]
+  },
+  {
+   "name": "sole_R",
+   "category": "boots",
+   "vertexCount": 32,
+   "triangleCount": 60,
+   "bones": [
+    "foot_R",
+    "toe_R"
+   ]
+  },
+  {
+   "name": "tongue_R",
+   "category": "boots",
+   "vertexCount": 15,
+   "triangleCount": 16,
+   "bones": [
+    "foot_R"
+   ]
+  },
+  {
+   "name": "laces_R",
+   "category": "boots",
+   "vertexCount": 145,
+   "triangleCount": 240,
+   "bones": [
+    "foot_R"
+   ]
+  },
+  {
+   "name": "ankleOpening_R",
+   "category": "boots",
+   "vertexCount": 227,
+   "triangleCount": 400,
+   "bones": [
+    "foot_R"
+   ]
+  },
+  {
+   "name": "heelTab_R",
+   "category": "boots",
+   "vertexCount": 4,
+   "triangleCount": 2,
+   "bones": [
+    "foot_R"
+   ]
+  },
+  {
+   "name": "stud_R",
+   "category": "boots",
+   "vertexCount": 270,
+   "triangleCount": 384,
+   "bones": [
+    "foot_R",
+    "toe_R"
+   ]
+  },
+  {
+   "name": "sleeve_L",
+   "category": "shirt",
+   "vertexCount": 296,
+   "triangleCount": 400,
+   "bones": [
+    "upperArm_L",
+    "chest"
+   ]
+  },
+  {
+   "name": "sock_L",
+   "category": "socks",
+   "vertexCount": 176,
+   "triangleCount": 336,
+   "bones": [
+    "shin_L",
+    "foot_L"
+   ]
+  },
+  {
+   "name": "boot_L",
+   "category": "boots",
+   "vertexCount": 227,
+   "triangleCount": 432,
+   "bones": [
+    "foot_L",
+    "toe_L"
+   ]
+  },
+  {
+   "name": "sole_L",
+   "category": "boots",
+   "vertexCount": 32,
+   "triangleCount": 60,
+   "bones": [
+    "foot_L",
+    "toe_L"
+   ]
+  },
+  {
+   "name": "tongue_L",
+   "category": "boots",
+   "vertexCount": 15,
+   "triangleCount": 16,
+   "bones": [
+    "foot_L"
+   ]
+  },
+  {
+   "name": "laces_L",
+   "category": "boots",
+   "vertexCount": 145,
+   "triangleCount": 240,
+   "bones": [
+    "foot_L"
+   ]
+  },
+  {
+   "name": "ankleOpening_L",
+   "category": "boots",
+   "vertexCount": 227,
+   "triangleCount": 400,
+   "bones": [
+    "foot_L"
+   ]
+  },
+  {
+   "name": "heelTab_L",
+   "category": "boots",
+   "vertexCount": 4,
+   "triangleCount": 2,
+   "bones": [
+    "foot_L"
+   ]
+  },
+  {
+   "name": "stud_L",
+   "category": "boots",
+   "vertexCount": 270,
+   "triangleCount": 384,
+   "bones": [
+    "foot_L",
+    "toe_L"
+   ]
+  },
+  {
+   "name": "refined_Touchline / Anchor / refined head",
+   "category": "head-and-neck-skin",
+   "vertexCount": 17594,
+   "triangleCount": 35184,
+   "bones": [
+    "head",
+    "neck",
+    "chest"
+   ]
+  },
+  {
+   "name": "refined_Eye globe -1",
+   "category": "eyes-and-brows",
+   "vertexCount": 1490,
+   "triangleCount": 2976,
+   "bones": [
+    "head"
+   ]
+  },
+  {
+   "name": "refined_Limbal ring -1",
+   "category": "eyes-and-brows",
+   "vertexCount": 455,
+   "triangleCount": 768,
+   "bones": [
+    "head"
+   ]
+  },
+  {
+   "name": "refined_Iris -1",
+   "category": "eyes-and-brows",
+   "vertexCount": 455,
+   "triangleCount": 768,
+   "bones": [
+    "head"
+   ]
+  },
+  {
+   "name": "refined_Pupil -1",
+   "category": "eyes-and-brows",
+   "vertexCount": 455,
+   "triangleCount": 768,
+   "bones": [
+    "head"
+   ]
+  },
+  {
+   "name": "refined_Eye globe 1",
+   "category": "eyes-and-brows",
+   "vertexCount": 1490,
+   "triangleCount": 2976,
+   "bones": [
+    "head"
+   ]
+  },
+  {
+   "name": "refined_Limbal ring 1",
+   "category": "eyes-and-brows",
+   "vertexCount": 455,
+   "triangleCount": 768,
+   "bones": [
+    "head"
+   ]
+  },
+  {
+   "name": "refined_Iris 1",
+   "category": "eyes-and-brows",
+   "vertexCount": 455,
+   "triangleCount": 768,
+   "bones": [
+    "head"
+   ]
+  },
+  {
+   "name": "refined_Pupil 1",
+   "category": "eyes-and-brows",
+   "vertexCount": 455,
+   "triangleCount": 768,
+   "bones": [
+    "head"
+   ]
+  },
+  {
+   "name": "refined_Brow -1",
+   "category": "eyes-and-brows",
+   "vertexCount": 165,
+   "triangleCount": 256,
+   "bones": [
+    "head"
+   ]
+  },
+  {
+   "name": "refined_Brow 1",
+   "category": "eyes-and-brows",
+   "vertexCount": 165,
+   "triangleCount": 256,
+   "bones": [
+    "head"
+   ]
+  },
+  {
+   "name": "refined_Hair / crop",
+   "category": "hair",
+   "vertexCount": 13825,
+   "triangleCount": 27456,
+   "bones": [
+    "head"
+   ]
+  },
+  {
+   "name": "integration_collar",
+   "category": "shirt",
+   "vertexCount": 325,
+   "triangleCount": 512,
+   "bones": [
+    "chest",
+    "neck"
+   ]
+  },
+  {
+   "name": "lower_anatomy",
+   "category": "lower-body-and-shorts",
+   "vertexCount": 4591,
+   "triangleCount": 8832,
+   "bones": [
+    "pelvis",
+    "thigh_R",
+    "thigh_L",
+    "shin_R",
+    "shin_L"
+   ],
+   "packageDeclared": {
+    "vertexCount": 4495,
+    "triangleCount": 8832,
+    "note": "vertex count only: this build duplicates vertices that straddle a material seam, so a part references more of them"
+   }
+  },
+  {
+   "name": "lower_shorts",
+   "category": "lower-body-and-shorts",
+   "vertexCount": 2000,
+   "triangleCount": 3648,
+   "bones": [
+    "pelvis",
+    "thigh_R",
+    "thigh_L"
+   ]
+  },
+  {
+   "name": "lower_hem",
+   "category": "lower-body-and-shorts",
+   "vertexCount": 192,
+   "triangleCount": 192,
+   "bones": [
+    "thigh_R",
+    "thigh_L"
+   ]
+  },
+  {
+   "name": "lower_facing",
+   "category": "lower-body-and-shorts",
+   "vertexCount": 192,
+   "triangleCount": 192,
+   "bones": [
+    "thigh_R",
+    "thigh_L"
+   ]
+  },
+  {
+   "name": "lower_waistband",
+   "category": "lower-body-and-shorts",
+   "vertexCount": 128,
+   "triangleCount": 128,
+   "bones": [
+    "pelvis"
+   ]
+  },
+  {
+   "name": "morph_arm_R",
+   "category": "exposed-arms",
+   "vertexCount": 429,
+   "triangleCount": 768,
+   "bones": [
+    "upperArm_R",
+    "foreArm_R"
+   ]
+  },
+  {
+   "name": "morph_sleeveHem_R",
+   "category": "shirt",
+   "vertexCount": 99,
+   "triangleCount": 128,
+   "bones": [
+    "upperArm_R"
+   ]
+  },
+  {
+   "name": "morph_barePalm_R",
+   "category": "bare-hands",
+   "vertexCount": 125,
+   "triangleCount": 192,
+   "bones": [
+    "hand_R"
+   ]
+  },
+  {
+   "name": "morph_bareFinger_R_0",
+   "category": "bare-hands",
+   "vertexCount": 120,
+   "triangleCount": 196,
+   "bones": [
+    "hand_R"
+   ]
+  },
+  {
+   "name": "morph_bareFinger_R_1",
+   "category": "bare-hands",
+   "vertexCount": 120,
+   "triangleCount": 196,
+   "bones": [
+    "hand_R"
+   ]
+  },
+  {
+   "name": "morph_bareFinger_R_2",
+   "category": "bare-hands",
+   "vertexCount": 120,
+   "triangleCount": 196,
+   "bones": [
+    "hand_R"
+   ]
+  },
+  {
+   "name": "morph_bareFinger_R_3",
+   "category": "bare-hands",
+   "vertexCount": 120,
+   "triangleCount": 196,
+   "bones": [
+    "hand_R"
+   ]
+  },
+  {
+   "name": "morph_bareThumb_R",
+   "category": "bare-hands",
+   "vertexCount": 85,
+   "triangleCount": 128,
+   "bones": [
+    "hand_R"
+   ]
+  },
+  {
+   "name": "morph_arm_L",
+   "category": "exposed-arms",
+   "vertexCount": 429,
+   "triangleCount": 768,
+   "bones": [
+    "upperArm_L",
+    "foreArm_L"
+   ]
+  },
+  {
+   "name": "morph_sleeveHem_L",
+   "category": "shirt",
+   "vertexCount": 99,
+   "triangleCount": 128,
+   "bones": [
+    "upperArm_L"
+   ]
+  },
+  {
+   "name": "morph_barePalm_L",
+   "category": "bare-hands",
+   "vertexCount": 125,
+   "triangleCount": 192,
+   "bones": [
+    "hand_L"
+   ]
+  },
+  {
+   "name": "morph_bareFinger_L_0",
+   "category": "bare-hands",
+   "vertexCount": 120,
+   "triangleCount": 196,
+   "bones": [
+    "hand_L"
+   ]
+  },
+  {
+   "name": "morph_bareFinger_L_1",
+   "category": "bare-hands",
+   "vertexCount": 120,
+   "triangleCount": 196,
+   "bones": [
+    "hand_L"
+   ]
+  },
+  {
+   "name": "morph_bareFinger_L_2",
+   "category": "bare-hands",
+   "vertexCount": 120,
+   "triangleCount": 196,
+   "bones": [
+    "hand_L"
+   ]
+  },
+  {
+   "name": "morph_bareFinger_L_3",
+   "category": "bare-hands",
+   "vertexCount": 120,
+   "triangleCount": 196,
+   "bones": [
+    "hand_L"
+   ]
+  },
+  {
+   "name": "morph_bareThumb_L",
+   "category": "bare-hands",
+   "vertexCount": 85,
+   "triangleCount": 128,
+   "bones": [
+    "hand_L"
+   ]
+  }
+ ],
+ "hairWarnings": []
+}

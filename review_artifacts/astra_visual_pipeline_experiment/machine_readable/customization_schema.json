@@ -1,0 +1,114 @@
+{
+ "record": "customization inputs that exist TODAY in the experimental pipeline (technical contract, not a design): body from skelBuild(H, prop), material groups per vertex / per capsule, palette overrides per variant. Any long-term solution must support the requirements in HANDOFF.md \u00a7H; how is Astra's call.",
+ "body": {
+  "heightM": "gk.height \u00d7 variant.h (simulation keeper height 1.90 m in fixtures; skeleton lengths are fractions of H)",
+  "proportions": "skelBuild prop multipliers {legs, arms, torso, width} on bone lengths / offsets / girth; clips are rotation-only so any proportion plays the same motion",
+  "note": "what depends on metres is documented in gk_motion_library.js (authored pelvis offsets scale with H / 1.90)"
+ },
+ "materialGroups": [
+  "skin",
+  "hair",
+  "shirt",
+  "shorts",
+  "socks",
+  "boots",
+  "gloves"
+ ],
+ "defaultPalette_rgb01": {
+  "skin": [
+   0.85,
+   0.63,
+   0.44
+  ],
+  "hair": [
+   0.12,
+   0.09,
+   0.07
+  ],
+  "shirt": [
+   0.22,
+   0.88,
+   0.11
+  ],
+  "shorts": [
+   0.07,
+   0.07,
+   0.08
+  ],
+  "socks": [
+   0.1,
+   0.1,
+   0.11
+  ],
+  "boots": [
+   0.05,
+   0.05,
+   0.06
+  ],
+  "gloves": [
+   0.96,
+   0.96,
+   0.96
+  ]
+ },
+ "variantsAvailable": {
+  "default": {
+   "label": "default goalkeeper"
+  },
+  "tall": {
+   "label": "taller / longer-limbed",
+   "h": 1.06,
+   "prop": {
+    "legs": 1.05,
+    "arms": 1.07,
+    "torso": 1,
+    "width": 0.97
+   }
+  },
+  "short": {
+   "label": "shorter / stockier",
+   "h": 0.94,
+   "prop": {
+    "legs": 0.96,
+    "arms": 0.96,
+    "torso": 1,
+    "width": 1.14
+   }
+  },
+  "skin2": {
+   "label": "alternate skin tone",
+   "palette": {
+    "skin": [
+     0.42,
+     0.27,
+     0.18
+    ]
+   }
+  },
+  "jersey2": {
+   "label": "alternate jersey colour",
+   "palette": {
+    "shirt": [
+     0.98,
+     0.62,
+     0.08
+    ]
+   }
+  }
+ },
+ "meshSource": "anim3d/skin_mesh.js skinBuildMesh(skel): procedural loft at the bind pose, linear-blend skinning (4 influences), per-vertex part id; NOT an approved visual target",
+ "required_long_term": [
+  "jersey colour / design",
+  "shorts",
+  "socks",
+  "skin tone",
+  "hair colour",
+  "hair style",
+  "goalkeeper gloves",
+  "boots",
+  "team identity",
+  "player height",
+  "player proportions / build where feasible",
+  "numbers / details later"
+ ]
+}

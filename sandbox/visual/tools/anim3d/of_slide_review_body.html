@@ -1,0 +1,115 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Slide Contact Geometry</title><style>
+:root{--bg:#0e1116;--pane:#151a21;--ink:#e8e6e0;--dim:#9aa4b2;--acc:#ffd54a;--ok:#48e08a;--bad:#ff6b6b;--line:#242b35;--leg:#ffa028;--tuck:#50dcff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:32px 16px 90px}
+h1{font-size:25px;margin:0 0 6px;letter-spacing:-.01em}h2{font-size:17px;margin:38px 0 10px;color:var(--acc);border-bottom:1px solid var(--line);padding-bottom:6px}
+h3{font-size:14px;margin:22px 0 6px;color:#cfd6e0}
+p,li{color:#cdd4de}.dim{color:var(--dim)}code,kbd{font-family:ui-monospace,Menlo,monospace;font-size:12.5px}
+kbd{background:#1e242d;border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:1px 6px;color:#fff}
+.lede{background:var(--pane);border:1px solid var(--line);border-left:3px solid var(--acc);padding:14px 16px;border-radius:0 8px 8px 0;margin:16px 0}
+.url{background:#101720;border:1px solid #27424f;border-radius:8px;padding:14px 16px;margin:14px 0}.url code{color:#7fd0ff;word-break:break-all}
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:12.5px;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:5px 9px;text-align:right;white-space:nowrap}th{background:#1a212a;color:#b9c2ce;font-weight:600}
+td:first-child,th:first-child,td.l,th.l{text-align:left}tbody tr:nth-child(odd){background:#12171e}
+.kv td{white-space:normal}.kv th{width:170px;vertical-align:top}
+.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:#ffb454}
+figure{margin:12px 0 22px}figure img{width:100%;height:auto;border:1px solid var(--line);border-radius:7px;background:#16301a;display:block}
+figcaption{color:var(--dim);font-size:12.5px;margin-top:7px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:820px){.grid{grid-template-columns:1fr}}
+pre{background:#0f1318;border:1px solid var(--line);border-radius:6px;padding:10px;overflow-x:auto;font-size:11.5px;color:#cdd4de;white-space:pre}
+ul{padding-left:20px}li{margin:3px 0}
+.stop li{list-style:none;margin-left:-18px}.stop b{display:inline-block;min-width:46px}
+svg text{fill:var(--ink);font:12px -apple-system,sans-serif}
+</style></head><body><div class="wrap">
+<h1>Slide Contact Geometry V1.2</h1>
+<p class="dim">Touchline · branch <code>prototype/slide-contact-v1.2</code> (worktree <code>FC Simulator worktrees/slide-contact-v1.2</code>) · built on <code>baseline/tackled-player-v1</code> (f5f6076) · frozen controls <code>baseline/outfield-runtime-v1</code>, <code>baseline/possession-v1.1-handoff</code>, <code>baseline/tackled-player-v1</code> untouched · local only, nothing pushed</p>
+<div class="lede">A focused contact-geometry pass on the slide tackle and the tackled-player reactions. There are three changes. The side-on slide now uses the researched technique: he drops onto the <b>near</b> hip and tucks the near leg, and the <b>far</b> leg sweeps across toward the ball. The defender's body therefore travels beside the attacker, not through him. Every body contact during the slide's travel is now tracked in a short, bounded contact history, not only the first one. The ball's response follows from the contact the rendered boot actually makes. The tackle-quality law (WON / POKE / GLANCE / MISS) is unchanged, and so are the standing tackle, the jockey and everything outside a slide.</div>
+<div class="url">Play: <code>http://127.0.0.1:8124/sandbox/visual/match.html?ofPlay=1&amp;fps=60&amp;squad=D7</code> (serve this worktree). <kbd>Shift</kbd>+<kbd>G</kbd> runs the side-on slide demo, which plays every case below back to back (<kbd>Shift</kbd>+<kbd>H</kbd> next, <kbd>-</kbd> 0.25×). <kbd>F</kbd> slides along the stick while you hold a direction; the HUD's <i>slide V1.2</i> lines show the technique, the ball contact and the contact history.</div>
+
+<h2>0 · Stop conditions</h2>
+%%STOP%%
+
+<h2>1 · The leg selection: what the technique is</h2>
+<p>Sources: Human Kinetics, <i>Soccer has three basic tackles</i> (figure 11.17); Soccer Coach Weekly, <i>How to coach the slide tackle</i>; B. Christensen, <i>Teaching the Slide Tackle</i> (2004). All three describe the same side-on chase → drop → sweep:</p>
+<ul><li>"The tackling player chases the ball until confident that his lead foot will overtake the ball. <b>The near leg leads, allowing the player to sink down on the left leg, which curls beneath the seat</b> of the defender. <b>The far leg swings around in a wide sweep, with the foot hooked, towards the ball.</b> The tackling leg sweeps through the ball and either traps it with the hooked foot or, more usually, plays the ball away." (Human Kinetics)</li>
+<li>"Approach from the side and tackle across the path of the opponent. <b>Tackle using the leg furthest from the ball</b> and keep it slightly bent. <b>Tuck the leg nearest the ball underneath the backside and ideally slide on the outer thigh.</b>" Contact through the centre-to-top half of the ball. (Soccer Coach Weekly)</li>
+<li>"Slide onto your hip area … on one hip." "Tackling leg even with the belly of the ball." "HOOK the ball, don't poke it away. If you have to poke it away, you are too far behind." "Gain a tiny bit of space between you and the opponent right before your slide, NOT shoulder to shoulder." (Christensen)</li></ul>
+<p>Your reading was right. With the defender on the attacker's right, the ball and the attacker are on the defender's <b>left</b>: he tucks his left (near) leg, drops onto his left hip, and his <b>right</b> (far) leg sweeps from his right across toward the ball.</p>
+<p><b>What the game did (measured, not assumed).</b> V1 chose <code>foot = the ball's side</code>, i.e. the <b>near</b> leg, and extended it straight along the slide from the far hip. In the rendered V1 pose he lay on his far hip with the far leg tucked. To reach a ball at the carrier's feet with a straight leg, the slide had to be aimed <i>at the ball</i>, and that line runs through the carrier.</p>
+<p><b>World coordinates, verified on the rendered rig</b> (the known Dribbling <code>ofBootPlan</code> mirror is not involved): +y is toward the camera (the near touchline draws lower on screen). A player facing +x has <code>thigh_R</code> at +y, which is his right as the camera sees it. The GL view matrix has determinant −1, the reflection a left-handed pitch frame needs, so <code>_R</code> bones render on the character's anatomical right. The simulation's <code>right = (−fy, fx)</code> is therefore correct, and every left/right below is in world terms.</p>
+
+<h2>2 · The rule, from the geometry</h2>
+<svg viewBox="0 0 760 230" width="100%" role="img" aria-label="Top-down: the attacker runs right with the ball at his feet; the defender runs beside him, drops onto the near hip, tucks the near leg and sweeps the far leg across toward the ball.">
+<rect x="0" y="0" width="760" height="230" fill="#16301a" rx="8"/>
+<line x1="40" y1="70" x2="720" y2="70" stroke="#9aa4b2" stroke-dasharray="4 5"/><text x="44" y="60">attacker's run (+x), ball at his feet</text>
+<circle cx="420" cy="70" r="16" fill="#cfd6e0"/><circle cx="470" cy="70" r="7" fill="#fff" stroke="#000"/>
+<line x1="40" y1="160" x2="720" y2="160" stroke="#ffd54a" stroke-dasharray="4 5"/><text x="44" y="185">defender's slide, on the attacker's right (+y, toward the camera)</text>
+<rect x="330" y="146" width="70" height="28" rx="12" fill="#f5f5f5" opacity=".9"/><text x="336" y="140">seat · on the near hip</text>
+<path d="M395 152 L445 138 L410 130" fill="none" stroke="#50dcff" stroke-width="7" stroke-linecap="round"/><text x="455" y="132" style="fill:#50dcff">near leg tucked under the seat</text>
+<path d="M398 166 L520 150" fill="none" stroke="#ffa028" stroke-width="6" stroke-linecap="round" opacity=".35"/>
+<path d="M398 166 L495 95" fill="none" stroke="#ffa028" stroke-width="7" stroke-linecap="round"/>
+<path d="M520 150 A 125 125 0 0 0 480 80" fill="none" stroke="#ffa028" stroke-width="2" stroke-dasharray="3 4"/><text x="530" y="118" style="fill:#ffa028">far leg sweeps across (0° → 75°), the body turning with it</text>
+<text x="44" y="218" class="dim">the body passes BESIDE the attacker; only the tackling leg enters the ball corridor</text></svg>
+<ul>
+<li><b>Which leg.</b> The ball's side of the slide line, where the ball will be in 0.3 s, is the <b>near</b> side. That leg tucks and he drops on that hip. The <b>far</b> leg tackles. If the ball is within 5 cm of the line, the nearest opponent's side decides. There is no alternation and no preferred-foot rule. Recorded at the request: <code>foot / tuck / tech</code>, the ball's lateral offset, which side of the carrier he is on, and the approach angle.</li>
+<li><b>Which technique.</b> <b>SWEEP</b> when the ball is genuinely beside the line (≥ 0.35 m): the far leg comes across 0° → 75°. <b>BLOCK</b> when the ball is on the line: the same top leg comes barely across (0° → 17°) and drives the ball along the slide. Both are the researched slide (lie on the bottom hip, top leg extended). They differ only in how far the leg has to come across.</li>
+<li><b>The sweep is a kinematic commitment, not an aim.</b> It starts 0.04 s after the drop and takes 0.20 s. The pelvis turns with it (30% of the sweep angle), since hip rotation drives a sweep. The foot is never steered to the ball; the player's skill is the timing of the request (and the AI's aiming aid picks the direction).</li>
+<li><b>The leg as the simulation holds it.</b> The top hip is 0.08 m behind the root and 0.05 m to the tackling side (lying on the near hip puts it nearly over the pelvis). The leg runs knee → toe tip to 1.20 × leg length (1.12 m for a 0.865 m leg: as far as the rendered Astra leg + boot gets under the contact-tracking IK, measured; the follow-up corrected V1.2's 1.25). The contact radius is 0.05 m about the leg's axis, the rendered boot's half-thickness. V1's 1.12 × leg reach and 0.08 m radius matched V1's straight near-leg pose.</li>
+<li><b>The AI aiming aid</b> rolls the same law forward. It wants the <i>lower</i> leg (knee → boot) on the ball first, and among ball-first lines prefers one whose body passes beside the carrier ("a tiny bit of space … not shoulder to shoulder"). It is an input, never part of the contact law.</li></ul>
+
+<h2>3 · Diagnosis, measured before anything changed</h2>
+<p>On the V1 build (<code>baseline/tackled-player-v1</code>), every side-on chase with the slide along the run MISSED: the straight near leg can't reach a ball 0.6–1.05 m to the side. With the AI aiming aid, the slide was angled at the ball. It won the ball, but the defender's root passed within 0.2 m of the attacker's, and the rendered bodies overlapped for 39 ticks (head into torso 22.6 cm, torso through his thighs 20 cm). Measured on the final rendered skeletons (<code>of_slide_geo.js</code>), the phasing came from three causes:</p>
+<ol><li><b>The slide's root trajectory.</b> A straight near leg forces an aim at the ball, and at a carrier's feet that line goes through his legs.</li>
+<li><b>Body collision evaluated once.</b> The first contact of a challenge (often foot on foot, a mild correction) was the only one. The sliding seat and trunk then ploughed through both legs with nothing re-evaluated.</li>
+<li><b>No collision in the slow end of the slide.</b> A slide still moving was excluded from disc occupancy but not yet a lying capsule, so a player going back for the ball walked through the defender. During a fall's <i>failing steps</i> (the steps before he leaves his feet) the victim counted as "falling" and was not tested, so he ran through the defender too.</li></ol>
+<p>It was <i>not</i> the reaction starting late (reactions start on the contact tick) and not sub-stepping (see §8).</p>
+
+<h2>4 · Side-on sweep geometry — both sides</h2>
+%%SIDE%%
+
+<h2>5 · Ball physics: the contact decides where the ball goes</h2>
+<p>At the first touching sub-step, the ball's new velocity follows from the contact itself:</p>
+<ul><li>the contact point and horizontal normal (leg → ball centre);</li>
+<li>the <b>leg's own velocity there</b>: the slide's, plus the sweep's ω × distance from the hip;</li>
+<li>restitution set by the authoritative outcome: WON is a hook / sweep-through that carries the ball with the boot (e 0.15); POKE is a knock away (e 0.50);</li>
+<li>the leg's effective mass (the shin + foot share of his recorded weight) against the ball's 0.43 kg;</li>
+<li>Coulomb-limited tangential drag (μ 0.3).</li></ul>
+<p>A GLANCE keeps V1's 1 m/s touch, now along the contact normal instead of the slide direction; the carrier rides it. The ball is then placed so the rest of the tick runs from the contact point with its new velocity (the keeper-contact convention). A sweep drives the ball across and back, "toward the defender's starting direction" as the coaching note says. A block drives it along the line. Spin: a ground ball rolls before (ω = v / r). The tangential impulse's spin about the vertical is <b>recorded</b> but not simulated, because the playtest ball has no spin state.</p>
+<p>The rendered boot follows the leg. Its inside face is tracked, every tick of the sweep, onto the simulation leg's leading surface: the axis plus 0.05 m toward where the leg is moving. The thigh, knee and foot are solved per sweep angle so the whole boot continues the leg's line (a locked, hooked ankle). The contact-tick measurement reads the final rendered boot after every layer, including the slide pose, the alignment, the reach IK and the ground drop.</p>
+%%BALL%%
+
+<h2>6 · Body contact through the follow-through: one challenge, a short contact history</h2>
+<ul><li><b>First contact</b>, exactly as V1: segment + support state + relative velocity + impulse + capture point → correction / stumble / fall.</li>
+<li><b>Every tick of the slide's travel</b>, the slider's parts (sweeping leg, its thigh, tucked leg, seat, reclined trunk; measured on the rendered pose) are tested against each opponent in reach. A <b>new</b> part of him met, or the same contact still driving into him at ≥ 1 m/s 0.1 s later, is resolved again through the same law from his state now. The stronger reaction wins; a weaker one is <i>absorbed</i> by the stepping already under way. A fall still in its failing steps whose next step meets the slider is <i>cut short</i> and starts now. The slider pays every impulse. At most 4 body resolutions per victim.</li>
+<li><b>Still on his feet</b> (correcting / stumbling, or in the steps before a fall): a bounded <b>non-penetration</b> constraint on the rigid body-to-body contacts. The closing velocity plus a separating bias is shared by the two players' masses: the slider is slowed and deflected sideways, he is pushed (<code>NONPEN</code>). A weight-bearing leg trapped under the slider's body is an <code>OVERRUN</code>: his support is lost, through the same balance law. See the follow-up section at the top.</li>
+<li><b>Falling (in the air)</b>, he goes <b>over</b> the slider. His falling body (pelvis over his root, head going where his head goes, legs trailing) stops the slider's seat and trunk, and he is steered off the slider: the part of his fall travel driving into it is removed, plus a separating push. If his trunk topples into the slider's upper body, his fall rotates around it. <b>On the ground</b>, he cannot slide through the slider's body (a velocity constraint), and a slide still moving cannot pass through a body already on the pitch. Never a displacement.</li>
+<li>The presentation lays a faller on the slider's rendered body where he lands on it: the pitch or the slider's seat / trunk / legs, whichever is higher, is his ground.</li>
+<li>Every contact, ball and bodies, enters the challenge's history in order (≤ 12 entries: <code>BALL</code>, <code>BODY</code> with segment / planted / impulse / reaction / how it was taken, <code>OVER</code>, <code>FALLER_CAUGHT</code>, <code>NONPEN</code>, <code>OVERRUN</code>, <code>SLIDER_BLOCKED_BY_FALLER</code>, <code>FALLER_STEERED</code>, <code>FALL_DEFLECTED</code>, <code>LANDED_ON</code>, <code>GROUND_BLOCK</code>). Each entry carries its ball-first / simultaneous / man-first / no-ball order: the facts a future referee reads. No foul is called.</li></ul>
+%%BODY%%
+
+<h2>7 · Before / after at identical starting states</h2>
+<p>The same fixture, the same inputs, the same slide request. Before is the frozen V1 build (<code>baseline/tackled-player-v1</code>); after is this build. Overlap is measured every tick on the final rendered capsules, from the slide request on. "Core" means trunk, head and legs of both players. "Limb" means any pair involving an arm.</p>
+%%BA%%
+
+<h2>8 · The counterfactual leg test</h2>
+<p>Same attacker, same ball, same tackler start and speed, and the same slide request, with the same authoritative outcome. These pairs were found by a grid search (<code>of_slide_cf_grid.js</code>, 80 geometries) in which both geometries give POKE → the attacker corrects: 0.60 m to the side, slide angled 10° in. <b>A</b> is the V1 geometry (straight near leg, V1 pose); <b>B</b> is the V1.2 far-leg sweep. The V1 path is still there, bit for bit, behind <code>PT_DEF.slide.rule = "near"</code>. It reproduces <code>baseline/tackled-player-v1</code> exactly on all 24 defending and 17 tackled-player fixtures.</p>
+%%CF%%
+<div class="lede"><b>What the counterfactual says.</b> At an identical request and identical outcome, the far-leg geometry by itself does <b>not</b> remove the body overlap when the slide line <i>converges through</i> the carrier (here 20° in from 0.75 m, a BLOCK-classified slide). Both geometries put the defender's trunk into the attacker. What B changes is the ball contact and the contact history. The rendered boot meets the ball on the leg, and the normal is known. The attacker's contacts continue (a second leg, the seat), so he reacts instead of being passed through. What removes the gross phasing is what the correct leg makes <i>possible</i>: the far leg reaches across, so the slide line itself can stay beside the carrier (§4, and §7: aimed side-on 22.7 cm → 0, <code>sl_left</code> 20.2 → 0). Where the line really does cut across him, the bodies now interact through the contact history: see the follow-up section.</div>
+
+<h2>9 · Continuous collision: can a fast foot or a fast ball cross unseen?</h2>
+<p>Ball: V1.2 slides against loose balls crossing at 0–40 m/s at many offsets and times. Every tick is re-checked with the simulation's own within-tick kinematics (root and sweep angle linear, ball b → b + v·dt), 400 samples per tick. The simulation's sub-steps are adaptive, so neither leg nor ball moves more than 3.5 cm relative per sub-step (4 to 32, event-driven: only while a slide is live).</p>
+%%CCD%%
+
+<h2>10 · Regression</h2>
+<p>Gate script <code>tools/anim3d/of_slide_gates.sh</code>. It checks: 60 frozen single-player scenarios against <code>outfield-runtime-v1</code>; 27 squad fixtures and auto pass / receive against <code>possession-v1.1-handoff</code>; the 24 defending fixtures, 17 tackled-player fixtures and 15 side-on fixtures against <code>tackled-player-v1</code>, with animation ON/OFF and determinism; small-sided games D7–D9 (7200 ticks each) and the defending demos. The V1.2 gates are strict. A fixture without a slide must be <b>bit-identical</b>. A slide fixture must be identical up to the slide request, and its changed facts are listed field by field. For games and demos, nothing may move before the first slide request.</p>
+%%GATES%%
+<h3>Changed facts, fixture by fixture</h3>
+%%SLIDEGATE%%
+
+<h2>11 · Performance</h2>
+<p>Everything is event-driven: the swept ball contact runs only for a live slide, the contact history only for opponents within 2.6 m of a live slide. With 22 players and no slide it costs nothing. <b>SGD</b> is a slide-dense loop of the side-on demo cases. The sweep tables of the presentation are solved once per body when a defending drill first presents him (≈ 40 ms per character, load time), never at the moment of a drop.</p>
+%%PERF%%
+
+<h2>12 · Limitations and next</h2>
+%%LIMITS%%
+</div></body></html>

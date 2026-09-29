@@ -35,6 +35,7 @@ const VIEW = { w: 1280, h: 720 };           // reference viewport defining V-spa
 // chunky edges survive; sprites keep nearest-neighbour sampling and now draw
 // from their sources at up to native resolution (players 128px -> ~123px).
 const RES = Math.min(window.devicePixelRatio || 1, 2);
+const FPS_CAP_PARAM = (() => { try { const v = new URLSearchParams(location.search).get("fps"); return v ? +v : null; } catch (e) { return null; } })();   // ?fps=60 → presentation frame cap (see tick)
 const PXQ = Math.max(1, Math.round(RES));   // stroke quantum (1 CSS px)
 const qw = (cssw) => Math.max(PXQ, Math.round(cssw * RES / PXQ) * PXQ);
 const uipx = (v) => Math.round(v * RES);    // HUD/debug sizes in backing px
@@ -43,9 +44,8 @@ const uipx = (v) => Math.round(v * RES);    // HUD/debug sizes in backing px
 // pscale 0.60 = 2X SCALE CALIBRATION: the 128px sprite body (100px opaque)
 // then implies a 1.88 m standing player (was 2.66 m at 0.85 — taller than
 // the 2.44 m goal). Drawn player/goal ratio 0.84 vs real 0.74: slight
-// pixel-art oversize kept for readability. BALL_VIS_R 0.19 m (visual only;
-// physical radius stays 0.11 m; selected from the six-candidate boot-
-// reference study) = 6.9 CSS px diameter at zoom 1.
+// player calibration retained. Ball artwork now follows the plain physics
+// sphere at 0.11 m radius, without the former sprite enlargement.
 const AUTHOR_DEFAULTS = {
   height: 30, dist: 43, fov: 28, depthoff: 3, pitch: 22, yaw: 0, pscale: 0.60,
 };
@@ -479,49 +479,43 @@ function deriveStandMaterial(img) {
   };
   return { upper: band(42, 18), lower: band(66, 23) };
 }
+// Mowing boundaries follow goal area (5.5 m), spot (11 m), penalty area
+// (16.5 m), halfway and their opposite-end counterparts. Six-metre bands
+// fill the space between boxes; the field and markings remain 105 × 68 m.
+const PITCH_BANDS = [0,5.5,11,16.5,22.5,28.5,34.5,40.5,46.5,52.5,58.5,64.5,70.5,76.5,82.5,88.5,94,99.5,105];
 function buildGroundTexture() {
-  const W = (APRON.x1 - APRON.x0) * REF_ZOOM, H = (APRON.y1 - APRON.y0) * REF_ZOOM;
-  const g = document.createElement("canvas");
-  g.width = W; g.height = H;
-  const c = g.getContext("2d");
-  c.imageSmoothingEnabled = false;
-  const gx = (x) => (x - APRON.x0) * REF_ZOOM;
-  const gy = (y) => (y - APRON.y0) * REF_ZOOM;
-  const M = REF_ZOOM;
-  const byCorners = {};
-  for (const t of S.tilesMeta)
-    byCorners[[t.corners.NW, t.corners.NE, t.corners.SW, t.corners.SE].join("|")] = t.bounding_box;
-  const palUpper = extractPalette(byCorners["upper|upper|upper|upper"]);
-  const palLower = extractPalette(byCorners["lower|lower|lower|lower"]);
-  const img = c.createImageData(W, H);
-  const d = img.data;
-  for (let py = 0; py < H; py++) {
-    const wy = APRON.y0 + py / M;
-    for (let px = 0; px < W; px++) {
-      const wx = APRON.x0 + px / M;
-      const dist = Math.max(GRASS_ZONE.x0 - wx, wx - GRASS_ZONE.x1,
-                            GRASS_ZONE.y0 - wy, wy - GRASS_ZONE.y1);
-      let pal = palUpper;
-      if (dist > 0.5) pal = palLower;
-      else if (dist > -0.5) pal = (hash01(px, py) < 0.5 - dist) ? palUpper : palLower;
-      let n = 0.55 * vnoise(wx / 7, wy / 7)
-            + 0.30 * vnoise(wx / 1.8 + 91.7, wy / 1.8 + 33.3)
-            + 0.15 * hash01(px + 7349, py + 1201);
-      const col = pal.pick(n);
-      const o = (py * W + px) * 4;
-      d[o] = col[0]; d[o + 1] = col[1]; d[o + 2] = col[2]; d[o + 3] = 255;
+  const W=(APRON.x1-APRON.x0)*REF_ZOOM,H=(APRON.y1-APRON.y0)*REF_ZOOM;
+  const g=document.createElement('canvas');g.width=W;g.height=H;
+  const c=g.getContext('2d'),img=c.createImageData(W,H),d=img.data,M=REF_ZOOM;
+  // Keep the original tile-art greens with the refined, low-amplitude grain.
+  // Palette extraction and texture generation happen only at setup.
+  const byCorners={};
+  for(const t of S.tilesMeta)
+    byCorners[[t.corners.NW,t.corners.NE,t.corners.SW,t.corners.SE].join('|')]=t.bounding_box;
+  const turf=extractPalette(byCorners['upper|upper|upper|upper']).pick(.5);
+  const outside=extractPalette(byCorners['lower|lower|lower|lower']).pick(.5);
+  const runoff=turf.map((v,k)=>v*.65+outside[k]*.35);
+  const smooth=t=>{t=Math.max(0,Math.min(1,t));return t*t*(3-2*t)};
+  for(let py=0;py<H;py++){
+    const y=APRON.y0+(py+.5)/M;
+    for(let px=0;px<W;px++){
+      const x=APRON.x0+(px+.5)/M;
+      const edge=Math.max(-x,x-PITCH.w,-y,y-PITCH.h);
+      const cut=Math.max(GRASS_ZONE.x0-x,x-GRASS_ZONE.x1,GRASS_ZONE.y0-y,y-GRASS_ZONE.y1);
+      const fieldMix=smooth((edge-.12)/1.4),outerMix=smooth((cut+.3)/.65);
+      const grain=(hash01(px+7349,py+1201)-.5)*2.4;
+      const nap=(vnoise(x/.38,y/1.8)-.5)*1.8;
+      const variation=(vnoise(x/12,y/12)-.5)*2;
+      const o=4*(py*W+px);
+      for(let k=0;k<3;k++){
+        const lawn=turf[k]+(runoff[k]-turf[k])*fieldMix;
+        const base=lawn+(outside[k]-lawn)*outerMix;
+        d[o+k]=Math.round(base+grain+nap+variation);
+      }
+      d[o+3]=255;
     }
   }
-  c.putImageData(img, 0, 0);
-  const bandW = PITCH.w / 14;
-  for (let x = GRASS_ZONE.x0; x < GRASS_ZONE.x1; x += 0.0001) {
-    const k = Math.floor(x / bandW + 1e-9);
-    const x0 = Math.max(GRASS_ZONE.x0, k * bandW), x1 = Math.min(GRASS_ZONE.x1, (k + 1) * bandW);
-    c.fillStyle = ((k % 2 + 2) % 2) === 0 ? "rgba(255,255,255,0.055)" : "rgba(0,0,0,0.05)";
-    c.fillRect(gx(x0), gy(GRASS_ZONE.y0), (x1 - x0) * M, (GRASS_ZONE.y1 - GRASS_ZONE.y0) * M);
-    x = x1;
-  }
-  S.groundTex = g;
+  c.putImageData(img,0,0);S.groundTex=g;S.pitchMowing=true;
 }
 
 // ═══ RAIL CAMERA ARCHITECTURE ════════════════════════════════════════════════
@@ -754,8 +748,8 @@ function drawNearBarrier() {
   railLine(ENV.barrierH, ENV.nearBarrierZ, 2, ENV_COL.boardTop);
 }
 function drawMarkings() {
-  ctx.strokeStyle = "rgba(250,250,250,0.92)";
-  ctx.fillStyle = "rgba(250,250,250,0.92)";
+  ctx.strokeStyle = "#f4f4ee";
+  ctx.fillStyle = "#f4f4ee";
   ctx.lineWidth = qw(2 * RIG.zoom);
   ctx.lineJoin = "round";
   const rect = (x, z, w, d) =>
@@ -846,6 +840,22 @@ function drawGroundPerspective() {
     ctx.setTransform(a, b2, c, d, e, f2);
     ctx.drawImage(S.groundTex, bx0, by0, bx1 - bx0, by1 - by0, bx0, by0, bx1 - bx0, by1 - by0);
     ctx.restore();
+  }
+  drawPitchMowing();
+}
+
+function drawPitchMowing() {
+  if(!S.pitchMowing)return;
+  // Two batched polygon fills keep stripe edges on the exact same projected
+  // world lines as the markings. Avoid scanline-warp stair-stepping.
+  for(let parity=0;parity<2;parity++){
+    ctx.beginPath();
+    for(let i=parity;i<PITCH_BANDS.length-1;i+=2){
+      const q=[[PITCH_BANDS[i],0],[PITCH_BANDS[i+1],0],[PITCH_BANDS[i+1],PITCH.h],[PITCH_BANDS[i],PITCH.h]].map(([x,y])=>sproj(x,y));
+      if(q.some(p=>p.d<.5))continue;
+      ctx.moveTo(q[0].x,q[0].y);for(let j=1;j<4;j++)ctx.lineTo(q[j].x,q[j].y);ctx.closePath();
+    }
+    ctx.fillStyle=parity?'rgba(0,0,0,.05)':'rgba(255,255,255,.055)';ctx.fill();
   }
 }
 
@@ -1642,7 +1652,7 @@ function drawBallTest(dt) {
     }
     ctx.stroke();
   }
-  drawBallAt(t.p[0], t.p[1], t.p[2], Math.hypot(t.v[0], t.v[1]), dt);
+  drawBallAt(t.p[0], t.p[1], t.p[2], Math.hypot(t.v[0], t.v[1]), dt, {key:t,x:t.p[0],y:t.p[1],z:t.p[2],vx:t.v[0],vy:t.v[1]});
   ctx.fillStyle = "#ffd34d"; ctx.font = "bold " + uipx(13) + "px ui-monospace, monospace";
   ctx.fillText((S.netSlow ? "[SLOW-MO 0.15x]  " : "") +
     "BALL PHYSICS TEST \u2014 SYNTHETIC (" + t.label + ")", uipx(14), cv.height - uipx(52));
@@ -1685,7 +1695,9 @@ function drawBallSeq(dt) {
     const f = Math.min(1, (t - tr[i][0]) / Math.max(1e-6, tr[i + 1][0] - tr[i][0]));
     x += (tr[i + 1][1] - x) * f; y += (tr[i + 1][2] - y) * f; z += (tr[i + 1][3] - z) * f;
   }
-  drawBallAt(x, y, z, 8, dt);
+  const next=tr[Math.min(i+1,tr.length-1)], span=next[0]-tr[i][0];
+  const vx=span>0?(next[1]-tr[i][1])/span:0, vy=span>0?(next[2]-tr[i][2])/span:0;
+  drawBallAt(x, y, z, Math.hypot(vx,vy), dt, {key:a,x,y,z,vx,vy});
   ctx.fillStyle = "#ffd34d"; ctx.font = "bold " + uipx(13) + "px ui-monospace, monospace";
   ctx.fillText("BALL TRANSPORT TEST \u2014 ENGINE BODY SEQUENCE  (" + (q.idx + 1) + "/" +
     q.actions.length + ": " + a.label + ")", uipx(14), cv.height - uipx(88));
@@ -1828,6 +1840,10 @@ function tick(ts) {
   netPhysUpdate(S.netSlow ? dt * 0.15 : dt);   // key 0: slow motion (same
                                                // fixed steps, fewer per frame)
   const __t0 = performance.now();
+  if (S.fpsCap == null && FPS_CAP_PARAM) S.fpsCap = FPS_CAP_PARAM;
+  S.frameStat = S.frameStat || { n: 0, drawn: 0, t0: __t0, intervals: [] }; const __fs = S.frameStat; __fs.n++; __fs.intervals.push(ts - (__fs.lastTs || ts)); if (__fs.intervals.length > 600) __fs.intervals.shift(); __fs.lastTs = ts;   // frame-pacing statistics (rAF cadence)
+  if (S.fpsCap && __fs.lastDrawTs != null && (ts - __fs.lastDrawTs) < (1000 / S.fpsCap) - 2) { requestAnimationFrame(tick); return; }   // presentation frame cap (?fps=60): the display may run at 120 Hz; the simulation stepping above is unaffected
+  __fs.lastDrawTs = ts; __fs.drawn++;
   draw(sample, dt);
   const __ms = performance.now() - __t0;
   (S.perfT ||= []).push(__ms);
@@ -2169,6 +2185,24 @@ const PT = {  // world.py Body constants, ported verbatim — keep in sync
   REACH: 0.9, EXCL: 0.45, ACC: 4.8, BRAKE: 6.5, VMAX: 8.2, RUNV: 5.0,
   // PLAYER LOCOMOTION RESPONSIVENESS V1 (candidate A, world.py mirror)
   ACC_GAIN: 8.5 / 4.8, BRAKE_PLANT: 12.0, ACC_LAT: 10.0, ACC_START: 9.5,
+  // OUTFIELD LOCOMOTION V1 harness gears: desired-speed INTENT only (the limiter above is untouched); keys.walk / keys.jog are
+  // set by the ?ofPlay harness (Q / E held) — the GK playtest and the plain playtest never set them, so their law is unchanged
+  WALKV: 1.5, JOGV: 3.0,
+  // DRIBBLING V1 — the simulation's own stride clock and boot plan. Leg length is a player attribute (a reference body by default); the
+  // gait law here is the SAME one the skeletal presentation plays, so the boots the simulation reasons about are the boots you see.
+  LEG_REF: 0.865, IDLE_V: 0.18, SETTLE_CAD: 1.6, REST_PHASE: [0.08, 0.58],
+  TOUCH_WIN: 0.20,      // s: how far EITHER SIDE of the law's nominal touch time the gate may look for a boot. It must span about one
+                        // half-stride, or only one foot's window is ever reachable and the touch locks onto that foot for ever. A touch can
+                        // only happen when a boot is actually there, so the realised period quantises to half-strides around T(v).
+  TOUCH_EARLY: 0.20,    // s: how far BEFORE the nominal due time the gate may already fire on a passing boot. The search is symmetric
+                        // about the due time so both boots' windows compete — a forward-only search locks onto one foot for ever.
+  BOOT_GRACE: 0.10,     // x legLen added to the boot reach before a contact is called implausible
+  TOUCH_MIN_HS: 0.55,   // a touch may not follow another closer than this many HALF-STRIDES: with no foot available there is no touch.
+                        // Without it, arming early re-arms the gate the tick after a touch and it fires twice in a row.
+  SAME_FOOT: 0.35,      // score penalty for touching twice running with the same boot. With a touch period that is not a whole number of
+                        // half-strides, the nearest-window rule has a stable fixed point on EITHER foot and would lock there for ever.
+                        // A standing leg carries the body while the other plays the ball, so alternation is the physical default — but a
+                        // ball sitting to one side, a cut, or a settle can outweigh this and produce consecutive same-foot touches.
 };
 const PT_DT = 1 / 60;
 // ═══ INSIDE_R BALL CURVE V1 — right-foot inside curl (technique-specific) ══
@@ -2484,6 +2518,8 @@ function ptFam(fam, D) {          // world.py FAM launch families (port)
   const c = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
   if (fam === "SHORT") return [c(Math.sqrt(2 * PT.MU_ROLL * D + 6.5 * 6.5), 8, 19), 0];
   if (fam === "DRIVEN") return [c(Math.sqrt(2 * PT.MU_ROLL * D + 7.0 * 7.0), 14, 26), 0];
+  if (fam === "THROUGH") return [c(Math.sqrt(2 * PT.MU_ROLL * D + 4.0 * 4.0), 10, 24), 0];   // weighted into space, dies ~2 m past (world.py FAM)
+  if (fam === "CUTBACK") return [c(Math.sqrt(2 * PT.MU_ROLL * D + 6.0 * 6.0), 9, 18), 0];
   if (fam === "LOFT") { const T = c(D / 16, 0.8, 2.2); return [D / T, PT.G * T / 2]; }
   if (fam === "CLEAR") { const T = c(D / 11, 1.2, 2.6); return [D / T, PT.G * T / 2 * 1.15]; }
   return [c(24 + D * 0.3, 24, 31), c(0.5 + D * 0.06, 0.5, 2.2)];   // SHOT
@@ -2491,13 +2527,17 @@ function ptFam(fam, D) {          // world.py FAM launch families (port)
 function ptReset() {
   const t = S.pt;
   t.now = 0;
-  t.p = { x: 76.0, y: 34.0, vx: 0, vy: 0, facing: 0, touchT: 0 };
+  t.p = { x: 76.0, y: 34.0, vx: 0, vy: 0, facing: 0, touchT: 0, legLen: (t.p && t.p.legLen) || PT.LEG_REF, gaitPhase: 0.08, gaitSettled: true };
   t.b = { x: 76.8, y: 34.0, z: 0, vx: 0, vy: 0, vz: 0, ctrl: true, exclT: 0 };
   t.ctrlSince = 0;
   t.shoot = null; t.kick = null; t.kickLog = t.kickLog || []; t.net = null; t.touchN = 0;
   t.pfoot = t.pfoot || "R";
-  t.dribT = 0; t.dribF0 = 0;
+  t.dribT = 0; t.dribF0 = 0; t.touchPlan = null; t.touchLog = []; t.lastTouch = null; t.lastTouchFoot = null; t.tickN = 0;
+  // carry run-state: these persisted across a reset, so the corridor and the touch clock started from the PREVIOUS run's values and the
+  // first seconds after R were not reproducible (t.now restarts at 0, so a stale t.corrT / t.lastTouchT reads as far in the future).
+  t.corr = undefined; t.corrT = undefined; t.lastTouchT = undefined; t.ctrlState = null; t.looseT = undefined; t.liveTurn = 0; t.dribSeq = null;
   t.last = "RESET";
+  t.squad = null;                  // RECEIVING + PASSING V1: squad play is set up explicitly (pt_squad.js ptSquadSetup), never inherited by a reset
   t.gk = ptGkMake();               // Goalkeeper V1 entity (always present in the playtest)
   t.gkScenario = null;             // null = free play (not in a shot scenario)
   t.gkStudy = null;                // positioning-study mode off
@@ -2955,6 +2995,51 @@ const GK_SCENARIOS = [
   { stage4: true, name: "S4 unreachable rocket stays untouched",              origin: [95, 34], aim: [105, 30.7], tech: "LACES_POWER", c: 1.0 },
   { stage4: true, name: "S4 handling probe (synthetic lat 1.0 z 1.2 21 m/s — T cycles handling)", origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synth: { lat: 1.0, z: 1.2, v: 21 } },
   { stage4: true, name: "S4 K2 high tip-up (POWER 28 m/s under the bar)",     origin: [86, 34], aim: [105, 32.5], tech: "LACES_POWER", c: 0.66, band: "K2" },
+  // ── M3 MOTION-LIBRARY COVERAGE FIXTURES (2026-09-20): one deterministic case per skeletal motion family and per world facing.
+  // synthK offsets are in the KEEPER frame (positive lateral = his right); real kicks from off-centre origins turn the keeper to
+  // south-west / north-west / south / north facings. Outcomes are NOT scripted (Stage-3 TOI + Stage-4 quality as always).
+  { name: "M3 low dive LEFT, hand (synthK lat -1.4 z 0.35 15 m/s)",   origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: -1.4, z: 0.35, v: 15 } },
+  { name: "M3 low dive RIGHT, hand (synthK lat 1.4 z 0.35 15 m/s)",   origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 1.4, z: 0.35, v: 15 } },
+  { name: "M3 chest catch (synthK lat 0.05 z 1.15 15 m/s)",           origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.05, z: 1.15, v: 15 } },
+  { name: "M3 high ball, real chip (CHIP 0.55)",                       origin: [90, 34], aim: [105, 34], tech: "CHIP", c: 0.55 },   // a high central ball through the real kick path (the synthetic lob variants did not register as a shot from a fresh page)
+  { name: "M3 near-body LEFT (synthK lat -0.9 z 1.3 17 m/s)",         origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: -0.9, z: 1.3, v: 17 } },
+  { name: "M3 foot save RIGHT wide (synthK lat 0.55 z 0.05 14 m/s)",  origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.55, z: 0.05, v: 14 } },
+  { name: "M3 far dive LEFT TOP (synthK lat -1.6 z 2.0 18 m/s)",      origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: -1.6, z: 2.0, v: 18 } },
+  { name: "M3 SW-facing far dive (from the south)",                   origin: [100, 42], aim: [105, 31.5], tech: "LACES", c: 0.62 },
+  { name: "M3 NW-facing low dive (from the north)",                   origin: [100, 26], aim: [105, 36.2], tech: "LACES", c: 0.55, lowZ: true },
+  { name: "M3 S-facing tight angle, high across",                     origin: [104, 44], aim: [105, 33], tech: "LACES", c: 0.6 },
+  { name: "M3 N-facing tight angle, low across",                      origin: [104, 24], aim: [105, 35], tech: "LACES", c: 0.5, lowZ: true },
+  { name: "M3 moving keeper into a chest catch (gkv 0,-3)",           origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, gkv: [0, -3], synthK: { lat: 0, z: 1.2, v: 12 } },
+  // ── M3b FOOT_SAVE (spread block) coverage (2026-09-20): both sides, close (16 / 17) and wide leg blocks, angled world facings (real low LACES shots) ──
+  { name: "M3b foot save RIGHT wide (aim 33.2, lat +0.59)",            origin: [92, 34],  aim: [105, 33.2],  tech: "LACES", c: 0.42, lowZ: true },
+  { name: "M3b foot save LEFT wide (aim 34.78, lat -0.58)",            origin: [92, 34],  aim: [105, 34.78], tech: "LACES", c: 0.42, lowZ: true },
+  { name: "M3b SW-facing foot save RIGHT (from the south, aim 34.2)",  origin: [100, 42], aim: [105, 34.2],  tech: "LACES", c: 0.5,  lowZ: true },
+  { name: "M3b NW-facing foot save LEFT (from the north, aim 33.8)",   origin: [100, 26], aim: [105, 33.8],  tech: "LACES", c: 0.5,  lowZ: true },
+  { name: "M3b SSW-facing foot save RIGHT (from [96,40], aim 33.9)",   origin: [96, 40],  aim: [105, 33.9],  tech: "LACES", c: 0.48, lowZ: true },
+  { name: "M3b NNW-facing foot save LEFT (from [96,28], aim 34.1)",    origin: [96, 28],  aim: [105, 34.1],  tech: "LACES", c: 0.48, lowZ: true },
+  // ── M3c CATCH group coverage (2026-09-20): chest catches under angled world facings (synthK offsets are in the keeper frame) ──
+  { name: "M3c SW-facing chest catch (from the south, synthK z 1.15)",   origin: [100, 42], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.05, z: 1.15, v: 15 } },
+  { name: "M3c NW-facing chest catch (from the north, synthK z 1.2)",    origin: [100, 26], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: -0.05, z: 1.2, v: 15 } },
+  { name: "M3c SSW-facing chest catch (from [96,40], synthK z 1.1)",     origin: [96, 40],  aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.0, z: 1.1, v: 14 } },
+  // ── GOALKEEPER DISTRIBUTION fixtures (v12): a secured catch followed by an AUTHORITATIVE release plan (sc.dist → GK_DIST) ──
+  // target = pitch point [x, y]; the keeper defends x = 105 facing −x, so y < 34 is on his RIGHT (right = (−sin f, cos f)); side/foot default to the target's side / R
+  { name: "D1 PUT DOWN central (chest catch → place ahead → free ball)",       origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.05, z: 1.15, v: 15 }, dist: { kind: "PUTDOWN" } },
+  { name: "D2 HAND ROLL RIGHT (target [96, 26], right hand)",                   origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.05, z: 1.15, v: 15 }, dist: { kind: "ROLL", target: [96, 26] } },
+  { name: "D2 HAND ROLL LEFT (target [96, 42], left hand)",                     origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: -0.05, z: 1.15, v: 15 }, dist: { kind: "ROLL", target: [96, 42] } },
+  { name: "D3 OVERARM THROW RIGHT (target [78, 24])",                           origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.05, z: 1.15, v: 15 }, dist: { kind: "THROW", target: [78, 24] } },
+  { name: "D3 OVERARM THROW LEFT (target [78, 44])",                            origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: -0.05, z: 1.15, v: 15 }, dist: { kind: "THROW", target: [78, 44] } },
+  { name: "D3 OVERARM THROW far, straight (target [62, 34])",                   origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.05, z: 1.15, v: 15 }, dist: { kind: "THROW", target: [62, 34] } },
+  { name: "D4 PUNT RIGHT foot (target [55, 34])",                               origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.05, z: 1.15, v: 15 }, dist: { kind: "PUNT", target: [55, 34], foot: "R" } },
+  { name: "D4 PUNT LEFT foot (target [55, 34])",                                origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: -0.05, z: 1.15, v: 15 }, dist: { kind: "PUNT", target: [55, 34], foot: "L" } },
+  { name: "D5 angled: SW-facing catch → PUT DOWN (body must turn to face out)", origin: [100, 42], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.05, z: 1.15, v: 15 }, dist: { kind: "PUTDOWN" } },
+  { name: "D5 angled: NW-facing catch → THROW to the far side (target [80, 46])", origin: [100, 26], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: -0.05, z: 1.2, v: 15 }, dist: { kind: "THROW", target: [80, 46] } },
+  { name: "D5 angled: SSW-facing catch → ROLL across (target [98, 42])",        origin: [96, 40],  aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.0, z: 1.1, v: 14 }, dist: { kind: "ROLL", target: [98, 42] } },
+  { name: "D5 angled: SW-facing catch → PUNT left foot (target [50, 30])",      origin: [100, 42], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.05, z: 1.15, v: 15 }, dist: { kind: "PUNT", target: [50, 30], foot: "L" } },
+  // v13 review fixtures: targets toward the SOUTH touchline so the keeper faces the camera (front / ¾ view of the lateral load, hip opening, rotation and cross-body follow-through)
+  { name: "D6 front view: PUNT right foot toward the camera (target [96, 60])",  origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.05, z: 1.15, v: 15 }, dist: { kind: "PUNT", target: [96, 60], foot: "R" } },
+  { name: "D6 front view: THROW toward the camera (target [92, 58])",           origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.05, z: 1.15, v: 15 }, dist: { kind: "THROW", target: [92, 58] } },
+  { name: "D6 front view: ROLL toward the camera (target [99, 50])",            origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.05, z: 1.15, v: 15 }, dist: { kind: "ROLL", target: [99, 50] } },
+  { name: "D6 front view: PUT DOWN facing the camera (target [101, 60])",       origin: [88, 34], aim: [105, 34], tech: "LACES", c: 0.5, synthK: { lat: 0.05, z: 1.15, v: 15 }, dist: { kind: "PUTDOWN", target: [101, 60] } },
 ];
 function ptGkMake() {
   const c = GK_CFG;
@@ -3638,7 +3723,7 @@ function gkTryCommit(t, gk, ev) {
     gk.committed = { t0, tier: reachable ? tier : "UNREACHABLE", execTime: execT, bestEffort: !reachable,
       action: gather ? "GATHER" : ax.action, gather, gatherSpeed: gather ? ev.gatherSpeed : null, gatherRel: gather ? ev.gatherRel : null, gatherSecure: gather ? ev.gatherSecure : null,
       actionDetail: { dArm: ax.dArm, dBody: ax.dBody, tArm: ax.tArm, tBody: ax.tBody },
-      target: [tx, ty, tz], feet: [gk.x, gk.y], handOrigin: ho,
+      target: [tx, ty, tz], feet: [gk.x, gk.y], handOrigin: ho, ballPoint: [tp[0], tp[1], tp[2]],   // ballPoint: the raw predicted interception (read-only diagnostic for the presentation's reachability classification; the committed target above is authoritative)
       reachMargin: +((1 - norm) * env.maxLat).toFixed(2), diveSpanMax: env.maxLat, envNorm: +norm.toFixed(3),
       tShotToReact: gk.latency, tReactToCommit: t0 - (gk.shotT0 + gk.latency), commitTime: t0, commitTick: t.now };
     gk.phase = "COMMIT";
@@ -4109,9 +4194,77 @@ function gkHeldBallStep(t, b) {
   b.vx = 0; b.vy = 0; b.vz = 0;
   return true;
 }
+// ═══ GOALKEEPER DISTRIBUTION (simulation-owned, 2026-09-20) ═══
+// A keeper-held ball (b.held === "GK") had no release: the hold was terminal until a scenario reset. This is the minimal
+// AUTHORITATIVE contract that decides and executes a release; animation only reads gk.dist and explains it.
+//   kind THROW   overarm: at tRelease the ball is at the release point (ahead / on the throwing side / shoulder height) with a
+//                flat ballistic arc to the target (horizontal speed vH, landing at z 0 at the target)
+//   kind ROLL    bowl: at tRelease the ball is at ground level ahead / beside the keeper, rolling toward the target (vz 0)
+//   kind PUNT    two authoritative moments: tDrop (the ball leaves the hands at the drop point, free-falls under the same
+//                physics as every ball) and tKick (foot contact at kickZ: the CLEAR launch family, ptFam, from the ball's position)
+//   kind PUTDOWN the ball is placed on the pitch ahead of the feet with a gentle roll; held cleared; the ordinary free-ball
+//                rules (player control / pickup exclusion) apply from that tick — the keeper entity has no dribbling mechanic
+// Decision: t.gkDist (scenario `dist` / tools) requests a kind + target; it starts once the ball has been secured for
+// GK_DIST.secureT. During the plan the keeper stands still and faces the target (authoritative facing); after the follow-through
+// the plan is cleared and normal positioning resumes. Deterministic: fixed durations, no randomness. Nothing here is read from
+// animation. Release / drop / kick events are recorded in gk.distEvents for validation.
+const GK_DIST = {
+  secureT: 1.00, secureTDown: 3.50, followT: 0.70,                                       // secure time after the catch before a release may start: standing catches 1.0 s; a diving / collapsing catch (the keeper is down) 3.5 s
+  THROW:   { prep: 0.90, release: [0.85, 0.28, 1.78], law: "driven", vMax: 24, thetaMinDeg: 12, vH: 17, rangeGain: 1.015 },   // [ahead, lateral toward the throwing side, height] in the keeper's frame; release beside / above the throwing shoulder with the arm extended forward-up.
+                                                                                              // launch law "driven" (v13.1): throw speed = the speed that reaches the target at the minimum elevation (θmin), capped at vMax; if the cap binds, the
+                                                                                              // elevation rises just enough to reach the target (drag-free ballistic from the release height; rangeGain compensates the simulation's air drag).
+                                                                                              // law "arc" = the v12 law (fixed horizontal speed vH, vertical component chosen to land at the target) — kept for the comparison study only
+  ROLL:    { prep: 1.00, v: 9,    release: [0.60, 0.22, 0.00] },                      // released ON the pitch (z 0 = the ball's ground rest height, the same convention as every rolling ball)
+  PUNT:    { prep: 0.75, drop: [0.55, 0.12, 1.05], kickZ: 0.45, fam: "CLEAR", D: 45, followT: 0.80, drift: 0.3 },   // the drop is the first authoritative moment; the KICK happens when the falling ball reaches kickZ (an event, predicted at the drop as tKick)
+  PUTDOWN: { prep: 0.85, release: [0.50, 0.00, 0.00], vFwd: 1.6, followT: 0.60, atFeetM: 1.6, atFeetV: 1.5 },   // v13.1: a gentle forward roll (1.6 m/s → the ball rolls ~0.3 m further and stops ~0.8 m ahead: immediately playable), then BALL_AT_FEET (below)
+  targets: { THROW: [78, 8], ROLL: [96, -6], PUNT: [55, 0], PUTDOWN: null },           // default targets [x, lateral offset from the keeper's y] for tools / fixtures without an explicit target
+};
+function gkDistKeeperPoint(gk, f, rel, sideSign) { const rx = -Math.sin(f), ry = Math.cos(f); return [gk.x + Math.cos(f) * rel[0] + rx * rel[1] * sideSign, gk.y + Math.sin(f) * rel[0] + ry * rel[1] * sideSign, rel[2]]; }
+function gkDistributionStart(t, gk, req) {
+  const K = GK_DIST[req.kind]; if (!K) return null;
+  const tgt = req.target || (GK_DIST.targets[req.kind] ? [GK_DIST.targets[req.kind][0], gk.y + GK_DIST.targets[req.kind][1]] : [gk.x - 3, gk.y]);
+  const f = Math.atan2(tgt[1] - gk.y, tgt[0] - gk.x);
+  // hand convention (no keeper handedness exists in the simulation): the hand on the target's side in the keeper's CURRENT frame; central → right
+  const rx0 = -Math.sin(gk.facing), ry0 = Math.cos(gk.facing), lat0 = (tgt[0] - gk.x) * rx0 + (tgt[1] - gk.y) * ry0;
+  const side = req.side || (lat0 < -0.05 ? "L" : "R"), foot = req.foot || "R", sg = side === "L" ? -1 : 1;
+  const d = { kind: req.kind, t0: t.now, facing: f, target: tgt.slice(), side, foot, released: false, kicked: false, done: false, events: [] };
+  const D = Math.hypot(tgt[0] - gk.x, tgt[1] - gk.y), ux = (tgt[0] - gk.x) / (D || 1), uy = (tgt[1] - gk.y) / (D || 1);
+  if (req.kind === "THROW") { d.tRelease = t.now + K.prep; d.release = gkDistKeeperPoint(gk, f, K.release, sg); d.tEnd = d.tRelease + GK_DIST.followT;
+    if (K.law === "arc") { const T = Math.max(0.3, D / K.vH); d.v0 = [ux * K.vH, uy * K.vH, (0 - d.release[2]) / T + PT.G * T / 2]; d.launch = { law: "arc", vH: K.vH, T }; }
+    else {                                                                                   // "driven": range R (from release height h) at elevation θ and speed v: R = v cosθ (v sinθ + √(v² sin²θ + 2 g h)) / g
+      const g = PT.G, h = d.release[2], Drel = Math.hypot(tgt[0] - d.release[0], tgt[1] - d.release[1]), R = Drel * (K.rangeGain || 1), thMin = (K.thetaMinDeg || 12) * Math.PI / 180;   // range from the RELEASE point (0.85 m ahead of the root)
+      const rangeAt = (v, th) => v * Math.cos(th) * (v * Math.sin(th) + Math.sqrt(v * v * Math.sin(th) * Math.sin(th) + 2 * g * h)) / g;
+      let lo = 1, hi = K.vMax, v = K.vMax; for (let i = 0; i < 40; i++) { const mid = (lo + hi) / 2; if (rangeAt(mid, thMin) >= R) hi = mid; else lo = mid; } v = Math.min(K.vMax, hi);   // the speed that reaches R at θmin
+      let th = thMin; if (rangeAt(v, thMin) < R - 1e-3) { let a = thMin, b2 = Math.PI / 4; for (let i = 0; i < 40; i++) { const mid = (a + b2) / 2; if (rangeAt(v, mid) >= R) b2 = mid; else a = mid; } th = Math.min(Math.PI / 4, b2); }   // the cap binds: raise the elevation just enough (≤ 45°)
+      d.v0 = [ux * v * Math.cos(th), uy * v * Math.cos(th), v * Math.sin(th)]; d.launch = { law: "driven", v: +v.toFixed(3), thetaDeg: +(th * 180 / Math.PI).toFixed(2), R, apexM: +(h + (v * Math.sin(th)) ** 2 / (2 * g)).toFixed(3) };
+    } }
+  else if (req.kind === "ROLL") { d.tRelease = t.now + K.prep; d.release = gkDistKeeperPoint(gk, f, K.release, sg); d.v0 = [ux * K.v, uy * K.v, 0]; d.tEnd = d.tRelease + GK_DIST.followT; }
+  else if (req.kind === "PUTDOWN") { d.tRelease = t.now + K.prep; d.release = gkDistKeeperPoint(gk, f, K.release, sg); d.v0 = [ux * K.vFwd, uy * K.vFwd, 0]; d.tEnd = d.tRelease + K.followT; }
+  else if (req.kind === "PUNT") { const fs = foot === "L" ? -1 : 1; d.tDrop = t.now + K.prep; d.drop = gkDistKeeperPoint(gk, f, K.drop, fs); d.tKick = d.tDrop + Math.sqrt(2 * Math.max(0.01, K.drop[2] - K.kickZ) / PT.G); d.kickP = [d.drop[0] + ux * K.drift * (d.tKick - d.tDrop), d.drop[1] + uy * K.drift * (d.tKick - d.tDrop), K.kickZ]; const lv = ptFam(K.fam, Math.min(K.D, D)); d.vKick = [ux * lv[0], uy * lv[0], lv[1]]; d.tRelease = d.tDrop; d.release = d.drop; d.tEnd = d.tKick + K.followT; }   // tKick / kickP = the PREDICTED free-fall arrival at kickZ (the presentation aims the foot at it); the kick itself fires on the ball's own fall
+  // the commit record is KEPT through the plan (the possession lifecycle continues from it); cleared when the plan ends
+  gk.dist = d; gk.distEvents = gk.distEvents || []; gk.shotActive = false; gk._snapped = null; gk.state = "DISTRIBUTE:" + req.kind;
+  return d;
+}
+function gkDistributionStep(t) {
+  const gk = t.gk, b = t.b, d = gk.dist; if (!d) return false;
+  gk.facing = d.facing; gk.vx = 0; gk.vy = 0;                                                            // the keeper stands and faces the target while distributing (authoritative)
+  const ev = (name, extra) => { const e = Object.assign({ name, kind: d.kind, t: t.now, tick: Math.round(t.now * 60), ball: [b.x, b.y, b.z], v: [b.vx, b.vy, b.vz], root: [gk.x, gk.y], facing: d.facing, held: b.held || null }, extra || {}); d.events.push(e); gk.distEvents.push(e); return e; };
+  if (d.kind === "PUNT") {
+    if (!d.released && t.now >= d.tDrop - 1e-6 && b.held === "GK") { b.x = d.drop[0]; b.y = d.drop[1]; b.z = d.drop[2]; const ux = Math.cos(d.facing), uy = Math.sin(d.facing); b.vx = ux * GK_DIST.PUNT.drift; b.vy = uy * GK_DIST.PUNT.drift; b.vz = 0; b.held = null; b.ctrl = false; b.curve = null; b.exclT = d.tKick + 0.4; d.released = true; ev("DROP"); }
+    if (d.released && !d.kicked && !b.held && (b.z <= GK_DIST.PUNT.kickZ + 1e-6 || t.now >= d.tKick + 0.10)) { const pre = [b.x, b.y, b.z]; b.vx = d.vKick[0]; b.vy = d.vKick[1]; b.vz = d.vKick[2]; b.exclT = t.now + 0.4; d.kicked = true; d.tKickActual = t.now; d.kickActual = pre; ev("KICK", { foot: d.foot, predicted: d.kickP.slice(), predErr: +Math.hypot(pre[0] - d.kickP[0], pre[1] - d.kickP[1], pre[2] - d.kickP[2]).toFixed(3), predTickErr: +(t.now - d.tKick).toFixed(3) }); }   // FOOT CONTACT: the falling ball (its own physics) reaches kick height → the CLEAR launch is applied WHERE THE BALL IS (never moved to the prediction)
+  } else if (!d.released && t.now >= d.tRelease - 1e-6 && b.held === "GK") {
+    b.x = d.release[0]; b.y = d.release[1]; b.z = d.release[2]; b.vx = d.v0[0]; b.vy = d.v0[1]; b.vz = d.v0[2]; b.held = null; b.ctrl = false; b.curve = null; b.exclT = t.now + (d.kind === "PUTDOWN" ? 0.15 : 0.4); d.released = true; ev("RELEASE", { side: d.side });
+  }
+  if (t.now >= d.tEnd - 1e-6) { d.done = true; gk.distDone = d; gk.dist = null; gk.committed = null; gk.state = d.kind === "PUTDOWN" ? "BALL_AT_FEET" : "SET"; }   // plan over: the commit record is released, normal positioning resumes (a put-down goes straight to the BALL_AT_FEET hold, re-evaluated every tick)
+  return true;
+}
 function ptGkUpdate(t) {
   const gk = t.gk; if (!gk) return;
   const b = t.b;
+  // GOALKEEPER DISTRIBUTION: a requested release starts once the caught ball has been secured; while a plan runs the keeper
+  // stands, faces the target and the plan owns the ball events (below); no positioning / shot logic
+  if (t.gkDist && !gk.dist && !gk.distDone && b.held === "GK" && gk.contact && t.now - gk.contact.tickT >= ((gk.contact.standing || (gk.committed && gk.committed.gather)) ? GK_DIST.secureT : GK_DIST.secureTDown) - 1e-6) gkDistributionStart(t, gk, t.gkDist);
+  if (gk.dist) { gk.height = gkHeightM(t, gk); gk.handZ = gk.height * GK_CFG.handReachFrac; gk.handPrev = gk.handNow || [gk.x, gk.y, gk.handZ]; gk.bodyPrev = gk.bodyNow || [gk.x, gk.y]; gkDistributionStep(t); gk.handNow = gk.handNow || [gk.x, gk.y, gk.handZ]; gk.bodyNow = [gk.x, gk.y]; gk.legTipNow = null; gk.depth = GK_MOUTH.lineX - gk.x; gk.predict = null; gk.reach = null; return; }
   gk.height = gkHeightM(t, gk); gk.handZ = gk.height * GK_CFG.handReachFrac;   // live height affects reach envelope + drawing
   gk.handPrev = gk.handNow || [gk.x, gk.y, gk.handZ];   // swept-contact geometry: last tick -> this tick
   gk.bodyPrev = gk.bodyNow || [gk.x, gk.y];
@@ -4125,6 +4278,7 @@ function ptGkUpdate(t) {
     gk.latency = gkReactionLatency(t, gk);
     gk.atShot = { x: gk.x, y: gk.y, vx: gk.vx, vy: gk.vy };
     gk.predHist = []; gk.committed = null; gk.contacted = false; gk.contact = null; gk.contacts = []; gk.lastContactT = null; gk.lastContactByVol = {}; gk._snapped = null; gk.lobLatched = false; gk.obsJitter = 0;
+    gk.dist = null; gk.distDone = null;                                                  // GOALKEEPER DISTRIBUTION: a new shot ends any plan (the ball is no longer his)
     gkAnimResetView();                              // GK Animation V1: per-shot view state (flags are kept for the review log)
     gk.setPos = [gk.x, gk.y];                        // A) freeze SET at the shot instant — POSITION controller stops here
     gk.moveTarget = [gk.x, gk.y]; gk.moveReversals = 0; gk.preCommitDist = 0; gk._lastMoveSgn = null;
@@ -4163,6 +4317,15 @@ function ptGkUpdate(t) {
   } else {
     // STAGE 1 positioning (unchanged) — active pre-shot / between shots
     if (gk.shotActive && b.ctrl) { gk.shotActive = false; gk._snapped = null; gk.committed = null; }   // ball re-controlled: reset
+    // BALL AT FEET (v13.1, simulation-owned): after a PUT DOWN the keeper has deliberately placed the ball at his own feet to play it — while that ball is free,
+    // uncontrolled, slow and within reach he HOLDS his position facing it (the goal-positioning controller does not walk him back to his set depth).
+    // Without this the positioning controller resumed at the plan's end and repositioned him ~0.7 m toward the goal (the "backing away"). The keeper entity still has
+    // no dribble controller: the ball simply stays playable in front of him until another actor takes it or a shot resets everything.
+    // ARCHITECTURE (documented, not implemented): BALL_AT_FEET is the future ENTRY POINT into the general player on-ball / dribble controller — the same system an
+    // outfield player uses with a free ball at his feet. No goalkeeper-specific dribble state, no presentation locomotion imitating one, and no change to the ball
+    // state may be added here; keeper-specific transitions are decided when the shared system exists (see GK_DISTRIBUTION_FINDINGS.md § v13.1.4).
+    const PD = GK_DIST.PUTDOWN, atFeet = !!(gk.distDone && gk.distDone.kind === "PUTDOWN" && !b.ctrl && !b.held && Math.hypot(b.x - gk.x, b.y - gk.y) <= PD.atFeetM && Math.hypot(b.vx, b.vy) <= PD.atFeetV);
+    if (atFeet) { gk.vx = 0; gk.vy = 0; gk.desired = [gk.x, gk.y]; gk.setPos = [gk.x, gk.y]; gk.moveTarget = [gk.x, gk.y]; gk.posError = 0; gk.state = "BALL_AT_FEET"; gk.facing = Math.atan2(b.y - gk.y, b.x - gk.x); gk.depth = GK_MOUTH.lineX - gk.x; gk.predict = null; gk.reach = null; gk.handNow = gk.handNow || [gk.x, gk.y, gk.handZ]; gk.bodyNow = [gk.x, gk.y]; gk.legTipNow = null; return; }
     const q = gkNorm01(t.gkPos != null ? t.gkPos : gk.attrs.gk_positioning);
     gk.q = q; gk.desired = gkPosition(t, b.x, b.y, q); gkMove(gk);
     gk.setPos = gk.desired.slice(); gk.predInt = null; gk.moveTarget = gk.desired.slice();   // pre-shot: SET is the live desired
@@ -4236,6 +4399,7 @@ function ptGkFire(sc, i, n) {
     t.gkReflex = cap.reflex; t.gkDiving = cap.diving; t.gkHeight = cap.height; t.gkJump = cap.jump; t.gkHandling = cap.handling;
   }
   t.now = 0; t.kick = null; t.shoot = null; t.net = null; t.pfoot = sc.foot || "R";
+  t.gkDist = sc.dist ? Object.assign({}, sc.dist) : null;                         // GOALKEEPER DISTRIBUTION request (kind / target / side / foot) for this fixture
   const facing = Math.atan2(sc.aim[1] - sc.origin[1], sc.aim[0] - sc.origin[0]);
   t.p = { x: sc.origin[0], y: sc.origin[1], vx: 0, vy: 0, facing, touchT: 0 };
   t.b = { x: sc.origin[0] + Math.cos(facing) * 0.3, y: sc.origin[1] + Math.sin(facing) * 0.3,
@@ -5185,7 +5349,8 @@ function ptDrawKeeper(dt) {
   const t = S.pt, gk = t && t.gk; if (!gk) return;
   // GOALKEEPER ANIMATION V1: sprite view of the same keeper state (read-only). The Stage-0 diagnostic stick figure below is
   // kept for review (dbg "gkstick") and as the fallback when the GK assets are not loaded.
-  const spriteDrawn = GK_ANIM.enabled && gkAnimDraw(t, gk, dt);
+  // PRESENTATION BACKEND (prototype/3d-animation-pipeline): SPRITE (default, unchanged path) or SKELETAL_3D; see anim3d/gk_backend.js
+  const spriteDrawn = GK_ANIM.enabled && (typeof gkPresentationDraw === "function" ? gkPresentationDraw(t, gk, dt) : gkAnimDraw(t, gk, dt));
   if (spriteDrawn && !S.dbg.gkstick) return;
   // STAGE-0 PLACEHOLDER (deliberately simple diagnostic — NOT final art):
   // feet/root, body spine, head, hands/reach origin + rest spread, facing, state.
@@ -5362,7 +5527,7 @@ function ptDrawKeeper(dt) {
     }
   }
 }
-function ptKick(fam, label, Dopt, force, charge, tgtDist) {
+function ptKick(fam, label, Dopt, force, charge, tgtDist, aim) {
   // tgtDist = AUTHORITATIVE intended target distance (m) for the target-
   // solved INSIDE_R setup — the engine-integration path (world.py kicks
   // carry dist(ball, target)). The legacy Dopt nominal is NOT player aim
@@ -5377,6 +5542,7 @@ function ptKick(fam, label, Dopt, force, charge, tgtDist) {
   // (match AI, engine, trivela geometry selection) reads this path.
   const t = S.pt, p = t.p, b = t.b;
   if (!b.ctrl || t.kick) return;
+  if (aim) return ptKickAimed(t, fam, label, aim);                 // RECEIVING + PASSING V1: a pass to a point the simulation chose
   const D = Dopt || (fam === "SHORT" ? 14 : fam === "LOFT" ? 22 : 20);
   let [v0, vz] = ptFam(fam, D);
   const tx = p.x + Math.cos(p.facing) * D, ty = p.y + Math.sin(p.facing) * D;
@@ -5566,12 +5732,119 @@ function ptShowcaseStep(t) {
   sh.idx++;
   sh.nextAt = t.now + 2.4;          // anim (<=1 s) + readable pause
 }
+// ═══ AUTHORITATIVE STRIDE CLOCK + BOOT PLAN (DRIBBLING V1) ══════════════════════════════════════════════════════════════════════════
+// The simulation keeps its own gait phase and its own idea of where both boots are. This is what makes a dribble touch able to happen
+// through a real foot WITHOUT handing the decision to the renderer: the phase law and the boot plan are shared with the presentation
+// (ofBootPlan in of_loco.js), so animation ON and animation OFF see identical boots and produce identical touches.
+// Nothing here is random and nothing here reads presentation state.
+function ptGaitStep(t, v) {
+  t.tickN = (t.tickN || 0) + 1;
+  const p = t.p, legLen = p.legLen || PT.LEG_REF;
+  const P = (typeof ofLocoParams === "function") ? ofLocoParams(v) : { step: 1.0, stance: 0.45 };
+  const step = P.step * legLen, cadence = step > 1e-6 ? v / step : 0;
+  if (p.gaitPhase === undefined) { p.gaitPhase = 0.08; p.gaitSettled = true; }
+  if (v > PT.IDLE_V) { p.gaitPhase = (p.gaitPhase + PT_DT * cadence / 2) % 1; p.gaitSettled = false; }
+  else if (!p.gaitSettled) {                                                                      // settle to a double-support phase, as the presentation does
+    const r0 = PT.REST_PHASE, cand = r0.map(r => ((r - p.gaitPhase) % 1 + 1) % 1), k = cand[0] < cand[1] ? 0 : 1;
+    const adv = PT_DT * PT.SETTLE_CAD / 2;
+    if (cand[k] <= adv) { p.gaitPhase = r0[k]; p.gaitSettled = true; } else p.gaitPhase = (p.gaitPhase + adv) % 1;
+  }
+  const dir = v > 0.3 ? Math.atan2(p.vy, p.vx) : p.facing, dx = Math.cos(dir), dy = Math.sin(dir);
+  const prev = t.boots;
+  t.boots = (typeof ofBootPlan === "function")
+    ? ofBootPlan(p.gaitPhase, P.stance, legLen, p.x, p.y, dx, dy)
+    : { R: { x: p.x, y: p.y, ahead: 0, u: 0, planted: true }, L: { x: p.x, y: p.y, ahead: 0, u: 0.5, planted: true } };
+  for (const sd of ["R", "L"]) {                                                                  // boot world velocity (finite difference, same 60 Hz step)
+    const c = t.boots[sd], q = prev && prev[sd];
+    c.vx = q ? (c.x - q.x) / PT_DT : 0; c.vy = q ? (c.y - q.y) / PT_DT : 0;
+    c.v = Math.hypot(c.vx, c.vy);
+    c.win = (typeof ofBootWindow === "function") ? ofBootWindow(p.gaitPhase, sd === "R" ? 0 : 0.5) : 1;
+  }
+  t.gait = { phase: p.gaitPhase, cadence, step, stance: P.stance, gait: P.gait, settled: p.gaitSettled, dir, legLen };
+}
+// ═══ TOUCH REALISATION (DRIBBLING V1) ══════════════════════════════════════════════════════════════════════════════════════════════
+// The carry law still decides EVERYTHING about the touch: whether possession holds, whether a touch is due, the corridor, the impulse.
+// All this adds is WHEN inside a small window the authorised touch happens, and WHICH boot does it — both computed from the authoritative
+// boot plan, never from the renderer. If no boot can plausibly reach the ball inside the window the touch still fires on the deadline and
+// is recorded as UNREALISED, so the carry model's own escape and loss behaviour is never rescued cosmetically.
+const PT_BALL_R = 0.11;
+function ptBootReach(t) { const B = (typeof OF_BOOT !== "undefined") ? OF_BOOT.reach : 0.30; return B * (t.p.legLen || PT.LEG_REF); }
+// Look ahead over the permitted window and score every (boot, tick) opportunity. Deterministic; no randomness anywhere.
+function ptTouchSelect(t, corr, corrective) {
+  const p = t.p, b = t.b, legLen = p.legLen || PT.LEG_REF, reach = ptBootReach(t) + PT_BALL_R;
+  const P = (typeof ofLocoParams === "function") ? ofLocoParams(Math.hypot(p.vx, p.vy)) : { step: 1, stance: 0.45 };
+  const step = P.step * legLen, cad = step > 1e-6 ? Math.hypot(p.vx, p.vy) / step : 0;
+  const dueIn = Math.max(0, p.touchT || 0);                                                        // s until the law's nominal touch time
+  const maxK = corrective ? 3 : Math.round((dueIn + PT.TOUCH_WIN) / PT_DT);                         // never past the deadline
+  const dirA = Math.hypot(p.vx, p.vy) > 0.3 ? Math.atan2(p.vy, p.vx) : p.facing;
+  const dx = Math.cos(dirA), dy = Math.sin(dirA);
+  const latBall = -(b.x - p.x) * dy + (b.y - p.y) * dx;                                            // + = the ball lies to the player's LEFT
+  const turn = ((corr - dirA) + Math.PI * 3) % (2 * Math.PI) - Math.PI;                            // + = the intended touch turns LEFT
+  let best = null;
+  for (let k = 0; k <= maxK; k++) {
+    const ph = (p.gaitPhase + k * PT_DT * cad / 2) % 1;                                            // the stride clock, advanced
+    const rx = p.x + p.vx * k * PT_DT, ry = p.y + p.vy * k * PT_DT;                                // the root, advanced (constant velocity)
+    const bs = Math.hypot(b.vx, b.vy), decay = Math.max(0, bs - PT.MU_ROLL * k * PT_DT);           // the ball, rolled on
+    const bf = bs > 1e-6 ? (bs + decay) / 2 * k * PT_DT / bs : 0;
+    const bx = b.x + b.vx * bf, by = b.y + b.vy * bf;
+    const boots = (typeof ofBootPlan === "function") ? ofBootPlan(ph, P.stance, legLen, rx, ry, dx, dy) : null;
+    if (!boots) break;
+    for (const sd of ["R", "L"]) {
+      const bo = boots[sd], win = (typeof ofBootWindow === "function") ? ofBootWindow(ph, sd === "R" ? 0 : 0.5) : 1;
+      if (win <= 0) continue;                                                                      // this boot is nowhere near its own plant
+      const gap = Math.hypot(bo.x - bx, bo.y - by) - reach;                                        // <= 0 means the boot can meet the ball
+      let sc = 0;
+      sc -= Math.max(0, gap) * 4.0;                                                                // out of reach is the dominant penalty
+      sc += win * 0.9;                                                                             // prefer the boot at its own plant
+      sc -= k * 0.055;                                                                             // prefer sooner: the law's timing is the baseline
+      const side = sd === "L" ? 1 : -1;
+      sc += Math.max(-0.5, Math.min(0.5, latBall * side * 1.6)) * 0.8;                             // a ball on one side favours that side's boot
+      sc += Math.max(-0.4, Math.min(0.4, turn * side * -0.5)) * 0.9;                               // an inside cut is made with the OUTSIDE boot
+      if (bo.planted) sc -= 1.20;                                                                  // the ball is played by the FREE foot: a boot already bearing weight cannot be moved to it
+      if (t.lastTouchFoot === sd) sc -= PT.SAME_FOOT;                                              // alternation is the default, not a rule
+      if (t.pfoot && sd === t.pfoot) sc += 0.10;                                                   // a small preferred-foot bias; the weak foot stays usable
+      if (!best || sc > best.sc) best = { sc: +sc.toFixed(4), k, foot: sd, gap: +gap.toFixed(4), win: +win.toFixed(3),
+        point: [+bx.toFixed(4), +by.toFixed(4)], boot: [+bo.x.toFixed(4), +bo.y.toFixed(4)], planted: bo.planted,
+        late: +(k * PT_DT - dueIn).toFixed(4) };
+    }
+  }
+  if (!best) return { k: 0, foot: t.pfoot || "R", gap: 99, win: 0, unrealisable: true };            // no boot window at all inside the horizon
+  return best;
+}
+// Gate the authorised touch: fire now, wait for the planned boot, or fire on the deadline as an unrealised touch.
+function ptTouchGate(t, due, corrective, corr) {
+  const p = t.p, pl = t.touchPlan;
+  // a touch cannot come round faster than a boot does
+  const cad = (t.gait && t.gait.cadence) || 0;
+  const minGap = cad > 0.2 ? PT.TOUCH_MIN_HS / cad : 0.12;
+  if (t.lastTouchT !== undefined && t.now - t.lastTouchT < minGap) { if (!pl) return null; }
+  if (pl) {
+    if (!t.b.ctrl) { t.touchPlan = null; return null; }                                            // possession went away while waiting
+    if (t.tickN >= pl.fire) { t.touchPlan = null; return Object.assign({}, pl, { waited: +((t.tickN - pl.made) / 60).toFixed(4) }); }
+    return null;
+  }
+  if (!due) return null;
+  const plan = ptTouchSelect(t, corr, corrective);
+  if (plan.unrealisable) return Object.assign({}, plan, { waited: 0, k: 0 });                       // fire anyway; the law stays in charge
+  if (plan.k <= 0) return Object.assign({}, plan, { waited: 0 });
+  t.touchPlan = Object.assign({}, plan, { made: t.tickN, fire: t.tickN + plan.k });
+  return null;
+}
 function ptStep() {
   const t = S.pt;
   if (!t || !t.on) return;
   t.now += PT_DT;
   if (t.gkStudy && t.gkStudy.active) { ptGkStudyStep(t); ptGkUpdate(t); return; }  // GK positioning study (kinematic ball) — isolated from shots
   ptShowcaseStep(t);               // V2.0.2 showcase sequencer (debug-only)
+  // RECEIVING + PASSING V1: the tick is three phases — every player, then the keeper, then the ball. Single-player play runs exactly
+  // the code it always ran, in the same order; squad play (several outfield players, one ball) runs the SAME per-player law for each.
+  if (t.squad) { ptSquadStep(t); return; }
+  ptPlayerStep(t);
+  ptGkUpdate(t);   // GK V1 Stage 3: keeper perceives/commits/MOVES before the ball advances, so the swept keeper->ball TOI competes in physical order
+  ptBallStep(t);
+}
+// one field player's tick: input / intent -> movement -> facing -> stride clock -> scheduled kick -> carry -> (single-player) regain
+function ptPlayerStep(t) {
   const p = t.p, b = t.b;
   // input -> desired velocity (kicker plants during the shoot animation)
   let dx = 0, dy = 0;
@@ -5581,7 +5854,18 @@ function ptStep() {
     if (t.keys.left) dx -= 1;
     if (t.keys.right) dx += 1;
   }
-  const m = Math.hypot(dx, dy), spd = t.keys.sprint ? PT.VMAX : PT.RUNV;
+  // RECEIVING + PASSING V1.1 — POST-RECEPTION HAND-OFF (squad play only; `t.handoff` is never set in single-player play). After a clean
+  // reception on the move, the receiver's movement intent continues toward his own first-touch ball until the ordinary carry law has touched
+  // it (collection done). It is an INTENT fed through the normal input path — the carry steering and Dribbling V1 touches do the collecting,
+  // at his own contact speed — and it ends the moment a movement key is held, on a kick, if possession is lost, or after a hard time bound.
+  let hSpd = null;
+  if (t.handoff && !t.handoff.end) { const h = t.handoff;
+    if (dx || dy) h.end = "INPUT"; else if (t.kick) h.end = "KICK"; else if (!b.ctrl) h.end = "LOST"; else if (t.now > h.until) h.end = "TIMEOUT";
+    // toward his own ball, never faster than his contact speed, and — world.locomote's arrival principle — never faster than he can brake to
+    // stand with it at his feet: a collection ends at rest with the ball, it does not run on through it (that is a dribble, and needs input)
+    if (!h.end) { dx = b.x - p.x; dy = b.y - p.y; const dB = Math.hypot(dx, dy);
+      hSpd = Math.min(h.v, 0.4 + 0.92 * Math.sqrt(2 * PT.BRAKE_PLANT * Math.max(0, dB - PT_RECV.handoffStand))); h.active = (h.active || 0) + 1; } }
+  const m = Math.hypot(dx, dy), spd = hSpd != null ? hSpd : t.keys.sprint ? PT.VMAX : t.keys.walk ? PT.WALKV : t.keys.jog ? PT.JOGV : PT.RUNV;
   const inCorr = m > 0 ? Math.atan2(dy, dx) : null;   // desired input corridor
   let dvx = 0, dvy = 0;
   if (m > 0 && b.ctrl && !t.kick) {
@@ -5601,6 +5885,25 @@ function ptStep() {
     const spdC = spd * Math.max(0.4, Math.min(1.0, 1.0 - 0.45 * ceS));
     if (dd > 0.12) { dvx = (tx - p.x) / dd * spdC; dvy = (ty - p.y) / dd * spdC; }
   } else if (m > 0) { dvx = dx / m * spd; dvy = dy / m * spd; }
+  if (t.aiGoal && !t.kick && !b.ctrl) {                             // RECEIVING + PASSING V1: off-ball intent of a squad player — the desired velocity
+    const g = t.aiGoal, dg = Math.hypot(g.x - p.x, g.y - p.y);      // toward a goal point with world.locomote's arrival profile (never approach faster
+    const sp = Math.min(g.v, 0.4 + 0.92 * Math.sqrt(2 * PT.BRAKE_PLANT * Math.max(0, dg)));   // than you can brake); the limiter below is unchanged
+    dvx = dg > 0.12 ? (g.x - p.x) / dg * sp : 0; dvy = dg > 0.12 ? (g.y - p.y) / dg * sp : 0;
+  }
+  if (t.kick && t.kick.aim && !t.kick.kicked && typeof PT_RECV !== "undefined") {   // RECEIVING + PASSING V1: an aimed pass's wind-up APPROACHES the ball
+    const k = t.kick, ux = Math.cos(k.dir), uy = Math.sin(k.dir), leg = p.legLen || PT.LEG_REF, sd = k.foot === "L" ? -1 : 1;   // (world.py KICK intent) to the spot behind
+    const gx = b.x - ux * PT_RECV.approachBack * leg + uy * sd * PT_RECV.approachSide * leg, gy = b.y - uy * PT_RECV.approachBack * leg - ux * sd * PT_RECV.approachSide * leg;   // it on the target (his left = (uy, −ux), rig convention)
+    const cx = (gx - p.x) / PT_RECV.approachTau, cy = (gy - p.y) / PT_RECV.approachTau, cm = Math.hypot(cx, cy), cl = Math.min(1, PT_RECV.approachV / Math.max(1e-9, cm));   // line, to the non-striking side,
+    dvx = b.vx + cx * cl; dvy = b.vy + cy * cl;                                                 // keeping pace with the ball
+
+  }
+  // DEFENDING V1 (squad defending drills only; null everywhere else): an action locks input, a lunge / jockey feeds the desired velocity
+  const defO = t.squad && typeof ptDefMotion === "function" ? ptDefMotion(t) : null;
+  if (defO) {
+    if (defO.lock) { dvx = 0; dvy = 0; }
+    if (defO.vDes) { dvx = defO.vDes[0]; dvy = defO.vDes[1]; }
+    if (defO.vmax) { const dm = Math.hypot(dvx, dvy); if (dm > defO.vmax) { dvx *= defO.vmax / dm; dvy *= defO.vmax / dm; } }
+  }
   // world.locomote LOCOMOTION V1 limiter (direction-decomposed, mirror)
   const cur = Math.hypot(p.vx, p.vy);
   const ax = dvx - p.vx, ay = dvy - p.vy;
@@ -5619,15 +5922,20 @@ function ptStep() {
     if (am > stp) { p.vx += ax / am * stp; p.vy += ay / am * stp; }
     else { p.vx = dvx; p.vy = dvy; }
   }
-  t.inDir = m > 0 ? inCorr : null;
+  if (defO && defO.v) { p.vx = defO.v[0]; p.vy = defO.v[1]; }   // DEFENDING V1: the slide's own authoritative velocity (launch, uniform deceleration)
+  t.inDir = m > 0 && !(defO && defO.lock) ? inCorr : null;
   p.x = Math.max(-2, Math.min(107, p.x + p.vx * PT_DT));   // world bounds (ported)
   p.y = Math.max(-2, Math.min(70, p.y + p.vy * PT_DT));
   // facing (ported): faces velocity when moving, else the ball
   const v = Math.hypot(p.vx, p.vy);
-  const want = v > 0.7 ? Math.atan2(p.vy, p.vx) : Math.atan2(b.y - p.y, b.x - p.x);
+  const want = (defO && defO.facing != null) ? defO.facing                                              // DEFENDING V1: jockey / tackle facing at any speed
+             : (t.kick && t.kick.aim && !t.kick.kicked) ? Math.atan2(t.kick.aim.y - p.y, t.kick.aim.x - p.x)   // aimed pass wind-up: turn to the target
+             : (t.faceDir != null && v <= 0.7) ? t.faceDir                                             // squad receiver: face the ball's incoming line, not its position
+             : v > 0.7 ? Math.atan2(p.vy, p.vx) : Math.atan2(b.y - p.y, b.x - p.x);
   const df = ((want - p.facing) + Math.PI * 3) % (2 * Math.PI) - Math.PI;
   const rate = Math.max(4.0, Math.min(7.0, 7.0 - v * 0.30)) * PT_DT;  // athletic hips (V1)
   p.facing += Math.abs(df) <= rate ? df : Math.sign(df) * rate;
+  ptGaitStep(t, v);                                        // AUTHORITATIVE stride clock + boot plan (see ptGaitStep)
   // scheduled shot: impulse fires exactly at the contact instant
   if (t.kick) {
     const k = t.kick;
@@ -5642,6 +5950,11 @@ function ptStep() {
       // LEFT to re-cross the aim line at the target. After this rotation the
       // flight is completely free — no steering, no homing.
       let launchDir = k.dir;
+      if (k.aim) {                                                   // RECEIVING + PASSING V1: world.py Body.kick — D, v0, vz and the direction from the
+        const D = Math.max(0.5, Math.hypot(k.aim.x - b.x, k.aim.y - b.y));   // ball's own position at the contact instant; no curl setup on a pass
+        const L = ptFam(k.fam, D); k.v0 = L[0]; k.vz = L[1]; k.aimD = D;
+        launchDir = Math.atan2(k.aim.y - b.y, k.aim.x - b.x); k.launchDir = launchDir; b.curve = null;
+      } else
       if ((k.tech === "INSIDE" || k.tech === "INSIDE_FINISH") && k.foot === "R") {
         const cc = k.charge != null ? k.charge : 0.5;
         if (PT_CURVE.mode === "v2") {
@@ -5695,9 +6008,11 @@ function ptStep() {
     const sep = ((b.x - p.x) * (b.vx - p.vx) + (b.y - p.y) * (b.vy - p.vy)) / Math.max(d, 1e-9);
     if (d <= 0.95) t.ctrlState = "SECURE";
     else if (d <= 4.2 || sep < -0.3) t.ctrlState = (d > 2.6 && sep > 0.3) ? "ESCAPING" : "EXPOSED";
-    else { b.ctrl = false; t.ctrlState = null; t.last = "LOOSE (escaped control envelope)"; }
+    else { b.ctrl = false; t.ctrlState = null; t.touchPlan = null; t.last = "LOOSE (escaped control envelope)"; }
     if (b.ctrl && t.kick) { /* wind-up: no carry touches; the ball keeps
         rolling under normal physics until the authoritative contact */ }
+    else if (b.ctrl && t.squad && t.squad.spec.defending && t.squad.ctx[t.squad.cur] && t.squad.ctx[t.squad.cur].react && t.squad.ctx[t.squad.cur].react.carryHold) {
+      /* TACKLED-PLAYER V1: a stumbling carrier makes no touches until he is balanced; the ball rolls on (the envelope law still applies) */ }
     else if (b.ctrl) {
       p.touchT -= PT_DT;
       // CONTROLLED DRIBBLING V1 — mirror of world.py carry_touch: solved
@@ -5724,6 +6039,20 @@ function ptStep() {
             t.touchN++;
             t.last = "SETTLE TOUCH";
             t.touchInfo = { d, u, T: 0.18, sc: 0.30, turn: 0, kind: "SETTLE" };
+            // a settle happens at walking pace or at rest, where both boots are near the ball: the nearer free boot plays it. Same
+            // instrumentation as a carry touch so the presentation can realise it and the review can score it.
+            { let pick = t.pfoot || "R", bd = 1e9;
+              for (const sd of ["R", "L"]) { const bo = t.boots && t.boots[sd]; if (!bo) continue;
+                const q = Math.hypot(bo.x - b.x, bo.y - b.y) + (bo.planted ? 0.25 : 0) + (t.lastTouchFoot === sd ? 0.10 : 0);
+                if (q < bd) { bd = q; pick = sd; } }
+              const bo = t.boots && t.boots[pick];
+              t.touchInfo.foot = pick; t.touchInfo.waited = 0; t.touchInfo.late = 0; t.touchInfo.planned = false;
+              t.touchInfo.gap = bo ? +(Math.hypot(bo.x - b.x, bo.y - b.y) - ptBootReach(t) - PT_BALL_R).toFixed(4) : null;
+              t.touchInfo.phase = +(p.gaitPhase || 0).toFixed(3); t.touchInfo.bootPlan = bo ? [+bo.x.toFixed(4), +bo.y.toFixed(4)] : null;
+              t.touchInfo.point = [b.x, b.y]; t.touchInfo.bootReal = t.touchInfo.gap;
+              t.lastTouchFoot = pick;
+              t.lastTouch = Object.assign({ tick: t.tickN, t: +t.now.toFixed(4) }, t.touchInfo);
+              (t.touchLog ||= []).push(t.lastTouch); if (t.touchLog.length > 400) t.touchLog.shift(); }
             const presS = ptPresDir(t);
             const baseS = DRIB3_MIRROR[presS] || presS;
             if (DRIB3[baseS]) {
@@ -5743,7 +6072,10 @@ function ptStep() {
           const turnA = Math.abs(((corr - bdir) + Math.PI * 3) % (2 * Math.PI) - Math.PI);
           t.liveTurn = turnA;
           const corrective = turnA > 0.52 && spacing >= 0.10;
-          if (p.touchT <= 0 || corrective) {
+          // DRIBBLING V1: the touch is authorised exactly as before; the gate only chooses WHEN inside a bounded window and WHICH boot.
+          const earlyS = Math.min(PT.TOUCH_EARLY, 0.45 * Math.max(0.18, Math.min(0.48, 0.18 + 0.036 * pv)));
+          const go = ptTouchGate(t, p.touchT <= earlyS || corrective, corrective, corr);
+          if (go) {
             const tt = Math.max(0, Math.min(1, (turnA - 0.52) / 1.40));
             const tf = 1 - 0.7 * tt * tt * (3 - 2 * tt);
             const T = Math.max(0.18, Math.min(0.48, 0.18 + 0.036 * pv));
@@ -5756,29 +6088,43 @@ function ptStep() {
             const rpx = b.vx - (b.vx * ux + b.vy * uy) * ux;
             const rpy = b.vy - (b.vx * ux + b.vy * uy) * uy;
             b.vx = ux * u + 0.15 * rpx; b.vy = uy * u + 0.15 * rpy; b.vz = 0;
-            p.touchT = T; t.lastTouchT = t.now;
+            // the next touch is due T after the law's PREVIOUS nominal time, not T after this one. Without that correction an early fire
+            // pulls the schedule earlier every time and the touch rate ratchets up to one per half-stride.
+            p.touchT = Math.max(0.05, T - (go.late || 0)); t.lastTouchT = t.now;
             t.touchN++;
             t.last = corrective ? "CORRECTIVE TOUCH" : "DRIBBLE TOUCH";
             t.touchInfo = { d, u, T, sc, turn: turnA, kind: corrective ? "CORRECTIVE" : "NORMAL" };
-            // DRIBBLE ANIMATION V2/V3: physics event -> pose selection
+            // the realisation facts: which boot the simulation chose, how long the authorised touch waited for it, and how far that boot
+            // was from the ball surface when it fired. `unrealisable` marks a touch no boot could reach inside the window.
+            const bo = t.boots && t.boots[go.foot];
+            t.touchInfo.foot = go.foot; t.touchInfo.waited = go.waited; t.touchInfo.gap = go.gap; t.touchInfo.late = go.late;
+            t.lastTouchFoot = go.foot;
+            t.touchInfo.win = go.win; t.touchInfo.planned = go.k > 0; t.touchInfo.unrealisable = !!go.unrealisable;
+            t.touchInfo.bootPlan = go.boot || (bo ? [+bo.x.toFixed(4), +bo.y.toFixed(4)] : null);
+            t.touchInfo.point = go.point || [b.x, b.y];
+            t.touchInfo.phase = +(p.gaitPhase || 0).toFixed(3);
+            t.touchInfo.bootReal = bo ? +Math.hypot(bo.x - b.x, bo.y - b.y).toFixed(4) : null;
+            t.lastTouch = Object.assign({ tick: t.tickN, t: +t.now.toFixed(4) }, t.touchInfo);
+            (t.touchLog ||= []).push(t.lastTouch); if (t.touchLog.length > 400) t.touchLog.shift();
+            // DRIBBLE ANIMATION V2/V3: pose selection (SPRITE presentation only — the skeletal harness uses t.lastTouch)
             const presT = ptPresDir(t);
             const baseT = DRIB3_MIRROR[presT] || presT;
             if (DRIB3[baseT]) {
               const pick = drib3Pick(t, corrective, turnA, baseT, !!DRIB3_MIRROR[presT]);
               drib3Schedule(t, pick, T, baseT);
-              t.touchInfo.foot = pick.foot; t.touchInfo.pose = pick.pose;
+              t.touchInfo.pose = pick.pose;                                          // the FOOT is the simulation's (go.foot), not the sprite library's
               drib3LogContact(t, pick, presT, baseT);
             } else {
               const pick = drib2Pick(t, corrective, turnA);
               drib2Schedule(t, pick, T);
-              t.touchInfo.foot = pick.foot; t.touchInfo.pose = pick.pose;
+              t.touchInfo.pose = pick.pose;                                          // the FOOT is the simulation's (go.foot), not the sprite library's
               drib2LogContact(t, pick);
             }
           }
         }
       }
     }
-  } else if (t.now >= b.exclT) {
+  } else if (!t.squad && t.now >= b.exclT) {
     // regain control: world.interact CLEAN branch (port), rv < 5.5
     const d = Math.hypot(p.x - b.x, p.y - b.y);
     const rv = Math.hypot(b.vx - p.vx, b.vy - p.vy);
@@ -5803,7 +6149,10 @@ function ptStep() {
       t.last = "CONTROL";
     }
   }
-  ptGkUpdate(t);   // GK V1 Stage 3: keeper perceives/commits/MOVES before the ball advances, so the swept keeper->ball TOI competes in physical order
+}
+// the authoritative ball: keeper contact, frame, ground, friction, curve, goal crossing, net (world.step_ball port)
+function ptBallStep(t) {
+  const b = t.b;
   // ball physics (world.step_ball port) + accepted net-catch behaviour
   if (t.net) {
     if (t.net.phase === "push") {
@@ -6073,9 +6422,9 @@ function drawPlaytest(dt) {
   if (!GOALFX.occlusion) {
     // depth order: a ball north of the player is BEHIND him — draw it first
     t._ballBehind = b.y < p.y - 0.05 && b.z < 1.6;
-    if (t._ballBehind) drawBallAt(b.x, b.y, b.z, Math.hypot(b.vx, b.vy), dt);
+    if (t._ballBehind) drawBallAt(b.x, b.y, b.z, Math.hypot(b.vx, b.vy), dt, b);
     ptDrawPlayerSprite(dt);
-    if (!t._ballBehind) drawBallAt(b.x, b.y, b.z, Math.hypot(b.vx, b.vy), dt);
+    if (!t._ballBehind) drawBallAt(b.x, b.y, b.z, Math.hypot(b.vx, b.vy), dt, b);
   }
   if (S.dbg.dribsync && t.dbgTouch && t.now <= t.dbgTouch.until) {
     const g = t.dbgTouch;
@@ -6297,7 +6646,7 @@ function drawAnimTest(dt) {
                   Math.round(im.width * s), Math.round(im.height * s));
   }
   drawBallAt(t.ball.p[0], t.ball.p[1], t.ball.p[2],
-             Math.hypot(t.ball.v[0], t.ball.v[1]), dt);
+             Math.hypot(t.ball.v[0], t.ball.v[1]), dt, {key:t.ball,x:t.ball.p[0],y:t.ball.p[1],z:t.ball.p[2],vx:t.ball.v[0],vy:t.ball.v[1]});
   ctx.fillStyle = "#ffd34d"; ctx.font = "bold " + uipx(13) + "px ui-monospace, monospace";
   ctx.fillText("ANIMATION PROTOTYPE — SYNTHETIC (" + v.st + "  frame " + v.f +
     (t.age < AT.kickT ? "  kick in " + (AT.kickT - t.age).toFixed(2) + "s" : "  KICKED") + ")",
@@ -6351,25 +6700,17 @@ function drawOccDebug(sample) {
                uipx(14), cv.height - uipx(70));
 }
 // ═══ BALL: procedural crisp pixel-art football + true height rendering ═════
-// Physical radius stays authoritative (0.11 m); the sprite uses its own
-// readability calibration. Sprites are built per-pixel on tiny grids and
-// nearest-upscaled — no antialiasing, no raster asset. 4 spin phases give
-// perceivable rotation from travel distance (cosmetic, renderer-owned).
-const BALL_VIS_R = 0.19;
-// PIXELLAB ANIMATED BALL SPRITE: 8 authored rotational phases of one
-// football (assets/visual_v1/originals/ball_pixellab, 24x24 each, sheet
-// 192x24; see RECORD.json for full generation provenance). Runtime only
-// SELECTS among the discrete authored frames — never rotates the bitmap.
-// Visual rotation derives from authoritative physical motion:
-//   rolling:  omega = horizontal speed / physical radius (0.11 m),
-//             display-capped so phase stepping stays readable;
-//   airborne: the launch omega is retained through flight and bounce;
-//   at rest:  rotation stops and the last orientation is preserved.
+// Surface art uses the plain white physics sphere: 0.11 m radius, no readability enlargement.
+const BALL_VIS_R = TouchlineBall.radius;
+// Legacy sprite constants retained for existing debug hooks. Ball art uses continuous sphere rotation.
 const BALL_FRAMES = 8, BALL_SRC = 24;
-const BALL_PHYS_R = 0.11;             // authoritative; never used for visuals sizing
+const BALL_PHYS_R = 0.11;             // authoritative; shared by contact geometry and surface art
 const BALL_OMEGA_MAX = 16;            // rad/s display cap (~2.5 rev/s legible)
 const _ballRot = { th: 0, om: 0 };
-function drawBallAt(xw, yw, z, speed, dt) {
+// Original authored sprite, retained verbatim for visual comparison.
+const ORIGINAL_SPRITE_R = 0.19;
+function drawOriginalSpriteBallAt(xw, yw, z, speed, dt) {
+  if (typeof gk3dOwnsBall === "function" && gk3dOwnsBall()) return;   // SKELETAL_3D backend renders the ball as 3D geometry near / in the keeper's hands (presentation only)
   const grounded = z <= 0.02;
   if (grounded) _ballRot.om = speed > 0.05 ? Math.min(speed / BALL_PHYS_R, BALL_OMEGA_MAX) : 0;
   _ballRot.th += _ballRot.om * (dt || 0);   // airborne keeps its spin; bounce never resets
@@ -6381,10 +6722,10 @@ function drawBallAt(xw, yw, z, speed, dt) {
   // actual 3D camera-space depth (bpos.d — includes airborne height);
   // shadow radius from the ground point's depth (gpos.d) so the shadow
   // stays visually attached while its position remains the authoritative
-  // (x,y,0). Same shared depthScale law as players. BALL_VIS_R 0.19
+  // (x,y,0). Same shared depthScale law as players. ORIGINAL_SPRITE_R 0.19
   // keeps its accepted size at czRef exactly.
-  const r = Math.max(2, Math.round(BALL_VIS_R * S.pxPerM * depthScale(bpos.d) * RIG.zoom * RES));
-  const rg = Math.max(2, Math.round(BALL_VIS_R * S.pxPerM * depthScale(gpos.d) * RIG.zoom * RES));
+  const r = Math.max(2, Math.round(ORIGINAL_SPRITE_R * S.pxPerM * depthScale(bpos.d) * RIG.zoom * RES));
+  const rg = Math.max(2, Math.round(ORIGINAL_SPRITE_R * S.pxPerM * depthScale(gpos.d) * RIG.zoom * RES));
   const flat = flattenAt(xw, yw);
   const sh = 1 / (1 + z * 0.55);            // higher ball: smaller, fainter
   ctx.beginPath();
@@ -6401,7 +6742,7 @@ function drawBallAt(xw, yw, z, speed, dt) {
   // the sprite draws at): near balls get the detailed 24px master, far
   // balls legitimately engage the micro LOD when they genuinely project
   // below 7 backing px.
-  const dpx = 2 * BALL_VIS_R * S.pxPerM * depthScale(bpos.d) * RIG.zoom * RES;
+  const dpx = 2 * ORIGINAL_SPRITE_R * S.pxPerM * depthScale(bpos.d) * RIG.zoom * RES;
   if (dpx < 7 && S.images.ballMicro) {
     const n = Math.max(7, Math.min(11, Math.round(dpx)));
     const m = S.images.ballMicro[n];
@@ -6417,8 +6758,20 @@ function drawBallAt(xw, yw, z, speed, dt) {
     ctx.drawImage(S.images.ballSheet, phase * BALL_SRC, 0, BALL_SRC, BALL_SRC,
                   Math.round(bpos.x - out / 2), Math.round(bpos.y - out / 2), out, out);
 }
+function drawBallAt(xw, yw, z, speed, dt, motion) {
+  if(TouchlineBall.getDesign()==='sprite')return drawOriginalSpriteBallAt(xw,yw,z,speed,dt);
+  if (typeof gk3dOwnsBall === "function" && gk3dOwnsBall()) return;
+  const point=sproj3(xw,Math.max(0,z)+TouchlineBall.radius,yw),ground=sproj3(xw,0,yw);
+  if(point.d<.5)return;
+  // Match the 3D character camera: projected metres use focal length / camera depth.
+  const radius=BALL_VIS_R*PROJ.fpx/point.d*RIG.zoom*RES;
+  const m=motion||{x:xw,y:yw,z,vx:speed,vy:0};
+  TouchlineBall.draw(ctx,{point,ground,radius,flat:flattenAt(xw,yw),
+    basis:{r:[PROJ.r.x,PROJ.r.y,PROJ.r.z],u:[PROJ.u.x,PROJ.u.y,PROJ.u.z],f:[PROJ.f.x,PROJ.f.y,PROJ.f.z]},
+    key:m.key||motion||'legacy-ball',motion:m,dt:dt||0,frame:S.frameNo});
+}
 function drawBall(ball, dt) {
-  drawBallAt(ball.x, ball.y, ball.z || 0, Math.hypot(ball.vx, ball.vy), dt);
+  drawBallAt(ball.x, ball.y, ball.z || 0, Math.hypot(ball.vx, ball.vy), dt, {...ball,key:'match-ball'});
   if (S.dbg.ball) {
     const sp = sproj3(ball.x, ball.z || 0, ball.y);
     ctx.fillStyle = "#ffd23c"; ctx.font = uipx(10) + "px monospace"; ctx.textAlign = "center";
@@ -6484,16 +6837,16 @@ function drawGoalGeoDebug(side) {
   strokeSeg3(gx, 2.44, 30.34, gx, 2.44, 37.66);
 }
 function draw(sample, dt) {
+  if (typeof TouchlineRain !== "undefined") TouchlineRain.step(dt);
   S.frameNo = (S.frameNo || 0) + 1;    // per-frame cache key (net projections)
   ctx.imageSmoothingEnabled = false;
-  const bg = ctx.createLinearGradient(0, 0, 0, cv.height);
-  bg.addColorStop(0, "#0a0b10"); bg.addColorStop(0.5, "#12141b"); bg.addColorStop(1, "#0b0e12");
-  ctx.fillStyle = bg;
+  ctx.fillStyle = "#284a31"; // Quiet empty surround for the pitch/character art direction.
   ctx.fillRect(0, 0, cv.width, cv.height);
   drawGroundPerspective();
-  drawStadium();
-  drawFarBarrier();
+  if (typeof TouchlineStadium !== "undefined") { TouchlineStadium.ground(ctx, sproj3); TouchlineStadium.draw(ctx, sproj3, "far"); }
   drawMarkings();
+  if (typeof TouchlineRain !== "undefined") TouchlineRain.ground(ctx, sproj3, RES);
+  if (typeof CornerFlags !== "undefined") CornerFlags.draw(ctx, sproj3, typeof FLAG_TIME === "number" ? FLAG_TIME : performance.now() / 1000, "far");
   if (S.dbg.occ && sample) drawOccDebug(sample);
   if (S.dbg.grid) drawGrid();
   const ents = [];
@@ -6549,7 +6902,7 @@ function draw(sample, dt) {
     else if (e.artPart) drawGoalArtCells(e.artPart.g, e.artPart.panel, e.artPart.lo, e.artPart.hi);
     else if (e.frameMember) drawGoalFrameMember(e.frameMember, e.cap);
     else if (e.ptP) ptDrawPlayerSprite(dt);
-    else if (e.ptB) { const b = S.pt.b; drawBallAt(b.x, b.y, b.z, Math.hypot(b.vx, b.vy), dt); }
+    else if (e.ptB) { const b = S.pt.b; drawBallAt(b.x, b.y, b.z, Math.hypot(b.vx, b.vy), dt, b); }
     else if (e.ptGk) ptDrawKeeper(dt);
     else drawGoal(e.goal);
   }
@@ -6566,7 +6919,9 @@ function draw(sample, dt) {
     ctx.strokeStyle = "#ff5ce0"; ctx.lineWidth = uipx(2);
     ctx.strokeRect(t.x - 7, t.y - 7, 14, 14);
   }
-  drawNearBarrier();
+  if (typeof TouchlineRain !== "undefined" && !(typeof OFPLAY !== "undefined" && OFPLAY.on && OFPLAY.mixed)) TouchlineRain.air(ctx, sproj3, RES);
+  if (typeof CornerFlags !== "undefined" && !(typeof OFPLAY !== "undefined" && OFPLAY.on && OFPLAY.mixed)) CornerFlags.draw(ctx, sproj3, typeof FLAG_TIME === "number" ? FLAG_TIME : performance.now() / 1000, "near");
+  if (typeof TouchlineStadium !== "undefined" && !(typeof OFPLAY !== "undefined" && OFPLAY.on && OFPLAY.mixed)) TouchlineStadium.draw(ctx, sproj3, "near");
   drawReadout(sample);
 }
 function drawReadout(sample) {

@@ -58,3 +58,8 @@ Claude outputs/
 __pycache__/
 *.pyc
 .DS_Store
+
+# ── local browser profiles / exported handoff bundles (not source) ──
+chrome-manifest/
+/*.zip
+review_artifacts/*.zip

@@ -1,0 +1,94 @@
+{
+ "seed7": {
+  "seed": 7,
+  "shots": 120,
+  "committed": 116,
+  "contacts": 44,
+  "held": 16,
+  "plans": 16,
+  "byKind": {
+   "THROW": 5,
+   "PUNT": 2,
+   "ROLL": 6,
+   "PUTDOWN": 3
+  },
+  "released": 16,
+  "done": 16,
+  "startDown": [],
+  "startPhases": {
+   "SET": 6,
+   "REPOSITION": 1,
+   "HOLD": 6,
+   "STRAIGHTEN": 3
+  },
+  "heldAfterRelease": [],
+  "anatomyFlagShots": [
+   [
+    6,
+    2
+   ],
+   [
+    37,
+    2
+   ],
+   [
+    73,
+    1
+   ]
+  ],
+  "residualPrevMax": 0.041,
+  "residualPrevMean": 0.0234,
+  "handSurfaceMax": 0.055,
+  "footSurfaceMax": 0.009,
+  "assertShotsOnPlanBoundaries": [],
+  "assertShotsOther": [
+   18,
+   25,
+   86,
+   98
+  ],
+  "errors": []
+ },
+ "seed11": {
+  "seed": 11,
+  "shots": 160,
+  "committed": 152,
+  "contacts": 60,
+  "held": 18,
+  "plans": 18,
+  "byKind": {
+   "PUTDOWN": 4,
+   "ROLL": 8,
+   "PUNT": 2,
+   "THROW": 4
+  },
+  "released": 18,
+  "done": 18,
+  "startDown": [],
+  "startPhases": {
+   "SET": 5,
+   "HOLD": 1,
+   "STRAIGHTEN": 12
+  },
+  "heldAfterRelease": [],
+  "anatomyFlagShots": [
+   [
+    114,
+    1
+   ]
+  ],
+  "residualPrevMax": 0.041,
+  "residualPrevMean": 0.0225,
+  "handSurfaceMax": 0.056,
+  "footSurfaceMax": 0.01,
+  "assertShotsOnPlanBoundaries": [],
+  "assertShotsOther": [
+   14,
+   94,
+   120,
+   149,
+   154
+  ],
+  "errors": []
+ }
+}

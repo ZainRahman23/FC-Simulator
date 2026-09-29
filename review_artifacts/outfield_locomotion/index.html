@@ -1,0 +1,165 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Touchline — Outfield Locomotion V1</title><style>
+:root{--bg:#0e1116;--pane:#151a21;--ink:#e8e6e0;--dim:#9aa4b2;--acc:#ffd54a;--ok:#48e08a;--bad:#ff6b6b;--line:#242b35}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:32px 22px 90px}
+h1{font-size:25px;margin:0 0 6px;letter-spacing:-.01em}h2{font-size:17px;margin:38px 0 10px;color:var(--acc);border-bottom:1px solid var(--line);padding-bottom:6px}
+h3{font-size:14px;margin:22px 0 6px;color:#cfd6e0}
+p,li{color:#cdd4de}.dim{color:var(--dim)}code,kbd{font-family:ui-monospace,Menlo,monospace;font-size:12.5px}
+kbd{background:#1e242d;border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:1px 6px;color:#fff}
+.lede{background:var(--pane);border:1px solid var(--line);border-left:3px solid var(--acc);padding:14px 16px;border-radius:0 8px 8px 0;margin:16px 0}
+.url{background:#101720;border:1px solid #27424f;border-radius:8px;padding:14px 16px;margin:14px 0}
+.url a{color:#7fd0ff;font-family:ui-monospace,Menlo,monospace;font-size:13px;word-break:break-all;text-decoration:none}
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:12.5px;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:5px 9px;text-align:right;white-space:nowrap}
+th{background:#1a212a;color:#b9c2ce;font-weight:600;text-align:right;position:sticky;top:0}
+td:first-child,th:first-child,td.l,th.l{text-align:left}
+tbody tr:nth-child(odd){background:#12171e}
+.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:#ffb454}
+figure{margin:12px 0 22px}figure img{width:100%;height:auto;border:1px solid var(--line);border-radius:7px;background:#16301a;display:block}
+figcaption{color:var(--dim);font-size:12.5px;margin-top:7px}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin:10px 0;font-size:12.5px;color:var(--dim)}
+.legend b{font-weight:600}.sw{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:820px){.grid{grid-template-columns:1fr}}
+ul{padding-left:20px}li{margin:3px 0}
+.k{display:inline-block;min-width:118px;color:var(--dim)}
+</style></head><body><div class="wrap">
+<h1>Touchline — Outfield Locomotion V1</h1>
+<p class="dim">Idle, walk, jog, run, sprint on the real pitch, driven by the simulation's own player law. No ball, no dribbling.</p>
+
+<div class="lede"><b>Simulation decides what happens; animation visually explains what happened.</b>
+The authoritative player law is untouched: the same <code>ptStep</code> acceleration, braking, lateral and facing limits the playtest
+always used. The locomotion reads that state and produces a pose. It never writes position, velocity, facing, ball state or timing,
+and it contains no randomness. Animation ON and animation OFF produce bit-identical authoritative traces (gate below).</p></div>
+
+<h2>Play it</h2>
+<div class="url"><a href="http://127.0.0.1:8124/sandbox/visual/match.html?ofPlay=1&amp;fps=60">http://127.0.0.1:8124/sandbox/visual/match.html?ofPlay=1&amp;fps=60</a></div>
+<p><span class="k">Move</span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> or the arrow keys.<br>
+<span class="k">Speed gears</span>hold <kbd>Q</kbd> to walk (1.5 m/s desired), hold <kbd>E</kbd> to jog (3.0), press nothing to run (5.0), hold <kbd>Shift</kbd> to sprint (8.2).<br>
+<span class="k">Body</span><kbd>1</kbd> short 1.70 · <kbd>2</kbd> average 1.83 · <kbd>3</kbd> tall 1.96 · <kbd>4</kbd> short-compact 1.66 · <kbd>5</kbd> average-lean 1.80 · <kbd>6</kbd> tall-power 2.00<br>
+<span class="k">View</span><kbd>X</kbd> Mixed / page · <kbd>G</kbd> camera follow · <kbd>V</kbd> foot and root markers · <kbd>H</kbd> HUD<br>
+<span class="k">Load</span><kbd>N</kbd> 10 extra runners · <kbd>B</kbd> 21 extra runners<br>
+<span class="k">Playtest</span><kbd>R</kbd> reset · <kbd>M</kbd> pause · <kbd>,</kbd> slow motion · <kbd>.</kbd> single step · <kbd>Esc</kbd> leave</p>
+<p class="dim">The gears are <b>desired-speed intent</b>, exactly like Shift. They feed the same acceleration limiter; they are not a clamp on
+the animation. Walking is a walk because the player is actually moving at walking speed.</p>
+
+<div class="legend"><span><span class="sw" style="background:#48e08a"></span><b>green</b> planted, ankle locked</span>
+<span><span class="sw" style="background:#ffd54a"></span><b>yellow</b> toe pivot</span>
+<span><span class="sw" style="background:#7fd0ff"></span><b>blue</b> stepping</span>
+<span><span class="sw" style="background:#ff9a3c"></span><b>orange</b> swing</span>
+<span><span class="sw" style="background:#ff6b6b"></span><b>red cross</b> authoritative root</span>
+<span><span class="sw" style="background:#b18cff"></span><b>violet ring</b> presentation pelvis</span></div>
+
+<h2>Architecture</h2>
+<p>One continuous parametric cycle, not a clip library. Five parameter sets (idle, walk, jog, run, sprint) are anchored at speeds and
+blended piecewise-linearly by the authoritative speed, so there is a single pose generator and no blend tree of canned animations.</p>
+<ul>
+<li><b>Stride from the body, not the clip.</b> Step length is a multiple of the player's own leg length, so cadence
+<code>v / (step x legLen)</code> falls out of the authoritative speed. A tall player takes longer, slower strides at the same speed.</li>
+<li><b>Phase is continuous.</b> One phase accumulator advances by cadence and is never reset by a gait change; the right heel strikes at
+phase 0, the left at 0.5. Changing gait changes the blend weights, not the phase, so legs never swap or restart.</li>
+<li><b>Pelvis height is geometric.</b> It comes from a forward-kinematics pass on the stance leg's own sole, not from an authored bob
+curve; in flight it interpolates to the computed landing height. A leg entering stance takes the pelvis over gradually.</li>
+<li><b>Contact solve.</b> Planted feet are locked in world space by two-bone leg IK with a forward knee pole, a late-stance toe pivot,
+a heel-strike forefoot roll, and a bounded pelvis drop. Every metre-valued quantity scales with leg length.</li>
+<li><b>Direction basis.</b> The legs play along the movement direction with the trunk twisting toward the facing up to 55 degrees;
+beyond 110 degrees the cycle back-pedals along the facing, with hysteresis at 88 degrees and a slewed leg basis. Lean and roll come from
+filtered authoritative acceleration. There are not eight directional libraries.</li>
+<li><b>The presentation root is the simulation root.</b> Sliding is never hidden by moving the player. The red cross (authoritative) and
+violet ring (presentation pelvis) are drawn together in the harness so the two can be compared directly.</li>
+</ul>
+
+<h3>Speed and gait</h3>
+<table><thead><tr><th class="l">Gait</th><th>Anchor speed</th><th>Step (x leg length)</th><th>Stance fraction</th><th>Observed entry</th><th>Cycle stride, short 0.803 m</th><th>Cycle stride, average 0.865 m</th><th>Cycle stride, tall 0.961 m</th></tr></thead><tbody><tr><td class="l">IDLE</td><td>0.0 m/s</td><td>0.30</td><td>0.80</td><td>below 0.6 m/s</td><td>—</td><td>—</td><td>—</td></tr><tr><td class="l">WALK</td><td>1.45 m/s</td><td>0.80</td><td>0.62</td><td>0.8 m/s</td><td>1.28</td><td>1.38</td><td>1.54</td></tr><tr><td class="l">JOG</td><td>3.00 m/s</td><td>1.08</td><td>0.42</td><td>2.3 m/s</td><td>1.73</td><td>1.87</td><td>2.08</td></tr><tr><td class="l">RUN</td><td>5.50 m/s</td><td>1.38</td><td>0.36</td><td>4.3 m/s</td><td>2.22</td><td>2.39</td><td>2.65</td></tr><tr><td class="l">SPRINT</td><td>8.20 m/s</td><td>1.66</td><td>0.30</td><td>6.9 m/s</td><td>2.67</td><td>2.87</td><td>3.19</td></tr></tbody></table>
+<p class="dim">Cycle stride is the configured two-step distance for each body, <code>2 x step x legLen</code>. It is the design
+quantity; the measured column in the next table agrees with it to a few centimetres for walk, jog and run. Entry speeds are where the blend crosses into the next gait, measured in the fixture, and they are symmetric on the way
+down. Stance fraction falls with speed, so jog is not a fast walk: it has a flight phase, a shorter stance, higher knee recovery and a
+different arm action.</p>
+
+<h2>Foot plant and sliding</h2>
+<p>The acceptance measure is <b>ground-relative displacement of a foot while it is in contact</b>. A foot that is releasing is airborne
+and leaving on purpose, so it is measured separately and reported as the release transient, not as slide.</p>
+<table><thead><tr><th class=l>Body</th><th class=l>H / leg (m)</th><th>Gait</th><th>Ticks</th><th>Slide max</th><th>p95</th><th>mean</th><th>Penetration</th><th>Hover</th><th>Pop p95</th><th>Pop max</th><th>Stride</th></tr></thead><tbody><tr><td class=l>SHORT_LEAN</td><td class=l>1.70 / 0.803</td><td>IDLE</td><td>360</td><td>1.6</td><td>0.1</td><td>0.02</td><td>0.0</td><td>4.4</td><td>3</td><td>14</td><td>—</td></tr><tr><td class=l>SHORT_LEAN</td><td class=l>1.70 / 0.803</td><td>WALK</td><td>772</td><td>0.0</td><td>0.0</td><td>0.00</td><td>2.9</td><td>0.0</td><td>8</td><td>34</td><td>1.27</td></tr><tr><td class=l>SHORT_LEAN</td><td class=l>1.70 / 0.803</td><td>JOG</td><td>345</td><td>0.0</td><td>0.0</td><td>0.00</td><td>1.6</td><td>0.0</td><td>12</td><td>18</td><td>1.69</td></tr><tr><td class=l>SHORT_LEAN</td><td class=l>1.70 / 0.803</td><td>RUN</td><td>776</td><td>0.0</td><td>0.0</td><td>0.00</td><td>1.1</td><td>0.0</td><td>17</td><td>35</td><td>2.10</td></tr><tr><td class=l>SHORT_LEAN</td><td class=l>1.70 / 0.803</td><td>SPRINT</td><td>373</td><td>0.0</td><td>0.0</td><td>0.00</td><td>2.6</td><td>2.7</td><td>27</td><td>33</td><td>3.73</td></tr><tr><td class=l>AVG_ATHLETIC</td><td class=l>1.83 / 0.865</td><td>IDLE</td><td>360</td><td>1.4</td><td>0.1</td><td>0.04</td><td>0.0</td><td>4.2</td><td>4</td><td>15</td><td>—</td></tr><tr><td class=l>AVG_ATHLETIC</td><td class=l>1.83 / 0.865</td><td>WALK</td><td>772</td><td>0.0</td><td>0.0</td><td>0.00</td><td>3.7</td><td>0.0</td><td>7</td><td>25</td><td>1.36</td></tr><tr><td class=l>AVG_ATHLETIC</td><td class=l>1.83 / 0.865</td><td>JOG</td><td>345</td><td>0.0</td><td>0.0</td><td>0.00</td><td>3.2</td><td>0.0</td><td>12</td><td>21</td><td>1.82</td></tr><tr><td class=l>AVG_ATHLETIC</td><td class=l>1.83 / 0.865</td><td>RUN</td><td>776</td><td>0.0</td><td>0.0</td><td>0.00</td><td>2.0</td><td>0.0</td><td>18</td><td>44</td><td>2.27</td></tr><tr><td class=l>AVG_ATHLETIC</td><td class=l>1.83 / 0.865</td><td>SPRINT</td><td>373</td><td>0.0</td><td>0.0</td><td>0.00</td><td>2.9</td><td>2.8</td><td>26</td><td>31</td><td>3.05</td></tr><tr><td class=l>TALL_LEAN</td><td class=l>1.96 / 0.961</td><td>IDLE</td><td>360</td><td>1.1</td><td>0.0</td><td>0.03</td><td>0.0</td><td>3.8</td><td>4</td><td>17</td><td>—</td></tr><tr><td class=l>TALL_LEAN</td><td class=l>1.96 / 0.961</td><td>WALK</td><td>772</td><td>0.0</td><td>0.0</td><td>0.00</td><td>2.6</td><td>2.8</td><td>7</td><td>37</td><td>1.51</td></tr><tr><td class=l>TALL_LEAN</td><td class=l>1.96 / 0.961</td><td>JOG</td><td>345</td><td>0.0</td><td>0.0</td><td>0.00</td><td>2.8</td><td>0.0</td><td>12</td><td>19</td><td>2.02</td></tr><tr><td class=l>TALL_LEAN</td><td class=l>1.96 / 0.961</td><td>RUN</td><td>776</td><td>0.0</td><td>0.0</td><td>0.00</td><td>1.9</td><td>0.0</td><td>19</td><td>50</td><td>2.52</td></tr><tr><td class=l>TALL_LEAN</td><td class=l>1.96 / 0.961</td><td>SPRINT</td><td>373</td><td>0.0</td><td>0.0</td><td>0.00</td><td>3.2</td><td>3.0</td><td>31</td><td>44</td><td>4.23</td></tr></tbody></table>
+<p class="dim">All values in centimetres. <b>Slide</b> is the planted foot's ground-relative displacement. <b>Pop</b> is the per-tick change
+in a joint's per-tick displacement, which separates a genuine discontinuity from a fast but smooth swing foot; at sprint the swing foot
+legitimately covers more than half a metre per tick, so the first difference alone is not a defect measure. <b>Stride</b> is the measured
+distance between consecutive same-foot plants.</p>
+<p><b>Result:</b> planted-foot slide is <span class="ok">0.0 cm at p95 and 0.0 cm mean for walk, jog, run and sprint on all three
+bodies</span>. The only non-zero maximum is 1.4 cm, during a standing turn, where the feet deliberately step to new stance points.</p>
+
+<h2>Live-harness measurements</h2>
+<p>The same numbers taken from the browser harness itself, driving the real page with scripted key intent at 60 Hz. The first 30 ticks
+of each clip are the harness's own spawn settle, not locomotion: the player stands at rest while the facing swings a long way toward the
+parked ball, and the stance feet are dragged up to 2.3 cm before the angular replant steps them. Those ticks are excluded here and
+called out under limitations.</p>
+<table><thead><tr><th class=l>Case</th><th class=l>Clip</th><th>Ticks</th><th>Peak speed</th><th>Slide max</th><th>p95</th><th>mean</th><th>Pop p95</th><th>Page errors</th></tr></thead><tbody><tr><td class=l>WALK</td><td class=l>walk</td><td>201</td><td>1.50</td><td>0.4</td><td>0.0</td><td>0.00</td><td>23</td><td>0</td></tr><tr><td class=l>JOG</td><td class=l>jog</td><td>201</td><td>3.00</td><td>0.0</td><td>0.0</td><td>0.00</td><td>27</td><td>0</td></tr><tr><td class=l>RUN</td><td class=l>run</td><td>201</td><td>5.00</td><td>0.0</td><td>0.0</td><td>0.00</td><td>23</td><td>0</td></tr><tr><td class=l>SPRINT</td><td class=l>sprint</td><td>261</td><td>8.20</td><td>0.0</td><td>0.0</td><td>0.00</td><td>29</td><td>0</td></tr><tr><td class=l>ACCELERATION</td><td class=l>accel</td><td>181</td><td>8.20</td><td>0.1</td><td>0.1</td><td>0.00</td><td>31</td><td>0</td></tr><tr><td class=l>DECELERATION and STOP</td><td class=l>stop</td><td>261</td><td>8.20</td><td>0.9</td><td>0.5</td><td>0.08</td><td>29</td><td>0</td></tr><tr><td class=l>WALK to JOG</td><td class=l>w2j</td><td>211</td><td>3.00</td><td>0.4</td><td>0.0</td><td>0.00</td><td>17</td><td>0</td></tr><tr><td class=l>JOG to RUN</td><td class=l>j2r</td><td>231</td><td>5.00</td><td>0.1</td><td>0.0</td><td>0.00</td><td>23</td><td>0</td></tr><tr><td class=l>RUN to SPRINT</td><td class=l>r2s</td><td>231</td><td>8.20</td><td>0.0</td><td>0.0</td><td>0.00</td><td>27</td><td>0</td></tr><tr><td class=l>GRADUAL TURN</td><td class=l>turn_grad</td><td>261</td><td>5.00</td><td>0.0</td><td>0.0</td><td>0.00</td><td>26</td><td>0</td></tr><tr><td class=l>SHARP CHANGE OF DIRECTION</td><td class=l>turn_sharp</td><td>251</td><td>5.00</td><td>1.8</td><td>0.0</td><td>0.03</td><td>38</td><td>0</td></tr><tr><td class=l>STANDING TURN</td><td class=l>idle_turn</td><td>301</td><td>0.00</td><td>1.5</td><td>0.1</td><td>0.05</td><td>6</td><td>0</td></tr><tr><td class=l>WALK</td><td class=l>walk_short</td><td>201</td><td>1.50</td><td>0.2</td><td>0.0</td><td>0.00</td><td>12</td><td>0</td></tr><tr><td class=l>WALK</td><td class=l>walk_tall</td><td>201</td><td>1.50</td><td>0.0</td><td>0.0</td><td>0.00</td><td>13</td><td>0</td></tr><tr><td class=l>RUN</td><td class=l>run_short</td><td>201</td><td>5.00</td><td>0.0</td><td>0.0</td><td>0.00</td><td>19</td><td>0</td></tr><tr><td class=l>RUN</td><td class=l>run_tall</td><td>201</td><td>5.00</td><td>0.0</td><td>0.0</td><td>0.00</td><td>27</td><td>0</td></tr><tr><td class=l>RUN</td><td class=l>run_game</td><td>201</td><td>5.00</td><td>0.1</td><td>0.0</td><td>0.00</td><td>23</td><td>0</td></tr><tr><td class=l>SPRINT</td><td class=l>sprint_game</td><td>261</td><td>8.20</td><td>0.1</td><td>0.0</td><td>0.00</td><td>29</td><td>0</td></tr></tbody></table>
+
+<h2>Gaits</h2>
+<figure><img src="img/walk.png" alt="WALK — 1.5 m/s desired (hold Q)"><figcaption>WALK — 1.5 m/s desired (hold Q) — 17 frames, 60 Hz ticks, Mixed presentation.</figcaption></figure><figure><img src="img/jog.png" alt="JOG — 3.0 m/s desired (hold E)"><figcaption>JOG — 3.0 m/s desired (hold E) — 17 frames, 60 Hz ticks, Mixed presentation.</figcaption></figure><figure><img src="img/run.png" alt="RUN — 5.0 m/s desired (no gear key)"><figcaption>RUN — 5.0 m/s desired (no gear key) — 17 frames, 60 Hz ticks, Mixed presentation.</figcaption></figure><figure><img src="img/sprint.png" alt="SPRINT — 8.2 m/s desired (hold Shift)"><figcaption>SPRINT — 8.2 m/s desired (hold Shift) — 17 frames, 60 Hz ticks, Mixed presentation.</figcaption></figure>
+
+<h2>Acceleration, braking and stopping</h2>
+<figure><img src="img/accel.png" alt="ACCELERATION — standing start to sprint"><figcaption>ACCELERATION — standing start to sprint — 17 frames, 60 Hz ticks, Mixed presentation.</figcaption></figure><figure><img src="img/stop.png" alt="DECELERATION and STOP — sprint, release, brake to stand"><figcaption>DECELERATION and STOP — sprint, release, brake to stand — 17 frames, 60 Hz ticks, Mixed presentation.</figcaption></figure>
+
+<h2>Gait transitions</h2>
+<figure><img src="img/w2j.png" alt="WALK to JOG"><figcaption>WALK to JOG — 17 frames, 60 Hz ticks, Mixed presentation.</figcaption></figure><figure><img src="img/j2r.png" alt="JOG to RUN"><figcaption>JOG to RUN — 17 frames, 60 Hz ticks, Mixed presentation.</figcaption></figure><figure><img src="img/r2s.png" alt="RUN to SPRINT"><figcaption>RUN to SPRINT — 17 frames, 60 Hz ticks, Mixed presentation.</figcaption></figure>
+
+<h2>Turning</h2>
+<figure><img src="img/turn_grad.png" alt="GRADUAL TURN — 90 degrees held at run speed"><figcaption>GRADUAL TURN — 90 degrees held at run speed — 16 frames, 60 Hz ticks, Mixed presentation.</figcaption></figure><figure><img src="img/turn_sharp.png" alt="SHARP CHANGE OF DIRECTION — full reversal at run speed"><figcaption>SHARP CHANGE OF DIRECTION — full reversal at run speed — 17 frames, 60 Hz ticks, Mixed presentation.</figcaption></figure><figure><img src="img/idle_turn.png" alt="STANDING TURN — facing follows the ball, the feet step"><figcaption>STANDING TURN — facing follows the ball, the feet step — 16 frames, 60 Hz ticks, Mixed presentation.</figcaption></figure>
+
+<h2>Proportions</h2>
+<p>The same system, the same parameters, driven only by the skeleton's leg length. No identity or rating keying anywhere.</p>
+<figure><img src="img/walk_short.png" alt="WALK — SHORT_LEAN, 1.70 m, leg 0.803 m"><figcaption>WALK — SHORT_LEAN, 1.70 m, leg 0.803 m — 17 frames, 60 Hz ticks, Mixed presentation.</figcaption></figure><figure><img src="img/walk_tall.png" alt="WALK — TALL_LEAN, 1.96 m, leg 0.961 m"><figcaption>WALK — TALL_LEAN, 1.96 m, leg 0.961 m — 17 frames, 60 Hz ticks, Mixed presentation.</figcaption></figure><figure><img src="img/run_short.png" alt="RUN — SHORT_LEAN, 1.70 m, leg 0.803 m"><figcaption>RUN — SHORT_LEAN, 1.70 m, leg 0.803 m — 17 frames, 60 Hz ticks, Mixed presentation.</figcaption></figure><figure><img src="img/run_tall.png" alt="RUN — TALL_LEAN, 1.96 m, leg 0.961 m"><figcaption>RUN — TALL_LEAN, 1.96 m, leg 0.961 m — 17 frames, 60 Hz ticks, Mixed presentation.</figcaption></figure>
+
+<h2>Gameplay view</h2>
+<p>The actual Touchline camera and Mixed presentation, at the distance the game is played from.</p>
+<figure><img src="img/run_game.png" alt="RUN — the gameplay Touchline camera, Mixed presentation, no zoom"><figcaption>RUN — the gameplay Touchline camera, Mixed presentation, no zoom — 9 frames, 60 Hz ticks, Mixed presentation.</figcaption></figure><figure><img src="img/sprint_game.png" alt="SPRINT — the gameplay Touchline camera, Mixed presentation, no zoom"><figcaption>SPRINT — the gameplay Touchline camera, Mixed presentation, no zoom — 9 frames, 60 Hz ticks, Mixed presentation.</figcaption></figure>
+
+<h2>Performance</h2>
+<p>Measured separately in the harness HUD and by the scaling probe: simulation step, animation and IK solve, skinning, character
+rendering, and compositing. The presentation stays capped at 60 fps and no GL buffer or canvas is recreated per frame: the character
+render target is grow-only and reused, and the region-of-interest pass reuses the same framebuffer across frames.</p>
+<table><thead><tr><th class=l>Rigs</th><th class=l>Simulation</th><th>Animation + IK</th><th>per rig</th><th>Skinning</th><th>Character render</th><th>Compositing</th><th>Draw calls</th><th>Layer</th></tr></thead><tbody><tr><td class=l>1</td><td class=l>0.07 | 0.20</td><td>0.25 | 0.40</td><td>0.247</td><td>0.03 | 0.10</td><td>25.6 | 28.1</td><td>6.59 | 8.40</td><td>1</td><td>3000x1900</td></tr><tr><td class=l>11</td><td class=l>0.05 | 0.10</td><td>1.28 | 1.90</td><td>0.117</td><td>0.04 | 0.10</td><td>24.4 | 26.5</td><td>6.88 | 8.10</td><td>11</td><td>3000x1900</td></tr><tr><td class=l>22</td><td class=l>0.04 | 0.10</td><td>2.74 | 3.70</td><td>0.125</td><td>0.07 | 0.20</td><td>23.8 | 28.8</td><td>8.09 | 9.40</td><td>22</td><td>3000x1900</td></tr></tbody></table><p class="dim">Milliseconds per 60 Hz frame, mean | p95, measured by the harness's own timers. The 60 fps frame budget is 16.7 ms.</p>
+<ul>
+<li><b>Simulation</b> and <b>animation</b> are the meaningful CPU figures. Animation and IK cost about 0.10 ms per rig and scale linearly:
+22 rigs solve in 2.3 ms, well inside the budget. A separate headless solver benchmark agrees at 0.16 ms per rig.</li>
+<li><b>Character render</b> and <b>compositing</b> here are measured under headless software OpenGL, which rasterises a 3000x1900 layer on
+the CPU. Those absolute numbers are not representative of a real GPU and should be read only for their structure, not their magnitude.</li>
+<li><b>Draw calls equal the rig count</b> — one merged draw per body, no per-bone draws.</li>
+<li><b>No per-frame buffer or canvas recreation.</b> The region-of-interest render target stays 3008x1920 across all three passes: it is
+allocated grow-only in multiples of 64 and reused. The frame cap held at 60 throughout.</li>
+</ul>
+
+<h2>Regression</h2>
+<p>Gate: <code>sandbox/visual/tools/anim3d/of_loco_regress.js</code>, 720 ticks covering every gait, both turns, acceleration and a stop.</p>
+<ul>
+<li><b>Animation ON/OFF neutrality</b> — authoritative x, y, vx, vy and facing are bit-identical with the presentation solve on and off,
+for all three bodies. Maximum absolute difference: <span class="ok">0</span>.</li>
+<li><b>Determinism</b> — the same run twice gives bit-identical joint world positions. Maximum absolute difference: <span class="ok">0</span>. No NaN.</li>
+<li><b>No presentation RNG</b> — no <code>Math.random</code>, <code>Date.now</code> or <code>performance.now</code> anywhere in the pose path.
+The harness calls <code>performance.now</code> only to fill its own timing panel.</li>
+<li><b>Goalkeeper work</b> — untouched, and proved so rather than argued. The frozen reference dive (fixture 42) was captured from a
+git worktree at commit <code>7fcf310</code> and from this branch head, 320 ticks by 23 bones with the per-tick authoritative facts and every
+bone pose and joint world position. The two 723 KB manifests are <span class="ok">bit-identical</span>, SHA-256
+<code>1d8b9ed1a67e0781c23bd771d037ba94...</code> on both sides. The locomotion lives in outfield files; the one shared solver file changed is
+the IK, where a per-chain bend-plane bound was added behind an opt-in field that only the outfield leg solve sets. The renderer change is a
+new function only, and the two constants added to the player law are read from keys the goalkeeper playtest never sets.</li>
+<li><b>Camera</b> — unchanged. The harness only sets the existing manual rail target, exactly as the goalkeeper playtest does.</li>
+</ul>
+
+<h2>Known limitations</h2>
+<ul>
+<li><b>Standing-turn foot drag.</b> A planted foot is re-stepped when the stance point has moved 12 cm or the body has turned 28
+degrees. Below those thresholds the foot is carried rather than stepped, so a large standing turn drags each foot up to about 2.3 cm
+before it replants. It is small and slow, but it is real sliding and it is the only place any is left.</li>
+<li><b>Instant full reversal at speed.</b> Holding right then pressing left in the same tick is the most extreme input the law allows.
+The body runs away from its planted foot faster than the leg can follow; the plant is released early and handed over, but the transition
+still shows up to about 50 cm of joint pop for a few ticks. Gradual and 90-degree turns are clean.</li>
+<li><b>Sprint stride measurement is noisy.</b> Contact is brief at 8.2 m/s and the fixture occasionally misses a plant, so the measured
+stride at sprint is less reliable than the configured value of 3.32 x leg length per cycle.</li>
+<li><b>No upper-body detail yet.</b> Arm swing is a counter-rotation with an elbow curve. There is no neck stabilisation, no shoulder
+girdle motion and no fatigue.</li>
+<li><b>Contact is flat-ground only.</b> The pitch is a plane; there is no terrain sampling.</li>
+<li><b>No ball.</b> Dribbling, carrying and any ball-aware footwork are explicitly out of scope for this pass.</li>
+</ul>
+</div></body></html>

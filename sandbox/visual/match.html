@@ -29,6 +29,16 @@
   <h1>Match Visual Preview</h1>
 
   <section>
+    <label for="weather">Weather</label>
+    <select id="weather" onchange="TouchlineRain.setWeather(this.value)" style="width:100%;margin-bottom:8px"><option value="rain">Rain</option><option value="light">Light rain</option><option value="off">Dry</option></select>
+    <label for="ball-design">Match ball design</label>
+    <select id="ball-design" onchange="TouchlineBall.setDesign(this.value)" style="width:100%;margin-bottom:8px">
+      <option value="classic">Classic · white / charcoal</option>
+      <option value="trionda">Trionda · 2026 simplified</option>
+      <option value="yellow">Yellow · simple</option>
+      <option value="sprite">Original sprite · original size</option>
+      <option value="plain">Plain physics reference</option>
+    </select>
     <button id="ptbtn" style="width:100%;padding:8px;font-weight:700;font-size:13px;
       background:#1d7a3d;color:#fff;border:1px solid #2fa35a;border-radius:5px;cursor:pointer">
       Single Player Test</button>
@@ -129,6 +139,15 @@
     <label class="inline"><input type="checkbox" id="dbg-gk"> Goalkeeper V1 debug (state, position/velocity, reach ring, ball, timing)</label>
     <label class="inline"><input type="checkbox" id="dbg-anim"> GK Animation V1 debug (anim state/phase/family, anchors, sim contact vs anim target, visual error, perf)</label>
     <label class="inline"><input type="checkbox" id="dbg-gkstick"> GK stick-figure diagnostic (Stage-0 placeholder drawn over the sprite)</label>
+    <label class="inline">GK presentation backend (prototype, review only — key 8 cycles):
+      <select id="gk-backend"><option value="SPRITE" selected>SPRITE (approved)</option><option value="SKELETAL_3D">SKELETAL_3D (prototype)</option></select></label>
+    <label class="inline"><input type="checkbox" id="dbg3d-bones"> 3D: skeleton / bones</label>
+    <label class="inline"><input type="checkbox" id="dbg3d-ik"> 3D: contact target + glove IK</label>
+    <label class="inline"><input type="checkbox" id="dbg3d-roots"> 3D: simulation root vs presentation root</label>
+    <label class="inline"><input type="checkbox" id="dbg3d-feet"> 3D: foot / ground contact (green planted · yellow touching · orange airborne)</label>
+    <label class="inline"><input type="checkbox" id="dbg3d-trail"> 3D: presentation-root trajectory (pelvis path · TOE-OFF / CONTACT / APEX / TOUCHDOWN / SETTLE · velocity vectors)</label>
+    <label class="inline">3D character <select id="gk3d-character"><option value="SKINNED">skinned humanoid (test character)</option><option value="COURTOIS">Courtois (approved true-proportion GLB, C treatment)</option><option value="MANNEQUIN">capsule mannequin (debug)</option></select></label>
+    <label class="inline">3D variant <select id="gk3d-variant"><option value="default">default</option><option value="tall">taller / longer-limbed</option><option value="short">shorter / stockier</option><option value="skin2">alternate skin tone</option><option value="jersey2">alternate jersey</option></select></label>
     <div style="font-size:11px;opacity:.75;margin:2px 0 4px">NET PHYSICS TEST (synthetic ball): keys 1 central &middot; 2 low corner &middot; 3 upper &middot; 4 side net &middot; 5 cycles slow/normal/power &middot; 0 toggles slow-motion</div>
     <div style="font-size:11px;opacity:.75;margin:2px 0 4px">BALL PHYSICS TEST (synthetic): keys 6 drop &middot; 7 roll &middot; 8 lofted &middot; 9 elevated shot &middot; C high chip (readout + trail via Ball debug) &middot; T engine transport sequence &middot; V ball spin showcase</div>
     <div style="font-size:11px;opacity:.75;margin:2px 0 4px">ANIMATION PROTOTYPE (synthetic): key P &mdash; idle &rarr; run &rarr; dribble &rarr; shoot with contact-synced kick (east-facing puppet near x=80)</div>
@@ -138,6 +157,40 @@
   </section>
 </div>
 
+<script src="anim3d/gk_backend.js"></script>
+<script src="anim3d/m4.js"></script>
+<script src="anim3d/skeleton.js"></script>
+<script src="anim3d/skin_mesh.js"></script>
+<script src="anim3d/gk_character_glb.js"></script>
+<script src="anim3d/ik.js"></script>
+<script src="anim3d/gl_renderer.js"></script>
+<script src="anim3d/gk_far_dive_clip.js"></script>
+<script src="anim3d/gk_motion_library.js"></script>
+<script src="anim3d/gk_graph.js"></script>
+<script src="anim3d/gk3d_backend.js"></script>
+<script src="ball-art.js"></script>
+<script>document.getElementById("ball-design").value=TouchlineBall.getDesign();</script>
+<script src="corner-flags.js"></script><script src="stadium-art.js"></script><script src="rain.js"></script>
+<script>document.getElementById("weather").value=TouchlineRain.getWeather();</script>
 <script src="match.js?v=pt2"></script>
+<script src="pt_squad.js"></script>
+<script src="pt_defend.js"></script>   <!-- DEFENDING V1: jockey / standing tackle / slide tackle / occupancy (simulation), inert outside defending drills -->
+<script src="pt_react.js"></script>   <!-- TACKLED-PLAYER V1: contact / balance / fall (simulation), inert outside defending drills -->
+<script src="anim3d/gk_playtest.js"></script>
+<script src="anim3d/of_rig.js"></script>
+<script src="anim3d/of_motion.js"></script>
+<script src="anim3d/of_loco.js"></script>
+<script src="anim3d/of_kick.js"></script>
+<script src="anim3d/of_recv.js"></script>
+<script src="anim3d/of_defend.js"></script>   <!-- DEFENDING V1: jockey / tackle / slide presentation (inert unless a defending drill runs) -->
+<script src="anim3d/of_react.js"></script>   <!-- TACKLED-PLAYER V1: stumble / fall / ground / recovery presentation (inert unless a defending drill runs) -->
+<script src="anim3d/of_character.js"></script>
+<script src="anim3d/of_char_gl.js"></script>
+<script src="anim3d/of_squad.js"></script>
+<script src="anim3d/of_autopass.js"></script>
+<script src="anim3d/of_defdemo.js"></script>   <!-- AUTO DEFEND demo (playtest instrumentation, inputs only): Shift+Y on/off, Shift+B pattern, - slow -->
+<script src="anim3d/of_rxdemo.js"></script>   <!-- TACKLED-PLAYER demo (inputs only): Shift+T on/off, Shift+N next case, - slow -->
+<script src="anim3d/of_player.js"></script>   <!-- playable outfield locomotion test: active only with ?ofPlay=1 -->
+<script src="anim3d/of_scene.js"></script>   <!-- outfield rig foundation: line-up / benchmark scene, active only with ?ofScene= -->   <!-- playable Courtois test harness: active only with ?gkPlay=1 -->
 </body>
 </html>

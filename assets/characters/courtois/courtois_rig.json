@@ -1,0 +1,1116 @@
+{
+ "record": "Courtois TRUE-PROPORTION rig, extracted verbatim from Astra's manifest (skeleton.bones): joint order = GLB skin joint order; offsets / directions / lengths / radii are the exact serialized tall values; the GLB's own inverse-bind accessor is read at load time and is authoritative (this file carries the manifest copy only for cross-checking)",
+ "glb": "assets/characters/courtois/Touchline_Player_courtois.glb",
+ "glbSha256": "cfd70a3ad37089079911da23de56ddfcf2a1aeb38aacdfc73b6238902a32b76d",
+ "H": 2.014,
+ "prop": {
+  "legs": 1.05,
+  "arms": 1.07,
+  "torso": 1,
+  "width": 0.97
+ },
+ "bindWidthM": 0.37118019999999996,
+ "measuredBindHeightM": 2.0094869136810303,
+ "worldScale": 1,
+ "rosterHeightCmNotUsedForScale": 199,
+ "glbDefaultConstructionPoseNote": "upper arms +/-0.12 rad Z, forearms -0.13 rad X, hands +0.03 rad X; all else zero \u2014 NOT the bind pose; the runtime replaces node rotations with the authored action rotations (zero = bind)",
+ "bones": [
+  {
+   "name": "root",
+   "index": 0,
+   "parent": null,
+   "offsetLocal": [
+    0,
+    0,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    1,
+    0
+   ],
+   "lengthM": 0,
+   "radiusM": 0,
+   "part": null,
+   "children": [
+    "pelvis"
+   ],
+   "bindOriginM": [
+    0,
+    0,
+    0
+   ],
+   "glbInverseBindMatrixFloat32": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    -0.0,
+    -0.0,
+    -0.0,
+    1.0
+   ]
+  },
+  {
+   "name": "pelvis",
+   "index": 1,
+   "parent": "root",
+   "offsetLocal": [
+    0,
+    1.05735,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    1,
+    0
+   ],
+   "lengthM": 0.12688,
+   "radiusM": 0.17665,
+   "part": "shorts",
+   "children": [
+    "spine",
+    "thigh_R",
+    "thigh_L"
+   ],
+   "bindOriginM": [
+    0.0,
+    1.05735,
+    0.0
+   ],
+   "glbInverseBindMatrixFloat32": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    -0.0,
+    -1.0573500394821167,
+    -0.0,
+    1.0
+   ]
+  },
+  {
+   "name": "spine",
+   "index": 2,
+   "parent": "pelvis",
+   "offsetLocal": [
+    0,
+    0.12084,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    1,
+    0
+   ],
+   "lengthM": 0.24168,
+   "radiusM": 0.17665,
+   "part": "shirt",
+   "children": [
+    "chest"
+   ],
+   "bindOriginM": [
+    0.0,
+    1.17819,
+    0.0
+   ],
+   "glbInverseBindMatrixFloat32": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    -0.0,
+    -1.178189992904663,
+    -0.0,
+    1.0
+   ]
+  },
+  {
+   "name": "chest",
+   "index": 3,
+   "parent": "spine",
+   "offsetLocal": [
+    0,
+    0.24168,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    1,
+    0
+   ],
+   "lengthM": 0.28196,
+   "radiusM": 0.19744,
+   "part": "shirt",
+   "children": [
+    "neck",
+    "clavicle_R",
+    "clavicle_L"
+   ],
+   "bindOriginM": [
+    0.0,
+    1.41987,
+    0.0
+   ],
+   "glbInverseBindMatrixFloat32": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    -0.0,
+    -1.4198700189590454,
+    -0.0,
+    1.0
+   ]
+  },
+  {
+   "name": "neck",
+   "index": 4,
+   "parent": "chest",
+   "offsetLocal": [
+    0,
+    0.28196,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    1,
+    0
+   ],
+   "lengthM": 0.1007,
+   "radiusM": 0.06235,
+   "part": "skin",
+   "children": [
+    "head"
+   ],
+   "bindOriginM": [
+    0.0,
+    1.70183,
+    0.0
+   ],
+   "glbInverseBindMatrixFloat32": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    -0.0,
+    -1.7018300294876099,
+    -0.0,
+    1.0
+   ]
+  },
+  {
+   "name": "head",
+   "index": 5,
+   "parent": "neck",
+   "offsetLocal": [
+    0,
+    0.1007,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    1,
+    0
+   ],
+   "lengthM": 0.24168,
+   "radiusM": 0.13509,
+   "part": "skin",
+   "children": [
+    "hair"
+   ],
+   "bindOriginM": [
+    0.0,
+    1.80253,
+    0.0
+   ],
+   "glbInverseBindMatrixFloat32": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    -0.0,
+    -1.80253005027771,
+    -0.0,
+    1.0
+   ]
+  },
+  {
+   "name": "hair",
+   "index": 6,
+   "parent": "head",
+   "offsetLocal": [
+    0,
+    0.14098,
+    -0.01007
+   ],
+   "bindDirLocal": [
+    0,
+    1,
+    0
+   ],
+   "lengthM": 0.1007,
+   "radiusM": 0.13821,
+   "part": "hair",
+   "children": [],
+   "bindOriginM": [
+    0.0,
+    1.9435099999999998,
+    -0.01007
+   ],
+   "glbInverseBindMatrixFloat32": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    -0.0,
+    -1.9435100555419922,
+    0.01006999984383583,
+    1.0
+   ]
+  },
+  {
+   "name": "clavicle_R",
+   "index": 7,
+   "parent": "chest",
+   "offsetLocal": [
+    0.06042,
+    0.24168,
+    0
+   ],
+   "bindDirLocal": [
+    1,
+    0,
+    0
+   ],
+   "lengthM": 0.2155,
+   "radiusM": 0.05196,
+   "part": "shirt",
+   "children": [
+    "upperArm_R"
+   ],
+   "bindOriginM": [
+    0.06042,
+    1.66155,
+    0.0
+   ],
+   "glbInverseBindMatrixFloat32": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    -0.060419999063014984,
+    -1.6615500450134277,
+    -0.0,
+    1.0
+   ]
+  },
+  {
+   "name": "upperArm_R",
+   "index": 8,
+   "parent": "clavicle_R",
+   "offsetLocal": [
+    0.2155,
+    0,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    -1,
+    0
+   ],
+   "lengthM": 0.36635,
+   "radiusM": 0.07274,
+   "part": "shirt",
+   "children": [
+    "foreArm_R"
+   ],
+   "bindOriginM": [
+    0.27592,
+    1.66155,
+    0.0
+   ],
+   "glbInverseBindMatrixFloat32": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    -0.27592000365257263,
+    -1.6615500450134277,
+    -0.0,
+    1.0
+   ]
+  },
+  {
+   "name": "foreArm_R",
+   "index": 9,
+   "parent": "upperArm_R",
+   "offsetLocal": [
+    0,
+    -0.36635,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    -1,
+    0
+   ],
+   "lengthM": 0.32325,
+   "radiusM": 0.06235,
+   "part": "shirt",
+   "children": [
+    "hand_R"
+   ],
+   "bindOriginM": [
+    0.27592,
+    1.2952000000000001,
+    0.0
+   ],
+   "glbInverseBindMatrixFloat32": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    -0.27592000365257263,
+    -1.295199990272522,
+    -0.0,
+    1.0
+   ]
+  },
+  {
+   "name": "hand_R",
+   "index": 10,
+   "parent": "foreArm_R",
+   "offsetLocal": [
+    0,
+    -0.32325,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    -1,
+    0
+   ],
+   "lengthM": 0.1293,
+   "radiusM": 0.07274,
+   "part": "gloves",
+   "children": [],
+   "bindOriginM": [
+    0.27592,
+    0.9719500000000001,
+    0.0
+   ],
+   "glbInverseBindMatrixFloat32": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    -0.27592000365257263,
+    -0.9719499945640564,
+    -0.0,
+    1.0
+   ]
+  },
+  {
+   "name": "clavicle_L",
+   "index": 11,
+   "parent": "chest",
+   "offsetLocal": [
+    -0.06042,
+    0.24168,
+    0
+   ],
+   "bindDirLocal": [
+    -1,
+    0,
+    0
+   ],
+   "lengthM": 0.2155,
+   "radiusM": 0.05196,
+   "part": "shirt",
+   "children": [
+    "upperArm_L"
+   ],
+   "bindOriginM": [
+    -0.06042,
+    1.66155,
+    0.0
+   ],
+   "glbInverseBindMatrixFloat32": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.060419999063014984,
+    -1.6615500450134277,
+    -0.0,
+    1.0
+   ]
+  },
+  {
+   "name": "upperArm_L",
+   "index": 12,
+   "parent": "clavicle_L",
+   "offsetLocal": [
+    -0.2155,
+    0,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    -1,
+    0
+   ],
+   "lengthM": 0.36635,
+   "radiusM": 0.05715,
+   "part": "shirt",
+   "children": [
+    "foreArm_L"
+   ],
+   "bindOriginM": [
+    -0.27592,
+    1.66155,
+    0.0
+   ],
+   "glbInverseBindMatrixFloat32": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.27592000365257263,
+    -1.6615500450134277,
+    -0.0,
+    1.0
+   ]
+  },
+  {
+   "name": "foreArm_L",
+   "index": 13,
+   "parent": "upperArm_L",
+   "offsetLocal": [
+    0,
+    -0.36635,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    -1,
+    0
+   ],
+   "lengthM": 0.32325,
+   "radiusM": 0.06235,
+   "part": "shirt",
+   "children": [
+    "hand_L"
+   ],
+   "bindOriginM": [
+    -0.27592,
+    1.2952000000000001,
+    0.0
+   ],
+   "glbInverseBindMatrixFloat32": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.27592000365257263,
+    -1.295199990272522,
+    -0.0,
+    1.0
+   ]
+  },
+  {
+   "name": "hand_L",
+   "index": 14,
+   "parent": "foreArm_L",
+   "offsetLocal": [
+    0,
+    -0.32325,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    -1,
+    0
+   ],
+   "lengthM": 0.1293,
+   "radiusM": 0.07274,
+   "part": "gloves",
+   "children": [],
+   "bindOriginM": [
+    -0.27592,
+    0.9719500000000001,
+    0.0
+   ],
+   "glbInverseBindMatrixFloat32": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.27592000365257263,
+    -0.9719499945640564,
+    -0.0,
+    1.0
+   ]
+  },
+  {
+   "name": "thigh_R",
+   "index": 15,
+   "parent": "pelvis",
+   "offsetLocal": [
+    0.19133,
+    0,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    -1,
+    0
+   ],
+   "lengthM": 0.50753,
+   "radiusM": 0.09872,
+   "part": "shorts",
+   "children": [
+    "shin_R"
+   ],
+   "bindOriginM": [
+    0.19133,
+    1.05735,
+    0.0
+   ],
+   "glbInverseBindMatrixFloat32": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    -0.19133000075817108,
+    -1.0573500394821167,
+    -0.0,
+    1.0
+   ]
+  },
+  {
+   "name": "shin_R",
+   "index": 16,
+   "parent": "thigh_R",
+   "offsetLocal": [
+    0,
+    -0.50753,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    -1,
+    0
+   ],
+   "lengthM": 0.46523,
+   "radiusM": 0.07794,
+   "part": "socks",
+   "children": [
+    "foot_R"
+   ],
+   "bindOriginM": [
+    0.19133,
+    0.54982,
+    0.0
+   ],
+   "glbInverseBindMatrixFloat32": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    -0.19133000075817108,
+    -0.5498200058937073,
+    -0.0,
+    1.0
+   ]
+  },
+  {
+   "name": "foot_R",
+   "index": 17,
+   "parent": "shin_R",
+   "offsetLocal": [
+    0,
+    -0.46523,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    -0.29998,
+    0.95394
+   ],
+   "lengthM": 0.21147,
+   "radiusM": 0.06235,
+   "part": "boots",
+   "children": [
+    "toe_R"
+   ],
+   "bindOriginM": [
+    0.19133,
+    0.08459,
+    0.0
+   ],
+   "glbInverseBindMatrixFloat32": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    -0.19133000075817108,
+    -0.08459000289440155,
+    -0.0,
+    1.0
+   ]
+  },
+  {
+   "name": "toe_R",
+   "index": 18,
+   "parent": "foot_R",
+   "offsetLocal": [
+    0,
+    -0.06344,
+    0.2009
+   ],
+   "bindDirLocal": [
+    0,
+    0,
+    1
+   ],
+   "lengthM": 0.08459,
+   "radiusM": 0.04157,
+   "part": "boots",
+   "children": [],
+   "bindOriginM": [
+    0.19133,
+    0.021150000000000002,
+    0.2009
+   ],
+   "glbInverseBindMatrixFloat32": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    -0.19133000075817108,
+    -0.021150000393390656,
+    -0.20090000331401825,
+    1.0
+   ]
+  },
+  {
+   "name": "thigh_L",
+   "index": 19,
+   "parent": "pelvis",
+   "offsetLocal": [
+    -0.19133,
+    0,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    -1,
+    0
+   ],
+   "lengthM": 0.50753,
+   "radiusM": 0.08833,
+   "part": "shorts",
+   "children": [
+    "shin_L"
+   ],
+   "bindOriginM": [
+    -0.19133,
+    1.05735,
+    0.0
+   ],
+   "glbInverseBindMatrixFloat32": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.19133000075817108,
+    -1.0573500394821167,
+    -0.0,
+    1.0
+   ]
+  },
+  {
+   "name": "shin_L",
+   "index": 20,
+   "parent": "thigh_L",
+   "offsetLocal": [
+    0,
+    -0.50753,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    -1,
+    0
+   ],
+   "lengthM": 0.46523,
+   "radiusM": 0.07794,
+   "part": "socks",
+   "children": [
+    "foot_L"
+   ],
+   "bindOriginM": [
+    -0.19133,
+    0.54982,
+    0.0
+   ],
+   "glbInverseBindMatrixFloat32": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.19133000075817108,
+    -0.5498200058937073,
+    -0.0,
+    1.0
+   ]
+  },
+  {
+   "name": "foot_L",
+   "index": 21,
+   "parent": "shin_L",
+   "offsetLocal": [
+    0,
+    -0.46523,
+    0
+   ],
+   "bindDirLocal": [
+    0,
+    -0.29998,
+    0.95394
+   ],
+   "lengthM": 0.21147,
+   "radiusM": 0.06235,
+   "part": "boots",
+   "children": [
+    "toe_L"
+   ],
+   "bindOriginM": [
+    -0.19133,
+    0.08459,
+    0.0
+   ],
+   "glbInverseBindMatrixFloat32": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.19133000075817108,
+    -0.08459000289440155,
+    -0.0,
+    1.0
+   ]
+  },
+  {
+   "name": "toe_L",
+   "index": 22,
+   "parent": "foot_L",
+   "offsetLocal": [
+    0,
+    -0.06344,
+    0.2009
+   ],
+   "bindDirLocal": [
+    0,
+    0,
+    1
+   ],
+   "lengthM": 0.08459,
+   "radiusM": 0.04157,
+   "part": "boots",
+   "children": [],
+   "bindOriginM": [
+    -0.19133,
+    0.021150000000000002,
+    0.2009
+   ],
+   "glbInverseBindMatrixFloat32": [
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.19133000075817108,
+    -0.021150000393390656,
+    -0.20090000331401825,
+    1.0
+   ]
+  }
+ ],
+ "gloveFrames": {
+  "R": {
+   "palmNormalBind": [
+    -1,
+    0,
+    0
+   ],
+   "fingerAxis": [
+    0,
+    -1,
+    0
+   ],
+   "thumbAxis": [
+    0,
+    0,
+    1
+   ]
+  },
+  "L": {
+   "palmNormalBind": [
+    1,
+    0,
+    0
+   ],
+   "fingerAxis": [
+    0,
+    -1,
+    0
+   ],
+   "thumbAxis": [
+    0,
+    0,
+    1
+   ]
+  },
+  "namedSocketsExist": false
+ },
+ "contact": {
+  "hand": {
+   "R": {
+    "palmPoint": [
+     -0.0308,
+     -0.0775,
+     0.029
+    ],
+    "palmNormal": [
+     -1,
+     0,
+     0
+    ],
+    "fingertipY": -0.1912,
+    "cuffY": 0.009,
+    "thumbZ": 0.103,
+    "backX": 0.0124
+   },
+   "L": {
+    "palmPoint": [
+     0.0287,
+     -0.0773,
+     0.03
+    ],
+    "palmNormal": [
+     1,
+     0,
+     0
+    ],
+    "fingertipY": -0.1912,
+    "cuffY": 0.009,
+    "thumbZ": 0.103,
+    "backX": -0.0124
+   },
+   "note": "palmPoint = centroid of the palm-facing glove patch (|n\u00b7palmNormal| > 0.85, mid-hand), hand-local metres at bind; the ball rests with its surface ON this point along palmNormal"
+  },
+  "foot": {
+   "soleBelowAnkleM": 0.0944,
+   "lacesPoint": [
+    0,
+    0.0087,
+    0.11
+   ],
+   "lacesNormal": [
+    0,
+    0.84,
+    0.292
+   ],
+   "lacesAlongM": 0.102,
+   "lacesUpM": 0.041,
+   "toeLocalZmax": 0.0955,
+   "note": "soleBelowAnkleM = bind ankle y (0.08459) \u2212 boot/sole minimum (\u22120.00985): the ankle target height when the foot is flat; lacesPoint = centroid of the upward-facing instep patch (foot-local), decomposed along the foot axis (lacesAlongM) and its perpendicular (lacesUpM)"
+  }
+ }
+}

@@ -1,0 +1,13 @@
+<ul>
+<li><b>Two short limb brushes on cross-line slides.</b> A runner crossing a slider that has almost stopped (<code>sl_loose</code>): his swinging leg passes through the slider's reclined upper body for about 5 ticks (max 16 cm), while the separating push acts on his stumble steps. A raised step-over knee brushing the back of a slider that is overtaking him (<code>cf_left</code>, 10.6 cm, 5 ticks). The core bodies never overlap. Closing these would need the attacker's leg to be a collision body in its own right (limb-level dynamics), which is outside this bounded pass.</li>
+<li><b>Limb-level overlap when bodies pile up.</b> A faller's protective arms and the slider's bracing arm are posed, not collided. When one player lands on or beside the other, a forearm can still pass into a trunk by 5–15 cm for some ticks (the "limb" column). The gross cases are handled, with no ragdoll by design: legs through the slider, pelvis through the sliding trunk, the sweep leg through both legs with no reaction, a faller sliding through the man underneath. The next step, if you want it, is an arm-placement pass (hands avoid a body under them).</li>
+<li><b>The terrain the faller is laid on is the slider's pose one tick earlier</b> (the attacker is solved before the tackler in the same tick). At slide speed that is ≈ 5 cm of lag in where a leg lying on the slider rests.</li>
+<li><b>The simulated leg reach is 1.20 × leg</b> (V1.2: 1.25), which is what the rendered Astra leg reaches under the tracking IK.</li>
+<li><b>The far-leg sweep reaches further to the side than V1's straight leg.</b> A parallel chase at 0.6–0.9 m now wins the ball where V1 missed, and a slide angled steeply at the ball from close can now meet the man first. This is the physical consequence of the correct leg. The quality law and its thresholds are untouched. Chases wider than ≈ 1.2 m still miss.</li>
+<li><b>The attacker's stride is not mirror-symmetric</b> (his right foot is planted on one side at a given moment), so a mirrored chase can meet a planted foot on one side and the ball clean on the other. The tackle geometry itself is exactly mirrored (§4).</li>
+<li><b>Ball spin is recorded, not simulated.</b> The playtest ball carries no spin state.</li>
+<li><b>BLOCK vs SWEEP is a threshold</b> (ball ≥ 0.35 m beside the line at the request).</li>
+<li><b>The V1 path is kept</b> behind <code>PT_DEF.slide.rule = "near"</code> for the counterfactual only.</li>
+<li><b>Recorded, not fixed.</b> The Dribbling V1 <code>ofBootPlan</code> lateral mirror (not used anywhere in this pass).</li>
+<li><b>Foul facts</b> (the contact history with ball / man order) are recorded for the future referee. No call is made.</li>
+</ul>

@@ -1,0 +1,2568 @@
+[
+ {
+  "idx": 0,
+  "name": "central ground",
+  "commitTick": 52,
+  "commit": {
+   "t0": 0.8667,
+   "exec": 0.407,
+   "tier": "LOW-DIVE REACHABLE",
+   "action": "GATHER",
+   "target": [
+    101.454,
+    34,
+    0
+   ],
+   "feet": [
+    101.739,
+    34
+   ],
+   "norm": 0.767,
+   "best": false
+  },
+  "cls": {
+   "family": "LOW_GATHER",
+   "side": "RIGHT",
+   "goalSide": "GOAL_RIGHT",
+   "hClass": "LOW-MID",
+   "zClass": "LOW",
+   "norm": 0.767,
+   "saveAngle": 180,
+   "expr": null
+  },
+  "seq": null,
+  "contact": {
+   "tick": 89,
+   "t": 1.5,
+   "volume": "HAND",
+   "outcome": "GATHER",
+   "point": [
+    101.3,
+    34,
+    0
+   ],
+   "held": "GK"
+  },
+  "art": {
+   "GK_BASE_V1 SET/west": 52,
+   "low_gather/east f1": 4,
+   "low_gather/east f2": 10,
+   "low_gather/east f3": 2,
+   "low_gather/east f4": 232
+  },
+  "gkAtShot": {
+   "x": 101.73911419045831,
+   "y": 34,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": 180
+ },
+ {
+  "idx": 1,
+  "name": "low corner",
+  "commitTick": 49,
+  "commit": {
+   "t0": 0.825,
+   "exec": 0.68,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-LOW",
+   "target": [
+    101.265,
+    32.157,
+    0.204
+   ],
+   "feet": [
+    101.511,
+    33.984
+   ],
+   "norm": 1.219,
+   "best": true
+  },
+  "cls": {
+   "family": "AIRBORNE_DIVE",
+   "side": "RIGHT",
+   "goalSide": "GOAL_LEFT",
+   "hClass": "LOW-MID",
+   "zClass": "LOW",
+   "norm": 1.219,
+   "saveAngle": -97.7,
+   "expr": {
+    "heightClass": "LOW-MID",
+    "intensity": 1,
+    "latFrac": 0.82,
+    "vertDemand": -1.224,
+    "depthDemand": 0.461,
+    "nearMax": true,
+    "exec": 0.68,
+    "extension": 1,
+    "launch": 0
+   }
+  },
+  "seq": "LOW_W_LEFT/full",
+  "contact": null,
+  "art": {
+   "GK_BASE_V1 SET/west": 50,
+   "SEQ LOW_W_LEFT": 87,
+   "SAVE POSE": 17,
+   "GK_BASE_V1 SET/north-east": 146
+  },
+  "gkAtShot": {
+   "x": 101.51091181217623,
+   "y": 33.98409647453697,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": -27.7
+ },
+ {
+  "idx": 2,
+  "name": "high corner",
+  "commitTick": 43,
+  "commit": {
+   "t0": 0.725,
+   "exec": 0.686,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "target": [
+    101.76,
+    32.43,
+    2.335
+   ],
+   "feet": [
+    101.988,
+    33.993
+   ],
+   "norm": 1.316,
+   "best": true
+  },
+  "cls": {
+   "family": "AIRBORNE_DIVE",
+   "side": "RIGHT",
+   "goalSide": "GOAL_LEFT",
+   "hClass": "TOP",
+   "zClass": "TOP",
+   "norm": 1.316,
+   "saveAngle": -98.3,
+   "expr": {
+    "heightClass": "TOP",
+    "intensity": 1,
+    "latFrac": 0.703,
+    "vertDemand": 0.908,
+    "depthDemand": 0.39,
+    "nearMax": true,
+    "exec": 0.686,
+    "extension": 1,
+    "launch": 1
+   }
+  },
+  "seq": "RIGHT_TOP/full",
+  "contact": null,
+  "art": {
+   "GK_BASE_V1 SET/west": 44,
+   "SEQ RIGHT_TOP": 99,
+   "SAVE POSE": 5,
+   "GK_BASE_V1 SET/east": 152
+  },
+  "gkAtShot": {
+   "x": 101.98750571004783,
+   "y": 33.99279656305087,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": -8.6
+ },
+ {
+  "idx": 3,
+  "name": "near post",
+  "commitTick": 49,
+  "commit": {
+   "t0": 0.825,
+   "exec": 0.649,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-LOW",
+   "target": [
+    101.733,
+    36.993,
+    0.144
+   ],
+   "feet": [
+    101.575,
+    35.225
+   ],
+   "norm": 1.145,
+   "best": true
+  },
+  "cls": {
+   "family": "AIRBORNE_DIVE",
+   "side": "LEFT",
+   "goalSide": "GOAL_RIGHT",
+   "hClass": "LOW-MID",
+   "zClass": "LOW",
+   "norm": 1.145,
+   "saveAngle": 84.9,
+   "expr": {
+    "heightClass": "LOW-MID",
+    "intensity": 1,
+    "latFrac": 0.789,
+    "vertDemand": -1.283,
+    "depthDemand": 0.594,
+    "nearMax": true,
+    "exec": 0.649,
+    "extension": 1,
+    "launch": 0
+   }
+  },
+  "seq": "LOW_FAR_LEFT/full",
+  "contact": null,
+  "art": {
+   "GK_BASE_V1 SET/west": 47,
+   "GK_BASE_V1 SET/south-west": 3,
+   "SEQ LOW_FAR_LEFT": 97,
+   "SAVE POSE": 5,
+   "GK_BASE_V1 SET/east": 148
+  },
+  "gkAtShot": {
+   "x": 101.57528932616566,
+   "y": 35.224972920600315,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": 6.3
+ },
+ {
+  "idx": 4,
+  "name": "far post",
+  "commitTick": 49,
+  "commit": {
+   "t0": 0.825,
+   "exec": 0.664,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-LOW",
+   "target": [
+    101.306,
+    34.676,
+    0.242
+   ],
+   "feet": [
+    101.563,
+    32.811
+   ],
+   "norm": 1.167,
+   "best": true
+  },
+  "cls": {
+   "family": "AIRBORNE_DIVE",
+   "side": "LEFT",
+   "goalSide": "GOAL_RIGHT",
+   "hClass": "LOW-MID",
+   "zClass": "LOW",
+   "norm": 1.167,
+   "saveAngle": 97.8,
+   "expr": {
+    "heightClass": "LOW-MID",
+    "intensity": 1,
+    "latFrac": 0.838,
+    "vertDemand": -1.186,
+    "depthDemand": 0.056,
+    "nearMax": true,
+    "exec": 0.664,
+    "extension": 1,
+    "launch": 0
+   }
+  },
+  "seq": "LOW_FAR_LEFT/full",
+  "contact": null,
+  "art": {
+   "GK_BASE_V1 SET/west": 50,
+   "SEQ LOW_FAR_LEFT": 98,
+   "SAVE POSE": 5,
+   "GK_BASE_V1 SET/south-east": 147
+  },
+  "gkAtShot": {
+   "x": 101.56283660859698,
+   "y": 32.81089866752778,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": 34.6
+ },
+ {
+  "idx": 5,
+  "name": "close POWER",
+  "commitTick": 43,
+  "commit": {
+   "t0": 0.725,
+   "exec": 1.094,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-MID",
+   "target": [
+    102.582,
+    35.687,
+    1.234
+   ],
+   "feet": [
+    101.1,
+    34
+   ],
+   "norm": 2.632,
+   "best": true
+  },
+  "cls": {
+   "family": "AIRBORNE_DIVE",
+   "side": "LEFT",
+   "goalSide": "GOAL_RIGHT",
+   "hClass": "MID",
+   "zClass": "MID",
+   "norm": 2.632,
+   "saveAngle": 48.7,
+   "expr": {
+    "heightClass": "MID",
+    "intensity": 1,
+    "latFrac": 0.999,
+    "vertDemand": -0.194,
+    "depthDemand": 2.246,
+    "nearMax": true,
+    "exec": 1.094,
+    "extension": 1,
+    "launch": 0.089
+   }
+  },
+  "seq": "LEFT_FAR/full",
+  "contact": {
+   "tick": 31,
+   "t": 0.533,
+   "volume": "LEG+",
+   "outcome": "LEG DEFLECTION",
+   "point": [
+    101.034,
+    34,
+    0.454
+   ],
+   "held": null
+  },
+  "art": {
+   "GK_BASE_V1 SET/west": 33,
+   "GK_BASE_V1 SET/south-east": 138,
+   "foot_save/east f4": 7,
+   "SEQ LEFT_FAR": 115,
+   "SAVE POSE": 7
+  },
+  "gkAtShot": {
+   "x": 101.1,
+   "y": 34,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": 48.5
+ },
+ {
+  "idx": 6,
+  "name": "long POWER",
+  "commitTick": 43,
+  "commit": {
+   "t0": 0.725,
+   "exec": 0.698,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "target": [
+    102.871,
+    34,
+    2.723
+   ],
+   "feet": [
+    102.838,
+    34
+   ],
+   "norm": 1.508,
+   "best": true
+  },
+  "cls": {
+   "family": "AIRBORNE_DIVE",
+   "side": "LEFT",
+   "goalSide": "GOAL_LEFT",
+   "hClass": "TOP",
+   "zClass": "TOP",
+   "norm": 1.508,
+   "saveAngle": 0,
+   "expr": {
+    "heightClass": "TOP",
+    "intensity": 1,
+    "latFrac": 0.015,
+    "vertDemand": 1.296,
+    "depthDemand": -0.033,
+    "nearMax": true,
+    "exec": 0.698,
+    "extension": 1,
+    "launch": 1
+   }
+  },
+  "seq": null,
+  "contact": null,
+  "art": {
+   "GK_BASE_V1 SET/west": 44,
+   "SET/west (load)": 13,
+   "SAVE POSE": 56,
+   "recover/east f0": 7,
+   "recover/east f1": 7,
+   "recover/east f2": 7,
+   "recover/east f3": 8,
+   "recover/east f4": 7,
+   "GK_BASE_V1 SET/east": 151
+  },
+  "gkAtShot": {
+   "x": 102.8376125,
+   "y": 34,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": 0
+ },
+ {
+  "idx": 7,
+  "name": "curved INSIDE_R",
+  "commitTick": 64,
+  "commit": {
+   "t0": 1.0754,
+   "exec": 0.338,
+   "tier": "LOW-DIVE REACHABLE",
+   "action": "GATHER",
+   "target": [
+    101.927,
+    35.715,
+    0
+   ],
+   "feet": [
+    102.234,
+    35.57
+   ],
+   "norm": 0.77,
+   "best": false
+  },
+  "cls": {
+   "family": "LOW_GATHER",
+   "side": "LEFT",
+   "goalSide": "GOAL_RIGHT",
+   "hClass": "LOW-MID",
+   "zClass": "LOW",
+   "norm": 0.77,
+   "saveAngle": 154.7,
+   "expr": null
+  },
+  "seq": null,
+  "contact": {
+   "tick": 100,
+   "t": 1.683,
+   "volume": "HAND",
+   "outcome": "GATHER",
+   "point": [
+    101.783,
+    35.768,
+    0
+   ],
+   "held": "GK"
+  },
+  "art": {
+   "GK_BASE_V1 SET/west": 43,
+   "shuffle/east f1": 8,
+   "shuffle/east f2": 4,
+   "shuffle/east f3": 3,
+   "shuffle/east f4": 2,
+   "shuffle/east f5": 4,
+   "low_gather/east f1": 3,
+   "low_gather/east f2": 9,
+   "low_gather/east f3": 2,
+   "low_gather/east f4": 222
+  },
+  "gkAtShot": {
+   "x": 102.28671517183356,
+   "y": 34.98336614977076,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": 154.7
+ },
+ {
+  "idx": 8,
+  "name": "CHIP",
+  "commitTick": 66,
+  "commit": null,
+  "cls": {
+   "family": "AIRBORNE_DIVE",
+   "side": "RIGHT",
+   "goalSide": "GOAL_RIGHT",
+   "hClass": "TOP",
+   "zClass": "TOP",
+   "norm": 0.94,
+   "saveAngle": 180,
+   "expr": {
+    "heightClass": "TOP",
+    "intensity": 0.891,
+    "latFrac": 0.11,
+    "vertDemand": 1.194,
+    "depthDemand": 0.247,
+    "nearMax": true,
+    "exec": 0.318,
+    "extension": 0.929,
+    "launch": 1
+   }
+  },
+  "seq": null,
+  "contact": {
+   "tick": 86,
+   "t": 1.45,
+   "volume": "HAND",
+   "outcome": "CONTROLLED PARRY",
+   "point": [
+    101.118,
+    34,
+    2.666
+   ],
+   "held": null
+  },
+  "art": {
+   "GK_BASE_V1 SET/west": 203,
+   "SET/west (load)": 6,
+   "SAVE POSE": 42,
+   "recover/east f0": 7,
+   "recover/east f1": 7,
+   "recover/east f2": 7,
+   "recover/east f3": 7,
+   "recover/east f4": 8,
+   "shuffle/east f2": 13
+  },
+  "gkAtShot": {
+   "x": 101.51024097483095,
+   "y": 34,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": 180
+ },
+ {
+  "idx": 9,
+  "name": "keeper set (centre)",
+  "commitTick": 52,
+  "commit": {
+   "t0": 0.8667,
+   "exec": 0.407,
+   "tier": "LOW-DIVE REACHABLE",
+   "action": "GATHER",
+   "target": [
+    101.453,
+    34,
+    0
+   ],
+   "feet": [
+    101.739,
+    34
+   ],
+   "norm": 0.767,
+   "best": false
+  },
+  "cls": {
+   "family": "LOW_GATHER",
+   "side": "RIGHT",
+   "goalSide": "GOAL_RIGHT",
+   "hClass": "LOW-MID",
+   "zClass": "LOW",
+   "norm": 0.767,
+   "saveAngle": 180,
+   "expr": null
+  },
+  "seq": null,
+  "contact": {
+   "tick": 86,
+   "t": 1.45,
+   "volume": "HAND",
+   "outcome": "GATHER",
+   "point": [
+    101.306,
+    34,
+    0
+   ],
+   "held": "GK"
+  },
+  "art": {
+   "GK_BASE_V1 SET/west": 52,
+   "low_gather/east f1": 4,
+   "low_gather/east f2": 10,
+   "low_gather/east f3": 2,
+   "low_gather/east f4": 232
+  },
+  "gkAtShot": {
+   "x": 101.73911419045831,
+   "y": 34,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": 180
+ },
+ {
+  "idx": 10,
+  "name": "keeper mispositioned",
+  "commitTick": 60,
+  "commit": {
+   "t0": 1,
+   "exec": 0.46,
+   "tier": "LOW-DIVE REACHABLE",
+   "action": "DIVE-LOW",
+   "target": [
+    101.815,
+    34,
+    0
+   ],
+   "feet": [
+    102.111,
+    35.192
+   ],
+   "norm": 0.909,
+   "best": false
+  },
+  "cls": {
+   "family": "AIRBORNE_DIVE",
+   "side": "RIGHT",
+   "goalSide": "GOAL_LEFT",
+   "hClass": "LOW-MID",
+   "zClass": "LOW",
+   "norm": 0.909,
+   "saveAngle": -104,
+   "expr": {
+    "heightClass": "LOW-MID",
+    "intensity": 0.835,
+    "latFrac": 0.546,
+    "vertDemand": -1.427,
+    "depthDemand": 0.491,
+    "nearMax": true,
+    "exec": 0.46,
+    "extension": 0.892,
+    "launch": 0
+   }
+  },
+  "seq": "LOW_W_LEFT/full",
+  "contact": {
+   "tick": 87,
+   "t": 1.467,
+   "volume": "HAND",
+   "outcome": "GATHER",
+   "point": [
+    101.672,
+    34,
+    0
+   ],
+   "held": "GK"
+  },
+  "art": {
+   "shuffle/east f1": 15,
+   "shuffle/east f2": 11,
+   "shuffle/east f3": 10,
+   "shuffle/east f4": 5,
+   "shuffle/east f5": 4,
+   "shuffle/east f6": 6,
+   "shuffle/east f7": 6,
+   "shuffle/east f8": 3,
+   "SEQ LOW_W_LEFT": 26,
+   "SAVE POSE": 214
+  },
+  "gkAtShot": {
+   "x": 102.49809083245368,
+   "y": 36.40775694754229,
+   "vx": -1.6835767735373939,
+   "vy": -5.340933368579449
+  },
+  "facingDeg": -104
+ },
+ {
+  "idx": 11,
+  "name": "keeper already moving",
+  "commitTick": 62,
+  "commit": {
+   "t0": 1.0333,
+   "exec": 0.399,
+   "tier": "LOW-DIVE REACHABLE",
+   "action": "DIVE-LOW",
+   "target": [
+    101.439,
+    34,
+    0
+   ],
+   "feet": [
+    101.739,
+    34.033
+   ],
+   "norm": 0.768,
+   "best": false
+  },
+  "cls": {
+   "family": "LOW_COLLAPSE",
+   "side": "RIGHT",
+   "goalSide": "GOAL_LEFT",
+   "hClass": "LOW-MID",
+   "zClass": "LOW",
+   "norm": 0.768,
+   "saveAngle": -173.8,
+   "expr": null
+  },
+  "seq": "LOW_W_LEFT/full",
+  "contact": {
+   "tick": 86,
+   "t": 1.45,
+   "volume": "HAND",
+   "outcome": "GATHER",
+   "point": [
+    101.288,
+    34,
+    0
+   ],
+   "held": "GK"
+  },
+  "art": {
+   "shuffle/east f1": 7,
+   "shuffle/east f2": 9,
+   "shuffle/east f3": 11,
+   "shuffle/east f4": 7,
+   "shuffle/east f5": 7,
+   "shuffle/east f6": 6,
+   "shuffle/east f7": 11,
+   "GK_BASE_V1 SET/west": 1,
+   "shuffle/east f8": 3,
+   "SEQ LOW_W_LEFT": 22,
+   "SAVE POSE": 216
+  },
+  "gkAtShot": {
+   "x": 101.73911419045831,
+   "y": 34.595000000000006,
+   "vx": 0,
+   "vy": -1.731428571428572
+  },
+  "facingDeg": -173.8
+ },
+ {
+  "idx": 12,
+  "name": "future max-reach",
+  "commitTick": 49,
+  "commit": {
+   "t0": 0.825,
+   "exec": 0.649,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-LOW",
+   "target": [
+    101.245,
+    32.146,
+    0.217
+   ],
+   "feet": [
+    101.511,
+    33.985
+   ],
+   "norm": 1.13,
+   "best": true
+  },
+  "cls": {
+   "family": "AIRBORNE_DIVE",
+   "side": "RIGHT",
+   "goalSide": "GOAL_LEFT",
+   "hClass": "LOW-MID",
+   "zClass": "LOW",
+   "norm": 1.13,
+   "saveAngle": -98.2,
+   "expr": {
+    "heightClass": "LOW-MID",
+    "intensity": 1,
+    "latFrac": 0.826,
+    "vertDemand": -1.21,
+    "depthDemand": 0.498,
+    "nearMax": true,
+    "exec": 0.649,
+    "extension": 1,
+    "launch": 0
+   }
+  },
+  "seq": "LOW_W_LEFT/full",
+  "contact": null,
+  "art": {
+   "GK_BASE_V1 SET/west": 50,
+   "SEQ LOW_W_LEFT": 85,
+   "SAVE POSE": 17,
+   "GK_BASE_V1 SET/north-east": 148
+  },
+  "gkAtShot": {
+   "x": 101.5108275758818,
+   "y": 33.98511868385244,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": -25.9
+ },
+ {
+  "idx": 13,
+  "name": "legal under-bar top corner",
+  "commitTick": 43,
+  "commit": {
+   "t0": 0.725,
+   "exec": 0.565,
+   "tier": "HIGH/FULL-STRETCH REACHABLE",
+   "action": "DIVE-HIGH",
+   "target": [
+    100.94,
+    32.015,
+    1.734
+   ],
+   "feet": [
+    101.24,
+    33.973
+   ],
+   "norm": 0.941,
+   "best": false
+  },
+  "cls": {
+   "family": "AIRBORNE_DIVE",
+   "side": "RIGHT",
+   "goalSide": "GOAL_LEFT",
+   "hClass": "HIGH",
+   "zClass": "HIGH",
+   "norm": 0.941,
+   "saveAngle": -98.7,
+   "expr": {
+    "heightClass": "HIGH",
+    "intensity": 0.893,
+    "latFrac": 0.881,
+    "vertDemand": 0.307,
+    "depthDemand": 1.64,
+    "nearMax": true,
+    "exec": 0.565,
+    "extension": 0.93,
+    "launch": 0.506
+   }
+  },
+  "seq": "RIGHT_FAR/full",
+  "contact": null,
+  "art": {
+   "GK_BASE_V1 SET/west": 40,
+   "GK_BASE_V1 SET/north-west": 4,
+   "SEQ RIGHT_FAR": 92,
+   "SAVE POSE": 5,
+   "GK_BASE_V1 SET/east": 159
+  },
+  "gkAtShot": {
+   "x": 101.24011434562159,
+   "y": 33.97336960519741,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": -16.6
+ },
+ {
+  "idx": 14,
+  "name": "medium-height far side",
+  "commitTick": 43,
+  "commit": {
+   "t0": 0.725,
+   "exec": 0.633,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "target": [
+    101.291,
+    34.787,
+    1.952
+   ],
+   "feet": [
+    101.563,
+    32.811
+   ],
+   "norm": 1.102,
+   "best": true
+  },
+  "cls": {
+   "family": "AIRBORNE_DIVE",
+   "side": "LEFT",
+   "goalSide": "GOAL_RIGHT",
+   "hClass": "TOP",
+   "zClass": "TOP",
+   "norm": 1.102,
+   "saveAngle": 97.8,
+   "expr": {
+    "heightClass": "TOP",
+    "intensity": 1,
+    "latFrac": 0.887,
+    "vertDemand": 0.524,
+    "depthDemand": 0.469,
+    "nearMax": true,
+    "exec": 0.633,
+    "extension": 1,
+    "launch": 0.687
+   }
+  },
+  "seq": "LEFT_FAR/full",
+  "contact": null,
+  "art": {
+   "GK_BASE_V1 SET/west": 44,
+   "SEQ LEFT_FAR": 96,
+   "SAVE POSE": 5,
+   "GK_BASE_V1 SET/south-west": 155
+  },
+  "gkAtShot": {
+   "x": 101.56283660859698,
+   "y": 32.81089866752778,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": 136.1
+ },
+ {
+  "idx": 15,
+  "name": "rocket top corner (unreachable)",
+  "commitTick": 43,
+  "commit": {
+   "t0": 0.725,
+   "exec": 1.037,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "target": [
+    102.792,
+    32.559,
+    1.623
+   ],
+   "feet": [
+    101.132,
+    33.957
+   ],
+   "norm": 2.33,
+   "best": true
+  },
+  "cls": {
+   "family": "AIRBORNE_DIVE",
+   "side": "RIGHT",
+   "goalSide": "GOAL_LEFT",
+   "hClass": "HIGH",
+   "zClass": "HIGH",
+   "norm": 2.33,
+   "saveAngle": -40.1,
+   "expr": {
+    "heightClass": "HIGH",
+    "intensity": 1,
+    "latFrac": 0.965,
+    "vertDemand": 0.196,
+    "depthDemand": 2.054,
+    "nearMax": true,
+    "exec": 1.037,
+    "extension": 1,
+    "launch": 0.413
+   }
+  },
+  "seq": "RIGHT_FAR/full",
+  "contact": null,
+  "art": {
+   "GK_BASE_V1 SET/west": 35,
+   "GK_BASE_V1 SET/north-west": 4,
+   "GK_BASE_V1 SET/north": 3,
+   "GK_BASE_V1 SET/north-east": 133,
+   "SEQ RIGHT_FAR": 119,
+   "SAVE POSE": 6
+  },
+  "gkAtShot": {
+   "x": 101.1321815394279,
+   "y": 33.95734713884523,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": -24.6
+ },
+ {
+  "idx": 16,
+  "name": "at left foot (low)",
+  "commitTick": 49,
+  "commit": {
+   "t0": 0.825,
+   "exec": 0.408,
+   "tier": "LOW-DIVE REACHABLE",
+   "action": "DIVE-LOW",
+   "target": [
+    101.226,
+    33.716,
+    0
+   ],
+   "feet": [
+    101.317,
+    33.997
+   ],
+   "norm": 0.767,
+   "best": false
+  },
+  "cls": {
+   "family": "FOOT_SAVE",
+   "side": "RIGHT",
+   "goalSide": "GOAL_LEFT",
+   "hClass": "LOW-MID",
+   "zClass": "LOW",
+   "norm": 0.767,
+   "saveAngle": -108.1,
+   "expr": null
+  },
+  "seq": null,
+  "contact": {
+   "tick": 71,
+   "t": 1.2,
+   "volume": "LEG-",
+   "outcome": "FOOT SAVE",
+   "point": [
+    101.065,
+    33.721,
+    0
+   ],
+   "held": null
+  },
+  "art": {
+   "GK_BASE_V1 SET/west": 68,
+   "foot_save/east f1": 4,
+   "foot_save/east f2": 4,
+   "foot_save/east f3": 14,
+   "foot_save/east f4": 19,
+   "foot_save/east f8": 7,
+   "GK_BASE_V1 SET/south-west": 184
+  },
+  "gkAtShot": {
+   "x": 101.3172414978788,
+   "y": 33.996951379528134,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": 156.5
+ },
+ {
+  "idx": 17,
+  "name": "at right foot (low)",
+  "commitTick": 49,
+  "commit": {
+   "t0": 0.825,
+   "exec": 0.408,
+   "tier": "LOW-DIVE REACHABLE",
+   "action": "DIVE-LOW",
+   "target": [
+    101.226,
+    34.284,
+    0
+   ],
+   "feet": [
+    101.317,
+    34.003
+   ],
+   "norm": 0.767,
+   "best": false
+  },
+  "cls": {
+   "family": "FOOT_SAVE",
+   "side": "LEFT",
+   "goalSide": "GOAL_RIGHT",
+   "hClass": "LOW-MID",
+   "zClass": "LOW",
+   "norm": 0.767,
+   "saveAngle": 108.1,
+   "expr": null
+  },
+  "seq": null,
+  "contact": {
+   "tick": 71,
+   "t": 1.2,
+   "volume": "LEG+",
+   "outcome": "FOOT SAVE",
+   "point": [
+    101.065,
+    34.279,
+    0
+   ],
+   "held": null
+  },
+  "art": {
+   "GK_BASE_V1 SET/west": 68,
+   "foot_save/east f1": 4,
+   "foot_save/east f2": 3,
+   "foot_save/east f3": 15,
+   "foot_save/east f4": 19,
+   "foot_save/east f8": 7,
+   "GK_BASE_V1 SET/north-west": 184
+  },
+  "gkAtShot": {
+   "x": 101.3172414978788,
+   "y": 34.003048620471866,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": -156.5
+ },
+ {
+  "idx": 18,
+  "name": "between legs (low)",
+  "commitTick": 49,
+  "commit": {
+   "t0": 0.825,
+   "exec": 0.393,
+   "tier": "LOW-DIVE REACHABLE",
+   "action": "DIVE-LOW",
+   "target": [
+    101.23,
+    34,
+    0
+   ],
+   "feet": [
+    101.317,
+    34
+   ],
+   "norm": 0.761,
+   "best": false
+  },
+  "cls": {
+   "family": "LOW_COLLAPSE",
+   "side": "RIGHT",
+   "goalSide": "GOAL_RIGHT",
+   "hClass": "LOW-MID",
+   "zClass": "LOW",
+   "norm": 0.761,
+   "saveAngle": 180,
+   "expr": null
+  },
+  "seq": "LOW_W_RIGHT/full",
+  "contact": {
+   "tick": 71,
+   "t": 1.2,
+   "volume": "LEG+",
+   "outcome": "FOOT SAVE",
+   "point": [
+    101.069,
+    34,
+    0
+   ],
+   "held": null
+  },
+  "art": {
+   "GK_BASE_V1 SET/west": 50,
+   "SEQ LOW_W_RIGHT": 70,
+   "foot_save/east f4": 17,
+   "GK_BASE_V1 SET/north-west": 163
+  },
+  "gkAtShot": {
+   "x": 101.31722801465064,
+   "y": 34,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": -148.6
+ },
+ {
+  "idx": 19,
+  "name": "20cm outside L foot",
+  "commitTick": 49,
+  "commit": {
+   "t0": 0.825,
+   "exec": 0.443,
+   "tier": "LOW-DIVE REACHABLE",
+   "action": "DIVE-LOW",
+   "target": [
+    101.581,
+    33.41,
+    0
+   ],
+   "feet": [
+    101.317,
+    33.994
+   ],
+   "norm": 0.799,
+   "best": false
+  },
+  "cls": {
+   "family": "FOOT_SAVE",
+   "side": "RIGHT",
+   "goalSide": "GOAL_LEFT",
+   "hClass": "LOW-MID",
+   "zClass": "LOW",
+   "norm": 0.799,
+   "saveAngle": -65.7,
+   "expr": null
+  },
+  "seq": null,
+  "contact": {
+   "tick": 71,
+   "t": 1.2,
+   "volume": "LEG-",
+   "outcome": "FOOT SAVE",
+   "point": [
+    101.255,
+    33.43,
+    0
+   ],
+   "held": null
+  },
+  "art": {
+   "GK_BASE_V1 SET/west": 50,
+   "foot_save/east f1": 4,
+   "foot_save/east f2": 5,
+   "foot_save/east f3": 13,
+   "foot_save/east f4": 19,
+   "foot_save/east f8": 10,
+   "GK_BASE_V1 SET/north": 199
+  },
+  "gkAtShot": {
+   "x": 101.31728183026024,
+   "y": 33.993911661923306,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": -98.7
+ },
+ {
+  "idx": 20,
+  "name": "20cm outside R foot",
+  "commitTick": 49,
+  "commit": {
+   "t0": 0.825,
+   "exec": 0.443,
+   "tier": "LOW-DIVE REACHABLE",
+   "action": "DIVE-LOW",
+   "target": [
+    101.581,
+    34.59,
+    0
+   ],
+   "feet": [
+    101.317,
+    34.006
+   ],
+   "norm": 0.799,
+   "best": false
+  },
+  "cls": {
+   "family": "FOOT_SAVE",
+   "side": "LEFT",
+   "goalSide": "GOAL_RIGHT",
+   "hClass": "LOW-MID",
+   "zClass": "LOW",
+   "norm": 0.799,
+   "saveAngle": 65.7,
+   "expr": null
+  },
+  "seq": null,
+  "contact": {
+   "tick": 71,
+   "t": 1.2,
+   "volume": "LEG+",
+   "outcome": "FOOT SAVE",
+   "point": [
+    101.255,
+    34.57,
+    0
+   ],
+   "held": null
+  },
+  "art": {
+   "GK_BASE_V1 SET/west": 50,
+   "foot_save/east f1": 4,
+   "foot_save/east f2": 4,
+   "foot_save/east f3": 14,
+   "foot_save/east f4": 19,
+   "foot_save/east f8": 10,
+   "GK_BASE_V1 SET/south": 199
+  },
+  "gkAtShot": {
+   "x": 101.31728183026024,
+   "y": 34.006088338076694,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": 98.7
+ },
+ {
+  "idx": 21,
+  "name": "ankle-height low corner",
+  "commitTick": 49,
+  "commit": {
+   "t0": 0.825,
+   "exec": 0.626,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-LOW",
+   "target": [
+    101.237,
+    32.292,
+    0.098
+   ],
+   "feet": [
+    101.511,
+    33.987
+   ],
+   "norm": 1.095,
+   "best": true
+  },
+  "cls": {
+   "family": "AIRBORNE_DIVE",
+   "side": "RIGHT",
+   "goalSide": "GOAL_LEFT",
+   "hClass": "LOW-MID",
+   "zClass": "LOW",
+   "norm": 1.095,
+   "saveAngle": -99.2,
+   "expr": {
+    "heightClass": "LOW-MID",
+    "intensity": 1,
+    "latFrac": 0.763,
+    "vertDemand": -1.329,
+    "depthDemand": 0.441,
+    "nearMax": true,
+    "exec": 0.626,
+    "extension": 1,
+    "launch": 0
+   }
+  },
+  "seq": "LOW_W_LEFT/full",
+  "contact": null,
+  "art": {
+   "GK_BASE_V1 SET/west": 50,
+   "SEQ LOW_W_LEFT": 84,
+   "SAVE POSE": 17,
+   "GK_BASE_V1 SET/north-east": 149
+  },
+  "gkAtShot": {
+   "x": 101.51071106772382,
+   "y": 33.98666615091355,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": -27.5
+ },
+ {
+  "idx": 22,
+  "name": "close POWER at feet",
+  "commitTick": 43,
+  "commit": {
+   "t0": 0.725,
+   "exec": 1.011,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-LOW",
+   "target": [
+    102.808,
+    32.686,
+    0.638
+   ],
+   "feet": [
+    101.1,
+    34
+   ],
+   "norm": 2.284,
+   "best": true
+  },
+  "cls": {
+   "family": "AIRBORNE_DIVE",
+   "side": "RIGHT",
+   "goalSide": "GOAL_LEFT",
+   "hClass": "LOW-MID",
+   "zClass": "LOW",
+   "norm": 2.284,
+   "saveAngle": -37.6,
+   "expr": {
+    "heightClass": "LOW-MID",
+    "intensity": 1,
+    "latFrac": 0.959,
+    "vertDemand": -0.79,
+    "depthDemand": 2.155,
+    "nearMax": true,
+    "exec": 1.011,
+    "extension": 1,
+    "launch": 0
+   }
+  },
+  "seq": "RIGHT_FAR/full",
+  "contact": {
+   "tick": 34,
+   "t": 0.583,
+   "volume": "LEG+",
+   "outcome": "FOOT DEFLECTION",
+   "point": [
+    101.024,
+    34,
+    0.062
+   ],
+   "held": null
+  },
+  "art": {
+   "GK_BASE_V1 SET/west": 35,
+   "GK_BASE_V1 SET/north-east": 141,
+   "foot_save/east f4": 9,
+   "SEQ RIGHT_FAR": 109,
+   "SAVE POSE": 6
+  },
+  "gkAtShot": {
+   "x": 101.1,
+   "y": 34,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": -27.5
+ },
+ {
+  "idx": 23,
+  "name": "low INSIDE_R at foot",
+  "commitTick": 73,
+  "commit": {
+   "t0": 1.2167,
+   "exec": 0.356,
+   "tier": "LOW-DIVE REACHABLE",
+   "action": "DIVE-LOW",
+   "target": [
+    101.609,
+    35.971,
+    0
+   ],
+   "feet": [
+    101.909,
+    35.774
+   ],
+   "norm": 0.771,
+   "best": false
+  },
+  "cls": {
+   "family": "LOW_COLLAPSE",
+   "side": "LEFT",
+   "goalSide": "GOAL_RIGHT",
+   "hClass": "LOW-MID",
+   "zClass": "LOW",
+   "norm": 0.771,
+   "saveAngle": 146.8,
+   "expr": null
+  },
+  "seq": "LOW_W_RIGHT/full",
+  "contact": {
+   "tick": 94,
+   "t": 1.583,
+   "volume": "HAND",
+   "outcome": "GATHER",
+   "point": [
+    101.464,
+    35.995,
+    0
+   ],
+   "held": "GK"
+  },
+  "art": {
+   "GK_BASE_V1 SET/west": 43,
+   "shuffle/east f1": 9,
+   "shuffle/east f2": 4,
+   "shuffle/east f3": 3,
+   "shuffle/east f4": 2,
+   "shuffle/east f5": 2,
+   "shuffle/east f6": 3,
+   "shuffle/east f7": 3,
+   "shuffle/east f8": 4,
+   "SEQ LOW_W_RIGHT": 20,
+   "SAVE POSE": 207
+  },
+  "gkAtShot": {
+   "x": 101.90916683579742,
+   "y": 34.832809612385105,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": 146.8
+ },
+ {
+  "idx": 24,
+  "name": "just beyond foot (hand)",
+  "commitTick": 49,
+  "commit": {
+   "t0": 0.825,
+   "exec": 0.546,
+   "tier": "LOW-DIVE REACHABLE",
+   "action": "DIVE-LOW",
+   "target": [
+    101.416,
+    32.63,
+    0
+   ],
+   "feet": [
+    101.51,
+    33.99
+   ],
+   "norm": 0.943,
+   "best": false
+  },
+  "cls": {
+   "family": "AIRBORNE_DIVE",
+   "side": "RIGHT",
+   "goalSide": "GOAL_LEFT",
+   "hClass": "LOW-MID",
+   "zClass": "LOW",
+   "norm": 0.943,
+   "saveAngle": -94,
+   "expr": {
+    "heightClass": "LOW-MID",
+    "intensity": 0.896,
+    "latFrac": 0.607,
+    "vertDemand": -1.427,
+    "depthDemand": 0.199,
+    "nearMax": true,
+    "exec": 0.546,
+    "extension": 0.933,
+    "launch": 0
+   }
+  },
+  "seq": "LOW_W_LEFT/full",
+  "contact": {
+   "tick": 74,
+   "t": 1.25,
+   "volume": "LEGTIP",
+   "outcome": "FOOT SAVE",
+   "point": [
+    101.292,
+    32.645,
+    0
+   ],
+   "held": null
+  },
+  "art": {
+   "GK_BASE_V1 SET/west": 50,
+   "SEQ LOW_W_LEFT": 73,
+   "foot_save/east f4": 19,
+   "SAVE POSE": 4,
+   "GK_BASE_V1 SET/north-west": 154
+  },
+  "gkAtShot": {
+   "x": 101.5104871243913,
+   "y": 33.9903346375629,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": -153.5
+ },
+ {
+  "idx": 25,
+  "name": "beyond both -> goal",
+  "commitTick": 49,
+  "commit": {
+   "t0": 0.825,
+   "exec": 0.691,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-LOW",
+   "target": [
+    101.27,
+    32.135,
+    0.223
+   ],
+   "feet": [
+    101.511,
+    33.984
+   ],
+   "norm": 1.245,
+   "best": true
+  },
+  "cls": {
+   "family": "AIRBORNE_DIVE",
+   "side": "RIGHT",
+   "goalSide": "GOAL_LEFT",
+   "hClass": "LOW-MID",
+   "zClass": "LOW",
+   "norm": 1.245,
+   "saveAngle": -97.4,
+   "expr": {
+    "heightClass": "LOW-MID",
+    "intensity": 1,
+    "latFrac": 0.829,
+    "vertDemand": -1.204,
+    "depthDemand": 0.565,
+    "nearMax": true,
+    "exec": 0.691,
+    "extension": 1,
+    "launch": 0
+   }
+  },
+  "seq": "LOW_W_LEFT/full",
+  "contact": null,
+  "art": {
+   "GK_BASE_V1 SET/west": 50,
+   "SEQ LOW_W_LEFT": 87,
+   "SAVE POSE": 17,
+   "GK_BASE_V1 SET/north-east": 146
+  },
+  "gkAtShot": {
+   "x": 101.51095585360594,
+   "y": 33.983588367917925,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": -23.6
+ },
+ {
+  "idx": 26,
+  "name": "S4 easy central catch (CHIP lob into the hands)",
+  "commitTick": 61,
+  "commit": {
+   "t0": 1.0221,
+   "exec": 0.191,
+   "tier": "STANDING REACHABLE",
+   "action": "GATHER",
+   "target": [
+    101.03,
+    34,
+    0.461
+   ],
+   "feet": [
+    101.317,
+    34
+   ],
+   "norm": 0.463,
+   "best": false
+  },
+  "cls": {
+   "family": "LOW_GATHER",
+   "side": "RIGHT",
+   "goalSide": "GOAL_RIGHT",
+   "hClass": "LOW-MID",
+   "zClass": "LOW",
+   "norm": 0.463,
+   "saveAngle": 180,
+   "expr": null
+  },
+  "seq": null,
+  "contact": {
+   "tick": 87,
+   "t": 1.467,
+   "volume": "HAND",
+   "outcome": "GATHER",
+   "point": [
+    100.909,
+    34,
+    0.546
+   ],
+   "held": "GK"
+  },
+  "art": {
+   "GK_BASE_V1 SET/west": 61,
+   "low_gather/east f1": 2,
+   "low_gather/east f2": 8,
+   "low_gather/east f3": 229
+  },
+  "gkAtShot": {
+   "x": 101.31722801465064,
+   "y": 34,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": 180
+ },
+ {
+  "idx": 27,
+  "name": "S4 chest gather (CHIP, hands+chest)",
+  "commitTick": 79,
+  "commit": {
+   "t0": 1.3221,
+   "exec": 0.191,
+   "tier": "STANDING REACHABLE",
+   "action": "GATHER",
+   "target": [
+    101.123,
+    34,
+    0.496
+   ],
+   "feet": [
+    101.408,
+    34
+   ],
+   "norm": 0.441,
+   "best": false
+  },
+  "cls": {
+   "family": "LOW_GATHER",
+   "side": "RIGHT",
+   "goalSide": "GOAL_RIGHT",
+   "hClass": "LOW-MID",
+   "zClass": "LOW",
+   "norm": 0.441,
+   "saveAngle": 180,
+   "expr": null
+  },
+  "seq": null,
+  "contact": {
+   "tick": 105,
+   "t": 1.767,
+   "volume": "HAND",
+   "outcome": "GATHER",
+   "point": [
+    100.973,
+    34,
+    0.481
+   ],
+   "held": "GK"
+  },
+  "art": {
+   "GK_BASE_V1 SET/west": 79,
+   "low_gather/east f1": 2,
+   "low_gather/east f2": 9,
+   "low_gather/east f3": 15,
+   "low_gather/east f7": 195
+  },
+  "gkAtShot": {
+   "x": 101.40820951352367,
+   "y": 34,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": 180
+ },
+ {
+  "idx": 28,
+  "name": "S4 central hard shot parry (LACES 24 m/s)",
+  "commitTick": 53,
+  "commit": null,
+  "cls": {
+   "family": "HIGH_CATCH",
+   "side": "LEFT",
+   "goalSide": "GOAL_RIGHT",
+   "hClass": "TOP",
+   "zClass": "TOP",
+   "norm": 0.713,
+   "saveAngle": 154.3,
+   "expr": null
+  },
+  "seq": null,
+  "contact": {
+   "tick": 64,
+   "t": 1.083,
+   "volume": "HAND",
+   "outcome": "CONTROLLED PARRY",
+   "point": [
+    101.176,
+    34.152,
+    2.239
+   ],
+   "held": null
+  },
+  "art": {
+   "GK_BASE_V1 SET/west": 233,
+   "shuffle/east f1": 19,
+   "SET/west (load)": 3,
+   "SAVE POSE": 32,
+   "shuffle/east f2": 13
+  },
+  "gkAtShot": {
+   "x": 101.62124036649742,
+   "y": 34.00091964159512,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": 179.5
+ },
+ {
+  "idx": 29,
+  "name": "S4 low foot save (20 cm outside R foot)",
+  "commitTick": 49,
+  "commit": {
+   "t0": 0.825,
+   "exec": 0.443,
+   "tier": "LOW-DIVE REACHABLE",
+   "action": "DIVE-LOW",
+   "target": [
+    101.581,
+    34.59,
+    0
+   ],
+   "feet": [
+    101.317,
+    34.006
+   ],
+   "norm": 0.799,
+   "best": false
+  },
+  "cls": {
+   "family": "FOOT_SAVE",
+   "side": "LEFT",
+   "goalSide": "GOAL_RIGHT",
+   "hClass": "LOW-MID",
+   "zClass": "LOW",
+   "norm": 0.799,
+   "saveAngle": 65.7,
+   "expr": null
+  },
+  "seq": null,
+  "contact": {
+   "tick": 71,
+   "t": 1.2,
+   "volume": "LEG+",
+   "outcome": "FOOT SAVE",
+   "point": [
+    101.255,
+    34.57,
+    0
+   ],
+   "held": null
+  },
+  "art": {
+   "GK_BASE_V1 SET/west": 50,
+   "foot_save/east f1": 4,
+   "foot_save/east f2": 4,
+   "foot_save/east f3": 14,
+   "foot_save/east f4": 19,
+   "foot_save/east f8": 10,
+   "GK_BASE_V1 SET/south": 199
+  },
+  "gkAtShot": {
+   "x": 101.31728183026024,
+   "y": 34.006088338076694,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": 98.7
+ },
+ {
+  "idx": 30,
+  "name": "S4 shin block (synthetic lat 0.4 z 0.4 18 m/s)",
+  "commitTick": 32,
+  "commit": {
+   "t0": 0.5384,
+   "exec": 0.184,
+   "tier": "STANDING REACHABLE",
+   "action": "DIVE-LOW",
+   "target": [
+    101.439,
+    34.391,
+    0.476
+   ],
+   "feet": [
+    101.739,
+    34.298
+   ],
+   "norm": 0.457,
+   "best": false
+  },
+  "cls": {
+   "family": "NEAR_BODY_SAVE",
+   "side": "LEFT",
+   "goalSide": "GOAL_RIGHT",
+   "hClass": "LOW-MID",
+   "zClass": "LOW",
+   "norm": 0.457,
+   "saveAngle": 162.8,
+   "expr": null
+  },
+  "seq": null,
+  "contact": {
+   "tick": 44,
+   "t": 0.75,
+   "volume": "HAND",
+   "outcome": "GATHER",
+   "point": [
+    101.308,
+    34.387,
+    0.499
+   ],
+   "held": "GK"
+  },
+  "art": {
+   "GK_BASE_V1 SET/west": 286,
+   "shuffle/east f1": 8,
+   "shuffle/east f2": 4,
+   "shuffle/east f3": 2
+  },
+  "gkAtShot": {
+   "x": 101.73911419045831,
+   "y": 34,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": 166.9
+ },
+ {
+  "idx": 31,
+  "name": "S4 body block (POWER 26 m/s at the chest)",
+  "commitTick": 43,
+  "commit": {
+   "t0": 0.725,
+   "exec": 0.148,
+   "tier": "STANDING REACHABLE",
+   "action": "STANDING",
+   "target": [
+    101.108,
+    34,
+    1.971
+   ],
+   "feet": [
+    101.408,
+    34
+   ],
+   "norm": 0.538,
+   "best": false
+  },
+  "cls": {
+   "family": "HIGH_CATCH",
+   "side": "RIGHT",
+   "goalSide": "GOAL_RIGHT",
+   "hClass": "TOP",
+   "zClass": "TOP",
+   "norm": 0.538,
+   "saveAngle": 180,
+   "expr": null
+  },
+  "seq": null,
+  "contact": {
+   "tick": 50,
+   "t": 0.85,
+   "volume": "HAND",
+   "outcome": "CONTROLLED PARRY",
+   "point": [
+    100.986,
+    34,
+    1.956
+   ],
+   "held": null
+  },
+  "art": {
+   "GK_BASE_V1 SET/west": 300
+  },
+  "gkAtShot": {
+   "x": 101.40820951352367,
+   "y": 34,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": 180
+ },
+ {
+  "idx": 32,
+  "name": "S4 comfortable lateral hand save (LACES 19 m/s)",
+  "commitTick": 49,
+  "commit": {
+   "t0": 0.825,
+   "exec": 0.475,
+   "tier": "LOW-DIVE REACHABLE",
+   "action": "DIVE-LOW",
+   "target": [
+    101.439,
+    33.051,
+    0.069
+   ],
+   "feet": [
+    101.739,
+    33.995
+   ],
+   "norm": 0.817,
+   "best": false
+  },
+  "cls": {
+   "family": "LOW_COLLAPSE",
+   "side": "RIGHT",
+   "goalSide": "GOAL_LEFT",
+   "hClass": "LOW-MID",
+   "zClass": "LOW",
+   "norm": 0.817,
+   "saveAngle": -107.6,
+   "expr": null
+  },
+  "seq": "LOW_W_LEFT/full",
+  "contact": {
+   "tick": 75,
+   "t": 1.267,
+   "volume": "HAND",
+   "outcome": "GATHER",
+   "point": [
+    101.3,
+    33.061,
+    0.054
+   ],
+   "held": "GK"
+  },
+  "art": {
+   "GK_BASE_V1 SET/west": 49,
+   "SEQ LOW_W_LEFT": 26,
+   "SAVE POSE": 225
+  },
+  "gkAtShot": {
+   "x": 101.73920906577139,
+   "y": 33.99529688709002,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": -107.6
+ },
+ {
+  "idx": 33,
+  "name": "S4 lateral catch (synthetic lat 1.2 z 1.3 13 m/s)",
+  "commitTick": 55,
+  "commit": {
+   "t0": 0.9168,
+   "exec": 0.111,
+   "tier": "STANDING REACHABLE",
+   "action": "STANDING",
+   "target": [
+    101.439,
+    35.173,
+    1.345
+   ],
+   "feet": [
+    101.739,
+    35.003
+   ],
+   "norm": 0.197,
+   "best": false
+  },
+  "cls": {
+   "family": "SUPPORTED_CATCH",
+   "side": "LEFT",
+   "goalSide": "GOAL_RIGHT",
+   "hClass": "MID",
+   "zClass": "MID",
+   "norm": 0.197,
+   "saveAngle": 150.4,
+   "expr": null
+  },
+  "seq": null,
+  "contact": {
+   "tick": 62,
+   "t": 1.05,
+   "volume": "HAND",
+   "outcome": "SUPPORTED CATCH",
+   "point": [
+    101.295,
+    35.16,
+    1.392
+   ],
+   "held": "GK"
+  },
+  "art": {
+   "GK_BASE_V1 SET/west": 18,
+   "shuffle/east f1": 16,
+   "shuffle/east f2": 4,
+   "shuffle/east f3": 3,
+   "shuffle/east f4": 2,
+   "shuffle/east f5": 2,
+   "shuffle/east f6": 3,
+   "shuffle/east f7": 3,
+   "shuffle/east f8": 4,
+   "chest_catch/east f1": 1,
+   "chest_catch/east f2": 6,
+   "chest_catch/east f6": 238
+  },
+  "gkAtShot": {
+   "x": 101.73911419045831,
+   "y": 34,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": 156.9
+ },
+ {
+  "idx": 34,
+  "name": "S4 full-extension controlled parry (norm ~0.96)",
+  "commitTick": 49,
+  "commit": {
+   "t0": 0.825,
+   "exec": 0.631,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-LOW",
+   "target": [
+    101.468,
+    32.283,
+    0.108
+   ],
+   "feet": [
+    101.739,
+    33.991
+   ],
+   "norm": 1.105,
+   "best": true
+  },
+  "cls": {
+   "family": "AIRBORNE_DIVE",
+   "side": "RIGHT",
+   "goalSide": "GOAL_LEFT",
+   "hClass": "LOW-MID",
+   "zClass": "LOW",
+   "norm": 1.105,
+   "saveAngle": -99,
+   "expr": {
+    "heightClass": "LOW-MID",
+    "intensity": 1,
+    "latFrac": 0.769,
+    "vertDemand": -1.319,
+    "depthDemand": 0.376,
+    "nearMax": true,
+    "exec": 0.631,
+    "extension": 1,
+    "launch": 0
+   }
+  },
+  "seq": "LOW_W_LEFT/full",
+  "contact": null,
+  "art": {
+   "GK_BASE_V1 SET/west": 50,
+   "SEQ LOW_W_LEFT": 84,
+   "SAVE POSE": 17,
+   "GK_BASE_V1 SET/north-east": 149
+  },
+  "gkAtShot": {
+   "x": 101.73948944576422,
+   "y": 33.99066497348718,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": -22.5
+ },
+ {
+  "idx": 35,
+  "name": "S4 fingertip around the post (LACES 15 m/s)",
+  "commitTick": 49,
+  "commit": {
+   "t0": 0.825,
+   "exec": 0.699,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-LOW",
+   "target": [
+    101.503,
+    32.124,
+    0.238
+   ],
+   "feet": [
+    101.74,
+    33.988
+   ],
+   "norm": 1.266,
+   "best": true
+  },
+  "cls": {
+   "family": "AIRBORNE_DIVE",
+   "side": "RIGHT",
+   "goalSide": "GOAL_LEFT",
+   "hClass": "LOW-MID",
+   "zClass": "LOW",
+   "norm": 1.266,
+   "saveAngle": -97.2,
+   "expr": {
+    "heightClass": "LOW-MID",
+    "intensity": 1,
+    "latFrac": 0.836,
+    "vertDemand": -1.189,
+    "depthDemand": 0.371,
+    "nearMax": true,
+    "exec": 0.699,
+    "extension": 1,
+    "launch": 0
+   }
+  },
+  "seq": "LOW_W_LEFT/full",
+  "contact": null,
+  "art": {
+   "GK_BASE_V1 SET/west": 50,
+   "SEQ LOW_W_LEFT": 88,
+   "SAVE POSE": 17,
+   "GK_BASE_V1 SET/north-east": 145
+  },
+  "gkAtShot": {
+   "x": 101.73969565789764,
+   "y": 33.98839666783365,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": -27
+ },
+ {
+  "idx": 36,
+  "name": "S4 fingertip over the bar (synthetic lat 1.4 z 2.45 17 m/s)",
+  "commitTick": 15,
+  "commit": {
+   "t0": 0.2583,
+   "exec": 0.537,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "target": [
+    101.451,
+    35.316,
+    2.464
+   ],
+   "feet": [
+    101.739,
+    34
+   ],
+   "norm": 1.04,
+   "best": true
+  },
+  "cls": {
+   "family": "AIRBORNE_DIVE",
+   "side": "LEFT",
+   "goalSide": "GOAL_RIGHT",
+   "hClass": "TOP",
+   "zClass": "TOP",
+   "norm": 1.04,
+   "saveAngle": 102.4,
+   "expr": {
+    "heightClass": "TOP",
+    "intensity": 1,
+    "latFrac": 0.599,
+    "vertDemand": 1.037,
+    "depthDemand": 0.35,
+    "nearMax": true,
+    "exec": 0.537,
+    "extension": 1,
+    "launch": 1
+   }
+  },
+  "seq": "LEFT_FAR/full",
+  "contact": {
+   "tick": 47,
+   "t": 0.8,
+   "volume": "HAND",
+   "outcome": "FINGERTIP (through)",
+   "point": [
+    101.329,
+    35.357,
+    2.523
+   ],
+   "held": null
+  },
+  "art": {
+   "GK_BASE_V1 SET/west": 16,
+   "SEQ LEFT_FAR": 92,
+   "SAVE POSE": 4,
+   "GK_BASE_V1 SET/south": 8,
+   "GK_BASE_V1 SET/south-west": 180
+  },
+  "gkAtShot": {
+   "x": 101.73911419045831,
+   "y": 34,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": 138.8
+ },
+ {
+  "idx": 37,
+  "name": "S4 awkward spill — weak parry (POWER 27 m/s)",
+  "commitTick": 43,
+  "commit": {
+   "t0": 0.725,
+   "exec": 0.189,
+   "tier": "STANDING REACHABLE",
+   "action": "LEAN",
+   "target": [
+    101.321,
+    33.769,
+    2.298
+   ],
+   "feet": [
+    101.621,
+    33.999
+   ],
+   "norm": 0.745,
+   "best": false
+  },
+  "cls": {
+   "family": "HIGH_CATCH",
+   "side": "RIGHT",
+   "goalSide": "GOAL_LEFT",
+   "hClass": "TOP",
+   "zClass": "TOP",
+   "norm": 0.745,
+   "saveAngle": -142.6,
+   "expr": null
+  },
+  "seq": null,
+  "contact": {
+   "tick": 54,
+   "t": 0.917,
+   "volume": "HAND",
+   "outcome": "WEAK PARRY",
+   "point": [
+    101.171,
+    33.772,
+    2.282
+   ],
+   "held": null
+  },
+  "art": {
+   "GK_BASE_V1 SET/west": 264,
+   "SET/west (load)": 3,
+   "SAVE POSE": 33
+  },
+  "gkAtShot": {
+   "x": 101.62124394865943,
+   "y": 33.99862067629376,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": -179.9
+ },
+ {
+  "idx": 38,
+  "name": "S4 awkward spill — body block into the D",
+  "commitTick": 61,
+  "commit": null,
+  "cls": {
+   "family": "HIGH_CATCH",
+   "side": "RIGHT",
+   "goalSide": "GOAL_RIGHT",
+   "hClass": "HIGH",
+   "zClass": "HIGH",
+   "norm": 0.367,
+   "saveAngle": 180,
+   "expr": null
+  },
+  "seq": null,
+  "contact": {
+   "tick": 69,
+   "t": 1.167,
+   "volume": "HAND",
+   "outcome": "CONTROLLED PARRY",
+   "point": [
+    101.29,
+    34,
+    1.688
+   ],
+   "held": null
+  },
+  "art": {
+   "GK_BASE_V1 SET/west": 269,
+   "shuffle/east f1": 31
+  },
+  "gkAtShot": {
+   "x": 101.73911419045831,
+   "y": 34,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": 180
+ },
+ {
+  "idx": 39,
+  "name": "S4 fingertip deflection into the net (synthetic lat 2.02 z 1.2 21 m/s)",
+  "commitTick": 15,
+  "commit": {
+   "t0": 0.2583,
+   "exec": 0.569,
+   "tier": "MEDIUM-DIVE REACHABLE",
+   "action": "DIVE-MID",
+   "target": [
+    101.973,
+    36.055,
+    1.224
+   ],
+   "feet": [
+    101.739,
+    34
+   ],
+   "norm": 0.921,
+   "best": false
+  },
+  "cls": {
+   "family": "AIRBORNE_DIVE",
+   "side": "LEFT",
+   "goalSide": "GOAL_RIGHT",
+   "hClass": "MID",
+   "zClass": "MID",
+   "norm": 0.921,
+   "saveAngle": 83.5,
+   "expr": {
+    "heightClass": "MID",
+    "intensity": 0.856,
+    "latFrac": 0.92,
+    "vertDemand": -0.204,
+    "depthDemand": -0.041,
+    "nearMax": true,
+    "exec": 0.569,
+    "extension": 0.907,
+    "launch": 0.08
+   }
+  },
+  "seq": "LEFT_FAR/full",
+  "contact": null,
+  "art": {
+   "GK_BASE_V1 SET/west": 16,
+   "SEQ LEFT_FAR": 92,
+   "SAVE POSE": 5,
+   "GK_BASE_V1 SET/south-east": 187
+  },
+  "gkAtShot": {
+   "x": 101.73911419045831,
+   "y": 34,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": 32.4
+ },
+ {
+  "idx": 40,
+  "name": "S4 unreachable rocket stays untouched",
+  "commitTick": 43,
+  "commit": {
+   "t0": 0.725,
+   "exec": 1.037,
+   "tier": "UNREACHABLE",
+   "action": "DIVE-HIGH",
+   "target": [
+    102.792,
+    32.559,
+    1.623
+   ],
+   "feet": [
+    101.132,
+    33.957
+   ],
+   "norm": 2.33,
+   "best": true
+  },
+  "cls": {
+   "family": "AIRBORNE_DIVE",
+   "side": "RIGHT",
+   "goalSide": "GOAL_LEFT",
+   "hClass": "HIGH",
+   "zClass": "HIGH",
+   "norm": 2.33,
+   "saveAngle": -40.1,
+   "expr": {
+    "heightClass": "HIGH",
+    "intensity": 1,
+    "latFrac": 0.965,
+    "vertDemand": 0.196,
+    "depthDemand": 2.054,
+    "nearMax": true,
+    "exec": 1.037,
+    "extension": 1,
+    "launch": 0.413
+   }
+  },
+  "seq": "RIGHT_FAR/full",
+  "contact": null,
+  "art": {
+   "GK_BASE_V1 SET/west": 35,
+   "GK_BASE_V1 SET/north-west": 4,
+   "GK_BASE_V1 SET/north": 3,
+   "GK_BASE_V1 SET/north-east": 133,
+   "SEQ RIGHT_FAR": 119,
+   "SAVE POSE": 6
+  },
+  "gkAtShot": {
+   "x": 101.1321815394279,
+   "y": 33.95734713884523,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": -24.6
+ },
+ {
+  "idx": 41,
+  "name": "S4 handling probe (synthetic lat 1.0 z 1.2 21 m/s — T cycles handling)",
+  "commitTick": 27,
+  "commit": {
+   "t0": 0.4584,
+   "exec": 0.156,
+   "tier": "MEDIUM-DIVE REACHABLE",
+   "action": "LEAN",
+   "target": [
+    101.439,
+    34.978,
+    1.261
+   ],
+   "feet": [
+    101.739,
+    34.155
+   ],
+   "norm": 0.395,
+   "best": false
+  },
+  "cls": {
+   "family": "NEAR_BODY_SAVE",
+   "side": "LEFT",
+   "goalSide": "GOAL_RIGHT",
+   "hClass": "MID",
+   "zClass": "MID",
+   "norm": 0.395,
+   "saveAngle": 110,
+   "expr": null
+  },
+  "seq": null,
+  "contact": {
+   "tick": 37,
+   "t": 0.633,
+   "volume": "HAND",
+   "outcome": "CONTROLLED PARRY",
+   "point": [
+    101.294,
+    34.967,
+    1.27
+   ],
+   "held": null
+  },
+  "art": {
+   "GK_BASE_V1 SET/west": 291,
+   "shuffle/east f1": 8,
+   "shuffle/east f2": 1
+  },
+  "gkAtShot": {
+   "x": 101.73911419045831,
+   "y": 34,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": 175.2
+ },
+ {
+  "idx": 42,
+  "name": "S4 K2 high tip-up (POWER 28 m/s under the bar)",
+  "commitTick": 38,
+  "commit": {
+   "t0": 0.6413,
+   "exec": 0.461,
+   "tier": "HIGH/FULL-STRETCH REACHABLE",
+   "action": "DIVE-HIGH",
+   "target": [
+    101.985,
+    32.738,
+    2.679
+   ],
+   "feet": [
+    101.987,
+    33.996
+   ],
+   "norm": 0.941,
+   "best": false
+  },
+  "cls": {
+   "family": "AIRBORNE_DIVE",
+   "side": "RIGHT",
+   "goalSide": "GOAL_LEFT",
+   "hClass": "TOP",
+   "zClass": "TOP",
+   "norm": 0.941,
+   "saveAngle": -90.1,
+   "expr": {
+    "heightClass": "TOP",
+    "intensity": 0.893,
+    "latFrac": 0.462,
+    "vertDemand": 1.197,
+    "depthDemand": 0.044,
+    "nearMax": true,
+    "exec": 0.461,
+    "extension": 0.93,
+    "launch": 1
+   }
+  },
+  "seq": "RIGHT_FAR/full",
+  "contact": {
+   "tick": 62,
+   "t": 1.05,
+   "volume": "HAND",
+   "outcome": "WEAK PARRY (through)",
+   "point": [
+    101.874,
+    32.747,
+    2.671
+   ],
+   "held": null
+  },
+  "art": {
+   "GK_BASE_V1 SET/west": 39,
+   "SEQ RIGHT_FAR": 84,
+   "SAVE POSE": 7,
+   "GK_BASE_V1 SET/north-east": 170
+  },
+  "gkAtShot": {
+   "x": 101.98729089498006,
+   "y": 33.995653526853154,
+   "vx": 0,
+   "vy": 0
+  },
+  "facingDeg": -61.5
+ }
+]

@@ -1,0 +1,215 @@
+{
+ "record": "the exact Touchline gameplay camera (CAMERA_V1, match.js buildFrozenBasis / fproj3 / sproj3 / glCamera) as captured on fixture 42; the rig state (rail travel x, zoom) is per tick in the motion rows[].camera \u2014 the rig follows the ball exactly as capture.js does",
+ "projection": "perspective; camera-space basis r (right) / u (up) / f (forward) from the authored pitch / yaw; screen = VIEW centre + fpx * (cx / cz, \u2212cy / cz), then rail translation (world x \u2212 travel) and uniform zoom about the canvas centre (sproj3)",
+ "authored": {
+  "height": 30,
+  "dist": 43,
+  "fov": 28,
+  "depthoff": 3,
+  "pitch": 22,
+  "yaw": 0,
+  "pscale": 0.6
+ },
+ "authorDefaults": {
+  "height": 30,
+  "dist": 43,
+  "fov": 28,
+  "depthoff": 3,
+  "pitch": 22,
+  "yaw": 0,
+  "pscale": 0.6
+ },
+ "runtimeDefaults": {
+  "zoom": 1,
+  "smooth": 0.35
+ },
+ "VIEW": {
+  "w": 1280,
+  "h": 720
+ },
+ "RES": 1,
+ "devicePixelRatio": 1,
+ "canvas": {
+  "width": 1100,
+  "height": 900,
+  "cssWidth": 1100,
+  "cssHeight": 900
+ },
+ "PROJ": {
+  "C": {
+   "x": 52.5,
+   "y": 30,
+   "z": 111
+  },
+  "f": {
+   "x": 0,
+   "y": -0.374606593415912,
+   "z": -0.9271838545667874
+  },
+  "u": {
+   "x": 0,
+   "y": 0.9271838545667874,
+   "z": -0.374606593415912
+  },
+  "r": {
+   "x": 1,
+   "y": 0,
+   "z": 0
+  },
+  "fpx": 1443.8811360729042,
+  "czRef": 79.84985911070852
+ },
+ "PITCH": {
+  "w": 105,
+  "h": 68
+ },
+ "DEPTH_ALPHA": 0.4,
+ "pxPerM": 18.082450641159213,
+ "playerVScale": 0.3390459495217352,
+ "REF_ZOOM": 32,
+ "rig": {
+  "x": 88,
+  "mode": "manual",
+  "zoom": 1.25,
+  "travel": 35.5
+ },
+ "gl": {
+  "view": [
+   1,
+   0,
+   0,
+   0,
+   0,
+   0.92718,
+   0.37461,
+   0,
+   0,
+   0.37461,
+   -0.92718,
+   0,
+   -88,
+   13.76581,
+   -114.15561,
+   1
+  ],
+  "proj": [
+   3.28155,
+   0,
+   0,
+   0,
+   0,
+   4.01078,
+   0,
+   0,
+   0,
+   0,
+   -1.00501,
+   -1,
+   0,
+   0,
+   -2.00501,
+   0
+  ],
+  "near": 1,
+  "far": 400,
+  "canvasW": 1100,
+  "canvasH": 900
+ },
+ "renderer": {
+  "GL3D": {
+   "pixelScale": 2,
+   "bands": 3,
+   "outline": true,
+   "light": [
+    -0.35,
+    0.9,
+    0.45
+   ],
+   "near": 1,
+   "far": 400,
+   "segments": 10,
+   "fixedTexelM": 0.055,
+   "mode": "B",
+   "character": "SKINNED"
+  },
+  "GK3D": {
+   "variant": "default",
+   "variants": {
+    "default": {
+     "label": "default goalkeeper"
+    },
+    "tall": {
+     "label": "taller / longer-limbed",
+     "h": 1.06,
+     "prop": {
+      "legs": 1.05,
+      "arms": 1.07,
+      "torso": 1,
+      "width": 0.97
+     }
+    },
+    "short": {
+     "label": "shorter / stockier",
+     "h": 0.94,
+     "prop": {
+      "legs": 0.96,
+      "arms": 0.96,
+      "torso": 1,
+      "width": 1.14
+     }
+    },
+    "skin2": {
+     "label": "alternate skin tone",
+     "palette": {
+      "skin": [
+       0.42,
+       0.27,
+       0.18
+      ]
+     }
+    },
+    "jersey2": {
+     "label": "alternate jersey colour",
+     "palette": {
+      "shirt": [
+       0.98,
+       0.62,
+       0.08
+      ]
+     }
+    }
+   },
+   "ballNearM": 3,
+   "debug": {
+    "bones": false,
+    "ik": false,
+    "roots": false,
+    "feet": false,
+    "trail": false,
+    "label": false,
+    "cradle": false,
+    "dist": false
+   }
+  },
+  "GK_GRAPH": {
+   "ballVisR": 0.11,
+   "handOff": 0.03,
+   "lookMaxDeg": 55,
+   "presMaxM": 2.5
+  },
+  "GOALFX_ballR": 0.11,
+  "SKIN_PARTS": [
+   "skin",
+   "hair",
+   "shirt",
+   "shorts",
+   "socks",
+   "boots",
+   "gloves"
+  ],
+  "SKIN_STYLE": {
+   "segments": 14
+  }
+ },
+ "validation": "reconstructed in python (vpx_skeleton_view.py) from this JSON: max 0.0005 px difference against the in-page sproj3 over 320 ticks"
+}

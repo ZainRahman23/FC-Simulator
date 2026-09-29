@@ -1,0 +1,236 @@
+[
+ {
+  "motion": "FAR_DIVE",
+  "fixture": 42,
+  "dir": "FAR_DIVE",
+  "family": "AIRBORNE_DIVE MID/HIGH/TOP",
+  "note": "approved v6 far dive (RIGHT); LEFT = mirror (fixture 49)",
+  "contactTick": 63,
+  "keyFrames": 22
+ },
+ {
+  "motion": "LOW_DIVE",
+  "fixture": 10,
+  "dir": "LOW_DIVE",
+  "family": "AIRBORNE_DIVE LOW-MID",
+  "note": "low sideways launch, body horizontal, side landing; this fixture is CAUGHT (held)",
+  "contactTick": 88,
+  "keyFrames": 18
+ },
+ {
+  "motion": "LOW_COLLAPSE",
+  "fixture": 32,
+  "dir": "LOW_COLLAPSE",
+  "family": "LOW_COLLAPSE",
+  "note": "no flight: near leg folds, drop onto the hip, hands down together (held here)",
+  "contactTick": 76,
+  "keyFrames": 12
+ },
+ {
+  "motion": "FOOT_SAVE",
+  "fixture": 19,
+  "dir": "FOOT_SAVE",
+  "family": "FOOT_SAVE",
+  "note": "SPREAD BLOCK (v9): COM drops, hips abduct both ways, far foot steps out wide, arms wide; saving foot on the simulation's leg tip; body commits onto the saving hip (side-sit) and recovers from the half-kneel",
+  "contactTick": 72,
+  "keyFrames": 12
+ },
+ {
+  "motion": "NEAR_BODY",
+  "fixture": 41,
+  "dir": "NEAR_BODY",
+  "family": "NEAR_BODY_SAVE",
+  "note": "one step out, torso lean, near-hand reach; a caught ball is cradled to the chest (parry here: RISE -> SET)",
+  "contactTick": 38,
+  "keyFrames": 5
+ },
+ {
+  "motion": "CHEST_CATCH",
+  "fixture": 45,
+  "dir": "CHEST_CATCH",
+  "family": "CHEST_CATCH / SUPPORTED_CATCH",
+  "note": "v10 sprite-language catch: upright ready, brace, arms receive, cradle, absorb, control, straighten, upright hold (held)",
+  "contactTick": 54,
+  "keyFrames": 9
+ },
+ {
+  "motion": "HIGH_CATCH",
+  "fixture": 31,
+  "dir": "HIGH_CATCH",
+  "family": "HIGH_CATCH",
+  "note": "both hands up, toe rise / jump by the launch demand; controlled parry here (RISE -> SET)",
+  "contactTick": 51,
+  "keyFrames": 7
+ },
+ {
+  "motion": "HIGH_CATCH_HELD",
+  "fixture": 46,
+  "dir": "HIGH_CATCH_HELD",
+  "family": "HIGH_CATCH (caught)",
+  "note": "high chip caught overhead, brought down to the chest, straighten, upright hold (held)",
+  "contactTick": 92,
+  "keyFrames": 9
+ },
+ {
+  "motion": "GATHER",
+  "fixture": 26,
+  "dir": "GATHER",
+  "family": "LOW_GATHER",
+  "note": "v10 sprite-language gather: deep crouch, gloves to the ground, scoop, clutch, rise to the upright hold (held)",
+  "contactTick": 88,
+  "keyFrames": 9
+ },
+ {
+  "motion": "CHEST_CATCH",
+  "fixture": 33,
+  "dir": "CHEST_CATCH_33",
+  "family": "CHEST_CATCH lateral supported catch (held)",
+  "note": "CHEST_CATCH lateral supported catch (held)",
+  "contactTick": 63,
+  "keyFrames": 8
+ },
+ {
+  "motion": "FOOT_SAVE",
+  "fixture": 16,
+  "dir": "FOOT_SAVE_16",
+  "family": "FOOT_SAVE close block RIGHT",
+  "note": "FOOT_SAVE close block RIGHT",
+  "contactTick": 72,
+  "keyFrames": 12
+ },
+ {
+  "motion": "FOOT_SAVE",
+  "fixture": 17,
+  "dir": "FOOT_SAVE_17",
+  "family": "FOOT_SAVE close block LEFT (mirror)",
+  "note": "FOOT_SAVE close block LEFT (mirror)",
+  "contactTick": 72,
+  "keyFrames": 12
+ },
+ {
+  "motion": "FOOT_SAVE",
+  "fixture": 55,
+  "dir": "FOOT_SAVE_55",
+  "family": "FOOT_SAVE wide block RIGHT",
+  "note": "FOOT_SAVE wide block RIGHT",
+  "contactTick": 72,
+  "keyFrames": 12
+ },
+ {
+  "motion": "FOOT_SAVE",
+  "fixture": 56,
+  "dir": "FOOT_SAVE_56",
+  "family": "FOOT_SAVE wide block LEFT (mirror)",
+  "note": "FOOT_SAVE wide block LEFT (mirror)",
+  "contactTick": 72,
+  "keyFrames": 12
+ },
+ {
+  "motion": "FOOT_SAVE",
+  "fixture": 57,
+  "dir": "FOOT_SAVE_57",
+  "family": "FOOT_SAVE SW-facing RIGHT (early contact)",
+  "note": "FOOT_SAVE SW-facing RIGHT (early contact)",
+  "contactTick": 34,
+  "keyFrames": 11
+ },
+ {
+  "motion": "FOOT_SAVE",
+  "fixture": 58,
+  "dir": "FOOT_SAVE_58",
+  "family": "FOOT_SAVE NW-facing LEFT (mirror)",
+  "note": "FOOT_SAVE NW-facing LEFT (mirror)",
+  "contactTick": 34,
+  "keyFrames": 11
+ },
+ {
+  "motion": "FOOT_SAVE",
+  "fixture": 59,
+  "dir": "FOOT_SAVE_59",
+  "family": "FOOT_SAVE SSW-facing RIGHT",
+  "note": "FOOT_SAVE SSW-facing RIGHT",
+  "contactTick": 38,
+  "keyFrames": 11
+ },
+ {
+  "motion": "FOOT_SAVE",
+  "fixture": 60,
+  "dir": "FOOT_SAVE_60",
+  "family": "FOOT_SAVE NNW-facing LEFT (mirror)",
+  "note": "FOOT_SAVE NNW-facing LEFT (mirror)",
+  "contactTick": 38,
+  "keyFrames": 11
+ },
+ {
+  "motion": "FAR_DIVE",
+  "fixture": 49,
+  "dir": "FAR_DIVE_49",
+  "family": "FAR_DIVE LEFT (mirror)",
+  "note": "FAR_DIVE LEFT (mirror)",
+  "contactTick": 45,
+  "keyFrames": 20
+ },
+ {
+  "motion": "LOW_DIVE",
+  "fixture": 50,
+  "dir": "LOW_DIVE_50",
+  "family": "LOW_DIVE south-west facing",
+  "note": "LOW_DIVE south-west facing",
+  "contactTick": null,
+  "keyFrames": 17
+ },
+ {
+  "motion": "LOW_DIVE",
+  "fixture": 51,
+  "dir": "LOW_DIVE_51",
+  "family": "LOW_DIVE north-west facing",
+  "note": "LOW_DIVE north-west facing",
+  "contactTick": null,
+  "keyFrames": 17
+ },
+ {
+  "motion": "LOW_COLLAPSE",
+  "fixture": 52,
+  "dir": "LOW_COLLAPSE_52",
+  "family": "LOW_COLLAPSE south facing",
+  "note": "LOW_COLLAPSE south facing",
+  "contactTick": 33,
+  "keyFrames": 12
+ },
+ {
+  "motion": "LOW_COLLAPSE",
+  "fixture": 53,
+  "dir": "LOW_COLLAPSE_53",
+  "family": "LOW_COLLAPSE north facing",
+  "note": "LOW_COLLAPSE north facing",
+  "contactTick": 36,
+  "keyFrames": 11
+ },
+ {
+  "motion": "FOOTWORK",
+  "fixture": 54,
+  "dir": "FOOTWORK_54",
+  "family": "FOOTWORK (moving keeper; the synthetic shot does not register on a fresh page \u2014 see README)",
+  "note": "FOOTWORK (moving keeper; the synthetic shot does not register on a fresh page \u2014 see README)",
+  "contactTick": null,
+  "keyFrames": 0
+ },
+ {
+  "motion": "LOW_DIVE",
+  "fixture": 1,
+  "dir": "LOW_DIVE_1",
+  "family": "LOW_DIVE best-effort (unreachable)",
+  "note": "LOW_DIVE best-effort (unreachable)",
+  "contactTick": null,
+  "keyFrames": 17
+ },
+ {
+  "motion": "LOW_COLLAPSE",
+  "fixture": 11,
+  "dir": "LOW_COLLAPSE_11",
+  "family": "FOOTWORK \u2192 LOW_COLLAPSE (moving keeper)",
+  "note": "FOOTWORK \u2192 LOW_COLLAPSE (moving keeper)",
+  "contactTick": 87,
+  "keyFrames": 11
+ }
+]
