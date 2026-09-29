@@ -1703,6 +1703,10 @@ def debug_bundle(match_id: str) -> dict[str, Any]:
 def index() -> FileResponse:
     return FileResponse(ROOT / "web" / "touchline.html")
 
+# The broadcast match view (sandbox/visual/match.html?embed=1) and its frozen
+# art are served same-origin so the app can drive it frame by frame.
+app.mount("/sandbox", StaticFiles(directory=ROOT / "sandbox"), name="sandbox")
+app.mount("/assets", StaticFiles(directory=ROOT / "assets"), name="assets")
 app.mount("/", StaticFiles(directory=ROOT / "web"), name="web")
 
 
