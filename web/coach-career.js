@@ -1618,6 +1618,10 @@ function renderHomeCC(el){
         <div class="cc-small">Transfer budget <b>${fmtM(S.finance.transferBudget)}</b> · wage bill <b>${fmtM(financeSnapshot().weeklyK / 1000)}/wk</b> · <span title="Squad cost ratio: wages + transfer amortisation as a share of revenue. Keep it under ~70%.">wages/revenue</span> <b>${Math.round(financeSnapshot().scr * 100)}%</b></div>
         <button class="cc-link" onclick="show('finances')">Finances →</button> <button class="cc-link" onclick="show('transfers')">Transfers →</button>
       </section>
+      <section class="cc-panel cc-proto"><h4>TRAINING GROUND <span class="cc-proto-tag">PROTOTYPE</span></h4>
+        <div class="cc-small cc-muted">An early look at the upcoming player-motion work: take control of one player with the keyboard (W A S D / arrows to move, Shift to sprint). Opens in a new tab — nothing there touches your season.</div>
+        <a class="cc-link" id="ccTrainingGround" href="/sandbox/visual/match.html?ofPlay=1" target="_blank" rel="noopener">Open the training ground ↗</a>
+      </section>
     </div>`;
   if(!c.introSeen) showIntro();
 }

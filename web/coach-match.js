@@ -77,7 +77,7 @@ function coachUI(){
   if(!S.coachUI){
     let saved = {};
     try{ saved = JSON.parse(localStorage.getItem(PREF_KEY) || '{}') || {}; }catch(e){}
-    S.coachUI = Object.assign({autoPause: 'moments', cam: 'wide'}, saved);
+    S.coachUI = Object.assign({autoPause: 'moments', cam: 'wide', view: 'broadcast', labels: 'numbers'}, saved);
   }
   if(!['moments', 'goals', 'off'].includes(S.coachUI.autoPause)) S.coachUI.autoPause = 'moments';
   return S.coachUI;
@@ -496,11 +496,11 @@ function controlsHTML(m){
     <button class="spdbtn cm-next" ${late ? 'disabled' : ''} onclick="CM.nextMoment()" title="Skip ahead to just before the next key moment">⏭ Next moment</button>
     <button class="spdbtn cm-simft" ${late ? 'disabled' : ''} onclick="CM.confirmSimFT()" title="Simulate the rest of the match">⏩ Sim to full time</button>
     <span class="cm-sep"></span>${autoPauseSeg()}
-    <button class="spdbtn cm-cam" onclick="CM.toggleCam()" title="Wide shows the whole shape; Follow tracks the ball">${coachUI().cam === 'follow' ? '🎥 Follow' : '🗺 Wide'}</button>`;
+    <span class="cm-sep"></span>${viewSegHTML()}`;
 }
 function ctrlSig(m){
   const cm = C(m), s = presS(m);
-  return [m.htActive, m.status, S.ui.matchSpeed || 1, cm.busy, cm.busyLabel, coachUI().autoPause, coachUI().cam, s >= FULL - 30].join('|');
+  return [m.htActive, m.status, S.ui.matchSpeed || 1, cm.busy, cm.busyLabel, coachUI().autoPause, coachUI().cam, s >= FULL - 30, viewPref(), labelsPref(), BC.state].join('|');
 }
 function refreshControls(force){
   const m = S.match, el = $('#cmCtrl'); if(!m || !el) return;
@@ -1221,6 +1221,17 @@ function monitor(){
   });
 }
 setInterval(monitor, 200);
+// The goal beat's sim-clock deadline is also checked every animation frame:
+// under load a 200 ms interval can fire late and let high-speed play run on.
+(function goalBeat(){
+  requestAnimationFrame(goalBeat);
+  const m = S.match, cm = m && m.matchId ? C(m) : null;
+  if(!cm || !cm.pendingGoal || cm.busy || m.status !== 'live') return;
+  if(presS(m) >= cm.pendingGoal.simAt){
+    const g = cm.pendingGoal; cm.pendingGoal = null;
+    safe(() => doAutoPause(m, g.mo));
+  }
+})();
 
 /* floating "back to the match" pill when the manager leaves the match view */
 function livePill(){
@@ -1603,6 +1614,393 @@ function exitRehearsal(){
   restoreOrigin(cm.origin);
 }
 
+/* ═══ 9. BROADCAST VIEW (perspective renderer in an iframe) ════════════════
+   /sandbox/visual/match.html?embed=1 exposes window.TouchlineBroadcast. It is a
+   pure VIEW: it receives the same frame rows AnimR2 ingests and is driven by
+   AnimR2's presentation clock every animation frame. AnimR2 keeps running
+   underneath (it owns the clock, event queue and every coach feature); only its
+   drawing is skipped while the broadcast picture is on screen. Nothing here
+   talks to the engine — outcomes are identical whichever view is chosen.
+   Weather is presentation only (hash of the fixture id), never sent anywhere. */
+const BC_SRC = '/sandbox/visual/match.html?embed=1';
+const BC_LOAD_TIMEOUT = 15000;                // .ready never rejects: our own deadline decides the fallback
+const BC_FPS_LOW = 40;                        // measured fps under this (twice running) → quality 'low'
+const BC = {el: null, api: null, state: 'idle', key: null, actNames: null, visible: null, warned: false,
+            optSig: '', plSig: '', numbers: {}, fpsAt: 0, fpsBad: 0, lowFps: false, lowFpsSpeed: null, loadSerial: 0, lastClock: null, clockLog: null};
+const bcOn = () => ANIM2_ON;                                   // the broadcast follows AnimR2's clock
+function viewPref(){ return coachUI().view === 'tactical' ? 'tactical' : 'broadcast'; }
+function labelsPref(){ const l = coachUI().labels; return ['off', 'numbers', 'names'].includes(l) ? l : 'numbers'; }
+function bcWanted(){ return bcOn() && viewPref() === 'broadcast' && BC.state !== 'failed'; }
+function savePrefs(){ try{ localStorage.setItem(PREF_KEY, JSON.stringify(S.coachUI)); }catch(e){} }
+
+/* ── weather per fixture: deterministic, presentation only ── */
+function weatherFor(f){
+  const id = String((f && (f.id || f.fixture_id)) || (S.match && S.match.matchId) || '').replace(/#branch$/, '');
+  const h = a2hash('touchline-weather|' + id) % 100;
+  return h < 25 ? 'rain' : h < 40 ? 'light' : 'off';
+}
+const WX_LABEL = {rain: 'Rain', light: 'Light rain', off: 'Dry'};
+const WX_ICON = {rain: '🌧', light: '🌦', off: '☀'};
+function forecastHTML(f){
+  const w = weatherFor(f);
+  return `<span class="cm-fc" data-wx="${w}" title="Presentation only — the weather never changes the football">${WX_ICON[w]} Forecast: ${esc(WX_LABEL[w].toLowerCase())}</span>`;
+}
+
+/* ── kits: club colour from CLUBS + a small kit table; guaranteed contrast ── */
+const KITS = {
+  ARS: {p: '#ef0107', s: '#ffffff', alt: '#1f2a44', altS: '#e8c35a'}, AVL: {p: '#670e36', s: '#95bfe5', alt: '#ffffff', altS: '#670e36'},
+  BOU: {p: '#da291c', s: '#111111', alt: '#ffffff', altS: '#da291c'}, BRE: {p: '#e30613', s: '#ffffff', alt: '#10263b', altS: '#ffd200'},
+  BHA: {p: '#0057b8', s: '#ffffff', alt: '#ffd100', altS: '#0057b8'}, BUR: {p: '#6c1d45', s: '#99d6ea', alt: '#ffffff', altS: '#6c1d45'},
+  CHE: {p: '#034694', s: '#ffffff', alt: '#f2f2f2', altS: '#034694'}, CRY: {p: '#1b458f', s: '#c4122e', alt: '#ffffff', altS: '#1b458f'},
+  EVE: {p: '#003399', s: '#ffffff', alt: '#f4f4f4', altS: '#003399'}, FUL: {p: '#f5f5f5', s: '#111111', alt: '#c8102e', altS: '#ffffff'},
+  LEE: {p: '#f7f7f7', s: '#1d428a', alt: '#1d428a', altS: '#ffcd00'}, LIV: {p: '#c8102e', s: '#ffffff', alt: '#f2f2f2', altS: '#c8102e'},
+  MCI: {p: '#6cabdd', s: '#ffffff', alt: '#1c2c5b', altS: '#6cabdd'}, MUN: {p: '#da291c', s: '#ffffff', alt: '#f4f4f4', altS: '#111111'},
+  NEW: {p: '#241f20', s: '#ffffff', alt: '#8ecae6', altS: '#241f20'}, NFO: {p: '#dd0000', s: '#ffffff', alt: '#f4f4f4', altS: '#dd0000'},
+  SUN: {p: '#eb172b', s: '#ffffff', alt: '#0d1b3e', altS: '#ffffff'}, TOT: {p: '#f7f7f7', s: '#132257', alt: '#132257', altS: '#ffffff'},
+  WHU: {p: '#7a263a', s: '#1bb1e7', alt: '#f4f4f4', altS: '#7a263a'}, WOL: {p: '#fdb913', s: '#231f20', alt: '#231f20', altS: '#fdb913'}
+};
+const GK_PALETTE = ['#f3e21b', '#27c46a', '#ff8a1f', '#b04fd6', '#19c6d8', '#1a1a1a', '#f06bb4', '#ffffff'];
+const KIT_MIN_DE = 40;        // CIE76 ΔE under which two shirts read as "the same team" on a TV picture
+function hexLab(hex){
+  const n = parseInt(String(hex).replace('#', ''), 16) || 0;
+  const lin = c => { c /= 255; return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); };
+  const r = lin(n >> 16 & 255), g = lin(n >> 8 & 255), b = lin(n & 255);
+  const f = t => t > 0.008856 ? Math.cbrt(t) : 7.787 * t + 16 / 116;
+  const x = f((r * 0.4124 + g * 0.3576 + b * 0.1805) / 0.95047), y = f(r * 0.2126 + g * 0.7152 + b * 0.0722),
+        z = f((r * 0.0193 + g * 0.1192 + b * 0.9505) / 1.08883);
+  return [116 * y - 16, 500 * (x - y), 200 * (y - z)];
+}
+function deltaE(a, b){ const A = hexLab(a), B = hexLab(b); return Math.hypot(A[0] - B[0], A[1] - B[1], A[2] - B[2]); }
+function kitOf(id){
+  const k = KITS[id], c = clubById(id);
+  return k || {p: (c && c.color) || '#888888', s: '#ffffff', alt: '#f4f4f4', altS: (c && c.color) || '#333333'};
+}
+function kitsFor(homeId, awayId){
+  const H = kitOf(homeId), A = kitOf(awayId);
+  const home = {primary: H.p, secondary: H.s};
+  const cands = [[A.p, A.s], [A.alt, A.altS], ['#f4f4f4', '#222222'], ['#1a1a1a', '#ffffff'], ['#f3e21b', '#111111']];
+  let away = cands.find(([p]) => deltaE(p, home.primary) >= KIT_MIN_DE);
+  if(!away) away = cands.slice().sort((x, y) => deltaE(y[0], home.primary) - deltaE(x[0], home.primary))[0];
+  const aw = {primary: away[0], secondary: away[1]};
+  const far = (c, from) => from.every(o => deltaE(c, o) >= KIT_MIN_DE);
+  const outfield = [home.primary, aw.primary];
+  const gkH = GK_PALETTE.find(c => far(c, outfield)) || '#1a1a1a';
+  const gkA = GK_PALETTE.find(c => c !== gkH && far(c, [...outfield, gkH])) || GK_PALETTE.find(c => c !== gkH && far(c, outfield)) || '#27c46a';
+  home.gk = gkH; aw.gk = gkA;
+  return {home, away: aw};
+}
+
+/* ── shirt numbers: stable per club from the squad order (the app has none) ── */
+const NUM_PREF = {GK: [1, 13, 31, 25, 40], RB: [2, 22, 24, 12], LB: [3, 21, 26, 33], CB: [4, 5, 6, 15, 16, 23, 32, 35],
+  CDM: [6, 16, 14, 18], CM: [8, 14, 17, 18, 20], CAM: [10, 20, 19], RM: [7, 17, 27], LM: [11, 26, 29],
+  RW: [7, 17, 27, 47], LW: [11, 19, 29], ST: [9, 19, 18, 14, 27]};
+function squadNumbers(clubId){
+  if(BC.numbers[clubId]) return BC.numbers[clubId];
+  const map = {}, used = new Set();
+  const squad = safe(() => playersForClub(clubId), []) || [];
+  const order = [...squad.filter(p => p.pos === 'GK'), ...squad.filter(p => p.pos !== 'GK')];
+  for(const p of order){
+    const n = (NUM_PREF[p.pos] || []).find(x => !used.has(x));
+    if(n){ map[p.id] = n; used.add(n); }
+  }
+  let next = 12;
+  for(const p of order) if(!map[p.id]){ while(used.has(next)) next++; map[p.id] = next; used.add(next); }
+  map._next = () => { while(used.has(next)) next++; used.add(next); return next; };
+  return (BC.numbers[clubId] = map);
+}
+function shirtNo(pid, clubId){
+  const map = squadNumbers(clubId || '_');
+  if(!map[pid]) map[pid] = map._next();
+  return map[pid];
+}
+
+/* ── the players map (names, numbers, team, position; GK marked) ── */
+function bcPlayers(snapPlayers, roster){
+  const f = S.matchFixture || {}, out = {};
+  const sp = snapPlayers || {};
+  const ids = new Set([...(roster || []), ...Object.keys(sp)]);
+  for(const pid of ids){
+    const s = sp[pid], pl = P(pid);
+    const team = (s && s.team) || (pl && pl.clubId ? (pl.clubId === f.home ? 'HOME' : pl.clubId === f.away ? 'AWAY' : null) : null);
+    if(!team) continue;
+    const club = team === 'HOME' ? f.home : f.away;
+    const name = (s && s.name) || (pl && pl.name) || pid;
+    const pos = (s && s.slot) || (pl && pl.pos) || '';
+    out[pid] = {name, short_name: shortName(String(name)), team, number: shirtNo(pid, club),
+                position: pos === 'GK' || (pl && pl.pos === 'GK' && !s) ? 'GK' : pos};
+  }
+  return out;
+}
+function bcMeta(snap){
+  const f = S.matchFixture || {};
+  const c = id => clubById(id) || {name: id || '', abbreviation: id || ''};
+  const kits = kitsFor(f.home, f.away);
+  const roster = (snap && snap.roster) || AnimR2.roster || [];
+  return {
+    home: {name: clubName(f.home), short: c(f.home).abbreviation || f.home, kit: kits.home},
+    away: {name: clubName(f.away), short: c(f.away).abbreviation || f.away, kit: kits.away},
+    players: bcPlayers(snap && snap.players, roster), roster: roster.slice(),
+    act_names: (snap && snap.act_names) || BC.actNames || [], weather: weatherFor(f)
+  };
+}
+
+/* ── lifecycle: create once, keep alive across screens (moved, never reloaded) ── */
+function bcPark(){
+  let p = $('#cmBcPark');
+  if(!p){ p = document.createElement('div'); p.id = 'cmBcPark'; p.setAttribute('aria-hidden', 'true'); document.body.appendChild(p); }
+  return p;
+}
+function bcMove(el, parent){
+  if(!el || !parent || el.parentNode === parent) return;
+  if(typeof parent.moveBefore === 'function' && el.isConnected && parent.isConnected){
+    try{ parent.moveBefore(el, null); return; }catch(e){}
+  }
+  parent.appendChild(el);                                   // older browsers: the iframe reloads (handled)
+}
+function bcFail(reason){
+  if(BC.state === 'failed') return;
+  BC.state = 'failed'; BC.api = null; BC.visible = null;
+  if(!BC.warned){ BC.warned = true; console.warn('[coach-match] broadcast view unavailable — using the tactical view:', reason); }
+  if(BC.el){ BC.el.remove(); BC.el = null; }
+  const pitch = $('#livePitch'); if(pitch) pitch.classList.remove('cm-bc', 'cm-bcload');
+  refreshControls(true);
+}
+function bcCreate(){
+  const f = document.createElement('iframe');
+  f.id = 'cmBroadcast'; f.className = 'cm-bcframe'; f.title = 'Broadcast match view';
+  f.setAttribute('allow', 'autoplay'); f.setAttribute('tabindex', '-1');
+  f.addEventListener('load', () => bcOnLoad(f));
+  f.addEventListener('error', () => bcFail('iframe error'));
+  f.src = BC_SRC;
+  BC.el = f; BC.state = 'loading'; BC.api = null;
+  const serial = ++BC.loadSerial;
+  setTimeout(() => { if(BC.loadSerial === serial && BC.state === 'loading') bcFail('timed out loading ' + BC_SRC); }, BC_LOAD_TIMEOUT);
+  return f;
+}
+async function bcOnLoad(f){
+  if(f !== BC.el) return;
+  const serial = ++BC.loadSerial;
+  BC.state = 'loading'; BC.api = null; BC.visible = null; BC.key = null; BC.optSig = ''; BC.plSig = '';
+  const t0 = performance.now();
+  let api = null;
+  while(performance.now() - t0 < 6000){
+    try{ api = f.contentWindow && f.contentWindow.TouchlineBroadcast; }catch(e){ return bcFail('cross-origin frame'); }
+    if(api) break;
+    await sleep(50);
+    if(serial !== BC.loadSerial) return;
+  }
+  if(!api) return bcFail('TouchlineBroadcast not found');
+  try{
+    await Promise.race([Promise.resolve(api.ready), sleep(BC_LOAD_TIMEOUT).then(() => { throw new Error('ready timed out'); })]);
+  }catch(e){ return bcFail(e && e.message || String(e)); }
+  if(serial !== BC.loadSerial || f !== BC.el) return;
+  BC.api = api; BC.state = 'ready';
+  try{
+    api.onPlayerClick = pid => bcPlayerClick(pid);
+    // the picture swallows key events (embed mode); hand focus straight back to the
+    // app after a click so Space = pause and the other shortcuts keep working
+    f.contentWindow.addEventListener('pointerup', () => setTimeout(() => {
+      try{ if(document.activeElement === f){ f.blur(); window.focus(); } }catch(e){}
+    }, 0), true);
+  }catch(e){}
+  bcPush();
+  refreshControls(true);
+}
+/* call a contract method; any exception degrades to the tactical view, never breaks the match */
+function bcCall(fn, ...args){
+  const api = BC.api; if(!api || BC.state !== 'ready') return;
+  try{ return api[fn](...args); }catch(e){ bcFail(`${fn}() threw: ${e && e.message || e}`); }
+}
+/* full re-sync: (re)init for the current match, then hand over AnimR2's buffer —
+   the equivalent of replaying every call queued before .ready resolved */
+function bcPush(){
+  const m = S.match; if(!m || !m.matchId || BC.state !== 'ready') return;
+  const meta = bcMeta(Object.assign({}, m.snap, {roster: AnimR2.roster || (m.snap && m.snap.roster)}));
+  bcCall('init', meta);
+  BC.key = m.matchId; BC.rosterN = meta.roster.length; BC.plSig = ''; BC.optSig = ''; BC.visible = null; BC.lowFpsSpeed = null;
+  const F = AnimR2.frames;
+  bcCall('reset', F.length ? F[0][0] - 1 : AnimR2.S);
+  if(F.length) bcCall('ingest', F.slice(), AnimR2.roster);
+}
+/* ensure the iframe exists (only when Broadcast is wanted) and sits in the live pitch */
+function bcAttach(){
+  if(!bcOn()) return;
+  const pitch = $('#livePitch');
+  const want = bcWanted() && pitch && S.match && $('#matchBody') && $('#matchBody').dataset.mode === 'live';
+  if(!want){ if(BC.el) bcMove(BC.el, bcPark()); return; }
+  if(!BC.el) pitch.appendChild(bcCreate());
+  else bcMove(BC.el, pitch);
+}
+
+/* ── feed: every frames batch that reaches AnimR2 also reaches the broadcast ── */
+AnimR2.ingest = (function(orig){
+  return function(snap){
+    const had = this.frames.length, last = this.bufferedUntil();
+    const r = orig.apply(this, arguments);
+    safe(() => {
+      if(!snap || !snap.frames || !snap.frames.length || !ANIM2_ON) return;
+      if(snap.act_names) BC.actNames = snap.act_names;
+      if(BC.state !== 'ready') return;                       // bcPush() hands over the buffer on ready
+      const mid = snap.match_id || (S.match && S.match.matchId);
+      if(mid && mid !== BC.key){                             // a new match (kickoff, rehearsal, scenario)
+        const meta = bcMeta(snap);
+        bcCall('init', meta); BC.key = mid; BC.plSig = ''; BC.optSig = ''; BC.visible = null; BC.rosterN = meta.roster.length; BC.lowFpsSpeed = null;
+        bcCall('reset', snap.frames[0][0] - 1);
+      }
+      const roster = snap.roster || this.roster;
+      if(roster && roster.length !== BC.rosterN){             // bench players arrive with the first roster
+        BC.rosterN = roster.length;
+        bcCall('setPlayers', bcPlayers((S.match && S.match.snap && S.match.snap.players) || snap.players, roster));
+      }
+      const rows = had ? snap.frames.filter(f => f[0] > last) : snap.frames;
+      if(rows.length) bcCall('ingest', rows, roster);
+    });
+    return r;
+  };
+})(AnimR2.ingest);
+/* …and every rewind / seek / branch / restart resets it */
+AnimR2.reset = (function(orig){
+  return function(clock){
+    const r = orig.apply(this, arguments);
+    if(BC.state === 'ready') safe(() => bcCall('reset', clock));
+    return r;
+  };
+})(AnimR2.reset);
+/* AnimR2 keeps stepping (clock, events, pacing); only its drawing is skipped under the broadcast */
+AnimR2.draw = (function(orig){
+  return function(){ if(BC.visible) return; return orig.apply(this, arguments); };
+})(AnimR2.draw);
+
+/* ── overlays: highlights (assistant flags + selected player), labels, weather ── */
+function bcHighlight(m){
+  const cm = C(m), out = [];
+  for(const i of (cm.insights && cm.insights.insights) || []){
+    const mm = /^(?:fatigue|card):([^:]+)/.exec(String(i.id || ''));
+    if(mm && (i.kind === 'fatigue' || i.kind === 'card_risk')) out.push(mm[1]);
+  }
+  if(m.selPid) out.push(m.selPid);
+  return [...new Set(out)];
+}
+function bcPlayerClick(pid){
+  const m = S.match; if(!m || !pid) return;
+  const known = (m.snap && m.snap.players && m.snap.players[pid]) || P(pid);
+  if(!known) return;
+  if(typeof selectLivePlayer === 'function') selectLivePlayer(pid);
+  else { m.selPid = pid; updatePlayerPanel(m); }
+  BC.optSig = '';
+}
+
+/* ── per-frame driver: only while a live match is on screen ── */
+function bcFrame(){
+  requestAnimationFrame(bcFrame);
+  if(!bcOn() || !BC.el) return;
+  try{
+    const m = S.match, pitch = $('#livePitch');
+    const onScreen = !!(m && m.matchId && S.ui.view === 'match' && pitch && BC.el.parentNode === pitch
+                        && m.status !== 'ft' && $('#matchBody').dataset.mode === 'live');
+    const vis = onScreen && bcWanted() && BC.state === 'ready';
+    if(pitch){
+      pitch.classList.toggle('cm-bc', vis);
+      pitch.classList.toggle('cm-bcload', onScreen && bcWanted() && BC.state === 'loading');
+    }
+    if(BC.state !== 'ready') return;
+    if(vis && m.matchId !== BC.key) bcPush();
+    if(vis !== BC.visible){ BC.visible = vis; bcCall('setOptions', {visible: vis}); }
+    if(!vis) return;
+    const cm = C(m);
+    const paused = (m.status === 'paused' && !m.htActive) || m.status === 'reconnecting' || cm.freeze > 0 || cm.busy;
+    const playing = !paused && AnimR2.S < AnimR2.bufferedUntil() + 0.5;
+    const speed = S.ui.matchSpeed || 1;
+    BC.lastClock = {S: AnimR2.S, playing, speed, t: performance.now()};
+    if(BC.clockLog){ BC.clockLog.push(AnimR2.S); if(BC.clockLog.length > 600) BC.clockLog.shift(); }
+    bcCall('setClock', AnimR2.S, {playing, speed});
+    // cheap signature checks for options / roster metadata
+    const pp = presentedSnap(m, presS(m)).players || {};
+    const plSig = Object.keys(pp).map(k => k + (pp[k].slot || '') + (pp[k].active ? 1 : 0)).join('|');
+    if(plSig !== BC.plSig){
+      const first = !BC.plSig; BC.plSig = plSig;
+      if(!first) bcCall('setPlayers', bcPlayers(pp, AnimR2.roster));
+    }
+    // quality: 'low' at 4x+ or when the measured frame rate sags (sticky until the speed changes)
+    if(BC.lowFpsSpeed !== speed){ BC.lowFps = false; BC.fpsBad = 0; BC.lowFpsSpeed = speed; BC.fpsAt = performance.now() + 2500; }
+    if(!BC.lowFps && performance.now() > BC.fpsAt){
+      BC.fpsAt = performance.now() + 2000;
+      const st = BC.api && typeof BC.api.stats === 'function' ? safe(() => BC.api.stats(), null) : null;
+      if(st && st.fps > 0 && st.fps < BC_FPS_LOW){ if(++BC.fpsBad >= 2) BC.lowFps = true; } else BC.fpsBad = 0;
+    }
+    const hl = bcHighlight(m);
+    const opt = {labels: labelsPref(), highlight: hl, weather: weatherFor(S.matchFixture),
+                 quality: speed >= 4 || BC.lowFps ? 'low' : 'high'};
+    const sig = JSON.stringify(opt);
+    if(sig !== BC.optSig){ BC.optSig = sig; bcCall('setOptions', opt); }
+  }catch(e){ console.warn('[coach-match] broadcast frame', e); }
+}
+requestAnimationFrame(bcFrame);
+
+/* ── view switch + labels ── */
+function setView(v){
+  if(v !== 'broadcast' && v !== 'tactical') return;
+  coachUI().view = v; savePrefs();
+  if(v === 'tactical'){                                   // switch synchronously: AnimR2 draws this very frame
+    const pitch = $('#livePitch'); if(pitch) pitch.classList.remove('cm-bc', 'cm-bcload');
+    if(BC.state === 'ready'){ BC.visible = false; bcCall('setOptions', {visible: false}); }
+  }
+  if(v === 'broadcast' && BC.state === 'failed') toast('The broadcast view is unavailable here — staying on the tactical view.');
+  bcAttach();
+  if(v === 'tactical') applyCam();
+  refreshControls(true);
+}
+function setLabels(l){
+  if(!['off', 'numbers', 'names'].includes(l)) return;
+  coachUI().labels = l; savePrefs(); BC.optSig = '';
+  refreshControls(true);
+}
+function viewSegHTML(){
+  if(!bcOn()) return `<button class="spdbtn cm-cam" onclick="CM.toggleCam()" title="Wide shows the whole shape; Follow tracks the ball">${coachUI().cam === 'follow' ? '🎥 Follow' : '🗺 Wide'}</button>`;
+  const v = viewPref(), failed = BC.state === 'failed';
+  const bc = v === 'broadcast' && !failed;
+  const seg = `<span class="cm-apseg cm-viewseg" title="Broadcast: the TV picture · Tactical: the coach's 2D board"><em>VIEW</em>`
+    + `<button class="${bc ? 'on' : ''}" data-view="broadcast" ${failed ? 'disabled title="Broadcast view unavailable"' : ''} onclick="CM.setView('broadcast')">Broadcast</button>`
+    + `<button class="${bc ? '' : 'on'}" data-view="tactical" onclick="CM.setView('tactical')">Tactical</button></span>`;
+  if(bc){
+    const l = labelsPref();
+    return seg + `<span class="cm-apseg cm-lblseg" title="Player labels in the broadcast picture"><em>LABELS</em>${
+      [['off', 'Off'], ['numbers', 'No.'], ['names', 'Names']].map(([k, t]) =>
+        `<button class="${l === k ? 'on' : ''}" data-lbl="${k}" onclick="CM.setLabels('${k}')">${t}</button>`).join('')}</span>`;
+  }
+  return seg + `<button class="spdbtn cm-cam" onclick="CM.toggleCam()" title="Wide shows the whole shape; Follow tracks the ball">${coachUI().cam === 'follow' ? '🎥 Follow' : '🗺 Wide'}</button>`;
+}
+
+/* keep the iframe alive across every re-render of the match screen: park it
+   before renderMatch rewrites #matchBody, put it back into the new pitch after.
+   Installed post-boot so it is the OUTERMOST renderMatch wrapper. */
+function bcInstallOuter(){
+  const inner = window.renderMatch;
+  window.renderMatch = function(){
+    if(BC.el && BC.el.parentNode && BC.el.parentNode.id !== 'cmBcPark') bcMove(BC.el, bcPark());
+    const r = inner.apply(this, arguments);
+    safe(() => {
+      bcAttach();
+      const wrap = $('#matchBody');
+      // the plain (non-career) pre-match board gets the forecast line too
+      if(wrap && wrap.dataset.mode === 'pre' && S.matchFixture && !S.match && !wrap.querySelector('.cm-fc')){
+        const board = wrap.querySelector('.board');
+        const k = board && board.firstElementChild;
+        if(k) k.insertAdjacentHTML('beforeend', ' · ' + forecastHTML(S.matchFixture));
+      }
+    });
+    return r;
+  };
+  const pre = TL.hooks.prematchHTML;
+  if(typeof pre === 'function' && !pre._cmWx){
+    TL.hooks.prematchHTML = function(f){
+      const html = pre.apply(this, arguments);
+      return safe(() => String(html).replace(/(<div class="cc-kicker">[\s\S]*?)(<\/div>)/, `$1 · ${forecastHTML(f)}$2`), html);
+    };
+    TL.hooks.prematchHTML._cmWx = true;
+  }
+}
+
 /* ── public surface for inline handlers ─────────────────────────────────── */
 /* ═══ PAST MATCHES: reopen Review / Decision Lab / Replay from Results ═════ */
 async function openPast(fid){
@@ -1637,7 +2035,12 @@ window.openResult = function(fid){
 
 window.CM = {
   setAutoPause, nextMoment, confirmSimFT, cancelSimFT, simToFT, closeMoment, openPast, toggleCam,
-  applyAction,
+  applyAction, setView, setLabels, weatherFor, forecastHTML,
+  /* test/debug: broadcast state + the kits/players handed to the renderer */
+  _bc: () => ({state: BC.state, visible: BC.visible, key: BC.key, last: BC.lastClock, view: viewPref(), labels: labelsPref(),
+               inPitch: !!(BC.el && BC.el.parentNode && BC.el.parentNode.id === 'livePitch')}),
+  _bcMeta: () => S.match ? bcMeta(Object.assign({}, S.match.snap, {roster: AnimR2.roster})) : null,
+  _kits: kitsFor, _deltaE: deltaE,
   resume(){ const m = S.match; closeMoment(); if(m && m.status === 'paused' && !m.htActive) togglePlay(); },
   openTouchline(){ closeMoment(); show('squad'); },
   ftTab(k){ const m = S.match; if(!m) return; C(m).ftTab = k; renderMatch(); window.scrollTo({top: 0}); },
@@ -1689,6 +2092,15 @@ document.addEventListener('keydown', e => {
   e.preventDefault();
   if(m.status === 'paused') CM.resume(); else togglePlay();
 });
+
+/* outermost renderMatch wrapper + forecast hook: install after every module
+   script has run (readyState 'interactive' precedes DOMContentLoaded/boot) */
+if(document.readyState === 'loading')
+  document.addEventListener('readystatechange', function once(){
+    if(document.readyState === 'loading') return;
+    document.removeEventListener('readystatechange', once); bcInstallOuter();
+  });
+else bcInstallOuter();
 
 /* post-boot: preferences for old saves */
 if(TL.booted) TL.booted.then(() => coachUI()).catch(() => {}); else coachUI();

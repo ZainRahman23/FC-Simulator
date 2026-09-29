@@ -326,3 +326,8 @@
   .navtabs::-webkit-scrollbar{display:none}
   .navtab{padding-left:6px!important;padding-right:6px!important;font-size:12.5px!important}
 }
+
+/* Home: low-key link to the player-motion prototype */
+.cc-proto h4{display:flex;align-items:center;gap:8px}
+.cc-proto-tag{font-family:var(--cond);font-size:9px;letter-spacing:.14em;font-weight:700;color:var(--dim);border:1px solid var(--line2);border-radius:5px;padding:1px 6px}
+.cc-proto a.cc-link{display:inline-block;text-decoration:none}

@@ -258,3 +258,18 @@
 .cm-htnote{font-size:12.5px;color:#9cc2ff;margin-right:8px}
 .cm-rp-hist{margin:14px 0 0 62px}
 .cm-pill.paused i{background:var(--accent2);box-shadow:0 0 8px var(--accent2)}
+
+/* ── broadcast view: the perspective renderer layered exactly over the pitch ──
+   z-order inside #livePitch: AnimR2 canvas (7) < broadcast iframe (8) < goal banner (9);
+   modal cards, the live pill and toasts are fixed overlays far above. */
+.cm-bcframe{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:8;display:block;
+  opacity:0;pointer-events:none;background:transparent;border-radius:inherit;transition:opacity .25s}
+.livepitch.cm-bc .cm-bcframe{opacity:1;pointer-events:auto}
+.livepitch.cm-bc .animcanvas{visibility:hidden}
+.livepitch.cm-bc .attackdir{display:none}
+.livepitch.cm-bcload::after{content:'Loading broadcast view…';position:absolute;left:10px;bottom:8px;z-index:9;
+  font-family:var(--cond);font-size:10.5px;letter-spacing:.14em;color:rgba(255,255,255,.55);pointer-events:none}
+#cmBcPark{position:fixed;left:-10000px;top:0;width:960px;height:560px;overflow:hidden;visibility:hidden;pointer-events:none}
+#cmBcPark .cm-bcframe{opacity:0}
+.cm-viewseg button[disabled]{opacity:.4;cursor:not-allowed}
+.cm-fc{white-space:nowrap}

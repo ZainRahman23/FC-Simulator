@@ -51,6 +51,18 @@ What's new (spec: `docs/COACH_MVP_SPEC.md`):
   condition carry-over, injuries/suspensions, form, development, season
   rollover, onboarding, **Challenges** (seeded daily + scenario library with a
   server-verified leaderboard).
+- **Broadcast view** (default for league matches and challenges): the live
+  match plays in the perspective renderer (`/sandbox/visual/match.html?embed=1`,
+  stadium, crowd, kits, rain) layered over the pitch; **Tactical** is the 2D
+  coach's board (with Wide/Follow). The choice is remembered. The app feeds it
+  the same frames and drives it with the 2D renderer's presentation clock, so
+  pauses, rewinds, 8×, next moment and rehearsals behave identically — and the
+  result is the same whichever view you watch. Labels Off/No./Names; players
+  the assistant flags (tired, card risk) and your selected player are
+  highlighted; click a player to open his panel. Weather is per fixture (see
+  the pre-match forecast) and purely cosmetic. If the renderer can't load, the
+  match silently stays on Tactical. Home has a low-key link to the
+  **Training ground** prototype (keyboard-controlled player motion, new tab).
 - **Backend**: `management.py` (one decision path), `labsim.py` (parallel
   workers), `coach.py` (insights, impacts, review, scouting), new endpoints in
   `server.py` (§5 of the spec).
@@ -58,4 +70,4 @@ What's new (spec: `docs/COACH_MVP_SPEC.md`):
 Tests:
 
     python -m pytest tests_integration.py tests_rc.py tests_coach.py -q   # 49, ~4 min
-    python -m pytest tests_ui -q                                         # 12 browser tests (Playwright + Chrome)
+    python -m pytest tests_ui -q                                         # 24 browser tests (Playwright + Chrome)
