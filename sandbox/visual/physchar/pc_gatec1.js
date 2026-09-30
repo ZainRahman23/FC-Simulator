@@ -46,7 +46,7 @@ export function runC1(J, spec, key, opts) {
   const P = opts.poses || buildPoses(spec), nb = spec.bodies.length, nj = spec.joints.length, M = spec.totalMass;
   const w = new JoltCharacterWorld(J, spec, GATE_C1_WORLD, patchPolicy(spec, TST.patches));
   for (const [a, b] of disabledPairs(spec)) w.disablePair(a, b);
-  const ctrl = new BalanceController(spec, P, { strength: TST.strength || "candidate", mode: TST.mode || "balance", xiShift: TST.xiShift, stanceKdScale: opts.stanceKdScale ?? TST.stanceKdScale });
+  const ctrl = new BalanceController(spec, P, { strength: TST.strength || "candidate", mode: TST.mode || "balance", xiShift: TST.xiShift, stanceKdScale: opts.stanceKdScale ?? TST.stanceKdScale , ...(opts.ctrlExtra || {})});
   ctrl.gain.forEach((gn, k) => w.setMotor(k, { kp: gn.kp, kd: gn.kdStance, tau: 1 }));   // motor mode + spring; limits are set every step
   // ── ASSERT: no pelvis support fixture, no obstacle, only the 13 joints ──
   const nCons = w.cons.length, nBodies = w.ps.GetNumBodies();
@@ -64,7 +64,7 @@ export function runC1(J, spec, key, opts) {
     const t0 = now(), u = ctrl.update(o), caps = [];
     for (let k = 0; k < nj; k++) { const j = spec.joints[k], m = u.motor[k];
       if (j.type === "hinge") { w.setJointTarget(k, u.final[k], 0); w.updateMotor(k, { kp: m.kp, kd: m.kd, lo: m.lo, hi: m.hi }); caps.push({ lo: m.lo, hi: m.hi }); }
-      else { w.setJointTarget(k, u.final[k], [0, 0, 0]); const b = budgetLimits(m, w.sixdofRot(k), u.final[k]); w.updateMotor(k, { kp: m.kp, kd: m.kd, lo: b.lo, hi: b.hi }); caps.push(b); } }
+      else { w.setJointTarget(k, u.final[k], u.vel ? u.vel[k] : [0, 0, 0]); const b = budgetLimits(m, w.sixdofRot(k), u.final[k]); w.updateMotor(k, { kp: m.kp, kd: m.kd, lo: b.lo, hi: b.hi }); caps.push(b); } }
     let ext = null; if (pu && n > pu.n0 && n <= pu.n1) { const Js = V.sc(pu.J, 1 / (pu.n1 - pu.n0)), at = prevStates[0].com.slice(); w.applyImpulse(0, Js, at); ext = { J: Js, at }; }
     const t1 = now(); w.step(dt, T.coll); const t2 = now();
     states = read(); const lam = { L: w.jointLambdaPosition(aL), R: w.jointLambdaPosition(aR) };

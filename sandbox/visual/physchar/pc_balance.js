@@ -69,7 +69,8 @@ export const BAL = {
   dorsiMarginDeg: 5,    // C2: pelvis lowering stops 5° before any stance ankle reaches its dorsiflexion stop
   settleKp: 0.2,        // C2: ankle stiffness fraction of a foot being loaded after touchdown (compliant heel rocker)
   swingKpDrop: 0.5,    // GATE C2: a swing-controlled leg runs at (1 − 0.5) × stance stiffness — compliant enough that an obstruction wins   // released, but both feet loaded + flat-supported and ξ ≥ 3 cm inside for 100 ms → balance re-engages (ramped back)
-  stepTime: 0.3, stepReach: 0.55,       // C1 labelling only: a single step of ≤ 0.3 s could capture ξ up to ~0.55 m beyond the support edge
+  stepTime: 0.3, stepReach: 0.55,
+  armShare: 0.5, armUse: 0.8, armGuardDeg: 15,   // GATE C4 reactive arms: the arms' share of the hip-strategy moment, the fraction of their shoulder torque they may use, range-of-motion guard       // C1 labelling only: a single step of ≤ 0.3 s could capture ξ up to ~0.55 m beyond the support edge
 };
 const G = 9.81, GV = [0, -9.81, 0];
 const expmap = (d) => { const a = Math.sqrt(d[0] * d[0] + d[1] * d[1] + d[2] * d[2]); return a < 1e-12 ? [0, 0, 0, 1] : Q.axis([d[0] / a, d[1] / a, d[2] / a], a); };
@@ -108,6 +109,7 @@ export class BalanceController {
     const Iub = inertiaAbout(ub, hipC), w0 = Math.sqrt(G / this.hNom), th = rad(BAL.trunkMaxDeg), hipL = this.limits.hip;
     const cap = (tau) => { const t = tau * BAL.hipUse * this.mult, d = t / (this.M * G), T = Math.sqrt(th * Iub / t), e = 1 - dexp(-w0 * T); return d * e * e; };
     this.hipCap = { fwd: cap(2 * -hipL.Y[0]), bwd: cap(2 * hipL.Y[1]), lat: cap(2 * hipL.Z[1]), Iub };
+    this.armI = {}; for (const side of ["L", "R"]) { const k = ji("shoulder_" + side); this.armI[side] = inertiaAbout(this.subtree[k], S[spec.joints[k].childIndex].pos); }   // C4: each arm's inertia about its shoulder
     this.cls = { state: "INIT", cnt: 0, out: 0, back: 0, times: {}, reason: "", fallStep: null }; this.sFoot = { L: 1, R: 1 }; this.nObs = 0;
   }
   // classification from the sensed state (hysteresis + dwell in integer steps)
@@ -344,7 +346,28 @@ export class BalanceController {
       const cu = Q.rot(S[this.bi("chest")].rot, [0, 1, 0]), fl = V.dot(cu, hd), sd = V.dot(cu, lat), lim = dsin(rad(BAL.trunkMaxDeg));
       if (tpc > 0 && fl > lim) tpc = 0; if (tpc < 0 && fl < -lim) tpc = 0; if (trc > 0 && sd < -lim) trc = 0; if (trc < 0 && sd > lim) trc = 0;
       tauTrunk = V.add(V.sc(pitchAx, tpc), V.sc(rollAx, trc));
-      for (const s of stance) { const k = this.legs[s].hip; tauB[k] = V.sub(tauB[k], V.sc(tauTrunk, fBal[s] ? fBal[s].share : 1 / nH)); } }
+      for (const s of stance) { const k = this.legs[s].hip; tauB[k] = V.sub(tauB[k], V.sc(tauTrunk, fBal[s] ? fBal[s].share : 1 / nH)); }
+      // GATE C4 (opts.reactiveArms): the ARMS join the hip strategy — each shoulder torques its arm in the SAME sense as the trunk moment, so
+      // part of the upper body's angular-momentum change goes into the light, fast arms instead of tilting the heavy trunk (the hips' moment on
+      // the upper body is unchanged; what the arms buy is less trunk excursion before the 35° trunk guard stops the strategy). Each arm's
+      // share is capped by its own finite shoulder torque (armUse × directional limit) and stops when the arm nears its range of motion in
+      // that direction (like the trunk guard): a finite, physically bounded throw — nothing is scripted by push direction.
+      if (this.opts.reactiveArms) { this.armInfo = {}; const need = V.sc([r[1], 0, -r[0]], W);
+        for (const side of ["L", "R"]) { const k = this.ji("shoulder_" + side), j = spec.joints[k], L = this.limits.shoulder, cap = BAL.armUse * this.mult;
+          const Cw = Q.rot(S[j.parentIndex].rot, Q.rot(Q.fromAxes(j.X, j.Y, j.Z), [1, 0, 0])), axY = Q.rot(S[j.parentIndex].rot, j.Y), axZ = Q.rot(S[j.parentIndex].rot, j.Z);
+          const want = V.sc(need, BAL.armShare / 2), my = V.dot(want, axY), mz = V.dot(want, axZ), js = this.jstate ? this.jstate(k, S) : null;
+          const cy = Math.max(-cap * -L.Y[0], Math.min(cap * L.Y[1], my)), cz = Math.max(-cap * -L.Z[0], Math.min(cap * L.Z[1], mz));
+          const q = csOfRel(j, Q.mul(Q.conj(S[j.parentIndex].rot), S[j.childIndex].rot)), sw = swingOf(q), guard = (a, lim, u) => (u > 0 && a > lim[1] - rad(BAL.armGuardDeg)) || (u < 0 && a < lim[0] + rad(BAL.armGuardDeg));
+          // RANGE-AWARE bang-bang: an arm moving toward a range limit whose stopping distance at full shoulder torque (ω²/2α) reaches what is
+          // left of its range is BRAKED (full torque against its motion) instead of driven — it must stop inside its range of motion; a throw
+          // driven until the guard hit the joint stop and handed its momentum back to the trunk at the wrong moment (finding 2026-09-30: arms
+          // turned three recovered forward steps into falls)
+          const wRel = Q.rot(Q.conj(Q.fromAxes(j.X, j.Y, j.Z)), Q.rot(Q.conj(S[j.childIndex].rot), V.sub(S[j.childIndex].w, S[j.parentIndex].w))), Ia = this.armI[side];
+          const axisCmd = (a, om, lim, want, capLo, capHi) => { const room = om > 0 ? lim[1] - rad(BAL.armGuardDeg) - a : a - (lim[0] + rad(BAL.armGuardDeg)), acc = (om > 0 ? capLo : capHi) / Ia;
+            if (Math.abs(om) > 1e-3 && om * om / (2 * acc) >= room) return om > 0 ? -capLo : capHi;          // brake
+            return guard(a, lim, want) ? 0 : want; };
+          const ty = axisCmd(sw.y, wRel[1], j.limits.swingY, cy, cap * -L.Y[0], cap * L.Y[1]), tz = axisCmd(sw.z, wRel[2], j.limits.swingZ, cz, cap * -L.Z[0], cap * L.Z[1]), M = V.add(V.sc(axY, ty), V.sc(axZ, tz));
+          this.armInfo[side] = { y: ty, z: tz, M, k }; } } }
     // ── released (fall transition): no balance, no IK, no hip strategy — posture requests stop escalating. What remains is muscle TONE:
     // stiffness ramps to fallScale of normal and a fraction fallTone of the static gravity support is kept (C1 finding: releasing tone
     // entirely — 15 % stiffness, no gravity support — made the heavy trunk jackknife over straight legs in forward falls). ──
@@ -357,11 +380,18 @@ export class BalanceController {
         out.gOff[k] = g; out.bOff[k] = b; final[k] = nominal[k] + tot; }
       else { const Cq = Q.fromAxes(j.X, j.Y, j.Z), toCs = (t) => Q.rot(Q.conj(Cq), Q.rot(Q.conj(Rc), t)), g = V.sc(toCs(tauG[k]), 1 / kp), b = V.sc(toCs(tauB[k]), 1 / kp);
         out.gOff[k] = g; out.bOff[k] = b; final[k] = Q.norm(Q.mul(nominal[k], expmap(clampVec(V.add(g, b), 0.7)))); } });
+    // GATE C4: an arm with a reactive moment is driven as a TORQUE source — its target is kept M/kp AHEAD of its actual rotation and its
+    // velocity target is its actual velocity, so the finite motor applies ≈ M continuously while the arm accelerates (an equilibrium-point
+    // offset from the nominal pose would only step the arm a few degrees and stop — no throw, no momentum; finding 2026-09-30)
+    const armVel = {}; if (this.armInfo && !released) for (const side of ["L", "R"]) { const a = this.armInfo[side]; if (!a || Math.hypot(a.y, a.z) < 1) continue;
+      const k = a.k, j = spec.joints[k], Pr = S[j.parentIndex].rot, Rc = S[j.childIndex].rot, Cq = Q.fromAxes(j.X, j.Y, j.Z), toCs = (t) => Q.rot(Q.conj(Cq), Q.rot(Q.conj(Rc), t));
+      const qAct = csOfRel(j, Q.mul(Q.conj(Pr), Rc)), g = V.sc(toCs(tauG[k]), 1 / motor[k].kp), m = V.sc(toCs(a.M), 1 / motor[k].kp);
+      final[k] = Q.norm(Q.mul(qAct, expmap(clampVec(V.add(g, m), 0.7)))); armVel[k] = toCs(V.sub(S[j.childIndex].w, S[j.parentIndex].w)); }
     out.final = final; out.motor = motor; out.cls = { ...cls, times: { ...cls.times } };
     // GATE C2: velocity feed-forward for a swing-controlled leg (finite difference of its own successive targets, in each joint's space), so
     // the swing damping acts on deviation from the intended motion rather than on the motion itself. Stance joints keep a zero target velocity.
-    if (plan) { out.vel = spec.joints.map(j => j.type === "hinge" ? 0 : [0, 0, 0]); for (const k in this.swingVel) out.vel[k] = this.swingVel[k]; for (const k in this.stanceVel) out.vel[k] = this.stanceVel[k]; }
-    out.debug = { pdTrace: this.pdTrace || null, unload: this.unloadInfo, xiRef, pRaw, pStar, r, hipCapHere, tauTrunk, feetStatic: fStatic, feetBal: fBal, heading: hd, pelvisTarget: { pos: Pd, rot: Rpd }, stance, replant: this.replant, fricR: this.fricR };
+    if (plan || Object.keys(armVel).length) { out.vel = spec.joints.map(j => j.type === "hinge" ? 0 : [0, 0, 0]); for (const k in this.swingVel) out.vel[k] = this.swingVel[k]; for (const k in this.stanceVel) out.vel[k] = this.stanceVel[k]; for (const k in armVel) out.vel[k] = armVel[k]; }
+    out.debug = { arms: this.armInfo || null, pdTrace: this.pdTrace || null, unload: this.unloadInfo, xiRef, pRaw, pStar, r, hipCapHere, tauTrunk, feetStatic: fStatic, feetBal: fBal, heading: hd, pelvisTarget: { pos: Pd, rot: Rpd }, stance, replant: this.replant, fricR: this.fricR };
     return out;
   }
 }
@@ -370,6 +400,9 @@ function romClamp(j, cs, m) { const L = j.limits; let q = cs[3] < 0 ? cs.map(x =
   for (const [ax, i, lim] of [[[0, 1, 0], 1, L.swingY], [[0, 0, 1], 2, L.swingZ]]) { const tl = Math.sqrt(q[0] * q[0] + q[3] * q[3]), qt = tl > 1e-12 ? [q[0] / tl, 0, 0, q[3] / tl] : [0, 0, 0, 1], qs = Q.mul(q, Q.conj(qt));
     const a = 2 * datan2(qs[i], qs[3]), c = Math.max(lim[0] + m, Math.min(lim[1] - m, a)); if (c !== a) q = Q.norm(Q.mul(Q.axis(ax, c - a), q)); }
   return q; }
+// swing angles (rad) of a constraint-space rotation (the same swing–twist split the joint limits use)
+function swingOf(q) { let x = q[3] < 0 ? q.map(v => -v) : q; const tl = Math.sqrt(x[0] * x[0] + x[3] * x[3]), qt = tl > 1e-12 ? [x[0] / tl, 0, 0, x[3] / tl] : [0, 0, 0, 1], qs = Q.mul(x, Q.conj(qt));
+  return { y: 2 * datan2(qs[1], qs[3]), z: 2 * datan2(qs[2], qs[3]) }; }
 function rotRate(a, b, dT) { let d = Q.mul(Q.conj(a), b); if (d[3] < 0) d = d.map(x => -x); return [2 * d[0] / dT, 2 * d[1] / dT, 2 * d[2] / dT]; }
 // GATE C2 two-foot CoP distribution: the C1 lever rule (share = projection of p* on the foot-centre line, the perpendicular remainder added
 // to BOTH feet) loses the demand once both per-foot CoPs clamp at their sole edges — in a staggered stance the commanded net CoP sat

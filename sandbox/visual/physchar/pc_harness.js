@@ -27,7 +27,7 @@ const H = { J: null, spec: null, entry: null, map: null, ref: null, suiteKey: (Q
         d_fp: true, d_reach: true, d_excl: true, d_path: true, d_trace: true, d_clear: true, d_env: true,
         a_jc: false, a_vis: false, a_pskel: false, a_rskel: false, a_live: false },
   ghostRoot: "actual", jsel: "hip_R", comp: "y", suite: null, suiteB: null, skin: null, poses: null,
-  calib: QS.get("calib") === "V1" ? "V1" : "V1.1", ctrlv: ["approved", "recal", "diag"].includes(QS.get("ctrl")) ? QS.get("ctrl") : "", specs: {}, posesBy: {}, suitesBy: {} };
+  arms: QS.get("arms") === "1", calib: QS.get("calib") === "V1" ? "V1" : "V1.1", ctrlv: ["approved", "recal", "diag"].includes(QS.get("ctrl")) ? QS.get("ctrl") : "", specs: {}, posesBy: {}, suitesBy: {} };
 window.GATEA = H;
 const isB = () => H.suiteKey === "B", isC = () => H.suiteKey === "C", isC2 = () => H.suiteKey === "C2", isC3 = () => H.suiteKey === "C3", isBal = () => isC() || isC2() || isC3();
 
@@ -82,7 +82,8 @@ function simulate() {
   $("status").textContent = `simulating ${title()} …`; H.playing = false; $("play").textContent = "▶ play"; H.run = null;   // no frame is drawn from the previous suite's run while switching
   setTimeout(() => {
     const t0 = performance.now();
-    H.run = isC3() ? runC3(H.J, H.spec, H.testC3, { keepStates: true, poses: H.poses }) : isC2() ? runC2(H.J, H.spec, H.testC2, { keepStates: true, poses: H.poses, ctrl: ctrlOpts() }) : isC() ? runC1(H.J, H.spec, H.testC, { keepStates: true, poses: H.poses }) : isB() ? runTest(H.J, H.spec, H.test, { keepStates: true, poses: H.poses }) : runDrop(H.J, H.spec, H.drop, { tsc: GATE_A_TSC, world: GATE_A_WORLD, keepStates: true, seconds: 6 });
+    const extra = H.arms ? { reactiveArms: true } : {};
+    H.run = isC3() ? runC3(H.J, H.spec, H.testC3, { keepStates: true, poses: H.poses, ctrlExtra: extra }) : isC2() ? runC2(H.J, H.spec, H.testC2, { keepStates: true, poses: H.poses, ctrl: ctrlOpts() }) : isC() ? runC1(H.J, H.spec, H.testC, { keepStates: true, poses: H.poses, ctrlExtra: extra }) : isB() ? runTest(H.J, H.spec, H.test, { keepStates: true, poses: H.poses }) : runDrop(H.J, H.spec, H.drop, { tsc: GATE_A_TSC, world: GATE_A_WORLD, keepStates: true, seconds: 6 });
     H.simMs = performance.now() - t0; H.i = 0; H.acc = 0; $("scrub").max = H.run.recs.length - 1; $("scrub").value = 0; renderSide(); drawChart(); drawChart2();
     window.GATEA_READY = true; $("status").textContent = "";
   }, 20);
@@ -559,7 +560,8 @@ function ui() {
   $("jsel").value = H.jsel; $("jsel").onchange = () => { H.jsel = $("jsel").value; drawChart2(); }; $("comp").onchange = () => { H.comp = $("comp").value; drawChart2(); };
   $("groot").onchange = () => { H.ghostRoot = $("groot").value; };
   $("suite").onchange = () => { setSuite($("suite").value); applySuites(); simulate(); };
-  $("calib").onchange = () => { setCalib($("calib").value); simulate(); }; $("ctrlv").onchange = () => { setCalib(H.calib, $("ctrlv").value); simulate(); };
+  $("calib").onchange = () => { setCalib($("calib").value); simulate(); };
+  $("arms").onclick = (e) => { H.arms = !H.arms; e.target.classList.toggle("on", H.arms); simulate(); }; $("arms").classList.toggle("on", H.arms); $("ctrlv").onchange = () => { setCalib(H.calib, $("ctrlv").value); simulate(); };
   $("drop").onchange = () => { if (isC3()) H.testC3 = $("drop").value; else if (isC2()) H.testC2 = $("drop").value; else if (isC()) H.testC = $("drop").value; else if (isB()) H.test = $("drop").value; else H.drop = $("drop").value; simulate(); }; $("restart").onclick = () => { H.i = 0; H.acc = 0; H.playing = true; $("play").textContent = "❚❚ pause"; };
   $("play").onclick = () => { H.playing = !H.playing; if (H.playing && H.i >= H.run.recs.length - 1) H.i = 0; $("play").textContent = H.playing ? "❚❚ pause" : "▶ play"; };
   $("speed").onchange = () => { H.speed = +$("speed").value; };
@@ -598,7 +600,7 @@ window.GATEA_DROP = (k) => new Promise((res) => { window.GATEA_READY = false; if
 window.GATEC1_TEST = (k) => new Promise((res) => { window.GATEA_READY = false; if (!isC()) setSuite("C"); H.testC = k; $("drop").value = k; simulate(); const w = () => window.GATEA_READY ? res(H.run.hash) : setTimeout(w, 30); w(); });
 window.GATEC3_TEST = (k) => new Promise((res) => { window.GATEA_READY = false; if (!isC3()) setSuite("C3"); H.testC3 = k; $("drop").value = k; simulate(); const w = () => window.GATEA_READY ? res(H.run.hash) : setTimeout(w, 30); w(); });
 window.GATEC2_TEST = (k) => new Promise((res) => { window.GATEA_READY = false; if (!isC2()) setSuite("C2"); H.testC2 = k; $("drop").value = k; simulate(); const w = () => window.GATEA_READY ? res(H.run.hash) : setTimeout(w, 30); w(); });
-window.PC_SETCALIB = (c, ctrlv) => { setCalib(c, ctrlv || ""); return H.calib; };   // no re-simulation (the next GATE*_TEST call simulates)
+window.PC_SETCALIB = (c, ctrlv, arms) => { setCalib(c, ctrlv || ""); if (arms != null) { H.arms = !!arms; $("arms").classList.toggle("on", H.arms); } return H.calib; };   // no re-simulation (the next GATE*_TEST call simulates)
 window.PC_CALIB = (c, ctrlv) => new Promise((res) => { window.GATEA_READY = false; setCalib(c, ctrlv || ""); simulate(); const w = () => window.GATEA_READY ? res(H.run.hash) : setTimeout(w, 30); w(); });
 window.GATEB_TEST = (k) => new Promise((res) => { window.GATEA_READY = false; if (!isB()) setSuite("B"); H.test = k; $("drop").value = k; simulate(); const w = () => window.GATEA_READY ? res(H.run.hash) : setTimeout(w, 30); w(); });
 (async function boot() {

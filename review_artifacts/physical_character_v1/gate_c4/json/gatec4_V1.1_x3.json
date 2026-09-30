@@ -1,0 +1,601 @@
+{
+ "calib": "V1.1",
+ "results": [
+  {
+   "gate": "C1",
+   "test": "PF55",
+   "noArms": {
+    "outcome": "RECOVERED",
+    "maxClass": "RECOVERABLE_HIP",
+    "recoveryS": 1.937,
+    "xiMinCm": 1.7,
+    "trunkMaxDeg": 7.2,
+    "comExcCm": 12.2,
+    "hash": "fb0dc575",
+    "deterministic": true
+   },
+   "arms": {
+    "outcome": "RECOVERED",
+    "maxClass": "RECOVERABLE_HIP",
+    "recoveryS": 1.9,
+    "xiMinCm": 1.7,
+    "trunkMaxDeg": 10.1,
+    "comExcCm": 12,
+    "hash": "e6bb3cb1",
+    "deterministic": true
+   }
+  },
+  {
+   "gate": "C1",
+   "test": "PF60",
+   "noArms": {
+    "outcome": "RECOVERED",
+    "maxClass": "RECOVERABLE_HIP",
+    "recoveryS": 2.396,
+    "xiMinCm": -0.4,
+    "trunkMaxDeg": 9.6,
+    "comExcCm": 16.6,
+    "hash": "830788b2",
+    "deterministic": true
+   },
+   "arms": {
+    "outcome": "RECOVERED",
+    "maxClass": "RECOVERABLE_HIP",
+    "recoveryS": 2.313,
+    "xiMinCm": -0.5,
+    "trunkMaxDeg": 10.6,
+    "comExcCm": 15.9,
+    "hash": "5c493bb5",
+    "deterministic": true
+   }
+  },
+  {
+   "gate": "C1",
+   "test": "PF65",
+   "noArms": {
+    "outcome": "FELL",
+    "maxClass": "GROUNDED",
+    "recoveryS": null,
+    "xiMinCm": -100000,
+    "trunkMaxDeg": 91.6,
+    "comExcCm": 166,
+    "hash": "773e6262",
+    "deterministic": true
+   },
+   "arms": {
+    "outcome": "FELL",
+    "maxClass": "GROUNDED",
+    "recoveryS": null,
+    "xiMinCm": -100000,
+    "trunkMaxDeg": 91.6,
+    "comExcCm": 166.7,
+    "hash": "70be363a",
+    "deterministic": true
+   }
+  },
+  {
+   "gate": "C1",
+   "test": "PF70",
+   "noArms": {
+    "outcome": "FELL",
+    "maxClass": "GROUNDED",
+    "recoveryS": null,
+    "xiMinCm": -100000,
+    "trunkMaxDeg": 91.7,
+    "comExcCm": 165.5,
+    "hash": "c7d781a",
+    "deterministic": true
+   },
+   "arms": {
+    "outcome": "FELL",
+    "maxClass": "GROUNDED",
+    "recoveryS": null,
+    "xiMinCm": -100000,
+    "trunkMaxDeg": 91.6,
+    "comExcCm": 165.1,
+    "hash": "be7b1766",
+    "deterministic": true
+   }
+  },
+  {
+   "gate": "C1",
+   "test": "PB30",
+   "noArms": {
+    "outcome": "RECOVERED",
+    "maxClass": "RECOVERABLE_HIP",
+    "recoveryS": 1.329,
+    "xiMinCm": 0.2,
+    "trunkMaxDeg": 5.9,
+    "comExcCm": 7.5,
+    "hash": "2d01488c",
+    "deterministic": true
+   },
+   "arms": {
+    "outcome": "RECOVERED",
+    "maxClass": "RECOVERABLE_HIP",
+    "recoveryS": 1.208,
+    "xiMinCm": 0.1,
+    "trunkMaxDeg": 6.5,
+    "comExcCm": 6.8,
+    "hash": "953fdf4f",
+    "deterministic": true
+   }
+  },
+  {
+   "gate": "C1",
+   "test": "PB35",
+   "noArms": {
+    "outcome": "FELL",
+    "maxClass": "GROUNDED",
+    "recoveryS": null,
+    "xiMinCm": -100000,
+    "trunkMaxDeg": 93.3,
+    "comExcCm": 138,
+    "hash": "867c8c0f",
+    "deterministic": true
+   },
+   "arms": {
+    "outcome": "FELL",
+    "maxClass": "GROUNDED",
+    "recoveryS": null,
+    "xiMinCm": -100000,
+    "trunkMaxDeg": 92.9,
+    "comExcCm": 137.2,
+    "hash": "dab0a616",
+    "deterministic": true
+   }
+  },
+  {
+   "gate": "C1",
+   "test": "PB40",
+   "noArms": {
+    "outcome": "FELL",
+    "maxClass": "GROUNDED",
+    "recoveryS": null,
+    "xiMinCm": -100000,
+    "trunkMaxDeg": 93.5,
+    "comExcCm": 136.9,
+    "hash": "64e3e392",
+    "deterministic": true
+   },
+   "arms": {
+    "outcome": "FELL",
+    "maxClass": "GROUNDED",
+    "recoveryS": null,
+    "xiMinCm": -100000,
+    "trunkMaxDeg": 93.2,
+    "comExcCm": 135.9,
+    "hash": "22c98eb9",
+    "deterministic": true
+   }
+  },
+  {
+   "gate": "C1",
+   "test": "PB50",
+   "noArms": {
+    "outcome": "FELL",
+    "maxClass": "GROUNDED",
+    "recoveryS": null,
+    "xiMinCm": -100000,
+    "trunkMaxDeg": 93.4,
+    "comExcCm": 136.4,
+    "hash": "d20092d6",
+    "deterministic": true
+   },
+   "arms": {
+    "outcome": "FELL",
+    "maxClass": "GROUNDED",
+    "recoveryS": null,
+    "xiMinCm": -100000,
+    "trunkMaxDeg": 93.5,
+    "comExcCm": 139.6,
+    "hash": "e039ecc9",
+    "deterministic": true
+   }
+  },
+  {
+   "gate": "C1",
+   "test": "PR45",
+   "noArms": {
+    "outcome": "RECOVERED",
+    "maxClass": "RECOVERABLE_HIP",
+    "recoveryS": 0.833,
+    "xiMinCm": 5.6,
+    "trunkMaxDeg": 4.9,
+    "comExcCm": 16.1,
+    "hash": "63376a5e",
+    "deterministic": true
+   },
+   "arms": {
+    "outcome": "RECOVERED",
+    "maxClass": "RECOVERABLE_HIP",
+    "recoveryS": 0.821,
+    "xiMinCm": 5.5,
+    "trunkMaxDeg": 5.4,
+    "comExcCm": 16.1,
+    "hash": "3c0f325c",
+    "deterministic": true
+   }
+  },
+  {
+   "gate": "C1",
+   "test": "PR50",
+   "noArms": {
+    "outcome": "RECOVERED",
+    "maxClass": "RECOVERABLE_HIP",
+    "recoveryS": 0.946,
+    "xiMinCm": 3.4,
+    "trunkMaxDeg": 5.1,
+    "comExcCm": 17.6,
+    "hash": "a1d5d33a",
+    "deterministic": true
+   },
+   "arms": {
+    "outcome": "RECOVERED",
+    "maxClass": "RECOVERABLE_HIP",
+    "recoveryS": 1.121,
+    "xiMinCm": 3.3,
+    "trunkMaxDeg": 6.2,
+    "comExcCm": 16.4,
+    "hash": "a4341d51",
+    "deterministic": true
+   }
+  },
+  {
+   "gate": "C1",
+   "test": "PR60",
+   "noArms": {
+    "outcome": "FELL",
+    "maxClass": "GROUNDED",
+    "recoveryS": null,
+    "xiMinCm": -100000,
+    "trunkMaxDeg": 98.9,
+    "comExcCm": 172.7,
+    "hash": "8f921664",
+    "deterministic": true
+   },
+   "arms": {
+    "outcome": "FELL",
+    "maxClass": "GROUNDED",
+    "recoveryS": null,
+    "xiMinCm": -100000,
+    "trunkMaxDeg": 97.3,
+    "comExcCm": 174.4,
+    "hash": "df95a053",
+    "deterministic": true
+   }
+  },
+  {
+   "gate": "C1",
+   "test": "PL40",
+   "noArms": {
+    "outcome": "RECOVERED",
+    "maxClass": "RECOVERABLE_HIP",
+    "recoveryS": 1.233,
+    "xiMinCm": 0.1,
+    "trunkMaxDeg": 4.8,
+    "comExcCm": 10,
+    "hash": "3b284b48",
+    "deterministic": true
+   },
+   "arms": {
+    "outcome": "RECOVERED",
+    "maxClass": "RECOVERABLE_HIP",
+    "recoveryS": 0.7,
+    "xiMinCm": 0.4,
+    "trunkMaxDeg": 6.1,
+    "comExcCm": 10.6,
+    "hash": "a551b861",
+    "deterministic": true
+   }
+  },
+  {
+   "gate": "C1",
+   "test": "PL60",
+   "noArms": {
+    "outcome": "FELL",
+    "maxClass": "GROUNDED",
+    "recoveryS": null,
+    "xiMinCm": -100000,
+    "trunkMaxDeg": 99.2,
+    "comExcCm": 175.1,
+    "hash": "7a24c111",
+    "deterministic": true
+   },
+   "arms": {
+    "outcome": "FELL",
+    "maxClass": "GROUNDED",
+    "recoveryS": null,
+    "xiMinCm": -100000,
+    "trunkMaxDeg": 99,
+    "comExcCm": 178.4,
+    "hash": "21a027da",
+    "deterministic": true
+   }
+  },
+  {
+   "gate": "C1",
+   "test": "DF55",
+   "noArms": {
+    "outcome": "RECOVERED",
+    "maxClass": "RECOVERABLE_HIP",
+    "recoveryS": 2.071,
+    "xiMinCm": 0.6,
+    "trunkMaxDeg": 12,
+    "comExcCm": 12.9,
+    "hash": "c49e9aa1",
+    "deterministic": true
+   },
+   "arms": {
+    "outcome": "RECOVERED",
+    "maxClass": "RECOVERABLE_HIP",
+    "recoveryS": 2.071,
+    "xiMinCm": 0.6,
+    "trunkMaxDeg": 11.9,
+    "comExcCm": 12.8,
+    "hash": "c5b01b03",
+    "deterministic": true
+   }
+  },
+  {
+   "gate": "C1",
+   "test": "DB35",
+   "noArms": {
+    "outcome": "FELL",
+    "maxClass": "GROUNDED",
+    "recoveryS": null,
+    "xiMinCm": -100000,
+    "trunkMaxDeg": 93.6,
+    "comExcCm": 136.8,
+    "hash": "c438bfb4",
+    "deterministic": true
+   },
+   "arms": {
+    "outcome": "FELL",
+    "maxClass": "GROUNDED",
+    "recoveryS": null,
+    "xiMinCm": -100000,
+    "trunkMaxDeg": 93.6,
+    "comExcCm": 135.4,
+    "hash": "53c6efca",
+    "deterministic": true
+   }
+  },
+  {
+   "gate": "C1",
+   "test": "DR45",
+   "noArms": {
+    "outcome": "RECOVERED",
+    "maxClass": "RECOVERABLE_HIP",
+    "recoveryS": 0.775,
+    "xiMinCm": 4.5,
+    "trunkMaxDeg": 6.5,
+    "comExcCm": 16,
+    "hash": "e274fba4",
+    "deterministic": true
+   },
+   "arms": {
+    "outcome": "RECOVERED",
+    "maxClass": "RECOVERABLE_HIP",
+    "recoveryS": 0.754,
+    "xiMinCm": 0.7,
+    "trunkMaxDeg": 6.4,
+    "comExcCm": 13.7,
+    "hash": "b39afa6c",
+    "deterministic": true
+   }
+  },
+  {
+   "gate": "C3",
+   "test": "B_F80",
+   "noArms": {
+    "outcome": "RECOVERED_WITH_STEP",
+    "step": {
+     "foot": "L",
+     "recoveredAfterNeedS": 0.71,
+     "tdErrCm": 7.8,
+     "xiAtTd": 12.5,
+     "fail": null
+    },
+    "trunkMaxDeg": 19.8,
+    "comExcCm": 29.9,
+    "hash": "b6dfadf0",
+    "deterministic": true
+   },
+   "arms": {
+    "outcome": "RECOVERED_WITH_STEP",
+    "step": {
+     "foot": "L",
+     "recoveredAfterNeedS": 0.59,
+     "tdErrCm": 5.5,
+     "xiAtTd": 14.9,
+     "fail": null
+    },
+    "trunkMaxDeg": 17.4,
+    "comExcCm": 29.1,
+    "hash": "b55b481f",
+    "deterministic": true
+   }
+  },
+  {
+   "gate": "C3",
+   "test": "B_F100",
+   "noArms": {
+    "outcome": "RECOVERED_WITH_STEP",
+    "step": {
+     "foot": "L",
+     "recoveredAfterNeedS": 0.75,
+     "tdErrCm": 10.1,
+     "xiAtTd": 11.6,
+     "fail": null
+    },
+    "trunkMaxDeg": 22.3,
+    "comExcCm": 40.9,
+    "hash": "8bad2a8",
+    "deterministic": true
+   },
+   "arms": {
+    "outcome": "RECOVERED_WITH_STEP",
+    "step": {
+     "foot": "L",
+     "recoveredAfterNeedS": 0.62,
+     "tdErrCm": 4.9,
+     "xiAtTd": 9.7,
+     "fail": null
+    },
+    "trunkMaxDeg": 20.7,
+    "comExcCm": 38.5,
+    "hash": "7a441146",
+    "deterministic": true
+   }
+  },
+  {
+   "gate": "C3",
+   "test": "B_B50",
+   "noArms": {
+    "outcome": "RECOVERED_WITH_STEP",
+    "step": {
+     "foot": "L",
+     "recoveredAfterNeedS": 0.91,
+     "tdErrCm": 13.8,
+     "xiAtTd": 7.5,
+     "fail": null
+    },
+    "trunkMaxDeg": 8,
+    "comExcCm": 22.3,
+    "hash": "422b3dd",
+    "deterministic": true
+   },
+   "arms": {
+    "outcome": "RECOVERED_WITH_STEP",
+    "step": {
+     "foot": "L",
+     "recoveredAfterNeedS": 1.16,
+     "tdErrCm": 11,
+     "xiAtTd": 10.3,
+     "fail": null
+    },
+    "trunkMaxDeg": 13.9,
+    "comExcCm": 22.5,
+    "hash": "9fe855d0",
+    "deterministic": true
+   }
+  },
+  {
+   "gate": "C3",
+   "test": "B_B60",
+   "noArms": {
+    "outcome": "STEPPED_FELL",
+    "step": {
+     "foot": "L",
+     "recoveredAfterNeedS": null,
+     "tdErrCm": 26.6,
+     "xiAtTd": 1.8,
+     "fail": "the capture point is still outside the new support after the step (a second step would be needed; C3 takes one)"
+    },
+    "trunkMaxDeg": 93.4,
+    "comExcCm": 156.1,
+    "hash": "a2c77d9e",
+    "deterministic": true
+   },
+   "arms": {
+    "outcome": "STEPPED_FELL",
+    "step": {
+     "foot": "L",
+     "recoveredAfterNeedS": null,
+     "tdErrCm": 24.5,
+     "xiAtTd": 6.2,
+     "fail": "the capture point is still outside the new support after the step (a second step would be needed; C3 takes one)"
+    },
+    "trunkMaxDeg": 93.7,
+    "comExcCm": 154.1,
+    "hash": "93d20c3e",
+    "deterministic": true
+   }
+  },
+  {
+   "gate": "C3",
+   "test": "C_proj_F115",
+   "noArms": {
+    "outcome": "RECOVERED_WITH_STEP",
+    "step": {
+     "foot": "L",
+     "recoveredAfterNeedS": 0.75,
+     "tdErrCm": 6.8,
+     "xiAtTd": 8.6,
+     "fail": null
+    },
+    "trunkMaxDeg": 22.3,
+    "comExcCm": 51.7,
+    "hash": "87bbac5b",
+    "deterministic": true
+   },
+   "arms": {
+    "outcome": "STEPPED_FELL",
+    "step": {
+     "foot": "L",
+     "recoveredAfterNeedS": 0.92,
+     "tdErrCm": 7.4,
+     "xiAtTd": 6.7,
+     "fail": null
+    },
+    "trunkMaxDeg": 93.1,
+    "comExcCm": 119.9,
+    "hash": "987257ae",
+    "deterministic": true
+   }
+  },
+  {
+   "gate": "C3",
+   "test": "B_R65",
+   "noArms": {
+    "outcome": "FELL_NO_STEP",
+    "step": null,
+    "trunkMaxDeg": 104.4,
+    "comExcCm": 177.9,
+    "hash": "5ca84a7f",
+    "deterministic": true
+   },
+   "arms": {
+    "outcome": "FELL_NO_STEP",
+    "step": null,
+    "trunkMaxDeg": 97.4,
+    "comExcCm": 174.5,
+    "hash": "7c3b317c",
+    "deterministic": true
+   }
+  },
+  {
+   "gate": "C3",
+   "test": "D_late_F80_100ms",
+   "noArms": {
+    "outcome": "STEPPED_FELL",
+    "step": {
+     "foot": "L",
+     "recoveredAfterNeedS": null,
+     "tdErrCm": 51.3,
+     "xiAtTd": -16.9,
+     "fail": "the capture point is still outside the new support after the step (a second step would be needed; C3 takes one)"
+    },
+    "trunkMaxDeg": 91.5,
+    "comExcCm": 162.9,
+    "hash": "256b3622",
+    "deterministic": true
+   },
+   "arms": {
+    "outcome": "STEPPED_FELL",
+    "step": {
+     "foot": "L",
+     "recoveredAfterNeedS": null,
+     "tdErrCm": 49.7,
+     "xiAtTd": -16.4,
+     "fail": "the capture point is still outside the new support after the step (a second step would be needed; C3 takes one)"
+    },
+    "trunkMaxDeg": 91.5,
+    "comExcCm": 163.4,
+    "hash": "e08911d1",
+    "deterministic": true
+   }
+  }
+ ]
+}

@@ -41,7 +41,7 @@ export function runC3(J, spec, key, opts) {
   opts = opts || {}; const TST = TESTS_C3[key], T = TIMESTEP_CONFIGS[GATE_C1_TSC], dt = 1 / T.hz, steps = Math.round((opts.seconds || TST.seconds) * T.hz), g = 9.81;
   const P = opts.poses || buildPoses(spec), nb = spec.bodies.length, nj = spec.joints.length, M = spec.totalMass;
   const w = new JoltCharacterWorld(J, spec, GATE_C1_WORLD, patchPolicy(spec, TST.patches)); for (const [a, b] of disabledPairs(spec)) w.disablePair(a, b);
-  const ctrlOpts = opts.ctrl === undefined ? controllerProfile(spec) : (opts.ctrl || {}), ctrl = new BalanceController(spec, P, Object.assign({ strength: "candidate" }, ctrlOpts));
+  const ctrlOpts = Object.assign({}, opts.ctrl === undefined ? controllerProfile(spec) : (opts.ctrl || {}), opts.ctrlExtra || {}), ctrl = new BalanceController(spec, P, Object.assign({ strength: "candidate" }, ctrlOpts));
   ctrl.gain.forEach((gn, k) => w.setMotor(k, { kp: gn.kp, kd: gn.kdStance, tau: 1 }));
   if (w.support || w.cons.length !== nj || w.ps.GetNumBodies() !== nb + 1) throw new Error("C3 world is not clean");
   P.N.S.forEach((s, i) => w.setPose(i, s.pos, s.rot));
