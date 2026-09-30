@@ -1,0 +1,12 @@
+// acceptance time series for one swept placement
+import fs from "fs"; import path from "path";
+const PC = process.argv[2], ROOT = path.resolve(PC, "../../.."), CAL = process.argv[3], FW = +process.argv[4], OW = +(process.argv[5] || 0), T0 = +(process.argv[6] || 2.5), T1 = +(process.argv[7] || 4.2), EV = +(process.argv[8] || 24);
+const { buildBodySpec } = await import(PC + "/pc_body.js"); const { loadJolt } = await import(PC + "/pc_jolt.js"); const C2 = await import(PC + "/pc_gatec2.js"); const { jointState } = await import(PC + "/pc_gatea.js");
+const dir = path.join(ROOT, "assets/characters/outfield/gabriel"), rig = JSON.parse(fs.readFileSync(path.join(dir, "rig.json"), "utf8")), buf = fs.readFileSync(path.join(dir, "mesh.bin"));
+const ab = buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength), L = rig.mesh.layout, T = { Float32Array, Uint16Array, Uint32Array, Uint8Array };
+const mesh = {}; for (const k of ["positions", "joints", "weights", "indices"]) mesh[k] = new T[L[k].elementType](ab, L[k].byteOffset, L[k].elementCount);
+const spec = buildBodySpec(rig, mesh, { calib: CAL }), J = await loadJolt(PC + "/vendor/jolt-physics.wasm-compat.js"), ji = (n) => spec.joints.findIndex(j => j.name === n);
+C2.TESTS_C2.X = { group: "x", title: "x", seconds: T1 + 0.3, requests: [{ type: "place", foot: "R", forward: FW, outward: OW, at: 0.5 }] };
+const r = C2.runC2(J, spec, "X", { keepStates: true, ctrl: process.env.CTRL ? JSON.parse(process.env.CTRL) : undefined }), f = (v) => v.map(x => (x * 100).toFixed(1)).join(",");
+for (const q of r.recs) { if (q.t < T0 || q.t > T1 || q.n % EV) continue; const c = q.ctl || {}, kl = jointState(spec.joints[ji("knee_L")], q.states).a * 57.3, kr = jointState(spec.joints[ji("knee_R")], q.states).a * 57.3;
+  const pd = c.pdTrace || {}; console.log(`t ${q.t.toFixed(2)} ${String(q.reqStage).padEnd(7)} Pd nom ${(pd.nomY || 0).toFixed(3)} reach ${(pd.yReach || 0).toFixed(3)} ank ${(pd.yAnkle || 0).toFixed(3)} tgt ${c.pelvisTarget ? c.pelvisTarget.pos[1].toFixed(3) : "-"} ξ ${f(q.xi)} ref ${c.xiRef ? f(c.xiRef) : "-"} p* ${c.pStar ? f(c.pStar) : "-"} cop ${q.copSmooth ? f(q.copSmooth) : "-"} com ${f([q.com[0], q.com[2]])} v ${f([q.vcom[0], q.vcom[2]])} | L ${q.feet.L.load.toFixed(0)} ${q.feet.L.state} R ${q.feet.R.load.toFixed(0)} ${q.feet.R.state} | pelv y ${q.states[0].pos[1].toFixed(3)} knee L ${kl.toFixed(0)} R ${kr.toFixed(0)} | ankL ${q.J[ji("ankle_L")].eff.toFixed(2)} ankR ${q.J[ji("ankle_R")].eff.toFixed(2)} ξm ${(q.xiMargin * 100).toFixed(1)}`); }

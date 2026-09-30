@@ -1,0 +1,13 @@
+import fs from "fs"; import path from "path";
+const PC = process.argv[2], ROOT = path.resolve(PC, "../../.."), CAL = process.argv[3], LIST = process.argv[4].split(",").map(Number), DIRN = process.argv[5] || "fwd";
+const { buildBodySpec } = await import(PC + "/pc_body.js"); const { loadJolt } = await import(PC + "/pc_jolt.js"); const C2 = await import(PC + "/pc_gatec2.js"); const { jointState } = await import(PC + "/pc_gatea.js"); const { V } = await import(PC + "/pc_math.js");
+const dir = path.join(ROOT, "assets/characters/outfield/gabriel"), rig = JSON.parse(fs.readFileSync(path.join(dir, "rig.json"), "utf8")), buf = fs.readFileSync(path.join(dir, "mesh.bin"));
+const ab = buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength), L = rig.mesh.layout, T = { Float32Array, Uint16Array, Uint32Array, Uint8Array };
+const mesh = {}; for (const k of ["positions", "joints", "weights", "indices"]) mesh[k] = new T[L[k].elementType](ab, L[k].byteOffset, L[k].elementCount);
+const spec = buildBodySpec(rig, mesh, { calib: CAL }), J = await loadJolt(PC + "/vendor/jolt-physics.wasm-compat.js"), ji = (n) => spec.joints.findIndex(j => j.name === n), bi = (n) => spec.bodies.findIndex(b => b.name === n);
+const Lleg = V.dist(spec.bodies[bi("shin_R")].origin, spec.bodies[bi("thigh_R")].origin) + V.dist(spec.bodies[bi("foot_R")].origin, spec.bodies[bi("shin_R")].origin);
+for (const X of LIST) { C2.TESTS_C2.X = { group: "x", title: "x", seconds: 7, requests: [{ type: "place", foot: "R", forward: DIRN === "fwd" ? X : DIRN === "bwd" ? -X : 0, outward: DIRN === "lat" ? X : 0, at: 0.5 }] };
+  const r = C2.runC2(J, spec, "X", { keepStates: true }), knee = (q) => jointState(spec.joints[ji("knee_R")], q.states).a * 57.3, ext = (q) => V.dist(q.states[bi("thigh_R")].pos, q.states[bi("foot_R")].pos) / Lleg;
+  const td = r.recs.find(q => q.reqStage === "ACCEPT"), sw = r.recs.filter(q => ["SWING", "ALIGN", "DESCEND"].includes(q.reqStage)), acc = r.recs.filter(q => q.reqStage === "ACCEPT");
+  const kneeLSS = Math.max(...sw.map(q => jointState(spec.joints[ji("knee_L")], q.states).a * 57.3));
+  console.log(`${DIRN} ${X.toFixed(2)} touchdown: knee_R ${td ? knee(td).toFixed(1) : "-"}° ext ${td ? (ext(td) * 100).toFixed(1) : "-"} % | end of swing (ALIGN/DESCEND) knee_R min ${Math.min(...sw.map(knee)).toFixed(1)}° ext max ${(Math.max(...sw.map(ext)) * 100).toFixed(1)} % | ACCEPT knee_R min ${Math.min(...acc.map(knee)).toFixed(1)}° ext max ${(Math.max(...acc.map(ext)) * 100).toFixed(1)} % | stance knee_L max in SS ${kneeLSS.toFixed(0)}° | bounce ${(acc.filter(q => !q.feet.R.touching).length / 0.24).toFixed(0)} ms`); }

@@ -1,0 +1,294 @@
+[
+{
+"test": "A",
+"t": 0,
+"cam": "three",
+"name": "A1_t0.00_start_relaxed_vs_target",
+"mesh": true,
+"follow": true
+},
+{
+"test": "A",
+"t": 3.9,
+"cam": "three",
+"name": "A2_t3.90_holding_stance",
+"mesh": true,
+"follow": true
+},
+{
+"test": "A_off",
+"t": 5.6,
+"cam": "side",
+"name": "A3_off_t5.60_toppling_no_support",
+"mesh": true,
+"follow": true
+},
+{
+"test": "A_off",
+"t": 6.3,
+"cam": "side",
+"name": "A4_off_t6.30_falls_like_a_statue",
+"mesh": true,
+"follow": true
+},
+{
+"test": "B",
+"t": 2.8,
+"cam": "three",
+"name": "B1_t2.80_knee_raise_hold",
+"mesh": true,
+"follow": true
+},
+{
+"test": "B",
+"t": 2.8,
+"cam": "front",
+"mesh": false,
+"name": "B2_t2.80_front_physics_ghost",
+"follow": true
+},
+{
+"test": "B_off",
+"t": 2.4,
+"cam": "three",
+"name": "B3_off_t2.40_single_stance_no_support",
+"mesh": true,
+"follow": true
+},
+{
+"test": "B_off",
+"t": 3.4,
+"cam": "three",
+"name": "B4_off_t3.40_falls",
+"mesh": true,
+"follow": true
+},
+{
+"test": "C",
+"t": 0.7,
+"cam": "three",
+"name": "C1_t0.70_fast_raise_lag",
+"mesh": true,
+"follow": true
+},
+{
+"test": "C",
+"t": 2.5,
+"cam": "front",
+"name": "C2_t2.50_fast_return",
+"mesh": true,
+"follow": true
+},
+{
+"test": "C",
+"t": 3.5,
+"cam": "front",
+"name": "C3_t3.50_end_right_foot_on_left_foot",
+"mesh": true,
+"follow": true
+},
+{
+"test": "C_weak",
+"t": 2.0,
+"cam": "side",
+"name": "C4_weak_t2.00_floppy",
+"mesh": true,
+"follow": true
+},
+{
+"test": "C_strong",
+"t": 0.7,
+"cam": "three",
+"name": "C5_strong_t0.70_rigid_tracking",
+"mesh": true,
+"follow": true
+},
+{
+"test": "D1",
+"t": 0.66,
+"cam": "side",
+"name": "D1_t0.66_reversal_instant",
+"mesh": true,
+"follow": true
+},
+{
+"test": "D1",
+"t": 0.8,
+"cam": "side",
+"name": "D1_t0.80_decelerating",
+"mesh": true,
+"follow": true
+},
+{
+"test": "D2",
+"t": 0.72,
+"cam": "side",
+"name": "D2_t0.72_step_change",
+"mesh": true,
+"follow": true
+},
+{
+"test": "D2",
+"t": 3.1,
+"cam": "side",
+"name": "D2_t3.10_end_toe_planted_behind",
+"mesh": true,
+"follow": true
+},
+{
+"test": "E",
+"worst": "contact",
+"az": 105,
+"el": 8,
+"dist": 1.5,
+"name": "E1_contact_step",
+"mesh": true,
+"follow": false,
+"target": [
+0.16,
+0.32,
+0.3
+]
+},
+{
+"test": "E",
+"t": 2.0,
+"cam": "side",
+"name": "E2_t2.00_blocked_trunk_folds",
+"mesh": true,
+"follow": true
+},
+{
+"test": "E",
+"t": 3.2,
+"cam": "side",
+"name": "E3_t3.20_post_removed_leg_resumes",
+"mesh": true,
+"follow": true
+},
+{
+"test": "E",
+"t": 4.9,
+"cam": "side",
+"name": "E4_t4.90_reached_target",
+"mesh": true,
+"follow": true
+},
+{
+"test": "E_strong",
+"t": 2.0,
+"cam": "three",
+"name": "E5_strong_t2.00_body_rotates_around_post",
+"mesh": true,
+"follow": true
+},
+{
+"test": "E_push_strong",
+"t": 1.6,
+"cam": "three",
+"name": "E6_push_strong_t1.60_bulldozes_post",
+"mesh": true,
+"follow": true
+},
+{
+"test": "E_push",
+"t": 2.0,
+"cam": "three",
+"name": "E7_push_candidate_t2.00",
+"mesh": true,
+"follow": true
+},
+{
+"test": "F_chest",
+"t": 1.02,
+"cam": "front",
+"name": "F1_chest_t1.02_impulse",
+"mesh": true,
+"follow": true
+},
+{
+"test": "F_chest",
+"t": 1.25,
+"cam": "front",
+"name": "F2_chest_t1.25_peak_response",
+"mesh": true,
+"follow": true
+},
+{
+"test": "F_chest",
+"t": 1.7,
+"cam": "front",
+"name": "F3_chest_t1.70_recovered",
+"mesh": true,
+"follow": true
+},
+{
+"test": "F_limb",
+"t": 1.08,
+"cam": "three",
+"name": "F4_limb_t1.08_hand_knocked",
+"mesh": true,
+"follow": true
+},
+{
+"test": "F_chest_off",
+"t": 1.9,
+"cam": "front",
+"name": "F5_chest_off_t1.90_no_support",
+"mesh": true,
+"follow": true
+},
+{
+"test": "E",
+"i": 249,
+"mesh": false,
+"follow": false,
+"target": [
+0.16,
+0.32,
+0.3
+],
+"az": 105,
+"el": 8,
+"dist": 1.2,
+"name": "E1a_step249_before_touch"
+},
+{
+"test": "E",
+"i": 250,
+"mesh": false,
+"follow": false,
+"target": [
+0.16,
+0.32,
+0.3
+],
+"az": 105,
+"el": 8,
+"dist": 1.2,
+"name": "E1b_step250_contact_step"
+},
+{
+"test": "E",
+"i": 251,
+"mesh": false,
+"follow": false,
+"target": [
+0.16,
+0.32,
+0.3
+],
+"az": 105,
+"el": 8,
+"dist": 1.2,
+"name": "E1c_step251_after"
+},
+{
+"test": "E",
+"t": 2.0,
+"cam": "three",
+"mesh": true,
+"follow": true,
+"name": "E2b_t2.00_blocked_three_quarter"
+}
+]

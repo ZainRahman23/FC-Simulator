@@ -1,0 +1,12 @@
+import fs from "fs"; import path from "path";
+const PC = process.argv[2], ROOT = path.resolve(PC, "../../..");
+const { buildBodySpec } = await import(PC + "/pc_body.js"); const { loadJolt } = await import(PC + "/pc_jolt.js"); const D = await import(PC + "/pc_gated.js"); const { V, Q } = await import(PC + "/pc_math.js");
+const dir = path.join(ROOT, "assets/characters/outfield/gabriel"), rig = JSON.parse(fs.readFileSync(path.join(dir, "rig.json"), "utf8")), buf = fs.readFileSync(path.join(dir, "mesh.bin"));
+const ab = buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength), L = rig.mesh.layout, T = { Float32Array, Uint16Array, Uint32Array, Uint8Array };
+const mesh = {}; for (const k of ["positions", "joints", "weights", "indices"]) mesh[k] = new T[L[k].elementType](ab, L[k].byteOffset, L[k].elementCount);
+const spec = buildBodySpec(rig, mesh, { calib: "V1.1" }), J = await loadJolt(PC + "/vendor/jolt-physics.wasm-compat.js");
+const r = D.runD(J, spec, "D6_slide", { keepStates: true }); let worst = { e: 0 };
+r.recs.forEach((q, i) => { spec.joints.forEach((j) => { const Pb = q.states[j.parentIndex], pb = spec.bodies[j.parentIndex], e = V.dist(V.add(Pb.pos, Q.rot(Pb.rot, V.sub(j.at, pb.origin))), q.states[j.childIndex].pos); if (e > worst.e) worst = { e, t: q.t, j: j.name, n: q.n }; }); });
+console.log(`slider max joint separation ${(worst.e * 1000).toFixed(2)} mm at t ${worst.t.toFixed(4)} s (step ${worst.n}) · joint ${worst.j} · first A↔B manifold ${r.contact.firstT} s`);
+const early = r.recs.slice(0, 12).map(q => { let m = 0; spec.joints.forEach((j) => { const Pb = q.states[j.parentIndex], pb = spec.bodies[j.parentIndex]; m = Math.max(m, V.dist(V.add(Pb.pos, Q.rot(Pb.rot, V.sub(j.at, pb.origin))), q.states[j.childIndex].pos)); }); return (m * 1000).toFixed(1); });
+console.log("first 12 steps, max joint sep mm:", early.join(" "));
