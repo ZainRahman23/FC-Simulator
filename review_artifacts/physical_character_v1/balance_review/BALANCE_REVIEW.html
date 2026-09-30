@@ -1,0 +1,667 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Balance Architecture Review</title><style>
+:root{--bg:#fbfaf7;--ink:#1d1f22;--mute:#5d646b;--line:#dcd8cf;--code:#f1eee7;--acc:#8a5a00;--q:#f4efe2}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#141619;--ink:#e6e4df;--mute:#9aa0a6;--line:#33373d;--code:#1d2024;--acc:#f0c060;--q:#1f1c14}}
+:root[data-theme="dark"]{--bg:#141619;--ink:#e6e4df;--mute:#9aa0a6;--line:#33373d;--code:#1d2024;--acc:#f0c060;--q:#1f1c14}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 -apple-system,system-ui,"Segoe UI",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px 80px}
+h1{font-size:26px;line-height:1.25} h2{font-size:20px;margin-top:40px;padding-top:12px;border-top:1px solid var(--line)} h3{font-size:16px;color:var(--acc)}
+table{border-collapse:collapse;width:100%;font-size:13px;margin:12px 0;display:block;overflow-x:auto} th,td{border:1px solid var(--line);padding:5px 8px;vertical-align:top;text-align:left} th{background:var(--code)}
+code{background:var(--code);padding:1px 4px;border-radius:3px;font-size:12.5px} pre{background:var(--code);padding:12px;border-radius:6px;overflow-x:auto;font-size:12px;line-height:1.45} pre code{padding:0;background:none}
+blockquote{margin:12px 0;padding:10px 16px;background:var(--q);border-left:4px solid var(--acc)} a{color:var(--acc)}
+img{max-width:100%;height:auto} li>ul,li>ol{margin:4px 0}
+</style></head><body><main><h1>Independent review: Gate B and the balance architecture</h1>
+<p><strong>Scope.</strong> Review only. Nothing was implemented; Touchline and the worktree code are untouched; nothing committed or pushed.</p>
+<p><strong>Evidence base.</strong>
+- <strong>Gate B's recorded runs, re-analysed read-only.</strong> Two scratch probes (in <code>analysis/</code>):
+    - centre of mass, extrapolated centre of mass (XCoM) / capture point, support polygon, and CoP from whole-body momentum;
+    - per-foot ground reaction from the ankle constraint impulse.
+- <strong>Primary sources</strong> (listed at the end).</p>
+<p><strong>My position.</strong> I built Gate B, so I have tried to review it as an outsider would: where my own report overstated things, I say so.</p>
+<p>2026-09-29 · Jolt 5.6.0 · 240 Hz · Gabriel (190 cm, 78 kg)</p>
+<hr />
+<h2>Summary</h2>
+<ol>
+<li><strong>Gate B's motor layer is sound; keep it.</strong><ul>
+<li>Jolt constraint motors with an implicit spring, a per-step torque clamp, and co-solved with contacts.</li>
+<li>Six amendments are listed in §1. None of them changes the architecture.</li>
+</ul>
+</li>
+<li><strong>Gate B's whole-body conclusions are weaker than its report says.</strong><ul>
+<li>Re-analysing the recorded runs shows the temporary pelvis support cancelled <strong>45 of the 46.6 N·s</strong> of the chest shove within 0.6 s, and 25 of 45 N·s of the pelvis shove.</li>
+<li>It carried about 57 N horizontally and 36 N vertically throughout the supported knee raise.</li>
+<li>Without it, the knee raise <strong>lifts the foot while the centre of mass is still on the midline</strong>. The capture point leaves the base of support that very step.</li>
+<li>The limb-level results (contact arrest, blocked hip, continuity, determinism) stand. The whole-body recovery results do not.</li>
+</ul>
+</li>
+<li><strong>Next step: delete the pelvis support from every balance pass criterion.</strong> Replace it with:<ul>
+<li>a <strong>support layer</strong>, which owns contacts, the support polygon, the capture point, the contact schedule and the footholds;</li>
+<li>a <strong>whole-body target composer</strong>, which turns support decisions into joint targets:</li>
+<li>stance legs are built up from the <em>actual</em> planted foot;</li>
+<li>the trunk is held in <strong>world</strong> orientation through the stance hips;</li>
+<li>ankle and hip strategies act as target offsets.</li>
+<li>Everything still acts only through the finite joint motors and the ground.</li>
+</ul>
+</li>
+<li><strong>Smallest next gate: Gate C1, "Feet-in-place balance, unsupported".</strong><ul>
+<li>Sensing and support state, ankle and hip strategies in double stance.</li>
+<li>A physics-based classifier: recoverable / step needed / unrecoverable.</li>
+<li>An honest fall transition, so no more statue falls.</li>
+<li>No stepping yet. <strong>Gate C2</strong> adds anticipatory weight transfer, single stance and <em>planned</em> foot placement, which fixes the foot-on-foot and planted-toe cases. <strong>Gate D</strong> adds reactive corrective steps.</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h2>1. Is Gate B's motor architecture sound?</h2>
+<p><strong>Yes.</strong> What Gate B got right:
+- <strong>The motors are the right mechanism.</strong> Jolt's <code>PositionAndVelocity</code> motor with a <code>StiffnessAndDamping</code> spring is an implicit (stable-PD-like) drive. Its impulse is clamped per step to ±τmax·dt and solved in the same Gauss–Seidel iterations as contacts, limits and friction.
+- <strong>That is why contact wins on the arrival step,</strong> and why tracking barely depends on the physics rate (B's error: 3.25° / 3.04° / 3.03° at 60 / 120 / 240 Hz).
+- <strong>Targets are in each joint's own anatomical coordinates.</strong>
+- <strong>The body is never written after t = 0</strong> (the audit counters prove it).
+- <strong>It is deterministic across Node and Chrome, and cheap</strong> (about 0.6 ms per 60 Hz frame).
+- <strong>Balance can be built on top without changing any of this.</strong> Every balance mechanism below operates by changing targets and gains.</p>
+<p><strong>Six amendments, needed during Gate C:</strong></p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>issue</th>
+<th>fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M1</td>
+<td><strong>Torque limits are symmetric.</strong> Ankle dorsiflexion gets 110 N·m where a human has about 45; the knee and hip are also asymmetric in reality. This overstates backward-push resistance.</td>
+<td>Use Jolt's separate <code>mMinTorqueLimit</code> / <code>mMaxTorqueLimit</code> per axis. Verify the sign per axis with a one-joint test.</td>
+</tr>
+<tr>
+<td>M2</td>
+<td><strong>The torque limit is a per-axis box.</strong> A joint driven on two or three axes can exert up to √2–√3 × τmax.</td>
+<td>Report vector magnitudes. Either scale the per-axis limits so the vector norm stays within the budget, or accept the box and document it. Decide before strength attributes exist.</td>
+</tr>
+<tr>
+<td>M3</td>
+<td><strong>Damping is designed for stance and applied in swing.</strong> The ankle kd of 281 N·m·s/rad was sized for the whole body standing on it; on a swinging 1 kg foot it is enormously over-damped.</td>
+<td><strong>Contact-state gain scheduling:</strong> stance / swing / loading-transition profiles per leg, switched from the <em>measured</em> contact state. The switch must be smooth (ramped over tens of ms).</td>
+</tr>
+<tr>
+<td>M4</td>
+<td><strong>There is no feed-forward torque channel.</strong> Jolt motors are position/velocity servos. Gravity sag (lumbar about 5–7°, stance knee) comes from pure PD.</td>
+<td>Express desired joint torques as <strong>equilibrium-point target offsets</strong>: Δθ = τ_desired / kp, applied to the current angle. Use this for gravity compensation and for ankle / hip strategy torques. It stays inside the motor's clamp and implicit solve. Don't use raw <code>AddTorque</code>, which bypasses the clamp and the implicit damping.</td>
+</tr>
+<tr>
+<td>M5</td>
+<td><strong>Stance-leg targets were authored</strong>, solved kinematically from a home foot position.</td>
+<td>Recompute them every step from the <strong>actual</strong> planted-foot pose (ground-up), see §8.</td>
+</tr>
+<tr>
+<td>M6</td>
+<td><strong>Joint-error RMS is the headline quality metric.</strong> It is blind to whole-body failure: E_strong scores 1.7° while jackknifed 48°.</td>
+<td>Add task-space metrics (§11): COM / XCoM, trunk world orientation, pelvis height, foot placement, contact-schedule compliance.</td>
+</tr>
+</tbody>
+</table>
+<h2>2. Concerns about Gate B's measurements and conclusions</h2>
+<p>I re-ran the recorded tests (inputs identical, hashes identical) and measured what the Gate B report didn't: support impulse, XCoM margin, and CoP. The full output is in <code>analysis/capture_point_analysis_of_gate_b.txt</code>.</p>
+<p><strong>The measurement method is sound.</strong>
+- The net CoP from whole-body momentum sits inside the measured foot polygon (±5 mm) on 96.7–100 % of quasi-static steps.
+- The total vertical ground reaction equals Mg to within 0.2–10.5 N.
+- The per-foot vertical load from the ankle constraint impulse plus Newton's law on the foot sums to the total to the newton: double stance 380 / 379; single stance 704 / 26.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Gate B claim</th>
+<th>what the re-analysis shows</th>
+<th>severity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C1</td>
+<td>"Deterministic shoves recover in 0.12–0.48 s without scripted recovery."</td>
+<td>Over the following 0.6 s the <strong>support delivered 45.0 of the 46.6 N·s chest shove (97 %)</strong> and 24.6 of the 45 N·s pelvis shove. The chest shove still pushed the XCoM <strong>39 mm outside</strong> the foot polygon while supported. Unsupported (F_chest_off), the right foot unloads at +0.10 s and the XCoM leaves the remaining left foot at +0.125 s and never returns. <strong>The whole-body recovery numbers measure the support, not the character.</strong> Only F_limb (support 65 N) is a genuine motor recovery.</td>
+<td><strong>High</strong></td>
+</tr>
+<tr>
+<td>C2</td>
+<td>"Slow controlled pose tracking ≈ 3°" (knee raise B)</td>
+<td>True at the joint level, but held with support help (about 57 N horizontal, 36 N vertical during the hold). Unsupported (B_off), <strong>the right foot lifts at 1.36 s with the COM still within about 2 cm of the midline, while the left foot is at x = −0.16 m</strong>: no weight transfer happened. The XCoM leaves the base of support <em>on the liftoff step</em>. The authored root shift only "worked" because the support dragged the pelvis.</td>
+<td><strong>High</strong></td>
+</tr>
+<tr>
+<td>C3</td>
+<td>The support is "finite, visible, defeatable"</td>
+<td>All true. But its <strong>target was the authored root</strong>, so it is exactly the pattern to avoid, "pull the pelvis toward the animation", just bounded. It must not survive into balance.</td>
+<td>High (architectural)</td>
+</tr>
+<tr>
+<td>C4</td>
+<td>"The ankle springs are only ≈ 1.03 × mgh, so standing topples."</td>
+<td>Correct but incomplete. The unsupported topple is a <strong>slow control failure</strong>: the COM creeps forward (z 0.02 → 0.17 m over 4 s) with no feedback. The XCoM leaves the base of support only at <strong>≈ 4.9 s</strong>, the CoP pins at the toe at 5.25 s (ankles then about 100 N·m each, near their 110 limit), and the heels lift at 5.5–5.75 s. For the first four seconds the capability was ample; <strong>COM feedback was missing</strong>. Peterka (2002) measured effective human stiffness at about 1.33 × gravity load, with a 150–200 ms loop delay.</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>C5</td>
+<td>Blocked-leg compliance: "the reaction flows through the body"</td>
+<td>True, but the pelvis support pulled about 80 N and saturated for 2.4 s. The XCoM also left the foot polygon at 0.88 s, during the swing, <em>before</em> contact, and the support held it. The trunk-fold result is partly a consequence of the support's torque limit. It needs re-measuring unsupported.</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>C6</td>
+<td>"Zero geometric penetration," "stopped on its arrival step"</td>
+<td>Holds. Jolt's own depth (≤ 0.23 mm) corroborates the approximate tapered-capsule SDF. "Arrival step" works because the 2 cm speculative contact acts one step early. That stops being true above about 4.8 m/s at 240 Hz (2 cm per step), the known fast-contact gate.</td>
+<td>Low (a caveat, not an error)</td>
+</tr>
+<tr>
+<td>C7</td>
+<td>Finite authority "capped exactly at 220 N·m"</td>
+<td>Per axis only. The vector magnitude can exceed it (M2), and dorsiflexion is overstated (M1).</td>
+<td>Low–Medium</td>
+</tr>
+<tr>
+<td>C8</td>
+<td>Statue falls (A_off, B_off, F_chest_off)</td>
+<td>The motors keep holding the stance pose all the way to the ground: face-down in the stance pose. That is unrealistic, and it produces the stiffest possible impacts. The balance layer needs a way to <strong>stop requesting</strong> posture once a fall is certain.</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>C9</td>
+<td>Per-foot GRF estimate</td>
+<td>An airborne foot still reads about 26 N vertical / 80 N horizontal. The source is unverified (probably self-contact or constraint bookkeeping). It is fine for <em>which foot is loaded</em>, not for per-foot CoP control until understood.</td>
+<td>Low</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Conclusion.</strong>
+- <strong>Gate B passes as a limb-control and contact gate.</strong> Its whole-body passes should be re-labelled <strong>"support-assisted"</strong>.
+- <strong>None of its shove recoveries is evidence of balance.</strong></p>
+<h2>3. Recommended balance architecture</h2>
+<p><strong>The one rule:</strong> every stabilising force the character exerts must be a <strong>ground reaction produced by finite joint torques through planted feet</strong>, or later, hands on the ground or another player. There are no external forces on the character's own bodies, ever.</p>
+<pre><code> ┌──────────────────────── ACTION / INTENT (animation, AI, player input) ────────────────────────────┐
+ │ what the body is trying to do: upper-body and swing-leg pose &quot;style&quot;, desired trunk orientation,   │
+ │ pelvis height, heading, desired COM motion (stand still / shift / later: velocity), and a SUPPORT  │
+ │ INTENT (e.g. &quot;lift R foot&quot;, &quot;reach with R leg&quot;, later &quot;run&quot;, &quot;slide&quot;) — never a root transform     │
+ └───────────────────────────────────────────────┬────────────────────────────────────────────────────┘
+                                                 ▼
+ ┌──────────────────────── SENSING / ESTIMATION (pure measurement, every step) ───────────────────────┐
+ │ COM, COM velocity, XCoM ξ = c + ċ/ω0 (ω0 = √(g/h)), centroidal angular momentum;                   │
+ │ per-foot contact state from Jolt manifolds (points, heel/toe/flat/air, slipping), per-foot load     │
+ │ (ankle impulse + foot Newton), net GRF + net CoP (whole-body momentum); support polygon; margins;  │
+ │ motor effort / saturation. Optional deterministic sensing DELAY (0 / ~100 ms).                      │
+ └───────────────────────────────────────────────┬────────────────────────────────────────────────────┘
+                                                 ▼
+ ┌──────────────────────── SUPPORT LAYER (new) ───────────────────────────────────────────────────────┐
+ │ support state machine per foot + whole-body phase (DOUBLE / SINGLE_L / SINGLE_R / FLIGHT /           │
+ │ FALLING / GROUNDED); contact SCHEDULE (planned) vs contact STATE (measured); liftoff gating;         │
+ │ footholds (planned now, reactive in Gate D); desired COM / XCoM reference; recovery classification │
+ │ (in-place / hip / step-needed / unrecoverable) with hysteresis                                      │
+ └───────────────────────────────────────────────┬────────────────────────────────────────────────────┘
+                                                 ▼
+ ┌──────────────────────── WHOLE-BODY TARGET COMPOSER (new) ──────────────────────────────────────────┐
+ │ stance legs: ground-up IK from the ACTUAL planted foot to the desired pelvis pose (COM shift from  │
+ │ balance), + ankle-strategy torque as target offsets; trunk: WORLD-frame orientation goal realised  │
+ │ through the stance hip(s) (+ hip-strategy lean); swing leg: foothold / swing trajectory → IK        │
+ │ relative to the ACTUAL pelvis; arms/head: action pose (+ later balance use); gravity compensation   │
+ │ as target offsets; per-leg gain schedule from contact state; fall mode releases posture goals      │
+ └───────────────────────────────────────────────┬────────────────────────────────────────────────────┘
+                                                 ▼
+          FINITE JOLT MOTORS (Gate B, amended M1–M4) → solver: contacts · friction · limits · inertia
+                                                 ▼
+                         solved rigid bodies (the only state) → render
+</code></pre>
+<p><strong>Where this comes from:</strong>
+- <strong>SIMBICON</strong> (Yin et al. 2007): world-frame torso control through the stance hip, and balance feedback on the swing hip / foot placement from COM position and velocity.
+- <strong>Generalized Biped Walking Control</strong> (Coros et al. 2010): PD tracking, plus inverted-pendulum foot placement, plus Jacobian-transpose gravity and velocity compensation.
+- <strong>Momentum Control for Balance</strong> (Macchietto et al. 2009): COM / CoP / angular momentum as the balance quantities.
+- <strong>Hof</strong> (2005, 2008) and <strong>Pratt / Koolen</strong> (2006, 2012): XCoM / capture point as the stability condition and the foothold rule.</p>
+<p>Everything is chosen to stay <strong>joint-target-based</strong>, so it composes with the Gate B motors. No whole-body QP or learned policy is needed at this stage.</p>
+<h2>4. The smallest next gate</h2>
+<p><strong>Gate C1: feet-in-place balance, unsupported.</strong> It replaces the support for double stance and gives the character the ability to fail honestly.</p>
+<table>
+<thead>
+<tr>
+<th>in C1</th>
+<th>out of C1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sensing + support state:</strong> COM, XCoM, contact states, per-foot load, polygon, net CoP, margins, delay parameter</td>
+<td>stepping (Gate D)</td>
+</tr>
+<tr>
+<td><strong>Stance-leg ground-up targets</strong> from the actual feet; <strong>trunk world-orientation</strong> via the stance hips</td>
+<td>liftoff, single stance, swing-foot placement (Gate C2)</td>
+</tr>
+<tr>
+<td><strong>Ankle strategy:</strong> CoP-reference law → ankle torque offsets (equilibrium-point)</td>
+<td>arm wind-milling, protective reach choreography</td>
+</tr>
+<tr>
+<td><strong>Hip strategy</strong> when the ankle / CoP saturates</td>
+<td>multi-step stumbling, get-up</td>
+</tr>
+<tr>
+<td><strong>Gravity compensation</strong> (target offsets)</td>
+<td>locomotion of any kind</td>
+</tr>
+<tr>
+<td><strong>Classifier</strong> + <strong>fall transition</strong> (release posture goals, falling gain profile)</td>
+<td>two players, ball, tackles</td>
+</tr>
+<tr>
+<td>M1 asymmetric limits, M4 feed-forward offsets, M6 metrics</td>
+<td>player attributes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why this is the smallest:</strong>
+- It is the first point where the support can be removed from <em>any</em> pass criterion.
+- It exercises every piece of the support layer except stepping.
+- It produces the recoverability boundary the stepping gate needs as its trigger.</p>
+<p><strong>Gate C2 (next): weight transfer and planned placement.</strong>
+- Anticipatory COM transfer before liftoff, with liftoff gated on the XCoM margin in the remaining foot.
+- Unsupported single stance.
+- The support layer decides <em>where a lifted foot comes down</em>: a foothold, not the animation's joint angles.
+- Contact-state gain scheduling (M3).
+- Re-running Gate B's B / C / D / E unsupported.
+- This is where the foot-on-foot and planted-toe failures get fixed.</p>
+<p><strong>Gate D: corrective stepping.</strong> Only then two-player contact.</p>
+<h2>5. Exact tests</h2>
+<h3>Gate C1</h3>
+<p>Everything runs at 240 Hz, with the pelvis support <strong>absent</strong> (asserted: no support constraint exists in the world). Gate A and Gate B tests are kept as a regression; their hashes must be unchanged, because C1 adds a layer and doesn't edit B.</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>test</th>
+<th>pass condition (measured, not scripted)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C1-0</td>
+<td><strong>Sensing validation.</strong> Replay Gate B A / A_off / B / E / F_* with estimation only</td>
+<td>ΣGRF_y vs M(a−g) within 1 %; net CoP inside the measured polygon on ≥ 99 % of quasi-static steps; ΣL+R foot load = total ± 5 N; contact-state labels match contact geometry; the airborne-foot residual (C9) explained or bounded</td>
+</tr>
+<tr>
+<td>C1-1</td>
+<td><strong>Quiet stance, 20 s</strong>, from N</td>
+<td>Stays up. COM drift &lt; 1 cm. No growing oscillation. Sway and CoP excursions reported. Ankle effort well below saturation. KE → ~0. (A_off topples at 5.5 s; this must not.)</td>
+</tr>
+<tr>
+<td>C1-2</td>
+<td><strong>Acquire stance from RELAXED</strong> (Gate B's A, unsupported)</td>
+<td>Settles into the stance with no fall and no overshoot oscillation</td>
+</tr>
+<tr>
+<td>C1-3</td>
+<td><strong>Graded sagittal pushes at the pelvis / COM</strong>, forward and backward: 10 → 70 N·s in 10 N·s steps, 50 ms each</td>
+<td>Each run is classified by physics: <em>ankle-recovered</em> / <em>hip-recovered</em> / <em>step-needed → falls</em>. The boundary is reported against the LIPM prediction below. No falls in runs the classifier called recoverable. The "step-needed" flag must come <strong>before</strong> the visible fall (report the lead time; A_off shows the XCoM leads heel-lift by about 0.6 s).</td>
+</tr>
+<tr>
+<td>C1-4</td>
+<td><strong>Graded lateral pushes</strong> (both sides) and <strong>chest / shoulder pushes</strong> (with rotation)</td>
+<td>As C1-3. F_chest's 47 N·s lateral shoulder shove must be classified correctly, whichever way it goes.</td>
+</tr>
+<tr>
+<td>C1-5</td>
+<td><strong>The same pushes with a 100 ms sensing delay</strong></td>
+<td>The boundary shrinks. No new instability; the controller must not oscillate with delay.</td>
+</tr>
+<tr>
+<td>C1-6</td>
+<td><strong>Unrecoverable push → fall transition</strong></td>
+<td>After the classifier says <em>unrecoverable</em>: posture goals are released within ≤ 150 ms, stance motors stop saturating against the fall, and the trunk and legs visibly articulate (not a plank). Time to trunk / hand ground contact and impact velocities are recorded (information only).</td>
+</tr>
+<tr>
+<td>C1-7</td>
+<td><strong>Support degradation:</strong> one foot on a μ = 0.1 patch, small push / weight shift</td>
+<td>Slip detected (foot tangential speed while loaded). Classifier downgrades the support. Physics decides the outcome (slide, recover or fall); nothing prevents it.</td>
+</tr>
+<tr>
+<td>C1-8</td>
+<td><strong>Strength sensitivity:</strong> candidate / weak ×0.5 / strong ×2 on C1-3</td>
+<td>The boundary moves in the right direction. Strong must not become "unfallable" by stiffness alone; report whether it does.</td>
+</tr>
+<tr>
+<td>C1-9</td>
+<td><strong>Determinism and cost</strong></td>
+<td>3/3 repeats, Chrome = Node for all C1 tests. ms per 60 Hz frame reported, split into Jolt / sensing / support + composer.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Expected numbers (my LIPM estimate for this body, not literature).</strong> Standing N, COM height 1.07 m, ω0 = 3.03 rad/s. Toe edge 0.222 m ahead of the COM projection, heel edge 0.136 m behind, outer foot edges 0.244 m to the side. The impulse at the COM that an <em>ideal, instantaneous</em> CoP could still capture feet-in-place:</p>
+<table>
+<thead>
+<tr>
+<th>direction</th>
+<th>limit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>forward</td>
+<td>about 52 N·s (Δv 0.67 m/s)</td>
+</tr>
+<tr>
+<td>backward</td>
+<td>about 32 N·s (0.41 m/s)</td>
+</tr>
+<tr>
+<td>lateral</td>
+<td>about 58 N·s (0.74 m/s)</td>
+</tr>
+</tbody>
+</table>
+<p>Real ankle control is slower, so expect the ankle-only boundary below these and the hip strategy to extend it by a few cm of capture offset. <strong>These are capability limits, not the behaviour we want:</strong> Maki &amp; McIlroy (1997) found people step well before reaching them.</p>
+<h3>Gate C2 (preview)</h3>
+<ul>
+<li><strong>C2-1:</strong> "lift R" request, then anticipatory COM transfer, liftoff only when the XCoM margin in the left foot is ≥ δ, hold for 5 s, then place the foot at a planned foothold.</li>
+<li><strong>C2-2:</strong> Gate B's B / C / D1 / D2 unsupported. No foot-on-foot; an unplanned toe-down is re-planned.</li>
+<li><strong>C2-3:</strong> E blocked leg unsupported: brace, or honest fall.</li>
+<li><strong>C2-4:</strong> small pushes in single stance.</li>
+<li><strong>C2-5:</strong> regression.</li>
+</ul>
+<h2>6. What happens to the temporary pelvis support</h2>
+<p><strong>It is retired from the character.</strong>
+- It stays only as a <strong>named lab fixture</strong>. Gate B's tests keep it, so they remain reproducible. A diagnostic may use it to isolate a subsystem, for example measuring swing-foot IK accuracy with the body held.
+- It is <strong>never present in any balance or support pass criterion</strong>, and never in production. C1 asserts it does not exist in the world.</p>
+<p><strong>Is any bounded pelvis force biomechanically justified? No.</strong>
+- A person has no actuator that pushes on their own pelvis from outside. Every stabilising force is a ground reaction through the feet, or later a hand, a teammate or an opponent, each of which is its own physical contact.</p>
+<p><strong>What the support was <em>standing in for</em> has a legitimate form: a virtual force.</strong>
+- Coros et al. 2010 compute a desired force at the COM or pelvis and realise it as <strong>joint torques on the stance leg</strong>, τ = Jᵀ·F.
+- Those torques push on the ground. They are limited by the motors, by friction, and by the foot's ability to keep the CoP inside it: the foot tips if you ask too much.
+- Implemented through M4 target offsets, that is the physically meaningful replacement for "pull the pelvis toward where it should be".</p>
+<p><strong>Product note for later.</strong> If gameplay ever needs super-human steadiness, express it as physically meaningful parameters (strength, foot friction, reaction delay), never as a hidden root force.</p>
+<h2>7. How foot contacts and support should be represented</h2>
+<p>The <strong>support layer</strong> owns the following. It is measured from Jolt contact manifolds and constraint impulses every step, and is deterministic.</p>
+<pre><code>FootContact (per foot) {
+  state:  AIR | TOUCHDOWN | PLANTED_FLAT | ROLL_HEEL | ROLL_TOE | EDGE | SLIPPING | LIFTOFF   (with hysteresis)
+  points: world contact points vs turf with depth &gt; −0.5 mm (speculative contacts excluded), ≤ 4 per manifold
+  polygon: convex hull of `points` in the ground plane                      (heel/toe/edge follow from which corners)
+  load:   vertical GRF estimate  = m_foot·(a_foot − g) − F_ankle_joint     (ankle GetTotalLambdaPosition / dt)
+  shear:  horizontal GRF estimate; friction use = |F_t| / (μ·F_n)
+  slip:   tangential velocity of the contact patch while loaded
+  anchor: the foot's ACTUAL pose at touchdown (updated, never snapped) — the reference for stance IK
+  time_in_state
+}
+SupportState {
+  phase:   DOUBLE | SINGLE_L | SINGLE_R | FLIGHT | FALLING | GROUNDED
+  polygon: convex hull of all planted feet's points (+ later: hands/knees if on the ground); shrunk copy by margin δ
+  com, com_vel, xcom (ξ), omega0, net_cop, net_grf, centroidal angular momentum
+  margins: XCoM→polygon (signed, Hof's margin of stability), CoP→polygon, time-to-boundary (Hof)
+  schedule: planned contacts (which foot, from when, target foothold) vs measured contacts
+  classification: IN_PLACE | HIP | STEP_NEEDED(n) | UNRECOVERABLE  (+ timestamps, hysteresis)
+}
+</code></pre>
+<p><strong>Support-foot selection:</strong>
+- In double stance, both feet support and the polygon is their hull.
+- When one foot must lift (intent in C2, a step in D), <strong>lift the less-loaded foot</strong>, provided the remaining foot can contain the XCoM after transfer. Otherwise transfer weight first (anticipatory postural adjustment), or refuse or delay the lift.
+- For reactive steps, prefer the leg on the side of the XCoM error that is unloaded. Avoid crossover and foot-on-foot footholds.</p>
+<p><strong>Double vs single support:</strong> the same machinery. The polygon shrinks to one foot, the stance-leg IK runs on one chain, and the trunk world-orientation torque comes from the one stance hip. In double stance it is split by load.</p>
+<h2>8. How COM / support error should change the targets</h2>
+<p>All outputs are <strong>targets or target offsets for the finite motors</strong>. Nothing else reaches the bodies.</p>
+<ul>
+<li>
+<p><strong>1. Stance legs, ground-up.</strong> Given the actual planted foot pose or poses and a <em>desired pelvis pose</em>, solve the stance-leg IK (ankle, knee, hip) for the joint targets every step.</p>
+<ul>
+<li>The desired pelvis pose comes from the intent (height, orientation) plus the balance layer's horizontal COM goal. It is not the animation's root.</li>
+<li>The legs push the pelvis there against the ground, with finite torque. They can fail: foot tips, foot slides, motors saturate.</li>
+</ul>
+</li>
+<li>
+<p><strong>2. Ankle strategy (CoP control).</strong></p>
+<ul>
+<li>Desired net CoP: p* = ξ + k_ξ·(ξ − ξ_ref), clipped to the δ-shrunk polygon. This is the instantaneous capture-point control of Koolen / Pratt 2012.</li>
+<li>Distribute p* to the feet (double stance: by load or proximity).</li>
+<li>Per-foot ankle torque ≈ (p*_foot − ankle) × F_n,foot.</li>
+<li>Apply as an M4 target offset: Δθ = τ/kp.</li>
+<li>The foot geometry enforces the physical limit automatically: ask for a CoP outside the foot and the foot rotates (heel or toe lift, Goswami's foot-rotation indicator). The sensing sees the state change.</li>
+</ul>
+</li>
+<li>
+<p><strong>3. Hip strategy, when p* saturates at the polygon edge.</strong></p>
+<ul>
+<li>Add a bounded trunk-lean offset in the direction that produces the needed horizontal ground reaction: Horak &amp; Nashner's hip strategy, the flywheel in Pratt et al. 2006.</li>
+<li>It is realised as a <strong>world-frame trunk orientation target</strong> through the stance hip(s) and lumbar / thoracic.</li>
+<li>Bounded by trunk ROM and a time budget, and it decays back afterwards.</li>
+</ul>
+</li>
+<li>
+<p><strong>4. Trunk / chest.</strong> The trunk's <em>world</em> orientation is a goal; the stance hips supply the torque (SIMBICON). This is what prevents the E-type jackknife and the forward fold over a pinned leg. The action layer can request a lean, and balance can bias it.</p>
+</li>
+<li>
+<p><strong>5. Pelvis height / COM height.</strong> Through stance knee and hip IK. Lowering the COM raises ω0 slightly and widens the time-to-boundary, a useful secondary lever.</p>
+</li>
+<li>
+<p><strong>6. Gravity compensation.</strong> Per joint τ_g = Jᵀ·(weights of the distal / supported bodies), applied as M4 offsets. This cuts the steady-state sag without raising stiffness, so compliance stays.</p>
+</li>
+<li>
+<p><strong>7. Anticipatory postural adjustment (C2).</strong> A lift is granted only after the COM has been transferred so that the XCoM margin in the remaining foot is at least δ. <strong>The support layer times the lift, not the animation clock.</strong> This is exactly what B_off shows is missing.</p>
+</li>
+</ul>
+<h2>9. How corrective stepping fits in later (Gate D)</h2>
+<p><strong>Trigger.</strong> Physics-based, from the classifier:
+- STEP_NEEDED when the XCoM is outside the (hip-extended) in-place capture region, or is predicted to leave it before a feasible swing could complete, using the temporal margin (Hof 2005);
+- or <em>proactively</em>, below the physical limit, because humans step early (Maki &amp; McIlroy 1997).</p>
+<p>The proactive threshold is later a player attribute; C1 just measures the physical boundary.</p>
+<p><strong>Foothold.</strong>
+- Place the CoP of the new foot at the <strong>XCoM predicted at touchdown plus a small offset</strong> (behind and outward), per Hof 2008. Equivalently, inside the 1-step capture region (Pratt 2006; Koolen 2012).
+- Clip it to the reachable region (leg length, hip ROM, swing time the finite hip torque can achieve).
+- Exclude the stance foot's footprint and crossover.
+- Re-evaluate every step during the swing (continuous replanning), since the XCoM keeps moving.</p>
+<p><strong>Swing.</strong> A world-space foot trajectory (lift, travel, descend), converted to joint targets by <strong>swing-leg IK relative to the actual pelvis</strong> each step, with swing-profile gains. Touchdown is detected by contact state, not by time.</p>
+<p><strong>Multi-step.</strong> If one step does not capture, plan the next one: N-step capturability, i.e. a stumble. If no reachable foothold exists, the classifier says UNRECOVERABLE and the character falls.</p>
+<p><strong>Beyond Gate D.</strong> The same foothold machinery drives running (a contact schedule from gait phase plus XCoM-based placement, as in SIMBICON / Coros), tackling (the plant foot and slide are support intents) and being tackled (reactive steps, then the fall).</p>
+<p><strong>The separation principle.</strong>
+- The <strong>action</strong> says <em>what</em>: kick, raise the knee, run toward, reach.
+- The <strong>support layer</strong> says <em>where the feet are allowed to be and when they may leave the ground</em>.
+- The <strong>composer</strong> turns both into joint targets.
+- Animation joint angles for the swing leg become <strong>style hints</strong> (knee height, foot orientation, swing arc) that the composer respects <strong>unless they contradict the foothold</strong>.</p>
+<h2>10. Recoverable imbalance vs an unavoidable fall</h2>
+<p><strong>The classification ladder.</strong> Evaluate it every step, with hysteresis and a minimum dwell time so deterministic mode switches don't chatter.</p>
+<table>
+<thead>
+<tr>
+<th>class</th>
+<th>condition (all physical, measured)</th>
+<th>response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>IN_PLACE (ankle)</strong></td>
+<td>XCoM inside the δ-shrunk polygon, and p* not saturated</td>
+<td>ankle strategy</td>
+</tr>
+<tr>
+<td><strong>HIP</strong></td>
+<td>p* saturated at an edge, but the XCoM is within the hip-extended bound (trunk torque × time, ROM)</td>
+<td>hip strategy + ankle</td>
+</tr>
+<tr>
+<td><strong>STEP_NEEDED(n)</strong></td>
+<td>the XCoM will leave the in-place region, or has left it, and a 1… n-step capture region is reachable</td>
+<td>C1: flag + fall · D: step</td>
+</tr>
+<tr>
+<td><strong>UNRECOVERABLE</strong></td>
+<td>no reachable capture region (reach / time / strength); <strong>or</strong> the stance foot is slipping with no alternative support; <strong>or</strong> both feet unloaded with the XCoM beyond reach; <strong>or</strong> the trunk tilt and angular momentum are past what the hips can arrest</td>
+<td>fall transition</td>
+</tr>
+<tr>
+<td><strong>FALLING / GROUNDED</strong></td>
+<td>the trunk or pelvis contacts the ground, or the COM height drops below a threshold</td>
+<td>falling profile; later protective reach and get-up</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Rules:</strong>
+- Physical evidence confirms the prediction: heel / toe lift, stance-ankle saturation, friction use near 1. The prediction is <strong>never overridden</strong> to keep the character up.
+- <strong>The controller never makes a fall impossible.</strong> It only chooses targets within finite capability.
+- The fall transition <strong>releases posture goals</strong>; it does not script a fall. The direction, speed and contact order of the fall remain the solver's.</p>
+<h2>11. Metrics and debug to expose</h2>
+<p><strong>Quantities:</strong>
+- <strong>COM, velocity and XCoM:</strong> 3D and ground projection, plus ω0.
+- <strong>Support polygon:</strong> raw and shrunk.
+- <strong>Margins:</strong> margin of stability (Hof) and time-to-boundary.
+- <strong>Net CoP and ground reaction:</strong> the CoP-to-polygon margin, the momentum-derived GRF vector, and centroidal angular momentum.
+- <strong>Per foot:</strong> state, contact points, load, shear, friction use, slip speed, anchor.</p>
+<p><strong>Classification and control effort:</strong>
+- <strong>Classifier:</strong> the recovery class with timestamps, the <strong>lead time</strong> from "step needed / unrecoverable" to the visible fall, and hysteresis events.
+- <strong>Balance torque budget:</strong> stance-ankle and hip effort ÷ limit, and CoP demand ÷ available foot lever.
+- <strong>Momentum ledger for pushes:</strong> impulse applied, ground friction impulse, support impulse (must be <strong>0</strong>).</p>
+<p><strong>Whole-body quality</strong> (beyond joint RMS; M6):
+- trunk world-orientation error;
+- pelvis height error;
+- COM / XCoM tracking vs intent;
+- contact-schedule compliance: planned vs actual lift and touchdown;
+- foothold error (C2 / D);
+- a self-contortion indicator: pelvis-vs-intent orientation error, the one that exposed E_strong.</p>
+<p><strong>Fall and cost:</strong>
+- <strong>Fall metrics:</strong> time from UNRECOVERABLE to first trunk / hand ground contact, and impact velocities of the head, pelvis and hands (information only for now).
+- <strong>Cost per 60 Hz frame:</strong> Jolt / sensing / support layer / composer.</p>
+<p><strong>Harness:</strong>
+- XCoM and COM markers with their ground projections.
+- The polygon (raw and shrunk), the CoP and demanded CoP p*.
+- Per-foot contact points coloured by state, with load bars.
+- A classifier banner.
+- A chart of margins against time.
+- Keep the Gate B ghost and torque views.</p>
+<h2>12. Failure modes to watch</h2>
+<ol>
+<li><strong>Hiding failure with stiffness.</strong> High gains make a statue that "passes" C1-1 but can't yield. C1-8 checks it.</li>
+<li><strong>Balance fighting intent.</strong> Feedback cancels the requested action; for example, a knee raise is suppressed forever. Requests must be delayed or refused <em>explicitly</em> by the support layer, not silently.</li>
+<li><strong>Target offsets pinned at motor limits.</strong> Continuous saturation means an effective bang-bang controller, chatter and limit cycles.</li>
+<li><strong>Oscillation from feedback gain combined with delay.</strong> Especially with the 100 ms sensing delay. Watch sway growth.</li>
+<li><strong>Demanding a CoP outside the foot.</strong> The foot rolls (heel / toe lift). If the state machine misses it, the IK keeps pushing a rolling foot.</li>
+<li><strong>Slip misread as planted.</strong> The stance IK drags a sliding foot, which acts like a hidden root force through friction.</li>
+<li><strong>A stale foot anchor.</strong> Stance targets computed from where the foot <em>was</em> produce torque spikes that look like teleport corrections.</li>
+<li><strong>Mode chattering</strong> at classification thresholds, which also threatens determinism. Use hysteresis, dwell times and integer-step timers.</li>
+<li><strong>Super-human reflexes.</strong> Zero-latency, noiseless feedback looks robotic. Human postural responses start at about 73–110 ms (Horak &amp; Nashner 1986), and the loop delay is about 150–200 ms (Peterka 2002).</li>
+<li><strong>Friction exploitation.</strong> Lateral recovery that needs more than μ·N must slide, not succeed.</li>
+<li><strong>Statue falls, or the opposite: a rag-doll collapse at the first wobble.</strong> Watch how early the fall transition triggers.</li>
+<li><strong>Footholds on the other foot and crossovers</strong> (C2 / D): the exact Gate B C / D2 failure.</li>
+<li><strong>Joint-RMS optimism</strong> (E_strong): always read it next to the task-space metrics.</li>
+<li><strong>Momentum accounting drift:</strong> any non-zero support impulse or external force on the character in a balance test is a bug.</li>
+</ol>
+<h2>13. What not to implement yet</h2>
+<ul>
+<li><strong>Out of C1:</strong><ul>
+<li>Stepping execution of any kind (Gate D), multi-step stumbling, walking, running, turning, jumping.</li>
+<li>Protective arm reach and landing choreography, get-up, and learned falling policies (Ha et al. 2012; Kumar et al. 2017 are references for later).</li>
+<li>Arm wind-milling or angular-momentum shaping beyond the trunk hip strategy.</li>
+<li>Whole-body QP / MPC optimisation (Macchietto-style) or learned controllers (DReCon, RL). Both are possible later. The C1 design keeps a clean seam: targets in, motors out.</li>
+</ul>
+</li>
+<li><strong>Out of Touchline scope for now:</strong><ul>
+<li>Player attributes (Strength, Balance, Agility, reaction time as ratings), fatigue.</li>
+<li>Uneven terrain, slopes.</li>
+<li>A second character, ball, tackles, fast swept-limb contact, the Reference Tackle.</li>
+<li>Production integration, commits and pushes.</li>
+</ul>
+</li>
+<li><strong>Never:</strong> any external force on the character's own bodies to keep it upright, including the Gate B pelvis support.</li>
+</ul>
+<hr />
+<h2>Appendix: re-analysis of the Gate B runs</h2>
+<p>From <code>analysis/capture_point_analysis_of_gate_b.txt</code>. The XCoM margin is Hof's margin of stability against the polygon of the feet's turf contacts (positive = inside).</p>
+<table>
+<thead>
+<tr>
+<th>run</th>
+<th>key moments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A_off (no support)</td>
+<td>the COM creeps forward (z 0.02 → 0.17 m by 4.0 s) with the CoP following; XCoM margin 67 mm at 0.5 s, 103 mm at 4.0 s → <strong>−30 mm at 5.0 s</strong> (XCoM out) → CoP pinned at the toe edge from 5.25 s → feet contacts 8 → 4 (heels up) between 5.5 and 5.75 s → falls</td>
+</tr>
+<tr>
+<td>F_chest (supported)</td>
+<td>impulse 46.6 N·s → XCoM margin min <strong>−39 mm</strong> → <strong>support impulse 45.0 N·s in 0.6 s</strong> → back inside by 1.3 s</td>
+</tr>
+<tr>
+<td>F_chest_off</td>
+<td>right foot unloads at +0.10 s; the XCoM leaves the left foot at +0.125 s; CoP pinned at the left foot's outer edge (−0.25 m) → falls</td>
+</tr>
+<tr>
+<td>F_pelvis (supported)</td>
+<td>45 N·s backward → XCoM margin min <strong>12 mm</strong>; support impulse 24.6 N·s</td>
+</tr>
+<tr>
+<td>B (supported)</td>
+<td>single-stance hold: COM 62 mm inside the left foot; support about 57 N horizontal, 36 N vertical</td>
+</tr>
+<tr>
+<td>B_off</td>
+<td>right foot lifts at about 1.36 s with the COM still within about 2 cm of the midline (left foot at x −0.16): the XCoM leaves the base of support on the lift step → falls</td>
+</tr>
+<tr>
+<td>E (supported)</td>
+<td>the XCoM leaves the foot polygon at 0.88 s (during the swing, before the post contact); support about 80 N; friction use up to 40 %</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Per-foot vertical load</strong> (knee raise B, ankle impulse + foot Newton, <code>analysis/per_foot_grf_probe_B.txt</code>):</p>
+<table>
+<thead>
+<tr>
+<th>phase</th>
+<th>left</th>
+<th>right</th>
+<th>L+R</th>
+<th>whole-body total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>double stance</td>
+<td>380 N</td>
+<td>379 N</td>
+<td>759 N</td>
+<td>759 N</td>
+</tr>
+<tr>
+<td>single stance</td>
+<td>704 N</td>
+<td>26 N</td>
+<td>730 N</td>
+<td>730 N</td>
+</tr>
+<tr>
+<td>after the return</td>
+<td>196 N</td>
+<td>553 N</td>
+<td>749 N</td>
+<td>749 N</td>
+</tr>
+</tbody>
+</table>
+<p>After the return the stance is uneven, because the feet moved.</p>
+<h2>Sources</h2>
+<p><strong>Balance, capture point and foot placement:</strong>
+- Hof, Gazendam, Sinke (2005), <em>The condition for dynamic stability</em>, J Biomech 38:1–8. XCoM; margin of stability; temporal margin. <a href="https://pubmed.ncbi.nlm.nih.gov/15519333/">https://pubmed.ncbi.nlm.nih.gov/15519333/</a>
+- Hof (2008), <em>The "extrapolated center of mass" concept suggests a simple control of balance in walking</em>, Hum Mov Sci 27:112–125. Put the CoP at an offset behind and outward of the XCoM at foot placement. <a href="https://pubmed.ncbi.nlm.nih.gov/17935808">https://pubmed.ncbi.nlm.nih.gov/17935808</a>
+- Pratt, Carff, Drakunov, Goswami (2006), <em>Capture Point: A Step toward Humanoid Push Recovery</em>, Humanoids. Capture point and region; LIPM + flywheel. <a href="http://www.ambarish.com/paper/Pratt_Goswami_Humanoids2006.pdf">http://www.ambarish.com/paper/Pratt_Goswami_Humanoids2006.pdf</a>
+- Koolen, de Boer, Rebula, Goswami, Pratt (2012), <em>Capturability-based analysis and control of legged locomotion, Part 1</em>, IJRR. N-step capturability; instantaneous capture-point control. <a href="https://journals.sagepub.com/doi/10.1177/0278364912452673">https://journals.sagepub.com/doi/10.1177/0278364912452673</a>
+- Stephens (2007), <em>Humanoid Push Recovery</em>, Humanoids. Ankle / hip / step strategies and fall-inevitability decision surfaces. <a href="http://www.cs.cmu.edu/~cga/papers/stephens-hum07.pdf">http://www.cs.cmu.edu/~cga/papers/stephens-hum07.pdf</a></p>
+<p><strong>Human postural control:</strong>
+- Horak &amp; Nashner (1986), <em>Central programming of postural movements</em>, J Neurophysiol 55:1369–1381. Ankle and hip strategies; 73–110 ms response latencies. <a href="https://journals.physiology.org/doi/abs/10.1152/jn.1986.55.6.1369">https://journals.physiology.org/doi/abs/10.1152/jn.1986.55.6.1369</a>
+- Maki &amp; McIlroy (1997), <em>The role of limb movements in maintaining upright stance: the "change-in-support" strategy</em>, Phys Ther 77:488–507. Stepping starts well before the stability limits and is preferred over the hip strategy. <a href="https://academic.oup.com/ptj/article/77/5/488/2633179">https://academic.oup.com/ptj/article/77/5/488/2633179</a>
+- Peterka (2002), <em>Sensorimotor integration in human postural control</em>, J Neurophysiol 88:1097–1118. Stiffness about 1/3 above the gravity load; 150–200 ms delay. <a href="https://journals.physiology.org/doi/full/10.1152/jn.2002.88.3.1097">https://journals.physiology.org/doi/full/10.1152/jn.2002.88.3.1097</a>
+- Loram &amp; Lakie (2002), J Physiol 545:1041–1053. Intrinsic ankle stiffness is insufficient on its own. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2290720/">https://pmc.ncbi.nlm.nih.gov/articles/PMC2290720/</a></p>
+<p><strong>Physics-based character control:</strong>
+- Yin, Loken, van de Panne (2007), <em>SIMBICON: Simple Biped Locomotion Control</em>, ACM TOG 26(3). <a href="https://dl.acm.org/doi/10.1145/1276377.1276509">https://dl.acm.org/doi/10.1145/1276377.1276509</a>
+- Coros, Beaudoin, van de Panne (2010), <em>Generalized Biped Walking Control</em>, ACM TOG 29(4). PD + inverted-pendulum foot placement + Jacobian-transpose compensation. <a href="https://www.cs.ubc.ca/~van/papers/2010-TOG-gbwc/index.html">https://www.cs.ubc.ca/~van/papers/2010-TOG-gbwc/index.html</a>
+- Macchietto, Zordan, Shelton (2009), <em>Momentum Control for Balance</em>, ACM TOG 28(3). <a href="https://people.computing.clemson.edu/~vbz/papers/macchietto_2009_MCB.pdf">https://people.computing.clemson.edu/~vbz/papers/macchietto_2009_MCB.pdf</a>
+- Bergamin, Clavet, Holden, Forbes (2019), <em>DReCon</em>, ACM TOG 38(6). Kinematic controller → physics tracking; a later option. <a href="https://www.theorangeduck.com/media/uploads/other_stuff/DReCon.pdf">https://www.theorangeduck.com/media/uploads/other_stuff/DReCon.pdf</a></p>
+<p><strong>Falling:</strong>
+- Ha, Ye, Liu (2012), <em>Falling and landing motion control for character animation</em>, ACM TOG 31(6). <a href="https://faculty.cc.gatech.edu/~sha9/projects/ha2012flm/2012_landing.pdf">https://faculty.cc.gatech.edu/~sha9/projects/ha2012flm/2012_landing.pdf</a>
+- Kumar, Ha, Liu (2017), <em>Learning a unified control policy for safe falling</em>, IROS. <a href="https://arxiv.org/abs/1703.02905">https://arxiv.org/abs/1703.02905</a></p>
+<p><strong>From prior knowledge, not re-fetched:</strong>
+- Goswami (1999), foot-rotation indicator, IJRR.
+- The Jacobian-transpose "virtual force" idea (Pratt's virtual model control, as used by Coros 2010).</p></main></body></html>

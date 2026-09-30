@@ -1,0 +1,1099 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Gate B Report</title><style>
+:root{--bg:#fbfaf7;--ink:#1d1f22;--mute:#5d646b;--line:#dcd8cf;--code:#f1eee7;--acc:#8a5a00;--q:#f4efe2}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#141619;--ink:#e6e4df;--mute:#9aa0a6;--line:#33373d;--code:#1d2024;--acc:#f0c060;--q:#1f1c14}}
+:root[data-theme="dark"]{--bg:#141619;--ink:#e6e4df;--mute:#9aa0a6;--line:#33373d;--code:#1d2024;--acc:#f0c060;--q:#1f1c14}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 -apple-system,system-ui,"Segoe UI",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px 80px}
+h1{font-size:26px;line-height:1.25} h2{font-size:20px;margin-top:40px;padding-top:12px;border-top:1px solid var(--line)} h3{font-size:16px;color:var(--acc)}
+table{border-collapse:collapse;width:100%;font-size:13px;margin:12px 0;display:block;overflow-x:auto} th,td{border:1px solid var(--line);padding:5px 8px;vertical-align:top;text-align:left} th{background:var(--code)}
+code{background:var(--code);padding:1px 4px;border-radius:3px;font-size:12.5px} pre{background:var(--code);padding:12px;border-radius:6px;overflow-x:auto;font-size:12px;line-height:1.45} pre code{padding:0;background:none}
+blockquote{margin:12px 0;padding:10px 16px;background:var(--q);border-left:4px solid var(--acc)} a{color:var(--acc)}
+img{max-width:100%;height:auto} li>ul,li>ol{margin:4px 0}
+</style></head><body><main><h1>Physical Character V1: Gate B report</h1>
+<blockquote>
+<p><strong>Addendum, 2026-09-29.</strong> Added after the independent balance review and your approval of Gate C1. The original report below is left unchanged.</p>
+<p><strong>What stays valid:</strong> Gate B's motor architecture is accepted. The <strong>limb-level</strong> results stand:
+- target tracking;
+- continuity under reversal and step changes;
+- finite authority against a fixed post;
+- contact acting on the arrival step;
+- blocked-hip compliance and release;
+- determinism and cost.</p>
+<p><strong>What changes: every whole-body result that depended materially on the temporary pelvis support is SUPPORT-ASSISTED.</strong> None of it is evidence of autonomous balance. The re-analysis in <code>../balance_review/</code> measured how much work the support did:
+- <strong>F_chest:</strong> the support delivered 45 of the 46.6 N·s shove within 0.6 s.
+- <strong>F_pelvis:</strong> it delivered 25 of 45 N·s.
+- <strong>The knee raise (B):</strong> it carried about 57 N horizontally and 36 N vertically during the hold.
+- <strong>E:</strong> it saturated for 2.4 s.
+- <strong>Without it (B_off):</strong> the foot lifts with the centre of mass still on the midline.</p>
+<p><strong>The support's status now:</strong>
+- It is retired from all new tests.
+- It survives only as a labelled <strong>historical Gate B fixture</strong>, so the 20 Gate B hashes stay reproducible (verified unchanged).
+- Every Gate C1 test asserts it is absent, and its measured pelvis external-force residual is ≈ 0 N.</p>
+</blockquote>
+<p><strong>Active control with finite strength.</strong> The Gate A humanoid is driven by authored joint-space targets through finite-strength Jolt motors. The rigid bodies are still the only spatial state. Worktree <code>physical-character-v1</code>. Nothing committed or pushed.</p>
+<p>2026-09-29 · Gabriel Magalhães (190 cm, 78 kg) · Jolt 5.6.0 (JoltPhysics.js 1.1.0, wasm-compat) · 240 Hz × 1 collision step, 30 velocity / 4 position iterations (Gate A's configuration, unchanged)</p>
+<p><img alt="Gate B contact sheet" src="contact_sheet.jpg" /></p>
+<hr />
+<h2>Verdict</h2>
+<p><strong>My opinion: Gate B passes all ten of your criteria, with one condition you need to hold me to.</strong> Every whole-body result here depends on a temporary pelvis support. It is finite and visible, and it can be defeated or removed, but it does real work:
+- about 60 N / 30 N·m on average over the knee-raise test;
+- saturated for 2.4 s in the blocked-leg test;
+- at its 250 N limit during the chest and pelvis shoves.</p>
+<p>With the support removed:
+- the standing body topples like a statue after about 5.5 s;
+- single-leg stance falls;
+- a shove knocks him over.</p>
+<p>That is the correct physical result, because nothing here balances. It means Gate B shows <strong>controlled limbs on a supported body</strong>, not a character that can stand by itself.</p>
+<table>
+<thead>
+<tr>
+<th>criterion</th>
+<th>evidence</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1 Intentionality</strong></td>
+<td>Slow knee raise (B): 3.0° RMS target error over 13 joints, and the pose is clearly the requested one (stills B1/B2). With 8× strength the error drops to 1.1° RMS.</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>2 Continuity</strong></td>
+<td>A mid-motion reversal (D1) and an instant step change of the request (D2) both produce continuous motion. In D2 the hip saturates for 388 ms and accelerates at its torque limit. Largest per-step correction pop in any run that stays up: 0.37 mm (1.4 mm in the falls). Nothing snaps.</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>3 Finite authority</strong></td>
+<td>A fixed post blocks the leg (E): <strong>0 mm geometric penetration</strong> (closest approach 0.06 mm; Jolt's own depth ≤ 0.23 mm). At 8× strength: ≤ 0.74 mm. The motor output is capped exactly at its limit (hip_R 220 N·m).</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>4 Contact on the contact step</strong></td>
+<td>See the four-step table in §6: approach speed drops from 1.02 m/s to 0.22 m/s <strong>in the step the gap closes</strong> (1.13 → 0.14 mm), then 0.004 m/s. Contact force 885 N in that step.</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>5 Compliance</strong></td>
+<td>While blocked, hip_R holds 22° of error at 208 N·m. The reaction flows through the body: stance hip 22°, lumbar 8°, and the support saturates. Shoves propagate: a chest shove moves the neck 8°, lumbar 7° and thoracic 4°.</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>6 Recovery</strong></td>
+<td>After the post is removed, hip_R is within 5° of target in 0.45 s. After shoves, recovery takes 0.12–0.48 s. Nothing in the controller scripts recovery; it comes from target error and damping.</td>
+<td>✅ (the support helps with whole-body shoves)</td>
+</tr>
+<tr>
+<td><strong>7 No hidden synchronization</strong></td>
+<td>Audit counters: <strong>0 teleports, 0 velocity writes after t = 0 in all 20 tests.</strong> Targets reach the solver only through Jolt's motor API.</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>8 Stability</strong></td>
+<td>No NaNs. Joint separation ≤ 0.73 mm in every run where he stays up (≤ 3.4 mm in falls). No energy growth in hold windows. No jitter at candidate strength: hold-window body angular velocity ≤ 0.9°/s once settled. C and D2 never settle, because they never reach their pose (§14).</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>9 Determinism</strong></td>
+<td>20/20 tests bit-identical over 3 runs, and <strong>Chrome = Node for 20/20</strong>.</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>10 Performance</strong></td>
+<td>0.56–0.67 ms per 60 Hz frame for one character: Jolt 0.53–0.65 ms, controller 0.03 ms. That is about 3× Gate A's passive cost and about 4 % of a frame.</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Visually bad frames, flagged even where the numbers pass (details in §14):</strong>
+- <strong>C:</strong> the fast return drops the right foot onto the left foot.
+- <strong>D2:</strong> the back-swing leaves the right toe planted behind, and the body ends in a forward-leaning split stance.
+- <strong>E:</strong> the blocked hip folds the trunk forward instead of bracing.
+- <strong>E_strong:</strong> the 8× profile jackknifes the whole body around the post while its joint errors look excellent.</p>
+<p>All of these are physically consistent. They show what is still missing: nothing decides where a foot is placed, nothing balances, and no posture is braced in anticipation of a load.</p>
+<hr />
+<h2>1. The interactive review harness</h2>
+<pre><code>cd &quot;/Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1&quot;
+python3 -m http.server 8171          # your server from the Gate A review is still running on 8171
+# Gate B: http://127.0.0.1:8171/sandbox/visual/physchar/index.html            (?test=E to open a test)
+# Gate A: http://127.0.0.1:8171/sandbox/visual/physchar/index.html?suite=A    (unchanged)
+</code></pre>
+<ul>
+<li><strong>Built on Gate A's harness:</strong> I extended it rather than replacing it, so it has the same playback: 1× / 0.5× / 0.25×, ±1 physics step, scrubber, worst-frame jump, orbit camera and presets, and every Gate A overlay.</li>
+<li><strong>suite</strong> switches between Gate A drops and Gate B tests. Each run is simulated in the browser with the same modules and WASM as the Node suite, and the side panel shows whether the hashes match.</li>
+<li><strong>Gate B overlay row:</strong><ul>
+<li><strong>target ghost:</strong> forward kinematics of the requested joint targets, drawn orange. It can hang off the actual pelvis (shows joint-space error) or sit at the requested root (shows root error too).</li>
+<li><strong>actual skeleton.</strong></li>
+<li><strong>target error labels:</strong> Δ° per joint.</li>
+<li><strong>motor torque:</strong> a world torque vector at each joint, 1.5 mm per N·m, coloured green → yellow → red by effort ÷ limit.</li>
+<li><strong>saturation:</strong> a red cross plus "SAT n N·m".</li>
+<li><strong>pelvis support:</strong> its target, the pull line, a force vector, and "SUPPORT n N · n N·m [SAT]".</li>
+<li><strong>obstacle + contact force:</strong> the post, its contact points, a force arrow, and the gap in mm.</li>
+<li><strong>disturbance:</strong> the impulse arrow.</li>
+</ul>
+</li>
+<li><strong>Gate A overlays that still apply:</strong> colliders, COMs, joint anchors / axes / limits, ground contacts, contact normals, penetration, velocities, joint error ×20.</li>
+<li><strong>Timeline:</strong><ul>
+<li>KE (yellow) and target-error RMS (cyan), with markers for contact (magenta), obstacle removal (green) and impulse (yellow).</li>
+<li><strong>A joint panel for any joint:</strong> requested angle (dashed) against the solved one (solid), for hinges or for a chosen swing / twist component; |error| (red); motor effort ÷ limit (orange); saturated steps (red band); contact force (magenta); support force (violet).</li>
+<li>Clicking either chart scrubs to that time.</li>
+</ul>
+</li>
+<li><strong>Side panel:</strong> the test's measurements, per-joint RMS / peak / torque / saturation, the motor profile, the support settings and effort, the blocked-limb and disturbance summaries, the audit counters, CPU, and the Node suite table.</li>
+</ul>
+<h2>2. Research: what the controller is built on</h2>
+<p>I kept this pass bounded. I read Jolt's source directly and checked a few citations.</p>
+<table>
+<thead>
+<tr>
+<th>source</th>
+<th>what I took from it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Jolt 5.6.0 source</strong> (<code>SixDOFConstraint.cpp/.h</code>, <code>HingeConstraint.cpp</code>, <code>MotorSettings.h</code>, <code>SpringPart.h</code>, <code>Ragdoll.cpp</code>), read at tag v5.6.0</td>
+<td>See the list below.</td>
+</tr>
+<tr>
+<td><strong>Tan, Liu &amp; Turk (2011)</strong>, <em>Stable Proportional-Derivative Controllers</em>, IEEE CG&amp;A 31(4):34–44</td>
+<td>Computing PD forces from the <strong>next-step</strong> state makes arbitrarily high gains stable at large timesteps. Jolt's soft-constraint motor is the constraint-space analogue: implicit in the spring, and solved together with the contacts.</td>
+</tr>
+<tr>
+<td><strong>Catto (2011)</strong>, <em>Soft Constraints</em> (GDC), the formulation <code>SpringPart.h</code> cites (from prior knowledge, not re-fetched)</td>
+<td>Implicit spring-damper as a velocity constraint. It is timestep-aware by construction.</td>
+</tr>
+<tr>
+<td><strong>Loram &amp; Lakie (2002)</strong>, J Physiol 545:1041–1053</td>
+<td>Human intrinsic ankle stiffness is about 90 % of the load stiffness mgh, which is not enough to stand without active control. This predicts, and explains, why the support-off stance topples (§9).</td>
+</tr>
+<tr>
+<td><strong>Harbo, Brincks &amp; Andersen (2012)</strong>, Eur J Appl Physiol 112:267–275</td>
+<td>Male isometric knee extension is 246.6 ± 56.3 N·m, the anchor for the knee limit. I could not retrieve the full table in this pass, so the other regions use typical dynamometry ranges; see §8.</td>
+</tr>
+<tr>
+<td><strong>Zordan &amp; Hodgins (2002)</strong>, <em>Motion capture-driven simulations that hit and react</em> (SCA); <strong>Geijtenbeek &amp; Pronost (2012)</strong>, CGF review (both from prior knowledge)</td>
+<td>Active ragdolls should track with gains scaled to the inertia they move and should yield on impact. The target stays a request; contact decides the outcome.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>What Jolt's source says about its motors:</strong>
+- <code>EMotorState::PositionAndVelocity</code> gives τ = k·(θ_target − θ) + c·(ω_target − ω).
+- <code>ESpringMode::StiffnessAndDamping</code> takes k and c in absolute units, N·m/rad and N·m·s/rad.
+- The spring is a <em>soft constraint</em>: softness γ = 1/(dt·(c + dt·k)) and bias = dt·k·γ·C. That makes it implicit and stable at any stiffness.
+- The motor impulse is clamped <strong>per step</strong> to [dt·τ_min, dt·τ_max] inside the same Gauss–Seidel velocity iterations that solve contacts and limits.
+- SixDOF rotation error is −2·(q⁻¹·q_target).xyz, expressed on body 2's constraint axes. That equals 2·sin(θ/2), so the spring slightly under-pulls at large errors.
+- <code>SetTargetOrientationCS</code> clamps the target to the joint limits.
+- Joint friction applies only when the motor is off.
+- Jolt's own <code>Ragdoll::DriveToPoseUsingMotors</code> drives poses exactly this way.</p>
+<p><strong>Conclusion:</strong> use Jolt's integrated motors. The torque limit, the timestep, the damping and contact coupling all live inside one solve. A JS-side PD that adds torques before the step would respond to contact one step late and needs explicit gain stability limits. Nothing here depends on large gains.</p>
+<h2>3. Controller: the chain as built</h2>
+<pre><code>authored key poses (joint params) ──► joint-space TARGETS (constraint-space quaternion per SixDOF joint, angle per hinge)
+   + target angular velocity (one-sided difference inside the active segment)
+   ──► Jolt constraint MOTOR per joint: PositionAndVelocity, implicit spring (kp, kd), torque limit ±τmax per axis
+   ──► solver: motors + joint limits + contacts + friction + inertia, 30 velocity / 4 position iterations, 240 Hz
+   ──► solved rigid bodies (the only spatial state) ──► skinned mesh
+</code></pre>
+<ul>
+<li><strong>Targets are in each joint's own anatomical coordinates.</strong> They use the same swing–twist parameterisation Gate A's limits and measurements use, not world-space bone rotations.</li>
+<li><strong>Shortest path:</strong> the target quaternion is sign-aligned with the current rotation.</li>
+<li><strong>Target timing:</strong> the target sent for a step is the request for the <em>end</em> of that step.</li>
+<li><strong>Segment boundaries:</strong> a step change in the request is sent with zero feed-forward velocity, never an infinite one.</li>
+<li><strong>Deterministic authoring maths:</strong> interpolation is nlerp with a min-jerk time law. Everything that feeds a target uses only + − × ÷ √ and Gate A's deterministic <code>dsin</code> / <code>dcos</code> / <code>dtan</code>. <code>Math.atan2</code> appears only in measurement.</li>
+<li><strong>Authoring vs physics:</strong> key poses are authored in joint parameters (<code>pc_control.js: POSES</code>). The stance ankles and the root are <em>solved</em> so the stance foot is flat at its home place, and so the COM sits over the stance foot in single stance (bisection on the stance hip). That is authoring consistency only. The physics sees nothing but joint targets and, if enabled, the support's root target.</li>
+</ul>
+<h2>4. Test sequence</h2>
+<p>All tests run at 240 Hz and start at rest.</p>
+<table>
+<thead>
+<tr>
+<th>test</th>
+<th>what it asks</th>
+<th>notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A</strong> / A_reduced / A_off</td>
+<td>start in Gate A's relaxed drop-A pose on the turf; at t = 0 the motors switch on with the neutral-stance target (a step request)</td>
+<td>support candidate / ¼ / off</td>
+</tr>
+<tr>
+<td><strong>B</strong> / B_reduced / B_off</td>
+<td>stance → <strong>right knee raise</strong> (hip 75°, knee 95°, trunk lean 8 + 8 + 6°, counter-arms) over 1.5 s, hold 1.5 s, back over 1.5 s</td>
+<td>the COM target moves over the left foot</td>
+</tr>
+<tr>
+<td><strong>C</strong> / C_weak / C_strong</td>
+<td>the same, in <strong>0.3 s</strong> transitions</td>
+<td>strength comparison</td>
+</tr>
+<tr>
+<td><strong>D1</strong></td>
+<td>the fast raise starts; at 0.65 s, near peak target velocity, the request <strong>reverses</strong> linearly back to stance</td>
+<td>target reversal with momentum</td>
+</tr>
+<tr>
+<td><strong>D2</strong></td>
+<td>the fast raise starts; at 0.70 s the request <strong>jumps instantly</strong> to a back-swing (hip extension 22°, knee 100°, arms swapped), held 1 s, then back</td>
+<td>step change</td>
+</tr>
+<tr>
+<td><strong>E</strong> / E_strong</td>
+<td>right-leg forward reach (hip flexion 60°) into a <strong>fixed post</strong> (capsule r 5.5 cm, shin-sized); the post is <strong>removed at 3.0 s</strong></td>
+<td>the mandatory blocked-limb test</td>
+</tr>
+<tr>
+<td><strong>E_push_weak / E_push / E_push_strong</strong></td>
+<td>the same reach into a <strong>movable post</strong>: 25 kg on a spring (2500 N/m) with a 180 N force limit, i.e. a finite-strength obstacle</td>
+<td>bulldozing comparison</td>
+</tr>
+<tr>
+<td><strong>F_chest / F_pelvis / F_limb</strong> (+ F_chest_off)</td>
+<td>holding stance; at 1.0 s a 50 ms impulse: 47 N·s at the right shoulder, 45 N·s at the pelvis, or 7 N·s at the left hand</td>
+<td>disturbance</td>
+</tr>
+</tbody>
+</table>
+<h2>5. Measurements</h2>
+<p>Full suite, 20 tests, 3 runs each (<code>gateb_final_240x1.json</code> / <code>.log</code>). "Mesh below turf" is the rendered skin, measured by CPU-skinning at 60 Hz.</p>
+<table>
+<thead>
+<tr>
+<th>test</th>
+<th>strength / support</th>
+<th>err RMS°</th>
+<th>peak err° (joint)</th>
+<th>motor sat ms (Σ joints)</th>
+<th>joint sep mm</th>
+<th>hard lim° / soft°</th>
+<th>turf mm max/rest</th>
+<th>mesh below turf mm</th>
+<th>self mm</th>
+<th>KE max J</th>
+<th>pelvis end mm/°</th>
+<th>support mean N / N·m, sat ms</th>
+<th>CPU ms/frame (Jolt + ctl)</th>
+<th>det</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>cand / cand</td>
+<td>1.76</td>
+<td>10 (knee_L, step at t=0)</td>
+<td>0</td>
+<td>0.19</td>
+<td>0 / 0</td>
+<td>1.4 / 0.83</td>
+<td>1.3</td>
+<td>0</td>
+<td>0.73</td>
+<td>12.8 / 1.73</td>
+<td>33.4 / 11.2, 0</td>
+<td>0.61 (0.57 + 0.04)</td>
+<td>3/3</td>
+</tr>
+<tr>
+<td>A_reduced</td>
+<td>cand / ¼</td>
+<td>1.7</td>
+<td>10 (knee_L)</td>
+<td>0</td>
+<td>0.2</td>
+<td>0 / 0</td>
+<td>1.45 / 0.74</td>
+<td>1.4</td>
+<td>0</td>
+<td>0.7</td>
+<td>29.3 / 0.99</td>
+<td>17.3 / 2.5, 0</td>
+<td>0.56</td>
+<td>3/3</td>
+</tr>
+<tr>
+<td>A_off</td>
+<td>cand / <strong>off</strong></td>
+<td>1.82</td>
+<td>10 (knee_L)</td>
+<td>0</td>
+<td>0.21</td>
+<td>0 / 0</td>
+<td>1.52 / 0.37</td>
+<td>1.4</td>
+<td>0</td>
+<td>0.71</td>
+<td>123.6 / 6.95 (toppling)</td>
+<td>off</td>
+<td>0.56</td>
+<td>3/3</td>
+</tr>
+<tr>
+<td><strong>B</strong></td>
+<td>cand / cand</td>
+<td><strong>3.03</strong></td>
+<td>7.9 (ankle_R)</td>
+<td>250</td>
+<td>0.24</td>
+<td>0 / 0</td>
+<td>1.85 / 0.82</td>
+<td>1.2</td>
+<td>0.45</td>
+<td>5.54</td>
+<td>14 / 1.35</td>
+<td>62.8 / 30.3, 0</td>
+<td>0.60</td>
+<td>3/3</td>
+</tr>
+<tr>
+<td>B_reduced</td>
+<td>cand / ¼</td>
+<td>5.18</td>
+<td>21.7 (shoulder_L)</td>
+<td>592</td>
+<td>0.23</td>
+<td>0.43 / 0</td>
+<td>5.02 / 0.02</td>
+<td>22.8</td>
+<td>1.69</td>
+<td>328</td>
+<td><strong>FELL</strong></td>
+<td>73.5 / 23.5, 4508</td>
+<td>0.64</td>
+<td>3/3</td>
+</tr>
+<tr>
+<td>B_off</td>
+<td>cand / <strong>off</strong></td>
+<td>6.34</td>
+<td>39.7 (neck)</td>
+<td>1960</td>
+<td>3.15</td>
+<td>0.11 / 0</td>
+<td>4.1 / 0.01</td>
+<td>22.6</td>
+<td>5.32</td>
+<td>498</td>
+<td><strong>FELL</strong></td>
+<td>off</td>
+<td>0.67</td>
+<td>3/3</td>
+</tr>
+<tr>
+<td><strong>C</strong></td>
+<td>cand / cand</td>
+<td>6.13</td>
+<td>32.6 (hip_R)</td>
+<td>546</td>
+<td>0.58</td>
+<td>0 / 0</td>
+<td>7.99 / 1.71</td>
+<td>5.6</td>
+<td>5.37</td>
+<td>59.8</td>
+<td>66.2 / 13.6 ⚠</td>
+<td>152.5 / 60.1, 1104</td>
+<td>0.60</td>
+<td>3/3</td>
+</tr>
+<tr>
+<td>C_weak</td>
+<td><strong>×¼</strong> / cand</td>
+<td>18.2</td>
+<td>57.5 (neck)</td>
+<td>7719</td>
+<td>0.49</td>
+<td>0.43 / 0</td>
+<td>2.43 / 1.67</td>
+<td>2</td>
+<td>2.12</td>
+<td>49.4</td>
+<td>40 / 8.62</td>
+<td>146.2 / 66.9, 692</td>
+<td>0.66</td>
+<td>3/3</td>
+</tr>
+<tr>
+<td>C_strong</td>
+<td><strong>×8</strong> / cand</td>
+<td>1.08</td>
+<td>10.5 (ankle_L)</td>
+<td>0</td>
+<td>0.73</td>
+<td>0 / 0</td>
+<td>6.3 / 0.81</td>
+<td>2.7</td>
+<td>4.53</td>
+<td>91.2</td>
+<td>46.4 / 4.94</td>
+<td>141.8 / 43.5, 483</td>
+<td>0.59</td>
+<td>3/3</td>
+</tr>
+<tr>
+<td><strong>D1</strong></td>
+<td>cand / cand</td>
+<td>1.59</td>
+<td>8 (ankle_R)</td>
+<td>108</td>
+<td>0.32</td>
+<td>0 / 0</td>
+<td>2.9 / 0.96</td>
+<td>1.6</td>
+<td>0</td>
+<td>23.8</td>
+<td>11.1 / 0.43</td>
+<td>64.3 / 9.8, 142</td>
+<td>0.62</td>
+<td>3/3</td>
+</tr>
+<tr>
+<td><strong>D2</strong></td>
+<td>cand / cand</td>
+<td>9.28</td>
+<td>70.6 (hip_R, the step)</td>
+<td>751</td>
+<td>0.25</td>
+<td>0 / 0</td>
+<td>2.19 / 1.05</td>
+<td>1.9</td>
+<td>0.26</td>
+<td>46.9</td>
+<td>28.9 / 17.6 ⚠</td>
+<td>107.3 / 65.9, 1421</td>
+<td>0.62</td>
+<td>3/3</td>
+</tr>
+<tr>
+<td><strong>E</strong></td>
+<td>cand / cand</td>
+<td>7.25</td>
+<td>33.8 (hip_R)</td>
+<td>2808</td>
+<td>0.22</td>
+<td>0 / 0</td>
+<td>1.55 / 0.44</td>
+<td>1.2</td>
+<td>0</td>
+<td>13.3</td>
+<td>33 / 8.63</td>
+<td>106.9 / 80.1, 2367</td>
+<td>0.62</td>
+<td>3/3</td>
+</tr>
+<tr>
+<td>E_strong</td>
+<td>×8 / cand</td>
+<td>1.7</td>
+<td>11.2 (hip_L)</td>
+<td>0</td>
+<td>0.21</td>
+<td>0 / 0</td>
+<td>2.11 / 0.07</td>
+<td>1.4</td>
+<td>0</td>
+<td>21.7</td>
+<td>73.6 / <strong>47.9</strong> ⚠</td>
+<td>198.7 / 124.7, 4346</td>
+<td>0.61</td>
+<td>3/3</td>
+</tr>
+<tr>
+<td>E_push_weak</td>
+<td>×¼ / cand</td>
+<td>17.9</td>
+<td>48.3 (hip_L)</td>
+<td>7855</td>
+<td>0.16</td>
+<td>0.23 / 0</td>
+<td>1.12 / 0.36</td>
+<td>1.1</td>
+<td>0</td>
+<td>22.5</td>
+<td>30.6 / 49.1</td>
+<td>89.8 / 82.8, 2667</td>
+<td>0.62</td>
+<td>3/3</td>
+</tr>
+<tr>
+<td>E_push</td>
+<td>cand / cand</td>
+<td>7.44</td>
+<td>33.8 (hip_R)</td>
+<td>646</td>
+<td>0.22</td>
+<td>0 / 0</td>
+<td>1.5 / 1.06</td>
+<td>1.2</td>
+<td>0</td>
+<td>13.3</td>
+<td>17.6 / 19.9</td>
+<td>71.3 / 95.2, 3333</td>
+<td>0.61</td>
+<td>3/3</td>
+</tr>
+<tr>
+<td>E_push_strong</td>
+<td>×8 / cand</td>
+<td>0.97</td>
+<td>6.8 (hip_L)</td>
+<td>0</td>
+<td>0.19</td>
+<td>0 / 0</td>
+<td>2.44 / 0.79</td>
+<td>2.2</td>
+<td>0</td>
+<td>27.2</td>
+<td>16.2 / 3.15</td>
+<td>65.6 / 26.7, 204</td>
+<td>0.61</td>
+<td>3/3</td>
+</tr>
+<tr>
+<td><strong>F_chest</strong></td>
+<td>cand / cand</td>
+<td>1.28</td>
+<td>8.3 (neck)</td>
+<td>0</td>
+<td>0.18</td>
+<td>0 / 0</td>
+<td>1.94 / 0.54</td>
+<td>1.7</td>
+<td>0</td>
+<td>22.8</td>
+<td>8.1 / 0.59</td>
+<td>32.1 / 6, 63</td>
+<td>0.59</td>
+<td>3/3</td>
+</tr>
+<tr>
+<td>F_chest_off</td>
+<td>cand / <strong>off</strong></td>
+<td>3.71</td>
+<td>40.7 (neck)</td>
+<td>581</td>
+<td>3.43</td>
+<td>0.67 / 0</td>
+<td>3.03 / 0.06</td>
+<td>15.8</td>
+<td>1.89</td>
+<td>498</td>
+<td><strong>FELL</strong></td>
+<td>off</td>
+<td>0.64</td>
+<td>3/3</td>
+</tr>
+<tr>
+<td><strong>F_pelvis</strong></td>
+<td>cand / cand</td>
+<td>1.04</td>
+<td>3.3 (lumbar)</td>
+<td>0</td>
+<td>0.18</td>
+<td>0 / 0</td>
+<td>1.33 / 0.62</td>
+<td>1.2</td>
+<td>0</td>
+<td>5.45</td>
+<td>7.4 / 0.63</td>
+<td>24.8 / 4.9, 54</td>
+<td>0.57</td>
+<td>3/3</td>
+</tr>
+<tr>
+<td><strong>F_limb</strong></td>
+<td>cand / cand</td>
+<td>1.18</td>
+<td>9.2 (elbow_L)</td>
+<td>0</td>
+<td>0.18</td>
+<td>0 / 0</td>
+<td>1.27 / 0.65</td>
+<td>1.2</td>
+<td>0</td>
+<td>6.46</td>
+<td>7.5 / 0.63</td>
+<td>22.6 / 4.5, 0</td>
+<td>0.57</td>
+<td>3/3</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Per-joint peak torque and saturation</strong> for every test are in the JSON and in the harness side panel.</li>
+<li><strong>Tables for the two most informative tests:</strong><ul>
+<li><strong>C (fast transition, candidate):</strong> the right leg hits its limits. hip_R 220/220 N·m, saturated 192 ms; knee_R 190/190, 133 ms; ankle_R 110/110, 146 ms. The trunk stays below its limits: lumbar 138/200.</li>
+<li><strong>E (blocked):</strong><ul>
+<li>hip_R 220/220, saturated 933 ms, peak error 33.8°;</li>
+<li>the <strong>stance</strong> hip_L 220/220, saturated 1671 ms, peak error 23.1°. It is the one resisting the reaction;</li>
+<li>knee_R 156/190 and lumbar 109/200: loaded, not saturated.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Hold windows</strong> (last 0.5 s of every constant request):<ul>
+<li>Candidate strength settles to 1.1–3.7° RMS error, with body angular velocity ≤ 0.9°/s and KE ≤ 0.01 J.</li>
+<li>Two runs never settle, because they don't reach their pose: C (9.1° error, still creeping at 7.2°/s) and D2 (6.7° error, 3.7°/s); see §14.</li>
+<li>Energy doesn't grow in any hold window except the falling runs.</li>
+</ul>
+</li>
+</ul>
+<h2>6. The blocked-limb test (mandatory)</h2>
+<p><strong>E:</strong> the leg is asked to reach 60° of hip flexion, and a fixed post sits in its path. The boot reaches it at 1.04 s.</p>
+<p><strong>The contact step.</strong> "Gap" is the geometric post-step distance between the post and the nearest collider. "Depth" is Jolt's listener value at the start of the step (negative = separated, a speculative contact).</p>
+<table>
+<thead>
+<tr>
+<th>step</th>
+<th>t (s)</th>
+<th>gap after the step</th>
+<th>Jolt depth at the start</th>
+<th>boot approach speed</th>
+<th>contact force</th>
+<th>hip_R error</th>
+<th>hip_R torque</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>247</td>
+<td>1.0292</td>
+<td>5.24 mm</td>
+<td>−8.72 mm</td>
+<td>0.874 m/s</td>
+<td>0 N</td>
+<td>33.4°</td>
+<td>220 (SAT)</td>
+</tr>
+<tr>
+<td>248</td>
+<td>1.0333</td>
+<td>1.13 mm</td>
+<td>−5.20 mm</td>
+<td>1.016 m/s</td>
+<td>0 N</td>
+<td>33.2°</td>
+<td>208</td>
+</tr>
+<tr>
+<td><strong>249</strong></td>
+<td>1.0375</td>
+<td><strong>0.14 mm</strong></td>
+<td>−1.09 mm</td>
+<td><strong>0.217 m/s</strong></td>
+<td><strong>885 N</strong></td>
+<td>33.1°</td>
+<td>220 (SAT)</td>
+</tr>
+<tr>
+<td>250</td>
+<td>1.0417</td>
+<td>0.06 mm</td>
+<td>+0.15 mm</td>
+<td>0.004 m/s</td>
+<td>634 N</td>
+<td>33.1°</td>
+<td>220 (SAT)</td>
+</tr>
+</tbody>
+</table>
+<p>At 1.02 m/s the boot would travel 4.2 mm per step and go 3 mm into the post on step 249. Instead, the speculative contact is solved together with the motor in step 249. The approach is arrested in the step in which the boot arrives, with no penetration and no delayed reaction.</p>
+<p><strong>While blocked (1.35–2.95 s):</strong>
+- <strong>hip_R:</strong> requested −60°, holding about −40°. Error 22.1° on average, motor 208 N·m on average, saturated 17 % of the time. It uses about 94 % of its available impulse (τmax·dt = 0.92 N·m·s per step).
+- <strong>Contact force</strong> 122 N on average (impact peak 885 N). Penetration stays ≤ 0 (closest gap 0.06 mm; listener ≤ 0.23 mm).
+- <strong>Response elsewhere:</strong> the hip flexor's reaction pitches the pelvis forward. The stance hip_L holds 21.9° of error and saturates at 220 N·m; lumbar 8.1°, neck 4.3°, stance knee 6.7°. The support pulls 96 N and saturates its 100 N·m torque limit.
+- <strong>Visually:</strong> the trunk folds forward over the pinned leg (still E2).</p>
+<p><strong>After the post is removed at 3.0 s:</strong> hip_R goes from 20.6° of error to within 5° in <strong>0.45 s</strong>, continuously, with no jump; its end error is 3.6°. The removal is an environment change: the post's lock and body leave the world. Nothing touches the character.</p>
+<p><strong>Other strengths and the movable post:</strong></p>
+<table>
+<thead>
+<tr>
+<th>run</th>
+<th>first contact</th>
+<th>max penetration</th>
+<th>peak / held contact force</th>
+<th>hip_R error while blocked</th>
+<th>the obstacle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>E (candidate, fixed)</td>
+<td>1.042 s (boot)</td>
+<td><strong>0 mm</strong> (listener 0.23)</td>
+<td>885 / 122 N</td>
+<td>22.1°</td>
+<td>fixed</td>
+</tr>
+<tr>
+<td>E_strong (×8, fixed)</td>
+<td>0.675 s</td>
+<td><strong>0.74 mm</strong> (listener 0.96)</td>
+<td>1086 / 159 N</td>
+<td>2.5°, because the <em>pelvis</em> is 48° off: the body jackknifes around the leg</td>
+<td>fixed</td>
+</tr>
+<tr>
+<td>E_push_weak (×¼, movable)</td>
+<td>never: the leg can't lift that far (21 mm short)</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>not touched</td>
+</tr>
+<tr>
+<td>E_push (candidate, movable)</td>
+<td>1.042 s</td>
+<td>0.30 mm</td>
+<td>196 / 190 N (the post's own limit)</td>
+<td>18.6°</td>
+<td>pushed <strong>139 mm</strong>; equilibrium where the hip torque equals the post's 180 N limit</td>
+</tr>
+<tr>
+<td>E_push_strong (×8, movable)</td>
+<td>0.675 s</td>
+<td>0.76 mm</td>
+<td>326 N</td>
+<td>0.5°</td>
+<td><strong>bulldozed 970 mm</strong></td>
+</tr>
+</tbody>
+</table>
+<h2>7. Disturbances</h2>
+<p>Each shove is a 50 ms impulse while holding the stance. Recovery means the target-error RMS stays within max(0.5°, 10 % of the peak) above the pre-impulse baseline for 0.25 s.</p>
+<table>
+<thead>
+<tr>
+<th>test</th>
+<th>impulse</th>
+<th>peak RMS (baseline 1.01°)</th>
+<th>worst joints</th>
+<th>pelvis moved</th>
+<th>support peak</th>
+<th>recovered in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F_chest (right shoulder, toward his left and back)</td>
+<td>46.6 N·s</td>
+<td>2.76° at +0.25 s</td>
+<td>neck 8.3°, lumbar 6.7°, thoracic 4.1°, knee_L 2.4°</td>
+<td>30.6 mm</td>
+<td><strong>263 N (at limit, 63 ms)</strong></td>
+<td><strong>0.48 s</strong></td>
+</tr>
+<tr>
+<td>F_pelvis (backward)</td>
+<td>45 N·s</td>
+<td>1.57° at +0.08 s</td>
+<td>lumbar 3.3°, neck 2.9°, hips 1.8°</td>
+<td>20.5 mm</td>
+<td><strong>253 N (at limit, 54 ms)</strong></td>
+<td><strong>0.12 s</strong></td>
+</tr>
+<tr>
+<td>F_limb (left hand, up and forward)</td>
+<td>7.1 N·s</td>
+<td>3.36° at +0.08 s</td>
+<td>elbow_L 9.2°, shoulder_L 8.4°, neck 2.1°, lumbar 1.9°</td>
+<td>9.5 mm</td>
+<td>65 N</td>
+<td><strong>0.23 s</strong></td>
+</tr>
+<tr>
+<td>F_chest_off (no support)</td>
+<td>46.6 N·s</td>
+<td>12.9°, never recovers</td>
+<td>neck 40.7° …</td>
+<td>1.8 m</td>
+<td>—</td>
+<td><strong>falls</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>The propagation is visible:</strong> impact → local joints (neck, lumbar, arm) → neighbours → motors pull back.</li>
+<li><strong>The recovery path is not scripted.</strong></li>
+<li><strong>Honestly, though:</strong> the whole-body shoves are largely absorbed by the temporary support, which hits its force limit. Only the limb knock is resisted mainly by the joint motors (support 65 N).</li>
+</ul>
+<h2>8. Regional motor profile (candidate)</h2>
+<ul>
+<li><strong>τmax:</strong> torque limit per constraint axis. These are approximate adult-male isometric maxima, averaged over the two directions of each joint. The knee is anchored on Harbo 2012 (extension 247 N·m, flexion about 130 N·m). The others are typical dynamometry ranges I didn't re-verify in this pass:<ul>
+<li>hip: extension about 250, flexion about 190;</li>
+<li>ankle: plantar about 170, dorsi about 45;</li>
+<li>trunk: extension about 250, flexion about 180;</li>
+<li>shoulder about 60–80; elbow about 50–75; neck about 20–45.</li>
+</ul>
+</li>
+<li><strong>Stiffness:</strong> kp = τmax / θsat. θsat is the error at which the spring alone reaches τmax: a linear compliant region, then saturation.</li>
+<li><strong>Damping:</strong> kd = 2·ζ·√(kp·I_load), ζ = 1. I_load is computed from the body spec in the neutral pose:<ul>
+<li>the distal chain for trunk, neck and arms;</li>
+<li>for hips, knees and ankles, the larger of the distal leg and half the body above the joint, because in stance they carry the body.</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>region (joints)</th>
+<th>τmax N·m</th>
+<th>θsat</th>
+<th>kp N·m/rad</th>
+<th>I_load kg·m²</th>
+<th>kd N·m·s/rad</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>spine (lumbar, thoracic)</td>
+<td>200</td>
+<td>20°</td>
+<td>573</td>
+<td>6.29 / 2.80</td>
+<td>120 / 80</td>
+</tr>
+<tr>
+<td>neck</td>
+<td>35</td>
+<td>30°</td>
+<td>67</td>
+<td>0.13</td>
+<td>5.9</td>
+</tr>
+<tr>
+<td>shoulder</td>
+<td>70</td>
+<td>30°</td>
+<td>134</td>
+<td>0.62</td>
+<td>18.2</td>
+</tr>
+<tr>
+<td>elbow</td>
+<td>60</td>
+<td>30°</td>
+<td>115</td>
+<td>0.09</td>
+<td>6.5</td>
+</tr>
+<tr>
+<td>hip</td>
+<td>220</td>
+<td>20°</td>
+<td>630</td>
+<td>7.79</td>
+<td>140</td>
+</tr>
+<tr>
+<td>knee</td>
+<td>190</td>
+<td>20°</td>
+<td>544</td>
+<td>20.6</td>
+<td>212</td>
+</tr>
+<tr>
+<td>ankle</td>
+<td>110</td>
+<td>15°</td>
+<td>420</td>
+<td>47.0</td>
+<td>281</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Strength comparison:</strong> one multiplier on τmax and kp (kd follows √kp, so ζ stays 1). Weak = ×0.25, strong = ×8.</li>
+<li><strong>No player attributes:</strong> there is no Strength, Balance or Agility yet.</li>
+<li><strong>Simplifications to revisit:</strong> limits are symmetric per axis (flexion strength = extension strength), and there is one kp per region (twist as stiff as swing).</li>
+</ul>
+<h2>9. Pelvis / root policy: explicit</h2>
+<ul>
+<li><strong>What it is.</strong> A <strong>temporary Gate B support</strong>: a SixDOF constraint from the turf to the pelvis with all six axes <em>free</em>, each driven by a finite PositionAndVelocity motor toward the <strong>authored root target</strong>. That target is the pelvis place the stance solve says the pose needs.</li>
+<li><strong>Candidate:</strong> k 3000 N/m, c 967 N·s/m, <strong>≤ 250 N per axis</strong>; k 400 N·m/rad, c 164, <strong>≤ 100 N·m per axis</strong>.</li>
+<li><strong>Reduced:</strong> ¼ of that (63 N, 25 N·m).</li>
+<li><strong>Off:</strong> no constraint exists.</li>
+<li><strong>Visible:</strong> a magenta line from the target to the pelvis, a force vector, and a label with N, N·m and SAT.</li>
+<li><strong>Measured</strong> every step, and summarised per test (§5).</li>
+<li><strong>What it does and doesn't do:</strong><ul>
+<li>It is <strong>not balance, and not the final system.</strong> It never sets a position or velocity; it can only pull with bounded force.</li>
+<li>It is <strong>defeatable:</strong> it saturates in C, D2 and E, and in both shove tests.</li>
+</ul>
+</li>
+<li><strong>What happens without it:</strong><ul>
+<li><strong>A_off:</strong> the motors hold the stance (1.8° RMS), but the body leans forward and topples at about 5.5 s like a stiff statue, arriving face-down with the stance pose intact. The ankle springs (2 × 420 N·m/rad) are only about 1.03× the load stiffness mgh (about 820 N·m/rad), which is exactly Loram &amp; Lakie's point: stiffness alone doesn't stand.</li>
+<li><strong>A_reduced:</strong> stands (support mean 17 N).</li>
+<li><strong>B_reduced / B_off:</strong> single-leg stance falls; the support saturates for 4.5 s before failing.</li>
+<li><strong>F_chest_off:</strong> the shove topples him.</li>
+</ul>
+</li>
+</ul>
+<h2>10. Physics stays causal</h2>
+<ul>
+<li><strong>Authored data only requests joint angles</strong> plus the support's root target.</li>
+<li><strong>Everything else is the solver's:</strong><ul>
+<li>contact response, fall direction, secondary motion (arms swinging on a shove, the trunk folding over a blocked leg), and separation;</li>
+<li>what happens when a request is impossible: the foot on the foot in C, the toe planted in D2.</li>
+</ul>
+</li>
+<li><strong>Audit counters in the adapter:</strong> position writes after t = 0 = <strong>0</strong>; velocity writes after t = 0 = <strong>0</strong> (all 20 tests).</li>
+</ul>
+<h2>11. Debug visualisation</h2>
+<p>See §1. The ghost is exactly the requested pose. Where it separates from the physical body, the error labels and the joint panel say by how much, and the torque vectors and SAT markers say whether the motor is giving up (saturated) or holding (compliant spring).</p>
+<h2>12. Strength comparison (the operating region)</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>too weak (×¼)</th>
+<th><strong>candidate</strong></th>
+<th>too strong (×8)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C fast transition</td>
+<td>18.2° RMS; lumbar sags 46° (the trunk slumps); the knee raise falls far short (hip_R 53° behind at peak); 7.7 s of saturation</td>
+<td>6.1° RMS; visible lag and saturation on the fast leg (hip/knee 192/133 ms); the trunk holds</td>
+<td>1.1° RMS; no saturation; rigid, robot-like exactness; KE 91 J; turf 6.3 mm; no measurable jitter (hold ω ≤ 1.2°/s)</td>
+</tr>
+<tr>
+<td>E fixed post</td>
+<td>(not run: can't reach)</td>
+<td>holds 22° of hip error; the trunk folds; 0 mm penetration</td>
+<td>reaches 2.5° by <strong>jackknifing the whole body</strong> (pelvis 48° off); penetration still only 0.74 mm</td>
+</tr>
+<tr>
+<td>E movable post</td>
+<td>never reaches the post</td>
+<td>pushes it 139 mm, to its own force limit</td>
+<td><strong>bulldozes it 970 mm</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>The useful region is near the candidate.</strong> Weak cannot hold posture. Strong wins every argument with the environment: it bulldozes, and it contorts itself when the environment won't yield. With implicit springs, strong does <strong>not</strong> jitter. Its cost is rigidity, bulldozing, and self-contortion that hides behind a small joint error.</li>
+</ul>
+<h2>13. Timestep</h2>
+<p>Gate A's configuration is unchanged (240 Hz × 1, 30 / 4 iterations); sleeping is disabled because a sleeping body ignores a changing target. Checking whether motors need a different rate (<code>gateb_timestep_compare.txt</code>):</p>
+<table>
+<thead>
+<tr>
+<th>rate</th>
+<th>B err RMS</th>
+<th>E err RMS</th>
+<th>C joint sep</th>
+<th>C turf / self pen</th>
+<th>ms/frame</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>60 Hz</td>
+<td>3.25°</td>
+<td>7.19°</td>
+<td>17.3 mm</td>
+<td>51.6 / 32.4 mm</td>
+<td>0.22</td>
+</tr>
+<tr>
+<td>120 Hz</td>
+<td>3.04°</td>
+<td>7.21°</td>
+<td>6.4 mm</td>
+<td>33.1 / 19.5 mm</td>
+<td>0.37</td>
+</tr>
+<tr>
+<td><strong>240 Hz</strong></td>
+<td><strong>3.03°</strong></td>
+<td><strong>7.25°</strong></td>
+<td><strong>0.58 mm</strong></td>
+<td><strong>8.0 / 5.4 mm</strong></td>
+<td><strong>0.60</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Motor tracking barely depends on the rate:</strong> the implicit motor is timestep-robust.</li>
+<li><strong>240 Hz is still what the constraints and contacts need:</strong> the Gate A reasons. No change, and no adaptive stepping.</li>
+</ul>
+<h2>14. Known failures and limitations</h2>
+<ol>
+<li><strong>No balance.</strong> Without the temporary support the character can't stand (§9). Every whole-body result depends on it.</li>
+<li><strong>Nothing decides where a foot lands.</strong><ul>
+<li><strong>C:</strong> in the fast return, the physical pelvis lags the requested root, so the right foot's joint targets put it down near the midline, on the left foot. It stays there: 9° residual error, support saturated (still C3).</li>
+<li><strong>D2:</strong> the back-swing touches the right toe down behind. Friction holds it, and the body ends in a forward-leaning split stance: hip_R 15° error, pelvis 17.6° off (D2 end still).</li>
+<li>Both are correct physics for the request, and both are visually bad.</li>
+</ul>
+</li>
+<li><strong>The blocked leg folds the trunk</strong> instead of the body bracing (E2). The finite stance hip and the finite support lose to the hip flexor's reaction. A player would brace in anticipation; that is future work.</li>
+<li><strong>Joint error alone is misleading.</strong> E_strong reports 1.7° RMS while the whole body is jackknifed. Root and global orientation error (the pelvis-vs-root readout) must be read alongside it.</li>
+<li><strong>Torque limits are per constraint axis (a box).</strong> A joint driven on two or three axes can exert up to √2–√3 × τmax in magnitude. The reported peaks are per-axis maxima. A spherical limit would need a custom clamp.</li>
+<li><strong>Jolt's rotation error is 2·sin(θ/2).</strong> The spring under-pulls by 10 % at a 90° error. It is irrelevant in practice, because motors saturate at 15–30° of error.</li>
+<li><strong>Simplifications:</strong> symmetric strength per axis, one kp per region, no velocity-dependent strength (force–velocity), no fatigue, no player attributes.</li>
+<li><strong>The poses are mine.</strong> I authored the knee raise, reach and back-swing in joint space to exercise the controller; they don't come from animation data.</li>
+<li><strong>Cost:</strong> motors triple the Jolt cost against the passive Gate A (0.2 → 0.6 ms per 60 Hz frame). That is still small for one character; my estimate for two players at Gate D is about 1.2–1.5 ms per frame.</li>
+<li><strong>Gate A limitations stay visible:</strong>
+        - Rendered-mesh sinking is <em>not</em> worse: ≤ 5.6 mm in every run where he stays up (the boots fit well), and about 23 mm only in the falls, as in Gate A.
+        - Limit overshoot is <em>better</em>: hard ≤ 0.67° (falls only) and soft 0°, because targets sit inside the ranges.</li>
+</ol>
+<h2>15. Determinism</h2>
+<ul>
+<li><strong>Hash:</strong> FNV-1a over the exact Float64 bits of position, rotation and velocities of all 14 bodies, every step.</li>
+<li><strong>Repeats:</strong> 20/20 tests bit-identical over 3 runs in Node 22.19.</li>
+<li><strong>Cross-runtime:</strong> <strong>Chrome 154 = Node for 20/20</strong> (<code>gateb_crossruntime_chrome_vs_node.txt</code>).</li>
+<li><strong>Gate A unchanged:</strong> Gate A's five hashes still reproduce after the adapter changes (A 5bbffb56 · B 2f8a9c80 · C 34af33e · D 55b97ba8 · E 48f19a22).</li>
+<li><strong>No presentation RNG anywhere.</strong></li>
+</ul>
+<hr />
+<h2>Evidence and files</h2>
+<p><strong>Evidence (<code>review_artifacts/physical_character_v1/gate_b/</code>):</strong></p>
+<ul>
+<li><code>contact_sheet.jpg</code>: 20 key frames, with the bad ones labelled red.</li>
+<li><code>stills/</code>: 33 viewport frames, including the contact step ±1 physics step (E1a / E1b / E1c).</li>
+<li><code>harness_frames/</code>: full harness screenshots with the joint panel.</li>
+<li><code>gateb_final_240x1.json</code> / <code>.log</code>: every metric, per joint.</li>
+<li><code>gateb_timestep_compare.txt</code>, <code>gateb_crossruntime_chrome_vs_node.txt</code>.</li>
+</ul>
+<p><strong>Code (<code>sandbox/visual/physchar/</code>, all untracked):</strong></p>
+<table>
+<thead>
+<tr>
+<th>file</th>
+<th>change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pc_control.js</code></td>
+<td>new: targets, poses, stance solve, motor profiles, support policy</td>
+</tr>
+<tr>
+<td><code>pc_gateb.js</code></td>
+<td>new: tests, runner, measurement</td>
+</tr>
+<tr>
+<td><code>tools/gateb_run.js</code></td>
+<td>new: the Node runner</td>
+</tr>
+<tr>
+<td><code>pc_jolt.js</code></td>
+<td>Gate B surface added: motors, support, obstacles, impulses, audit. Gate A's paths are unchanged, and its hashes are re-verified.</td>
+</tr>
+<tr>
+<td><code>pc_harness.js</code> + <code>index.html</code></td>
+<td>extended</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Gate A baseline preserved:</strong> <code>worktrees/_preserved_2026-09-29_physical_character_gate_a/physical_character_gate_a_baseline.tgz</code>, with a README holding sha256s and hashes.</p>
+<p><strong>Reproduce:</strong></p>
+<pre><code>cd &quot;…/physical-character-v1/sandbox/visual/physchar&quot;
+node tools/gateb_run.js --tests all --repeat 3 --mesh --out results/gateb_final_240x1.json
+node tools/gateb_run.js --tests C,E,F_chest,B --tsc 120x1 --brief     # rate comparison
+node tools/gateb_run.js --poses --profile                             # authored poses + motor profile
+</code></pre>
+<p><strong>Not done, as instructed:</strong> balance or locomotion, Reference Tackle, a second character, tackle collision, fast swept-limb contact, defence, production integration, commits and pushes.</p></main></body></html>

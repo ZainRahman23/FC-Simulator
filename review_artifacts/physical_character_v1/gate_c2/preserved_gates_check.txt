@@ -1,0 +1,5 @@
+Preserved-gate re-check after the C2 changes (2026-09-30 00:32)
+Gate A  (tools/gatea_run.js --drops A,B,C,D,E --tsc 240x1 --seconds 6, Gate A world): 5/5 hashes identical to results/gatea_final_240x1.json
+Gate B  (tools/gateb_run.js --tests all --tsc 240x1): 20/20 hashes identical to results/gateb_final_240x1.json
+Gate C1 (tools/gatec1_run.js, all 59 tests): 59/59 hashes identical to results/gatec1_final_240x1.json
+C1 reference hashes: QS20 d3a31473 · PF60 a02dcd48 · PR45 fa63e694 · H_patch_right eaa15851 · DB30 ecde3d26 · G_fall def24b51

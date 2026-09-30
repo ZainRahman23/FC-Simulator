@@ -1,0 +1,664 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Gate C2 Report</title><style>
+:root{--bg:#fbfaf7;--ink:#1d1f22;--mute:#5d646b;--line:#dcd8cf;--code:#f1eee7;--acc:#8a5a00;--q:#f4efe2}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#141619;--ink:#e6e4df;--mute:#9aa0a6;--line:#33373d;--code:#1d2024;--acc:#f0c060;--q:#1f1c14}}
+:root[data-theme="dark"]{--bg:#141619;--ink:#e6e4df;--mute:#9aa0a6;--line:#33373d;--code:#1d2024;--acc:#f0c060;--q:#1f1c14}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 -apple-system,system-ui,"Segoe UI",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px 80px}
+h1{font-size:26px;line-height:1.25} h2{font-size:20px;margin-top:40px;padding-top:12px;border-top:1px solid var(--line)} h3{font-size:16px;color:var(--acc)}
+table{border-collapse:collapse;width:100%;font-size:13px;margin:12px 0;display:block;overflow-x:auto} th,td{border:1px solid var(--line);padding:5px 8px;vertical-align:top;text-align:left} th{background:var(--code)}
+code{background:var(--code);padding:1px 4px;border-radius:3px;font-size:12.5px} pre{background:var(--code);padding:12px;border-radius:6px;overflow-x:auto;font-size:12px;line-height:1.45} pre code{padding:0;background:none}
+blockquote{margin:12px 0;padding:10px 16px;background:var(--q);border-left:4px solid var(--acc)} a{color:var(--acc)}
+img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:4px} li>ul,li>ol{margin:4px 0}
+</style></head><body><main><h1>Physical Character V1: Gate C2 report</h1>
+<p><strong>Weight transfer and deliberate foot placement.</strong></p>
+<p>The 14-body Jolt humanoid can do all of the following with finite joint torques and ground reaction only:
+- shift its weight between its feet;
+- unload a foot physically, lift it, and hold it in sustained single support;
+- swing it under finite motors to a validated target;
+- set it down wherever it actually lands, and rebuild double support from there.</p>
+<p>Requests the body can't do are projected or rejected, with the reason reported. An obstructed swing stalls and is reported; it is not driven through.</p>
+<ul>
+<li><strong>No pelvis support, no root anchor, no state writes after t = 0.</strong> All three are asserted and measured in every test.</li>
+<li><strong>No corrective stepping.</strong> <code>STEP_NEEDED</code> is never connected to a step.</li>
+<li><strong>Nothing committed or pushed.</strong> Worktree <code>physical-character-v1</code>.</li>
+</ul>
+<p>2026-09-30 · Gabriel (190 cm, 78 kg) · Jolt 5.6.0 (JoltPhysics.js 1.1.0) · 240 Hz × 1 collision step, 30 velocity / 4 position iterations. The solver, body and C1 strength profile are unchanged.</p>
+<p><img alt="C2 contact sheet 1" src="contact_sheet_1.jpg" />
+<img alt="C2 contact sheet 2" src="contact_sheet_2.jpg" /></p>
+<hr />
+<h2>1. Assessment first: does C2 pass?</h2>
+<p><strong>My opinion: yes on nine of your ten pass criteria, and partially on the tenth (repeated placements).</strong> There are real caveats about how much this body can reach and how hard it works. They come from its proportions and are listed after the table.</p>
+<table>
+<thead>
+<tr>
+<th>your pass criterion</th>
+<th>evidence</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1. Physical load transfer</strong></td>
+<td>Weight moves only by moving the balance reference ξ_ref; the feet's loads follow physically. <strong>A_shift:</strong> the measured R share steps 5 % → 95 % → 50 %. The per-step load change is at most 27.8 N and ΣL+R stays within 0.94 N of body weight on average. Before every liftoff the swing foot's measured load falls to <strong>0 N</strong>, or 38 N (5 % BW) in J #2.</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>2. Lift only after genuine unloading</strong></td>
+<td>The liftoff gate is measured and must hold for 50 ms: swing-foot load &lt; 5 % BW, ξ ≥ 2 cm inside the stance sole, |v_COM| ≤ 8 cm/s, and the stance foot loaded and not sliding. The foot counts as "off" only when it has no touching contact point and &lt; 25 N. At liftoff: swing load 0 N, stance ξ margin 6.4–7.1 cm, COM margin 3.9–7.9 cm, |v| 0.02–0.07 m/s, transfer 1.1–1.6 s. <strong>J #2 was rejected because the rear foot kept 91 N; it did not lift.</strong></td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>3. Sustainable single support</strong></td>
+<td><strong>B:</strong> 3.26 s (R up) and 3.29 s (L up) of single support. ξ margin stays ≈ 7.7 cm, root residual 0.02 N, no drift. <strong>It is not effortless:</strong> see caveats 1–2 (stance hip at its directional budget, 13° trunk lean).</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>4. Reachable placements work</strong></td>
+<td>C, D, E, F×2, G×2, H and J (5 of 6) are placed, loaded and accepted, with landing errors of 1.2–8.1 cm. <strong>The body's single-support reach is short:</strong> C (10 cm out), D (20 cm fwd) and E (15 cm back) are projected by 4.4 / 1.5 / 4.7 cm before liftoff (§5 F13).</td>
+<td>✅ (with reach caveat)</td>
+</tr>
+<tr>
+<td><strong>5. Unreachable → rejected or projected</strong></td>
+<td>G_far (1.2 m forward) is projected to 18.5 cm; G_far_side (0.8 m sideways) to 5.6 cm. The reasons are listed: pelvis drop beyond what the stance ankle allows, hip extension/abduction limits, beyond single-support reach.</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>6. No landing on the other foot</strong></td>
+<td>The checks use the <strong>actual</strong> stance sole, not a canned offset: footprint clearance ≥ 3 cm, crossover (≥ 10 cm to its own side), and the swing path past the stance footprint. F_onfoot is projected 19.5 cm and F_cross 27.9 cm; both land clear. <strong>F_onfoot's swing leg brushed the stance leg: 3.6 mm self-contact</strong> (caveat 5).</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>7. Actual touchdown is authoritative</strong></td>
+<td>Touchdown is <strong>sensed</strong> contact, wherever it happens. H's forefoot hit the 3 cm slab first: 4 contact points at y = 3.0 cm, 7.6 cm before its planned height. The stance is rebuilt from the touchdown pose, and a foot that loses contact is reached back to <em>that</em> pose, never to the marker or its old anchor (§5 F9). Final contact is 2–8.5 cm from the feasible target; all reported.</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>8. Blocked limbs yield</strong></td>
+<td><strong>I:</strong> the swing foot hits the 22 cm box (first contact 2.41 s, peak 505 N, 0.12 mm penetration). It stalls, meaning ≥ 6 cm behind its path <em>and</em> &lt; 5 cm/s toward it, for 150 ms, which gives FAILED_BLOCKED. The foot is held where it stopped, not driven through, and he stays upright. No recovery is attempted.</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>9. No root support</strong></td>
+<td>In all 13 tests: support fixture absent (asserted), 13 joint constraints only, bodies = 14 + ground (+ slab/box), <strong>0 teleports, 0 velocity writes</strong>. Pelvis external-force residual <strong>0.018–0.041 N mean, ≤ 0.14 N max.</strong></td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>10. Repeated placements deterministic and stable</strong></td>
+<td>13/13 tests bit-identical over 3 runs, and <strong>Chrome = Node for 13/13</strong>. <strong>J:</strong> 5 of 6 alternating placements done, upright throughout, root ≤ 0.14 N. <strong>#2 (L forward from the staggered stance) was honestly rejected</strong>, so the loop doesn't close: final foot drift L 13 / R 11 cm.</td>
+<td>⚠️ partial</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Gates A, B and C1 are preserved bit-for-bit:</strong> A 5/5, B 20/20, C1 59/59 hashes identical (<code>preserved_gates_check.txt</code>). Every C2 behaviour is behind a support plan or a sensor option that C1 never sets.</p>
+<p><strong>Caveats you should weigh.</strong> Most trace to this body's proportions, which C2 did not change:
+1. <strong>Single support costs this body far more than a human.</strong> Its hip joint centres are <strong>32.3 cm apart (≈ 1.8 × human)</strong>, so standing on one leg needs <strong>124 N·m of stance-hip abduction statically: 88 % of the 140 N·m limit.</strong> The pelvis dropped (Trendelenburg) and he fell until I added a <strong>lateral trunk lean over the stance leg, sized from the body's own statics (13.4° → 98 N·m).</strong> It's visible. Even with the lean, the stance hip runs at its directional (multi-axis) budget for most of single support.
+2. <strong>The stance ankle works hard.</strong> It saturates at its budgeted limit for 1.2–2.2 s per placement.
+3. <strong>Short reach.</strong> The ankle's 20° dorsiflexion caps pelvis lowering at ≈ 2.5–3.7 cm (§5 F13), so small requests get projected.
+4. <strong>Touchdowns aren't soft.</strong>
+   - Horizontal foot speed at contact is 0.1–0.7 m/s, vertical up to 0.63 m/s.
+   - Backward swings (E, J #5) land early on the toe (u 0.72–0.8, foot pitched 11–20°).
+   - After touchdown the landed foot moves 0.5–6.5 cm before acceptance.
+   - E's swing ankle reaches its range-of-motion stop (0° margin) in that toe-strike.
+5. <strong>F_onfoot:</strong> projecting inward keeps the landing clear, but the swing leg brushes the stance leg on the way (3.6 mm self-contact). Swing-path clearance is checked for the footprint, not for the shin.
+6. <strong>J #2 rejection.</strong> In a staggered stance the force distribution keeps ≈ 12 % on the rear foot even with ξ 7.9 cm inside the front foot. Two attempts to force it off failed: the foot floated off, or the closed chain loaded it to 174 N. The rejection is the honest outcome.</p>
+<p><strong>Decisions that are yours.</strong> I did not make these changes, because they alter Gate A/C1 or are policy:
+- <strong>Hip joint centres:</strong> move them toward human spacing. This changes Gate A's body, but would roughly halve single-support hip load and remove the need for the lean.
+- <strong>Ankle dorsiflexion:</strong> raise the ROM from 20° to ≈ 30° with the knee flexed, which is the human range. This would widen placement reach.
+- <strong>Hip abduction strength:</strong> raise it from 140 to athlete level (≈ 190 N·m).</p>
+<hr />
+<h2>2. What was built</h2>
+<pre><code>observation (C1 Sensor, + option supportTouching)
+   │
+   ├─► SupportSequencer (pc_support.js)  ── requests: &quot;shift weight&quot;, &quot;lift this foot and hold&quot;, &quot;place this foot about here&quot;
+   │     • validates / projects the request against the SENSED stance (feasibility, reach, ROM, exclusion)
+   │     • plans weight transfers in capture-point space and the swing trajectory
+   │     • advances ONLY on sensed contact / load / motion; reports every outcome and reason
+   │     → plan { ξ_ref, ξ̇_ref, v_COM ref, swing-foot target {pos, rot, vel, reach}, lean, preload, settle, anchor }
+   │
+   └─► C1 BalanceController (pc_balance.js), unchanged unless a plan is present
+         • CoP law + LIPM feed-forward, stance IK from the actual feet, Jᵀ gravity + GRF, hip strategy
+         • C2 hooks: swing-leg IK + velocity feed-forward, stance velocity feed-forward, trunk lean, reach/ROM-limited
+           pelvis height, exact two-foot CoP distribution, landed-foot compliance + preload, touchdown-pose re-plant
+   → finite Jolt motors (same profiles and multi-axis budget as C1) → step → SENSE
+</code></pre>
+<h3>2.1 Foot contact state machine: sensed, never declared</h3>
+<table>
+<thead>
+<tr>
+<th>role (per foot)</th>
+<th>entered when (measured)</th>
+<th>left when (measured)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LOADED</td>
+<td>touching, load &gt; 40 N (hysteresis 25 N)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>UNLOADING</td>
+<td>a lift/place request is in TRANSFER</td>
+<td>the liftoff gate holds for 50 ms (§1, criterion 2)</td>
+</tr>
+<tr>
+<td>LIFTOFF</td>
+<td>gate passed → swing target starts rising</td>
+<td>no touching point and load &lt; 25 N for 3 steps (physically off)</td>
+</tr>
+<tr>
+<td>SWING / HELD UP / ALIGNING</td>
+<td>foot off</td>
+<td>touchdown, or stalled → BLOCKED</td>
+</tr>
+<tr>
+<td>(touchdown)</td>
+<td><strong>armed</strong> once the sole has risen ≥ 5 mm above its liftoff height, then <strong>any sensed contact</strong></td>
+<td>—</td>
+</tr>
+<tr>
+<td>ACCEPTING</td>
+<td>touchdown</td>
+<td>loaded ≥ 35 % BW, load stable (band ≤ 8 % BW over 100 ms), sole settled (heel + toe), ξ transfer complete</td>
+</tr>
+<tr>
+<td>PLANTED</td>
+<td>accepted → part of the new double stance</td>
+<td>—</td>
+</tr>
+<tr>
+<td>SLIPPING</td>
+<td>C1's windowed minimum-corner slide on a loaded foot</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>The intent (the request) can only ask for a transition; the gates above decide it. Every failure ends in an explicit status with a reason:
+- <code>REJECTED</code> (infeasible, or the weight transfer was not achieved);
+- <code>FAILED</code> (no liftoff, dragged, no ground contact, balance lost, load not accepted);
+- <code>FAILED_BLOCKED</code>.</p>
+<h3>2.2 Feasibility and projection: against the actual stance</h3>
+<p>For a requested sole centre and yaw, all of these are checked with the stance foot <strong>where it actually is</strong>:
+- <strong>Yaw:</strong> within ±25° of the stance foot.
+- <strong>No crossover:</strong> the swing foot stays ≥ 10 cm to its own side.
+- <strong>Footprint clearance:</strong> ≥ 3 cm from the actual stance sole polygon.
+- <strong>Swing path:</strong> ≥ 1 cm past the stance footprint.
+- <strong>Reach and hip ROM in the resulting double stance:</strong> legs ≤ 99.5 % extended; hip flexion ≤ 70°, extension ≤ 25°, abduction ≤ 35°, adduction ≤ 15°.
+- <strong>Reach and hip ROM in single support, from where the pelvis will be:</strong> over the stance foot, 1.9 cm medial of the COM by statics.
+- <strong>Pelvis lowering:</strong> at most what keeps the stance ankle ≥ 5° off its dorsiflexion stop.</p>
+<p>If the request fails, the target is <strong>projected</strong>: the farthest feasible point on the segment from the current foot toward the request, found by bisection. If less than 3 cm of movement is feasible, the request is <strong>REJECTED</strong>. The reachability boundary (36 rays) and the exclusion geometry are recorded for display.</p>
+<h3>2.3 Weight transfer, swing, touchdown, acceptance</h3>
+<ul>
+<li><strong>Transfer:</strong> ξ_ref follows a min-jerk path <strong>in capture-point space</strong> from its rest point to the stance foot's weight point, over 0.9 s.</li>
+<li>The CoP law gets the LIPM feed-forward −ξ̇_d/ω₀. This produces the anticipatory CoP shift onto the unloading foot that starts a human transfer.</li>
+<li>The stance legs get the joint velocities of the planned COM motion (§5 F1–F2).</li>
+<li><strong>Single-support lean:</strong> the trunk leans laterally over the stance leg at the lumbar joint by the angle that brings the stance-hip abduction demand to 70 % of capacity. It is computed once from the body's masses and geometry.</li>
+<li><strong>Swing:</strong> under <strong>finite motors at half stance stiffness</strong>, critically damped for the distal leg, and collidable. IK runs from the <em>actual</em> hip and pelvis. The velocity feed-forward is the trajectory velocity pushed through the same IK.</li>
+<li><strong>Shape:</strong> rise first (u 0 → 0.12), then horizontal progression (min-jerk, u 0.12 → 0.75), then a near-vertical approach to 1.5 cm above flat.</li>
+<li><strong>ALIGN:</strong> the foot waits there until stance balance re-converges (ξ within 1.2 cm, |v| &lt; 5 cm/s, max 1 s).</li>
+<li><strong>DESCEND:</strong> it then descends at 8 cm/s until contact is sensed.</li>
+<li><strong>Clearance:</strong> a knee-forward bias keeps the shin ≤ 18° back at mid-swing, and the clearance is raised for the predicted toe drop (§5 F6, F15).</li>
+<li>The swing ankle target is kept 5° inside its range of motion.</li>
+<li><strong>Acceptance:</strong> starts at touchdown. The double-support reference is built <strong>once, from the touchdown pose</strong>.</li>
+<li>The landed foot keeps a 6 % BW commanded preload.</li>
+<li>Its ankle is compliant (20 % stiffness) so the heel rocks down.</li>
+<li>It counts as support while on the turf.</li>
+<li>The ξ transfer takes max(2 s, 12 s/m × distance).</li>
+</ul>
+<hr />
+<h2>3. Tests A–J</h2>
+<table>
+<thead>
+<tr>
+<th>test</th>
+<th>request</th>
+<th>outcome</th>
+<th>key evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A_shift</strong></td>
+<td>weight 25 → 10 → 50 → 75 → 90 → 50 % toward R, no lift</td>
+<td>6/6 DONE, upright</td>
+<td>R share 0.05–0.95 measured; max per-step load change 27.8 N; COM drift 0.8 cm; feet 0.1 mm</td>
+</tr>
+<tr>
+<td><strong>B_lift_R / _L</strong></td>
+<td>shift, lift 8 cm, hold 2 s, set down in place</td>
+<td>DONE / DONE</td>
+<td>swing 0 N at liftoff; <strong>3.26 / 3.29 s single support</strong>; touchdown 2.1 / 1.2 cm from its spot; accepted 2.0 s later; final 2.5 / 1.7 cm</td>
+</tr>
+<tr>
+<td><strong>C_lat_R</strong></td>
+<td>R 10 cm outward</td>
+<td>DONE (projected 4.4 cm)</td>
+<td>"single support needs 3.6 cm of pelvis drop, the stance ankle allows 2.5 cm"; landing 5.6 cm; final 8.5 cm</td>
+</tr>
+<tr>
+<td><strong>D_fwd_R</strong></td>
+<td>R 20 cm forward</td>
+<td>DONE (projected 1.5 cm)</td>
+<td>landing 3.1 cm, heel first; accepted 2.1 s after touchdown</td>
+</tr>
+<tr>
+<td><strong>E_bwd_R</strong></td>
+<td>R 15 cm backward</td>
+<td>DONE (projected 4.7 cm)</td>
+<td>early toe strike (u 0.8, 11° pitch, 0.72 m/s horizontal); landing 8.1 cm; final 6.4 cm</td>
+</tr>
+<tr>
+<td><strong>F_onfoot</strong></td>
+<td>R onto the left foot (32 cm inward)</td>
+<td>DONE (projected 19.5 cm)</td>
+<td>"footprint overlaps the stance foot · crossover · path through the stance foot"; lands 2.9 cm from the feasible target; <strong>leg brush 3.6 mm</strong></td>
+</tr>
+<tr>
+<td><strong>F_cross</strong></td>
+<td>R 40 cm inward, 10 cm behind L</td>
+<td>DONE (projected 27.9 cm)</td>
+<td>crossover −8 cm + overlap + hip adduction 16° &gt; 15°; lands 3.7 cm off</td>
+</tr>
+<tr>
+<td><strong>G_far</strong></td>
+<td>R 1.2 m forward</td>
+<td>DONE (projected <strong>101.5 cm</strong> → 18.5 cm)</td>
+<td>"needs 22 cm of pelvis drop (ankle allows 2.5); L hip extension 41° &gt; 25°; beyond single-support reach; …"</td>
+</tr>
+<tr>
+<td><strong>G_far_side</strong></td>
+<td>R 0.8 m sideways</td>
+<td>DONE (projected <strong>74.4 cm</strong>)</td>
+<td>"needs 9 cm drop; beyond single-support reach; hip abduction …"</td>
+</tr>
+<tr>
+<td><strong>H_uneven</strong></td>
+<td>R 25 cm forward, 3 cm slab under the forefoot</td>
+<td>DONE (projected 6.5 cm)</td>
+<td><strong>forefoot touched the slab first</strong> (all 4 points at y 3.0 cm); final rests across the slab edge (4 slab + 2 turf points, 5.9° toe-up, 364 N)</td>
+</tr>
+<tr>
+<td><strong>I_block</strong></td>
+<td>R 30 cm forward, 22 cm box in the path</td>
+<td><strong>FAILED_BLOCKED</strong> (as designed)</td>
+<td>first box contact 2.41 s; peak 505 N; penetration 0.12 mm; stalled 150 ms; foot held; upright</td>
+</tr>
+<tr>
+<td><strong>J_repeat</strong></td>
+<td>R↑ L↑ R→ R← L↓ R↓</td>
+<td>5 DONE, 1 REJECTED</td>
+<td>#2 "weight transfer not achieved: swing load 91 N, ξ 7.9 cm inside the stance foot"; others land 3.4–4.4 cm off</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>4. Metrics</h2>
+<p>All tests: bit-identical ×3, Chrome = Node, pelvis residual ≤ 0.14 N, joint separation ≤ 0.24 mm, turf penetration ≤ 1.9 mm, no NaN.</p>
+<p><strong>CPU:</strong> 0.95–1.55 ms per 60 Hz frame in Node, split as Jolt 0.56–0.76 ms, sensing ≤ 0.12 ms, controller + support ≤ 0.68 ms.</p>
+<p>Column key: <strong>load / ξm / COMm</strong> are measured at liftoff (swing-foot load, stance ξ margin, COM margin). <strong>SS</strong> is single support. <strong>err</strong> is the landing error. <strong>v↓ / v↔</strong> are touchdown velocities (early = contact before the planned end). <strong>acc</strong> is the time from touchdown to acceptance. <strong>sole</strong> is min / peak sole clearance during progression. <strong>slid</strong> is stance slip. <strong>lim</strong> is the smallest joint-limit margin.</p>
+<table>
+<thead>
+<tr>
+<th>request</th>
+<th>load</th>
+<th>ξm / COMm</th>
+<th>SS</th>
+<th>err</th>
+<th>v↓ / v↔</th>
+<th>acc</th>
+<th>sole</th>
+<th>slid</th>
+<th>lim</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B R lift</td>
+<td>0 N</td>
+<td>6.8 / 7.5 cm</td>
+<td>3.26 s</td>
+<td>2.1 cm</td>
+<td>0.09 / 0.18 m/s</td>
+<td>2.0 s</td>
+<td>2.5 / 7.4 cm</td>
+<td>1.8 mm</td>
+<td>4.9°</td>
+</tr>
+<tr>
+<td>B L lift</td>
+<td>0 N</td>
+<td>6.6 / 7.2</td>
+<td>3.29</td>
+<td>1.2</td>
+<td>0.09 / 0.18</td>
+<td>2.0</td>
+<td>2.4 / 6.4</td>
+<td>1.8</td>
+<td>3.7°</td>
+</tr>
+<tr>
+<td>C lateral</td>
+<td>0 N</td>
+<td>6.8 / 7.5</td>
+<td>0.90</td>
+<td>5.6</td>
+<td>0.02 / 0.69</td>
+<td>2.2</td>
+<td>5.3 / 9.8</td>
+<td>1.8</td>
+<td>3.5°</td>
+</tr>
+<tr>
+<td>D forward</td>
+<td>0 N</td>
+<td>6.8 / 7.5</td>
+<td>0.96</td>
+<td>3.1</td>
+<td>0.05 / 0.49</td>
+<td>2.1</td>
+<td>2.8 / 8.8</td>
+<td>1.7</td>
+<td>4.3°</td>
+</tr>
+<tr>
+<td>E backward</td>
+<td>0 N</td>
+<td>6.8 / 7.5</td>
+<td>0.71</td>
+<td>8.1</td>
+<td>0.40 / 0.72 early</td>
+<td>2.0</td>
+<td>4.6 / 16.6</td>
+<td>2.0</td>
+<td><strong>0.0°</strong></td>
+</tr>
+<tr>
+<td>F on-foot</td>
+<td>0 N</td>
+<td>6.8 / 7.5</td>
+<td>0.81</td>
+<td>2.9</td>
+<td>0.18 / 0.49 early</td>
+<td>2.0</td>
+<td>6.1 / 13.8</td>
+<td>1.8</td>
+<td>2.9°</td>
+</tr>
+<tr>
+<td>F cross</td>
+<td>0 N</td>
+<td>6.8 / 7.5</td>
+<td>0.78</td>
+<td>3.7</td>
+<td>0.28 / 0.54 early</td>
+<td>2.0</td>
+<td>5.2 / 15.3</td>
+<td>2.1</td>
+<td>2.0°</td>
+</tr>
+<tr>
+<td>G far</td>
+<td>0 N</td>
+<td>6.8 / 7.5</td>
+<td>0.96</td>
+<td>3.1</td>
+<td>0.05 / 0.49</td>
+<td>2.1</td>
+<td>2.8 / 8.8</td>
+<td>1.7</td>
+<td>4.3°</td>
+</tr>
+<tr>
+<td>G side</td>
+<td>0 N</td>
+<td>6.8 / 7.5</td>
+<td>0.90</td>
+<td>5.6</td>
+<td>0.02 / 0.69</td>
+<td>2.2</td>
+<td>5.3 / 9.8</td>
+<td>1.8</td>
+<td>3.5°</td>
+</tr>
+<tr>
+<td>H slab</td>
+<td>0 N</td>
+<td>6.8 / 7.5</td>
+<td>0.86</td>
+<td>3.8</td>
+<td>0.13 / 0.61</td>
+<td>2.4</td>
+<td>2.8 / 8.8</td>
+<td>2.5</td>
+<td>4.3°</td>
+</tr>
+<tr>
+<td>I block</td>
+<td>0 N</td>
+<td>6.8 / 7.5</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>2.8 / 6.1</td>
+<td>1.2</td>
+<td>3.0°</td>
+</tr>
+<tr>
+<td>J #1 R fwd</td>
+<td>0 N</td>
+<td>6.8 / 7.5</td>
+<td>0.93</td>
+<td>3.5</td>
+<td>0.04 / 0.56</td>
+<td>2.0</td>
+<td>3.7 / 9.2</td>
+<td>1.7</td>
+<td>4.7°</td>
+</tr>
+<tr>
+<td>J #2 L fwd</td>
+<td>REJECTED</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>0.3</td>
+<td>5.7°</td>
+</tr>
+<tr>
+<td>J #3 R out</td>
+<td>38 N (5 %)</td>
+<td>6.0 / 3.9</td>
+<td>0.77</td>
+<td>4.4</td>
+<td>0.01 / 0.52</td>
+<td>2.2</td>
+<td>4.3 / 8.8</td>
+<td>1.5</td>
+<td>4.0°</td>
+</tr>
+<tr>
+<td>J #4 R in</td>
+<td>0 N</td>
+<td>6.5 / 7.9</td>
+<td>0.90</td>
+<td>4.3</td>
+<td>0.01 / 0.37</td>
+<td>2.0</td>
+<td>4.0 / 9.0</td>
+<td>1.3</td>
+<td>3.9°</td>
+</tr>
+<tr>
+<td>J #5 L back</td>
+<td>0 N</td>
+<td>7.1 / 7.0</td>
+<td>0.45</td>
+<td>3.9</td>
+<td>0.63 / 0.11 early</td>
+<td>2.0</td>
+<td>1.3 / 5.0</td>
+<td>1.1</td>
+<td>1.6°</td>
+</tr>
+<tr>
+<td>J #6 R back</td>
+<td>0 N</td>
+<td>6.4 / 7.2</td>
+<td>0.61</td>
+<td>3.4</td>
+<td>0.03 / 0.66</td>
+<td>2.0</td>
+<td>3.1 / 6.0</td>
+<td>2.2</td>
+<td>3.6°</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Saturation per placement:</strong> stance ankle 1.2–2.2 s; stance hip 0.1–0.8 s; swing leg ≈ 0 s. The swing leg is never saturated: it isn't artificially strong, and in I the box wins with 505 N.</p>
+<p><strong>Swing-foot penetration at touchdown:</strong> ≤ 0.7 mm.</p>
+<p><strong>Load transfer smoothness:</strong> ≤ 28 N/step without a lift (A). Touchdown impacts reach 256 N/step.</p>
+<p><strong>Single support:</strong> 0.45–0.96 s per placement; 3.3 s for the lifts.</p>
+<p><strong>Other behaviour:</strong>
+- <strong>G_far and D land at the same place.</strong> Both requests point straight ahead, so the projection lands on the same reach limit: (0.161, 0.271), equal to 10⁻⁹ m. Their metrics are therefore identical to the printed precision.
+- <strong>G_far_side and C</strong> do the same, landing at (0.217, 0.087).
+- The state hashes still differ, because the bisections converge a few nanometres apart and the physics is bit-exact.</p>
+<hr />
+<h2>5. What I found building it: the honest history</h2>
+<p>Each item is a failure I hit, the measurement that explained it, and what changed. The probes are in <code>analysis/</code>.</p>
+<p><strong>F1. The first transfer stalled.</strong>
+- <strong>Symptom:</strong> ξ stayed 2.5 cm outside the stance sole, and 189 N remained on the swing foot.
+- <strong>Measurement:</strong> the realised CoP lagged the demand by ≈ 0.4 m per m/s of COM speed. The stance joints' damping, with a zero target velocity, acted as a ≈ 290 N·s/m drag on the deliberate shift.
+- <strong>Fix:</strong> the stance legs get the joint velocities of the planned COM motion, the same principle as the swing leg's feed-forward.</p>
+<p><strong>F2. A min-jerk <em>COM</em> path needs an impossible CoP.</strong> To brake at the end of a 0.9 s shift, the CoP must sit ≈ 12 cm outside the stance sole. He overshot and fell. Planning in <strong>capture-point space</strong> keeps the feed-forward CoP on the unloading side by construction.</p>
+<p><strong>F3. Geometry bug.</strong> The sensor lists the four sole corners in "bowtie" order, so every stance-margin test was wrong. Fixed with a convex hull. An orientation bug in my <code>ccw()</code> was fixed too.</p>
+<p><strong>F4. Trendelenburg.</strong>
+- <strong>Measurement:</strong> in single support the stance hip saturated at 115–130 N·m and the pelvis dropped 25° on the swing side. Statics show the cause: hip centres 32.3 cm apart need 124 N·m.
+- <strong>Fix:</strong> a lateral trunk lean sized from the statics, at the lumbar joint where the model pivots it. A split lumbar/thoracic lean moved the COM only half as far as modelled.</p>
+<p><strong>F5. A held foot over its old footprint hangs abducted</strong> and adds ≈ 11 N·m to the stance hip. It is now carried with the pelvis's measured shift.</p>
+<p><strong>F6. 20° of dorsiflexion plus a 36 cm boot.</strong>
+- <strong>Symptom:</strong> a knee-bend lift tilts the shin back 34°. The boot sits on its range-of-motion stop, pitched toe-down, and the toe never leaves the turf.
+- <strong>Fix:</strong> lifts and swings are <em>knee-forward</em>: the shin is kept near vertical and the thigh flexes. The swing ankle target is clamped 5° inside its range of motion.</p>
+<p><strong>F7. Velocity feed-forward spike.</strong>
+- <strong>Symptom:</strong> finite-differencing successive joint targets spiked to ≈ 2900°/s when a new trajectory began from the actual foot. It slammed the toe into the turf, and "touchdown" registered 8 cm up.
+- <strong>Fix:</strong> the feed-forward is the trajectory velocity through the IK.</p>
+<p><strong>F8. Liftoff and touchdown semantics.</strong>
+- Jolt keeps speculative contact manifolds up to 2 cm away, so "no manifold" was too strict a definition of off.
+- "No touching points" alone let a creeping foot "touch down" 4 ms after liftoff.
+- <strong>Fix:</strong> off means no touching points and &lt; 25 N for 3 steps. Touchdown detection <strong>arms</strong> only once the sole has measurably risen.</p>
+<p><strong>F9. The landed foot was dragged back to where it started.</strong> C1's feet-in-place re-plant reached any airborne foot back to its <em>pre-lift</em> anchor, and "acceptance" then happened at the start position. <strong>This is exactly what the spec forbids.</strong> A foot that loses contact during acceptance is now reached back to its <strong>touchdown</strong> pose.</p>
+<p><strong>F10. Stance IK for a pelvis the body hasn't reached lifts the new foot.</strong>
+- <strong>Symptom:</strong> the reach-lowering target jumped 7 cm at touchdown.
+- <strong>Fix:</strong> the pelvis-height target is now always within ±1 cm of the actual pelvis. A later un-lowering step of 6.8 cm had launched him upward.</p>
+<p><strong>F11. Load acceptance: three wrong ideas.</strong>
+1. <strong>"Load the new foot first, then shift" is physically impossible.</strong> Loading a foot beside you pushes the COM away from it. Tried: the pelvis rolled and the foot was lifted.
+2. <strong>A 0.6 s transfer off the old stance foot needs its CoP 10.7 cm beyond the only foot that can push.</strong> That became 2 s, which needs ≈ 1.3 cm.
+3. <strong>Actively levelling a heel-landed boot is a push-off.</strong> It launched the leg 19 cm. A <strong>compliant</strong> ankle, the heel rocker, works.</p>
+<p>In addition, a foot on the turf must count as support before it carries 40 N, otherwise the classifier declares STEP_NEEDED in the middle of every acceptance.</p>
+<p><strong>F12. The C1 lever rule fails in a staggered stance.</strong> When both per-foot CoPs clamp at their sole edges, the commanded net CoP sat 6–9 cm ahead of p<em>. Under a plan, C2 now uses an </em><em>exact</em><em> two-foot distribution: (1 − a)·x + a·y = p</em>, choosing the minimum summed ankle moment.</p>
+<p><strong>F13. The big one: the stance ankle on its dorsiflexion stop.</strong>
+- <strong>Symptom:</strong> forward placements fell backward during acceptance, with the demanded CoP at the heel and the realised CoP 6 cm ahead of it.
+- <strong>Cause:</strong> pelvis lowering for the swing leg's reach bent the stance knee to 33°, putting the ankle on its 20° stop. At the stop, <strong>the joint-limit constraint cancels the motor's dorsiflexion torque</strong>, so the CoP cannot move heel-ward.
+- <strong>Fix:</strong> lowering is now bounded by the stance ankle's range of motion. It is computed with the controller's own IK, in both the controller and the feasibility check. In practice that allows ≈ 2.5–3.7 cm, not 8 cm.
+- <strong>A units error of mine:</strong> the "96 % leg extension" limit actually meant a 32° knee, more bent than standing. It is now 99.5 %, a knee of ≥ 11°.</p>
+<p><strong>F14. Attempts that were reverted:</strong>
+- <strong>Forward-biased stance balance point for forward placements:</strong> he fell forward in single support.
+- <strong>Unload penalty on the transfer foot:</strong> the foot floated off and drifted 15 cm.
+- <strong>Unload penalty with a floor:</strong> the closed chain put 174 N on it.</p>
+<p><strong>F15. Backward swings:</strong> the knee-forward bias sent the foot 14 cm forward and snapped it back at ≈ 1 m/s. It is now disabled for backward targets, which rely on toe-drop-aware clearance instead. Backward landings are still early toe strikes (caveat 4).</p>
+<hr />
+<h2>6. How to review it</h2>
+<pre><code>cd &quot;/Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1&quot;
+# your server on 8171 is still running (python3 -m http.server 8171 from this folder)
+# C2:  http://127.0.0.1:8171/sandbox/visual/physchar/index.html?suite=C2&amp;test=D_fwd_R
+#      (suite list also has C1 · Gate B (historical support fixture) · Gate A)
+</code></pre>
+<ul>
+<li><strong>Controls:</strong> play at 1× / 0.5× / 0.25×, step ±1 physics step, scrub, and jump to the first liftoff / touchdown / outcome. Camera presets are ¾ / front / side / back / top and orbit.</li>
+<li><strong>Gate C2 overlays:</strong></li>
+<li>footprints: <strong>requested</strong> (orange), <strong>feasible</strong> (green), <strong>actual touchdown</strong> (cyan) and <strong>final loaded contact</strong> (white);</li>
+<li>reach boundary (violet);</li>
+<li>stance exclusion: the actual stance sole plus the 3 cm clearance (red);</li>
+<li><strong>planned swing path</strong> (yellow) and <strong>actual foot trace</strong> (cyan);</li>
+<li>sole and stance-leg clearance labels;</li>
+<li>slab and obstacle, with the contact force.</li>
+<li><strong>Balance overlays (from C1):</strong> COM and velocity, ξ, support region and contact polygon, measured and demanded CoP, per-foot state / load / slip, motor torque and saturation, target ghost.</li>
+<li><strong>Phase banner:</strong> shows the live stage and the request outcome. The status line shows roles, per-foot load, <strong>root support = none + the pelvis residual</strong>, and the joint-limit margin.</li>
+<li><strong>Charts:</strong></li>
+<li>per-foot load / body weight history, with the 5 % liftoff gate, the phase strip and liftoff / touchdown / outcome markers;</li>
+<li>selected-joint panel: nominal + gravity + balance → target vs actual, and effort against the budgeted limit. This is where motor target vs actual is shown.</li>
+<li><strong>Side panel:</strong> a per-request report (projection and reasons, liftoff gate, touchdown, acceptance, block, metrics), whole-run load, drift, root, stability and CPU, and the <strong>browser hash compared with Node</strong>.</li>
+</ul>
+<hr />
+<h2>7. Files</h2>
+<p><strong>New:</strong></p>
+<table>
+<thead>
+<tr>
+<th>file</th>
+<th>contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pc_support.js</code></td>
+<td>SupportSequencer, feasibility and projection, swing, statics</td>
+</tr>
+<tr>
+<td><code>pc_gatec2.js</code></td>
+<td>tests A–J, runner, measurement</td>
+</tr>
+<tr>
+<td><code>tools/gatec2_run.js</code></td>
+<td>Node runner</td>
+</tr>
+<tr>
+<td><code>results/gatec2_final_240x1.json</code> / <code>.log</code></td>
+<td>3-repeat results and log</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Changed:</strong> each change is behind a support plan or an option, so C1, B and A hashes are unchanged.</p>
+<table>
+<thead>
+<tr>
+<th>file</th>
+<th>change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pc_balance.js</code></td>
+<td>C2 hooks (§2), <code>minPelvisY</code>, <code>split2</code>, <code>romClamp</code></td>
+</tr>
+<tr>
+<td><code>pc_sense.js</code></td>
+<td><code>supportTouching</code> option</td>
+</tr>
+<tr>
+<td><code>pc_jolt.js</code></td>
+<td><code>addTerrainBox</code></td>
+</tr>
+<tr>
+<td><code>pc_math.js</code></td>
+<td><code>datan</code> / <code>datan2</code> / <code>dacos</code> / <code>dexp</code></td>
+</tr>
+<tr>
+<td><code>pc_harness.js</code>, <code>index.html</code></td>
+<td>C2 suite, overlays, charts, side panel, <code>GATEC2_TEST</code> hook, plan camera</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Evidence</strong> (this folder):
+- <code>contact_sheet_1.jpg</code> and <code>contact_sheet_2.jpg</code>;
+- <code>stills/</code>: 79 frames;
+- <code>json/</code>;
+- <code>crossruntime.txt</code>: Chrome = Node, 13/13;
+- <code>preserved_gates_check.txt</code>;
+- <code>analysis/</code>: the probes behind F1–F15, plus the capture script and shot list.</p>
+<p><strong>Preserved:</strong> the C1 baseline is at <code>worktrees/_preserved_2026-09-29_physical_character_gate_c1/</code>, and the C2 state at <code>worktrees/_preserved_2026-09-30_physical_character_gate_c2/</code>.</p>
+<h2>8. Not done (STOP)</h2>
+<p>Out of scope and not started: corrective stepping, locomotion, a second player, the ball, the Reference Tackle, protective falls, and any change to Touchline. Nothing is committed or pushed. <strong>I'm waiting for your visual review.</strong></p></main></body></html>

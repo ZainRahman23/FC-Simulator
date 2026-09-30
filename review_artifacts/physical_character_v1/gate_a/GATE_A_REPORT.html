@@ -1,0 +1,1135 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Gate A Report</title><style>
+:root{--bg:#fbfaf7;--ink:#1d1f22;--mute:#5d646b;--line:#dcd8cf;--code:#f1eee7;--acc:#8a5a00;--q:#f4efe2}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#141619;--ink:#e6e4df;--mute:#9aa0a6;--line:#33373d;--code:#1d2024;--acc:#f0c060;--q:#1f1c14}}
+:root[data-theme="dark"]{--bg:#141619;--ink:#e6e4df;--mute:#9aa0a6;--line:#33373d;--code:#1d2024;--acc:#f0c060;--q:#1f1c14}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 -apple-system,system-ui,"Segoe UI",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px 80px}
+h1{font-size:26px;line-height:1.25} h2{font-size:20px;margin-top:40px;padding-top:12px;border-top:1px solid var(--line)} h3{font-size:16px;color:var(--acc)}
+table{border-collapse:collapse;width:100%;font-size:13px;margin:12px 0;display:block;overflow-x:auto} th,td{border:1px solid var(--line);padding:5px 8px;vertical-align:top;text-align:left} th{background:var(--code)}
+code{background:var(--code);padding:1px 4px;border-radius:3px;font-size:12.5px} pre{background:var(--code);padding:12px;border-radius:6px;overflow-x:auto;font-size:12px;line-height:1.45} pre code{padding:0;background:none}
+blockquote{margin:12px 0;padding:10px 16px;background:var(--q);border-left:4px solid var(--acc)} a{color:var(--acc)}
+img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:4px} li>ul,li>ol{margin:4px 0}
+</style></head><body><main><h1>Physical Character V1: Gate A report</h1>
+<p><strong>Passive 14-body humanoid on Jolt Physics.</strong> No motors, no animation targets, one character. Worktree <code>physical-character-v1</code>; nothing committed or pushed.</p>
+<p>2026-09-29 · Gabriel Magalhães (190 cm, 78 kg) · Jolt Physics 5.6.0 (JoltPhysics.js 1.1.0, wasm-compat) · 240 Hz, 1 collision step, 30 velocity / 4 position iterations</p>
+<p><img alt="Gate A contact sheet" src="contact_sheet.jpg" /></p>
+<hr />
+<h2>Verdict</h2>
+<p><strong>My opinion: Gate A passes on its physical criteria.</strong> Two items still need your eyes before we teach the body to move:</p>
+<ol>
+<li><strong>Rendered mesh sinking into the turf.</strong> The colliders sit ≤ 5.3 mm into the turf at rest. The skinned mesh extends 3–5 cm beyond the colliders on the limbs, so at rest it dips up to <strong>2.4 cm</strong> below the turf plane (shin, hand, shorts). In mid-fall it dips up to <strong>3.7 cm</strong>, lasting a few frames. This comes from how the colliders are fitted, not from the solver.</li>
+<li><strong>Joint-limit excursions during impact.</strong> Hard limits yield up to <strong>7.2°</strong> briefly on landing. At rest they are within <strong>0.63°</strong>. The soft end-stops on the knees and elbows overshoot up to <strong>12°</strong> by design, and are within 1.45° at rest.</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>criterion</th>
+<th>measured (worst over drops A–E)</th>
+<th>pass?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>joints stay connected (no "sausages")</td>
+<td>max separation <strong>4.6 mm</strong> in flight, ≤ 0.13 mm at rest</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>no collider sinking into the turf</td>
+<td>≤ <strong>13.9 mm</strong> transient (drop D, spinning foot), ≤ <strong>5.3 mm</strong> at rest (Jolt's 5 mm slop)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>rendered mesh not visibly below the turf</td>
+<td>≤ <strong>37 mm</strong> transient, ≤ <strong>23.7 mm</strong> at rest</td>
+<td>⚠️ your call</td>
+</tr>
+<tr>
+<td>self-penetration between bodies</td>
+<td>≤ <strong>5.5 mm</strong> (drop C forearm–thigh), otherwise ≤ 2.2 mm</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>anatomical limits respected</td>
+<td>hard ≤ <strong>7.2°</strong> transient / ≤ 0.63° at rest; soft stops ≤ 12.3° transient / ≤ 1.45° at rest</td>
+<td>⚠️ your call</td>
+</tr>
+<tr>
+<td>no explosions, pops or jitter</td>
+<td>max correction pop <strong>1.4 mm</strong>; no NaN; residual motion <strong>0 mm/s</strong>; all drops <strong>asleep ≤ 1.85 s</strong></td>
+<td>✅</td>
+</tr>
+<tr>
+<td>energy is not created</td>
+<td>max single-step gain <strong>2.6 J</strong> against 400–1150 J of starting energy; the causes are identified (§15)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>propagation emerges, not a rigid plank</td>
+<td>first-to-last turf contact spread over 200–600 ms, body by body (§3)</td>
+<td>✅ (from data and stills; judge the motion in the harness)</td>
+</tr>
+<tr>
+<td>deterministic</td>
+<td>3/3 repeats bit-identical for every drop; <strong>Node = Chrome</strong> for every drop</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>cheap</td>
+<td><strong>0.17–0.26 ms per 60 Hz frame</strong> (4 steps), one character, Apple M4</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p>The ✅ items are measured. I have not judged how natural the motion looks: I only looked at stills and the contact sheet. The harness is there for that.</p>
+<hr />
+<h2>1. Interactive harness</h2>
+<pre><code>cd &quot;/Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1&quot;
+python3 -m http.server 8171
+# open http://127.0.0.1:8171/sandbox/visual/physchar/index.html
+</code></pre>
+<p>It needs the HTTP server because of ES modules, the WASM, the mesh fetch and the suite JSON. Stop the server with Ctrl-C when you are done.</p>
+<ul>
+<li><strong>Simulation:</strong> the page simulates each drop in the browser with the exact Gate A settings and the same Jolt WASM as the Node runs. It records every 240 Hz step, so playback, scrubbing and stepping are exact rather than re-simulated. The side panel shows the browser run's hash next to the Node suite's hash.</li>
+<li><strong>Toolbar 1:</strong><ul>
+<li>drop selector A–E, ↺ restart;</li>
+<li>▶ play / pause (Space) at 1× / 0.5× / 0.25×;</li>
+<li>◀ step / step ▶ by one physics step (← / →);</li>
+<li><strong>worst</strong> jumps to the worst frame for ground penetration, joint separation, limit violation, correction pop, self-penetration or energy gain;</li>
+<li><strong>view</strong> mesh / physics toggles;</li>
+<li><strong>camera</strong> presets ¾ / front / side / back / top, plus follow-COM.</li>
+</ul>
+</li>
+<li><strong>Toolbar 2, overlays:</strong> bodies, colliders, body COMs, total COM, joint anchors, joint axes, joint limits, ground contacts, contact normals, penetration, linear velocity, angular velocity, joint error ×20, sleeping.</li>
+<li><strong>Camera:</strong> drag to orbit; Shift-drag or right-drag to pan (this turns follow off); scroll wheel to zoom.</li>
+<li><strong>Timeline:</strong> a scrubber over the whole run. Below it is a chart of KE (yellow), awake bodies (green) and worst-frame markers (red ticks).</li>
+<li><strong>Side panel:</strong> live per-step readouts (KE / PE / E, awake count, contacts, penetration, joint error, limits), the drop's summary, and the Node suite table.</li>
+</ul>
+<h2>2. Views</h2>
+<ul>
+<li><strong>mesh + physics</strong> (default): the skinned player mesh is drawn from the physical body transforms, with colliders as a cyan wireframe over it.</li>
+<li><strong>physics only</strong> (toggle "mesh" off): colliders in per-body colours; sleeping bodies are grey.</li>
+<li><strong>mesh only</strong> (toggle "physics" off).</li>
+</ul>
+<p>The mesh is <strong>fitted from</strong> the physical state. Each rig bone's skin matrix is its body's rigid transform about the bind pose (<code>pc_fit.js</code>). There is no second animation state.</p>
+<h2>3. Drop suite (deterministic, released passive)</h2>
+<table>
+<thead>
+<tr>
+<th>drop</th>
+<th>set-up</th>
+<th>first turf contacts (s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A</strong> relaxed upright</td>
+<td>standing, joints slightly relaxed, 3 cm up, released from rest</td>
+<td>foot_L 0.050, foot_R 0.050 → foreArm_L 0.533, foreArm_R 0.533 → pelvis 0.579</td>
+</tr>
+<tr>
+<td><strong>B</strong> hip / side-first</td>
+<td>rolled ~92° onto the right side, trunk bent laterally away from the turf, right arm overhead (10° inside its limit), legs lightly flexed; 20 cm up, 0.5 m/s down; right thigh / hip lowest</td>
+<td><strong>thigh_R 0.154 → pelvis 0.171 → upperArm_R 0.192 → foot_R 0.254 → foreArm_L 0.313 → foot_L 0.400 → shin_L 0.479 → thigh_L 0.496</strong></td>
+</tr>
+<tr>
+<td><strong>C</strong> shoulder / upper-body-first</td>
+<td>pitched 70° forward, rolled 35° right, bent at the hips; arms asymmetric; 30 cm up, 0.4 m/s forward</td>
+<td>foreArm_R 0.217 → foot_R 0.237, foot_L 0.242 → thigh_R 0.346 → shin_R 0.350 → pelvis 0.392 → thigh_L 0.408</td>
+</tr>
+<tr>
+<td><strong>D</strong> rotating</td>
+<td>nearly upright, feet 2 cm up; ω = (1.5, 2.0, −2.5) rad/s, drift 1.2 m/s sideways, 0.6 m/s forward</td>
+<td>foot_R 0.004 → foot_L 0.096 → foreArm_R 0.462 → foreArm_L 0.529 → head 0.571 → upperArm_R 0.575 → thigh_R 0.592 → pelvis 0.604</td>
+</tr>
+<tr>
+<td><strong>E</strong> awkward asymmetric</td>
+<td>root yawed 30°, pitched 25°, rolled −35°; right leg flexed, abducted and twisted, left leg extended; arms opposite; spine twisted and bent; 40 cm up with a small tumble</td>
+<td>foot_R 0.246 → foot_L 0.338 → shin_R 0.400 → shin_L 0.471 → thigh_L 0.487 → foreArm_L 0.496 → foreArm_R 0.546</td>
+</tr>
+</tbody>
+</table>
+<p>Every drop's starting pose is checked for self-overlap before release, and none have any. Poses are built from joint angles through the same swing–twist convention Jolt clamps (<code>pc_gatea.js: jointRelRot</code>). Limit violations are measured from step 0, and no drop starts outside a limit (A's 0.88° is its largest, at landing).</p>
+<p><strong>Propagation evidence:</strong></p>
+<ul>
+<li><strong>Drop B (hip-first)</strong> shows the load travelling through the chain. The right thigh lands, the pelvis follows 17 ms later, then the raised right arm 38 ms later. The legs fold over and the free-side (left) arm and leg reach the turf 160–340 ms after the first impact. A rigid plank would land in one event; disconnected parts would not bring the pelvis down 17 ms after the thigh.</li>
+<li><strong>Drop A</strong> is a collapse, not a topple: the feet stay planted, the knees and hips buckle, the forearms reach the turf 0.48 s later and the pelvis after them.</li>
+<li>Stills (in <code>stills/</code>):<ul>
+<li><code>B1_0.16s_hip_contact</code> / <code>B2_0.20s_propagation_physics</code>: the moment of hip contact and the chain 40 ms later;</li>
+<li><code>A2_0.55s</code>: the crouched collapse;</li>
+<li><code>E2_worst_limit_physics</code>: the worst-limit frame of the asymmetric drop;</li>
+<li><code>D2_0.6s_physics_top</code>: the tumbling drop from above.</li>
+</ul>
+</li>
+</ul>
+<h2>4. Measurements</h2>
+<p>All figures are from <code>gatea_final_240x1.json</code> / <code>.log</code>: 6 s per drop, 1,440 steps, maxima over every step. Rendered-mesh depth is measured every 4th step (60 Hz) by CPU-skinning all of the mesh's referenced vertices.</p>
+<table>
+<thead>
+<tr>
+<th>drop</th>
+<th>turf pen. (colliders) max / rest</th>
+<th>rendered mesh below turf max / rest</th>
+<th>self-pen. max</th>
+<th>joint separation max</th>
+<th>hard-limit max (time &gt; 2°)</th>
+<th>soft-stop overshoot</th>
+<th>pop max</th>
+<th>max step E-gain (steps &gt; 50 mJ)</th>
+<th>settle / sleep</th>
+<th>start PE + KE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>5.75 / 2.52 mm</td>
+<td>3.3 (toe) / 2.3 (toe) mm</td>
+<td>0.19 mm</td>
+<td>1.64 mm (lumbar)</td>
+<td>0.88° (0 ms)</td>
+<td>8.65°</td>
+<td>0.45 mm</td>
+<td>2.63 J (10)</td>
+<td>1.14 / 1.63 s</td>
+<td>846.7 + 0 J</td>
+</tr>
+<tr>
+<td>B</td>
+<td>7.90 / 5.26 mm</td>
+<td>28.6 (hand_R) / 23.7 (shin_L) mm</td>
+<td>0.23 mm</td>
+<td>4.44 mm (shoulder_R)</td>
+<td>5.59° shoulder_R (500 ms)</td>
+<td>0.53°</td>
+<td>0.69 mm</td>
+<td>0.60 J (1)</td>
+<td>0.98 / 1.52 s</td>
+<td>397.3 + 9.8 J</td>
+</tr>
+<tr>
+<td>C</td>
+<td>5.09 / 5.04 mm</td>
+<td>14.3 (head) / 11.2 (thigh_L) mm</td>
+<td>5.47 mm (foreArm_L–thigh_L)</td>
+<td>3.76 mm (hip_R)</td>
+<td>4.21° shoulder_L (13 ms)</td>
+<td>1.37°</td>
+<td>1.27 mm</td>
+<td>0.24 J (1)</td>
+<td>0.78 / 1.28 s</td>
+<td>768.2 + 9.8 J</td>
+</tr>
+<tr>
+<td>D</td>
+<td>13.9 / 1.95 mm</td>
+<td>17.1 (thigh_R) / 10.5 (upperArm_R) mm</td>
+<td>2.19 mm</td>
+<td>4.62 mm (ankle_R)</td>
+<td>5.31° ankle_R (96 ms)</td>
+<td>10.73°</td>
+<td>0.81 mm</td>
+<td>2.36 J (9)</td>
+<td>1.34 / 1.85 s</td>
+<td>858.9 + 127.8 J</td>
+</tr>
+<tr>
+<td>E</td>
+<td>4.15 / 1.42 mm</td>
+<td>37.0 (shin_L) / 18.9 (hand_R) mm</td>
+<td>0.23 mm</td>
+<td>3.89 mm (ankle_R)</td>
+<td>7.20° shoulder_R (33 ms)</td>
+<td>12.26°</td>
+<td>1.39 mm</td>
+<td>0.96 J (2)</td>
+<td>1.10 / 1.60 s</td>
+<td>1142.3 + 21.7 J</td>
+</tr>
+</tbody>
+</table>
+<p>State at rest (t = 6 s, re-run on 2026-09-29; hashes identical to the suite):</p>
+<table>
+<thead>
+<tr>
+<th>drop</th>
+<th>largest hard-limit violation</th>
+<th>soft-stop overshoot</th>
+<th>joint separation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>0.00°</td>
+<td>0.41°</td>
+<td>0.00 mm</td>
+</tr>
+<tr>
+<td>B</td>
+<td>0.63° (shoulder_R)</td>
+<td>0.00°</td>
+<td>0.13 mm</td>
+</tr>
+<tr>
+<td>C</td>
+<td>0.08°</td>
+<td>0.54°</td>
+<td>0.05 mm</td>
+</tr>
+<tr>
+<td>D</td>
+<td>0.00°</td>
+<td>1.45°</td>
+<td>0.01 mm</td>
+</tr>
+<tr>
+<td>E</td>
+<td>0.00°</td>
+<td>0.01°</td>
+<td>0.00 mm</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Definitions:</strong></p>
+<ul>
+<li><strong>Turf penetration:</strong> the exact lowest point of every collider shape below y = 0, computed analytically from the body state. It is not the engine's contact report, although the two agree (drop B: 7.90 vs 7.89 mm).</li>
+<li><strong>Rendered mesh below turf:</strong> the lowest skinned vertex, labelled with its dominant bone.</li>
+<li><strong>Self-penetration:</strong> the deepest contact between two of the character's own bodies. This is Jolt's contact depth, which is pre-solve (§15).</li>
+<li><strong>Joint separation:</strong> the distance between the joint's anchor on the parent and on the child.</li>
+<li><strong>Hard / soft limit:</strong> the swing–twist angles outside the ROM, recomputed independently in JS and checked against Jolt's own readouts (<code>tools/check_joints.js</code>). "Hard" means the SixDOF joints; "soft" means the knee and elbow spring end-stops.</li>
+<li><strong>Pop:</strong> each step, the gap between a body's COM displacement and its v·dt. This is the position-correction jump.</li>
+<li><strong>Energy gain:</strong> any step where KE + PE rises by more than 50 mJ with no external source.</li>
+<li><strong>Settle:</strong> the time at which every body falls below its motion threshold. <strong>Sleep:</strong> the time at which Jolt puts all 14 bodies to sleep.</li>
+</ul>
+<p><strong>Rendered-visible penetration</strong>, by class:</p>
+<ul>
+<li><strong>Transient:</strong> colliders ≤ 13.9 mm (D's spinning right foot, 0.25 s in); mesh ≤ 37 mm (E's left shin).</li>
+<li><strong>Sustained (rest):</strong> colliders ≤ 5.3 mm, which is Jolt's intended resting overlap (penetration slop 5 mm); mesh ≤ 23.7 mm.</li>
+<li><strong>Rendered-visible:</strong> the mesh-at-rest figures, which you are likely to see as a shin or hand dipping into the grass at close camera range. The cause is the collider fit (§9), not the solver.</li>
+</ul>
+<h2>5. Jolt version and build</h2>
+<ul>
+<li><strong>Jolt Physics 5.6.0</strong> through <strong>JoltPhysics.js 1.1.0</strong> (npm <code>jolt-physics</code>), <strong><code>jolt-physics.wasm-compat.js</code></strong>: the single-threaded build with the WASM inlined. MIT licence.</li>
+<li>Vendored at <code>sandbox/visual/physchar/vendor/</code>, with the licence file and a README (sha256 <code>011233a5…4c257de</code>). Node and the browser load this identical file, which is the precondition for the cross-runtime check.</li>
+<li>No multithreading, no SharedArrayBuffer, no COOP/COEP headers needed.</li>
+<li><code>pc_jolt.js</code> is the only file that knows Jolt. The body spec (<code>pc_body.js</code>) and the drop suite (<code>pc_gatea.js</code>) are engine-agnostic data and measurement.</li>
+</ul>
+<h2>6. Timestep and solver configuration</h2>
+<table>
+<thead>
+<tr>
+<th>setting</th>
+<th>value</th>
+<th>why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>step</td>
+<td><strong>240 Hz, 1 collision step</strong> (4 steps per 60 Hz frame)</td>
+<td>the lowest rate that keeps joint separation under 5 mm and hard-limit transients under 10° (sweep below)</td>
+</tr>
+<tr>
+<td>iterations</td>
+<td><strong>30 velocity / 4 position</strong></td>
+<td>Jolt's default of 10 velocity iterations let trapped limbs inject up to 18 J; 4 position iterations halve limit transients against 2 without the energy cost of 8</td>
+</tr>
+<tr>
+<td>penetration slop</td>
+<td>5 mm</td>
+<td>Jolt's resting-overlap allowance; this is where the 5.3 mm at rest comes from</td>
+</tr>
+<tr>
+<td>speculative contact distance</td>
+<td>0.02 m (Jolt default)</td>
+<td>the fall speeds here (≤ 4 m/s) do not need the 0.25 m that fast limbs will need (a Gate B+ concern)</td>
+</tr>
+<tr>
+<td>Baumgarte</td>
+<td>0.2 (default)</td>
+<td></td>
+</tr>
+<tr>
+<td>linear / angular damping</td>
+<td>0.05 / 0.05</td>
+<td>Jolt default; small, uniform, not tuned per drop</td>
+</tr>
+<tr>
+<td>max angular velocity</td>
+<td>47.1 rad/s (15π)</td>
+<td>Jolt default</td>
+</tr>
+<tr>
+<td>sleeping</td>
+<td>allowed</td>
+<td>all drops sleep ≤ 1.85 s with 0 residual motion</td>
+</tr>
+<tr>
+<td>knee / elbow end-stops</td>
+<td>soft, 20 Hz, ζ = 1.0</td>
+<td>hard hinge stops injected up to 14 J (§15)</td>
+</tr>
+<tr>
+<td>gravity</td>
+<td>−9.81 m/s²</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Configuration comparison</strong> (<code>config_sweep.txt</code>; worst over all five drops):</p>
+<table>
+<thead>
+<tr>
+<th>config</th>
+<th>turf mm</th>
+<th>joint mm</th>
+<th>hard lim °</th>
+<th>soft over °</th>
+<th>self mm</th>
+<th>max E+ J</th>
+<th>E+ steps</th>
+<th>sleep ≤ s</th>
+<th>ms / 60 Hz frame</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>60 Hz, Jolt defaults (hard stops)</td>
+<td>44.6</td>
+<td>47.7</td>
+<td>39.0</td>
+<td>7.3</td>
+<td>32.8</td>
+<td>8.82</td>
+<td>176</td>
+<td>4.40</td>
+<td>0.062</td>
+</tr>
+<tr>
+<td>60 Hz, 30 vel it, soft stops</td>
+<td>76.7</td>
+<td>31.0</td>
+<td>43.8</td>
+<td>15.9</td>
+<td>31.6</td>
+<td>4.28</td>
+<td>44</td>
+<td>3.23</td>
+<td>0.050</td>
+</tr>
+<tr>
+<td>120 Hz, 30 vel it, soft stops</td>
+<td>17.5</td>
+<td>13.2</td>
+<td>12.3</td>
+<td>10.8</td>
+<td>8.1</td>
+<td>3.68</td>
+<td>21</td>
+<td>1.83</td>
+<td>0.071</td>
+</tr>
+<tr>
+<td>120 Hz, 30 vel / 4 pos it, soft stops</td>
+<td>19.3</td>
+<td>12.3</td>
+<td>7.6</td>
+<td>10.9</td>
+<td>11.3</td>
+<td>3.68</td>
+<td>16</td>
+<td>2.10</td>
+<td>0.112</td>
+</tr>
+<tr>
+<td>180 Hz, 30 vel it, soft stops</td>
+<td>18.1</td>
+<td>9.9</td>
+<td>19.0</td>
+<td>15.5</td>
+<td>10.5</td>
+<td>4.90</td>
+<td>27</td>
+<td>2.21</td>
+<td>0.111</td>
+</tr>
+<tr>
+<td>240 Hz, 10 vel it (default), soft stops</td>
+<td>13.9</td>
+<td>7.2</td>
+<td>8.8</td>
+<td>12.6</td>
+<td>5.2</td>
+<td><strong>18.04</strong></td>
+<td>28</td>
+<td>3.23</td>
+<td>0.157</td>
+</tr>
+<tr>
+<td>240 Hz, 30 vel it, HARD stops</td>
+<td>15.8</td>
+<td>6.2</td>
+<td>9.4</td>
+<td>3.3</td>
+<td>5.5</td>
+<td>6.46</td>
+<td>17</td>
+<td>2.49</td>
+<td>0.148</td>
+</tr>
+<tr>
+<td>240 Hz, 30 vel / 2 pos it, soft stops</td>
+<td>15.8</td>
+<td>5.8</td>
+<td>15.4</td>
+<td>12.3</td>
+<td>4.9</td>
+<td>2.63</td>
+<td>19</td>
+<td>1.80</td>
+<td>0.127</td>
+</tr>
+<tr>
+<td>240 Hz, 30 vel / 8 pos it, soft stops</td>
+<td>13.6</td>
+<td>4.8</td>
+<td>5.3</td>
+<td>12.2</td>
+<td>5.6</td>
+<td>7.22</td>
+<td>23</td>
+<td>1.95</td>
+<td>0.329</td>
+</tr>
+<tr>
+<td><strong>240 Hz, 30 vel / 4 pos it, soft stops ← Gate A</strong></td>
+<td><strong>13.9</strong></td>
+<td><strong>4.6</strong></td>
+<td><strong>7.2</strong></td>
+<td><strong>12.3</strong></td>
+<td><strong>5.5</strong></td>
+<td><strong>2.63</strong></td>
+<td>23</td>
+<td><strong>1.85</strong></td>
+<td><strong>0.196</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>60 Hz is not usable:</strong> the joints open 3–5 cm, limits blow through by ~40°, and bodies overlap 3 cm.</li>
+<li><strong>120 Hz with 30 / 4 iterations is the near-miss alternative</strong> at about half the cost. Its 12 mm joint gaps are the reason I did not choose it.</li>
+<li><strong>60 × 20 was not inherited.</strong> 240 × 1 is 5× fewer solver steps.</li>
+<li><strong>180 Hz scoring worse than 120 Hz on limits is a sampling artefact:</strong> each config runs the same five chaotic landings once, so single-config differences of a few degrees are noise. The trend over 60 → 120 → 240 is the result.</li>
+</ul>
+<h2>7. The 14-body hierarchy</h2>
+<pre><code>pelvis (root)
+├── abdomen ── chest ─┬─ head
+│                     ├─ upperArm_L ── foreArm_L (+hand)
+│                     └─ upperArm_R ── foreArm_R (+hand)
+├── thigh_L ── shin_L ── foot_L (+toe)
+└── thigh_R ── shin_R ── foot_R (+toe)
+</code></pre>
+<ul>
+<li><strong>Exactly the 14 bodies you specified:</strong> 13 joints (9 SixDOF, 4 hinges).</li>
+<li><strong>No fingers, toes, clavicles or extra spine segments.</strong> The rig's extra bones ride on their parent bodies: root → pelvis; clavicle_L/R → chest; neck, head and hair → head; hand → forearm; toe → foot.</li>
+<li><strong>Nothing had to be added for Gate A.</strong> One candidate for later: the missing clavicle / scapula means the shoulder cannot shrug, and arm elevation is capped at 150° (§10, §14). That did not matter for passive falls; it may matter when Gate B raises the arms.</li>
+<li><strong>Body frames:</strong> each body's origin is its rig bone's joint, with world-aligned axes at bind, so a body's transform <em>is</em> its bone's transform. The COM is offset inside the body (<code>OffsetCenterOfMassShape</code>), and mass and inertia are given explicitly (<code>MassAndInertiaProvided</code>), never derived from the collider volumes.</li>
+</ul>
+<h2>8. Masses, COMs and inertia (with sources)</h2>
+<ul>
+<li><strong>Player:</strong> <code>rig.identity</code> gives Gabriel Magalhães at <strong>190 cm, 78 kg</strong>. The physical mass totals <strong>78.000 kg</strong>.</li>
+<li><strong>Mass:</strong> de Leva (1996) <strong>male</strong> segment mass fractions × 78 kg. Two combined bodies:<ul>
+<li>forearm + hand = 1.62 % + 0.61 %;</li>
+<li>head = the de Leva head segment, which includes the neck (vertex → C7).</li>
+</ul>
+</li>
+<li><strong>COM:</strong><ul>
+<li>limbs: de Leva's CM % applied along <strong>the rig's own segment</strong> (proximal joint → distal joint);</li>
+<li>trunk slices: the rig's joint-to-joint height;</li>
+<li>head: measured from the vertex at the player's stature;</li>
+<li>foot: along the rendered boot heel → toe, 4.5 cm above the stud plane;</li>
+<li>forearm + hand: the mass-weighted composite, with hand length = de Leva × stature ratio.</li>
+</ul>
+</li>
+<li><strong>Inertia:</strong> de Leva radii of gyration (% of de Leva's mean segment length, 1.741 m subjects) × <strong>(H / 1.741) = 1.091</strong>, then m·k².<ul>
+<li>Axes: x = transverse (medio-lateral), y = longitudinal, z = sagittal (antero-posterior). The foot lies along z, so its Iz is the longitudinal one.</li>
+<li>The forearm + hand uses the parallel-axis theorem about the composite COM.</li>
+<li>Inertia scaled ×2 on the light distal bodies was tried and gave mixed results, so it was not adopted.</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>body</th>
+<th>parent</th>
+<th>mass kg</th>
+<th>de Leva segment</th>
+<th>COM (body-local, m)</th>
+<th>Ixx / Iyy / Izz (kg·m²)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pelvis</td>
+<td>—</td>
+<td>8.713</td>
+<td>lower trunk 11.17 %</td>
+<td>(0, 0.045, 0)</td>
+<td>0.067 / 0.076 / 0.083</td>
+</tr>
+<tr>
+<td>abdomen</td>
+<td>pelvis</td>
+<td>12.737</td>
+<td>mid trunk 16.33 %</td>
+<td>(0, 0.128, 0)</td>
+<td>0.103 / 0.154 / 0.164</td>
+</tr>
+<tr>
+<td>chest</td>
+<td>abdomen</td>
+<td>12.449</td>
+<td>upper trunk 15.96 %</td>
+<td>(0, 0.190, 0)</td>
+<td>0.089 / 0.188 / 0.221</td>
+</tr>
+<tr>
+<td>head</td>
+<td>chest</td>
+<td>5.413</td>
+<td>head + neck 6.94 %</td>
+<td>(0, 0.133, 0)</td>
+<td>0.038 / 0.026 / 0.035</td>
+</tr>
+<tr>
+<td>upperArm L/R</td>
+<td>chest</td>
+<td>2.114</td>
+<td>upper arm 2.71 %</td>
+<td>(0, −0.198, 0)</td>
+<td>0.014 / 0.005 / 0.016</td>
+</tr>
+<tr>
+<td>foreArm L/R</td>
+<td>upperArm</td>
+<td>1.739</td>
+<td>forearm 1.62 % + hand 0.61 %</td>
+<td>(0, −0.204, 0)</td>
+<td>0.028 / 0.002 / 0.030</td>
+</tr>
+<tr>
+<td>thigh L/R</td>
+<td>pelvis</td>
+<td>11.045</td>
+<td>thigh 14.16 %</td>
+<td>(0, −0.197, 0)</td>
+<td>0.254 / 0.052 / 0.254</td>
+</tr>
+<tr>
+<td>shin L/R</td>
+<td>thigh</td>
+<td>3.377</td>
+<td>shank 4.33 %</td>
+<td>(0, −0.197, 0)</td>
+<td>0.047 / 0.008 / 0.049</td>
+</tr>
+<tr>
+<td>foot L/R</td>
+<td>shin</td>
+<td>1.069</td>
+<td>foot 1.37 %</td>
+<td>(0, −0.043, 0.077)</td>
+<td>0.005 / 0.006 / 0.001</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Source:</strong> de Leva P. (1996), "Adjustments to Zatsiorsky–Seluyanov's segment inertia parameters", <em>J Biomech</em> 29(9):1223–1230, male columns. The table is transcribed in <code>pc_body.js: DE_LEVA</code>.</p>
+<h2>9. Colliders and mesh fit</h2>
+<p>Every collider is <strong>fitted to this player's own skinned mesh</strong>. Each vertex is assigned to its dominant bone, then to that bone's body. Percentile windows keep joint bulges, sleeve and short hems, and the hair shell out of the fit.</p>
+<ul>
+<li><strong>Trunk (pelvis / abdomen / chest): rounded boxes,</strong> one per height slice of all torso vertices, stacked joint to joint.<ul>
+<li>Only 66 vertices are skinned mainly to <code>spine</code>, so a per-bone fit was useless.</li>
+<li>The chest slice stops 3 cm medial of the shoulder joints; the deltoid belongs to the upper-arm capsule.</li>
+</ul>
+</li>
+<li><strong>Limbs: tapered capsules</strong> whose axis runs through the <strong>cross-section centroids</strong> of the limb's own vertices, not the bone line.<ul>
+<li>The calf sits behind the tibia; a bone-line capsule left the calf mesh 2–3 cm under the turf.</li>
+<li>The radius is the 80th percentile of distance to that axis.</li>
+</ul>
+</li>
+<li><strong>Hand:</strong> a capsule on the hand's own centre line, offset from the bone, part of the forearm body. A flat box hand was measured and rejected (§15).</li>
+<li><strong>Head:</strong> a skull sphere (85th percentile of head-bone vertices; the 36,801-vertex hair shell is excluded) plus a neck capsule.</li>
+<li><strong>Foot:</strong> a rounded box = the rig's rendered boot bounds (<code>footwearMin/Max</code>).</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>body</th>
+<th>collider(s)</th>
+<th>mesh verts</th>
+<th>inside collider</th>
+<th>p95 / max outside</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pelvis</td>
+<td>box ½-extents 0.182 × 0.133 × 0.119, r 0.04</td>
+<td>1826</td>
+<td>88.6 %</td>
+<td>26.5 / 27.7 mm</td>
+</tr>
+<tr>
+<td>abdomen</td>
+<td>box 0.172 × 0.116 × 0.107, r 0.04</td>
+<td>66 †</td>
+<td>86.4 %</td>
+<td>12.9 / 12.9 mm</td>
+</tr>
+<tr>
+<td>chest</td>
+<td>box 0.193 × 0.136 × 0.100, r 0.04</td>
+<td>1607</td>
+<td>87.1 %</td>
+<td>32.0 / 35.0 mm</td>
+</tr>
+<tr>
+<td>head</td>
+<td>sphere r 0.115 + neck capsule ½h 0.047 r 0.062</td>
+<td>36801</td>
+<td>91.3 %</td>
+<td>31.6 / 39.3 mm</td>
+</tr>
+<tr>
+<td>upperArm L / R</td>
+<td>tapered capsule ½h 0.090, r 0.075 → 0.067</td>
+<td>530</td>
+<td>79.2 / 78.5 %</td>
+<td>46.0 / 48.8 mm</td>
+</tr>
+<tr>
+<td>foreArm L / R</td>
+<td>tapered capsule ½h 0.099, r 0.049 → 0.038 + hand capsule ½h 0.072 r 0.029</td>
+<td>954</td>
+<td>72.3 / 71.5 %</td>
+<td>28.0 / 35.1 mm</td>
+</tr>
+<tr>
+<td>thigh L / R</td>
+<td>tapered capsule ½h 0.086, r 0.118 → 0.096</td>
+<td>2038 / 1975</td>
+<td>75.6 / 75.5 %</td>
+<td>33.4 / 57.6 mm</td>
+</tr>
+<tr>
+<td>shin L / R</td>
+<td>tapered capsule ½h 0.146, r 0.065 → 0.060</td>
+<td>848</td>
+<td>69.8 / 70.3 %</td>
+<td>37.6 / 44.8 mm</td>
+</tr>
+<tr>
+<td>foot L / R</td>
+<td>box 0.082 × 0.075 × 0.179, r 0.01</td>
+<td>920</td>
+<td>100 %</td>
+<td>0 / 0 mm</td>
+</tr>
+</tbody>
+</table>
+<p>† The abdomen fit column counts the spine-dominant vertices. The box itself is fitted to the whole torso slice.</p>
+<ul>
+<li><strong>How to read the fit:</strong> the colliders are deliberately <em>inside</em> the mesh surface on the limbs. The p95 of the mesh lies 3–5 cm outside them, and that margin is exactly the rendered sinking at rest (§4).</li>
+<li><strong>The trade-off:</strong> fatter colliders reduce the sinking but make limbs meet each other earlier and fight (for example hands against thighs). This was a fitting choice, and it is the main open visual question (§14).</li>
+<li><strong>The thigh radius is set by the shorts:</strong> 11.8 cm at the top. The rendered thigh is inside the shorts.</li>
+</ul>
+<h2>10. Joints: definitions, ROM and the Jolt mapping</h2>
+<p>Each constraint frame's X axis is the twist axis: it points up the trunk and neck, and down the limbs. Y is the first swing axis (the body's +x at bind), and Z = X × Y.</p>
+<table>
+<thead>
+<tr>
+<th>joint</th>
+<th>Jolt constraint</th>
+<th>twist (X)</th>
+<th>swing Y</th>
+<th>swing Z</th>
+<th>passive friction N·m</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>lumbar</td>
+<td>SixDOF, pyramid</td>
+<td>±12°</td>
+<td>−20° ext … +45° flex</td>
+<td>±20° lateral</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td>thoracic</td>
+<td>SixDOF, pyramid</td>
+<td>±30°</td>
+<td>−10° … +35°</td>
+<td>±15°</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td>neck</td>
+<td>SixDOF, pyramid</td>
+<td>±60°</td>
+<td>±45°</td>
+<td>±40°</td>
+<td>0.5</td>
+</tr>
+<tr>
+<td>shoulder_L</td>
+<td>SixDOF, pyramid</td>
+<td>−70° … +90°</td>
+<td>−150° flex … +50° ext</td>
+<td>−150° abd … +30° add</td>
+<td>0.5</td>
+</tr>
+<tr>
+<td>shoulder_R</td>
+<td>SixDOF, pyramid</td>
+<td>−90° … +70°</td>
+<td>−150° … +50°</td>
+<td>−30° add … +150° abd</td>
+<td>0.5</td>
+</tr>
+<tr>
+<td>elbow L/R</td>
+<td>Hinge, soft stops</td>
+<td>—</td>
+<td>0 … 145° flexion (−2° allowance)</td>
+<td>—</td>
+<td>0.3</td>
+</tr>
+<tr>
+<td>hip_L</td>
+<td>SixDOF, pyramid</td>
+<td>±45°</td>
+<td>−120° flex … +30° ext</td>
+<td>−45° abd … +30° add</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td>hip_R</td>
+<td>SixDOF, pyramid</td>
+<td>±45°</td>
+<td>−120° … +30°</td>
+<td>−30° add … +45° abd</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td>knee L/R</td>
+<td>Hinge, soft stops</td>
+<td>—</td>
+<td>0 … 140° flexion (−3° allowance)</td>
+<td>—</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>ankle_L</td>
+<td>SixDOF, pyramid</td>
+<td>±10°</td>
+<td>−20° dorsi … +50° plantar</td>
+<td>−15° … +35° (inv / ev, mirrored)</td>
+<td>0.5</td>
+</tr>
+<tr>
+<td>ankle_R</td>
+<td>SixDOF, pyramid</td>
+<td>±10°</td>
+<td>−20° … +50°</td>
+<td>−35° … +15°</td>
+<td>0.5</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sign convention for this rig:</strong></p>
+<ul>
+<li>A hinge angle &gt; 0 is flexion.</li>
+<li>SixDOF swing Y &gt; 0 is flexion for the trunk and neck (X up) but <em>extension</em> for hips and shoulders, and plantarflexion for ankles (X down).</li>
+<li>Swing Z &gt; 0 moves a down-pointing segment toward the player's right. That is abduction on the right and adduction on the left, which is why the left limits are mirrored.</li>
+</ul>
+<p><strong>ROM sources:</strong></p>
+<ul>
+<li>AAOS / Norkin &amp; White normative ROM, cross-checked against the CDC normal-joint-ROM study (Soucie et al. 2011).</li>
+<li>The <strong>trunk split is ours:</strong> total flexion 80°, extension 30°, lateral bend 35° and rotation 42° are divided between lumbar and thoracic, with the rotation mostly thoracic.</li>
+<li><strong>Shoulder elevation is capped at 150°,</strong> not 180°. Glenohumeral motion alone is about 120°; the rest comes from the scapula, which we don't have. Pyramid swing also becomes poorly conditioned near 180°.</li>
+</ul>
+<p><strong>Why these Jolt constraints:</strong></p>
+<ul>
+<li><strong>SixDOF with <code>ESwingType_Pyramid</code>:</strong><ul>
+<li><code>SwingTwistConstraint</code> and SixDOF's cone mode only allow symmetric swing, but anatomy is asymmetric (hip flexion 120° against extension 30°). Pyramid gives independent min / max per axis.</li>
+<li>All three translation axes are locked, and the rotation limits are hard.</li>
+<li>Jolt's swing–twist decomposition (twist about X, then swingY / swingZ = 2·atan2) is reproduced in <code>pc_math.js: Q.swingTwist</code>. It is verified identical to Jolt's own readouts, which is how the limit measurements in §4 are independent of the solver.</li>
+</ul>
+</li>
+<li><strong>Hinge for knees and elbows:</strong> one degree of freedom is the cheapest and most stable constraint.<ul>
+<li><strong>Soft end-stops</strong> (<code>mLimitsSpringSettings</code>, 20 Hz, ζ = 1) replace hard stops, which injected energy.</li>
+<li>The cost is designed overshoot under load: ≤ 12° transient, ≤ 1.45° at rest.</li>
+<li>Known consequence: the forearm cannot pronate or supinate (§14).</li>
+</ul>
+</li>
+<li><strong>Passive joint friction:</strong> <code>SetMaxFriction</code> per rotation axis on SixDOF, <code>mMaxFrictionTorque</code> on the hinges.<ul>
+<li>This is dry friction: it only ever opposes relative rotation, and no motor state is enabled. It is what stops the limbs flopping like rope. Zero friction measured worse during tuning.</li>
+<li>That tuning run was not repeated for the final configuration.</li>
+</ul>
+</li>
+<li><strong>Self-collision</strong> (<code>GroupFilterTable</code>):<ul>
+<li>Every body pair collides except these 16:<ul>
+<li>the 13 parent–child pairs, which always overlap at the joint;</li>
+<li>pelvis–chest, which sit one short abdomen apart and meet under ordinary trunk flexion;</li>
+<li>abdomen–thigh L / R, which fought the hip at deep flexion and injected 12 J.</li>
+</ul>
+</li>
+<li>So hands against thighs, arm against chest, leg against leg, head against arm and so on all collide.</li>
+</ul>
+</li>
+</ul>
+<h2>11. Friction, restitution and damping</h2>
+<table>
+<thead>
+<tr>
+<th>pair</th>
+<th>friction</th>
+<th>restitution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>boot ↔ turf</td>
+<td>0.9</td>
+<td>0</td>
+</tr>
+<tr>
+<td>hand ↔ turf</td>
+<td>0.6</td>
+<td>0</td>
+</tr>
+<tr>
+<td>body ↔ turf</td>
+<td>0.5</td>
+<td>0</td>
+</tr>
+<tr>
+<td>body ↔ body</td>
+<td>0.4</td>
+<td>0</td>
+</tr>
+<tr>
+<td>boot ↔ body</td>
+<td>0.4</td>
+<td>0</td>
+</tr>
+<tr>
+<td>hand ↔ body</td>
+<td>0.4</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>How the policy is applied:</strong> it is applied per contact pair (a <code>ContactListenerJS</code> sets <code>mCombinedFriction</code> / <code>mCombinedRestitution</code>), not by Jolt's geometric-mean combine.</li>
+<li><strong>Restitution is 0 everywhere,</strong> because humans don't bounce.</li>
+<li><strong>Damping:</strong> linear and angular 0.05 on every body. Joint friction is in §10.</li>
+<li><strong>Starting values, not tuned:</strong> these were chosen as plausible values and nothing was tuned per drop. Gate B will be the first real test of turf friction, when feet push.</li>
+</ul>
+<h2>12. Determinism</h2>
+<ul>
+<li><strong>Hash:</strong> FNV-1a over the exact Float64 bits of position, rotation, linear and angular velocity for all 14 bodies, chained every step (1,440 steps per drop).</li>
+<li><strong>Repeats:</strong> 3 runs per drop in one Node process are <strong>bit-identical</strong> for all five drops.</li>
+<li>
+<p><strong>Cross-runtime:</strong> the Chrome 154 harness (same WASM) against Node 22.19 is <strong>identical for all five drops</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>drop</th>
+<th>hash</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td><code>5bbffb56</code></td>
+</tr>
+<tr>
+<td>B</td>
+<td><code>2f8a9c80</code></td>
+</tr>
+<tr>
+<td>C</td>
+<td><code>34af33e</code></td>
+</tr>
+<tr>
+<td>D</td>
+<td><code>55b97ba8</code></td>
+</tr>
+<tr>
+<td>E</td>
+<td><code>48f19a22</code></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p><strong>Fresh process:</strong> a separate Node process today, used for the rest-state table in §4, reproduced all five hashes.</p>
+</li>
+<li><strong>Condition:</strong> everything JS-side that feeds the physical state uses <strong>deterministic trigonometry</strong> (§15). <code>Math.sin</code> is only allowed for display.</li>
+<li><strong>Not tested:</strong> other machines or CPU architectures. WASM float arithmetic is IEEE-deterministic apart from NaN payloads, so the same file <em>should</em> reproduce elsewhere, but that is unverified.</li>
+</ul>
+<h2>13. Performance</h2>
+<p>Figures are Jolt step time, measured in Node 22.19 on an Apple M4, single-threaded, for one character: 14 bodies, 13 constraints, the turf, and all self-collision pairs live.</p>
+<table>
+<thead>
+<tr>
+<th>drop</th>
+<th>ms / 240 Hz step</th>
+<th>ms / 60 Hz frame (4 steps)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>0.055</td>
+<td>0.221</td>
+</tr>
+<tr>
+<td>B</td>
+<td>0.052</td>
+<td>0.206</td>
+</tr>
+<tr>
+<td>C</td>
+<td>0.042</td>
+<td>0.166</td>
+</tr>
+<tr>
+<td>D</td>
+<td>0.065</td>
+<td>0.259</td>
+</tr>
+<tr>
+<td>E</td>
+<td>0.051</td>
+<td>0.204</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>That is about <strong>1.5 % of a 16.7 ms frame per character.</strong> It excludes the harness's measurement code and rendering.</li>
+<li>Browser step time was not separately benchmarked; the harness pre-simulates the drop.</li>
+</ul>
+<h2>14. Known failures and limitations</h2>
+<ol>
+<li><strong>Rendered mesh sinks up to 2.4 cm at rest</strong> (shins, hands, shorts) and 3.7 cm transiently. This is the collider-fit margin (§9), not solver penetration. It can be fixed later by fitting limbs closer to the p95 surface, or with a render-side contact offset. I have not attempted either.</li>
+<li><strong>Hard limits can be overpowered by body weight on landing:</strong> up to 7.2°, for 500 ms total on B's loaded shoulder, and ≤ 0.63° at rest. More position iterations reduce it, but 8 iterations raised the energy injection to 7.2 J.</li>
+<li><strong>Soft knee and elbow stops overshoot</strong> ≤ 12° under impact. This is the price of not injecting energy.</li>
+<li><strong>Trapped-limb energy events:</strong> a limb pinned between the turf and the body gets conflicting contact and joint corrections. They are now ≤ 2.6 J per step, 23 steps over all drops, and they settle. Reduced, not eliminated.</li>
+<li><strong>Elbow is a hinge:</strong> there is no pronation or supination, so the forearm cannot twist. A SixDOF elbow would allow it at some cost in stability. It didn't matter for passive falls.</li>
+<li><strong>Shoulder at 150° max elevation, and no clavicle or scapula:</strong> no shrug. Pyramid limits get poorly conditioned towards 180°.</li>
+<li><strong>The thigh collider is sized by the shorts</strong> (r 11.8 cm), so thigh-to-thigh and hand-to-thigh contact happens at the shorts' surface.</li>
+<li><strong>Three collision pairs are filtered out on purpose</strong> (pelvis–chest, abdomen–thigh L/R), so extreme trunk-to-thigh folding is limited only by the hip ROM, not by contact.</li>
+<li><strong>Jolt JS exposes no post-solve contact impulses.</strong> The contact depth in the listener is pre-solve (the previous committed state). Contact <em>forces</em> for later gates will have to come from velocity deltas or a custom readout.</li>
+<li><strong>120 Hz was a near miss</strong> (§6). If the frame budget ever matters more than 12 mm joint gaps, it is the fallback.</li>
+<li><strong>Not tested:</strong> fast limb impacts (tunnelling at 13–15 m/s, deliberately out of scope), a second character, other players' rigs, and other machines for determinism.</li>
+</ol>
+<h2>15. Unexpected discoveries</h2>
+<ol>
+<li><strong><code>Math.sin</code> is not bit-identical between Node 22 and Chrome 154.</strong><ul>
+<li>Drop D's starting pose came out differently in the two runtimes, and the chaotic tumble amplified that into a different hash. Jolt itself was not the problem: once the inputs matched, its WASM gave identical bits.</li>
+<li>Fixed with deterministic <code>dsin</code> / <code>dcos</code> / <code>dtan</code> in <code>pc_math.js</code>: Cody–Waite reduction plus Taylor polynomials, using only + − × ÷, and <code>Math.sqrt</code> instead of <code>Math.hypot</code>.</li>
+<li><strong>Production rule this implies:</strong> any JS maths feeding a physics state must avoid <code>Math.sin/cos/tan/exp/pow/hypot/atan2</code>.</li>
+</ul>
+</li>
+<li><strong>Hard joint stops create energy.</strong> The hinge's hard knee limit injected up to <strong>14 J</strong>. Soft end-stops at 20 Hz, ζ = 1 removed that.</li>
+<li><strong>Trapped limbs are the dominant energy source, and the hand's shape decides it.</strong><ul>
+<li>A trapped flat box hand injected <strong>29 J</strong>. The offset capsule plus 30 velocity iterations brought it to ≤ 2.6 J.</li>
+<li>Even with the capsule hand, the 240 Hz sweep with Jolt's default 10 velocity iterations shows 18 J (§6).</li>
+</ul>
+</li>
+<li><strong>Collider-fit details matter more than the solver for what you see.</strong><ul>
+<li>Bone-line capsules left the calf 2–3 cm in the turf.</li>
+<li>The original abdomen box was fitted to only 66 vertices.</li>
+<li>The original thigh radius was 13.5 cm, and the head sphere was too small.</li>
+<li>Percentile windows, torso height slices and centroid axes fixed each of these. The remaining 2.4 cm is the deliberate interior margin (§14.1).</li>
+</ul>
+</li>
+<li><strong>A starting pose can start "outside" a limit without looking wrong.</strong> Drop B's raised arm began at the shoulder's limit and stayed in violation for 5.3 s until it was moved 10° inside. Every drop is now checked for self-overlap before release, and limit violations are measured from step 0.</li>
+<li><strong>More position iterations are not monotonically better.</strong> 2 → 4 halved the limit transients, but 4 → 8 raised the energy gain from 2.6 J to 7.2 J.</li>
+</ol>
+<hr />
+<h2>Evidence and files</h2>
+<p><strong>Evidence (<code>review_artifacts/physical_character_v1/gate_a/</code>):</strong></p>
+<ul>
+<li><code>contact_sheet.jpg</code>: A, B, C, D and E at key frames and at rest.</li>
+<li><code>stills/</code>:<ul>
+<li><code>A1_start_mesh+phys</code>, <code>A2_0.55s_mesh+phys</code>, <code>A3_rest_physics</code></li>
+<li><code>B1_0.16s_hip_contact</code>, <code>B2_0.20s_propagation_physics</code>, <code>B3_rest_mesh</code></li>
+<li><code>C1_0.25s_mesh+phys</code>, <code>C2_0.45s_physics</code></li>
+<li><code>D1_0.35s_mesh+phys</code>, <code>D2_0.6s_physics_top</code></li>
+<li><code>E1_0.45s_mesh+phys</code>, <code>E2_worst_limit_physics</code>, <code>E3_rest_mesh</code></li>
+</ul>
+</li>
+<li><code>gatea_final_240x1.json</code> / <code>.log</code>: full per-drop summaries, worst frames, contact order and hashes.</li>
+<li><code>config_sweep.txt</code>: the §6 comparison.</li>
+</ul>
+<p><strong>Code (<code>sandbox/visual/physchar/</code>, all untracked):</strong></p>
+<table>
+<thead>
+<tr>
+<th>file</th>
+<th>role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pc_math.js</code></td>
+<td>Float64 V/Q, deterministic trig, swing–twist, hash</td>
+</tr>
+<tr>
+<td><code>pc_body.js</code></td>
+<td>body spec: de Leva, collider fit, joints, materials</td>
+</tr>
+<tr>
+<td><code>pc_jolt.js</code></td>
+<td>the only Jolt-aware file (adapter)</td>
+</tr>
+<tr>
+<td><code>pc_fit.js</code></td>
+<td>mesh-from-physics skinning</td>
+</tr>
+<tr>
+<td><code>pc_gatea.js</code></td>
+<td>drops, measurement, summary</td>
+</tr>
+<tr>
+<td><code>pc_harness.js</code> + <code>index.html</code></td>
+<td>the review harness</td>
+</tr>
+<tr>
+<td><code>vendor/</code></td>
+<td>the pinned Jolt build</td>
+</tr>
+<tr>
+<td><code>tools/</code></td>
+<td>Node runners</td>
+</tr>
+<tr>
+<td><code>results/</code></td>
+<td>the suite and sweep outputs</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Reproduce the suite</strong> (one Node process, sequential):</p>
+<pre><code>cd &quot;…/physical-character-v1/sandbox/visual/physchar&quot;
+node tools/gatea_run.js --drops A,B,C,D,E --tsc 240x1 --world '{&quot;hingeSoftHz&quot;:20,&quot;velSteps&quot;:30,&quot;posSteps&quot;:4}' --mesh --repeat 3 --order --why --out results/gatea_final_240x1.json
+node tools/gatea_run.js --spec          # body / collider / joint dump
+node tools/config_sweep.js              # §6 table
+</code></pre>
+<p><strong>Not done, as instructed:</strong> Gate B, motors, animation targets, Reference Tackle reproduction, a second character, fast-limb collision, production integration, commits and pushes.</p>
+<p><strong>Preserved and untouched:</strong> touchline-current, Reference Tackle V1 and <code>RT_export()</code>, the Reference Tackle cache, the rear-contact and follow-through work, the defence experiments, and the substrate spikes.</p></main></body></html>

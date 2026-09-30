@@ -1,0 +1,22 @@
+#!/bin/zsh
+# V1.1 anatomy calibration — sequential comparison batch (one node process at a time)
+cd "/Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1/sandbox/visual/physchar" || exit 1
+O="../../../review_artifacts/physical_character_v1/v1_1/json/final"
+W='{"hingeSoftHz":20,"velSteps":30,"posSteps":4}'
+C1="SV_static,QS20,PF30,PF60,PB30,PB35,PR30,PR45,PR50,G_fall,H_ice_quiet,H_ice_push"
+run() { local name=$1; shift; echo "$(date +%H:%M:%S) start $name"; local t0=$(date +%s); node "$@" > "$O/$name.log" 2>&1; echo "$(date +%H:%M:%S) done  $name ($(( $(date +%s) - t0 )) s, exit $?)"; }
+# ── V1 preservation (every approved test, ×1) ──
+run pres_gatea_V1   tools/gatea_run.js  --calib V1 --drops A,B,C,D,E --tsc 240x1 --seconds 6 --world "$W" --out "$O/pres_gatea_V1.json"
+run pres_gateb_V1   tools/gateb_run.js  --calib V1 --tests all --tsc 240x1 --out "$O/pres_gateb_V1.json"
+run pres_gatec1_V1  tools/gatec1_run.js --calib V1 --tests all --out "$O/pres_gatec1_V1.json"
+# ── comparison sets, ×3 (determinism) ──
+for C in V1 V1.1; do
+  run gatea_$C  tools/gatea_run.js  --calib $C --drops A,B,C,D,E --tsc 240x1 --seconds 6 --world "$W" --repeat 3 --out "$O/gatea_$C.json"
+  run gateb_$C  tools/gateb_run.js  --calib $C --tests A,C,E,F_chest --tsc 240x1 --repeat 3 --out "$O/gateb_$C.json"
+  run gatec1_$C tools/gatec1_run.js --calib $C --tests $C1 --repeat 3 --out "$O/gatec1_$C.json"
+done
+run gatec2_V1            tools/gatec2_run.js --calib V1   --tests all --repeat 3 --out "$O/gatec2_V1.json"
+run gatec2_V1.1_raw      tools/gatec2_run.js --calib V1.1 --tests all --repeat 3 --out "$O/gatec2_V1.1_raw.json"
+run gatec2_V1.1_recal    tools/gatec2_run.js --calib V1.1 --recal --tests all --repeat 3 --out "$O/gatec2_V1.1_recal.json"
+run gatec2_V1.1_diag     tools/gatec2_run.js --calib V1.1 --recal --diag-unload --tests all --repeat 3 --out "$O/gatec2_V1.1_recal_diag.json"
+echo "$(date +%H:%M:%S) ALL DONE"

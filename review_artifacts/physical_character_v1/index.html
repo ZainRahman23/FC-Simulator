@@ -1,0 +1,985 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Physical Character Architecture</title><style>
+:root{--bg:#fbfaf7;--ink:#1d1f22;--mute:#5d646b;--line:#dcd8cf;--code:#f1eee7;--acc:#8a5a00;--q:#f4efe2}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#141619;--ink:#e6e4df;--mute:#9aa0a6;--line:#33373d;--code:#1d2024;--acc:#f0c060;--q:#1f1c14}}
+:root[data-theme="dark"]{--bg:#141619;--ink:#e6e4df;--mute:#9aa0a6;--line:#33373d;--code:#1d2024;--acc:#f0c060;--q:#1f1c14}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 -apple-system,system-ui,"Segoe UI",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px 80px}
+h1{font-size:26px;line-height:1.25} h2{font-size:20px;margin-top:40px;padding-top:12px;border-top:1px solid var(--line)} h3{font-size:16px;color:var(--acc)}
+table{border-collapse:collapse;width:100%;font-size:13px;margin:12px 0;display:block;overflow-x:auto} th,td{border:1px solid var(--line);padding:5px 8px;vertical-align:top;text-align:left} th{background:var(--code)}
+code{background:var(--code);padding:1px 4px;border-radius:3px;font-size:12.5px} pre{background:var(--code);padding:12px;border-radius:6px;overflow-x:auto;font-size:12px;line-height:1.45} pre code{padding:0;background:none}
+blockquote{margin:12px 0;padding:10px 16px;background:var(--q);border-left:4px solid var(--acc)} a{color:var(--acc)}
+</style></head><body><main><h1>Physically Articulated Character / Contact System V1: research and architecture for approval</h1>
+<p><strong>Status:</strong> design only. Nothing is implemented and nothing is committed.
+<strong>Worktree:</strong> <code>worktrees/physical-character-v1</code>, branch <code>prototype/physical-character-v1</code>, off <code>touchline-current</code> 4baf37b.
+<strong>Preserved:</strong>
+- Reference Tackle V1: <code>worktrees/_preserved_2026-09-29_reference_tackle_v1/</code>. The tgz has 114 files, including the 97 reference frames.
+- Follow-through V1/V2: <code>worktrees/_preserved_2026-09-29_followthrough_v2/</code>.</p>
+<hr />
+<h2>0. Summary and the invariant everything is judged by</h2>
+<blockquote>
+<p><strong>Invariant.</strong> When shin meets leg, the physical bodies cannot continue through one another. The contact must change their motion on that contact step.</p>
+<p>In testable form:
+- <strong>A. The contact acts on the step it happens.</strong> On the first substep where two players' shapes meet (detected on the predicted positions), the solver applies a non-zero normal impulse to both bodies in that same substep.
+- <strong>B. Nothing is left overlapping.</strong> In every committed substep state, every non-filtered pair has separation ≥ −3 mm (body–body) or ≥ −5 mm (ground). In practice any overlap is corrected inside the substep before it is committed.
+- <strong>C. No lingering overlap.</strong> Never ≥ 2 consecutive 60 Hz frames over tolerance.
+- <strong>D. Always monitored.</strong> A monitor checks A–C in every gate and every run. Any violation stops the run and saves the frame for reproduction.</p>
+</blockquote>
+<p><strong>Decisions proposed</strong>
+1. <strong>Solver:</strong> a small custom articulated solver in JS, doubles throughout, based on XPBD rigid bodies (Müller et al. 2020). It uses substeps with one iteration each (Macklin et al. 2019): 60 Hz × 20 substeps (h ≈ 0.83 ms). The whole physical state is ours, lives in the same heap as the renderer, and is deterministic by construction.
+   - <strong>Fallback:</strong> JoltPhysics.js behind the same interfaces, if Gate A/B stability fails (§18).
+2. <strong>Body:</strong> 14 rigid bodies per player, 13 joints:
+   - pelvis, abdomen, chest, head/neck;
+   - thigh, shank and foot per side;
+   - upper arm and forearm+hand per side.
+3. <strong>Mass:</strong> each player's recorded weight is the total mass (Gabriel 78 kg, Vinícius 73 kg). It is split by de Leva (1996) fractions, with inertia from de Leva radii of gyration × our own segment lengths.
+4. <strong>Joints:</strong>
+   - swing–twist joints with asymmetric elliptical swing limits (AAOS ranges) for hips, shoulders, spine, neck and ankles;
+   - hinge joints (plus limited twist) for knees and elbows.
+5. <strong>Motors:</strong> implicit, stable PD drives, i.e. compliant orientation constraints. Each has a natural frequency ω and a damping ratio ζ, scaled by the inertia of the chain it drives. Each has a torque cap τmax and a time-varying strength s(t).
+   - Separate world-space drives: a strength-limited pelvis root drive, an upper-body balance drive on the chest, and a head gaze drive.
+6. <strong>Contacts:</strong>
+   - detected on predicted positions every substep, so the correction happens before anything is committed;
+   - broadphase once per frame on swept bounds;
+   - a deterministic guard raises the substep count if anything moves too far in one substep.
+7. <strong>Friction:</strong> dissipative Coulomb friction (static at position level, dynamic at velocity level), set per material pair. A planted boot is a stud anchor with a break-out force and a torsional limit, not just "a high μ".
+8. <strong>Separation of concerns:</strong> the contact provider (pure geometry) is separate from Touchline's contact policy (materials, filters, event reports), which is separate from the solver. Physics never decides football outcomes.
+9. <strong>Rendering:</strong> the rendered 23-bone skeleton is fitted from the 14 bodies with fixed bone lengths. What you see is the physical state.
+10. <strong>Targets:</strong> Reference Tackle V1 is the target signal. Its curves are sampled at substep times into joint targets, pelvis/chest world targets and target velocities.</p>
+<h3>Data flow</h3>
+<pre><code>AUTHORITATIVE SIMULATION (world.py / pt_* — 60 Hz, deterministic)        decides: possession, tackle success, ball, broad trajectories
+  │  event facts: contact intent + window, ball path, root trajectories, outcome        (physics NEVER writes these back)
+  ▼
+TARGET GENERATOR (kinematic)            Reference Tackle V1 curves · run-in locomotion · later: the clip library
+  │  per substep: 13 joint target rotations + angular velocities; pelvis / chest / head world targets; profile keys
+  ▼
+CONTROLLER                              profiles: per joint (ω, ζ, τmax, strength s(t)); world drives (root, upper body, gaze)
+  │
+  ▼
+PHYSICAL CHARACTER — ONE STATE (Float64)  14 bodies × 2 players, 13 joints each (limits), motors, shapes
+  │        ├─ CONTACT PROVIDER   broadphase per frame (swept AABBs) → narrowphase per substep → contact facts
+  │        └─ CONTACT POLICY     (Touchline) materials / friction model / filters / contact classes / event REPORTS
+  ▼
+XPBD SOLVER, 20 substeps × 1 iteration:
+  integrate → joints → limits → motors &amp; drives → contacts + static friction → velocities → dynamic friction &amp; damping
+  │  committed state + contact log (λn, λt per contact) + support / balance state
+  ▼
+RENDER FIT   14 bodies → 23-bone skeleton (rig lengths, no stretch) → existing skinning → WebGL
+  └─▶ DEBUG + RECORDER taps at every stage (read-only; never feed back)
+</code></pre>
+<p>The ball stays authoritative. In V1 it is a kinematic <strong>sensor</strong>: boot–ball proximity is reported, and a boot cannot push the ball or be blocked by it.</p>
+<hr />
+<h2>1. Why the current architecture gives contact → penetration → a late reaction</h2>
+<p>These points come from reading the accepted code (<code>pt_react.js</code>, <code>of_react.js</code>, <code>of_defend.js</code>, <code>pt_defend.js</code>) and the Reference Tackle V1 harness.</p>
+<ol>
+<li><strong>There is no physical body anywhere.</strong> Every visible pose is a function of clip, time and gait phase: the authored key poses, the locomotion, the slide poses in <code>of_defend.js</code>, the fall bases in <code>of_react.js</code>. The pose evaluator never sees the other player's limbs. Interpenetration is not something the motion can prevent; it can only be measured afterwards. Reference Tackle V1 made this explicit: purely kinematic trajectories, with overlap <em>measured</em>.</li>
+<li><strong>The collision geometry and the drawn geometry are different objects.</strong></li>
+<li>The attacker's contact legs are rebuilt from the stride clock (<code>ptRxBody</code>: hip height, lift and ankle position are formulas).</li>
+<li>The slider's contact parts are parametric primitives with hard-coded heights (<code>ptRxTacklerPrims</code>: <code>LEG</code> at 0.12 m, <code>BODY</code> at 0.22 m, …).</li>
+<li>The renderer draws a different, solved pose.</li>
+<li>So the proxies can say "touching" while the rendered limbs are 5 cm inside each other, or the reverse.</li>
+<li><strong>Contact is an event, not a constraint.</strong> <code>ptRxDetect</code> finds the <em>first</em> contact within a tick (4 sub-steps) and returns it. <code>ptRxResolve</code> routes the impulse into <em>lumped</em> quantities: the COM velocity, a spin about the vertical, a planted-foot "sweep" distance, and a capture-point <strong>classification</strong> (CORRECTION / STUMBLE / FALL). Nothing moves the two colliding limbs apart at that instant. They keep following their clips through the contact.</li>
+<li><strong>Leg-against-leg is deliberately excluded from non-penetration.</strong> <code>ptRxNonPen</code> says: "<em>The sweeping leg against legs, and any contact with a SWINGING limb, is the tackle itself — the impulse / reaction model's … not a wall.</em>" V1.2's non-penetration covers only rigid body parts. It acts on <strong>root velocities</strong>, only once penetration exceeds a 1 cm slop, with a Baumgarte-style separating bias. That is after-the-fact separation by construction.</li>
+<li><strong>The reaction is a timeline, and it isn't local.</strong> A FALL is a directional blend of whole-body key poses (<code>FWD_MID</code>/<code>FWD_LAND</code>/<code>SIDE_*</code>/<code>BACK_*</code>) advanced by a topple clock that starts at the reaction's start. The first visible change is a whole-body blend easing in over tens of milliseconds. The struck shank is not displaced first, and nothing propagates from shank → knee → hip → pelvis → trunk → head.</li>
+<li><strong>The later fixes were bolted onto the outside.</strong></li>
+<li>Follow-through V1 was a set of pose layers.</li>
+<li>V2's <code>PT_RB</code> was a <em>single</em> rigid body with no articulation, started after the event and synchronised with a separately animated skeleton.</li>
+<li>Both kept two states: a dynamic proxy and the kinematic character.</li>
+</ol>
+<p><strong>Root cause:</strong> presentation motion is kinematic and blind to the other body, and contact enters as a <em>state-machine input</em> rather than a <em>constraint in the equations of motion</em>. No amount of cleanup at the root or pose level can make contact cause the reaction.</p>
+<hr />
+<h2>2. Articulated body hierarchy (per player)</h2>
+<pre><code>pelvis (root body, lower trunk) ──L5/S1 &quot;lumbar&quot;──▶ abdomen (middle trunk) ──T12/L1 &quot;thoracic&quot;──▶ chest (upper trunk) ──C7 &quot;neck&quot;──▶ head+neck
+   │                                                                                      ├──&quot;shoulder_R&quot;──▶ upperArm_R ──&quot;elbow_R&quot;──▶ forearm+hand_R
+   │                                                                                      └──&quot;shoulder_L&quot;──▶ upperArm_L ──&quot;elbow_L&quot;──▶ forearm+hand_L
+   ├──&quot;hip_R&quot;──▶ thigh_R ──&quot;knee_R&quot;──▶ shank_R ──&quot;ankle_R&quot;──▶ foot_R      (forefoot/toe: future split at the MTP line, §13)
+   └──&quot;hip_L&quot;──▶ thigh_L ──&quot;knee_L&quot;──▶ shank_L ──&quot;ankle_L&quot;──▶ foot_L
+</code></pre>
+<p><strong>14 bodies and 13 joints.</strong> The joints are lumbar, thoracic, neck, 2 hips, 2 knees, 2 ankles, 2 shoulders and 2 elbows.</p>
+<p><strong>Mapped to our 23-bone rig:</strong></p>
+<table>
+<thead>
+<tr>
+<th>body</th>
+<th>render bones driven</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pelvis</td>
+<td><code>root</code>, <code>pelvis</code></td>
+</tr>
+<tr>
+<td>abdomen</td>
+<td><code>spine</code></td>
+</tr>
+<tr>
+<td>chest</td>
+<td><code>chest</code>, <code>clavicle_R/L</code> (clavicles authored relative to the chest)</td>
+</tr>
+<tr>
+<td>head</td>
+<td><code>neck</code>, <code>head</code>, <code>hair</code> (neck/head split, §15)</td>
+</tr>
+<tr>
+<td>thigh / shank / foot</td>
+<td><code>thigh</code>, <code>shin</code>, <code>foot</code> + <code>toe</code></td>
+</tr>
+<tr>
+<td>upperArm</td>
+<td><code>upperArm</code></td>
+</tr>
+<tr>
+<td>forearm</td>
+<td><code>foreArm</code>, <code>hand</code> (wrist authored relative to the forearm)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Deliberately not bodies in V1:</strong>
+- <strong>Clavicles / shoulder girdle.</strong> A 0.5 kg scapula body between a 12 kg chest and a 2 kg arm hurts stability and adds little to contact. Shoulder elevation stays an authored offset; a girdle body is a documented V2 extension.
+- <strong>Separate hands and toes.</strong> The toe split is planned for (§13).</p>
+<hr />
+<h2>3. Collider shapes and how they are sized</h2>
+<p><strong>Rules:</strong>
+- Shapes are attached to bodies and are simple primitives: capsule, sphere, box, plane.
+- They are <strong>derived per player from that player's own rig</strong> (<code>rig.json</code>: <code>lengthM</code>, <code>radiusM</code>, the <code>footwearMin/Max</code> boot box, <code>ankleHeightM</code>), so a different morphology gets different colliders automatically.
+- Radii are about <strong>0.9 × the render radius</strong>, so contact looks like skin/kit touching (≈ 5 mm of visual compression) rather than a visible gap.
+- They are never taken from the render mesh.
+- Each shape can carry a <em>self-collision inset</em> (a smaller radius used only against the same player).</p>
+<p>Example numbers for <strong>Gabriel</strong> (1.90 m; the rig's radii and lengths):</p>
+<table>
+<thead>
+<tr>
+<th>body</th>
+<th>shape(s)</th>
+<th>size (m)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pelvis</td>
+<td>capsule, axis left→right, 0.05 above the hip-joint line</td>
+<td>r 0.115, half-segment 0.06 → 0.35 wide × 0.23 deep</td>
+</tr>
+<tr>
+<td>abdomen</td>
+<td>capsule left→right at mid-spine</td>
+<td>r 0.110, half-segment 0.05</td>
+</tr>
+<tr>
+<td>chest</td>
+<td>capsule left→right at 0.45 of chest length</td>
+<td>r 0.115, half-segment 0.08 → 0.39 wide</td>
+</tr>
+<tr>
+<td>head</td>
+<td>sphere at head centre + neck capsule</td>
+<td>sphere r 0.100; neck r 0.055</td>
+</tr>
+<tr>
+<td>thigh</td>
+<td>capsule hip→knee (hip end inset 0.05)</td>
+<td>r 0.085 (render 0.096)</td>
+</tr>
+<tr>
+<td>shank</td>
+<td>capsule knee→ankle</td>
+<td>r 0.055 (render 0.060)</td>
+</tr>
+<tr>
+<td>foot</td>
+<td><strong>box</strong> for the ground (the boot bbox 0.357 × 0.164 × 0.10, sole on the stud-tip plane) + shoe capsule heel→toe for player contact</td>
+<td>box as measured; capsule r 0.045</td>
+</tr>
+<tr>
+<td>upper arm</td>
+<td>capsule shoulder→elbow</td>
+<td>r 0.050</td>
+</tr>
+<tr>
+<td>forearm+hand</td>
+<td>capsule elbow→(wrist + 0.08) + palm sphere</td>
+<td>r 0.037; palm r 0.045</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why the foot has two shapes:</strong> a box gives a stable 4-point sole manifold on the ground (§13). A capsule gives robust, cheap contact against another player's leg. Box–capsule SAT isn't needed in V1.</p>
+<p><strong>Self-collision filtering:</strong>
+- Off for jointed pairs and for pairs that overlap at rest: pelvis–thigh, pelvis–abdomen, abdomen–chest, chest–upperArm, chest–head.
+- On for pairs that must not pass through each other: thigh–thigh, knee–knee, hand/forearm–thigh, arm–torso (for the tackler's arm crossing his body in Reference Tackle V1), foot–opposite shank.
+- The filter table is data, visible in the debug view.</p>
+<hr />
+<h2>4. Mass and inertia</h2>
+<p><strong>Total mass = the recorded <code>identity.weightKg</code></strong> (<code>rig.json</code>; <code>pt_react</code> already uses it as <code>massKg</code>). There is no universal character mass.</p>
+<p>It is split by <strong>de Leva (1996), male</strong> [S1]. Hand and forearm are merged; the trunk is de Leva's three parts.</p>
+<table>
+<thead>
+<tr>
+<th>body</th>
+<th>de Leva segment</th>
+<th>fraction</th>
+<th>Gabriel (78 kg)</th>
+<th>Vinícius (73 kg)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pelvis</td>
+<td>lower trunk</td>
+<td>11.17 %</td>
+<td>8.71</td>
+<td>8.15</td>
+</tr>
+<tr>
+<td>abdomen</td>
+<td>middle trunk</td>
+<td>16.33 %</td>
+<td>12.74</td>
+<td>11.92</td>
+</tr>
+<tr>
+<td>chest</td>
+<td>upper trunk</td>
+<td>15.96 %</td>
+<td>12.45</td>
+<td>11.65</td>
+</tr>
+<tr>
+<td>head+neck</td>
+<td>head</td>
+<td>6.94 %</td>
+<td>5.41</td>
+<td>5.07</td>
+</tr>
+<tr>
+<td>thigh ×2</td>
+<td>thigh</td>
+<td>14.16 %</td>
+<td>11.04</td>
+<td>10.34</td>
+</tr>
+<tr>
+<td>shank ×2</td>
+<td>shank</td>
+<td>4.33 %</td>
+<td>3.38</td>
+<td>3.16</td>
+</tr>
+<tr>
+<td>foot ×2</td>
+<td>foot</td>
+<td>1.37 %</td>
+<td>1.07</td>
+<td>1.00</td>
+</tr>
+<tr>
+<td>upper arm ×2</td>
+<td>upper arm</td>
+<td>2.71 %</td>
+<td>2.11</td>
+<td>1.98</td>
+</tr>
+<tr>
+<td>forearm+hand ×2</td>
+<td>forearm + hand</td>
+<td>2.23 %</td>
+<td>1.74</td>
+<td>1.63</td>
+</tr>
+<tr>
+<td><strong>total</strong></td>
+<td></td>
+<td><strong>100.00 %</strong></td>
+<td><strong>77.99</strong></td>
+<td><strong>73.01</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>COM along each segment</strong> uses de Leva's positions from the proximal end:
+- thigh 40.95 %, shank 44.59 %, upper arm 57.72 %;
+- foot 44.15 % from the heel;
+- forearm+hand is the mass-weighted combination of forearm 45.74 % and hand 79.0 %;
+- head 50.02 % of vertex→C7.</p>
+<p>Each is applied to <strong>our</strong> segment lengths.</p>
+<p><strong>Inertia tensor (diagonal, in the segment frame):</strong> I = m·(r·L)², using de Leva's sagittal, transverse and longitudinal radii of gyration × our segment length. For example, thigh r = 32.9 / 32.9 / 14.9 %. This is more human than uniform-capsule inertia.</p>
+<p><strong>Cross-check:</strong> Dempster/Winter [S2] gives lighter thighs (10.0 %) and a heavier trunk (49.7 %). We use de Leva because it is based on living subjects and splits the trunk into three parts, which our three trunk bodies need.</p>
+<p><strong>Mass ratios:</strong>
+- The largest to smallest ratio is abdomen : foot ≈ 12 : 1.
+- Every adjacent ratio is ≤ 5.9 : 1 (chest : upper arm).
+- Heavy bodies support light ones everywhere except pelvis (8.7) → two thighs (11.0 each). That is the case Catto warns about [S17].
+- XPBD with 20 substeps handles far larger ratios (Müller shows 1 : 1000) [S16].
+- <strong>Contingency, only if Gate A jitters:</strong> Jolt-style inertia <em>stabilisation</em> — parent inertia ≥ the sum of its children's, capped at 2×. Masses stay exact; the change is shown in the debug panel.</p>
+<hr />
+<h2>5. Joint types and limits</h2>
+<p><strong>Frames:</strong>
+- Every joint has a frame in the parent and in the child, taken from the rig's bind. The Astra bind is translation-only, so all bind rotations are identity: +x = the player's right, +y = up, +z = forward.
+- Limits are relative to a <strong>neutral reference pose</strong>, chosen near the centre of each joint's range so that swing–twist decomposition stays far from its singularity (180° swing).
+- Swing is limited by an <strong>asymmetric elliptical cone</strong> (four quadrant half-angles, interpolated). Twist is limited separately, decoupled from swing as in Müller 2020 §3.4.2 [S16].
+- Limits are hard (zero compliance) with a 2° soft band, so hitting a limit doesn't produce an impulse spike.</p>
+<p>Ranges from AAOS norms (Norkin &amp; White), cross-checked against CDC measurements (Soucie 2011) [S3][S4]:</p>
+<table>
+<thead>
+<tr>
+<th>joint</th>
+<th>type</th>
+<th>limits (neutral = bind unless noted)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>hip</td>
+<td>swing–twist, twist axis = femur</td>
+<td>flex 120 / ext 30 / abd 45 / add 30; twist (IR/ER) ±40</td>
+</tr>
+<tr>
+<td>knee</td>
+<td>hinge (x) + tiny twist</td>
+<td>flex 0→140, hyperextension allowance −3°; twist ±5</td>
+</tr>
+<tr>
+<td>ankle</td>
+<td>swing–twist, twist axis = shank</td>
+<td>dorsiflex 20 / plantarflex 50 / inversion 35 / eversion 15; twist ±10</td>
+</tr>
+<tr>
+<td>lumbar</td>
+<td>swing–twist</td>
+<td>flex 45 / ext 20 / lateral ±20; twist ±12</td>
+</tr>
+<tr>
+<td>thoracic</td>
+<td>swing–twist</td>
+<td>flex 35 / ext 10 / lateral ±15; twist ±30</td>
+</tr>
+<tr>
+<td>neck</td>
+<td>swing–twist</td>
+<td>flex 45 / ext 45 / lateral ±45; twist ±60</td>
+</tr>
+<tr>
+<td>shoulder (glenohumeral + scapular, no girdle body)</td>
+<td>swing–twist; <strong>neutral = arm abducted ≈ 60°, flexed ≈ 30°</strong> (the centre of the range)</td>
+<td>flex 180 / ext 60 / abd 180 / add 40 from anatomical zero; twist IR 70 / ER 90</td>
+</tr>
+<tr>
+<td>elbow</td>
+<td>hinge (x) + pronation/supination twist (the hand is merged into the forearm)</td>
+<td>flex 0→145; twist ±75</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Notes:</strong>
+- The lumbar/thoracic split is my division of the thoracolumbar totals (flex 80, ext 25, lateral 35, rotation 45).
+- The 3° knee allowance is a design choice; measured hyperextension averages about 1°.</p>
+<p><strong>Attachment:</strong> position constraints at each joint with zero compliance, i.e. truly rigid in XPBD, so shoulders can't detach and there are no gaps.</p>
+<hr />
+<h2>6. Joint motors ("muscles")</h2>
+<p><strong>Local drive per joint:</strong>
+- A <strong>compliant 3-DOF orientation constraint</strong> pulls the child toward <code>q_target</code>, expressed in the parent's joint frame.
+- Error: q_err = q_rel⁻¹ · q_target, with the shortest path enforced (w &lt; 0 → negate). The correction is applied about the world axes of the child frame, as equal and opposite angular corrections on child and parent. This is the same construction as Jolt's <code>SwingTwistConstraint</code> motor [S6].
+- <strong>Compliance</strong> α = 1 / k, with k = I_eff · ω². <strong>Damping</strong> c = 2 ζ · I_eff · ω acts on relative angular velocity minus target relative angular velocity (velocity feed-forward).
+- <strong>I_eff</strong> is the inertia of the whole outboard chain about the joint. This is Zordan's inertia-scaled servo [S10], so one (ω, ζ) family works on every joint and every body size.
+- <strong>Torque cap:</strong> the per-substep correction is clamped so that the implied torque |λ|/h² ≤ τmax·s(t). The motor's actual torque is exposed for debugging.
+- This is an <strong>implicit PD</strong>: the same stability argument as Tan et al.'s Stable PD [S5] and Catto's soft constraints (k = m_eff ω², c = 2 m_eff ζ ω) [S7]. It stays stable for any gain at our substep, as long as ω ≤ 0.125 × substep rate ≈ 150 Hz.</p>
+<p><strong>World-space drives</strong> (Unreal's world-space physical-animation drives [S11]; Geijtenbeek calls the root version "hand of God" [S8]). Each is optional, per body, with its own ω/ζ/force cap:
+- <strong>Root drive on the pelvis:</strong> 6-DOF toward the authored pelvis frame. Until a balance controller exists (§14), this is what carries the body along the authoritative trajectory.
+  - Strength-limited, so a collision can push the pelvis off target.
+  - Force and torque are drawn every frame, so you can see when the root is being carried.
+- <strong>Upper-body balance drive on the chest:</strong> orientation, plus optionally position of a neck-base point. This is the "neck / upper-body balance point" idea (§8).
+- <strong>Gaze drive on the head:</strong> orientation only.</p>
+<p><strong>Profiles</strong> — the mechanism, not the laws:
+- A profile is a named table: joint → (ω, ζ, τmax, s), plus a world-drive table. Profiles are keyed on the master timeline, like any other track, and cross-faded over a stated time.
+- Starting profile for Gate B: STRONG_TRACK with ω ≈ 10–15 Hz legs, 8–10 Hz trunk, 6–8 Hz arms, 6 Hz neck, and ζ = 1.
+- Per-joint strength s(t) ∈ [0, 1] is the hook for later event-driven compliance, e.g. Zordan's reaction-gain drop and ramp-back [S9][S10]. It is manual in V1, with no automatic rules.</p>
+<p><strong>τmax defaults</strong> are order-of-magnitude human values: hip/knee/trunk ~250 N·m, ankle ~150, shoulder ~80, elbow ~70, neck ~50. <strong>These are unverified and must be checked before Gate D.</strong> Gate B may run with higher caps to prove tracking first.</p>
+<hr />
+<h2>7. How Reference Tackle V1 becomes motor targets</h2>
+<ul>
+<li><strong>Target pose.</strong> The RT kinematic pipeline, unchanged, is evaluated at each <strong>substep time</strong> (fractional frame f). The Catmull-Rom tracks are continuous in f, so this is valid. The pipeline is <code>rtEvalChar</code>:</li>
+<li>authored per-bone keys;</li>
+<li>the run-in locomotion;</li>
+<li>the plants and IK that were part of the approved motion.</li>
+</ul>
+<p>The result is 23 bone world matrices, converted once to Float64 quaternions.
+- <strong>Joint targets:</strong> q_target(j) = parent bone⁻¹ · child bone, re-expressed in the joint frames of the mapped bodies (§2 mapping).
+- <strong>World targets:</strong> pelvis body frame (root drive), chest frame (upper-body drive), head frame (gaze) — the same data <code>RT_export()</code> already produces.
+- <strong>Target velocities:</strong> central differences of the target poses at t ± h (deterministic). Used for motor damping feed-forward and for the initial velocities at activation (§16).
+- <strong>Measured/inferred flags</strong> travel with each target. The debug view colours tracking error by them. Profiles may soften inferred spans, but that is optional.
+- <strong>Footing.</strong> RT's plant, IK and ground-clamp outputs shape the <em>targets</em> only. Physical support comes from real turf contact and friction (§12–13). There is <strong>no world-space foot drive by default</strong>; a pinned-foot "hand of God" would hide exactly the support physics we want to see.
+- <strong>The ball</strong> is REF.ball, a kinematic sensor (§0).
+- <strong>Two characters, one timeline:</strong> frame N = the reference frame, tackler targets, attacker targets, ball and camera, as in V1. The RT harness comparison stays available: the reference video, the ghost, the authored skeleton, and now the physical skeleton.</p>
+<hr />
+<h2>8. Independent pelvis / chest / neck / shoulder dynamics</h2>
+<ul>
+<li>Pelvis, abdomen, chest and head are <strong>separate rigid bodies</strong> with their own masses and inertias, joined by lumbar, thoracic and neck joints.</li>
+<li>Each is tracked by (a) its local joint motor relative to its parent and (b) optionally its own world-space drive. Gains and caps are set per region.</li>
+<li>The upper body therefore <strong>does not inherit</strong> the pelvis transform. It is pulled toward its targets through finite-stiffness, torque-limited joints and has its own inertia.</li>
+</ul>
+<p><strong>What this gives us, without authoring it:</strong>
+- <strong>The tackler rolls onto the hip:</strong> the ground contact rolls the pelvis first; the chest follows late through the lumbar and thoracic motors and its upper-body drive.
+- <strong>The struck shank:</strong> the contact impulse enters the shank. It reaches the thigh through the knee constraint, then the pelvis through the hip, then the abdomen, chest, arms and head. Each link adds inertia and compliance, so the response <em>propagates in time</em>.
+- The authored targets still carry the phase lags observed in the reference, so observed lag and physical lag add up rather than cancel.</p>
+<p><strong>Shoulders:</strong>
+- Each upper arm has its own swing–twist joint and motor on the chest. RT's shoulder world positions follow from the chest pose, since there is no girdle body.
+- Arms get lower gains so they respond freely and can act as balance arms later.
+- A scapular girdle — elevation and protraction as a small 2-DOF body or an authored offset — is a V2 extension.</p>
+<p><strong>Relation to the third reference:</strong> this reproduces its <em>structural</em> property, independent pelvis roll plus an upper-body balance point, with our own equations: joint motors plus world-space drives on real bodies. We are not copying its point-mass model.</p>
+<hr />
+<h2>9. Collision detection architecture</h2>
+<p>Three layers with one-way interfaces:</p>
+<ol>
+<li><strong>Contact provider</strong> — pure geometry; knows nothing about football.</li>
+<li>Shapes on bodies.</li>
+<li><strong>Broadphase once per 60 Hz frame:</strong> sweep-and-prune on x over AABBs expanded by 2·|v|·Δt plus a margin (Müller 2020) [S16]. The pair list is sorted by (bodyA, bodyB, shapeA, shapeB) for determinism.</li>
+<li><strong>Narrowphase every substep</strong> on the <em>predicted</em> positions: capsule–capsule, capsule–sphere, sphere–sphere, capsule–plane, box–plane, sphere–plane.</li>
+<li><strong>Output:</strong> contact facts
+     <code>{bodyA, bodyB, segmentA, segmentB, shapeA, shapeB, featureId, pointA, pointB, normal, separation, v_rel_normal, v_rel_tangent, materialPair}</code>.</li>
+<li><strong>Contact policy</strong> — Touchline's.</li>
+<li>Maps a pair to a <strong>material pair</strong> and friction model: boot-studs/turf, kit/turf, hand/turf, limb/limb, boot/limb.</li>
+<li>Applies the self-collision filter table and sets per-class compliance (e.g. slight turf softness).</li>
+<li>Emits <strong>reports</strong> for the presentation and football layers, e.g. "first tackler → attacker lower-leg contact at t, point, relative velocity".</li>
+<li>It <strong>cannot</strong> change possession, success or the ball. It may only change physical parameters.</li>
+<li><strong>Solver</strong> — consumes contacts as constraints and writes back, per contact:</li>
+<li>λn, the normal impulse;</li>
+<li>λt, the tangential impulse;</li>
+<li>the static/dynamic friction mode;</li>
+<li>the committed separation.</li>
+</ol>
+<p><strong>Contact log:</strong> a ring buffer per substep plus a summary per frame; exportable with the frame state for reproduction. The physics layer never makes football decisions in a collision callback.</p>
+<hr />
+<h2>10. Anti-tunnelling (CCD) and substeps</h2>
+<ul>
+<li><strong>Fixed rate:</strong> 60 Hz × <strong>20 substeps</strong> (h = 0.833 ms), one XPBD iteration per substep. Macklin shows that n substeps × 1 iteration beats 1 step × n iterations, because error scales with h² [S15].</li>
+<li><strong>Detection on predicted positions:</strong> each substep predicts x̃ = x + h·v, runs the narrowphase <strong>on x̃</strong>, and solves contacts before committing. Committed states are therefore penetration-free up to solver residual. This is what makes the contact act <em>on its own step</em>: the correction happens in the predicted state of the substep where they meet.</li>
+<li><strong>Why tunnelling can't happen at football speeds.</strong> Relative displacement per substep:</li>
+<li>8 m/s leg: 6.7 mm;</li>
+<li>13 m/s closing speed (slide into a swinging shin): 10.8 mm;</li>
+<li>20 m/s kicking foot: 16.7 mm.</li>
+</ul>
+<p>Tunnelling needs a displacement comparable to the sum of radii: shank + shank 110 mm, forearm + forearm 74 mm. That is a margin of 4–10×.</p>
+<p>Rotation is included for free, because the narrowphase runs on each substep's <em>rotated</em> predicted pose. That is the gap in Jolt's LinearCast, which ignores rotation [J2].
+- <strong>Deterministic guard:</strong>
+  - Before each frame, compute the maximum relative displacement per substep over the candidate pairs, including the angular term |ω|·extent.
+  - If it exceeds 0.5 × the smallest radius sum, raise that frame's substep count: N = 20 · 2^k, with k chosen from the state.
+  - It is logged when it happens.
+- <strong>Kept in reserve:</strong> conservative-advancement time-of-impact (Mirtich / Catto 2013 [S19]) for pathological cases such as ball–boot, if the ball ever becomes physical.</p>
+<hr />
+<h2>11. Contact / constraint solver</h2>
+<p><strong>XPBD rigid bodies</strong> as in Müller et al. 2020 [S16]. Each substep:
+1. <strong>Integrate:</strong> v += h·(g + F_ext/m); x̃ = x + h·v; q̃ = normalise(q + ½·h·[ω, 0]·q), where F_ext includes the world-drive forces.
+2. <strong>Solve</strong> — one pass, fixed order:
+   1. joint attachments (compliance 0);
+   2. joint limits (swing, twist, hinge);
+   3. motors and world drives (compliant, capped);
+   4. contacts — non-penetration (compliance 0; ground optionally ~1 mm "turf give") plus <strong>static friction</strong> as a positional constraint.
+3. <strong>Velocities:</strong> v = (x̃ − x)/h; ω = 2·(q̃·q⁻¹).xyz / h.
+4. <strong>Velocity pass:</strong>
+   - <strong>dynamic friction:</strong> Δv_t = −v̂_t · min(h·μd·|f_n|, |v_t|). It can only reduce tangential speed, so it <strong>dissipates</strong>;
+   - restitution 0 (human and turf contacts are effectively inelastic);
+   - motor damping and small joint damping.</p>
+<p><strong>Energy safety:</strong>
+- Contact corrections only remove the overlap predicted <em>this substep</em>; there is no accumulated Baumgarte bias.
+- Separation velocity from any initial overlap (e.g. at activation) is capped at 1 m/s, as in Box2D v3's push-out cap [S14].
+- XPBD's low numerical damping (Müller's stated drawback) is handled with small, explicit physical joint damping. It is reported, not hidden.</p>
+<p><strong>Momentum exchange:</strong> every positional correction is applied as equal and opposite generalised impulses on the two bodies, weighted by their inverse masses and inertias. The contact log's λn/h is the impulse, which lets Gate D check that momentum is conserved.</p>
+<p><strong>Alternative considered:</strong> a Box2D v3 "soft step" (sequential impulses + soft constraints + relax + substeps) would also meet the requirements [S14]. XPBD is chosen because:
+- joint limits and articulated joints are simpler and exact at position level;
+- the Müller paper gives the swing/twist limit machinery directly.</p>
+<p>If Gate A/B shows XPBD jitter we cannot damp cleanly, soft step is the in-house plan B, ahead of switching to Jolt.</p>
+<hr />
+<h2>12. Friction</h2>
+<p><strong>Coulomb friction, dissipative, per material pair.</strong> There is no global μ.
+- Static friction is positional: a contact point sticks while λt ≤ μs·λn. Dynamic friction is velocity-level, as in §11.
+- Friction acts along the tangent plane of each contact normal.</p>
+<table>
+<thead>
+<tr>
+<th>pair</th>
+<th>model</th>
+<th>starting values</th>
+<th>evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>boot studs ↔ turf</td>
+<td><strong>stud anchor</strong>: static up to a break-out force μ_trac·F_n (≈ 1.9, the lower bound for boots on natural grass), with <strong>torsional</strong> resistance about the normal scaled by load; then dynamic sliding μd</td>
+<td>μ_trac 1.9; torsion ~30–60 N·m at 580 N; μd 0.6 (to calibrate)</td>
+<td>Thomson et al. 2019: translational 1.9–2.5, rotational 28–59 N·m [S22]. A traction coefficient above 1 means the studs shear the turf, so it is not Coulomb friction; hence the anchor.</td>
+</tr>
+<tr>
+<td>kit/body (hip, thigh, torso, shoulder) ↔ turf</td>
+<td>Coulomb</td>
+<td>μ 0.5</td>
+<td>skin–infilled turf ≈ 0.57, FIFA requirement 0.35–0.75 [S23][S25]; clothing–grass <strong>unverified</strong></td>
+</tr>
+<tr>
+<td>hand ↔ turf</td>
+<td>Coulomb</td>
+<td>μ 0.6</td>
+<td>skin–turf [S25]; natural grass <strong>unverified</strong></td>
+</tr>
+<tr>
+<td>limb ↔ limb (kit/sock/skin)</td>
+<td>Coulomb</td>
+<td>μ 0.4</td>
+<td><strong>unverified</strong>; to calibrate on Gate D</td>
+</tr>
+<tr>
+<td>boot ↔ limb</td>
+<td>Coulomb</td>
+<td>μ 0.35</td>
+<td><strong>unverified</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Values without evidence are marked. They are <strong>calibrated per pair against specific observations</strong>: the slide's stopping distance in RT (≈ 2–2.5 m), the trail-foot drag, the attacker's prone slide (≈ 0.3 m). They are never tuned as one global constant.</li>
+<li>Designed for later: anisotropic stud friction (along vs across the boot) and a wet/dry pitch factor.</li>
+</ul>
+<hr />
+<h2>13. Ground contact</h2>
+<ul>
+<li><strong>The pitch</strong> is a static half-space (y ≤ 0) with the TURF material. There is optional turf compliance (~1 mm under body weight), restitution 0, and contacts with every body.</li>
+<li><strong>Feet:</strong> the boot box gives up to <strong>4 sole points on the stud-tip plane</strong> (heel and forefoot corners), which is a stable support manifold. Planted support is real: normal forces from those points hold the body and the stud anchor resists shear and twist. The ankle is <strong>not rigid</strong>: it has a finite-stiffness motor with anatomical limits, so the foot can roll onto an edge or its toes when loaded.</li>
+<li><strong>Forefoot/toe later:</strong> the box splits at the metatarsophalangeal line into rearfoot + forefoot with a hinge (dorsiflex 60 / plantarflex 30). The shape and joint tables already key by body, so this is additive.</li>
+<li><strong>Knees, hips, shoulders, torso, head, elbows, hands:</strong> capsule/sphere–plane contacts give 1–2 points. When the tackler lands on his right hip, the contact is on the <strong>pelvis/thigh capsule</strong>, and its normal force appears in the log and the support set. When the attacker lands on his forearms and chest, those capsules meet the turf and stop him; no animation stops at ground height.</li>
+<li><strong>The ground-height clamp and the "sole level" step from RT V1 are not used.</strong> The turf is a constraint like any other.</li>
+</ul>
+<hr />
+<h2>14. Support and balance representation (V1: measured and displayed; not yet a controller)</h2>
+<p>Per character, every frame:
+- <strong>Support set:</strong> that character's ground contacts with λn &gt; ε over the frame, labelled by body (foot_R, foot_L, knee, hip, hand, …).
+- <strong>Support polygon:</strong> the 2D convex hull of the support points. Static balance means the COM's ground projection lies inside it.
+- <strong>COM, v_COM, and XCoM = COM + v_COM/ω₀</strong>, with ω₀ = √(g/l), l = COM height (Hof 2005 [S27]; the capture point is the same quantity, Pratt 2006 [S28]). The <strong>margin of stability</strong> b = the signed distance from XCoM to the polygon edge.
+- <strong>Angular momentum about the COM:</strong> L = Σ(I_i·ω_i + m_i·r_i × v_i). Also pelvis and chest linear and angular velocity.
+- <strong>External impulse accumulator:</strong> player–player and ground impulses over the last 100 ms, by body.
+- <strong>Step capability:</strong> can a free foot reach the XCoM (reach limit, swing time)? This is a continuous estimate.
+- <strong>Derived continuum label</strong>, for display and later control only: stable → corrective → step needed → stumble → support lost → falling → grounded → recovering, from thresholds on b, the support set and body height. <strong>It never selects a canned animation.</strong></p>
+<p>A later balance controller (stepping, balance arms, removing the root "hand of God") builds on these quantities.</p>
+<hr />
+<h2>15. Rendered-skeleton fitting</h2>
+<ul>
+<li>Bodies are defined in bone-aligned frames at bind, so a directly mapped bone's world rotation is its body's rotation (bind offset = identity).</li>
+<li><strong>Positions come from FK with the rig's own bone lengths</strong>, starting at the physical pelvis joint. Bones never stretch. The tiny joint-attachment error (sub-millimetre, since attachments are rigid constraints) is absorbed and shown in debug.</li>
+<li><strong>Sub-bones inside a body:</strong></li>
+<li>neck/head share the chest → head relative rotation (≈ 40 / 60);</li>
+<li><code>toe</code>, <code>hand</code> (wrist) and <code>clavicle</code> take their authored relative rotation from the targets;</li>
+<li><code>hair</code> follows the head.</li>
+<li><strong>Skinning and drawing are unchanged:</strong> <code>skelSkinMatrices</code> → <code>ofCharDraw</code>.</li>
+<li>The renderer may interpolate between the last two committed physics states for display timing. This is presentation-only and never feeds back.</li>
+<li><strong>No "touch-up" IK in V1.</strong> If a boot is 2 cm off the ball, we see it and fix the <em>target</em>, never the rendered result.</li>
+</ul>
+<hr />
+<h2>16. Animation → physics and physics → animation</h2>
+<ul>
+<li><strong>Animation → physics (activation at t₀):</strong></li>
+<li>Initialise every body from the kinematic target pose at t₀.</li>
+<li>Linear and angular velocities come from central differences of the targets, with consistent quaternion polarity [S17]. There is no velocity pop, and momentum is carried in.</li>
+<li>Motors start at the profile strength. Any initial overlap is resolved at ≤ 1 m/s.</li>
+<li>The render switches source at t₀ with an identical pose by construction.</li>
+<li>In this prototype both characters are physical for the whole clip.</li>
+<li><strong>Kinematic-but-colliding mode</strong> (designed, not used in V1): bodies moved <em>by velocity</em> toward the animation pose, like Jolt's <code>DriveToPoseUsingKinematics</code> [S6]. This lets distant players push others without full dynamics.</li>
+<li><strong>Physics → animation (recovery; design only):</strong></li>
+<li>Trigger: "grounded" plus low energy (kinetic energy below a threshold for 0.2 s).</li>
+<li>Take a pose snapshot.</li>
+<li><strong>Pick the recovery by pose matching</strong> on the actual physical end state: joint angles, pelvis/chest orientation relative to gravity, support contacts. It is not picked by contact direction.</li>
+<li>Blend the <em>targets</em> from the snapshot to the chosen get-up clip over 0.3 s while ramping gains up. Spread the root position error over the blend (Zordan 2005 [S10]; Unreal pose snapshot [S11]).</li>
+<li>Hand back to pure animation once tracking error is below a threshold, then deactivate physics.</li>
+<li>The reference clip ends prone, so recovery is <strong>not</strong> part of Gates A–E.</li>
+</ul>
+<hr />
+<h2>17. Determinism</h2>
+<ul>
+<li><strong>Fixed step:</strong> dt = 1/60 s with a fixed substep count, or the guard's state-derived count (§10).</li>
+<li><strong>No wall-clock inputs:</strong> no <code>performance.now</code>, no frame-time dependence. Rendering at any refresh rate reads the committed states.</li>
+<li><strong>Fixed order everywhere:</strong></li>
+<li>bodies by index; joints by index;</li>
+<li>contact pairs sorted by (bodyA, bodyB, shapeA, shapeB, featureId);</li>
+<li>constraint solve order fixed;</li>
+<li>no iteration over unordered collections.</li>
+<li><strong>No presentation RNG.</strong></li>
+<li><strong>Arithmetic:</strong></li>
+<li>All state is Float64 (plain JS numbers). The existing <code>M4</code> uses Float32Array and is kept for rendering only; the solver gets its own vec/quat module.</li>
+<li>The solver uses only +, −, ×, ÷ and √, which are IEEE-exact.</li>
+<li>Trigonometry (acos/atan2 in limits) goes through <strong>our own polynomial implementations</strong>. That makes results bit-identical across JS engines (Chrome, Safari, Node), not just within one browser.</li>
+<li>Positions are kept relative to a local origin near the interaction, avoiding the far-from-origin precision loss Catto observed.</li>
+<li><strong>Recording:</strong></li>
+<li>a per-frame state hash (FNV-1a over the Float64 state);</li>
+<li>full snapshots every 30 frames;</li>
+<li>the inputs (targets, profile keys, event facts).</li>
+</ul>
+<p>A bad frame is reproduced by loading the nearest snapshot and stepping. A replay test compares hashes; one run per check, never a matrix.
+- <strong>Simulation neutrality:</strong> physics reads event facts and never writes simulation state (ball, possession, success, root). Divergence between the physical pelvis and the authoritative root is <em>reported</em>. The root drive pulls it back within its caps.</p>
+<hr />
+<h2>18. Physics library vs custom solver</h2>
+<p>The engine survey (npm type definitions checked directly, current as of 2026-09) against our hard requirements:</p>
+<table>
+<thead>
+<tr>
+<th>requirement</th>
+<th>Rapier JS 0.21</th>
+<th>JoltPhysics.js 1.1</th>
+<th>PhysX (physx-js-webidl)</th>
+<th>Ammo / cannon-es / Havok</th>
+<th><strong>custom XPBD</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>swing–twist / cone limits (hips, shoulders)</td>
+<td><strong>no</strong> — spherical joints have per-axis limits only [R4]; multibody joints can't have motors in JS [R7]</td>
+<td>yes, elliptical cone + twist [J4]</td>
+<td>yes (D6 cone/pyramid + twist) [P4]</td>
+<td>partial / no</td>
+<td>yes (Müller §3.4)</td>
+</tr>
+<tr>
+<td>PD drive to a target orientation</td>
+<td>per-axis; issue open on coupled axes [R8]</td>
+<td>quaternion target, <code>DriveToPoseUsingMotors</code> [J6]</td>
+<td>yes</td>
+<td>weak</td>
+<td>yes, implicit, capped, per joint</td>
+</tr>
+<tr>
+<td>fast dynamic-vs-dynamic anti-tunnelling</td>
+<td>bullets vs frozen targets; no bullet–bullet [R5]</td>
+<td>LinearCast handles both bodies but <strong>ignores rotation</strong>; can miss a fast-rotating long body such as a sweeping shin [J2]</td>
+<td>sweep CCD by relative linear speed; articulation-vs-articulation <strong>unverified</strong> [P2]</td>
+<td>no / sphere only</td>
+<td>per-substep narrowphase on rotated predicted poses; deterministic guard</td>
+</tr>
+<tr>
+<td>post-solve contact impulses (for debugging and momentum checks)</td>
+<td>yes [R7]</td>
+<td><strong>no</strong> in JS (feature request filed 2026-09-15) [J5]</td>
+<td>yes [P4]</td>
+<td>limited</td>
+<td>yes, every contact, every substep</td>
+</tr>
+<tr>
+<td>per-pair friction / stud anchor</td>
+<td>combine rule only; hooks can't modify contacts [R7]</td>
+<td>per-contact friction override [J4]</td>
+<td>combine modes; no contact modification in JS [P4]</td>
+<td>per material (cannon)</td>
+<td>full per-pair model incl. anchor + torsion</td>
+</tr>
+<tr>
+<td>determinism</td>
+<td>cross-platform in the <code>-deterministic</code> build [R2][R3]</td>
+<td>same binary; cross-platform needs a self-built flag [J1]</td>
+<td>same platform</td>
+<td>unverified</td>
+<td>by construction, cross-engine (§17)</td>
+</tr>
+<tr>
+<td>size / loading</td>
+<td>3.1–4.4 MB WASM, ES module</td>
+<td>2–3.2 MB, ES module; single-threaded build only (JS callbacks) [J1]</td>
+<td>5.4 MB WASM + 4.8 MB JS</td>
+<td>—</td>
+<td>a few JS files, plain <code>&lt;script&gt;</code></td>
+</tr>
+<tr>
+<td>one coherent state</td>
+<td>state in WASM; read back each frame</td>
+<td>same</td>
+<td>same</td>
+<td>same</td>
+<td>the state <em>is</em> the character, in our heap</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Recommendation: build the small custom XPBD solver.</strong>
+- <strong>Scale is tiny:</strong> 2 × 14 bodies, 26 joints, a few dozen contacts, so JS cost is well under 1 ms per frame. The core is roughly 1.5–2 k lines, and the Müller 2020 paper specifies it precisely.
+- <strong>Every hard requirement that one or more libraries miss is structural for us:</strong>
+  - rotation-aware anti-tunnelling for a sweeping shin;
+  - post-solve impulses for the invariant and momentum checks;
+  - a stud-anchor friction model;
+  - cross-engine determinism;
+  - full visibility of every constraint's error and λ.
+- <strong>No second physics state to synchronise.</strong> The reference developer found that fragile. Jolt's patterns (<code>SkeletonMapper</code>, drive-to-pose) are the industry's mitigation, and we'd adopt their <em>ideas</em> (§6, §15) either way.</p>
+<p><strong>Risk and exit:</strong>
+- The risk is engineering time and subtle stability bugs. The Gate A/B acceptance metrics are the exit criteria.
+- If the custom solver can't pass Gate A (passive stability) and Gate B (tracking) in their first focused pass, switch to <strong>JoltPhysics.js</strong> behind the same provider/solver interfaces. We would accept its two gaps: impulses estimated from velocity change, and our own substeps compensating for LinearCast.
+- Rapier is excluded mainly for the swing–twist and motor gaps. PhysX is heavy and can't modify contacts in JS. Ammo, cannon-es and Havok lack the basics.</p>
+<hr />
+<h2>19. Debugging and visualisation</h2>
+<p>A new harness page reuses the RT V1 page: timeline, 1× / 0.5× / 0.25×, frame stepping, cameras, reference ghost. It adds <strong>substep stepping</strong> and these toggles:</p>
+<table>
+<thead>
+<tr>
+<th>layer</th>
+<th>what you see</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bodies / shapes</td>
+<td>translucent capsules, spheres and boxes coloured by body; self-collision insets</td>
+</tr>
+<tr>
+<td>joints</td>
+<td>anchors (dot + parent/child anchor mismatch in mm), joint frames (axes)</td>
+</tr>
+<tr>
+<td>limits</td>
+<td>swing ellipse cones and twist arcs, the current swing/twist marker, red when at the limit</td>
+</tr>
+<tr>
+<td>targets vs actual</td>
+<td>target orientation (ghost axes / ghost skeleton) vs actual (solid)</td>
+</tr>
+<tr>
+<td>motors</td>
+<td>error (°) as a colour ramp per joint; torque vs τmax as a bar, highlighted when <strong>saturated</strong>; strength s(t)</td>
+</tr>
+<tr>
+<td>world drives</td>
+<td>root / upper-body / gaze drive force and torque arrows, highlighted when capped</td>
+</tr>
+<tr>
+<td>contacts</td>
+<td>points, normals, penetration (mm), normal and tangential impulse arrows, static/dynamic friction colour, stud-anchor state</td>
+</tr>
+<tr>
+<td>balance</td>
+<td>COM and velocity, XCoM, support polygon on the turf, support contacts highlighted, margin b, angular momentum</td>
+</tr>
+<tr>
+<td>skeletons</td>
+<td>physical skeleton vs rendered skeleton vs authored target skeleton vs the reference video</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Panels:</strong>
+- per-frame numbers for all of the above;
+- time graphs: joint error, contact impulses, kinetic/potential energy, total momentum, root-drive force;
+- the <strong>invariant monitor</strong>: a strip of maximum penetration per frame, green ≤ tolerance and red otherwise, auto-pausing on the first violation, first player-player contact, a limit violation or a NaN;
+- the determinism hash;
+- "export this frame" (state + contact log + inputs) for reproduction.</p>
+<hr />
+<h2>20. Gate plan (each gate ends with "stop and inspect")</h2>
+<p>Resource rules for every gate:
+- one character, then two;
+- one headless browser at a time;
+- short clips only; no match, no regression suite, no matrices;
+- processes shut down after each run;
+- anything more expensive is asked for first.</p>
+<p><strong>Gate A: passive articulated body (Gabriel)</strong>
+- <strong>Build:</strong> bodies, shapes, mass and inertia, joints and limits, ground, solver; motors off.
+- <strong>Tests:</strong> drops from 1.2 m in four initial orientations (supine, prone, side, seated-upright), plus one "thrown" drop with 3 m/s horizontal velocity. 5 s each.
+- <strong>Pass criteria:</strong>
+  - joint attachment error &lt; 1 mm steady and &lt; 3 mm peak;
+  - limit overshoot &lt; 2°;
+  - ground penetration &lt; 5 mm;
+  - kinetic energy &lt; 1 % of the initial value within 2 s, with no creep afterwards;
+  - no NaN, no explosion (no body &gt; 10 m/s after the first impact);
+  - two runs give identical hashes;
+  - the rest pose is anatomically plausible (you judge the stills).
+- <strong>Deliverable:</strong> the stills, energy curves and the debug view.</p>
+<p><strong>Gate B: motor tracking, no collision perturbation</strong>
+- <strong>Setup:</strong> ground off. Root and upper-body drives on. STRONG_TRACK profile.
+- <strong>Runs:</strong> tackler f76–f98 (launch → seat); attacker f96–f130 (hurdle); each separately.
+- <strong>Compared:</strong> the authored RT pose vs the physical pose, joint by joint and at the end-effectors (feet, hands, head).
+- <strong>Pass criteria:</strong> joint RMS &lt; 3° and max &lt; 8°; end-effector RMS &lt; 2 cm and max &lt; 5 cm; the ghost overlay indistinguishable at 1×.
+- <strong>Deliverable:</strong> error tables, side-by-side and ghost at 1× and 0.25×, and motor-saturation report.</p>
+<p><strong>Gate C: ground interaction</strong>
+- <strong>Setup:</strong> turf on, tackler f76–f114 with the same targets.
+- <strong>Verify:</strong>
+  - trail-foot touch ≈ f89, seat on the right hip f92–94, bracing/near-arm contacts where RT has them;
+  - normal forces plausible (weight-scale, no spikes &gt; 5× body weight without cause);
+  - no contact jitter (a resting contact's point velocity &lt; 1 cm/s);
+  - the slide decelerates by friction to about RT's stopping distance, with μ calibrated for kit–turf only;
+  - tracking error reported <em>where the ground obstructs</em> the target.
+- <strong>Deliverable:</strong> contact timeline vs the reference events, forces, and side-by-side.</p>
+<p><strong>Gate D: two-player controlled leg-contact experiment (critical)</strong>
+- <strong>Setup:</strong>
+  - The attacker stands in a stance profile, supported by his own feet on the turf, with a soft root drive.
+  - The tackler's body is carried by the root drive along the pitch with his sweeping leg driven by motors.
+- <strong>Cases:</strong>
+  1. sweep into the <strong>planted</strong> shin at 3, 6 and 9 m/s;
+  2. sweep into the <strong>swinging</strong> shin at 6 m/s.
+- <strong>Measured:</strong>
+  - the contact instant vs the analytic crossing (± one substep);
+  - <strong>the invariant monitor clean:</strong> ≤ 3 mm and never 2 frames;
+  - <strong>momentum:</strong> Δp_attacker + Δp_tackler matches the ground and root-drive impulses to within 2 %;
+  - <strong>propagation order:</strong> peak angular-velocity times shank → thigh → pelvis → chest → head, strictly increasing;
+  - motors still acting, with saturation shown;
+  - <strong>no explosive separation:</strong> kinetic energy after contact ≤ kinetic energy before plus drive work; no body faster than the pre-contact maximum relative speed.
+- <strong>Deliverable:</strong> per-case report, slow-motion side-by-side with contact vectors, and a momentum ledger.</p>
+<p><strong>Gate E: the reference tackle</strong>
+- <strong>Setup:</strong> both players physical for f56–f152, targets from RT V1, profiles keyed to the RT phases (manual in V1).
+- <strong>Criteria:</strong>
+  - the invariant holds throughout;
+  - it is recognisably the reference tackle, compared in the RT harness (reference, ghost, the V1 authored version, the physical version);
+  - the attacker's reaction begins on the contact substep, measured in the log rather than judged by eye;
+  - divergences from RT are listed with their physical cause.
+- <strong>Deliverable:</strong> the same review package as RT V1, plus the contact and momentum logs.</p>
+<hr />
+<h2>21. Reusable existing code</h2>
+<table>
+<thead>
+<tr>
+<th>what</th>
+<th>where</th>
+<th>how it's used</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rig data per player (lengths, radii, boot box, ankle height, <strong>height/weight</strong>)</td>
+<td><code>assets/characters/outfield/*/rig.json</code>, <code>of_character.js</code></td>
+<td>builds bodies, shapes and masses</td>
+</tr>
+<tr>
+<td>FK, skin matrices, GL skinned renderer</td>
+<td><code>anim3d/skeleton.js</code>, <code>of_char_gl.js</code> (<code>ofCharDraw</code>)</td>
+<td>render fitting and drawing (§15)</td>
+</tr>
+<tr>
+<td>Reference Tackle V1: data, <code>rtSample</code> (Catmull-Rom), <code>rtEvalChar</code>, <code>RT_export()</code>, the harness UI, reference frames, camera fit, capture tool</td>
+<td>preserved tgz / <code>reference-tackle</code> worktree</td>
+<td>target generator (§7) and the review harness</td>
+</tr>
+<tr>
+<td>run-in locomotion (<code>ofLocoTick</code>)</td>
+<td><code>anim3d/of_loco.js</code></td>
+<td>target generation only</td>
+</tr>
+<tr>
+<td>closest points between segments (Ericson)</td>
+<td><code>ptRxSegSeg3</code> in <code>pt_react.js</code></td>
+<td>the algorithm, re-implemented in the Float64 contact module</td>
+</tr>
+<tr>
+<td>balance quantities (XCoM / capture point, step reach)</td>
+<td><code>pt_react.js</code> §4</td>
+<td>the <em>concepts</em> for §14</td>
+</tr>
+<tr>
+<td>classic ball renderer</td>
+<td><code>ball-art.js</code></td>
+<td>ball drawing</td>
+</tr>
+<tr>
+<td>fixed 60 Hz tick discipline, deterministic style</td>
+<td><code>PT_DT = 1/60</code>, <code>world.py DT</code></td>
+<td>timing contract</td>
+</tr>
+<tr>
+<td><code>M4</code> / <code>V3</code></td>
+<td><code>anim3d/m4.js</code></td>
+<td>rendering only; Float32, not for physics state</td>
+</tr>
+</tbody>
+</table>
+<h2>22. Existing defence/contact code that must NOT be reused</h2>
+<table>
+<thead>
+<tr>
+<th>code</th>
+<th>why not</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ptRxDetect</code> / <code>ptRxResolve</code> impulse routing into COM / spin / "sweep" plus CORRECTION / STUMBLE / FALL classification (<code>pt_react.js</code>)</td>
+<td>contact as a state-machine input, not a constraint (§1.3)</td>
+</tr>
+<tr>
+<td>stride-clock leg proxies <code>ptRxBody</code> and parametric slide primitives <code>ptRxTacklerPrims</code></td>
+<td>collision geometry that isn't the drawn body (§1.2)</td>
+</tr>
+<tr>
+<td><code>ptRxNonPen</code> (root-velocity separation after 1 cm slop, bias, overrun)</td>
+<td>after-the-fact separation; excludes leg–leg (§1.4)</td>
+</tr>
+<tr>
+<td><code>of_react.js</code> directional fall bases, topple timeline, stumble overlays</td>
+<td>canned directional falls (§1.5)</td>
+</tr>
+<tr>
+<td><code>of_defend.js</code> slide / sit / kneel / crouch key poses as runtime drivers</td>
+<td>kinematic, blind to the other body. They could later be <em>target</em> material like RT, not the executor</td>
+</tr>
+<tr>
+<td>Follow-through V1 pose layers; V2 <code>PT_RB</code> whole-body rigid fall and slide body</td>
+<td>post-event layers and a single non-articulated body</td>
+</tr>
+<tr>
+<td>RT V1's ground clamp, "sole level", plant-IK used as a <em>correction</em>, and <code>rtBodyOverlap</code> as anything but a measurement</td>
+<td>corrections that hide or report penetration instead of preventing it</td>
+</tr>
+<tr>
+<td>root nudges, teleports, separation-after-penetration of any kind</td>
+<td>ruled out by the invariant</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Appendix A: what the three videos established vs outside research</h2>
+<p><strong>From the three football-development references, as you described them to me.</strong> I have not watched them myself; please correct anything I've overstated.
+1. Targeted capsule/body collision, and an animation-driven ragdoll with joint motors, because passive ragdolls behave like "connected wooden sticks".
+2. Humanoid skeletal synchronisation; richer spine/head/shoulder/arm rotation; balance arms; articulated feet (moving from point feet to foot colliders).
+3. Independently controlled pelvis and upper-body regions (a neck/upper-body balance point, independent pelvis roll); physical foot/environment contact; a separate collision provider; tangential contact friction. Also the finding that synchronising a separate engine's ragdoll with the animated character was fragile. The engine survey could not find a public statement of that last point, so it rests on your account.</p>
+<p><strong>Added from outside research:</strong>
+- XPBD rigid-body dynamics with swing/twist limits [S16] and substepping [S15];
+- implicit / Stable PD and soft-constraint motor formulation [S5][S7];
+- inertia-scaled servos and reaction-gain schedules [S9][S10];
+- world-space vs local drives and force caps [S11];
+- Jolt's drive-to-pose and mass/inertia stabilisation [S6];
+- speculative / predicted-position contacts and TOI [S19][S20];
+- manifold construction [S21];
+- de Leva segment parameters [S1];
+- AAOS / CDC joint ranges [S3][S4];
+- stud–turf traction data [S22][S23];
+- XCoM / capture point [S27][S28].</p>
+<h2>Appendix B: decisions I need from you</h2>
+<ol>
+<li><strong>Solver:</strong> approve the custom XPBD solver, with JoltPhysics.js as the fallback behind the same interfaces? Or would you rather start on Jolt?</li>
+<li><strong>Root "hand of God" during Gates B–E:</strong> a strength-limited, drawn, reported root drive carries the pelvis along the authoritative trajectory until a support-based balance controller exists. Acceptable as a temporary mechanism?</li>
+<li><strong>Invariant tolerances:</strong> 3 mm body–body, 5 mm body–ground, never 2 consecutive frames. Tighter or looser?</li>
+<li><strong>Body set:</strong> 14 bodies with no scapula girdle or toe body in V1, both designed as additive V2 extensions. OK?</li>
+</ol>
+<h2>Sources</h2>
+<ul>
+<li><strong>Engine survey</strong> (checked against published npm type definitions, 2026-09):</li>
+<li>[R2] https://github.com/dimforge/rapier.js/blob/master/CHANGELOG.md</li>
+<li>[R3] https://rapier.rs/docs/user_guides/javascript/determinism</li>
+<li>[R4] https://docs.rs/rapier3d/latest/rapier3d/dynamics/struct.SphericalJoint.html</li>
+<li>[R5] https://github.com/dimforge/rapier/blob/master/src/dynamics/ccd/</li>
+<li>[R7] https://cdn.jsdelivr.net/npm/@dimforge/rapier3d-deterministic-compat@0.21.0/dist/</li>
+<li>[R8] https://github.com/dimforge/rapier/issues/1011</li>
+<li>[J1] https://github.com/jrouwe/JoltPhysics.js</li>
+<li>[J2] https://jrouwe.github.io/JoltPhysics/ (Deterministic Simulation, Continuous Collision Detection)</li>
+<li>[J4] https://cdn.jsdelivr.net/npm/jolt-physics@1.1.0/dist/types.d.ts</li>
+<li>[J5] https://github.com/jrouwe/JoltPhysics/issues/2128</li>
+<li>[J6] https://jrouwe.github.io/JoltPhysics/class_ragdoll.html</li>
+<li>[P2] https://nvidia-omniverse.github.io/PhysX/physx/5.6.1/docs/AdvancedCollisionDetection.html</li>
+<li>[P4] https://cdn.jsdelivr.net/npm/physx-js-webidl@2.8.0/physx-js-webidl.d.ts</li>
+<li>[S1] de Leva 1996 — https://ebm.ufabc.edu.br/wp-content/uploads/2013/12/Leva-1996.pdf</li>
+<li>[S2] Winter, Table 4.1 — https://courses.grainger.illinois.edu/me481/sp2021/Anthro-Winter.pdf</li>
+<li>[S3] AAOS ROM chart — https://goniometer.io/rom-chart.pdf</li>
+<li>[S4] Soucie et al. 2011 — https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1365-2516.2010.02399.x</li>
+<li>[S5] Tan, Liu, Turk 2011, Stable PD — https://www.jie-tan.net/project/spd.pdf</li>
+<li>[S6] Jolt source (SwingTwistConstraint, Ragdoll) — https://github.com/jrouwe/JoltPhysics</li>
+<li>[S7] Catto 2011, Soft Constraints — https://box2d.org/files/ErinCatto_SoftConstraints_GDC2011.pdf</li>
+<li>[S8] Geijtenbeek &amp; Pronost 2012 — https://perso.liris.cnrs.fr/nicolas.pronost/UUCourses/GamePhysics/literature/Interactive%20Character%20Animation%20Using%20Simulated%20Physics%20-%20A%20State-of-the-Art%20Review.pdf</li>
+<li>[S9] Zordan &amp; Hodgins 2002 — https://dl.acm.org/doi/10.1145/545261.545276</li>
+<li>[S10] Zordan et al. 2005 — https://www.rose-hulman.edu/Class/csse/csse451/assignments/papers/yeomanms.pdf</li>
+<li>[S11] Unreal Physical Animation — https://dev.epicgames.com/documentation/en-us/unreal-engine/API/Runtime/Engine/FPhysicalAnimationData</li>
+<li>[S14] Catto, Solver2D (2024) and Box2D v3 — https://box2d.org/posts/2024/02/solver2d/</li>
+<li>[S15] Macklin et al. 2019, Small Steps — https://mmacklin.com/smallsteps.pdf</li>
+<li>[S16] Müller et al. 2020, XPBD rigid bodies — https://matthias-research.github.io/pages/publications/PBDBodies.pdf</li>
+<li>[S17] Catto 2012, Ragdolls — https://box2d.org/files/ErinCatto_Ragdolls_GDC2012.pdf</li>
+<li>[S19] Catto 2013, Continuous Collision — https://box2d.org/files/ErinCatto_ContinuousCollision_GDC2013.pdf</li>
+<li>[S20] Firth 2011, Speculative contacts — https://wildbunny.co.uk/blog/2011/03/25/speculative-contacts-an-continuous-collision-engine-approach-part-1/</li>
+<li>[S21] Gregorius 2015, Contacts — http://media.steampowered.com/apps/valve/2015/DirkGregorius_Contacts.pdf</li>
+<li>[S22] Thomson et al. 2019, boot–grass traction — https://journals.plos.org/plosone/article?id=10.1371%2Fjournal.pone.0216364</li>
+<li>[S23] FIFA 2006 handbooks — https://www.uefa.com/newsfiles/38018.pdf</li>
+<li>[S25] J Sports Sci 2017, skin–turf friction — https://www.tandfonline.com/doi/abs/10.1080/02640414.2016.1223330</li>
+<li>[S27] Hof 2005 — https://pubmed.ncbi.nlm.nih.gov/15519333/</li>
+<li>[S28] Pratt et al. 2006, Capture point — http://www.ambarish.com/paper/Pratt_Goswami_Humanoids2006.pdf</li>
+</ul></main></body></html>

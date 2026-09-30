@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Physical Character Gates</title>
+<style>
+:root{--bg:#111316;--panel:#1a1d21;--ink:#e6e4df;--mute:#9aa0a6;--line:#2e3238;--acc:#f0c060;--bad:#ff5a5a;--ok:#5ad08a}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:12.5px/1.4 -apple-system,system-ui,sans-serif}
+.bar{display:flex;flex-wrap:wrap;gap:5px;align-items:center;padding:6px 8px;background:var(--panel);border-bottom:1px solid var(--line)}
+.bar button,.bar select{background:#262a30;color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:3px 7px;font:inherit;cursor:pointer}
+.bar button.on{background:var(--acc);color:#111}.bar .sep{width:1px;height:20px;background:var(--line);margin:0 3px}.bar label{color:var(--mute)}
+body{display:flex;flex-direction:column}.bar{flex:none}#wrap{display:flex;flex:1;min-height:0}#view{position:relative;flex:1;min-width:0}#gl,#ov{position:absolute;left:0;top:0;width:100%;height:100%}
+#side{width:370px;overflow:auto;border-left:1px solid var(--line);background:var(--panel);padding:8px}
+#side h3{margin:8px 0 4px;font-size:12px;color:var(--acc)}#side table{border-collapse:collapse;width:100%;font:11px ui-monospace,Menlo,monospace}
+#side td,#side th{border-bottom:1px solid var(--line);padding:2px 4px;text-align:left;vertical-align:top}#side .bad{color:var(--bad)}#side .ok{color:var(--ok)}
+#tl{flex:none;height:182px;padding:4px 8px;background:var(--panel);border-top:1px solid var(--line)}#scrub{width:100%}#chart{width:100%;height:46px;display:block}#chart2{width:100%;height:92px;display:block;margin-top:3px}
+#tlbar{display:flex;gap:6px;align-items:center;font-size:11px;color:var(--mute)}#tlbar select{background:#262a30;color:var(--ink);border:1px solid var(--line);border-radius:4px;font:inherit}
+.gb,.gc,.gc2{display:none}body.suiteC2 select.gc2{display:inline-block}body.suiteC2 div.bar.gc2{display:flex}body.suiteB .gb{display:inline-block}body.suiteB div.bar.gb,body.suiteB #tlbar,body.suiteC #tlbar{display:flex}body.suiteB canvas.gb,body.suiteC canvas.gb{display:block}body.suiteB .ga,body.suiteC .ga{display:none}
+body.suiteC .gc{display:inline-block}body.suiteC div.bar.gc{display:flex}body.suiteC .gbonly{display:none}
+#status{position:absolute;left:8px;top:6px;font:11px ui-monospace,Menlo,monospace;background:#000a;padding:2px 6px;border-radius:3px;pointer-events:none;white-space:pre}
+.small{color:var(--mute);font-size:11px}
+</style></head><body>
+<div class="bar">
+  <label>suite</label><select id="suite"><option value="C2">Gate C2 — weight transfer + foot placement</option><option value="C">Gate C1 — unsupported balance</option><option value="B">Gate B — active control (historical support fixture)</option><option value="A">Gate A — passive drops</option></select>
+  <label>body</label><select id="calib" title="physical-character calibration (the same run is re-simulated with the chosen body)"><option value="V1">V1 — approved baseline</option><option value="V1.1">V1.1 — anatomy / ROM</option></select><select id="ctrlv" class="gc2" title="C2 controller variant (applies to Gate C2 only)"><option value="">C2 controller as approved</option><option value="recal">+ R1·R2 recalibration (V1.1)</option><option value="diag">+ R1·R2 + D1 diagnostic (unload intent)</option></select><span class="sep"></span>
+  <label>test</label><select id="drop"></select><button id="restart">↺ restart</button><span class="sep"></span>
+  <button id="play">▶ play</button><select id="speed"><option value="1">1×</option><option value="0.5">0.5×</option><option value="0.25">0.25×</option></select>
+  <button id="sm">◀ step</button><button id="sp">step ▶</button><span class="sep"></span>
+  <label>worst</label><select id="worst"><option value="groundPen">ground penetration</option><option value="anchor">joint separation</option><option value="limit">limit violation</option><option value="pop">correction pop</option><option value="self">self penetration</option><option value="energy">energy gain</option></select><button id="goworst">go</button><span class="sep"></span>
+  <label>view</label><button id="v_mesh" class="on">mesh</button><button id="v_phys" class="on">physics</button><span class="sep"></span>
+  <label>camera</label><button data-cam="three">¾</button><button data-cam="front">front</button><button data-cam="side">side</button><button data-cam="back">back</button><button data-cam="top">top</button><button id="follow" class="on">follow</button>
+</div>
+<div class="bar" style="border-top:0">
+  <label>overlays</label>
+  <button data-ov="bodies">bodies</button><button data-ov="colliders" class="on">colliders</button><button data-ov="coms">body COMs</button><button data-ov="tcom" class="on">total COM</button>
+  <button data-ov="anchors" class="on">joint anchors</button><button data-ov="axes">joint axes</button><button data-ov="limits">joint limits</button>
+  <button data-ov="ground" class="on">ground contacts</button><button data-ov="normals">contact normals</button><button data-ov="pen" class="on">penetration</button>
+  <button data-ov="vel">linear vel</button><button data-ov="angvel">angular vel</button><button data-ov="jerr" class="on">joint error ×20</button><button data-ov="sleep" class="ga">sleeping</button>
+</div>
+<div class="bar" style="border-top:0;width:100%">
+  <label>Anatomy</label>
+  <button data-ov="a_jc">hip + shoulder centres V1 ↔ V1.1</button><button data-ov="a_vis">visible width (mesh)</button><button data-ov="a_pskel">physics skeleton</button><button data-ov="a_rskel">rendered skeleton (rig bones)</button>
+  <button data-ov="coms">segment COMs</button><button data-ov="limits">joint limits</button><button data-ov="a_live">joint angles · margins</button>
+</div>
+<div class="bar gc" style="border-top:0;width:100%">
+  <label>Balance</label>
+  <button data-ov="c_com">COM + velocity</button><button data-ov="c_xi">capture point ξ</button><button data-ov="c_region">support region / contacts</button><button data-ov="c_cop">CoP (measured · demanded)</button>
+  <button data-ov="c_feet">foot state · load · slip</button><button data-ov="c_grf">ground reaction</button><button data-ov="c_hip">hip-strategy torque</button><button data-ov="c_banner">classification banner</button>
+  <button data-ov="ghost">target ghost</button><button data-ov="torque">motor torque</button><button data-ov="satur">saturation</button><button data-ov="impulse">push</button>
+</div>
+<div class="bar gc2" style="border-top:0;width:100%">
+  <label>Gate C2</label>
+  <button data-ov="d_fp">footprints: requested · feasible · touchdown · final</button><button data-ov="d_reach">reach boundary</button><button data-ov="d_excl">stance exclusion</button>
+  <button data-ov="d_path">planned swing path</button><button data-ov="d_trace">actual foot trace</button><button data-ov="d_clear">clearance</button><button data-ov="d_env">slab / obstacle</button>
+</div>
+<div class="bar gb" style="border-top:0;width:100%">
+  <label>Gate B</label>
+  <button data-ov="ghost">target ghost</button><select id="groot"><option value="actual">ghost on actual pelvis</option><option value="target">ghost at target root</option></select>
+  <button data-ov="skel">actual skeleton</button><button data-ov="errlab">target error labels</button><button data-ov="torque">motor torque</button><button data-ov="satur">saturation</button>
+  <button data-ov="support">pelvis support</button><button data-ov="obstacle">obstacle + contact force</button><button data-ov="impulse">disturbance</button>
+</div>
+<div id="wrap"><div id="view"><canvas id="gl"></canvas><canvas id="ov"></canvas><div id="status">loading…</div></div><div id="side"></div></div>
+<div id="tl"><input id="scrub" type="range" min="0" max="0" value="0" step="1"><canvas id="chart"></canvas>
+  <div id="tlbar" class="gb"><span>joint</span><select id="jsel"></select><select id="comp"><option value="y">swing Y (flex/ext)</option><option value="z">swing Z (ab/ad)</option><option value="t">twist</option></select>
+  <span id="tlhelp">target (dashed) vs actual (solid) · error (red) · motor effort / limit (orange) · saturated (red band) · contact force (magenta) · support force (violet)</span></div>
+  <canvas id="chart2" class="gb"></canvas></div>
+<script src="../anim3d/m4.js"></script>
+<script src="../anim3d/skeleton.js"></script>
+<script src="../anim3d/of_character.js"></script>
+<script src="../anim3d/of_char_gl.js"></script>
+<script type="module" src="pc_harness.js"></script>
+</body></html>

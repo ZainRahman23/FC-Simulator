@@ -1,0 +1,1809 @@
+{
+ "player": {
+  "id": "gabriel",
+  "name": "Gabriel Magalhães",
+  "heightCm": 190,
+  "weightKg": 78,
+  "H": 1.9
+ },
+ "world": {
+  "hingeSoftHz": 20,
+  "velSteps": 30,
+  "posSteps": 4
+ },
+ "filterPairs": [
+  [
+   "pelvis",
+   "abdomen"
+  ],
+  [
+   "abdomen",
+   "chest"
+  ],
+  [
+   "chest",
+   "head"
+  ],
+  [
+   "chest",
+   "upperArm_L"
+  ],
+  [
+   "upperArm_L",
+   "foreArm_L"
+  ],
+  [
+   "chest",
+   "upperArm_R"
+  ],
+  [
+   "upperArm_R",
+   "foreArm_R"
+  ],
+  [
+   "pelvis",
+   "thigh_L"
+  ],
+  [
+   "thigh_L",
+   "shin_L"
+  ],
+  [
+   "shin_L",
+   "foot_L"
+  ],
+  [
+   "pelvis",
+   "thigh_R"
+  ],
+  [
+   "thigh_R",
+   "shin_R"
+  ],
+  [
+   "shin_R",
+   "foot_R"
+  ],
+  [
+   "pelvis",
+   "chest"
+  ],
+  [
+   "abdomen",
+   "thigh_L"
+  ],
+  [
+   "abdomen",
+   "thigh_R"
+  ]
+ ],
+ "results": [
+  {
+   "drop": "A",
+   "title": "A — relaxed upright drop",
+   "tsc": "240 Hz, 1 collision step",
+   "steps": 1440,
+   "hash": "5bbffb56",
+   "initialLowestBody": "foot_L",
+   "E0": {
+    "ke": 0,
+    "pe": 846.7
+   },
+   "maxGroundPenMm": 5.75,
+   "maxGroundPenAt": {
+    "n": 118,
+    "t": 0.492,
+    "body": "foot_R"
+   },
+   "maxEngineGroundDepthMm": 6.47,
+   "maxMeshPenMm": null,
+   "maxMeshPenPart": null,
+   "restMeshPenMm": null,
+   "restMeshPenPart": null,
+   "restGroundPenMm": 2.52,
+   "maxSelfPenMm": 0.19,
+   "maxSelfPenAt": {
+    "n": 271,
+    "t": 1.129,
+    "pair": "chest–thigh_R"
+   },
+   "maxAnchorErrMm": 1.644,
+   "maxAnchorAt": {
+    "n": 133,
+    "t": 0.554,
+    "joint": "lumbar"
+   },
+   "maxLimitViolDeg": 8.65,
+   "maxLimitAt": {
+    "n": 138,
+    "t": 0.575,
+    "joint": "knee_R"
+   },
+   "maxHardLimitViolDeg": 0.88,
+   "maxHardLimitAt": {
+    "n": 149,
+    "t": 0.621,
+    "joint": "shoulder_L"
+   },
+   "hardLimitViolOver2degSteps": 0,
+   "maxSoftStopOvershootDeg": 8.65,
+   "maxPopMm": 0.45,
+   "maxPopAt": {
+    "n": 128,
+    "t": 0.533,
+    "body": "foreArm_L"
+   },
+   "energyGain": {
+    "stepsOver50mJ": 10,
+    "maxJ": 2.625,
+    "totalJ": 9.91,
+    "fromPE": 4.88,
+    "at": 0.096,
+    "dPE": 0.513,
+    "dKE": 2.112,
+    "body": "thigh_R"
+   },
+   "keCurve": [
+    [
+     0,
+     0
+    ],
+    [
+     0.1,
+     5.64
+    ],
+    [
+     0.2,
+     18.39
+    ],
+    [
+     0.3,
+     74.63
+    ],
+    [
+     0.4,
+     178.27
+    ],
+    [
+     0.5,
+     348.56
+    ],
+    [
+     0.6,
+     33.56
+    ],
+    [
+     0.7,
+     21.21
+    ],
+    [
+     0.8,
+     5.95
+    ],
+    [
+     0.9,
+     1.65
+    ],
+    [
+     1,
+     7.48
+    ],
+    [
+     1.1,
+     15.18
+    ],
+    [
+     1.2,
+     0.01
+    ],
+    [
+     1.3,
+     0
+    ],
+    [
+     1.4,
+     0
+    ],
+    [
+     1.5,
+     0
+    ],
+    [
+     1.6,
+     0
+    ],
+    [
+     1.7,
+     0
+    ],
+    [
+     1.8,
+     0
+    ],
+    [
+     1.9,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2.1,
+     0
+    ],
+    [
+     2.2,
+     0
+    ],
+    [
+     2.3,
+     0
+    ],
+    [
+     2.4,
+     0
+    ],
+    [
+     2.5,
+     0
+    ],
+    [
+     2.6,
+     0
+    ],
+    [
+     2.7,
+     0
+    ],
+    [
+     2.8,
+     0
+    ],
+    [
+     2.9,
+     0
+    ],
+    [
+     3,
+     0
+    ],
+    [
+     3.1,
+     0
+    ],
+    [
+     3.2,
+     0
+    ],
+    [
+     3.3,
+     0
+    ],
+    [
+     3.4,
+     0
+    ],
+    [
+     3.5,
+     0
+    ],
+    [
+     3.6,
+     0
+    ],
+    [
+     3.7,
+     0
+    ],
+    [
+     3.8,
+     0
+    ],
+    [
+     3.9,
+     0
+    ],
+    [
+     4,
+     0
+    ],
+    [
+     4.1,
+     0
+    ],
+    [
+     4.2,
+     0
+    ],
+    [
+     4.3,
+     0
+    ],
+    [
+     4.4,
+     0
+    ],
+    [
+     4.5,
+     0
+    ],
+    [
+     4.6,
+     0
+    ],
+    [
+     4.7,
+     0
+    ],
+    [
+     4.8,
+     0
+    ],
+    [
+     4.9,
+     0
+    ],
+    [
+     5,
+     0
+    ],
+    [
+     5.1,
+     0
+    ],
+    [
+     5.2,
+     0
+    ],
+    [
+     5.3,
+     0
+    ],
+    [
+     5.4,
+     0
+    ],
+    [
+     5.5,
+     0
+    ],
+    [
+     5.6,
+     0
+    ],
+    [
+     5.7,
+     0
+    ],
+    [
+     5.8,
+     0
+    ],
+    [
+     5.9,
+     0
+    ],
+    [
+     6,
+     0
+    ]
+   ],
+   "settleT": 1.1416666666666666,
+   "sleepT": 1.633,
+   "residualMaxSpeedMmS": 0,
+   "firstGroundContactOrder": [
+    "foot_L@0.050",
+    "foot_R@0.050",
+    "foreArm_L@0.533",
+    "foreArm_R@0.533",
+    "pelvis@0.579"
+   ],
+   "cpuMsPerStep": 0.0529,
+   "cpuMsPerFrame": 0.2117,
+   "bodies": 14,
+   "constraints": {
+    "sixdof": 9,
+    "hinge": 4
+   },
+   "worst": {
+    "groundPen": 118,
+    "anchor": 133,
+    "limit": 138,
+    "pop": 128,
+    "self": 271,
+    "energy": 23
+   },
+   "repeatHashes": [
+    "5bbffb56",
+    "5bbffb56",
+    "5bbffb56"
+   ],
+   "deterministic": true
+  },
+  {
+   "drop": "B",
+   "title": "B — hip / side-first fall",
+   "tsc": "240 Hz, 1 collision step",
+   "steps": 1440,
+   "hash": "2f8a9c80",
+   "initialLowestBody": "thigh_R",
+   "E0": {
+    "ke": 9.75,
+    "pe": 397.3
+   },
+   "maxGroundPenMm": 7.9,
+   "maxGroundPenAt": {
+    "n": 226,
+    "t": 0.942,
+    "body": "foreArm_R"
+   },
+   "maxEngineGroundDepthMm": 7.89,
+   "maxMeshPenMm": null,
+   "maxMeshPenPart": null,
+   "restMeshPenMm": null,
+   "restMeshPenPart": null,
+   "restGroundPenMm": 5.26,
+   "maxSelfPenMm": 0.23,
+   "maxSelfPenAt": {
+    "n": 76,
+    "t": 0.317,
+    "pair": "thigh_L–thigh_R"
+   },
+   "maxAnchorErrMm": 4.436,
+   "maxAnchorAt": {
+    "n": 176,
+    "t": 0.733,
+    "joint": "shoulder_R"
+   },
+   "maxLimitViolDeg": 5.59,
+   "maxLimitAt": {
+    "n": 174,
+    "t": 0.725,
+    "joint": "shoulder_R"
+   },
+   "maxHardLimitViolDeg": 5.59,
+   "maxHardLimitAt": {
+    "n": 174,
+    "t": 0.725,
+    "joint": "shoulder_R"
+   },
+   "hardLimitViolOver2degSteps": 120,
+   "maxSoftStopOvershootDeg": 0.53,
+   "maxPopMm": 0.69,
+   "maxPopAt": {
+    "n": 177,
+    "t": 0.738,
+    "body": "upperArm_R"
+   },
+   "energyGain": {
+    "stepsOver50mJ": 1,
+    "maxJ": 0.598,
+    "totalJ": 0.6,
+    "fromPE": 0,
+    "at": 0.204,
+    "dPE": -1.702,
+    "dKE": 2.3,
+    "body": "thigh_L"
+   },
+   "keCurve": [
+    [
+     0,
+     9.75
+    ],
+    [
+     0.1,
+     84.96
+    ],
+    [
+     0.2,
+     57.57
+    ],
+    [
+     0.3,
+     19.46
+    ],
+    [
+     0.4,
+     10.32
+    ],
+    [
+     0.5,
+     10.94
+    ],
+    [
+     0.6,
+     14.43
+    ],
+    [
+     0.7,
+     4.49
+    ],
+    [
+     0.8,
+     1.75
+    ],
+    [
+     0.9,
+     0.7
+    ],
+    [
+     1,
+     0.14
+    ],
+    [
+     1.1,
+     0.03
+    ],
+    [
+     1.2,
+     0
+    ],
+    [
+     1.3,
+     0
+    ],
+    [
+     1.4,
+     0
+    ],
+    [
+     1.5,
+     0
+    ],
+    [
+     1.6,
+     0
+    ],
+    [
+     1.7,
+     0
+    ],
+    [
+     1.8,
+     0
+    ],
+    [
+     1.9,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2.1,
+     0
+    ],
+    [
+     2.2,
+     0
+    ],
+    [
+     2.3,
+     0
+    ],
+    [
+     2.4,
+     0
+    ],
+    [
+     2.5,
+     0
+    ],
+    [
+     2.6,
+     0
+    ],
+    [
+     2.7,
+     0
+    ],
+    [
+     2.8,
+     0
+    ],
+    [
+     2.9,
+     0
+    ],
+    [
+     3,
+     0
+    ],
+    [
+     3.1,
+     0
+    ],
+    [
+     3.2,
+     0
+    ],
+    [
+     3.3,
+     0
+    ],
+    [
+     3.4,
+     0
+    ],
+    [
+     3.5,
+     0
+    ],
+    [
+     3.6,
+     0
+    ],
+    [
+     3.7,
+     0
+    ],
+    [
+     3.8,
+     0
+    ],
+    [
+     3.9,
+     0
+    ],
+    [
+     4,
+     0
+    ],
+    [
+     4.1,
+     0
+    ],
+    [
+     4.2,
+     0
+    ],
+    [
+     4.3,
+     0
+    ],
+    [
+     4.4,
+     0
+    ],
+    [
+     4.5,
+     0
+    ],
+    [
+     4.6,
+     0
+    ],
+    [
+     4.7,
+     0
+    ],
+    [
+     4.8,
+     0
+    ],
+    [
+     4.9,
+     0
+    ],
+    [
+     5,
+     0
+    ],
+    [
+     5.1,
+     0
+    ],
+    [
+     5.2,
+     0
+    ],
+    [
+     5.3,
+     0
+    ],
+    [
+     5.4,
+     0
+    ],
+    [
+     5.5,
+     0
+    ],
+    [
+     5.6,
+     0
+    ],
+    [
+     5.7,
+     0
+    ],
+    [
+     5.8,
+     0
+    ],
+    [
+     5.9,
+     0
+    ],
+    [
+     6,
+     0
+    ]
+   ],
+   "settleT": 0.9791666666666666,
+   "sleepT": 1.517,
+   "residualMaxSpeedMmS": 0,
+   "firstGroundContactOrder": [
+    "thigh_R@0.154",
+    "pelvis@0.171",
+    "upperArm_R@0.192",
+    "foot_R@0.254",
+    "foreArm_L@0.313",
+    "foot_L@0.400",
+    "shin_L@0.479",
+    "thigh_L@0.496"
+   ],
+   "cpuMsPerStep": 0.0479,
+   "cpuMsPerFrame": 0.1916,
+   "bodies": 14,
+   "constraints": {
+    "sixdof": 9,
+    "hinge": 4
+   },
+   "worst": {
+    "groundPen": 226,
+    "anchor": 176,
+    "limit": 174,
+    "pop": 177,
+    "self": 76,
+    "energy": 49
+   },
+   "repeatHashes": [
+    "2f8a9c80",
+    "2f8a9c80",
+    "2f8a9c80"
+   ],
+   "deterministic": true
+  },
+  {
+   "drop": "C",
+   "title": "C — shoulder / upper-body-first fall",
+   "tsc": "240 Hz, 1 collision step",
+   "steps": 1440,
+   "hash": "34af33e",
+   "initialLowestBody": "foreArm_R",
+   "E0": {
+    "ke": 9.75,
+    "pe": 768.2
+   },
+   "maxGroundPenMm": 5.09,
+   "maxGroundPenAt": {
+    "n": 186,
+    "t": 0.775,
+    "body": "foreArm_R"
+   },
+   "maxEngineGroundDepthMm": 5.58,
+   "maxMeshPenMm": null,
+   "maxMeshPenPart": null,
+   "restMeshPenMm": null,
+   "restMeshPenPart": null,
+   "restGroundPenMm": 5.04,
+   "maxSelfPenMm": 5.47,
+   "maxSelfPenAt": {
+    "n": 126,
+    "t": 0.525,
+    "pair": "foreArm_L–thigh_L"
+   },
+   "maxAnchorErrMm": 3.757,
+   "maxAnchorAt": {
+    "n": 94,
+    "t": 0.392,
+    "joint": "hip_R"
+   },
+   "maxLimitViolDeg": 4.21,
+   "maxLimitAt": {
+    "n": 114,
+    "t": 0.475,
+    "joint": "shoulder_L"
+   },
+   "maxHardLimitViolDeg": 4.21,
+   "maxHardLimitAt": {
+    "n": 114,
+    "t": 0.475,
+    "joint": "shoulder_L"
+   },
+   "hardLimitViolOver2degSteps": 3,
+   "maxSoftStopOvershootDeg": 1.37,
+   "maxPopMm": 1.27,
+   "maxPopAt": {
+    "n": 94,
+    "t": 0.392,
+    "body": "pelvis"
+   },
+   "energyGain": {
+    "stepsOver50mJ": 1,
+    "maxJ": 0.242,
+    "totalJ": 0.24,
+    "fromPE": 0.68,
+    "at": 0.483,
+    "dPE": 0.682,
+    "dKE": -0.44,
+    "body": "abdomen"
+   },
+   "keCurve": [
+    [
+     0,
+     9.75
+    ],
+    [
+     0.1,
+     69.77
+    ],
+    [
+     0.2,
+     203.38
+    ],
+    [
+     0.3,
+     340.75
+    ],
+    [
+     0.4,
+     257.39
+    ],
+    [
+     0.5,
+     18.51
+    ],
+    [
+     0.6,
+     12.12
+    ],
+    [
+     0.7,
+     1.07
+    ],
+    [
+     0.8,
+     0.08
+    ],
+    [
+     0.9,
+     0
+    ],
+    [
+     1,
+     0
+    ],
+    [
+     1.1,
+     0
+    ],
+    [
+     1.2,
+     0
+    ],
+    [
+     1.3,
+     0
+    ],
+    [
+     1.4,
+     0
+    ],
+    [
+     1.5,
+     0
+    ],
+    [
+     1.6,
+     0
+    ],
+    [
+     1.7,
+     0
+    ],
+    [
+     1.8,
+     0
+    ],
+    [
+     1.9,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2.1,
+     0
+    ],
+    [
+     2.2,
+     0
+    ],
+    [
+     2.3,
+     0
+    ],
+    [
+     2.4,
+     0
+    ],
+    [
+     2.5,
+     0
+    ],
+    [
+     2.6,
+     0
+    ],
+    [
+     2.7,
+     0
+    ],
+    [
+     2.8,
+     0
+    ],
+    [
+     2.9,
+     0
+    ],
+    [
+     3,
+     0
+    ],
+    [
+     3.1,
+     0
+    ],
+    [
+     3.2,
+     0
+    ],
+    [
+     3.3,
+     0
+    ],
+    [
+     3.4,
+     0
+    ],
+    [
+     3.5,
+     0
+    ],
+    [
+     3.6,
+     0
+    ],
+    [
+     3.7,
+     0
+    ],
+    [
+     3.8,
+     0
+    ],
+    [
+     3.9,
+     0
+    ],
+    [
+     4,
+     0
+    ],
+    [
+     4.1,
+     0
+    ],
+    [
+     4.2,
+     0
+    ],
+    [
+     4.3,
+     0
+    ],
+    [
+     4.4,
+     0
+    ],
+    [
+     4.5,
+     0
+    ],
+    [
+     4.6,
+     0
+    ],
+    [
+     4.7,
+     0
+    ],
+    [
+     4.8,
+     0
+    ],
+    [
+     4.9,
+     0
+    ],
+    [
+     5,
+     0
+    ],
+    [
+     5.1,
+     0
+    ],
+    [
+     5.2,
+     0
+    ],
+    [
+     5.3,
+     0
+    ],
+    [
+     5.4,
+     0
+    ],
+    [
+     5.5,
+     0
+    ],
+    [
+     5.6,
+     0
+    ],
+    [
+     5.7,
+     0
+    ],
+    [
+     5.8,
+     0
+    ],
+    [
+     5.9,
+     0
+    ],
+    [
+     6,
+     0
+    ]
+   ],
+   "settleT": 0.7791666666666667,
+   "sleepT": 1.283,
+   "residualMaxSpeedMmS": 0,
+   "firstGroundContactOrder": [
+    "foreArm_R@0.217",
+    "foot_R@0.237",
+    "foot_L@0.242",
+    "thigh_R@0.346",
+    "shin_R@0.350",
+    "pelvis@0.392",
+    "thigh_L@0.408",
+    "shin_L@0.417"
+   ],
+   "cpuMsPerStep": 0.0392,
+   "cpuMsPerFrame": 0.157,
+   "bodies": 14,
+   "constraints": {
+    "sixdof": 9,
+    "hinge": 4
+   },
+   "worst": {
+    "groundPen": 186,
+    "anchor": 94,
+    "limit": 114,
+    "pop": 94,
+    "self": 126,
+    "energy": 116
+   },
+   "repeatHashes": [
+    "34af33e",
+    "34af33e",
+    "34af33e"
+   ],
+   "deterministic": true
+  },
+  {
+   "drop": "D",
+   "title": "D — rotating fall",
+   "tsc": "240 Hz, 1 collision step",
+   "steps": 1440,
+   "hash": "55b97ba8",
+   "initialLowestBody": "foot_R",
+   "E0": {
+    "ke": 127.8,
+    "pe": 858.9
+   },
+   "maxGroundPenMm": 13.9,
+   "maxGroundPenAt": {
+    "n": 59,
+    "t": 0.246,
+    "body": "foot_R"
+   },
+   "maxEngineGroundDepthMm": 16.48,
+   "maxMeshPenMm": null,
+   "maxMeshPenPart": null,
+   "restMeshPenMm": null,
+   "restMeshPenPart": null,
+   "restGroundPenMm": 1.95,
+   "maxSelfPenMm": 2.19,
+   "maxSelfPenAt": {
+    "n": 445,
+    "t": 1.854,
+    "pair": "shin_L–foot_R"
+   },
+   "maxAnchorErrMm": 4.62,
+   "maxAnchorAt": {
+    "n": 60,
+    "t": 0.25,
+    "joint": "ankle_R"
+   },
+   "maxLimitViolDeg": 10.73,
+   "maxLimitAt": {
+    "n": 140,
+    "t": 0.583,
+    "joint": "elbow_L"
+   },
+   "maxHardLimitViolDeg": 5.31,
+   "maxHardLimitAt": {
+    "n": 60,
+    "t": 0.25,
+    "joint": "ankle_R"
+   },
+   "hardLimitViolOver2degSteps": 23,
+   "maxSoftStopOvershootDeg": 10.73,
+   "maxPopMm": 0.81,
+   "maxPopAt": {
+    "n": 64,
+    "t": 0.267,
+    "body": "foot_R"
+   },
+   "energyGain": {
+    "stepsOver50mJ": 9,
+    "maxJ": 2.355,
+    "totalJ": 9.26,
+    "fromPE": 0,
+    "at": 0.267,
+    "dPE": -2.545,
+    "dKE": 4.9,
+    "body": "chest"
+   },
+   "keCurve": [
+    [
+     0,
+     127.8
+    ],
+    [
+     0.1,
+     160
+    ],
+    [
+     0.2,
+     203.95
+    ],
+    [
+     0.3,
+     249.34
+    ],
+    [
+     0.4,
+     357.2
+    ],
+    [
+     0.5,
+     516.64
+    ],
+    [
+     0.6,
+     182.3
+    ],
+    [
+     0.7,
+     13.72
+    ],
+    [
+     0.8,
+     5.88
+    ],
+    [
+     0.9,
+     1.15
+    ],
+    [
+     1,
+     0.68
+    ],
+    [
+     1.1,
+     0.79
+    ],
+    [
+     1.2,
+     0.3
+    ],
+    [
+     1.3,
+     0.25
+    ],
+    [
+     1.4,
+     0.01
+    ],
+    [
+     1.5,
+     0
+    ],
+    [
+     1.6,
+     0
+    ],
+    [
+     1.7,
+     0
+    ],
+    [
+     1.8,
+     0
+    ],
+    [
+     1.9,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2.1,
+     0
+    ],
+    [
+     2.2,
+     0
+    ],
+    [
+     2.3,
+     0
+    ],
+    [
+     2.4,
+     0
+    ],
+    [
+     2.5,
+     0
+    ],
+    [
+     2.6,
+     0
+    ],
+    [
+     2.7,
+     0
+    ],
+    [
+     2.8,
+     0
+    ],
+    [
+     2.9,
+     0
+    ],
+    [
+     3,
+     0
+    ],
+    [
+     3.1,
+     0
+    ],
+    [
+     3.2,
+     0
+    ],
+    [
+     3.3,
+     0
+    ],
+    [
+     3.4,
+     0
+    ],
+    [
+     3.5,
+     0
+    ],
+    [
+     3.6,
+     0
+    ],
+    [
+     3.7,
+     0
+    ],
+    [
+     3.8,
+     0
+    ],
+    [
+     3.9,
+     0
+    ],
+    [
+     4,
+     0
+    ],
+    [
+     4.1,
+     0
+    ],
+    [
+     4.2,
+     0
+    ],
+    [
+     4.3,
+     0
+    ],
+    [
+     4.4,
+     0
+    ],
+    [
+     4.5,
+     0
+    ],
+    [
+     4.6,
+     0
+    ],
+    [
+     4.7,
+     0
+    ],
+    [
+     4.8,
+     0
+    ],
+    [
+     4.9,
+     0
+    ],
+    [
+     5,
+     0
+    ],
+    [
+     5.1,
+     0
+    ],
+    [
+     5.2,
+     0
+    ],
+    [
+     5.3,
+     0
+    ],
+    [
+     5.4,
+     0
+    ],
+    [
+     5.5,
+     0
+    ],
+    [
+     5.6,
+     0
+    ],
+    [
+     5.7,
+     0
+    ],
+    [
+     5.8,
+     0
+    ],
+    [
+     5.9,
+     0
+    ],
+    [
+     6,
+     0
+    ]
+   ],
+   "settleT": 1.3416666666666666,
+   "sleepT": 1.854,
+   "residualMaxSpeedMmS": 0,
+   "firstGroundContactOrder": [
+    "foot_R@0.004",
+    "foot_L@0.096",
+    "foreArm_R@0.462",
+    "foreArm_L@0.529",
+    "head@0.571",
+    "upperArm_R@0.575",
+    "thigh_R@0.592",
+    "pelvis@0.604"
+   ],
+   "cpuMsPerStep": 0.059,
+   "cpuMsPerFrame": 0.2358,
+   "bodies": 14,
+   "constraints": {
+    "sixdof": 9,
+    "hinge": 4
+   },
+   "worst": {
+    "groundPen": 59,
+    "anchor": 60,
+    "limit": 140,
+    "pop": 64,
+    "self": 445,
+    "energy": 64
+   },
+   "repeatHashes": [
+    "55b97ba8",
+    "55b97ba8",
+    "55b97ba8"
+   ],
+   "deterministic": true
+  },
+  {
+   "drop": "E",
+   "title": "E — awkward asymmetric fall",
+   "tsc": "240 Hz, 1 collision step",
+   "steps": 1440,
+   "hash": "48f19a22",
+   "initialLowestBody": "foot_R",
+   "E0": {
+    "ke": 21.67,
+    "pe": 1142.3
+   },
+   "maxGroundPenMm": 4.15,
+   "maxGroundPenAt": {
+    "n": 95,
+    "t": 0.396,
+    "body": "foot_R"
+   },
+   "maxEngineGroundDepthMm": 8,
+   "maxMeshPenMm": null,
+   "maxMeshPenPart": null,
+   "restMeshPenMm": null,
+   "restMeshPenPart": null,
+   "restGroundPenMm": 1.42,
+   "maxSelfPenMm": 0.23,
+   "maxSelfPenAt": {
+    "n": 146,
+    "t": 0.608,
+    "pair": "abdomen–upperArm_L"
+   },
+   "maxAnchorErrMm": 3.894,
+   "maxAnchorAt": {
+    "n": 101,
+    "t": 0.421,
+    "joint": "ankle_R"
+   },
+   "maxLimitViolDeg": 12.26,
+   "maxLimitAt": {
+    "n": 96,
+    "t": 0.4,
+    "joint": "knee_R"
+   },
+   "maxHardLimitViolDeg": 7.2,
+   "maxHardLimitAt": {
+    "n": 133,
+    "t": 0.554,
+    "joint": "shoulder_R"
+   },
+   "hardLimitViolOver2degSteps": 8,
+   "maxSoftStopOvershootDeg": 12.26,
+   "maxPopMm": 1.39,
+   "maxPopAt": {
+    "n": 101,
+    "t": 0.421,
+    "body": "foot_R"
+   },
+   "energyGain": {
+    "stepsOver50mJ": 2,
+    "maxJ": 0.956,
+    "totalJ": 1.41,
+    "fromPE": 0,
+    "at": 0.425,
+    "dPE": -5.22,
+    "dKE": 6.176,
+    "body": "chest"
+   },
+   "keCurve": [
+    [
+     0,
+     21.67
+    ],
+    [
+     0.1,
+     96.76
+    ],
+    [
+     0.2,
+     245.21
+    ],
+    [
+     0.3,
+     450.02
+    ],
+    [
+     0.4,
+     408.51
+    ],
+    [
+     0.5,
+     408.54
+    ],
+    [
+     0.6,
+     176.09
+    ],
+    [
+     0.7,
+     33.05
+    ],
+    [
+     0.8,
+     12.98
+    ],
+    [
+     0.9,
+     5.73
+    ],
+    [
+     1,
+     8
+    ],
+    [
+     1.1,
+     0.21
+    ],
+    [
+     1.2,
+     0
+    ],
+    [
+     1.3,
+     0
+    ],
+    [
+     1.4,
+     0
+    ],
+    [
+     1.5,
+     0
+    ],
+    [
+     1.6,
+     0
+    ],
+    [
+     1.7,
+     0
+    ],
+    [
+     1.8,
+     0
+    ],
+    [
+     1.9,
+     0
+    ],
+    [
+     2,
+     0
+    ],
+    [
+     2.1,
+     0
+    ],
+    [
+     2.2,
+     0
+    ],
+    [
+     2.3,
+     0
+    ],
+    [
+     2.4,
+     0
+    ],
+    [
+     2.5,
+     0
+    ],
+    [
+     2.6,
+     0
+    ],
+    [
+     2.7,
+     0
+    ],
+    [
+     2.8,
+     0
+    ],
+    [
+     2.9,
+     0
+    ],
+    [
+     3,
+     0
+    ],
+    [
+     3.1,
+     0
+    ],
+    [
+     3.2,
+     0
+    ],
+    [
+     3.3,
+     0
+    ],
+    [
+     3.4,
+     0
+    ],
+    [
+     3.5,
+     0
+    ],
+    [
+     3.6,
+     0
+    ],
+    [
+     3.7,
+     0
+    ],
+    [
+     3.8,
+     0
+    ],
+    [
+     3.9,
+     0
+    ],
+    [
+     4,
+     0
+    ],
+    [
+     4.1,
+     0
+    ],
+    [
+     4.2,
+     0
+    ],
+    [
+     4.3,
+     0
+    ],
+    [
+     4.4,
+     0
+    ],
+    [
+     4.5,
+     0
+    ],
+    [
+     4.6,
+     0
+    ],
+    [
+     4.7,
+     0
+    ],
+    [
+     4.8,
+     0
+    ],
+    [
+     4.9,
+     0
+    ],
+    [
+     5,
+     0
+    ],
+    [
+     5.1,
+     0
+    ],
+    [
+     5.2,
+     0
+    ],
+    [
+     5.3,
+     0
+    ],
+    [
+     5.4,
+     0
+    ],
+    [
+     5.5,
+     0
+    ],
+    [
+     5.6,
+     0
+    ],
+    [
+     5.7,
+     0
+    ],
+    [
+     5.8,
+     0
+    ],
+    [
+     5.9,
+     0
+    ],
+    [
+     6,
+     0
+    ]
+   ],
+   "settleT": 1.1041666666666667,
+   "sleepT": 1.604,
+   "residualMaxSpeedMmS": 0,
+   "firstGroundContactOrder": [
+    "foot_R@0.246",
+    "foot_L@0.338",
+    "shin_R@0.400",
+    "shin_L@0.471",
+    "thigh_L@0.487",
+    "foreArm_L@0.496",
+    "foreArm_R@0.546",
+    "upperArm_R@0.550"
+   ],
+   "cpuMsPerStep": 0.0473,
+   "cpuMsPerFrame": 0.189,
+   "bodies": 14,
+   "constraints": {
+    "sixdof": 9,
+    "hinge": 4
+   },
+   "worst": {
+    "groundPen": 95,
+    "anchor": 101,
+    "limit": 96,
+    "pop": 101,
+    "self": 146,
+    "energy": 102
+   },
+   "repeatHashes": [
+    "48f19a22",
+    "48f19a22",
+    "48f19a22"
+   ],
+   "deterministic": true
+  }
+ ]
+}

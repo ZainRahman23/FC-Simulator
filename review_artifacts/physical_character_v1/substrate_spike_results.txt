@@ -1,0 +1,78 @@
+Physics-substrate spike — 2026-09-29 20:21 — node v22.19.0 on arm64; identical scene & metrics for every engine (common.js); worst case over 5 contact phases; each phase run twice (det = identical state hash)
+=== RAPIER @dimforge/rapier3d-deterministic-compat ===
+WORST CASE over 5 contact phases per row.  pen@touch = depth when first visible; latency = frames from first touch to the shank moving (≤0 = same frame)
+case    variant            maxPen(mm) pen@touch f>3mm f>10mm consec  tunnels latency minShankV steps ms/frame det
+ROT_09  discrete_1              105.1     105.1     9      9      9      0/5       1     7.408    40    0.203 true
+ROT_09  ccd_all                 105.1     105.1     9      9      9      0/5       1     7.408    40    0.052 true
+ROT_09  ccd_fastOnly              5.9       5.0     7      0      7      0/5       1     7.649    40    0.036 true
+ROT_09  softccd_0.5              18.2      15.4     9      9      9      0/5       1     7.134    40    0.026 true
+ROT_09  pred_0.25                16.6      10.6    10      8     10      0/5       0     7.134    40    0.046 true
+ROT_09  adaptive                 20.2      13.1    12     11      7      0/5       0      5.15   131     0.06 true
+ROT_09  ccdF_pred_adapt120_it8        6.0       1.1     8      0      5      0/5       0     5.352   126    0.111 true
+ROT_15  discrete_1              100.1     100.1     8      7      7      2/5      15     7.331    40    0.022 true
+ROT_15  ccd_all                 100.1     100.1     8      7      7      2/5      15     7.331    40    0.022 true
+ROT_15  ccd_fastOnly              6.2       5.7     5      0      5      0/5       1     8.635    40    0.022 true
+ROT_15  softccd_0.5              34.3      30.1     6      6      6      0/5       1     6.773    40     0.03 true
+ROT_15  pred_0.25                34.3      30.1     7      7      7      0/5       0     6.773    40    0.031 true
+ROT_15  adaptive                 31.1      16.6    16     14      6      0/5       0     7.923   170    0.066 true
+ROT_15  ccdF_pred_adapt120_it8        6.2       1.9     8      0      4      0/5       0     7.958   180    0.136 true
+LIN_13  discrete_1               93.9      93.9     4      4      4      2/5    none     0.095    40    0.022 true
+LIN_13  ccd_all                  93.9      93.9     4      4      4      2/5    none     0.095    40    0.021 true
+LIN_13  ccd_fastOnly              6.1       6.1     1      0      1      0/5       1     5.883    40    0.022 true
+LIN_13  softccd_0.5               0.3       0.3     0      0      0      0/5       0     5.539    40    0.022 true
+LIN_13  pred_0.25                 0.3       0.3     0      0      0      0/5       0     5.539    40    0.025 true
+LIN_13  adaptive                 28.6      28.6     2      2      2      0/5       1     5.551   214    0.084 true
+LIN_13  ccdF_pred_adapt120_it8        0.3       0.3     0      0      0      0/5       0     5.488   217     0.13 true
+=== JOLT jolt-physics 1.1.0 (wasm-compat, single-threaded) ===
+WORST CASE over 5 contact phases per row.  pen@touch = depth when first visible; latency = frames from first touch to the shank moving (≤0 = same frame)
+case    variant            maxPen(mm) pen@touch f>3mm f>10mm consec  tunnels latency minShankV steps ms/frame det
+ROT_09  discrete_1              109.7     109.7    12     12      6      1/5      24      7.09    40    0.064 true
+ROT_09  linearcast_1             45.1      13.8    12     10      6      0/5       1     7.311    40    0.042 true
+ROT_09  spec_0.25                43.6       3.3    10      6      6      0/5       1     7.528    40    0.044 true
+ROT_09  collSteps4               13.7      10.7     9      6      6      0/5       0     7.737    40    0.096 true
+ROT_09  adaptive                 17.3      10.9     6      6      6      0/5       0     6.151   125    0.075 true
+ROT_09  adapt_spec.25             2.0       0.2     0      0      0      0/5       0     6.161   124    0.092 true
+ROT_09  adapt_spec_slop2          2.0       0.2     0      0      0      0/5       0     6.161   124    0.088 true
+ROT_15  discrete_1              106.8      93.6    12     11      6      2/5      15     7.723    40     0.03 true
+ROT_15  linearcast_1             63.6      29.8    14     11      5      0/5       0     8.127    40    0.032 true
+ROT_15  spec_0.25                19.7       5.9     9      5      3      0/5       0     8.127    40    0.037 true
+ROT_15  collSteps4               36.4      36.4    10      8      5      0/5       1       7.9    40    0.091 true
+ROT_15  adaptive                 24.3      13.6    14     10      6      0/5       0     7.161   168    0.099 true
+ROT_15  adapt_spec.25            11.5       0.2     9      2      5      0/5       0     6.965   168    0.115 true
+ROT_15  adapt_spec_slop2          9.3       0.2     8      0      4      0/5       0     6.953   168    0.118 true
+LIN_13  discrete_1               96.6      96.6     5      5      5      2/5    none     0.096    40    0.024 true
+LIN_13  linearcast_1             15.9      15.9     3      2      3      0/5       1     5.562    40    0.026 true
+LIN_13  spec_0.25                 0.6       0.3     0      0      0      0/5       1      5.25    40    0.026 true
+LIN_13  collSteps4               22.7      22.7     2      2      2      0/5       1     5.501    40    0.071 true
+LIN_13  adaptive                 23.0      23.0     3      2      3      0/5       1     5.392   161    0.075 true
+LIN_13  adapt_spec.25             0.2       0.2     0      0      0      0/5       0     5.352   161    0.082 true
+LIN_13  adapt_spec_slop2          0.2       0.2     0      0      0      0/5       0     5.352   161    0.083 true
+=== BULLET ammo.js (kripken builds 2026-09-22, Bullet 2.82-based) ===
+WORST CASE over 5 contact phases per row.  pen@touch = depth when first visible; latency = frames from first touch to the shank moving (≤0 = same frame)
+case    variant            maxPen(mm) pen@touch f>3mm f>10mm consec  tunnels latency minShankV steps ms/frame det
+ROT_09  discrete_1               70.1      42.0     6      6      6      0/5       0 229953676.933    40    0.048 true
+ROT_09  ccd_1                     NaN      37.8     6      6      6      0/5       0       NaN    40    0.035 true
+ROT_09  sub4                     16.2      16.2     2      1      2      0/5       0     6.125   160    0.055 true
+ROT_09  adaptive                 16.7      16.2     9      2      5      0/5       0     6.226   132    0.035 true
+ROT_09  ccd_adaptive             16.7      16.2     9      2      5      0/5       0     6.226   132    0.045 true
+ROT_09  discrete_noPD            40.8      40.8     5      5      5      0/5       0     7.714    40    0.019 true
+ROT_15  discrete_1                NaN      35.7     6      6      6      2/5    none     0.166    40     0.02 true
+ROT_15  ccd_1                     NaN      47.0     5      5      5      0/5       0       NaN    40     0.02 true
+ROT_15  sub4                     48.6      22.9    10      5      4      0/5       0     7.311   160    0.042 true
+ROT_15  adaptive                 22.3      12.3    10      4      4      1/5       0     7.897   211    0.044 true
+ROT_15  ccd_adaptive             22.3      12.3    10      4      4      1/5       0     7.897   211    0.052 true
+ROT_15  discrete_noPD            36.1      36.1     5      5      5      2/5    none     0.164    40    0.013 true
+LIN_13  discrete_1               29.0      29.0     2      2      2      2/5    none     0.186    40    0.018 true
+LIN_13  ccd_1                    12.0      12.0     1      1      1      0/5       0     5.086    40    0.018 true
+LIN_13  sub4                     38.2      38.2     2      2      2      0/5       0     5.269   160    0.035 true
+LIN_13  adaptive                 38.2      38.2     3      3      3      0/5       0     5.457   200    0.041 true
+LIN_13  ccd_adaptive             11.9      11.9     2      1      2      0/5       0     5.451   186    0.041 true
+LIN_13  discrete_noPD            29.0      28.7     2      2      2      2/5    none     0.164    40    0.011 true
+
+SCALE probe (28 bodies / 26 joints / 26 torque writes + 28 transform reads per frame):
+rapier  steps/frame=1  0.089 ms/frame (28 bodies, 26 joints)  max body speed in the last second (rest jitter): 7.2 mm/s  repeatable: true
+rapier  steps/frame=4  0.293 ms/frame (28 bodies, 26 joints)  max body speed in the last second (rest jitter): 3.5 mm/s  repeatable: true
+jolt    steps/frame=1  0.135 ms/frame (28 bodies, 26 joints)  max body speed in the last second (rest jitter): 0.0 mm/s  repeatable: true
+jolt    steps/frame=4  0.430 ms/frame (28 bodies, 26 joints)  max body speed in the last second (rest jitter): 0.0 mm/s  repeatable: true
+bullet  steps/frame=1  0.088 ms/frame (28 bodies, 26 joints)  max body speed in the last second (rest jitter): 273.8 mm/s  repeatable: true
+bullet  steps/frame=4  0.296 ms/frame (28 bodies, 26 joints)  max body speed in the last second (rest jitter): 238.0 mm/s  repeatable: true

@@ -1,0 +1,6644 @@
+{
+ "player": {
+  "id": "gabriel",
+  "name": "Gabriel Magalhães",
+  "heightCm": 190,
+  "weightKg": 78,
+  "H": 1.9
+ },
+ "tsc": "240x1",
+ "results": [
+  {
+   "test": "A_shift",
+   "group": "A weight shift",
+   "title": "A — static weight shift L↔R (no lift): 25 → 10 → 50 → 75 → 90 → 50 % toward R",
+   "hash": "4b713748",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "fell": false,
+   "finalClass": "RECOVERABLE_IN_PLACE",
+   "requests": [
+    {
+     "id": 0,
+     "label": null,
+     "type": "shift",
+     "foot": null,
+     "status": "DONE",
+     "why": "weight 25 % toward R",
+     "w": 0.25
+    },
+    {
+     "id": 1,
+     "label": null,
+     "type": "shift",
+     "foot": null,
+     "status": "DONE",
+     "why": "weight 10 % toward R",
+     "w": 0.1
+    },
+    {
+     "id": 2,
+     "label": null,
+     "type": "shift",
+     "foot": null,
+     "status": "DONE",
+     "why": "weight 50 % toward R",
+     "w": 0.5
+    },
+    {
+     "id": 3,
+     "label": null,
+     "type": "shift",
+     "foot": null,
+     "status": "DONE",
+     "why": "weight 75 % toward R",
+     "w": 0.75
+    },
+    {
+     "id": 4,
+     "label": null,
+     "type": "shift",
+     "foot": null,
+     "status": "DONE",
+     "why": "weight 90 % toward R",
+     "w": 0.9
+    },
+    {
+     "id": 5,
+     "label": null,
+     "type": "shift",
+     "foot": null,
+     "status": "DONE",
+     "why": "weight 50 % toward R",
+     "w": 0.5
+    }
+   ],
+   "loads": {
+    "totalVsBodyWeightN": 1.33,
+    "maxStepChangeN": 27.6,
+    "shareR": [
+     0.051,
+     0.948
+    ]
+   },
+   "drift": {
+    "footL": 0.01,
+    "footR": 0.01,
+    "com": 1.03,
+    "slidL": 1.6,
+    "slidR": 1.6
+   },
+   "root": {
+    "residualMeanN": 0.031,
+    "residualMaxN": 0.07
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "minJointLimitMarginDeg": 8.9,
+    "maxTurfPenMm": 1.15,
+    "maxSelfPenMm": 0,
+    "keMaxJ": 0.91
+   },
+   "cpu": {
+    "msPerFrame": 1.2009,
+    "jolt": 0.5627,
+    "sensing": 0.0556,
+    "controller": 0.5826
+   },
+   "events": [
+    {
+     "t": 0.5,
+     "kind": "request",
+     "what": "shift  "
+    },
+    {
+     "t": 2.304,
+     "kind": "DONE",
+     "what": "weight 25 % toward R"
+    },
+    {
+     "t": 2.308,
+     "kind": "request",
+     "what": "shift  "
+    },
+    {
+     "t": 4.108,
+     "kind": "DONE",
+     "what": "weight 10 % toward R"
+    },
+    {
+     "t": 4.112,
+     "kind": "request",
+     "what": "shift  "
+    },
+    {
+     "t": 6.112,
+     "kind": "DONE",
+     "what": "weight 50 % toward R"
+    },
+    {
+     "t": 6.117,
+     "kind": "request",
+     "what": "shift  "
+    },
+    {
+     "t": 7.917,
+     "kind": "DONE",
+     "what": "weight 75 % toward R"
+    },
+    {
+     "t": 7.921,
+     "kind": "request",
+     "what": "shift  "
+    },
+    {
+     "t": 9.725,
+     "kind": "DONE",
+     "what": "weight 90 % toward R"
+    },
+    {
+     "t": 9.729,
+     "kind": "request",
+     "what": "shift  "
+    },
+    {
+     "t": 11.729,
+     "kind": "DONE",
+     "what": "weight 50 % toward R"
+    }
+   ],
+   "marks": {
+    "DONE#0": 553,
+    "DONE#1": 986,
+    "DONE#2": 1467,
+    "DONE#3": 1900,
+    "DONE#4": 2334,
+    "DONE#5": 2815
+   },
+   "worst": {
+    "liftoff": 0,
+    "touchdown": 0,
+    "done": 553
+   },
+   "calib": "V1.1",
+   "recal": null,
+   "env": {
+    "terrain": [],
+    "obstacle": null
+   },
+   "box": {
+    "he": [
+     0.08207660244551523,
+     0.0746698049377926,
+     0.17878945945945948
+    ],
+    "pos": [
+     -0.0005227809072962872,
+     -0.013330195062207416,
+     0.09765810810810813
+    ]
+   },
+   "lean": {
+    "hipHalfWidth": 0.092,
+    "legComOffset": 0.026369450636924224,
+    "mUp": 38.305800000000005,
+    "hUp": 0.2897783130662963,
+    "mPelvis": 8.7126,
+    "mLeg": 15.4908,
+    "tau0": 74.40378692093864,
+    "cap": 140,
+    "target": 98,
+    "leanDeg": 0,
+    "tauAtLean": 74.40378692093864,
+    "ssPelvisOffset": -0.015957114351607803
+   },
+   "sup": {
+    "footClear": 0.03,
+    "latMin": 0.1
+   },
+   "reqRaw": [
+    {
+     "id": 0,
+     "type": "shift",
+     "foot": null,
+     "label": null,
+     "status": "DONE",
+     "why": "weight 25 % toward R",
+     "proj": null,
+     "reach": null,
+     "excl": null,
+     "td": null,
+     "accepted": null,
+     "blocked": null,
+     "align": null,
+     "fwdBias": null,
+     "clear": null,
+     "T": 1
+    },
+    {
+     "id": 1,
+     "type": "shift",
+     "foot": null,
+     "label": null,
+     "status": "DONE",
+     "why": "weight 10 % toward R",
+     "proj": null,
+     "reach": null,
+     "excl": null,
+     "td": null,
+     "accepted": null,
+     "blocked": null,
+     "align": null,
+     "fwdBias": null,
+     "clear": null,
+     "T": 1
+    },
+    {
+     "id": 2,
+     "type": "shift",
+     "foot": null,
+     "label": null,
+     "status": "DONE",
+     "why": "weight 50 % toward R",
+     "proj": null,
+     "reach": null,
+     "excl": null,
+     "td": null,
+     "accepted": null,
+     "blocked": null,
+     "align": null,
+     "fwdBias": null,
+     "clear": null,
+     "T": 1.2
+    },
+    {
+     "id": 3,
+     "type": "shift",
+     "foot": null,
+     "label": null,
+     "status": "DONE",
+     "why": "weight 75 % toward R",
+     "proj": null,
+     "reach": null,
+     "excl": null,
+     "td": null,
+     "accepted": null,
+     "blocked": null,
+     "align": null,
+     "fwdBias": null,
+     "clear": null,
+     "T": 1
+    },
+    {
+     "id": 4,
+     "type": "shift",
+     "foot": null,
+     "label": null,
+     "status": "DONE",
+     "why": "weight 90 % toward R",
+     "proj": null,
+     "reach": null,
+     "excl": null,
+     "td": null,
+     "accepted": null,
+     "blocked": null,
+     "align": null,
+     "fwdBias": null,
+     "clear": null,
+     "T": 1
+    },
+    {
+     "id": 5,
+     "type": "shift",
+     "foot": null,
+     "label": null,
+     "status": "DONE",
+     "why": "weight 50 % toward R",
+     "proj": null,
+     "reach": null,
+     "excl": null,
+     "td": null,
+     "accepted": null,
+     "blocked": null,
+     "align": null,
+     "fwdBias": null,
+     "clear": null,
+     "T": 1.2
+    }
+   ],
+   "repeatHashes": [
+    "4b713748",
+    "4b713748",
+    "4b713748"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "B_lift_R",
+   "group": "B single support",
+   "title": "B — shift onto L, lift R 8 cm, hold 2 s, set it back down in place",
+   "hash": "b034350b",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "fell": false,
+   "finalClass": "RECOVERABLE_IN_PLACE",
+   "requests": [
+    {
+     "id": 0,
+     "label": null,
+     "type": "lift",
+     "foot": "R",
+     "status": "REJECTED",
+     "why": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s",
+     "requested": [
+      0.16,
+      0.086
+     ],
+     "feasible": [
+      0.16,
+      0.086
+     ],
+     "correctedCm": 0,
+     "projectionReasons": [],
+     "stanceClearanceCm": 15.7,
+     "metrics": {
+      "minSoleClearanceCm": null,
+      "peakSoleClearanceCm": null,
+      "minClearanceToStanceLegCm": null,
+      "peakSwingFootPenetrationMm": null,
+      "stanceFootSlidMm": 0.26,
+      "stanceMaxSlipSpeed": 0.001,
+      "legSelfContactMm": 0,
+      "saturationMs": {
+       "hip_L": 4
+      },
+      "jointLimitMarginDeg": 8.6,
+      "jointLimitMarginJoint": "ankle_L",
+      "rootResidualMaxN": 0.11,
+      "ankle": {
+       "stance": {
+        "foot": "L",
+        "maxDorsiDeg": 14.7,
+        "limitDeg": 30,
+        "minMarginDeg": 15.3,
+        "atStopMs": 0
+       },
+       "swing": {
+        "foot": "R",
+        "maxDorsiDeg": 8.1,
+        "limitDeg": 30,
+        "minMarginDeg": 21.9,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     }
+    }
+   ],
+   "loads": {
+    "totalVsBodyWeightN": 1.27,
+    "maxStepChangeN": 41.6,
+    "shareR": [
+     0,
+     0.68
+    ]
+   },
+   "drift": {
+    "footL": 0.02,
+    "footR": 0.05,
+    "com": 1.83,
+    "slidL": 1.5,
+    "slidR": 0.9
+   },
+   "root": {
+    "residualMeanN": 0.028,
+    "residualMaxN": 0.11
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "minJointLimitMarginDeg": 8.6,
+    "maxTurfPenMm": 1.46,
+    "maxSelfPenMm": 0,
+    "keMaxJ": 1.83
+   },
+   "cpu": {
+    "msPerFrame": 1.2055,
+    "jolt": 0.5461,
+    "sensing": 0.0507,
+    "controller": 0.6087
+   },
+   "events": [
+    {
+     "t": 0.5,
+     "kind": "request",
+     "what": "lift R "
+    },
+    {
+     "t": 2.604,
+     "kind": "REJECTED",
+     "what": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s"
+    }
+   ],
+   "marks": {
+    "REJECTED#0": 625
+   },
+   "worst": {
+    "liftoff": 0,
+    "touchdown": 0,
+    "done": 625
+   },
+   "calib": "V1.1",
+   "recal": null,
+   "env": {
+    "terrain": [],
+    "obstacle": null
+   },
+   "box": {
+    "he": [
+     0.08207660244551523,
+     0.0746698049377926,
+     0.17878945945945948
+    ],
+    "pos": [
+     -0.0005227809072962872,
+     -0.013330195062207416,
+     0.09765810810810813
+    ]
+   },
+   "lean": {
+    "hipHalfWidth": 0.092,
+    "legComOffset": 0.026369450636924224,
+    "mUp": 38.305800000000005,
+    "hUp": 0.2897783130662963,
+    "mPelvis": 8.7126,
+    "mLeg": 15.4908,
+    "tau0": 74.40378692093864,
+    "cap": 140,
+    "target": 98,
+    "leanDeg": 0,
+    "tauAtLean": 74.40378692093864,
+    "ssPelvisOffset": -0.015957114351607803
+   },
+   "sup": {
+    "footClear": 0.03,
+    "latMin": 0.1
+   },
+   "reqRaw": [
+    {
+     "id": 0,
+     "type": "lift",
+     "foot": "R",
+     "label": null,
+     "status": "REJECTED",
+     "why": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s",
+     "proj": {
+      "requested": [
+       0.1600526631053262,
+       0.0862381201157039
+      ],
+      "target": [
+       0.1600526631053262,
+       0.0862381201157039
+      ],
+      "yaw": 0.00008616983392461063,
+      "rejected": false,
+      "reasons": [],
+      "current": [
+       0.1600526631053262,
+       0.0862381201157039
+      ]
+     },
+     "reach": [
+      [
+       0.1600526631053262,
+       0.3476257543930476
+      ],
+      [
+       0.19732226359097543,
+       0.2976045277743818
+      ],
+      [
+       0.22039101593565433,
+       0.25201638204411636
+      ],
+      [
+       0.23354662062485743,
+       0.21353338858884074
+      ],
+      [
+       0.2405374477477635,
+       0.18215615136249985
+      ],
+      [
+       0.24391825866334077,
+       0.15660971041689686
+      ],
+      [
+       0.24520293004816351,
+       0.13539964965671955
+      ],
+      [
+       0.24521517457834596,
+       0.11723473936723706
+      ],
+      [
+       0.2443900506939144,
+       0.10110907703003924
+      ],
+      [
+       0.24292162062485745,
+       0.0862381201157039
+      ],
+      [
+       0.2408737388316577,
+       0.07198718385526967
+      ],
+      [
+       0.2381993115511465,
+       0.05779506617376014
+      ],
+      [
+       0.23474893992160917,
+       0.04311220458836016
+      ],
+      [
+       0.23023872662320802,
+       0.02734502010406413
+      ],
+      [
+       0.2241980330905247,
+       0.009792644987558857
+      ],
+      [
+       0.21583803297837306,
+       -0.010384974823435436
+      ],
+      [
+       0.2038766033755386,
+       -0.034167166208232666
+      ],
+      [
+       0.18627158778259995,
+       -0.06245679073644454
+      ],
+      [
+       0.16005266310532623,
+       -0.09548032470851482
+      ],
+      [
+       0.12162330603757221,
+       -0.13170559396224646
+      ],
+      [
+       0.06796774756344452,
+       -0.1667631060080021
+      ],
+      [
+       0.03302782179673247,
+       -0.1337753588541543
+      ],
+      [
+       0.033036003190139884,
+       -0.06513444065753636
+      ],
+      [
+       0.03304096085113292,
+       -0.020337352400988273
+      ],
+      [
+       0.033042827809706216,
+       0.01290895751804759
+      ],
+      [
+       0.03304446461293398,
+       0.04001091635669949
+      ],
+      [
+       0.03304618349589203,
+       0.06384345103576115
+      ],
+      [
+       0.03305070998032625,
+       0.08623812011570388
+      ],
+      [
+       0.033050691588023096,
+       0.10863199429737239
+      ],
+      [
+       0.03305306775582445,
+       0.13246219258677502
+      ],
+      [
+       0.0330547208587694,
+       0.15956041625828205
+      ],
+      [
+       0.03305849421698795,
+       0.19279888039157372
+      ],
+      [
+       0.03306248522361993,
+       0.237579120830405
+      ],
+      [
+       0.03306673170884178,
+       0.3061842051408705
+      ],
+      [
+       0.03326838033080817,
+       0.4345750741804411
+      ],
+      [
+       0.10542566390354341,
+       0.3960432275490457
+      ]
+     ],
+     "excl": [
+      [
+       -0.2431985052872373,
+       -0.09249414323966779
+      ],
+      [
+       -0.07904531338041866,
+       -0.09250833109519667
+      ],
+      [
+       -0.07901450087134794,
+       0.2650705058493597
+      ],
+      [
+       -0.24316769277816658,
+       0.2650846937048886
+      ]
+     ],
+     "td": null,
+     "accepted": null,
+     "blocked": null,
+     "align": null,
+     "fwdBias": null,
+     "clear": null,
+     "T": null
+    }
+   ],
+   "repeatHashes": [
+    "b034350b",
+    "b034350b",
+    "b034350b"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "B_hold_R",
+   "group": "B single support",
+   "title": "B — V1.1 comparison: shift onto L, lift R 8 cm and HOLD 20 s (single-leg sustainability)",
+   "hash": "6c26efc8",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "fell": false,
+   "finalClass": "RECOVERABLE_IN_PLACE",
+   "requests": [
+    {
+     "id": 0,
+     "label": null,
+     "type": "lift",
+     "foot": "R",
+     "status": "REJECTED",
+     "why": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s",
+     "requested": [
+      0.16,
+      0.086
+     ],
+     "feasible": [
+      0.16,
+      0.086
+     ],
+     "correctedCm": 0,
+     "projectionReasons": [],
+     "stanceClearanceCm": 15.7,
+     "metrics": {
+      "minSoleClearanceCm": null,
+      "peakSoleClearanceCm": null,
+      "minClearanceToStanceLegCm": null,
+      "peakSwingFootPenetrationMm": null,
+      "stanceFootSlidMm": 0.26,
+      "stanceMaxSlipSpeed": 0.001,
+      "legSelfContactMm": 0,
+      "saturationMs": {
+       "hip_L": 4
+      },
+      "jointLimitMarginDeg": 8.6,
+      "jointLimitMarginJoint": "ankle_L",
+      "rootResidualMaxN": 0.11,
+      "ankle": {
+       "stance": {
+        "foot": "L",
+        "maxDorsiDeg": 14.7,
+        "limitDeg": 30,
+        "minMarginDeg": 15.3,
+        "atStopMs": 0
+       },
+       "swing": {
+        "foot": "R",
+        "maxDorsiDeg": 8.1,
+        "limitDeg": 30,
+        "minMarginDeg": 21.9,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     }
+    }
+   ],
+   "loads": {
+    "totalVsBodyWeightN": 0.48,
+    "maxStepChangeN": 41.6,
+    "shareR": [
+     0,
+     0.68
+    ]
+   },
+   "drift": {
+    "footL": 0.05,
+    "footR": 0.1,
+    "com": 0.06,
+    "slidL": 2.2,
+    "slidR": 1.6
+   },
+   "root": {
+    "residualMeanN": 0.021,
+    "residualMaxN": 0.11
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "minJointLimitMarginDeg": 8.6,
+    "maxTurfPenMm": 1.46,
+    "maxSelfPenMm": 0,
+    "keMaxJ": 1.83
+   },
+   "cpu": {
+    "msPerFrame": 1.0294,
+    "jolt": 0.5414,
+    "sensing": 0.0378,
+    "controller": 0.4503
+   },
+   "events": [
+    {
+     "t": 0.5,
+     "kind": "request",
+     "what": "lift R "
+    },
+    {
+     "t": 2.604,
+     "kind": "REJECTED",
+     "what": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s"
+    }
+   ],
+   "marks": {
+    "REJECTED#0": 625
+   },
+   "worst": {
+    "liftoff": 0,
+    "touchdown": 0,
+    "done": 625
+   },
+   "calib": "V1.1",
+   "recal": null,
+   "env": {
+    "terrain": [],
+    "obstacle": null
+   },
+   "box": {
+    "he": [
+     0.08207660244551523,
+     0.0746698049377926,
+     0.17878945945945948
+    ],
+    "pos": [
+     -0.0005227809072962872,
+     -0.013330195062207416,
+     0.09765810810810813
+    ]
+   },
+   "lean": {
+    "hipHalfWidth": 0.092,
+    "legComOffset": 0.026369450636924224,
+    "mUp": 38.305800000000005,
+    "hUp": 0.2897783130662963,
+    "mPelvis": 8.7126,
+    "mLeg": 15.4908,
+    "tau0": 74.40378692093864,
+    "cap": 140,
+    "target": 98,
+    "leanDeg": 0,
+    "tauAtLean": 74.40378692093864,
+    "ssPelvisOffset": -0.015957114351607803
+   },
+   "sup": {
+    "footClear": 0.03,
+    "latMin": 0.1
+   },
+   "reqRaw": [
+    {
+     "id": 0,
+     "type": "lift",
+     "foot": "R",
+     "label": null,
+     "status": "REJECTED",
+     "why": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s",
+     "proj": {
+      "requested": [
+       0.1600526631053262,
+       0.0862381201157039
+      ],
+      "target": [
+       0.1600526631053262,
+       0.0862381201157039
+      ],
+      "yaw": 0.00008616983392461063,
+      "rejected": false,
+      "reasons": [],
+      "current": [
+       0.1600526631053262,
+       0.0862381201157039
+      ]
+     },
+     "reach": [
+      [
+       0.1600526631053262,
+       0.3476257543930476
+      ],
+      [
+       0.19732226359097543,
+       0.2976045277743818
+      ],
+      [
+       0.22039101593565433,
+       0.25201638204411636
+      ],
+      [
+       0.23354662062485743,
+       0.21353338858884074
+      ],
+      [
+       0.2405374477477635,
+       0.18215615136249985
+      ],
+      [
+       0.24391825866334077,
+       0.15660971041689686
+      ],
+      [
+       0.24520293004816351,
+       0.13539964965671955
+      ],
+      [
+       0.24521517457834596,
+       0.11723473936723706
+      ],
+      [
+       0.2443900506939144,
+       0.10110907703003924
+      ],
+      [
+       0.24292162062485745,
+       0.0862381201157039
+      ],
+      [
+       0.2408737388316577,
+       0.07198718385526967
+      ],
+      [
+       0.2381993115511465,
+       0.05779506617376014
+      ],
+      [
+       0.23474893992160917,
+       0.04311220458836016
+      ],
+      [
+       0.23023872662320802,
+       0.02734502010406413
+      ],
+      [
+       0.2241980330905247,
+       0.009792644987558857
+      ],
+      [
+       0.21583803297837306,
+       -0.010384974823435436
+      ],
+      [
+       0.2038766033755386,
+       -0.034167166208232666
+      ],
+      [
+       0.18627158778259995,
+       -0.06245679073644454
+      ],
+      [
+       0.16005266310532623,
+       -0.09548032470851482
+      ],
+      [
+       0.12162330603757221,
+       -0.13170559396224646
+      ],
+      [
+       0.06796774756344452,
+       -0.1667631060080021
+      ],
+      [
+       0.03302782179673247,
+       -0.1337753588541543
+      ],
+      [
+       0.033036003190139884,
+       -0.06513444065753636
+      ],
+      [
+       0.03304096085113292,
+       -0.020337352400988273
+      ],
+      [
+       0.033042827809706216,
+       0.01290895751804759
+      ],
+      [
+       0.03304446461293398,
+       0.04001091635669949
+      ],
+      [
+       0.03304618349589203,
+       0.06384345103576115
+      ],
+      [
+       0.03305070998032625,
+       0.08623812011570388
+      ],
+      [
+       0.033050691588023096,
+       0.10863199429737239
+      ],
+      [
+       0.03305306775582445,
+       0.13246219258677502
+      ],
+      [
+       0.0330547208587694,
+       0.15956041625828205
+      ],
+      [
+       0.03305849421698795,
+       0.19279888039157372
+      ],
+      [
+       0.03306248522361993,
+       0.237579120830405
+      ],
+      [
+       0.03306673170884178,
+       0.3061842051408705
+      ],
+      [
+       0.03326838033080817,
+       0.4345750741804411
+      ],
+      [
+       0.10542566390354341,
+       0.3960432275490457
+      ]
+     ],
+     "excl": [
+      [
+       -0.2431985052872373,
+       -0.09249414323966779
+      ],
+      [
+       -0.07904531338041866,
+       -0.09250833109519667
+      ],
+      [
+       -0.07901450087134794,
+       0.2650705058493597
+      ],
+      [
+       -0.24316769277816658,
+       0.2650846937048886
+      ]
+     ],
+     "td": null,
+     "accepted": null,
+     "blocked": null,
+     "align": null,
+     "fwdBias": null,
+     "clear": null,
+     "T": null
+    }
+   ],
+   "repeatHashes": [
+    "6c26efc8",
+    "6c26efc8",
+    "6c26efc8"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "B_lift_L",
+   "group": "B single support",
+   "title": "B — shift onto R, lift L 8 cm, hold 2 s, set it back down in place",
+   "hash": "40ab7746",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "fell": false,
+   "finalClass": "RECOVERABLE_IN_PLACE",
+   "requests": [
+    {
+     "id": 0,
+     "label": null,
+     "type": "lift",
+     "foot": "L",
+     "status": "REJECTED",
+     "why": "weight transfer not achieved: swing load 83 N, ξ margin on the stance foot 7.1 cm, |v| 0.01 m/s",
+     "requested": [
+      -0.161,
+      0.086
+     ],
+     "feasible": [
+      -0.161,
+      0.086
+     ],
+     "correctedCm": 0,
+     "projectionReasons": [],
+     "stanceClearanceCm": 15.7,
+     "metrics": {
+      "minSoleClearanceCm": null,
+      "peakSoleClearanceCm": null,
+      "minClearanceToStanceLegCm": null,
+      "peakSwingFootPenetrationMm": null,
+      "stanceFootSlidMm": 0.26,
+      "stanceMaxSlipSpeed": 0.001,
+      "legSelfContactMm": 0,
+      "saturationMs": {
+       "hip_R": 4
+      },
+      "jointLimitMarginDeg": 8.5,
+      "jointLimitMarginJoint": "ankle_R",
+      "rootResidualMaxN": 0.11,
+      "ankle": {
+       "swing": {
+        "foot": "L",
+        "maxDorsiDeg": 8.1,
+        "limitDeg": 30,
+        "minMarginDeg": 21.9,
+        "atStopMs": 0
+       },
+       "stance": {
+        "foot": "R",
+        "maxDorsiDeg": 14.7,
+        "limitDeg": 30,
+        "minMarginDeg": 15.3,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     }
+    }
+   ],
+   "loads": {
+    "totalVsBodyWeightN": 1.22,
+    "maxStepChangeN": 27.6,
+    "shareR": [
+     0.32,
+     1
+    ]
+   },
+   "drift": {
+    "footL": 0.04,
+    "footR": 0.01,
+    "com": 1.82,
+    "slidL": 0.9,
+    "slidR": 1.5
+   },
+   "root": {
+    "residualMeanN": 0.028,
+    "residualMaxN": 0.11
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "minJointLimitMarginDeg": 8.5,
+    "maxTurfPenMm": 1.4,
+    "maxSelfPenMm": 0,
+    "keMaxJ": 1.84
+   },
+   "cpu": {
+    "msPerFrame": 1.1507,
+    "jolt": 0.5427,
+    "sensing": 0.0375,
+    "controller": 0.5706
+   },
+   "events": [
+    {
+     "t": 0.5,
+     "kind": "request",
+     "what": "lift L "
+    },
+    {
+     "t": 2.604,
+     "kind": "REJECTED",
+     "what": "weight transfer not achieved: swing load 83 N, ξ margin on the stance foot 7.1 cm, |v| 0.01 m/s"
+    }
+   ],
+   "marks": {
+    "REJECTED#0": 625
+   },
+   "worst": {
+    "liftoff": 0,
+    "touchdown": 0,
+    "done": 625
+   },
+   "calib": "V1.1",
+   "recal": null,
+   "env": {
+    "terrain": [],
+    "obstacle": null
+   },
+   "box": {
+    "he": [
+     0.08207660244551523,
+     0.0746698049377926,
+     0.17878945945945948
+    ],
+    "pos": [
+     -0.0005227809072962872,
+     -0.013330195062207416,
+     0.09765810810810813
+    ]
+   },
+   "lean": {
+    "hipHalfWidth": 0.092,
+    "legComOffset": 0.026369450636924224,
+    "mUp": 38.305800000000005,
+    "hUp": 0.2897783130662963,
+    "mPelvis": 8.7126,
+    "mLeg": 15.4908,
+    "tau0": 74.40378692093864,
+    "cap": 140,
+    "target": 98,
+    "leanDeg": 0,
+    "tauAtLean": 74.40378692093864,
+    "ssPelvisOffset": -0.015957114351607803
+   },
+   "sup": {
+    "footClear": 0.03,
+    "latMin": 0.1
+   },
+   "reqRaw": [
+    {
+     "id": 0,
+     "type": "lift",
+     "foot": "L",
+     "label": null,
+     "status": "REJECTED",
+     "why": "weight transfer not achieved: swing load 83 N, ξ margin on the stance foot 7.1 cm, |v| 0.01 m/s",
+     "proj": {
+      "requested": [
+       -0.16113549680067743,
+       0.0862380341880626
+      ],
+      "target": [
+       -0.16113549680067743,
+       0.0862380341880626
+      ],
+      "yaw": -0.00007385466275855629,
+      "rejected": false,
+      "reasons": [],
+      "current": [
+       -0.16113549680067743,
+       0.0862380341880626
+      ]
+     },
+     "reach": [
+      [
+       -0.16113549680067743,
+       0.34762109082868753
+      ],
+      [
+       -0.1065092924971689,
+       0.3960386335292732
+      ],
+      [
+       -0.03435434531409293,
+       0.43456638510990936
+      ],
+      [
+       -0.03411065549208375,
+       0.3062515131579208
+      ],
+      [
+       -0.03410706709283326,
+       0.23762462165398696
+      ],
+      [
+       -0.034102754507458005,
+       0.1928311613937415
+      ],
+      [
+       -0.03410187540693099,
+       0.15958092969587512
+      ],
+      [
+       -0.0341014888796137,
+       0.13247463181086677
+      ],
+      [
+       -0.034097460546325536,
+       0.10863826755592498
+      ],
+      [
+       -0.03409692258192748,
+       0.08623803418806261
+      ],
+      [
+       -0.03409295245419444,
+       0.06383700592192598
+      ],
+      [
+       -0.0340928857367232,
+       0.03999830527732515
+      ],
+      [
+       -0.034089982357867754,
+       0.012888272225171984
+      ],
+      [
+       -0.034088727814773956,
+       -0.020366862810274125
+      ],
+      [
+       -0.03408352750751753,
+       -0.06517660666322984
+      ],
+      [
+       -0.034078612035052525,
+       -0.13383094567742387
+      ],
+      [
+       -0.06905371254672897,
+       -0.16675458879275284
+      ],
+      [
+       -0.12270772952947184,
+       -0.1316966637056256
+      ],
+      [
+       -0.1611354968006774,
+       -0.09547125536271865
+      ],
+      [
+       -0.18735283168140268,
+       -0.06244786047982366
+      ],
+      [
+       -0.20495787142692315,
+       -0.03416295056442872
+      ],
+      [
+       -0.21692086667372432,
+       -0.01038506075107673
+      ],
+      [
+       -0.22527792433771143,
+       0.009796065733088541
+      ],
+      [
+       -0.2313180536453882,
+       0.02734787662458725
+      ],
+      [
+       -0.23582780926727262,
+       0.043114407479078166
+      ],
+      [
+       -0.2392821452464977,
+       0.057794980246118774
+      ],
+      [
+       -0.24195657252700892,
+       0.07198709792762836
+      ],
+      [
+       -0.24400445432020867,
+       0.08623803418806258
+      ],
+      [
+       -0.24546837629713453,
+       0.10110819620412366
+      ],
+      [
+       -0.24629370670225198,
+       0.11723308779562915
+      ],
+      [
+       -0.24628179939382702,
+       0.13539727491071885
+      ],
+      [
+       -0.245001092358692,
+       0.15660962448925556
+      ],
+      [
+       -0.24162028144311476,
+       0.18215606543485852
+      ],
+      [
+       -0.23462945432020874,
+       0.2135333026611994
+      ],
+      [
+       -0.22147228398703903,
+       0.2520119945450297
+      ],
+      [
+       -0.19840430238805246,
+       0.29759993375460936
+      ]
+     ],
+     "excl": [
+      [
+       0.07796933874448875,
+       0.2650727497164559
+      ],
+      [
+       0.07799574760870605,
+       -0.09250608393960884
+      ],
+      [
+       0.24214895143354126,
+       -0.09249397024994609
+      ],
+      [
+       0.24212254256932397,
+       0.2650848634061186
+      ]
+     ],
+     "td": null,
+     "accepted": null,
+     "blocked": null,
+     "align": null,
+     "fwdBias": null,
+     "clear": null,
+     "T": null
+    }
+   ],
+   "repeatHashes": [
+    "40ab7746",
+    "40ab7746",
+    "40ab7746"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "C_lat_R",
+   "group": "C–E placement",
+   "title": "C — place R 10 cm outward (sideways)",
+   "hash": "ab2f02a",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "fell": false,
+   "finalClass": "RECOVERABLE_IN_PLACE",
+   "requests": [
+    {
+     "id": 0,
+     "label": null,
+     "type": "place",
+     "foot": "R",
+     "status": "REJECTED",
+     "why": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s",
+     "requested": [
+      0.26,
+      0.086
+     ],
+     "feasible": [
+      0.243,
+      0.086
+     ],
+     "correctedCm": 1.7,
+     "projectionReasons": [
+      "single support: needs 6.8 cm of pelvis drop to reach (the stance ankle allows 6.1 cm)"
+     ],
+     "stanceClearanceCm": 24,
+     "metrics": {
+      "minSoleClearanceCm": null,
+      "peakSoleClearanceCm": null,
+      "minClearanceToStanceLegCm": null,
+      "peakSwingFootPenetrationMm": null,
+      "stanceFootSlidMm": 0.26,
+      "stanceMaxSlipSpeed": 0.001,
+      "legSelfContactMm": 0,
+      "saturationMs": {
+       "hip_L": 4
+      },
+      "jointLimitMarginDeg": 8.6,
+      "jointLimitMarginJoint": "ankle_L",
+      "rootResidualMaxN": 0.11,
+      "ankle": {
+       "stance": {
+        "foot": "L",
+        "maxDorsiDeg": 14.7,
+        "limitDeg": 30,
+        "minMarginDeg": 15.3,
+        "atStopMs": 0
+       },
+       "swing": {
+        "foot": "R",
+        "maxDorsiDeg": 8.1,
+        "limitDeg": 30,
+        "minMarginDeg": 21.9,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     }
+    }
+   ],
+   "loads": {
+    "totalVsBodyWeightN": 1.63,
+    "maxStepChangeN": 41.6,
+    "shareR": [
+     0,
+     0.68
+    ]
+   },
+   "drift": {
+    "footL": 0.02,
+    "footR": 0.05,
+    "com": 3.88,
+    "slidL": 1.4,
+    "slidR": 0.8
+   },
+   "root": {
+    "residualMeanN": 0.031,
+    "residualMaxN": 0.11
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "minJointLimitMarginDeg": 8.6,
+    "maxTurfPenMm": 1.46,
+    "maxSelfPenMm": 0,
+    "keMaxJ": 1.83
+   },
+   "cpu": {
+    "msPerFrame": 1.1802,
+    "jolt": 0.544,
+    "sensing": 0.0386,
+    "controller": 0.5976
+   },
+   "events": [
+    {
+     "t": 0.5,
+     "kind": "request",
+     "what": "place R "
+    },
+    {
+     "t": 2.604,
+     "kind": "REJECTED",
+     "what": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s"
+    }
+   ],
+   "marks": {
+    "REJECTED#0": 625
+   },
+   "worst": {
+    "liftoff": 0,
+    "touchdown": 0,
+    "done": 625
+   },
+   "calib": "V1.1",
+   "recal": null,
+   "env": {
+    "terrain": [],
+    "obstacle": null
+   },
+   "box": {
+    "he": [
+     0.08207660244551523,
+     0.0746698049377926,
+     0.17878945945945948
+    ],
+    "pos": [
+     -0.0005227809072962872,
+     -0.013330195062207416,
+     0.09765810810810813
+    ]
+   },
+   "lean": {
+    "hipHalfWidth": 0.092,
+    "legComOffset": 0.026369450636924224,
+    "mUp": 38.305800000000005,
+    "hUp": 0.2897783130662963,
+    "mPelvis": 8.7126,
+    "mLeg": 15.4908,
+    "tau0": 74.40378692093864,
+    "cap": 140,
+    "target": 98,
+    "leanDeg": 0,
+    "tauAtLean": 74.40378692093864,
+    "ssPelvisOffset": -0.015957114351607803
+   },
+   "sup": {
+    "footClear": 0.03,
+    "latMin": 0.1
+   },
+   "reqRaw": [
+    {
+     "id": 0,
+     "type": "place",
+     "foot": "R",
+     "label": null,
+     "status": "REJECTED",
+     "why": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s",
+     "proj": {
+      "requested": [
+       0.2600526627340642,
+       0.08622950313232211
+      ],
+      "target": [
+       0.2429238364923868,
+       0.08623097912043834
+      ],
+      "yaw": 0.00008616983392461063,
+      "rejected": false,
+      "reasons": [
+       "single support: needs 6.8 cm of pelvis drop to reach (the stance ankle allows 6.1 cm)"
+      ],
+      "current": [
+       0.1600526631053262,
+       0.0862381201157039
+      ]
+     },
+     "reach": [
+      [
+       0.1600526631053262,
+       0.3476257543930476
+      ],
+      [
+       0.19732226359097543,
+       0.2976045277743818
+      ],
+      [
+       0.22039101593565433,
+       0.25201638204411636
+      ],
+      [
+       0.23354662062485743,
+       0.21353338858884074
+      ],
+      [
+       0.2405374477477635,
+       0.18215615136249985
+      ],
+      [
+       0.24391825866334077,
+       0.15660971041689686
+      ],
+      [
+       0.24520293004816351,
+       0.13539964965671955
+      ],
+      [
+       0.24521517457834596,
+       0.11723473936723706
+      ],
+      [
+       0.2443900506939144,
+       0.10110907703003924
+      ],
+      [
+       0.24292162062485745,
+       0.0862381201157039
+      ],
+      [
+       0.2408737388316577,
+       0.07198718385526967
+      ],
+      [
+       0.2381993115511465,
+       0.05779506617376014
+      ],
+      [
+       0.23474893992160917,
+       0.04311220458836016
+      ],
+      [
+       0.23023872662320802,
+       0.02734502010406413
+      ],
+      [
+       0.2241980330905247,
+       0.009792644987558857
+      ],
+      [
+       0.21583803297837306,
+       -0.010384974823435436
+      ],
+      [
+       0.2038766033755386,
+       -0.034167166208232666
+      ],
+      [
+       0.18627158778259995,
+       -0.06245679073644454
+      ],
+      [
+       0.16005266310532623,
+       -0.09548032470851482
+      ],
+      [
+       0.12162330603757221,
+       -0.13170559396224646
+      ],
+      [
+       0.06796774756344452,
+       -0.1667631060080021
+      ],
+      [
+       0.03302782179673247,
+       -0.1337753588541543
+      ],
+      [
+       0.033036003190139884,
+       -0.06513444065753636
+      ],
+      [
+       0.03304096085113292,
+       -0.020337352400988273
+      ],
+      [
+       0.033042827809706216,
+       0.01290895751804759
+      ],
+      [
+       0.03304446461293398,
+       0.04001091635669949
+      ],
+      [
+       0.03304618349589203,
+       0.06384345103576115
+      ],
+      [
+       0.03305070998032625,
+       0.08623812011570388
+      ],
+      [
+       0.033050691588023096,
+       0.10863199429737239
+      ],
+      [
+       0.03305306775582445,
+       0.13246219258677502
+      ],
+      [
+       0.0330547208587694,
+       0.15956041625828205
+      ],
+      [
+       0.03305849421698795,
+       0.19279888039157372
+      ],
+      [
+       0.03306248522361993,
+       0.237579120830405
+      ],
+      [
+       0.03306673170884178,
+       0.3061842051408705
+      ],
+      [
+       0.03326838033080817,
+       0.4345750741804411
+      ],
+      [
+       0.10542566390354341,
+       0.3960432275490457
+      ]
+     ],
+     "excl": [
+      [
+       -0.2431985052872373,
+       -0.09249414323966779
+      ],
+      [
+       -0.07904531338041866,
+       -0.09250833109519667
+      ],
+      [
+       -0.07901450087134794,
+       0.2650705058493597
+      ],
+      [
+       -0.24316769277816658,
+       0.2650846937048886
+      ]
+     ],
+     "td": null,
+     "accepted": null,
+     "blocked": null,
+     "align": null,
+     "fwdBias": null,
+     "clear": null,
+     "T": null
+    }
+   ],
+   "repeatHashes": [
+    "ab2f02a",
+    "ab2f02a",
+    "ab2f02a"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "D_fwd_R",
+   "group": "C–E placement",
+   "title": "D — place R 20 cm forward",
+   "hash": "ab2f02a",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "fell": false,
+   "finalClass": "RECOVERABLE_IN_PLACE",
+   "requests": [
+    {
+     "id": 0,
+     "label": null,
+     "type": "place",
+     "foot": "R",
+     "status": "REJECTED",
+     "why": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s",
+     "requested": [
+      0.16,
+      0.286
+     ],
+     "feasible": [
+      0.16,
+      0.286
+     ],
+     "correctedCm": 0,
+     "projectionReasons": [],
+     "stanceClearanceCm": 15.7,
+     "metrics": {
+      "minSoleClearanceCm": null,
+      "peakSoleClearanceCm": null,
+      "minClearanceToStanceLegCm": null,
+      "peakSwingFootPenetrationMm": null,
+      "stanceFootSlidMm": 0.26,
+      "stanceMaxSlipSpeed": 0.001,
+      "legSelfContactMm": 0,
+      "saturationMs": {
+       "hip_L": 4
+      },
+      "jointLimitMarginDeg": 8.6,
+      "jointLimitMarginJoint": "ankle_L",
+      "rootResidualMaxN": 0.11,
+      "ankle": {
+       "stance": {
+        "foot": "L",
+        "maxDorsiDeg": 14.7,
+        "limitDeg": 30,
+        "minMarginDeg": 15.3,
+        "atStopMs": 0
+       },
+       "swing": {
+        "foot": "R",
+        "maxDorsiDeg": 8.1,
+        "limitDeg": 30,
+        "minMarginDeg": 21.9,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     }
+    }
+   ],
+   "loads": {
+    "totalVsBodyWeightN": 1.63,
+    "maxStepChangeN": 41.6,
+    "shareR": [
+     0,
+     0.68
+    ]
+   },
+   "drift": {
+    "footL": 0.02,
+    "footR": 0.05,
+    "com": 3.88,
+    "slidL": 1.4,
+    "slidR": 0.8
+   },
+   "root": {
+    "residualMeanN": 0.031,
+    "residualMaxN": 0.11
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "minJointLimitMarginDeg": 8.6,
+    "maxTurfPenMm": 1.46,
+    "maxSelfPenMm": 0,
+    "keMaxJ": 1.83
+   },
+   "cpu": {
+    "msPerFrame": 1.1841,
+    "jolt": 0.5466,
+    "sensing": 0.0371,
+    "controller": 0.6004
+   },
+   "events": [
+    {
+     "t": 0.5,
+     "kind": "request",
+     "what": "place R "
+    },
+    {
+     "t": 2.604,
+     "kind": "REJECTED",
+     "what": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s"
+    }
+   ],
+   "marks": {
+    "REJECTED#0": 625
+   },
+   "worst": {
+    "liftoff": 0,
+    "touchdown": 0,
+    "done": 625
+   },
+   "calib": "V1.1",
+   "recal": null,
+   "env": {
+    "terrain": [],
+    "obstacle": null
+   },
+   "box": {
+    "he": [
+     0.08207660244551523,
+     0.0746698049377926,
+     0.17878945945945948
+    ],
+    "pos": [
+     -0.0005227809072962872,
+     -0.013330195062207416,
+     0.09765810810810813
+    ]
+   },
+   "lean": {
+    "hipHalfWidth": 0.092,
+    "legComOffset": 0.026369450636924224,
+    "mUp": 38.305800000000005,
+    "hUp": 0.2897783130662963,
+    "mPelvis": 8.7126,
+    "mLeg": 15.4908,
+    "tau0": 74.40378692093864,
+    "cap": 140,
+    "target": 98,
+    "leanDeg": 0,
+    "tauAtLean": 74.40378692093864,
+    "ssPelvisOffset": -0.015957114351607803
+   },
+   "sup": {
+    "footClear": 0.03,
+    "latMin": 0.1
+   },
+   "reqRaw": [
+    {
+     "id": 0,
+     "type": "place",
+     "foot": "R",
+     "label": null,
+     "status": "REJECTED",
+     "why": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s",
+     "proj": {
+      "requested": [
+       0.1600698970720898,
+       0.2862381193731799
+      ],
+      "target": [
+       0.1600698970720898,
+       0.2862381193731799
+      ],
+      "yaw": 0.00008616983392461063,
+      "rejected": false,
+      "reasons": [],
+      "current": [
+       0.1600526631053262,
+       0.0862381201157039
+      ]
+     },
+     "reach": [
+      [
+       0.1600526631053262,
+       0.3476257543930476
+      ],
+      [
+       0.19732226359097543,
+       0.2976045277743818
+      ],
+      [
+       0.22039101593565433,
+       0.25201638204411636
+      ],
+      [
+       0.23354662062485743,
+       0.21353338858884074
+      ],
+      [
+       0.2405374477477635,
+       0.18215615136249985
+      ],
+      [
+       0.24391825866334077,
+       0.15660971041689686
+      ],
+      [
+       0.24520293004816351,
+       0.13539964965671955
+      ],
+      [
+       0.24521517457834596,
+       0.11723473936723706
+      ],
+      [
+       0.2443900506939144,
+       0.10110907703003924
+      ],
+      [
+       0.24292162062485745,
+       0.0862381201157039
+      ],
+      [
+       0.2408737388316577,
+       0.07198718385526967
+      ],
+      [
+       0.2381993115511465,
+       0.05779506617376014
+      ],
+      [
+       0.23474893992160917,
+       0.04311220458836016
+      ],
+      [
+       0.23023872662320802,
+       0.02734502010406413
+      ],
+      [
+       0.2241980330905247,
+       0.009792644987558857
+      ],
+      [
+       0.21583803297837306,
+       -0.010384974823435436
+      ],
+      [
+       0.2038766033755386,
+       -0.034167166208232666
+      ],
+      [
+       0.18627158778259995,
+       -0.06245679073644454
+      ],
+      [
+       0.16005266310532623,
+       -0.09548032470851482
+      ],
+      [
+       0.12162330603757221,
+       -0.13170559396224646
+      ],
+      [
+       0.06796774756344452,
+       -0.1667631060080021
+      ],
+      [
+       0.03302782179673247,
+       -0.1337753588541543
+      ],
+      [
+       0.033036003190139884,
+       -0.06513444065753636
+      ],
+      [
+       0.03304096085113292,
+       -0.020337352400988273
+      ],
+      [
+       0.033042827809706216,
+       0.01290895751804759
+      ],
+      [
+       0.03304446461293398,
+       0.04001091635669949
+      ],
+      [
+       0.03304618349589203,
+       0.06384345103576115
+      ],
+      [
+       0.03305070998032625,
+       0.08623812011570388
+      ],
+      [
+       0.033050691588023096,
+       0.10863199429737239
+      ],
+      [
+       0.03305306775582445,
+       0.13246219258677502
+      ],
+      [
+       0.0330547208587694,
+       0.15956041625828205
+      ],
+      [
+       0.03305849421698795,
+       0.19279888039157372
+      ],
+      [
+       0.03306248522361993,
+       0.237579120830405
+      ],
+      [
+       0.03306673170884178,
+       0.3061842051408705
+      ],
+      [
+       0.03326838033080817,
+       0.4345750741804411
+      ],
+      [
+       0.10542566390354341,
+       0.3960432275490457
+      ]
+     ],
+     "excl": [
+      [
+       -0.2431985052872373,
+       -0.09249414323966779
+      ],
+      [
+       -0.07904531338041866,
+       -0.09250833109519667
+      ],
+      [
+       -0.07901450087134794,
+       0.2650705058493597
+      ],
+      [
+       -0.24316769277816658,
+       0.2650846937048886
+      ]
+     ],
+     "td": null,
+     "accepted": null,
+     "blocked": null,
+     "align": null,
+     "fwdBias": null,
+     "clear": null,
+     "T": null
+    }
+   ],
+   "repeatHashes": [
+    "ab2f02a",
+    "ab2f02a",
+    "ab2f02a"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "E_bwd_R",
+   "group": "C–E placement",
+   "title": "E — place R 15 cm backward",
+   "hash": "ab2f02a",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "fell": false,
+   "finalClass": "RECOVERABLE_IN_PLACE",
+   "requests": [
+    {
+     "id": 0,
+     "label": null,
+     "type": "place",
+     "foot": "R",
+     "status": "REJECTED",
+     "why": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s",
+     "requested": [
+      0.16,
+      -0.064
+     ],
+     "feasible": [
+      0.16,
+      -0.064
+     ],
+     "correctedCm": 0,
+     "projectionReasons": [],
+     "stanceClearanceCm": 15.7,
+     "metrics": {
+      "minSoleClearanceCm": null,
+      "peakSoleClearanceCm": null,
+      "minClearanceToStanceLegCm": null,
+      "peakSwingFootPenetrationMm": null,
+      "stanceFootSlidMm": 0.26,
+      "stanceMaxSlipSpeed": 0.001,
+      "legSelfContactMm": 0,
+      "saturationMs": {
+       "hip_L": 4
+      },
+      "jointLimitMarginDeg": 8.6,
+      "jointLimitMarginJoint": "ankle_L",
+      "rootResidualMaxN": 0.11,
+      "ankle": {
+       "stance": {
+        "foot": "L",
+        "maxDorsiDeg": 14.7,
+        "limitDeg": 30,
+        "minMarginDeg": 15.3,
+        "atStopMs": 0
+       },
+       "swing": {
+        "foot": "R",
+        "maxDorsiDeg": 8.1,
+        "limitDeg": 30,
+        "minMarginDeg": 21.9,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     }
+    }
+   ],
+   "loads": {
+    "totalVsBodyWeightN": 1.63,
+    "maxStepChangeN": 41.6,
+    "shareR": [
+     0,
+     0.68
+    ]
+   },
+   "drift": {
+    "footL": 0.02,
+    "footR": 0.05,
+    "com": 3.88,
+    "slidL": 1.4,
+    "slidR": 0.8
+   },
+   "root": {
+    "residualMeanN": 0.031,
+    "residualMaxN": 0.11
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "minJointLimitMarginDeg": 8.6,
+    "maxTurfPenMm": 1.46,
+    "maxSelfPenMm": 0,
+    "keMaxJ": 1.83
+   },
+   "cpu": {
+    "msPerFrame": 1.2172,
+    "jolt": 0.5621,
+    "sensing": 0.0399,
+    "controller": 0.6152
+   },
+   "events": [
+    {
+     "t": 0.5,
+     "kind": "request",
+     "what": "place R "
+    },
+    {
+     "t": 2.604,
+     "kind": "REJECTED",
+     "what": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s"
+    }
+   ],
+   "marks": {
+    "REJECTED#0": 625
+   },
+   "worst": {
+    "liftoff": 0,
+    "touchdown": 0,
+    "done": 625
+   },
+   "calib": "V1.1",
+   "recal": null,
+   "env": {
+    "terrain": [],
+    "obstacle": null
+   },
+   "box": {
+    "he": [
+     0.08207660244551523,
+     0.0746698049377926,
+     0.17878945945945948
+    ],
+    "pos": [
+     -0.0005227809072962872,
+     -0.013330195062207416,
+     0.09765810810810813
+    ]
+   },
+   "lean": {
+    "hipHalfWidth": 0.092,
+    "legComOffset": 0.026369450636924224,
+    "mUp": 38.305800000000005,
+    "hUp": 0.2897783130662963,
+    "mPelvis": 8.7126,
+    "mLeg": 15.4908,
+    "tau0": 74.40378692093864,
+    "cap": 140,
+    "target": 98,
+    "leanDeg": 0,
+    "tauAtLean": 74.40378692093864,
+    "ssPelvisOffset": -0.015957114351607803
+   },
+   "sup": {
+    "footClear": 0.03,
+    "latMin": 0.1
+   },
+   "reqRaw": [
+    {
+     "id": 0,
+     "type": "place",
+     "foot": "R",
+     "label": null,
+     "status": "REJECTED",
+     "why": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s",
+     "proj": {
+      "requested": [
+       0.1600397376302535,
+       -0.06376187932740308
+      ],
+      "target": [
+       0.1600397376302535,
+       -0.06376187932740308
+      ],
+      "yaw": 0.00008616983392461063,
+      "rejected": false,
+      "reasons": [],
+      "current": [
+       0.1600526631053262,
+       0.0862381201157039
+      ]
+     },
+     "reach": [
+      [
+       0.1600526631053262,
+       0.3476257543930476
+      ],
+      [
+       0.19732226359097543,
+       0.2976045277743818
+      ],
+      [
+       0.22039101593565433,
+       0.25201638204411636
+      ],
+      [
+       0.23354662062485743,
+       0.21353338858884074
+      ],
+      [
+       0.2405374477477635,
+       0.18215615136249985
+      ],
+      [
+       0.24391825866334077,
+       0.15660971041689686
+      ],
+      [
+       0.24520293004816351,
+       0.13539964965671955
+      ],
+      [
+       0.24521517457834596,
+       0.11723473936723706
+      ],
+      [
+       0.2443900506939144,
+       0.10110907703003924
+      ],
+      [
+       0.24292162062485745,
+       0.0862381201157039
+      ],
+      [
+       0.2408737388316577,
+       0.07198718385526967
+      ],
+      [
+       0.2381993115511465,
+       0.05779506617376014
+      ],
+      [
+       0.23474893992160917,
+       0.04311220458836016
+      ],
+      [
+       0.23023872662320802,
+       0.02734502010406413
+      ],
+      [
+       0.2241980330905247,
+       0.009792644987558857
+      ],
+      [
+       0.21583803297837306,
+       -0.010384974823435436
+      ],
+      [
+       0.2038766033755386,
+       -0.034167166208232666
+      ],
+      [
+       0.18627158778259995,
+       -0.06245679073644454
+      ],
+      [
+       0.16005266310532623,
+       -0.09548032470851482
+      ],
+      [
+       0.12162330603757221,
+       -0.13170559396224646
+      ],
+      [
+       0.06796774756344452,
+       -0.1667631060080021
+      ],
+      [
+       0.03302782179673247,
+       -0.1337753588541543
+      ],
+      [
+       0.033036003190139884,
+       -0.06513444065753636
+      ],
+      [
+       0.03304096085113292,
+       -0.020337352400988273
+      ],
+      [
+       0.033042827809706216,
+       0.01290895751804759
+      ],
+      [
+       0.03304446461293398,
+       0.04001091635669949
+      ],
+      [
+       0.03304618349589203,
+       0.06384345103576115
+      ],
+      [
+       0.03305070998032625,
+       0.08623812011570388
+      ],
+      [
+       0.033050691588023096,
+       0.10863199429737239
+      ],
+      [
+       0.03305306775582445,
+       0.13246219258677502
+      ],
+      [
+       0.0330547208587694,
+       0.15956041625828205
+      ],
+      [
+       0.03305849421698795,
+       0.19279888039157372
+      ],
+      [
+       0.03306248522361993,
+       0.237579120830405
+      ],
+      [
+       0.03306673170884178,
+       0.3061842051408705
+      ],
+      [
+       0.03326838033080817,
+       0.4345750741804411
+      ],
+      [
+       0.10542566390354341,
+       0.3960432275490457
+      ]
+     ],
+     "excl": [
+      [
+       -0.2431985052872373,
+       -0.09249414323966779
+      ],
+      [
+       -0.07904531338041866,
+       -0.09250833109519667
+      ],
+      [
+       -0.07901450087134794,
+       0.2650705058493597
+      ],
+      [
+       -0.24316769277816658,
+       0.2650846937048886
+      ]
+     ],
+     "td": null,
+     "accepted": null,
+     "blocked": null,
+     "align": null,
+     "fwdBias": null,
+     "clear": null,
+     "T": null
+    }
+   ],
+   "repeatHashes": [
+    "ab2f02a",
+    "ab2f02a",
+    "ab2f02a"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "F_onfoot",
+   "group": "F other-foot conflict",
+   "title": "F — request R ON TOP of the left foot (32 cm inward)",
+   "hash": "ab2f02a",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "fell": false,
+   "finalClass": "RECOVERABLE_IN_PLACE",
+   "requests": [
+    {
+     "id": 0,
+     "label": null,
+     "type": "place",
+     "foot": "R",
+     "status": "REJECTED",
+     "why": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s",
+     "requested": [
+      -0.164,
+      0.086
+     ],
+     "feasible": [
+      0.033,
+      0.086
+     ],
+     "correctedCm": 19.7,
+     "projectionReasons": [
+      "crossover: -0 cm to its own side of the stance foot (min 10 cm)",
+      "footprint overlaps the stance foot",
+      "swing path passes through the stance foot"
+     ],
+     "stanceClearanceCm": 3,
+     "metrics": {
+      "minSoleClearanceCm": null,
+      "peakSoleClearanceCm": null,
+      "minClearanceToStanceLegCm": null,
+      "peakSwingFootPenetrationMm": null,
+      "stanceFootSlidMm": 0.26,
+      "stanceMaxSlipSpeed": 0.001,
+      "legSelfContactMm": 0,
+      "saturationMs": {
+       "hip_L": 4
+      },
+      "jointLimitMarginDeg": 8.6,
+      "jointLimitMarginJoint": "ankle_L",
+      "rootResidualMaxN": 0.11,
+      "ankle": {
+       "stance": {
+        "foot": "L",
+        "maxDorsiDeg": 14.7,
+        "limitDeg": 30,
+        "minMarginDeg": 15.3,
+        "atStopMs": 0
+       },
+       "swing": {
+        "foot": "R",
+        "maxDorsiDeg": 8.1,
+        "limitDeg": 30,
+        "minMarginDeg": 21.9,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     }
+    }
+   ],
+   "loads": {
+    "totalVsBodyWeightN": 1.63,
+    "maxStepChangeN": 41.6,
+    "shareR": [
+     0,
+     0.68
+    ]
+   },
+   "drift": {
+    "footL": 0.02,
+    "footR": 0.05,
+    "com": 3.88,
+    "slidL": 1.4,
+    "slidR": 0.8
+   },
+   "root": {
+    "residualMeanN": 0.031,
+    "residualMaxN": 0.11
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "minJointLimitMarginDeg": 8.6,
+    "maxTurfPenMm": 1.46,
+    "maxSelfPenMm": 0,
+    "keMaxJ": 1.83
+   },
+   "cpu": {
+    "msPerFrame": 1.178,
+    "jolt": 0.5451,
+    "sensing": 0.0381,
+    "controller": 0.5949
+   },
+   "events": [
+    {
+     "t": 0.5,
+     "kind": "request",
+     "what": "place R "
+    },
+    {
+     "t": 2.604,
+     "kind": "REJECTED",
+     "what": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s"
+    }
+   ],
+   "marks": {
+    "REJECTED#0": 625
+   },
+   "worst": {
+    "liftoff": 0,
+    "touchdown": 0,
+    "done": 625
+   },
+   "calib": "V1.1",
+   "recal": null,
+   "env": {
+    "terrain": [],
+    "obstacle": null
+   },
+   "box": {
+    "he": [
+     0.08207660244551523,
+     0.0746698049377926,
+     0.17878945945945948
+    ],
+    "pos": [
+     -0.0005227809072962872,
+     -0.013330195062207416,
+     0.09765810810810813
+    ]
+   },
+   "lean": {
+    "hipHalfWidth": 0.092,
+    "legComOffset": 0.026369450636924224,
+    "mUp": 38.305800000000005,
+    "hUp": 0.2897783130662963,
+    "mPelvis": 8.7126,
+    "mLeg": 15.4908,
+    "tau0": 74.40378692093864,
+    "cap": 140,
+    "target": 98,
+    "leanDeg": 0,
+    "tauAtLean": 74.40378692093864,
+    "ssPelvisOffset": -0.015957114351607803
+   },
+   "sup": {
+    "footClear": 0.03,
+    "latMin": 0.1
+   },
+   "reqRaw": [
+    {
+     "id": 0,
+     "type": "place",
+     "foot": "R",
+     "label": null,
+     "status": "REJECTED",
+     "why": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s",
+     "proj": {
+      "requested": [
+       -0.1639473356917849,
+       0.08626603914186093
+      ],
+      "target": [
+       0.03304669344151995,
+       0.08624906419904436
+      ],
+      "yaw": 0.00008616983392461063,
+      "rejected": false,
+      "reasons": [
+       "crossover: -0 cm to its own side of the stance foot (min 10 cm)",
+       "footprint overlaps the stance foot",
+       "swing path passes through the stance foot"
+      ],
+      "current": [
+       0.1600526631053262,
+       0.0862381201157039
+      ]
+     },
+     "reach": [
+      [
+       0.1600526631053262,
+       0.3476257543930476
+      ],
+      [
+       0.19732226359097543,
+       0.2976045277743818
+      ],
+      [
+       0.22039101593565433,
+       0.25201638204411636
+      ],
+      [
+       0.23354662062485743,
+       0.21353338858884074
+      ],
+      [
+       0.2405374477477635,
+       0.18215615136249985
+      ],
+      [
+       0.24391825866334077,
+       0.15660971041689686
+      ],
+      [
+       0.24520293004816351,
+       0.13539964965671955
+      ],
+      [
+       0.24521517457834596,
+       0.11723473936723706
+      ],
+      [
+       0.2443900506939144,
+       0.10110907703003924
+      ],
+      [
+       0.24292162062485745,
+       0.0862381201157039
+      ],
+      [
+       0.2408737388316577,
+       0.07198718385526967
+      ],
+      [
+       0.2381993115511465,
+       0.05779506617376014
+      ],
+      [
+       0.23474893992160917,
+       0.04311220458836016
+      ],
+      [
+       0.23023872662320802,
+       0.02734502010406413
+      ],
+      [
+       0.2241980330905247,
+       0.009792644987558857
+      ],
+      [
+       0.21583803297837306,
+       -0.010384974823435436
+      ],
+      [
+       0.2038766033755386,
+       -0.034167166208232666
+      ],
+      [
+       0.18627158778259995,
+       -0.06245679073644454
+      ],
+      [
+       0.16005266310532623,
+       -0.09548032470851482
+      ],
+      [
+       0.12162330603757221,
+       -0.13170559396224646
+      ],
+      [
+       0.06796774756344452,
+       -0.1667631060080021
+      ],
+      [
+       0.03302782179673247,
+       -0.1337753588541543
+      ],
+      [
+       0.033036003190139884,
+       -0.06513444065753636
+      ],
+      [
+       0.03304096085113292,
+       -0.020337352400988273
+      ],
+      [
+       0.033042827809706216,
+       0.01290895751804759
+      ],
+      [
+       0.03304446461293398,
+       0.04001091635669949
+      ],
+      [
+       0.03304618349589203,
+       0.06384345103576115
+      ],
+      [
+       0.03305070998032625,
+       0.08623812011570388
+      ],
+      [
+       0.033050691588023096,
+       0.10863199429737239
+      ],
+      [
+       0.03305306775582445,
+       0.13246219258677502
+      ],
+      [
+       0.0330547208587694,
+       0.15956041625828205
+      ],
+      [
+       0.03305849421698795,
+       0.19279888039157372
+      ],
+      [
+       0.03306248522361993,
+       0.237579120830405
+      ],
+      [
+       0.03306673170884178,
+       0.3061842051408705
+      ],
+      [
+       0.03326838033080817,
+       0.4345750741804411
+      ],
+      [
+       0.10542566390354341,
+       0.3960432275490457
+      ]
+     ],
+     "excl": [
+      [
+       -0.2431985052872373,
+       -0.09249414323966779
+      ],
+      [
+       -0.07904531338041866,
+       -0.09250833109519667
+      ],
+      [
+       -0.07901450087134794,
+       0.2650705058493597
+      ],
+      [
+       -0.24316769277816658,
+       0.2650846937048886
+      ]
+     ],
+     "td": null,
+     "accepted": null,
+     "blocked": null,
+     "align": null,
+     "fwdBias": null,
+     "clear": null,
+     "T": null
+    }
+   ],
+   "repeatHashes": [
+    "ab2f02a",
+    "ab2f02a",
+    "ab2f02a"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "F_cross",
+   "group": "F other-foot conflict",
+   "title": "F — request R crossing BEHIND the left foot (40 cm inward, 10 cm back)",
+   "hash": "ab2f02a",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "fell": false,
+   "finalClass": "RECOVERABLE_IN_PLACE",
+   "requests": [
+    {
+     "id": 0,
+     "label": null,
+     "type": "place",
+     "foot": "R",
+     "status": "REJECTED",
+     "why": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s",
+     "requested": [
+      -0.24,
+      -0.014
+     ],
+     "feasible": [
+      0.033,
+      0.054
+     ],
+     "correctedCm": 28.1,
+     "projectionReasons": [
+      "crossover: -8 cm to its own side of the stance foot (min 10 cm)",
+      "footprint overlaps the stance foot",
+      "swing path passes through the stance foot"
+     ],
+     "stanceClearanceCm": 3,
+     "metrics": {
+      "minSoleClearanceCm": null,
+      "peakSoleClearanceCm": null,
+      "minClearanceToStanceLegCm": null,
+      "peakSwingFootPenetrationMm": null,
+      "stanceFootSlidMm": 0.26,
+      "stanceMaxSlipSpeed": 0.001,
+      "legSelfContactMm": 0,
+      "saturationMs": {
+       "hip_L": 4
+      },
+      "jointLimitMarginDeg": 8.6,
+      "jointLimitMarginJoint": "ankle_L",
+      "rootResidualMaxN": 0.11,
+      "ankle": {
+       "stance": {
+        "foot": "L",
+        "maxDorsiDeg": 14.7,
+        "limitDeg": 30,
+        "minMarginDeg": 15.3,
+        "atStopMs": 0
+       },
+       "swing": {
+        "foot": "R",
+        "maxDorsiDeg": 8.1,
+        "limitDeg": 30,
+        "minMarginDeg": 21.9,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     }
+    }
+   ],
+   "loads": {
+    "totalVsBodyWeightN": 1.63,
+    "maxStepChangeN": 41.6,
+    "shareR": [
+     0,
+     0.68
+    ]
+   },
+   "drift": {
+    "footL": 0.02,
+    "footR": 0.05,
+    "com": 3.88,
+    "slidL": 1.4,
+    "slidR": 0.8
+   },
+   "root": {
+    "residualMeanN": 0.031,
+    "residualMaxN": 0.11
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "minJointLimitMarginDeg": 8.6,
+    "maxTurfPenMm": 1.46,
+    "maxSelfPenMm": 0,
+    "keMaxJ": 1.83
+   },
+   "cpu": {
+    "msPerFrame": 1.1836,
+    "jolt": 0.5493,
+    "sensing": 0.0368,
+    "controller": 0.5976
+   },
+   "events": [
+    {
+     "t": 0.5,
+     "kind": "request",
+     "what": "place R "
+    },
+    {
+     "t": 2.604,
+     "kind": "REJECTED",
+     "what": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s"
+    }
+   ],
+   "marks": {
+    "REJECTED#0": 625
+   },
+   "worst": {
+    "liftoff": 0,
+    "touchdown": 0,
+    "done": 625
+   },
+   "calib": "V1.1",
+   "recal": null,
+   "env": {
+    "terrain": [],
+    "obstacle": null
+   },
+   "box": {
+    "he": [
+     0.08207660244551523,
+     0.0746698049377926,
+     0.17878945945945948
+    ],
+    "pos": [
+     -0.0005227809072962872,
+     -0.013330195062207416,
+     0.09765810810810813
+    ]
+   },
+   "lean": {
+    "hipHalfWidth": 0.092,
+    "legComOffset": 0.026369450636924224,
+    "mUp": 38.305800000000005,
+    "hUp": 0.2897783130662963,
+    "mPelvis": 8.7126,
+    "mLeg": 15.4908,
+    "tau0": 74.40378692093864,
+    "cap": 140,
+    "target": 98,
+    "leanDeg": 0,
+    "tauAtLean": 74.40378692093864,
+    "ssPelvisOffset": -0.015957114351607803
+   },
+   "sup": {
+    "footClear": 0.03,
+    "latMin": 0.1
+   },
+   "reqRaw": [
+    {
+     "id": 0,
+     "type": "place",
+     "foot": "R",
+     "label": null,
+     "status": "REJECTED",
+     "why": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s",
+     "proj": {
+      "requested": [
+       -0.2399559523930076,
+       -0.013727411579506903
+      ],
+      "target": [
+       0.03304395707795077,
+       0.054497571697440655
+      ],
+      "yaw": 0.00008616983392461063,
+      "rejected": false,
+      "reasons": [
+       "crossover: -8 cm to its own side of the stance foot (min 10 cm)",
+       "footprint overlaps the stance foot",
+       "swing path passes through the stance foot"
+      ],
+      "current": [
+       0.1600526631053262,
+       0.0862381201157039
+      ]
+     },
+     "reach": [
+      [
+       0.1600526631053262,
+       0.3476257543930476
+      ],
+      [
+       0.19732226359097543,
+       0.2976045277743818
+      ],
+      [
+       0.22039101593565433,
+       0.25201638204411636
+      ],
+      [
+       0.23354662062485743,
+       0.21353338858884074
+      ],
+      [
+       0.2405374477477635,
+       0.18215615136249985
+      ],
+      [
+       0.24391825866334077,
+       0.15660971041689686
+      ],
+      [
+       0.24520293004816351,
+       0.13539964965671955
+      ],
+      [
+       0.24521517457834596,
+       0.11723473936723706
+      ],
+      [
+       0.2443900506939144,
+       0.10110907703003924
+      ],
+      [
+       0.24292162062485745,
+       0.0862381201157039
+      ],
+      [
+       0.2408737388316577,
+       0.07198718385526967
+      ],
+      [
+       0.2381993115511465,
+       0.05779506617376014
+      ],
+      [
+       0.23474893992160917,
+       0.04311220458836016
+      ],
+      [
+       0.23023872662320802,
+       0.02734502010406413
+      ],
+      [
+       0.2241980330905247,
+       0.009792644987558857
+      ],
+      [
+       0.21583803297837306,
+       -0.010384974823435436
+      ],
+      [
+       0.2038766033755386,
+       -0.034167166208232666
+      ],
+      [
+       0.18627158778259995,
+       -0.06245679073644454
+      ],
+      [
+       0.16005266310532623,
+       -0.09548032470851482
+      ],
+      [
+       0.12162330603757221,
+       -0.13170559396224646
+      ],
+      [
+       0.06796774756344452,
+       -0.1667631060080021
+      ],
+      [
+       0.03302782179673247,
+       -0.1337753588541543
+      ],
+      [
+       0.033036003190139884,
+       -0.06513444065753636
+      ],
+      [
+       0.03304096085113292,
+       -0.020337352400988273
+      ],
+      [
+       0.033042827809706216,
+       0.01290895751804759
+      ],
+      [
+       0.03304446461293398,
+       0.04001091635669949
+      ],
+      [
+       0.03304618349589203,
+       0.06384345103576115
+      ],
+      [
+       0.03305070998032625,
+       0.08623812011570388
+      ],
+      [
+       0.033050691588023096,
+       0.10863199429737239
+      ],
+      [
+       0.03305306775582445,
+       0.13246219258677502
+      ],
+      [
+       0.0330547208587694,
+       0.15956041625828205
+      ],
+      [
+       0.03305849421698795,
+       0.19279888039157372
+      ],
+      [
+       0.03306248522361993,
+       0.237579120830405
+      ],
+      [
+       0.03306673170884178,
+       0.3061842051408705
+      ],
+      [
+       0.03326838033080817,
+       0.4345750741804411
+      ],
+      [
+       0.10542566390354341,
+       0.3960432275490457
+      ]
+     ],
+     "excl": [
+      [
+       -0.2431985052872373,
+       -0.09249414323966779
+      ],
+      [
+       -0.07904531338041866,
+       -0.09250833109519667
+      ],
+      [
+       -0.07901450087134794,
+       0.2650705058493597
+      ],
+      [
+       -0.24316769277816658,
+       0.2650846937048886
+      ]
+     ],
+     "td": null,
+     "accepted": null,
+     "blocked": null,
+     "align": null,
+     "fwdBias": null,
+     "clear": null,
+     "T": null
+    }
+   ],
+   "repeatHashes": [
+    "ab2f02a",
+    "ab2f02a",
+    "ab2f02a"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "G_far",
+   "group": "G unreachable",
+   "title": "G — request R 1.2 m forward (outside anatomical reach)",
+   "hash": "9f067a16",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "fell": false,
+   "finalClass": "RECOVERABLE_IN_PLACE",
+   "requests": [
+    {
+     "id": 0,
+     "label": null,
+     "type": "place",
+     "foot": "R",
+     "status": "REJECTED",
+     "why": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s",
+     "requested": [
+      0.16,
+      1.286
+     ],
+     "feasible": [
+      0.16,
+      0.348
+     ],
+     "correctedCm": 93.9,
+     "projectionReasons": [
+      "needs 22 cm of pelvis drop (the stance ankle allows 6.1 cm)",
+      "L hip extension 41° > 25°",
+      "beyond single-support reach",
+      "single support: R hip flexion 133° > 70°",
+      "single support: R hip abduction 167° > 35°"
+     ],
+     "stanceClearanceCm": 15.7,
+     "metrics": {
+      "minSoleClearanceCm": null,
+      "peakSoleClearanceCm": null,
+      "minClearanceToStanceLegCm": null,
+      "peakSwingFootPenetrationMm": null,
+      "stanceFootSlidMm": 0.26,
+      "stanceMaxSlipSpeed": 0.001,
+      "legSelfContactMm": 0,
+      "saturationMs": {
+       "hip_L": 4
+      },
+      "jointLimitMarginDeg": 8.6,
+      "jointLimitMarginJoint": "ankle_L",
+      "rootResidualMaxN": 0.11,
+      "ankle": {
+       "stance": {
+        "foot": "L",
+        "maxDorsiDeg": 14.7,
+        "limitDeg": 30,
+        "minMarginDeg": 15.3,
+        "atStopMs": 0
+       },
+       "swing": {
+        "foot": "R",
+        "maxDorsiDeg": 8.1,
+        "limitDeg": 30,
+        "minMarginDeg": 21.9,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     }
+    }
+   ],
+   "loads": {
+    "totalVsBodyWeightN": 1.42,
+    "maxStepChangeN": 41.6,
+    "shareR": [
+     0,
+     0.68
+    ]
+   },
+   "drift": {
+    "footL": 0.01,
+    "footR": 0.05,
+    "com": 2.65,
+    "slidL": 1.4,
+    "slidR": 0.8
+   },
+   "root": {
+    "residualMeanN": 0.029,
+    "residualMaxN": 0.11
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "minJointLimitMarginDeg": 8.6,
+    "maxTurfPenMm": 1.46,
+    "maxSelfPenMm": 0,
+    "keMaxJ": 1.83
+   },
+   "cpu": {
+    "msPerFrame": 1.1653,
+    "jolt": 0.5447,
+    "sensing": 0.037,
+    "controller": 0.5836
+   },
+   "events": [
+    {
+     "t": 0.5,
+     "kind": "request",
+     "what": "place R "
+    },
+    {
+     "t": 2.604,
+     "kind": "REJECTED",
+     "what": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s"
+    }
+   ],
+   "marks": {
+    "REJECTED#0": 625
+   },
+   "worst": {
+    "liftoff": 0,
+    "touchdown": 0,
+    "done": 625
+   },
+   "calib": "V1.1",
+   "recal": null,
+   "env": {
+    "terrain": [],
+    "obstacle": null
+   },
+   "box": {
+    "he": [
+     0.08207660244551523,
+     0.0746698049377926,
+     0.17878945945945948
+    ],
+    "pos": [
+     -0.0005227809072962872,
+     -0.013330195062207416,
+     0.09765810810810813
+    ]
+   },
+   "lean": {
+    "hipHalfWidth": 0.092,
+    "legComOffset": 0.026369450636924224,
+    "mUp": 38.305800000000005,
+    "hUp": 0.2897783130662963,
+    "mPelvis": 8.7126,
+    "mLeg": 15.4908,
+    "tau0": 74.40378692093864,
+    "cap": 140,
+    "target": 98,
+    "leanDeg": 0,
+    "tauAtLean": 74.40378692093864,
+    "ssPelvisOffset": -0.015957114351607803
+   },
+   "sup": {
+    "footClear": 0.03,
+    "latMin": 0.1
+   },
+   "reqRaw": [
+    {
+     "id": 0,
+     "type": "place",
+     "foot": "R",
+     "label": null,
+     "status": "REJECTED",
+     "why": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s",
+     "proj": {
+      "requested": [
+       0.16015606690590778,
+       1.2862381156605598
+      ],
+      "target": [
+       0.16007518486938196,
+       0.3476029501757244
+      ],
+      "yaw": 0.00008616983392461063,
+      "rejected": false,
+      "reasons": [
+       "needs 22 cm of pelvis drop (the stance ankle allows 6.1 cm)",
+       "L hip extension 41° > 25°",
+       "beyond single-support reach",
+       "single support: R hip flexion 133° > 70°",
+       "single support: R hip abduction 167° > 35°"
+      ],
+      "current": [
+       0.1600526631053262,
+       0.0862381201157039
+      ]
+     },
+     "reach": [
+      [
+       0.1600526631053262,
+       0.3476257543930476
+      ],
+      [
+       0.19732226359097543,
+       0.2976045277743818
+      ],
+      [
+       0.22039101593565433,
+       0.25201638204411636
+      ],
+      [
+       0.23354662062485743,
+       0.21353338858884074
+      ],
+      [
+       0.2405374477477635,
+       0.18215615136249985
+      ],
+      [
+       0.24391825866334077,
+       0.15660971041689686
+      ],
+      [
+       0.24520293004816351,
+       0.13539964965671955
+      ],
+      [
+       0.24521517457834596,
+       0.11723473936723706
+      ],
+      [
+       0.2443900506939144,
+       0.10110907703003924
+      ],
+      [
+       0.24292162062485745,
+       0.0862381201157039
+      ],
+      [
+       0.2408737388316577,
+       0.07198718385526967
+      ],
+      [
+       0.2381993115511465,
+       0.05779506617376014
+      ],
+      [
+       0.23474893992160917,
+       0.04311220458836016
+      ],
+      [
+       0.23023872662320802,
+       0.02734502010406413
+      ],
+      [
+       0.2241980330905247,
+       0.009792644987558857
+      ],
+      [
+       0.21583803297837306,
+       -0.010384974823435436
+      ],
+      [
+       0.2038766033755386,
+       -0.034167166208232666
+      ],
+      [
+       0.18627158778259995,
+       -0.06245679073644454
+      ],
+      [
+       0.16005266310532623,
+       -0.09548032470851482
+      ],
+      [
+       0.12162330603757221,
+       -0.13170559396224646
+      ],
+      [
+       0.06796774756344452,
+       -0.1667631060080021
+      ],
+      [
+       0.03302782179673247,
+       -0.1337753588541543
+      ],
+      [
+       0.033036003190139884,
+       -0.06513444065753636
+      ],
+      [
+       0.03304096085113292,
+       -0.020337352400988273
+      ],
+      [
+       0.033042827809706216,
+       0.01290895751804759
+      ],
+      [
+       0.03304446461293398,
+       0.04001091635669949
+      ],
+      [
+       0.03304618349589203,
+       0.06384345103576115
+      ],
+      [
+       0.03305070998032625,
+       0.08623812011570388
+      ],
+      [
+       0.033050691588023096,
+       0.10863199429737239
+      ],
+      [
+       0.03305306775582445,
+       0.13246219258677502
+      ],
+      [
+       0.0330547208587694,
+       0.15956041625828205
+      ],
+      [
+       0.03305849421698795,
+       0.19279888039157372
+      ],
+      [
+       0.03306248522361993,
+       0.237579120830405
+      ],
+      [
+       0.03306673170884178,
+       0.3061842051408705
+      ],
+      [
+       0.03326838033080817,
+       0.4345750741804411
+      ],
+      [
+       0.10542566390354341,
+       0.3960432275490457
+      ]
+     ],
+     "excl": [
+      [
+       -0.2431985052872373,
+       -0.09249414323966779
+      ],
+      [
+       -0.07904531338041866,
+       -0.09250833109519667
+      ],
+      [
+       -0.07901450087134794,
+       0.2650705058493597
+      ],
+      [
+       -0.24316769277816658,
+       0.2650846937048886
+      ]
+     ],
+     "td": null,
+     "accepted": null,
+     "blocked": null,
+     "align": null,
+     "fwdBias": null,
+     "clear": null,
+     "T": null
+    }
+   ],
+   "repeatHashes": [
+    "9f067a16",
+    "9f067a16",
+    "9f067a16"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "G_far_side",
+   "group": "G unreachable",
+   "title": "G — request R 0.8 m sideways (outside reach)",
+   "hash": "9f067a16",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "fell": false,
+   "finalClass": "RECOVERABLE_IN_PLACE",
+   "requests": [
+    {
+     "id": 0,
+     "label": null,
+     "type": "place",
+     "foot": "R",
+     "status": "REJECTED",
+     "why": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s",
+     "requested": [
+      0.96,
+      0.086
+     ],
+     "feasible": [
+      0.243,
+      0.086
+     ],
+     "correctedCm": 71.7,
+     "projectionReasons": [
+      "needs 12 cm of pelvis drop (the stance ankle allows 6.1 cm)",
+      "beyond single-support reach",
+      "single support: R hip extension 178° > 25°",
+      "single support: R hip abduction 136° > 35°"
+     ],
+     "stanceClearanceCm": 24,
+     "metrics": {
+      "minSoleClearanceCm": null,
+      "peakSoleClearanceCm": null,
+      "minClearanceToStanceLegCm": null,
+      "peakSwingFootPenetrationMm": null,
+      "stanceFootSlidMm": 0.26,
+      "stanceMaxSlipSpeed": 0.001,
+      "legSelfContactMm": 0,
+      "saturationMs": {
+       "hip_L": 4
+      },
+      "jointLimitMarginDeg": 8.6,
+      "jointLimitMarginJoint": "ankle_L",
+      "rootResidualMaxN": 0.11,
+      "ankle": {
+       "stance": {
+        "foot": "L",
+        "maxDorsiDeg": 14.7,
+        "limitDeg": 30,
+        "minMarginDeg": 15.3,
+        "atStopMs": 0
+       },
+       "swing": {
+        "foot": "R",
+        "maxDorsiDeg": 8.1,
+        "limitDeg": 30,
+        "minMarginDeg": 21.9,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     }
+    }
+   ],
+   "loads": {
+    "totalVsBodyWeightN": 1.42,
+    "maxStepChangeN": 41.6,
+    "shareR": [
+     0,
+     0.68
+    ]
+   },
+   "drift": {
+    "footL": 0.01,
+    "footR": 0.05,
+    "com": 2.65,
+    "slidL": 1.4,
+    "slidR": 0.8
+   },
+   "root": {
+    "residualMeanN": 0.029,
+    "residualMaxN": 0.11
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "minJointLimitMarginDeg": 8.6,
+    "maxTurfPenMm": 1.46,
+    "maxSelfPenMm": 0,
+    "keMaxJ": 1.83
+   },
+   "cpu": {
+    "msPerFrame": 1.1652,
+    "jolt": 0.5471,
+    "sensing": 0.0389,
+    "controller": 0.5792
+   },
+   "events": [
+    {
+     "t": 0.5,
+     "kind": "request",
+     "what": "place R "
+    },
+    {
+     "t": 2.604,
+     "kind": "REJECTED",
+     "what": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s"
+    }
+   ],
+   "marks": {
+    "REJECTED#0": 625
+   },
+   "worst": {
+    "liftoff": 0,
+    "touchdown": 0,
+    "done": 625
+   },
+   "calib": "V1.1",
+   "recal": null,
+   "env": {
+    "terrain": [],
+    "obstacle": null
+   },
+   "box": {
+    "he": [
+     0.08207660244551523,
+     0.0746698049377926,
+     0.17878945945945948
+    ],
+    "pos": [
+     -0.0005227809072962872,
+     -0.013330195062207416,
+     0.09765810810810813
+    ]
+   },
+   "lean": {
+    "hipHalfWidth": 0.092,
+    "legComOffset": 0.026369450636924224,
+    "mUp": 38.305800000000005,
+    "hUp": 0.2897783130662963,
+    "mPelvis": 8.7126,
+    "mLeg": 15.4908,
+    "tau0": 74.40378692093864,
+    "cap": 140,
+    "target": 98,
+    "leanDeg": 0,
+    "tauAtLean": 74.40378692093864,
+    "ssPelvisOffset": -0.015957114351607803
+   },
+   "sup": {
+    "footClear": 0.03,
+    "latMin": 0.1
+   },
+   "reqRaw": [
+    {
+     "id": 0,
+     "type": "place",
+     "foot": "R",
+     "label": null,
+     "status": "REJECTED",
+     "why": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s",
+     "proj": {
+      "requested": [
+       0.9600526601352302,
+       0.08616918424864953
+      ],
+      "target": [
+       0.2429238346297417,
+       0.08623097912059884
+      ],
+      "yaw": 0.00008616983392461063,
+      "rejected": false,
+      "reasons": [
+       "needs 12 cm of pelvis drop (the stance ankle allows 6.1 cm)",
+       "beyond single-support reach",
+       "single support: R hip extension 178° > 25°",
+       "single support: R hip abduction 136° > 35°"
+      ],
+      "current": [
+       0.1600526631053262,
+       0.0862381201157039
+      ]
+     },
+     "reach": [
+      [
+       0.1600526631053262,
+       0.3476257543930476
+      ],
+      [
+       0.19732226359097543,
+       0.2976045277743818
+      ],
+      [
+       0.22039101593565433,
+       0.25201638204411636
+      ],
+      [
+       0.23354662062485743,
+       0.21353338858884074
+      ],
+      [
+       0.2405374477477635,
+       0.18215615136249985
+      ],
+      [
+       0.24391825866334077,
+       0.15660971041689686
+      ],
+      [
+       0.24520293004816351,
+       0.13539964965671955
+      ],
+      [
+       0.24521517457834596,
+       0.11723473936723706
+      ],
+      [
+       0.2443900506939144,
+       0.10110907703003924
+      ],
+      [
+       0.24292162062485745,
+       0.0862381201157039
+      ],
+      [
+       0.2408737388316577,
+       0.07198718385526967
+      ],
+      [
+       0.2381993115511465,
+       0.05779506617376014
+      ],
+      [
+       0.23474893992160917,
+       0.04311220458836016
+      ],
+      [
+       0.23023872662320802,
+       0.02734502010406413
+      ],
+      [
+       0.2241980330905247,
+       0.009792644987558857
+      ],
+      [
+       0.21583803297837306,
+       -0.010384974823435436
+      ],
+      [
+       0.2038766033755386,
+       -0.034167166208232666
+      ],
+      [
+       0.18627158778259995,
+       -0.06245679073644454
+      ],
+      [
+       0.16005266310532623,
+       -0.09548032470851482
+      ],
+      [
+       0.12162330603757221,
+       -0.13170559396224646
+      ],
+      [
+       0.06796774756344452,
+       -0.1667631060080021
+      ],
+      [
+       0.03302782179673247,
+       -0.1337753588541543
+      ],
+      [
+       0.033036003190139884,
+       -0.06513444065753636
+      ],
+      [
+       0.03304096085113292,
+       -0.020337352400988273
+      ],
+      [
+       0.033042827809706216,
+       0.01290895751804759
+      ],
+      [
+       0.03304446461293398,
+       0.04001091635669949
+      ],
+      [
+       0.03304618349589203,
+       0.06384345103576115
+      ],
+      [
+       0.03305070998032625,
+       0.08623812011570388
+      ],
+      [
+       0.033050691588023096,
+       0.10863199429737239
+      ],
+      [
+       0.03305306775582445,
+       0.13246219258677502
+      ],
+      [
+       0.0330547208587694,
+       0.15956041625828205
+      ],
+      [
+       0.03305849421698795,
+       0.19279888039157372
+      ],
+      [
+       0.03306248522361993,
+       0.237579120830405
+      ],
+      [
+       0.03306673170884178,
+       0.3061842051408705
+      ],
+      [
+       0.03326838033080817,
+       0.4345750741804411
+      ],
+      [
+       0.10542566390354341,
+       0.3960432275490457
+      ]
+     ],
+     "excl": [
+      [
+       -0.2431985052872373,
+       -0.09249414323966779
+      ],
+      [
+       -0.07904531338041866,
+       -0.09250833109519667
+      ],
+      [
+       -0.07901450087134794,
+       0.2650705058493597
+      ],
+      [
+       -0.24316769277816658,
+       0.2650846937048886
+      ]
+     ],
+     "td": null,
+     "accepted": null,
+     "blocked": null,
+     "align": null,
+     "fwdBias": null,
+     "clear": null,
+     "T": null
+    }
+   ],
+   "repeatHashes": [
+    "9f067a16",
+    "9f067a16",
+    "9f067a16"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "H_uneven",
+   "group": "H uneven touchdown",
+   "title": "H — place R 25 cm forward onto a 3 cm slab under the forefoot (touchdown differs from the plan)",
+   "hash": "ab2f02a",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "fell": false,
+   "finalClass": "RECOVERABLE_IN_PLACE",
+   "requests": [
+    {
+     "id": 0,
+     "label": null,
+     "type": "place",
+     "foot": "R",
+     "status": "REJECTED",
+     "why": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s",
+     "requested": [
+      0.16,
+      0.336
+     ],
+     "feasible": [
+      0.16,
+      0.336
+     ],
+     "correctedCm": 0,
+     "projectionReasons": [],
+     "stanceClearanceCm": 15.7,
+     "metrics": {
+      "minSoleClearanceCm": null,
+      "peakSoleClearanceCm": null,
+      "minClearanceToStanceLegCm": null,
+      "peakSwingFootPenetrationMm": null,
+      "stanceFootSlidMm": 0.26,
+      "stanceMaxSlipSpeed": 0.001,
+      "legSelfContactMm": 0,
+      "saturationMs": {
+       "hip_L": 4
+      },
+      "jointLimitMarginDeg": 8.6,
+      "jointLimitMarginJoint": "ankle_L",
+      "rootResidualMaxN": 0.11,
+      "ankle": {
+       "stance": {
+        "foot": "L",
+        "maxDorsiDeg": 14.7,
+        "limitDeg": 30,
+        "minMarginDeg": 15.3,
+        "atStopMs": 0
+       },
+       "swing": {
+        "foot": "R",
+        "maxDorsiDeg": 8.1,
+        "limitDeg": 30,
+        "minMarginDeg": 21.9,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     }
+    }
+   ],
+   "loads": {
+    "totalVsBodyWeightN": 1.63,
+    "maxStepChangeN": 41.6,
+    "shareR": [
+     0,
+     0.68
+    ]
+   },
+   "drift": {
+    "footL": 0.02,
+    "footR": 0.05,
+    "com": 3.88,
+    "slidL": 1.4,
+    "slidR": 0.8
+   },
+   "root": {
+    "residualMeanN": 0.031,
+    "residualMaxN": 0.11
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "minJointLimitMarginDeg": 8.6,
+    "maxTurfPenMm": 1.46,
+    "maxSelfPenMm": 0,
+    "keMaxJ": 1.83
+   },
+   "cpu": {
+    "msPerFrame": 1.2015,
+    "jolt": 0.5538,
+    "sensing": 0.0407,
+    "controller": 0.607
+   },
+   "events": [
+    {
+     "t": 0.5,
+     "kind": "request",
+     "what": "place R "
+    },
+    {
+     "t": 2.604,
+     "kind": "REJECTED",
+     "what": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s"
+    }
+   ],
+   "marks": {
+    "REJECTED#0": 625
+   },
+   "worst": {
+    "liftoff": 0,
+    "touchdown": 0,
+    "done": 625
+   },
+   "calib": "V1.1",
+   "recal": null,
+   "env": {
+    "terrain": [
+     {
+      "he": [
+       0.12,
+       0.015,
+       0.06
+      ],
+      "pos": [
+       0.16002861690223633,
+       0.015,
+       0.46624303550471047
+      ]
+     }
+    ],
+    "obstacle": null
+   },
+   "box": {
+    "he": [
+     0.08207660244551523,
+     0.0746698049377926,
+     0.17878945945945948
+    ],
+    "pos": [
+     -0.0005227809072962872,
+     -0.013330195062207416,
+     0.09765810810810813
+    ]
+   },
+   "lean": {
+    "hipHalfWidth": 0.092,
+    "legComOffset": 0.026369450636924224,
+    "mUp": 38.305800000000005,
+    "hUp": 0.2897783130662963,
+    "mPelvis": 8.7126,
+    "mLeg": 15.4908,
+    "tau0": 74.40378692093864,
+    "cap": 140,
+    "target": 98,
+    "leanDeg": 0,
+    "tauAtLean": 74.40378692093864,
+    "ssPelvisOffset": -0.015957114351607803
+   },
+   "sup": {
+    "footClear": 0.03,
+    "latMin": 0.1
+   },
+   "reqRaw": [
+    {
+     "id": 0,
+     "type": "place",
+     "foot": "R",
+     "label": null,
+     "status": "REJECTED",
+     "why": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s",
+     "proj": {
+      "requested": [
+       0.16007420556378069,
+       0.33623811918754887
+      ],
+      "target": [
+       0.16007420556378069,
+       0.33623811918754887
+      ],
+      "yaw": 0.00008616983392461063,
+      "rejected": false,
+      "reasons": [],
+      "current": [
+       0.1600526631053262,
+       0.0862381201157039
+      ]
+     },
+     "reach": [
+      [
+       0.1600526631053262,
+       0.3476257543930476
+      ],
+      [
+       0.19732226359097543,
+       0.2976045277743818
+      ],
+      [
+       0.22039101593565433,
+       0.25201638204411636
+      ],
+      [
+       0.23354662062485743,
+       0.21353338858884074
+      ],
+      [
+       0.2405374477477635,
+       0.18215615136249985
+      ],
+      [
+       0.24391825866334077,
+       0.15660971041689686
+      ],
+      [
+       0.24520293004816351,
+       0.13539964965671955
+      ],
+      [
+       0.24521517457834596,
+       0.11723473936723706
+      ],
+      [
+       0.2443900506939144,
+       0.10110907703003924
+      ],
+      [
+       0.24292162062485745,
+       0.0862381201157039
+      ],
+      [
+       0.2408737388316577,
+       0.07198718385526967
+      ],
+      [
+       0.2381993115511465,
+       0.05779506617376014
+      ],
+      [
+       0.23474893992160917,
+       0.04311220458836016
+      ],
+      [
+       0.23023872662320802,
+       0.02734502010406413
+      ],
+      [
+       0.2241980330905247,
+       0.009792644987558857
+      ],
+      [
+       0.21583803297837306,
+       -0.010384974823435436
+      ],
+      [
+       0.2038766033755386,
+       -0.034167166208232666
+      ],
+      [
+       0.18627158778259995,
+       -0.06245679073644454
+      ],
+      [
+       0.16005266310532623,
+       -0.09548032470851482
+      ],
+      [
+       0.12162330603757221,
+       -0.13170559396224646
+      ],
+      [
+       0.06796774756344452,
+       -0.1667631060080021
+      ],
+      [
+       0.03302782179673247,
+       -0.1337753588541543
+      ],
+      [
+       0.033036003190139884,
+       -0.06513444065753636
+      ],
+      [
+       0.03304096085113292,
+       -0.020337352400988273
+      ],
+      [
+       0.033042827809706216,
+       0.01290895751804759
+      ],
+      [
+       0.03304446461293398,
+       0.04001091635669949
+      ],
+      [
+       0.03304618349589203,
+       0.06384345103576115
+      ],
+      [
+       0.03305070998032625,
+       0.08623812011570388
+      ],
+      [
+       0.033050691588023096,
+       0.10863199429737239
+      ],
+      [
+       0.03305306775582445,
+       0.13246219258677502
+      ],
+      [
+       0.0330547208587694,
+       0.15956041625828205
+      ],
+      [
+       0.03305849421698795,
+       0.19279888039157372
+      ],
+      [
+       0.03306248522361993,
+       0.237579120830405
+      ],
+      [
+       0.03306673170884178,
+       0.3061842051408705
+      ],
+      [
+       0.03326838033080817,
+       0.4345750741804411
+      ],
+      [
+       0.10542566390354341,
+       0.3960432275490457
+      ]
+     ],
+     "excl": [
+      [
+       -0.2431985052872373,
+       -0.09249414323966779
+      ],
+      [
+       -0.07904531338041866,
+       -0.09250833109519667
+      ],
+      [
+       -0.07901450087134794,
+       0.2650705058493597
+      ],
+      [
+       -0.24316769277816658,
+       0.2650846937048886
+      ]
+     ],
+     "td": null,
+     "accepted": null,
+     "blocked": null,
+     "align": null,
+     "fwdBias": null,
+     "clear": null,
+     "T": null
+    }
+   ],
+   "repeatHashes": [
+    "ab2f02a",
+    "ab2f02a",
+    "ab2f02a"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "I_block",
+   "group": "I obstruction",
+   "title": "I — place R 30 cm forward with a 22 cm box in the swing path",
+   "hash": "ab2f02a",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "fell": false,
+   "finalClass": "RECOVERABLE_IN_PLACE",
+   "requests": [
+    {
+     "id": 0,
+     "label": null,
+     "type": "place",
+     "foot": "R",
+     "status": "REJECTED",
+     "why": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s",
+     "requested": [
+      0.16,
+      0.386
+     ],
+     "feasible": [
+      0.16,
+      0.348
+     ],
+     "correctedCm": 3.9,
+     "projectionReasons": [
+      "single support: needs 7.2 cm of pelvis drop to reach (the stance ankle allows 6.1 cm)"
+     ],
+     "stanceClearanceCm": 15.7,
+     "metrics": {
+      "minSoleClearanceCm": null,
+      "peakSoleClearanceCm": null,
+      "minClearanceToStanceLegCm": null,
+      "peakSwingFootPenetrationMm": null,
+      "stanceFootSlidMm": 0.26,
+      "stanceMaxSlipSpeed": 0.001,
+      "legSelfContactMm": 0,
+      "saturationMs": {
+       "hip_L": 4
+      },
+      "jointLimitMarginDeg": 8.6,
+      "jointLimitMarginJoint": "ankle_L",
+      "rootResidualMaxN": 0.11,
+      "ankle": {
+       "stance": {
+        "foot": "L",
+        "maxDorsiDeg": 14.7,
+        "limitDeg": 30,
+        "minMarginDeg": 15.3,
+        "atStopMs": 0
+       },
+       "swing": {
+        "foot": "R",
+        "maxDorsiDeg": 8.1,
+        "limitDeg": 30,
+        "minMarginDeg": 21.9,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     }
+    }
+   ],
+   "loads": {
+    "totalVsBodyWeightN": 1.63,
+    "maxStepChangeN": 41.6,
+    "shareR": [
+     0,
+     0.68
+    ]
+   },
+   "drift": {
+    "footL": 0.02,
+    "footR": 0.05,
+    "com": 3.88,
+    "slidL": 1.4,
+    "slidR": 0.8
+   },
+   "root": {
+    "residualMeanN": 0.031,
+    "residualMaxN": 0.11
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "minJointLimitMarginDeg": 8.6,
+    "maxTurfPenMm": 1.46,
+    "maxSelfPenMm": 0,
+    "keMaxJ": 1.83
+   },
+   "cpu": {
+    "msPerFrame": 1.2296,
+    "jolt": 0.5663,
+    "sensing": 0.0419,
+    "controller": 0.6214
+   },
+   "events": [
+    {
+     "t": 0.5,
+     "kind": "request",
+     "what": "place R "
+    },
+    {
+     "t": 2.604,
+     "kind": "REJECTED",
+     "what": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s"
+    }
+   ],
+   "marks": {
+    "REJECTED#0": 625
+   },
+   "worst": {
+    "liftoff": 0,
+    "touchdown": 0,
+    "done": 625
+   },
+   "calib": "V1.1",
+   "recal": null,
+   "env": {
+    "terrain": [],
+    "obstacle": {
+     "he": [
+      0.12,
+      0.11,
+      0.04
+     ],
+     "pos": [
+      0.16002861690223633,
+      0.113,
+      0.37624303550471044
+     ]
+    }
+   },
+   "box": {
+    "he": [
+     0.08207660244551523,
+     0.0746698049377926,
+     0.17878945945945948
+    ],
+    "pos": [
+     -0.0005227809072962872,
+     -0.013330195062207416,
+     0.09765810810810813
+    ]
+   },
+   "lean": {
+    "hipHalfWidth": 0.092,
+    "legComOffset": 0.026369450636924224,
+    "mUp": 38.305800000000005,
+    "hUp": 0.2897783130662963,
+    "mPelvis": 8.7126,
+    "mLeg": 15.4908,
+    "tau0": 74.40378692093864,
+    "cap": 140,
+    "target": 98,
+    "leanDeg": 0,
+    "tauAtLean": 74.40378692093864,
+    "ssPelvisOffset": -0.015957114351607803
+   },
+   "sup": {
+    "footClear": 0.03,
+    "latMin": 0.1
+   },
+   "reqRaw": [
+    {
+     "id": 0,
+     "type": "place",
+     "foot": "R",
+     "label": null,
+     "status": "REJECTED",
+     "why": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s",
+     "proj": {
+      "requested": [
+       0.1600785140554716,
+       0.3862381190019179
+      ],
+      "target": [
+       0.16007518486957456,
+       0.34760295241089856
+      ],
+      "yaw": 0.00008616983392461063,
+      "rejected": false,
+      "reasons": [
+       "single support: needs 7.2 cm of pelvis drop to reach (the stance ankle allows 6.1 cm)"
+      ],
+      "current": [
+       0.1600526631053262,
+       0.0862381201157039
+      ]
+     },
+     "reach": [
+      [
+       0.1600526631053262,
+       0.3476257543930476
+      ],
+      [
+       0.19732226359097543,
+       0.2976045277743818
+      ],
+      [
+       0.22039101593565433,
+       0.25201638204411636
+      ],
+      [
+       0.23354662062485743,
+       0.21353338858884074
+      ],
+      [
+       0.2405374477477635,
+       0.18215615136249985
+      ],
+      [
+       0.24391825866334077,
+       0.15660971041689686
+      ],
+      [
+       0.24520293004816351,
+       0.13539964965671955
+      ],
+      [
+       0.24521517457834596,
+       0.11723473936723706
+      ],
+      [
+       0.2443900506939144,
+       0.10110907703003924
+      ],
+      [
+       0.24292162062485745,
+       0.0862381201157039
+      ],
+      [
+       0.2408737388316577,
+       0.07198718385526967
+      ],
+      [
+       0.2381993115511465,
+       0.05779506617376014
+      ],
+      [
+       0.23474893992160917,
+       0.04311220458836016
+      ],
+      [
+       0.23023872662320802,
+       0.02734502010406413
+      ],
+      [
+       0.2241980330905247,
+       0.009792644987558857
+      ],
+      [
+       0.21583803297837306,
+       -0.010384974823435436
+      ],
+      [
+       0.2038766033755386,
+       -0.034167166208232666
+      ],
+      [
+       0.18627158778259995,
+       -0.06245679073644454
+      ],
+      [
+       0.16005266310532623,
+       -0.09548032470851482
+      ],
+      [
+       0.12162330603757221,
+       -0.13170559396224646
+      ],
+      [
+       0.06796774756344452,
+       -0.1667631060080021
+      ],
+      [
+       0.03302782179673247,
+       -0.1337753588541543
+      ],
+      [
+       0.033036003190139884,
+       -0.06513444065753636
+      ],
+      [
+       0.03304096085113292,
+       -0.020337352400988273
+      ],
+      [
+       0.033042827809706216,
+       0.01290895751804759
+      ],
+      [
+       0.03304446461293398,
+       0.04001091635669949
+      ],
+      [
+       0.03304618349589203,
+       0.06384345103576115
+      ],
+      [
+       0.03305070998032625,
+       0.08623812011570388
+      ],
+      [
+       0.033050691588023096,
+       0.10863199429737239
+      ],
+      [
+       0.03305306775582445,
+       0.13246219258677502
+      ],
+      [
+       0.0330547208587694,
+       0.15956041625828205
+      ],
+      [
+       0.03305849421698795,
+       0.19279888039157372
+      ],
+      [
+       0.03306248522361993,
+       0.237579120830405
+      ],
+      [
+       0.03306673170884178,
+       0.3061842051408705
+      ],
+      [
+       0.03326838033080817,
+       0.4345750741804411
+      ],
+      [
+       0.10542566390354341,
+       0.3960432275490457
+      ]
+     ],
+     "excl": [
+      [
+       -0.2431985052872373,
+       -0.09249414323966779
+      ],
+      [
+       -0.07904531338041866,
+       -0.09250833109519667
+      ],
+      [
+       -0.07901450087134794,
+       0.2650705058493597
+      ],
+      [
+       -0.24316769277816658,
+       0.2650846937048886
+      ]
+     ],
+     "td": null,
+     "accepted": null,
+     "blocked": null,
+     "align": null,
+     "fwdBias": null,
+     "clear": null,
+     "T": null
+    }
+   ],
+   "repeatHashes": [
+    "ab2f02a",
+    "ab2f02a",
+    "ab2f02a"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "J_repeat",
+   "group": "J repeated",
+   "title": "J — six alternating placements R↑ L↑ R→ R← L↓ R↓ (closed loop: returns to the start)",
+   "hash": "5134b03c",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "fell": false,
+   "finalClass": "RECOVERABLE_IN_PLACE",
+   "requests": [
+    {
+     "id": 0,
+     "label": "1 R fwd",
+     "type": "place",
+     "foot": "R",
+     "status": "REJECTED",
+     "why": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s",
+     "requested": [
+      0.16,
+      0.236
+     ],
+     "feasible": [
+      0.16,
+      0.236
+     ],
+     "correctedCm": 0,
+     "projectionReasons": [],
+     "stanceClearanceCm": 15.7,
+     "metrics": {
+      "minSoleClearanceCm": null,
+      "peakSoleClearanceCm": null,
+      "minClearanceToStanceLegCm": null,
+      "peakSwingFootPenetrationMm": null,
+      "stanceFootSlidMm": 0.26,
+      "stanceMaxSlipSpeed": 0.001,
+      "legSelfContactMm": 0,
+      "saturationMs": {
+       "hip_L": 4
+      },
+      "jointLimitMarginDeg": 8.6,
+      "jointLimitMarginJoint": "ankle_L",
+      "rootResidualMaxN": 0.11,
+      "ankle": {
+       "stance": {
+        "foot": "L",
+        "maxDorsiDeg": 14.7,
+        "limitDeg": 30,
+        "minMarginDeg": 15.3,
+        "atStopMs": 0
+       },
+       "swing": {
+        "foot": "R",
+        "maxDorsiDeg": 8.1,
+        "limitDeg": 30,
+        "minMarginDeg": 21.9,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     }
+    },
+    {
+     "id": 1,
+     "label": "2 L fwd",
+     "type": "place",
+     "foot": "L",
+     "status": "REJECTED",
+     "why": "weight transfer not achieved: swing load 109 N, ξ margin on the stance foot 5.6 cm, |v| 0.02 m/s",
+     "requested": [
+      -0.161,
+      0.236
+     ],
+     "feasible": [
+      -0.161,
+      0.236
+     ],
+     "correctedCm": 0,
+     "projectionReasons": [],
+     "stanceClearanceCm": 15.8,
+     "metrics": {
+      "minSoleClearanceCm": null,
+      "peakSoleClearanceCm": null,
+      "minClearanceToStanceLegCm": null,
+      "peakSwingFootPenetrationMm": null,
+      "stanceFootSlidMm": 0.41,
+      "stanceMaxSlipSpeed": 0.012,
+      "legSelfContactMm": 0,
+      "saturationMs": {
+       "ankle_L": 208
+      },
+      "jointLimitMarginDeg": 8.8,
+      "jointLimitMarginJoint": "ankle_R",
+      "rootResidualMaxN": 0.14,
+      "ankle": {
+       "swing": {
+        "foot": "L",
+        "maxDorsiDeg": 14.1,
+        "limitDeg": 30,
+        "minMarginDeg": 15.9,
+        "atStopMs": 0
+       },
+       "stance": {
+        "foot": "R",
+        "maxDorsiDeg": 14.1,
+        "limitDeg": 30,
+        "minMarginDeg": 15.9,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     }
+    },
+    {
+     "id": 2,
+     "label": "3 R out",
+     "type": "place",
+     "foot": "R",
+     "status": "REJECTED",
+     "why": "weight transfer not achieved: swing load 111 N, ξ margin on the stance foot 5.9 cm, |v| 0.01 m/s",
+     "requested": [
+      0.233,
+      0.082
+     ],
+     "feasible": [
+      0.233,
+      0.082
+     ],
+     "correctedCm": 0,
+     "projectionReasons": [],
+     "stanceClearanceCm": 23.2,
+     "metrics": {
+      "minSoleClearanceCm": null,
+      "peakSoleClearanceCm": null,
+      "minClearanceToStanceLegCm": null,
+      "peakSwingFootPenetrationMm": null,
+      "stanceFootSlidMm": 0.4,
+      "stanceMaxSlipSpeed": 0.006,
+      "legSelfContactMm": 0,
+      "saturationMs": {
+       "ankle_R": 133
+      },
+      "jointLimitMarginDeg": 9,
+      "jointLimitMarginJoint": "ankle_L",
+      "rootResidualMaxN": 0.13,
+      "ankle": {
+       "stance": {
+        "foot": "L",
+        "maxDorsiDeg": 14.2,
+        "limitDeg": 30,
+        "minMarginDeg": 15.8,
+        "atStopMs": 0
+       },
+       "swing": {
+        "foot": "R",
+        "maxDorsiDeg": 13.6,
+        "limitDeg": 30,
+        "minMarginDeg": 16.4,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     }
+    },
+    {
+     "id": 3,
+     "label": "4 R in",
+     "type": "place",
+     "foot": "R",
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "requested": [
+      0.076,
+      0.081
+     ],
+     "feasible": [
+      0.076,
+      0.081
+     ],
+     "correctedCm": 0,
+     "projectionReasons": [],
+     "stanceClearanceCm": 7.4,
+     "liftoff": {
+      "commandT": 9.679,
+      "physicalT": 9.692,
+      "swingLoadN": 0,
+      "swingLoadPctBW": 0,
+      "stanceXiMarginCm": 6.8,
+      "stanceComMarginCm": 7.4,
+      "vcom": 0.067,
+      "transferS": 1.067
+     },
+     "touchdown": {
+      "t": 10.492,
+      "singleSupportS": 0.8,
+      "actualCenter": [
+       0.05,
+       0.042
+      ],
+      "landingErrorCm": 4.8,
+      "verticalVelocity": -0.042,
+      "horizontalVelocity": 0.559,
+      "early": false,
+      "uAt": 0.96,
+      "plannedAnkleY": 0.1035,
+      "actualAnkleY": 0.1002,
+      "footTiltDeg": 2.6
+     },
+     "accepted": {
+      "t": 12.492,
+      "fromTouchdownS": 2,
+      "loadN": 419,
+      "finalCenter": [
+       0.051,
+       0.03
+      ],
+      "finalErrorCm": 5.8,
+      "driftAfterTouchdownCm": 1.2
+     },
+     "metrics": {
+      "minSoleClearanceCm": 5.3,
+      "peakSoleClearanceCm": 9.2,
+      "minClearanceToStanceLegCm": 6,
+      "peakSwingFootPenetrationMm": 0.31,
+      "stanceFootSlidMm": 1.76,
+      "stanceMaxSlipSpeed": 0.002,
+      "legSelfContactMm": 0,
+      "saturationMs": {
+       "hip_L": 58,
+       "ankle_L": 1662,
+       "ankle_R": 54
+      },
+      "jointLimitMarginDeg": 4.9,
+      "jointLimitMarginJoint": "ankle_R",
+      "rootResidualMaxN": 0.08,
+      "ankle": {
+       "stance": {
+        "foot": "L",
+        "maxDorsiDeg": 13.7,
+        "limitDeg": 30,
+        "minMarginDeg": 16.3,
+        "atStopMs": 0
+       },
+       "swing": {
+        "foot": "R",
+        "maxDorsiDeg": 25.1,
+        "limitDeg": 30,
+        "minMarginDeg": 4.9,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     }
+    },
+    {
+     "id": 4,
+     "label": "5 L back",
+     "type": "place",
+     "foot": "L",
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "requested": [
+      -0.161,
+      -0.066
+     ],
+     "feasible": [
+      -0.161,
+      -0.066
+     ],
+     "correctedCm": 0,
+     "projectionReasons": [],
+     "stanceClearanceCm": 4.8,
+     "liftoff": {
+      "commandT": 14.104,
+      "physicalT": 14.158,
+      "swingLoadN": 10.2,
+      "swingLoadPctBW": 1.3,
+      "stanceXiMarginCm": 7.6,
+      "stanceComMarginCm": 5.4,
+      "vcom": 0.068,
+      "transferS": 1.012
+     },
+     "touchdown": {
+      "t": 14.862,
+      "singleSupportS": 0.704,
+      "actualCenter": [
+       -0.148,
+       -0.112
+      ],
+      "landingErrorCm": 4.8,
+      "verticalVelocity": -0.083,
+      "horizontalVelocity": 0.055,
+      "early": false,
+      "uAt": 1,
+      "plannedAnkleY": 0.1035,
+      "actualAnkleY": 0.1041,
+      "footTiltDeg": 3.2
+     },
+     "accepted": {
+      "t": 16.863,
+      "fromTouchdownS": 2,
+      "loadN": 476,
+      "finalCenter": [
+       -0.146,
+       -0.116
+      ],
+      "finalErrorCm": 5.2,
+      "driftAfterTouchdownCm": 0.45
+     },
+     "metrics": {
+      "minSoleClearanceCm": 5.1,
+      "peakSoleClearanceCm": 7.6,
+      "minClearanceToStanceLegCm": 4.1,
+      "peakSwingFootPenetrationMm": 0.11,
+      "stanceFootSlidMm": 0.94,
+      "stanceMaxSlipSpeed": 0.002,
+      "legSelfContactMm": 0,
+      "saturationMs": {
+       "ankle_R": 742
+      },
+      "jointLimitMarginDeg": 4.9,
+      "jointLimitMarginJoint": "ankle_L",
+      "rootResidualMaxN": 0.08,
+      "ankle": {
+       "swing": {
+        "foot": "L",
+        "maxDorsiDeg": 25.1,
+        "limitDeg": 30,
+        "minMarginDeg": 4.9,
+        "atStopMs": 0
+       },
+       "stance": {
+        "foot": "R",
+        "maxDorsiDeg": 11.5,
+        "limitDeg": 30,
+        "minMarginDeg": 18.5,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     }
+    },
+    {
+     "id": 5,
+     "label": "6 R back",
+     "type": "place",
+     "foot": "R",
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "requested": [
+      0.053,
+      -0.12
+     ],
+     "feasible": [
+      0.053,
+      -0.12
+     ],
+     "correctedCm": 0,
+     "projectionReasons": [],
+     "stanceClearanceCm": 3.5,
+     "liftoff": {
+      "commandT": 18.579,
+      "physicalT": 18.629,
+      "swingLoadN": 5.4,
+      "swingLoadPctBW": 0.7,
+      "stanceXiMarginCm": 8.1,
+      "stanceComMarginCm": 6.3,
+      "vcom": 0.071,
+      "transferS": 1.113
+     },
+     "touchdown": {
+      "t": 19.283,
+      "singleSupportS": 0.654,
+      "actualCenter": [
+       0.042,
+       -0.163
+      ],
+      "landingErrorCm": 4.4,
+      "verticalVelocity": -0.054,
+      "horizontalVelocity": 0.109,
+      "early": false,
+      "uAt": 1,
+      "plannedAnkleY": 0.1035,
+      "actualAnkleY": 0.1019,
+      "footTiltDeg": 2.8
+     },
+     "accepted": {
+      "t": 21.283,
+      "fromTouchdownS": 2,
+      "loadN": 448,
+      "finalCenter": [
+       0.042,
+       -0.168
+      ],
+      "finalErrorCm": 4.8,
+      "driftAfterTouchdownCm": 0.47
+     },
+     "metrics": {
+      "minSoleClearanceCm": 4.9,
+      "peakSoleClearanceCm": 8.8,
+      "minClearanceToStanceLegCm": 2.5,
+      "peakSwingFootPenetrationMm": 0.33,
+      "stanceFootSlidMm": 0.85,
+      "stanceMaxSlipSpeed": 0.003,
+      "legSelfContactMm": 0,
+      "saturationMs": {
+       "ankle_L": 304
+      },
+      "jointLimitMarginDeg": 4.9,
+      "jointLimitMarginJoint": "ankle_R",
+      "rootResidualMaxN": 0.08,
+      "ankle": {
+       "stance": {
+        "foot": "L",
+        "maxDorsiDeg": 11.9,
+        "limitDeg": 30,
+        "minMarginDeg": 18.1,
+        "atStopMs": 0
+       },
+       "swing": {
+        "foot": "R",
+        "maxDorsiDeg": 25.1,
+        "limitDeg": 30,
+        "minMarginDeg": 4.9,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     }
+    }
+   ],
+   "loads": {
+    "totalVsBodyWeightN": 3.94,
+    "maxStepChangeN": 141.5,
+    "shareR": [
+     0,
+     1
+    ]
+   },
+   "drift": {
+    "footL": 20.33,
+    "footR": 27.99,
+    "com": 23.13,
+    "slidL": 6.3,
+    "slidR": 4.5
+   },
+   "root": {
+    "residualMeanN": 0.03,
+    "residualMaxN": 0.14
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "minJointLimitMarginDeg": 4.9,
+    "maxTurfPenMm": 1.46,
+    "maxSelfPenMm": 0,
+    "keMaxJ": 3.44
+   },
+   "cpu": {
+    "msPerFrame": 0.986,
+    "jolt": 0.556,
+    "sensing": 0.0467,
+    "controller": 0.3833
+   },
+   "events": [
+    {
+     "t": 0.5,
+     "kind": "request",
+     "what": "place R 1 R fwd"
+    },
+    {
+     "t": 2.604,
+     "kind": "REJECTED",
+     "what": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s"
+    },
+    {
+     "t": 3.204,
+     "kind": "request",
+     "what": "place L 2 L fwd"
+    },
+    {
+     "t": 5.308,
+     "kind": "REJECTED",
+     "what": "weight transfer not achieved: swing load 109 N, ξ margin on the stance foot 5.6 cm, |v| 0.02 m/s"
+    },
+    {
+     "t": 5.908,
+     "kind": "request",
+     "what": "place R 3 R out"
+    },
+    {
+     "t": 8.012,
+     "kind": "REJECTED",
+     "what": "weight transfer not achieved: swing load 111 N, ξ margin on the stance foot 5.9 cm, |v| 0.01 m/s"
+    },
+    {
+     "t": 8.613,
+     "kind": "request",
+     "what": "place R 4 R in"
+    },
+    {
+     "t": 9.679,
+     "kind": "liftoff commanded",
+     "what": "R"
+    },
+    {
+     "t": 9.692,
+     "kind": "liftoff",
+     "what": "R"
+    },
+    {
+     "t": 10.492,
+     "kind": "touchdown",
+     "what": "R"
+    },
+    {
+     "t": 10.55,
+     "kind": "landed foot loaded",
+     "what": "R 164 N"
+    },
+    {
+     "t": 12.492,
+     "kind": "DONE",
+     "what": "placed, loaded and accepted"
+    },
+    {
+     "t": 13.092,
+     "kind": "request",
+     "what": "place L 5 L back"
+    },
+    {
+     "t": 14.104,
+     "kind": "liftoff commanded",
+     "what": "L"
+    },
+    {
+     "t": 14.158,
+     "kind": "liftoff",
+     "what": "L"
+    },
+    {
+     "t": 14.862,
+     "kind": "touchdown",
+     "what": "L"
+    },
+    {
+     "t": 14.883,
+     "kind": "landed foot loaded",
+     "what": "L 49 N"
+    },
+    {
+     "t": 16.863,
+     "kind": "DONE",
+     "what": "placed, loaded and accepted"
+    },
+    {
+     "t": 17.467,
+     "kind": "request",
+     "what": "place R 6 R back"
+    },
+    {
+     "t": 18.579,
+     "kind": "liftoff commanded",
+     "what": "R"
+    },
+    {
+     "t": 18.629,
+     "kind": "liftoff",
+     "what": "R"
+    },
+    {
+     "t": 19.283,
+     "kind": "touchdown",
+     "what": "R"
+    },
+    {
+     "t": 19.363,
+     "kind": "landed foot loaded",
+     "what": "R 162 N"
+    },
+    {
+     "t": 21.283,
+     "kind": "DONE",
+     "what": "placed, loaded and accepted"
+    }
+   ],
+   "marks": {
+    "REJECTED#0": 625,
+    "REJECTED#1": 1274,
+    "REJECTED#2": 1923,
+    "liftoff#3": 2326,
+    "touchdown#4": 2518,
+    "DONE#5": 2998,
+    "liftoff#6": 3398,
+    "touchdown#7": 3567,
+    "DONE#8": 4047,
+    "liftoff#9": 4471,
+    "touchdown#10": 4628,
+    "DONE#11": 5108
+   },
+   "worst": {
+    "liftoff": 2326,
+    "touchdown": 2518,
+    "done": 625
+   },
+   "calib": "V1.1",
+   "recal": null,
+   "env": {
+    "terrain": [],
+    "obstacle": null
+   },
+   "box": {
+    "he": [
+     0.08207660244551523,
+     0.0746698049377926,
+     0.17878945945945948
+    ],
+    "pos": [
+     -0.0005227809072962872,
+     -0.013330195062207416,
+     0.09765810810810813
+    ]
+   },
+   "lean": {
+    "hipHalfWidth": 0.092,
+    "legComOffset": 0.026369450636924224,
+    "mUp": 38.305800000000005,
+    "hUp": 0.2897783130662963,
+    "mPelvis": 8.7126,
+    "mLeg": 15.4908,
+    "tau0": 74.40378692093864,
+    "cap": 140,
+    "target": 98,
+    "leanDeg": 0,
+    "tauAtLean": 74.40378692093864,
+    "ssPelvisOffset": -0.015957114351607803
+   },
+   "sup": {
+    "footClear": 0.03,
+    "latMin": 0.1
+   },
+   "reqRaw": [
+    {
+     "id": 0,
+     "type": "place",
+     "foot": "R",
+     "label": "1 R fwd",
+     "status": "REJECTED",
+     "why": "weight transfer not achieved: swing load 85 N, ξ margin on the stance foot 7.0 cm, |v| 0.01 m/s",
+     "proj": {
+      "requested": [
+       0.1600655885803989,
+       0.2362381195588109
+      ],
+      "target": [
+       0.1600655885803989,
+       0.2362381195588109
+      ],
+      "yaw": 0.00008616983392461063,
+      "rejected": false,
+      "reasons": [],
+      "current": [
+       0.1600526631053262,
+       0.0862381201157039
+      ]
+     },
+     "reach": [
+      [
+       0.1600526631053262,
+       0.3476257543930476
+      ],
+      [
+       0.19732226359097543,
+       0.2976045277743818
+      ],
+      [
+       0.22039101593565433,
+       0.25201638204411636
+      ],
+      [
+       0.23354662062485743,
+       0.21353338858884074
+      ],
+      [
+       0.2405374477477635,
+       0.18215615136249985
+      ],
+      [
+       0.24391825866334077,
+       0.15660971041689686
+      ],
+      [
+       0.24520293004816351,
+       0.13539964965671955
+      ],
+      [
+       0.24521517457834596,
+       0.11723473936723706
+      ],
+      [
+       0.2443900506939144,
+       0.10110907703003924
+      ],
+      [
+       0.24292162062485745,
+       0.0862381201157039
+      ],
+      [
+       0.2408737388316577,
+       0.07198718385526967
+      ],
+      [
+       0.2381993115511465,
+       0.05779506617376014
+      ],
+      [
+       0.23474893992160917,
+       0.04311220458836016
+      ],
+      [
+       0.23023872662320802,
+       0.02734502010406413
+      ],
+      [
+       0.2241980330905247,
+       0.009792644987558857
+      ],
+      [
+       0.21583803297837306,
+       -0.010384974823435436
+      ],
+      [
+       0.2038766033755386,
+       -0.034167166208232666
+      ],
+      [
+       0.18627158778259995,
+       -0.06245679073644454
+      ],
+      [
+       0.16005266310532623,
+       -0.09548032470851482
+      ],
+      [
+       0.12162330603757221,
+       -0.13170559396224646
+      ],
+      [
+       0.06796774756344452,
+       -0.1667631060080021
+      ],
+      [
+       0.03302782179673247,
+       -0.1337753588541543
+      ],
+      [
+       0.033036003190139884,
+       -0.06513444065753636
+      ],
+      [
+       0.03304096085113292,
+       -0.020337352400988273
+      ],
+      [
+       0.033042827809706216,
+       0.01290895751804759
+      ],
+      [
+       0.03304446461293398,
+       0.04001091635669949
+      ],
+      [
+       0.03304618349589203,
+       0.06384345103576115
+      ],
+      [
+       0.03305070998032625,
+       0.08623812011570388
+      ],
+      [
+       0.033050691588023096,
+       0.10863199429737239
+      ],
+      [
+       0.03305306775582445,
+       0.13246219258677502
+      ],
+      [
+       0.0330547208587694,
+       0.15956041625828205
+      ],
+      [
+       0.03305849421698795,
+       0.19279888039157372
+      ],
+      [
+       0.03306248522361993,
+       0.237579120830405
+      ],
+      [
+       0.03306673170884178,
+       0.3061842051408705
+      ],
+      [
+       0.03326838033080817,
+       0.4345750741804411
+      ],
+      [
+       0.10542566390354341,
+       0.3960432275490457
+      ]
+     ],
+     "excl": [
+      [
+       -0.2431985052872373,
+       -0.09249414323966779
+      ],
+      [
+       -0.07904531338041866,
+       -0.09250833109519667
+      ],
+      [
+       -0.07901450087134794,
+       0.2650705058493597
+      ],
+      [
+       -0.24316769277816658,
+       0.2650846937048886
+      ]
+     ],
+     "td": null,
+     "accepted": null,
+     "blocked": null,
+     "align": null,
+     "fwdBias": null,
+     "clear": null,
+     "T": null
+    },
+    {
+     "id": 1,
+     "type": "place",
+     "foot": "L",
+     "label": "2 L fwd",
+     "status": "REJECTED",
+     "why": "weight transfer not achieved: swing load 109 N, ξ margin on the stance foot 5.6 cm, |v| 0.02 m/s",
+     "proj": {
+      "requested": [
+       -0.1611209539136294,
+       0.2361547810944828
+      ],
+      "target": [
+       -0.1611209539136294,
+       0.2361547810944828
+      ],
+      "yaw": 0.0010970133552179002,
+      "rejected": false,
+      "reasons": [],
+      "current": [
+       -0.1612855058839074,
+       0.08615487135234633
+      ]
+     },
+     "reach": [
+      [
+       -0.1612855058839074,
+       0.34560616529765886
+      ],
+      [
+       -0.10694308026429974,
+       0.3943460818027549
+      ],
+      [
+       -0.03492551262434895,
+       0.43332609955542145
+      ],
+      [
+       -0.03354426442882932,
+       0.3074091917744653
+      ],
+      [
+       -0.03361856492437568,
+       0.23830240689638116
+      ],
+      [
+       -0.033670655844299346,
+       0.19323644495332537
+      ],
+      [
+       -0.0337048042332537,
+       0.15981362379375258
+      ],
+      [
+       -0.03373530938941391,
+       0.13257934625114728
+      ],
+      [
+       -0.033760595679396876,
+       0.10864095373382579
+      ],
+      [
+       -0.033789167993282465,
+       0.08615487135234634
+      ],
+      [
+       -0.033810184692838974,
+       0.06367753285188343
+      ],
+      [
+       -0.033838547104099864,
+       0.039767971908744745
+      ],
+      [
+       -0.033867342570450765,
+       0.012589960463674485
+      ],
+      [
+       -0.0339056029467574,
+       -0.02072955822161396
+      ],
+      [
+       -0.03395400401512391,
+       -0.06559290345019263
+      ],
+      [
+       -0.03402720510265744,
+       -0.13426297128566078
+      ],
+      [
+       -0.0693837706861225,
+       -0.16634307091226558
+      ],
+      [
+       -0.12301433357272554,
+       -0.13089173239151547
+      ],
+      [
+       -0.16128550588390736,
+       -0.09439169847187241
+      ],
+      [
+       -0.18727788455302494,
+       -0.0612552332424391
+      ],
+      [
+       -0.2046507124718943,
+       -0.0329900545381326
+      ],
+      [
+       -0.21640482961437613,
+       -0.009314597827662432
+      ],
+      [
+       -0.2245893356940707,
+       0.010712304751111776
+      ],
+      [
+       -0.23049320758707578,
+       0.028082714378590466
+      ],
+      [
+       -0.23489158653606346,
+       0.04365838087383067
+      ],
+      [
+       -0.2382535237537297,
+       0.058140803857261794
+      ],
+      [
+       -0.2408578400899246,
+       0.0721241219138744
+      ],
+      [
+       -0.24285441457531365,
+       0.08615487135234631
+      ],
+      [
+       -0.24428399010955937,
+       0.10078974347923467
+      ],
+      [
+       -0.24509732392311928,
+       0.11665987839835464
+      ],
+      [
+       -0.24509582263229063,
+       0.1345427802878932
+      ],
+      [
+       -0.24386765906133018,
+       0.15544952562534742
+      ],
+      [
+       -0.24059625370872573,
+       0.18067374000390696
+      ],
+      [
+       -0.2337906938721887,
+       0.2117375407603821
+      ],
+      [
+       -0.22090992506544793,
+       0.24997161670172563
+      ],
+      [
+       -0.19819263275650678,
+       0.29546558899924336
+      ]
+     ],
+     "excl": [
+      [
+       0.07809513639697285,
+       -0.09296063884048177
+      ],
+      [
+       0.24224298020538293,
+       -0.09313971254980805
+      ],
+      [
+       0.24263524886308402,
+       0.2644388880007053
+      ],
+      [
+       0.07848740505467394,
+       0.26461796171003155
+      ]
+     ],
+     "td": null,
+     "accepted": null,
+     "blocked": null,
+     "align": null,
+     "fwdBias": null,
+     "clear": null,
+     "T": null
+    },
+    {
+     "id": 2,
+     "type": "place",
+     "foot": "R",
+     "label": "3 R out",
+     "status": "REJECTED",
+     "why": "weight transfer not achieved: swing load 111 N, ξ margin on the stance foot 5.9 cm, |v| 0.01 m/s",
+     "proj": {
+      "requested": [
+       0.23302020016811714,
+       0.08199164383726247
+      ],
+      "target": [
+       0.23302020016811714,
+       0.08199164383726247
+      ],
+      "yaw": -0.00026097685385734085,
+      "rejected": false,
+      "reasons": [],
+      "current": [
+       0.15302020289247384,
+       0.08197076568919089
+      ]
+     },
+     "reach": [
+      [
+       0.15302020289247384,
+       0.3524450088532533
+      ],
+      [
+       0.19186767645247393,
+       0.30228573622809907
+      ],
+      [
+       0.2162800473645517,
+       0.2557757599344361
+      ],
+      [
+       0.2303662417108332,
+       0.21593803468678396
+      ],
+      [
+       0.2378774655072967,
+       0.18309971326811636
+      ],
+      [
+       0.24147603363134812,
+       0.15619402063766022
+      ],
+      [
+       0.24277307982277024,
+       0.1337896133454409
+      ],
+      [
+       0.24267355495433252,
+       0.11460191724189592
+      ],
+      [
+       0.2416538022819988,
+       0.09759926065886948
+      ],
+      [
+       0.2399357912713801,
+       0.08197076568919089
+      ],
+      [
+       0.23758750317974806,
+       0.06705926896286972
+      ],
+      [
+       0.23456509278004006,
+       0.05229085301360173
+      ],
+      [
+       0.23072145677205913,
+       0.0371099258454409
+      ],
+      [
+       0.22575912447885518,
+       0.0209355634138252
+      ],
+      [
+       0.2192076319038066,
+       0.0030916593803608644
+      ],
+      [
+       0.21028414942567697,
+       -0.0172132991482246
+      ],
+      [
+       0.1977256007159044,
+       -0.0408563053584203
+      ],
+      [
+       0.17957457464147356,
+       -0.06862656004228106
+      ],
+      [
+       0.15302020289247387,
+       -0.1006586288420591
+      ],
+      [
+       0.11467828463488539,
+       -0.13547705825433864
+      ],
+      [
+       0.06167740259077939,
+       -0.16899151556946757
+      ],
+      [
+       0.03059359766786446,
+       -0.13007833475800984
+      ],
+      [
+       0.03057904987302071,
+       -0.06394891830311979
+      ],
+      [
+       0.03056717576060114,
+       -0.020779524213705047
+      ],
+      [
+       0.030557476688684693,
+       0.011266877749737697
+      ],
+      [
+       0.030550162274818243,
+       0.03739531631499138
+      ],
+      [
+       0.03054435587479351,
+       0.060374969374851456
+      ],
+      [
+       0.030540954845598864,
+       0.08197076568919086
+      ],
+      [
+       0.030535339690531293,
+       0.10356815180007874
+      ],
+      [
+       0.03052865441759199,
+       0.12655404328322356
+      ],
+      [
+       0.030521797541495047,
+       0.15269525299387837
+      ],
+      [
+       0.030514575663035837,
+       0.18476519231455366
+      ],
+      [
+       0.030502546220744706,
+       0.22798162318394793
+      ],
+      [
+       0.030483734386614364,
+       0.29421015492140284
+      ],
+      [
+       0.03045063367614992,
+       0.4187278894233205
+      ],
+      [
+       0.09692741127300693,
+       0.4000887950122781
+      ]
+     ],
+     "excl": [
+      [
+       -0.24573928875019477,
+       0.2648351251111804
+      ],
+      [
+       -0.24564596894199806,
+       -0.09274373561443944
+      ],
+      [
+       -0.0814928912226408,
+       -0.09270099682860994
+      ],
+      [
+       -0.08158621103083752,
+       0.26487786389700996
+      ]
+     ],
+     "td": null,
+     "accepted": null,
+     "blocked": null,
+     "align": null,
+     "fwdBias": null,
+     "clear": null,
+     "T": null
+    },
+    {
+     "id": 3,
+     "type": "place",
+     "foot": "R",
+     "label": "4 R in",
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "proj": {
+      "requested": [
+       0.07614945429405308,
+       0.08135884136100348
+      ],
+      "target": [
+       0.07614945429405308,
+       0.08135884136100348
+      ],
+      "yaw": -0.000754392236856751,
+      "rejected": false,
+      "reasons": [],
+      "current": [
+       0.15614943152974828,
+       0.08141919273422761
+      ]
+     },
+     "reach": [
+      [
+       0.15614943152974828,
+       0.3482908358006338
+      ],
+      [
+       0.19438960280823497,
+       0.2982899808849766
+      ],
+      [
+       0.21830549700534513,
+       0.252191579110573
+      ],
+      [
+       0.23206038123677952,
+       0.21290081447761156
+      ],
+      [
+       0.2393942325504478,
+       0.1806264834154364
+      ],
+      [
+       0.24292205914653495,
+       0.1542300725637568
+      ],
+      [
+       0.24422538854213324,
+       0.132269870224462
+      ],
+      [
+       0.2441767895853032,
+       0.11345853086754282
+      ],
+      [
+       0.24323224722617537,
+       0.09677424269757033
+      ],
+      [
+       0.24161390906881078,
+       0.08141919273422761
+      ],
+      [
+       0.23937782845408628,
+       0.0667437807953534
+      ],
+      [
+       0.23648557984119983,
+       0.05217922601326422
+      ],
+      [
+       0.23278427534333312,
+       0.03717404502914951
+      ],
+      [
+       0.22798713811117854,
+       0.021140199637127814
+      ],
+      [
+       0.2216159607407887,
+       0.00339922135229645
+      ],
+      [
+       0.2128915274770139,
+       -0.016861000374384538
+      ],
+      [
+       0.20054326620381752,
+       -0.04055186559577924
+      ],
+      [
+       0.18258218384279049,
+       -0.06848839490118626
+      ],
+      [
+       0.1561494315297483,
+       -0.10083941322280364
+      ],
+      [
+       0.11779558979804633,
+       -0.13609625259126845
+      ],
+      [
+       0.06461092573222386,
+       -0.17008078495508683
+      ],
+      [
+       0.03273634559224828,
+       -0.13233854242838644
+      ],
+      [
+       0.03268724899722797,
+       -0.06571730684842557
+      ],
+      [
+       0.03265492246608388,
+       -0.022205004273512532
+      ],
+      [
+       0.03262822395933415,
+       0.01010419029282128
+      ],
+      [
+       0.03260829962222592,
+       0.036453898012334805
+      ],
+      [
+       0.032591642400604345,
+       0.05963262083407246
+      ],
+      [
+       0.03257612830709207,
+       0.08141919273422758
+      ],
+      [
+       0.0325600857556866,
+       0.10321132892230234
+      ],
+      [
+       0.03254377605054719,
+       0.12640797211561997
+      ],
+      [
+       0.032521186517765324,
+       0.15279599327133697
+      ],
+      [
+       0.0324971221733881,
+       0.18517579990936836
+      ],
+      [
+       0.032463622936729025,
+       0.22882219947787796
+      ],
+      [
+       0.032413622203576326,
+       0.2957359012028121
+      ],
+      [
+       0.03231795327631275,
+       0.42164338305322707
+      ],
+      [
+       0.10066235239524629,
+       0.3961020558534178
+      ]
+     ],
+     "excl": [
+      [
+       -0.24379269645728102,
+       0.26264831454450177
+      ],
+      [
+       -0.2435229419011961,
+       -0.0949302655794349
+      ],
+      [
+       -0.07936992311281264,
+       -0.09480667627907988
+      ],
+      [
+       -0.07963967766889754,
+       0.2627719038448568
+      ]
+     ],
+     "td": {
+      "center": [
+       0.04982757388139529,
+       0.0416695561412872
+      ],
+      "rot": [
+       0.017930636182427406,
+       0.003257244825363159,
+       -0.014530667103827,
+       0.9997283816337585
+      ],
+      "pos": [
+       0.050153836607933044,
+       0.10019856691360474,
+       -0.055450715124607086
+      ],
+      "t": 10.491666666666667
+     },
+     "accepted": {
+      "center": [
+       0.05071725193840028,
+       0.029712124016556207
+      ],
+      "rot": [
+       -0.0002914333308581263,
+       -0.001076245796866715,
+       0.0003027159837074578,
+       0.9999993443489075
+      ],
+      "t": 12.491666666666667
+     },
+     "blocked": null,
+     "align": null,
+     "fwdBias": 0.17952239202189701,
+     "clear": 0.08,
+     "T": 0.8466789568460269
+    },
+    {
+     "id": 4,
+     "type": "place",
+     "foot": "L",
+     "label": "5 L back",
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "proj": {
+      "requested": [
+       -0.16134594340143513,
+       -0.06620183298415144
+      ],
+      "target": [
+       -0.16134594340143513,
+       -0.06620183298415144
+      ],
+      "yaw": -0.0021433971415635465,
+      "rejected": false,
+      "reasons": [],
+      "current": [
+       -0.16166745272649244,
+       0.08379782245463249
+      ]
+     },
+     "reach": [
+      [
+       -0.16166745272649244,
+       0.3705043654233825
+      ],
+      [
+       -0.14372262418570134,
+       0.18556800231417805
+      ],
+      [
+       -0.14361088085923657,
+       0.13340784593267763
+      ],
+      [
+       -0.1435720547772737,
+       0.11513997108585704
+      ],
+      [
+       -0.14355079937792056,
+       0.10538840916857695
+      ],
+      [
+       -0.1435379524323406,
+       0.0990102794648837
+      ],
+      [
+       -0.14353055290510966,
+       0.09426916644877312
+      ],
+      [
+       -0.14351912279899115,
+       0.09040327434988547
+      ],
+      [
+       -0.14351336571455933,
+       0.08699887780496542
+      ],
+      [
+       -0.14350796786321118,
+       0.08379782245463249
+      ],
+      [
+       -0.14349984143816602,
+       0.08059438240947688
+      ],
+      [
+       -0.14349331337031968,
+       0.07718297669557968
+      ],
+      [
+       -0.14348298070885684,
+       0.07329901264017938
+      ],
+      [
+       -0.1434748323152623,
+       0.06853240137742105
+      ],
+      [
+       -0.14345958348482235,
+       0.06209852887238655
+      ],
+      [
+       -0.14343701449407056,
+       0.052221777191831645
+      ],
+      [
+       -0.14339795327977356,
+       0.03360278526003366
+      ],
+      [
+       -0.14328066074522822,
+       -0.02047885662980377
+      ],
+      [
+       -0.1616674527264924,
+       -0.231738676568805
+      ],
+      [
+       -0.21227862584685436,
+       -0.20323240353240038
+      ],
+      [
+       -0.25385256948223905,
+       -0.16947870424156938
+      ],
+      [
+       -0.2867857083417268,
+       -0.13291335322534337
+      ],
+      [
+       -0.31196476251887556,
+       -0.09531953644768501
+      ],
+      [
+       -0.3304611658133393,
+       -0.057836919941584436
+      ],
+      [
+       -0.34330999106877386,
+       -0.021073545953570735
+      ],
+      [
+       -0.3513796581762646,
+       0.01474822659392086
+      ],
+      [
+       -0.3553395987706093,
+       0.049648197695344495
+      ],
+      [
+       -0.35561276522649243,
+       0.08379782245463245
+      ],
+      [
+       -0.3524183550696576,
+       0.11743235313221798
+      ],
+      [
+       -0.34574459958298975,
+       0.15079642471904603
+      ],
+      [
+       -0.33538525604299374,
+       0.184093842962445
+      ],
+      [
+       -0.3209195081150053,
+       0.2174261633953574
+      ],
+      [
+       -0.3017368126992174,
+       0.250725985414499
+      ],
+      [
+       -0.27705823031438315,
+       0.2836605119617391
+      ],
+      [
+       -0.24600399627747432,
+       0.315510571495806
+      ],
+      [
+       -0.20773498731134327,
+       0.34505979382030705
+      ]
+     ],
+     "excl": [
+      [
+       -0.031694267667398926,
+       0.20835938665767562
+      ],
+      [
+       -0.030927834751478547,
+       -0.14921865026086223
+      ],
+      [
+       0.13322496158740998,
+       -0.14886686440096958
+      ],
+      [
+       0.1324585286714896,
+       0.2087111725175682
+      ]
+     ],
+     "td": {
+      "center": [
+       -0.1480848803332611,
+       -0.11223720664590904
+      ],
+      "rot": [
+       0.02730107307434082,
+       -0.00375916319899261,
+       0.006927497684955597,
+       0.9995961785316467
+      ],
+      "pos": [
+       -0.14705252647399902,
+       0.10408797860145569,
+       -0.20901598036289215
+      ],
+      "t": 14.862499999999999
+     },
+     "accepted": {
+      "center": [
+       -0.1464273757814551,
+       -0.11640357740029196
+      ],
+      "rot": [
+       -0.0003540822654031217,
+       -0.0044473279267549515,
+       -0.0006386580062098801,
+       0.9999898672103882
+      ],
+      "t": 16.8625
+     },
+     "blocked": null,
+     "align": {
+      "s": 0.0791666666666675,
+      "xiErr": 0.008109879406946637,
+      "vcom": 0.009692320819183373,
+      "settled": true
+     },
+     "fwdBias": 0,
+     "clear": 0.08,
+     "T": 0.6184619646279482
+    },
+    {
+     "id": 5,
+     "type": "place",
+     "foot": "R",
+     "label": "6 R back",
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "proj": {
+      "requested": [
+       0.052521140522308024,
+       -0.12032077400690554
+      ],
+      "target": [
+       0.052521140522308024,
+       -0.12032077400690554
+      ],
+      "yaw": -0.008990840319181506,
+      "rejected": false,
+      "reasons": [],
+      "current": [
+       0.05117253264376891,
+       0.029673163393210564
+      ]
+     },
+     "reach": [
+      [
+       0.05117253264376891,
+       0.23127686212367932
+      ],
+      [
+       0.08404475587636583,
+       0.21610080538265236
+      ],
+      [
+       0.11278531966294178,
+       0.19895290447805491
+      ],
+      [
+       0.13810643156955016,
+       0.18024709323272115
+      ],
+      [
+       0.16062277701713712,
+       0.16011088533548634
+      ],
+      [
+       0.1808177464493951,
+       0.13845841448141116
+      ],
+      [
+       0.19902691859749402,
+       0.1150369329244606
+      ],
+      [
+       0.2154237367091183,
+       0.08945571261538161
+      ],
+      [
+       0.22998600702378555,
+       0.061202803440629366
+      ],
+      [
+       0.24244908293673773,
+       0.029673163393210574
+      ],
+      [
+       0.25223794978288705,
+       -0.005780094535818174
+      ],
+      [
+       0.25838353073281,
+       -0.045745472123791334
+      ],
+      [
+       0.25943171478949606,
+       -0.09056533147983624
+      ],
+      [
+       0.25346549453333,
+       -0.14007078631807973
+      ],
+      [
+       0.2382151351139117,
+       -0.1932355300687526
+      ],
+      [
+       0.21144017180392513,
+       -0.24791853044129547
+      ],
+      [
+       0.1714390395851656,
+       -0.30075634874495927
+      ],
+      [
+       0.11765941409709571,
+       -0.3473926786361188
+      ],
+      [
+       0.05117253264376896,
+       -0.38303283025913315
+      ],
+      [
+       0.04658199511007816,
+       0.0036389313361175103
+      ],
+      [
+       0.04646464123608328,
+       0.016738338057349846
+      ],
+      [
+       0.04642323454806579,
+       0.021447137791162633
+      ],
+      [
+       0.04639988172101699,
+       0.02398533950982289
+      ],
+      [
+       0.04638592376533231,
+       0.025656721648724512
+      ],
+      [
+       0.046375669521610846,
+       0.02690369317836681
+      ],
+      [
+       0.046363375767981656,
+       0.027922773438507353
+      ],
+      [
+       0.046357890247755856,
+       0.028824212036330614
+      ],
+      [
+       0.046347703542206416,
+       0.029673163393210564
+      ],
+      [
+       0.046339857879231464,
+       0.03052529434318744
+      ],
+      [
+       0.04633326476786492,
+       0.03143451285568025
+      ],
+      [
+       0.0463241329756703,
+       0.032472388246726186
+      ],
+      [
+       0.04631228362874097,
+       0.03375139654915024
+      ],
+      [
+       0.04629689603526094,
+       0.03548372083758379
+      ],
+      [
+       0.04627217253634704,
+       0.03816083607464893
+      ],
+      [
+       0.046225097709187396,
+       0.04326612916019422
+      ],
+      [
+       0.04608836328177999,
+       0.0585069206637157
+      ]
+     ],
+     "excl": [
+      [
+       -0.23018147997316007,
+       0.061691842772443606
+      ],
+      [
+       -0.22696658905072065,
+       -0.29587254302288823
+      ],
+      [
+       -0.0628202098814396,
+       -0.2943965217057475
+      ],
+      [
+       -0.06603510080387905,
+       0.06316786408958436
+      ]
+     ],
+     "td": {
+      "center": [
+       0.04243684687595427,
+       -0.1629880189900848
+      ],
+      "rot": [
+       0.023805497214198112,
+       -0.0022499514743685722,
+       -0.005313649773597717,
+       0.9996999502182007
+      ],
+      "pos": [
+       0.04356381297111511,
+       0.10192076116800308,
+       -0.2598974406719208
+      ],
+      "t": 19.28333333333333
+     },
+     "accepted": {
+      "center": [
+       0.04197357130298346,
+       -0.16761965372340543
+      ],
+      "rot": [
+       -0.00036731312866322696,
+       -0.0009323584963567555,
+       0.00009712761675473303,
+       0.9999995231628418
+      ],
+      "t": 21.28333333333333
+     },
+     "blocked": null,
+     "align": {
+      "s": 0.05833333333333357,
+      "xiErr": 0.007333212398858862,
+      "vcom": 0.010757524731216913,
+      "settled": true
+     },
+     "fwdBias": 0,
+     "clear": 0.08,
+     "T": 0.6130019170535467
+    }
+   ],
+   "repeatHashes": [
+    "5134b03c",
+    "5134b03c",
+    "5134b03c"
+   ],
+   "deterministic": true
+  }
+ ]
+}

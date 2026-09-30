@@ -1,0 +1,510 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Physics Substrate Decision</title><style>
+:root{--bg:#fbfaf7;--ink:#1d1f22;--mute:#5d646b;--line:#dcd8cf;--code:#f1eee7;--acc:#8a5a00;--q:#f4efe2}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#141619;--ink:#e6e4df;--mute:#9aa0a6;--line:#33373d;--code:#1d2024;--acc:#f0c060;--q:#1f1c14}}
+:root[data-theme="dark"]{--bg:#141619;--ink:#e6e4df;--mute:#9aa0a6;--line:#33373d;--code:#1d2024;--acc:#f0c060;--q:#1f1c14}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 -apple-system,system-ui,"Segoe UI",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px 80px}
+h1{font-size:26px;line-height:1.25} h2{font-size:20px;margin-top:40px;padding-top:12px;border-top:1px solid var(--line)} h3{font-size:16px;color:var(--acc)}
+table{border-collapse:collapse;width:100%;font-size:13px;margin:12px 0;display:block;overflow-x:auto} th,td{border:1px solid var(--line);padding:5px 8px;vertical-align:top;text-align:left} th{background:var(--code)}
+code{background:var(--code);padding:1px 4px;border-radius:3px;font-size:12.5px} pre{background:var(--code);padding:12px;border-radius:6px;overflow-x:auto;font-size:12px;line-height:1.45} pre code{padding:0;background:none}
+blockquote{margin:12px 0;padding:10px 16px;background:var(--q);border-left:4px solid var(--acc)} a{color:var(--acc)}
+</style></head><body><main><h1>Physical Character V1: physics-substrate decision (for approval)</h1>
+<p><strong>Status:</strong> comparison and recommendation only. Gate A is not implemented, and nothing is committed or pushed.</p>
+<p><strong>Evidence:</strong>
+- Primary sources: npm type definitions, engine source, issue trackers and specs, checked 2026-09-29.
+- A disposable empirical spike: <code>spikes/substrate/</code> in the <code>physical-character-v1</code> worktree. Raw output is in <code>substrate_spike_results.txt</code> next to this file.</p>
+<p><strong>The spike is not Gate A.</strong> It has no humanoid, no Reference Tackle playback and no renderer, and it ran in Node, one process at a time. Total CPU was a few seconds.</p>
+<hr />
+<h2>0. The answer in one paragraph</h2>
+<p><strong>Use Jolt Physics (JoltPhysics.js, single-threaded WASM build) as the rigid-body substrate, with Touchline owning the whole physical-character layer on top of it.</strong></p>
+<p>In the spike it was the only engine that kept first touch to 0.2 mm in every configuration that mattered. That covers both a 15 m/s rotating shin sweep and a 13 m/s linear hit, with the struck leg responding on the same frame and no tunnelling in any of the 5 contact phases. It needed two settings: its speculative-contact distance, plus a Touchline-owned adaptive-substep rule for close fast pairs.</p>
+<p>Its constraint model matches our controller design:
+- per-axis <em>asymmetric</em> anatomical limits (SixDOF with a pyramid swing);
+- quaternion target-orientation motors with implicit spring drives and torque caps;
+- a per-contact friction override for Touchline's material-pair policy;
+- snapshots and ragdoll self-collision filtering.</p>
+<p>For context, Rabona itself moved its custom engine from Bullet to Jolt in 2026 [RB2].</p>
+<p><strong>Second choice: Rapier</strong> (the <code>-deterministic</code> build).</p>
+<p><strong>Rejected:</strong>
+- Bullet via ammo.js: solver blow-ups at 60 Hz, rotation-blind CCD, the worst tunnelling results, and friction data not exposed.
+- Custom XPBD as the substrate: we would be building a general engine. It stays the last resort, and a source of targeted fixes.</p>
+<hr />
+<h2>1. Rapier (0.21.0 / core 0.36, deterministic-compat build)</h2>
+<p><strong>Supports what we need:</strong>
+- dynamic bodies;
+- capsule, box and sphere shapes, and compounds;
+- explicit mass plus principal inertia and inertia frame (<code>setAdditionalMassProperties</code>) [R-rb];
+- our own torques (<code>addTorque</code>, <code>applyTorqueImpulse</code>);
+- revolute, spherical and generic joints;
+- <strong>asymmetric per-axis angular limits</strong>, through the raw <code>jointSetLimits(handle, AngX|Y|Z, min, max)</code> [R-raw]. Each limit is a per-axis projection of the relative rotation (2·atan2(q_i, q_w)), neither Euler angles nor a cone [R-limit];
+- per-axis joint motors (position/velocity, stiffness/damping, max force);
+- <strong>full contact data in JS</strong>: points, normal, distance, normal impulse, and both tangent impulses per point [R-np];
+- collision and solver groups;
+- snapshots;
+- a <code>-deterministic</code> package documented as cross-platform deterministic [R-det].</p>
+<p><strong>What limits it for us</strong> (behaviours, not missing conveniences):
+1. <strong>Built-in CCD does not protect limb-vs-limb when both limbs are fast.</strong>
+   - Docs and source: "A bullet never sweeps another bullet". Targets are frozen at their end-of-step pose. "Two CCD-enabled objects might still tunnel" [R-ccd].
+   - <strong>Spike, reproduced:</strong> CCD on both bodies was bit-identical to no CCD. It gave 100 mm of penetration and <strong>2 of 5 tunnels</strong> at 15 m/s.
+   - CCD on the fast body only works (≤ 6.2 mm, and its sweep includes rotation). But in a tackle both players' legs can be the fast one.
+2. <strong>Soft-CCD (predictive contacts) uses linear velocity only</strong> [R-pred]. The spike's linear hit: 0.3 mm. The rotating sweep: still 30 mm.
+3. <strong>No per-pair friction.</strong> Friction is per collider plus a global combine rule. JS hooks can filter pairs but not modify contacts [R-hooks].
+4. <strong>No orientation motor.</strong> Motors are per axis (2·asin(q_i)), and the coupled-axis motor path is an open TODO [R-1011]. Quaternion targets would go through our own torques.
+5. <strong>Smaller items:</strong>
+   - <code>numSolverIterations</code> is its internal substep count (default 4) [R-sub];
+   - angular speed is capped at ~47 rad/s at 60 Hz, and the override isn't bound in JS [R-maxang];
+   - snapshot restore leaks WASM memory until #994 lands;
+   - its determinism statements disagree between the README and the docs, so use the <code>-deterministic</code> build.</p>
+<p><strong>Best spike configuration:</strong> CCD on the fast body + prediction 0.25 m + adaptive substeps + contact natural frequency 120 Hz + 8 iterations.
+- First touch: ≤ 1.9 mm.
+- Sustained contact: ≤ 6.2 mm.
+- No tunnels.
+- It takes five interacting settings, and it relies on knowing <em>which</em> body is the fast one.</p>
+<h2>2. Bullet in the browser</h2>
+<p><strong>Builds available:</strong>
+- The only maintained Bullet-in-WASM is <strong>ammo.js</strong>, active again with a build on 2026-09-22. It is still Bullet <strong>2.82</strong> (2013) [B-ver].
+- <code>btMultiBody</code> is not bound in any build found.
+- Per-point friction impulses (<code>m_appliedImpulseLateral1/2</code>) and <code>m_combinedFriction</code> exist in C++ but are not bound [B-mp].
+- A community fork has Bullet 3.2.6 with Spring2 bindings (unmaintained upstream; bullet3's last release was 2022) [B-fork].</p>
+<p><strong>What it offers:</strong>
+- Limits: Generic6Dof per-axis asymmetric limits, as Euler XYZ with the middle axis restricted to ±90°. ConeTwist limits are symmetric but it has a quaternion motor [B-6dof].
+- CCD: a <strong>translation-only swept sphere</strong> against a frozen target [B-ccd].</p>
+<p><strong>Spike:</strong>
+- <strong>Numerical blow-up (NaN, or 10⁸ m/s)</strong> in <strong>all 4</strong> single-step rotating runs (default and CCD, at 9 and 15 m/s), with the same PD torque inputs that Rapier and Jolt handled. Without our PD torques, the same runs didn't blow up.
+- Stable only with substeps, and even then 16–49 mm of penetration.
+- <strong>Tunnelling at 15 m/s even with adaptive substeps.</strong>
+- Its CCD helped only the linear case (12 mm).</p>
+<p><strong>Verdict: rejected.</strong> The contact behaviour, stability and exposed data all miss the invariant.</p>
+<h2>3. Jolt (JoltPhysics.js 1.1.0 / Jolt 5.6.0)</h2>
+<p><strong>Supports what we need:</strong>
+- dynamic bodies;
+- capsule, box, sphere and compound shapes;
+- explicit mass and full inertia (<code>MassAndInertiaProvided</code>);
+- our own torques (<code>AddTorque</code>, <code>AddAngularImpulse</code>);
+- hinge, SwingTwist and <strong>SixDOF</strong> constraints. SixDOF with <code>ESwingType_Pyramid</code> allows <strong>asymmetric</strong> Y/Z swing limits ("does not need to be symmetrical around zero") plus a twist range [J-6dof];
+- <strong>motors with a quaternion target</strong> (<code>SetTargetOrientationCS/BS</code>). They are implicit springs (frequency or stiffness, plus damping) with torque limits, and the <code>Ragdoll</code> class and <code>DriveToPoseUsingMotors</code> are bound [J-idl];
+- per-contact <code>ContactSettings</code> override (<code>mCombinedFriction</code>, <code>mCombinedRestitution</code>, mass scales) → <strong>per-pair friction</strong> [J-cl];
+- <code>GroupFilterTable</code> for ragdoll self-collision;
+- <code>SaveState</code>/<code>RestoreState</code>;
+- sleeping control;
+- adjustable maximum angular velocity.</p>
+<p><strong>What limits it for us:</strong>
+1. <strong>No post-solve contact impulses in JS.</strong> Listener callbacks fire before the solver [J-cl]. The request (issue #2128) is open; the maintainer's advice is to add the function locally [J-2128]. Joint impulses <em>are</em> readable (<code>GetTotalLambda*</code>).
+   - <strong>Mitigations:</strong>
+     - body-level impulse accounting from velocity change, gravity, known drive impulses and joint lambdas (enough for the momentum ledger);
+     - or a small local JoltPhysics.js build exposing contact-constraint impulses (a one-time emsdk toolchain setup).
+2. <strong>LinearCast CCD ignores rotation.</strong> "Tunneling is still possible if the body is long and thin and has high angular velocity" [J-mq]. The spike agrees: 45–64 mm on rotating sweeps. <strong>We don't rely on it for limbs.</strong> Speculative contacts plus adaptive substeps solved the rotating case (below).
+3. <strong>Cross-platform determinism.</strong> Jolt guarantees determinism for the same binary and API call order [J-det]. The npm build doesn't enable the cross-platform flag.
+   - <strong>However:</strong> it is single-threaded, has no SIMD (the agent's byte scan found no v128 in the single-thread <code>.wasm</code>), and is built with <code>-ffp-contract=off</code>. Under the WebAssembly determinism rules (only NaN bits, relaxed SIMD and threads are non-deterministic [W-nd]), the same <code>.wasm</code> <em>should</em> be bit-identical across browsers and CPUs.
+   - <strong>This is an inference.</strong> It is checked at Gate A by comparing hashes across Node, Chrome and Safari: one run each.
+4. <strong>Limit shape.</strong> The pyramid limit clamps two swing projections independently, not a true asymmetric cone. That's acceptable for anatomical ranges. SixDOF rotation limits can't be soft.
+5. <strong>Tolerance defaults.</strong> Default penetration slop is 2 cm and speculative distance is 2 cm [J-ps]. Both must be changed for us (we used 2 mm and 0.25 m).</p>
+<h2>4. Custom XPBD, stated honestly</h2>
+<p>"Small custom solver" understated it. What XPBD (Müller 2020) gives us conceptually vs what we'd still have to engineer to production quality:</p>
+<table>
+<thead>
+<tr>
+<th>area</th>
+<th>XPBD gives us</th>
+<th>we would still engineer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>translational + quaternion integration</td>
+<td>the substep update and velocity derivation</td>
+<td>numerical robustness (quaternion drift, NaN guards, far-from-origin precision)</td>
+</tr>
+<tr>
+<td>inertia</td>
+<td>the generalised inverse-mass formulas</td>
+<td>tensor construction per shape/compound; stabilisation for mass ratios</td>
+</tr>
+<tr>
+<td>broad phase</td>
+<td>—</td>
+<td>sweep-and-prune or BVH, swept bounds, deterministic pair ordering</td>
+</tr>
+<tr>
+<td>narrow phase</td>
+<td>—</td>
+<td>capsule/capsule, capsule/box, box/plane, sphere/*; manifolds with feature IDs; degenerate cases (parallel capsules, deep overlap)</td>
+</tr>
+<tr>
+<td>persistent contacts, resting stability</td>
+<td>a positional contact constraint</td>
+<td>contact caching and matching across substeps, jitter control (XPBD has little numerical damping), sleeping</td>
+</tr>
+<tr>
+<td>friction</td>
+<td>static (positional) + dynamic (velocity) formulas</td>
+<td>anisotropic friction, torsional friction (stud anchor), stable stick/slip switching</td>
+</tr>
+<tr>
+<td>joints, limits, motors, damping</td>
+<td>attachment, swing/twist limit and compliant-drive formulas</td>
+<td>anatomical frames, limit singularities, torque caps, profile blending, damping tuning</td>
+</tr>
+<tr>
+<td>CCD / fast rotating limbs</td>
+<td>the substep argument</td>
+<td>a guard or time-of-impact for pathological speeds; rotating sweeps</td>
+</tr>
+<tr>
+<td>determinism</td>
+<td>—</td>
+<td>ordering discipline plus our own trigonometry for cross-engine bit-identity</td>
+</tr>
+<tr>
+<td>debugging, performance</td>
+<td>—</td>
+<td>every visualisation, allocation-free inner loops, a regression suite</td>
+</tr>
+</tbody>
+</table>
+<p>Honest scope: roughly <strong>4–8 k lines plus months of hardening</strong> — a general-purpose physics engine, which is exactly what we don't want to build for two footballers.</p>
+<p><strong>What it would uniquely buy:</strong>
+- position-level contacts with zero slop;
+- complete introspection;
+- pure-JS cross-engine determinism.</p>
+<p>The spike shows a mature engine meets the invariant's critical part without it.</p>
+<p><strong>Verdict:</strong> not the substrate. Kept as a last resort, and as a source of <em>targeted</em> techniques (e.g. a swept-capsule guard) that sit on top of the library.</p>
+<h2>5. Empirical spike results</h2>
+<p><strong>Scene</strong> (identical for every engine; metrics computed by our own exact capsule–capsule distance from body transforms, never by engine reports):
+- a two-capsule "attacker leg": thigh 11 kg + shank 3.4 kg with de Leva-style inertia, hung from a fixed hip by a ball joint with <strong>asymmetric</strong> limits;
+- a hinge knee with limits;
+- held by <strong>our own PD torques</strong>;
+- hit by a dynamic "tackler shin" capsule on a motor-driven hinge sweeping at <strong>9 or 15 m/s</strong> (rotating, dynamic vs dynamic), or by a free capsule at <strong>13 m/s</strong> (linear).</p>
+<p><strong>Protocol:</strong>
+- 40 frames at 60 Hz;
+- <strong>worst case over 5 contact phases</strong>: contact placed at 0, 0.2, 0.4, 0.6 and 0.8 of a frame;
+- each phase run twice for repeatability.</p>
+<table>
+<thead>
+<tr>
+<th>engine · configuration</th>
+<th>ROT 9 m/s: max / at touch (mm)</th>
+<th>ROT 15 m/s: max / at touch</th>
+<th>LIN 13 m/s: max</th>
+<th>tunnels (of 15 runs)</th>
+<th>frames &gt; 10 mm (worst)</th>
+<th>repeatable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rapier · default</td>
+<td>105 / 105</td>
+<td>100 / 100</td>
+<td>94</td>
+<td><strong>4</strong></td>
+<td>9</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>Rapier · CCD on both bodies</td>
+<td>105 / 105</td>
+<td>100 / 100</td>
+<td>94</td>
+<td><strong>4</strong></td>
+<td>9</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>Rapier · CCD on the fast body only</td>
+<td>5.9 / 5.0</td>
+<td>6.2 / 5.7</td>
+<td>6.1</td>
+<td>0</td>
+<td>0</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>Rapier · soft-CCD (predictive)</td>
+<td>18 / 15</td>
+<td>34 / 30</td>
+<td>0.3</td>
+<td>0</td>
+<td>9</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>Rapier · best (CCD-fast + prediction + adaptive + stiff contacts)</td>
+<td>6.0 / <strong>1.1</strong></td>
+<td>6.2 / <strong>1.9</strong></td>
+<td><strong>0.3</strong></td>
+<td>0</td>
+<td>0</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>Jolt · default</td>
+<td>110 / 110</td>
+<td>107 / 94</td>
+<td>97</td>
+<td><strong>5</strong></td>
+<td>12</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>Jolt · LinearCast</td>
+<td>45 / 14</td>
+<td>64 / 30</td>
+<td>16</td>
+<td>0</td>
+<td>11</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>Jolt · speculative 0.25 m</td>
+<td>44 / 3.3</td>
+<td>20 / 5.9</td>
+<td>0.6</td>
+<td>0</td>
+<td>6</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><strong>Jolt · speculative 0.25 m + adaptive substeps (+ slop 2 mm)</strong></td>
+<td><strong>2.0 / 0.2</strong></td>
+<td>9.3 / <strong>0.2</strong></td>
+<td><strong>0.2</strong></td>
+<td><strong>0</strong></td>
+<td><strong>0</strong></td>
+<td>yes</td>
+</tr>
+<tr>
+<td>Bullet · default</td>
+<td>70 (then a 10⁸ m/s blow-up)</td>
+<td><strong>NaN</strong></td>
+<td>29</td>
+<td><strong>4</strong></td>
+<td>6</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>Bullet · CCD</td>
+<td><strong>NaN</strong></td>
+<td><strong>NaN</strong></td>
+<td>12</td>
+<td>0</td>
+<td>6</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>Bullet · best (adaptive)</td>
+<td>17 / 16</td>
+<td>22 / 12</td>
+<td>38</td>
+<td><strong>1</strong></td>
+<td>4</td>
+<td>yes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>What the numbers mean:</strong>
+- <strong>Tunnelling is real at football speeds on every engine's defaults.</strong> At 60 Hz a 15 m/s limb moves 25 cm per frame, more than twice the 11.5 cm radius sum. A single-step discrete engine lets the limbs pass through or overlap by ~10 cm, which is exactly our old failure.
+- <strong>The critical part of the invariant is achievable on a mature engine.</strong> With Jolt's speculative contacts plus a deterministic adaptive-substep rule, first touch is <strong>0.2 mm</strong>. The struck shank moves in <strong>the same frame</strong>, and there are <strong>no tunnels</strong> at any phase. Rapier reaches 1–2 mm, but only with CCD on the known-fast body.
+- <strong>Sustained compression:</strong> 6–9 mm remains <em>while the sweep motor keeps pushing at 400 N·m</em>, on both Rapier and Jolt. It isn't tunnelling. It's the iterative solver's position-correction compliance under a large, continuous drive; more iterations and lower slop reduce but don't eliminate it.
+  - It's comparable to the ~10 % collider inset I proposed (5.5–8.5 mm), so the rendered meshes would be about touching.
+  - The invariant should therefore be stated as <strong>first touch ≤ 3 mm</strong> and <strong>sustained compression under load ≤ the collider inset (visible mesh overlap ≤ ~2 mm)</strong>.
+  - Gate D should use realistic drive torques (≤ 250 N·m) rather than the spike's deliberately harsh 400 N·m.
+- <strong>Cost:</strong> every configuration ran at 0.02–0.14 ms per frame for this scene. The 28-body / 26-joint scale probe, with 26 torque writes and 28 transform reads per frame (i.e. the JS↔WASM traffic), cost <strong>0.09–0.14 ms per frame at 1 step and 0.29–0.43 ms at 4 steps</strong>, in all three engines. Performance doesn't decide this.
+- <strong>Determinism:</strong> all engines were bit-identical run-to-run in-process. Cross-runtime (Node vs Chrome vs Safari) wasn't tested; it's a Gate A item.
+- <strong>Rest stability:</strong> the scale probe's rest figures were <strong>inconclusive</strong>. An undamped 14-capsule chain five seconds after a drop gave 0–270 mm/s depending on inputs, so it isn't a rest test. Gate A's damped drop test is.</p>
+<h2>6. Concrete blockers (behaviour we need that an option cannot deliver)</h2>
+<table>
+<thead>
+<tr>
+<th>option</th>
+<th>blockers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bullet / ammo.js</td>
+<td>numerically unstable with our inputs at 60 Hz (NaN); rotation-blind, target-frozen CCD that still tunnelled at 15 m/s with substeps; friction impulses and friction override not exposed; Bullet 2.82 codebase</td>
+</tr>
+<tr>
+<td>Rapier</td>
+<td>CCD cannot protect a pair where <em>both</em> limbs are fast (by design) — so the invariant relies on knowing which limb is fast; no per-pair friction (the material-pair and stud-anchor policy can't be expressed); no orientation motor</td>
+</tr>
+<tr>
+<td>Jolt</td>
+<td><strong>no blocker found.</strong> Gaps with mitigations: post-solve contact impulses (body-level accounting now; local binding if needed); rotation-blind LinearCast (not used for limbs); cross-browser determinism is an inference (checked at Gate A)</td>
+</tr>
+<tr>
+<td>custom XPBD</td>
+<td>no capability blocker; the blocker is scope — it is a general engine</td>
+</tr>
+</tbody>
+</table>
+<h2>7. Recommended substrate</h2>
+<p><strong>Jolt Physics via JoltPhysics.js, single-threaded <code>wasm</code> build</strong>, loaded as an ES module. Its WASM is 2.0 MB (0.74 MB gzipped) [J-size].</p>
+<p>It sits behind a thin <strong>Touchline substrate adapter</strong>: bodies, shapes, constraints, motors, step, contacts, snapshots. Touchline code never calls Jolt directly, which keeps Rapier a real fallback.</p>
+<h2>8. Second-choice fallback</h2>
+<p><strong>Rapier (<code>@dimforge/rapier3d-deterministic-compat</code>)</strong>, behind the same adapter:
+- the fast-limb CCD role is assigned per interacting pair by Touchline's contact policy;
+- orientation control uses our own torques;
+- friction is approximated with per-collider values.</p>
+<p>We switch if a Jolt abandonment trigger (§15) fires.</p>
+<h2>9. Why Jolt fits Touchline specifically</h2>
+<ol>
+<li><strong>Our controller design maps 1:1 onto its constraint model.</strong></li>
+<li>The architecture's "implicit PD with ω, ζ, τmax per joint" <em>is</em> Jolt's <code>MotorSettings</code> (frequency/damping spring plus torque limits) driving a quaternion target (<code>SetTargetOrientationCS</code>).</li>
+<li>Asymmetric anatomical ranges are SixDOF pyramid limits.</li>
+<li>Profiles and strength s(t) are Touchline changing motor settings over time.</li>
+<li>Where we want custom behaviour (the root drive, the upper-body balance drive), we apply our own torques and forces, which the spike exercised.</li>
+<li><strong>The material-pair friction policy stays ours.</strong> The per-contact <code>ContactSettings</code> override lets Touchline's contact policy set boot–turf, kit–turf, hand–turf and limb–limb friction per contact without Jolt knowing anything about football.</li>
+<li><strong>It met the invariant's hardest part with the simplest configuration:</strong> speculative distance plus an adaptive-substep rule that Touchline owns. It doesn't depend on guessing which limb is fast.</li>
+<li><strong>Deterministic, snapshot-able, MIT-licensed, single-threaded and small.</strong> No SIMD or threads in the build we'd use, which is also what makes cross-browser bit-identity plausible.</li>
+<li><strong>Relevant prior art:</strong> Rabona's own engine moved to Jolt in 2026 [RB2]. The earlier engine, <em>enigine</em>, used bullet3 [RB1]. This is supporting evidence only. We aren't copying Rabona, and the devlog quote about fragile synchronisation could not be found in retrievable sources (UNVERIFIED).</li>
+</ol>
+<h2>10. Ownership boundary</h2>
+<table>
+<thead>
+<tr>
+<th>Jolt owns (generic mechanics)</th>
+<th>Touchline owns (football and character intelligence)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rigid-body integration; mass/inertia mechanics</td>
+<td>authoritative football outcomes (the simulation); action/animation resolution</td>
+</tr>
+<tr>
+<td>broad and narrow phase; persistent contacts; contact constraints; non-penetration; resting contact</td>
+<td>Reference Tackle targets and target-pose generation (substep-sampled)</td>
+</tr>
+<tr>
+<td>generic joint solving; limit enforcement; motor/spring math</td>
+<td>anatomical frames and ranges (data); motor targets, gains, torque caps, strength profiles over time</td>
+</tr>
+<tr>
+<td>friction <em>mechanics</em> (Coulomb solve)</td>
+<td>friction <em>policy</em>: per-pair coefficients via the contact listener; the stud anchor as a Touchline-managed temporary constraint on the turf</td>
+</tr>
+<tr>
+<td>speculative contacts; optional LinearCast for free fast bodies</td>
+<td>the <strong>fast-pair guard</strong>: adaptive substep count and speculative distance, plus an analytic swept-capsule check for flagged pairs (detection only, never moves a body)</td>
+</tr>
+<tr>
+<td>snapshots; sleeping</td>
+<td>activation/deactivation policy; determinism discipline of inputs; recording and replay</td>
+</tr>
+<tr>
+<td>—</td>
+<td>balance / support representation; stumble / fall / recovery control; contact <em>interpretation</em>; root and upper-body drives</td>
+</tr>
+<tr>
+<td>—</td>
+<td>rendered-skeleton fitting; all debug visualisation; the invariant monitor; momentum ledger</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Where I challenge the proposed split (with a reason):</strong> CCD can't be left entirely to the library. The spike showed that every engine's built-in CCD fails fast <em>rotating</em> dynamic-vs-dynamic limbs in some way. The <strong>policy</strong> (when and how finely to substep, which pairs get the analytic guard) must be Touchline's, even though the library still does the actual collision work.</p>
+<h2>11. How we avoid dual animation/physics character states</h2>
+<ul>
+<li><strong>Jolt's bodies are the only character state.</strong> Touchline's controller writes <em>targets and drive parameters</em> into it before each step. It never writes body poses or velocities during simulation. The only exceptions are activation, which initialises from the animation pose with matching velocities, and an explicit, logged reset.</li>
+<li><strong>The animation system produces targets, not a character.</strong> Once a player is physical, no kinematic pose is drawn anywhere except as a debug ghost.</li>
+<li><strong>One-way flow:</strong> targets in → step → body transforms out → fitted 23-bone skeleton → skinning. The rendered skeleton is a pure function of the physical state plus authored sub-bone detail (toe, wrist, clavicle).</li>
+<li><strong>This is the opposite of the fragile pattern.</strong> That pattern moves a character with its own motion system and asks physics to collide around it. Here the motion <em>comes out of</em> the physics.</li>
+</ul>
+<h2>12. Timestep, substep and CCD strategy</h2>
+<ul>
+<li><strong>Base rate:</strong> 60 Hz, <strong>one Jolt step per frame</strong> by default (10 velocity + 2 position iterations).</li>
+<li><strong>Why 20 fixed substeps is unnecessary:</strong></li>
+<li>Joint and motor stability doesn't need it: Jolt's motors are implicit springs, stable at 60 Hz.</li>
+<li>That number came from the custom-XPBD design, where single-iteration position solves need small steps to converge. It was never a tunnelling requirement.</li>
+<li>Solver convergence is measured separately at Gates A and B (joint drift, motor tracking). If needed, raise iterations or use 2 fixed steps.</li>
+<li><strong>Anti-tunnelling:</strong></li>
+<li>Speculative contact distance <strong>0.10–0.25 m</strong> for character bodies (0.25 tested), and penetration slop <strong>2 mm</strong>.</li>
+<li><strong>Adaptive substeps, decided by Touchline each frame:</strong> n = clamp(⌈max over close pairs of (|v_rel| + |ω|·extent)·Δt / (0.5·(r_a + r_b))⌉, 1, 8).</li>
+<li>In the spike this added only 3–5 steps, and only in contact frames. Steps are whole-world, which is cheap at our scale (0.1–0.4 ms per frame at 28 bodies).</li>
+<li><strong>Targeted swept-capsule guard (Touchline):</strong></li>
+<li>For flagged pairs (e.g. tackling limb vs the opponent's legs), an analytic check of the relative sweep over the frame, rotation included.</li>
+<li>If a crossing is possible, it raises n. It never moves a body.</li>
+<li>This is the "targeted enhancement without replacing the engine" you asked about. The spike's adaptive rule is its simplest form, and it closed the gap.</li>
+<li><strong>LinearCast</strong> is only for free, fast, compact bodies (e.g. a physical ball later). Never for limbs.</li>
+</ul>
+<h2>13. Should the 14-body hierarchy change?</h2>
+<p><strong>No.</strong> Keep 14 bodies and 13 joints. Mapped onto Jolt:
+- <strong>SixDOF (pyramid):</strong> hips, shoulders, ankles (DF/PF and inversion/eversion are asymmetric), lumbar, thoracic, neck.
+- <strong>Hinge:</strong> knees and elbows (the elbow's pronation/supination as a SixDOF twist if needed).
+- <strong>Feet:</strong> a <code>StaticCompoundShape</code> (sole box + shoe capsule).
+- <strong>Self-collision:</strong> filtered with <code>GroupFilterTable</code>.
+- <strong>Maximum angular velocity:</strong> raise it for fast limbs (default ≈ 47 rad/s).</p>
+<p>Masses (de Leva, per player weight), colliders and the rendered-skeleton mapping are unchanged from <code>ARCHITECTURE.md</code>.</p>
+<h2>14. Changes to Gates A–E</h2>
+<ul>
+<li><strong>Gate A (passive body):</strong></li>
+<li>built on Jolt through the substrate adapter;</li>
+<li>slop/speculative settings as above;</li>
+<li>add a <strong>cross-runtime determinism check</strong>: identical inputs in Node, Chrome and Safari, one run each, compare hashes;</li>
+<li>the rest test uses realistic joint damping.</li>
+<li><strong>Gate B (tracking):</strong> compare Jolt target-orientation motors against our own PD torques joint by joint, and keep the better per joint.</li>
+<li><strong>Gate C (ground):</strong> friction via the contact-listener override. The <strong>stud anchor</strong> is a Touchline-managed temporary point/SixDOF constraint to the turf with a break-out force, since Jolt's Coulomb friction has no traction-anchor concept.</li>
+<li><strong>Gate D (two-player contact):</strong></li>
+<li>invariant split into <strong>first touch ≤ 3 mm / same-frame response / no tunnels</strong> and <strong>sustained compression ≤ collider inset</strong>;</li>
+<li>realistic drive caps (≤ 250 N·m);</li>
+<li>momentum ledger from body-level impulse accounting;</li>
+<li>if per-point impulses prove necessary, take the decision about a local Jolt binding here.</li>
+<li><strong>Gate E:</strong> unchanged.</li>
+</ul>
+<h2>15. What would make us abandon Jolt later</h2>
+<ol>
+<li>The cross-runtime determinism check fails and our input discipline can't fix it → Rapier's <code>-deterministic</code> build.</li>
+<li>Per-contact impulses become essential, body-level accounting isn't enough, and a local binding build is impractical → Rapier.</li>
+<li>Sustained compression can't be brought within the collider inset at realistic drive torques.</li>
+<li>14-body articulated stability at 60 Hz plus adaptive substeps fails Gate A/B (drift, jitter, explosions) and iterations don't fix it.</li>
+<li>JS↔WASM callback cost (the contact listener) becomes significant at larger scale. Not an issue at 2 players; re-checked before any 22-player work.</li>
+<li>Maintenance risk: JoltPhysics.js has a single maintainer. Mitigated by the MIT source, our adapter, and the Rapier fallback.</li>
+</ol>
+<h2>Unity (brief)</h2>
+<p>Unity would supply PhysX (4.x per a forum report [U1]), ArticulationBody (reduced-coordinate, per-axis limits and drives [U2]), ConfigurableJoint (asymmetric X only; Y and Z symmetric [U3]), speculative CCD that handles rotation [U4], and a profiler and editor.</p>
+<p>It solves an <em>engine and tooling</em> problem, not ours:
+- the active-ragdoll controller, target generation, contact-caused reaction and football neutrality remain our work in any engine;
+- Unity makes no cross-platform determinism claim for PhysX [U5];
+- a migration would replace the web renderer, the Astra pipeline, the JS presentation layer and the simulation boundary.</p>
+<p>The spike shows the physics we need can be supplied cleanly underneath the existing architecture, in the browser. <strong>No migration is recommended.</strong></p>
+<h2>Sources</h2>
+<ul>
+<li><strong>Rapier:</strong></li>
+<li>[R-rb] https://unpkg.com/@dimforge/rapier3d@0.21.0/dynamics/rigid_body.d.ts</li>
+<li>[R-raw] https://unpkg.com/@dimforge/rapier3d@0.21.0/rapier_wasm3d.d.ts</li>
+<li>[R-limit] https://github.com/dimforge/rapier/blob/master/src/dynamics/solver/joint_constraint/joint_constraint_helper.rs</li>
+<li>[R-np] https://unpkg.com/@dimforge/rapier3d@0.21.0/geometry/narrow_phase.d.ts</li>
+<li>[R-det] https://github.com/dimforge/rapier/blob/master/bindings/typescript/builds/prepare_builds/templates/README.md.tera and https://rapier.rs/docs/user_guides/javascript/determinism</li>
+<li>[R-ccd] https://github.com/dimforge/rapier/blob/master/src/dynamics/ccd/sweeps.rs ; rigid_body.rs ; https://github.com/dimforge/rapier/blob/master/website/docs/user_guides/templates/rigid_body_ccd.mdx ; issue https://github.com/dimforge/rapier/issues/984</li>
+<li>[R-pred] https://github.com/dimforge/rapier/blob/master/src/geometry/narrow_phase/pair_update.rs</li>
+<li>[R-hooks] https://unpkg.com/@dimforge/rapier3d@0.21.0/pipeline/physics_hooks.d.ts</li>
+<li>[R-1011] https://github.com/dimforge/rapier/issues/1011 ; joint_velocity_constraint.rs</li>
+<li>[R-sub] https://github.com/dimforge/rapier/blob/master/src/dynamics/solver/staged_island_solver/init.rs</li>
+<li>[R-maxang] …/staged_island_solver/worker.rs</li>
+<li><strong>Bullet / ammo.js:</strong></li>
+<li>[B-ver] https://github.com/kripken/ammo.js/blob/main/bullet/VERSION ; https://github.com/kripken/ammo.js</li>
+<li>[B-mp] https://github.com/kripken/ammo.js/blob/main/ammo.idl ; btManifoldPoint.h</li>
+<li>[B-fork] https://forum.babylonjs.com/t/updated-ammo-js-with-bullet-v3-2-6-source/53483</li>
+<li>[B-6dof] btGeneric6DofConstraint.h ; btConeTwistConstraint.h (ammo.js bullet/src)</li>
+<li>[B-ccd] btDiscreteDynamicsWorld.cpp (ammo.js bullet/src)</li>
+<li><strong>Jolt:</strong></li>
+<li>[J-6dof] https://github.com/jrouwe/JoltPhysics/blob/master/Jolt/Physics/Constraints/SixDOFConstraint.h</li>
+<li>[J-idl] https://github.com/jrouwe/JoltPhysics.js/blob/main/JoltJS.idl ; https://unpkg.com/jolt-physics@1.1.0/dist/types.d.ts</li>
+<li>[J-cl] https://github.com/jrouwe/JoltPhysics/blob/master/Jolt/Physics/Collision/ContactListener.h</li>
+<li>[J-2128] https://github.com/jrouwe/JoltPhysics/issues/2128</li>
+<li>[J-mq] https://github.com/jrouwe/JoltPhysics/blob/master/Jolt/Physics/Body/MotionQuality.h ; https://jrouwe.github.io/JoltPhysics/#continuous-collision-detection</li>
+<li>[J-det] https://jrouwe.github.io/JoltPhysics/#deterministic-simulation ; https://github.com/jrouwe/JoltPhysics.js/blob/main/CMakeLists.txt</li>
+<li>[J-ps] https://github.com/jrouwe/JoltPhysics/blob/master/Jolt/Physics/PhysicsSettings.h</li>
+<li>[J-size] measured from the jolt-physics@1.1.0 tarball</li>
+<li><strong>WebAssembly:</strong> [W-nd] https://github.com/WebAssembly/design/blob/main/Nondeterminism.md ; https://webassembly.github.io/spec/core/exec/numerics.html</li>
+<li><strong>Rabona:</strong></li>
+<li>[RB1] https://github.com/furkansarihan/enigine (conanfile: bullet3/3.25) ; https://www.youtube.com/watch?v=ptD3X9wkYK0</li>
+<li>[RB2] https://www.youtube.com/watch?v=2r5PdbEr8zc (2026-02-09: "rewrote the game engine … physics integration (Jolt Physics) [has] been migrated") ; https://puls.games/rabona</li>
+<li><strong>Unity:</strong></li>
+<li>[U1] https://discussions.unity.com/t/physx-future/1709078</li>
+<li>[U2] https://docs.unity3d.com/6000.0/Documentation/Manual/class-ArticulationBody.html</li>
+<li>[U3] https://docs.unity3d.com/6000.0/Documentation/Manual/class-ConfigurableJoint.html</li>
+<li>[U4] https://docs.unity3d.com/6000.0/Documentation/Manual/speculative-ccd.html</li>
+<li>[U5] https://docs.unity3d.com/6000.0/Documentation/Manual/class-PhysicsManager.html</li>
+</ul></main></body></html>

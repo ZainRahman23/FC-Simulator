@@ -1,0 +1,11 @@
+import fs from "fs"; import path from "path";
+const PC = process.argv[2], ROOT = path.resolve(PC, "../../.."), CAL = process.argv[3], TEST = process.argv[4] || "B_lift_R", TS = (process.argv[5] || "1.0,1.6,2.0,2.4,2.9").split(",").map(Number);
+const { buildBodySpec } = await import(PC + "/pc_body.js"); const { loadJolt } = await import(PC + "/pc_jolt.js"); const C2 = await import(PC + "/pc_gatec2.js"); const { Q, V } = await import(PC + "/pc_math.js"); const { jointState } = await import(PC + "/pc_gatea.js");
+const dir = path.join(ROOT, "assets/characters/outfield/gabriel"), rig = JSON.parse(fs.readFileSync(path.join(dir, "rig.json"), "utf8")), buf = fs.readFileSync(path.join(dir, "mesh.bin"));
+const ab = buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength), L = rig.mesh.layout, T = { Float32Array, Uint16Array, Uint32Array, Uint8Array };
+const mesh = {}; for (const k of ["positions", "joints", "weights", "indices"]) mesh[k] = new T[L[k].elementType](ab, L[k].byteOffset, L[k].elementCount);
+const spec = buildBodySpec(rig, mesh, { calib: CAL }), J = await loadJolt(PC + "/vendor/jolt-physics.wasm-compat.js"), r = C2.runC2(J, spec, TEST, { keepStates: true, ctrl: process.env.RECAL ? { anticipateReach: true } : null });
+const bi = (n) => spec.bodies.findIndex(b => b.name === n), ji = (n) => spec.joints.findIndex(j => j.name === n), Lr = V.dist(spec.bodies[bi("shin_R")].origin, spec.bodies[bi("thigh_R")].origin) + V.dist(spec.bodies[bi("foot_R")].origin, spec.bodies[bi("shin_R")].origin);
+for (const t of TS) { const q = r.recs.find(x => Math.abs(x.t - t) < 0.003); if (!q || !q.ctl) continue; const c = q.ctl, f = (a) => a ? a.map(v => (v * 100).toFixed(1)).join(",") : "-", fb = c.feetBal;
+  const aL = fb.L ? [fb.L.at[0], fb.L.at[2]] : null, aR = fb.R ? [fb.R.at[0], fb.R.at[2]] : null, cL = S => null;
+  console.log(`${CAL} t ${t} ${String(q.reqStage).padEnd(8)} cm: com ${f([q.com[0], q.com[2]])} ξ ${f(q.xi)} ξref ${f(c.xiRef)} p* ${f(c.pStar)} copMeas ${f(q.copSmooth)} | cmd L ${fb.L ? fb.L.share.toFixed(3) : "-"}@${f(aL)} R ${fb.R ? fb.R.share.toFixed(3) : "-"}@${f(aR)} | meas L ${q.feet.L.load.toFixed(0)} R ${q.feet.R.load.toFixed(0)} | footL ${f([q.states[bi("foot_L")].pos[0], q.states[bi("foot_L")].pos[2]])} footR ${f([q.states[bi("foot_R")].pos[0], q.states[bi("foot_R")].pos[2]])}`); }

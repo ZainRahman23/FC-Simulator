@@ -1,0 +1,10 @@
+import fs from "fs"; import path from "path";
+const PC = process.argv[2], ROOT = path.resolve(PC, "../../.."), KEY = process.argv[3], T0 = +process.argv[4], T1 = +process.argv[5], EVERY = +(process.argv[6] || 12);
+const { buildBodySpec } = await import(PC + "/pc_body.js"); const { loadJolt } = await import(PC + "/pc_jolt.js"); const C2 = await import(PC + "/pc_gatec2.js"); const { Q } = await import(PC + "/pc_math.js");
+const dir = path.join(ROOT, "assets/characters/outfield/gabriel"), rig = JSON.parse(fs.readFileSync(path.join(dir, "rig.json"), "utf8")), buf = fs.readFileSync(path.join(dir, "mesh.bin"));
+const ab = buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength), L = rig.mesh.layout, T = { Float32Array, Uint16Array, Uint32Array, Uint8Array };
+const mesh = {}; for (const k of ["positions", "joints", "weights", "indices"]) mesh[k] = new T[L[k].elementType](ab, L[k].byteOffset, L[k].elementCount);
+const spec = buildBodySpec(rig, mesh), J = await loadJolt(PC + "/vendor/jolt-physics.wasm-compat.js"), r = C2.runC2(J, spec, KEY, { keepStates: true });
+const jn = (n) => spec.joints.findIndex(j => j.name === n), JJ = ["hip_L", "ankle_L", "knee_L", "hip_R", "lumbar"].map(n => [n, jn(n)]);
+for (let i = 0; i < r.recs.length; i += EVERY) { const q = r.recs[i]; if (q.t < T0 || q.t > T1) continue; const pr = Q.rot(q.states[0].rot, [1, 0, 0]), cp = q.copSmooth || [NaN, NaN];
+  console.log(`t ${q.t.toFixed(2)} ${String(q.reqStage).padEnd(8)} ${q.cls.slice(0, 14).padEnd(14)} L ${q.feet.L.load.toFixed(0).padStart(4)} R ${q.feet.R.load.toFixed(0).padStart(4)} c ${q.com[0].toFixed(3)},${q.com[2].toFixed(3)} ξ ${q.xi.map(v => v.toFixed(3))} p* ${q.ctl ? q.ctl.pStar.map(v => v.toFixed(3)) : "-"} cop ${cp.map(v => v.toFixed(3))} roll ${(Math.asin(pr[1]) * 57.3).toFixed(1)} tr ${q.trunk.toFixed(1)} slip ${q.feet.L.slipDist != null ? (q.feet.L.slipDist * 1000).toFixed(1) : "-"} | ${JJ.map(([n, k]) => `${n} ${q.J[k].tq.toFixed(0)}${q.J[k].sat ? "S" : ""}(${(q.J[k].eff * 100).toFixed(0)}%)`).join(" ")}`); }

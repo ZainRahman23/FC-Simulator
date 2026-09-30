@@ -1,0 +1,1677 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Gate C1 Report</title><style>
+:root{--bg:#fbfaf7;--ink:#1d1f22;--mute:#5d646b;--line:#dcd8cf;--code:#f1eee7;--acc:#8a5a00;--q:#f4efe2}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#141619;--ink:#e6e4df;--mute:#9aa0a6;--line:#33373d;--code:#1d2024;--acc:#f0c060;--q:#1f1c14}}
+:root[data-theme="dark"]{--bg:#141619;--ink:#e6e4df;--mute:#9aa0a6;--line:#33373d;--code:#1d2024;--acc:#f0c060;--q:#1f1c14}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 -apple-system,system-ui,"Segoe UI",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px 80px}
+h1{font-size:26px;line-height:1.25} h2{font-size:20px;margin-top:40px;padding-top:12px;border-top:1px solid var(--line)} h3{font-size:16px;color:var(--acc)}
+table{border-collapse:collapse;width:100%;font-size:13px;margin:12px 0;display:block;overflow-x:auto} th,td{border:1px solid var(--line);padding:5px 8px;vertical-align:top;text-align:left} th{background:var(--code)}
+code{background:var(--code);padding:1px 4px;border-radius:3px;font-size:12.5px} pre{background:var(--code);padding:12px;border-radius:6px;overflow-x:auto;font-size:12px;line-height:1.45} pre code{padding:0;background:none}
+blockquote{margin:12px 0;padding:10px 16px;background:var(--q);border-left:4px solid var(--acc)} a{color:var(--acc)}
+img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:4px} li>ul,li>ol{margin:4px 0}
+</style></head><body><main><h1>Physical Character V1: Gate C1 report</h1>
+<p><strong>Unsupported feet-in-place balance.</strong> The 14-body Jolt humanoid stands and recovers from pushes using only finite joint torques and ground reaction through its feet. When no in-place solution exists, it says so and falls physically.</p>
+<ul>
+<li><strong>No pelvis support, no root anchor, no state writes after t = 0.</strong> All three are asserted and measured in every test.</li>
+<li><strong>No stepping.</strong></li>
+<li><strong>Nothing committed or pushed.</strong> Worktree <code>physical-character-v1</code>.</li>
+</ul>
+<p>2026-09-29 · Gabriel (190 cm, 78 kg) · Jolt 5.6.0 (JoltPhysics.js 1.1.0) · 240 Hz × 1 collision step, 30 velocity / 4 position iterations. The solver configuration is unchanged from Gates A and B.</p>
+<p><img alt="C1 contact sheet 1" src="contact_sheet_1.jpg" />
+<img alt="C1 contact sheet 2" src="contact_sheet_2.jpg" /></p>
+<hr />
+<h2>17. Assessment first: does C1 pass?</h2>
+<p><strong>My opinion: yes, on every pass condition you set,</strong> with the caveats listed after the table.</p>
+<table>
+<thead>
+<tr>
+<th>your pass condition</th>
+<th>evidence</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Quiet standing ≥ 20 s without root support</strong></td>
+<td>QS20 stands 20 s with no support. COM drift is 1.5 mm and sway RMS 1.0 mm. It stays in RECOVERABLE_IN_PLACE throughout.</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>…with finite effort, not extreme stiffness</strong></td>
+<td>Ankle effort is 10 % of its limit. The capture-point law gives a total ankle stiffness of about 1.5 × mgh (Peterka 2002 measured about 1.33 × in humans). Intrinsic stance damping is cut to 0.3 × Gate B's, and 100 ms of delay then clearly degrades behaviour. The excessive ×3 profile is shown and rejected (§7).</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>…deterministic</strong></td>
+<td>59/59 tests bit-identical over 3 runs, <strong>and Chrome = Node for 59/59</strong>. Gate A (5/5) and Gate B (20/20) hashes are unchanged.</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>Small disturbances: visible displacement, recovered through ground reaction and finite control</strong></td>
+<td>10–20 N·s pushes in every direction, and 30 N·s forward or sideways, move the COM 1.3–5.3 cm and recover in 0.13–0.33 s. Backward 30 N·s needs the hip strategy and takes 1.29 s. The recovery comes from the ground force the feet produce: CoP moves, per-foot loads shift.</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>Increasing disturbances: larger response, then recoverable → step-needed → fall</strong></td>
+<td>The response grows monotonically: COM excursion 1.5 → 16.7 cm forward and trunk 4.5° → 9.7°. The class escalates IN_PLACE → HIP → STEP_NEEDED → released → GROUNDED. The boundaries emerge from the physics, not from any threshold I set (§3).</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>Low friction changes the classification</strong></td>
+<td>On ice (μ 0.08) both feet are flagged SLIPPING within 42 ms of the push. Support becomes DEGRADED, the controller learns μ ≈ 0.075, and its CoP demand drops to the friction limit. With one foot on μ 0.05, that foot is flagged and the learned μ is 0.050.</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>Delayed sensing measurably degrades recovery</strong></td>
+<td>With 100 ms delay: quiet sway 1.0 → 6.0 mm; recovery times 2–4 × longer (forward 30 N·s 0.33 → 1.07 s; backward 20 N·s 0.28 → 0.88 s; lateral 30 N·s 0.29 → 0.93 s); larger excursions; the lateral boundary drops from 45 to 40 N·s.</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>Unrecoverable → honest physical fall</strong></td>
+<td>G_fall (90 N·s) and every push past the boundary. STEP_NEEDED is declared, then after 62 ms the controller releases posture and the body falls under physics. It reaches the ground 1.2–1.7 s after the flag, with no statue fall and no jackknife (§6).</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>Zero direct pelvis/root support impulse in every C1 test</strong></td>
+<td>Support fixture absent (asserted), 13 constraints (joints only), 14 + 1 bodies, 0 teleports, 0 velocity writes. The pelvis's external-force residual is <strong>0.039 N mean, 1.0 N max, before any fall</strong>. That detector reads back the historical Gate B fixture's force to within 0.04 N (§11).</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Caveats you should weigh:</strong>
+1. <strong>No sensory or motor noise.</strong> Quiet stance settles almost completely: 1 mm of sway, where humans show roughly 5–10 mm. With 100 ms delay it's 6 mm. That comes from the deterministic, noise-free inputs, not from stiffness.
+2. <strong>Falls have no protective reactions.</strong> The arms hang; that's C1 scope. Fall shape depends on a documented "tone during release" choice (§6).
+3. <strong>Lateral pushes near the boundary can leave him on one leg for 1–1.5 s before he falls (PR50, DR45).</strong> That is honest without stepping, but visually it's "balancing on one leg" where a player would step.
+4. <strong>Three modelling parameters shape the boundaries:</strong> the CoP-law gain (0.5), intrinsic stance damping (0.3 ×) and release tone (30 % stiffness, 60 % gravity support). Each is argued from physiology or from a measured failure, and none was tuned to hit a push threshold. The boundaries would still move if they changed.</p>
+<hr />
+<h2>1. Interactive C1 review harness</h2>
+<pre><code>cd &quot;/Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1&quot;
+python3 -m http.server 8171                       # your server on 8171 is still running
+# C1:     http://127.0.0.1:8171/sandbox/visual/physchar/index.html            (?test=PF60 opens a test)
+# Gate B: …/index.html?suite=B     (historical support fixture, labelled SUPPORT-ASSISTED)
+# Gate A: …/index.html?suite=A
+</code></pre>
+<ul>
+<li><strong>Built on Gates A and B:</strong> the harness keeps the same playback (1× / 0.5× / 0.25×, ±1 physics step, scrubber), worst-frame jumps, orbit camera, presets and all earlier overlays.</li>
+<li><strong>Test list:</strong> grouped as sensing / quiet / fall / friction / pushes by direction / delay / strength (59 tests). Each test is simulated in the browser and its hash is compared with Node's.</li>
+<li><strong>Balance overlays:</strong><ul>
+<li>COM with its ground projection and velocity arrow;</li>
+<li>capture point ξ;</li>
+<li><strong>support region</strong> (the sole footprints of the loaded feet) and the <strong>contact polygon</strong> (the points actually touching);</li>
+<li><strong>CoP</strong>, both measured and demanded (and the unclamped demand when it saturates);</li>
+<li>per-foot contact state (colour-coded points and sole outline), load bar, and label (<code>L TOE 367 N</code>, <code>SLIP 4.1 cm/s μ 0.08</code>, <code>slid 7 cm</code>);</li>
+<li>ground-reaction vector;</li>
+<li>hip-strategy torque;</li>
+<li>push arrow;</li>
+<li>a <strong>classification banner</strong> (RECOVERABLE IN PLACE / HIP / STEP NEEDED "a step would be required (C1: no stepping)" / FALLING "balance released" / GROUNDED) with a timeline of class times.</li>
+</ul>
+</li>
+<li><strong>Gate B overlays that still apply:</strong> target ghost, motor torque vectors (heat = effort ÷ budgeted limit) and saturation.</li>
+<li><strong>Timeline:</strong><ul>
+<li>ξ margin, COM margin and per-foot loads;</li>
+<li>a class colour strip;</li>
+<li>markers for push, step-needed, release and ground.</li>
+</ul>
+</li>
+<li><strong>Joint panel</strong> for any joint and swing/twist component:<ul>
+<li><strong>nominal target</strong> (grey dashed);</li>
+<li><strong>gravity offset</strong> (green);</li>
+<li><strong>balance offset</strong> (orange);</li>
+<li><strong>final motor target</strong> (white dashed);</li>
+<li><strong>actual</strong> (cyan);</li>
+<li><strong>motor effort ÷ its budgeted limit</strong> (red), with saturated steps as a red band.</li>
+</ul>
+</li>
+<li><strong>Side panel:</strong><ul>
+<li>outcome and class times, recovery and fall lead, whole-body metrics;</li>
+<li>quiet-stance metrics, friction and slip, sensing checks;</li>
+<li><strong>ROOT SUPPORT (must be 0)</strong>, stability, flags;</li>
+<li>per-joint peak torque, effort, saturation and |τ|/budget;</li>
+<li>CPU, and the hash compared with Node;</li>
+<li>the whole Node suite table.</li>
+</ul>
+</li>
+</ul>
+<h2>2. Unsupported 20 s standing (QS20)</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>QS20</th>
+<th>QS20 + 100 ms delay</th>
+<th>weak ×0.5 (10 s)</th>
+<th>excessive ×3 (10 s)</th>
+<th>on ice μ 0.08 (5 s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>outcome</td>
+<td>stood 20 s</td>
+<td>stood 20 s</td>
+<td>stood</td>
+<td>stood</td>
+<td>stood</td>
+</tr>
+<tr>
+<td>class</td>
+<td>in-place throughout</td>
+<td>in-place throughout</td>
+<td>in-place</td>
+<td>in-place</td>
+<td>in-place</td>
+</tr>
+<tr>
+<td>COM drift</td>
+<td>1.5 mm</td>
+<td>6.7 mm</td>
+<td>0.9 mm</td>
+<td>1.3 mm</td>
+<td>0.6 mm</td>
+</tr>
+<tr>
+<td>sway RMS</td>
+<td>1.0 mm</td>
+<td>6.0 mm</td>
+<td>0.7 mm</td>
+<td>1.0 mm</td>
+<td>0.4 mm</td>
+</tr>
+<tr>
+<td>CoP path</td>
+<td>1.3 mm</td>
+<td>4.0 mm</td>
+<td>0.8 mm</td>
+<td>1.0 mm</td>
+<td>0.5 mm</td>
+</tr>
+<tr>
+<td>ankle effort (of limit)</td>
+<td>10 %</td>
+<td>10.6 %</td>
+<td>20 %</td>
+<td>3.4 %</td>
+<td>10 %</td>
+</tr>
+<tr>
+<td>pelvis external-force residual</td>
+<td>0.018 N</td>
+<td>0.018 N</td>
+<td>0.018 N</td>
+<td>0.018 N</td>
+<td>0.018 N</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>The body is physically standing on its feet.</strong> The ankles, knees, hips and trunk hold it against gravity through Jᵀ gravity offsets on finite motors. The ground carries 765 N (ΣGRF matches Mg to 0.01 N). Nothing else holds him up.</li>
+<li><strong>The small sway is honest.</strong> A deterministic simulation with no sensory or motor noise settles to equilibrium (caveat 1).</li>
+</ul>
+<h2>3. Graded push tests (C–E)</h2>
+<ul>
+<li><strong>The push:</strong> a 50 ms impulse at the pelvis COM at t = 1.0 s; each run lasts 6 s.</li>
+<li><strong>Recovery</strong> means ξ is back ≥ 1.5 cm inside the support region, |v_COM| &lt; 3 cm/s, and the trunk is within 3° of its pre-push angle, held for 0.25 s.</li>
+<li><strong>Times</strong> in the tables are measured from the push.</li>
+<li><strong>Lead</strong> is the time from the first STEP_NEEDED / UNRECOVERABLE flag to the first non-foot ground contact.</li>
+</ul>
+<h3>Forward (push from behind)</h3>
+<table>
+<thead>
+<tr>
+<th>test</th>
+<th>N·s</th>
+<th>outcome</th>
+<th>highest class</th>
+<th>recovery s</th>
+<th>COM excursion cm</th>
+<th>min ξ margin cm</th>
+<th>trunk max °</th>
+<th>STEP_NEEDED s</th>
+<th>released s</th>
+<th>grounded s</th>
+<th>lead s</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PF10</td>
+<td>10</td>
+<td><strong>RECOVERED</strong></td>
+<td>IN PLACE</td>
+<td>0.171</td>
+<td>1.5</td>
+<td>12.2</td>
+<td>4.5</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>PF20</td>
+<td>20</td>
+<td><strong>RECOVERED</strong></td>
+<td>IN PLACE</td>
+<td>0.279</td>
+<td>3.1</td>
+<td>12.2</td>
+<td>5</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>PF30</td>
+<td>30</td>
+<td><strong>RECOVERED</strong></td>
+<td>IN PLACE</td>
+<td>0.329</td>
+<td>4.7</td>
+<td>12</td>
+<td>5.5</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>PF40</td>
+<td>40</td>
+<td><strong>RECOVERED</strong></td>
+<td>HIP</td>
+<td>0.35</td>
+<td>6.4</td>
+<td>7.8</td>
+<td>6.3</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>PF50</td>
+<td>50</td>
+<td><strong>RECOVERED</strong></td>
+<td>HIP</td>
+<td>1.717</td>
+<td>9.4</td>
+<td>3.7</td>
+<td>6.7</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>PF55</td>
+<td>55</td>
+<td><strong>RECOVERED</strong></td>
+<td>HIP</td>
+<td>1.937</td>
+<td>12.3</td>
+<td>1.6</td>
+<td>7.3</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>PF60</td>
+<td>60</td>
+<td><strong>RECOVERED</strong></td>
+<td>HIP</td>
+<td>2.417</td>
+<td>16.7</td>
+<td>-0.4</td>
+<td>9.7</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>PF65</td>
+<td>65</td>
+<td><strong>FELL</strong></td>
+<td>GROUNDED</td>
+<td>—</td>
+<td>166</td>
+<td>lost</td>
+<td>91.6</td>
+<td>0.683</td>
+<td>0.742</td>
+<td>2.183</td>
+<td>1.5</td>
+</tr>
+<tr>
+<td>PF70</td>
+<td>70</td>
+<td><strong>FELL</strong></td>
+<td>GROUNDED</td>
+<td>—</td>
+<td>166.5</td>
+<td>lost</td>
+<td>91.6</td>
+<td>0.337</td>
+<td>0.396</td>
+<td>1.729</td>
+<td>1.392</td>
+</tr>
+</tbody>
+</table>
+<h3>Backward</h3>
+<table>
+<thead>
+<tr>
+<th>test</th>
+<th>N·s</th>
+<th>outcome</th>
+<th>highest class</th>
+<th>recovery s</th>
+<th>COM excursion cm</th>
+<th>min ξ margin cm</th>
+<th>trunk max °</th>
+<th>STEP_NEEDED s</th>
+<th>released s</th>
+<th>grounded s</th>
+<th>lead s</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PB10</td>
+<td>10</td>
+<td><strong>RECOVERED</strong></td>
+<td>IN PLACE</td>
+<td>0.171</td>
+<td>1.6</td>
+<td>8.5</td>
+<td>4.6</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>PB20</td>
+<td>20</td>
+<td><strong>RECOVERED</strong></td>
+<td>HIP</td>
+<td>0.275</td>
+<td>3.2</td>
+<td>4.5</td>
+<td>5.3</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>PB30</td>
+<td>30</td>
+<td><strong>RECOVERED</strong></td>
+<td>HIP</td>
+<td>1.287</td>
+<td>7.3</td>
+<td>0.3</td>
+<td>5.9</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>PB35</td>
+<td>35</td>
+<td><strong>FELL</strong></td>
+<td>GROUNDED</td>
+<td>—</td>
+<td>135.2</td>
+<td>lost</td>
+<td>93.3</td>
+<td>0.704</td>
+<td>0.762</td>
+<td>2.283</td>
+<td>1.579</td>
+</tr>
+<tr>
+<td>PB40</td>
+<td>40</td>
+<td><strong>FELL</strong></td>
+<td>GROUNDED</td>
+<td>—</td>
+<td>139.2</td>
+<td>lost</td>
+<td>93</td>
+<td>0.321</td>
+<td>0.379</td>
+<td>1.775</td>
+<td>1.454</td>
+</tr>
+<tr>
+<td>PB50</td>
+<td>50</td>
+<td><strong>FELL</strong></td>
+<td>GROUNDED</td>
+<td>—</td>
+<td>138.5</td>
+<td>lost</td>
+<td>93</td>
+<td>0.042</td>
+<td>0.1</td>
+<td>1.442</td>
+<td>1.4</td>
+</tr>
+<tr>
+<td>PB60</td>
+<td>60</td>
+<td><strong>FELL</strong></td>
+<td>GROUNDED</td>
+<td>—</td>
+<td>136</td>
+<td>lost</td>
+<td>93.3</td>
+<td>0.038</td>
+<td>0.096</td>
+<td>1.271</td>
+<td>1.233</td>
+</tr>
+<tr>
+<td>PB70</td>
+<td>70</td>
+<td><strong>FELL</strong></td>
+<td>GROUNDED</td>
+<td>—</td>
+<td>140.6</td>
+<td>lost</td>
+<td>93.4</td>
+<td>0.029</td>
+<td>0.087</td>
+<td>1.212</td>
+<td>1.183</td>
+</tr>
+</tbody>
+</table>
+<h3>Lateral, toward his right</h3>
+<table>
+<thead>
+<tr>
+<th>test</th>
+<th>N·s</th>
+<th>outcome</th>
+<th>highest class</th>
+<th>recovery s</th>
+<th>COM excursion cm</th>
+<th>min ξ margin cm</th>
+<th>trunk max °</th>
+<th>STEP_NEEDED s</th>
+<th>released s</th>
+<th>grounded s</th>
+<th>lead s</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PR10</td>
+<td>10</td>
+<td><strong>RECOVERED</strong></td>
+<td>IN PLACE</td>
+<td>0.125</td>
+<td>1.3</td>
+<td>12.2</td>
+<td>4</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>PR20</td>
+<td>20</td>
+<td><strong>RECOVERED</strong></td>
+<td>IN PLACE</td>
+<td>0.188</td>
+<td>2.7</td>
+<td>12.2</td>
+<td>4.1</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>PR30</td>
+<td>30</td>
+<td><strong>RECOVERED</strong></td>
+<td>HIP</td>
+<td>0.287</td>
+<td>5.3</td>
+<td>0.1</td>
+<td>4.3</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>PR40</td>
+<td>40</td>
+<td><strong>RECOVERED</strong></td>
+<td>HIP</td>
+<td>2.333</td>
+<td>11.8</td>
+<td>2.7</td>
+<td>4.7</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>PR45</td>
+<td>45</td>
+<td><strong>RECOVERED</strong></td>
+<td>HIP</td>
+<td>2.833</td>
+<td>14.4</td>
+<td>4.1</td>
+<td>4.9</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>PR50</td>
+<td>50</td>
+<td><strong>FELL</strong></td>
+<td>GROUNDED</td>
+<td>—</td>
+<td>168.6</td>
+<td>lost</td>
+<td>93.7</td>
+<td>1.958</td>
+<td>2.017</td>
+<td>3.267</td>
+<td>1.308</td>
+</tr>
+<tr>
+<td>PR60</td>
+<td>60</td>
+<td><strong>FELL</strong></td>
+<td>GROUNDED</td>
+<td>—</td>
+<td>169.3</td>
+<td>lost</td>
+<td>97.1</td>
+<td>0.379</td>
+<td>0.438</td>
+<td>1.563</td>
+<td>1.183</td>
+</tr>
+<tr>
+<td>PR70</td>
+<td>70</td>
+<td><strong>FELL</strong></td>
+<td>GROUNDED</td>
+<td>—</td>
+<td>175.6</td>
+<td>lost</td>
+<td>104.8</td>
+<td>0.05</td>
+<td>0.108</td>
+<td>1.279</td>
+<td>1.229</td>
+</tr>
+</tbody>
+</table>
+<h3>Lateral, toward his left (fewer runs)</h3>
+<table>
+<thead>
+<tr>
+<th>test</th>
+<th>N·s</th>
+<th>outcome</th>
+<th>highest class</th>
+<th>recovery s</th>
+<th>COM excursion cm</th>
+<th>min ξ margin cm</th>
+<th>trunk max °</th>
+<th>STEP_NEEDED s</th>
+<th>released s</th>
+<th>grounded s</th>
+<th>lead s</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PL20</td>
+<td>20</td>
+<td><strong>RECOVERED</strong></td>
+<td>IN PLACE</td>
+<td>0.188</td>
+<td>2.7</td>
+<td>12.2</td>
+<td>4.1</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>PL40</td>
+<td>40</td>
+<td><strong>RECOVERED</strong></td>
+<td>HIP</td>
+<td>2.329</td>
+<td>11.8</td>
+<td>2.6</td>
+<td>4.7</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>PL60</td>
+<td>60</td>
+<td><strong>FELL</strong></td>
+<td>GROUNDED</td>
+<td>—</td>
+<td>166.6</td>
+<td>lost</td>
+<td>95.3</td>
+<td>0.387</td>
+<td>0.446</td>
+<td>1.567</td>
+<td>1.179</td>
+</tr>
+</tbody>
+</table>
+<h3>100 ms sensing delay (F)</h3>
+<table>
+<thead>
+<tr>
+<th>test</th>
+<th>N·s</th>
+<th>outcome</th>
+<th>highest class</th>
+<th>recovery s</th>
+<th>COM excursion cm</th>
+<th>min ξ margin cm</th>
+<th>trunk max °</th>
+<th>STEP_NEEDED s</th>
+<th>released s</th>
+<th>grounded s</th>
+<th>lead s</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DF20</td>
+<td>20</td>
+<td><strong>RECOVERED</strong></td>
+<td>IN PLACE</td>
+<td>0.279</td>
+<td>3.4</td>
+<td>12.3</td>
+<td>6.3</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>DF30</td>
+<td>30</td>
+<td><strong>RECOVERED</strong></td>
+<td>IN PLACE</td>
+<td>1.067</td>
+<td>5.2</td>
+<td>11.1</td>
+<td>7.4</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>DF40</td>
+<td>40</td>
+<td><strong>RECOVERED</strong></td>
+<td>HIP</td>
+<td>1.229</td>
+<td>7.2</td>
+<td>7</td>
+<td>8.6</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>DF50</td>
+<td>50</td>
+<td><strong>RECOVERED</strong></td>
+<td>HIP</td>
+<td>1.754</td>
+<td>10.5</td>
+<td>2.7</td>
+<td>10.6</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>DF55</td>
+<td>55</td>
+<td><strong>RECOVERED</strong></td>
+<td>HIP</td>
+<td>2.075</td>
+<td>12.9</td>
+<td>0.6</td>
+<td>12</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>DF60</td>
+<td>60</td>
+<td><strong>RECOVERED</strong></td>
+<td>HIP</td>
+<td>2.821</td>
+<td>18.4</td>
+<td>-1.6</td>
+<td>13.7</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>DB20</td>
+<td>20</td>
+<td><strong>RECOVERED</strong></td>
+<td>HIP</td>
+<td>0.883</td>
+<td>4.1</td>
+<td>4.2</td>
+<td>5.3</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>DB30</td>
+<td>30</td>
+<td><strong>RECOVERED</strong></td>
+<td>HIP</td>
+<td>1.321</td>
+<td>8.3</td>
+<td>0.1</td>
+<td>6</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>DB35</td>
+<td>35</td>
+<td><strong>FELL</strong></td>
+<td>GROUNDED</td>
+<td>—</td>
+<td>136.9</td>
+<td>lost</td>
+<td>93.6</td>
+<td>0.704</td>
+<td>0.762</td>
+<td>2.383</td>
+<td>1.679</td>
+</tr>
+<tr>
+<td>DR30</td>
+<td>30</td>
+<td><strong>RECOVERED</strong></td>
+<td>HIP</td>
+<td>0.933</td>
+<td>7</td>
+<td>-1.3</td>
+<td>4.7</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>DR40</td>
+<td>40</td>
+<td><strong>RECOVERED</strong></td>
+<td>HIP</td>
+<td>1.675</td>
+<td>14.1</td>
+<td>6.2</td>
+<td>6.6</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>DR45</td>
+<td>45</td>
+<td><strong>FELL</strong></td>
+<td>GROUNDED</td>
+<td>—</td>
+<td>165.4</td>
+<td>lost</td>
+<td>93.7</td>
+<td>1.862</td>
+<td>1.921</td>
+<td>3.275</td>
+<td>1.413</td>
+</tr>
+</tbody>
+</table>
+<h3>Strength sweep (I)</h3>
+<table>
+<thead>
+<tr>
+<th>test</th>
+<th>N·s</th>
+<th>outcome</th>
+<th>highest class</th>
+<th>recovery s</th>
+<th>COM excursion cm</th>
+<th>min ξ margin cm</th>
+<th>trunk max °</th>
+<th>STEP_NEEDED s</th>
+<th>released s</th>
+<th>grounded s</th>
+<th>lead s</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S_weak_PF30</td>
+<td>30</td>
+<td><strong>RECOVERED</strong></td>
+<td>IN PLACE</td>
+<td>0.363</td>
+<td>5.5</td>
+<td>11.4</td>
+<td>5.9</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>S_weak_PF50</td>
+<td>50</td>
+<td><strong>FELL</strong></td>
+<td>GROUNDED</td>
+<td>—</td>
+<td>147.7</td>
+<td>lost</td>
+<td>91.7</td>
+<td>0.679</td>
+<td>0.738</td>
+<td>1.975</td>
+<td>1.296</td>
+</tr>
+<tr>
+<td>S_weak_PR40</td>
+<td>40</td>
+<td><strong>FELL</strong></td>
+<td>GROUNDED</td>
+<td>—</td>
+<td>165.7</td>
+<td>lost</td>
+<td>98.4</td>
+<td>0.446</td>
+<td>0.504</td>
+<td>1.496</td>
+<td>1.05</td>
+</tr>
+<tr>
+<td>S_weak_PR60</td>
+<td>60</td>
+<td><strong>FELL</strong></td>
+<td>GROUNDED</td>
+<td>—</td>
+<td>160.7</td>
+<td>lost</td>
+<td>100.6</td>
+<td>0.05</td>
+<td>0.108</td>
+<td>1.112</td>
+<td>1.062</td>
+</tr>
+<tr>
+<td>S_strong_PF30</td>
+<td>30</td>
+<td><strong>RECOVERED</strong></td>
+<td>IN PLACE</td>
+<td>0.267</td>
+<td>4</td>
+<td>12.3</td>
+<td>5.1</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>S_strong_PF50</td>
+<td>50</td>
+<td><strong>RECOVERED</strong></td>
+<td>HIP</td>
+<td>1.325</td>
+<td>9.3</td>
+<td>4.7</td>
+<td>5.3</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>S_strong_PR40</td>
+<td>40</td>
+<td><strong>RECOVERED</strong></td>
+<td>HIP</td>
+<td>0.75</td>
+<td>8.5</td>
+<td>-0.8</td>
+<td>4.6</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>S_strong_PR60</td>
+<td>60</td>
+<td><strong>RECOVERED</strong></td>
+<td>HIP</td>
+<td>2.142</td>
+<td>20.1</td>
+<td>0</td>
+<td>4.5</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h3>Fall, ice and slippery patch (G, H)</h3>
+<table>
+<thead>
+<tr>
+<th>test</th>
+<th>N·s</th>
+<th>outcome</th>
+<th>highest class</th>
+<th>recovery s</th>
+<th>COM excursion cm</th>
+<th>min ξ margin cm</th>
+<th>trunk max °</th>
+<th>STEP_NEEDED s</th>
+<th>released s</th>
+<th>grounded s</th>
+<th>lead s</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>G_fall</td>
+<td>90</td>
+<td><strong>FELL</strong></td>
+<td>GROUNDED</td>
+<td>—</td>
+<td>164.8</td>
+<td>lost</td>
+<td>91.6</td>
+<td>0.042</td>
+<td>0.1</td>
+<td>1.221</td>
+<td>1.179</td>
+</tr>
+<tr>
+<td>H_ice_push</td>
+<td>25</td>
+<td><strong>RECOVERED</strong></td>
+<td>STEP NEEDED</td>
+<td>0.529</td>
+<td>7.7</td>
+<td>12.2</td>
+<td>5.2</td>
+<td>0.05</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>H_patch_right</td>
+<td>30</td>
+<td><strong>RECOVERED</strong></td>
+<td>IN PLACE</td>
+<td>0.625</td>
+<td>12.1</td>
+<td>11.8</td>
+<td>4.3</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Boundaries that emerged (candidate strength, no delay):</strong></p>
+<table>
+<thead>
+<tr>
+<th>direction</th>
+<th>recovers up to</th>
+<th>falls from</th>
+<th>idealised ankle-only ceiling (review estimate)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>forward</td>
+<td>60 N·s</td>
+<td>65 N·s</td>
+<td>≈ 52 N·s</td>
+</tr>
+<tr>
+<td>backward</td>
+<td>30 N·s</td>
+<td>35 N·s</td>
+<td>≈ 32 N·s</td>
+</tr>
+<tr>
+<td>lateral</td>
+<td>45 N·s (right) / 40 N·s (left run)</td>
+<td>50 N·s (right) / 60 N·s (left run)</td>
+<td>≈ 58 N·s</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Forward exceeds the ankle-only ceiling, and legitimately:</strong>
+- The hip strategy extends the capture region by about 4.7 cm (its physically derived capacity, §9). That's worth about +11 N·s.
+- The body rises onto its toes (PF50–PF60 stand on the toe edge for 0.5–1 s, then the heels roll back down).</p>
+<p><strong>Backward and lateral fail at or below their ceilings,</strong> as a finite, non-ideal controller should.</p>
+<p><strong>Nothing was tuned to these numbers:</strong>
+- None of the parameters was adjusted after seeing a boundary.
+- The three parameter changes made during development (§16) were forced by physically wrong behaviour.</p>
+<h2>4. Delayed-reaction comparison (F)</h2>
+<p>The 100 ms delay applies to all sensing the controller sees: body poses, contacts, loads, COM and ξ. The motors' intrinsic stiffness and damping stay undelayed, like muscle short-range stiffness.</p>
+<table>
+<thead>
+<tr>
+<th>push</th>
+<th>recovery, no delay → 100 ms</th>
+<th>COM excursion, no delay → 100 ms</th>
+<th>outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>forward 20</td>
+<td>0.28 → 0.28 s</td>
+<td>3.1 → 3.4 cm</td>
+<td>both recover</td>
+</tr>
+<tr>
+<td>forward 30</td>
+<td>0.33 → <strong>1.07 s</strong></td>
+<td>4.7 → 5.2 cm</td>
+<td>both recover</td>
+</tr>
+<tr>
+<td>forward 40</td>
+<td>0.35 → <strong>1.23 s</strong></td>
+<td>6.4 → 7.2 cm</td>
+<td>both recover</td>
+</tr>
+<tr>
+<td>forward 60</td>
+<td>2.42 → <strong>2.82 s</strong></td>
+<td>16.7 → <strong>18.4 cm</strong></td>
+<td>both recover</td>
+</tr>
+<tr>
+<td>backward 20</td>
+<td>0.28 → <strong>0.88 s</strong></td>
+<td>3.2 → 4.1 cm</td>
+<td>both recover</td>
+</tr>
+<tr>
+<td>backward 30</td>
+<td>1.29 → 1.32 s</td>
+<td>7.3 → 8.3 cm</td>
+<td>both recover</td>
+</tr>
+<tr>
+<td>lateral 30</td>
+<td>0.29 → <strong>0.93 s</strong></td>
+<td>5.3 → 7.0 cm</td>
+<td>both recover</td>
+</tr>
+<tr>
+<td>lateral 40</td>
+<td>2.33 → 1.68 s</td>
+<td>11.8 → <strong>14.1 cm</strong></td>
+<td>both recover</td>
+</tr>
+<tr>
+<td>lateral 45</td>
+<td>2.83 s → <strong>FELL</strong></td>
+<td>14.4 → fall</td>
+<td><strong>delay flips the outcome</strong></td>
+</tr>
+<tr>
+<td>quiet stance</td>
+<td>—</td>
+<td>sway 1.0 → <strong>6.0 mm</strong></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Delay degrades recovery clearly, as required:</strong> recoveries take up to 3–4 × longer, excursions grow, and the lateral boundary drops.</p>
+<p><strong>Why this only became visible after a correction:</strong>
+- My first C1 build kept Gate B's stance damping. That damping was undelayed and very large (critical damping of half the body per ankle, 281 N·m·s/rad).
+- It did the stabilising, so delay barely mattered: no outcome flipped, and the quiet-sway difference was small.
+- You predicted that failure mode ("excessively stiff"). The damping sweep that found it is in <code>analysis/intrinsic_stance_damping_vs_delay.txt</code>: at 0.1 × damping, delay even flips backward 30 N·s into a fall.
+- C1 uses 0.3 × (ankle ζ ≈ 0.25). The remaining sway damping comes from the capture-point law's velocity term, which the delay does affect.</p>
+<h2>5. Low-friction tests (H)</h2>
+<table>
+<thead>
+<tr>
+<th>test</th>
+<th>what happened</th>
+<th>detection</th>
+<th>controller response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>H1</strong> ice, both feet μ 0.08, quiet 5 s</td>
+<td>stands; standing needs almost no friction</td>
+<td>no slip</td>
+<td>normal</td>
+</tr>
+<tr>
+<td><strong>H2</strong> ice, 25 N·s forward push</td>
+<td>both feet slide 7.0 cm, then he recovers in 0.53 s</td>
+<td><strong>SLIPPING on both feet 42 ms after the push begins</strong>; support DEGRADED for 313 ms; μ observed <strong>0.075</strong> (true 0.08)</td>
+<td>CoP demand limited to the friction the feet can supply (|p − c| ≤ h·Σμ·N/W, 3.4 cm minimum); a friction-limited STEP_NEEDED flag appears briefly (50 ms, not held long enough to release)</td>
+</tr>
+<tr>
+<td><strong>H3</strong> right foot on μ 0.05, 30 N·s toward his right</td>
+<td>right foot slides 24 cm, left sticks; recovers in 0.63 s</td>
+<td><strong>SLIPPING on the right foot only</strong>; μ observed <strong>0.050</strong> (true 0.05); DEGRADED 479 ms</td>
+<td>the sliding foot keeps carrying vertical load but its friction is learned; the IK always solves from the foot's <em>current</em> pose, so a sliding foot is never treated as an anchor</td>
+</tr>
+</tbody>
+</table>
+<p><strong>How slip is detected:</strong>
+- A foot is SLIPPING when it is loaded and all four sole corners have moved sideways more than 3 cm/s over a 42 ms window, counting only samples taken while it was loaded.
+- A rolling foot keeps a stationary pivot corner, so it isn't slip. Impact jitter doesn't accumulate. A foot being put back down doesn't count.
+- In the 56 normal-friction runs, no slip is flagged before the controller has released a fall. There are no false slips while balancing.</p>
+<h2>6. Honest fall (G)</h2>
+<p><strong>G_fall: 90 N·s forward.</strong>
+- RECOVERABLE_HIP at +21 ms, then STEP_NEEDED at +42 ms (ξ 6.1 cm beyond the hip-extended support).
+- <strong>Released</strong> at +100 ms, after the 62.5 ms confirmation.
+- First non-foot ground contact at +1.22 s: <strong>1.18 s after the flag.</strong></p>
+<p><strong>Every push past a boundary does the same</strong> (lead 1.2–1.7 s): the controller stops requesting posture and the articulated body falls under physics.</p>
+<p><strong>How the release works:</strong>
+- <strong>Stopped:</strong> balance offsets, stance IK, the hip strategy and re-planting.
+- <strong>Kept:</strong> the targets go to the nominal pose, stiffness ramps to 30 % over 0.1 s, and <strong>60 % of the static gravity support is kept (muscle tone)</strong>.
+- <strong>Never done:</strong> increase strength, drag the root, teleport feet, enlarge friction, freeze the pelvis, or snap to a fall pose.</p>
+<p><strong>The tone choice was forced by a failure:</strong>
+- My first release (15 % stiffness, no gravity support) made the heavy trunk <strong>jackknife</strong> over straight legs in forward falls: 30–33° hip fold, trunk folded past horizontal to 129–136°. That's visually pathological.
+- Keeping partial tone gives a whole-body topple with a natural 11–14° hip and 14–23° knee give, and the trunk lands at about 92°.
+- Evidence: <code>analysis/fall_release_tone.txt</code>, and stills 11 / 24–26.</p>
+<p><strong>Re-engagement:</strong> if the physics shows in-place balance is clearly possible again for 100 ms after a release, balance re-engages (ramped). It never fires in the final suite, but it fixed a false release during development (§16).</p>
+<h2>7. Strength comparison (I)</h2>
+<p>The strength multiplier scales every directional torque limit and stiffness; damping scales with √.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>weak ×0.5</th>
+<th><strong>candidate</strong></th>
+<th>excessive ×3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>quiet stance</td>
+<td>stands, ankle effort 20 %</td>
+<td>stands, 10 %</td>
+<td>stands, 3.4 %</td>
+</tr>
+<tr>
+<td>forward 30 / 50</td>
+<td>recovers / <strong>falls</strong> (ankles saturated 817 ms)</td>
+<td>recovers / recovers</td>
+<td>recovers / recovers</td>
+</tr>
+<tr>
+<td>lateral 40 / 60</td>
+<td><strong>falls</strong> / falls</td>
+<td>recovers / falls</td>
+<td>recovers / <strong>recovers</strong></td>
+</tr>
+<tr>
+<td>lateral 60 peak torques</td>
+<td>—</td>
+<td>(falls)</td>
+<td>hip ab/adduction <strong>254 N·m</strong>, ankle roll <strong>77 N·m</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why the excessive profile is not the selected solution:</strong>
+- It survives more only because it uses torques no player has. Its lateral-60 recovery needs about 1.8 × a strong human's hip abduction and 2.2 × the ankle roll.
+- At its quiet-stance effort (3.4 %) it is statue-like.
+- Its boundary no longer means anything physical.
+- <strong>Weak</strong> shows the other failure: posture holds, but the ankles and hips saturate early and it falls.
+- <strong>The candidate uses 10 % effort in quiet stance and saturates only when a push genuinely exceeds a human's capacity.</strong></p>
+<h2>8. Sensing validation (A)</h2>
+<table>
+<thead>
+<tr>
+<th>check</th>
+<th>method</th>
+<th>result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>COM / COM velocity</strong></td>
+<td>mass-weighted body COMs and velocities (exact)</td>
+<td>SV_static: |v| &lt; 0.001 m/s, drift 0.6 mm</td>
+</tr>
+<tr>
+<td><strong>total ground force</strong></td>
+<td>momentum: F = M·Δv_COM/dt − M·g − J_push/dt</td>
+<td>static: ΣF_y vs Mg <strong>0.01–0.08 N</strong> · free fall: F ≈ 0 until touchdown; the residual that grows to 7.8 N is Jolt's linear damping (0.05 s⁻¹ × m × v), identified exactly</td>
+</tr>
+<tr>
+<td><strong>CoP</strong></td>
+<td>angular momentum about the COM: L̇ = (p − c) × F</td>
+<td>inside the measured contact polygon <strong>100 %</strong> of quasi-static steps in every test</td>
+</tr>
+<tr>
+<td><strong>per-foot load</strong></td>
+<td>Newton on the foot: F_f = m_f·Δv_f/dt − m_f·g − λ_ankle/dt</td>
+<td>L + R vs total <strong>0.15 N mean, 0.2 N max</strong> · airborne foot (no manifold) <strong>0.04 N mean, 0.1 N max</strong> (= damping)</td>
+</tr>
+<tr>
+<td><strong>per-foot load, independent cross-check</strong></td>
+<td>lever rule from the momentum CoP vs the ankle-impulse loads</td>
+<td>load-share error <strong>0.2 %</strong> (static) · <strong>1.5 % mean, 3.1 % max</strong> during the commanded 8 cm weight shift (SV_shift)</td>
+</tr>
+<tr>
+<td><strong>support polygon</strong></td>
+<td>hull of the touching points (contact) / hull of the loaded soles (support region)</td>
+<td>always contains the measured CoP</td>
+</tr>
+<tr>
+<td><strong>capture point</strong></td>
+<td>ξ = c + v/ω0, ω0 = √(g/h); matches the review probe's values on the same runs</td>
+<td>the XCoM exit precedes the visible fall: in every fall the STEP_NEEDED / UNRECOVERABLE flag comes 1.2–1.7 s before the first body contact with the ground; heel or toe roll is first seen 0.08–0.69 s after the push</td>
+</tr>
+<tr>
+<td><strong>contact state</strong></td>
+<td>points + load + windowed slip, with integer-step hysteresis</td>
+<td>reproduces heel / toe / edge / liftoff / touchdown / slip; one-step speculative-contact lead handled (§11)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>These are estimates, not solver outputs:</strong>
+- Every quantity comes from Jolt's integrated velocities and constraint impulses. JoltPhysics.js does not expose contact impulses.
+- <strong>Failure cases:</strong> impact spikes (heel strike reads up to about 1100 N for a few steps); speculative contacts (load can arrive one step before geometric touch); and a floor of about 0.1 N from damping.</p>
+<h2>9. Balance equations and controller</h2>
+<p><strong>Sensing, every 240 Hz step</strong> (optionally delayed by d steps for the controller):</p>
+<pre><code>c = Σ mᵢcᵢ / M      v = Σ mᵢvᵢ / M      L = Σ (Rᵢ Iᵢ Rᵢᵀ ωᵢ + mᵢ (cᵢ − c) × vᵢ)      h = c_y      ω0 = √(g/h)
+ξ = c_xz + v_xz / ω0                                   (extrapolated COM / instantaneous capture point; Hof 2005, Pratt 2006)
+support region R = hull(sole footprints of loaded, touching feet)       contact polygon C = hull(touching contact points)
+m_ξ = signed distance(ξ, R)                            (Hof's margin of stability; &gt; 0 inside)
+</code></pre>
+<p><strong>Ankle strategy: capture-point CoP law</strong> (Koolen / Pratt 2012 instantaneous capture-point control):</p>
+<pre><code>ξ_ref  = ankle midpoint + 0.041 m · heading          (COM over mid-foot, as in the nominal stance)
+p*_raw = ξ + k_ξ (ξ − ξ_ref),     k_ξ = 0.5           → ξ̇ = −ω0 k_ξ (ξ − ξ_ref);  total ankle stiffness ≈ (1 + k_ξ) m g h
+friction: once a foot has been seen sliding,  |p*_raw − c| ≤ h · Σ μᵢ Nᵢ / (M g)   (sliding foot: observed μ; sticking foot: belief 0.9)
+p*     = clamp(p*_raw, R shrunk by 1.5 cm),     r = p*_raw − p*          (r ≠ 0 → the ankle strategy is saturated)
+</code></pre>
+<p><strong>Desired ground reaction.</strong> The LIPM line of action passes through the COM, so the ground force alone creates no angular momentum:</p>
+<pre><code>F_net = M g · [ (c_x − p*_x)/h , 1 , (c_z − p*_z)/h ]
+</code></pre>
+<p>It is split between stance feet by the lever rule along the foot-centre line; each foot's CoP is clamped into its own contact area.</p>
+<p><strong>Joint torques by Jᵀ.</strong> For each joint j (point p_j), the torque the motor must apply on its child subtree:</p>
+<pre><code>τ_j = − Σ_{i ∈ subtree(j)} (cᵢ − p_j) × mᵢ g  −  Σ_{feet f ∈ subtree(j)} (c_f − p_j) × F_f
+τ_G  = τ with the CoP at the COM projection (static support)      → GRAVITY / feed-forward
+τ_B  = τ(p*) − τ_G                                                   → BALANCE (ankle strategy through the whole stance chain)
+</code></pre>
+<p><strong>Hip strategy.</strong> When the CoP saturates, a centroidal moment is generated by torquing the trunk about the hips (Horak &amp; Nashner; the flywheel in Pratt 2006):</p>
+<pre><code>τ_trunk = M g (ŷ × r)     (forward ξ error → trunk pitches forward, hips pushed back)
+clamped to 0.8 × Σ stance-hip limits (flexion / extension / ab-adduction by direction), zeroed past 35° of trunk deviation;
+applied to the pelvis through the stance hips (each thigh receives −share · τ_trunk)
+</code></pre>
+<p><strong>Torques become targets.</strong> The equilibrium-point shift is expressed in each joint's own constraint space:</p>
+<pre><code>Δθ_G = C⁻¹ R_childᵀ τ_G / k_p        Δθ_B = C⁻¹ R_childᵀ τ_B / k_p        (hinge: Δ = τ·axis / k_p)
+target = q_nominal ⊗ exp(Δθ_G + Δθ_B)                      (|Δ| ≤ 0.7 rad)        velocity target = 0
+</code></pre>
+<p><strong>q_nominal: stance built upward from the actual feet.</strong>
+- Desired pelvis: horizontally at its <strong>current</strong> position; height = mean ankle height + 0.917 m (the nominal stance); orientation = heading from the feet × 2° nominal pitch.
+- <strong>Two-bone IK</strong> per stance leg, from the desired hip-joint position to the <strong>actual</strong> ankle, with the knee pole along the foot's own forward direction.
+- Hip target = csOfRel(R_pelvis,desiredᵀ R_thigh). <strong>Because the hip is driven from a world-frame pelvis goal, the stance hips hold the trunk upright in the world:</strong> that's the anti-jackknife mechanism.
+- Knee target = datan2 of the bend.
+- Ankle target = csOfRel(R_shinᵀ R_foot,actual): the foot stays exactly as it physically is.
+- A foot that has left the ground is reached back to <strong>its own landed pose</strong>: the same place, not a step.
+- The upper body uses the nominal stance pose.</p>
+<p><strong>Motors (Gate B, revised):</strong>
+- PositionAndVelocity, implicit spring, k_p as in Gate B.
+- k_d: legs blend stance ↔ swing by the measured foot load.
+- Directional limits × budget weights (§12).</p>
+<p><strong>Determinism:</strong> everything that reaches a target or a decision uses only + − × ÷ √ and the deterministic <code>dsin</code> / <code>dcos</code> / <code>dtan</code> / <code>datan2</code> / <code>dacos</code> / <code>dexp</code> (new, accurate to 2e-15). Measurement may use <code>Math.*</code>.</p>
+<h2>10. Support-state classifier</h2>
+<p>It is evaluated every control step from the (delayed) observation, with integer-step hysteresis and dwell (deterministic).</p>
+<table>
+<thead>
+<tr>
+<th>class</th>
+<th>condition</th>
+<th>controller</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>INIT</td>
+<td>first 12 observed steps (by the observation's own time)</td>
+<td>balancing, not classifying</td>
+</tr>
+<tr>
+<td><strong>RECOVERABLE_IN_PLACE</strong></td>
+<td>ankle strategy not saturated and m_ξ ≥ 1.5 cm</td>
+<td>ankle strategy</td>
+</tr>
+<tr>
+<td><strong>RECOVERABLE_HIP</strong></td>
+<td>p* saturated (|r| &gt; 3 mm) or m_ξ &lt; 1.5 cm, but ξ within the hip-extended region: m_ξ ≥ −Δ_hip</td>
+<td>ankle + hip strategy</td>
+</tr>
+<tr>
+<td><strong>STEP_NEEDED</strong></td>
+<td>m_ξ &lt; −Δ_hip (or the friction-limited equivalent) <strong>and</strong> one ≤ 0.3 s step could still reach the capture point (≤ 0.55 m beyond the edge)</td>
+<td>C1: shown explicitly; <strong>held 62.5 ms → release</strong> (no stepping)</td>
+</tr>
+<tr>
+<td><strong>UNRECOVERABLE</strong></td>
+<td>not even one step could reach it; or both feet off the ground; or trunk &gt; 55°; or COM below 78 % of stance height</td>
+<td>release (2 steps for the physical conditions)</td>
+</tr>
+<tr>
+<td><strong>FALLING</strong></td>
+<td>released</td>
+<td>tone only (§6); re-engage if clearly recoverable for 100 ms</td>
+</tr>
+<tr>
+<td><strong>GROUNDED</strong></td>
+<td>any non-foot body on the turf for 2 steps</td>
+<td>tone only</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Hip-extended capacity Δ_hip</strong> comes from physics, not tuning. Pratt 2006's LIPM + flywheel gives:</p>
+<pre><code>Δ = d (1 − e^(−ω0 T))²,    d = τ / (M g),    T = √(θmax · I_ub / τ)
+</code></pre>
+<p>with τ = 0.8 × both hips' flexion, extension or ab-adduction limit, θmax = 35°, and I_ub = 9.55 kg·m² (the upper body about the hip centre). Result: <strong>4.7 cm forward, 4.9 cm backward, 4.4 cm lateral.</strong> It scales with the strength profile, so the weak and strong sweeps move the classifier boundary for physical reasons.</p>
+<p><strong>The step-reach test is a coarse placeholder for Gate D.</strong> Both STEP_NEEDED and UNRECOVERABLE lead to a fall in C1; the distinction is information only.</p>
+<h2>11. Foot-contact and load methodology</h2>
+<p><strong>Contact per foot (every step):</strong>
+- The manifold points against the turf. A point is <strong>touching</strong> when depth &gt; −0.5 mm; speculative contacts are excluded.
+- A foot also counts as <strong>in contact</strong> when a speculative manifold exists <em>and</em> its measured load exceeds 40 N. Jolt acts on contacts up to 2 cm apart, so load can arrive one step before geometric touch; this was found in SV_freefall.</p>
+<p><strong>Load and shear:</strong> F_f = m_f·(v_f(n) − v_f(n−1))/dt − m_f·g − λ_ankle/dt. λ_ankle is the ankle joint's accumulated point-constraint impulse, the shin's force on the foot. Newton on the foot then leaves the ground reaction.</p>
+<p><strong>States (with hysteresis):</strong>
+- AIR, then TOUCHDOWN (30 ms), then FLAT (heel and toe points both present) / HEEL / TOE / EDGE (from which box corners touch, in the foot's own frame);
+- LIFTOFF (touching but unloaded: loaded above 40 N, unloaded below 25 N);
+- SLIPPING (§5).</p>
+<p><strong>Anchor:</strong> the actual pose at planting. It updates at every re-plant, is never snapped, and is used only for re-planting a lifted foot and for slide distance.</p>
+<p><strong>Planned vs actual:</strong> the C1 plan is "both feet planted". The harness shows the actual state. The support region uses only loaded, touching feet: physical contact decides support, not expectation.</p>
+<p><strong>Root-force detector:</strong> the pelvis's residual m_p·a_p − m_p·g + Σ λ_joint→pelvis/dt − push, over steps when the pelvis touches nothing.
+- <strong>Validated</strong> by applying it to the historical Gate B support fixture: it reads the fixture's force (mean 63 N) to <strong>0.04 N</strong> (<code>analysis/root_force_detector_on_gate_b_fixture.txt</code>).
+- In C1 it reads <strong>0.039 N mean, 1.0 N max</strong> before any fall.</p>
+<h2>12. Motor strength and torque changes from Gate B</h2>
+<p><strong>Directional limits</strong> (N·m). Sign convention verified by a one-joint probe (<code>analysis/motor_axis_sign_probe.txt</code>).</p>
+<table>
+<thead>
+<tr>
+<th>joint</th>
+<th>Gate B</th>
+<th>C1 candidate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ankle</td>
+<td>±110, every axis</td>
+<td><strong>plantarflexion 150 / dorsiflexion 45</strong>, inversion/eversion ±35, twist ±20</td>
+</tr>
+<tr>
+<td>knee</td>
+<td>±190</td>
+<td><strong>extension 250</strong> (Harbo 2012: 247) / flexion 130</td>
+</tr>
+<tr>
+<td>hip</td>
+<td>±220</td>
+<td>extension 250 / flexion 190, ab-adduction ±140, rotation ±60</td>
+</tr>
+<tr>
+<td>spine (lumbar, thoracic)</td>
+<td>±200</td>
+<td>extension 250 / flexion 180, lateral ±150, rotation ±80</td>
+</tr>
+<tr>
+<td>neck</td>
+<td>±35</td>
+<td>extension 45 / flexion 25, lateral ±30, rotation ±20</td>
+</tr>
+<tr>
+<td>shoulder</td>
+<td>±70</td>
+<td>extension 80 / flexion 70, ab-adduction ±65, rotation ±45</td>
+</tr>
+<tr>
+<td>elbow</td>
+<td>±60</td>
+<td>flexion 75 / extension 50</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Other changes:</strong>
+- <strong>Multi-axis budget.</strong> Each step, every SixDOF axis gets its directional limit × w_i, where w_i = max(0.25, |e_i| / |e|) is that axis's share of the current demand (e = target vs current rotation). The worst-case vector effort is 1.06 × the directional maximum instead of √3 ×; <strong>measured max |τ| ÷ directional max over all 59 tests is 1.01.</strong> This is an actuator property, so it uses the current (undelayed) joint state.
+- <strong>Stiffness k_p:</strong> unchanged from Gate B; only the limits changed. Nothing was weakened globally.
+- <strong>Stance damping</strong> (hip / knee / ankle): 0.3 × Gate B's stance-load critical damping, i.e. ankle 84, knee 64, hip 42 N·m·s/rad (§4).
+- <strong>Swing / unloaded damping:</strong> critical for the distal leg, i.e. ankle 4.5, knee 30, hip 90 N·m·s/rad. The blend is driven by the measured load, low-passed.
+- <strong>Trunk, neck and arms:</strong> Gate B damping.</p>
+<h2>13. Balance and recovery metrics exposed</h2>
+<p><strong>Per step (harness):</strong>
+- COM, v_COM, ξ, ω0;
+- support region, contact polygon, ξ margin and COM margin;
+- measured and demanded CoP, net GRF, angular momentum;
+- trunk / pelvis tilt, spine bend;
+- per foot: state, points, load, shear, slip speed, slide distance, μ used / available, friction state, anchor;
+- class and reason;
+- per joint: nominal, gravity offset, balance offset, final target, actual, motor torque, effort ÷ budgeted limit, saturation;
+- pelvis external-force residual;
+- the Gate A stability metrics.</p>
+<p><strong>Per run (JSON):</strong>
+- outcome, highest class, class times, recovery time, fall lead, first foot roll;
+- COM excursion and peak speed, minimum ξ / COM margins;
+- trunk, pelvis and spine maxima, angular-momentum peak;
+- foot slide, load-share range;
+- quiet-stance drift, sway, CoP path and ankle effort;
+- friction (first slip per foot, degraded ms, observed μ, friction limit);
+- sensing checks, root residual, stability, per-joint peaks / effort / saturation / budget;
+- <strong>pathology flags</strong> (spine bend &gt; 30° while balancing, trunk &gt; 20° while classified in-place, foot slide &gt; 1 cm, saturation streaks &gt; 300 ms);
+- CPU split.</p>
+<p><strong>Joint-angle error is deliberately not the whole-body quality metric,</strong> after Gate B's jackknife lesson.</p>
+<h2>14. Determinism</h2>
+<ul>
+<li><strong>59 / 59 C1 tests</strong> are bit-identical over 3 runs (FNV-1a over every body's Float64 state, every step).</li>
+<li><strong>Chrome 154 = Node 22.19 for 59 / 59</strong> (<code>gatec1_crossruntime_chrome_vs_node.txt</code>).</li>
+<li><strong>Gate A 5 / 5 and Gate B 20 / 20</strong> hashes are unchanged after all C1 changes.</li>
+</ul>
+<h2>15. Performance</h2>
+<p>One character, Apple M4, Node, per rendered 60 Hz frame (4 physics steps):</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>range over 59 tests</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>total</strong></td>
+<td><strong>0.61 – 0.78 ms</strong></td>
+</tr>
+<tr>
+<td>Jolt step</td>
+<td>0.50 – 0.68 ms</td>
+</tr>
+<tr>
+<td>sensing</td>
+<td>≤ 0.09 ms</td>
+</tr>
+<tr>
+<td>controller (support, classifier, IK, Jᵀ, budget)</td>
+<td>≤ 0.13 ms</td>
+</tr>
+</tbody>
+</table>
+<p>That is about 4–5 % of a 16.7 ms frame. Balance costs about 0.1–0.2 ms over Gate B.</p>
+<h2>16. Known failures, limitations and development findings</h2>
+<p><strong>Findings during C1.</strong> Each was a physically wrong behaviour; I fixed it and kept the evidence.</p>
+<ol>
+<li><strong>A toe stand was misread as lost support (PF60).</strong> Capture margins were measured against the <em>current contact points</em>, so a body up on its toes was released while it was actually recovering.<ul>
+<li>Fix: split the <strong>support region</strong> (whole loaded soles; a rolled foot can roll back) from the <strong>contact polygon</strong> (where CoP can be commanded now).</li>
+</ul>
+</li>
+<li><strong>The CoP demand held the heels up (PF60).</strong> Clamping the demand to the toe-edge contact kept plantarflexing while the body rocked back, and he fell backward.<ul>
+<li>Fix: clamp to the support region, so a smaller demand lets the heels roll down.</li>
+</ul>
+</li>
+<li><strong>Slip false positives.</strong><ul>
+<li>A centroid velocity, and then a per-point instantaneous velocity, flagged heel-strike rotation as slip on both feet and caused a false release (PF50).</li>
+<li>A window that spanned a foot's pre-touchdown travel flagged a re-plant as a 13–18 cm/s slide (PR30).</li>
+<li>Fix: windowed minimum-corner slide over loaded samples only.</li>
+</ul>
+</li>
+<li><strong>Speculative-contact lead:</strong> load arrives one step before geometric touch. Now counted as contact.</li>
+<li><strong>Delay warmup bug:</strong> with delay, the controller saw the t = 0 snapshot (no contacts) and released at start. Warmup now uses the observation's own time.</li>
+<li><strong>Slipping-foot exclusion was too conservative:</strong> it gave up at startup on the patch test (H3). Now a sliding foot stays in the support region and friction is limited instead.</li>
+<li><strong>Intrinsic damping hid the delay</strong> (§4).</li>
+<li><strong>Release jackknife</strong> (§6).</li>
+</ol>
+<p><strong>Remaining limitations:</strong>
+- <strong>No noise:</strong> quiet sway is 1 mm (caveat 1). A deterministic seeded noise model would be the next realism step; it is not added.
+- <strong>No protective reactions in falls</strong> (arms hang, no hand plant, no roll). Out of C1 scope; the fall shape depends on the release-tone choice.
+- <strong>One-leg lingering near the lateral boundary</strong> (PR50, DR45: 1–1.5 s on one foot, ankle roll saturated for 2–3 s). Honest without stepping; a player would step. Also, a lifted foot whose landed spot is out of reach hangs (the re-plant IK can't reach it).
+- <strong>Long, oscillatory recoveries for big pushes</strong> (2–2.8 s, from the lower intrinsic damping).
+- <strong>The friction belief is μ = 0.9 until a slide is seen.</strong> The controller can demand more friction than exists until then, and does on ice (a brief friction-limited STEP_NEEDED flag in H2).
+- <strong>Coarse step-reach placeholder</strong> (0.3 s / 0.55 m) separating STEP_NEEDED from UNRECOVERABLE: labelling only in C1.
+- <strong>Swing damping above stance damping at the hip</strong> (90 vs 42 N·m·s/rad): a by-product of the two separate rules; harmless in C1, and it will matter for C2's swing leg.
+- <strong>Estimator noise at impacts</strong> (heel strikes read about 1100 N for a few steps). The controller never uses the measured CoP; loads feed only the gain blend and the slip test.
+- <strong>Not measured in C1:</strong> rendered-mesh sinking as a suite metric (the harness shows it live per frame), other characters, uneven ground.</p>
+<p><strong>Visually questionable frames (flagged even though they pass):</strong>
+- <strong>PR50 at 2.6 s:</strong> balancing on one leg, far foot hanging.
+- <strong>PF65 / G_fall mid-fall:</strong> a forward topple with the arms hanging (no protective reach).
+- <strong>H3:</strong> the right foot sliding 24 cm sideways while the body stays upright. That is physically right on μ 0.05, but it looks like skating.</p>
+<hr />
+<h2>Evidence and files</h2>
+<p><strong>Evidence (<code>review_artifacts/physical_character_v1/gate_c1/</code>):</strong></p>
+<ul>
+<li><code>contact_sheet_1.jpg</code>, <code>contact_sheet_2.jpg</code>: 29 key frames; the questionable ones are labelled red.</li>
+<li><code>stills/</code>: the 29 viewport frames.</li>
+<li><code>harness_frames/</code>: full harness screenshots.</li>
+<li><code>gatec1_final_240x1.json</code> / <code>.log</code>: every metric; 3 runs per test.</li>
+<li><code>gatec1_crossruntime_chrome_vs_node.txt</code>.</li>
+<li><code>analysis/</code>:<ul>
+<li>the root-force detector on the Gate B fixture;</li>
+<li>intrinsic damping vs delay;</li>
+<li>fall-release tone;</li>
+<li>motor-axis sign probe;</li>
+<li>the scripts.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Code (<code>sandbox/visual/physchar/</code>, untracked):</strong></p>
+<table>
+<thead>
+<tr>
+<th>file</th>
+<th>status</th>
+<th>contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pc_sense.js</code></td>
+<td>new</td>
+<td>sensing: COM, ξ, polygons, contacts, loads, slip, CoP</td>
+</tr>
+<tr>
+<td><code>pc_balance.js</code></td>
+<td>new</td>
+<td>limits, budget, gains, support state, classifier, composer, release</td>
+</tr>
+<tr>
+<td><code>pc_gatec1.js</code></td>
+<td>new</td>
+<td>tests, runner, measurement, assertions</td>
+</tr>
+<tr>
+<td><code>tools/gatec1_run.js</code></td>
+<td>new</td>
+<td>the Node runner</td>
+</tr>
+<tr>
+<td><code>pc_math.js</code></td>
+<td>extended</td>
+<td>deterministic <code>datan</code> / <code>datan2</code> / <code>dacos</code> / <code>dexp</code></td>
+</tr>
+<tr>
+<td><code>pc_jolt.js</code></td>
+<td>extended</td>
+<td>friction patches by contact point, per-step motor re-tuning, joint impulses (Gate A/B paths unchanged, hashes re-verified)</td>
+</tr>
+<tr>
+<td><code>pc_harness.js</code> + <code>index.html</code></td>
+<td>extended</td>
+<td>the C1 suite, overlays, charts and panels; Gate B labelled as a historical fixture</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Also preserved or amended:</strong>
+- <strong>Gate B baseline:</strong> <code>worktrees/_preserved_2026-09-29_physical_character_gate_b/</code> (tgz + README).
+- <strong>Gate B report:</strong> a dated <strong>addendum</strong> re-labels its whole-body results as support-assisted. The original text is kept.</p>
+<p><strong>Reproduce:</strong></p>
+<pre><code>cd &quot;…/physical-character-v1/sandbox/visual/physchar&quot;
+node tools/gatec1_run.js --tests all --repeat 3 --out results/gatec1_final_240x1.json     # ≈ 50 s, one process
+node tools/gatec1_run.js --tests group:PF --brief                                         # one group
+</code></pre>
+<p><strong>Not done, as instructed:</strong> corrective stepping, walking, running, locomotion, tackle animation, two-player collision, protective fall choreography, get-up, player attributes, learning or optimisation controllers, any external pelvis or root force, the Reference Tackle, commits and pushes.</p></main></body></html>

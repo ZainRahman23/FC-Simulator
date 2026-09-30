@@ -1,0 +1,1668 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Anatomy V1.1 Report</title><style>
+:root{--bg:#fbfaf7;--ink:#1d1f22;--mute:#5d646b;--line:#dcd8cf;--code:#f1eee7;--acc:#8a5a00;--q:#f4efe2}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#141619;--ink:#e6e4df;--mute:#9aa0a6;--line:#33373d;--code:#1d2024;--acc:#f0c060;--q:#1f1c14}}
+:root[data-theme="dark"]{--bg:#141619;--ink:#e6e4df;--mute:#9aa0a6;--line:#33373d;--code:#1d2024;--acc:#f0c060;--q:#1f1c14}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 -apple-system,system-ui,"Segoe UI",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px 80px}
+h1{font-size:26px;line-height:1.25} h2{font-size:20px;margin-top:40px;padding-top:12px;border-top:1px solid var(--line)} h3{font-size:16px;color:var(--acc)}
+table{border-collapse:collapse;width:100%;font-size:13px;margin:12px 0;display:block;overflow-x:auto} th,td{border:1px solid var(--line);padding:5px 8px;vertical-align:top;text-align:left} th{background:var(--code)}
+code{background:var(--code);padding:1px 4px;border-radius:3px;font-size:12.5px} pre{background:var(--code);padding:12px;border-radius:6px;overflow-x:auto;font-size:12px;line-height:1.45} pre code{padding:0;background:none}
+blockquote{margin:12px 0;padding:10px 16px;background:var(--q);border-left:4px solid var(--acc)} a{color:var(--acc)}
+img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:4px} li>ul,li>ol{margin:4px 0}
+</style></head><body><main><h1>Physical Character V1.1 — anatomy / joint-ROM calibration</h1>
+<p><strong>Status:</strong> built, measured, awaiting your visual review · worktree <code>physical-character-v1</code> · <strong>nothing committed or pushed</strong> · C3 not started.
+<strong>Date:</strong> 2026-09-30 · Jolt 5.6.0 · 240 Hz × 1 · one character, one process, one headless browser, sequential runs.</p>
+<p>The V1 baseline stays reproducible. Every approved Gate A/B/C1/C2 test re-runs <strong>bit-identically</strong> under <code>--calib V1</code>. V1.1 is a separate calibration (<code>--calib V1.1</code>), and the harness switches between the two bodies live.</p>
+<h2>0 · Summary</h2>
+<table>
+<thead>
+<tr>
+<th>question</th>
+<th>answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Why were the hips 32 cm apart?</td>
+<td>The Astra shared-skeleton template hangs each leg from x = ±0.1805 m. For this player that becomes ±0.1615 m, i.e. <strong>81 % of the visible hip half-width</strong>. Human hip joint centres sit at about ±9 cm. It was a rig property, not a physics or collider choice.</td>
+</tr>
+<tr>
+<td>Corrected spacing</td>
+<td><strong>18.4 cm</strong> (±9.2 cm; Bardakos &amp; Freeman 2012, Hara 2016, Harrington 2007). The mesh, colliders and visible width (40.8 cm) are unchanged.</td>
+</tr>
+<tr>
+<td>Single-leg stance</td>
+<td>Static hip-abduction demand drops <strong>124 → 74 N·m</strong> (88 → 53 % of the unchanged 140 N·m cap). The 13.4° compensating lean is no longer needed (0°). Measured in a 20 s hold: <strong>98 → 69.1 N·m</strong> (70 → 49.3 % of the limit), no lean, held 20.45 s.</td>
+</tr>
+<tr>
+<td>Dorsiflexion</td>
+<td>20° was a non-weight-bearing, knee-extended number applied to a loaded, knee-flexed stance ankle. V1.1 uses 30°, still well inside the weight-bearing norm (&gt; 40°). The neutral orientation and ankle joint centre were correct.</td>
+</tr>
+<tr>
+<td>Muscles</td>
+<td><strong>No capacity raised.</strong> Four caps were <em>lowered</em> to the evidence: hip flexion 190 → 170, hip extension 250 → 230, shoulder abduction 65 → 60, elbow flexion 75 → 60 N·m. Hip abduction stays 140.</td>
+</tr>
+<tr>
+<td>Gate B / C1</td>
+<td>Same or better. C1 PR50 now <strong>recovers</strong> (V1 fell); PR45 recovers in 0.83 s (V1 2.83 s).</td>
+</tr>
+<tr>
+<td>Gate A</td>
+<td><strong>Regressions:</strong> drop A knee-stop energy injection +12.755 J (V1 2.6 J); drop B shoulder hard-limit excursion 16.4° (V1 5.6°); elbow soft-stop overshoots; drop E starts with the arm inside the head (a V1-authored pose).</td>
+</tr>
+<tr>
+<td>Gate C2, approved controller</td>
+<td><strong>Regression:</strong> no weight transfer completes. The swing foot keeps 85 N against the 38 N gate.</td>
+</tr>
+<tr>
+<td>C2 + the recalibrations the anatomy requires (R1, R2)</td>
+<td>Still no transfer (57 N). J_repeat falls.</td>
+</tr>
+<tr>
+<td>C2 + diagnostic D1 (not adopted)</td>
+<td>The V1.1 body <em>can</em> do it: 10 of the 13 placement/lift tests complete (J_repeat 6/6, V1 5/6); I_block is blocked and held as in V1; D_fwd_R, G_far lose balance in acceptance.</td>
+</tr>
+<tr>
+<td>Recommendation</td>
+<td>Adopt V1.1 as the anatomical body. <strong>Do not</strong> make it the working baseline until you rule on the C2 controller item (D1), forward-step acceptance under the larger ROM, and the Gate A items (§16).</td>
+</tr>
+</tbody>
+</table>
+<h2>1 · Research summary and sources</h2>
+<table>
+<thead>
+<tr>
+<th>quantity</th>
+<th>evidence</th>
+<th>used in V1.1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hip joint centre (HJC), medio-lateral</td>
+<td>Bardakos &amp; Freeman 2012: 90.6 mm from the midline (men). Hara et al. 2016 (CT, n = 157): ML = 8 + 0.086·LL mm ≈ 92 mm here. Harrington et al. 2007 (Bell/Davis/Harrington review): ≈ 90 mm</td>
+<td><strong>±0.092 m</strong></td>
+</tr>
+<tr>
+<td>HJC height</td>
+<td>Drillis &amp; Contini: greater trochanter ≈ 0.530 H</td>
+<td>unchanged (0.533 H)</td>
+</tr>
+<tr>
+<td>Pelvis width</td>
+<td>the visible mesh is 40.8 cm at hip-centre height. Male bi-trochanteric breadth is ≈ 33–36 cm, so human HJC spacing is ≈ 50–55 % of it</td>
+<td>mesh unchanged</td>
+</tr>
+<tr>
+<td>Knee joint centre</td>
+<td>hip–knee–ankle mechanical alignment ≈ 180 ± 3° (neutral)</td>
+<td>on the hip→ankle line (±0.128 m)</td>
+</tr>
+<tr>
+<td>Ankle joint centre</td>
+<td>≈ malleolar height (≈ 0.04–0.05 H)</td>
+<td>mesh value kept (0.088 m)</td>
+</tr>
+<tr>
+<td>Shoulder joint centre</td>
+<td>glenohumeral centre ≈ 5–7 cm below acromion height (acromion 0.818 H = 1.554 m). The rig's (±0.258, 1.595) lies 8 cm <em>above</em> the deltoid cap, outside the mesh</td>
+<td><strong>(±0.245, 1.485)</strong></td>
+</tr>
+<tr>
+<td>Segment masses / COMs / radii of gyration</td>
+<td>de Leva 1996 (male columns)</td>
+<td>unchanged fractions. COM now on the joint-centre line</td>
+</tr>
+<tr>
+<td>ROM</td>
+<td>CDC normative joint motion (Soucie et al. 2011, males 20–44): hip flex 130.4, <strong>hip ext 17.4</strong>, knee flex 137.7, <strong>ankle DF 12.7 (non-weight-bearing, knee extended)</strong>, PF 54.6, shoulder flex 168.8, elbow flex 144.6. Weight-bearing lunge test norms: DF <strong>&gt; 40°</strong></td>
+<td>§5</td>
+</tr>
+<tr>
+<td>Strength</td>
+<td>Harbo et al. 2012 (isometric, men &lt; 30 y): knee ext 265 ± 73, <strong>hip flex 167 ± 37</strong>, DF 44 ± 11, <strong>shoulder abd 60 ± 14</strong>, <strong>elbow flex 50 ± 18</strong> N·m. Isokinetic: <strong>hip ext 197 ± 58</strong>, knee flex 106, PF 128. Hip abduction ≈ 1.3–1.9 N·m/kg (≈ 101–148 N·m at 78 kg)</td>
+<td>§6</td>
+</tr>
+</tbody>
+</table>
+<p>Distinguishing <strong>visible width</strong> from <strong>joint-centre width</strong>: the eye reads the pelvis at its surface (40.8 cm here). The femoral heads sit deep inside, about 9 cm either side of the midline, with the greater trochanters and gluteal mass lateral to them. V1 used a template joint at 79 % of the visible half-width. V1.1 moves only the joint centres. The mesh and every collider are the same in world space.</p>
+<h2>2 · Why the hip centres were 32 cm apart</h2>
+<ol>
+<li>The Astra shared skeleton (<code>canonical/source/data/shared-skeleton.json</code>) places <code>thigh_R</code> at <strong>x = +0.1805 m</strong> (mirror for L), with the legs as straight vertical columns.</li>
+<li>Per player: x = (0.1805 − <code>hipJointNarrowingM</code> 0.026) × <code>girdleWidth</code> 1.04 × (1.90 / 1.85)^0.2 = <strong>0.1615 m</strong>, so 32.3 cm apart. The mesh is built around those columns, so the feet also sit at ±0.161 m.</li>
+<li>V1 used the rig bone origins as joint centres (§4 of the architecture), so the physics inherited the template's 32.3 cm. That is <strong>1.76×</strong> the human 18.4 cm.</li>
+<li>Consequence (Gate C2): the single-leg abduction moment arm grows with the half-spacing d, τ0 = g[m_up·d + m_pel·d + m_leg·(2d + e)] = 124 N·m (88 % of the cap). The controller had to lean the trunk 13.4° over the stance hip to bring it to 98 N·m.</li>
+</ol>
+<p>It was not the colliders, the controller or the physics: it was a rig-template property carried into the physics.</p>
+<h2>3 · Corrected hip spacing</h2>
+<p><code>CALIBS["V1.1"].centres.thigh.x = 0.092</code> gives <strong>18.4 cm</strong>. Knees go on the hip→ankle line (±0.128 m). Keeping them at the mesh's ±0.1615 made an 8.2° varus leg, and its two-bone IK fought the knee hinge: quiet stance saturated ankle roll at ±32 N·m. The knee hinge axis is now perpendicular to the straight, splayed bind leg. Ankles stay at the mesh (±0.161). The neutral stance is therefore a <strong>4.3°-splayed</strong> stance: feet 32.3 cm apart under hips 18.4 cm apart, a shoulder-width stance. Hip ab/ad and ankle inv/ev limits are re-expressed about that bind, so the anatomical ranges are unchanged: the bind femur is 4.3° abducted and the bind foot 4.3° inverted.</p>
+<p><img alt="anatomy" src="contact_sheet_anatomy.jpg" /></p>
+<h2>4 · The 14 bodies: V1 → V1.1 parameter table</h2>
+<p>Joint centre (JC), segment length, mass, COM, inertia and collider for every body. The audit checks the physics skeleton against the rendered (rig) skeleton. Full machine output: <code>json/spec_v1_vs_v11.json</code> / <code>.txt</code>.</p>
+<table>
+<thead>
+<tr>
+<th>body</th>
+<th>parent joint</th>
+<th>JC V1 → V1.1 (m)</th>
+<th>length</th>
+<th>mass kg</th>
+<th>COM (world) V1 → V1.1</th>
+<th>collider</th>
+<th>fit %</th>
+<th>rendered region</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pelvis</td>
+<td>root</td>
+<td>(0, 1.012, 0)</td>
+<td>—</td>
+<td>8.71</td>
+<td>y 1.058</td>
+<td>box 0.36 × 0.27 × 0.24</td>
+<td>88.6</td>
+<td>pelvis / shorts</td>
+</tr>
+<tr>
+<td>abdomen</td>
+<td>lumbar</td>
+<td>(0, 1.129, 0)</td>
+<td>—</td>
+<td>12.74</td>
+<td>y 1.257</td>
+<td>box</td>
+<td>86.4</td>
+<td>lower trunk</td>
+</tr>
+<tr>
+<td>chest</td>
+<td>thoracic</td>
+<td>(0, 1.362, 0)</td>
+<td>—</td>
+<td>12.45</td>
+<td>y 1.552</td>
+<td>box</td>
+<td>87.1</td>
+<td>upper trunk + clavicles</td>
+</tr>
+<tr>
+<td>head</td>
+<td>neck</td>
+<td>(0, 1.634, 0)</td>
+<td>—</td>
+<td>5.41</td>
+<td>y 1.767</td>
+<td>sphere + neck capsule</td>
+<td>91.3</td>
+<td>head, neck (no hair)</td>
+</tr>
+<tr>
+<td>upperArm L/R</td>
+<td>shoulder</td>
+<td><strong>(±0.258, 1.595) → (±0.245, 1.485)</strong></td>
+<td><strong>0.343 → 0.234</strong></td>
+<td>2.11</td>
+<td>(±0.258, 1.397) → <strong>(±0.253, 1.350)</strong></td>
+<td>tapered capsule, <strong>world-identical</strong></td>
+<td>78.5</td>
+<td>upper arm</td>
+</tr>
+<tr>
+<td>foreArm L/R</td>
+<td>elbow</td>
+<td>(±0.258, 1.251)</td>
+<td>—</td>
+<td>1.74</td>
+<td>(±0.258, 1.048)</td>
+<td>tapered capsule + hand capsule</td>
+<td>72</td>
+<td>forearm + hand</td>
+</tr>
+<tr>
+<td>thigh L/R</td>
+<td>hip</td>
+<td><strong>(±0.1615, 1.012) → (±0.092, 1.012)</strong></td>
+<td>0.482 → 0.484</td>
+<td>11.04</td>
+<td>(±0.162, 0.815) → <strong>(±0.107, 0.815)</strong></td>
+<td>tapered capsule, <strong>world-identical</strong></td>
+<td>75.5</td>
+<td>thigh</td>
+</tr>
+<tr>
+<td>shin L/R</td>
+<td>knee</td>
+<td><strong>(±0.1615, 0.530) → (±0.128, 0.530)</strong></td>
+<td>0.442 → 0.443</td>
+<td>3.38</td>
+<td>(±0.162, 0.333) → <strong>(±0.143, 0.333)</strong></td>
+<td>tapered capsule, <strong>world-identical</strong></td>
+<td>70.3</td>
+<td>shank</td>
+</tr>
+<tr>
+<td>foot L/R</td>
+<td>ankle</td>
+<td>(±0.161, 0.088)</td>
+<td>—</td>
+<td>1.07</td>
+<td>(±0.162, 0.045, 0.077)</td>
+<td>box (boot)</td>
+<td>100</td>
+<td>boot</td>
+</tr>
+</tbody>
+</table>
+<p>Total <strong>78.000 kg</strong> in both. Left and right are mass- and geometry-symmetric in both. Whole-body COM at bind: 0.567 H (V1) → 0.565 H (V1.1).</p>
+<p><strong>Physics vs rendered skeleton.</strong> In V1 the physics skeleton <em>is</em> the rig skeleton. In V1.1 the rendered chain (harness: <em>Anatomy → rendered skeleton</em>) keeps the rig's hip at ±16 cm and its shoulder 8 cm above the cap. The physics centres sit where the anatomy is. Skinning uses M = [R_body | pos − R·origin], so a relocated origin needs no render change: at bind the two skeletons coincide on the mesh. Under large rotations the mesh region skinned to a body still rotates about the <em>anatomical</em> centre, which is the intended correction.</p>
+<h2>5 · ROM: current → evidence → V1.1</h2>
+<table>
+<thead>
+<tr>
+<th>joint · axis</th>
+<th>V1</th>
+<th>evidence</th>
+<th>V1.1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>hip flexion</td>
+<td>120</td>
+<td>130 (CDC, knee flexed); ~80–90 straight-leg</td>
+<td>120 (kept)</td>
+</tr>
+<tr>
+<td><strong>hip extension</strong></td>
+<td><strong>30</strong></td>
+<td><strong>17.4</strong> (CDC males)</td>
+<td><strong>20</strong></td>
+</tr>
+<tr>
+<td>hip abduction / adduction</td>
+<td>45 / 30 about the vertical femur</td>
+<td>40–45 / 30 (AAOS)</td>
+<td>45 / 30 <strong>anatomical</strong>, re-expressed about the 4.3°-abducted bind (R: −34.3…+40.7 from bind)</td>
+</tr>
+<tr>
+<td>hip rotation</td>
+<td>±45</td>
+<td>35–45</td>
+<td>±45 (kept)</td>
+</tr>
+<tr>
+<td>knee flexion / hyperext.</td>
+<td>140 / 3</td>
+<td>137.7 / 0–5</td>
+<td>kept</td>
+</tr>
+<tr>
+<td><strong>ankle dorsiflexion</strong></td>
+<td><strong>20</strong></td>
+<td>12.7 NWB knee-extended · <strong>&gt; 40 weight-bearing lunge</strong></td>
+<td><strong>30</strong></td>
+</tr>
+<tr>
+<td>ankle plantarflexion</td>
+<td>50</td>
+<td>54.6</td>
+<td>kept</td>
+</tr>
+<tr>
+<td>ankle inversion / eversion</td>
+<td>35 / 15 about the bind</td>
+<td>35 / 15 (AAOS, subtalar + midfoot)</td>
+<td>35 / 15 <strong>anatomical</strong>, re-expressed about the 4.3°-inverted bind (R: −30.7…+19.3)</td>
+</tr>
+<tr>
+<td>ankle "twist" (foot ab/adduction)</td>
+<td>±10</td>
+<td>forefoot ab/adduction ≈ 10–20; the model's knee has no axial rotation</td>
+<td>±10 (kept — see §15)</td>
+</tr>
+<tr>
+<td>shoulder flex / ext / abd</td>
+<td>150 / 50 / 150</td>
+<td>168.8 / 50–60 / 180 incl. scapula (no scapula here)</td>
+<td>kept</td>
+</tr>
+<tr>
+<td>elbow</td>
+<td>−2…145</td>
+<td>144.6</td>
+<td>kept</td>
+</tr>
+<tr>
+<td>spine, neck</td>
+<td>as C1</td>
+<td>within AAOS ranges</td>
+<td>kept</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The 20° dorsiflexion investigation:</strong>
+- <strong>Neutral orientation:</strong> correct. At bind the foot is flat and the shank vertical in the sagittal plane; the V1.1 splay is frontal-plane only.
+- <strong>Ankle joint centre:</strong> correct at 0.088 m (≈ malleolar height).
+- <strong>Stance consumption:</strong> the nominal standing posture (slightly flexed knees) already uses <strong>8.1°</strong> of dorsiflexion (C1 QS20, both bodies), leaving 11.9° in V1.
+- <strong>Range:</strong> this is the error. 20° lies between the non-weight-bearing, knee-extended norm (12.7°, gastrocnemius-limited) and the weight-bearing, knee-flexed norm (&gt; 40°, soleus-limited). A stance ankle is loaded with the knee flexed, so 30° is a conservative value inside the evidence.</p>
+<p>The approved C2 build never sat on the DF stop (0 ms at the stop in every C2 test). The limit bound indirectly: it capped the pelvis lowering the feasibility planner allows, and the lift shin angle. It was not raised to make C2 pass. Its consequence is that forward and far steps now pass feasibility at greater length (§11), and D_fwd_R and G_far then lose balance in acceptance (§12).</p>
+<h2>6 · Torque audit</h2>
+<p>Base caps (N·m, before the controller's strength multiplier, 1.0 for "candidate"):</p>
+<table>
+<thead>
+<tr>
+<th>joint · direction</th>
+<th>V1 (C1)</th>
+<th>evidence</th>
+<th>V1.1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>hip flexion</strong></td>
+<td><strong>190</strong></td>
+<td>167 ± 37 isometric</td>
+<td><strong>170</strong></td>
+</tr>
+<tr>
+<td><strong>hip extension</strong></td>
+<td><strong>250</strong></td>
+<td>197 ± 58 isokinetic (isometric higher)</td>
+<td><strong>230</strong></td>
+</tr>
+<tr>
+<td>hip abduction / adduction</td>
+<td>140</td>
+<td>1.3–1.9 N·m/kg → 101–148</td>
+<td>140 (kept, <strong>not raised</strong>)</td>
+</tr>
+<tr>
+<td>hip rotation</td>
+<td>60</td>
+<td>40–60</td>
+<td>60</td>
+</tr>
+<tr>
+<td>knee extension / flexion</td>
+<td>250 / 130</td>
+<td>265 ± 73 / 106 isokinetic (isometric ≈ 130–150)</td>
+<td>kept</td>
+</tr>
+<tr>
+<td>ankle DF / PF / inv-ev</td>
+<td>45 / 150 / 35</td>
+<td>44 ± 11 / 128 isokinetic (isometric 150+) / —</td>
+<td>kept</td>
+</tr>
+<tr>
+<td><strong>shoulder abduction</strong></td>
+<td><strong>65</strong></td>
+<td>60 ± 14</td>
+<td><strong>60</strong></td>
+</tr>
+<tr>
+<td><strong>elbow flexion</strong></td>
+<td><strong>75</strong></td>
+<td>50 ± 18</td>
+<td><strong>60</strong></td>
+</tr>
+<tr>
+<td>elbow extension, spine, neck</td>
+<td>as C1</td>
+<td>within evidence</td>
+<td>kept</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Multi-axis total-effort budget:</strong> unchanged. The M2 policy scales each axis's cap by its share of the rotation-error direction (floor 25 %), which keeps the vector effort within about 1.06× the directional budget. One V1.1 side-effect: the hip twist axis is now the femur's mechanical axis (hip→knee, 4.3° off vertical). About 7.5 % of a sagittal hip moment projects onto twist, and during C2 transfers and acceptance the stance hip's twist sits at its 25 % floor (15 N·m) for about 2 s. It is reported (§15), not tuned. Abduction (Z) never saturates.</p>
+<h2>7 · Mass / COM / inertia</h2>
+<ul>
+<li><strong>Masses:</strong> de Leva fractions × 78 kg, unchanged. Symmetric; total 78.000 kg.</li>
+<li><strong>COM:</strong> V1 placed each limb COM at de Leva's fraction <em>straight below</em> the proximal centre, which was correct while the segment line was vertical. With relocated centres the thigh and shank lines tilt 4.3° and the upper-arm line 3°. V1.1 places the COM <strong>on the joint-centre line</strong> (de Leva's definition): thigh ±0.107 (not ±0.092), shank ±0.143, upper arm ±0.253. This is a real biomechanical correction.</li>
+<li><strong>Collider volume</strong> is not used anywhere as a mass source.</li>
+<li><strong>Inertia:</strong> de Leva radii of gyration × stature ratio, diagonal in body (world-bind) axes. The 4.3° segment tilt adds an off-diagonal term of about 6 % of the transverse moment, inside de Leva's inter-subject spread. Every measurement (KE, sensed angular momentum) assumes the diagonal form, so it is <strong>left diagonal</strong> and noted as an approximation.</li>
+</ul>
+<h2>8 · Colliders</h2>
+<p><strong>No collider changes.</strong> Every V1.1 collider is world-identical to V1 (the same fit % in the table above). Colliders describe the visible body. The fit for a limb with a relocated centre is done along the rig segment and re-expressed about the new centre.</p>
+<p>Two intermediate V1.1 builds got this wrong, and I corrected both before measuring:
+1. Refitting along the new centre lines slid the fit windows. The upper arm (11 cm shorter centre→elbow line) got a thinner, shorter capsule covering <strong>65 %</strong> of its vertices instead of 79 %. A deltoid-sphere patch only partly compensated.
+2. The chest box read the relocated shoulder x for its arm cut-off and narrowed by 7 mm.</p>
+<p>Upper-arm coverage, own colliders / ∪ chest ∪ forearm: V1 78.5 / 87.7 %, V1.1 78.5 / 87.7 %. The boot box (35.7 cm) is longer than an anatomical foot (≈ 27–30 cm). It is stylised and was left alone, as the brief asks: no inflation, only mechanical errors.</p>
+<h2>9 · Controller consequences: anatomical correction vs recalibration</h2>
+<p>With the anatomical body, the <strong>approved C2 controller rejects every weight transfer</strong>: the swing foot keeps 85 N against the 5 % = 38 N lift gate. Three separate items came out of the diagnosis.</p>
+<p><strong>R1 — reach checked where the pelvis is going (<code>anticipateReach</code>, opt-in, off for V1). Logically required by the splay.</strong> With hips narrower than feet, the unloading leg goes taut at 99.6–99.8 % extension before the COM reaches the stance foot. It then carries load as a strut, and ξ stalled 1.7 cm short. The pelvis-lowering reach check now also evaluates the planned COM goal. Result: 85 → 57 N.</p>
+<p><strong>R2 — the runtime reach target equals the feasibility target (<code>reachToGround</code>, opt-in, off for V1). Logically required by the narrower hips.</strong> The feasibility check lowers the pelvis to reach the touchdown depth (flat − 5 mm). The runtime pelvis lowering aimed at the approach point 15 mm <em>above</em> flat. V1's wider hips left about 2 % reach slack that hid the 2 cm inconsistency. In V1.1, single-support reach back to the old footprint needs about 100 % extension, and the straight leg hung 9 mm above the turf ("no ground contact 0.8 s after the planned touchdown").</p>
+<p><strong>What still blocks the transfer (not caused by the anatomy, not fixed):</strong>
+- The transfer's ξ target is the stance <em>weight point</em>, about 5 cm behind the sole-centre line. At that equilibrium, <code>split2</code>'s minimum-ankle-effort distribution keeps about 4–8 % of the weight on the swing foot, because the fore-aft CoP demand is shared by two ankles.
+- V1 only lifted because its realised CoP was biased <strong>+6 mm medially</strong>, so ξ overshot 1.5 cm past the target and the swing share went to zero.
+- V1.1's realised CoP is biased <strong>−5 mm laterally</strong>. The CoP-law equilibrium then settles ξ − ξref = −b / kXi = <strong>1 cm short</strong>, and the swing foot keeps 57 N.
+- (Probe at B_lift_R t = 2.4 s: ξ −15.2 cm, ξref −16.1, p* −14.7, measured CoP −15.2.)</p>
+<p>The approved controller's lift criterion therefore depended on a favourable, unmodelled bias.</p>
+<p><strong>D1 — diagnostic only (<code>--diag-unload</code>, not adopted, not part of any calibration).</strong> During a planned TRANSFER the foot being unloaded gets zero commanded share whenever p<em> already lies inside the stance foot's contact polygon. It adds no strength and no external force. It shows the V1.1 body </em><em>can</em>* unload: liftoff after 1.54 s, the same as V1's 1.55 s. It is a controller-policy change you have not approved. I report it separately and do not use it to restore the old result.</p>
+<h3>Gate C2 — every test under the four configurations (240 Hz, ×3)</h3>
+<table>
+<thead>
+<tr>
+<th>test</th>
+<th>V1</th>
+<th>V1.1 raw</th>
+<th>V1.1 + R1·R2</th>
+<th>V1.1 + R1·R2 + D1 (diagnostic)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A_shift</td>
+<td>6 shifts DONE</td>
+<td>6 shifts DONE</td>
+<td>6 shifts DONE</td>
+<td>6 shifts DONE</td>
+</tr>
+<tr>
+<td>B_lift_R</td>
+<td>DONE</td>
+<td>REJECTED (weight transfer not achieved: swing load 85 N)</td>
+<td>REJECTED (weight transfer not achieved: swing load 57 N)</td>
+<td>DONE</td>
+</tr>
+<tr>
+<td>B_hold_R</td>
+<td>DONE</td>
+<td>REJECTED (weight transfer not achieved: swing load 85 N)</td>
+<td>REJECTED (weight transfer not achieved: swing load 57 N)</td>
+<td>DONE</td>
+</tr>
+<tr>
+<td>B_lift_L</td>
+<td>DONE</td>
+<td>REJECTED (weight transfer not achieved: swing load 83 N)</td>
+<td>REJECTED (weight transfer not achieved: swing load 57 N)</td>
+<td>DONE</td>
+</tr>
+<tr>
+<td>C_lat_R</td>
+<td>DONE</td>
+<td>REJECTED (weight transfer not achieved: swing load 85 N)</td>
+<td>REJECTED (weight transfer not achieved: swing load 57 N)</td>
+<td>DONE</td>
+</tr>
+<tr>
+<td>D_fwd_R</td>
+<td>DONE</td>
+<td>REJECTED (weight transfer not achieved: swing load 85 N)</td>
+<td>REJECTED (weight transfer not achieved: swing load 57 N)</td>
+<td>FAILED (balance lost during ACCEPT (STEP_NEEDED) — C2 do)</td>
+</tr>
+<tr>
+<td>E_bwd_R</td>
+<td>DONE</td>
+<td>REJECTED (weight transfer not achieved: swing load 85 N)</td>
+<td>REJECTED (weight transfer not achieved: swing load 57 N)</td>
+<td>DONE</td>
+</tr>
+<tr>
+<td>F_onfoot</td>
+<td>DONE</td>
+<td>REJECTED (weight transfer not achieved: swing load 85 N)</td>
+<td>REJECTED (weight transfer not achieved: swing load 57 N)</td>
+<td>DONE</td>
+</tr>
+<tr>
+<td>F_cross</td>
+<td>DONE</td>
+<td>REJECTED (weight transfer not achieved: swing load 85 N)</td>
+<td>REJECTED (weight transfer not achieved: swing load 57 N)</td>
+<td>DONE</td>
+</tr>
+<tr>
+<td>G_far</td>
+<td>DONE</td>
+<td>REJECTED (weight transfer not achieved: swing load 85 N)</td>
+<td>REJECTED (weight transfer not achieved: swing load 57 N)</td>
+<td>FAILED (balance lost during ACCEPT (STEP_NEEDED) — C2 do)</td>
+</tr>
+<tr>
+<td>G_far_side</td>
+<td>DONE</td>
+<td>REJECTED (weight transfer not achieved: swing load 85 N)</td>
+<td>REJECTED (weight transfer not achieved: swing load 57 N)</td>
+<td>DONE</td>
+</tr>
+<tr>
+<td>H_uneven</td>
+<td>DONE</td>
+<td>REJECTED (weight transfer not achieved: swing load 85 N)</td>
+<td>REJECTED (weight transfer not achieved: swing load 57 N)</td>
+<td>DONE</td>
+</tr>
+<tr>
+<td>I_block</td>
+<td>FAILED_BLOCKED (swing foot 14 cm behind its trajectory for 150 m)</td>
+<td>REJECTED (weight transfer not achieved: swing load 85 N)</td>
+<td>REJECTED (weight transfer not achieved: swing load 57 N)</td>
+<td>FAILED_BLOCKED (swing foot 20 cm behind its trajectory for 150 m)</td>
+</tr>
+<tr>
+<td>J_repeat</td>
+<td>DONE · REJECTED (weight transfer not achieved: swing load 91 N) · DONE · DONE · DONE · DONE</td>
+<td>REJECTED (weight transfer not achieved: swing load 85 N) · REJECTED (weight transfer not achieved: swing load 109 N) · REJECTED (weight transfer not achieved: swing load 111 N) · DONE · DONE · DONE</td>
+<td>REJECTED (weight transfer not achieved: swing load 57 N) · REJECTED (weight transfer not achieved: swing load 111 N) · REJECTED (weight transfer not achieved: swing load 98 N) · FAILED (balance lost during ACCEPT (STEP_NEEDED) — C2 do) · <strong>FELL</strong></td>
+<td>DONE · DONE · DONE · DONE · DONE · DONE</td>
+</tr>
+</tbody>
+</table>
+<h2>10 · Single-leg comparison (deliverable 9)</h2>
+<h3>Single-leg stance (B_hold_R: shift onto L, lift R 8 cm, hold 20 s)</h3>
+<table>
+<thead>
+<tr>
+<th>quantity</th>
+<th>V1 (approved controller)</th>
+<th>V1.1 + R1·R2 + D1</th>
+<th>V1.1 raw / + R1·R2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>hip joint-centre half spacing d</td>
+<td>16.2 cm</td>
+<td>9.2 cm</td>
+<td>9.2 cm</td>
+</tr>
+<tr>
+<td>free-leg COM lateral offset e (statics)</td>
+<td>0.0 cm</td>
+<td>2.64 cm</td>
+<td>2.64 cm</td>
+</tr>
+<tr>
+<td>static hip abduction demand τ0 (upright trunk)</td>
+<td>124 N·m (88 % of 140)</td>
+<td>74 N·m (53 %)</td>
+<td>74 N·m</td>
+</tr>
+<tr>
+<td>planned trunk lean (to bring τ to the 70 % target)</td>
+<td>13.4°</td>
+<td>0.0°</td>
+<td>0.0°</td>
+</tr>
+<tr>
+<td>request outcome</td>
+<td>DONE</td>
+<td>DONE</td>
+<td>REJECTED (weight transfer not achieved: swing load 85 N, ξ margin on t)</td>
+</tr>
+<tr>
+<td>held (s) / held to plan</td>
+<td>20.45 / True</td>
+<td>20.45 / True</td>
+<td>never lifted</td>
+</tr>
+<tr>
+<td>measured stance-hip abduction torque mean / max</td>
+<td>97.6 / 99.5 N·m</td>
+<td>69.1 / 71.4 N·m</td>
+<td>—</td>
+</tr>
+<tr>
+<td>… as % of the hip Z limit · vector effort · saturated</td>
+<td>69.7 % · 73.9 % · 0 %</td>
+<td>49.3 % · 54.7 % · 0 %</td>
+<td>—</td>
+</tr>
+<tr>
+<td>COM lateral of the stance ankle mean (min…max)</td>
+<td>0.1 (0…1.3) cm</td>
+<td>0 (0…1) cm</td>
+<td>—</td>
+</tr>
+<tr>
+<td>pelvis roll mean (min…max)</td>
+<td>-0.01° (-0.19…0.02)</td>
+<td>0.5° (0.35…0.87)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>trunk lateral lean (measured, mean)</td>
+<td>13.3°</td>
+<td>0°</td>
+<td>—</td>
+</tr>
+<tr>
+<td>ξ margin mean / min</td>
+<td>8.1 / 7.2 cm</td>
+<td>8.1 / 7.2 cm</td>
+<td>—</td>
+</tr>
+<tr>
+<td>saturation during the request (joint: ms)</td>
+<td>ankle_L 1479, ankle_R 54</td>
+<td>hip_L 2133, ankle_L 1233, ankle_R 67</td>
+<td>hip_L 4</td>
+</tr>
+<tr>
+<td>joint-limit margin (joint)</td>
+<td>4.9° (ankle_R)</td>
+<td>0.1° (ankle_R)</td>
+<td>8.6° (ankle_L)</td>
+</tr>
+</tbody>
+</table>
+<p>Statics, not tuning: the free leg's COM now sits 2.6 cm lateral of its hip (e ≠ 0, because the COM is on the splayed leg line). That term is in τ0 and in the single-support pelvis offset (it is 0 for V1, so V1 is bit-exact). The planned lean is the lean needed to bring τ0 to the 70 % target. V1.1 needs none.</p>
+<p><img alt="behaviour" src="contact_sheet_behaviour.jpg" /></p>
+<h2>11 · Ankle and placement comparison (deliverable 10)</h2>
+<h3>Ankle and placement (V1 vs V1.1 + R1·R2 + D1 — the only V1.1 configuration that lifts a foot)</h3>
+<table>
+<thead>
+<tr>
+<th>test</th>
+<th>body</th>
+<th>requested → feasible (corr.)</th>
+<th>touchdown centre · landing err</th>
+<th>stance DF max / limit (min margin, at stop)</th>
+<th>swing DF max / limit (min margin, at stop)</th>
+<th>outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B_lift_R</td>
+<td>V1</td>
+<td>(0.161, 0.087) → (0.161, 0.087) (0 cm)</td>
+<td>(0.168, 0.067) · 2.1 cm</td>
+<td>8.1° / 20° (11.9°, 0 ms)</td>
+<td>15.1° / 20° (4.9°, 0 ms)</td>
+<td>DONE</td>
+</tr>
+<tr>
+<td></td>
+<td>V1.1+R+D1</td>
+<td>(0.160, 0.086) → (0.160, 0.086) (0 cm)</td>
+<td>(0.161, 0.089) · 0.3 cm</td>
+<td>16.1° / 30° (13.9°, 0 ms)</td>
+<td>19.2° / 30° (10.8°, 0 ms)</td>
+<td>DONE</td>
+</tr>
+<tr>
+<td>B_lift_L</td>
+<td>V1</td>
+<td>(-0.162, 0.087) → (-0.162, 0.087) (0 cm)</td>
+<td>(-0.166, 0.075) · 1.2 cm</td>
+<td>8.1° / 20° (11.9°, 0 ms)</td>
+<td>16.3° / 20° (3.7°, 0 ms)</td>
+<td>DONE</td>
+</tr>
+<tr>
+<td></td>
+<td>V1.1+R+D1</td>
+<td>(-0.161, 0.086) → (-0.161, 0.086) (0 cm)</td>
+<td>(-0.162, 0.088) · 0.2 cm</td>
+<td>16.1° / 30° (13.9°, 0 ms)</td>
+<td>19.3° / 30° (10.7°, 0 ms)</td>
+<td>DONE</td>
+</tr>
+<tr>
+<td>C_lat_R</td>
+<td>V1</td>
+<td>(0.261, 0.087) → (0.217, 0.087) (4.4 cm)</td>
+<td>(0.204, 0.032) · 5.6 cm</td>
+<td>11.1° / 20° (8.9°, 0 ms)</td>
+<td>15.3° / 20° (4.7°, 0 ms)</td>
+<td>DONE</td>
+</tr>
+<tr>
+<td></td>
+<td>V1.1+R+D1</td>
+<td>(0.260, 0.086) → (0.243, 0.086) (1.7 cm)</td>
+<td>(0.231, 0.014) · 7.3 cm</td>
+<td>21.7° / 30° (8.3°, 0 ms)</td>
+<td>25.1° / 30° (4.9°, 0 ms)</td>
+<td>DONE</td>
+</tr>
+<tr>
+<td>D_fwd_R</td>
+<td>V1</td>
+<td>(0.161, 0.287) → (0.161, 0.271) (1.5 cm)</td>
+<td>(0.155, 0.240) · 3.1 cm</td>
+<td>11.4° / 20° (8.6°, 0 ms)</td>
+<td>15° / 20° (5°, 0 ms)</td>
+<td>DONE</td>
+</tr>
+<tr>
+<td></td>
+<td>V1.1+R+D1</td>
+<td>(0.160, 0.286) → (0.160, 0.286) (0 cm)</td>
+<td>(0.152, 0.258) · 3 cm</td>
+<td>21° / 30° (9°, 0 ms)</td>
+<td>19.6° / 30° (10.4°, 0 ms)</td>
+<td>FAILED</td>
+</tr>
+<tr>
+<td>E_bwd_R</td>
+<td>V1</td>
+<td>(0.161, -0.063) → (0.161, -0.016) (4.7 cm)</td>
+<td>(0.158, 0.064) · 8.1 cm</td>
+<td>9° / 20° (11°, 0 ms)</td>
+<td>16.6° / 20° (3.4°, 0 ms)</td>
+<td>DONE</td>
+</tr>
+<tr>
+<td></td>
+<td>V1.1+R+D1</td>
+<td>(0.160, -0.064) → (0.160, -0.064) (0 cm)</td>
+<td>(0.162, -0.031) · 3.3 cm</td>
+<td>19° / 30° (11°, 0 ms)</td>
+<td>25.3° / 30° (4.7°, 0 ms)</td>
+<td>DONE</td>
+</tr>
+<tr>
+<td>F_onfoot</td>
+<td>V1</td>
+<td>(-0.163, 0.087) → (0.032, 0.087) (19.5 cm)</td>
+<td>(0.003, 0.092) · 2.9 cm</td>
+<td>8.1° / 20° (11.9°, 0 ms)</td>
+<td>15.8° / 20° (4.2°, 0 ms)</td>
+<td>DONE</td>
+</tr>
+<tr>
+<td></td>
+<td>V1.1+R+D1</td>
+<td>(-0.164, 0.086) → (0.033, 0.086) (19.7 cm)</td>
+<td>(0.027, 0.027) · 5.9 cm</td>
+<td>16.1° / 30° (13.9°, 0 ms)</td>
+<td>25.1° / 30° (4.9°, 0 ms)</td>
+<td>DONE</td>
+</tr>
+<tr>
+<td>F_cross</td>
+<td>V1</td>
+<td>(-0.239, -0.013) → (0.032, 0.054) (27.9 cm)</td>
+<td>(0.003, 0.077) · 3.7 cm</td>
+<td>8.1° / 20° (11.9°, 0 ms)</td>
+<td>16.7° / 20° (3.3°, 0 ms)</td>
+<td>DONE</td>
+</tr>
+<tr>
+<td></td>
+<td>V1.1+R+D1</td>
+<td>(-0.240, -0.014) → (0.033, 0.054) (28.1 cm)</td>
+<td>(0.031, -0.014) · 6.9 cm</td>
+<td>16.1° / 30° (13.9°, 0 ms)</td>
+<td>25.2° / 30° (4.8°, 0 ms)</td>
+<td>DONE</td>
+</tr>
+<tr>
+<td>G_far</td>
+<td>V1</td>
+<td>(0.161, 1.287) → (0.161, 0.271) (101.5 cm)</td>
+<td>(0.155, 0.240) · 3.1 cm</td>
+<td>11.4° / 20° (8.6°, 0 ms)</td>
+<td>15° / 20° (5°, 0 ms)</td>
+<td>DONE</td>
+</tr>
+<tr>
+<td></td>
+<td>V1.1+R+D1</td>
+<td>(0.160, 1.286) → (0.160, 0.348) (93.9 cm)</td>
+<td>(0.155, 0.323) · 2.5 cm</td>
+<td>22.5° / 30° (7.5°, 0 ms)</td>
+<td>21.2° / 30° (8.8°, 0 ms)</td>
+<td>FAILED</td>
+</tr>
+<tr>
+<td>G_far_side</td>
+<td>V1</td>
+<td>(0.961, 0.087) → (0.217, 0.087) (74.4 cm)</td>
+<td>(0.204, 0.032) · 5.6 cm</td>
+<td>11.1° / 20° (8.9°, 0 ms)</td>
+<td>15.3° / 20° (4.7°, 0 ms)</td>
+<td>DONE</td>
+</tr>
+<tr>
+<td></td>
+<td>V1.1+R+D1</td>
+<td>(0.960, 0.086) → (0.243, 0.086) (71.7 cm)</td>
+<td>(0.231, 0.014) · 7.3 cm</td>
+<td>21.7° / 30° (8.3°, 0 ms)</td>
+<td>25.1° / 30° (4.9°, 0 ms)</td>
+<td>DONE</td>
+</tr>
+<tr>
+<td>H_uneven</td>
+<td>V1</td>
+<td>(0.161, 0.337) → (0.161, 0.271) (6.5 cm)</td>
+<td>(0.147, 0.307) · 3.8 cm</td>
+<td>12.3° / 20° (7.7°, 0 ms)</td>
+<td>15° / 20° (5°, 0 ms)</td>
+<td>DONE</td>
+</tr>
+<tr>
+<td></td>
+<td>V1.1+R+D1</td>
+<td>(0.160, 0.336) → (0.160, 0.336) (0 cm)</td>
+<td>(0.153, 0.354) · 1.9 cm</td>
+<td>21.8° / 30° (8.2°, 0 ms)</td>
+<td>20.9° / 30° (9.1°, 0 ms)</td>
+<td>DONE</td>
+</tr>
+<tr>
+<td>I_block</td>
+<td>V1</td>
+<td>(0.161, 0.387) → (0.161, 0.271) (11.5 cm)</td>
+<td>— · — cm</td>
+<td>8.1° / 20° (11.9°, 0 ms)</td>
+<td>15.5° / 20° (4.5°, 0 ms)</td>
+<td>FAILED_BLOCKED</td>
+</tr>
+<tr>
+<td></td>
+<td>V1.1+R+D1</td>
+<td>(0.160, 0.386) → (0.160, 0.348) (3.9 cm)</td>
+<td>— · — cm</td>
+<td>16.1° / 30° (13.9°, 0 ms)</td>
+<td>21.2° / 30° (8.8°, 0 ms)</td>
+<td>FAILED_BLOCKED</td>
+</tr>
+</tbody>
+</table>
+<p><em>V1.1 raw / + R1·R2 (transfers rejected, no lift): stance-ankle dorsiflexion during the transfer</em></p>
+<table>
+<thead>
+<tr>
+<th>test</th>
+<th>config</th>
+<th>stance DF max / limit (margin)</th>
+<th>swing load at rejection</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B_lift_R</td>
+<td>V1.1 raw</td>
+<td>14.7° / 30° (15.3°)</td>
+<td>85 N</td>
+</tr>
+<tr>
+<td>B_lift_R</td>
+<td>V1.1 + R1·R2</td>
+<td>16.1° / 30° (13.9°)</td>
+<td>57 N</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>No test in either body spends any time at the dorsiflexion stop.</li>
+<li>V1.1 uses more of its range: stance up to 22.5° of 30°, swing up to 25.3°. That is the larger ROM being used, not a stop.</li>
+<li>The feasibility planner is ROM-derived, so it now <strong>accepts longer steps</strong>: G_far 34.8 cm (V1 27.1), H_uneven 33.6 (27.1), D_fwd 28.6 (27.1), backward E_bwd −6.4 (−1.6).</li>
+<li>H_uneven, E_bwd and C_lat succeed at those lengths with D1: E_bwd lands 3.3 cm from target (V1 8.1 cm, on its toe). D_fwd_R and G_far lose balance in acceptance.</li>
+<li>Close and crossed placement are preserved: F_onfoot and F_cross are corrected exactly as in V1 (19.7 / 28.1 cm) and complete. No foot-separation rule was added.</li>
+</ul>
+<h2>12 · Gate A / B / C1 / C2 regression results (deliverable 11)</h2>
+<h3>V1 preservation (every approved test re-run after all V1.1 code changes)</h3>
+<table>
+<thead>
+<tr>
+<th>gate</th>
+<th>re-run</th>
+<th>identical hashes to the approved evidence</th>
+<th>deterministic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A — 5 drops</td>
+<td>pres_gatea_V1.json</td>
+<td><strong>5/5</strong></td>
+<td>True</td>
+</tr>
+<tr>
+<td>B — all 20</td>
+<td>pres_gateb_V1.json</td>
+<td><strong>20/20</strong></td>
+<td>True</td>
+</tr>
+<tr>
+<td>C1 — all 59</td>
+<td>pres_gatec1_V1.json</td>
+<td><strong>59/59</strong></td>
+<td>True</td>
+</tr>
+<tr>
+<td>C2 — 13 approved (+ new B_hold_R)</td>
+<td>gatec2_V1.json</td>
+<td><strong>13/13</strong></td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+<h3>Gate A — passive drops (240 Hz, Gate A world, ×3)</h3>
+<table>
+<thead>
+<tr>
+<th>drop</th>
+<th>body</th>
+<th>turf pen mm</th>
+<th>self pen mm</th>
+<th>joint sep mm</th>
+<th>limit °</th>
+<th>pop mm</th>
+<th>E+ max J</th>
+<th>sleep s</th>
+<th>worst (self · limit · sep)</th>
+<th>det</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>V1</td>
+<td>5.75</td>
+<td>0.19</td>
+<td>1.644</td>
+<td>8.65</td>
+<td>0.45</td>
+<td>2.625</td>
+<td>1.633</td>
+<td>chest–thigh_R · knee_R · lumbar</td>
+<td>True</td>
+</tr>
+<tr>
+<td></td>
+<td>V1.1</td>
+<td>7.42</td>
+<td>0.09</td>
+<td>2.638</td>
+<td>16.74</td>
+<td>0.91</td>
+<td>12.755</td>
+<td>3.558</td>
+<td>thigh_L–thigh_R · elbow_R · thoracic</td>
+<td>True</td>
+</tr>
+<tr>
+<td>B</td>
+<td>V1</td>
+<td>7.9</td>
+<td>0.23</td>
+<td>4.436</td>
+<td>5.59</td>
+<td>0.69</td>
+<td>0.598</td>
+<td>1.517</td>
+<td>thigh_L–thigh_R · shoulder_R · shoulder_R</td>
+<td>True</td>
+</tr>
+<tr>
+<td></td>
+<td>V1.1</td>
+<td>11.9</td>
+<td>5.02</td>
+<td>5.033</td>
+<td>16.44</td>
+<td>1.49</td>
+<td>1.071</td>
+<td>1.871</td>
+<td>abdomen–upperArm_L · shoulder_R · shoulder_R</td>
+<td>True</td>
+</tr>
+<tr>
+<td>C</td>
+<td>V1</td>
+<td>5.09</td>
+<td>5.47</td>
+<td>3.757</td>
+<td>4.21</td>
+<td>1.27</td>
+<td>0.242</td>
+<td>1.283</td>
+<td>foreArm_L–thigh_L · shoulder_L · hip_R</td>
+<td>True</td>
+</tr>
+<tr>
+<td></td>
+<td>V1.1</td>
+<td>2.41</td>
+<td>1.79</td>
+<td>2.08</td>
+<td>10.78</td>
+<td>0.47</td>
+<td>0</td>
+<td>1.275</td>
+<td>foreArm_L–thigh_L · elbow_L · hip_L</td>
+<td>True</td>
+</tr>
+<tr>
+<td>D</td>
+<td>V1</td>
+<td>13.9</td>
+<td>2.19</td>
+<td>4.62</td>
+<td>10.73</td>
+<td>0.81</td>
+<td>2.355</td>
+<td>1.854</td>
+<td>shin_L–foot_R · elbow_L · ankle_R</td>
+<td>True</td>
+</tr>
+<tr>
+<td></td>
+<td>V1.1</td>
+<td>5.25</td>
+<td>2.12</td>
+<td>3.244</td>
+<td>11.85</td>
+<td>3.15</td>
+<td>0.753</td>
+<td>2.242</td>
+<td>thigh_L–thigh_R · elbow_L · thoracic</td>
+<td>True</td>
+</tr>
+<tr>
+<td>E</td>
+<td>V1</td>
+<td>4.15</td>
+<td>0.23</td>
+<td>3.894</td>
+<td>12.26</td>
+<td>1.39</td>
+<td>0.956</td>
+<td>1.604</td>
+<td>abdomen–upperArm_L · knee_R · ankle_R</td>
+<td>True</td>
+</tr>
+<tr>
+<td></td>
+<td>V1.1</td>
+<td>10.65</td>
+<td>112.46</td>
+<td>12.857</td>
+<td>8.76</td>
+<td>20.63</td>
+<td>0</td>
+<td>1.996</td>
+<td>head–foreArm_R · knee_R · elbow_R</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+<p>Gate A's "limit" column is the largest limit excursion, <strong>soft stops included</strong>. Knee and elbow stops are 20 Hz soft springs designed to be overshot under impact. <strong>Hard</strong>-limit violations, V1 → V1.1: A 0.9 → 2.3°, <strong>B 5.6 → 16.4°</strong> (shoulder_R, 206 steps &gt; 2°), C 4.2 → 2.6°, D 5.3 → 2.6°, E 7.2 → 2.4°.</p>
+<h3>Gate B — pose tracking · blocked limb · disturbance (240 Hz, ×3)</h3>
+<table>
+<thead>
+<tr>
+<th>test</th>
+<th>body</th>
+<th>err RMS °</th>
+<th>peak ° (joint)</th>
+<th>sat ms</th>
+<th>pelvis end mm / °</th>
+<th>extra</th>
+<th>det</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>V1</td>
+<td>1.76</td>
+<td>7.1 (knee_L)</td>
+<td>0</td>
+<td>12.8 / 1.73</td>
+<td></td>
+<td>True</td>
+</tr>
+<tr>
+<td></td>
+<td>V1.1</td>
+<td>1.72</td>
+<td>7.1 (knee_L)</td>
+<td>0</td>
+<td>12.6 / 1.81</td>
+<td></td>
+<td>True</td>
+</tr>
+<tr>
+<td>C</td>
+<td>V1</td>
+<td>6.13</td>
+<td>13.0 (hip_R)</td>
+<td>546</td>
+<td>66.2 / 13.61</td>
+<td></td>
+<td>True</td>
+</tr>
+<tr>
+<td></td>
+<td>V1.1</td>
+<td>2.76</td>
+<td>7.8 (hip_R)</td>
+<td>287</td>
+<td>10.8 / 1.39</td>
+<td></td>
+<td>True</td>
+</tr>
+<tr>
+<td>E</td>
+<td>V1</td>
+<td>7.25</td>
+<td>10.5 (hip_R)</td>
+<td>2808</td>
+<td>33 / 8.63</td>
+<td>post force max 885 N · while blocked: hip err 22.1°, hip sat 17 %, contact 122 N · recover ≤5° in 0.446 s</td>
+<td>True</td>
+</tr>
+<tr>
+<td></td>
+<td>V1.1</td>
+<td>7.09</td>
+<td>10.5 (hip_R)</td>
+<td>2863</td>
+<td>23.3 / 6.57</td>
+<td>post force max 650 N · while blocked: hip err 23.1°, hip sat 39 %, contact 247 N · recover ≤5° in 0.367 s</td>
+<td>True</td>
+</tr>
+<tr>
+<td>F_chest</td>
+<td>V1</td>
+<td>1.28</td>
+<td>2.8 (neck)</td>
+<td>0</td>
+<td>8.1 / 0.59</td>
+<td>peak RMS 2.76° · recovery 0.483 s · pelvis 30.6 mm</td>
+<td>True</td>
+</tr>
+<tr>
+<td></td>
+<td>V1.1</td>
+<td>1.16</td>
+<td>2.2 (neck)</td>
+<td>0</td>
+<td>7.5 / 0.58</td>
+<td>peak RMS 2.19° · recovery 0.45 s · pelvis 26.2 mm</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+<h3>Gate C1 — unsupported balance (240 Hz, ×3)</h3>
+<table>
+<thead>
+<tr>
+<th>test</th>
+<th>body</th>
+<th>outcome</th>
+<th>max class</th>
+<th>recovery s</th>
+<th>COM exc cm</th>
+<th>ξ min cm</th>
+<th>trunk max °</th>
+<th>quiet sway mm</th>
+<th>ankle effort %</th>
+<th>hip peak effort</th>
+<th>sat ms</th>
+<th>det</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SV_static</td>
+<td>V1</td>
+<td>STOOD</td>
+<td>RECOVERABLE_IN_PLACE</td>
+<td>—</td>
+<td>0.1</td>
+<td>12.2</td>
+<td>4</td>
+<td>0.48</td>
+<td>10</td>
+<td>0.04</td>
+<td>0</td>
+<td>True</td>
+</tr>
+<tr>
+<td></td>
+<td>V1.1</td>
+<td>STOOD</td>
+<td>RECOVERABLE_IN_PLACE</td>
+<td>—</td>
+<td>0.1</td>
+<td>12.1</td>
+<td>4</td>
+<td>0.42</td>
+<td>9.8</td>
+<td>0.22</td>
+<td>0</td>
+<td>True</td>
+</tr>
+<tr>
+<td>QS20</td>
+<td>V1</td>
+<td>STOOD</td>
+<td>RECOVERABLE_IN_PLACE</td>
+<td>—</td>
+<td>0.1</td>
+<td>12.2</td>
+<td>4</td>
+<td>1.03</td>
+<td>10</td>
+<td>0.04</td>
+<td>0</td>
+<td>True</td>
+</tr>
+<tr>
+<td></td>
+<td>V1.1</td>
+<td>STOOD</td>
+<td>RECOVERABLE_IN_PLACE</td>
+<td>—</td>
+<td>0.1</td>
+<td>12.1</td>
+<td>4</td>
+<td>0.91</td>
+<td>9.8</td>
+<td>0.22</td>
+<td>0</td>
+<td>True</td>
+</tr>
+<tr>
+<td>PF30</td>
+<td>V1</td>
+<td>RECOVERED</td>
+<td>RECOVERABLE_IN_PLACE</td>
+<td>0.329</td>
+<td>4.7</td>
+<td>12</td>
+<td>5.5</td>
+<td>—</td>
+<td>—</td>
+<td>0.13</td>
+<td>0</td>
+<td>True</td>
+</tr>
+<tr>
+<td></td>
+<td>V1.1</td>
+<td>RECOVERED</td>
+<td>RECOVERABLE_IN_PLACE</td>
+<td>0.329</td>
+<td>4.7</td>
+<td>12.1</td>
+<td>5.5</td>
+<td>—</td>
+<td>—</td>
+<td>0.57</td>
+<td>0</td>
+<td>True</td>
+</tr>
+<tr>
+<td>PF60</td>
+<td>V1</td>
+<td>RECOVERED</td>
+<td>RECOVERABLE_HIP</td>
+<td>2.417</td>
+<td>16.7</td>
+<td>-0.4</td>
+<td>9.7</td>
+<td>—</td>
+<td>—</td>
+<td>0.4</td>
+<td>0</td>
+<td>True</td>
+</tr>
+<tr>
+<td></td>
+<td>V1.1</td>
+<td>RECOVERED</td>
+<td>RECOVERABLE_HIP</td>
+<td>2.396</td>
+<td>16.6</td>
+<td>-0.4</td>
+<td>9.6</td>
+<td>—</td>
+<td>—</td>
+<td>1</td>
+<td>59</td>
+<td>True</td>
+</tr>
+<tr>
+<td>PB30</td>
+<td>V1</td>
+<td>RECOVERED</td>
+<td>RECOVERABLE_HIP</td>
+<td>1.287</td>
+<td>7.3</td>
+<td>0.3</td>
+<td>5.9</td>
+<td>—</td>
+<td>—</td>
+<td>0.21</td>
+<td>0</td>
+<td>True</td>
+</tr>
+<tr>
+<td></td>
+<td>V1.1</td>
+<td>RECOVERED</td>
+<td>RECOVERABLE_HIP</td>
+<td>1.329</td>
+<td>7.5</td>
+<td>0.2</td>
+<td>5.9</td>
+<td>—</td>
+<td>—</td>
+<td>0.45</td>
+<td>0</td>
+<td>True</td>
+</tr>
+<tr>
+<td>PB35</td>
+<td>V1</td>
+<td>FELL</td>
+<td>GROUNDED</td>
+<td>—</td>
+<td>135.2</td>
+<td>—</td>
+<td>93.3</td>
+<td>—</td>
+<td>—</td>
+<td>1</td>
+<td>421</td>
+<td>True</td>
+</tr>
+<tr>
+<td></td>
+<td>V1.1</td>
+<td>FELL</td>
+<td>GROUNDED</td>
+<td>—</td>
+<td>138</td>
+<td>—</td>
+<td>93.3</td>
+<td>—</td>
+<td>—</td>
+<td>1</td>
+<td>287</td>
+<td>True</td>
+</tr>
+<tr>
+<td>PR30</td>
+<td>V1</td>
+<td>RECOVERED</td>
+<td>RECOVERABLE_HIP</td>
+<td>0.287</td>
+<td>5.3</td>
+<td>0.1</td>
+<td>4.3</td>
+<td>—</td>
+<td>—</td>
+<td>1</td>
+<td>138</td>
+<td>True</td>
+</tr>
+<tr>
+<td></td>
+<td>V1.1</td>
+<td>RECOVERED</td>
+<td>RECOVERABLE_HIP</td>
+<td>0.254</td>
+<td>4.9</td>
+<td>-0.5</td>
+<td>4.4</td>
+<td>—</td>
+<td>—</td>
+<td>0.82</td>
+<td>83</td>
+<td>True</td>
+</tr>
+<tr>
+<td>PR45</td>
+<td>V1</td>
+<td>RECOVERED</td>
+<td>RECOVERABLE_HIP</td>
+<td>2.833</td>
+<td>14.4</td>
+<td>4.1</td>
+<td>4.9</td>
+<td>—</td>
+<td>—</td>
+<td>1</td>
+<td>479</td>
+<td>True</td>
+</tr>
+<tr>
+<td></td>
+<td>V1.1</td>
+<td>RECOVERED</td>
+<td>RECOVERABLE_HIP</td>
+<td>0.833</td>
+<td>16.1</td>
+<td>5.6</td>
+<td>4.9</td>
+<td>—</td>
+<td>—</td>
+<td>1</td>
+<td>338</td>
+<td>True</td>
+</tr>
+<tr>
+<td>PR50</td>
+<td>V1</td>
+<td>FELL</td>
+<td>GROUNDED</td>
+<td>—</td>
+<td>168.6</td>
+<td>—</td>
+<td>93.7</td>
+<td>—</td>
+<td>—</td>
+<td>1</td>
+<td>5600</td>
+<td>True</td>
+</tr>
+<tr>
+<td></td>
+<td>V1.1</td>
+<td>RECOVERED</td>
+<td>RECOVERABLE_HIP</td>
+<td>0.946</td>
+<td>17.6</td>
+<td>3.4</td>
+<td>5.1</td>
+<td>—</td>
+<td>—</td>
+<td>1</td>
+<td>1943</td>
+<td>True</td>
+</tr>
+<tr>
+<td>G_fall</td>
+<td>V1</td>
+<td>FELL</td>
+<td>GROUNDED</td>
+<td>—</td>
+<td>164.8</td>
+<td>—</td>
+<td>91.6</td>
+<td>—</td>
+<td>—</td>
+<td>1</td>
+<td>382</td>
+<td>True</td>
+</tr>
+<tr>
+<td></td>
+<td>V1.1</td>
+<td>FELL</td>
+<td>GROUNDED</td>
+<td>—</td>
+<td>166.1</td>
+<td>—</td>
+<td>91.6</td>
+<td>—</td>
+<td>—</td>
+<td>1</td>
+<td>552</td>
+<td>True</td>
+</tr>
+<tr>
+<td>H_ice_quiet</td>
+<td>V1</td>
+<td>STOOD</td>
+<td>RECOVERABLE_IN_PLACE</td>
+<td>—</td>
+<td>0.1</td>
+<td>12.2</td>
+<td>4</td>
+<td>0.4</td>
+<td>10</td>
+<td>0.04</td>
+<td>0</td>
+<td>True</td>
+</tr>
+<tr>
+<td></td>
+<td>V1.1</td>
+<td>STOOD</td>
+<td>RECOVERABLE_IN_PLACE</td>
+<td>—</td>
+<td>0</td>
+<td>12.1</td>
+<td>4</td>
+<td>0.32</td>
+<td>9.7</td>
+<td>0.23</td>
+<td>0</td>
+<td>True</td>
+</tr>
+<tr>
+<td>H_ice_push</td>
+<td>V1</td>
+<td>RECOVERED</td>
+<td>STEP_NEEDED</td>
+<td>0.529</td>
+<td>7.7</td>
+<td>12.2</td>
+<td>5.2</td>
+<td>—</td>
+<td>—</td>
+<td>0.12</td>
+<td>0</td>
+<td>True</td>
+</tr>
+<tr>
+<td></td>
+<td>V1.1</td>
+<td>RECOVERED</td>
+<td>STEP_NEEDED</td>
+<td>0.529</td>
+<td>7.7</td>
+<td>12.1</td>
+<td>5.2</td>
+<td>—</td>
+<td>—</td>
+<td>0.38</td>
+<td>0</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+<p>Higher quiet-stance hip effort (22 % vs 4 %) is the splayed-stance statics: each hip holds 24 N·m of ab/ad torque (Z axis), about 17 % of its cap, where V1 held 0.2 N·m. That is physically correct for feet wider than hips.</p>
+<p><img alt="regressions" src="contact_sheet_regressions.jpg" /></p>
+<h2>13 · Interactive before/after harness (deliverable 12)</h2>
+<p><code>sandbox/visual/physchar/index.html</code> (served on :8171) now has:
+- <strong>body</strong> selector: V1 approved / V1.1. It rebuilds the spec and poses and re-simulates the same test.
+- <strong>C2 controller</strong> selector: as approved / + R1·R2 / + R1·R2 + D1 diagnostic.
+- An <strong>Anatomy</strong> overlay row:
+  - V1 ↔ V1.1 hip and shoulder centres drawn together on the live pelvis and chest (red V1, green V1.1, with spacing labels);
+  - the visible hip width;
+  - the physics skeleton and the rendered rig skeleton;
+  - segment COMs, joint-limit cones, and live joint angles with limit margins.
+- A side panel table of this body's anatomy vs the other body (centres, ROM, caps, mass, single-leg statics).</p>
+<p>Each side panel's Node-suite hash comparison follows the selected body and controller. URL: <code>index.html?suite=C2&amp;test=B_hold_R&amp;calib=V1.1&amp;ctrl=diag</code>. Existing overlays (colliders, COM, ξ, support, CoP, torque, saturation, footprints) are unchanged.</p>
+<p><strong>Browser = Node:</strong> <strong>66/66 identical (61 s)</strong> (every V1.1 Gate A/B/C1 test, every C2 test in all three controller variants, and V1 C2 spot checks) — <code>crossruntime.txt</code>.</p>
+<h2>14 · Determinism and performance (deliverables 13, 14)</h2>
+<h3>Performance (mean ms per 60 Hz frame = 4 physics steps + sensing + controller, Node, one process)</h3>
+<table>
+<thead>
+<tr>
+<th>gate</th>
+<th>V1</th>
+<th>V1.1</th>
+<th>V1.1 + R1·R2</th>
+<th>V1.1 + R1·R2 + D1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>0.211</td>
+<td>0.306</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>B</td>
+<td>0.613</td>
+<td>0.612</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>C1</td>
+<td>0.694</td>
+<td>0.685</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>C2</td>
+<td>1.088</td>
+<td>1.163</td>
+<td>1.228</td>
+<td>1.129</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Determinism:</strong> 182/182 result rows deterministic across their repeats (×3 for every comparison set).</p>
+<h2>15 · Regressions introduced (deliverable 15)</h2>
+<ol>
+<li><strong>C2, approved controller:</strong> every weight transfer is REJECTED (85 N swing load). With R1·R2: 57 N, still rejected, and <strong>J_repeat falls</strong> in its 4th request (after three rejections, balance lost in ACCEPT). Cause: §9. Not fixed.</li>
+<li><strong>C2 + D1 (diagnostic):</strong> D_fwd_R and G_far lose balance in ACCEPT after the larger ROM admits longer forward steps (28.6 / 34.8 cm vs 27.1). I_block is held (as V1).</li>
+<li><strong>Stance hip twist saturation</strong> in C2 transfers and acceptance (twist at the 25 % budget floor, 15 N·m, about 2 s), from the femoral-axis tilt (§6).</li>
+<li><strong>Swing ankle twist at its ±10° stop</strong> during HOVER (D1 runs; margin 0.1° vs V1 4.9°). The IK asks for it: the foot keeps its liftoff yaw (7–11°, V1 2–4°) while the pelvis yaws ±4°, and the model's hinge knee has no axial rotation.</li>
+<li><strong>Gate A drop A:</strong> a single-step energy injection of <strong>+12.755 J</strong> (V1 2.6 J) when both knees reach their flexion soft stop at t ≈ 0.55 s with the soles 5.6–7.5 mm in the turf (the same event releases 0.5 J in V1). The body stays awake to 3.6 s (V1 1.6 s). Elbow_R soft-stop overshoot 16.74° (V1 8.7° on the knee).</li>
+<li><strong>Gate A drop E:</strong> the authored start pose (joint angles written for V1's shoulder, 11 cm higher) puts the right forearm <strong>112 mm inside the head</strong> at t = 0. That gives a 20.6 mm correction pop and a large self-penetration reading. It is a test-fixture artefact of the relocated shoulder; V1.1 needs its own drop-E arm pose.</li>
+<li><strong>Gate A drop B (side-first fall):</strong> the right arm starts overhead, authored 10° inside its abduction limit. The body rolls onto it, and the relocated (lower) shoulder centre is forced <strong>16.4° past its hard limit</strong> (V1 5.6°), with 206 steps beyond 2° (V1 120). Also self-penetration 5.0 mm (abdomen–upperArm_L; V1 0.2) and turf 11.9 mm (V1 7.9). <strong>Drops C/D:</strong> C elbow soft overshoot 10.8° (V1 4.2° on the shoulder); D correction pop 3.2 mm (V1 0.8). D improves turf penetration (5.3 vs 13.9 mm).</li>
+<li><strong>Gate B E (blocked limb):</strong> while blocked, hip saturation 39 % (V1 17 %) and post contact 247 N (V1 122 N). Recovery after removal is faster (0.37 vs 0.45 s). Cause not investigated.</li>
+<li><strong>C1 PF60:</strong> 59 ms of hip saturation (V1 0). Outcome unchanged (recovered).</li>
+<li><strong>CPU:</strong> Gate A 0.21 → 0.31 ms/frame (drop A stays awake twice as long); C2 +4–13 %; B and C1 unchanged (§14).</li>
+</ol>
+<p>Nothing above was hidden by adding strength, fixtures or external forces.</p>
+<h2>16 · Recommendation: does V1.1 replace V1? (deliverable 16)</h2>
+<p><strong>The anatomy: yes.</strong> V1.1 is the correct physical body:
+- hip centres 18.4 cm;
+- shoulders inside the mesh;
+- COMs on the segment lines;
+- ROM and torque caps inside the evidence.</p>
+<p>It removes the structural problem you identified (88 % hip-abduction demand and a 13° compensating lean) without stronger muscles. Gate B and C1 are the same or better, including one push that V1 failed.</p>
+<p><strong>As the working baseline: not yet.</strong> Three things need your decision first:
+1. <strong>C2 transfer completion.</strong> The approved controller's lift gate depended on a favourable CoP bias. Options: adopt D1 (unload intent during TRANSFER) as a proper controller change, re-validated on both bodies, or another fix you prefer. R1·R2 are the recalibrations the anatomy logically requires, and they are not enough on their own.
+2. <strong>Forward-step acceptance under the larger ROM.</strong> Either acceptance is re-validated for 28–35 cm forward steps, or the feasibility planner's forward reach stays as conservative as V1's until then.
+3. <strong>Gate A items:</strong> the knee soft-stop energy injection in drop A, the shoulder hard-limit excursion in drop B, and V1.1-valid start poses for drops B and E (arm poses authored for V1's shoulder).</p>
+<p>Until then V1 remains the reproducible reference (<code>--calib V1</code>, bit-identical). V1.1 is selectable everywhere (<code>--calib V1.1</code>, the harness body selector).</p>
+<p><strong>Stopped here as instructed: no C3, no stepping, no commit or push.</strong></p>
+<h2>Files</h2>
+<ul>
+<li><code>ANATOMY_V1_1_REPORT.md / .html</code> — this report</li>
+<li><code>contact_sheet_anatomy.jpg</code>, <code>contact_sheet_behaviour.jpg</code>, <code>contact_sheet_regressions.jpg</code>, <code>stills/</code> (36 harness captures)</li>
+<li><code>json/final/</code> — every run (V1 preservation, V1 and V1.1 ×3 for A/B/C1, C2 in four configurations ×3) with logs</li>
+<li><code>json/spec_v1_vs_v11.json / .txt</code> — per-body and per-joint parameters, V1 vs V1.1</li>
+<li><code>crossruntime.txt</code> — browser vs Node, all V1.1 tests</li>
+<li><code>analysis/</code> — every probe used in this report (transfer / CoP / descent / saturation-axis / twist / drop-A / arm-coverage), the batch, table and contact-sheet generators, and the capture script with its shot list</li>
+</ul>
+<p>Reproduce:</p>
+<pre><code>node tools/gatec2_run.js --calib V1.1 [--recal] [--diag-unload] --tests all --repeat 3
+</code></pre>
+<p>The other runners take <code>--calib V1|V1.1</code>; <code>analysis/v11_batch.sh</code> runs everything.</p></main></body></html>

@@ -1,0 +1,2440 @@
+{
+ "player": {
+  "id": "gabriel",
+  "name": "Gabriel Magalhães",
+  "heightCm": 190,
+  "weightKg": 78,
+  "H": 1.9
+ },
+ "tsc": "240x1",
+ "results": [
+  {
+   "test": "SV_static",
+   "group": "A sensing",
+   "title": "SV1 — static stance (analytic: ΣF = Mg, CoP = COM projection, loads ≈ Mg/2)",
+   "strength": "candidate",
+   "delayMs": 0,
+   "push": null,
+   "hash": "5430977",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "constraints": 13,
+   "outcome": "STOOD",
+   "maxClass": "RECOVERABLE_IN_PLACE",
+   "classTimes": {},
+   "fallReason": null,
+   "tGrounded": null,
+   "tFootRoll": null,
+   "fallLeadS": null,
+   "recoveryS": null,
+   "whole": {
+    "comMaxExcursionCm": 0.1,
+    "comPeakSpeed": 0,
+    "xiMarginMinCm": 12.1,
+    "comMarginMinCm": 12.1,
+    "trunkTiltMaxDeg": 4,
+    "pelvisTiltMaxDeg": 2,
+    "spineBendMaxDeg": 2,
+    "angMomPeak": 0.01,
+    "footSlipMaxCm": 0.05,
+    "loadShareL": [
+     0.5,
+     0.5
+    ],
+    "keMaxJ": 0,
+    "keEndJ": 0
+   },
+   "quiet": {
+    "comDriftCm": 0.06,
+    "swayRmsMm": 0.42,
+    "copPathMm": 0.4,
+    "ankleEffortPct": 9.8,
+    "keMax": 0,
+    "stayedInPlace": true
+   },
+   "sensing": {
+    "grfYErrN": 0.07,
+    "footSumErrN": 0.15,
+    "footSumErrMaxN": 0.2,
+    "airborneFootResidualN": null,
+    "copInsidePct": 100,
+    "leverShareErr": {
+     "mean": 0.0016,
+     "max": 0.002,
+     "n": 888
+    },
+    "rootResidualN": {
+     "mean": 0.018,
+     "max": 0.06
+    }
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "maxHardLimitDeg": 0,
+    "maxSoftOvershootDeg": 0,
+    "maxTurfPenMm": 0.99,
+    "maxSelfPenMm": 0
+   },
+   "friction": {
+    "firstSlipL": null,
+    "firstSlipR": null,
+    "degradedMs": 0,
+    "frictionLimitCmMin": null,
+    "slidCm": {
+     "L": 0,
+     "R": 0
+    },
+    "muObserved": null
+   },
+   "joints": [
+    {
+     "joint": "lumbar",
+     "peakNm": 18.4,
+     "peakEff": 0.07,
+     "satMs": 0,
+     "budgetMax": 0.07
+    },
+    {
+     "joint": "thoracic",
+     "peakNm": 9.2,
+     "peakEff": 0.04,
+     "satMs": 0,
+     "budgetMax": 0.04
+    },
+    {
+     "joint": "neck",
+     "peakNm": 0.6,
+     "peakEff": 0.01,
+     "satMs": 0,
+     "budgetMax": 0.01
+    },
+    {
+     "joint": "shoulder_L",
+     "peakNm": 3.7,
+     "peakEff": 0.06,
+     "satMs": 0,
+     "budgetMax": 0.05
+    },
+    {
+     "joint": "elbow_L",
+     "peakNm": 1.7,
+     "peakEff": 0.03,
+     "satMs": 0,
+     "budgetMax": 0.03
+    },
+    {
+     "joint": "shoulder_R",
+     "peakNm": 3.7,
+     "peakEff": 0.06,
+     "satMs": 0,
+     "budgetMax": 0.05
+    },
+    {
+     "joint": "elbow_R",
+     "peakNm": 1.7,
+     "peakEff": 0.03,
+     "satMs": 0,
+     "budgetMax": 0.03
+    },
+    {
+     "joint": "hip_L",
+     "peakNm": 27.3,
+     "peakEff": 0.26,
+     "satMs": 0,
+     "budgetMax": 0.12
+    },
+    {
+     "joint": "knee_L",
+     "peakNm": 20.2,
+     "peakEff": 0.08,
+     "satMs": 0,
+     "budgetMax": 0.08
+    },
+    {
+     "joint": "ankle_L",
+     "peakNm": 29.2,
+     "peakEff": 0.36,
+     "satMs": 0,
+     "budgetMax": 0.19
+    },
+    {
+     "joint": "hip_R",
+     "peakNm": 27.3,
+     "peakEff": 0.26,
+     "satMs": 0,
+     "budgetMax": 0.12
+    },
+    {
+     "joint": "knee_R",
+     "peakNm": 20.1,
+     "peakEff": 0.08,
+     "satMs": 0,
+     "budgetMax": 0.08
+    },
+    {
+     "joint": "ankle_R",
+     "peakNm": 29.1,
+     "peakEff": 0.35,
+     "satMs": 0,
+     "budgetMax": 0.19
+    }
+   ],
+   "flags": [],
+   "cpu": {
+    "msPerFrame": 0.825,
+    "jolt": 0.5901,
+    "sensing": 0.0891,
+    "controller": 0.1458
+   },
+   "hipCapCm": {
+    "fwd": 4.5,
+    "bwd": 4.7,
+    "lat": 4.3
+   },
+   "worst": {
+    "push": 0,
+    "stepNeeded": 0,
+    "falling": 0,
+    "grounded": 0,
+    "minMargin": 960,
+    "footRoll": 0
+   },
+   "repeatHashes": [
+    "5430977",
+    "5430977",
+    "5430977"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "QS20",
+   "group": "B quiet",
+   "title": "QS — unsupported quiet standing, 20 s",
+   "strength": "candidate",
+   "delayMs": 0,
+   "push": null,
+   "hash": "2f0abd15",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "constraints": 13,
+   "outcome": "STOOD",
+   "maxClass": "RECOVERABLE_IN_PLACE",
+   "classTimes": {},
+   "fallReason": null,
+   "tGrounded": null,
+   "tFootRoll": null,
+   "fallLeadS": null,
+   "recoveryS": null,
+   "whole": {
+    "comMaxExcursionCm": 0.1,
+    "comPeakSpeed": 0,
+    "xiMarginMinCm": 12.1,
+    "comMarginMinCm": 12.1,
+    "trunkTiltMaxDeg": 4,
+    "pelvisTiltMaxDeg": 2,
+    "spineBendMaxDeg": 2,
+    "angMomPeak": 0.01,
+    "footSlipMaxCm": 0.13,
+    "loadShareL": [
+     0.5,
+     0.5
+    ],
+    "keMaxJ": 0,
+    "keEndJ": 0
+   },
+   "quiet": {
+    "comDriftCm": 0.14,
+    "swayRmsMm": 0.95,
+    "copPathMm": 1.3,
+    "ankleEffortPct": 9.8,
+    "keMax": 0,
+    "stayedInPlace": true
+   },
+   "sensing": {
+    "grfYErrN": 0.01,
+    "footSumErrN": 0.16,
+    "footSumErrMaxN": 0.2,
+    "airborneFootResidualN": null,
+    "copInsidePct": 100,
+    "leverShareErr": {
+     "mean": 0.0016,
+     "max": 0.002,
+     "n": 4728
+    },
+    "rootResidualN": {
+     "mean": 0.018,
+     "max": 0.06
+    }
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "maxHardLimitDeg": 0,
+    "maxSoftOvershootDeg": 0,
+    "maxTurfPenMm": 0.99,
+    "maxSelfPenMm": 0
+   },
+   "friction": {
+    "firstSlipL": null,
+    "firstSlipR": null,
+    "degradedMs": 0,
+    "frictionLimitCmMin": null,
+    "slidCm": {
+     "L": 0.1,
+     "R": 0.1
+    },
+    "muObserved": null
+   },
+   "joints": [
+    {
+     "joint": "lumbar",
+     "peakNm": 18.4,
+     "peakEff": 0.07,
+     "satMs": 0,
+     "budgetMax": 0.07
+    },
+    {
+     "joint": "thoracic",
+     "peakNm": 9.2,
+     "peakEff": 0.04,
+     "satMs": 0,
+     "budgetMax": 0.04
+    },
+    {
+     "joint": "neck",
+     "peakNm": 0.6,
+     "peakEff": 0.01,
+     "satMs": 0,
+     "budgetMax": 0.01
+    },
+    {
+     "joint": "shoulder_L",
+     "peakNm": 3.7,
+     "peakEff": 0.06,
+     "satMs": 0,
+     "budgetMax": 0.05
+    },
+    {
+     "joint": "elbow_L",
+     "peakNm": 1.7,
+     "peakEff": 0.03,
+     "satMs": 0,
+     "budgetMax": 0.03
+    },
+    {
+     "joint": "shoulder_R",
+     "peakNm": 3.7,
+     "peakEff": 0.06,
+     "satMs": 0,
+     "budgetMax": 0.05
+    },
+    {
+     "joint": "elbow_R",
+     "peakNm": 1.7,
+     "peakEff": 0.03,
+     "satMs": 0,
+     "budgetMax": 0.03
+    },
+    {
+     "joint": "hip_L",
+     "peakNm": 27.3,
+     "peakEff": 0.26,
+     "satMs": 0,
+     "budgetMax": 0.12
+    },
+    {
+     "joint": "knee_L",
+     "peakNm": 20.2,
+     "peakEff": 0.08,
+     "satMs": 0,
+     "budgetMax": 0.08
+    },
+    {
+     "joint": "ankle_L",
+     "peakNm": 29.2,
+     "peakEff": 0.36,
+     "satMs": 0,
+     "budgetMax": 0.19
+    },
+    {
+     "joint": "hip_R",
+     "peakNm": 27.3,
+     "peakEff": 0.26,
+     "satMs": 0,
+     "budgetMax": 0.12
+    },
+    {
+     "joint": "knee_R",
+     "peakNm": 20.1,
+     "peakEff": 0.08,
+     "satMs": 0,
+     "budgetMax": 0.08
+    },
+    {
+     "joint": "ankle_R",
+     "peakNm": 29.1,
+     "peakEff": 0.35,
+     "satMs": 0,
+     "budgetMax": 0.19
+    }
+   ],
+   "flags": [],
+   "cpu": {
+    "msPerFrame": 0.654,
+    "jolt": 0.5304,
+    "sensing": 0.0411,
+    "controller": 0.0825
+   },
+   "hipCapCm": {
+    "fwd": 4.5,
+    "bwd": 4.7,
+    "lat": 4.3
+   },
+   "worst": {
+    "push": 0,
+    "stepNeeded": 0,
+    "falling": 0,
+    "grounded": 0,
+    "minMargin": 4555,
+    "footRoll": 0
+   },
+   "repeatHashes": [
+    "2f0abd15",
+    "2f0abd15",
+    "2f0abd15"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "PF30",
+   "group": "C–E push forward",
+   "title": "30 N·s push forward at the pelvis",
+   "strength": "candidate",
+   "delayMs": 0,
+   "push": {
+    "dir": "F",
+    "Ns": 30
+   },
+   "hash": "96f91667",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "constraints": 13,
+   "outcome": "RECOVERED",
+   "maxClass": "RECOVERABLE_IN_PLACE",
+   "classTimes": {},
+   "fallReason": null,
+   "tGrounded": null,
+   "tFootRoll": null,
+   "fallLeadS": null,
+   "recoveryS": 0.329,
+   "whole": {
+    "comMaxExcursionCm": 4.7,
+    "comPeakSpeed": 0.322,
+    "xiMarginMinCm": 12.1,
+    "comMarginMinCm": 12.1,
+    "trunkTiltMaxDeg": 5.5,
+    "pelvisTiltMaxDeg": 2.9,
+    "spineBendMaxDeg": 2.8,
+    "angMomPeak": 3.62,
+    "footSlipMaxCm": 0.15,
+    "loadShareL": [
+     0.49,
+     0.5
+    ],
+    "keMaxJ": 4.95,
+    "keEndJ": 0.0001
+   },
+   "quiet": null,
+   "sensing": {
+    "grfYErrN": 0.47,
+    "footSumErrN": 0.15,
+    "footSumErrMaxN": 0.2,
+    "airborneFootResidualN": null,
+    "copInsidePct": 100,
+    "leverShareErr": {
+     "mean": 0.0017,
+     "max": 0.002,
+     "n": 1293
+    },
+    "rootResidualN": {
+     "mean": 0.023,
+     "max": 0.33
+    }
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "maxHardLimitDeg": 0,
+    "maxSoftOvershootDeg": 0,
+    "maxTurfPenMm": 0.99,
+    "maxSelfPenMm": 0
+   },
+   "friction": {
+    "firstSlipL": null,
+    "firstSlipR": null,
+    "degradedMs": 0,
+    "frictionLimitCmMin": null,
+    "slidCm": {
+     "L": 0.1,
+     "R": 0.1
+    },
+    "muObserved": null
+   },
+   "joints": [
+    {
+     "joint": "lumbar",
+     "peakNm": 47.2,
+     "peakEff": 0.26,
+     "satMs": 0,
+     "budgetMax": 0.19
+    },
+    {
+     "joint": "thoracic",
+     "peakNm": 14.5,
+     "peakEff": 0.06,
+     "satMs": 0,
+     "budgetMax": 0.06
+    },
+    {
+     "joint": "neck",
+     "peakNm": 4.9,
+     "peakEff": 0.2,
+     "satMs": 0,
+     "budgetMax": 0.11
+    },
+    {
+     "joint": "shoulder_L",
+     "peakNm": 10.9,
+     "peakEff": 0.18,
+     "satMs": 0,
+     "budgetMax": 0.14
+    },
+    {
+     "joint": "elbow_L",
+     "peakNm": 4.5,
+     "peakEff": 0.08,
+     "satMs": 0,
+     "budgetMax": 0.08
+    },
+    {
+     "joint": "shoulder_R",
+     "peakNm": 11,
+     "peakEff": 0.18,
+     "satMs": 0,
+     "budgetMax": 0.14
+    },
+    {
+     "joint": "elbow_R",
+     "peakNm": 4.6,
+     "peakEff": 0.08,
+     "satMs": 0,
+     "budgetMax": 0.08
+    },
+    {
+     "joint": "hip_L",
+     "peakNm": 34.9,
+     "peakEff": 0.57,
+     "satMs": 0,
+     "budgetMax": 0.15
+    },
+    {
+     "joint": "knee_L",
+     "peakNm": 28.6,
+     "peakEff": 0.22,
+     "satMs": 0,
+     "budgetMax": 0.11
+    },
+    {
+     "joint": "ankle_L",
+     "peakNm": 98.3,
+     "peakEff": 0.65,
+     "satMs": 0,
+     "budgetMax": 0.66
+    },
+    {
+     "joint": "hip_R",
+     "peakNm": 34.1,
+     "peakEff": 0.56,
+     "satMs": 0,
+     "budgetMax": 0.15
+    },
+    {
+     "joint": "knee_R",
+     "peakNm": 29.2,
+     "peakEff": 0.22,
+     "satMs": 0,
+     "budgetMax": 0.12
+    },
+    {
+     "joint": "ankle_R",
+     "peakNm": 99.4,
+     "peakEff": 0.66,
+     "satMs": 0,
+     "budgetMax": 0.66
+    }
+   ],
+   "flags": [],
+   "cpu": {
+    "msPerFrame": 0.6784,
+    "jolt": 0.5414,
+    "sensing": 0.0579,
+    "controller": 0.0792
+   },
+   "hipCapCm": {
+    "fwd": 4.5,
+    "bwd": 4.7,
+    "lat": 4.3
+   },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 0,
+    "falling": 0,
+    "grounded": 0,
+    "minMargin": 252,
+    "footRoll": 0
+   },
+   "repeatHashes": [
+    "96f91667",
+    "96f91667",
+    "96f91667"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "PF60",
+   "group": "C–E push forward",
+   "title": "60 N·s push forward at the pelvis",
+   "strength": "candidate",
+   "delayMs": 0,
+   "push": {
+    "dir": "F",
+    "Ns": 60
+   },
+   "hash": "4e9a591f",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "constraints": 13,
+   "outcome": "RECOVERED",
+   "maxClass": "RECOVERABLE_HIP",
+   "classTimes": {
+    "RECOVERABLE_HIP": 0.033
+   },
+   "fallReason": null,
+   "tGrounded": null,
+   "tFootRoll": 0.113,
+   "fallLeadS": null,
+   "recoveryS": 2.396,
+   "whole": {
+    "comMaxExcursionCm": 16.6,
+    "comPeakSpeed": 0.685,
+    "xiMarginMinCm": -0.4,
+    "comMarginMinCm": 7,
+    "trunkTiltMaxDeg": 9.6,
+    "pelvisTiltMaxDeg": 6.1,
+    "spineBendMaxDeg": 3.6,
+    "angMomPeak": 7.9,
+    "footSlipMaxCm": 0.32,
+    "loadShareL": [
+     0.47,
+     0.51
+    ],
+    "keMaxJ": 21.76,
+    "keEndJ": 0.0004
+   },
+   "quiet": null,
+   "sensing": {
+    "grfYErrN": 0.2,
+    "footSumErrN": 0.16,
+    "footSumErrMaxN": 0.2,
+    "airborneFootResidualN": null,
+    "copInsidePct": 100,
+    "leverShareErr": {
+     "mean": 0.0018,
+     "max": 0.002,
+     "n": 944
+    },
+    "rootResidualN": {
+     "mean": 0.041,
+     "max": 0.67
+    }
+   },
+   "stability": {
+    "maxJointSepMm": 0.36,
+    "maxHardLimitDeg": 0,
+    "maxSoftOvershootDeg": 0,
+    "maxTurfPenMm": 2.05,
+    "maxSelfPenMm": 0
+   },
+   "friction": {
+    "firstSlipL": null,
+    "firstSlipR": null,
+    "degradedMs": 0,
+    "frictionLimitCmMin": null,
+    "slidCm": {
+     "L": 0.3,
+     "R": 0.3
+    },
+    "muObserved": null
+   },
+   "joints": [
+    {
+     "joint": "lumbar",
+     "peakNm": 138.2,
+     "peakEff": 0.77,
+     "satMs": 0,
+     "budgetMax": 0.55
+    },
+    {
+     "joint": "thoracic",
+     "peakNm": 42.9,
+     "peakEff": 0.24,
+     "satMs": 0,
+     "budgetMax": 0.17
+    },
+    {
+     "joint": "neck",
+     "peakNm": 12.5,
+     "peakEff": 0.5,
+     "satMs": 0,
+     "budgetMax": 0.28
+    },
+    {
+     "joint": "shoulder_L",
+     "peakNm": 21.4,
+     "peakEff": 0.32,
+     "satMs": 0,
+     "budgetMax": 0.27
+    },
+    {
+     "joint": "elbow_L",
+     "peakNm": 8.2,
+     "peakEff": 0.14,
+     "satMs": 0,
+     "budgetMax": 0.14
+    },
+    {
+     "joint": "shoulder_R",
+     "peakNm": 21.5,
+     "peakEff": 0.33,
+     "satMs": 0,
+     "budgetMax": 0.27
+    },
+    {
+     "joint": "elbow_R",
+     "peakNm": 8.2,
+     "peakEff": 0.14,
+     "satMs": 0,
+     "budgetMax": 0.14
+    },
+    {
+     "joint": "hip_L",
+     "peakNm": 81.1,
+     "peakEff": 1,
+     "satMs": 13,
+     "budgetMax": 0.35
+    },
+    {
+     "joint": "knee_L",
+     "peakNm": 57.5,
+     "peakEff": 0.44,
+     "satMs": 0,
+     "budgetMax": 0.23
+    },
+    {
+     "joint": "ankle_L",
+     "peakNm": 128.8,
+     "peakEff": 1,
+     "satMs": 25,
+     "budgetMax": 0.86
+    },
+    {
+     "joint": "hip_R",
+     "peakNm": 80.8,
+     "peakEff": 1,
+     "satMs": 13,
+     "budgetMax": 0.35
+    },
+    {
+     "joint": "knee_R",
+     "peakNm": 58.5,
+     "peakEff": 0.45,
+     "satMs": 0,
+     "budgetMax": 0.23
+    },
+    {
+     "joint": "ankle_R",
+     "peakNm": 129.7,
+     "peakEff": 1,
+     "satMs": 21,
+     "budgetMax": 0.86
+    }
+   ],
+   "flags": [],
+   "cpu": {
+    "msPerFrame": 0.6666,
+    "jolt": 0.5379,
+    "sensing": 0.0384,
+    "controller": 0.0903
+   },
+   "hipCapCm": {
+    "fwd": 4.5,
+    "bwd": 4.7,
+    "lat": 4.3
+   },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 0,
+    "falling": 0,
+    "grounded": 0,
+    "minMargin": 252,
+    "footRoll": 267
+   },
+   "repeatHashes": [
+    "4e9a591f",
+    "4e9a591f",
+    "4e9a591f"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "PB30",
+   "group": "C–E push backward",
+   "title": "30 N·s push backward at the pelvis",
+   "strength": "candidate",
+   "delayMs": 0,
+   "push": {
+    "dir": "B",
+    "Ns": 30
+   },
+   "hash": "4803a4e0",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "constraints": 13,
+   "outcome": "RECOVERED",
+   "maxClass": "RECOVERABLE_HIP",
+   "classTimes": {
+    "RECOVERABLE_HIP": 0.029
+   },
+   "fallReason": null,
+   "tGrounded": null,
+   "tFootRoll": null,
+   "fallLeadS": null,
+   "recoveryS": 1.329,
+   "whole": {
+    "comMaxExcursionCm": 7.5,
+    "comPeakSpeed": 0.337,
+    "xiMarginMinCm": 0.2,
+    "comMarginMinCm": 4.7,
+    "trunkTiltMaxDeg": 5.9,
+    "pelvisTiltMaxDeg": 2.6,
+    "spineBendMaxDeg": 4.2,
+    "angMomPeak": 4.02,
+    "footSlipMaxCm": 0.11,
+    "loadShareL": [
+     0.47,
+     0.51
+    ],
+    "keMaxJ": 5.31,
+    "keEndJ": 0.0002
+   },
+   "quiet": null,
+   "sensing": {
+    "grfYErrN": 0.34,
+    "footSumErrN": 0.16,
+    "footSumErrMaxN": 0.2,
+    "airborneFootResidualN": null,
+    "copInsidePct": 100,
+    "leverShareErr": {
+     "mean": 0.0016,
+     "max": 0.002,
+     "n": 1159
+    },
+    "rootResidualN": {
+     "mean": 0.025,
+     "max": 0.34
+    }
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "maxHardLimitDeg": 0,
+    "maxSoftOvershootDeg": 0,
+    "maxTurfPenMm": 1.39,
+    "maxSelfPenMm": 0
+   },
+   "friction": {
+    "firstSlipL": null,
+    "firstSlipR": null,
+    "degradedMs": 0,
+    "frictionLimitCmMin": null,
+    "slidCm": {
+     "L": 0.1,
+     "R": 0.1
+    },
+    "muObserved": null
+   },
+   "joints": [
+    {
+     "joint": "lumbar",
+     "peakNm": 91.6,
+     "peakEff": 0.37,
+     "satMs": 0,
+     "budgetMax": 0.37
+    },
+    {
+     "joint": "thoracic",
+     "peakNm": 34.7,
+     "peakEff": 0.14,
+     "satMs": 0,
+     "budgetMax": 0.14
+    },
+    {
+     "joint": "neck",
+     "peakNm": 7.2,
+     "peakEff": 0.16,
+     "satMs": 0,
+     "budgetMax": 0.16
+    },
+    {
+     "joint": "shoulder_L",
+     "peakNm": 8,
+     "peakEff": 0.38,
+     "satMs": 0,
+     "budgetMax": 0.1
+    },
+    {
+     "joint": "elbow_L",
+     "peakNm": 2.7,
+     "peakEff": 0.05,
+     "satMs": 0,
+     "budgetMax": 0.05
+    },
+    {
+     "joint": "shoulder_R",
+     "peakNm": 8,
+     "peakEff": 0.38,
+     "satMs": 0,
+     "budgetMax": 0.1
+    },
+    {
+     "joint": "elbow_R",
+     "peakNm": 2.7,
+     "peakEff": 0.05,
+     "satMs": 0,
+     "budgetMax": 0.05
+    },
+    {
+     "joint": "hip_L",
+     "peakNm": 56.7,
+     "peakEff": 0.47,
+     "satMs": 0,
+     "budgetMax": 0.25
+    },
+    {
+     "joint": "knee_L",
+     "peakNm": 35.4,
+     "peakEff": 0.14,
+     "satMs": 0,
+     "budgetMax": 0.14
+    },
+    {
+     "joint": "ankle_L",
+     "peakNm": 36.6,
+     "peakEff": 0.81,
+     "satMs": 0,
+     "budgetMax": 0.24
+    },
+    {
+     "joint": "hip_R",
+     "peakNm": 56.7,
+     "peakEff": 0.46,
+     "satMs": 0,
+     "budgetMax": 0.25
+    },
+    {
+     "joint": "knee_R",
+     "peakNm": 35.5,
+     "peakEff": 0.14,
+     "satMs": 0,
+     "budgetMax": 0.14
+    },
+    {
+     "joint": "ankle_R",
+     "peakNm": 36.6,
+     "peakEff": 0.81,
+     "satMs": 0,
+     "budgetMax": 0.24
+    }
+   ],
+   "flags": [],
+   "cpu": {
+    "msPerFrame": 0.6527,
+    "jolt": 0.5311,
+    "sensing": 0.0385,
+    "controller": 0.0831
+   },
+   "hipCapCm": {
+    "fwd": 4.5,
+    "bwd": 4.7,
+    "lat": 4.3
+   },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 0,
+    "falling": 0,
+    "grounded": 0,
+    "minMargin": 252,
+    "footRoll": 0
+   },
+   "repeatHashes": [
+    "4803a4e0",
+    "4803a4e0",
+    "4803a4e0"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "PB35",
+   "group": "C–E push backward",
+   "title": "35 N·s push backward at the pelvis",
+   "strength": "candidate",
+   "delayMs": 0,
+   "push": {
+    "dir": "B",
+    "Ns": 35
+   },
+   "hash": "71c42450",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "constraints": 13,
+   "outcome": "FELL",
+   "maxClass": "GROUNDED",
+   "classTimes": {
+    "RECOVERABLE_HIP": 0.025,
+    "STEP_NEEDED": 0.637,
+    "FALLING": 0.696,
+    "GROUNDED": 2.221
+   },
+   "fallReason": "STEP_NEEDED — no stepping in C1 — ξ 0.9 cm beyond the hip-extended support",
+   "tGrounded": 2.225,
+   "tFootRoll": 0.438,
+   "fallLeadS": 1.588,
+   "recoveryS": null,
+   "whole": {
+    "comMaxExcursionCm": 134.5,
+    "comPeakSpeed": 3.579,
+    "xiMarginMinCm": -100000,
+    "comMarginMinCm": -100000,
+    "trunkTiltMaxDeg": 93,
+    "pelvisTiltMaxDeg": 100.4,
+    "spineBendMaxDeg": 29.7,
+    "angMomPeak": 66.47,
+    "footSlipMaxCm": 0.07,
+    "loadShareL": [
+     0,
+     1
+    ],
+    "keMaxJ": 578.74,
+    "keEndJ": 0
+   },
+   "quiet": null,
+   "sensing": {
+    "grfYErrN": 0.39,
+    "footSumErrN": 0.15,
+    "footSumErrMaxN": 0.2,
+    "airborneFootResidualN": {
+     "mean": 0,
+     "maxAbs": 0,
+     "n": 124
+    },
+    "copInsidePct": 100,
+    "leverShareErr": {
+     "mean": 0.0016,
+     "max": 0.002,
+     "n": 168
+    },
+    "rootResidualN": {
+     "mean": 0.049,
+     "max": 0.39
+    }
+   },
+   "stability": {
+    "maxJointSepMm": 1.59,
+    "maxHardLimitDeg": 0,
+    "maxSoftOvershootDeg": 0,
+    "maxTurfPenMm": 1.44,
+    "maxSelfPenMm": 0
+   },
+   "friction": {
+    "firstSlipL": 3.054,
+    "firstSlipR": 2.996,
+    "degradedMs": 388,
+    "frictionLimitCmMin": 0,
+    "slidCm": {
+     "L": 5,
+     "R": 0.7
+    },
+    "muObserved": 0.864
+   },
+   "joints": [
+    {
+     "joint": "lumbar",
+     "peakNm": 249.6,
+     "peakEff": 1,
+     "satMs": 50,
+     "budgetMax": 1
+    },
+    {
+     "joint": "thoracic",
+     "peakNm": 198.1,
+     "peakEff": 1,
+     "satMs": 8,
+     "budgetMax": 0.79
+    },
+    {
+     "joint": "neck",
+     "peakNm": 31.3,
+     "peakEff": 1,
+     "satMs": 17,
+     "budgetMax": 0.7
+    },
+    {
+     "joint": "shoulder_L",
+     "peakNm": 70.1,
+     "peakEff": 1,
+     "satMs": 8,
+     "budgetMax": 0.88
+    },
+    {
+     "joint": "elbow_L",
+     "peakNm": 17.6,
+     "peakEff": 0.29,
+     "satMs": 0,
+     "budgetMax": 0.29
+    },
+    {
+     "joint": "shoulder_R",
+     "peakNm": 70.1,
+     "peakEff": 1,
+     "satMs": 8,
+     "budgetMax": 0.88
+    },
+    {
+     "joint": "elbow_R",
+     "peakNm": 17.6,
+     "peakEff": 0.29,
+     "satMs": 0,
+     "budgetMax": 0.29
+    },
+    {
+     "joint": "hip_L",
+     "peakNm": 166.8,
+     "peakEff": 1,
+     "satMs": 54,
+     "budgetMax": 0.73
+    },
+    {
+     "joint": "knee_L",
+     "peakNm": 108.2,
+     "peakEff": 0.83,
+     "satMs": 0,
+     "budgetMax": 0.43
+    },
+    {
+     "joint": "ankle_L",
+     "peakNm": 37.4,
+     "peakEff": 1,
+     "satMs": 33,
+     "budgetMax": 0.25
+    },
+    {
+     "joint": "hip_R",
+     "peakNm": 152.7,
+     "peakEff": 1,
+     "satMs": 63,
+     "budgetMax": 0.66
+    },
+    {
+     "joint": "knee_R",
+     "peakNm": 115.8,
+     "peakEff": 0.89,
+     "satMs": 0,
+     "budgetMax": 0.46
+    },
+    {
+     "joint": "ankle_R",
+     "peakNm": 37.4,
+     "peakEff": 1,
+     "satMs": 58,
+     "budgetMax": 0.25
+    }
+   ],
+   "flags": [],
+   "cpu": {
+    "msPerFrame": 0.7376,
+    "jolt": 0.5888,
+    "sensing": 0.0531,
+    "controller": 0.0957
+   },
+   "hipCapCm": {
+    "fwd": 4.5,
+    "bwd": 4.7,
+    "lat": 4.3
+   },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 393,
+    "falling": 407,
+    "grounded": 774,
+    "minMargin": 757,
+    "footRoll": 345
+   },
+   "repeatHashes": [
+    "71c42450",
+    "71c42450",
+    "71c42450"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "PR30",
+   "group": "C–E push toward his right",
+   "title": "30 N·s push toward his right at the pelvis",
+   "strength": "candidate",
+   "delayMs": 0,
+   "push": {
+    "dir": "R",
+    "Ns": 30
+   },
+   "hash": "69d821b0",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "constraints": 13,
+   "outcome": "RECOVERED",
+   "maxClass": "RECOVERABLE_HIP",
+   "classTimes": {
+    "RECOVERABLE_HIP": 0.087
+   },
+   "fallReason": null,
+   "tGrounded": null,
+   "tFootRoll": 0.067,
+   "fallLeadS": null,
+   "recoveryS": 0.254,
+   "whole": {
+    "comMaxExcursionCm": 4.9,
+    "comPeakSpeed": 0.342,
+    "xiMarginMinCm": -0.5,
+    "comMarginMinCm": -6.3,
+    "trunkTiltMaxDeg": 4.4,
+    "pelvisTiltMaxDeg": 2.1,
+    "spineBendMaxDeg": 2.7,
+    "angMomPeak": 2.23,
+    "footSlipMaxCm": 0.09,
+    "loadShareL": [
+     0,
+     0.5
+    ],
+    "keMaxJ": 5.54,
+    "keEndJ": 0.0001
+   },
+   "quiet": null,
+   "sensing": {
+    "grfYErrN": 0.3,
+    "footSumErrN": 0.16,
+    "footSumErrMaxN": 0.2,
+    "airborneFootResidualN": null,
+    "copInsidePct": 100,
+    "leverShareErr": {
+     "mean": 0.0075,
+     "max": 0.045,
+     "n": 1304
+    },
+    "rootResidualN": {
+     "mean": 0.022,
+     "max": 0.34
+    }
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "maxHardLimitDeg": 0,
+    "maxSoftOvershootDeg": 0,
+    "maxTurfPenMm": 1.21,
+    "maxSelfPenMm": 0
+   },
+   "friction": {
+    "firstSlipL": null,
+    "firstSlipR": null,
+    "degradedMs": 0,
+    "frictionLimitCmMin": null,
+    "slidCm": {
+     "L": 0.1,
+     "R": 0.1
+    },
+    "muObserved": null
+   },
+   "joints": [
+    {
+     "joint": "lumbar",
+     "peakNm": 62.3,
+     "peakEff": 1,
+     "satMs": 8,
+     "budgetMax": 0.25
+    },
+    {
+     "joint": "thoracic",
+     "peakNm": 23.4,
+     "peakEff": 0.56,
+     "satMs": 0,
+     "budgetMax": 0.09
+    },
+    {
+     "joint": "neck",
+     "peakNm": 4.4,
+     "peakEff": 0.21,
+     "satMs": 0,
+     "budgetMax": 0.1
+    },
+    {
+     "joint": "shoulder_L",
+     "peakNm": 7.6,
+     "peakEff": 0.5,
+     "satMs": 0,
+     "budgetMax": 0.09
+    },
+    {
+     "joint": "elbow_L",
+     "peakNm": 2.1,
+     "peakEff": 0.04,
+     "satMs": 0,
+     "budgetMax": 0.04
+    },
+    {
+     "joint": "shoulder_R",
+     "peakNm": 12.5,
+     "peakEff": 0.23,
+     "satMs": 0,
+     "budgetMax": 0.16
+    },
+    {
+     "joint": "elbow_R",
+     "peakNm": 1.9,
+     "peakEff": 0.03,
+     "satMs": 0,
+     "budgetMax": 0.03
+    },
+    {
+     "joint": "hip_L",
+     "peakNm": 43.7,
+     "peakEff": 0.72,
+     "satMs": 0,
+     "budgetMax": 0.19
+    },
+    {
+     "joint": "knee_L",
+     "peakNm": 43.8,
+     "peakEff": 0.24,
+     "satMs": 0,
+     "budgetMax": 0.18
+    },
+    {
+     "joint": "ankle_L",
+     "peakNm": 29.2,
+     "peakEff": 1,
+     "satMs": 17,
+     "budgetMax": 0.19
+    },
+    {
+     "joint": "hip_R",
+     "peakNm": 99.9,
+     "peakEff": 0.8,
+     "satMs": 0,
+     "budgetMax": 0.43
+    },
+    {
+     "joint": "knee_R",
+     "peakNm": 21.7,
+     "peakEff": 0.09,
+     "satMs": 0,
+     "budgetMax": 0.09
+    },
+    {
+     "joint": "ankle_R",
+     "peakNm": 37.5,
+     "peakEff": 1,
+     "satMs": 58,
+     "budgetMax": 0.25
+    }
+   ],
+   "flags": [],
+   "cpu": {
+    "msPerFrame": 0.6634,
+    "jolt": 0.541,
+    "sensing": 0.039,
+    "controller": 0.0834
+   },
+   "hipCapCm": {
+    "fwd": 4.5,
+    "bwd": 4.7,
+    "lat": 4.3
+   },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 0,
+    "falling": 0,
+    "grounded": 0,
+    "minMargin": 298,
+    "footRoll": 256
+   },
+   "repeatHashes": [
+    "69d821b0",
+    "69d821b0",
+    "69d821b0"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "PR45",
+   "group": "C–E push toward his right",
+   "title": "45 N·s push toward his right at the pelvis",
+   "strength": "candidate",
+   "delayMs": 0,
+   "push": {
+    "dir": "R",
+    "Ns": 45
+   },
+   "hash": "71f5f85e",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "constraints": 13,
+   "outcome": "RECOVERED",
+   "maxClass": "RECOVERABLE_HIP",
+   "classTimes": {
+    "RECOVERABLE_HIP": 0.042
+   },
+   "fallReason": null,
+   "tGrounded": null,
+   "tFootRoll": 0.058,
+   "fallLeadS": null,
+   "recoveryS": 0.775,
+   "whole": {
+    "comMaxExcursionCm": 13.4,
+    "comPeakSpeed": 0.523,
+    "xiMarginMinCm": -0.3,
+    "comMarginMinCm": -6,
+    "trunkTiltMaxDeg": 4.9,
+    "pelvisTiltMaxDeg": 2.8,
+    "spineBendMaxDeg": 3.5,
+    "angMomPeak": 4.49,
+    "footSlipMaxCm": 0.25,
+    "loadShareL": [
+     0,
+     0.5
+    ],
+    "keMaxJ": 12.99,
+    "keEndJ": 0.0026
+   },
+   "quiet": null,
+   "sensing": {
+    "grfYErrN": 0.42,
+    "footSumErrN": 0.16,
+    "footSumErrMaxN": 0.2,
+    "airborneFootResidualN": null,
+    "copInsidePct": 100,
+    "leverShareErr": {
+     "mean": 0.0321,
+     "max": 0.091,
+     "n": 922
+    },
+    "rootResidualN": {
+     "mean": 0.032,
+     "max": 0.51
+    }
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "maxHardLimitDeg": 0,
+    "maxSoftOvershootDeg": 0,
+    "maxTurfPenMm": 1.54,
+    "maxSelfPenMm": 0
+   },
+   "friction": {
+    "firstSlipL": null,
+    "firstSlipR": null,
+    "degradedMs": 0,
+    "frictionLimitCmMin": null,
+    "slidCm": {
+     "L": 0.1,
+     "R": 0.3
+    },
+    "muObserved": null
+   },
+   "joints": [
+    {
+     "joint": "lumbar",
+     "peakNm": 96.9,
+     "peakEff": 1,
+     "satMs": 17,
+     "budgetMax": 0.39
+    },
+    {
+     "joint": "thoracic",
+     "peakNm": 39.1,
+     "peakEff": 0.83,
+     "satMs": 0,
+     "budgetMax": 0.16
+    },
+    {
+     "joint": "neck",
+     "peakNm": 7.1,
+     "peakEff": 0.29,
+     "satMs": 0,
+     "budgetMax": 0.16
+    },
+    {
+     "joint": "shoulder_L",
+     "peakNm": 12.9,
+     "peakEff": 0.82,
+     "satMs": 0,
+     "budgetMax": 0.16
+    },
+    {
+     "joint": "elbow_L",
+     "peakNm": 2.3,
+     "peakEff": 0.04,
+     "satMs": 0,
+     "budgetMax": 0.04
+    },
+    {
+     "joint": "shoulder_R",
+     "peakNm": 17.9,
+     "peakEff": 0.31,
+     "satMs": 0,
+     "budgetMax": 0.22
+    },
+    {
+     "joint": "elbow_R",
+     "peakNm": 2.3,
+     "peakEff": 0.04,
+     "satMs": 0,
+     "budgetMax": 0.04
+    },
+    {
+     "joint": "hip_L",
+     "peakNm": 45.4,
+     "peakEff": 1,
+     "satMs": 4,
+     "budgetMax": 0.2
+    },
+    {
+     "joint": "knee_L",
+     "peakNm": 38.2,
+     "peakEff": 0.29,
+     "satMs": 0,
+     "budgetMax": 0.15
+    },
+    {
+     "joint": "ankle_L",
+     "peakNm": 29.2,
+     "peakEff": 1,
+     "satMs": 258,
+     "budgetMax": 0.19
+    },
+    {
+     "joint": "hip_R",
+     "peakNm": 139.7,
+     "peakEff": 1,
+     "satMs": 21,
+     "budgetMax": 0.61
+    },
+    {
+     "joint": "knee_R",
+     "peakNm": 33.2,
+     "peakEff": 0.13,
+     "satMs": 0,
+     "budgetMax": 0.13
+    },
+    {
+     "joint": "ankle_R",
+     "peakNm": 48.1,
+     "peakEff": 1,
+     "satMs": 542,
+     "budgetMax": 0.32
+    }
+   ],
+   "flags": [
+    "saturation streaks > 300 ms: ankle_R 396 ms"
+   ],
+   "cpu": {
+    "msPerFrame": 0.6463,
+    "jolt": 0.5371,
+    "sensing": 0.0367,
+    "controller": 0.0724
+   },
+   "hipCapCm": {
+    "fwd": 4.5,
+    "bwd": 4.7,
+    "lat": 4.3
+   },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 0,
+    "falling": 0,
+    "grounded": 0,
+    "minMargin": 617,
+    "footRoll": 254
+   },
+   "repeatHashes": [
+    "71f5f85e",
+    "71f5f85e",
+    "71f5f85e"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "PR50",
+   "group": "C–E push toward his right",
+   "title": "50 N·s push toward his right at the pelvis",
+   "strength": "candidate",
+   "delayMs": 0,
+   "push": {
+    "dir": "R",
+    "Ns": 50
+   },
+   "hash": "f3c69b6c",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "constraints": 13,
+   "outcome": "RECOVERED",
+   "maxClass": "RECOVERABLE_HIP",
+   "classTimes": {
+    "RECOVERABLE_HIP": 0.038
+   },
+   "fallReason": null,
+   "tGrounded": null,
+   "tFootRoll": 0.058,
+   "fallLeadS": null,
+   "recoveryS": 2.342,
+   "whole": {
+    "comMaxExcursionCm": 16.4,
+    "comPeakSpeed": 0.582,
+    "xiMarginMinCm": -0.1,
+    "comMarginMinCm": -5.7,
+    "trunkTiltMaxDeg": 5.1,
+    "pelvisTiltMaxDeg": 2.7,
+    "spineBendMaxDeg": 3.9,
+    "angMomPeak": 5.58,
+    "footSlipMaxCm": 0.26,
+    "loadShareL": [
+     0,
+     0.5
+    ],
+    "keMaxJ": 16.25,
+    "keEndJ": 0.0039
+   },
+   "quiet": null,
+   "sensing": {
+    "grfYErrN": 3.81,
+    "footSumErrN": 0.16,
+    "footSumErrMaxN": 0.3,
+    "airborneFootResidualN": {
+     "mean": 0,
+     "maxAbs": 0,
+     "n": 201
+    },
+    "copInsidePct": 100,
+    "leverShareErr": {
+     "mean": 0.0331,
+     "max": 0.091,
+     "n": 818
+    },
+    "rootResidualN": {
+     "mean": 0.036,
+     "max": 0.57
+    }
+   },
+   "stability": {
+    "maxJointSepMm": 0.19,
+    "maxHardLimitDeg": 0.1,
+    "maxSoftOvershootDeg": 0,
+    "maxTurfPenMm": 2.8,
+    "maxSelfPenMm": 0
+   },
+   "friction": {
+    "firstSlipL": null,
+    "firstSlipR": null,
+    "degradedMs": 0,
+    "frictionLimitCmMin": null,
+    "slidCm": {
+     "L": 0.1,
+     "R": 0.3
+    },
+    "muObserved": null
+   },
+   "joints": [
+    {
+     "joint": "lumbar",
+     "peakNm": 107.2,
+     "peakEff": 1,
+     "satMs": 21,
+     "budgetMax": 0.43
+    },
+    {
+     "joint": "thoracic",
+     "peakNm": 43.7,
+     "peakEff": 0.86,
+     "satMs": 0,
+     "budgetMax": 0.17
+    },
+    {
+     "joint": "neck",
+     "peakNm": 7.9,
+     "peakEff": 0.33,
+     "satMs": 0,
+     "budgetMax": 0.18
+    },
+    {
+     "joint": "shoulder_L",
+     "peakNm": 14.9,
+     "peakEff": 0.91,
+     "satMs": 0,
+     "budgetMax": 0.19
+    },
+    {
+     "joint": "elbow_L",
+     "peakNm": 2.4,
+     "peakEff": 0.04,
+     "satMs": 0,
+     "budgetMax": 0.04
+    },
+    {
+     "joint": "shoulder_R",
+     "peakNm": 19.8,
+     "peakEff": 0.34,
+     "satMs": 0,
+     "budgetMax": 0.25
+    },
+    {
+     "joint": "elbow_R",
+     "peakNm": 2.4,
+     "peakEff": 0.04,
+     "satMs": 0,
+     "budgetMax": 0.04
+    },
+    {
+     "joint": "hip_L",
+     "peakNm": 48.2,
+     "peakEff": 1,
+     "satMs": 4,
+     "budgetMax": 0.21
+    },
+    {
+     "joint": "knee_L",
+     "peakNm": 36.9,
+     "peakEff": 0.27,
+     "satMs": 0,
+     "budgetMax": 0.15
+    },
+    {
+     "joint": "ankle_L",
+     "peakNm": 29.2,
+     "peakEff": 1,
+     "satMs": 254,
+     "budgetMax": 0.19
+    },
+    {
+     "joint": "hip_R",
+     "peakNm": 140.2,
+     "peakEff": 1,
+     "satMs": 38,
+     "budgetMax": 0.61
+    },
+    {
+     "joint": "knee_R",
+     "peakNm": 32.3,
+     "peakEff": 0.13,
+     "satMs": 0,
+     "budgetMax": 0.13
+    },
+    {
+     "joint": "ankle_R",
+     "peakNm": 53.9,
+     "peakEff": 1,
+     "satMs": 1242,
+     "budgetMax": 0.36
+    }
+   ],
+   "flags": [
+    "saturation streaks > 300 ms: ankle_R 675 ms"
+   ],
+   "cpu": {
+    "msPerFrame": 0.6638,
+    "jolt": 0.5465,
+    "sensing": 0.0392,
+    "controller": 0.0781
+   },
+   "hipCapCm": {
+    "fwd": 4.5,
+    "bwd": 4.7,
+    "lat": 4.3
+   },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 0,
+    "falling": 0,
+    "grounded": 0,
+    "minMargin": 722,
+    "footRoll": 254
+   },
+   "repeatHashes": [
+    "f3c69b6c",
+    "f3c69b6c",
+    "f3c69b6c"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "G_fall",
+   "group": "G fall",
+   "title": "G — unrecoverable push: 90 N·s forward at the pelvis (a fall is the required outcome)",
+   "strength": "candidate",
+   "delayMs": 0,
+   "push": {
+    "dir": "F",
+    "Ns": 90
+   },
+   "hash": "35b383b2",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "constraints": 13,
+   "outcome": "FELL",
+   "maxClass": "GROUNDED",
+   "classTimes": {
+    "RECOVERABLE_HIP": 0.021,
+    "STEP_NEEDED": 0.038,
+    "FALLING": 0.096,
+    "GROUNDED": 1.212
+   },
+   "fallReason": "STEP_NEEDED — no stepping in C1 — ξ 5.9 cm beyond the hip-extended support",
+   "tGrounded": 1.217,
+   "tFootRoll": 0.079,
+   "fallLeadS": 1.179,
+   "recoveryS": null,
+   "whole": {
+    "comMaxExcursionCm": 169.5,
+    "comPeakSpeed": 3.756,
+    "xiMarginMinCm": -100000,
+    "comMarginMinCm": -100000,
+    "trunkTiltMaxDeg": 91.4,
+    "pelvisTiltMaxDeg": 104.1,
+    "spineBendMaxDeg": 18.2,
+    "angMomPeak": 72.99,
+    "footSlipMaxCm": 0.13,
+    "loadShareL": [
+     0,
+     1
+    ],
+    "keMaxJ": 605,
+    "keEndJ": 0
+   },
+   "quiet": null,
+   "sensing": {
+    "grfYErrN": 0.39,
+    "footSumErrN": 0.15,
+    "footSumErrMaxN": 0.2,
+    "airborneFootResidualN": {
+     "mean": 0,
+     "maxAbs": 0.1,
+     "n": 96
+    },
+    "copInsidePct": 100,
+    "leverShareErr": {
+     "mean": 0.0016,
+     "max": 0.002,
+     "n": 168
+    },
+    "rootResidualN": {
+     "mean": 0.07,
+     "max": 1.02
+    }
+   },
+   "stability": {
+    "maxJointSepMm": 0.97,
+    "maxHardLimitDeg": 0,
+    "maxSoftOvershootDeg": 0,
+    "maxTurfPenMm": 0.99,
+    "maxSelfPenMm": 0.02
+   },
+   "friction": {
+    "firstSlipL": 2.233,
+    "firstSlipR": 2.575,
+    "degradedMs": 1008,
+    "frictionLimitCmMin": 0,
+    "slidCm": {
+     "L": 12.9,
+     "R": 5.9
+    },
+    "muObserved": 0.922
+   },
+   "joints": [
+    {
+     "joint": "lumbar",
+     "peakNm": 250,
+     "peakEff": 1,
+     "satMs": 50,
+     "budgetMax": 1
+    },
+    {
+     "joint": "thoracic",
+     "peakNm": 250.2,
+     "peakEff": 1,
+     "satMs": 8,
+     "budgetMax": 1
+    },
+    {
+     "joint": "neck",
+     "peakNm": 45,
+     "peakEff": 1,
+     "satMs": 17,
+     "budgetMax": 1
+    },
+    {
+     "joint": "shoulder_L",
+     "peakNm": 75.2,
+     "peakEff": 1,
+     "satMs": 21,
+     "budgetMax": 0.94
+    },
+    {
+     "joint": "elbow_L",
+     "peakNm": 24.8,
+     "peakEff": 0.41,
+     "satMs": 0,
+     "budgetMax": 0.41
+    },
+    {
+     "joint": "shoulder_R",
+     "peakNm": 75.3,
+     "peakEff": 1,
+     "satMs": 21,
+     "budgetMax": 0.94
+    },
+    {
+     "joint": "elbow_R",
+     "peakNm": 23.7,
+     "peakEff": 0.4,
+     "satMs": 0,
+     "budgetMax": 0.4
+    },
+    {
+     "joint": "hip_L",
+     "peakNm": 108.5,
+     "peakEff": 1,
+     "satMs": 38,
+     "budgetMax": 0.47
+    },
+    {
+     "joint": "knee_L",
+     "peakNm": 130,
+     "peakEff": 1,
+     "satMs": 8,
+     "budgetMax": 0.52
+    },
+    {
+     "joint": "ankle_L",
+     "peakNm": 143.8,
+     "peakEff": 1,
+     "satMs": 196,
+     "budgetMax": 0.96
+    },
+    {
+     "joint": "hip_R",
+     "peakNm": 108.7,
+     "peakEff": 1,
+     "satMs": 38,
+     "budgetMax": 0.47
+    },
+    {
+     "joint": "knee_R",
+     "peakNm": 130,
+     "peakEff": 1,
+     "satMs": 8,
+     "budgetMax": 0.52
+    },
+    {
+     "joint": "ankle_R",
+     "peakNm": 144.3,
+     "peakEff": 1,
+     "satMs": 238,
+     "budgetMax": 0.96
+    }
+   ],
+   "flags": [],
+   "cpu": {
+    "msPerFrame": 0.7447,
+    "jolt": 0.6195,
+    "sensing": 0.0459,
+    "controller": 0.0793
+   },
+   "hipCapCm": {
+    "fwd": 4.5,
+    "bwd": 4.7,
+    "lat": 4.3
+   },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 249,
+    "falling": 263,
+    "grounded": 532,
+    "minMargin": 499,
+    "footRoll": 259
+   },
+   "repeatHashes": [
+    "35b383b2",
+    "35b383b2",
+    "35b383b2"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "H_ice_quiet",
+   "group": "H friction",
+   "title": "H1 — quiet standing on ice (μ 0.08 under both feet), 5 s",
+   "strength": "candidate",
+   "delayMs": 0,
+   "push": null,
+   "hash": "13850c03",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "constraints": 13,
+   "outcome": "STOOD",
+   "maxClass": "RECOVERABLE_IN_PLACE",
+   "classTimes": {},
+   "fallReason": null,
+   "tGrounded": null,
+   "tFootRoll": null,
+   "fallLeadS": null,
+   "recoveryS": null,
+   "whole": {
+    "comMaxExcursionCm": 0,
+    "comPeakSpeed": 0,
+    "xiMarginMinCm": 12.1,
+    "comMarginMinCm": 12.1,
+    "trunkTiltMaxDeg": 4,
+    "pelvisTiltMaxDeg": 2,
+    "spineBendMaxDeg": 2,
+    "angMomPeak": 0,
+    "footSlipMaxCm": 0.07,
+    "loadShareL": [
+     0.5,
+     0.5
+    ],
+    "keMaxJ": 0,
+    "keEndJ": 0
+   },
+   "quiet": {
+    "comDriftCm": 0.05,
+    "swayRmsMm": 0.32,
+    "copPathMm": 0.4,
+    "ankleEffortPct": 9.7,
+    "keMax": 0,
+    "stayedInPlace": true
+   },
+   "sensing": {
+    "grfYErrN": 0.05,
+    "footSumErrN": 0.15,
+    "footSumErrMaxN": 0.2,
+    "airborneFootResidualN": null,
+    "copInsidePct": 100,
+    "leverShareErr": {
+     "mean": 0.0016,
+     "max": 0.002,
+     "n": 1128
+    },
+    "rootResidualN": {
+     "mean": 0.018,
+     "max": 0.06
+    }
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "maxHardLimitDeg": 0,
+    "maxSoftOvershootDeg": 0,
+    "maxTurfPenMm": 0.98,
+    "maxSelfPenMm": 0
+   },
+   "friction": {
+    "firstSlipL": null,
+    "firstSlipR": null,
+    "degradedMs": 0,
+    "frictionLimitCmMin": null,
+    "slidCm": {
+     "L": 0.1,
+     "R": 0.1
+    },
+    "muObserved": null
+   },
+   "joints": [
+    {
+     "joint": "lumbar",
+     "peakNm": 18.3,
+     "peakEff": 0.07,
+     "satMs": 0,
+     "budgetMax": 0.07
+    },
+    {
+     "joint": "thoracic",
+     "peakNm": 9.2,
+     "peakEff": 0.04,
+     "satMs": 0,
+     "budgetMax": 0.04
+    },
+    {
+     "joint": "neck",
+     "peakNm": 0.6,
+     "peakEff": 0.01,
+     "satMs": 0,
+     "budgetMax": 0.01
+    },
+    {
+     "joint": "shoulder_L",
+     "peakNm": 3.7,
+     "peakEff": 0.06,
+     "satMs": 0,
+     "budgetMax": 0.05
+    },
+    {
+     "joint": "elbow_L",
+     "peakNm": 1.7,
+     "peakEff": 0.03,
+     "satMs": 0,
+     "budgetMax": 0.03
+    },
+    {
+     "joint": "shoulder_R",
+     "peakNm": 3.7,
+     "peakEff": 0.06,
+     "satMs": 0,
+     "budgetMax": 0.05
+    },
+    {
+     "joint": "elbow_R",
+     "peakNm": 1.7,
+     "peakEff": 0.03,
+     "satMs": 0,
+     "budgetMax": 0.03
+    },
+    {
+     "joint": "hip_L",
+     "peakNm": 27.3,
+     "peakEff": 0.27,
+     "satMs": 0,
+     "budgetMax": 0.12
+    },
+    {
+     "joint": "knee_L",
+     "peakNm": 20.1,
+     "peakEff": 0.08,
+     "satMs": 0,
+     "budgetMax": 0.08
+    },
+    {
+     "joint": "ankle_L",
+     "peakNm": 29.2,
+     "peakEff": 0.36,
+     "satMs": 0,
+     "budgetMax": 0.19
+    },
+    {
+     "joint": "hip_R",
+     "peakNm": 27.3,
+     "peakEff": 0.27,
+     "satMs": 0,
+     "budgetMax": 0.12
+    },
+    {
+     "joint": "knee_R",
+     "peakNm": 20.1,
+     "peakEff": 0.08,
+     "satMs": 0,
+     "budgetMax": 0.08
+    },
+    {
+     "joint": "ankle_R",
+     "peakNm": 29,
+     "peakEff": 0.36,
+     "satMs": 0,
+     "budgetMax": 0.19
+    }
+   ],
+   "flags": [],
+   "cpu": {
+    "msPerFrame": 0.6557,
+    "jolt": 0.5401,
+    "sensing": 0.0384,
+    "controller": 0.0772
+   },
+   "hipCapCm": {
+    "fwd": 4.5,
+    "bwd": 4.7,
+    "lat": 4.3
+   },
+   "worst": {
+    "push": 0,
+    "stepNeeded": 0,
+    "falling": 0,
+    "grounded": 0,
+    "minMargin": 1200,
+    "footRoll": 0
+   },
+   "repeatHashes": [
+    "13850c03",
+    "13850c03",
+    "13850c03"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "H_ice_push",
+   "group": "H friction",
+   "title": "H2 — 25 N·s forward push on ice (μ 0.08 under both feet)",
+   "strength": "candidate",
+   "delayMs": 0,
+   "push": {
+    "dir": "F",
+    "Ns": 25
+   },
+   "hash": "cc6ac926",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "constraints": 13,
+   "outcome": "RECOVERED",
+   "maxClass": "STEP_NEEDED",
+   "classTimes": {
+    "STEP_NEEDED": 0.05
+   },
+   "fallReason": "ξ 0.4 cm beyond the hip-extended support",
+   "tGrounded": null,
+   "tFootRoll": null,
+   "fallLeadS": null,
+   "recoveryS": 0.529,
+   "whole": {
+    "comMaxExcursionCm": 7.7,
+    "comPeakSpeed": 0.302,
+    "xiMarginMinCm": 12.1,
+    "comMarginMinCm": 10.8,
+    "trunkTiltMaxDeg": 5.2,
+    "pelvisTiltMaxDeg": 2.6,
+    "spineBendMaxDeg": 2.6,
+    "angMomPeak": 2.36,
+    "footSlipMaxCm": 6.99,
+    "loadShareL": [
+     0.5,
+     0.5
+    ],
+    "keMaxJ": 4.05,
+    "keEndJ": 0
+   },
+   "quiet": null,
+   "sensing": {
+    "grfYErrN": 0.08,
+    "footSumErrN": 0.15,
+    "footSumErrMaxN": 0.2,
+    "airborneFootResidualN": null,
+    "copInsidePct": 100,
+    "leverShareErr": {
+     "mean": 0.0016,
+     "max": 0.002,
+     "n": 1256
+    },
+    "rootResidualN": {
+     "mean": 0.023,
+     "max": 0.28
+    }
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "maxHardLimitDeg": 0,
+    "maxSoftOvershootDeg": 0,
+    "maxTurfPenMm": 0.98,
+    "maxSelfPenMm": 0
+   },
+   "friction": {
+    "firstSlipL": 1.042,
+    "firstSlipR": 1.042,
+    "degradedMs": 313,
+    "frictionLimitCmMin": 3.3,
+    "slidCm": {
+     "L": 7,
+     "R": 7
+    },
+    "muObserved": 0.075
+   },
+   "joints": [
+    {
+     "joint": "lumbar",
+     "peakNm": 32.5,
+     "peakEff": 0.18,
+     "satMs": 0,
+     "budgetMax": 0.13
+    },
+    {
+     "joint": "thoracic",
+     "peakNm": 12,
+     "peakEff": 0.05,
+     "satMs": 0,
+     "budgetMax": 0.05
+    },
+    {
+     "joint": "neck",
+     "peakNm": 3,
+     "peakEff": 0.12,
+     "satMs": 0,
+     "budgetMax": 0.07
+    },
+    {
+     "joint": "shoulder_L",
+     "peakNm": 9.1,
+     "peakEff": 0.16,
+     "satMs": 0,
+     "budgetMax": 0.11
+    },
+    {
+     "joint": "elbow_L",
+     "peakNm": 3.8,
+     "peakEff": 0.06,
+     "satMs": 0,
+     "budgetMax": 0.06
+    },
+    {
+     "joint": "shoulder_R",
+     "peakNm": 9.2,
+     "peakEff": 0.16,
+     "satMs": 0,
+     "budgetMax": 0.11
+    },
+    {
+     "joint": "elbow_R",
+     "peakNm": 3.8,
+     "peakEff": 0.06,
+     "satMs": 0,
+     "budgetMax": 0.06
+    },
+    {
+     "joint": "hip_L",
+     "peakNm": 28.4,
+     "peakEff": 0.38,
+     "satMs": 0,
+     "budgetMax": 0.12
+    },
+    {
+     "joint": "knee_L",
+     "peakNm": 26.8,
+     "peakEff": 0.21,
+     "satMs": 0,
+     "budgetMax": 0.11
+    },
+    {
+     "joint": "ankle_L",
+     "peakNm": 68.8,
+     "peakEff": 0.46,
+     "satMs": 0,
+     "budgetMax": 0.46
+    },
+    {
+     "joint": "hip_R",
+     "peakNm": 27.8,
+     "peakEff": 0.38,
+     "satMs": 0,
+     "budgetMax": 0.12
+    },
+    {
+     "joint": "knee_R",
+     "peakNm": 27.4,
+     "peakEff": 0.21,
+     "satMs": 0,
+     "budgetMax": 0.11
+    },
+    {
+     "joint": "ankle_R",
+     "peakNm": 70,
+     "peakEff": 0.47,
+     "satMs": 0,
+     "budgetMax": 0.47
+    }
+   ],
+   "flags": [
+    "foot slid 7.0 cm"
+   ],
+   "cpu": {
+    "msPerFrame": 0.6468,
+    "jolt": 0.5316,
+    "sensing": 0.0386,
+    "controller": 0.0766
+   },
+   "hipCapCm": {
+    "fwd": 4.5,
+    "bwd": 4.7,
+    "lat": 4.3
+   },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 252,
+    "falling": 0,
+    "grounded": 0,
+    "minMargin": 1440,
+    "footRoll": 0
+   },
+   "repeatHashes": [
+    "cc6ac926",
+    "cc6ac926",
+    "cc6ac926"
+   ],
+   "deterministic": true
+  }
+ ]
+}
