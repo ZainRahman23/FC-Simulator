@@ -11,6 +11,7 @@ import { runTest, TESTS, GATE_B_TSC } from "./pc_gateb.js";
 import { runC1, TESTS_C1, GATE_C1_TSC } from "./pc_gatec1.js";
 import { runC2, TESTS_C2 } from "./pc_gatec2.js";
 import { runC3, TESTS_C3 } from "./pc_gatec3.js";
+import { runD, TESTS_D } from "./pc_gated.js";
 import { footprint } from "./pc_support.js";
 import { buildPoses, fk } from "./pc_control.js";
 import { skinMatrices, boneBodyMap, meshLowestY, referencedVertices } from "./pc_fit.js";
@@ -19,7 +20,7 @@ import { V, Q, deg } from "./pc_math.js";
 OF_CHAR.base = "../../../assets/characters/outfield";
 const $ = (id) => document.getElementById(id);
 const QS = new URLSearchParams(location.search);
-const H = { J: null, spec: null, entry: null, map: null, ref: null, suiteKey: (QS.get("suite") || "C").toUpperCase(), drop: "A", test: "E", testC: QS.get("suite") && QS.get("suite").toUpperCase() === "C" && QS.get("test") || "PF60", testC2: QS.get("test") || "D_fwd_R", testC3: QS.get("suite") && QS.get("suite").toUpperCase() === "C3" && QS.get("test") || "B_F80", run: null, i: 0, playing: false, speed: 1, acc: 0, last: 0,
+const H = { J: null, spec: null, entry: null, map: null, ref: null, suiteKey: (QS.get("suite") || "C").toUpperCase(), drop: "A", test: "E", testC: QS.get("suite") && QS.get("suite").toUpperCase() === "C" && QS.get("test") || "PF60", testC2: QS.get("test") || "D_fwd_R", testD: QS.get("suite") && QS.get("suite").toUpperCase() === "D" && QS.get("test") || "D2_shoved_into", testC3: QS.get("suite") && QS.get("suite").toUpperCase() === "C3" && QS.get("test") || "B_F80", run: null, i: 0, playing: false, speed: 1, acc: 0, last: 0,
   cam: { az: 35, el: 18, dist: 3.4, target: [0, 0.6, 0] }, follow: true, mesh: true, phys: true,
   ov: { bodies: false, colliders: true, coms: false, tcom: true, anchors: true, axes: false, limits: false, ground: true, normals: false, pen: true, vel: false, angvel: false, jerr: true, sleep: true,
         ghost: true, skel: false, errlab: true, torque: true, satur: true, support: true, obstacle: true, impulse: true,
@@ -29,7 +30,7 @@ const H = { J: null, spec: null, entry: null, map: null, ref: null, suiteKey: (Q
   ghostRoot: "actual", jsel: "hip_R", comp: "y", suite: null, suiteB: null, skin: null, poses: null,
   arms: QS.get("arms") === "1", prot: QS.get("prot") === "1", calib: QS.get("calib") === "V1" ? "V1" : "V1.1", ctrlv: ["approved", "recal", "diag"].includes(QS.get("ctrl")) ? QS.get("ctrl") : "", specs: {}, posesBy: {}, suitesBy: {} };
 window.GATEA = H;
-const isB = () => H.suiteKey === "B", isC = () => H.suiteKey === "C", isC2 = () => H.suiteKey === "C2", isC3 = () => H.suiteKey === "C3", isBal = () => isC() || isC2() || isC3();
+const isD = () => H.suiteKey === "D", isB = () => H.suiteKey === "B", isC = () => H.suiteKey === "C", isC2 = () => H.suiteKey === "C2", isC3 = () => H.suiteKey === "C3", isBal = () => isC() || isC2() || isC3();
 
 // ── GL: mirrored camera (the engine's; Astra meshes are wound for it), a line renderer, the turf ──────────────────────────────────
 const canvas = $("gl"), gl = canvas.getContext("webgl2", { antialias: true, preserveDrawingBuffer: true }), R = { gl };
@@ -83,7 +84,7 @@ function simulate() {
   setTimeout(() => {
     const t0 = performance.now();
     const extra = Object.assign({}, H.arms ? { reactiveArms: true } : {}, H.prot ? { protective: true } : {});
-    H.run = isC3() ? runC3(H.J, H.spec, H.testC3, { keepStates: true, poses: H.poses, ctrlExtra: extra }) : isC2() ? runC2(H.J, H.spec, H.testC2, { keepStates: true, poses: H.poses, ctrl: ctrlOpts() }) : isC() ? runC1(H.J, H.spec, H.testC, { keepStates: true, poses: H.poses, ctrlExtra: extra }) : isB() ? runTest(H.J, H.spec, H.test, { keepStates: true, poses: H.poses }) : runDrop(H.J, H.spec, H.drop, { tsc: GATE_A_TSC, world: GATE_A_WORLD, keepStates: true, seconds: 6 });
+    H.run = isD() ? runD(H.J, H.spec, H.testD, { keepStates: true, poses: H.poses, ctrlExtra: extra }) : isC3() ? runC3(H.J, H.spec, H.testC3, { keepStates: true, poses: H.poses, ctrlExtra: extra }) : isC2() ? runC2(H.J, H.spec, H.testC2, { keepStates: true, poses: H.poses, ctrl: ctrlOpts() }) : isC() ? runC1(H.J, H.spec, H.testC, { keepStates: true, poses: H.poses, ctrlExtra: extra }) : isB() ? runTest(H.J, H.spec, H.test, { keepStates: true, poses: H.poses }) : runDrop(H.J, H.spec, H.drop, { tsc: GATE_A_TSC, world: GATE_A_WORLD, keepStates: true, seconds: 6 });
     H.simMs = performance.now() - t0; H.i = 0; H.acc = 0; $("scrub").max = H.run.recs.length - 1; $("scrub").value = 0; renderSide(); drawChart(); drawChart2();
     window.GATEA_READY = true; $("status").textContent = "";
   }, 20);
@@ -93,9 +94,9 @@ function simulate() {
 // "" = the body's WORKING controller (pc_balance controllerProfile: V1 → as approved, V1.1 → the integrated V1.1 controller); "approved" = the
 // approved Gate C2 controller; "recal" / "diag" = the historical V1.1-report variants (R1·R2 / + D1)
 function ctrlOpts() { if (H.ctrlv === "approved") return {}; if (H.ctrlv === "recal") return { anticipateReach: true, reachToGround: true }; if (H.ctrlv === "diag") return { anticipateReach: true, reachToGround: true, diagUnload: true }; return undefined; }
-function applySuites() { const b = H.suitesBy[H.calib] || {}; H.suiteC3 = b.C3 || null; H.suite = b.A || null; H.suiteB = b.B || null; H.suiteC = b.C || null; H.suiteC2 = (H.calib === "V1.1" ? b["C2" + (H.ctrlv || "working")] : b.C2) || null; }
+function applySuites() { const b = H.suitesBy[H.calib] || {}; H.suiteD = b.D || null; H.suiteC3 = b.C3 || null; H.suite = b.A || null; H.suiteB = b.B || null; H.suiteC = b.C || null; H.suiteC2 = (H.calib === "V1.1" ? b["C2" + (H.ctrlv || "working")] : b.C2) || null; }
 function setCalib(c, ctrlv) { H.calib = c; if (ctrlv != null) H.ctrlv = ctrlv; H.spec = H.specs[c]; H.poses = H.posesBy[c]; H.skin = null; $("calib").value = c; $("ctrlv").value = H.ctrlv; applySuites(); document.title = `Physical character — ${c}${isC2() && H.ctrlv ? " + " + H.ctrlv : ""}`; }
-const hz = () => TIMESTEP_CONFIGS[isBal() ? GATE_C1_TSC : isB() ? GATE_B_TSC : GATE_A_TSC].hz;
+const hz = () => TIMESTEP_CONFIGS[isBal() || isD() ? GATE_C1_TSC : isB() ? GATE_B_TSC : GATE_A_TSC].hz;
 // ── camera ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 const PRESETS = { plan: [0, 89, 1.9], three: [35, 18, 3.4], front: [0, 8, 3.6], side: [90, 8, 3.6], back: [180, 12, 3.6], top: [0, 85, 4.2], left: [-90, 8, 3.6], low: [60, 4, 2.6] };
 function camera(rec) {
@@ -104,7 +105,7 @@ function camera(rec) {
   const eye = [target[0] + dist * Math.cos(e) * Math.sin(a), target[1] + dist * Math.sin(e), target[2] + dist * Math.cos(e) * Math.cos(a)];
   return { view: lookAt(eye, target), proj: persp(40, canvas.width / canvas.height, 0.05, 200), eye };
 }
-const totalCom = (rec) => { let m = 0, c = [0, 0, 0]; rec.states.forEach((s, i) => { const b = H.spec.bodies[i]; c = V.add(c, V.sc(s.com, b.mass)); m += b.mass; }); return V.sc(c, 1 / m); };
+const totalCom = (rec) => { let m = 0, c = [0, 0, 0]; rec.states.forEach((s, i) => { const b = H.spec.bodies[i % H.spec.bodies.length]; c = V.add(c, V.sc(s.com, b.mass)); m += b.mass; }); return V.sc(c, 1 / m); };
 function project(cam, p) { const vp = mul4(cam.proj, cam.view), x = vp[0] * p[0] + vp[4] * p[1] + vp[8] * p[2] + vp[12], y = vp[1] * p[0] + vp[5] * p[1] + vp[9] * p[2] + vp[13], w = vp[3] * p[0] + vp[7] * p[1] + vp[11] * p[2] + vp[15];
   if (w <= 0.01) return null; return [(x / w * 0.5 + 0.5) * canvas.width, (1 - (y / w * 0.5 + 0.5)) * canvas.height]; }
 // ── draw ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -124,6 +125,7 @@ function draw() {
   gl.disable(gl.CULL_FACE); gl.bindVertexArray(groundVao); gl.drawArrays(gl.TRIANGLES, 0, 6); gl.bindVertexArray(null);
   if (!rec) return;
   const S = rec.states, spec = H.spec;
+  if (isD()) return drawD(rec, cam, ov, W, Hh);
   if (H.mesh) { H.skin = skinMatrices(H.entry.rig, spec, S, H.map, H.skin); gl.enable(gl.CULL_FACE); ofCharDraw(R, H.entry, H.skin, cam.view, cam.proj); gl.disable(gl.CULL_FACE); }
   const labels = [], O = H.ov;
   if (H.phys) {
@@ -208,7 +210,7 @@ function drawGateB(rec, S, labels) {
     L(V.sub(im.pt, V.sc(V.norm(im.J), 0.35)), im.pt, [1, 1, 0.1, a]); cross3(im.pt, 0.03, [1, 1, 0.1, a]); if (q === H.i) labels.push([im.pt, `impulse ${V.len(im.J).toFixed(2)} N·s this step`, "#ffff40"]); break; } }
 }
 // ── charts: KE (+ target-error RMS in Gate B) with the cursor; Gate B joint panel ────────────────────────────────────────────────────
-function drawChart(cursorOnly) { if (isC2()) return drawChartC2(); if (isC() || isC3()) return drawChartC1();
+function drawChart(cursorOnly) { if (isD()) return drawChartD(); if (isC2()) return drawChartC2(); if (isC() || isC3()) return drawChartC1();
   const c = $("chart"), g = c.getContext("2d"), w = c.clientWidth, h = c.clientHeight; if (c.width !== w) { c.width = w; c.height = h; }
   if (!H.run) return; const R_ = H.run.recs, maxKE = Math.max(1, ...R_.map(r => r.ke)); g.clearRect(0, 0, w, h); g.fillStyle = "#0d0f12"; g.fillRect(0, 0, w, h);
   const X = (i) => i / (R_.length - 1) * w;
@@ -224,7 +226,7 @@ function drawChart(cursorOnly) { if (isC2()) return drawChartC2(); if (isC() || 
   g.fillStyle = "#fff"; g.fillRect(X(H.i) - 1, 0, 2, h);
 }
 // the selected joint: requested vs solved angle (hinge: the angle; SixDOF: the chosen swing-twist component), |error|, motor effort / limit
-function drawChart2() { if (isBal()) return drawChart2C1();
+function drawChart2() { if (isD()) return; if (isBal()) return drawChart2C1();
   const c = $("chart2"), g = c.getContext("2d"), w = c.clientWidth, h = c.clientHeight; if (!w) return; if (c.width !== w) { c.width = w; c.height = h; }
   if (!H.run || !isB()) return; const R_ = H.run.recs, k = H.spec.joints.findIndex(j => j.name === H.jsel), j = H.spec.joints[k], pr = H.run.profile[k];
   const comp = (q) => { if (j.type === "hinge") return q; const s = Q.swingTwist(q); return H.comp === "z" ? s.swingZ : H.comp === "t" ? s.twist : s.swingY; };
@@ -244,7 +246,7 @@ function drawChart2() { if (isBal()) return drawChart2C1();
 }
 // ── side panel ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 function renderSide() { renderSideInner(); $("side").insertAdjacentHTML("afterbegin", anatSide()); }
-function renderSideInner() { if (isC3()) return renderSideC3(); if (isC2()) return renderSideC2(); if (isC()) return renderSideC1(); if (isB()) return renderSideB();
+function renderSideInner() { if (isD()) return renderSideD(); if (isC3()) return renderSideC3(); if (isC2()) return renderSideC2(); if (isC()) return renderSideC1(); if (isB()) return renderSideB();
   const s = H.run, spec = H.spec, T = TIMESTEP_CONFIGS[GATE_A_TSC], f = (x, d = 1) => (x == null ? "-" : (+x).toFixed(d));
   const row = (k, v, bad) => `<tr><td>${k}</td><td class="${bad ? "bad" : ""}">${v}</td></tr>`;
   let h = `<h3>${DROPS[H.drop].title}</h3><div class="small">${DROPS[H.drop].note}</div><table>`;
@@ -534,6 +536,45 @@ function statusC3(rec, meshPen) { const R = H.run.step, st = rec.step;
   return statusC1(rec, meshPen) + `\nstep ${rec.stepStage || "-"}${st ? ` · ${st.sw} foot${st.projected ? " (projected foothold)" : ""}` : ""}   outcome ${H.run.outcome}${H.run.refused ? " — " + H.run.refused : ""}${R && R.fail ? " — " + R.fail : ""}`; }
 function bannerC3(ov, rec, W) { const stg = rec.stepStage; if (!stg || stg === "STAND") return; const txt = { SWING: "CORRECTIVE STEP — SWING", DESCEND: "CORRECTIVE STEP — SEEKING GROUND", ACCEPT: "CORRECTIVE STEP — LOAD ACCEPTANCE", FAILED: "CORRECTIVE STEP FAILED — releasing" }[stg] || stg;
   ov.font = "bold 15px -apple-system, system-ui, sans-serif"; const w = ov.measureText(txt).width; ov.fillStyle = "#000b"; ov.fillRect(W / 2 - w / 2 - 10, 150, w + 20, 24); ov.fillStyle = stg === "FAILED" ? "#ff6060" : "#70e0ff"; ov.fillText(txt, W / 2 - w / 2, 168); }
+// ── GATE D (vertical slice): two characters. Each is skinned from ITS OWN solved bodies (B with A's bind spec — the mesh is A's bind mesh),
+// colliders per character (A cyan, B magenta), the character ↔ character manifolds (red = touching ≤ 0.5 mm, amber = speculative: the solver
+// already limits the approach), per-character state labels ──
+function drawD(rec, cam, ov, W, Hh) { const spec = H.spec, nb = spec.bodies.length, S = rec.states, SA = S.slice(0, nb), SB = S.slice(nb), O = H.ov, labels = [];
+  if (H.mesh) { gl.enable(gl.CULL_FACE); H.skin = skinMatrices(H.entry.rig, spec, SA, H.map, H.skin); ofCharDraw(R, H.entry, H.skin, cam.view, cam.proj); H.skinB = skinMatrices(H.entry.rig, spec, SB, H.map, H.skinB); ofCharDraw(R, H.entry, H.skinB, cam.view, cam.proj); gl.disable(gl.CULL_FACE); }
+  if (H.phys) {
+    if (O.colliders) { SA.forEach((s, i) => { for (const sh of spec.bodies[i].shapes) wireShape(s, sh, H.mesh ? [0.1, 1, 0.9, 0.7] : [0.1, 0.9, 1, 0.95]); }); SB.forEach((s, i) => { for (const sh of spec.bodies[i].shapes) wireShape(s, sh, H.mesh ? [1, 0.3, 0.9, 0.7] : [1, 0.35, 0.9, 0.95]); }); }
+    if (O.tcom) for (const [SS, col] of [[SA, [0.1, 0.9, 1, 1]], [SB, [1, 0.35, 0.9, 1]]]) { let m = 0, c = [0, 0, 0]; SS.forEach((s, i) => { c = V.add(c, V.sc(s.com, spec.bodies[i].mass)); m += spec.bodies[i].mass; }); c = V.sc(c, 1 / m); cross3(c, 0.05, col); L(c, [c[0], 0, c[2]], [col[0], col[1], col[2], 0.6]); }
+    if (rec.cts) for (const c of rec.cts) { const inter = c.a >= 0 && c.b >= 0 && (c.a < nb) !== (c.b < nb), turf = c.a === -1 || c.b === -1;
+      if (inter) { const touch = c.depth > -0.0005; for (const p of c.pts) { cross3(p, touch ? 0.025 : 0.012, touch ? [1, 0.15, 0.15, 1] : [1, 0.7, 0.1, 0.9]); if (O.normals) L(p, V.add(p, V.sc(c.normal, -0.08)), [0.2, 1, 1, 1]); }
+        if (touch && c.pts[0]) labels.push([c.pts[0], `${spec.bodies[(c.a < nb ? c.a : c.b)].name} ↔ ${spec.bodies[(c.a < nb ? c.b : c.a) - nb].name} ${(c.depth * 1000).toFixed(1)} mm`, "#ff8080"]); }
+      else if (turf && O.ground) for (const p of c.pts) cross3(p, 0.01, [1, 0.95, 0.2, 1]); }
+    const head = (SS) => V.add(SS[spec.bodies.findIndex(b => b.name === "head")].pos, [0, 0.32, 0]);
+    labels.push([head(SA), `A · ${rec.A.cls}${rec.A.stage && rec.A.stage !== "STAND" && rec.A.stage !== "IDLE" ? " · " + rec.A.stage : ""}`, "#70f0ff"], [head(SB), `B · ${rec.B.cls}${rec.B.stage && rec.B.stage !== "STAND" && rec.B.stage !== "IDLE" ? " · " + rec.B.stage : ""}`, "#ff90f0"]);
+    flushLines(cam.view, cam.proj, false); }
+  ov.font = "11px ui-monospace, Menlo, monospace"; for (const [p, t, c] of labels) { const q = project(cam, p); if (!q) continue; ov.fillStyle = "#000a"; ov.fillRect(q[0] + 6, q[1] - 11, ov.measureText(t).width + 6, 14); ov.fillStyle = c; ov.fillText(t, q[0] + 9, q[1]); }
+  const touching = rec.inter.filter(c => c.depth > -0.0005), txt = `t ${rec.t.toFixed(3)} s · step ${rec.n}   ·   A ↔ B: ${touching.length ? touching.map(c => `${c.a.slice(2)}↔${c.b.slice(2)} ${(c.depth * 1000).toFixed(1)} mm`).join(", ") : rec.inter.length ? rec.inter.length + " speculative manifold(s)" : "no contact"}`;
+  ov.font = "12px ui-monospace, Menlo, monospace"; ov.fillStyle = "#000b"; ov.fillRect(8, 8, ov.measureText(txt).width + 12, 20); ov.fillStyle = touching.length ? "#ff9090" : "#e0e0e0"; ov.fillText(txt, 14, 22);
+  drawChart(true); }
+// chart: A↔B deepest manifold (red: > −0.5 mm = touching), each character's COM speed (A cyan, B magenta), cursor
+function drawChartD() { const c = $("chart"), g = c.getContext("2d"), w = c.clientWidth, h = c.clientHeight; if (!w) return; if (c.width !== w) { c.width = w; c.height = h; }
+  if (!H.run) return; const R_ = H.run.recs, X = (i) => i / (R_.length - 1) * w; g.clearRect(0, 0, w, h); g.fillStyle = "#0d0f12"; g.fillRect(0, 0, w, h);
+  const sp = (q) => Math.hypot(q.vcom[0], q.vcom[2]), vmax = Math.max(0.5, ...R_.map(r => Math.max(sp(r.A), sp(r.B))));
+  for (const [key, col] of [["A", "#39d0f0"], ["B", "#f060e0"]]) { g.strokeStyle = col; g.beginPath(); R_.forEach((r, i) => { const y = h - 4 - sp(r[key]) / vmax * (h * 0.55); i ? g.lineTo(X(i), y) : g.moveTo(X(i), y); }); g.stroke(); }
+  R_.forEach((r, i) => { if (!r.inter.length) return; const d = Math.max(...r.inter.map(q => q.depth)); g.fillStyle = d > -0.0005 ? "#ff4040" : "#c08020"; const hh = d > -0.0005 ? 10 + Math.min(20, d * 1000 * 4) : 5; g.fillRect(X(i), 2, Math.max(1, w / R_.length), hh); });
+  g.fillStyle = "#aaa"; g.font = "10px ui-monospace, Menlo, monospace"; g.fillText(`A↔B contact (red touching, amber speculative) · COM speed A (cyan) / B (magenta), max ${vmax.toFixed(2)} m/s`, 6, h - 6);
+  g.strokeStyle = "#fff"; g.beginPath(); g.moveTo(X(H.i), 0); g.lineTo(X(H.i), h); g.stroke(); }
+function renderSideD() { const r = H.run, f = (x) => x == null ? "-" : x, row = (k, v, bad) => `<tr><td>${k}</td><td class="${bad ? "bad" : ""}">${v}</td></tr>`, T = TESTS_D[H.testD], C = r.contact, inv = C.invariant;
+  let h = `<h3>${T.title}</h3><div class="small">Gate D (vertical slice): two complete V1.1 characters in ONE Jolt world (28 bodies, 26 joints). Each has its own sensing, balance, stepping and motors and sees the other only as an unknown external body. Physics is the only coupling; nothing here decides a football outcome.</div><table>`;
+  h += row("B relative to A", `${T.B.map(v => v.toFixed(2)).join(", ")} m (both face +z)`) + row("action", T.A.push ? `push on A: ${T.A.push.Ns} N·s ${T.A.push.dir} at ${T.A.push.at} s (pelvis)` : T.A.requests ? `A: C2 placement ${T.A.requests.map(q => `${q.foot} ${q.forward * 100} cm fwd`).join(", ")}` : "none");
+  h += row("contact", C.any ? `first manifold ${C.firstT} s (${C.firstPair}) · first TOUCH ${f(C.firstTouchT)} s (${f(C.firstTouchPair)}) · deepest ${C.maxDepthMm} mm` : "none", C.maxDepthMm > 3);
+  if (inv) { h += row("the invariant", `${inv.pair} closing at ${inv.closingBefore} m/s · arrested on step ${inv.arrestStep} (${inv.arrestVsTouch >= 0 ? "+" : ""}${inv.arrestVsTouch} vs geometric touch; Jolt's speculative contact acts when the gap would close within the step)`);
+    h += `</table><table class="small"><tr><th>step</th><th>gap mm</th><th>v<sub>n</sub> m/s</th><th>Δv A</th><th>Δv B</th></tr>` + inv.series.map(q => `<tr${q.step === inv.arrestStep ? ' style="background:#402020"' : ""}><td>${q.step}</td><td>${f(q.gapMm)}</td><td>${q.vn}</td><td>${q.dvA}</td><td>${q.dvB}</td></tr>`).join("") + `</table><table>`; }
+  for (const [nm, x] of [["A", r.A], ["B", r.Bres]]) h += row(`character ${nm}`, `<b>${x.fell ? "FELL" : "UPRIGHT"}</b> (final ${x.finalCls})${x.step ? ` · step ${x.step.foot}: ${x.step.status}${x.step.fail ? " — " + x.step.fail : ""}` : x.refused ? " · no step: " + x.refused : ""}${x.request ? ` · request ${x.request.foot}: ${x.request.status}` : ""}<br><span class=small>trunk max ${x.trunkMaxDeg}° · pelvis residual ≤ ${x.maxRootResN} N (no hidden support) · joint sep ≤ ${x.maxJointSepMm} mm · turf ≤ ${x.maxTurfPenMm} mm</span>`, x.maxRootResN > 5);
+  h += row("contact pairs", `<span class=small>${Object.entries(C.pairs).map(([k, v]) => `${k}: ${v.touchSteps} touching / ${v.manifoldSteps} manifold steps, deepest ${v.maxMm} mm`).join("<br>") || "-"}</span>`);
+  const node = H.suiteD && H.suiteD.results.find(q => q.test === H.testD);
+  h += row("state hash", `${r.hash} ${node ? (node.hash === r.hash ? "<span class=ok>= Node</span>" : `<span class=bad>≠ Node ${node.hash}</span>`) : ""}`) + row("CPU", `${r.cpu.msPerFrame} ms per 60 Hz frame (both characters, browser)`) + `</table>`;
+  if (H.suiteD) h += `<h3>D suite (Node, same WASM, ×3)</h3><table><tr><th>test</th><th>first touch</th><th>deepest</th><th>A</th><th>B</th><th>det</th></tr>` + H.suiteD.results.map(q => `<tr><td>${q.test}</td><td>${q.contact.firstTouchPair ? q.contact.firstTouchPair.replace(/A\.|B\./g, "") : "-"}</td><td>${q.contact.maxDepthMm} mm</td><td class="${q.A.fell ? "bad" : "ok"}">${q.A.fell ? "fell" : "up"}</td><td class="${q.Bres.fell ? "bad" : "ok"}">${q.Bres.fell ? "fell" : "up"}</td><td>${q.deterministic ? "✓" : "✗"}</td></tr>`).join("") + `</table>`;
+  $("side").innerHTML = h; }
 function renderSideC3() { const r = H.run, R = r.step, f = (x) => x == null ? "-" : x, row = (k, v, bad) => `<tr><td>${k}</td><td class="${bad ? "bad" : ""}">${v}</td></tr>`;
   let h = `<h3>${TESTS_C3[H.testC3].title}</h3><div class="small">Gate C3: C1's STEP_NEEDED → a physically executed corrective step (one step). No pelvis support, no teleport; liftoff and touchdown are SENSED.</div><table>`;
   h += row("outcome", `<b>${r.outcome}</b>${r.refused ? " — " + r.refused : ""}`, /FELL/.test(r.outcome)) + row("push", r.push ? `${r.push.Ns} N·s ${r.push.dir} at ${r.push.at} s` : "-") + (r.delayMs ? row("sensing delay", r.delayMs + " ms") : "") + (r.friction ? row("turf friction μ", r.friction) : "");
@@ -547,14 +588,15 @@ function renderSideC3() { const r = H.run, R = r.step, f = (x) => x == null ? "-
   if (H.suiteC3) h += `<h3>C3 suite (Node, same WASM, ×3)</h3><table><tr><th>test</th><th>outcome</th><th>det</th></tr>` + H.suiteC3.results.map(q => `<tr><td>${q.test}</td><td class="${/FELL/.test(q.outcome) ? "bad" : "ok"}">${q.outcome}</td><td>${q.deterministic ? "✓" : "✗"}</td></tr>`).join("") + `</table>`;
   $("side").innerHTML = h; }
 // ── UI ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-const WORST = { C3: [["push", "push"], ["stepNeeded", "STEP_NEEDED"], ["liftoff", "liftoff"], ["touchdown", "touchdown"], ["recovered", "recovered"], ["falling", "fall release"], ["grounded", "first non-foot ground contact"]], C2: [["liftoff", "first liftoff"], ["touchdown", "first touchdown"], ["done", "first request outcome"]], C: [["push", "push"], ["stepNeeded", "STEP_NEEDED declared"], ["falling", "fall transition (release)"], ["grounded", "first non-foot ground contact"], ["minMargin", "smallest capture-point margin"], ["footRoll", "first foot roll / lift"]], A: [["groundPen", "ground penetration"], ["anchor", "joint separation"], ["limit", "limit violation"], ["pop", "correction pop"], ["self", "self penetration"], ["energy", "energy gain"]],
+const WORST = { D: [["contact", "first A↔B manifold"], ["arrest", "approach arrested"], ["touch", "first A↔B touch"], ["push", "push on A"], ["fallA", "A falls"], ["fallB", "B falls"]], C3: [["push", "push"], ["stepNeeded", "STEP_NEEDED"], ["liftoff", "liftoff"], ["touchdown", "touchdown"], ["recovered", "recovered"], ["falling", "fall release"], ["grounded", "first non-foot ground contact"]], C2: [["liftoff", "first liftoff"], ["touchdown", "first touchdown"], ["done", "first request outcome"]], C: [["push", "push"], ["stepNeeded", "STEP_NEEDED declared"], ["falling", "fall transition (release)"], ["grounded", "first non-foot ground contact"], ["minMargin", "smallest capture-point margin"], ["footRoll", "first foot roll / lift"]], A: [["groundPen", "ground penetration"], ["anchor", "joint separation"], ["limit", "limit violation"], ["pop", "correction pop"], ["self", "self penetration"], ["energy", "energy gain"]],
   B: [["err", "target error (RMS peak)"], ["contact", "first obstacle contact"], ["penetration", "deepest obstacle penetration"], ["disturbance", "disturbance"], ["limit", "limit violation"], ["anchor", "joint separation"], ["ground", "ground penetration"], ["self", "self penetration"]] };
 function setSuite(k) { H.suiteKey = k; document.body.classList.toggle("suiteB", isB()); document.body.classList.toggle("suiteC", isBal()); document.body.classList.toggle("suiteC2", isC2()); $("suite").value = k; const sel = $("drop"); sel.innerHTML = "";
-  if (isC3()) { let grp = null, og = null; for (const t of Object.keys(TESTS_C3)) { if (TESTS_C3[t].group !== grp) { grp = TESTS_C3[t].group; og = document.createElement("optgroup"); og.label = grp; sel.appendChild(og); } og.appendChild(new Option(`${t} — ${TESTS_C3[t].title}`, t)); } }
+  if (isD()) { let grp = null, og = null; for (const t of Object.keys(TESTS_D)) { if (TESTS_D[t].group !== grp) { grp = TESTS_D[t].group; og = document.createElement("optgroup"); og.label = grp; sel.appendChild(og); } og.appendChild(new Option(`${t} — ${TESTS_D[t].title}`, t)); } }
+  else if (isC3()) { let grp = null, og = null; for (const t of Object.keys(TESTS_C3)) { if (TESTS_C3[t].group !== grp) { grp = TESTS_C3[t].group; og = document.createElement("optgroup"); og.label = grp; sel.appendChild(og); } og.appendChild(new Option(`${t} — ${TESTS_C3[t].title}`, t)); } }
   else if (isC2()) { let grp = null, og = null; for (const t of Object.keys(TESTS_C2)) { if (TESTS_C2[t].group !== grp) { grp = TESTS_C2[t].group; og = document.createElement("optgroup"); og.label = grp; sel.appendChild(og); } og.appendChild(new Option(`${t} — ${TESTS_C2[t].title}`, t)); } }
   else if (isC()) { let grp = null, og = null; for (const t of Object.keys(TESTS_C1)) { if (TESTS_C1[t].group !== grp) { grp = TESTS_C1[t].group; og = document.createElement("optgroup"); og.label = grp; sel.appendChild(og); } og.appendChild(new Option(`${t} — ${TESTS_C1[t].title}`, t)); } }
   else if (isB()) for (const t of Object.keys(TESTS)) sel.add(new Option(TESTS[t].title, t)); else for (const d of Object.keys(DROPS)) sel.add(new Option(DROPS[d].title, d));
-  sel.value = isC3() ? H.testC3 : isC2() ? H.testC2 : isC() ? H.testC : isB() ? H.test : H.drop; $("tlhelp").textContent = isBal() ? "nominal (grey dashed) · final target (white dashed) · actual (cyan) · gravity offset (green) · balance offset (orange) · effort / limit (red) · saturated (red band)" : "target (dashed) vs actual (solid) · error (red) · motor effort / limit (orange) · saturated (red band) · contact force (magenta) · support force (violet)"; $("worst").innerHTML = ""; for (const [v, t] of WORST[k]) $("worst").add(new Option(t, v)); applySuites(); }
+  sel.value = isD() ? H.testD : isC3() ? H.testC3 : isC2() ? H.testC2 : isC() ? H.testC : isB() ? H.test : H.drop; $("tlhelp").textContent = isBal() ? "nominal (grey dashed) · final target (white dashed) · actual (cyan) · gravity offset (green) · balance offset (orange) · effort / limit (red) · saturated (red band)" : "target (dashed) vs actual (solid) · error (red) · motor effort / limit (orange) · saturated (red band) · contact force (magenta) · support force (violet)"; $("worst").innerHTML = ""; for (const [v, t] of WORST[k]) $("worst").add(new Option(t, v)); applySuites(); }
 function ui() {
   for (const j of ["lumbar", "thoracic", "neck", "shoulder_L", "elbow_L", "shoulder_R", "elbow_R", "hip_L", "knee_L", "ankle_L", "hip_R", "knee_R", "ankle_R"]) $("jsel").add(new Option(j, j));
   $("jsel").value = H.jsel; $("jsel").onchange = () => { H.jsel = $("jsel").value; drawChart2(); }; $("comp").onchange = () => { H.comp = $("comp").value; drawChart2(); };
@@ -563,7 +605,7 @@ function ui() {
   $("calib").onchange = () => { setCalib($("calib").value); simulate(); };
   $("prot").onclick = (e) => { H.prot = !H.prot; e.target.classList.toggle("on", H.prot); simulate(); }; $("prot").classList.toggle("on", H.prot);
   $("arms").onclick = (e) => { H.arms = !H.arms; e.target.classList.toggle("on", H.arms); simulate(); }; $("arms").classList.toggle("on", H.arms); $("ctrlv").onchange = () => { setCalib(H.calib, $("ctrlv").value); simulate(); };
-  $("drop").onchange = () => { if (isC3()) H.testC3 = $("drop").value; else if (isC2()) H.testC2 = $("drop").value; else if (isC()) H.testC = $("drop").value; else if (isB()) H.test = $("drop").value; else H.drop = $("drop").value; simulate(); }; $("restart").onclick = () => { H.i = 0; H.acc = 0; H.playing = true; $("play").textContent = "❚❚ pause"; };
+  $("drop").onchange = () => { if (isD()) H.testD = $("drop").value; else if (isC3()) H.testC3 = $("drop").value; else if (isC2()) H.testC2 = $("drop").value; else if (isC()) H.testC = $("drop").value; else if (isB()) H.test = $("drop").value; else H.drop = $("drop").value; simulate(); }; $("restart").onclick = () => { H.i = 0; H.acc = 0; H.playing = true; $("play").textContent = "❚❚ pause"; };
   $("play").onclick = () => { H.playing = !H.playing; if (H.playing && H.i >= H.run.recs.length - 1) H.i = 0; $("play").textContent = H.playing ? "❚❚ pause" : "▶ play"; };
   $("speed").onchange = () => { H.speed = +$("speed").value; };
   $("sm").onclick = () => { H.playing = false; H.i = Math.max(0, H.i - 1); $("play").textContent = "▶ play"; }; $("sp").onclick = () => { H.playing = false; H.i = Math.min(H.run.recs.length - 1, H.i + 1); $("play").textContent = "▶ play"; };
@@ -599,6 +641,7 @@ window.GATEA_SET = (o) => { if (o.i != null) H.i = Math.max(0, Math.min(H.run.re
   H.playing = false; drawChart2(); draw(); return { i: H.i, t: H.run.recs[H.i].t }; };
 window.GATEA_DROP = (k) => new Promise((res) => { window.GATEA_READY = false; if (H.suiteKey !== "A") setSuite("A"); H.drop = k; $("drop").value = k; simulate(); const w = () => window.GATEA_READY ? res(H.run.hash) : setTimeout(w, 30); w(); });
 window.GATEC1_TEST = (k) => new Promise((res) => { window.GATEA_READY = false; if (!isC()) setSuite("C"); H.testC = k; $("drop").value = k; simulate(); const w = () => window.GATEA_READY ? res(H.run.hash) : setTimeout(w, 30); w(); });
+window.GATED_TEST = (k) => new Promise((res) => { window.GATEA_READY = false; if (!isD()) setSuite("D"); H.testD = k; $("drop").value = k; simulate(); const w = () => window.GATEA_READY ? res(H.run.hash) : setTimeout(w, 30); w(); });
 window.GATEC3_TEST = (k) => new Promise((res) => { window.GATEA_READY = false; if (!isC3()) setSuite("C3"); H.testC3 = k; $("drop").value = k; simulate(); const w = () => window.GATEA_READY ? res(H.run.hash) : setTimeout(w, 30); w(); });
 window.GATEC2_TEST = (k) => new Promise((res) => { window.GATEA_READY = false; if (!isC2()) setSuite("C2"); H.testC2 = k; $("drop").value = k; simulate(); const w = () => window.GATEA_READY ? res(H.run.hash) : setTimeout(w, 30); w(); });
 window.PC_SETCALIB = (c, ctrlv, arms, prot) => { setCalib(c, ctrlv || ""); if (arms != null) { H.arms = !!arms; $("arms").classList.toggle("on", H.arms); } if (prot != null) { H.prot = !!prot; $("prot").classList.toggle("on", H.prot); } return H.calib; };   // no re-simulation (the next GATE*_TEST call simulates)
@@ -613,8 +656,8 @@ window.GATEB_TEST = (k) => new Promise((res) => { window.GATEA_READY = false; if
     H.visHip = visibleHipWidth(entry.rig, entry.mesh, H.specs.V1);
     const get = async (u) => { try { return await (await fetch(u)).json(); } catch (e) { return null; } };
     H.suitesBy.V1 = { A: await get("results/gatea_final_240x1.json"), B: await get("results/gateb_final_240x1.json"), C: await get("results/gatec1_final_240x1.json"), C2: await get("results/gatec2_final_240x1.json") };
-    const c3 = await get("results/v1_1/gatec3_V1.1.json");
-    H.suitesBy["V1.1"] = { C3: c3, A: await get("results/v1_1/gatea_V1.1.json"), B: await get("results/v1_1/gateb_V1.1.json"), C: await get("results/v1_1/gatec1_V1.1.json"),
+    const c3 = await get("results/v1_1/gatec3_V1.1.json"), dd = await get("results/v1_1/gated_V1.1.json");
+    H.suitesBy["V1.1"] = { D: dd, C3: c3, A: await get("results/v1_1/gatea_V1.1.json"), B: await get("results/v1_1/gateb_V1.1.json"), C: await get("results/v1_1/gatec1_V1.1.json"),
       C2working: await get("results/v1_1/gatec2_V1.1_working.json"), C2approved: await get("results/v1_1/gatec2_V1.1_raw.json"), C2recal: await get("results/v1_1/gatec2_V1.1_recal.json"), C2diag: await get("results/v1_1/gatec2_V1.1_recal_diag.json") };
     setCalib(H.calib); simulate(); requestAnimationFrame(loop);
   } catch (e) { $("status").textContent = "BOOT FAILED: " + (e.stack || e); window.GATEA_ERROR = String(e); }
