@@ -46,6 +46,11 @@ export class Sensor {
     // GATE C2 option: a foot that is ON the turf and not sliding counts as support even while it carries < loadOn (it can take load the
     // moment the CoP moves onto it). C1 keeps its loaded-feet-only region (option off → identical behaviour).
     this.supportTouching = !!(opts && opts.supportTouching);
+    // GATE C3 option: a friction coefficient is only OBSERVED from a slip once the foot's contact has lasted muSettle seconds — a landing
+    // foot rolls and slides under its own impact momentum, and shear/load then is no measurement of the turf's friction (finding
+    // 2026-09-30, C3 B_F70: a touchdown read μ = 0.036 on 0.9 turf, the controller believed it stood on ice and gave up a recovered step).
+    // 0 = the C1/C2 behaviour (identical).
+    this.muSettle = (opts && opts.muSettle) || 0;
     const bi = (n) => spec.bodies.findIndex(b => b.name === n), ji = (n) => spec.joints.findIndex(j => j.name === n);
     this.feet = {}; for (const s of ["L", "R"]) { const i = bi("foot_" + s), sh = spec.bodies[i].shapes[0];
       this.feet[s] = { side: s, body: i, ankle: ji("ankle_" + s), box: sh, state: "AIR", slipCnt: 0, stickCnt: 0, tdCnt: 0, loaded: false, anchor: null, slipping: false }; }
@@ -87,6 +92,7 @@ export class Sensor {
       // the window only holds samples taken while this foot was LOADED and in contact (C1 finding PR30: a window spanning the pre-touchdown
       // travel of a foot being put back down read as a 13–18 cm/s "slide" the instant it loaded; the loaded slide was 0.06 mm)
       F.hist = F.hist || []; if (!(touching && load > SENSE.loadOff)) F.hist.length = 0; else { F.hist.push(corners); if (F.hist.length > SENSE.slipWindow + 1) F.hist.shift(); }
+      if (touching) { if (F.contactSince == null) F.contactSince = n * dt; } else F.contactSince = null;
       let slipSpeed = 0, step1 = 0; const centroid = touching ? V.sc(pts.reduce((a, p) => V.add(a, p), [0, 0, 0]), 1 / pts.length) : null;
       if (F.hist.length > SENSE.slipWindow) { const old = F.hist[0], prev1 = F.hist[F.hist.length - 2]; slipSpeed = 1e9; step1 = 1e9;
         for (let q = 0; q < 4; q++) { slipSpeed = Math.min(slipSpeed, Math.sqrt((corners[q][0] - old[q][0]) ** 2 + (corners[q][2] - old[q][2]) ** 2) / (SENSE.slipWindow * dt));
@@ -112,7 +118,7 @@ export class Sensor {
       F.state = state;
       const muAvail = turfMu[s].length ? turfMu[s].reduce((a, b) => a + b, 0) / turfMu[s].length : null;
       feet[s] = { side: s, state, touching, manifold: manifold[s], loaded: F.loaded, slipping: F.slipping, points: pts, centroid, heel, toe, lat, med, load, shear, shearMag, slipSpeed,
-        muUsed: load > 1 ? shearMag / load : null, muAvail, friction: F.slipping ? "SLIP" : (muAvail != null && load > 1 && shearMag / load > 0.8 * muAvail ? "NEAR_LIMIT" : "STICK"),
+        muUsed: load > 1 ? shearMag / load : null, muAvail, muValid: !this.muSettle || (F.contactSince != null && n * dt - F.contactSince >= this.muSettle), friction: F.slipping ? "SLIP" : (muAvail != null && load > 1 && shearMag / load > 0.8 * muAvail ? "NEAR_LIMIT" : "STICK"),
         anchor: F.anchor, slipDist: F.slid || 0, fromAnchor: F.anchor ? Math.sqrt((st.pos[0] - F.anchor.pos[0]) ** 2 + (st.pos[2] - F.anchor.pos[2]) ** 2) : 0, pose: { pos: st.pos, rot: st.rot } }; }
     // Two different regions (Gate C1 finding, test PF60): the CONTACT polygon = hull of the points actually touching now — where the
     // CoP can be commanded this instant (a foot up on its toes offers only the toe edge); the SUPPORT REGION = hull of the whole sole
