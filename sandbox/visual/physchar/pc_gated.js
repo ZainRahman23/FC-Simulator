@@ -89,7 +89,7 @@ class Agent {
 export function runD(J, spec, key, opts) {
   opts = opts || {}; const TST = TESTS_D[key], T = TIMESTEP_CONFIGS[GATE_C1_TSC], dt = 1 / T.hz, steps = Math.round((opts.seconds || TST.seconds) * T.hz), g = 9.81;
   const nb = spec.bodies.length, nj = spec.joints.length, specB = shiftSpec(spec, TST.B), world = mergeSpecs(spec, specB);
-  const w = new JoltCharacterWorld(J, world, GATE_C1_WORLD, frictionPolicy(world));
+  const w = new JoltCharacterWorld(J, world, opts.world ? { ...GATE_C1_WORLD, ...opts.world } : GATE_C1_WORLD, frictionPolicy(world));   // opts.world: EXPERIMENTS only (the gate config is Gate A's)
   for (const [a, b] of disabledPairs(spec)) { w.disablePair(a, b); w.disablePair(a + nb, b + nb); }         // each character's own filtered pairs; A ↔ B all collide
   const A = new Agent("A", spec, 0, 0, TST.A, opts.ctrlExtraA || opts.ctrlExtra, opts.poses), B = new Agent("B", specB, nb, nj, TST.B_cfg || {}, opts.ctrlExtraB || opts.ctrlExtra), agents = [A, B];
   if (w.support || w.cons.length !== 2 * nj || w.ps.GetNumBodies() !== 2 * nb + 1) throw new Error("D world is not clean");

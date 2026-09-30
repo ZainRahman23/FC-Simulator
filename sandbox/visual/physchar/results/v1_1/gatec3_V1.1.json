@@ -51,15 +51,25 @@
     "maxTurfPenMm": 1.52,
     "maxSelfPenMm": 0
    },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 0,
+    "liftoff": 0,
+    "touchdown": 0,
+    "recovered": 0,
+    "falling": 0,
+    "grounded": 0
+   },
+   "classTimes": {},
    "saturationMs": {
     "hip_L": 4,
     "hip_R": 4,
     "ankle_R": 4
    },
    "cpu": {
-    "msPerFrame": 0.8018,
-    "jolt": 0.5827,
-    "controller": 0.1352
+    "msPerFrame": 0.7701,
+    "jolt": 0.5588,
+    "controller": 0.1354
    },
    "ctrl": {
     "anticipateReach": true,
@@ -117,11 +127,21 @@
     "maxTurfPenMm": 1.4,
     "maxSelfPenMm": 0
    },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 0,
+    "liftoff": 0,
+    "touchdown": 0,
+    "recovered": 0,
+    "falling": 0,
+    "grounded": 0
+   },
+   "classTimes": {},
    "saturationMs": {},
    "cpu": {
-    "msPerFrame": 0.6654,
-    "jolt": 0.5373,
-    "controller": 0.0869
+    "msPerFrame": 0.6271,
+    "jolt": 0.5071,
+    "controller": 0.0811
    },
    "ctrl": {
     "anticipateReach": true,
@@ -179,6 +199,16 @@
     "maxTurfPenMm": 1.49,
     "maxSelfPenMm": 0
    },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 0,
+    "liftoff": 0,
+    "touchdown": 0,
+    "recovered": 0,
+    "falling": 0,
+    "grounded": 0
+   },
+   "classTimes": {},
    "saturationMs": {
     "lumbar": 17,
     "ankle_L": 79,
@@ -186,9 +216,9 @@
     "ankle_R": 1250
    },
    "cpu": {
-    "msPerFrame": 0.6979,
-    "jolt": 0.5462,
-    "controller": 0.093
+    "msPerFrame": 0.7143,
+    "jolt": 0.5491,
+    "controller": 0.1005
    },
    "ctrl": {
     "anticipateReach": true,
@@ -300,6 +330,19 @@
     "maxTurfPenMm": 2.07,
     "maxSelfPenMm": 0
    },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 253,
+    "liftoff": 260,
+    "touchdown": 314,
+    "recovered": 384,
+    "falling": 0,
+    "grounded": 0
+   },
+   "classTimes": {
+    "STEP_NEEDED": 1.05,
+    "STEPPING": 1.08
+   },
    "saturationMs": {
     "lumbar": 54,
     "thoracic": 33,
@@ -309,9 +352,9 @@
     "ankle_R": 754
    },
    "cpu": {
-    "msPerFrame": 1.064,
-    "jolt": 0.5624,
-    "controller": 0.4407
+    "msPerFrame": 1.0405,
+    "jolt": 0.552,
+    "controller": 0.43
    },
    "ctrl": {
     "anticipateReach": true,
@@ -423,6 +466,19 @@
     "maxTurfPenMm": 3.04,
     "maxSelfPenMm": 0
    },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 252,
+    "liftoff": 260,
+    "touchdown": 312,
+    "recovered": 423,
+    "falling": 0,
+    "grounded": 0
+   },
+   "classTimes": {
+    "STEP_NEEDED": 1.05,
+    "STEPPING": 1.05
+   },
    "saturationMs": {
     "lumbar": 83,
     "thoracic": 29,
@@ -432,9 +488,9 @@
     "ankle_R": 1392
    },
    "cpu": {
-    "msPerFrame": 1.0148,
-    "jolt": 0.5635,
-    "controller": 0.4045
+    "msPerFrame": 0.9964,
+    "jolt": 0.553,
+    "controller": 0.3985
    },
    "ctrl": {
     "anticipateReach": true,
@@ -548,6 +604,19 @@
     "maxTurfPenMm": 3.03,
     "maxSelfPenMm": 0
    },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 250,
+    "liftoff": 259,
+    "touchdown": 299,
+    "recovered": 400,
+    "falling": 0,
+    "grounded": 0
+   },
+   "classTimes": {
+    "STEP_NEEDED": 1.04,
+    "STEPPING": 1.05
+   },
    "saturationMs": {
     "lumbar": 121,
     "thoracic": 25,
@@ -558,9 +627,9 @@
     "ankle_R": 2771
    },
    "cpu": {
-    "msPerFrame": 1.0456,
-    "jolt": 0.5681,
-    "controller": 0.4376
+    "msPerFrame": 1.0442,
+    "jolt": 0.5641,
+    "controller": 0.4427
    },
    "ctrl": {
     "anticipateReach": true,
@@ -674,6 +743,19 @@
     "maxTurfPenMm": 3.62,
     "maxSelfPenMm": 0
    },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 249,
+    "liftoff": 258,
+    "touchdown": 308,
+    "recovered": 429,
+    "falling": 0,
+    "grounded": 0
+   },
+   "classTimes": {
+    "STEP_NEEDED": 1.04,
+    "STEPPING": 1.04
+   },
    "saturationMs": {
     "lumbar": 117,
     "thoracic": 29,
@@ -683,9 +765,9 @@
     "ankle_R": 3354
    },
    "cpu": {
-    "msPerFrame": 1.0444,
-    "jolt": 0.5637,
-    "controller": 0.4438
+    "msPerFrame": 1.0252,
+    "jolt": 0.5555,
+    "controller": 0.4326
    },
    "ctrl": {
     "anticipateReach": true,
@@ -797,6 +879,19 @@
     "maxTurfPenMm": 3.17,
     "maxSelfPenMm": 0
    },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 312,
+    "liftoff": 321,
+    "touchdown": 366,
+    "recovered": 543,
+    "falling": 0,
+    "grounded": 0
+   },
+   "classTimes": {
+    "STEP_NEEDED": 1.3,
+    "STEPPING": 1.3
+   },
    "saturationMs": {
     "lumbar": 25,
     "thoracic": 21,
@@ -806,9 +901,9 @@
     "ankle_R": 267
    },
    "cpu": {
-    "msPerFrame": 1.0033,
-    "jolt": 0.5793,
-    "controller": 0.3621
+    "msPerFrame": 0.9785,
+    "jolt": 0.5647,
+    "controller": 0.3557
    },
    "ctrl": {
     "anticipateReach": true,
@@ -920,6 +1015,19 @@
     "maxTurfPenMm": 3.32,
     "maxSelfPenMm": 0
    },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 251,
+    "liftoff": 259,
+    "touchdown": 298,
+    "recovered": 470,
+    "falling": 0,
+    "grounded": 0
+   },
+   "classTimes": {
+    "STEP_NEEDED": 1.05,
+    "STEPPING": 1.05
+   },
    "saturationMs": {
     "lumbar": 58,
     "thoracic": 4,
@@ -930,9 +1038,9 @@
     "ankle_R": 425
    },
    "cpu": {
-    "msPerFrame": 1.0035,
-    "jolt": 0.5693,
-    "controller": 0.3963
+    "msPerFrame": 0.9692,
+    "jolt": 0.5483,
+    "controller": 0.3832
    },
    "ctrl": {
     "anticipateReach": true,
@@ -1046,6 +1154,21 @@
     "maxTurfPenMm": 2.89,
     "maxSelfPenMm": 0.03
    },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 249,
+    "liftoff": 258,
+    "touchdown": 295,
+    "recovered": 0,
+    "falling": 423,
+    "grounded": 653
+   },
+   "classTimes": {
+    "STEP_NEEDED": 1.04,
+    "STEPPING": 1.04,
+    "FALLING": 1.76,
+    "GROUNDED": 2.73
+   },
    "saturationMs": {
     "lumbar": 271,
     "thoracic": 192,
@@ -1059,9 +1182,9 @@
     "ankle_R": 417
    },
    "cpu": {
-    "msPerFrame": 1.1107,
-    "jolt": 0.6453,
-    "controller": 0.4087
+    "msPerFrame": 1.0958,
+    "jolt": 0.6372,
+    "controller": 0.4059
    },
    "ctrl": {
     "anticipateReach": true,
@@ -1125,6 +1248,20 @@
     "maxTurfPenMm": 4.73,
     "maxSelfPenMm": 4.3
    },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 481,
+    "liftoff": 0,
+    "touchdown": 0,
+    "recovered": 0,
+    "falling": 495,
+    "grounded": 766
+   },
+   "classTimes": {
+    "STEP_NEEDED": 2,
+    "FALLING": 2.06,
+    "GROUNDED": 3.2
+   },
    "saturationMs": {
     "lumbar": 96,
     "thoracic": 188,
@@ -1137,9 +1274,9 @@
     "ankle_R": 2275
    },
    "cpu": {
-    "msPerFrame": 0.77,
-    "jolt": 0.6278,
-    "controller": 0.0933
+    "msPerFrame": 0.7455,
+    "jolt": 0.6076,
+    "controller": 0.0916
    },
    "ctrl": {
     "anticipateReach": true,
@@ -1203,6 +1340,20 @@
     "maxTurfPenMm": 4.48,
     "maxSelfPenMm": 6.11
    },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 331,
+    "liftoff": 0,
+    "touchdown": 0,
+    "recovered": 0,
+    "falling": 345,
+    "grounded": 601
+   },
+   "classTimes": {
+    "STEP_NEEDED": 1.38,
+    "FALLING": 1.44,
+    "GROUNDED": 2.51
+   },
    "saturationMs": {
     "lumbar": 225,
     "thoracic": 350,
@@ -1215,8 +1366,8 @@
     "ankle_R": 1567
    },
    "cpu": {
-    "msPerFrame": 0.7561,
-    "jolt": 0.6386,
+    "msPerFrame": 0.7279,
+    "jolt": 0.6159,
     "controller": 0.0788
    },
    "ctrl": {
@@ -1281,6 +1432,20 @@
     "maxTurfPenMm": 4.45,
     "maxSelfPenMm": 2.15
    },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 252,
+    "liftoff": 0,
+    "touchdown": 0,
+    "recovered": 0,
+    "falling": 266,
+    "grounded": 535
+   },
+   "classTimes": {
+    "STEP_NEEDED": 1.05,
+    "FALLING": 1.11,
+    "GROUNDED": 2.24
+   },
    "saturationMs": {
     "lumbar": 225,
     "thoracic": 346,
@@ -1293,9 +1458,9 @@
     "ankle_R": 1167
    },
    "cpu": {
-    "msPerFrame": 0.7486,
-    "jolt": 0.6303,
-    "controller": 0.0812
+    "msPerFrame": 0.7244,
+    "jolt": 0.6079,
+    "controller": 0.0793
    },
    "ctrl": {
     "anticipateReach": true,
@@ -1359,6 +1524,20 @@
     "maxTurfPenMm": 4.79,
     "maxSelfPenMm": 2.97
    },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 484,
+    "liftoff": 0,
+    "touchdown": 0,
+    "recovered": 0,
+    "falling": 498,
+    "grounded": 768
+   },
+   "classTimes": {
+    "STEP_NEEDED": 2.02,
+    "FALLING": 2.08,
+    "GROUNDED": 3.21
+   },
    "saturationMs": {
     "lumbar": 117,
     "thoracic": 192,
@@ -1371,9 +1550,9 @@
     "ankle_R": 75
    },
    "cpu": {
-    "msPerFrame": 0.7317,
-    "jolt": 0.6163,
-    "controller": 0.0792
+    "msPerFrame": 0.703,
+    "jolt": 0.5933,
+    "controller": 0.0756
    },
    "ctrl": {
     "anticipateReach": true,
@@ -1437,6 +1616,20 @@
     "maxTurfPenMm": 4.61,
     "maxSelfPenMm": 2.88
    },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 253,
+    "liftoff": 0,
+    "touchdown": 0,
+    "recovered": 0,
+    "falling": 267,
+    "grounded": 554
+   },
+   "classTimes": {
+    "STEP_NEEDED": 1.05,
+    "FALLING": 1.11,
+    "GROUNDED": 2.32
+   },
    "saturationMs": {
     "lumbar": 225,
     "thoracic": 392,
@@ -1449,9 +1642,9 @@
     "ankle_R": 83
    },
    "cpu": {
-    "msPerFrame": 0.7548,
-    "jolt": 0.6339,
-    "controller": 0.0847
+    "msPerFrame": 0.7186,
+    "jolt": 0.6071,
+    "controller": 0.0778
    },
    "ctrl": {
     "anticipateReach": true,
@@ -1515,6 +1708,20 @@
     "maxTurfPenMm": 5.37,
     "maxSelfPenMm": 5.15
    },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 414,
+    "liftoff": 0,
+    "touchdown": 0,
+    "recovered": 0,
+    "falling": 428,
+    "grounded": 633
+   },
+   "classTimes": {
+    "STEP_NEEDED": 1.72,
+    "FALLING": 1.78,
+    "GROUNDED": 2.65
+   },
    "saturationMs": {
     "lumbar": 288,
     "thoracic": 83,
@@ -1528,9 +1735,9 @@
     "ankle_R": 1771
    },
    "cpu": {
-    "msPerFrame": 0.7638,
-    "jolt": 0.6529,
-    "controller": 0.0753
+    "msPerFrame": 0.743,
+    "jolt": 0.6378,
+    "controller": 0.0725
    },
    "ctrl": {
     "anticipateReach": true,
@@ -1594,6 +1801,20 @@
     "maxTurfPenMm": 5.83,
     "maxSelfPenMm": 5.1
    },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 314,
+    "liftoff": 0,
+    "touchdown": 0,
+    "recovered": 0,
+    "falling": 328,
+    "grounded": 521
+   },
+   "classTimes": {
+    "STEP_NEEDED": 1.31,
+    "FALLING": 1.37,
+    "GROUNDED": 2.18
+   },
    "saturationMs": {
     "lumbar": 354,
     "thoracic": 258,
@@ -1606,9 +1827,9 @@
     "ankle_R": 1408
    },
    "cpu": {
-    "msPerFrame": 0.7776,
-    "jolt": 0.668,
-    "controller": 0.0741
+    "msPerFrame": 0.7633,
+    "jolt": 0.6563,
+    "controller": 0.072
    },
    "ctrl": {
     "anticipateReach": true,
@@ -1720,6 +1941,21 @@
     "maxTurfPenMm": 4.8,
     "maxSelfPenMm": 2.8
    },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 376,
+    "liftoff": 385,
+    "touchdown": 467,
+    "recovered": 0,
+    "falling": 600,
+    "grounded": 827
+   },
+   "classTimes": {
+    "STEP_NEEDED": 1.57,
+    "STEPPING": 1.57,
+    "FALLING": 2.5,
+    "GROUNDED": 3.45
+   },
    "saturationMs": {
     "lumbar": 158,
     "thoracic": 208,
@@ -1732,9 +1968,9 @@
     "ankle_R": 1808
    },
    "cpu": {
-    "msPerFrame": 0.8217,
-    "jolt": 0.6478,
-    "controller": 0.1358
+    "msPerFrame": 0.7746,
+    "jolt": 0.6137,
+    "controller": 0.1273
    },
    "ctrl": {
     "anticipateReach": true,
@@ -1848,6 +2084,21 @@
     "maxTurfPenMm": 2.91,
     "maxSelfPenMm": 0
    },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 253,
+    "liftoff": 265,
+    "touchdown": 291,
+    "recovered": 0,
+    "falling": 439,
+    "grounded": 681
+   },
+   "classTimes": {
+    "STEP_NEEDED": 1.05,
+    "STEPPING": 1.06,
+    "FALLING": 1.83,
+    "GROUNDED": 2.85
+   },
    "saturationMs": {
     "lumbar": 179,
     "thoracic": 33,
@@ -1860,9 +2111,9 @@
     "ankle_R": 713
    },
    "cpu": {
-    "msPerFrame": 0.9564,
-    "jolt": 0.6298,
-    "controller": 0.2894
+    "msPerFrame": 0.9267,
+    "jolt": 0.6096,
+    "controller": 0.2801
    },
    "ctrl": {
     "anticipateReach": true,
@@ -1976,6 +2227,19 @@
     "maxTurfPenMm": 3.32,
     "maxSelfPenMm": 0
    },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 248,
+    "liftoff": 258,
+    "touchdown": 311,
+    "recovered": 427,
+    "falling": 0,
+    "grounded": 0
+   },
+   "classTimes": {
+    "STEP_NEEDED": 1.03,
+    "STEPPING": 1.04
+   },
    "saturationMs": {
     "lumbar": 117,
     "thoracic": 29,
@@ -1985,9 +2249,9 @@
     "ankle_R": 3383
    },
    "cpu": {
-    "msPerFrame": 1.0933,
-    "jolt": 0.575,
-    "controller": 0.479
+    "msPerFrame": 1.0564,
+    "jolt": 0.5577,
+    "controller": 0.4617
    },
    "ctrl": {
     "anticipateReach": true,
@@ -2051,6 +2315,20 @@
     "maxTurfPenMm": 4.41,
     "maxSelfPenMm": 2.18
    },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 250,
+    "liftoff": 0,
+    "touchdown": 0,
+    "recovered": 0,
+    "falling": 264,
+    "grounded": 492
+   },
+   "classTimes": {
+    "STEP_NEEDED": 1.04,
+    "FALLING": 1.1,
+    "GROUNDED": 2.06
+   },
    "saturationMs": {
     "lumbar": 246,
     "thoracic": 375,
@@ -2063,9 +2341,9 @@
     "ankle_R": 983
    },
    "cpu": {
-    "msPerFrame": 0.759,
-    "jolt": 0.6331,
-    "controller": 0.0892
+    "msPerFrame": 0.7624,
+    "jolt": 0.6286,
+    "controller": 0.0949
    },
    "ctrl": {
     "anticipateReach": true,
@@ -2180,6 +2458,21 @@
     "maxTurfPenMm": 3.27,
     "maxSelfPenMm": 0
    },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 248,
+    "liftoff": 257,
+    "touchdown": 297,
+    "recovered": 0,
+    "falling": 369,
+    "grounded": 570
+   },
+   "classTimes": {
+    "STEP_NEEDED": 1.03,
+    "STEPPING": 1.04,
+    "FALLING": 1.54,
+    "GROUNDED": 2.38
+   },
    "saturationMs": {
     "lumbar": 300,
     "thoracic": 175,
@@ -2192,9 +2485,9 @@
     "ankle_R": 1063
    },
    "cpu": {
-    "msPerFrame": 0.9575,
-    "jolt": 0.6412,
-    "controller": 0.2779
+    "msPerFrame": 0.938,
+    "jolt": 0.6283,
+    "controller": 0.273
    },
    "ctrl": {
     "anticipateReach": true,
@@ -2306,6 +2599,21 @@
     "maxTurfPenMm": 3.3,
     "maxSelfPenMm": 0
    },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 275,
+    "liftoff": 283,
+    "touchdown": 312,
+    "recovered": 0,
+    "falling": 398,
+    "grounded": 553
+   },
+   "classTimes": {
+    "STEP_NEEDED": 1.15,
+    "STEPPING": 1.15,
+    "FALLING": 1.66,
+    "GROUNDED": 2.41
+   },
    "saturationMs": {
     "lumbar": 321,
     "thoracic": 50,
@@ -2320,9 +2628,9 @@
     "ankle_R": 1058
    },
    "cpu": {
-    "msPerFrame": 0.9595,
-    "jolt": 0.7006,
-    "controller": 0.2098
+    "msPerFrame": 0.8868,
+    "jolt": 0.6491,
+    "controller": 0.1984
    },
    "ctrl": {
     "anticipateReach": true,
@@ -2434,6 +2742,21 @@
     "maxTurfPenMm": 2.29,
     "maxSelfPenMm": 1.91
    },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 287,
+    "liftoff": 296,
+    "touchdown": 307,
+    "recovered": 0,
+    "falling": 401,
+    "grounded": 531
+   },
+   "classTimes": {
+    "STEP_NEEDED": 1.2,
+    "STEPPING": 1.2,
+    "FALLING": 1.67,
+    "GROUNDED": 2.37
+   },
    "saturationMs": {
     "lumbar": 450,
     "thoracic": 108,
@@ -2447,9 +2770,9 @@
     "ankle_R": 1213
    },
    "cpu": {
-    "msPerFrame": 0.9523,
-    "jolt": 0.6558,
-    "controller": 0.2582
+    "msPerFrame": 0.9369,
+    "jolt": 0.6526,
+    "controller": 0.2472
    },
    "ctrl": {
     "anticipateReach": true,
@@ -2513,6 +2836,20 @@
     "maxTurfPenMm": 4.53,
     "maxSelfPenMm": 4.65
    },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 277,
+    "liftoff": 0,
+    "touchdown": 0,
+    "recovered": 0,
+    "falling": 300,
+    "grounded": 582
+   },
+   "classTimes": {
+    "STEP_NEEDED": 1.15,
+    "FALLING": 1.25,
+    "GROUNDED": 2.53
+   },
    "saturationMs": {
     "lumbar": 200,
     "thoracic": 342,
@@ -2525,9 +2862,9 @@
     "ankle_R": 1758
    },
    "cpu": {
-    "msPerFrame": 0.7662,
-    "jolt": 0.6466,
-    "controller": 0.0834
+    "msPerFrame": 0.7552,
+    "jolt": 0.6377,
+    "controller": 0.0818
    },
    "ctrl": {
     "anticipateReach": true,
@@ -2591,6 +2928,20 @@
     "maxTurfPenMm": 1.51,
     "maxSelfPenMm": 0
    },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 252,
+    "liftoff": 0,
+    "touchdown": 0,
+    "recovered": 0,
+    "falling": 266,
+    "grounded": 578
+   },
+   "classTimes": {
+    "STEP_NEEDED": 1.05,
+    "FALLING": 1.11,
+    "GROUNDED": 2.42
+   },
    "saturationMs": {
     "lumbar": 25,
     "thoracic": 13,
@@ -2605,9 +2956,9 @@
     "ankle_R": 75
    },
    "cpu": {
-    "msPerFrame": 0.7408,
-    "jolt": 0.6192,
-    "controller": 0.083
+    "msPerFrame": 0.7432,
+    "jolt": 0.6211,
+    "controller": 0.0834
    },
    "ctrl": {
     "anticipateReach": true,
@@ -2671,6 +3022,18 @@
     "maxTurfPenMm": 2.19,
     "maxSelfPenMm": 0
    },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 253,
+    "liftoff": 0,
+    "touchdown": 0,
+    "recovered": 0,
+    "falling": 0,
+    "grounded": 0
+   },
+   "classTimes": {
+    "STEP_NEEDED": 1.05
+   },
    "saturationMs": {
     "lumbar": 21,
     "thoracic": 4,
@@ -2681,9 +3044,9 @@
     "ankle_R": 600
    },
    "cpu": {
-    "msPerFrame": 0.6594,
-    "jolt": 0.5459,
-    "controller": 0.0767
+    "msPerFrame": 0.6496,
+    "jolt": 0.5424,
+    "controller": 0.0725
    },
    "ctrl": {
     "anticipateReach": true,
@@ -2797,6 +3160,21 @@
     "maxTurfPenMm": 2.65,
     "maxSelfPenMm": 0
    },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 246,
+    "liftoff": 257,
+    "touchdown": 320,
+    "recovered": 0,
+    "falling": 394,
+    "grounded": 577
+   },
+   "classTimes": {
+    "STEP_NEEDED": 1.02,
+    "STEPPING": 1.03,
+    "FALLING": 1.64,
+    "GROUNDED": 2.41
+   },
    "saturationMs": {
     "lumbar": 421,
     "thoracic": 71,
@@ -2811,9 +3189,9 @@
     "ankle_R": 529
    },
    "cpu": {
-    "msPerFrame": 0.8923,
-    "jolt": 0.6613,
-    "controller": 0.1959
+    "msPerFrame": 0.8947,
+    "jolt": 0.6617,
+    "controller": 0.1986
    },
    "ctrl": {
     "anticipateReach": true,
@@ -2928,6 +3306,21 @@
     "maxTurfPenMm": 4.29,
     "maxSelfPenMm": 0
    },
+   "worst": {
+    "push": 240,
+    "stepNeeded": 246,
+    "liftoff": 255,
+    "touchdown": 297,
+    "recovered": 0,
+    "falling": 352,
+    "grounded": 521
+   },
+   "classTimes": {
+    "STEP_NEEDED": 1.02,
+    "STEPPING": 1.03,
+    "FALLING": 1.47,
+    "GROUNDED": 2.18
+   },
    "saturationMs": {
     "lumbar": 358,
     "thoracic": 138,
@@ -2941,9 +3334,9 @@
     "ankle_R": 542
    },
    "cpu": {
-    "msPerFrame": 1.0558,
-    "jolt": 0.6352,
-    "controller": 0.3842
+    "msPerFrame": 1.0437,
+    "jolt": 0.6307,
+    "controller": 0.378
    },
    "ctrl": {
     "anticipateReach": true,
