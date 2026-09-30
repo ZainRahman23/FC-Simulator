@@ -1,0 +1,938 @@
+{
+ "calib": "V1.1",
+ "results": [
+  {
+   "gate": "C1",
+   "test": "PF65",
+   "noProt": {
+    "hash": "773e6262",
+    "outcome": "FELL",
+    "m": {
+     "tRelease": 1.762,
+     "firstBody": "foreArm_L",
+     "firstSpeed": 1.36,
+     "order": [
+      "foreArm_L",
+      "foreArm_R",
+      "thigh_L",
+      "thigh_R",
+      "abdomen",
+      "head"
+     ],
+     "hands": {
+      "t": 3.175,
+      "dtFromRelease": 1.412,
+      "speed": 1.36,
+      "vy": -1.2
+     },
+     "head": {
+      "t": 3.288,
+      "dtFromRelease": 1.525,
+      "speed": 0.8,
+      "vy": 0.13
+     },
+     "pelvis": null,
+     "chest": {
+      "t": 4.308,
+      "dtFromRelease": 2.546,
+      "speed": 0,
+      "vy": 0
+     },
+     "handsBeforeHead": true,
+     "maxJointSepMm": 1
+    },
+    "deterministic": true
+   },
+   "prot": {
+    "hash": "5dc8ecce",
+    "outcome": "FELL",
+    "m": {
+     "tRelease": 1.762,
+     "firstBody": "foreArm_L",
+     "firstSpeed": 1.79,
+     "order": [
+      "foreArm_L",
+      "foreArm_R",
+      "thigh_R",
+      "thigh_L",
+      "head"
+     ],
+     "hands": {
+      "t": 3.167,
+      "dtFromRelease": 1.404,
+      "speed": 1.79,
+      "vy": -1.36
+     },
+     "head": {
+      "t": 3.346,
+      "dtFromRelease": 1.583,
+      "speed": 0.15,
+      "vy": -0.01
+     },
+     "pelvis": null,
+     "chest": null,
+     "handsBeforeHead": true,
+     "maxJointSepMm": 0.6
+    },
+    "deterministic": true
+   }
+  },
+  {
+   "gate": "C1",
+   "test": "G_fall",
+   "noProt": {
+    "hash": "e17b4c35",
+    "outcome": "FELL",
+    "m": {
+     "tRelease": 1.1,
+     "firstBody": "foreArm_L",
+     "firstSpeed": 1.42,
+     "order": [
+      "foreArm_L",
+      "foreArm_R",
+      "thigh_L",
+      "thigh_R",
+      "abdomen",
+      "head"
+     ],
+     "hands": {
+      "t": 2.208,
+      "dtFromRelease": 1.108,
+      "speed": 1.42,
+      "vy": -1.06
+     },
+     "head": {
+      "t": 2.317,
+      "dtFromRelease": 1.217,
+      "speed": 0.76,
+      "vy": 0.1
+     },
+     "pelvis": null,
+     "chest": null,
+     "handsBeforeHead": true,
+     "maxJointSepMm": 0.9
+    },
+    "deterministic": true
+   },
+   "prot": {
+    "hash": "55a3be58",
+    "outcome": "FELL",
+    "m": {
+     "tRelease": 1.1,
+     "firstBody": "foreArm_R",
+     "firstSpeed": 2.29,
+     "order": [
+      "foreArm_R",
+      "foreArm_L",
+      "thigh_L",
+      "thigh_R",
+      "head"
+     ],
+     "hands": {
+      "t": 2.192,
+      "dtFromRelease": 1.092,
+      "speed": 2.29,
+      "vy": -1.25
+     },
+     "head": {
+      "t": 2.375,
+      "dtFromRelease": 1.275,
+      "speed": 0.12,
+      "vy": -0.01
+     },
+     "pelvis": null,
+     "chest": null,
+     "handsBeforeHead": true,
+     "maxJointSepMm": 0.7
+    },
+    "deterministic": true
+   }
+  },
+  {
+   "gate": "C1",
+   "test": "PB40",
+   "noProt": {
+    "hash": "64e3e392",
+    "outcome": "FELL",
+    "m": {
+     "tRelease": 1.358,
+     "firstBody": "pelvis",
+     "firstSpeed": 1.08,
+     "order": [
+      "pelvis",
+      "chest",
+      "head",
+      "abdomen"
+     ],
+     "hands": null,
+     "head": {
+      "t": 2.804,
+      "dtFromRelease": 1.446,
+      "speed": 0.57,
+      "vy": 0.09
+     },
+     "pelvis": {
+      "t": 2.742,
+      "dtFromRelease": 1.383,
+      "speed": 1.08,
+      "vy": -0.41
+     },
+     "chest": {
+      "t": 2.8,
+      "dtFromRelease": 1.442,
+      "speed": 0.7,
+      "vy": 0.38
+     },
+     "handsBeforeHead": null,
+     "maxJointSepMm": 1.6
+    },
+    "deterministic": true
+   },
+   "prot": {
+    "hash": "878619e6",
+    "outcome": "FELL",
+    "m": {
+     "tRelease": 1.358,
+     "firstBody": "foreArm_L",
+     "firstSpeed": 2.6,
+     "order": [
+      "foreArm_L",
+      "foreArm_R",
+      "pelvis",
+      "chest",
+      "head",
+      "abdomen"
+     ],
+     "hands": {
+      "t": 2.371,
+      "dtFromRelease": 1.012,
+      "speed": 2.6,
+      "vy": -0.9
+     },
+     "head": {
+      "t": 2.642,
+      "dtFromRelease": 1.283,
+      "speed": 0.14,
+      "vy": 0.04
+     },
+     "pelvis": {
+      "t": 2.538,
+      "dtFromRelease": 1.179,
+      "speed": 1.16,
+      "vy": -0.7
+     },
+     "chest": {
+      "t": 2.638,
+      "dtFromRelease": 1.279,
+      "speed": 0.24,
+      "vy": 0.04
+     },
+     "handsBeforeHead": true,
+     "maxJointSepMm": 0.5
+    },
+    "deterministic": true
+   }
+  },
+  {
+   "gate": "C1",
+   "test": "PB60",
+   "noProt": {
+    "hash": "2244ddbe",
+    "outcome": "FELL",
+    "m": {
+     "tRelease": 1.096,
+     "firstBody": "pelvis",
+     "firstSpeed": 1.46,
+     "order": [
+      "pelvis",
+      "chest",
+      "head",
+      "abdomen"
+     ],
+     "hands": null,
+     "head": {
+      "t": 2.308,
+      "dtFromRelease": 1.212,
+      "speed": 0.41,
+      "vy": 0.14
+     },
+     "pelvis": {
+      "t": 2.25,
+      "dtFromRelease": 1.154,
+      "speed": 1.46,
+      "vy": -0.92
+     },
+     "chest": {
+      "t": 2.304,
+      "dtFromRelease": 1.208,
+      "speed": 0.54,
+      "vy": -0.02
+     },
+     "handsBeforeHead": null,
+     "maxJointSepMm": 1.7
+    },
+    "deterministic": true
+   },
+   "prot": {
+    "hash": "845bab4c",
+    "outcome": "FELL",
+    "m": {
+     "tRelease": 1.096,
+     "firstBody": "foreArm_L",
+     "firstSpeed": 2.95,
+     "order": [
+      "foreArm_L",
+      "foreArm_R",
+      "pelvis",
+      "chest",
+      "head",
+      "abdomen"
+     ],
+     "hands": {
+      "t": 1.967,
+      "dtFromRelease": 0.871,
+      "speed": 2.95,
+      "vy": -1
+     },
+     "head": {
+      "t": 2.229,
+      "dtFromRelease": 1.133,
+      "speed": 0.15,
+      "vy": 0.03
+     },
+     "pelvis": {
+      "t": 2.108,
+      "dtFromRelease": 1.013,
+      "speed": 1.23,
+      "vy": -0.63
+     },
+     "chest": {
+      "t": 2.225,
+      "dtFromRelease": 1.129,
+      "speed": 0.23,
+      "vy": 0.04
+     },
+     "handsBeforeHead": true,
+     "maxJointSepMm": 0.6
+    },
+    "deterministic": true
+   }
+  },
+  {
+   "gate": "C1",
+   "test": "PR60",
+   "noProt": {
+    "hash": "8f921664",
+    "outcome": "FELL",
+    "m": {
+     "tRelease": 1.592,
+     "firstBody": "foreArm_R",
+     "firstSpeed": 1.96,
+     "order": [
+      "foreArm_R",
+      "thigh_R",
+      "upperArm_R",
+      "head",
+      "pelvis",
+      "abdomen"
+     ],
+     "hands": {
+      "t": 2.696,
+      "dtFromRelease": 1.104,
+      "speed": 1.96,
+      "vy": -1.91
+     },
+     "head": {
+      "t": 3.204,
+      "dtFromRelease": 1.613,
+      "speed": 0.83,
+      "vy": -0.15
+     },
+     "pelvis": {
+      "t": 3.275,
+      "dtFromRelease": 1.683,
+      "speed": 0.18,
+      "vy": -0.02
+     },
+     "chest": {
+      "t": 3.317,
+      "dtFromRelease": 1.725,
+      "speed": 0.21,
+      "vy": 0.06
+     },
+     "handsBeforeHead": true,
+     "maxJointSepMm": 1.8
+    },
+    "deterministic": true
+   },
+   "prot": {
+    "hash": "11cfdcf8",
+    "outcome": "FELL",
+    "m": {
+     "tRelease": 1.592,
+     "firstBody": "foreArm_R",
+     "firstSpeed": 2.31,
+     "order": [
+      "foreArm_R",
+      "upperArm_R",
+      "head",
+      "abdomen",
+      "chest",
+      "pelvis"
+     ],
+     "hands": {
+      "t": 2.646,
+      "dtFromRelease": 1.054,
+      "speed": 2.31,
+      "vy": -1.89
+     },
+     "head": {
+      "t": 2.892,
+      "dtFromRelease": 1.3,
+      "speed": 0.86,
+      "vy": 0.02
+     },
+     "pelvis": {
+      "t": 3.279,
+      "dtFromRelease": 1.688,
+      "speed": 0.08,
+      "vy": -0.02
+     },
+     "chest": {
+      "t": 3.225,
+      "dtFromRelease": 1.633,
+      "speed": 0.22,
+      "vy": 0.08
+     },
+     "handsBeforeHead": true,
+     "maxJointSepMm": 3.8
+    },
+    "deterministic": true
+   }
+  },
+  {
+   "gate": "C1",
+   "test": "PR70",
+   "noProt": {
+    "hash": "1658a096",
+    "outcome": "FELL",
+    "m": {
+     "tRelease": 1.113,
+     "firstBody": "foreArm_R",
+     "firstSpeed": 1.85,
+     "order": [
+      "foreArm_R",
+      "thigh_R",
+      "upperArm_R",
+      "head",
+      "pelvis",
+      "abdomen"
+     ],
+     "hands": {
+      "t": 2.304,
+      "dtFromRelease": 1.192,
+      "speed": 1.85,
+      "vy": -1.8
+     },
+     "head": {
+      "t": 2.717,
+      "dtFromRelease": 1.604,
+      "speed": 0.86,
+      "vy": -0.13
+     },
+     "pelvis": {
+      "t": 3.058,
+      "dtFromRelease": 1.946,
+      "speed": 0.21,
+      "vy": -0.04
+     },
+     "chest": {
+      "t": 3.496,
+      "dtFromRelease": 2.383,
+      "speed": 0.09,
+      "vy": -0.07
+     },
+     "handsBeforeHead": true,
+     "maxJointSepMm": 1.9
+    },
+    "deterministic": true
+   },
+   "prot": {
+    "hash": "d0a5e8c4",
+    "outcome": "FELL",
+    "m": {
+     "tRelease": 1.113,
+     "firstBody": "foreArm_R",
+     "firstSpeed": 2.45,
+     "order": [
+      "foreArm_R",
+      "thigh_R",
+      "upperArm_R",
+      "pelvis"
+     ],
+     "hands": {
+      "t": 2.267,
+      "dtFromRelease": 1.154,
+      "speed": 2.45,
+      "vy": -1.84
+     },
+     "head": null,
+     "pelvis": {
+      "t": 2.688,
+      "dtFromRelease": 1.575,
+      "speed": 0.23,
+      "vy": 0.06
+     },
+     "chest": null,
+     "handsBeforeHead": true,
+     "maxJointSepMm": 1.6
+    },
+    "deterministic": true
+   }
+  },
+  {
+   "gate": "C1",
+   "test": "PL60",
+   "noProt": {
+    "hash": "7a24c111",
+    "outcome": "FELL",
+    "m": {
+     "tRelease": 1.6,
+     "firstBody": "foreArm_L",
+     "firstSpeed": 1.81,
+     "order": [
+      "foreArm_L",
+      "thigh_L",
+      "upperArm_L",
+      "head",
+      "pelvis",
+      "abdomen"
+     ],
+     "hands": {
+      "t": 2.704,
+      "dtFromRelease": 1.104,
+      "speed": 1.81,
+      "vy": -1.79
+     },
+     "head": {
+      "t": 3.1,
+      "dtFromRelease": 1.5,
+      "speed": 1.23,
+      "vy": -0.28
+     },
+     "pelvis": {
+      "t": 3.258,
+      "dtFromRelease": 1.658,
+      "speed": 0.22,
+      "vy": -0.01
+     },
+     "chest": {
+      "t": 3.288,
+      "dtFromRelease": 1.688,
+      "speed": 0.22,
+      "vy": 0.04
+     },
+     "handsBeforeHead": true,
+     "maxJointSepMm": 2.3
+    },
+    "deterministic": true
+   },
+   "prot": {
+    "hash": "c6195a61",
+    "outcome": "FELL",
+    "m": {
+     "tRelease": 1.6,
+     "firstBody": "foreArm_L",
+     "firstSpeed": 2.32,
+     "order": [
+      "foreArm_L",
+      "thigh_L",
+      "upperArm_L",
+      "head",
+      "chest",
+      "abdomen"
+     ],
+     "hands": {
+      "t": 2.65,
+      "dtFromRelease": 1.05,
+      "speed": 2.32,
+      "vy": -1.88
+     },
+     "head": {
+      "t": 2.9,
+      "dtFromRelease": 1.3,
+      "speed": 1.02,
+      "vy": -0.08
+     },
+     "pelvis": {
+      "t": 3.2,
+      "dtFromRelease": 1.6,
+      "speed": 0.24,
+      "vy": -0.19
+     },
+     "chest": {
+      "t": 3.171,
+      "dtFromRelease": 1.571,
+      "speed": 0.22,
+      "vy": 0.07
+     },
+     "handsBeforeHead": true,
+     "maxJointSepMm": 2.5
+    },
+    "deterministic": true
+   }
+  },
+  {
+   "gate": "C3",
+   "test": "C_proj_B75",
+   "noProt": {
+    "hash": "a8789717",
+    "outcome": "STEPPED_FELL",
+    "m": {
+     "tRelease": 1.538,
+     "firstBody": "pelvis",
+     "firstSpeed": 2.49,
+     "order": [
+      "pelvis",
+      "upperArm_R",
+      "foreArm_R",
+      "head",
+      "chest"
+     ],
+     "hands": {
+      "t": 2.408,
+      "dtFromRelease": 0.871,
+      "speed": 0.7,
+      "vy": -0.43
+     },
+     "head": {
+      "t": 2.438,
+      "dtFromRelease": 0.9,
+      "speed": 0.97,
+      "vy": 0.08
+     },
+     "pelvis": {
+      "t": 2.371,
+      "dtFromRelease": 0.833,
+      "speed": 2.49,
+      "vy": -1.85
+     },
+     "chest": {
+      "t": 2.596,
+      "dtFromRelease": 1.058,
+      "speed": 0.21,
+      "vy": -0.01
+     },
+     "handsBeforeHead": true,
+     "maxJointSepMm": 0.9
+    },
+    "deterministic": true
+   },
+   "prot": {
+    "hash": "ba83d149",
+    "outcome": "STEPPED_FELL",
+    "m": {
+     "tRelease": 1.538,
+     "firstBody": "foreArm_R",
+     "firstSpeed": 1.75,
+     "order": [
+      "foreArm_R",
+      "pelvis",
+      "upperArm_R",
+      "chest",
+      "head",
+      "abdomen"
+     ],
+     "hands": {
+      "t": 2.3,
+      "dtFromRelease": 0.762,
+      "speed": 1.75,
+      "vy": -1.53
+     },
+     "head": {
+      "t": 2.425,
+      "dtFromRelease": 0.887,
+      "speed": 0.83,
+      "vy": 0.09
+     },
+     "pelvis": {
+      "t": 2.35,
+      "dtFromRelease": 0.813,
+      "speed": 1.52,
+      "vy": -1.02
+     },
+     "chest": {
+      "t": 2.417,
+      "dtFromRelease": 0.879,
+      "speed": 0.82,
+      "vy": -0.01
+     },
+     "handsBeforeHead": true,
+     "maxJointSepMm": 2.1
+    },
+    "deterministic": true
+   }
+  },
+  {
+   "gate": "C3",
+   "test": "F_nofoot_F160",
+   "noProt": {
+    "hash": "6688e072",
+    "outcome": "STEPPED_FELL",
+    "m": {
+     "tRelease": 1.642,
+     "firstBody": "foreArm_L",
+     "firstSpeed": 1.08,
+     "order": [
+      "foreArm_L",
+      "foreArm_R",
+      "thigh_R",
+      "thigh_L",
+      "abdomen",
+      "head"
+     ],
+     "hands": {
+      "t": 2.404,
+      "dtFromRelease": 0.763,
+      "speed": 1.08,
+      "vy": -0.54
+     },
+     "head": {
+      "t": 2.55,
+      "dtFromRelease": 0.908,
+      "speed": 1.09,
+      "vy": 0.07
+     },
+     "pelvis": {
+      "t": 2.775,
+      "dtFromRelease": 1.133,
+      "speed": 0.14,
+      "vy": -0.01
+     },
+     "chest": {
+      "t": 2.767,
+      "dtFromRelease": 1.125,
+      "speed": 0.21,
+      "vy": 0
+     },
+     "handsBeforeHead": true,
+     "maxJointSepMm": 1.1
+    },
+    "deterministic": true
+   },
+   "prot": {
+    "hash": "64701e5",
+    "outcome": "STEPPED_FELL",
+    "m": {
+     "tRelease": 1.642,
+     "firstBody": "foreArm_L",
+     "firstSpeed": 1.37,
+     "order": [
+      "foreArm_L",
+      "foreArm_R",
+      "thigh_R",
+      "thigh_L",
+      "head",
+      "abdomen"
+     ],
+     "hands": {
+      "t": 2.417,
+      "dtFromRelease": 0.775,
+      "speed": 1.37,
+      "vy": -0.59
+     },
+     "head": {
+      "t": 2.642,
+      "dtFromRelease": 1,
+      "speed": 0.3,
+      "vy": -0.01
+     },
+     "pelvis": null,
+     "chest": {
+      "t": 3.492,
+      "dtFromRelease": 1.85,
+      "speed": 0.21,
+      "vy": -0.19
+     },
+     "handsBeforeHead": true,
+     "maxJointSepMm": 1.3
+    },
+    "deterministic": true
+   }
+  },
+  {
+   "gate": "C3",
+   "test": "D_late_F80_100ms",
+   "noProt": {
+    "hash": "256b3622",
+    "outcome": "STEPPED_FELL",
+    "m": {
+     "tRelease": 1.658,
+     "firstBody": "foreArm_L",
+     "firstSpeed": 1.06,
+     "order": [
+      "foreArm_L",
+      "foreArm_R",
+      "thigh_R",
+      "thigh_L",
+      "abdomen",
+      "head"
+     ],
+     "hands": {
+      "t": 2.304,
+      "dtFromRelease": 0.646,
+      "speed": 1.06,
+      "vy": -0.54
+     },
+     "head": {
+      "t": 2.429,
+      "dtFromRelease": 0.771,
+      "speed": 0.77,
+      "vy": 0.07
+     },
+     "pelvis": {
+      "t": 2.767,
+      "dtFromRelease": 1.108,
+      "speed": 0.11,
+      "vy": 0.11
+     },
+     "chest": {
+      "t": 2.671,
+      "dtFromRelease": 1.013,
+      "speed": 0.02,
+      "vy": -0.02
+     },
+     "handsBeforeHead": true,
+     "maxJointSepMm": 0.7
+    },
+    "deterministic": true
+   },
+   "prot": {
+    "hash": "49211d74",
+    "outcome": "STEPPED_FELL",
+    "m": {
+     "tRelease": 1.658,
+     "firstBody": "foreArm_L",
+     "firstSpeed": 1.21,
+     "order": [
+      "foreArm_L",
+      "foreArm_R",
+      "thigh_R",
+      "thigh_L",
+      "upperArm_R",
+      "head"
+     ],
+     "hands": {
+      "t": 2.296,
+      "dtFromRelease": 0.638,
+      "speed": 1.21,
+      "vy": -0.86
+     },
+     "head": {
+      "t": 2.521,
+      "dtFromRelease": 0.863,
+      "speed": 1.2,
+      "vy": 0.02
+     },
+     "pelvis": null,
+     "chest": null,
+     "handsBeforeHead": true,
+     "maxJointSepMm": 1.7
+    },
+    "deterministic": true
+   }
+  },
+  {
+   "gate": "C3",
+   "test": "B_R65",
+   "noProt": {
+    "hash": "5ca84a7f",
+    "outcome": "FELL_NO_STEP",
+    "m": {
+     "tRelease": 1.438,
+     "firstBody": "foreArm_R",
+     "firstSpeed": 1.79,
+     "order": [
+      "foreArm_R",
+      "thigh_R",
+      "upperArm_R",
+      "head",
+      "pelvis",
+      "abdomen"
+     ],
+     "hands": {
+      "t": 2.504,
+      "dtFromRelease": 1.067,
+      "speed": 1.79,
+      "vy": -1.77
+     },
+     "head": {
+      "t": 3.079,
+      "dtFromRelease": 1.642,
+      "speed": 0.78,
+      "vy": -0.19
+     },
+     "pelvis": {
+      "t": 3.167,
+      "dtFromRelease": 1.729,
+      "speed": 0.19,
+      "vy": -0.03
+     },
+     "chest": {
+      "t": 3.208,
+      "dtFromRelease": 1.771,
+      "speed": 0.22,
+      "vy": 0.07
+     },
+     "handsBeforeHead": true,
+     "maxJointSepMm": 2.3
+    },
+    "deterministic": true
+   },
+   "prot": {
+    "hash": "f1e2b521",
+    "outcome": "FELL_NO_STEP",
+    "m": {
+     "tRelease": 1.438,
+     "firstBody": "foreArm_R",
+     "firstSpeed": 2.44,
+     "order": [
+      "foreArm_R",
+      "thigh_R",
+      "upperArm_R",
+      "head",
+      "chest",
+      "abdomen"
+     ],
+     "hands": {
+      "t": 2.458,
+      "dtFromRelease": 1.021,
+      "speed": 2.44,
+      "vy": -1.95
+     },
+     "head": {
+      "t": 2.742,
+      "dtFromRelease": 1.304,
+      "speed": 0.87,
+      "vy": -0.19
+     },
+     "pelvis": {
+      "t": 3.046,
+      "dtFromRelease": 1.608,
+      "speed": 0.08,
+      "vy": -0.02
+     },
+     "chest": {
+      "t": 2.983,
+      "dtFromRelease": 1.546,
+      "speed": 0.2,
+      "vy": 0.03
+     },
+     "handsBeforeHead": true,
+     "maxJointSepMm": 0.7
+    },
+    "deterministic": true
+   }
+  }
+ ]
+}

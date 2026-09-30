@@ -16,7 +16,7 @@
 //
 // Deterministic: only + − × ÷ √ and the pc_math deterministic trig / exp are used for anything that reaches a target or a decision.
 import { V, Q, rad, deg, datan2, dacos, dexp, dsin } from "./pc_math.js";
-import { csOfRel, relOf, MOTOR_REGIONS, REGION_OF, motorProfile } from "./pc_control.js";
+import { csOfRel, relOf, MOTOR_REGIONS, REGION_OF, motorProfile, paramTarget } from "./pc_control.js";
 import { polyDist, polyClamp, polyNearest } from "./pc_sense.js";
 
 // ── motor strength, revised from Gate B (review items M1/M2/M3) ─────────────────────────────────────────────────────────────────────
@@ -70,9 +70,19 @@ export const BAL = {
   settleKp: 0.2,        // C2: ankle stiffness fraction of a foot being loaded after touchdown (compliant heel rocker)
   swingKpDrop: 0.5,    // GATE C2: a swing-controlled leg runs at (1 − 0.5) × stance stiffness — compliant enough that an obstruction wins   // released, but both feet loaded + flat-supported and ξ ≥ 3 cm inside for 100 ms → balance re-engages (ramped back)
   stepTime: 0.3, stepReach: 0.55,
-  armShare: 0.5, armUse: 0.8, armGuardDeg: 15,   // GATE C4 reactive arms: the arms' share of the hip-strategy moment, the fraction of their shoulder torque they may use, range-of-motion guard       // C1 labelling only: a single step of ≤ 0.3 s could capture ξ up to ~0.55 m beyond the support edge
+  armShare: 0.5, armUse: 0.8, armGuardDeg: 15,
+  protK: 0.6, protKLeg: 0.45,                    // GATE C5 protective response: stiffness of the protective arms / neck / spine and legs (fraction of normal)   // GATE C4 reactive arms: the arms' share of the hip-strategy moment, the fraction of their shoulder torque they may use, range-of-motion guard       // C1 labelling only: a single step of ≤ 0.3 s could capture ξ up to ~0.55 m beyond the support edge
 };
 const G = 9.81, GV = [0, -9.81, 0];
+// GATE C5 protective targets per fall direction (joint parameters in degrees, the Gate A convention: shoulder Y− = flexion, shoulder Z
+// abduction = − for L / + for R, neck / spine Y+ = flexion, hip Y+ = extension, knee / elbow + = flexion). Joints not listed keep nominal.
+const PROT = {
+  F: { shoulder_L: { y: -75, z: -15 }, shoulder_R: { y: -75, z: 15 }, elbow_L: { a: 25 }, elbow_R: { a: 25 }, neck: { y: -15 }, hip_L: { y: -20 }, hip_R: { y: -20 }, knee_L: { a: 30 }, knee_R: { a: 30 } },
+  B: { shoulder_L: { y: 30, z: -35 }, shoulder_R: { y: 30, z: 35 }, elbow_L: { a: 30 }, elbow_R: { a: 30 }, neck: { y: 35 }, thoracic: { y: 15 }, lumbar: { y: 15 }, hip_L: { y: -60 }, hip_R: { y: -60 }, knee_L: { a: 70 }, knee_R: { a: 70 } },
+  R: { shoulder_R: { y: -20, z: 75 }, elbow_R: { a: 15 }, shoulder_L: { y: -40, z: -10 }, elbow_L: { a: 45 }, neck: { y: 10 }, knee_L: { a: 25 }, knee_R: { a: 25 } },
+  L: { shoulder_L: { y: -20, z: -75 }, elbow_L: { a: 15 }, shoulder_R: { y: -40, z: 10 }, elbow_R: { a: 45 }, neck: { y: 10 }, knee_L: { a: 25 }, knee_R: { a: 25 } } };
+const PROT_J = new Set(Object.values(PROT).flatMap(o => Object.keys(o)));
+const nlerpQ = (a, b, s) => { const d = a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3], bb = d < 0 ? b.map(x => -x) : b; return Q.norm([0, 1, 2, 3].map(i => a[i] + (bb[i] - a[i]) * s)); };
 const expmap = (d) => { const a = Math.sqrt(d[0] * d[0] + d[1] * d[1] + d[2] * d[2]); return a < 1e-12 ? [0, 0, 0, 1] : Q.axis([d[0] / a, d[1] / a, d[2] / a], a); };
 const clampVec = (d, m) => { const a = Math.sqrt(d[0] * d[0] + d[1] * d[1] + d[2] * d[2]); return a > m ? V.sc(d, m / a) : d; };
 const yawQ = (psi) => Q.axis([0, 1, 0], psi);
@@ -372,7 +382,21 @@ export class BalanceController {
     // stiffness ramps to fallScale of normal and a fraction fallTone of the static gravity support is kept (C1 finding: releasing tone
     // entirely — 15 % stiffness, no gravity support — made the heavy trunk jackknife over straight legs in forward falls). ──
     let relK = 1; if (released) { const k = Math.min(1, (this.nObs - (cls.fallStep || this.nObs)) / BAL.fallRampSteps); relK = 1 + (BAL.fallScale - 1) * k;
-      for (const m of motor) { m.kp *= relK; m.kd *= Math.sqrt(relK); } for (let k2 = 0; k2 < nj; k2++) { tauG[k2] = V.sc(tauG[k2], BAL.fallTone); tauB[k2] = [0, 0, 0]; } }
+      for (const m of motor) { m.kp *= relK; m.kd *= Math.sqrt(relK); } for (let k2 = 0; k2 < nj; k2++) { tauG[k2] = V.sc(tauG[k2], BAL.fallTone); tauB[k2] = [0, 0, 0]; }
+      // GATE C5 (opts.protective): once the fall is unavoidable the posture requests are not merely released — the joints that can protect
+      // take a PROTECTIVE target chosen from the actual fall direction (the capture point's direction from the COM, in the body frame):
+      // forward → arms reach forward-down with flexed elbows, knees give; backward → chin tucked, trunk curled, hips/knees flex (sit), arms
+      // back; sideways → the fall-side arm abducts toward the turf. Blended per direction weight, ramped in over the release ramp (≈ the
+      // 0.1 s protective reaction latency), at moderate stiffness (protK) so the arms brace but yield. Physics decides where it lands.
+      if (this.opts.protective) { let d = [o.xi[0] - c[0], o.xi[1] - c[2]]; const dn = Math.hypot(d[0], d[1]); if (dn < 0.02) d = [o.vcom[0], o.vcom[2]];
+        const n2 = Math.hypot(d[0], d[1]) || 1, f = (d[0] * hd[0] + d[1] * hd[2]) / n2, rt = (d[0] * lat[0] + d[1] * lat[2]) / n2;
+        const wts = { F: Math.max(0, f), B: Math.max(0, -f), R: Math.max(0, rt), L: Math.max(0, -rt) }, tgtOf = (dir, k) => { const p = PROT[dir][spec.joints[k].name]; return p ? paramTarget(spec.joints[k], p) : nominal[k]; };
+        this.protInfo = { dir: wts, ramp: k };
+        spec.joints.forEach((j, kk) => { if (!PROT_J.has(j.name)) return; let acc = null, W0 = 0;
+          for (const dir of ["F", "B", "R", "L"]) { const w = wts[dir]; if (w < 1e-3) continue; const t = tgtOf(dir, kk); if (acc == null) { acc = t; W0 = w; continue; }
+            const a = w / (W0 + w); acc = j.type === "hinge" ? acc + (t - acc) * a : nlerpQ(acc, t, a); W0 += w; }
+          if (acc == null) return; nominal[kk] = j.type === "hinge" ? nominal[kk] + (acc - nominal[kk]) * k : nlerpQ(nominal[kk], acc, k);
+          const pk = /^(hip|knee|ankle)_/.test(j.name) ? BAL.protKLeg : BAL.protK; motor[kk].kp *= pk / relK; motor[kk].kd *= Math.sqrt(pk / relK); }); } }
     // ── torques → target offsets in each joint's own constraint space (equilibrium-point shift Δθ = τ / kp) ──
     const final = nominal.map((x, k) => Array.isArray(x) ? x.slice() : x);
     spec.joints.forEach((j, k) => { const Rc = S[j.childIndex].rot, kp = motor[k].kp;
@@ -391,7 +415,7 @@ export class BalanceController {
     // GATE C2: velocity feed-forward for a swing-controlled leg (finite difference of its own successive targets, in each joint's space), so
     // the swing damping acts on deviation from the intended motion rather than on the motion itself. Stance joints keep a zero target velocity.
     if (plan || Object.keys(armVel).length) { out.vel = spec.joints.map(j => j.type === "hinge" ? 0 : [0, 0, 0]); for (const k in this.swingVel) out.vel[k] = this.swingVel[k]; for (const k in this.stanceVel) out.vel[k] = this.stanceVel[k]; for (const k in armVel) out.vel[k] = armVel[k]; }
-    out.debug = { arms: this.armInfo || null, pdTrace: this.pdTrace || null, unload: this.unloadInfo, xiRef, pRaw, pStar, r, hipCapHere, tauTrunk, feetStatic: fStatic, feetBal: fBal, heading: hd, pelvisTarget: { pos: Pd, rot: Rpd }, stance, replant: this.replant, fricR: this.fricR };
+    out.debug = { prot: this.protInfo || null, arms: this.armInfo || null, pdTrace: this.pdTrace || null, unload: this.unloadInfo, xiRef, pRaw, pStar, r, hipCapHere, tauTrunk, feetStatic: fStatic, feetBal: fBal, heading: hd, pelvisTarget: { pos: Pd, rot: Rpd }, stance, replant: this.replant, fricR: this.fricR };
     return out;
   }
 }
