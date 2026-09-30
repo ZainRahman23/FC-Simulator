@@ -36,6 +36,23 @@ class EvidenceTests(unittest.TestCase):
             with patch.object(C, 'run_map', side_effect=fake_map):
                 self.assertEqual(paired.run_arms([(sid, path, commands, seeds)]), [[{'score': 11}, {'score': 12}]])
 
+    def test_cpu_checkpoint_replays_exact_score_and_canonical_context(self):
+        import json
+        from tools.balance import states
+        req = json.loads((C.ROOT / 'tools/balance/reference_request.json').read_text())
+        opts = {'builds': {'HOME': {'system_id': 'gegenpress', 'control': 'cpu'},
+                           'AWAY': {'system_id': 'counter_strike', 'control': 'cpu'}}}
+        recorded = league.play_match(req, opts)
+        prepared = recorded['request']
+        self.assertTrue(prepared['_build_prepared'])
+        with tempfile.TemporaryDirectory() as directory, patch.object(C, 'CACHE', Path(directory)):
+            snapshots = states._snap(prepared, [(1800, 'HOME', 'checkpoint')])
+            snapshot = snapshots[0]
+            self.assertEqual(snapshot['score'], states._score_at(recorded['goals'], 1800))
+            self.assertEqual(snapshot['ctx']['own_system'], 'gegenpress')
+            self.assertEqual(snapshot['ctx']['opp_system'], 'counter_strike')
+            self.assertEqual(league.play_match(prepared)['score'], recorded['score'])
+
     def test_double_week_trains_once_and_advances_both_lineups(self):
         import copy
         import json

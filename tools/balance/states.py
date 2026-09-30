@@ -62,7 +62,7 @@ def build_library(matches: list[dict], reqs: list[dict], strength: dict, plan: d
                   per_cell: int = PER_CELL, limit: int = 0) -> list[dict]:
     """``matches``: season-harness records (with goal timelines) aligned with
     ``reqs``. Deterministic selection by hash order within each cell."""
-    ck = f"statelib/{C.engine_digest()}_{C.build_digest()}_{C.key(reqs, per_cell, limit, C.harness_digest())}.pkl"
+    ck = f"statelib/{C.engine_digest()}_{C.build_digest()}_{C.key(reqs, per_cell, limit, C.harness_digest(), C.policy_digest())}.pkl"
     hit = C.cache_get(ck)
     if hit is not None and all(__import__("pathlib").Path(s["path"]).exists() for s in hit):
         return hit
@@ -138,13 +138,14 @@ def library_summary(lib: list[dict]) -> dict:
 
 
 def load(a=None) -> list[dict]:
-    from tools.balance import league
+    from tools.balance import league, feel
     from tools.balance.run import seasons
     seas = seasons(1)
     sea = seas[0]
-    matches = league.sim_season(sea, label="season 1 (for states)")
-    reqs = [league.fixture_request(sea, f) for f in sea["fixtures"]]
-    lib = build_library(matches, reqs, sea["strength"], sea["plan"],
+    matches = league.sim_season(sea, opts_fn=feel.cpu_cards_opts, label="CPU season 1 (for states)")
+    reqs = [m["request"] for m in matches]
+    system_ids = {club: block["system_id"] for club, block in sea["cpu_builds"].items()}
+    lib = build_library(matches, reqs, sea["strength"], system_ids,
                         per_cell=C.SCALE["per_cell"], limit=C.SCALE["state_matches"])
     count = getattr(a, "states", 0) if a else 0
     return lib[:count] if count else lib

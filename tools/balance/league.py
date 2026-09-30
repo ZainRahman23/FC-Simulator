@@ -164,7 +164,9 @@ def play_match(req: dict, opts: dict | None = None) -> dict:
         engine = management.build_engine(req)
     else:
         from tools.balance import adapter
+        req = adapter.build_mod().prepare_request(req)
         engine = adapter.build_engine(req)
+    kickoff_request = copy.deepcopy(req) if req.get("builds") else None
     result = engine.run()
     plays = [(e.timestamp, e.team_id, (e.detail or {}).get("card_id") or (e.detail or {}).get("card"))
              for e in engine.events if e.event_type in ("CARD_PLAY", "TACTIC_CARD", "CARD_PLAYED")]
@@ -187,7 +189,7 @@ def play_match(req: dict, opts: dict | None = None) -> dict:
         elif t == "SUBSTITUTION":
             subs.append((e.timestamp, e.team_id))
     # fatigue alert proxy: first time any on-pitch player of a side is < 60 energy
-    return {"score": ft["score"],
+    return {"request": kickoff_request, "score": ft["score"],
             "team_stats": {s: _flat(ts) for s, ts in ft["team_stats"].items()},
             "possession": ft.get("possession"),
             "players": ps, "goals": goals, "shots": shots, "reds": reds,
@@ -207,6 +209,31 @@ def simulate_matches(reqs: list[dict], opts_list: list[dict | None] | None = Non
     ed, bd = C.engine_digest(), C.build_digest()
     keys = [f"match/{ed}/{C.key(r, o, bd, C.harness_digest(), C.policy_digest())}.pkl" for r, o in zip(reqs, opts_list)]
     out: list[Any] = [C.cache_get(k) for k in keys]
+    # Narrow, recorded migration after adding immutable kickoff records.
+    # Only exact approved source versions may reuse prior football results;
+    # state/arm caches never use this compatibility path.
+    compat_path = C.CACHE / "match-cache-compat.json"
+    if compat_path.exists():
+        compat = json.loads(compat_path.read_text())
+        current = C.provenance()
+        if all(current[k] == compat["current"].get(k) for k in ("engine", "build", "web", "harness", "policy")):
+            for i, cached in enumerate(out):
+                if cached is not None:
+                    continue
+                old_key = f"match/{ed}/{C.key(reqs[i], opts_list[i], bd, compat['previous_harness'], C.policy_digest())}.pkl"
+                previous = C.cache_get(old_key)
+                if previous is None:
+                    continue
+                req = copy.deepcopy(reqs[i])
+                opt = opts_list[i] or {}
+                if opt.get("builds"):
+                    req["builds"] = {**(req.get("builds") or {}), **opt["builds"]}
+                if req.get("builds") and not opt.get("engine_only"):
+                    from tools.balance import adapter
+                    req = adapter.build_mod().prepare_request(req)
+                previous["request"] = req if req.get("builds") else None
+                out[i] = previous
+                C.cache_put(keys[i], previous)
     todo = [i for i, v in enumerate(out) if v is None]
     if todo:
         res = C.run_map(_job, [(reqs[i], opts_list[i]) for i in todo], label=f"{label} ({len(todo)} new)",

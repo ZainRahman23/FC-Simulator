@@ -1,6 +1,6 @@
 # Touchline v2 balance report
 
-Run scale: **smoke**. Source versions: `{"build": "6d2fb4c483b4ae9b", "engine": "aace2947eae5173e", "harness": "215075ebcf18d445", "policy": "heuristic", "scale": {"curve_clubs": 2, "curve_mw_limit": 4, "econ_runs": 20, "fit_lams": [-1.0, 0.0, 1.0], "matchup_pools": 1, "matchup_seeds": 1, "matchup_systems": 4, "max_cards": 6, "mw_limit": 3, "n": 4, "name": "smoke", "per_cell": 1, "seasons": 1, "state_matches": 6}, "web": "ed115443923b5f29"}`.
+Run scale: **smoke**. Source versions: `{"build": "6d2fb4c483b4ae9b", "engine": "aace2947eae5173e", "harness": "32acbe2d443d0846", "policy": "heuristic", "scale": {"curve_clubs": 2, "curve_mw_limit": 4, "econ_runs": 20, "fit_lams": [-1.0, 0.0, 1.0], "matchup_pools": 1, "matchup_seeds": 1, "matchup_systems": 4, "max_cards": 6, "mw_limit": 3, "n": 4, "name": "smoke", "per_cell": 1, "seasons": 1, "state_matches": 6}, "web": "ed115443923b5f29"}`.
 
 Release balance is **not certified**. Extreme match outcomes and historical scorer concentration require completed calibration and tuning before release. Only results matching the current engine, build, web, harness and scale are included. Smoke verifies tooling; it cannot certify season totals, card bands, dominance or agency. An in-band point estimate alone is not statistical support for a gate.
 

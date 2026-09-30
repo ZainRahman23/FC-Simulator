@@ -11,7 +11,7 @@ The Claude build was resumed from the unfinished working tree on 2026-09-30. Imp
 | Engine hooks | 33 tests validated: 32 broad, 1 added targeted | Nine frozen ledger cases, including explicitly unset hooks; set pieces; all new shapes/remaps; scheduled effects; partner departure on substitutions and red cards |
 | Existing engine | 100 tests pass | Native football simulation regression suite |
 | Browser | 27 cases validated, including targeted reruns | System/training persistence, exact card drawer, presented-clock card play, league round, Broadcast, career and Analyst stress |
-| Balance plumbing | 8 tests pass | Source/scale isolation, per-future resume, 3/1/0 points, paired null comparison, calendar/training progression, JSON provenance |
+| Balance plumbing | 9 tests pass (7.1s) | Source/scale isolation, per-future resume, 3/1/0 points, paired null comparison, calendar/training progression, JSON provenance; actual CPU match/checkpoint score identity and canonical system contexts |
 
 JavaScript syntax and `git diff --check` pass. The final substitution-window run passed its new case plus all nine legacy ledger identity cases (10 tests, 48 seconds). The standalone formation harness reproduces an existing smoke row exactly after removing its pytest dependency.
 
@@ -27,7 +27,9 @@ The screenshots in [the walkthrough](../README_TOUCHLINE.md) are captures of the
 - Earlier v2 browser captures produced Liverpool 11–0 and 13–0 Everton. The exact 13–0 request replay matched the recorded ledger; without its one Tactical Foul card it still finished 9–1. CPU named-system application was subsequently corrected. These are diagnostic captures, not final-snapshot acceptance evidence. Statistical analysis must establish the scoring tail after the fix.
 - The existing formation report contains 16 paired seeds per setup/shape. It exercises execution, but the requested 200-seed calibration remains pending.
 - The effect-table placeholder has `calibrated:false`; the UI reports unavailable estimates honestly. A card receives measured previews only after its own calibration evidence passes.
-- The [generated balance report](../tools/balance/report.md) states sample sizes, source versions and method limits. The [remote run receipt](v2_progress/remote-balance.md) records running smoke job 1796 and 200-seed formation job 1797, plus dependent medium 1798 and full 1799, with source hashes and retrieval commands.
+- The [generated balance report](../tools/balance/report.md) states sample sizes, source versions and method limits. The [remote run receipt](v2_progress/remote-balance.md) records running smoke job 1801 and 200-seed formation job 1797, plus dependent medium 1802 and full 1803, with source hashes and retrieval commands.
+
+State sampling now uses progressed CPU-card season records and their immutable prepared requests, preserving actual system IDs, training, familiarity and frozen CPU policy at kickoff. The regression checks the recorded goal timeline against a 30-minute checkpoint and verifies exact final-score replay.
 
 Large sweeps use a frozen snapshot and Slurm CPU allocations. They do not run on the remote login node or consume the laptop's full CPU. Intermediate matches and paired futures persist so interrupted jobs can resume compatible work.
 
