@@ -1,0 +1,9 @@
+# EXPERIMENT (rejected, reverted): contact-yielding tracking — the slider's leg motors softened to 30 % while a leg segment touches the other character, recovering over 0.15 s
+gap 0.65 no yield  touch-window max 7.06 mm · run max 7.06 mm · closing 4.947 · slide 1.23 m, stops 1.18 s · slider joint sep 3.08 mm · B UP · det-hash 68fa2cc4
+gap 0.65 YIELD     touch-window max 7.06 mm · run max 7.06 mm · closing 4.947 · slide 1.3 m, stops 1.06 s · slider joint sep 2.97 mm · B UP · det-hash c72b86c1
+gap 0.75 no yield  touch-window max 1.69 mm · run max 4.95 mm · closing 3.575 · slide 1.24 m, stops 1.22 s · slider joint sep 3.06 mm · B UP · det-hash 3128e37b
+gap 0.75 YIELD     touch-window max 1.70 mm · run max 5.74 mm · closing 3.575 · slide 1.36 m, stops 1.13 s · slider joint sep 2.99 mm · B UP · det-hash fdd10379
+gap 0.85 no yield  touch-window max 5.09 mm · run max 5.09 mm · closing 3.086 · slide 1.37 m, stops 1.23 s · slider joint sep 2.56 mm · B FELL · det-hash 3f4c01cc
+gap 0.85 YIELD     touch-window max 5.15 mm · run max 5.15 mm · closing 3.086 · slide 1.49 m, stops 1.09 s · slider joint sep 2.56 mm · B UP · det-hash 37a0178b
+
+# Finding: the touch-window penetration is unchanged (it happens on the impact step, before any reaction to the contact can act); the weaker-slider test (solver_config_experiment.txt) helps because the leg is less stiff BEFORE impact (pre-impact co-contraction / tracking stiffness), not through a reflex.
