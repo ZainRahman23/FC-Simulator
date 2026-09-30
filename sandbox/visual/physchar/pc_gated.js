@@ -82,7 +82,7 @@ class Agent {
     // a TRACKING character (the slider) holds time-varying joint targets with the SAME finite motors and gains (BalanceController "hold" mode:
     // no balance law, no classifier — nothing to balance on); every other character runs the full C1 + C3 stack
     this.ctrl = new BalanceController(spec, this.P, Object.assign({ strength: "candidate" }, controllerProfile(spec), this.track ? { mode: "hold" } : {}, ctrlExtra || {}));
-    this.sensor = new Sensor(spec, { supportTouching: true, muSettle: 0.15 });
+    this.sensor = new Sensor(spec, { supportTouching: true, muSettle: 0.15, externalSupport: !!(ctrlExtra && ctrlExtra.externalSupport) });   // (option) support by the other body
     // a scripted C2 placement (the only voluntary action in the slice) or, by default, C3 reactive stepping on top of C1 balance
     this.seq = this.cfg.requests ? new SupportSequencer(spec, this.P, this.ctrl, this.cfg.requests) : null; this.stepper = this.seq || this.track ? null : new CorrectiveStepper(spec, this.P, this.ctrl);
     const ji = (n) => spec.joints.findIndex(j => j.name === n); this.aL = ji("ankle_L"); this.aR = ji("ankle_R");

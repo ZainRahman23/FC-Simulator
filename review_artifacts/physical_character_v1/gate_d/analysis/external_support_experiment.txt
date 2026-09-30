@@ -1,0 +1,31 @@
+# EXPERIMENT (option externalSupport, default off): support by another body joins the classifier's support region
+D2_shoved_into    turf only   · A final RECOVERABLE_IN_PLACE released never · A pelvis height 0.99 m · A trunk 4° · A non-foot ground false · B RECOVERABLE_IN_PLACE · hash a513500d
+D2_shoved_into    EXT-SUPPORT · A final RECOVERABLE_IN_PLACE released never · A pelvis height 0.99 m · A trunk 4° · A non-foot ground false · B RECOVERABLE_IN_PLACE · hash a513500d
+D3_shoulder       turf only   · A final RECOVERABLE_IN_PLACE released never · A pelvis height 1.01 m · A trunk 4° · A non-foot ground false · B RECOVERABLE_IN_PLACE · hash b18efb3b
+D3_shoulder       EXT-SUPPORT · A final RECOVERABLE_IN_PLACE released never · A pelvis height 1.01 m · A trunk 4° · A non-foot ground false · B RECOVERABLE_IN_PLACE · hash 78279a9c
+D4_shoved_hard    turf only   · A final GROUNDED           released 3.51 s · A pelvis height 0.31 m · A trunk 98° · A non-foot ground true · B RECOVERABLE_IN_PLACE · hash cc2c6660
+D4_shoved_hard    EXT-SUPPORT · A final GROUNDED           released 3.51 s · A pelvis height 0.31 m · A trunk 99° · A non-foot ground true · B RECOVERABLE_IN_PLACE · hash 9410f47d
+D5_shoulder_hard  turf only   · A final GROUNDED           released 1.09 s · A pelvis height 0.12 m · A trunk 91° · A non-foot ground true · B GROUNDED · hash cd6f4872
+D5_shoulder_hard  EXT-SUPPORT · A final GROUNDED           released 1.09 s · A pelvis height 0.12 m · A trunk 91° · A non-foot ground true · B GROUNDED · hash cd6f4872
+
+# D4 with the option: A's state while leaning on B
+1.10 A STEPPING             SWING   ξm   -26 cm · COM y 1.08 v 1.16 · trunk 4° · feet L AIR/-0 R TOE/599 · touching -
+1.30 A RECOVERABLE_HIP      ACCEPT  ξm    -1 cm · COM y 1.06 v 0.57 · trunk 16° · feet L TOE/596 R SLIPPING/289 · touching head↔head
+1.50 A RECOVERABLE_HIP      ACCEPT  ξm    -0 cm · COM y 1.05 v 0.24 · trunk 13° · feet L FLAT/684 R TOE/90 · touching abdomen↔pelvis
+1.70 A RECOVERABLE_HIP      ACCEPT  ξm    -1 cm · COM y 1.05 v 0.12 · trunk 10° · feet L FLAT/554 R TOE/199 · touching abdomen↔pelvis
+1.90 A RECOVERABLE_HIP      ACCEPT  ξm    -0 cm · COM y 1.05 v 0.06 · trunk 9° · feet L FLAT/556 R TOE/209 · touching abdomen↔pelvis,head↔head
+2.10 A RECOVERABLE_HIP      ACCEPT  ξm    -0 cm · COM y 1.05 v 0.07 · trunk 9° · feet L FLAT/517 R TOE/243 · touching abdomen↔pelvis,head↔head
+2.30 A RECOVERABLE_HIP      ACCEPT  ξm    -0 cm · COM y 1.05 v 0.07 · trunk 8° · feet L FLAT/491 R TOE/270 · touching head↔head
+2.50 A RECOVERABLE_HIP      ACCEPT  ξm    -0 cm · COM y 1.04 v 0.07 · trunk 8° · feet L FLAT/459 R TOE/310 · touching head↔head
+2.70 A RECOVERABLE_HIP      ACCEPT  ξm    -1 cm · COM y 1.04 v 0.07 · trunk 8° · feet L FLAT/429 R TOE/334 · touching head↔head
+2.90 A RECOVERABLE_HIP      ACCEPT  ξm    -2 cm · COM y 1.04 v 0.09 · trunk 8° · feet L FLAT/419 R TOE/336 · touching head↔head
+3.10 A RECOVERABLE_HIP      ACCEPT  ξm    -3 cm · COM y 1.03 v 0.12 · trunk 8° · feet L FLAT/372 R TOE/386 · touching abdomen↔pelvis,head↔head
+3.30 A RECOVERABLE_HIP      ACCEPT  ξm    -6 cm · COM y 1.03 v 0.15 · trunk 10° · feet L FLAT/322 R TOE/430 · touching abdomen↔pelvis,head↔head
+3.50 A STEP_NEEDED          FAILED  ξm    -9 cm · COM y 1.02 v 0.18 · trunk 11° · feet L FLAT/264 R TOE/495 · touching abdomen↔pelvis,foreArm_L↔thigh_L
+3.70 A FALLING              FAILED  ξm    -7 cm · COM y 1.01 v 0.23 · trunk 17° · feet L FLAT/449 R FLAT/453 · touching head↔chest
+3.90 A FALLING              FAILED  ξm   -15 cm · COM y 1.00 v 0.34 · trunk 20° · feet L FLAT/208 R FLAT/550 · touching -
+4.10 A FALLING              FAILED  ξm   -28 cm · COM y 0.98 v 0.53 · trunk 21° · feet L EDGE/109 R FLAT/499 · touching -
+4.30 A FALLING              FAILED  ξm   -49 cm · COM y 0.95 v 0.80 · trunk 26° · feet L TOE/53 R FLAT/627 · touching -
+4.50 A FALLING              FAILED  ξm   -78 cm · COM y 0.87 v 1.30 · trunk 34° · feet L LIFTOFF/10 R SLIPPING/513 · touching -
+4.70 A FALLING              FAILED  ξm  -118 cm · COM y 0.65 v 2.33 · trunk 50° · feet L AIR/20 R SLIPPING/86 · touching -
+4.90 A GROUNDED             FAILED  ξm  -128 cm · COM y 0.30 v 1.87 · trunk 75° · feet L AIR/-0 R LIFTOFF/-0 · touching -

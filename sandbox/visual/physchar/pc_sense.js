@@ -46,6 +46,11 @@ export class Sensor {
     // GATE C2 option: a foot that is ON the turf and not sliding counts as support even while it carries < loadOn (it can take load the
     // moment the CoP moves onto it). C1 keeps its loaded-feet-only region (option off → identical behaviour).
     this.supportTouching = !!(opts && opts.supportTouching);
+    // GATE D option (externalSupport): support by ANOTHER BODY. The vertical force the feet do not carry — whole-body ground reaction
+    // (momentum) minus the feet's measured forces (load + shear) — is carried by contacts with other bodies (contact index ≤ −1000 in this character's view).
+    // Sustained above 10 % BW for 50 ms, those contact points join the SUPPORT REGION (the classifier's capture region; never the CoP
+    // polygon — an ankle cannot push a CoP into someone else's body). Off: identical behaviour.
+    this.externalSupport = !!(opts && opts.externalSupport); this.extCnt = 0;
     // GATE C3 option: a friction coefficient is only OBSERVED from a slip once the foot's contact has lasted muSettle seconds — a landing
     // foot rolls and slides under its own impact momentum, and shear/load then is no measurement of the turf's friction (finding
     // 2026-09-30, C3 B_F70: a touchdown read μ = 0.036 on 0.9 turf, the controller believed it stood on ice and gave up a recovered step).
@@ -133,13 +138,17 @@ export class Sensor {
     // A SLIDING foot still carries vertical load, so it stays in the support region; what it cannot supply is friction. Support is then
     // flagged DEGRADED and the controller limits its CoP demand to what the feet's friction can deliver (Gate C1 finding, H3: excluding
     // the slipping foot from the region made the classifier give up at startup).
-    const regionRaw = hull2(loadFeet.flatMap(s => feet[s].sole)), region = regionRaw, degraded = loadFeet.some(s => feet[s].slipping);
+    const regionRaw = hull2(loadFeet.flatMap(s => feet[s].sole)); let region = regionRaw; const degraded = loadFeet.some(s => feet[s].slipping);
+    let extSupport = null; if (this.externalSupport && grf) { const fF = (s) => feet[s].touching ? [feet[s].shear[0], feet[s].load, feet[s].shear[2]] : [0, 0, 0], fo = V.sub(grf, V.add(fF("L"), fF("R"))), fOther = Math.hypot(fo[0], fo[1], fo[2]), pts = [];   // a leaning contact is mostly HORIZONTAL
+      for (const k of contacts) if (k.depth > SENSE.touchDepth && ((k.a <= -1000 && k.b >= 0) || (k.b <= -1000 && k.a >= 0))) pts.push(...k.pts);
+      this.extCnt = pts.length && fOther > 0.1 * M * g ? this.extCnt + 1 : 0;
+      if (this.extCnt >= 12 && regionRaw.length >= 3) { region = hull2([...regionRaw.map(p => [p[0], 0, p[1]]), ...pts]); extSupport = { forceN: fOther, points: pts.length }; } }
     const comG = [c[0], c[2]], xiMargin = polyDist(region, xi), comMargin = polyDist(region, comG), xiMarginRaw = polyDist(regionRaw, xi), xiMarginContact = polyDist(reliable, xi);
     // body lean: chest and pelvis "up" vs gravity, spine bend between them, heading from the feet
     const up = (q) => Q.rot(q, [0, 1, 0]), tilt = (u) => dacos(u[1]) * 180 / Math.PI;
     const pu = up(states[0].rot), cu = up(states[this.chest].rot), spineBend = dacos(V.dot(pu, cu)) * 180 / Math.PI;
     const obs = { n, t: n * dt, states, contacts, com: c, vcom: v, L, h, omega0, xi, grf, cop, copSmooth: this.cop, feet, polyRaw: raw, polyReliable: reliable.length >= 3 ? reliable : raw, region, regionRaw, reliableFeet: relFeet, supportDegraded: degraded || ["L", "R"].some(s => feet[s].slipping),
-      comMargin, xiMargin, xiMarginRaw, xiMarginContact, nonFootGround, footSelfContact: footSelf, trunkTiltDeg: tilt(cu), pelvisTiltDeg: tilt(pu), spineBendDeg: spineBend, gravity: [0, -1, 0] };
+      comMargin, xiMargin, xiMarginRaw, xiMarginContact, extSupport, nonFootGround, footSelfContact: footSelf, trunkTiltDeg: tilt(cu), pelvisTiltDeg: tilt(pu), spineBendDeg: spineBend, gravity: [0, -1, 0] };
     this.prev = { v, L, states }; return obs;
   }
 }

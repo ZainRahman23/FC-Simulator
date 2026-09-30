@@ -233,7 +233,7 @@ Flagged:
 | D1 heel clip (C2 placement into B's heel) | A.foot_R ↔ B.foot_R | 1.14 | −0.80 / +0.06 (2 steps before touch) | 0.7 | upright, placement DONE | upright |
 | D2 shoved into (80 N·s) | A.foot_L ↔ B.foot_L | 3.6–3.9 | **−1.19 / +0.44**, then −1.50 / +0.57 | 0.3 | upright, step recovered | upright |
 | D3 shoulder (65 N·s lateral) | A.foreArm_R ↔ B.foreArm_L | 0.90 | −0.33 / +0.32 | 1.2 | upright, **held up by B** | upright |
-| D4 shoved hard (110 N·s) | A.foot_L ↔ B.foot_L | 3.3–3.7 | −2.07 / +0.83 | 1.6 | fell onto B's back | upright |
+| D4 shoved hard (110 N·s) | A.foot_L ↔ B.foot_L | 3.3–3.7 | −2.07 / +0.83 | 1.6 | leans on B's back ~2 s, drifts off and falls (C3's one step used) | upright |
 | D5 hard shoulder (110 N·s lateral) | A.foreArm_R ↔ B.foreArm_L | 1.31 | −0.64 / +0.67 | 1.8 (8.4 with protective) | fell | **knocked down** |
 | D6 slide tackle | A.foot_R ↔ B.foot_L | 3.5 | −0.27 / +0.25 at 6 mm, then **−0.51 / +1.78** on the touch step | 5.0 (sustained; ≤ 1.7 in the first steps) | slide 1.24 m, stops at 1.22 s | upright (step refused: no foothold) |
 
@@ -242,14 +242,14 @@ On the step the gap would close, both bodies' velocities change in opposite dire
 **Robustness:** B's placement ±5 cm and the slide gap ±10 cm (`gate_d/analysis/robustness.txt`). In all six variants the approach was arrested on or before the touch step. One outcome flips: with the slide gap at 0.85 m, the slower arrival knocks B down (limitation 2 below).
 
 **Visual** (`gate_d/sheet_D2.jpg`, `sheet_D4.jpg`, `sheet_D5.jpg`, `sheet_D13.jpg`):
-- D2/D4 read as bumping into, then leaning on, someone's back.
+- D2/D4 read as bumping into, then leaning on, someone's back. In D4, A stands leaning lightly on B for about 2 s (head and abdomen contacts, classifier RECOVERABLE_HIP), then drifts sideways off him and, with his one step used, falls.
 - D3: A leans on B's arm and is held up.
 - D5: both go down, with A draped over B's hips.
 
 Flagged: where colliders touch, the *rendered* meshes visibly overlap (head-to-head in D4). The colliders sit 1–3 cm inside the mesh, as reported at Gate A.
 
 **Limitations found:**
-1. **Support from another body is not perceived.** In D4, A leans on B's back and is physically held up. His classifier still declares FALLING and releases to tone, because support is turf-only by design.
+1. **Support from another body is not part of the support region.** By design, support is turf-only. The option `externalSupport` (default off) adds the other body's contact points to the classifier's region, but never to the CoP polygon. It triggers when the force the feet do not carry (whole-body reaction minus both feet's load and shear) exceeds 10 % BW for 50 ms. It engages in D3/D4 but changes no outcome (`external_support_experiment.txt`): in D4, A's fall comes from drifting off B with his one step used, not from ignored support.
 2. **A tracked limb rams into contact.** In a D6 robustness variant (gap 0.85 m) penetration first reached 9.3 mm. Two causes were found and one was fixed:
    - **Fixed: the reference data broke the body's joint limits.** The trail knee was keyed at 145° (limit 140°) and the trail ankle at 48° of dorsiflexion (limit 30°). The start pose began with a joint 9.4 mm apart, and the motors pushed into the stops all slide long. The reference targets are now **clamped to the body's range of motion** (2° margin), the same rule as Gate A's re-authored fixture. Start separation is now 0.0 mm, and the gap 0.85 m case drops to 5.1 mm.
    - **Remaining: the slider's hold motors drive the leg into the contact at full strength.** Weaker slider motors reduce it (strength 0.5 → 3.7 mm, 0.25 → 2.7 mm). The solver configuration is not the lever: speculative distance, slop, iterations and sub-steps were all tested with no consistent improvement (`gate_d/analysis/solver_config_experiment.txt`). A *reactive* yield was tested and rejected (`contact_yield_experiment.txt`): the penetration happens on the impact step itself, before any reaction to the contact can act. What reduces it is the leg's stiffness *going into* the impact, i.e. how firmly an authored action is tracked. So the remedy is a tracking-stiffness (co-contraction) choice for authored actions, and it belongs in the Reference Tackle design.
@@ -392,6 +392,6 @@ That keeps the architecture, determinism and physical causality. The alternative
 Smaller choices that can wait until after this:
 - **Adopt the C3 swing-shaping options as defaults?** `step.h0 = 0` and `step.heelUp` improve landing accuracy but change no outcome.
 - **How firmly authored actions are tracked** (co-contraction): this, not the solver, sets the slider's impact penetration.
-- **Should contact with another body count as perceived support?** (D4: a leaning player currently releases.)
+- **Should contact with another body count as support?** The option exists (default off) and changes no outcome in these tests.
 
 Tested and ruled out as a lever: refitting the foot collider to boot size. It does not rescue crossovers (still 5.1–5.8 m/s) or the short steps, and its smaller sole costs in-place recovery.
