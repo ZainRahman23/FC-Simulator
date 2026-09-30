@@ -1,0 +1,52 @@
+# (re-run after the ROM clamp) speculative distance
+D6_slide          0.85  speculative 0.02 (gate)   first-touch window max 5.09 mm · run max 5.09 mm · cpu 2.032 ms · A slide B FELL
+D6_slide          0.85  speculative 0.1           first-touch window max 5.41 mm · run max 5.41 mm · cpu 1.5409 ms · A slide B UP
+D6_slide          0.85  speculative 0.25          first-touch window max 6.16 mm · run max 6.16 mm · cpu 2.4406 ms · A slide B UP
+D6_slide          0.75  speculative 0.02 (gate)   first-touch window max 1.69 mm · run max 4.95 mm · cpu 1.3594 ms · A slide B UP
+D6_slide          0.75  speculative 0.1           first-touch window max 2.19 mm · run max 2.79 mm · cpu 1.7931 ms · A slide B FELL
+D6_slide          0.75  speculative 0.25          first-touch window max 1.85 mm · run max 3.33 mm · cpu 1.9726 ms · A slide B UP
+D2_shoved_into          speculative 0.02 (gate)   first-touch window max 0.30 mm · run max 0.3 mm · cpu 1.6887 ms · A UP B UP
+D2_shoved_into          speculative 0.1           first-touch window max 0.33 mm · run max 0.33 mm · cpu 1.8145 ms · A UP B UP
+D2_shoved_into          speculative 0.25          first-touch window max 0.33 mm · run max 0.33 mm · cpu 2.5914 ms · A UP B UP
+D5_shoulder_hard        speculative 0.02 (gate)   first-touch window max 0.16 mm · run max 1.77 mm · cpu 1.5166 ms · A FELL B FELL
+D5_shoulder_hard        speculative 0.1           first-touch window max 0.16 mm · run max 1.89 mm · cpu 1.7003 ms · A FELL B FELL
+D5_shoulder_hard        speculative 0.25          first-touch window max 0.16 mm · run max 3.11 mm · cpu 2.2438 ms · A FELL B FELL
+
+# slop / iterations
+D6_slide 0.85        gate (slop 5 mm, 30/4)   first-touch window max 5.09 mm · run max 5.09 mm · cpu 2.0317 ms · A slide 1.37 B FELL · joint sep A 2.56 mm
+D6_slide 0.85        slop 2 mm                first-touch window max 4.26 mm · run max 4.26 mm · cpu 1.669 ms · A slide 1.25 B UP · joint sep A 3.71 mm
+D6_slide 0.85        slop 1 mm                first-touch window max 4.78 mm · run max 4.78 mm · cpu 1.6117 ms · A slide 1.25 B UP · joint sep A 4.12 mm
+D6_slide 0.85        pos iterations 8         first-touch window max 9.02 mm · run max 9.02 mm · cpu 2.1482 ms · A slide 1.25 B UP · joint sep A 2.37 mm
+D6_slide 0.85        vel iterations 60        first-touch window max 4.91 mm · run max 7.12 mm · cpu 1.9852 ms · A slide 1.25 B FELL · joint sep A 2 mm
+D6_slide 0.85        slop 2 mm + pos 8        first-touch window max 9.43 mm · run max 9.43 mm · cpu 2.0881 ms · A slide 1.23 B UP · joint sep A 3.46 mm
+D6_slide 0.75        gate (slop 5 mm, 30/4)   first-touch window max 1.69 mm · run max 4.95 mm · cpu 1.3453 ms · A slide 1.24 B UP · joint sep A 3.06 mm
+D6_slide 0.75        slop 2 mm                first-touch window max 1.54 mm · run max 2.4 mm · cpu 1.3616 ms · A slide 1.24 B UP · joint sep A 4.19 mm
+D6_slide 0.75        slop 1 mm                first-touch window max 1.59 mm · run max 1.59 mm · cpu 1.3414 ms · A slide 1.23 B UP · joint sep A 4.61 mm
+D6_slide 0.75        pos iterations 8         first-touch window max 4.46 mm · run max 5.07 mm · cpu 2.311 ms · A slide 1.28 B UP · joint sep A 2.46 mm
+D6_slide 0.75        vel iterations 60        first-touch window max 0.74 mm · run max 2 mm · cpu 1.6383 ms · A slide 1.24 B UP · joint sep A 1.95 mm
+D6_slide 0.75        slop 2 mm + pos 8        first-touch window max 3.64 mm · run max 3.64 mm · cpu 2.2165 ms · A slide 1.23 B UP · joint sep A 3.58 mm
+D2_shoved_into       gate (slop 5 mm, 30/4)   first-touch window max 0.30 mm · run max 0.3 mm · cpu 1.7028 ms · A UP B UP · joint sep A 0.43 mm
+D2_shoved_into       slop 2 mm                first-touch window max 0.30 mm · run max 0.3 mm · cpu 1.6712 ms · A UP B UP · joint sep A 0.43 mm
+D2_shoved_into       slop 1 mm                first-touch window max 0.30 mm · run max 0.3 mm · cpu 1.6898 ms · A UP B UP · joint sep A 0.49 mm
+D2_shoved_into       pos iterations 8         first-touch window max 0.23 mm · run max 0.23 mm · cpu 2.3924 ms · A UP B UP · joint sep A 0.19 mm
+D2_shoved_into       vel iterations 60        first-touch window max -0.24 mm · run max 1.23 mm · cpu 1.7587 ms · A UP B UP · joint sep A 0.19 mm
+D2_shoved_into       slop 2 mm + pos 8        first-touch window max 0.23 mm · run max 0.23 mm · cpu 2.339 ms · A UP B UP · joint sep A 0.19 mm
+
+# collision sub-steps
+D6_slide 0.85        gate (240 Hz × 1)        first-touch window max 5.09 mm · run max 5.09 mm · cpu 2.0446 ms · A slide 1.37 B FELL · joint sep A 2.56 mm
+D6_slide 0.85        240 Hz × 2 collision steps first-touch window max 5.29 mm · run max 6.62 mm · cpu 2.4781 ms · A slide 1.26 B UP · joint sep A 1.83 mm
+D6_slide 0.85        240 Hz × 4 collision steps first-touch window max 2.30 mm · run max 3.34 mm · cpu 5.3208 ms · A slide 1.31 B FELL · joint sep A 2.01 mm
+D6_slide 0.75        gate (240 Hz × 1)        first-touch window max 1.69 mm · run max 4.95 mm · cpu 1.3423 ms · A slide 1.24 B UP · joint sep A 3.06 mm
+D6_slide 0.75        240 Hz × 2 collision steps first-touch window max 0.40 mm · run max 5.87 mm · cpu 2.7849 ms · A slide 1.22 B UP · joint sep A 1.84 mm
+D6_slide 0.75        240 Hz × 4 collision steps first-touch window max 0.16 mm · run max 4.1 mm · cpu 4.7006 ms · A slide 1.27 B UP · joint sep A 1.97 mm
+D2_shoved_into       gate (240 Hz × 1)        first-touch window max 0.30 mm · run max 0.3 mm · cpu 1.6977 ms · A UP B UP · joint sep A 0.43 mm
+D2_shoved_into       240 Hz × 2 collision steps first-touch window max 0.18 mm · run max 0.89 mm · cpu 2.809 ms · A UP B UP · joint sep A 0.19 mm
+D2_shoved_into       240 Hz × 4 collision steps first-touch window max 0.03 mm · run max 0.03 mm · cpu 5.1312 ms · A UP B UP · joint sep A 0.08 mm
+
+# slider strength (the hold motors ramming the leg into the contact)
+gap 0.85 slider strength candidate (1)  first-touch window max 5.09 mm · run max 5.09 mm · slider joint sep 2.56 mm · slide 1.37 m · B FELL
+gap 0.85 slider strength 0.5            first-touch window max 3.66 mm · run max 5.04 mm · slider joint sep 2.11 mm · slide 1.53 m · B UP
+gap 0.85 slider strength 0.25           first-touch window max 2.66 mm · run max 6.18 mm · slider joint sep 2.31 mm · slide 1.51 m · B UP
+gap 0.75 slider strength candidate (1)  first-touch window max 1.69 mm · run max 4.95 mm · slider joint sep 3.06 mm · slide 1.24 m · B UP
+gap 0.75 slider strength 0.5            first-touch window max 2.64 mm · run max 5.41 mm · slider joint sep 2.11 mm · slide 1.44 m · B UP
+gap 0.75 slider strength 0.25           first-touch window max 2.93 mm · run max 5.82 mm · slider joint sep 2.31 mm · slide 1.45 m · B UP

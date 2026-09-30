@@ -196,9 +196,9 @@
     "push": 0
    },
    "cpu": {
-    "msPerFrame": 1.9602,
-    "jolt": 1.1453,
-    "controllers": 0.8149
+    "msPerFrame": 1.9726,
+    "jolt": 1.1491,
+    "controllers": 0.8235
    },
    "repeatHashes": [
     "23125e2a",
@@ -421,9 +421,9 @@
     "push": 240
    },
    "cpu": {
-    "msPerFrame": 1.7002,
-    "jolt": 1.115,
-    "controllers": 0.5853
+    "msPerFrame": 1.8089,
+    "jolt": 1.1561,
+    "controllers": 0.6529
    },
    "repeatHashes": [
     "a513500d",
@@ -595,9 +595,9 @@
     "push": 240
    },
    "cpu": {
-    "msPerFrame": 1.2722,
-    "jolt": 1.1029,
-    "controllers": 0.1693
+    "msPerFrame": 1.2792,
+    "jolt": 1.107,
+    "controllers": 0.1722
    },
    "repeatHashes": [
     "b18efb3b",
@@ -850,9 +850,9 @@
     "push": 240
    },
    "cpu": {
-    "msPerFrame": 1.9496,
-    "jolt": 1.2296,
-    "controllers": 0.72
+    "msPerFrame": 1.8775,
+    "jolt": 1.1925,
+    "controllers": 0.685
    },
    "repeatHashes": [
     "9c462c1d",
@@ -1120,9 +1120,9 @@
     "push": 240
    },
    "cpu": {
-    "msPerFrame": 1.6083,
-    "jolt": 1.3917,
-    "controllers": 0.2166
+    "msPerFrame": 1.6077,
+    "jolt": 1.3892,
+    "controllers": 0.2185
    },
    "repeatHashes": [
     "8af3e0d1",
@@ -1135,9 +1135,9 @@
    "test": "D6_slide",
    "group": "D reference-tackle step",
    "title": "D6 — slide tackle into a standing player: A's joints track the reference slide (f94→f114); A starts at the seat landing at 5.5 m/s (initial condition — the run-up is not simulated); B stands",
-   "hash": "a66d05b3",
-   "hashA": "b399359e",
-   "hashB": "fa468ea0",
+   "hash": "3128e37b",
+   "hashA": "ff0f8396",
+   "hashB": "64dc8270",
    "nan": false,
    "audit": {
     "teleports": 0,
@@ -1154,114 +1154,114 @@
     "bLeftBootX": -0.161,
     "pelvis": [
      -2.091,
-     0.328,
+     0.404,
      0.195
     ],
     "lowestY": 0.01
    },
    "contact": {
     "any": true,
-    "firstT": 0.2,
+    "firstT": 0.175,
     "firstPair": "A.foot_R ↔ B.foot_L",
-    "firstTouchT": 0.2125,
+    "firstTouchT": 0.1792,
     "firstTouchPair": "A.foot_R ↔ B.foot_L",
-    "maxDepthMm": 5.06,
+    "maxDepthMm": 4.95,
     "pairs": {
      "A.foot_R ↔ B.foot_L": {
-      "manifoldSteps": 237,
-      "touchSteps": 113,
-      "maxMm": 4.99,
-      "first": 0.2
+      "manifoldSteps": 227,
+      "touchSteps": 66,
+      "maxMm": 2.14,
+      "first": 0.175
      },
      "A.foot_R ↔ B.shin_L": {
-      "manifoldSteps": 208,
-      "touchSteps": 89,
-      "maxMm": 5.06,
-      "first": 0.2083
+      "manifoldSteps": 222,
+      "touchSteps": 100,
+      "maxMm": 4.95,
+      "first": 0.1792
      }
     },
     "invariant": {
      "pair": "A.foot_R ↔ B.foot_L",
-     "touchStep": 51,
-     "t": 0.2125,
+     "touchStep": 43,
+     "t": 0.1792,
      "normal": [
-      0.999,
-      -0.037,
-      0
+      1,
+      -0.016,
+      0.001
      ],
-     "closingBefore": 2.885,
-     "arrestStep": 50,
-     "arrestVsTouch": -1,
+     "closingBefore": 3.575,
+     "arrestStep": 43,
+     "arrestVsTouch": 0,
      "series": [
       {
-       "step": 46,
+       "step": 38,
        "gapMm": null,
-       "vn": 2.885,
-       "dvA": -0.047,
+       "vn": 3.575,
+       "dvA": -0.082,
        "dvB": 0
+      },
+      {
+       "step": 39,
+       "gapMm": null,
+       "vn": 3.514,
+       "dvA": -0.061,
+       "dvB": 0
+      },
+      {
+       "step": 40,
+       "gapMm": null,
+       "vn": 3.465,
+       "dvA": -0.05,
+       "dvB": 0
+      },
+      {
+       "step": 41,
+       "gapMm": null,
+       "vn": 3.412,
+       "dvA": -0.053,
+       "dvB": 0
+      },
+      {
+       "step": 42,
+       "gapMm": 6.24,
+       "vn": 2.891,
+       "dvA": -0.274,
+       "dvB": 0.247
+      },
+      {
+       "step": 43,
+       "gapMm": -0.06,
+       "vn": 0.607,
+       "dvA": -0.507,
+       "dvB": 1.777
+      },
+      {
+       "step": 44,
+       "gapMm": -0.96,
+       "vn": 0.191,
+       "dvA": -0.035,
+       "dvB": 0.381
+      },
+      {
+       "step": 45,
+       "gapMm": -1.57,
+       "vn": 0.096,
+       "dvA": -0.148,
+       "dvB": -0.053
+      },
+      {
+       "step": 46,
+       "gapMm": -1.69,
+       "vn": 0.02,
+       "dvA": -0.163,
+       "dvB": -0.087
       },
       {
        "step": 47,
-       "gapMm": null,
-       "vn": 2.838,
-       "dvA": -0.047,
-       "dvB": 0
-      },
-      {
-       "step": 48,
-       "gapMm": 16.48,
-       "vn": 2.79,
-       "dvA": -0.047,
-       "dvB": 0
-      },
-      {
-       "step": 49,
-       "gapMm": 4.95,
-       "vn": 2.17,
-       "dvA": -0.304,
-       "dvB": 0.316
-      },
-      {
-       "step": 50,
-       "gapMm": 0.61,
-       "vn": 1.426,
-       "dvA": -0.71,
-       "dvB": 0.033
-      },
-      {
-       "step": 51,
-       "gapMm": -0.76,
-       "vn": 0.358,
-       "dvA": 0.154,
-       "dvB": 1.223
-      },
-      {
-       "step": 52,
-       "gapMm": -1.27,
-       "vn": 0.012,
-       "dvA": -0.101,
-       "dvB": 0.245
-      },
-      {
-       "step": 53,
-       "gapMm": -1.8,
-       "vn": -0.228,
-       "dvA": -0.073,
-       "dvB": 0.167
-      },
-      {
-       "step": 54,
-       "gapMm": -1.85,
-       "vn": -0.169,
-       "dvA": -0.109,
-       "dvB": -0.168
-      },
-      {
-       "step": 55,
-       "gapMm": -2.11,
-       "vn": -0.05,
-       "dvA": -0.127,
-       "dvB": -0.246
+       "gapMm": -1.59,
+       "vn": -0.047,
+       "dvA": -0.2,
+       "dvB": -0.132
       }
      ]
     }
@@ -1270,18 +1270,18 @@
     "fell": null,
     "slide": {
      "startSpeed": 5.5,
-     "travelM": 1.22,
-     "stopT": 1.31
+     "travelM": 1.24,
+     "stopT": 1.22
     },
     "tFalling": null,
     "finalCls": "HOLD",
     "step": null,
     "refused": null,
     "request": null,
-    "maxRootResN": 2.42,
-    "maxTurfPenMm": 20.1,
-    "maxJointSepMm": 9.38,
-    "trunkMaxDeg": 95.5,
+    "maxRootResN": 2.43,
+    "maxTurfPenMm": 10.6,
+    "maxJointSepMm": 3.06,
+    "trunkMaxDeg": 96.6,
     "events": []
    },
    "Bres": {
@@ -1290,31 +1290,37 @@
     "tFalling": null,
     "finalCls": "RECOVERABLE_IN_PLACE",
     "step": null,
-    "refused": null,
+    "refused": "no reachable foothold (neither foot)",
     "request": null,
-    "maxRootResN": 0.07,
-    "maxTurfPenMm": 2.9,
-    "maxJointSepMm": 0.79,
-    "trunkMaxDeg": 4.4,
-    "events": []
+    "maxRootResN": 0.16,
+    "maxTurfPenMm": 3,
+    "maxJointSepMm": 0.53,
+    "trunkMaxDeg": 4.8,
+    "events": [
+     {
+      "t": 0.20833333333333334,
+      "kind": "NO STEP",
+      "what": "no reachable foothold (neither foot)"
+     }
+    ]
    },
    "worst": {
-    "contact": 47,
-    "touch": 50,
-    "arrest": 49,
+    "contact": 41,
+    "touch": 42,
+    "arrest": 42,
     "fallA": 0,
     "fallB": 0,
     "push": 0
    },
    "cpu": {
-    "msPerFrame": 1.36,
-    "jolt": 1.1972,
-    "controllers": 0.1628
+    "msPerFrame": 1.3444,
+    "jolt": 1.1918,
+    "controllers": 0.1526
    },
    "repeatHashes": [
-    "a66d05b3",
-    "a66d05b3",
-    "a66d05b3"
+    "3128e37b",
+    "3128e37b",
+    "3128e37b"
    ],
    "deterministic": true
   },
@@ -1384,9 +1390,9 @@
     "push": 0
    },
    "cpu": {
-    "msPerFrame": 1.2553,
-    "jolt": 1.096,
-    "controllers": 0.1593
+    "msPerFrame": 1.2623,
+    "jolt": 1.0936,
+    "controllers": 0.1687
    },
    "repeatHashes": [
     "7415dbc1",

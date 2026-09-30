@@ -39,8 +39,15 @@ const REF_SLIDE = {
   elbow_R: [[92, 40], [96, 25], [98, 35], [106, 80], [110, 105], [114, 105]],
 };
 const lerpKeys = (keys, f) => { if (f <= keys[0][0]) return keys[0][1]; for (let i = 1; i < keys.length; i++) if (f <= keys[i][0]) { const [f0, a] = keys[i - 1], [f1, b] = keys[i]; return a + (b - a) * (f - f0) / (f1 - f0); } return keys[keys.length - 1][1]; };
-export function slideTargets(spec, f) { return spec.joints.map(j => { const c = REF_SLIDE[j.name]; if (!c) return paramTarget(j, null);
-  if (j.type === "hinge") return paramTarget(j, { a: lerpKeys(c, f) }); if (Array.isArray(c)) return paramTarget(j, { y: lerpKeys(c, f) }); return paramTarget(j, { y: lerpKeys(c.y, f), z: lerpKeys(c.z, f) }); }); }
+// The reference's keys exceed this body's range of motion in places (trail knee 145° vs 140°, trail ankle 48° dorsiflexion vs 30°): an
+// initial pose built from them started with the ankle 9.4 mm apart (the limit constraint snapped it on step 1) and the motors pushed into
+// the stops all slide long (finding 2026-09-30). The targets are the reference CLAMPED to the body's ROM with a 2° margin — the same rule
+// as Gate A's re-authored fixture: the body's anatomy wins over the authored data.
+const ROM_MARGIN = 2 * Math.PI / 180, clampR = (v, lo, hi) => Math.max(lo + ROM_MARGIN, Math.min(hi - ROM_MARGIN, v));
+export function slideTargets(spec, f) { return spec.joints.map(j => { const c = REF_SLIDE[j.name]; if (!c) return paramTarget(j, null); const d2r = Math.PI / 180, r2d = 180 / Math.PI;
+  if (j.type === "hinge") return paramTarget(j, { a: clampR(lerpKeys(c, f) * d2r, j.lo, j.hi) * r2d });
+  const y = clampR((Array.isArray(c) ? lerpKeys(c, f) : lerpKeys(c.y, f)) * d2r, j.limits.swingY[0], j.limits.swingY[1]) * r2d, z = Array.isArray(c) ? 0 : clampR(lerpKeys(c.z, f) * d2r, j.limits.swingZ[0], j.limits.swingZ[1]) * r2d;
+  return paramTarget(j, { y, z }); }); }
 const S2 = Math.SQRT1_2, DIR = { F: [0, 0, 1], B: [0, 0, -1], R: [1, 0, 0], L: [-1, 0, 0], FR: [S2, 0, S2] };
 const OTHER = -1000;                         // the other character's body j is seen as contact index OTHER − j (not turf −1, not an obstacle)
 // B's placement relative to A (m, world): both face +z; A is at the origin
@@ -118,7 +125,7 @@ export function runD(J, spec, key, opts) {
         if (j.type === "hinge") { w.setJointTarget(kk, u.final[k], vel); w.updateMotor(kk, { kp: m.kp, kd: m.kd, lo: m.lo, hi: m.hi }); ag.caps.push({ lo: m.lo, hi: m.hi }); }
         else { w.setJointTarget(kk, u.final[k], vel); const b = budgetLimits(m, w.sixdofRot(kk), u.final[k]); w.updateMotor(kk, { kp: m.kp, kd: m.kd, lo: b.lo, hi: b.hi }); ag.caps.push(b); } } }
     let ext = null; if (pu && n > pu.n0 && n <= pu.n1) { const Js = V.sc(pu.J, 1 / (pu.n1 - pu.n0)), at = A.prev[0].com.slice(); w.applyImpulse(0, Js, at); ext = { J: Js, at }; }
-    const t1 = now(); w.step(dt, T.coll); const t2 = now(); cpuC += t1 - t0; cpuJ += t2 - t1;
+    const t1 = now(); w.step(dt, opts.coll || T.coll); const t2 = now(); cpuC += t1 - t0; cpuJ += t2 - t1;   // opts.coll: EXPERIMENTS only (collision sub-steps)
     for (const ag of agents) { ag.prev = ag.states; ag.states = ag.read(w); const cts = w.contacts.map(c => ag.view(c));
       ag.obs = ag.sensor.update(n, dt, ag.states, cts, { L: w.jointLambdaPosition(ag.k0 + ag.aL), R: w.jointLambdaPosition(ag.k0 + ag.aR) }, ag === A ? ext : null);
       for (const s of ag.states) { for (const x of s.pos) if (!Number.isFinite(x)) nan = true; const q = [...s.pos, ...s.rot, ...s.v, ...s.w]; h = hashNums(q, h); if (ag === A) hA = hashNums(q, hA); else hB = hashNums(q, hB); } }

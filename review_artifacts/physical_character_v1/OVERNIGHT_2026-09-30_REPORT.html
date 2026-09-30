@@ -742,11 +742,11 @@ img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:4px} l
 <tr>
 <td>D6 slide tackle</td>
 <td>A.foot_R ↔ B.foot_L</td>
-<td>2.9</td>
-<td>−0.30 / +0.32, then −0.71</td>
-<td>5.1</td>
-<td>slide 1.22 m, stops at 1.31 s</td>
-<td>upright</td>
+<td>3.5</td>
+<td>−0.27 / +0.25 at 6 mm, then <strong>−0.51 / +1.78</strong> on the touch step</td>
+<td>5.0 (sustained; ≤ 1.7 in the first steps)</td>
+<td>slide 1.24 m, stops at 1.22 s</td>
+<td>upright (step refused: no foothold)</td>
 </tr>
 </tbody>
 </table>
@@ -759,17 +759,20 @@ img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:4px} l
 <p>Flagged: where colliders touch, the <em>rendered</em> meshes visibly overlap (head-to-head in D4). The colliders sit 1–3 cm inside the mesh, as reported at Gate A.</p>
 <p><strong>Limitations found:</strong>
 1. <strong>Support from another body is not perceived.</strong> In D4, A leans on B's back and is physically held up. His classifier still declares FALLING and releases to tone, because support is turf-only by design.
-2. <strong>Box-edge first touch.</strong> In one robustness variant (D6, gap 0.85 m) the slider's boot spins at 11–18 rad/s against B's planted boot, and first-touch penetration reaches <strong>9.3 mm</strong> (target ≤ 3 mm). Jolt's speculative contacts are linear, so rotation is not anticipated. The substrate spike's remedy (a larger speculative distance) was tested and <strong>does not fix it</strong> (7.1–12.2 mm; <code>gate_d/analysis/speculative_experiment.txt</code>). Head-on contacts are clean (0.16–0.33 mm). Candidate remedies, all touching the approved Gate A solver config: smaller slop, more position iterations, or a rounded boot collider.
+2. <strong>A tracked limb rams into contact.</strong> In a D6 robustness variant (gap 0.85 m) penetration first reached 9.3 mm. Two causes were found and one was fixed:
+   - <strong>Fixed: the reference data broke the body's joint limits.</strong> The trail knee was keyed at 145° (limit 140°) and the trail ankle at 48° of dorsiflexion (limit 30°). The start pose began with a joint 9.4 mm apart, and the motors pushed into the stops all slide long. The reference targets are now <strong>clamped to the body's range of motion</strong> (2° margin), the same rule as Gate A's re-authored fixture. Start separation is now 0.0 mm, and the gap 0.85 m case drops to 5.1 mm.
+   - <strong>Remaining: the slider's hold motors drive the leg into the contact at full strength.</strong> Weaker slider motors reduce it (strength 0.5 → 3.7 mm, 0.25 → 2.7 mm). The solver configuration is not the lever: speculative distance, slop, iterations and sub-steps were all tested with no consistent improvement (<code>gate_d/analysis/solver_config_experiment.txt</code>). The remedy is a tracking controller that yields on unexpected contact (impedance or contact reflex), which the Reference Tackle will need anyway.</p>
+<p>Head-on contacts are clean (0.16–0.33 mm). In the same variant, B's outcome is <strong>sensitive</strong>: arriving at 3.1 m/s knocks him down, while the default 3.5 m/s arrival leaves him standing.
 3. <strong>Sustained compression</strong> (not first touch) under load: 5 mm is the configured penetration slop. It reaches 8.4 mm when a foot is trapped between a falling pelvis and the turf (D5 with protective).</p>
 <h3>3.6 D6: the first physical step toward the Reference Tackle: <strong>PARTIAL</strong></h3>
 <p><strong>Objective:</strong> use the reference as <em>targets</em>, not playback.</p>
 <p><strong>Implementation:</strong>
-- <strong>Targets:</strong> the slider holds joint targets interpolated from the reference's <em>measured tackler keys</em> (f94 → f114: legs, spine, neck, arms; joint angles only). He uses the same finite motors, via the controller's hold mode.
+- <strong>Targets:</strong> the slider holds joint targets interpolated from the reference's <em>measured tackler keys</em> (f94 → f114: legs, spine, neck, arms; joint angles only), <strong>clamped to the body's range of motion</strong>. He uses the same finite motors, via the controller's hold mode.
 - <strong>Not commanded:</strong> the pelvis orientation, root path and plants of the clip. There is no root actuator, so his orientation, his slide and where he stops are physics.
 - <strong>Initial condition:</strong> the one authored state, at t = 0, like Gate A's drops. The f94 pose, reclined 48°, 1 cm above the turf, moving at 5.5 m/s (the reference root speed at the seat landing). <strong>The run-up is not simulated.</strong>
 - <strong>The defender:</strong> B stands with the full C1 + C3 stack.</p>
 <p><strong>Result:</strong>
-- The slider decelerates on the turf from 5.5 to 2.9 m/s.
+- The slider decelerates on the turf from 5.5 m/s to 3.5 m/s at contact.
 - His lead boot meets B's left boot and then B's shin, and the contact is arrested on the step it acts.
 - B's planted, loaded foot holds, so he stays upright.
 - The slider sits up and rolls back, as the reference keys flex his knee.</p>
@@ -950,6 +953,18 @@ img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:4px} l
 <tr>
 <td><code>cca491e</code>, <code>be5c27b</code></td>
 <td>C3 swing-execution diagnosis + swing-shaping options (default off)</td>
+</tr>
+<tr>
+<td><code>7c7a6fc</code></td>
+<td>harness: Gate D panel first, C4/C5 toggles in suite D</td>
+</tr>
+<tr>
+<td><code>963bade</code></td>
+<td>C5 lateral head-flexion experiment (not adopted)</td>
+</tr>
+<tr>
+<td>(latest)</td>
+<td>D6: reference targets clamped to the body's range of motion; solver experiments</td>
 </tr>
 </tbody>
 </table>
