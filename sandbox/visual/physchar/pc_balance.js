@@ -77,7 +77,7 @@ export const BAL = {
 const G = 9.81, GV = [0, -9.81, 0];
 // GATE C5 protective targets per fall direction (joint parameters in degrees, the Gate A convention: shoulder Y− = flexion, shoulder Z
 // abduction = − for L / + for R, neck / spine Y+ = flexion, hip Y+ = extension, knee / elbow + = flexion). Joints not listed keep nominal.
-const PROT = {
+export const PROT = {
   F: { shoulder_L: { y: -75, z: -15 }, shoulder_R: { y: -75, z: 15 }, elbow_L: { a: 25 }, elbow_R: { a: 25 }, neck: { y: -15 }, hip_L: { y: -20 }, hip_R: { y: -20 }, knee_L: { a: 30 }, knee_R: { a: 30 } },
   B: { shoulder_L: { y: 30, z: -35 }, shoulder_R: { y: 30, z: 35 }, elbow_L: { a: 30 }, elbow_R: { a: 30 }, neck: { y: 35 }, thoracic: { y: 15 }, lumbar: { y: 15 }, hip_L: { y: -60 }, hip_R: { y: -60 }, knee_L: { a: 70 }, knee_R: { a: 70 } },
   R: { shoulder_R: { y: -20, z: 75 }, elbow_R: { a: 15 }, shoulder_L: { y: -40, z: -10 }, elbow_L: { a: 45 }, neck: { y: 10 }, knee_L: { a: 25 }, knee_R: { a: 25 } },
