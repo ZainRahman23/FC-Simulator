@@ -1,0 +1,47 @@
+# EXPERIMENT (opts.step.maxSteps; default 1 = Gate C3 as scoped): the cases that failed only because a second step would be needed
+B_B60
+   max 1: STEPPED_FELL (= C3 hash) | 1.04 STEP_NEEDED → step · 1.70 FAILED
+   max 2: STEPPED_FELL | 1.04 STEP_NEEDED → step · 1.60 next step · 1.60 step 2 · 2.47 FAILED
+   max 3: STEPPED_FELL | 1.04 STEP_NEEDED → step · 1.60 next step · 1.60 step 2 · 2.36 next step · 2.36 NO STEP
+D_late_F80_100ms
+   max 1: STEPPED_FELL (= C3 hash) | 1.05 STEP_NEEDED → step · 1.50 FAILED
+   max 2: FELL_NO_STEP | 1.05 STEP_NEEDED → step · 1.40 next step · 1.40 step 2 · 1.65 FAILED
+   max 3: FELL_NO_STEP | 1.05 STEP_NEEDED → step · 1.40 next step · 1.40 step 2 · 1.65 FAILED
+D_late_F80_150ms
+   max 1: STEPPED_FELL (= C3 hash) | 1.05 STEP_NEEDED → step · 1.46 FAILED
+   max 2: STEPPED_FELL | 1.05 STEP_NEEDED → step · 1.31 next step · 1.31 step 2 · 1.70 FAILED
+   max 3: STEPPED_FELL | 1.05 STEP_NEEDED → step · 1.31 next step · 1.31 step 2 · 1.60 next step · 1.60 NO STEP
+F_nofoot_F160
+   max 1: STEPPED_FELL (= C3 hash) | 1.02 STEP_NEEDED → step · 1.58 FAILED
+   max 2: STEPPED_FELL | 1.02 STEP_NEEDED → step · 1.37 next step · 1.37 NO STEP
+   max 3: STEPPED_FELL | 1.02 STEP_NEEDED → step · 1.37 next step · 1.37 NO STEP
+F_nofoot_B110
+   max 1: STEPPED_FELL (= C3 hash) | 1.02 STEP_NEEDED → step · 1.40 FAILED
+   max 2: STEPPED_FELL | 1.02 STEP_NEEDED → step · 1.30 next step · 1.30 NO STEP
+   max 3: STEPPED_FELL | 1.02 STEP_NEEDED → step · 1.30 next step · 1.30 NO STEP
+B_BL45
+   max 1: STEPPED_FELL (= C3 hash) | 1.57 STEP_NEEDED → step · 2.44 FAILED
+   max 2: STEPPED_FELL | 1.57 STEP_NEEDED → step · 2.33 next step · 2.33 NO STEP
+   max 3: STEPPED_FELL | 1.57 STEP_NEEDED → step · 2.33 next step · 2.33 NO STEP
+B_BL60
+   max 1: STEPPED_FELL (= C3 hash) | 1.05 STEP_NEEDED → step · 1.77 FAILED
+   max 2: STEPPED_FELL | 1.05 STEP_NEEDED → step · 1.66 next step · 1.66 NO STEP
+   max 3: STEPPED_FELL | 1.05 STEP_NEEDED → step · 1.66 next step · 1.66 NO STEP
+C_proj_B75
+   max 1: STEPPED_FELL (= C3 hash) | 1.03 STEP_NEEDED → step · 1.48 FAILED
+   max 2: STEPPED_FELL | 1.03 STEP_NEEDED → step · 1.37 next step · 1.37 step 2 · 1.85 FAILED
+   max 3: STEPPED_FELL | 1.03 STEP_NEEDED → step · 1.37 next step · 1.37 step 2 · 1.72 next step · 1.72 NO STEP
+
+# candidates at the handover
+F_nofoot_F160
+  handover t 1.371 ξ -0.107,1.258 v -0.22,1.81 feet L FLAT/780 R LIFTOFF/-0
+     {"sw":"L","feasible":false,"want":[-0.66,3.87],"margin":null,"reasons":["L leg cannot reach (183 cm from the hip at touchdown)","stance: R leg cannot keep its toe on the ground (168 cm from the hip at touchdown)","swing 294 cm in 0.40 s needs a 21.8 m/s foot (max 4.5)"]}
+     {"sw":"R","feasible":false,"want":[-0.09,1.6],"margin":null,"reasons":["crossover: no route passes the stance shin (≥ 7.000000000000001 cm) within 45 cm in front of the stance ankle","swing 147 cm in 0.40 s needs a 10.9 m/s foot (max 4.5)"]}
+B_BL60
+  handover t 1.662 ξ -0.246,-0.229 v -0.13,-0.22 feet L FLAT/744 R AIR/-0
+     null (its stance foot is not touching or is slipping)
+     {"sw":"R","feasible":true,"want":[-0.24,-0.36],"target":[-0.02,-0.08],"T":0.36,"margin":-0.151,"reasons":["footprint overlaps the stance foot","crossover: no route passes the stance shin (≥ 7.000000000000001 cm) within 45 cm in front of the stance ankle","swing 90 cm in 0.40 s needs a 6.7 m/s foot (max 4.5)"]}
+B_B60
+  handover t 1.596 ξ -0.009,-0.327 v 0.05,-0.28 feet L FLAT/737 R AIR/-0
+     null (its stance foot is not touching or is slipping)
+     {"sw":"R","feasible":true,"want":[0.17,-0.31],"target":[0.17,-0.25],"T":0.36,"margin":0.068,"reasons":["swing 62 cm in 0.37 s needs a 4.9 m/s foot (max 4.5)"]}

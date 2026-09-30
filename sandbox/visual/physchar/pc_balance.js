@@ -240,7 +240,7 @@ export class BalanceController {
     // hip-extended capacity in the direction ξ leaves the polygon
     let hipCapHere = this.hipCap.lat; if (region && o.xiMargin < 0) { const nr = polyNearest(region, o.xi), u = V.norm([o.xi[0] - nr[0], 0, o.xi[1] - nr[1]]), cf = V.dot(u, hd), cl = V.dot(u, lat);
       hipCapHere = Math.abs(cf) * (cf > 0 ? this.hipCap.fwd : this.hipCap.bwd) + Math.abs(cl) * this.hipCap.lat; }
-    this._classify(o, r, hipCapHere); const cls = this.cls;
+    this.hipCapHere = hipCapHere; this._classify(o, r, hipCapHere); const cls = this.cls;
     const released = cls.state === "FALLING" || cls.state === "GROUNDED";
     // ── nominal: stance legs solved UPWARD from the actual feet; pelvis in world orientation (heading from the feet, nominal pitch) ──
     const Rpd = Q.norm(Q.mul(yawQ(psi), Q.axis([1, 0, 0], this.rootPitch))), footY = ankles.length ? ankles.reduce((a, p) => a + p[1], 0) / ankles.length : S[0].pos[1] - this.hPelvis;

@@ -67,6 +67,9 @@ export class CorrectiveStepper {
     this.W = spec.totalMass * 9.81; this.yFlat = poses.N.feet.L[1]; this.box = this.geo.box; this.stage = "STAND"; this.steps = 0; this.log = []; this.R = null;
     const hip = spec.joints.find(j => j.name === "hip_R"); this.hipFlexMax = -hip.swingY[0] - STEP.hipMargin; this.hipExtMax = hip.swingY[1] - STEP.hipMargin;
     this.hNomPelvis = ctrl.hPelvis;
+    // EXPERIMENT (opts.maxSteps > 1, default 1 = Gate C3 as scoped): a step whose acceptance finds ξ still outside AND receding hands over
+    // to the next step (the trailing foot swings) instead of failing — repeated capture-point steps, the core of a stepping gait
+    this.maxSteps = (this.opts && this.opts.maxSteps) || STEP.maxSteps; this.history = [];
   }
   event(kind, what) { this.log.push({ t: this.lastT ?? null, kind, what }); }
   // ── the physical reach of foot `sw` at touchdown, with the pelvis carried by the predicted COM motion (not held over the stance foot) ──
@@ -171,7 +174,7 @@ export class CorrectiveStepper {
   update(o) {
     const t = o.t, ctrl = this.ctrl, cls = ctrl.cls.state, F = o.feet, W = this.W; this.lastT = t; let R = this.R;
     if (this.stage === "STAND") {
-      if (cls === "STEP_NEEDED" && this.steps < STEP.maxSteps && !this.refused) {
+      if (cls === "STEP_NEEDED" && this.steps < this.maxSteps && !this.refused) {
         const c = this._choose(o);
         if (!c || (!c.capture && c.deficit > STEP.maxDeficit)) { this.refused = c ? `best foothold leaves ξ ${(c.deficit * 100).toFixed(1)} cm outside the new support` : "no reachable foothold (neither foot)"; this.event("NO STEP", this.refused); return this._restPlan(); }
         const s0 = o.states[this.geo.foot[c.sw]];
@@ -216,6 +219,20 @@ export class CorrectiveStepper {
       const away = R.prevXiM != null && o.xiMargin < R.prevXiM - 1e-5; R.prevXiM = o.xiMargin; R.again = cls === "STEPPING" && o.xiMargin < 0 && away ? R.again + 1 : cls === "STEPPING" && o.xiMargin < 0 ? R.again : 0;
       if (R.acc >= STEP.accSteps) { R.accepted = { t, fromTouchdown: t - R.tT, fromNeed: t - R.tNeed }; this.steps++; this.stage = "STAND"; R.stage = "DONE"; R.status = "RECOVERED_WITH_STEP"; this.done = R; this.R = null;
         this.rest = { xiRef: R.accTo.slice(), anchors: R.anchors }; this.event("recovered", `in the new support ${(t - R.tNeed).toFixed(2)} s after STEP_NEEDED`); return this._restPlan(); }
+      // (experiment) the NEXT step is due as soon as ξ is beyond the hip-extended new support and still receding for 25 ms (C1's own
+      // STEP_NEEDED criterion) — waiting for C3's 30-step failure confirmation left the second step 0.45 s too late (finding 2026-09-30)
+      if (this.maxSteps > this.steps + 1) { const beyond = -o.xiMargin - (this.ctrl.hipCapHere ?? 0); R.beyond = t - R.tT > 0.0125 && beyond > 0 && away ? (R.beyond || 0) + 1 : 0; if (R.beyond >= 6) R.again = STEP.againSteps; }
+      if (R.again >= STEP.againSteps && this.steps + 1 < this.maxSteps) {
+        // NEXT STEP (experiment): this step is done (its foot stays where it landed and becomes the stance); the other foot is chosen afresh
+        R.stage = "DONE"; R.status = "NEXT_STEP"; R.handover = { t, fromNeed: t - R.tNeed }; this.steps++; this.history.push(R); this.event("next step", `ξ still outside and receding ${(t - R.tT).toFixed(2)} s after touchdown`);
+        this.rest = { xiRef: R.accTo.slice(), anchors: R.anchors };
+        const c = this._choose(o);
+        if (!c || (!c.capture && c.deficit > STEP.maxDeficit)) { this.refused = c ? `step ${this.steps + 1}: best foothold leaves ξ ${(c.deficit * 100).toFixed(1)} cm outside the new support` : `step ${this.steps + 1}: no reachable foothold`; this.event("NO STEP", this.refused);
+          this.stage = "FAILED"; R.fail = this.refused; this.R = R; return { stepping: false, swing: {}, step: R }; }
+        const s0 = o.states[this.geo.foot[c.sw]];
+        const N = this.R = { sw: c.sw, st: c.st, cand: c, first: c, tNeed: t, stage: "SWING", tSw0: t, tSw: t, p0: s0.pos.slice(), q0: s0.rot.slice(), cur0: this.geo._center(o, c.sw), soleY0: this.geo._soleLow(o, c.sw), air: 0, index: this.steps + 1 };
+        this._aim(N, o, c); this.stage = "SWING"; this.event("step " + (this.steps + 1), `${c.sw} foot · predicted ξ margin at touchdown ${(c.margin * 100).toFixed(1)} cm`);
+        return { stepping: true, swing: {}, step: N, swingKpDrop: 0 }; }
       if (R.again >= STEP.againSteps) { this.stage = "FAILED"; R.fail = `the capture point is still outside the new support after the step (a second step would be needed; C3 takes one)`; this.event("FAILED", R.fail); }
       else if (t - R.tT > STEP.accTimeout) { this.steps++; this.stage = "STAND"; R.stage = "DONE"; R.status = "STEP_TAKEN_NOT_SETTLED"; this.done = R; this.R = null; this.rest = { xiRef: R.accTo.slice(), anchors: R.anchors }; this.event("timeout", "acceptance window over"); return this._restPlan(); }
       else return plan; }
