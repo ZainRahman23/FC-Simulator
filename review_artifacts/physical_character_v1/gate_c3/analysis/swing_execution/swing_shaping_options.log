@@ -1,0 +1,62 @@
+# EXPERIMENT: reactive swing shaping (C3 options, default off). C2 = the approved C2 profile (default); h0 0 = progression starts with the lift; heelUp = backward swings lift by knee flexion
+A_inplace_F50      h0 C2: RECOVERED_IN_PLACE                        trunk   6.6 = | h0 0: RECOVERED_IN_PLACE                        trunk   6.6
+A_inplace_B30      h0 C2: RECOVERED_IN_PLACE                        trunk   5.9 = | h0 0: RECOVERED_IN_PLACE                        trunk   5.9
+A_inplace_R40      h0 C2: RECOVERED_IN_PLACE                        trunk   4.8 = | h0 0: RECOVERED_IN_PLACE                        trunk   4.8
+B_F70              h0 C2: RECOVERED_WITH_STEP  u@td 0.79 err   5.4 trunk  14.6 = | h0 0: RECOVERED_WITH_STEP  u@td 0.8  err   6.3 trunk  14.1
+B_F80              h0 C2: RECOVERED_WITH_STEP  u@td 0.71 err   7.8 trunk  19.8 = | h0 0: RECOVERED_WITH_STEP  u@td 0.74 err   6.7 trunk  18.8
+B_F90              h0 C2: RECOVERED_WITH_STEP  u@td 0.56 err  26.6 trunk  19.8 = | h0 0: RECOVERED_WITH_STEP  u@td 0.69 err   8.3 trunk  20.1
+B_F100             h0 C2: RECOVERED_WITH_STEP  u@td 0.66 err  10.1 trunk  22.3 = | h0 0: RECOVERED_WITH_STEP  u@td 0.7  err   7.5 trunk  20.1
+B_B40              h0 C2: RECOVERED_WITH_STEP  u@td 0.74 err   5.5 trunk   9.2 = | h0 0: RECOVERED_WITH_STEP  u@td 0.72 err   4.6 trunk   8.7
+B_B50              h0 C2: RECOVERED_WITH_STEP  u@td 0.61 err  13.8 trunk     8 = | h0 0: RECOVERED_WITH_STEP  u@td 0.57 err  11.8 trunk   7.5
+B_B60              h0 C2: STEPPED_FELL         u@td 0.55 err  26.6 trunk  93.4 = | h0 0: STEPPED_FELL         u@td 0.51 err    24 trunk  94.9
+B_R55              h0 C2: FELL_NO_STEP                              trunk  95.6 = | h0 0: FELL_NO_STEP                              trunk  95.6
+B_R65              h0 C2: FELL_NO_STEP                              trunk 104.4 = | h0 0: FELL_NO_STEP                              trunk 104.4
+B_R75              h0 C2: FELL_NO_STEP                              trunk 109.2 = | h0 0: FELL_NO_STEP                              trunk 109.2
+B_L55              h0 C2: FELL_NO_STEP                              trunk  96.5 = | h0 0: FELL_NO_STEP                              trunk  96.5
+B_L70              h0 C2: FELL_NO_STEP                              trunk 103.7 = | h0 0: FELL_NO_STEP                              trunk 103.7
+B_FR70             h0 C2: FELL_NO_STEP                              trunk  93.1 = | h0 0: FELL_NO_STEP                              trunk  93.1
+B_FR90             h0 C2: FELL_NO_STEP                              trunk 103.2 = | h0 0: FELL_NO_STEP                              trunk 103.2
+B_BL45             h0 C2: STEPPED_FELL         u@td 1    err     4 trunk  97.6 = | h0 0: STEPPED_FELL         u@td 1    err   4.3 trunk 102.2
+B_BL60             h0 C2: STEPPED_FELL         u@td 0.44 err  43.2 trunk  93.7 = | h0 0: FELL_NO_STEP                              trunk  93.5
+C_proj_F115        h0 C2: RECOVERED_WITH_STEP  u@td 0.71 err   6.8 trunk  22.3 = | h0 0: RECOVERED_WITH_STEP  u@td 0.73 err   8.7 trunk  19.9
+C_proj_R90         h0 C2: FELL_NO_STEP                              trunk 110.5 = | h0 0: FELL_NO_STEP                              trunk 110.5
+C_proj_B75         h0 C2: STEPPED_FELL         u@td 0.55 err  37.2 trunk  93.5 = | h0 0: STEPPED_FELL         u@td 0.52 err    32 trunk  93.6
+D_late_F80_100ms   h0 C2: STEPPED_FELL         u@td 0.73 err  51.3 trunk  91.5 = | h0 0: STEPPED_FELL         u@td 0.63 err  52.5 trunk  91.5
+D_late_F80_150ms   h0 C2: STEPPED_FELL         u@td 0.67 err  57.3 trunk  91.5 = | h0 0: STEP_FAILED_FELL                          trunk  98.7
+D_late_R65_100ms   h0 C2: FELL_NO_STEP                              trunk 107.6 = | h0 0: FELL_NO_STEP                              trunk 107.6
+E_fric_F80_mu0.25  h0 C2: FELL_NO_STEP                              trunk  91.5 = | h0 0: FELL_NO_STEP                              trunk  91.5
+E_fric_R65_mu0.2   h0 C2: RECOVERED_IN_PLACE                        trunk   6.2 = | h0 0: RECOVERED_IN_PLACE                        trunk   6.2
+F_nofoot_F160      h0 C2: STEPPED_FELL         u@td 0.83 err  28.2 trunk  91.5 = | h0 0: STEPPED_FELL         u@td 0.82 err  27.4 trunk  91.5
+F_nofoot_B110      h0 C2: STEPPED_FELL         u@td 0.57 err  27.8 trunk  93.4 = | h0 0: STEPPED_FELL         u@td 0.53 err  23.7 trunk  93.4
+{"0":{"RECOVERED_IN_PLACE":4,"RECOVERED_WITH_STEP":7,"STEPPED_FELL":6,"FELL_NO_STEP":11,"STEP_FAILED_FELL":1},"null":{"RECOVERED_IN_PLACE":4,"RECOVERED_WITH_STEP":7,"STEPPED_FELL":8,"FELL_NO_STEP":10}}
+
+A_inplace_F50      heelUp:true: RECOVERED_IN_PLACE                        trunk   6.6 | heelUp:true,h0:0: RECOVERED_IN_PLACE                        trunk   6.6
+A_inplace_B30      heelUp:true: RECOVERED_IN_PLACE                        trunk   5.9 | heelUp:true,h0:0: RECOVERED_IN_PLACE                        trunk   5.9
+A_inplace_R40      heelUp:true: RECOVERED_IN_PLACE                        trunk   4.8 | heelUp:true,h0:0: RECOVERED_IN_PLACE                        trunk   4.8
+B_F70              heelUp:true: RECOVERED_WITH_STEP  u@td 0.79 err   5.4 trunk  14.6 | heelUp:true,h0:0: RECOVERED_WITH_STEP  u@td 0.8  err   6.3 trunk  14.1
+B_F80              heelUp:true: RECOVERED_WITH_STEP  u@td 0.71 err   7.8 trunk  19.8 | heelUp:true,h0:0: RECOVERED_WITH_STEP  u@td 0.74 err   6.7 trunk  18.8
+B_F90              heelUp:true: RECOVERED_WITH_STEP  u@td 0.56 err  26.6 trunk  19.8 | heelUp:true,h0:0: RECOVERED_WITH_STEP  u@td 0.69 err   8.3 trunk  20.1
+B_F100             heelUp:true: RECOVERED_WITH_STEP  u@td 0.66 err  10.1 trunk  22.3 | heelUp:true,h0:0: RECOVERED_WITH_STEP  u@td 0.7  err   7.5 trunk  20.1
+B_B40              heelUp:true: RECOVERED_WITH_STEP  u@td 0.95 err   5.4 trunk    11 | heelUp:true,h0:0: RECOVERED_WITH_STEP  u@td 0.95 err   5.4 trunk    11
+B_B50              heelUp:true: RECOVERED_WITH_STEP  u@td 0.72 err   7.9 trunk   8.3 | heelUp:true,h0:0: RECOVERED_WITH_STEP  u@td 0.71 err   7.5 trunk   8.2
+B_B60              heelUp:true: STEPPED_FELL         u@td 0.67 err  19.2 trunk  93.5 | heelUp:true,h0:0: STEPPED_FELL         u@td 0.69 err  16.2 trunk  94.5
+B_R55              heelUp:true: FELL_NO_STEP                              trunk  95.6 | heelUp:true,h0:0: FELL_NO_STEP                              trunk  95.6
+B_R65              heelUp:true: FELL_NO_STEP                              trunk 104.4 | heelUp:true,h0:0: FELL_NO_STEP                              trunk 104.4
+B_R75              heelUp:true: FELL_NO_STEP                              trunk 109.2 | heelUp:true,h0:0: FELL_NO_STEP                              trunk 109.2
+B_L55              heelUp:true: FELL_NO_STEP                              trunk  96.5 | heelUp:true,h0:0: FELL_NO_STEP                              trunk  96.5
+B_L70              heelUp:true: FELL_NO_STEP                              trunk 103.7 | heelUp:true,h0:0: FELL_NO_STEP                              trunk 103.7
+B_FR70             heelUp:true: FELL_NO_STEP                              trunk  93.1 | heelUp:true,h0:0: FELL_NO_STEP                              trunk  93.1
+B_FR90             heelUp:true: FELL_NO_STEP                              trunk 103.2 | heelUp:true,h0:0: FELL_NO_STEP                              trunk 103.2
+B_BL45             heelUp:true: STEPPED_FELL         u@td 1    err   3.6 trunk    95 | heelUp:true,h0:0: STEPPED_FELL         u@td 1    err   3.6 trunk  95.2
+B_BL60             heelUp:true: STEPPED_FELL         u@td 0.44 err  43.2 trunk  93.7 | heelUp:true,h0:0: FELL_NO_STEP                              trunk  93.5
+C_proj_F115        heelUp:true: RECOVERED_WITH_STEP  u@td 0.71 err   6.8 trunk  22.3 | heelUp:true,h0:0: RECOVERED_WITH_STEP  u@td 0.73 err   8.7 trunk  19.9
+C_proj_R90         heelUp:true: FELL_NO_STEP                              trunk 110.5 | heelUp:true,h0:0: FELL_NO_STEP                              trunk 110.5
+C_proj_B75         heelUp:true: STEPPED_FELL         u@td 0.56 err  35.9 trunk  93.1 | heelUp:true,h0:0: STEPPED_FELL         u@td 0.51 err  36.1 trunk  93.2
+D_late_F80_100ms   heelUp:true: STEPPED_FELL         u@td 0.73 err  51.3 trunk  91.5 | heelUp:true,h0:0: STEPPED_FELL         u@td 0.63 err  52.5 trunk  91.5
+D_late_F80_150ms   heelUp:true: STEPPED_FELL         u@td 0.67 err  57.3 trunk  91.5 | heelUp:true,h0:0: STEP_FAILED_FELL                          trunk  98.7
+D_late_R65_100ms   heelUp:true: FELL_NO_STEP                              trunk 107.6 | heelUp:true,h0:0: FELL_NO_STEP                              trunk 107.6
+E_fric_F80_mu0.25  heelUp:true: FELL_NO_STEP                              trunk  91.5 | heelUp:true,h0:0: FELL_NO_STEP                              trunk  91.5
+E_fric_R65_mu0.2   heelUp:true: RECOVERED_IN_PLACE                        trunk   6.2 | heelUp:true,h0:0: RECOVERED_IN_PLACE                        trunk   6.2
+F_nofoot_F160      heelUp:true: STEPPED_FELL         u@td 0.83 err  28.2 trunk  91.5 | heelUp:true,h0:0: STEPPED_FELL         u@td 0.82 err  27.4 trunk  91.5
+F_nofoot_B110      heelUp:true: STEPPED_FELL         u@td 0.61 err  23.7 trunk  93.3 | heelUp:true,h0:0: STEPPED_FELL         u@td 0.58 err  20.7 trunk    93
+{"{\"heelUp\":true}":{"RECOVERED_IN_PLACE":4,"RECOVERED_WITH_STEP":7,"STEPPED_FELL":8,"FELL_NO_STEP":10},"{\"heelUp\":true,\"h0\":0}":{"RECOVERED_IN_PLACE":4,"RECOVERED_WITH_STEP":7,"STEPPED_FELL":6,"FELL_NO_STEP":11,"STEP_FAILED_FELL":1}}

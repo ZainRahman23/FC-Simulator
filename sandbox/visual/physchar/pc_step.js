@@ -177,8 +177,17 @@ export class CorrectiveStepper {
   // hip with the knee at 45°, the boot pitched 20° toe-down and the toe caught the turf 0.16 s into the step (finding 2026-09-30, B_F80) —
   // only its DURATION is the reactive one
   _aim(R, o, c) { R.foot = R.sw; R.type = "place"; R.proj = { target: c.target, yaw: c.yaw }; R.plannedAt = { ...c }; const keep = R.stage; R.stage = "SWING";
-    this.geo._planSwing(R, o); R.T = c.tSw; R.stage = keep; R.tSw = R.tSw0; R.xo = c.xo || null;
+    this.geo._planSwing(R, o); R.T = c.tSw; R.stage = keep; R.tSw = R.tSw0; R.xo = c.xo || null; if (this.opts.h0 != null) R.h0 = this.opts.h0;
+    // (option heelUp) a BACKWARD reactive swing lifts the foot by KNEE flexion (heel up, the ankle travelling back along the shin's arc) rather
+    // than by hip flexion that must then reverse into extension — the reversal saturated the hip and the toe touched down at u ≈ 0.55
+    // (finding 2026-09-30, B_B60 / C_proj_B75 / F_nofoot_B110)
+    if (this.opts.heelUp && !R.xo) { const d = [R.pT[0] - R.p0[0], R.pT[2] - R.p0[2]], n = len2(d), hd = [dsin(c.yaw), dcos(c.yaw)]; R.heelUp = n > 0.05 && dot2(d, hd) < -0.5 * n ? { dist: n, L2: this.ctrl.legs[R.sw].L2 } : null; }
     if (R.xo) { R.fwdBias = 0; R.hdSw = [dsin(c.yaw), dcos(c.yaw)]; const H = this._crossH(R.xo, R.p0[1], R.pT[1]); R.xoPr = this._crossProfile(R.xo, R.p0[1], R.pT[1], H); R.clear = H; } }
+  _swingHeelUp(R, t) { const base = this.geo._swingAt(R, t), u = base.u; if (R.stage === "DESCEND" || u >= 1) return base;
+    const h0 = R.h0 ?? SUP.hStart, h1 = SUP.hEnd, H = R.heelUp, frac = (uu) => { const uh = Math.max(0, Math.min(1, (uu - h0) / (h1 - h0))), sh = minjerk(uh), sn = dsin(Math.PI * uu), lift = R.clear * sn * sn;
+      const back = H.L2 * Math.sqrt(Math.max(0, 1 - (1 - Math.min(1, lift / H.L2)) ** 2)); return Math.max(sh, Math.min(1, back / H.dist)); };
+    const du = 1e-3, f = frac(u), df = (frac(Math.min(1, u + du)) - f) / du / R.T, p0 = R.p0, pT = R.pT;
+    return { ...base, pos: [p0[0] + (pT[0] - p0[0]) * f, base.pos[1], p0[2] + (pT[2] - p0[2]) * f], vel: [(pT[0] - p0[0]) * df, base.vel[1], (pT[2] - p0[2]) * df] }; }
   // swing trajectory (world, foot ORIGIN = ankle): rise, min-jerk horizontal progression under a sin² clearance bell, vertical approach
   _traj(R, t) { const u = Math.min(1, (t - R.tSw) / R.T), p0 = R.p0, pT = R.pT, T = R.T, h0 = STEP.hStart, h1 = STEP.hEnd;
     const uh = Math.max(0, Math.min(1, (u - h0) / (h1 - h0))), sh = minjerk(uh), dsh = uh > 0 && uh < 1 ? 30 * uh * uh * (1 - uh) * (1 - uh) / ((h1 - h0) * T) : 0;
@@ -206,7 +215,7 @@ export class CorrectiveStepper {
     if (this.stage === "SWING" || this.stage === "DESCEND") {
       // re-plan the foothold from the CURRENT state during the rise (the horizontal progression has not started)
       if (this.stage === "SWING" && (t - R.tSw) < STEP.replanUntil * R.T) { const c = this._candidate(o, sw, R.cur0, t - R.tSw, R.alpha); if (c && c.feasible) { R.cand = c; this._aim(R, o, c); } }
-      plan.copFoot = st; plan.xiRef = o.xi.slice(); const tg = R.xo ? this._swingCross(R, t) : this.geo._swingAt(R, t); plan.swing[sw] = tg; R.u = tg.u;
+      plan.copFoot = st; plan.xiRef = o.xi.slice(); const tg = R.xo ? this._swingCross(R, t) : R.heelUp ? this._swingHeelUp(R, t) : this.geo._swingAt(R, t); plan.swing[sw] = tg; R.u = tg.u;
       // LIFTOFF = the sensed departure of the foot (no touching contact, < 25 N, 3 steps); it must happen within liftTimeout
       if (!R.liftoff) { if (!F[sw].touching && F[sw].load < 25) R.air++; else R.air = 0;
         if (R.air >= 3) { R.liftoff = { t, dtFromNeed: t - R.tNeed, load: F[sw].load }; this.event("liftoff", `${sw} ${(t - R.tNeed).toFixed(3)} s after STEP_NEEDED`); }

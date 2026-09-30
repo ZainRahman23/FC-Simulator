@@ -344,7 +344,7 @@ export class SupportSequencer {
   // APPROACHES the ground near-vertically in the last quarter with zero velocity at u = 1 (then DESCEND presses slowly until contact is
   // sensed). A swing that is still travelling horizontally when it lands overshot by ≈ 8 cm (the leg's momentum, no inertial feed-forward).
   _swingAt(R, t) {
-    const u = Math.min(1, (t - R.tSw) / R.T); R.u = u; const p0 = R.p0, pT = R.pT, T = R.T, h0 = SUP.hStart, h1 = SUP.hEnd;
+    const u = Math.min(1, (t - R.tSw) / R.T); R.u = u; const p0 = R.p0, pT = R.pT, T = R.T, h0 = R.h0 ?? SUP.hStart, h1 = SUP.hEnd;   // R.h0: a reactive (C3) swing may start its progression with the lift
     const uh = Math.max(0, Math.min(1, (u - h0) / (h1 - h0))), sh = minjerk(uh), dsh = uh > 0 && uh < 1 ? 30 * uh * uh * (1 - uh) * (1 - uh) / ((h1 - h0) * T) : 0;
     const sv = minjerk(u), dsv = u < 1 ? 30 * u * u * (1 - u) * (1 - u) / T : 0, sn = dsin(Math.PI * u), cs = dcos(Math.PI * u), bell = sn * sn, dbell = 2 * sn * cs * Math.PI / T;
     let y = p0[1] + (pT[1] - p0[1]) * sv + R.clear * bell; if (R.stage === "DESCEND") y = pT[1] - Math.min(SUP.approachH + SUP.descendMax, SUP.descendV * (t - R.tD));
