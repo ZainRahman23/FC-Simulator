@@ -48,9 +48,17 @@
   box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.18),0 6px 16px rgba(0,0,0,.35);color:#fff;font-family:var(--disp)}
 .card.cc-gcard::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(115deg,rgba(255,255,255,.05) 0 6%,transparent 6% 12%);display:block;left:0;top:0;width:100%;height:100%;border-radius:0}
 .card.cc-gcard::after{display:none}
-.card.cc-gcard.gold{box-shadow:inset 0 0 0 1.5px rgba(232,201,121,.75),0 6px 16px rgba(0,0,0,.35)}
-.card.cc-gcard.silver{box-shadow:inset 0 0 0 1.5px rgba(210,220,235,.45),0 6px 16px rgba(0,0,0,.35)}
-.card.cc-gcard.bronze{box-shadow:inset 0 0 0 1.5px rgba(205,140,90,.5),0 6px 16px rgba(0,0,0,.35)}
+/* FIFA-style tiers by rating: gold 75+, silver 65-74, bronze below; the club
+   colour stays on the badge ring and club tag */
+.card.cc-gcard.gold{background:linear-gradient(160deg,#fbeab0 0%,#e3bf62 45%,#b38a33 100%);color:#2a1f08;
+  box-shadow:inset 0 0 0 1.5px rgba(255,240,190,.8),0 6px 16px rgba(0,0,0,.35)}
+.card.cc-gcard.silver{background:linear-gradient(160deg,#f3f6fa 0%,#c3cbd6 48%,#8d97a5 100%);color:#1d2430;
+  box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.7),0 6px 16px rgba(0,0,0,.35)}
+.card.cc-gcard.bronze{background:linear-gradient(160deg,#f0c49b 0%,#c98a55 48%,#8a5530 100%);color:#2b1706;
+  box-shadow:inset 0 0 0 1.5px rgba(255,220,190,.6),0 6px 16px rgba(0,0,0,.35)}
+.card.cc-gcard.gold .cc-g-ovr,.card.cc-gcard.silver .cc-g-ovr,.card.cc-gcard.bronze .cc-g-ovr{text-shadow:none}
+.card.cc-gcard.gold .cc-g-st,.card.cc-gcard.silver .cc-g-st,.card.cc-gcard.bronze .cc-g-st{border-top-color:rgba(0,0,0,.18)}
+.card.cc-gcard .cc-g-club{background:var(--kit);color:#fff}
 .cc-gk-top{position:absolute;left:9%;top:7%;text-align:center;line-height:1;z-index:3}
 .cc-g-ovr{font-weight:900;font-size:calc(var(--cw2,86px)*.22);letter-spacing:-.03em;text-shadow:0 1px 2px rgba(0,0,0,.35)}
 .cc-g-pos{font-family:var(--cond);font-weight:700;font-size:calc(var(--cw2,86px)*.105);letter-spacing:.06em;margin-top:.15em;opacity:.95}
@@ -58,7 +66,7 @@
 .cc-g-art{position:absolute;right:9%;top:8%;width:56%;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;z-index:2;
   background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.28),rgba(255,255,255,.05) 60%),color-mix(in srgb,var(--kit) 80%,#000 20%);
   box-shadow:inset 0 0 0 2px rgba(255,255,255,.22)}
-.cc-g-art span{font-weight:900;font-size:calc(var(--cw2,86px)*.2);letter-spacing:-.02em;color:rgba(255,255,255,.92);text-shadow:0 2px 6px rgba(0,0,0,.35)}
+.cc-g-art span{font-weight:900;font-size:calc(var(--cw2,86px)*.17);letter-spacing:-.02em;color:rgba(255,255,255,.92);text-shadow:0 2px 6px rgba(0,0,0,.35)}
 .cc-g-nm{position:absolute;left:4%;right:4%;top:60%;text-align:center;font-weight:800;font-size:calc(var(--cw2,86px)*.118);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;z-index:3}
 .cc-g-st{position:absolute;left:7%;right:7%;top:73%;display:grid;grid-template-columns:repeat(6,1fr);text-align:center;z-index:3;border-top:1px solid rgba(255,255,255,.18);padding-top:4%}
 .cc-g-st i{display:block;font-style:normal;font-weight:600;font-size:calc(var(--cw2,86px)*.052);opacity:.72}

@@ -21,6 +21,7 @@ from typing import Any, Iterable
 
 import management
 import bridge
+import build  # registers the 'card' applier; build.build_engine installs the card runtime
 
 _POOL: Executor | None = None
 
@@ -135,7 +136,7 @@ def sim_full(start_request: dict[str, Any]) -> dict[str, Any]:
     """A whole match, instantly. Returns the full-time payload (with the full
     event stream) and the final snapshot — exactly what /matches/start
     (mode=full) produces for the same request."""
-    engine = management.build_engine(start_request)
+    engine = build.build_engine(start_request)
     result = engine.run()
     payload = bridge.full_time_payload(engine, result)
     payload["events"] = [e.to_dict() for e in engine.events]
@@ -172,7 +173,7 @@ def sim_record(start_request: dict[str, Any]) -> dict[str, Any]:
 
 
 def _team_xg(engine, team_id: str) -> float:
-    return round(sum(s.xg for s in engine.states.values() if s.team_id == team_id), 3)
+    return round(sum(s.xg for s in engine.states.values() if s.team_id == team_id) + bridge.ledger_penalty_xg(engine.events,team_id), 3)
 
 
 def state_summary(engine) -> dict[str, Any]:
@@ -194,14 +195,14 @@ def state_summary(engine) -> dict[str, Any]:
 
 def sim_to(start_request: dict[str, Any], to_clock: int) -> dict[str, Any]:
     """Play a request (no management) up to ``to_clock`` and summarise."""
-    engine = management.build_engine(start_request)
+    engine = build.build_engine(start_request)
     engine.advance(int(to_clock))
     return state_summary(engine)
 
 
 def sim_states(start_request: dict[str, Any], clocks: list[int]) -> list[dict[str, Any]]:
     """Play a request (no management) and summarise at each of ``clocks``."""
-    engine = management.build_engine(start_request)
+    engine = build.build_engine(start_request)
     out = []
     for c in sorted(int(c) for c in clocks):
         engine.advance(c - engine.clock)
@@ -243,3 +244,85 @@ def finish(engine_bytes: bytes, commands: list[dict[str, Any]],
             "goals_after": {t: engine.score[t] - g0[t] for t in ("HOME", "AWAY")},
             "xg_after": {t: round(_team_xg(engine, t) - xg0[t], 3) for t in ("HOME", "AWAY")},
             "xg": {t: _team_xg(engine, t) for t in ("HOME", "AWAY")}}
+
+
+# ── Core Loop v2 additions (build-core) ─────────────────────────────────────
+def analyst_future(start_request: dict[str, Any], team: str) -> dict[str, Any]:
+    """One whole-match future for the Analyst: the request is already
+    prepared (kick-off modifiers applied, both sides' cards played by the
+    deterministic policy). Returns score, xG and the system pillar metrics."""
+    engine = build.build_engine(start_request)
+    result = engine.run()
+    payload = bridge.full_time_payload(engine, result)
+    events = [e.to_dict() for e in engine.events]
+    side = "home" if team == "HOME" else "away"
+    ts = dict(payload["team_stats"].get(side) or {})
+    ts["possession"] = payload["possession"].get(side, 50)
+    pillars = build.pillar_metrics(events, team, payload.get("player_stats"), ts)
+    plays = [e for e in events if e["event_type"] == "CARD_PLAYED"]
+    return {"score": dict(engine.score), "xg": {t: _team_xg(engine, t) for t in ("HOME", "AWAY")},
+            "pillars": pillars,
+            "conditions": {pid:st.energy for pid,st in engine.states.items() if st.team_id == team},
+            "card_plays": [{"team": e["team_id"], "card_id": (e.get("detail") or {}).get("card_id"),
+                            "minute": e["timestamp"] // 60} for e in plays]}
+
+
+def finish_window(engine_bytes: bytes, commands: list[dict[str, Any]], reseed: int | None,
+                  window: int = 900) -> dict[str, Any]:
+    """Like ``finish`` but also reports xG in the first ``window`` seconds
+    after the start clock (card previews: xG for/against per 15')."""
+    engine = pickle.loads(engine_bytes)
+    c0 = engine.clock
+    xg0 = {t: _team_xg(engine, t) for t in ("HOME", "AWAY")}
+    if reseed is not None:
+        engine.rng.seed = int(reseed)
+    for cmd in sorted(commands, key=lambda c: int(c["sim_clock"])):
+        target = int(cmd["sim_clock"])
+        if target > engine.clock:
+            engine.advance(target - engine.clock)
+        try:
+            apply_command(engine, cmd)
+        except Exception:
+            pass
+    engine.advance(max(0, c0 + window - engine.clock))
+    xgw = {t: round(_team_xg(engine, t) - xg0[t], 3) for t in ("HOME", "AWAY")}
+    engine.advance(engine.config.duration_seconds - engine.clock)
+    return {"score": dict(engine.score), "xg_window": xgw}
+
+
+def analyst_stress(requests: list[dict[str, Any]], manager_build: dict[str, Any], hand: list[str],
+                   team: str, seed: int) -> list[dict[str, Any]]:
+    """Three matchweeks on a private save copy, sharing weekly seeds across variants."""
+    import copy
+    import hashlib
+    current = copy.deepcopy(manager_build)
+    conditions = {}
+    futures = []
+    side_key = 'home_team' if team == 'HOME' else 'away_team'
+    for week, template in enumerate(requests):
+        req = copy.deepcopy(template)
+        req.pop('_build_prepared', None)
+        req.pop('modifiers', None)
+        # Templates are raw inputs. The managed side's previous result and
+        # weekly recovery carry forward; every variant uses the same seedset.
+        req['seed'] = int(hashlib.sha256(f'{seed}:stress:{week}'.encode()).hexdigest()[:12],16)
+        req['build_team'] = team
+        req['build'] = dict(current, hand=list(hand), control='cpu', difficulty='hard')
+        if req.get('builds'):
+            req['builds'].pop(team,None)
+        side = req[side_key]
+        squad = [p for p in (side.get('lineup') or {}).values() if p] + list(side.get('bench') or [])
+        for p in squad:
+            if str(p['id']) in conditions:
+                p['cond'] = conditions[str(p['id'])]
+        prepared = build.prepare_request(req)
+        result = analyst_future(prepared, team)
+        futures.append(result)
+        current = build.week_tick(squad,current,[{'xi':[str(p['id']) for p in side['lineup'].values() if p],
+                                                 'system_id':current.get('system_id')}])['build']
+        fitness = int((current.get('staff') or {}).get('fitness',1))
+        for p in squad:
+            pid = str(p['id'])
+            energy = result.get('conditions',{}).get(pid,float(p.get('cond',100)))
+            conditions[pid] = min(100.0, energy + 25.0 + 2.0*(fitness-1))
+    return futures

@@ -58,6 +58,12 @@ def default_instructions(slot: str) -> PlayerInstructions:
         "LW": PlayerInstructions("TOUCHLINE_WINGER", 65, "STAY_HIGH", 35),
         "RW": PlayerInstructions("TOUCHLINE_WINGER", 65, "STAY_HIGH", 35),
         "ST": PlayerInstructions("RUN_BEHIND", 65, "STAY_HIGH", 30),
+        # Core Loop v2 E3 slots
+        "CB": PlayerInstructions("HOLD_RECYCLE", 30, "COVER", 60),
+        "LWB": PlayerInstructions("OVERLAP", 65, "TRACK_RUNNER", 60),
+        "RWB": PlayerInstructions("OVERLAP", 65, "TRACK_RUNNER", 60),
+        "LST": PlayerInstructions("RUN_BEHIND", 65, "STAY_HIGH", 30),
+        "RST": PlayerInstructions("LINK", 60, "STAY_HIGH", 30),
     }
     return defaults.get(slot, PlayerInstructions())
 

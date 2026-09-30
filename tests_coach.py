@@ -175,8 +175,9 @@ def test_insights_shape_and_actions_accepted(client):
         assert r.status_code == 200, r.text
         j = r.json()
         assert j["clock"] == clock - 60
-        assert set(j["window"]) == {"xg_for", "xg_against", "shots_for", "shots_against",
-                                    "box_for", "box_against", "possession"}
+        assert set(j["window"]) >= {"xg_for", "xg_against", "shots_for", "shots_against",
+                                        "box_for", "box_against", "possession"}
+        assert j["window"]["goals_for"] >= 0 and j["window"]["goals_against"] >= 0
         assert j["momentum"] and {"minute", "HOME", "AWAY", "goals"} <= set(j["momentum"][0])
         for ins in j["insights"]:
             assert {"id", "kind", "severity", "minute", "title", "text", "why", "actions"} <= set(ins)

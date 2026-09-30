@@ -282,7 +282,7 @@ def test_rewind_resets_and_refills_the_broadcast(match):
     pg.evaluate("if(S.match.status === 'live') togglePlay()")
     presented = pg.evaluate("Math.floor(CM._presS())")
     with pg.expect_response(lambda r: "/tactics" in r.url and r.request.method == "POST") as ri:
-        pg.evaluate("setTactic('pressingIntensity', S.current.tactics.pressingIntensity === 'Aggressive' ? 'Balanced' : 'Aggressive')")
+        pg.evaluate("setTactic('pressingIntensity', S.current.tactics.pressingIntensity === 'Aggressive' ? 'Selective' : 'Aggressive')")
     out = ri.value.json()
     assert out["rewound_to"] == presented, out
     _wait(pg, "() => window.__bcResets.length > 0", 5000)

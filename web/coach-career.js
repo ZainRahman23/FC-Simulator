@@ -17,6 +17,12 @@ try{ if(!document.querySelector('link[rel~="icon"]')) document.head.insertAdjace
 
 /* ═══ 0. UTILITIES ═══════════════════════════════════════════════════════ */
 const CC = window.CC = {};
+/* Which API routes this server has (FastAPI's route list): optional
+   endpoints are only called when present, so no 404s reach the console. */
+const ROUTES = fetch('/openapi.json').then(r => r.ok ? r.json() : {paths: {}})
+  .then(j => new Set(Object.keys(j.paths || {}))).catch(() => new Set());
+CC.routes = ROUTES;
+CC.hasRoute = async p => (await ROUTES).has('/api' + p);
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const r1 = v => Math.round(v * 10) / 10;
 function mulberry(seed){
@@ -169,13 +175,21 @@ function heightFor(r, pos){
 }
 function ageFor(r){ return Math.round(clamp(weighted(r, [[18,4],[19,6],[20,8],[21,9],[22,10],[23,10],[24,10],[25,10],[26,9],[27,8],[28,7],[29,6],[30,5],[31,4],[32,3],[33,2],[34,1]]) + 0, 17, 36)); }
 const USED_NAMES = new Set(PLAYERS.map(p => p.name));
-function makeName(r){
-  for(let i = 0; i < 40; i++){
+/* surnames are unique within a squad too (two "Ortega"s at one club read as a bug) */
+const surnameOf = n => String(n).split(' ').slice(1).join(' ') || String(n);
+const CLUB_SURNAMES = {};
+function clubSurnames(clubId){
+  if(!CLUB_SURNAMES[clubId]) CLUB_SURNAMES[clubId] = new Set(PLAYERS.filter(p => p.clubId === clubId).map(p => surnameOf(p.name)));
+  return CLUB_SURNAMES[clubId];
+}
+function makeName(r, clubId){
+  const sur = clubId ? clubSurnames(clubId) : new Set();
+  for(let i = 0; i < 60; i++){
     const reg = NAME_POOLS[weighted(r, REGIONS)];
-    const n = pick(r, reg.f) + ' ' + pick(r, reg.l);
-    if(!USED_NAMES.has(n)){ USED_NAMES.add(n); return n; }
+    const last = pick(r, reg.l), n = pick(r, reg.f) + ' ' + last;
+    if(!USED_NAMES.has(n) && !sur.has(last)){ USED_NAMES.add(n); sur.add(last); return n; }
   }
-  const n = 'Sam Kettle ' + Math.floor(r() * 99); USED_NAMES.add(n); return n;
+  const n = 'Sam Kettle ' + Math.floor(r() * 99); USED_NAMES.add(n); sur.add(surnameOf(n)); return n;
 }
 function makeFictional(clubId, idx, pos, target, role){
   const r = rngFor(`squad|${clubId}|${idx}|${pos}`);
@@ -196,7 +210,7 @@ function makeFictional(clubId, idx, pos, target, role){
   const side = leftSided ? 'L' : ['RB','RW','RM'].includes(pos) ? 'R' : 'C';
   const wide = ['LW','RW','LM','RM','CAM'].includes(pos);
   return {
-    id: `${clubId.toLowerCase()}_sq_${String(idx).padStart(2, '0')}`, name: makeName(r), pos,
+    id: `${clubId.toLowerCase()}_sq_${String(idx).padStart(2, '0')}`, name: makeName(r, clubId), pos,
     elig: pick(r, ELIG_OPTIONS[pos] || [[pos]]), clubId, rank: null, ovr, pot: Math.min(94, ovr + gap), age,
     ht, wt: Math.round(ht - 105 + gauss(r) * 4), foot, wf: 2 + Math.floor(r() * 3), sm: pos === 'GK' ? 1 : wide ? 3 + Math.floor(r() * 2) : 2 + Math.floor(r() * 2),
     side, face: faceOf(a, pos === 'GK'), a, fictional: true, archetype: arch
@@ -269,16 +283,33 @@ window.artCandidates = function(pl){
   return k ? [encodeURI(LEAGUE_ART_DIR + k + '.png')] : [];
 };
 function kitOf(clubId){ const c = clubById(clubId); return c ? c.color : '#3a4660'; }
+/* FIFA-style card tiers by rating (never by whether we have a photo) */
+const cardTier = ovr => ovr >= 75 ? 'gold' : ovr >= 65 ? 'silver' : 'bronze';
+CC.cardTier = cardTier;
+/* The monogram on a generated card: the start of the surname, never
+   initials — "CB" (Conor Bradley) or "AM" read as positions. */
+const POS_CODES = new Set(['GK','CB','LB','RB','LWB','RWB','CDM','DM','CM','CAM','AM','LM','RM','LW','RW','ST','CF','SS','LF','RF']);
+function cardMonogram(name){
+  const parts = String(name).trim().split(/\s+/);
+  // surname = after the first name, minus lowercase particles (van, de, da…)
+  const rest = parts.length > 1 ? parts.slice(1) : parts;
+  const core = rest.filter(w => !/^\p{Ll}/u.test(w));
+  const sur = (core.length ? core : rest).join('').replace(/[^\p{L}]/gu, '');
+  let n = 3, m = sur.slice(0, n).toUpperCase();
+  while(POS_CODES.has(m) && n < sur.length){ n++; m = sur.slice(0, n).toUpperCase(); }
+  return m || '?';
+}
+CC.cardMonogram = cardMonogram;
 function genCardHTML(pl, opts){
   const labels = pl.pos === 'GK' ? FACE_LABELS.gk : FACE_LABELS.out;
   const kit = kitOf(pl.clubId || (PRISTINE[pl.id] || {}).club);
   const club = clubById(pl.clubId);
-  const tierCls = pl.ovr >= 85 ? 'gold' : pl.ovr >= 78 ? 'silver' : 'bronze';
+  const tierCls = cardTier(pl.ovr);
   return `<div class="card cc-gcard ${tierCls} ${opts.mini ? 'mini' : ''}" role="img" style="--kit:${kit}"
       aria-label="${esc(pl.name)} — ${pl.ovr} ${esc(pl.pos)}">
     <div class="cc-gk-top"><div class="cc-g-ovr">${pl.ovr}</div><div class="cc-g-pos">${esc(pl.pos)}</div>
       ${club ? `<div class="cc-g-club">${esc(club.abbreviation)}</div>` : ''}</div>
-    <div class="cc-g-art"><span>${esc(initials(pl.name))}</span></div>
+    <div class="cc-g-art"><span>${esc(cardMonogram(pl.name))}</span></div>
     <div class="cc-g-nm">${esc(shortName(pl.name))}</div>
     <div class="cc-g-st">${labels.map((l, i) => `<span><i>${l}</i><b>${(pl.face || [])[i] ?? '—'}</b></span>`).join('')}</div>
   </div>`;
@@ -369,13 +400,15 @@ CC.buildSide = buildSide;
 /* CPU rotation is abstracted: a seeded per-matchweek condition (86-100) so
    opponents are not always perfectly fresh while you manage real fatigue. */
 function cpuCond(pid){
-  const mw = (S.season && S.season.matchweek) || 1;
+  // the fixture's own matchweek when building a round (resumed rounds must
+  // rebuild the identical request), else the current one
+  const mw = CC._condMW || (S.season && S.season.matchweek) || 1;
   return 86 + (hashStr(`${(S.season || {}).seed}|${pid}|${mw}|cpucond`) % 15);
 }
 window.cpuSideForRequest = function(clubId){
-  return buildSide(clubId, playersForClub(clubId), {cond: cpuCond, tactics: cpuTactics(clubById(clubId).plan)});
+  return buildSide(clubId, playersForClub(clubId), {formation: CC.cpuFormationFor && CC.cpuFormationFor(clubId), cond: cpuCond, tactics: cpuTactics(clubById(clubId).plan)});
 };
-window.clubFormation = function(clubId){ return shapeFor(clubId); };
+window.clubFormation = function(clubId){ return CC.cpuFormationFor && CC.cpuFormationFor(clubId) || shapeFor(clubId); };
 const _clubLines = window.clubLines;
 window.clubLines = function(clubId){ const o = _clubLines.apply(this, arguments);
   o.tactics = cpuTactics(clubById(clubId).plan); return o; };
@@ -415,7 +448,8 @@ function blankCareer(){
     board: {confidence: 60, objective: objectiveFor(LIV), history: [], lastWarn: null},
     cond: {}, injuries: {}, form: {}, dev: {}, xp: {}, stats: {}, notices: [],
     processed: {}, lastReport: null, kick: null, seasonEnd: null, sacked: null, history: [],
-    challenges: {best: {}, lastDaily: null, submitted: {}}, ui: {advanced: false}, batchMs: 3500, exBackup: null};
+    challenges: {best: {}, lastDaily: null, submitted: {}}, ui: {advanced: false}, batchMs: 3500, exBackup: null,
+    firstXI: null, rotated: false, preMatch: null, pendingWeek: null, tickV: 0};
 }
 function ensureCareer(){
   if(!S.career || typeof S.career !== 'object') S.career = blankCareer();
@@ -567,13 +601,144 @@ window.pickPlayer = function(pid){
   return _pickPlayer.apply(this, arguments);
 };
 
+/* ── selection: one optimiser for auto-pick, shape changes and odds ─────
+   Score of a player in a slot = OVR − positional-fit penalty − fatigue.
+   A Hungarian assignment maximises the XI total, so an 90-rated winger is
+   never benched for a 71 "natural" and nobody is parked out of position
+   when a better arrangement exists. */
+const SEL_FIT_PEN = {natural: 0, comfortable: 1.5, secondary: 7, out: 20};
+const FATIGUE_W = 0.13;                    // 50% condition ≈ −6.5 rating
+const fatiguePen = c => Math.max(0, 100 - c) * FATIGUE_W;
+/* With a build fit matrix (coach-build sets CC.fitMatrix = {pid:{slot:fit}}
+   from /api/build/evaluate for the chosen system) the score is system fit
+   minus fatigue, with a light positional penalty on top. */
+const FIT_POS_PEN = {natural: 0, comfortable: 1, secondary: 4, out: 12};
+function selScore(pl, slotPos, cond, slotId){
+  if(!pl) return -1e6;
+  if((slotPos === 'GK') !== (pl.pos === 'GK')) return -1e6;
+  const fm = CC.fitMatrix && slotId && CC.fitMatrix[pl.id];
+  if(fm && fm[slotId] != null)
+    return fm[slotId] - FIT_POS_PEN[suitability(pl, slotPos) || 'out'] - (cond == null ? 0 : fatiguePen(cond));
+  return pl.ovr - SEL_FIT_PEN[suitability(pl, slotPos) || 'out'] - (cond == null ? 0 : fatiguePen(cond));
+}
+CC.selScore = selScore;
+/* rectangular Hungarian (rows <= cols), maximising total weight */
+function hungarianMax(W){
+  const n = W.length, m = n ? W[0].length : 0;
+  if(!n || !m) return [];
+  if(n > m){                                    // transpose
+    const T = Array.from({length: m}, (_, j) => W.map(r => r[j]));
+    const colOf = hungarianMax(T), rowOf = new Array(n).fill(-1);
+    colOf.forEach((i, j) => { if(i >= 0) rowOf[i] = j; });
+    return rowOf;
+  }
+  const INF = 1e18, u = new Array(n + 1).fill(0), v = new Array(m + 1).fill(0);
+  const p = new Array(m + 1).fill(0), way = new Array(m + 1).fill(0);
+  for(let i = 1; i <= n; i++){
+    p[0] = i; let j0 = 0;
+    const minv = new Array(m + 1).fill(INF), used = new Array(m + 1).fill(false);
+    do{
+      used[j0] = true; const i0 = p[j0]; let delta = INF, j1 = 0;
+      for(let j = 1; j <= m; j++) if(!used[j]){
+        const cur = -W[i0 - 1][j - 1] - u[i0] - v[j];
+        if(cur < minv[j]){ minv[j] = cur; way[j] = j0; }
+        if(minv[j] < delta){ delta = minv[j]; j1 = j; }
+      }
+      for(let j = 0; j <= m; j++){ if(used[j]){ u[p[j]] += delta; v[j] -= delta; } else minv[j] -= delta; }
+      j0 = j1;
+    } while(p[j0] !== 0);
+    do{ const j1 = way[j0]; p[j0] = p[j1]; j0 = j1; } while(j0);
+  }
+  const rowOf = new Array(n).fill(-1);
+  for(let j = 1; j <= m; j++) if(p[j]) rowOf[p[j] - 1] = j - 1;
+  return rowOf;
+}
+CC.hungarianMax = hungarianMax;
+/* best slot -> player map for `players` (objects) over `slots` */
+function bestXI(players, slots, opts = {}){
+  const cond = opts.fatigue ? (opts.cond || condOf) : null;
+  const W = slots.map(sl => players.map(pl => selScore(pl, sl.position, cond ? cond(pl.id) : null, opts.fit ? sl.id : null)));
+  const rowOf = hungarianMax(W), xi = {};
+  slots.forEach((sl, i) => { const j = rowOf[i]; if(j >= 0 && W[i][j] > -1e5) xi[sl.id] = players[j].id; });
+  return xi;
+}
+CC.bestXI = bestXI;
+/* bench of 7 from what's left: a keeper, then cover for each line, then quality */
+function bestBench(pool, used, n = 7, cond){
+  const band = p => ['CB','LB','RB'].includes(p.pos) ? 'D' : ['CDM','CM','CAM'].includes(p.pos) ? 'M' : p.pos === 'GK' ? 'G' : 'A';
+  const val = p => p.ovr - (cond ? fatiguePen(cond(p.id)) : 0);
+  const rest = pool.filter(p => !used.has(p.id)).sort((a, b) => val(b) - val(a));
+  const bench = [];
+  const gk = rest.find(p => p.pos === 'GK'); if(gk) bench.push(gk);
+  for(const b of ['D','M','A']){ const x = rest.find(p => band(p) === b && !bench.includes(p)); if(x) bench.push(x); }
+  for(const p of rest){ if(bench.length >= n) break; if(!bench.includes(p) && p.pos !== 'GK') bench.push(p); }
+  return bench.slice(0, n).map(p => p.id);
+}
+function availablePool(){ return clubPool().filter(p => !isInjured(p.id)); }
+window.autoFill = function(opts = {}){
+  if(isLiveMatch()){ liveBlocked('The XI cannot be auto-picked during a live match.'); return; }
+  const f = curForm(), st = S.current;
+  const pool = availablePool();
+  const xi = bestXI(pool, f.slots, {fatigue: true, fit: !!opts.fit});
+  st.starters = {}; for(const sl of f.slots) st.starters[sl.id] = xi[sl.id] || null;
+  const used = new Set(Object.values(xi));
+  st.bench = bestBench(pool, used, 7, condOf);
+  for(const sl of f.slots) if(st.starters[sl.id]) instrFor(st.starters[sl.id], sl.position);
+  if(S.career){ S.career.rotated = false; rememberFirstChoice(); }
+  renderPitch(); saveState();
+  if(!opts.silent) toast(opts.fit ? `Best XI for ${opts.fit} picked — system fit × fitness` : `Best available XI picked (fitness included) — squad rating ${squadAverage()}`);
+};
+window.fillBench = function(){
+  if(isLiveMatch()){ liveBlocked(); return; }
+  const st = S.current, pool = availablePool();
+  if(st.bench.length >= 7) return;
+  const used = new Set([...Object.values(st.starters).filter(Boolean), ...st.bench]);
+  const extra = bestBench(pool, used, 7, condOf).filter(id => !(P(id).pos === 'GK' && st.bench.some(b => P(b) && P(b).pos === 'GK')));
+  for(const id of extra){ if(st.bench.length >= 7) break; st.bench.push(id); }
+  renderPitch(); saveState();
+};
+/* Shapes: only the ones the engine plays, and players re-seated optimally. */
+const _setFormation = window.setFormation;
+window.setFormation = function(newId, o){
+  if(isLiveMatch() || !S.current) return _setFormation.apply(this, arguments);
+  const st = S.current, newF = formationOf(newId);
+  const ids = [...new Set(Object.values(st.starters).filter(Boolean))];
+  const xi = bestXI(ids.map(P).filter(Boolean), newF.slots);
+  st.formationId = newId; st.starters = {};
+  for(const sl of newF.slots){ st.starters[sl.id] = xi[sl.id] || null; if(xi[sl.id]) instrFor(xi[sl.id], sl.position); }
+  const placed = new Set(Object.values(xi));
+  for(const id of ids) if(!placed.has(id) && !st.bench.includes(id)) st.bench.unshift(id);   // nobody vanishes
+};
+const engineShapes = () => (typeof SUPPORTED_ENGINE_FORMATIONS !== 'undefined' ? SUPPORTED_ENGINE_FORMATIONS : ['433', '4231', '4141']);
+window.cycleForm = async function(dir){
+  const L = engineShapes(), i = L.indexOf(S.current.formationId);
+  const id = L[i < 0 ? 0 : (i + dir + L.length) % L.length];
+  if(isLiveMatch()){ await liveFormationChange(id); return; }
+  setFormation(id); renderPitch(); saveState();
+};
+const _openManager = window.openManager;
+window.openManager = function(){
+  const r = _openManager.apply(this, arguments);
+  try{
+    const ok = new Set(engineShapes());
+    $$('#drawerBody button[onclick^="pickFormation"]').forEach(b => {
+      const m = /pickFormation\('([^']+)'\)/.exec(b.getAttribute('onclick') || ''); if(m && !ok.has(m[1])) b.remove(); });
+  }catch(e){}
+  return r;
+};
+/* The user's first-choice XI: remembered so "Rest tired players" can be undone. */
+function snapSquad(){ const st = S.current; return {formationId: st.formationId, starters: {...st.starters}, bench: [...st.bench]}; }
+function rememberFirstChoice(){ if(S.career && S.current && startingIds().length === 11) S.career.firstXI = snapSquad(); }
+CC.rememberFirstChoice = rememberFirstChoice;
+
 /* ── cond on the lineup entries we send (spec §4.7) ────────────────────── */
 const _livSide = window.livSideForRequest;
 window.livSideForRequest = function(){
   const side = _livSide.apply(this, arguments);
   const kick = {};
-  for(const [sl, pl] of Object.entries(side.lineup)) if(pl){ pl.cond = Math.round(condOf(pl.id)); kick[pl.id] = pl.cond; }
-  for(const pl of side.bench){ pl.cond = Math.round(condOf(pl.id)); kick[pl.id] = pl.cond; }
+  const kc = pid => Math.round(CC.kickCond ? CC.kickCond(pid, condOf(pid)) : condOf(pid));
+  for(const [sl, pl] of Object.entries(side.lineup)) if(pl){ pl.cond = kc(pl.id); kick[pl.id] = pl.cond; }
+  for(const pl of side.bench){ pl.cond = kc(pl.id); kick[pl.id] = pl.cond; }
   CC._lastLivKick = kick;
   return side;
 };
@@ -585,8 +750,16 @@ window.kickOff = async function(){
     const notes = enforceAvailability();
     if(notes.length){ toast(notes[0]); renderPitch(); }
   }
+  const pre = f && !f.exhibition && !S.match && S.current ? JSON.parse(JSON.stringify(S.current)) : null;
   const r = await _kickOff.apply(this, arguments);
-  if(S.match && f && !f.exhibition && S.career){ S.career.kick = {fid: f.id, cond: {...(CC._lastLivKick || {})}}; saveCareer(); }
+  if(S.match && f && !f.exhibition && S.career){
+    S.career.kick = {fid: f.id, cond: {...(CC._lastLivKick || {})}};
+    // the selection you walked out with — restored after the match, whatever
+    // happens with in-match subs, reloads or recovery
+    S.career.preMatch = {fid: f.id, squad: pre};
+    if(!S.career.rotated) rememberFirstChoice();
+    saveCareer();
+  }
   return r;
 };
 
@@ -598,6 +771,34 @@ function matchOdds(livStr, oppStr, livHome){
   const pW = s * (1 - pD), pL = (1 - s) * (1 - pD);
   return {pW, pD, pL, exp: 3 * pW + pD, d};
 }
+/* Strength of an actual XI on the day: the same score the auto-pick
+   maximises (OVR, positional fit, fitness), averaged over the 11 slots. */
+function xiStrength(formationId, starters, cond){
+  const slots = formationOf(formationId).slots;
+  let t = 0;
+  for(const sl of slots){ const pl = P(starters[sl.id]); t += pl ? Math.max(40, selScore(pl, sl.position, cond ? cond(pl.id) : null)) : 40; }
+  return t / slots.length;
+}
+function selectedStrength(){ return S.current ? xiStrength(S.current.formationId, S.current.starters, condOf) : clubStrength(LIV); }
+function oppDayStrength(clubId){
+  const pool = playersForClub(clubId), fid = shapeFor(clubId);
+  return xiStrength(fid, pickXI(pool, fid), cpuCond);
+}
+/* your best available XI in this shape, everyone fresh */
+function fullStrength(){
+  const fid = S.current.formationId;
+  return xiStrength(fid, bestXI(availablePool(), formationOf(fid).slots), null);
+}
+CC.selectedStrength = selectedStrength; CC.oppDayStrength = oppDayStrength; CC.fullStrength = fullStrength;
+/* Chances for the XI you have actually picked (fitness included). The
+   board's expectation stays on your full-strength squad — resting players
+   doesn't lower the bar. */
+function selectedOdds(f){
+  const home = f.home === LIV, opp = home ? f.away : f.home;
+  const you = selectedStrength(), them = oppDayStrength(opp);
+  return {...matchOdds(you, them, home), you, them};
+}
+CC.selectedOdds = selectedOdds;
 function expectationFor(f){
   const home = f.home === LIV, opp = home ? f.away : f.home;
   const o = matchOdds(clubStrength(LIV), clubStrength(opp), home);
@@ -626,7 +827,7 @@ const INJURY_TYPES = [
 ];
 function rollInjury(pid, minutes, energy, key){
   const r = rngFor(`inj|${key}|${pid}`);
-  const p = .022 * (.4 + .6 * clamp(minutes / 90, 0, 1.2)) * (1 + Math.max(0, 70 - energy) / 30);
+  const p = .022 * (.4 + .6 * clamp(minutes / 90, 0, 1.2)) * (1 + Math.max(0, 70 - energy) / 30) * (CC.injuryMult ? CC.injuryMult(pid) : 1);
   if(r() >= p) return null;
   const weeks = weighted(r, [[1,35],[2,25],[3,18],[4,10],[5,7],[6,5]]);
   const types = INJURY_TYPES.find(t => t[0] === weeks)[1];
@@ -736,11 +937,14 @@ function careerAfterMatch(f, m){
 CC.careerAfterMatch = careerAfterMatch;
 
 /* A week passes: recovery, injury countdown. */
+/* recovery per matchweek; CC.recoveryFor(mw) (coach-build) returns the
+   smaller midweek recovery between the two legs of a double week */
+CC.recoveryFor = CC.recoveryFor || (() => ({flat: 12, frac: 0.55}));
 function weekPasses(mw){
-  const c = S.career;
+  const c = S.career, rc = CC.recoveryFor(mw);
   for(const pl of clubPool()){
     const cur = condOf(pl.id);
-    c.cond[pl.id] = Math.round(Math.min(100, cur + 12 + 0.55 * (100 - cur)));
+    c.cond[pl.id] = Math.round(Math.min(100, cur + rc.flat + rc.frac * (100 - cur)));
   }
   for(const [pid, inj] of Object.entries(c.injuries)){
     if(inj.mw === mw) continue;             // picked up this week: "out N" means N matches missed
@@ -771,9 +975,13 @@ function resultFromFull(o, res){
   return r;
 }
 function cpuRequest(o){
-  return {save_id: SAVE_ID, fixture_id: o.id, seed: fixtureSeed(o), mode: 'full',
-    config: {duration_seconds: 90 * 60}, coach_ai: {home: true, away: true},
-    home_team: cpuSideForRequest(o.home), away_team: cpuSideForRequest(o.away)};
+  CC._condMW = o.mw;
+  try{
+    return {save_id: SAVE_ID, fixture_id: o.id, seed: fixtureSeed(o), mode: 'full',
+      config: {duration_seconds: 90 * 60}, coach_ai: {home: true, away: true},
+      home_team: cpuSideForRequest(o.home), away_team: cpuSideForRequest(o.away),
+      ...(CC.cpuBuilds ? {builds: CC.cpuBuilds(o)} : {})};
+  } finally { CC._condMW = null; }
 }
 let _batchUI = null;
 function simHost(){ return document.getElementById('ccSimHost') || document.getElementById('ccSimFloat') || (() => {
@@ -812,16 +1020,24 @@ async function simulateOthers(f){
   try{
     const reqs = others.map(cpuRequest);
     try{
-      const j = await api('/matches/batch', {method: 'POST', body: {requests: reqs, summary_only: true}});
-      results = j.results;
+      // idempotent + resumable server round: finished fixtures come back from storage
+      if(!(await CC.hasRoute('/matchweek/round'))) throw new Error('(404) no round endpoint');
+      const j = await api('/matchweek/round', {method: 'POST', body: {requests: reqs, summary_only: true}});
+      results = j.results; u.reused = j.reused || 0;
     }catch(e){
       if(!/\((404|405)\)|Not Found|Method Not Allowed/.test(e.message)) throw e;
-      // endpoint unavailable: parallel singles, still one progress UI
-      results = await Promise.all(reqs.map(rq => api('/matches/start', {method: 'POST', body: rq})));
+      try{
+        const j = await api('/matches/batch', {method: 'POST', body: {requests: reqs, summary_only: true}});
+        results = j.results;
+      }catch(e2){
+        if(!/\((404|405)\)|Not Found|Method Not Allowed/.test(e2.message)) throw e2;
+        // endpoint unavailable: parallel singles, still one progress UI
+        results = await Promise.all(reqs.map(rq => api('/matches/start', {method: 'POST', body: rq})));
+      }
     }
     others.forEach((o, i) => { S.season.results[o.id] = resultFromFull(o, results[i]); });
     u.ms = performance.now() - u.t0;
-    S.career.batchMs = Math.round(u.ms);
+    if(!u.reused) S.career.batchMs = Math.round(u.ms);
   }catch(e){
     u.error = 'League simulation failed: ' + e.message; toast(u.error);
   }finally{ clearInterval(timer); }
@@ -847,44 +1063,100 @@ function recordLivResult(f, m){
   };
 }
 
+/* ── week finalisation: a persisted journal of idempotent steps ─────────
+   1. pendingWeek marker is written first;
+   2. your result + its career effects (condition, injuries, form, board);
+   3. the weekly recovery/injury tick (once per matchweek, `tick:<mw>`);
+   4. the matchweek counter;
+   all committed synchronously in one save, before any network wait. Then
+   5. the other fixtures (server-side, idempotent — a reload re-asks and gets
+   the stored results back), after which the marker is cleared. On boot
+   `recoverResults` resumes any step that didn't happen; none is applied
+   twice. */
+const tickKey = mw => 'tick:' + mw;
+function applyWeekTick(mw){
+  const c = S.career; if(!c || c.processed[tickKey(mw)]) return false;
+  weekPasses(mw); c.processed[tickKey(mw)] = true; return true;
+}
+function advanceMatchweek(mw){ S.season.matchweek = Math.max(S.season.matchweek || 1, Math.min(38, mw + 1)); }
+function roundComplete(mw){ return S.season.fixtures.filter(x => x.mw === mw).every(x => S.season.results[x.id]); }
+async function finishRound(f){
+  let ok = true;
+  if(!roundComplete(f.mw)) ok = await simulateOthers(f);
+  S.season.standings = computeStandings();
+  const c = S.career;
+  if(ok !== false && roundComplete(f.mw) && c.pendingWeek && c.pendingWeek.mw === f.mw) c.pendingWeek = null;
+  checkSeasonEnd();
+  saveState(); renderTopBar(); refreshFtBanner();
+  return roundComplete(f.mw);
+}
+CC.finishRound = finishRound; CC.applyWeekTick = applyWeekTick;
 let _finalizing = null;
 window.finalizeFixture = function(){
   if(_finalizing) return _finalizing;
   _finalizing = (async () => {
     const f = S.matchFixture, m = S.match;
     if(!f || !m || !m.fullTime) return;
+    if(f.exhibition && f.friendly){ if(CC.onFriendlyFT) CC.onFriendlyFT(f, m); return; }
     if(f.exhibition) return finalizeExhibition(f, m);
-    if(S.season.results[f.id]) return;
-    ensureCareer();
-    recordLivResult(f, m);
-    careerAfterMatch(f, m);
-    saveState();
-    refreshFtBanner();
-    TL.bus.dispatchEvent(new CustomEvent('career:result', {detail: {fixtureId: f.id}}));
-    await simulateOthers(f);
-    weekPasses(f.mw);
-    S.season.matchweek = Math.min(38, f.mw + 1);
+    const c = ensureCareer();
+    c.pendingWeek = {fid: f.id, mw: f.mw, matchId: m.matchId || null, t: Date.now()};
+    saveCareer();                                     // 1. marker first
+    if(!S.season.results[f.id]) recordLivResult(f, m); // 2.
+    careerAfterMatch(f, m);                           //    (idempotent: processed[fid])
+    applyWeekTick(f.mw);                              // 3.
+    advanceMatchweek(f.mw);                           // 4.
     S.season.standings = computeStandings();
-    checkSeasonEnd();
-    saveState(); renderTopBar(); refreshFtBanner();
+    saveState();                                      // one synchronous commit
+    renderTopBar(); refreshFtBanner();
+    TL.bus.dispatchEvent(new CustomEvent('career:result', {detail: {fixtureId: f.id}}));
+    await finishRound(f);                             // 5.
   })().finally(() => { _finalizing = null; });
   return _finalizing;
 };
+/* the pre-match selection comes back after the match: subs made during it
+   never rewrite your squad; only unavailable players are replaced */
+function restorePreMatch(force){
+  const c = S.career, pm = c && c.preMatch;
+  if(!pm || !pm.squad || isLiveMatch()) return false;
+  if(!force && !S.season.results[pm.fid]) return false;
+  const mine = pid => pid && P(pid) && P(pid).clubId === LIV;
+  const sq = pm.squad;
+  S.current = {...blankSquad(), ...sq, starters: {...sq.starters}, bench: [...sq.bench],
+    playerInstructions: {...(sq.playerInstructions || {})}};
+  for(const k in S.current.starters) if(!mine(S.current.starters[k])) S.current.starters[k] = null;
+  S.current.bench = S.current.bench.filter(mine);
+  // signings made since kick-off keep their bench place
+  for(const id of (c.pendingBench || [])) if(mine(id) && !isUsed(id) && S.current.bench.length < 7) S.current.bench.push(id);
+  c.preMatch = null;
+  return true;
+}
+CC.restorePreMatch = restorePreMatch;
 
 CC.isFinalizing = () => !!_finalizing;
 const _startFixture = window.startFixture;
 window.startFixture = function(fid){
   CC.lastRotation = null;
+  if(!isLiveMatch() && restorePreMatch(false)) saveState();
   if(_finalizing){ toast('Results from around the league are still coming in…'); _finalizing.then(() => window.startFixture(fid)); return; }
   return _startFixture.apply(this, arguments);
 };
 window.continueSeason = function(){
   const f = S.matchFixture;
   if(f && f.exhibition && f.scenario){ endExhibition(); return; }
+  if(f && f.friendly){
+    S.match = null; S.matchFixture = null; S.changes = [];
+    if(S.base) S.current = JSON.parse(JSON.stringify(S.base));
+    S.base = null; clearActiveMatchHandle();
+    enforceAvailability(); saveState();
+    return show(CC.afterFriendlyView ? CC.afterFriendlyView() : 'schedule');
+  }
   // in-match changes were for that match: next fixture starts from your plan
   const hadChanges = S.base && S.changes && S.changes.length;
-  if(S.base && !(f && f.exhibition)) S.current = JSON.parse(JSON.stringify(S.base));
-  S.match = null; S.matchFixture = null; S.changes = []; S.base = null;
+  const wasExh = !!(f && f.exhibition);
+  S.match = null;
+  if(!wasExh && !restorePreMatch(true) && S.base) S.current = JSON.parse(JSON.stringify(S.base));
+  S.matchFixture = null; S.changes = []; S.base = null;
   if(hadChanges) setTimeout(() => toast('In-match changes reset — you’re back on your pre-match plan.'), 250);
   const notes = enforceAvailability(); if(notes.length){ saveState(); setTimeout(() => toast(notes[0]), 300); }
   if(S.career && S.career.sacked) return show('gameover');
@@ -936,6 +1208,7 @@ function checkSeasonEnd(){
   if(!S.season.fixtures.every(f => S.season.results[f.id])) return;
   c.seasonEnd = computeSeasonEnd();
   const se = c.seasonEnd;
+  if(CC.onSeasonEnd) try{ CC.onSeasonEnd(se); }catch(e){ console.warn('onSeasonEnd', e); }
   c.board.confidence = Math.round(clamp(c.board.confidence + se.confAdj, 0, 100));
   if(se.verdict === 'failed' && c.board.confidence < 25)
     c.sacked = {year: c.year, mw: 38, pos: se.pos, pts: se.pts, record: se.record, conf: c.board.confidence,
@@ -986,7 +1259,7 @@ CC.startNextSeason = function(){
   applyCareerToPlayers();
   PREMIER_LEAGUE.season = seasonLabel(c.year);
   S.season = blankSeason();
-  relabelFixtures(c.year);
+  (CC.relabelFixtures || relabelFixtures)(c.year);
   c.seasonSeed = S.season.seed;
   c.board.objective = objectiveFor(LIV, se.pos);
   c.board.confidence = Math.round(clamp(55 + (se.confAdj > 0 ? 10 : se.confAdj < -15 ? -10 : 0) + (c.board.confidence - 55) * .3, 30, 80));
@@ -1000,6 +1273,7 @@ CC.startNextSeason = function(){
   c.stats = {}; c.processed = {}; c.lastReport = null; c.kick = null; c.seasonEnd = null;
   c.notices = [{kind: 'season', text: `Welcome to ${PREMIER_LEAGUE.season}. Objective: ${c.board.objective.text}. Transfer budget ${fmtM(S.finance.transferBudget)} (finish bonus ${fmtM(bonus)}).`, mw: 1},
     ...devNotes.map(n => ({...n, mw: 1})), ...c.notices].slice(0, 40);
+  if(CC.onNewSeason) try{ CC.onNewSeason(se, bonus); }catch(e){ console.warn('onNewSeason', e); }
   enforceAvailability();
   saveState(); renderTopBar(); show('home');
   toast(`${PREMIER_LEAGUE.season} begins — ${devNotes.length} squad changes over the summer`);
@@ -1083,29 +1357,66 @@ CC.applyPlan = function(i){
   renderMatch();
 };
 CC.undoPlan = function(){ if(!CC._undoTac) return; S.current.tactics = CC._undoTac; CC._undoTac = null; saveState(); renderMatch(); };
+/* Rest tired players: a few like-for-like changes, never a reserve XI.
+   Most tired first, at most ROT_MAX changes, the keeper only when he's
+   really spent, replacements must fit the position, and the swap has to be
+   worth it on the day (fitness included). Your first-choice XI is
+   remembered so it can be restored once they've recovered. */
+const ROT_MAX = 4, ROT_TIRED = 75, ROT_GK_TIRED = 55;
 CC.rotateTired = function(){
   const st = S.current, f = curForm(), swaps = [], kept = [];
-  for(const sl of f.slots){
-    const pid = st.starters[sl.id]; if(!pid) continue;
-    const c0 = condOf(pid); if(c0 >= 75) continue;
+  if(S.career && !S.career.rotated) rememberFirstChoice();
+  const tired = f.slots.map(sl => ({sl, pid: st.starters[sl.id]})).filter(x => x.pid && P(x.pid))
+    .map(x => ({...x, c: condOf(x.pid)}))
+    .filter(x => x.c < (x.sl.position === 'GK' ? ROT_GK_TIRED : ROT_TIRED))
+    .sort((a, b) => a.c - b.c);
+  for(const {sl, pid, c: c0} of tired){
+    if(swaps.length >= ROT_MAX){ kept.push(`${shortName(P(pid).name)} (${Math.round(c0)}%)`); continue; }
     const used = new Set(Object.values(st.starters).filter(Boolean));
+    const now = selScore(P(pid), sl.position, c0);
     const cand = clubPool().filter(p => !used.has(p.id) && !isInjured(p.id) && condOf(p.id) >= Math.max(80, c0 + 15)
-        && (sl.position === 'GK') === (p.pos === 'GK'))
-      .sort((a, b) => slotScore(b, sl.position) - slotScore(a, sl.position))[0];
-    // the more tired he is, the bigger the quality drop worth taking
-    const allowed = 7 + (75 - c0) * 0.5;
-    if(!cand || slotScore(P(pid), sl.position) - slotScore(cand, sl.position) > allowed){
+        && (sl.position === 'GK') === (p.pos === 'GK') && ['natural', 'comfortable', 'secondary'].includes(suitability(p, sl.position)))
+      .map(p => ({p, v: selScore(p, sl.position, condOf(p.id))}))
+      .sort((a, b) => b.v - a.v)[0];
+    // on the day (fitness included) the change must not cost more than a little
+    if(!cand || cand.v < now - (2 + (ROT_TIRED - c0) * 0.1)){
       kept.push(`${shortName(P(pid).name)} (${Math.round(c0)}%)`); continue; }
-    const bi = st.bench.indexOf(cand.id); if(bi > -1) st.bench.splice(bi, 1);
-    st.starters[sl.id] = cand.id; instrFor(cand.id, sl.position);
+    const bi = st.bench.indexOf(cand.p.id); if(bi > -1) st.bench.splice(bi, 1);
+    st.starters[sl.id] = cand.p.id; instrFor(cand.p.id, sl.position);
     if(!st.bench.includes(pid)) st.bench.unshift(pid);
-    swaps.push(`${shortName(cand.name)} in for ${shortName(P(pid).name)} (${Math.round(c0)}%)`);
+    swaps.push(`${shortName(cand.p.name)} in for ${shortName(P(pid).name)} (${Math.round(c0)}%)`);
   }
-  while(st.bench.length > 7) st.bench.pop();
+  while(st.bench.length > 7){                      // trim, never the only keeper
+    const k = [...st.bench].reverse().findIndex(id => !(P(id).pos === 'GK' && st.bench.filter(b => P(b).pos === 'GK').length === 1));
+    st.bench.splice(st.bench.length - 1 - (k < 0 ? 0 : k), 1);
+  }
+  if(swaps.length && S.career) S.career.rotated = true;
   saveState();
   CC.lastRotation = {swaps, kept};
   toast(swaps.length ? `Rested ${swaps.length}: ${swaps.join(', ')}` : 'No fresher like-for-like options — pick manually on the team screen.');
   renderMatch();
+};
+/* first-choice players who are back to fitness and not in the XI */
+function firstChoiceBack(){
+  const c = S.career, fx = c && c.firstXI; if(!fx || !S.current) return [];
+  const inXI = new Set(Object.values(S.current.starters).filter(Boolean));
+  return Object.values(fx.starters).filter(pid => pid && P(pid) && P(pid).clubId === LIV && !inXI.has(pid) && !isInjured(pid) && condOf(pid) >= 80);
+}
+CC.firstChoiceBack = firstChoiceBack;
+CC.restoreFirstXI = function(){
+  const c = S.career, fx = c && c.firstXI; if(!fx || isLiveMatch()) return;
+  const st = S.current, mine = pid => pid && P(pid) && P(pid).clubId === LIV;
+  st.formationId = fx.formationId;
+  st.starters = {}; for(const sl of formationOf(fx.formationId).slots) st.starters[sl.id] = mine(fx.starters[sl.id]) ? fx.starters[sl.id] : null;
+  const xiSet = new Set(Object.values(st.starters).filter(Boolean));
+  st.bench = fx.bench.filter(id => mine(id) && !xiSet.has(id));
+  for(const sl of curForm().slots) if(st.starters[sl.id]) instrFor(st.starters[sl.id], sl.position);
+  const notes = enforceAvailability();
+  if(st.bench.length < 7) _fillBenchQuiet();
+  c.rotated = false; CC.lastRotation = null;
+  saveState();
+  toast('First-choice XI restored' + (notes.length ? ' — ' + notes[0] : ''));
+  if(S.ui.view === 'match') renderMatch(); else renderPitch();
 };
 function readiness(){
   const st = S.current, f = curForm(), rows = [], warns = [];
@@ -1125,24 +1436,29 @@ TL.hooks.prematchHTML = function(f){
   const notes = enforceAvailability();
   const home = f.home === LIV, opp = clubById(home ? f.away : f.home);
   const ex = expectationFor(f); CC._expCache = {fid: f.id, e: ex};
+  const so = selectedOdds(f), best = fullStrength();
   const online = ENGINE_MODE === 'mock' || !!ENGINE_HEALTH;
-  const sideSub = id => id === LIV ? `${curForm().name} · ${esc(activePlanName())}` : `${formationOf(shapeFor(id)).name} · ${esc(clubById(id).plan)}`;
+  const sideSub = id => id === LIV ? `${curForm().name} · ${esc(window.CB && CB.catalog && CB.systemApplied() ? CB.sysById(S.career.build.system_id).name : activePlanName())}` : `${formationOf(window.clubFormation(id)).name} · ${esc(clubById(id).plan)}`;
   const R = readiness();
   const pct = v => Math.round(v * 100);
-  const canRotate = R.rows.some(r => r.c < 75);
+  const canRotate = R.rows.some(r => r.c < (r.sl.position === 'GK' ? ROT_GK_TIRED : ROT_TIRED));
+  const back = S.career.rotated ? firstChoiceBack() : [];
   return `<div class="cc-pre">
     <div class="board cc-prehead">
-      <div class="cc-kicker">PREMIER LEAGUE · MATCHWEEK ${f.mw} · ${esc(f.date)} · ${home ? 'ANFIELD' : 'AWAY AT ' + esc(opp.shortName.toUpperCase())}${ENGINE_MODE === 'mock' ? ' · <b style="color:var(--warn)">MOCK ENGINE (DEV)</b>' : ''}</div>
+      <div class="cc-kicker">${f.friendly ? `PRE-SEASON FRIENDLY ${f.n || ''} · CAMP WEEK ${f.camp_week}` : `PREMIER LEAGUE · MATCHWEEK ${f.mw}`} · ${esc(f.date)} · ${home ? 'ANFIELD' : 'AWAY AT ' + esc(opp.shortName.toUpperCase())}${ENGINE_MODE === 'mock' ? ' · <b style="color:var(--warn)">MOCK ENGINE (DEV)</b>' : ''}</div>
       <div class="scoreline" style="margin-top:10px">
         <div class="tm"><span><span class="clubdot" style="background:${clubById(f.home).color}"></span>${esc(clubName(f.home))}</span><small>${sideSub(f.home)}</small></div>
         <div class="sc" style="font-size:22px;color:var(--dim)">vs</div>
         <div class="tm"><span><span class="clubdot" style="background:${clubById(f.away).color}"></span>${esc(clubName(f.away))}</span><small>${sideSub(f.away)}</small></div>
       </div>
+      ${CC.systemStripHTML ? CC.systemStripHTML(f) : ''}
       <div class="cc-expect">
-        <div><span class="cc-k">THE BOARD EXPECTS</span><b>${ex.short}</b><span class="cc-muted"> — ${esc(ex.verdict)}</span></div>
-        <div class="cc-odds" title="The board's pre-match estimate from squad strength and venue — not the engine's odds">
-          <i class="w" style="flex:${ex.pW.toFixed(3)}">${pct(ex.pW) >= 12 ? 'W ' + pct(ex.pW) + '%' : ''}</i><i class="d" style="flex:${ex.pD.toFixed(3)}">${pct(ex.pD) >= 12 ? 'D ' + pct(ex.pD) + '%' : ''}</i><i class="l" style="flex:${ex.pL.toFixed(3)}">${pct(ex.pL) >= 12 ? 'L ' + pct(ex.pL) + '%' : ''}</i></div>
-        <div class="cc-muted cc-small">Board confidence ${S.career.board.confidence}/100 · strength ${clubStrength(LIV).toFixed(1)} v ${clubStrength(opp.id).toFixed(1)} · a result above expectation lifts confidence</div>
+        ${f.friendly ? `<div class="cc-small">A pre-season friendly: no points, no board verdict. Minutes build partnerships and system familiarity, and the gate goes to the club.</div>` : ''}
+        <div${f.friendly ? ' style="display:none"' : ''}><span class="cc-k">THE BOARD EXPECTS</span><b>${ex.short}</b><span class="cc-muted"> — ${esc(ex.verdict)}</span></div>
+        <div class="cc-k" style="margin-top:8px">YOUR XI'S CHANCES</div>
+        <div class="cc-odds" id="ccOdds" title="Estimate from the XI you've picked (rating, positional fit, fitness) against their likely XI — not the engine's odds">
+          <i class="w" style="flex:${so.pW.toFixed(3)}">${pct(so.pW) >= 12 ? 'W ' + pct(so.pW) + '%' : ''}</i><i class="d" style="flex:${so.pD.toFixed(3)}">${pct(so.pD) >= 12 ? 'D ' + pct(so.pD) + '%' : ''}</i><i class="l" style="flex:${so.pL.toFixed(3)}">${pct(so.pL) >= 12 ? 'L ' + pct(so.pL) + '%' : ''}</i></div>
+        <div class="cc-muted cc-small" id="ccStrLine">Your XI <b>${so.you.toFixed(1)}</b>${Math.abs(best - so.you) >= 0.3 ? ` (full strength ${best.toFixed(1)})` : ''} v ${esc(opp.shortName)} ${so.them.toFixed(1)} · fitness and positions included · board confidence ${S.career.board.confidence}/100 — the board judges you against your full-strength squad</div>
       </div>
       <div class="cc-actions">
         <button class="btn pri" style="flex:0 0 auto;padding:12px 30px" ${online ? '' : 'disabled style="opacity:.5"'} onclick="kickOff()">Kick off</button>
@@ -1153,11 +1469,13 @@ TL.hooks.prematchHTML = function(f){
       ${!SUPPORTED_ENGINE_FORMATIONS.includes(S.current.formationId) ? `<p class="cc-warnp">${curForm().name} isn't available in matches yet — switch to 4-3-3, 4-2-3-1 or 4-1-4-1 on the team screen.</p>` : ''}
       ${startingIds().length < 11 ? `<p class="cc-warnp">Only ${startingIds().length} of 11 selected.</p>` : ''}
     </div>
+    ${TL.hooks.prepCardsHTML ? `<section class="cc-panel" id="ccPrepCards">${(() => { try{ return TL.hooks.prepCardsHTML(f) || ''; }catch(e){ console.warn('prepCards', e); return ''; } })()}</section>` : ''}
     <div class="cc-pregrid">
       <section class="cc-panel"><h4>SCOUTING REPORT · ${esc(opp.name.toUpperCase())}</h4><div id="ccScout"></div></section>
       <div class="cc-col">
         <section class="cc-panel"><h4>SUGGESTED PLAN</h4><div id="ccPlan"></div></section>
-        <section class="cc-panel"><h4>YOUR SQUAD <span class="cc-h-r">${canRotate ? `<button class="btn sec sm" onclick="CC.rotateTired()">Rest tired players</button>` : ''}</span></h4>
+        <section class="cc-panel"><h4>YOUR SQUAD <span class="cc-h-r">${back.length ? `<button class="btn sec sm" onclick="CC.restoreFirstXI()" title="Back to the XI you picked before resting players">Restore first-choice XI</button>` : ''}${canRotate ? `<button class="btn sec sm" onclick="CC.rotateTired()">Rest tired players</button>` : ''}</span></h4>
+          ${back.length ? `<div class="cc-note good">${esc(back.map(pid => shortName(P(pid).name)).join(', '))} ${back.length > 1 ? 'are' : 'is'} fit again — restore your first-choice XI?</div>` : ''}
           ${CC.lastRotation ? `<div class="cc-rot">${CC.lastRotation.swaps.length ? '✓ ' + esc(CC.lastRotation.swaps.join(' · ')) : ''}${CC.lastRotation.kept.length ? `<div class="cc-rot-k">Kept (no fresher like-for-like): ${esc(CC.lastRotation.kept.join(', '))}</div>` : ''}</div>` : ''}
           ${notes.map(n => `<div class="cc-note bad">⚕ ${esc(n)}</div>`).join('')}
           ${R.warns.slice(0, 5).map(w => `<div class="cc-note ${w.lvl}">${esc(w.text)}</div>`).join('')}
@@ -1176,7 +1494,7 @@ window.renderMatch = function(){
   const wrap = $('#matchBody');
   const f = S.matchFixture;
   if(wrap) wrap.classList.toggle('cc-wide', !!(f && !S.match && !f.exhibition));
-  if(wrap && f && !S.match && !f.exhibition && S.season && S.season.fixtures.some(x => x.id === f.id)){
+  if(wrap && f && !S.match && ((!f.exhibition && S.season && S.season.fixtures.some(x => x.id === f.id)) || f.friendly)){
     wrap.dataset.mode = 'pre';
     const sc = $('#v-match'), st = sc ? sc.scrollTop : 0;
     wrap.innerHTML = TL.hooks.prematchHTML(f);
@@ -1188,8 +1506,13 @@ window.renderMatch = function(){
 };
 
 /* ═══ 8. FULL TIME — board reaction / scenario stars (match-ui hook) ═════ */
+/* Stars: the server's table (GET /api/daily) is the single source of truth;
+   the fallback below mirrors server._scenario_stars exactly. */
+CC.starsTable = null;
 function starsFor(kind, gf, ga){
-  const d = gf - ga;
+  const d = gf - ga, T = CC.starsTable && CC.starsTable[kind];
+  if(T){ const k = String(clamp(d, -6, 6)); if(T[k] != null) return T[k]; }
+  if(kind === 'comeback') return d > 0 ? 3 : d === 0 ? 2 : d === -1 ? 1 : 0;
   if(kind === 'protect') return d >= 2 ? 3 : d === 1 ? 2 : d === 0 ? 1 : 0;
   if(kind === 'deadlock') return d > 0 ? 3 : d === 0 ? 1 : 0;
   return d > 0 ? 3 : d === 0 ? 2 : d === -1 ? 1 : 0;
@@ -1223,11 +1546,11 @@ function ftLeagueHTML(f){
   </div>`;
 }
 function ftScenarioHTML(f, m){
-  const sc = f.scenario, [gf, ga] = scenarioFinal(m, sc), stars = starsFor(sc.kind, gf, ga);
-  const c = ensureCareer(), sub = c.challenges.submitted[sc.scenario_id + '|' + m.matchId];
+  const c = ensureCareer(), sub = c.challenges.submitted[f.scenario.scenario_id + '|' + m.matchId];
+  const sc = f.scenario, [gf, ga] = scenarioFinal(m, sc), stars = sub && sub.stars != null ? sub.stars : starsFor(sc.kind, gf, ga);
   const objs = ((sc.objective || {}).stars || []);
   return `<div class="cc-ftb cc-ftsc" id="ccFt">
-    <div class="cc-k">${sc.daily ? 'TOUCHLINE DAILY · ' + esc(sc.date) : 'SCENARIO'} · ${esc(sc.title || KIND_INFO[sc.kind].name)}</div>
+    <div class="cc-k">${sc.daily ? 'TOUCHLINE DAILY · ' + esc(sc.date) : 'SCENARIO'} · ${esc(sc.title || KIND_INFO[sc.kind].name)}${sc.daily && sc.ranked != null ? (sc.ranked ? ' · <span class="good">RANKED ATTEMPT</span>' : ' · <span class="warn">PRACTICE</span>') : ''}</div>
     <div class="cc-stars s${stars}">${starStr(stars)}</div>
     <div class="cc-small">${gf}–${ga} from ${sc.state.score[0]}–${sc.state.score[1]} at ${Math.round(sc.takeover_clock / 60)}'</div>
     ${objs.length ? `<div class="cc-objs">${objs.map(o => `<span class="${stars >= o.stars ? 'hit' : ''}">${starStr(o.stars)} ${esc(o.label)}</span>`).join('')}</div>` : ''}
@@ -1246,6 +1569,7 @@ function managerFormHTML(action){
     <button class="btn pri sm" style="flex:0 0 auto" onclick="${action}">Submit</button></div>`;
 }
 function submittedHTML(sub){
+  if(sub.practice) return `<div class="cc-small"><span class="warn">Practice — not ranked.</span> ${esc(sub.reason || '')}${sub.rank ? ` Your ranked entry: <b>${sub.rank}</b> of ${sub.total}.` : ''}</div>`;
   return `<div class="cc-small">Submitted as <b>${esc(sub.name)}</b> — rank <b>${sub.rank}</b> of ${sub.total}${sub.best ? ' · <span class="good">new personal best</span>' : ''}</div>`;
 }
 const _ftView = window.renderFullTimeView;
@@ -1297,7 +1621,32 @@ const KIND_INFO = {
 const KINDS = ['chase','comeback','protect','tenmen','deadlock'];
 const LIB_DEFAULT_OPP = {chase:'ARS', comeback:'MCI', protect:'NEW', tenmen:'CHE', deadlock:'EVE'};
 const DAILY_OPPS = ['MCI','ARS','CHE','NEW','TOT','AVL','MUN'];
-function localDate(){ const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; }
+/* The Daily's date comes from the server (UTC day); the browser clock is
+   only a fallback before /api/daily has answered. */
+CC.serverDay = null;
+function localDate(){ return CC.serverDay || new Date().toISOString().slice(0, 10); }
+let _dailyInfo = null;
+function fetchDaily(){
+  // /api/daily is optional (server-side ranked attempts are a build-core/Ghost
+  // League item): without it the browser's UTC day is used
+  if(!_dailyInfo) _dailyInfo = CC.hasRoute('/daily').then(ok => { if(!ok) throw new Error('no /daily'); return api('/daily'); }).then(j => {
+    CC.serverDay = j.date; CC.starsTable = j.stars || null; return j;
+  }).catch(e => { CC.serverDay = new Date().toISOString().slice(0, 10); CC.dailyLocal = true; return {date: CC.serverDay}; });
+  return _dailyInfo;
+}
+CC.fetchDaily = fetchDaily;
+/* persistent anonymous player id: one ranked Daily attempt per id per day */
+const PLAYER_KEY = 'touchline:player_id';
+function playerId(){
+  let id = null;
+  try{ id = localStorage.getItem(PLAYER_KEY); }catch(e){}
+  if(!id || !/^[A-Za-z0-9_-]{8,64}$/.test(id)){
+    id = (crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2) + Date.now().toString(36)).replace(/[^A-Za-z0-9-]/g, '');
+    try{ localStorage.setItem(PLAYER_KEY, id); }catch(e){}
+  }
+  return id;
+}
+CC.playerId = playerId;
 function dailySpec(date){
   const [y, mo, d] = date.split('-').map(Number);
   const dayIdx = Math.floor(Date.UTC(y, mo - 1, d) / 86400000);
@@ -1360,17 +1709,28 @@ CC.takeCharge = async function(key){
   const team = spec.livHome ? 'HOME' : 'AWAY';
   let snap;
   ent.starting = true; renderChallenges();
+  let att = null;
   try{
-    snap = await api('/matches/start', {method: 'POST', body: {...ent.request, scenario_id: sc.scenario_id, mode: 'live', save_id: SAVE_ID}});
+    if(spec.daily){
+      if(spec.date !== localDate()) throw new Error(`that Daily (${spec.date}) isn't today's — today is ${localDate()}`);
+      if(await CC.hasRoute('/challenges/{scenario_id}/attempt')){
+        att = await api(`/challenges/${encodeURIComponent(sc.scenario_id)}/attempt`, {method: 'POST', body: {player_id: playerId(), save_id: SAVE_ID}});
+        snap = att.snapshot;
+      } else {
+        snap = await api('/matches/start', {method: 'POST', body: {...ent.request, scenario_id: sc.scenario_id, mode: 'live', save_id: SAVE_ID}});
+      }
+    } else snap = await api('/matches/start', {method: 'POST', body: {...ent.request, scenario_id: sc.scenario_id, mode: 'live', save_id: SAVE_ID}});
   }catch(e){ ent.starting = false; renderChallenges(); return toast('Could not start the scenario: ' + e.message); }
   ent.starting = false;
+  if(att && att.reason) setTimeout(() => toast(att.reason), 400);
   backupSquad();
   const livSide = spec.livHome ? ent.request.home_team : ent.request.away_team;
   S.current = squadFromSide(livSide);
   S.base = JSON.parse(JSON.stringify(S.current)); S.changes = [];
   const fixture = {id: ent.request.fixture_id, mw: 0, home: ent.request.home_team.club_id, away: ent.request.away_team.club_id,
     date: spec.daily ? 'Daily ' + spec.date : 'Scenario', exhibition: true,
-    scenario: {...sc, team, kind: sc.kind || spec.kind, daily: !!spec.daily, date: spec.date || null, opp: spec.opp, key}};
+    scenario: {...sc, team, kind: sc.kind || spec.kind, daily: !!spec.daily, date: spec.date || null, opp: spec.opp, key,
+      ranked: spec.daily ? (att ? !!att.ranked : null) : true}};
   S.matchKickoff = null;
   if(typeof TL.startLiveFromSnapshot === 'function') TL.startLiveFromSnapshot(snap, fixture);
   else { S.matchFixture = fixture; S.match = makeLiveMatch(snap); S.match.status = 'paused'; show('match'); renderMatch(); }
@@ -1397,17 +1757,22 @@ CC.submitCurrent = async function(auto){
   const c = ensureCareer();
   const inp = document.getElementById('ccMgr');
   if(inp){ const v = inp.value.trim(); if(!v){ inp.focus(); return toast('Enter a manager name'); } c.manager = v.slice(0, 24); saveCareer(); }
+  else if(!c.manager && f.scenario.daily && f.scenario.ranked === false && !auto) return;
   if(!c.manager) return;
   const k = f.scenario.scenario_id + '|' + m.matchId;
   if(c.challenges.submitted[k]) return;
   const box = document.getElementById('ccSubmit');
   if(box) box.innerHTML = `<div class="cc-loading"><i class="cc-dot"></i> Submitting as ${esc(c.manager)}…</div>`;
   try{
-    const r = await api(`/challenges/${encodeURIComponent(f.scenario.scenario_id)}/submit`, {method: 'POST', body: {match_id: m.matchId, manager_name: c.manager}});
-    c.challenges.submitted[k] = {name: c.manager, rank: r.rank, total: r.total, best: r.best, stars: r.stars};
+    const r = await api(`/challenges/${encodeURIComponent(f.scenario.scenario_id)}/submit`, {method: 'POST', body: {match_id: m.matchId, manager_name: c.manager, player_id: playerId()}});
+    c.challenges.submitted[k] = {name: c.manager, rank: r.rank, total: r.total, best: r.best, stars: r.stars, practice: !!r.practice, reason: r.reason || null};
+    // the server's stars are the record: keep local bests in step
+    const b = c.challenges.best[f.scenario.scenario_id];
+    if(b && c.challenges.last && c.challenges.last.id === f.scenario.scenario_id && c.challenges.last.stars !== r.stars){
+      c.challenges.last.stars = r.stars; if(b.score[0] === r.score[0] && b.score[1] === r.score[1]) b.stars = r.stars; }
     saveCareer();
-    if(box) box.innerHTML = submittedHTML(c.challenges.submitted[k]);
-    loadLeaderboardInto(f.scenario.scenario_id, 'ccLb');
+    refreshFtBanner();
+    const box2 = document.getElementById('ccSubmit'); if(box2) box2.innerHTML = submittedHTML(c.challenges.submitted[k]);
   }catch(e){
     if(box) box.innerHTML = `<div class="cc-note bad">Leaderboard submit failed: ${esc(e.message)} <button class="cc-link" onclick="CC.submitCurrent()">Retry</button></div>`;
   }
@@ -1415,14 +1780,18 @@ CC.submitCurrent = async function(auto){
 async function loadLeaderboardInto(id, elId){
   const el = document.getElementById(elId); if(!el) return;
   try{
-    const lb = await api(`/challenges/${encodeURIComponent(id)}/leaderboard`);
-    const me = S.career && S.career.manager;
+    const lb = await api(`/challenges/${encodeURIComponent(id)}/leaderboard?player_id=${encodeURIComponent(playerId())}`);
     const el2 = document.getElementById(elId); if(!el2) return;
     el2.innerHTML = `<div class="cc-lb"><div class="cc-k">LEADERBOARD · ${lb.total} manager${lb.total === 1 ? '' : 's'}</div>
-      ${(lb.entries || []).length ? `<table><tbody>${lb.entries.slice(0, 10).map((e, i) => `<tr class="${e.manager_name === me ? 'me' : ''}">
+      ${(lb.entries || []).length ? `<table><tbody>${lb.entries.slice(0, 10).map((e, i) => `<tr class="${e.me ? 'me' : ''}">
         <td class="rk">${i + 1}</td><td class="nm">${esc(e.manager_name)}</td><td class="st">${starStr(e.stars)}</td>
         <td class="sc">${e.score[0]}–${e.score[1]}</td><td class="dc">${e.decisions ?? '—'} dec.</td></tr>`).join('')}</tbody></table>`
-      : '<div class="cc-small cc-muted">No entries yet — be the first.</div>'}</div>`;
+      : '<div class="cc-small cc-muted">No entries yet — be the first.</div>'}
+      ${lb.me && lb.me.rank && lb.me.rank > 10 ? `<div class="cc-small">You: rank <b>${lb.me.rank}</b> of ${lb.total}</div>` : ''}</div>`;
+    const st = document.getElementById('ccRankState');
+    if(st && lb.me) st.innerHTML = lb.me.ranked_attempt_used
+      ? '<span class="warn">You\'ve used today\'s ranked attempt</span> — replays are practice and don\'t change the leaderboard.'
+      : '<span class="good">Your first attempt today is ranked</span> — one go counts; replays after it are practice.';
   }catch(e){ el.innerHTML = `<div class="cc-small cc-muted">Leaderboard unavailable (${esc(e.message)}).</div>`; }
 }
 CC.loadLeaderboardInto = loadLeaderboardInto;
@@ -1465,20 +1834,26 @@ function briefingHTML(key, ent, big){
 CC.retryScen = key => { const e = _scen[key]; if(!e) return; delete _scen[key]; findScenario(e.spec); };
 function renderChallenges(){
   const el = document.getElementById('challengesBody'); if(!el || S.ui.view !== 'challenges') return;
+  if(!CC.serverDay && !TL.hooks.ghostLeagueHTML){
+    el.innerHTML = '<div class="pagehead">CHALLENGES · SEEDED & FAIR</div><div class="cc-loading" style="margin-top:14px"><i class="cc-dot"></i> Checking today\'s Daily…</div>';
+    fetchDaily().then(() => renderChallenges()).catch(e => { el.innerHTML = `<div class="pagehead">CHALLENGES</div><div class="cc-note bad" style="margin-top:14px">Couldn't reach the server for today's Daily (${esc(e.message)}). <button class="cc-link" onclick="CC.renderChallenges()">Retry</button></div>`; });
+    return;
+  }
   const c = ensureCareer();
   const date = localDate(), ds = dailySpec(date), dkey = specKey(ds), dent = _scen[dkey];
   const kinfo = KIND_INFO[(dent && dent.sc && dent.sc.kind) || ds.kind] || KIND_INFO[ds.kind];
   el.innerHTML = `
     <div class="pagehead">CHALLENGES · SEEDED & FAIR</div>
-    <h2 class="pagetitle">Take charge mid-match</h2>
+    <h2 class="pagetitle">${TL.hooks.ghostLeagueHTML ? 'Ghost League & scenarios' : 'Take charge mid-match'}</h2>
     <p class="cc-lead">Every challenge drops you into a real engine match at a decisive moment. Same squads, same seed, same dice for everyone — only your decisions differ.</p>
-    <div class="cc-chgrid">
+    ${TL.hooks.ghostLeagueHTML ? `<section class="cc-panel" id="ccGhost">${(() => { try{ return TL.hooks.ghostLeagueHTML() || ''; }catch(e){ console.warn('ghost', e); return ''; } })()}</section>` : `<div class="cc-chgrid">
       <section class="cc-panel cc-daily"><h4>TOUCHLINE DAILY · ${esc(date)} <span class="cc-h-r cc-kind">${esc(kinfo.name.toUpperCase())}</span></h4>
         <div id="ccDaily">${briefingHTML(dkey, dent, true)}</div>
-        ${c.manager ? `<div class="cc-small cc-muted" style="margin-top:8px">Playing as <b>${esc(c.manager)}</b> · <button class="cc-link" onclick="CC.renameManager()">change</button></div>` : ''}
+        <div class="cc-small" id="ccRankState" style="margin-top:8px"></div>
+        ${c.manager ? `<div class="cc-small cc-muted" style="margin-top:4px">Playing as <b>${esc(c.manager)}</b> · <button class="cc-link" onclick="CC.renameManager()">change</button></div>` : ''}
       </section>
       <section class="cc-panel"><h4>DAILY LEADERBOARD</h4><div id="ccDailyLb">${dent && dent.status === 'ready' ? '<div class="cc-loading"><i class="cc-dot"></i> Loading…</div>' : '<div class="cc-small cc-muted">Available once today\'s scenario is ready.</div>'}</div></section>
-    </div>
+    </div>`}
     <h3 class="cc-sub">SCENARIO LIBRARY</h3>
     <div class="cc-lib">${KINDS.map(k => {
       const spec = {kind: k, opp: _libOpp[k], livHome: true, base_seed: hashStr(`lib|${k}|${_libOpp[k]}`), daily: false};
@@ -1490,7 +1865,8 @@ function renderChallenges(){
           `<option value="${x.id}" ${x.id === _libOpp[k] ? 'selected' : ''}>${esc(x.shortName)}</option>`).join('')}</select>
           ${!ent ? `<button class="btn sec sm" onclick='CC.findScenario(${JSON.stringify(spec)})'>Find scenario</button>` : ''}</div>
         ${ent ? briefingHTML(key, ent, false) : ''}</div>`; }).join('')}</div>`;
-  if(!dent) findScenario(ds);
+  if(TL.hooks.ghostLeagueHTML){}
+  else if(!dent) findScenario(ds);
   else if(dent.status === 'ready' && !CC._lbLoaded){ CC._lbLoaded = true; loadLeaderboardInto(dent.sc.scenario_id, 'ccDailyLb').then(() => { CC._lbLoaded = false; }); }
 }
 CC.renderChallenges = renderChallenges;
@@ -1605,17 +1981,17 @@ function renderHomeCC(el){
           ${scorers.length ? `<div class="cc-small" style="margin-top:6px">Top scorers: ${scorers.map(([pid, n]) => `${esc(shortName(P(pid).name))} <b>${n}</b>`).join(' · ')}</div>` : ''}
           <button class="btn sec sm" style="margin-top:10px" onclick="(window.CM && CM.openPast) ? CM.openPast('${last.id}') : openResult('${last.id}')">Match review →</button>` : '<div class="cc-small cc-muted">Your first match is waiting.</div>'}
       </section>
-      <section class="cc-panel cc-dailyc"><h4>TOUCHLINE DAILY</h4>
+      ${TL.hooks.ghostLeagueHTML ? `<section class="cc-panel cc-dailyc"><h4>GHOST LEAGUE</h4><div class="cc-small cc-muted">Your squad, system and hand face three saved builds. One ranked run per server day; later runs are practice.</div><button class="btn pri sm" style="margin-top:10px" onclick="show('challenges')">Enter Ghost League →</button></section>` : `<section class="cc-panel cc-dailyc"><h4>TOUCHLINE DAILY</h4>
         <div class="cc-nf">${esc(dinfo ? dinfo.title : KIND_INFO[ds.kind].name)} <small>v ${esc(clubById(ds.opp).shortName)}</small></div>
         <div class="cc-small cc-muted">${esc(KIND_INFO[dinfo ? dinfo.kind : ds.kind].blurb)}</div>
         ${dbest ? `<div class="cc-best" style="margin-top:6px">${starStr(dbest.stars)} <small>${dbest.score[0]}–${dbest.score[1]}</small></div>` : ''}
         <button class="btn ${dbest ? 'sec' : 'pri'} sm" style="margin-top:10px;flex:0 0 auto" onclick="show('challenges')">${dbest ? 'Try again' : 'Play today\'s challenge'} →</button>
-      </section>
+      </section>`}
       <section class="cc-panel cc-news"><h4>CLUB NEWS</h4>
         ${c.notices.length ? c.notices.slice(0, 6).map(n => `<div class="cc-newsi ${n.kind}"><span>${n.mw ? 'MW' + n.mw : ''}</span>${esc(n.text)}</div>`).join('') : '<div class="cc-small cc-muted">Injuries, player development and board news will appear here.</div>'}
       </section>
       <section class="cc-panel"><h4>CLUB FINANCES</h4>
-        <div class="cc-small">Transfer budget <b>${fmtM(S.finance.transferBudget)}</b> · wage bill <b>${fmtM(financeSnapshot().weeklyK / 1000)}/wk</b> · <span title="Squad cost ratio: wages + transfer amortisation as a share of revenue. Keep it under ~70%.">wages/revenue</span> <b>${Math.round(financeSnapshot().scr * 100)}%</b></div>
+        <div class="cc-small">Transfer budget <b>${fmtM(S.finance.transferBudget)}</b> · wage bill <b>${fmtM(financeSnapshot().weeklyK / 1000)}/wk</b> · <span title="Squad cost ratio: wages + transfer amortisation as a share of revenue. The board warns above 80% and freezes signings above 90%.">squad cost ratio</span> <b>${Math.round(financeSnapshot().scr * 100)}%</b></div>
         <button class="cc-link" onclick="show('finances')">Finances →</button> <button class="cc-link" onclick="show('transfers')">Transfers →</button>
       </section>
       <section class="cc-panel cc-proto"><h4>TRAINING GROUND <span class="cc-proto-tag">PROTOTYPE</span></h4>
@@ -1656,12 +2032,14 @@ function renderSeasonView(){
           <div class="cc-award"><span class="cc-k">YOUNG PLAYER OF THE SEASON</span>${aw.young ? `<b>${esc(aw.young.name)}</b><small>${esc(clubById(aw.young.club).shortName)} · ${aw.young.avg} avg · ${aw.young.apps} apps</small>` : '<b>—</b><small>No under-22 made 8+ appearances</small>'}</div>
         </div>
       </section>
+      ${CC.seasonReviewHTML ? CC.seasonReviewHTML(se) : ''}
       <section class="cc-panel cc-setable"><h4>FINAL TABLE</h4>
         <table class="cc-mini">${se.table.map((r, i) => `<tr class="${r.c === LIV ? 'liv' : ''} ${i === 3 ? 'cut' : ''} ${i === 16 ? 'cut rel' : ''}"><td>${i + 1}</td>
           <td><span class="clubdot" style="background:${clubById(r.c).color}"></span>${esc(clubById(r.c).shortName)}</td><td>${r.gd >= 0 ? '+' : ''}${r.gd}</td><td><b>${r.p}</b></td></tr>`).join('')}</table>
       </section>
     </div>`;
 }
+CC.renderSeasonView = renderSeasonView;
 function renderGameOver(){
   const el = document.getElementById('gameoverBody'); if(!el) return;
   const s = S.career.sacked || {};
@@ -1820,6 +2198,45 @@ window.openDetails = function(pid){
   return r;
 };
 
+/* ── a bench player's card offers "Start" / "Sub on", not "To bench" ─── */
+function bestSlotFor(pid){
+  const pl = P(pid), live = isLiveMatch();
+  const en = id => live ? ((S.match.playerEnergy || {})[id] ?? 100) : condOf(id);
+  let best = null;
+  for(const sl of curForm().slots){
+    const cur = S.current.starters[sl.id];
+    if((sl.position === 'GK') !== (pl.pos === 'GK')) continue;
+    const gain = selScore(pl, sl.position, en(pid)) - (cur ? selScore(P(cur), sl.position, en(cur)) : -50);
+    if(!best || gain > best.gain) best = {sl, cur, gain};
+  }
+  return best;
+}
+CC.bestSlotFor = bestSlotFor;
+CC.startBench = function(pid, slotId){
+  if(isLiveMatch()){ const out = S.current.starters[slotId]; closeAll(); if(out) confirmSub(pid, out, slotId, true); return; }
+  const out = S.current.starters[slotId];
+  putInSlot(slotId, pid); if(out) addToBench(out);
+  closeAll(); renderPitch(); saveState();
+  toast(`${shortName(P(pid).name)} starts at ${slotById(slotId).position}${out ? ' — ' + shortName(P(out).name) + ' to the bench' : ''}`);
+};
+const _openFocus = window.openFocus;
+window.openFocus = function(pid){
+  const r = _openFocus.apply(this, arguments);
+  try{
+    if(!S.current || !S.current.bench.includes(pid) || Object.values(S.current.starters).includes(pid)) return r;
+    const btn = [...$$('#focus .fbtns button')].find(b => /benchThis/.test(b.getAttribute('onclick') || ''));
+    if(!btn) return r;
+    const b = bestSlotFor(pid), live = isLiveMatch();
+    const used = live && S.match.snap && (S.match.snap.substitutions_used || {})[livTeamId()] >= 5;
+    if(!b || used){ btn.remove(); return r; }
+    btn.className = 'btn pri sm';
+    btn.setAttribute('onclick', `CC.startBench('${pid}','${b.sl.id}')`);
+    btn.textContent = `${live ? 'Sub on' : 'Start'} at ${b.sl.position}${b.cur ? ' for ' + shortName(P(b.cur).name) : ''}`;
+    btn.title = live ? 'Opens the substitution confirmation — or drag him onto any starter' : 'Or drag him onto any slot';
+  }catch(e){ console.warn(e); }
+  return r;
+};
+
 /* ── table: league top scorers / assists / ratings ─────────────────────── */
 const _renderTable = window.renderTable;
 window.renderTable = function(){
@@ -1875,8 +2292,20 @@ function postBoot(){
     for(const f of livFixtures()) if(S.season.results[f.id]) c.processed[f.id] = true;
     c.seasonSeed = S.season.seed;
   }
+  // weekly-tick journal (v1): weeks already played before it existed count as ticked
+  if(c.tickV !== 1){
+    for(const f of livFixtures()) if(S.season.results[f.id]) c.processed[tickKey(f.mw)] = true;
+    c.tickV = 1;
+  }
   // an exhibition interrupted by a reload: give the squad back
   if(c.exBackup && !(S.matchFixture && S.matchFixture.exhibition)) restoreSquadBackup();
+  // a finished league match whose FT screen was never left: back to the pre-match selection
+  if(!S.match && restorePreMatch(false)) saveState();
+  // a save from before shapes were limited to what the engine plays
+  if(!S.match && S.current && !engineShapes().includes(S.current.formationId)){
+    const was = curForm().name; setFormation('433');
+    setTimeout(() => toast(`${was} isn't playable in matches — switched to 4-3-3.`), 500);
+  }
   checkSeasonEnd();
   const notes = enforceAvailability();
   if(notes.length) setTimeout(() => toast(notes[0]), 400);
@@ -1929,8 +2358,95 @@ window.submitOffer = function(pid){
     const gap = Math.max(0.5, Math.round((ask - worth) * 2) / 2);
     return out(`<div class="cc-offer-res warn"><b>${esc(club.shortName)} reject the offer.</b> They're about ${fmtM(gap)} short of what they want (${fmtM(ask)}).</div>`);
   }
+  // the agreed fee survives a reload until the contract is signed
+  S.transfers.agreed = S.transfers.agreed || {};
+  S.transfers.agreed[pid] = {fee, addons, mw: S.season.matchweek, club: pl.clubId};
+  saveState();
   out(`<div class="cc-offer-res good"><b>Fee agreed!</b> Now agree personal terms with ${esc(shortName(pl.name))}.</div>`);
   setTimeout(() => openContract(pid, fee, addons), 700);
+};
+/* an agreed fee is only good while he's still at the club it was agreed with */
+function agreedFor(pid){
+  const a = S.transfers && S.transfers.agreed && S.transfers.agreed[pid], pl = P(pid);
+  if(!a || !pl || pl.clubId === LIV || (a.club && a.club !== pl.clubId)) return null;
+  return a;
+}
+CC.agreedFor = agreedFor;
+const _openTransferProfile = window.openTransferProfile;
+window.openTransferProfile = function(pid){
+  const r = _openTransferProfile.apply(this, arguments);
+  try{
+    const a = agreedFor(pid), pl = P(pid);
+    if(a){
+      $('#drawerBody').insertAdjacentHTML('afterbegin', `<div class="cc-offer-stance good"><b>Fee agreed: ${fmtM(a.fee)}${a.addons ? ' + ' + fmtM(a.addons) + ' add-ons' : ''}.</b> Personal terms with ${esc(shortName(pl.name))} are still to be finalised.</div>`);
+      $('#drawerFoot').insertAdjacentHTML('beforeend', `<button class="btn pri" onclick="openContract('${pid}', ${a.fee}, ${a.addons || 0})">Finalise contract</button>`);
+      const mk = [...$$('#drawerFoot button')].find(b => /Make offer/.test(b.textContent)); if(mk) mk.className = 'btn sec';
+    }
+  }catch(e){ console.warn(e); }
+  return r;
+};
+/* a signing joins the squad: onto the bench (dropping the weakest outfield
+   substitute if it's full) and a Club News unveiling */
+const _completeTransfer = window.completeTransfer;
+window.completeTransfer = function(pid, fee){
+  const before = P(pid) && P(pid).clubId;
+  const r = _completeTransfer.apply(this, arguments);
+  const pl = P(pid);
+  if(!pl || pl.clubId !== LIV || before === LIV) return r;
+  if(S.transfers.agreed) delete S.transfers.agreed[pid];
+  let note = '';
+  if(!isUsed(pid)){
+    const st = S.current;
+    if(st.bench.length >= 7){
+      const out = st.bench.filter(id => P(id) && P(id).pos !== 'GK').sort((a, b) => P(a).ovr - P(b).ovr)[0];
+      if(out){ st.bench.splice(st.bench.indexOf(out), 1); note = ` (${shortName(P(out).name)} drops out of the matchday squad)`; }
+    }
+    if(st.bench.length < 7) st.bench.push(pid);
+    if(S.career && S.career.preMatch){ S.career.pendingBench = [...(S.career.pendingBench || []), pid]; }
+  }
+  const from = clubById(before);
+  if(S.career){
+    S.career.notices.unshift({kind: 'signing', pid, mw: S.season.matchweek,
+      text: `Unveiled at Anfield: ${pl.name} (${pl.pos}, ${pl.ovr}) signs from ${from ? from.shortName : 'abroad'} for ${fmtM(fee)} and goes straight onto the bench${note}.`});
+    S.career.notices = S.career.notices.slice(0, 40);
+  }
+  saveState();
+  setTimeout(() => toast(`${shortName(pl.name)} joins the squad — he's on the bench${note}`), 2300);
+  return r;
+};
+/* selling needs a confirmation, and the placeholder note goes */
+window.acceptSale = function(pid, fee){
+  if(isLiveMatch()){ liveBlocked('Transfers cannot be completed during a live match.'); return; }
+  const pl = P(pid); if(!pl) return;
+  const to = clubName(CLUBS.filter(c => c.id !== LIV)[hashStr(pid + ':buyer') % 19].id);
+  const inXI = Object.values(S.current.starters).includes(pid);
+  if(!confirm(`Sell ${pl.name} (${pl.pos}, ${pl.ovr}) to ${to} for ${fmtM(fee)}?${inXI ? '\n\nHe is in your starting XI.' : ''}\n\nThis can't be undone.`)) return;
+  sellPlayer(pid, fee);
+  if(S.career){ S.career.notices.unshift({kind: 'sale', pid, mw: S.season.matchweek, text: `${pl.name} leaves for ${to} — ${fmtM(fee)}.`}); }
+  enforceAvailability(); saveState();
+  toast(`${shortName(pl.name)} sold to ${to} — ${fmtM(fee)}`);
+  renderPitch(); renderTransfers();
+};
+const _renderOutgoing = window.renderOutgoing;
+window.renderOutgoing = function(){
+  const r = _renderOutgoing.apply(this, arguments);
+  try{
+    $$('#transferTabBody .finnote').forEach(n => { if(/deterministic offer|UI testing/.test(n.textContent))
+      n.textContent = 'List a player and clubs make an offer — click it to sell (you\'ll be asked to confirm). Sales credit cash in full; the board releases 70% to the transfer budget. Profit against remaining book value feeds the Squad Cost Ratio.'; });
+  }catch(e){ console.warn(e); }
+  return r;
+};
+const _renderTransfers = window.renderTransfers;
+window.renderTransfers = function(){
+  const r = _renderTransfers.apply(this, arguments);
+  try{        // negotiations in progress, on every tab
+    const ag = Object.keys((S.transfers && S.transfers.agreed) || {}).filter(agreedFor);
+    const tb = $('#transferTabBody');
+    if(ag.length && tb) tb.insertAdjacentHTML('beforebegin', `<div class="cc-panel cc-agreed" style="margin-bottom:12px"><h4>FEE AGREED — CONTRACT TO FINALISE</h4>
+      ${ag.map(pid => `<div class="cc-alert"><b>${esc(P(pid).name)}</b> <span class="cc-muted">${esc(clubName(P(pid).clubId))} · ${fmtM(S.transfers.agreed[pid].fee)}</span>
+        <button class="btn pri sm" style="margin-left:auto" onclick="openContract('${pid}', ${S.transfers.agreed[pid].fee}, ${S.transfers.agreed[pid].addons || 0});$('#scrim').classList.add('on');$('#drawer').classList.add('on')">Finalise contract</button></div>`).join('')}</div>`);
+  }catch(e){ console.warn(e); }
+  return r;
 };
 
 /* ── result recovery: the server is the source of truth ──────────────────
@@ -1962,18 +2478,33 @@ async function recoverResults(){
     played.add(f.id);
     toast(`Recovered your result: ${clubName(f.home)} ${snap.full_time.score.home}–${snap.full_time.score.away} ${clubName(f.away)}`);
   }
-  // matchweeks where Liverpool played but the rest of the round is missing
+  // weeks whose finalisation was interrupted: finish every step exactly once
+  const c = ensureCareer();
   for(const f of livFixtures()){
     if(!S.season.results[f.id] || played.has(f.id)) continue;
-    const missing = S.season.fixtures.some(x => x.mw === f.mw && !S.season.results[x.id]);
-    if(missing){ await simulateOthers(f); S.season.standings = computeStandings(); played.add('round:' + f.mw); }
+    if(!c.processed[f.id] && S.season.results[f.id].players){
+      careerAfterMatch(f, {fullTime: {player_stats: S.season.results[f.id].players, team_stats: (S.season.results[f.id].rich || {}).team_stats || {home: {}, away: {}},
+        score: {home: S.season.results[f.id].score[0], away: S.season.results[f.id].score[1]}}});
+      played.add('proc:' + f.mw);
+    }
+    if(applyWeekTick(f.mw)) played.add('tick:' + f.mw);
+    const mw0 = S.season.matchweek; advanceMatchweek(f.mw); if(S.season.matchweek !== mw0) played.add('mw:' + f.mw);
   }
-  if(played.size){ saveState(); renderTopBar(); if(S.ui.view === 'home') renderHome(); }
+  if(played.size) saveState();
+  // matchweeks where Liverpool played but the rest of the round is missing
+  const rounds = livFixtures().filter(f => S.season.results[f.id] && !played.has(f.id) && !roundComplete(f.mw));
+  if(rounds.length){
+    if(_finalizing) await _finalizing;
+    _finalizing = (async () => { for(const f of rounds){ await finishRound(f); played.add('round:' + f.mw); } })()
+      .finally(() => { _finalizing = null; });
+    await _finalizing;
+  } else if(c.pendingWeek && roundComplete(c.pendingWeek.mw)){ c.pendingWeek = null; saveCareer(); }
+  if(played.size){ S.season.standings = computeStandings(); checkSeasonEnd(); saveState(); renderTopBar(); if(S.ui.view === 'home') renderHome(); }
 }
 CC.recoverResults = recoverResults;
 TL.booted.then(() => setTimeout(async () => {
   try{ await recoverResults(); }catch(e){ console.warn('recover', e); }
   // prefetch today's Daily so "Play today's challenge" opens instantly
-  try{ const spec = dailySpec(localDate()); if(!S.match) findScenario(spec); }catch(e){}
+  try{ await fetchDaily(); const spec = dailySpec(localDate()); if(!S.match && !TL.hooks.ghostLeagueHTML) findScenario(spec); if(S.ui.view === 'home') renderHome(); }catch(e){}
 }, 600));
 })();

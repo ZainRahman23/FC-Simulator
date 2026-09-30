@@ -78,6 +78,28 @@ def _slot_channel(slot: str | None) -> str:
 
 
 # ── windowed metrics ─────────────────────────────────────────────────────────
+PEN_XG = 0.76          # conventional penalty xG when the ledger carries no p_goal
+
+
+def pen_xg(detail: dict | None) -> float:
+    """xG of a penalty kick. The engine resolves penalties outside the shot
+    pipeline (no SHOT event, not in player xG), so reporting adds the kick's
+    own scoring probability — the honest expected-goals value of the chance."""
+    try:
+        return float((detail or {}).get("p_goal") or PEN_XG)
+    except (TypeError, ValueError):
+        return PEN_XG
+
+
+def penalty_xg(events: list[dict]) -> dict[str, float]:
+    """Penalty xG per team over a ledger (to add to engine team xG)."""
+    out = {"HOME": 0.0, "AWAY": 0.0}
+    for e in events:
+        if e.get("event_type") == "PENALTY" and e.get("team_id") in out:
+            out[e["team_id"]] += pen_xg(e.get("detail"))
+    return out
+
+
 def window_metrics(events: list[dict], team: str, t0: int, t1: int) -> dict[str, float]:
     """Process metrics for ``team`` over (t0, t1] from the event ledger."""
     m = defaultdict(float)
@@ -88,7 +110,14 @@ def window_metrics(events: list[dict], team: str, t0: int, t1: int) -> dict[str,
             continue
         et, tid, d = e["event_type"], e.get("team_id"), e.get("detail") or {}
         mine = tid == team
-        if et == "SHOT":
+        if et == "GOAL" and tid:
+            m["goals_for" if mine else "goals_against"] += 1
+        elif et == "PENALTY" and tid:
+            k = "for" if mine else "against"
+            m[f"shots_{k}"] += 1
+            m[f"xg_{k}"] += pen_xg(d)
+            m[f"big_{k}"] += 1
+        elif et == "SHOT":
             k = "for" if mine else "against"
             m[f"shots_{k}"] += 1
             m[f"xg_{k}"] += float(d.get("xg", 0.0))
@@ -157,6 +186,8 @@ def momentum(events: list[dict], upto: int, bucket: int = 300) -> list[dict]:
         tid = e.get("team_id")
         if e["event_type"] == "SHOT" and tid:
             rows[i][tid] += float((e.get("detail") or {}).get("xg", 0.0))
+        elif e["event_type"] == "PENALTY" and tid:
+            rows[i][tid] += pen_xg(e.get("detail"))
         elif e["event_type"] == "BOX_ENTRY" and tid:
             rows[i][tid] += 0.04
         elif e["event_type"] == "GOAL" and tid:
@@ -246,11 +277,24 @@ def _pace_loss(energy: float) -> int:
     return int(round(100 * 0.34 * d * d))
 
 
-def player_evidence(ev: list[dict], pid: str, name: str) -> dict[str, int]:
-    """Honest per-player counts from the ledger (what actually happened)."""
+def player_evidence(ev: list[dict], pid: str, name: str, team: str | None = None) -> dict[str, int]:
+    """Honest per-player counts from the ledger (what actually happened).
+
+    Engine counters are broader than their names suggest (``dribbles``
+    completed includes half-won PARTIAL take-ons; ``tackles`` attempted
+    counts every dribble a defender faced), so reports use these event
+    counts instead:
+      take_ons / beat     DRIBBLE by him / outcome BEAT (clean past his man)
+      tackles_won         his TACKLE CLEAN_WIN + a dribble he faced ending TACKLED
+      dispossessed        possession actually lost to a challenge: tackled
+                          while dribbling, CLEAN_WIN tackle on him, shield lost
+      lost_control        challenges that knocked the ball loose (may be regained)
+    Opponent/carrier fields are names; ``team`` (his team) keeps a namesake on
+    the other side from being counted."""
     c = Counter()
     for e in ev:
         et, d = e["event_type"], e.get("detail") or {}
+        tid = e.get("team_id")
         if e.get("actor_id") == pid:
             if et == "PASS":
                 c["passes"] += 1
@@ -259,20 +303,34 @@ def player_evidence(ev: list[dict], pid: str, name: str) -> dict[str, int]:
                 elif d.get("outcome") in ("INTERCEPTED", "RECEIVER_DENIED"):
                     c["passes_cut_out"] += 1
             elif et == "DRIBBLE":
-                if d.get("outcome") == "LOOSE":        # TACKLED is counted via TACKLE below
+                c["take_ons"] += 1
+                o = d.get("outcome")
+                if o == "BEAT":
+                    c["beat"] += 1
+                elif o == "TACKLED":
                     c["dispossessed"] += 1
-                elif d.get("outcome") in ("BEAT", "PARTIAL"):
-                    c["dribbles_won"] += 1
-            elif et == "SHIELD" and d.get("outcome") in ("DEFENDER_WIN", "LOOSE"):
-                c["dispossessed"] += 1
+                elif o == "LOOSE":
+                    c["lost_control"] += 1
+            elif et == "SHIELD":
+                if d.get("outcome") == "DEFENDER_WIN":
+                    c["dispossessed"] += 1
+                elif d.get("outcome") == "LOOSE":
+                    c["lost_control"] += 1
             elif et == "FOUL":
                 c["fouls"] += 1
-            elif et == "TACKLE" and d.get("outcome") in ("CLEAN_WIN", "POKE_LOOSE"):
+            elif et == "TACKLE" and d.get("outcome") == "CLEAN_WIN":
                 c["tackles_won"] += 1
-        if et == "TACKLE" and d.get("carrier") == name and d.get("outcome") in ("CLEAN_WIN", "POKE_LOOSE"):
-            c["dispossessed"] += 1
-        if et == "DRIBBLE" and d.get("defender") == name and d.get("outcome") == "BEAT":
-            c["beaten"] += 1
+        opp_side = team is None or (tid is not None and tid != team)
+        if et == "TACKLE" and d.get("carrier") == name and opp_side:
+            if d.get("outcome") == "CLEAN_WIN":
+                c["dispossessed"] += 1
+            elif d.get("outcome") == "POKE_LOOSE":
+                c["lost_control"] += 1
+        if et == "DRIBBLE" and d.get("defender") == name and opp_side:
+            if d.get("outcome") == "BEAT":
+                c["beaten"] += 1
+            elif d.get("outcome") == "TACKLED":
+                c["tackles_won"] += 1
         if et in ("GROUND_DUEL", "AERIAL_DUEL") and (e.get("actor_id") == pid or d.get("opponent") == name):
             c["duels"] += 1
             if d.get("winner") == name:
@@ -479,32 +537,49 @@ def live_insights(ctx: dict[str, Any]) -> list[dict[str, Any]]:
     # 6. game state
     if lead < 0 and minute >= 60 and left >= 3:
         late = minute >= 78 and lead == -1
-        acts = [_tactics_action("Go for it", tactics,
-                                {"box_commitment": "COMMIT", "progression_risk": "AMBITIOUS",
-                                 "build_up_tempo": "QUICK", "after_losing_possession": "COUNTERPRESS",
-                                 "pressing_intensity": "AGGRESSIVE" if tactics.get("pressing_intensity") in ("PASSIVE", "SELECTIVE") else None})]
-        defmid = sorted(((p["rating"], pid) for pid, p in outfield.items()
-                         if p["slot"] in ("CDM", "LDM", "RDM", "LB", "RB")))
-        attackers = sorted((b for b in bench if b["id"] not in used_bench
-                            and _POS_GROUP.get(b.get("pos", ""), "") in ("ST", "W", "AM")),
-                           key=lambda x: -int(x.get("ovr") or 0))
-        if subs_left > 0 and defmid and attackers:
-            _r, pid = defmid[0]
-            b = attackers[0]
-            used_bench.add(b["id"])
-            acts.append({"label": f"{_short(b['name'])} on for {_short(players[pid]['name'])}",
-                         "type": "sub", "player_off": pid, "player_on": b["id"],
-                         "target_slot": players[pid]["slot"], "on_name": b["name"]})
+        go = _tactics_action("Go for it", tactics,
+                             {"box_commitment": "COMMIT", "progression_risk": "AMBITIOUS",
+                              "build_up_tempo": "QUICK", "after_losing_possession": "COUNTERPRESS",
+                              "pressing_intensity": "AGGRESSIVE" if tactics.get("pressing_intensity") in ("PASSIVE", "SELECTIVE") else None})
+        acts = [go]
+        all_in = go is None                  # the attacking dials are already set
+        # Fresh attacking legs — like for like, so nobody ends up out of
+        # position (a striker is never sent on at full-back): the most tired
+        # or weakest attacker/midfielder makes way for the best bench player
+        # who fits his slot.
+        if subs_left > 0:
+            cands = sorted(((p["energy"] + 8.0 * p["rating"], pid) for pid, p in outfield.items()
+                            if p["slot"] in ATT_SLOTS | {"LCM", "RCM", "CM", "LM", "RM"}
+                            and pid not in fresh),
+                           key=lambda x: x[0])
+            for _k, pid in cands:
+                b = best_replacement(players[pid]["slot"], bench, used_bench)
+                if b and _POS_GROUP.get(b.get("pos", ""), "") in ("ST", "W", "AM", "WM", "CM"):
+                    used_bench.add(b["id"])
+                    acts.append(_sub_action(f"Fresh legs: {_short(b['name'])} for {_short(players[pid]['name'])}",
+                                            pid, players[pid]["slot"], b))
+                    break
+        if all_in:
+            # everything forward already: send the full-backs on as well
+            for fpid, fp in outfield.items():
+                if fp["slot"] in ("LB", "RB"):
+                    ins = my_ins.get(fpid, {}).get("instructions")
+                    if ins and (ins["attack_role"] not in ("OVERLAP", "WIDE_ADVANCE") or ins["attack_effort"] < 75):
+                        acts.append(_instr_action(f"{_short(fp['name'])}: get forward", fpid, ins,
+                                                  attack_role="OVERLAP", attack_effort=max(80, ins["attack_effort"])))
+                        break
         acts = [a for a in acts if a]
+        body = ("You're already set up to attack — the last levers are fresh legs and more bodies "
+                "from full-back." if all_in else None)
         if late:
             add("chase", 3, f"{left} minutes to find a goal",
-                "Still a goal down. If you're going to gamble, it's now: all in on attack and "
+                body or "Still a goal down. If you're going to gamble, it's now: all in on attack and "
                 "win it back high.", why=f"Score {score[team]}–{score[other]}, {minute}'",
                 actions=acts, key="chase:late")
         else:
             gap = abs(lead)
             add("chase", 2, f"{'A goal' if gap == 1 else f'{gap} goals'} down with {left} to play",
-                "Time to take risks: commit numbers forward and win the ball back higher. "
+                body or "Time to take risks: commit numbers forward and win the ball back higher. "
                 "You'll leave space on the break — that's the price.",
                 why=f"Score {score[team]}–{score[other]}, {minute}'", actions=acts, key="chase")
     elif lead == 1 and minute >= 70 and left >= 3:
@@ -524,7 +599,7 @@ def live_insights(ctx: dict[str, Any]) -> list[dict[str, Any]]:
         r, pid = ratings[0]
         if r <= 5.0 and avg - r >= 1.0:
             p = players[pid]
-            evd = player_evidence(ev, pid, p["name"])
+            evd = player_evidence(ev, pid, p["name"], team)
             act = sub_for(pid, "Replace with {on}")
             add("struggler", 2 if (minute >= 55 and act) else 1, f"{_short(p['name'])} is having a nightmare",
                 _struggle_text(r, evd), why=f"Rating {r:.1f} vs team average {avg:.1f}",
@@ -537,6 +612,10 @@ def live_insights(ctx: dict[str, Any]) -> list[dict[str, Any]]:
         if e.get("team_id") == other and e["event_type"] in ("FORMATION_CHANGE", "TACTIC_CHANGE"):
             d = e.get("detail") or {}
             mode = str(d.get("mode", ""))
+            # a goal since their change rewrites the situation (they chased and
+            # equalised, or they sat deep and conceded) — the read is stale
+            if any(g["event_type"] == "GOAL" and g["timestamp"] >= e["timestamp"] for g in ev):
+                break
             if e["event_type"] == "FORMATION_CHANGE":
                 meaning = {"4-2-3-1": "two holding midfielders and a No. 10 behind the striker",
                            "4-1-4-1": "a single pivot with a flat midfield four",
@@ -581,40 +660,117 @@ def _engine_tactics(front: dict[str, Any] | None) -> dict[str, str]:
         return {}
 
 
+# Plain words for the tactics board (the technical dial names stay available
+# as ``detail``). Ordinal dials read as a direction (up = more adventurous);
+# the web client mirrors this table (coach-match.js PLAIN_*), so the live feed,
+# the Review and the Decision Lab name a decision the same way.
+_ORDINAL = {
+    "build_up_tempo": (["PATIENT", "BALANCED", "QUICK"], "play quicker", "slow it down"),
+    "progression_risk": (["SECURE", "BALANCED", "AMBITIOUS"], "take more risks on the ball", "keep the ball safer"),
+    "box_commitment": (["CAUTIOUS", "BALANCED", "COMMIT"], "more men in the box", "fewer men forward"),
+    "after_winning_possession": (["SECURE", "BALANCED", "COUNTER"], "break faster after winning it", "keep the ball after winning it"),
+    "after_losing_possession": (["REGROUP", "BALANCED", "COUNTERPRESS"], "win it straight back", "regroup when you lose it"),
+    "defensive_block_height": (["DEEP", "MID", "HIGH"], "defend higher up", "drop deeper"),
+    "pressing_intensity": (["PASSIVE", "SELECTIVE", "AGGRESSIVE", "RELENTLESS"], "press harder", "ease off the press"),
+    "defensive_line_behavior": (["DROP", "HOLD", "STEP_UP"], "step the line up", "drop the line off"),
+}
+_NOMINAL = {
+    "passing_directness": {"DIRECT": "go longer", "SHORT": "pass it short", "MIXED": "mix up the passing"},
+    "attacking_width": {"WIDE": "stretch the pitch", "NARROW": "attack through the middle", "BALANCED": "balanced width"},
+    "chance_creation_focus": {"CENTRAL": "create through the middle", "VERTICAL": "look for runs in behind",
+                              "WIDE": "create from wide", "BALANCED": "mix up the chance creation"},
+    "defensive_width": {"NARROW": "stay compact", "WIDE": "defend wider", "BALANCED": "balanced defensive width"},
+    "marking_orientation": {"ZONAL": "mark zones", "HYBRID": "mixed marking", "MAN_ORIENTED": "man-mark"},
+}
+
+
+def plain_tactics(prev: dict[str, str], new: dict[str, str]) -> tuple[str, str, int]:
+    """(plain label, technical detail, risk direction) for a tactics change
+    in engine vocabulary. Risk > 0 = more adventurous, < 0 = safer."""
+    phrases, tech, risk = [], [], 0
+    for key in _TLABEL:
+        a, b = prev.get(key), new.get(key)
+        if b is None or a == b:
+            continue
+        tech.append(f"{_TLABEL[key]}: {_TVAL.get(b, b)}")
+        if key in _ORDINAL:
+            order, up, down = _ORDINAL[key]
+            ia = order.index(a) if a in order else None
+            ib = order.index(b) if b in order else None
+            if ia is not None and ib is not None and ia != ib:
+                risk += 1 if ib > ia else -1
+                phrases.append(up if ib > ia else down)
+                continue
+        phrases.append(_NOMINAL.get(key, {}).get(b) or f"{_TLABEL[key].lower()} {str(_TVAL.get(b, b)).lower()}")
+    if not phrases:
+        return _SAME + " (no change)", "No dial changed", 0
+    # Tempo and pressing changes do not imply additional forward runners.
+    head = None if len(phrases) == 1 else "Tactical tweak"
+    body = ", ".join(phrases[:2]) + (f" (+{len(phrases) - 2} more)" if len(phrases) > 2 else "")
+    label = f"{head}: {body}" if head else body[0].upper() + body[1:]
+    return label, " · ".join(tech), risk
+
+
+_SAME = "Same tactics re-applied"
+_FORM = {"433": "4-3-3", "4231": "4-2-3-1", "4141": "4-1-4-1"}
+
+
+def describe_command_full(cmd: dict[str, Any], names: dict[str, str],
+                          prev_tactics: dict[str, str] | None = None) -> tuple[str, str]:
+    """(plain label, technical detail) for one command."""
+    k, p = cmd["kind"], cmd["payload"]
+    if k == "card":
+        import build
+        cid = p.get("card_id")
+        if cid not in build.CARDS:
+            return str(cid or "Card"), "Unknown card catalogue entry"
+        view = build.card_view(cid, bool(p.get("upgraded")), names)
+        return view["name"], " · ".join(view["lines"])
+    if k == "substitution":
+        on = _short(names.get(p.get("player_on"), p.get("player_on")))
+        off = _short(names.get(p.get("player_off"), p.get("player_off")))
+        return f"{on} on for {off}", f"Substitution: {on} for {off}" + (f" ({p.get('target_slot')})" if p.get("target_slot") else "")
+    if k == "formation":
+        f = _FORM.get(p.get("formation"), p.get("formation"))
+        return f"Switch to {f}", f"Formation → {f}"
+    if k == "instructions":
+        ins = p.get("instructions") or {}
+        who = _short(names.get(p.get("player_id"), p.get("player_id")))
+        tech = " · ".join(str(x) for x in (
+            f"{ins.get('attackRole')} {ins.get('attackEffort', '')}".strip() if ins.get("attackRole") else None,
+            f"{ins.get('defenseRole')} {ins.get('defenseEffort', '')}".strip() if ins.get("defenseRole") else None) if x)
+        return f"New orders for {who}", f"{who}: {tech}" if tech else f"New instructions for {who}"
+    new = _engine_tactics(p.get("tactics"))
+    label, tech, _r = plain_tactics(prev_tactics or {}, new)
+    # Manual changes identify only the dials actually changed. Cards keep
+    # their authored name above; the detail remains an exact setting diff.
+    return tech.replace(": ", " ") if tech != "No dial changed" else label, tech
+
+
 def describe_command(cmd: dict[str, Any], names: dict[str, str],
                      prev_tactics: dict[str, str] | None = None) -> str:
     """One legible label per command. ``prev_tactics`` (engine vocabulary) is
     the team's tactics before this command, to name what actually changed."""
-    k, p = cmd["kind"], cmd["payload"]
-    if k == "substitution":
-        return f"{_short(names.get(p.get('player_on'), p.get('player_on')))} on for {_short(names.get(p.get('player_off'), p.get('player_off')))}"
-    if k == "formation":
-        return f"Formation → {({'433': '4-3-3', '4231': '4-2-3-1', '4141': '4-1-4-1'}).get(p.get('formation'), p.get('formation'))}"
-    if k == "instructions":
-        ins = p.get("instructions") or {}
-        who = _short(names.get(p.get("player_id"), p.get("player_id")))
-        roles = " / ".join(str(r) for r in (ins.get("attackRole"), ins.get("defenseRole")) if r)
-        return f"{who}: {roles}" if roles else f"New instructions for {who}"
-    if prev_tactics is not None:
-        new = _engine_tactics(p.get("tactics"))
-        diff = [(key, v) for key, v in new.items() if prev_tactics.get(key) != v]
-        if diff:
-            head = ", ".join(f"{_TLABEL.get(key, key)} {_TVAL.get(v, v)}" for key, v in diff[:2])
-            return head + (f" +{len(diff) - 2} more" if len(diff) > 2 else "")
-    return "Tactical change"
+    return describe_command_full(cmd, names, prev_tactics)[0]
+
+
+def command_details(commands: list[dict[str, Any]], team: str, names: dict[str, str],
+                    base_tactics: dict[str, Any] | None = None) -> list[tuple[str, str]]:
+    """(label, detail) for ``team``'s commands in order (tracking tactics as they change)."""
+    cur = _engine_tactics(base_tactics)
+    out = []
+    for c in sorted((c for c in commands if str(c["payload"].get("team", "")).upper() == team),
+                    key=lambda c: int(c["sim_clock"])):
+        out.append(describe_command_full(c, names, cur))
+        if c["kind"] == "tactics":
+            cur = _engine_tactics(c["payload"].get("tactics")) or cur
+    return out
 
 
 def command_labels(commands: list[dict[str, Any]], team: str, names: dict[str, str],
                    base_tactics: dict[str, Any] | None = None) -> list[str]:
     """Labels for ``team``'s commands in order (tracking tactics as they change)."""
-    cur = _engine_tactics(base_tactics)
-    out = []
-    for c in sorted((c for c in commands if str(c["payload"].get("team", "")).upper() == team),
-                    key=lambda c: int(c["sim_clock"])):
-        out.append(describe_command(c, names, cur))
-        if c["kind"] == "tactics":
-            cur = _engine_tactics(c["payload"].get("tactics")) or cur
-    return out
+    return [lab for lab, _d in command_details(commands, team, names, base_tactics)]
 
 
 def group_commands(commands: list[dict[str, Any]], team: str, gap: int = 120) -> list[list[dict]]:
@@ -629,69 +785,141 @@ def group_commands(commands: list[dict[str, Any]], team: str, gap: int = 120) ->
     return groups
 
 
+def group_labels(commands: list[dict[str, Any]], team: str, names: dict[str, str],
+                 base_tactics: dict[str, Any] | None = None) -> list[tuple[str, str]]:
+    """(label, detail) per decision moment (group_commands order)."""
+    det = command_details(commands, team, names, base_tactics)
+    out, k = [], 0
+    for g in group_commands(commands, team):
+        part = det[k:k + len(g)]
+        k += len(g)
+        real = [x for x in part if not x[0].startswith(_SAME)]
+        part = real or [("Kept the same tactics (re-applied)", part[0][1])]
+        out.append((" · ".join(lab for lab, _ in part), " · ".join(d for _, d in part)))
+    return out
+
+
+def clean_holds(holds: list[dict] | None, now: int | None = None) -> list[dict]:
+    """Deliberate 'keep it as is' decisions reported by the client
+    ({clock, label, alt?}). They change nothing in the engine; they are
+    judged like any other decision."""
+    out = []
+    for h in holds or []:
+        try:
+            c = int(h.get("clock"))
+        except (TypeError, ValueError, AttributeError):
+            continue
+        if c < 0 or (now is not None and c > now):
+            continue
+        out.append({"clock": c, "label": str(h.get("label") or "Kept it as is")[:120],
+                    "alt": h.get("alt") if isinstance(h.get("alt"), dict) else None,
+                    "alt_label": str(h.get("alt_label") or "")[:80]})
+    out.sort(key=lambda h: h["clock"])
+    return out[:12]
+
+
 def _per15(m: dict[str, float], secs: int) -> dict[str, float]:
     f = 900.0 / max(60, secs)
     return {"xg_for": round(m.get("xg_for", 0) * f, 2), "xg_against": round(m.get("xg_against", 0) * f, 2),
             "shots_for": round(m.get("shots_for", 0) * f, 1), "shots_against": round(m.get("shots_against", 0) * f, 1),
             "box_for": round(m.get("box_for", 0) * f, 1), "box_against": round(m.get("box_against", 0) * f, 1),
+            "goals_for": round(m.get("goals_for", 0) * f, 2), "goals_against": round(m.get("goals_against", 0) * f, 2),
             "possession": m.get("possession", 50.0)}
 
 
+def _judge(events: list[dict], team: str, c0: int, c1: int, end: int, final: bool,
+           later: list[int]) -> dict[str, Any]:
+    """Before (15' up to the decision) vs since (the decision up to ``end``)."""
+    start = max(0, c0 - WINDOW)
+    before_s, after_s = c0 - start, end - c1
+    before = _per15(window_metrics(events, team, start, c0), before_s) if before_s >= 120 else None
+    raw = window_metrics(events, team, c1, end)
+    after = _per15(raw, after_s) if after_s >= 180 else None
+    since = {"minutes": round(max(0, after_s) / 60, 1),
+             "xg_for": round(raw.get("xg_for", 0), 2), "xg_against": round(raw.get("xg_against", 0), 2),
+             "goals_for": int(raw.get("goals_for", 0)), "goals_against": int(raw.get("goals_against", 0))}
+    gf, ga = since["goals_for"], since["goals_against"]
+    goals_txt = (f"since then you've scored {gf} and conceded {ga}" if gf and ga
+                 else f"you've scored {gf} since" if gf else f"you've conceded {ga} since" if ga else "")
+    verdict, text = "pending", ("Too little football after it to judge — see the Decision Lab."
+                                if final else "Too early to judge — give it ten minutes.")
+    if before is None:
+        text = "Made in the opening minutes, so there's no 'before' to compare — see the Decision Lab."
+    elif after is not None and after_s >= 600:
+        d_for = after["xg_for"] - before["xg_for"]
+        d_against = after["xg_against"] - before["xg_against"]
+        # judge by what the change was for: protecting a lead is about
+        # conceding less, chasing a game is about creating more — and the
+        # scoreboard since the decision counts, not only the chances
+        lead = sum(1 if e.get("team_id") == team else -1 for e in events
+                   if e["event_type"] == "GOAL" and e["timestamp"] <= c0)
+        w_for, w_against = (0.5, 1.5) if lead > 0 else (1.5, 0.5) if lead < 0 else (1.0, 1.0)
+        g_for = after["goals_for"] - before["goals_for"]
+        g_against = after["goals_against"] - before["goals_against"]
+        net = w_for * d_for - w_against * d_against + 0.25 * (w_for * g_for - w_against * g_against)
+        verdict = "better" if net >= 0.12 else "worse" if net <= -0.12 else "neutral"
+        bits = []
+        if abs(d_for) >= 0.05:
+            bits.append(f"chances created {'up' if d_for > 0 else 'down'} ({before['xg_for']:.2f} → {after['xg_for']:.2f} xG per 15')")
+        if abs(d_against) >= 0.05:
+            bits.append(f"chances conceded {'up' if d_against > 0 else 'down'} ({before['xg_against']:.2f} → {after['xg_against']:.2f})")
+        if abs(after["possession"] - before["possession"]) >= 6:
+            bits.append(f"possession {before['possession']:.0f}% → {after['possession']:.0f}%")
+        if goals_txt:
+            bits.append(goals_txt)
+        text = "; ".join(bits) or "no real change in the pattern of the game"
+        text = text[0].upper() + text[1:] + "."
+    elif goals_txt:
+        text = text.rstrip(".") + f" (so far {goals_txt.replace(' since', '')})." if not final else text
+    if final and later:
+        text += (f" Measured to full time, so it includes your later change{'s' if len(later) > 1 else ''} at "
+                 + ", ".join(f"{_minute(t)}'" for t in later) + ".")
+    return {"before": before, "after": after, "after_minutes": round(max(0, after_s) / 60, 1),
+            "since": since, "verdict": verdict, "text": text}
+
+
 def change_impacts(events: list[dict], commands: list[dict], team: str, now: int,
-                   names: dict[str, str], base_tactics: dict[str, Any] | None = None) -> list[dict[str, Any]]:
+                   names: dict[str, str], base_tactics: dict[str, Any] | None = None,
+                   final: bool = False, holds: list[dict] | None = None) -> list[dict[str, Any]]:
+    """What happened after each decision. Live: 'since' runs from the decision
+    to now (or to your next change). ``final`` (full time): to the final
+    whistle, whatever came after. ``holds`` are deliberate stand-pat calls.
+    ``index`` matches the Decision Lab's decision index (changes, then holds)."""
     out = []
     groups = group_commands(commands, team)
-    labels = command_labels(commands, team, names, base_tactics)
-    glabels, k = [], 0
-    for g in groups:
-        glabels.append(" · ".join(labels[k:k + len(g)]))
-        k += len(g)
+    glabels = group_labels(commands, team, names, base_tactics)
+    starts = [int(g[0]["sim_clock"]) for g in groups]
     for gi, g in enumerate(groups):
-        c0 = int(g[0]["sim_clock"])
-        c1 = int(g[-1]["sim_clock"])
-        nxt = int(groups[gi + 1][0]["sim_clock"]) if gi + 1 < len(groups) else None
-        end = min(now, c1 + WINDOW, nxt if nxt is not None else now)
-        start = max(0, c0 - WINDOW)
-        before_s, after_s = c0 - start, end - c1
-        if before_s < 120:
-            continue
-        before = _per15(window_metrics(events, team, start, c0), before_s)
-        after = _per15(window_metrics(events, team, c1, end), after_s) if after_s >= 300 else None
-        verdict, text = "pending", "Too early to judge — give it ten minutes."
-        if after is not None and after_s >= 600:
-            d_for = after["xg_for"] - before["xg_for"]
-            d_against = after["xg_against"] - before["xg_against"]
-            # judge by what the change was for: protecting a lead is about
-            # conceding less, chasing a game is about creating more
-            lead = sum(1 if e.get("team_id") == team else -1 for e in events
-                       if e["event_type"] == "GOAL" and e["timestamp"] <= c0)
-            w_for, w_against = (0.5, 1.5) if lead > 0 else (1.5, 0.5) if lead < 0 else (1.0, 1.0)
-            net = w_for * d_for - w_against * d_against
-            if net >= 0.12:
-                verdict = "better"
-            elif net <= -0.12:
-                verdict = "worse"
-            else:
-                verdict = "neutral"
-            bits = []
-            if abs(d_for) >= 0.05:
-                bits.append(f"chances created {'up' if d_for > 0 else 'down'} ({before['xg_for']:.2f} → {after['xg_for']:.2f} xG per 15')")
-            if abs(d_against) >= 0.05:
-                bits.append(f"chances conceded {'up' if d_against > 0 else 'down'} ({before['xg_against']:.2f} → {after['xg_against']:.2f})")
-            if abs(after["possession"] - before["possession"]) >= 6:
-                bits.append(f"possession {before['possession']:.0f}% → {after['possession']:.0f}%")
-            text = "; ".join(bits) or "no real change in the pattern of the game"
-            text = text[0].upper() + text[1:] + "."
-        out.append({"minute": _minute(c0), "clock": c0,
-                    "label": glabels[gi],
-                    "before": before, "after": after, "after_minutes": round(after_s / 60, 1),
-                    "verdict": verdict, "text": text})
+        c0, c1 = int(g[0]["sim_clock"]), int(g[-1]["sim_clock"])
+        nxt = starts[gi + 1] if gi + 1 < len(groups) else None
+        end = now if final else min(now, nxt if nxt is not None else now)
+        later = [t for t in starts[gi + 1:] if t < end] if final else []
+        j = _judge(events, team, c0, c1, end, final, later)
+        out.append(dict(j, index=gi, kind="change", minute=_minute(c0), clock=c0,
+                        label=glabels[gi][0], detail=glabels[gi][1]))
+    for hi, h in enumerate(clean_holds(holds, now)):
+        c = h["clock"]
+        nxt = next((t for t in starts if t > c), None)
+        end = now if final else min(now, nxt if nxt is not None else now)
+        later = [t for t in starts if c < t < end] if final else []
+        j = _judge(events, team, c, c, end, final, later)
+        out.append(dict(j, index=len(groups) + hi, kind="hold", minute=_minute(c), clock=c,
+                        label=h["label"], detail=(f"Kept the plan instead of: {h['alt_label']}"
+                                                  if h["alt_label"] else "Kept the plan")))
+    out.sort(key=lambda i: (i["clock"], i["index"]))
     return out
 
 
 # ── post-match review ────────────────────────────────────────────────────────
+def decisive_score(p: dict) -> float:
+    """Man-of-the-match ordering: the match rating plus what decided the game
+    (a hat-trick beats a busy 8.3 without a goal)."""
+    return (float(p.get("rating", 6)) + 0.45 * int(p.get("goals") or 0)
+            + 0.25 * int(p.get("assists") or 0))
+
+
 def review(ft: dict[str, Any], team: str, commands: list[dict], team_names: dict[str, str],
-           base_tactics: dict[str, Any] | None = None) -> dict[str, Any]:
+           base_tactics: dict[str, Any] | None = None, holds: list[dict] | None = None) -> dict[str, Any]:
     ev = ft["events"]
     other = opp(team)
     side = "home" if team == "HOME" else "away"
@@ -699,7 +927,10 @@ def review(ft: dict[str, Any], team: str, commands: list[dict], team_names: dict
     gs = ft["score"][side]
     ga = ft["score"][oside]
     ts = ft["team_stats"]
-    xf, xa = float(ts[side].get("xg", 0)), float(ts[oside].get("xg", 0))
+    # engine team xG leaves penalties out (they bypass the shot pipeline)
+    pens = penalty_xg(ev)
+    xf = float(ts[side].get("xg", 0)) + (0 if ts[side].get("xg_includes_penalties") else pens[team])
+    xa = float(ts[oside].get("xg", 0)) + (0 if ts[oside].get("xg_includes_penalties") else pens[other])
     ps = ft["player_stats"]
     names = {pid: p["name"] for pid, p in ps.items()}
     me, them = team_names.get(team, "You"), team_names.get(other, "They")
@@ -748,44 +979,56 @@ def review(ft: dict[str, Any], team: str, commands: list[dict], team_names: dict
             moments.append({"minute": _minute(e["timestamp"]), "kind": "penalty",
                             "text": f"Penalty — {_short(e.get('actor_name'))} {'scores' if d.get('outcome') == 'GOAL' else 'fails to score'}"})
 
-    # biggest momentum swing
+    # biggest momentum swing — only a real one: the side it swung to must
+    # actually have been on top in that spell (a dominant half followed by an
+    # even one is not "the game swinging away from you")
     mom = momentum(ev, max([int(e["timestamp"]) for e in ev] + [60]))
     swing = None
     for i in range(2, len(mom)):
         a = sum(r[team] - r[other] for r in mom[max(0, i - 5):i - 2]) if i >= 3 else 0
         b = sum(r[team] - r[other] for r in mom[i - 2:i + 1])
+        if (b - a > 0 and b < 0.2) or (b - a < 0 and b > -0.2):
+            continue
         if swing is None or abs(b - a) > abs(swing[1]):
-            swing = (mom[i]["minute"], b - a)
+            swing = (max(0, mom[i - 2]["minute"] - 5), b - a, mom[i]["minute"])
     if swing and abs(swing[1]) >= 0.35:
-        moments.append({"minute": swing[0], "kind": "swing_for" if swing[1] > 0 else "swing_against",
-                        "text": ("The game swung your way" if swing[1] > 0 else "The game swung away from you")
-                                + f" around {swing[0]}'"})
+        s0, _d, s1 = swing
+        moments.append({"minute": max(1, s0), "kind": "swing_for" if swing[1] > 0 else "swing_against",
+                        "text": ((f"You took control from {'kick-off' if s0 == 0 else f'around {s0}' + chr(39)}")
+                                 if swing[1] > 0 else
+                                 f"{them} had their best spell from {'kick-off' if s0 == 0 else f'around {s0}' + chr(39)}")
+                                + f" (the {s0}'–{s1}' spell on the momentum chart)"})
     moments.sort(key=lambda m: m["minute"])
 
-    # 3. your decisions
+    # 3. your decisions — judged over the whole rest of the match
     end_ts = max([int(e["timestamp"]) for e in ev] + [60])
-    impacts = change_impacts(ev, commands, team, end_ts, names, base_tactics)
+    impacts = change_impacts(ev, commands, team, end_ts, names, base_tactics, final=True, holds=holds)
 
-    # 4. players
+    # 4. players — the best player is the one who decided the game (goals and
+    # assists weigh on top of the rating), not only the highest rating
     mine = [(pid, p) for pid, p in ps.items() if p.get("team_id") == team and p.get("minutes", 0) >= 15]
-    mine.sort(key=lambda x: -float(x[1].get("rating", 6)))
+    mine.sort(key=lambda x: -decisive_score(x[1]))
+    evidence = {pid: player_evidence(ev, pid, p["name"], team) for pid, p in mine}
 
-    def good(pid: str, p: dict) -> str:
+    def contrib(p: dict) -> list[str]:
         bits = []
         if p.get("goals"):
-            bits.append(f"{p['goals']} goal{'s' if p['goals'] > 1 else ''}")
+            bits.append("a hat-trick" if p["goals"] == 3 else f"{p['goals']} goal{'s' if p['goals'] > 1 else ''}")
         if p.get("assists"):
             bits.append(f"{p['assists']} assist{'s' if p['assists'] > 1 else ''}")
+        return bits
+
+    def good(pid: str, p: dict) -> str:
+        evd = evidence.get(pid, {})
+        bits = contrib(p)
         if p.get("saves", 0) >= 3:
             bits.append(f"{p['saves']} saves")
         if p.get("key_passes", 0) >= 2:
             bits.append(f"{p['key_passes']} key passes")
-        dr = p.get("dribbles") or [0, 0]
-        if dr and dr[0] >= 3:
-            bits.append(f"beat his man {dr[0]} times")
-        tk = p.get("tackles") or [0, 0]
-        if tk and tk[0] >= 3:
-            bits.append(f"won {tk[0]} of {tk[1]} tackles")
+        if evd.get("beat", 0) >= 3:
+            bits.append(f"beat his man {evd['beat']} times")
+        if evd.get("tackles_won", 0) >= 3:
+            bits.append(f"won {evd['tackles_won']} tackles")
         if p.get("interceptions", 0) >= 8:
             bits.append(f"cut out {p['interceptions']} passes")
         pa = p.get("passes") or [0, 0]
@@ -794,13 +1037,13 @@ def review(ft: dict[str, Any], team: str, commands: list[dict], team_names: dict
         return ", ".join(bits[:3]) or f"steady over {p.get('minutes', 0)} minutes"
 
     def bad(pid: str, p: dict) -> str:
-        evd = player_evidence(ev, pid, p["name"])
+        evd = evidence.get(pid, {})
         bits = []
         pa = p.get("passes") or [0, 0]
         if pa and pa[1] >= 15 and pa[0] / pa[1] < 0.72:
             bits.append(f"only {round(100 * pa[0] / pa[1])}% of his passes found a teammate")
         if evd.get("dispossessed", 0) >= 4:
-            bits.append(f"dispossessed {evd['dispossessed']} times")
+            bits.append(f"lost the ball in a challenge {evd['dispossessed']} times")
         if evd.get("beaten", 0) >= 3:
             bits.append(f"dribbled past {evd['beaten']} times")
         dl = evd.get("duels", 0) - evd.get("duels_won", 0)
@@ -808,13 +1051,23 @@ def review(ft: dict[str, Any], team: str, commands: list[dict], team_names: dict
             bits.append(f"lost {dl} of {evd['duels']} duels")
         if p.get("goals_conceded") and p.get("slot") == "GK" and p.get("saves", 0) <= 1:
             bits.append(f"{p['goals_conceded']} conceded, {p.get('saves', 0)} saves")
-        return ", ".join(bits[:2]) or f"quiet over {p.get('minutes', 0)} minutes"
+        plus = contrib(p)
+        if plus:        # say what he did well too — never "quiet" for a goal or an assist
+            return (", ".join(plus) + (" — but " + ", ".join(bits[:2]) if bits
+                                       else f", otherwise little on the ball (rated {float(p['rating']):.1f})"))
+        if bits:
+            return ", ".join(bits[:2])
+        if not p.get("shots") and not p.get("key_passes"):
+            return f"no shots or chances created in {p.get('minutes', 0)} minutes"
+        return f"quiet over {p.get('minutes', 0)} minutes"
 
-    best = [{"id": pid, "name": p["name"], "rating": round(float(p["rating"]), 1), "why": good(pid, p)}
+    best = [{"id": pid, "name": p["name"], "rating": round(float(p["rating"]), 1), "why": good(pid, p),
+             "goals": int(p.get("goals") or 0), "assists": int(p.get("assists") or 0)}
             for pid, p in mine[:3]]
     best_ids = {b["id"] for b in best}
+    by_rating = sorted(mine, key=lambda x: float(x[1].get("rating", 6)))
     worst = [{"id": pid, "name": p["name"], "rating": round(float(p["rating"]), 1), "why": bad(pid, p)}
-             for pid, p in mine[-2:] if float(p["rating"]) < 6.0 and pid not in best_ids]
+             for pid, p in by_rating[:2] if float(p["rating"]) < 6.0 and pid not in best_ids]
     tired = [{"id": pid, "name": p["name"], "energy": round(float(p.get("energy", 100)))}
              for pid, p in mine if p.get("active_at_ft") and p.get("slot") != "GK"
              and float(p.get("energy", 100)) < 60]
@@ -854,11 +1107,11 @@ def review(ft: dict[str, Any], team: str, commands: list[dict], team_names: dict
         lessons.append(f"{', '.join(_short(t['name']) for t in tired[:3])} finished on "
                        f"{min(t['energy'] for t in tired[:3])}% energy with {5 - subs_made} subs unused. "
                        "Fresh legs keep your effective quality up in the last 20 minutes.")
-    helped = [i for i in impacts if i["verdict"] == "better"]
+    helped = [i for i in impacts if i["verdict"] == "better" and i["kind"] == "change"]
     if helped:
         lessons.append(f"Your change at {helped[0]['minute']}' ({helped[0]['label']}) changed the pattern: "
                        f"{helped[0]['text'][0].lower() + helped[0]['text'][1:]}")
-    if not impacts and res != "W":
+    if not any(i["kind"] == "change" for i in impacts) and res != "W":
         lessons.append("You didn't make a single change. The bench and the tactics board are your levers — "
                        "the assistant flags the moments where they matter.")
     if not lessons:
@@ -867,7 +1120,7 @@ def review(ft: dict[str, Any], team: str, commands: list[dict], team_names: dict
     return {"result": res, "score": [gs, ga], "verdict": verdict, "process": process,
             "xg": [round(xf, 2), round(xa, 2)], "moments": moments[:10], "impacts": impacts,
             "best": best, "worst": worst, "tired": tired, "lessons": lessons[:4],
-            "momentum": mom}
+            "motm": best[0] if best else None, "momentum": mom}
 
 
 # ── pre-match scouting ───────────────────────────────────────────────────────

@@ -191,7 +191,8 @@ def test_matchweek_batch_condition_injury(server, browser):
     assert r["results"] == 10 and r["played"] == 20, r
     assert r["lg"] > 200 and r["board"] == 1 and r["banner"]
     assert r["conds"] >= 4, "starters carry fatigue into next week"
-    assert r["ms"] < 8000, f"batch took {r['ms']} ms"
+    # v2 simulates CPU cards/builds, and CI intentionally caps the pool at two workers.
+    assert r["ms"] < 30000, f"batch took {r['ms']} ms"
     pg.js("continueSeason()")
     pg.js("show('table')")
     pg.page.wait_for_timeout(300)
@@ -267,13 +268,15 @@ def test_season_end_next_season(server, browser):
     assert pg.close() == []
 
 
-def test_daily_challenge_flow(server, browser):
+def test_scenario_library_flow_with_ghost_entry(server, browser):
     pg = Page(browser, server, 1280, 800)
     squad0 = pg.js("JSON.stringify(S.current.starters)")
     pg.js("show('challenges')")
-    pg.wait("document.querySelector('#ccDaily .cc-brief')", 90000)
+    pg.wait("document.querySelector('#ccGhost')", 30000)
+    pg.page.locator('.cc-libc button:has-text("Find scenario")').first.click()
+    pg.wait("document.querySelector('.cc-libc .cc-brief')", 90000)
     pg.shot("challenges", full=True)
-    pg.page.locator("#ccDaily button:has-text('Take charge')").click()
+    pg.page.locator(".cc-libc button:has-text('Take charge')").click()
     pg.wait("S.match && S.matchFixture && S.matchFixture.exhibition && S.matchFixture.scenario", 30000)
     st = pg.js("({clock: S.match.clockSeconds, take: S.matchFixture.scenario.takeover_clock})")
     assert st["clock"] >= st["take"] - 1
@@ -287,7 +290,7 @@ def test_daily_challenge_flow(server, browser):
     pg.shot("challenge_ft")
     assert "Pytest Gaffer" in pg.js("document.getElementById('ccLb').innerText")
     share = pg.js("CC.shareText(S.matchFixture.scenario.scenario_id)")
-    assert share.startswith("Touchline Daily ") and " from " in share and "'" in share
+    assert share.startswith("Touchline · ") and " from " in share and "'" in share
     # the season was untouched and the squad is restored
     assert pg.js("Object.keys(S.season.results).length") == 0
     pg.js("continueSeason()")

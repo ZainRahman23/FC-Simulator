@@ -34,8 +34,22 @@ FATIGUE_SENSITIVITY = {
 }
 
 
+def modded_attr(state: PlayerState, name: str, default: float = 50.0) -> float:
+    """Base attribute plus any match-scoped E2 modifier (Core Loop v2, ENGINE
+    CHANGE). ``state.mods`` is None unless a modifiers command was given, and
+    modifiers only apply while the player is on the pitch."""
+    base = state.player.attr(name, default)
+    m = state.mods
+    if m and state.active:
+        base += m.get(name, 0.0)
+    return base
+
+
 def effective_attribute(player: Player, state: PlayerState, name: str) -> float:
     base = player.attr(name)
+    m = state.mods
+    if m and state.active:
+        base += m.get(name, 0.0)
     sensitivity = FATIGUE_SENSITIVITY.get(name, 0.06)
     deficit = clamp((100.0 - state.energy) / 100.0, 0.0, 1.0)
     acute = clamp(state.acute_exertion / 100.0, 0.0, 1.0)
@@ -48,7 +62,7 @@ def stamina_efficiency(stamina: float) -> float:
 
 
 def update_fatigue(state: PlayerState, moved_m: float, desired_speed_mps: float, dt: float = 1.0) -> None:
-    stamina = state.player.attr("stamina", 70.0)
+    stamina = modded_attr(state, "stamina", 70.0)
     intensity = clamp(desired_speed_mps / 8.5, 0.0, 1.25)
     locomotion_load = 0.0010 + 0.0075 * intensity**2 + 0.0060 * max(0.0, intensity - 0.65)**2
     movement_factor = 0.45 + 0.55 * clamp(moved_m / max(0.25, desired_speed_mps * dt), 0.0, 1.0)
@@ -62,7 +76,7 @@ def update_fatigue(state: PlayerState, moved_m: float, desired_speed_mps: float,
 
 def add_explosive_load(state: PlayerState, duel: float = 0.0, jump: float = 0.0, sprint_burst: float = 0.0) -> None:
     """Add event-based workload without making weight a universal stamina penalty."""
-    stamina = state.player.attr("stamina", 70.0)
+    stamina = modded_attr(state, "stamina", 70.0)
     raw = 0.11 * max(0.0, duel) + 0.14 * max(0.0, jump) + 0.12 * max(0.0, sprint_burst)
     state.energy = clamp(state.energy - raw * stamina_efficiency(stamina), 0.0, 100.0)
     state.acute_exertion = clamp(state.acute_exertion + 2.1 * duel + 2.8 * jump + 2.5 * sprint_burst, 0.0, 100.0)
@@ -72,6 +86,6 @@ def add_explosive_load(state: PlayerState, duel: float = 0.0, jump: float = 0.0,
 
 def halftime_recovery(state: PlayerState) -> None:
     """Large acute recovery plus modest long-term Energy restoration at halftime."""
-    stamina = state.player.attr("stamina", 70.0)
+    stamina = modded_attr(state, "stamina", 70.0)
     state.energy = clamp(state.energy + 2.5 + 0.025 * stamina, 0.0, 100.0)
     state.acute_exertion = clamp(state.acute_exertion * 0.15, 0.0, 100.0)

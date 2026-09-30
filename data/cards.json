@@ -1,0 +1,2235 @@
+{
+ "version": "v2.1",
+ "cards": [
+  {
+   "id": "blitz",
+   "name": "BLITZ",
+   "cost": 2,
+   "type": "INSTRUCTION",
+   "duration": 10,
+   "headline": "Everyone hunts the ball for ten minutes.",
+   "effects": [
+    {
+     "op": "tactics",
+     "set": {
+      "pressingIntensity": "Relentless",
+      "afterLosingPossession": "Counterpress",
+      "defensiveBlockHeight": "High"
+     }
+    },
+    {
+     "op": "energy",
+     "who": {
+      "group": "FRONT"
+     },
+     "amount": -4
+    },
+    {
+     "op": "energy",
+     "who": {
+      "group": "MID"
+     },
+     "amount": -4
+    }
+   ],
+   "drawback": "Burns energy and leaves space behind a high block.",
+   "upgrade": {
+    "kind": "duration",
+    "add": 5
+   },
+   "source": {
+    "kind": "system",
+    "ref": "gegenpress"
+   },
+   "tags": [
+    "press",
+    "chase"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "counterpress_trap",
+   "name": "COUNTERPRESS TRAP",
+   "cost": 1,
+   "type": "INSTRUCTION",
+   "duration": 15,
+   "headline": "Swarm the ball the moment you lose it.",
+   "effects": [
+    {
+     "op": "tactics",
+     "set": {
+      "afterLosingPossession": "Counterpress",
+      "markingOrientation": "Man-Oriented"
+     }
+    },
+    {
+     "op": "role",
+     "who": {
+      "group": "CM"
+     },
+     "defenseRole": "Ball Hunt",
+     "defenseEffort": 85
+    }
+   ],
+   "drawback": "Man-oriented marking can be dragged apart by rotations.",
+   "upgrade": {
+    "kind": "cost",
+    "delta": -1
+   },
+   "source": {
+    "kind": "system",
+    "ref": "gegenpress"
+   },
+   "tags": [
+    "press"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "high_line",
+   "name": "HIGH LINE",
+   "cost": 1,
+   "type": "STANCE",
+   "duration": null,
+   "headline": "Squeeze the pitch until another stance replaces it.",
+   "effects": [
+    {
+     "op": "tactics",
+     "set": {
+      "defensiveLineBehavior": "Step Up",
+      "defensiveBlockHeight": "High",
+      "defensiveWidth": "Narrow"
+     }
+    }
+   ],
+   "drawback": "Quick forwards get in behind.",
+   "upgrade": {
+    "kind": "effect",
+    "effect": {
+     "op": "role",
+     "who": {
+      "group": "CB"
+     },
+     "defenseRole": "Step Out",
+     "defenseEffort": 75
+    }
+   },
+   "source": {
+    "kind": "system",
+    "ref": "gegenpress"
+   },
+   "tags": [
+    "press"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "fresh_press",
+   "name": "FRESH PRESS",
+   "cost": 1,
+   "type": "SUB",
+   "duration": null,
+   "headline": "Your most tired forward off, a fresh presser on.",
+   "effects": [
+    {
+     "op": "sub",
+     "out": "most_tired",
+     "pool": "FRONT",
+     "in": "best"
+    },
+    {
+     "op": "role",
+     "who": {
+      "sub": "in"
+     },
+     "defenseRole": "auto_press",
+     "defenseEffort": 85
+    }
+   ],
+   "drawback": "Uses a substitution window.",
+   "upgrade": {
+    "kind": "cost",
+    "delta": -1
+   },
+   "source": {
+    "kind": "system",
+    "ref": "gegenpress"
+   },
+   "tags": [
+    "sub",
+    "press",
+    "energy"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "control",
+   "name": "CONTROL",
+   "cost": 1,
+   "type": "STANCE",
+   "duration": null,
+   "headline": "Keep the ball and make them run.",
+   "effects": [
+    {
+     "op": "tactics",
+     "set": {
+      "buildUpTempo": "Patient",
+      "passingDirectness": "Short",
+      "progressionRisk": "Secure",
+      "afterWinningPossession": "Secure"
+     }
+    }
+   ],
+   "drawback": "Fewer chances: the ball goes sideways more than forwards.",
+   "upgrade": {
+    "kind": "cost",
+    "delta": -1
+   },
+   "source": {
+    "kind": "system",
+    "ref": "positional"
+   },
+   "tags": [
+    "protect"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "pin_the_wings",
+   "name": "PIN THE WINGS",
+   "cost": 1,
+   "type": "PLAYER ORDER",
+   "duration": 15,
+   "headline": "Wingers hug the touchline and stretch the back four.",
+   "effects": [
+    {
+     "op": "role",
+     "who": {
+      "group": "W"
+     },
+     "attackRole": "Touchline Winger",
+     "attackEffort": 75
+    },
+    {
+     "op": "tactics",
+     "set": {
+      "attackingWidth": "Wide",
+      "chanceCreationFocus": "Wide"
+     }
+    }
+   ],
+   "drawback": "Fewer bodies centrally; weak crossers waste it.",
+   "upgrade": {
+    "kind": "duration",
+    "add": 10
+   },
+   "source": {
+    "kind": "system",
+    "ref": "positional"
+   },
+   "tags": [
+    "chase"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "half_space_overload",
+   "name": "HALF-SPACE OVERLOAD",
+   "cost": 2,
+   "type": "PLAYER ORDER",
+   "duration": 15,
+   "headline": "Flood the channels between their centre-backs and full-backs.",
+   "effects": [
+    {
+     "op": "role",
+     "who": {
+      "group": "CM"
+     },
+     "attackRole": "Advance Support",
+     "attackEffort": 75
+    },
+    {
+     "op": "role",
+     "who": {
+      "group": "FB"
+     },
+     "attackRole": "Invert",
+     "attackEffort": 60
+    },
+    {
+     "op": "tactics",
+     "set": {
+      "chanceCreationFocus": "Central"
+     }
+    }
+   ],
+   "drawback": "Inverted full-backs leave the flanks open on the break.",
+   "upgrade": {
+    "kind": "cost",
+    "delta": -1
+   },
+   "source": {
+    "kind": "system",
+    "ref": "positional"
+   },
+   "tags": [
+    "chase"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "third_man",
+   "name": "THIRD MAN",
+   "cost": 1,
+   "type": "INSTRUCTION",
+   "duration": 15,
+   "headline": "Risk the line-breaking pass through the pivot.",
+   "effects": [
+    {
+     "op": "tactics",
+     "set": {
+      "progressionRisk": "Ambitious",
+      "passingDirectness": "Short"
+     }
+    },
+    {
+     "op": "role",
+     "who": {
+      "group": "DM"
+     },
+     "attackRole": "Deep Playmaker",
+     "attackEffort": 60
+    }
+   ],
+   "drawback": "Ambitious passes get intercepted in dangerous areas.",
+   "upgrade": {
+    "kind": "duration",
+    "add": 10
+   },
+   "source": {
+    "kind": "system",
+    "ref": "positional"
+   },
+   "tags": [
+    "chase"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "fullback_storm",
+   "name": "FULL-BACK STORM",
+   "cost": 2,
+   "type": "PLAYER ORDER",
+   "duration": 15,
+   "headline": "Both full-backs bomb on at once.",
+   "effects": [
+    {
+     "op": "role",
+     "who": {
+      "group": "FB"
+     },
+     "attackRole": "Overlap",
+     "attackEffort": 85,
+     "defenseEffort": 45
+    },
+    {
+     "op": "tactics",
+     "set": {
+      "attackingWidth": "Wide",
+      "chanceCreationFocus": "Wide"
+     }
+    },
+    {
+     "op": "energy",
+     "who": {
+      "group": "FB"
+     },
+     "amount": -5
+    }
+   ],
+   "drawback": "Nobody home on the flanks when it breaks down; Fatigue 5.",
+   "upgrade": {
+    "kind": "cost",
+    "delta": -1
+   },
+   "source": {
+    "kind": "system",
+    "ref": "wing_overload"
+   },
+   "tags": [
+    "chase"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "cross_it_in",
+   "name": "CROSS IT IN",
+   "cost": 1,
+   "type": "INSTRUCTION",
+   "duration": 15,
+   "headline": "Get it wide and put it in the box.",
+   "effects": [
+    {
+     "op": "tactics",
+     "set": {
+      "chanceCreationFocus": "Wide",
+      "boxCommitment": "Commit",
+      "passingDirectness": "Mixed"
+     }
+    }
+   ],
+   "drawback": "Committing bodies to the box invites counters.",
+   "upgrade": {
+    "kind": "duration",
+    "add": 10
+   },
+   "source": {
+    "kind": "system",
+    "ref": "wing_overload"
+   },
+   "tags": [
+    "chase"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "big_man_target",
+   "name": "BIG MAN TARGET",
+   "cost": 1,
+   "type": "PLAYER ORDER",
+   "duration": null,
+   "headline": "The striker plays with his back to goal and attacks every ball.",
+   "effects": [
+    {
+     "op": "role",
+     "who": {
+      "group": "ST"
+     },
+     "attackRole": "Target",
+     "attackEffort": 80
+    }
+   ],
+   "drawback": "Small strikers lose the duels; runs in behind stop.",
+   "upgrade": {
+    "kind": "cost",
+    "delta": -1
+   },
+   "source": {
+    "kind": "system",
+    "ref": "wing_overload"
+   },
+   "tags": [
+    "chase"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "second_wave",
+   "name": "SECOND WAVE",
+   "cost": 1,
+   "type": "INSTRUCTION",
+   "duration": 15,
+   "headline": "The number ten arrives late in the box.",
+   "effects": [
+    {
+     "op": "tactics",
+     "set": {
+      "boxCommitment": "Commit"
+     }
+    },
+    {
+     "op": "role",
+     "who": {
+      "group": "AM"
+     },
+     "attackRole": "Second Striker",
+     "attackEffort": 80
+    }
+   ],
+   "drawback": "Less protection in front of the back line.",
+   "upgrade": {
+    "kind": "cost",
+    "delta": -1
+   },
+   "source": {
+    "kind": "system",
+    "ref": "wing_overload"
+   },
+   "tags": [
+    "chase"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "go_long",
+   "name": "GO LONG",
+   "cost": 1,
+   "type": "STANCE",
+   "duration": null,
+   "headline": "Skip midfield and play for the target man.",
+   "effects": [
+    {
+     "op": "tactics",
+     "set": {
+      "passingDirectness": "Direct",
+      "buildUpTempo": "Quick"
+     }
+    },
+    {
+     "op": "role",
+     "who": {
+      "group": "ST"
+     },
+     "attackRole": "Target",
+     "attackEffort": 75
+    }
+   ],
+   "drawback": "Possession drops; works only if you win headers.",
+   "upgrade": {
+    "kind": "cost",
+    "delta": -1
+   },
+   "source": {
+    "kind": "system",
+    "ref": "target_man"
+   },
+   "tags": [
+    "chase"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "second_balls",
+   "name": "SECOND BALLS",
+   "cost": 1,
+   "type": "INSTRUCTION",
+   "duration": 15,
+   "headline": "Midfielders crash onto every knock-down.",
+   "effects": [
+    {
+     "op": "role",
+     "who": {
+      "group": "CM"
+     },
+     "attackRole": "Runner",
+     "attackEffort": 75
+    },
+    {
+     "op": "tactics",
+     "set": {
+      "pressingIntensity": "Aggressive",
+      "boxCommitment": "Commit"
+     }
+    }
+   ],
+   "drawback": "Runners leave the centre exposed.",
+   "upgrade": {
+    "kind": "cost",
+    "delta": -1
+   },
+   "source": {
+    "kind": "system",
+    "ref": "target_man"
+   },
+   "tags": [
+    "chase"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "knock_down",
+   "name": "KNOCK-DOWN",
+   "cost": 2,
+   "type": "PLAYER ORDER",
+   "duration": 15,
+   "headline": "Target man flicks on, a midfielder runs beyond.",
+   "effects": [
+    {
+     "op": "role",
+     "who": {
+      "group": "ST"
+     },
+     "attackRole": "Target",
+     "attackEffort": 85
+    },
+    {
+     "op": "role",
+     "who": {
+      "group": "CM",
+      "first": 1
+     },
+     "attackRole": "Second Striker",
+     "attackEffort": 80
+    },
+    {
+     "op": "tactics",
+     "set": {
+      "boxCommitment": "Commit"
+     }
+    }
+   ],
+   "drawback": "One fewer midfielder behind the ball.",
+   "upgrade": {
+    "kind": "duration",
+    "add": 10
+   },
+   "source": {
+    "kind": "system",
+    "ref": "target_man"
+   },
+   "tags": [
+    "chase"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "aerial_bombardment",
+   "name": "AERIAL BOMBARDMENT",
+   "cost": 2,
+   "type": "INSTRUCTION",
+   "duration": 10,
+   "headline": "Everything goes into the box, from everywhere.",
+   "effects": [
+    {
+     "op": "tactics",
+     "set": {
+      "passingDirectness": "Direct",
+      "chanceCreationFocus": "Wide",
+      "boxCommitment": "Commit"
+     }
+    },
+    {
+     "op": "role",
+     "who": {
+      "group": "FB"
+     },
+     "attackRole": "Overlap",
+     "attackEffort": 75
+    }
+   ],
+   "drawback": "Wide open on the counter.",
+   "upgrade": {
+    "kind": "cost",
+    "delta": -1
+   },
+   "source": {
+    "kind": "system",
+    "ref": "target_man"
+   },
+   "tags": [
+    "chase"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "spring_the_trap",
+   "name": "SPRING THE TRAP",
+   "cost": 1,
+   "type": "STANCE",
+   "duration": null,
+   "headline": "Sit deep, then go the moment you win it.",
+   "effects": [
+    {
+     "op": "tactics",
+     "set": {
+      "defensiveBlockHeight": "Deep",
+      "afterWinningPossession": "Counter",
+      "buildUpTempo": "Quick",
+      "pressingIntensity": "Selective"
+     }
+    }
+   ],
+   "drawback": "Concedes territory and set pieces.",
+   "upgrade": {
+    "kind": "cost",
+    "delta": -1
+   },
+   "source": {
+    "kind": "system",
+    "ref": "counter_strike"
+   },
+   "tags": [
+    "protect"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "release_the_runners",
+   "name": "RELEASE THE RUNNERS",
+   "cost": 1,
+   "type": "PLAYER ORDER",
+   "duration": 15,
+   "headline": "Wide men and striker sprint in behind.",
+   "effects": [
+    {
+     "op": "role",
+     "who": {
+      "group": "W"
+     },
+     "attackRole": "Wide Runner",
+     "attackEffort": 85
+    },
+    {
+     "op": "role",
+     "who": {
+      "group": "ST"
+     },
+     "attackRole": "Run Behind",
+     "attackEffort": 85
+    },
+    {
+     "op": "energy",
+     "who": {
+      "group": "W"
+     },
+     "amount": -4
+    },
+    {
+     "op": "energy",
+     "who": {
+      "group": "ST"
+     },
+     "amount": -4
+    }
+   ],
+   "drawback": "Fatigue 4; less link play.",
+   "upgrade": {
+    "kind": "cost",
+    "delta": -1
+   },
+   "source": {
+    "kind": "system",
+    "ref": "counter_strike"
+   },
+   "tags": [
+    "chase"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "hit_the_space",
+   "name": "HIT THE SPACE",
+   "cost": 2,
+   "type": "INSTRUCTION",
+   "duration": 10,
+   "headline": "Every regain goes forward, fast.",
+   "effects": [
+    {
+     "op": "tactics",
+     "set": {
+      "afterWinningPossession": "Counter",
+      "passingDirectness": "Direct",
+      "progressionRisk": "Ambitious",
+      "chanceCreationFocus": "Vertical"
+     }
+    }
+   ],
+   "drawback": "Turns the ball over a lot.",
+   "upgrade": {
+    "kind": "duration",
+    "add": 5
+   },
+   "source": {
+    "kind": "system",
+    "ref": "counter_strike"
+   },
+   "tags": [
+    "chase"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "bait_the_press",
+   "name": "BAIT THE PRESS",
+   "cost": 1,
+   "type": "INSTRUCTION",
+   "duration": 15,
+   "headline": "Invite them on to open space behind them.",
+   "effects": [
+    {
+     "op": "tactics",
+     "set": {
+      "defensiveBlockHeight": "Mid",
+      "pressingIntensity": "Passive",
+      "defensiveLineBehavior": "Drop",
+      "afterLosingPossession": "Regroup"
+     }
+    }
+   ],
+   "drawback": "Hands the opponent the ball.",
+   "upgrade": {
+    "kind": "cost",
+    "delta": -1
+   },
+   "source": {
+    "kind": "system",
+    "ref": "counter_strike"
+   },
+   "tags": [
+    "protect"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "park_the_bus",
+   "name": "PARK THE BUS",
+   "cost": 3,
+   "type": "SHAPE",
+   "duration": null,
+   "headline": "Back five, deep and narrow.",
+   "effects": [
+    {
+     "op": "formation",
+     "formation": "532"
+    },
+    {
+     "op": "tactics",
+     "set": {
+      "defensiveBlockHeight": "Deep",
+      "defensiveLineBehavior": "Drop",
+      "defensiveWidth": "Narrow",
+      "boxCommitment": "Cautious"
+     }
+    }
+   ],
+   "drawback": "Almost no threat going forward.",
+   "upgrade": {
+    "kind": "cost",
+    "delta": -1
+   },
+   "source": {
+    "kind": "system",
+    "ref": "low_block"
+   },
+   "tags": [
+    "protect"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": [
+    "E3"
+   ]
+  },
+  {
+   "id": "box_defence",
+   "name": "BOX DEFENCE",
+   "cost": 1,
+   "type": "INSTRUCTION",
+   "duration": 15,
+   "headline": "Bodies on bodies inside the area.",
+   "effects": [
+    {
+     "op": "tactics",
+     "set": {
+      "defensiveBlockHeight": "Deep",
+      "defensiveWidth": "Narrow",
+      "markingOrientation": "Man-Oriented"
+     }
+    },
+    {
+     "op": "role",
+     "who": {
+      "group": "CB"
+     },
+     "defenseRole": "Tight Mark",
+     "defenseEffort": 80
+    }
+   ],
+   "drawback": "Crosses from wide go unchallenged at source.",
+   "upgrade": {
+    "kind": "duration",
+    "add": 10
+   },
+   "source": {
+    "kind": "system",
+    "ref": "low_block"
+   },
+   "tags": [
+    "protect"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "outlet_ball",
+   "name": "OUTLET BALL",
+   "cost": 1,
+   "type": "PLAYER ORDER",
+   "duration": 15,
+   "headline": "Clear it to the striker who stays up.",
+   "effects": [
+    {
+     "op": "role",
+     "who": {
+      "group": "ST"
+     },
+     "attackRole": "Target",
+     "attackEffort": 70,
+     "defenseRole": "Stay High",
+     "defenseEffort": 30
+    },
+    {
+     "op": "tactics",
+     "set": {
+      "afterWinningPossession": "Counter",
+      "passingDirectness": "Direct"
+     }
+    }
+   ],
+   "drawback": "One fewer defender in the block.",
+   "upgrade": {
+    "kind": "cost",
+    "delta": -1
+   },
+   "source": {
+    "kind": "system",
+    "ref": "low_block"
+   },
+   "tags": [
+    "protect"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "sit_in",
+   "name": "SIT IN",
+   "cost": 0,
+   "type": "STANCE",
+   "duration": null,
+   "headline": "Drop off and stay compact.",
+   "effects": [
+    {
+     "op": "tactics",
+     "set": {
+      "defensiveBlockHeight": "Deep",
+      "pressingIntensity": "Passive",
+      "defensiveLineBehavior": "Drop"
+     }
+    }
+   ],
+   "drawback": "Invites sustained pressure.",
+   "upgrade": {
+    "kind": "effect",
+    "effect": {
+     "op": "tactics",
+     "set": {
+      "defensiveWidth": "Narrow"
+     }
+    }
+   },
+   "source": {
+    "kind": "system",
+    "ref": "low_block"
+   },
+   "tags": [
+    "protect"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "cut_inside",
+   "name": "CUT INSIDE",
+   "cost": 1,
+   "type": "PLAYER ORDER",
+   "duration": 15,
+   "headline": "Wingers come inside on their strong foot; full-backs go round.",
+   "effects": [
+    {
+     "op": "role",
+     "who": {
+      "group": "W"
+     },
+     "attackRole": "Inside Forward",
+     "attackEffort": 80
+    },
+    {
+     "op": "role",
+     "who": {
+      "group": "FB"
+     },
+     "attackRole": "Overlap",
+     "attackEffort": 70
+    }
+   ],
+   "drawback": "Predictable against a narrow block.",
+   "upgrade": {
+    "kind": "cost",
+    "delta": -1
+   },
+   "source": {
+    "kind": "system",
+    "ref": "inside_forwards"
+   },
+   "tags": [
+    "chase"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "shoot_on_sight",
+   "name": "SHOOT ON SIGHT",
+   "cost": 1,
+   "type": "INSTRUCTION",
+   "duration": 15,
+   "headline": "Take the shot when it's on.",
+   "effects": [
+    {
+     "op": "tactics",
+     "set": {
+      "chanceCreationFocus": "Central",
+      "progressionRisk": "Ambitious",
+      "boxCommitment": "Commit"
+     }
+    }
+   ],
+   "drawback": "Lots of low-quality shots and turnovers.",
+   "upgrade": {
+    "kind": "duration",
+    "add": 10
+   },
+   "source": {
+    "kind": "system",
+    "ref": "inside_forwards"
+   },
+   "tags": [
+    "chase"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "fullback_width",
+   "name": "FULL-BACK WIDTH",
+   "cost": 1,
+   "type": "STANCE",
+   "duration": null,
+   "headline": "Full-backs hold the width so the wingers can come in.",
+   "effects": [
+    {
+     "op": "role",
+     "who": {
+      "group": "FB"
+     },
+     "attackRole": "Wide Advance",
+     "attackEffort": 75
+    },
+    {
+     "op": "tactics",
+     "set": {
+      "attackingWidth": "Wide"
+     }
+    }
+   ],
+   "drawback": "Full-backs caught high on the turnover.",
+   "upgrade": {
+    "kind": "cost",
+    "delta": -1
+   },
+   "source": {
+    "kind": "system",
+    "ref": "inside_forwards"
+   },
+   "tags": [
+    "chase"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "false_nine",
+   "name": "FALSE NINE",
+   "cost": 1,
+   "type": "PLAYER ORDER",
+   "duration": 15,
+   "headline": "Striker drops, the wide forwards attack the space.",
+   "effects": [
+    {
+     "op": "role",
+     "who": {
+      "group": "ST"
+     },
+     "attackRole": "Link",
+     "attackEffort": 70,
+     "defenseRole": "Track Midfield",
+     "defenseEffort": 55
+    },
+    {
+     "op": "role",
+     "who": {
+      "group": "W"
+     },
+     "attackRole": "Inside Forward",
+     "attackEffort": 85
+    }
+   ],
+   "drawback": "Nobody pins the centre-backs.",
+   "upgrade": {
+    "kind": "cost",
+    "delta": -1
+   },
+   "source": {
+    "kind": "system",
+    "ref": "inside_forwards"
+   },
+   "tags": [
+    "chase"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "rotate",
+   "name": "ROTATE",
+   "cost": 2,
+   "type": "PLAYER ORDER",
+   "duration": 15,
+   "headline": "Positions swap; markers lose their man.",
+   "effects": [
+    {
+     "op": "role",
+     "who": {
+      "group": "AM"
+     },
+     "attackRole": "Free Roam",
+     "attackEffort": 75
+    },
+    {
+     "op": "role",
+     "who": {
+      "group": "DM"
+     },
+     "attackRole": "Advance Support",
+     "attackEffort": 65
+    },
+    {
+     "op": "role",
+     "who": {
+      "group": "FB"
+     },
+     "attackRole": "Underlap",
+     "attackEffort": 70
+    },
+    {
+     "op": "energy",
+     "who": "team",
+     "amount": -3
+    }
+   ],
+   "drawback": "Fatigue 3 for everyone; the shape can come loose.",
+   "upgrade": {
+    "kind": "cost",
+    "delta": -1
+   },
+   "source": {
+    "kind": "system",
+    "ref": "total_football"
+   },
+   "tags": [
+    "chase"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "everyone_attacks",
+   "name": "EVERYONE ATTACKS",
+   "cost": 2,
+   "type": "INSTRUCTION",
+   "duration": 10,
+   "headline": "Numbers forward, win it back high.",
+   "effects": [
+    {
+     "op": "tactics",
+     "set": {
+      "boxCommitment": "Commit",
+      "progressionRisk": "Ambitious",
+      "afterLosingPossession": "Counterpress",
+      "buildUpTempo": "Quick"
+     }
+    },
+    {
+     "op": "energy",
+     "who": "team",
+     "amount": -3
+    }
+   ],
+   "drawback": "Fatigue 3 for everyone; exposed if the counterpress fails.",
+   "upgrade": {
+    "kind": "duration",
+    "add": 5
+   },
+   "source": {
+    "kind": "system",
+    "ref": "total_football"
+   },
+   "tags": [
+    "chase",
+    "press"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "fluid_press",
+   "name": "FLUID PRESS",
+   "cost": 1,
+   "type": "INSTRUCTION",
+   "duration": 15,
+   "headline": "Press as a unit, pass the runners on.",
+   "effects": [
+    {
+     "op": "tactics",
+     "set": {
+      "pressingIntensity": "Aggressive",
+      "markingOrientation": "Hybrid",
+      "defensiveBlockHeight": "High"
+     }
+    }
+   ],
+   "drawback": "Space behind the block.",
+   "upgrade": {
+    "kind": "cost",
+    "delta": -1
+   },
+   "source": {
+    "kind": "system",
+    "ref": "total_football"
+   },
+   "tags": [
+    "press"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "switch_play",
+   "name": "SWITCH PLAY",
+   "cost": 1,
+   "type": "INSTRUCTION",
+   "duration": 15,
+   "headline": "Move the ball side to side and attack the far flank.",
+   "effects": [
+    {
+     "op": "tactics",
+     "set": {
+      "attackingWidth": "Wide",
+      "passingDirectness": "Mixed",
+      "chanceCreationFocus": "Wide"
+     }
+    },
+    {
+     "op": "role",
+     "who": {
+      "group": "W"
+     },
+     "attackRole": "Winger",
+     "attackEffort": 70
+    }
+   ],
+   "drawback": "Slower build-up in the middle.",
+   "upgrade": {
+    "kind": "duration",
+    "add": 10
+   },
+   "source": {
+    "kind": "system",
+    "ref": "total_football"
+   },
+   "tags": [
+    "chase"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "overlap_drive",
+   "name": "OVERLAP DRIVE",
+   "cost": 1,
+   "type": "PLAYER ORDER",
+   "duration": 15,
+   "headline": "{fb} bombs on; {winger} tucks in.",
+   "effects": [
+    {
+     "op": "role",
+     "who": {
+      "combo_role": "fb"
+     },
+     "attackRole": "Overlap",
+     "attackEffort": 85
+    },
+    {
+     "op": "role",
+     "who": {
+      "combo_role": "winger"
+     },
+     "attackRole": "Inside Forward"
+    },
+    {
+     "op": "tactics",
+     "set": {
+      "attackingWidth": "Wide"
+     }
+    },
+    {
+     "op": "energy",
+     "who": {
+      "combo_role": "fb"
+     },
+     "amount": -6
+    },
+    {
+     "op": "modifiers",
+     "who": {
+      "combo_role": "fb"
+     },
+     "deltas": {
+      "cro": 2
+     },
+     "min_level": 2,
+     "requires": "E2"
+    }
+   ],
+   "drawback": "Fatigue 6 on the full-back; his flank is open.",
+   "upgrade": {
+    "kind": "cost",
+    "delta": -1
+   },
+   "source": {
+    "kind": "combo",
+    "ref": "overlap"
+   },
+   "tags": [
+    "chase"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": "overlap",
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "cross_head_barrage",
+   "name": "CROSS & HEAD BARRAGE",
+   "cost": 2,
+   "type": "INSTRUCTION",
+   "duration": 15,
+   "headline": "{crosser} delivers, {target} attacks it.",
+   "effects": [
+    {
+     "op": "tactics",
+     "set": {
+      "chanceCreationFocus": "Wide",
+      "boxCommitment": "Commit"
+     }
+    },
+    {
+     "op": "role",
+     "who": {
+      "combo_role": "target"
+     },
+     "attackRole": "Target",
+     "attackEffort": 80
+    },
+    {
+     "op": "role",
+     "who": {
+      "combo_role": "crosser"
+     },
+     "attackEffort": 80
+    },
+    {
+     "op": "modifiers",
+     "who": {
+      "combo_role": "crosser"
+     },
+     "deltas": {
+      "cro": 3
+     },
+     "min_level": 3,
+     "requires": "E2"
+    }
+   ],
+   "drawback": "Committing bodies to the box invites counters.",
+   "upgrade": {
+    "kind": "cost",
+    "delta": -1
+   },
+   "source": {
+    "kind": "combo",
+    "ref": "cross_head"
+   },
+   "tags": [
+    "chase"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": "cross_head",
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "one_two_rush",
+   "name": "ONE-TWO RUSH",
+   "cost": 1,
+   "type": "PLAYER ORDER",
+   "duration": 10,
+   "headline": "{mid} and {striker} combine at speed.",
+   "effects": [
+    {
+     "op": "tactics",
+     "set": {
+      "buildUpTempo": "Quick",
+      "passingDirectness": "Short",
+      "progressionRisk": "Ambitious"
+     }
+    },
+    {
+     "op": "role",
+     "who": {
+      "combo_role": "mid"
+     },
+     "attackRole": "Advance Support",
+     "attackEffort": 80
+    },
+    {
+     "op": "role",
+     "who": {
+      "combo_role": "striker"
+     },
+     "attackRole": "Link",
+     "attackEffort": 75
+    }
+   ],
+   "drawback": "Quick short passing in traffic turns the ball over.",
+   "upgrade": {
+    "kind": "duration",
+    "add": 5
+   },
+   "source": {
+    "kind": "combo",
+    "ref": "one_two"
+   },
+   "tags": [
+    "chase"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": "one_two",
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "through_ball_threat",
+   "name": "THROUGH-BALL THREAT",
+   "cost": 1,
+   "type": "PLAYER ORDER",
+   "duration": 15,
+   "headline": "{creator} looks for {runner} in behind.",
+   "effects": [
+    {
+     "op": "role",
+     "who": {
+      "combo_role": "creator"
+     },
+     "attackRole": "Creator",
+     "attackEffort": 80
+    },
+    {
+     "op": "role",
+     "who": {
+      "combo_role": "runner"
+     },
+     "attackRole": "Run Behind",
+     "attackEffort": 85
+    },
+    {
+     "op": "tactics",
+     "set": {
+      "chanceCreationFocus": "Vertical"
+     }
+    }
+   ],
+   "drawback": "Low-percentage passes; possession drops.",
+   "upgrade": {
+    "kind": "cost",
+    "delta": -1
+   },
+   "source": {
+    "kind": "combo",
+    "ref": "through_ball"
+   },
+   "tags": [
+    "chase"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": "through_ball",
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "wall",
+   "name": "WALL",
+   "cost": 1,
+   "type": "STANCE",
+   "duration": null,
+   "headline": "{cb1} and {cb2} hold the line together.",
+   "effects": [
+    {
+     "op": "tactics",
+     "set": {
+      "defensiveLineBehavior": "Hold",
+      "defensiveBlockHeight": "Mid",
+      "markingOrientation": "Zonal"
+     }
+    },
+    {
+     "op": "role",
+     "who": {
+      "combo_role": "cb1"
+     },
+     "defenseRole": "Hold Line",
+     "defenseEffort": 80
+    },
+    {
+     "op": "role",
+     "who": {
+      "combo_role": "cb2"
+     },
+     "defenseRole": "Cover",
+     "defenseEffort": 80
+    }
+   ],
+   "drawback": "Passive: you give up the initiative.",
+   "upgrade": {
+    "kind": "cost",
+    "delta": -1
+   },
+   "source": {
+    "kind": "combo",
+    "ref": "cb_pair"
+   },
+   "tags": [
+    "protect"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": "cb_pair",
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "press_trigger",
+   "name": "PRESS TRIGGER",
+   "cost": 1,
+   "type": "INSTRUCTION",
+   "duration": 10,
+   "headline": "{p1}, {p2} and {p3} go together on the trigger.",
+   "effects": [
+    {
+     "op": "tactics",
+     "set": {
+      "pressingIntensity": "Relentless"
+     }
+    },
+    {
+     "op": "role",
+     "who": {
+      "combo_role": [
+       "p1",
+       "p2",
+       "p3"
+      ]
+     },
+     "defenseRole": "auto_press",
+     "defenseEffort": 90
+    },
+    {
+     "op": "energy",
+     "who": {
+      "combo_role": [
+       "p1",
+       "p2",
+       "p3"
+      ]
+     },
+     "amount": -4
+    }
+   ],
+   "drawback": "Fatigue 4 for the trio; beaten press means a free run at goal.",
+   "upgrade": {
+    "kind": "duration",
+    "add": 5
+   },
+   "source": {
+    "kind": "combo",
+    "ref": "pressing_trio"
+   },
+   "tags": [
+    "press"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": "pressing_trio",
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "fresh_legs",
+   "name": "FRESH LEGS",
+   "cost": 0,
+   "type": "SUB",
+   "duration": null,
+   "headline": "Your most tired outfielder off, the best fit on the bench on.",
+   "effects": [
+    {
+     "op": "sub",
+     "out": "most_tired",
+     "pool": "OUT",
+     "in": "best"
+    },
+    {
+     "op": "role",
+     "who": {
+      "sub": "in"
+     },
+     "attackEffort": 70,
+     "defenseEffort": 70
+    }
+   ],
+   "drawback": "Uses a substitution window.",
+   "upgrade": {
+    "kind": "effect",
+    "effect": {
+     "op": "energy",
+     "who": {
+      "most_tired": 2
+     },
+     "amount": 4
+    }
+   },
+   "source": {
+    "kind": "universal"
+   },
+   "tags": [
+    "sub",
+    "energy"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "see_it_out",
+   "name": "SEE IT OUT",
+   "cost": 1,
+   "type": "INSTRUCTION",
+   "duration": null,
+   "headline": "Keep it tight and run the clock.",
+   "effects": [
+    {
+     "op": "tactics",
+     "set": {
+      "buildUpTempo": "Patient",
+      "progressionRisk": "Secure",
+      "afterWinningPossession": "Secure",
+      "defensiveBlockHeight": "Deep",
+      "boxCommitment": "Cautious"
+     }
+    }
+   ],
+   "drawback": "Hands them the initiative; one mistake and it's level.",
+   "upgrade": {
+    "kind": "cost",
+    "delta": -1
+   },
+   "source": {
+    "kind": "universal"
+   },
+   "tags": [
+    "protect"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "all_out_attack",
+   "name": "ALL-OUT ATTACK",
+   "cost": 2,
+   "type": "INSTRUCTION",
+   "duration": null,
+   "headline": "Everything forward.",
+   "effects": [
+    {
+     "op": "tactics",
+     "set": {
+      "boxCommitment": "Commit",
+      "progressionRisk": "Ambitious",
+      "buildUpTempo": "Quick",
+      "passingDirectness": "Direct",
+      "defensiveBlockHeight": "High",
+      "afterLosingPossession": "Counterpress"
+     }
+    },
+    {
+     "op": "energy",
+     "who": "team",
+     "amount": -3
+    }
+   ],
+   "drawback": "High variance: you'll score more and concede more. Fatigue 3 for everyone.",
+   "upgrade": {
+    "kind": "cost",
+    "delta": -1
+   },
+   "source": {
+    "kind": "universal"
+   },
+   "tags": [
+    "chase"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "tactical_foul",
+   "name": "TACTICAL FOUL",
+   "cost": 1,
+   "type": "INSTRUCTION",
+   "duration": 10,
+   "headline": "Stop the counter at source, whatever it takes.",
+   "effects": [
+    {
+     "op": "tactics",
+     "set": {
+      "pressingIntensity": "Aggressive",
+      "markingOrientation": "Man-Oriented"
+     }
+    },
+    {
+     "op": "modifiers",
+     "who": "team",
+     "deltas": {
+      "agg": 8
+     },
+     "requires": "E2"
+    }
+   ],
+   "drawback": "Card risk goes up with aggression.",
+   "upgrade": {
+    "kind": "duration",
+    "add": 5
+   },
+   "source": {
+    "kind": "universal"
+   },
+   "tags": [
+    "protect"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "time_waste",
+   "name": "TIME WASTE",
+   "cost": 1,
+   "type": "INSTRUCTION",
+   "duration": 10,
+   "headline": "Slow everything down and get your breath back.",
+   "effects": [
+    {
+     "op": "tactics",
+     "set": {
+      "buildUpTempo": "Patient",
+      "passingDirectness": "Short"
+     }
+    },
+    {
+     "op": "energy",
+     "who": "team",
+     "amount": 3
+    }
+   ],
+   "drawback": "No attacking threat while it lasts.",
+   "upgrade": {
+    "kind": "cost",
+    "delta": -1
+   },
+   "source": {
+    "kind": "universal"
+   },
+   "tags": [
+    "protect",
+    "energy"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "near_post_flick",
+   "name": "NEAR-POST FLICK",
+   "cost": 1,
+   "type": "SET PIECE",
+   "duration": 15,
+   "headline": "Corners to the near post for a flick-on.",
+   "effects": [
+    {
+     "op": "set_pieces",
+     "corner_routine": {
+      "zone": "near",
+      "target": "best_header"
+     }
+    }
+   ],
+   "drawback": "Easier to clear if the first contact is lost.",
+   "upgrade": {
+    "kind": "duration",
+    "add": 15
+   },
+   "source": {
+    "kind": "set_piece",
+    "ref": "corner"
+   },
+   "tags": [
+    "chase"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": [
+    "E4"
+   ]
+  },
+  {
+   "id": "short_corner",
+   "name": "SHORT CORNER",
+   "cost": 1,
+   "type": "SET PIECE",
+   "duration": 15,
+   "headline": "Work corners short to change the angle.",
+   "effects": [
+    {
+     "op": "set_pieces",
+     "corner_routine": {
+      "zone": "short"
+     }
+    }
+   ],
+   "drawback": "Fewer balls into the box.",
+   "upgrade": {
+    "kind": "duration",
+    "add": 15
+   },
+   "source": {
+    "kind": "set_piece",
+    "ref": "corner"
+   },
+   "tags": [
+    "neutral"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": [
+    "E4"
+   ]
+  },
+  {
+   "id": "big_man_up",
+   "name": "BIG MAN UP",
+   "cost": 1,
+   "type": "SET PIECE",
+   "duration": 15,
+   "headline": "Your tallest player attacks the far post at corners.",
+   "effects": [
+    {
+     "op": "set_pieces",
+     "corner_routine": {
+      "zone": "far",
+      "target": "tallest"
+     }
+    },
+    {
+     "op": "tactics",
+     "set": {
+      "boxCommitment": "Commit"
+     }
+    }
+   ],
+   "drawback": "Leaves you short at the back on the break.",
+   "upgrade": {
+    "kind": "duration",
+    "add": 15
+   },
+   "source": {
+    "kind": "set_piece",
+    "ref": "corner"
+   },
+   "tags": [
+    "chase"
+   ],
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": [
+    "E4"
+   ]
+  },
+  {
+   "id": "read_the_game",
+   "name": "READ THE GAME",
+   "cost": 1,
+   "type": "INSTRUCTION",
+   "duration": null,
+   "headline": "Your analysts read the other bench: see the card they'd play now.",
+   "effects": [
+    {
+     "op": "reveal"
+    }
+   ],
+   "drawback": "No effect on the pitch.",
+   "upgrade": {
+    "kind": "cost",
+    "delta": -1
+   },
+   "source": {
+    "kind": "staff",
+    "ref": "analyst:2"
+   },
+   "tags": [
+    "neutral"
+   ],
+   "trigger": null,
+   "exhaust": true,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "second_wind",
+   "name": "SECOND WIND",
+   "cost": 1,
+   "type": "INSTRUCTION",
+   "duration": null,
+   "headline": "A breather and a word: three tired players recover.",
+   "effects": [
+    {
+     "op": "energy",
+     "who": {
+      "most_tired": 3
+     },
+     "amount": 8
+    }
+   ],
+   "drawback": "Once per match.",
+   "upgrade": {
+    "kind": "effect",
+    "effect": {
+     "op": "energy",
+     "who": {
+      "most_tired": 3
+     },
+     "amount": 3
+    }
+   },
+   "source": {
+    "kind": "staff",
+    "ref": "fitness:2"
+   },
+   "tags": [
+    "energy"
+   ],
+   "trigger": null,
+   "exhaust": true,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "hit_back",
+   "name": "HIT BACK",
+   "cost": 1,
+   "type": "REACTION",
+   "duration": 10,
+   "headline": "Straight back at them after conceding.",
+   "effects": [
+    {
+     "op": "tactics",
+     "set": {
+      "buildUpTempo": "Quick",
+      "boxCommitment": "Commit",
+      "pressingIntensity": "Aggressive"
+     }
+    }
+   ],
+   "drawback": "Emotional football leaves gaps.",
+   "upgrade": {
+    "kind": "duration",
+    "add": 5
+   },
+   "source": {
+    "kind": "universal"
+   },
+   "tags": [
+    "chase"
+   ],
+   "trigger": "conceded",
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "exploit_the_extra_man",
+   "name": "EXPLOIT THE EXTRA MAN",
+   "cost": 1,
+   "type": "REACTION",
+   "duration": 15,
+   "headline": "Stretch ten men until they break.",
+   "effects": [
+    {
+     "op": "tactics",
+     "set": {
+      "attackingWidth": "Wide",
+      "progressionRisk": "Ambitious",
+      "buildUpTempo": "Quick"
+     }
+    },
+    {
+     "op": "role",
+     "who": {
+      "group": "W"
+     },
+     "attackRole": "Winger",
+     "attackEffort": 75
+    }
+   ],
+   "drawback": "Over-committing can still be punished.",
+   "upgrade": {
+    "kind": "duration",
+    "add": 10
+   },
+   "source": {
+    "kind": "universal"
+   },
+   "tags": [
+    "chase"
+   ],
+   "trigger": "opp_red",
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "late_push",
+   "name": "LATE PUSH",
+   "cost": 1,
+   "type": "REACTION",
+   "duration": 15,
+   "headline": "Level after 70': the striker lives in the box.",
+   "effects": [
+    {
+     "op": "role",
+     "who": {
+      "group": "ST"
+     },
+     "attackRole": "Poacher",
+     "attackEffort": 85
+    },
+    {
+     "op": "tactics",
+     "set": {
+      "boxCommitment": "Commit"
+     }
+    }
+   ],
+   "drawback": "A lost ball in midfield is dangerous now.",
+   "upgrade": {
+    "kind": "duration",
+    "add": 10
+   },
+   "source": {
+    "kind": "universal"
+   },
+   "tags": [
+    "chase"
+   ],
+   "trigger": "level_70",
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  },
+  {
+   "id": "shut_up_shop",
+   "name": "SHUT UP SHOP",
+   "cost": 1,
+   "type": "REACTION",
+   "duration": null,
+   "headline": "Ahead after 75': everyone behind the ball.",
+   "effects": [
+    {
+     "op": "tactics",
+     "set": {
+      "defensiveBlockHeight": "Deep",
+      "pressingIntensity": "Passive",
+      "boxCommitment": "Cautious",
+      "defensiveWidth": "Narrow"
+     }
+    }
+   ],
+   "drawback": "You will not score again.",
+   "upgrade": {
+    "kind": "cost",
+    "delta": -1
+   },
+   "source": {
+    "kind": "universal"
+   },
+   "tags": [
+    "protect"
+   ],
+   "trigger": "ahead_75",
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "requires": []
+  }
+ ]
+}

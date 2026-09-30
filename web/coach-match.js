@@ -13,7 +13,9 @@ TL.bus = TL.bus || new EventTarget();
 'use strict';
 
 const HALF = HALF_SECONDS, FULL = 90 * 60;
-const GOAL_BEAT_MS = 2600;          // celebration beat before a goal auto-pause
+const GOAL_BEAT_MS = 4200;          // celebration beat before a goal auto-pause (real ms after the banner)
+const GOAL_BEAT_SIM = 5.5;          // …or this many presented sim-seconds after the goal (AnimR2 slows the celebration)
+const BANNER_WAIT_MS = 1800;        // longest the goal banner waits for the ball to reach the net
 const PAUSE_COOLDOWN = 300;         // presented seconds between non-goal pauses
 const PAUSE_CAP = 8;                // non-goal pauses per match
 const INSIGHT_EVERY = 45;           // presented seconds between assistant polls
@@ -60,6 +62,12 @@ function presS(m){
   }
   if(ANIM_ON) return AnimR.head;
   return (m && m.clockSeconds) || 0;
+}
+/* what the user has SEEN: a goal counts (score, feed) once the ball is in the net */
+function shownS(m){
+  const s = presS(m), cm = m && m._cm;
+  const pb = cm && cm.pendingBanners;
+  return pb && pb.length ? Math.min(s, pb[0].e.timestamp - 0.001) : s;
 }
 function nameOf(pid, m){
   m = m || S.match;
@@ -122,9 +130,15 @@ function firstAfter(events, t){
 }
 
 /* ═══ 1. EXACT-MINUTE DECISIONS: api() wrapper ═════════════════════════════ */
-const MGMT_RE = /^\/matches\/([^/?]+)\/(tactics|instructions|formation|substitution)$/;
+const MGMT_RE = /^\/matches\/([^/?]+)\/(tactics|instructions|formation|substitution|card)$/;
 window.api = async function(path, opts){
   opts = opts || {};
+  if(path === '/matches/start' && (opts.method || 'GET') === 'POST'){
+    const x = safe(() => startExtras(opts.body), null);
+    const r = await _api.call(this, path, x ? {...opts, body: {...opts.body, ...x}} : opts);
+    safe(() => noteStart(r));
+    return r;
+  }
   const mm = MGMT_RE.exec(path);
   const m = S.match;
   if(!mm || (opts.method || 'GET') !== 'POST' || !m || m.matchId !== mm[1] || m.status === 'ft')
@@ -168,6 +182,8 @@ function applyRewind(m, r){
   m.eventIndex = n;
   cm.snapHist = cm.snapHist.filter(h => h.clock <= rt);
   cm.serverFT = false; cm.pendingFT = null; m.fullTime = null;
+  if(cm.pendingBanners) cm.pendingBanners = cm.pendingBanners.filter(b => b.e.timestamp <= rt);
+  if(cm.pendingGoal && cm.pendingGoal.mo.clock > rt) cm.pendingGoal = null;
   if(rt < HALF) m.htShown = false;
   cm.scanPtr = Math.min(cm.scanPtr, firstAfter(m.events, rt));
   cm.feedDirty = true;
@@ -179,6 +195,7 @@ function applyRewind(m, r){
 
 const TKEY_LABEL = k => k.replace(/([A-Z])/g, ' $1').toLowerCase().replace(/^./, c => c.toUpperCase());
 function decisionLabel(kind, body, before){
+  if(kind === 'card') return cardLabel(body);
   if(kind === 'substitution') return `${short(nameOf(body.player_on))} on for ${short(nameOf(body.player_off))}`;
   if(kind === 'formation') return `Shape → ${(formationOf(body.formation) || {}).name || body.formation}`;
   if(kind === 'instructions'){
@@ -328,6 +345,11 @@ function momentumSVG(m, s, opts = {}){
       marks += `<rect class="cm-mr" x="${gx - 2.5}" y="${up ? 1 : H - 9}" width="5" height="8" rx="1"/>`;
     }
   });
+  for(const e of (opts.cards || [])){
+    const gx = (e.timestamp / FULL) * W, up = isMine(e.team_id), d = e.detail || {};
+    const y = up ? 11 : H - 11;
+    marks += `<g class="cm-mcard ${up ? 'u' : 'd'}"><title>${esc(`${minuteOf(e.timestamp)}' ${up ? 'you play' : sideName(e.team_id) + ' play'} ${d.name || d.card_id || 'a card'}`)}</title><rect x="${gx - 4}" y="${y - 5.5}" width="8" height="11" rx="1.6"/><path d="M${gx + 0.8} ${y - 3.6} L${gx - 1.8} ${y + 0.6} L${gx + 0.2} ${y + 0.6} L${gx - 0.8} ${y + 3.8} L${gx + 1.9} ${y - 0.6} L${gx - 0.1} ${y - 0.6} Z"/></g>`;
+  }
   for(const dcs of (opts.decisions || [])){
     const gx = (dcs.clock / FULL) * W;
     marks += `<g><title>${esc(`${dcs.minute}' your call: ${dcs.label}`)}</title><path class="cm-mdec" d="M${gx - 4} ${mid - 4} L${gx + 4} ${mid - 4} L${gx} ${mid + 3} Z"/></g>`;
@@ -422,6 +444,13 @@ function commentary(e, ctx){
       if(e.timestamp - (ctx.lastBox[tid] ?? -1e9) < 360) return null;
       ctx.lastBox[tid] = e.timestamp;
       return L('att', `${side} break into the box${nm ? ' — ' + short(nm) + ' ' + (d.via === 'CARRY' ? 'drives in' : 'is found') : ''}`);
+    case 'CARD_PLAYED': {
+      if(mine && ctx && (d.by || 'USER') === 'USER') return null;        // your own play is logged as "Your call"
+      const ln = (d.lines || [])[0];
+      return L(mine ? 'you card' : 'tac card', `${mine ? 'You play' : side + ' play'} ${d.name || d.card_id || 'a card'}${ln ? ' · ' + ln : ''}`, {card: true});
+    }
+    case 'CARD_EXPIRED':
+      return L('info', `${d.name || d.card_id || 'A card'} wears off${mine ? '' : ` (${side})`}`);
     case 'HALFTIME': return L('info', `Half-time${ctx ? ' — ' + scoreLine(ctx.score) : ''}`, {min: 45});
     case 'FULL_TIME': return L('info', `Full-time${ctx ? ' — ' + scoreLine(ctx.score) : (d.score ? ' — ' + scoreLine(d.score) : '')}`, {min: 90});
     default: return null;
@@ -438,7 +467,7 @@ function feedRow(l){
 }
 window.updateFeedList = function(m){
   const list = $('#feedList'); if(!list || !m) return;
-  const cm = C(m), s = presS(m);
+  const cm = C(m), s = shownS(m);
   if(cm.feedDirty || !list.dataset.cm){
     list.innerHTML = ''; list.dataset.cm = '1';
     cm.feedPtr = 0; cm.localPtr = 0; cm.feedDirty = false; cm.lastOff = null;
@@ -494,13 +523,13 @@ function controlsHTML(m){
     <span class="cm-spds">${SPEEDS.map(x => `<button class="spdbtn ${spd === x && !paused ? 'on' : ''}" data-spd="${x}" onclick="setSpeed(${x})">${x}×</button>`).join('')}</span>
     <span class="cm-sep"></span>
     <button class="spdbtn cm-next" ${late ? 'disabled' : ''} onclick="CM.nextMoment()" title="Skip ahead to just before the next key moment">⏭ Next moment</button>
-    <button class="spdbtn cm-simft" ${late ? 'disabled' : ''} onclick="CM.confirmSimFT()" title="Simulate the rest of the match">⏩ Sim to full time</button>
+    <button class="spdbtn cm-simft" ${late ? 'disabled' : ''} onclick="CM.confirmSimFT()" title="Simulate the rest of the match">⏩ Sim to FT</button>
     <span class="cm-sep"></span>${autoPauseSeg()}
     <span class="cm-sep"></span>${viewSegHTML()}`;
 }
 function ctrlSig(m){
   const cm = C(m), s = presS(m);
-  return [m.htActive, m.status, S.ui.matchSpeed || 1, cm.busy, cm.busyLabel, coachUI().autoPause, coachUI().cam, s >= FULL - 30, viewPref(), labelsPref(), BC.state].join('|');
+  return [m.htActive, m.status, S.ui.matchSpeed || 1, cm.busy, cm.busyLabel, coachUI().autoPause, coachUI().cam, coachUI().bcCam, s >= FULL - 30, viewPref(), labelsPref(), BC.state].join('|');
 }
 function refreshControls(force){
   const m = S.match, el = $('#cmCtrl'); if(!m || !el) return;
@@ -518,7 +547,8 @@ window.updateMatchHeader = function(m){
   if(!el.dataset.cm){
     el.dataset.cm = '1';
     el.classList.add('cm-head');
-    const reh = f.exhibition ? `<div class="cm-reh">${f.branchOf ? 'REHEARSAL' : 'EXHIBITION'} — DOESN'T COUNT${f.branchOf && cm && cm.origin ? ` · replaying from ${clockStr(cm.startClock)}` : ''}</div>` : '';
+    const reh = f.friendly && !f.branchOf ? `<div class="cm-reh cm-friendly">PRE-SEASON FRIENDLY · NO LEAGUE CONSEQUENCES${f.camp_week ? ` · CAMP WEEK ${esc(String(f.camp_week))}` : ''}</div>`
+      : f.exhibition ? `<div class="cm-reh">${f.branchOf ? 'REHEARSAL' : 'EXHIBITION'} — DOESN'T COUNT${f.branchOf && cm && cm.origin ? ` · replaying from ${clockStr(cm.startClock)}` : ''}</div>` : '';
     el.innerHTML = `${reh}
       <div class="mh-top">
         <div class="mh-club h">${esc(clubName(f.home))}<small>${f.home === 'LIV' ? 'YOU' : 'CPU'}</small></div>
@@ -533,7 +563,7 @@ window.updateMatchHeader = function(m){
       <div class="mh-ctrl cm-ctrl" id="cmCtrl"></div>`;
   }
   const real = S.match, s = presS(real);
-  const st = statsAt(real, s);
+  const st = statsAt(real, shownS(real));
   const H = st.T.HOME, A = st.T.AWAY;
   const sc = $('#cmScore', el) || el.querySelector('#cmScore');
   const scTxt = `${st.score.HOME}<span>–</span>${st.score.AWAY}`;
@@ -555,7 +585,7 @@ window.updateMatchHeader = function(m){
   const bucket = Math.floor(s / 20);
   if(hm && hm.dataset.v !== String(bucket) + ':' + real.events.length){
     hm.dataset.v = String(bucket) + ':' + real.events.length;
-    hm.innerHTML = momentumBlock(real, s, {h: 40, decisions: cm ? cm.decisions : []});
+    hm.innerHTML = momentumBlock(real, s, {h: 40, decisions: cm ? cm.decisions : [], cards: cardEvents(real, shownS(real))});
   }
   refreshControls();
 };
@@ -581,6 +611,13 @@ window.buildLiveShell = function(wrap, m){
     if(pitch && !pitch.querySelector('#cmBanner')){
       const bn = document.createElement('div'); bn.id = 'cmBanner'; bn.className = 'cm-banner';
       pitch.appendChild(bn);
+    }
+    if(pitch && !wrap.querySelector('#cmHand')){
+      const hb = document.createElement('div'); hb.id = 'cmHand'; hb.className = 'cm-hand'; hb.style.display = 'none';
+      pitch.after(hb);
+      const dr = document.createElement('div'); dr.id = 'cmDrawer'; dr.className = 'cm-drawwrap'; dr.style.display = 'none';
+      pitch.appendChild(dr);
+      CS(m).barSig = '';
     }
     const hdr = wrap.querySelector('#mHeader'); if(hdr) delete hdr.dataset.cm;
     C(m).asstSig = ''; C(m).htSig = ''; C(m).feedDirty = true;
@@ -724,7 +761,7 @@ function queueMoment(m, mo){
     if(!isGoal && (cm.pauses >= PAUSE_CAP || s - cm.lastPauseS < PAUSE_COOLDOWN)) return;
   }
   if(m.htActive || m.status === 'ft' || cm.ftPresented) return;
-  if(isGoal){ cm.pendingGoal = {mo, at: performance.now() + GOAL_BEAT_MS, simAt: mo.clock + 8}; return; }
+  if(isGoal){ cm.pendingGoal = {mo, at: performance.now() + GOAL_BEAT_MS, simAt: mo.clock + GOAL_BEAT_SIM}; return; }
   doAutoPause(m, mo);
 }
 function doAutoPause(m, mo){
@@ -741,9 +778,15 @@ function scanMoments(m, s){
   const cm = C(m), ev = m.events;
   while(cm.scanPtr < ev.length && ev[cm.scanPtr].timestamp <= s){
     const e = ev[cm.scanPtr++], d = e.detail || {};
+    if(e.event_type === 'CARD_PLAYED'){ safe(() => presentCardEvent(m, e)); cm.insAt = -1e9; }
+    if((e.event_type === 'SHOT' || e.event_type === 'TACKLE') && !lowFx()) safe(() => formPop(m, e));
+    if(e.event_type === 'GOAL') setTimeout(() => safe(() => formPop(m, e)), 1800);
     switch(e.event_type){
       case 'GOAL':
-        showGoalBanner(m, e);
+        // the banner waits for the picture: it appears once the ball is in the net
+        cm.pendingBanners = cm.pendingBanners || [];
+        cm.pendingBanners.push({e, t0: performance.now()});
+        (cm.goalLog = cm.goalLog || []).push({ts: e.timestamp, seenAt: performance.now(), bannerAt: null, netAt: null, pauseAt: null});
         cm.insAt = -1e9;
         queueMoment(m, {kind: 'goal', clock: e.timestamp, event: e});
         break;
@@ -854,7 +897,9 @@ function choiceInsight(m, mo){
 setInterval(() => { if(S.match && S.ui.view === 'match') applyCam(); }, 1000);
 function openMoment(m, mo){
   closeMoment();
-  if((mo.kind === 'goal' || mo.kind === 'red') && !mo.choice) mo.choice = choiceInsight(m, mo);
+  const cards = hasHand(m);
+  if(cards) mo.answers = safe(() => answerCards(m, mo), []);
+  else if((mo.kind === 'goal' || mo.kind === 'red') && !mo.choice) mo.choice = choiceInsight(m, mo);
   const cm = C(m);
   cm.moment = mo;
   const el = document.createElement('div');
@@ -864,6 +909,7 @@ function openMoment(m, mo){
     <h2 class="cm-mo-t ${mo.kind === 'goal' ? (isMine(mo.event.team_id) ? 'gf' : 'ga') : mo.kind === 'red' ? 'rc' : ''}">${esc(momentTitle(m, mo))}</h2>
     <div class="cm-mo-l">${esc(momentLede(m, mo))}</div>
     ${situationHTML(m)}
+    ${cards ? momentCardsHTML(m, mo) : ''}
     <div class="cm-mo-cards" id="cmMoCards"><div class="cm-empty"><i class="cm-spin"></i> The assistant is reading the game…</div></div>
     <div class="cm-mo-f">
       <button class="btn sec sm" onclick="CM.openTouchline()">Tactics &amp; subs</button>
@@ -878,7 +924,7 @@ function openMoment(m, mo){
     if(mo.kind === 'insight' && !list.some(i => i.id === mo.insight.id)) list = [mo.insight, ...list];
     if(mo.kind === 'insight') list = [list.find(i => i.id === mo.insight.id), ...list.filter(i => i.id !== mo.insight.id)];
     // one voice, few loaded calls: the question's answers first, then at most one more read
-    list = mo.choice ? [mo.choice, ...list.filter(i => i.severity >= 2).slice(0, 1)] : list.slice(0, 2);
+    list = mo.choice ? [mo.choice, ...list.filter(i => i.severity >= 2).slice(0, 1)] : list.slice(0, cards ? 1 : 2);
     const imps = withLabels(m, (I && I.impacts) || []).slice(-1);
     box.innerHTML = (list.length ? list.map(i => insightCard(m, i)).join('')
       : `<div class="cm-empty">${I ? 'No red flags from the assistant — trust the plan, or make your own call on the Touchline.' : 'The assistant is unavailable right now — the Touchline is still yours.'}</div>`)
@@ -886,7 +932,7 @@ function openMoment(m, mo){
   };
   pollInsights(m, 'modal').then(I => fill(I || cm.insights));
 }
-function closeMoment(){ const el = $('#cmMoment'); if(el) el.remove(); if(S.match && S.match._cm) S.match._cm.moment = null; }
+function closeMoment(){ const el = $('#cmMoment'); if(el) el.remove(); if(S.match && S.match._cm){ S.match._cm.moment = null; if(S.match._cm.cs) S.match._cm.cs.barSig = ''; } }
 
 function showGoalBanner(m, e){
   const bn = $('#cmBanner'); if(!bn || S.ui.view !== 'match') return;
@@ -1201,10 +1247,8 @@ function monitor(){
     if(!cm.busy){
       scanMoments(m, s);
       checkClock(m);
-      if(cm.pendingGoal && (performance.now() >= cm.pendingGoal.at || s >= cm.pendingGoal.simAt)){
-        const g = cm.pendingGoal; cm.pendingGoal = null;
-        doAutoPause(m, g.mo);
-      }
+      releaseBanners(m, cm);
+      if(cm.pendingGoal && m.status === 'live' && goalPauseDue(m, cm)) fireGoalPause(m, cm);
       if(m.status === 'live' && !m.htActive && s - cm.insAt >= INSIGHT_EVERY && s > cm.startClock + 20) pollInsights(m, 'poll');
     }
     if(S.ui.view !== 'match' || m.status === 'ft') return;
@@ -1213,6 +1257,10 @@ function monitor(){
     updateFeedList(m);
     updateHtPanel(m);
     renderAssistant(m);
+    refreshLabels(m);
+    renderHandBar(m);
+    traitBanner(m);
+    if(!lowFx()) scanCombos(m, shownS(m));
     if(performance.now() - cm.lastRatings > 1000){
       cm.lastRatings = performance.now();
       if(m.sideTab === 'ratings') updateRatingsList(m);
@@ -1223,14 +1271,38 @@ function monitor(){
 setInterval(monitor, 200);
 // The goal beat's sim-clock deadline is also checked every animation frame:
 // under load a 200 ms interval can fire late and let high-speed play run on.
+function releaseBanners(m, cm){
+  if(!cm.pendingBanners || !cm.pendingBanners.length) return;
+  const now = performance.now(), ln = ANIM2_ON ? AnimR2.lastNet : null;
+  while(cm.pendingBanners.length){
+    const pb = cm.pendingBanners[0], ts = pb.e.timestamp;
+    const inNet = ln && Math.abs(ln.ts - ts) <= 2 && ln.at > (cm.lastNetUsed || 0);
+    if(ANIM2_ON && !inNet && now - pb.t0 < BANNER_WAIT_MS) return;
+    cm.pendingBanners.shift();
+    if(inNet) cm.lastNetUsed = ln.at;
+    const gl = (cm.goalLog || []).find(g => g.ts === ts && !g.bannerAt);
+    if(gl){ gl.bannerAt = now; gl.netAt = inNet ? ln.at : null; }
+    showGoalBanner(m, pb.e);
+    if(cm.pendingGoal && cm.pendingGoal.mo.clock === ts) cm.pendingGoal.at = now + GOAL_BEAT_MS;
+  }
+}
+function goalPauseDue(m, cm){
+  const g = cm.pendingGoal;
+  if(!g || (cm.pendingBanners && cm.pendingBanners.length)) return false;   // never before the ball is in
+  return performance.now() >= g.at || presS(m) >= g.simAt;
+}
+function fireGoalPause(m, cm){
+  const g = cm.pendingGoal; cm.pendingGoal = null;
+  const gl = (cm.goalLog || []).find(x => x.ts === g.mo.clock && !x.pauseAt); if(gl) gl.pauseAt = performance.now();
+  safe(() => doAutoPause(m, g.mo));
+}
 (function goalBeat(){
   requestAnimationFrame(goalBeat);
   const m = S.match, cm = m && m.matchId ? C(m) : null;
-  if(!cm || !cm.pendingGoal || cm.busy || m.status !== 'live') return;
-  if(presS(m) >= cm.pendingGoal.simAt){
-    const g = cm.pendingGoal; cm.pendingGoal = null;
-    safe(() => doAutoPause(m, g.mo));
-  }
+  if(!cm || cm.busy) return;
+  safe(() => releaseBanners(m, cm));
+  if(!cm.pendingGoal || m.status !== 'live') return;
+  if(goalPauseDue(m, cm)) fireGoalPause(m, cm);
 })();
 
 /* floating "back to the match" pill when the manager leaves the match view */
@@ -1342,7 +1414,8 @@ async function fetchReview(m){
   if(cm.review || cm.reviewBusy) return;
   cm.reviewBusy = true;
   try{
-    cm.review = await _api(`/matches/${m.matchId}/review?team=${myTeam()}`);
+    const holds = labHolds(m);
+    cm.review = await _api(`/matches/${m.matchId}/review?team=${myTeam()}${holds.length ? '&holds=' + encodeURIComponent(JSON.stringify(holds)) : ''}`);
     cm.reviewErr = null;
   }catch(e){ cm.reviewErr = e.message; }
   finally{ cm.reviewBusy = false; }
@@ -1374,7 +1447,8 @@ function reviewHTML(m){
   return `<div class="cm-panel cm-review">
     <div class="cm-rv-head"><span class="cm-chip ${res[0]}">${res[1]} ${R.score[0]}–${R.score[1]}</span>
       <h2>${esc(R.verdict)}</h2><p>${esc(R.process)}</p></div>
-    ${momentumBlock(m, FULL, {h: 56, full: true, rows: R.momentum && R.momentum.length ? normMom(R.momentum) : momentumAt(m, FULL), decisions: cm.decisions})}
+    ${momentumBlock(m, FULL, {h: 56, full: true, rows: R.momentum && R.momentum.length ? normMom(R.momentum) : momentumAt(m, FULL), decisions: cm.decisions, cards: cardEvents(m, FULL)})}
+    ${safe(() => buildReviewHTML(m, R), '')}
     <div class="cm-grid2">
       <section><h4>TURNING POINTS</h4>
         <div class="cm-tl"><div class="cm-tlbar"></div>${tl}<span class="cm-tlht"></span></div>
@@ -1403,13 +1477,25 @@ function normMom(rows){
     goals: (r.goals || []).map(g => ({...g, ts: (g.minute - 0.5) * 60})), reds: []}));
 }
 
+/* "Stay the course" calls, tested against the card the manager turned down */
+function labHolds(m){ return (m._cm && m._cm.cs && m._cm.cs.holds || []).filter(h => h.alt); }
 /* Decision Lab — one decision at a time so results stream in */
 async function runLab(m){
   const cm = C(m);
   if(cm.lab && (cm.lab.running || cm.lab.done)) return;
+  const cached = labCacheGet(m);
+  if(cached && cached.items && cached.items.length){
+    cm.lab = {running: false, done: true, items: cached.items, total: cached.total, error: null, next: 0, samples: cached.samples || 16, cached: true};
+    if(S.match === m && m.status === 'ft') renderMatch();
+    return;
+  }
   cm.lab = {running: true, done: false, items: [], total: null, error: null, next: 0, samples: 16};
   const L = cm.lab;
-  const rerender = () => { if(S.match === m && m.status === 'ft' && cm.ftTab === 'lab') renderLabPane(m); };
+  const rerender = () => {
+    if(S.match !== m || m.status !== 'ft') return;
+    if(cm.ftTab === 'lab') renderLabPane(m);
+    else if(cm.ftTab === 'review' && cm.review){ const el = $('#cmFtPane'); if(el) el.innerHTML = reviewHTML(m); }
+  };
   rerender();
   try{
     for(let i = 0; i < 12; i++){
@@ -1417,7 +1503,8 @@ async function runLab(m){
       rerender();
       let r;
       try{
-        r = await _api(`/matches/${m.matchId}/decision-lab`, {method: 'POST', body: {team: myTeam(), samples: 16, index: i}});
+        const holds = labHolds(m);
+        r = await _api(`/matches/${m.matchId}/decision-lab`, {method: 'POST', body: {team: myTeam(), samples: 16, index: i, ...(holds.length ? {holds} : {})}});
       }catch(e){
         if(/index must be/i.test(e.message)) break;   // past the last decision (or none at all)
         throw e;
@@ -1434,6 +1521,7 @@ async function runLab(m){
     }
   }catch(e){ L.error = e.message; }
   L.running = false; L.done = true;
+  if(!L.error && L.items.length) labCachePut(m, L);
   rerender();
 }
 function wdlBar(o){
@@ -1740,7 +1828,7 @@ function bcMeta(snap){
     home: {name: clubName(f.home), short: c(f.home).abbreviation || f.home, kit: kits.home},
     away: {name: clubName(f.away), short: c(f.away).abbreviation || f.away, kit: kits.away},
     players: bcPlayers(snap && snap.players, roster), roster: roster.slice(),
-    act_names: (snap && snap.act_names) || BC.actNames || [], weather: weatherFor(f)
+    act_names: (snap && snap.act_names) || BC.actNames || [], weather: weatherFor(f), flip: AnimR2.flip()
   };
 }
 
@@ -1914,6 +2002,11 @@ function bcFrame(){
     BC.lastClock = {S: AnimR2.S, playing, speed, t: performance.now()};
     if(BC.clockLog){ BC.clockLog.push(AnimR2.S); if(BC.clockLog.length > 600) BC.clockLog.shift(); }
     bcCall('setClock', AnimR2.S, {playing, speed});
+    // POSE FEED: the picture shows AnimR2's choreographed state (ball flights into
+    // the net, keeper dives, capped pursuit), so both views show the same play and
+    // the last frame stays up through every pause, rewind and refill
+    const pose = bcPose();
+    if(pose) bcCall('setPose', pose);
     // cheap signature checks for options / roster metadata
     const pp = presentedSnap(m, presS(m)).players || {};
     const plSig = Object.keys(pp).map(k => k + (pp[k].slot || '') + (pp[k].active ? 1 : 0)).join('|');
@@ -1929,13 +2022,76 @@ function bcFrame(){
       if(st && st.fps > 0 && st.fps < BC_FPS_LOW){ if(++BC.fpsBad >= 2) BC.lowFps = true; } else BC.fpsBad = 0;
     }
     const hl = bcHighlight(m);
-    const opt = {labels: labelsPref(), highlight: hl, weather: weatherFor(S.matchFixture),
-                 quality: speed >= 4 || BC.lowFps ? 'low' : 'high'};
+    refreshLabels(m);
+    const opt = {labels: labelsPref(), highlight: [...new Set([...hl, ...LBL.hi])], weather: weatherFor(S.matchFixture),
+                 quality: speed >= 4 || BC.lowFps ? 'low' : 'high', fatigue: LBL.fat, camera: bcCamPref(), flip: AnimR2.flip()};
     const sig = JSON.stringify(opt);
     if(sig !== BC.optSig){ BC.optSig = sig; bcCall('setOptions', opt); }
   }catch(e){ console.warn('[coach-match] broadcast frame', e); }
 }
 requestAnimationFrame(bcFrame);
+
+function bcPose(){
+  const P = AnimR2.players, pl = [];
+  for(const pid in P){
+    const p = P[pid];
+    if(!p || !p.team) continue;
+    pl.push({pid, x: p.x, y: p.y, vx: p.vx, vy: p.vy, active: p.active !== 0 && p.active !== false, face: p.face,
+             pose: p.pose, poseU: p.poseDur ? Math.min(1, p.poseT / p.poseDur) : 1, poseTx: p.poseTx, poseTy: p.poseTy});
+  }
+  if(!pl.length) return null;
+  const b = AnimR2.ball;
+  // celebration: once the ball is in, the camera follows the scorer to the corner
+  const g = AnimR2.goalSeq, cel = AnimR2.celebrate, sc = g && g.netAt && cel && P[g.scorer];
+  const focus = sc && performance.now() - g.netAt > 700 && AnimR2.S < cel.until ? {x: (sc.x * 2 + g.gx) / 3, y: sc.y} : null;
+  return {ball: {x: b.x, y: b.y, z: b.z || 0, state: b.state}, players: pl, carrier: b.holder || null, flip: AnimR2.flip(), focus};
+}
+
+/* ── shared presentation state for BOTH views: kits, label chips, fatigue ──
+   refreshed a few times a second from the presented snapshot (never the prefetch) */
+const LBL = {at: 0, key: null, energy: {}, fat: {}, hi: new Set(), mode: 'numbers', kits: null, sig: ''};
+const FATIGUE_WARN = 40, FATIGUE_BAD = 25;            // energy under which a label turns orange / red
+function hexRGB(h){ const n = parseInt(String(h).replace('#', ''), 16) || 0; return [n >> 16 & 255, n >> 8 & 255, n & 255]; }
+function shade(h, k){ const [r, g, b] = hexRGB(h); const f = x => Math.max(0, Math.min(255, Math.round(x * k))).toString(16).padStart(2, '0'); return '#' + f(r) + f(g) + f(b); }
+function lumOf(h){ const [r, g, b] = hexRGB(h); return (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255; }
+function refreshLabels(m){
+  const now = performance.now();
+  if(now - LBL.at < 250 && LBL.key === m.matchId) return;
+  LBL.at = now;
+  const f = S.matchFixture || {};
+  if(LBL.key !== m.matchId || !LBL.kits){
+    const k = kitsFor(f.home, f.away);
+    const mk = t => ({shirt: t.primary, shirt2: shade(t.primary, 0.78), shorts: t.secondary, gk: t.gk});
+    LBL.kits = {HOME: mk(k.home), AWAY: mk(k.away)};
+    LBL.key = m.matchId;
+  }
+  AnimR2.kits = LBL.kits;
+  LBL.mode = labelsPref();
+  const pp = presentedSnap(m, presS(m)).players || {};
+  const fat = {};
+  for(const pid in pp){
+    const e = Number(pp[pid].energy);
+    LBL.energy[pid] = e;
+    if(pp[pid].active !== false && isFinite(e)) { if(e < FATIGUE_BAD) fat[pid] = 2; else if(e < FATIGUE_WARN) fat[pid] = 1; }
+  }
+  LBL.fat = fat;
+  LBL.slot = pp;
+  LBL.hi = new Set([...bcHighlight(m), ...((FX.glow && performance.now() < FX.until) ? FX.glow : [])]);
+}
+const FAT_COL = {1: {bg: '#ff9f1a', fg: '#1a1206', edge: 'rgba(0,0,0,.55)'}, 2: {bg: '#ff4d4d', fg: '#ffffff', edge: 'rgba(255,255,255,.6)'}};
+AnimR2.labelFor = function(pid, p){
+  if(LBL.mode === 'off') return null;
+  const sp = (LBL.slot || {})[pid] || {};
+  const f = S.matchFixture || {};
+  const club = p.team === 'HOME' ? f.home : f.away;
+  const text = LBL.mode === 'names' ? short(p.name || sp.name || pid) : String(shirtNo(pid, club));
+  const K = LBL.kits && LBL.kits[p.team];
+  const col = K ? (sp.slot === 'GK' ? K.gk : K.shirt) : '#555c66';
+  const fz = LBL.fat[pid];
+  const light = lumOf(col) > 0.55;
+  const c = fz ? FAT_COL[fz] : {bg: col, fg: light ? '#10151b' : '#ffffff', edge: light ? 'rgba(0,0,0,.55)' : 'rgba(255,255,255,.55)'};
+  return {text, bg: c.bg, fg: c.fg, edge: c.edge, hi: LBL.hi.has(pid), carrier: AnimR2.ball.holder === pid};
+};
 
 /* ── view switch + labels ── */
 function setView(v){
@@ -1950,6 +2106,8 @@ function setView(v){
   if(v === 'tactical') applyCam();
   refreshControls(true);
 }
+function bcCamPref(){ return coachUI().bcCam === 'wide' ? 'wide' : 'tv'; }
+function setBcCam(c){ coachUI().bcCam = c === 'wide' ? 'wide' : 'tv'; savePrefs(); BC.optSig = ''; refreshControls(true); }
 function setLabels(l){
   if(!['off', 'numbers', 'names'].includes(l)) return;
   coachUI().labels = l; savePrefs(); BC.optSig = '';
@@ -1962,13 +2120,15 @@ function viewSegHTML(){
   const seg = `<span class="cm-apseg cm-viewseg" title="Broadcast: the TV picture · Tactical: the coach's 2D board"><em>VIEW</em>`
     + `<button class="${bc ? 'on' : ''}" data-view="broadcast" ${failed ? 'disabled title="Broadcast view unavailable"' : ''} onclick="CM.setView('broadcast')">Broadcast</button>`
     + `<button class="${bc ? '' : 'on'}" data-view="tactical" onclick="CM.setView('tactical')">Tactical</button></span>`;
-  if(bc){
-    const l = labelsPref();
-    return seg + `<span class="cm-apseg cm-lblseg" title="Player labels in the broadcast picture"><em>LABELS</em>${
+  const l = labelsPref();
+  const lbl = `<span class="cm-apseg cm-lblseg" title="Player labels (team-coloured; orange/red = tiring)"><em>LABELS</em>${
       [['off', 'Off'], ['numbers', 'No.'], ['names', 'Names']].map(([k, t]) =>
         `<button class="${l === k ? 'on' : ''}" data-lbl="${k}" onclick="CM.setLabels('${k}')">${t}</button>`).join('')}</span>`;
+  if(bc){
+    const c = bcCamPref();
+    return seg + lbl + `<button class="spdbtn cm-cam cm-bccam" onclick="CM.setBcCam('${c === 'wide' ? 'tv' : 'wide'}')" title="TV follows the ball; Wide pulls back to show the shape">${c === 'wide' ? '🗺 Wide' : '📺 TV'}</button>`;
   }
-  return seg + `<button class="spdbtn cm-cam" onclick="CM.toggleCam()" title="Wide shows the whole shape; Follow tracks the ball">${coachUI().cam === 'follow' ? '🎥 Follow' : '🗺 Wide'}</button>`;
+  return seg + lbl + `<button class="spdbtn cm-cam" onclick="CM.toggleCam()" title="Wide shows the whole shape; Follow tracks the ball">${coachUI().cam === 'follow' ? '🎥 Follow' : '🗺 Wide'}</button>`;
 }
 
 /* keep the iframe alive across every re-render of the match screen: park it
@@ -1999,6 +2159,927 @@ function bcInstallOuter(){
     };
     TL.hooks.prematchHTML._cmWx = true;
   }
+}
+
+/* ═══ 10. TACTIC CARDS (v2 §6.1–6.2, §6.6): hand bar, influence, moments ════
+   Contract: docs/v2_progress/build-core.md §7–9. The UI never compiles a card —
+   the server does (at the presented second, via the same rewind path as every
+   decision). Everything the hand bar shows is derived from the ledger up to the
+   PRESENTED clock (CARD_PLAYED / goals / half time), refined by the server's
+   `/cards?at=` read when it is available. Matches started without a build (old
+   saves, scenarios) have no hand: the bar hides and moments keep the classic
+   one-click answers. */
+const CARDS = {catalog: null, catP: null, starts: {}, previews: new Map(), prevBusy: new Set()};
+const TYPE_CLS = {'SHAPE': 'shape', 'INSTRUCTION': 'instr', 'PLAYER ORDER': 'order', 'SET PIECE': 'setp', 'SUB': 'sub', 'REACTION': 'react', 'STANCE': 'stance'};
+const TRIGGER_TEXT = {conceded: 'after you concede', opp_red: 'after an opponent is sent off', level_70: "from 70' with the scores level",
+  behind_60: "when behind from 60'", ahead_75: "when ahead from 75'"};
+const KW_HELP = {Exhaust: 'Once per match.', Upgrade: 'Training can improve this card (2 TP).',
+  Fatigue: 'The affected players lose this much energy.', Combo: 'Needs that partnership on the pitch; stronger at Lv2/Lv3.',
+  Trigger: 'A reaction: only playable after the trigger.', Target: 'You choose the player.'};
+/* optional routes are probed once through the OpenAPI list (no console 404s on older servers) */
+const ROUTE_TPL = {catalog: '/build/catalog', preview: '/build/preview', cardsAt: '/matches/{match_id}/cards', analyst: '/analyst/test',
+  ghostToday: '/ghost/today', ghostRun: '/ghost/run', ghostLb: '/ghost/leaderboard'};
+CARDS.routes = null;
+function probeRoutes(){
+  if(CARDS.routesP) return CARDS.routesP;
+  CARDS.routesP = (async () => {
+    const out = {};
+    for(const [k, tpl] of Object.entries(ROUTE_TPL)) out[k] = window.CC && CC.hasRoute ? await CC.hasRoute(tpl).catch(() => false) : true;
+    CARDS.routes = out;
+    if(!out.preview) CARDS.noPreview = true;
+    if(!out.cardsAt) CARDS.noCardsAt = true;
+    return out;
+  })();
+  return CARDS.routesP;
+}
+function catalog(){
+  if(CARDS.catalog) return Promise.resolve(CARDS.catalog);
+  if(!CARDS.catP) CARDS.catP = (async () => {
+    const tb = TL.build;
+    if(tb && typeof tb.catalog === 'function'){ const c = await Promise.resolve(tb.catalog()); if(c && c.cards) return (CARDS.catalog = c); }
+    if(tb && tb.ready){ const c = await tb.ready; if(c && c.cards) return (CARDS.catalog = c); }
+    const R = await probeRoutes();
+    if(!R.catalog) return null;
+    return (CARDS.catalog = await _api('/build/catalog'));
+  })().catch(() => null);
+  return CARDS.catP;
+}
+function catCard(id){ const c = CARDS.catalog; return (c && (c.cards || []).find(x => x.id === id)) || null; }
+function buildState(){ return safe(() => (TL.build && typeof TL.build.state === 'function') ? TL.build.state() : (S.career && S.career.build) || null, null); }
+function prepFor(fid){ const u = coachUI(); u.prep = u.prep || {}; return fid ? (u.prep[fid] = u.prep[fid] || {}) : {}; }
+function defaultHand(bs){
+  const deck = (bs && bs.deck) || [];
+  const size = (CARDS.catalog && CARDS.catalog.constants && CARDS.catalog.constants.hand_size) || 5;
+  return deck.filter(id => { const c = catCard(id); return !c || c.available !== false; }).slice(0, size);
+}
+
+/* ── kick-off: inject the build (+ the picked hand) and the CPU's build into /matches/start ── */
+function startExtras(body){
+  if(!body || body.scenario_id || body.build || !S.matchFixture) return null;
+  const bs = buildState(); if(!bs || !bs.system_id) return null;
+  const f = S.matchFixture, prep = prepFor(f.id);
+  const kb = safe(() => TL.build.kickoffBuild ? TL.build.kickoffBuild() : null, null) || {
+    system_id: bs.system_id, partnerships: bs.partnerships || [], familiarity: bs.familiarity || {},
+    set_pieces: bs.set_pieces || {}, upgrades: bs.upgrades || {}, custom_system: bs.custom_system};
+  const build = {...kb, hand: (prep.hand && prep.hand.length ? prep.hand : defaultHand(bs)).slice()};
+  if(prep.set_pieces) build.set_pieces = {...(build.set_pieces || {}), ...prep.set_pieces};
+  const oppClub = f.home === 'LIV' ? f.away : f.home;
+  const cpu = safe(() => TL.build.cpuBuildFor ? TL.build.cpuBuildFor(oppClub) : null, null);
+  const out = {build, build_team: myTeam()};
+  if(cpu) out.cpu_build = cpu;
+  return out;
+}
+function noteStart(r){
+  if(!r || !r.match_id) return;
+  CARDS.starts[r.match_id] = {hand: r.hand || null, traits: r.active_traits || [], cards: r.cards || null,
+                               fit: r.system_fit ?? null, kickoff: r.kickoff_modifiers || null, build: JSON.parse(JSON.stringify(buildState() || {}))};
+}
+
+/* ── per-match card state ── */
+function CS(m){
+  const cm = C(m);
+  if(!cm.cs){
+    const st = CARDS.starts[m.matchId] || {};
+    const blk = (m.snap && m.snap.cards) || st.cards || null;
+    cm.cs = {build: st.build || null, hand: st.hand || null, traits: st.traits || [], fit: st.fit, blk, srv: null, srvSig: '', srvBusy: false, revision: 0,
+             holds: [], plays: [], fxSerial: 0, traitShown: false, aiSeen: new Set(), comboSeen: new Set(), combos: [], comboSig: '',
+             formSeen: new Set(), barSig: '', open: null, target: {}};
+  }
+  return cm.cs;
+}
+function handIds(m){
+  const cs = CS(m);
+  if(cs.hand && cs.hand.length) return cs.hand.map(c => c.id);
+  const b = cs.blk && cs.blk[myTeam()];
+  return (b && b.hand) || [];
+}
+function handCard(m, id){
+  const cs = CS(m);
+  const c = (cs.hand || []).find(x => x.id === id);
+  return c || catCard(id) || {id, name: id.replace(/_/g, ' ').toUpperCase(), cost: 0, type: 'INSTRUCTION', lines: []};
+}
+function hasHand(m){ return !!m && handIds(m).length > 0; }
+const kwList = c => (c.keywords || []).map(String);
+const isExhaust = c => !!c.exhaust || kwList(c).some(k => /^exhaust$/i.test(k));
+function cardEvents(m, s, team){
+  const out = [];
+  for(const e of m.events){
+    if(e.timestamp > s) break;
+    if(e.event_type === 'CARD_PLAYED' && (!team || e.team_id === team)) out.push(e);
+  }
+  return out;
+}
+/* influence at the presented second — the server's read when fresh, else the rules replayed from the ledger */
+function influenceAt(m, s){
+  const K = (CARDS.catalog && CARDS.catalog.constants) || {};
+  const start = K.influence_start ?? 3, max = K.influence_max ?? 5, me = myTeam();
+  const cs = CS(m);
+  if(cs.srv && cs.srv.sig === infSig(m, s) && cs.srv.influence != null) return {now: cs.srv.influence, max: cs.srv.max || max, src: 'server'};
+  let v = start, htDone = s < HALF ? true : false;
+  const add = x => { v = Math.max(0, Math.min(max, v + x)); };
+  for(const e of m.events){
+    if(e.timestamp > s) break;
+    if(!htDone && e.timestamp >= HALF){ add(1); htDone = true; }
+    if(e.event_type === 'GOAL' && e.team_id && e.team_id !== me) add(1);
+    if(e.event_type === 'CARD_PLAYED' && e.team_id === me) add(-(Number((e.detail || {}).cost) || 0));
+  }
+  if(!htDone && s >= HALF) add(1);
+  return {now: v, max, src: 'ledger'};
+}
+function infSig(m, s){
+  const me = myTeam();
+  let n = 0, g = 0;
+  for(const e of m.events){ if(e.timestamp > s) break; if(e.event_type === 'CARD_PLAYED') n++; if(e.event_type === 'GOAL') g++; }
+  return `${m.matchId}|${n}|${g}|${s >= HALF ? 1 : 0}|${Math.floor(s / 900)}|${me}`;
+}
+async function refreshServerCards(m, s){
+  const cs = CS(m);
+  const sig = infSig(m, s), revision = cs.revision;
+  if(cs.srvBusy || cs.srvSig === sig || CARDS.noCardsAt || !CARDS.routes || !CARDS.routes.cardsAt) return;
+  cs.srvBusy = true; cs.srvSig = sig;
+  try{
+    const r = await _api(`/matches/${m.matchId}/cards?team=${myTeam()}&at=${Math.floor(s)}`);
+    const b = r && (r[myTeam()] || r.cards && r.cards[myTeam()] || r);
+    if(b && S.match === m && cs.revision === revision) cs.srv = {sig, influence: b.influence, max: b.max, playable: b.playable || {}, triggers: b.triggers_met || [],
+                                      exhausted: b.exhausted || [], opp: r[other(myTeam())] || null};
+  }catch(e){ if(/\(404\)|Not Found/.test(e.message)) CARDS.noCardsAt = true; cs.srvSig = ''; }
+  finally{ cs.srvBusy = false; if(cs.revision !== revision) cs.srvSig = ''; }
+}
+function triggerMet(m, s, trig){
+  if(!trig) return true;
+  const cs = CS(m);
+  if(cs.srv && cs.srv.sig === infSig(m, s) && cs.srv.triggers) return cs.srv.triggers.includes(trig);
+  const st = statsAt(m, s), me = myTeam(), f = st.score[me], a = st.score[other(me)];
+  switch(trig){
+    case 'conceded': return m.events.some(e => e.timestamp <= s && e.event_type === 'GOAL' && e.team_id && e.team_id !== me);
+    case 'opp_red': return st.T[other(me)].reds > 0;
+    case 'level_70': return s >= 70 * 60 && f === a;
+    case 'behind_60': return s >= 60 * 60 && f < a;
+    case 'ahead_75': return s >= 75 * 60 && f > a;
+    default: return true;
+  }
+}
+/* why a card can't be played right now (null = playable) */
+function cardBlock(m, id, s, inf){
+  const c = handCard(m, id), me = myTeam();
+  const mine = cardEvents(m, s, me);
+  if(isExhaust(c) && mine.some(e => (e.detail || {}).card_id === id)) return {code: 'exhausted', text: 'Exhausted — once per match'};
+  const cs = CS(m);
+  const sp = cs.srv && cs.srv.sig === infSig(m, s) ? (cs.srv.playable || {})[id] : null;
+  if(sp && sp.ok === false && sp.reason) return {code: 'server', text: sp.reason};
+  const cost = Number(c.cost) || 0;
+  if(cost > inf.now) return {code: 'cost', text: `Needs ⚡${cost} — you have ${inf.now}`};
+  if(c.trigger && !triggerMet(m, s, c.trigger)) return {code: 'trigger', text: `Reaction: playable ${TRIGGER_TEXT[c.trigger] || c.trigger}`};
+  if(!isLiveMatch() || m.status === 'ft') return {code: 'ft', text: 'The match is over'};
+  if(C(m).busy) return {code: 'busy', text: 'One moment…'};
+  return null;
+}
+
+/* ── previews: the Analyst's effect-table read for THIS state (cached per card × state) ── */
+function previewKey(m, id, s){ const st = statsAt(m, s).score, me = myTeam(); return `${m.matchId}|${id}|${Math.floor(s / 300)}|${st[me] - st[other(me)]}`; }
+function previewFor(m, id, s){
+  const k = previewKey(m, id, s);
+  if(CARDS.previews.has(k)) return CARDS.previews.get(k);
+  const c = handCard(m, id);
+  if(!CARDS.prevBusy.has(k) && !CARDS.noPreview && CARDS.routes && CARDS.routes.preview){
+    CARDS.prevBusy.add(k);
+    const st = statsAt(m, s).score, me = myTeam();
+    _api('/build/preview', {method: 'POST', body: {match_id: m.matchId, at_clock: Math.floor(s), card_id: id, side: me,
+         state: {minute: minuteOf(s), score_diff: st[me] - st[other(me)]}}})
+      .then(r => { CARDS.previews.set(k, r); CS(m).barSig = ''; refreshMomentCards(); refreshDrawer(); })
+      .catch(e => { if(/\(404\)|Not Found/.test(e.message)) CARDS.noPreview = true; CARDS.previews.set(k, null); })
+      .finally(() => CARDS.prevBusy.delete(k));
+  }
+  return c.preview || null;
+}
+const sgn = (v, d = 2) => { v = Number(v) || 0; return (v >= 0 ? '+' : '−') + Math.abs(v).toFixed(d); };
+function previewHTML(p, opts = {}){
+  if(!p || p.source === 'none' || (p.dxg_for == null && p.dpts == null)) return `<div class="cc-prev none">${opts.loading ? '<i class="cm-spin"></i> Analyst preview…' : 'No Analyst preview for this state'}</div>`;
+  const n = p.n ? ` (${p.n} futures)` : '';
+  return `<div class="cc-prev" title="Analyst effect-table read for the current minute and score · mean ± standard error${esc(n)}">
+    <span>xG for <b class="${p.dxg_for > 0.005 ? 'up' : p.dxg_for < -0.005 ? 'dn' : ''}">${sgn(p.dxg_for)}</b></span>
+    <span>against <b class="${p.dxg_against > 0.005 ? 'dn' : p.dxg_against < -0.005 ? 'up' : ''}">${sgn(p.dxg_against)}</b></span>
+    ${p.dpts != null ? `<span>pts <b class="${p.dpts > 0.01 ? 'up' : p.dpts < -0.01 ? 'dn' : ''}">${sgn(p.dpts)}</b></span>` : ''}
+    ${p.se != null ? `<em>±${(Number(p.se) || 0).toFixed(2)} /15'</em>` : ''}</div>`;
+}
+function kwChips(c){
+  return kwList(c).map(k => `<i class="cc-kw" title="${esc(KW_HELP[k.split(/[ (]/)[0]] || '')}">${esc(k)}</i>`).join('')
+    + (c.duration ? `<i class="cc-kw dur" title="Timed effects revert automatically">${esc(String(c.duration))}'</i>` : '');
+}
+function cardFace(m, id, s, inf, opts = {}){
+  const c = handCard(m, id), blk = cardBlock(m, id, s, inf);
+  const cls = TYPE_CLS[c.type] || 'instr';
+  const played = cardEvents(m, s, myTeam()).filter(e => (e.detail || {}).card_id === id).length;
+  const head = c.headline || (c.lines && c.lines[0]) || c.text || '';
+  return `<div class="cm-card t-${cls} ${blk ? 'off' : ''} ${opts.hl ? 'hl' : ''} ${played ? 'used' : ''}" data-card="${esc(id)}"
+      role="button" tabindex="0" onclick="CM.cardDrawer('${esc(id)}')" title="${esc(blk ? blk.text : 'Open the card for the exact effects')}">
+    <div class="cc-top"><span class="cc-cost">⚡${Number(c.cost) || 0}</span><span class="cc-type">${esc(c.type || '')}</span>${c.upgraded ? '<span class="cc-up" title="Upgraded">+</span>' : ''}</div>
+    <div class="cc-name">${esc(c.name || id)}</div>
+    <div class="cc-head">${esc(head)}</div>
+    <div class="cc-kws">${kwChips(c)}</div>
+    ${blk ? `<div class="cc-off" data-reason="${esc(blk.code)}">${esc(blk.text)}</div>`
+          : `<button class="cc-play" onclick="event.stopPropagation();CM.playCard('${esc(id)}', this)">PLAY${played ? ' AGAIN' : ''}</button>`}
+  </div>`;
+}
+function influenceHTML(inf){
+  let pips = '';
+  for(let i = 0; i < inf.max; i++) pips += `<i class="${i < inf.now ? 'on' : ''}"></i>`;
+  return `<div class="cm-infl" title="Influence: +1 at half time, +1 when you concede (max ${inf.max}). Cards cost 0–3."><em>INFLUENCE</em>
+    <div class="cm-pips">${pips}</div><b>⚡${inf.now}<small>/${inf.max}</small></b></div>`;
+}
+function renderHandBar(m, force){
+  const el = $('#cmHand'); if(!el) return;
+  const wrap = el.closest('.cm-live');
+  if(!hasHand(m) || m.status === 'ft'){ if(el.innerHTML || el.style.display !== 'none'){ el.innerHTML = ''; el.style.display = 'none'; if(wrap) wrap.classList.remove('cm-hashand'); } return; }
+  if(wrap && !wrap.classList.contains('cm-hashand')) wrap.classList.add('cm-hashand');
+  el.style.display = '';
+  const s = shownS(m), inf = influenceAt(m, s), ids = handIds(m);
+  refreshServerCards(m, s);
+  const hl = (C(m).moment && C(m).moment.answers) || [];
+  const blocks = ids.map(id => { const b = cardBlock(m, id, s, inf); return b ? b.code + b.text : ''; });
+  const sig = JSON.stringify([ids, inf.now, inf.max, blocks, hl, cardEvents(m, s, myTeam()).length, CS(m).open]);
+  if(!force && sig === CS(m).barSig) return;
+  CS(m).barSig = sig;
+  el.innerHTML = influenceHTML(inf) + `<div class="cm-cards">${ids.map(id => cardFace(m, id, s, inf, {hl: hl.includes(id)})).join('')}</div>`
+    + `<div class="cm-hand-note">Cards play at the second on screen — no pause needed.</div>`;
+}
+
+/* ── card detail drawer ("choose how much to nerd out") ── */
+function drawerHTML(m, id){
+  const c = handCard(m, id), s = shownS(m), inf = influenceAt(m, s), blk = cardBlock(m, id, s, inf);
+  const p = previewFor(m, id, s);
+  const lines = (c.lines && c.lines.length ? c.lines : (c.effects_text || [])).map(l => `<li>${esc(l)}</li>`).join('');
+  const kws = kwList(c).map(k => { const h = KW_HELP[k.split(/[ (]/)[0]]; return `<div><b>${esc(k)}</b>${h ? ` — ${esc(h)}` : ''}</div>`; }).join('');
+  const tg = targetPicker(m, c);
+  return `<div class="cm-drawer t-${TYPE_CLS[c.type] || 'instr'}" role="dialog" aria-label="${esc(c.name)}">
+    <div class="cd-h"><span class="cc-cost">⚡${Number(c.cost) || 0}</span><b>${esc(c.name)}</b><span class="cc-type">${esc(c.type || '')}</span>
+      <button class="cd-x" onclick="CM.cardDrawer(null)" aria-label="Close">×</button></div>
+    ${c.headline ? `<div class="cd-head">${esc(c.headline)}</div>` : ''}
+    <div class="cd-sec"><em>EXACT EFFECTS</em><ul class="cd-lines">${lines || '<li>Effects are compiled when played.</li>'}</ul>
+      ${c.duration ? `<div class="cd-dur">Lasts ${esc(String(c.duration))}' — timed effects revert automatically (replays exactly on rewind).</div>` : `<div class="cd-dur">Permanent until you change it.</div>`}
+      ${c.drawback ? `<div class="cd-draw"><b>Trade-off:</b> ${esc(c.drawback)}</div>` : ''}</div>
+    ${kws ? `<div class="cd-sec cd-kws"><em>KEYWORDS</em>${kws}</div>` : ''}
+    <div class="cd-sec"><em>ANALYST PREVIEW · ${minuteOf(s)}' · THIS SCORE</em>${previewHTML(p, {loading: !CARDS.noPreview && !CARDS.previews.has(previewKey(m, id, s))})}</div>
+    ${tg}
+    <div class="cd-f">${blk ? `<span class="cd-why" data-reason="${esc(blk.code)}">${esc(blk.text)}</span>` : `<span class="cm-dim">Applies at ${clockStr(s)} — the second on screen.</span>`}
+      <button class="btn pri cd-play" ${blk ? 'disabled' : ''} onclick="CM.playCard('${esc(id)}', this)">Play ⚡${Number(c.cost) || 0}</button></div>
+  </div>`;
+}
+function targetPicker(m, c){
+  if(!c.target) return '';
+  const cs = CS(m), me = myTeam(), ps = presentedSnap(m, presS(m)).players || {};
+  const onPitch = t => Object.entries(ps).filter(([, p]) => p.team === t && p.active !== false && !p.subbed_off);
+  const opts = list => list.map(([pid, p]) => `<option value="${esc(pid)}" ${cs.target.player_id === pid || cs.target.opp_player === pid || cs.target.player_off === pid ? 'selected' : ''}>${esc(short(p.name))} · ${esc(p.slot || '')}${p.energy != null ? ` · ${Math.round(p.energy)}%` : ''}</option>`).join('');
+  if(c.target === 'opp_player') return `<div class="cd-sec cd-tg"><em>TARGET</em><select onchange="CM.cardTarget('opp_player', this.value)"><option value="">Scouting's pick</option>${opts(onPitch(other(me)))}</select></div>`;
+  if(c.target === 'bench'){
+    const bench = (S.current.bench || []).filter(pid => !(ps[pid] && ps[pid].subbed_off)).map(pid => [pid, {name: nameOf(pid), slot: (P(pid) || {}).pos || ''}]);
+    return `<div class="cd-sec cd-tg"><em>SUBSTITUTION</em><select onchange="CM.cardTarget('player_off', this.value)"><option value="">Off: the card's pick</option>${opts(onPitch(me))}</select>
+      <select onchange="CM.cardTarget('player_on', this.value)"><option value="">On: the card's pick</option>${bench.map(([pid, p]) => `<option value="${esc(pid)}">${esc(short(p.name))} · ${esc(p.slot)}</option>`).join('')}</select></div>`;
+  }
+  return `<div class="cd-sec cd-tg"><em>TARGET</em><select onchange="CM.cardTarget('player_id', this.value)"><option value="">The card's pick</option>${opts(onPitch(me))}</select></div>`;
+}
+function refreshDrawer(){
+  const m = S.match, box = $('#cmDrawer'); if(!m || !box || !m._cm) return;
+  const id = CS(m).open;
+  if(!id){ box.innerHTML = ''; box.style.display = 'none'; return; }
+  const focused = box.contains(document.activeElement) && document.activeElement.tagName === 'SELECT';
+  if(focused) return;
+  box.style.display = ''; box.innerHTML = drawerHTML(m, id);
+}
+function cardDrawer(id){
+  const m = S.match; if(!m) return;
+  const cs = CS(m);
+  cs.open = cs.open === id ? null : id; cs.target = {};
+  refreshDrawer(); cs.barSig = ''; renderHandBar(m, true);
+}
+
+/* ── play a card at the presented second ── */
+async function playCard(id, btn){
+  const m = S.match; if(!m || !m.matchId) return;
+  const cs = CS(m), s = shownS(m), inf = influenceAt(m, s), blk = cardBlock(m, id, s, inf);
+  if(blk){ toast(blk.text); return; }
+  const c = handCard(m, id);
+  const src = document.querySelector(`#cmHand .cm-card[data-card="${CSS.escape(id)}"]`);
+  const rect = src ? src.getBoundingClientRect() : null;
+  if(btn){ btn.disabled = true; btn.dataset.lbl = btn.textContent; btn.innerHTML = '<i class="cm-spin"></i>'; }
+  await waitFor(() => !mgmtPending && !advanceInFlight);
+  mgmtPending = true;
+  const targets = Object.fromEntries(Object.entries(cs.target || {}).filter(([, v]) => v));
+  let r;
+  try{
+    r = await api(`/matches/${m.matchId}/card`, {method: 'POST', body: {team: myTeam(), card_id: id, ...(Object.keys(targets).length ? {targets} : {})}});
+  }catch(e){
+    mgmtPending = false;
+    toast('Not played: ' + e.message.replace(/^.*?:\s*/, ''));
+    if(btn){ btn.disabled = false; btn.textContent = btn.dataset.lbl || 'PLAY'; }
+    return;
+  }
+  mgmtPending = false;
+  const snap = r.snapshot || {};
+  if(r.cards) cs.blk = r.cards;
+  if(r.card) cs.hand = (cs.hand || []).map(x => x.id === id ? {...x, ...r.card} : x);
+  cs.revision++;
+  const sideCards = (r.cards || snap.cards || {})[myTeam()] || {};
+  const sig = infSig(m, shownS(m));
+  cs.srvSig = sig; cs.srv = {sig, influence: sideCards.influence ?? (r.influence && r.influence.now), max: sideCards.max || (r.influence && r.influence.max), playable: sideCards.playable || {}, triggers: sideCards.triggers_met || [], exhausted: sideCards.exhausted || []};
+  safe(() => reconcileLiveFromEngine(snap.management || r.management));
+  const clock = r.rewound_to ?? Math.floor(s), minute = minuteOf(clock);
+  cs.plays.push({clock, card_id: id, name: c.name, cost: c.cost, commands: r.commands || []});
+  S.changes.push({minute, text: `Card: ${c.name}`});
+  saveState();
+  cs.open = null; refreshDrawer();
+  toast(`✓ ${c.name} — played at ${minute}'`);
+  if(!lowFx()) flyCard(rect, c, true);
+  cardFx(m, r.commands || [], c, targets);
+  const mo = $('#cmMoment .cm-mo');
+  if(mo){
+    let dn = mo.querySelector('.cm-mo-done');
+    if(!dn){ dn = document.createElement('div'); dn.className = 'cm-mo-done'; mo.querySelector('.cm-mo-f').before(dn); }
+    dn.textContent = `✓ ${c.name} played at ${minute}'. Resume to watch it work — the tracker follows it.`;
+    const b = mo.querySelector(`.cm-ans[data-card="${CSS.escape(id)}"] .cm-ans-play`); if(b){ b.disabled = true; b.textContent = `✓ Played ${minute}'`; }
+  }
+  cs.barSig = ''; renderHandBar(m, true);
+  C(m).asstSig = ''; C(m).htSig = '';
+  emit('match:card', {card_id: id, minute, clock});
+}
+/* decision label for the tracker / feed */
+function cardLabel(body){ const m = S.match; const c = m ? handCard(m, body.card_id) : {name: body.card_id}; return `Card: ${c.name}`; }
+
+/* ── visual engagement §6.5: card fly, glow, role arrows, ghost shape ── */
+const FX = {glow: [], until: 0};
+function lowFx(){ return (S.ui.matchSpeed || 1) >= 4; }
+function flyCard(rect, c, mine){
+  const pitch = $('#livePitch'); if(!pitch) return;
+  const pr = pitch.getBoundingClientRect();
+  const el = document.createElement('div');
+  el.className = `cm-flycard t-${TYPE_CLS[c.type] || 'instr'} ${mine ? 'mine' : 'opp'}`;
+  el.innerHTML = `<span class="cc-cost">⚡${Number(c.cost) || 0}</span><b>${esc(c.name || '')}</b>`;
+  document.body.appendChild(el);
+  const r0 = rect || {left: pr.left + pr.width / 2 - 70, top: mine ? pr.bottom : pr.top - 40, width: 140, height: 60};
+  el.style.left = r0.left + 'px'; el.style.top = r0.top + 'px'; el.style.width = r0.width + 'px';
+  const tx = pr.left + pr.width / 2 - r0.width / 2, ty = pr.top + pr.height * 0.36;
+  requestAnimationFrame(() => {
+    el.style.transform = `translate(${tx - r0.left}px, ${ty - r0.top}px) scale(1.12) rotate(${mine ? -2 : 2}deg)`;
+    el.style.opacity = '1';
+  });
+  setTimeout(() => { el.style.transition = 'opacity .5s, transform .5s'; el.style.opacity = '0'; el.style.transform += ' scale(.7)'; }, 1150);
+  setTimeout(() => el.remove(), 1750);
+}
+const FWD_ROLES = /overlap|get forward|inside forward|make runs|run in behind|join attack|attack|forward|bomb|advanced/i;
+function cardFx(m, commands, c, targets){
+  const me = myTeam(), glow = new Set(), arrows = [];
+  let ghost = null;
+  const ps = presentedSnap(m, presS(m)).players || {};
+  for(const cmd of commands || []){
+    const k = cmd.kind || cmd.type, p = cmd.payload || cmd;
+    if(p.team && p.team !== me) continue;
+    if(k === 'instructions' && p.player_id){
+      glow.add(p.player_id);
+      const role = String((p.instructions || {}).attackRole || '');
+      const fwd = FWD_ROLES.test(role);
+      arrows.push({pid: p.player_id, dx: fwd ? 14 : -7, dy: 0, color: fwd ? '#ffd65a' : '#8fd3ff', ms: 2600});
+    } else if(k === 'substitution'){ if(p.player_on) glow.add(p.player_on); }
+    else if(k === 'modifiers'){ for(const pid of Object.keys(p.deltas || {})) glow.add(pid); }
+    else if(k === 'formation' && p.formation){ ghost = ghostShape(m, p.formation); }
+    else if(k === 'tactics'){ for(const [pid, q] of Object.entries(ps)) if(q.team === me && q.active !== false && q.slot !== 'GK') glow.add(pid); }
+  }
+  for(const v of Object.values(targets || {})) if(v && ps[v] && ps[v].team === me) glow.add(v);
+  const G = [...glow];
+  FX.glow = G; FX.until = performance.now() + 3200;
+  const now = performance.now();
+  AnimR2.fx = {glow: new Set(G), arrows: arrows.map(a => ({...a, until: now + a.ms})), ghost: ghost ? {...ghost, until: now + 3000} : null};
+  if(BC.state === 'ready') bcCall('setFx', {glow: G, arrows, ghost: ghost ? {...ghost, ms: 3000} : null, ms: 3200});
+  CS(m).fxSerial++;
+}
+/* the new shape in world metres: slot anchors laid onto the team's current block (my team attacks +x) */
+function ghostShape(m, formation){
+  const fid = (typeof FRONTEND_FORMATION_BY_ENGINE !== 'undefined' && FRONTEND_FORMATION_BY_ENGINE[formation]) || formation;
+  const F = FORMATIONS.find(f => f.id === fid || f.name === formation);
+  if(!F) return null;
+  const me = myTeam();
+  let sx = 0, n = 0;
+  for(const [pid, p] of Object.entries(AnimR2.players)) if(p.team === me && p.active) { sx += p.x; n++; }
+  const cx = n ? sx / n : 45;
+  const pts = F.slots.filter(sl => sl.id !== 'GK').map(sl => [Math.max(3, Math.min(102, cx + (52 - sl.y) * 0.42)), sl.x * 0.68]);
+  return {pts, color: '#ffd65a', name: F.name};
+}
+
+/* ── pops over the pitch: AI card plays, COMBO, form, kick-off traits ── */
+function popLayer(){
+  const pitch = $('#livePitch'); if(!pitch) return null;
+  let L = pitch.querySelector('#cmPops');
+  if(!L){ L = document.createElement('div'); L.id = 'cmPops'; L.className = 'cm-pops'; pitch.appendChild(L); }
+  return L;
+}
+function pop(cls, html, ms = 3200){
+  const L = popLayer(); if(!L) return null;
+  const el = document.createElement('div');
+  el.className = 'cm-pop ' + cls; el.innerHTML = html;
+  L.appendChild(el);
+  while(L.children.length > 4) L.firstChild.remove();
+  requestAnimationFrame(() => el.classList.add('in'));
+  setTimeout(() => { el.classList.remove('in'); el.classList.add('out'); }, ms);
+  setTimeout(() => el.remove(), ms + 600);
+  return el;
+}
+function traitBanner(m){
+  const cs = CS(m);
+  if(cs.traitShown || !cs.traits || !cs.traits.length) return;
+  const s = presS(m);
+  if(s > cs0Start(m) + 40) { cs.traitShown = true; return; }
+  cs.traitShown = true;
+  const chips = cs.traits.map(t => `<span class="cm-trait ${t.active ? 'on' : ''}">${esc(String(t.name || t.label || t.id).toUpperCase())} <b>${t.count ?? 0}/${t.need ?? '?'}</b></span>`).join('');
+  const bs = buildState() || {};
+  const sys = CARDS.catalog && (CARDS.catalog.systems || []).find(x => x.id === bs.system_id);
+  pop('traits', `<div class="cm-pop-k">${esc((sys && sys.name || 'YOUR SYSTEM').toUpperCase())}${cs.fit != null ? ` · FIT ${Math.round(cs.fit)}` : ''}</div><div class="cm-traits">${chips}</div>`, 5200);
+}
+function cs0Start(m){ return C(m).startClock || 0; }
+/* AI (and replayed) card plays reach the picture at the presented second */
+function presentCardEvent(m, e){
+  const cs = CS(m), key = e.event_id ?? `${e.timestamp}|${(e.detail || {}).card_id}`;
+  if(cs.aiSeen.has(key)) return;
+  cs.aiSeen.add(key);
+  if(isMine(e.team_id)) return;                      // your own plays animate when you play them
+  const d = e.detail || {};
+  const line = (d.lines || [])[0] || '';
+  pop('ai', `<div class="cm-pop-k">${esc(sideName(e.team_id).toUpperCase())} PLAY</div><b>${esc(d.name || d.card_id || 'a card')}</b>${line ? `<span>${esc(line)}</span>` : ''}`, 3600);
+  if(!lowFx()) flyCard(null, {name: d.name || d.card_id, cost: d.cost, type: d.type}, false);
+}
+/* COMBO detection: read-only patterns over the ledger for the manager's active partnerships */
+function activePartnerships(m){
+  const bs = CS(m).build || buildState(); if(!bs || !bs.partnerships) return [];
+  const ps = (m.snap && m.snap.players) || {};
+  return bs.partnerships.filter(p => (p.members || []).length >= 2 && (p.fam || 0) >= 30 && p.members.every(pid => ps[pid]));
+}
+const PATTERN_NAME = {cross_head: 'Cross & Head', overlap: 'Overlap', one_two: 'One-Two', through_ball: 'Through Ball',
+  cb_partnership: 'CB Partnership', cb_pair: 'CB Partnership', cb: 'CB Partnership', press_trio: 'Pressing Trio', pressing_trio: 'Pressing Trio', keeper_line: 'Keeper–Back line', keeper_backline: 'Keeper–Back line'};
+function patternKey(p){ return String(p.pattern || p.id || '').toLowerCase().replace(/[^a-z]+/g, '_').replace(/^_|_$/g, ''); }
+function detectCombos(m){
+  const parts = activePartnerships(m);
+  if(!parts.length) return [];
+  const ev = m.events, out = [], last = {};
+  const done = e => (e.detail || {}).outcome === 'COMPLETED' || (e.detail || {}).outcome === 'AERIAL_COMPLETED';
+  for(let i = 0; i < ev.length; i++){
+    const e = ev[i], d = e.detail || {}, a = e.actor_id;
+    if(!a) continue;
+    for(const p of parts){
+      const mem = p.members, k = patternKey(p);
+      if(!mem.includes(a)) continue;
+      if(last[p.id || k] != null && e.timestamp - last[p.id || k] < 240) continue;
+      let hit = null;
+      if(k.includes('cross') && e.event_type === 'SHOT' && d.shot_type === 'HEADER'){
+        for(let j = i - 1; j >= 0 && ev[j].timestamp >= e.timestamp - 5; j--){
+          const q = ev[j];
+          if((q.event_type === 'CROSS' || (q.event_type === 'PASS' && (q.detail || {}).pass_type === 'CROSS')) && q.actor_id !== a && mem.includes(q.actor_id)){ hit = [q.actor_id, a]; break; }
+        }
+      } else if(k.includes('through') && e.event_type === 'PASS' && d.pass_type === 'THROUGH' && done(e) && mem.includes(d.target_id) && d.target_id !== a){ hit = [a, d.target_id]; }
+      else if(k.includes('one_two') && e.event_type === 'PASS' && done(e) && mem.includes(d.target_id) && d.target_id !== a){
+        for(let j = i - 1; j >= 0 && ev[j].timestamp >= e.timestamp - 8; j--){
+          const q = ev[j];
+          if(q.event_type === 'PASS' && q.actor_id === d.target_id && (q.detail || {}).target_id === a && done(q)){ hit = [d.target_id, a]; break; }
+        }
+      } else if(k.includes('overlap') && e.event_type === 'PASS' && done(e) && mem.includes(d.target_id) && d.target_id !== a){
+        const tx = d.actual_target && d.actual_target[0];
+        const rel = tx == null ? 0 : (e.team_id === 'HOME' ? tx : 100 - tx);
+        if(rel >= 66) hit = [a, d.target_id];
+      } else if((k.includes('cb') || k.includes('keeper') || k.includes('press')) && ['TACKLE', 'CLEARANCE', 'INTERCEPTION', 'RECOVERY', 'BLOCK'].includes(e.event_type)){
+        for(let j = i - 1; j >= 0 && ev[j].timestamp >= e.timestamp - 10; j--){
+          const q = ev[j];
+          if(q.actor_id !== a && mem.includes(q.actor_id) && ['TACKLE', 'CLEARANCE', 'INTERCEPTION', 'RECOVERY', 'BLOCK', 'SHOT'].includes(q.event_type) && (q.event_type !== 'SHOT' || String((q.detail || {}).outcome || '').startsWith('SAVED'))){ hit = [q.actor_id, a]; break; }
+        }
+      }
+      if(hit){ last[p.id || k] = e.timestamp; out.push({ts: e.timestamp, id: `${p.id || k}@${e.timestamp}`, name: PATTERN_NAME[k] || p.pattern || 'Combo', who: hit, level: p.fam >= 90 ? 3 : p.fam >= 60 ? 2 : 1}); }
+    }
+  }
+  return out;
+}
+function scanCombos(m, s){
+  const cs = CS(m);
+  const sig = m.events.length + ':' + (m.events.length ? m.events[m.events.length - 1].event_id : '');
+  if(sig !== cs.comboSig){
+    cs.comboSig = sig;
+    cs.combos = safe(() => detectCombos(m), []);
+    AnimR2.slowWindows = cs.combos.map(c => [c.ts - 3.5, c.ts + 1.5]);   // the play slows around it (presentation only)
+  }
+  for(const c of cs.combos){
+    if(c.ts > s || cs.comboSeen.has(c.id)) continue;
+    cs.comboSeen.add(c.id);
+    if(s - c.ts > 6) continue;
+    pop('combo', `<div class="cm-pop-k">COMBO · ${esc(c.name)}${c.level > 1 ? ` · LV${c.level}` : ''}</div><b>${esc(short(nameOf(c.who[0])))} → ${esc(short(nameOf(c.who[1])))}</b>`, 3400);
+  }
+}
+/* player moments: goal, big save, big tackle → a card-flip "form up" pop */
+function formPop(m, e){
+  const cs = CS(m), d = e.detail || {};
+  let pid = null, why = '';
+  if(e.event_type === 'GOAL'){ pid = e.actor_id; why = d.penalty ? 'Penalty' : 'Goal'; }
+  else if(e.event_type === 'SHOT' && String(d.outcome || '').startsWith('SAVED') && (Number(d.xg) || 0) >= 0.2){
+    pid = AnimR2.pidByName(d.goalkeeper) || null; why = 'Big save';
+  } else if(e.event_type === 'TACKLE' && d.outcome === 'CLEAN_WIN'){
+    const loc = d.location, rel = loc ? (e.team_id === 'HOME' ? loc[0] : 100 - loc[0]) : 50;
+    if(rel < 25){ pid = e.actor_id; why = 'Last-ditch tackle'; }
+  }
+  if(!pid || cs.formSeen.has(e.event_id)) return;
+  cs.formSeen.add(e.event_id);
+  if(why === 'Last-ditch tackle' && (cs.lastTacklePop || -1e9) > e.timestamp - 300) return;
+  if(why === 'Last-ditch tackle') cs.lastTacklePop = e.timestamp;
+  const now = presentedSnap(m, e.timestamp + 30).players || {}, before = presentedSnap(m, e.timestamp - 1).players || {};
+  const r1 = now[pid] && Number(now[pid].rating), r0 = before[pid] && Number(before[pid].rating);
+  const team = (now[pid] || before[pid] || {}).team;
+  const up = isFinite(r1) && isFinite(r0) && r1 > r0 + 0.04;
+  pop('form ' + (isMine(team) ? 'mine' : 'opp'), `<div class="cm-flip"><div class="cm-pop-k">${esc(why.toUpperCase())} · FORM ${up ? '▲' : '●'}</div>
+    <b>${esc(short(nameOf(pid)))}</b>${isFinite(r1) ? `<span class="cm-rt">${up ? `${r0.toFixed(1)} → ` : ''}<i>${r1.toFixed(1)}</i></span>` : ''}</div>`, 2800);
+}
+
+/* ── moments: highlight the 1–2 cards that answer the question ── */
+function answerTags(m, mo){
+  const s = presS(m), st = statsAt(m, s).score, me = myTeam(), lead = st[me] - st[other(me)];
+  const e = mo.event || {};
+  switch(mo.kind){
+    case 'goal': return isMine(e.team_id) ? (lead > 0 ? ['protect', 'neutral'] : ['chase', 'press']) : ['chase', 'press', 'react'];
+    case 'red': return isMine(e.team_id) ? ['protect', 'neutral', 'sub'] : ['chase', 'press'];
+    case 'opp_shape': return ['press', 'neutral', 'chase'];
+    case 'window': return lead < 0 ? ['chase', 'sub'] : lead > 0 ? ['protect', 'sub', 'energy'] : ['chase', 'press', 'sub'];
+    case 'insight': return mo.insight && mo.insight.kind === 'fatigue' ? ['sub', 'energy'] : mo.insight && mo.insight.kind === 'protect' ? ['protect'] : ['chase', 'press', 'neutral'];
+    default: return ['neutral'];
+  }
+}
+function answerCards(m, mo){
+  const s = shownS(m), inf = influenceAt(m, s), tags = answerTags(m, mo);
+  const ids = handIds(m).filter(id => !cardBlock(m, id, s, inf));
+  const score = id => {
+    const c = handCard(m, id), t = c.tags || [];
+    let sc = 0;
+    tags.forEach((tag, k) => { if(t.includes(tag)) sc += 10 - k * 2; });
+    if(c.trigger && triggerMet(m, s, c.trigger)) sc += 6;          // a reaction that just unlocked is the answer
+    if(c.type === 'REACTION' && mo.kind === 'goal' && !isMine((mo.event || {}).team_id)) sc += 3;
+    const p = CARDS.previews.get(previewKey(m, id, s)) || c.preview;
+    if(p && p.dpts != null) sc += Math.max(-3, Math.min(3, p.dpts * 20));
+    return sc;
+  };
+  return ids.map(id => [id, score(id)]).filter(([, v]) => v > 0).sort((a, b) => b[1] - a[1]).slice(0, 2).map(([id]) => id);
+}
+function answerHTML(m, id){
+  const c = handCard(m, id), s = shownS(m);
+  const p = previewFor(m, id, s);
+  const lines = (c.lines || []).slice(0, 3).map(l => `<li>${esc(l)}</li>`).join('');
+  return `<div class="cm-ans t-${TYPE_CLS[c.type] || 'instr'}" data-card="${esc(id)}">
+    <div class="cm-ans-h"><span class="cc-cost">⚡${Number(c.cost) || 0}</span><b>${esc(c.name)}</b><span class="cc-type">${esc(c.type || '')}</span>${kwChips(c)}</div>
+    ${lines ? `<ul class="cd-lines">${lines}</ul>` : ''}
+    <div class="cm-ans-f">${previewHTML(p, {loading: !CARDS.noPreview && !CARDS.previews.has(previewKey(m, id, s))})}
+      <button class="btn pri sm cm-ans-play" onclick="CM.playCard('${esc(id)}', this)">Play ⚡${Number(c.cost) || 0}</button></div></div>`;
+}
+function momentCardsHTML(m, mo){
+  if(!hasHand(m)) return '';
+  const ans = mo.answers || [];
+  const inf = influenceAt(m, shownS(m));
+  const altLabel = ans.length ? handCard(m, ans[0]).name : '';
+  return `<div class="cm-answers" id="cmAnswers">
+    <div class="cm-asst-h">YOUR HAND ANSWERS <span>⚡${inf.now}/${inf.max}</span></div>
+    ${ans.length ? ans.map(id => answerHTML(m, id)).join('') : `<div class="cm-empty">No card in your hand answers this one${inf.now < 1 ? ' — you are out of influence' : ''}. Stay the course, or go Manual.</div>`}
+    <div class="cm-ans-alt">
+      <button class="btn sec sm" onclick="CM.openTouchline()" title="The full tactics and substitutions panel">Manual — tactics &amp; subs</button>
+      <button class="btn sec sm cm-stay" onclick="CM.stayCourse()" title="${ans.length ? esc(`The Decision Lab will test this against playing ${altLabel}`) : 'Keep the plan'}">Stay the course</button>
+    </div></div>`;
+}
+function refreshMomentCards(){
+  const m = S.match, box = $('#cmAnswers'); if(!m || !box || !C(m).moment) return;
+  const mo = C(m).moment;
+  box.outerHTML = momentCardsHTML(m, mo);
+}
+function stayCourse(){
+  const m = S.match; if(!m) return;
+  const cm = C(m), mo = cm.moment, cs = CS(m);
+  if(mo){
+    const clock = Math.floor(presS(m)), alt = (mo.answers || [])[0];
+    cs.holds.push({clock, label: `Stayed the course · ${momentTitle(m, mo)}`, alt: alt ? {kind: 'card', card_id: alt} : null,
+                   alt_label: alt ? handCard(m, alt).name : null});
+    cm.localLines.push({clock, type: 'you', text: 'Stayed the course', local: true});
+  }
+  CM.resume();
+}
+
+/* ═══ 11. MATCH PREP (v2 §6.1): hand picker, set pieces, Analyst test ══════
+   Rendered through TL.hooks.prepCardsHTML(fixture) into ui-build's
+   #ccPrepCards; every interaction re-renders that element in place. */
+const PREP = {busy: false, result: {}, err: {}, runsLeft: null};
+function prepEl(){ return document.getElementById('ccPrepCards'); }
+function prepRerender(){ const el = prepEl(), f = S.matchFixture; if(el && f && !S.match) el.innerHTML = prepInner(f); }
+function oppOf(f){ return f.home === 'LIV' ? f.away : f.home; }
+function prepPreview(id, f){
+  const k = `prep|${f.id}|${id}`;
+  if(CARDS.previews.has(k)) return CARDS.previews.get(k);
+  if(!CARDS.prevBusy.has(k) && !CARDS.noPreview && CARDS.routes && CARDS.routes.preview){
+    CARDS.prevBusy.add(k);
+    _api('/build/preview', {method: 'POST', body: {card_id: id, side: f.home === 'LIV' ? 'HOME' : 'AWAY', state: {minute: 60, score_diff: 0}, opponent: oppOf(f)}})
+      .then(r => { CARDS.previews.set(k, r); prepRerender(); })
+      .catch(e => { if(/\(404\)|Not Found/.test(e.message)) CARDS.noPreview = true; CARDS.previews.set(k, null); })
+      .finally(() => CARDS.prevBusy.delete(k));
+  }
+  return null;
+}
+function prepCard(id, f, on, idx){
+  const c = catCard(id) || {id, name: id, cost: 0, type: ''};
+  const p = prepPreview(id, f) || c.preview;
+  const off = c.available === false;
+  return `<div class="cm-pcard cm-card t-${TYPE_CLS[c.type] || 'instr'} ${on ? 'picked' : ''} ${off ? 'off' : ''}" data-card="${esc(id)}"
+      role="button" tabindex="0" onclick="CM.prepToggle('${esc(id)}')" title="${esc(off ? 'Needs ' + (c.requires || []).join(', ') : on ? 'In your hand — click to remove' : 'Add to your hand')}">
+    <div class="cc-top"><span class="cc-cost">⚡${Number(c.cost) || 0}</span><span class="cc-type">${esc(c.type || '')}</span>${on ? `<span class="cm-pick">${idx + 1}</span>` : ''}</div>
+    <div class="cc-name">${esc(c.name || id)}</div>
+    <div class="cc-head">${esc(c.headline || (c.lines || [])[0] || c.text || '')}</div>
+    <div class="cc-kws">${kwChips(c)}</div>
+    <div class="cm-pprev"><em>v ${esc(clubById(oppOf(f)) ? clubById(oppOf(f)).abbreviation || oppOf(f) : oppOf(f))} · 60' level</em>${previewHTML(p, {loading: !CARDS.noPreview && !CARDS.previews.has(`prep|${f.id}|${id}`)})}</div>
+  </div>`;
+}
+function xiPlayers(){
+  const st = (S.current && S.current.starters) || {};
+  return Object.entries(st).filter(([, pid]) => pid).map(([slot, pid]) => ({slot, pid, pl: P(pid)})).filter(x => x.pl);
+}
+function takerSelect(kind, cur, attr, hooks){
+  const xi = xiPlayers().filter(x => x.slot !== 'GK');
+  const best = xi.slice().sort((a, b) => ((b.pl.a || {})[attr] || 0) - ((a.pl.a || {})[attr] || 0));
+  return `<label class="cm-sp"><span>${esc(kind)}</span><select ${hooks.E1 === false ? 'disabled title="Chosen takers need engine hook E1 — the engine picks automatically"' : ''} onchange="CM.prepSetPiece('${kind === 'Corners' ? 'corner' : kind === 'Free kicks' ? 'free_kick' : 'penalty'}', this.value)">
+    <option value="">Auto (best ${esc(attr)}: ${esc(best[0] ? short(best[0].pl.name) : '—')})</option>
+    ${best.map(x => `<option value="${esc(x.pid)}" ${cur === x.pid ? 'selected' : ''}>${esc(short(x.pl.name))} · ${esc(x.slot)} · ${esc(attr)} ${Math.round((x.pl.a || {})[attr] || 0)}</option>`).join('')}</select></label>`;
+}
+function analystResultHTML(r, f){
+  if(!r) return '';
+  const sm = r.summary || r;
+  const pil = sm.pillars ? Object.entries(sm.pillars).map(([k, v]) => {
+    const sys = CARDS.catalog && (CARDS.catalog.systems || []).find(x => x.id === (buildState() || {}).system_id);
+    const pd = sys && (sys.pillars || []).find(p => p.id === k);
+    return `<span class="cm-pill"><em>${esc(pd ? pd.label : k.replace(/_/g, ' '))}</em><b>${typeof v === 'number' ? (Math.abs(v) < 1 ? v.toFixed(2) : v.toFixed(1)) : esc(String(v))}</b>${pd && pd.benchmark != null ? `<i>bench ${esc(String(pd.benchmark))}</i>` : ''}</span>`;
+  }).join('') : '';
+  const weekRows = (r.weeks || []).map(w => `<div class="cm-dim">Week ${w.week}: ${(Number((w.summary || {}).exp_points) || 0).toFixed(2)} expected pts · xG ${f2((w.summary || {}).xg_for)}–${f2((w.summary || {}).xg_against)}</div>`).join('');
+  const variants = (r.variants || []).map(v => { const a = v.summary || {}; return `<div class="cm-dim"><b>${esc(v.label || 'Comparison')}</b> · ${(Number(a.exp_points) || 0).toFixed(2)} expected pts · xG ${f2(a.xg_for)}–${f2(a.xg_against)} · change ${sgn((Number(sm.exp_points) || 0) - (Number(a.exp_points) || 0))} pts for your current plan</div>`; }).join('');
+  const plays = sm.card_plays ? Object.entries(sm.card_plays).map(([k, v]) => `${esc((catCard(k) || {}).name || k)} ×${v}`).join(' · ') : '';
+  return `<div class="cm-an-res">
+    <div class="cm-an-top"><div><em>EXPECTED POINTS</em><b>${(Number(sm.exp_points) || 0).toFixed(2)}</b></div>
+      <div class="cm-an-wdl">${wdlBar({win: sm.win, draw: sm.draw})}</div>
+      <div><em>xG</em><b>${f2(sm.xg_for)}–${f2(sm.xg_against)}</b></div>
+      <div><em>GOALS</em><b>${(Number(sm.goals_for) || 0).toFixed(1)}–${(Number(sm.goals_against) || 0).toFixed(1)}</b></div></div>
+    ${pil ? `<div class="cm-an-pil"><em>SYSTEM PILLARS</em>${pil}</div>` : ''}
+    ${weekRows}${variants}${plays ? `<div class="cm-dim cm-an-plays">Hand played by the assistant in the ${r.n || 16} futures: ${plays}</div>` : ''}
+    <div class="cm-dim">${r.n || 16} seeded futures${r.weeks ? ' of three matchweeks' : ''} against ${esc(clubName(r.test_opponent || oppOf(f)))} with your XI, system and hand. Expected points is a forecast, not a promise.</div></div>`;
+}
+function prepInner(f){
+  const bs = buildState();
+  if(!bs){ return `<h4>YOUR HAND</h4><div class="cm-empty">Pick a system on the System Board to build a deck — your hand for this match comes from it.</div>`; }
+  if(!CARDS.catalog){ catalog().then(() => prepRerender()); return `<h4>YOUR HAND</h4><div class="cm-empty"><i class="cm-spin"></i> Loading your deck…</div>`; }
+  const hooks = CARDS.catalog.engine_hooks || {};
+  const size = (CARDS.catalog.constants || {}).hand_size || 5;
+  const prep = prepFor(f.id);
+  if(!prep.hand) prep.hand = defaultHand(bs);
+  const deck = (bs.deck || []);
+  const cost = prep.hand.reduce((a, id) => a + (Number((catCard(id) || {}).cost) || 0), 0);
+  const sp = {...(bs.set_pieces || {}), ...(prep.set_pieces || {})};
+  const runs = bs.analyst_runs_left ?? PREP.runsLeft;
+  const res = PREP.result[f.id], err = PREP.err[f.id];
+  return `<h4>YOUR HAND <span class="cc-h-r">${prep.hand.length}/${size} picked · ⚡${cost} total · you start with ⚡${(CARDS.catalog.constants || {}).influence_start ?? 3}</span></h4>
+    <div class="cm-prep-note">Pick ${size} cards from your ${deck.length}-card deck. Each shows the Analyst's read against ${esc(clubName(oppOf(f)))} at 60' with the scores level. During the match they sit under the pitch — play them live, at the second on screen.
+      <button class="cc-link" onclick="CM.prepAuto()">Auto-pick</button></div>
+    <div class="cm-pgrid">${deck.map(id => prepCard(id, f, prep.hand.includes(id), prep.hand.indexOf(id))).join('')}</div>
+    <div class="cm-prep-row">
+      <div class="cm-prep-sp"><h5>SET PIECES</h5>
+        ${takerSelect('Corners', sp.corner, 'cro', hooks)}${takerSelect('Free kicks', sp.free_kick, 'fka', hooks)}${takerSelect('Penalties', sp.penalty, 'pen', hooks)}
+        <label class="cm-sp"><span>Corner routine</span><select ${hooks.E4 === false ? 'disabled title="Corner routines need engine hook E4"' : ''} onchange="CM.prepSetPiece('routine', this.value)">
+          ${[['auto', 'Auto'], ['near', 'Near post'], ['far', 'Far post'], ['short', 'Short corner']].map(([k, l]) => `<option value="${k}" ${(sp.routine || 'auto') === k ? 'selected' : ''}>${l}</option>`).join('')}</select></label>
+        ${hooks.E1 === false ? `<div class="cm-dim">Chosen takers arrive with engine hook E1 — until then the engine picks automatically.</div>` : ''}</div>
+      <div class="cm-prep-an"><h5>ANALYST <span class="cc-h-r">${runs != null ? `${runs} run${runs === 1 ? '' : 's'} left this week` : ''}</span></h5>
+        <div class="cm-dim">Plays 16 seeded futures of this match with your XI, system and hand and reports what to expect.</div>
+        <button class="btn sec cm-an-go" ${PREP.busy || runs === 0 || prep.hand.length !== size ? 'disabled' : ''} onclick="CM.analystTest()">${PREP.busy ? '<i class="cm-spin"></i> Running 16 futures…' : `Test my plan against ${esc(clubName(oppOf(f)))}`}</button>
+        ${S.career && S.career.cal && S.career.cal.phase === 'preseason' ? `<button class="btn sec sm" ${PREP.busy || runs < 2 + Math.max(0, ((bs.staff || {}).analyst || 1) - 1) ? 'disabled' : ''} onclick="CM.analystTest('stress')">Stress-test my system · 3 matchweeks</button><div class="cm-dim">Three weeks against Fulham; uses this camp week's Analyst budget. Your save is untouched.</div>` : ''}
+        <button class="cc-link" onclick="CM.prepCompare()">${prep.comparison ? 'Replace saved comparison' : 'Save this plan for comparison'}</button>${prep.comparison ? `<div class="cm-dim">Compared with ${esc(prep.comparison.label)}. Change your hand, then test both with the same seeded futures. <button class="cc-link" onclick="CM.prepCompare(true)">Clear</button></div>` : '<div class="cm-dim">Save one variant, change your hand, then compare them in one Analyst run.</div>'}
+        ${runs === 0 ? `<div class="cm-dim">No runs left this week — Analyst staff add more.</div>` : ''}
+        ${err ? `<div class="cc-note bad">${esc(err)}</div>` : ''}${analystResultHTML(res, f)}</div>
+    </div>`;
+}
+TL.hooks.prepCardsHTML = function(f){
+  if(!f) return '';
+  return safe(() => prepInner(f), '');
+};
+function prepToggle(id){
+  const f = S.matchFixture; if(!f) return;
+  const c = catCard(id); if(c && c.available === false){ toast(`${c.name} needs ${(c.requires || []).join(', ')} first.`); return; }
+  const size = (CARDS.catalog && CARDS.catalog.constants || {}).hand_size || 5;
+  const prep = prepFor(f.id); prep.hand = prep.hand || [];
+  const i = prep.hand.indexOf(id);
+  if(i >= 0) prep.hand.splice(i, 1);
+  else if(prep.hand.length >= size){ toast(`Your hand is full (${size}). Remove a card first.`); return; }
+  else prep.hand.push(id);
+  delete PREP.result[f.id];
+  savePrefs(); prepRerender();
+}
+function prepAuto(){
+  const f = S.matchFixture, bs = buildState(); if(!f || !bs) return;
+  const size = (CARDS.catalog && CARDS.catalog.constants || {}).hand_size || 5;
+  const deck = (bs.deck || []).filter(id => (catCard(id) || {}).available !== false);
+  // the Analyst's pick: best expected-points read vs this opponent, one of each cost where possible
+  const val = id => { const p = CARDS.previews.get(`prep|${f.id}|${id}`); return p && p.dpts != null ? p.dpts : 0; };
+  const pick = deck.slice().sort((a, b) => val(b) - val(a)).slice(0, size);
+  prepFor(f.id).hand = pick; delete PREP.result[f.id];
+  savePrefs(); prepRerender();
+}
+function prepSetPiece(k, v){
+  const f = S.matchFixture; if(!f) return;
+  const prep = prepFor(f.id); prep.set_pieces = prep.set_pieces || {};
+  prep.set_pieces[k] = v || null;
+  savePrefs();
+}
+function prepCompare(clear){ const f = S.matchFixture, bs = buildState(); if(!f || !bs) return; const prep = prepFor(f.id); if(clear) delete prep.comparison; else { const sys = (CARDS.catalog.systems || []).find(s => s.id === bs.system_id); prep.comparison = {label: (sys && sys.name || bs.system_id) + ' · saved hand', build: JSON.parse(JSON.stringify(bs)), hand: (prep.hand || defaultHand(bs)).slice()}; } savePrefs(); prepRerender(); }
+async function analystTest(mode){
+  const f = S.matchFixture; if(!f || PREP.busy) return;
+  const bs = buildState(); if(!bs) return;
+  PREP.busy = true; delete PREP.err[f.id]; prepRerender();
+  try{
+    if(!(await probeRoutes()).analyst) throw new Error('the Analyst service is not available on this server');
+    const testFixture = mode === 'stress' ? {...f, home: 'LIV', away: 'FUL', id: 'stress-' + S.career.year} : f;
+    const start_request = buildV07MatchRequest(testFixture);
+    const x = startExtras(start_request) || {};
+    if(mode === 'stress'){ x.build_team = 'HOME'; x.cpu_build = safe(() => TL.build.cpuBuildFor('FUL'), null); }
+    const r = await _api('/analyst/test', {method: 'POST', body: {start_request: {...start_request, ...x}, build: x.build || bs,
+      hand: (x.build && x.build.hand) || prepFor(f.id).hand || [], player_id: safe(() => CC.playerId(), 'anon'), week: safe(() => CB.currentWeek().key, f.mw ?? f.camp_week ?? 0), save_id: String(S.season.seed), mode: mode || 'match', variants: mode !== 'stress' && prepFor(f.id).comparison ? [prepFor(f.id).comparison] : []}});
+    r.test_opponent = oppOf(testFixture); PREP.result[f.id] = r; PREP.runsLeft = r.runs_left ?? PREP.runsLeft;
+    safe(() => { if(TL.build && TL.build.setAnalystRuns) TL.build.setAnalystRuns(r.runs_left); });
+  }catch(e){
+    PREP.err[f.id] = /\(429\)/.test(e.message) ? 'No Analyst runs left this week.' : 'The Analyst could not run: ' + e.message;
+    if(/\(429\)/.test(e.message)) PREP.runsLeft = 0;
+  }finally{ PREP.busy = false; prepRerender(); }
+}
+
+/* ═══ 12. GHOST LEAGUE (replaces the Daily Challenge) ══════════════════════
+   Your saved build plays other managers' saved builds. The day comes from the
+   server (UTC); the first run of the day is ranked, later ones are practice. */
+const GHOST = {today: null, busy: false, err: null, last: null, lb: null, lbDay: null};
+function ghostSnapshot(){
+  const hand = defaultHand(buildState());
+  const snap = safe(() => TL.build && TL.build.ghostSnapshot ? TL.build.ghostSnapshot(hand) : null, null);
+  if(snap) return snap;
+  const f = {id: 'ghost', home: 'LIV', away: 'MCI'};
+  const team = safe(() => livSideForRequest(), null);
+  const x = safe(() => { const prev = S.matchFixture; S.matchFixture = f; try{ return startExtras({}); } finally{ S.matchFixture = prev; } }, null);
+  return team ? {team, build: x ? x.build : buildState()} : null;
+}
+function ghostPid(){ return safe(() => CC.playerId(), 'anon'); }
+async function ghostLoad(force){
+  if(GHOST.loading || (GHOST.today && !force)) return;
+  GHOST.loading = true;
+  try{
+    const R = await probeRoutes();
+    if(!R.ghostToday) throw new Error('(404) Not Found');
+    GHOST.today = await _api(`/ghost/today?player_id=${encodeURIComponent(ghostPid())}`);
+    GHOST.err = null;
+    const lb = !R.ghostLb ? null : await _api(`/ghost/leaderboard?day=${encodeURIComponent(GHOST.today.day)}&player_id=${encodeURIComponent(ghostPid())}`).catch(() => null);
+    GHOST.lb = lb;
+  }catch(e){ GHOST.err = /\(404\)|Not Found/.test(e.message) ? 'The Ghost League server isn\'t available yet.' : e.message; }
+  finally{ GHOST.loading = false; ghostRerender(); }
+}
+function ghostRerender(){ const el = document.getElementById('ccGhost'); if(el) el.innerHTML = ghostInner(); }
+function ghostInner(){
+  const T = GHOST.today;
+  if(!T && !GHOST.err){ ghostLoad(); return `<h4>GHOST LEAGUE</h4><div class="cc-loading"><i class="cc-dot"></i> Checking today's league…</div>`; }
+  if(!T) return `<h4>GHOST LEAGUE</h4><div class="cc-note bad">${esc(GHOST.err)} <button class="cc-link" onclick="CM.ghostRetry()">Retry</button></div>`;
+  const used = !!T.ranked_used, L = GHOST.last;
+  const rows = ((GHOST.lb && GHOST.lb.entries) || []).slice(0, 10).map((e, i) => `<div class="cm-gl-row ${e.me ? 'me' : ''}"><span>${i + 1}</span><b>${esc(e.manager_name || 'Manager')}</b>
+      <span class="cm-stars">${'★'.repeat(e.stars || 0)}${'☆'.repeat(Math.max(0, 3 - (e.stars || 0)))}</span><span>${e.points ?? 0} pts</span><span class="cm-dim">GD ${e.gd >= 0 ? '+' : ''}${e.gd ?? 0}</span></div>`).join('');
+  const res = L ? `<div class="cm-gl-res ${L.practice ? 'practice' : 'ranked'}"><div class="cm-gl-k">${L.practice ? 'PRACTICE RUN — NOT RANKED' : 'RANKED RUN'} · ${esc(L.day || T.day)}</div>
+      ${(L.results || []).map(r => `<div class="cm-gl-m"><span>v ${esc(r.opponent && (r.opponent.manager_name || r.opponent.name) || r.opponent || 'Ghost')}</span><b>${r.score[0]}–${r.score[1]}</b><span class="cm-chip ${r.points === 3 ? 'good' : r.points === 1 ? 'mid' : 'bad'}">${r.points === 3 ? 'W' : r.points === 1 ? 'D' : 'L'}</span></div>`).join('')}
+      <div class="cm-gl-sum">${L.points} pts · <span class="cm-stars">${'★'.repeat(L.stars || 0)}${'☆'.repeat(Math.max(0, 3 - (L.stars || 0)))}</span>${!L.practice && L.rank ? ` · rank ${L.rank} of ${L.total}` : ''}</div></div>` : '';
+  return `<h4>GHOST LEAGUE · ${esc(T.day)} <span class="cc-h-r">${T.pool_size != null ? `${T.pool_size} ghosts in today's pool · ` : ''}server day (UTC)</span></h4>
+    <div class="cm-gl">
+      <div class="cm-gl-l"><p>Your saved build — squad, system and hand — plays three other managers' saved builds, instantly and deterministically.
+        <b>The first run of the day is ranked</b>; any later run is practice and is labelled that way.</p>
+        <div class="cm-gl-st ${used ? 'used' : ''}">${used ? 'Today\'s ranked run is used — further runs are practice.' : 'Your ranked run for today is available.'}</div>
+        <button class="btn pri" ${GHOST.busy ? 'disabled' : ''} onclick="CM.ghostRun()">${GHOST.busy ? '<i class="cm-spin"></i> Playing your ghosts…' : used ? 'Practice run' : 'Play today\'s ranked run'}</button>
+        ${res}</div>
+      <div class="cm-gl-lb"><h5>TODAY'S TABLE</h5>${rows || '<div class="cm-dim">No ranked runs yet today — be the first.</div>'}</div>
+    </div>`;
+}
+TL.hooks.ghostLeagueHTML = function(){ return safe(() => ghostInner(), ''); };
+async function ghostRun(){
+  if(GHOST.busy) return;
+  const snap = ghostSnapshot();
+  if(!snap){ toast('Set up your squad and system first.'); return; }
+  GHOST.busy = true; ghostRerender();
+  try{
+    const mgr = safe(() => (S.career && S.career.manager) || 'Manager', 'Manager');
+    GHOST.last = await _api('/ghost/run', {method: 'POST', body: {player_id: ghostPid(), manager_name: mgr, snapshot: snap}});
+    GHOST.today = null; await ghostLoad(true);
+  }catch(e){ toast('Ghost League: ' + e.message); }
+  finally{ GHOST.busy = false; ghostRerender(); }
+}
+/* until ui-build renders #ccGhost itself, the Daily panels are swapped after their render */
+function ghostInstall(){
+  const cc = window.CC; if(!cc || typeof cc.renderChallenges !== 'function' || cc.renderChallenges._cmGhost) return;
+  const inner = cc.renderChallenges;
+  cc.renderChallenges = function(){
+    const r = inner.apply(this, arguments);
+    safe(() => {
+      if(document.getElementById('ccGhost')) { ghostRerender(); return; }
+      const daily = document.querySelector('section.cc-daily');
+      if(!daily) return;
+      const lb = document.getElementById('ccDailyLb'); if(lb && lb.closest('section') && lb.closest('section') !== daily) lb.closest('section').remove();
+      const sec = document.createElement('section'); sec.className = 'cc-panel cm-ghost'; sec.id = 'ccGhost';
+      daily.replaceWith(sec); ghostRerender();
+    });
+    return r;
+  };
+  cc.renderChallenges._cmGhost = true;
+}
+
+/* ═══ 13. REVIEW AROUND THE BUILD (v2 §6.3) ═══════════════════════════════
+   Rendered from build-core's review fields when present (system_report,
+   partnership_report, card_report, player_grades, next_steps); the classic
+   review keeps rendering underneath for matches played without a build. */
+const GRADE = {good: ['good', 'Worked'], ok: ['mid', 'Mixed'], mixed: ['mid', 'Mixed'], poor: ['bad', "Didn't work"], bad: ['bad', "Didn't work"], na: ['pend', 'Not tested']};
+const gradeChip = g => { const [c, l] = GRADE[String(g || 'na').toLowerCase()] || ['mid', String(g)]; return `<span class="cm-chip ${c}">${esc(l)}</span>`; };
+function numFmt(v){ if(v == null || v === '') return '—'; const n = Number(v); if(!isFinite(n)) return esc(String(v)); return Math.abs(n) < 1 && n !== 0 ? n.toFixed(2) : Math.abs(n) < 10 ? (Math.round(n * 10) / 10).toString() : Math.round(n).toString(); }
+function systemReportHTML(R){
+  const rows = R.system_report && (R.system_report.pillars || R.system_report);
+  if(!Array.isArray(rows) || !rows.length) return '';
+  const sys = R.system_report.name || R.system_name || ((CARDS.catalog && (CARDS.catalog.systems || []).find(x => x.id === (R.system_id || (buildState() || {}).system_id))) || {}).name || 'Your system';
+  return `<section class="cm-rv-sys"><h4>SYSTEM REPORT · ${esc(String(sys).toUpperCase())}${R.system_fit != null ? ` <span class="cc-h-r">fit ${Math.round(R.system_fit)}</span>` : ''}</h4>
+    ${rows.map(p => {
+      const v = Number(p.value), b = Number(p.benchmark), hib = p.higher_is_better !== false;
+      const w = isFinite(v) && isFinite(b) && b ? Math.max(4, Math.min(100, v / (b * 1.6) * 100)) : 0;
+      const bm = isFinite(b) && b ? Math.min(100, 1 / 1.6 * 100) : null;
+      return `<div class="cm-pil-row"><div class="cm-pil-l"><b>${esc(p.label || p.id)}</b></div>
+        <div class="cm-pil-bar">${w ? `<i class="${(v >= b) === hib ? 'up' : 'dn'}" style="width:${w}%"></i>` : ''}${bm != null ? `<span class="bm" style="left:${bm}%" title="Benchmark for this system: ${esc(String(p.benchmark))}"></span>` : ''}</div>
+        <div class="cm-pil-v"><b>${numFmt(p.value)}</b>${p.benchmark != null ? `<span class="cm-dim"> / ${numFmt(p.benchmark)}</span>` : ''}</div>${gradeChip(p.grade)}
+        ${p.text ? `<div class="cm-pil-t">${esc(p.text)}</div>` : ''}</div>`;
+    }).join('')}</section>`;
+}
+function partnershipReportHTML(R){
+  const rows = R.partnership_report;
+  if(!Array.isArray(rows) || !rows.length) return '';
+  return `<section><h4>PARTNERSHIPS</h4>${rows.map(p => {
+    const names = (p.member_names || p.members || []).map(x => esc(short(nameOf(x)))).join(' + ');
+    const ev = p.events || p.counts || {};
+    const stat = Object.entries(ev).map(([k, v]) => `<span><b>${esc(String(v))}</b> ${esc(k.replace(/_/g, ' '))}</span>`).join('');
+    return `<div class="cm-pr"><div class="cm-pr-h"><b>${esc(p.name || PATTERN_NAME[patternKey(p)] || p.pattern || 'Partnership')}</b>${p.level ? `<span class="cm-lv">LV${p.level}</span>` : ''}<span class="cm-dim">${names}</span>${gradeChip(p.verdict || p.grade)}</div>
+      ${stat ? `<div class="cm-pr-s">${stat}</div>` : ''}${p.text ? `<div class="cm-pil-t">${esc(p.text)}</div>` : ''}</div>`;
+  }).join('')}</section>`;
+}
+function labForClock(m, clock){
+  const L = C(m).lab; if(!L || !L.items) return null;
+  return L.items.find(d => d && Math.abs((d.clock ?? (d.minute - 1) * 60) - clock) <= 120) || null;
+}
+function cardReportHTML(m, R){
+  let rows = R.card_report;
+  if(!Array.isArray(rows) || !rows.length){
+    rows = cardEvents(m, FULL, myTeam()).map(e => ({card_id: (e.detail || {}).card_id, name: (e.detail || {}).name, clock: e.timestamp, minute: minuteOf(e.timestamp), lines: (e.detail || {}).lines}));
+  }
+  const holds = labHolds(m);
+  if(!rows.length && !holds.length) return '';
+  const L = C(m).lab;
+  const labBtn = !L ? `<button class="btn sec sm" onclick="CM.runLabHere()">Run the Decision Lab on these</button>`
+    : L.running ? `<span class="cm-dim"><i class="cm-spin"></i> Decision Lab running…</span>` : '';
+  return `<section class="cm-rv-cards"><h4>CARD REPORT <span class="cc-h-r">${labBtn}</span></h4>
+    ${rows.map(c => {
+      const im = c.effect || c.impact || null, lab = labForClock(m, c.clock ?? (c.minute - 1) * 60);
+      return `<div class="cm-cr"><div class="cm-cr-h"><span class="cm-mmin">${c.minute ?? minuteOf(c.clock)}'</span><b>${esc(c.name || (catCard(c.card_id) || {}).name || c.card_id)}</b>
+        ${lab ? chip(lab.verdict) + `<em class="cm-dim"> Decision Lab ${(Number(lab.delta_points) || 0) >= 0 ? '+' : ''}${(Number(lab.delta_points) || 0).toFixed(2)} pts</em>` : c.verdict ? chip(c.verdict) : ''}</div>
+        ${(c.lines || []).length ? `<div class="cm-dim cm-cr-l">${c.lines.slice(0, 2).map(esc).join(' · ')}</div>` : ''}
+        ${im && im.before ? impactCard({...im, label: c.name, minute: c.minute}, `Effect since ${c.minute}'`, {review: true, lab}) : ''}
+        ${c.text ? `<div class="cm-pil-t">${esc(c.text)}</div>` : ''}${lab && lab.text ? `<div class="cm-pil-t">${esc(lab.text)}</div>` : ''}</div>`;
+    }).join('')}
+    ${holds.map(h => { const lab = labForClock(m, h.clock); return `<div class="cm-cr hold"><div class="cm-cr-h"><span class="cm-mmin">${minuteOf(h.clock)}'</span><b>Stayed the course</b>
+      <span class="cm-dim">instead of ${esc(h.alt_label || 'a card')}</span>${lab ? chip(lab.verdict) : ''}</div>${lab && lab.text ? `<div class="cm-pil-t">${esc(lab.text)}</div>` : ''}</div>`; }).join('')}
+  </section>`;
+}
+function gradesHTML(R){
+  const rows = R.player_grades;
+  if(!Array.isArray(rows) || !rows.length) return '';
+  return `<section><h4>PLAYER GRADES · BY SLOT DEMAND</h4>${rows.slice(0, 8).map(p => `<div class="cm-pl"><span class="rv ${ratingClass(p.rating || 6)}">${p.rating != null ? Number(p.rating).toFixed(1) : '—'}</span>
+    <b>${esc(p.name)}</b><span class="cm-dim">${esc(p.text || [p.role, p.stat, p.fit != null ? `fit ${Math.round(p.fit)}` : ''].filter(Boolean).join(' · '))}</span></div>`).join('')}</section>`;
+}
+function nextStepsHTML(R){
+  const rows = R.next_steps;
+  if(!Array.isArray(rows) || !rows.length) return '';
+  return `<section class="cm-rv-next"><h4>NEXT STEPS FOR THE BUILD</h4><ul class="cm-lessons">${rows.map(x => {
+    const t = typeof x === 'string' ? x : x.text; const act = typeof x === 'object' && x.action;
+    return `<li>${esc(t)}${act ? ` <button class="cc-link" onclick="show('${esc(x.screen || 'squad')}')">${esc(act)} →</button>` : ''}</li>`;
+  }).join('')}</ul></section>`;
+}
+function buildReviewHTML(m, R){
+  const a = systemReportHTML(R), b = partnershipReportHTML(R), c = cardReportHTML(m, R), d = gradesHTML(R), e = nextStepsHTML(R);
+  if(!a && !b && !c && !d && !e) return '';
+  return `<div class="cm-rv-build">${a}<div class="cm-grid2">${c || ''}${b || d || ''}</div>${b && d ? `<div class="cm-grid2">${d}<div></div>` : ''}${e}</div>`;
+}
+/* Decision Lab caching (client side): a finished Lab is a pure function of the
+   match and its decisions — reopening the match never re-runs it */
+const LAB_CACHE_KEY = 'touchline:labcache';
+function labCacheGet(m){
+  try{ const all = JSON.parse(localStorage.getItem(LAB_CACHE_KEY) || '{}'); const k = m.matchId + '|' + JSON.stringify(labHolds(m)); return all[k] || null; }catch(e){ return null; }
+}
+function labCachePut(m, L){
+  try{
+    const all = JSON.parse(localStorage.getItem(LAB_CACHE_KEY) || '{}');
+    all[m.matchId + '|' + JSON.stringify(labHolds(m))] = {items: L.items, total: L.total, samples: L.samples, at: Date.now()};
+    const keys = Object.keys(all).sort((x, y) => (all[y].at || 0) - (all[x].at || 0));
+    for(const k of keys.slice(24)) delete all[k];
+    localStorage.setItem(LAB_CACHE_KEY, JSON.stringify(all));
+  }catch(e){}
 }
 
 /* ── public surface for inline handlers ─────────────────────────────────── */
@@ -2035,7 +3116,15 @@ window.openResult = function(fid){
 
 window.CM = {
   setAutoPause, nextMoment, confirmSimFT, cancelSimFT, simToFT, closeMoment, openPast, toggleCam,
-  applyAction, setView, setLabels, weatherFor, forecastHTML,
+  applyAction, setView, setLabels, setBcCam, weatherFor, forecastHTML,
+  runLabHere(){ const m = S.match; if(m && m.status === 'ft') runLab(m); },
+  playCard, cardDrawer, stayCourse, prepToggle, prepAuto, prepSetPiece, prepCompare, analystTest, ghostRun,
+  ghostRetry(){ GHOST.err = null; GHOST.today = null; ghostRerender(); }, cardTarget(k, v){ const m = S.match; if(m) CS(m).target[k] = v || null; },
+  _cards: () => { const m = S.match; if(!m) return null; const s = shownS(m), inf = influenceAt(m, s);
+    return {hand: handIds(m), influence: inf, blocks: Object.fromEntries(handIds(m).map(id => [id, cardBlock(m, id, s, inf)])),
+            played: cardEvents(m, s).map(e => ({ts: e.timestamp, team: e.team_id, id: (e.detail || {}).card_id, by: (e.detail || {}).by})),
+            holds: CS(m).holds, plays: CS(m).plays, traits: CS(m).traits, combos: CS(m).combos, answers: (C(m).moment || {}).answers || null}; },
+  _fx: () => ({anim: AnimR2.fx ? {glow: [...(AnimR2.fx.glow || [])], arrows: (AnimR2.fx.arrows || []).length, ghost: !!AnimR2.fx.ghost} : null}),
   /* test/debug: broadcast state + the kits/players handed to the renderer */
   _bc: () => ({state: BC.state, visible: BC.visible, key: BC.key, last: BC.lastClock, view: viewPref(), labels: labelsPref(),
                inPitch: !!(BC.el && BC.el.parentNode && BC.el.parentNode.id === 'livePitch')}),
@@ -2103,5 +3192,5 @@ if(document.readyState === 'loading')
 else bcInstallOuter();
 
 /* post-boot: preferences for old saves */
-if(TL.booted) TL.booted.then(() => coachUI()).catch(() => {}); else coachUI();
+if(TL.booted) TL.booted.then(() => { coachUI(); ghostInstall(); probeRoutes().then(() => catalog()); }).catch(() => {}); else coachUI();
 })();

@@ -160,6 +160,12 @@ class StartRequest(BaseModel):
     away_team: dict[str, Any] | None = None
     scenario_id: str | None = None           # start a stored scenario (teams/seed ignored)
     start_clock: int | None = None           # live: position the new match at this clock
+    # Core Loop v2 (build-core): manager build block, CPU build, or both sides
+    build: dict[str, Any] | None = None
+    build_team: str | None = None
+    cpu_build: dict[str, Any] | None = None
+    builds: dict[str, Any] | None = None
+    modifiers: list[dict[str, Any]] | dict[str, Any] | None = None
 
 
 class AdvanceRequest(BaseModel):
@@ -213,6 +219,9 @@ class DecisionLabRequest(BaseModel):
     team: str = "HOME"
     samples: int = 12
     index: int | None = None
+    # deliberate "keep it as is" calls: [{clock, label, alt: {kind, payload}, alt_label}]
+    # — tested against the alternative the manager turned down
+    holds: list[dict[str, Any]] | None = None
 
 
 class BranchRequest(BaseModel):
@@ -230,6 +239,17 @@ class ScenarioFindRequest(BaseModel):
 class ChallengeSubmitRequest(BaseModel):
     match_id: str
     manager_name: str
+    player_id: str | None = None       # persistent anonymous id (localStorage)
+
+
+class ChallengeAttemptRequest(BaseModel):
+    player_id: str
+    save_id: str = "local"
+
+
+class RoundRequest(BaseModel):
+    requests: list[dict[str, Any]]
+    summary_only: bool = True
 
 
 class ScoutRequest(BaseModel):
@@ -245,7 +265,25 @@ class SaveStateRequest(BaseModel):
 #    what-if branches and Decision Lab counterfactuals (see management.py) ──
 from management import (_apply_tactics, _apply_instructions, _apply_formation,  # noqa: E402
                         _apply_substitution, _team_id, APPLIERS as _APPLIERS,
-                        build_engine as _build_engine)
+                        build_engine as _mgmt_build_engine)
+import build as bld  # noqa: E402  (registers the 'card' applier)
+
+_build_engine = bld.build_engine        # management.build_engine + the card runtime when builds are present
+_V2_KEYS = ("build", "build_team", "cpu_build", "builds")
+
+
+def _strip_v2(body: dict[str, Any]) -> dict[str, Any]:
+    for k in _V2_KEYS:
+        if k in body and body[k] is None:
+            body.pop(k)
+    return body
+
+
+def _prepare(body: dict[str, Any], where: str = "") -> dict[str, Any]:
+    try:
+        return bld.prepare_request(_strip_v2(body))
+    except (BridgeError, ValueError, KeyError, TypeError) as e:
+        raise HTTPException(400, f"{where}{e}")
 
 
 def _make_lab(engine: MatchEngine) -> HybridLab:
@@ -620,7 +658,14 @@ def _live_snapshot(match_id: str, s: dict[str, Any], since: int | None = None) -
     snap = bridge.match_snapshot(eng, len(eng.events) if since is None else max(0, int(since)))
     snap.update({"match_id": match_id, "fixture_id": s["meta"]["fixture_id"],
                  "save_id": s["meta"].get("save_id")})
+    _add_cards(snap, eng)
     return snap
+
+
+def _add_cards(snap: dict[str, Any], engine: MatchEngine) -> None:
+    cs = bld.card_state(engine)
+    if cs is not None:
+        snap["cards"] = cs
 
 
 def _management(match_id: str, kind: str, payload: dict[str, Any],
@@ -650,10 +695,12 @@ def _management(match_id: str, kind: str, payload: dict[str, Any],
             raise HTTPException(409, "The match has finished; no further management is possible.")
         try:
             extra = _APPLIERS[kind](target, payload)
-        except (BridgeError, ValueError) as e:
+        except (BridgeError, ValueError, KeyError) as e:
             raise HTTPException(400, str(e))
         if rewound is not None:
             _commit_rewind(match_id, s, target, rewound)
+        if kind == "card":
+            payload["upgraded"] = bool(extra["card"].get("upgraded"))
         store.append_command(match_id, target.clock, kind,
                              json.dumps(payload, separators=(",", ":")), request_id)
         s["commands"].append({"sim_clock": target.clock, "kind": kind, "payload": payload})
@@ -666,6 +713,8 @@ def _management(match_id: str, kind: str, payload: dict[str, Any],
                "snapshot": _live_snapshot(match_id, s)}
     if kind == "formation":
         out["formation"] = extra
+    if kind == "card":
+        out["card_result"] = extra
     if kind == "substitution":
         out["substitutions_used"] = target.substitutions_used[_team_id(payload["team"])]
     return out
@@ -841,6 +890,7 @@ def start_match(req: StartRequest) -> dict[str, Any]:
         start_clock = int(req.start_clock or 0) if req.mode != "full" else 0
         if start_clock:
             body["takeover_clock"] = start_clock
+        body = _prepare(body)
     if len(str(body["fixture_id"])) > 128 or abs(int(body["seed"])) > 2**62:
         raise HTTPException(400, "Invalid fixture_id or seed")
     try:
@@ -867,8 +917,10 @@ def start_match(req: StartRequest) -> dict[str, Any]:
         store.update_clock(match_id, engine.clock)
         log.info("MATCH_COMPLETED match=%s save=%s fixture=%s seed=%s mode=full",
                  match_id, save_id, fixture_id, seed)
-        return {"match_id": match_id, "fixture_id": fixture_id, "status": "ft",
-                "full_time": payload}
+        out = {"match_id": match_id, "fixture_id": fixture_id, "status": "ft",
+               "full_time": payload}
+        _add_build_info(out, body, engine)
+        return out
     meta = {"fixture_id": fixture_id, "seed": seed, "save_id": save_id}
     with _SESSIONS_LOCK:
         if len(ACTIVE_MATCHES) >= MAX_SESSIONS:
@@ -887,7 +939,32 @@ def start_match(req: StartRequest) -> dict[str, Any]:
     snap.update({"match_id": match_id, "fixture_id": fixture_id, "save_id": save_id})
     if scenario is not None:
         snap["scenario"] = scenario
+    _add_build_info(snap, body, engine)
     return snap
+
+
+def _add_build_info(out: dict[str, Any], body: dict[str, Any], engine: MatchEngine | None) -> None:
+    """v2 kick-off block: trait bar, compiled hand, card state, modifiers."""
+    builds = body.get("builds") or {}
+    if not builds:
+        return
+    me = next((t for t, b in builds.items() if b.get("control") == "manager"), None) or next(iter(builds))
+    try:
+        at = bld.active_traits(body, me)
+    except (BridgeError, ValueError, KeyError, TypeError):
+        at = {"traits": [], "system_fit": None}
+    out["build_team"] = me
+    out["active_traits"] = at["traits"]
+    out["system_fit"] = at.get("system_fit")
+    out["kickoff_modifiers"] = (builds.get(me) or {}).get("kickoff_modifiers") or {}
+    out["builds"] = {t: {k: b.get(k) for k in ("control", "system_id", "difficulty", "familiarity")}
+                     for t, b in builds.items()}
+    if engine is not None:
+        out["hand"] = bld.compiled_hand(engine, me)
+        cs = bld.card_state(engine)
+        if cs is not None:
+            out["cards"] = cs
+            out["influence"] = (cs.get(me) or {}).get("influence")
 
 
 @app.get("/api/matches/lookup")
@@ -1062,6 +1139,7 @@ def advance_match(match_id: str, req: AdvanceRequest) -> dict[str, Any]:
         result = engine.result() if engine.is_finished else None   # records FULL_TIME after lab events
         snap = bridge.match_snapshot(engine, max(0, int(req.last_event_index)))
         snap["new_events"] = lab_events + (snap.get("new_events") or [])
+        _add_cards(snap, engine)
         store.update_clock(match_id, engine.clock)
     if frames is not None:
         snap["frames"] = frames
@@ -1112,6 +1190,166 @@ import coach  # noqa: E402
 import labsim  # noqa: E402
 
 
+# ── v2 persistence (build-core): challenge attempts, Ghost League, Analyst
+#    budget. Own tables in the same SQLite file, created lazily per DB path
+#    (store.init may be re-pointed, e.g. by tests). store.py stays untouched.
+class _V2DB:
+    _ready_for: Any = None
+
+    def conn(self):
+        c = store._conn()
+        if self._ready_for != store._db_path:
+            with store._lock:
+                c.executescript("""
+                CREATE TABLE IF NOT EXISTS challenge_attempts(
+                    match_id TEXT PRIMARY KEY, scenario_id TEXT, player_id TEXT, ranked INTEGER,
+                    day TEXT, ts REAL);
+                CREATE INDEX IF NOT EXISTS idx_att_player ON challenge_attempts(scenario_id, player_id);
+                CREATE TABLE IF NOT EXISTS ghost_entries(
+                    day TEXT, player_id TEXT, manager_name TEXT, snapshot_json TEXT, ts REAL,
+                    PRIMARY KEY(day, player_id));
+                CREATE TABLE IF NOT EXISTS ghost_runs(
+                    run_id TEXT PRIMARY KEY, day TEXT, player_id TEXT, manager_name TEXT, ranked INTEGER,
+                    points INTEGER, stars INTEGER, gd INTEGER, results_json TEXT, ts REAL);
+                CREATE INDEX IF NOT EXISTS idx_ghost_runs_day ON ghost_runs(day, ranked);
+                CREATE UNIQUE INDEX IF NOT EXISTS idx_ghost_ranked_once ON ghost_runs(day, player_id) WHERE ranked=1;
+                CREATE TABLE IF NOT EXISTS analyst_runs(
+                    player_id TEXT, save_id TEXT, week TEXT, used INTEGER,
+                    PRIMARY KEY(player_id, save_id, week));
+                """)
+                cols = {r[1] for r in c.execute("PRAGMA table_info(challenge_entries)").fetchall()}
+                if "player_id" not in cols:
+                    c.execute("ALTER TABLE challenge_entries ADD COLUMN player_id TEXT")
+                c.commit()
+            self._ready_for = store._db_path
+        return c
+
+    def _one(self, sql: str, args: tuple) -> dict[str, Any] | None:
+        with self.conn() as c:
+            r = c.execute(sql, args).fetchone()
+            return dict(r) if r else None
+
+    def _all(self, sql: str, args: tuple) -> list[dict[str, Any]]:
+        with self.conn() as c:
+            return [dict(r) for r in c.execute(sql, args).fetchall()]
+
+    def _exec(self, sql: str, args: tuple) -> None:
+        conn = self.conn()
+        with store._lock, conn as c:
+            c.execute(sql, args)
+
+    # challenge attempts (ported from wip/playtest-fixes store.py)
+    def challenge_entry_for_player(self, scenario_id, player_id):
+        return self._one("SELECT * FROM challenge_entries WHERE scenario_id=? AND player_id=?", (scenario_id, player_id))
+
+    def put_player_entry(self, scenario_id, player_id, manager_name, match_id, stars, gf, ga, decisions):
+        if self.challenge_entry_for_player(scenario_id, player_id):
+            self._exec("""UPDATE challenge_entries SET manager_name=?, match_id=?, stars=?, goals_for=?,
+                          goals_against=?, decisions=?, ts=? WHERE scenario_id=? AND player_id=?""",
+                       (manager_name, match_id, stars, gf, ga, decisions, time.time(), scenario_id, player_id))
+        else:
+            self._exec("""INSERT OR REPLACE INTO challenge_entries(scenario_id, manager_name, match_id, stars,
+                          goals_for, goals_against, decisions, ts, player_id) VALUES(?,?,?,?,?,?,?,?,?)""",
+                       (scenario_id, manager_name, match_id, stars, gf, ga, decisions, time.time(), player_id))
+
+    def rename_player_entry(self, scenario_id, player_id, manager_name):
+        self._exec("UPDATE challenge_entries SET manager_name=? WHERE scenario_id=? AND player_id=?",
+                   (manager_name, scenario_id, player_id))
+
+    def put_attempt(self, match_id, scenario_id, player_id, ranked, day):
+        self._exec("""INSERT OR IGNORE INTO challenge_attempts(match_id, scenario_id, player_id, ranked, day, ts)
+                      VALUES(?,?,?,?,?,?)""", (match_id, scenario_id, player_id, 1 if ranked else 0, day, time.time()))
+
+    def ranked_attempt(self, scenario_id, player_id):
+        return self._one("""SELECT * FROM challenge_attempts WHERE scenario_id=? AND player_id=? AND ranked=1
+                            ORDER BY ts LIMIT 1""", (scenario_id, player_id))
+
+    def attempt_for_match(self, match_id):
+        return self._one("SELECT * FROM challenge_attempts WHERE match_id=?", (match_id,))
+
+    # analyst budget
+    def analyst_used(self, player_id, save_id, week) -> int:
+        r = self._one("SELECT used FROM analyst_runs WHERE player_id=? AND save_id=? AND week=?",
+                      (player_id, save_id, week))
+        return int(r["used"]) if r else 0
+
+    def analyst_take(self, player_id, save_id, week, budget, amount=1) -> int | None:
+        """Atomically consume one run; None when the budget is spent."""
+        conn = self.conn()
+        with store._lock:
+            try:
+                conn.execute("BEGIN IMMEDIATE")
+                r = conn.execute("SELECT used FROM analyst_runs WHERE player_id=? AND save_id=? AND week=?",
+                                 (player_id, save_id, week)).fetchone()
+                used = int(r["used"]) if r else 0
+                if used + amount > budget:
+                    conn.commit()
+                    return None
+                conn.execute("INSERT OR REPLACE INTO analyst_runs(player_id, save_id, week, used) VALUES(?,?,?,?)",
+                             (player_id, save_id, week, used + amount))
+                conn.commit()
+                return used + amount
+            except Exception:
+                conn.rollback()
+                raise
+
+    def analyst_refund(self, player_id, save_id, week, amount=1) -> None:
+        self._exec("UPDATE analyst_runs SET used=MAX(0, used-?) WHERE player_id=? AND save_id=? AND week=?",
+                   (amount, player_id, save_id, week))
+
+    # ghost league
+    def ghost_put_entry(self, day, player_id, name, snapshot):
+        self._exec("INSERT OR REPLACE INTO ghost_entries(day, player_id, manager_name, snapshot_json, ts) VALUES(?,?,?,?,?)",
+                   (day, player_id, name, json.dumps(snapshot, separators=(",", ":")), time.time()))
+
+    def ghost_pool(self, days, exclude):
+        rows = self._all(f"SELECT * FROM ghost_entries WHERE day IN ({','.join('?' * len(days))}) AND player_id != ? "
+                         "ORDER BY ts DESC", tuple(days) + (exclude,))
+        seen, out = set(), []
+        for r in rows:
+            if r["player_id"] not in seen:
+                seen.add(r["player_id"]); out.append(r)
+        return out
+
+    def ghost_ranked(self, day, player_id):
+        return self._one("SELECT * FROM ghost_runs WHERE day=? AND player_id=? AND ranked=1", (day, player_id))
+
+    def ghost_reserve(self, run_id, day, player_id, name):
+        conn = self.conn()
+        with store._lock:
+            try:
+                conn.execute("BEGIN IMMEDIATE")
+                old = conn.execute("SELECT 1 FROM ghost_runs WHERE day=? AND player_id=? AND ranked=1", (day, player_id)).fetchone()
+                ranked = old is None
+                conn.execute("INSERT INTO ghost_runs(run_id,day,player_id,manager_name,ranked,points,stars,gd,results_json,ts) VALUES(?,?,?,?,?,0,0,0,'[]',?)", (run_id,day,player_id,name,int(ranked),time.time()))
+                conn.commit()
+                return ranked
+            except Exception:
+                conn.rollback()
+                raise
+
+    def ghost_finish(self, run_id, points, stars, gd, results):
+        self._exec("UPDATE ghost_runs SET points=?,stars=?,gd=?,results_json=? WHERE run_id=?",
+                   (points,stars,gd,json.dumps(results,separators=(",",":")),run_id))
+
+    def ghost_put_run(self, run_id, day, player_id, name, ranked, points, stars, gd, results):
+        self._exec("""INSERT INTO ghost_runs(run_id, day, player_id, manager_name, ranked, points, stars, gd,
+                      results_json, ts) VALUES(?,?,?,?,?,?,?,?,?,?)""",
+                   (run_id, day, player_id, name, 1 if ranked else 0, points, stars, gd,
+                    json.dumps(results, separators=(",", ":")), time.time()))
+
+    def ghost_board(self, day):
+        return self._all("""SELECT * FROM ghost_runs WHERE day=? AND ranked=1
+                            ORDER BY stars DESC, points DESC, gd DESC, ts ASC""", (day,))
+
+    def ghost_count(self, day):
+        r = self._one("SELECT COUNT(*) AS n FROM ghost_entries WHERE day=?", (day,))
+        return int(r["n"]) if r else 0
+
+
+v2db = _V2DB()
+
+
 @app.on_event("startup")
 def _warm_workers() -> None:
     if not CONTINUOUS:
@@ -1150,6 +1388,7 @@ def seek_match(match_id: str, req: SeekRequest) -> dict[str, Any]:
                          "full_time": record.get("full_time"), "rewound_to": None})
             return snap
         snap = bridge.match_snapshot(eng, max(0, int(req.last_event_index)))
+        _add_cards(snap, eng)
     snap.update({"match_id": match_id, "fixture_id": s["meta"]["fixture_id"],
                  "rewound_to": rewound})
     if result is not None:
@@ -1174,8 +1413,30 @@ def _side(request: dict[str, Any], team: str) -> dict[str, Any]:
     return request.get("home_team" if team == "HOME" else "away_team") or {}
 
 
+def _parse_holds(raw: str | None) -> list[dict[str, Any]]:
+    """Client-reported 'kept it as is' decisions (JSON list of {clock, label,
+    alt?}). Presentation-only input: they never reach the engine."""
+    if not raw:
+        return []
+    try:
+        val = json.loads(raw)
+    except (TypeError, ValueError):
+        raise HTTPException(400, "holds must be a JSON list")
+    if not isinstance(val, list):
+        raise HTTPException(400, "holds must be a JSON list")
+    return coach.clean_holds(val)
+
+
+def _decision_list(commands: list[dict[str, Any]], team: str, names: dict[str, str],
+                   base_tactics: dict[str, Any] | None) -> list[dict[str, Any]]:
+    groups = coach.group_commands(commands, team)
+    labels = coach.group_labels(commands, team, names, base_tactics)
+    return [{"index": i, "clock": int(g[0]["sim_clock"]), "minute": coach._minute(int(g[0]["sim_clock"])),
+             "label": labels[i][0], "detail": labels[i][1]} for i, g in enumerate(groups)]
+
+
 def _insights_payload(engine: MatchEngine, team: str, commands: list[dict[str, Any]],
-                      request: dict[str, Any]) -> dict[str, Any]:
+                      request: dict[str, Any], holds: list[dict[str, Any]] | None = None) -> dict[str, Any]:
     now = engine.clock
     events = [e.to_dict() for e in engine.events]
     snap = bridge.match_snapshot(engine, len(engine.events))
@@ -1187,31 +1448,62 @@ def _insights_payload(engine: MatchEngine, team: str, commands: list[dict[str, A
                           "AWAY": (request.get("away_team") or {}).get("name") or "Away"},
            "duration": engine.config.duration_seconds}
     w = coach.window_metrics(events, team, max(0, now - coach.WINDOW), now)
-    return {"clock": now, "team": team,
-            "insights": coach.live_insights(ctx),
-            "impacts": coach.change_impacts(events, ctx["commands"], team, now, _names(engine),
-                                            _side(request, team).get("tactics")),
+    names = _names(engine)
+    base = _side(request, team).get("tactics")
+    insights = coach.live_insights(ctx)
+    system_report = None
+    bb = (request.get("builds") or {}).get(team) or {}
+    if bb.get("system_id"):
+        system = bld.get_system(bb["system_id"], bb)
+        pstats = {pid:dict(p, team_id=p["team"]) for pid,p in snap["players"].items()}
+        stats = dict(snap["team_stats"]["home" if team == "HOME" else "away"])
+        stats["possession"] = snap["possession"]["home" if team == "HOME" else "away"]
+        metrics = bld.pillar_metrics(events, team, pstats, stats)
+        ratios = {"field_tilt", "possession", "xg_per_shot", "aerials_won_share", "pass_completion", "contributors"}
+        pillars = []
+        for p in system.get("pillars", []):
+            value = metrics.get(p["metric"], 0)
+            # Count pillars are compared on a disclosed 90-minute rate.
+            projected = value if p["metric"] in ratios else value * 5400 / max(1, now)
+            pillars.append(dict(p, value=value, projected=round(projected,2), grade=bld.grade_pillar(p,projected)))
+        system_report = {"name":system["name"], "pillars":pillars}
+        weak = [p for p in pillars if p["grade"] == "weak"]
+        if now >= 1800 and weak:
+            p = weak[0]
+            insights.append({"id":f"system:{system['id']}:{p['id']}", "kind":"system", "severity":1,
+                             "minute":coach._minute(now), "title":f"{system['name']}: {p['label']}",
+                             "text":f"{p['label']}: {p['value']:.2f} so far; the system benchmark is {p['benchmark']}. "
+                                     + ("The current rate over 90 minutes is " + str(p['projected']) + "." if p['metric'] not in ratios else ""),
+                             "why":"Measured from this match's events.", "actions":[]})
+    return {"clock": now, "team": team, "system_report":system_report,
+            "insights": insights,
+            "impacts": coach.change_impacts(events, ctx["commands"], team, now, names, base,
+                                            holds=[h for h in (holds or []) if h["clock"] <= now]),
+            "decisions": _decision_list(ctx["commands"], team, names, base),
             "momentum": coach.momentum(events, max(1, now)),
             "window": {k: w.get(k, 0) for k in ("xg_for", "xg_against", "shots_for",
                                                  "shots_against", "box_for", "box_against",
-                                                 "possession")}}
+                                                 "possession", "goals_for", "goals_against")}}
 
 
 @app.get("/api/matches/{match_id}/insights")
-def match_insights(match_id: str, team: str = "HOME", at: int | None = None) -> dict[str, Any]:
+def match_insights(match_id: str, team: str = "HOME", at: int | None = None,
+                   holds: str | None = None) -> dict[str, Any]:
     """Assistant-coach read of the match as the manager sees it: events <= at,
     engine state exactly at ``at`` (checkpoint + replay, never the server's
-    prefetched future)."""
+    prefetched future). ``holds``: the manager's deliberate 'keep it as is'
+    calls (JSON), tracked like changes."""
     team = _team_id_http(team)
+    hl = _parse_holds(holds)
     tl = _timeline(match_id)
     at_ = tl["clock"] if at is None else max(0, min(int(at), tl["clock"]))
     s = tl.get("session")
     if s is not None and at_ == tl["clock"]:
         with s["lock"]:
             if s["engine"].clock == at_:
-                return _insights_payload(s["engine"], team, s["commands"], s["request"])
+                return _insights_payload(s["engine"], team, s["commands"], s["request"], hl)
     eng = _engine_at(tl, at_)
-    return _insights_payload(eng, team, tl["commands"], tl["request"])
+    return _insights_payload(eng, team, tl["commands"], tl["request"], hl)
 
 
 def _team_id_http(team: str) -> str:
@@ -1239,6 +1531,8 @@ def batch_matches(req: BatchRequest) -> dict[str, Any]:
         if sr.fixture_id is None or sr.seed is None or not sr.home_team or not sr.away_team:
             raise HTTPException(400, f"requests[{i}]: fixture_id, seed and both teams are required")
         body = sr.model_dump()
+        if raw.get("_build_prepared"):
+            body["_build_prepared"] = raw["_build_prepared"]
         body["mode"] = "full"
         for k in ("scenario_id", "start_clock"):
             body.pop(k, None)
@@ -1246,6 +1540,12 @@ def batch_matches(req: BatchRequest) -> dict[str, Any]:
             bridge.build_team(body["home_team"], "HOME"); bridge.build_team(body["away_team"], "AWAY")
         except (BridgeError, ValueError, KeyError, TypeError) as e:
             raise HTTPException(400, f"requests[{i}] ({body['fixture_id']}): {e}")
+        if not body.get("_build_prepared"):
+            if body.get("build"):
+                body["build"] = dict(body["build"], control="cpu")
+            for team, bb in (body.get("builds") or {}).items():
+                body["builds"][team] = dict(bb, control="cpu")
+        body = _prepare(body)
         bodies.append(body)
     t0 = time.time()
     outs = labsim.run_all(labsim.sim_record, [(b,) for b in bodies])
@@ -1265,6 +1565,108 @@ def batch_matches(req: BatchRequest) -> dict[str, Any]:
     return {"results": results}
 
 
+# ── matchweek round: idempotent + resumable ────────────────────────────────
+# The client finalises a week in steps it can resume after a reload. The other
+# nine fixtures are asked for here: fixtures this save already finished with
+# the identical request are returned from storage (no re-simulation, no
+# duplicate rows), a round that is still running for another tab/reload is
+# joined rather than started twice, and the work completes even if the tab
+# that asked for it has gone.
+_ROUND_INFLIGHT: dict[str, Any] = {}
+_ROUND_LOCK = threading.Lock()
+
+
+def _round_key(body: dict[str, Any]) -> str:
+    canon = {k: v for k, v in body.items() if k not in ("mode",)}
+    return hashlib.blake2b(json.dumps(canon, sort_keys=True, separators=(",", ":")).encode(),
+                           digest_size=12).hexdigest()
+
+
+def _stored_round_result(body: dict[str, Any], key: str, summary_only: bool) -> dict[str, Any] | None:
+    row = store.find_match(body.get("save_id", "local"), body["fixture_id"])
+    if not row or row["status"] != "ft" or not row["result_json"]:
+        return None
+    try:
+        sreq = json.loads(row["start_request_json"])
+    except Exception:
+        return None
+    if _round_key(sreq) != key:
+        return None
+    rec = json.loads(row["result_json"])
+    ft = rec.get("full_time") or {}
+    if summary_only:
+        ft = labsim.summarize_full_time(ft)
+    return {"match_id": row["match_id"], "fixture_id": body["fixture_id"], "status": "ft",
+            "full_time": ft, "reused": True}
+
+
+@app.post("/api/matchweek/round")
+def matchweek_round(req: RoundRequest) -> dict[str, Any]:
+    _require_native("Round simulation")
+    if not req.requests:
+        return {"results": [], "reused": 0, "simulated": 0}
+    if len(req.requests) > 20:
+        raise HTTPException(400, "At most 20 fixtures per round")
+    t0 = time.time()
+    bodies, keys = [], []
+    for i, raw in enumerate(req.requests):
+        try:
+            sr = StartRequest(**raw)
+        except Exception as e:
+            raise HTTPException(400, f"requests[{i}]: {e}")
+        if sr.fixture_id is None or sr.seed is None or not sr.home_team or not sr.away_team:
+            raise HTTPException(400, f"requests[{i}]: fixture_id, seed and both teams are required")
+        body = sr.model_dump()
+        if raw.get("_build_prepared"):
+            body["_build_prepared"] = raw["_build_prepared"]
+        body["mode"] = "full"
+        for k in ("scenario_id", "start_clock"):
+            body.pop(k, None)
+        if not body.get("_build_prepared"):
+            if body.get("build"):
+                body["build"] = dict(body["build"], control="cpu")
+            for team, bb in (body.get("builds") or {}).items():
+                body["builds"][team] = dict(bb, control="cpu")
+        body = _prepare(body)
+        bodies.append(body)
+        keys.append(_round_key(body))
+    results: list[Any] = [None] * len(bodies)
+    todo, waits = [], []
+    with _ROUND_LOCK:
+        for i, (body, key) in enumerate(zip(bodies, keys)):
+            got = _stored_round_result(body, key, req.summary_only)
+            if got is not None:
+                results[i] = got
+            elif key in _ROUND_INFLIGHT:
+                waits.append((i, _ROUND_INFLIGHT[key]))
+            else:
+                ev = threading.Event()
+                _ROUND_INFLIGHT[key] = ev
+                todo.append(i)
+    reused = sum(1 for r in results if r is not None)
+    try:
+        if todo:
+            out = batch_matches(BatchRequest(requests=[bodies[i] for i in todo],
+                                             summary_only=req.summary_only))["results"]
+            for i, r in zip(todo, out):
+                results[i] = r
+    finally:
+        with _ROUND_LOCK:
+            for i in todo:
+                ev = _ROUND_INFLIGHT.pop(keys[i], None)
+                if ev is not None:
+                    ev.set()
+    for i, ev in waits:
+        ev.wait(timeout=300)
+        got = _stored_round_result(bodies[i], keys[i], req.summary_only)
+        if got is None:
+            got = batch_matches(BatchRequest(requests=[bodies[i]], summary_only=req.summary_only))["results"][0]
+        results[i] = got
+    log.info("ROUND n=%d reused=%d joined=%d simulated=%d secs=%.2f", len(bodies), reused,
+             len(waits), len(todo), time.time() - t0)
+    return {"results": results, "reused": reused, "simulated": len(todo)}
+
+
 def _finished_record(match_id: str) -> tuple[dict[str, Any], dict[str, Any]]:
     row = store.get_match(match_id)
     if not row:
@@ -1280,14 +1682,18 @@ def _team_names(req: dict[str, Any]) -> dict[str, str]:
 
 
 @app.get("/api/matches/{match_id}/review")
-def match_review(match_id: str, team: str = "HOME") -> dict[str, Any]:
+def match_review(match_id: str, team: str = "HOME", holds: str | None = None) -> dict[str, Any]:
     team = _team_id_http(team)
+    hl = _parse_holds(holds)
     row, record = _finished_record(match_id)
     ft = record["full_time"]
     if not ft.get("events"):
         ft = dict(ft, events=store.ledger(match_id) or [])
     req = json.loads(row["start_request_json"])
-    return coach.review(ft, team, _cmd_rows(match_id), _team_names(req), _side(req, team).get("tactics"))
+    out = coach.review(ft, team, _cmd_rows(match_id), _team_names(req), _side(req, team).get("tactics"),
+                       holds=hl)
+    out.update(bld.review_report(ft, req, team))
+    return out
 
 
 def _points(gf: int, ga: int) -> int:
@@ -1313,13 +1719,53 @@ def _lab_seed(seed: int, k: int) -> int:
     return int.from_bytes(h, "big")
 
 
+# Decision Lab results are a pure function of (finished match, team, K,
+# commands, holds): cache them so reopening the Lab never re-runs it.
+_LAB_CACHE: "OrderedDict[tuple, dict[str, Any]]" = OrderedDict()
+_LAB_LOCK = threading.Lock()
+_LAB_KINDS = ("tactics", "substitution", "instructions", "formation")
+
+
+def _pts_word(n: int) -> str:
+    return f"{abs(n)} point{'s' if abs(n) != 1 else ''}"
+
+
+def _lab_text(K: int, mins: int, what: str, alt: str, w: dict, wo: dict, se: float,
+              verdict: str, same: int, actual: list[int], ex: list[int]) -> tuple[str, str]:
+    """(text, this-match summary). The average over K paired futures and this
+    very match's counterfactual, told together so they never read as a contradiction."""
+    exd = _points(*actual) - _points(*ex)
+    if same == K and w == wo:
+        avg = (f"Across {K} replays of the last {mins} minutes it made no difference in any of the "
+               f"{K} futures — every one ended exactly the same {what} or not.")
+    else:
+        tail = {"helped": " — on average it helped.",
+                "hurt": " — on average it cost you.",
+                "no clear effect": " — too close to call on average."}[verdict]
+        avg = (f"Across {K} replays of the last {mins} minutes: {w['exp_points']:.1f} points on average "
+               f"with {what} vs {wo['exp_points']:.1f} {alt} (±{se:.1f}){tail}")
+    res = f"{ex[0]}–{ex[1]}"
+    if exd == 0:
+        here = f" In this match itself, {alt} would also have ended {res}: no difference here."
+        short = "This match: same result"
+    else:
+        opposed = (verdict == "hurt" and exd > 0) or (verdict == "helped" and exd < 0)
+        lead = " But" if opposed else " And"
+        here = (f"{lead} in this match as it actually played out, {alt} would have ended {res} — "
+                + (f"here it earned you {_pts_word(exd)}." if exd > 0 else f"here it cost you {_pts_word(exd)}."))
+        short = f"This match: {'+' if exd > 0 else '−'}{_pts_word(exd)}"
+    return avg + here, short
+
+
 @app.post("/api/matches/{match_id}/decision-lab")
 def decision_lab(match_id: str, req: DecisionLabRequest) -> dict[str, Any]:
     """Did your decisions help? For each decision moment (your commands
     within 120 s of each other): K paired alternate futures from that minute
     WITH all your commands from then on vs WITHOUT (stand pat; earlier
     decisions kept). Same K reseeds in both arms (common random numbers), so
-    the difference isolates the decision, not the dice."""
+    the difference isolates the decision, not the dice. Deliberate holds
+    ("keep it as is", reported by the client) are indexed after the changes
+    and tested against the alternative the manager turned down."""
     _require_native("The Decision Lab")
     team = _team_id_http(req.team)
     other = coach.opp(team)
@@ -1328,13 +1774,23 @@ def decision_lab(match_id: str, req: DecisionLabRequest) -> dict[str, Any]:
     K = max(2, min(40, int(req.samples)))
     commands = tl["commands"]
     groups = coach.group_commands(commands, team)
+    holds = coach.clean_holds(req.holds)
+    total = len(groups) + len(holds)
     ft_score = record["full_time"]["score"]
     actual = [ft_score["home" if team == "HOME" else "away"], ft_score["away" if team == "HOME" else "home"]]
-    idxs = list(range(len(groups)))
-    if req.index is not None and groups:
-        if not 0 <= int(req.index) < len(groups):
-            raise HTTPException(400, f"index must be 0..{len(groups) - 1}")
+    idxs = list(range(total))
+    if req.index is not None and total:
+        if not 0 <= int(req.index) < total:
+            raise HTTPException(400, f"index must be 0..{total - 1}")
         idxs = [int(req.index)]
+    ckey = (match_id, team, K, hashlib.blake2b(json.dumps([commands, holds], sort_keys=True,
+                                                          separators=(",", ":"), default=str).encode(),
+                                               digest_size=12).hexdigest())
+    with _LAB_LOCK:
+        hit = {i: _LAB_CACHE[ckey + (i,)] for i in idxs if ckey + (i,) in _LAB_CACHE}
+        for i in hit:
+            _LAB_CACHE.move_to_end(ckey + (i,))
+    todo = [i for i in idxs if i not in hit]
     names = {}
     for p in ("home_team", "away_team"):
         side = tl["request"].get(p) or {}
@@ -1342,26 +1798,44 @@ def decision_lab(match_id: str, req: DecisionLabRequest) -> dict[str, Any]:
             if pd:
                 names[str(pd["id"])] = pd["name"]
     seeds = [_lab_seed(int(tl["meta"]["seed"]), k) for k in range(K)]
-    labels = coach.command_labels(commands, team, names, _side(tl["request"], team).get("tactics"))
-    glabels, k0 = [], 0
-    for g in groups:
-        glabels.append(" · ".join(labels[k0:k0 + len(g)]))
-        k0 += len(g)
-    jobs, plan = [], []
-    for gi in idxs:
-        c0 = int(groups[gi][0]["sim_clock"])
-        base = _engine_at(tl, c0, strict=True)
+    glabels = coach.group_labels(commands, team, names, _side(tl["request"], team).get("tactics"))
+    dur = engine_duration(tl["request"])
+    jobs, plan, fresh = [], [], {}
+    for gi in todo:
+        if gi < len(groups):
+            c0 = int(groups[gi][0]["sim_clock"])
+            base = _engine_at(tl, c0, strict=True)
+            rest = [c for c in commands if int(c["sim_clock"]) >= c0]
+            alt_arm = [c for c in rest if str(c["payload"].get("team", "")).upper() != team]
+            meta = {"kind": "change", "label": glabels[gi][0], "detail": glabels[gi][1],
+                    "what": "your change" if len(groups[gi]) == 1 else "your changes",
+                    "alt": "standing pat", "arms": {"with": "With your call", "without": "Standing pat"}}
+        else:
+            h = holds[gi - len(groups)]
+            c0 = h["clock"]
+            alt = h["alt"] or {}
+            kind = alt.get("kind") or alt.get("type")
+            payload = alt.get("payload") if isinstance(alt.get("payload"), dict) else None
+            alt_label = h["alt_label"] or "the alternative"
+            meta = {"kind": "hold", "label": h["label"], "detail": f"Kept the plan instead of: {alt_label}",
+                    "what": "keeping it as is", "alt": f"choosing '{alt_label}'",
+                    "arms": {"with": "Kept it as is", "without": f"'{alt_label}' instead"}}
+            if kind not in _LAB_KINDS or payload is None or c0 >= dur:
+                fresh[gi] = dict(meta, index=gi, minute=coach._minute(c0), clock=c0, testable=False,
+                                 text="There was no alternative on the table to test this against.")
+                continue
+            base = _engine_at(tl, c0, strict=True)
+            rest = [c for c in commands if int(c["sim_clock"]) >= c0]
+            alt_cmd = {"sim_clock": c0, "kind": kind, "payload": dict(payload, team=team)}
+            alt_arm = [alt_cmd] + rest
         blob = pickle.dumps(base, protocol=pickle.HIGHEST_PROTOCOL)
-        rest = [c for c in commands if int(c["sim_clock"]) >= c0]
-        without = [c for c in rest if str(c["payload"].get("team", "")).upper() != team]
         start = len(jobs)
         jobs += [(blob, rest, sd) for sd in seeds]
-        jobs += [(blob, without, sd) for sd in seeds]
-        jobs.append((blob, without, None))
-        plan.append((gi, c0, start))
-    outs = labsim.run_all(labsim.finish, jobs)
-    decisions = []
-    for gi, c0, st in plan:
+        jobs += [(blob, alt_arm, sd) for sd in seeds]
+        jobs.append((blob, alt_arm, None))
+        plan.append((gi, c0, start, meta))
+    outs = labsim.run_all(labsim.finish, jobs) if jobs else []
+    for gi, c0, st, meta in plan:
         w_out, wo_out, exact = outs[st:st + K], outs[st + K:st + 2 * K], outs[st + 2 * K]
         w, wo = _arm_stats(w_out, team), _arm_stats(wo_out, team)
         delta = round(w["exp_points"] - wo["exp_points"], 2)
@@ -1369,28 +1843,32 @@ def decision_lab(match_id: str, req: DecisionLabRequest) -> dict[str, Any]:
         # the mean per-seed difference says how sure the verdict can be
         diffs = [_points(a["score"][team], a["score"][other]) - _points(b["score"][team], b["score"][other])
                  for a, b in zip(w_out, wo_out)]
+        same = sum(1 for a, b in zip(w_out, wo_out) if a["score"] == b["score"])
         md = sum(diffs) / max(1, len(diffs))
         se = (sum((x - md) ** 2 for x in diffs) / max(1, len(diffs) - 1)) ** 0.5 / max(1, len(diffs)) ** 0.5
         se = round(se, 2)
         clear = abs(delta) >= max(0.25, 1.5 * se)
         verdict = ("helped" if delta > 0 else "hurt") if clear else "no clear effect"
         ex = [exact["score"][team], exact["score"][other]]
-        mins = max(1, round((engine_duration(tl["request"]) - c0) / 60))
-        what = "your change" if len(groups[gi]) == 1 else "your changes"
-        verb = "earned"
-        tail = {"helped": " — it made a real difference.",
-                "hurt": " — standing pat would have served you better.",
-                "no clear effect": " — too close to call."}[verdict]
-        text = (f"Across {K} replays of the last {mins} minutes, {what} from {coach._minute(c0)}' on {verb} "
-                f"{w['exp_points']:.1f} points on average vs {wo['exp_points']:.1f} standing pat "
-                f"(±{se:.1f}){tail}")
-        decisions.append({"index": gi, "minute": coach._minute(c0), "clock": c0,
-                          "label": glabels[gi],
-                          "actual": {"score": actual, "points": _points(*actual)},
-                          "exact_without": {"score": ex, "points": _points(*ex)},
-                          "with": w, "without": wo, "delta_points": delta, "delta_se": se,
-                          "verdict": verdict, "text": text})
-    return {"samples": K, "team": team, "decision_count": len(groups), "decisions": decisions}
+        mins = max(1, round((dur - c0) / 60))
+        text, here = _lab_text(K, mins, meta["what"], meta["alt"], w, wo, se, verdict, same, actual, ex)
+        fresh[gi] = {"index": gi, "minute": coach._minute(c0), "clock": c0,
+                     "kind": meta["kind"], "label": meta["label"], "detail": meta["detail"],
+                     "arms": meta["arms"], "testable": True,
+                     "actual": {"score": actual, "points": _points(*actual)},
+                     "exact_without": {"score": ex, "points": _points(*ex)},
+                     "exact_delta_points": _points(*actual) - _points(*ex),
+                     "with": w, "without": wo, "delta_points": delta, "delta_se": se,
+                     "same_results": same, "identical": same == K and w == wo,
+                     "verdict": verdict, "text": text, "this_match": here}
+    with _LAB_LOCK:
+        for gi, d in fresh.items():
+            _LAB_CACHE[ckey + (gi,)] = d
+        while len(_LAB_CACHE) > 400:
+            _LAB_CACHE.popitem(last=False)
+    decisions = [hit.get(i) or fresh[i] for i in idxs]
+    return {"samples": K, "team": team, "decision_count": total, "decisions": decisions,
+            "cached": not jobs}
 
 
 @app.post("/api/matches/{match_id}/branch")
@@ -1510,6 +1988,9 @@ def find_scenario(req: ScenarioFindRequest) -> dict[str, Any]:
         _build_engine(body)
     except (BridgeError, ValueError, KeyError, TypeError) as e:
         raise HTTPException(400, str(e))
+    dday = _daily_date(body)
+    if dday is not None and dday > _utc_day():
+        raise HTTPException(400, f"The {dday} Daily isn't out yet — today is {_utc_day()} (UTC).")
     sid = _scenario_hash(body, team, kind, int(req.base_seed))
     got = store.get_scenario(sid)
     if got:
@@ -1586,6 +2067,75 @@ def _leaderboard(scenario_id: str) -> list[dict[str, Any]]:
             for e in store.challenge_entries(scenario_id)]
 
 
+def _utc_day(ts: float | None = None) -> str:
+    """The Daily's date is the server's UTC day — never the browser clock."""
+    return time.strftime("%Y-%m-%d", time.gmtime(time.time() if ts is None else ts))
+
+
+def _daily_date(request_or_json: Any) -> str | None:
+    """`DAILY-YYYY-MM-DD` fixture ids mark a Touchline Daily."""
+    req = json.loads(request_or_json) if isinstance(request_or_json, str) else request_or_json
+    fid = str((req or {}).get("fixture_id") or "")
+    return fid[6:16] if fid.startswith("DAILY-") and len(fid) >= 16 else None
+
+
+def _clean_player_id(pid: str | None) -> str | None:
+    if pid is None:
+        return None
+    pid = str(pid).strip()
+    if not (8 <= len(pid) <= 64) or not all(ch.isalnum() or ch in "-_" for ch in pid):
+        raise HTTPException(400, "Invalid player_id")
+    return pid
+
+
+STARS_TABLE_RANGE = range(-6, 7)
+
+
+@app.get("/api/daily")
+def daily_info() -> dict[str, Any]:
+    """Authoritative Daily date (server UTC day) + the star rules, so the UI
+    shows exactly the stars the leaderboard will record."""
+    return {"date": _utc_day(), "server_time": time.time(),
+            "stars": {k: {str(d): _scenario_stars(k, max(d, 0), max(-d, 0)) for d in STARS_TABLE_RANGE}
+                      for k in SCENARIO_KINDS}}
+
+
+@app.post("/api/challenges/{scenario_id}/attempt")
+def challenge_attempt(scenario_id: str, req: ChallengeAttemptRequest) -> dict[str, Any]:
+    """Start a challenge match for a player. For the Daily, the first attempt a
+    player starts on the day is ranked; every later one is practice. An
+    unfinished ranked attempt is handed back for resuming rather than
+    replaced."""
+    sc = store.get_scenario(scenario_id)
+    if not sc:
+        raise HTTPException(404, "Unknown scenario_id")
+    pid = _clean_player_id(req.player_id)
+    day = _daily_date(sc["request_json"])
+    today = _utc_day()
+    ranked, reason = True, None
+    if day is not None:
+        if day > today:
+            raise HTTPException(400, f"The {day} Daily isn't out yet — today is {today} (UTC).")
+        prior = v2db.ranked_attempt(scenario_id, pid)
+        if day < today:
+            ranked, reason = False, f"The {day} Daily has closed — this is a practice run."
+        elif prior:
+            row = store.get_match(prior["match_id"])
+            if row and row["status"] == "live":
+                try:
+                    snap = get_match(prior["match_id"])
+                except HTTPException:
+                    snap = None
+                if snap is not None and snap.get("status") != "ft":
+                    return {"ranked": True, "resume": True, "match_id": prior["match_id"],
+                            "snapshot": snap, "day": day, "reason": "Resuming your ranked attempt."}
+            ranked, reason = False, "You've used today's ranked attempt — this one is practice."
+    snap = start_match(StartRequest(scenario_id=scenario_id, mode="live", save_id=req.save_id))
+    v2db.put_attempt(snap["match_id"], scenario_id, pid, ranked, today)
+    return {"ranked": ranked, "resume": False, "match_id": snap["match_id"], "snapshot": snap,
+            "day": day, "reason": reason}
+
+
 @app.post("/api/challenges/{scenario_id}/submit")
 def submit_challenge(scenario_id: str, req: ChallengeSubmitRequest) -> dict[str, Any]:
     sc = store.get_scenario(scenario_id)
@@ -1594,6 +2144,7 @@ def submit_challenge(scenario_id: str, req: ChallengeSubmitRequest) -> dict[str,
     name = " ".join(str(req.manager_name).split())[:40]
     if not name:
         raise HTTPException(400, "manager_name is required")
+    pid = _clean_player_id(req.player_id)
     row = store.get_match(req.match_id)
     if not row:
         raise HTTPException(404, "No persisted record for that match ID")
@@ -1604,31 +2155,88 @@ def submit_challenge(scenario_id: str, req: ChallengeSubmitRequest) -> dict[str,
         raise HTTPException(400, "That match wasn't played from this scenario.")
     if row["status"] != "ft":
         raise HTTPException(409, "Finish the match before submitting it.")
-    prior = store.challenge_entry_for_match(req.match_id)
-    if prior and prior["manager_name"] != name:
-        raise HTTPException(409, "That match has already been submitted by another manager.")
     team = sc["team"]
     gf = row["score_home"] if team == "HOME" else row["score_away"]
     ga = row["score_away"] if team == "HOME" else row["score_home"]
     stars = _scenario_stars(sc["kind"], gf, ga)
     decisions = len(coach.group_commands(_cmd_rows(req.match_id), team))
+    out = {"stars": stars, "score": [gf, ga], "decisions": decisions}
+    day = _daily_date(sc["request_json"])
+    if day is not None:
+        # the Daily: only a player's ranked attempt, started on the day, counts
+        att = v2db.attempt_for_match(req.match_id)
+        why = None
+        if pid is None:
+            why = "Daily entries need a player id."
+        elif not att or att["player_id"] != pid:
+            why = "Only matches started as your Daily attempt can be ranked."
+        elif not att["ranked"]:
+            why = "Practice run — your ranked Daily attempt was your first one."
+        elif att["day"] != day:
+            why = f"The {day} Daily has closed."
+        if why:
+            board = _leaderboard(scenario_id)
+            mine = v2db.challenge_entry_for_player(scenario_id, pid) if pid else None
+            return {**out, "ranked": False, "practice": True, "reason": why,
+                    "rank": _rank_of(board, mine), "total": len(board), "best": False}
+    if pid is not None:
+        taken = store.challenge_entry(scenario_id, name)
+        if taken and taken.get("player_id") != pid:
+            raise HTTPException(409, "That name is already on this leaderboard — pick another.")
+        prior = store.challenge_entry_for_match(req.match_id)
+        if prior and prior.get("player_id") != pid:
+            raise HTTPException(409, "That match has already been submitted by another manager.")
+        cur = v2db.challenge_entry_for_player(scenario_id, pid)
+        better = cur is None or ((stars, gf - ga, -decisions)
+                                 > (cur["stars"], cur["goals_for"] - cur["goals_against"], -cur["decisions"]))
+        if better:
+            v2db.put_player_entry(scenario_id, pid, name, req.match_id, stars, gf, ga, decisions)
+        elif cur["manager_name"] != name:
+            v2db.rename_player_entry(scenario_id, pid, name)
+        board = _leaderboard(scenario_id)
+        mine = v2db.challenge_entry_for_player(scenario_id, pid)
+        return {**out, "ranked": True, "practice": False, "rank": _rank_of(board, mine),
+                "total": len(board), "best": better}
+    # legacy (no player id): best per manager name
+    prior = store.challenge_entry_for_match(req.match_id)
+    if prior and prior["manager_name"] != name:
+        raise HTTPException(409, "That match has already been submitted by another manager.")
     cur = store.challenge_entry(scenario_id, name)
+    if cur is not None and cur.get("player_id"):
+        raise HTTPException(409, "That name is already on this leaderboard — pick another.")
     better = cur is None or ((stars, gf - ga, -decisions)
                              > (cur["stars"], cur["goals_for"] - cur["goals_against"], -cur["decisions"]))
     if better:
         store.put_challenge_entry(scenario_id, name, req.match_id, stars, gf, ga, decisions)
     board = _leaderboard(scenario_id)
     rank = next((k + 1 for k, e in enumerate(board) if e["manager_name"] == name), None)
-    return {"stars": stars, "score": [gf, ga], "decisions": decisions, "rank": rank,
-            "total": len(board), "best": better}
+    return {**out, "ranked": True, "practice": False, "rank": rank, "total": len(board), "best": better}
+
+
+def _rank_of(board: list[dict[str, Any]], mine: dict[str, Any] | None) -> int | None:
+    if not mine:
+        return None
+    return next((k + 1 for k, e in enumerate(board) if e["match_id"] == mine["match_id"]
+                 and e["manager_name"] == mine["manager_name"]), None)
 
 
 @app.get("/api/challenges/{scenario_id}/leaderboard")
-def challenge_leaderboard(scenario_id: str, limit: int = 50) -> dict[str, Any]:
+def challenge_leaderboard(scenario_id: str, limit: int = 50, player_id: str | None = None) -> dict[str, Any]:
     if not store.get_scenario(scenario_id):
         raise HTTPException(404, "Unknown scenario_id")
-    board = _leaderboard(scenario_id)
-    return {"entries": board[:max(1, min(200, int(limit)))], "total": len(board)}
+    pid = _clean_player_id(player_id) if player_id else None
+    rows = store.challenge_entries(scenario_id)
+    board = []
+    for e, r in zip(_leaderboard(scenario_id), rows):
+        e = dict(e)
+        e["me"] = bool(pid and r.get("player_id") == pid)
+        board.append(e)
+    out = {"entries": board[:max(1, min(200, int(limit)))], "total": len(board)}
+    if pid:
+        mine = next((k + 1 for k, e in enumerate(board) if e["me"]), None)
+        att = v2db.ranked_attempt(scenario_id, pid)
+        out["me"] = {"rank": mine, "ranked_attempt_used": bool(att)}
+    return out
 
 
 @app.get("/api/scenarios/{scenario_id}")
@@ -1699,6 +2307,270 @@ def debug_bundle(match_id: str) -> dict[str, Any]:
 
 
 # ── static frontend ──────────────────────────────────────────────────────────
+# Core Loop v2: all calculations delegate to the deterministic build module.
+def _build_call(fn, *args, **kwargs):
+    try:
+        return fn(*args, **kwargs)
+    except (BridgeError, ValueError, KeyError, TypeError) as e:
+        raise HTTPException(400, str(e))
+
+
+@app.get('/api/build/catalog')
+def build_catalog():
+    return bld.catalog()
+
+
+@app.post('/api/build/evaluate')
+def build_evaluate(body: dict[str, Any]):
+    out = _build_call(bld.evaluate, body.get('squad', []), body.get('xi', {}), body.get('system_id'), body.get('build'))
+    out['deck_min'] = bld.minimum_deck_size(body.get('build') or {'system_id':body.get('system_id')})
+    return out
+
+
+@app.post('/api/build/train')
+def build_train(body: dict[str, Any]):
+    return _build_call(bld.train, body.get('squad', []), body.get('build'), body.get('plan', []))
+
+
+@app.post('/api/build/week_tick')
+def build_week_tick(body: dict[str, Any]):
+    return _build_call(bld.week_tick, body.get('squad', []), body.get('build'), body.get('lineups_played', []),
+                       'midweek' if body.get('midweek') else body.get('week_kind', 'single'))
+
+
+@app.post('/api/matches/{match_id}/card')
+def play_card(match_id: str, body: dict[str, Any]):
+    team = _team_id_http(body.get('team', 'HOME'))
+    cmd = bld.card_command(body.get('card_id'), team, body.get('targets'))
+    out = _management(match_id, 'card', cmd['payload'], body.get('request_id'), body.get('at_clock'))
+    result = out.pop('card_result', {})
+    cards = out['snapshot'].get('cards', {})
+    state = cards.get(team, {})
+    out.update(result, applied=True, cards=cards, influence={'now': state.get('influence'), 'max': state.get('max')})
+    return out
+
+
+@app.get('/api/matches/{match_id}/cards')
+def cards_at(match_id: str, team: str = 'HOME', at: int | None = None):
+    team = _team_id_http(team)
+    if at is None:
+        s = _session_rewindable(match_id)
+        with s['lock']:
+            engine = s['engine']
+            return (bld.card_state(engine) or {}).get(team, {})
+    tl = _timeline(match_id)
+    if not 0 <= at <= tl['clock']:
+        raise HTTPException(400, 'at must not be ahead of the recorded match')
+    engine = _engine_at(tl, at)
+    return (bld.card_state(engine) or {}).get(team, {})
+
+
+@app.post('/api/build/preview')
+def build_preview(body: dict[str, Any]):
+    cid = body.get('card_id')
+    if cid not in bld.CARDS:
+        raise HTTPException(400, 'Unknown card_id')
+    team = _team_id_http(body.get('side', 'HOME'))
+    engine = None
+    ctx = dict(body.get('state') or {})
+    if body.get('match_id'):
+        tl = _timeline(body['match_id'])
+        at = int(body.get('at_clock') if body.get('at_clock') is not None else tl['clock'])
+        if not 0 <= at <= tl['clock']:
+            raise HTTPException(400, 'at_clock must not be ahead of the recorded match')
+        engine = _engine_at(tl, at)
+        ctx = bld.card_context(engine, team)
+    table = bld.table_preview(cid, ctx)
+    if table:
+        return dict(table, card_id=cid, context=ctx)
+    pid = _clean_player_id(body.get('player_id'))
+    if engine is None or not pid:
+        return {'card_id': cid, 'dxg_for': None, 'dxg_against': None, 'dpts': None, 'se': None, 'n': 0, 'context': ctx, 'source': 'none'}
+    targets = dict(body.get('targets') or {})
+    _build_call(bld.compile_card, engine, team, cid, targets)
+    cmd = bld.card_command(cid, team, targets, force=True)
+    cmd['sim_clock'] = engine.clock
+    blob = pickle.dumps(engine)
+    seeds = [_lab_seed(int(engine.rng.seed), i) for i in range(6)]
+    jobs = [(blob, commands, seed, 900) for seed in seeds for commands in ([], [cmd])]
+    save = str(tl['request'].get('save_id', 'local')); week = str(body.get('week', 0))
+    bb = (tl['request'].get('builds') or {}).get(team) or {}
+    if v2db.analyst_take(pid, save, week, bld.analyst_budget(bb)) is None:
+        raise HTTPException(429, 'Your Analyst has used every run for this week')
+    try:
+        outs = labsim.run_all(labsim.finish_window, jobs)
+    except Exception:
+        v2db.analyst_refund(pid, save, week)
+        raise
+    other = coach.opp(team)
+    diffs = [(_points(outs[i+1]['score'][team], outs[i+1]['score'][other]) - _points(outs[i]['score'][team], outs[i]['score'][other])) for i in range(0, 12, 2)]
+    mean = sum(diffs) / 6
+    return {'card_id': cid, 'dxg_for': sum(outs[i+1]['xg_window'][team] - outs[i]['xg_window'][team] for i in range(0,12,2))/6,
+            'dxg_against': sum(outs[i+1]['xg_window'][other] - outs[i]['xg_window'][other] for i in range(0,12,2))/6,
+            'dpts': mean, 'se': (sum((d-mean)**2 for d in diffs)/30)**.5, 'n': 6, 'context': ctx, 'source': 'live'}
+
+
+def _analyst_summary(outs, team):
+    other = coach.opp(team)
+    n = len(outs)
+    gf = [o['score'][team] for o in outs]; ga = [o['score'][other] for o in outs]
+    return {'exp_points': sum(_points(f,a) for f,a in zip(gf,ga))/n,
+            'win': sum(f>a for f,a in zip(gf,ga))/n, 'draw': sum(f==a for f,a in zip(gf,ga))/n,
+            'loss': sum(f<a for f,a in zip(gf,ga))/n, 'goals_for': sum(gf)/n, 'goals_against': sum(ga)/n,
+            'xg_for': sum(o['xg'][team] for o in outs)/n, 'xg_against': sum(o['xg'][other] for o in outs)/n,
+            'pillars': {k: sum(o['pillars'].get(k,0) for o in outs)/n for k in outs[0]['pillars']},
+            'card_plays': {cid: sum(p['card_id']==cid and p['team']==team for o in outs for p in o['card_plays'])
+                           for cid in {p['card_id'] for o in outs for p in o['card_plays'] if p['team']==team}}}
+
+
+@app.post('/api/analyst/test')
+def analyst_test(body: dict[str, Any]):
+    pid = _clean_player_id(body.get('player_id'))
+    if not pid:
+        raise HTTPException(400, 'player_id is required')
+    raw = dict(body.get('start_request') or {})
+    team = _team_id_http(raw.get('build_team', 'HOME'))
+    build = body.get('build') or {}
+    variants = body.get('variants') or []
+    if len(variants) > 3:
+        raise HTTPException(400, 'At most 3 variants per Analyst test')
+    prepared = []
+    for variant in [{}] + variants:
+        req = dict(raw)
+        req['build'] = dict(variant.get('build', build), hand=variant.get('hand', body.get('hand', [])), control='cpu', difficulty='hard')
+        req.pop('_build_prepared', None)
+        req = _prepare(req)
+        _build_call(_build_engine, req)
+        prepared.append(req)
+    save = str(body.get('save_id', raw.get('save_id', 'local'))); week = str(body.get('week', 0))
+    budget = bld.analyst_budget(build)
+    stress = body.get('mode') == 'stress'
+    cost = budget if stress else 1
+    stress_requests = body.get('start_requests') or [raw, raw, raw]
+    if stress and (not isinstance(stress_requests,list) or len(stress_requests)!=3):
+        raise HTTPException(400, 'Stress test requires three start_requests')
+    if stress:
+        for template in stress_requests:
+            _build_call(_build_engine, _prepare(dict(template, build=dict(build,hand=body.get('hand',[]),control='cpu'),build_team=team)))
+    used = v2db.analyst_take(pid, save, week, budget, cost)
+    if used is None:
+        raise HTTPException(429, 'Your Analyst has used every run for this week')
+    try:
+        if stress:
+            setups = [{}] + variants
+            jobs = [(stress_requests, v.get('build',build), v.get('hand',body.get('hand',[])), team,
+                     _lab_seed(int(raw.get('seed',0)),k)) for v in setups for k in range(16)]
+            runs = labsim.run_all(labsim.analyst_stress,jobs)
+            stress_summaries = []
+            for i in range(0,len(runs),16):
+                block = runs[i:i+16]
+                weeks = [{'week':w+1,'summary':_analyst_summary([run[w] for run in block],team)} for w in range(3)]
+                summary = _analyst_summary([out for run in block for out in run],team)
+                summary['total_exp_points'] = sum(w['summary']['exp_points'] for w in weeks)
+                stress_summaries.append({'summary':summary,'weeks':weeks})
+            return dict(stress_summaries[0], mode='stress', n=16, matches=48, runs_left=budget-used, runs_used=used,
+                        variants=[dict(label=v.get('label','Variant'),**s) for v,s in zip(variants,stress_summaries[1:])])
+        jobs = [(dict(req, seed=_lab_seed(int(raw.get('seed', 0)), k)), team) for req in prepared for k in range(16)]
+        outs = labsim.run_all(labsim.analyst_future, jobs)
+        summaries = [_analyst_summary(outs[i:i+16], team) for i in range(0,len(outs),16)]
+    except Exception:
+        v2db.analyst_refund(pid, save, week, cost)
+        raise
+    return {'runs_left': budget-used, 'runs_used': used, 'n': 16, 'summary': summaries[0],
+            'variants': [dict(label=v.get('label','Variant'), summary=s) for v,s in zip(variants,summaries[1:])]}
+
+
+_GHOST_RUN_LOCK = threading.Lock()
+
+def _ghost_identity(body):
+    pid = _clean_player_id(body.get('player_id'))
+    if not pid:
+        raise HTTPException(400, 'player_id is required')
+    return pid, str(body.get('manager_name') or 'Manager').strip()[:60] or 'Manager'
+
+
+def _ghost_snapshot(snapshot):
+    if not isinstance(snapshot, dict) or not snapshot.get('team'):
+        raise HTTPException(400, 'snapshot must contain team and build')
+    _build_call(bridge.build_team, snapshot['team'], 'HOME')
+    _build_call(bld.prepare_request, {'seed': 0, 'home_team': snapshot['team'], 'build': snapshot.get('build') or {}})
+    return snapshot
+
+
+@app.get('/api/ghost/today')
+def ghost_today(player_id: str):
+    pid, _ = _ghost_identity({'player_id': player_id})
+    day = _utc_day(); run = v2db.ghost_ranked(day,pid)
+    return {'day': day, 'server_time': time.time(), 'ranked_used': bool(run),
+            'ranked_match_ids': [r['match_id'] for r in json.loads(run['results_json'])] if run else [],
+            'pool_size': v2db.ghost_count(day), 'rules': {'ranked_runs_per_day': 1, 'opponents': 3}}
+
+
+@app.post('/api/ghost/submit')
+def ghost_submit(body: dict[str, Any]):
+    pid,name = _ghost_identity(body); snap = _ghost_snapshot(body.get('snapshot')); day = _utc_day()
+    v2db.ghost_put_entry(day,pid,name,snap)
+    return {'day': day, 'submitted': True}
+
+
+@app.get('/api/ghost/leaderboard')
+def ghost_leaderboard(day: str | None = None, player_id: str | None = None):
+    day = day or _utc_day(); rows = v2db.ghost_board(day)
+    return {'day': day, 'total': len(rows), 'entries': [{k:r[k] for k in ('manager_name','stars','points','gd','ts')} | {'me':r['player_id']==player_id} for r in rows]}
+
+
+@app.post('/api/ghost/run')
+def ghost_run(body: dict[str, Any]):
+    pid,name = _ghost_identity(body); snap = _ghost_snapshot(body.get('snapshot')); day = _utc_day()
+    from datetime import date, timedelta
+    days = [day, (date.fromisoformat(day)-timedelta(days=1)).isoformat()]
+    pool = v2db.ghost_pool(days,pid)
+    pool.sort(key=lambda r: hashlib.sha256(f"{day}:{pid}:{r['player_id']}".encode()).hexdigest())
+    opponents = [(r['manager_name'],json.loads(r['snapshot_json'])) for r in pool[:3]]
+    for fallback in body.get('fallback_opponents') or []:
+        if len(opponents)>=3: break
+        fs = _ghost_snapshot(fallback)
+        opponents.append((fallback.get('manager_name','Club ghost'),fs))
+    while len(opponents)<3:
+        opponents.append(('Practice club',snap))
+    requests = []
+    import copy
+    for i,(opp,other) in enumerate(opponents):
+        other = copy.deepcopy(other)
+        ids = {}
+        for p in list((other['team'].get('lineup') or {}).values()) + list(other['team'].get('bench') or []):
+            if p:
+                old = str(p['id']); ids[old] = f'ghost_away_{old}'; p['id'] = ids[old]
+        for pt in (other.get('build') or {}).get('partnerships') or []:
+            pt['members'] = [ids.get(str(m),str(m)) for m in pt['members']]
+        for roles in (other['team'].get('set_pieces'), (other.get('build') or {}).get('set_pieces')):
+            if roles:
+                for k,v in list(roles.items()):
+                    if isinstance(v,str): roles[k] = ids.get(v,v)
+                    elif isinstance(v,dict) and v.get('target_pid'):
+                        v['target_pid'] = ids.get(str(v['target_pid']),str(v['target_pid']))
+        other['team']['player_instructions'] = {ids.get(str(k),str(k)):v for k,v in (other['team'].get('player_instructions') or {}).items()}
+        seed = int(hashlib.sha256(f'{day}:{pid}:{i}'.encode()).hexdigest()[:12],16)
+        requests.append({'fixture_id': f'ghost:{day}:{pid}:{i}', 'save_id': f'ghost:{pid}', 'seed':seed,
+                         'home_team':snap['team'], 'away_team':other['team'],
+                         'builds':{'HOME':dict(snap.get('build') or {},control='cpu'), 'AWAY':dict(other.get('build') or {},control='cpu')}})
+    run_id = uuid.uuid4().hex
+    ranked = v2db.ghost_reserve(run_id,day,pid,name)
+    outs = batch_matches(BatchRequest(requests=requests,summary_only=True))['results']
+    results=[]
+    for (opp,_),out in zip(opponents,outs):
+        sc = out['full_time']['score']; f,a = sc['home'],sc['away']
+        results.append({'opponent':opp,'match_id':out['match_id'],'score':[f,a],'points':_points(f,a)})
+    points=sum(r['points'] for r in results); gd=sum(r['score'][0]-r['score'][1] for r in results)
+    stars=3 if points>=7 else 2 if points>=5 else 1 if points>=3 else 0
+    v2db.ghost_put_entry(day,pid,name,snap)
+    v2db.ghost_finish(run_id,points,stars,gd,results)
+    board=v2db.ghost_board(day)
+    rank=next((i+1 for i,r in enumerate(board) if r['player_id']==pid),None)
+    return {'day':day,'ranked':ranked,'practice':not ranked,'reason':None if ranked else 'Ranked run already used today',
+            'results':results,'points':points,'stars':stars,'rank':rank,'total':len(board)}
+
+
 @app.get("/")
 def index() -> FileResponse:
     return FileResponse(ROOT / "web" / "touchline.html")

@@ -189,7 +189,7 @@ def test_one_click_action_applies_at_presented_second(match):
         assert pg.evaluate("isLiveMatch()"), _st(pg)
         presented = pg.evaluate("Math.floor(CM._presS())")
         with pg.expect_response(lambda r: "/tactics" in r.url and r.request.method == "POST") as ri:
-            pg.evaluate("setTactic('pressingIntensity', S.current.tactics.pressingIntensity === 'Aggressive' ? 'Balanced' : 'Aggressive')")
+            pg.evaluate("setTactic('pressingIntensity', S.current.tactics.pressingIntensity === 'Aggressive' ? 'Selective' : 'Aggressive')")
     resp = ri.value
     body = json.loads(resp.request.post_data)
     out = resp.json()

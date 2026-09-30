@@ -561,10 +561,11 @@ const RIG = { x: 52.5, mode: "ball", smooth: RUNTIME_DEFAULTS.smooth, lead: 0,
               manualX: 52.5, zoom: RUNTIME_DEFAULTS.zoom,
               zoomTarget: RUNTIME_DEFAULTS.zoom, targetX: 52.5 };
 let TRAVEL = 0;
+let VIEW_PANY = 0;                      // vertical screen framing (backing px); embed.js only — standalone never assigns (stays 0)
 function sproj3(wx, wy, wz) {           // world → screen (rig-translated + zoom)
   const p = fproj3(wx - TRAVEL, wy, wz);
   return { x: (p.x - VIEW.w / 2) * (RIG.zoom * RES) + cv.width / 2,
-           y: (p.y - VIEW.h / 2) * (RIG.zoom * RES) + cv.height / 2, d: p.d };
+           y: (p.y - VIEW.h / 2) * (RIG.zoom * RES) + cv.height / 2 + VIEW_PANY, d: p.d };
 }
 function sproj(wx, wz) { return sproj3(wx, 0, wz); }
 // BILLBOARD PERSPECTIVE COMPRESSION (sprites only — world projection is
@@ -802,7 +803,7 @@ function drawGroundPerspective() {
   const tx = (x) => (x + TRAVEL - APRON.x0) * REF_ZOOM;   // shifted → actual world
   const tz = (z) => (z - APRON.y0) * REF_ZOOM;
   const rowWorld = (sy) => {
-    const vy = (sy - cv.height / 2) / (RIG.zoom * RES) + VIEW.h / 2;
+    const vy = (sy - cv.height / 2 - VIEW_PANY) / (RIG.zoom * RES) + VIEW.h / 2;
     const qy = (VIEW.h / 2 - vy) / PROJ.fpx;
     const dy = PROJ.f.y + qy * PROJ.u.y;
     if (dy >= -1e-6) return null;
