@@ -196,9 +196,9 @@
     "push": 0
    },
    "cpu": {
-    "msPerFrame": 1.9681,
-    "jolt": 1.1395,
-    "controllers": 0.8285
+    "msPerFrame": 1.9602,
+    "jolt": 1.1453,
+    "controllers": 0.8149
    },
    "repeatHashes": [
     "23125e2a",
@@ -421,9 +421,9 @@
     "push": 240
    },
    "cpu": {
-    "msPerFrame": 1.7816,
-    "jolt": 1.1731,
-    "controllers": 0.6085
+    "msPerFrame": 1.7002,
+    "jolt": 1.115,
+    "controllers": 0.5853
    },
    "repeatHashes": [
     "a513500d",
@@ -595,9 +595,9 @@
     "push": 240
    },
    "cpu": {
-    "msPerFrame": 1.2796,
-    "jolt": 1.107,
-    "controllers": 0.1727
+    "msPerFrame": 1.2722,
+    "jolt": 1.1029,
+    "controllers": 0.1693
    },
    "repeatHashes": [
     "b18efb3b",
@@ -850,9 +850,9 @@
     "push": 240
    },
    "cpu": {
-    "msPerFrame": 1.9055,
-    "jolt": 1.205,
-    "controllers": 0.7006
+    "msPerFrame": 1.9496,
+    "jolt": 1.2296,
+    "controllers": 0.72
    },
    "repeatHashes": [
     "9c462c1d",
@@ -865,9 +865,9 @@
    "test": "D5_shoulder_hard",
    "group": "D contact",
    "title": "D5 — hard shoulder: A is pushed toward his right 110 N·s into B standing 85 cm to his right",
-   "hash": "f0c3013",
-   "hashA": "233a9f7d",
-   "hashB": "77a96d03",
+   "hash": "8af3e0d1",
+   "hashA": "b6f088aa",
+   "hashB": "b3a6dc42",
    "nan": false,
    "audit": {
     "teleports": 0,
@@ -937,8 +937,8 @@
       "first": 2.4
      },
      "A.thigh_R ↔ B.foot_R": {
-      "manifoldSteps": 343,
-      "touchSteps": 204,
+      "manifoldSteps": 312,
+      "touchSteps": 133,
       "maxMm": 6.71,
       "first": 2.475
      },
@@ -949,8 +949,8 @@
       "first": 2.4917
      },
      "A.pelvis ↔ B.foot_R": {
-      "manifoldSteps": 338,
-      "touchSteps": 179,
+      "manifoldSteps": 592,
+      "touchSteps": 466,
       "maxMm": 8.43,
       "first": 2.5375
      },
@@ -967,7 +967,7 @@
       "first": 2.6583
      },
      "A.upperArm_R ↔ B.shin_R": {
-      "manifoldSteps": 118,
+      "manifoldSteps": 117,
       "touchSteps": 38,
       "maxMm": 0.3,
       "first": 3.075
@@ -979,16 +979,10 @@
       "first": 3.0833
      },
      "A.abdomen ↔ B.foot_R": {
-      "manifoldSteps": 78,
-      "touchSteps": 0,
-      "maxMm": -2.64,
+      "manifoldSteps": 336,
+      "touchSteps": 157,
+      "maxMm": 1.78,
       "first": 3.3917
-     },
-     "A.foreArm_R ↔ B.foot_R": {
-      "manifoldSteps": 179,
-      "touchSteps": 86,
-      "maxMm": 0.4,
-      "first": 3.8083
      }
     },
     "invariant": {
@@ -1086,7 +1080,7 @@
     "refused": "best foothold leaves ξ 21.6 cm outside the new support",
     "request": null,
     "maxRootResN": 1.39,
-    "maxTurfPenMm": 4.4,
+    "maxTurfPenMm": 5,
     "maxJointSepMm": 0.97,
     "trunkMaxDeg": 99.4,
     "events": [
@@ -1126,14 +1120,14 @@
     "push": 240
    },
    "cpu": {
-    "msPerFrame": 1.5605,
-    "jolt": 1.3503,
-    "controllers": 0.2102
+    "msPerFrame": 1.6083,
+    "jolt": 1.3917,
+    "controllers": 0.2166
    },
    "repeatHashes": [
-    "f0c3013",
-    "f0c3013",
-    "f0c3013"
+    "8af3e0d1",
+    "8af3e0d1",
+    "8af3e0d1"
    ],
    "deterministic": true
   },
@@ -1313,9 +1307,9 @@
     "push": 0
    },
    "cpu": {
-    "msPerFrame": 1.3484,
-    "jolt": 1.1922,
-    "controllers": 0.1562
+    "msPerFrame": 1.36,
+    "jolt": 1.1972,
+    "controllers": 0.1628
    },
    "repeatHashes": [
     "a66d05b3",
@@ -1390,9 +1384,9 @@
     "push": 0
    },
    "cpu": {
-    "msPerFrame": 1.2679,
-    "jolt": 1.1007,
-    "controllers": 0.1672
+    "msPerFrame": 1.2553,
+    "jolt": 1.096,
+    "controllers": 0.1593
    },
    "repeatHashes": [
     "7415dbc1",

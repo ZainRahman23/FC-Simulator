@@ -16,7 +16,7 @@
 //
 // Deterministic: only + − × ÷ √ and the pc_math deterministic trig / exp are used for anything that reaches a target or a decision.
 import { V, Q, rad, deg, datan2, dacos, dexp, dsin } from "./pc_math.js";
-import { csOfRel, relOf, MOTOR_REGIONS, REGION_OF, motorProfile, paramTarget } from "./pc_control.js";
+import { csOfRel, relOf, MOTOR_REGIONS, REGION_OF, motorProfile, paramTarget, minjerk } from "./pc_control.js";
 import { polyDist, polyClamp, polyNearest } from "./pc_sense.js";
 
 // ── motor strength, revised from Gate B (review items M1/M2/M3) ─────────────────────────────────────────────────────────────────────
@@ -71,7 +71,8 @@ export const BAL = {
   swingKpDrop: 0.5,    // GATE C2: a swing-controlled leg runs at (1 − 0.5) × stance stiffness — compliant enough that an obstruction wins   // released, but both feet loaded + flat-supported and ξ ≥ 3 cm inside for 100 ms → balance re-engages (ramped back)
   stepTime: 0.3, stepReach: 0.55,
   armShare: 0.5, armUse: 0.8, armGuardDeg: 15,
-  protK: 0.6, protKLeg: 0.45,                    // GATE C5 protective response: stiffness of the protective arms / neck / spine and legs (fraction of normal)   // GATE C4 reactive arms: the arms' share of the hip-strategy moment, the fraction of their shoulder torque they may use, range-of-motion guard       // C1 labelling only: a single step of ≤ 0.3 s could capture ξ up to ~0.55 m beyond the support edge
+  protK: 0.6, protKLeg: 0.45, protRestV: 0.3, protFadeSteps: 120,   // C5: bracing lasts while any grounded segment still moves (≥ protRestV m/s), then fades to tone over 120 steps (0.5 s at 240 Hz)
+                     // GATE C5 protective response: stiffness of the protective arms / neck / spine and legs (fraction of normal)   // GATE C4 reactive arms: the arms' share of the hip-strategy moment, the fraction of their shoulder torque they may use, range-of-motion guard       // C1 labelling only: a single step of ≤ 0.3 s could capture ξ up to ~0.55 m beyond the support edge
 };
 const G = 9.81, GV = [0, -9.81, 0];
 // GATE C5 protective targets per fall direction (joint parameters in degrees, the Gate A convention: shoulder Y− = flexion, shoulder Z
@@ -388,15 +389,25 @@ export class BalanceController {
       // forward → arms reach forward-down with flexed elbows, knees give; backward → chin tucked, trunk curled, hips/knees flex (sit), arms
       // back; sideways → the fall-side arm abducts toward the turf. Blended per direction weight, ramped in over the release ramp (≈ the
       // 0.1 s protective reaction latency), at moderate stiffness (protK) so the arms brace but yield. Physics decides where it lands.
+      // Protective bracing is a reaction to the FALL: it is held while any segment of the grounded body still moves, then fades to plain
+      // tone with the direction frozen from that moment — the bracing arm otherwise stayed raised while lying on the turf (visual finding
+      // 2026-09-30, PR70). (Freezing the direction already at the first ground contact changed the roll-back of sit-down falls: PB60 head
+      // impact 0.15 → 0.33 m/s — rejected.)
       if (this.opts.protective) { let d = [o.xi[0] - c[0], o.xi[1] - c[2]]; const dn = Math.hypot(d[0], d[1]); if (dn < 0.02) d = [o.vcom[0], o.vcom[2]];
         const n2 = Math.hypot(d[0], d[1]) || 1, f = (d[0] * hd[0] + d[1] * hd[2]) / n2, rt = (d[0] * lat[0] + d[1] * lat[2]) / n2;
-        const wts = { F: Math.max(0, f), B: Math.max(0, -f), R: Math.max(0, rt), L: Math.max(0, -rt) }, tgtOf = (dir, k) => { const p = PROT[dir][spec.joints[k].name]; return p ? paramTarget(spec.joints[k], p) : nominal[k]; };
-        this.protInfo = { dir: wts, ramp: k };
+        let wts = { F: Math.max(0, f), B: Math.max(0, -f), R: Math.max(0, rt), L: Math.max(0, -rt) };
+        if (cls.state === "GROUNDED" && !this.protGround) this.protGround = { n: this.nObs };
+        // at rest = EVERY segment slower than protRestV (the COM alone stops when a sit-down fall's seat lands while the trunk and head are
+        // still rolling back — fading then untucked the chin: PB60 head impact 0.15 → 0.33 m/s)
+        if (this.protGround && this.protRest == null && Math.max(...S.map(b => Math.hypot(b.v[0], b.v[1], b.v[2]))) < BAL.protRestV) { this.protRest = this.nObs; this.protRestWts = wts; }
+        if (this.protRest != null) wts = this.protRestWts;
+        const fade = this.protRest == null ? 1 : 1 - minjerk((this.nObs - this.protRest) / BAL.protFadeSteps), kP = k * fade, tgtOf = (dir, k) => { const p = PROT[dir][spec.joints[k].name]; return p ? paramTarget(spec.joints[k], p) : nominal[k]; };
+        this.protInfo = { dir: wts, ramp: k, fade };
         spec.joints.forEach((j, kk) => { if (!PROT_J.has(j.name)) return; let acc = null, W0 = 0;
           for (const dir of ["F", "B", "R", "L"]) { const w = wts[dir]; if (w < 1e-3) continue; const t = tgtOf(dir, kk); if (acc == null) { acc = t; W0 = w; continue; }
             const a = w / (W0 + w); acc = j.type === "hinge" ? acc + (t - acc) * a : nlerpQ(acc, t, a); W0 += w; }
-          if (acc == null) return; nominal[kk] = j.type === "hinge" ? nominal[kk] + (acc - nominal[kk]) * k : nlerpQ(nominal[kk], acc, k);
-          const pk = /^(hip|knee|ankle)_/.test(j.name) ? BAL.protKLeg : BAL.protK; motor[kk].kp *= pk / relK; motor[kk].kd *= Math.sqrt(pk / relK); }); } }
+          if (acc == null) return; nominal[kk] = j.type === "hinge" ? nominal[kk] + (acc - nominal[kk]) * kP : nlerpQ(nominal[kk], acc, kP);
+          const pk = /^(hip|knee|ankle)_/.test(j.name) ? BAL.protKLeg : BAL.protK, sk = 1 + (pk / relK - 1) * fade; motor[kk].kp *= sk; motor[kk].kd *= Math.sqrt(sk); }); } }
     // ── torques → target offsets in each joint's own constraint space (equilibrium-point shift Δθ = τ / kp) ──
     const final = nominal.map((x, k) => Array.isArray(x) ? x.slice() : x);
     spec.joints.forEach((j, k) => { const Rc = S[j.childIndex].rot, kp = motor[k].kp;

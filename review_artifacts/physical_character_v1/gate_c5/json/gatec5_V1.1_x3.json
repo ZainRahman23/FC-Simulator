@@ -44,7 +44,7 @@
     "deterministic": true
    },
    "prot": {
-    "hash": "5dc8ecce",
+    "hash": "4ec30b03",
     "outcome": "FELL",
     "m": {
      "tRelease": 1.762,
@@ -55,7 +55,8 @@
       "foreArm_R",
       "thigh_R",
       "thigh_L",
-      "head"
+      "head",
+      "pelvis"
      ],
      "hands": {
       "t": 3.167,
@@ -69,7 +70,12 @@
       "speed": 0.15,
       "vy": -0.01
      },
-     "pelvis": null,
+     "pelvis": {
+      "t": 4.775,
+      "dtFromRelease": 3.013,
+      "speed": 0.04,
+      "vy": -0.03
+     },
      "chest": null,
      "handsBeforeHead": true,
      "maxJointSepMm": 0.6
@@ -115,7 +121,7 @@
     "deterministic": true
    },
    "prot": {
-    "hash": "55a3be58",
+    "hash": "eee55df7",
     "outcome": "FELL",
     "m": {
      "tRelease": 1.1,
@@ -126,7 +132,8 @@
       "foreArm_L",
       "thigh_L",
       "thigh_R",
-      "head"
+      "head",
+      "abdomen"
      ],
      "hands": {
       "t": 2.192,
@@ -140,8 +147,18 @@
       "speed": 0.12,
       "vy": -0.01
      },
-     "pelvis": null,
-     "chest": null,
+     "pelvis": {
+      "t": 4.662,
+      "dtFromRelease": 3.562,
+      "speed": 0.01,
+      "vy": 0
+     },
+     "chest": {
+      "t": 3.742,
+      "dtFromRelease": 2.642,
+      "speed": 0.02,
+      "vy": -0.02
+     },
      "handsBeforeHead": true,
      "maxJointSepMm": 0.7
     },
@@ -189,7 +206,7 @@
     "deterministic": true
    },
    "prot": {
-    "hash": "878619e6",
+    "hash": "a48a582c",
     "outcome": "FELL",
     "m": {
      "tRelease": 1.358,
@@ -274,7 +291,7 @@
     "deterministic": true
    },
    "prot": {
-    "hash": "845bab4c",
+    "hash": "abf4369c",
     "outcome": "FELL",
     "m": {
      "tRelease": 1.096,
@@ -366,7 +383,7 @@
     "deterministic": true
    },
    "prot": {
-    "hash": "11cfdcf8",
+    "hash": "d8b6c979",
     "outcome": "FELL",
     "m": {
      "tRelease": 1.592,
@@ -458,7 +475,7 @@
     "deterministic": true
    },
    "prot": {
-    "hash": "d0a5e8c4",
+    "hash": "2020259a",
     "outcome": "FELL",
     "m": {
      "tRelease": 1.113,
@@ -538,7 +555,7 @@
     "deterministic": true
    },
    "prot": {
-    "hash": "c6195a61",
+    "hash": "1456f919",
     "outcome": "FELL",
     "m": {
      "tRelease": 1.6,
@@ -629,7 +646,7 @@
     "deterministic": true
    },
    "prot": {
-    "hash": "ba83d149",
+    "hash": "8a9ee5cc",
     "outcome": "STEPPED_FELL",
     "m": {
      "tRelease": 1.538,
@@ -721,7 +738,7 @@
     "deterministic": true
    },
    "prot": {
-    "hash": "64701e5",
+    "hash": "ff8e5b3a",
     "outcome": "STEPPED_FELL",
     "m": {
      "tRelease": 1.642,
@@ -747,7 +764,12 @@
       "speed": 0.3,
       "vy": -0.01
      },
-     "pelvis": null,
+     "pelvis": {
+      "t": 4.142,
+      "dtFromRelease": 2.5,
+      "speed": 0.06,
+      "vy": -0.05
+     },
      "chest": {
       "t": 3.492,
       "dtFromRelease": 1.85,
@@ -890,7 +912,7 @@
     "deterministic": true
    },
    "prot": {
-    "hash": "f1e2b521",
+    "hash": "977e3723",
     "outcome": "FELL_NO_STEP",
     "m": {
      "tRelease": 1.438,
