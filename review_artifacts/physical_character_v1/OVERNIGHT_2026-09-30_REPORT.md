@@ -324,7 +324,7 @@ That is well inside a 16.7 ms frame. All runs were sequential, one headless brow
 | evidence | result |
 |---|---|
 | ×3 reruns | every suite reproduces ×3: C3 29/29, C4 23 pairs, C5 22 runs, D 7/7 with protective off and 7/7 on |
-| Browser = Node | promotion 38/38, C3 29/29, D 7/7, cross-suite smoke 8/8 |
+| Browser = Node | promotion 38/38, C3 29/29, D 7/7, C4 (arms on) + C5 (protective on) 34/34, cross-suite smoke 8/8 |
 
 The only nondeterminism risk remains the one noted at Gate A: cross-*browser* determinism is inferred (single-thread, no-SIMD WASM), and Chrome = Node is measured.
 
