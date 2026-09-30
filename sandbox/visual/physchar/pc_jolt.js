@@ -38,15 +38,17 @@ export class JoltCharacterWorld {
     // the turf: a static half-space approximated by a thick box whose top face is y = 0
     const gs = new J.BodyCreationSettings(new J.BoxShape(new J.Vec3(50, 1, 50), 0.0, null), new J.RVec3(0, -1, 0), new J.Quat(0, 0, 0, 1), J.EMotionType_Static, L_STATIC);
     gs.mUserData = GROUND_UD; gs.mFriction = 0.5; gs.mRestitution = 0; this.ground = this.bi.CreateBody(gs); this.bi.AddBody(this.ground.GetID(), J.EActivation_DontActivate); J.destroy(gs);
-    if (this.plateFrom != null) { const M = 1e8, ps = new J.BodyCreationSettings(new J.BoxShape(new J.Vec3(50, 1, 50), 0.0, null), new J.RVec3(0, -1, 0), new J.Quat(0, 0, 0, 1), J.EMotionType_Dynamic, 3);
+    this._addPlate = () => { if (this.plateFrom == null || this.plate) return; const M = 1e8, ps = new J.BodyCreationSettings(new J.BoxShape(new J.Vec3(50, 1, 50), 0.0, null), new J.RVec3(0, -1, 0), new J.Quat(0, 0, 0, 1), J.EMotionType_Dynamic, 3);
       ps.mOverrideMassProperties = J.EOverrideMassProperties_MassAndInertiaProvided; ps.mMassPropertiesOverride.mMass = M; const I = J.Mat44.prototype.sIdentity();
       I.SetAxisX(new J.Vec3(M * 1e3, 0, 0)); I.SetAxisY(new J.Vec3(0, M * 1e3, 0)); I.SetAxisZ(new J.Vec3(0, 0, M * 1e3)); ps.mMassPropertiesOverride.mInertia = I;
       ps.mGravityFactor = 0; ps.mLinearDamping = 0; ps.mAngularDamping = 0; ps.mAllowSleeping = false; ps.mUserData = GROUND_UD; ps.mFriction = 0.5; ps.mRestitution = 0;
-      this.plate = this.bi.CreateBody(ps); this.bi.AddBody(this.plate.GetID(), J.EActivation_Activate); J.destroy(ps); this.plateMass = M; }
+      this.plate = this.bi.CreateBody(ps); this.bi.AddBody(this.plate.GetID(), J.EActivation_Activate); J.destroy(ps); this.plateMass = M; };
+    if (!this.cfg.plateLate) this._addPlate();
     // self-collision filter (ragdoll pattern): one group, sub-group = body index; the caller decides which pairs are disabled
     this.gft = new J.GroupFilterTable(spec.bodies.length);
     this.bodies = []; this.shapeCom = [];
     for (const b of spec.bodies) this._addBody(b);
+    if (this.cfg.plateLate) this._addPlate();   // (experiment: the plate created AFTER the character's bodies — body-ID order in the contact pair)
     this.cons = []; for (const j of spec.joints) this._addJoint(j);
     this.contacts = []; this._listen();
   }
@@ -188,7 +190,7 @@ export class JoltCharacterWorld {
     const ss = this._shapeSettings(o.shape), r = ss.Create(); if (r.HasError()) throw new Error("obstacle: " + r.GetError().c_str());
     const bcs = new J.BodyCreationSettings(r.Get(), new J.RVec3(o.pos[0], o.pos[1], o.pos[2]), new J.Quat(0, 0, 0, 1), J.EMotionType_Dynamic, L_MOVING);
     bcs.mOverrideMassProperties = J.EOverrideMassProperties_CalculateInertia; bcs.mMassPropertiesOverride.mMass = o.mass;
-    bcs.mGravityFactor = 0; bcs.mFriction = 0.5; bcs.mRestitution = 0; bcs.mAllowSleeping = false; bcs.mUserData = OBST_UD + k;
+    bcs.mGravityFactor = 0; bcs.mFriction = 0.5; bcs.mRestitution = 0; bcs.mAllowSleeping = false; bcs.mUserData = o.asTurf ? GROUND_UD : OBST_UD + k;   // (o.asTurf, G1a: a raised piece of turf whose mount measures the force on it — its contacts report as turf)
     const body = this.bi.CreateBody(bcs); this.bi.AddBody(body.GetID(), J.EActivation_Activate); J.destroy(bcs);
     const cs = new J.SixDOFConstraintSettings(); cs.mSpace = J.EConstraintSpace_WorldSpace; cs.mPosition1 = cs.mPosition2 = new J.RVec3(o.pos[0], o.pos[1], o.pos[2]);
     cs.mAxisX1 = cs.mAxisX2 = new J.Vec3(1, 0, 0); cs.mAxisY1 = cs.mAxisY2 = new J.Vec3(0, 1, 0);

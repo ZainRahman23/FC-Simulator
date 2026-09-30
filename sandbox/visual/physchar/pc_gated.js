@@ -18,6 +18,7 @@ import { BalanceController, budgetLimits, controllerProfile } from "./pc_balance
 import { CorrectiveStepper } from "./pc_step.js";
 import { SupportSequencer } from "./pc_support.js";
 import { D6X_VARIANTS } from "./pc_d6x.js";
+import { LocoController } from "./pc_loco.js";
 
 // ── THE REFERENCE SLIDE as JOINT TARGETS (Reference Tackle V1, reference-tackle/sandbox/visual/reftackle/authoring.js, the tackler's measured
 // keys f92–f114, 60 Hz): per channel [frame, degrees]. Only JOINT angles are used — the pelvis orientation, the root path and the plants of
@@ -153,10 +154,13 @@ export function runD(J, spec, key, opts) {
   for (const [a, b] of disabledPairs(spec)) { w.disablePair(a, b); w.disablePair(a + nb, b + nb); }         // each character's own filtered pairs; A ↔ B all collide
   const exB = TST.Bctrl ? Object.assign({}, opts.ctrlExtraB || opts.ctrlExtra, TST.Bctrl) : opts.ctrlExtraB || opts.ctrlExtra;   // D6X: B's controller diagnostic
   const A = new Agent("A", spec, 0, 0, TST.A, opts.ctrlExtraA || opts.ctrlExtra, opts.poses), B = new Agent("B", specB, nb, nj, TST.B_cfg || {}, exB), agents = [A, B];
+  // (G1a S6, opts.Bloco — EXPERIMENT: B runs the NEW locomotion stack (pc_loco: gait state, viability monitor, arbiter; its own observation delays)
+  // in place of C1 + C3. The default path is untouched.)
+  if (opts.Bloco) { B.loco = new LocoController(specB, B.P, { ...opts.Bloco, ctrl: { ...(exB || {}), ...(opts.Bloco.ctrl || {}) } }, T.hz); B.ctrl = B.loco.ctrl; B.stepper = B.loco.stepper; B.seq = null; }
   if (w.support || w.cons.length !== 2 * nj || w.ps.GetNumBodies() !== 2 * nb + 1 + (w.plate ? 1 : 0)) throw new Error("D world is not clean");   // (+ the measurement force plate, opts.world.plateFrom)
   // B's initial standing state: the nominal stance (default), or (D6X) another stance width / weight share / facing — see standState
   const stB = TST.Bstand || TST.Byaw ? standState(B, TST.Bstand || {}, TST.Byaw || 0) : null, SB0 = stB ? stB.S : B.P.N.S;
-  if (stB) { B.ctrl.hPelvis = stB.hPelvis; if (B.stepper) B.stepper.hNomPelvis = stB.hPelvis; if (stB.xiShift) { const xs = stB.xiShift; B.ctrl.opts.xiShift = () => xs; } }
+  if (stB) { B.ctrl.hPelvis = stB.hPelvis; if (B.stepper) B.stepper.hNomPelvis = stB.hPelvis; if (B.loco) B.loco.tool.hNomPelvis = stB.hPelvis; if (stB.xiShift) { const xs = stB.xiShift; B.ctrl.opts.xiShift = () => xs; } }
   for (const ag of agents) { ag.ctrl.gain.forEach((gn, k) => w.setMotor(ag.k0 + k, { kp: gn.kp, kd: gn.kdStance, tau: 1 })); if (!ag.track) (ag === B ? SB0 : ag.P.N.S).forEach((s, i) => w.setPose(ag.i0 + i, s.pos, s.rot)); }
   // the SLIDER's initial condition (t = 0 only, like Gate A's drops): the reference pose at f0 (forward kinematics of its joint targets), facing
   // the slide direction (+x), reclined / rolled as the reference pelvis at f0, its lowest point `clear` above the turf, its LEAD (right) boot
@@ -172,12 +176,14 @@ export function runD(J, spec, key, opts) {
     initInfo = { leadBootFrontX: +(front + shift[0]).toFixed(3), bLeftBootX: +(bL[0]).toFixed(3), pelvis: S[0].pos.map(v => +v.toFixed(3)), lowestY: I.clear }; }
   const pu = TST.A.push ? { ...TST.A.push, n0: Math.round(TST.A.push.at * T.hz), n1: Math.round((TST.A.push.at + TST.A.push.dur) * T.hz), J: V.sc(DIR[TST.A.push.dir], TST.A.push.Ns) } : null;
   for (const ag of agents) { ag.states = ag.read(w); ag.obs = ag.sensor.update(0, dt, ag.states, [], { L: [0, 0, 0], R: [0, 0, 0] }, null); ag.prev = ag.states; }
-  if (TST.Bdelay) { B.delaySteps = Math.round(TST.Bdelay * T.hz); B.buf = [B.obs]; }   // D6X: B's sensing delay, as the C1 / C3 delay tests (observation buffer)
+  if (TST.Bdelay && !B.loco) { B.delaySteps = Math.round(TST.Bdelay * T.hz); B.buf = [B.obs]; }   // D6X: B's sensing delay, as the C1 / C3 delay tests (observation buffer)
   const recs = [], contactLog = []; let h = 2166136261, hA = 2166136261, hB = 2166136261, cpuJ = 0, cpuC = 0, nan = false; const now = () => (typeof performance !== "undefined" ? performance.now() : 0);
   const nm = (i) => i < 0 ? (i === -1 ? "turf" : "obstacle") : (i < nb ? "A." : "B.") + world.bodies[i].name;
   for (let n = 1; n <= steps; n++) {
     const t0 = now(), U = {};
-    for (const ag of agents) { const o = ag.delaySteps ? ag.buf[Math.max(0, ag.buf.length - 1 - ag.delaySteps)] : ag.obs; let plan = null;   // (D6X Bdelay: B's controller sees a delayed observation)
+    for (const ag of agents) { if (ag.loco) { const u = ag.loco.control(ag.obs, { dt, n, qCur: (k) => ag.spec.joints[k].type === "hinge" ? w.hingeAngle(ag.k0 + k) : w.sixdofRot(ag.k0 + k) }); U[ag.name] = u; ag.plan = u.plan; ag.caps = [];
+        for (let k = 0; k < nj; k++) { const kk = ag.k0 + k; w.setJointTarget(kk, u.final[k], u.vel[k]); w.updateMotor(kk, { kp: u.motor[k].kp, kd: u.motor[k].kd, lo: u.limits[k].lo, hi: u.limits[k].hi }); ag.caps.push(u.limits[k]); } continue; }
+      const o = ag.delaySteps ? ag.buf[Math.max(0, ag.buf.length - 1 - ag.delaySteps)] : ag.obs; let plan = null;   // (D6X Bdelay: B's controller sees a delayed observation)
       if (ag.track) { const f = ag.track.f0 + Math.min(ag.track.f1 - ag.track.f0, n * dt * 60); ag.ctrl.P = { ...ag.P, N: { ...ag.P.N, T: slideTargets(ag.spec, f, TST.A.leadMod) } }; }
       else plan = ag.seq ? ag.seq.update(o) : ag.stepper ? ag.stepper.update(o) : null;
       ag.ctrl.plan = plan; ag.plan = plan; const u = ag.ctrl.update(o); U[ag.name] = u; ag.caps = [];
@@ -185,7 +191,15 @@ export function runD(J, spec, key, opts) {
         if (j.type === "hinge") { w.setJointTarget(kk, u.final[k], vel); w.updateMotor(kk, { kp: m.kp, kd: m.kd, lo: m.lo, hi: m.hi }); ag.caps.push({ lo: m.lo, hi: m.hi }); }
         else { w.setJointTarget(kk, u.final[k], vel); const b = budgetLimits(m, w.sixdofRot(kk), u.final[k]); w.updateMotor(kk, { kp: m.kp, kd: m.kd, lo: b.lo, hi: b.hi }); ag.caps.push(b); } } }
     let ext = null; if (pu && n > pu.n0 && n <= pu.n1) { const Js = V.sc(pu.J, 1 / (pu.n1 - pu.n0)), at = A.prev[0].com.slice(); w.applyImpulse(0, Js, at); ext = { J: Js, at }; }
-    const t1 = now(); w.step(dt, opts.coll || T.coll); const t2 = now(); cpuC += t1 - t0; cpuJ += t2 - t1;   // opts.coll: EXPERIMENTS only (collision sub-steps)
+    const t1 = now(); if (!(opts.sub > 1)) w.step(dt, opts.coll || T.coll); else {
+      // (G1a S10, opts.sub — EXPERIMENT: the physics at sub × 240 Hz under the same 240 Hz control; contacts and constraint impulses of the
+      // sub-steps are accumulated so the sensors see this control step's totals, exactly as runG1a does)
+      const nJ = w.cons.length, Lp = [], Lm = []; let C = [];
+      for (let s = 0; s < opts.sub; s++) { w.step(dt / opts.sub, opts.coll || T.coll); C = C.concat(w.contacts);
+        for (let k = 0; k < nJ; k++) { const l = w.jointLambdaPosition(k), m = w.motorLambda(k); Lp[k] = s ? V.add(Lp[k], l) : l; Lm[k] = s ? (typeof m === "number" ? Lm[k] + m : V.add(Lm[k], m)) : m; } }
+      w.contacts = C; w.jointLambdaPosition = (k) => Lp[k]; w.motorLambda = (k) => Lm[k]; }
+    const t2 = now(); cpuC += t1 - t0; cpuJ += t2 - t1;   // opts.coll: EXPERIMENTS only (collision sub-steps)
+    for (const ag of agents) if (ag.loco) ag.loco.arb.realize(ag.spec.joints.map((j, k) => w.motorLambda(ag.k0 + k)), dt);
     for (const ag of agents) { ag.prev = ag.states; ag.states = ag.read(w); const cts = w.contacts.map(c => ag.view(c));
       ag.obs = ag.sensor.update(n, dt, ag.states, cts, { L: w.jointLambdaPosition(ag.k0 + ag.aL), R: w.jointLambdaPosition(ag.k0 + ag.aR) }, ag === A ? ext : null);
       if (ag.delaySteps) { ag.buf.push(ag.obs); if (ag.buf.length > ag.delaySteps + 2) ag.buf.shift(); }
@@ -214,6 +228,7 @@ export function runD(J, spec, key, opts) {
     recs.push(rec);
     // (MEASUREMENT hook, read-only: the D6 diagnostic reads joint / motor / contact state here; it must not act on the world)
     if (opts.onStep) opts.onStep({ n, t: n * dt, dt, w, A, B, U, nb, nj, ext, rec });
+    if (opts.sub > 1) { delete w.jointLambdaPosition; delete w.motorLambda; }
   }
   const audit = Object.assign({}, w.audit), support = !!w.support; w.destroy();
   return summarizeD(spec, world, key, TST, T, recs, contactLog, { initInfo, hash: (h >>> 0).toString(16), hashA: (hA >>> 0).toString(16), hashB: (hB >>> 0).toString(16), nan, audit, support, cpuJ, cpuC, steps, agents, pu });

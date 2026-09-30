@@ -12,6 +12,9 @@
 import { V, Q, dacos } from "./pc_math.js";
 
 export const SENSE = {
+  // G1a: a turf contact can SUPPORT the foot only if the vertical load lies inside its friction cone — |n_y| ≥ 1 / √(1 + μ²) (μ 0.5 → 26.6°).
+  // A steeper contact (a raised patch's vertical face or rounded edge) is reported as an EDGE contact — an obstruction — not as touching,
+  // support region or friction evidence. (Flat turf: n_y = 1, so every approved gate is unaffected.)
   touchDepth: -0.0005,        // a manifold point counts as touching when its penetration depth > −0.5 mm (speculative contacts excluded)
   loadOn: 40, loadOff: 25,    // N: a touching foot is LOADED above loadOn, UNLOADED below loadOff (hysteresis)
   slipOn: 0.03, slipOff: 0.012, slipOnSteps: 2, slipOffSteps: 6,   // m/s: windowed sliding speed of the sole while loaded
@@ -26,10 +29,12 @@ const hull2 = (P) => { const p = P.map(q => [q[0], q[2]]).sort((a, b) => a[0] - 
   for (let i = p.length - 1; i >= 0; i--) { const q = p[i]; while (up.length >= 2 && cr(up[up.length - 2], up[up.length - 1], q) <= 0) up.pop(); up.push(q); }
   return lo.slice(0, -1).concat(up.slice(0, -1)); };
 // signed distance of a ground point x = [x, z] to a convex polygon (counter-clockwise): > 0 inside; −1e3 if the polygon is degenerate
-export function polyDist(poly, x) { if (!poly || poly.length < 3) return -1e3; let inside = true, dmin = 1e9, near = null;
-  for (let i = 0; i < poly.length; i++) { const a = poly[i], b = poly[(i + 1) % poly.length], e = [b[0] - a[0], b[1] - a[1]], w = [x[0] - a[0], x[1] - a[1]];
-    const t = Math.max(0, Math.min(1, (w[0] * e[0] + w[1] * e[1]) / (e[0] * e[0] + e[1] * e[1]))), dx = w[0] - t * e[0], dy = w[1] - t * e[1], d = Math.sqrt(dx * dx + dy * dy);
-    if (d < dmin) { dmin = d; near = [a[0] + t * e[0], a[1] + t * e[1]]; } if (e[0] * w[1] - e[1] * w[0] < 0) inside = false; }
+// (G1b: allocation-free — the same arithmetic in the same order, so results are bit-identical; it is called ~3000× per control step by
+// C2's double-support split, where the per-edge temporary arrays were the largest JavaScript cost of the whole controller)
+export function polyDist(poly, x) { if (!poly || poly.length < 3) return -1e3; let inside = true, dmin = 1e9; const n = poly.length, x0 = x[0], x1 = x[1];
+  for (let i = 0; i < n; i++) { const a = poly[i], b = poly[(i + 1) % n], e0 = b[0] - a[0], e1 = b[1] - a[1], w0 = x0 - a[0], w1 = x1 - a[1];
+    const t = Math.max(0, Math.min(1, (w0 * e0 + w1 * e1) / (e0 * e0 + e1 * e1))), dx = w0 - t * e0, dy = w1 - t * e1, d = Math.sqrt(dx * dx + dy * dy);
+    if (d < dmin) dmin = d; if (e0 * w1 - e1 * w0 < 0) inside = false; }
   return inside ? dmin : -dmin; }
 export function polyNearest(poly, x) { let dmin = 1e9, near = null;
   for (let i = 0; i < poly.length; i++) { const a = poly[i], b = poly[(i + 1) % poly.length], e = [b[0] - a[0], b[1] - a[1]], w = [x[0] - a[0], x[1] - a[1]];
@@ -78,13 +83,14 @@ export class Sensor {
         this.cop = this.cop ? [this.cop[0] + SENSE.copAlpha * (cop[0] - this.cop[0]), this.cop[1] + SENSE.copAlpha * (cop[1] - this.cop[1])] : cop; } else this.cop = null; }
     // per-foot contact state
     const feet = {}; let nonFootGround = false, footSelf = false;
-    const turfPts = { L: [], R: [] }, turfMu = { L: [], R: [] }, manifold = { L: false, R: false }, extOn = { L: false, R: false };
+    const turfPts = { L: [], R: [] }, turfMu = { L: [], R: [] }, manifold = { L: false, R: false }, extOn = { L: false, R: false }, edgeOn = { L: false, R: false };
     for (const k of contacts) { const oth = k.a === -1 ? k.b : k.b === -1 ? k.a : null;
       // a foot in contact with ANOTHER body (another character: index ≤ −1000; an obstacle: −2 − k) — any manifold, since the solver may act
       // on a speculative one: that body's push is part of the foot's measured horizontal force, so it is no measurement of the turf's friction
       if (oth == null) { for (const s of ["L", "R"]) { const fb = this.feet[s].body; if ((k.a === fb && k.b < -1) || (k.b === fb && k.a < -1)) extOn[s] = true; }
         if ((k.a === this.feet.L.body || k.b === this.feet.L.body || k.a === this.feet.R.body || k.b === this.feet.R.body) && k.a >= 0 && k.b >= 0 && k.depth > SENSE.touchDepth) footSelf = true; continue; }
       if (oth < 0) continue; const side = oth === this.feet.L.body ? "L" : oth === this.feet.R.body ? "R" : null;
+      if (side && k.normal && Math.abs(k.normal[1]) < 1 / Math.sqrt(1 + (k.mu ?? 0.5) ** 2) - 1e-6) { if (k.depth > SENSE.touchDepth) edgeOn[side] = true; continue; }
       if (side) { manifold[side] = true; turfMu[side].push(k.mu); }       // any manifold, speculative included: the solver may act on it this step
       if (k.depth <= SENSE.touchDepth) continue;
       if (side) turfPts[side].push(...k.pts); else nonFootGround = true; }
@@ -132,7 +138,7 @@ export class Sensor {
       // friction nearly cancelled in the foot's balance, the victim "measured" μ 0.037 on 0.9 turf, kept it for the rest of the run as the
       // running minimum and his friction-limited capture radius collapsed to 3–50 mm). No other body in the world → identical to before.
       if (extOn[s]) F.extLast = n; const extRecent = F.extLast != null && (n - F.extLast) * dt < SENSE.extSettle;
-      feet[s] = { side: s, state, touching, manifold: manifold[s], loaded: F.loaded, slipping: F.slipping, points: pts, centroid, heel, toe, lat, med, load, shear, shearMag, slipSpeed, extContact: extOn[s], extRecent,
+      feet[s] = { side: s, state, touching, manifold: manifold[s], loaded: F.loaded, slipping: F.slipping, points: pts, centroid, heel, toe, lat, med, load, shear, shearMag, slipSpeed, extContact: extOn[s], edgeContact: edgeOn[s], extRecent,
         muUsed: load > 1 ? shearMag / load : null, muAvail, muValid: !extRecent && (!this.muSettle || (F.contactSince != null && n * dt - F.contactSince >= this.muSettle)), friction: F.slipping ? "SLIP" : (muAvail != null && load > 1 && shearMag / load > 0.8 * muAvail ? "NEAR_LIMIT" : "STICK"),
         anchor: F.anchor, slipDist: F.slid || 0, fromAnchor: F.anchor ? Math.sqrt((st.pos[0] - F.anchor.pos[0]) ** 2 + (st.pos[2] - F.anchor.pos[2]) ** 2) : 0, pose: { pos: st.pos, rot: st.rot } }; }
     // Two different regions (Gate C1 finding, test PF60): the CONTACT polygon = hull of the points actually touching now — where the

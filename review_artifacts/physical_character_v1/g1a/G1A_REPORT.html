@@ -1,0 +1,431 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>G1a Locomotion Parity</title><style>
+:root{--bg:#fbfaf7;--ink:#1d1f22;--mute:#5d646b;--line:#dcd8cf;--code:#f1eee7;--acc:#8a5a00;--q:#f4efe2}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#141619;--ink:#e6e4df;--mute:#9aa0a6;--line:#33373d;--code:#1d2024;--acc:#f0c060;--q:#1f1c14}}
+:root[data-theme="dark"]{--bg:#141619;--ink:#e6e4df;--mute:#9aa0a6;--line:#33373d;--code:#1d2024;--acc:#f0c060;--q:#1f1c14}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 -apple-system,system-ui,"Segoe UI",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px 80px}
+h1{font-size:26px;line-height:1.25} h2{font-size:20px;margin-top:40px;padding-top:12px;border-top:1px solid var(--line)} h3{font-size:16px;color:var(--acc)}
+table{border-collapse:collapse;width:100%;font-size:13px;margin:12px 0;display:block;overflow-x:auto} th,td{border:1px solid var(--line);padding:5px 8px;vertical-align:top;text-align:left} th{background:var(--code)}
+code{background:var(--code);padding:1px 4px;border-radius:3px;font-size:12.5px} pre{background:var(--code);padding:12px;border-radius:6px;overflow-x:auto;font-size:12px;line-height:1.45} pre code{padding:0;background:none}
+blockquote{margin:12px 0;padding:10px 16px;background:var(--q);border-left:4px solid var(--acc)} a{color:var(--acc)}
+img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:4px} li>ul,li>ol{margin:4px 0}
+</style></head><body><main><h1>G1a — locomotion architecture parity: the new stack on the approved body</h1>
+<blockquote>
+<p><strong>Status (2026-09-30): built and validated; awaiting your visual review.</strong> Nothing is committed and nothing is pushed. G2 (continuous walking) has not been started.</p>
+<p><strong>Interactive review:</strong> <a href="http://127.0.0.1:8171/sandbox/visual/physchar/index.html?suite=G1&amp;test=S4_steps10">http://127.0.0.1:8171/sandbox/visual/physchar/index.html?suite=G1&amp;test=S4_steps10</a>. Pick a scenario from the <strong>test</strong> list; the side panel has every scenario, clickable. Use speed <strong>0.1×</strong> for slow motion.</p>
+<p><strong>Evidence:</strong> <code>review_artifacts/physical_character_v1/g1a/json/g1a_results.json</code>, produced by <code>node tools/g1a_run.js --out …</code>. It is sequential, takes 61 s, and repeats every scenario ×3.</p>
+</blockquote>
+<h2>1. Result at a glance</h2>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>criterion (approved, plus your unexpected-contact addition)</th>
+<th>result</th>
+<th>measured</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S1</td>
+<td>quiet stance: upright; sway ≤ C1 + 20 %; no extra saturation</td>
+<td style="color:#2e8b57"><strong>PASS</strong></td>
+<td>sway RMS 0.90 mm vs C1 QS20 0.91 mm · drift 0.13 vs 0.13 cm · 0 saturated steps</td>
+</tr>
+<tr>
+<td>S2 / S2b</td>
+<td>weight transfer: the liftoff gate opens (≤ 5 % BW) within C2's time ± 20 %</td>
+<td style="color:#2e8b57"><strong>PASS</strong></td>
+<td>1.17 s / 1.18 s vs C2 1.196 s · swing foot 0.2 % BW</td>
+</tr>
+<tr>
+<td>S3</td>
+<td>4 placements: accepted, foothold ≤ 3 cm, no bounce</td>
+<td style="color:#2e8b57"><strong>PASS</strong></td>
+<td>4/4 · 2.2 / 1.8 / 2.2 / 0.4 cm · no re-lift</td>
+</tr>
+<tr>
+<td>S4</td>
+<td>10 in-place steps: liftoffs sensed; timing ± 15 %; slip ≤ 1 cm; no non-foot contact</td>
+<td style="color:#2e8b57"><strong>PASS</strong></td>
+<td>10/10 · touchdown +12…+17 ms against a 400 ms swing · slip ≤ 0.02 cm · foothold ≤ 3.3 cm</td>
+</tr>
+<tr>
+<td>S5</td>
+<td>the C3 push set: everything C3 recovers is recovered; failures fall honestly</td>
+<td style="color:#2e8b57"><strong>PASS</strong></td>
+<td>F70 / F80 / F100 / B40 / B50 recover with a step · R40 recovers in place · R55 falls (as C3)</td>
+</tr>
+<tr>
+<td>S6</td>
+<td>D6 with the new stack as B: no latch, no release while re-planting, continuum preserved</td>
+<td style="color:#2e8b57"><strong>PASS</strong></td>
+<td>D6_slide / v60 / load20 recover, load80 falls, at 0/0 <strong>and</strong> 50/120 ms · 0 releases while re-planting · no refusal latch</td>
+</tr>
+<tr>
+<td>S7a / S7b</td>
+<td>15 N·s lateral push at mid-swing: an interpretable modified step; no fall</td>
+<td style="color:#2e8b57"><strong>PASS</strong></td>
+<td>upright · the following footholds adjusted 5.2 cm (S7a) / 1.1 cm (S7b)</td>
+</tr>
+<tr>
+<td>S8</td>
+<td>saturation: P0 realised ≥ 95 %; P3 dropped first</td>
+<td style="color:#2e8b57"><strong>PASS</strong></td>
+<td>support realised <strong>96.2 %</strong> (without arbitration: 9.2 %) · style yielded 4259 of 4305 N·m·s · P0/P1 yielded 0</td>
+</tr>
+<tr>
+<td>S9</td>
+<td>internal momentum: ΔP ≤ 0.5 N·s, ΔL ≤ 0.5 kg·m²/s</td>
+<td style="color:#2e8b57"><strong>PASS</strong></td>
+<td>ΔP 0.00002 N·s · ΔL 0.20 kg·m²/s</td>
+</tr>
+<tr>
+<td>S11a</td>
+<td>unexpected early ground contact becomes the touchdown immediately</td>
+<td style="color:#2e8b57"><strong>PASS</strong></td>
+<td>TOUCHDOWN 108 ms EARLY, 8.1 cm short, on 2.5 cm raised turf · phase re-synchronised at the event · upright</td>
+</tr>
+<tr>
+<td>S11b</td>
+<td>obstacle in the swing path → OBSTRUCTION; reaction ≤ delay + 2 steps; no pass-through</td>
+<td style="color:#2e8b57"><strong>PASS</strong></td>
+<td>OBSTRUCTION at the contact · executor reaction 50 ms (= its feedback delay) · deepest box contact 0.9 mm · upright</td>
+</tr>
+<tr>
+<td>S11c</td>
+<td>the toe strikes a turf edge the foot cannot stand on → obstruction, not touchdown</td>
+<td style="color:#2e8b57"><strong>PASS</strong></td>
+<td>contact normal outside the friction cone → OBSTRUCTION · reaction 50 ms · upright</td>
+</tr>
+<tr>
+<td>ledger</td>
+<td>no external or root force except turf, push and obstacle mounts</td>
+<td style="color:#2e8b57"><strong>PASS</strong></td>
+<td>worst per-step residual 0.075 N·s over all scenarios · no support fixture, teleport or velocity write</td>
+</tr>
+<tr>
+<td>det</td>
+<td>determinism</td>
+<td style="color:#2e8b57"><strong>PASS</strong></td>
+<td>24/24 scenarios ×3 identical · S6 identical · <strong>browser hash = Node</strong> for S4 (headless Chrome, already installed)</td>
+</tr>
+<tr>
+<td>approved</td>
+<td>every approved suite hash-identical</td>
+<td style="color:#2e8b57"><strong>PASS</strong></td>
+<td>A 5/5 + 5/5 · B 20/20 + 20/20 · C1 59/59 + 59/59 · C2 13/13 + 14/14 · C3 29/29 · D 7/7 (post-fix baseline)</td>
+</tr>
+<tr>
+<td><strong>S10</strong></td>
+<td>480 Hz convergence: integrated impulses within 5 %</td>
+<td style="color:#c0392b"><strong>FAIL</strong> (boundary cases)</td>
+<td>S4 totals 0.003 % and shear 1.3 %, touchdown times identical — but the 50 ms landing windows differ 4–15 % · F80 recovers at 240 / 720 / 960 Hz, <strong>falls at 480 Hz</strong> · D6_slide: same outcome, total A→B 17.6 %</td>
+</tr>
+<tr>
+<td><strong>perf</strong></td>
+<td>controller ≤ 0.4 ms per character per 60 Hz frame</td>
+<td style="color:#c0392b"><strong>FAIL</strong></td>
+<td>0.13–0.76 ms. The approved controller this reuses already costs 0.47–0.70 ms in C2 by the same measure (§7)</td>
+</tr>
+<tr>
+<td>obs</td>
+<td>S2x (a second transfer), S7c / S7d (30 N·s mid-swing)</td>
+<td>observations</td>
+<td>reported in §8 as G2 items</td>
+</tr>
+</tbody>
+</table>
+<p><strong>What you asked G1a to demonstrate, and where to see it:</strong></p>
+<table>
+<thead>
+<tr>
+<th>demonstration</th>
+<th>scenario</th>
+<th>what to look at</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>stance</td>
+<td>S1_stance</td>
+<td>the C1 overlays; the monitor holds NOMINAL; the ledger line stays at the weight</td>
+</tr>
+<tr>
+<td>intentional weight transfer</td>
+<td>S2_transfer, S2b_transfer</td>
+<td>ξ travels onto the stance foot; the unloaded foot's role is UNLOADING; the gate opens at 1.17 s</td>
+</tr>
+<tr>
+<td>one physical step</td>
+<td>S3_place, S11a_earlyTurf</td>
+<td>planned (orange) vs actual (cyan) footprint; the swing path and trace</td>
+</tr>
+<tr>
+<td>10 alternating in-place steps</td>
+<td>S4_steps10</td>
+<td>the gait diagram (roles and phase); fixed footholds; touchdown +12…17 ms against plan</td>
+</tr>
+<tr>
+<td>representative C1 push behaviour</td>
+<td>S5_F70 … S5_R55</td>
+<td>the same outcome classes as C3</td>
+</tr>
+<tr>
+<td>D6 transient without latched refusal or premature release</td>
+<td>S6 (Node; table in the side panel)</td>
+<td>load20 recovers <strong>without</strong> the release the baseline needed</td>
+</tr>
+<tr>
+<td>disturbance during swing</td>
+<td>S7a / S7b (and S7c / S7d)</td>
+<td>the next foothold moves; in S7c/d the honest fall</td>
+</tr>
+<tr>
+<td>saturation: support kept, style yields first</td>
+<td>S8_styleConflict vs S8n_naive</td>
+<td>the magenta yield band on the knee / hip chart; no fall vs COM −11.7 cm</td>
+</tr>
+<tr>
+<td>internal-momentum accounting</td>
+<td>S9_internal</td>
+<td>side panel: ΔP, ΔL</td>
+</tr>
+<tr>
+<td>240 / 480 Hz convergence</td>
+<td>S10 (Node; table in the side panel)</td>
+<td>§6</td>
+</tr>
+<tr>
+<td>unexpected contact overriding the plan</td>
+<td>S11a / S11b / S11c</td>
+<td>the banner at the event (EARLY TOUCHDOWN / OBSTRUCTION); the role flips at the contact, not when the plan expected it</td>
+</tr>
+</tbody>
+</table>
+<h2>2. What was built</h2>
+<p>The new stack is five modules plus the gate runner. It composes the approved controllers rather than rewriting them.</p>
+<table>
+<thead>
+<tr>
+<th>file</th>
+<th>role (LOCOMOTION_ARCHITECTURE_FINAL layer)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pc_act.js</code></td>
+<td><strong>L1 — the actuator arbiter.</strong> One envelope per joint axis. The core request (hold + damping + P0 gravity + P1 balance / hip / arms) passes unchanged, which gives parity. P2 / P3 / P4 are added only within the remaining headroom and may not cancel more than κ (0.25 / 0.05 / 0) of an opposing higher-priority request. P0 / P1 extras such as the swing feed-forward are never scaled. The <strong>ledger</strong> records per joint and step: every module's request, the allowed share, the predicted total, <strong>Jolt's realised torque</strong>, the envelope, and who yielded and why (envelope or conflict).</td>
+</tr>
+<tr>
+<td><code>pc_gait.js</code></td>
+<td><strong>L3 — support / gait state from contact truth.</strong> Support mode; per-foot role; stride phase. Truth overrides intent: an actual touchdown is the touchdown now, with the early or late offset recorded and the phase re-synchronised. It stays authoritative until the executor acknowledges it. A non-turf contact, or a turf contact outside the friction cone, on a swing leg is an OBSTRUCTION, latched for that swing. Lifts are classified as liftoff, early lift or unplanned lift.</td>
+</tr>
+<tr>
+<td><code>pc_plan.js</code></td>
+<td><strong>L4 — the viability monitor and step executor.</strong> The monitor evaluates the 120 ms planning view against the prospective support: the sensed region, plus feet touching but still loading, plus feet re-planting near their anchors, plus the landing footprint of a step under way. It adds the hip-strategy capacity and the friction-limited capture, and re-searches at 60 Hz with <strong>no latch</strong>. WAIT_VIEW holds a decision until the planning view has caught up with a contact event the executor has already acted on. The executor runs timed rhythmic steps and C3's corrective steps, obstruction handling, and acceptance. The planner holds the rhythm on fixed home footholds and the LIPM ξ plan, with C2's transfer.</td>
+</tr>
+<tr>
+<td><code>pc_loco.js</code></td>
+<td><strong>Composition.</strong> Truth → gait; 50 ms feedback view → executor + C1 balance law; 120 ms planning view → monitor. P3 style from <code>of_loco</code> IDLE; P1 swing inverse-dynamics feed-forward; arbiter → Jolt targets, gains and envelope.</td>
+</tr>
+<tr>
+<td><code>pc_ref.js</code></td>
+<td><code>of_loco.js</code> sampled as a <strong>P3 preference only</strong>: joint targets that never move the root or touch state.</td>
+</tr>
+<tr>
+<td><code>pc_gateg1a.js</code>, <code>tools/g1a_run.js</code></td>
+<td>The G1a world (turf as force plate), the scenarios, the external-impulse ledger, and the criteria evaluation.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Changes to shared modules</strong> are all opt-in or proven neutral; every approved suite is hash-identical:</p>
+<ul>
+<li><code>pc_balance.js</code>:</li>
+<li><code>expose</code> / <code>monitor</code>: hooks for the arbiter and the monitor.</li>
+<li><code>swingMovingBase</code>: swing joint velocity for a moving pelvis (§4a).</li>
+<li><code>replantActual</code>: an airborne foot is reached from the actual pelvis (§4h).</li>
+</ul>
+<p>All are off for C1–C3.
+- <code>pc_sense.js</code>: a turf contact whose normal lies outside the friction cone is an <strong>edge contact</strong>, not support (§4f). On flat turf n_y = 1, so no approved run changes.
+- <code>pc_jolt.js</code>: <code>plateLate</code> (§4c); obstacle bodies can report as turf.
+- <code>pc_gated.js</code>: <code>opts.Bloco</code> (B runs the new stack) and <code>opts.sub</code> (physics sub-stepping). Both are experiments; the default path is untouched.</p>
+<h2>3. Latencies: approved as provisional, and measured</h2>
+<p>The feedback / planning delays apply only to what a layer observes. Contact and the motors are immediate. The approved gates keep zero delay.</p>
+<table>
+<thead>
+<tr>
+<th>scenario</th>
+<th>0 / 0 ms</th>
+<th><strong>50 / 120</strong> (default)</th>
+<th>100 / 170</th>
+<th>150 / 220</th>
+<th>250 / 320</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S4 10 in-place steps</td>
+<td>10/10, ≤ 2.4 cm</td>
+<td><strong>10/10, ≤ 3.3 cm</strong></td>
+<td>10/10, ≤ 3.3 cm</td>
+<td><strong>falls</strong> after 7 steps</td>
+<td>never lifts (the gate times out; stands)</td>
+</tr>
+<tr>
+<td>S5_F80 push</td>
+<td>step, 2.5 cm</td>
+<td><strong>step, 19.6 cm</strong></td>
+<td><strong>falls</strong></td>
+<td>falls</td>
+<td>falls</td>
+</tr>
+<tr>
+<td>S7a push in swing</td>
+<td><strong>falls</strong> late (§8)</td>
+<td><strong>upright</strong></td>
+<td><strong>falls</strong></td>
+<td>falls</td>
+<td>never lifts</td>
+</tr>
+<tr>
+<td>S11a early turf</td>
+<td>upright</td>
+<td><strong>upright</strong></td>
+<td>upright</td>
+<td>upright</td>
+<td>recovers with a step</td>
+</tr>
+<tr>
+<td>S11b obstacle</td>
+<td>upright, reaction 0 ms</td>
+<td><strong>upright, 50 ms</strong></td>
+<td>upright, 100 ms</td>
+<td><strong>falls</strong>, 150 ms</td>
+<td>never lifts</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Reading:</strong> behaviour <em>is</em> sensitive to latency. In-place stepping tolerates 100 / 170 ms. The reactive push step degrades sharply above 50 ms feedback: F80's foothold error is already 19.6 cm at 50 ms and the step comes too late at 100 ms. The obstruction reaction time equals the feedback delay, exactly as designed. S7a is a <strong>boundary case</strong> in delay (see §8).</p>
+<h2>4. General issues found and fixed during G1a</h2>
+<p>Each is a physical or architectural correction, not tuning to a scenario.</p>
+<p><strong>a. The swing leg was carried along by pelvis drift.</strong> C2's swing IK converts the planned foot velocity into joint velocities <em>as if the pelvis were stationary</em>. The critically damped swing motors (kd ≈ 90 N·m·s/rad at the hip) then held the leg's configuration while the pelvis drifted 3 cm, and every foothold landed 5–6 cm forward and 2–3 cm outward. I first verified the inverse-dynamics model: ID of the measured motion matches Jolt's realised hip torque to about 1 N·m. The actual fix is <code>swingMovingBase</code>, which computes the joint velocity for the world trajectory given the hip's velocity and the pelvis's angular velocity. Result: <strong>≤ 2 cm forward, ≤ 0.6 cm lateral</strong>. It applies to the new controller only.</p>
+<p><strong>b. In-place footholds drifted</strong> because each step was planned from where the foot last landed. Rhythm steps are now planned from <strong>home footholds</strong> captured once. Planned centres are constant to ±1 mm after step 2.</p>
+<p><strong>c. The force plate was not contact-identical to the turf.</strong> It was created <em>before</em> the character, so it became body 1 of every foot contact. That ordering changed Jolt's contact solve: loads during the F70 push differed by up to 20 %, and S5_F70 flipped from recover to fall. With <code>plateLate</code> (plate created after the character), the loads match static turf to the newton, and <strong>6/6 comparison scenarios give identical outcomes</strong> with COM excursions within 0.2 cm. The ledger still closes (≤ 0.075 N·s). <em>Caveat for the D6 diagnostic:</em> its instrumented twin used the early ordering. That is why some twin runs landed across a decision boundary; the D6 conclusions came from the un-instrumented runs and stand.</p>
+<p><strong>d. The monitor mixed views.</strong> It combined the controller's friction radius (50 ms view) with the planning view's ξ (120 ms), and a single planning cycle was enough to order a step. Three consequences in S7, all fixed:
+- the friction-limited capture is now evaluated on the planning view with capacity μ_eff·W, the average over the ~1/ω capture horizon, instead of the instantaneous normal load that collapses at every touchdown;
+- "both feet off the turf" must persist 62.5 ms (a 1213 N landing bounces both feet ~1 mm up for 17 ms);
+- with no foot touching, the last measured μ_eff is kept.</p>
+<p><strong>e. The arbiter's prediction omitted P1 extras</strong> (the swing feed-forward); it now includes them. The remaining difference between <em>allowed</em> and <em>realised</em> torque is real physics, and the ledger shows both. Jolt's motor is an implicit spring-damper whose damper acts on the end-of-step velocity.</p>
+<p><strong>f. A turf edge counted as support.</strong> A toe on a 4 cm patch's rounded edge (normal 45°) was sensed as touchdown and planted the foot 21 cm short; he fell. A contact supports the foot only if the vertical load lies inside its friction cone (|n_y| ≥ 1/√(1+μ²), 26.6° at μ 0.5). Otherwise it is an edge contact, and the gait layer makes it an OBSTRUCTION. <strong>S11c now stays upright.</strong></p>
+<p><strong>g. Gait truth was not sticky.</strong> One step after an actual touchdown the role returned to the plan's SWING. The touchdown is now latched until the executor acknowledges it. A flickering obstruction is one event with the first contact time kept (the executor had reacted 130 ms late). Reaction latency is reported in wall-clock time.</p>
+<p><strong>h. An airborne foot never got back to its anchor</strong> (D6X_load20; S2x). C1's feet-in-place IK solves from the <em>desired</em> pelvis. With the pelvis displaced, the unloaded foot hovered 1.8 cm up and drifted 15 cm in 1.5 s. The baseline only "recovered" because its <strong>premature release</strong> dropped the limp leg. With <code>replantActual</code>, an off-turf foot is reached from the actual pelvis, and <strong>load20 recovers without any release</strong>.</p>
+<p><strong>i. The transfer re-planting anchor followed the drifting foot.</strong> It is now captured once per transfer.</p>
+<h2>5. What the arbiter shows (S8)</h2>
+<p>A deep-crouch style request at weight 1 on both stance legs conflicts with support. The arbiter admits <strong>1 %</strong> of it, 46 of 4305 N·m·s; every refusal is logged as <em>conflict</em> (4328 axis-steps) or <em>envelope</em> (39). Support is delivered at 96.2 % of its request, and he stays upright with the trunk under 4°.</p>
+<p>The same request <strong>without</strong> arbitration (the diagnostic S8n) realises 9 % of support, drops the COM 11.7 cm, and triggers a fall release. In the review, select <code>knee_L</code> or <code>hip_L</code> and look for the magenta yield band. The <em>Arbiter at the cursor</em> table lists, per joint, every module's request, the allowed share, Jolt's realised torque and who yielded.</p>
+<h2>6. Convergence (S10): reported as boundary cases</h2>
+<table>
+<thead>
+<tr>
+<th>scenario</th>
+<th>240 Hz vs 480 Hz physics (control stays 240 Hz)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S4</td>
+<td>total impulse 0.003 %, shear 1.3 %, every touchdown time identical; the 50 ms landing-impact windows are 4–15 % higher at 480 Hz (impact dynamics are not converged at 240 Hz)</td>
+</tr>
+<tr>
+<td>S5_F80</td>
+<td>recovers at 240, 720 and 960 Hz, and at 480 Hz on static turf; <strong>falls at 480 Hz on the plate</strong> — a secondary instability ~1 s <em>after</em> a successful recovery step, in a marginal post-step stance</td>
+</tr>
+<tr>
+<td>D6_slide (new B)</td>
+<td>same outcome; A→B impulse 0–35 ms within 3.8 %, 100–250 ms within 3.8 %; 35–100 ms differs 34 % and 250–500 ms 55 %; total 17.6 %</td>
+</tr>
+</tbody>
+</table>
+<p>The totals and the event timing converge; the impact-scale windows and one marginal case do not. This is a property of the approved contact / motor stack at 240 Hz, not of the new layers: S4 and D6's early windows agree.</p>
+<h2>7. Performance: fails the 0.4 ms budget, with context</h2>
+<p>Controller time per 60 Hz frame (4 control steps, Node): 0.13–0.76 ms (S1 0.17, S4 0.48, S5_F80 0.44, S2b 0.76).</p>
+<p>A profile of S4 splits this into:</p>
+<table>
+<thead>
+<tr>
+<th>component</th>
+<th>ms per 60 Hz frame</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>reused balance controller</td>
+<td>0.36</td>
+</tr>
+<tr>
+<td>arbiter</td>
+<td>0.12</td>
+</tr>
+<tr>
+<td>planner + monitor + executor + gait</td>
+<td>≈ 0.08</td>
+</tr>
+<tr>
+<td>swing feed-forward</td>
+<td>0.016</td>
+</tr>
+</tbody>
+</table>
+<p>By the same measure, the <strong>approved</strong> C2 controller costs 0.47–0.70 ms (A_shift 0.70), and C3's B_F80 costs 0.40 ms. The budget I wrote in the architecture document was therefore already exceeded by approved code. The new layers add roughly 0.05–0.35 ms. Optimisation, such as caching IK and budget computations, is a prerequisite before multi-character play, not a G1a blocker.</p>
+<h2>8. Open observations (the G2 list)</h2>
+<ol>
+<li><strong>No escalation from a rhythmic step to a corrective step mid-swing.</strong> If the needed correction exceeds the ±12 cm foothold adjustment, the rhythmic step continues and he falls honestly: S7c / S7d at 30 N·s; S7a at 100/170 ms. At 0/0 ms, S7a's residual lateral oscillation grows over six steps until the last adjustment reaches 8.8 cm.</li>
+<li><strong>No descend-to-contact search.</strong> A swing foot that finds no ground at the planned height is MISSED after 4 cm (S7d).</li>
+<li><strong>A touching-but-unloaded foot is not re-loaded.</strong></li>
+<li>load80 at default delay stands 2.4 s on one foot before falling at 3.58 s (the baseline falls at 1.7 s).</li>
+<li>S2x: after one transfer-and-back, the second transfer's gate never opens.</li>
+<li><strong>The sequence planner can choose the same foot twice</strong> (S7a at 0/0). A second outward step with the foot already out needs the other foot to move first.</li>
+<li>Walking-quality items visible in the review:</li>
+<li>pelvis yaw oscillates ±12° during in-place stepping;</li>
+<li>the stance ankle's lateral torque (35 N·m) saturates in single support;</li>
+<li>the trailing foot briefly lifts 75 ms after some touchdowns;</li>
+<li>landings reach 1.2–1.6 BW;</li>
+<li>the swing lags 3 cm mid-swing.</li>
+<li>S10 boundary cases (§6) and performance (§7).</li>
+</ol>
+<h2>9. How to review</h2>
+<ul>
+<li><strong>URL:</strong> <a href="http://127.0.0.1:8171/sandbox/visual/physchar/index.html?suite=G1&amp;test=S4_steps10">http://127.0.0.1:8171/sandbox/visual/physchar/index.html?suite=G1&amp;test=S4_steps10</a> (the lightweight server on 8171 is running).</li>
+<li><strong>Scene overlays</strong> (the <em>G1a</em> bar):</li>
+<li>footholds: planned (orange) vs actual (cyan), with the error line;</li>
+<li>prospective support (blue);</li>
+<li>swing target, planned path (yellow) and actual trace (cyan);</li>
+<li>slab and box;</li>
+<li>gait roles at the feet;</li>
+<li>arbiter yields (magenta ring) and saturation (red);</li>
+<li>delayed views: ξ as the 50 ms and 120 ms views see it.</li>
+</ul>
+<p>The C1 <em>Balance</em> overlays (COM, ξ, region, CoP demand) work as in C1–C3.
+- <strong>Banner:</strong> the monitor state and verdict, plus the latest gait event (EARLY TOUCHDOWN in cyan, OBSTRUCTION in red).
+- <strong>Charts:</strong>
+  - <em>top:</em> the gait diagram — roles L / R, support mode, monitor verdict, event ticks;
+  - <em>bottom:</em> the arbiter for the selected joint axis (joint / axis selectors) — allowed total, <strong>realised</strong>, spring, gravity, P1 feed-forward, P3 requested / allowed, envelope, yield and saturation bands.
+- <strong>Side panel:</strong>
+  - this scenario's criterion and the run summary;
+  - the steps table (click to seek);
+  - <em>Arbiter at the cursor</em>, and the arbiter over the run;
+  - gait events (click to seek) and the monitor, executor and planner logs;
+  - all criteria; the S6, S10, latency and plate tables; every scenario (click to load).
+- <strong>Suggested order:</strong> S4 (0.1×, side camera) → S11a / S11c / S11b (at each contact) → S8 vs S8n (knee_L swing Y) → S7a → S2 / S3 → S5_F80.</p>
+<h2>10. Reproduce</h2>
+<pre><code>cd sandbox/visual/physchar
+node tools/g1a_run.js --out ../../../review_artifacts/physical_character_v1/g1a/json/g1a_results.json   # 61 s, sequential
+zsh tools/review/regress.sh                                                                          # approved suites, ~3 min
+</code></pre>
+<p>Uncommitted and not pushed:</p>
+<ul>
+<li><strong>New:</strong> <code>pc_act.js</code>, <code>pc_gait.js</code>, <code>pc_plan.js</code>, <code>pc_loco.js</code>, <code>pc_ref.js</code>, <code>pc_gateg1a.js</code>, <code>tools/g1a_run.js</code>.</li>
+<li><strong>Modified:</strong> <code>pc_balance.js</code>, <code>pc_sense.js</code>, <code>pc_jolt.js</code>, <code>pc_gated.js</code>, <code>pc_harness.js</code>, <code>index.html</code>.</li>
+<li><strong>Evidence:</strong> this folder.</li>
+</ul></main></body></html>

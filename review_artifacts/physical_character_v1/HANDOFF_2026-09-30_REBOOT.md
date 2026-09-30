@@ -44,7 +44,30 @@ After the reboot the preserved state was verified, the user reviewed the overnig
 
 **Review:** `http://127.0.0.1:8171/sandbox/visual/physchar/index.html?suite=D&test=D6_slide` (the D6 diagnostic panel, representative-case buttons, the matrix).
 
-**Next:** the locomotion decision (`LOCOMOTION_PROPOSAL.md` §7) and the four observations above. **Locomotion has not started.**
+**Next:** the locomotion decision and the four observations above. **Locomotion has not started.**
+- `LOCOMOTION_PROPOSAL.md` is superseded by **`LOCOMOTION_ARCHITECTURE_FINAL.md` / `.html`**, which reconciles it with Astra's independent review.
+- The first gate proposed for approval is **G1a (architecture skeleton with regression parity)**, in that document's §15.
+
+**G1a (2026-09-30, after the architecture was approved): BUILT and validated, uncommitted, awaiting the user's visual review. G2 has not started.**
+- **Report:** `g1a/G1A_REPORT.md` / `.html`. **Evidence:** `g1a/json/g1a_results.json`, from `node tools/g1a_run.js --out …` (61 s, ×3).
+- **Review:** `http://127.0.0.1:8171/sandbox/visual/physchar/index.html?suite=G1&test=S4_steps10`.
+- **Results:** 18 criteria PASS; S10 (480 Hz, boundary cases) and perf (controller 0.13–0.76 ms vs the 0.4 ms budget; the approved C2 is already 0.47–0.70 ms) FAIL.
+- **Regression:** all approved suites hash-identical (regress.sh). Browser = Node verified for S4 with the already-installed Chrome (headless, no Puppeteer).
+
+**G1b (2026-09-30; you approved G1a's architecture): closure done, awaiting review. G2 has not started.**
+- **Report:** `g1b/G1B_REPORT.md` / `.html`, plus `g1b/sheets/`, `g1b/json/`, `g1b/probes/`.
+- **Review:** `http://127.0.0.1:8171/sandbox/visual/physchar/index.html?suite=G1&review=steps` (eight review cases).
+- **Verdict:**
+  - G1 is ready to promote.
+  - G2 can begin, with yaw / angular-momentum regulation (and arm counter-swing) as its first item.
+  - Human-likeness is currently robotic and needs its own G2 track.
+
+**G1 PROMOTED (2026-09-30, your approval after the G1/G1b visual review).**
+- **Baseline:** `sandbox/visual/physchar/results/v1_1/g1_V1.1.json` (26 scenarios ×3). `tools/review/regress.sh` now also checks G1.
+- **Accepted as an honest current boundary:** the 30 N·s mid-swing fall (no rhythmic → corrective escalation yet). It is not to be artificially rescued.
+- **G2 is approved to begin:**
+  - G2a first: yaw / angular-momentum regulation + a human in-place gait;
+  - then stop for your review.
 
 ## Where
 

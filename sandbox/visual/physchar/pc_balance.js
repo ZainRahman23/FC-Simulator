@@ -161,6 +161,12 @@ export class BalanceController {
     if (C.state === "RECOVERABLE_HIP" || C.state === "STEP_NEEDED" || C.state === "UNRECOVERABLE" || C.state === "STEPPING") { C.back++; if (C.back < 12) return; }
     C.state = "RECOVERABLE_IN_PLACE"; C.back = 0;
   }
+  // (opts.monitor, G1a locomotion stack) the state comes from the viability monitor (pc_plan.js); the release / re-engage bookkeeping the
+  // fall transition needs (fallStep, reengageStep, times) is kept exactly as C1 keeps it. C1's own classifier is not run.
+  _monitorApply(o) { const C = this.cls, m = this.monitorState || { state: "RECOVERABLE_IN_PLACE", reason: "" }, prev = C.state; if (C.times[m.state] == null) C.times[m.state] = o.t;
+    if (m.state === "FALLING" && prev !== "FALLING" && prev !== "GROUNDED") { C.fallStep = this.nObs; C.reengageStep = null; }
+    if (prev === "FALLING" && m.state !== "FALLING" && m.state !== "GROUNDED") { C.reengageStep = this.nObs; C.reengaged = (C.reengaged || 0) + 1; }
+    C.state = m.state; C.reason = m.reason || ""; }
   // two-bone IK of a stance leg from the ACTUAL foot to a desired hip-joint position; returns world rotations of thigh + shin and the knee angle
   _legIK(leg, pHip, pAnkle, pole) {
     const { L1, L2, a0, b0, kneeAxis } = leg; let dv = V.sub(pAnkle, pHip), d = Math.sqrt(V.dot(dv, dv)); const u = V.sc(dv, 1 / d);
@@ -250,7 +256,7 @@ export class BalanceController {
     // hip-extended capacity in the direction ξ leaves the polygon
     let hipCapHere = this.hipCap.lat; if (region && o.xiMargin < 0) { const nr = polyNearest(region, o.xi), u = V.norm([o.xi[0] - nr[0], 0, o.xi[1] - nr[1]]), cf = V.dot(u, hd), cl = V.dot(u, lat);
       hipCapHere = Math.abs(cf) * (cf > 0 ? this.hipCap.fwd : this.hipCap.bwd) + Math.abs(cl) * this.hipCap.lat; }
-    this.hipCapHere = hipCapHere; this._classify(o, r, hipCapHere); const cls = this.cls;
+    this.hipCapHere = hipCapHere; if (this.opts.monitor) this._monitorApply(o); else this._classify(o, r, hipCapHere); const cls = this.cls;
     const released = cls.state === "FALLING" || cls.state === "GROUNDED";
     // ── nominal: stance legs solved UPWARD from the actual feet; pelvis in world orientation (heading from the feet, nominal pitch) ──
     const Rpd = Q.norm(Q.mul(yawQ(psi), Q.axis([1, 0, 0], this.rootPitch))), footY = ankles.length ? ankles.reduce((a, p) => a + p[1], 0) / ankles.length : S[0].pos[1] - this.hPelvis;
@@ -322,9 +328,14 @@ export class BalanceController {
     // Velocity feed-forward = the TRAJECTORY's velocity pushed through the same IK (continuous; a finite difference of successive targets
     // spiked to ≈ 2900°/s when a new trajectory began from the actual foot and slammed the toe into the turf — finding 2026-09-29).
     this.swingIK = {}; this.swingVel = {}; if (!released) for (const s of swingCtl) { const L = this.legs[s], tg = plan.swing[s], Rp = S[0].rot, pole = V.norm(V.sub(Q.rot(Rp, [0, 0, 1]), [0, Q.rot(Rp, [0, 0, 1])[1], 0]));
-      const solve = (pos) => { const ik = this._legIK(L, S[L.thigh].pos, pos, pole); return { ik, hip: csOfRel(spec.joints[L.hip], Q.mul(Q.conj(Rp), ik.Rt)), knee: ik.kappa, ankle: romClamp(spec.joints[L.ankle], csOfRel(spec.joints[L.ankle], Q.mul(Q.conj(ik.Rs), tg.rot)), rad(5)) }; };
+      const solve = (pos, hipP, RpX) => { hipP = hipP || S[L.thigh].pos; RpX = RpX || Rp; const ik = this._legIK(L, hipP, pos, pole); return { ik, hip: csOfRel(spec.joints[L.hip], Q.mul(Q.conj(RpX), ik.Rt)), knee: ik.kappa, ankle: romClamp(spec.joints[L.ankle], csOfRel(spec.joints[L.ankle], Q.mul(Q.conj(ik.Rs), tg.rot)), rad(5)) }; };
       const a = solve(tg.pos); nominal[L.hip] = a.hip; nominal[L.knee] = a.knee; nominal[L.ankle] = a.ankle; this.swingIK[s] = { knee: a.ik.pKnee, target: tg.pos };
-      if (tg.vel) { const dT = 1 / 60, b = solve(V.add(tg.pos, V.sc(tg.vel, dT))); this.swingVel[L.hip] = rotRate(a.hip, b.hip, dT); this.swingVel[L.knee] = (b.knee - a.knee) / dT; this.swingVel[L.ankle] = rotRate(a.ankle, b.ankle, dT); } }
+      // (G1a, opts.swingMovingBase — the new locomotion controller only; C2 / C3 keep the approved form): the joint velocity that moves the
+      // foot along its WORLD trajectory while the hip and pelvis themselves move (hip joint velocity, pelvis angular velocity). The
+      // stationary-base form asked the critically damped swing motors to hold the leg's configuration while the pelvis drifted, so the
+      // swing foot was carried with the pelvis (G1a finding: 3 cm of pelvis drift in late swing → 5 cm foothold error)
+      if (tg.vel) { const dT = 1 / 60, mb = this.opts.swingMovingBase, b = solve(V.add(tg.pos, V.sc(tg.vel, dT)), mb ? V.add(S[L.thigh].pos, V.sc(S[L.thigh].v, dT)) : null, mb && Math.hypot(...S[0].w) > 1e-9 ? Q.norm(Q.mul(Q.axis(S[0].w, Math.hypot(...S[0].w) * dT), Rp)) : null);
+        this.swingVel[L.hip] = rotRate(a.hip, b.hip, dT); this.swingVel[L.knee] = (b.knee - a.knee) / dT; this.swingVel[L.ankle] = rotRate(a.ankle, b.ankle, dT); } }
     this.replant = []; if (!released) for (const s of ["L", "R"]) { const f = o.feet[s], L = this.legs[s]; if (stance.includes(s) || swingCtl.includes(s) || !(f.anchor || (plan && plan.anchors && plan.anchors[s]))) continue;
       // V1.1 controller (unloadPlan): the foot a planned transfer is UNLOADING is not pressed back into the turf when it loses contact — it is
       // meant to carry nothing, and pressing it (4 mm below its anchor) re-loaded it by up to 190 N and reset the liftoff gate (finding
@@ -332,8 +343,12 @@ export class BalanceController {
       const unl = this.opts.unloadPlan && plan && plan.unloading && plan.unloading.foot === s;
       // (GATE C3: plan.anchors — after a corrective step each foot is re-planted onto its OWN pose at the step's touchdown: a trailing foot up
       // on its toe is reached back onto its toe, not onto its flat pre-step pose 50 cm behind that the leg cannot reach from the new stance)
-      const a = anchorOf(s), above = V.add(a.pos, [0, unl ? 0 : -0.004, 0]), pHip = V.add(Pd, Q.rot(Rpd, L.hipOff)), ik = this._legIK(L, pHip, above, fwdOf(s));
-      nominal[L.hip] = csOfRel(spec.joints[L.hip], Q.mul(Q.conj(Rpd), ik.Rt)); nominal[L.knee] = ik.kappa; nominal[L.ankle] = csOfRel(spec.joints[L.ankle], Q.mul(Q.conj(ik.Rs), a.rot));
+      // (G1a, opts.replantActual — the new locomotion controller only; C1–C3 keep the approved form): a foot that is OFF the turf is reached
+      // from the ACTUAL hip and pelvis, as a swing foot is. From the desired pelvis the IK assumed the pelvis already where balance wants it;
+      // with the pelvis displaced the airborne foot hovered above the turf and drifted (G1a findings: D6X_load20 — 15 cm in 1.5 s; S2x)
+      const air = this.opts.replantActual && !o.feet[s].touching, RpR = air ? S[0].rot : Rpd;
+      const a = anchorOf(s), above = V.add(a.pos, [0, unl ? 0 : -0.004, 0]), pHip = air ? S[L.thigh].pos : V.add(Pd, Q.rot(Rpd, L.hipOff)), ik = this._legIK(L, pHip, above, fwdOf(s));
+      nominal[L.hip] = csOfRel(spec.joints[L.hip], Q.mul(Q.conj(RpR), ik.Rt)); nominal[L.knee] = ik.kappa; nominal[L.ankle] = csOfRel(spec.joints[L.ankle], Q.mul(Q.conj(ik.Rs), a.rot));
       this.replant.push(s); }
     // ── desired ground reaction (LIPM line of action through the COM), split between the stance feet by the lever rule ──
     const feetForce = (p) => { const F = [W * (c[0] - p[0]) / h, W, W * (c[2] - p[1]) / h], res = {};
@@ -366,7 +381,7 @@ export class BalanceController {
       const cu = Q.rot(S[this.bi("chest")].rot, [0, 1, 0]), fl = V.dot(cu, hd), sd = V.dot(cu, lat), lim = dsin(rad(BAL.trunkMaxDeg));
       if (tpc > 0 && fl > lim) tpc = 0; if (tpc < 0 && fl < -lim) tpc = 0; if (trc > 0 && sd < -lim) trc = 0; if (trc < 0 && sd > lim) trc = 0;
       tauTrunk = V.add(V.sc(pitchAx, tpc), V.sc(rollAx, trc));
-      for (const s of stance) { const k = this.legs[s].hip; tauB[k] = V.sub(tauB[k], V.sc(tauTrunk, fBal[s] ? fBal[s].share : 1 / nH)); }
+      for (const s of stance) { const k = this.legs[s].hip, dh = V.sc(tauTrunk, fBal[s] ? fBal[s].share : 1 / nH); tauB[k] = V.sub(tauB[k], dh); if (this.opts.expose) (this._hipPart = this._hipPart || {})[k] = V.sc(dh, -1); }
       // GATE C4 (opts.reactiveArms): the ARMS join the hip strategy — each shoulder torques its arm in the SAME sense as the trunk moment, so
       // part of the upper body's angular-momentum change goes into the light, fast arms instead of tilting the heavy trunk (the hips' moment on
       // the upper body is unchanged; what the arms buy is less trunk excursion before the 35° trunk guard stops the strategy). Each arm's
@@ -436,6 +451,11 @@ export class BalanceController {
     // GATE C2: velocity feed-forward for a swing-controlled leg (finite difference of its own successive targets, in each joint's space), so
     // the swing damping acts on deviation from the intended motion rather than on the motion itself. Stance joints keep a zero target velocity.
     if (plan || Object.keys(armVel).length) { out.vel = spec.joints.map(j => j.type === "hinge" ? 0 : [0, 0, 0]); for (const k in this.swingVel) out.vel[k] = this.swingVel[k]; for (const k in this.stanceVel) out.vel[k] = this.stanceVel[k]; for (const k in armVel) out.vel[k] = armVel[k]; }
+    // (opts.expose, G1a locomotion stack: the components the actuator arbiter allocates — world torques on the child body, the posture
+    // target each joint holds, and the arms' torque-source moment; read-only copies, the default composition above is unchanged)
+    if (this.opts.expose) { const hp = this._hipPart || {}; this._hipPart = null;
+      out.parts = { tauG: tauG.map(t => t.slice()), tauB: tauB.map((t, k) => hp[k] ? V.sub(t, hp[k]) : t.slice()), tauHip: tauB.map((t, k) => hp[k] || [0, 0, 0]), nominal: nominal.map(x => Array.isArray(x) ? x.slice() : x),
+        arms: this.armInfo && !released ? Object.fromEntries(Object.entries(this.armInfo).map(([sd, a]) => [a.k, a.M])) : {}, released, relK, swing: swingCtl.slice(), replant: (this.replant || []).slice(), stance: stance.slice(), lean: !!(plan && plan.lean && plan.lean.rad && !released) }; }
     out.debug = { prot: this.protInfo || null, arms: this.armInfo || null, pdTrace: this.pdTrace || null, unload: this.unloadInfo, xiRef, pRaw, pStar, r, hipCapHere, tauTrunk, feetStatic: fStatic, feetBal: fBal, heading: hd, pelvisTarget: { pos: Pd, rot: Rpd }, stance, replant: this.replant, fricR: this.fricR };
     return out;
   }

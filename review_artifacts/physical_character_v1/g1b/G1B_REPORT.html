@@ -1,0 +1,521 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>G1b Closure</title><style>
+:root{--bg:#fbfaf7;--ink:#1d1f22;--mute:#5d646b;--line:#dcd8cf;--code:#f1eee7;--acc:#8a5a00;--q:#f4efe2}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#141619;--ink:#e6e4df;--mute:#9aa0a6;--line:#33373d;--code:#1d2024;--acc:#f0c060;--q:#1f1c14}}
+:root[data-theme="dark"]{--bg:#141619;--ink:#e6e4df;--mute:#9aa0a6;--line:#33373d;--code:#1d2024;--acc:#f0c060;--q:#1f1c14}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 -apple-system,system-ui,"Segoe UI",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px 80px}
+h1{font-size:26px;line-height:1.25} h2{font-size:20px;margin-top:40px;padding-top:12px;border-top:1px solid var(--line)} h3{font-size:16px;color:var(--acc)}
+table{border-collapse:collapse;width:100%;font-size:13px;margin:12px 0;display:block;overflow-x:auto} th,td{border:1px solid var(--line);padding:5px 8px;vertical-align:top;text-align:left} th{background:var(--code)}
+code{background:var(--code);padding:1px 4px;border-radius:3px;font-size:12.5px} pre{background:var(--code);padding:12px;border-radius:6px;overflow-x:auto;font-size:12px;line-height:1.45} pre code{padding:0;background:none}
+blockquote{margin:12px 0;padding:10px 16px;background:var(--q);border-left:4px solid var(--acc)} a{color:var(--acc)}
+img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:4px} li>ul,li>ol{margin:4px 0}
+</style></head><body><main><h1>G1b — closing and qualifying G1 before continuous walking</h1>
+<blockquote>
+<p><strong>Status (2026-09-30): done; awaiting your review.</strong> Nothing committed, nothing pushed, G2 not started. No C4 / C5, Reference Tackle or football-simulation work.</p>
+<p><strong>Review:</strong> <a href="http://127.0.0.1:8171/sandbox/visual/physchar/index.html?suite=G1&amp;review=steps">http://127.0.0.1:8171/sandbox/visual/physchar/index.html?suite=G1&amp;review=steps</a>. The eight G1 review cases are buttons at the top of the side panel. Static contact sheets are in <code>g1b/sheets/</code>.</p>
+</blockquote>
+<h2>Verdict</h2>
+<p><strong>G1 is ready to promote as the locomotion foundation.</strong> The architecture held in every test:</p>
+<ul>
+<li><strong>authority:</strong> truth overrides the plan; obstructions are detected;</li>
+<li><strong>arbitration:</strong> support beats style;</li>
+<li><strong>accounting:</strong> force-plate ledger, internal momentum;</li>
+<li><strong>latency:</strong> a layered design;</li>
+<li><strong>determinism:</strong> Node ×3, and browser = Node;</li>
+<li><strong>parity:</strong> every approved suite is hash-identical.</li>
+</ul>
+<p>The two G1a failures are now understood:</p>
+<ul>
+<li><strong>S10:</strong> both rates produce materially the same physical event. The disagreement is confined to rigid-contact impact detail and sliding two-body contact (§1). 240 Hz remains justified for locomotion.</li>
+<li><strong>Performance:</strong> measured and explained (§2). A 22-player match needs a physics-scaling plan; G2 does not.</li>
+</ul>
+<p><strong>G2 can begin, with one condition.</strong> Of the five open items, one is a genuine G2 blocker: <strong>whole-body yaw.</strong> The pelvis yaw envelope grows to ±12° in undisturbed in-place stepping, with the stance twist axes (ankle, hip) at their limits. Its clean fix is new capability (angular-momentum regulation plus arm counter-swing), so it must be <strong>G2's first work item</strong>, not a G1 patch.</p>
+<p>Separately, on human-likeness: the motion is physically sound but <strong>does not look human yet</strong>. It is robotic marching with a rigid upper body and static arms (§5). G2 must treat this as a first-class track, not polish.</p>
+<h2>1. 240 vs 480 Hz: is it the same physical event?</h2>
+<p>Control stays at 240 Hz; only the physics is sub-stepped. Each S4 landing is measured as an event from the first physical contact.</p>
+<table>
+<thead>
+<tr>
+<th>per landing (mean of 10)</th>
+<th>240 Hz</th>
+<th>480 Hz</th>
+<th>960 Hz</th>
+<th>240 Hz, 2× iterations</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>contact time</td>
+<td>identical at every rate</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>foot approach speed / COM vertical speed</td>
+<td>−0.35 / −0.041 m/s</td>
+<td>−0.35 / −0.041</td>
+<td>−0.35 / −0.040</td>
+<td>−0.35 / −0.041</td>
+</tr>
+<tr>
+<td>COM low point after landing (time)</td>
+<td>1.062 m (233 ms)</td>
+<td>1.063 m (232 ms)</td>
+<td>1.062 m (234 ms)</td>
+<td>1.062 m (234 ms)</td>
+</tr>
+<tr>
+<td>new foot &gt; 50 % BW</td>
+<td>9.6 ms</td>
+<td>9.6 ms</td>
+<td>9.6 ms</td>
+<td>8.7 ms</td>
+</tr>
+<tr>
+<td>vertical turf impulse, 0–10 ms</td>
+<td>9.5 N·s</td>
+<td>11.7</td>
+<td>14.1</td>
+<td>10.9</td>
+</tr>
+<tr>
+<td>0–25 ms</td>
+<td>30.1</td>
+<td>27.0</td>
+<td>25.5</td>
+<td>28.2</td>
+</tr>
+<tr>
+<td><strong>0–50 ms</strong> (the G1a window)</td>
+<td><strong>40.2</strong></td>
+<td><strong>45.5</strong></td>
+<td><strong>47.4</strong></td>
+<td>43.7</td>
+</tr>
+<tr>
+<td><strong>0–100 ms</strong> (arrest complete)</td>
+<td><strong>73.6</strong></td>
+<td><strong>75.6</strong></td>
+<td><strong>75.8</strong></td>
+<td>74.6</td>
+</tr>
+<tr>
+<td>0–200 ms</td>
+<td>154.7</td>
+<td>154.3</td>
+<td>154.2</td>
+<td>154.4</td>
+</tr>
+<tr>
+<td>0–400 ms</td>
+<td>312.3</td>
+<td>312.0</td>
+<td>312.1</td>
+<td>311.9</td>
+</tr>
+<tr>
+<td>peak landing-foot load (control-step average)</td>
+<td>1159 N</td>
+<td>1720 N</td>
+<td>2348 N</td>
+<td>1581 N</td>
+</tr>
+<tr>
+<td>peak penetration</td>
+<td>1.20 mm</td>
+<td>0.54 mm</td>
+<td>0.21 mm</td>
+<td>0.74 mm</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Classification.</strong> The integrated impulse converges once the window covers the arrest: 240 vs 960 Hz differs 3 % at 100 ms, 0.3 % at 200 ms and 0.06 % at 400 ms. The contact time, approach, COM trajectory and loading time are identical. So this is <strong>materially the same physical event</strong>, and the G1a 4–15 % came from two sources:</p>
+<ul>
+<li><strong>Windowing:</strong> a fixed 50 ms window cuts through a roughly 100 ms arrest, so it measures how the impulse is distributed inside the impact, not the event itself.</li>
+<li><strong>Contact-solver / sub-step sensitivity of rigid impact:</strong> peak forces never converge (1.2 → 1.7 → 2.3 kN). Rigid contact has no finite peak; penetration and the first-step impulse depend on the time step. Doubling the solver iterations at 240 Hz moves the 50 ms impulse and peak about half-way toward 480 Hz, so the residual is part iteration convergence and part time step.</li>
+</ul>
+<p>It is <strong>not controller-rate sensitivity</strong>, because the control rate was held fixed. Whether the controller itself is rate-sensitive was <em>not</em> tested: the controllers carry step-count constants that would first have to be re-expressed in time.</p>
+<p><strong>The other two S10 cases:</strong></p>
+<table>
+<thead>
+<tr>
+<th>case</th>
+<th>finding</th>
+<th>class</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D6_slide</td>
+<td>A→B impulse 180 / 148 / 165 N·s at 240 / 480 / 960 Hz with the new stack, and <strong>166 / 149 / 166 with the approved C1+C3</strong> — the same non-monotone spread, so it is not the new layers. Outcome identical; struck foot slides 14.7–16.7 cm; COM peak 0.24–0.30 m/s; trunk ≈ 5°.</td>
+<td>contact-solver sensitivity of a sustained two-body sliding (stick-slip) contact; the gross response is robust</td>
+</tr>
+<tr>
+<td>S5_F80</td>
+<td>The corrective step is identical at every rate: liftoff 1.075–1.083 s, touchdown 1.354–1.358 s, foothold 2.5–2.9 cm. The post-step stance is marginal: at 720 / 960 Hz the trailing foot is dragged 23 cm and carries 2–7 N; ξ margin 2.5–3 cm. 480 Hz on the plate tips over the edge; 480 Hz on static turf, 720 and 960 Hz recover.</td>
+<td>a boundary case in the post-step phase (a missing closing step — §3), exposed by more accurate contact</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Is 240 Hz justified?</strong> Yes, for locomotion events, trajectories and integrated impulses over physically meaningful windows (≥ the ~100 ms arrest). Rules that follow from this:</p>
+<ul>
+<li>Never use <strong>peak contact forces</strong> as decision thresholds or claims; they aren't convergent at any rate with rigid contact. Use impulses over the arrest window.</li>
+<li>Re-qualify sliding <strong>two-body contact</strong> (tackles, G6) with an event-level test, not fixed windows.</li>
+<li>If contact-force realism is ever needed, the fix is compliance in the contact model (a shoe / turf law), not a higher rate.</li>
+</ul>
+<h2>2. Controller cost</h2>
+<p><strong>Split</strong> (Node, single thread; per character per 60 Hz frame = 4 control steps; production mode, meaning no ledger objects, which gives bit-identical targets):</p>
+<table>
+<thead>
+<tr>
+<th>scenario</th>
+<th>production controller p50 / p95</th>
+<th>Jolt physics p50 / p95</th>
+<th>review instrumentation p50 / p95</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S1 quiet stance</td>
+<td>0.17 / 0.39 ms</td>
+<td>0.53 / 0.58</td>
+<td>0.07 / 0.08</td>
+</tr>
+<tr>
+<td>S4 in-place steps</td>
+<td>0.44 / 0.88</td>
+<td>0.62 / 0.68</td>
+<td>0.07 / 0.11</td>
+</tr>
+<tr>
+<td>S7a push in swing</td>
+<td>0.39 / 0.71</td>
+<td>0.61 / 0.67</td>
+<td>0.07 / 0.08</td>
+</tr>
+<tr>
+<td>S5_F80 reactive step</td>
+<td>0.47 / 0.67</td>
+<td>0.56 / 0.67</td>
+<td>0.07 / 0.08</td>
+</tr>
+<tr>
+<td>S2b transfer</td>
+<td>0.49 / 0.67</td>
+<td>0.57 / 0.61</td>
+<td>0.07 / 0.08</td>
+</tr>
+<tr>
+<td>S11b obstacle</td>
+<td>0.53 / 0.78</td>
+<td>0.60 / 0.72</td>
+<td>0.07 / 0.09</td>
+</tr>
+<tr>
+<td>S8 style saturation</td>
+<td>0.18 / 0.37</td>
+<td>0.55 / 0.59</td>
+<td>0.07 / 0.08</td>
+</tr>
+</tbody>
+</table>
+<p>Worst single frames reach 1.6–40 ms. These are isolated garbage-collection / JIT events, not recurring cost.</p>
+<p><strong>By layer</strong> (mean ms per frame, production, standing → stepping):</p>
+<table>
+<thead>
+<tr>
+<th>layer</th>
+<th>ms per frame</th>
+<th>note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>task controllers</td>
+<td>0.07 → 0.25–0.34</td>
+<td>the <strong>reused, approved</strong> balance controller: C1 law, IK, Jᵀ, hip strategy, C2's double-support split. The swing feed-forward is ≤ 0.02.</td>
+</tr>
+<tr>
+<td>actuator arbitration</td>
+<td>0.03–0.06</td>
+<td>the review ledger adds another 0.02–0.06</td>
+</tr>
+<tr>
+<td>sensing</td>
+<td>0.03–0.05</td>
+<td></td>
+</tr>
+<tr>
+<td>Jolt I/O</td>
+<td>≈ 0.055</td>
+<td>13 motor writes, 14 state reads, joint reads, ankle λ</td>
+</tr>
+<tr>
+<td>motion planning</td>
+<td>0.004–0.03</td>
+<td>viability monitor + executor + rhythm + capture search</td>
+</tr>
+<tr>
+<td>gait / support state</td>
+<td>≤ 0.005</td>
+<td></td>
+</tr>
+<tr>
+<td>composition</td>
+<td>≤ 0.013</td>
+<td></td>
+</tr>
+<tr>
+<td>review-only</td>
+<td>≈ 0.07</td>
+<td>runner recording, hashing, force-plate ledger, motor-λ reads</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Optimisations</strong>, both low-risk and general. Determinism and behaviour are unchanged: all 10 approved suites and all G1a hashes are identical.</p>
+<ol>
+<li><strong><code>polyDist</code> made allocation-free</strong> (same arithmetic, same order). It was the largest JavaScript cost in the whole controller. C2's double-support weight split calls it about 3000 times per control step (49 ratios × 2 clamps × 31 bisection steps), and every call allocated four small arrays per edge. Task-controller cost when stepping fell from 0.36–0.44 to 0.28–0.34 ms per frame.</li>
+<li><strong>An arbiter production mode</strong> (<code>ledger: false</code>) that builds no ledger objects. Its targets are bit-identical to the review mode.</li>
+</ol>
+<p><strong>Not done:</strong> C2's split could run below 240 Hz, and its bisection could be replaced by an exact projection. Both would change approved behaviour, so both are left for an explicit decision.</p>
+<p><strong>Preliminary 22-player projection.</strong> This is measured, not extrapolated: 22 characters in one Jolt world, each running the new stack in production mode while stepping in place.</p>
+<table>
+<thead>
+<tr>
+<th>characters</th>
+<th>Jolt p50 / p95</th>
+<th>controller p50 / p95</th>
+<th>sensing</th>
+<th>Jolt I/O</th>
+<th>total p50 / p95 per 60 Hz frame</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>0.62 / 0.68</td>
+<td>0.32 / 0.85</td>
+<td>0.05</td>
+<td>0.06</td>
+<td>1.07 / 1.72 ms</td>
+</tr>
+<tr>
+<td>6</td>
+<td>3.65 / 3.88</td>
+<td>1.32 / 2.85</td>
+<td>0.14</td>
+<td>0.31</td>
+<td>5.47 / 7.02</td>
+</tr>
+<tr>
+<td>11</td>
+<td>6.83 / 9.72</td>
+<td>2.61 / 6.65</td>
+<td>0.28</td>
+<td>0.60</td>
+<td>10.5 / 19.2</td>
+</tr>
+<tr>
+<td><strong>22</strong></td>
+<td><strong>13.5 / 14.0</strong></td>
+<td><strong>4.7 / 10.6</strong></td>
+<td>0.55</td>
+<td>1.2</td>
+<td><strong>20.1 / 26.1</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Review instrumentation, if left on, would add about 1.5 ms for 22 players.</p>
+<p><strong>Reading:</strong>
+- Jolt scales linearly at about 0.61 ms per character per frame.
+- 22 full-physics players at 240 Hz on <strong>one thread</strong> need about 20 ms per 60 Hz frame against a 16.7 ms budget, before rendering and the match engine.
+- The controller is not the main problem: 4.7 of 20 ms.</p>
+<p>Options for later, not G2:
+- a multithreaded Jolt build (needs SharedArrayBuffer / cross-origin isolation);
+- physics in a worker;
+- a physics level of detail for players far from the ball;
+- a lower rate or fewer solver iterations where §1 shows it is safe.</p>
+<h2>3. The five open items: classification</h2>
+<table>
+<thead>
+<tr>
+<th>item</th>
+<th>class</th>
+<th>reasoning / evidence</th>
+<th>action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>no mid-swing rhythmic → corrective escalation</td>
+<td><strong>can wait (G3)</strong></td>
+<td>Needed only when a disturbance exceeds the gait's own foothold adjustment (30 N·s; 15 N·s at ≥ 100 ms latency). G2 walking is undisturbed; its step generator must have enough foothold range by design.</td>
+<td>none</td>
+</tr>
+<tr>
+<td>no downward search when planned ground is absent</td>
+<td><strong>can wait (G3 / uneven ground)</strong></td>
+<td>No MISSED touchdown in any undisturbed run at any tested latency. MISSED appears only after a disturbance or at ≥ 100 ms latency (S7d; F80 at 100/170).</td>
+<td>none</td>
+</tr>
+<tr>
+<td>a touching-but-unloaded foot is not reloaded</td>
+<td><strong>can wait (G3)</strong></td>
+<td>Diagnosed as a missing <strong>closing step</strong> after a large recovery step (F80 at 720 / 960 Hz, D6X_load80, S2x), not a support deadlock. I tested the deadlock hypothesis directly: letting the CoP use an unloaded foot's contact points was eligible 162 times in F80 and changed nothing, because the capture-point law pushes off the front foot. That change is reverted. In walking, the planned double-support transfer loads each landing foot within 10 ms.</td>
+<td>none (experiment reverted)</td>
+</tr>
+<tr>
+<td>the recovery planner can choose the same foot twice</td>
+<td><strong>can wait (G3)</strong></td>
+<td>A multi-step recovery sequencing issue (S7a at 0/0). It does not arise in undisturbed stepping.</td>
+<td>none</td>
+</tr>
+<tr>
+<td><strong>±12° pelvis yaw</strong></td>
+<td><strong>G2 blocker — not cleanly fixable in G1b</strong></td>
+<td>Whole-body yaw (vertical angular momentum ±1 kg·m²/s per step), exchanged with the ground through the stance foot. The stance twist axes saturate: the ankle at its V1.1 limit (~20 N·m) on 270–380 of the 1200 control steps between 1.5 and 6.5 s, the hip at its budgeted limit. The envelope <strong>grows</strong> over ten undisturbed steps (±2° → ±11°). It is not the style or the latency: ±12.8° with or without style, ±9–10° at 0/0 ms or without the swing feed-forward. No layer regulates heading. Walking's forward leg swing will make the yaw moment larger. The physically right fix is angular-momentum regulation with arm counter-swing and trunk counter-rotation — new capability, with arms and C4 out of G1b's scope.</td>
+<td><strong>the first G2 work item</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Also found, and belonging to G2's design:</strong> in-place stepping has weak step-to-step correction. After a push at zero latency the lateral capture-point orbit shifts to one side and is not pulled back (adjustments stay near 1 cm), and a fall follows six steps later. G2's walking foothold law must be designed and tested for <strong>orbital stability</strong> (step-to-step ξ feedback), not inherit the in-place adjustment.</p>
+<h2>4. Latency: what needs what</h2>
+<p>The architecture keeps per-process delays. The values are provisional parameters, not human constants, and were <strong>not</strong> tuned to pass tests.</p>
+<table>
+<thead>
+<tr>
+<th>timescale</th>
+<th>processes (in this stack)</th>
+<th>why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>immediate — mechanical, no delay</strong></td>
+<td>contact and friction; joint constraints and limits; the motors' current impedance (spring and damping act on the <em>actual</em> joint state every physics step); the finite torque envelope (Jolt enforces it every sub-step); the landing leg's compliance; gravity</td>
+<td>the body's own mechanics: muscle impedance, tissue, the ground. Delaying them would be unphysical.</td>
+</tr>
+<tr>
+<td><strong>fast feedback (tens of ms; 50 ms here)</strong></td>
+<td>the balance law (CoP / ankle strategy), hip strategy, stance posture, swing-tracking corrections, touchdown acceptance and loading, obstruction reaction, early-swing foothold adjustment</td>
+<td>reflex-like responses to the sensed state. Obstruction reaction = feedback delay (50 ms), by construction.</td>
+</tr>
+<tr>
+<td><strong>slower replanning (100–200 ms; 120 ms here, re-searched at 60 Hz)</strong></td>
+<td>the viability monitor's step decision; capture-step and sequence search; rhythm and transfer scheduling; style and task selection</td>
+<td>decisions on a whole-body state estimate</td>
+</tr>
+<tr>
+<td><strong>bookkeeping — undelayed, never reacts</strong></td>
+<td>gait / support roles and events from contact truth</td>
+<td>records what happened; every reaction still waits for its own view</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Measured sensitivity</strong> (G1a sweep): in-place stepping tolerates 100/170 ms and fails at 150/220 ms. The reactive step degrades sharply above 50 ms: F80 foothold error is 19.6 cm at 50/120 ms and it falls at 100/170 ms.</p>
+<p><strong>Why 50/120 is kept as the provisional default:</strong> it puts the reactive step's liftoff about 204 ms after the push starts, whereas zero latency gives 83 ms, which is faster than a person can react. Compensatory stepping in people is generally reported to start some 200–300 ms after a perturbation; I'm quoting that from memory, not a checked source.</p>
+<h2>5. Final G1 visual review</h2>
+<p>Open with <code>?suite=G1&amp;review=&lt;id&gt;</code>, or use the buttons in the side panel. Each case sets its test, its comparison ghost (magenta), its camera and its bottom chart. Contact sheets, also produced by the page itself in headless Chrome, are in <code>g1b/sheets/</code>.</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>case</th>
+<th>ghost</th>
+<th>chart</th>
+<th>physical</th>
+<th>how human it looks (my honest read of the sheets)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>steps</code></td>
+<td>10 in-place steps</td>
+<td>—</td>
+<td>pelvis yaw</td>
+<td>10/10, ≤ 3.3 cm, ledger closed</td>
+<td><strong>robotic</strong>: 7 cm flat-footed vertical lifts, little knee bend, a rigid bolt-upright trunk, arms hanging motionless, growing pelvis yaw</td>
+</tr>
+<tr>
+<td><code>transfer</code></td>
+<td>transfer + one step</td>
+<td>—</td>
+<td>vertical force</td>
+<td>gate 1.17 s, foothold 2.2 cm</td>
+<td><strong>statue-like</strong>: C2 hovers and lowers the foot for 1.5 s; a person takes about 0.5 s with a counterbalance</td>
+</tr>
+<tr>
+<td><code>push</code></td>
+<td>15 N·s in swing</td>
+<td>no push</td>
+<td>ξ lateral</td>
+<td>footholds move 5.2 cm, keeps stepping</td>
+<td>the reaction is almost invisible: no arm or trunk response</td>
+</tr>
+<tr>
+<td><code>early</code></td>
+<td>early touchdown on raised turf</td>
+<td>flat turf</td>
+<td>vertical force</td>
+<td>touchdown 108 ms early, re-synchronised, upright</td>
+<td>correct but stiff; no stumble reaction</td>
+</tr>
+<tr>
+<td><code>obstacle</code></td>
+<td>box in the swing path</td>
+<td>flat turf</td>
+<td>ξ fore-aft</td>
+<td>OBSTRUCTION, 50 ms reaction, 0.9 mm, upright</td>
+<td>right outcome; abrupt stop, no trip reaction</td>
+</tr>
+<tr>
+<td><code>sat</code></td>
+<td>style vs support</td>
+<td>no arbitration</td>
+<td>COM height</td>
+<td>support 96 %, style 1 % admitted; the ghost sags 11.7 cm</td>
+<td>the body simply ignores the style</td>
+</tr>
+<tr>
+<td><code>latency</code></td>
+<td>F80 at 50/120</td>
+<td>100/170 ms</td>
+<td>COM height</td>
+<td>lunge step recovers; the ghost misses the ground and falls</td>
+<td>a pronounced hip jackknife before the step; the fall is plausible</td>
+</tr>
+<tr>
+<td><code>rate</code></td>
+<td>240 Hz</td>
+<td>480 Hz physics</td>
+<td>vertical force</td>
+<td>the ghost lies on the body; the impulse agrees within 3 % over 100 ms</td>
+<td>identical</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Physical correctness vs human look.</strong> Physically the stack does the right things for the right reasons. Visually it is a robot:</p>
+<ul>
+<li>no arm swing;</li>
+<li>no trunk or pelvis motion patterns except an unwanted yaw;</li>
+<li>flat-foot vertical lifts with no heel–toe roll;</li>
+<li>minimal knee flexion;</li>
+<li>slow C2 placements.</li>
+</ul>
+<p>None of this is hidden by the metrics. It is expected at G1, where the only style is the IDLE pose at P3. G2 needs the walking reference (of_loco at the measured phase: arm swing, knee flexion, heel–toe) and yaw / angular-momentum regulation from the start.</p>
+<h2>6. What changed in G1b</h2>
+<ul>
+<li><strong><code>pc_sense.js</code>:</strong> <code>polyDist</code> allocation-free (bit-identical).</li>
+<li><strong><code>pc_act.js</code>:</strong> production mode <code>ledger: false</code>. <strong><code>pc_loco.js</code>:</strong> passes <code>opts.ledger</code>.</li>
+<li><strong><code>pc_gateg1a.js</code>:</strong> two review scenarios, <code>S3a_transferStep</code> and <code>S11f_flatStep</code>.</li>
+<li><strong><code>pc_harness.js</code> / <code>index.html</code>:</strong></li>
+<li>the G1 review list;</li>
+<li>comparison runs as a magenta ghost;</li>
+<li>the bottom-chart selector (arbiter / vertical force / COM / ξ / yaw);</li>
+<li>shot mode (<code>&amp;shot=…</code>) for contact sheets;</li>
+<li>camera parameters.</li>
+<li><strong><code>pc_balance.js</code>:</strong> the <code>touchSupport</code> experiment was <strong>reverted</strong> — no net change beyond G1a.</li>
+<li><strong>Regression:</strong> A, B, C1, C2 (V1 + V1.1), C3 29/29 and D 7/7 all hash-identical. G1a evidence regenerated: 26/26 scenarios deterministic, the same criteria results.</li>
+<li><strong>Evidence:</strong> <code>g1b/json/</code> (S10 event analysis, D6 rates, profiles, 22-character scaling), <code>g1b/probes/</code> (the scripts), <code>g1b/sheets/</code> (9 contact sheets).</li>
+</ul></main></body></html>

@@ -1,0 +1,1304 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Locomotion Architecture Final</title><style>
+:root{--bg:#fbfaf7;--ink:#1d1f22;--mute:#5d646b;--line:#dcd8cf;--code:#f1eee7;--acc:#8a5a00;--q:#f4efe2}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#141619;--ink:#e6e4df;--mute:#9aa0a6;--line:#33373d;--code:#1d2024;--acc:#f0c060;--q:#1f1c14}}
+:root[data-theme="dark"]{--bg:#141619;--ink:#e6e4df;--mute:#9aa0a6;--line:#33373d;--code:#1d2024;--acc:#f0c060;--q:#1f1c14}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 -apple-system,system-ui,"Segoe UI",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px 80px}
+h1{font-size:26px;line-height:1.25} h2{font-size:20px;margin-top:40px;padding-top:12px;border-top:1px solid var(--line)} h3{font-size:16px;color:var(--acc)}
+table{border-collapse:collapse;width:100%;font-size:13px;margin:12px 0;display:block;overflow-x:auto} th,td{border:1px solid var(--line);padding:5px 8px;vertical-align:top;text-align:left} th{background:var(--code)}
+code{background:var(--code);padding:1px 4px;border-radius:3px;font-size:12.5px} pre{background:var(--code);padding:12px;border-radius:6px;overflow-x:auto;font-size:12px;line-height:1.45} pre code{padding:0;background:none}
+blockquote{margin:12px 0;padding:10px 16px;background:var(--q);border-left:4px solid var(--acc)} a{color:var(--acc)}
+img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:4px} li>ul,li>ol{margin:4px 0}
+
+.dg{display:block;width:100%;height:auto;margin:16px 0 8px}
+.dg .box{fill:var(--code);stroke:var(--line);stroke-width:1.2}
+.dg .hi{fill:var(--q);stroke:var(--acc);stroke-width:1.5}
+.dg .ok{fill:var(--q);stroke:var(--mute);stroke-width:1.2;stroke-dasharray:4 3}
+.dg text{fill:var(--ink);font:13px -apple-system,system-ui,"Segoe UI",sans-serif}
+.dg .b{font-weight:600}
+.dg .s{fill:var(--mute);font-size:11.5px}
+.dg .ln{stroke:var(--mute);stroke-width:1.5;fill:none}
+.dg .ac{stroke:var(--acc);stroke-width:1.8;fill:none}
+.dg .dash{stroke-dasharray:5 4}
+.cap{color:var(--mute);font-size:13px;margin:0 0 18px}
+</style></head><body><main><h1>Physical locomotion architecture: final (Claude + Astra reconciled)</h1>
+<p><strong>Status:</strong> architecture and plan only. Nothing here is implemented. Locomotion has not started, accepted physics behaviour is unchanged, the Reference Tackle has not started, and nothing is pushed.</p>
+<p><strong>Inputs reconciled:</strong>
+- my <code>LOCOMOTION_PROPOSAL.md</code> (commit 4062764);
+- Astra's independent report <em>"Touchline: independent physical-character architecture review"</em>;
+- the D6 diagnostic (<code>d6_diagnostic/D6_DIAGNOSTIC_REPORT.md</code>, checkpoint f18c8a7);
+- the pre-reboot handoff;
+- targeted checks made for this document: the Jolt headers, our own joint/motor configuration, the D6 joint-limit loading, and the existing <code>anim3d/of_loco.js</code> gait family.</p>
+<p><strong>How claims are marked</strong>
+- <strong>[R] research-supported principle.</strong> The physics, or a published result.
+- <strong>[E] engineering choice.</strong> A defensible design decision, not the only one.
+- <strong>[H] Touchline hypothesis.</strong> Believed, but it must be tested in a named gate before it is relied on.</p>
+<hr />
+<h2>1. Executive architecture</h2>
+<p><strong>One continuous, actively controlled physical footballer.</strong> The same 14-body V1.1 Jolt character stands, starts, walks, runs, turns, stops, acts, gets hit, recovers, stumbles or falls. Locomotion is not a new character. It is a <strong>support-planning layer</strong> added above the balance machinery we already have, and it feeds <strong>one actuator authority per joint</strong>.</p>
+<svg class="dg" viewBox="0 0 880 386" role="img" aria-label="Figure 1 — control stack. Commands flow down; only the SENSED physical state flows up (orange). No layer writes a pose, a velocity or a root force."><defs><marker id="ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--mute)"/></marker><marker id="aa1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--acc)"/></marker></defs><rect x="170" y="10" width="620" height="46" rx="6" class="box"/><text x="184" y="30" class="b">L5 Football intent</text><text x="184" y="47" class="s">desired velocity · facing · foot constraints · action requests</text><text x="800" y="38" class="s">match tick</text><path d="M480 56 L480 72" class="ln" marker-end="url(#ar1)"/><rect x="170" y="72" width="620" height="46" rx="6" class="hi"/><text x="184" y="92" class="b">L4 Motion planner + viability monitor</text><text x="184" y="109" class="s">N-step timed footsteps · speed/turn regulation · capability envelope ↑</text><text x="800" y="100" class="s">60 Hz + events</text><path d="M480 118 L480 134" class="ln" marker-end="url(#ar1)"/><rect x="170" y="134" width="620" height="46" rx="6" class="hi"/><text x="184" y="154" class="b">L3 Gait / support state</text><text x="184" y="171" class="s">support mode from contacts · per-foot roles · state-based phase</text><text x="800" y="162" class="s">240 Hz</text><path d="M480 180 L480 196" class="ln" marker-end="url(#ar1)"/><rect x="170" y="196" width="620" height="46" rx="6" class="hi"/><text x="184" y="216" class="b">L2 Task controllers</text><text x="184" y="233" class="s">stance (C1) · transfer (C2) · swing · style (reference) · arms (C4) · protective (C5)</text><text x="800" y="224" class="s">240 Hz</text><path d="M480 242 L480 258" class="ln" marker-end="url(#ar1)"/><rect x="170" y="258" width="620" height="46" rx="6" class="hi"/><text x="184" y="278" class="b">L1 Actuator arbiter</text><text x="184" y="295" class="s">one target + gains + torque envelope per joint axis · priorities · ledger</text><text x="800" y="286" class="s">240 Hz</text><path d="M480 304 L480 320" class="ln" marker-end="url(#ar1)"/><rect x="170" y="320" width="620" height="46" rx="6" class="box"/><text x="184" y="340" class="b">L0 Jolt + sensing</text><text x="184" y="357" class="s">14 bodies · joints/limits · contacts/friction · pc_sense: actual contact is truth</text><text x="800" y="348" class="s">240 Hz</text><path d="M170 343 L150 343 L150 95 L168 95" class="ac" marker-end="url(#aa1)"/><path d="M150 157 L168 157" class="ac" marker-end="url(#aa1)"/><path d="M150 219 L168 219" class="ac" marker-end="url(#aa1)"/><text x="14" y="170" class="s">sensed state</text><text x="14" y="185" class="s">flows up;</text><text x="14" y="200" class="s">each layer</text><text x="14" y="215" class="s">reads it through</text><text x="14" y="230" class="s">its own delay</text></svg><p class="cap">Figure 1 — control stack. Commands flow down; only the SENSED physical state flows up (orange). No layer writes a pose, a velocity or a root force.</p>
+
+<table>
+<thead>
+<tr>
+<th>layer</th>
+<th>rate</th>
+<th>owns</th>
+<th>never does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>L5 Football intent</strong> (not physics)</td>
+<td>match tick</td>
+<td>desired planar velocity, facing, optional timed foot constraints, action requests</td>
+<td>set a body transform; decide a physical outcome</td>
+</tr>
+<tr>
+<td><strong>L4 Motion planner</strong></td>
+<td>60 Hz + on every contact event</td>
+<td>the N-step footstep plan (timed, reachable, occupancy-aware); speed and turn regulation; the <strong>viability monitor</strong>; the capability envelope reported back to L5</td>
+<td>apply a force; write a pose</td>
+</tr>
+<tr>
+<td><strong>L3 Gait / support state</strong></td>
+<td>240 Hz</td>
+<td>per-foot contact truth (from Jolt) → support mode; per-foot role; continuous stride phase, re-synchronised by actual events</td>
+<td>advance a phase the body has not followed</td>
+</tr>
+<tr>
+<td><strong>L2 Task controllers</strong></td>
+<td>240 Hz</td>
+<td><strong>stance/support</strong> (C1's CoP law, Jᵀ gravity compensation, virtual force, trunk via the stance hip); <strong>swing</strong>; <strong>posture/style</strong> (reference); <strong>arms</strong>; <strong>protective</strong></td>
+<td>exceed their priority class; bypass L1</td>
+</tr>
+<tr>
+<td><strong>L1 Actuator arbiter</strong></td>
+<td>240 Hz</td>
+<td>one target + gains + torque envelope per joint axis; priority allocation; activation-rate limit; torque–velocity envelope; the work/power ledger</td>
+<td>leave any motor at Jolt's ±FLT_MAX default</td>
+</tr>
+<tr>
+<td><strong>L0 Jolt + sensing</strong></td>
+<td>240 Hz</td>
+<td>rigid bodies, joints and limits, contacts, friction; sensing of contacts, loads, slip, rocking, external contact</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Principles, locked (from the user) and confirmed by the evidence so far:</strong>
+- the Jolt body is the only spatial state;
+- no root support, kinematic capsule or teleport;
+- finite motors;
+- contacts can defeat intent;
+- actual touchdown overrides planned touchdown;
+- reference motion supplies preferences only;
+- football authority is separate.</p>
+<p><strong>What already exists and evolves; nothing is thrown away and no second controller is created:</strong>
+- <strong>C1 → stance controller:</strong> the CoP law, Jᵀ gravity support, hip strategy, feet-in-place.
+- <strong>C2 → support-transfer logic:</strong> planned unloading, liftoff gate, load acceptance.
+- <strong>C3 → the foothold law</strong> inside the N-step planner (its latched one-shot decision is retired).
+- <strong>C1 classifier → the viability monitor.</strong>
+- <strong>C4 → arm module.</strong>
+- <strong>C5 → protective module.</strong>
+- <strong>pc_sense</strong> stays the contact truth, including the D6 fix: a foot touched by another body is no measurement of turf friction.</p>
+<p><strong>Direction:</strong>
+- <strong>[E]</strong> B + C as originally proposed: GBWC-style feedback (Coros et al. 2010) plus reference-driven style (Lee et al. 2010; DReCon-like in spirit).
+- <strong>Strengthened by Astra:</strong> an explicit support-state model, a single actuator arbiter, a layered latency model, stride-level impulse auditing, perturbations in every gate, and a flight/landing gate before running.
+- <strong>Deferred:</strong> learned control (DeepMimic, DReCon). It stays a later option for motion quality, behind the same actuator and observation interface.
+- <strong>No engine migration.</strong></p>
+<hr />
+<h2>2. Claude vs Astra: reconciliation</h2>
+<p>Each row gives: my original position | Astra's | evidence | revised conclusion | what stays uncertain. The tag in the last column says what kind of conclusion it is.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>topic</th>
+<th>Claude (original)</th>
+<th>Astra</th>
+<th>evidence</th>
+<th><strong>revised conclusion</strong></th>
+<th>uncertain → test</th>
+<th>type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Overall approach</td>
+<td>B + C: Coros-style walking on the existing layers + reference gait targets</td>
+<td>Hybrid contact-aware controller; GBWC "best first direction"; learned control later</td>
+<td>SIMBICON (Yin 2007), GBWC (Coros 2010), Lee 2010, DReCon (Bergamin 2019), DeepMimic (Peng 2018)</td>
+<td><strong>Agree; unchanged in substance.</strong> Add Astra's structure (§§3–5).</td>
+<td>Whether hand-built feedback reaches human motion quality → visual gates G2/G5</td>
+<td>[E]</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Gate 0</td>
+<td>None; went straight to L1</td>
+<td>Instrumentation first: momentum closure, actuator audit, convergence, frozen-command tests</td>
+<td>D6 showed why the ledger matters (the friction-observer bug was found by instrumentation)</td>
+<td><strong>Adopt, but small:</strong> D6 already did most of it. The remaining items (actuator ledger, 480 Hz convergence check, internal-momentum test, frozen-command diagnostic) are the <strong>entry of G1a</strong>, not a separate long gate.</td>
+<td>–</td>
+<td>[E]</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Pushes</td>
+<td>A separate late gate (L5)</td>
+<td>Perturbations in <strong>every</strong> gate, at stance, unloading, early and late swing, and touchdown</td>
+<td>Pijnappels 2004 (phase-dependent responses); the C3 finding that recovery quality depends on swing execution</td>
+<td><strong>Adopt Astra.</strong> Every gate carries a perturbation matrix; my L5 disappears as a separate gate.</td>
+<td>Phase-specific failure modes of the new swing → G1–G3</td>
+<td>[R] principle / [E] schedule</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Running entry</td>
+<td>Go to jog (L3) after walking, possibly straight after L1</td>
+<td>Prove push-off → flight → landing (G4) before running</td>
+<td>Running = spring-mass stance + ballistic flight (Blickhan 1989; McMahon &amp; Cheng 1990); flight must be physically produced</td>
+<td><strong>Adopt Astra; I withdraw "L3 straight after L1".</strong> G4 = a vertical hop + a single leap from a walk, before continuous running (G5).</td>
+<td>Whether the rigid box foot gives usable push-off → G4</td>
+<td>[R]</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Speed changes and stopping</td>
+<td>Stop in L2; speed changes in L4</td>
+<td>Start, stop and speed change <strong>inside</strong> walking</td>
+<td>Speed is regulated by foot placement and step timing from the first steps (Raibert 1986; Coros 2010)</td>
+<td><strong>Adopt.</strong> G2 = start, three speeds, changes, stop.</td>
+<td>–</td>
+<td>[E]</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Turns</td>
+<td>L4, after jog</td>
+<td>G3: 3-D walking + constrained recovery <strong>before</strong> flight</td>
+<td>C3's lateral gap (crossover needs a 5–6 m/s foot; step sequences are the fix)</td>
+<td><strong>Adopt the order, trimmed:</strong> G3 = turns, side, back and crossover steps, blocked-foothold recovery, lateral pushes. Curves at speed are left to G6.</td>
+<td>Lateral step sequences with 140 N·m hip abduction → G3</td>
+<td>[E] + [H]</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Actuator authority</td>
+<td>Implicit: each module shapes targets; one Jolt motor per joint with a budgeted torque cap</td>
+<td><strong>One final actuator arbiter</strong>; torque–velocity, activation rate, power/work ledger; no module gets its own full strength</td>
+<td>Jolt motor limits default to ±FLT_MAX (<strong>verified</strong>, MotorSettings.h); Hill torque–velocity; Anderson et al. 2007 torque–angle–velocity surfaces; Geijtenbeek 2013 activation dynamics</td>
+<td><strong>Adopt, and make explicit</strong> (§4). Our code already clamps every joint every step (no FLT_MAX motor), so torque can already never exceed the cap. What is new is the <strong>choice of which request loses</strong> under saturation, and the <strong>speed-dependent envelope</strong>.</td>
+<td>Whether priority allocation computed on a <em>predicted</em> torque works with Jolt's implicit spring motor → G1a saturation tests</td>
+<td>[R] physics / [E] design / [H] realisation</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Hard limits as hidden bracing</td>
+<td>Not considered</td>
+<td>Limits are a separate, possibly unbounded resistance path; check them</td>
+<td>Jolt: SixDOF <strong>rotation limits cannot be soft</strong> (verified, SixDOFConstraint.h). Our knees and elbows have soft 20 Hz stops; hips, ankles, spine and shoulders are hard</td>
+<td><strong>Measured:</strong> in D6 no limit carried load (struck-leg margins ≥ 7°, knee limit torque 0). <strong>Rule:</strong> log limit engagement in every gate; the ankle dorsiflexion stop (30°) is the expected one in late stance and running.</td>
+<td>Hard-limit loading in running landings → G4/G5</td>
+<td>[R] Jolt fact / [H]</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Latency</td>
+<td>D6: 0 vs 100 ms delay made no difference</td>
+<td>Three mechanisms: immediate mechanical, delayed feedback, slower task-level; sweep 0–250 ms; <strong>frozen targets ≠ frozen feedback</strong></td>
+<td>Pijnappels 2004 (support-limb responses ≈ 65 ms after trips); DeMers 2017 (pre-activation vs reflex)</td>
+<td><strong>Adopt the layered model</strong> (§9). Astra is right about my freeze diagnostic: it held <em>targets</em>, so the PD impedance still reacted (it is the "pre-activation" part). A <strong>frozen-command</strong> diagnostic is added to G1a. The new controller runs with <strong>configurable delays from day one</strong>: [E] default 50 ms feedback, 120 ms planning, swept 0/50/100/150/250.</td>
+<td>Which delays keep human-like recovery without making the controller too weak → G1a/G1 sweep</td>
+<td>[R] structure / [E] values</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Capture point</td>
+<td>Classifier: ξ outside the hip-extended support → STEP_NEEDED → release</td>
+<td>ξ is a diagnostic, not a fall oracle; use support feasibility (friction cone, CoP in patch, torque, <strong>time</strong>, occupancy) and N-step selection; "planner failed" ≠ "physically unrecoverable"</td>
+<td>Hof 2008; Curtze et al. (cautions on margin of stability); Koolen 2012; Wieber 2002 (viability)</td>
+<td><strong>Adopt.</strong> The C1 classifier cannot survive gait unchanged anyway: single support is <em>normal</em> in walking, and a region-shrink rule would call STEP_NEEDED on every swing. It becomes the <strong>viability monitor</strong> (§6), with ξ as its fast core estimate. This also retires two D6 observations (the C3 refusal latch, the C1 release window).</td>
+<td>Cost and determinism of an N-step check at 60 Hz → G1a</td>
+<td>[R] + [E]</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Reference motion</td>
+<td>Gait cycles as joint targets for non-balance joints + nominal leg shapes; "author or record"</td>
+<td>Preferences only; the root trajectory is never a constraint; rebase to the actual state (DReCon)</td>
+<td>DReCon; Lee 2010; my D6 used reference <em>joint</em> keys only</td>
+<td><strong>Agree.</strong> New fact: <strong><code>anim3d/of_loco.js</code> already authors a continuous IDLE/WALK/JOG/RUN/SPRINT family for this rig</strong> (biomechanical curves, one phase convention, flight, retraction, lean from acceleration, backpedal). It is the reference source (§7), sampled by the <em>measured</em> phase and speed. Its root and stride are ignored.</td>
+<td>Dynamic feasibility of of_loco's kinematic curves; the missing toe joint → G2/G4</td>
+<td>[E] + [H]</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Propulsion</td>
+<td>Capture-point foot placement + a Coros virtual forward force</td>
+<td>Ground impulse ledger; stride impulse balance; no hidden root forces; Hamner 2010</td>
+<td>Newton; Hamner, Seth &amp; Delp 2010; Winter 2009; Morin 2011 (sprint force orientation)</td>
+<td><strong>Agree; made auditable:</strong> the force-plate instrument from D6 measures the exact GRF on the moving character (§8).</td>
+<td>Whether the virtual-force feed-forward stays inside the friction cone at acceleration → G2/G6</td>
+<td>[R]</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Gait state</td>
+<td>L/R stance FSM with contact-sensed transitions</td>
+<td>Continuous phase + per-foot states + a separate contact record; planned vs actual; hysteresis without fictitious support</td>
+<td>SIMBICON; hybrid zero dynamics (Westervelt, Grizzle &amp; Koditschek 2003) for phase as a state function</td>
+<td><strong>Merge:</strong> per-foot <strong>roles</strong> driven by physical events; phase is <strong>state-based</strong> (progression over the stance foot) and re-synchronised at contact events, never a free-running clock (§5).</td>
+<td>Phase robustness under large perturbations → G3</td>
+<td>[R] + [E]</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Contact model</td>
+<td>Coulomb, per material pair</td>
+<td>Studs have rotational traction too; audit yaw resistance, rocking, patch</td>
+<td>Turf-traction research (via Astra)</td>
+<td><strong>Partly disagree:</strong> don't model rotational traction yet. A box foot with multi-point Coulomb contact already resists yaw through distributed friction. <strong>Measure</strong> stance-foot yaw resistance in G3 turns and add a traction model only if the measurement demands it.</td>
+<td>Yaw traction adequacy for cuts → G3/G6</td>
+<td>[H]</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Numerics</td>
+<td>240 Hz, 30/4 iterations, speculative contacts</td>
+<td>Halve dt, raise iterations, rotating-limb CCD tests, momentum closure</td>
+<td>The Jolt docs on LinearCast; our substrate spike: at 13–15 m/s the defaults tunnel, speculative 0.25 m + adaptive substeps gave 0 tunnels</td>
+<td><strong>Adopt.</strong> The gate world uses speculative <strong>0.02 m</strong>; at 240 Hz a 15 m/s relative approach moves 6 cm per step. Add a <strong>deterministic, state-triggered, capped</strong> collision-substep rule before running contacts (G5/G6). Convergence checks at 480 Hz from G1a.</td>
+<td>Solver sufficiency for 2–3 BW landings and leg–leg contact at speed → G4–G6</td>
+<td>[R] + [E]</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Muscle models</td>
+<td>Not considered</td>
+<td>Borrow activation and capability constraints before any full muscle model</td>
+<td>Geyer &amp; Herr 2010; Geijtenbeek 2013; Zajac 1989</td>
+<td><strong>Adopt:</strong> activation-rate limits, torque–velocity, and eccentric &gt; concentric in the arbiter. No muscle model.</td>
+<td>Envelope parameters → G1a (permissive), G5 (binding)</td>
+<td>[R] + [E]</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Football authority</td>
+<td>"Physics never decides football outcomes"</td>
+<td>Football cannot also insist on a player transform; unreachable actions must be adjudicated explicitly</td>
+<td>–</td>
+<td><strong>Adopt:</strong> a <strong>capability envelope</strong> goes up to L5, and actions are <em>attempted</em> with their outcome <em>reported</em> (§3.4).</td>
+<td>The interface design → before G6/G7</td>
+<td>[E]</td>
+</tr>
+<tr>
+<td>18</td>
+<td>Acceptance numbers</td>
+<td>Timing ±15 %, straightness 10 cm/m, stop ≤ 2 steps</td>
+<td>3 cm foothold, 0.15 m/s speed error, 5 % convergence; fixed before acceptance; held-out set</td>
+<td>–</td>
+<td><strong>Combine</strong> (§11); values are declared per gate <em>before</em> testing and never retuned per trial.</td>
+<td>–</td>
+<td>[E]</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Where I did not simply defer to Astra:</strong>
+- rotational traction (row 14);
+- splitting G1 into <strong>G1a</strong> (architecture swap with regression parity to C2/C3) and <strong>G1</strong> (stepping capability), because the risky part is the new arbiter and monitor, not stepping itself;
+- the concrete G4 content (a vertical hop + a single leap);
+- keeping my B + C direction and the virtual-force mechanism, now audited.</p>
+<hr />
+<h2>3. Control stack</h2>
+<h3>3.1 Data flow</h3>
+<ul>
+<li><strong>Sensed state</strong> (pc_sense): the Jolt state, contacts, per-foot load / shear / slip / rocking / external-contact, whole-body COM, momentum, angular momentum. It is the <strong>only</strong> input to decisions.</li>
+<li><strong>Delays:</strong> each layer reads the sensed state through its own configurable delay buffer ([E], §9). The actuator arbiter and Jolt never wait.</li>
+</ul>
+<h3>3.2 Rates</h3>
+<table>
+<thead>
+<tr>
+<th>rate</th>
+<th>what runs there</th>
+<th>why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>240 Hz</td>
+<td>Jolt step; arbiter output (targets, gains, limits); L2 task controllers; sensing</td>
+<td>Contact and motor dynamics; the current 240 Hz × 1 world</td>
+</tr>
+<tr>
+<td>60 Hz, plus events</td>
+<td>L4 planner: N-step plan, viability, reference parameter selection, capability envelope</td>
+<td>Planning horizons are 0.3–1.5 s; replanned immediately at liftoff, touchdown, and new external contact</td>
+</tr>
+<tr>
+<td>event</td>
+<td>plan revision on touchdown, liftoff, obstruction, slip onset, new contact</td>
+<td>Actual contact is truth</td>
+</tr>
+</tbody>
+</table>
+<h3>3.3 Command interface (L5 → L4), built general from the start</h3>
+<ul>
+<li><strong>Command:</strong> <code>{ vDesired: planar vector, facing: yaw, footConstraints?: [{ foot, where, when, tolerance }], action?: request }</code>.</li>
+<li>There is no "walk / run mode". The gait family is <strong>continuous in speed and direction relative to the facing</strong> (forward, side, back); of_loco already has one phase convention across all gaits.</li>
+<li>The capability envelope is reported back every planner tick: current max acceleration, deceleration and turn rate given the state and contacts.</li>
+</ul>
+<h3>3.4 Football contract ([E])</h3>
+<ul>
+<li>L5 <em>requests</em>: "plant left foot near P at t ± Δ", "slide from here".</li>
+<li>L4 <em>attempts</em> the request, or answers "infeasible (reason)".</li>
+<li>Physics decides what actually happened, and <strong>L5 adjudicates</strong> football outcomes separately from that report. L5 never moves the body.</li>
+</ul>
+<hr />
+<h2>4. Actuator authority and budget</h2>
+<svg class="dg" viewBox="0 0 910 312" role="img" aria-label="Figure 2 — one actuator authority per joint axis. Modules REQUEST; the arbiter decides which request loses when the envelope is exceeded; Jolt enforces the envelope on the single motor."><defs><marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--mute)"/></marker><marker id="aa2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--acc)"/></marker></defs><rect x="10" y="12" width="290" height="40" rx="6" class="box"/><text x="22" y="29">posture target (one owner by role)</text><text x="22" y="45" class="s">stance IK · swing · reference · action · protective</text><path d="M300 32 L328 174" class="ln" marker-end="url(#ar2)"/><rect x="10" y="62" width="290" height="40" rx="6" class="box"/><text x="22" y="79">gravity compensation Jᵀ</text><text x="22" y="95" class="s">P0 support</text><path d="M300 82 L328 174" class="ln" marker-end="url(#ar2)"/><rect x="10" y="112" width="290" height="40" rx="6" class="box"/><text x="22" y="129">stance virtual force Jᵀ F</text><text x="22" y="145" class="s">P1 balance / propulsion</text><path d="M300 132 L328 174" class="ln" marker-end="url(#ar2)"/><rect x="10" y="162" width="290" height="40" rx="6" class="box"/><text x="22" y="179">hip strategy · arm momentum (C4)</text><text x="22" y="195" class="s">P1 balance</text><path d="M300 182 L328 174" class="ln" marker-end="url(#ar2)"/><rect x="10" y="212" width="290" height="40" rx="6" class="box"/><text x="22" y="229">football action feed-forward</text><text x="22" y="245" class="s">P2 task</text><path d="M300 232 L328 174" class="ln" marker-end="url(#ar2)"/><rect x="10" y="262" width="290" height="40" rx="6" class="box"/><text x="22" y="279">reference style feed-forward</text><text x="22" y="295" class="s">P3 style</text><path d="M300 282 L328 174" class="ln" marker-end="url(#ar2)"/><rect x="330" y="140" width="180" height="68" rx="6" class="hi"/><text x="342" y="162" class="b">ownership +</text><text x="342" y="178" class="b">additive torques</text><text x="342" y="197" class="s">one request per axis</text><path d="M510 174 L528 174" class="ln" marker-end="url(#ar2)"/><rect x="530" y="140" width="170" height="68" rx="6" class="hi"/><text x="542" y="162" class="b">priority allocation</text><text x="542" y="180" class="s">over budget: drop</text><text x="542" y="196" class="s">P4 → P3 → P2 → P1, keep P0</text><path d="M700 174 L718 174" class="ln" marker-end="url(#ar2)"/><rect x="720" y="120" width="180" height="108" rx="6" class="hi"/><text x="732" y="142" class="b">envelope</text><text x="732" y="162" class="s">τmax(dir) · f_v(q̇) · a(t)</text><text x="732" y="180" class="s">activation-rate limited</text><text x="732" y="198" class="s">→ one Jolt motor per axis:</text><text x="732" y="214" class="s">target · kp · kd · [lo, hi]</text><path d="M810 228 L810 262" class="ln" marker-end="url(#ar2)"/><rect x="670" y="264" width="230" height="42" rx="6" class="box"/><text x="682" y="283" class="b">Jolt clamps the total</text><text x="682" y="299" class="s">the sum can never exceed the envelope</text><rect x="330" y="222" width="320" height="32" rx="6" class="ok"/><text x="342" y="243" class="s">ledger: τ · q̇ · P · work ± · saturation · limit engagement</text><rect x="330" y="264" width="320" height="42" rx="6" class="ok"/><text x="342" y="283" class="b">passive paths (logged)</text><text x="342" y="299" class="s">joint friction · soft knee/elbow stops · hard SixDOF limits</text></svg><p class="cap">Figure 2 — one actuator authority per joint axis. Modules REQUEST; the arbiter decides which request loses when the envelope is exceeded; Jolt enforces the envelope on the single motor.</p>
+
+<h3>4.1 One actuator per joint axis, one envelope</h3>
+<ul>
+<li><strong>[R]</strong> Joint torque capability depends on the joint, the direction, the angle and the velocity. Eccentric (lengthening) torque exceeds isometric; concentric torque falls with speed (Hill 1938; Anderson, Madigan &amp; Nussbaum 2007). Activation rises and decays over tens of milliseconds (Zajac 1989).</li>
+<li><strong>[E]</strong> Each joint axis has <strong>one</strong> envelope:</li>
+</ul>
+<p>τ_max(dir, q, q̇) = τ_iso(dir) · f_v(q̇, dir) · a(t)</p>
+<ul>
+<li>τ_iso(dir) is the directional limit already in <code>LIMITS_V11</code>;</li>
+<li>f_v is a torque–velocity factor (1 at rest, falling for concentric motion, up to ≈ 1.3 eccentric);</li>
+<li>a(t) is an activation that may change only at bounded rates (<strong>rise ≈ 20–40 ms, fall ≈ 50–80 ms</strong>, [E] from Zajac-range time constants).</li>
+<li><strong>Rollout:</strong> G1a starts <strong>permissive</strong> (f_v ≡ 1, activation unconstrained), so behaviour matches C1–C3. The envelope becomes binding in G5, where speed matters.</li>
+<li><strong>[R, verified]</strong> Jolt clamps the motor's accumulated impulse per step to the configured limits, and the defaults are ±FLT_MAX. The arbiter <strong>asserts that every motor has finite limits every step</strong>; ours already do (<code>budgetLimits</code> per step).</li>
+</ul>
+<h3>4.2 How requests combine (no module has its own strength)</h3>
+<ol>
+<li><strong>Posture-target ownership, by role, one owner per joint at a time [E]:</strong></li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>joints</th>
+<th>owner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>stance leg</td>
+<td>stance controller (IK from the <em>actual</em> foot, C1)</td>
+</tr>
+<tr>
+<td>swing leg</td>
+<td>swing controller</td>
+</tr>
+<tr>
+<td>spine, neck, arms</td>
+<td>posture/style (reference)</td>
+</tr>
+<tr>
+<td>a limb claimed by an action (kicking leg, tackling leg)</td>
+<td>action, <strong>only through L4</strong> (it becomes a special swing)</td>
+</tr>
+<tr>
+<td>everything, once the viability monitor declares no upright recovery</td>
+<td>protective (C5)</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li><strong>Additive torque terms, in torque space, each tagged with a priority class:</strong></li>
+<li>gravity compensation (Jᵀ);</li>
+<li>the stance virtual force (Jᵀ F: propulsion, braking, balance);</li>
+<li>the hip-strategy trunk torque;</li>
+<li>the arm angular-momentum torque (C4);</li>
+<li>action feed-forward;</li>
+<li>reference inverse-dynamics feed-forward (style).</li>
+<li><strong>Priority allocation when the predicted total exceeds the envelope [E].</strong> Scale down in this order, lowest first:</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>order</th>
+<th>class</th>
+<th>contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 (dropped first)</td>
+<td>P4 comfort</td>
+<td>posture smoothing</td>
+</tr>
+<tr>
+<td>2</td>
+<td>P3 style</td>
+<td>reference tracking beyond what support needs</td>
+</tr>
+<tr>
+<td>3</td>
+<td>P2 task</td>
+<td>football action</td>
+</tr>
+<tr>
+<td>4</td>
+<td>P1 balance</td>
+<td>virtual force, hip strategy, capture-driven swing</td>
+</tr>
+<tr>
+<td>5 (kept longest)</td>
+<td>P0 support</td>
+<td>stance-leg weight bearing within friction and CoP feasibility</td>
+</tr>
+</tbody>
+</table>
+<p>Within a class, scale proportionally.
+4. <strong>To Jolt:</strong> one equilibrium-point target (posture ⊕ τ_ff / kp, as today), one kp/kd, one [lo, hi] envelope. Jolt's clamp is the hard physical guarantee that the <strong>total can never exceed the envelope</strong>. The allocation decides <strong>which request loses</strong>.</p>
+<p><strong>[H] to test in G1a:</strong> allocation is computed on a <em>predicted</em> torque (spring + damping + feed-forward at the current state). Jolt's implicit spring realises a slightly different torque. The test: saturation scenarios, where the realised P0 torque must stay ≥ 95 % of its request while P3 is dropped.</p>
+<h3>4.3 Passive paths are part of the budget ledger</h3>
+<ul>
+<li>Joint friction (0.3–2 N·m) is logged.</li>
+<li><strong>Hard SixDOF limits</strong> (hip, ankle, spine, shoulder, neck) and <strong>soft hinge stops</strong> (knee, elbow, 20 Hz). Knee and elbow limit impulses are logged. For SixDOF joints the <em>angle margin</em> is logged, because Jolt exposes no limit impulse there.</li>
+<li>Any limit engagement during locomotion is reported per stride. The ankle dorsiflexion stop is expected in late stance; C2 found that at the stop the limit cancels dorsiflexion torque.</li>
+</ul>
+<h3>4.4 Stiffness and damping ([E] + [H])</h3>
+<ul>
+<li><strong>Stance gains</strong> are justified against human joint quasi-stiffness in walking (e.g., Shamaei, Sawicki &amp; Dollar 2013), not "as stiff as stable". Stable-PD numerics (Tan, Liu &amp; Turk 2011) is not a license for high gains (Astra).</li>
+<li><strong>Swing gains are low</strong>, with feed-forward (gravity + reference inverse dynamics), so the swing leg's own pendulum dynamics show. This is the main lever against the "servo" look ([H], visual gates).</li>
+</ul>
+<h3>4.5 Ledger (every gate, every run)</h3>
+<ul>
+<li><strong>Per joint axis:</strong> τ, q̇, P = τ·q̇, positive and negative work per stride, saturation time, and limit engagement.</li>
+<li><strong>Whole body:</strong> the external-impulse ledger (§8.3). No unexplained momentum is allowed.</li>
+</ul>
+<hr />
+<h2>5. Support and gait state model</h2>
+<svg class="dg" viewBox="0 0 870 320" role="img" aria-label="Figure 3 — per-foot role. Physical events trigger transitions (time windows only guard them). Orange = deviations where actual contact overrides the plan. Phase is state-based and re-synchronised at every liftoff / touchdown."><defs><marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--mute)"/></marker><marker id="aa3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--acc)"/></marker></defs><rect x="20" y="50" width="140" height="40" rx="20" class="hi"/><text x="90" y="75" class="b" text-anchor="middle">STANCE</text><rect x="230" y="50" width="140" height="40" rx="20" class="hi"/><text x="300" y="75" class="b" text-anchor="middle">UNLOADING</text><rect x="440" y="50" width="140" height="40" rx="20" class="hi"/><text x="510" y="75" class="b" text-anchor="middle">SWING</text><rect x="650" y="140" width="140" height="40" rx="20" class="hi"/><text x="720" y="165" class="b" text-anchor="middle">DESCENDING</text><rect x="230" y="220" width="140" height="40" rx="20" class="hi"/><text x="300" y="245" class="b" text-anchor="middle">LOADING</text><path d="M160 70 L228 70" class="ln" marker-end="url(#ar3)"/><text x="164" y="60" class="s">step scheduled</text><path d="M370 70 L438 70" class="ln" marker-end="url(#ar3)"/><text x="374" y="60" class="s">SENSED liftoff</text><path d="M580 82 L668 142" class="ln" marker-end="url(#ar3)"/><text x="632" y="106" class="s">approach</text><path d="M660 178 L372 236" class="ln" marker-end="url(#ar3)"/><text x="470" y="196" class="s">SENSED touchdown (anywhere, any time)</text><path d="M236 240 L110 92" class="ln" marker-end="url(#ar3)"/><text x="60" y="170" class="s">load accepted</text><path d="M470 90 L360 222" class="ac" marker-end="url(#aa3)"/><text x="408" y="150" class="s">early touchdown</text><rect x="600" y="236" width="250" height="32" rx="6" class="ok"/><text x="610" y="256" class="s">no contact by deadline → MISSED → re-plan</text><path d="M720 180 L720 234" class="ac dash" marker-end="url(#aa3)"/><rect x="560" y="4" width="300" height="30" rx="6" class="ok"/><text x="570" y="24" class="s">non-turf contact on the swing leg → OBSTRUCTED → re-route / abort</text><path d="M548 52 L590 34" class="ac dash" marker-end="url(#aa3)"/><rect x="10" y="4" width="200" height="30" rx="6" class="ok"/><text x="20" y="24" class="s">stance foot slips → DEGRADED support</text><path d="M90 50 L90 36" class="ac dash" marker-end="url(#aa3)"/><rect x="10" y="284" width="850" height="30" rx="6" class="box"/><text x="22" y="304" class="s">support mode is DERIVED from contacts, never scheduled: DOUBLE · SINGLE_L · SINGLE_R · FLIGHT (planned = ballistic; unplanned = viability check) · NON_FOOT (fall)</text></svg><p class="cap">Figure 3 — per-foot role. Physical events trigger transitions (time windows only guard them). Orange = deviations where actual contact overrides the plan. Phase is state-based and re-synchronised at every liftoff / touchdown.</p>
+
+<h3>5.1 Truth layer (existing pc_sense) [R principle: actual contact is truth]</h3>
+<ul>
+<li><strong>Per foot:</strong> contact points, touching, load, shear, slip, rocking state (HEEL / FLAT / TOE / EDGE), external-body contact.</li>
+<li><strong>Support mode</strong>, derived and never scheduled: DOUBLE, SINGLE_L, SINGLE_R, FLIGHT, NON_FOOT (a non-foot body on the turf).</li>
+</ul>
+<h3>5.2 Intent layer: per-foot role [E]</h3>
+<p><code>STANCE → UNLOADING → SWING → DESCENDING → LOADING → STANCE</code>, with these guards (events trigger; time windows only guard):</p>
+<table>
+<thead>
+<tr>
+<th>transition</th>
+<th>trigger (physical)</th>
+<th>guard</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>STANCE → UNLOADING</td>
+<td>the planner schedules the next step and the viability monitor allows it</td>
+<td>–</td>
+</tr>
+<tr>
+<td>UNLOADING → SWING</td>
+<td><strong>sensed liftoff</strong> (no touching contact and &lt; 25 N for 3 steps, as in C2/C3)</td>
+<td>timeout → <em>step aborted</em>: the planner re-plans</td>
+</tr>
+<tr>
+<td>SWING → DESCENDING</td>
+<td>the swing trajectory reaches its approach segment</td>
+<td>–</td>
+</tr>
+<tr>
+<td>DESCENDING / SWING → LOADING</td>
+<td><strong>sensed touchdown</strong>: a turf contact whose load is rising, at whatever place and time it happens</td>
+<td>–</td>
+</tr>
+<tr>
+<td>LOADING → STANCE</td>
+<td>measured load ≥ an acceptance share, not slipping (C2 acceptance)</td>
+<td>–</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Deviations:</strong>
+- <strong>Early touchdown:</strong> the swing ends <em>now</em>, where the foot is; the foothold becomes the actual one and the next step is re-planned from the actual state. The foot is never driven through the turf.
+- <strong>Late touchdown:</strong> descend at a bounded speed for ≤ Δt. With no contact → <strong>MISSED</strong>: the viability monitor re-plans (the other foot, an extended reach, or protective).
+- <strong>Obstructed swing:</strong> a non-turf contact on the swing foot or shin (another player, an obstacle) → <strong>OBSTRUCTED</strong>. Stiffness along the contact normal drops to the swing floor, and the step is re-routed or aborted. <strong>Contact with another body is not support</strong> (the turf-only rule; the <code>externalSupport</code> option stays experimental).
+- <strong>Stance slip:</strong> support is DEGRADED. Friction-limited balance uses the fixed observer.
+- <strong>Flight:</strong> both feet AIR. A <em>planned</em> flight is ballistic: only landing preparation (leg angle of attack, retraction, pre-activation) runs. An <em>unplanned</em> flight is a viability check.</p>
+<h3>5.3 Phase [R: phase as a function of state (HZD); E: this form]</h3>
+<ul>
+<li><strong>Stride phase</strong> φ ∈ [0, 1), with the of_loco convention: right heel strike at 0, left at 0.5.</li>
+<li><strong>In stance</strong>, φ advances with the <strong>measured progression of the COM over the stance foot</strong>, normalised by the planned step, blended with time only when the progression stalls.</li>
+<li><strong>In swing</strong>, φ advances with the swing's own normalised progress.</li>
+<li><strong>At every actual touchdown or liftoff</strong>, φ is <strong>re-synchronised</strong> to that event's nominal phase. A disturbed body therefore never leaves a running reference cursor behind: no elastic tether (Astra, §3.7).</li>
+</ul>
+<h3>5.4 There is no separate "recovery state machine" [E]</h3>
+<ul>
+<li><strong>Recovery</strong> is the same planner producing short, fast or crossover steps.</li>
+<li>A <strong>stumble</strong> is a sequence of such steps.</li>
+<li>A <strong>fall</strong> is the viability monitor finding no N-step capture: the protective module takes posture ownership, and physics decides.</li>
+</ul>
+<hr />
+<h2>6. Footstep planning</h2>
+<h3>6.1 Models [R]</h3>
+<ul>
+<li><strong>Walking:</strong> LIPM / DCM capture dynamics (Pratt et al. 2006; Englsberger et al. 2015), N-step capturability (Koolen et al. 2012), and step-timing adaptation as a free variable (Khadiv et al. 2020).</li>
+<li><strong>Running:</strong> spring-mass stance and ballistic flight, with a Raibert-style neutral point plus a velocity-error term for foot placement (Raibert 1986; Kwon &amp; Hodgins 2010 for the IPM + reference combination).</li>
+</ul>
+<h3>6.2 Plan [E]</h3>
+<p>At 60 Hz and at every event, plan <strong>N = 2–3 steps</strong> from the <strong>actual</strong> COM state and support, and execute only the first. Each candidate step is (foot, position, yaw, touchdown time, swing duration, clearance), subject to:</p>
+<ol>
+<li><strong>Reach at the predicted touchdown time:</strong> a <em>time-indexed</em> reachable set (leg length at ≤ 99.5 %, bounded pelvis lowering, hip ROM with margin), extending C3's <code>_feasible</code>.</li>
+<li><strong>Swing feasibility:</strong> peak foot speed ≤ the torque–velocity envelope (C3's <code>vFootMax</code> becomes a derived quantity), and the swing path clears the stance foot (C2/C3 rules, plus the crossover route).</li>
+<li><strong>Occupancy:</strong> the swept volumes of other bodies (another player's legs, obstacles) at the touchdown time.</li>
+<li><strong>Support feasibility at the new stance:</strong> the friction cone at the planned stance load, and the CoP inside the foot's patch.</li>
+</ol>
+<h3>6.3 Regulation [R + E]</h3>
+<ul>
+<li><strong>Speed:</strong> the foothold offset from the capture point / neutral point, plus step timing.</li>
+<li><strong>Turning:</strong> the foothold yaw, plus the stance-hip yaw moment, each limited per step by hip twist ROM and measured stance-foot yaw traction (§2 row 14).</li>
+</ul>
+<h3>6.4 Viability monitor = the same planner in "can I capture?" mode [E]</h3>
+<p>Outputs, each recorded with its reason:</p>
+<table>
+<thead>
+<tr>
+<th>output</th>
+<th>meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NOMINAL</td>
+<td>continue the nominal gait</td>
+</tr>
+<tr>
+<td>MODIFIED</td>
+<td>a single-step correction</td>
+</tr>
+<tr>
+<td>SEQUENCE</td>
+<td>a multi-step stumble</td>
+</tr>
+<tr>
+<td>NO_CAPTURE_FOUND</td>
+<td>→ protective</td>
+</tr>
+</tbody>
+</table>
+<p>"Planner found none" is recorded <strong>separately</strong> from physical inevitability (Astra, §1.6). This replaces both the C3 refusal latch and the C1 release rule.</p>
+<hr />
+<h2>7. Reference-motion role</h2>
+<h3>7.1 Source [E]</h3>
+<p><code>anim3d/of_loco.js</code>, the existing presentation-layer gait family for this exact rig:
+- IDLE / WALK / JOG / RUN / SPRINT parameter sets at 0 / 1.45 / 3.0 / 5.5 / 8.2 m/s, blended by speed on <strong>one phase convention</strong>;
+- stance fractions 0.80 / 0.62 / 0.42 / 0.36 / 0.30;
+- a flight phase, swing retraction, lean from acceleration, trunk twist toward the facing, backpedal.</p>
+<p>It uses the same bone-rotation conventions as D6's reference keys, so it maps to physics joint targets the same way (ROM-clamped). Later, football actions get their own reference clips (kicks, slide entry).</p>
+<h3>7.2 What reference data controls vs what it never controls</h3>
+<table>
+<thead>
+<tr>
+<th>reference controls (as preferences, P3 style priority)</th>
+<th>reference never controls</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>swing-leg shape (knee flexion profile, hip path)</td>
+<td>root position, velocity, heading</td>
+</tr>
+<tr>
+<td>stance-leg nominal knee flexion (compliance, loading response)</td>
+<td>foot world placement, touchdown time</td>
+</tr>
+<tr>
+<td>pelvis rotation and obliquity, trunk counter-rotation</td>
+<td>stride length and cadence (the planner decides; the reference's preferred cadence–speed curve is a <em>cost term</em>)</td>
+</tr>
+<tr>
+<td>lean <em>preference</em> vs planned acceleration</td>
+<td>support, liftoff or landing decisions</td>
+</tr>
+<tr>
+<td>arm swing and elbow, head stabilisation</td>
+<td>anything under saturation (P3 is dropped first)</td>
+</tr>
+<tr>
+<td>relative phase relations (arms opposite legs, heel-strike phases)</td>
+<td>–</td>
+</tr>
+</tbody>
+</table>
+<h3>7.3 Sampling rule [E]</h3>
+<p>The reference is sampled at the <strong>measured</strong> φ, at the <strong>measured</strong> speed and direction relative to the facing. <strong>There is no independent reference cursor.</strong> Toe curves (the physics foot has no toe joint) map to a foot-pitch preference only.</p>
+<p><strong>[H]</strong> of_loco's kinematic curves may be dynamically infeasible in places (they were designed with a toe joint and root authority). This is flagged by the style-torque saturation share in the G2/G5 reviews.</p>
+<hr />
+<h2>8. Physical propulsion</h2>
+<h3>8.1 Where forward motion comes from [R]</h3>
+<ul>
+<li>M·c̈ = Σ F_ground + M·g (+ other contacts). Only the ground, or another body, can accelerate the COM.</li>
+<li>In the sagittal inverted-pendulum approximation, ẍ = ω²(x − p): the body accelerates forward only when the <strong>CoP p is behind the COM</strong>, i.e. the COM is ahead of where the stance foot pushes. The stance foot then pushes the ground backward, and static friction pushes the body forward.</li>
+<li><strong>Where the energy comes from:</strong></li>
+<li>walking: hip extensors in early and mid stance, and ankle plantarflexors in the late-stance push-off; the knee mostly absorbs at loading (Winter 2009);</li>
+<li>running: plantarflexors and quadriceps dominate support and propulsion; the arms regulate angular momentum rather than propel (Hamner, Seth &amp; Delp 2010);</li>
+<li>sprint starts: acceleration depends on <em>orienting</em> the ground force forward (Morin, Edouard &amp; Samozino 2011).</li>
+</ul>
+<h3>8.2 The mechanisms in the controller: all internal torques whose reaction reaches the COM only through the foot [E]</h3>
+<ol>
+<li><strong>Foot placement is the primary speed regulator</strong> [R].</li>
+<li>A foothold short of the capture point / neutral point lets the body keep "falling" forward: it accelerates.</li>
+<li>A foothold beyond it brakes.</li>
+<li>Stepping <em>later</em> at the same place accelerates.</li>
+<li><strong>Stance virtual force</strong> (Coros et al. 2010; Pratt et al. 2001, virtual model control).</li>
+<li>A desired force F on the COM becomes τ = J_stanceᵀ F on the stance-leg joints.</li>
+<li>Physically, this is the joint torque the leg must produce to transmit that ground force. The reaction appears <strong>only if</strong> the foot grips (friction cone), the CoP stays inside the foot, and the envelope allows it; otherwise the foot slips or rolls and the force is simply not realised.</li>
+<li><strong>This is the only feed-forward, and it is internal.</strong></li>
+<li><strong>Push-off:</strong> late-stance ankle plantarflexion and hip extension, from the reference profile plus the virtual force, rolling on the box foot's front edge ([H] G2/G4).</li>
+<li><strong>Swing-leg retraction</strong> before touchdown reduces braking (Seyfarth, Geyer &amp; Herr 2003) [R]; of_loco has <code>retract</code>.</li>
+</ol>
+<p><strong>Forbidden:</strong> root or pelvis forces, <code>setVel</code>, support constraints, and contact-free acceleration. D6 audit: controllers call none of these, and only tests and the t = 0 initial conditions do; this audit is repeated per gate.</p>
+<h3>8.3 Audit, with the D6 force-plate instrument [R + E]</h3>
+<p>The force plate from D6 (<code>pc_jolt cfg.plateFrom</code>) gives the <strong>exact GRF</strong> on the moving character. Per stride:
+- ∫F_z dt = M·g·T within ± 2 % at steady speed;
+- net horizontal impulse = M·Δv within ± 5 %;
+- in flight, the COM acceleration equals g within ± 2 %: no mid-air steering;
+- the external ledger closes: ΔP = ∫(F_ground + other contacts) + M·g·Δt, with no residual.
+- <strong>GRF shapes vs normative</strong> [R]: the walking vertical GRF double hump peaks ≈ 1.0–1.2 BW; the running single hump ≈ 2–3 BW at jogging to running speeds (Winter 2009; Cavanagh &amp; Lafortune 1980).</p>
+<hr />
+<h2>9. Disturbance and recovery integration</h2>
+<h3>9.1 Same pipeline, no special mode [E]</h3>
+<p>Disturbance → changed <em>actual</em> state → next planner tick (or the event) re-plans the footholds:
+- <strong>corrective placement</strong> if one step captures;
+- a <strong>multi-step stumble</strong> if a sequence does;
+- NO_CAPTURE_FOUND → <strong>protective</strong>, and physics decides.</p>
+<p>A player hit while running therefore cannot keep following the gait: the phase is state-based, the plan is re-derived, and contacts override the plan.</p>
+<h3>9.2 Latency layers [R structure (Astra; Pijnappels 2004; DeMers 2017) / E values]</h3>
+<table>
+<thead>
+<tr>
+<th>layer</th>
+<th>delay</th>
+<th>what</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mechanical</td>
+<td>0</td>
+<td>contacts, constraints, passive properties, the <strong>current</strong> activation and impedance of every motor</td>
+</tr>
+<tr>
+<td>feedback ("reflex")</td>
+<td>≈ 50 ms default, swept 0–250</td>
+<td>stance ankle/hip corrections, swing-leg stiffening, arm response</td>
+</tr>
+<tr>
+<td>decision</td>
+<td>≈ 120 ms default, swept</td>
+<td>step re-planning, action abort, protective hand-over</td>
+</tr>
+</tbody>
+</table>
+<p>Delays apply only to what a layer <em>observes</em>, never to collision or joint transmission. Activation-rate limits bound how fast any new command takes effect.</p>
+<h3>9.3 Priorities during a disturbance [E]</h3>
+<ul>
+<li>Recovery (P0/P1) pre-empts the football action (P2) and style (P3).</li>
+<li>L5 is <em>told</em> (a capability drop, action infeasible). It is never allowed to decide the physical outcome.</li>
+</ul>
+<h3>9.4 What D6 contributes</h3>
+<ul>
+<li>The response continuum (absorbed → local → whole-body → step → fall) is the <strong>regression target</strong> for the gait-time perturbation matrices.</li>
+<li>The same measurement code (pc_d6diag, generalised) and the force plate carry over.</li>
+</ul>
+<hr />
+<h2>10. Authored vs procedural vs physical</h2>
+<table>
+<thead>
+<tr>
+<th>element</th>
+<th>authored / reference</th>
+<th>procedurally planned</th>
+<th>physically solved</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>gait-cycle joint shapes</td>
+<td>of_loco curves (P3 preference)</td>
+<td>sampled at the measured phase and speed</td>
+<td>the realised joint angles</td>
+</tr>
+<tr>
+<td>phase</td>
+<td>the convention (RHS 0, LHS 0.5)</td>
+<td>state-based clock + event re-sync</td>
+<td>–</td>
+</tr>
+<tr>
+<td>step location and yaw</td>
+<td>–</td>
+<td>N-step planner</td>
+<td>the actual touchdown place</td>
+</tr>
+<tr>
+<td>step timing</td>
+<td>preferred cadence–speed curve (cost term)</td>
+<td>the planner (timing adaptation)</td>
+<td>the actual liftoff and touchdown</td>
+</tr>
+<tr>
+<td>swing foot trajectory</td>
+<td>clearance and knee-profile preferences</td>
+<td>smooth, bounded, re-plannable path from the actual liftoff</td>
+<td>the realised swing (can be early, late or obstructed)</td>
+</tr>
+<tr>
+<td>pelvis / trunk posture</td>
+<td>rotation, obliquity, lean preferences</td>
+<td>lean from the <em>planned</em> acceleration</td>
+<td>the realised trunk motion (not held vertical)</td>
+</tr>
+<tr>
+<td>arm swing</td>
+<td>rhythm and amplitude preference</td>
+<td>phase-locked, plus the angular-momentum term</td>
+<td>the realised arms</td>
+</tr>
+<tr>
+<td>push-off</td>
+<td>timing and profile preference</td>
+<td>virtual force + ankle/hip feed-forward</td>
+<td>the actual GRF (plate)</td>
+</tr>
+<tr>
+<td>touchdown</td>
+<td>–</td>
+<td>planned target</td>
+<td><strong>actual contact is truth</strong></td>
+</tr>
+<tr>
+<td>balance corrections</td>
+<td>–</td>
+<td>CoP law, hip strategy, footholds</td>
+<td>realised within friction and torque</td>
+</tr>
+<tr>
+<td>impedance schedules</td>
+<td>engineering-authored per role and phase</td>
+<td>–</td>
+<td>–</td>
+</tr>
+<tr>
+<td>stumble / fall</td>
+<td>–</td>
+<td>viability monitor → sequence / protective</td>
+<td>the outcome</td>
+</tr>
+</tbody>
+</table>
+<p>This keeps enough authored information for human-looking motion (of_loco's biomechanical curves) without canned playback: every authored quantity is a <em>preference at P3</em>, and every decision is procedural on the actual state.</p>
+<hr />
+<h2>11. Final gated roadmap</h2>
+<svg class="dg" viewBox="0 0 930 126" role="img" aria-label="Figure 4 — gated roadmap. G1a (highlighted) is the proposed first implementation gate."><defs><marker id="ar4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--mute)"/></marker><marker id="aa4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--acc)"/></marker></defs><rect x="8" y="10" width="94" height="86" rx="8" class="ok"/><text x="17" y="30" class="b">G0</text><text x="17" y="50" class="s">disturbance</text><text x="17" y="65" class="s">mechanics</text><text x="17" y="86" class="s">done (D6)</text><path d="M102 53 L110 53" class="ln" marker-end="url(#ar4)"/><rect x="110" y="10" width="94" height="86" rx="8" class="hi"/><text x="119" y="30" class="b">G1a</text><text x="119" y="50" class="s">architecture</text><text x="119" y="65" class="s">skeleton</text><text x="119" y="86" class="s">parity C1–C3</text><path d="M204 53 L212 53" class="ln" marker-end="url(#ar4)"/><rect x="212" y="10" width="94" height="86" rx="8" class="box"/><text x="221" y="30" class="b">G1</text><text x="221" y="50" class="s">load transfer</text><text x="221" y="65" class="s">+ single steps</text><text x="221" y="86" class="s">in place</text><path d="M306 53 L314 53" class="ln" marker-end="url(#ar4)"/><rect x="314" y="10" width="94" height="86" rx="8" class="box"/><text x="323" y="30" class="b">G2</text><text x="323" y="50" class="s">walking</text><text x="323" y="65" class="s">start/speeds/stop</text><text x="323" y="86" class="s">straight</text><path d="M408 53 L416 53" class="ln" marker-end="url(#ar4)"/><rect x="416" y="10" width="94" height="86" rx="8" class="box"/><text x="425" y="30" class="b">G3</text><text x="425" y="50" class="s">omnidirectional</text><text x="425" y="65" class="s">walking</text><text x="425" y="86" class="s">+ blocked steps</text><path d="M510 53 L518 53" class="ln" marker-end="url(#ar4)"/><rect x="518" y="10" width="94" height="86" rx="8" class="box"/><text x="527" y="30" class="b">G4</text><text x="527" y="50" class="s">push-off →</text><text x="527" y="65" class="s">flight → landing</text><text x="527" y="86" class="s">hop · leap</text><path d="M612 53 L620 53" class="ln" marker-end="url(#ar4)"/><rect x="620" y="10" width="94" height="86" rx="8" class="box"/><text x="629" y="30" class="b">G5</text><text x="629" y="50" class="s">jog / run</text><text x="629" y="65" class="s">walk ↔ run</text><text x="629" y="86" class="s">continuous</text><path d="M714 53 L722 53" class="ln" marker-end="url(#ar4)"/><rect x="722" y="10" width="94" height="86" rx="8" class="box"/><text x="731" y="30" class="b">G6</text><text x="731" y="50" class="s">football</text><text x="731" y="65" class="s">running envelope</text><text x="731" y="86" class="s">starts · cuts</text><path d="M816 53 L824 53" class="ln" marker-end="url(#ar4)"/><rect x="824" y="10" width="94" height="86" rx="8" class="box"/><text x="833" y="30" class="b">G7</text><text x="833" y="50" class="s">football</text><text x="833" y="65" class="s">transitions</text><text x="833" y="86" class="s">Ref. Tackle held-out</text><text x="8" y="118" class="s">every gate: perturbation matrix · force-plate ledger · determinism ×3 · approved-suite regression · physical AND human-quality verdicts</text></svg><p class="cap">Figure 4 — gated roadmap. G1a (highlighted) is the proposed first implementation gate.</p>
+
+<p><strong>Common contract for every gate [E]:</strong>
+- <strong>Declared up front and never retuned per trial:</strong> fixtures, commands, morphology (V1.1), surface μ, budgets.
+- <strong>A held-out set:</strong> other push magnitudes, directions and phases; intermediate speeds; μ variants.
+- <strong>Determinism:</strong> ×3 in Node. Browser = Node when Puppeteer is available (currently deferred).
+- <strong>Always:</strong> no root/pose/velocity writes; no hidden support; the external ledger closes; all motors finite.
+- <strong>Regression:</strong> all approved suites (A/B/C1/C2/C3/D + the D6X matrix) stay hash-identical. The locomotion controller is a <strong>new code path</strong>, and shared-code changes need explicit approval.
+- <strong>Separate verdicts:</strong> <strong>physical validity</strong> and <strong>human motion quality</strong> each need your visual sign-off.</p>
+<h3>G0 — explainable disturbance mechanics: <strong>substantially done</strong> (D6)</h3>
+<ul>
+<li><strong>Done:</strong></li>
+<li>the contact and ground impulse ledger (the force plate);</li>
+<li>the response continuum;</li>
+<li>the friction-observer fix;</li>
+<li>limit loading measured;</li>
+<li>no hidden actuation;</li>
+<li>the frozen-target diagnostic.</li>
+<li><strong>Remaining, folded into G1a's entry:</strong></li>
+<li>the actuator ledger (τ, q̇, P, W, saturation, limits);</li>
+<li>a 480 Hz convergence check on D6 / D6X / C3 subsets (integrated impulse within 5 % away from boundaries);</li>
+<li>the internal-momentum test (a free-floating character with gravity off, driving all motors: |ΔP| &lt; 0.5 N·s, |ΔL| &lt; 0.5 kg·m²/s over 2 s);</li>
+<li>the frozen-<em>command</em> diagnostic.</li>
+</ul>
+<h3>G1a — architecture skeleton with regression parity (<strong>proposed first implementation gate</strong>, §15)</h3>
+<ul>
+<li><strong>Objective:</strong> replace C1–C3's monolith with the final architecture (arbiter, support/gait state, planner + viability monitor, task controllers) and show it <strong>does at least what C1–C3 do</strong>, with the same body. No new locomotion capability yet.</li>
+<li><strong>Out of scope:</strong> walking, running, turning, reference style, the binding torque–velocity envelope.</li>
+<li><strong>Details:</strong> in §15.</li>
+</ul>
+<h3>G1 — repeatable load transfer and individual steps</h3>
+<ul>
+<li><strong>Objective:</strong> unload either foot, lift, place and accept weight, repeatedly and rhythmically, with no external support.</li>
+<li><strong>Implemented:</strong></li>
+<li>rhythmic stepping in place and to placements;</li>
+<li>state-based phase;</li>
+<li>the swing controller v2 (low-gain + feed-forward; heel-up and progression-with-lift as defaults if G1a confirms them);</li>
+<li>reference sampling (IDLE → WALK at 0 speed);</li>
+<li>the latency sweep.</li>
+<li><strong>Out of scope:</strong> travelling gait, turning, running.</li>
+<li><strong>Scenarios:</strong></li>
+<li>20 alternating in-place steps at step periods of 0.5 / 0.6 / 0.7 s;</li>
+<li>placements forward 20 cm, back 15 cm, out 10 cm, in 5 cm, crossed 3 cm, each ×4 alternating;</li>
+<li>perturbations of 15 / 30 N·s in 4 directions at 4 phases (loading, mid-stance, early swing, late swing);</li>
+<li>a blocked foothold (a static obstacle on the planned spot).</li>
+<li><strong>Pass:</strong></li>
+<li>foothold error vs the plan at liftoff: median ≤ 3 cm, max ≤ 5 cm;</li>
+<li>step timing within ± 15 % of the plan;</li>
+<li>stance-foot slip ≤ 1 cm per step;</li>
+<li>minimum toe clearance ≥ 1.5 cm;</li>
+<li>no non-foot contact in unperturbed runs;</li>
+<li>15 N·s pushes are recovered at every phase;</li>
+<li>30 N·s pushes produce an interpretable response (in place, extra step or sequence) that is monotone in impulse;</li>
+<li>a blocked foothold → an alternative step or a <em>recorded</em> failure, never a pass-through.</li>
+<li><strong>Visual:</strong> weight visibly shifts before the lift (pelvis lateral ≈ 2–4 cm); the knee flexes in swing and there is no marching; no foot drag, contact jitter or servo buzz; arms not frozen. Reviewed in slow motion from the fixed side and front cameras.</li>
+<li><strong>Failure modes:</strong> early touchdown by toe drag (C3 finding); hip saturation on backward swings; chatter at liftoff; phase drift.</li>
+<li><strong>Performance:</strong> controller ≤ 0.4 ms per character per 60 Hz frame (+ Jolt ≈ 0.55–0.7 ms).</li>
+<li><strong>Your decision:</strong> approve the swing style and the default delays; approve the G2 speed set.</li>
+</ul>
+<h3>G2 — walking with start, speed change and stop (straight)</h3>
+<ul>
+<li><strong>Objective:</strong> continuous walking generated by the body's own contacts, starting and stopping from its own state.</li>
+<li><strong>Implemented:</strong></li>
+<li>travelling gait: foothold offset + step timing;</li>
+<li>the stance virtual force;</li>
+<li>push-off;</li>
+<li>swing retraction;</li>
+<li>full WALK reference style;</li>
+<li>arm swing;</li>
+<li>the GRF-shape review panel.</li>
+<li><strong>Out of scope:</strong> turning beyond heading hold; running.</li>
+<li><strong>Scenarios:</strong></li>
+<li>standing → 0.8 / 1.2 / 1.5 m/s;</li>
+<li>30 s at each speed;</li>
+<li>0.8 ↔ 1.5 speed changes;</li>
+<li>stop from each speed;</li>
+<li>perturbations of 20 / 40 N·s at 4 phases;</li>
+<li>held-out: 1.0 m/s, μ 0.6.</li>
+<li><strong>Pass:</strong></li>
+<li>steady speed error ≤ 0.15 m/s;</li>
+<li>lateral drift ≤ 10 cm over 10 m and heading drift ≤ 3°;</li>
+<li>reaches the commanded speed within 4 steps; stops within 2 steps, then settles in ≤ 1 s;</li>
+<li>vertical impulse per stride = M·g·T ± 2 %; net horizontal impulse per stride = M·Δv ± 5 %;</li>
+<li>vertical GRF double hump with peaks 1.0–1.3 BW;</li>
+<li>at 1.2 m/s: double support 12–30 % of the cycle, and cadence within the human band for this leg length (≈ 95–125 steps/min);</li>
+<li>slip ≤ 1 cm/step; toe clearance ≥ 1.5 cm;</li>
+<li>20 N·s pushes recovered within ≤ 3 steps; 40 N·s: interpretable, monotone.</li>
+<li><strong>Visual:</strong></li>
+<li>heel strike → foot flat → heel rise → toe-off rolling;</li>
+<li>pelvis rotation and obliquity present;</li>
+<li>knee not locked in stance;</li>
+<li>arms counter-swinging;</li>
+<li>no robotic constant-velocity limbs, marching or skating;</li>
+<li>side-by-side with the of_loco kinematic render at the same phase and speed, and with your chosen reference footage.</li>
+<li><strong>Failure modes:</strong> the rigid 36 cm box foot's toe clearance and toe-off ([H]); virtual force outside the friction cone; style torques saturating; a walk that only works at one speed.</li>
+<li><strong>Performance:</strong> controller ≤ 0.5 ms per character-frame.</li>
+<li><strong>Your decision:</strong> the foot model (keep the box, or revise the collider / add a toe segment) based on the G2 measurements; human-quality sign-off.</li>
+</ul>
+<h3>G3 — omnidirectional walking and constrained recovery</h3>
+<ul>
+<li><strong>Objective:</strong> steer, side-step, back-step, cross over, and recover when the obvious step is unavailable.</li>
+<li><strong>Implemented:</strong></li>
+<li>footstep yaw and the stance-hip yaw moment;</li>
+<li>lateral and backward gait via the direction-relative reference (of_loco backpedal);</li>
+<li>the crossover route from C3, now inside multi-step plans;</li>
+<li>protective hand-over (C5 evaluated, enabled only if it passes).</li>
+<li><strong>Out of scope:</strong> curves at running speed; cuts.</li>
+<li><strong>Scenarios:</strong></li>
+<li>turns of ±45° and ±90° while walking at 1 m/s, and in place;</li>
+<li>circles of radius 2 m and 4 m at 1 m/s;</li>
+<li>S-curves;</li>
+<li>3 side-steps each way; backward walking at 0.6 m/s;</li>
+<li>lateral pushes of 40 / 55 / 70 N·s at 4 phases (the C3 lateral gap);</li>
+<li>blocked capture foothold;</li>
+<li>a stance-foot yaw-traction test.</li>
+<li><strong>Pass:</strong></li>
+<li>path error ≤ 10 % of the radius; heading error ≤ 5°;</li>
+<li>55 N·s lateral pushes recovered with step sequences (C3 could not);</li>
+<li>higher impulses end in an honest fall with protective response;</li>
+<li>zero obstacle pass-throughs;</li>
+<li>the yaw-traction measurement is recorded (it decides §2 row 14).</li>
+<li><strong>Visual:</strong> natural pivots (no ice-skating turns); believable crossovers; stumbles that look like stumbles.</li>
+<li><strong>Failure modes:</strong> hip twist and abduction saturation; foot-yaw slip; phase confusion in back-stepping.</li>
+<li><strong>Performance:</strong> the planner's N = 3 search within ≤ 0.2 ms average at 60 Hz.</li>
+<li><strong>Your decision:</strong> turning quality; whether a rotational-traction model is needed.</li>
+</ul>
+<h3>G4 — push-off → physical flight → physical landing</h3>
+<ul>
+<li><strong>Objective:</strong> produce flight with the existing articulated body, then land and continue.</li>
+<li><strong>Implemented:</strong> takeoff planning (a spring-mass stance target), landing preparation (angle of attack, pre-activation, compliant landing gains), the flight support mode.</li>
+<li><strong>Out of scope:</strong> continuous running; jumping for headers (a later action).</li>
+<li><strong>Scenarios:</strong></li>
+<li><strong>G4a:</strong> a two-leg vertical hop in place (target flight 80–120 ms), then land and stand;</li>
+<li><strong>G4b:</strong> from a 1.2 m/s walk, one leap (push off one leg, flight, land on the other at a planned foothold), then continue walking;</li>
+<li>a perturbation on landing;</li>
+<li>held-out: different hop heights.</li>
+<li><strong>Pass:</strong></li>
+<li>a real flight interval (no contact) ≥ 60 ms;</li>
+<li>in flight, COM acceleration = g ± 2 %;</li>
+<li>takeoff impulse (plate) = M·Δv ± 3 %;</li>
+<li>landing foothold error ≤ 5 cm; no bounce-off &gt; 1 cm;</li>
+<li>peak landing GRF ≤ 3.5 BW for these small hops;</li>
+<li>hard-limit engagement logged and ≤ 2° past margin;</li>
+<li>motor positive work ≥ the take-off energy.</li>
+<li><strong>Visual:</strong> crouch-and-extend with arm drive; soft landing with knee and ankle yielding; no pogo-stick stiffness; no hover.</li>
+<li><strong>Failure modes:</strong> insufficient push-off from the box foot ([H]); hard ankle-stop impacts; energy injected by limits; the envelope binding too early.</li>
+<li><strong>Performance:</strong> Jolt impacts at 2–3 BW with no solver instability at 240 Hz (convergence check at 480 Hz).</li>
+<li><strong>Your decision:</strong> whether push-off quality requires the foot revision before G5.</li>
+</ul>
+<h3>G5 — continuous jog/run and walk–run–walk transitions</h3>
+<ul>
+<li><strong>Objective:</strong> repeatable running with physically produced flight, connected to walking without a reset.</li>
+<li><strong>Implemented:</strong></li>
+<li>running footstep law (neutral point + velocity term) with the flight model;</li>
+<li>the JOG and RUN reference;</li>
+<li>the torque–velocity envelope made <strong>binding</strong>;</li>
+<li>deterministic adaptive collision substeps (for leg speeds);</li>
+<li>swing retraction.</li>
+<li><strong>Out of scope:</strong> sprinting, cuts, tackles.</li>
+<li><strong>Scenarios:</strong></li>
+<li>30 strides at 2.5 and 3.5 m/s;</li>
+<li>walk 1.4 → run 3.0 → walk 1.4;</li>
+<li>perturbations of 30 / 60 N·s at 4 phases;</li>
+<li>held-out: 3.0 m/s, μ 0.6.</li>
+<li><strong>Pass:</strong></li>
+<li>a flight phase every stride at 3.5 m/s;</li>
+<li>stance 0.18–0.30 s (human-band);</li>
+<li>vertical GRF single hump 2.0–3.0 BW;</li>
+<li>speed error ≤ 0.2 m/s;</li>
+<li>stride impulse balance as in G2;</li>
+<li>slip ≤ 2 cm/step;</li>
+<li>sustained saturation ≤ 30 % of stance;</li>
+<li>walk–run transition near ≈ 2 m/s, without a reset or leg swap (Hreljac 1993: human preferred transition ≈ 2 m/s).</li>
+<li><strong>Visual:</strong></li>
+<li>running, not shuffling: visible flight;</li>
+<li>knee recovery rises with speed;</li>
+<li>forward lean from acceleration only;</li>
+<li>arm drive;</li>
+<li>vs the of_loco kinematic twin and your footage.</li>
+<li><strong>Failure modes:</strong> a "running" gait that is actually a fast walk; landing bounce; tunnelling in leg–leg contact (hence the substeps); envelope-limited speed.</li>
+<li><strong>Performance:</strong> ≤ 0.8 ms controller + Jolt with substeps ≤ 1.0 ms per character-frame worst case.</li>
+<li><strong>Your decision:</strong> running-quality sign-off; the performance direction (§13).</li>
+</ul>
+<h3>G6 — the football running envelope</h3>
+<ul>
+<li><strong>Objective:</strong> acceleration from standstill, braking, curved runs, cuts, lateral shuffle and backpedal, inside a <strong>measured</strong> capability envelope; commands outside it are limited or fail physically.</li>
+<li><strong>Implemented:</strong></li>
+<li>the start/acceleration law (forward force orientation, Morin 2011);</li>
+<li>braking steps;</li>
+<li>curve and cut planning (traction shared between braking and turning, a_lat = v²/R);</li>
+<li>the capability envelope published to L5;</li>
+<li>perturbations while running;</li>
+<li>rotating-limb collision tests.</li>
+<li><strong>Out of scope:</strong> football actions; injury; tackles.</li>
+<li><strong>Scenarios:</strong></li>
+<li>0 → 5 m/s starts;</li>
+<li>5 → 0 stops;</li>
+<li>curves of R = 3, 6 and 10 m at 3–5 m/s;</li>
+<li>45° and 90° cuts at 3–4 m/s;</li>
+<li>lateral shuffle; backpedal at 2 m/s;</li>
+<li>over-envelope commands;</li>
+<li>pushes while running;</li>
+<li>held-out combinations.</li>
+<li><strong>Pass:</strong></li>
+<li>the envelope table is measured and deterministic;</li>
+<li>traction utilisation ≤ μ, with no hidden forces;</li>
+<li>over-envelope commands degrade (wider turn, slower, extra steps, or physical loss of balance), never execute perfectly;</li>
+<li>all values within declared human-plausibility bands (to be fixed at G5 review).</li>
+<li><strong>Visual:</strong> athletic starts (low, forward-driving), plant-and-cut mechanics, believable deceleration.</li>
+<li><strong>Failure modes:</strong> traction saturation (yaw traction again), CCD misses at high foot speeds, planner cost.</li>
+<li><strong>Performance:</strong> measured for 4 characters in one world; worst-case contacts recorded.</li>
+<li><strong>Your decision:</strong> the capability envelope values; the football-authority interface.</li>
+</ul>
+<h3>G7 — football transitions and held-out interaction acceptance</h3>
+<ul>
+<li><strong>Objective:</strong> enter and leave a small set of football actions with the same bodies and ownership:</li>
+<li>a slide tackle <em>physically attempted</em> from a run: lower the body, redistribute support, extend the leg, inherit momentum;</li>
+<li>a plant-foot kick preparation;</li>
+<li>a receiving posture.</li>
+<li><strong>Implemented:</strong> action reference clips (P2/P3), action requests through L4, reach adjudication.</li>
+<li><strong>Validation:</strong> the preserved <strong>Reference Tackle as one held-out case</strong>. The attacker jogs, hurdles and is caught; the slider runs in. It is <strong>never tuned to reproduce</strong>. The D6 arrival-speed issue is superseded because the slider now brings its own physical momentum.</li>
+<li><strong>Pass:</strong></li>
+<li>pose and velocity are continuous at action entry;</li>
+<li>unreachable actions are reported, not rescued;</li>
+<li>collision outcomes are consistent across held-out loads, directions, timings and surfaces;</li>
+<li>no action-triggered velocity injection;</li>
+<li>no tackle-specific friction or collision filtering.</li>
+<li><strong>Your decision:</strong> integration with the football simulation.</li>
+</ul>
+<hr />
+<h2>12. Test and validation strategy</h2>
+<ul>
+<li><strong>Fixtures:</strong></li>
+<li>initial states are deterministic: the N pose, or a previous gate's <em>steady-state snapshot</em>, which requires controller snapshots (§13);</li>
+<li>commands are scripted;</li>
+<li>perturbations are defined by impulse, point, direction and gait phase (the phase is triggered on the <em>measured</em> phase).</li>
+<li><strong>Instruments:</strong></li>
+<li><strong>Force plate</strong> [E]: in single-character locomotion gates <strong>the turf itself is the force plate</strong> (<code>plateFrom: 0</code>). Every run is then the instrumented run, and the D6 twin problem disappears.<ul>
+<li><strong>[H]</strong> Plate-turf and static turf must agree statistically: checked in G1a on C1/C3 fixtures (outcomes and key metrics, not bits).</li>
+<li>Multi-character gates use per-character plates (a layer per character).</li>
+</ul>
+</li>
+<li><strong>Measurement code:</strong> pc_d6diag generalised → <code>pc_diag</code> (gait metrics, ledger, limit engagement, phase/contact agreement).</li>
+<li><strong>Regression:</strong> approved suites (hashes) after every gate; the D6X matrix as the contact-response regression (class per case, allowing only documented boundary cases).</li>
+<li><strong>Numerics:</strong> a 480 Hz convergence check of integrated impulses on each gate's core scenarios (≤ 5 % away from outcome boundaries).</li>
+</ul>
+<p><strong>Motion-quality review (built into the harness from G1):</strong>
+- a slow-motion 0.1× / 0.25× and frame-step review (0.25× exists);
+- fixed, non-following cameras available (to show real translation over the ground grid);
+- onion-skin of previous frames;
+- the <strong>gait diagram</strong> (per-foot contact bars: planned vs actual);
+- <strong>joint-angle curves</strong> vs the reference and normative bands (Winter 2009);
+- the <strong>GRF curve</strong> (plate) vs normative shapes;
+- a COM top-view path;
+- a footprint trail: planned vs actual footholds;
+- the <strong>of_loco kinematic twin</strong> rendered beside the physical character at the same phase and speed;
+- your reference footage beside it (comparison only, never a target).</p>
+<p><strong>Motion-quality rubric (your rating, 1–5):</strong> weight transfer, foot roll, knee/hip naturalness, pelvis/trunk, arm swing, rhythm, "robotic-ness". Plus objective proxies:
+- high-frequency joint oscillation power (servo buzz);
+- symmetry index;
+- normalised jerk;
+- the style-torque saturation share.</p>
+<p><strong>Rule: a gate passes only with both verdicts.</strong></p>
+<hr />
+<h2>13. Performance and determinism strategy</h2>
+<p><strong>Measured today</strong> (Node, single-threaded WASM, per 60 Hz frame = 4 steps at 240 Hz; Gate D post-fix run):</p>
+<table>
+<thead>
+<tr>
+<th>cost</th>
+<th>two characters</th>
+<th>per character</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Jolt</td>
+<td>1.10–1.37 ms</td>
+<td>≈ 0.55–0.7 ms</td>
+</tr>
+<tr>
+<td>controllers</td>
+<td>0.17–0.85 ms</td>
+<td>0.08–0.43 ms</td>
+</tr>
+</tbody>
+</table>
+<p>A single character in C1 costs 0.6–0.8 ms. A naive 22-player extrapolation is ≈ 15–22 ms per frame, over a 16.7 ms frame on one thread. This is not premature to note, but it is premature to optimise.</p>
+<p><strong>Rates:</strong>
+- <strong>240 Hz:</strong> Jolt, arbiter, sensing, stance / swing / posture controllers. [H] The stance controller may run at 120 Hz with zero-order hold; test in G2.
+- <strong>60 Hz + events:</strong> the planner, viability monitor, reference parameters, capability envelope.</p>
+<p><strong>Expensive components:</strong></p>
+<table>
+<thead>
+<tr>
+<th>component</th>
+<th>why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Jolt constraint solve</td>
+<td>30 velocity / 4 position iterations, 26 joints/character + contacts</td>
+</tr>
+<tr>
+<td>N-step search</td>
+<td>candidate grid × feasibility</td>
+</tr>
+<tr>
+<td>split2u-style CoP allocation</td>
+<td>convex clipping</td>
+</tr>
+<tr>
+<td>IK solves</td>
+<td>per leg, per step</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Safe adaptive work (deterministic only):</strong>
+- fixed-size candidate sets and fixed iteration counts;
+- deterministic tie-breaks;
+- no wall-clock budgets;
+- collision substeps chosen by a <strong>state rule</strong>: the relative speed of the nearest cross-character body pairs, with a <strong>hard cap</strong> (e.g., ≤ 4). Iterations are never changed mid-run.</p>
+<p><strong>Determinism:</strong>
+- all control maths uses pc_math's deterministic functions (Math.<em> only for measurement);
+- snapshots = Jolt state + </em><em>controller state</em>*: phase, roles, plans, viability results, delay buffers, filters, activation states, latches;
+- replay-hash tests from mid-run snapshots start at G1a;
+- Browser = Node is measured when Puppeteer is available.</p>
+<p><strong>Open (not decided here):</strong>
+- Jolt's multithreaded determinism in the WASM build (to verify before relying on it);
+- physics in a worker;
+- a physical level of detail for distant players (a product decision; must keep the same character architecture).</p>
+<hr />
+<h2>14. Known risks and open questions</h2>
+<ol>
+<li><strong>Motion quality from hand-built feedback</strong> ("robotic").</li>
+<li>Mitigations: low-gain swing + feed-forward, the reference style layer, phase-locked arms and pelvis, and the visual gates.</li>
+<li>Fallback: a learned residual policy (DReCon-like) behind the same arbiter, only with deterministic inference.</li>
+<li><strong>Foot model:</strong> the art-fitted rigid 36 cm box boot has no toe joint, which affects toe clearance (C3 toe-drag), rocking and toe-off. The decision point is G2/G4 measurements. Options: a revised collider (rounded heel/toe) or a 15th body (toes).</li>
+<li><strong>Lateral authority:</strong> hip abduction 140 N·m and V1.1 geometry for lateral steps; C3's crossover limit. Tested at G3.</li>
+<li><strong>The torque–velocity envelope may cap running speed.</strong> That is honest, but it needs plausibility review at G5/G6.</li>
+<li><strong>Numerics at running speed:</strong> landing impacts and leg–leg contact at relative speeds &gt; 10 m/s (speculative 0.02 m at 240 Hz). Needs the substep rule and convergence evidence.</li>
+<li><strong>Performance for 22 players</strong> (§13).</li>
+<li><strong>Latency defaults</strong> for the new controller (the approved gates keep zero delay).</li>
+<li><strong>Friction:</strong> multi-point Coulomb vs stud rotational traction (§2 row 14).</li>
+<li><strong>The football-authority interface:</strong> the capability envelope and action adjudication.</li>
+<li><strong>Plate-as-turf instrumentation</strong> ([H], checked in G1a).</li>
+<li><strong>of_loco dynamic feasibility</strong> as a physical reference ([H]).</li>
+<li><strong>The D6 observations:</strong><ul>
+<li>arrival-speed sensitivity is superseded at G7 (the slider runs in);</li>
+<li>shin-contact bistability stays a regression watch, revisited at G6/G7 (leg–leg contacts at speed);</li>
+<li>the C3 refusal latch and the C1 release window are retired by the viability monitor in G1a (the old gates keep their approved behaviour).</li>
+</ul>
+</li>
+</ol>
+<p><strong>Do the listed C3/C4/C5 items block G1?</strong>
+- <strong>C3 permanent refusal and the C1 release window:</strong> not blockers to <em>fix</em> in the old code. The <strong>old classifier is structurally unsuitable for gait</strong> (single support is normal), so G1a replaces both with the viability monitor. Its first regression scenarios include the D6 transient (far foot airborne, struck foot slipping) to prove there is no latch and no premature release.
+- <strong>D6 arrival speed and shin bistability:</strong> not blockers; documented; revisited at G7 / G6.
+- <strong>C4 reactive arms:</strong> not a blocker. Arm swing comes from the reference plus the arm module; C4's torque-source mechanism is re-evaluated in G3 perturbations.
+- <strong>C5 protective:</strong> not a blocker for G1–G2. It is evaluated at G3, where perturbation falls first occur during gait.</p>
+<hr />
+<h2>15. The exact smallest first implementation gate: <strong>G1a, architecture skeleton with regression parity</strong></h2>
+<p><strong>Why this first:</strong>
+- The risk is not "can the body take a step". C2 and C3 already step.
+- The risk is whether the <strong>final architecture</strong> (one arbiter, support/gait state, viability monitor, state-based phase, delayed observation) can stand, transfer, step and recover <strong>at least as well as the old monolith</strong>, with no new hidden authority.
+- Doing this first means walking is built on the final skeleton, not retrofitted.</p>
+<p><strong>Implemented (new files; the old gates untouched):</strong>
+1. <strong><code>pc_act.js</code> (actuator arbiter):</strong>
+   - ownership + additive torque terms + priority classes;
+   - the envelope (initially permissive: <code>LIMITS_V11</code> directional limits with today's budget rule; f_v ≡ 1; an activation-rate limit present but set wide);
+   - the ledger: τ, q̇, P, positive/negative work, saturation, limit engagement;
+   - the assert that every motor is finite.
+2. <strong><code>pc_gait.js</code> (support/gait state):</strong> support mode from pc_sense; per-foot roles with event triggers (early, late, missed, obstructed); the state-based phase (single-cycle stepping only in G1a).
+3. <strong><code>pc_plan.js</code> (planner + viability monitor):</strong>
+   - N = 2 capture-step planner (C3's foothold law, reach, swing-speed and clearance feasibility, crossover route), re-planned at 60 Hz and on events;
+   - NOMINAL / MODIFIED / SEQUENCE / NO_CAPTURE_FOUND with reasons;
+   - no latch.
+4. <strong><code>pc_loco.js</code> (controller composition):</strong>
+   - the stance controller = C1's CoP law, gravity Jᵀ, hip strategy, feet-in-place, re-hosted as P0/P1 requests;
+   - C2's transfer and acceptance;
+   - the C3 swing, with the h0 / heelUp options on trial;
+   - configurable observation delays (defaults 50 / 120 ms, swept).
+5. <strong>G0-closure diagnostics:</strong> the 480 Hz convergence check, the internal-momentum test, the frozen-command diagnostic; <strong>plate-as-turf</strong> for G1a's own fixtures, with a plate-vs-static comparison.
+6. <strong>Harness:</strong> a "Loco" suite with the gait diagram, ledger panel and slow motion (0.1×).</p>
+<p><strong>Deterministic scenarios:</strong></p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>scenario</th>
+<th>pass (declared)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S1</td>
+<td>quiet stance 10 s</td>
+<td>upright; COM sway ≤ C1's ± 20 %; no saturation beyond C1's</td>
+</tr>
+<tr>
+<td>S2</td>
+<td>weight shift L → R → L (C2 transfer, no lift)</td>
+<td>liftoff criteria met (unload ≤ 5 % BW) within C2's time ± 20 %</td>
+</tr>
+<tr>
+<td>S3</td>
+<td>single placement forward 20 cm, back to stance; mirrored</td>
+<td>C2-equivalent: accepted, no bounce, foothold ≤ 3 cm</td>
+</tr>
+<tr>
+<td>S4</td>
+<td>10 alternating in-place steps at a 0.6 s period</td>
+<td>all liftoffs sensed; timing ± 15 %; slip ≤ 1 cm/step; no non-foot contact</td>
+</tr>
+<tr>
+<td>S5</td>
+<td>the C3 push set (F70, F80, F100, B40, B50, R40 in place, R55) with the new planner</td>
+<td><strong>no regression:</strong> every case C3 recovered is recovered; the failures fall honestly or improve</td>
+</tr>
+<tr>
+<td>S6</td>
+<td>the D6 transient (far foot airborne while the near foot slips): the D6_slide fixture with the new controller as B</td>
+<td>no latch; no release while a foot is being re-planted; still recovers (D6 continuum preserved for D6_slide / v60 / load80)</td>
+</tr>
+<tr>
+<td>S7</td>
+<td>a 15 N·s lateral push at mid-swing during S4</td>
+<td>an interpretable modified step or sequence; no fall</td>
+</tr>
+<tr>
+<td>S8</td>
+<td>a saturation test: a stance support request plus a large style request on the same joints</td>
+<td>realised P0 torque ≥ 95 % of its request; P3 dropped first</td>
+</tr>
+<tr>
+<td>S9</td>
+<td>the internal-momentum test (free-floating, gravity off, all motors cycling)</td>
+<td>ΔP ≤ 0.5 N·s, ΔL ≤ 0.5 kg·m²/s over 2 s</td>
+</tr>
+<tr>
+<td>S10</td>
+<td>the 480 Hz convergence check of S4, S5 (F80) and D6_slide</td>
+<td>integrated impulses within 5 % (boundary cases reported)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Common:</strong> determinism ×3; all approved suites hash-identical (the old controllers are unchanged).</p>
+<p><strong>Performance:</strong>
+- controller ≤ 0.4 ms per character per 60 Hz frame (today's C1–C3: 0.08–0.43 ms);
+- planner average ≤ 0.1 ms at 60 Hz;
+- no allocation growth.</p>
+<p><strong>Visual review:</strong>
+- S3 / S4 / S7 in slow motion, side and front, with the gait diagram;
+- the criteria are G1's visual list, at the level C2/C3 achieved; <em>no worse</em>, plus a visible weight shift before each lift.</p>
+<p><strong>Deliberately out of scope:</strong> travelling gait, reference style (only IDLE sampling), the binding torque–velocity envelope, turning, running, football actions, D6 tuning.</p>
+<p><strong>Decisions I need from you to start G1a:</strong>
+1. Approve the architecture: the one arbiter with priority classes; the support/gait state model; the viability monitor replacing the old classifier <em>for the new controller only</em>.
+2. Approve <strong>of_loco.js as the reference-motion source</strong> (preferences at P3, sampled at the measured phase).
+3. Approve the <strong>default latencies for the new controller</strong> (50 ms feedback / 120 ms planning, swept 0–250), while the approved gates keep zero delay.
+4. Approve <strong>plate-as-turf</strong> for single-character locomotion gates.
+5. Approve the G1a pass criteria above, or amend them before any implementation.</p>
+<hr />
+<h2>References</h2>
+<p>Primary sources consulted or relied on. Astra-cited items were used as Astra summarised them; I did not re-read them.</p>
+<ul>
+<li>Yin, Loken &amp; van de Panne (2007). <em>SIMBICON: Simple Biped Locomotion Control.</em> ACM TOG 26(3).</li>
+<li>Coros, Beaudoin &amp; van de Panne (2010). <em>Generalized Biped Walking Control.</em> ACM TOG 29(4).</li>
+<li>Lee, Kim &amp; Lee (2010). <em>Data-Driven Biped Control.</em> ACM TOG 29(4).</li>
+<li>Kwon &amp; Hodgins (2010). <em>Control Systems for Human Running using an Inverted Pendulum Model and a Reference Motion Capture Sequence.</em> SCA.</li>
+<li>Peng, Abbeel, Levine &amp; van de Panne (2018). <em>DeepMimic.</em> ACM TOG 37(4).</li>
+<li>Bergamin, Clavet, Holden &amp; Forbes (2019). <em>DReCon: Data-Driven Responsive Control of Physics-Based Characters.</em> ACM TOG 38(6).</li>
+<li>Geyer &amp; Herr (2010). <em>A Muscle-Reflex Model that Encodes Principles of Legged Mechanics.</em> IEEE TNSRE.</li>
+<li>Geijtenbeek, van de Panne &amp; van der Stappen (2013). <em>Flexible Muscle-Based Locomotion for Bipedal Creatures.</em> ACM TOG 32(6).</li>
+<li>Pratt, Carff, Drakunov &amp; Goswami (2006). <em>Capture Point.</em> Humanoids.</li>
+<li>Koolen et al. (2012). <em>Capturability-based Analysis and Control of Legged Locomotion, Part 1.</em> IJRR 31(9).</li>
+<li>Englsberger, Ott &amp; Albu-Schäffer (2015). <em>Three-Dimensional Bipedal Walking Control Based on Divergent Component of Motion.</em> IEEE T-RO.</li>
+<li>Khadiv, Herzog, Moosavian &amp; Righetti (2020). <em>Walking Control Based on Step Timing Adaptation.</em> IEEE T-RO.</li>
+<li>Wieber (2002). <em>On the Stability of Walking Systems</em> (viability).</li>
+<li>Westervelt, Grizzle &amp; Koditschek (2003). <em>Hybrid Zero Dynamics of Planar Biped Walkers.</em> IEEE TAC.</li>
+<li>Pratt, Chew, Torres, Dilworth &amp; Pratt (2001). <em>Virtual Model Control.</em> IJRR.</li>
+<li>Raibert (1986). <em>Legged Robots That Balance.</em> MIT Press.</li>
+<li>Blickhan (1989). <em>The Spring-Mass Model for Running and Hopping.</em> J Biomech.</li>
+<li>McMahon &amp; Cheng (1990). <em>The Mechanics of Running.</em> J Biomech.</li>
+<li>Seyfarth, Geyer &amp; Herr (2003). <em>Swing-Leg Retraction.</em> J Exp Biol.</li>
+<li>Hof (2008). <em>The "extrapolated center of mass" concept.</em> Hum Mov Sci.</li>
+<li>Curtze et al. (margin-of-stability cautions; via Astra).</li>
+<li>Pijnappels et al. (2004) (trip responses ≈ 65 ms; via Astra).</li>
+<li>DeMers, Hicks &amp; Delp (2017) (pre-activation vs reflex in landing; via Astra).</li>
+<li>Hamner, Seth &amp; Delp (2010). <em>Muscle Contributions to Propulsion and Support during Running.</em> J Biomech.</li>
+<li>Winter (2009). <em>Biomechanics and Motor Control of Human Movement</em>, 4th ed.</li>
+<li>Cavanagh &amp; Lafortune (1980). <em>Ground Reaction Forces in Distance Running.</em> J Biomech.</li>
+<li>Hreljac (1993). <em>Preferred and Energetically Optimal Gait Transition Speeds in Human Locomotion.</em> MSSE.</li>
+<li>Morin, Edouard &amp; Samozino (2011). <em>Technical Ability of Force Application as a Determinant Factor of Sprint Performance.</em> MSSE.</li>
+<li>Shamaei, Sawicki &amp; Dollar (2013). <em>Estimation of Quasi-Stiffness of the Human Knee in the Stance Phase of Walking.</em> PLoS One.</li>
+<li>Anderson, Madigan &amp; Nussbaum (2007). <em>Maximum Voluntary Joint Torque as a Function of Joint Angle and Angular Velocity.</em> J Biomech.</li>
+<li>Zajac (1989). <em>Muscle and Tendon: Properties, Models, Scaling, and Application to Biomechanics and Motor Control.</em> Crit Rev Biomed Eng.</li>
+<li>Tan, Liu &amp; Turk (2011). <em>Stable Proportional-Derivative Controllers.</em> IEEE CG&amp;A.</li>
+<li>Jolt Physics source, verified for this document:</li>
+<li><code>MotorSettings.h</code>: torque and force limits default to ±FLT_MAX; the spring is used for position targets.</li>
+<li><code>SixDOFConstraint.h</code>: the angular-velocity target is in body 2's constraint space; the orientation target is in body 1's; soft rotation limits are not supported.</li>
+</ul></main></body></html>
