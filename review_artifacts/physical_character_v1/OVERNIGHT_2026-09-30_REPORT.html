@@ -413,7 +413,8 @@ img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:4px} l
 - <strong>F160:</strong> the trailing foot would need 147 cm in 0.4 s (10.9 m/s). The body is already moving at 1.8 m/s.
 - <strong>BL60:</strong> the trailing foot would have to cross behind the stance foot.
 - <strong>B60:</strong> it needs 4.9 m/s; the step is executed projected, and the body still falls.</p>
-<p><strong>Cause:</strong> C3's one-step capture policy takes the <em>longest</em> first step it can. That leaves the trailing foot too far behind for any second step. Step sequences need <strong>N-step capturability</strong> (Koolen et al. 2012): a shorter first step chosen so the second is feasible. That is the gait-controller question in §10.</p>
+<p><strong>First reading:</strong> C3's one-step capture policy takes the <em>longest</em> first step it can, which leaves the trailing foot too far behind for any second step. Sequences would then need <strong>N-step capturability</strong> (Koolen et al. 2012): a shorter first step chosen so the second is feasible.</p>
+<p>That reading is incomplete. §3.2.3 shows the first steps already <em>plan</em> a capture and fall short in execution.</p>
 <h4>3.2.3 Why the "second step needed" steps fall short: swing execution (<code>gate_c3/analysis/swing_execution/</code>)</h4>
 <p>A 2-step capturability planner (Koolen et al. 2012; option <code>step.nStep</code>, default off) exposed the real cause. B60's one-step plan <em>already predicts</em> a capture (+10.6 cm), and so do the others. Every such failure is an <strong>early touchdown</strong> at u = 0.44–0.73 of the swing, landing 26–57 cm short (the recovered steps land 5–14 cm from plan).</p>
 <p>Two traced mechanisms:
@@ -751,7 +752,7 @@ img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:4px} l
 </tbody>
 </table>
 <p>On the step the gap would close, both bodies' velocities change in opposite directions along the contact normal. Through Jolt's speculative contacts, that is 1–2 steps <em>before</em> the ≤ 0.5 mm geometric touch, never after.</p>
-<p><strong>Robustness:</strong> B's placement ±5 cm and the slide gap ±10 cm (<code>gate_d/analysis/robustness.txt</code>). In all six variants the approach was arrested on or before the touch step, and no outcome flipped. One variant exceeded the first-touch penetration target (limitation 2 below).</p>
+<p><strong>Robustness:</strong> B's placement ±5 cm and the slide gap ±10 cm (<code>gate_d/analysis/robustness.txt</code>). In all six variants the approach was arrested on or before the touch step. One outcome flips: with the slide gap at 0.85 m, the slower arrival knocks B down (limitation 2 below).</p>
 <p><strong>Visual</strong> (<code>gate_d/sheet_D2.jpg</code>, <code>sheet_D4.jpg</code>, <code>sheet_D5.jpg</code>, <code>sheet_D13.jpg</code>):
 - D2/D4 read as bumping into, then leaning on, someone's back.
 - D3: A leans on B's arm and is held up.
@@ -963,8 +964,16 @@ img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:4px} l
 <td>C5 lateral head-flexion experiment (not adopted)</td>
 </tr>
 <tr>
-<td>(latest)</td>
+<td><code>1542819</code></td>
+<td>this report</td>
+</tr>
+<tr>
+<td><code>f5503ba</code></td>
 <td>D6: reference targets clamped to the body's range of motion; solver experiments</td>
+</tr>
+<tr>
+<td><code>0dee87c</code></td>
+<td>reactive contact yield (tested, rejected)</td>
 </tr>
 </tbody>
 </table>
@@ -976,13 +985,17 @@ img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:4px} l
 </ul>
 <h2>10. The single most important next decision</h2>
 <p><strong>How the attacker moves.</strong> Everything after this point in the Reference Tackle needs a <em>moving</em> player. The attacker jogs, lifts his knee, hurdles, and his trailing leg is caught mid-stride. Lateral recovery beyond 50 N·s needs step <em>sequences</em>, which is the same capability.</p>
-<p>The multi-step experiment (§3.2.2) sharpens this. The existing parts (foothold law, swing, acceptance, physics) all work step by step. What is missing is a <em>policy</em> that chooses each step for the steps that follow (N-step capturability), rather than the longest capture step.</p>
+<p>The stepping experiments (§3.2.2–3.2.3) sharpen this. The existing foothold law, acceptance and physics work step by step. Two things are missing:
+- a <em>policy</em> that chooses each step for the steps that follow (N-step capturability);
+- swing trajectories planned <em>within the hip's torque limits</em> (heel-up backward swings, progression with the lift), because Cartesian min-jerk swings saturate the hip and touch down early.</p>
 <p>My recommendation is a <strong>locomotion gate built on the existing layers</strong>:
 - authored or recorded gait cycles as joint <em>targets</em>, the same way D6 uses the reference;
 - capture-point foot placement for every step, i.e. C3's foothold law run each step (Pratt 2006; Coros, Beaudoin &amp; van de Panne 2010, <em>Generalized Biped Walking Control</em>);
 - SIMBICON-style stance-hip torso control (Yin, Loken &amp; van de Panne 2007);
 - finite motors and Jolt contacts as now.</p>
 <p>That keeps the architecture, determinism and physical causality. The alternatives would give up causality (a kinematic attacker) or determinism (a learned policy).</p>
-<p>Two smaller choices can wait until after this:
-- whether to refit the foot collider to a boot-sized, rounded shape (it would help crossovers and box-edge contact, but changes the approved art-fitted body);
-- whether contacts with another body should count as perceived support.</p></main></body></html>
+<p>Smaller choices that can wait until after this:
+- <strong>Adopt the C3 swing-shaping options as defaults?</strong> <code>step.h0 = 0</code> and <code>step.heelUp</code> improve landing accuracy but change no outcome.
+- <strong>How firmly authored actions are tracked</strong> (co-contraction): this, not the solver, sets the slider's impact penetration.
+- <strong>Should contact with another body count as perceived support?</strong> (D4: a leaning player currently releases.)</p>
+<p>Tested and ruled out as a lever: refitting the foot collider to boot size. It does not rescue crossovers (still 5.1–5.8 m/s) or the short steps, and its smaller sole costs in-place recovery.</p></main></body></html>

@@ -118,7 +118,9 @@ This is an option, `step.maxSteps`, with default 1, so C3 stays as scoped: all h
 - **BL60:** the trailing foot would have to cross behind the stance foot.
 - **B60:** it needs 4.9 m/s; the step is executed projected, and the body still falls.
 
-**Cause:** C3's one-step capture policy takes the *longest* first step it can. That leaves the trailing foot too far behind for any second step. Step sequences need **N-step capturability** (Koolen et al. 2012): a shorter first step chosen so the second is feasible. That is the gait-controller question in §10.
+**First reading:** C3's one-step capture policy takes the *longest* first step it can, which leaves the trailing foot too far behind for any second step. Sequences would then need **N-step capturability** (Koolen et al. 2012): a shorter first step chosen so the second is feasible.
+
+That reading is incomplete. §3.2.3 shows the first steps already *plan* a capture and fall short in execution.
 
 #### 3.2.3 Why the "second step needed" steps fall short: swing execution (`gate_c3/analysis/swing_execution/`)
 A 2-step capturability planner (Koolen et al. 2012; option `step.nStep`, default off) exposed the real cause. B60's one-step plan *already predicts* a capture (+10.6 cm), and so do the others. Every such failure is an **early touchdown** at u = 0.44–0.73 of the swing, landing 26–57 cm short (the recovered steps land 5–14 cm from plan).
@@ -237,7 +239,7 @@ Flagged:
 
 On the step the gap would close, both bodies' velocities change in opposite directions along the contact normal. Through Jolt's speculative contacts, that is 1–2 steps *before* the ≤ 0.5 mm geometric touch, never after.
 
-**Robustness:** B's placement ±5 cm and the slide gap ±10 cm (`gate_d/analysis/robustness.txt`). In all six variants the approach was arrested on or before the touch step, and no outcome flipped. One variant exceeded the first-touch penetration target (limitation 2 below).
+**Robustness:** B's placement ±5 cm and the slide gap ±10 cm (`gate_d/analysis/robustness.txt`). In all six variants the approach was arrested on or before the touch step. One outcome flips: with the slide gap at 0.85 m, the slower arrival knocks B down (limitation 2 below).
 
 **Visual** (`gate_d/sheet_D2.jpg`, `sheet_D4.jpg`, `sheet_D5.jpg`, `sheet_D13.jpg`):
 - D2/D4 read as bumping into, then leaning on, someone's back.
@@ -363,7 +365,9 @@ Local commits only, on `prototype/physical-character-v1`, nothing pushed:
 | `cca491e`, `be5c27b` | C3 swing-execution diagnosis + swing-shaping options (default off) |
 | `7c7a6fc` | harness: Gate D panel first, C4/C5 toggles in suite D |
 | `963bade` | C5 lateral head-flexion experiment (not adopted) |
-| (latest) | D6: reference targets clamped to the body's range of motion; solver experiments |
+| `1542819` | this report |
+| `f5503ba` | D6: reference targets clamped to the body's range of motion; solver experiments |
+| `0dee87c` | reactive contact yield (tested, rejected) |
 
 - **Code, evidence JSON and analysis probes** are committed.
 - **Stills and sheets** (heavyweight media) follow the existing policy: they are in the worktree, uncommitted.
@@ -373,7 +377,9 @@ Local commits only, on `prototype/physical-character-v1`, nothing pushed:
 ## 10. The single most important next decision
 **How the attacker moves.** Everything after this point in the Reference Tackle needs a *moving* player. The attacker jogs, lifts his knee, hurdles, and his trailing leg is caught mid-stride. Lateral recovery beyond 50 N·s needs step *sequences*, which is the same capability.
 
-The multi-step experiment (§3.2.2) sharpens this. The existing parts (foothold law, swing, acceptance, physics) all work step by step. What is missing is a *policy* that chooses each step for the steps that follow (N-step capturability), rather than the longest capture step.
+The stepping experiments (§3.2.2–3.2.3) sharpen this. The existing foothold law, acceptance and physics work step by step. Two things are missing:
+- a *policy* that chooses each step for the steps that follow (N-step capturability);
+- swing trajectories planned *within the hip's torque limits* (heel-up backward swings, progression with the lift), because Cartesian min-jerk swings saturate the hip and touch down early.
 
 My recommendation is a **locomotion gate built on the existing layers**:
 - authored or recorded gait cycles as joint *targets*, the same way D6 uses the reference;
@@ -383,6 +389,9 @@ My recommendation is a **locomotion gate built on the existing layers**:
 
 That keeps the architecture, determinism and physical causality. The alternatives would give up causality (a kinematic attacker) or determinism (a learned policy).
 
-Two smaller choices can wait until after this:
-- whether to refit the foot collider to a boot-sized, rounded shape (it would help crossovers and box-edge contact, but changes the approved art-fitted body);
-- whether contacts with another body should count as perceived support.
+Smaller choices that can wait until after this:
+- **Adopt the C3 swing-shaping options as defaults?** `step.h0 = 0` and `step.heelUp` improve landing accuracy but change no outcome.
+- **How firmly authored actions are tracked** (co-contraction): this, not the solver, sets the slider's impact penetration.
+- **Should contact with another body count as perceived support?** (D4: a leaning player currently releases.)
+
+Tested and ruled out as a lever: refitting the foot collider to boot size. It does not rescue crossovers (still 5.1–5.8 m/s) or the short steps, and its smaller sole costs in-place recovery.
