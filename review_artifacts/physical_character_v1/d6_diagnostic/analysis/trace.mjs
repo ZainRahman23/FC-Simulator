@@ -1,0 +1,12 @@
+import fs from "fs"; import path from "path";
+const PC = process.argv[2], ROOT = path.resolve(PC, "../../..");
+const { buildBodySpec } = await import(PC + "/pc_body.js"); const { loadJolt } = await import(PC + "/pc_jolt.js"); const D = await import(PC + "/pc_gated.js"); const { buildPoses } = await import(PC + "/pc_control.js");
+const dir = path.join(ROOT, "assets/characters/outfield/gabriel"), rig = JSON.parse(fs.readFileSync(path.join(dir, "rig.json"), "utf8")), buf = fs.readFileSync(path.join(dir, "mesh.bin"));
+const ab = buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength), L = rig.mesh.layout, T = { Float32Array, Uint16Array, Uint32Array, Uint8Array };
+const mesh = {}; for (const k of ["positions", "joints", "weights", "indices"]) mesh[k] = new T[L[k].elementType](ab, L[k].byteOffset, L[k].elementCount);
+const spec = buildBodySpec(rig, mesh, { calib: "V1.1" }), J = await loadJolt(PC + "/vendor/jolt-physics.wasm-compat.js"), poses = buildPoses(spec);
+const v = JSON.parse(process.argv[3]), t0 = +process.argv[4], t1 = +process.argv[5]; D.TESTS_D6X.x = D.mergeD6(D.TESTS_D.D6_slide, v); const f = (x, d = 2) => (+x).toFixed(d); let last = "";
+const r = D.runD(J, spec, "x", { poses, onStep: ({ t, B, U }) => { if (t < t0 || t > t1) return; const o = B.obs, c = B.ctrl.cls, st = B.stepper, fl = o.feet.L, fr = o.feet.R, d = U.B.debug || {};
+  const line = `${c.state}${c.reason ? " (" + c.reason.slice(0, 50) + ")" : ""} | L ${fl.state} ${f(fl.load, 0)}N ${fl.slipping ? "slip" : ""} | R ${fr.state} ${f(fr.load, 0)}N | ξm ${f(o.xiMargin * 100, 1)} hipCap ${f((B.ctrl.hipCapHere || 0) * 100, 1)} | stage ${st ? st.stage : "-"}${st && st.refused ? " refused" : ""} replant ${JSON.stringify(d.replant || [])} stance ${JSON.stringify(d.stance || [])} | trunk ${f(o.trunkTiltDeg, 0)} COMy ${f(o.com[1], 3)}`;
+  if (line !== last) console.log(f(t, 3), line); last = line; } });
+console.log(JSON.stringify(r.Bres.events));

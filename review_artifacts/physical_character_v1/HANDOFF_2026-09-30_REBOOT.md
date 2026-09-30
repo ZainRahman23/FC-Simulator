@@ -2,6 +2,50 @@
 
 The state was frozen for a Mac reboot. **No development is in progress. Nothing has been pushed.**
 
+## Update after the reboot: D6 diagnostic checkpoint (2026-09-30)
+
+After the reboot the preserved state was verified, the user reviewed the overnight gates, and asked why D6's slide barely moves the standing player B. The full report is `d6_diagnostic/D6_DIAGNOSTIC_REPORT.md` / `.html`, and it is checkpointed locally (nothing pushed).
+
+**Why baseline D6 legitimately recovers.** Measured, with an exact contact impulse from a force-plate twin run:
+- **The hit:** the slider hits the **outer side of B's left boot, 1.8 cm above the turf**, and pushes it straight toward his other foot. That is **toward the midline, under his COM**.
+- **The foot:** it is not locked. It slides **16 cm**, then carries ≈ **1.9 BW**, and its own friction pins it. The base narrows from 32 to ≈ 16 cm but still contains the COM.
+- **The far foot:** it lifts for **29 ms**, and C1's feet-in-place rule puts it back down.
+- **Momentum:** A→B **173 N·s** (peak 2.3 kN, 21 ms), and B's feet return all of it to the turf. B's own peak momentum is **18 N·s** (COM 0.24 m/s).
+- **What holds him up:** active balance.
+  - With B's controller frozen at impact, the same hit knocks him down; frozen with no hit, he stands.
+  - A 100 ms sensing delay changes nothing.
+  - It is not body, joint, motor, friction or collider resistance.
+- **The user's decision:** do **not** make the baseline fall; preserve the continuum.
+
+**Physical response spectrum** (D6X matrix, 24 runs, one variable at a time, deterministic ×3; `sandbox/visual/physchar/pc_d6x.js`, `tools/d6x_run.js`):
+- **minor contact, absorbed:** slider arrives at 1.3 m/s;
+- **local disturbance:** 2.6 m/s; ±30° diagonals; B boot μ 0.5; boot-sized colliders;
+- **whole-body disturbance, recovered in place:** the D6 baseline (3.4 m/s); 4.0 m/s; upper shin; 20 % / 70 % load; 22 / 44 cm stance; 100 ms delay;
+- **corrective step:** a knee-height hit (0.50 m). The struck leg steps, partly onto the slider's shin;
+- **support lost / fall:** arrival ≥ 4.8 m/s (the foot is carried away with the slider); a thigh-height hit (0.63 m); **80 % of the weight on the struck foot** (the sweep takes the base from under the COM); B's controller frozen at impact.
+
+**Friction-sensing bug, found and fixed** (`pc_sense.js`, general, approved by the user):
+- **Bug:** the foot friction observer took a foot being pushed by another body as a turf-friction measurement. The slider's push and the turf friction cancelled in the foot's force balance, so B "measured" μ **0.037** on 0.9 turf. He kept it as the running minimum, and his friction-limited capture radius collapsed to 3–50 mm.
+- **Fix:** `muValid` is false while any non-turf body touches that foot, and for 50 ms after (`SENSE.extSettle`).
+- **Regression:** A/B/C1/C2 (V1 + V1.1) and C3 are identical. In Gate D only D6_slide changes (3128e37b → e0ed5a7): still upright, still arrested on the touch step, deepest 2.8 mm.
+- **Matrix effect:** the "step at 70 % load" found before the fix was an artefact of this bug.
+
+**Four unresolved observations** (documented, not changed; the user's decision):
+1. **Permanent C3 step refusal:** after one "no reachable foothold", C3 never re-plans in that run, even once the transient that caused it has passed (in D6: far foot airborne, struck foot slipping).
+2. **C1 premature release window:** C1 releases posture after 62 ms of STEP_NEEDED even when the only cause is a far foot that its own feet-in-place rule is already putting down. Balance re-engages 0.1–0.2 s later (`D6X_load20`, `D6X_inflate`). In the D6 baseline the foot landed 12 ms before the release.
+3. **Arrival-speed sensitivity:** the slider decelerates at ≈ 1.1 g on the turf and meets B at 3.4 m/s (reference ≈ 4.3 m/s). 4.0 m/s → recovered with the far foot up 320 ms; 4.8 m/s → fall. D6 and the Reference Tackle are unchanged.
+4. **Shin-contact bistability:** at ≈ 0.25 m the slider's boot glances either down (local) or up the tapered shin collider (it lifts the leg → fall), depending on last-bit differences.
+
+**Baselines, regression, verification:**
+- `sandbox/visual/physchar/results/v1_1/gated_V1.1.json`: the **pre-fix** Gate D baseline, kept unchanged as history.
+- `sandbox/visual/physchar/results/v1_1/gated_V1.1_post_mu_fix.json`: the **post-fix** Gate D baseline (×3). It is the default Gate D reference of `tools/review/regress.sh` (override with `D_REF=…`) and of the harness.
+- The regression after the fix: all 10 suites identical (`d6_diagnostic/analysis/regress_post_mu_fix.txt`).
+- Browser = Node **deferred** (puppeteer-core not installed); Node ×3 is the checkpoint evidence.
+
+**Review:** `http://127.0.0.1:8171/sandbox/visual/physchar/index.html?suite=D&test=D6_slide` (the D6 diagnostic panel, representative-case buttons, the matrix).
+
+**Next:** the locomotion decision (`LOCOMOTION_PROPOSAL.md` §7) and the four observations above. **Locomotion has not started.**
+
 ## Where
 
 - **Worktree:** `/Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1`
@@ -37,7 +81,7 @@ intent → sensing / support reasoning (`pc_sense`) → physically achievable ta
 | C4 reactive arms | **PARTIAL, off by default** (`ctrlExtra.reactiveArms`) | small effect; C_proj_F115 regresses |
 | C5 protective falls | **PARTIAL, off by default** (`ctrlExtra.protective`) | forward/backward: hands first, head impact 0.12–0.30 m/s; lateral mixed; the brace fades at rest |
 | Gate D (two characters, one world) | **PASS with limitations**, awaiting review | contact invariant shown (both Δv on the contact step); first touch ≤ 1.8 mm; D0 isolation bit-identical |
-| D6 physical slide tackle | **PARTIAL** | slider tracks the reference joint keys (ROM-clamped) from a t = 0 initial condition; the standing B holds |
+| D6 physical slide tackle | **PARTIAL** | slider tracks the reference joint keys (ROM-clamped) from a t = 0 initial condition; the standing B holds — **diagnosed 2026-09-30: physically justified (see the update above); friction-sensing fix approved** |
 | Reference Tackle | **NOT STARTED, blocked** | needs a running attacker, i.e. locomotion |
 
 **Experiment options, all default off:**

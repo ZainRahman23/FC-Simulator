@@ -1,0 +1,1405 @@
+{
+ "calib": "V1.1",
+ "extra": {
+  "protective": true
+ },
+ "results": [
+  {
+   "test": "D1_heel_clip",
+   "group": "D contact",
+   "title": "D1 — heel clip: A places his right foot 26 cm forward into the heel of B standing 45 cm in front",
+   "hash": "23125e2a",
+   "hashA": "9f4551d5",
+   "hashB": "df7da106",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "B": [
+    0,
+    0,
+    0.45
+   ],
+   "init": null,
+   "contact": {
+    "any": true,
+    "firstT": 2.0167,
+    "firstPair": "A.foot_R ↔ B.foot_R",
+    "firstTouchT": 2.0375,
+    "firstTouchPair": "A.foot_R ↔ B.foot_R",
+    "maxDepthMm": 0.7,
+    "pairs": {
+     "A.foot_R ↔ B.foot_R": {
+      "manifoldSteps": 86,
+      "touchSteps": 39,
+      "maxMm": 0.7,
+      "first": 2.0167
+     }
+    },
+    "invariant": {
+     "pair": "A.foot_R ↔ B.foot_R",
+     "touchStep": 489,
+     "t": 2.0375,
+     "normal": [
+      0.047,
+      0.001,
+      0.999
+     ],
+     "closingBefore": 1.14,
+     "arrestStep": 487,
+     "arrestVsTouch": -2,
+     "series": [
+      {
+       "step": 484,
+       "gapMm": 16.23,
+       "vn": 1.14,
+       "dvA": 0.02,
+       "dvB": 0
+      },
+      {
+       "step": 485,
+       "gapMm": 11.53,
+       "vn": 1.159,
+       "dvA": 0.019,
+       "dvB": 0
+      },
+      {
+       "step": 486,
+       "gapMm": 6.76,
+       "vn": 1.176,
+       "dvA": 0.018,
+       "dvB": 0
+      },
+      {
+       "step": 487,
+       "gapMm": 1.91,
+       "vn": 0.323,
+       "dvA": -0.795,
+       "dvB": 0.058
+      },
+      {
+       "step": 488,
+       "gapMm": 1.04,
+       "vn": 0.078,
+       "dvA": -0.31,
+       "dvB": -0.065
+      },
+      {
+       "step": 489,
+       "gapMm": -0.02,
+       "vn": 0.064,
+       "dvA": -0.014,
+       "dvB": 0
+      },
+      {
+       "step": 490,
+       "gapMm": 0.92,
+       "vn": 0.082,
+       "dvA": 0.023,
+       "dvB": 0.005
+      },
+      {
+       "step": 491,
+       "gapMm": -0.01,
+       "vn": 0.094,
+       "dvA": 0.014,
+       "dvB": 0.001
+      },
+      {
+       "step": 492,
+       "gapMm": 0.79,
+       "vn": 0.099,
+       "dvA": 0.005,
+       "dvB": 0
+      },
+      {
+       "step": 493,
+       "gapMm": 0.72,
+       "vn": 0.1,
+       "dvA": 0.001,
+       "dvB": 0
+      }
+     ]
+    }
+   },
+   "A": {
+    "fell": false,
+    "slide": null,
+    "tFalling": null,
+    "finalCls": "RECOVERABLE_IN_PLACE",
+    "step": null,
+    "refused": null,
+    "request": {
+     "foot": "R",
+     "status": "DONE",
+     "why": "placed, loaded and accepted"
+    },
+    "maxRootResN": 0.1,
+    "maxTurfPenMm": 1.9,
+    "maxJointSepMm": 0.16,
+    "trunkMaxDeg": 8.4,
+    "events": [
+     {
+      "t": 0.5,
+      "kind": "request",
+      "what": "place R "
+     },
+     {
+      "t": 1.6958333333333333,
+      "kind": "liftoff commanded",
+      "what": "R"
+     },
+     {
+      "t": 1.7625,
+      "kind": "liftoff",
+      "what": "R"
+     },
+     {
+      "t": 2.2125,
+      "kind": "touchdown",
+      "what": "R"
+     },
+     {
+      "t": 2.4416666666666664,
+      "kind": "landed foot loaded",
+      "what": "R 41 N"
+     },
+     {
+      "t": 4.258333333333333,
+      "kind": "DONE",
+      "what": "placed, loaded and accepted"
+     }
+    ]
+   },
+   "Bres": {
+    "fell": false,
+    "slide": null,
+    "tFalling": null,
+    "finalCls": "RECOVERABLE_IN_PLACE",
+    "step": null,
+    "refused": null,
+    "request": null,
+    "maxRootResN": 0.06,
+    "maxTurfPenMm": 1,
+    "maxJointSepMm": 0.16,
+    "trunkMaxDeg": 4,
+    "events": []
+   },
+   "worst": {
+    "contact": 483,
+    "touch": 488,
+    "arrest": 486,
+    "fallA": 0,
+    "fallB": 0,
+    "push": 0
+   },
+   "cpu": {
+    "msPerFrame": 2.0665,
+    "jolt": 1.1923,
+    "controllers": 0.8743
+   },
+   "repeatHashes": [
+    "23125e2a",
+    "23125e2a",
+    "23125e2a"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "D2_shoved_into",
+   "group": "D contact",
+   "title": "D2 — shoved into: A is pushed forward 80 N·s; his corrective step runs into B standing 55 cm in front",
+   "hash": "a513500d",
+   "hashA": "dc791eeb",
+   "hashB": "71aff6e3",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "B": [
+    0,
+    0,
+    0.55
+   ],
+   "init": null,
+   "contact": {
+    "any": true,
+    "firstT": 1.2292,
+    "firstPair": "A.foot_L ↔ B.foot_L",
+    "firstTouchT": 1.2375,
+    "firstTouchPair": "A.foot_L ↔ B.foot_L",
+    "maxDepthMm": 0.3,
+    "pairs": {
+     "A.foot_L ↔ B.foot_L": {
+      "manifoldSteps": 906,
+      "touchSteps": 10,
+      "maxMm": 0.3,
+      "first": 1.2292
+     },
+     "A.head ↔ B.head": {
+      "manifoldSteps": 100,
+      "touchSteps": 17,
+      "maxMm": -0.01,
+      "first": 1.2958
+     },
+     "A.head ↔ B.chest": {
+      "manifoldSteps": 21,
+      "touchSteps": 0,
+      "maxMm": -11.58,
+      "first": 1.3208
+     },
+     "A.pelvis ↔ B.pelvis": {
+      "manifoldSteps": 87,
+      "touchSteps": 20,
+      "maxMm": 0,
+      "first": 1.5375
+     },
+     "A.chest ↔ B.chest": {
+      "manifoldSteps": 9,
+      "touchSteps": 0,
+      "maxMm": -12.56,
+      "first": 1.575
+     },
+     "A.abdomen ↔ B.abdomen": {
+      "manifoldSteps": 3,
+      "touchSteps": 0,
+      "maxMm": -13.28,
+      "first": 1.5917
+     }
+    },
+    "invariant": {
+     "pair": "A.foot_L ↔ B.foot_L",
+     "touchStep": 297,
+     "t": 1.2375,
+     "normal": [
+      -0.006,
+      -0.076,
+      0.997
+     ],
+     "closingBefore": 3.564,
+     "arrestStep": 296,
+     "arrestVsTouch": -1,
+     "series": [
+      {
+       "step": 292,
+       "gapMm": null,
+       "vn": 3.564,
+       "dvA": 0.173,
+       "dvB": 0
+      },
+      {
+       "step": 293,
+       "gapMm": null,
+       "vn": 3.725,
+       "dvA": 0.162,
+       "dvB": 0
+      },
+      {
+       "step": 294,
+       "gapMm": null,
+       "vn": 3.873,
+       "dvA": 0.148,
+       "dvB": 0
+      },
+      {
+       "step": 295,
+       "gapMm": 9.27,
+       "vn": 2.236,
+       "dvA": -1.194,
+       "dvB": 0.443
+      },
+      {
+       "step": 296,
+       "gapMm": 0.64,
+       "vn": 0.166,
+       "dvA": -1.499,
+       "dvB": 0.571
+      },
+      {
+       "step": 297,
+       "gapMm": 0.43,
+       "vn": 0.107,
+       "dvA": -0.214,
+       "dvB": -0.154
+      },
+      {
+       "step": 298,
+       "gapMm": 0.36,
+       "vn": 0.131,
+       "dvA": -0.043,
+       "dvB": -0.067
+      },
+      {
+       "step": 299,
+       "gapMm": -0.3,
+       "vn": 0.065,
+       "dvA": -0.058,
+       "dvB": 0.008
+      },
+      {
+       "step": 300,
+       "gapMm": 0.31,
+       "vn": -0.014,
+       "dvA": -0.07,
+       "dvB": 0.009
+      },
+      {
+       "step": 301,
+       "gapMm": 0.26,
+       "vn": -0.066,
+       "dvA": -0.08,
+       "dvB": -0.029
+      }
+     ]
+    }
+   },
+   "A": {
+    "fell": false,
+    "slide": null,
+    "tFalling": null,
+    "finalCls": "RECOVERABLE_IN_PLACE",
+    "step": {
+     "foot": "L",
+     "status": "RECOVERED_WITH_STEP",
+     "fail": null,
+     "liftoff": true,
+     "touchdown": true
+    },
+    "refused": null,
+    "request": null,
+    "maxRootResN": 0.89,
+    "maxTurfPenMm": 2.1,
+    "maxJointSepMm": 0.43,
+    "trunkMaxDeg": 19.4,
+    "events": [
+     {
+      "t": 1.05,
+      "kind": "STEP_NEEDED → step",
+      "what": "L foot · foothold projected · predicted ξ margin at touchdown 10.4 cm · T 0.36 s"
+     },
+     {
+      "t": 1.0833333333333333,
+      "kind": "liftoff",
+      "what": "L 0.033 s after STEP_NEEDED"
+     },
+     {
+      "t": 1.2583333333333333,
+      "kind": "touchdown",
+      "what": "L 0.208 s after STEP_NEEDED · 29.2 cm from the foothold"
+     },
+     {
+      "t": 1.6708333333333334,
+      "kind": "recovered",
+      "what": "in the new support 0.62 s after STEP_NEEDED"
+     }
+    ]
+   },
+   "Bres": {
+    "fell": false,
+    "slide": null,
+    "tFalling": null,
+    "finalCls": "RECOVERABLE_IN_PLACE",
+    "step": null,
+    "refused": null,
+    "request": null,
+    "maxRootResN": 0.06,
+    "maxTurfPenMm": 1,
+    "maxJointSepMm": 0.16,
+    "trunkMaxDeg": 5.7,
+    "events": []
+   },
+   "worst": {
+    "contact": 294,
+    "touch": 296,
+    "arrest": 295,
+    "fallA": 0,
+    "fallB": 0,
+    "push": 240
+   },
+   "cpu": {
+    "msPerFrame": 1.796,
+    "jolt": 1.1685,
+    "controllers": 0.6274
+   },
+   "repeatHashes": [
+    "a513500d",
+    "a513500d",
+    "a513500d"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "D3_shoulder",
+   "group": "D contact",
+   "title": "D3 — shoulder to shoulder: A is pushed toward his right 65 N·s into B standing 85 cm to his right (hanging hands 3 cm apart)",
+   "hash": "b18efb3b",
+   "hashA": "927a31d7",
+   "hashB": "359858e5",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "B": [
+    0.85,
+    0,
+    0
+   ],
+   "init": null,
+   "contact": {
+    "any": true,
+    "firstT": 1.0875,
+    "firstPair": "A.foreArm_R ↔ B.foreArm_L",
+    "firstTouchT": 1.1083,
+    "firstTouchPair": "A.foreArm_R ↔ B.foreArm_L",
+    "maxDepthMm": 1.2,
+    "pairs": {
+     "A.foreArm_R ↔ B.foreArm_L": {
+      "manifoldSteps": 773,
+      "touchSteps": 368,
+      "maxMm": 1.2,
+      "first": 1.0875
+     },
+     "A.upperArm_R ↔ B.upperArm_L": {
+      "manifoldSteps": 129,
+      "touchSteps": 69,
+      "maxMm": 0.07,
+      "first": 1.2542
+     }
+    },
+    "invariant": {
+     "pair": "A.foreArm_R ↔ B.foreArm_L",
+     "touchStep": 266,
+     "t": 1.1083,
+     "normal": [
+      0.929,
+      -0.295,
+      -0.223
+     ],
+     "closingBefore": 0.896,
+     "arrestStep": 265,
+     "arrestVsTouch": -1,
+     "series": [
+      {
+       "step": 261,
+       "gapMm": 17.3,
+       "vn": 0.896,
+       "dvA": -0.003,
+       "dvB": 0
+      },
+      {
+       "step": 262,
+       "gapMm": 12.98,
+       "vn": 0.886,
+       "dvA": -0.009,
+       "dvB": 0
+      },
+      {
+       "step": 263,
+       "gapMm": 8.74,
+       "vn": 0.871,
+       "dvA": -0.015,
+       "dvB": 0
+      },
+      {
+       "step": 264,
+       "gapMm": 8.79,
+       "vn": 0.857,
+       "dvA": -0.015,
+       "dvB": 0
+      },
+      {
+       "step": 265,
+       "gapMm": 4.67,
+       "vn": 0.202,
+       "dvA": -0.334,
+       "dvB": 0.321
+      },
+      {
+       "step": 266,
+       "gapMm": 5.03,
+       "vn": 0.073,
+       "dvA": -0.069,
+       "dvB": 0.059
+      },
+      {
+       "step": 267,
+       "gapMm": 0,
+       "vn": 0.074,
+       "dvA": -0.005,
+       "dvB": -0.006
+      },
+      {
+       "step": 268,
+       "gapMm": 7.36,
+       "vn": 0.08,
+       "dvA": -0.002,
+       "dvB": -0.008
+      },
+      {
+       "step": 269,
+       "gapMm": 0,
+       "vn": 0.082,
+       "dvA": -0.004,
+       "dvB": -0.005
+      },
+      {
+       "step": 270,
+       "gapMm": 9.63,
+       "vn": 0.087,
+       "dvA": -0.001,
+       "dvB": -0.006
+      }
+     ]
+    }
+   },
+   "A": {
+    "fell": false,
+    "slide": null,
+    "tFalling": null,
+    "finalCls": "RECOVERABLE_IN_PLACE",
+    "step": null,
+    "refused": null,
+    "request": null,
+    "maxRootResN": 0.77,
+    "maxTurfPenMm": 1.4,
+    "maxJointSepMm": 0.16,
+    "trunkMaxDeg": 6.1,
+    "events": []
+   },
+   "Bres": {
+    "fell": false,
+    "slide": null,
+    "tFalling": null,
+    "finalCls": "RECOVERABLE_IN_PLACE",
+    "step": null,
+    "refused": null,
+    "request": null,
+    "maxRootResN": 0.06,
+    "maxTurfPenMm": 1.1,
+    "maxJointSepMm": 0.16,
+    "trunkMaxDeg": 5,
+    "events": []
+   },
+   "worst": {
+    "contact": 260,
+    "touch": 265,
+    "arrest": 264,
+    "fallA": 0,
+    "fallB": 0,
+    "push": 240
+   },
+   "cpu": {
+    "msPerFrame": 1.3259,
+    "jolt": 1.14,
+    "controllers": 0.1859
+   },
+   "repeatHashes": [
+    "b18efb3b",
+    "b18efb3b",
+    "b18efb3b"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "D4_shoved_hard",
+   "group": "D contact",
+   "title": "D4 — shoved hard into: A is pushed forward 110 N·s (beyond one step alone) into B standing 55 cm in front",
+   "hash": "9c462c1d",
+   "hashA": "3be787f1",
+   "hashB": "eda87685",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "B": [
+    0,
+    0,
+    0.55
+   ],
+   "init": null,
+   "contact": {
+    "any": true,
+    "firstT": 1.2,
+    "firstPair": "A.foot_L ↔ B.foot_L",
+    "firstTouchT": 1.2125,
+    "firstTouchPair": "A.foot_L ↔ B.foot_L",
+    "maxDepthMm": 1.59,
+    "pairs": {
+     "A.foot_L ↔ B.foot_L": {
+      "manifoldSteps": 497,
+      "touchSteps": 54,
+      "maxMm": 0.23,
+      "first": 1.2
+     },
+     "A.head ↔ B.head": {
+      "manifoldSteps": 711,
+      "touchSteps": 401,
+      "maxMm": 0.01,
+      "first": 1.2417
+     },
+     "A.chest ↔ B.chest": {
+      "manifoldSteps": 547,
+      "touchSteps": 39,
+      "maxMm": 0.03,
+      "first": 1.25
+     },
+     "A.abdomen ↔ B.abdomen": {
+      "manifoldSteps": 537,
+      "touchSteps": 0,
+      "maxMm": -4.19,
+      "first": 1.3417
+     },
+     "A.head ↔ B.chest": {
+      "manifoldSteps": 218,
+      "touchSteps": 91,
+      "maxMm": 0.14,
+      "first": 1.3417
+     },
+     "A.chest ↔ B.abdomen": {
+      "manifoldSteps": 140,
+      "touchSteps": 0,
+      "maxMm": -7.68,
+      "first": 1.3458
+     },
+     "A.abdomen ↔ B.pelvis": {
+      "manifoldSteps": 536,
+      "touchSteps": 373,
+      "maxMm": 1.59,
+      "first": 1.3625
+     },
+     "A.pelvis ↔ B.pelvis": {
+      "manifoldSteps": 513,
+      "touchSteps": 0,
+      "maxMm": -4.19,
+      "first": 1.3833
+     },
+     "A.thigh_L ↔ B.thigh_L": {
+      "manifoldSteps": 85,
+      "touchSteps": 0,
+      "maxMm": -17.43,
+      "first": 2.7833
+     },
+     "A.foreArm_L ↔ B.thigh_L": {
+      "manifoldSteps": 123,
+      "touchSteps": 42,
+      "maxMm": 0,
+      "first": 3.3167
+     },
+     "A.head ↔ B.upperArm_R": {
+      "manifoldSteps": 33,
+      "touchSteps": 0,
+      "maxMm": -2.67,
+      "first": 3.9875
+     }
+    },
+    "invariant": {
+     "pair": "A.foot_L ↔ B.foot_L",
+     "touchStep": 291,
+     "t": 1.2125,
+     "normal": [
+      -0.007,
+      -0.071,
+      0.997
+     ],
+     "closingBefore": 3.287,
+     "arrestStep": 289,
+     "arrestVsTouch": -2,
+     "series": [
+      {
+       "step": 286,
+       "gapMm": null,
+       "vn": 3.287,
+       "dvA": 0.209,
+       "dvB": 0
+      },
+      {
+       "step": 287,
+       "gapMm": null,
+       "vn": 3.479,
+       "dvA": 0.191,
+       "dvB": 0
+      },
+      {
+       "step": 288,
+       "gapMm": 18.54,
+       "vn": 3.666,
+       "dvA": 0.187,
+       "dvB": 0
+      },
+      {
+       "step": 289,
+       "gapMm": 3.41,
+       "vn": 0.775,
+       "dvA": -2.066,
+       "dvB": 0.825
+      },
+      {
+       "step": 290,
+       "gapMm": 0.54,
+       "vn": -0.039,
+       "dvA": -0.703,
+       "dvB": 0.111
+      },
+      {
+       "step": 291,
+       "gapMm": -0.23,
+       "vn": -0.021,
+       "dvA": -0.07,
+       "dvB": -0.089
+      },
+      {
+       "step": 292,
+       "gapMm": -0.22,
+       "vn": -0.002,
+       "dvA": 0.027,
+       "dvB": 0.008
+      },
+      {
+       "step": 293,
+       "gapMm": 0.52,
+       "vn": -0.043,
+       "dvA": 0.014,
+       "dvB": 0.055
+      },
+      {
+       "step": 294,
+       "gapMm": 0.49,
+       "vn": -0.085,
+       "dvA": -0.004,
+       "dvB": 0.037
+      },
+      {
+       "step": 295,
+       "gapMm": 0.43,
+       "vn": -0.087,
+       "dvA": -0.059,
+       "dvB": -0.057
+      }
+     ]
+    }
+   },
+   "A": {
+    "fell": true,
+    "slide": null,
+    "tFalling": 3.512,
+    "finalCls": "GROUNDED",
+    "step": {
+     "foot": "L",
+     "status": "FAILED",
+     "fail": "the capture point is still outside the new support after the step (a second step would be needed; C3 takes one)",
+     "liftoff": true,
+     "touchdown": true
+    },
+    "refused": null,
+    "request": null,
+    "maxRootResN": 1.3,
+    "maxTurfPenMm": 7,
+    "maxJointSepMm": 0.67,
+    "trunkMaxDeg": 55.2,
+    "events": [
+     {
+      "t": 1.0375,
+      "kind": "STEP_NEEDED → step",
+      "what": "L foot · foothold projected · predicted ξ margin at touchdown 10.7 cm · T 0.36 s"
+     },
+     {
+      "t": 1.075,
+      "kind": "liftoff",
+      "what": "L 0.037 s after STEP_NEEDED"
+     },
+     {
+      "t": 1.25,
+      "kind": "touchdown",
+      "what": "L 0.212 s after STEP_NEEDED · 38.6 cm from the foothold"
+     },
+     {
+      "t": 3.4499999999999997,
+      "kind": "FAILED",
+      "what": "the capture point is still outside the new support after the step (a second step would be needed; C3 takes one)"
+     }
+    ]
+   },
+   "Bres": {
+    "fell": false,
+    "slide": null,
+    "tFalling": null,
+    "finalCls": "RECOVERABLE_IN_PLACE",
+    "step": null,
+    "refused": null,
+    "request": null,
+    "maxRootResN": 0.1,
+    "maxTurfPenMm": 1.2,
+    "maxJointSepMm": 0.16,
+    "trunkMaxDeg": 11.7,
+    "events": []
+   },
+   "worst": {
+    "contact": 287,
+    "touch": 290,
+    "arrest": 288,
+    "fallA": 842,
+    "fallB": 0,
+    "push": 240
+   },
+   "cpu": {
+    "msPerFrame": 1.9872,
+    "jolt": 1.2526,
+    "controllers": 0.7346
+   },
+   "repeatHashes": [
+    "9c462c1d",
+    "9c462c1d",
+    "9c462c1d"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "D5_shoulder_hard",
+   "group": "D contact",
+   "title": "D5 — hard shoulder: A is pushed toward his right 110 N·s into B standing 85 cm to his right",
+   "hash": "8af3e0d1",
+   "hashA": "b6f088aa",
+   "hashB": "b3a6dc42",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "B": [
+    0.85,
+    0,
+    0
+   ],
+   "init": null,
+   "contact": {
+    "any": true,
+    "firstT": 1.0708,
+    "firstPair": "A.foreArm_R ↔ B.foreArm_L",
+    "firstTouchT": 1.0833,
+    "firstTouchPair": "A.foreArm_R ↔ B.foreArm_L",
+    "maxDepthMm": 8.43,
+    "pairs": {
+     "A.foreArm_R ↔ B.foreArm_L": {
+      "manifoldSteps": 34,
+      "touchSteps": 20,
+      "maxMm": 1.17,
+      "first": 1.0708
+     },
+     "A.upperArm_R ↔ B.upperArm_L": {
+      "manifoldSteps": 162,
+      "touchSteps": 89,
+      "maxMm": 0.2,
+      "first": 1.1458
+     },
+     "A.chest ↔ B.upperArm_L": {
+      "manifoldSteps": 103,
+      "touchSteps": 17,
+      "maxMm": 5.91,
+      "first": 1.45
+     },
+     "A.chest ↔ B.foreArm_L": {
+      "manifoldSteps": 67,
+      "touchSteps": 22,
+      "maxMm": 5.4,
+      "first": 1.7458
+     },
+     "A.abdomen ↔ B.foreArm_L": {
+      "manifoldSteps": 151,
+      "touchSteps": 7,
+      "maxMm": 0.44,
+      "first": 1.7833
+     },
+     "A.pelvis ↔ B.thigh_L": {
+      "manifoldSteps": 17,
+      "touchSteps": 0,
+      "maxMm": -10.06,
+      "first": 2.3292
+     },
+     "A.pelvis ↔ B.shin_L": {
+      "manifoldSteps": 7,
+      "touchSteps": 0,
+      "maxMm": -15.13,
+      "first": 2.4
+     },
+     "A.thigh_R ↔ B.foot_L": {
+      "manifoldSteps": 100,
+      "touchSteps": 3,
+      "maxMm": -0.02,
+      "first": 2.4
+     },
+     "A.thigh_R ↔ B.foot_R": {
+      "manifoldSteps": 312,
+      "touchSteps": 133,
+      "maxMm": 6.71,
+      "first": 2.475
+     },
+     "A.pelvis ↔ B.shin_R": {
+      "manifoldSteps": 4,
+      "touchSteps": 0,
+      "maxMm": -16.35,
+      "first": 2.4917
+     },
+     "A.pelvis ↔ B.foot_R": {
+      "manifoldSteps": 592,
+      "touchSteps": 466,
+      "maxMm": 8.43,
+      "first": 2.5375
+     },
+     "A.upperArm_R ↔ B.thigh_R": {
+      "manifoldSteps": 40,
+      "touchSteps": 5,
+      "maxMm": 0.02,
+      "first": 2.6208
+     },
+     "A.pelvis ↔ B.foot_L": {
+      "manifoldSteps": 56,
+      "touchSteps": 0,
+      "maxMm": -2.15,
+      "first": 2.6583
+     },
+     "A.upperArm_R ↔ B.shin_R": {
+      "manifoldSteps": 117,
+      "touchSteps": 38,
+      "maxMm": 0.3,
+      "first": 3.075
+     },
+     "A.head ↔ B.foreArm_R": {
+      "manifoldSteps": 54,
+      "touchSteps": 42,
+      "maxMm": -0.02,
+      "first": 3.0833
+     },
+     "A.abdomen ↔ B.foot_R": {
+      "manifoldSteps": 336,
+      "touchSteps": 157,
+      "maxMm": 1.78,
+      "first": 3.3917
+     }
+    },
+    "invariant": {
+     "pair": "A.foreArm_R ↔ B.foreArm_L",
+     "touchStep": 260,
+     "t": 1.0833,
+     "normal": [
+      0.925,
+      -0.27,
+      -0.265
+     ],
+     "closingBefore": 1.31,
+     "arrestStep": 259,
+     "arrestVsTouch": -1,
+     "series": [
+      {
+       "step": 255,
+       "gapMm": null,
+       "vn": 1.31,
+       "dvA": 0.102,
+       "dvB": 0
+      },
+      {
+       "step": 256,
+       "gapMm": null,
+       "vn": 1.389,
+       "dvA": 0.079,
+       "dvB": 0
+      },
+      {
+       "step": 257,
+       "gapMm": 14.85,
+       "vn": 1.455,
+       "dvA": 0.066,
+       "dvB": 0
+      },
+      {
+       "step": 258,
+       "gapMm": 7.71,
+       "vn": 1.516,
+       "dvA": 0.061,
+       "dvB": 0
+      },
+      {
+       "step": 259,
+       "gapMm": 0.51,
+       "vn": 0.203,
+       "dvA": -0.64,
+       "dvB": 0.674
+      },
+      {
+       "step": 260,
+       "gapMm": -0.07,
+       "vn": 0.122,
+       "dvA": -0.018,
+       "dvB": 0.063
+      },
+      {
+       "step": 261,
+       "gapMm": -0.16,
+       "vn": 0.152,
+       "dvA": 0.032,
+       "dvB": 0.002
+      },
+      {
+       "step": 262,
+       "gapMm": 9.63,
+       "vn": 0.153,
+       "dvA": -0.007,
+       "dvB": -0.008
+      },
+      {
+       "step": 263,
+       "gapMm": 11.84,
+       "vn": 0.188,
+       "dvA": 0.014,
+       "dvB": -0.021
+      },
+      {
+       "step": 264,
+       "gapMm": 14.04,
+       "vn": 0.227,
+       "dvA": 0.021,
+       "dvB": -0.019
+      }
+     ]
+    }
+   },
+   "A": {
+    "fell": true,
+    "slide": null,
+    "tFalling": 1.092,
+    "finalCls": "GROUNDED",
+    "step": null,
+    "refused": "best foothold leaves ξ 21.6 cm outside the new support",
+    "request": null,
+    "maxRootResN": 1.39,
+    "maxTurfPenMm": 5,
+    "maxJointSepMm": 0.97,
+    "trunkMaxDeg": 99.4,
+    "events": [
+     {
+      "t": 1.0333333333333332,
+      "kind": "NO STEP",
+      "what": "best foothold leaves ξ 21.6 cm outside the new support"
+     }
+    ]
+   },
+   "Bres": {
+    "fell": true,
+    "slide": null,
+    "tFalling": 1.775,
+    "finalCls": "GROUNDED",
+    "step": null,
+    "refused": "best foothold leaves ξ 12.5 cm outside the new support",
+    "request": null,
+    "maxRootResN": 1.28,
+    "maxTurfPenMm": 7.4,
+    "maxJointSepMm": 4.95,
+    "trunkMaxDeg": 95.4,
+    "events": [
+     {
+      "t": 1.7166666666666666,
+      "kind": "NO STEP",
+      "what": "best foothold leaves ξ 12.5 cm outside the new support"
+     }
+    ]
+   },
+   "worst": {
+    "contact": 256,
+    "touch": 259,
+    "arrest": 258,
+    "fallA": 261,
+    "fallB": 425,
+    "push": 240
+   },
+   "cpu": {
+    "msPerFrame": 1.658,
+    "jolt": 1.4245,
+    "controllers": 0.2335
+   },
+   "repeatHashes": [
+    "8af3e0d1",
+    "8af3e0d1",
+    "8af3e0d1"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "D6_slide",
+   "group": "D reference-tackle step",
+   "title": "D6 — slide tackle into a standing player: A's joints track the reference slide (f94→f114); A starts at the seat landing at 5.5 m/s (initial condition — the run-up is not simulated); B stands",
+   "hash": "e0ed5a7",
+   "hashA": "9b11652e",
+   "hashB": "16c1498c",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "B": [
+    0,
+    0,
+    0
+   ],
+   "init": {
+    "leadBootFrontX": -0.993,
+    "bLeftBootX": -0.161,
+    "pelvis": [
+     -2.091,
+     0.404,
+     0.195
+    ],
+    "lowestY": 0.01
+   },
+   "contact": {
+    "any": true,
+    "firstT": 0.175,
+    "firstPair": "A.foot_R ↔ B.foot_L",
+    "firstTouchT": 0.1792,
+    "firstTouchPair": "A.foot_R ↔ B.foot_L",
+    "maxDepthMm": 2.79,
+    "pairs": {
+     "A.foot_R ↔ B.foot_L": {
+      "manifoldSteps": 220,
+      "touchSteps": 64,
+      "maxMm": 1.92,
+      "first": 0.175
+     },
+     "A.foot_R ↔ B.shin_L": {
+      "manifoldSteps": 222,
+      "touchSteps": 38,
+      "maxMm": 2.79,
+      "first": 0.1792
+     }
+    },
+    "invariant": {
+     "pair": "A.foot_R ↔ B.foot_L",
+     "touchStep": 43,
+     "t": 0.1792,
+     "normal": [
+      1,
+      -0.016,
+      0.001
+     ],
+     "closingBefore": 3.575,
+     "arrestStep": 43,
+     "arrestVsTouch": 0,
+     "series": [
+      {
+       "step": 38,
+       "gapMm": null,
+       "vn": 3.575,
+       "dvA": -0.082,
+       "dvB": 0
+      },
+      {
+       "step": 39,
+       "gapMm": null,
+       "vn": 3.514,
+       "dvA": -0.061,
+       "dvB": 0
+      },
+      {
+       "step": 40,
+       "gapMm": null,
+       "vn": 3.465,
+       "dvA": -0.05,
+       "dvB": 0
+      },
+      {
+       "step": 41,
+       "gapMm": null,
+       "vn": 3.412,
+       "dvA": -0.053,
+       "dvB": 0
+      },
+      {
+       "step": 42,
+       "gapMm": 6.24,
+       "vn": 2.891,
+       "dvA": -0.274,
+       "dvB": 0.247
+      },
+      {
+       "step": 43,
+       "gapMm": -0.06,
+       "vn": 0.607,
+       "dvA": -0.507,
+       "dvB": 1.777
+      },
+      {
+       "step": 44,
+       "gapMm": -0.96,
+       "vn": 0.191,
+       "dvA": -0.035,
+       "dvB": 0.381
+      },
+      {
+       "step": 45,
+       "gapMm": -1.57,
+       "vn": 0.096,
+       "dvA": -0.148,
+       "dvB": -0.053
+      },
+      {
+       "step": 46,
+       "gapMm": -1.69,
+       "vn": 0.02,
+       "dvA": -0.163,
+       "dvB": -0.087
+      },
+      {
+       "step": 47,
+       "gapMm": -1.59,
+       "vn": -0.047,
+       "dvA": -0.2,
+       "dvB": -0.132
+      }
+     ]
+    }
+   },
+   "A": {
+    "fell": null,
+    "slide": {
+     "startSpeed": 5.5,
+     "travelM": 1.25,
+     "stopT": 1.22
+    },
+    "tFalling": null,
+    "finalCls": "HOLD",
+    "step": null,
+    "refused": null,
+    "request": null,
+    "maxRootResN": 2.43,
+    "maxTurfPenMm": 10.6,
+    "maxJointSepMm": 3.06,
+    "trunkMaxDeg": 97,
+    "events": []
+   },
+   "Bres": {
+    "fell": false,
+    "slide": null,
+    "tFalling": null,
+    "finalCls": "RECOVERABLE_IN_PLACE",
+    "step": null,
+    "refused": "no reachable foothold (neither foot)",
+    "request": null,
+    "maxRootResN": 0.15,
+    "maxTurfPenMm": 3,
+    "maxJointSepMm": 0.56,
+    "trunkMaxDeg": 4.4,
+    "events": [
+     {
+      "t": 0.20833333333333334,
+      "kind": "NO STEP",
+      "what": "no reachable foothold (neither foot)"
+     }
+    ]
+   },
+   "worst": {
+    "contact": 41,
+    "touch": 42,
+    "arrest": 42,
+    "fallA": 0,
+    "fallB": 0,
+    "push": 0
+   },
+   "cpu": {
+    "msPerFrame": 1.3943,
+    "jolt": 1.2297,
+    "controllers": 0.1646
+   },
+   "repeatHashes": [
+    "e0ed5a7",
+    "e0ed5a7",
+    "e0ed5a7"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "D0_apart",
+   "group": "D control",
+   "title": "D0 — control: both stand 2 m apart for 3 s (no contact expected; each must match its single-character run)",
+   "hash": "7415dbc1",
+   "hashA": "c2b8f7fd",
+   "hashB": "e43e1021",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "B": [
+    2,
+    0,
+    0
+   ],
+   "init": null,
+   "contact": {
+    "any": false,
+    "firstT": null,
+    "firstPair": null,
+    "firstTouchT": null,
+    "firstTouchPair": null,
+    "maxDepthMm": -20,
+    "pairs": {},
+    "invariant": null
+   },
+   "A": {
+    "fell": false,
+    "slide": null,
+    "tFalling": null,
+    "finalCls": "RECOVERABLE_IN_PLACE",
+    "step": null,
+    "refused": null,
+    "request": null,
+    "maxRootResN": 0.06,
+    "maxTurfPenMm": 1,
+    "maxJointSepMm": 0.16,
+    "trunkMaxDeg": 4,
+    "events": []
+   },
+   "Bres": {
+    "fell": false,
+    "slide": null,
+    "tFalling": null,
+    "finalCls": "RECOVERABLE_IN_PLACE",
+    "step": null,
+    "refused": null,
+    "request": null,
+    "maxRootResN": 0.06,
+    "maxTurfPenMm": 1,
+    "maxJointSepMm": 0.16,
+    "trunkMaxDeg": 4,
+    "events": []
+   },
+   "worst": {
+    "contact": 0,
+    "touch": 0,
+    "arrest": 0,
+    "fallA": 0,
+    "fallB": 0,
+    "push": 0
+   },
+   "cpu": {
+    "msPerFrame": 1.2948,
+    "jolt": 1.1168,
+    "controllers": 0.1779
+   },
+   "repeatHashes": [
+    "7415dbc1",
+    "7415dbc1",
+    "7415dbc1"
+   ],
+   "deterministic": true
+  }
+ ]
+}

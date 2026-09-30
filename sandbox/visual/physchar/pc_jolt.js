@@ -16,10 +16,18 @@ export class JoltCharacterWorld {
   constructor(J, spec, cfg, frictionOf) {
     this.J = J; this.spec = spec; this.cfg = Object.assign({}, DEFAULT_WORLD, cfg || {}); this.frictionOf = frictionOf;
     const st = new J.JoltSettings(); st.mMaxWorkerThreads = 1;
-    const opf = new J.ObjectLayerPairFilterTable(2); opf.EnableCollision(L_STATIC, L_MOVING); opf.EnableCollision(L_MOVING, L_MOVING);
-    const bpi = new J.BroadPhaseLayerInterfaceTable(2, 2); bpi.MapObjectToBroadPhaseLayer(L_STATIC, new J.BroadPhaseLayer(0)); bpi.MapObjectToBroadPhaseLayer(L_MOVING, new J.BroadPhaseLayer(1));
+    // MEASUREMENT ONLY (cfg.plateFrom = first body index of the character that stands on a FORCE PLATE; off = the unchanged 2-layer world):
+    // JoltPhysics.js exposes no contact impulses, so the turf under that character is its own coincident "turf" — a free body of huge mass,
+    // gravity off, no damping — that collides only with that character. The plate's momentum change per step IS the turf impulse on that
+    // character (Newton's third law), which separates turf reaction from character↔character contact on a body that touches both
+    // (the D6 diagnostic, 2026-09-30). Layers: 0 turf, 1 the other character, 2 the plate character, 3 its plate.
+    this.plateFrom = this.cfg.plateFrom ?? null; const nL = this.plateFrom != null ? 4 : 2;
+    const opf = new J.ObjectLayerPairFilterTable(nL);
+    if (this.plateFrom == null) { opf.EnableCollision(L_STATIC, L_MOVING); opf.EnableCollision(L_MOVING, L_MOVING); }
+    else { opf.EnableCollision(0, 1); opf.EnableCollision(1, 1); opf.EnableCollision(1, 2); opf.EnableCollision(2, 2); opf.EnableCollision(2, 3); }
+    const bpi = new J.BroadPhaseLayerInterfaceTable(nL, 2); bpi.MapObjectToBroadPhaseLayer(L_STATIC, new J.BroadPhaseLayer(0)); for (let l = 1; l < nL; l++) bpi.MapObjectToBroadPhaseLayer(l, new J.BroadPhaseLayer(1));
     st.mObjectLayerPairFilter = opf; st.mBroadPhaseLayerInterface = bpi;
-    st.mObjectVsBroadPhaseLayerFilter = new J.ObjectVsBroadPhaseLayerFilterTable(st.mBroadPhaseLayerInterface, 2, st.mObjectLayerPairFilter, 2);
+    st.mObjectVsBroadPhaseLayerFilter = new J.ObjectVsBroadPhaseLayerFilterTable(st.mBroadPhaseLayerInterface, 2, st.mObjectLayerPairFilter, nL);
     this.jolt = new J.JoltInterface(st); J.destroy(st);
     this.ps = this.jolt.GetPhysicsSystem(); this.bi = this.ps.GetBodyInterface();
     this.ps.SetGravity(new J.Vec3(0, this.cfg.gravity, 0));
@@ -30,6 +38,11 @@ export class JoltCharacterWorld {
     // the turf: a static half-space approximated by a thick box whose top face is y = 0
     const gs = new J.BodyCreationSettings(new J.BoxShape(new J.Vec3(50, 1, 50), 0.0, null), new J.RVec3(0, -1, 0), new J.Quat(0, 0, 0, 1), J.EMotionType_Static, L_STATIC);
     gs.mUserData = GROUND_UD; gs.mFriction = 0.5; gs.mRestitution = 0; this.ground = this.bi.CreateBody(gs); this.bi.AddBody(this.ground.GetID(), J.EActivation_DontActivate); J.destroy(gs);
+    if (this.plateFrom != null) { const M = 1e8, ps = new J.BodyCreationSettings(new J.BoxShape(new J.Vec3(50, 1, 50), 0.0, null), new J.RVec3(0, -1, 0), new J.Quat(0, 0, 0, 1), J.EMotionType_Dynamic, 3);
+      ps.mOverrideMassProperties = J.EOverrideMassProperties_MassAndInertiaProvided; ps.mMassPropertiesOverride.mMass = M; const I = J.Mat44.prototype.sIdentity();
+      I.SetAxisX(new J.Vec3(M * 1e3, 0, 0)); I.SetAxisY(new J.Vec3(0, M * 1e3, 0)); I.SetAxisZ(new J.Vec3(0, 0, M * 1e3)); ps.mMassPropertiesOverride.mInertia = I;
+      ps.mGravityFactor = 0; ps.mLinearDamping = 0; ps.mAngularDamping = 0; ps.mAllowSleeping = false; ps.mUserData = GROUND_UD; ps.mFriction = 0.5; ps.mRestitution = 0;
+      this.plate = this.bi.CreateBody(ps); this.bi.AddBody(this.plate.GetID(), J.EActivation_Activate); J.destroy(ps); this.plateMass = M; }
     // self-collision filter (ragdoll pattern): one group, sub-group = body index; the caller decides which pairs are disabled
     this.gft = new J.GroupFilterTable(spec.bodies.length);
     this.bodies = []; this.shapeCom = [];
@@ -62,9 +75,12 @@ export class JoltCharacterWorld {
     bcs.mFriction = 0.5; bcs.mRestitution = 0; bcs.mLinearDamping = this.cfg.linDamp; bcs.mAngularDamping = this.cfg.angDamp; bcs.mMaxAngularVelocity = this.cfg.maxAngVel;
     bcs.mAllowSleeping = this.cfg.allowSleep; bcs.mUserData = b.index + 1;
     bcs.mCollisionGroup.SetGroupFilter(this.gft); bcs.mCollisionGroup.SetGroupID(0); bcs.mCollisionGroup.SetSubGroupID(b.index);
+    if (this.plateFrom != null && b.index >= this.plateFrom) bcs.mObjectLayer = 2;
     const body = this.bi.CreateBody(bcs); this.bi.AddBody(body.GetID(), J.EActivation_Activate); J.destroy(bcs);
     this.bodies.push(body);
   }
+  // (measurement) the force plate's linear momentum (N·s): its change over a step = the turf impulse the plate character received, negated
+  plateMomentum() { if (!this.plate) return null; const v = this.plate.GetLinearVelocity(); return [v.GetX() * this.plateMass, v.GetY() * this.plateMass, v.GetZ() * this.plateMass]; }
   _addJoint(j) {
     const J = this.J, b1 = this.bodies[j.parentIndex], b2 = this.bodies[j.childIndex], k = this.cfg.jointFriction;
     if (j.type === "hinge") {

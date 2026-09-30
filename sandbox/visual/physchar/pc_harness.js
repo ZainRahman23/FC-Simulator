@@ -11,7 +11,9 @@ import { runTest, TESTS, GATE_B_TSC } from "./pc_gateb.js";
 import { runC1, TESTS_C1, GATE_C1_TSC } from "./pc_gatec1.js";
 import { runC2, TESTS_C2 } from "./pc_gatec2.js";
 import { runC3, TESTS_C3 } from "./pc_gatec3.js";
-import { runD, TESTS_D } from "./pc_gated.js";
+import { runD, TESTS_D, TESTS_D6X } from "./pc_gated.js";
+import { D6Diag } from "./pc_d6diag.js";
+import { D6X_COMPARE } from "./pc_d6x.js";
 import { footprint } from "./pc_support.js";
 import { buildPoses, fk } from "./pc_control.js";
 import { skinMatrices, boneBodyMap, meshLowestY, referencedVertices } from "./pc_fit.js";
@@ -30,6 +32,7 @@ const H = { J: null, spec: null, entry: null, map: null, ref: null, suiteKey: (Q
   ghostRoot: "actual", jsel: "hip_R", comp: "y", suite: null, suiteB: null, skin: null, poses: null,
   arms: QS.get("arms") === "1", prot: QS.get("prot") === "1", calib: QS.get("calib") === "V1" ? "V1" : "V1.1", ctrlv: ["approved", "recal", "diag"].includes(QS.get("ctrl")) ? QS.get("ctrl") : "", specs: {}, posesBy: {}, suitesBy: {} };
 window.GATEA = H;
+const TD = (k) => TESTS_D[k] || TESTS_D6X[k], isD6 = () => H.suiteKey === "D" && (H.testD === "D6_slide" || !!TESTS_D6X[H.testD]);   // D6 diagnostic (D6_slide + D6X)
 const isD = () => H.suiteKey === "D", isB = () => H.suiteKey === "B", isC = () => H.suiteKey === "C", isC2 = () => H.suiteKey === "C2", isC3 = () => H.suiteKey === "C3", isBal = () => isC() || isC2() || isC3();
 
 // ── GL: mirrored camera (the engine's; Astra meshes are wound for it), a line renderer, the turf ──────────────────────────────────
@@ -78,14 +81,15 @@ function wireShape(s, sh, col) {
 const cross3 = (p, r, col) => { L(V.add(p, [-r, 0, 0]), V.add(p, [r, 0, 0]), col); L(V.add(p, [0, -r, 0]), V.add(p, [0, r, 0]), col); L(V.add(p, [0, 0, -r]), V.add(p, [0, 0, r]), col); };
 
 // ── simulation ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-const title = () => isC3() ? TESTS_C3[H.testC3].title : isC2() ? TESTS_C2[H.testC2].title : isC() ? TESTS_C1[H.testC].title : isB() ? TESTS[H.test].title : DROPS[H.drop].title;
+const title = () => isD() ? TD(H.testD).title : isC3() ? TESTS_C3[H.testC3].title : isC2() ? TESTS_C2[H.testC2].title : isC() ? TESTS_C1[H.testC].title : isB() ? TESTS[H.test].title : DROPS[H.drop].title;
 function simulate() {
   $("status").textContent = `simulating ${title()} …`; H.playing = false; $("play").textContent = "▶ play"; H.run = null;   // no frame is drawn from the previous suite's run while switching
   setTimeout(() => {
     const t0 = performance.now();
     const extra = Object.assign({}, H.arms ? { reactiveArms: true } : {}, H.prot ? { protective: true } : {});
-    H.run = isD() ? runD(H.J, H.spec, H.testD, { keepStates: true, poses: H.poses, ctrlExtra: extra }) : isC3() ? runC3(H.J, H.spec, H.testC3, { keepStates: true, poses: H.poses, ctrlExtra: extra }) : isC2() ? runC2(H.J, H.spec, H.testC2, { keepStates: true, poses: H.poses, ctrl: ctrlOpts() }) : isC() ? runC1(H.J, H.spec, H.testC, { keepStates: true, poses: H.poses, ctrlExtra: extra }) : isB() ? runTest(H.J, H.spec, H.test, { keepStates: true, poses: H.poses }) : runDrop(H.J, H.spec, H.drop, { tsc: GATE_A_TSC, world: GATE_A_WORLD, keepStates: true, seconds: 6 });
-    H.simMs = performance.now() - t0; H.i = 0; H.acc = 0; $("scrub").max = H.run.recs.length - 1; $("scrub").value = 0; renderSide(); drawChart(); drawChart2();
+    const dg = isD6() ? new D6Diag(H.spec) : null; H.diag = dg;   // D6 diagnostic: the causal-chain measurement (read-only onStep hook, the same code as tools/d6x_run.js)
+    H.run = isD() ? runD(H.J, H.spec, H.testD, { keepStates: true, poses: H.poses, ctrlExtra: extra, onStep: dg ? (x) => dg.onStep(x) : undefined }) : isC3() ? runC3(H.J, H.spec, H.testC3, { keepStates: true, poses: H.poses, ctrlExtra: extra }) : isC2() ? runC2(H.J, H.spec, H.testC2, { keepStates: true, poses: H.poses, ctrl: ctrlOpts() }) : isC() ? runC1(H.J, H.spec, H.testC, { keepStates: true, poses: H.poses, ctrlExtra: extra }) : isB() ? runTest(H.J, H.spec, H.test, { keepStates: true, poses: H.poses }) : runDrop(H.J, H.spec, H.drop, { tsc: GATE_A_TSC, world: GATE_A_WORLD, keepStates: true, seconds: 6 });
+    H.diagSum = dg ? dg.summary(H.run) : null; H.simMs = performance.now() - t0; H.i = 0; H.acc = 0; $("scrub").max = H.run.recs.length - 1; $("scrub").value = 0; renderSide(); drawChart(); drawChart2();
     window.GATEA_READY = true; $("status").textContent = "";
   }, 20);
 }
@@ -100,7 +104,7 @@ const hz = () => TIMESTEP_CONFIGS[isBal() || isD() ? GATE_C1_TSC : isB() ? GATE_
 // ── camera ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 const PRESETS = { plan: [0, 89, 1.9], three: [35, 18, 3.4], front: [0, 8, 3.6], side: [90, 8, 3.6], back: [180, 12, 3.6], top: [0, 85, 4.2], left: [-90, 8, 3.6], low: [60, 4, 2.6] };
 function camera(rec) {
-  if (H.follow && rec) { const c = totalCom(rec); H.cam.target = [c[0], H.cam.el > 80 ? 0 : Math.max(0.25, c[1]), c[2]]; }   // plan view: look at the ground under the COM
+  if (H.follow && rec) { const c = isD6() && H.diag && H.diag.rec[H.i] ? H.diag.rec[H.i].B.com : totalCom(rec); H.cam.target = [c[0], H.cam.el > 80 ? 0 : Math.max(0.25, c[1]), c[2]]; }   // plan view: look at the ground under the COM (D6: follow the struck player)
   const { az, el, dist, target } = H.cam, a = az * Math.PI / 180, e = el * Math.PI / 180;
   const eye = [target[0] + dist * Math.cos(e) * Math.sin(a), target[1] + dist * Math.sin(e), target[2] + dist * Math.cos(e) * Math.cos(a)];
   return { view: lookAt(eye, target), proj: persp(40, canvas.width / canvas.height, 0.05, 200), eye };
@@ -226,7 +230,7 @@ function drawChart(cursorOnly) { if (isD()) return drawChartD(); if (isC2()) ret
   g.fillStyle = "#fff"; g.fillRect(X(H.i) - 1, 0, 2, h);
 }
 // the selected joint: requested vs solved angle (hinge: the angle; SixDOF: the chosen swing-twist component), |error|, motor effort / limit
-function drawChart2() { if (isD()) return; if (isBal()) return drawChart2C1();
+function drawChart2() { if (isD()) return H.diag ? drawChart2D6() : undefined; if (isBal()) return drawChart2C1();
   const c = $("chart2"), g = c.getContext("2d"), w = c.clientWidth, h = c.clientHeight; if (!w) return; if (c.width !== w) { c.width = w; c.height = h; }
   if (!H.run || !isB()) return; const R_ = H.run.recs, k = H.spec.joints.findIndex(j => j.name === H.jsel), j = H.spec.joints[k], pr = H.run.profile[k];
   const comp = (q) => { if (j.type === "hinge") return q; const s = Q.swingTwist(q); return H.comp === "z" ? s.swingZ : H.comp === "t" ? s.twist : s.swingY; };
@@ -548,13 +552,14 @@ function drawD(rec, cam, ov, W, Hh) { const spec = H.spec, nb = spec.bodies.leng
       if (inter) { const touch = c.depth > -0.0005; for (const p of c.pts) { cross3(p, touch ? 0.025 : 0.012, touch ? [1, 0.15, 0.15, 1] : [1, 0.7, 0.1, 0.9]); if (O.normals) L(p, V.add(p, V.sc(c.normal, -0.08)), [0.2, 1, 1, 1]); }
         if (touch && c.pts[0]) labels.push([c.pts[0], `${spec.bodies[(c.a < nb ? c.a : c.b)].name} ↔ ${spec.bodies[(c.a < nb ? c.b : c.a) - nb].name} ${(c.depth * 1000).toFixed(1)} mm`, "#ff8080"]); }
       else if (turf && O.ground) for (const p of c.pts) cross3(p, 0.01, [1, 0.95, 0.2, 1]); }
+    if (H.diag && H.diag.rec[H.i]) drawD6(H.diag.rec[H.i], labels);
     const head = (SS, up) => V.add(SS[spec.bodies.findIndex(b => b.name === "head")].pos, [0, up, 0]);   // staggered: in a side view the two heads line up
     labels.push([head(SA, 0.30), `A · ${rec.A.cls}${rec.A.stage && rec.A.stage !== "STAND" && rec.A.stage !== "IDLE" ? " · " + rec.A.stage : ""}`, "#70f0ff"], [head(SB, 0.44), `B · ${rec.B.cls}${rec.B.stage && rec.B.stage !== "STAND" && rec.B.stage !== "IDLE" ? " · " + rec.B.stage : ""}`, "#ff90f0"]);
     flushLines(cam.view, cam.proj, false); }
   ov.font = "11px ui-monospace, Menlo, monospace"; for (const [p, t, c] of labels) { const q = project(cam, p); if (!q) continue; ov.fillStyle = "#000a"; ov.fillRect(q[0] + 6, q[1] - 11, ov.measureText(t).width + 6, 14); ov.fillStyle = c; ov.fillText(t, q[0] + 9, q[1]); }
   const touching = rec.inter.filter(c => c.depth > -0.0005), txt = `t ${rec.t.toFixed(3)} s · step ${rec.n}   ·   A ↔ B: ${touching.length ? touching.map(c => `${c.a.slice(2)}↔${c.b.slice(2)} ${(c.depth * 1000).toFixed(1)} mm`).join(", ") : rec.inter.length ? rec.inter.length + " speculative manifold(s)" : "no contact"}`;
   ov.font = "12px ui-monospace, Menlo, monospace"; ov.fillStyle = "#000b"; ov.fillRect(8, 8, ov.measureText(txt).width + 12, 20); ov.fillStyle = touching.length ? "#ff9090" : "#e0e0e0"; ov.fillText(txt, 14, 22);
-  drawChart(true); }
+  if (H.diag) cursorD6(); drawChart(true); if (H.diag) drawChart2(); }
 // chart: A↔B deepest manifold (red: > −0.5 mm = touching), each character's COM speed (A cyan, B magenta), cursor
 function drawChartD() { const c = $("chart"), g = c.getContext("2d"), w = c.clientWidth, h = c.clientHeight; if (!w) return; if (c.width !== w) { c.width = w; c.height = h; }
   if (!H.run) return; const R_ = H.run.recs, X = (i) => i / (R_.length - 1) * w; g.clearRect(0, 0, w, h); g.fillStyle = "#0d0f12"; g.fillRect(0, 0, w, h);
@@ -563,8 +568,8 @@ function drawChartD() { const c = $("chart"), g = c.getContext("2d"), w = c.clie
   R_.forEach((r, i) => { if (!r.inter.length) return; const d = Math.max(...r.inter.map(q => q.depth)); g.fillStyle = d > -0.0005 ? "#ff4040" : "#c08020"; const hh = d > -0.0005 ? 10 + Math.min(20, d * 1000 * 4) : 5; g.fillRect(X(i), 2, Math.max(1, w / R_.length), hh); });
   g.fillStyle = "#aaa"; g.font = "10px ui-monospace, Menlo, monospace"; g.fillText(`A↔B contact (red touching, amber speculative) · COM speed A (cyan) / B (magenta), max ${vmax.toFixed(2)} m/s`, 6, h - 6);
   g.strokeStyle = "#fff"; g.beginPath(); g.moveTo(X(H.i), 0); g.lineTo(X(H.i), h); g.stroke(); }
-function renderSideD() { const r = H.run, f = (x) => x == null ? "-" : x, row = (k, v, bad) => `<tr><td>${k}</td><td class="${bad ? "bad" : ""}">${v}</td></tr>`, T = TESTS_D[H.testD], C = r.contact, inv = C.invariant;
-  let h = `<h3>${T.title}</h3><div class="small">Gate D (vertical slice): two complete V1.1 characters in ONE Jolt world (28 bodies, 26 joints). Each has its own sensing, balance, stepping and motors and sees the other only as an unknown external body. Physics is the only coupling; nothing here decides a football outcome.</div><table>`;
+function renderSideD() { const r = H.run, f = (x) => x == null ? "-" : x, row = (k, v, bad) => `<tr><td>${k}</td><td class="${bad ? "bad" : ""}">${v}</td></tr>`, T = TD(H.testD), C = r.contact, inv = C.invariant;
+  let h = (isD6() ? renderSideD6() : "") + `<h3>${T.title}</h3><div class="small">Gate D (vertical slice): two complete V1.1 characters in ONE Jolt world (28 bodies, 26 joints). Each has its own sensing, balance, stepping and motors and sees the other only as an unknown external body. Physics is the only coupling; nothing here decides a football outcome.</div><table>`;
   h += row("B relative to A", `${T.B.map(v => v.toFixed(2)).join(", ")} m (both face +z)`) + row("action", T.A.push ? `push on A: ${T.A.push.Ns} N·s ${T.A.push.dir} at ${T.A.push.at} s (pelvis)` : T.A.requests ? `A: C2 placement ${T.A.requests.map(q => `${q.foot} ${q.forward * 100} cm fwd`).join(", ")}` : "none");
   h += row("contact", C.any ? `first manifold ${C.firstT} s (${C.firstPair}) · first TOUCH ${f(C.firstTouchT)} s (${f(C.firstTouchPair)}) · deepest ${C.maxDepthMm} mm` : "none", C.maxDepthMm > 3);
   if (inv) { h += row("the invariant", `${inv.pair} closing at ${inv.closingBefore} m/s · arrested on step ${inv.arrestStep} (${inv.arrestVsTouch >= 0 ? "+" : ""}${inv.arrestVsTouch} vs geometric touch; Jolt's speculative contact acts when the gap would close within the step)`);
@@ -572,7 +577,7 @@ function renderSideD() { const r = H.run, f = (x) => x == null ? "-" : x, row = 
   if (r.init) h += row("slider start (initial condition)", `pelvis ${r.init.pelvis.join(", ")} · lead boot front x ${r.init.leadBootFrontX} m vs B's left boot x ${r.init.bLeftBootX} m · run-up NOT simulated`);
   for (const [nm, x] of [["A", r.A], ["B", r.Bres]]) h += row(`character ${nm}`, `<b>${x.slide ? `SLIDE: ${x.slide.startSpeed} m/s start, ${x.slide.travelM} m, stopped at ${x.slide.stopT} s (joint targets from the reference; orientation and path are physics)` : x.fell ? "FELL" : "UPRIGHT"}</b> (final ${x.finalCls})${x.step ? ` · step ${x.step.foot}: ${x.step.status}${x.step.fail ? " — " + x.step.fail : ""}` : x.refused ? " · no step: " + x.refused : ""}${x.request ? ` · request ${x.request.foot}: ${x.request.status}` : ""}<br><span class=small>trunk max ${x.trunkMaxDeg}° · pelvis residual ≤ ${x.maxRootResN} N (no hidden support) · joint sep ≤ ${x.maxJointSepMm} mm · turf ≤ ${x.maxTurfPenMm} mm</span>`, x.maxRootResN > 5);
   h += row("contact pairs", `<span class=small>${Object.entries(C.pairs).map(([k, v]) => `${k}: ${v.touchSteps} touching / ${v.manifoldSteps} manifold steps, deepest ${v.maxMm} mm`).join("<br>") || "-"}</span>`);
-  const node = H.suiteD && H.suiteD.results.find(q => q.test === H.testD);
+  const node = d6Node(H.testD) || (H.suiteD && H.suiteD.results.find(q => q.test === H.testD));   // D6 tests: the D6 diagnostic matrix (current code) first
   h += row("state hash", `${r.hash} ${node ? (node.hash === r.hash ? "<span class=ok>= Node</span>" : `<span class=bad>≠ Node ${node.hash}</span>`) : ""}`) + row("CPU", `${r.cpu.msPerFrame} ms per 60 Hz frame (both characters, browser)`) + `</table>`;
   if (H.suiteD) h += `<h3>D suite (Node, same WASM, ×3)</h3><table><tr><th>test</th><th>first touch</th><th>deepest</th><th>A</th><th>B</th><th>det</th></tr>` + H.suiteD.results.map(q => `<tr><td>${q.test}</td><td>${q.contact.firstTouchPair ? q.contact.firstTouchPair.replace(/A\.|B\./g, "") : "-"}</td><td>${q.contact.maxDepthMm} mm</td><td class="${q.A.fell ? "bad" : "ok"}">${q.A.slide ? "slide" : q.A.fell ? "fell" : "up"}</td><td class="${q.Bres.fell ? "bad" : "ok"}">${q.Bres.fell ? "fell" : "up"}</td><td>${q.deterministic ? "✓" : "✗"}</td></tr>`).join("") + `</table>`;
   $("side").innerHTML = h; }
@@ -588,11 +593,73 @@ function renderSideC3() { const r = H.run, R = r.step, f = (x) => x == null ? "-
   if (r.events && r.events.length) h += `<h3>Stepper events</h3><table>` + r.events.map(e => `<tr><td>${e.t != null ? e.t.toFixed(3) : "-"}</td><td>${e.kind}</td><td class="small">${e.what}</td></tr>`).join("") + `</table>`;
   if (H.suiteC3) h += `<h3>C3 suite (Node, same WASM, ×3)</h3><table><tr><th>test</th><th>outcome</th><th>det</th></tr>` + H.suiteC3.results.map(q => `<tr><td>${q.test}</td><td class="${/FELL/.test(q.outcome) ? "bad" : "ok"}">${q.outcome}</td><td>${q.deterministic ? "✓" : "✗"}</td></tr>`).join("") + `</table>`;
   $("side").innerHTML = h; }
+// ── D6 DIAGNOSTIC (D6_slide + the D6X matrix): the struck player's causal chain — live from pc_d6diag (the same measurement code as
+// tools/d6x_run.js), plus the Node matrix JSON for the instrumented twin's EXACT contact force / momentum ledger (JoltPhysics.js exposes no
+// contact impulses; see pc_d6diag.js) ──────────────────────────────────────────────────────────────────────────────────────────────
+const d6Node = (k) => H.d6x && H.d6x.results ? H.d6x.results.find(q => q.test === k) : null;
+const d6Force = (t) => { const n = d6Node(H.testD), s = n && n.forceSeries; if (!s) return null; const i = Math.round((t - s.t0) / s.dt); return i >= 0 && i < s.F.length ? { F: s.F[i], turf: s.turf[i] } : null; };
+function drawD6(d, labels) { const O = H.ov, b = d.B, c = b.com, cg = [c[0], 0.004, c[2]], hs = (v) => Math.hypot(v[0], v[2]);
+  if (O.c_region && b.region && b.region.length >= 3) { polyLine(b.region, [0.3, 1, 0.5, 1]);
+    labels.push([G2(b.region[0], 0.01), `B support region · ξ margin ${b.xiM > -999 ? (b.xiM * 100).toFixed(1) + " cm" : "— (no support polygon)"}`, b.xiM > 0.015 ? "#8cf0a0" : b.xiM > -0.05 ? "#ffd070" : "#ff7070"]); }
+  if (O.c_com) { cross3(cg, 0.03, [1, 0.35, 0.9, 1]); L(c, cg, [1, 0.35, 0.9, 0.5]); L(c, V.add(c, V.sc(b.vcom, 0.5)), [1, 0.5, 1, 1]); if (hs(b.vcom) > 0.03) labels.push([V.add(c, V.sc(b.vcom, 0.5)), `B COM ${hs(b.vcom).toFixed(2)} m/s`, "#ff90ff"]); }
+  if (O.c_xi) { const x = [b.xi[0], 0.006, b.xi[1]]; ring(x, 0.035, [0.2, 1, 1, 1]); L(cg, x, [0.2, 1, 1, 0.8]); labels.push([x, "ξ", "#60ffff"]); }
+  if (O.c_cop) { if (b.cop) cross3([b.cop[0], 0.008, b.cop[1]], 0.03, [1, 1, 1, 1]); if (b.pStar) ring([b.pStar[0], 0.01, b.pStar[1]], 0.02, [0.3, 0.7, 1, 1]); }
+  if (O.c_feet) for (const s of ["L", "R"]) { const f = b.feet[s], col = FOOT_COL[f.st] || [1, 1, 1, 1], base = [f.pos[0], f.pos[1] + 0.12, f.pos[2]], top = V.add(base, [0, Math.max(0, f.load) / 800 * 0.4, 0]);
+    if (f.sole) polyLine([0, 1, 3, 2].map(q => f.sole[q]), [col[0], col[1], col[2], 0.8], 0.003); L(base, top, col);
+    labels.push([V.add(top, [0, 0.02, 0]), `${s === "L" ? "struck L" : "far R"} ${f.st} ${f.load.toFixed(0)} N${f.slip ? " · SLIP" : ""}`, f.slip ? "#ff6060" : "#c8f0c8"]); }
+  if (O.impulse && d.pairs.length) { const fz = d6Force(d.t), F = fz && fz.F, len = F ? Math.hypot(...F) : 0;
+    for (const p of d.pairs.slice(0, 3)) { const dir = F && len > 1 ? V.sc(F, 1 / len) : p.n, sc = F ? Math.min(0.6, len * 0.00025) : 0.12; L(V.sub(p.p, V.sc(dir, sc)), p.p, [1, 0.25, 0.25, 1]); cross3(p.p, 0.02, [1, 0.25, 0.25, 1]); }
+    labels.push([d.pairs[0].p, `${d.pairs[0].a} → ${d.pairs[0].b} @ ${d.pairs[0].y.toFixed(2)} m${F ? ` · A→B ${hs(F).toFixed(0)} N horiz. (twin)` : ""}`, "#ff8080"]); } }
+// chart 2 (D6): contact force A→B and turf→B (twin, exact) · foot loads (struck L / far R; slip and air shaded) · ξ margin + classification band
+function drawChart2D6() { const c = $("chart2"), g = c.getContext("2d"), w = c.clientWidth, h = c.clientHeight; if (!w) return; if (c.width !== w) { c.width = w; c.height = h; }
+  const R_ = H.diag.rec, n = R_.length, X = (i) => i / (n - 1) * w, h1 = Math.round(h * 0.34), h2 = Math.round(h * 0.33), y3 = h1 + h2, h3 = h - y3; g.clearRect(0, 0, w, h); g.fillStyle = "#0d0f12"; g.fillRect(0, 0, w, h);
+  g.font = "10px ui-monospace, Menlo"; const node = d6Node(H.testD), s = node && node.forceSeries;
+  if (s) { const fmax = Math.max(500, ...s.F.map(f => f ? Math.hypot(f[0], f[2]) : 0)), idx = (i) => Math.round((R_[i].t - s.t0) / s.dt);
+    for (const [key, col] of [["turf", "#50d070"], ["F", "#ff5050"]]) { g.strokeStyle = col; g.beginPath(); for (let i = 0; i < n; i++) { const k = idx(i), v = k >= 0 && k < s[key].length && s[key][k] ? Math.hypot(s[key][k][0], s[key][k][2]) : 0, y = h1 - 1 - Math.min(1, v / fmax) * (h1 - 12); i ? g.lineTo(X(i), y) : g.moveTo(X(i), y); } g.stroke(); }
+    g.fillStyle = "#9aa0a6"; g.fillText(`contact force A→B (red) · turf→B (green), horizontal — instrumented twin, exact · max ${fmax.toFixed(0)} N`, 6, 10); }
+  else { g.fillStyle = "#9aa0a6"; g.fillText("contact force: no Node matrix entry for this test (run tools/d6x_run.js)", 6, 10); }
+  const lmax = Math.max(800, ...R_.map(q => Math.max(q.B.feet.L.load, q.B.feet.R.load)));
+  for (let i = 0; i < n; i++) { const q = R_[i].B.feet; if (q.L.slip) { g.fillStyle = "#ff303033"; g.fillRect(X(i), h1, Math.max(1, w / n), h2); } if (!q.R.touch) { g.fillStyle = "#3080ff33"; g.fillRect(X(i), h1, Math.max(1, w / n), h2); } }
+  for (const [side, col] of [["L", "#ffa040"], ["R", "#40c8ff"]]) { g.strokeStyle = col; g.beginPath(); for (let i = 0; i < n; i++) { const y = h1 + h2 - 1 - Math.max(0, R_[i].B.feet[side].load) / lmax * (h2 - 12); i ? g.lineTo(X(i), y) : g.moveTo(X(i), y); } g.stroke(); }
+  g.fillStyle = "#9aa0a6"; g.fillText(`foot load: struck L (orange) · far R (cyan), max ${lmax.toFixed(0)} N · red = struck foot SLIPPING · blue = far foot off the turf`, 6, h1 + 10);
+  const xm = (v) => y3 + 4 + (0.2 - Math.max(-0.3, Math.min(0.2, v))) / 0.5 * (h3 - 12); g.strokeStyle = "#555"; g.beginPath(); g.moveTo(0, xm(0)); g.lineTo(w, xm(0)); g.stroke();
+  g.strokeStyle = "#e0e0e0"; g.beginPath(); for (let i = 0; i < n; i++) { const v = R_[i].B.xiM, y = xm(v <= -999 ? -0.3 : v); i ? g.lineTo(X(i), y) : g.moveTo(X(i), y); } g.stroke();
+  for (let i = 0; i < n; i++) { g.fillStyle = CLS_COL[R_[i].B.cls] || "#888"; g.fillRect(X(i), h - 5, Math.max(1, w / n), 5); if (R_[i].B.stage && !["STAND", "IDLE"].includes(R_[i].B.stage)) { g.fillStyle = "#b080ff"; g.fillRect(X(i), h - 9, Math.max(1, w / n), 3); } }
+  g.fillStyle = "#9aa0a6"; g.fillText("B capture-point margin ξ (white; 0 = support edge, −30 cm clipped) · classification band (bottom) · stepping (violet)", 6, y3 + 10);
+  g.fillStyle = "#fff"; g.fillRect(X(H.i) - 1, 0, 2, h); }
+const f1 = (x, d = 1) => x == null || !Number.isFinite(+x) ? "-" : (+x).toFixed(d);
+function cursorD6() { const el = $("d6cur"); if (!el || !H.diag) return; const d = H.diag.rec[H.i]; if (!d) return; const b = d.B, J_ = b.joints, fz = d6Force(d.t);
+  const jr = (n, lab, ax) => { const j = J_[n]; if (!j) return ""; const one = !Array.isArray(j.a), a = one ? j.a : j.a[ax], tq = one ? j.tq : j.tq[ax], sp = one ? j.spr : j.spr[ax], dm = one ? j.dmp : j.dmp[ax];
+    return `<tr><td>${lab}</td><td>${f1(a)}°</td><td>${f1(tq, 0)}</td><td class="${j.sat >= 0.98 ? "bad" : ""}">${f1(j.sat * 100, 0)} %</td><td>${f1(sp, 0)} / ${f1(dm, 0)}</td></tr>`; };
+  el.innerHTML = `t ${d.t.toFixed(3)} s · B <b style="color:${CLS_COL[b.cls] || "#fff"}">${b.cls}</b>${b.frozen ? " (FROZEN — diagnostic)" : ""}${b.stage && b.stage !== "STAND" ? " · C3 " + b.stage : ""}${b.refused ? " · C3 refused: " + b.refused : ""}<br>`
+    + `contact ${d.pairs.length ? d.pairs.map(p => `${p.a}→${p.b} @${p.y.toFixed(2)} m`).join(", ") : d.spec ? "speculative only" : "none"}${fz && fz.F ? ` · A→B ${Math.hypot(fz.F[0], fz.F[2]).toFixed(0)} N, turf→B ${fz.turf ? Math.hypot(fz.turf[0], fz.turf[2]).toFixed(0) : "-"} N (twin)` : ""}<br>`
+    + `struck L ${b.feet.L.st} ${b.feet.L.load} N${b.feet.L.slip ? " SLIP" : ""} · far R ${b.feet.R.st} ${b.feet.R.load} N · ξ margin ${b.xiM > -999 ? f1(b.xiM * 100) + " cm" : "no support"} · COM ${f1(Math.hypot(b.vcom[0], b.vcom[2]), 2)} m/s · trunk ${f1(b.trunk)}°`
+    + `<table><tr><th>struck leg</th><th>angle</th><th>τ N·m</th><th>sat</th><th>spring / damping N·m</th></tr>${jr("ankle_L", "ankle roll (Z)", 2)}${jr("knee_L", "knee flexion", 0)}${jr("hip_L", "hip ad/abduction (Z)", 2)}${jr("hip_L", "hip flex/ext (Y)", 1)}${jr("hip_R", "far hip ad/abd (Z)", 2)}</table>`; }
+function renderSideD6() { const S = H.diagSum, n = d6Node(H.testD), row = (k, v, bad) => `<tr><td>${k}</td><td class="${bad ? "bad" : ""}">${v}</td></tr>`;
+  let h = `<h3>D6 diagnostic — ${H.testD}</h3><div class="small">${TD(H.testD).title}. Everything below is MEASURED from the solved bodies (pc_d6diag); the response label is a description of those measurements, never an input.</div>`;
+  h += `<div style="display:flex;flex-wrap:wrap;gap:4px;margin:6px 0">${D6X_COMPARE.map(([k, lab]) => `<button onclick="D6_PICK('${k}')" style="background:${k === H.testD ? "#f0c060" : "#262a30"};color:${k === H.testD ? "#111" : "#e6e4df"};border:1px solid #2e3238;border-radius:4px;padding:2px 6px;font:11px -apple-system,system-ui;cursor:pointer">${lab}</button>`).join("")}</div><table>`;
+  if (!S) return h + "</table>";
+  const C = S.contact, M = n && n.momentum, Fe = S.feet, Bo = S.body;
+  h += row("observed response", `<b>${S.outcome}</b>${n && n.twin && n.twin.outcome !== S.outcome ? `<br><span class=small>instrumented twin (Node): ${n.twin.outcome} — this case sits on a decision boundary</span>` : ""}`, /fall/.test(S.outcome));
+  h += row("1 · contact", C.pair ? `${C.pair} at ${f1(C.heightM, 2)} m (${C.where}) · slider ${f1(C.aSpeed, 2)} m/s at touch · first touch ${f1(C.firstTouchT, 3)} s · bodies hit: ${C.bodiesHit.join(", ")} · deepest ${f1(C.maxDepthMm)} mm` : "none");
+  if (M) { const Wn = M.windows, wr = (k) => `<tr><td>${k}</td><td>${f1(Wn[k].AtoB[0])}</td><td>${f1(Wn[k].AtoB[2])}</td><td>${f1(Wn[k].turfToB[0])}</td><td>${f1(Wn[k].turfToB[1])}</td></tr>`;
+    const twinNote = n.twin && n.twin.outcome !== S.outcome ? `<br><span class=small>⚠ the instrumented twin took the other branch (${n.twin.outcome}): its ledger after the first ~100 ms describes that branch</span>` : "";
+    h += row("2 · contact impulse (twin, exact)", `peak ${M.peakForceN} N at +${M.peakAtMs} ms · high force (> 25 % of peak) for ${M.highForceMs ?? "-"} ms<br><table class=small><tr><th>window</th><th>A→B x</th><th>A→B z</th><th>turf→B x</th><th>turf→B y</th></tr>${Object.keys(Wn).map(wr).join("")}</table>`);
+    h += row("momentum transfer", `slider ${M.A.atTouch} N·s at touch → ${M.A.after100} (+100 ms) → ${M.A.after250} (+250 ms) → ${M.A.after500} (+500 ms) · B's whole-body peak ${M.BpeakMomentum} N·s (COM ${f1(M.BpeakComSpeed, 2)} m/s): B's feet hand the rest to the turf${twinNote}`); }
+  h += row("3 · struck foot", `slid ${f1(Fe.struckSlideCm)} cm (peak ${f1(Fe.struckPeakSpeed, 2)} m/s, SLIPPING ${Fe.struckSlipMs} ms, off the turf ${Fe.struckAirMs} ms) · peak load ${Fe.struckPeakLoadN} N (before: L ${Fe.preLoad.L} / R ${Fe.preLoad.R} N) · far foot off the turf ${Fe.farAirMs} ms, moved ${f1(Fe.farMovedCm)} cm`);
+  h += row("4 · joints (first 150 ms)", `<table class=small><tr><th>joint</th><th>excursion °</th><th>peak rate °/s</th><th>peak τ N·m</th><th>sat steps</th><th>spring / damping N·m</th></tr>${Object.entries(S.joints).map(([k, j]) => `<tr><td>${k} ${j.axes.join("/")}</td><td>${j.excursionDeg.join(" / ")}</td><td>${j.peakRateDegS.join(" / ")}</td><td>${j.peakTorqueNm.join(" / ")}</td><td>${j.satSteps}</td><td>${j.peakSpringNm.join(" / ")} · ${j.peakDampingNm.join(" / ")}</td></tr>`).join("")}</table>`);
+  h += row("5 · whole body", `COM peak ${f1(Bo.comPeakSpeed, 2)} m/s at ${f1(Bo.comPeakT, 3)} s · moved ${f1(Bo.comMovedCm)} cm · dropped ${f1(Bo.comDropCm)} cm · trunk ≤ ${f1(Bo.trunkMaxDeg)}° · |L| horizontal ≤ ${f1(Bo.Lpeak)} kg·m²/s · ξ min ${f1(Bo.xiMinCm)} cm (outside ${Bo.xiOutsideMs} ms${Bo.noSupportMs ? `, no support polygon ${Bo.noSupportMs} ms` : ""})`, /fall/.test(S.outcome));
+  h += row("6 · classification", S.classes.map(c => `<span style="color:${CLS_COL[c.state] || "#fff"}">${f1(c.t, 3)} ${c.state}</span>${c.why ? ` <span class=small>(${c.why})</span>` : ""}`).join("<br>"));
+  h += row("7 · C3 stepping", (S.stepper.length ? S.stepper.map(e => `${f1(e.t, 3)} ${e.kind}: ${e.what}`).join("<br>") : "no step decision") + (S.refused ? `<br><span class=small>refused: ${S.refused}</span>` : ""));
+  h += `</table><h3>at the cursor</h3><div id="d6cur" class="small"></div>`;
+  if (H.d6x) h += `<h3>D6 diagnostic matrix (Node ×3, deterministic; twin = instrumented run)</h3><table class=small><tr><th>test</th><th>response</th><th>arrive m/s</th><th>contact</th><th>A→B 35 ms / total N·s</th><th>foot cm</th><th>COM m/s</th><th>twin</th></tr>` + H.d6x.results.map(q => { const m = q.momentum;
+      return `<tr style="cursor:pointer;${q.test === H.testD ? "background:#3a3320" : ""}" onclick="D6_PICK('${q.test}')"><td>${q.test}</td><td class="${/fall/.test(q.outcome) ? "bad" : /step/.test(q.outcome) ? "" : "ok"}">${q.outcome}</td><td>${f1(q.contact.aSpeed, 1)}</td><td>${q.contact.pair ? q.contact.pair.replace("foot_R → ", "") + " @" + f1(q.contact.heightM, 2) : "-"}</td><td>${m ? f1(m.windows["−10–35 ms"].AtoB[0], 0) + " / " + f1(Object.values(m.windows).reduce((s, w) => s + w.AtoB[0], 0), 0) : "-"}</td><td>${f1(q.feet.struckSlideCm, 0)}</td><td>${f1(q.body.comPeakSpeed, 2)}</td><td class=small>${q.twin.outcome === q.outcome ? "=" : q.twin.outcome}</td></tr>`; }).join("") + `</table>`;
+  return h; }
 // ── UI ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 const WORST = { D: [["contact", "first A↔B manifold"], ["arrest", "approach arrested"], ["touch", "first A↔B touch"], ["push", "push on A"], ["fallA", "A falls"], ["fallB", "B falls"]], C3: [["push", "push"], ["stepNeeded", "STEP_NEEDED"], ["liftoff", "liftoff"], ["touchdown", "touchdown"], ["recovered", "recovered"], ["falling", "fall release"], ["grounded", "first non-foot ground contact"]], C2: [["liftoff", "first liftoff"], ["touchdown", "first touchdown"], ["done", "first request outcome"]], C: [["push", "push"], ["stepNeeded", "STEP_NEEDED declared"], ["falling", "fall transition (release)"], ["grounded", "first non-foot ground contact"], ["minMargin", "smallest capture-point margin"], ["footRoll", "first foot roll / lift"]], A: [["groundPen", "ground penetration"], ["anchor", "joint separation"], ["limit", "limit violation"], ["pop", "correction pop"], ["self", "self penetration"], ["energy", "energy gain"]],
   B: [["err", "target error (RMS peak)"], ["contact", "first obstacle contact"], ["penetration", "deepest obstacle penetration"], ["disturbance", "disturbance"], ["limit", "limit violation"], ["anchor", "joint separation"], ["ground", "ground penetration"], ["self", "self penetration"]] };
 function setSuite(k) { H.suiteKey = k; document.body.classList.toggle("suiteD", isD()); document.body.classList.toggle("suiteB", isB()); document.body.classList.toggle("suiteC", isBal()); document.body.classList.toggle("suiteC2", isC2()); $("suite").value = k; const sel = $("drop"); sel.innerHTML = "";
-  if (isD()) { let grp = null, og = null; for (const t of Object.keys(TESTS_D)) { if (TESTS_D[t].group !== grp) { grp = TESTS_D[t].group; og = document.createElement("optgroup"); og.label = grp; sel.appendChild(og); } og.appendChild(new Option(`${t} — ${TESTS_D[t].title}`, t)); } }
+  if (isD()) { let grp = null, og = null; for (const t of [...Object.keys(TESTS_D), ...Object.keys(TESTS_D6X)]) { const T = TD(t); if (T.group !== grp) { grp = T.group; og = document.createElement("optgroup"); og.label = grp; sel.appendChild(og); } og.appendChild(new Option(`${t} — ${T.title}`, t)); } }
   else if (isC3()) { let grp = null, og = null; for (const t of Object.keys(TESTS_C3)) { if (TESTS_C3[t].group !== grp) { grp = TESTS_C3[t].group; og = document.createElement("optgroup"); og.label = grp; sel.appendChild(og); } og.appendChild(new Option(`${t} — ${TESTS_C3[t].title}`, t)); } }
   else if (isC2()) { let grp = null, og = null; for (const t of Object.keys(TESTS_C2)) { if (TESTS_C2[t].group !== grp) { grp = TESTS_C2[t].group; og = document.createElement("optgroup"); og.label = grp; sel.appendChild(og); } og.appendChild(new Option(`${t} — ${TESTS_C2[t].title}`, t)); } }
   else if (isC()) { let grp = null, og = null; for (const t of Object.keys(TESTS_C1)) { if (TESTS_C1[t].group !== grp) { grp = TESTS_C1[t].group; og = document.createElement("optgroup"); og.label = grp; sel.appendChild(og); } og.appendChild(new Option(`${t} — ${TESTS_C1[t].title}`, t)); } }
@@ -642,6 +709,7 @@ window.GATEA_SET = (o) => { if (o.i != null) H.i = Math.max(0, Math.min(H.run.re
   H.playing = false; drawChart2(); draw(); return { i: H.i, t: H.run.recs[H.i].t }; };
 window.GATEA_DROP = (k) => new Promise((res) => { window.GATEA_READY = false; if (H.suiteKey !== "A") setSuite("A"); H.drop = k; $("drop").value = k; simulate(); const w = () => window.GATEA_READY ? res(H.run.hash) : setTimeout(w, 30); w(); });
 window.GATEC1_TEST = (k) => new Promise((res) => { window.GATEA_READY = false; if (!isC()) setSuite("C"); H.testC = k; $("drop").value = k; simulate(); const w = () => window.GATEA_READY ? res(H.run.hash) : setTimeout(w, 30); w(); });
+window.D6_PICK = (k) => { if (!isD()) setSuite("D"); H.testD = k; $("drop").value = k; simulate(); };
 window.GATED_TEST = (k) => new Promise((res) => { window.GATEA_READY = false; if (!isD()) setSuite("D"); H.testD = k; $("drop").value = k; simulate(); const w = () => window.GATEA_READY ? res(H.run.hash) : setTimeout(w, 30); w(); });
 window.GATEC3_TEST = (k) => new Promise((res) => { window.GATEA_READY = false; if (!isC3()) setSuite("C3"); H.testC3 = k; $("drop").value = k; simulate(); const w = () => window.GATEA_READY ? res(H.run.hash) : setTimeout(w, 30); w(); });
 window.GATEC2_TEST = (k) => new Promise((res) => { window.GATEA_READY = false; if (!isC2()) setSuite("C2"); H.testC2 = k; $("drop").value = k; simulate(); const w = () => window.GATEA_READY ? res(H.run.hash) : setTimeout(w, 30); w(); });
@@ -657,7 +725,8 @@ window.GATEB_TEST = (k) => new Promise((res) => { window.GATEA_READY = false; if
     H.visHip = visibleHipWidth(entry.rig, entry.mesh, H.specs.V1);
     const get = async (u) => { try { return await (await fetch(u)).json(); } catch (e) { return null; } };
     H.suitesBy.V1 = { A: await get("results/gatea_final_240x1.json"), B: await get("results/gateb_final_240x1.json"), C: await get("results/gatec1_final_240x1.json"), C2: await get("results/gatec2_final_240x1.json") };
-    const c3 = await get("results/v1_1/gatec3_V1.1.json"), dd = await get("results/v1_1/gated_V1.1.json");
+    const c3 = await get("results/v1_1/gatec3_V1.1.json"), dd = (await get("results/v1_1/gated_V1.1_post_mu_fix.json")) || await get("results/v1_1/gated_V1.1.json");   // Gate D: the post friction-sensing-fix baseline (the pre-fix file is kept as history)
+    H.d6x = await get("../../../review_artifacts/physical_character_v1/d6_diagnostic/json/d6x_matrix.json");   // D6 diagnostic matrix (Node: ×3 hashes + the instrumented twin's exact momentum ledger)
     H.suitesBy["V1.1"] = { D: dd, C3: c3, A: await get("results/v1_1/gatea_V1.1.json"), B: await get("results/v1_1/gateb_V1.1.json"), C: await get("results/v1_1/gatec1_V1.1.json"),
       C2working: await get("results/v1_1/gatec2_V1.1_working.json"), C2approved: await get("results/v1_1/gatec2_V1.1_raw.json"), C2recal: await get("results/v1_1/gatec2_V1.1_recal.json"), C2diag: await get("results/v1_1/gatec2_V1.1_recal_diag.json") };
     setCalib(H.calib); simulate(); requestAnimationFrame(loop);

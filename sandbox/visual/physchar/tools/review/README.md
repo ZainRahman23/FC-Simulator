@@ -4,7 +4,7 @@ These are the tools used to produce the Gate A → D evidence. They were copied 
 
 | file / folder | what it is |
 |---|---|
-| `regress.sh` | Full regression. V1 (approved) and V1.1 (promoted) Gates A/B/C1/C2, then C3 (29) and Gate D (7), each compared with the committed evidence hashes. `tools/review/regress.sh [outdir]`, about 2–3 min, sequential. |
+| `regress.sh` | Full regression. V1 (approved) and V1.1 (promoted) Gates A/B/C1/C2, then C3 (29) and Gate D (7), each compared with the committed evidence hashes. `tools/review/regress.sh [outdir]`, about 2–3 min, sequential. Gate D is compared with the post friction-sensing-fix baseline `results/v1_1/gated_V1.1_post_mu_fix.json` (2026-09-30); `D_REF=results/v1_1/gated_V1.1.json` compares with the preserved pre-fix one (only D6_slide differs). |
 | `v11_cap.js` | One headless Chrome against the harness. It does two jobs: a **browser = Node hash check** (`--hash plan.json`) and **captures** (`--shots shots.json`). It needs `puppeteer-core` (see below) and the harness server. |
 | `strip.py` | Filmstrip / contact sheet from captured PNGs: `python3 strip.py <capdir> <out.jpg> 186 <cols> <name…>`. |
 | `gatea_cap.js` … `gatec2_cap.js` | The earlier per-gate capture scripts (Gates A–C2 evidence). |

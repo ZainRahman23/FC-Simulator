@@ -1,0 +1,14 @@
+# tools/review/regress.sh after the friction-sensing fix (2026-09-30, sequential, Node; Gate D reference = results/v1_1/gated_V1.1_post_mu_fix.json)
+rg_a_v1.json     vs gatea_final_240x1.json      : 5/5 identical []
+rg_b_v1.json     vs gateb_final_240x1.json      : 20/20 identical []
+rg_c1_v1.json    vs gatec1_final_240x1.json     : 59/59 identical []
+rg_c2_v1.json    vs gatec2_final_240x1.json     : 13/13 identical []
+rg_a_v11.json    vs gatea_V1.1.json             : 5/5 identical []
+rg_b_v11.json    vs gateb_V1.1_all.json         : 20/20 identical []
+rg_c1_v11.json   vs gatec1_V1.1_all.json        : 59/59 identical []
+rg_c2_v11.json   vs gatec2_V1.1_working.json    : 14/14 identical []
+rg_c3_v11.json   vs gatec3_V1.1_x3.json         : 29/29 identical []
+rg_d_v11.json    vs gated_V1.1_post_mu_fix.json : 7/7 identical []
+
+# the same run's Gate D vs the preserved PRE-fix baseline
+rg_d_v11.json    vs gated_V1.1.json (PRE-fix, historical): 6/7 identical ['D6_slide']  (expected: only D6_slide — the friction-sensing fix)

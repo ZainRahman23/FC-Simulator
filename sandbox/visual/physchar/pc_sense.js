@@ -17,6 +17,7 @@ export const SENSE = {
   slipOn: 0.03, slipOff: 0.012, slipOnSteps: 2, slipOffSteps: 6,   // m/s: windowed sliding speed of the sole while loaded
   slipWindow: 10,             // steps (42 ms) for the sliding-displacement window
   touchdownSteps: 7,          // ≈ 30 ms in TOUCHDOWN after first contact
+  extSettle: 0.05,            // s: a foot's friction observation is invalid while another body touches it and for 50 ms after (D6 finding)
   copAlpha: 0.35,             // EMA on the displayed net CoP (the controller never uses the measured CoP)
 };
 const hull2 = (P) => { const p = P.map(q => [q[0], q[2]]).sort((a, b) => a[0] - b[0] || a[1] - b[1]); if (p.length < 3) return p;
@@ -77,9 +78,12 @@ export class Sensor {
         this.cop = this.cop ? [this.cop[0] + SENSE.copAlpha * (cop[0] - this.cop[0]), this.cop[1] + SENSE.copAlpha * (cop[1] - this.cop[1])] : cop; } else this.cop = null; }
     // per-foot contact state
     const feet = {}; let nonFootGround = false, footSelf = false;
-    const turfPts = { L: [], R: [] }, turfMu = { L: [], R: [] }, manifold = { L: false, R: false };
+    const turfPts = { L: [], R: [] }, turfMu = { L: [], R: [] }, manifold = { L: false, R: false }, extOn = { L: false, R: false };
     for (const k of contacts) { const oth = k.a === -1 ? k.b : k.b === -1 ? k.a : null;
-      if (oth == null) { if ((k.a === this.feet.L.body || k.b === this.feet.L.body || k.a === this.feet.R.body || k.b === this.feet.R.body) && k.a >= 0 && k.b >= 0 && k.depth > SENSE.touchDepth) footSelf = true; continue; }
+      // a foot in contact with ANOTHER body (another character: index ≤ −1000; an obstacle: −2 − k) — any manifold, since the solver may act
+      // on a speculative one: that body's push is part of the foot's measured horizontal force, so it is no measurement of the turf's friction
+      if (oth == null) { for (const s of ["L", "R"]) { const fb = this.feet[s].body; if ((k.a === fb && k.b < -1) || (k.b === fb && k.a < -1)) extOn[s] = true; }
+        if ((k.a === this.feet.L.body || k.b === this.feet.L.body || k.a === this.feet.R.body || k.b === this.feet.R.body) && k.a >= 0 && k.b >= 0 && k.depth > SENSE.touchDepth) footSelf = true; continue; }
       if (oth < 0) continue; const side = oth === this.feet.L.body ? "L" : oth === this.feet.R.body ? "R" : null;
       if (side) { manifold[side] = true; turfMu[side].push(k.mu); }       // any manifold, speculative included: the solver may act on it this step
       if (k.depth <= SENSE.touchDepth) continue;
@@ -122,8 +126,14 @@ export class Sensor {
       if (F.anchor == null && touching) F.anchor = { pos: st.pos.slice(), rot: st.rot.slice(), n };
       F.state = state;
       const muAvail = turfMu[s].length ? turfMu[s].reduce((a, b) => a + b, 0) / turfMu[s].length : null;
-      feet[s] = { side: s, state, touching, manifold: manifold[s], loaded: F.loaded, slipping: F.slipping, points: pts, centroid, heel, toe, lat, med, load, shear, shearMag, slipSpeed,
-        muUsed: load > 1 ? shearMag / load : null, muAvail, muValid: !this.muSettle || (F.contactSince != null && n * dt - F.contactSince >= this.muSettle), friction: F.slipping ? "SLIP" : (muAvail != null && load > 1 && shearMag / load > 0.8 * muAvail ? "NEAR_LIMIT" : "STICK"),
+      // FRICTION OBSERVATION VALIDITY: shear / load of a sliding foot is the turf's friction coefficient only if the turf is the only thing
+      // acting on the sole besides the leg (the ankle force is already removed). While another body pushes the foot — and for SENSE.extSettle
+      // after — the slide is that push, not the turf's limit (finding 2026-09-30, D6 diagnostic: a slide tackle's push and the turf's
+      // friction nearly cancelled in the foot's balance, the victim "measured" μ 0.037 on 0.9 turf, kept it for the rest of the run as the
+      // running minimum and his friction-limited capture radius collapsed to 3–50 mm). No other body in the world → identical to before.
+      if (extOn[s]) F.extLast = n; const extRecent = F.extLast != null && (n - F.extLast) * dt < SENSE.extSettle;
+      feet[s] = { side: s, state, touching, manifold: manifold[s], loaded: F.loaded, slipping: F.slipping, points: pts, centroid, heel, toe, lat, med, load, shear, shearMag, slipSpeed, extContact: extOn[s], extRecent,
+        muUsed: load > 1 ? shearMag / load : null, muAvail, muValid: !extRecent && (!this.muSettle || (F.contactSince != null && n * dt - F.contactSince >= this.muSettle)), friction: F.slipping ? "SLIP" : (muAvail != null && load > 1 && shearMag / load > 0.8 * muAvail ? "NEAR_LIMIT" : "STICK"),
         anchor: F.anchor, slipDist: F.slid || 0, fromAnchor: F.anchor ? Math.sqrt((st.pos[0] - F.anchor.pos[0]) ** 2 + (st.pos[2] - F.anchor.pos[2]) ** 2) : 0, pose: { pos: st.pos, rot: st.rot } }; }
     // Two different regions (Gate C1 finding, test PF60): the CONTACT polygon = hull of the points actually touching now — where the
     // CoP can be commanded this instant (a foot up on its toes offers only the toe edge); the SUPPORT REGION = hull of the whole sole

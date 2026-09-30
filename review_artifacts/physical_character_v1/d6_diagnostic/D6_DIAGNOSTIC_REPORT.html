@@ -1,0 +1,362 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>D6 Slide Diagnostic</title><style>
+:root{--bg:#fbfaf7;--ink:#1d1f22;--mute:#5d646b;--line:#dcd8cf;--code:#f1eee7;--acc:#8a5a00;--q:#f4efe2}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#141619;--ink:#e6e4df;--mute:#9aa0a6;--line:#33373d;--code:#1d2024;--acc:#f0c060;--q:#1f1c14}}
+:root[data-theme="dark"]{--bg:#141619;--ink:#e6e4df;--mute:#9aa0a6;--line:#33373d;--code:#1d2024;--acc:#f0c060;--q:#1f1c14}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 -apple-system,system-ui,"Segoe UI",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px 80px}
+h1{font-size:26px;line-height:1.25} h2{font-size:20px;margin-top:40px;padding-top:12px;border-top:1px solid var(--line)} h3{font-size:16px;color:var(--acc)}
+table{border-collapse:collapse;width:100%;font-size:13px;margin:12px 0;display:block;overflow-x:auto} th,td{border:1px solid var(--line);padding:5px 8px;vertical-align:top;text-align:left} th{background:var(--code)}
+code{background:var(--code);padding:1px 4px;border-radius:3px;font-size:12.5px} pre{background:var(--code);padding:12px;border-radius:6px;overflow-x:auto;font-size:12px;line-height:1.45} pre code{padding:0;background:none}
+blockquote{margin:12px 0;padding:10px 16px;background:var(--q);border-left:4px solid var(--acc)} a{color:var(--acc)}
+img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:4px} li>ul,li>ol{margin:4px 0}
+</style></head><body><main><h1>D6 diagnostic: why the slide barely moves the standing player</h1>
+<blockquote>
+<p><strong>Status (2026-09-30).</strong> Reviewed by the user.
+- The friction-sensing fix is <strong>approved</strong>.
+- The baseline D6 player is <strong>not</strong> to be made to fall; the physical continuum below is to be preserved.
+- Checkpointed locally, with the post-fix Gate D baseline <code>results/v1_1/gated_V1.1_post_mu_fix.json</code>. The pre-fix <code>results/v1_1/gated_V1.1.json</code> is kept unchanged as history.
+- The four observations in §5 (items 1–4) are unresolved and await decisions. Locomotion has not started.</p>
+</blockquote>
+<p><strong>Question.</strong> In D6 the slider makes solid contact with B's near leg. That leg moves, but B barely reacts as a whole body. Is that physics, or is something in the physical-character stack making him unrealistically resistant to low-leg impacts?</p>
+<p><strong>Answer.</strong> For this particular contact the outcome is physically justified, and the stack is not holding B up unrealistically. The slider hands B <strong>173 N·s</strong> along the slide, in a <strong>2.3 kN</strong> spike and then a long lean on his shin. Three things keep the whole-body effect small:</p>
+<ol>
+<li><strong>The hit sweeps his foot the "safe" way.</strong> The contact is on the outside of his left boot at <strong>1.8 cm</strong> above the turf, and it pushes the foot <em>toward</em> the other foot, under his centre of mass.</li>
+<li>His base narrows from 32 cm to about 16 cm, but it still contains the COM.</li>
+<li>The swept foot becomes the loaded support (peak <strong>1.48 kN ≈ 1.9 body weight</strong>). Its friction then stops the slide after <strong>16 cm</strong>.</li>
+<li><strong>The feet pass the momentum into the turf.</strong> B's feet return all 173 N·s to the ground. His own peak momentum is <strong>18 N·s</strong> (COM 0.24 m/s).</li>
+<li><strong>The active balance response arrests the roll.</strong> The body briefly rolls onto the struck foot and the far foot lifts for <strong>29 ms</strong>. The balance controller stops that roll by holding the pelvis level and putting the lifted foot back down, using finite torques.</li>
+</ol>
+<p>This is not an artefact of superhuman control:
+- <strong>Frozen controller:</strong> with B's controller frozen at the moment of impact (same body, same contact), the same hit knocks him down (trunk 64°, COM drops 56 cm).
+- <strong>Latency:</strong> with a 100 ms sensing delay he still recovers exactly as in the baseline.</p>
+<p><strong>One genuine general bug was exposed and fixed: the foot friction observer</strong> (§4).
+- While the slider pushed B's boot, the push and the turf's friction nearly cancelled in the foot's force balance.
+- B "measured" μ = 0.037 on 0.9 turf and kept that value for the rest of the run.
+- His friction-limited capture radius collapsed to 3–50 mm.
+- A foot that another body is pushing is no longer used as a friction measurement.
+- All approved and promoted gates are hash-identical after the fix; only D6_slide changes.</p>
+<p><strong>The response is a continuous spectrum</strong> (§3). Varying only physical conditions, with nothing encoded as an outcome:
+- minor contact, absorbed (1.3 m/s arrival);
+- local disturbance (2.6 m/s);
+- whole-body disturbance recovered in place (the D6 baseline, 4.0 m/s);
+- a corrective step (a knee-height hit);
+- support lost and a fall (4.8 or 5.7 m/s arrival, a thigh-height hit, or 80 % of the weight on the struck foot).</p>
+<p><strong>Stronger physically plausible cases that do destabilise him:</strong>
+- The same slide into a foot carrying 80 % of his weight sweeps that foot out from under the COM, and he falls.
+- A slide that arrives at ≥ 4.8 m/s carries the foot away with the slider, and he falls.</p>
+<p>Nothing in the Reference Tackle or in D6's definition was changed, nothing was pushed, and locomotion was not started.</p>
+<h2>1. The D6 causal chain, measured (after the fix)</h2>
+<p>All numbers are measured from the solved bodies by <code>pc_d6diag.js</code>. The contact impulse is exact, from the instrumented twin (§6). Times are from t = 0, and the first touch is at 0.179 s.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>link</th>
+<th>measurement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Contact geometry</strong></td>
+<td>Slider's lead boot (<code>A.foot_R</code>) → B's <strong>left boot, outer side near the toe, 1.8 cm above the turf</strong>. The contact normal is (1.00, −0.02, 0.00): purely lateral, pushing B's foot toward his right foot. The shin is touched later (the slider's boot rests against it). First manifold 0.175 s, first touch 0.179 s. Deepest 2.8 mm. The core contact rule holds: the approach is arrested <strong>on the touch step</strong>.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Impulse and duration</strong></td>
+<td>Peak <strong>2 287 N</strong> on the touch step, above 25 % of peak for <strong>21 ms</strong>. A→B along the slide: <strong>37.6 N·s</strong> in the first 35 ms, 18.5 N·s in 35–100 ms, 45.8 in 100–250 ms, 63.1 in 250–500 ms, 8.4 after. Total <strong>173 N·s</strong>, almost all of it horizontal and lateral.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Standing-foot contact state</strong></td>
+<td>Before: both feet FLAT, 352 / 354 N. On impact the struck foot goes <strong>SLIPPING for 135 ms</strong>, and its load rises to <strong>1 476 N</strong> as it slides under the COM. The far (right) foot unloads, <strong>leaves the turf at 0.204 s for 29 ms</strong>, and is put back down.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Struck foot: slide, rotation, lock</strong></td>
+<td>It slides <strong>16.1 cm</strong> medially at up to 2.41 m/s, rolls 9.7° about the ankle (inversion/eversion), then sticks: stud friction 0.9 × a load that has grown to ≈ 1.9 body weight. It is <strong>not locked</strong>; it is swept, then pinned by its own growing load.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Ankle / knee / hip</strong></td>
+<td>First 150 ms: ankle roll <strong>9.7°</strong> (230°/s), knee <strong>1.0°</strong>, hip adduction <strong>8.3°</strong> (169°/s). The leg swings under the pelvis about the hip, and the knee is not involved (the push is lateral to its hinge).</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>Motor effort and saturation</strong></td>
+<td>The ankle motor is at its (budgeted) limit on 28 of 36 steps: peak 52 N·m pitch, 24 N·m roll. Hip ab/adduction peaks at <strong>97 N·m</strong> (limit 140 × budget), saturated on 2 steps. Knee peak 54 N·m.</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>Is any controller restoring the struck leg?</strong></td>
+<td><strong>No.</strong> The stance leg is re-solved every step from the foot's <em>actual</em> position (C1's ground-up IK), and the foot target is its actual orientation. The resistance is the motors' <strong>damping</strong> on the leg's own motion (at the hip, up to 116 N·m of damping before the torque clamp vs 32 N·m of spring) plus finite abductor torque. The foot is never pulled back toward where it was.</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>COM position and velocity</strong></td>
+<td>Peak <strong>0.24 m/s</strong>, displaced <strong>8.3 cm</strong>, no measurable drop. Trunk tilt ≤ 4.4°.</td>
+</tr>
+<tr>
+<td>9</td>
+<td><strong>Whole-body angular momentum</strong></td>
+<td>Horizontal part about the COM ≤ <strong>9.7 kg·m²/s</strong>: the brief roll onto the struck foot. The frozen-controller run reaches 38.9.</td>
+</tr>
+<tr>
+<td>10</td>
+<td><strong>CoP, support, capture</strong></td>
+<td>While the far foot is up, the support region shrinks to the struck foot, and <strong>ξ is outside it by up to 7.4 cm for 29 ms</strong>. When the far foot re-plants, ξ is back inside.</td>
+</tr>
+<tr>
+<td>11</td>
+<td><strong>Classification</strong></td>
+<td>RECOVERABLE_IN_PLACE → <strong>STEP_NEEDED at 0.208 s</strong> (ξ 3.1 cm beyond the hip-extended support) → RECOVERABLE_IN_PLACE at 0.283 s. No release.</td>
+</tr>
+<tr>
+<td>12</td>
+<td><strong>Is stepping allowed?</strong></td>
+<td>Yes, B runs the full C1 + C3 stack. C3 <strong>refused at 0.208 s: "no reachable foothold (neither foot)"</strong>. At that instant the far foot was in the air and the struck foot slipping, so neither could be the stance foot of a step. The C1 feet-in-place rule re-planted the far foot, which was enough. The refusal is latched for the rest of the run (§5).</td>
+</tr>
+<tr>
+<td>13</td>
+<td><strong>Momentum: slider loss vs B's gain</strong></td>
+<td>Slider: <strong>287 N·s</strong> at touch → 137 (+100 ms) → 64 (+250 ms) → 61 (+500 ms). B receives 173 N·s through the contact, <strong>and his turf takes −173 N·s back</strong> (−19.9, −26.9, −48.7, −66.8, −11.0 per window). B's own peak is 18 N·s. From about 0.1 to 0.5 s the slider's leg leans on B's shin with ≈ 250–300 N on average. That stays well under what B's two planted feet can hold (≈ 0.9 × 765 N ≈ 690 N).</td>
+</tr>
+<tr>
+<td>14</td>
+<td><strong>Collider inset and geometry</strong></td>
+<td>Neither changes the outcome class. Boot-sized colliders on both players: 12 cm slide, local disturbance. Shin and thigh colliders grown 1.5 cm toward the mesh: whole-body disturbance recovered, with the far foot up 361 ms.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why a medial sweep of the near foot does not topple a square-standing player.</strong>
+- B's COM sits between his feet.
+- Pushing the near foot toward the other foot narrows the base, but the base still contains the COM. And the more the foot moves under the COM, the more load, and therefore friction, it carries.
+- Support fails only if:
+  - the foot is carried <strong>past</strong> the COM (a faster slide: the foot travels &gt; 60 cm with the slider); or
+  - the COM already sits over the struck foot (80 % load), so the sweep takes the base from under it.</p>
+<p>Both regimes appear in §3.</p>
+<h2>2. Where the stability comes from: the controller comparison</h2>
+<table>
+<thead>
+<tr>
+<th>run</th>
+<th>what changes</th>
+<th>result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D6 baseline</td>
+<td>–</td>
+<td>whole-body disturbance recovered in place: COM 0.24 m/s, trunk 4°, far foot up 29 ms</td>
+</tr>
+<tr>
+<td><code>D6X_freezeNoHit</code></td>
+<td>B's controller frozen at 0.17 s; the slider stops short (no contact)</td>
+<td><strong>stands</strong> (COM 0.01 m/s): the frozen standing posture is statically stable on its own</td>
+</tr>
+<tr>
+<td><code>D6X_freeze</code></td>
+<td>frozen at 0.17 s + <strong>the same hit</strong></td>
+<td><strong>knocked down</strong>: COM 1.66 m/s, trunk 64°, COM drops 56 cm, falls onto the slider</td>
+</tr>
+<tr>
+<td><code>D6X_delay100</code></td>
+<td>B's controller sees the world 100 ms late</td>
+<td>same as the baseline (COM 0.24 m/s, foot 14 cm): the recovery does not depend on zero-latency control</td>
+</tr>
+<tr>
+<td><code>D6X_noStep</code></td>
+<td>no C3</td>
+<td>identical to the baseline (C3 refused anyway)</td>
+</tr>
+<tr>
+<td>(not used)</td>
+<td>N-pose PD hold without balance / the C1 fall release</td>
+<td>cannot stand even with no contact, so not a valid comparison</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Conclusion.</strong> The surprising stability is not from:
+- Jolt or the contact mechanics (the hit is transferred on the step it occurs, with a realistic spike);
+- mass or inertia;
+- the joint constraints (the leg swings freely at the hip; the knee is not involved);
+- motor strength (the ankle and hip saturate at their finite limits);
+- a planted foot that cannot move (it slides 16 cm);
+- the corrective-step logic (it refused).</p>
+<p>It comes from <strong>balance control</strong> (hold the pelvis level, put the lifted foot back down), which is doing what a person does, within torque limits, and still works with human-like latency. On top of that come the <strong>D6 initial conditions</strong>:
+- B stands square with 50 / 50 load;
+- the hit is at ground level and pushes the foot toward the midline;
+- the slider arrives at 3.4 m/s (§5).</p>
+<h2>3. The diagnostic matrix (24 runs, one variable at a time)</h2>
+<p>Everything is D6 except the named condition. Each run is deterministic ×3 (Node). "twin" is the instrumented force-plate run, a different but equally valid world. Where it lands in another class, that case sits on a decision boundary.</p>
+<p>The "observed response" is a <em>description</em> of the measurements, never a simulation input:
+- <strong>fall:</strong> trunk &gt; 55°, COM drop &gt; 25 cm, or the classifier's own fall;
+- <strong>corrective step:</strong> a C3 step with sensed liftoff and touchdown;
+- <strong>whole-body disturbance:</strong> ξ left the support, or the COM exceeded 0.3 m/s;
+- <strong>local disturbance:</strong> the foot moved ≥ 1 cm or the COM ≥ 0.05 m/s;
+- <strong>minor contact:</strong> otherwise.
+| test | arrival m/s | first contact | A→B N·s first 35 ms / total | peak N | struck foot slid cm | far foot off turf ms | B COM peak m/s | trunk max ° | ξ min cm | observed response | twin | ×3 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| <code>D6_slide</code> | 3.38 | slider boot → foot_L @ 0.02 m | 38 / 173 | 2287 | 16.1 | 29 | 0.24 | 4 | -7.4 | <strong>whole-body disturbance, recovered in place</strong> | local disturbance | ✓ |
+| <code>D6X_v45</code> | 1.32 | slider boot → foot_L @ 0.15 m | 11 / 76 | 475 | 0.1 | 0 | 0.01 | 4 | 11.6 | <strong>minor contact, absorbed</strong> | = | ✓ |
+| <code>D6X_v50</code> | 2.56 | slider boot → foot_L @ 0.00 m | 41 / 145 | 1816 | 5.2 | 0 | 0.10 | 4 | 11.1 | <strong>local disturbance</strong> | = | ✓ |
+| <code>D6X_v60</code> | 3.98 | slider boot → foot_L @ 0.00 m | 41 / 162 | 2622 | 24.9 | 320 | 0.50 | 8 | -5.3 | <strong>whole-body disturbance, recovered in place</strong> | = | ✓ |
+| <code>D6X_v65</code> | 4.78 | slider boot → foot_L @ 0.02 m | 40 / 226 | 2372 | 63.4 | 865 | 1.35 | 109 | no support | <strong>fall / support lost</strong> | = | ✓ |
+| <code>D6X_v70</code> | 5.69 | slider boot → foot_L @ 0.00 m | 56 / 597 | 3573 | 116.8 | 964 | 0.93 | 85 | no support | <strong>fall / support lost</strong> | = | ✓ |
+| <code>D6X_hLowShin</code> | 3.13 | slider boot → shin_L @ 0.25 m | 62 / 269 | 2102 | 6.1 | 0 | 0.18 | 5 | 10.3 | <strong>local disturbance</strong> | fall / support lost | ✓ |
+| <code>D6X_hUpShin</code> | 3.37 | slider boot → shin_L @ 0.47 m | 63 / 190 | 3545 | 14.3 | 0 | 0.57 | 5 | 2.7 | <strong>whole-body disturbance, recovered in place</strong> | = | ✓ |
+| <code>D6X_hKnee</code> | 3.42 | slider boot → shin_L @ 0.50 m | 62 / 178 | 3002 | 17.5 | 21 | 0.68 | 12 | -24.5 | <strong>corrective step</strong> | whole-body disturbance, recovered in place | ✓ |
+| <code>D6X_hThigh</code> | 3.41 | slider boot → thigh_L @ 0.63 m | 64 / 139 | 3175 | 116.8 | 0 | 2.00 | 105 | no support | <strong>fall / support lost</strong> | = | ✓ |
+| <code>D6X_dirFront</code> | 3.10 | slider boot → foot_L @ 0.02 m | 44 / 179 | 1652 | 9.2 | 0 | 0.14 | 5 | 12.0 | <strong>local disturbance</strong> | = | ✓ |
+| <code>D6X_dirRear</code> | 3.08 | slider boot → foot_L @ 0.01 m | 33 / 156 | 1578 | 4.1 | 0 | 0.13 | 4 | 11.7 | <strong>local disturbance</strong> | = | ✓ |
+| <code>D6X_load20</code> | 3.39 | slider boot → foot_L @ 0.02 m | 67 / 154 | 2312 | 16.3 | 62 | 0.20 | 10 | -18.5 | <strong>whole-body disturbance, recovered in place</strong> | = | ✓ |
+| <code>D6X_load70</code> | 3.33 | slider boot → foot_L @ 0.00 m | 30 / 137 | 1993 | 18.4 | 316 | 0.31 | 6 | 3.1 | <strong>whole-body disturbance, recovered in place</strong> | = | ✓ |
+| <code>D6X_load80</code> | 3.23 | slider boot → foot_L @ 0.00 m | 30 / 210 | 1576 | 111.2 | 882 | 1.43 | 114 | no support | <strong>fall / support lost</strong> | = | ✓ |
+| <code>D6X_w22</code> | 3.39 | slider boot → foot_L @ 0.02 m | 45 / 158 | 2217 | 13.5 | 111 | 0.45 | 6 | -1.6 | <strong>whole-body disturbance, recovered in place</strong> | = | ✓ |
+| <code>D6X_w44</code> | 3.38 | slider boot → foot_L @ 0.02 m | 62 / 175 | 2386 | 13.3 | 41 | 0.19 | 5 | -14.5 | <strong>whole-body disturbance, recovered in place</strong> | local disturbance | ✓ |
+| <code>D6X_freeze</code> | 3.39 | slider boot → foot_L @ 0.02 m | 38 / 182 | 2292 | 18.7 | 37 | 1.66 | 64 | -131.2 | <strong>fall / support lost</strong> | = | ✓ |
+| <code>D6X_freezeNoHit</code> | – | no contact | – | – | 0.0 | 0 | 0.01 | 4 | 12.0 | <strong>no contact</strong> | = | ✓ |
+| <code>D6X_delay100</code> | 3.38 | slider boot → foot_L @ 0.02 m | 38 / 160 | 2301 | 14.1 | 21 | 0.24 | 5 | -7.2 | <strong>whole-body disturbance, recovered in place</strong> | local disturbance | ✓ |
+| <code>D6X_noStep</code> | 3.38 | slider boot → foot_L @ 0.02 m | 38 / 173 | 2287 | 16.1 | 29 | 0.24 | 4 | -7.4 | <strong>whole-body disturbance, recovered in place</strong> | local disturbance | ✓ |
+| <code>D6X_mu05</code> | 3.42 | slider boot → foot_L @ 0.02 m | 28 / 167 | 1644 | 18.0 | 21 | 0.24 | 5 | 0.9 | <strong>local disturbance</strong> | = | ✓ |
+| <code>D6X_bootHuman</code> | 3.32 | slider boot → foot_L @ 0.00 m | 46 / 204 | 1775 | 12.4 | 0 | 0.19 | 5 | 8.6 | <strong>local disturbance</strong> | = | ✓ |
+| <code>D6X_inflate</code> | 3.37 | slider boot → foot_L @ 0.02 m | 64 / 137 | 2673 | 16.0 | 361 | 0.45 | 11 | -23.5 | <strong>whole-body disturbance, recovered in place</strong> | = | ✓ |</p>
+<p><strong>Along each axis:</strong>
+- <strong>Speed:</strong> the response is monotonic. 1.3 m/s arrival: nothing. 2.6: the foot moves 5 cm. 3.4: 16 cm and a brief single-foot moment. 4.0: 25 cm, the far foot up 320 ms, COM 0.5 m/s. 4.8 and 5.7: the struck foot is carried 63–117 cm with the slider, support is lost, and he falls.
+- <strong>Height, at the same ≈ 3.3 m/s:</strong>
+  - boot: whole-body, recovered;
+  - lower shin, 0.25 m: local. This case is <strong>bistable</strong>: in the twin the boot rides <em>up</em> the tapered shin collider, lifts the leg, and he falls.
+  - upper shin, 0.47 m: whole-body, COM 0.57 m/s;
+  - knee, 0.50 m: <strong>corrective step</strong>. The struck leg steps and lands partly on the slider's shin; he balances on the far foot until the foot reaches the turf and the step is accepted at 1.38 s.
+  - lower thigh, 0.63 m: knocked down.
+- <strong>Direction:</strong> ±30° diagonals glance off (local).
+- <strong>Load on the struck foot:</strong> 20 % and 70 % recover in place. <strong>80 % falls</strong>: the sweep takes the base from under the COM.
+- <strong>Stance width:</strong> 22 cm or 44 cm changes the details, not the class.</p>
+<h2>4. Found and fixed: the foot friction observer is corrupted by another body's push</h2>
+<ul>
+<li><strong>Problem.</strong> At impact B's controller "learned" μ = <strong>0.037</strong> for his left foot on 0.9 turf, and kept it for the rest of the run: the observer keeps a running minimum, by design, for ice patches. With that belief, the friction-limited capture radius fell to <strong>3–50 mm</strong> during the hit. That fed the STEP_NEEDED decision and clamped the ankle's CoP demand.</li>
+<li><strong>Cause.</strong> The sensor estimates a sliding foot's friction as |shear| / load from the foot's own force balance. That is valid only if the turf is the only thing acting on the sole besides the leg. The ankle force is already removed. The slider's push on the boot is not: push and turf friction nearly cancelled, so the "shear" looked tiny.</li>
+<li><strong>Fix</strong> (<code>pc_sense.js</code>, general). A foot's friction observation is invalid while any other body touches it: another character, or an obstacle, including speculative manifolds the solver may act on. It stays invalid for 50 ms after contact ends. In a world with no other body, nothing changes.</li>
+<li><strong>Regression</strong> (<code>tools/review/regress.sh</code>, sequential):</li>
+<li><strong>identical:</strong> A 5/5, B 20/20, C1 59/59, C2 13/13 (V1) and 14/14 (V1.1), C3 29/29;</li>
+<li><strong>Gate D:</strong> 6/7 identical, <strong>only D6_slide changes</strong>. That holds both with and without protective falls, deterministic ×3 (<code>json/gated_V1.1_x3_after_mu_fix.json</code>, <code>…prot…</code>).</li>
+<li><strong>D6 after the fix.</strong> Still upright. The core contact rule still holds: arrested on the touch step, deepest 2.8 mm (was 5.0). The far foot is up for 29 ms instead of 57.</li>
+<li><strong>What the fix changed in the matrix:</strong></li>
+<li>the "corrective step" I first found at 70 % load <strong>was an artefact of this bug</strong>: ξ never left the support; the step came from the false friction limit. After the fix it recovers in place;</li>
+<li>6.5 m/s now falls, instead of releasing posture and re-engaging.</li>
+</ul>
+<h2>5. Found, not changed (your decision)</h2>
+<ol>
+<li><strong>C3 refusal is latched.</strong> Once C3 refuses ("no reachable foothold"), it never re-plans, even after the transient that caused the refusal has passed (in D6: far foot in the air, struck foot slipping). In the baseline no second episode follows, so it doesn't change D6.</li>
+<li>Proposed: re-evaluate on each new STEP_NEEDED episode.</li>
+<li><strong>Release while the far foot is being re-planted.</strong> C1 releases posture after 62 ms of STEP_NEEDED if no step runs. When STEP_NEEDED comes only from a foot that C1's own feet-in-place rule is already putting back down, the release fires just as it lands. Balance re-engages about 0.1–0.2 s later (<code>D6X_load20</code>, <code>D6X_inflate</code>).</li>
+<li>In the D6 baseline the far foot landed 12 ms before the release would have fired.</li>
+<li>Proposed: count a re-planting foot's anchor as prospective support for a bounded time.</li>
+<li><strong>D6 initial condition: the slider arrives slowly.</strong></li>
+<li>The slider starts at the seat landing at 5.5 m/s and loses 2.1 m/s on the turf in 0.18 s (≈ 1.1 g: the landing impact plus body|turf 0.5 and boot|turf 0.9). It meets B at <strong>3.4 m/s</strong>.</li>
+<li>The reference slider was ≈ 4.3 m/s between f96 and f106.</li>
+<li>D6's outcome is sensitive to this: 4.0 m/s → recovered with the far foot up 320 ms; 4.8 m/s → fall.</li>
+<li>I did not change D6 or the reference.</li>
+<li><strong>Contact at shin height is bistable.</strong> The slider's boot can glance up or down B's tapered shin collider. That is physical, but it means shin-height cases need several nearby samples, not one.</li>
+<li><strong>B's stepping repertoire.</strong> C3 cannot make lateral recovery steps (the known crossover limit). The only step in the matrix came from the struck leg itself. Richer stumbles, such as a far-foot side-step or a hop, need the locomotion gate's step sequences.</li>
+</ol>
+<h2>6. Instruments, determinism, resources</h2>
+<ul>
+<li><strong>Measurement.</strong> <code>pc_d6diag.js</code>, read-only, through a new <code>runD</code> <code>onStep</code> hook. The same code produces the Node matrix and the live harness panel.</li>
+<li><strong>Exact contact impulse.</strong> JoltPhysics.js exposes no contact impulses, and at impact both the slider's boot and B's struck boot also touch the turf. So a per-body Newton balance cannot separate "the slider pushed" from "the turf held".</li>
+<li>The <strong>instrumented twin</strong> stands B on his own coincident turf: a free body of 10⁸ kg with gravity off and no damping, colliding only with B (<code>pc_jolt</code> <code>cfg.plateFrom</code>, off by default).</li>
+<li>Its momentum change is the exact turf impulse on B, so A→B = ΔP_B − M·g·dt − turf→B.</li>
+<li>Sanity check: the twin's vertical turf impulse equals B's weight × time.</li>
+<li>The twin's last bits differ from the ordinary world. Its class is reported per test, and in the panel its ledger is flagged when it took the other branch.</li>
+<li><strong>Determinism.</strong> 24/24 matrix runs ×3 identical; Gate D 7/7 ×3 with and without protective.</li>
+<li><strong>Deferred.</strong> Browser = Node was not measured: puppeteer-core is not installed, and installing it was deferred. Node determinism ×3 is the evidence for this checkpoint. The harness panel shows the live browser hash against Node's for every D6 test.</li>
+<li><strong>Regression after the fix</strong> (<code>analysis/regress_post_mu_fix.txt</code>):</li>
+<li>A 5/5, B 20/20, C1 59/59, C2 13/13 (V1) and 14/14 (V1.1), C3 29/29 identical;</li>
+<li>Gate D 7/7 identical against the post-fix baseline;</li>
+<li>the same run against the preserved pre-fix baseline: 6/7, only D6_slide (3128e37b → e0ed5a7).</li>
+<li><strong>Resources.</strong> Node, sequential, <code>nice</code>: about 40 s for the matrix and about 80 s for the regression. One server, no headless browser.</li>
+</ul>
+<h2>7. Review</h2>
+<p><code>http://127.0.0.1:8171/sandbox/visual/physchar/index.html?suite=D&amp;test=D6_slide</code></p>
+<p>The <strong>D6 diagnostic</strong> panel, at the top right, has:
+- one-click buttons for the representative cases;
+- the numbered causal chain (§1) for the selected run, and an <strong>at the cursor</strong> readout: struck-leg angle, torque, saturation, and the spring/damping split;
+- the whole matrix (click a row to load it).</p>
+<p>The second chart shows:
+- the exact A→B and turf→B force;
+- the foot loads (struck foot SLIPPING shaded red, far foot off the turf shaded blue);
+- ξ margin with the classification band.</p>
+<p>In the 3D view (the Balance row, now enabled in suite D):
+- B's support region, ξ, COM and velocity, CoP, and foot-load bars;
+- the contact force arrow, via the <strong>push</strong> toggle.</p>
+<table>
+<thead>
+<tr>
+<th>case</th>
+<th>URL <code>?suite=D&amp;test=…</code></th>
+<th>look for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mild, absorbed</td>
+<td><code>D6X_v45</code></td>
+<td>the boot taps the top of B's boot at 1.3 m/s: nothing moves</td>
+</tr>
+<tr>
+<td>local</td>
+<td><code>D6X_v50</code></td>
+<td>the foot slides 5 cm, the body is unaffected</td>
+</tr>
+<tr>
+<td><strong>current D6</strong></td>
+<td><code>D6_slide</code></td>
+<td>the 16 cm sweep toward the midline; the far foot's 29 ms lift; ξ briefly outside; the slider's lean on the shin</td>
+</tr>
+<tr>
+<td>recovered</td>
+<td><code>D6X_v60</code></td>
+<td>25 cm sweep, far foot up 320 ms, COM 0.5 m/s, recovered in place</td>
+</tr>
+<tr>
+<td>stumble / step</td>
+<td><code>D6X_hKnee</code></td>
+<td>knee-height hit → C3 steps the struck leg (partly onto the slider's shin)</td>
+</tr>
+<tr>
+<td>support lost</td>
+<td><code>D6X_load80</code></td>
+<td>80 % load: the loaded foot is swept from under the COM → fall</td>
+</tr>
+<tr>
+<td>fast slide</td>
+<td><code>D6X_v70</code></td>
+<td>the foot is carried &gt; 1 m with the slider → fall</td>
+</tr>
+<tr>
+<td>controller frozen</td>
+<td><code>D6X_freeze</code> vs <code>D6X_freezeNoHit</code></td>
+<td>the same hit topples a frozen B; frozen without a hit he stands</td>
+</tr>
+</tbody>
+</table>
+<h2>8. Files</h2>
+<ul>
+<li><strong>Code.</strong> For the flagged items, all defaults are unchanged and the approved hashes are identical.</li>
+<li><code>pc_sense.js</code>: <strong>the fix</strong>.</li>
+<li><code>pc_gated.js</code>: the onStep hook and the D6X knobs (<code>standState</code>, <code>geoSpec</code>, B friction and delay, lead-leg mod).</li>
+<li><code>pc_jolt.js</code>: the opt-in force plate.</li>
+<li><code>pc_balance.js</code>: the diagnostic-only <code>freezeAt</code> / <code>releaseAt</code>, default off.</li>
+<li><code>pc_d6x.js</code>: the matrix, new.</li>
+<li><code>pc_d6diag.js</code>: the measurement, new.</li>
+<li><code>tools/d6x_run.js</code>: the matrix runner, new.</li>
+<li><code>pc_harness.js</code> and <code>index.html</code>: the review UI.</li>
+<li><strong>Evidence.</strong></li>
+<li><code>json/d6x_matrix.json</code>: the matrix, twin ledgers and force series.</li>
+<li><code>json/gated_V1.1_x3_after_mu_fix.json</code>, <code>json/gated_V1.1_prot_x3_after_mu_fix.json</code>: Gate D after the fix. The overnight <code>gate_d/json</code> files are untouched.</li>
+<li><strong>Gate D baselines.</strong></li>
+<li><code>sandbox/visual/physchar/results/v1_1/gated_V1.1.json</code>: <strong>pre-fix, kept unchanged as history</strong>.</li>
+<li><code>sandbox/visual/physchar/results/v1_1/gated_V1.1_post_mu_fix.json</code> (+ <code>.log</code>): <strong>post-fix, ×3</strong>. It is now the default Gate D reference of <code>tools/review/regress.sh</code> and of the harness; use <code>D_REF=results/v1_1/gated_V1.1.json</code> to compare against the pre-fix file.</li>
+<li><strong>Reproduce.</strong> <code>node tools/d6x_run.js --repeat 3 --out ../../../review_artifacts/physical_character_v1/d6_diagnostic/json/d6x_matrix.json</code> (from <code>sandbox/visual/physchar</code>).</li>
+</ul></main></body></html>

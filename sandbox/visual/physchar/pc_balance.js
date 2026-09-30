@@ -128,6 +128,10 @@ export class BalanceController {
     const C = this.cls, t = o.t, mark = (k) => { if (C.times[k] == null) C.times[k] = t; };
     if (o.nonFootGround) { C.ground = (C.ground || 0) + 1; if (C.ground >= 2) { C.state = "GROUNDED"; mark("GROUNDED"); if (C.times.FALLING == null) mark("FALLING"); return; } } else C.ground = 0;
     if (C.state === "GROUNDED") return;
+    // DIAGNOSTIC ONLY (opts.releaseAt, D6X): the controller gives up at a set time — the fall release (or a limp one, releaseMode "limp")
+    // with the same physical body — to measure how much of a response balance control itself provides. Never part of a character.
+    if (this.opts.releaseAt != null && t >= this.opts.releaseAt && C.state !== "FALLING") { C.state = "FALLING"; mark("FALLING"); C.fallStep = this.nObs; C.reengageStep = null; C.noReengage = true; C.reason = `diagnostic release at ${this.opts.releaseAt} s`; return; }
+    if (C.state === "FALLING" && C.noReengage) return;
     if (C.state === "FALLING") {                                    // re-engage only if the PHYSICS says in-place balance is clearly possible again
       const ok = ["L", "R"].every(s => o.feet[s].loaded && o.feet[s].touching && !o.feet[s].slipping) && o.xiMargin > 2 * BAL.copInset && o.trunkTiltDeg < 30;
       C.reOk = ok ? (C.reOk || 0) + 1 : 0; if (C.reOk >= BAL.reengageSteps) { C.state = "RECOVERABLE_IN_PLACE"; C.out = 0; C.back = 0; C.reOk = 0; C.reengaged = (C.reengaged || 0) + 1; mark("REENGAGED"); C.reengageStep = this.nObs; }
@@ -180,6 +184,11 @@ export class BalanceController {
     if (!dorsiOk(yHi)) return yHi; let a = yHi - 0.3, b = yHi; if (dorsiOk(a)) return a; for (let it = 0; it < 24; it++) { const m = (a + b) / 2; if (dorsiOk(m)) b = m; else a = m; } return b; }
   // one control step. o: the observation the controller is allowed to see (delayed or not). Returns targets + motor settings + debug.
   update(o) {
+    // DIAGNOSTIC ONLY (opts.freezeAt, D6X): from that time on the controller stops reacting — it keeps issuing its last targets and motor
+    // settings (the standing posture it had just before, gravity support included) — the same body and contacts without balance feedback
+    if (this.opts.freezeAt != null && this.frozenOut && o.t >= this.opts.freezeAt) return this.frozenOut;
+    const out0 = this._update(o); if (this.opts.freezeAt != null && o.t < this.opts.freezeAt) this.frozenOut = out0; return out0; }
+  _update(o) {
     this.nObs++; const spec = this.spec, P = this.P, nj = spec.joints.length, M = this.M, W = M * G, S = o.states;
     const nominal = P.N.T.map(x => Array.isArray(x) ? x.slice() : x), out = { nominal, gOff: spec.joints.map(j => j.type === "hinge" ? 0 : [0, 0, 0]), bOff: spec.joints.map(j => j.type === "hinge" ? 0 : [0, 0, 0]) };
     // leg damping blend from the MEASURED foot load (stance ↔ swing), low-passed
@@ -382,8 +391,9 @@ export class BalanceController {
     // ── released (fall transition): no balance, no IK, no hip strategy — posture requests stop escalating. What remains is muscle TONE:
     // stiffness ramps to fallScale of normal and a fraction fallTone of the static gravity support is kept (C1 finding: releasing tone
     // entirely — 15 % stiffness, no gravity support — made the heavy trunk jackknife over straight legs in forward falls). ──
-    let relK = 1; if (released) { const k = Math.min(1, (this.nObs - (cls.fallStep || this.nObs)) / BAL.fallRampSteps); relK = 1 + (BAL.fallScale - 1) * k;
-      for (const m of motor) { m.kp *= relK; m.kd *= Math.sqrt(relK); } for (let k2 = 0; k2 < nj; k2++) { tauG[k2] = V.sc(tauG[k2], BAL.fallTone); tauB[k2] = [0, 0, 0]; }
+    const limp = this.opts.releaseMode === "limp", fScale = limp ? 0.02 : BAL.fallScale, fTone = limp ? 0 : BAL.fallTone, fRamp = limp ? 1 : BAL.fallRampSteps;   // (limp: DIAGNOSTIC only)
+    let relK = 1; if (released) { const k = Math.min(1, (this.nObs - (cls.fallStep || this.nObs)) / fRamp); relK = 1 + (fScale - 1) * k;
+      for (const m of motor) { m.kp *= relK; m.kd *= Math.sqrt(relK); } for (let k2 = 0; k2 < nj; k2++) { tauG[k2] = V.sc(tauG[k2], fTone); tauB[k2] = [0, 0, 0]; }
       // GATE C5 (opts.protective): once the fall is unavoidable the posture requests are not merely released — the joints that can protect
       // take a PROTECTIVE target chosen from the actual fall direction (the capture point's direction from the COM, in the body frame):
       // forward → arms reach forward-down with flexed elbows, knees give; backward → chin tucked, trunk curled, hips/knees flex (sit), arms
