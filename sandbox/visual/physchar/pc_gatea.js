@@ -30,8 +30,15 @@ export const DROPS = {
     rot: mulAll(Ry(30), Rx(25), Rz(-35)), lift: 0.40, v: [0.3, -0.5, 0.2], w: [0.5, -0.8, 0.3],
     j: { hip_R: { y: -70, z: 20, t: 15 }, hip_L: { y: 15, z: 10, t: -20 }, knee_R: { a: 90 }, knee_L: { a: 20 }, ankle_R: { y: 30 }, ankle_L: { y: -10 },
          lumbar: { t: 10, z: -10, y: 15 }, thoracic: { t: 15 }, neck: { t: 30, y: 10 },
-         shoulder_R: { y: -110, z: 20, t: 30 }, shoulder_L: { y: 20, z: -60, t: -20 }, elbow_R: { a: 100 }, elbow_L: { a: 30 } } },
+         shoulder_R: { y: -110, z: 20, t: 30 }, shoulder_L: { y: 20, z: -60, t: -20 }, elbow_R: { a: 100 }, elbow_L: { a: 30 } },
+    // V1.1 initial condition (re-authored 2026-09-30): the angles above were written for V1's shoulder centre, 11 cm higher; on the V1.1 body
+    // they start the right forearm 112 mm INSIDE the head. The smallest change that removes it (search over shoulder flexion ±30° × elbow
+    // −40…0°): elbow 100 → 80°, shoulder unchanged — hand within 9.3 cm of the V1-authored position in the chest frame, initial energy
+    // 1134.5 vs 1135.0 J. Same challenge: right arm raised forward, elbow flexed; left arm abducted back.
+    jV11: { elbow_R: { a: 80 } } },
 };
+// the initial joint parameters of a drop for this body: a V1.1-specific re-authored initial condition where one exists
+export const dropParams = (spec, D) => spec.calib && spec.calib.name === "V1.1" && D.jV11 ? { ...D.j, ...D.jV11 } : D.j;
 // the relative rotation a joint parameter set means, expressed in the parent's bind frame (= world at bind)
 export function jointRelRot(j, p) {
   if (!p) return Q.id();
@@ -75,7 +82,7 @@ export function disabledPairs(spec, cfg) { const out = [...spec.joints.map(j => 
 export function initialSelfOverlaps(J, spec, dropKey, cfg) {
   const D = DROPS[dropKey], w = new JoltCharacterWorld(J, spec, Object.assign({}, cfg, { gravity: 0 }), () => 0.5);
   for (const [a, b] of disabledPairs(spec, cfg)) w.disablePair(a, b);
-  let S = poseBodies(spec, D.rot, D.j); const lo = lowestOf(spec, S), up = D.lift - lo.y + 1.0;   // well above the turf: self contacts only
+  let S = poseBodies(spec, D.rot, dropParams(spec, D)); const lo = lowestOf(spec, S), up = D.lift - lo.y + 1.0;   // well above the turf: self contacts only
   S.forEach((s, i) => w.setPose(i, V.add(s.pos, [0, up, 0]), s.rot)); w.setGravity(0); w.step(1 / 6000, 1);
   const out = []; for (const c of w.contacts) if (c.a >= 0 && c.b >= 0 && c.depth > 0.001) out.push({ a: spec.bodies[c.a].name, b: spec.bodies[c.b].name, depthMm: +(c.depth * 1000).toFixed(1) });
   w.destroy(); return out;
@@ -97,7 +104,7 @@ export function runDrop(J, spec, dropKey, opts) {
   const w = new JoltCharacterWorld(J, spec, opts.world || {}, frictionPolicy(spec));
   for (const [a, b] of disabledPairs(spec, opts.world)) w.disablePair(a, b);    // parent–child + pelvis↔chest (the trunk boxes share the spine's bending volume)
   // initial condition: pose, then lift so the lowest collider point sits `lift` above the turf; rigid velocity field about the total COM
-  let S = poseBodies(spec, D.rot, D.j); const lo = lowestOf(spec, S), up = D.lift - lo.y; S = S.map(s => ({ pos: V.add(s.pos, [0, up, 0]), rot: s.rot }));
+  let S = poseBodies(spec, D.rot, dropParams(spec, D)); const lo = lowestOf(spec, S), up = D.lift - lo.y; S = S.map(s => ({ pos: V.add(s.pos, [0, up, 0]), rot: s.rot }));
   const comW = (i, s) => V.add(s.pos, Q.rot(s.rot, spec.bodies[i].com)), M = spec.totalMass;
   const pivot = V.sc(S.reduce((a, s, i) => V.add(a, V.sc(comW(i, s), spec.bodies[i].mass)), [0, 0, 0]), 1 / M);
   S.forEach((s, i) => { w.setPose(i, s.pos, s.rot); w.setVel(i, V.add(D.v, V.cross(D.w, V.sub(comW(i, s), pivot))), D.w); });

@@ -1,0 +1,63 @@
+[
+ {
+  "X": 0.6,
+  "status": "DONE",
+  "why": "placed, loaded and accepted",
+  "feasible": [
+   0.033,
+   0.16
+  ],
+  "corr": 45.3,
+  "tdErr": 3.9,
+  "tdV": [
+   0.001,
+   0.444
+  ],
+  "accS": 2,
+  "pelvisDropCm": 2.7,
+  "accMinXiM": 8.3,
+  "lostAt": null,
+  "lostStage": null,
+  "effAcc": {
+   "kneeL": 0.2363485050201416,
+   "kneeR": 0.1177616286277771,
+   "ankL": 1.0000000298023224,
+   "ankR": 0.9348593053269452,
+   "hipL": 0.7173099517822266,
+   "hipR": 0.7496077418327332
+  },
+  "effSS": {
+   "kneeL": 0.3182923221588135,
+   "ankL": 1.0000001414965483,
+   "hipL": 1.0000001428369791
+  },
+  "sat": {
+   "hip_L": 754,
+   "ankle_L": 1554,
+   "ankle_R": 283
+  },
+  "ankle": {
+   "stance": {
+    "foot": "L",
+    "maxDorsiDeg": 15.9,
+    "limitDeg": 30,
+    "minMarginDeg": 14.1,
+    "atStopMs": 0
+   },
+   "swing": {
+    "foot": "R",
+    "maxDorsiDeg": 23.1,
+    "limitDeg": 30,
+    "minMarginDeg": 6.9,
+    "atStopMs": 0
+   }
+  },
+  "hash": "4f37db6b",
+  "bounceMs": 0,
+  "limMargin": 5.7,
+  "limJoint": "ankle_L",
+  "kneeSatMs": 0,
+  "anklePitchSatMs": 0,
+  "hipPitchSatMs": 0
+ }
+]

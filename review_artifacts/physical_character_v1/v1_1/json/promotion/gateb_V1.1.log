@@ -1,0 +1,24 @@
+A              err rms   1.72° peak     10° (knee_L    ) sat     0 ms | joint 0.19 mm lim 0° soft 0° turf 1.46/0.85 self 0 pop 0.09 | KE max 0.74 end 0 | pelvis end 12.6 mm 1.81° | sup F̄ 32.7 N pk 104 lift 1.2% T̄ 11.7 pk 12.6 sat 0 ms | cpu 0.6462 ms/frame | audit 0/0 nan false | det true 6ae27640
+      holds: [3.5-4] err 1.16° ω 0.01°/s KE 0 sat 0
+      joints: shoulder_L rms 1.75 pk 8.9@0 τ 18.2/70 sat 0ms · elbow_L rms 1.07 pk 8@0 τ 11.2/60 sat 0ms · shoulder_R rms 1.75 pk 8.9@0 τ 18.2/70 sat 0ms · elbow_R rms 1.07 pk 8@0 τ 11.2/60 sat 0ms · hip_L rms 1.2 pk 4@0 τ 12.6/220 sat 0ms · knee_L rms 2.52 pk 10@0 τ 20.6/190 sat 0ms · ankle_L rms 2.48 pk 8@0 τ 26.7/110 sat 0ms · hip_R rms 1.2 pk 4@0 τ 12.6/220 sat 0ms · knee_R rms 2.52 pk 10@0 τ 20.3/190 sat 0ms · ankle_R rms 2.47 pk 8@0 τ 26/110 sat 0ms
+C              err rms   2.76° peak   20.2° (hip_R     ) sat   287 ms | joint 0.53 mm lim 0° soft 0° turf 7.98/1.11 self 4.8 pop 0.27 | KE max 58.39 end 0.002 | pelvis end 10.8 mm 1.39° | sup F̄ 98.5 N pk 383 lift 1.9% T̄ 29.8 pk 131.6 sat 429 ms | cpu 0.6252 ms/frame | audit 0/0 nan false | det true 466afd04
+      holds: [0-0.5] err 0.67° ω 5.78°/s KE 0.357 sat 0  [1.8-2.3] err 2.9° ω 0.65°/s KE 0.005 sat 0  [3.1-3.6] err 1.6° ω 4.13°/s KE 0.091 sat 0
+      joints: lumbar rms 4.54 pk 9@2.487 τ 142.9/200 sat 0ms · thoracic rms 2.23 pk 4.5@2.492 τ 61.5/200 sat 0ms · neck rms 2.47 pk 7.5@2.5 τ 11.4/35 sat 0ms · shoulder_L rms 2.02 pk 5.2@0.646 τ 24/70 sat 0ms · elbow_L rms 1.63 pk 4.7@2.592 τ 13.1/60 sat 0ms · shoulder_R rms 2.12 pk 3.4@2.483 τ 15.5/70 sat 0ms · hip_L rms 2.98 pk 4.6@2.3 τ 85.8/220 sat 0ms · ankle_L rms 2.03 pk 5@2.45 τ 110/110 sat 50ms · hip_R rms 4.68 pk 20.2@2.5 τ 220/220 sat 100ms · knee_R rms 3.62 pk 12.7@2.483 τ 190/190 sat 54ms · ankle_R rms 2.18 pk 7@0.613 τ 110/110 sat 83ms
+E              err rms   7.09° peak   33.8° (hip_R     ) sat  2863 ms | joint 0.18 mm lim 0° soft 0° turf 1.86/0.57 self 0 pop 0.09 | KE max 12.45 end 0 | pelvis end 23.3 mm 6.57° | sup F̄ 80.1 N pk 270 lift -0.1% T̄ 72.2 pk 123.9 sat 2354 ms | cpu 0.6252 ms/frame | audit 0/0 nan false | det true 5ed01cbb
+      holds: [0-0.5] err 0.67° ω 5.78°/s KE 0.357 sat 0  [4.5-5] err 2.86° ω 0.65°/s KE 0.002 sat 0
+      joints: lumbar rms 5.95 pk 9.5@3.138 τ 117.4/200 sat 0ms · thoracic rms 2.5 pk 4.2@3.138 τ 51.2/200 sat 0ms · neck rms 3.15 pk 6.2@3.129 τ 8.5/35 sat 0ms · shoulder_R rms 2.48 pk 3.4@3.017 τ 7.9/70 sat 0ms · hip_L rms 14.93 pk 23.8@2.771 τ 220/220 sat 1613ms · knee_L rms 3.86 pk 6.7@3.008 τ 64.4/190 sat 0ms · ankle_L rms 2.56 pk 3.8@3.038 τ 43.3/110 sat 0ms · hip_R rms 17.1 pk 33.8@1.033 τ 220/220 sat 1250ms · knee_R rms 5.24 pk 8.1@2.058 τ 134.6/190 sat 0ms · ankle_R rms 5.38 pk 8.3@2.996 τ 102.3/110 sat 0ms
+      block: first contact 0.9917s (foot_R) max pen -0.44 mm (listener 0.17) max F 650 N obstacle moved 0 mm removed 3
+      while blocked [1.29-2.95]: hip err 23.1° τ 213 N·m sat 39% F 247 N pen -0.5 mm support 63 N; others: lumbar 7.6, thoracic 3.1, neck 4.1, shoulder_L 0.8, elbow_L 1.1, shoulder_R 3.2, elbow_R 0.6, hip_L 21.8, knee_L 5.6, ankle_L 3.6
+      after removal: hip err 20.6° → within 5° in 0.367s, end 3.57°
+        n 235 t 0.9792 gap 2.11 mm depth -5.19 approach 0.766 m/s F 0 N hip err 32.86° τ 220
+        n 236 t 0.9833 gap 0.56 mm depth -2.08 approach 0.364 m/s F 558 N hip err 32.9° τ 220
+        n 237 t 0.9875 gap 0.48 mm depth -0.54 approach 0.004 m/s F 650 N hip err 33.03° τ 220
+        n 238 t 0.9917 gap 0.48 mm depth 0.13 approach -0.008 m/s F 436 N hip err 33.16° τ 220
+        n 239 t 0.9958 gap 0.47 mm depth 0.13 approach -0.001 m/s F 398 N hip err 33.28° τ 220
+        n 240 t 1 gap 0.45 mm depth 0.15 approach 0 m/s F 399 N hip err 33.39° τ 220
+        n 241 t 1.0042 gap 0.45 mm depth 0.16 approach -0.001 m/s F 401 N hip err 33.48° τ 220
+        n 242 t 1.0083 gap 0.44 mm depth 0.17 approach -0.001 m/s F 402 N hip err 33.56° τ 220
+F_chest        err rms   1.16° peak    6.4° (neck      ) sat     0 ms | joint 0.18 mm lim 0° soft 0° turf 2.25/0.62 self 0 pop 0.09 | KE max 15.59 end 0 | pelvis end 7.5 mm 0.58° | sup F̄ 29.4 N pk 267 lift 0.8% T̄ 6.1 pk 81.2 sat 50 ms | cpu 0.5877 ms/frame | audit 0/0 nan false | det true dd16b83b
+      holds: [3.5-4] err 1.1° ω 0.01°/s KE 0 sat 0
+      joints: lumbar rms 2.1 pk 5.2@1.246 τ 127.3/200 sat 0ms · neck rms 1.37 pk 6.4@1.058 τ 17.8/35 sat 0ms
+      disturbance 46.6 N·s @1: baseline 0.97° peak 2.19° (+0.063s) recovered in 0.45s (thr 1.47°) worst neck 6.4, lumbar 5.2, thoracic 2.6, knee_L 2.6, shoulder_R 1.7 pelvis 26.2 mm support pk 267 N

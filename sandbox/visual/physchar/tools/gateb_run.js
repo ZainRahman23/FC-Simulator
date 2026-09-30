@@ -1,7 +1,7 @@
 // ═══ physchar/tools/gateb_run.js — GATE B measurement run (Node, one process, sequential) ═══════════════════════════════════════════
 // usage: node tools/gateb_run.js [--tests A,B,...|all] [--tsc 240x1|120x1|60x1] [--repeat 3] [--mesh] [--out file.json] [--poses] [--profile] [--brief]
 import fs from "fs"; import path from "path"; import { fileURLToPath } from "url";
-import { buildBodySpec } from "../pc_body.js";
+import { buildBodySpec, WORKING_CALIB } from "../pc_body.js";
 import { loadJolt } from "../pc_jolt.js";
 import { runTest, TESTS } from "../pc_gateb.js";
 import { buildPoses, motorProfile, supportSettings } from "../pc_control.js";
@@ -12,7 +12,7 @@ const arg = (k, d) => { const i = process.argv.indexOf(k); return i < 0 ? d : (p
 const dir = path.join(ROOT, "assets/characters/outfield/gabriel"), rig = JSON.parse(fs.readFileSync(path.join(dir, "rig.json"), "utf8")), buf = fs.readFileSync(path.join(dir, "mesh.bin"));
 const ab = buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength), L = rig.mesh.layout, T = { Float32Array, Uint16Array, Uint32Array, Uint8Array };
 const mesh = {}; for (const k of ["positions", "joints", "weights", "indices"]) mesh[k] = new T[L[k].elementType](ab, L[k].byteOffset, L[k].elementCount);
-const spec = buildBodySpec(rig, mesh, { calib: String(arg("--calib", "V1")) }), J = await loadJolt(path.join(here, "../vendor/jolt-physics.wasm-compat.js")), poses = buildPoses(spec);
+const spec = buildBodySpec(rig, mesh, { calib: String(arg("--calib", WORKING_CALIB)) }), J = await loadJolt(path.join(here, "../vendor/jolt-physics.wasm-compat.js")), poses = buildPoses(spec);
 if (arg("--poses", false)) for (const [k, p] of Object.entries(poses)) console.log(`pose ${k.padEnd(10)} stance ${p.stance.padEnd(4)} root [${p.rootPos.map(v => v.toFixed(3))}]  COM−support (x, z) [${p.comOffset.map(v => (v * 1000).toFixed(1))}] mm  stance hip ${JSON.stringify(p.params["hip_" + (p.stance === "both" ? "L" : p.stance)])}`);
 if (arg("--profile", false)) { for (const m of motorProfile(spec, poses.N.S, "candidate")) console.log(`motor ${m.joint.padEnd(11)} ${m.region.padEnd(9)} tau ${m.tau.toFixed(0).padStart(4)} N·m  kp ${m.kp.toFixed(0).padStart(5)} N·m/rad  kd ${m.kd.toFixed(1).padStart(6)} N·m·s/rad  I_load ${m.Iload.toFixed(3)} kg·m²`);
   console.log("support candidate", JSON.stringify(supportSettings(spec, poses.N.S, "candidate"))); }

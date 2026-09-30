@@ -83,65 +83,65 @@
    "title": "A — relaxed upright drop",
    "tsc": "240 Hz, 1 collision step",
    "steps": 1440,
-   "hash": "c9f9f51",
+   "hash": "5bbffb56",
    "initialLowestBody": "foot_L",
    "E0": {
     "ke": 0,
-    "pe": 844.9
+    "pe": 846.7
    },
-   "maxGroundPenMm": 7.42,
+   "maxGroundPenMm": 5.75,
    "maxGroundPenAt": {
-    "n": 129,
-    "t": 0.537,
-    "body": "foot_L"
+    "n": 118,
+    "t": 0.492,
+    "body": "foot_R"
    },
-   "maxEngineGroundDepthMm": 7.66,
+   "maxEngineGroundDepthMm": 6.47,
    "maxMeshPenMm": null,
    "maxMeshPenPart": null,
    "restMeshPenMm": null,
    "restMeshPenPart": null,
-   "restGroundPenMm": 3.41,
-   "maxSelfPenMm": 0.09,
+   "restGroundPenMm": 2.52,
+   "maxSelfPenMm": 0.19,
    "maxSelfPenAt": {
-    "n": 622,
-    "t": 2.592,
-    "pair": "thigh_L–thigh_R"
+    "n": 271,
+    "t": 1.129,
+    "pair": "chest–thigh_R"
    },
-   "maxAnchorErrMm": 2.638,
+   "maxAnchorErrMm": 1.644,
    "maxAnchorAt": {
-    "n": 139,
-    "t": 0.579,
-    "joint": "thoracic"
-   },
-   "maxLimitViolDeg": 16.74,
-   "maxLimitAt": {
-    "n": 389,
-    "t": 1.621,
-    "joint": "elbow_R"
-   },
-   "maxHardLimitViolDeg": 2.3,
-   "maxHardLimitAt": {
-    "n": 138,
-    "t": 0.575,
+    "n": 133,
+    "t": 0.554,
     "joint": "lumbar"
    },
-   "hardLimitViolOver2degSteps": 3,
-   "maxSoftStopOvershootDeg": 16.74,
-   "maxPopMm": 0.91,
+   "maxLimitViolDeg": 8.65,
+   "maxLimitAt": {
+    "n": 138,
+    "t": 0.575,
+    "joint": "knee_R"
+   },
+   "maxHardLimitViolDeg": 0.88,
+   "maxHardLimitAt": {
+    "n": 149,
+    "t": 0.621,
+    "joint": "shoulder_L"
+   },
+   "hardLimitViolOver2degSteps": 0,
+   "maxSoftStopOvershootDeg": 8.65,
+   "maxPopMm": 0.45,
    "maxPopAt": {
-    "n": 604,
-    "t": 2.517,
-    "body": "chest"
+    "n": 128,
+    "t": 0.533,
+    "body": "foreArm_L"
    },
    "energyGain": {
     "stepsOver50mJ": 10,
-    "maxJ": 12.755,
-    "totalJ": 25.11,
-    "fromPE": 3.22,
-    "at": 0.55,
-    "dPE": 0.367,
-    "dKE": 12.388,
-    "body": "thigh_L"
+    "maxJ": 2.625,
+    "totalJ": 9.91,
+    "fromPE": 4.88,
+    "at": 0.096,
+    "dPE": 0.513,
+    "dKE": 2.112,
+    "body": "thigh_R"
    },
    "keCurve": [
     [
@@ -150,123 +150,123 @@
     ],
     [
      0.1,
-     5.63
+     5.64
     ],
     [
      0.2,
-     18.35
+     18.39
     ],
     [
      0.3,
-     85.59
+     74.63
     ],
     [
      0.4,
-     199.27
+     178.27
     ],
     [
      0.5,
-     371.32
+     348.56
     ],
     [
      0.6,
-     77.17
+     33.56
     ],
     [
      0.7,
-     19.43
+     21.21
     ],
     [
      0.8,
-     17.23
+     5.95
     ],
     [
      0.9,
-     22.72
+     1.65
     ],
     [
      1,
-     11.49
+     7.48
     ],
     [
      1.1,
-     15.43
+     15.18
     ],
     [
      1.2,
-     24.9
+     0.01
     ],
     [
      1.3,
-     5.67
+     0
     ],
     [
      1.4,
-     3.77
+     0
     ],
     [
      1.5,
-     4.08
+     0
     ],
     [
      1.6,
-     3.94
+     0
     ],
     [
      1.7,
-     5.72
+     0
     ],
     [
      1.8,
-     7.04
+     0
     ],
     [
      1.9,
-     7.06
+     0
     ],
     [
      2,
-     2.9
+     0
     ],
     [
      2.1,
-     2.52
+     0
     ],
     [
      2.2,
-     4.44
+     0
     ],
     [
      2.3,
-     6.27
+     0
     ],
     [
      2.4,
-     8.59
+     0
     ],
     [
      2.5,
-     13.27
+     0
     ],
     [
      2.6,
-     19.28
+     0
     ],
     [
      2.7,
-     28.9
+     0
     ],
     [
      2.8,
-     9.79
+     0
     ],
     [
      2.9,
-     2.54
+     0
     ],
     [
      3,
-     0.52
+     0
     ],
     [
      3.1,
@@ -389,38 +389,33 @@
      0
     ]
    ],
-   "settleT": 3.033333333333333,
-   "sleepT": 3.558,
+   "settleT": 1.1416666666666666,
+   "sleepT": 1.633,
    "residualMaxSpeedMmS": 0,
    "firstGroundContactOrder": [
     "foot_L@0.050",
     "foot_R@0.050",
-    "foreArm_L@0.525",
-    "foreArm_R@0.525",
-    "pelvis@0.633",
-    "abdomen@1.842",
-    "upperArm_L@2.250",
-    "chest@2.517"
+    "foreArm_L@0.533",
+    "foreArm_R@0.533",
+    "pelvis@0.579"
    ],
-   "cpuMsPerStep": 0.1336,
-   "cpuMsPerFrame": 0.5344,
+   "cpuMsPerStep": 0.0545,
+   "cpuMsPerFrame": 0.2178,
    "bodies": 14,
    "constraints": {
     "sixdof": 9,
     "hinge": 4
    },
    "worst": {
-    "groundPen": 129,
-    "anchor": 139,
-    "limit": 389,
-    "pop": 604,
-    "self": 622,
-    "energy": 132
+    "groundPen": 118,
+    "anchor": 133,
+    "limit": 138,
+    "pop": 128,
+    "self": 271,
+    "energy": 23
    },
    "repeatHashes": [
-    "c9f9f51",
-    "c9f9f51",
-    "c9f9f51"
+    "5bbffb56"
    ],
    "deterministic": true
   },
@@ -429,65 +424,65 @@
    "title": "B — hip / side-first fall",
    "tsc": "240 Hz, 1 collision step",
    "steps": 1440,
-   "hash": "39fe55c1",
+   "hash": "2f8a9c80",
    "initialLowestBody": "thigh_R",
    "E0": {
     "ke": 9.75,
-    "pe": 392.7
+    "pe": 397.3
    },
-   "maxGroundPenMm": 11.9,
+   "maxGroundPenMm": 7.9,
    "maxGroundPenAt": {
     "n": 226,
     "t": 0.942,
     "body": "foreArm_R"
    },
-   "maxEngineGroundDepthMm": 11.9,
+   "maxEngineGroundDepthMm": 7.89,
    "maxMeshPenMm": null,
    "maxMeshPenPart": null,
    "restMeshPenMm": null,
    "restMeshPenPart": null,
-   "restGroundPenMm": 5.19,
-   "maxSelfPenMm": 5.02,
+   "restGroundPenMm": 5.26,
+   "maxSelfPenMm": 0.23,
    "maxSelfPenAt": {
-    "n": 74,
-    "t": 0.308,
-    "pair": "abdomen–upperArm_L"
+    "n": 76,
+    "t": 0.317,
+    "pair": "thigh_L–thigh_R"
    },
-   "maxAnchorErrMm": 5.033,
+   "maxAnchorErrMm": 4.436,
    "maxAnchorAt": {
-    "n": 226,
-    "t": 0.942,
+    "n": 176,
+    "t": 0.733,
     "joint": "shoulder_R"
    },
-   "maxLimitViolDeg": 16.44,
+   "maxLimitViolDeg": 5.59,
    "maxLimitAt": {
-    "n": 241,
-    "t": 1.004,
+    "n": 174,
+    "t": 0.725,
     "joint": "shoulder_R"
    },
-   "maxHardLimitViolDeg": 16.44,
+   "maxHardLimitViolDeg": 5.59,
    "maxHardLimitAt": {
-    "n": 241,
-    "t": 1.004,
+    "n": 174,
+    "t": 0.725,
     "joint": "shoulder_R"
    },
-   "hardLimitViolOver2degSteps": 206,
-   "maxSoftStopOvershootDeg": 5.28,
-   "maxPopMm": 1.49,
+   "hardLimitViolOver2degSteps": 120,
+   "maxSoftStopOvershootDeg": 0.53,
+   "maxPopMm": 0.69,
    "maxPopAt": {
-    "n": 226,
-    "t": 0.942,
-    "body": "foreArm_R"
+    "n": 177,
+    "t": 0.738,
+    "body": "upperArm_R"
    },
    "energyGain": {
     "stepsOver50mJ": 1,
-    "maxJ": 1.071,
-    "totalJ": 1.07,
+    "maxJ": 0.598,
+    "totalJ": 0.6,
     "fromPE": 0,
-    "at": 0.196,
-    "dPE": -1.454,
-    "dKE": 2.525,
-    "body": "chest"
+    "at": 0.204,
+    "dPE": -1.702,
+    "dKE": 2.3,
+    "body": "thigh_L"
    },
    "keCurve": [
     [
@@ -500,55 +495,55 @@
     ],
     [
      0.2,
-     54
+     57.57
     ],
     [
      0.3,
-     20.56
+     19.46
     ],
     [
      0.4,
-     18.46
+     10.32
     ],
     [
      0.5,
-     10.57
+     10.94
     ],
     [
      0.6,
-     10.47
+     14.43
     ],
     [
      0.7,
-     2.96
+     4.49
     ],
     [
      0.8,
-     1.71
+     1.75
     ],
     [
      0.9,
-     1.9
+     0.7
     ],
     [
      1,
-     1.98
+     0.14
     ],
     [
      1.1,
-     1.62
+     0.03
     ],
     [
      1.2,
-     0.52
+     0
     ],
     [
      1.3,
-     0.31
+     0
     ],
     [
      1.4,
-     0.04
+     0
     ],
     [
      1.5,
@@ -735,21 +730,21 @@
      0
     ]
    ],
-   "settleT": 1.3541666666666667,
-   "sleepT": 1.871,
+   "settleT": 0.9791666666666666,
+   "sleepT": 1.517,
    "residualMaxSpeedMmS": 0,
    "firstGroundContactOrder": [
     "thigh_R@0.154",
     "pelvis@0.171",
-    "upperArm_R@0.179",
-    "foreArm_R@0.200",
-    "abdomen@0.308",
-    "foot_L@0.350",
-    "shin_L@0.396",
-    "foreArm_L@0.400"
+    "upperArm_R@0.192",
+    "foot_R@0.254",
+    "foreArm_L@0.313",
+    "foot_L@0.400",
+    "shin_L@0.479",
+    "thigh_L@0.496"
    ],
-   "cpuMsPerStep": 0.0701,
-   "cpuMsPerFrame": 0.2804,
+   "cpuMsPerStep": 0.0519,
+   "cpuMsPerFrame": 0.2075,
    "bodies": 14,
    "constraints": {
     "sixdof": 9,
@@ -757,16 +752,14 @@
    },
    "worst": {
     "groundPen": 226,
-    "anchor": 226,
-    "limit": 241,
-    "pop": 226,
-    "self": 74,
-    "energy": 47
+    "anchor": 176,
+    "limit": 174,
+    "pop": 177,
+    "self": 76,
+    "energy": 49
    },
    "repeatHashes": [
-    "39fe55c1",
-    "39fe55c1",
-    "39fe55c1"
+    "2f8a9c80"
    ],
    "deterministic": true
   },
@@ -775,65 +768,65 @@
    "title": "C — shoulder / upper-body-first fall",
    "tsc": "240 Hz, 1 collision step",
    "steps": 1440,
-   "hash": "9dc3fc22",
-   "initialLowestBody": "foot_R",
+   "hash": "34af33e",
+   "initialLowestBody": "foreArm_R",
    "E0": {
     "ke": 9.75,
-    "pe": 724.1
+    "pe": 768.2
    },
-   "maxGroundPenMm": 2.41,
+   "maxGroundPenMm": 5.09,
    "maxGroundPenAt": {
-    "n": 103,
-    "t": 0.429,
+    "n": 186,
+    "t": 0.775,
     "body": "foreArm_R"
    },
-   "maxEngineGroundDepthMm": 5.62,
+   "maxEngineGroundDepthMm": 5.58,
    "maxMeshPenMm": null,
    "maxMeshPenPart": null,
    "restMeshPenMm": null,
    "restMeshPenPart": null,
-   "restGroundPenMm": 1.94,
-   "maxSelfPenMm": 1.79,
+   "restGroundPenMm": 5.04,
+   "maxSelfPenMm": 5.47,
    "maxSelfPenAt": {
-    "n": 106,
-    "t": 0.442,
+    "n": 126,
+    "t": 0.525,
     "pair": "foreArm_L–thigh_L"
    },
-   "maxAnchorErrMm": 2.08,
+   "maxAnchorErrMm": 3.757,
    "maxAnchorAt": {
-    "n": 86,
-    "t": 0.358,
-    "joint": "hip_L"
+    "n": 94,
+    "t": 0.392,
+    "joint": "hip_R"
    },
-   "maxLimitViolDeg": 10.78,
+   "maxLimitViolDeg": 4.21,
    "maxLimitAt": {
-    "n": 107,
-    "t": 0.446,
-    "joint": "elbow_L"
+    "n": 114,
+    "t": 0.475,
+    "joint": "shoulder_L"
    },
-   "maxHardLimitViolDeg": 2.55,
+   "maxHardLimitViolDeg": 4.21,
    "maxHardLimitAt": {
-    "n": 103,
-    "t": 0.429,
-    "joint": "shoulder_R"
+    "n": 114,
+    "t": 0.475,
+    "joint": "shoulder_L"
    },
    "hardLimitViolOver2degSteps": 3,
-   "maxSoftStopOvershootDeg": 10.78,
-   "maxPopMm": 0.47,
+   "maxSoftStopOvershootDeg": 1.37,
+   "maxPopMm": 1.27,
    "maxPopAt": {
-    "n": 105,
-    "t": 0.438,
-    "body": "foreArm_L"
+    "n": 94,
+    "t": 0.392,
+    "body": "pelvis"
    },
    "energyGain": {
-    "stepsOver50mJ": 0,
-    "maxJ": 0,
-    "totalJ": 0,
-    "fromPE": 0,
-    "at": 0.796,
-    "dPE": 0,
-    "dKE": 0,
-    "body": "thigh_L"
+    "stepsOver50mJ": 1,
+    "maxJ": 0.242,
+    "totalJ": 0.24,
+    "fromPE": 0.68,
+    "at": 0.483,
+    "dPE": 0.682,
+    "dKE": -0.44,
+    "body": "abdomen"
    },
    "keCurve": [
     [
@@ -850,27 +843,27 @@
     ],
     [
      0.3,
-     358.06
+     340.75
     ],
     [
      0.4,
-     246.01
+     257.39
     ],
     [
      0.5,
-     10.25
+     18.51
     ],
     [
      0.6,
-     2.18
+     12.12
     ],
     [
      0.7,
-     0.06
+     1.07
     ],
     [
      0.8,
-     0
+     0.08
     ],
     [
      0.9,
@@ -1081,38 +1074,36 @@
      0
     ]
    ],
-   "settleT": 0.6166666666666667,
-   "sleepT": 1.275,
+   "settleT": 0.7791666666666667,
+   "sleepT": 1.283,
    "residualMaxSpeedMmS": 0,
    "firstGroundContactOrder": [
-    "foot_L@0.217",
-    "foot_R@0.217",
-    "foreArm_R@0.225",
-    "thigh_R@0.329",
-    "shin_R@0.333",
-    "pelvis@0.383",
-    "thigh_L@0.392",
-    "shin_L@0.396"
+    "foreArm_R@0.217",
+    "foot_R@0.237",
+    "foot_L@0.242",
+    "thigh_R@0.346",
+    "shin_R@0.350",
+    "pelvis@0.392",
+    "thigh_L@0.408",
+    "shin_L@0.417"
    ],
-   "cpuMsPerStep": 0.0388,
-   "cpuMsPerFrame": 0.155,
+   "cpuMsPerStep": 0.0521,
+   "cpuMsPerFrame": 0.2084,
    "bodies": 14,
    "constraints": {
     "sixdof": 9,
     "hinge": 4
    },
    "worst": {
-    "groundPen": 103,
-    "anchor": 86,
-    "limit": 107,
-    "pop": 105,
-    "self": 106,
-    "energy": 191
+    "groundPen": 186,
+    "anchor": 94,
+    "limit": 114,
+    "pop": 94,
+    "self": 126,
+    "energy": 116
    },
    "repeatHashes": [
-    "9dc3fc22",
-    "9dc3fc22",
-    "9dc3fc22"
+    "34af33e"
    ],
    "deterministic": true
   },
@@ -1121,142 +1112,142 @@
    "title": "D — rotating fall",
    "tsc": "240 Hz, 1 collision step",
    "steps": 1440,
-   "hash": "b3dca22e",
+   "hash": "55b97ba8",
    "initialLowestBody": "foot_R",
    "E0": {
-    "ke": 124.6,
-    "pe": 856.4
+    "ke": 127.8,
+    "pe": 858.9
    },
-   "maxGroundPenMm": 5.25,
+   "maxGroundPenMm": 13.9,
    "maxGroundPenAt": {
-    "n": 50,
-    "t": 0.208,
+    "n": 59,
+    "t": 0.246,
     "body": "foot_R"
    },
-   "maxEngineGroundDepthMm": 7.96,
+   "maxEngineGroundDepthMm": 16.48,
    "maxMeshPenMm": null,
    "maxMeshPenPart": null,
    "restMeshPenMm": null,
    "restMeshPenPart": null,
-   "restGroundPenMm": 5,
-   "maxSelfPenMm": 2.12,
+   "restGroundPenMm": 1.95,
+   "maxSelfPenMm": 2.19,
    "maxSelfPenAt": {
-    "n": 222,
-    "t": 0.925,
-    "pair": "thigh_L–thigh_R"
+    "n": 445,
+    "t": 1.854,
+    "pair": "shin_L–foot_R"
    },
-   "maxAnchorErrMm": 3.244,
+   "maxAnchorErrMm": 4.62,
    "maxAnchorAt": {
-    "n": 131,
-    "t": 0.546,
-    "joint": "thoracic"
+    "n": 60,
+    "t": 0.25,
+    "joint": "ankle_R"
    },
-   "maxLimitViolDeg": 11.85,
+   "maxLimitViolDeg": 10.73,
    "maxLimitAt": {
-    "n": 137,
-    "t": 0.571,
+    "n": 140,
+    "t": 0.583,
     "joint": "elbow_L"
    },
-   "maxHardLimitViolDeg": 2.62,
+   "maxHardLimitViolDeg": 5.31,
    "maxHardLimitAt": {
-    "n": 138,
-    "t": 0.575,
-    "joint": "lumbar"
+    "n": 60,
+    "t": 0.25,
+    "joint": "ankle_R"
    },
-   "hardLimitViolOver2degSteps": 13,
-   "maxSoftStopOvershootDeg": 11.85,
-   "maxPopMm": 3.15,
+   "hardLimitViolOver2degSteps": 23,
+   "maxSoftStopOvershootDeg": 10.73,
+   "maxPopMm": 0.81,
    "maxPopAt": {
-    "n": 131,
-    "t": 0.546,
-    "body": "abdomen"
+    "n": 64,
+    "t": 0.267,
+    "body": "foot_R"
    },
    "energyGain": {
-    "stepsOver50mJ": 2,
-    "maxJ": 0.753,
-    "totalJ": 0.99,
+    "stepsOver50mJ": 9,
+    "maxJ": 2.355,
+    "totalJ": 9.26,
     "fromPE": 0,
-    "at": 0.117,
-    "dPE": -2.581,
-    "dKE": 3.334,
-    "body": "thigh_R"
+    "at": 0.267,
+    "dPE": -2.545,
+    "dKE": 4.9,
+    "body": "chest"
    },
    "keCurve": [
     [
      0,
-     124.6
+     127.8
     ],
     [
      0.1,
-     158.91
+     160
     ],
     [
      0.2,
-     213.41
+     203.95
     ],
     [
      0.3,
-     294.27
+     249.34
     ],
     [
      0.4,
-     452.45
+     357.2
     ],
     [
      0.5,
-     641.68
+     516.64
     ],
     [
      0.6,
-     52.85
+     182.3
     ],
     [
      0.7,
-     28.84
+     13.72
     ],
     [
      0.8,
-     16.83
+     5.88
     ],
     [
      0.9,
-     5.26
+     1.15
     ],
     [
      1,
-     1.18
+     0.68
     ],
     [
      1.1,
-     0.71
+     0.79
     ],
     [
      1.2,
-     0.69
+     0.3
     ],
     [
      1.3,
-     0.84
+     0.25
     ],
     [
      1.4,
-     1.12
+     0.01
     ],
     [
      1.5,
-     1.24
+     0
     ],
     [
      1.6,
-     1.54
+     0
     ],
     [
      1.7,
-     0.8
+     0
     ],
     [
      1.8,
-     0.08
+     0
     ],
     [
      1.9,
@@ -1427,38 +1418,36 @@
      0
     ]
    ],
-   "settleT": 1.75,
-   "sleepT": 2.242,
+   "settleT": 1.3416666666666666,
+   "sleepT": 1.854,
    "residualMaxSpeedMmS": 0,
    "firstGroundContactOrder": [
-    "foot_R@0.008",
+    "foot_R@0.004",
     "foot_L@0.096",
-    "foreArm_R@0.450",
-    "thigh_R@0.500",
-    "pelvis@0.512",
-    "foreArm_L@0.512",
-    "abdomen@0.546",
-    "upperArm_R@0.546"
+    "foreArm_R@0.462",
+    "foreArm_L@0.529",
+    "head@0.571",
+    "upperArm_R@0.575",
+    "thigh_R@0.592",
+    "pelvis@0.604"
    ],
-   "cpuMsPerStep": 0.0786,
-   "cpuMsPerFrame": 0.3145,
+   "cpuMsPerStep": 0.0735,
+   "cpuMsPerFrame": 0.2941,
    "bodies": 14,
    "constraints": {
     "sixdof": 9,
     "hinge": 4
    },
    "worst": {
-    "groundPen": 50,
-    "anchor": 131,
-    "limit": 137,
-    "pop": 131,
-    "self": 222,
-    "energy": 28
+    "groundPen": 59,
+    "anchor": 60,
+    "limit": 140,
+    "pop": 64,
+    "self": 445,
+    "energy": 64
    },
    "repeatHashes": [
-    "b3dca22e",
-    "b3dca22e",
-    "b3dca22e"
+    "55b97ba8"
    ],
    "deterministic": true
   },
@@ -1467,150 +1456,150 @@
    "title": "E — awkward asymmetric fall",
    "tsc": "240 Hz, 1 collision step",
    "steps": 1440,
-   "hash": "da681b9b",
+   "hash": "48f19a22",
    "initialLowestBody": "foot_R",
    "E0": {
-    "ke": 21.14,
-    "pe": 1113.4
+    "ke": 21.67,
+    "pe": 1142.3
    },
-   "maxGroundPenMm": 5.01,
+   "maxGroundPenMm": 4.15,
    "maxGroundPenAt": {
-    "n": 91,
-    "t": 0.379,
+    "n": 95,
+    "t": 0.396,
     "body": "foot_R"
    },
-   "maxEngineGroundDepthMm": 9.14,
+   "maxEngineGroundDepthMm": 8,
    "maxMeshPenMm": null,
    "maxMeshPenPart": null,
    "restMeshPenMm": null,
    "restMeshPenPart": null,
-   "restGroundPenMm": 2.33,
-   "maxSelfPenMm": 3.39,
+   "restGroundPenMm": 1.42,
+   "maxSelfPenMm": 0.23,
    "maxSelfPenAt": {
-    "n": 211,
-    "t": 0.879,
+    "n": 146,
+    "t": 0.608,
     "pair": "abdomen–upperArm_L"
    },
-   "maxAnchorErrMm": 2.591,
+   "maxAnchorErrMm": 3.894,
    "maxAnchorAt": {
-    "n": 92,
-    "t": 0.383,
-    "joint": "ankle_R"
-   },
-   "maxLimitViolDeg": 8.71,
-   "maxLimitAt": {
     "n": 101,
     "t": 0.421,
+    "joint": "ankle_R"
+   },
+   "maxLimitViolDeg": 12.26,
+   "maxLimitAt": {
+    "n": 96,
+    "t": 0.4,
     "joint": "knee_R"
    },
-   "maxHardLimitViolDeg": 2.51,
+   "maxHardLimitViolDeg": 7.2,
    "maxHardLimitAt": {
-    "n": 102,
-    "t": 0.425,
-    "joint": "hip_R"
+    "n": 133,
+    "t": 0.554,
+    "joint": "shoulder_R"
    },
-   "hardLimitViolOver2degSteps": 2,
-   "maxSoftStopOvershootDeg": 8.71,
-   "maxPopMm": 1.63,
+   "hardLimitViolOver2degSteps": 8,
+   "maxSoftStopOvershootDeg": 12.26,
+   "maxPopMm": 1.39,
    "maxPopAt": {
-    "n": 91,
-    "t": 0.379,
+    "n": 101,
+    "t": 0.421,
     "body": "foot_R"
    },
    "energyGain": {
-    "stepsOver50mJ": 0,
-    "maxJ": 0,
-    "totalJ": 0,
+    "stepsOver50mJ": 2,
+    "maxJ": 0.956,
+    "totalJ": 1.41,
     "fromPE": 0,
-    "at": 2.058,
-    "dPE": 0,
-    "dKE": 0,
-    "body": "thigh_L"
+    "at": 0.425,
+    "dPE": -5.22,
+    "dKE": 6.176,
+    "body": "chest"
    },
    "keCurve": [
     [
      0,
-     21.14
+     21.67
     ],
     [
      0.1,
-     96.23
+     96.76
     ],
     [
      0.2,
-     244.69
+     245.21
     ],
     [
      0.3,
-     449.7
+     450.02
     ],
     [
      0.4,
-     417.87
+     408.51
     ],
     [
      0.5,
-     331.97
+     408.54
     ],
     [
      0.6,
-     28.75
+     176.09
     ],
     [
      0.7,
-     27.55
+     33.05
     ],
     [
      0.8,
-     25.42
+     12.98
     ],
     [
      0.9,
-     4.72
+     5.73
     ],
     [
      1,
-     1.67
+     8
     ],
     [
      1.1,
-     2.05
+     0.21
     ],
     [
      1.2,
-     2.41
+     0
     ],
     [
      1.3,
-     1.73
+     0
     ],
     [
      1.4,
-     0.41
+     0
     ],
     [
      1.5,
-     0.59
+     0
     ],
     [
      1.6,
-     0.87
+     0
     ],
     [
      1.7,
-     1.21
+     0
     ],
     [
      1.8,
-     1.59
+     0
     ],
     [
      1.9,
-     0.89
+     0
     ],
     [
      2,
-     0.06
+     0
     ],
     [
      2.1,
@@ -1773,38 +1762,36 @@
      0
     ]
    ],
-   "settleT": 1.9833333333333334,
-   "sleepT": 2.458,
+   "settleT": 1.1041666666666667,
+   "sleepT": 1.604,
    "residualMaxSpeedMmS": 0,
    "firstGroundContactOrder": [
     "foot_R@0.246",
-    "foot_L@0.321",
-    "shin_R@0.412",
-    "thigh_L@0.433",
-    "shin_L@0.433",
-    "foreArm_L@0.471",
+    "foot_L@0.338",
+    "shin_R@0.400",
+    "shin_L@0.471",
+    "thigh_L@0.487",
+    "foreArm_L@0.496",
     "foreArm_R@0.546",
-    "chest@0.563"
+    "upperArm_R@0.550"
    ],
-   "cpuMsPerStep": 0.0774,
-   "cpuMsPerFrame": 0.3095,
+   "cpuMsPerStep": 0.0638,
+   "cpuMsPerFrame": 0.2551,
    "bodies": 14,
    "constraints": {
     "sixdof": 9,
     "hinge": 4
    },
    "worst": {
-    "groundPen": 91,
-    "anchor": 92,
-    "limit": 101,
-    "pop": 91,
-    "self": 211,
-    "energy": 494
+    "groundPen": 95,
+    "anchor": 101,
+    "limit": 96,
+    "pop": 101,
+    "self": 146,
+    "energy": 102
    },
    "repeatHashes": [
-    "da681b9b",
-    "da681b9b",
-    "da681b9b"
+    "48f19a22"
    ],
    "deterministic": true
   }

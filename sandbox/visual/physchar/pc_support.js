@@ -16,6 +16,8 @@ export const SUP = {
   liftMargin: 0.02,        // … ξ must be ≥ 2 cm inside the STANCE foot's sole region …
   liftVmax: 0.08,          // … |v_COM| ≤ 8 cm/s, the stance foot loaded and not sliding …
   readySteps: 12,          // … all held for 50 ms
+  liftTorqueUse: 0.8,      // V1.1 controller (unloadPlan): … and holding ξ over the stance foot alone needs ≤ 80 % of its ankle's finite torque
+                           // on every axis (inversion/eversion, dorsi-, plantarflexion) — a 20 % reserve for balance corrections in single support
   readyTimeout: 1.2,       // s after the shift ends → REJECTED (weight transfer not achieved)
   liftTimeout: 0.4,        // s: the foot must physically leave the ground after the lift is commanded
   // swing
@@ -131,6 +133,14 @@ export class SupportSequencer {
     const yMinAnk = this.ctrl.minPelvisY(st, pSS, Q.axis([0, 1, 0], stYaw), stF.pos, stF.rot, hNom, rad(5)), dropAllowed = Math.min(SUP.maxPelvisDrop, hNom - yMinAnk);
     const drop = hNom - hMax; if (drop > dropAllowed) reasons.push(drop > 1 ? "beyond leg reach" : `needs ${(drop * 100).toFixed(0)} cm of pelvis drop (the stance ankle allows ${(dropAllowed * 100).toFixed(1)} cm)`);
     const hPel = Math.min(hNom, hMax), fwdW = [dsin(pyaw), dcos(pyaw)], latW = [dcos(pyaw), -dsin(pyaw)];
+    // V1.1 controller (ankleReach): the RESULTING double stance must also keep BOTH ankles ≥ dorsiMarginDeg off their dorsiflexion stops at the
+    // pelvis height its reach needs — with the pelvis over the mid-point the REAR shank tilts forward and dorsiflexes; the single-support check
+    // above (pelvis over the stance foot) cannot see it. Without it, 21–26 cm forward placements were planned whose load acceptance had to
+    // raise the pelvis for the rear ankle, straightened the front leg to 100 % and lifted the landed foot off the turf for up to 1 s
+    // (finding 2026-09-30; V1's 20° range limited the planned drop and hid the gap)
+    if (this.ctrl.opts.ankleReach && drop <= dropAllowed) { const swRot = Q.axis([0, 1, 0], yaw), foot = (s) => s === st ? { pos: stF.pos, rot: stF.rot } : { pos: [swAnk2[0], yA, swAnk2[1]], rot: swRot };
+      let yNeed = -1e9, which = null; for (const s of ["L", "R"]) { const f = foot(s), y = this.ctrl.minPelvisY(s, mid, Rp, f.pos, f.rot, hNom, rad(5)); if (y > yNeed) { yNeed = y; which = s; } }
+      if (hPel < yNeed - 1e-4) reasons.push(`resulting stance: the ${which === st ? "stance" : "placed"} ankle would be within 5° of its dorsiflexion stop at the ${((hNom - hPel) * 100).toFixed(1)} cm pelvis drop the reach needs`); }
     for (const s of ["L", "R"]) { const ho = hipOf(s), a = ankOf(s), d = [a[0] - (mid[0] + ho[0]), a[1] - (mid[1] + ho[2])], down = hPel + ho[1] - yA, f = dot2(d, fwdW), l = dot2(d, latW) * (s === "R" ? 1 : -1);
       const flex = deg(datan2(f, down)), abd = deg(datan2(l, down));
       if (flex > SUP.hipFlex) reasons.push(`${s} hip flexion ${flex.toFixed(0)}° > ${SUP.hipFlex}°`); if (-flex > SUP.hipExt) reasons.push(`${s} hip extension ${(-flex).toFixed(0)}° > ${SUP.hipExt}°`);
@@ -204,12 +214,17 @@ export class SupportSequencer {
     if (R.stage === "LOST") { plan.xiRef = null; this.phase = "BALANCE LOST"; this._roles(o, R); return out(plan); }
     // ─ TRANSFER: ξ_ref onto the stance foot; lift only after the swing foot has PHYSICALLY unloaded and the stance can carry the body ─
     if (R.stage === "TRANSFER") { const uT = this._transfer(plan, o, R.id + ":transfer", R.from, this._weightPoint(o, st, R.fwdBal), R.tS, SUP.shiftT); plan.lean = { side: st, rad: this.leanRad * minjerk(uT) }; plan.unload = sw;
-      const stSole = this._sole(o, st), mStance = polyDist(stSole, o.xi), vc = Math.sqrt(o.vcom[0] ** 2 + o.vcom[2] ** 2);
-      const ok = F[sw].load < SUP.liftLoadFrac * W && mStance >= SUP.liftMargin && vc <= SUP.liftVmax && F[st].loaded && !F[st].slipping && !F[sw].slipping;
-      R.ready = ok ? R.ready + 1 : 0; R.readyState = { swingLoad: F[sw].load, stanceMargin: mStance, vcom: vc };
-      if (R.ready >= SUP.readySteps) { R.liftoff = { t, swingLoadN: F[sw].load, swingLoadFrac: F[sw].load / W, stanceMarginXi: mStance, comMarginStance: polyDist(stSole, [o.com[0], o.com[2]]), vcom: vc, transferS: t - R.tS };
+      // V1.1 controller: the PLANNED UNLOADING — an upper bound on the unloading foot's commanded share of the body weight, from its measured
+      // share when the transfer begins to 0 when it ends (min-jerk). The balance controller never commands less than the physical minimum
+      // that realises its CoP demand (pc_balance split2u), so the bound only bites once the COM/ξ state lets the stance foot carry it all.
+      if (R.share0 == null) R.share0 = Math.max(0, Math.min(1, F[sw].load / W));
+      if (ctrl.opts.unloadPlan) plan.unloading = { foot: sw, maxShare: R.share0 * (1 - minjerk(uT)) };
+      const stSole = this._sole(o, st), mStance = polyDist(stSole, o.xi), vc = Math.sqrt(o.vcom[0] ** 2 + o.vcom[2] ** 2), tq = ctrl.opts.unloadPlan ? this._ankleUse(o, st, o.xi) : null;
+      const ok = F[sw].load < SUP.liftLoadFrac * W && mStance >= SUP.liftMargin && vc <= SUP.liftVmax && F[st].loaded && !F[st].slipping && !F[sw].slipping && (!tq || tq.use <= SUP.liftTorqueUse);
+      R.ready = ok ? R.ready + 1 : 0; R.readyState = { swingLoad: F[sw].load, stanceMargin: mStance, vcom: vc, ankleUse: tq };
+      if (R.ready >= SUP.readySteps) { R.liftoff = { t, swingLoadN: F[sw].load, swingLoadFrac: F[sw].load / W, stanceMarginXi: mStance, comMarginStance: polyDist(stSole, [o.com[0], o.com[2]]), vcom: vc, transferS: t - R.tS, stanceAnkleUse: tq };
         R.stage = "LIFTOFF"; R.tL = t; R.soleY0 = this._soleLow(o, sw); R.p0 = o.states[this.foot[sw]].pos.slice(); R.q0 = o.states[this.foot[sw]].rot.slice(); this._planSwing(R, o); this.event("liftoff commanded", sw); }
-      else if (t - R.tS > SUP.shiftT + SUP.readyTimeout) { this.finish(R, "REJECTED", `weight transfer not achieved: swing load ${F[sw].load.toFixed(0)} N, ξ margin on the stance foot ${(mStance * 100).toFixed(1)} cm, |v| ${vc.toFixed(2)} m/s`); plan.xiRef = R.from; }
+      else if (t - R.tS > SUP.shiftT + SUP.readyTimeout) { this.finish(R, "REJECTED", `weight transfer not achieved: swing load ${F[sw].load.toFixed(0)} N, ξ margin on the stance foot ${(mStance * 100).toFixed(1)} cm, |v| ${vc.toFixed(2)} m/s${tq ? `, stance ankle ${(tq.use * 100).toFixed(0)} % of its torque (${tq.axis})` : ""}`); plan.xiRef = R.from; }
       this.phase = this._phaseOf(R); this._roles(o, R); return out(plan); }
     // ─ single support: the swing foot follows its trajectory under finite motors; touchdown / blockage decided by SENSING ─
     if (["LIFTOFF", "SWING", "HOVER", "LOWER", "ALIGN", "DESCEND"].includes(R.stage)) {
@@ -256,9 +271,17 @@ export class SupportSequencer {
       // the weight transfer onto the landed foot starts AT touchdown: a foot placed beside the body cannot be loaded before the COM moves
       // toward it (commanding load onto it first pushes the COM away and lifts it — tried, finding 2026-09-29). It stays planted with a
       // small commanded preload, counts as support while on the turf (sensor supportTouching), and its ankle is compliant (heel rocker).
-      plan.anchor = { foot: sw, pos: R.td.pos, rot: R.td.rot }; plan.settle = { foot: sw }; plan.preload = { foot: sw, share: SUP.acceptPreload };
+      plan.anchor = { foot: sw, pos: R.td.pos, rot: R.td.rot }; plan.settle = { foot: sw };
       const from = R.accFrom || this._weightPoint(o, st), to = R.accTo; if (!R.accT) R.accT = Math.max(SUP.acceptT, SUP.acceptTperM * Math.hypot(to[0] - from[0], to[1] - from[1]));
       const u = this._transfer(plan, o, R.id + ":accept", from, to, R.tT, R.accT); plan.lean = { side: st, rad: this.leanRad * (1 - minjerk(u)) };
+      // V1.1 controller: the landed foot keeps the preload floor while ξ travels to the double-support reference (a foot cannot be loaded
+      // before the COM moves toward it — C2 finding); once ξ_ref has ARRIVED, a final redistribution raises the floor to the even split the
+      // reference (mid-point of the two weight points) implies, over 0.5 s, never above what physics can realise (split2u). The least-effort
+      // split alone left a forward-inward diagonal placement balanced and flat on 34 % BW — just under the unchanged 35 % acceptance
+      // criterion (finding 2026-09-30, boundary sweep 330°; ramping the floor WITH the transfer pushed the CoPs to the sole edges instead).
+      // (during the transfer itself the approved preload floor + least-effort split is kept unchanged)
+      if (ctrl.opts.unloadPlan && u >= 1) { if (R.tU1 == null) R.tU1 = t; plan.loading = { foot: sw, minShare: SUP.acceptPreload + (0.5 - SUP.acceptPreload) * minjerk(Math.min(1, (t - R.tU1) / 0.5)) }; }
+      else plan.preload = { foot: sw, share: SUP.acceptPreload };
       if (!R.loadedAt && F[sw].loaded && F[sw].touching) { R.loadedAt = t; this.event("landed foot loaded", `${sw} ${F[sw].load.toFixed(0)} N`); }
       R.loadHist = R.loadHist || []; R.loadHist.push(F[sw].load); if (R.loadHist.length > SUP.acceptSteps) R.loadHist.shift();
       const band = R.loadHist.length >= SUP.acceptSteps ? Math.max(...R.loadHist) - Math.min(...R.loadHist) : 1e9;
@@ -270,6 +293,11 @@ export class SupportSequencer {
       this.phase = R.done ? "DOUBLE_SUPPORT" : this._phaseOf(R); this._roles(o, R.done ? null : R); return out(plan); }
     this.phase = this._restPhase(o); this._roles(o, null); return out(plan);
   }
+  // the share of the stance ankle's FINITE torque needed to hold a CoP at p (x, z) with the whole body weight on that foot: pitch about the
+  // ankle (plantarflexion for a CoP ahead of the ankle, dorsiflexion behind) and roll (inversion/eversion), each against its directional cap
+  _ankleUse(o, s, p) { const a = o.states[this.foot[s]].pos, hd = this._heading(o, s), rt = [hd[1], -hd[0]], d = [p[0] - a[0], p[1] - a[2]], W = this.W, L = this.ctrl.limits.ankle, m = this.ctrl.mult;
+    const fwd = dot2(d, hd), lat = dot2(d, rt), pitch = fwd >= 0 ? W * fwd / (L.Y[1] * m) : W * -fwd / (-L.Y[0] * m), roll = W * Math.abs(lat) / (L.Z[1] * m);
+    return { use: Math.max(pitch, roll), axis: pitch >= roll ? (fwd >= 0 ? "plantarflexion" : "dorsiflexion") : "inversion/eversion", pitch, roll }; }
   _lerp(a, b, s) { return [a[0] + (b[0] - a[0]) * s, a[1] + (b[1] - a[1]) * s]; }
   // a planned weight transfer is planned in CAPTURE-POINT space: ξ_d moves monotonically (min-jerk) from → to over T. Its LIPM feed-forward
   // CoP, ξ_d − ξ̇_d/ω0, then always lies on the unloading side of ξ_d (never beyond the target, never past the stance foot's outer edge —

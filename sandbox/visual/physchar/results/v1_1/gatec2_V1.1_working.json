@@ -1,0 +1,8133 @@
+{
+ "player": {
+  "id": "gabriel",
+  "name": "Gabriel Magalhães",
+  "heightCm": 190,
+  "weightKg": 78,
+  "H": 1.9
+ },
+ "tsc": "240x1",
+ "results": [
+  {
+   "test": "A_shift",
+   "group": "A weight shift",
+   "title": "A — static weight shift L↔R (no lift): 25 → 10 → 50 → 75 → 90 → 50 % toward R",
+   "hash": "3e66ad4d",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "fell": false,
+   "finalClass": "RECOVERABLE_IN_PLACE",
+   "requests": [
+    {
+     "id": 0,
+     "label": null,
+     "type": "shift",
+     "foot": null,
+     "status": "DONE",
+     "why": "weight 25 % toward R",
+     "w": 0.25
+    },
+    {
+     "id": 1,
+     "label": null,
+     "type": "shift",
+     "foot": null,
+     "status": "DONE",
+     "why": "weight 10 % toward R",
+     "w": 0.1
+    },
+    {
+     "id": 2,
+     "label": null,
+     "type": "shift",
+     "foot": null,
+     "status": "DONE",
+     "why": "weight 50 % toward R",
+     "w": 0.5
+    },
+    {
+     "id": 3,
+     "label": null,
+     "type": "shift",
+     "foot": null,
+     "status": "DONE",
+     "why": "weight 75 % toward R",
+     "w": 0.75
+    },
+    {
+     "id": 4,
+     "label": null,
+     "type": "shift",
+     "foot": null,
+     "status": "DONE",
+     "why": "weight 90 % toward R",
+     "w": 0.9
+    },
+    {
+     "id": 5,
+     "label": null,
+     "type": "shift",
+     "foot": null,
+     "status": "DONE",
+     "why": "weight 50 % toward R",
+     "w": 0.5
+    }
+   ],
+   "loads": {
+    "totalVsBodyWeightN": 4.98,
+    "maxStepChangeN": 72.8,
+    "shareR": [
+     0.05,
+     0.968
+    ]
+   },
+   "drift": {
+    "footL": 0.02,
+    "footR": 0,
+    "com": 1.1,
+    "slidL": 2.2,
+    "slidR": 2.1
+   },
+   "root": {
+    "residualMeanN": 0.031,
+    "residualMaxN": 0.07
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "minJointLimitMarginDeg": 8.7,
+    "maxTurfPenMm": 1.07,
+    "maxSelfPenMm": 0,
+    "keMaxJ": 0.91
+   },
+   "cpu": {
+    "msPerFrame": 1.3673,
+    "jolt": 0.5941,
+    "sensing": 0.0726,
+    "controller": 0.7006
+   },
+   "events": [
+    {
+     "t": 0.5,
+     "kind": "request",
+     "what": "shift  "
+    },
+    {
+     "t": 2.304,
+     "kind": "DONE",
+     "what": "weight 25 % toward R"
+    },
+    {
+     "t": 2.308,
+     "kind": "request",
+     "what": "shift  "
+    },
+    {
+     "t": 4.108,
+     "kind": "DONE",
+     "what": "weight 10 % toward R"
+    },
+    {
+     "t": 4.112,
+     "kind": "request",
+     "what": "shift  "
+    },
+    {
+     "t": 6.112,
+     "kind": "DONE",
+     "what": "weight 50 % toward R"
+    },
+    {
+     "t": 6.117,
+     "kind": "request",
+     "what": "shift  "
+    },
+    {
+     "t": 7.917,
+     "kind": "DONE",
+     "what": "weight 75 % toward R"
+    },
+    {
+     "t": 7.921,
+     "kind": "request",
+     "what": "shift  "
+    },
+    {
+     "t": 9.725,
+     "kind": "DONE",
+     "what": "weight 90 % toward R"
+    },
+    {
+     "t": 9.729,
+     "kind": "request",
+     "what": "shift  "
+    },
+    {
+     "t": 11.729,
+     "kind": "DONE",
+     "what": "weight 50 % toward R"
+    }
+   ],
+   "marks": {
+    "DONE#0": 553,
+    "DONE#1": 986,
+    "DONE#2": 1467,
+    "DONE#3": 1900,
+    "DONE#4": 2334,
+    "DONE#5": 2815
+   },
+   "worst": {
+    "liftoff": 0,
+    "touchdown": 0,
+    "done": 553
+   },
+   "calib": "V1.1",
+   "recal": {
+    "anticipateReach": true,
+    "reachToGround": true,
+    "unloadPlan": true,
+    "reachAll": true,
+    "ankleReach": true
+   },
+   "env": {
+    "terrain": [],
+    "obstacle": null
+   },
+   "box": {
+    "he": [
+     0.08207660244551523,
+     0.0746698049377926,
+     0.17878945945945948
+    ],
+    "pos": [
+     -0.0005227809072962872,
+     -0.013330195062207416,
+     0.09765810810810813
+    ]
+   },
+   "lean": {
+    "hipHalfWidth": 0.092,
+    "legComOffset": 0.026369450636924224,
+    "mUp": 38.305800000000005,
+    "hUp": 0.2897783130662963,
+    "mPelvis": 8.7126,
+    "mLeg": 15.4908,
+    "tau0": 74.40378692093864,
+    "cap": 140,
+    "target": 98,
+    "leanDeg": 0,
+    "tauAtLean": 74.40378692093864,
+    "ssPelvisOffset": -0.015957114351607803
+   },
+   "sup": {
+    "footClear": 0.03,
+    "latMin": 0.1
+   },
+   "reqRaw": [
+    {
+     "id": 0,
+     "type": "shift",
+     "foot": null,
+     "label": null,
+     "status": "DONE",
+     "why": "weight 25 % toward R",
+     "proj": null,
+     "reach": null,
+     "excl": null,
+     "td": null,
+     "accepted": null,
+     "blocked": null,
+     "align": null,
+     "fwdBias": null,
+     "clear": null,
+     "T": 1
+    },
+    {
+     "id": 1,
+     "type": "shift",
+     "foot": null,
+     "label": null,
+     "status": "DONE",
+     "why": "weight 10 % toward R",
+     "proj": null,
+     "reach": null,
+     "excl": null,
+     "td": null,
+     "accepted": null,
+     "blocked": null,
+     "align": null,
+     "fwdBias": null,
+     "clear": null,
+     "T": 1
+    },
+    {
+     "id": 2,
+     "type": "shift",
+     "foot": null,
+     "label": null,
+     "status": "DONE",
+     "why": "weight 50 % toward R",
+     "proj": null,
+     "reach": null,
+     "excl": null,
+     "td": null,
+     "accepted": null,
+     "blocked": null,
+     "align": null,
+     "fwdBias": null,
+     "clear": null,
+     "T": 1.2
+    },
+    {
+     "id": 3,
+     "type": "shift",
+     "foot": null,
+     "label": null,
+     "status": "DONE",
+     "why": "weight 75 % toward R",
+     "proj": null,
+     "reach": null,
+     "excl": null,
+     "td": null,
+     "accepted": null,
+     "blocked": null,
+     "align": null,
+     "fwdBias": null,
+     "clear": null,
+     "T": 1
+    },
+    {
+     "id": 4,
+     "type": "shift",
+     "foot": null,
+     "label": null,
+     "status": "DONE",
+     "why": "weight 90 % toward R",
+     "proj": null,
+     "reach": null,
+     "excl": null,
+     "td": null,
+     "accepted": null,
+     "blocked": null,
+     "align": null,
+     "fwdBias": null,
+     "clear": null,
+     "T": 1
+    },
+    {
+     "id": 5,
+     "type": "shift",
+     "foot": null,
+     "label": null,
+     "status": "DONE",
+     "why": "weight 50 % toward R",
+     "proj": null,
+     "reach": null,
+     "excl": null,
+     "td": null,
+     "accepted": null,
+     "blocked": null,
+     "align": null,
+     "fwdBias": null,
+     "clear": null,
+     "T": 1.2
+    }
+   ],
+   "repeatHashes": [
+    "3e66ad4d",
+    "3e66ad4d",
+    "3e66ad4d"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "B_lift_R",
+   "group": "B single support",
+   "title": "B — shift onto L, lift R 8 cm, hold 2 s, set it back down in place",
+   "hash": "62faa8f0",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "fell": false,
+   "finalClass": "RECOVERABLE_IN_PLACE",
+   "requests": [
+    {
+     "id": 0,
+     "label": null,
+     "type": "lift",
+     "foot": "R",
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "requested": [
+      0.16,
+      0.086
+     ],
+     "feasible": [
+      0.16,
+      0.086
+     ],
+     "correctedCm": 0,
+     "projectionReasons": [],
+     "stanceClearanceCm": 15.7,
+     "liftoff": {
+      "commandT": 1.696,
+      "physicalT": 1.721,
+      "swingLoadN": 0,
+      "swingLoadPctBW": 0,
+      "stanceXiMarginCm": 6.9,
+      "stanceComMarginCm": 4.5,
+      "vcom": 0.072,
+      "transferS": 1.196
+     },
+     "touchdown": {
+      "t": 4.854,
+      "singleSupportS": 3.133,
+      "actualCenter": [
+       0.169,
+       0.029
+      ],
+      "landingErrorCm": 5.8,
+      "verticalVelocity": -0.017,
+      "horizontalVelocity": 0.06,
+      "early": false,
+      "uAt": 1,
+      "plannedAnkleY": 0.1035,
+      "actualAnkleY": 0.1068,
+      "footTiltDeg": 3.7
+     },
+     "accepted": {
+      "t": 6.862,
+      "fromTouchdownS": 2.008,
+      "loadN": 394,
+      "finalCenter": [
+       0.155,
+       0.052
+      ],
+      "finalErrorCm": 3.4,
+      "driftAfterTouchdownCm": 2.76
+     },
+     "metrics": {
+      "minSoleClearanceCm": 3.2,
+      "peakSoleClearanceCm": 8.1,
+      "minClearanceToStanceLegCm": 2.4,
+      "peakSwingFootPenetrationMm": 0.23,
+      "stanceFootSlidMm": 2.37,
+      "stanceMaxSlipSpeed": 0.004,
+      "legSelfContactMm": 0.01,
+      "saturationMs": {
+       "hip_L": 1092,
+       "ankle_L": 1592,
+       "ankle_R": 283
+      },
+      "jointLimitMarginDeg": 4.1,
+      "jointLimitMarginJoint": "ankle_L",
+      "rootResidualMaxN": 0.1,
+      "ankle": {
+       "stance": {
+        "foot": "L",
+        "maxDorsiDeg": 15.9,
+        "limitDeg": 30,
+        "minMarginDeg": 14.1,
+        "atStopMs": 0
+       },
+       "swing": {
+        "foot": "R",
+        "maxDorsiDeg": 20.1,
+        "limitDeg": 30,
+        "minMarginDeg": 9.9,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     },
+     "singleLeg": {
+      "stance": "L",
+      "holdS": 2.45,
+      "heldToPlan": true,
+      "hipAbductionNm": {
+       "mean": 75.3,
+       "max": 76.7
+      },
+      "hipAbductionPctOfLimit": 53.8,
+      "hipZcapNm": 140,
+      "hipEffortPct": 59.4,
+      "hipSatPct": 0,
+      "comLateralOfStanceAnkleCm": {
+       "mean": -0.7,
+       "min": -1.4,
+       "max": -0.2
+      },
+      "pelvisRollDeg": {
+       "mean": 0.05,
+       "min": -0.05,
+       "max": 0.32
+      },
+      "trunkLateralLeanDeg": {
+       "mean": 0
+      },
+      "xiMarginCm": {
+       "mean": 7.7,
+       "min": 7.3
+      }
+     }
+    }
+   ],
+   "loads": {
+    "totalVsBodyWeightN": 10.1,
+    "maxStepChangeN": 98.6,
+    "shareR": [
+     -0.001,
+     0.604
+    ]
+   },
+   "drift": {
+    "footL": 0.02,
+    "footR": 3.53,
+    "com": 2.24,
+    "slidL": 2.8,
+    "slidR": 1.4
+   },
+   "root": {
+    "residualMeanN": 0.034,
+    "residualMaxN": 0.1
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "minJointLimitMarginDeg": 4.1,
+    "maxTurfPenMm": 1.53,
+    "maxSelfPenMm": 0.01,
+    "keMaxJ": 5.08
+   },
+   "cpu": {
+    "msPerFrame": 1.0828,
+    "jolt": 0.5651,
+    "sensing": 0.0491,
+    "controller": 0.4686
+   },
+   "events": [
+    {
+     "t": 0.5,
+     "kind": "request",
+     "what": "lift R "
+    },
+    {
+     "t": 1.696,
+     "kind": "liftoff commanded",
+     "what": "R"
+    },
+    {
+     "t": 1.721,
+     "kind": "liftoff",
+     "what": "R"
+    },
+    {
+     "t": 4.854,
+     "kind": "touchdown",
+     "what": "R"
+    },
+    {
+     "t": 4.858,
+     "kind": "landed foot loaded",
+     "what": "R 69 N"
+    },
+    {
+     "t": 6.862,
+     "kind": "DONE",
+     "what": "placed, loaded and accepted"
+    }
+   ],
+   "marks": {
+    "liftoff#0": 413,
+    "touchdown#1": 1165,
+    "DONE#2": 1647
+   },
+   "worst": {
+    "liftoff": 413,
+    "touchdown": 1165,
+    "done": 1647
+   },
+   "calib": "V1.1",
+   "recal": {
+    "anticipateReach": true,
+    "reachToGround": true,
+    "unloadPlan": true,
+    "reachAll": true,
+    "ankleReach": true
+   },
+   "env": {
+    "terrain": [],
+    "obstacle": null
+   },
+   "box": {
+    "he": [
+     0.08207660244551523,
+     0.0746698049377926,
+     0.17878945945945948
+    ],
+    "pos": [
+     -0.0005227809072962872,
+     -0.013330195062207416,
+     0.09765810810810813
+    ]
+   },
+   "lean": {
+    "hipHalfWidth": 0.092,
+    "legComOffset": 0.026369450636924224,
+    "mUp": 38.305800000000005,
+    "hUp": 0.2897783130662963,
+    "mPelvis": 8.7126,
+    "mLeg": 15.4908,
+    "tau0": 74.40378692093864,
+    "cap": 140,
+    "target": 98,
+    "leanDeg": 0,
+    "tauAtLean": 74.40378692093864,
+    "ssPelvisOffset": -0.015957114351607803
+   },
+   "sup": {
+    "footClear": 0.03,
+    "latMin": 0.1
+   },
+   "reqRaw": [
+    {
+     "id": 0,
+     "type": "lift",
+     "foot": "R",
+     "label": null,
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "proj": {
+      "requested": [
+       0.1600526631053262,
+       0.0862381201157039
+      ],
+      "target": [
+       0.1600526631053262,
+       0.0862381201157039
+      ],
+      "yaw": 0.00008616983392461063,
+      "rejected": false,
+      "reasons": [],
+      "current": [
+       0.1600526631053262,
+       0.0862381201157039
+      ]
+     },
+     "reach": [
+      [
+       0.1600526631053262,
+       0.3476257543930476
+      ],
+      [
+       0.19732226359097543,
+       0.2976045277743818
+      ],
+      [
+       0.22039101593565433,
+       0.25201638204411636
+      ],
+      [
+       0.23354662062485743,
+       0.21353338858884074
+      ],
+      [
+       0.2405374477477635,
+       0.18215615136249985
+      ],
+      [
+       0.24391825866334077,
+       0.15660971041689686
+      ],
+      [
+       0.24520293004816351,
+       0.13539964965671955
+      ],
+      [
+       0.24521517457834596,
+       0.11723473936723706
+      ],
+      [
+       0.2443900506939144,
+       0.10110907703003924
+      ],
+      [
+       0.24292162062485745,
+       0.0862381201157039
+      ],
+      [
+       0.2408737388316577,
+       0.07198718385526967
+      ],
+      [
+       0.2381993115511465,
+       0.05779506617376014
+      ],
+      [
+       0.23474893992160917,
+       0.04311220458836016
+      ],
+      [
+       0.23023872662320802,
+       0.02734502010406413
+      ],
+      [
+       0.2241980330905247,
+       0.009792644987558857
+      ],
+      [
+       0.21583803297837306,
+       -0.010384974823435436
+      ],
+      [
+       0.2038766033755386,
+       -0.034167166208232666
+      ],
+      [
+       0.18627158778259995,
+       -0.06245679073644454
+      ],
+      [
+       0.16005266310532623,
+       -0.09548032470851482
+      ],
+      [
+       0.12162330603757221,
+       -0.13170559396224646
+      ],
+      [
+       0.06796774756344452,
+       -0.1667631060080021
+      ],
+      [
+       0.03302782179673247,
+       -0.1337753588541543
+      ],
+      [
+       0.033036003190139884,
+       -0.06513444065753636
+      ],
+      [
+       0.03304096085113292,
+       -0.020337352400988273
+      ],
+      [
+       0.033042827809706216,
+       0.01290895751804759
+      ],
+      [
+       0.03304446461293398,
+       0.04001091635669949
+      ],
+      [
+       0.03304618349589203,
+       0.06384345103576115
+      ],
+      [
+       0.03305070998032625,
+       0.08623812011570388
+      ],
+      [
+       0.033050691588023096,
+       0.10863199429737239
+      ],
+      [
+       0.03305306775582445,
+       0.13246219258677502
+      ],
+      [
+       0.0330547208587694,
+       0.15956041625828205
+      ],
+      [
+       0.03305849421698795,
+       0.19279888039157372
+      ],
+      [
+       0.03306248522361993,
+       0.237579120830405
+      ],
+      [
+       0.03306673170884178,
+       0.3061842051408705
+      ],
+      [
+       0.03326838033080817,
+       0.4345750741804411
+      ],
+      [
+       0.10542566390354341,
+       0.3960432275490457
+      ]
+     ],
+     "excl": [
+      [
+       -0.2431985052872373,
+       -0.09249414323966779
+      ],
+      [
+       -0.07904531338041866,
+       -0.09250833109519667
+      ],
+      [
+       -0.07901450087134794,
+       0.2650705058493597
+      ],
+      [
+       -0.24316769277816658,
+       0.2650846937048886
+      ]
+     ],
+     "td": {
+      "center": [
+       0.16920262581971995,
+       0.02850537376421268
+      ],
+      "rot": [
+       0.03225110471248627,
+       0.00922543928027153,
+       0.004495308268815279,
+       0.9994271397590637
+      ],
+      "pos": [
+       0.16778428852558136,
+       0.10676637291908264,
+       -0.06808200478553772
+      ],
+      "t": 4.854166666666667
+     },
+     "accepted": {
+      "center": [
+       0.15493353225836404,
+       0.052137226195884664
+      ],
+      "rot": [
+       -0.00017513874627184123,
+       0.021358856931328773,
+       -0.00007187481241999194,
+       0.9997718930244446
+      ],
+      "t": 6.8625
+     },
+     "blocked": null,
+     "align": null,
+     "fwdBias": 0,
+     "clear": 0.02,
+     "T": 0.6774617947244006
+    }
+   ],
+   "repeatHashes": [
+    "62faa8f0",
+    "62faa8f0",
+    "62faa8f0"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "B_hold_R",
+   "group": "B single support",
+   "title": "B — V1.1 comparison: shift onto L, lift R 8 cm and HOLD 20 s (single-leg sustainability)",
+   "hash": "47e32f1",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "fell": false,
+   "finalClass": "RECOVERABLE_IN_PLACE",
+   "requests": [
+    {
+     "id": 0,
+     "label": null,
+     "type": "lift",
+     "foot": "R",
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "requested": [
+      0.16,
+      0.086
+     ],
+     "feasible": [
+      0.16,
+      0.086
+     ],
+     "correctedCm": 0,
+     "projectionReasons": [],
+     "stanceClearanceCm": 15.7,
+     "liftoff": {
+      "commandT": 1.696,
+      "physicalT": 1.721,
+      "swingLoadN": 0,
+      "swingLoadPctBW": 0,
+      "stanceXiMarginCm": 6.9,
+      "stanceComMarginCm": 4.5,
+      "vcom": 0.072,
+      "transferS": 1.196
+     },
+     "touchdown": {
+      "t": 22.846,
+      "singleSupportS": 21.125,
+      "actualCenter": [
+       0.17,
+       0.028
+      ],
+      "landingErrorCm": 5.9,
+      "verticalVelocity": -0.022,
+      "horizontalVelocity": 0.059,
+      "early": false,
+      "uAt": 1,
+      "plannedAnkleY": 0.1035,
+      "actualAnkleY": 0.1068,
+      "footTiltDeg": 3.7
+     },
+     "accepted": {
+      "t": 24.858,
+      "fromTouchdownS": 2.013,
+      "loadN": 394,
+      "finalCenter": [
+       0.156,
+       0.05
+      ],
+      "finalErrorCm": 3.6,
+      "driftAfterTouchdownCm": 2.57
+     },
+     "metrics": {
+      "minSoleClearanceCm": 3.2,
+      "peakSoleClearanceCm": 8.1,
+      "minClearanceToStanceLegCm": 2.6,
+      "peakSwingFootPenetrationMm": 0.22,
+      "stanceFootSlidMm": 2.9,
+      "stanceMaxSlipSpeed": 0.004,
+      "legSelfContactMm": 0.01,
+      "saturationMs": {
+       "hip_L": 1083,
+       "ankle_L": 1575,
+       "ankle_R": 283
+      },
+      "jointLimitMarginDeg": 4.1,
+      "jointLimitMarginJoint": "ankle_L",
+      "rootResidualMaxN": 0.1,
+      "ankle": {
+       "stance": {
+        "foot": "L",
+        "maxDorsiDeg": 15.9,
+        "limitDeg": 30,
+        "minMarginDeg": 14.1,
+        "atStopMs": 0
+       },
+       "swing": {
+        "foot": "R",
+        "maxDorsiDeg": 19.9,
+        "limitDeg": 30,
+        "minMarginDeg": 10.1,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     },
+     "singleLeg": {
+      "stance": "L",
+      "holdS": 20.45,
+      "heldToPlan": true,
+      "hipAbductionNm": {
+       "mean": 76.2,
+       "max": 76.7
+      },
+      "hipAbductionPctOfLimit": 54.4,
+      "hipZcapNm": 140,
+      "hipEffortPct": 60.2,
+      "hipSatPct": 0,
+      "comLateralOfStanceAnkleCm": {
+       "mean": -0.1,
+       "min": -1.4,
+       "max": 0
+      },
+      "pelvisRollDeg": {
+       "mean": 0,
+       "min": -0.05,
+       "max": 0.32
+      },
+      "trunkLateralLeanDeg": {
+       "mean": 0
+      },
+      "xiMarginCm": {
+       "mean": 8.1,
+       "min": 7.3
+      }
+     }
+    }
+   ],
+   "loads": {
+    "totalVsBodyWeightN": 3.04,
+    "maxStepChangeN": 98.6,
+    "shareR": [
+     -0.001,
+     0.604
+    ]
+   },
+   "drift": {
+    "footL": 0.07,
+    "footR": 3.7,
+    "com": 2.51,
+    "slidL": 3.4,
+    "slidR": 1.4
+   },
+   "root": {
+    "residualMeanN": 0.023,
+    "residualMaxN": 0.1
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "minJointLimitMarginDeg": 4.1,
+    "maxTurfPenMm": 1.53,
+    "maxSelfPenMm": 0.01,
+    "keMaxJ": 5.08
+   },
+   "cpu": {
+    "msPerFrame": 0.8138,
+    "jolt": 0.5485,
+    "sensing": 0.0364,
+    "controller": 0.2289
+   },
+   "events": [
+    {
+     "t": 0.5,
+     "kind": "request",
+     "what": "lift R "
+    },
+    {
+     "t": 1.696,
+     "kind": "liftoff commanded",
+     "what": "R"
+    },
+    {
+     "t": 1.721,
+     "kind": "liftoff",
+     "what": "R"
+    },
+    {
+     "t": 22.846,
+     "kind": "touchdown",
+     "what": "R"
+    },
+    {
+     "t": 22.85,
+     "kind": "landed foot loaded",
+     "what": "R 70 N"
+    },
+    {
+     "t": 24.858,
+     "kind": "DONE",
+     "what": "placed, loaded and accepted"
+    }
+   ],
+   "marks": {
+    "liftoff#0": 413,
+    "touchdown#1": 5483,
+    "DONE#2": 5966
+   },
+   "worst": {
+    "liftoff": 413,
+    "touchdown": 5483,
+    "done": 5966
+   },
+   "calib": "V1.1",
+   "recal": {
+    "anticipateReach": true,
+    "reachToGround": true,
+    "unloadPlan": true,
+    "reachAll": true,
+    "ankleReach": true
+   },
+   "env": {
+    "terrain": [],
+    "obstacle": null
+   },
+   "box": {
+    "he": [
+     0.08207660244551523,
+     0.0746698049377926,
+     0.17878945945945948
+    ],
+    "pos": [
+     -0.0005227809072962872,
+     -0.013330195062207416,
+     0.09765810810810813
+    ]
+   },
+   "lean": {
+    "hipHalfWidth": 0.092,
+    "legComOffset": 0.026369450636924224,
+    "mUp": 38.305800000000005,
+    "hUp": 0.2897783130662963,
+    "mPelvis": 8.7126,
+    "mLeg": 15.4908,
+    "tau0": 74.40378692093864,
+    "cap": 140,
+    "target": 98,
+    "leanDeg": 0,
+    "tauAtLean": 74.40378692093864,
+    "ssPelvisOffset": -0.015957114351607803
+   },
+   "sup": {
+    "footClear": 0.03,
+    "latMin": 0.1
+   },
+   "reqRaw": [
+    {
+     "id": 0,
+     "type": "lift",
+     "foot": "R",
+     "label": null,
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "proj": {
+      "requested": [
+       0.1600526631053262,
+       0.0862381201157039
+      ],
+      "target": [
+       0.1600526631053262,
+       0.0862381201157039
+      ],
+      "yaw": 0.00008616983392461063,
+      "rejected": false,
+      "reasons": [],
+      "current": [
+       0.1600526631053262,
+       0.0862381201157039
+      ]
+     },
+     "reach": [
+      [
+       0.1600526631053262,
+       0.3476257543930476
+      ],
+      [
+       0.19732226359097543,
+       0.2976045277743818
+      ],
+      [
+       0.22039101593565433,
+       0.25201638204411636
+      ],
+      [
+       0.23354662062485743,
+       0.21353338858884074
+      ],
+      [
+       0.2405374477477635,
+       0.18215615136249985
+      ],
+      [
+       0.24391825866334077,
+       0.15660971041689686
+      ],
+      [
+       0.24520293004816351,
+       0.13539964965671955
+      ],
+      [
+       0.24521517457834596,
+       0.11723473936723706
+      ],
+      [
+       0.2443900506939144,
+       0.10110907703003924
+      ],
+      [
+       0.24292162062485745,
+       0.0862381201157039
+      ],
+      [
+       0.2408737388316577,
+       0.07198718385526967
+      ],
+      [
+       0.2381993115511465,
+       0.05779506617376014
+      ],
+      [
+       0.23474893992160917,
+       0.04311220458836016
+      ],
+      [
+       0.23023872662320802,
+       0.02734502010406413
+      ],
+      [
+       0.2241980330905247,
+       0.009792644987558857
+      ],
+      [
+       0.21583803297837306,
+       -0.010384974823435436
+      ],
+      [
+       0.2038766033755386,
+       -0.034167166208232666
+      ],
+      [
+       0.18627158778259995,
+       -0.06245679073644454
+      ],
+      [
+       0.16005266310532623,
+       -0.09548032470851482
+      ],
+      [
+       0.12162330603757221,
+       -0.13170559396224646
+      ],
+      [
+       0.06796774756344452,
+       -0.1667631060080021
+      ],
+      [
+       0.03302782179673247,
+       -0.1337753588541543
+      ],
+      [
+       0.033036003190139884,
+       -0.06513444065753636
+      ],
+      [
+       0.03304096085113292,
+       -0.020337352400988273
+      ],
+      [
+       0.033042827809706216,
+       0.01290895751804759
+      ],
+      [
+       0.03304446461293398,
+       0.04001091635669949
+      ],
+      [
+       0.03304618349589203,
+       0.06384345103576115
+      ],
+      [
+       0.03305070998032625,
+       0.08623812011570388
+      ],
+      [
+       0.033050691588023096,
+       0.10863199429737239
+      ],
+      [
+       0.03305306775582445,
+       0.13246219258677502
+      ],
+      [
+       0.0330547208587694,
+       0.15956041625828205
+      ],
+      [
+       0.03305849421698795,
+       0.19279888039157372
+      ],
+      [
+       0.03306248522361993,
+       0.237579120830405
+      ],
+      [
+       0.03306673170884178,
+       0.3061842051408705
+      ],
+      [
+       0.03326838033080817,
+       0.4345750741804411
+      ],
+      [
+       0.10542566390354341,
+       0.3960432275490457
+      ]
+     ],
+     "excl": [
+      [
+       -0.2431985052872373,
+       -0.09249414323966779
+      ],
+      [
+       -0.07904531338041866,
+       -0.09250833109519667
+      ],
+      [
+       -0.07901450087134794,
+       0.2650705058493597
+      ],
+      [
+       -0.24316769277816658,
+       0.2650846937048886
+      ]
+     ],
+     "td": {
+      "center": [
+       0.16965299738949977,
+       0.02833532081307258
+      ],
+      "rot": [
+       0.0321846529841423,
+       0.009411743842065334,
+       0.004710960667580366,
+       0.999426543712616
+      ],
+      "pos": [
+       0.16819138824939728,
+       0.10677222907543182,
+       -0.06825409829616547
+      ],
+      "t": 22.84583333333333
+     },
+     "accepted": {
+      "center": [
+       0.1560288841099229,
+       0.050179375116446656
+      ],
+      "rot": [
+       -0.00017054144700523466,
+       0.021916743367910385,
+       -0.00006694422336295247,
+       0.9997597932815552
+      ],
+      "t": 24.858333333333334
+     },
+     "blocked": null,
+     "align": null,
+     "fwdBias": 0,
+     "clear": 0.02,
+     "T": 0.6767534952820414
+    }
+   ],
+   "repeatHashes": [
+    "47e32f1",
+    "47e32f1",
+    "47e32f1"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "B_lift_L",
+   "group": "B single support",
+   "title": "B — shift onto R, lift L 8 cm, hold 2 s, set it back down in place",
+   "hash": "38a8c8c5",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "fell": false,
+   "finalClass": "RECOVERABLE_IN_PLACE",
+   "requests": [
+    {
+     "id": 0,
+     "label": null,
+     "type": "lift",
+     "foot": "L",
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "requested": [
+      -0.161,
+      0.086
+     ],
+     "feasible": [
+      -0.161,
+      0.086
+     ],
+     "correctedCm": 0,
+     "projectionReasons": [],
+     "stanceClearanceCm": 15.7,
+     "liftoff": {
+      "commandT": 1.696,
+      "physicalT": 1.721,
+      "swingLoadN": 0,
+      "swingLoadPctBW": 0,
+      "stanceXiMarginCm": 6.9,
+      "stanceComMarginCm": 4.6,
+      "vcom": 0.072,
+      "transferS": 1.196
+     },
+     "touchdown": {
+      "t": 4.85,
+      "singleSupportS": 3.129,
+      "actualCenter": [
+       -0.17,
+       0.029
+      ],
+      "landingErrorCm": 5.8,
+      "verticalVelocity": -0.019,
+      "horizontalVelocity": 0.06,
+      "early": false,
+      "uAt": 1,
+      "plannedAnkleY": 0.1035,
+      "actualAnkleY": 0.1068,
+      "footTiltDeg": 3.7
+     },
+     "accepted": {
+      "t": 6.858,
+      "fromTouchdownS": 2.008,
+      "loadN": 394,
+      "finalCenter": [
+       -0.156,
+       0.051
+      ],
+      "finalErrorCm": 3.5,
+      "driftAfterTouchdownCm": 2.67
+     },
+     "metrics": {
+      "minSoleClearanceCm": 3.2,
+      "peakSoleClearanceCm": 8.1,
+      "minClearanceToStanceLegCm": 2.4,
+      "peakSwingFootPenetrationMm": 0.21,
+      "stanceFootSlidMm": 2.35,
+      "stanceMaxSlipSpeed": 0.004,
+      "legSelfContactMm": 0.01,
+      "saturationMs": {
+       "ankle_L": 283,
+       "hip_R": 1092,
+       "ankle_R": 1604
+      },
+      "jointLimitMarginDeg": 4.1,
+      "jointLimitMarginJoint": "ankle_R",
+      "rootResidualMaxN": 0.1,
+      "ankle": {
+       "swing": {
+        "foot": "L",
+        "maxDorsiDeg": 20.1,
+        "limitDeg": 30,
+        "minMarginDeg": 9.9,
+        "atStopMs": 0
+       },
+       "stance": {
+        "foot": "R",
+        "maxDorsiDeg": 15.9,
+        "limitDeg": 30,
+        "minMarginDeg": 14.1,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     },
+     "singleLeg": {
+      "stance": "R",
+      "holdS": 2.45,
+      "heldToPlan": true,
+      "hipAbductionNm": {
+       "mean": 75.3,
+       "max": 76.8
+      },
+      "hipAbductionPctOfLimit": 53.8,
+      "hipZcapNm": 140,
+      "hipEffortPct": 59.4,
+      "hipSatPct": 0,
+      "comLateralOfStanceAnkleCm": {
+       "mean": -0.7,
+       "min": -1.4,
+       "max": -0.2
+      },
+      "pelvisRollDeg": {
+       "mean": -0.05,
+       "min": -0.31,
+       "max": 0.06
+      },
+      "trunkLateralLeanDeg": {
+       "mean": 0
+      },
+      "xiMarginCm": {
+       "mean": 7.8,
+       "min": 7.3
+      }
+     }
+    }
+   ],
+   "loads": {
+    "totalVsBodyWeightN": 10.25,
+    "maxStepChangeN": 99.1,
+    "shareR": [
+     0.395,
+     1.001
+    ]
+   },
+   "drift": {
+    "footL": 3.6,
+    "footR": 0.02,
+    "com": 2.24,
+    "slidL": 1.4,
+    "slidR": 2.8
+   },
+   "root": {
+    "residualMeanN": 0.034,
+    "residualMaxN": 0.1
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "minJointLimitMarginDeg": 4.1,
+    "maxTurfPenMm": 1.42,
+    "maxSelfPenMm": 0.01,
+    "keMaxJ": 5.05
+   },
+   "cpu": {
+    "msPerFrame": 1.0343,
+    "jolt": 0.5587,
+    "sensing": 0.0502,
+    "controller": 0.4255
+   },
+   "events": [
+    {
+     "t": 0.5,
+     "kind": "request",
+     "what": "lift L "
+    },
+    {
+     "t": 1.696,
+     "kind": "liftoff commanded",
+     "what": "L"
+    },
+    {
+     "t": 1.721,
+     "kind": "liftoff",
+     "what": "L"
+    },
+    {
+     "t": 4.85,
+     "kind": "touchdown",
+     "what": "L"
+    },
+    {
+     "t": 4.854,
+     "kind": "landed foot loaded",
+     "what": "L 68 N"
+    },
+    {
+     "t": 6.858,
+     "kind": "DONE",
+     "what": "placed, loaded and accepted"
+    }
+   ],
+   "marks": {
+    "liftoff#0": 413,
+    "touchdown#1": 1164,
+    "DONE#2": 1646
+   },
+   "worst": {
+    "liftoff": 413,
+    "touchdown": 1164,
+    "done": 1646
+   },
+   "calib": "V1.1",
+   "recal": {
+    "anticipateReach": true,
+    "reachToGround": true,
+    "unloadPlan": true,
+    "reachAll": true,
+    "ankleReach": true
+   },
+   "env": {
+    "terrain": [],
+    "obstacle": null
+   },
+   "box": {
+    "he": [
+     0.08207660244551523,
+     0.0746698049377926,
+     0.17878945945945948
+    ],
+    "pos": [
+     -0.0005227809072962872,
+     -0.013330195062207416,
+     0.09765810810810813
+    ]
+   },
+   "lean": {
+    "hipHalfWidth": 0.092,
+    "legComOffset": 0.026369450636924224,
+    "mUp": 38.305800000000005,
+    "hUp": 0.2897783130662963,
+    "mPelvis": 8.7126,
+    "mLeg": 15.4908,
+    "tau0": 74.40378692093864,
+    "cap": 140,
+    "target": 98,
+    "leanDeg": 0,
+    "tauAtLean": 74.40378692093864,
+    "ssPelvisOffset": -0.015957114351607803
+   },
+   "sup": {
+    "footClear": 0.03,
+    "latMin": 0.1
+   },
+   "reqRaw": [
+    {
+     "id": 0,
+     "type": "lift",
+     "foot": "L",
+     "label": null,
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "proj": {
+      "requested": [
+       -0.16113549680067743,
+       0.0862380341880626
+      ],
+      "target": [
+       -0.16113549680067743,
+       0.0862380341880626
+      ],
+      "yaw": -0.00007385466275855629,
+      "rejected": false,
+      "reasons": [],
+      "current": [
+       -0.16113549680067743,
+       0.0862380341880626
+      ]
+     },
+     "reach": [
+      [
+       -0.16113549680067743,
+       0.34762109082868753
+      ],
+      [
+       -0.1065092924971689,
+       0.3960386335292732
+      ],
+      [
+       -0.03435434531409293,
+       0.43456638510990936
+      ],
+      [
+       -0.03411065549208375,
+       0.3062515131579208
+      ],
+      [
+       -0.03410706709283326,
+       0.23762462165398696
+      ],
+      [
+       -0.034102754507458005,
+       0.1928311613937415
+      ],
+      [
+       -0.03410187540693099,
+       0.15958092969587512
+      ],
+      [
+       -0.0341014888796137,
+       0.13247463181086677
+      ],
+      [
+       -0.034097460546325536,
+       0.10863826755592498
+      ],
+      [
+       -0.03409692258192748,
+       0.08623803418806261
+      ],
+      [
+       -0.03409295245419444,
+       0.06383700592192598
+      ],
+      [
+       -0.0340928857367232,
+       0.03999830527732515
+      ],
+      [
+       -0.034089982357867754,
+       0.012888272225171984
+      ],
+      [
+       -0.034088727814773956,
+       -0.020366862810274125
+      ],
+      [
+       -0.03408352750751753,
+       -0.06517660666322984
+      ],
+      [
+       -0.034078612035052525,
+       -0.13383094567742387
+      ],
+      [
+       -0.06905371254672897,
+       -0.16675458879275284
+      ],
+      [
+       -0.12270772952947184,
+       -0.1316966637056256
+      ],
+      [
+       -0.1611354968006774,
+       -0.09547125536271865
+      ],
+      [
+       -0.18735283168140268,
+       -0.06244786047982366
+      ],
+      [
+       -0.20495787142692315,
+       -0.03416295056442872
+      ],
+      [
+       -0.21692086667372432,
+       -0.01038506075107673
+      ],
+      [
+       -0.22527792433771143,
+       0.009796065733088541
+      ],
+      [
+       -0.2313180536453882,
+       0.02734787662458725
+      ],
+      [
+       -0.23582780926727262,
+       0.043114407479078166
+      ],
+      [
+       -0.2392821452464977,
+       0.057794980246118774
+      ],
+      [
+       -0.24195657252700892,
+       0.07198709792762836
+      ],
+      [
+       -0.24400445432020867,
+       0.08623803418806258
+      ],
+      [
+       -0.24546837629713453,
+       0.10110819620412366
+      ],
+      [
+       -0.24629370670225198,
+       0.11723308779562915
+      ],
+      [
+       -0.24628179939382702,
+       0.13539727491071885
+      ],
+      [
+       -0.245001092358692,
+       0.15660962448925556
+      ],
+      [
+       -0.24162028144311476,
+       0.18215606543485852
+      ],
+      [
+       -0.23462945432020874,
+       0.2135333026611994
+      ],
+      [
+       -0.22147228398703903,
+       0.2520119945450297
+      ],
+      [
+       -0.19840430238805246,
+       0.29759993375460936
+      ]
+     ],
+     "excl": [
+      [
+       0.07796933874448875,
+       0.2650727497164559
+      ],
+      [
+       0.07799574760870605,
+       -0.09250608393960884
+      ],
+      [
+       0.24214895143354126,
+       -0.09249397024994609
+      ],
+      [
+       0.24212254256932397,
+       0.2650848634061186
+      ]
+     ],
+     "td": {
+      "center": [
+       -0.17044381444967635,
+       0.028518620510870396
+      ],
+      "rot": [
+       0.03220512717962265,
+       -0.009258870035409927,
+       -0.004583992995321751,
+       0.999427855014801
+      ],
+      "pos": [
+       -0.16797074675559998,
+       0.10680084675550461,
+       -0.06805140525102615
+      ],
+      "t": 4.85
+     },
+     "accepted": {
+      "center": [
+       -0.15646970357194015,
+       0.051314296904335144
+      ],
+      "rot": [
+       -0.00016828009393066168,
+       -0.02260676585137844,
+       0.00027059970307163894,
+       0.9997444152832031
+      ],
+      "t": 6.858333333333333
+     },
+     "blocked": null,
+     "align": null,
+     "fwdBias": 0,
+     "clear": 0.02,
+     "T": 0.6770369712055109
+    }
+   ],
+   "repeatHashes": [
+    "38a8c8c5",
+    "38a8c8c5",
+    "38a8c8c5"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "C_lat_R",
+   "group": "C–E placement",
+   "title": "C — place R 10 cm outward (sideways)",
+   "hash": "214a6a63",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "fell": false,
+   "finalClass": "RECOVERABLE_IN_PLACE",
+   "requests": [
+    {
+     "id": 0,
+     "label": null,
+     "type": "place",
+     "foot": "R",
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "requested": [
+      0.26,
+      0.086
+     ],
+     "feasible": [
+      0.243,
+      0.086
+     ],
+     "correctedCm": 1.7,
+     "projectionReasons": [
+      "single support: needs 6.8 cm of pelvis drop to reach (the stance ankle allows 6.1 cm)"
+     ],
+     "stanceClearanceCm": 24,
+     "liftoff": {
+      "commandT": 1.696,
+      "physicalT": 1.725,
+      "swingLoadN": 0,
+      "swingLoadPctBW": 0,
+      "stanceXiMarginCm": 6.9,
+      "stanceComMarginCm": 4.5,
+      "vcom": 0.072,
+      "transferS": 1.196
+     },
+     "touchdown": {
+      "t": 2.533,
+      "singleSupportS": 0.808,
+      "actualCenter": [
+       0.234,
+       0.042
+      ],
+      "landingErrorCm": 4.6,
+      "verticalVelocity": -0.089,
+      "horizontalVelocity": 0.57,
+      "early": false,
+      "uAt": 0.97,
+      "plannedAnkleY": 0.1035,
+      "actualAnkleY": 0.0997,
+      "footTiltDeg": 2.4
+     },
+     "accepted": {
+      "t": 4.912,
+      "fromTouchdownS": 2.379,
+      "loadN": 377,
+      "finalCenter": [
+       0.229,
+       0.039
+      ],
+      "finalErrorCm": 4.9,
+      "driftAfterTouchdownCm": 0.52
+     },
+     "metrics": {
+      "minSoleClearanceCm": 3.1,
+      "peakSoleClearanceCm": 6.9,
+      "minClearanceToStanceLegCm": 14.4,
+      "peakSwingFootPenetrationMm": 0.52,
+      "stanceFootSlidMm": 1.97,
+      "stanceMaxSlipSpeed": 0.004,
+      "legSelfContactMm": 0,
+      "saturationMs": {
+       "hip_L": 2079,
+       "ankle_L": 1492,
+       "ankle_R": 288
+      },
+      "jointLimitMarginDeg": 4.9,
+      "jointLimitMarginJoint": "ankle_R",
+      "rootResidualMaxN": 0.1,
+      "ankle": {
+       "stance": {
+        "foot": "L",
+        "maxDorsiDeg": 21.2,
+        "limitDeg": 30,
+        "minMarginDeg": 8.8,
+        "atStopMs": 0
+       },
+       "swing": {
+        "foot": "R",
+        "maxDorsiDeg": 25.1,
+        "limitDeg": 30,
+        "minMarginDeg": 4.9,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     }
+    }
+   ],
+   "loads": {
+    "totalVsBodyWeightN": 8.91,
+    "maxStepChangeN": 171.8,
+    "shareR": [
+     0,
+     0.604
+    ]
+   },
+   "drift": {
+    "footL": 0.04,
+    "footR": 8.16,
+    "com": 2.25,
+    "slidL": 2.4,
+    "slidR": 1.4
+   },
+   "root": {
+    "residualMeanN": 0.042,
+    "residualMaxN": 0.1
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "minJointLimitMarginDeg": 4.9,
+    "maxTurfPenMm": 1.7,
+    "maxSelfPenMm": 0,
+    "keMaxJ": 2.6
+   },
+   "cpu": {
+    "msPerFrame": 1.2398,
+    "jolt": 0.5585,
+    "sensing": 0.0376,
+    "controller": 0.6438
+   },
+   "events": [
+    {
+     "t": 0.5,
+     "kind": "request",
+     "what": "place R "
+    },
+    {
+     "t": 1.696,
+     "kind": "liftoff commanded",
+     "what": "R"
+    },
+    {
+     "t": 1.725,
+     "kind": "liftoff",
+     "what": "R"
+    },
+    {
+     "t": 2.533,
+     "kind": "touchdown",
+     "what": "R"
+    },
+    {
+     "t": 2.538,
+     "kind": "landed foot loaded",
+     "what": "R 60 N"
+    },
+    {
+     "t": 4.912,
+     "kind": "DONE",
+     "what": "placed, loaded and accepted"
+    }
+   ],
+   "marks": {
+    "liftoff#0": 414,
+    "touchdown#1": 608,
+    "DONE#2": 1179
+   },
+   "worst": {
+    "liftoff": 414,
+    "touchdown": 608,
+    "done": 1179
+   },
+   "calib": "V1.1",
+   "recal": {
+    "anticipateReach": true,
+    "reachToGround": true,
+    "unloadPlan": true,
+    "reachAll": true,
+    "ankleReach": true
+   },
+   "env": {
+    "terrain": [],
+    "obstacle": null
+   },
+   "box": {
+    "he": [
+     0.08207660244551523,
+     0.0746698049377926,
+     0.17878945945945948
+    ],
+    "pos": [
+     -0.0005227809072962872,
+     -0.013330195062207416,
+     0.09765810810810813
+    ]
+   },
+   "lean": {
+    "hipHalfWidth": 0.092,
+    "legComOffset": 0.026369450636924224,
+    "mUp": 38.305800000000005,
+    "hUp": 0.2897783130662963,
+    "mPelvis": 8.7126,
+    "mLeg": 15.4908,
+    "tau0": 74.40378692093864,
+    "cap": 140,
+    "target": 98,
+    "leanDeg": 0,
+    "tauAtLean": 74.40378692093864,
+    "ssPelvisOffset": -0.015957114351607803
+   },
+   "sup": {
+    "footClear": 0.03,
+    "latMin": 0.1
+   },
+   "reqRaw": [
+    {
+     "id": 0,
+     "type": "place",
+     "foot": "R",
+     "label": null,
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "proj": {
+      "requested": [
+       0.2600526627340642,
+       0.08622950313232211
+      ],
+      "target": [
+       0.2429238364923868,
+       0.08623097912043834
+      ],
+      "yaw": 0.00008616983392461063,
+      "rejected": false,
+      "reasons": [
+       "single support: needs 6.8 cm of pelvis drop to reach (the stance ankle allows 6.1 cm)"
+      ],
+      "current": [
+       0.1600526631053262,
+       0.0862381201157039
+      ]
+     },
+     "reach": [
+      [
+       0.1600526631053262,
+       0.3476257543930476
+      ],
+      [
+       0.19732226359097543,
+       0.2976045277743818
+      ],
+      [
+       0.22039101593565433,
+       0.25201638204411636
+      ],
+      [
+       0.23354662062485743,
+       0.21353338858884074
+      ],
+      [
+       0.2405374477477635,
+       0.18215615136249985
+      ],
+      [
+       0.24391825866334077,
+       0.15660971041689686
+      ],
+      [
+       0.24520293004816351,
+       0.13539964965671955
+      ],
+      [
+       0.24521517457834596,
+       0.11723473936723706
+      ],
+      [
+       0.2443900506939144,
+       0.10110907703003924
+      ],
+      [
+       0.24292162062485745,
+       0.0862381201157039
+      ],
+      [
+       0.2408737388316577,
+       0.07198718385526967
+      ],
+      [
+       0.2381993115511465,
+       0.05779506617376014
+      ],
+      [
+       0.23474893992160917,
+       0.04311220458836016
+      ],
+      [
+       0.23023872662320802,
+       0.02734502010406413
+      ],
+      [
+       0.2241980330905247,
+       0.009792644987558857
+      ],
+      [
+       0.21583803297837306,
+       -0.010384974823435436
+      ],
+      [
+       0.2038766033755386,
+       -0.034167166208232666
+      ],
+      [
+       0.18627158778259995,
+       -0.06245679073644454
+      ],
+      [
+       0.16005266310532623,
+       -0.09548032470851482
+      ],
+      [
+       0.12162330603757221,
+       -0.13170559396224646
+      ],
+      [
+       0.06796774756344452,
+       -0.1667631060080021
+      ],
+      [
+       0.03302782179673247,
+       -0.1337753588541543
+      ],
+      [
+       0.033036003190139884,
+       -0.06513444065753636
+      ],
+      [
+       0.03304096085113292,
+       -0.020337352400988273
+      ],
+      [
+       0.033042827809706216,
+       0.01290895751804759
+      ],
+      [
+       0.03304446461293398,
+       0.04001091635669949
+      ],
+      [
+       0.03304618349589203,
+       0.06384345103576115
+      ],
+      [
+       0.03305070998032625,
+       0.08623812011570388
+      ],
+      [
+       0.033050691588023096,
+       0.10863199429737239
+      ],
+      [
+       0.03305306775582445,
+       0.13246219258677502
+      ],
+      [
+       0.0330547208587694,
+       0.15956041625828205
+      ],
+      [
+       0.03305849421698795,
+       0.19279888039157372
+      ],
+      [
+       0.03306248522361993,
+       0.237579120830405
+      ],
+      [
+       0.03306673170884178,
+       0.3061842051408705
+      ],
+      [
+       0.03326838033080817,
+       0.4345750741804411
+      ],
+      [
+       0.10542566390354341,
+       0.3960432275490457
+      ]
+     ],
+     "excl": [
+      [
+       -0.2431985052872373,
+       -0.09249414323966779
+      ],
+      [
+       -0.07904531338041866,
+       -0.09250833109519667
+      ],
+      [
+       -0.07901450087134794,
+       0.2650705058493597
+      ],
+      [
+       -0.24316769277816658,
+       0.2650846937048886
+      ]
+     ],
+     "td": {
+      "center": [
+       0.23370671431263101,
+       0.04167016474654614
+      ],
+      "rot": [
+       0.019828462973237038,
+       0.010348407551646233,
+       -0.005292170215398073,
+       0.9997358322143555
+      ],
+      "pos": [
+       0.23237569630146027,
+       0.09974254667758942,
+       -0.05537412688136101
+      ],
+      "t": 2.533333333333333
+     },
+     "accepted": {
+      "center": [
+       0.22913099252089772,
+       0.03923198877771099
+      ],
+      "rot": [
+       -0.00003624177406891249,
+       0.012431377544999123,
+       -0.00009441642760066316,
+       0.9999227523803711
+      ],
+      "t": 4.9125
+     },
+     "blocked": null,
+     "align": null,
+     "fwdBias": 0.1840872290342946,
+     "clear": 0.08,
+     "T": 0.863463552427426
+    }
+   ],
+   "repeatHashes": [
+    "214a6a63",
+    "214a6a63",
+    "214a6a63"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "D_fwd_R",
+   "group": "C–E placement",
+   "title": "D — place R 20 cm forward",
+   "hash": "bad0b29c",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "fell": false,
+   "finalClass": "RECOVERABLE_IN_PLACE",
+   "requests": [
+    {
+     "id": 0,
+     "label": null,
+     "type": "place",
+     "foot": "R",
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "requested": [
+      0.16,
+      0.286
+     ],
+     "feasible": [
+      0.16,
+      0.286
+     ],
+     "correctedCm": 0,
+     "projectionReasons": [],
+     "stanceClearanceCm": 15.7,
+     "liftoff": {
+      "commandT": 1.696,
+      "physicalT": 1.729,
+      "swingLoadN": 0,
+      "swingLoadPctBW": 0,
+      "stanceXiMarginCm": 6.9,
+      "stanceComMarginCm": 4.5,
+      "vcom": 0.072,
+      "transferS": 1.196
+     },
+     "touchdown": {
+      "t": 2.575,
+      "singleSupportS": 0.846,
+      "actualCenter": [
+       0.149,
+       0.263
+      ],
+      "landingErrorCm": 2.6,
+      "verticalVelocity": -0.061,
+      "horizontalVelocity": 0.404,
+      "early": false,
+      "uAt": 1,
+      "plannedAnkleY": 0.1035,
+      "actualAnkleY": 0.0948,
+      "footTiltDeg": 1.4
+     },
+     "accepted": {
+      "t": 4.717,
+      "fromTouchdownS": 2.142,
+      "loadN": 295,
+      "finalCenter": [
+       0.148,
+       0.261
+      ],
+      "finalErrorCm": 2.8,
+      "driftAfterTouchdownCm": 0.2
+     },
+     "metrics": {
+      "minSoleClearanceCm": 4,
+      "peakSoleClearanceCm": 7,
+      "minClearanceToStanceLegCm": 13.7,
+      "peakSwingFootPenetrationMm": 0.6,
+      "stanceFootSlidMm": 1.92,
+      "stanceMaxSlipSpeed": 0.004,
+      "legSelfContactMm": 0,
+      "saturationMs": {
+       "hip_L": 2488,
+       "ankle_L": 1804,
+       "ankle_R": 288
+      },
+      "jointLimitMarginDeg": 7.6,
+      "jointLimitMarginJoint": "ankle_R",
+      "rootResidualMaxN": 0.1,
+      "ankle": {
+       "stance": {
+        "foot": "L",
+        "maxDorsiDeg": 20.9,
+        "limitDeg": 30,
+        "minMarginDeg": 9.1,
+        "atStopMs": 0
+       },
+       "swing": {
+        "foot": "R",
+        "maxDorsiDeg": 22.3,
+        "limitDeg": 30,
+        "minMarginDeg": 7.7,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     }
+    }
+   ],
+   "loads": {
+    "totalVsBodyWeightN": 9.44,
+    "maxStepChangeN": 110.3,
+    "shareR": [
+     0,
+     0.604
+    ]
+   },
+   "drift": {
+    "footL": 0.03,
+    "footR": 17.55,
+    "com": 8.89,
+    "slidL": 2.4,
+    "slidR": 1.2
+   },
+   "root": {
+    "residualMeanN": 0.041,
+    "residualMaxN": 0.1
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "minJointLimitMarginDeg": 7.6,
+    "maxTurfPenMm": 1.59,
+    "maxSelfPenMm": 0,
+    "keMaxJ": 2.58
+   },
+   "cpu": {
+    "msPerFrame": 1.1833,
+    "jolt": 0.5571,
+    "sensing": 0.0389,
+    "controller": 0.5872
+   },
+   "events": [
+    {
+     "t": 0.5,
+     "kind": "request",
+     "what": "place R "
+    },
+    {
+     "t": 1.696,
+     "kind": "liftoff commanded",
+     "what": "R"
+    },
+    {
+     "t": 1.729,
+     "kind": "liftoff",
+     "what": "R"
+    },
+    {
+     "t": 2.575,
+     "kind": "touchdown",
+     "what": "R"
+    },
+    {
+     "t": 2.579,
+     "kind": "landed foot loaded",
+     "what": "R 63 N"
+    },
+    {
+     "t": 4.717,
+     "kind": "DONE",
+     "what": "placed, loaded and accepted"
+    }
+   ],
+   "marks": {
+    "liftoff#0": 415,
+    "touchdown#1": 618,
+    "DONE#2": 1132
+   },
+   "worst": {
+    "liftoff": 415,
+    "touchdown": 618,
+    "done": 1132
+   },
+   "calib": "V1.1",
+   "recal": {
+    "anticipateReach": true,
+    "reachToGround": true,
+    "unloadPlan": true,
+    "reachAll": true,
+    "ankleReach": true
+   },
+   "env": {
+    "terrain": [],
+    "obstacle": null
+   },
+   "box": {
+    "he": [
+     0.08207660244551523,
+     0.0746698049377926,
+     0.17878945945945948
+    ],
+    "pos": [
+     -0.0005227809072962872,
+     -0.013330195062207416,
+     0.09765810810810813
+    ]
+   },
+   "lean": {
+    "hipHalfWidth": 0.092,
+    "legComOffset": 0.026369450636924224,
+    "mUp": 38.305800000000005,
+    "hUp": 0.2897783130662963,
+    "mPelvis": 8.7126,
+    "mLeg": 15.4908,
+    "tau0": 74.40378692093864,
+    "cap": 140,
+    "target": 98,
+    "leanDeg": 0,
+    "tauAtLean": 74.40378692093864,
+    "ssPelvisOffset": -0.015957114351607803
+   },
+   "sup": {
+    "footClear": 0.03,
+    "latMin": 0.1
+   },
+   "reqRaw": [
+    {
+     "id": 0,
+     "type": "place",
+     "foot": "R",
+     "label": null,
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "proj": {
+      "requested": [
+       0.1600698970720898,
+       0.2862381193731799
+      ],
+      "target": [
+       0.1600698970720898,
+       0.2862381193731799
+      ],
+      "yaw": 0.00008616983392461063,
+      "rejected": false,
+      "reasons": [],
+      "current": [
+       0.1600526631053262,
+       0.0862381201157039
+      ]
+     },
+     "reach": [
+      [
+       0.1600526631053262,
+       0.3476257543930476
+      ],
+      [
+       0.19732226359097543,
+       0.2976045277743818
+      ],
+      [
+       0.22039101593565433,
+       0.25201638204411636
+      ],
+      [
+       0.23354662062485743,
+       0.21353338858884074
+      ],
+      [
+       0.2405374477477635,
+       0.18215615136249985
+      ],
+      [
+       0.24391825866334077,
+       0.15660971041689686
+      ],
+      [
+       0.24520293004816351,
+       0.13539964965671955
+      ],
+      [
+       0.24521517457834596,
+       0.11723473936723706
+      ],
+      [
+       0.2443900506939144,
+       0.10110907703003924
+      ],
+      [
+       0.24292162062485745,
+       0.0862381201157039
+      ],
+      [
+       0.2408737388316577,
+       0.07198718385526967
+      ],
+      [
+       0.2381993115511465,
+       0.05779506617376014
+      ],
+      [
+       0.23474893992160917,
+       0.04311220458836016
+      ],
+      [
+       0.23023872662320802,
+       0.02734502010406413
+      ],
+      [
+       0.2241980330905247,
+       0.009792644987558857
+      ],
+      [
+       0.21583803297837306,
+       -0.010384974823435436
+      ],
+      [
+       0.2038766033755386,
+       -0.034167166208232666
+      ],
+      [
+       0.18627158778259995,
+       -0.06245679073644454
+      ],
+      [
+       0.16005266310532623,
+       -0.09548032470851482
+      ],
+      [
+       0.12162330603757221,
+       -0.13170559396224646
+      ],
+      [
+       0.06796774756344452,
+       -0.1667631060080021
+      ],
+      [
+       0.03302782179673247,
+       -0.1337753588541543
+      ],
+      [
+       0.033036003190139884,
+       -0.06513444065753636
+      ],
+      [
+       0.03304096085113292,
+       -0.020337352400988273
+      ],
+      [
+       0.033042827809706216,
+       0.01290895751804759
+      ],
+      [
+       0.03304446461293398,
+       0.04001091635669949
+      ],
+      [
+       0.03304618349589203,
+       0.06384345103576115
+      ],
+      [
+       0.03305070998032625,
+       0.08623812011570388
+      ],
+      [
+       0.033050691588023096,
+       0.10863199429737239
+      ],
+      [
+       0.03305306775582445,
+       0.13246219258677502
+      ],
+      [
+       0.0330547208587694,
+       0.15956041625828205
+      ],
+      [
+       0.03305849421698795,
+       0.19279888039157372
+      ],
+      [
+       0.03306248522361993,
+       0.237579120830405
+      ],
+      [
+       0.03306673170884178,
+       0.3061842051408705
+      ],
+      [
+       0.03326838033080817,
+       0.4345750741804411
+      ],
+      [
+       0.10542566390354341,
+       0.3960432275490457
+      ]
+     ],
+     "excl": [
+      [
+       -0.2431985052872373,
+       -0.09249414323966779
+      ],
+      [
+       -0.07904531338041866,
+       -0.09250833109519667
+      ],
+      [
+       -0.07901450087134794,
+       0.2650705058493597
+      ],
+      [
+       -0.24316769277816658,
+       0.2650846937048886
+      ]
+     ],
+     "td": {
+      "center": [
+       0.1488640417603029,
+       0.26307151680716573
+      ],
+      "rot": [
+       0.010280458256602287,
+       0.00479353591799736,
+       -0.007070295047014952,
+       0.9999107122421265
+      ],
+      "pos": [
+       0.14865456521511078,
+       0.09481968730688095,
+       0.165706604719162
+      ],
+      "t": 2.575
+     },
+     "accepted": {
+      "center": [
+       0.14783966706253177,
+       0.2613114067250251
+      ],
+      "rot": [
+       -0.00006522138573927805,
+       0.004670599475502968,
+       -0.000543945818208158,
+       0.9999889731407166
+      ],
+      "t": 4.716666666666667
+     },
+     "blocked": null,
+     "align": null,
+     "fwdBias": 0.08405536098954097,
+     "clear": 0.08,
+     "T": 0.7997165217529655
+    }
+   ],
+   "repeatHashes": [
+    "bad0b29c",
+    "bad0b29c",
+    "bad0b29c"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "E_bwd_R",
+   "group": "C–E placement",
+   "title": "E — place R 15 cm backward",
+   "hash": "8cbc884e",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "fell": false,
+   "finalClass": "RECOVERABLE_IN_PLACE",
+   "requests": [
+    {
+     "id": 0,
+     "label": null,
+     "type": "place",
+     "foot": "R",
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "requested": [
+      0.16,
+      -0.064
+     ],
+     "feasible": [
+      0.16,
+      -0.064
+     ],
+     "correctedCm": 0,
+     "projectionReasons": [],
+     "stanceClearanceCm": 15.7,
+     "liftoff": {
+      "commandT": 1.696,
+      "physicalT": 1.721,
+      "swingLoadN": 0,
+      "swingLoadPctBW": 0,
+      "stanceXiMarginCm": 6.9,
+      "stanceComMarginCm": 4.5,
+      "vcom": 0.072,
+      "transferS": 1.196
+     },
+     "touchdown": {
+      "t": 2.533,
+      "singleSupportS": 0.813,
+      "actualCenter": [
+       0.134,
+       -0.108
+      ],
+      "landingErrorCm": 5.1,
+      "verticalVelocity": -0.074,
+      "horizontalVelocity": 0.151,
+      "early": false,
+      "uAt": 1,
+      "plannedAnkleY": 0.1035,
+      "actualAnkleY": 0.1043,
+      "footTiltDeg": 3.3
+     },
+     "accepted": {
+      "t": 4.65,
+      "fromTouchdownS": 2.117,
+      "loadN": 421,
+      "finalCenter": [
+       0.126,
+       -0.094
+      ],
+      "finalErrorCm": 4.6,
+      "driftAfterTouchdownCm": 1.6
+     },
+     "metrics": {
+      "minSoleClearanceCm": 3.7,
+      "peakSoleClearanceCm": 5.7,
+      "minClearanceToStanceLegCm": 14.9,
+      "peakSwingFootPenetrationMm": 0.41,
+      "stanceFootSlidMm": 2.17,
+      "stanceMaxSlipSpeed": 0.004,
+      "legSelfContactMm": 0,
+      "saturationMs": {
+       "hip_L": 1133,
+       "ankle_L": 2433,
+       "ankle_R": 288
+      },
+      "jointLimitMarginDeg": 2.8,
+      "jointLimitMarginJoint": "ankle_R",
+      "rootResidualMaxN": 0.1,
+      "ankle": {
+       "stance": {
+        "foot": "L",
+        "maxDorsiDeg": 18.9,
+        "limitDeg": 30,
+        "minMarginDeg": 11.1,
+        "atStopMs": 0
+       },
+       "swing": {
+        "foot": "R",
+        "maxDorsiDeg": 25.3,
+        "limitDeg": 30,
+        "minMarginDeg": 4.7,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     }
+    }
+   ],
+   "loads": {
+    "totalVsBodyWeightN": 10.33,
+    "maxStepChangeN": 196.3,
+    "shareR": [
+     0,
+     0.604
+    ]
+   },
+   "drift": {
+    "footL": 0.08,
+    "footR": 18.39,
+    "com": 8.66,
+    "slidL": 2.6,
+    "slidR": 1.4
+   },
+   "root": {
+    "residualMeanN": 0.038,
+    "residualMaxN": 0.1
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "minJointLimitMarginDeg": 2.8,
+    "maxTurfPenMm": 1.51,
+    "maxSelfPenMm": 0,
+    "keMaxJ": 1.64
+   },
+   "cpu": {
+    "msPerFrame": 1.1629,
+    "jolt": 0.5547,
+    "sensing": 0.0365,
+    "controller": 0.5717
+   },
+   "events": [
+    {
+     "t": 0.5,
+     "kind": "request",
+     "what": "place R "
+    },
+    {
+     "t": 1.696,
+     "kind": "liftoff commanded",
+     "what": "R"
+    },
+    {
+     "t": 1.721,
+     "kind": "liftoff",
+     "what": "R"
+    },
+    {
+     "t": 2.533,
+     "kind": "touchdown",
+     "what": "R"
+    },
+    {
+     "t": 2.538,
+     "kind": "landed foot loaded",
+     "what": "R 133 N"
+    },
+    {
+     "t": 4.65,
+     "kind": "DONE",
+     "what": "placed, loaded and accepted"
+    }
+   ],
+   "marks": {
+    "liftoff#0": 413,
+    "touchdown#1": 608,
+    "DONE#2": 1116
+   },
+   "worst": {
+    "liftoff": 413,
+    "touchdown": 608,
+    "done": 1116
+   },
+   "calib": "V1.1",
+   "recal": {
+    "anticipateReach": true,
+    "reachToGround": true,
+    "unloadPlan": true,
+    "reachAll": true,
+    "ankleReach": true
+   },
+   "env": {
+    "terrain": [],
+    "obstacle": null
+   },
+   "box": {
+    "he": [
+     0.08207660244551523,
+     0.0746698049377926,
+     0.17878945945945948
+    ],
+    "pos": [
+     -0.0005227809072962872,
+     -0.013330195062207416,
+     0.09765810810810813
+    ]
+   },
+   "lean": {
+    "hipHalfWidth": 0.092,
+    "legComOffset": 0.026369450636924224,
+    "mUp": 38.305800000000005,
+    "hUp": 0.2897783130662963,
+    "mPelvis": 8.7126,
+    "mLeg": 15.4908,
+    "tau0": 74.40378692093864,
+    "cap": 140,
+    "target": 98,
+    "leanDeg": 0,
+    "tauAtLean": 74.40378692093864,
+    "ssPelvisOffset": -0.015957114351607803
+   },
+   "sup": {
+    "footClear": 0.03,
+    "latMin": 0.1
+   },
+   "reqRaw": [
+    {
+     "id": 0,
+     "type": "place",
+     "foot": "R",
+     "label": null,
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "proj": {
+      "requested": [
+       0.1600397376302535,
+       -0.06376187932740308
+      ],
+      "target": [
+       0.1600397376302535,
+       -0.06376187932740308
+      ],
+      "yaw": 0.00008616983392461063,
+      "rejected": false,
+      "reasons": [],
+      "current": [
+       0.1600526631053262,
+       0.0862381201157039
+      ]
+     },
+     "reach": [
+      [
+       0.1600526631053262,
+       0.3476257543930476
+      ],
+      [
+       0.19732226359097543,
+       0.2976045277743818
+      ],
+      [
+       0.22039101593565433,
+       0.25201638204411636
+      ],
+      [
+       0.23354662062485743,
+       0.21353338858884074
+      ],
+      [
+       0.2405374477477635,
+       0.18215615136249985
+      ],
+      [
+       0.24391825866334077,
+       0.15660971041689686
+      ],
+      [
+       0.24520293004816351,
+       0.13539964965671955
+      ],
+      [
+       0.24521517457834596,
+       0.11723473936723706
+      ],
+      [
+       0.2443900506939144,
+       0.10110907703003924
+      ],
+      [
+       0.24292162062485745,
+       0.0862381201157039
+      ],
+      [
+       0.2408737388316577,
+       0.07198718385526967
+      ],
+      [
+       0.2381993115511465,
+       0.05779506617376014
+      ],
+      [
+       0.23474893992160917,
+       0.04311220458836016
+      ],
+      [
+       0.23023872662320802,
+       0.02734502010406413
+      ],
+      [
+       0.2241980330905247,
+       0.009792644987558857
+      ],
+      [
+       0.21583803297837306,
+       -0.010384974823435436
+      ],
+      [
+       0.2038766033755386,
+       -0.034167166208232666
+      ],
+      [
+       0.18627158778259995,
+       -0.06245679073644454
+      ],
+      [
+       0.16005266310532623,
+       -0.09548032470851482
+      ],
+      [
+       0.12162330603757221,
+       -0.13170559396224646
+      ],
+      [
+       0.06796774756344452,
+       -0.1667631060080021
+      ],
+      [
+       0.03302782179673247,
+       -0.1337753588541543
+      ],
+      [
+       0.033036003190139884,
+       -0.06513444065753636
+      ],
+      [
+       0.03304096085113292,
+       -0.020337352400988273
+      ],
+      [
+       0.033042827809706216,
+       0.01290895751804759
+      ],
+      [
+       0.03304446461293398,
+       0.04001091635669949
+      ],
+      [
+       0.03304618349589203,
+       0.06384345103576115
+      ],
+      [
+       0.03305070998032625,
+       0.08623812011570388
+      ],
+      [
+       0.033050691588023096,
+       0.10863199429737239
+      ],
+      [
+       0.03305306775582445,
+       0.13246219258677502
+      ],
+      [
+       0.0330547208587694,
+       0.15956041625828205
+      ],
+      [
+       0.03305849421698795,
+       0.19279888039157372
+      ],
+      [
+       0.03306248522361993,
+       0.237579120830405
+      ],
+      [
+       0.03306673170884178,
+       0.3061842051408705
+      ],
+      [
+       0.03326838033080817,
+       0.4345750741804411
+      ],
+      [
+       0.10542566390354341,
+       0.3960432275490457
+      ]
+     ],
+     "excl": [
+      [
+       -0.2431985052872373,
+       -0.09249414323966779
+      ],
+      [
+       -0.07904531338041866,
+       -0.09250833109519667
+      ],
+      [
+       -0.07901450087134794,
+       0.2650705058493597
+      ],
+      [
+       -0.24316769277816658,
+       0.2650846937048886
+      ]
+     ],
+     "td": {
+      "center": [
+       0.13404501617461065,
+       -0.10798257100954188
+      ],
+      "rot": [
+       0.025142159312963486,
+       0.006682477425783873,
+       -0.014362556859850883,
+       0.9995584487915039
+      ],
+      "pos": [
+       0.13372066617012024,
+       0.10425552725791931,
+       -0.20484840869903564
+      ],
+      "t": 2.533333333333333
+     },
+     "accepted": {
+      "center": [
+       0.12590406328642892,
+       -0.09416447760806053
+      ],
+      "rot": [
+       -0.000006696348464174662,
+       0.007272737566381693,
+       0.00036867705057375133,
+       0.9999735355377197
+      ],
+      "t": 4.65
+     },
+     "blocked": null,
+     "align": {
+      "s": 0.20833333333333348,
+      "xiErr": 0.011304731778035626,
+      "vcom": 0.02498032481028521,
+      "settled": true
+     },
+     "fwdBias": 0,
+     "clear": 0.08,
+     "T": 0.6148156377988295
+    }
+   ],
+   "repeatHashes": [
+    "8cbc884e",
+    "8cbc884e",
+    "8cbc884e"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "F_onfoot",
+   "group": "F other-foot conflict",
+   "title": "F — request R ON TOP of the left foot (32 cm inward)",
+   "hash": "78b3c245",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "fell": false,
+   "finalClass": "RECOVERABLE_IN_PLACE",
+   "requests": [
+    {
+     "id": 0,
+     "label": null,
+     "type": "place",
+     "foot": "R",
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "requested": [
+      -0.164,
+      0.086
+     ],
+     "feasible": [
+      0.033,
+      0.086
+     ],
+     "correctedCm": 19.7,
+     "projectionReasons": [
+      "crossover: -0 cm to its own side of the stance foot (min 10 cm)",
+      "footprint overlaps the stance foot",
+      "swing path passes through the stance foot"
+     ],
+     "stanceClearanceCm": 3,
+     "liftoff": {
+      "commandT": 1.696,
+      "physicalT": 1.721,
+      "swingLoadN": 0,
+      "swingLoadPctBW": 0,
+      "stanceXiMarginCm": 6.9,
+      "stanceComMarginCm": 4.5,
+      "vcom": 0.072,
+      "transferS": 1.196
+     },
+     "touchdown": {
+      "t": 2.6,
+      "singleSupportS": 0.879,
+      "actualCenter": [
+       0.026,
+       0.035
+      ],
+      "landingErrorCm": 5.1,
+      "verticalVelocity": 0.006,
+      "horizontalVelocity": 0.369,
+      "early": false,
+      "uAt": 1,
+      "plannedAnkleY": 0.1035,
+      "actualAnkleY": 0.1048,
+      "footTiltDeg": 3.4
+     },
+     "accepted": {
+      "t": 4.604,
+      "fromTouchdownS": 2.004,
+      "loadN": 448,
+      "finalCenter": [
+       0.026,
+       0.03
+      ],
+      "finalErrorCm": 5.7,
+      "driftAfterTouchdownCm": 0.52
+     },
+     "metrics": {
+      "minSoleClearanceCm": 5.4,
+      "peakSoleClearanceCm": 9.2,
+      "minClearanceToStanceLegCm": 1.3,
+      "peakSwingFootPenetrationMm": 0.5,
+      "stanceFootSlidMm": 2.04,
+      "stanceMaxSlipSpeed": 0.004,
+      "legSelfContactMm": 0.01,
+      "saturationMs": {
+       "hip_L": 708,
+       "ankle_L": 1600,
+       "ankle_R": 317
+      },
+      "jointLimitMarginDeg": 4.9,
+      "jointLimitMarginJoint": "ankle_R",
+      "rootResidualMaxN": 0.1,
+      "ankle": {
+       "stance": {
+        "foot": "L",
+        "maxDorsiDeg": 15.9,
+        "limitDeg": 30,
+        "minMarginDeg": 14.1,
+        "atStopMs": 0
+       },
+       "swing": {
+        "foot": "R",
+        "maxDorsiDeg": 25.1,
+        "limitDeg": 30,
+        "minMarginDeg": 4.9,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     }
+    }
+   ],
+   "loads": {
+    "totalVsBodyWeightN": 10.46,
+    "maxStepChangeN": 99,
+    "shareR": [
+     0,
+     0.671
+    ]
+   },
+   "drift": {
+    "footL": 0.01,
+    "footR": 14.6,
+    "com": 7.23,
+    "slidL": 2.5,
+    "slidR": 1.6
+   },
+   "root": {
+    "residualMeanN": 0.033,
+    "residualMaxN": 0.1
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "minJointLimitMarginDeg": 4.9,
+    "maxTurfPenMm": 1.54,
+    "maxSelfPenMm": 0.01,
+    "keMaxJ": 3.31
+   },
+   "cpu": {
+    "msPerFrame": 1.0386,
+    "jolt": 0.5648,
+    "sensing": 0.0391,
+    "controller": 0.4347
+   },
+   "events": [
+    {
+     "t": 0.5,
+     "kind": "request",
+     "what": "place R "
+    },
+    {
+     "t": 1.696,
+     "kind": "liftoff commanded",
+     "what": "R"
+    },
+    {
+     "t": 1.721,
+     "kind": "liftoff",
+     "what": "R"
+    },
+    {
+     "t": 2.6,
+     "kind": "touchdown",
+     "what": "R"
+    },
+    {
+     "t": 2.604,
+     "kind": "landed foot loaded",
+     "what": "R 60 N"
+    },
+    {
+     "t": 4.604,
+     "kind": "DONE",
+     "what": "placed, loaded and accepted"
+    }
+   ],
+   "marks": {
+    "liftoff#0": 413,
+    "touchdown#1": 624,
+    "DONE#2": 1105
+   },
+   "worst": {
+    "liftoff": 413,
+    "touchdown": 624,
+    "done": 1105
+   },
+   "calib": "V1.1",
+   "recal": {
+    "anticipateReach": true,
+    "reachToGround": true,
+    "unloadPlan": true,
+    "reachAll": true,
+    "ankleReach": true
+   },
+   "env": {
+    "terrain": [],
+    "obstacle": null
+   },
+   "box": {
+    "he": [
+     0.08207660244551523,
+     0.0746698049377926,
+     0.17878945945945948
+    ],
+    "pos": [
+     -0.0005227809072962872,
+     -0.013330195062207416,
+     0.09765810810810813
+    ]
+   },
+   "lean": {
+    "hipHalfWidth": 0.092,
+    "legComOffset": 0.026369450636924224,
+    "mUp": 38.305800000000005,
+    "hUp": 0.2897783130662963,
+    "mPelvis": 8.7126,
+    "mLeg": 15.4908,
+    "tau0": 74.40378692093864,
+    "cap": 140,
+    "target": 98,
+    "leanDeg": 0,
+    "tauAtLean": 74.40378692093864,
+    "ssPelvisOffset": -0.015957114351607803
+   },
+   "sup": {
+    "footClear": 0.03,
+    "latMin": 0.1
+   },
+   "reqRaw": [
+    {
+     "id": 0,
+     "type": "place",
+     "foot": "R",
+     "label": null,
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "proj": {
+      "requested": [
+       -0.1639473356917849,
+       0.08626603914186093
+      ],
+      "target": [
+       0.03304669344151995,
+       0.08624906419904436
+      ],
+      "yaw": 0.00008616983392461063,
+      "rejected": false,
+      "reasons": [
+       "crossover: -0 cm to its own side of the stance foot (min 10 cm)",
+       "footprint overlaps the stance foot",
+       "swing path passes through the stance foot"
+      ],
+      "current": [
+       0.1600526631053262,
+       0.0862381201157039
+      ]
+     },
+     "reach": [
+      [
+       0.1600526631053262,
+       0.3476257543930476
+      ],
+      [
+       0.19732226359097543,
+       0.2976045277743818
+      ],
+      [
+       0.22039101593565433,
+       0.25201638204411636
+      ],
+      [
+       0.23354662062485743,
+       0.21353338858884074
+      ],
+      [
+       0.2405374477477635,
+       0.18215615136249985
+      ],
+      [
+       0.24391825866334077,
+       0.15660971041689686
+      ],
+      [
+       0.24520293004816351,
+       0.13539964965671955
+      ],
+      [
+       0.24521517457834596,
+       0.11723473936723706
+      ],
+      [
+       0.2443900506939144,
+       0.10110907703003924
+      ],
+      [
+       0.24292162062485745,
+       0.0862381201157039
+      ],
+      [
+       0.2408737388316577,
+       0.07198718385526967
+      ],
+      [
+       0.2381993115511465,
+       0.05779506617376014
+      ],
+      [
+       0.23474893992160917,
+       0.04311220458836016
+      ],
+      [
+       0.23023872662320802,
+       0.02734502010406413
+      ],
+      [
+       0.2241980330905247,
+       0.009792644987558857
+      ],
+      [
+       0.21583803297837306,
+       -0.010384974823435436
+      ],
+      [
+       0.2038766033755386,
+       -0.034167166208232666
+      ],
+      [
+       0.18627158778259995,
+       -0.06245679073644454
+      ],
+      [
+       0.16005266310532623,
+       -0.09548032470851482
+      ],
+      [
+       0.12162330603757221,
+       -0.13170559396224646
+      ],
+      [
+       0.06796774756344452,
+       -0.1667631060080021
+      ],
+      [
+       0.03302782179673247,
+       -0.1337753588541543
+      ],
+      [
+       0.033036003190139884,
+       -0.06513444065753636
+      ],
+      [
+       0.03304096085113292,
+       -0.020337352400988273
+      ],
+      [
+       0.033042827809706216,
+       0.01290895751804759
+      ],
+      [
+       0.03304446461293398,
+       0.04001091635669949
+      ],
+      [
+       0.03304618349589203,
+       0.06384345103576115
+      ],
+      [
+       0.03305070998032625,
+       0.08623812011570388
+      ],
+      [
+       0.033050691588023096,
+       0.10863199429737239
+      ],
+      [
+       0.03305306775582445,
+       0.13246219258677502
+      ],
+      [
+       0.0330547208587694,
+       0.15956041625828205
+      ],
+      [
+       0.03305849421698795,
+       0.19279888039157372
+      ],
+      [
+       0.03306248522361993,
+       0.237579120830405
+      ],
+      [
+       0.03306673170884178,
+       0.3061842051408705
+      ],
+      [
+       0.03326838033080817,
+       0.4345750741804411
+      ],
+      [
+       0.10542566390354341,
+       0.3960432275490457
+      ]
+     ],
+     "excl": [
+      [
+       -0.2431985052872373,
+       -0.09249414323966779
+      ],
+      [
+       -0.07904531338041866,
+       -0.09250833109519667
+      ],
+      [
+       -0.07901450087134794,
+       0.2650705058493597
+      ],
+      [
+       -0.24316769277816658,
+       0.2650846937048886
+      ]
+     ],
+     "td": {
+      "center": [
+       0.02639181821094578,
+       0.03522854386951092
+      ],
+      "rot": [
+       0.029201224446296692,
+       0.004530043341219425,
+       -0.003853369737043977,
+       0.9995558857917786
+      ],
+      "pos": [
+       0.026158355176448822,
+       0.10477186739444733,
+       -0.06148615479469299
+      ],
+      "t": 2.6
+     },
+     "accepted": {
+      "center": [
+       0.0263376135848278,
+       0.030013791534452314
+      ],
+      "rot": [
+       -0.0002881960244849324,
+       0.005164224188774824,
+       0.0006026756600476801,
+       0.999986469745636
+      ],
+      "t": 4.604166666666667
+     },
+     "blocked": null,
+     "align": null,
+     "fwdBias": 0.18400644590175722,
+     "clear": 0.08,
+     "T": 0.893722003066564
+    }
+   ],
+   "repeatHashes": [
+    "78b3c245",
+    "78b3c245",
+    "78b3c245"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "F_cross",
+   "group": "F other-foot conflict",
+   "title": "F — request R crossing BEHIND the left foot (40 cm inward, 10 cm back)",
+   "hash": "5e485db0",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "fell": false,
+   "finalClass": "RECOVERABLE_IN_PLACE",
+   "requests": [
+    {
+     "id": 0,
+     "label": null,
+     "type": "place",
+     "foot": "R",
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "requested": [
+      -0.24,
+      -0.014
+     ],
+     "feasible": [
+      0.033,
+      0.054
+     ],
+     "correctedCm": 28.1,
+     "projectionReasons": [
+      "crossover: -8 cm to its own side of the stance foot (min 10 cm)",
+      "footprint overlaps the stance foot",
+      "swing path passes through the stance foot"
+     ],
+     "stanceClearanceCm": 3,
+     "liftoff": {
+      "commandT": 1.696,
+      "physicalT": 1.721,
+      "swingLoadN": 0,
+      "swingLoadPctBW": 0,
+      "stanceXiMarginCm": 6.9,
+      "stanceComMarginCm": 4.5,
+      "vcom": 0.072,
+      "transferS": 1.196
+     },
+     "touchdown": {
+      "t": 2.983,
+      "singleSupportS": 1.263,
+      "actualCenter": [
+       0.034,
+       0.079
+      ],
+      "landingErrorCm": 2.5,
+      "verticalVelocity": -0.083,
+      "horizontalVelocity": 0.081,
+      "early": false,
+      "uAt": 1,
+      "plannedAnkleY": 0.1035,
+      "actualAnkleY": 0.0903,
+      "footTiltDeg": 1.6
+     },
+     "accepted": {
+      "t": 4.983,
+      "fromTouchdownS": 2,
+      "loadN": 389,
+      "finalCenter": [
+       0.034,
+       0.083
+      ],
+      "finalErrorCm": 2.8,
+      "driftAfterTouchdownCm": 0.34
+     },
+     "metrics": {
+      "minSoleClearanceCm": 6.2,
+      "peakSoleClearanceCm": 9.4,
+      "minClearanceToStanceLegCm": 4.7,
+      "peakSwingFootPenetrationMm": 0.27,
+      "stanceFootSlidMm": 1.92,
+      "stanceMaxSlipSpeed": 0.004,
+      "legSelfContactMm": 0.02,
+      "saturationMs": {
+       "hip_L": 675,
+       "ankle_L": 1671,
+       "hip_R": 13,
+       "ankle_R": 283
+      },
+      "jointLimitMarginDeg": 4.9,
+      "jointLimitMarginJoint": "ankle_R",
+      "rootResidualMaxN": 0.1,
+      "ankle": {
+       "stance": {
+        "foot": "L",
+        "maxDorsiDeg": 15.9,
+        "limitDeg": 30,
+        "minMarginDeg": 14.1,
+        "atStopMs": 0
+       },
+       "swing": {
+        "foot": "R",
+        "maxDorsiDeg": 25.1,
+        "limitDeg": 30,
+        "minMarginDeg": 4.9,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     }
+    }
+   ],
+   "loads": {
+    "totalVsBodyWeightN": 10.37,
+    "maxStepChangeN": 98.6,
+    "shareR": [
+     0,
+     0.604
+    ]
+   },
+   "drift": {
+    "footL": 0.02,
+    "footR": 12.63,
+    "com": 6.81,
+    "slidL": 2.3,
+    "slidR": 1.3
+   },
+   "root": {
+    "residualMeanN": 0.033,
+    "residualMaxN": 0.1
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "minJointLimitMarginDeg": 4.9,
+    "maxTurfPenMm": 1.55,
+    "maxSelfPenMm": 0.02,
+    "keMaxJ": 1.93
+   },
+   "cpu": {
+    "msPerFrame": 1.0123,
+    "jolt": 0.5648,
+    "sensing": 0.0385,
+    "controller": 0.409
+   },
+   "events": [
+    {
+     "t": 0.5,
+     "kind": "request",
+     "what": "place R "
+    },
+    {
+     "t": 1.696,
+     "kind": "liftoff commanded",
+     "what": "R"
+    },
+    {
+     "t": 1.721,
+     "kind": "liftoff",
+     "what": "R"
+    },
+    {
+     "t": 2.983,
+     "kind": "touchdown",
+     "what": "R"
+    },
+    {
+     "t": 3,
+     "kind": "landed foot loaded",
+     "what": "R 89 N"
+    },
+    {
+     "t": 4.983,
+     "kind": "DONE",
+     "what": "placed, loaded and accepted"
+    }
+   ],
+   "marks": {
+    "liftoff#0": 413,
+    "touchdown#1": 716,
+    "DONE#2": 1196
+   },
+   "worst": {
+    "liftoff": 413,
+    "touchdown": 716,
+    "done": 1196
+   },
+   "calib": "V1.1",
+   "recal": {
+    "anticipateReach": true,
+    "reachToGround": true,
+    "unloadPlan": true,
+    "reachAll": true,
+    "ankleReach": true
+   },
+   "env": {
+    "terrain": [],
+    "obstacle": null
+   },
+   "box": {
+    "he": [
+     0.08207660244551523,
+     0.0746698049377926,
+     0.17878945945945948
+    ],
+    "pos": [
+     -0.0005227809072962872,
+     -0.013330195062207416,
+     0.09765810810810813
+    ]
+   },
+   "lean": {
+    "hipHalfWidth": 0.092,
+    "legComOffset": 0.026369450636924224,
+    "mUp": 38.305800000000005,
+    "hUp": 0.2897783130662963,
+    "mPelvis": 8.7126,
+    "mLeg": 15.4908,
+    "tau0": 74.40378692093864,
+    "cap": 140,
+    "target": 98,
+    "leanDeg": 0,
+    "tauAtLean": 74.40378692093864,
+    "ssPelvisOffset": -0.015957114351607803
+   },
+   "sup": {
+    "footClear": 0.03,
+    "latMin": 0.1
+   },
+   "reqRaw": [
+    {
+     "id": 0,
+     "type": "place",
+     "foot": "R",
+     "label": null,
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "proj": {
+      "requested": [
+       -0.2399559523930076,
+       -0.013727411579506903
+      ],
+      "target": [
+       0.03304395707795077,
+       0.054497571697440655
+      ],
+      "yaw": 0.00008616983392461063,
+      "rejected": false,
+      "reasons": [
+       "crossover: -8 cm to its own side of the stance foot (min 10 cm)",
+       "footprint overlaps the stance foot",
+       "swing path passes through the stance foot"
+      ],
+      "current": [
+       0.1600526631053262,
+       0.0862381201157039
+      ]
+     },
+     "reach": [
+      [
+       0.1600526631053262,
+       0.3476257543930476
+      ],
+      [
+       0.19732226359097543,
+       0.2976045277743818
+      ],
+      [
+       0.22039101593565433,
+       0.25201638204411636
+      ],
+      [
+       0.23354662062485743,
+       0.21353338858884074
+      ],
+      [
+       0.2405374477477635,
+       0.18215615136249985
+      ],
+      [
+       0.24391825866334077,
+       0.15660971041689686
+      ],
+      [
+       0.24520293004816351,
+       0.13539964965671955
+      ],
+      [
+       0.24521517457834596,
+       0.11723473936723706
+      ],
+      [
+       0.2443900506939144,
+       0.10110907703003924
+      ],
+      [
+       0.24292162062485745,
+       0.0862381201157039
+      ],
+      [
+       0.2408737388316577,
+       0.07198718385526967
+      ],
+      [
+       0.2381993115511465,
+       0.05779506617376014
+      ],
+      [
+       0.23474893992160917,
+       0.04311220458836016
+      ],
+      [
+       0.23023872662320802,
+       0.02734502010406413
+      ],
+      [
+       0.2241980330905247,
+       0.009792644987558857
+      ],
+      [
+       0.21583803297837306,
+       -0.010384974823435436
+      ],
+      [
+       0.2038766033755386,
+       -0.034167166208232666
+      ],
+      [
+       0.18627158778259995,
+       -0.06245679073644454
+      ],
+      [
+       0.16005266310532623,
+       -0.09548032470851482
+      ],
+      [
+       0.12162330603757221,
+       -0.13170559396224646
+      ],
+      [
+       0.06796774756344452,
+       -0.1667631060080021
+      ],
+      [
+       0.03302782179673247,
+       -0.1337753588541543
+      ],
+      [
+       0.033036003190139884,
+       -0.06513444065753636
+      ],
+      [
+       0.03304096085113292,
+       -0.020337352400988273
+      ],
+      [
+       0.033042827809706216,
+       0.01290895751804759
+      ],
+      [
+       0.03304446461293398,
+       0.04001091635669949
+      ],
+      [
+       0.03304618349589203,
+       0.06384345103576115
+      ],
+      [
+       0.03305070998032625,
+       0.08623812011570388
+      ],
+      [
+       0.033050691588023096,
+       0.10863199429737239
+      ],
+      [
+       0.03305306775582445,
+       0.13246219258677502
+      ],
+      [
+       0.0330547208587694,
+       0.15956041625828205
+      ],
+      [
+       0.03305849421698795,
+       0.19279888039157372
+      ],
+      [
+       0.03306248522361993,
+       0.237579120830405
+      ],
+      [
+       0.03306673170884178,
+       0.3061842051408705
+      ],
+      [
+       0.03326838033080817,
+       0.4345750741804411
+      ],
+      [
+       0.10542566390354341,
+       0.3960432275490457
+      ]
+     ],
+     "excl": [
+      [
+       -0.2431985052872373,
+       -0.09249414323966779
+      ],
+      [
+       -0.07904531338041866,
+       -0.09250833109519667
+      ],
+      [
+       -0.07901450087134794,
+       0.2650705058493597
+      ],
+      [
+       -0.24316769277816658,
+       0.2650846937048886
+      ]
+     ],
+     "td": {
+      "center": [
+       0.03369658694270779,
+       0.07936617262713608
+      ],
+      "rot": [
+       -0.01407407782971859,
+       -0.001152918441221118,
+       0.0004153278423473239,
+       0.999900221824646
+      ],
+      "pos": [
+       0.034435030072927475,
+       0.09031996130943298,
+       -0.01862698420882225
+      ],
+      "t": 2.9833333333333334
+     },
+     "accepted": {
+      "center": [
+       0.03352632874262616,
+       0.08280941341803177
+      ],
+      "rot": [
+       -0.000252277561230585,
+       -0.0011106617748737335,
+       0.00001997259460040368,
+       0.9999994039535522
+      ],
+      "t": 4.983333333333333
+     },
+     "blocked": null,
+     "align": {
+      "s": 0.5333333333333337,
+      "xiErr": 0.011032411186295289,
+      "vcom": 0.018890413781058123,
+      "settled": true
+     },
+     "fwdBias": 0,
+     "clear": 0.08,
+     "T": 0.6012094268430503
+    }
+   ],
+   "repeatHashes": [
+    "5e485db0",
+    "5e485db0",
+    "5e485db0"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "G_far",
+   "group": "G unreachable",
+   "title": "G — request R 1.2 m forward (outside anatomical reach)",
+   "hash": "dd6d5fff",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "fell": false,
+   "finalClass": "RECOVERABLE_IN_PLACE",
+   "requests": [
+    {
+     "id": 0,
+     "label": null,
+     "type": "place",
+     "foot": "R",
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "requested": [
+      0.16,
+      1.286
+     ],
+     "feasible": [
+      0.16,
+      0.348
+     ],
+     "correctedCm": 93.9,
+     "projectionReasons": [
+      "needs 22 cm of pelvis drop (the stance ankle allows 6.1 cm)",
+      "L hip extension 41° > 25°",
+      "beyond single-support reach",
+      "single support: R hip flexion 133° > 70°",
+      "single support: R hip abduction 167° > 35°"
+     ],
+     "stanceClearanceCm": 15.7,
+     "liftoff": {
+      "commandT": 1.696,
+      "physicalT": 1.762,
+      "swingLoadN": 0,
+      "swingLoadPctBW": 0,
+      "stanceXiMarginCm": 6.9,
+      "stanceComMarginCm": 4.5,
+      "vcom": 0.072,
+      "transferS": 1.196
+     },
+     "touchdown": {
+      "t": 2.538,
+      "singleSupportS": 0.775,
+      "actualCenter": [
+       0.144,
+       0.329
+      ],
+      "landingErrorCm": 2.4,
+      "verticalVelocity": -0.105,
+      "horizontalVelocity": 0.513,
+      "early": false,
+      "uAt": 1,
+      "plannedAnkleY": 0.1035,
+      "actualAnkleY": 0.0903,
+      "footTiltDeg": 1.2
+     },
+     "accepted": {
+      "t": 4.883,
+      "fromTouchdownS": 2.346,
+      "loadN": 295,
+      "finalCenter": [
+       0.142,
+       0.328
+      ],
+      "finalErrorCm": 2.6,
+      "driftAfterTouchdownCm": 0.22
+     },
+     "metrics": {
+      "minSoleClearanceCm": 4.1,
+      "peakSoleClearanceCm": 6.7,
+      "minClearanceToStanceLegCm": 13.5,
+      "peakSwingFootPenetrationMm": 0.52,
+      "stanceFootSlidMm": 1.89,
+      "stanceMaxSlipSpeed": 0.004,
+      "legSelfContactMm": 0,
+      "saturationMs": {
+       "hip_L": 2596,
+       "ankle_L": 1729,
+       "ankle_R": 300
+      },
+      "jointLimitMarginDeg": 5.6,
+      "jointLimitMarginJoint": "ankle_R",
+      "rootResidualMaxN": 0.1,
+      "ankle": {
+       "stance": {
+        "foot": "L",
+        "maxDorsiDeg": 23.5,
+        "limitDeg": 30,
+        "minMarginDeg": 6.5,
+        "atStopMs": 0
+       },
+       "swing": {
+        "foot": "R",
+        "maxDorsiDeg": 24.4,
+        "limitDeg": 30,
+        "minMarginDeg": 5.6,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     }
+    }
+   ],
+   "loads": {
+    "totalVsBodyWeightN": 9.74,
+    "maxStepChangeN": 98.6,
+    "shareR": [
+     0,
+     0.604
+    ]
+   },
+   "drift": {
+    "footL": 0.02,
+    "footR": 24.28,
+    "com": 11.82,
+    "slidL": 2.4,
+    "slidR": 1.4
+   },
+   "root": {
+    "residualMeanN": 0.04,
+    "residualMaxN": 0.1
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "minJointLimitMarginDeg": 5.6,
+    "maxTurfPenMm": 1.63,
+    "maxSelfPenMm": 0,
+    "keMaxJ": 2.98
+   },
+   "cpu": {
+    "msPerFrame": 1.1723,
+    "jolt": 0.5545,
+    "sensing": 0.0384,
+    "controller": 0.5794
+   },
+   "events": [
+    {
+     "t": 0.5,
+     "kind": "request",
+     "what": "place R "
+    },
+    {
+     "t": 1.696,
+     "kind": "liftoff commanded",
+     "what": "R"
+    },
+    {
+     "t": 1.762,
+     "kind": "liftoff",
+     "what": "R"
+    },
+    {
+     "t": 2.538,
+     "kind": "touchdown",
+     "what": "R"
+    },
+    {
+     "t": 2.542,
+     "kind": "landed foot loaded",
+     "what": "R 74 N"
+    },
+    {
+     "t": 4.883,
+     "kind": "DONE",
+     "what": "placed, loaded and accepted"
+    }
+   ],
+   "marks": {
+    "liftoff#0": 423,
+    "touchdown#1": 609,
+    "DONE#2": 1172
+   },
+   "worst": {
+    "liftoff": 423,
+    "touchdown": 609,
+    "done": 1172
+   },
+   "calib": "V1.1",
+   "recal": {
+    "anticipateReach": true,
+    "reachToGround": true,
+    "unloadPlan": true,
+    "reachAll": true,
+    "ankleReach": true
+   },
+   "env": {
+    "terrain": [],
+    "obstacle": null
+   },
+   "box": {
+    "he": [
+     0.08207660244551523,
+     0.0746698049377926,
+     0.17878945945945948
+    ],
+    "pos": [
+     -0.0005227809072962872,
+     -0.013330195062207416,
+     0.09765810810810813
+    ]
+   },
+   "lean": {
+    "hipHalfWidth": 0.092,
+    "legComOffset": 0.026369450636924224,
+    "mUp": 38.305800000000005,
+    "hUp": 0.2897783130662963,
+    "mPelvis": 8.7126,
+    "mLeg": 15.4908,
+    "tau0": 74.40378692093864,
+    "cap": 140,
+    "target": 98,
+    "leanDeg": 0,
+    "tauAtLean": 74.40378692093864,
+    "ssPelvisOffset": -0.015957114351607803
+   },
+   "sup": {
+    "footClear": 0.03,
+    "latMin": 0.1
+   },
+   "reqRaw": [
+    {
+     "id": 0,
+     "type": "place",
+     "foot": "R",
+     "label": null,
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "proj": {
+      "requested": [
+       0.16015606690590778,
+       1.2862381156605598
+      ],
+      "target": [
+       0.16007518486938196,
+       0.3476029501757244
+      ],
+      "yaw": 0.00008616983392461063,
+      "rejected": false,
+      "reasons": [
+       "needs 22 cm of pelvis drop (the stance ankle allows 6.1 cm)",
+       "L hip extension 41° > 25°",
+       "beyond single-support reach",
+       "single support: R hip flexion 133° > 70°",
+       "single support: R hip abduction 167° > 35°"
+      ],
+      "current": [
+       0.1600526631053262,
+       0.0862381201157039
+      ]
+     },
+     "reach": [
+      [
+       0.1600526631053262,
+       0.3476257543930476
+      ],
+      [
+       0.19732226359097543,
+       0.2976045277743818
+      ],
+      [
+       0.22039101593565433,
+       0.25201638204411636
+      ],
+      [
+       0.23354662062485743,
+       0.21353338858884074
+      ],
+      [
+       0.2405374477477635,
+       0.18215615136249985
+      ],
+      [
+       0.24391825866334077,
+       0.15660971041689686
+      ],
+      [
+       0.24520293004816351,
+       0.13539964965671955
+      ],
+      [
+       0.24521517457834596,
+       0.11723473936723706
+      ],
+      [
+       0.2443900506939144,
+       0.10110907703003924
+      ],
+      [
+       0.24292162062485745,
+       0.0862381201157039
+      ],
+      [
+       0.2408737388316577,
+       0.07198718385526967
+      ],
+      [
+       0.2381993115511465,
+       0.05779506617376014
+      ],
+      [
+       0.23474893992160917,
+       0.04311220458836016
+      ],
+      [
+       0.23023872662320802,
+       0.02734502010406413
+      ],
+      [
+       0.2241980330905247,
+       0.009792644987558857
+      ],
+      [
+       0.21583803297837306,
+       -0.010384974823435436
+      ],
+      [
+       0.2038766033755386,
+       -0.034167166208232666
+      ],
+      [
+       0.18627158778259995,
+       -0.06245679073644454
+      ],
+      [
+       0.16005266310532623,
+       -0.09548032470851482
+      ],
+      [
+       0.12162330603757221,
+       -0.13170559396224646
+      ],
+      [
+       0.06796774756344452,
+       -0.1667631060080021
+      ],
+      [
+       0.03302782179673247,
+       -0.1337753588541543
+      ],
+      [
+       0.033036003190139884,
+       -0.06513444065753636
+      ],
+      [
+       0.03304096085113292,
+       -0.020337352400988273
+      ],
+      [
+       0.033042827809706216,
+       0.01290895751804759
+      ],
+      [
+       0.03304446461293398,
+       0.04001091635669949
+      ],
+      [
+       0.03304618349589203,
+       0.06384345103576115
+      ],
+      [
+       0.03305070998032625,
+       0.08623812011570388
+      ],
+      [
+       0.033050691588023096,
+       0.10863199429737239
+      ],
+      [
+       0.03305306775582445,
+       0.13246219258677502
+      ],
+      [
+       0.0330547208587694,
+       0.15956041625828205
+      ],
+      [
+       0.03305849421698795,
+       0.19279888039157372
+      ],
+      [
+       0.03306248522361993,
+       0.237579120830405
+      ],
+      [
+       0.03306673170884178,
+       0.3061842051408705
+      ],
+      [
+       0.03326838033080817,
+       0.4345750741804411
+      ],
+      [
+       0.10542566390354341,
+       0.3960432275490457
+      ]
+     ],
+     "excl": [
+      [
+       -0.2431985052872373,
+       -0.09249414323966779
+      ],
+      [
+       -0.07904531338041866,
+       -0.09250833109519667
+      ],
+      [
+       -0.07901450087134794,
+       0.2650705058493597
+      ],
+      [
+       -0.24316769277816658,
+       0.2650846937048886
+      ]
+     ],
+     "td": {
+      "center": [
+       0.14438309220465276,
+       0.3294725016379535
+      ],
+      "rot": [
+       0.000983556266874075,
+       0.004504112992435694,
+       -0.010678838938474655,
+       0.9999323487281799
+      ],
+      "pos": [
+       0.14431291818618774,
+       0.0902911126613617,
+       0.23183876276016235
+      ],
+      "t": 2.5375
+     },
+     "accepted": {
+      "center": [
+       0.14247270770614823,
+       0.3283863225562674
+      ],
+      "rot": [
+       0.000018155549696530215,
+       0.0036951371002942324,
+       -0.0003853531670756638,
+       0.9999931454658508
+      ],
+      "t": 4.883333333333333
+     },
+     "blocked": null,
+     "align": null,
+     "fwdBias": 0.05337295456575508,
+     "clear": 0.08,
+     "T": 0.7997124435155898
+    }
+   ],
+   "repeatHashes": [
+    "dd6d5fff",
+    "dd6d5fff",
+    "dd6d5fff"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "G_far_side",
+   "group": "G unreachable",
+   "title": "G — request R 0.8 m sideways (outside reach)",
+   "hash": "8d0d0f4c",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "fell": false,
+   "finalClass": "RECOVERABLE_IN_PLACE",
+   "requests": [
+    {
+     "id": 0,
+     "label": null,
+     "type": "place",
+     "foot": "R",
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "requested": [
+      0.96,
+      0.086
+     ],
+     "feasible": [
+      0.243,
+      0.086
+     ],
+     "correctedCm": 71.7,
+     "projectionReasons": [
+      "needs 12 cm of pelvis drop (the stance ankle allows 6.1 cm)",
+      "beyond single-support reach",
+      "single support: R hip extension 178° > 25°",
+      "single support: R hip abduction 136° > 35°"
+     ],
+     "stanceClearanceCm": 24,
+     "liftoff": {
+      "commandT": 1.696,
+      "physicalT": 1.725,
+      "swingLoadN": 0,
+      "swingLoadPctBW": 0,
+      "stanceXiMarginCm": 6.9,
+      "stanceComMarginCm": 4.5,
+      "vcom": 0.072,
+      "transferS": 1.196
+     },
+     "touchdown": {
+      "t": 2.533,
+      "singleSupportS": 0.808,
+      "actualCenter": [
+       0.234,
+       0.042
+      ],
+      "landingErrorCm": 4.6,
+      "verticalVelocity": -0.089,
+      "horizontalVelocity": 0.57,
+      "early": false,
+      "uAt": 0.97,
+      "plannedAnkleY": 0.1035,
+      "actualAnkleY": 0.0997,
+      "footTiltDeg": 2.4
+     },
+     "accepted": {
+      "t": 4.912,
+      "fromTouchdownS": 2.379,
+      "loadN": 377,
+      "finalCenter": [
+       0.229,
+       0.039
+      ],
+      "finalErrorCm": 4.9,
+      "driftAfterTouchdownCm": 0.52
+     },
+     "metrics": {
+      "minSoleClearanceCm": 3.1,
+      "peakSoleClearanceCm": 6.9,
+      "minClearanceToStanceLegCm": 14.4,
+      "peakSwingFootPenetrationMm": 0.52,
+      "stanceFootSlidMm": 1.97,
+      "stanceMaxSlipSpeed": 0.004,
+      "legSelfContactMm": 0,
+      "saturationMs": {
+       "hip_L": 2079,
+       "ankle_L": 1492,
+       "ankle_R": 288
+      },
+      "jointLimitMarginDeg": 4.9,
+      "jointLimitMarginJoint": "ankle_R",
+      "rootResidualMaxN": 0.1,
+      "ankle": {
+       "stance": {
+        "foot": "L",
+        "maxDorsiDeg": 21.2,
+        "limitDeg": 30,
+        "minMarginDeg": 8.8,
+        "atStopMs": 0
+       },
+       "swing": {
+        "foot": "R",
+        "maxDorsiDeg": 25.1,
+        "limitDeg": 30,
+        "minMarginDeg": 4.9,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     }
+    }
+   ],
+   "loads": {
+    "totalVsBodyWeightN": 7.61,
+    "maxStepChangeN": 171.7,
+    "shareR": [
+     0,
+     0.604
+    ]
+   },
+   "drift": {
+    "footL": 0.04,
+    "footR": 8.16,
+    "com": 2.84,
+    "slidL": 2.5,
+    "slidR": 1.4
+   },
+   "root": {
+    "residualMeanN": 0.038,
+    "residualMaxN": 0.1
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "minJointLimitMarginDeg": 4.9,
+    "maxTurfPenMm": 1.7,
+    "maxSelfPenMm": 0,
+    "keMaxJ": 2.6
+   },
+   "cpu": {
+    "msPerFrame": 1.202,
+    "jolt": 0.5557,
+    "sensing": 0.038,
+    "controller": 0.6083
+   },
+   "events": [
+    {
+     "t": 0.5,
+     "kind": "request",
+     "what": "place R "
+    },
+    {
+     "t": 1.696,
+     "kind": "liftoff commanded",
+     "what": "R"
+    },
+    {
+     "t": 1.725,
+     "kind": "liftoff",
+     "what": "R"
+    },
+    {
+     "t": 2.533,
+     "kind": "touchdown",
+     "what": "R"
+    },
+    {
+     "t": 2.538,
+     "kind": "landed foot loaded",
+     "what": "R 60 N"
+    },
+    {
+     "t": 4.912,
+     "kind": "DONE",
+     "what": "placed, loaded and accepted"
+    }
+   ],
+   "marks": {
+    "liftoff#0": 414,
+    "touchdown#1": 608,
+    "DONE#2": 1179
+   },
+   "worst": {
+    "liftoff": 414,
+    "touchdown": 608,
+    "done": 1179
+   },
+   "calib": "V1.1",
+   "recal": {
+    "anticipateReach": true,
+    "reachToGround": true,
+    "unloadPlan": true,
+    "reachAll": true,
+    "ankleReach": true
+   },
+   "env": {
+    "terrain": [],
+    "obstacle": null
+   },
+   "box": {
+    "he": [
+     0.08207660244551523,
+     0.0746698049377926,
+     0.17878945945945948
+    ],
+    "pos": [
+     -0.0005227809072962872,
+     -0.013330195062207416,
+     0.09765810810810813
+    ]
+   },
+   "lean": {
+    "hipHalfWidth": 0.092,
+    "legComOffset": 0.026369450636924224,
+    "mUp": 38.305800000000005,
+    "hUp": 0.2897783130662963,
+    "mPelvis": 8.7126,
+    "mLeg": 15.4908,
+    "tau0": 74.40378692093864,
+    "cap": 140,
+    "target": 98,
+    "leanDeg": 0,
+    "tauAtLean": 74.40378692093864,
+    "ssPelvisOffset": -0.015957114351607803
+   },
+   "sup": {
+    "footClear": 0.03,
+    "latMin": 0.1
+   },
+   "reqRaw": [
+    {
+     "id": 0,
+     "type": "place",
+     "foot": "R",
+     "label": null,
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "proj": {
+      "requested": [
+       0.9600526601352302,
+       0.08616918424864953
+      ],
+      "target": [
+       0.2429238346297417,
+       0.08623097912059884
+      ],
+      "yaw": 0.00008616983392461063,
+      "rejected": false,
+      "reasons": [
+       "needs 12 cm of pelvis drop (the stance ankle allows 6.1 cm)",
+       "beyond single-support reach",
+       "single support: R hip extension 178° > 25°",
+       "single support: R hip abduction 136° > 35°"
+      ],
+      "current": [
+       0.1600526631053262,
+       0.0862381201157039
+      ]
+     },
+     "reach": [
+      [
+       0.1600526631053262,
+       0.3476257543930476
+      ],
+      [
+       0.19732226359097543,
+       0.2976045277743818
+      ],
+      [
+       0.22039101593565433,
+       0.25201638204411636
+      ],
+      [
+       0.23354662062485743,
+       0.21353338858884074
+      ],
+      [
+       0.2405374477477635,
+       0.18215615136249985
+      ],
+      [
+       0.24391825866334077,
+       0.15660971041689686
+      ],
+      [
+       0.24520293004816351,
+       0.13539964965671955
+      ],
+      [
+       0.24521517457834596,
+       0.11723473936723706
+      ],
+      [
+       0.2443900506939144,
+       0.10110907703003924
+      ],
+      [
+       0.24292162062485745,
+       0.0862381201157039
+      ],
+      [
+       0.2408737388316577,
+       0.07198718385526967
+      ],
+      [
+       0.2381993115511465,
+       0.05779506617376014
+      ],
+      [
+       0.23474893992160917,
+       0.04311220458836016
+      ],
+      [
+       0.23023872662320802,
+       0.02734502010406413
+      ],
+      [
+       0.2241980330905247,
+       0.009792644987558857
+      ],
+      [
+       0.21583803297837306,
+       -0.010384974823435436
+      ],
+      [
+       0.2038766033755386,
+       -0.034167166208232666
+      ],
+      [
+       0.18627158778259995,
+       -0.06245679073644454
+      ],
+      [
+       0.16005266310532623,
+       -0.09548032470851482
+      ],
+      [
+       0.12162330603757221,
+       -0.13170559396224646
+      ],
+      [
+       0.06796774756344452,
+       -0.1667631060080021
+      ],
+      [
+       0.03302782179673247,
+       -0.1337753588541543
+      ],
+      [
+       0.033036003190139884,
+       -0.06513444065753636
+      ],
+      [
+       0.03304096085113292,
+       -0.020337352400988273
+      ],
+      [
+       0.033042827809706216,
+       0.01290895751804759
+      ],
+      [
+       0.03304446461293398,
+       0.04001091635669949
+      ],
+      [
+       0.03304618349589203,
+       0.06384345103576115
+      ],
+      [
+       0.03305070998032625,
+       0.08623812011570388
+      ],
+      [
+       0.033050691588023096,
+       0.10863199429737239
+      ],
+      [
+       0.03305306775582445,
+       0.13246219258677502
+      ],
+      [
+       0.0330547208587694,
+       0.15956041625828205
+      ],
+      [
+       0.03305849421698795,
+       0.19279888039157372
+      ],
+      [
+       0.03306248522361993,
+       0.237579120830405
+      ],
+      [
+       0.03306673170884178,
+       0.3061842051408705
+      ],
+      [
+       0.03326838033080817,
+       0.4345750741804411
+      ],
+      [
+       0.10542566390354341,
+       0.3960432275490457
+      ]
+     ],
+     "excl": [
+      [
+       -0.2431985052872373,
+       -0.09249414323966779
+      ],
+      [
+       -0.07904531338041866,
+       -0.09250833109519667
+      ],
+      [
+       -0.07901450087134794,
+       0.2650705058493597
+      ],
+      [
+       -0.24316769277816658,
+       0.2650846937048886
+      ]
+     ],
+     "td": {
+      "center": [
+       0.2337059709167517,
+       0.04167092739925095
+      ],
+      "rot": [
+       0.019827794283628464,
+       0.01034774724394083,
+       -0.005292817018926144,
+       0.9997358918190002
+      ],
+      "pos": [
+       0.2323751002550125,
+       0.09974218904972076,
+       -0.05537338927388191
+      ],
+      "t": 2.533333333333333
+     },
+     "accepted": {
+      "center": [
+       0.22913038569976163,
+       0.03923256205346187
+      ],
+      "rot": [
+       -0.00003641887451522052,
+       0.0124299181625247,
+       -0.00009586862870492041,
+       0.9999227523803711
+      ],
+      "t": 4.9125
+     },
+     "blocked": null,
+     "align": null,
+     "fwdBias": 0.1840872290335777,
+     "clear": 0.08,
+     "T": 0.8634635509404263
+    }
+   ],
+   "repeatHashes": [
+    "8d0d0f4c",
+    "8d0d0f4c",
+    "8d0d0f4c"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "H_uneven",
+   "group": "H uneven touchdown",
+   "title": "H — place R 25 cm forward onto a 3 cm slab under the forefoot (touchdown differs from the plan)",
+   "hash": "471bd713",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "fell": false,
+   "finalClass": "RECOVERABLE_IN_PLACE",
+   "requests": [
+    {
+     "id": 0,
+     "label": null,
+     "type": "place",
+     "foot": "R",
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "requested": [
+      0.16,
+      0.336
+     ],
+     "feasible": [
+      0.16,
+      0.336
+     ],
+     "correctedCm": 0,
+     "projectionReasons": [],
+     "stanceClearanceCm": 15.7,
+     "liftoff": {
+      "commandT": 1.696,
+      "physicalT": 1.758,
+      "swingLoadN": 0,
+      "swingLoadPctBW": 0,
+      "stanceXiMarginCm": 6.9,
+      "stanceComMarginCm": 4.5,
+      "vcom": 0.072,
+      "transferS": 1.196
+     },
+     "touchdown": {
+      "t": 2.446,
+      "singleSupportS": 0.688,
+      "actualCenter": [
+       0.141,
+       0.375
+      ],
+      "landingErrorCm": 4.3,
+      "verticalVelocity": -0.138,
+      "horizontalVelocity": 0.289,
+      "early": true,
+      "uAt": 0.94,
+      "plannedAnkleY": 0.1035,
+      "actualAnkleY": 0.1096,
+      "footTiltDeg": 4.5
+     },
+     "accepted": {
+      "t": 4.954,
+      "fromTouchdownS": 2.508,
+      "loadN": 282,
+      "finalCenter": [
+       0.139,
+       0.369
+      ],
+      "finalErrorCm": 3.9,
+      "driftAfterTouchdownCm": 0.61
+     },
+     "metrics": {
+      "minSoleClearanceCm": 4.1,
+      "peakSoleClearanceCm": 6.7,
+      "minClearanceToStanceLegCm": 13.5,
+      "peakSwingFootPenetrationMm": 0.07,
+      "stanceFootSlidMm": 2.05,
+      "stanceMaxSlipSpeed": 0.004,
+      "legSelfContactMm": 0,
+      "saturationMs": {
+       "hip_L": 2625,
+       "ankle_L": 2179,
+       "ankle_R": 296
+      },
+      "jointLimitMarginDeg": 6,
+      "jointLimitMarginJoint": "ankle_R",
+      "rootResidualMaxN": 0.1,
+      "ankle": {
+       "stance": {
+        "foot": "L",
+        "maxDorsiDeg": 22.9,
+        "limitDeg": 30,
+        "minMarginDeg": 7.1,
+        "atStopMs": 0
+       },
+       "swing": {
+        "foot": "R",
+        "maxDorsiDeg": 24,
+        "limitDeg": 30,
+        "minMarginDeg": 6,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     }
+    }
+   ],
+   "loads": {
+    "totalVsBodyWeightN": 11.54,
+    "maxStepChangeN": 99.6,
+    "shareR": [
+     0,
+     0.604
+    ]
+   },
+   "drift": {
+    "footL": 0.03,
+    "footR": 28.25,
+    "com": 13.22,
+    "slidL": 2.5,
+    "slidR": 1.4
+   },
+   "root": {
+    "residualMeanN": 0.044,
+    "residualMaxN": 0.1
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "minJointLimitMarginDeg": 6,
+    "maxTurfPenMm": 1.77,
+    "maxSelfPenMm": 0,
+    "keMaxJ": 2.89
+   },
+   "cpu": {
+    "msPerFrame": 1.3554,
+    "jolt": 0.6005,
+    "sensing": 0.0562,
+    "controller": 0.6987
+   },
+   "events": [
+    {
+     "t": 0.5,
+     "kind": "request",
+     "what": "place R "
+    },
+    {
+     "t": 1.696,
+     "kind": "liftoff commanded",
+     "what": "R"
+    },
+    {
+     "t": 1.758,
+     "kind": "liftoff",
+     "what": "R"
+    },
+    {
+     "t": 2.446,
+     "kind": "touchdown",
+     "what": "R"
+    },
+    {
+     "t": 2.45,
+     "kind": "landed foot loaded",
+     "what": "R 154 N"
+    },
+    {
+     "t": 4.954,
+     "kind": "DONE",
+     "what": "placed, loaded and accepted"
+    }
+   ],
+   "marks": {
+    "liftoff#0": 422,
+    "touchdown#1": 587,
+    "DONE#2": 1189
+   },
+   "worst": {
+    "liftoff": 422,
+    "touchdown": 587,
+    "done": 1189
+   },
+   "calib": "V1.1",
+   "recal": {
+    "anticipateReach": true,
+    "reachToGround": true,
+    "unloadPlan": true,
+    "reachAll": true,
+    "ankleReach": true
+   },
+   "env": {
+    "terrain": [
+     {
+      "he": [
+       0.12,
+       0.015,
+       0.06
+      ],
+      "pos": [
+       0.16002861690223633,
+       0.015,
+       0.46624303550471047
+      ]
+     }
+    ],
+    "obstacle": null
+   },
+   "box": {
+    "he": [
+     0.08207660244551523,
+     0.0746698049377926,
+     0.17878945945945948
+    ],
+    "pos": [
+     -0.0005227809072962872,
+     -0.013330195062207416,
+     0.09765810810810813
+    ]
+   },
+   "lean": {
+    "hipHalfWidth": 0.092,
+    "legComOffset": 0.026369450636924224,
+    "mUp": 38.305800000000005,
+    "hUp": 0.2897783130662963,
+    "mPelvis": 8.7126,
+    "mLeg": 15.4908,
+    "tau0": 74.40378692093864,
+    "cap": 140,
+    "target": 98,
+    "leanDeg": 0,
+    "tauAtLean": 74.40378692093864,
+    "ssPelvisOffset": -0.015957114351607803
+   },
+   "sup": {
+    "footClear": 0.03,
+    "latMin": 0.1
+   },
+   "reqRaw": [
+    {
+     "id": 0,
+     "type": "place",
+     "foot": "R",
+     "label": null,
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "proj": {
+      "requested": [
+       0.16007420556378069,
+       0.33623811918754887
+      ],
+      "target": [
+       0.16007420556378069,
+       0.33623811918754887
+      ],
+      "yaw": 0.00008616983392461063,
+      "rejected": false,
+      "reasons": [],
+      "current": [
+       0.1600526631053262,
+       0.0862381201157039
+      ]
+     },
+     "reach": [
+      [
+       0.1600526631053262,
+       0.3476257543930476
+      ],
+      [
+       0.19732226359097543,
+       0.2976045277743818
+      ],
+      [
+       0.22039101593565433,
+       0.25201638204411636
+      ],
+      [
+       0.23354662062485743,
+       0.21353338858884074
+      ],
+      [
+       0.2405374477477635,
+       0.18215615136249985
+      ],
+      [
+       0.24391825866334077,
+       0.15660971041689686
+      ],
+      [
+       0.24520293004816351,
+       0.13539964965671955
+      ],
+      [
+       0.24521517457834596,
+       0.11723473936723706
+      ],
+      [
+       0.2443900506939144,
+       0.10110907703003924
+      ],
+      [
+       0.24292162062485745,
+       0.0862381201157039
+      ],
+      [
+       0.2408737388316577,
+       0.07198718385526967
+      ],
+      [
+       0.2381993115511465,
+       0.05779506617376014
+      ],
+      [
+       0.23474893992160917,
+       0.04311220458836016
+      ],
+      [
+       0.23023872662320802,
+       0.02734502010406413
+      ],
+      [
+       0.2241980330905247,
+       0.009792644987558857
+      ],
+      [
+       0.21583803297837306,
+       -0.010384974823435436
+      ],
+      [
+       0.2038766033755386,
+       -0.034167166208232666
+      ],
+      [
+       0.18627158778259995,
+       -0.06245679073644454
+      ],
+      [
+       0.16005266310532623,
+       -0.09548032470851482
+      ],
+      [
+       0.12162330603757221,
+       -0.13170559396224646
+      ],
+      [
+       0.06796774756344452,
+       -0.1667631060080021
+      ],
+      [
+       0.03302782179673247,
+       -0.1337753588541543
+      ],
+      [
+       0.033036003190139884,
+       -0.06513444065753636
+      ],
+      [
+       0.03304096085113292,
+       -0.020337352400988273
+      ],
+      [
+       0.033042827809706216,
+       0.01290895751804759
+      ],
+      [
+       0.03304446461293398,
+       0.04001091635669949
+      ],
+      [
+       0.03304618349589203,
+       0.06384345103576115
+      ],
+      [
+       0.03305070998032625,
+       0.08623812011570388
+      ],
+      [
+       0.033050691588023096,
+       0.10863199429737239
+      ],
+      [
+       0.03305306775582445,
+       0.13246219258677502
+      ],
+      [
+       0.0330547208587694,
+       0.15956041625828205
+      ],
+      [
+       0.03305849421698795,
+       0.19279888039157372
+      ],
+      [
+       0.03306248522361993,
+       0.237579120830405
+      ],
+      [
+       0.03306673170884178,
+       0.3061842051408705
+      ],
+      [
+       0.03326838033080817,
+       0.4345750741804411
+      ],
+      [
+       0.10542566390354341,
+       0.3960432275490457
+      ]
+     ],
+     "excl": [
+      [
+       -0.2431985052872373,
+       -0.09249414323966779
+      ],
+      [
+       -0.07904531338041866,
+       -0.09250833109519667
+      ],
+      [
+       -0.07901450087134794,
+       0.2650705058493597
+      ],
+      [
+       -0.24316769277816658,
+       0.2650846937048886
+      ]
+     ],
+     "td": {
+      "center": [
+       0.14088857149540784,
+       0.37483241697819775
+      ],
+      "rot": [
+       -0.03843440115451813,
+       -0.004181288182735443,
+       -0.008385155349969864,
+       0.9992172122001648
+      ],
+      "pos": [
+       0.14239200949668884,
+       0.10964284092187881,
+       0.27644801139831543
+      ],
+      "t": 2.4458333333333333
+     },
+     "accepted": {
+      "center": [
+       0.13919847842284083,
+       0.36893684854046327
+      ],
+      "rot": [
+       -0.0730476975440979,
+       -0.0021519497968256474,
+       -0.0006022134912200272,
+       0.9973259568214417
+      ],
+      "t": 4.954166666666667
+     },
+     "blocked": null,
+     "align": null,
+     "fwdBias": 0.05905536839720296,
+     "clear": 0.08,
+     "T": 0.7997130510773405
+    }
+   ],
+   "repeatHashes": [
+    "471bd713",
+    "471bd713",
+    "471bd713"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "I_block",
+   "group": "I obstruction",
+   "title": "I — place R 30 cm forward with a 22 cm box in the swing path",
+   "hash": "1f568cff",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "fell": false,
+   "finalClass": "RECOVERABLE_IN_PLACE",
+   "requests": [
+    {
+     "id": 0,
+     "label": null,
+     "type": "place",
+     "foot": "R",
+     "status": "FAILED_BLOCKED",
+     "why": "swing foot 20 cm behind its trajectory for 150 ms — obstructed, not driven through; holding it where it is",
+     "requested": [
+      0.16,
+      0.386
+     ],
+     "feasible": [
+      0.16,
+      0.348
+     ],
+     "correctedCm": 3.9,
+     "projectionReasons": [
+      "single support: needs 7.2 cm of pelvis drop to reach (the stance ankle allows 6.1 cm)"
+     ],
+     "stanceClearanceCm": 15.7,
+     "liftoff": {
+      "commandT": 1.696,
+      "physicalT": 1.762,
+      "swingLoadN": 0,
+      "swingLoadPctBW": 0,
+      "stanceXiMarginCm": 6.9,
+      "stanceComMarginCm": 4.5,
+      "vcom": 0.072,
+      "transferS": 1.196
+     },
+     "blocked": {
+      "t": 2.25,
+      "lagCm": 19.6,
+      "obstacleMaxForceN": 507,
+      "obstaclePenetrationMm": 0.15,
+      "firstObstacleContactT": 2.017
+     },
+     "metrics": {
+      "minSoleClearanceCm": 3.1,
+      "peakSoleClearanceCm": 7.3,
+      "minClearanceToStanceLegCm": 13.5,
+      "peakSwingFootPenetrationMm": null,
+      "stanceFootSlidMm": 1.86,
+      "stanceMaxSlipSpeed": 0.004,
+      "legSelfContactMm": 0,
+      "saturationMs": {
+       "lumbar": 13,
+       "hip_L": 1429,
+       "ankle_L": 2050,
+       "hip_R": 108,
+       "ankle_R": 471
+      },
+      "jointLimitMarginDeg": -0.1,
+      "jointLimitMarginJoint": "ankle_R",
+      "rootResidualMaxN": 0.1,
+      "ankle": {
+       "stance": {
+        "foot": "L",
+        "maxDorsiDeg": 18.2,
+        "limitDeg": 30,
+        "minMarginDeg": 11.8,
+        "atStopMs": 0
+       },
+       "swing": {
+        "foot": "R",
+        "maxDorsiDeg": 24.4,
+        "limitDeg": 30,
+        "minMarginDeg": 5.6,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     }
+    }
+   ],
+   "loads": {
+    "totalVsBodyWeightN": 9.14,
+    "maxStepChangeN": 194.2,
+    "shareR": [
+     -0.056,
+     0.604
+    ]
+   },
+   "drift": {
+    "footL": 0.04,
+    "footR": 7.02,
+    "com": 16.2,
+    "slidL": 2.2,
+    "slidR": 1
+   },
+   "root": {
+    "residualMeanN": 0.035,
+    "residualMaxN": 0.1
+   },
+   "stability": {
+    "maxJointSepMm": 0.18,
+    "minJointLimitMarginDeg": -0.1,
+    "maxTurfPenMm": 2.24,
+    "maxSelfPenMm": 0,
+    "keMaxJ": 3.14
+   },
+   "cpu": {
+    "msPerFrame": 0.9589,
+    "jolt": 0.5976,
+    "sensing": 0.041,
+    "controller": 0.3203
+   },
+   "events": [
+    {
+     "t": 0.5,
+     "kind": "request",
+     "what": "place R "
+    },
+    {
+     "t": 1.696,
+     "kind": "liftoff commanded",
+     "what": "R"
+    },
+    {
+     "t": 1.762,
+     "kind": "liftoff",
+     "what": "R"
+    },
+    {
+     "t": 2.25,
+     "kind": "FAILED_BLOCKED",
+     "what": "swing foot 20 cm behind its trajectory for 150 ms — obstructed, not driven through; holding it where it is"
+    }
+   ],
+   "marks": {
+    "liftoff#0": 423,
+    "FAILED_BLOCKED#1": 540
+   },
+   "worst": {
+    "liftoff": 423,
+    "touchdown": 0,
+    "done": 540
+   },
+   "calib": "V1.1",
+   "recal": {
+    "anticipateReach": true,
+    "reachToGround": true,
+    "unloadPlan": true,
+    "reachAll": true,
+    "ankleReach": true
+   },
+   "env": {
+    "terrain": [],
+    "obstacle": {
+     "he": [
+      0.12,
+      0.11,
+      0.04
+     ],
+     "pos": [
+      0.16002861690223633,
+      0.113,
+      0.37624303550471044
+     ]
+    }
+   },
+   "box": {
+    "he": [
+     0.08207660244551523,
+     0.0746698049377926,
+     0.17878945945945948
+    ],
+    "pos": [
+     -0.0005227809072962872,
+     -0.013330195062207416,
+     0.09765810810810813
+    ]
+   },
+   "lean": {
+    "hipHalfWidth": 0.092,
+    "legComOffset": 0.026369450636924224,
+    "mUp": 38.305800000000005,
+    "hUp": 0.2897783130662963,
+    "mPelvis": 8.7126,
+    "mLeg": 15.4908,
+    "tau0": 74.40378692093864,
+    "cap": 140,
+    "target": 98,
+    "leanDeg": 0,
+    "tauAtLean": 74.40378692093864,
+    "ssPelvisOffset": -0.015957114351607803
+   },
+   "sup": {
+    "footClear": 0.03,
+    "latMin": 0.1
+   },
+   "reqRaw": [
+    {
+     "id": 0,
+     "type": "place",
+     "foot": "R",
+     "label": null,
+     "status": "FAILED_BLOCKED",
+     "why": "swing foot 20 cm behind its trajectory for 150 ms — obstructed, not driven through; holding it where it is",
+     "proj": {
+      "requested": [
+       0.1600785140554716,
+       0.3862381190019179
+      ],
+      "target": [
+       0.16007518486957456,
+       0.34760295241089856
+      ],
+      "yaw": 0.00008616983392461063,
+      "rejected": false,
+      "reasons": [
+       "single support: needs 7.2 cm of pelvis drop to reach (the stance ankle allows 6.1 cm)"
+      ],
+      "current": [
+       0.1600526631053262,
+       0.0862381201157039
+      ]
+     },
+     "reach": [
+      [
+       0.1600526631053262,
+       0.3476257543930476
+      ],
+      [
+       0.19732226359097543,
+       0.2976045277743818
+      ],
+      [
+       0.22039101593565433,
+       0.25201638204411636
+      ],
+      [
+       0.23354662062485743,
+       0.21353338858884074
+      ],
+      [
+       0.2405374477477635,
+       0.18215615136249985
+      ],
+      [
+       0.24391825866334077,
+       0.15660971041689686
+      ],
+      [
+       0.24520293004816351,
+       0.13539964965671955
+      ],
+      [
+       0.24521517457834596,
+       0.11723473936723706
+      ],
+      [
+       0.2443900506939144,
+       0.10110907703003924
+      ],
+      [
+       0.24292162062485745,
+       0.0862381201157039
+      ],
+      [
+       0.2408737388316577,
+       0.07198718385526967
+      ],
+      [
+       0.2381993115511465,
+       0.05779506617376014
+      ],
+      [
+       0.23474893992160917,
+       0.04311220458836016
+      ],
+      [
+       0.23023872662320802,
+       0.02734502010406413
+      ],
+      [
+       0.2241980330905247,
+       0.009792644987558857
+      ],
+      [
+       0.21583803297837306,
+       -0.010384974823435436
+      ],
+      [
+       0.2038766033755386,
+       -0.034167166208232666
+      ],
+      [
+       0.18627158778259995,
+       -0.06245679073644454
+      ],
+      [
+       0.16005266310532623,
+       -0.09548032470851482
+      ],
+      [
+       0.12162330603757221,
+       -0.13170559396224646
+      ],
+      [
+       0.06796774756344452,
+       -0.1667631060080021
+      ],
+      [
+       0.03302782179673247,
+       -0.1337753588541543
+      ],
+      [
+       0.033036003190139884,
+       -0.06513444065753636
+      ],
+      [
+       0.03304096085113292,
+       -0.020337352400988273
+      ],
+      [
+       0.033042827809706216,
+       0.01290895751804759
+      ],
+      [
+       0.03304446461293398,
+       0.04001091635669949
+      ],
+      [
+       0.03304618349589203,
+       0.06384345103576115
+      ],
+      [
+       0.03305070998032625,
+       0.08623812011570388
+      ],
+      [
+       0.033050691588023096,
+       0.10863199429737239
+      ],
+      [
+       0.03305306775582445,
+       0.13246219258677502
+      ],
+      [
+       0.0330547208587694,
+       0.15956041625828205
+      ],
+      [
+       0.03305849421698795,
+       0.19279888039157372
+      ],
+      [
+       0.03306248522361993,
+       0.237579120830405
+      ],
+      [
+       0.03306673170884178,
+       0.3061842051408705
+      ],
+      [
+       0.03326838033080817,
+       0.4345750741804411
+      ],
+      [
+       0.10542566390354341,
+       0.3960432275490457
+      ]
+     ],
+     "excl": [
+      [
+       -0.2431985052872373,
+       -0.09249414323966779
+      ],
+      [
+       -0.07904531338041866,
+       -0.09250833109519667
+      ],
+      [
+       -0.07901450087134794,
+       0.2650705058493597
+      ],
+      [
+       -0.24316769277816658,
+       0.2650846937048886
+      ]
+     ],
+     "td": null,
+     "accepted": null,
+     "blocked": {
+      "t": 2.25,
+      "lag": 0.19616293658178527,
+      "footPos": [
+       0.1727868616580963,
+       0.1238383799791336,
+       0.057995036244392395
+      ]
+     },
+     "align": null,
+     "fwdBias": 0.05337295344816831,
+     "clear": 0.08,
+     "T": 0.7997124435154752
+    }
+   ],
+   "repeatHashes": [
+    "1f568cff",
+    "1f568cff",
+    "1f568cff"
+   ],
+   "deterministic": true
+  },
+  {
+   "test": "J_repeat",
+   "group": "J repeated",
+   "title": "J — six alternating placements R↑ L↑ R→ R← L↓ R↓ (closed loop: returns to the start)",
+   "hash": "368f4f86",
+   "nan": false,
+   "audit": {
+    "teleports": 0,
+    "velocityWrites": 0
+   },
+   "supportFixture": false,
+   "fell": false,
+   "finalClass": "RECOVERABLE_IN_PLACE",
+   "requests": [
+    {
+     "id": 0,
+     "label": "1 R fwd",
+     "type": "place",
+     "foot": "R",
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "requested": [
+      0.16,
+      0.236
+     ],
+     "feasible": [
+      0.16,
+      0.236
+     ],
+     "correctedCm": 0,
+     "projectionReasons": [],
+     "stanceClearanceCm": 15.7,
+     "liftoff": {
+      "commandT": 1.696,
+      "physicalT": 1.721,
+      "swingLoadN": 0,
+      "swingLoadPctBW": 0,
+      "stanceXiMarginCm": 6.9,
+      "stanceComMarginCm": 4.5,
+      "vcom": 0.072,
+      "transferS": 1.196
+     },
+     "touchdown": {
+      "t": 2.571,
+      "singleSupportS": 0.85,
+      "actualCenter": [
+       0.149,
+       0.209
+      ],
+      "landingErrorCm": 2.9,
+      "verticalVelocity": -0.048,
+      "horizontalVelocity": 0.441,
+      "early": false,
+      "uAt": 1,
+      "plannedAnkleY": 0.1035,
+      "actualAnkleY": 0.0958,
+      "footTiltDeg": 1.6
+     },
+     "accepted": {
+      "t": 4.575,
+      "fromTouchdownS": 2.004,
+      "loadN": 309,
+      "finalCenter": [
+       0.148,
+       0.207
+      ],
+      "finalErrorCm": 3.1,
+      "driftAfterTouchdownCm": 0.2
+     },
+     "metrics": {
+      "minSoleClearanceCm": 3.9,
+      "peakSoleClearanceCm": 7.6,
+      "minClearanceToStanceLegCm": 13.7,
+      "peakSwingFootPenetrationMm": 0.58,
+      "stanceFootSlidMm": 2.03,
+      "stanceMaxSlipSpeed": 0.004,
+      "legSelfContactMm": 0,
+      "saturationMs": {
+       "hip_L": 2254,
+       "ankle_L": 1513,
+       "ankle_R": 288
+      },
+      "jointLimitMarginDeg": 7.3,
+      "jointLimitMarginJoint": "ankle_R",
+      "rootResidualMaxN": 0.1,
+      "ankle": {
+       "stance": {
+        "foot": "L",
+        "maxDorsiDeg": 18.9,
+        "limitDeg": 30,
+        "minMarginDeg": 11.1,
+        "atStopMs": 0
+       },
+       "swing": {
+        "foot": "R",
+        "maxDorsiDeg": 20.3,
+        "limitDeg": 30,
+        "minMarginDeg": 9.7,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     }
+    },
+    {
+     "id": 1,
+     "label": "2 L fwd",
+     "type": "place",
+     "foot": "L",
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "requested": [
+      -0.159,
+      0.236
+     ],
+     "feasible": [
+      -0.159,
+      0.236
+     ],
+     "correctedCm": 0,
+     "projectionReasons": [],
+     "stanceClearanceCm": 14.4,
+     "liftoff": {
+      "commandT": 6.408,
+      "physicalT": 6.442,
+      "swingLoadN": 0,
+      "swingLoadPctBW": 0,
+      "stanceXiMarginCm": 6.2,
+      "stanceComMarginCm": 4,
+      "vcom": 0.074,
+      "transferS": 1.233
+     },
+     "touchdown": {
+      "t": 7.337,
+      "singleSupportS": 0.896,
+      "actualCenter": [
+       -0.142,
+       0.19
+      ],
+      "landingErrorCm": 5,
+      "verticalVelocity": -0.082,
+      "horizontalVelocity": 0.495,
+      "early": true,
+      "uAt": 0.93,
+      "plannedAnkleY": 0.1035,
+      "actualAnkleY": 0.1017,
+      "footTiltDeg": 2.8
+     },
+     "accepted": {
+      "t": 9.338,
+      "fromTouchdownS": 2,
+      "loadN": 395,
+      "finalCenter": [
+       -0.138,
+       0.188
+      ],
+      "finalErrorCm": 5.3,
+      "driftAfterTouchdownCm": 0.46
+     },
+     "metrics": {
+      "minSoleClearanceCm": 4.5,
+      "peakSoleClearanceCm": 8.8,
+      "minClearanceToStanceLegCm": 12.1,
+      "peakSwingFootPenetrationMm": 0.58,
+      "stanceFootSlidMm": 2.03,
+      "stanceMaxSlipSpeed": 0.004,
+      "legSelfContactMm": 0,
+      "saturationMs": {
+       "ankle_L": 283,
+       "hip_R": 1025,
+       "ankle_R": 1679
+      },
+      "jointLimitMarginDeg": 4.8,
+      "jointLimitMarginJoint": "ankle_R",
+      "rootResidualMaxN": 0.1,
+      "ankle": {
+       "swing": {
+        "foot": "L",
+        "maxDorsiDeg": 25.1,
+        "limitDeg": 30,
+        "minMarginDeg": 4.9,
+        "atStopMs": 0
+       },
+       "stance": {
+        "foot": "R",
+        "maxDorsiDeg": 16.3,
+        "limitDeg": 30,
+        "minMarginDeg": 13.7,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     }
+    },
+    {
+     "id": 2,
+     "label": "3 R out",
+     "type": "place",
+     "foot": "R",
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "requested": [
+      0.228,
+      0.208
+     ],
+     "feasible": [
+      0.228,
+      0.208
+     ],
+     "correctedCm": 0,
+     "projectionReasons": [],
+     "stanceClearanceCm": 20.2,
+     "liftoff": {
+      "commandT": 11.025,
+      "physicalT": 11.042,
+      "swingLoadN": 0,
+      "swingLoadPctBW": 0,
+      "stanceXiMarginCm": 5,
+      "stanceComMarginCm": 2.6,
+      "vcom": 0.072,
+      "transferS": 1.088
+     },
+     "touchdown": {
+      "t": 11.854,
+      "singleSupportS": 0.813,
+      "actualCenter": [
+       0.218,
+       0.166
+      ],
+      "landingErrorCm": 4.3,
+      "verticalVelocity": -0.018,
+      "horizontalVelocity": 0.562,
+      "early": false,
+      "uAt": 1,
+      "plannedAnkleY": 0.1035,
+      "actualAnkleY": 0.0989,
+      "footTiltDeg": 2.2
+     },
+     "accepted": {
+      "t": 13.992,
+      "fromTouchdownS": 2.138,
+      "loadN": 376,
+      "finalCenter": [
+       0.214,
+       0.166
+      ],
+      "finalErrorCm": 4.4,
+      "driftAfterTouchdownCm": 0.47
+     },
+     "metrics": {
+      "minSoleClearanceCm": 3.4,
+      "peakSoleClearanceCm": 7.3,
+      "minClearanceToStanceLegCm": 11.5,
+      "peakSwingFootPenetrationMm": 0.46,
+      "stanceFootSlidMm": 2.38,
+      "stanceMaxSlipSpeed": 0.005,
+      "legSelfContactMm": 0,
+      "saturationMs": {
+       "hip_L": 742,
+       "ankle_L": 1429,
+       "ankle_R": 383
+      },
+      "jointLimitMarginDeg": 4.9,
+      "jointLimitMarginJoint": "ankle_R",
+      "rootResidualMaxN": 0.08,
+      "ankle": {
+       "stance": {
+        "foot": "L",
+        "maxDorsiDeg": 18,
+        "limitDeg": 30,
+        "minMarginDeg": 12,
+        "atStopMs": 0
+       },
+       "swing": {
+        "foot": "R",
+        "maxDorsiDeg": 25.1,
+        "limitDeg": 30,
+        "minMarginDeg": 4.9,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     }
+    },
+    {
+     "id": 3,
+     "label": "4 R in",
+     "type": "place",
+     "foot": "R",
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "requested": [
+      0.134,
+      0.166
+     ],
+     "feasible": [
+      0.134,
+      0.166
+     ],
+     "correctedCm": 0,
+     "projectionReasons": [],
+     "stanceClearanceCm": 10.7,
+     "liftoff": {
+      "commandT": 15.829,
+      "physicalT": 15.867,
+      "swingLoadN": 2.7,
+      "swingLoadPctBW": 0.3,
+      "stanceXiMarginCm": 6.7,
+      "stanceComMarginCm": 4.3,
+      "vcom": 0.073,
+      "transferS": 1.237
+     },
+     "touchdown": {
+      "t": 16.679,
+      "singleSupportS": 0.813,
+      "actualCenter": [
+       0.103,
+       0.123
+      ],
+      "landingErrorCm": 5.2,
+      "verticalVelocity": -0.047,
+      "horizontalVelocity": 0.539,
+      "early": true,
+      "uAt": 0.95,
+      "plannedAnkleY": 0.1035,
+      "actualAnkleY": 0.1012,
+      "footTiltDeg": 2.9
+     },
+     "accepted": {
+      "t": 18.679,
+      "fromTouchdownS": 2,
+      "loadN": 422,
+      "finalCenter": [
+       0.098,
+       0.121
+      ],
+      "finalErrorCm": 5.7,
+      "driftAfterTouchdownCm": 0.56
+     },
+     "metrics": {
+      "minSoleClearanceCm": 5,
+      "peakSoleClearanceCm": 9.2,
+      "minClearanceToStanceLegCm": 9.3,
+      "peakSwingFootPenetrationMm": 0.67,
+      "stanceFootSlidMm": 2.28,
+      "stanceMaxSlipSpeed": 0.005,
+      "legSelfContactMm": 0,
+      "saturationMs": {
+       "hip_L": 963,
+       "ankle_L": 2171,
+       "ankle_R": 442
+      },
+      "jointLimitMarginDeg": 4.9,
+      "jointLimitMarginJoint": "ankle_R",
+      "rootResidualMaxN": 0.1,
+      "ankle": {
+       "stance": {
+        "foot": "L",
+        "maxDorsiDeg": 17.6,
+        "limitDeg": 30,
+        "minMarginDeg": 12.4,
+        "atStopMs": 0
+       },
+       "swing": {
+        "foot": "R",
+        "maxDorsiDeg": 25.1,
+        "limitDeg": 30,
+        "minMarginDeg": 4.9,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     }
+    },
+    {
+     "id": 4,
+     "label": "5 L back",
+     "type": "place",
+     "foot": "L",
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "requested": [
+      -0.14,
+      0.037
+     ],
+     "feasible": [
+      -0.14,
+      0.037
+     ],
+     "correctedCm": 0,
+     "projectionReasons": [],
+     "stanceClearanceCm": 7.3,
+     "liftoff": {
+      "commandT": 20.233,
+      "physicalT": 20.267,
+      "swingLoadN": 0,
+      "swingLoadPctBW": 0,
+      "stanceXiMarginCm": 4.6,
+      "stanceComMarginCm": 2.5,
+      "vcom": 0.07,
+      "transferS": 0.95
+     },
+     "touchdown": {
+      "t": 22.029,
+      "singleSupportS": 1.762,
+      "actualCenter": [
+       -0.135,
+       0.041
+      ],
+      "landingErrorCm": 0.6,
+      "verticalVelocity": -0.085,
+      "horizontalVelocity": 0.039,
+      "early": false,
+      "uAt": 1,
+      "plannedAnkleY": 0.1035,
+      "actualAnkleY": 0.0887,
+      "footTiltDeg": 0.3
+     },
+     "accepted": {
+      "t": 24.029,
+      "fromTouchdownS": 2,
+      "loadN": 407,
+      "finalCenter": [
+       -0.135,
+       0.042
+      ],
+      "finalErrorCm": 0.7,
+      "driftAfterTouchdownCm": 0.05
+     },
+     "metrics": {
+      "minSoleClearanceCm": 5,
+      "peakSoleClearanceCm": 7.7,
+      "minClearanceToStanceLegCm": 6.8,
+      "peakSwingFootPenetrationMm": 0.51,
+      "stanceFootSlidMm": 2.13,
+      "stanceMaxSlipSpeed": 0.005,
+      "legSelfContactMm": 0,
+      "saturationMs": {
+       "ankle_L": 317,
+       "hip_R": 329,
+       "ankle_R": 2604
+      },
+      "jointLimitMarginDeg": 4.9,
+      "jointLimitMarginJoint": "ankle_L",
+      "rootResidualMaxN": 0.07,
+      "ankle": {
+       "swing": {
+        "foot": "L",
+        "maxDorsiDeg": 25.1,
+        "limitDeg": 30,
+        "minMarginDeg": 4.9,
+        "atStopMs": 0
+       },
+       "stance": {
+        "foot": "R",
+        "maxDorsiDeg": 13.7,
+        "limitDeg": 30,
+        "minMarginDeg": 16.3,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     }
+    },
+    {
+     "id": 5,
+     "label": "6 R back",
+     "type": "place",
+     "foot": "R",
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "requested": [
+      0.097,
+      -0.029
+     ],
+     "feasible": [
+      0.097,
+      -0.029
+     ],
+     "correctedCm": 0,
+     "projectionReasons": [],
+     "stanceClearanceCm": 6.8,
+     "liftoff": {
+      "commandT": 25.592,
+      "physicalT": 25.604,
+      "swingLoadN": 0,
+      "swingLoadPctBW": 0,
+      "stanceXiMarginCm": 4.6,
+      "stanceComMarginCm": 2.5,
+      "vcom": 0.069,
+      "transferS": 0.962
+     },
+     "touchdown": {
+      "t": 27.387,
+      "singleSupportS": 1.783,
+      "actualCenter": [
+       0.093,
+       -0.025
+      ],
+      "landingErrorCm": 0.6,
+      "verticalVelocity": -0.08,
+      "horizontalVelocity": 0.05,
+      "early": false,
+      "uAt": 1,
+      "plannedAnkleY": 0.1035,
+      "actualAnkleY": 0.0888,
+      "footTiltDeg": 0.3
+     },
+     "accepted": {
+      "t": 29.387,
+      "fromTouchdownS": 2,
+      "loadN": 406,
+      "finalCenter": [
+       0.092,
+       -0.025
+      ],
+      "finalErrorCm": 0.7,
+      "driftAfterTouchdownCm": 0.05
+     },
+     "metrics": {
+      "minSoleClearanceCm": 5.1,
+      "peakSoleClearanceCm": 8.2,
+      "minClearanceToStanceLegCm": 6.6,
+      "peakSwingFootPenetrationMm": 0.53,
+      "stanceFootSlidMm": 1.89,
+      "stanceMaxSlipSpeed": 0.004,
+      "legSelfContactMm": 0,
+      "saturationMs": {
+       "hip_L": 167,
+       "ankle_L": 2688,
+       "ankle_R": 150
+      },
+      "jointLimitMarginDeg": 4.9,
+      "jointLimitMarginJoint": "ankle_R",
+      "rootResidualMaxN": 0.07,
+      "ankle": {
+       "stance": {
+        "foot": "L",
+        "maxDorsiDeg": 14.2,
+        "limitDeg": 30,
+        "minMarginDeg": 15.8,
+        "atStopMs": 0
+       },
+       "swing": {
+        "foot": "R",
+        "maxDorsiDeg": 25.1,
+        "limitDeg": 30,
+        "minMarginDeg": 4.9,
+        "atStopMs": 0
+       }
+      },
+      "classMax": "RECOVERABLE_IN_PLACE"
+     }
+    }
+   ],
+   "loads": {
+    "totalVsBodyWeightN": 8.97,
+    "maxStepChangeN": 164.7,
+    "shareR": [
+     0,
+     1
+    ]
+   },
+   "drift": {
+    "footL": 5.12,
+    "footR": 13.03,
+    "com": 8.09,
+    "slidL": 12.1,
+    "slidR": 9.7
+   },
+   "root": {
+    "residualMeanN": 0.033,
+    "residualMaxN": 0.1
+   },
+   "stability": {
+    "maxJointSepMm": 0.16,
+    "minJointLimitMarginDeg": 4.8,
+    "maxTurfPenMm": 1.81,
+    "maxSelfPenMm": 0,
+    "keMaxJ": 3.87
+   },
+   "cpu": {
+    "msPerFrame": 1.31,
+    "jolt": 0.6574,
+    "sensing": 0.0659,
+    "controller": 0.5867
+   },
+   "events": [
+    {
+     "t": 0.5,
+     "kind": "request",
+     "what": "place R 1 R fwd"
+    },
+    {
+     "t": 1.696,
+     "kind": "liftoff commanded",
+     "what": "R"
+    },
+    {
+     "t": 1.721,
+     "kind": "liftoff",
+     "what": "R"
+    },
+    {
+     "t": 2.571,
+     "kind": "touchdown",
+     "what": "R"
+    },
+    {
+     "t": 2.575,
+     "kind": "landed foot loaded",
+     "what": "R 63 N"
+    },
+    {
+     "t": 4.575,
+     "kind": "DONE",
+     "what": "placed, loaded and accepted"
+    },
+    {
+     "t": 5.175,
+     "kind": "request",
+     "what": "place L 2 L fwd"
+    },
+    {
+     "t": 6.408,
+     "kind": "liftoff commanded",
+     "what": "L"
+    },
+    {
+     "t": 6.442,
+     "kind": "liftoff",
+     "what": "L"
+    },
+    {
+     "t": 7.337,
+     "kind": "touchdown",
+     "what": "L"
+    },
+    {
+     "t": 7.342,
+     "kind": "landed foot loaded",
+     "what": "L 63 N"
+    },
+    {
+     "t": 9.338,
+     "kind": "DONE",
+     "what": "placed, loaded and accepted"
+    },
+    {
+     "t": 9.938,
+     "kind": "request",
+     "what": "place R 3 R out"
+    },
+    {
+     "t": 11.025,
+     "kind": "liftoff commanded",
+     "what": "R"
+    },
+    {
+     "t": 11.042,
+     "kind": "liftoff",
+     "what": "R"
+    },
+    {
+     "t": 11.854,
+     "kind": "touchdown",
+     "what": "R"
+    },
+    {
+     "t": 11.858,
+     "kind": "landed foot loaded",
+     "what": "R 65 N"
+    },
+    {
+     "t": 13.992,
+     "kind": "DONE",
+     "what": "placed, loaded and accepted"
+    },
+    {
+     "t": 14.592,
+     "kind": "request",
+     "what": "place R 4 R in"
+    },
+    {
+     "t": 15.829,
+     "kind": "liftoff commanded",
+     "what": "R"
+    },
+    {
+     "t": 15.867,
+     "kind": "liftoff",
+     "what": "R"
+    },
+    {
+     "t": 16.679,
+     "kind": "touchdown",
+     "what": "R"
+    },
+    {
+     "t": 16.683,
+     "kind": "landed foot loaded",
+     "what": "R 79 N"
+    },
+    {
+     "t": 18.679,
+     "kind": "DONE",
+     "what": "placed, loaded and accepted"
+    },
+    {
+     "t": 19.283,
+     "kind": "request",
+     "what": "place L 5 L back"
+    },
+    {
+     "t": 20.233,
+     "kind": "liftoff commanded",
+     "what": "L"
+    },
+    {
+     "t": 20.267,
+     "kind": "liftoff",
+     "what": "L"
+    },
+    {
+     "t": 22.029,
+     "kind": "touchdown",
+     "what": "L"
+    },
+    {
+     "t": 22.033,
+     "kind": "landed foot loaded",
+     "what": "L 76 N"
+    },
+    {
+     "t": 24.029,
+     "kind": "DONE",
+     "what": "placed, loaded and accepted"
+    },
+    {
+     "t": 24.629,
+     "kind": "request",
+     "what": "place R 6 R back"
+    },
+    {
+     "t": 25.592,
+     "kind": "liftoff commanded",
+     "what": "R"
+    },
+    {
+     "t": 25.604,
+     "kind": "liftoff",
+     "what": "R"
+    },
+    {
+     "t": 27.387,
+     "kind": "touchdown",
+     "what": "R"
+    },
+    {
+     "t": 27.392,
+     "kind": "landed foot loaded",
+     "what": "R 70 N"
+    },
+    {
+     "t": 29.387,
+     "kind": "DONE",
+     "what": "placed, loaded and accepted"
+    }
+   ],
+   "marks": {
+    "liftoff#0": 413,
+    "touchdown#1": 617,
+    "DONE#2": 1098,
+    "liftoff#3": 1546,
+    "touchdown#4": 1761,
+    "DONE#5": 2241,
+    "liftoff#6": 2650,
+    "touchdown#7": 2845,
+    "DONE#8": 3358,
+    "liftoff#9": 3808,
+    "touchdown#10": 4003,
+    "DONE#11": 4483,
+    "liftoff#12": 4864,
+    "touchdown#13": 5287,
+    "DONE#14": 5767,
+    "liftoff#15": 6145,
+    "touchdown#16": 6573,
+    "DONE#17": 7053
+   },
+   "worst": {
+    "liftoff": 413,
+    "touchdown": 617,
+    "done": 1098
+   },
+   "calib": "V1.1",
+   "recal": {
+    "anticipateReach": true,
+    "reachToGround": true,
+    "unloadPlan": true,
+    "reachAll": true,
+    "ankleReach": true
+   },
+   "env": {
+    "terrain": [],
+    "obstacle": null
+   },
+   "box": {
+    "he": [
+     0.08207660244551523,
+     0.0746698049377926,
+     0.17878945945945948
+    ],
+    "pos": [
+     -0.0005227809072962872,
+     -0.013330195062207416,
+     0.09765810810810813
+    ]
+   },
+   "lean": {
+    "hipHalfWidth": 0.092,
+    "legComOffset": 0.026369450636924224,
+    "mUp": 38.305800000000005,
+    "hUp": 0.2897783130662963,
+    "mPelvis": 8.7126,
+    "mLeg": 15.4908,
+    "tau0": 74.40378692093864,
+    "cap": 140,
+    "target": 98,
+    "leanDeg": 0,
+    "tauAtLean": 74.40378692093864,
+    "ssPelvisOffset": -0.015957114351607803
+   },
+   "sup": {
+    "footClear": 0.03,
+    "latMin": 0.1
+   },
+   "reqRaw": [
+    {
+     "id": 0,
+     "type": "place",
+     "foot": "R",
+     "label": "1 R fwd",
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "proj": {
+      "requested": [
+       0.1600655885803989,
+       0.2362381195588109
+      ],
+      "target": [
+       0.1600655885803989,
+       0.2362381195588109
+      ],
+      "yaw": 0.00008616983392461063,
+      "rejected": false,
+      "reasons": [],
+      "current": [
+       0.1600526631053262,
+       0.0862381201157039
+      ]
+     },
+     "reach": [
+      [
+       0.1600526631053262,
+       0.3476257543930476
+      ],
+      [
+       0.19732226359097543,
+       0.2976045277743818
+      ],
+      [
+       0.22039101593565433,
+       0.25201638204411636
+      ],
+      [
+       0.23354662062485743,
+       0.21353338858884074
+      ],
+      [
+       0.2405374477477635,
+       0.18215615136249985
+      ],
+      [
+       0.24391825866334077,
+       0.15660971041689686
+      ],
+      [
+       0.24520293004816351,
+       0.13539964965671955
+      ],
+      [
+       0.24521517457834596,
+       0.11723473936723706
+      ],
+      [
+       0.2443900506939144,
+       0.10110907703003924
+      ],
+      [
+       0.24292162062485745,
+       0.0862381201157039
+      ],
+      [
+       0.2408737388316577,
+       0.07198718385526967
+      ],
+      [
+       0.2381993115511465,
+       0.05779506617376014
+      ],
+      [
+       0.23474893992160917,
+       0.04311220458836016
+      ],
+      [
+       0.23023872662320802,
+       0.02734502010406413
+      ],
+      [
+       0.2241980330905247,
+       0.009792644987558857
+      ],
+      [
+       0.21583803297837306,
+       -0.010384974823435436
+      ],
+      [
+       0.2038766033755386,
+       -0.034167166208232666
+      ],
+      [
+       0.18627158778259995,
+       -0.06245679073644454
+      ],
+      [
+       0.16005266310532623,
+       -0.09548032470851482
+      ],
+      [
+       0.12162330603757221,
+       -0.13170559396224646
+      ],
+      [
+       0.06796774756344452,
+       -0.1667631060080021
+      ],
+      [
+       0.03302782179673247,
+       -0.1337753588541543
+      ],
+      [
+       0.033036003190139884,
+       -0.06513444065753636
+      ],
+      [
+       0.03304096085113292,
+       -0.020337352400988273
+      ],
+      [
+       0.033042827809706216,
+       0.01290895751804759
+      ],
+      [
+       0.03304446461293398,
+       0.04001091635669949
+      ],
+      [
+       0.03304618349589203,
+       0.06384345103576115
+      ],
+      [
+       0.03305070998032625,
+       0.08623812011570388
+      ],
+      [
+       0.033050691588023096,
+       0.10863199429737239
+      ],
+      [
+       0.03305306775582445,
+       0.13246219258677502
+      ],
+      [
+       0.0330547208587694,
+       0.15956041625828205
+      ],
+      [
+       0.03305849421698795,
+       0.19279888039157372
+      ],
+      [
+       0.03306248522361993,
+       0.237579120830405
+      ],
+      [
+       0.03306673170884178,
+       0.3061842051408705
+      ],
+      [
+       0.03326838033080817,
+       0.4345750741804411
+      ],
+      [
+       0.10542566390354341,
+       0.3960432275490457
+      ]
+     ],
+     "excl": [
+      [
+       -0.2431985052872373,
+       -0.09249414323966779
+      ],
+      [
+       -0.07904531338041866,
+       -0.09250833109519667
+      ],
+      [
+       -0.07901450087134794,
+       0.2650705058493597
+      ],
+      [
+       -0.24316769277816658,
+       0.2650846937048886
+      ]
+     ],
+     "td": {
+      "center": [
+       0.14899864042682873,
+       0.20934845471188607
+      ],
+      "rot": [
+       0.012282690033316612,
+       0.005223451182246208,
+       -0.006613517180085182,
+       0.999889075756073
+      ],
+      "pos": [
+       0.14869511127471924,
+       0.09584243595600128,
+       0.11204610019922256
+      ],
+      "t": 2.5708333333333333
+     },
+     "accepted": {
+      "center": [
+       0.14818488102737293,
+       0.20748263237285167
+      ],
+      "rot": [
+       -0.00010461257625138387,
+       0.0061078560538589954,
+       -0.0004550039884634316,
+       0.9999812841415405
+      ],
+      "t": 4.575
+     },
+     "blocked": null,
+     "align": null,
+     "fwdBias": 0.10905535358187897,
+     "clear": 0.08,
+     "T": 0.7997222170109951
+    },
+    {
+     "id": 1,
+     "type": "place",
+     "foot": "L",
+     "label": "2 L fwd",
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "proj": {
+      "requested": [
+       -0.15924033127854786,
+       0.23621654142679732
+      ],
+      "target": [
+       -0.15924033127854786,
+       0.23621654142679732
+      ],
+      "yaw": 0.012182929690009872,
+      "rejected": false,
+      "reasons": [],
+      "current": [
+       -0.1610677255264742,
+       0.08622767307230024
+      ]
+     },
+     "reach": [
+      [
+       -0.1610677255264742,
+       0.4823900876230815
+      ],
+      [
+       -0.080821949844463,
+       0.5413240817988112
+      ],
+      [
+       -0.04358493355776297,
+       0.40900899118081924
+      ],
+      [
+       -0.04507041107334922,
+       0.2871409152466564
+      ],
+      [
+       -0.0458443978544381,
+       0.2235454877761091
+      ],
+      [
+       -0.04634340606352036,
+       0.1824928072207293
+      ],
+      [
+       -0.04671209443410096,
+       0.1522509274668315
+      ],
+      [
+       -0.047011558655723665,
+       0.1277407228477524
+      ],
+      [
+       -0.04727446395328927,
+       0.10629249531046853
+      ],
+      [
+       -0.04751944671788044,
+       0.08622767307230025
+      ],
+      [
+       -0.047761337903447915,
+       0.06624869984774903
+      ],
+      [
+       -0.04801812637391169,
+       0.045080983985041796
+      ],
+      [
+       -0.048309727358257656,
+       0.02112681247659713
+      ],
+      [
+       -0.048668330375903804,
+       -0.008086617943092733
+      ],
+      [
+       -0.04914288224679619,
+       -0.04715916100679983
+      ],
+      [
+       -0.0874593270889742,
+       -0.04126581288522334
+      ],
+      [
+       -0.12291454770343087,
+       -0.018597321476948092
+      ],
+      [
+       -0.1458319103042663,
+       -0.0001789288044621029
+      ],
+      [
+       -0.1610677255264742,
+       0.01409785129495647
+      ],
+      [
+       -0.17180521141480226,
+       0.02533236456542355
+      ],
+      [
+       -0.1798836347175503,
+       0.03453138744330986
+      ],
+      [
+       -0.18635687957920857,
+       0.042425573372527926
+      ],
+      [
+       -0.191854560671205,
+       0.04953735168396162
+      ],
+      [
+       -0.19677617842692838,
+       0.05626472341361784
+      ],
+      [
+       -0.20140894794885478,
+       0.06293665744730022
+      ],
+      [
+       -0.20597613141486326,
+       0.06988235006058155
+      ],
+      [
+       -0.2106973117977361,
+       0.07747663797127835
+      ],
+      [
+       -0.21578879486241168,
+       0.08622767307230023
+      ],
+      [
+       -0.22152124100450327,
+       0.09688725892975353
+      ],
+      [
+       -0.22821095421535012,
+       0.11066580974757964
+      ],
+      [
+       -0.23616440166121827,
+       0.12958475925394086
+      ],
+      [
+       -0.2453225618064715,
+       0.1569258751197481
+      ],
+      [
+       -0.25421974951690607,
+       0.19724193232031934
+      ],
+      [
+       -0.25811820160069304,
+       0.2543240285315948
+      ],
+      [
+       -0.24867959625566635,
+       0.32693930957693257
+      ],
+      [
+       -0.21762076324672153,
+       0.4069558877392934
+      ]
+     ],
+     "excl": [
+      [
+       0.06388011270612426,
+       0.0297094134103926
+      ],
+      [
+       0.2280210521767862,
+       0.027709625128882392
+      ],
+      [
+       0.23237730317800656,
+       0.3852620026098951
+      ],
+      [
+       0.06823636370734461,
+       0.3872617908914054
+      ]
+     ],
+     "td": {
+      "center": [
+       -0.1421157333260605,
+       0.1897079014157443
+      ],
+      "rot": [
+       0.022139444947242737,
+       -0.0018042937153950334,
+       0.009628735482692719,
+       0.9997069835662842
+      ],
+      "pos": [
+       -0.14154008030891418,
+       0.10171915590763092,
+       0.09273788332939148
+      ],
+      "t": 7.3374999999999995
+     },
+     "accepted": {
+      "center": [
+       -0.13803677020591576,
+       0.18758664215558107
+      ],
+      "rot": [
+       -0.0001689646451268345,
+       -0.004394460003823042,
+       0.00022830936359241605,
+       0.9999903440475464
+      ],
+      "t": 9.3375
+     },
+     "blocked": null,
+     "align": null,
+     "fwdBias": 0.23210716393659467,
+     "clear": 0.08,
+     "T": 0.9959354360019264
+    },
+    {
+     "id": 2,
+     "type": "place",
+     "foot": "R",
+     "label": "3 R out",
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "proj": {
+      "requested": [
+       0.228081242332851,
+       0.20799089566242307
+      ],
+      "target": [
+       0.228081242332851,
+       0.20799089566242307
+      ],
+      "yaw": -0.008684984189331672,
+      "rejected": false,
+      "reasons": [],
+      "current": [
+       0.1480842594719007,
+       0.20729610566190015
+      ]
+     },
+     "reach": [
+      [
+       0.1480842594719007,
+       0.4831261837869002
+      ],
+      [
+       0.18952071671107495,
+       0.4422939322717957
+      ],
+      [
+       0.2189155581666482,
+       0.4019034994163646
+      ],
+      [
+       0.23884048505783817,
+       0.3644904994799264
+      ],
+      [
+       0.25187029112868603,
+       0.3309834817499705
+      ],
+      [
+       0.26008740055414625,
+       0.30127790003470933
+      ],
+      [
+       0.26497707436442375,
+       0.2747842038064314
+      ],
+      [
+       0.26751308907776594,
+       0.2507646447516853
+      ],
+      [
+       0.2682925361476386,
+       0.22849206814430081
+      ],
+      [
+       0.26764297529221315,
+       0.20729610566190015
+      ],
+      [
+       0.2656778427116015,
+       0.18656118417855416
+      ],
+      [
+       0.2623598064863589,
+       0.1657032080441494
+      ],
+      [
+       0.2574685960558556,
+       0.14414302949002522
+      ],
+      [
+       0.2505843162606934,
+       0.12128834581477398
+      ],
+      [
+       0.24101559984999815,
+       0.09654484690170724
+      ],
+      [
+       0.2277236942863538,
+       0.06935655827719764
+      ],
+      [
+       0.20919447477778225,
+       0.039397169010980476
+      ],
+      [
+       0.18342623164253702,
+       0.006861821421135783
+      ],
+      [
+       0.14808425947190074,
+       -0.027001074513881063
+      ],
+      [
+       0.10105648777177739,
+       -0.05941164099814128
+      ],
+      [
+       0.05810043813324954,
+       -0.039932411582283
+      ],
+      [
+       0.0573188786125257,
+       0.05008585444512298
+      ],
+      [
+       0.05689779085532731,
+       0.09862430409211963
+      ],
+      [
+       0.05661970315229489,
+       0.1305482301883253
+      ],
+      [
+       0.05641263729274107,
+       0.15436946991971262
+      ],
+      [
+       0.05624570911585609,
+       0.1738696069741421
+      ],
+      [
+       0.05609663953683859,
+       0.19107620637619285
+      ],
+      [
+       0.05595474287033822,
+       0.20729610566190013
+      ],
+      [
+       0.05581262973257939,
+       0.22356608353888405
+      ],
+      [
+       0.05566069539930234,
+       0.24093553192912118
+      ],
+      [
+       0.05548894381549904,
+       0.260756036081822
+      ],
+      [
+       0.055276647327795775,
+       0.28517093878246264
+      ],
+      [
+       0.054988141996593576,
+       0.31824373811966994
+      ],
+      [
+       0.054544830760963114,
+       0.36931114870021087
+      ],
+      [
+       0.053700978586991716,
+       0.4666120386672301
+      ],
+      [
+       0.09294614067978663,
+       0.5199999163355382
+      ]
+     ],
+     "excl": [
+      [
+       -0.2216638449419391,
+       0.36565366814971245
+      ],
+      [
+       -0.21855831690755223,
+       0.008088255932971355
+      ],
+      [
+       -0.05441134222242559,
+       0.009513866667954243
+      ],
+      [
+       -0.057516870256812486,
+       0.3670792788846954
+      ]
+     ],
+     "td": {
+      "center": [
+       0.21831232545885013,
+       0.1658013255102993
+      ],
+      "rot": [
+       0.018241340294480324,
+       0.0038501981180161238,
+       -0.005313237197697163,
+       0.9998120665550232
+      ],
+      "pos": [
+       0.21824562549591064,
+       0.09888347238302231,
+       0.0686926618218422
+      ],
+      "t": 11.854166666666666
+     },
+     "accepted": {
+      "center": [
+       0.21364468432138292,
+       0.16638084870844638
+      ],
+      "rot": [
+       -0.00007870463014114648,
+       0.004540838301181793,
+       -0.00024326825223397464,
+       0.9999896883964539
+      ],
+      "t": 13.991666666666667
+     },
+     "blocked": null,
+     "align": null,
+     "fwdBias": 0.16027796713464085,
+     "clear": 0.08,
+     "T": 0.8183255867594585
+    },
+    {
+     "id": 3,
+     "type": "place",
+     "foot": "R",
+     "label": "4 R in",
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "proj": {
+      "requested": [
+       0.13362753924159854,
+       0.16562335570498105
+      ],
+      "target": [
+       0.13362753924159854,
+       0.16562335570498105
+      ],
+      "yaw": -0.009193232706928631,
+      "rejected": false,
+      "reasons": [],
+      "current": [
+       0.2136241586443039,
+       0.16635880396196695
+      ]
+     },
+     "reach": [
+      [
+       0.2136241586443039,
+       0.41031937525102946
+      ],
+      [
+       0.24572930504226675,
+       0.3484361370448988
+      ],
+      [
+       0.26117120026718554,
+       0.29699322718270327
+      ],
+      [
+       0.2670131356950851,
+       0.2588312247780489
+      ],
+      [
+       0.2684360830518395,
+       0.23168111179164982
+      ],
+      [
+       0.26807227297066666,
+       0.21204619661151633
+      ],
+      [
+       0.2670199845883923,
+       0.19718689844438883
+      ],
+      [
+       0.2656946809890308,
+       0.18531092417814074
+      ],
+      [
+       0.26423200090801413,
+       0.17528233198849721
+      ],
+      [
+       0.2626643808122726,
+       0.16635880396196695
+      ],
+      [
+       0.26097265029723005,
+       0.15800998738770652
+      ],
+      [
+       0.25908746724912995,
+       0.14981151287855177
+      ],
+      [
+       0.25691485723435853,
+       0.14136490747759195
+      ],
+      [
+       0.2542945540817455,
+       0.13223229015057558
+      ],
+      [
+       0.2509667682994486,
+       0.1218556147486051
+      ],
+      [
+       0.24648472382985076,
+       0.10944263549517075
+      ],
+      [
+       0.24002404720978285,
+       0.0938257062521953
+      ],
+      [
+       0.23003801310892388,
+       0.07327120954691682
+      ],
+      [
+       0.21362415864430392,
+       0.04560532495806072
+      ],
+      [
+       0.18595613441310493,
+       0.009445641154826212
+      ],
+      [
+       0.14114736814061807,
+       -0.03276954138145316
+      ],
+      [
+       0.07567936494313199,
+       -0.07256858736806998
+      ],
+      [
+       0.05819521925310489,
+       -0.018874192950602164
+      ],
+      [
+       0.05769642942191408,
+       0.03551990388114876
+      ],
+      [
+       0.05732174350601779,
+       0.07611756250688873
+      ],
+      [
+       0.05701684703716023,
+       0.1093584040685146
+      ],
+      [
+       0.056747060574211916,
+       0.13869713891696187
+      ],
+      [
+       0.05649220063649141,
+       0.16635880396196692
+      ],
+      [
+       0.0562376461633978,
+       0.1941102925119602
+      ],
+      [
+       0.055967263604519646,
+       0.22374122098327937
+      ],
+      [
+       0.055652752287481816,
+       0.25756363794634196
+      ],
+      [
+       0.055269811587571105,
+       0.2992338781725904
+      ],
+      [
+       0.05475255490068823,
+       0.3556946084846245
+      ],
+      [
+       0.05394932343922562,
+       0.44292373122734985
+      ],
+      [
+       0.08309642114555027,
+       0.5249808153522921
+      ],
+      [
+       0.1595058943380297,
+       0.4732787324314058
+      ]
+     ],
+     "excl": [
+      [
+       -0.22158129916557723,
+       0.3654797982950881
+      ],
+      [
+       -0.2182940395369388,
+       0.007916020160918094
+      ],
+      [
+       -0.054147771347617946,
+       0.00942509778142138
+      ],
+      [
+       -0.05743503097625639,
+       0.3669888759155914
+      ]
+     ],
+     "td": {
+      "center": [
+       0.10333821215194758,
+       0.12321892394749082
+      ],
+      "rot": [
+       0.019224192947149277,
+       0.0017803633818402886,
+       -0.01652415283024311,
+       0.9996771216392517
+      ],
+      "pos": [
+       0.10401643812656403,
+       0.10120856016874313,
+       0.026142999529838562
+      ],
+      "t": 16.679166666666667
+     },
+     "accepted": {
+      "center": [
+       0.0982830185821172,
+       0.12071978589199625
+      ],
+      "rot": [
+       -0.00016464822692796588,
+       0.004428925924003124,
+       0.00030018645338714123,
+       0.9999901056289673
+      ],
+      "t": 18.679166666666667
+     },
+     "blocked": null,
+     "align": null,
+     "fwdBias": 0.21219813761022138,
+     "clear": 0.08,
+     "T": 0.8993989727375802
+    },
+    {
+     "id": 4,
+     "type": "place",
+     "foot": "L",
+     "label": "5 L back",
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "proj": {
+      "requested": [
+       -0.13969965274723825,
+       0.037231894060198695
+      ],
+      "target": [
+       -0.13969965274723825,
+       0.037231894060198695
+      ],
+      "yaw": 0.008878635761400654,
+      "rejected": false,
+      "reasons": [],
+      "current": [
+       -0.138367874880569,
+       0.18722598183606354
+      ]
+     },
+     "reach": [
+      [
+       -0.138367874880569,
+       0.45006930458996974
+      ],
+      [
+       -0.09295454157541125,
+       0.4447777933778442
+      ],
+      [
+       -0.0941634831264632,
+       0.3086765500211954
+      ],
+      [
+       -0.09456904675556901,
+       0.26308777746054024
+      ],
+      [
+       -0.0947813902204431,
+       0.239170331518321
+      ],
+      [
+       -0.09492019429168289,
+       0.22368291459370615
+      ],
+      [
+       -0.0950216753948861,
+       0.2122519217774698
+      ],
+      [
+       -0.0951026692842647,
+       0.20297322885252583
+      ],
+      [
+       -0.09517584417251557,
+       0.1948419022014819
+      ],
+      [
+       -0.09524195935322524,
+       0.18722598183606354
+      ],
+      [
+       -0.09531108693644852,
+       0.17963390841887214
+      ],
+      [
+       -0.09538227142820581,
+       0.17158050167743283
+      ],
+      [
+       -0.09546171821022453,
+       0.16245410073254793
+      ],
+      [
+       -0.09556191548197879,
+       0.15130751709251686
+      ],
+      [
+       -0.09569354915142528,
+       0.136368700836821
+      ],
+      [
+       -0.09589427258564714,
+       0.11365954468078478
+      ],
+      [
+       -0.0962692742615936,
+       0.07156102724479027
+      ],
+      [
+       -0.09730899432165496,
+       -0.04563050101156024
+      ],
+      [
+       -0.13836787488056898,
+       -0.12764218222643642
+      ],
+      [
+       -0.1879202434996537,
+       -0.0937994654323463
+      ],
+      [
+       -0.22684867801124603,
+       -0.05587302682068154
+      ],
+      [
+       -0.256123001833694,
+       -0.016731880898472273
+      ],
+      [
+       -0.2772308311058658,
+       0.02173555487631354
+      ],
+      [
+       -0.29173923936128826,
+       0.05853212646713571
+      ],
+      [
+       -0.30103703561735584,
+       0.09330889809582907
+      ],
+      [
+       -0.3062194942455909,
+       0.12613298861381497
+      ],
+      [
+       -0.3080614788793737,
+       0.15730442099741643
+      ],
+      [
+       -0.30706294323994404,
+       0.1872259818360635
+      ],
+      [
+       -0.3034587168135222,
+       0.21633595153671956
+      ],
+      [
+       -0.29727652721092035,
+       0.24506400125166808
+      ],
+      [
+       -0.2883273305184808,
+       0.2738051139161417
+      ],
+      [
+       -0.2762011705405172,
+       0.30288184938827506
+      ],
+      [
+       -0.2602646749895974,
+       0.3324969312917363
+      ],
+      [
+       -0.23964808728291281,
+       0.3626484555182904
+      ],
+      [
+       -0.2132604540247801,
+       0.39299165191950125
+      ],
+      [
+       -0.17987984745579533,
+       0.42265207719841336
+      ]
+     ],
+     "excl": [
+      [
+       0.014668654302975079,
+       -0.057331896925733
+      ],
+      [
+       0.17881535501278678,
+       -0.058789374875034606
+      ],
+      [
+       0.18199012603869108,
+       0.29877542316348876
+      ],
+      [
+       0.017843425328879378,
+       0.30023290111279033
+      ]
+     ],
+     "td": {
+      "center": [
+       -0.13495591793424544,
+       0.041252794103129764
+      ],
+      "rot": [
+       -0.001735582249239087,
+       0.004892000928521156,
+       0.0022934169974178076,
+       0.9999839663505554
+      ],
+      "pos": [
+       -0.13544923067092896,
+       0.08866064250469208,
+       -0.05645114183425903
+      ],
+      "t": 22.029166666666665
+     },
+     "accepted": {
+      "center": [
+       -0.13465365601487683,
+       0.041607597577140054
+      ],
+      "rot": [
+       -0.00030263522057794034,
+       0.0046889944933354855,
+       -0.00039930565981194377,
+       0.9999889135360718
+      ],
+      "t": 24.029166666666665
+     },
+     "blocked": null,
+     "align": {
+      "s": 1.0041666666666664,
+      "xiErr": 0.011729856105665704,
+      "vcom": 0.015718605181143337,
+      "settled": false
+     },
+     "fwdBias": 0,
+     "clear": 0.08,
+     "T": 0.620069827226749
+    },
+    {
+     "id": 5,
+     "type": "place",
+     "foot": "R",
+     "label": "6 R back",
+     "status": "DONE",
+     "why": "placed, loaded and accepted",
+     "proj": {
+      "requested": [
+       0.09722897237669098,
+       -0.02947877473050721
+      ],
+      "target": [
+       0.09722897237669098,
+       -0.02947877473050721
+      ],
+      "yaw": 0.009343214076304797,
+      "rejected": false,
+      "reasons": [],
+      "current": [
+       0.09863043409767722,
+       0.1205146781434253
+      ]
+     },
+     "reach": [
+      [
+       0.09863043409767722,
+       0.37156600870983153
+      ],
+      [
+       0.13843814477294974,
+       0.3462754239767003
+      ],
+      [
+       0.17083480255116779,
+       0.31889455005537226
+      ],
+      [
+       0.1969054279941616,
+       0.2907319606856576
+      ],
+      [
+       0.21775250558762102,
+       0.2624788347988301
+      ],
+      [
+       0.23432816579647672,
+       0.2343785947634815
+      ],
+      [
+       0.2473966204795811,
+       0.20640487589733159
+      ],
+      [
+       0.25748316599924037,
+       0.1783323441874635
+      ],
+      [
+       0.26492042853750264,
+       0.14983609078502716
+      ],
+      [
+       0.26982489210548977,
+       0.12051467814342531
+      ],
+      [
+       0.2721018193023423,
+       0.08992699255097164
+      ],
+      [
+       0.2714245590532891,
+       0.0576227600035078
+      ],
+      [
+       0.2671906184704367,
+       0.02319641032115971
+      ],
+      [
+       0.2584821305984338,
+       -0.013616821433422036
+      ],
+      [
+       0.24405799217788132,
+       -0.05279913666086096
+      ],
+      [
+       0.22237768751564593,
+       -0.09382185207359796
+      ],
+      [
+       0.19177372496100742,
+       -0.13539441027726834
+      ],
+      [
+       0.1507813251752269,
+       -0.17524772230154512
+      ],
+      [
+       0.09863043409767726,
+       -0.2101417549620434
+      ],
+      [
+       0.05804213331710866,
+       -0.10967301416258828
+      ],
+      [
+       0.05918090307025623,
+       0.012127982437511606
+      ],
+      [
+       0.059562593521505336,
+       0.05284719332349466
+      ],
+      [
+       0.05976069384517852,
+       0.0741915255543062
+      ],
+      [
+       0.05989221557746537,
+       0.08800945327065063
+      ],
+      [
+       0.05998595334164677,
+       0.09820327677623777
+      ],
+      [
+       0.06006254451958371,
+       0.10647711433853356
+      ],
+      [
+       0.060131327298097184,
+       0.11372624688148261
+      ],
+      [
+       0.060196596207052214,
+       0.12051467814342529
+      ],
+      [
+       0.06025755387776794,
+       0.12728085225368946
+      ],
+      [
+       0.06032494037774384,
+       0.13445673766635202
+      ],
+      [
+       0.060402210058858825,
+       0.14258575358287842
+      ],
+      [
+       0.06049185668970905,
+       0.15251674438007753
+      ],
+      [
+       0.06061694626103596,
+       0.16581738883977878
+      ],
+      [
+       0.06080542189064592,
+       0.18602952108291643
+      ],
+      [
+       0.06115518011218884,
+       0.22347709225688123
+      ],
+      [
+       0.06212791044666201,
+       0.3275307768955933
+      ]
+     ],
+     "excl": [
+      [
+       -0.21844929007421204,
+       -0.1363823166472391
+      ],
+      [
+       -0.05430331419664937,
+       -0.13791591585259855
+      ],
+      [
+       -0.05096242714315928,
+       0.21964731781328656
+      ],
+      [
+       -0.21510840302072193,
+       0.221180917018646
+      ]
+     ],
+     "td": {
+      "center": [
+       0.09272252651146158,
+       -0.02512521830973026
+      ],
+      "rot": [
+       -0.002044487977400422,
+       0.0042221564799547195,
+       -0.0022673753555864096,
+       0.999986469745636
+      ],
+      "pos": [
+       0.09247995167970657,
+       0.08878529816865921,
+       -0.12283819913864136
+      ],
+      "t": 27.3875
+     },
+     "accepted": {
+      "center": [
+       0.09242916706485739,
+       -0.024717986119331528
+      ],
+      "rot": [
+       -0.00022368889767676592,
+       0.004323807079344988,
+       0.00046021316666156054,
+       0.9999905228614807
+      ],
+      "t": 29.3875
+     },
+     "blocked": null,
+     "align": {
+      "s": 1.0041666666666664,
+      "xiErr": 0.01397298495950329,
+      "vcom": 0.017185162046107774,
+      "settled": false
+     },
+     "fwdBias": 0,
+     "clear": 0.08,
+     "T": 0.6202902993670161
+    }
+   ],
+   "repeatHashes": [
+    "368f4f86",
+    "368f4f86",
+    "368f4f86"
+   ],
+   "deterministic": true
+  }
+ ]
+}

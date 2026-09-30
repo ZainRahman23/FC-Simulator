@@ -26,7 +26,7 @@ const H = { J: null, spec: null, entry: null, map: null, ref: null, suiteKey: (Q
         d_fp: true, d_reach: true, d_excl: true, d_path: true, d_trace: true, d_clear: true, d_env: true,
         a_jc: false, a_vis: false, a_pskel: false, a_rskel: false, a_live: false },
   ghostRoot: "actual", jsel: "hip_R", comp: "y", suite: null, suiteB: null, skin: null, poses: null,
-  calib: QS.get("calib") === "V1.1" ? "V1.1" : "V1", ctrlv: ["recal", "diag"].includes(QS.get("ctrl")) ? QS.get("ctrl") : "", specs: {}, posesBy: {}, suitesBy: {} };
+  calib: QS.get("calib") === "V1" ? "V1" : "V1.1", ctrlv: ["approved", "recal", "diag"].includes(QS.get("ctrl")) ? QS.get("ctrl") : "", specs: {}, posesBy: {}, suitesBy: {} };
 window.GATEA = H;
 const isB = () => H.suiteKey === "B", isC = () => H.suiteKey === "C", isC2 = () => H.suiteKey === "C2", isBal = () => isC() || isC2();
 
@@ -88,8 +88,10 @@ function simulate() {
 }
 // V1.1 anatomy calibration: the body selector rebuilds the spec (and poses) and re-simulates the same test; the C2 controller variant is
 // the approved controller, + the V1.1 recalibration R1·R2 (reach geometry), or + R1·R2 + the D1 diagnostic (unload intent) — never mixed silently
-function ctrlOpts() { if (H.ctrlv === "recal") return { anticipateReach: true, reachToGround: true }; if (H.ctrlv === "diag") return { anticipateReach: true, reachToGround: true, diagUnload: true }; return null; }
-function applySuites() { const b = H.suitesBy[H.calib] || {}; H.suite = b.A || null; H.suiteB = b.B || null; H.suiteC = b.C || null; H.suiteC2 = (H.calib === "V1.1" ? b["C2" + (H.ctrlv || "raw")] : b.C2) || null; }
+// "" = the body's WORKING controller (pc_balance controllerProfile: V1 → as approved, V1.1 → the integrated V1.1 controller); "approved" = the
+// approved Gate C2 controller; "recal" / "diag" = the historical V1.1-report variants (R1·R2 / + D1)
+function ctrlOpts() { if (H.ctrlv === "approved") return {}; if (H.ctrlv === "recal") return { anticipateReach: true, reachToGround: true }; if (H.ctrlv === "diag") return { anticipateReach: true, reachToGround: true, diagUnload: true }; return undefined; }
+function applySuites() { const b = H.suitesBy[H.calib] || {}; H.suite = b.A || null; H.suiteB = b.B || null; H.suiteC = b.C || null; H.suiteC2 = (H.calib === "V1.1" ? b["C2" + (H.ctrlv || "working")] : b.C2) || null; }
 function setCalib(c, ctrlv) { H.calib = c; if (ctrlv != null) H.ctrlv = ctrlv; H.spec = H.specs[c]; H.poses = H.posesBy[c]; H.skin = null; $("calib").value = c; $("ctrlv").value = H.ctrlv; applySuites(); document.title = `Physical character — ${c}${isC2() && H.ctrlv ? " + " + H.ctrlv : ""}`; }
 const hz = () => TIMESTEP_CONFIGS[isBal() ? GATE_C1_TSC : isB() ? GATE_B_TSC : GATE_A_TSC].hz;
 // ── camera ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -497,7 +499,7 @@ function anatSide() { const spec = H.spec, bi = (n) => spec.bodies.findIndex(b =
   const hipS = 2 * Math.abs(o("thigh_R")[0]), kneeS = 2 * Math.abs(o("shin_R")[0]), ankS = 2 * Math.abs(o("foot_R")[0]), shS = 2 * Math.abs(o("upperArm_R")[0]);
   let com = [0, 0, 0]; spec.bodies.forEach(b => { com = V.add(com, V.sc(V.add(b.origin, b.com), b.mass)); }); com = V.sc(com, 1 / spec.totalMass);
   const row = (k, v, w) => `<tr><td>${k}</td><td><b>${v}</b></td><td class="small">${w ?? ""}</td></tr>`, hip = J("hip_R"), ank = J("ankle_R"), kn = J("knee_R"), sh = J("shoulder_R");
-  let h = `<h3>Body: ${H.calib}${H.calib === "V1.1" ? " — anatomy / ROM calibration" : " — approved baseline"}${isC2() ? ` · C2 controller: ${H.ctrlv === "recal" ? "+ R1·R2 recalibration" : H.ctrlv === "diag" ? "+ R1·R2 + D1 diagnostic" : "as approved"}` : ""}</h3>`;
+  let h = `<h3>Body: ${H.calib}${H.calib === "V1.1" ? " — anatomy / ROM calibration" : " — approved baseline"}${isC2() ? ` · C2 controller: ${H.ctrlv === "recal" ? "approved + R1·R2 (historical)" : H.ctrlv === "diag" ? "approved + R1·R2 + D1 (historical)" : H.ctrlv === "approved" ? "approved Gate C2" : H.calib === "V1.1" ? "V1.1 working (integrated)" : "approved (V1 working)"}` : ""}</h3>`;
   h += `<table><tr><th>quantity</th><th>${H.calib}</th><th>${other}</th></tr>`;
   h += row("hip joint centres apart", `${cm(hipS)} cm`, `${cm(2 * Math.abs(oo("thigh_R")[0]))} cm`) + row("knee joint centres apart", `${cm(kneeS)} cm`, `${cm(2 * Math.abs(oo("shin_R")[0]))} cm`) + row("ankle joint centres apart", `${cm(ankS)} cm`, `${cm(2 * Math.abs(oo("foot_R")[0]))} cm`);
   h += row("shoulder centres (apart · height)", `${cm(shS)} · ${o("upperArm_R")[1].toFixed(3)} m`, `${cm(2 * Math.abs(oo("upperArm_R")[0]))} · ${oo("upperArm_R")[1].toFixed(3)} m`);
@@ -574,7 +576,7 @@ window.GATEB_TEST = (k) => new Promise((res) => { window.GATEA_READY = false; if
     const get = async (u) => { try { return await (await fetch(u)).json(); } catch (e) { return null; } };
     H.suitesBy.V1 = { A: await get("results/gatea_final_240x1.json"), B: await get("results/gateb_final_240x1.json"), C: await get("results/gatec1_final_240x1.json"), C2: await get("results/gatec2_final_240x1.json") };
     H.suitesBy["V1.1"] = { A: await get("results/v1_1/gatea_V1.1.json"), B: await get("results/v1_1/gateb_V1.1.json"), C: await get("results/v1_1/gatec1_V1.1.json"),
-      C2raw: await get("results/v1_1/gatec2_V1.1_raw.json"), C2recal: await get("results/v1_1/gatec2_V1.1_recal.json"), C2diag: await get("results/v1_1/gatec2_V1.1_recal_diag.json") };
+      C2working: await get("results/v1_1/gatec2_V1.1_working.json"), C2approved: await get("results/v1_1/gatec2_V1.1_raw.json"), C2recal: await get("results/v1_1/gatec2_V1.1_recal.json"), C2diag: await get("results/v1_1/gatec2_V1.1_recal_diag.json") };
     setCalib(H.calib); simulate(); requestAnimationFrame(loop);
   } catch (e) { $("status").textContent = "BOOT FAILED: " + (e.stack || e); window.GATEA_ERROR = String(e); }
 })();

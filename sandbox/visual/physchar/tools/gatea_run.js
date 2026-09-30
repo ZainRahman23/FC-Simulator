@@ -2,7 +2,7 @@
 // usage: node tools/gatea_run.js [--spec] [--drops A,B,...] [--tsc 60x1,60x2,120x1] [--seconds 6] [--mesh] [--repeat 2] [--out file.json]
 //        [--world '{"jointFriction":0}']
 import fs from "fs"; import path from "path"; import { fileURLToPath } from "url";
-import { buildBodySpec, setHandShape } from "../pc_body.js";
+import { buildBodySpec, setHandShape, WORKING_CALIB } from "../pc_body.js";
 import { loadJolt } from "../pc_jolt.js";
 import { runDrop, initialSelfOverlaps, disabledPairs, DROPS } from "../pc_gatea.js";
 import { boneBodyMap, referencedVertices } from "../pc_fit.js";
@@ -13,7 +13,7 @@ const rig = JSON.parse(fs.readFileSync(path.join(dir, "rig.json"), "utf8")), buf
 const ab = buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength), L = rig.mesh.layout, T = { Float32Array, Uint16Array, Uint32Array, Uint8Array };
 const mesh = {}; for (const k of ["positions", "joints", "weights", "indices"]) mesh[k] = new T[L[k].elementType](ab, L[k].byteOffset, L[k].elementCount);
 if (arg("--hand", null)) setHandShape(arg("--hand"));
-const spec = buildBodySpec(rig, mesh, { calib: String(arg("--calib", "V1")) });
+const spec = buildBodySpec(rig, mesh, { calib: String(arg("--calib", WORKING_CALIB)) });
 const J = await loadJolt(path.join(here, "../vendor/jolt-physics.wasm-compat.js"));
 const world = arg("--world", null) ? JSON.parse(arg("--world")) : {};
 const f2 = (x) => (Array.isArray(x) ? x.map(v => +v.toFixed(3)) : +x.toFixed(3));

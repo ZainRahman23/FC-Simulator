@@ -8,7 +8,7 @@ import { JoltCharacterWorld } from "./pc_jolt.js";
 import { disabledPairs, jointState, frictionPolicy, TIMESTEP_CONFIGS } from "./pc_gatea.js";
 import { buildPoses } from "./pc_control.js";
 import { Sensor, polyDist } from "./pc_sense.js";
-import { BalanceController, budgetLimits, BAL } from "./pc_balance.js";
+import { BalanceController, budgetLimits, BAL, controllerProfile } from "./pc_balance.js";
 import { GATE_C1_WORLD, GATE_C1_TSC } from "./pc_gatec1.js";
 import { SupportSequencer, SUP } from "./pc_support.js";
 
@@ -41,7 +41,7 @@ export function runC2(J, spec, key, opts) {
   const P = opts.poses || buildPoses(spec), nb = spec.bodies.length, nj = spec.joints.length, M = spec.totalMass, W = M * g;
   const w = new JoltCharacterWorld(J, spec, GATE_C1_WORLD, frictionPolicy(spec));
   for (const [a, b] of disabledPairs(spec)) w.disablePair(a, b);
-  const ctrl = new BalanceController(spec, P, Object.assign({ strength: "candidate" }, opts.ctrl || {}));
+  const ctrlOpts = opts.ctrl === undefined ? controllerProfile(spec) : (opts.ctrl || {}), ctrl = new BalanceController(spec, P, Object.assign({ strength: "candidate" }, ctrlOpts));
   ctrl.gain.forEach((gn, k) => w.setMotor(k, { kp: gn.kp, kd: gn.kdStance, tau: 1 }));
   // environment (relative to the initial right-foot sole centre; heading +z, his right +x)
   const fi = { L: spec.bodies.findIndex(b => b.name === "foot_L"), R: spec.bodies.findIndex(b => b.name === "foot_R") }, box = spec.bodies[fi.R].shapes[0];
@@ -96,17 +96,17 @@ export function runC2(J, spec, key, opts) {
     // V1.1 comparison measurements: pelvis roll (+ = right side up), trunk lateral lean of the chest relative to the pelvis (+ = toward his left)
     const pX = Q.rot(states[0].rot, [1, 0, 0]), pelvisRoll = Math.asin(Math.max(-1, Math.min(1, pX[1]))) * 57.29578, cU = Q.rot(states[chestI].rot, [0, 1, 0]), pU = Q.rot(states[0].rot, [0, 1, 0]);
     const trunkLat = Math.asin(Math.max(-1, Math.min(1, V.dot(V.sub(cU, V.sc(pU, V.dot(cU, pU))), V.norm(Q.rot(states[0].rot, [-1, 0, 0])))))) * 57.29578;
-    const f = obs.feet, rec = { n, t: n * dt, ankY, pelvisRoll, trunkLat, cls: u.cls.state, phase: seq.phase, roles: { ...seq.role }, reqId: req ? req.id : null, reqStage: req ? req.stage : null, reqStatus: req ? (req.status || null) : null,
+    const f = obs.feet, rec = { n, t: n * dt, ankY, pelvisRoll, trunkLat, cls: u.cls.state, phase: seq.phase, roles: { ...seq.role }, reqId: req ? req.id : null, reqStage: req ? req.stage : null, reqStatus: req ? (req.status || null) : null, ready: req && req.stage === "TRANSFER" ? { n: req.ready, ...req.readyState } : null,
       com: obs.com, vcom: obs.vcom, xi: obs.xi, xiMargin: obs.xiMargin, comMargin: obs.comMargin, xiRef: plan.xiRef, swingTgt: swingFoot && plan.swing[swingFoot] ? { foot: swingFoot, pos: plan.swing[swingFoot].pos, u: plan.swing[swingFoot].u } : null,
       feet: { L: slim(f.L), R: slim(f.R) }, footPos: { L: states[fi.L].pos, R: states[fi.R].pos }, footPen, soleY, legClear, obF, obDepth, grf: obs.grf, J: J8, limMargin, limJoint, rootRes,
       groundPen, anchorErr, selfPen, legSelf, ke, trunk: obs.trunkTiltDeg, spine: obs.spineBendDeg };
     if (opts.keepStates) { rec.states = states.map(s => ({ pos: s.pos, rot: s.rot, com: s.com, v: s.v, w: s.w, awake: s.awake })); rec.cts = w.contacts.map(c => ({ ...c }));
       rec.region = obs.region; rec.polyReliable = obs.polyReliable; rec.copSmooth = obs.copSmooth; rec.tgt = { T: u.final }; rec.jt = spec.joints.map((j, k) => ({ nom: u.nominal[k], g: u.gOff[k], b: u.bOff[k], fin: u.final[k], act: j.type === "hinge" ? w.hingeAngle(k) : w.sixdofRot(k), vt: u.vel ? u.vel[k] : null, kp: u.motor[k].kp, kd: u.motor[k].kd }));
-      rec.ctl = u.debug ? { pStar: u.debug.pStar, pRaw: u.debug.pRaw, xiRef: u.debug.xiRef, r: u.debug.r, tauTrunk: u.debug.tauTrunk || null, feetBal: u.debug.feetBal, stance: u.debug.stance, pelvisTarget: u.debug.pelvisTarget, pdTrace: u.debug.pdTrace } : null; rec.push = null; }
+      rec.ctl = u.debug ? { pStar: u.debug.pStar, pRaw: u.debug.pRaw, xiRef: u.debug.xiRef, r: u.debug.r, tauTrunk: u.debug.tauTrunk || null, feetBal: u.debug.feetBal, stance: u.debug.stance, pelvisTarget: u.debug.pelvisTarget, pdTrace: u.debug.pdTrace, unload: u.debug.unload } : null; rec.push = null; }
     recs.push(rec); prevStates = states;
   }
   const audit = Object.assign({}, w.audit), support = !!w.support; w.destroy();
-  return summarizeC2(spec, key, TST, T, recs, { hash: (h >>> 0).toString(16), nan, audit, support, cpuJ, cpuS, cpuC, steps, seq, obst, W, env, hipZcap: ctrl.limits.hip.Z[1] * ctrl.mult, recal: opts.ctrl || null });
+  return summarizeC2(spec, key, TST, T, recs, { hash: (h >>> 0).toString(16), nan, audit, support, cpuJ, cpuS, cpuC, steps, seq, obst, W, env, hipZcap: ctrl.limits.hip.Z[1] * ctrl.mult, recal: Object.keys(ctrlOpts).length ? ctrlOpts : null });
 }
 function slim(f) { return { state: f.state, touching: f.touching, manifold: f.manifold, loaded: f.loaded, slipping: f.slipping, load: f.load, shear: f.shearMag, slipSpeed: f.slipSpeed, slipDist: f.slipDist, points: f.points, sole: f.sole, anchor: f.anchor ? f.anchor.pos : null }; }
 

@@ -78,6 +78,9 @@ export const JOINT_DEFS = [
 //   • ROM: hip extension 30 → 20° (CDC / Soucie 2011 adult males 17.4°); hip ab/adduction 45 / 30° kept ANATOMICAL (the limits are
 //     re-expressed about the tilted bind femur); ankle dorsiflexion 20 → 30° (a weight-bearing, knee-flexed joint: the non-weight-bearing
 //     knee-extended norm is 12.7° (CDC) but the weight-bearing lunge norm is > 40°; 30° stays well inside it).
+// the WORKING calibration (promoted 2026-09-30 after the V1.1 integration checkpoint: V1.1 passes representative A/B/C1/C2 with its working
+// controller and valid fixtures — review_artifacts/physical_character_v1/v1_1/PROMOTION.md). V1 stays reproducible with calib "V1".
+export const WORKING_CALIB = "V1.1";
 export const CALIBS = {
   V1: { name: "V1" },
   "V1.1": { name: "V1.1", centres: { thigh: { x: 0.092 }, shin: { legLine: true }, upperArm: { x: 0.245, y: 1.485 } },

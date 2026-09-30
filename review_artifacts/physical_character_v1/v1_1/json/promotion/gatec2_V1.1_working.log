@@ -1,0 +1,109 @@
+A_shift      upright final RECOVERABLE_IN_PLACE loads ΣvsBW 4.98 N maxΔ/step 72.8 N shareR [0.05,0.968] | drift L 0.02 R 0 COM 1.1 cm slid L 2.2 R 2.1 mm | root 0.031/0.07 N | sep 0.16 limMargin 8.7° | cpu 1.3673 | audit 0/0 fixture false | det true 3e66ad4d
+      #0 shift w=0.25 DONE
+      #1 shift w=0.1 DONE
+      #2 shift w=0.5 DONE
+      #3 shift w=0.75 DONE
+      #4 shift w=0.9 DONE
+      #5 shift w=0.5 DONE
+B_lift_R     upright final RECOVERABLE_IN_PLACE loads ΣvsBW 10.1 N maxΔ/step 98.6 N shareR [-0.001,0.604] | drift L 0.02 R 3.53 COM 2.24 cm slid L 2.8 R 1.4 mm | root 0.034/0.1 N | sep 0.16 limMargin 4.1° | cpu 1.0828 | audit 0/0 fixture false | det true 62faa8f0
+      #0 lift R  → DONE (placed, loaded and accepted)
+         liftoff: swing load 0 N (0% BW) · stance ξ margin 6.9 cm · COM margin 4.5 cm · |v| 0.072 · transfer 1.196 s · physical liftoff 1.721
+         touchdown: single support 3.133 s · landing error 5.8 cm · v -0.017/0.06 m/s · early false (u 1) · ankle y planned 0.1035 actual 0.1068 · tilt 3.7°
+         accepted: 2.008 s after touchdown · load 394 N · final error 3.4 cm · moved after touchdown 2.76 cm
+         metrics: sole clearance min 3.2 / peak 8.1 cm · to stance leg 2.4 cm · swing pen 0.23 mm · stance slid 2.37 mm · leg self-contact 0.01 mm · limit margin 4.1° (ankle_L) · root max 0.1 N · class RECOVERABLE_IN_PLACE · sat {"hip_L":1092,"ankle_L":1592,"ankle_R":283}
+B_hold_R     upright final RECOVERABLE_IN_PLACE loads ΣvsBW 3.04 N maxΔ/step 98.6 N shareR [-0.001,0.604] | drift L 0.07 R 3.7 COM 2.51 cm slid L 3.4 R 1.4 mm | root 0.023/0.1 N | sep 0.16 limMargin 4.1° | cpu 0.8138 | audit 0/0 fixture false | det true 47e32f1
+      #0 lift R  → DONE (placed, loaded and accepted)
+         liftoff: swing load 0 N (0% BW) · stance ξ margin 6.9 cm · COM margin 4.5 cm · |v| 0.072 · transfer 1.196 s · physical liftoff 1.721
+         touchdown: single support 21.125 s · landing error 5.9 cm · v -0.022/0.059 m/s · early false (u 1) · ankle y planned 0.1035 actual 0.1068 · tilt 3.7°
+         accepted: 2.013 s after touchdown · load 394 N · final error 3.6 cm · moved after touchdown 2.57 cm
+         metrics: sole clearance min 3.2 / peak 8.1 cm · to stance leg 2.6 cm · swing pen 0.22 mm · stance slid 2.9 mm · leg self-contact 0.01 mm · limit margin 4.1° (ankle_L) · root max 0.1 N · class RECOVERABLE_IN_PLACE · sat {"hip_L":1083,"ankle_L":1575,"ankle_R":283}
+B_lift_L     upright final RECOVERABLE_IN_PLACE loads ΣvsBW 10.25 N maxΔ/step 99.1 N shareR [0.395,1.001] | drift L 3.6 R 0.02 COM 2.24 cm slid L 1.4 R 2.8 mm | root 0.034/0.1 N | sep 0.16 limMargin 4.1° | cpu 1.0343 | audit 0/0 fixture false | det true 38a8c8c5
+      #0 lift L  → DONE (placed, loaded and accepted)
+         liftoff: swing load 0 N (0% BW) · stance ξ margin 6.9 cm · COM margin 4.6 cm · |v| 0.072 · transfer 1.196 s · physical liftoff 1.721
+         touchdown: single support 3.129 s · landing error 5.8 cm · v -0.019/0.06 m/s · early false (u 1) · ankle y planned 0.1035 actual 0.1068 · tilt 3.7°
+         accepted: 2.008 s after touchdown · load 394 N · final error 3.5 cm · moved after touchdown 2.67 cm
+         metrics: sole clearance min 3.2 / peak 8.1 cm · to stance leg 2.4 cm · swing pen 0.21 mm · stance slid 2.35 mm · leg self-contact 0.01 mm · limit margin 4.1° (ankle_R) · root max 0.1 N · class RECOVERABLE_IN_PLACE · sat {"ankle_L":283,"hip_R":1092,"ankle_R":1604}
+C_lat_R      upright final RECOVERABLE_IN_PLACE loads ΣvsBW 8.91 N maxΔ/step 171.8 N shareR [0,0.604] | drift L 0.04 R 8.16 COM 2.25 cm slid L 2.4 R 1.4 mm | root 0.042/0.1 N | sep 0.16 limMargin 4.9° | cpu 1.2398 | audit 0/0 fixture false | det true 214a6a63
+      #0 place R  → DONE (placed, loaded and accepted) · projected 1.7 cm [single support: needs 6.8 cm of pelvis drop to reach (the stance ankle allows 6.1 cm)]
+         liftoff: swing load 0 N (0% BW) · stance ξ margin 6.9 cm · COM margin 4.5 cm · |v| 0.072 · transfer 1.196 s · physical liftoff 1.725
+         touchdown: single support 0.808 s · landing error 4.6 cm · v -0.089/0.57 m/s · early false (u 0.97) · ankle y planned 0.1035 actual 0.0997 · tilt 2.4°
+         accepted: 2.379 s after touchdown · load 377 N · final error 4.9 cm · moved after touchdown 0.52 cm
+         metrics: sole clearance min 3.1 / peak 6.9 cm · to stance leg 14.4 cm · swing pen 0.52 mm · stance slid 1.97 mm · leg self-contact 0 mm · limit margin 4.9° (ankle_R) · root max 0.1 N · class RECOVERABLE_IN_PLACE · sat {"hip_L":2079,"ankle_L":1492,"ankle_R":288}
+D_fwd_R      upright final RECOVERABLE_IN_PLACE loads ΣvsBW 9.44 N maxΔ/step 110.3 N shareR [0,0.604] | drift L 0.03 R 17.55 COM 8.89 cm slid L 2.4 R 1.2 mm | root 0.041/0.1 N | sep 0.16 limMargin 7.6° | cpu 1.1833 | audit 0/0 fixture false | det true bad0b29c
+      #0 place R  → DONE (placed, loaded and accepted)
+         liftoff: swing load 0 N (0% BW) · stance ξ margin 6.9 cm · COM margin 4.5 cm · |v| 0.072 · transfer 1.196 s · physical liftoff 1.729
+         touchdown: single support 0.846 s · landing error 2.6 cm · v -0.061/0.404 m/s · early false (u 1) · ankle y planned 0.1035 actual 0.0948 · tilt 1.4°
+         accepted: 2.142 s after touchdown · load 295 N · final error 2.8 cm · moved after touchdown 0.2 cm
+         metrics: sole clearance min 4 / peak 7 cm · to stance leg 13.7 cm · swing pen 0.6 mm · stance slid 1.92 mm · leg self-contact 0 mm · limit margin 7.6° (ankle_R) · root max 0.1 N · class RECOVERABLE_IN_PLACE · sat {"hip_L":2488,"ankle_L":1804,"ankle_R":288}
+E_bwd_R      upright final RECOVERABLE_IN_PLACE loads ΣvsBW 10.33 N maxΔ/step 196.3 N shareR [0,0.604] | drift L 0.08 R 18.39 COM 8.66 cm slid L 2.6 R 1.4 mm | root 0.038/0.1 N | sep 0.16 limMargin 2.8° | cpu 1.1629 | audit 0/0 fixture false | det true 8cbc884e
+      #0 place R  → DONE (placed, loaded and accepted)
+         liftoff: swing load 0 N (0% BW) · stance ξ margin 6.9 cm · COM margin 4.5 cm · |v| 0.072 · transfer 1.196 s · physical liftoff 1.721
+         touchdown: single support 0.813 s · landing error 5.1 cm · v -0.074/0.151 m/s · early false (u 1) · ankle y planned 0.1035 actual 0.1043 · tilt 3.3°
+         accepted: 2.117 s after touchdown · load 421 N · final error 4.6 cm · moved after touchdown 1.6 cm
+         metrics: sole clearance min 3.7 / peak 5.7 cm · to stance leg 14.9 cm · swing pen 0.41 mm · stance slid 2.17 mm · leg self-contact 0 mm · limit margin 2.8° (ankle_R) · root max 0.1 N · class RECOVERABLE_IN_PLACE · sat {"hip_L":1133,"ankle_L":2433,"ankle_R":288}
+F_onfoot     upright final RECOVERABLE_IN_PLACE loads ΣvsBW 10.46 N maxΔ/step 99 N shareR [0,0.671] | drift L 0.01 R 14.6 COM 7.23 cm slid L 2.5 R 1.6 mm | root 0.033/0.1 N | sep 0.16 limMargin 4.9° | cpu 1.0386 | audit 0/0 fixture false | det true 78b3c245
+      #0 place R  → DONE (placed, loaded and accepted) · projected 19.7 cm [crossover: -0 cm to its own side of the stance foot (min 10 cm); footprint overlaps the stance foot; swing path passes through the stance foot]
+         liftoff: swing load 0 N (0% BW) · stance ξ margin 6.9 cm · COM margin 4.5 cm · |v| 0.072 · transfer 1.196 s · physical liftoff 1.721
+         touchdown: single support 0.879 s · landing error 5.1 cm · v 0.006/0.369 m/s · early false (u 1) · ankle y planned 0.1035 actual 0.1048 · tilt 3.4°
+         accepted: 2.004 s after touchdown · load 448 N · final error 5.7 cm · moved after touchdown 0.52 cm
+         metrics: sole clearance min 5.4 / peak 9.2 cm · to stance leg 1.3 cm · swing pen 0.5 mm · stance slid 2.04 mm · leg self-contact 0.01 mm · limit margin 4.9° (ankle_R) · root max 0.1 N · class RECOVERABLE_IN_PLACE · sat {"hip_L":708,"ankle_L":1600,"ankle_R":317}
+F_cross      upright final RECOVERABLE_IN_PLACE loads ΣvsBW 10.37 N maxΔ/step 98.6 N shareR [0,0.604] | drift L 0.02 R 12.63 COM 6.81 cm slid L 2.3 R 1.3 mm | root 0.033/0.1 N | sep 0.16 limMargin 4.9° | cpu 1.0123 | audit 0/0 fixture false | det true 5e485db0
+      #0 place R  → DONE (placed, loaded and accepted) · projected 28.1 cm [crossover: -8 cm to its own side of the stance foot (min 10 cm); footprint overlaps the stance foot; swing path passes through the stance foot]
+         liftoff: swing load 0 N (0% BW) · stance ξ margin 6.9 cm · COM margin 4.5 cm · |v| 0.072 · transfer 1.196 s · physical liftoff 1.721
+         touchdown: single support 1.263 s · landing error 2.5 cm · v -0.083/0.081 m/s · early false (u 1) · ankle y planned 0.1035 actual 0.0903 · tilt 1.6°
+         accepted: 2 s after touchdown · load 389 N · final error 2.8 cm · moved after touchdown 0.34 cm
+         metrics: sole clearance min 6.2 / peak 9.4 cm · to stance leg 4.7 cm · swing pen 0.27 mm · stance slid 1.92 mm · leg self-contact 0.02 mm · limit margin 4.9° (ankle_R) · root max 0.1 N · class RECOVERABLE_IN_PLACE · sat {"hip_L":675,"ankle_L":1671,"hip_R":13,"ankle_R":283}
+G_far        upright final RECOVERABLE_IN_PLACE loads ΣvsBW 9.74 N maxΔ/step 98.6 N shareR [0,0.604] | drift L 0.02 R 24.28 COM 11.82 cm slid L 2.4 R 1.4 mm | root 0.04/0.1 N | sep 0.16 limMargin 5.6° | cpu 1.1723 | audit 0/0 fixture false | det true dd6d5fff
+      #0 place R  → DONE (placed, loaded and accepted) · projected 93.9 cm [needs 22 cm of pelvis drop (the stance ankle allows 6.1 cm); L hip extension 41° > 25°; beyond single-support reach; single support: R hip flexion 133° > 70°; single support: R hip abduction 167° > 35°]
+         liftoff: swing load 0 N (0% BW) · stance ξ margin 6.9 cm · COM margin 4.5 cm · |v| 0.072 · transfer 1.196 s · physical liftoff 1.762
+         touchdown: single support 0.775 s · landing error 2.4 cm · v -0.105/0.513 m/s · early false (u 1) · ankle y planned 0.1035 actual 0.0903 · tilt 1.2°
+         accepted: 2.346 s after touchdown · load 295 N · final error 2.6 cm · moved after touchdown 0.22 cm
+         metrics: sole clearance min 4.1 / peak 6.7 cm · to stance leg 13.5 cm · swing pen 0.52 mm · stance slid 1.89 mm · leg self-contact 0 mm · limit margin 5.6° (ankle_R) · root max 0.1 N · class RECOVERABLE_IN_PLACE · sat {"hip_L":2596,"ankle_L":1729,"ankle_R":300}
+G_far_side   upright final RECOVERABLE_IN_PLACE loads ΣvsBW 7.61 N maxΔ/step 171.7 N shareR [0,0.604] | drift L 0.04 R 8.16 COM 2.84 cm slid L 2.5 R 1.4 mm | root 0.038/0.1 N | sep 0.16 limMargin 4.9° | cpu 1.202 | audit 0/0 fixture false | det true 8d0d0f4c
+      #0 place R  → DONE (placed, loaded and accepted) · projected 71.7 cm [needs 12 cm of pelvis drop (the stance ankle allows 6.1 cm); beyond single-support reach; single support: R hip extension 178° > 25°; single support: R hip abduction 136° > 35°]
+         liftoff: swing load 0 N (0% BW) · stance ξ margin 6.9 cm · COM margin 4.5 cm · |v| 0.072 · transfer 1.196 s · physical liftoff 1.725
+         touchdown: single support 0.808 s · landing error 4.6 cm · v -0.089/0.57 m/s · early false (u 0.97) · ankle y planned 0.1035 actual 0.0997 · tilt 2.4°
+         accepted: 2.379 s after touchdown · load 377 N · final error 4.9 cm · moved after touchdown 0.52 cm
+         metrics: sole clearance min 3.1 / peak 6.9 cm · to stance leg 14.4 cm · swing pen 0.52 mm · stance slid 1.97 mm · leg self-contact 0 mm · limit margin 4.9° (ankle_R) · root max 0.1 N · class RECOVERABLE_IN_PLACE · sat {"hip_L":2079,"ankle_L":1492,"ankle_R":288}
+H_uneven     upright final RECOVERABLE_IN_PLACE loads ΣvsBW 11.54 N maxΔ/step 99.6 N shareR [0,0.604] | drift L 0.03 R 28.25 COM 13.22 cm slid L 2.5 R 1.4 mm | root 0.044/0.1 N | sep 0.16 limMargin 6° | cpu 1.3554 | audit 0/0 fixture false | det true 471bd713
+      #0 place R  → DONE (placed, loaded and accepted)
+         liftoff: swing load 0 N (0% BW) · stance ξ margin 6.9 cm · COM margin 4.5 cm · |v| 0.072 · transfer 1.196 s · physical liftoff 1.758
+         touchdown: single support 0.688 s · landing error 4.3 cm · v -0.138/0.289 m/s · early true (u 0.94) · ankle y planned 0.1035 actual 0.1096 · tilt 4.5°
+         accepted: 2.508 s after touchdown · load 282 N · final error 3.9 cm · moved after touchdown 0.61 cm
+         metrics: sole clearance min 4.1 / peak 6.7 cm · to stance leg 13.5 cm · swing pen 0.07 mm · stance slid 2.05 mm · leg self-contact 0 mm · limit margin 6° (ankle_R) · root max 0.1 N · class RECOVERABLE_IN_PLACE · sat {"hip_L":2625,"ankle_L":2179,"ankle_R":296}
+I_block      upright final RECOVERABLE_IN_PLACE loads ΣvsBW 9.14 N maxΔ/step 194.2 N shareR [-0.056,0.604] | drift L 0.04 R 7.02 COM 16.2 cm slid L 2.2 R 1 mm | root 0.035/0.1 N | sep 0.18 limMargin -0.1° | cpu 0.9589 | audit 0/0 fixture false | det true 1f568cff
+      #0 place R  → FAILED_BLOCKED (swing foot 20 cm behind its trajectory for 150 ms — obstructed, not driven through; holding it where it is) · projected 3.9 cm [single support: needs 7.2 cm of pelvis drop to reach (the stance ankle allows 6.1 cm)]
+         liftoff: swing load 0 N (0% BW) · stance ξ margin 6.9 cm · COM margin 4.5 cm · |v| 0.072 · transfer 1.196 s · physical liftoff 1.762
+         blocked: {"t":2.25,"lagCm":19.6,"obstacleMaxForceN":507,"obstaclePenetrationMm":0.15,"firstObstacleContactT":2.017}
+         metrics: sole clearance min 3.1 / peak 7.3 cm · to stance leg 13.5 cm · swing pen null mm · stance slid 1.86 mm · leg self-contact 0 mm · limit margin -0.1° (ankle_R) · root max 0.1 N · class RECOVERABLE_IN_PLACE · sat {"lumbar":13,"hip_L":1429,"ankle_L":2050,"hip_R":108,"ankle_R":471}
+J_repeat     upright final RECOVERABLE_IN_PLACE loads ΣvsBW 8.97 N maxΔ/step 164.7 N shareR [0,1] | drift L 5.12 R 13.03 COM 8.09 cm slid L 12.1 R 9.7 mm | root 0.033/0.1 N | sep 0.16 limMargin 4.8° | cpu 1.31 | audit 0/0 fixture false | det true 368f4f86
+      #0 place R 1 R fwd → DONE (placed, loaded and accepted)
+         liftoff: swing load 0 N (0% BW) · stance ξ margin 6.9 cm · COM margin 4.5 cm · |v| 0.072 · transfer 1.196 s · physical liftoff 1.721
+         touchdown: single support 0.85 s · landing error 2.9 cm · v -0.048/0.441 m/s · early false (u 1) · ankle y planned 0.1035 actual 0.0958 · tilt 1.6°
+         accepted: 2.004 s after touchdown · load 309 N · final error 3.1 cm · moved after touchdown 0.2 cm
+         metrics: sole clearance min 3.9 / peak 7.6 cm · to stance leg 13.7 cm · swing pen 0.58 mm · stance slid 2.03 mm · leg self-contact 0 mm · limit margin 7.3° (ankle_R) · root max 0.1 N · class RECOVERABLE_IN_PLACE · sat {"hip_L":2254,"ankle_L":1513,"ankle_R":288}
+      #1 place L 2 L fwd → DONE (placed, loaded and accepted)
+         liftoff: swing load 0 N (0% BW) · stance ξ margin 6.2 cm · COM margin 4 cm · |v| 0.074 · transfer 1.233 s · physical liftoff 6.442
+         touchdown: single support 0.896 s · landing error 5 cm · v -0.082/0.495 m/s · early true (u 0.93) · ankle y planned 0.1035 actual 0.1017 · tilt 2.8°
+         accepted: 2 s after touchdown · load 395 N · final error 5.3 cm · moved after touchdown 0.46 cm
+         metrics: sole clearance min 4.5 / peak 8.8 cm · to stance leg 12.1 cm · swing pen 0.58 mm · stance slid 2.03 mm · leg self-contact 0 mm · limit margin 4.8° (ankle_R) · root max 0.1 N · class RECOVERABLE_IN_PLACE · sat {"ankle_L":283,"hip_R":1025,"ankle_R":1679}
+      #2 place R 3 R out → DONE (placed, loaded and accepted)
+         liftoff: swing load 0 N (0% BW) · stance ξ margin 5 cm · COM margin 2.6 cm · |v| 0.072 · transfer 1.088 s · physical liftoff 11.042
+         touchdown: single support 0.813 s · landing error 4.3 cm · v -0.018/0.562 m/s · early false (u 1) · ankle y planned 0.1035 actual 0.0989 · tilt 2.2°
+         accepted: 2.138 s after touchdown · load 376 N · final error 4.4 cm · moved after touchdown 0.47 cm
+         metrics: sole clearance min 3.4 / peak 7.3 cm · to stance leg 11.5 cm · swing pen 0.46 mm · stance slid 2.38 mm · leg self-contact 0 mm · limit margin 4.9° (ankle_R) · root max 0.08 N · class RECOVERABLE_IN_PLACE · sat {"hip_L":742,"ankle_L":1429,"ankle_R":383}
+      #3 place R 4 R in → DONE (placed, loaded and accepted)
+         liftoff: swing load 2.7 N (0.3% BW) · stance ξ margin 6.7 cm · COM margin 4.3 cm · |v| 0.073 · transfer 1.237 s · physical liftoff 15.867
+         touchdown: single support 0.813 s · landing error 5.2 cm · v -0.047/0.539 m/s · early true (u 0.95) · ankle y planned 0.1035 actual 0.1012 · tilt 2.9°
+         accepted: 2 s after touchdown · load 422 N · final error 5.7 cm · moved after touchdown 0.56 cm
+         metrics: sole clearance min 5 / peak 9.2 cm · to stance leg 9.3 cm · swing pen 0.67 mm · stance slid 2.28 mm · leg self-contact 0 mm · limit margin 4.9° (ankle_R) · root max 0.1 N · class RECOVERABLE_IN_PLACE · sat {"hip_L":963,"ankle_L":2171,"ankle_R":442}
+      #4 place L 5 L back → DONE (placed, loaded and accepted)
+         liftoff: swing load 0 N (0% BW) · stance ξ margin 4.6 cm · COM margin 2.5 cm · |v| 0.07 · transfer 0.95 s · physical liftoff 20.267
+         touchdown: single support 1.762 s · landing error 0.6 cm · v -0.085/0.039 m/s · early false (u 1) · ankle y planned 0.1035 actual 0.0887 · tilt 0.3°
+         accepted: 2 s after touchdown · load 407 N · final error 0.7 cm · moved after touchdown 0.05 cm
+         metrics: sole clearance min 5 / peak 7.7 cm · to stance leg 6.8 cm · swing pen 0.51 mm · stance slid 2.13 mm · leg self-contact 0 mm · limit margin 4.9° (ankle_L) · root max 0.07 N · class RECOVERABLE_IN_PLACE · sat {"ankle_L":317,"hip_R":329,"ankle_R":2604}
+      #5 place R 6 R back → DONE (placed, loaded and accepted)
+         liftoff: swing load 0 N (0% BW) · stance ξ margin 4.6 cm · COM margin 2.5 cm · |v| 0.069 · transfer 0.962 s · physical liftoff 25.604
+         touchdown: single support 1.783 s · landing error 0.6 cm · v -0.08/0.05 m/s · early false (u 1) · ankle y planned 0.1035 actual 0.0888 · tilt 0.3°
+         accepted: 2 s after touchdown · load 406 N · final error 0.7 cm · moved after touchdown 0.05 cm
+         metrics: sole clearance min 5.1 / peak 8.2 cm · to stance leg 6.6 cm · swing pen 0.53 mm · stance slid 1.89 mm · leg self-contact 0 mm · limit margin 4.9° (ankle_R) · root max 0.07 N · class RECOVERABLE_IN_PLACE · sat {"hip_L":167,"ankle_L":2688,"ankle_R":150}

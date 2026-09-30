@@ -46,6 +46,10 @@ export const LIMITS_V11 = {
   elbow:    { H: [-50, 60] },
 };
 export const limitsFor = (spec) => spec.calib && spec.calib.name === "V1.1" ? LIMITS_V11 : LIMITS_C1;
+// the WORKING controller of each calibration: V1 = the approved Gate C2 controller (no options); V1.1 = the approved controller plus the
+// corrections its anatomy logically requires (R1 anticipateReach, R2 reachToGround — reach geometry of the narrower hips) and the planned,
+// physically bounded unloading of a transfer (unloadPlan). The historical V1.1 evidence is reproduced with ctrl "approved" (+ flags).
+export const controllerProfile = (spec) => spec.calib && spec.calib.name === "V1.1" ? { anticipateReach: true, reachToGround: true, unloadPlan: true, reachAll: true, ankleReach: true } : {};
 export const STRENGTH_C1 = { candidate: 1, weak: 0.5, strong: 3 };
 export const BAL = {
   kXi: 0.5,            // capture-point CoP law p* = ξ + kXi·(ξ − ξref): ξ converges at ω0·kXi; total ankle stiffness ≈ (1 + kXi)·mgh (Peterka 2002: ≈ 1.33)
@@ -218,18 +222,38 @@ export class BalanceController {
     // (a swinging leg counts with its planned touchdown point, so the pelvis is lowered DURING the swing, before the foot needs the reach).
     // The lowered target is never more than 1 cm below the ACTUAL pelvis: the stance legs are solved up to this height, and joint targets
     // for a pelvis the body has not yet reached lift a newly landed foot off the turf (finding 2026-09-29, test D).
-    if (plan && !released) { const nomY = Pd[1], reachOf = (s) => stance.includes(s) ? S[this.legs[s].foot].pos : (plan.swing && plan.swing[s] && plan.swing[s].reach) || null;
+    // V1.1 controller (reachAll): EVERY foot the controller intends to have on the ground keeps the pelvis within its reach — a stance foot
+    // where it is, a swing foot at its touchdown point, and a foot being RE-PLANTED at its anchor (finding 2026-09-30: a 22 cm forward step
+    // bounced its landed foot off the turf; no longer stance, it dropped out of the reach check, the pelvis rose 7 cm back to nominal height,
+    // the straight front leg could not reach the ground and the load-acceptance transfer moved ξ toward a foot that was not there)
+    const replantOf = (s) => { const f = o.feet[s]; if (!this.opts.reachAll || stance.includes(s) || swingCtl.includes(s) || !f.anchor) return null; const a = plan.anchor && plan.anchor.foot === s ? plan.anchor : f.anchor; return a.pos; };
+    if (plan && !released) { const nomY = Pd[1], reachOf = (s) => stance.includes(s) ? S[this.legs[s].foot].pos : (plan.swing && plan.swing[s] && plan.swing[s].reach) || replantOf(s);
       // V1.1 RECALIBRATION (opt-in, off for V1): during a planned weight transfer the reach is checked where the pelvis is GOING (shifted by
       // the planned COM goal − the COM now), not only where it is — with V1.1's anatomical hips the neutral stance is splayed (feet 32 cm
       // apart, hips 18.4 cm), and a height that only follows the current pelvis left the unloading leg exactly taut: it carried ≈ 90 N as a
       // strut and stalled ξ 1.7 cm short of the stance foot (finding 2026-09-30)
       const ant = this.opts.anticipateReach && plan.comGoal ? [plan.comGoal[0] - o.com[0], plan.comGoal[1] - o.com[2]] : null;
       const px = (sh) => sh ? [Pd[0] + ant[0], Pd[2] + ant[1]] : [Pd[0], Pd[2]];
+      if (this.opts.reachAll) {
+        // V1.1 controller: a pelvis HEIGHT BAND per horizontal pelvis position — hi = the lowest height every intended foot contact still
+        // reaches at 99.5 % extension, lo = the height below which a stance ankle comes within dorsiMarginDeg of its dorsiflexion stop. The
+        // target lies in the band of where the pelvis IS; the planned goal position (anticipation) only moves it within that band. (The
+        // earlier form took the reach limit of the present and the ankle limit of the goal at once — right after a 22 cm touchdown the rear
+        // ankle's FUTURE dorsiflexion raised the pelvis above the height at which the front leg could reach its foot NOW; finding 2026-09-30.)
+        const band = (sh) => { const P2 = px(sh); let hi = nomY, lo = -1e9;
+          for (const s of ["L", "R"]) { const a = reachOf(s); if (!a) continue; const L = this.legs[s], ho = Q.rot(Rpd, L.hipOff), hx = P2[0] + ho[0] - a[0], hz = P2[1] + ho[2] - a[2], Lm = BAL.reachExt * (L.L1 + L.L2), h2 = hx * hx + hz * hz;
+            if (h2 < Lm * Lm) hi = Math.min(hi, a[1] + Math.sqrt(Lm * Lm - h2) - ho[1]); }
+          if (hi < nomY) for (const s of stance) lo = Math.max(lo, this.minPelvisY(s, P2, Rpd, S[this.legs[s].foot].pos, S[this.legs[s].foot].rot, nomY, rad(BAL.dorsiMarginDeg)));
+          return { lo, hi }; };
+        const bN = band(false); let y = Math.max(bN.lo, bN.hi);
+        if (ant) { const bG = band(true), yG = Math.max(bG.lo, Math.min(bG.hi, y)); y = bN.lo <= bN.hi ? Math.max(bN.lo, Math.min(bN.hi, yG)) : y; }
+        Pd[1] = y; this.pdTrace = { nomY, yReach: bN.hi, yAnkle: bN.lo, y };
+      } else {
       for (const sh of ant ? [false, true] : [false]) for (const s of ["L", "R"]) { const a = reachOf(s); if (!a) continue; const P2 = px(sh), L = this.legs[s], ho = Q.rot(Rpd, L.hipOff), hx = P2[0] + ho[0] - a[0], hz = P2[1] + ho[2] - a[2], Lm = BAL.reachExt * (L.L1 + L.L2), h2 = hx * hx + hz * hz;
         if (h2 < Lm * Lm) Pd[1] = Math.min(Pd[1], a[1] + Math.sqrt(Lm * Lm - h2) - ho[1]); }
       const yReach = Pd[1];
       if (Pd[1] < nomY) for (const sh of ant ? [false, true] : [false]) for (const s of stance) Pd[1] = Math.max(Pd[1], this.minPelvisY(s, px(sh), Rpd, S[this.legs[s].foot].pos, S[this.legs[s].foot].rot, nomY, rad(BAL.dorsiMarginDeg)));
-      this.pdTrace = { nomY, yReach, yAnkle: Pd[1] }; Pd[1] = Math.max(S[0].pos[1] - 0.01, Math.min(S[0].pos[1] + 0.01, Pd[1])); }   // both ways: the reach lowering ending must not step the target back up (it launched him)
+      this.pdTrace = { nomY, yReach, yAnkle: Pd[1] }; } Pd[1] = Math.max(S[0].pos[1] - 0.01, Math.min(S[0].pos[1] + 0.01, Pd[1])); }   // both ways: the reach lowering ending must not step the target back up (it launched him)
     // GATE C2: a foot being LOADED after touchdown (plan.settle) is aimed level (its own yaw) — the heel rocker: a boot that lands on its heel
     // is lowered onto its sole by the finite ankle instead of being held on the heel (finding 2026-09-29, test D: held heel-only, the front
     // foot's CoP was pinned at the heel, the COM could not be drawn onto it and he fell backward after "acceptance")
@@ -263,12 +287,18 @@ export class BalanceController {
       const a = solve(tg.pos); nominal[L.hip] = a.hip; nominal[L.knee] = a.knee; nominal[L.ankle] = a.ankle; this.swingIK[s] = { knee: a.ik.pKnee, target: tg.pos };
       if (tg.vel) { const dT = 1 / 60, b = solve(V.add(tg.pos, V.sc(tg.vel, dT))); this.swingVel[L.hip] = rotRate(a.hip, b.hip, dT); this.swingVel[L.knee] = (b.knee - a.knee) / dT; this.swingVel[L.ankle] = rotRate(a.ankle, b.ankle, dT); } }
     this.replant = []; if (!released) for (const s of ["L", "R"]) { const f = o.feet[s], L = this.legs[s]; if (stance.includes(s) || swingCtl.includes(s) || !f.anchor) continue;
-      const a = plan && plan.anchor && plan.anchor.foot === s ? plan.anchor : f.anchor, above = V.add(a.pos, [0, -0.004, 0]), pHip = V.add(Pd, Q.rot(Rpd, L.hipOff)), ik = this._legIK(L, pHip, above, fwdOf(s));
+      // V1.1 controller (unloadPlan): the foot a planned transfer is UNLOADING is not pressed back into the turf when it loses contact — it is
+      // meant to carry nothing, and pressing it (4 mm below its anchor) re-loaded it by up to 190 N and reset the liftoff gate (finding
+      // 2026-09-30, J_repeat #5); it is held at its anchor height instead (its weight is carried by Jᵀ gravity support, as a free leg's)
+      const unl = this.opts.unloadPlan && plan && plan.unloading && plan.unloading.foot === s;
+      const a = plan && plan.anchor && plan.anchor.foot === s ? plan.anchor : f.anchor, above = V.add(a.pos, [0, unl ? 0 : -0.004, 0]), pHip = V.add(Pd, Q.rot(Rpd, L.hipOff)), ik = this._legIK(L, pHip, above, fwdOf(s));
       nominal[L.hip] = csOfRel(spec.joints[L.hip], Q.mul(Q.conj(Rpd), ik.Rt)); nominal[L.knee] = ik.kappa; nominal[L.ankle] = csOfRel(spec.joints[L.ankle], Q.mul(Q.conj(ik.Rs), a.rot));
       this.replant.push(s); }
     // ── desired ground reaction (LIPM line of action through the COM), split between the stance feet by the lever rule ──
     const feetForce = (p) => { const F = [W * (c[0] - p[0]) / h, W, W * (c[2] - p[1]) / h], res = {};
-      if (stance.length === 2 && plan) { const d2 = split2(o, p, (s) => { const f = this.legs[s].foot, q = V.add(S[f].pos, Q.rot(S[f].rot, spec.bodies[f].shapes[0].pos)); return [q[0], q[2]]; }, plan.preload, this.opts.diagUnload ? plan.unload : null);
+      if (stance.length === 2 && plan) { const cenOf = (s) => { const f = this.legs[s].foot, q = V.add(S[f].pos, Q.rot(S[f].rot, spec.bodies[f].shapes[0].pos)); return [q[0], q[2]]; };
+        const du = this.opts.unloadPlan && plan.unloading && !plan.preload ? split2u(o, p, cenOf, plan.unloading) : this.opts.unloadPlan && plan.loading && !plan.preload ? split2u(o, p, cenOf, plan.loading) : null; if (du && recordUnload) this.unloadInfo = du.info;
+        const d2 = du || split2(o, p, cenOf, plan.preload, this.opts.diagUnload ? plan.unload : null);
         for (const s of ["L", "R"]) res[s] = { F: V.sc(F, d2.share[s]), at: [d2.at[s][0], groundY(o.feet[s]), d2.at[s][1]], share: d2.share[s] }; }
       else if (stance.length === 2) { const cen = (s) => { const f = this.legs[s].foot, q = V.add(S[f].pos, Q.rot(S[f].rot, spec.bodies[f].shapes[0].pos)); return [q[0], q[2]]; };
         const cL = cen("L"), cR = cen("R"), e = [cR[0] - cL[0], cR[1] - cL[1]], ee = e[0] * e[0] + e[1] * e[1];
@@ -284,7 +314,7 @@ export class BalanceController {
       for (const i of this.subtree[k]) tau = V.sub(tau, V.cross(V.sub(S[i].com, pj), V.sc(GV, spec.bodies[i].mass)));
       for (const s of ["L", "R"]) if (feetF[s] && this.subtree[k].includes(this.legs[s].foot)) tau = V.sub(tau, V.cross(V.sub(feetF[s].at, pj), feetF[s].F));
       return tau; });                                            // world torque the motor must apply on the CHILD body
-    const pStatic = poly ? polyClamp(poly, comG, BAL.copInset) : comG, fStatic = feetForce(pStatic), fBal = feetForce(pStar);
+    this.unloadInfo = null; let recordUnload = false; const pStatic = poly ? polyClamp(poly, comG, BAL.copInset) : comG, fStatic = feetForce(pStatic); recordUnload = true; const fBal = feetForce(pStar);
     const tauG = torques(fStatic), tauB0 = torques(fBal), tauB = tauB0.map((t, k) => V.sub(t, tauG[k]));
     // ── hip strategy: when the CoP saturates, a trunk torque about the hips (centroidal moment W·(ŷ × r)), budgeted, tilt-guarded ──
     let tauTrunk = [0, 0, 0];
@@ -312,7 +342,7 @@ export class BalanceController {
     // GATE C2: velocity feed-forward for a swing-controlled leg (finite difference of its own successive targets, in each joint's space), so
     // the swing damping acts on deviation from the intended motion rather than on the motion itself. Stance joints keep a zero target velocity.
     if (plan) { out.vel = spec.joints.map(j => j.type === "hinge" ? 0 : [0, 0, 0]); for (const k in this.swingVel) out.vel[k] = this.swingVel[k]; for (const k in this.stanceVel) out.vel[k] = this.stanceVel[k]; }
-    out.debug = { pdTrace: this.pdTrace || null, xiRef, pRaw, pStar, r, hipCapHere, tauTrunk, feetStatic: fStatic, feetBal: fBal, heading: hd, pelvisTarget: { pos: Pd, rot: Rpd }, stance, replant: this.replant, fricR: this.fricR };
+    out.debug = { pdTrace: this.pdTrace || null, unload: this.unloadInfo, xiRef, pRaw, pStar, r, hipCapHere, tauTrunk, feetStatic: fStatic, feetBal: fBal, heading: hd, pelvisTarget: { pos: Pd, rot: Rpd }, stance, replant: this.replant, fricR: this.fricR };
     return out;
   }
 }
@@ -342,6 +372,47 @@ function split2(o, p, cen, preload, unload) {
   if (unload) { const stP = unload === "R" ? A : B; if (polyDist(stP, p) >= -1e-4) best = unload === "R" ? { a: 0, x: p.slice(), y: cR } : { a: 1, x: cL, y: p.slice() }; }
   let aR = best.a; if (preload) aR = preload.foot === "R" ? Math.max(aR, preload.share) : Math.min(aR, 1 - preload.share);
   return { share: { L: 1 - aR, R: aR }, at: { L: best.x, R: best.y } }; }
+// V1.1 PLANNED UNLOADING (controller option unloadPlan; the V1.1 working controller). During a planned TRANSFER the support layer
+// schedules an UPPER BOUND on the share of body weight the unloading foot may be commanded to carry (from its measured share at the start
+// of the transfer to 0 at its end). Double support is statically indeterminate — the joint torques decide how the ground reaction is
+// split — and the approved split minimised the summed ankle effort, which in a transfer keeps 4–8 % of the weight on the foot being
+// unloaded and made liftoff depend on an unmodelled CoP bias (V1.1 anatomy report §9). Here, among the distributions that reproduce the
+// demanded net CoP p* EXACTLY, the least-effort one is chosen subject to swing share ≤ the bound; the bound can never go below the
+// PHYSICAL minimum a_min — the smallest swing share for which p* is realisable with the stance CoP inside the stance foot's contact
+// polygon ((1 − a)·A ⊕ a·B ∋ p*, found exactly by convex-polygon clipping). So while p* is still outside the stance foot the swing foot
+// is commanded exactly the load physics requires, and it is unloaded only as the COM/ξ state makes the stance foot able to carry the whole
+// demand. Liftoff is still decided by the MEASURED load (pc_support.js).
+function clipConvex(subject, clip) { let out = subject;
+  for (let i = 0; i < clip.length && out.length; i++) { const a = clip[i], b = clip[(i + 1) % clip.length], inp = out; out = [];
+    const side = (q) => (b[0] - a[0]) * (q[1] - a[1]) - (b[1] - a[1]) * (q[0] - a[0]);
+    for (let j = 0; j < inp.length; j++) { const P = inp[j], R = inp[(j + 1) % inp.length], sP = side(P), sR = side(R);
+      if (sP >= 0) out.push(P); if ((sP >= 0) !== (sR >= 0)) { const t = sP / (sP - sR); out.push([P[0] + (R[0] - P[0]) * t, P[1] + (R[1] - P[1]) * t]); } } }
+  return out; }
+function nearestIn(poly, c) { if (!poly.length) return null; if (poly.length >= 3 && polyDist(poly, c) >= 0) return c.slice();
+  if (poly.length >= 3) return polyNearest(poly, c); let best = poly[0], bd = 1e18; for (const q of poly) { const d = (q[0] - c[0]) ** 2 + (q[1] - c[1]) ** 2; if (d < bd) { bd = d; best = q; } } return best.slice(); }
+function split2u(o, p, cen, unl) {
+  const poly = (s) => { const f = o.feet[s]; let P = f.points.length >= 3 ? hullOf(f.points) : []; if (P.length < 3) P = hullOf(f.sole); return ccw2(P); };
+  const sw = unl.foot, st = sw === "R" ? "L" : "R", A = poly(st), B = poly(sw), cA = cen(st), cB = cen(sw), sq = (u, v) => (u[0] - v[0]) ** 2 + (u[1] - v[1]) ** 2;
+  if (A.length < 3 || B.length < 3) return null;
+  const TA = (a) => A.map(v => [(p[0] - (1 - a) * v[0]) / a, (p[1] - (1 - a) * v[1]) / a]);          // swing CoPs compatible with a stance CoP in A
+  const TB = (a) => B.map(v => [(p[0] - a * v[0]) / (1 - a), (p[1] - a * v[1]) / (1 - a)]);          // stance CoPs compatible with a swing CoP in B
+  const feas = (a) => a <= 0 ? polyDist(A, p) >= -1e-5 : a >= 1 ? polyDist(B, p) >= -1e-5 : clipConvex(B, TA(a)).length > 0;
+  // the physically realisable interval [aMin, aMax] of this foot's share (convex in a: the CoPs reachable with share a form (1 − a)A ⊕ aB)
+  let aMin = 0; if (!feas(0)) { let prev = 0, hit = null; for (let i = 1; i <= 99; i++) { const a = i / 100; if (feas(a)) { hit = a; break; } prev = a; }
+    if (hit == null) return null; let lo = prev, hi = hit; for (let it = 0; it < 14; it++) { const m = (lo + hi) / 2; if (feas(m)) hi = m; else lo = m; } aMin = hi; }
+  let aMax = aMin; if (unl.minShare != null) { let top = null; for (let i = 99; i >= 1; i--) { const a = i / 100; if (a <= aMin) break; if (feas(a)) { top = a; break; } }
+    if (top != null) { let lo = top, hi = Math.min(1, top + 0.01); for (let it = 0; it < 14; it++) { const m = (lo + hi) / 2; if (feas(m) && m < 1) lo = m; else hi = m; } aMax = lo; } }
+  // UNLOADING (maxShare): the share may not exceed the scheduled bound unless physics needs it; LOADING (minShare): it may not fall below
+  // the scheduled bound unless physics cannot carry it
+  const aLo = unl.minShare != null ? Math.max(aMin, Math.min(unl.minShare, aMax)) : aMin, aHi = unl.minShare != null ? Math.max(aLo, aMax) : Math.max(aMin, Math.min(unl.maxShare, 0.99));
+  const cand = [aLo]; if (aHi > aLo) for (let i = 1; i <= 20; i++) cand.push(aLo + (aHi - aLo) * i / 20);
+  let best = null; const take = (a, x, y) => { const c = (1 - a) ** 2 * sq(x, cA) + a * a * sq(y, cB); if (!best || c < best.c - 1e-15) best = { a, x, y, c }; };
+  for (const a of cand) { if (a <= 1e-9) { if (feas(0)) take(0, p.slice(), cB); continue; }
+    const Y = clipConvex(B, TA(a)); if (Y.length) { const y = nearestIn(Y, cB); take(a, [(p[0] - a * y[0]) / (1 - a), (p[1] - a * y[1]) / (1 - a)], y); }
+    const X = clipConvex(A, TB(a)); if (X.length) { const x = nearestIn(X, cA); take(a, x, [(p[0] - (1 - a) * x[0]) / a, (p[1] - (1 - a) * x[1]) / a]); } }
+  if (!best) return null;
+  const share = sw === "R" ? { L: 1 - best.a, R: best.a } : { L: best.a, R: 1 - best.a }, at = sw === "R" ? { L: best.x, R: best.y } : { L: best.y, R: best.x };
+  return { share, at, info: { foot: sw, mode: unl.minShare != null ? "load" : "unload", bound: unl.minShare != null ? unl.minShare : unl.maxShare, aMin, aMax: unl.minShare != null ? aMax : null, share: best.a } }; }
 function ccw2(P) { let a = 0; for (let i = 0; i < P.length; i++) { const p = P[i], q = P[(i + 1) % P.length]; a += p[0] * q[1] - q[0] * p[1]; } return a > 0 ? P : P.slice().reverse(); }
 function groundY(f) { return f.points.length ? f.points.reduce((a, p) => a + p[1], 0) / f.points.length : 0; }
 function hullOf(P) { const p = P.map(q => [q[0], q[2]]).sort((a, b) => a[0] - b[0] || a[1] - b[1]); if (p.length < 3) return p;
