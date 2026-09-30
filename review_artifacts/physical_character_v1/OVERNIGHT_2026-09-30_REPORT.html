@@ -1,0 +1,973 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Overnight Runway Report</title><style>
+:root{--bg:#fbfaf7;--ink:#1d1f22;--mute:#5d646b;--line:#dcd8cf;--code:#f1eee7;--acc:#8a5a00;--q:#f4efe2}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#141619;--ink:#e6e4df;--mute:#9aa0a6;--line:#33373d;--code:#1d2024;--acc:#f0c060;--q:#1f1c14}}
+:root[data-theme="dark"]{--bg:#141619;--ink:#e6e4df;--mute:#9aa0a6;--line:#33373d;--code:#1d2024;--acc:#f0c060;--q:#1f1c14}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 -apple-system,system-ui,"Segoe UI",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px 80px}
+h1{font-size:26px;line-height:1.25} h2{font-size:20px;margin-top:40px;padding-top:12px;border-top:1px solid var(--line)} h3{font-size:16px;color:var(--acc)}
+table{border-collapse:collapse;width:100%;font-size:13px;margin:12px 0;display:block;overflow-x:auto} th,td{border:1px solid var(--line);padding:5px 8px;vertical-align:top;text-align:left} th{background:var(--code)}
+code{background:var(--code);padding:1px 4px;border-radius:3px;font-size:12.5px} pre{background:var(--code);padding:12px;border-radius:6px;overflow-x:auto;font-size:12px;line-height:1.45} pre code{padding:0;background:none}
+blockquote{margin:12px 0;padding:10px 16px;background:var(--q);border-left:4px solid var(--acc)} a{color:var(--acc)}
+img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:4px} li>ul,li>ol{margin:4px 0}
+</style></head><body><main><h1>Physical character: overnight runway report, 30 Sep 2026</h1>
+<p>Worktree <code>worktrees/physical-character-v1</code> (branch <code>prototype/physical-character-v1</code>). All work was done there. Your original tree was not touched, nothing was pushed, and nothing in the football simulation was modified.</p>
+<h2>1. Where I reached, and why I stopped</h2>
+<p><strong>Reached (in roadmap order):</strong>
+- V1.1 integration and promotion.
+- C3 one-step corrective stepping.
+- C4 reactive arms.
+- C5 protective fall response.
+- A two-character vertical slice (Gate D, 7 tests).
+- The first physically honest step toward the Reference Tackle: <strong>D6</strong>, a slide tackle into a standing player.</p>
+<p><strong>Why I stopped short of the Reference Tackle itself.</strong> In the reference, the attacker <em>jogs at ≈ 3 m/s</em>, lifts his knee, hurdles the slider, and his <em>moving trailing leg</em> is caught. The physical character has no locomotion: it stands, balances, and takes one reactive step. Reproducing the attacker tonight would need a kinematic attacker, root dragging, or animation driving the outcome, and all three are forbidden. I also consider a gait controller an architectural decision for you, not an overnight improvisation. So the Reference Tackle is blocked on a prerequisite, and I stopped there instead of faking it (see §10).</p>
+<h2>2. V1.1 status: promoted working foundation</h2>
+<p><code>WORKING_CALIB = "V1.1"</code> (pc_body.js). Every runner and the harness default to it, and V1 stays reproducible with <code>--calib V1</code>. Details: <code>v1_1/PROMOTION.md</code>.</p>
+<ul>
+<li><strong>A. C2 weight transfer (planned physical unloading).</strong> The unloading foot's commanded share gets an <em>upper bound</em> that ramps to 0. The controller takes the least-effort split within that bound, and never goes below the <strong>physical minimum</strong>, found by exact convex clipping of (1 − a)·A ⊕ a·B ∋ p*. The liftoff criterion was not weakened; one stricter condition was added (holding ξ on the stance foot may use ≤ 80 % of the stance ankle's torque). Result: J_repeat 6/6 (V1: 5/6).</li>
+<li><strong>B. Anatomy-invalid fixtures.</strong> Only Gate A drop E was invalid for V1.1: its authored elbow started the forearm 112 mm inside the head. It is re-authored as elbow 100 → 80°, for V1.1 only. Two findings are reported rather than tuned:</li>
+<li>Drop A: +12.8 J from the position correction when the knee stop is hit carrying 341 J.</li>
+<li>Drop B: a 16.4° transient past the shoulder limit, with the arm trapped under the body.</li>
+<li><strong>C. Physically useful reach.</strong> A consistent pelvis-height band per pelvis position:</li>
+<li>upper edge = reach to every intended contact;</li>
+<li>lower edge = 5° stance-ankle dorsiflexion margin.</li>
+</ul>
+<p>Every placement up to the planner's anatomical limit is accepted without bounce. Envelope: forward 26 cm, backward 18 cm, outward 8.3 cm.</p>
+<h2>3. Gate by gate</h2>
+<h3>3.1 V1.1 integration and promotion checkpoint: <strong>PASS</strong></h3>
+<p>The objective, implementation and measurements are in §2 and <code>v1_1/PROMOTION.md</code>.
+- C1: 8 stood, 37 recovered, 14 fell. PR50, DR45 and S_weak_PR40 now recover (they fell on V1).
+- C2: 13 done; I_block is blocked by design.
+- Determinism: 35/35 ×3. Browser = Node: 38/38.</p>
+<h3>3.2 C3: physics-driven corrective stepping (one step): <strong>PARTIAL</strong></h3>
+<p><strong>Objective:</strong> when C1 declares STEP_NEEDED, choose a foot and foothold and execute one physical step: sensed liftoff, finite-motor swing, sensed touchdown, acceptance in the new support. Otherwise fall honestly.</p>
+<p><strong>Implementation (<code>pc_step.js</code>):</strong>
+- <strong>Foothold:</strong> LIPM prediction ξ_td = p_st + (ξ − p_st)·e^{ωT}, with the foot's weight point aimed at ξ_td + 3 cm (Hof 2008; Pratt 2006; Koolen 2012).
+- <strong>Reach:</strong> checked at touchdown with the pelvis carried by the predicted COM, plus hip range of motion. The stance heel may rise.
+- <strong>Swing:</strong>
+  - swing-foot speed ≤ 4.5 m/s (the measured human reactive range);
+  - active-lift unloading with sensed liftoff;
+  - C2's knee-forward swing at reactive duration (0.25 + 0.2 s/m, ≤ 0.40 s).
+- <strong>Landing and acceptance:</strong> landing compliance (kp × 0.35, recovering over 0.15 s); a second step is flagged only while ξ is outside <em>and receding</em>.
+- <strong>Crossover:</strong> now planned in 3-D (§3.2.1).</p>
+<p><strong>Results (29 tests, deterministic ×3, Browser = Node 29/29):</strong></p>
+<table>
+<thead>
+<tr>
+<th>test</th>
+<th>outcome</th>
+<th>STEP_NEEDED s</th>
+<th>liftoff +s</th>
+<th>touchdown +s</th>
+<th>landing err cm</th>
+<th>recovered +s</th>
+<th>trunk max °</th>
+<th>why (failures)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A_inplace_F50</td>
+<td>RECOVERED_IN_PLACE</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>6.6</td>
+<td></td>
+</tr>
+<tr>
+<td>A_inplace_B30</td>
+<td>RECOVERED_IN_PLACE</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>5.9</td>
+<td></td>
+</tr>
+<tr>
+<td>A_inplace_R40</td>
+<td>RECOVERED_IN_PLACE</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>4.8</td>
+<td></td>
+</tr>
+<tr>
+<td>B_F70</td>
+<td>RECOVERED_WITH_STEP</td>
+<td>1.054</td>
+<td>0.029</td>
+<td>0.254</td>
+<td>5.4</td>
+<td>0.55</td>
+<td>14.6</td>
+<td></td>
+</tr>
+<tr>
+<td>B_F80</td>
+<td>RECOVERED_WITH_STEP</td>
+<td>1.05</td>
+<td>0.033</td>
+<td>0.25</td>
+<td>7.8</td>
+<td>0.71</td>
+<td>19.8</td>
+<td></td>
+</tr>
+<tr>
+<td>B_F90</td>
+<td>RECOVERED_WITH_STEP</td>
+<td>1.042</td>
+<td>0.037</td>
+<td>0.204</td>
+<td>26.6</td>
+<td>0.63</td>
+<td>19.8</td>
+<td></td>
+</tr>
+<tr>
+<td>B_F100</td>
+<td>RECOVERED_WITH_STEP</td>
+<td>1.038</td>
+<td>0.037</td>
+<td>0.246</td>
+<td>10.1</td>
+<td>0.75</td>
+<td>22.3</td>
+<td></td>
+</tr>
+<tr>
+<td>B_B40</td>
+<td>RECOVERED_WITH_STEP</td>
+<td>1.3</td>
+<td>0.037</td>
+<td>0.225</td>
+<td>5.5</td>
+<td>0.96</td>
+<td>9.2</td>
+<td></td>
+</tr>
+<tr>
+<td>B_B50</td>
+<td>RECOVERED_WITH_STEP</td>
+<td>1.046</td>
+<td>0.033</td>
+<td>0.196</td>
+<td>13.8</td>
+<td>0.91</td>
+<td>8</td>
+<td></td>
+</tr>
+<tr>
+<td>B_B60</td>
+<td>STEPPED_FELL</td>
+<td>1.038</td>
+<td>0.037</td>
+<td>0.192</td>
+<td>26.6</td>
+<td>-</td>
+<td>93.4</td>
+<td>ξ still outside after the step (2nd step needed)</td>
+</tr>
+<tr>
+<td>B_R55</td>
+<td>FELL_NO_STEP</td>
+<td>2.004</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>95.6</td>
+<td>best foothold leaves ξ 12.7 cm outside the new support</td>
+</tr>
+<tr>
+<td>B_R65</td>
+<td>FELL_NO_STEP</td>
+<td>1.379</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>104.4</td>
+<td>best foothold leaves ξ 12.7 cm outside the new support</td>
+</tr>
+<tr>
+<td>B_R75</td>
+<td>FELL_NO_STEP</td>
+<td>1.05</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>109.2</td>
+<td>best foothold leaves ξ 21.3 cm outside the new support</td>
+</tr>
+<tr>
+<td>B_L55</td>
+<td>FELL_NO_STEP</td>
+<td>2.017</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>96.5</td>
+<td>best foothold leaves ξ 12.6 cm outside the new support</td>
+</tr>
+<tr>
+<td>B_L70</td>
+<td>FELL_NO_STEP</td>
+<td>1.054</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>103.7</td>
+<td>best foothold leaves ξ 15.0 cm outside the new support</td>
+</tr>
+<tr>
+<td>B_FR70</td>
+<td>FELL_NO_STEP</td>
+<td>1.725</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>93.1</td>
+<td>no reachable foothold (neither foot)</td>
+</tr>
+<tr>
+<td>B_FR90</td>
+<td>FELL_NO_STEP</td>
+<td>1.308</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>103.2</td>
+<td>no reachable foothold (neither foot)</td>
+</tr>
+<tr>
+<td>B_BL45</td>
+<td>STEPPED_FELL</td>
+<td>1.567</td>
+<td>0.038</td>
+<td>0.379</td>
+<td>4</td>
+<td>-</td>
+<td>97.6</td>
+<td>ξ still outside after the step (2nd step needed)</td>
+</tr>
+<tr>
+<td>B_BL60</td>
+<td>STEPPED_FELL</td>
+<td>1.054</td>
+<td>0.05</td>
+<td>0.158</td>
+<td>43.2</td>
+<td>-</td>
+<td>93.7</td>
+<td>ξ still outside after the step (2nd step needed)</td>
+</tr>
+<tr>
+<td>C_proj_F115</td>
+<td>RECOVERED_WITH_STEP</td>
+<td>1.033</td>
+<td>0.042</td>
+<td>0.263</td>
+<td>6.8</td>
+<td>0.75</td>
+<td>22.3</td>
+<td></td>
+</tr>
+<tr>
+<td>C_proj_R90</td>
+<td>FELL_NO_STEP</td>
+<td>1.042</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>110.5</td>
+<td>best foothold leaves ξ 22.4 cm outside the new support</td>
+</tr>
+<tr>
+<td>C_proj_B75</td>
+<td>STEPPED_FELL</td>
+<td>1.033</td>
+<td>0.038</td>
+<td>0.204</td>
+<td>37.2</td>
+<td>-</td>
+<td>93.5</td>
+<td>ξ still outside after the step (2nd step needed)</td>
+</tr>
+<tr>
+<td>D_late_F80_100ms</td>
+<td>STEPPED_FELL</td>
+<td>1.146</td>
+<td>0.133</td>
+<td>0.254</td>
+<td>51.3</td>
+<td>-</td>
+<td>91.5</td>
+<td>ξ still outside after the step (2nd step needed)</td>
+</tr>
+<tr>
+<td>D_late_F80_150ms</td>
+<td>STEPPED_FELL</td>
+<td>1.196</td>
+<td>0.188</td>
+<td>0.233</td>
+<td>57.3</td>
+<td>-</td>
+<td>91.5</td>
+<td>ξ still outside after the step (2nd step needed)</td>
+</tr>
+<tr>
+<td>D_late_R65_100ms</td>
+<td>FELL_NO_STEP</td>
+<td>1.154</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>107.6</td>
+<td>best foothold leaves ξ 12.0 cm outside the new support</td>
+</tr>
+<tr>
+<td>E_fric_F80_mu0.25</td>
+<td>FELL_NO_STEP</td>
+<td>1.05</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>91.5</td>
+<td>no reachable foothold (neither foot)</td>
+</tr>
+<tr>
+<td>E_fric_R65_mu0.2</td>
+<td>RECOVERED_IN_PLACE</td>
+<td>1.054</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>6.2</td>
+<td>step refused (stance foot slipping); survived in place</td>
+</tr>
+<tr>
+<td>F_nofoot_F160</td>
+<td>STEPPED_FELL</td>
+<td>1.025</td>
+<td>0.046</td>
+<td>0.308</td>
+<td>28.2</td>
+<td>-</td>
+<td>91.5</td>
+<td>ξ still outside after the step (2nd step needed)</td>
+</tr>
+<tr>
+<td>F_nofoot_B110</td>
+<td>STEPPED_FELL</td>
+<td>1.025</td>
+<td>0.038</td>
+<td>0.213</td>
+<td>27.8</td>
+<td>-</td>
+<td>93.4</td>
+<td>ξ still outside after the step (2nd step needed)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>What works:</strong>
+- Forward steps up to 100 N·s (and 115 N·s with a projected foothold) and backward steps up to 50 N·s are caught by one physical step.
+- In-place controls never step.
+- Late reactions, low friction, and pushes beyond any single step fall honestly, with the stated reason.
+- On μ 0.2 turf, the 65 N·s lateral push is <em>survived in place</em>: the feet slide with the push and absorb the lateral momentum. That is plausible physics, not a bug.</p>
+<p><strong>Visual:</strong> F80 is a plausible reactive step with the stance heel rising (<code>gate_c3/sheet_F80_side.jpg</code>). Flagged: low swing clearance, and the landing error on B_F90 (26.6 cm).</p>
+<h4>3.2.1 The lateral gap: a body limit, not a missing patch (<code>gate_c3/analysis/crossover/</code>)</h4>
+<p>A lateral or forward-right push beyond the in-place boundary (≥ 55 N·s) can only be caught by the <strong>unloaded</strong> leg crossing in front of the stance leg: the loaded leg cannot be unloaded in time. This matches the human data (Maki &amp; McIlroy 1997; Mille et al. 2005). I rebuilt the crossover as a real 3-D route:
+- the swing ankle passes ≥ 7 cm in front of the stance shin;
+- while the footprints overlap, its sole stays ≥ 4 cm above the stance boot;
+- feasibility checks the planned trajectory's peak 3-D foot speed.</p>
+<p>Measured results:
+- <strong>Physiological cap (4.5 m/s):</strong> every lateral and forward-right case needs <strong>5.1–6.3 m/s</strong>. The free foot must travel 65–85 cm from the 32 cm-wide stance, including the shin detour and a 13–19 cm lift over the art-fitted 16 × 15 × 36 cm boot. The planner refuses with that reason, and the body falls honestly.
+- <strong>Boot-sized collider (experiment only, 29 × 10.5 × 8.8 cm):</strong> the lift drops to 13 cm, but the lateral travel does not change. Still 5.1–5.8 m/s.
+- <strong>Cap lifted to 7 m/s (a non-physiological mechanics test):</strong>
+  - the swing hip saturates from 23 % of the swing;
+  - the foot lags 20–25 cm;
+  - it strikes the stance shin and comes to rest <em>on top of</em> the stance boot, never touching the ground.</p>
+<p>Physics blocks the pass-through, as it should.
+- <strong>An earlier trigger doesn't rescue it:</strong> at 1.05 s, R65 still needs 5.1 m/s.</p>
+<p>Lateral recovery beyond ≈ 50 N·s needs <strong>more than one step</strong> (a side-step or crossover sequence), and C3 is scoped to one. All C3 hashes were unchanged by the new planner (29/29).</p>
+<h4>3.2.2 Experiment: does a second capture step rescue the "second step needed" failures? (<code>gate_c3/analysis/multistep/</code>)</h4>
+<p>This is an option, <code>step.maxSteps</code>, with default 1, so C3 stays as scoped: all hashes are identical at 1. The next step is handed over as soon as ξ is beyond the hip-extended new support and receding (C1's own criterion), 0–40 ms after touchdown. Waiting for C3's 30-step failure confirmation was 0.45 s too late.</p>
+<p><strong>0 of 8 are rescued.</strong> At the handover:
+- <strong>F160:</strong> the trailing foot would need 147 cm in 0.4 s (10.9 m/s). The body is already moving at 1.8 m/s.
+- <strong>BL60:</strong> the trailing foot would have to cross behind the stance foot.
+- <strong>B60:</strong> it needs 4.9 m/s; the step is executed projected, and the body still falls.</p>
+<p><strong>Cause:</strong> C3's one-step capture policy takes the <em>longest</em> first step it can. That leaves the trailing foot too far behind for any second step. Step sequences need <strong>N-step capturability</strong> (Koolen et al. 2012): a shorter first step chosen so the second is feasible. That is the gait-controller question in §10.</p>
+<h4>3.2.3 Why the "second step needed" steps fall short: swing execution (<code>gate_c3/analysis/swing_execution/</code>)</h4>
+<p>A 2-step capturability planner (Koolen et al. 2012; option <code>step.nStep</code>, default off) exposed the real cause. B60's one-step plan <em>already predicts</em> a capture (+10.6 cm), and so do the others. Every such failure is an <strong>early touchdown</strong> at u = 0.44–0.73 of the swing, landing 26–57 cm short (the recovered steps land 5–14 cm from plan).</p>
+<p>Two traced mechanisms:
+- <strong>Backward (B60):</strong> C2's rise-first profile lifts the foot in place by hip <em>flexion</em> (−9 → −24°). The hip must then reverse into extension at about 400°/s, and saturates. Hip and knee lag 5–8°, the foot drops, and the toe touches at u 0.54.
+- <strong>Late forward (D_late):</strong> as the knee flexes behind a falling, pitched trunk, the foot pitches 3 → 19° toe-down. The 27.6 cm forefoot skims the turf at 6–11 mm and touches at u 0.48.</p>
+<p>Tested responses:</p>
+<table>
+<thead>
+<tr>
+<th>variant</th>
+<th>effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>boot-sized foot collider (experiment)</td>
+<td>does <strong>not</strong> help: the same early touchdowns, and the smaller sole costs a recovery</td>
+</tr>
+<tr>
+<td>progression starts with the lift (<code>step.h0 = 0</code>)</td>
+<td>F90 landing error 26.6 → 8.3 cm</td>
+</tr>
+<tr>
+<td>heel-up backward swing (<code>step.heelUp</code>), the foot lifted by knee flexion</td>
+<td>B50 13.8 → 7.9 cm; B60 touches later and closer (26.6 → 19.2 cm) but still falls</td>
+</tr>
+</tbody>
+</table>
+<p>Neither option changes an outcome. The remaining limit is the swing hip's <em>finite</em> extension torque while the body falls backward. So I kept the reviewed C3 default, and left both options in for the C3 revision.</p>
+<h3>3.3 C4: whole-body reactive balance (arms): <strong>PARTIAL, kept opt-in</strong></h3>
+<p><strong>Objective:</strong> the arms join the hip strategy, with an arms-disabled comparison.</p>
+<p><strong>Implementation:</strong> the arms act as a torque source. Their equilibrium point moves with the demanded torque, and their target velocity is their actual velocity. Braking is range-aware: when ω²/2α ≥ the remaining range, they brake. This keeps the arm from arriving at its joint stop with its momentum. The first version (equilibrium offset only) moved the arms just ~15°. The unbraked version turned three recoveries into falls.</p>
+<p><strong>Results (23 pairs, deterministic ×3):</strong></p>
+<table>
+<thead>
+<tr>
+<th>gate</th>
+<th>test</th>
+<th>outcome off → on</th>
+<th>recovery s off → on</th>
+<th>trunk max ° off → on</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C1</td>
+<td>PF55</td>
+<td>RECOVERED → RECOVERED</td>
+<td>1.94 → 1.90</td>
+<td>7.2 → 10.1</td>
+</tr>
+<tr>
+<td>C1</td>
+<td>PF60</td>
+<td>RECOVERED → RECOVERED</td>
+<td>2.40 → 2.31</td>
+<td>9.6 → 10.6</td>
+</tr>
+<tr>
+<td>C1</td>
+<td>PB30</td>
+<td>RECOVERED → RECOVERED</td>
+<td>1.33 → 1.21</td>
+<td>5.9 → 6.5</td>
+</tr>
+<tr>
+<td>C1</td>
+<td>PR45</td>
+<td>RECOVERED → RECOVERED</td>
+<td>0.83 → 0.82</td>
+<td>4.9 → 5.4</td>
+</tr>
+<tr>
+<td>C1</td>
+<td>PR50</td>
+<td>RECOVERED → RECOVERED</td>
+<td>0.95 → <strong>1.12</strong></td>
+<td>5.1 → 6.2</td>
+</tr>
+<tr>
+<td>C1</td>
+<td>PL40</td>
+<td>RECOVERED → RECOVERED</td>
+<td>1.23 → <strong>0.70</strong></td>
+<td>4.8 → 6.1</td>
+</tr>
+<tr>
+<td>C1</td>
+<td>DR45</td>
+<td>RECOVERED → RECOVERED</td>
+<td>0.78 → 0.75</td>
+<td>6.5 → 6.4</td>
+</tr>
+<tr>
+<td>C1</td>
+<td>PF65 / PF70 / PB35 / PB40 / PB50 / PR60 / PL60 / DB35</td>
+<td>FELL → FELL</td>
+<td>–</td>
+<td>–</td>
+</tr>
+<tr>
+<td>C3</td>
+<td>B_F80</td>
+<td>STEP → STEP</td>
+<td>–</td>
+<td>19.8 → 17.4</td>
+</tr>
+<tr>
+<td>C3</td>
+<td>B_F100</td>
+<td>STEP → STEP</td>
+<td>–</td>
+<td>22.3 → 20.7</td>
+</tr>
+<tr>
+<td>C3</td>
+<td>B_B50</td>
+<td>STEP → STEP</td>
+<td>–</td>
+<td>8.0 → 13.9</td>
+</tr>
+<tr>
+<td>C3</td>
+<td><strong>C_proj_F115</strong></td>
+<td>RECOVERED_WITH_STEP → <strong>STEPPED_FELL</strong></td>
+<td>–</td>
+<td>22.3 → 93.1</td>
+</tr>
+</tbody>
+</table>
+<p><strong>What it shows:</strong>
+- No in-place boundary moves. That is consistent with the ≈ 2 cm capture capacity estimated for the arms' angular momentum.
+- Recovery times change by −43 % to +18 %.
+- One marginal step (C_proj_F115) regresses.
+- PB35's earlier "recovery" with arms was an artefact of the joint stop, and it is gone.</p>
+<p><strong>Visual:</strong> under a forward push the arms swing back, which is the physically correct reaction direction (<code>gate_c4/sheet_PF60_noarms_arms.jpg</code>). Flagged: humans also throw the arms <em>forward</em> when stepping, and that isn't modelled.</p>
+<h3>3.4 C5: fall transition / protective response: <strong>PARTIAL, kept opt-in</strong></h3>
+<p><strong>Objective:</strong> once a fall is unavoidable, make a protective response in a few representative directions.</p>
+<p><strong>Implementation:</strong> the fall direction comes from ξ − COM in the body frame, which selects a protective posture:
+- forward: hands ahead, chin tucked;
+- backward: sit-down (hips and knees flex, hands behind);
+- lateral: the near arm toward the ground.</p>
+<p>The posture is blended in over the balance release ramp and driven by the same finite motors (protK 0.6 for arms/neck/spine, 0.45 for legs). Nothing is kinematic, and the contacts decide the outcome.</p>
+<p><strong>Results (11 falls, deterministic ×3):</strong></p>
+<table>
+<thead>
+<tr>
+<th>fall</th>
+<th>first body on the ground off → on</th>
+<th>hands land (s after release) off → on</th>
+<th>head impact m/s off → on</th>
+<th>pelvis impact m/s off → on</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C1 PF65</td>
+<td>foreArm_L → foreArm_L</td>
+<td>1.41 → 1.40</td>
+<td>0.80 → <strong>0.15</strong></td>
+<td>–</td>
+</tr>
+<tr>
+<td>C1 G_fall</td>
+<td>foreArm_L → foreArm_R</td>
+<td>1.11 → 1.09</td>
+<td>0.76 → <strong>0.12</strong></td>
+<td>–</td>
+</tr>
+<tr>
+<td>C1 PB40</td>
+<td>pelvis → <strong>foreArm_L</strong></td>
+<td>— → 1.01</td>
+<td>0.57 → <strong>0.14</strong></td>
+<td>1.08 → 1.16</td>
+</tr>
+<tr>
+<td>C1 PB60</td>
+<td>pelvis → <strong>foreArm_L</strong></td>
+<td>— → 0.87</td>
+<td>0.41 → <strong>0.15</strong></td>
+<td>1.46 → 1.23</td>
+</tr>
+<tr>
+<td>C1 PR60</td>
+<td>foreArm_R → foreArm_R</td>
+<td>1.10 → 1.05</td>
+<td>0.83 → 0.86</td>
+<td>0.18 → 0.08</td>
+</tr>
+<tr>
+<td>C1 PR70</td>
+<td>foreArm_R → foreArm_R</td>
+<td>1.19 → 1.15</td>
+<td>0.86 → <strong>no contact</strong></td>
+<td>0.21 → 0.23</td>
+</tr>
+<tr>
+<td>C1 PL60</td>
+<td>foreArm_L → foreArm_L</td>
+<td>1.10 → 1.05</td>
+<td>1.23 → 1.02</td>
+<td>0.22 → 0.24</td>
+</tr>
+<tr>
+<td>C3 C_proj_B75</td>
+<td>pelvis → foreArm_R</td>
+<td>0.87 → 0.76</td>
+<td>0.97 → 0.83</td>
+<td>2.49 → <strong>1.52</strong></td>
+</tr>
+<tr>
+<td>C3 F_nofoot_F160</td>
+<td>foreArm_L → foreArm_L</td>
+<td>0.76 → 0.78</td>
+<td>1.09 → <strong>0.30</strong></td>
+<td>0.14 → –</td>
+</tr>
+<tr>
+<td>C3 D_late_F80_100ms</td>
+<td>foreArm_L → foreArm_L</td>
+<td>0.65 → 0.64</td>
+<td>0.77 → <strong>1.20 (worse)</strong></td>
+<td>0.11 → –</td>
+</tr>
+<tr>
+<td>C3 B_R65</td>
+<td>foreArm_R → foreArm_R</td>
+<td>1.07 → 1.02</td>
+<td>0.78 → 0.87</td>
+<td>0.19 → 0.08</td>
+</tr>
+</tbody>
+</table>
+<p><strong>What it shows:</strong>
+- Forward and backward falls clearly improve: the hands land first and head impact drops to 0.12–0.30 m/s.
+- Lateral falls are mixed.
+- One late-reaction case is worse.
+- Hand impact speeds rise, as expected for an arm reaching out.</p>
+<p><strong>Visual:</strong>
+- Forward: OFF is a rigid plank; ON reaches forward, lands on the hands and lowers onto the forearms (<code>gate_c5/sheet_PF65_forward_off_on.jpg</code>).
+- Backward: ON is a sit-down fall that rolls back (<code>sheet_PB60_…</code>).
+- Lateral: ON reaches the near arm toward the ground (<code>sheet_PR70_…</code>).</p>
+<p>Flagged:
+- Legs stay rather stiff in forward falls.
+- The sit-down roll lifts the legs high.</p>
+<p><strong>Fixed after the visual review:</strong> a lateral fall's bracing arm stayed raised while lying on the turf, because the brace was re-aimed and held forever. The brace is now held while any segment still moves (≥ 0.3 m/s), then fades to tone over 0.5 s (<code>gate_c5/sheet_fade_PR70_PF65.jpg</code>). All 11 impact metrics are unchanged, because the fade starts after the last impact. Two variants were rejected:
+- the COM speed as the rest signal;
+- freezing the direction at the first ground contact, which raised PB60's head impact from 0.15 to 0.33 m/s.</p>
+<h3>3.5 Gate D: two-character vertical slice: <strong>PASS (with limitations)</strong></h3>
+<p><strong>Objective:</strong> the critical invariant. When a leg meets a leg, the bodies cannot pass through each other, and the contact changes both bodies' motion <em>on that contact step</em>.</p>
+<p><strong>Implementation (<code>pc_gated.js</code>):</strong>
+- <strong>One world:</strong> 28 bodies and 26 joints. B is A's spec translated, and both face +z, so no controller sees a new frame.
+- <strong>Separate control:</strong> each character has its own sensor, balance controller, stepper or sequencer, and motors.
+- <strong>Sensing the other character:</strong> each sees the other only as an unknown external body, never as turf or self. Support comes only from turf contacts.
+- <strong>Coupling:</strong> physics is the only coupling, and nothing decides a football outcome.</p>
+<p><strong>Isolation proof (<code>gate_d/analysis/d0_isolation.txt</code>):</strong> while apart, each character's trajectory is <strong>bit-identical</strong> to its own single-character run. So a second character perturbs nothing through the world or solver ordering, and every single-character gate result carries over.</p>
+<p><strong>Results (deterministic ×3 with protective off and on; Browser = Node 7/7; 0 teleports and 0 velocity writes after t = 0; pelvis residual ≤ 2.4 N, so no hidden support):</strong></p>
+<table>
+<thead>
+<tr>
+<th>test</th>
+<th>first touch</th>
+<th>closing m/s</th>
+<th>first step the contact acts: Δv along the normal, A / B (m/s)</th>
+<th>deepest mm</th>
+<th>A</th>
+<th>B</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D0 apart (control)</td>
+<td>none</td>
+<td>–</td>
+<td>–</td>
+<td>–</td>
+<td>upright</td>
+<td>upright</td>
+</tr>
+<tr>
+<td>D1 heel clip (C2 placement into B's heel)</td>
+<td>A.foot_R ↔ B.foot_R</td>
+<td>1.14</td>
+<td>−0.80 / +0.06 (2 steps before touch)</td>
+<td>0.7</td>
+<td>upright, placement DONE</td>
+<td>upright</td>
+</tr>
+<tr>
+<td>D2 shoved into (80 N·s)</td>
+<td>A.foot_L ↔ B.foot_L</td>
+<td>3.6–3.9</td>
+<td><strong>−1.19 / +0.44</strong>, then −1.50 / +0.57</td>
+<td>0.3</td>
+<td>upright, step recovered</td>
+<td>upright</td>
+</tr>
+<tr>
+<td>D3 shoulder (65 N·s lateral)</td>
+<td>A.foreArm_R ↔ B.foreArm_L</td>
+<td>0.90</td>
+<td>−0.33 / +0.32</td>
+<td>1.2</td>
+<td>upright, <strong>held up by B</strong></td>
+<td>upright</td>
+</tr>
+<tr>
+<td>D4 shoved hard (110 N·s)</td>
+<td>A.foot_L ↔ B.foot_L</td>
+<td>3.3–3.7</td>
+<td>−2.07 / +0.83</td>
+<td>1.6</td>
+<td>fell onto B's back</td>
+<td>upright</td>
+</tr>
+<tr>
+<td>D5 hard shoulder (110 N·s lateral)</td>
+<td>A.foreArm_R ↔ B.foreArm_L</td>
+<td>1.31</td>
+<td>−0.64 / +0.67</td>
+<td>1.8 (8.4 with protective)</td>
+<td>fell</td>
+<td><strong>knocked down</strong></td>
+</tr>
+<tr>
+<td>D6 slide tackle</td>
+<td>A.foot_R ↔ B.foot_L</td>
+<td>2.9</td>
+<td>−0.30 / +0.32, then −0.71</td>
+<td>5.1</td>
+<td>slide 1.22 m, stops at 1.31 s</td>
+<td>upright</td>
+</tr>
+</tbody>
+</table>
+<p>On the step the gap would close, both bodies' velocities change in opposite directions along the contact normal. Through Jolt's speculative contacts, that is 1–2 steps <em>before</em> the ≤ 0.5 mm geometric touch, never after.</p>
+<p><strong>Robustness:</strong> B's placement ±5 cm and the slide gap ±10 cm (<code>gate_d/analysis/robustness.txt</code>). In all six variants the approach was arrested on or before the touch step, and no outcome flipped. One variant exceeded the first-touch penetration target (limitation 2 below).</p>
+<p><strong>Visual</strong> (<code>gate_d/sheet_D2.jpg</code>, <code>sheet_D4.jpg</code>, <code>sheet_D5.jpg</code>, <code>sheet_D13.jpg</code>):
+- D2/D4 read as bumping into, then leaning on, someone's back.
+- D3: A leans on B's arm and is held up.
+- D5: both go down, with A draped over B's hips.</p>
+<p>Flagged: where colliders touch, the <em>rendered</em> meshes visibly overlap (head-to-head in D4). The colliders sit 1–3 cm inside the mesh, as reported at Gate A.</p>
+<p><strong>Limitations found:</strong>
+1. <strong>Support from another body is not perceived.</strong> In D4, A leans on B's back and is physically held up. His classifier still declares FALLING and releases to tone, because support is turf-only by design.
+2. <strong>Box-edge first touch.</strong> In one robustness variant (D6, gap 0.85 m) the slider's boot spins at 11–18 rad/s against B's planted boot, and first-touch penetration reaches <strong>9.3 mm</strong> (target ≤ 3 mm). Jolt's speculative contacts are linear, so rotation is not anticipated. The substrate spike's remedy (a larger speculative distance) was tested and <strong>does not fix it</strong> (7.1–12.2 mm; <code>gate_d/analysis/speculative_experiment.txt</code>). Head-on contacts are clean (0.16–0.33 mm). Candidate remedies, all touching the approved Gate A solver config: smaller slop, more position iterations, or a rounded boot collider.
+3. <strong>Sustained compression</strong> (not first touch) under load: 5 mm is the configured penetration slop. It reaches 8.4 mm when a foot is trapped between a falling pelvis and the turf (D5 with protective).</p>
+<h3>3.6 D6: the first physical step toward the Reference Tackle: <strong>PARTIAL</strong></h3>
+<p><strong>Objective:</strong> use the reference as <em>targets</em>, not playback.</p>
+<p><strong>Implementation:</strong>
+- <strong>Targets:</strong> the slider holds joint targets interpolated from the reference's <em>measured tackler keys</em> (f94 → f114: legs, spine, neck, arms; joint angles only). He uses the same finite motors, via the controller's hold mode.
+- <strong>Not commanded:</strong> the pelvis orientation, root path and plants of the clip. There is no root actuator, so his orientation, his slide and where he stops are physics.
+- <strong>Initial condition:</strong> the one authored state, at t = 0, like Gate A's drops. The f94 pose, reclined 48°, 1 cm above the turf, moving at 5.5 m/s (the reference root speed at the seat landing). <strong>The run-up is not simulated.</strong>
+- <strong>The defender:</strong> B stands with the full C1 + C3 stack.</p>
+<p><strong>Result:</strong>
+- The slider decelerates on the turf from 5.5 to 2.9 m/s.
+- His lead boot meets B's left boot and then B's shin, and the contact is arrested on the step it acts.
+- B's planted, loaded foot holds, so he stays upright.
+- The slider sits up and rolls back, as the reference keys flex his knee.</p>
+<p><strong>Visual</strong> (<code>gate_d/sheet_D6_slide.jpg</code>): the seat landing, the slide with the left arm raised as counterweight, and the extended lead leg read as a slide tackle. It differs from the reference because the reference attacker was <em>running</em>, and his <em>moving, unloaded</em> leg was caught.</p>
+<h3>3.7 Key sheets</h3>
+<p><img alt="D6 slide tackle" src="gate_d/sheet_D6_slide.jpg" />
+<img alt="D5 hard shoulder: both go down" src="gate_d/sheet_D5.jpg" />
+<img alt="D2 shoved into B" src="gate_d/sheet_D2.jpg" />
+<img alt="C3 F80 corrective step" src="gate_c3/sheet_F80_side.jpg" />
+<img alt="C5 forward fall OFF / ON" src="gate_c5/sheet_PF65_forward_off_on.jpg" />
+<img alt="C5 bracing fades after rest" src="gate_c5/sheet_fade_PR70_PF65.jpg" />
+<img alt="C4 arms OFF / ON" src="gate_c4/sheet_PF60_noarms_arms.jpg" /></p>
+<h2>4. Architecture (unchanged, and confirmed in code)</h2>
+<p>The pipeline is:</p>
+<p>intent → sensing / support reasoning (pc_sense) → physically achievable targets (pc_support C2 · pc_step C3 · reference keys D6) → finite motors (pc_balance: capture-point CoP law, hip strategy, C4 arms, C5 protective; torque-limited, budgeted) → Jolt articulated rigid bodies + contacts (pc_jolt) → solved state → rendered skeleton (pc_fit).</p>
+<p>The Jolt body is the only spatial state.</p>
+<p><strong>Audited:</strong>
+- 0 teleports and 0 velocity writes after t = 0 across C3 and D (with protective on and off).
+- No support fixture: every run's world passes the clean-world check (no support constraint, exact body count).
+- Pelvis external-force residual: ≈ 0.04 N in C1, ≤ 0.14 N in C2, ≤ 2.4 N in Gate D. C3's recorder does not compute it.
+- No kinematic override, root dragging, separation hack, canned reaction, or animation-decided outcome.
+- 14 bodies per character, unchanged.</p>
+<h2>5. Regressions</h2>
+<p>After every change (including the C4/C5 hooks, the crossover planner and Gate D), every approved and promoted hash is identical:</p>
+<table>
+<thead>
+<tr>
+<th>suite</th>
+<th>V1 (approved)</th>
+<th>V1.1 (promoted)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gate A drops</td>
+<td>5/5</td>
+<td>5/5</td>
+</tr>
+<tr>
+<td>Gate B</td>
+<td>20/20</td>
+<td>20/20</td>
+</tr>
+<tr>
+<td>C1</td>
+<td>59/59</td>
+<td>59/59</td>
+</tr>
+<tr>
+<td>C2</td>
+<td>13/13</td>
+<td>14/14</td>
+</tr>
+<tr>
+<td>C3</td>
+<td>–</td>
+<td>29/29</td>
+</tr>
+</tbody>
+</table>
+<p>C4 and C5 are opt-in (off by default), so they cannot move these. Gate D adds new evidence only.</p>
+<h2>6. Performance (Node, single-threaded WASM, per 60 Hz frame = 4 physics steps at 240 Hz + sensing + control)</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>ms per 60 Hz frame</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>one character, C1 standing</td>
+<td>0.6–0.8</td>
+</tr>
+<tr>
+<td>one character, C2 transfer/placement</td>
+<td>1.0–1.4</td>
+</tr>
+<tr>
+<td>one character, C3 stepping (29 tests)</td>
+<td>mean 0.85, max 1.10</td>
+</tr>
+<tr>
+<td>two characters, Gate D</td>
+<td>1.2–2.0</td>
+</tr>
+</tbody>
+</table>
+<p>That is well inside a 16.7 ms frame. All runs were sequential, one headless browser at a time, closed after use, and at <code>nice</code> priority.</p>
+<h2>7. Determinism</h2>
+<table>
+<thead>
+<tr>
+<th>evidence</th>
+<th>result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>×3 reruns</td>
+<td>every suite reproduces ×3: C3 29/29, C4 23 pairs, C5 22 runs, D 7/7 with protective off and 7/7 on</td>
+</tr>
+<tr>
+<td>Browser = Node</td>
+<td>promotion 38/38, C3 29/29, D 7/7, cross-suite smoke 8/8</td>
+</tr>
+</tbody>
+</table>
+<p>The only nondeterminism risk remains the one noted at Gate A: cross-<em>browser</em> determinism is inferred (single-thread, no-SIMD WASM), and Chrome = Node is measured.</p>
+<h2>8. Review entry point</h2>
+<p><strong>One harness, all gates:</strong> <code>http://127.0.0.1:8171/sandbox/visual/physchar/index.html</code>. Your existing server on 8171 serves the worktree root.
+- <strong>suite selector:</strong> D (two characters), C3, C2, C1, B, A;
+- <strong>test selector:</strong> grouped per suite;
+- <strong>body selector:</strong> V1.1 or V1;
+- <strong>toggles:</strong> reactive arms (C4) and protective fall (C5).</p>
+<p>Every run is simulated in the browser with the same code, and its hash is compared with Node's on the side panel.</p>
+<p>Suggested order:
+1. <code>?suite=D&amp;test=D2_shoved_into</code>, the invariant (side panel: the per-step gap / v_n / Δv table). "go worst → approach arrested" jumps to the step.
+2. <code>?suite=D&amp;test=D6_slide</code>, the slide tackle.
+3. <code>?suite=D&amp;test=D5_shoulder_hard</code>, then the same test with <strong>protective fall (C5)</strong> on.
+4. <code>?suite=C3&amp;test=B_F80</code>, a caught forward step; then <code>?suite=C3&amp;test=B_R65</code> (the lateral gap, honest fall).
+5. <code>?suite=C&amp;test=PF65</code> with <strong>protective fall (C5)</strong> toggled, and <code>?suite=C&amp;test=PF60</code> with <strong>reactive arms (C4)</strong> toggled.</p>
+<p>Sheets and stills are in <code>gate_c3/</code>, <code>gate_c4/</code>, <code>gate_c5/</code> and <code>gate_d/</code>.</p>
+<h2>9. Preservation</h2>
+<p>Local commits only, on <code>prototype/physical-character-v1</code>, nothing pushed:</p>
+<table>
+<thead>
+<tr>
+<th>commit</th>
+<th>content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>4dbb5a2</code></td>
+<td>checkpoint: V1 approved baseline + V1.1 candidate</td>
+</tr>
+<tr>
+<td><code>e14354b</code></td>
+<td>V1.1 integration + promotion</td>
+</tr>
+<tr>
+<td><code>1aa4f5e</code>, <code>d0d8e0f</code></td>
+<td>C3 (+ crossover experiments, recorded and reverted)</td>
+</tr>
+<tr>
+<td><code>40ad2fe</code></td>
+<td>C4</td>
+</tr>
+<tr>
+<td><code>b0a84d2</code></td>
+<td>C5</td>
+</tr>
+<tr>
+<td>tag <code>checkpoint/physchar-pre-crossover</code></td>
+<td>before the second crossover attempt</td>
+</tr>
+<tr>
+<td><code>e4dc66a</code></td>
+<td>C3 3-D crossover planner + the infeasibility evidence</td>
+</tr>
+<tr>
+<td><code>4cd5526</code>, <code>d79b5b3</code></td>
+<td>Gate D + D6</td>
+</tr>
+<tr>
+<td><code>9df21f0</code></td>
+<td>evidence</td>
+</tr>
+<tr>
+<td><code>e97f909</code></td>
+<td>multi-step experiment (default off)</td>
+</tr>
+<tr>
+<td><code>596b147</code></td>
+<td>C5 bracing fade</td>
+</tr>
+<tr>
+<td><code>cca491e</code>, <code>be5c27b</code></td>
+<td>C3 swing-execution diagnosis + swing-shaping options (default off)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Code, evidence JSON and analysis probes</strong> are committed.</li>
+<li><strong>Stills and sheets</strong> (heavyweight media) follow the existing policy: they are in the worktree, uncommitted.</li>
+<li><strong>Earlier snapshots</strong> stay untouched in <code>worktrees/_preserved_*</code>.</li>
+<li><strong>No prior evidence was deleted.</strong></li>
+</ul>
+<h2>10. The single most important next decision</h2>
+<p><strong>How the attacker moves.</strong> Everything after this point in the Reference Tackle needs a <em>moving</em> player. The attacker jogs, lifts his knee, hurdles, and his trailing leg is caught mid-stride. Lateral recovery beyond 50 N·s needs step <em>sequences</em>, which is the same capability.</p>
+<p>The multi-step experiment (§3.2.2) sharpens this. The existing parts (foothold law, swing, acceptance, physics) all work step by step. What is missing is a <em>policy</em> that chooses each step for the steps that follow (N-step capturability), rather than the longest capture step.</p>
+<p>My recommendation is a <strong>locomotion gate built on the existing layers</strong>:
+- authored or recorded gait cycles as joint <em>targets</em>, the same way D6 uses the reference;
+- capture-point foot placement for every step, i.e. C3's foothold law run each step (Pratt 2006; Coros, Beaudoin &amp; van de Panne 2010, <em>Generalized Biped Walking Control</em>);
+- SIMBICON-style stance-hip torso control (Yin, Loken &amp; van de Panne 2007);
+- finite motors and Jolt contacts as now.</p>
+<p>That keeps the architecture, determinism and physical causality. The alternatives would give up causality (a kinematic attacker) or determinism (a learned policy).</p>
+<p>Two smaller choices can wait until after this:
+- whether to refit the foot collider to a boot-sized, rounded shape (it would help crossovers and box-edge contact, but changes the approved art-fitted body);
+- whether contacts with another body should count as perceived support.</p></main></body></html>
