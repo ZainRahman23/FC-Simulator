@@ -47,6 +47,7 @@ export const STEP = {
   // would need ≈ 8). The swing's vertical profile is a plateau keyed to that overlap window; its PEAK 3-D speed must stay ≤ vFootMax.
   // (first attempt 2026-09-30, kept in git history: a 2-D route AROUND the 36 cm box made the path 1.0–1.3 m = an 8–9.6 m/s foot.)
   crossover: true, xoFwd: [0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45], xoClear: 0.04, xoShin: 0.07,
+  nAlphas: [0.35, 0.45, 0.55, 0.65, 0.75, 0.85, 1.0],   // (experiment, opts.nStep) first-step fractions tried by the 2-step planner
   maxDeficit: 0.08,             // m: a best foothold whose predicted ξ_td is still more than this outside the new support → no capturing step
   // acceptance in the new support
   softenK: 0.35, softenT: 0.15,  // landing compliance: the landed leg's stiffness × 0.35 at touchdown, back to 1 over 0.15 s
@@ -130,7 +131,7 @@ export class CorrectiveStepper {
     let y = R.xoPr.y(u), vy = R.xoPr.dy(u, R.T); if (R.stage === "DESCEND") { y = base.pos[1]; vy = base.vel[1]; }
     return { ...base, pos: [P[0], y, P[1]], vel: u < 1 ? [dP[0] * dsh, vy, dP[1] * dsh] : base.vel }; }
   // ── one candidate: swing foot sw, stance st; the foothold from the PREDICTED capture point, projected onto the reachable region ──
-  _candidate(o, sw, R0cur, elapsed) {
+  _candidate(o, sw, R0cur, elapsed, alpha) {
     const st = sw === "L" ? "R" : "L", F = o.feet, W = this.W; if (!F[st].touching || F[st].slipping) return null;
     const stSole = this.geo._sole(o, st); if (stSole.length < 3) return null;
     const w0 = o.omega0 || Math.sqrt(9.81 / Math.max(0.5, o.com[1])), xi = o.xi, pst = nearestInset(stSole, xi, BAL.copInset), cur = R0cur || this.geo._center(o, sw), yaw = yawOf(o.states[this.geo.foot[sw]].rot);
@@ -139,7 +140,8 @@ export class CorrectiveStepper {
     const predict = (T) => { const e = dexp(w0 * T), xtd = add2(pst, sc2(sub2(xi, pst), e)), ch = (e + 1 / e) / 2, sh = (e - 1 / e) / 2, ctd = add2(pst, add2(sc2(sub2(c0, pst), ch), sc2(v0, sh / w0))); return { xtd, ctd }; };
     let tSw = 0.4, want = null, pr = null;
     for (let it = 0; it < 3; it++) { pr = predict(tUnl + tSw); const run = sub2(pr.xtd, pst), n = len2(run), e = n > 1e-6 ? sc2(run, 1 / n) : hd;
-      want = add2(add2(pr.xtd, sc2(e, STEP.b)), sc2(hd, wpToC)); tSw = Math.max(STEP.tSwMin, Math.min(STEP.tSwMax, STEP.tSwMin + STEP.tSwPerM * len2(sub2(want, cur)))); }
+      want = add2(add2(pr.xtd, sc2(e, STEP.b)), sc2(hd, wpToC)); if (alpha) want = add2(cur, sc2(sub2(want, cur), alpha));   // (experiment) a SHORTER first step of a 2-step sequence
+      tSw = Math.max(STEP.tSwMin, Math.min(STEP.tSwMax, STEP.tSwMin + STEP.tSwPerM * len2(sub2(want, cur)))); }
     const dComOf = (T) => sub2(predict(T).ctd, c0);
     let tc = want, f0 = this._feasible(o, sw, want, yaw, cur, dComOf(tUnl + tSw), tSw), projected = false, reasons = f0.reasons;
     if (!f0.ok) { let lo = 0, hi = 1; for (let it = 0; it < 24; it++) { const m = (lo + hi) / 2, p = add2(cur, sc2(sub2(want, cur), m)); if (this._feasible(o, sw, p, yaw, cur, dComOf(tUnl + tSw), tSw).ok) lo = m; else hi = m; }
@@ -149,6 +151,21 @@ export class CorrectiveStepper {
     const newSup = hullXZ(stSole.concat(footprint(this.box, tc, yaw))), margin = polyDist(newSup, prT.xtd);
     return { sw, st, feasible: true, target: tc, want, yaw, projected, reasons, via, xo, tUnl, tSw, T: tUnl + tSw, pst, xtd: prT.xtd, ctd: prT.ctd, margin, capture: margin >= 0, deficit: Math.max(0, -margin), load: F[sw].load };
   }
+  // ── EXPERIMENT (opts.nStep): 2-STEP CAPTURABILITY (Koolen et al. 2012). A capture that one step cannot reach may be reached by two — but
+  // only if the FIRST step leaves the second one feasible (the longest first step leaves the trailing foot too far behind: finding
+  // 2026-09-30, multistep/). For shorter first steps (a fraction α of the one-step foothold) the LIPM predicts the state at its touchdown;
+  // a synthetic observation (the first foot flat at its foothold, the pelvis carried by the predicted COM) asks the ordinary one-step
+  // planner whether the trailing foot can then capture. The pair with the largest final capture margin is executed step by step. ──
+  _synth(o, sw, tc, yaw, xi1, c1, v1) { const box = this.box, fi = this.geo.foot[sw], a = this.geo._ankleFromCenter(tc, yaw), rot = Q.axis([0, 1, 0], yaw), pos = [a[0], this.yFlat, a[1]];
+    const sole = []; for (const sx of [-1, 1]) for (const sz of [-1, 1]) { const q = V.add(pos, Q.rot(rot, [box.pos[0] + sx * box.he[0], box.pos[1] - box.he[1], box.pos[2] + sz * box.he[2]])); sole.push(q); }
+    const states = o.states.slice(), dc = [c1[0] - o.com[0], c1[1] - o.com[2]]; states[fi] = { ...states[fi], pos, rot, v: [0, 0, 0] }; states[0] = { ...states[0], pos: [states[0].pos[0] + dc[0], states[0].pos[1], states[0].pos[2] + dc[1]] };
+    return { ...o, xi: xi1.slice(), com: [c1[0], o.com[1], c1[1]], vcom: [v1[0], 0, v1[1]], states, feet: { ...o.feet, [sw]: { ...o.feet[sw], touching: true, loaded: true, slipping: false, sole } } }; }
+  _plan2(o) { const w0 = o.omega0 || Math.sqrt(9.81 / Math.max(0.5, o.com[1])); let best = null;
+    for (const sw of ["L", "R"]) { const st = sw === "L" ? "R" : "L";
+      for (const alpha of STEP.nAlphas) { const c1 = this._candidate(o, sw, null, 0, alpha); if (!c1 || !c1.feasible) continue;
+        const v1 = sc2(sub2(c1.xtd, c1.ctd), w0), o2 = this._synth(o, sw, c1.target, c1.yaw, c1.xtd, c1.ctd, v1), c2 = this._candidate(o2, st, null, 0);
+        if (!c2 || !c2.feasible || !c2.capture) continue; if (!best || c2.margin > best.margin) best = { c1, c2, alpha, margin: c2.margin }; } }
+    return best; }
   _choose(o) { const all = ["L", "R"].map(s => this._candidate(o, s)); this.allCands = all; const c = all.filter(x => x && x.feasible); this.cands = c; if (!c.length) return null;
     c.sort((a, b) => a.capture !== b.capture ? (a.capture ? -1 : 1) : a.capture ? a.T - b.T : a.deficit - b.deficit); return c[0]; }
   // after a step the body stands in its NEW stance: the balance reference is that stance's mid-point, both feet keep their touchdown poses as
@@ -175,10 +192,11 @@ export class CorrectiveStepper {
     const t = o.t, ctrl = this.ctrl, cls = ctrl.cls.state, F = o.feet, W = this.W; this.lastT = t; let R = this.R;
     if (this.stage === "STAND") {
       if (cls === "STEP_NEEDED" && this.steps < this.maxSteps && !this.refused) {
-        const c = this._choose(o);
-        if (!c || (!c.capture && c.deficit > STEP.maxDeficit)) { this.refused = c ? `best foothold leaves ξ ${(c.deficit * 100).toFixed(1)} cm outside the new support` : "no reachable foothold (neither foot)"; this.event("NO STEP", this.refused); return this._restPlan(); }
+        let c = this._choose(o), p2 = null;
+        if (this.opts.nStep && this.maxSteps >= 2 && (!c || !c.capture)) { p2 = this._plan2(o); if (p2) { c = p2.c1; this.event("2-step plan", `first step α ${p2.alpha} (${c.sw}), predicted final ξ margin ${(p2.margin * 100).toFixed(1)} cm`); } }
+        if (!c || (!c.capture && !p2 && c.deficit > STEP.maxDeficit)) { this.refused = c ? `best foothold leaves ξ ${(c.deficit * 100).toFixed(1)} cm outside the new support` : "no reachable foothold (neither foot)"; this.event("NO STEP", this.refused); return this._restPlan(); }
         const s0 = o.states[this.geo.foot[c.sw]];
-        R = this.R = { sw: c.sw, st: c.st, cand: c, first: c, tNeed: t, stage: "SWING", tSw0: t, tSw: t, p0: s0.pos.slice(), q0: s0.rot.slice(), cur0: this.geo._center(o, c.sw), soleY0: this.geo._soleLow(o, c.sw), air: 0 };
+        R = this.R = { sw: c.sw, st: c.st, cand: c, first: c, tNeed: t, stage: "SWING", tSw0: t, tSw: t, p0: s0.pos.slice(), q0: s0.rot.slice(), cur0: this.geo._center(o, c.sw), soleY0: this.geo._soleLow(o, c.sw), air: 0, alpha: p2 ? p2.alpha : null, plan2: p2 ? { margin: p2.margin, second: p2.c2.target } : null };
         this._aim(R, o, c); this.stage = "SWING";
         this.event("STEP_NEEDED → step", `${c.sw} foot · foothold ${c.projected ? "projected" : "as wanted"} · predicted ξ margin at touchdown ${(c.margin * 100).toFixed(1)} cm · T ${c.T.toFixed(2)} s`);
       } else return this._restPlan();
@@ -187,7 +205,7 @@ export class CorrectiveStepper {
     if (["SWING", "DESCEND", "ACCEPT"].includes(this.stage) && (cls === "FALLING" || cls === "GROUNDED" || cls === "UNRECOVERABLE")) { this.stage = "FAILED"; R.fail = R.fail || `balance lost (${cls}) during ${R.stage}`; this.event("FAILED", R.fail); }
     if (this.stage === "SWING" || this.stage === "DESCEND") {
       // re-plan the foothold from the CURRENT state during the rise (the horizontal progression has not started)
-      if (this.stage === "SWING" && (t - R.tSw) < STEP.replanUntil * R.T) { const c = this._candidate(o, sw, R.cur0, t - R.tSw); if (c && c.feasible) { R.cand = c; this._aim(R, o, c); } }
+      if (this.stage === "SWING" && (t - R.tSw) < STEP.replanUntil * R.T) { const c = this._candidate(o, sw, R.cur0, t - R.tSw, R.alpha); if (c && c.feasible) { R.cand = c; this._aim(R, o, c); } }
       plan.copFoot = st; plan.xiRef = o.xi.slice(); const tg = R.xo ? this._swingCross(R, t) : this.geo._swingAt(R, t); plan.swing[sw] = tg; R.u = tg.u;
       // LIFTOFF = the sensed departure of the foot (no touching contact, < 25 N, 3 steps); it must happen within liftTimeout
       if (!R.liftoff) { if (!F[sw].touching && F[sw].load < 25) R.air++; else R.air = 0;
@@ -221,16 +239,18 @@ export class CorrectiveStepper {
         this.rest = { xiRef: R.accTo.slice(), anchors: R.anchors }; this.event("recovered", `in the new support ${(t - R.tNeed).toFixed(2)} s after STEP_NEEDED`); return this._restPlan(); }
       // (experiment) the NEXT step is due as soon as ξ is beyond the hip-extended new support and still receding for 25 ms (C1's own
       // STEP_NEEDED criterion) — waiting for C3's 30-step failure confirmation left the second step 0.45 s too late (finding 2026-09-30)
+      if (R.plan2 && this.maxSteps > this.steps + 1 && t - R.tT >= 0.0125) R.again = STEP.againSteps;   // (experiment) the planned second step follows at once
       if (this.maxSteps > this.steps + 1) { const beyond = -o.xiMargin - (this.ctrl.hipCapHere ?? 0); R.beyond = t - R.tT > 0.0125 && beyond > 0 && away ? (R.beyond || 0) + 1 : 0; if (R.beyond >= 6) R.again = STEP.againSteps; }
       if (R.again >= STEP.againSteps && this.steps + 1 < this.maxSteps) {
         // NEXT STEP (experiment): this step is done (its foot stays where it landed and becomes the stance); the other foot is chosen afresh
         R.stage = "DONE"; R.status = "NEXT_STEP"; R.handover = { t, fromNeed: t - R.tNeed }; this.steps++; this.history.push(R); this.event("next step", `ξ still outside and receding ${(t - R.tT).toFixed(2)} s after touchdown`);
         this.rest = { xiRef: R.accTo.slice(), anchors: R.anchors };
-        const c = this._choose(o);
-        if (!c || (!c.capture && c.deficit > STEP.maxDeficit)) { this.refused = c ? `step ${this.steps + 1}: best foothold leaves ξ ${(c.deficit * 100).toFixed(1)} cm outside the new support` : `step ${this.steps + 1}: no reachable foothold`; this.event("NO STEP", this.refused);
+        let c = this._choose(o), p2 = null;
+        if (this.opts.nStep && this.maxSteps >= this.steps + 2 && (!c || !c.capture)) { p2 = this._plan2(o); if (p2) c = p2.c1; }
+        if (!c || (!c.capture && !p2 && c.deficit > STEP.maxDeficit)) { this.refused = c ? `step ${this.steps + 1}: best foothold leaves ξ ${(c.deficit * 100).toFixed(1)} cm outside the new support` : `step ${this.steps + 1}: no reachable foothold`; this.event("NO STEP", this.refused);
           this.stage = "FAILED"; R.fail = this.refused; this.R = R; return { stepping: false, swing: {}, step: R }; }
         const s0 = o.states[this.geo.foot[c.sw]];
-        const N = this.R = { sw: c.sw, st: c.st, cand: c, first: c, tNeed: t, stage: "SWING", tSw0: t, tSw: t, p0: s0.pos.slice(), q0: s0.rot.slice(), cur0: this.geo._center(o, c.sw), soleY0: this.geo._soleLow(o, c.sw), air: 0, index: this.steps + 1 };
+        const N = this.R = { sw: c.sw, st: c.st, cand: c, first: c, tNeed: t, stage: "SWING", tSw0: t, tSw: t, p0: s0.pos.slice(), q0: s0.rot.slice(), cur0: this.geo._center(o, c.sw), soleY0: this.geo._soleLow(o, c.sw), air: 0, index: this.steps + 1, alpha: p2 ? p2.alpha : null, plan2: p2 ? { margin: p2.margin, second: p2.c2.target } : null };
         this._aim(N, o, c); this.stage = "SWING"; this.event("step " + (this.steps + 1), `${c.sw} foot · predicted ξ margin at touchdown ${(c.margin * 100).toFixed(1)} cm`);
         return { stepping: true, swing: {}, step: N, swingKpDrop: 0 }; }
       if (R.again >= STEP.againSteps) { this.stage = "FAILED"; R.fail = `the capture point is still outside the new support after the step (a second step would be needed; C3 takes one)`; this.event("FAILED", R.fail); }

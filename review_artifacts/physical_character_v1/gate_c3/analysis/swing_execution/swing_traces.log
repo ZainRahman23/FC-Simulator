@@ -1,0 +1,59 @@
+# B_B60 (backward, fails): swing target vs ankle/toe/heel, joint targets vs actual
+1.042 SWING   u 0.00 tgt -0.161,0.088,-0.013 ankle -0.161,0.088,-0.013 toeY 0.005 heelY -0.001 pitch -1° (+ toe down) · pelvisY 1.005 trunk 6° · hip 28% knee 6% ankle 88% · L FLAT
+1.063 SWING   u 0.06 tgt -0.161,0.091,-0.013 ankle -0.160,0.092,-0.017 toeY 0.015 heelY 0.001 pitch -2° (+ toe down) · pelvisY 1.007 trunk 8° · hip 19% knee 22% ankle 3% · L LIFTOFF
+1.083 SWING   u 0.12 tgt -0.161,0.099,-0.013 ankle -0.157,0.099,-0.032 toeY 0.025 heelY 0.007 pitch -3° (+ toe down) · pelvisY 1.007 trunk 8° · hip 26% knee 4% ankle 5% · L AIR
+1.104 SWING   u 0.18 tgt -0.161,0.112,-0.017 ankle -0.152,0.109,-0.049 toeY 0.040 heelY 0.016 pitch -4° (+ toe down) · pelvisY 1.006 trunk 8° · hip 12% knee 2% ankle 6% · L AIR
+1.125 SWING   u 0.24 tgt -0.161,0.127,-0.038 ankle -0.145,0.121,-0.068 toeY 0.060 heelY 0.026 pitch -5° (+ toe down) · pelvisY 1.003 trunk 8° · hip 10% knee 9% ankle 2% · L AIR
+1.146 SWING   u 0.30 tgt -0.163,0.143,-0.084 ankle -0.139,0.132,-0.090 toeY 0.063 heelY 0.039 pitch -4° (+ toe down) · pelvisY 1.000 trunk 7° · hip 34% knee 13% ankle 3% · L AIR
+1.167 SWING   u 0.36 tgt -0.164,0.158,-0.151 ankle -0.136,0.139,-0.118 toeY 0.055 heelY 0.050 pitch -1° (+ toe down) · pelvisY 0.995 trunk 5° · hip 100% knee 9% ankle 7% · L AIR
+1.188 SWING   u 0.42 tgt -0.167,0.169,-0.233 ankle -0.135,0.137,-0.149 toeY 0.040 heelY 0.051 pitch 2° (+ toe down) · pelvisY 0.990 trunk 4° · hip 70% knee 10% ankle 6% · L AIR
+1.208 SWING   u 0.48 tgt -0.169,0.175,-0.318 ankle -0.138,0.124,-0.186 toeY 0.021 heelY 0.041 pitch 3° (+ toe down) · pelvisY 0.984 trunk 2° · hip 42% knee 10% ankle 1% · L AIR
+1.229 SWING   u 0.54 tgt -0.171,0.175,-0.393 ankle -0.141,0.106,-0.225 toeY 0.006 heelY 0.022 pitch 3° (+ toe down) · pelvisY 0.980 trunk 4° · hip 26% knee 11% ankle 31% · L TOUCHDOWN
+1.250 ACCEPT  u -    tgt -                   ankle -0.138,0.091,-0.245 toeY 0.000 heelY 0.004 pitch 1° (+ toe down) · pelvisY 0.976 trunk 6° · hip 94% knee 0% ankle 100% · L TOUCHDOWN
+1.042 u 0.00 hip Y: nominal -9 final -10 actual -10 (28%) · knee: nominal 14 final 14 actual 14 (6%)
+1.063 u 0.06 hip Y: nominal -12 final -12 actual -12 (19%) · knee: nominal 15 final 15 actual 17 (22%)
+1.083 u 0.12 hip Y: nominal -16 final -16 actual -15 (26%) · knee: nominal 21 final 21 actual 22 (4%)
+1.104 u 0.18 hip Y: nominal -20 final -21 actual -18 (12%) · knee: nominal 29 final 29 actual 29 (2%)
+1.125 u 0.24 hip Y: nominal -23 final -24 actual -20 (10%) · knee: nominal 37 final 37 actual 36 (9%)
+1.146 u 0.30 hip Y: nominal -23 final -24 actual -21 (34%) · knee: nominal 45 final 45 actual 42 (13%)
+1.167 u 0.36 hip Y: nominal -19 final -20 actual -19 (100% SAT ax 1) · knee: nominal 51 final 51 actual 46 (9%)
+1.188 u 0.42 hip Y: nominal -12 final -13 actual -14 (70%) · knee: nominal 53 final 53 actual 47 (10%)
+1.208 u 0.48 hip Y: nominal -2 final -3 actual -7 (42%) · knee: nominal 51 final 52 actual 44 (10%)
+1.229 u 0.54 hip Y: nominal 9 final 9 actual 2 (26%) · knee: nominal 45 final 46 actual 38 (11%)
+1.250 u - hip Y: nominal -4 final 6 actual 5 (94%) · knee: nominal 25 final -14 actual 33 (0%)
+
+# D_late_F80_100ms (forward, late, fails)
+1.150 SWING   u 0.00 tgt -0.161,0.090,-0.010 ankle -0.160,0.103,-0.006 toeY -0.000 heelY 0.020 pitch 3° (+ toe down) · pelvisY 1.012 trunk 1° · hip 49% knee 12% ankle 46% · L FLAT
+1.171 SWING   u 0.06 tgt -0.161,0.093,-0.010 ankle -0.160,0.108,-0.013 toeY 0.002 heelY 0.026 pitch 4° (+ toe down) · pelvisY 1.013 trunk 3° · hip 26% knee 24% ankle 7% · L AIR
+1.192 SWING   u 0.12 tgt -0.161,0.101,-0.010 ankle -0.159,0.120,-0.033 toeY 0.007 heelY 0.039 pitch 5° (+ toe down) · pelvisY 1.013 trunk 5° · hip 22% knee 9% ankle 6% · L AIR
+1.212 SWING   u 0.18 tgt -0.161,0.113,-0.007 ankle -0.157,0.136,-0.055 toeY 0.011 heelY 0.060 pitch 8° (+ toe down) · pelvisY 1.012 trunk 7° · hip 13% knee 1% ankle 1% · L AIR
+1.233 SWING   u 0.24 tgt -0.161,0.128,0.014 ankle -0.153,0.155,-0.071 toeY 0.007 heelY 0.088 pitch 13° (+ toe down) · pelvisY 1.010 trunk 9° · hip 54% knee 7% ankle 6% · L AIR
+1.254 SWING   u 0.30 tgt -0.161,0.144,0.060 ankle -0.148,0.173,-0.075 toeY 0.006 heelY 0.113 pitch 17° (+ toe down) · pelvisY 1.007 trunk 12° · hip 60% knee 15% ankle 8% · L AIR
+1.275 SWING   u 0.36 tgt -0.162,0.158,0.128 ankle -0.141,0.180,-0.060 toeY 0.008 heelY 0.123 pitch 19° (+ toe down) · pelvisY 1.002 trunk 14° · hip 75% knee 21% ankle 9% · L AIR
+1.296 SWING   u 0.42 tgt -0.163,0.169,0.212 ankle -0.133,0.171,-0.023 toeY 0.006 heelY 0.111 pitch 17° (+ toe down) · pelvisY 0.998 trunk 17° · hip 73% knee 20% ankle 13% · L AIR
+1.317 SWING   u 0.48 tgt -0.164,0.176,0.300 ankle -0.129,0.157,0.014 toeY -0.000 heelY 0.093 pitch 15° (+ toe down) · pelvisY 0.993 trunk 19° · hip 70% knee 60% ankle 100% · L TOUCHDOWN
+1.337 SWING   u 0.54 tgt -0.165,0.177,0.380 ankle -0.129,0.147,0.018 toeY -0.000 heelY 0.080 pitch 13° (+ toe down) · pelvisY 0.990 trunk 22° · hip 100% knee 78% ankle 100% · L TOE
+1.358 SWING   u 0.59 tgt -0.166,0.172,0.441 ankle -0.129,0.130,0.009 toeY -0.000 heelY 0.056 pitch 9° (+ toe down) · pelvisY 0.991 trunk 25° · hip 100% knee 52% ankle 100% · L SLIPPING
+1.379 SWING   u 0.65 tgt -0.166,0.163,0.477 ankle -0.130,0.111,-0.000 toeY -0.001 heelY 0.030 pitch 5° (+ toe down) · pelvisY 0.994 trunk 27° · hip 100% knee 21% ankle 100% · L SLIPPING
+1.400 SWING   u 0.71 tgt -0.167,0.151,0.490 ankle -0.130,0.097,-0.006 toeY -0.001 heelY 0.012 pitch 2° (+ toe down) · pelvisY 0.999 trunk 30° · hip 100% knee 2% ankle 100% · L FLAT
+1.421 ACCEPT  u -    tgt -                   ankle -0.129,0.102,-0.016 toeY -0.002 heelY 0.018 pitch 3° (+ toe down) · pelvisY 1.003 trunk 33° · hip 18% knee 55% ankle 100% · L SLIPPING
+1.150 u 0.00 hip Y: nominal -4 final -4 actual -5 (49%) · knee: nominal 13 final 13 actual 14 (12%)
+1.171 u 0.06 hip Y: nominal -2 final -2 actual -7 (26%) · knee: nominal 12 final 13 actual 16 (24%)
+1.192 u 0.12 hip Y: nominal -4 final -4 actual -9 (22%) · knee: nominal 17 final 17 actual 22 (9%)
+1.212 u 0.18 hip Y: nominal -8 final -8 actual -11 (13%) · knee: nominal 24 final 25 actual 29 (1%)
+1.233 u 0.24 hip Y: nominal -14 final -14 actual -15 (54%) · knee: nominal 32 final 33 actual 36 (7%)
+1.254 u 0.30 hip Y: nominal -21 final -21 actual -19 (60%) · knee: nominal 39 final 40 actual 43 (15%)
+1.275 u 0.36 hip Y: nominal -29 final -29 actual -24 (75%) · knee: nominal 45 final 45 actual 48 (21%)
+1.296 u 0.42 hip Y: nominal -37 final -37 actual -30 (73%) · knee: nominal 47 final 48 actual 50 (20%)
+1.317 u 0.48 hip Y: nominal -43 final -43 actual -34 (70%) · knee: nominal 46 final 47 actual 49 (60%)
+1.337 u 0.54 hip Y: nominal -47 final -47 actual -35 (100% SAT ax 0) · knee: nominal 42 final 43 actual 48 (78%)
+1.358 u 0.59 hip Y: nominal -49 final -49 actual -34 (100% SAT ax 0) · knee: nominal 36 final 36 actual 41 (52%)
+1.379 u 0.65 hip Y: nominal -50 final -50 actual -31 (100% SAT ax 0) · knee: nominal 28 final 29 actual 31 (21%)
+
+# the 2-step planner at B_B60's STEP_NEEDED (the 1-step plan already PREDICTS capture — the failure is execution)
+B_B60
+  STEP_NEEDED t 1.038 · 1-step best: {"sw":"L","feasible":true,"capture":true,"margin":0.106,"target":[-0.18,-0.26],"T":0.32,"reasons":[]}
+    L α 0.35: step1 {"sw":"L","feasible":true,"capture":false,"margin":-0.064,"target":[-0.15,-0.03],"T":0.27,"reasons":[]}
+              step2 {"sw":"R","feasible":true,"capture":false,"margin":-0.108,"target":[0.04,-0.12],"T":0.3,"reasons":["1.5 cm from the stance foot","crossover: no route passes the stance shin (≥ 7.000000000000001 cm) within 45 cm in front of the stance ankle"]}
+    L α 0.45: step1 {"sw":"L","feasible":true,"capture":false,"margin":-0.035,"target":[-0.15,-0.06],"T":0.28,"reasons":[]}
+              step2 {"sw":"R","feasible":true,"capture":false,"margin":-0.083,"target":[0.04,-0.09],"T":0.29,"reasons":["footprint overlaps the stance foot","crossover: no route passes the stance shin (≥ 7.000000000000001 cm) within 45 cm in front of the stance ankle"]}

@@ -1,0 +1,30 @@
+A_inplace_F50      art: RECOVERED_IN_PLACE                            | boot: RECOVERED_IN_PLACE                           
+A_inplace_B30      art: RECOVERED_IN_PLACE                            | boot: RECOVERED_WITH_STEP  u@td 0.82 err   6.8 cm
+A_inplace_R40      art: RECOVERED_IN_PLACE                            | boot: RECOVERED_IN_PLACE                           
+B_F70              art: RECOVERED_WITH_STEP  u@td 0.79 err   5.4 cm | boot: RECOVERED_WITH_STEP  u@td 0.72 err  10.3 cm
+B_F80              art: RECOVERED_WITH_STEP  u@td 0.71 err   7.8 cm | boot: RECOVERED_WITH_STEP  u@td 0.54 err    32 cm
+B_F90              art: RECOVERED_WITH_STEP  u@td 0.56 err  26.6 cm | boot: STEPPED_FELL         u@td 0.55 err  28.5 cm
+B_F100             art: RECOVERED_WITH_STEP  u@td 0.66 err  10.1 cm | boot: RECOVERED_WITH_STEP  u@td 0.73 err  10.2 cm
+B_B40              art: RECOVERED_WITH_STEP  u@td 0.74 err   5.5 cm | boot: RECOVERED_WITH_STEP  u@td 0.67 err   8.7 cm
+B_B50              art: RECOVERED_WITH_STEP  u@td 0.61 err  13.8 cm | boot: STEPPED_FELL         u@td 0.59 err  20.4 cm
+B_B60              art: STEPPED_FELL         u@td 0.55 err  26.6 cm | boot: STEPPED_FELL         u@td 0.56 err  30.9 cm
+B_R55              art: FELL_NO_STEP                                  | boot: FELL_NO_STEP                                 
+B_R65              art: FELL_NO_STEP                                  | boot: FELL_NO_STEP                                 
+B_R75              art: FELL_NO_STEP                                  | boot: FELL_NO_STEP                                 
+B_L55              art: FELL_NO_STEP                                  | boot: FELL_NO_STEP                                 
+B_L70              art: FELL_NO_STEP                                  | boot: FELL_NO_STEP                                 
+B_FR70             art: FELL_NO_STEP                                  | boot: FELL_NO_STEP                                 
+B_FR90             art: FELL_NO_STEP                                  | boot: FELL_NO_STEP                                 
+B_BL45             art: STEPPED_FELL         u@td 1    err     4 cm | boot: RECOVERED_WITH_STEP  u@td 1    err   3.4 cm
+B_BL60             art: STEPPED_FELL         u@td 0.44 err  43.2 cm | boot: STEPPED_FELL         u@td 0.45 err  46.5 cm
+C_proj_F115        art: RECOVERED_WITH_STEP  u@td 0.71 err   6.8 cm | boot: STEPPED_FELL         u@td 0.76 err  10.8 cm
+C_proj_R90         art: FELL_NO_STEP                                  | boot: FELL_NO_STEP                                 
+C_proj_B75         art: STEPPED_FELL         u@td 0.55 err  37.2 cm | boot: STEPPED_FELL         u@td 0.52 err  41.4 cm
+D_late_F80_100ms   art: STEPPED_FELL         u@td 0.73 err  51.3 cm | boot: STEPPED_FELL         u@td 0.73 err    59 cm
+D_late_F80_150ms   art: STEPPED_FELL         u@td 0.67 err  57.3 cm | boot: STEPPED_FELL         u@td 0.86 err  63.6 cm
+D_late_R65_100ms   art: FELL_NO_STEP                                  | boot: FELL_NO_STEP                                 
+E_fric_F80_mu0.25  art: FELL_NO_STEP                                  | boot: STEPPED_FELL         u@td 0.75 err   9.8 cm
+E_fric_R65_mu0.2   art: RECOVERED_IN_PLACE                            | boot: RECOVERED_IN_PLACE                           
+F_nofoot_F160      art: STEPPED_FELL         u@td 0.83 err  28.2 cm | boot: STEP_FAILED_FELL                             
+F_nofoot_B110      art: STEPPED_FELL         u@td 0.57 err  27.8 cm | boot: STEPPED_FELL         u@td 0.56 err  29.2 cm
+{"art":{"RECOVERED_IN_PLACE":4,"RECOVERED_WITH_STEP":7,"STEPPED_FELL":8,"FELL_NO_STEP":10},"boot":{"RECOVERED_IN_PLACE":3,"RECOVERED_WITH_STEP":6,"STEPPED_FELL":10,"FELL_NO_STEP":9,"STEP_FAILED_FELL":1}}
