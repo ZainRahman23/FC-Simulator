@@ -1,0 +1,171 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Locomotion Proposal</title><style>
+:root{--bg:#fbfaf7;--ink:#1d1f22;--mute:#5d646b;--line:#dcd8cf;--code:#f1eee7;--acc:#8a5a00;--q:#f4efe2}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#141619;--ink:#e6e4df;--mute:#9aa0a6;--line:#33373d;--code:#1d2024;--acc:#f0c060;--q:#1f1c14}}
+:root[data-theme="dark"]{--bg:#141619;--ink:#e6e4df;--mute:#9aa0a6;--line:#33373d;--code:#1d2024;--acc:#f0c060;--q:#1f1c14}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 -apple-system,system-ui,"Segoe UI",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px 80px}
+h1{font-size:26px;line-height:1.25} h2{font-size:20px;margin-top:40px;padding-top:12px;border-top:1px solid var(--line)} h3{font-size:16px;color:var(--acc)}
+table{border-collapse:collapse;width:100%;font-size:13px;margin:12px 0;display:block;overflow-x:auto} th,td{border:1px solid var(--line);padding:5px 8px;vertical-align:top;text-align:left} th{background:var(--code)}
+code{background:var(--code);padding:1px 4px;border-radius:3px;font-size:12.5px} pre{background:var(--code);padding:12px;border-radius:6px;overflow-x:auto;font-size:12px;line-height:1.45} pre code{padding:0;background:none}
+blockquote{margin:12px 0;padding:10px 16px;background:var(--q);border-left:4px solid var(--acc)} a{color:var(--acc)}
+img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:4px} li>ul,li>ol{margin:4px 0}
+</style></head><body><main><h1>Locomotion gate: proposal for your decision</h1>
+<p>This is the next decision after the overnight runway (<code>OVERNIGHT_2026-09-30_REPORT.md</code> §10). It is a proposal only: nothing described here has been built.</p>
+<h2>1. Why locomotion is the next gate (evidence from the runway)</h2>
+<ul>
+<li><strong>The Reference Tackle needs a moving attacker.</strong> In the reference, the attacker jogs toward the camera at ≈ 3 m/s, lifts his knee (f104), hurdles the slider (f112), and his <em>trailing leg is caught mid-stride</em> (f127). That trailing leg is moving and lightly loaded.</li>
+<li>D6 shows the slider can already be driven physically from the reference's joint keys, and that a <em>standing, planted</em> defender is not tripped.</li>
+<li>The catch in the reference depends on the attacker's own gait: which leg is loaded, and where it is in its swing, at the moment of contact.</li>
+<li><strong>Lateral and large pushes need step sequences.</strong> C3 shows single-step recovery ends at about 50 N·s sideways, 100 N·s forward and 50 N·s backward for this body.</li>
+<li>Lateral: a crossover needs a 5–6 m/s foot.</li>
+<li>Forward/backward: the "second step needed" failures cannot be rescued by adding steps. The experiments (§3.2.2–3.2.3) rule out step policy, collider size, swing shaping, and all of them combined.</li>
+<li>What is missing is <em>gait-quality</em> stepping: steps planned before the body is unrecoverable, and swings that stay within the hip's torque.</li>
+<li><strong>Every tackle in football happens between moving players.</strong> A standing-balance foundation cannot produce the attacker's side of any contact.</li>
+</ul>
+<h2>2. Requirements (your invariants, unchanged)</h2>
+<ul>
+<li><strong>The pipeline:</strong> intent → sensing / support reasoning → physically achievable targets → finite motors → Jolt articulated bodies + contacts → solved state → rendered skeleton.</li>
+<li><strong>The single spatial state:</strong> the Jolt body.</li>
+<li><strong>Never:</strong></li>
+<li>kinematic override;</li>
+<li>animation copied into physics;</li>
+<li>hidden root support or dragging;</li>
+<li>teleports;</li>
+<li>infinite motors;</li>
+<li>canned reactions;</li>
+<li>animation deciding outcomes.</li>
+<li><strong>Determinism:</strong> ×3, and browser = Node.</li>
+<li><strong>Football authority</strong> stays separate from locomotion.</li>
+<li><strong>The 14-body V1.1 character</strong>, with the same motors and limits. No strength increases to hit targets.</li>
+</ul>
+<h2>3. Options</h2>
+<table>
+<thead>
+<tr>
+<th>approach</th>
+<th>how it moves the body</th>
+<th>fit with our layers</th>
+<th>determinism / cost</th>
+<th>risk</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A. SIMBICON</strong> (Yin, Loken &amp; van de Panne 2007)</td>
+<td>Finite-state pose targets per gait phase. Balance feedback moves the swing hip's target by the COM offset and velocity (d, v gains). The torso is held by stance-hip torque.</td>
+<td>Good: PD targets are what our motors take.</td>
+<td>Deterministic, cheap.</td>
+<td>Gains are hand-tuned per gait, and style is poor without a reference.</td>
+</tr>
+<tr>
+<td><strong>B. Generalized biped walking control</strong> (Coros, Beaudoin &amp; van de Panne 2010)</td>
+<td>Inverted-pendulum foot placement each step. Virtual forces through Jᵀ for speed control and gravity compensation. IK swing. Stance hip for torso.</td>
+<td><strong>Best.</strong> We already have capture-point footholds (C3), Jᵀ gravity compensation (pc_balance), IK swings (C2) and stance-hip torso control (the hip strategy).</td>
+<td>Deterministic, cheap.</td>
+<td>Needs a gait-phase layer and swing trajectories within torque limits (tonight's finding).</td>
+</tr>
+<tr>
+<td><strong>C. Reference-tracking with balance feedback</strong> (Lee, Kim &amp; Lee 2010, <em>Data-driven biped control</em>; for running, Kwon &amp; Hodgins 2010, <em>IPM + mocap reference</em>)</td>
+<td>A recorded or authored gait cycle is the target. Balance is kept by modulating that reference: foot placement from an inverted-pendulum model, stance and swing timing adjusted.</td>
+<td>Good. It is D6's principle (reference = targets) plus B's balance.</td>
+<td>Deterministic, cheap.</td>
+<td>Needs a clean reference gait cycle (walk / jog) for this rig.</td>
+</tr>
+<tr>
+<td>D. DCM / capture-point walking with whole-body QP (Englsberger 2015; Kuindersma 2016)</td>
+<td>Plan the divergent component of motion, then solve joint torques with a QP each step.</td>
+<td>Partial: our motors are PD with torque caps, not torque-controlled.</td>
+<td>A QP per step in JS is heavy; determinism is fine.</td>
+<td>Significant new machinery.</td>
+</tr>
+<tr>
+<td>E. Learned imitation policy (DeepMimic, Peng et al. 2018)</td>
+<td>An RL policy tracks the reference.</td>
+<td>The policy outputs PD targets; that fits.</td>
+<td>Training is expensive and GPU-heavy; inference is deterministic.</td>
+<td>A black box; debugging contact outcomes is hard.</td>
+</tr>
+</tbody>
+</table>
+<h2>4. Recommendation: B + C, built on the existing layers</h2>
+<p>A <strong>gait layer</strong> above the existing balance layer:</p>
+<ol>
+<li><strong>Phase and timing.</strong> A left/right stance FSM with contact-sensed transitions (sensed touchdown ends a swing, as in C2/C3).</li>
+<li><strong>Foot placement.</strong> Each step's foothold comes from the capture-point law already used by C3: an inverted-pendulum prediction plus an offset that sets the desired speed (Coros 2010; Pratt 2006). The step policy is <em>N-step aware</em>: choose this step so the next is feasible (Koolen 2012).</li>
+<li><strong>Swing.</strong> Trajectories are planned in joint space within the hip and knee torque limits: the heel-up / early-progression findings of §3.2.3, with toe clearance for the 36 cm boot.</li>
+<li><strong>Stance and torso.</strong> The existing controller's Jᵀ gravity compensation and hip-strategy torso control, plus a virtual forward force for speed (Coros 2010).</li>
+<li><strong>Style.</strong> A reference gait cycle (walk, then jog) supplies the <em>joint targets</em> for the non-balance joints and the nominal leg shapes. Balance only modulates it (Lee 2010; Kwon &amp; Hodgins 2010). This is how D6 already uses the reference.</li>
+</ol>
+<p><strong>Why B + C?</strong>
+- They reuse almost everything the gates built.
+- They keep every invariant, and they are deterministic and cheap: tonight's per-frame cost is 0.8–2 ms, so gait fits many times over in a 16.7 ms frame.
+- They give the attacker's <em>style</em> from reference data without letting animation decide anything.</p>
+<h2>5. Staged gates (same validation at each: deterministic fixture, numbers, interactive review, known failures, regression)</h2>
+<table>
+<thead>
+<tr>
+<th>gate</th>
+<th>objective</th>
+<th>pass criteria (proposed)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L1</td>
+<td>Stepping in place, rhythmic</td>
+<td>20 steps, both feet, no support; ξ stays captured; step timing within ±15 %</td>
+</tr>
+<tr>
+<td>L2</td>
+<td>Walk forward 1.0–1.5 m/s, start and stop</td>
+<td>10 m, straight within 10 cm/m; stop in ≤ 2 steps</td>
+</tr>
+<tr>
+<td>L3</td>
+<td>Jog 2.5–3.5 m/s (the attacker's speed)</td>
+<td>20 m; flight phases sensed; foot placement from the capture law each step</td>
+</tr>
+<tr>
+<td>L4</td>
+<td>Turns and speed changes</td>
+<td>±45° turns and 1 ↔ 3 m/s changes within 3 steps</td>
+</tr>
+<tr>
+<td>L5</td>
+<td>Pushes during gait</td>
+<td>the C3 pushes during walk and jog; recover with step sequences (the lateral / stagger gap closes here) or fall honestly</td>
+</tr>
+<tr>
+<td>L6</td>
+<td>The attacker from the reference</td>
+<td>jog + knee lift + hurdle from the reference's attacker keys as targets; then the D6 slider meets him: the Reference Tackle</td>
+</tr>
+</tbody>
+</table>
+<h2>6. Risks and what tonight already measured</h2>
+<ul>
+<li><strong>Toe clearance.</strong> The art-fitted 36 cm boot and 30° dorsiflexion make toe clearance the main swing risk. Tonight: the forefoot skims at 6–11 mm in pitched swings; a boot-sized collider does <em>not</em> fix stepping.</li>
+<li><strong>Hip torque.</strong> It saturates in fast swings (hip extension at 230 N·m × strength). Gait swings must be planned inside it; no strength increases.</li>
+<li><strong>Stance width.</strong> The 32 cm stance width (the rig's feet) makes lateral steps long.</li>
+<li><strong>Impact stiffness.</strong> How firmly authored actions are tracked sets impact penetration (D6). The jog's footfalls and the tackle both need a tracking-stiffness choice.</li>
+</ul>
+<h2>7. Decisions needed from you</h2>
+<ol>
+<li><strong>Approach:</strong> B + C (recommended), or pure SIMBICON (A), or a learned policy (E)?</li>
+<li><strong>Reference gait source:</strong> author a walk and jog cycle for this rig, or use recorded data if you have it?</li>
+<li><strong>Speeds and acceptance:</strong> are L2 1.0–1.5 m/s and L3 2.5–3.5 m/s the right targets? Are the pass criteria in §5 right?</li>
+<li><strong>Order:</strong> L1 → L6 as listed, or go straight to the attacker's jog (L3) after L1?</li>
+</ol>
+<h2>8. References</h2>
+<ul>
+<li>Yin, Loken &amp; van de Panne (2007), <em>SIMBICON: Simple Biped Locomotion Control</em>, ACM TOG 26(3).</li>
+<li>Coros, Beaudoin &amp; van de Panne (2010), <em>Generalized Biped Walking Control</em>, ACM TOG 29(4).</li>
+<li>Lee, Kim &amp; Lee (2010), <em>Data-driven Biped Control</em>, ACM TOG 29(4).</li>
+<li>Kwon &amp; Hodgins (2010), <em>Control Systems for Human Running using an Inverted Pendulum Model and a Reference Motion Capture Sequence</em>, SCA 2010.</li>
+<li>Kwon &amp; Hodgins (2017), <em>Momentum-Mapped Inverted Pendulum Models for Controlling Dynamic Human Motions</em>, ACM TOG 36(1).</li>
+<li>Pratt, Carff, Drakunov &amp; Goswami (2006), <em>Capture Point: A Step toward Humanoid Push Recovery</em>, Humanoids.</li>
+<li>Koolen, de Boer, Rebula, Goswami &amp; Pratt (2012), <em>Capturability-based Analysis and Control of Legged Locomotion, Part 1</em>, IJRR 31(9).</li>
+<li>Englsberger, Ott &amp; Albu-Schäffer (2015), <em>Three-Dimensional Bipedal Walking Control Based on Divergent Component of Motion</em>, IEEE T-RO 31(2).</li>
+<li>Peng, Abbeel, Levine &amp; van de Panne (2018), <em>DeepMimic</em>, ACM TOG 37(4).</li>
+<li>Maki &amp; McIlroy (1997), <em>The role of limb movements in maintaining upright stance: the "change-in-support" strategy</em>, Phys Ther 77(5).</li>
+</ul></main></body></html>

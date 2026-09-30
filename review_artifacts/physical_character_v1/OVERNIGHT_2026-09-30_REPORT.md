@@ -391,6 +391,8 @@ My recommendation is a **locomotion gate built on the existing layers**:
 
 That keeps the architecture, determinism and physical causality. The alternatives would give up causality (a kinematic attacker) or determinism (a learned policy).
 
+**Full proposal, with options, staged gates L1–L6, risks and the four decisions I need from you:** `LOCOMOTION_PROPOSAL.md` / `.html`.
+
 Smaller choices that can wait until after this:
 - **Adopt the C3 swing-shaping options as defaults?** `step.h0 = 0` and `step.heelUp` improve landing accuracy but change no outcome.
 - **How firmly authored actions are tracked** (co-contraction): this, not the solver, sets the slider's impact penetration.
