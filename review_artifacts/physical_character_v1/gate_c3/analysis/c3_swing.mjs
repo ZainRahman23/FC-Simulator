@@ -1,0 +1,11 @@
+import fs from "fs"; import path from "path";
+const PC = process.argv[2], ROOT = path.resolve(PC, "../../.."), TEST = process.argv[3], EV = +(process.argv[4] || 6);
+const { buildBodySpec } = await import(PC + "/pc_body.js"); const { loadJolt } = await import(PC + "/pc_jolt.js"); const C3 = await import(PC + "/pc_gatec3.js"); const { jointState } = await import(PC + "/pc_gatea.js");
+const dir = path.join(ROOT, "assets/characters/outfield/gabriel"), rig = JSON.parse(fs.readFileSync(path.join(dir, "rig.json"), "utf8")), buf = fs.readFileSync(path.join(dir, "mesh.bin"));
+const ab = buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength), L = rig.mesh.layout, T = { Float32Array, Uint16Array, Uint32Array, Uint8Array };
+const mesh = {}; for (const k of ["positions", "joints", "weights", "indices"]) mesh[k] = new T[L[k].elementType](ab, L[k].byteOffset, L[k].elementCount);
+const spec = buildBodySpec(rig, mesh, { calib: "V1.1" }), J = await loadJolt(PC + "/vendor/jolt-physics.wasm-compat.js"), bi = (n) => spec.bodies.findIndex(b => b.name === n), ji = (n) => spec.joints.findIndex(j => j.name === n);
+const r = C3.runC3(J, spec, TEST, { keepStates: true }), R = r.step; console.log(r.outcome, "step", R && R.foot, JSON.stringify(R && R.planned).slice(0, 200));
+const sw = R ? R.foot : "L", st = sw === "L" ? "R" : "L", f3 = (v) => v.map(x => x.toFixed(3)).join(",");
+for (const q of r.recs) { if (q.t < 1.04 || q.t > 1.5 || q.n % EV) continue; const fs2 = q.states[bi("foot_" + sw)], lowest = Math.min(...q.feet[sw].sole.map(p => p[1])), cts = (q.cts || []).filter(c => (c.a === bi("foot_" + sw) || c.b === bi("foot_" + sw))).map(c => `${(c.depth * 1000).toFixed(1)}`).join("/");
+  console.log(`t ${q.t.toFixed(3)} ${String(q.stepStage).padEnd(7)} ${q.cls.slice(0, 10).padEnd(10)} swing ankle ${f3(fs2.pos)} tgt ${q.swingTgt ? f3(q.swingTgt.pos) : "-"} u ${q.swingTgt ? q.swingTgt.u.toFixed(2) : "-"} sole low ${(lowest * 1000).toFixed(0)}mm ${q.feet[sw].touching ? "TOUCH" : "air"} ${cts} | pelvis y ${q.states[0].pos[1].toFixed(3)} z ${q.states[0].pos[2].toFixed(3)} | knee ${sw} ${(jointState(spec.joints[ji("knee_" + sw)], q.states).a * 57.3).toFixed(0)}° hip ${sw} eff ${q.J[ji("hip_" + sw)].eff.toFixed(2)} knee eff ${q.J[ji("knee_" + sw)].eff.toFixed(2)} | ξ ${f3(q.xi)} trunk ${q.trunk.toFixed(0)}`); }

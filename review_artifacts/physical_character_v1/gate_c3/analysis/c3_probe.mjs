@@ -1,0 +1,11 @@
+import fs from "fs"; import path from "path";
+const PC = process.argv[2], ROOT = path.resolve(PC, "../../.."), TEST = process.argv[3];
+const { buildBodySpec } = await import(PC + "/pc_body.js"); const { loadJolt } = await import(PC + "/pc_jolt.js"); const C3 = await import(PC + "/pc_gatec3.js");
+const dir = path.join(ROOT, "assets/characters/outfield/gabriel"), rig = JSON.parse(fs.readFileSync(path.join(dir, "rig.json"), "utf8")), buf = fs.readFileSync(path.join(dir, "mesh.bin"));
+const ab = buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength), L = rig.mesh.layout, T = { Float32Array, Uint16Array, Uint32Array, Uint8Array };
+const mesh = {}; for (const k of ["positions", "joints", "weights", "indices"]) mesh[k] = new T[L[k].elementType](ab, L[k].byteOffset, L[k].elementCount);
+const spec = buildBodySpec(rig, mesh, { calib: "V1.1" }), J = await loadJolt(PC + "/vendor/jolt-physics.wasm-compat.js");
+const { CorrectiveStepper } = await import(PC + "/pc_step.js"); const orig = CorrectiveStepper.prototype._choose; let shown = 0;
+CorrectiveStepper.prototype._choose = function (o) { const r = orig.call(this, o); if (shown++ < 2) { console.log(`t ${o.t.toFixed(3)} ξ ${o.xi.map(v => v.toFixed(3))} com ${[o.com[0], o.com[2]].map(v => v.toFixed(3))} v ${[o.vcom[0], o.vcom[2]].map(v => v.toFixed(2))} ξmargin ${(o.xiMargin * 100).toFixed(1)} loads L ${o.feet.L.load.toFixed(0)} R ${o.feet.R.load.toFixed(0)}`);
+  for (const c of this.allCands) console.log("   ", c ? JSON.stringify({ sw: c.sw, feasible: c.feasible, want: c.want && c.want.map(v => +v.toFixed(3)), target: c.target && c.target.map(v => +v.toFixed(3)), projected: c.projected, xtd: c.xtd && c.xtd.map(v => +v.toFixed(3)), T: c.T && +c.T.toFixed(3), margin: c.margin && +c.margin.toFixed(3), reasons: c.reasons, via: c.via }) : "null"); } return r; };
+const r = C3.runC3(J, spec, TEST, {}); console.log(r.outcome, r.refused || "", JSON.stringify(r.step || {}).slice(0, 300));

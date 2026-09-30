@@ -10,6 +10,7 @@ import { runDrop, DROPS, GATE_A_TSC, GATE_A_WORLD, TIMESTEP_CONFIGS, jointState 
 import { runTest, TESTS, GATE_B_TSC } from "./pc_gateb.js";
 import { runC1, TESTS_C1, GATE_C1_TSC } from "./pc_gatec1.js";
 import { runC2, TESTS_C2 } from "./pc_gatec2.js";
+import { runC3, TESTS_C3 } from "./pc_gatec3.js";
 import { footprint } from "./pc_support.js";
 import { buildPoses, fk } from "./pc_control.js";
 import { skinMatrices, boneBodyMap, meshLowestY, referencedVertices } from "./pc_fit.js";
@@ -18,7 +19,7 @@ import { V, Q, deg } from "./pc_math.js";
 OF_CHAR.base = "../../../assets/characters/outfield";
 const $ = (id) => document.getElementById(id);
 const QS = new URLSearchParams(location.search);
-const H = { J: null, spec: null, entry: null, map: null, ref: null, suiteKey: (QS.get("suite") || "C").toUpperCase(), drop: "A", test: "E", testC: QS.get("suite") && QS.get("suite").toUpperCase() === "C" && QS.get("test") || "PF60", testC2: QS.get("test") || "D_fwd_R", run: null, i: 0, playing: false, speed: 1, acc: 0, last: 0,
+const H = { J: null, spec: null, entry: null, map: null, ref: null, suiteKey: (QS.get("suite") || "C").toUpperCase(), drop: "A", test: "E", testC: QS.get("suite") && QS.get("suite").toUpperCase() === "C" && QS.get("test") || "PF60", testC2: QS.get("test") || "D_fwd_R", testC3: QS.get("suite") && QS.get("suite").toUpperCase() === "C3" && QS.get("test") || "B_F80", run: null, i: 0, playing: false, speed: 1, acc: 0, last: 0,
   cam: { az: 35, el: 18, dist: 3.4, target: [0, 0.6, 0] }, follow: true, mesh: true, phys: true,
   ov: { bodies: false, colliders: true, coms: false, tcom: true, anchors: true, axes: false, limits: false, ground: true, normals: false, pen: true, vel: false, angvel: false, jerr: true, sleep: true,
         ghost: true, skel: false, errlab: true, torque: true, satur: true, support: true, obstacle: true, impulse: true,
@@ -28,7 +29,7 @@ const H = { J: null, spec: null, entry: null, map: null, ref: null, suiteKey: (Q
   ghostRoot: "actual", jsel: "hip_R", comp: "y", suite: null, suiteB: null, skin: null, poses: null,
   calib: QS.get("calib") === "V1" ? "V1" : "V1.1", ctrlv: ["approved", "recal", "diag"].includes(QS.get("ctrl")) ? QS.get("ctrl") : "", specs: {}, posesBy: {}, suitesBy: {} };
 window.GATEA = H;
-const isB = () => H.suiteKey === "B", isC = () => H.suiteKey === "C", isC2 = () => H.suiteKey === "C2", isBal = () => isC() || isC2();
+const isB = () => H.suiteKey === "B", isC = () => H.suiteKey === "C", isC2 = () => H.suiteKey === "C2", isC3 = () => H.suiteKey === "C3", isBal = () => isC() || isC2() || isC3();
 
 // ── GL: mirrored camera (the engine's; Astra meshes are wound for it), a line renderer, the turf ──────────────────────────────────
 const canvas = $("gl"), gl = canvas.getContext("webgl2", { antialias: true, preserveDrawingBuffer: true }), R = { gl };
@@ -76,12 +77,12 @@ function wireShape(s, sh, col) {
 const cross3 = (p, r, col) => { L(V.add(p, [-r, 0, 0]), V.add(p, [r, 0, 0]), col); L(V.add(p, [0, -r, 0]), V.add(p, [0, r, 0]), col); L(V.add(p, [0, 0, -r]), V.add(p, [0, 0, r]), col); };
 
 // ── simulation ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-const title = () => isC2() ? TESTS_C2[H.testC2].title : isC() ? TESTS_C1[H.testC].title : isB() ? TESTS[H.test].title : DROPS[H.drop].title;
+const title = () => isC3() ? TESTS_C3[H.testC3].title : isC2() ? TESTS_C2[H.testC2].title : isC() ? TESTS_C1[H.testC].title : isB() ? TESTS[H.test].title : DROPS[H.drop].title;
 function simulate() {
   $("status").textContent = `simulating ${title()} …`; H.playing = false; $("play").textContent = "▶ play"; H.run = null;   // no frame is drawn from the previous suite's run while switching
   setTimeout(() => {
     const t0 = performance.now();
-    H.run = isC2() ? runC2(H.J, H.spec, H.testC2, { keepStates: true, poses: H.poses, ctrl: ctrlOpts() }) : isC() ? runC1(H.J, H.spec, H.testC, { keepStates: true, poses: H.poses }) : isB() ? runTest(H.J, H.spec, H.test, { keepStates: true, poses: H.poses }) : runDrop(H.J, H.spec, H.drop, { tsc: GATE_A_TSC, world: GATE_A_WORLD, keepStates: true, seconds: 6 });
+    H.run = isC3() ? runC3(H.J, H.spec, H.testC3, { keepStates: true, poses: H.poses }) : isC2() ? runC2(H.J, H.spec, H.testC2, { keepStates: true, poses: H.poses, ctrl: ctrlOpts() }) : isC() ? runC1(H.J, H.spec, H.testC, { keepStates: true, poses: H.poses }) : isB() ? runTest(H.J, H.spec, H.test, { keepStates: true, poses: H.poses }) : runDrop(H.J, H.spec, H.drop, { tsc: GATE_A_TSC, world: GATE_A_WORLD, keepStates: true, seconds: 6 });
     H.simMs = performance.now() - t0; H.i = 0; H.acc = 0; $("scrub").max = H.run.recs.length - 1; $("scrub").value = 0; renderSide(); drawChart(); drawChart2();
     window.GATEA_READY = true; $("status").textContent = "";
   }, 20);
@@ -91,7 +92,7 @@ function simulate() {
 // "" = the body's WORKING controller (pc_balance controllerProfile: V1 → as approved, V1.1 → the integrated V1.1 controller); "approved" = the
 // approved Gate C2 controller; "recal" / "diag" = the historical V1.1-report variants (R1·R2 / + D1)
 function ctrlOpts() { if (H.ctrlv === "approved") return {}; if (H.ctrlv === "recal") return { anticipateReach: true, reachToGround: true }; if (H.ctrlv === "diag") return { anticipateReach: true, reachToGround: true, diagUnload: true }; return undefined; }
-function applySuites() { const b = H.suitesBy[H.calib] || {}; H.suite = b.A || null; H.suiteB = b.B || null; H.suiteC = b.C || null; H.suiteC2 = (H.calib === "V1.1" ? b["C2" + (H.ctrlv || "working")] : b.C2) || null; }
+function applySuites() { const b = H.suitesBy[H.calib] || {}; H.suiteC3 = b.C3 || null; H.suite = b.A || null; H.suiteB = b.B || null; H.suiteC = b.C || null; H.suiteC2 = (H.calib === "V1.1" ? b["C2" + (H.ctrlv || "working")] : b.C2) || null; }
 function setCalib(c, ctrlv) { H.calib = c; if (ctrlv != null) H.ctrlv = ctrlv; H.spec = H.specs[c]; H.poses = H.posesBy[c]; H.skin = null; $("calib").value = c; $("ctrlv").value = H.ctrlv; applySuites(); document.title = `Physical character — ${c}${isC2() && H.ctrlv ? " + " + H.ctrlv : ""}`; }
 const hz = () => TIMESTEP_CONFIGS[isBal() ? GATE_C1_TSC : isB() ? GATE_B_TSC : GATE_A_TSC].hz;
 // ── camera ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -163,6 +164,7 @@ function draw() {
     if (isB()) drawGateB(rec, S, labels);
     if (isBal()) drawC1(rec, S, labels);
     if (isC2()) drawC2(rec, S, labels);
+    if (isC3()) drawC3(rec, S, labels);
     drawAnat(rec, S, labels);
     flushLines(cam.view, cam.proj, false);
   }
@@ -170,7 +172,8 @@ function draw() {
   // live readout
   const meshPen = H.ov.pen && H.mesh ? Math.max(0, -meshLowestY(H.entry.mesh, H.skin || skinMatrices(H.entry.rig, spec, S, H.map), H.ref).minY) : null;
   const head = `${title()}   step ${rec.n}/${H.run.recs.length - 1}   t ${rec.t.toFixed(3)} s   ${hz()} Hz   ${H.playing ? "▶ " + H.speed + "×" : "❚❚"}\n`;
-  if (isC2()) $("status").textContent = head + statusC2(rec, meshPen);
+  if (isC3()) $("status").textContent = head + statusC3(rec, meshPen);
+  else if (isC2()) $("status").textContent = head + statusC2(rec, meshPen);
   else if (isC()) $("status").textContent = head + statusC1(rec, meshPen);
   else if (isB()) { const worst = rec.J.reduce((a, m, k) => m.err > a.e ? { e: m.err, k } : a, { e: -1, k: 0 }), nsat = rec.J.filter(m => m.sat).length, mag = (v) => Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
     $("status").textContent = head + `target error RMS ${deg(rec.errRms).toFixed(2)}°   worst ${spec.joints[worst.k].name} ${deg(worst.e).toFixed(1)}°   motors saturated ${nsat}/13   KE ${rec.ke.toFixed(2)} J\n` +
@@ -183,7 +186,8 @@ function draw() {
     `worst joint separation ${(rec.anchorErr * 1000).toFixed(2)} mm (${rec.anchorJoint >= 0 ? spec.joints[rec.anchorJoint].name : "-"})   limit ${deg(rec.limitViol).toFixed(1)}° (${rec.limitJoint >= 0 ? spec.joints[rec.limitJoint].name : "-"})   pop ${(rec.pop * 1000).toFixed(2)} mm`;
   if (H.ov.a_live) $("status").textContent += "\n" + anatLive(S);
   $("scrub").value = H.i; drawChart(true); if (isB() || isBal()) drawChart2(true);
-  if (isC() && H.ov.c_banner) bannerC1(ov, rec, W);
+  if ((isC() || isC3()) && H.ov.c_banner) bannerC1(ov, rec, W);
+  if (isC3() && H.ov.c_banner) bannerC3(ov, rec, W);
   if (isC2() && H.ov.c_banner) bannerC2(ov, rec, W);
 }
 // Gate B scene overlays: the target ghost, the actual skeleton, the temporary support, the obstacle + contact force, the disturbance
@@ -203,7 +207,7 @@ function drawGateB(rec, S, labels) {
     L(V.sub(im.pt, V.sc(V.norm(im.J), 0.35)), im.pt, [1, 1, 0.1, a]); cross3(im.pt, 0.03, [1, 1, 0.1, a]); if (q === H.i) labels.push([im.pt, `impulse ${V.len(im.J).toFixed(2)} N·s this step`, "#ffff40"]); break; } }
 }
 // ── charts: KE (+ target-error RMS in Gate B) with the cursor; Gate B joint panel ────────────────────────────────────────────────────
-function drawChart(cursorOnly) { if (isC2()) return drawChartC2(); if (isC()) return drawChartC1();
+function drawChart(cursorOnly) { if (isC2()) return drawChartC2(); if (isC() || isC3()) return drawChartC1();
   const c = $("chart"), g = c.getContext("2d"), w = c.clientWidth, h = c.clientHeight; if (c.width !== w) { c.width = w; c.height = h; }
   if (!H.run) return; const R_ = H.run.recs, maxKE = Math.max(1, ...R_.map(r => r.ke)); g.clearRect(0, 0, w, h); g.fillStyle = "#0d0f12"; g.fillRect(0, 0, w, h);
   const X = (i) => i / (R_.length - 1) * w;
@@ -239,7 +243,7 @@ function drawChart2() { if (isBal()) return drawChart2C1();
 }
 // ── side panel ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 function renderSide() { renderSideInner(); $("side").insertAdjacentHTML("afterbegin", anatSide()); }
-function renderSideInner() { if (isC2()) return renderSideC2(); if (isC()) return renderSideC1(); if (isB()) return renderSideB();
+function renderSideInner() { if (isC3()) return renderSideC3(); if (isC2()) return renderSideC2(); if (isC()) return renderSideC1(); if (isB()) return renderSideB();
   const s = H.run, spec = H.spec, T = TIMESTEP_CONFIGS[GATE_A_TSC], f = (x, d = 1) => (x == null ? "-" : (+x).toFixed(d));
   const row = (k, v, bad) => `<tr><td>${k}</td><td class="${bad ? "bad" : ""}">${v}</td></tr>`;
   let h = `<h3>${DROPS[H.drop].title}</h3><div class="small">${DROPS[H.drop].note}</div><table>`;
@@ -512,21 +516,51 @@ function anatSide() { const spec = H.spec, bi = (n) => spec.bodies.findIndex(b =
   h += row("mass · whole-body COM (bind)", `${spec.totalMass} kg · ${com[1].toFixed(3)} m`, "");
   if (H.run && H.run.lean) { const l = H.run.lean; h += row("single-leg statics (hip abduction τ0 · lean)", `${(+l.tau0).toFixed(0)} N·m · ${(+l.leanDeg).toFixed(1)}°`, `hip half-width ${cm(l.hipHalfWidth)} cm`); }
   return h + `</table><div class="small">V1 hip centres come from the Astra template skeleton (thigh bone x 0.1805 → 0.1615 for this player); V1.1 places them at the anatomical hip-joint-centre width (±9.2 cm; Bardakos & Freeman 2012, Hara 2016). The mesh is unchanged — only the physics joint centres move. Overlays: Anatomy row.</div>`; }
+// ── GATE C3: corrective stepping overlays — the planned step (predicted capture point at touchdown, wanted foothold, projected foothold,
+// the stance CoP it was planned from), the swing target, and the SENSED touchdown ──
+const S3COL = { want: [1, 0.55, 0.2, 0.9], target: [0.35, 1, 0.45, 1], td: [0.3, 0.75, 1, 1], xtd: [1, 0.3, 0.9, 1], pst: [1, 1, 1, 0.9] };
+function footQuad(center, yaw) { const b = H.spec.bodies[H.spec.bodies.findIndex(q => q.name === "foot_L")].shapes[0]; return footprint(b, center, yaw); }
+function drawC3(rec, S, labels) {
+  const st = rec.step, R = H.run.step; if (!st && !(R && R.touchdown)) return;
+  if (st && st.target) { const yaw = st.yaw || 0, tq = footQuad(st.target, yaw); polyLine(tq, S3COL.target, 0.012); labels.push([G2(st.target, 0.02), `planned foothold (${st.sw})${st.projected ? " — PROJECTED onto reach" : ""}`, "#70ff90"]);
+    if (st.projected && st.want) { polyLine(footQuad(st.want, yaw), S3COL.want, 0.01); labels.push([G2(st.want, 0.02), "wanted (capture) foothold — beyond reach", "#ffa050"]); L(G2(st.target, 0.012), G2(st.want, 0.012), [1, 0.55, 0.2, 0.5]); } }
+  if (st && st.xtd) { const x = G2(st.xtd, 0.014); ring(x, 0.04, S3COL.xtd, 0.014); cross3(x, 0.03, S3COL.xtd); labels.push([x, `predicted ξ at touchdown · margin ${st.margin != null ? (st.margin * 100).toFixed(1) : "-"} cm`, "#ff70e0"]); }
+  if (st && st.pst) { const p = G2(st.pst, 0.012); cross3(p, 0.025, S3COL.pst); labels.push([p, "stance CoP (planned)", "#ffffff"]); if (st.xtd) L(p, G2(st.xtd, 0.012), [1, 0.3, 0.9, 0.5]); }
+  if (rec.swingTgt) { cross3(rec.swingTgt.pos, 0.02, [1, 0.9, 0.2, 1]); }
+  if (R && R.touchdown && rec.t >= (H.run.worst.touchdown || 1e9) / 240) { const c = R.touchdown.center; polyLine(footQuad(c, (st && st.yaw) || 0), S3COL.td, 0.016); labels.push([G2(c, 0.03), `touchdown (sensed) · ${R.touchdown.errCm} cm from the plan`, "#60c0ff"]); }
+}
+function statusC3(rec, meshPen) { const R = H.run.step, st = rec.step;
+  return statusC1(rec, meshPen) + `\nstep ${rec.stepStage || "-"}${st ? ` · ${st.sw} foot${st.projected ? " (projected foothold)" : ""}` : ""}   outcome ${H.run.outcome}${H.run.refused ? " — " + H.run.refused : ""}${R && R.fail ? " — " + R.fail : ""}`; }
+function bannerC3(ov, rec, W) { const stg = rec.stepStage; if (!stg || stg === "STAND") return; const txt = { SWING: "CORRECTIVE STEP — SWING", DESCEND: "CORRECTIVE STEP — SEEKING GROUND", ACCEPT: "CORRECTIVE STEP — LOAD ACCEPTANCE", FAILED: "CORRECTIVE STEP FAILED — releasing" }[stg] || stg;
+  ov.font = "bold 15px -apple-system, system-ui, sans-serif"; const w = ov.measureText(txt).width; ov.fillStyle = "#000b"; ov.fillRect(W / 2 - w / 2 - 10, 150, w + 20, 24); ov.fillStyle = stg === "FAILED" ? "#ff6060" : "#70e0ff"; ov.fillText(txt, W / 2 - w / 2, 168); }
+function renderSideC3() { const r = H.run, R = r.step, f = (x) => x == null ? "-" : x, row = (k, v, bad) => `<tr><td>${k}</td><td class="${bad ? "bad" : ""}">${v}</td></tr>`;
+  let h = `<h3>${TESTS_C3[H.testC3].title}</h3><div class="small">Gate C3: C1's STEP_NEEDED → a physically executed corrective step (one step). No pelvis support, no teleport; liftoff and touchdown are SENSED.</div><table>`;
+  h += row("outcome", `<b>${r.outcome}</b>${r.refused ? " — " + r.refused : ""}`, /FELL/.test(r.outcome)) + row("push", r.push ? `${r.push.Ns} N·s ${r.push.dir} at ${r.push.at} s` : "-") + (r.delayMs ? row("sensing delay", r.delayMs + " ms") : "") + (r.friction ? row("turf friction μ", r.friction) : "");
+  if (R) { h += row("swing foot", R.foot) + row("timeline", `STEP_NEEDED ${f(R.tStepNeeded)} s · liftoff +${f(R.liftoffAfterNeedS)} · touchdown +${f(R.touchdownAfterNeedS)} · recovered +${f(R.recoveredAfterNeedS)} s`);
+    if (R.planned) h += row("foothold", `${R.planned.projected ? "PROJECTED onto reach" : "as wanted"} · predicted ξ margin at touchdown ${R.planned.predictedXiMarginCm} cm · swing ${R.planned.tSwing} s${R.planned.reasons && R.planned.reasons.length ? "<br><span class=small>" + R.planned.reasons.join("; ") + "</span>" : ""}`);
+    if (R.touchdown) h += row("touchdown", `${R.touchdown.errCm} cm from the planned foothold (u ${R.touchdown.uAt}) · ξ margin at touchdown ${f(R.xiMarginAtTouchdownCm)} cm`, R.touchdown.errCm > 15);
+    if (R.fail) h += row("failure", R.fail, true); }
+  h += row("whole body", `COM excursion ${r.whole.comExcursionCm} cm · trunk max ${r.whole.trunkMaxDeg}° · COM drop ${r.whole.comDropCm} cm · stance slid ${f(r.whole.stanceSlidCm)} cm`) + row("stability", `joint sep ≤ ${r.stability.maxJointSepMm} mm · limit margin ${r.stability.minJointLimitMarginDeg}° (${r.stability.limJoint}) · turf ${r.stability.maxTurfPenMm} mm · self ${r.stability.maxSelfPenMm} mm`);
+  h += row("state hash", `${r.hash} ${H.suiteC3 ? ((H.suiteC3.results.find(q => q.test === H.testC3) || {}).hash === r.hash ? "<span class=ok>= Node</span>" : "<span class=bad>≠ Node</span>") : ""}`) + `</table>`;
+  if (r.events && r.events.length) h += `<h3>Stepper events</h3><table>` + r.events.map(e => `<tr><td>${e.t != null ? e.t.toFixed(3) : "-"}</td><td>${e.kind}</td><td class="small">${e.what}</td></tr>`).join("") + `</table>`;
+  if (H.suiteC3) h += `<h3>C3 suite (Node, same WASM, ×3)</h3><table><tr><th>test</th><th>outcome</th><th>det</th></tr>` + H.suiteC3.results.map(q => `<tr><td>${q.test}</td><td class="${/FELL/.test(q.outcome) ? "bad" : "ok"}">${q.outcome}</td><td>${q.deterministic ? "✓" : "✗"}</td></tr>`).join("") + `</table>`;
+  $("side").innerHTML = h; }
 // ── UI ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-const WORST = { C2: [["liftoff", "first liftoff"], ["touchdown", "first touchdown"], ["done", "first request outcome"]], C: [["push", "push"], ["stepNeeded", "STEP_NEEDED declared"], ["falling", "fall transition (release)"], ["grounded", "first non-foot ground contact"], ["minMargin", "smallest capture-point margin"], ["footRoll", "first foot roll / lift"]], A: [["groundPen", "ground penetration"], ["anchor", "joint separation"], ["limit", "limit violation"], ["pop", "correction pop"], ["self", "self penetration"], ["energy", "energy gain"]],
+const WORST = { C3: [["push", "push"], ["stepNeeded", "STEP_NEEDED"], ["liftoff", "liftoff"], ["touchdown", "touchdown"], ["recovered", "recovered"], ["falling", "fall release"], ["grounded", "first non-foot ground contact"]], C2: [["liftoff", "first liftoff"], ["touchdown", "first touchdown"], ["done", "first request outcome"]], C: [["push", "push"], ["stepNeeded", "STEP_NEEDED declared"], ["falling", "fall transition (release)"], ["grounded", "first non-foot ground contact"], ["minMargin", "smallest capture-point margin"], ["footRoll", "first foot roll / lift"]], A: [["groundPen", "ground penetration"], ["anchor", "joint separation"], ["limit", "limit violation"], ["pop", "correction pop"], ["self", "self penetration"], ["energy", "energy gain"]],
   B: [["err", "target error (RMS peak)"], ["contact", "first obstacle contact"], ["penetration", "deepest obstacle penetration"], ["disturbance", "disturbance"], ["limit", "limit violation"], ["anchor", "joint separation"], ["ground", "ground penetration"], ["self", "self penetration"]] };
 function setSuite(k) { H.suiteKey = k; document.body.classList.toggle("suiteB", isB()); document.body.classList.toggle("suiteC", isBal()); document.body.classList.toggle("suiteC2", isC2()); $("suite").value = k; const sel = $("drop"); sel.innerHTML = "";
-  if (isC2()) { let grp = null, og = null; for (const t of Object.keys(TESTS_C2)) { if (TESTS_C2[t].group !== grp) { grp = TESTS_C2[t].group; og = document.createElement("optgroup"); og.label = grp; sel.appendChild(og); } og.appendChild(new Option(`${t} — ${TESTS_C2[t].title}`, t)); } }
+  if (isC3()) { let grp = null, og = null; for (const t of Object.keys(TESTS_C3)) { if (TESTS_C3[t].group !== grp) { grp = TESTS_C3[t].group; og = document.createElement("optgroup"); og.label = grp; sel.appendChild(og); } og.appendChild(new Option(`${t} — ${TESTS_C3[t].title}`, t)); } }
+  else if (isC2()) { let grp = null, og = null; for (const t of Object.keys(TESTS_C2)) { if (TESTS_C2[t].group !== grp) { grp = TESTS_C2[t].group; og = document.createElement("optgroup"); og.label = grp; sel.appendChild(og); } og.appendChild(new Option(`${t} — ${TESTS_C2[t].title}`, t)); } }
   else if (isC()) { let grp = null, og = null; for (const t of Object.keys(TESTS_C1)) { if (TESTS_C1[t].group !== grp) { grp = TESTS_C1[t].group; og = document.createElement("optgroup"); og.label = grp; sel.appendChild(og); } og.appendChild(new Option(`${t} — ${TESTS_C1[t].title}`, t)); } }
   else if (isB()) for (const t of Object.keys(TESTS)) sel.add(new Option(TESTS[t].title, t)); else for (const d of Object.keys(DROPS)) sel.add(new Option(DROPS[d].title, d));
-  sel.value = isC2() ? H.testC2 : isC() ? H.testC : isB() ? H.test : H.drop; $("tlhelp").textContent = isBal() ? "nominal (grey dashed) · final target (white dashed) · actual (cyan) · gravity offset (green) · balance offset (orange) · effort / limit (red) · saturated (red band)" : "target (dashed) vs actual (solid) · error (red) · motor effort / limit (orange) · saturated (red band) · contact force (magenta) · support force (violet)"; $("worst").innerHTML = ""; for (const [v, t] of WORST[k]) $("worst").add(new Option(t, v)); applySuites(); }
+  sel.value = isC3() ? H.testC3 : isC2() ? H.testC2 : isC() ? H.testC : isB() ? H.test : H.drop; $("tlhelp").textContent = isBal() ? "nominal (grey dashed) · final target (white dashed) · actual (cyan) · gravity offset (green) · balance offset (orange) · effort / limit (red) · saturated (red band)" : "target (dashed) vs actual (solid) · error (red) · motor effort / limit (orange) · saturated (red band) · contact force (magenta) · support force (violet)"; $("worst").innerHTML = ""; for (const [v, t] of WORST[k]) $("worst").add(new Option(t, v)); applySuites(); }
 function ui() {
   for (const j of ["lumbar", "thoracic", "neck", "shoulder_L", "elbow_L", "shoulder_R", "elbow_R", "hip_L", "knee_L", "ankle_L", "hip_R", "knee_R", "ankle_R"]) $("jsel").add(new Option(j, j));
   $("jsel").value = H.jsel; $("jsel").onchange = () => { H.jsel = $("jsel").value; drawChart2(); }; $("comp").onchange = () => { H.comp = $("comp").value; drawChart2(); };
   $("groot").onchange = () => { H.ghostRoot = $("groot").value; };
   $("suite").onchange = () => { setSuite($("suite").value); applySuites(); simulate(); };
   $("calib").onchange = () => { setCalib($("calib").value); simulate(); }; $("ctrlv").onchange = () => { setCalib(H.calib, $("ctrlv").value); simulate(); };
-  $("drop").onchange = () => { if (isC2()) H.testC2 = $("drop").value; else if (isC()) H.testC = $("drop").value; else if (isB()) H.test = $("drop").value; else H.drop = $("drop").value; simulate(); }; $("restart").onclick = () => { H.i = 0; H.acc = 0; H.playing = true; $("play").textContent = "❚❚ pause"; };
+  $("drop").onchange = () => { if (isC3()) H.testC3 = $("drop").value; else if (isC2()) H.testC2 = $("drop").value; else if (isC()) H.testC = $("drop").value; else if (isB()) H.test = $("drop").value; else H.drop = $("drop").value; simulate(); }; $("restart").onclick = () => { H.i = 0; H.acc = 0; H.playing = true; $("play").textContent = "❚❚ pause"; };
   $("play").onclick = () => { H.playing = !H.playing; if (H.playing && H.i >= H.run.recs.length - 1) H.i = 0; $("play").textContent = H.playing ? "❚❚ pause" : "▶ play"; };
   $("speed").onchange = () => { H.speed = +$("speed").value; };
   $("sm").onclick = () => { H.playing = false; H.i = Math.max(0, H.i - 1); $("play").textContent = "▶ play"; }; $("sp").onclick = () => { H.playing = false; H.i = Math.min(H.run.recs.length - 1, H.i + 1); $("play").textContent = "▶ play"; };
@@ -562,6 +596,7 @@ window.GATEA_SET = (o) => { if (o.i != null) H.i = Math.max(0, Math.min(H.run.re
   H.playing = false; drawChart2(); draw(); return { i: H.i, t: H.run.recs[H.i].t }; };
 window.GATEA_DROP = (k) => new Promise((res) => { window.GATEA_READY = false; if (H.suiteKey !== "A") setSuite("A"); H.drop = k; $("drop").value = k; simulate(); const w = () => window.GATEA_READY ? res(H.run.hash) : setTimeout(w, 30); w(); });
 window.GATEC1_TEST = (k) => new Promise((res) => { window.GATEA_READY = false; if (!isC()) setSuite("C"); H.testC = k; $("drop").value = k; simulate(); const w = () => window.GATEA_READY ? res(H.run.hash) : setTimeout(w, 30); w(); });
+window.GATEC3_TEST = (k) => new Promise((res) => { window.GATEA_READY = false; if (!isC3()) setSuite("C3"); H.testC3 = k; $("drop").value = k; simulate(); const w = () => window.GATEA_READY ? res(H.run.hash) : setTimeout(w, 30); w(); });
 window.GATEC2_TEST = (k) => new Promise((res) => { window.GATEA_READY = false; if (!isC2()) setSuite("C2"); H.testC2 = k; $("drop").value = k; simulate(); const w = () => window.GATEA_READY ? res(H.run.hash) : setTimeout(w, 30); w(); });
 window.PC_SETCALIB = (c, ctrlv) => { setCalib(c, ctrlv || ""); return H.calib; };   // no re-simulation (the next GATE*_TEST call simulates)
 window.PC_CALIB = (c, ctrlv) => new Promise((res) => { window.GATEA_READY = false; setCalib(c, ctrlv || ""); simulate(); const w = () => window.GATEA_READY ? res(H.run.hash) : setTimeout(w, 30); w(); });
@@ -575,7 +610,8 @@ window.GATEB_TEST = (k) => new Promise((res) => { window.GATEA_READY = false; if
     H.visHip = visibleHipWidth(entry.rig, entry.mesh, H.specs.V1);
     const get = async (u) => { try { return await (await fetch(u)).json(); } catch (e) { return null; } };
     H.suitesBy.V1 = { A: await get("results/gatea_final_240x1.json"), B: await get("results/gateb_final_240x1.json"), C: await get("results/gatec1_final_240x1.json"), C2: await get("results/gatec2_final_240x1.json") };
-    H.suitesBy["V1.1"] = { A: await get("results/v1_1/gatea_V1.1.json"), B: await get("results/v1_1/gateb_V1.1.json"), C: await get("results/v1_1/gatec1_V1.1.json"),
+    const c3 = await get("results/v1_1/gatec3_V1.1.json");
+    H.suitesBy["V1.1"] = { C3: c3, A: await get("results/v1_1/gatea_V1.1.json"), B: await get("results/v1_1/gateb_V1.1.json"), C: await get("results/v1_1/gatec1_V1.1.json"),
       C2working: await get("results/v1_1/gatec2_V1.1_working.json"), C2approved: await get("results/v1_1/gatec2_V1.1_raw.json"), C2recal: await get("results/v1_1/gatec2_V1.1_recal.json"), C2diag: await get("results/v1_1/gatec2_V1.1_recal_diag.json") };
     setCalib(H.calib); simulate(); requestAnimationFrame(loop);
   } catch (e) { $("status").textContent = "BOOT FAILED: " + (e.stack || e); window.GATEA_ERROR = String(e); }

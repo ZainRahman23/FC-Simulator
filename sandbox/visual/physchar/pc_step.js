@@ -42,7 +42,10 @@ export const STEP = {
                                 // 2026-09-30: a 0.95 m foothold at 7 m/s peak left the leg behind; the knee extended and the foot landed 59 cm short)
   crossover: false,             // crossover steps (routed around the stance foot) — OFF: executing them needs coordinated pelvis/trunk rotation
                                 // and leg-to-leg clearance the controller does not have yet (finding 2026-09-30: the crossing hip saturated
-                                // and the foot never landed); a lateral fall that only a crossover could catch is refused → honest fall
+                                // and the foot never landed; routing the 2-D footprint around the 36 cm boot box made the path 1.0–1.3 m =
+                                // an 8–9.6 m/s swing foot; holding the stance CoP at the heel to steer ξ forward-lateral still left the
+                                // capture 12–30 cm out of reach). Needs 3-D swing clearance over the stance foot + pelvis rotation.
+                                // A lateral fall that only a crossover could catch is refused → honest fall
   viaClear: 0.06,               // m: a CROSSOVER swing is routed around the stance foot through a waypoint this far beyond its toe (or heel)               // m: the trailing stance foot may rise onto its toe — its reach is taken to the toe with this much extra lever
   maxDeficit: 0.08,             // m: a best foothold whose predicted ξ_td is still more than this outside the new support → no capturing step
   // acceptance in the new support

@@ -67,13 +67,14 @@ export function runC3(J, spec, key, opts) {
       const tq = lm.map(x => x / dt), mag = Math.sqrt(tq[0] ** 2 + tq[1] ** 2 + tq[2] ** 2); let eff = 0, sat = false; const satAx = [];
       tq.forEach((x, i) => { const lim = x >= 0 ? cap.hi[i] : -cap.lo[i]; if (lim > 0) { eff = Math.max(eff, Math.abs(x) / lim); if (Math.abs(x) >= 0.98 * lim) { sat = true; satAx.push(i); } } }); return { lam: lm, tq: mag, eff, sat, satAx }; });
     let groundPen = 0; for (let i = 0; i < nb; i++) for (const s of spec.bodies[i].shapes) groundPen = Math.max(groundPen, -shapeLowestY(s, states[i].pos, states[i].rot));
-    let anchorErr = 0, limMargin = 1e9, limJoint = null; spec.joints.forEach((j, k) => { const Pb = states[j.parentIndex], pb = spec.bodies[j.parentIndex]; anchorErr = Math.max(anchorErr, V.dist(V.add(Pb.pos, Q.rot(Pb.rot, V.sub(j.at, pb.origin))), states[j.childIndex].pos));
-      const js = jointState(j, states); let m; if (j.type === "hinge") m = Math.min(js.a - j.lo, j.hi - js.a); else { const L = j.limits; m = Math.min(js.twist - L.twist[0], L.twist[1] - js.twist, js.swingY - L.swingY[0], L.swingY[1] - js.swingY, js.swingZ - L.swingZ[0], L.swingZ[1] - js.swingZ); }
+    let anchorErr = 0, limMargin = 1e9, limJoint = null, hardViol = 0; spec.joints.forEach((j, k) => { const Pb = states[j.parentIndex], pb = spec.bodies[j.parentIndex]; anchorErr = Math.max(anchorErr, V.dist(V.add(Pb.pos, Q.rot(Pb.rot, V.sub(j.at, pb.origin))), states[j.childIndex].pos));
+      const js = jointState(j, states); if (j.type === "sixdof") hardViol = Math.max(hardViol, js.viol); let m; if (j.type === "hinge") m = Math.min(js.a - j.lo, j.hi - js.a); else { const L = j.limits; m = Math.min(js.twist - L.twist[0], L.twist[1] - js.twist, js.swingY - L.swingY[0], L.swingY[1] - js.swingY, js.swingZ - L.swingZ[0], L.swingZ[1] - js.swingZ); }
       if (m < limMargin) { limMargin = m; limJoint = j.name; } });
     let selfPen = 0; for (const c of w.contacts) if (c.a >= 0 && c.b >= 0) selfPen = Math.max(selfPen, c.depth);
+    let ke = 0; for (let i = 0; i < nb; i++) { const b = spec.bodies[i], s0 = states[i], wl = Q.rot(Q.conj(s0.rot), s0.w); ke += 0.5 * b.mass * V.dot(s0.v, s0.v) + 0.5 * (b.inertia[0] * wl[0] ** 2 + b.inertia[1] * wl[1] ** 2 + b.inertia[2] * wl[2] ** 2); }
     const f = obs.feet, R = stepper ? (stepper.R || stepper.done) : null;
     const rec = { n, t: n * dt, cls: u.cls.state, com: obs.com, vcom: obs.vcom, xi: obs.xi, h: obs.h, xiMargin: obs.xiMargin, comMargin: obs.comMargin, degraded: obs.supportDegraded, copSmooth: obs.copSmooth,
-      trunk: obs.trunkTiltDeg, nonFootGround: obs.nonFootGround, feet: { L: slimFoot(f.L), R: slimFoot(f.R) }, push: ext, J: J8, groundPen, anchorErr, limMargin: limMargin * 57.2958, limJoint, selfPen,
+      trunk: obs.trunkTiltDeg, spine: obs.spineBendDeg, grf: obs.grf, ke, hardViol, rootRes: null, nonFootGround: obs.nonFootGround, feet: { L: slimFoot(f.L), R: slimFoot(f.R) }, push: ext, J: J8, groundPen, anchorErr, limMargin: limMargin * 57.2958, limJoint, selfPen,
       ctl: u.debug ? { pStar: u.debug.pStar, pRaw: u.debug.pRaw, xiRef: u.debug.xiRef, r: u.debug.r, tauTrunk: u.debug.tauTrunk || null, feetBal: u.debug.feetBal, stance: u.debug.stance, pelvisTarget: u.debug.pelvisTarget, fricR: u.debug.fricR, hipCap: u.debug.hipCapHere, muObs: ctrl.muObs ? { ...ctrl.muObs } : null, reason: u.cls.reason } : null,
       stepStage: stepper ? stepper.stage : null, step: R && plan && plan.step ? { sw: R.sw, st: R.st, stage: R.stage, target: R.cand && R.cand.target, want: R.cand && R.cand.want, xtd: R.cand && R.cand.xtd, pst: R.cand && R.cand.pst, margin: R.cand && R.cand.margin, projected: R.cand && R.cand.projected, yaw: R.cand && R.cand.yaw } : null,
       swingTgt: plan && plan.swing ? Object.values(plan.swing)[0] || null : null };
@@ -106,5 +107,8 @@ function summarizeC3(spec, key, TST, T, recs, x) {
       stanceSlidCm: R ? r2(Math.max(0, ...ssWin.map(r => r.feet[R.st].slipDist || 0)) * 100, 2) : null, finalXiMarginCm: r2(last.xiMargin * 100, 1), finalV: r2(hyp(last.vcom), 3) },
     stability: { maxJointSepMm: r2(Math.max(...recs.map(r => r.anchorErr)) * 1000, 2), minJointLimitMarginDeg: r2(Math.min(...recs.map(r => r.limMargin)), 1), limJoint: recs.reduce((a, r) => r.limMargin < a.m ? { m: r.limMargin, j: r.limJoint } : a, { m: 1e9, j: null }).j,
       maxTurfPenMm: r2(Math.max(...recs.map(r => r.groundPen)) * 1000, 2), maxSelfPenMm: r2(Math.max(...recs.map(r => r.selfPen)) * 1000, 2) },
+    worst: { push: x.pu ? x.pu.n0 : 0, stepNeeded: tNeed ? tNeed.n : 0, liftoff: R && R.liftoff ? Math.round(R.liftoff.t * T.hz) : 0, touchdown: R && R.td ? Math.round(R.td.t * T.hz) : 0,
+      recovered: R && R.accepted ? Math.round(R.accepted.t * T.hz) : 0, falling: tFall ? tFall.n : 0, grounded: tGround ? tGround.n : 0 },
+    classTimes: Object.fromEntries(["STEP_NEEDED", "STEPPING", "FALLING", "GROUNDED"].map(k => [k, (recs.find(r => r.cls === k) || {}).t]).filter(e => e[1] != null).map(([k, v]) => [k, r2(v, 2)])),
     saturationMs: satMs, cpu: { msPerFrame: r2((x.cpuJ + x.cpuS + x.cpuC) / x.steps * 4, 4), jolt: r2(x.cpuJ / x.steps * 4, 4), controller: r2(x.cpuC / x.steps * 4, 4) }, ctrl: x.ctrlOpts, recs };
 }
