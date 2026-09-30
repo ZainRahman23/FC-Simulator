@@ -1,0 +1,12 @@
+# EXPERIMENT: swing-shaping options (h0 = 0, heelUp) + capture-step sequences (maxSteps 2/3, 2-step plan) together — all default off
+B_B60             C3 default: STEPPED_FELL | swing opts: STEPPED_FELL | swing + 2 steps: STEPPED_FELL (2 extra-step events) | swing + 3 steps + 2-step plan: STEPPED_FELL (3 extra-step events)
+C_proj_B75        C3 default: STEPPED_FELL | swing opts: STEPPED_FELL | swing + 2 steps: STEPPED_FELL (2 extra-step events) | swing + 3 steps + 2-step plan: STEPPED_FELL (3 extra-step events)
+F_nofoot_B110     C3 default: STEPPED_FELL | swing opts: STEPPED_FELL | swing + 2 steps: STEPPED_FELL (1 extra-step events) | swing + 3 steps + 2-step plan: STEPPED_FELL (1 extra-step events)
+D_late_F80_100ms  C3 default: STEPPED_FELL | swing opts: STEPPED_FELL | swing + 2 steps: FELL_NO_STEP (2 extra-step events) | swing + 3 steps + 2-step plan: FELL_NO_STEP (2 extra-step events)
+D_late_F80_150ms  C3 default: STEPPED_FELL | swing opts: STEP_FAILED_FELL | swing + 2 steps: STEP_FAILED_FELL | swing + 3 steps + 2-step plan: STEP_FAILED_FELL
+F_nofoot_F160     C3 default: STEPPED_FELL | swing opts: STEPPED_FELL | swing + 2 steps: STEPPED_FELL (1 extra-step events) | swing + 3 steps + 2-step plan: STEPPED_FELL (1 extra-step events)
+B_BL45            C3 default: STEPPED_FELL | swing opts: STEPPED_FELL | swing + 2 steps: STEPPED_FELL (1 extra-step events) | swing + 3 steps + 2-step plan: STEPPED_FELL (1 extra-step events)
+B_BL60            C3 default: STEPPED_FELL | swing opts: FELL_NO_STEP | swing + 2 steps: FELL_NO_STEP | swing + 3 steps + 2-step plan: FELL_NO_STEP
+B_F90             C3 default: RECOVERED_WITH_STEP | swing opts: RECOVERED_WITH_STEP | swing + 2 steps: RECOVERED_WITH_STEP | swing + 3 steps + 2-step plan: RECOVERED_WITH_STEP
+B_B50             C3 default: RECOVERED_WITH_STEP | swing opts: RECOVERED_WITH_STEP | swing + 2 steps: RECOVERED_WITH_STEP | swing + 3 steps + 2-step plan: RECOVERED_WITH_STEP
+{"C3 default":{"rec":2},"swing opts":{"rec":2},"swing + 2 steps":{"rec":2},"swing + 3 steps + 2-step plan":{"rec":2}}

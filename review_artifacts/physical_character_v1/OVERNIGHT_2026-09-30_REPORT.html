@@ -444,6 +444,7 @@ img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:4px} l
 </tbody>
 </table>
 <p>Neither option changes an outcome. The remaining limit is the swing hip's <em>finite</em> extension torque while the body falls backward. So I kept the reviewed C3 default, and left both options in for the C3 revision.</p>
+<p><strong>All together</strong> (<code>combined_options.log</code>): swing options plus 2–3 capture steps plus the 2-step planner rescue <strong>0 of 8</strong>. The extra steps are executed, and the body still falls; the recovered controls keep recovering. These pushes exceed what this body can do with reactive stepping of this quality. That capacity is the locomotion gate's job (§10), not more C3 options.</p>
 <h3>3.3 C4: whole-body reactive balance (arms): <strong>PARTIAL, kept opt-in</strong></h3>
 <p><strong>Objective:</strong> the arms join the hip strategy, with an arms-disabled comparison.</p>
 <p><strong>Implementation:</strong> the arms act as a torque source. Their equilibrium point moves with the demanded torque, and their target velocity is their actual velocity. Braking is range-aware: when ω²/2α ≥ the remaining range, they brake. This keeps the arm from arriving at its joint stop with its momentum. The first version (equilibrium offset only) moved the arms just ~15°. The unbraked version turned three recoveries into falls.</p>
