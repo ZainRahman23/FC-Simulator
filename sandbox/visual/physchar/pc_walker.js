@@ -61,8 +61,14 @@ export function decideA(C, x, b) { const M = modelAt(C, 0), un = C.nom, rho = C.
 export const adaptBias = (C, b, e) => { const g = C.adapt.gain ?? 0.3, m = C.adapt.max ?? 0.06; return b.map((v, i) => Math.max(-m, Math.min(m, v + g * (e[i] - v)))); };
 // Controller A's IN-SWING re-decision at τ: the same target yt, the step's timing fixed, the measured map of instant τ, the foothold pulled
 // toward the step-start decision (a smooth correction, not a new step)
-export function adjustA(C, x, tau, yt, uDec, b) { const M = modelAt(C, tau), sg = C.sig || [0.05, 0.05, 0.03], lo = C.lo || [0.10, 0.17, 0.34], hi = C.hi || [0.50, 0.34, 0.50];
-  const s = solveStep(M, x, yt, uDec, sg, lo, hi, true, b, C.auth); return { df: s.u[0], dl: s.u[1], T: uDec[2], info: { ...s.info, tau, x: x.slice() } }; }
+// (G2b speed work, opt-in: C.inSwingT — the in-swing re-decision may also move the TIMING (T, the single support from the step's start),
+//  never to less than lim.tMin (s, set by the executor: the time now + a minimum swing remainder); lim.dfHi(T) — the REACHABLE forward
+//  foothold at that touchdown time (the swing hip's predicted position + the leg's reach at its height) replaces the fixed forward bound)
+export function adjustA(C, x, tau, yt, uDec, b, lim) { const M = modelAt(C, tau), sg = C.sig || [0.05, 0.05, 0.03], lo = (C.lo || [0.10, 0.17, 0.34]).slice(), hi = (C.hi || [0.50, 0.34, 0.50]).slice();
+  const freeT = !!C.inSwingT; if (freeT && lim && lim.tMin != null) lo[2] = Math.max(lo[2], lim.tMin); if (lo[2] > hi[2]) lo[2] = hi[2];
+  let s = null, uR = uDec.slice(); if (freeT) uR[2] = Math.max(lo[2], Math.min(hi[2], uR[2]));
+  for (let it = 0; it < 3; it++) { const h = hi.slice(); if (lim && lim.dfHi) h[0] = Math.max(lo[0], Math.min(hi[0], lim.dfHi(s ? s.u[2] : uR[2]))); s = solveStep(M, x, yt, uR, sg, lo, h, !freeT, b, C.auth); if (!(lim && lim.dfHi) || s.u[0] <= lim.dfHi(s.u[2]) + 1e-4) break; }
+  return { df: s.u[0], dl: s.u[1], T: freeT ? s.u[2] : uDec[2], info: { ...s.info, tau, x: x.slice() } }; }
 
 // Controller B (SIMBICON-style): foothold = COM-relative linear law per axis, fixed T. d = COM offset from the stance foot (forward, inward),
 // v = COM velocity (forward, inward). The foothold relative to the COM: f = f0 + c_d·d + c_v·v per axis; returned relative to the stance foot.

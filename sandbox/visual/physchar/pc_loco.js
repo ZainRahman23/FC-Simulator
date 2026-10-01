@@ -15,7 +15,11 @@ import { LocoPlanner } from "./pc_plan.js";
 import { poseTargets, idlePose, inPlaceWalkParams, walkParams, refPose } from "./pc_ref.js";
 import { fk, minjerk } from "./pc_control.js";
 import { SupportSequencer, SUP } from "./pc_support.js";
+import { SwingV2 } from "./pc_swing.js";
 
+// the swing's PHASE at time tt: (tt − tSw0)/T, or — after the planner moved the step's timing in the swing (R.warp = { tc, wc, tEnd, T0 }) —
+// the phase reached at the change, spread over the new remaining time (continuous position; the swing's rate changes once)
+export const swPhase = (R, tt) => { const W = R.warp, w = W ? (tt < W.tc ? (tt - R.tSw0) / W.T0 : W.wc + (1 - W.wc) * (tt - W.tc) / Math.max(1e-3, W.tEnd - W.tc)) : (tt - R.tSw0) / R.T; return Math.max(0, Math.min(1, w)); };
 export const LOCO = { delayFb: 0.05, delayPlan: 0.12, styleW: 0.2, styleJoints: ["lumbar", "thoracic", "neck", "shoulder_L", "shoulder_R", "elbow_L", "elbow_R"] };
 const logmap = (q) => { let x = q[3] < 0 ? q.map(v => -v) : q; const s = Math.sqrt(x[0] * x[0] + x[1] * x[1] + x[2] * x[2]); if (s < 1e-12) return [0, 0, 0]; const a = 2 * Math.atan2(s, x[3]); return [x[0] / s * a, x[1] / s * a, x[2] / s * a]; };
 
@@ -39,6 +43,8 @@ export class LocoController {
     this.planner = new LocoPlanner(spec, P, this.ctrl, this.tool, { seq, transfer: this.opts.transfer, rhythm: this.opts.rhythm, timedLead: this.opts.timedLead });
     this.gait = new GaitState(spec); this.arb = new ActuatorArbiter(spec, { ledger: this.opts.ledger !== false, styleHold: !!H });
     if (H) { this.planner.exec.refSwing = (R, t, o, noVel) => this._refSwingAt(R, t, o, noVel); const jp = (n) => spec.joints.find(j => j.name === n);
+      // ((G2b speed/swing, opt-in human.over.swingGen = "v2") the GENERIC swing execution (pc_swing.js): state-anchored, foot-agnostic)
+      if (H.P.swingGen === "v2") this.sw2 = new SwingV2(this, H.P.swing2 || null);
       H.shin = V.dist(jp("knee_L").at, jp("ankle_L").at); H.styleIdx = new Set(H.styleJoints.map(n => spec.joints.findIndex(j => j.name === n)));
       H.kIdle = (idlePose() ? idlePose().shin_L[0] : 7) * Math.PI / 180; }
     this.dFb = this.opts.delayFb ?? LOCO.delayFb; this.dPl = this.opts.delayPlan ?? LOCO.delayPlan; this.buf = []; this.obstructedAt = { L: null, R: null }; this.lastR = [0, 0]; this.nStep = 0;
@@ -51,7 +57,7 @@ export class LocoController {
     else if (this.opts.style && this.opts.style.targets) { const T = {}; spec.joints.forEach((j, k) => { const p = this.opts.style.targets[j.name]; if (!p) return; const d = Math.PI / 180;
         T[k] = j.type === "hinge" ? p.a * d : Q.norm(Q.mul(Q.norm([0, Math.tan((p.y || 0) * d / 2), Math.tan((p.z || 0) * d / 2), 1]), [0, 0, 0, 1])); });
       this.styleT = { targets: T, w: this.opts.style.w ?? 1, at: this.opts.style.at ?? 0, until: this.opts.style.until ?? 1e9, module: this.opts.style.module || "style(test)" }; } }
-  _swingFF(o, R, u) { const spec = this.spec, ctrl = this.ctrl, Lg = ctrl.legs[R.sw], S = o.states, hip = S[Lg.thigh].pos, Rp = S[0].rot, fz = Q.rot(Rp, [0, 0, 1]), pole = V.norm([fz[0], 0, fz[2]]), h = 1 / 120, t = o.t, B = spec.bodies;
+  _swingFF(o, R, u) { const spec = this.spec, ctrl = this.ctrl, Lg = ctrl.legs[R.sw], S = o.states, hip = S[Lg.thigh].pos, Rp = S[0].rot, fz = Q.rot(Rp, [0, 0, 1]), pole = V.norm([fz[0], 0, fz[2]]), h = 1 / 120, t = o.t + (this.sw2 ? 0 : (R.leadNow ?? (this.planner.exec.lead || 0))), B = spec.bodies;   // (the same lead as the swing's targets)
     const ex = this.planner.exec, pose = (tt) => { const tg = ex._timedAt(R, tt, undefined, true), ik = ctrl._legIK(Lg, hip, tg.pos, pole); return [{ i: Lg.thigh, pos: hip, rot: ik.Rt }, { i: Lg.shin, pos: ik.pKnee, rot: ik.Rs }, { i: Lg.foot, pos: tg.pos, rot: tg.rot }]; };
     const A = pose(t - h), Bp = pose(t), C = pose(t + h), com = (X) => V.add(X.pos, Q.rot(X.rot, B[X.i].com)), wOf = (X, Y) => Q.rot(X.rot, logmap(Q.mul(Q.conj(X.rot), Y.rot))).map(v => v / h);
     const acc = [0, 1, 2].map(n => { const b = B[Bp[n].i], a = V.sc(V.add(V.sub(com(C[n]), V.sc(com(Bp[n]), 2)), com(A[n])), 1 / (h * h)), al = V.sc(V.sub(wOf(Bp[n], C[n]), wOf(A[n], Bp[n])), 1 / h), Ra = Bp[n].rot, al_b = Q.rot(Q.conj(Ra), al);
@@ -116,7 +122,7 @@ export class LocoController {
   //   3. blended from mid-swing onto the PLANNED foothold, contacting forefoot-first at the reference's contact pitch (the heel then lowers
   //      under the stance leg's level-foot demand and the landing compliance).
   // A clearance guard keeps the lowest sole point off the turf until the landing blend. The planner still owns the foothold and timing.
-  _refSwingAt(R, t, o, noVel) { const H = this.human, spec = this.spec, g = this.planner.exec.geo, fi = g.foot[R.sw], box = g.box, P = H.P, wA = R.wA ?? 0.2, S0 = o.states[0], d2r = Math.PI / 180;
+  _refSwingAt(R, t, o, noVel) { if (this.sw2 && R.walkK) return this.sw2.at(R, t, o, noVel); const H = this.human, spec = this.spec, g = this.planner.exec.geo, fi = g.foot[R.sw], box = g.box, P = H.P, wA = R.wA ?? 0.2, S0 = o.states[0], d2r = Math.PI / 180;
     const yawOfQ = (q) => { const f = Q.rot(q, [0, 0, 1]); return datan2(f[0], f[2]); }, footRot = (yaw, rho) => Q.norm(Q.mul(Q.axis([0, 1, 0], yaw), Q.axis([1, 0, 0], -rho)));
     if (!R.hs) { const toeL = [box.pos[0], box.pos[1] - box.he[1], box.pos[2] + box.he[2]], fz0 = Q.rot(R.q0, [0, 0, 1]); R.hs = { toeL, toe0: V.add(R.p0, Q.rot(R.q0, toeL)), yaw0: yawOfQ(R.q0), rho0: Math.min(0, datan2(fz0[1], Math.hypot(fz0[0], fz0[2]))), rhoTO: P.toeOffHeelH != null ? -Math.asin(P.toeOffHeelH / (2 * box.he[2])) : -P.ankleTO * d2r, rhoL: P.landToeH != null ? Math.asin(P.landToeH / (2 * box.he[2])) : P.landHeelH != null ? -Math.asin(P.landHeelH / (2 * box.he[2])) : (-P.kneeStance + P.ankleHS) * d2r, heelL: [box.pos[0], box.pos[1] - box.he[1], box.pos[2] - box.he[2]] }; R.heelStrike = R.hs.rhoL > 0; }
     const Hs = R.hs, pivot = (ww) => { const rho = Hs.rho0 + (Hs.rhoTO - Hs.rho0) * minjerk(Math.min(1, ww / wA)), rot = footRot(Hs.yaw0, rho); return { pos: V.sub(Hs.toe0, Q.rot(rot, Hs.toeL)), rho }; };
@@ -133,7 +139,7 @@ export class LocoController {
     // reference-leg path across a blend window (the reference continues smoothly into its own late stance before the hand-over), and the
     // clearance correction uses smooth minimum / softplus forms rather than switches.
     const sp = (x, k) => x > 20 * k ? x : k * Math.log1p(Math.exp(x / k)), dB = 0.06;
-    const at = (tt) => { const w = Math.max(0, Math.min(1, (tt - R.tSw0) / R.T)), sg = minjerk((w - wA + dB) / (2 * dB)), A = pivot(w);
+    const at = (tt) => { const w = swPhase(R, tt), sg = minjerk((w - wA + dB) / (2 * dB)), A = pivot(w);
       if (sg <= 0) return { pos: A.pos, rho: A.rho, yaw: Hs.yaw0, w };
       const wp = (w - wA) / (1 - wA), wq = Math.max(0, wp); if (!Hs.d0) { const a = pivot(wA), b = legPose(0); Hs.d0 = { pos: V.sub(a.pos, b.pos), rho: a.rho - b.rho }; }
       if (Hs.cacheO !== o) { Hs.cacheO = o; Hs.f1 = legPose(1); } const f = legPose(wp), f1 = Hs.f1, land = landing();
@@ -152,7 +158,7 @@ export class LocoController {
     // swing-leg amplitudes at walking speeds move the foot ≈ 0.4 m relative to the pelvis, the capture-point footholds need ≈ 0.6 m — a
     // reference incompatibility); the human foot trajectory: horizontal min-jerk progression, an EARLY lift peak (the knee flexes at toe-off),
     // toes down → level → toes up for the heel strike; the clearance correction as above
-    const atWalk = (tt) => { const w = Math.max(0, Math.min(1, (tt - R.tSw0) / R.T)), land = landing(), p0 = Hs.p0w || (Hs.p0w = R.p0.slice()), x = Math.max(0, Math.min(1, w / 0.92));
+    const atWalk = (tt) => { const w = swPhase(R, tt), land = landing(), p0 = Hs.p0w || (Hs.p0w = R.p0.slice()), x = Math.max(0, Math.min(1, w / 0.92));
       // ((G2b walker, P.swingHorizEnd) the horizontal travel completes at swingHorizEnd of the swing (default 0.85): completed before the final
       // descent, the touchdown TIME no longer moves the foothold — the forward foothold scattered 6 cm (rms) about its target while the width,
       // which the path does not move late, scattered 2.5 cm)
