@@ -19,7 +19,20 @@ export const TESTS_G2A = {
   G2a_turn30: { group: "G2a intentional turn", title: "G2a — walking in place with an INTENDED 30° turn to the left over 3 s from 3.5 s (the footholds and the intended heading turn; nothing is pinned)", seconds: 11.5, amBudget: true, loco: { human: {}, rhythm: RH({ turn: { at: 3.5, deg: -30, dur: 3 } }) } },
   G2a_G1style: { group: "G2a yaw attribution (diagnostic)", title: "G2a REFERENCE — G1's robotic in-place stepping (S4 timing and swing, IDLE style)", seconds: 11.5, amBudget: true, loco: { rhythm: { at: 0.5, steps: alt(16, "R") }, style: "idle" } },
 };
-export function runG2a(J, spec, key, opts) { return runG1a(J, spec, key, { ...(opts || {}), test: TESTS_G2A[key] }); }
+// ── G2b: the first FORWARD walk (rhythm.walk: the periodic LIPM plan with a finite double support, DCM footholds, the walking reference) ──
+// (gait initiation ramps the step length over the first two steps: 0.7 L, 0.9 L, then the walk's own)
+const WK = (speed, n, x) => ({ at: 0.5, steps: alt(n, "R").map((q, i) => i === 0 ? { sw: q.sw, fwdK: 0.7 } : i === 1 ? { sw: q.sw, fwdK: 0.9 } : { sw: q.sw }), walk: { speed }, human: true, Tfirst: 0.6, Tlast: 0.8, wA: 0.15, ...(x || {}) });
+export const TESTS_G2B = {
+  G2b_walk08: { group: "G2b forward walk", title: "G2b — forward walk at 0.8 m/s, 20 steps (physical propulsion; heel strike; DCM footholds)", seconds: 15, amBudget: true, loco: { human: { walk: 0.8 }, rhythm: WK(0.8, 20) } },
+  G2b_dbg: { group: "G2b forward walk", title: "G2b — debug variant (0.6 m/s, G2a timing, tracking double support, no corrective steps)", seconds: 8, amBudget: true, loco: { human: { walk: 0.6 }, rhythm: WK(0.6, 20, { walk: { speed: 0.6, w: 0.28, wMax: 0.45, latDS: "track", placeGain: 1, release: 0.15, Tss: 0.45, Tds: 0.15, firstTol: 0.004, noCorrective: true } }) } },
+};
+// every G2 scenario (the review page's list)
+export const TESTS_G2 = Object.assign({}, TESTS_G2A, TESTS_G2B);
+// (opts.rhythmOver — probes / variants: merged into the test's rhythm, its walk object merged one level deep)
+export function runG2a(J, spec, key, opts) { let test = TESTS_G2A[key] || TESTS_G2B[key]; const ro = opts && opts.rhythmOver;
+  if (ro) { const rh = test.loco.rhythm; test = { ...test, loco: { ...test.loco, rhythm: { ...rh, ...ro, ...(ro.walk ? { walk: { ...rh.walk, ...ro.walk } } : {}) } } }; }
+  const ho = opts && opts.humanOver; if (ho) test = { ...test, loco: { ...test.loco, human: { ...test.loco.human, over: { ...(test.loco.human.over || {}), ...ho } } } };
+  return runG1a(J, spec, key, { ...(opts || {}), test }); }
 
 // ── G2a ANALYSIS (measurement only; needs the run's recs with keepStates) ─────────────────────────────────────────────────────────────
 // Yaw: pelvis / chest heading relative to the intended heading, trunk counter-rotation. ANGULAR-MOMENTUM BUDGET: the vertical angular

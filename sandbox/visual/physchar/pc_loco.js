@@ -12,7 +12,7 @@ import { CorrectiveStepper } from "./pc_step.js";
 import { ActuatorArbiter, ownerOf } from "./pc_act.js";
 import { GaitState } from "./pc_gait.js";
 import { LocoPlanner } from "./pc_plan.js";
-import { poseTargets, idlePose, inPlaceWalkParams, refPose } from "./pc_ref.js";
+import { poseTargets, idlePose, inPlaceWalkParams, walkParams, refPose } from "./pc_ref.js";
 import { fk, minjerk } from "./pc_control.js";
 import { SupportSequencer, SUP } from "./pc_support.js";
 
@@ -28,7 +28,9 @@ export class LocoController {
     // the planned pelvis posture and the swing foot's path; the heading is the intended one (see pc_balance headingIntent)
     // (the reference's stance fraction is the rhythm's own: a step of Tss swing + Tds double support, two steps per cycle)
     const rh = this.opts.rhythm, stF = rh && rh.Tss && rh.Tds ? 1 - rh.Tss / (2 * (rh.Tss + rh.Tds)) : undefined;
-    const H = this.opts.human ? { P: inPlaceWalkParams(Object.assign(stF != null ? { stance: stF } : {}, this.opts.human.over || {})), styleJoints: ["lumbar", "thoracic", "neck", "shoulder_L", "shoulder_R", "elbow_L", "elbow_R"], arms: this.opts.human.arms !== false, trunk: this.opts.human.trunk === undefined ? "stabilize" : this.opts.human.trunk, styleVel: this.opts.human.styleVel } : null;
+    // (G2b: a FORWARD walk uses of_loco's parameter set at the walking speed, as authored; its stance fraction is 0.5 + dsFrac/2)
+    const wkS = this.opts.human && this.opts.human.walk, wkStance = rh && rh.walk ? 0.5 + (rh.walk.dsFrac ?? 0.2) / 2 : undefined;
+    const H = this.opts.human ? { P: wkS ? walkParams(wkS, Object.assign({ stance: wkStance }, this.opts.human.over || {})) : inPlaceWalkParams(Object.assign(stF != null ? { stance: stF } : {}, this.opts.human.over || {})), styleJoints: ["lumbar", "thoracic", "neck", "shoulder_L", "shoulder_R", "elbow_L", "elbow_R"], arms: this.opts.human.arms !== false, trunk: this.opts.human.trunk === undefined ? "stabilize" : this.opts.human.trunk, styleVel: this.opts.human.styleVel } : null;
     this.human = H; if (H) this.opts.headingIntent = this.opts.headingIntent ?? true;
     this.ctrl = new BalanceController(spec, P, Object.assign({ strength: "candidate" }, controllerProfile(spec), { expose: true, monitor: true, swingMovingBase: true, replantActual: true },
       H ? { styleNominal: true, pelvisStyle: true, settleAxes: true } : {}, this.opts.headingIntent ? { headingIntent: true } : {}, this.opts.ctrl || {}));
@@ -101,7 +103,7 @@ export class LocoController {
   // A clearance guard keeps the lowest sole point off the turf until the landing blend. The planner still owns the foothold and timing.
   _refSwingAt(R, t, o, noVel) { const H = this.human, spec = this.spec, g = this.planner.exec.geo, fi = g.foot[R.sw], box = g.box, P = H.P, wA = R.wA ?? 0.2, S0 = o.states[0], d2r = Math.PI / 180;
     const yawOfQ = (q) => { const f = Q.rot(q, [0, 0, 1]); return datan2(f[0], f[2]); }, footRot = (yaw, rho) => Q.norm(Q.mul(Q.axis([0, 1, 0], yaw), Q.axis([1, 0, 0], -rho)));
-    if (!R.hs) { const toeL = [box.pos[0], box.pos[1] - box.he[1], box.pos[2] + box.he[2]], fz0 = Q.rot(R.q0, [0, 0, 1]); R.hs = { toeL, toe0: V.add(R.p0, Q.rot(R.q0, toeL)), yaw0: yawOfQ(R.q0), rho0: Math.min(0, datan2(fz0[1], Math.hypot(fz0[0], fz0[2]))), rhoTO: P.toeOffHeelH != null ? -Math.asin(P.toeOffHeelH / (2 * box.he[2])) : -P.ankleTO * d2r, rhoL: P.landHeelH != null ? -Math.asin(P.landHeelH / (2 * box.he[2])) : (-P.kneeStance + P.ankleHS) * d2r }; }
+    if (!R.hs) { const toeL = [box.pos[0], box.pos[1] - box.he[1], box.pos[2] + box.he[2]], fz0 = Q.rot(R.q0, [0, 0, 1]); R.hs = { toeL, toe0: V.add(R.p0, Q.rot(R.q0, toeL)), yaw0: yawOfQ(R.q0), rho0: Math.min(0, datan2(fz0[1], Math.hypot(fz0[0], fz0[2]))), rhoTO: P.toeOffHeelH != null ? -Math.asin(P.toeOffHeelH / (2 * box.he[2])) : -P.ankleTO * d2r, rhoL: P.landToeH != null ? Math.asin(P.landToeH / (2 * box.he[2])) : P.landHeelH != null ? -Math.asin(P.landHeelH / (2 * box.he[2])) : (-P.kneeStance + P.ankleHS) * d2r, heelL: [box.pos[0], box.pos[1] - box.he[1], box.pos[2] - box.he[2]] }; R.heelStrike = R.hs.rhoL > 0; }
     const Hs = R.hs, pivot = (ww) => { const rho = Hs.rho0 + (Hs.rhoTO - Hs.rho0) * minjerk(Math.min(1, ww / wA)), rot = footRot(Hs.yaw0, rho); return { pos: V.sub(Hs.toe0, Q.rot(rot, Hs.toeL)), rho }; };
     // (in place the reference's hip flexes with the knee — pc_ref inPlaceAdapt)
     const legPose = (x) => { const uc = (R.sw === "R" ? P.stance : P.stance - 0.5) + (1 - P.stance) * x, pose = refPose(P, uc, 1);
@@ -110,7 +112,8 @@ export class LocoController {
     // (the landing pose's toe is PRESSED landPress below the turf surface: the leg is still extending when the foot arrives, so contact is
     // made with a small downward velocity and loads at once, as a human foot does — a target arriving at the surface at rest kissed the turf
     // at zero load and left the foot hovering above it)
-    const landing = () => { const a = g._ankleFromCenter(R.landC, R.yawT), flat = [a[0], g.yFlat + SUP.touchDepth - (P.landPress || 0), a[1]], rotF = footRot(R.yawT, 0), toeF = V.add(flat, Q.rot(rotF, Hs.toeL)), rotL = footRot(R.yawT, Hs.rhoL); return { pos: V.sub(toeF, Q.rot(rotL, Hs.toeL)), rho: Hs.rhoL }; };
+    // (the contact pivot: the toe edge for a forefoot landing, the heel edge for a heel strike — toes up, rhoL > 0)
+    const landing = () => { const a = g._ankleFromCenter(R.landC, R.yawT), flat = [a[0], g.yFlat + SUP.touchDepth - (P.landPress || 0), a[1]], rotF = footRot(R.yawT, 0), pvL = Hs.rhoL > 0 ? Hs.heelL : Hs.toeL, pvF = V.add(flat, Q.rot(rotF, pvL)), rotL = footRot(R.yawT, Hs.rhoL); return { pos: V.sub(pvF, Q.rot(rotL, pvL)), rho: Hs.rhoL }; };
     // The path is C¹ by construction (the swing's inverse-dynamics feed-forward differentiates it twice): the toe pivot hands over to the
     // reference-leg path across a blend window (the reference continues smoothly into its own late stance before the hand-over), and the
     // clearance correction uses smooth minimum / softplus forms rather than switches.
@@ -130,8 +133,32 @@ export class LocoController {
         const dMax = 10 * d2r; rho += G * dMax * (1 - Math.exp(-sp(yg + m - lowAt(rho), 0.003) / (dMax * 0.25)));
         pos = [pos[0], pos[1] + G * sp(yg + m - lowAt(rho), 0.003), pos[2]]; }
       return { pos, rho, yaw, w }; };
-    const c = at(t), out = { pos: c.pos, rot: footRot(c.yaw, c.rho), u: c.w, reach: landing().pos, rho: c.rho };
-    if (!noVel) { const h = 1 / 240, a = at(t - h), b = at(t + h); out.vel = c.w < 1 ? V.sc(V.sub(b.pos, a.pos), 1 / (2 * h)) : [0, 0, 0]; }
+    // (G2b) the WALKING swing: a WORLD path from the actual toe-off pose to the heel-strike pose at the planned foothold (the walking reference's
+    // swing-leg amplitudes at walking speeds move the foot ≈ 0.4 m relative to the pelvis, the capture-point footholds need ≈ 0.6 m — a
+    // reference incompatibility); the human foot trajectory: horizontal min-jerk progression, an EARLY lift peak (the knee flexes at toe-off),
+    // toes down → level → toes up for the heel strike; the clearance correction as above
+    const atWalk = (tt) => { const w = Math.max(0, Math.min(1, (tt - R.tSw0) / R.T)), land = landing(), p0 = Hs.p0w || (Hs.p0w = R.p0.slice()), x = Math.max(0, Math.min(1, w / 0.92));
+      const sh = minjerk((w - 0.02) / 0.83), sv = minjerk((w - 0.04) / 0.9), H = P.swingLiftH ?? 0.09, bump = H * Math.pow(x, 1.2) * Math.pow(1 - x, 2) / (Math.pow(0.375, 1.2) * Math.pow(0.625, 2));
+      let pos = [p0[0] + (land.pos[0] - p0[0]) * sh, p0[1] + (land.pos[1] - p0[1]) * sv + bump, p0[2] + (land.pos[2] - p0[2]) * sh];
+      let rho = Hs.rho0 * (1 - minjerk(w / 0.45)) + land.rho * minjerk((w - 0.55) / 0.4); const yaw = Hs.yaw0 + (R.yawT - Hs.yaw0) * minjerk(w);
+      // ((G2b) the guard is on from liftoff — the toe leaves the turf at w = 0, so its margin, not the guard, ramps in: a guard ramped over the
+      // first 10 % let the hanging toe re-contact ≈ 25 ms after liftoff with ≈ 200–380 N, braking the body and pushing ξ sideways)
+      const G = (P.walkClrRamp ? minjerk(Math.min(1, w / 0.1)) : 1) * (1 - minjerk(Math.max(0, Math.min(1, (w - 0.7) / 0.22))));
+      // (the clearance uses the pitch the leg can actually give: from the leg's IK at the ACTUAL hip, the shank's backward tilt β limits the
+      // foot to −(β − 25°) — the ankle's dorsiflexion range less a 5° margin; the toe of the long boot hangs from there, and the ankle is
+      // lifted until it clears — two passes, as the lift itself tilts the shank)
+      if (G > 0) { const yg = g.yFlat + SUP.touchDepth + box.pos[1] - box.he[1], m = 0.03 * G * (P.walkClrRamp ? 1 : minjerk(Math.min(1, w / 0.12))), kS = 0.004, Lg = this.ctrl.legs[R.sw], hip = S0 ? o.states[Lg.thigh].pos : null, hdw = [Math.sin(yaw), 0, Math.cos(yaw)];
+        const rhoMax = (pp) => { if (!hip) return 1; const ik = this.ctrl._legIK(Lg, hip, pp, hdw), sv2 = V.sub(pp, ik.pKnee), beta = Math.atan2(-(sv2[0] * hdw[0] + sv2[2] * hdw[2]), -sv2[1]); return -(beta - (this.ankDorsi ?? 25 * d2r)); };
+        const lowAt = (r0) => { const rot = footRot(yaw, r0); let e = 0; for (const sx of [-1, 1]) for (const sz of [-1, 1]) e += Math.exp(-(pos[1] + Q.rot(rot, [box.pos[0] + sx * box.he[0], box.pos[1] - box.he[1], box.pos[2] + sz * box.he[2]])[1] - yg) / kS); return yg - kS * Math.log(e); };
+        const dMax = 10 * d2r; rho += G * dMax * (1 - Math.exp(-sp(yg + m - lowAt(rho), 0.003) / (dMax * 0.25)));
+        let rA = rho; for (let it = 0; it < 2; it++) { rA = Math.min(rho, rhoMax(pos)); pos = [pos[0], pos[1] + G * sp(yg + m - lowAt(rA), 0.003), pos[2]]; }
+        // ((G2b) the commanded pitch is the one the leg can give — the foot hangs plantar-flexed from a shank tilted back, as a human foot does
+        // in initial swing — instead of a level target the ankle could only press against its dorsiflexion stop)
+        if (!P.walkClrRamp) rho = rho + G * (rA - rho); }
+      return { pos, rho, yaw, w }; };
+    const atF = P.walk && P.walkSwing !== false ? atWalk : at;
+    const c = atF(t), out = { pos: c.pos, rot: footRot(c.yaw, c.rho), u: c.w, reach: landing().pos, rho: c.rho };
+    if (!noVel) { const h = 1 / 240, a = atF(t - h), b = atF(t + h); out.vel = c.w < 1 ? V.sc(V.sub(b.pos, a.pos), 1 / (2 * h)) : [0, 0, 0]; }
     return out; }
   // the delayed view: the observation `d` seconds old (the first observation until the buffer is that deep)
   view(d) { const k = Math.round(d * this.hz); return this.buf[Math.max(0, this.buf.length - 1 - k)]; }

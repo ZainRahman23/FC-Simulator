@@ -204,7 +204,12 @@ export class BalanceController {
     // leg damping blend from the MEASURED foot load (stance ↔ swing), low-passed
     for (const s of ["L", "R"]) { const f = o.feet[s], target = f.loaded ? 1 : 0; this.sFoot[s] += 0.2 * (target - this.sFoot[s]); }
     const plan = this.plan || null, swingCtl = plan ? Object.keys(plan.swing || {}) : [];
-    const motor = this.gain.map((g) => { const s = g.leg ? this.sFoot[g.leg] : 1;
+    // ((G2b) PRE-SWING RELAXATION, plan.unloading.relax: the walking trailing leg's damping follows its PLANNED share, not its measured load —
+    // at stance damping the body rolling over the trailing foot was resisted by ≈ 100 N·m at the ankle and 250 N·m at the knee, which pressed
+    // the toe into the turf (≈ 250 N to the end of double support) and pushed the capture point sideways; the measured-load blend kept that
+    // load and the damping feeding each other)
+    const relax = plan && plan.unloading && plan.unloading.relax != null ? plan.unloading : null;
+    const motor = this.gain.map((g) => { const s = g.leg ? (relax && relax.foot === g.leg ? Math.min(this.sFoot[g.leg], relax.relax) : this.sFoot[g.leg]) : 1;
       // GATE C2 (only with a support plan): a leg under SWING control runs the swing profile — half the stance stiffness and damping
       // critical for that stiffness and the distal leg (kd_swing·√0.5); blended by the measured foot load like C1's damping
       // (GATE C3: a REACTIVE step's swing keeps the full stance stiffness — plan.swingKpDrop 0 — at half stiffness the 0.35 s swing lagged its
@@ -220,6 +225,10 @@ export class BalanceController {
     // to the impact instead of a stiff leg arresting the falling body in one step (finding 2026-09-30: 3.4 kN ≈ 4.4 BW landings bounced the
     // trailing foot off the turf and left the body on the front foot alone)
     if (plan && plan.soften) { const L = this.legs[plan.soften.foot]; for (const k of [L.hip, L.knee, L.ankle]) { motor[k].kp *= plan.soften.k; motor[k].kd *= Math.sqrt(plan.soften.k); } }
+    // ((G2b) PRE-SWING RELEASE, plan.unloading.release: the walking trailing leg's stiffness follows its planned share down to `release` — the
+    // same equilibrium-point form as the landing compliance (its gravity / commanded torques are kept), so only the posture-error terms that
+    // pressed its pinned toe into the turf after its share had reached zero are relaxed, as a human trailing leg releases in pre-swing)
+    if (relax && relax.release != null) { const L = this.legs[relax.foot], k = relax.release + (1 - relax.release) * relax.relax; for (const j of [L.hip, L.knee, L.ankle]) { motor[j].kp *= k; motor[j].kd *= Math.sqrt(k); } }
     if (this.cls.reengageStep != null && this.cls.state !== "FALLING" && this.cls.state !== "GROUNDED") { const k = Math.min(1, (this.nObs - this.cls.reengageStep) / BAL.fallRampSteps), sc = BAL.fallScale + (1 - BAL.fallScale) * k;
       for (const m of motor) { m.kp *= sc; m.kd *= Math.sqrt(sc); } }
     if (this.mode === "hold") { out.final = nominal; out.cls = { state: "HOLD", times: {} }; out.motor = motor; return out; }
@@ -239,7 +248,11 @@ export class BalanceController {
     const c = o.com, h = o.h, comG = [c[0], c[2]];
     let poly = o.polyReliable && o.polyReliable.length >= 3 ? o.polyReliable : (o.polyRaw && o.polyRaw.length >= 3 ? o.polyRaw : null);
     // ── ankle strategy: capture-point CoP law, friction-limited once a foot has been seen slipping ──
-    let pRaw = [o.xi[0] + BAL.kXi * (o.xi[0] - xiRef[0]), o.xi[1] + BAL.kXi * (o.xi[1] - xiRef[1])];
+    // ((G2b) plan.kXi — a walking single support: the CoP follows the planned heel-to-toe roll and only carries the capture-point error, (1 + k) = 1;
+    // the foot placement corrects it — tracking the step-start plan with the ankle braked a body that had more forward momentum than planned)
+    // (per axis when plan.kXi = { hd, along, across }: the sideways capture-point error keeps the ankle's feedback — G2b)
+    const kE = kXiErr(plan && plan.kXi != null ? plan.kXi : BAL.kXi, [o.xi[0] - xiRef[0], o.xi[1] - xiRef[1]]);
+    let pRaw = [o.xi[0] + kE[0], o.xi[1] + kE[1]];
     // GATE C2: a MOVING reference (planned weight transfer) adds the LIPM feed-forward −ξ̇_d/ω0 — the tracking form of the same law
     // (p = ξ_d − ξ̇_d/ω0 + (1 + kXi)(ξ − ξ_d)). It is the anticipatory CoP shift toward the unloading foot that starts a transfer.
     if (plan && plan.xiDot) { const w0 = o.omega0 || Math.sqrt(G / Math.max(0.5, o.com[1])); pRaw = [pRaw[0] - plan.xiDot[0] / w0, pRaw[1] - plan.xiDot[1] / w0]; }
@@ -260,7 +273,7 @@ export class BalanceController {
     if (plan && plan.copFoot && o.feet[plan.copFoot] && o.feet[plan.copFoot].sole) { const sp = ccw2(hullOf(o.feet[plan.copFoot].sole)); if (sp.length >= 3) cpoly = sp; }
     // (GATE C3, stepping: the CoP goes to the point of the stance sole NEAREST the demand — ξ̇ = ω0(ξ − p), so the nearest point slows the
     // capture point's divergence most; the radial clamp toward the sole centre used for balance in place gave up up to 6 cm of lever)
-    const pStar = cpoly ? (plan && plan.copFoot ? nearestInset(cpoly, pRaw, BAL.copInset) : polyClamp(cpoly, pRaw, BAL.copInset)) : pRaw.slice(), r = [pRaw[0] - pStar[0], pRaw[1] - pStar[1]];
+    let pStar = cpoly ? (plan && plan.copFoot ? nearestInset(cpoly, pRaw, BAL.copInset) : polyClamp(cpoly, pRaw, BAL.copInset)) : pRaw.slice(), r = [pRaw[0] - pStar[0], pRaw[1] - pStar[1]];
     // hip-extended capacity in the direction ξ leaves the polygon
     let hipCapHere = this.hipCap.lat; if (region && o.xiMargin < 0) { const nr = polyNearest(region, o.xi), u = V.norm([o.xi[0] - nr[0], 0, o.xi[1] - nr[1]]), cf = V.dot(u, hd), cl = V.dot(u, lat);
       hipCapHere = Math.abs(cf) * (cf > 0 ? this.hipCap.fwd : this.hipCap.bwd) + Math.abs(cl) * this.hipCap.lat; }
@@ -318,9 +331,17 @@ export class BalanceController {
     // GATE C2: a foot being LOADED after touchdown (plan.settle) is aimed level (its own yaw) — the heel rocker: a boot that lands on its heel
     // is lowered onto its sole by the finite ankle instead of being held on the heel (finding 2026-09-29, test D: held heel-only, the front
     // foot's CoP was pinned at the heel, the COM could not be drawn onto it and he fell backward after "acceptance")
-    const footTgt = (s) => { const R = S[this.legs[s].foot].rot; if (!(plan && plan.settle && plan.settle.foot === s && plan.settle.level)) return R; const f = Q.rot(R, [0, 0, 1]); return yawQ(datan2(f[0], f[2])); };
-    if (!released) for (const s of stance) { const L = this.legs[s], pHip = V.add(Pd, Q.rot(Rpd, L.hipOff)), ik = this._legIK(L, pHip, S[L.foot].pos, fwdOf(s));
-      nominal[L.hip] = csOfRel(spec.joints[L.hip], Q.mul(Q.conj(Rpd), ik.Rt)); nominal[L.knee] = ik.kappa;
+    // ((G2b) plan.heelRise — PRE-SWING: the trailing foot's heel rises about its toe, the ankle plantar-flexing toward the planned pitch, while it
+    // still carries its last share of the load on the toe; a stance foot's orientation target is otherwise its own actual orientation)
+    const footTgt = (s) => { const R = S[this.legs[s].foot].rot;
+      if (plan && plan.heelRise && plan.heelRise.foot === s) { const f = Q.rot(R, [0, 0, 1]), pit = Math.atan2(-f[1], Math.hypot(f[0], f[2])); return plan.heelRise.rad > pit ? Q.norm(Q.mul(yawQ(datan2(f[0], f[2])), Q.axis([1, 0, 0], plan.heelRise.rad))) : R; }
+      if (!(plan && plan.settle && plan.settle.foot === s && plan.settle.level)) return R; const f = Q.rot(R, [0, 0, 1]); return yawQ(datan2(f[0], f[2])); };
+    // ((G2b) the UNLOADING trailing leg (plan.unloading.relax < 1) is posed from the ACTUAL pelvis HEIGHT in proportion to how far it has been unloaded —
+    // posed from the desired pelvis it kept regulating the body's height: 1.4 cm of pelvis sag made the nearly straight trailing knee press the
+    // toe with ≈ 250 N to the end of double support; a foot being unloaded hands the height to the other leg, as an airborne foot does)
+    const baseOf = (s) => { if (!(relax && relax.foot === s && relax.relax < 1 && this.opts.unloadActualBase !== false)) return { P: Pd, R: Rpd }; const a = 1 - relax.relax; return { P: [Pd[0], Pd[1] + (S[0].pos[1] - Pd[1]) * a, Pd[2]], R: Rpd }; };   // (the HEIGHT only: posed horizontally from the actual pelvis the foot was dragged 7 cm inward with the pelvis's sideways motion)
+    if (!released) for (const s of stance) { const L = this.legs[s], B = baseOf(s), pHip = V.add(B.P, Q.rot(B.R, L.hipOff)), ik = this._legIK(L, pHip, S[L.foot].pos, fwdOf(s));
+      nominal[L.hip] = csOfRel(spec.joints[L.hip], Q.mul(Q.conj(B.R), ik.Rt)); nominal[L.knee] = ik.kappa;
       nominal[L.ankle] = csOfRel(spec.joints[L.ankle], Q.mul(Q.conj(ik.Rs), footTgt(s))); }
     // GATE C2: during a PLANNED weight transfer the stance legs are given the joint velocities of the planned pelvis motion (the same
     // stance IK, advanced by the planned COM velocity), so their damping resists deviation from the transfer, not the transfer itself
@@ -328,7 +349,7 @@ export class BalanceController {
     this.stanceVel = {}; if (plan && plan.vRef && !released) { const dT = 1 / 60, dP = [plan.vRef[0] * dT, 0, plan.vRef[1] * dT];
       for (const s of stance) { const L = this.legs[s], pHip = V.add(V.add(Pd, dP), Q.rot(Rpd, L.hipOff)), ik = this._legIK(L, pHip, S[L.foot].pos, fwdOf(s));
         this.stanceVel[L.hip] = rotRate(nominal[L.hip], csOfRel(spec.joints[L.hip], Q.mul(Q.conj(Rpd), ik.Rt)), dT); this.stanceVel[L.knee] = (ik.kappa - nominal[L.knee]) / dT;
-        this.stanceVel[L.ankle] = rotRate(nominal[L.ankle], csOfRel(spec.joints[L.ankle], Q.mul(Q.conj(ik.Rs), S[L.foot].rot)), dT); } }
+        this.stanceVel[L.ankle] = rotRate(nominal[L.ankle], csOfRel(spec.joints[L.ankle], Q.mul(Q.conj(ik.Rs), plan.heelRise && plan.heelRise.foot === s ? footTgt(s) : S[L.foot].rot)), dT); } }   // ((G2b) the rising heel's own target, not the actual foot)
     // GATE C2: planned lateral trunk lean over the stance leg (single-support hip-load compensation, sized by the support layer from the
     // body's statics): the whole upper body rotates about the LUMBAR joint (the pivot the statics assume), about the heading axis,
     // relative to the level pelvis target
@@ -369,6 +390,8 @@ export class BalanceController {
     // ── desired ground reaction (LIPM line of action through the COM), split between the stance feet by the lever rule ──
     const feetForce = (p) => { const F = [W * (c[0] - p[0]) / h, W, W * (c[2] - p[1]) / h], res = {};
       if (stance.length === 2 && plan) { const cenOf = (s) => { const f = this.legs[s].foot, q = V.add(S[f].pos, Q.rot(S[f].rot, spec.bodies[f].shapes[0].pos)); return [q[0], q[2]]; };
+        if (plan.unloading && plan.heelRise && plan.heelRise.toeOnly && plan.heelRise.foot === plan.unloading.foot && !plan.unloading.toeRegion) { const f = this.legs[plan.unloading.foot].foot, sh = spec.bodies[f].shapes[0], zf = sh.pos[2] + sh.he[2], yb = sh.pos[1] - sh.he[1];
+          plan.unloading = { ...plan.unloading, toeRegion: [[-1, zf], [1, zf], [1, zf - 0.05], [-1, zf - 0.05]].map(([sx, z]) => { const q = V.add(S[f].pos, Q.rot(S[f].rot, [sh.pos[0] + sx * sh.he[0], yb, z])); return [q[0], q[2]]; }) }; }
         const du = this.opts.unloadPlan && plan.unloading && !plan.preload ? split2u(o, p, cenOf, plan.unloading) : this.opts.unloadPlan && plan.loading && !plan.preload ? split2u(o, p, cenOf, plan.loading) : null; if (du && recordUnload) this.unloadInfo = du.info;
         const d2 = du || split2(o, p, cenOf, plan.preload, this.opts.diagUnload ? plan.unload : null);
         for (const s of ["L", "R"]) res[s] = { F: V.sc(F, d2.share[s]), at: [d2.at[s][0], groundY(o.feet[s]), d2.at[s][1]], share: d2.share[s] }; }
@@ -386,6 +409,12 @@ export class BalanceController {
       for (const i of this.subtree[k]) tau = V.sub(tau, V.cross(V.sub(S[i].com, pj), V.sc(GV, spec.bodies[i].mass)));
       for (const s of ["L", "R"]) if (feetF[s] && this.subtree[k].includes(this.legs[s].foot)) tau = V.sub(tau, V.cross(V.sub(feetF[s].at, pj), feetF[s].F));
       return tau; });                                            // world torque the motor must apply on the CHILD body
+    // ((G2b) plan.latCop = { foot, cap } — WALKING SINGLE SUPPORT: sideways the stance ankle can move the CoP only ≈ cap from the ankle (its roll
+    // budget shares the motor with plantar flexion: ±9 N·m in late stance ≈ 1.2 cm), well inside the sole. The sideways demand beyond that is
+    // the RESIDUAL the hip strategy carries (trunk roll about the stance hip, budgeted and tilt-guarded as for a push) — not a sole-edge CoP
+    // demand the ankle cannot deliver. The human lateral hip strategy of single stance.)
+    if (plan && plan.latCop && o.feet[plan.latCop.foot] && !released) { const a = S[this.legs[plan.latCop.foot].foot].pos, ld = [hd[2], -hd[0]], off = (pStar[0] - a[0]) * ld[0] + (pStar[1] - a[2]) * ld[1], c = plan.latCop.cap, ex = off > c ? off - c : off < -c ? off + c : 0;
+      if (ex) { pStar = [pStar[0] - ld[0] * ex, pStar[1] - ld[1] * ex]; r = [pRaw[0] - pStar[0], pRaw[1] - pStar[1]]; } }
     this.unloadInfo = null; let recordUnload = false; const pStatic = poly ? polyClamp(poly, comG, BAL.copInset) : comG, fStatic = feetForce(pStatic); recordUnload = true; const fBal = feetForce(pStar);
     const tauG = torques(fStatic), tauB0 = torques(fBal), tauB = tauB0.map((t, k) => V.sub(t, tauG[k]));
     // ── hip strategy: when the CoP saturates, a trunk torque about the hips (centroidal moment W·(ŷ × r)), budgeted, tilt-guarded ──
@@ -524,6 +553,9 @@ function split2(o, p, cen, preload, unload) {
 // is commanded exactly the load physics requires, and it is unloaded only as the COM/ξ state makes the stance foot able to carry the whole
 // demand. Liftoff is still decided by the MEASURED load (pc_support.js).
 // the point of a convex CCW polygon shrunk by `inset` nearest to p (p itself if already inside it)
+// the capture-point feedback term kXi·e — a scalar gain, or per axis { hd: heading [x, z], along, across } (G2b walking single support)
+export function kXiErr(k, e) { if (typeof k === "number") return [k * e[0], k * e[1]]; const h = k.hd, a = (e[0] * h[0] + e[1] * h[1]) * k.along, l = (e[0] * h[1] - e[1] * h[0]) * k.across;
+  return [h[0] * a + h[1] * l, h[1] * a - h[0] * l]; }
 export function nearestInset(P, p, inset) { const n = P.length; if (n < 3) return p.slice(); const off = [];
   for (let i = 0; i < n; i++) { const a = P[i], b = P[(i + 1) % n], e = [b[0] - a[0], b[1] - a[1]], L = Math.hypot(e[0], e[1]) || 1, nin = [-e[1] / L, e[0] / L]; off.push([[a[0] + nin[0] * inset, a[1] + nin[1] * inset], e]); }
   const Q2 = []; for (let i = 0; i < n; i++) { const [p1, d1] = off[(i + n - 1) % n], [p2, d2] = off[i], den = d1[0] * d2[1] - d1[1] * d2[0]; if (Math.abs(den) < 1e-12) { Q2.push(p2); continue; }
@@ -539,7 +571,8 @@ function nearestIn(poly, c) { if (!poly.length) return null; if (poly.length >= 
   if (poly.length >= 3) return polyNearest(poly, c); let best = poly[0], bd = 1e18; for (const q of poly) { const d = (q[0] - c[0]) ** 2 + (q[1] - c[1]) ** 2; if (d < bd) { bd = d; best = q; } } return best.slice(); }
 function split2u(o, p, cen, unl) {
   const poly = (s) => { const f = o.feet[s]; let P = f.points.length >= 3 ? hullOf(f.points) : []; if (P.length < 3) P = hullOf(f.sole); return ccw2(P); };
-  const sw = unl.foot, st = sw === "R" ? "L" : "R", A = poly(st), B = poly(sw), cA = cen(st), cB = cen(sw), sq = (u, v) => (u[0] - v[0]) ** 2 + (u[1] - v[1]) ** 2;
+  // ((G2b) a foot in PRE-SWING carries its load on its TOE edge only (unl.toeRegion): with the heel rising, the rest of the sole is no support)
+  const sw = unl.foot, st = sw === "R" ? "L" : "R", A = poly(st), B = unl.toeRegion ? ccw2(hullOf(unl.toeRegion.map(q => [q[0], 0, q[1]]))) : poly(sw), cA = cen(st), cB = cen(sw), sq = (u, v) => (u[0] - v[0]) ** 2 + (u[1] - v[1]) ** 2;
   if (A.length < 3 || B.length < 3) return null;
   const TA = (a) => A.map(v => [(p[0] - (1 - a) * v[0]) / a, (p[1] - (1 - a) * v[1]) / a]);          // swing CoPs compatible with a stance CoP in A
   const TB = (a) => B.map(v => [(p[0] - a * v[0]) / (1 - a), (p[1] - a * v[1]) / (1 - a)]);          // stance CoPs compatible with a swing CoP in B

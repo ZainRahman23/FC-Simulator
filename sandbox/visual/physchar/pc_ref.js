@@ -48,6 +48,12 @@ export const idlePose = () => OFL ? OFL.OF_IDLE : null;
 // counter-rotation, roll, lean — is the WALK set's own.
 export function inPlaceWalkParams(over) { if (!OFL) return null; const W = OFL.OF_LOCO.gaits.find(g => g.id === "WALK"), P = OFL.ofLocoParams(W.v);
   return Object.assign(P, { inPlace: true, stance: 2 / 3, hipExt: 0, retract: 1, ankleHS: -8, pYaw: 2, landHeelH: 0.02, landPress: 0.015, kneeTO: 0, toeOffHeelH: 0.06, gait: "WALK (in place)" }, over || {}); }
+// ── G2b: the FORWARD WALK reference — of_loco's own parameter set at the requested speed (ofLocoParams interpolates IDLE → WALK: a slower
+// walk has a shorter stride, less hip / knee excursion, less arm swing), as AUTHORED (no in-place adaptation). The stance fraction is the
+// rhythm's own; the contact geometry of the 36 cm collider boot is given as heights: heel strike with the toe landToeH up, pressed landPress
+// through the turf (a finite contact velocity); the swing's toe-off pivot raises the heel toeOffHeelH.
+export function walkParams(speed, over) { if (!OFL) return null; const P = OFL.ofLocoParams(speed);
+  return Object.assign(P, { walk: true, landToeH: 0.07, landPress: 0.012, toeOffHeelH: 0.06, gait: `WALK ${speed.toFixed(2)} m/s` }, over || {}); }
 const SKEL_STUB = { legLen: 1, byName: { thigh_R: { len: 0.45 }, shin_R: { len: 0.43 } }, ankleH: 0.08, hipY: 0.9 };   // (used only by a flight phase, which a walk has none of)
 // IN PLACE (P.inPlace) two walking terms have no in-place meaning and are re-derived from the in-place legs, as marching in place does:
 //   the HIP flexes WITH the knee (hip flexion ∝ the knee's swing flexion, peaking at hipFlex): with no stride the foot stays under the body
