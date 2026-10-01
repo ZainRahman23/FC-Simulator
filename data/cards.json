@@ -2230,6 +2230,228 @@
    "combo": null,
    "target": null,
    "requires": []
+  },
+  {
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "id": "engine_room_surge",
+   "name": "ENGINE ROOM SURGE",
+   "cost": 1,
+   "type": "INSTRUCTION",
+   "duration": 15,
+   "headline": "Your Engine Room hunts in a pack.",
+   "effects": [
+    {
+     "op": "tactics",
+     "set": {
+      "pressingIntensity": "Aggressive",
+      "afterLosingPossession": "Counterpress"
+     }
+    },
+    {
+     "op": "role",
+     "who": {
+      "trait_members": "engine_room"
+     },
+     "defenseRole": "auto_press",
+     "defenseEffort": 90,
+     "attackEffort": 80
+    },
+    {
+     "op": "modifiers",
+     "who": {
+      "trait_members": "engine_room"
+     },
+     "deltas": {
+      "stam": 4,
+      "agg": 4
+     },
+     "requires": "E2"
+    }
+   ],
+   "drawback": "Pulls the midfield high; the back four is exposed to a quick switch.",
+   "upgrade": {
+    "kind": "duration",
+    "add": 5
+   },
+   "source": {
+    "kind": "trait",
+    "ref": "engine_room"
+   },
+   "tags": [
+    "press",
+    "chase"
+   ],
+   "trait": "engine_room",
+   "requires": []
+  },
+  {
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "id": "aerial_assault",
+   "name": "AERIAL ASSAULT",
+   "cost": 1,
+   "type": "INSTRUCTION",
+   "duration": 15,
+   "headline": "Get it wide and put it on their heads.",
+   "effects": [
+    {
+     "op": "tactics",
+     "set": {
+      "attackingWidth": "Wide",
+      "chanceCreationFocus": "Wide",
+      "boxCommitment": "Commit"
+     }
+    },
+    {
+     "op": "role",
+     "who": {
+      "trait_members": "aerial_threat"
+     },
+     "attackEffort": 85
+    },
+    {
+     "op": "modifiers",
+     "who": {
+      "trait_members": "aerial_threat"
+     },
+     "deltas": {
+      "hea": 4,
+      "jum": 3,
+      "cro": 4
+     },
+     "requires": "E2"
+    }
+   ],
+   "drawback": "Bodies in the box leave few behind the ball.",
+   "upgrade": {
+    "kind": "cost",
+    "delta": -1
+   },
+   "source": {
+    "kind": "trait",
+    "ref": "aerial_threat"
+   },
+   "tags": [
+    "chase"
+   ],
+   "trait": "aerial_threat",
+   "requires": []
+  },
+  {
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "id": "in_behind",
+   "name": "IN BEHIND",
+   "cost": 1,
+   "type": "INSTRUCTION",
+   "duration": 10,
+   "headline": "Play early into the channels for your runners.",
+   "effects": [
+    {
+     "op": "tactics",
+     "set": {
+      "passingDirectness": "Direct",
+      "chanceCreationFocus": "Vertical",
+      "buildUpTempo": "Quick"
+     }
+    },
+    {
+     "op": "role",
+     "who": {
+      "trait_members": "pace_in_behind"
+     },
+     "attackEffort": 90
+    },
+    {
+     "op": "modifiers",
+     "who": {
+      "trait_members": "pace_in_behind"
+     },
+     "deltas": {
+      "spr": 3,
+      "acc": 3,
+      "apo": 3
+     },
+     "requires": "E2"
+    }
+   ],
+   "drawback": "Direct balls give the ball back more often.",
+   "upgrade": {
+    "kind": "duration",
+    "add": 5
+   },
+   "source": {
+    "kind": "trait",
+    "ref": "pace_in_behind"
+   },
+   "tags": [
+    "chase"
+   ],
+   "trait": "pace_in_behind",
+   "requires": []
+  },
+  {
+   "trigger": null,
+   "exhaust": false,
+   "combo": null,
+   "target": null,
+   "id": "the_wall_holds",
+   "name": "THE WALL HOLDS",
+   "cost": 1,
+   "type": "INSTRUCTION",
+   "duration": 15,
+   "headline": "Your centre-backs own the box.",
+   "effects": [
+    {
+     "op": "tactics",
+     "set": {
+      "defensiveBlockHeight": "Mid",
+      "defensiveLineBehavior": "Hold",
+      "boxCommitment": "Cautious"
+     }
+    },
+    {
+     "op": "role",
+     "who": {
+      "trait_members": "wall"
+     },
+     "defenseEffort": 90
+    },
+    {
+     "op": "modifiers",
+     "who": {
+      "trait_members": "wall"
+     },
+     "deltas": {
+      "daw": 5,
+      "sta": 4,
+      "hea": 3
+     },
+     "requires": "E2"
+    }
+   ],
+   "drawback": "Sitting a little deeper gives them the ball.",
+   "upgrade": {
+    "kind": "cost",
+    "delta": -1
+   },
+   "source": {
+    "kind": "trait",
+    "ref": "wall"
+   },
+   "tags": [
+    "protect",
+    "neutral"
+   ],
+   "trait": "wall",
+   "requires": []
   }
  ]
 }

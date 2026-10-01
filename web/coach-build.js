@@ -1021,7 +1021,7 @@ function sysTilesHTML(){
       <span class="nm">${esc(s.name)}</span><span class="sh">${esc(formationOf(s.formation).name)}${s.id === cur ? ' · <b>YOURS</b>' : ''}</span>
       <span class="id">${esc(s.identity || '')}</span>
       <span class="ft"><em>FIT</em><b class="${e && e.fit != null ? fitCls(e.fit) : ''}">${e && e.fit != null ? e.fit : '…'}</b>
-        ${fam != null ? `<em>FAM</em><b>${Math.round(fam)}</b>` : ''}</span></button>`;
+        ${fam != null ? `<em>FAMILIAR</em><b>${Math.round(fam)}%</b>` : ''}</span></button>`;
   }).join('') + `<button class="cb-sys custom" onclick="CB.openCustom()"><span class="nm">＋ Custom system</span>
     <span class="id">Edit any bundle: shape, the 13 team tactics and every slot's roles. Starts at familiarity ${K('fam_switch_custom') ?? 20}, no named bonuses.</span></button>`;
 }
@@ -1037,7 +1037,7 @@ async function renderBoard(){
     <div class="pagehead">SYSTEM BOARD · ${esc(PREMIER_LEAGUE.season)}</div>
     <div class="cb-head">
       <div><h2 class="pagetitle">${esc(sys.name)} <small>${esc(formationOf(sys.formation).name)}</small></h2>
-        <div class="cc-small">${esc(sys.identity || '')}${(sys.key_demands || []).length ? ` · <span class="cb-dem">${esc(sys.key_demands.join(' · '))}</span>` : ''}</div></div>
+        <div class="cc-small">${esc(sys.identity || '')}${(sys.key_demands || []).length ? `<br><span class="cb-dem">What it asks for — ${esc(sys.key_demands.join(' · '))}</span>` : ''}</div></div>
       <div class="cb-headr">
         <div class="cb-bigfit" id="cbBigFit">${ringSVG(ev0 ? ev0.system_fit : 0, 84)}<b>${ev0 ? ev0.system_fit : '…'}</b><em>SYSTEM FIT</em></div>
         <div class="cb-sysfam"><span class="cc-k">FAMILIARITY</span>${famBar(fam, {big: true})}
@@ -1057,7 +1057,7 @@ async function renderBoard(){
       <div class="cb-side">
         <section class="cc-panel"><h4>TRAITS <span class="cc-h-r cc-small" id="cbBonus"></span></h4><div class="cb-traits" id="cbTraits">${loadingHTML('…')}</div></section>
         <section class="cc-panel"><h4>PARTNERSHIPS <span class="cc-h-r cc-small">${b.partnerships.length}/${maxPairs()}</span></h4><div id="cbPairs">${pairsHTML(null)}</div>
-          <div class="cc-small cc-muted" style="margin-top:6px">Boosts apply at kick-off when every member starts. v1: a member subbed off keeps the others' boost for that match.</div></section>
+          <div class="cc-small cc-muted" style="margin-top:6px">Boosts apply while every member is on the pitch and end when one of them goes off.</div></section>
       </div>
     </div>
     <section class="cc-panel cb-deckp"><h4>DECK <span class="cc-h-r">${deckCountHTML()}</span></h4><div id="cbDeck">${deckHTML()}</div></section>
@@ -1104,7 +1104,7 @@ function paintBoard(sys, ev, mine){
     if(was && ev.system_fit !== was){ big.classList.remove('bump'); void big.offsetWidth; big.classList.add('bump'); } }
   const tt = $('#cbTraits');
   if(tt) tt.innerHTML = (ev.traits || []).map(t => traitHTML(t)).join('') || '<div class="cc-small cc-muted">No unit traits for this system.</div>';
-  const bo = $('#cbBonus'); if(bo) bo.innerHTML = `base ${ev.base_fit ?? '—'} · bonuses +${ev.bonus_points ?? 0}`;
+  const bo = $('#cbBonus'); if(bo) bo.innerHTML = `players ${ev.base_fit ?? '—'} + active traits ${ev.bonus_points ?? 0}`;
   const pp = $('#cbPairs'); if(pp) pp.innerHTML = pairsHTML(ev);
 }
 CB.applyNow = () => { applySystemToSquad(sysById(B().system_id)); renderBoard(); toast('Shape, team tactics and slot roles set for ' + sysById(B().system_id).name); };

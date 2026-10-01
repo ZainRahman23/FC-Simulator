@@ -1,6 +1,6 @@
 # Touchline: build a football system, then watch it work
 
-You coach Liverpool through a season. Choose how the team plays, recruit and train the players that suit it, prepare five specific Tactic Cards, then watch the match and intervene from the touchline. The football comes from the native Python engine; the Broadcast and Tactical views present the same match.
+You coach Liverpool. **The Run** is the main mode: choose how the team plays, then take it through seven fixtures that get harder, picking one reward after every match and watching the build play out on the pitch. **Season mode** is the long game: a full Premier League season with training, transfers and finances. The football comes from the native Python engine; the Broadcast and Tactical views present the same match.
 
 ## Run locally
 
@@ -14,7 +14,66 @@ Open <http://127.0.0.1:8000>. The two-worker setting keeps the laptop responsive
 
 The default is `TOUCHLINE_ENGINE=native`. The experimental continuous engine remains available with `TOUCHLINE_ENGINE=continuous`, but coaching, cards and analysis require native mode. `?debug=1` opens the engine debug panel; `?engine=mock` is a labelled development option.
 
-## Walkthrough: from the summer window to the final whistle
+## The Run — walkthrough
+
+Seven fixtures, three strikes, one final. A run takes about 40 minutes. The design and its reasoning are in [docs/RUN_MODE.md](docs/RUN_MODE.md).
+
+### 1. Start a run
+
+A first visit opens a welcome screen explaining both modes. Home always offers **Start a run** or **Continue run**, with Season mode below it.
+
+![Welcome: the Run first, Season mode as the long game](docs/screenshots/run/01_welcome.png)
+
+### 2. Pick 1 of 3 systems
+
+Three of the eight systems are offered. Each card shows what the system asks of players, its starting cards and its fit with your squad, calculated by the Python build engine. You keep the system for the whole run. The starting deck is small: two signature cards plus four basics.
+
+![Choose a system](docs/screenshots/run/02_choose_system.png)
+
+### 3. Choose the next opponent
+
+Every round offers a **standard** fixture and an **elite** one. The elite opponent is a stronger club with a visible threat (here, *In form: their striker +6 Finishing, +6 Composure*) and a sharper CPU coach, but a win pays a **rare** reward. The final has one boss: the strongest club, every starter +3 Reactions and Composure. The ladder along the top shows every result so far.
+
+![Opponent choice and the ladder](docs/screenshots/run/03_opponent.png)
+
+### 4. Set the XI and pick a hand of 5
+
+The board shows each player's fit for his job in this system, the unit traits you have switched on, and your partnerships and sharpened players. Swap anyone with the dropdowns, or press **Best XI**. Pick 5 cards from your deck; the default hand favours build cards that can fire with this XI. Each card shows a one-line summary, and **Exact effect** expands the precise instructions it changes.
+
+![Team and hand](docs/screenshots/run/04_team_and_hand.png)
+
+### 5. Watch the match and make your calls
+
+Run matches play at **Highlights (8×)**. The view slows down for chances and around your build's moments, which are called out on the pitch: *ENGINE ROOM · Szoboszlai wins it back high — chance*, a partnership combo, a header from your Aerial Threat. These callouts are read from the match events after the fact and never change the football.
+
+![A trait payoff called out on the pitch](docs/screenshots/run/07_build_callout.png)
+
+The match stops at decision beats (30', 60', 80'), at half-time, after goals and after red cards. Each stop shows the last 15 minutes and the cards in your hand that answer the situation. Here a partnership won earlier in the run has unlocked **ONE-TWO RUSH**, a card naming Szoboszlai and Salah, which is played at 31'. Influence starts at ⚡3 and rises by ⚡1 at half-time and ⚡1 when you concede. Manual tactics and substitutions are still available.
+
+![A decision beat](docs/screenshots/run/05_decision_beat.png)
+
+### 6. Result, then pick 1 of 3
+
+A win offers 3 rewards, a draw 2, a loss 1. A loss costs a strike. In the final, a draw costs a strike too and the final is replayed. The result screen lists what your build did in the match. Rewards are the run's main decisions:
+- a **new card**, including trait cards that only work while that trait is on the pitch;
+- a **partnership** drilled to Lv2 or Lv3, which adds a combo card naming those players;
+- a **signing** who fits your weakest slot;
+- a **sharpened player**: +3 or +5 to the attributes his job demands;
+- **system drills**, a **card upgrade**, or an **assistant** for +1 starting Influence.
+
+![Result and rewards](docs/screenshots/run/08_result_and_rewards.png)
+
+### 7. The build grows
+
+A few rounds in, the board shows the partnerships, boosts and signings you chose, and the hand holds cards that are specific to them.
+
+![Later in the run](docs/screenshots/run/06_prep_with_build.png)
+
+Win the final and the trophy is yours. Three strikes and the board sacks you; the run summary lists every match and every choice you made.
+
+## Season mode — walkthrough
+
+The long mode keeps the full v2 career: systems, training points, transfers, finances, the calendar and the Ghost League. Everyday tabs sit in the top bar; Players, Transfers, Club and Challenges are under **More**.
 
 ### 1. Build a system
 
@@ -85,11 +144,14 @@ The first ranked attempt is reserved before simulation; a failed attempt remains
 | `build.py`, `data/systems.json`, `data/cards.json` | Python source of truth for fit, traits, training, familiarity and cards |
 | `server.py`, `store.py` | Match API, persistence, recovery, build endpoints, Analyst budget and Ghost League |
 | `management.py`, `labsim.py`, `coach.py` | Commands, seeded simulation futures and reports |
+| `web/coach-run.js` | The Run: draft, ladder, rewards, run state (never written into the season save) |
 | `web/coach-build.js`, `web/coach-career.js`, `web/coach-match.js` | Career building, season integrity and the live coaching flow |
 | `sandbox/visual/embed.js`, `web/touchline.html` | Broadcast integration and presentation clock |
 | `tools/balance/` | Paired card effects, build-value curves, matchup matrix, economy and feel checks |
 
-**ENGINE CHANGES:** E1 designated corner/free-kick/penalty takers; E2 match-scoped attribute modifiers and scheduled commands; E3 4-4-2, 3-4-3 and 5-3-2, including slot/remap support; E4 corner zone and target hints. These hooks are inert without their inputs. Nine frozen reference cases prove exact ledger identity with the hooks unused or explicitly unset. The old unsupported 4-2-3-1 ↔ 4-1-4-1 manager transition remains rejected.
+**ENGINE CHANGES (v3, The Run):** run boosts are a separate kick-off modifier layer (`source: "boosts"`, capped at +10 per attribute); `influence_bonus` raises starting Influence (at most +2); `unlocks` lets rewarded cards into the deck; trait cards (`"trait"` field) target that trait's kick-off members and stop being playable when the trait drops below its count. All are input-gated, so requests without them behave as before.
+
+**ENGINE CHANGES (v2):** E1 designated corner/free-kick/penalty takers; E2 match-scoped attribute modifiers and scheduled commands; E3 4-4-2, 3-4-3 and 5-3-2, including slot/remap support; E4 corner zone and target hints. These hooks are inert without their inputs. Nine frozen reference cases prove exact ledger identity with the hooks unused or explicitly unset. The old unsupported 4-2-3-1 ↔ 4-1-4-1 manager transition remains rejected.
 
 The renderer does not resolve football, Overall does not decide events, and engine outcomes are not corrected to force a target league distribution. The full design and approved scope are in [Core Loop v2](docs/CORE_LOOP_V2_SPEC.md).
 

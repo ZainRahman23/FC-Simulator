@@ -548,6 +548,7 @@ window.updateMatchHeader = function(m){
     el.dataset.cm = '1';
     el.classList.add('cm-head');
     const reh = f.friendly && !f.branchOf ? `<div class="cm-reh cm-friendly">PRE-SEASON FRIENDLY · NO LEAGUE CONSEQUENCES${f.camp_week ? ` · CAMP WEEK ${esc(String(f.camp_week))}` : ''}</div>`
+      : f.run && !f.branchOf ? `<div class="cm-reh cm-friendly">THE RUN · ${esc(String(f.date || '').toUpperCase())}${f.kind === 'elite' ? ' · ELITE' : ''}</div>`
       : f.exhibition ? `<div class="cm-reh">${f.branchOf ? 'REHEARSAL' : 'EXHIBITION'} — DOESN'T COUNT${f.branchOf && cm && cm.origin ? ` · replaying from ${clockStr(cm.startClock)}` : ''}</div>` : '';
     el.innerHTML = `${reh}
       <div class="mh-top">
@@ -750,9 +751,11 @@ function renderAssistant(m){
 }
 
 /* ═══ 4. KEY MOMENTS & AUTO-PAUSE ══════════════════════════════════════════ */
+/* The Run: the match is a handful of decision beats with football in between */
+const RUN_BEATS = [30, 60, 80];
 function queueMoment(m, mo){
   const cm = C(m), mode = coachUI().autoPause, s = presS(m);
-  const forced = cm.forceAt && Math.abs(cm.forceAt.clock - mo.clock) <= 2;
+  const forced = (cm.forceAt && Math.abs(cm.forceAt.clock - mo.clock) <= 2) || (mo.beat && mode !== 'off');
   if(forced) cm.forceAt = null;
   const isGoal = mo.kind === 'goal';
   if(!forced){
@@ -801,11 +804,13 @@ function scanMoments(m, s){
         break;
     }
   }
-  for(const w of [60, 75]){
+  const beats = (S.matchFixture && S.matchFixture.run) ? RUN_BEATS : null;
+  for(const w of beats || [60, 75]){
     const c = w * 60, key = 'w' + w;
     if(!cm.fired.has(key) && s >= c && s < c + 30 && cm.startClock < c - 60){
       cm.fired.add(key);
-      if(!cm.decisions.length) queueMoment(m, {kind: 'window', clock: c, minute: w});
+      if(beats) queueMoment(m, {kind: 'window', clock: c, minute: w, beat: true});
+      else if(!cm.decisions.length) queueMoment(m, {kind: 'window', clock: c, minute: w});
     }
   }
 }
@@ -821,7 +826,7 @@ function momentTitle(m, mo){
     }
     case 'red': return isMine(e.team_id) ? `Down to ten — ${short(e.actor_name)} is sent off` : `${oppName()} are down to ten — ${short(e.actor_name)} is off`;
     case 'opp_shape': return `${oppName()} switch to ${d.to || 'a new shape'}`;
-    case 'window': return `${mo.minute}' — your window`;
+    case 'window': return mo.beat ? `${mo.minute}' — your call` : `${mo.minute}' — your window`;
     case 'insight': return mo.insight.title;
     case 'takeover': {
       const f0 = S.matchFixture || {};
@@ -839,7 +844,8 @@ function momentLede(m, mo){
       return f0.branchOf ? 'Everything up to now happened exactly as in the real match. From here it\'s yours — try a different call. This doesn\'t count.'
         : 'Read the situation, then make your call.';
     }
-    case 'window': return `No changes yet. The ${mo.minute === 60 ? 'hour mark' : 'last quarter'} is when managers win games — fresh legs, a tweak to the plan, or a vote of confidence.`;
+    case 'window': return mo.beat ? `A decision beat. Read the last 15 minutes below, then play a card — or trust the plan and keep your influence.`
+      : `No changes yet. The ${mo.minute === 60 ? 'hour mark' : 'last quarter'} is when managers win games — fresh legs, a tweak to the plan, or a vote of confidence.`;
     case 'opp_shape': return `Their coach is reacting. A new shape means new gaps — and new problems for you.`;
     case 'red': return isMine((mo.event || {}).team_id) ? `Ten men for the rest of it. Reshape or protect — the assistant has options.` : `A man advantage. Push the numbers and make it count.`;
     case 'goal': return isMine((mo.event || {}).team_id) ? `Momentum is yours. Keep the foot down or manage the game?` : `How do you respond?`;
@@ -1260,7 +1266,7 @@ function monitor(){
     refreshLabels(m);
     renderHandBar(m);
     traitBanner(m);
-    if(!lowFx()) scanCombos(m, shownS(m));
+    scanCombos(m, shownS(m));
     if(performance.now() - cm.lastRatings > 1000){
       cm.lastRatings = performance.now();
       if(m.sideTab === 'ratings') updateRatingsList(m);
@@ -2653,19 +2659,51 @@ function detectCombos(m){
   }
   return out;
 }
+/* TRAIT PROCS: the kick-off unit traits doing their job, read from the ledger
+   (presentation only — the engine never sees a trait). */
+const TRAIT_TXT = {engine_room: 'wins it back high — chance', aerial_threat: 'attacks it in the air', pace_in_behind: 'is in behind', wall: 'holds the box'};
+function detectTraitProcs(m){
+  const cs = CS(m), me = myTeam(), out = [], last = {};
+  const traits = (cs.traits || []).filter(t => t.active && (t.members || []).length);
+  if(!traits.length) return out;
+  const rel = (e, loc) => !loc ? 50 : (e.team_id === 'HOME' ? loc[0] : 100 - loc[0]);
+  const done = e => ['COMPLETED', 'AERIAL_COMPLETED'].includes((e.detail || {}).outcome);
+  const ev = m.events;
+  // a regain that turns into a shot of ours within 12 s: the press paying off
+  const shotSoon = (i, t0) => { for(let j = i + 1; j < ev.length && ev[j].timestamp <= t0 + 12; j++){ const q = ev[j];
+    if(q.team_id !== me && ['TACKLE', 'INTERCEPTION', 'RECOVERY', 'CLEARANCE'].includes(q.event_type)) return false;
+    if(q.team_id === me && q.event_type === 'SHOT') return true; } return false; };
+  for(let i = 0; i < ev.length; i++){
+    const e = ev[i];
+    if(e.team_id !== me || !e.actor_id) continue;
+    const d = e.detail || {}, loc = d.location || e.location || null;
+    for(const t of traits){
+      if(!t.members.includes(e.actor_id) && !(t.id === 'pace_in_behind' && t.members.includes(d.target_id))) continue;
+      if(last[t.id] != null && e.timestamp - last[t.id] < 900) continue;
+      let who = null;
+      if(t.id === 'engine_room' && ['TACKLE', 'INTERCEPTION', 'RECOVERY'].includes(e.event_type) && (e.event_type !== 'TACKLE' || d.outcome === 'CLEAN_WIN') && rel(e, loc) >= 50 && shotSoon(i, e.timestamp)) who = e.actor_id;
+      else if(t.id === 'aerial_threat' && e.event_type === 'SHOT' && d.shot_type === 'HEADER') who = e.actor_id;
+      else if(t.id === 'pace_in_behind' && e.event_type === 'PASS' && d.pass_type === 'THROUGH' && done(e) && t.members.includes(d.target_id)) who = d.target_id;
+      else if(t.id === 'wall' && ['BLOCK', 'CLEARANCE', 'INTERCEPTION', 'TACKLE'].includes(e.event_type) && rel(e, loc) <= 20) who = e.actor_id;
+      if(who){ last[t.id] = e.timestamp; out.push({ts: e.timestamp, id: `trait:${t.id}@${e.timestamp}`, kind: 'trait', trait: t.id, name: String(t.name || t.id), who: [who]}); }
+    }
+  }
+  return out;
+}
 function scanCombos(m, s){
   const cs = CS(m);
   const sig = m.events.length + ':' + (m.events.length ? m.events[m.events.length - 1].event_id : '');
   if(sig !== cs.comboSig){
     cs.comboSig = sig;
-    cs.combos = safe(() => detectCombos(m), []);
+    cs.combos = [...safe(() => detectCombos(m), []), ...safe(() => detectTraitProcs(m), [])].sort((a, b) => a.ts - b.ts);
     AnimR2.slowWindows = cs.combos.map(c => [c.ts - 3.5, c.ts + 1.5]);   // the play slows around it (presentation only)
   }
   for(const c of cs.combos){
     if(c.ts > s || cs.comboSeen.has(c.id)) continue;
     cs.comboSeen.add(c.id);
     if(s - c.ts > 6) continue;
-    pop('combo', `<div class="cm-pop-k">COMBO · ${esc(c.name)}${c.level > 1 ? ` · LV${c.level}` : ''}</div><b>${esc(short(nameOf(c.who[0])))} → ${esc(short(nameOf(c.who[1])))}</b>`, 3400);
+    if(c.kind === 'trait') pop('combo trait', `<div class="cm-pop-k">${esc(c.name.toUpperCase())}</div><b>${esc(short(nameOf(c.who[0])))} ${esc(TRAIT_TXT[c.trait] || '')}</b>`, 3000);
+    else pop('combo', `<div class="cm-pop-k">COMBO · ${esc(c.name)}${c.level > 1 ? ` · LV${c.level}` : ''}</div><b>${esc(short(nameOf(c.who[0])))} → ${esc(short(nameOf(c.who[1])))}</b>`, 3400);
   }
 }
 /* player moments: goal, big save, big tackle → a card-flip "form up" pop */
@@ -3118,6 +3156,7 @@ window.CM = {
   setAutoPause, nextMoment, confirmSimFT, cancelSimFT, simToFT, closeMoment, openPast, toggleCam,
   applyAction, setView, setLabels, setBcCam, weatherFor, forecastHTML,
   runLabHere(){ const m = S.match; if(m && m.status === 'ft') runLab(m); },
+  buildMoments: m => { m = m || S.match; if(!m) return []; return [...safe(() => detectCombos(m), []), ...safe(() => detectTraitProcs(m), [])].sort((a, b) => a.ts - b.ts); },
   playCard, cardDrawer, stayCourse, prepToggle, prepAuto, prepSetPiece, prepCompare, analystTest, ghostRun,
   ghostRetry(){ GHOST.err = null; GHOST.today = null; ghostRerender(); }, cardTarget(k, v){ const m = S.match; if(m) CS(m).target[k] = v || null; },
   _cards: () => { const m = S.match; if(!m) return null; const s = shownS(m), inf = influenceAt(m, s);

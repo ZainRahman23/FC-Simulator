@@ -74,6 +74,8 @@ CONST: dict[str, Any] = {
     "ai_best_prob": {"easy": 0.50, "normal": 0.75, "hard": 0.95},
     # analyst
     "analyst_runs": 2, "analyst_futures": 16,
+    # run rewards (docs/RUN_MODE.md)
+    "boost_cap": 10.0, "influence_bonus_max": 2,
 }
 CATALOG_VERSION = "v2.1"
 
@@ -553,7 +555,24 @@ def kickoff_modifiers(side: dict[str, Any], build: dict[str, Any] | None,
                 add(pid, "rea", fb)
                 add(pid, "gkp" if p.get("pos") == "GK" else "apo", fb)
                 add(pid, "cmp", fb)
+    for pid, d in run_boosts(build, xi_ids).items():
+        for a, x in d.items():
+            add(pid, a, x)
     return mods
+
+
+def run_boosts(build: dict[str, Any] | None, xi_ids: set[str]) -> dict[str, dict[str, float]]:
+    """Run rewards ("Sharpen a player"): {pid: {short_attr: +x}} for starters
+    only, clamped to CONST['boost_cap'] per attribute. Kick-off inputs, never
+    rewritten into the player's base attributes."""
+    out: dict[str, dict[str, float]] = {}
+    for pid, d in ((build or {}).get("boosts") or {}).items():
+        if str(pid) not in xi_ids or not isinstance(d, dict):
+            continue
+        for a, x in d.items():
+            if a in LONG and float(x):
+                out.setdefault(str(pid), {})[a] = max(-CONST["boost_cap"], min(CONST["boost_cap"], float(x)))
+    return out
 
 
 def load_threshold(build: dict[str, Any] | None) -> int:
@@ -922,6 +941,7 @@ def unlocked_cards(build: dict[str, Any] | None) -> list[str]:
                 out.append(cid)
         if src["kind"] == "set_piece" and (b.get("set_pieces") or {}).get("drilled"):
             out.append(cid)
+    out += [c for c in b.get("unlocks") or [] if c in CARDS]   # run rewards
     return [c for c in dict.fromkeys(out) if card_available(c)]
 
 
@@ -944,6 +964,10 @@ def _who_label(who: Any, names: dict[str, str] | None = None) -> str:
         if "most_tired" in who:
             n = int(who["most_tired"])
             return f"Your {n} most tired players" if n > 1 else "Your most tired player"
+        if "trait_members" in who:
+            if names and names.get("__trait"):
+                return names["__trait"]
+            return f"Your {UNIT_NAME.get(who['trait_members'], 'trait')} players"
         if who.get("sub") == "in":
             return names.get("__sub_in", "The substitute") if names else "The substitute"
         if "target" in who:
@@ -1043,6 +1067,8 @@ def card_view(cid: str, upgraded: bool = False, names: dict[str, str] | None = N
         kws.append("Exhaust")
     if c.get("combo"):
         kws.append(f"Combo({PATTERNS[c['combo']]['name']})")
+    if c.get("trait"):
+        kws.append(f"Trait({UNIT_NAME.get(c['trait'], c['trait'])})")
     if c.get("trigger"):
         kws.append(f"Trigger({TRIGGER_LABEL.get(c['trigger'], c['trigger'])})")
     if c.get("target"):
@@ -1056,7 +1082,7 @@ def card_view(cid: str, upgraded: bool = False, names: dict[str, str] | None = N
     return {"id": cid, "name": c["name"], "cost": c["cost"], "type": c["type"], "duration": c.get("duration"),
             "headline": headline, "lines": lines, "effects_text": lines, "text": " · ".join(lines),
             "keywords": kws, "drawback": c.get("drawback", ""), "source": c["source"], "tags": c.get("tags", []),
-            "trigger": c.get("trigger"), "exhaust": bool(c.get("exhaust")), "combo": c.get("combo"),
+            "trigger": c.get("trigger"), "exhaust": bool(c.get("exhaust")), "combo": c.get("combo"), "trait": c.get("trait"),
             "target": c.get("target"), "upgrade": dict(base.get("upgrade") or {}, text=upgrade_text(base)),
             "upgraded": bool(upgraded), "requires": base.get("requires", []), "available": card_available(cid),
             "version": CARDS_VERSION}
@@ -1233,13 +1259,15 @@ def _side_state(block: dict[str, Any], team: str, seed: int) -> dict[str, Any]:
                       "level": int(pt.get("level", _level(float(pt.get("fam", 0)))))})
     return {"control": control, "system_id": sid, "hand": hand, "upgrades": dict(block.get("upgrades") or {}),
             "partnerships": parts, "difficulty": block.get("difficulty", "normal"),
-            "influence": int(CONST["influence_start"]), "played": [], "exhausted": [], "conceded": [],
-            "policy_table": copy.deepcopy(block.get("policy_table"))}
+            "influence": min(CONST["influence_max"], int(CONST["influence_start"]) + int(block.get("influence_bonus") or 0)),
+            "played": [], "exhausted": [], "conceded": [],
+            "policy_table": copy.deepcopy(block.get("policy_table")),
+            "traits": copy.deepcopy(block.get("traits") or {})}
 
 
 def cpu_hand(system_id: str | None, seed: int, team: str, deck: list[str] | None = None) -> list[str]:
     pool = [c for c in (deck or starter_deck(system_id)) if c in CARDS and card_available(c)
-            and not CARDS[c].get("combo") and CARDS[c]["source"]["kind"] != "staff"]
+            and not CARDS[c].get("combo") and not CARDS[c].get("trait") and CARDS[c]["source"]["kind"] != "staff"]
     sysd = SYSTEMS.get(system_id or "") or {}
     sig = [c for c in sysd.get("signature_cards", []) if c in pool]
     rest = sorted((c for c in pool if c not in sig), key=lambda c: _u("cpu-hand", seed, team, c))
@@ -1316,6 +1344,22 @@ def _combo_members(engine: MatchEngine, team: str, pattern: str) -> tuple[dict[s
     return dict(zip(PATTERNS[pattern]["roles"], best["members"])), best["level"]
 
 
+UNIT_NAME = {b["id"]: b["name"] for b in UNIT_BONUSES}
+
+
+def _trait_members(engine: MatchEngine, team: str, trait: str) -> list[str]:
+    """The kick-off members of an active unit trait still on the pitch, or []
+    once the trait has dropped below its count (a member subbed off / sent off)."""
+    rt = runtime(engine)
+    side = rt.sides.get(team) if rt else None
+    t = ((side or {}).get("traits") or {}).get(trait) or {}
+    if not t.get("active"):
+        return []
+    active = {st.player.player_id for st in _active(engine, team)}
+    on = [pid for pid in t.get("members") or [] if pid in active]
+    return on if len(on) >= int(t.get("need", 1)) else []
+
+
 def can_play(engine: MatchEngine, team: str, cid: str, targets: dict[str, Any] | None = None,
              force: bool = False) -> tuple[bool, str | None]:
     if cid not in CARDS:
@@ -1337,6 +1381,8 @@ def can_play(engine: MatchEngine, team: str, cid: str, targets: dict[str, Any] |
     card = CARDS[cid]
     if card.get("combo") and _combo_members(engine, team, card["combo"]) is None:
         return False, f"Needs your {PATTERNS[card['combo']]['name']} partnership on the pitch."
+    if card.get("trait") and not _trait_members(engine, team, card["trait"]):
+        return False, f"Needs {UNIT_NAME.get(card['trait'], card['trait'])} active on the pitch."
     if card["type"] == "SUB" or any(e.get("op") == "sub" for e in card["effects"]):
         if engine.substitutions_used[team] >= 5:
             return False, "All five substitutions are used."
@@ -1372,6 +1418,9 @@ def _resolve(engine: MatchEngine, team: str, who: Any, ctx: dict[str, Any]) -> l
             roles = who["combo_role"] if isinstance(who["combo_role"], list) else [who["combo_role"]]
             m = ctx.get("combo") or {}
             ids = [m.get(r) for r in roles]
+            return [st for st in act if st.player.player_id in ids]
+        if "trait_members" in who:
+            ids = set(ctx.get("trait") or [])
             return [st for st in act if st.player.player_id in ids]
         if "most_tired" in who:
             out = sorted((st for st in act if st.slot != "GK"), key=lambda st: (st.energy, st.player.player_id))
@@ -1418,7 +1467,8 @@ def _execute(engine: MatchEngine, team: str, card: dict[str, Any], targets: dict
     management appliers; returns the primitive commands + revert record."""
     ap = management.APPLIERS
     hooks = engine_hooks()
-    ctx: dict[str, Any] = {"targets": targets, "combo": combo[0] if combo else {}}
+    ctx: dict[str, Any] = {"targets": targets, "combo": combo[0] if combo else {},
+                           "trait": _trait_members(engine, team, card["trait"]) if card.get("trait") else []}
     level = combo[1] if combo else None
     cmds: list[dict[str, Any]] = []
     revert: dict[str, Any] = {"team": team, "card_id": card["id"], "tactics": {}, "instr": {}}
@@ -1427,6 +1477,8 @@ def _execute(engine: MatchEngine, team: str, card: dict[str, Any], targets: dict
         for r, pid in combo[0].items():
             st = engine.states.get(pid)
             names[r] = _short(st.player.name if st else pid)
+    if ctx["trait"]:
+        names["__trait"] = ", ".join(_short(engine.states[pid].player.name) for pid in ctx["trait"] if pid in engine.states)
     dur_s = int(card["duration"]) * 60 if card.get("duration") else None
     for e in card["effects"]:
         op = e.get("op")
@@ -1899,6 +1951,12 @@ def prepare_request(body: dict[str, Any]) -> dict[str, Any]:
             for pid, dd in view['boosts'].items():
                 for attr, value in dd.items():
                     partnership_totals.setdefault(pid,{})[attr] = partnership_totals.get(pid,{}).get(attr,0) + value
+        boosts = run_boosts(bb, xi_ids)
+        if boosts:
+            layers.append({'team':team, 'deltas':boosts, 'source':'boosts'})
+            for pid, dd in boosts.items():
+                for attr, value in dd.items():
+                    partnership_totals.setdefault(pid,{})[attr] = partnership_totals.get(pid,{}).get(attr,0) + value
         remaining = {pid:{attr:round(value-partnership_totals.get(pid,{}).get(attr,0),2)
                           for attr,value in dd.items() if round(value-partnership_totals.get(pid,{}).get(attr,0),2)}
                      for pid,dd in mods.items()}
@@ -1930,6 +1988,14 @@ def prepare_request(body: dict[str, Any]) -> dict[str, Any]:
                        "kickoff_modifiers": mods, "kickoff_layered": True, "policy_table": copy.deepcopy(policy_table)}
         if bb.get("deck"):
             canon[team]["deck"] = list(bb["deck"])
+        ib = int(bb.get("influence_bonus") or 0)
+        if ib:
+            canon[team]["influence_bonus"] = max(0, min(CONST["influence_bonus_max"], ib))
+        if system is not None and any(CARDS[c].get("trait") for c in hand):
+            lineup = {fs: p for fs, p in (side.get("lineup") or {}).items() if p}
+            canon[team]["traits"] = {b["id"]: {"members": b["members"][:b["need"]] if b["active"] else [],
+                                               "need": b["need"], "active": b["active"]}
+                                     for b in unit_bonuses(lineup, bb, str(side.get("formation", system["formation"])))}
         if system is not None and system.get("custom"):
             canon[team]["custom_system"] = bb.get("custom_system")
     out["builds"] = canon

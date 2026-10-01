@@ -108,7 +108,8 @@ def test_every_card_compiles_and_applies(cid):
     eng=build.build_engine(r)
     ids=[st.player.player_id for st in build._active(eng,'HOME')]
     parts=[dict(pattern=pattern,members=ids[:len(p['roles'])],fam=100,level=3) for pattern,p in build.PATTERNS.items()]
-    build.install_runtime(eng,{'HOME':{'system_id':'positional','hand':[cid],'partnerships':parts}})
+    traits={t['id']:dict(members=ids[1:4],need=2,active=True) for t in build.UNIT_BONUSES}
+    build.install_runtime(eng,{'HOME':{'system_id':'positional','hand':[cid],'partnerships':parts,'traits':traits}})
     before=[e.to_dict() for e in eng.events]
     compiled=build.compile_card(eng,'HOME',cid)
     assert [e.to_dict() for e in eng.events]==before
@@ -259,3 +260,44 @@ def test_penalty_xg_reporting_is_inclusive_and_idempotent():
     stats=server.bridge.reported_team_stats({'xg':7.237},events,'AWAY')
     assert stats['xg']==8.087 and stats['non_penalty_xg']==7.237
     assert server.bridge.reported_team_stats(stats,events,'AWAY')==stats
+
+
+def test_run_boosts_influence_bonus_and_trait_cards(client):
+    r=req(); lineup=r['home_team']['lineup']; st=lineup['ST']['id']
+    r['build'].update(boosts={st:{'fin':4,'cmp':99},'not-in-xi':{'fin':5}},influence_bonus=1,
+                      unlocks=['the_wall_holds'],hand=['the_wall_holds','time_waste'])
+    r['build']['deck']=r['build']['deck']+['the_wall_holds']
+    p=build.prepare_request(r)
+    layer=[l for l in p['modifiers'] if l['source']=='boosts']
+    assert layer==[{'team':'HOME','deltas':{st:{'fin':4.0,'cmp':build.CONST['boost_cap']}},'source':'boosts'}]
+    assert p['home_team']['lineup']==r['home_team']['lineup']        # base attributes untouched
+    a=client.post('/api/matches/start',json=r)
+    assert a.status_code==200,a.text
+    assert a.json()['cards']['HOME']['influence']==4
+    mid=a.json()['match_id']
+    eng=server.ACTIVE_MATCHES[mid]['engine']
+    assert eng.states[st].mods.get('finishing',0)==4
+    ok,why=build.can_play(eng,'HOME','the_wall_holds')
+    wall=p['builds']['HOME'].get('traits',{}).get('wall',{})
+    assert ok==bool(wall.get('active')), why
+    if not ok:
+        assert 'Wall' in why
+
+def test_trait_card_targets_kickoff_members_and_ends_with_them(client):
+    r=req(); side=r['home_team']; fm=str(side['formation'])
+    mids=[p for fs,p in side['lineup'].items() if build.engine_slot(fm,fs) in build.GROUPS['MID']]
+    for p in mids: p['a']['stam']=90
+    r['build'].update(unlocks=['engine_room_surge'],hand=['engine_room_surge'])
+    r['build']['deck']=r['build']['deck']+['engine_room_surge']
+    p=build.prepare_request(r)
+    tr=p['builds']['HOME']['traits']['engine_room']
+    assert tr['active'] and len(tr['members'])==3
+    mid=client.post('/api/matches/start',json=r).json()['match_id']
+    eng=server.ACTIVE_MATCHES[mid]['engine']
+    out=build.compile_card(eng,'HOME','engine_room_surge')
+    touched={c['payload']['player_id'] for c in out['commands'] if c['kind']=='instructions'}
+    assert touched==set(tr['members'])
+    assert any(m.split()[-1] in ' '.join(out['lines']) for m in [eng.states[x].player.name for x in tr['members']])
+    build.management.APPLIERS['substitution'](eng,{'team':'HOME','player_off':tr['members'][0],'player_on':'liv_gen_cb_02','target_slot':eng.states[tr['members'][0]].slot})
+    ok,why=build.can_play(eng,'HOME','engine_room_surge')
+    assert not ok and 'Engine Room' in why

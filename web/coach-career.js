@@ -2064,15 +2064,13 @@ function showIntro(){
   d.innerHTML = `<div class="cc-introc" role="dialog" aria-label="Welcome">
     <div class="pagehead">WELCOME TO TOUCHLINE</div>
     <h2>You're the Liverpool coach.</h2>
-    <p class="cc-lead">Every match runs on a real football engine. You don't control players — you read the game and make the calls. The loop:</p>
+    <p class="cc-lead">Every match runs on a real football engine. You don't control players — you build how the team plays, then make the calls from the touchline.</p>
     <div class="cc-steps">
-      <div><b>1 · Prepare</b><span>Open the next fixture: read the scouting report, apply a game plan, rest tired legs.</span></div>
-      <div><b>2 · React</b><span>Watch live. Your assistant flags the moments that need a decision — subs, shape, tempo.</span></div>
-      <div><b>3 · Review</b><span>At full time see why it went the way it did. The board judges results against expectations.</span></div>
+      <div><b>The Run · start here</b><span>Pick a system, then seven fixtures that get harder. After each match choose 1 of 3 rewards — cards, partnerships, signings — and watch your build play. Three strikes and you're out. About 40 minutes.</span></div>
+      <div><b>Season mode · the long game</b><span>A full Premier League season with training, transfers, finances and a board watching the table.</span></div>
     </div>
-    <p class="cc-small cc-muted">Condition carries between matches, injuries happen, young players grow with minutes — and a board with a target of the top four is watching.</p>
-    <div class="cc-actions"><button class="btn pri" style="flex:0 0 auto;padding:11px 26px" onclick="CC.closeIntro(true)">Let's go</button>
-      <button class="btn sec" onclick="CC.closeIntro(false)">Try a challenge first</button></div>
+    <div class="cc-actions"><button class="btn pri" style="flex:0 0 auto;padding:11px 26px" onclick="CC.closeIntro(true);window.RN&&RN.newRun()">Start a run</button>
+      <button class="btn sec" onclick="CC.closeIntro(true)">Season mode</button></div>
   </div>`;
   document.body.appendChild(d);
 }
