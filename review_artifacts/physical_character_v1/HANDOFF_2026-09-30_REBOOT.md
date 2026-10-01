@@ -96,6 +96,14 @@ After the reboot the preserved state was verified, the user reviewed the overnig
   - Step-length oscillation.
 - **Next.** The next step is the user's decision (options in the log and in memory `physical-character-g2b`).
 
+**G2b Option 1 (2026-10-01 midday, the user chose: fix landing + forward placement):**
+- **Touchdown fixed into the human range.** Contact velocity forward −0.07, vertical −0.4 m/s; peak force 1.6 kN → ≈ 0.58 kN.
+- **Walk still not stable.** Fall-aware count: 2–5 upright steps over 6 starts.
+- **Diagnostics.** Zero delay and independent torque limits do not help → the stepping controller is the gate.
+- **Corrections.** The overnight "20/20" and "5–7 step" counts included steps taken after a fall.
+- **Commit:** `77966eb` (local).
+- **Report:** `g2_walk/G2B_OPTION1_REVIEW.md`.
+
 ## Where
 
 - **Worktree:** `/Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1`
