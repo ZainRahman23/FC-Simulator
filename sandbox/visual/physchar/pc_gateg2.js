@@ -24,7 +24,9 @@ export const TESTS_G2A = {
 const WK = (speed, n, x) => ({ at: 0.5, steps: alt(n, "R").map((q, i) => i === 0 ? { sw: q.sw, fwdK: 0.7 } : i === 1 ? { sw: q.sw, fwdK: 0.9 } : { sw: q.sw }), walk: { speed }, human: true, Tfirst: 0.6, Tlast: 0.8, wA: 0.15, ...(x || {}) });
 export const TESTS_G2B = {
   G2b_walk08: { group: "G2b forward walk", title: "G2b — forward walk at 0.8 m/s, 20 steps (physical propulsion; heel strike; DCM footholds)", seconds: 15, amBudget: true, loco: { human: { walk: 0.8 }, rhythm: WK(0.8, 20) } },
-  G2b_dbg: { group: "G2b forward walk", title: "G2b — debug variant (0.6 m/s, G2a timing, tracking double support, no corrective steps)", seconds: 8, amBudget: true, loco: { human: { walk: 0.6 }, rhythm: WK(0.6, 20, { walk: { speed: 0.6, w: 0.28, wMax: 0.45, latDS: "track", placeGain: 1, release: 0.15, Tss: 0.45, Tds: 0.15, firstTol: 0.004, noCorrective: true } }) } },
+  G2b_dbg: { group: "G2b forward walk", title: "G2b — debug: Option-1 configuration (0.6 m/s)", seconds: 9, amBudget: true, loco: { human: { walk: 0.6, over: {"clrOff": [0.85, 0.12], "armsFromLegs": true, "approach": {"wd": 0.75, "m0": 0.02}, "lateBlend": true, "swingRetract": 0.01} }, rhythm: WK(0.6, 20, { walk: {"speed": 0.6, "w": 0.3, "wMax": 0.45, "latDS": "freeze", "placeGain": 1, "release": 0.15, "Tss": 0.45, "Tds": 0.15, "firstTol": 0.004, "firstProg": true, "copBand": 0.025, "noCorrective": true, "vGain": 0.5, "swingPredict": true, "fwdDS": "track", "adjustUntil": 0.8, "kXiAcross": 0.0} }) } },
+  G2b_land_before: { group: "G2b forward walk", title: "G2b — touchdown BEFORE the landing fixes (0.6 m/s): late fast descent, forward overshoot from the sensing delay", seconds: 9, amBudget: true, loco: { human: { walk: 0.6, over: {"clrOff": [0.85, 0.12], "armsFromLegs": true} }, rhythm: WK(0.6, 20, { walk: {"speed": 0.6, "w": 0.24, "wMax": 0.45, "latDS": "freeze", "placeGain": 1, "release": 0.15, "Tss": 0.45, "Tds": 0.15, "firstTol": 0.004, "firstProg": true, "copBand": 0.025, "noCorrective": true} }) } },
+  G2b_land_after: { group: "G2b forward walk", title: "G2b — touchdown AFTER: controlled descent + 1 cm retraction + delay-compensated swing (0.6 m/s)", seconds: 9, amBudget: true, loco: { human: { walk: 0.6, over: {"clrOff": [0.85, 0.12], "armsFromLegs": true, "approach": {"wd": 0.75, "m0": 0.02}, "swingRetract": 0.01} }, rhythm: WK(0.6, 20, { walk: {"speed": 0.6, "w": 0.24, "wMax": 0.45, "latDS": "freeze", "placeGain": 1, "release": 0.15, "Tss": 0.45, "Tds": 0.15, "firstTol": 0.004, "firstProg": true, "copBand": 0.025, "noCorrective": true, "swingPredict": true} }) } },
 };
 // every G2 scenario (the review page's list)
 export const TESTS_G2 = Object.assign({}, TESTS_G2A, TESTS_G2B);
@@ -32,6 +34,7 @@ export const TESTS_G2 = Object.assign({}, TESTS_G2A, TESTS_G2B);
 export function runG2a(J, spec, key, opts) { let test = TESTS_G2A[key] || TESTS_G2B[key]; const ro = opts && opts.rhythmOver;
   if (ro) { const rh = test.loco.rhythm; test = { ...test, loco: { ...test.loco, rhythm: { ...rh, ...ro, ...(ro.walk ? { walk: { ...rh.walk, ...ro.walk } } : {}) } } }; }
   const ho = opts && opts.humanOver; if (ho) test = { ...test, loco: { ...test.loco, human: { ...test.loco.human, over: { ...(test.loco.human.over || {}), ...ho } } } };
+  const lo = opts && opts.locoOver; if (lo) test = { ...test, loco: { ...test.loco, ...lo } };
   return runG1a(J, spec, key, { ...(opts || {}), test }); }
 
 // ── G2a ANALYSIS (measurement only; needs the run's recs with keepStates) ─────────────────────────────────────────────────────────────

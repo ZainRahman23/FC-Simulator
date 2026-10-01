@@ -98,3 +98,100 @@ The user said "keep going". Same rule: one measured mechanism → one general, o
   - widths saturate at the clamp.
 - **Not achieved.** No stable 20-step walk at any speed above ≈ 0.
 - **G2c / G2d / G2e not started** (not earned).
+
+## 5. Option 1 (the user's decision, 2026-10-01 late morning): landing mechanics + closed-loop forward placement
+
+The user chose Option 1: fix the landing and the step-to-step placement. Do not change the body. Do not retreat to the in-place march.
+
+### 5.1 Touchdown — decomposed, then fixed (measured, not tuned)
+
+**Before** (touchdown probe `td.mjs`, per touchdown):
+- Landing-foot velocity at contact: forward 0.4–3.4 m/s, vertical 1.1–4.1 m/s **down**.
+- Peak vertical force 1.1–1.9 kN (1.5–2.6 BW). Mean braking 216 N.
+
+**Human reference:**
+- Winter 1992: heel contact velocity negligible vertically, ≈ 0.87 m/s horizontally.
+- Lockhart: 0.67 ± 0.26 m/s horizontal.
+- Retraction: the foot stops moving forward and may move back over the last ≈ 3–5 % of the cycle.
+
+| Cause (measured) | Fix (opt-in) |
+|---|---|
+| The clearance guard faded at 70–92 % of the swing, so the target fell at ≈ 1.2 m/s in the last 10 % | `approach`: the guard holds through the swing; its floor lowers at a constant rate from w = 0.75 → contact at ≈ 0.25–0.4 m/s |
+| The foot arrived moving forward | `swingRetract` (δ 1 cm): the target passes the foothold and comes back |
+| The foot landed **6–12 cm beyond** its target. Joints tracked their targets within 1–2°; the swing IK was solved from the 50 ms-old hip. Proof: `delayFb 0` → 2 cm | `swingPredict`: the swing IK uses the hip / pelvis advanced over the feedback delay by their own measured velocities (an internal-model prediction). The swing's velocity feed-forward base is the hip JOINT's velocity, not the thigh COM's (that error made damping cancel the hip abduction / rotation drive and put the foot 2–8 cm outward) |
+
+**After:**
+- Contact velocity forward −0.03 m/s (max 0.18), vertical −0.37 m/s.
+- Peak vertical force 510 N. Braking −57 N.
+- Foothold error 0.5–2 cm.
+- **Pelvis yaw change across a touchdown −4…+3°** (was the ±20–30° spike).
+
+### 5.2 Pelvis yaw that remains (±15–20°) is not the touchdown
+
+- In single support the whole-body vertical angular momentum changes by ≈ 10 N·m — the stance foot's free moment.
+- The swing leg carries ≈ 3 kg·m²/s; the arms only 0.5–0.7 even with the counter-swing driven by the legs' measured angle AND rate (`armsFromLegs`).
+- A wide gait's leg swing cannot be cancelled by the arms alone.
+
+### 5.3 Forward step-to-step map (the user's question: decays / persists / oscillates / amplifies?)
+
+**Deadbeat target (always the nominal gait):**
+- **Oscillates and amplifies.** Step lengths 6–75 cm; COM speed 0.32 → 0.53 → 0.80 → 1.06 m/s against a 0.6 target.
+- A slow body's next foot is placed *behind* the stance foot.
+
+**Measured cause — the double-support model:**
+- The analytic double-support model (CoP ramp trailing toe → leading heel) **over-predicted the forward travel by 4–9 cm per step**: the leading foot takes load sooner.
+- `fwdDS: "track"`: the double-support CoP re-solved every tick to land ξ at the planned next-start offset. The next single support then starts within 1–3 cm of plan.
+
+**Gradual law (`vGain`):**
+- Implemented: the next stance aims at the periodic gait L* = L_cur + g·(L_nom − L_cur), L_cur from the measured offset.
+- With it the walk no longer runs away. But it slows / stalls: the start offsets land 1–3 cm short each step, a bias the law then follows.
+
+**Sideways:**
+- Offsets alternate and grow (widths 23 ↔ 47 cm), an **amplifying oscillation**.
+- The measured sideways divergence over single support is 2.2–3.1× vs the model's 3.9× (the stance ankle's sideways feedback); the 0.20 m minimum width then clamps the narrow side.
+
+### 5.4 Late foot placement
+
+- The executor stopped adjusting footholds at 40 % of the swing (the in-place setting), with prediction errors up to 9.5 cm at that point.
+- `adjustUntil` 0.8 + `lateBlend`: a late change enters the swing as a min-jerk-decaying offset (continuous position / velocity). The last-adjust prediction error is then 1–4 cm.
+
+### 5.5 Two regressions of my own, found by bisecting against the WIP commits
+
+1. The actual-pitch clearance (morning) was default-on and broke the in-place baseline (20/20 → 2 steps) → now opt-in (`clrActual`).
+2. **A parameter-name collision.** My retraction option was named `retract`, which is also an of_loco reference parameter (≈ 1). Every walking swing without an explicit override got ≈ 1 m of "retraction" → renamed `swingRetract`.
+   - The B1–B6 analyses set it explicitly (0.01) and are valid.
+   - The first cumulative ladder was contaminated and was re-run.
+
+### 5.6 Robustness scoring and the decisive diagnostics
+
+**Robustness score** (`rob.mjs`): every configuration over 6 starts (first foot R / L × rhythm start 0.50 / 0.56 / 0.62 s).
+- **No configuration completes 20 steps.** Best mean 9.3 steps (heel landing, 0.3 m/s).
+- The later stages (the fixes above) do not add robustness, though each fixed its own measured mechanism.
+
+**Diagnostics** (not adopted):
+- zero sensing delay (`delayFb` / `delayPlan` 0);
+- independent per-axis torque limits (`budgetFloor` 1 instead of the approved shared budget).
+
+**Neither makes walking robust** (means 1–5 steps). This is **strong evidence that the body / actuator architecture is not what gates forward walking — the stepping controller design is.**
+
+### 5.7 Re-verified necessary
+
+The pre-swing release: without it, double support lasts 0.24–0.45 s and the walk falls at once.
+
+### 5.8 Assessment
+
+The planner is an exact-plan, phase-model DCM design: rolling-CoP single support, modelled double support, deadbeat / partial placement. On this body, every model mismatch (the double-support load transfer, the slower sideways divergence, the late liftoffs) enters a step-to-step map with ≈ 4–12× sensitivity, so it does not settle into a bounded gait. Fixing mismatches one at a time moved the failure but did not produce stability.
+
+**The next step is a stepping-controller redesign — the user's decision.**
+
+### 5.9 CORRECTION — step counts after a fall
+
+The rhythm keeps executing steps when the body is already on the turf. My matrix and robustness counters counted those as landed steps.
+
+**Fall-aware recount** (only steps landed while COM > 0.75 m):
+- The overnight "20/20 at v ≈ 0" and "19–20 steps at 0.1 m/s" were not walks: the in-place walking planner keeps the body upright for ≈ 3 steps.
+- Every configuration since lands 2–5 upright steps on average over 6 starts. The best single runs reach ≈ 9 upright steps (G2b_dbg, still upright at 8 s).
+
+The diagnostics' conclusion is unchanged. Neither zero delay (mean 4–5 upright steps) nor independent torque limits (1–3) makes walking robust.
+
+`mat.mjs` / `rob.mjs` now count only pre-fall steps. Earlier tables in §3–5 that quote "rh" counts above ≈ 9 are affected.

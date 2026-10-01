@@ -118,7 +118,7 @@ export function runG1a(J, spec, key, opts) {
   const audit = Object.assign({}, w.audit), support = !!w.support; w.destroy();
   return summarizeG1a(spec, key, TST, { hash: (h >>> 0).toString(16), nan, audit, support, recs, loco, led, arbSum, ev, puOn, cpuJ, cpuC, steps, sub, P0: P0v, L0, M, worldCfg, obst, supR, obstDepth, delays: { fb: loco.dFb, pl: loco.dPl } });
 }
-const slim = (f) => ({ state: f.state, touching: f.touching, loaded: f.loaded, slipping: f.slipping, load: f.load, slipDist: f.slipDist, slipSpeed: f.slipSpeed, muUsed: f.muUsed, edgeContact: f.edgeContact, sole: f.sole, points: f.points, anchor: f.anchor ? f.anchor.pos : null, heel: f.heel, toe: f.toe, extContact: f.extContact });
+const slim = (f) => ({ state: f.state, touching: f.touching, loaded: f.loaded, slipping: f.slipping, load: f.load, shear: f.shear, centroid: f.centroid, slipDist: f.slipDist, slipSpeed: f.slipSpeed, muUsed: f.muUsed, edgeContact: f.edgeContact, sole: f.sole, points: f.points, anchor: f.anchor ? f.anchor.pos : null, heel: f.heel, toe: f.toe, extContact: f.extContact });
 const r2 = (x, d = 2) => (x == null || !Number.isFinite(x) ? null : +x.toFixed(d));
 export function summarizeG1a(spec, key, TST, x) {
   const R_ = x.recs, last = R_[R_.length - 1], com0 = R_[Math.min(R_.length - 1, 12)].com, hyp = (v) => Math.hypot(v[0], v[2]), pl = x.loco.planner, M = x.M;

@@ -153,13 +153,13 @@ export class StepExecutor {
         this.ev(t, "OBSTRUCTED", `${sw}: stop progressing, set the foot down where it is (reaction ${((t - truth.obstructedAt[sw] + (this.dFb || 0)) * 1000).toFixed(0)} ms after the contact, of which ${((this.dFb || 0) * 1000).toFixed(0)} ms is the feedback view's age)`); R.obst.reactS = t - truth.obstructedAt[sw] + (this.dFb || 0); }
       // re-plan the foothold from the current state: corrective — during the rise (C3); rhythmic — follow the capture-point error in early swing
       if (R.stage === "SWING" && R.kind === "corrective" && t - R.tSw < STEP.replanUntil * R.T) { const c = T._candidate(o, sw, R.cur0, t - R.tSw, R.alpha); if (c && c.feasible) { R.cand = c; T._aim(R, o, c); R.plannedTd.center = c.target.slice(); } }
-      if (R.stage === "SWING" && R.kind === "rhythmic" && (R.u || 0) < PLAN.adjustUntil && t - R.lastAim >= 1 / 60 - 1e-9) { R.lastAim = t; this._adjust(o, R); }
+      if (R.stage === "SWING" && R.kind === "rhythmic" && (R.u || 0) < (R.walkK && R.walkK.adjustUntil != null ? R.walkK.adjustUntil : PLAN.adjustUntil) && t - R.lastAim >= 1 / 60 - 1e-9) { R.lastAim = t; this._adjust(o, R); }
       let tg; if (R.stage === "OBSTRUCTED") { const y = Math.max(g.yFlat + SUP.touchDepth, R.obst.yTop - PLAN.obstruct.descendV * (t - R.obst.t)), yaw = yawOf(R.obst.rot);
         tg = { pos: [R.obst.pos[0], y, R.obst.pos[2]], rot: Q.axis([0, 1, 0], yaw), vel: [0, -PLAN.obstruct.descendV, 0], u: R.u, reach: [R.obst.pos[0], g.yFlat + SUP.touchDepth, R.obst.pos[2]] }; }
       else if (R.timed) { tg = this._timedAt(R, t + (this.lead || 0), o); if (R.stage === "DESCEND") { const y = (R.human ? tg.pos[1] : R.tpT[1]) - Math.min(0.04, PLAN.obstruct.descendV * (t - R.tD)); tg = { ...tg, pos: [tg.pos[0], y, tg.pos[2]], vel: [0, -PLAN.obstruct.descendV, 0] }; } }
       else { tg = R.xo ? T._swingCross(R, t) : R.heelUp ? T._swingHeelUp(R, t) : g._swingAt(R, t);
         if (R.fastDescend && R.stage === "DESCEND") { const y = R.pT[1] - Math.min(0.04, PLAN.obstruct.descendV * (t - R.tD)); tg = { ...tg, pos: [tg.pos[0], y, tg.pos[2]], vel: [0, -PLAN.obstruct.descendV, 0] }; } }
-      plan.copFoot = st; plan.xiRef = R.kind === "rhythmic" ? this._xiD(R, t, o) : o.xi.slice(); if (R.kind === "rhythmic") plan.xiDot = R.xiDotNow; if (R.walkK) { plan.kXi = R.walkK.kXi ?? { hd: R.walkK.hd, along: 0, across: BAL.kXi }; if (R.walkK.latCop) plan.latCop = { foot: st, cap: R.walkK.latCop }; } plan.swing[sw] = tg; R.u = tg.u; R.lastTgt = tg;
+      plan.copFoot = st; plan.xiRef = R.kind === "rhythmic" ? this._xiD(R, t, o) : o.xi.slice(); if (R.kind === "rhythmic") plan.xiDot = R.xiDotNow; if (R.walkK) { plan.kXi = R.walkK.kXi ?? { hd: R.walkK.hd, along: 0, across: R.walkK.kXiAcross ?? BAL.kXi }; if (R.walkK.latCop) plan.latCop = { foot: st, cap: R.walkK.latCop }; if (R.walkK.swingKpDrop != null) plan.swingKpDrop = R.walkK.swingKpDrop; if (R.walkK.swingPredict) plan.swingPredict = this.dFb || 0; } plan.swing[sw] = tg; R.u = tg.u; R.lastTgt = tg;
       if (!R.liftoff) { if (!F[sw].touching && F[sw].load < 25) R.air++; else R.air = 0;
         if (R.air >= 3) { R.liftoff = { t }; this.lastEventT = t; this.ev(t, "liftoff", `${sw} ${(t - R.tNeed).toFixed(3)} s after the step started`); }
         else if (t - R.tSw0 > STEP.liftTimeout) { R.stage = "FAILED"; R.fail = `the ${sw} foot did not leave the ground within ${STEP.liftTimeout} s (load ${F[sw].load.toFixed(0)} N)`; this.ev(t, "FAILED", R.fail); } }
@@ -207,11 +207,11 @@ export class StepExecutor {
   // τ_dorsi / W behind the ankle). Only the part of the error the ankle cannot remove moves the foothold (a fixed-CoP prediction amplified
   // every ankle-correctable error by e^{ωT} and pushed the footholds 12 cm out — G1a finding).
   _predictTd(o, R, Trem) { const w = o.omega0, g = this.geo, ctrl = this.tool.ctrl, st = R.st, sole = g._sole(o, st), ank = o.states[g.foot[st]].pos, hd = g._heading(o, st), rt = [hd[1], -hd[0]];
-    const Wt = this.tool.W, L = ctrl.limits.ankle, m = ctrl.mult, fwdMax = L.Y[1] * m / Wt, backMax = -L.Y[0] * m / Wt, latMax = L.Z[1] * m / Wt;
+    const Wt = this.tool.W, L = ctrl.limits.ankle, m = ctrl.mult, fwdMax = L.Y[1] * m / Wt, backMax = -L.Y[0] * m / Wt, latMax = R.walkK && R.walkK.latPred != null ? R.walkK.latPred : L.Z[1] * m / Wt;   // ((G2b) walking: the realisable sideways CoP, ≈ 1–2.5 cm)
     let xi = o.xi.slice(); const h = 0.01, n = Math.max(0, Math.round(Trem / h)); let tt = o.t - R.tSw0;
     for (let i = 0; i < n; i++) { let xd, pN = R.pSt; if (R.walkK && R.walkK.r) { const K = R.walkK, q = segXi(R.xiIni, [R.pSt[0] - K.hd[0] * K.r, R.pSt[1] - K.hd[1] * K.r], [R.pSt[0] + K.hd[0] * K.r, R.pSt[1] + K.hd[1] * K.r], K.Tss, tt, w); xd = q.xi; pN = q.p; }
       else { const e = dexp(w * tt); xd = [R.pSt[0] + (R.xiIni[0] - R.pSt[0]) * e, R.pSt[1] + (R.xiIni[1] - R.pSt[1]) * e]; }
-      const ex = [xi[0] - xd[0], xi[1] - xd[1]], kq = kXiErr(R.walkK ? (R.walkK.kXi ?? { hd: R.walkK.hd, along: 0, across: BAL.kXi }) : BAL.kXi, ex); let p = [pN[0] + ex[0] + kq[0], pN[1] + ex[1] + kq[1]];
+      const ex = [xi[0] - xd[0], xi[1] - xd[1]], kq = kXiErr(R.walkK ? (R.walkK.kXi ?? { hd: R.walkK.hd, along: 0, across: R.walkK.kXiAcross ?? BAL.kXi }) : BAL.kXi, ex); let p = [pN[0] + ex[0] + kq[0], pN[1] + ex[1] + kq[1]];
       const d = [p[0] - ank[0], p[1] - ank[2]], f = Math.max(-backMax, Math.min(fwdMax, d[0] * hd[0] + d[1] * hd[1])), l = Math.max(-latMax, Math.min(latMax, d[0] * rt[0] + d[1] * rt[1]));
       p = [ank[0] + hd[0] * f + rt[0] * l, ank[2] + hd[1] * f + rt[1] * l]; if (sole.length >= 3 && polyDist(sole, p) < 0) { const c = this._nearest(sole, p); p = c; }
       xi = [xi[0] + h * w * (xi[0] - p[0]), xi[1] + h * w * (xi[1] - p[1])]; tt += h; }
@@ -260,7 +260,7 @@ export class LocoPlanner {
       if (r.walk && er.R.td && er.R.td.uAt > 0.5) r.uTd = 0.5 * (r.uTd || 0.88) + 0.5 * Math.min(1, er.R.td.uAt);   // (the measured touchdown fraction of the swing)
       if (r.walk && er.R.pSt) { const w = oFb.omega0, e = dexp(w * (oFb.t - er.R.tSw0)), x0 = r.walk.openLoop ? [er.R.pSt[0] + (er.R.xiIni[0] - er.R.pSt[0]) * e, er.R.pSt[1] + (er.R.xiIni[1] - er.R.pSt[1]) * e] : oFb.xi.slice();
         const ps = this._hdg(), hd = [Math.sin(ps), Math.cos(ps)], R0 = r.wk.r, pL = this._wkP(oFb, er.R.sw);
-        r.wds = { t0: oFb.t, xi0: x0, p0: [er.R.pSt[0] + hd[0] * R0, er.R.pSt[1] + hd[1] * R0], p1: [pL[0] - hd[0] * R0, pL[1] - hd[1] * R0], pC: pL, T: r.Tds }; } } }
+        r.wds = { t0: oFb.t, xi0: x0, p0: [er.R.pSt[0] + hd[0] * R0, er.R.pSt[1] + hd[1] * R0], p1: [pL[0] - hd[0] * R0, pL[1] - hd[1] * R0], pC: pL, T: r.Tds, cT: er.R.walkK ? er.R.walkK.cNext.slice() : null, pT: er.R.pSt.slice() }; } } }
     else if (er && er.rest) { this.rest = er.rest; if (this.rhythm && this.rhythm.paused) { this.rhythm.paused = false; this.rhythm.stage = "DS"; this.rhythm.tDs = t; this.rhythm.tTd = t; this.rhythm.anchors = er.rest.anchors; this.rhythm.dsFrom = oFb.xi.slice(); } }
     else if (er && er.failed) { if (this.rhythm && this.rhythm.stage !== "DONE") { this.rhythm.stage = "ABORTED"; this.ev(t, "rhythm", `aborted: ${er.R.fail}`); } }
     // 2. voluntary C2 requests (quasi-static placement) / transfer-only requests / the rhythm
@@ -336,7 +336,8 @@ export class LocoPlanner {
     r.Tds = W.Tds || T * ds; r.Tss = W.Tss || T - r.Tds; const E1 = dexp(w * r.Tss), E2 = dexp(w * r.Tds), k = (E2 - 1) / (w * r.Tds), k1 = (E1 - 1) / (w * r.Tss);
     const f = (s) => Q.rot(o.states[this.geo.foot[s]].rot, [0, 0, 1]), h0 = Math.atan2(f("L")[0] + f("R")[0], f("L")[2] + f("R")[2]);
     // (latDS "freeze": across the walk the double support HOLDS ξ (CoP on ξ), so the lateral step map has no double-support term: E2 = κ = 1)
-    const fr = W.latDS === "freeze"; r.wk = { v, cad, T, L: W.L || v * T, w: W.w ?? 0.22, E1, E2, k, k1, lE2: fr ? 1 : E2, lK: fr ? 1 : k, r: W.roll ?? 0.08, omega: w, h0, toeOut: { L: r.homeYaw.L - h0, R: r.homeYaw.R - h0 }, Lmax: W.Lmax ?? 0.68,
+    // (fwdDS "freeze": along the walk too the double support HOLDS ξ — the forward step map has no double-support term either)
+    const fr = W.latDS === "freeze", ff = W.fwdDS === "freeze"; r.wk = { v, cad, T, L: W.L || v * (W.Tss || W.Tds ? r.Tss + r.Tds : T), w: W.w ?? 0.22, E1, E2, k, k1, lE2: fr ? 1 : E2, lK: fr ? 1 : k, fE2: ff ? 1 : E2, fK: ff ? 1 : k, r: W.roll ?? 0.08, omega: w, h0, toeOut: { L: r.homeYaw.L - h0, R: r.homeYaw.R - h0 }, Lmax: W.Lmax ?? 0.68,
       // (the narrowest step this body can take: its collider boots are 16.4 cm wide, so below ≈ 20 cm centre-to-centre the swinging boot's
       // path meets the stance boot — a body-geometry limit, a human foot is ≈ 10 cm wide)
       wMin: W.wMin ?? 0.20, wMax: W.wMax ?? 0.34, w0: Math.hypot(r.home.L[0] - r.home.R[0], r.home.L[1] - r.home.R[1]) };   // (Lmax ≈ 0.73 leg: the reachable step)
@@ -350,16 +351,23 @@ export class LocoPlanner {
   // (with the stance CoP ROLLING r behind → r ahead of the foot centre over single support and on from the trailing forefoot to the leading heel
   // over double support: c_f = [E2(r(E1 − 1) + 2r(1 − κ1)) − r(E2 − 1) + (L − 2r)(1 − κ2) − L] / (1 − E1E2); laterally unchanged)
   _wkC(r, Lf, Ll) { const K = r.wk, ps = this._hdg(), hd = [Math.sin(ps), Math.cos(ps)], rt = [hd[1], -hd[0]], R0 = K.r, cl = Ll * K.lK / (K.E1 * K.lE2 + 1);
-    const cf = (K.E2 * (R0 * (K.E1 - 1) + 2 * R0 * (1 - K.k1)) - R0 * (K.E2 - 1) + (Lf - 2 * R0) * (1 - K.k) - Lf) / (1 - K.E1 * K.E2);
+    const E2 = K.fE2 ?? K.E2, kk = K.fK ?? K.k, cf = (E2 * (R0 * (K.E1 - 1) + 2 * R0 * (1 - K.k1)) - R0 * (E2 - 1) + (Lf - 2 * R0) * (1 - kk) - Lf) / (1 - K.E1 * E2);
     return [hd[0] * cf + rt[0] * cl, hd[1] * cf + rt[1] * cl]; }
   // ξ at the start of the FIRST single support: the stance foot's point + the nominal offset of the first step (from standing)
   _walkFirstXi(o, step) { const r = this.rhythm, st = step.sw === "L" ? "R" : "L", side = step.sw === "R" ? 1 : -1, p = this._wkP(o, st), c = this._wkC(r, this._stepL(step), side * this._stepW(r.i)); return [p[0] + c[0], p[1] + c[1]]; }
   // the DCM foothold (along, across the walk, relative to the stance centre) for a capture point ξ_eos at the end of single support, so that the
   // double support (CoP: trailing forefoot → leading heel) leaves ξ at c_next from the new stance centre
   _dcmD(K, hd, rt, eos, pSt, cN) { const e = [eos[0] - pSt[0], eos[1] - pSt[1]], ef = e[0] * hd[0] + e[1] * hd[1], el = e[0] * rt[0] + e[1] * rt[1], cf = cN[0] * hd[0] + cN[1] * hd[1], cl = cN[0] * rt[0] + cN[1] * rt[1], R0 = K.r;
-    return [(K.E2 * ef - R0 * (K.E2 - 1) - 2 * R0 * (1 - K.k) - cf) / K.k, (K.lE2 * el - cl) / K.lK]; }
+    const E2 = K.fE2 ?? K.E2, kk = K.fK ?? K.k; return [(E2 * ef - R0 * (E2 - 1) - 2 * R0 * (1 - kk) - cf) / kk, (K.lE2 * el - cl) / K.lK]; }
   _walkPlan(o, step, xi0) { const r = this.rhythm, K = r.wk, st = step.sw === "L" ? "R" : "L", side = step.sw === "R" ? 1 : -1, ps = this._hdg(), hd = [Math.sin(ps), Math.cos(ps)], rt = [hd[1], -hd[0]];
-    const pSt = this._wkP(o, st), nxt = r.steps[r.i + 1], cN = nxt ? this._wkC(r, this._stepL(nxt), -side * this._stepW(r.i + 1)) : [0, 0], Wn = this._stepW(r.i), R0 = K.r;
+    const pSt = this._wkP(o, st), nxt = r.steps[r.i + 1], Wn = this._stepW(r.i), R0 = K.r;
+    // ((G2b, walk.vGain) GRADUAL forward placement: the next single support aims at the periodic gait of step length L* = L_cur + g_v·(L_nom − L_cur),
+    // L_cur the periodic step length whose start offset equals the MEASURED one (c_f(L) is linear in L: c_f = A + B·L) — a speed error decays by
+    // (1 − g_v) per step instead of being cancelled in one step; the deadbeat target (always the nominal gait) placed a slow body's next foot
+    // behind the stance foot and drove step lengths between 6 and 75 cm)
+    let Lnext = nxt ? this._stepL(nxt) : 0; if (nxt && r.walk.vGain != null) { const A = this._wkC(r, 0, 0), B = this._wkC(r, 1, 0), a = A[0] * hd[0] + A[1] * hd[1], b = (B[0] * hd[0] + B[1] * hd[1]) - a, c0f = (xi0[0] - pSt[0]) * hd[0] + (xi0[1] - pSt[1]) * hd[1];
+      const Lc = b > 1e-6 ? (c0f - a) / b : Lnext, dLm = r.walk.vStepMax ?? 0.12; Lnext = Math.max(0.05, Math.min(K.Lmax, Lc + Math.max(-dLm, Math.min(dLm, r.walk.vGain * (Lnext - Lc))))); this.lastLc = { Lc, Lnext, c0f }; }
+    const cN = nxt ? this._wkC(r, Lnext, -side * this._stepW(r.i + 1)) : [0, 0];
     // (STEP TIMING, rhythm.walk.adaptT: the single support lasts as long as the MEASURED sideways capture-point offset c0 needs to reach the
     // nominal step width — e^{ωT} = (W·κ − c_next) / (E2·c0), bounded. The foot cannot be placed narrower than the boots allow (wMin), so a
     // capture point that starts too close to the stance foot was uncorrectable by placement; a longer stance lets it travel. A larger offset
@@ -380,7 +388,7 @@ export class LocoPlanner {
     const sw0 = this.geo._center(o, step.sw), dC = dComAt(o, pSt, Tk), ok = (q) => this.tool._feasible(o, step.sw, q, ps + (K.toeOut[step.sw] || 0), sw0, dC, null).ok;
     if (!ok(target)) { const a = [pSt[0] + rt[0] * dl, pSt[1] + rt[1] * dl]; let lo = 0, hi = 1; for (let i = 0; i < 14; i++) { const m = (lo + hi) / 2; if (ok([a[0] + (target[0] - a[0]) * m, a[1] + (target[1] - a[1]) * m])) lo = m; else hi = m; } target = [a[0] + (target[0] - a[0]) * lo, a[1] + (target[1] - a[1]) * lo]; }
     return { target, pSt, pSw: target, xiIni: xi0.slice(), xiTd: eos, yaw: ps + (K.toeOut[step.sw] || 0), dcm: { df: df0, dl: dl0, clamped: df !== df0 || dl !== dl0 },
-      walkK: { cNext: cN, side, hd, E2: K.E2, k: K.k, r: K.r, Tss: Tk, kXi: r.walk.kXiSS, latCop: r.walk.latCop, dcm: (eos2, pS2) => this._dcmD(K, hd, rt, eos2, pS2, cN), Lmax: K.Lmax || 0.9, g: r.walk.placeGain ?? 0.6, gf: r.walk.placeGainFwd ?? 1, Ln, w: Wn, wMin: K.wMin, wMax: K.wMax } }; }
+      walkK: { cNext: cN, side, hd, E2: K.E2, k: K.k, r: K.r, Tss: Tk, kXi: r.walk.kXiSS, latCop: r.walk.latCop, swingKpDrop: r.walk.swingKpDrop, swingPredict: !!r.walk.swingPredict, adjustUntil: r.walk.adjustUntil, latPred: r.walk.latPred, kXiAcross: r.walk.kXiAcross, dcm: (eos2, pS2) => this._dcmD(K, hd, rt, eos2, pS2, cN), Lmax: K.Lmax || 0.9, g: r.walk.placeGain ?? 0.6, gf: r.walk.placeGainFwd ?? 1, Ln, w: Wn, wMin: K.wMin, wMax: K.wMax } }; }
   // the walking double support's reference at the current time (and the CoP reference)
   _walkDSxi(o, r) { const D = r.wds, w = r.wk.omega, s = Math.max(0, o.t - D.t0), T = D.T, d = [D.p1[0] - D.p0[0], D.p1[1] - D.p0[1]];
     const at = (x) => { const E = dexp(w * x); return [E * D.xi0[0] - D.p0[0] * (E - 1) + d[0] * x / T - d[0] * (E - 1) / (w * T), E * D.xi0[1] - D.p0[1] * (E - 1) + d[1] * x / T - d[1] * (E - 1) / (w * T)]; };
@@ -399,6 +407,18 @@ export class LocoPlanner {
     // solution p0 = (E·ξ + p_b(1 − κ) − ξ_T)/(E − κ), E = e^{ωτ}, κ = (E − 1)/(ωτ); bounded to the two feet's lateral extent (± the ankle's
     // few cm). The reference is the measured ξ itself with the rate that CoP gives, so the balance law places the CoP there. It uses the
     // body's actual sideways momentum at touchdown, which a zero-velocity transfer ignored.)
+    // ((G2b, walk.fwdDS "track") ALONG the walk the double support is closed-loop as well: the CoP now (ramping onto the leading foot's
+    // single-support start point p_b = stance point − r) that brings ξ to the planned next-start offset c_T (the previous plan's c_next),
+    // re-solved every tick from the MEASURED ξ, clamped to the feet's extent along the walk. The analytic ramp over-predicted the double
+    // support's forward travel by 4–9 cm per step (the leading foot takes the load sooner than a linear ramp), the next single support started
+    // off-plan by ± 5 cm and the speed ran away (0.32 → 1.06 m/s).)
+    if (r.walk.fwdDS === "freeze") { const fN = (o.xi[0] - D.pC[0]) * hd[0] + (o.xi[1] - D.pC[1]) * hd[1], ex = this.geo.box.he[2] - 0.02, pf = Math.max(-ex, Math.min(ex, fN)); r.wdsFwd = { fN, pf };
+      const latP = (p[0] - D.pC[0]) * rt[0] + (p[1] - D.pC[1]) * rt[1]; p = [D.pC[0] + hd[0] * pf + rt[0] * latP, D.pC[1] + hd[1] * pf + rt[1] * latP];
+      const latX = (xi[0] - D.pC[0]) * rt[0] + (xi[1] - D.pC[1]) * rt[1]; xi = [D.pC[0] + hd[0] * fN + rt[0] * latX, D.pC[1] + hd[1] * fN + rt[1] * latX]; }
+    if (r.walk.fwdDS === "track" && D.cT) { const fN = (o.xi[0] - D.pC[0]) * hd[0] + (o.xi[1] - D.pC[1]) * hd[1], fT = D.cT[0] * hd[0] + D.cT[1] * hd[1], tau = Math.max(0.04, T - s), E = dexp(w * tau), kq = (E - 1) / (w * tau), pb = -K.r;
+      let pf = (E * fN + pb * (1 - kq) - fT) / (E - kq); const tr = (D.pT[0] - D.pC[0]) * hd[0] + (D.pT[1] - D.pC[1]) * hd[1], ex = this.geo.box.he[2] - 0.02; pf = Math.max(Math.min(tr + ex, -ex), Math.min(ex, pf));   // (from the trailing toe — its heel is up — to the leading toe)
+      r.wdsFwd = { fN, fT, pf }; const latP = (p[0] - D.pC[0]) * rt[0] + (p[1] - D.pC[1]) * rt[1]; p = [D.pC[0] + hd[0] * pf + rt[0] * latP, D.pC[1] + hd[1] * pf + rt[1] * latP];
+      const latX = (xi[0] - D.pC[0]) * rt[0] + (xi[1] - D.pC[1]) * rt[1]; xi = [D.pC[0] + hd[0] * fN + rt[0] * latX, D.pC[1] + hd[1] * fN + rt[1] * latX]; }
     if (r.walk.latDS === "freeze") { const lN = (o.xi[0] - D.p1[0]) * rt[0] + (o.xi[1] - D.p1[1]) * rt[1], fw = (xi[0] - D.p1[0]) * hd[0] + (xi[1] - D.p1[1]) * hd[1], xiT = [D.p1[0] + hd[0] * fw + rt[0] * lN, D.p1[1] + hd[1] * fw + rt[1] * lN];
       const dotA = [w * (xi[0] - p[0]), w * (xi[1] - p[1])], fwdDot = dotA[0] * hd[0] + dotA[1] * hd[1]; r.wdsLat = { lN, latT, p0: lN };
       return { xi: xiT, p, dot: [hd[0] * fwdDot, hd[1] * fwdDot], u: Math.min(1, s / T) }; }   // (sideways: reference = measured ξ, rate 0 → the CoP sits on ξ)

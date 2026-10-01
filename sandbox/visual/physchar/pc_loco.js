@@ -73,11 +73,11 @@ export class LocoController {
     else if (r && r.stage === "DONE") w = 0;
     u = ((u % 1) + 1) % 1; if (tq == null) { this.refU = u; this.refW = w; } return { u, w }; }
   // the style posture, the planned pelvis posture and the full reference pose (for the overlay) at the measured phase
-  _humanStyle(o) { const H = this.human, ph = this._refPhase(o), styled = (u, w) => { const pose = refPose(H.P, u, w); if (!H.arms) { for (const n of ["upperArm_L", "upperArm_R", "foreArm_L", "foreArm_R"]) pose[n] = idlePose()[n]; }
+  _humanStyle(o) { const H = this.human, ph = this._refPhase(o), styled = (u, w, cOv) => { const pose = refPose(H.P, u, w), cLeg_ = cOv ?? cLeg; if (!H.arms) { for (const n of ["upperArm_L", "upperArm_R", "foreArm_L", "foreArm_R"]) pose[n] = idlePose()[n]; }
       // ((G2b, P.armsFromLegs) WALKING COUNTER-SWING from the legs' ACTUAL fore-aft angles — G2a's in-place finding applied to walking: the walk's
       // own clock left the arms adding to the legs' momentum in double support (arms +0.8 with legs +1.0 kg·m²/s) and the pelvis yawed ±15–30°;
       // c = (φ_R − φ_L) / (2·legAmp) from each thigh's sagittal angle to the pelvis, the arms / thorax / pelvis yaw as in place (pc_ref)
-      else if (H.P.walk && H.P.armsFromLegs && cLeg != null) { const P = H.P, c = cLeg, aR = P.arm * c, aL = -aR, cl = (v) => Math.max(0, Math.min(1, v));
+      else if (H.P.walk && H.P.armsFromLegs && cLeg_ != null) { const P = H.P, c = cLeg_, aR = P.arm * c, aL = -aR, cl = (v) => Math.max(0, Math.min(1, v));
         pose.upperArm_R = [aR, 0, P.abd]; pose.upperArm_L = [aL, 0, -P.abd]; pose.foreArm_R = [-P.elbow - 14 * cl(-aR / Math.max(1, P.arm)), 0, 0]; pose.foreArm_L = [-P.elbow - 14 * cl(-aL / Math.max(1, P.arm)), 0, 0];
         pose.spine = [pose.spine[0], P.sYaw * c * 0.5, pose.spine[2]]; pose.chest = [pose.chest[0], P.sYaw * c * 0.5, pose.chest[2]]; pose.pelvis = [pose.pelvis[0], -P.pYaw * c, pose.pelvis[2]]; }
       if (!H.trunk) { pose.spine = [pose.spine[0], 0, pose.spine[2]]; pose.chest = [pose.chest[0], 0, pose.chest[2]]; }
@@ -87,8 +87,11 @@ export class LocoController {
     // keeps its heading while the pelvis rotates beneath it with the legs. The walk's feed-forward thorax twist compensates a stride's pelvis
     // rotation; in place the arms already cancel the legs' momentum and that twist added its own (G2a attribution). (Stabilising against the
     // INTENDED heading instead was positive feedback in a turn: the lagging pelvis was twisted further away and he spun.)
-    let cLeg = null; if (H.P.walk && H.P.armsFromLegs) { const Rp = o.states[0].rot, fw = Q.rot(Rp, [0, 0, 1]), up = Q.rot(Rp, [0, 1, 0]), ang = (s) => { const d = Q.rot(o.states[this.ctrl.legs[s].thigh].rot, [0, -1, 0]); return Math.atan2(V.dot(d, fw), -V.dot(d, up)); };
-      cLeg = Math.max(-1.2, Math.min(1.2, (ang("R") - ang("L")) / (2 * (H.P.legAmp ?? 0.35)))); }
+    let cLeg = null, cLegDot = 0; if (H.P.walk && H.P.armsFromLegs) { const Rp = o.states[0].rot, fw = Q.rot(Rp, [0, 0, 1]), up = Q.rot(Rp, [0, 1, 0]);
+      // (each thigh's sagittal angle φ = atan2(d·fw, −d·up) and its rate from the thigh's measured angular velocity (ḋ = ω × d) — the
+      // counter-swing's own VELOCITY, so the arms are driven with the legs instead of lagging their targets by the damping (G2a finding))
+      const ang = (s) => { const S = o.states[this.ctrl.legs[s].thigh], d = Q.rot(S.rot, [0, -1, 0]), dd = V.cross(S.w, d), a = V.dot(d, fw), b = -V.dot(d, up), da = V.dot(dd, fw), db = -V.dot(dd, up); return [Math.atan2(a, b), (da * b - a * db) / Math.max(1e-6, a * a + b * b)]; };
+      const R_ = ang("R"), L_ = ang("L"), A2 = 2 * (H.P.legAmp ?? 0.35); cLeg = Math.max(-1.2, Math.min(1.2, (R_[0] - L_[0]) / A2)); cLegDot = H.P.armsVel === false ? 0 : (R_[1] - L_[1]) / A2; }
     let tw = null; if (H.trunk === "stabilize") { const f = Q.rot(o.states[0].rot, [0, 0, 1]), yp = datan2(f[0], f[2]), wr = (a) => Math.atan2(Math.sin(a), Math.cos(a));
       if (this.pelLP == null || this.pelLPt == null) { this.pelLP = yp; this.pelLPt = o.t; } const dt = Math.max(0, o.t - this.pelLPt); this.pelLPt = o.t; this.pelLP = wr(this.pelLP + wr(yp - this.pelLP) * Math.min(1, dt / 0.6));
       tw = Math.max(-10, Math.min(10, -wr(yp - this.pelLP) * 180 / Math.PI)); }
@@ -96,7 +99,7 @@ export class LocoController {
     // the style's own VELOCITY (the reference advanced by the same measured-phase law 1/60 s ahead): the joint damping then resists deviation
     // from the intended motion, not the motion — with a zero target velocity the shoulder's damping cancelled its drive and the arm swing
     // lagged ≈ 100 ms (G2a finding; the C2 principle for the legs)
-    if (H.styleVel !== false) { const h = 1 / 60, ph2 = this._refPhase(o, o.t + h), sn2 = poseTargets(this.spec, styled(ph2.u, ph2.w), H.styleJoints); this.styleVel = {};
+    if (H.styleVel !== false) { const h = 1 / 60, ph2 = this._refPhase(o, o.t + h), sn2 = poseTargets(this.spec, styled(ph2.u, ph2.w, cLeg != null ? cLeg + cLegDot * h : null), H.styleJoints); this.styleVel = {};
       for (const k in sn) { const a = sn[k], b = sn2[k]; if (typeof a === "number") this.styleVel[k] = (b - a) / h; else { let d = Q.mul(Q.conj(a), b); if (d[3] < 0) d = d.map(x => -x); this.styleVel[k] = [2 * d[0] / h, 2 * d[1] / h, 2 * d[2] / h]; } } }
     // pelvis: the reference's yaw and roll; the height lowers with the SUPPORTING leg's knee bend (stance, before its late-stance heel rise)
     let dy = 0; for (const s of ["L", "R"]) { const lg = pose._legs && pose._legs[s]; if (!lg || !lg.st || lg.s > 0.62) continue; const k = pose["shin_" + s][0] * Math.PI / 180; dy = Math.min(dy, H.shin * (dcos(k) - dcos(H.kIdle))); }
@@ -148,29 +151,42 @@ export class LocoController {
     const atWalk = (tt) => { const w = Math.max(0, Math.min(1, (tt - R.tSw0) / R.T)), land = landing(), p0 = Hs.p0w || (Hs.p0w = R.p0.slice()), x = Math.max(0, Math.min(1, w / 0.92));
       const sh = minjerk((w - 0.02) / 0.83), sv = minjerk((w - 0.04) / 0.9), H = P.swingLiftH ?? 0.09, bump = H * Math.pow(x, 1.2) * Math.pow(1 - x, 2) / (Math.pow(0.375, 1.2) * Math.pow(0.625, 2));
       let pos = [p0[0] + (land.pos[0] - p0[0]) * sh, p0[1] + (land.pos[1] - p0[1]) * sv + bump, p0[2] + (land.pos[2] - p0[2]) * sh];
+      // ((G2b, P.swingRetract = δ m — not of_loco's own `retract` parameter, a name collision that applied 1 m of 'retraction' to every walking swing) SWING-LEG RETRACTION: the horizontal target passes the foothold by δ late in the swing and comes back to it, so the
+      // foot is moving slightly BACKWARD relative to the turf when it lands (human terminal swing: the foot stops moving forward and may move
+      // back over the last ≈ 3–5 % of the cycle) — it had arrived with 0.4–3.4 m/s forward and braked the body against the turf)
+      if (P.swingRetract) { const x2 = Math.max(0, Math.min(1, (w - 0.55) / 0.45)), b2 = P.swingRetract * Math.sin(Math.PI * x2), hdr = [Math.sin(R.yawT), 0, Math.cos(R.yawT)]; pos = [pos[0] + hdr[0] * b2, pos[1], pos[2] + hdr[2] * b2]; }
       let rho = Hs.rho0 * (1 - minjerk(w / 0.45)) + land.rho * minjerk((w - 0.55) / 0.4); const yaw = Hs.yaw0 + (R.yawT - Hs.yaw0) * minjerk(w);
       // ((G2b) the guard is on from liftoff — the toe leaves the turf at w = 0, so its margin, not the guard, ramps in: a guard ramped over the
       // first 10 % let the hanging toe re-contact ≈ 25 ms after liftoff with ≈ 200–380 N, braking the body and pushing ξ sideways)
       // ((G2b) the guard holds until P.clrOff[0] of the swing (default 0.7) and fades over clrOff[1]: faded from 70 %, the heel-strike pitch put
       // the heel on the turf at ≈ 67 % of a long step, 30 cm short — a human heel descends to contact only at the end of the swing)
-      const cO = P.clrOff || [0.7, 0.22], G = (P.walkClrRamp ? minjerk(Math.min(1, w / 0.1)) : 1) * (1 - minjerk(Math.max(0, Math.min(1, (w - cO[0]) / cO[1]))));
+      // ((G2b, P.approach = { wd, m0 }) a CONTROLLED FINAL DESCENT: the guard stays on through the whole swing and its floor lowers at a constant
+      // rate from wd to the pressed landing at w = 1 — the lowest point of the boot meets the turf at ≈ (m0 + press) / ((1 − wd)·T) ≈ 0.25 m/s
+      // instead of the 1–4 m/s at which a fading guard let it fall (human heel: negligible vertical velocity at contact, Winter 1992))
+      const AP = P.approach, cO = P.clrOff || [0.7, 0.22], G = AP ? 1 : (P.walkClrRamp ? minjerk(Math.min(1, w / 0.1)) : 1) * (1 - minjerk(Math.max(0, Math.min(1, (w - cO[0]) / cO[1]))));
       // (the clearance uses the pitch the leg can actually give: from the leg's IK at the ACTUAL hip, the shank's backward tilt β limits the
       // foot to −(β − 25°) — the ankle's dorsiflexion range less a 5° margin; the toe of the long boot hangs from there, and the ankle is
       // lifted until it clears — two passes, as the lift itself tilts the shank)
-      if (G > 0) { const yg = g.yFlat + SUP.touchDepth + box.pos[1] - box.he[1], m = 0.03 * G * (P.walkClrRamp ? 1 : minjerk(Math.min(1, w / 0.12))), kS = 0.004, Lg = this.ctrl.legs[R.sw], hip = S0 ? o.states[Lg.thigh].pos : null, hdw = [Math.sin(yaw), 0, Math.cos(yaw)];
+      if (G > 0) { const yg = g.yFlat + SUP.touchDepth + box.pos[1] - box.he[1], mIn = (AP ? AP.m0 : 0.03) * (P.walkClrRamp ? 1 : minjerk(Math.min(1, w / 0.12))), m = AP ? (w < AP.wd ? mIn : mIn - (mIn + (P.landPress || 0)) * (w - AP.wd) / (1 - AP.wd)) : mIn * G, kS = 0.004, Lg = this.ctrl.legs[R.sw], hip = S0 ? o.states[Lg.thigh].pos : null, hdw = [Math.sin(yaw), 0, Math.cos(yaw)];
         const rhoMax = (pp) => { if (!hip) return 1; const ik = this.ctrl._legIK(Lg, hip, pp, hdw), sv2 = V.sub(pp, ik.pKnee), beta = Math.atan2(-(sv2[0] * hdw[0] + sv2[2] * hdw[2]), -sv2[1]); return -(beta - (this.ankDorsi ?? 25 * d2r)); };
         const lowAt = (r0) => { const rot = footRot(yaw, r0); let e = 0; for (const sx of [-1, 1]) for (const sz of [-1, 1]) e += Math.exp(-(pos[1] + Q.rot(rot, [box.pos[0] + sx * box.he[0], box.pos[1] - box.he[1], box.pos[2] + sz * box.he[2]])[1] - yg) / kS); return yg - kS * Math.log(e); };
         const dMax = 10 * d2r; rho += G * dMax * (1 - Math.exp(-sp(yg + m - lowAt(rho), 0.003) / (dMax * 0.25)));
         // ((G2b) and the foot's ACTUAL pitch when it hangs further toes-down than commanded (the ankle dorsiflexes at a finite rate — a target-pitch
         // clearance let the hanging toe scuff the turf at 41 % of a swing, which ended the step 46 cm short; a scuff is a real trip, so the
         // swing must actually clear)
-        const fq = o.states[g.foot[R.sw]].rot, fz = Q.rot(fq, [0, 0, 1]), rAct = P.clrActual === false ? 1 : datan2(fz[1], Math.hypot(fz[0], fz[2]));
+        const fq = o.states[g.foot[R.sw]].rot, fz = Q.rot(fq, [0, 0, 1]), rAct = P.clrActual ? datan2(fz[1], Math.hypot(fz[0], fz[2])) : 1;   // (opt-in, P.clrActual: default-on it broke the in-place baseline, 20/20 → 2 steps)
         let rA = rho; for (let it = 0; it < 2; it++) { rA = Math.min(rho, rhoMax(pos)); pos = [pos[0], pos[1] + G * sp(yg + m - lowAt(Math.min(rA, rAct)), 0.003), pos[2]]; }   // (the actual pitch only for the clearance — commanding it fed back: −38° → −55°)
         // ((G2b) the commanded pitch is the one the leg can give — the foot hangs plantar-flexed from a shank tilted back, as a human foot does
         // in initial swing — instead of a level target the ankle could only press against its dorsiflexion stop)
         if (!P.walkClrRamp) rho = rho + G * (rA - rho); }
       return { pos, rho, yaw, w }; };
-    const atF = P.walk && P.walkSwing !== false ? atWalk : at;
+    const atF0 = P.walk && P.walkSwing !== false ? atWalk : at;
+    // ((G2b, P.lateBlend) a LATE FOOTHOLD CHANGE (the executor adjusts the landing until late in the swing) enters the walking swing as a
+    // horizontal offset that decays by min-jerk over the remaining swing — the path stays continuous in position and velocity instead of
+    // jumping by the change (the C¹ requirement of the swing's inverse-dynamics feed-forward))
+    let atF = atF0; if (P.walk && P.lateBlend && P.walkSwing !== false) { Hs.blends = Hs.blends || []; if (Hs.landPrev && (Hs.landPrev[0] !== R.landC[0] || Hs.landPrev[1] !== R.landC[1])) { const nw = R.landC; R.landC = Hs.landPrev; const a0 = atF0(t).pos; R.landC = nw; const a1 = atF0(t).pos, rem = Math.max(0.06, (R.tSw0 + R.T - t) * 0.7);
+        Hs.blends.push({ d: [a0[0] - a1[0], 0, a0[2] - a1[2]], t0: t, dur: rem }); } Hs.landPrev = R.landC.slice();
+      atF = (tt) => { const c = atF0(tt); let pos = c.pos; for (const b of Hs.blends) { const k = 1 - minjerk(Math.max(0, Math.min(1, (tt - b.t0) / b.dur))); pos = [pos[0] + b.d[0] * k, pos[1], pos[2] + b.d[2] * k]; } return { ...c, pos }; }; }
     const c = atF(t), out = { pos: c.pos, rot: footRot(c.yaw, c.rho), u: c.w, reach: landing().pos, rho: c.rho };
     if (!noVel) { const h = 1 / 240, a = atF(t - h), b = atF(t + h); out.vel = c.w < 1 ? V.sc(V.sub(b.pos, a.pos), 1 / (2 * h)) : [0, 0, 0]; }
     return out; }

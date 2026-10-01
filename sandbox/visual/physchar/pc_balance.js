@@ -364,14 +364,23 @@ export class BalanceController {
     // stop — where the requested foot orientation is anatomically impossible (a flat boot under a strongly tilted shin) the foot pitches.
     // Velocity feed-forward = the TRAJECTORY's velocity pushed through the same IK (continuous; a finite difference of successive targets
     // spiked to ≈ 2900°/s when a new trajectory began from the actual foot and slammed the toe into the turf — finding 2026-09-29).
-    this.swingIK = {}; this.swingVel = {}; if (!released) for (const s of swingCtl) { const L = this.legs[s], tg = plan.swing[s], Rp = S[0].rot, pole = V.norm(V.sub(Q.rot(Rp, [0, 0, 1]), [0, Q.rot(Rp, [0, 0, 1])[1], 0]));
-      const solve = (pos, hipP, RpX) => { hipP = hipP || S[L.thigh].pos; RpX = RpX || Rp; const ik = this._legIK(L, hipP, pos, pole); return { ik, hip: csOfRel(spec.joints[L.hip], Q.mul(Q.conj(RpX), ik.Rt)), knee: ik.kappa, ankle: romClamp(spec.joints[L.ankle], csOfRel(spec.joints[L.ankle], Q.mul(Q.conj(ik.Rs), tg.rot)), rad(5)) }; };
+    // ((G2b) plan.swingPredict = d (s) — DELAY COMPENSATION of the swing IK: the sensed state is d old (the feedback view), and joint targets
+    // solved from where the hip WAS put the foot ahead of its world target by the pelvis's travel over d (measured: 6–12 cm beyond the
+    // foothold at 0.4–0.6 m/s, joints tracking their targets within 1–2°; 2 cm with no delay). The hip point and pelvis orientation are
+    // advanced over d by their own measured velocities — an internal-model prediction, as the nervous system compensates its own delays.
+    // With it, the moving base of the swing's VELOCITY feed-forward is the hip JOINT's velocity (the pelvis's), not the thigh's centre of mass
+    // (which moves with the swinging leg itself: the target joint velocities came out wrong and the damping cancelled the swing's hip
+    // abduction / rotation drive — ≈ 90 N·m against ≈ 100 N·m — leaving the foot 2–8 cm outside its target at touchdown).)
+    const dP = plan && plan.swingPredict ? plan.swingPredict : 0, wP = S[0].w, nwP = Math.hypot(wP[0], wP[1], wP[2]), RpPred = dP && nwP > 1e-9 ? Q.norm(Q.mul(Q.axis(V.sc(wP, 1 / nwP), nwP * dP), S[0].rot)) : S[0].rot;
+    const hipPred = (L) => { if (!dP) return S[L.thigh].pos; const hp = S[L.thigh].pos, vh = V.add(S[0].v, V.cross(wP, V.sub(hp, S[0].com))); return V.add(hp, V.sc(vh, dP)); };
+    this.swingIK = {}; this.swingVel = {}; if (!released) for (const s of swingCtl) { const L = this.legs[s], tg = plan.swing[s], Rp = RpPred, pole = V.norm(V.sub(Q.rot(Rp, [0, 0, 1]), [0, Q.rot(Rp, [0, 0, 1])[1], 0]));
+      const solve = (pos, hipP, RpX) => { hipP = hipP || hipPred(L); RpX = RpX || Rp; const ik = this._legIK(L, hipP, pos, pole); return { ik, hip: csOfRel(spec.joints[L.hip], Q.mul(Q.conj(RpX), ik.Rt)), knee: ik.kappa, ankle: romClamp(spec.joints[L.ankle], csOfRel(spec.joints[L.ankle], Q.mul(Q.conj(ik.Rs), tg.rot)), rad(5)) }; };
       const a = solve(tg.pos); nominal[L.hip] = a.hip; nominal[L.knee] = a.knee; nominal[L.ankle] = a.ankle; this.swingIK[s] = { knee: a.ik.pKnee, target: tg.pos };
       // (G1a, opts.swingMovingBase — the new locomotion controller only; C2 / C3 keep the approved form): the joint velocity that moves the
       // foot along its WORLD trajectory while the hip and pelvis themselves move (hip joint velocity, pelvis angular velocity). The
       // stationary-base form asked the critically damped swing motors to hold the leg's configuration while the pelvis drifted, so the
       // swing foot was carried with the pelvis (G1a finding: 3 cm of pelvis drift in late swing → 5 cm foothold error)
-      if (tg.vel) { const dT = 1 / 60, mb = this.opts.swingMovingBase, b = solve(V.add(tg.pos, V.sc(tg.vel, dT)), mb ? V.add(S[L.thigh].pos, V.sc(S[L.thigh].v, dT)) : null, mb && Math.hypot(...S[0].w) > 1e-9 ? Q.norm(Q.mul(Q.axis(S[0].w, Math.hypot(...S[0].w) * dT), Rp)) : null);
+      if (tg.vel) { const dT = 1 / 60, mb = this.opts.swingMovingBase, b = solve(V.add(tg.pos, V.sc(tg.vel, dT)), mb ? V.add(hipPred(L), V.sc(dP ? V.add(S[0].v, V.cross(wP, V.sub(S[L.thigh].pos, S[0].com))) : S[L.thigh].v, dT)) : null, mb && Math.hypot(...S[0].w) > 1e-9 ? Q.norm(Q.mul(Q.axis(S[0].w, Math.hypot(...S[0].w) * dT), Rp)) : null);
         this.swingVel[L.hip] = rotRate(a.hip, b.hip, dT); this.swingVel[L.knee] = (b.knee - a.knee) / dT; this.swingVel[L.ankle] = rotRate(a.ankle, b.ankle, dT); } }
     this.replant = []; if (!released) for (const s of ["L", "R"]) { const f = o.feet[s], L = this.legs[s]; if (stance.includes(s) || swingCtl.includes(s) || !(f.anchor || (plan && plan.anchors && plan.anchors[s]))) continue;
       // V1.1 controller (unloadPlan): the foot a planned transfer is UNLOADING is not pressed back into the turf when it loses contact — it is
