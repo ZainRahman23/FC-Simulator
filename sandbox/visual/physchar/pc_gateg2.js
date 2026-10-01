@@ -28,13 +28,37 @@ export const TESTS_G2B = {
   G2b_land_before: { group: "G2b forward walk", title: "G2b — touchdown BEFORE the landing fixes (0.6 m/s): late fast descent, forward overshoot from the sensing delay", seconds: 9, amBudget: true, loco: { human: { walk: 0.6, over: {"clrOff": [0.85, 0.12], "armsFromLegs": true} }, rhythm: WK(0.6, 20, { walk: {"speed": 0.6, "w": 0.24, "wMax": 0.45, "latDS": "freeze", "placeGain": 1, "release": 0.15, "Tss": 0.45, "Tds": 0.15, "firstTol": 0.004, "firstProg": true, "copBand": 0.025, "noCorrective": true} }) } },
   G2b_land_after: { group: "G2b forward walk", title: "G2b — touchdown AFTER: controlled descent + 1 cm retraction + delay-compensated swing (0.6 m/s)", seconds: 9, amBudget: true, loco: { human: { walk: 0.6, over: {"clrOff": [0.85, 0.12], "armsFromLegs": true, "approach": {"wd": 0.75, "m0": 0.02}, "swingRetract": 0.01} }, rhythm: WK(0.6, 20, { walk: {"speed": 0.6, "w": 0.24, "wMax": 0.45, "latDS": "freeze", "placeGain": 1, "release": 0.15, "Tss": 0.45, "Tds": 0.15, "firstTol": 0.004, "firstProg": true, "copBand": 0.025, "noCorrective": true, "swingPredict": true} }) } },
 };
+// ── G2 PLANT CHARACTERISATION (measurement only; tools/g2char_run.js, pc_g2char.js): open-loop commanded steps with a fixed, minimal inner
+// loop — single support: the stance CoP on a fixed heel → toe roll (capture-point feedback −1 = none); double support: the CoP ramps trailing →
+// leading foot (no feedback); the validated landing work (controlled descent, 1 cm retraction, delay-compensated swing) and support fixes.
+// The review cases reproduce the sweep's runs exactly (tools/g2char_run.js → runChar: 7 rhythmic steps, the reference STYLE clip = the
+// 0.8 m/s walk while the commanded walking speed is 0.6 m/s — as the sweep was measured) ──
+export const CHAR_BASE = (speed, over) => ({
+  walk: { speed, Tss: 0.45, Tds: 0.15, w: 0.26, wMax: 0.5, wMin: 0.12, latDS: "lipm", placeGain: 1, release: 0.15, firstTol: 0.004, firstProg: true, copBand: 0.025, swingPredict: true, noCorrective: true,
+    kXiAlong: -1, kXiAcross: -1, kXiDS: -1, ...(over || {}) },
+  human: { approach: { wd: 0.75, m0: 0.02 }, swingRetract: 0.01 } });
+const CH_COND = { 0: { df: 0.237, dl: 0.368, T: 0.45 } }, CH_NOM = { df: 0.34, dl: 0.26, T: 0.45 };
+const chTest = (title, measured, push, extra) => { const b = CHAR_BASE(0.6), steps = alt(7, "R").map((q, i) => i === 0 ? { sw: q.sw, fwdK: 0.7 } : i === 1 ? { sw: q.sw, fwdK: 0.9 } : { sw: q.sw });
+  return { group: "G2 plant characterisation (step-response experiments)", title, seconds: 3.7, amBudget: true, ...(push ? { pushChar: { step: 1, u: 0, ...push } } : {}),
+    loco: { human: { walk: 0.8, over: b.human }, rhythm: { at: 0.5, steps, walk: { ...b.walk, char: { ...CH_COND, ...(extra || {}), 1: { ...CH_NOM, ...measured } } }, human: true, Tfirst: 0.6, Tlast: 0.8, wA: 0.15 } } }; };
+export const TESTS_G2C = {
+  G2C_nominal: chTest("G2C — measured step at nominal (forward 0.34 m, width 0.26 m, single support 0.45 s)", {}),
+  G2C_df_short: chTest("G2C — measured step SHORT (forward 0.22 m)", { df: 0.22 }), G2C_df_long: chTest("G2C — measured step LONG (forward 0.46 m)", { df: 0.46 }),
+  G2C_dl_narrow: chTest("G2C — measured step NARROW (commanded width 0.14 m; achieved ≈ 0.18)", { dl: 0.14 }), G2C_dl_wide: chTest("G2C — measured step WIDE (width 0.38 m)", { dl: 0.38 }),
+  G2C_T_fast: chTest("G2C — measured step FAST (single support 0.37 s)", { T: 0.37 }), G2C_T_slow: chTest("G2C — measured step SLOW (single support 0.53 s)", { T: 0.53 }),
+  G2C_push_fwd: chTest("G2C — forward push 12 N·s at the measured step's start", {}, { J: [12, 0] }), G2C_push_back: chTest("G2C — backward push 12 N·s at the measured step's start", {}, { J: [-12, 0] }),
+  G2C_push_in: chTest("G2C — sideways push 9 N·s toward the swing side at the measured step's start", {}, { J: [0, 9] }), G2C_push_out: chTest("G2C — sideways push 9 N·s toward the stance side (fell)", {}, { J: [0, -9] }),
+  G2C_yaw_pos: chTest("G2C — yaw couple +4 kg·m²/s at the measured step's start", {}, { Lz: 4 }), G2C_yaw_neg: chTest("G2C — yaw couple −4 kg·m²/s at the measured step's start", {}, { Lz: -4 }),
+  G2C_refB_runaway: chTest("G2C — reference B: a moderate step → the body runs away forward and the next swing cannot complete (re-contacts behind)", { df: 0.36, dl: 0.28 }, null, { 2: { ...CH_NOM } }),
+};
 // every G2 scenario (the review page's list)
-export const TESTS_G2 = Object.assign({}, TESTS_G2A, TESTS_G2B);
+export const TESTS_G2 = Object.assign({}, TESTS_G2A, TESTS_G2B, TESTS_G2C);
 // (opts.rhythmOver — probes / variants: merged into the test's rhythm, its walk object merged one level deep)
-export function runG2a(J, spec, key, opts) { let test = TESTS_G2A[key] || TESTS_G2B[key]; const ro = opts && opts.rhythmOver;
+export function runG2a(J, spec, key, opts) { let test = TESTS_G2A[key] || TESTS_G2B[key] || TESTS_G2C[key]; const ro = opts && opts.rhythmOver;
   if (ro) { const rh = test.loco.rhythm; test = { ...test, loco: { ...test.loco, rhythm: { ...rh, ...ro, ...(ro.walk ? { walk: { ...rh.walk, ...ro.walk } } : {}) } } }; }
   const ho = opts && opts.humanOver; if (ho) test = { ...test, loco: { ...test.loco, human: { ...test.loco.human, over: { ...(test.loco.human.over || {}), ...ho } } } };
   const lo = opts && opts.locoOver; if (lo) test = { ...test, loco: { ...test.loco, ...lo } };
+  if (opts && opts.pushChar) test = { ...test, pushChar: opts.pushChar };   // (G2 characterisation: a rhythm-phase push / yaw couple)
   return runG1a(J, spec, key, { ...(opts || {}), test }); }
 
 // ── G2a ANALYSIS (measurement only; needs the run's recs with keepStates) ─────────────────────────────────────────────────────────────

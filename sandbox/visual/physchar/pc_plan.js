@@ -159,7 +159,7 @@ export class StepExecutor {
       else if (R.timed) { tg = this._timedAt(R, t + (this.lead || 0), o); if (R.stage === "DESCEND") { const y = (R.human ? tg.pos[1] : R.tpT[1]) - Math.min(0.04, PLAN.obstruct.descendV * (t - R.tD)); tg = { ...tg, pos: [tg.pos[0], y, tg.pos[2]], vel: [0, -PLAN.obstruct.descendV, 0] }; } }
       else { tg = R.xo ? T._swingCross(R, t) : R.heelUp ? T._swingHeelUp(R, t) : g._swingAt(R, t);
         if (R.fastDescend && R.stage === "DESCEND") { const y = R.pT[1] - Math.min(0.04, PLAN.obstruct.descendV * (t - R.tD)); tg = { ...tg, pos: [tg.pos[0], y, tg.pos[2]], vel: [0, -PLAN.obstruct.descendV, 0] }; } }
-      plan.copFoot = st; plan.xiRef = R.kind === "rhythmic" ? this._xiD(R, t, o) : o.xi.slice(); if (R.kind === "rhythmic") plan.xiDot = R.xiDotNow; if (R.walkK) { plan.kXi = R.walkK.kXi ?? { hd: R.walkK.hd, along: 0, across: R.walkK.kXiAcross ?? BAL.kXi }; if (R.walkK.latCop) plan.latCop = { foot: st, cap: R.walkK.latCop }; if (R.walkK.swingKpDrop != null) plan.swingKpDrop = R.walkK.swingKpDrop; if (R.walkK.swingPredict) plan.swingPredict = this.dFb || 0; } plan.swing[sw] = tg; R.u = tg.u; R.lastTgt = tg;
+      plan.copFoot = st; plan.xiRef = R.kind === "rhythmic" ? this._xiD(R, t, o) : o.xi.slice(); if (R.kind === "rhythmic") plan.xiDot = R.xiDotNow; if (R.walkK) { plan.kXi = R.walkK.kXi ?? { hd: R.walkK.hd, along: R.walkK.kXiAlong ?? 0, across: R.walkK.kXiAcross ?? BAL.kXi }; if (R.walkK.latCop) plan.latCop = { foot: st, cap: R.walkK.latCop }; if (R.walkK.swingKpDrop != null) plan.swingKpDrop = R.walkK.swingKpDrop; if (R.walkK.swingPredict) plan.swingPredict = this.dFb || 0; } plan.swing[sw] = tg; R.u = tg.u; R.lastTgt = tg;
       if (!R.liftoff) { if (!F[sw].touching && F[sw].load < 25) R.air++; else R.air = 0;
         if (R.air >= 3) { R.liftoff = { t }; this.lastEventT = t; this.ev(t, "liftoff", `${sw} ${(t - R.tNeed).toFixed(3)} s after the step started`); }
         else if (t - R.tSw0 > STEP.liftTimeout) { R.stage = "FAILED"; R.fail = `the ${sw} foot did not leave the ground within ${STEP.liftTimeout} s (load ${F[sw].load.toFixed(0)} N)`; this.ev(t, "FAILED", R.fail); } }
@@ -211,7 +211,7 @@ export class StepExecutor {
     let xi = o.xi.slice(); const h = 0.01, n = Math.max(0, Math.round(Trem / h)); let tt = o.t - R.tSw0;
     for (let i = 0; i < n; i++) { let xd, pN = R.pSt; if (R.walkK && R.walkK.r) { const K = R.walkK, q = segXi(R.xiIni, [R.pSt[0] - K.hd[0] * K.r, R.pSt[1] - K.hd[1] * K.r], [R.pSt[0] + K.hd[0] * K.r, R.pSt[1] + K.hd[1] * K.r], K.Tss, tt, w); xd = q.xi; pN = q.p; }
       else { const e = dexp(w * tt); xd = [R.pSt[0] + (R.xiIni[0] - R.pSt[0]) * e, R.pSt[1] + (R.xiIni[1] - R.pSt[1]) * e]; }
-      const ex = [xi[0] - xd[0], xi[1] - xd[1]], kq = kXiErr(R.walkK ? (R.walkK.kXi ?? { hd: R.walkK.hd, along: 0, across: R.walkK.kXiAcross ?? BAL.kXi }) : BAL.kXi, ex); let p = [pN[0] + ex[0] + kq[0], pN[1] + ex[1] + kq[1]];
+      const ex = [xi[0] - xd[0], xi[1] - xd[1]], kq = kXiErr(R.walkK ? (R.walkK.kXi ?? { hd: R.walkK.hd, along: R.walkK.kXiAlong ?? 0, across: R.walkK.kXiAcross ?? BAL.kXi }) : BAL.kXi, ex); let p = [pN[0] + ex[0] + kq[0], pN[1] + ex[1] + kq[1]];
       const d = [p[0] - ank[0], p[1] - ank[2]], f = Math.max(-backMax, Math.min(fwdMax, d[0] * hd[0] + d[1] * hd[1])), l = Math.max(-latMax, Math.min(latMax, d[0] * rt[0] + d[1] * rt[1]));
       p = [ank[0] + hd[0] * f + rt[0] * l, ank[2] + hd[1] * f + rt[1] * l]; if (sole.length >= 3 && polyDist(sole, p) < 0) { const c = this._nearest(sole, p); p = c; }
       xi = [xi[0] + h * w * (xi[0] - p[0]), xi[1] + h * w * (xi[1] - p[1])]; tt += h; }
@@ -387,8 +387,12 @@ export class LocoPlanner {
     // (the step must be reachable: the planner's feasibility check, the target pulled back along the step until it is)
     const sw0 = this.geo._center(o, step.sw), dC = dComAt(o, pSt, Tk), ok = (q) => this.tool._feasible(o, step.sw, q, ps + (K.toeOut[step.sw] || 0), sw0, dC, null).ok;
     if (!ok(target)) { const a = [pSt[0] + rt[0] * dl, pSt[1] + rt[1] * dl]; let lo = 0, hi = 1; for (let i = 0; i < 14; i++) { const m = (lo + hi) / 2; if (ok([a[0] + (target[0] - a[0]) * m, a[1] + (target[1] - a[1]) * m])) lo = m; else hi = m; } target = [a[0] + (target[0] - a[0]) * lo, a[1] + (target[1] - a[1]) * lo]; }
-    return { target, pSt, pSw: target, xiIni: xi0.slice(), xiTd: eos, yaw: ps + (K.toeOut[step.sw] || 0), dcm: { df: df0, dl: dl0, clamped: df !== df0 || dl !== dl0 },
-      walkK: { cNext: cN, side, hd, E2: K.E2, k: K.k, r: K.r, Tss: Tk, kXi: r.walk.kXiSS, latCop: r.walk.latCop, swingKpDrop: r.walk.swingKpDrop, swingPredict: !!r.walk.swingPredict, adjustUntil: r.walk.adjustUntil, latPred: r.walk.latPred, kXiAcross: r.walk.kXiAcross, dcm: (eos2, pS2) => this._dcmD(K, hd, rt, eos2, pS2, cN), Lmax: K.Lmax || 0.9, g: r.walk.placeGain ?? 0.6, gf: r.walk.placeGainFwd ?? 1, Ln, w: Wn, wMin: K.wMin, wMax: K.wMax } }; }
+    // ((G2 characterisation, opt-in rhythm.walk.char = { [stepIndex]: { df, dl, T } }) an OPEN-LOOP measured step: the foothold is commanded
+    // explicitly — df along the heading and dl the step width (toward the swing side) from the stance point — with single-support duration T
+    // and no in-swing foothold adjustment; the body's response to it is the measurement)
+    const CH = r.walk.char && r.walk.char[r.i]; if (CH) { target = [pSt[0] + hd[0] * CH.df + rt[0] * side * CH.dl, pSt[1] + hd[1] * CH.df + rt[1] * side * CH.dl]; if (CH.T) Tk = CH.T; }
+    return { target, pSt, pSw: target, xiIni: xi0.slice(), xiTd: eos, yaw: ps + (K.toeOut[step.sw] || 0), dcm: { df: df0, dl: dl0, clamped: df !== df0 || dl !== dl0 }, char: CH || null,
+      walkK: { cNext: cN, side, hd, E2: K.E2, k: K.k, r: K.r, Tss: Tk, kXi: r.walk.kXiSS, latCop: r.walk.latCop, swingKpDrop: r.walk.swingKpDrop, swingPredict: !!r.walk.swingPredict, adjustUntil: CH ? 0 : r.walk.adjustUntil, latPred: r.walk.latPred, kXiAcross: r.walk.kXiAcross, kXiAlong: r.walk.kXiAlong, dcm: (eos2, pS2) => this._dcmD(K, hd, rt, eos2, pS2, cN), Lmax: K.Lmax || 0.9, g: r.walk.placeGain ?? 0.6, gf: r.walk.placeGainFwd ?? 1, Ln, w: Wn, wMin: K.wMin, wMax: K.wMax } }; }
   // the walking double support's reference at the current time (and the CoP reference)
   _walkDSxi(o, r) { const D = r.wds, w = r.wk.omega, s = Math.max(0, o.t - D.t0), T = D.T, d = [D.p1[0] - D.p0[0], D.p1[1] - D.p0[1]];
     const at = (x) => { const E = dexp(w * x); return [E * D.xi0[0] - D.p0[0] * (E - 1) + d[0] * x / T - d[0] * (E - 1) / (w * T), E * D.xi0[1] - D.p0[1] * (E - 1) + d[1] * x / T - d[1] * (E - 1) / (w * T)]; };
@@ -431,7 +435,7 @@ export class LocoPlanner {
     return { xi, p, dot: [hd[0] * fwdDot + rt[0] * latDot, hd[1] * fwdDot + rt[1] * latDot], u: Math.min(1, s / T) }; }
   // (PRE-SWING, the trailing foot over the double support: it unloads from its measured share to zero and its heel rises toward preSwingHeelH
   // about the toe — the knee flexes as the ankle rises, so the swing begins from a bent knee and a lifted heel, as in human pre-swing)
-  _walkDS(o, r, plan) { const q = this._walkDSxi(o, r), next = r.steps[r.i], W = this.spec.totalMass * 9.81; plan.xiRef = q.xi; plan.xiDot = q.dot; plan.comGoal = q.xi.slice();
+  _walkDS(o, r, plan) { const q = this._walkDSxi(o, r), next = r.steps[r.i], W = this.spec.totalMass * 9.81; plan.xiRef = q.xi; plan.xiDot = q.dot; plan.comGoal = q.xi.slice(); if (r.walk.kXiDS != null) plan.kXi = r.walk.kXiDS;
     if (next) { if (next.share0 == null) next.share0 = Math.max(0, Math.min(1, o.feet[next.sw].load / W)); plan.unloading = { foot: next.sw, maxShare: next.share0 * (1 - minjerk(q.u)), relax: r.walk.relax === false ? null : 1 - minjerk(q.u), release: r.walk.release ?? null, axisSel: !!r.walk.releaseAxisSel, bandCap: r.walk.copBand ?? null };
       // (the heel rises because the body has PASSED over the foot: in proportion to how far the trailing leg is beyond 93 % of full extension
       // from its hip — the rise keeps the trailing knee bent instead of letting the leg lock straight behind the body)

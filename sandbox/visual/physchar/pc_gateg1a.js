@@ -77,9 +77,19 @@ export function runG1a(J, spec, key, opts) {
     // the disturbance: at a time (S5), or on the MEASURED gait phase (S7: mid-swing of a given rhythmic step, as the executor sees it)
     if (TST.pushOn && !puOn) { const R = loco.planner.exec.R; if (R && R.kind === "rhythmic" && R.stepIndex === TST.pushOn.step && (R.u || 0) >= TST.pushOn.u) {
       const sgn = (TST.pushOn.side === "swing") === (R.sw === "R") ? 1 : -1; puOn = { n0: n - 1, n1: n - 1 + Math.round(0.05 * hz), J: [sgn * TST.pushOn.Ns, 0, 0], t: n * dt, sw: R.sw, side: TST.pushOn.side }; ev.push({ t: n * dt, kind: "PUSH", what: `${TST.pushOn.Ns} N·s toward ${TST.pushOn.side} side (${sgn > 0 ? "+x" : "−x"}) at u ${R.u.toFixed(2)} of step ${R.stepIndex + 1} (${R.sw} swinging)` }); } }
-    const P_ = pu || puOn; let ext = null; if (P_ && n > P_.n0 && n <= P_.n1) ext = { J: V.sc(P_.J, 1 / (P_.n1 - P_.n0)), at: states[0].com.slice() };
+    // (G2 characterisation, opt-in TST.pushChar = { step, u, J: [fwd, lat] N·s in the heading frame (lat + = toward the swing side), Lz }: a
+    // linear push at the pelvis COM and/or a pure YAW couple Lz (kg·m²/s — two equal and opposite horizontal impulses 0.15 m either side of the
+    // pelvis COM: no net linear impulse) over 0.05 s at a given swing fraction of a given rhythmic step; recorded in the ledger as a push)
+    if (TST.pushChar && !puOn) { const R = loco.planner.exec.R, q = TST.pushChar; if (R && R.kind === "rhythmic" && R.stepIndex === q.step && (R.u || 0) >= (q.u || 0)) {
+      const h0 = loco.planner.rhythm && loco.planner.rhythm.wk ? loco.planner.rhythm.wk.h0 : 0, hd = [Math.sin(h0), 0, Math.cos(h0)], lt = [hd[2], 0, -hd[0]], sd = R.sw === "R" ? 1 : -1, J = q.J || [0, 0];
+      puOn = { n0: n - 1, n1: n - 1 + Math.round(0.05 * hz), J: V.add(V.sc(hd, J[0]), V.sc(lt, J[1] * sd)), Lz: q.Lz || 0, t: n * dt, sw: R.sw, side: "char" }; ev.push({ t: n * dt, kind: "PUSH", what: `characterisation push fwd ${J[0]} lat ${J[1]} N·s, yaw ${q.Lz || 0} kg·m²/s at u ${R.u.toFixed(2)} of step ${R.stepIndex + 1}` }); } }
+    const P_ = pu || puOn; let ext = null; if (P_ && n > P_.n0 && n <= P_.n1) { ext = { J: V.sc(P_.J, 1 / (P_.n1 - P_.n0)), at: states[0].com.slice() }; if (P_.Lz) ext.couple = { Jc: P_.Lz / (2 * 0.15) / (P_.n1 - P_.n0), r: 0.15 }; }
     const t1 = now(), cts = [], lamA = { L: [0, 0, 0], R: [0, 0, 0] }, lamM = spec.joints.map(j => j.type === "hinge" ? 0 : [0, 0, 0]), obJ = obst.map(() => [0, 0, 0]);
-    for (let s = 0; s < sub; s++) { if (ext) w.applyImpulse(0, V.sc(ext.J, 1 / sub), ext.at); w.step(dt / sub, 1); cts.push(...w.contacts);
+    for (let s = 0; s < sub; s++) { if (ext) { w.applyImpulse(0, V.sc(ext.J, 1 / sub), ext.at);
+        if (ext.couple) { const R0 = states[0].rot, fx = Q.rot(R0, [0, 0, 1]), lx = Q.rot(R0, [1, 0, 0]), f = V.norm([fx[0], 0, fx[2]]), l = V.norm([lx[0], 0, lx[2]]), c = ext.couple, jv = V.sc(f, c.Jc / sub);
+          // (yaw +: about +y; a +y torque from +r·l with −J along f … the pair (J at +r·l, −J at −r·l) gives torque 2·r·(l × J)_y)
+          const sgn = (l[2] * f[0] - l[0] * f[2]) >= 0 ? 1 : -1; w.applyImpulse(0, V.sc(jv, sgn), V.add(ext.at, V.sc(l, c.r))); w.applyImpulse(0, V.sc(jv, -sgn), V.sub(ext.at, V.sc(l, c.r))); } }
+      w.step(dt / sub, 1); cts.push(...w.contacts);
       lamA.L = V.add(lamA.L, w.jointLambdaPosition(aL)); lamA.R = V.add(lamA.R, w.jointLambdaPosition(aR));
       for (let k = 0; k < nj; k++) { const l = w.motorLambda(k); lamM[k] = spec.joints[k].type === "hinge" ? lamM[k] + l : V.add(lamM[k], l); }
       obst.forEach((o, i) => { obJ[i] = V.add(obJ[i], w.obstacleImpulse(o.k)); }); }

@@ -104,6 +104,14 @@ After the reboot the preserved state was verified, the user reviewed the overnig
 - **Commit:** `77966eb` (local).
 - **Report:** `g2_walk/G2B_OPTION1_REVIEW.md`.
 
+**G2 plant characterisation (2026-10-01 afternoon, the user chose the controller-redesign path): measurement + design only, STOPPED for review before building the new walker.**
+- **What.** Open-loop commanded steps from a deterministic start (`rhythm.walk.char`, `pushChar`; fixed minimal inner loop) → the measured step-to-step map, stability bands, yaw by segment, human-compatible region, controller families, proposed architecture, pass tests P1–P9.
+- **Key numbers.** Sideways amplification −10 to −12 per step (sign-flipping); stable sideways placement gain band only [6.2, 7.5] at T 0.45 s ([3.2, 4.6] at 0.40 s); per-axis laws stable in ≈ 1 % of the gain plane (coupling); double support 0.22–0.38 s (not 0.15); yaw injected mainly in double support; arms cancel ≈ 40 %.
+- **Report:** `g2_char/G2_PLANT_REPORT.md` (+ `fig/`, `json/`, `analyse_char.py`). Reproduce: `node tools/g2char_run.js --phase all --inner natural`.
+- **Interactive:** `index.html?suite=G2` → buttons C1–C8 (cases `G2C_*` reproduce the sweep runs exactly; every step after the measured one is uncorrected, so most cases fall ≈ 1 s later — expected).
+- **Regression:** A/B/C1/C2 (V1, V1.1), C3 29/29, D 7/7, G1 26/26, G2a 10/10 identical; G2b Option-1 cases hash-identical to `34de412`.
+- **Next: the user's decisions** (report §9): approve inner-loop-first + controller A (SIMBICON-style B as the baseline), cadence ≈ 105–115 steps/min, nominal width ≈ 0.20–0.22 m. **Do not build the new walker before that.**
+
 ## Where
 
 - **Worktree:** `/Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1`
