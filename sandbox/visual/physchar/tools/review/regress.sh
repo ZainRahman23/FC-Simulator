@@ -1,6 +1,6 @@
 #!/bin/zsh
 # Full regression of the physical character (portable copy of the overnight runner, 2026-09-30):
-#   V1 (approved) and V1.1 (promoted) Gates A / B / C1 / C2, then C3 (29), Gate D (7) and G1 (the new locomotion stack's scenarios) — each compared with the committed evidence hashes.
+#   V1 (approved) and V1.1 (promoted) Gates A / B / C1 / C2, then C3 (29), Gate D (7), G1 (the new locomotion stack's scenarios) and G2a (the human in-place gait) — each compared with the committed evidence hashes.
 # usage: tools/review/regress.sh [outdir]      (run from anywhere; ~2–3 min, sequential, one Node process at a time)
 # Gate D reference: the POST friction-sensing-fix baseline results/v1_1/gated_V1.1_post_mu_fix.json (2026-09-30, D6 diagnostic). The
 # original results/v1_1/gated_V1.1.json is kept unchanged as historical pre-fix evidence (only D6_slide differs); compare against it with
@@ -18,6 +18,7 @@ nice -n 10 node tools/gatec2_run.js --calib V1.1 --tests all --out $OUT/rg_c2_v1
 nice -n 10 node tools/gatec3_run.js --tests all --out $OUT/rg_c3_v11.json >/dev/null 2>&1
 nice -n 10 node tools/gated_run.js --tests all --out $OUT/rg_d_v11.json >/dev/null 2>&1
 nice -n 10 node tools/g1a_run.js --scenarios-only --repeat 1 --out $OUT/rg_g1_v11.json >/dev/null 2>&1   # G1 (promoted 2026-09-30): the new locomotion stack's scenarios
+nice -n 10 node tools/g2a_run.js --scenarios-only --repeat 1 --out $OUT/rg_g2a_v11.json >/dev/null 2>&1   # G2a (2026-10-01, awaiting review): the human in-place gait + yaw regulation
 OUT="$OUT" D_REF="$D_REF" python3 - <<'EOF'
 import json, os
 R='results/'; P='../../../review_artifacts/physical_character_v1/v1_1/json/promotion/'; S=os.environ['OUT']+'/'; C3='../../../review_artifacts/physical_character_v1/gate_c3/json/gatec3_V1.1_x3.json'; D=os.environ.get('D_REF') or 'results/v1_1/gated_V1.1_post_mu_fix.json'
@@ -33,4 +34,8 @@ try:
   a=H('results/v1_1/g1_V1.1.json','d'); b=H(S+'rg_g1_v11.json','d'); com=[k for k in b if k in a]; diff=[k for k in com if a[k]!=b[k]]
   print(f"{'rg_g1_v11.json':16s} vs {'g1_V1.1.json':28s}: {len(com)-len(diff)}/{len(com)} identical {diff[:6]}")
 except Exception as e: print('rg_g1_v11.json ERR', e)
+try:
+  a=H('results/v1_1/g2a_V1.1.json','d'); b=H(S+'rg_g2a_v11.json','d'); com=[k for k in b if k in a]; diff=[k for k in com if a[k]!=b[k]]
+  print(f"{'rg_g2a_v11.json':16s} vs {'g2a_V1.1.json':28s}: {len(com)-len(diff)}/{len(com)} identical {diff[:6]}")
+except Exception as e: print('rg_g2a_v11.json ERR', e)
 EOF

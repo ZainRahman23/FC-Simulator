@@ -68,6 +68,19 @@ After the reboot the preserved state was verified, the user reviewed the overnig
 - **G2 is approved to begin:**
   - G2a first: yaw / angular-momentum regulation + a human in-place gait;
   - then stop for your review.
+- **Checkpoint:** local commit `772d0bd`. Nothing pushed.
+
+**G2a (2026-10-01): built and validated, awaiting your visual review. Uncommitted, on top of `772d0bd`. G2b has not started.**
+- **Report:** `g2a/G2A_REPORT.md` / `.html`. **Evidence:** `g2a/json/g2a_results.json`, from `node tools/g2a_run.js --repeat 3` (12 s). **Sheets:** `g2a/sheets/` (local).
+- **Review:** `http://127.0.0.1:8171/sandbox/visual/physchar/index.html?suite=G2`, with seven review cases in the side panel.
+- **Baseline:** `results/v1_1/g2a_V1.1.json`. `regress.sh` checks it after G1; all suites identical, G1 26/26.
+- **Physics:** all eight criteria PASS.
+  - Yaw within 5° of the intended heading in place; a 30° intended turn is followed.
+  - Ledger ≤ 0.041 N·s, no root force; deterministic ×3; browser = Node.
+- **Looks:** a careful march.
+  - Knee lift, forefoot → heel, contralateral arm swing, steady thorax.
+  - But long double support (≈ 45 %) and no heel rise before toe-off. Both are deferred to G2b with reasons (report §7).
+- **Proposed sub-gates:** G2b forward walk · G2c start/stop · G2d speed + turning · G2e qualification.
 
 ## Where
 

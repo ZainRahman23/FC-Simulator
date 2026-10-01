@@ -110,7 +110,7 @@ export class StepExecutor {
   // c: { sw, st, target (sole centre x, z), yaw, tSw, xo?, alpha? }; kind: "rhythmic" | "corrective"; extra: rhythmic ξ plan
   start(o, c, kind, extra) { const g = this.geo, s0 = o.states[g.foot[c.sw]];
     const R = this.R = { sw: c.sw, st: c.st, cand: c, first: c, kind, tNeed: o.t, stage: "SWING", tSw0: o.t, tSw: o.t, p0: s0.pos.slice(), q0: s0.rot.slice(), cur0: g._center(o, c.sw), soleY0: g._soleLow(o, c.sw), air: 0, alpha: c.alpha ?? null, lastAim: o.t, ...(extra || {}) };
-    this.tool._aim(R, o, c); if (kind === "rhythmic") { R.T = c.tSw; R.tSw = R.tSw0; this._groundEnd(R); this._timedInit(o, R, c.target, c.yaw); }
+    this.tool._aim(R, o, c); if (kind === "rhythmic") { R.T = c.tSw; R.tSw = R.tSw0; this._groundEnd(R); this._timedInit(o, R, c.target, c.yaw); if (R.human) R.landC = c.target.slice(); }
     R.plannedTd = { t: R.tSw0 + R.T, center: c.target.slice() }; R.nominalTarget = c.target.slice();
     this.ev(o.t, "step", `${kind} ${c.sw} → (${c.target[0].toFixed(3)}, ${c.target[1].toFixed(3)}) · swing ${R.T.toFixed(2)} s`); return R; }
   // a TIMED (rhythmic) swing ends AT the ground (5 mm below flat) instead of C2's quasi-static approach point 1.5 cm above it followed by a slow
@@ -120,9 +120,13 @@ export class StepExecutor {
   // within its range for a 7 cm lift, so C2's knee-forward bias (a 15 cm forward-and-back excursion needed by V1's 20° ankle) is not used:
   // a 0.4 s step could not track it and landed 13 cm forward (G1a finding). A foothold change re-anchors the path so it stays continuous.
   _timedInit(o, R, target, yaw) { const g = this.geo, a = g._ankleFromCenter(target, yaw); R.tp0 = R.p0.slice(); R.tpT = [a[0], g.yFlat + SUP.touchDepth, a[1]]; R.yaw0 = yawOf(R.q0); R.yawT = yaw; R.timed = true; }
-  _timedRetarget(o, R, target, t) { const g = this.geo, a = g._ankleFromCenter(target, R.yawT), u = Math.min(1, (t - R.tSw0) / R.T), sw = PLAN.swing, uh = Math.max(0, Math.min(1, (u - sw.h0) / (sw.h1 - sw.h0))), sh = minjerk(uh);
+  _timedRetarget(o, R, target, t) { if (R.human) { R.landC = target.slice(); return; }   // (the human swing blends toward its landing in late swing)
+    const g = this.geo, a = g._ankleFromCenter(target, R.yawT), u = Math.min(1, (t - R.tSw0) / R.T), sw = PLAN.swing, uh = Math.max(0, Math.min(1, (u - sw.h0) / (sw.h1 - sw.h0))), sh = minjerk(uh);
     const cur = this._timedAt(R, t).pos, nT = [a[0], R.tpT[1], a[1]]; if (sh < 0.95) { R.tp0 = [(cur[0] - nT[0] * sh) / (1 - sh), R.tp0[1], (cur[2] - nT[2] * sh) / (1 - sh)]; } R.tpT = nT; }
-  _timedAt(R, t) { const sw = PLAN.swing, T = R.T, u = Math.min(1, (t - R.tSw0) / T), p0 = R.tp0, pT = R.tpT, uh = Math.max(0, Math.min(1, (u - sw.h0) / (sw.h1 - sw.h0))), sh = minjerk(uh), dsh = uh > 0 && uh < 1 ? 30 * uh * uh * (1 - uh) * (1 - uh) / ((sw.h1 - sw.h0) * T) : 0;
+  // (G2a) a HUMAN swing (R.human): the locomotion layer's reference-shaped generator (toe pivot → the gait reference's swing-leg motion from the
+  // ACTUAL hip → the planned foothold, forefoot first); o: the observation whose hip / pelvis the reference is attached to
+  _timedAt(R, t, o) { if (R.human && this.refSwing) return this.refSwing(R, t, o || this._o);
+    const sw = PLAN.swing, T = R.T, u = Math.min(1, (t - R.tSw0) / T), p0 = R.tp0, pT = R.tpT, uh = Math.max(0, Math.min(1, (u - sw.h0) / (sw.h1 - sw.h0))), sh = minjerk(uh), dsh = uh > 0 && uh < 1 ? 30 * uh * uh * (1 - uh) * (1 - uh) / ((sw.h1 - sw.h0) * T) : 0;
     const sv = minjerk(u), dsv = u < 1 ? 30 * u * u * (1 - u) * (1 - u) / T : 0, sn = Math.sin(Math.PI * u), cs = Math.cos(Math.PI * u), bell = sn * sn, dbell = 2 * sn * cs * Math.PI / T;
     const pos = [p0[0] + (pT[0] - p0[0]) * sh, p0[1] + (pT[1] - p0[1]) * sv + sw.H * bell, p0[2] + (pT[2] - p0[2]) * sh], yaw = R.yaw0 + (R.yawT - R.yaw0) * sh;
     return { pos, rot: Q.axis([0, 1, 0], yaw), vel: u < 1 ? [(pT[0] - p0[0]) * dsh, (pT[1] - p0[1]) * dsv + sw.H * dbell, (pT[2] - p0[2]) * dsh] : [0, 0, 0], u, reach: [pT[0], pT[1], pT[2]] }; }
@@ -131,7 +135,7 @@ export class StepExecutor {
   footprintIfOnTrack() { const R = this.R; if (!R || !["SWING", "DESCEND"].includes(R.stage) || (R.u || 0) < PLAN.stepProspectU) return null; return footprint(this.geo.box, R.proj.target, R.proj.yaw); }
   // o: the FEEDBACK-delayed observation; truth: { obstructedAt: { L, R } (the gait layer's times) }
   update(o, truth) {
-    const R = this.R; if (!R) return null; const t = o.t, g = this.geo, F = o.feet, sw = R.sw, st = R.st, T = this.tool;
+    const R = this.R; if (!R) return null; this._o = o; const t = o.t, g = this.geo, F = o.feet, sw = R.sw, st = R.st, T = this.tool;
     const plan = { stepping: true, swing: {}, step: R, swingKpDrop: 0 };
     if (["SWING", "DESCEND", "OBSTRUCTED"].includes(R.stage)) {
       // OBSTRUCTED (the gait layer saw a non-turf contact on this leg; this executor reacts once its own delayed view has reached that time)
@@ -143,7 +147,7 @@ export class StepExecutor {
       if (R.stage === "SWING" && R.kind === "rhythmic" && (R.u || 0) < PLAN.adjustUntil && t - R.lastAim >= 1 / 60 - 1e-9) { R.lastAim = t; this._adjust(o, R); }
       let tg; if (R.stage === "OBSTRUCTED") { const y = Math.max(g.yFlat + SUP.touchDepth, R.obst.yTop - PLAN.obstruct.descendV * (t - R.obst.t)), yaw = yawOf(R.obst.rot);
         tg = { pos: [R.obst.pos[0], y, R.obst.pos[2]], rot: Q.axis([0, 1, 0], yaw), vel: [0, -PLAN.obstruct.descendV, 0], u: R.u, reach: [R.obst.pos[0], g.yFlat + SUP.touchDepth, R.obst.pos[2]] }; }
-      else if (R.timed) { tg = this._timedAt(R, t + (this.lead || 0)); if (R.stage === "DESCEND") { const y = R.tpT[1] - Math.min(0.04, PLAN.obstruct.descendV * (t - R.tD)); tg = { ...tg, pos: [tg.pos[0], y, tg.pos[2]], vel: [0, -PLAN.obstruct.descendV, 0] }; } }
+      else if (R.timed) { tg = this._timedAt(R, t + (this.lead || 0), o); if (R.stage === "DESCEND") { const y = (R.human ? tg.pos[1] : R.tpT[1]) - Math.min(0.04, PLAN.obstruct.descendV * (t - R.tD)); tg = { ...tg, pos: [tg.pos[0], y, tg.pos[2]], vel: [0, -PLAN.obstruct.descendV, 0] }; } }
       else { tg = R.xo ? T._swingCross(R, t) : R.heelUp ? T._swingHeelUp(R, t) : g._swingAt(R, t);
         if (R.fastDescend && R.stage === "DESCEND") { const y = R.pT[1] - Math.min(0.04, PLAN.obstruct.descendV * (t - R.tD)); tg = { ...tg, pos: [tg.pos[0], y, tg.pos[2]], vel: [0, -PLAN.obstruct.descendV, 0] }; } }
       plan.copFoot = st; plan.xiRef = R.kind === "rhythmic" ? this._xiD(R, t, o) : o.xi.slice(); if (R.kind === "rhythmic") plan.xiDot = R.xiDotNow; plan.swing[sw] = tg; R.u = tg.u; R.lastTgt = tg;
@@ -151,7 +155,8 @@ export class StepExecutor {
         if (R.air >= 3) { R.liftoff = { t }; this.lastEventT = t; this.ev(t, "liftoff", `${sw} ${(t - R.tNeed).toFixed(3)} s after the step started`); }
         else if (t - R.tSw0 > STEP.liftTimeout) { R.stage = "FAILED"; R.fail = `the ${sw} foot did not leave the ground within ${STEP.liftTimeout} s (load ${F[sw].load.toFixed(0)} N)`; this.ev(t, "FAILED", R.fail); } }
       if (R.stage !== "FAILED") {
-        if (!R.armed && !F[sw].touching && g._soleLow(o, sw) - R.soleY0 >= STEP.armRise) { R.armed = true; R.armedT = t; }
+        // ((G2a) a HUMAN step's toe pivot is a contact phase — the pressed toe may bounce; touchdown detection arms only after the pivot)
+        if (!R.armed && !F[sw].touching && g._soleLow(o, sw) - R.soleY0 >= STEP.armRise && !(R.human && (t - R.tSw0) / R.T < (R.wA ?? 0.2) + 0.05)) { R.armed = true; R.armedT = t; }
         if (R.armed && F[sw].touching) { const s1 = o.states[g.foot[sw]]; R.td = { t, pos: s1.pos.slice(), rot: s1.rot.slice(), center: g._center(o, sw), xi: o.xi.slice(), uAt: R.u, planned: R.plannedTd.center, plannedT: R.plannedTd.t, fromNeed: t - R.tNeed, obstructed: !!R.obst };
           const wpS = g._weightPoint(o, st), wpW = g._weightPoint(o, sw); R.accTo = [(wpS[0] + wpW[0]) / 2, (wpS[1] + wpW[1]) / 2];
           const sS = o.states[g.foot[st]]; R.anchors = { [sw]: { foot: sw, pos: s1.pos.slice(), rot: s1.rot.slice() }, [st]: { foot: st, pos: sS.pos.slice(), rot: sS.rot.slice() } };
@@ -223,7 +228,11 @@ export class LocoPlanner {
     // 1. the step under way (execution on the feedback view)
     const er = this.exec.update(oFb, truthCtx);
     if (er && er.stepping) plan = er;
-    else if (er && er.handover) { const r = this.rhythm; if (r) { r.stage = "DS"; r.tDs = oFb.t; r.tTd = oFb.t; r.lastLanded = er.R.sw; r.anchors = this.anchorsNow(oFb); r.dsFrom = oFb.xi.slice(); r.i++; } }
+    else if (er && er.handover) { const r = this.rhythm; if (r) { r.stage = "DS"; r.tDs = oFb.t; r.tTd = oFb.t; r.lastLanded = er.R.sw; r.anchors = this.anchorsNow(oFb); r.dsFrom = oFb.xi.slice(); r.i++;
+      // (G2a) a HUMAN step contacts forefoot first: the landed foot's anchor is its LEVEL pose about the toe contact (the heel lowers onto
+      // the turf), not the heel-up contact pose — held there, a foot that bounced off its toe hovered unloaded through the double support
+      if (er.R.human && r.anchors[er.R.sw]) { const a = r.anchors[er.R.sw], b = this.geo.box, toeL = [b.pos[0], b.pos[1] - b.he[1], b.pos[2] + b.he[2]], lvl = Q.axis([0, 1, 0], yawOf(a.rot)), toeW = V.add(a.pos, Q.rot(a.rot, toeL));
+        r.anchors[er.R.sw] = { foot: er.R.sw, pos: V.sub(toeW, Q.rot(lvl, toeL)), rot: lvl }; r.humanLand = er.R.sw; } else r.humanLand = null; } }
     else if (er && er.rest) { this.rest = er.rest; if (this.rhythm && this.rhythm.paused) { this.rhythm.paused = false; this.rhythm.stage = "DS"; this.rhythm.tDs = t; this.rhythm.tTd = t; this.rhythm.anchors = er.rest.anchors; this.rhythm.dsFrom = oFb.xi.slice(); } }
     else if (er && er.failed) { if (this.rhythm && this.rhythm.stage !== "DONE") { this.rhythm.stage = "ABORTED"; this.ev(t, "rhythm", `aborted: ${er.R.fail}`); } }
     // 2. voluntary C2 requests (quasi-static placement) / transfer-only requests / the rhythm
@@ -254,18 +263,29 @@ export class LocoPlanner {
       let to; if (!next) to = r.restXi = r.restXi || this.mid(o); else { const pl = this._xiPlan(o, next, Tss); to = pl.xiIni; next.pl = pl; }
       const u = g._transfer(plan, o, `rhythm:ds:${r.i}`, r.dsFrom, to, r.tDs, T);
       if (r.tTd != null && t - r.tTd < STEP.softenT && r.lastLanded) plan.soften = { foot: r.lastLanded, k: STEP.softenK + (1 - STEP.softenK) * minjerk((t - r.tTd) / STEP.softenT) };
+      // (G2a) after a forefoot contact the heel LOWERS: the landed foot is aimed level on a compliant ankle (C2's heel rocker, plan.settle) until
+      // its sole is down (heel and toe in contact) — the load acceptance of a human step; the body's weight, not a position target, lowers it
+      if (r.humanLand && r.humanLand === r.lastLanded && next && !(o.feet[r.humanLand].heel && o.feet[r.humanLand].toe)) plan.settle = { foot: r.humanLand, level: true };
       r.unloading = next && this.ctrl.opts.unloadPlan && u > 0.4 ? next.sw : null;
       if (next && this.ctrl.opts.unloadPlan && u > 0.4) { if (next.share0 == null) next.share0 = Math.max(0, Math.min(1, o.feet[next.sw].load / (this.spec.totalMass * 9.81))); plan.unloading = { foot: next.sw, maxShare: next.share0 * (1 - minjerk((u - 0.4) / 0.6)) }; }
+      // (G2a) a human double support ends on the CONTACT, not the clock: the trailing foot lifts once the landed foot's sole is down (heel and
+      // toe) and it carries its planned share (≥ 35 % BW), or at the latest 0.3 s after the planned end (phase follows measured progress)
+      if (u >= 1 && next && r.humanLand && r.humanLand === r.lastLanded && t - r.tDs < T + 0.3) { const F = o.feet[r.humanLand]; if (!(F.heel && F.toe && F.load >= 0.35 * this.spec.totalMass * 9.81)) return plan; }
       if (u >= 1) { if (!next) { r.stage = "DONE"; this.ev(t, "rhythm", `done: ${r.i} steps`); return { stepping: false, swing: {}, xiRef: r.restXi, anchors: r.anchors }; }
-        r.first = false; const st = next.sw === "L" ? "R" : "L", yaw = r.homeYaw ? r.homeYaw[next.sw] : yawOf(o.states[g.foot[next.sw]].rot);
-        this.exec.start(o, { sw: next.sw, st, target: next.pl.target, yaw, tSw: Tss }, "rhythmic", { pSt: next.pl.pSt, xiIni: next.pl.xiIni, xiTdNom: next.pl.xiTd, stepIndex: r.i });
+        r.first = false; const st = next.sw === "L" ? "R" : "L", yaw = (r.homeYaw ? r.homeYaw[next.sw] : yawOf(o.states[g.foot[next.sw]].rot)) + (r.turn ? this.turnAt(o.t + Tss) : 0);
+        this.exec.start(o, { sw: next.sw, st, target: next.pl.target, yaw, tSw: Tss }, "rhythmic", { pSt: next.pl.pSt, xiIni: next.pl.xiIni, xiTdNom: next.pl.xiTd, stepIndex: r.i, human: !!r.human, wA: r.wA ?? 0.2 });
         r.stage = "SS"; return this.exec.update(o, { obstructedAt: {} }); }
       return plan; }
     return null; }
+  // (G2a) an INTENDED TURN (rhythm.turn = { at, deg, dur }): the heading offset at time t (rad, min-jerk) — the in-place footholds and their
+  // yaw rotate with it about the home midpoint, and the locomotion layer's intended heading follows it (nothing else is rotated)
+  turnAt(t) { const q = this.rhythm && this.rhythm.turn; return q ? q.deg * Math.PI / 180 * minjerk((t - q.at) / q.dur) : 0; }
+  _home(sw, th) { const r = this.rhythm, h = r.home[sw]; if (!th) return h; const m = [(r.home.L[0] + r.home.R[0]) / 2, (r.home.L[1] + r.home.R[1]) / 2], d = [h[0] - m[0], h[1] - m[1]], c = Math.cos(th), s = Math.sin(th);
+    return [m[0] + d[0] * c + d[1] * s, m[1] - d[0] * s + d[1] * c]; }
   // the periodic LIPM capture-point plan for one step: stance nominal CoP p_st, landing weight point p_sw, midpoint m
-  _xiPlan(o, step, Tss) { const g = this.geo, st = step.sw === "L" ? "R" : "L", hd = g._heading(o, st), side = step.sw === "R" ? 1 : -1, lat = [hd[1] * side, -hd[0] * side];
-    const cur = this.rhythm && this.rhythm.home ? this.rhythm.home[step.sw] : g._center(o, step.sw), target = [cur[0] + hd[0] * (step.fwd || 0) + lat[0] * (step.out || 0), cur[1] + hd[1] * (step.fwd || 0) + lat[1] * (step.out || 0)];
-    const pSt = g._weightPoint(o, st), yaw = this.rhythm && this.rhythm.homeYaw ? this.rhythm.homeYaw[step.sw] : yawOf(o.states[g.foot[step.sw]].rot), a = g._ankleFromCenter(target, yaw), pSw = [a[0] + hd[0] * this.ctrl.comFwd, a[1] + hd[1] * this.ctrl.comFwd];
+  _xiPlan(o, step, Tss) { const g = this.geo, st = step.sw === "L" ? "R" : "L", hd = g._heading(o, st), side = step.sw === "R" ? 1 : -1, lat = [hd[1] * side, -hd[0] * side], th = this.rhythm && this.rhythm.turn ? this.turnAt(o.t + Tss) : 0;
+    const cur = this.rhythm && this.rhythm.home ? this._home(step.sw, th) : g._center(o, step.sw), target = [cur[0] + hd[0] * (step.fwd || 0) + lat[0] * (step.out || 0), cur[1] + hd[1] * (step.fwd || 0) + lat[1] * (step.out || 0)];
+    const pSt = g._weightPoint(o, st), yaw = (this.rhythm && this.rhythm.homeYaw ? this.rhythm.homeYaw[step.sw] : yawOf(o.states[g.foot[step.sw]].rot)) + th, a = g._ankleFromCenter(target, yaw), pSw = [a[0] + hd[0] * this.ctrl.comFwd, a[1] + hd[1] * this.ctrl.comFwd];
     const m = [(pSt[0] + pSw[0]) / 2, (pSt[1] + pSw[1]) / 2], k = Math.tanh(o.omega0 * Tss / 2), xiIni = [m[0] + (pSt[0] - m[0]) * k, m[1] + (pSt[1] - m[1]) * k], xiTd = [m[0] - (pSt[0] - m[0]) * k, m[1] - (pSt[1] - m[1]) * k];
     return { target, pSt, pSw, xiIni, xiTd }; }
   // ── transfer-only: C2's planned weight transfer until its liftoff gate OPENS (measured), held, then back to the middle ──

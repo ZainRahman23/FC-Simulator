@@ -15,7 +15,7 @@
 //     → finite Jolt motors (directional, budgeted torque limits; stance / swing damping)
 //
 // Deterministic: only + − × ÷ √ and the pc_math deterministic trig / exp are used for anything that reaches a target or a decision.
-import { V, Q, rad, deg, datan2, dacos, dexp, dsin } from "./pc_math.js";
+import { V, Q, rad, deg, datan2, dacos, dexp, dsin, dcos } from "./pc_math.js";
 import { csOfRel, relOf, MOTOR_REGIONS, REGION_OF, motorProfile, paramTarget, minjerk } from "./pc_control.js";
 import { polyDist, polyClamp, polyNearest } from "./pc_sense.js";
 
@@ -86,6 +86,7 @@ const PROT_J = new Set(Object.values(PROT).flatMap(o => Object.keys(o)));
 const nlerpQ = (a, b, s) => { const d = a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3], bb = d < 0 ? b.map(x => -x) : b; return Q.norm([0, 1, 2, 3].map(i => a[i] + (bb[i] - a[i]) * s)); };
 const expmap = (d) => { const a = Math.sqrt(d[0] * d[0] + d[1] * d[1] + d[2] * d[2]); return a < 1e-12 ? [0, 0, 0, 1] : Q.axis([d[0] / a, d[1] / a, d[2] / a], a); };
 const clampVec = (d, m) => { const a = Math.sqrt(d[0] * d[0] + d[1] * d[1] + d[2] * d[2]); return a > m ? V.sc(d, m / a) : d; };
+const logmap = (q) => { let x = q[3] < 0 ? q.map(v => -v) : q; const s = Math.sqrt(x[0] * x[0] + x[1] * x[1] + x[2] * x[2]); if (s < 1e-12) return [0, 0, 0]; const a = 2 * Math.atan2(s, x[3]); return [x[0] / s * a, x[1] / s * a, x[2] / s * a]; };
 const yawQ = (psi) => Q.axis([0, 1, 0], psi);
 
 export class BalanceController {
@@ -197,6 +198,9 @@ export class BalanceController {
   _update(o) {
     this.nObs++; const spec = this.spec, P = this.P, nj = spec.joints.length, M = this.M, W = M * G, S = o.states;
     const nominal = P.N.T.map(x => Array.isArray(x) ? x.slice() : x), out = { nominal, gOff: spec.joints.map(j => j.type === "hinge" ? 0 : [0, 0, 0]), bOff: spec.joints.map(j => j.type === "hinge" ? 0 : [0, 0, 0]) };
+    // (G2a, opts.styleNominal — the new locomotion controller only): the trunk / neck / arm posture is the reference gait's (P3 style, set per
+    // step by the locomotion layer as this.styleNominal = { jointIndex: target }) instead of the standing pose; legs are still solved below
+    if (this.opts.styleNominal && this.styleNominal) for (const ks in this.styleNominal) nominal[+ks] = this.styleNominal[ks];
     // leg damping blend from the MEASURED foot load (stance ↔ swing), low-passed
     for (const s of ["L", "R"]) { const f = o.feet[s], target = f.loaded ? 1 : 0; this.sFoot[s] += 0.2 * (target - this.sFoot[s]); }
     const plan = this.plan || null, swingCtl = plan ? Object.keys(plan.swing || {}) : [];
@@ -223,6 +227,10 @@ export class BalanceController {
     const planted = ["L", "R"].filter(s => o.feet[s].touching && !swingCtl.includes(s)), stance = planted.length ? planted : [];   // a foot under swing control is not stance
     const fwdOf = (s) => { const fz = Q.rot(S[this.legs[s].foot].rot, [0, 0, 1]); return V.norm([fz[0], 0, fz[2]]); };
     let hd = stance.length ? stance.map(fwdOf).reduce((a, b) => V.add(a, b), [0, 0, 0]) : Q.rot(S[0].rot, [0, 0, 1]); hd = V.norm([hd[0], 0, hd[2]]);
+    // (G2a, opts.headingIntent — the new locomotion controller only): the desired heading is the INTENDED heading this.headingIntent
+    // (radians about +y, set by the locomotion layer) — not the instantaneous stance foot's direction, which alternates by each foot's
+    // toe-out at every step and drove a growing pelvis-yaw oscillation (G1b finding). Turning = the locomotion layer changing it.
+    if (this.opts.headingIntent && this.headingIntent != null) hd = [dsin(this.headingIntent), 0, dcos(this.headingIntent)];
     const psi = datan2(hd[0], hd[2]), lat = [hd[2], 0, -hd[0]];   // lat = the player's right
     const ankles = stance.map(s => S[this.legs[s].foot].pos), ankMid = ankles.length ? V.sc(ankles.reduce((a, b) => V.add(a, b), [0, 0, 0]), 1 / ankles.length) : S[0].pos;
     const shift = this.opts.xiShift ? this.opts.xiShift(o.t) : [0, 0];
@@ -259,8 +267,16 @@ export class BalanceController {
     this.hipCapHere = hipCapHere; if (this.opts.monitor) this._monitorApply(o); else this._classify(o, r, hipCapHere); const cls = this.cls;
     const released = cls.state === "FALLING" || cls.state === "GROUNDED";
     // ── nominal: stance legs solved UPWARD from the actual feet; pelvis in world orientation (heading from the feet, nominal pitch) ──
-    const Rpd = Q.norm(Q.mul(yawQ(psi), Q.axis([1, 0, 0], this.rootPitch))), footY = ankles.length ? ankles.reduce((a, p) => a + p[1], 0) / ankles.length : S[0].pos[1] - this.hPelvis;
-    const Pd = [S[0].pos[0], footY + this.hPelvis, S[0].pos[2]];
+    // (G2a, opts.pelvisStyle — the new locomotion controller only): the PLANNED pelvis posture of the gait (this.pelvisStyle = { yaw, roll
+    // (rad), dy (m) }: the reference's small pelvis yaw and swing-side drop, and the stance knee's loading bend as a lower pelvis) — offsets on
+    // the controller's own desired pelvis pose; the stance legs realise them through their finite joints like any posture target
+    const ps = this.opts.pelvisStyle && this.pelvisStyle ? this.pelvisStyle : null;
+    const Rpd = ps ? Q.norm(Q.mul(Q.mul(yawQ(psi + ps.yaw), Q.axis([1, 0, 0], this.rootPitch)), Q.axis([0, 0, 1], ps.roll))) : Q.norm(Q.mul(yawQ(psi), Q.axis([1, 0, 0], this.rootPitch))), footY = ankles.length ? ankles.reduce((a, p) => a + p[1], 0) / ankles.length : S[0].pos[1] - this.hPelvis;
+    // (G2a, with the gait's pelvis posture) the height is referenced to the GROUND under the stance feet — each foot's lowest sole point plus
+    // the flat foot's ankle height — not to the ankle: a forefoot landing (heel up, ankle 5 cm above its flat height) raised the planned
+    // pelvis by half of that and lifted the landed foot back off the turf
+    const gY = ps && stance.length ? stance.reduce((a, s) => { const sh = this.spec.bodies[this.legs[s].foot].shapes[0]; return a + Math.min(...o.feet[s].sole.map(c => c[1])) - (sh.pos[1] - sh.he[1]); }, 0) / stance.length : footY;
+    const Pd = [S[0].pos[0], gY + this.hPelvis + (ps ? ps.dy : 0), S[0].pos[2]];
     // GATE C2 (only with a plan): in a wide or split stance the nominal pelvis height may be out of the legs' reach — lower it so every stance
     // leg stays within 99.5 % extension (the feasibility check limits how much lowering a placement may need)
     // (a swinging leg counts with its planned touchdown point, so the pelvis is lowered DURING the swing, before the foot needs the reach).
@@ -433,6 +449,14 @@ export class BalanceController {
             const a = w / (W0 + w); acc = j.type === "hinge" ? acc + (t - acc) * a : nlerpQ(acc, t, a); W0 += w; }
           if (acc == null) return; nominal[kk] = j.type === "hinge" ? nominal[kk] + (acc - nominal[kk]) * kP : nlerpQ(nominal[kk], acc, kP);
           const pk = /^(hip|knee|ankle)_/.test(j.name) ? BAL.protKLeg : BAL.protK, sk = 1 + (pk / relK - 1) * fade; motor[kk].kp *= sk; motor[kk].kd *= Math.sqrt(sk); }); } }
+    // (G2a, opts.settleAxes — the new locomotion controller's human gait only): the landed foot's ankle compliance is AXIS-SELECTIVE. The heel
+    // rocker (plan.settle) and the landing compliance (plan.soften) are sagittal needs — the heel lowering, the impact — but the motor's
+    // stiffness is one number per joint, so the ankle's twist and roll went soft with it (× 0.07 in early double support) and the landed
+    // foot could not brake the whole-body yaw the landing leg brings in (G2a finding: the pelvis yawed ~9° in every double support). The
+    // twist (X) and roll (Z) errors are scaled by 1 / k in the posture target — the equilibrium-point form of their full stiffness.
+    if (this.opts.settleAxes && plan && !released) for (const s of ["L", "R"]) { let kS = 1; if (plan.settle && plan.settle.foot === s) kS *= BAL.settleKp; if (plan.soften && plan.soften.foot === s) kS *= plan.soften.k;
+      if (kS >= 0.999 || !stance.includes(s)) continue; const k = this.legs[s].ankle, j = spec.joints[k], qAct = csOfRel(j, Q.mul(Q.conj(S[j.parentIndex].rot), S[j.childIndex].rot));
+      let d = Q.mul(Q.conj(qAct), nominal[k]); if (d[3] < 0) d = d.map(x => -x); const e = logmap(d); nominal[k] = Q.norm(Q.mul(qAct, expmap(clampVec([e[0] / kS, e[1], e[2] / kS], 0.7)))); }
     // ── torques → target offsets in each joint's own constraint space (equilibrium-point shift Δθ = τ / kp) ──
     const final = nominal.map((x, k) => Array.isArray(x) ? x.slice() : x);
     spec.joints.forEach((j, k) => { const Rc = S[j.childIndex].rot, kp = motor[k].kp;

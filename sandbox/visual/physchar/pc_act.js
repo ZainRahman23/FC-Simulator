@@ -35,7 +35,10 @@ const clampVec = (d, m) => { const a = Math.sqrt(d[0] * d[0] + d[1] * d[1] + d[2
 export class ActuatorArbiter {
   // opts.ledger (default true): build the per-joint LEDGER (every module's request, allowed share, prediction, yields) — review / debug
   // instrumentation; false = the production path (the same allocation and the same targets, bit for bit, without the ledger objects)
-  constructor(spec, opts) { this.ledger = !(opts && opts.ledger === false); this.spec = spec; this.nj = spec.joints.length; this.Cq = spec.joints.map(j => j.type === "hinge" ? null : Q.fromAxes(j.X, j.Y, j.Z)); this.prevQ = null; this.act = spec.joints.map(j => j.type === "hinge" ? 1 : [1, 1, 1]); this.last = null; }
+  // opts.styleHold (G2a): a posture target OWNED by a lower class (P2–P4: the gait reference on the trunk / neck / arms) is not part of the core —
+  // its spring is added only within the envelope headroom left by P0 / P1 (style yields first under saturation); it is not conflict-scaled
+  // against P0's gravity feed-forward, which supports that same posture rather than competing with it
+  constructor(spec, opts) { this.ledger = !(opts && opts.ledger === false); this.styleHold = !!(opts && opts.styleHold); this.spec = spec; this.nj = spec.joints.length; this.Cq = spec.joints.map(j => j.type === "hinge" ? null : Q.fromAxes(j.X, j.Y, j.Z)); this.prevQ = null; this.act = spec.joints.map(j => j.type === "hinge" ? 1 : [1, 1, 1]); this.last = null; }
   // one control step. a = {
   //   u        the balance controller's output with u.parts (opts.expose): nominal, tauG, tauB, tauHip, arms, stance/swing/replant, released
   //   S        body states (read after the last physics step); qCur(k) → Jolt's current joint coordinate (angle / constraint-space quaternion)
@@ -59,13 +62,20 @@ export class ActuatorArbiter {
       const coreOff = clampVec(V.sc(V.add(V.add(g, b), hp), 1 / kp), ARB.offClamp), coreFF = V.sc(coreOff, kp);
       const terms = this.ledger ? [{ m: own.module, c: own.cls, kind: "hold", req: hold }, { m: "damping", c: "D", kind: "damp", req: damp }, { m: "gravity", c: "P0", kind: "ff", req: g }, { m: "balance", c: "P1", kind: "ff", req: b }, { m: "hipStrategy", c: "P1", kind: "ff", req: hp }] : null;
       if (arm && terms) terms.push({ m: "arms(C4)", c: "P1", kind: "ff", req: arm });
-      let core = V.add(V.add(hold, damp), coreFF); if (arm) core = V.add(core, arm);
+      const holdLow = this.styleHold && (own.cls === "P2" || own.cls === "P3" || own.cls === "P4");
+      let core = V.add(V.add(holdLow ? [0, 0, 0] : hold, damp), coreFF); if (arm) core = V.add(core, arm);
       // envelope for this step (the multi-axis budget of the core target, as the approved runners compute it) × f_v × activation (permissive in G1a)
       const coreFinal = u.final[k], bud = hinge ? { lo: m.lo, hi: m.hi } : budgetLimits(m, q, coreFinal), env = this._env(k, hinge, bud, om);
       // lower classes: allocation per axis
       const lower = ex.map(e => ({ m: e.module, c: e.cls, kind: "ff", off: hinge ? [e.off, 0, 0] : e.off, req: V.sc(hinge ? [e.off, 0, 0] : e.off, kp) })), yielded = []; let S1 = core.slice(), H = V.sub(core, damp), anyLower = lower.length > 0;
       // P0 / P1 extras (e.g. the swing feed-forward) are part of the higher-priority request: never scaled, included in the prediction
       for (const t of lower) if (t.c === "P0" || t.c === "P1") { t.alw = t.req; S1 = V.add(S1, t.req); H = V.add(H, t.req); }
+      // a lower-class posture spring (holdLow): envelope headroom only
+      let sH = [1, 1, 1]; if (holdLow) { for (let i = 0; i < (hinge ? 1 : 3); i++) { const t = hold[i]; if (Math.abs(t) < 1e-9 || a.naive) continue; const lo = hinge ? env.lo : env.lo[i], hi = hinge ? env.hi : env.hi[i];
+          const cur = Math.max(lo, Math.min(hi, S1[i])), head = t > 0 ? Math.max(0, hi - cur) : Math.max(0, cur - lo); sH[i] = Math.min(1, head / Math.abs(t)); }
+        const add = hold.map((x, i) => x * sH[i]); S1 = V.add(S1, add); H = V.add(H, add);
+        if (this.ledger && terms) { terms[0].alw = add; const y = hold.map((x, i) => Math.abs(x) * (1 - sH[i])); if (Math.max(...y) > 1e-6) yielded.push({ m: own.module, c: own.cls, amt: y, why: y.map(v => v > 1e-6 ? "envelope" : "") }); } }
+      const holdScaled = holdLow && (sH[0] < 1 - 1e-9 || sH[1] < 1 - 1e-9 || sH[2] < 1 - 1e-9);
       const scale = {}; for (const c of ["P2", "P3", "P4"]) { const L = lower.filter(t => t.c === c); if (!L.length) continue; const tc = L.reduce((acc, t) => V.add(acc, t.req), [0, 0, 0]), s = [1, 1, 1], why = ["", "", ""];
         for (let i = 0; i < (hinge ? 1 : 3); i++) { const t = tc[i]; if (Math.abs(t) < 1e-9 || a.naive) continue; const lo = hinge ? env.lo : env.lo[i], hi = hinge ? env.hi : env.hi[i];
           const cur = Math.max(lo, Math.min(hi, S1[i])), head = t > 0 ? Math.max(0, hi - cur) : Math.max(0, cur - lo), sEnv = Math.min(1, head / Math.abs(t));
@@ -74,10 +84,12 @@ export class ActuatorArbiter {
         const add = tc.map((x, i) => x * s[i]); S1 = V.add(S1, add); H = V.add(H, add); }
       // compose: no lower-class request → the approved controller's own target, bit for bit (parity); otherwise the same composition with the
       // allowed lower-class offsets added to the core offset (one equilibrium point, one motor)
-      let fin = coreFinal; if (anyLower) { const lowOff = lower.reduce((acc, t) => V.add(acc, V.sc(t.alw || t.req, 1 / kp)), [0, 0, 0]);
-        fin = hinge ? P.nominal[k] + Math.max(-ARB.offClamp, Math.min(ARB.offClamp, coreOff[0] + lowOff[0])) : Q.norm(Q.mul(P.nominal[k], expmap(clampVec(V.add(coreOff, lowOff), ARB.offClamp)))); }
+      let fin = coreFinal; if (anyLower || holdScaled) { const lowOff = lower.reduce((acc, t) => V.add(acc, V.sc(t.alw || t.req, 1 / kp)), [0, 0, 0]), off = clampVec(V.add(coreOff, lowOff), ARB.offClamp);
+        // (a scaled style spring moves the equilibrium point from the style target toward the current posture: q ∘ exp(s ⊙ err + offsets))
+        if (holdScaled) fin = hinge ? q + sH[0] * err[0] + Math.max(-ARB.offClamp, Math.min(ARB.offClamp, coreOff[0] + lowOff[0])) : Q.norm(Q.mul(q, expmap(V.add([sH[0] * err[0], sH[1] * err[1], sH[2] * err[2]], off))));
+        else fin = hinge ? P.nominal[k] + Math.max(-ARB.offClamp, Math.min(ARB.offClamp, coreOff[0] + lowOff[0])) : Q.norm(Q.mul(P.nominal[k], expmap(off))); }
       if (arm && !anyLower) fin = coreFinal;   // (C4 torque-source arms: the controller's own composition)
-      const lim = anyLower && !hinge ? this._env(k, hinge, budgetLimits(m, q, fin), om) : env;
+      const lim = (anyLower || holdScaled) && !hinge ? this._env(k, hinge, budgetLimits(m, q, fin), om) : env;
       out.final.push(fin); out.vel.push(vt); out.motor.push({ kp, kd }); out.limits.push(lim);
       if (this.ledger) out.led.push({ k, joint: j.name, hinge, terms: [...terms.map(t => ({ m: t.m, c: t.c, kind: t.kind, req: hinge ? t.req[0] : t.req })), ...lower.map(t => ({ m: t.m, c: t.c, kind: t.kind, req: hinge ? t.req[0] : t.req, alw: hinge ? (t.alw || t.req)[0] : (t.alw || t.req) }))],
         pred: hinge ? S1[0] : S1, env: lim, yielded, owner: own.module, kp, kd, clampOff: anyLower ? +Math.hypot(...V.add(coreOff, lower.reduce((acc, t) => V.add(acc, V.sc(t.alw || t.req, 1 / kp)), [0, 0, 0]))).toFixed(3) : +Math.hypot(...coreOff).toFixed(3) }); });
