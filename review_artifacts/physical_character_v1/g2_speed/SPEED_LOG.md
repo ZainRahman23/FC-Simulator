@@ -162,3 +162,37 @@ Bench: identification runs (600 per variant, seed 72, M8A maps); swing failure i
 Not yet a material improvement.
 
 Checkpoint: all approved gates bit-identical (`regress.sh` 12/12); G2W_A8 / FG hashes unchanged. Every new mechanism is opt-in.
+
+## 9. The creep's root: Controller A's target is a ≈ 0.6 m/s state
+
+**Measured on this body** (steps from walks with nominal steps 0.20–0.28 m):
+- The capture point at a step's START: x_S ≈ −0.147 + 0.341·v ahead of the stance centre (rms 3.4 cm).
+- At LIFTOFF: x_L ≈ −0.114 + 0.393·v (rms 3.1 cm).
+
+**Controller A's target:**
+- x* is its map's fixed point for the nominal step: M8A, u* = 0.22 m / T 0.40 → x* = 0.067.
+- By the measured relation that is a ≈ 0.63 m/s gait, not the ≈ 0.37 m/s the nominal step implies.
+- The fixed point assumes the nominal step is executed. Executed steps are 0.28–0.34 m (in-swing lengthening + 7 cm overshoot), and longer steps put the same x at a higher speed (speed ≈ 0.25 + 1.58·Δx + 1.0·L_prev).
+- **So the walker has been regulating TOWARD ≈ 0.6 m/s, at the envelope's edge.** That is the upward drift.
+- The earlier explicit-target trials (x* 0.06 / 0.08 / 0.10 → 7.5 / 6.7 / 5.0 steps) all corresponded to 0.6–0.73 m/s.
+
+## 10. Capture-point (DCM) tracking through the ground reaction (`walk.dcmRef`)
+
+**Single support** (from the measured liftoff):
+- Reference = the DESIRED gait's capture point: the stance centre + x_L(vd), the measured sideways ξ, propagated under the planned heel→toe roll.
+- The stance ankle tracks it: p = p_ref + (1 + k)(ξ − ξ_ref) along the walk.
+- The old reference was re-anchored every step to the measured state, so it encoded no speed. It also started at the step start, where the pre-swing double-support overlap biased it by 8–20 cm.
+
+**Double support** (`dcmRef.ds`):
+- The existing closed-loop double-support CoP solver (the CoP now, ramping onto the leading foot's heel by the double support's end, that brings ξ to a target) is aimed at the desired gait's next-step start x_S(vd).
+- Under the base configuration's `latDS: "lipm"` the function returned before reaching the forward tracking code; the forward tracking now runs first.
+
+**Results:**
+
+| configuration | upright steps | speed (m/s) | note |
+|---|---|---|---|
+| single + double support tracking, M8A maps (not re-identified) | 5.5–5.7 | 0.44 ± 0.07 (target 0.45; base 0.65 ± 0.25) | falls: time-infeasible terminal steps, two with no liftoff |
+| single support only, maps re-identified (dcm05) | 10.2 (8–12) | 0.57 | clamped decisions 61 % → 35 %; identified open-loop eigenvalue 2.7 → 2.1 |
+| single + double support, maps re-identified (dds05/10) | 7.0 | 0.57–0.65 | regulation lost: Controller A's target x* (0.10 for 0.25 m steps, i.e. ≈ 0.73 m/s) fights the tracking's target |
+| Controller A alone, explicit target from 0.45 m/s (x* = 0.007) | 7.2 | 0.28 | stalls |
+| coherent target 0.5 m/s: x* = 0.024 + tracking at 0.5 + nominal 0.27 m | 10.2 (7–15) | 0.45 ± 0.08 | speed held for 8–10 steps; falls in BOTH directions (stall / runaway); decisions oscillate (start df 0.10 ↔ 0.25); maps identified at vd 0.45 |

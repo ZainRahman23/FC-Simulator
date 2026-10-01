@@ -186,7 +186,7 @@ export class StepExecutor {
         plan.copShift = [hd[0] * d, hd[1] * d]; (R.vreg = R.vreg || []).push(d); (R.vregD = R.vregD || []).push([o.t, this.vBar, vdNow, this.vBarT0]); }
       if (R.walkK && R.walkK.ctrlA && R.walkK.ctrlA.C.ankle) { const A = R.walkK.ctrlA, ak = A.C.ankle, lg = A.log, pr = lg.adj.length ? lg.adj[lg.adj.length - 1].pred : lg.info.pred;
         if (pr) { const d = Math.max(ak.min ?? -0.03, Math.min(ak.max ?? 0.06, ak.k * (pr[0] - A.yt[0]))); plan.copShift = [R.walkK.hd[0] * d, R.walkK.hd[1] * d]; lg.ank = d; } }
-      plan.copFoot = st; plan.xiRef = R.kind === "rhythmic" ? this._xiD(R, t, o) : o.xi.slice(); if (R.kind === "rhythmic") plan.xiDot = R.xiDotNow; if (R.walkK) { plan.kXi = R.walkK.kXi ?? { hd: R.walkK.hd, along: R.walkK.kXiAlong ?? 0, across: R.walkK.kXiAcross ?? BAL.kXi }; if (R.walkK.latCop) plan.latCop = { foot: st, cap: R.walkK.latCop }; if (R.walkK.swingKpDrop != null) plan.swingKpDrop = R.walkK.swingKpDrop; if (R.walkK.swingPredict) plan.swingPredict = this.dFb || 0; } plan.swing[sw] = tg; R.u = tg.u; R.lastTgt = tg;
+      plan.copFoot = st; plan.xiRef = R.kind === "rhythmic" ? this._xiD(R, t, o) : o.xi.slice(); if (R.kind === "rhythmic") plan.xiDot = R.xiDotNow; if (R.walkK) { plan.kXi = R.dcm0 ? { hd: R.walkK.hd, along: R.walkK.dcmRef.k, across: R.walkK.kXiAcross ?? BAL.kXi } : (R.walkK.kXi ?? { hd: R.walkK.hd, along: R.walkK.kXiAlong ?? 0, across: R.walkK.kXiAcross ?? BAL.kXi }); if (R.walkK.latCop) plan.latCop = { foot: st, cap: R.walkK.latCop }; if (R.walkK.swingKpDrop != null) plan.swingKpDrop = R.walkK.swingKpDrop; if (R.walkK.swingPredict) plan.swingPredict = this.dFb || 0; } plan.swing[sw] = tg; R.u = tg.u; R.lastTgt = tg;
       if (!R.liftoff) { if (!F[sw].touching && F[sw].load < 25) R.air++; else R.air = 0;
         if (R.air >= 3) { R.liftoff = { t }; this.lastEventT = t; this.ev(t, "liftoff", `${sw} ${(t - R.tNeed).toFixed(3)} s after the step started`); }
         else if (t - R.tSw0 > STEP.liftTimeout) { R.stage = "FAILED"; R.fail = `the ${sw} foot did not leave the ground within ${STEP.liftTimeout} s (load ${F[sw].load.toFixed(0)} N)`; this.ev(t, "FAILED", R.fail); } }
@@ -246,7 +246,17 @@ export class StepExecutor {
     if (!ok(tc)) { const a = R.proj.target; let lo = 0, hi = 1; for (let i = 0; i < 16; i++) { const m = (lo + hi) / 2; if (ok([a[0] + (tc[0] - a[0]) * m, a[1] + (tc[1] - a[1]) * m])) lo = m; else hi = m; } tc = [a[0] + (tc[0] - a[0]) * lo, a[1] + (tc[1] - a[1]) * lo]; }
     const c = { ...R.cand, target: tc, tSw: R.T }; const T0 = R.T; this.tool._aim(R, o, c); R.T = T0; R.tSw = R.tSw0; this._groundEnd(R); this._timedRetarget(o, R, tc, o.t); R.plannedTd.center = tc.slice(); R.adjusted = (R.adjusted || 0) + 1; }
   // rhythmic: the planned capture-point trajectory during single support (LIPM about the stance foot's nominal CoP p_st)
-  _xiD(R, t, o) { if (R.walkK && R.walkK.r) { const K = R.walkK, w = o.omega0, q = segXi(R.xiIni, [R.pSt[0] - K.hd[0] * K.r, R.pSt[1] - K.hd[1] * K.r], [R.pSt[0] + K.hd[0] * K.r, R.pSt[1] + K.hd[1] * K.r], K.Tss, Math.max(0, t - R.tSw0), w);
+  // ((G2b speed work, walk.dcmRef = { k, vd, xL: [a, b], from }) from the swing's measured LIFTOFF the single support's capture-point reference is
+  //  the DESIRED gait's, not the step's own measured start: ξ_ref(liftoff) = the stance centre + x_L(vd) along the walk (x_L = a + b·v, measured on
+  //  this body: the capture point's offset at liftoff vs the walking speed) and the measured sideways ξ, propagated under the planned heel→toe
+  //  CoP roll over the remaining single support; the stance ankle then tracks it, p = p_ref + (1 + k)(ξ − ξ_ref) along the walk — capture-point
+  //  (DCM) tracking through the ground reaction: an error converges at k·ω within the step instead of diverging at ω, within the sole / torque)
+  _dcmRef(R, t, o) { const K = R.walkK, D = K.dcmRef; if (!D || !R.liftoff || (R.stepIndex ?? 0) < (D.from ?? 2)) return null;
+    if (!R.dcm0) { const tL = R.liftoff.t, hd = K.hd, rt = [hd[1], -hd[0]], x0 = D.xL[0] + D.xL[1] * D.vd, lat = (o.xi[0] - R.pSt[0]) * rt[0] + (o.xi[1] - R.pSt[1]) * rt[1], fr = Math.max(0, Math.min(1, (tL - R.tSw0) / K.Tss));
+      R.dcm0 = { t: tL, xi: [R.pSt[0] + hd[0] * x0 + rt[0] * lat, R.pSt[1] + hd[1] * x0 + rt[1] * lat], pa: [R.pSt[0] + hd[0] * K.r * (2 * fr - 1), R.pSt[1] + hd[1] * K.r * (2 * fr - 1)], pb: [R.pSt[0] + hd[0] * K.r, R.pSt[1] + hd[1] * K.r], T: Math.max(0.05, R.tSw0 + K.Tss - tL) }; }
+    const Z = R.dcm0, q = segXi(Z.xi, Z.pa, Z.pb, Z.T, Math.max(0, t - Z.t), o.omega0); return q; }
+  _xiD(R, t, o) { if (R.walkK && R.walkK.dcmRef) { const q = this._dcmRef(R, t, o); if (q) { R.xiDotNow = [o.omega0 * (q.xi[0] - q.p[0]), o.omega0 * (q.xi[1] - q.p[1])]; R.pNomNow = q.p; return q.xi; } }
+    if (R.walkK && R.walkK.r) { const K = R.walkK, w = o.omega0, q = segXi(R.xiIni, [R.pSt[0] - K.hd[0] * K.r, R.pSt[1] - K.hd[1] * K.r], [R.pSt[0] + K.hd[0] * K.r, R.pSt[1] + K.hd[1] * K.r], K.Tss, Math.max(0, t - R.tSw0), w);
       R.xiDotNow = [w * (q.xi[0] - q.p[0]), w * (q.xi[1] - q.p[1])]; R.pNomNow = q.p; return q.xi; }   // ((G2b) the stance CoP rolls heel → toe)
     const w = o.omega0, e = dexp(w * Math.max(0, t - R.tSw0)), xi = [R.pSt[0] + (R.xiIni[0] - R.pSt[0]) * e, R.pSt[1] + (R.xiIni[1] - R.pSt[1]) * e]; R.xiDotNow = [w * (xi[0] - R.pSt[0]), w * (xi[1] - R.pSt[1])]; return xi; }
   // rhythmic foothold adjustment: the landing target moves with the predicted capture-point error at touchdown (bounded, reach-checked)
@@ -469,7 +479,7 @@ export class LocoPlanner {
       if (Cc.kind !== "B") this._ctrlStep = { C: Cc, yt: dec.yt, b: Cc.adapt && r.wb ? r.wb.slice() : null }; }   // (B: SIMBICON's swing hip is servoed continuously — the same in-swing re-evaluation of its own law)
     if (CH) { target = [pSt[0] + hd[0] * CH.df + rt[0] * side * CH.dl, pSt[1] + hd[1] * CH.df + rt[1] * side * CH.dl]; if (CH.T) Tk = CH.T; }
     return { target, pSt, pSw: target, xiIni: xi0.slice(), xiTd: eos, yaw: ps + (K.toeOut[step.sw] || 0), dcm: { df: df0, dl: dl0, clamped: df !== df0 || dl !== dl0 }, char: CH || null,
-      walkK: { vReg: r.walk.vReg || null, ...(this._ctrlStep && CH && !(r.walk.char && r.walk.char[r.i]) ? { ctrlC: this._ctrlStep.C, ctrlYt: this._ctrlStep.yt, ctrlB: this._ctrlStep.b } : {}), cNext: cN, side, hd, E2: K.E2, k: K.k, r: K.r, Tss: Tk, kXi: r.walk.kXiSS, latCop: r.walk.latCop, swingKpDrop: r.walk.swingKpDrop, swingPredict: !!r.walk.swingPredict, swingLead: r.walk.swingLead, adjustUntil: CH ? (ctrlA ? 1 : 0) : r.walk.adjustUntil, ctrlA, latPred: r.walk.latPred, kXiAcross: r.walk.kXiAcross, kXiAlong: r.walk.kXiAlong, dcm: (eos2, pS2) => this._dcmD(K, hd, rt, eos2, pS2, cN), Lmax: K.Lmax || 0.9, g: r.walk.placeGain ?? 0.6, gf: r.walk.placeGainFwd ?? 1, Ln, w: Wn, wMin: K.wMin, wMax: K.wMax } }; }
+      walkK: { vReg: r.walk.vReg || null, dcmRef: r.walk.dcmRef || null, ...(this._ctrlStep && CH && !(r.walk.char && r.walk.char[r.i]) ? { ctrlC: this._ctrlStep.C, ctrlYt: this._ctrlStep.yt, ctrlB: this._ctrlStep.b } : {}), cNext: cN, side, hd, E2: K.E2, k: K.k, r: K.r, Tss: Tk, kXi: r.walk.kXiSS, latCop: r.walk.latCop, swingKpDrop: r.walk.swingKpDrop, swingPredict: !!r.walk.swingPredict, swingLead: r.walk.swingLead, adjustUntil: CH ? (ctrlA ? 1 : 0) : r.walk.adjustUntil, ctrlA, latPred: r.walk.latPred, kXiAcross: r.walk.kXiAcross, kXiAlong: r.walk.kXiAlong, dcm: (eos2, pS2) => this._dcmD(K, hd, rt, eos2, pS2, cN), Lmax: K.Lmax || 0.9, g: r.walk.placeGain ?? 0.6, gf: r.walk.placeGainFwd ?? 1, Ln, w: Wn, wMin: K.wMin, wMax: K.wMax } }; }
   // the walking double support's reference at the current time (and the CoP reference)
   // ((G2b walker, walk.dsLead) the double support's plan is evaluated AHEAD by the feedback view's age: its t0 is the contact as the 50 ms-old
   // view saw it, and on the hand-over tick the physical foot has been loading for those 50 ms (≈ 50 % of the weight) — evaluated at s = 0 the
@@ -487,6 +497,12 @@ export class LocoPlanner {
     // ((G2b walker, walk.dsLatTarget) the sideways target of the double support's tracking is the MEASURED nominal inward offset of the next
     // single support (Controller A's periodic state), not the LIPM's)
     const lat0 = (D.xi0[0] - D.p1[0]) * rt[0] + (D.xi0[1] - D.p1[1]) * rt[1], latT = sideN * (r.walk.dsLatTarget != null ? r.walk.dsLatTarget : this._stepW(r.i) * K.lK / (K.E1 * K.lE2 + 1)), x = Math.min(1, s / T), sm = minjerk(x), dsm = x < 1 ? 30 * x * x * (1 - x) * (1 - x) / T : 0;
+    // ((G2b speed work) with latDS "lipm" the function returned here, before the forward closed-loop options below were reached: the desired-gait
+    //  forward tracking (walk.dcmRef.ds) is applied first, along the walk only — the lateral stays the analytic LIPM)
+    if (r.walk.latDS === "lipm" && r.walk.dcmRef && r.walk.dcmRef.ds && r.i >= (r.walk.dcmRef.from ?? 2)) { const fN = (o.xi[0] - D.pC[0]) * hd[0] + (o.xi[1] - D.pC[1]) * hd[1], fT = r.walk.dcmRef.xS[0] + r.walk.dcmRef.xS[1] * r.walk.dcmRef.vd, tau = Math.max(0.04, T - s), E = dexp(w * tau), kq = (E - 1) / (w * tau), pb = -K.r;
+      let pf = (E * fN + pb * (1 - kq) - fT) / (E - kq); const tr = (D.pT[0] - D.pC[0]) * hd[0] + (D.pT[1] - D.pC[1]) * hd[1], ex = this.geo.box.he[2] - 0.02; pf = Math.max(Math.min(tr + ex, -ex), Math.min(ex, pf));
+      r.wdsFwd = { fN, fT, pf }; const latP = (p[0] - D.pC[0]) * rt[0] + (p[1] - D.pC[1]) * rt[1], latX = (xi[0] - D.pC[0]) * rt[0] + (xi[1] - D.pC[1]) * rt[1];
+      p = [D.pC[0] + hd[0] * pf + rt[0] * latP, D.pC[1] + hd[1] * pf + rt[1] * latP]; xi = [D.pC[0] + hd[0] * fN + rt[0] * latX, D.pC[1] + hd[1] * fN + rt[1] * latX]; }
     if (r.walk.latDS === "lipm") { const dot = [w * (xi[0] - p[0]), w * (xi[1] - p[1])]; return { xi, p, dot, u: Math.min(1, s / T) }; }   // (variant: the analytic lateral, for comparison)
     // (latDS "track" — ACROSS the walk the CoP is re-solved every tick from the MEASURED capture point: the CoP now, ramping linearly onto the
     // leading foot over the remaining double support τ, that brings ξ exactly to the next single support's offset latT — the LIPM boundary
@@ -501,7 +517,11 @@ export class LocoPlanner {
     if (r.walk.fwdDS === "freeze") { const fN = (o.xi[0] - D.pC[0]) * hd[0] + (o.xi[1] - D.pC[1]) * hd[1], ex = this.geo.box.he[2] - 0.02, pf = Math.max(-ex, Math.min(ex, fN)); r.wdsFwd = { fN, pf };
       const latP = (p[0] - D.pC[0]) * rt[0] + (p[1] - D.pC[1]) * rt[1]; p = [D.pC[0] + hd[0] * pf + rt[0] * latP, D.pC[1] + hd[1] * pf + rt[1] * latP];
       const latX = (xi[0] - D.pC[0]) * rt[0] + (xi[1] - D.pC[1]) * rt[1]; xi = [D.pC[0] + hd[0] * fN + rt[0] * latX, D.pC[1] + hd[1] * fN + rt[1] * latX]; }
-    if (r.walk.fwdDS === "track" && D.cT) { const fN = (o.xi[0] - D.pC[0]) * hd[0] + (o.xi[1] - D.pC[1]) * hd[1], fT = D.cT[0] * hd[0] + D.cT[1] * hd[1], tau = Math.max(0.04, T - s), E = dexp(w * tau), kq = (E - 1) / (w * tau), pb = -K.r;
+    // ((G2b speed work, walk.dcmRef.ds) the same closed-loop double support, aimed at the DESIRED gait's next-step start: x_S(vd) = xS[0] + xS[1]·vd
+    //  ahead of the landed foot's centre (measured on this body: the capture point at a step's start vs the walking speed) — the double support
+    //  is where the CoP has the most room (trailing toe → leading toe) to brake or propel)
+    const dsDcm = r.walk.dcmRef && r.walk.dcmRef.ds && r.i >= (r.walk.dcmRef.from ?? 2);
+    if ((r.walk.fwdDS === "track" && D.cT) || dsDcm) { const fN = (o.xi[0] - D.pC[0]) * hd[0] + (o.xi[1] - D.pC[1]) * hd[1], fT = dsDcm ? r.walk.dcmRef.xS[0] + r.walk.dcmRef.xS[1] * r.walk.dcmRef.vd : D.cT[0] * hd[0] + D.cT[1] * hd[1], tau = Math.max(0.04, T - s), E = dexp(w * tau), kq = (E - 1) / (w * tau), pb = -K.r;
       let pf = (E * fN + pb * (1 - kq) - fT) / (E - kq); const tr = (D.pT[0] - D.pC[0]) * hd[0] + (D.pT[1] - D.pC[1]) * hd[1], ex = this.geo.box.he[2] - 0.02; pf = Math.max(Math.min(tr + ex, -ex), Math.min(ex, pf));   // (from the trailing toe — its heel is up — to the leading toe)
       r.wdsFwd = { fN, fT, pf }; const latP = (p[0] - D.pC[0]) * rt[0] + (p[1] - D.pC[1]) * rt[1]; p = [D.pC[0] + hd[0] * pf + rt[0] * latP, D.pC[1] + hd[1] * pf + rt[1] * latP];
       const latX = (xi[0] - D.pC[0]) * rt[0] + (xi[1] - D.pC[1]) * rt[1]; xi = [D.pC[0] + hd[0] * fN + rt[0] * latX, D.pC[1] + hd[1] * fN + rt[1] * latX]; }

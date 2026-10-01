@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Speed Swing Review</title>
+<style>
+  :root { --bg: #f4f3ef; --panel: #ffffff; --ink: #1d1d1b; --mute: #6b6a66; --line: #d9d7d0; --accent: #2f6fdf; --warn: #c2410c; --ok: #15803d;
+          --near: #3b5b8f; --far: #a9b8cf; --toe: #d97706; --torso: #8d8a83; --ground: #6f8f5a; --loaded: #15803d; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #16171a; --panel: #1f2125; --ink: #ecebe6; --mute: #9b9a94; --line: #34363b; --accent: #7aa7ff; --warn: #fb923c; --ok: #4ade80;
+          --near: #8fb0e8; --far: #46536a; --toe: #fbbf24; --torso: #7c7a75; --ground: #8fb27a; --loaded: #4ade80; } }
+  :root[data-theme="dark"] { --bg: #16171a; --panel: #1f2125; --ink: #ecebe6; --mute: #9b9a94; --line: #34363b; --accent: #7aa7ff; --warn: #fb923c; --ok: #4ade80;
+          --near: #8fb0e8; --far: #46536a; --toe: #fbbf24; --torso: #7c7a75; --ground: #8fb27a; --loaded: #4ade80; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  header { position: sticky; top: 0; z-index: 2; background: var(--bg); border-bottom: 1px solid var(--line); padding: 10px 16px; }
+  h1 { font-size: 17px; margin: 0 0 6px; font-weight: 650; }
+  .row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 6px; }
+  button, select { font: inherit; color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+  button.on { border-color: var(--accent); color: var(--accent); font-weight: 600; }
+  input[type=range] { flex: 1; min-width: 200px; }
+  .mute { color: var(--mute); }
+  #desc { max-width: 1100px; margin: 8px 0 0; }
+  main { display: grid; gap: 12px; padding: 12px 16px; }
+  .col { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px; min-width: 0; }
+  .col h2 { font-size: 15px; margin: 0 0 2px; }
+  .col .sub { font-size: 12px; color: var(--mute); margin-bottom: 6px; min-height: 2.9em; }
+  canvas { width: 100%; display: block; border-radius: 6px; }
+  .cap { font-size: 12.5px; margin-top: 6px; white-space: pre-wrap; }
+  .tag { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 4px; border: 1px solid var(--line); margin-left: 6px; vertical-align: 1px; }
+  .tag.bad { color: var(--warn); border-color: var(--warn); } .tag.good { color: var(--ok); border-color: var(--ok); }
+  footer { padding: 4px 16px 24px; font-size: 12.5px; color: var(--mute); max-width: 1200px; }
+  .legend span { display: inline-flex; align-items: center; gap: 4px; margin-right: 12px; font-size: 12px; color: var(--mute); }
+  .legend i { width: 12px; height: 8px; border-radius: 2px; display: inline-block; }
+  @media (max-width: 700px) { main { grid-template-columns: 1fr !important; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>G2b speed regulation and swing execution: configurations side by side</h1>
+  <div class="row" id="scen"></div>
+  <div class="row">
+    <span class="mute" id="feetLabel"></span><span id="feet"></span>
+    <span class="mute" style="margin-left:12px">view</span><button id="vFoot" class="on">foot close-up</button><button id="vTrace" class="on">traces</button>
+    <button id="theme" title="toggle light/dark">◐</button>
+  </div>
+  <div class="row">
+    <button id="play">▶ play</button><button id="back">◀ frame</button><button id="fwd">frame ▶</button>
+    <select id="speed"><option value="0.1">0.1×</option><option value="0.25" selected>0.25×</option><option value="0.5">0.5×</option><option value="1">1×</option></select>
+    <input type="range" id="t" min="0" max="1000" value="0"><span id="tl" class="mono" style="min-width:150px"></span>
+  </div>
+  <div class="legend row"><span><i style="background:var(--near)"></i>left leg (near)</span><span><i style="background:var(--far)"></i>right leg (far)</span><span><i style="background:var(--loaded)"></i>foot loaded (&gt; 5 % BW)</span><span>│ traces: focus foot, time aligned to the scenario's event (0 s)</span></div>
+  <p id="desc" class="mute"></p>
+</header>
+<main id="cols"></main>
+<footer id="foot"></footer>
+<script src="data/manifest.js"></script>
+<script>
+"use strict";
+const M = window.FG_MANIFEST, colsOf = (S) => S.cols.map(c => c.key), nameOf = (S, k) => (S.cols.find(c => c.key === k) || { name: k }).name;
+let FEETALL = colsOf(M.scenarios[0]); const NAMES = {};
+const st = { scen: 0, feet: null, tRel: 0, playing: false, speed: 0.25, showFoot: true, showTrace: true, runs: {} };
+const css = (k) => getComputedStyle(document.documentElement).getPropertyValue(k).trim();
+try { const s = localStorage.getItem("g2s_view"); if (s) { const o = JSON.parse(s); if (o.scen != null) st.scen = Math.min(o.scen, M.scenarios.length - 1); } } catch (e) {}
+const save = () => { try { localStorage.setItem("g2s_view", JSON.stringify({ scen: st.scen })); } catch (e) {} };
+// ── loading: one script per run file, sequentially (each pushes into window.FG_RUNS) ──
+const loaded = {}; function loadFile(f) { if (loaded[f]) return loaded[f]; return loaded[f] = new Promise((res, rej) => { const n0 = (window.FG_RUNS || []).length, s = document.createElement("script"); s.src = "data/" + f; s.onload = () => res(window.FG_RUNS[n0]); s.onerror = () => rej(new Error("missing " + f)); document.head.appendChild(s); }); }
+// ── math ──
+const qrot = (q, v) => { const [x, y, z, w] = q, tx = 2 * (y * v[2] - z * v[1]), ty = 2 * (z * v[0] - x * v[2]), tz = 2 * (x * v[1] - y * v[0]); return [v[0] + w * tx + (y * tz - z * ty), v[1] + w * ty + (z * tx - x * tz), v[2] + w * tz + (x * ty - y * tx)]; };
+const qmul = (a, b) => [a[3] * b[0] + a[0] * b[3] + a[1] * b[2] - a[2] * b[1], a[3] * b[1] - a[0] * b[2] + a[1] * b[3] + a[2] * b[0], a[3] * b[2] + a[0] * b[1] - a[1] * b[0] + a[2] * b[3], a[3] * b[3] - a[0] * b[0] - a[1] * b[1] - a[2] * b[2]];
+const add = (a, b) => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
+function hull(P) { P = P.slice().sort((a, b) => a[0] - b[0] || a[1] - b[1]); const cr = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]); const lo = [], up = [];
+  for (const p of P) { while (lo.length >= 2 && cr(lo[lo.length - 2], lo[lo.length - 1], p) <= 0) lo.pop(); lo.push(p); }
+  for (const p of P.slice().reverse()) { while (up.length >= 2 && cr(up[up.length - 2], up[up.length - 1], p) <= 0) up.pop(); up.push(p); } return lo.slice(0, -1).concat(up.slice(0, -1)); }
+function frameAt(run, t) { const F = run.frames; let lo = 0, hi = F.length - 1; if (t <= F[0].t) return F[0]; if (t >= F[hi].t) return F[hi]; while (hi - lo > 1) { const m = (lo + hi) >> 1; if (F[m].t < t) lo = m; else hi = m; } return (t - F[lo].t < F[hi].t - t) ? F[lo] : F[hi]; }
+function heading(run) { // the mean pelvis forward direction over the run
+  let sx = 0, sz = 0; for (const f of run.frames) { const q = f.b[0].slice(3), v = qrot(q, [0, 0, 1]); sx += v[0]; sz += v[2]; } const h = Math.atan2(sx, sz); return [Math.sin(h), 0, Math.cos(h)]; }
+// ── drawing one figure (side projection: screen x = forward, screen y = up; viewer on the character's left) ──
+function drawBody(ctx, run, fr, map, opts) {
+  const hd = run._hd, order = []; run.bodies.forEach((b, i) => { const far = /_R$/.test(b.name), near = /_L$/.test(b.name); order.push({ i, z: far ? 0 : near ? 2 : 1 }); }); order.sort((a, b) => a.z - b.z);
+  const P = (w) => map([w[0] * hd[0] + w[2] * hd[2], w[1]]);
+  for (const { i, z } of order) { const b = run.bodies[i], s0 = fr.b[i], bp = s0.slice(0, 3), bq = s0.slice(3), isToe = /^toe_/.test(b.name), isFoot = /^(foot|toe)_/.test(b.name), side = b.name.slice(-1);
+    const ld = isFoot && fr.ch[side] && fr.ch[side][6] > 0.05;
+    let col = z === 0 ? css("--far") : z === 2 ? css("--near") : css("--torso"); if (isToe) col = css("--toe");
+    ctx.fillStyle = col; ctx.strokeStyle = ld ? css("--loaded") : "rgba(0,0,0,0.35)"; ctx.lineWidth = ld ? 2.2 : 0.8; ctx.globalAlpha = z === 0 ? 0.75 : 0.92;
+    for (const s of b.shapes) { const sq = s.rot ? qmul(bq, s.rot) : bq, sc = add(bp, qrot(bq, s.pos)), W = (l) => add(sc, qrot(sq, l));
+      if (s.type === "box") { const pts = []; for (const a of [-1, 1]) for (const c of [-1, 1]) for (const d of [-1, 1]) pts.push(P(W([a * s.he[0], c * s.he[1], d * s.he[2]]))); const H = hull(pts); ctx.beginPath(); H.forEach((p, k) => k ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1])); ctx.closePath(); ctx.fill(); ctx.stroke(); }
+      else if (s.type === "sphere") { const c = P(sc), r = Math.abs(map([s.r, 0])[0] - map([0, 0])[0]); ctx.beginPath(); ctx.arc(c[0], c[1], r, 0, 7); ctx.fill(); ctx.stroke(); }
+      else { const h = s.half, rT = s.type === "tapered" ? s.rTop : s.r, rB = s.type === "tapered" ? s.rBot : s.r, a = P(W([0, h, 0])), c = P(W([0, -h, 0])), k = Math.abs(map([1, 0])[0] - map([0, 0])[0]);
+        const dx = c[0] - a[0], dy = c[1] - a[1], L = Math.hypot(dx, dy) || 1, nx = -dy / L, ny = dx / L; ctx.beginPath(); ctx.moveTo(a[0] + nx * rT * k, a[1] + ny * rT * k); ctx.lineTo(c[0] + nx * rB * k, c[1] + ny * rB * k);
+        ctx.arc(c[0], c[1], rB * k, Math.atan2(ny, nx), Math.atan2(ny, nx) + Math.PI, true); ctx.lineTo(a[0] - nx * rT * k, a[1] - ny * rT * k); ctx.arc(a[0], a[1], rT * k, Math.atan2(-ny, -nx), Math.atan2(-ny, -nx) + Math.PI, true); ctx.closePath(); ctx.fill(); ctx.stroke(); } } }
+  ctx.globalAlpha = 1; }
+function setupCanvas(cv, h) { const dpr = window.devicePixelRatio || 1, w = cv.clientWidth; cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); cv.style.height = h + "px"; const ctx = cv.getContext("2d"); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); return { ctx, w, h }; }
+// ── one column ──
+function render() {
+  const S = M.scenarios[st.scen], feet = FEETALL.filter(f => st.feet.has(f) && S.runs[f]);
+  for (const f of feet) { const R = st.runs[S.runs[f].file]; if (!R) continue; const spec = S.runs[f], fr = frameAt(R, spec.anchor + st.tRel), col = document.getElementById("col_" + f); if (!col) continue;
+    // whole body, following the focus foot's ankle region horizontally (the camera is fixed through the window for event-aligned comparison)
+    const cv = col.querySelector(".body"), { ctx, w, h } = setupCanvas(cv, 300), hd = R._hd, gx = spec._cx;
+    const px = Math.min(w / 2.2, h / 2.15), body = (p) => [w / 2 + (p[0] - (spec.follow ? (fr.com[0] * hd[0] + fr.com[2] * hd[2]) : gx)) * px, h - 14 - p[1] * px];
+    ctx.fillStyle = css("--panel"); ctx.fillRect(0, 0, w, h); ctx.strokeStyle = css("--ground"); ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(0, h - 14); ctx.lineTo(w, h - 14); ctx.stroke();
+    ctx.fillStyle = css("--mute"); ctx.font = "11px sans-serif"; for (let m = -3; m <= 3; m++) { const x = body([m * 0.25 + Math.round(gx * 4) / 4, 0])[0]; ctx.fillRect(x, h - 14, 1, 5); }
+    drawBody(ctx, R, fr, body);
+    if (fr.com) { const c = body([fr.com[0] * hd[0] + fr.com[2] * hd[2], fr.com[1]]); ctx.fillStyle = css("--warn"); ctx.beginPath(); ctx.arc(c[0], c[1], 3.5, 0, 7); ctx.fill(); }
+    // foot close-up: fixed window around the focus foot's position at the anchor
+    const cf = col.querySelector(".footcv"); cf.style.display = st.showFoot ? "block" : "none";
+    if (st.showFoot) { const sid = R.bodies.findIndex(b => b.name === "foot_" + spec.side), fb = fr.b[sid], fx = fb[0] * hd[0] + fb[2] * hd[2] + 0.06, o = setupCanvas(cf, 190), k = o.w / 1.05, fm = (p) => [o.w * 0.5 + (p[0] - fx) * k, o.h - 16 - p[1] * k];
+      o.ctx.fillStyle = css("--panel"); o.ctx.fillRect(0, 0, o.w, o.h); o.ctx.strokeStyle = css("--ground"); o.ctx.lineWidth = 2; o.ctx.beginPath(); o.ctx.moveTo(0, o.h - 16); o.ctx.lineTo(o.w, o.h - 16); o.ctx.stroke();
+      o.ctx.fillStyle = css("--mute"); for (let c = 0; c <= 30; c += 5) { const y = o.h - 16 - c / 100 * k; o.ctx.fillRect(0, y, c % 10 ? 4 : 8, 1); } o.ctx.font = "10px sans-serif"; o.ctx.fillText("10 cm", 10, o.h - 16 - 0.1 * k + 3);
+      const sub = { ...R, bodies: R.bodies.map((b, i) => ({ ...b, _i: i })).filter(b => /^(foot|toe|shin)_/.test(b.name)) }, frs = { ...fr, b: sub.bodies.map(b => fr.b[b._i]) }; drawBody(o.ctx, sub, frs, fm);
+      const c = fr.ch[spec.side]; o.ctx.fillStyle = css("--ink"); o.ctx.font = "11.5px sans-serif"; o.ctx.fillText(`${spec.side} foot (focus) · heel ${(c[0] * 100).toFixed(1)} cm · toe clr ${(c[1] * 100).toFixed(1)} cm · pitch ${c[2].toFixed(0)}°${c[3] != null ? " · MTP " + c[3].toFixed(0) + "°" : ""}`, 6, 14); }
+    // traces
+    const ct = col.querySelector(".trace"); ct.style.display = st.showTrace ? "block" : "none"; if (st.showTrace) drawTraces(ct, R, spec, S);
+    col.querySelector(".tnow").textContent = `t = ${fr.t.toFixed(3)} s (abs) · ${st.tRel >= 0 ? "+" : ""}${st.tRel.toFixed(3)} s`; }
+  document.getElementById("tl").textContent = `${st.tRel >= 0 ? "+" : ""}${st.tRel.toFixed(3)} s from the event`; }
+function drawTraces(cv, R, spec, S) {
+  const rows = [{ k: "v", nm: "forward COM speed (m/s)" + (S.vd ? " · target " + S.vd : ""), sc: 1, lo: -0.2, hi: 1.2, lim: S.vd ? [S.vd] : null }, { k: 0, nm: "heel (cm)", sc: 100, lo: 0, hi: 30 }, { k: 1, nm: "toe clearance (cm)", sc: 100, lo: -1, hi: 15 }, { k: 3, nm: "MTP (°, + = dorsiflexion)", sc: 1, lo: -10, hi: 60 }, { k: 5, nm: "ankle τ (N·m)", sc: 1, lo: -60, hi: 160, lim: [150, -150] }, { k: 6, nm: "load (BW)", sc: 1, lo: 0, hi: 2 }];
+  const rh = 46, o = setupCanvas(cv, rows.length * rh + 8), [a, b] = S.win, tA = spec.anchor + a, tB = spec.anchor + b, X = (t) => 36 + (t - tA) / (tB - tA) * (o.w - 44), c = o.ctx;
+  c.fillStyle = css("--panel"); c.fillRect(0, 0, o.w, o.h); const fr = R.frames.filter(f => f.t >= tA && f.t <= tB), side = spec.side;
+  rows.forEach((r, i) => { const y0 = 4 + i * rh, Y = (v) => y0 + rh - 6 - (v - r.lo) / (r.hi - r.lo) * (rh - 12);
+    c.strokeStyle = css("--line"); c.lineWidth = 1; c.strokeRect(36, y0, o.w - 44, rh - 4); c.fillStyle = css("--mute"); c.font = "10px sans-serif"; c.fillText(r.nm, 40, y0 + 10);
+    c.fillText(String(r.hi), 2, y0 + 9); c.fillText(String(r.lo), 2, y0 + rh - 6);
+    if (r.lim) for (const l of r.lim) if (l >= r.lo && l <= r.hi) { c.strokeStyle = css("--warn"); c.setLineDash([3, 3]); c.beginPath(); c.moveTo(36, Y(l)); c.lineTo(o.w - 8, Y(l)); c.stroke(); c.setLineDash([]); }
+    if (r.k === 1) { c.strokeStyle = css("--line"); c.beginPath(); c.moveTo(36, Y(0)); c.lineTo(o.w - 8, Y(0)); c.stroke(); }
+    c.strokeStyle = css("--accent"); c.lineWidth = 1.6; c.beginPath(); let on = false; for (const f of fr) { const v = r.k === "v" ? (f.v ? f.v[0] * R._hd[0] + f.v[2] * R._hd[2] : null) : f.ch[side][r.k]; if (v == null) { on = false; continue; } const yy = Math.max(y0, Math.min(y0 + rh - 4, Y(v * r.sc))); on ? c.lineTo(X(f.t), yy) : c.moveTo(X(f.t), yy); on = true; } c.stroke(); });
+  // the focus foot's events: liftoff (▲) and touchdown (▼) of its swings
+  for (const e of R.events) { if (e.sw !== side) continue; for (const [t, m] of [[e.lift, "lift"], [e.td, "td"]]) { if (t == null || t < tA || t > tB) continue; c.strokeStyle = m === "lift" ? css("--toe") : css("--ok"); c.lineWidth = 1; c.beginPath(); c.moveTo(X(t), 4); c.lineTo(X(t), o.h - 4); c.stroke(); if (b - a <= 3) { c.fillStyle = c.strokeStyle; c.font = "10px sans-serif"; c.fillText(m + (m === "td" && e.uAt != null ? " u" + e.uAt : ""), X(t) + 2, o.h - 14); } } }
+  const tick = [0.1, 0.2, 0.5, 1, 2, 5].find(d => (b - a) / d <= 12) || 5; c.fillStyle = css("--mute"); c.font = "10px sans-serif";
+  for (let tt = Math.ceil(a / tick) * tick; tt <= b + 1e-9; tt += tick) { const x = X(spec.anchor + tt); c.fillRect(x, o.h - 4, 1, 4); c.fillText((tt >= 0 ? "+" : "") + (tick < 1 ? tt.toFixed(1) : tt.toFixed(0)), x - 8, o.h - 2); }
+  const tc = spec.anchor + st.tRel; c.strokeStyle = css("--ink"); c.lineWidth = 1.2; c.beginPath(); c.moveTo(X(tc), 2); c.lineTo(X(tc), o.h - 2); c.stroke(); }
+// ── layout ──
+async function build() {
+  const S = M.scenarios[st.scen]; document.querySelectorAll("#scen button").forEach((b, i) => b.classList.toggle("on", i === st.scen));
+  FEETALL = colsOf(S); for (const c of S.cols) NAMES[c.key] = c.name; st.feet = new Set(FEETALL);
+  document.getElementById("desc").innerHTML = S.desc; document.getElementById("foot").innerHTML = S.foot || "";
+  const feet = FEETALL.filter(f => st.feet.has(f) && S.runs[f]), main = document.getElementById("cols"); main.style.gridTemplateColumns = `repeat(${feet.length}, minmax(0, 1fr))`; main.innerHTML = "";
+  for (const f of feet) { const spec = S.runs[f], d = document.createElement("div"); d.className = "col"; d.id = "col_" + f;
+    d.innerHTML = `<h2>${NAMES[f]}${spec.verdict ? `<span class="tag ${spec.verdict.cls}">${spec.verdict.txt}</span>` : ""}</h2><div class="sub">${spec.sub || ""}<br><span class="tnow"></span></div><canvas class="body"></canvas><canvas class="footcv"></canvas><canvas class="trace"></canvas><div class="cap">${spec.caption || ""}</div>`; main.appendChild(d); }
+  for (const f of feet) { const spec = S.runs[f]; if (!st.runs[spec.file]) { try { const R = await loadFile(spec.file); R._hd = heading(R); st.runs[spec.file] = R; } catch (e) { document.getElementById("col_" + f).querySelector(".cap").textContent = String(e); continue; } }
+    const R = st.runs[spec.file], f0 = frameAt(R, spec.anchor), hd = R._hd, sid = R.bodies.findIndex(b => b.name === "foot_" + spec.side), fp = f0.b[sid];
+    spec._fx = (fp[0] * hd[0] + fp[2] * hd[2]) + (spec.footDx || 0.1); const fa = frameAt(R, spec.anchor + (S.win[0] + S.win[1]) / 2); spec._cx = fa.com[0] * hd[0] + fa.com[2] * hd[2]; }
+  const t = document.getElementById("t"); t.min = S.win[0] * 1000; t.max = S.win[1] * 1000; st.tRel = Math.max(S.win[0], Math.min(S.win[1], S.t0 ?? 0)); t.value = st.tRel * 1000; render(); }
+function init() {
+  const sc = document.getElementById("scen"); M.scenarios.forEach((s, i) => { const b = document.createElement("button"); b.textContent = (i + 1) + ". " + s.title; b.onclick = () => { st.scen = i; save(); build(); }; sc.appendChild(b); });
+  document.getElementById("feetLabel").style.display = "none";
+  const t = document.getElementById("t"); t.oninput = () => { st.tRel = +t.value / 1000; render(); };
+  document.getElementById("play").onclick = () => { st.playing = !st.playing; document.getElementById("play").textContent = st.playing ? "❚❚ pause" : "▶ play"; if (st.playing) { const S = M.scenarios[st.scen]; if (st.tRel >= S.win[1] - 1e-3) st.tRel = S.win[0]; last = performance.now(); requestAnimationFrame(tick); } };
+  const step = (d) => { const S = M.scenarios[st.scen]; st.tRel = Math.max(S.win[0], Math.min(S.win[1], st.tRel + d)); t.value = st.tRel * 1000; render(); };
+  document.getElementById("back").onclick = () => step(-1 / 60); document.getElementById("fwd").onclick = () => step(1 / 60);
+  document.getElementById("speed").onchange = (e) => { st.speed = +e.target.value; };
+  document.getElementById("vFoot").onclick = (e) => { st.showFoot = !st.showFoot; e.target.classList.toggle("on", st.showFoot); render(); };
+  document.getElementById("vTrace").onclick = (e) => { st.showTrace = !st.showTrace; e.target.classList.toggle("on", st.showTrace); render(); };
+  document.getElementById("theme").onclick = () => { const r = document.documentElement, dark = r.dataset.theme ? r.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches; r.dataset.theme = dark ? "light" : "dark"; render(); };
+  document.addEventListener("keydown", (e) => { if (e.key === " ") { e.preventDefault(); document.getElementById("play").click(); } else if (e.key === "ArrowRight") step(1 / 60); else if (e.key === "ArrowLeft") step(-1 / 60); });
+  window.addEventListener("resize", render); build(); }
+let last = 0; function tick(now) { if (!st.playing) return; const S = M.scenarios[st.scen]; st.tRel += (now - last) / 1000 * st.speed; last = now;
+  if (st.tRel >= S.win[1]) { st.tRel = S.win[1]; st.playing = false; document.getElementById("play").textContent = "▶ play"; } document.getElementById("t").value = st.tRel * 1000; render(); if (st.playing) requestAnimationFrame(tick); }
+init();
+</script>
+</body>
+</html>

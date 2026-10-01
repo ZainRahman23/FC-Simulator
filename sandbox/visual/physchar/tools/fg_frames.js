@@ -16,7 +16,7 @@ export function dumpFrames(file, spec, recs, P, meta, opt = {}) {
       const heel = Math.min(cor(S, f.fb, f.sh, -1, -1), cor(S, f.fb, f.sh, 1, -1)), toe = f.tsh ? Math.min(cor(S, f.tb, f.tsh, -1, 1), cor(S, f.tb, f.tsh, 1, 1)) : Math.min(cor(S, f.fb, f.pb, -1, 1), cor(S, f.fb, f.pb, 1, 1));
       const a = q.arb && q.arb.find(x => x.joint === "ankle_" + s);
       ch[s] = [r4(heel), r4(toe), r2(Math.atan2(fz[1], Math.hypot(fz[0], fz[2])) * 57.2958), q.mtp ? r2(q.mtp[s].a * 57.2958) : null, q.mtp ? r2(q.mtp[s].tau) : null, a ? r2(a.real[1]) : null, r2((q.feet[s].load || 0) / W)]; }
-    frames.push({ t: r4(q.t), b: q.states.map(s => [...s.pos.map(r4), ...s.rot.map(r4)]), com: q.com ? q.com.map(r4) : null, ch }); }
+    frames.push({ t: r4(q.t), b: q.states.map(s => [...s.pos.map(r4), ...s.rot.map(r4)]), com: q.com ? q.com.map(r4) : null, v: q.vcom ? q.vcom.map(r4) : null, ch }); }
   const ev = (P ? P.exec.done : []).filter(d => d.kind === "rhythmic").map(d => ({ k: d.stepIndex, sw: d.sw, tSw0: r4(d.tSw0), lift: d.liftoff ? r4(d.liftoff.t) : null, td: d.td ? r4(d.td.t) : null, uAt: d.td && d.td.uAt != null ? r2(d.td.uAt) : null, status: d.status }));
   const out = { ...meta, channels: ["heel", "toeClr", "pitch", "mtp", "mtpTau", "ankleTau", "loadBW"], bodies, events: ev, frames };
   fs.writeFileSync(file, "(window.FG_RUNS = window.FG_RUNS || []).push(" + JSON.stringify(out) + ");\n");

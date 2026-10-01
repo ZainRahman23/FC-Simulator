@@ -1,0 +1,16 @@
+[ 1332s] identification: 600 runs → /Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1/review_artifacts/physical_character_v1/g2_speed/analysis/../json/ident_dcm05.json
+ident_dcm05.json: swings 2582 · failed 21% · by previous step 0.00-0.20: 13%(n1389) 0.20-0.26: 10%(n319) 0.26-0.32: 26%(n302) 0.32-0.38: 35%(n310) 0.38-0.60: 48%(n209) · upright steps per run 5.8
+τ 0.00: n 1915 (closed-loop 0) | CV rms linT [0.054 0.043] quad [0.053 0.041] | A eig [ 2.21 -3.37] | x mean [0.034 0.089] sd [0.062 0.047]
+τ 0.20: n 1840 (closed-loop 0) | CV rms linT [0.035 0.03 ] quad [0.033 0.029] | A eig [ 1.38 -2.08] | x mean [0.119 0.126] sd [0.102 0.075]
+first step 0.224,0.343,0.471
+G2W_A8 R@0.5: upright 10 · hash a9a07a70 · cpu 39.6 s
+G2W_A8 R@0.55: upright 8 · hash d086fbe3 · cpu 4.3 s
+G2W_A8 R@0.6: upright 9 · hash 5ff0482b · cpu 5.1 s
+G2W_A8 L@0.5: upright 10 · hash 4a3a79fc · cpu 137.0 s
+G2W_A8 L@0.55: upright 12 · hash 19d9270a · cpu 2.7 s
+G2W_A8 L@0.6: upright 12 · hash 626700d6 · cpu 3.1 s
+wrote /Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1/review_artifacts/physical_character_v1/g2_speed/analysis/../json/diag_dcm05.json
+diag_dcm05.json                    upright 10.2 (8–12) | speed 0.57±0.17 | step 0.29±0.06 | exec err fwd +2.9±6.6 lat +1.0±1.9 cm | Tss 0.28 DS 0.23 uAt 0.90 | clamped 35% | model err (achieved u) fwd +6.9±6.8 cm
+swing quality:
+  diag_dcm05.json                    swings  64 | early/failed   23% | overshoot fwd +2.9±6.6 cm | min toe clr med 3.9 p10 -0.0 cm | foot v at td fwd +0.03 vert -0.52 m/s | re-contacts 20
+[ 1528s] done dcm05

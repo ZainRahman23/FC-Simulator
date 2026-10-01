@@ -1,0 +1,15 @@
+[  261s] identification: 600 runs → /Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1/review_artifacts/physical_character_v1/g2_speed/analysis/../json/ident_ank2.json
+τ 0.00: n 1851 (closed-loop 0) | CV rms linT [0.045 0.041] quad [0.043 0.038] | A eig [ 2.43 -3.41] | x mean [0.018 0.089] sd [0.054 0.048]
+τ 0.20: n 1793 (closed-loop 0) | CV rms linT [0.029 0.031] quad [0.029 0.03 ] | A eig [ 1.5  -2.05] | x mean [0.089 0.128] sd [0.094 0.075]
+first step 0.224,0.343,0.471
+G2W_A8 R@0.5: upright 4 · hash 5fdda311 · cpu 2.4 s
+G2W_A8 R@0.55: upright 8 · hash aee2faaf · cpu 2.4 s
+G2W_A8 R@0.6: upright 13 · hash e16dd167 · cpu 2.4 s
+G2W_A8 L@0.5: upright 10 · hash f7a32601 · cpu 2.4 s
+G2W_A8 L@0.55: upright 10 · hash 51b8aed · cpu 2.8 s
+G2W_A8 L@0.6: upright 6 · hash c15f1e31 · cpu 1.5 s
+wrote /Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1/review_artifacts/physical_character_v1/g2_speed/analysis/../json/diag_ank2.json
+diag_ank2.json                     upright  8.5 (4–13) | speed 0.55±0.22 | step 0.24±0.11 | exec err fwd +0.8±12.4 lat +2.7±5.6 cm | Tss 0.29 DS 0.21 uAt 0.88 | clamped 69% | model err (achieved u) fwd +4.6±12.1 cm
+swing quality:
+  diag_ank2.json                     swings  54 | early/failed   31% | overshoot fwd +0.8±12.4 cm | min toe clr med 4.5 p10 -0.0 cm | foot v at td fwd +0.05 vert -0.38 m/s | re-contacts 12
+[  276s] done ank2

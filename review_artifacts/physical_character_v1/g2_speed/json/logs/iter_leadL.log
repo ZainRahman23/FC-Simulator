@@ -1,0 +1,16 @@
+[  127s] identification: 600 runs → /Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1/review_artifacts/physical_character_v1/g2_speed/analysis/../json/ident_leadL.json
+ident_leadL.json: swings 1512 · failed 14% · by previous step 0.00-0.20: 11%(n1379) 0.20-0.26: 14%(n50) 0.26-0.32: 37%(n27) 0.32-0.38: 79%(n28) 0.38-0.60: 92%(n12) · upright steps per run 4.3
+τ 0.00: n 1088 (closed-loop 0) | CV rms linT [0.028 0.033] quad [0.028 0.032] | A eig [ 2.91 -3.35] | x mean [-0.027  0.117] sd [0.04  0.035]
+τ 0.20: n 1084 (closed-loop 0) | CV rms linT [0.029 0.033] quad [0.029 0.033] | A eig [ 1.72 -1.93] | x mean [0.01 0.18] sd [0.07  0.061]
+first step 0.217,0.332,0.503
+G2W_A8 R@0.5: upright 6 · hash 9fb5df50 · cpu 1.6 s
+G2W_A8 R@0.55: upright 6 · hash a599ef81 · cpu 1.5 s
+G2W_A8 R@0.6: upright 6 · hash 260684ae · cpu 1.3 s
+G2W_A8 L@0.5: upright 6 · hash b0ac42ec · cpu 1.3 s
+G2W_A8 L@0.55: upright 6 · hash 3fbccc4b · cpu 1.3 s
+G2W_A8 L@0.6: upright 7 · hash 32d2a90c · cpu 1.4 s
+wrote /Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1/review_artifacts/physical_character_v1/g2_speed/analysis/../json/diag_leadL.json
+diag_leadL.json                    upright  6.2 (6–7) | speed 0.82±0.27 | step 0.22±0.15 | exec err fwd -7.9±15.1 lat +0.3±7.9 cm | Tss 0.20 DS 0.20 uAt 0.85 | clamped 100% | model err (achieved u) fwd -9.7±25.7 cm
+swing quality:
+  diag_leadL.json                    swings  41 | early/failed   51% | overshoot fwd -7.9±15.1 cm | min toe clr med 2.3 p10 -0.0 cm | foot v at td fwd +1.09 vert -0.46 m/s | re-contacts 12
+[  137s] done leadL

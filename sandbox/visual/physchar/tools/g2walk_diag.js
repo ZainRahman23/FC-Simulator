@@ -19,6 +19,7 @@ import { initOfLoco } from "../pc_ref.js";
 import { runG2a, TESTS_G2 } from "../pc_gateg2.js";
 import { predictA, modelAt } from "../pc_walker.js";
 import { V, Q } from "../pc_math.js";
+import { dumpFrames } from "./fg_frames.js";
 const here = path.dirname(fileURLToPath(import.meta.url)), PC = path.resolve(here, ".."), ROOT = path.resolve(here, "../../../..");
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i < 0 ? d : (process.argv[i + 1] && !process.argv[i + 1].startsWith("--") ? process.argv[i + 1] : true); };
 const dir = path.join(ROOT, "assets/characters/outfield/gabriel"), rig = JSON.parse(fs.readFileSync(path.join(dir, "rig.json"), "utf8")), buf = fs.readFileSync(path.join(dir, "mesh.bin"));
@@ -41,6 +42,7 @@ export function diagRun(first, at, extra) {
   if (arg("--first", null)) { const [df, dl, T] = (arg("--first") + "").split(",").map(Number); WX0 = { ...(WX0 || {}), char: { ...((WX0 && WX0.char) || TESTS_G2[key].loco.rhythm.walk.char || {}), 0: { df, dl, T } } }; }
   const WX = WX0, HX = arg("--human", null) ? JSON.parse(arg("--human")) : null;   // (diagnostic variants: merged into the test's walk / human-swing options)
   const r = runG2a(J, spec, key, { poses, keepStates: true, seconds: 1.6 + n * 0.58, rhythmOver: { steps, at, ...(WX ? { walk: WX } : {}) }, ...(HX ? { humanOver: HX } : {}), ...(arg("--loco", null) ? { locoOver: JSON.parse(arg("--loco")) } : {}), onLoco: (l) => { LOCO = l; }, ...(extra || {}) });
+  if (arg("--frames", null) && (arg("--frameStart", null) == null || arg("--frameStart") === first + "@" + at)) { const fr = dumpFrames(path.join(arg("--frames"), `${arg("--tag", key)}_${first}${at}.js`), spec, r.recs, LOCO.planner, { scenario: arg("--tag", key), foot, test: key, start: first + "@" + at, hash: r.hash }, { t1: ((r.recs.find(q => q.com[1] < 0.75) || { t: Infinity }).t) + 1.0 }); console.log("frames", fr.frames); }
   const R_ = r.recs, fall = R_.find(q => q.com[1] < 0.75), tF = fall ? fall.t : Infinity, P = LOCO.planner, h0 = P.rhythm.wk.h0, hd = [Math.sin(h0), Math.cos(h0)], rt = [hd[1], -hd[0]];
   const at_ = (t) => { let lo = 0, hi = R_.length - 1; while (hi - lo > 1) { const m = (lo + hi) >> 1; if (R_[m].t < t) lo = m; else hi = m; } return R_[hi]; };
   const fw = (v2) => v2[0] * hd[0] + v2[1] * hd[1], vF = (q) => q.vcom[0] * hd[0] + q.vcom[2] * hd[1];
@@ -62,7 +64,7 @@ export function diagRun(first, at, extra) {
       dec: lg ? { x: lg.x, u: lg.u, dz: lg.dz, xs: lg.info.xs, yt: lg.info.yt, pred: lg.info.pred, clamped: lg.info.clamped || [], adj: lg.adj.map(a => ({ tau: a.tau, x: a.x, df: a.df, dl: a.dl, pred: a.pred, clamped: a.clamped })), b: lg.info.b } : null,
       truth: { xi: xiT, com: comT, vF: vF(q0), vL: (q0.vcom[0] * rt[0] + q0.vcom[2] * rt[1]) * sd, h: q0.com[1] },
       exec: { final: fin, ach, err: ach && fin ? [ach[0] - fin[0], ach[1] - fin[1]] : null, liftDelay: lift != null ? lift - d.tSw0 : null, air: lift != null && td != null ? td - lift : null, Tplan: d.walkK ? d.walkK.Tss : null, Tss: lift != null && td != null ? td - lift : null, uAt: d.td ? d.td.uAt : null, ds: td != null && nLift != null ? nLift - td : null },
-      dyn: { vLift: lift != null ? vF(at_(lift)) : null, vTd: td != null ? vF(at_(td)) : null, vNext: nLift != null ? vF(at_(nLift)) : null,
+      dyn: { xiLift: lift != null ? rel(at_(lift).xi) : null, comLift: lift != null ? rel([at_(lift).com[0], at_(lift).com[2]]) : null, vLift: lift != null ? vF(at_(lift)) : null, vTd: td != null ? vF(at_(td)) : null, vNext: nLift != null ? vF(at_(nLift)) : null,
         ssTrack: lift != null && td != null ? track(lift, td) : null, dsTrack: td != null && nLift != null ? track(td, nLift) : null,
         ssSt: lift != null && td != null ? imp(st, lift, td) : null, dsLead: td != null && nLift != null ? imp(d.sw, td, nLift) : null, dsTrail: td != null && nLift != null ? imp(st, td, nLift) : null },
       // (reachability geometry, for the failure classifier: the swing hip at the decision and at touchdown, relative to the stance centre along
