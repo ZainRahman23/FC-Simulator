@@ -168,6 +168,7 @@ The double support's horizontal force couple dominates: the trailing foot pushes
 - About the vertical axis the two thighs, in phase, are the main term; the arms cancel it out of phase (coefficient ≈ 0.64 with arm swing, 0.20 arms folded); thorax and pelvis are small.
 - The external moment from the ground-reaction forces is the main regulator; the free moment is minor (PMC10192365).
 - **Ours ≈ 0.075:** 2.5× the human bound.
+- **CORRECTION (2026-10-01 night):** the "< 0.03" bound above was not verified. The verified human reference is the transverse-plane WBAM RANGE in level walking, **0.014 ± 0.003 m/s** normalised by body mass × height (Silverman, Neptune et al., Gait & Posture, Table 1). By that measure the walker's open-loop runs show ≈ 0.04 m/s (see `g2_walker/WALKER_LOG.md` §2).
 
 **Primary missing mechanisms** (a combination, ranked):
 1. **The gait's geometry and timing make the double-support couple large:**

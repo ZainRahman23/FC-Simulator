@@ -211,7 +211,10 @@ export function buildBodySpec(rig, mesh, opts) {
     } else if (d.kind === "foot") {
       const f = rig.feet[d.side], mn = V.sub(f.footwearMin, o), mx = V.sub(f.footwearMax, o);
       const heF = V.sc(V.sub(mx, mn), 0.5); if (opts && opts.diagFootWidth) heF[0] = opts.diagFootWidth / 2;   // (DIAGNOSTIC ONLY, never a calibration: a narrower boot collider)
-      shapes.push({ type: "box", pos: V.sc(V.add(mn, mx), 0.5), rot: Q.id(), he: heF, cr: 0.01 });
+      // ((G2b walker) DIAGNOSTIC ONLY, never a calibration: opts.diagFootToe — the boot collider's toe edge at that distance ahead of the ankle
+      // (heel unchanged): a human foot's forefoot lever (MTP ≈ 0.15–0.18 m, toe tip ≈ 0.20 m) instead of the boot mesh's 0.277 m)
+      let posF = V.sc(V.add(mn, mx), 0.5); if (opts && opts.diagFootToe) { const z0 = mn[2], z1 = Math.min(mx[2], opts.diagFootToe); posF = [posF[0], posF[1], (z0 + z1) / 2]; heF[2] = (z1 - z0) / 2; }
+      shapes.push({ type: "box", pos: posF, rot: Q.id(), he: heF, cr: 0.01 });
     }
     // ── fit report: how well the colliders occupy the space of the mesh this body carries ──
     const fitVs = fitSet || (d.kind === "head" ? [...(boneVerts.head || []), ...(boneVerts.neck || [])].map(local) : vs);   // trunk: its height slice; head: no hair shell

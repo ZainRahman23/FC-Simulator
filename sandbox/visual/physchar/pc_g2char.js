@@ -33,7 +33,7 @@ export function runChar(J, spec, poses, x) {
   const base = CHAR_BASE(x.speed ?? 0.6, x.walkOver), nSteps = x.n ?? 6, steps = []; const first = x.first || "R";
   for (let i = 0; i < nSteps; i++) { const sw = (i % 2 === 0) === (first === "R") ? "R" : "L"; steps.push(i === 0 ? { sw, fwdK: 0.7 } : i === 1 ? { sw, fwdK: 0.9 } : { sw }); }
   const char = {}; for (const k in (x.steps || {})) char[k] = x.steps[k];
-  let LOCO = null; const test = "G2b_walk08", ro = { walk: { ...base.walk, char }, steps, at: x.at ?? 0.5 };
+  let LOCO = null; const test = "G2b_walk08", ro = { walk: { ...base.walk, char }, steps, at: x.at ?? 0.5, ...(x.rhythmX || {}) };
   const opts = { poses, keepStates: true, seconds: x.seconds ?? (1.6 + nSteps * 0.62), rhythmOver: ro, humanOver: { ...base.human, ...(x.humanOver || {}) }, onLoco: (l) => { LOCO = l; } };
   if (x.push) opts.locoOver = undefined;
   const r = x.push ? runG2a(J, spec, test, { ...opts, pushChar: x.push }) : runG2a(J, spec, test, opts);

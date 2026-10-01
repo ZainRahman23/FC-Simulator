@@ -112,6 +112,16 @@ After the reboot the preserved state was verified, the user reviewed the overnig
 - **Regression:** A/B/C1/C2 (V1, V1.1), C3 29/29, D 7/7, G1 26/26, G2a 10/10 identical; G2b Option-1 cases hash-identical to `34de412`.
 - **Next: the user's decisions** (report §9): approve inner-loop-first + controller A (SIMBICON-style B as the baseline), cadence ≈ 105–115 steps/min, nominal width ≈ 0.20–0.22 m. **Do not build the new walker before that.**
 
+**G2b walker (2026-10-01 night, approved plan: inner loop first → Controller A, SIMBICON-style B baseline): STOPPED for review — G2b NOT achieved.**
+- **Result:** Controller A 9–13 upright steps from every one of six starts (mean 11.2); Controller B 5–7; old G2b 2–3.
+- **Closed-loop step-to-step map:** sideways stable (−0.44), forward unstable (+1.25).
+- **The forward window is bounded** by C8 swing failures above ≈ 0.30 m steps (trailing leg straight, rigid boot pivoting on its tip) and by stalls below.
+- **Diagnostic (not adopted):** a human-sized foot collider cuts swing failures 50 % → 18 %.
+- **Yaw not solved:** WBAM about 4× human.
+- **Review:** `g2_walker/G2B_WALKER_REVIEW.md` (plain English + technical, decisions); trail in `g2_walker/WALKER_LOG.md`; harness `?suite=G2` buttons W1–W6.
+- **Code:** `pc_walker.js`, `pc_walker_models.js`, `tools/g2walk_ident.js`, `tools/g2walk_eval.js`, TESTS_G2W.
+- **Next: the user's decisions** — the foot (collider / toe segment / neither), the walking pelvis height, Controller A as the path.
+
 ## Where
 
 - **Worktree:** `/Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1`

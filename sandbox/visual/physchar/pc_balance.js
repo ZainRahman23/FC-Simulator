@@ -256,6 +256,9 @@ export class BalanceController {
     // GATE C2: a MOVING reference (planned weight transfer) adds the LIPM feed-forward −ξ̇_d/ω0 — the tracking form of the same law
     // (p = ξ_d − ξ̇_d/ω0 + (1 + kXi)(ξ − ξ_d)). It is the anticipatory CoP shift toward the unloading foot that starts a transfer.
     if (plan && plan.xiDot) { const w0 = o.omega0 || Math.sqrt(G / Math.max(0.5, o.com[1])); pRaw = [pRaw[0] - plan.xiDot[0] / w0, pRaw[1] - plan.xiDot[1] / w0]; }
+    // ((G2b walker, plan.copShift = [x, z]) the stepping controller's ANKLE term: a bounded shift of the CoP demand under the stance foot (the
+    // sole clamp below still applies) — forward = braking; set from the measured map's predicted next state against the controller's target)
+    if (plan && plan.copShift) pRaw = [pRaw[0] + plan.copShift[0], pRaw[1] + plan.copShift[1]];
     // friction limit: the horizontal ground force the CoP offset implies, W·|p − c|/h, cannot exceed Σ μᵢ·Nᵢ. A sliding foot contributes its
     // OBSERVED μ (shear / load while sliding); a sticking foot the nominal boot-on-turf belief μ = 0.9 (the controller does not know the
     // turf until a foot slides). Only engaged once a foot has actually been seen sliding.
@@ -320,7 +323,10 @@ export class BalanceController {
         // earlier form took the reach limit of the present and the ankle limit of the goal at once — right after a 22 cm touchdown the rear
         // ankle's FUTURE dorsiflexion raised the pelvis above the height at which the front leg could reach its foot NOW; finding 2026-09-30.)
         const band = (sh) => { const P2 = px(sh); let hi = nomY, lo = -1e9;
-          for (const s of ["L", "R"]) { const a = reachOf(s); if (!a) continue; const L = this.legs[s], ho = Q.rot(Rpd, L.hipOff), hx = P2[0] + ho[0] - a[0], hz = P2[1] + ho[2] - a[2], Lm = BAL.reachExt * (L.L1 + L.L2), h2 = hx * hx + hz * hz;
+          // ((G2b walker, plan.reachExt) a walking double support keeps every stance leg within reachExt (e.g. 0.96) instead of 99.5 % of full
+          // extension: at 99.5 % the TRAILING leg ended every double support straight (measured 0.98–1.00) and its swing had to start from a
+          // locked knee with the toe dragging — the C8 failures; a human trailing knee is flexed at toe-off)
+          for (const s of ["L", "R"]) { const a = reachOf(s); if (!a) continue; const L = this.legs[s], ho = Q.rot(Rpd, L.hipOff), hx = P2[0] + ho[0] - a[0], hz = P2[1] + ho[2] - a[2], Lm = (plan.reachExt && stance.includes(s) ? plan.reachExt : BAL.reachExt) * (L.L1 + L.L2), h2 = hx * hx + hz * hz;
             if (h2 < Lm * Lm) hi = Math.min(hi, a[1] + Math.sqrt(Lm * Lm - h2) - ho[1]); }
           if (hi < nomY) for (const s of stance) lo = Math.max(lo, this.minPelvisY(s, P2, Rpd, S[this.legs[s].foot].pos, S[this.legs[s].foot].rot, nomY, rad(BAL.dorsiMarginDeg)));
           return { lo, hi }; };

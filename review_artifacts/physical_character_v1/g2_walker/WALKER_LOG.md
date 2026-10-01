@@ -113,3 +113,67 @@ With inner loop v5 (v2 + `dsExtEnd` + `clrActualUntil` + `lateBlend`), the v5 cl
 the predicted state (e.g. predicted 0.090 / 0.070, actual 0.068 / 0.070). Best so far **9 steps** (0.43 m/s, nominal step 0.22 m, step length
 bounded at 0.30). Failures: an over-large late in-swing retarget (+18 cm late) the swing cannot execute → the body runs ahead → a step at the
 length bound → C8 swing failure.
+
+## 7. Later iterations (2026-10-01 night) — what moved, what did not
+
+Evaluation from here on: **6 deterministic starts** (first foot R / L × start 0.50 / 0.55 / 0.60 s), 30 steps, fall-aware.
+
+| configuration (Controller A unless noted) | mean / min / max upright steps |
+|---|---|
+| v5, maps m5a, bias adaptation | 7.7 / 6 / 10 |
+| + in-swing until 0.30 s, commit 0.12 s before touchdown | 9.5 / 4 / 15 |
+| + nominal width 0.28 | **11.0 / 8 / 17** |
+| v6 (DS sideways tracking), maps m6a | 4.2–4.7 |
+| v7 (v5 + walking reach limit 0.96), maps m7a | 8.0–10.0 |
+| v7 + forward ankle feedback (kXiAlong 0 / 0.3 / 0.6) | 5.0–5.3 |
+| explicit forward target x*_f 0.06 / 0.08 / 0.10 | 7.5 / 6.7 / 5.0 (worse than the model's own x*) |
+| Controller B on v5 (80-run gain grid, measured first step) | best 7 |
+| Controller B, zero sensing delay (diagnostic) | best 6 |
+
+**Online refinement (adopted, opt-in `ctrl.adapt`):** the maps' constant term is corrected by the exponentially averaged prediction error
+(γ 0.3, |b| ≤ 6 cm per axis), logged per step. It removed the slow backward drift (x_f −0.006 → −0.24 over 8 steps without it).
+
+**The walking pelvis is nearly at the straight-leg height.** The bind pose has straight legs (hip joint 1.012 m); walking carries the hip at
+0.97–1.00 m, the hip-to-ankle vertical is 0.88–0.91 m against a 0.924 m leg. The support layer's height band keeps every stance leg within
+**99.5 %** of full extension (`BAL.reachExt`) — so the trailing leg ENDS every double support straight (measured 0.98–1.00 at every step
+start). `walk.reachExt` (opt-in, double support only) carries the pelvis lower: 0.94–0.97 at the step start, trailing heel 4–5 cm (was
+1–3). A plain pelvis drop (`P.pelvisDrop`) made toe scuffs worse.
+
+**Failure classes (best configuration, 6 starts):** C8 swing failures from a fully extended trailing leg (4/6), backward stalls (x_f < 0: the
+walker cannot step backward — 2/6); with nominal width 0.24, sideways range exhaustion (x_l 0.10 → widest step 0.40 → x_l 0.01 → narrowest
+step 0.17 → x_l 0.31).
+
+**The swing failure is an early-swing TOE SCUFF.** Traced (v7): after liftoff the heel rises 2.6 → 9.9 cm while the toe tip stays 0–1 cm off
+the turf; at 11 % of the swing the toe touches and the executor takes it as the touchdown (u 0.26) — the step collapses. The rigid boot
+pivots on its tip, so the toe is the last point to leave the turf.
+
+**DIAGNOSTIC (not adopted): a human-sized foot collider** (`opts.diagFootWidth 0.11`, `opts.diagFootToe 0.20` — width 11 cm, toe tip 0.20 m
+ahead of the ankle instead of 16.4 cm / 0.277 m; heel, masses, inertias unchanged). Closed-loop identification, same inner loop v7, same
+design, 600 runs each:
+
+| | real boot | diagnostic foot |
+|---|---|---|
+| swing failures | 50 % | **18 %** |
+| after a previous step ≥ 0.32 m | 74 % | **14 %** |
+| at ≥ 0.45 m/s | 61 % | 23 % |
+| at 0.30–0.45 m/s | 21 % | 6 % |
+| upright steps per identification run | 4.41 | 5.35 |
+
+Controller A on the diagnostic foot without re-tuning its nominal gait stalled backward in all 6 starts (5–6 steps) — the shorter foot moves
+the CoP roll and the forward operating point; that test is inconclusive. The swing-failure comparison is not (it does not depend on the
+controller's tuning).
+
+## 8. Final iterations and stop (2026-10-01 night)
+
+- **v8 = v7 + higher early swing lift (`P.swingLiftH 0.20`):** swing failures 43 % → 14 % (lift 0.13: 32 %, 0.16: 22 %). Earlier swing
+  dorsiflexion, the toe-off heel height, shorter / longer toe pivot: no gain.
+- Controller A on v8 (maps m8a): **11.2 / 9 / 13** over six starts (`eval/G2W_A8.json`). Failure in all six: FORWARD drift → a step at the
+  length limit → C8 swing failure → runaway.
+- **Closed-loop step-to-step map of the walking (47 pairs): eigenvalues +1.25 (forward), −0.44 (sideways).**
+- Tried against the forward drift, none better than 11: a relaxed step cap (0.34 / 0.38), a lower timing floor (0.30 s), a forward authority
+  factor from the closed-loop map, a nominal step start (in-swing decides the foothold), Controller A's own ankle term (CoP shift from the
+  predicted next forward state — active only once placement saturates), maps identified in the controller's own in-swing mode with a
+  dithered target (worse: 5–6 — endogeneity of the final foothold), earlier horizontal swing completion (forward scatter 5.3 → 3.1 cm but
+  shorter walks).
+- Controller B on v8 (80-run grid): best 9, typically 5–7 (`eval/G2W_B8.json`: 6.0 / 5 / 7).
+- Stopped: see G2B_WALKER_REVIEW.md (decisions: the foot — collider / toe segment; the walking pelvis height; Controller A as the path).

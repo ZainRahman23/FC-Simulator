@@ -26,10 +26,15 @@ export function fixedPointA(M, u) { const a = predictA(M, [0, 0], u), e0 = predi
   return { x: [(m[1][1] * a[0] - m[0][1] * a[1]) / det, (-m[1][0] * a[0] + m[0][0] * a[1]) / det], A }; }
 // the core solve: u = [df, dl, T] with f(x, u) = yt at minimum weighted deviation from uRef, inputs bounded (clamped one at a time, the rest
 // re-solved); fixT keeps T at uRef[2] (an in-swing re-decision cannot change the step's timing any more)
-export function solveStep(M, x, yt, uRef, sg, lo, hi, fixT) { const Wi = sg.map(s => s * s); let u = uRef.slice(), free = [true, true, !fixT]; const info = { it: 0, clamped: [] };
+// (bias b: the ONLINE, bounded correction of the map's constant term — see decideA)
+// (auth = [βf, βl]: the CLOSED-LOOP-measured authority of the inputs relative to the maps — the step-to-step map of the walking itself showed
+//  a forward eigenvalue far above the design value; the requested change of the prediction is divided by β: yt' = f0 + (yt − f0)/β)
+export function solveStep(M, x, yt, uRef, sg, lo, hi, fixT, b, auth) { const Wi = sg.map(s => s * s); let u = uRef.slice(), free = [true, true, !fixT]; const info = { it: 0, clamped: [] };
+  const P = (xx, uu) => { const y = predictA(M, xx, uu); return b ? [y[0] + b[0], y[1] + b[1]] : y; };
+  if (auth) { const f0 = P(x, uRef); yt = [f0[0] + (yt[0] - f0[0]) / auth[0], f0[1] + (yt[1] - f0[1]) / auth[1]]; info.ytEff = yt.slice(); }
   for (let pass = 0; pass < 3; pass++) {
-    for (let it = 0; it < 4; it++) { info.it++; const y = predictA(M, x, u), r = [yt[0] - y[0], yt[1] - y[1]], h = [0.005, 0.005, 0.003], G = [[0, 0, 0], [0, 0, 0]];
-      for (let j = 0; j < 3; j++) { const up = u.slice(); up[j] += h[j]; const yp = predictA(M, x, up); G[0][j] = (yp[0] - y[0]) / h[j]; G[1][j] = (yp[1] - y[1]) / h[j]; }
+    for (let it = 0; it < 4; it++) { info.it++; const y = P(x, u), r = [yt[0] - y[0], yt[1] - y[1]], h = [0.005, 0.005, 0.003], G = [[0, 0, 0], [0, 0, 0]];
+      for (let j = 0; j < 3; j++) { const up = u.slice(); up[j] += h[j]; const yp = P(x, up); G[0][j] = (yp[0] - y[0]) / h[j]; G[1][j] = (yp[1] - y[1]) / h[j]; }
       // minimum-norm update in the free inputs, pulled toward uRef: u_free = uRef + W Gᵀ λ with G (u_new − u) = r
       const d = u.map((v, j) => free[j] ? v - uRef[j] : 0), rr = [r[0] + G[0][0] * d[0] + G[0][1] * d[1] + G[0][2] * d[2], r[1] + G[1][0] * d[0] + G[1][1] * d[1] + G[1][2] * d[2]];
       const nFree = free.filter(Boolean).length; if (!nFree) break;
@@ -39,17 +44,25 @@ export function solveStep(M, x, yt, uRef, sg, lo, hi, fixT) { const Wi = sg.map(
       else { const j = free.indexOf(true), g = [G[0][j], G[1][j]], gg = g[0] * g[0] + g[1] * g[1]; if (gg < 1e-12) break; u[j] = uRef[j] + (g[0] * rr[0] + g[1] * rr[1]) / gg; } }
     let worst = -1, wv = 0; for (let j = 0; j < 3; j++) { if (!free[j]) continue; const v = u[j] < lo[j] ? (lo[j] - u[j]) / sg[j] : u[j] > hi[j] ? (u[j] - hi[j]) / sg[j] : 0; if (v > wv) { wv = v; worst = j; } }
     if (worst < 0) break; u[worst] = clamp(u[worst], lo[worst], hi[worst]); free[worst] = false; info.clamped.push(["df", "dl", "T"][worst]); }
-  u = u.map((v, j) => clamp(v, lo[j], hi[j])); info.pred = predictA(M, x, u); return { u, info }; }
+  u = u.map((v, j) => clamp(v, lo[j], hi[j])); info.pred = P(x, u); return { u, info }; }
 // the model for a decision instant τ (s into the step, view time): the measured map of the latest instant ≤ τ
 export const modelAt = (C, tau) => { if (!C.models) return C.model; let best = null; for (const k of Object.keys(C.models).map(Number).sort((a, b) => a - b)) if (k <= tau + 1e-9) best = k; return C.models[best ?? 0]; };
 // Controller A's step decision. C = { model | models: {τ: model}, nom: [df, dl, T], rho, sig, lo, hi, xStar? }
-export function decideA(C, x) { const M = modelAt(C, 0), un = C.nom, rho = C.rho ?? 0.4, sg = C.sig || [0.05, 0.05, 0.03], lo = C.lo || [0.10, 0.17, 0.34], hi = C.hi || [0.50, 0.34, 0.50];
+// ONLINE REFINEMENT (opt-in, C.adapt = { gain γ, max }): the measured maps' constant term is corrected by b, the exponentially averaged
+// prediction error of the previous steps (b ← b + γ (e − b), |b| ≤ max per axis) — integral action on a persistent model bias (an
+// execution overshoot, a regime with little identification data). Deterministic, bounded, logged; the maps' gains are never re-fitted online.
+// The periodic state x* keeps its identified value (the target does not drift with b).
+export function decideA(C, x, b) { const M = modelAt(C, 0), un = C.nom, rho = C.rho ?? 0.4, sg = C.sig || [0.05, 0.05, 0.03], lo = C.lo || [0.10, 0.17, 0.34], hi = C.hi || [0.50, 0.34, 0.50];
   const xs = C.xStar || fixedPointA(M, un).x, yt = [xs[0] + rho * (x[0] - xs[0]), xs[1] + rho * (x[1] - xs[1])];
-  const s = solveStep(M, x, yt, un, sg, lo, hi, false); return { df: s.u[0], dl: s.u[1], T: s.u[2], yt, info: { ...s.info, xs, yt, x: x.slice() } }; }
+  // (C.startNominal: the step starts on the NOMINAL step and timing — the step-start map (the noisiest: the whole step ahead of it) does not
+  //  decide; the foothold is decided in the swing by the maps of the later instants, toward the same target)
+  if (C.startNominal) return { df: un[0], dl: un[1], T: un[2], yt, info: { xs, yt, x: x.slice(), b: b ? b.slice() : null, pred: predictA(M, x, un).map((v, i) => v + (b ? b[i] : 0)), clamped: [], startNominal: true } };
+  const s = solveStep(M, x, yt, un, sg, lo, hi, false, b, C.auth); return { df: s.u[0], dl: s.u[1], T: s.u[2], yt, info: { ...s.info, xs, yt, x: x.slice(), b: b ? b.slice() : null } }; }
+export const adaptBias = (C, b, e) => { const g = C.adapt.gain ?? 0.3, m = C.adapt.max ?? 0.06; return b.map((v, i) => Math.max(-m, Math.min(m, v + g * (e[i] - v)))); };
 // Controller A's IN-SWING re-decision at τ: the same target yt, the step's timing fixed, the measured map of instant τ, the foothold pulled
 // toward the step-start decision (a smooth correction, not a new step)
-export function adjustA(C, x, tau, yt, uDec) { const M = modelAt(C, tau), sg = C.sig || [0.05, 0.05, 0.03], lo = C.lo || [0.10, 0.17, 0.34], hi = C.hi || [0.50, 0.34, 0.50];
-  const s = solveStep(M, x, yt, uDec, sg, lo, hi, true); return { df: s.u[0], dl: s.u[1], T: uDec[2], info: { ...s.info, tau, x: x.slice() } }; }
+export function adjustA(C, x, tau, yt, uDec, b) { const M = modelAt(C, tau), sg = C.sig || [0.05, 0.05, 0.03], lo = C.lo || [0.10, 0.17, 0.34], hi = C.hi || [0.50, 0.34, 0.50];
+  const s = solveStep(M, x, yt, uDec, sg, lo, hi, true, b, C.auth); return { df: s.u[0], dl: s.u[1], T: uDec[2], info: { ...s.info, tau, x: x.slice() } }; }
 
 // Controller B (SIMBICON-style): foothold = COM-relative linear law per axis, fixed T. d = COM offset from the stance foot (forward, inward),
 // v = COM velocity (forward, inward). The foothold relative to the COM: f = f0 + c_d·d + c_v·v per axis; returned relative to the stance foot.

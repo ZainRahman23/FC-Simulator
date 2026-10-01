@@ -4,6 +4,7 @@
 //               planned pelvis posture and the swing foot's path; the heading is the INTENDED heading (pc_balance headingIntent)
 //   rhythm.human the executor's human swing (toe pivot → reference swing-leg motion from the actual pelvis → forefoot contact)
 // Diagnostic variants remove one contribution at a time to attribute the yaw regulation (arms / trunk counter-rotation / intended heading).
+import { M5A, M8A } from "./pc_walker_models.js";
 import { runG1a } from "./pc_gateg1a.js";
 const alt = (n, first) => Array.from({ length: n }, (_, i) => ({ sw: (i % 2 === 0) === (first === "R") ? "R" : "L", fwd: 0, out: 0 }));
 const RH = (x) => ({ at: 0.5, steps: alt(16, "R"), Tss: 0.45, Tds: 0.15, Tfirst: 0.5, Tlast: 0.6, human: true, wA: 0.2, ...(x || {}) });
@@ -51,10 +52,35 @@ export const TESTS_G2C = {
   G2C_yaw_pos: chTest("G2C — yaw couple +4 kg·m²/s at the measured step's start", {}, { Lz: 4 }), G2C_yaw_neg: chTest("G2C — yaw couple −4 kg·m²/s at the measured step's start", {}, { Lz: -4 }),
   G2C_refB_runaway: chTest("G2C — reference B: a moderate step → the body runs away forward and the next swing cannot complete (re-contacts behind)", { df: 0.36, dl: 0.28 }, null, { 2: { ...CH_NOM } }),
 };
+// ── G2b WALKER (opt-in; pc_walker.js): the inner loop v5 + Controller A (measured-response foothold + timing) or B (SIMBICON-style) ──
+// inner loop v5: the double-support plan ahead by the feedback delay, the load (not the heel rocker) ends it, an early end at 96 % trailing-
+// leg extension; the swing clearance from the actual foot pitch through mid-swing only; late foothold changes blended. The first step from
+// standing is the MEASURED one that lands step 1 on the nominal state (analysis/first_step.py).
+export const WALKER_INNER_V5 = { dsLead: true, dsFlat: false, dsExtEnd: 0.96 }, WALKER_HUMAN_V5 = { lateBlend: true, clrActual: true, clrActualUntil: [0.5, 0.2] }, WALKER_FIRST = { df: 0.24, dl: 0.351, T: 0.448 };
+export const ctrlA = (x) => ({ kind: "A", models: M5A, nom: [0.22, 0.24, 0.40], rho: 0.4, sig: [0.05, 0.05, 0.03], lo: [0.10, 0.17, 0.36], hi: [0.30, 0.40, 0.48], inSwing: 0.3, commitMargin: 0.12, adapt: { gain: 0.3, max: 0.06 }, ...(x || {}) });
+export const ctrlB = (x) => ({ kind: "B", gains: { f0: [0.05, 0.08], cd: [0.3, 0.5], cv: [0.33, 0.2] }, T: 0.40, lo: [0.05, 0.17], hi: [0.32, 0.40], inSwing: 0.4, commitMargin: 0.16, ...(x || {}) });
+const wTest = (title, ctrl, x) => { x = x || {}; const b = CHAR_BASE(0.6), n = x.n ?? 30, steps = alt(n, x.first || "R").map((q, i) => i === 0 ? { sw: q.sw, fwdK: 0.7 } : i === 1 ? { sw: q.sw, fwdK: 0.9 } : { sw: q.sw });
+  return { group: "G2b walker", title, seconds: x.seconds ?? 1.6 + n * 0.58, amBudget: true, ...(x.push ? { pushChar: x.push } : {}),
+    loco: { human: { walk: 0.8, over: { ...b.human, ...WALKER_HUMAN_V5, ...(x.human || {}) } }, rhythm: { at: x.at ?? 0.5, steps, walk: { ...b.walk, ...WALKER_INNER_V5, ...(x.inner || {}), char: { 0: WALKER_FIRST }, ctrl }, human: true, Tfirst: 0.6, Tlast: 0.8, wA: 0.15 } } }; };
+// inner loop v8 (current): v5 + the walking reach limit (stance legs within 96 % in double support) + the higher early swing lift (0.20 m)
+export const WALKER_INNER_V8 = { ...WALKER_INNER_V5, reachExt: 0.96 }, WALKER_HUMAN_V8 = { ...WALKER_HUMAN_V5, swingLiftH: 0.20 }, WALKER_FIRST_V8 = { df: 0.224, dl: 0.343, T: 0.469 };
+export const ctrlA8 = (x) => ctrlA({ models: M8A, nom: [0.22, 0.28, 0.40], ...(x || {}) });
+const wTest8 = (title, ctrl, x) => { const t = wTest(title, ctrl, { ...(x || {}), inner: { ...WALKER_INNER_V8, ...((x || {}).inner || {}) }, human: { ...WALKER_HUMAN_V8, ...((x || {}).human || {}) } }); t.loco.rhythm.walk.char = { 0: WALKER_FIRST_V8 }; return t; };
+export const ctrlB8 = (x) => ctrlB({ T: 0.36, gains: { f0: [0, 0.08], cd: [0.3, 0.5], cv: [0.33, 0.2] }, ...(x || {}) });   // (the best of an 80-run gain grid on inner loop v8)
+export const TESTS_G2W = {
+  G2W_A8: wTest8("G2b walker — Controller A, inner loop v8 (reach limit + higher swing lift), 0.4 m/s nominal", ctrlA8()),
+  G2W_A8_best: wTest8("G2b walker — Controller A, its LONGEST start of six (first foot R, start 0.60 s)", ctrlA8(), { first: "R", at: 0.6 }),
+  G2W_A8_worst: wTest8("G2b walker — Controller A, its SHORTEST start of six (first foot R, start 0.55 s)", ctrlA8(), { first: "R", at: 0.55 }),
+  G2W_A8_push: wTest8("G2b walker — Controller A, a 6 N·s sideways push at the start of step 4", ctrlA8(), { first: "R", at: 0.6, push: { step: 4, u: 0, J: [0, 6] } }),
+  G2W_B8: wTest8("G2b walker — Controller B (SIMBICON-style baseline, best of an 80-run grid), inner loop v8", ctrlB8(), { first: "R", at: 0.6 }),
+  G2W_A: wTest("G2b walker — Controller A (measured-response foothold + timing), 0.4 m/s nominal", ctrlA()),
+  G2W_A_L: wTest("G2b walker — Controller A, first step LEFT, start 0.55 s", ctrlA(), { first: "L", at: 0.55 }),
+  G2W_B: wTest("G2b walker — Controller B (SIMBICON-style), 0.4 m/s", ctrlB()),
+};
 // every G2 scenario (the review page's list)
-export const TESTS_G2 = Object.assign({}, TESTS_G2A, TESTS_G2B, TESTS_G2C);
+export const TESTS_G2 = Object.assign({}, TESTS_G2A, TESTS_G2B, TESTS_G2C, TESTS_G2W);
 // (opts.rhythmOver — probes / variants: merged into the test's rhythm, its walk object merged one level deep)
-export function runG2a(J, spec, key, opts) { let test = TESTS_G2A[key] || TESTS_G2B[key] || TESTS_G2C[key]; const ro = opts && opts.rhythmOver;
+export function runG2a(J, spec, key, opts) { let test = TESTS_G2A[key] || TESTS_G2B[key] || TESTS_G2C[key] || TESTS_G2W[key]; const ro = opts && opts.rhythmOver;
   if (ro) { const rh = test.loco.rhythm; test = { ...test, loco: { ...test.loco, rhythm: { ...rh, ...ro, ...(ro.walk ? { walk: { ...rh.walk, ...ro.walk } } : {}) } } }; }
   const ho = opts && opts.humanOver; if (ho) test = { ...test, loco: { ...test.loco, human: { ...test.loco.human, over: { ...(test.loco.human.over || {}), ...ho } } } };
   const lo = opts && opts.locoOver; if (lo) test = { ...test, loco: { ...test.loco, ...lo } };

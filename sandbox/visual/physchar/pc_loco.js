@@ -103,6 +103,10 @@ export class LocoController {
       for (const k in sn) { const a = sn[k], b = sn2[k]; if (typeof a === "number") this.styleVel[k] = (b - a) / h; else { let d = Q.mul(Q.conj(a), b); if (d[3] < 0) d = d.map(x => -x); this.styleVel[k] = [2 * d[0] / h, 2 * d[1] / h, 2 * d[2] / h]; } } }
     // pelvis: the reference's yaw and roll; the height lowers with the SUPPORTING leg's knee bend (stance, before its late-stance heel rise)
     let dy = 0; for (const s of ["L", "R"]) { const lg = pose._legs && pose._legs[s]; if (!lg || !lg.st || lg.s > 0.62) continue; const k = pose["shin_" + s][0] * Math.PI / 180; dy = Math.min(dy, H.shin * (dcos(k) - dcos(H.kIdle))); }
+    // ((G2b walker, P.pelvisDrop = m) the WALKING pelvis is carried m lower than the reference's own stance-knee bend gives: at the bind's
+    // straight-leg height (hip 0.88–0.91 m above the ankle, leg 0.924 m) the trailing leg reached full extension with its ankle only
+    // 0.12–0.26 m behind the hip — the C8 swing failures; 3 cm lower adds ≈ 8 cm of trailing reach (a modest stance-knee bend)
+    if (H.P.walk && H.P.pelvisDrop) dy -= H.P.pelvisDrop;
     const d2r = Math.PI / 180; this.ctrl.pelvisStyle = { yaw: pose.pelvis[1] * d2r, roll: pose.pelvis[2] * d2r, dy: dy * ph.w };
     return { u: ph.u, w: ph.w, T: poseTargets(this.spec, pose) }; }
   // ── G2a: the HUMAN SWING — the foot's target pose over the step (R.T), in three parts:
@@ -149,13 +153,18 @@ export class LocoController {
     // reference incompatibility); the human foot trajectory: horizontal min-jerk progression, an EARLY lift peak (the knee flexes at toe-off),
     // toes down → level → toes up for the heel strike; the clearance correction as above
     const atWalk = (tt) => { const w = Math.max(0, Math.min(1, (tt - R.tSw0) / R.T)), land = landing(), p0 = Hs.p0w || (Hs.p0w = R.p0.slice()), x = Math.max(0, Math.min(1, w / 0.92));
-      const sh = minjerk((w - 0.02) / 0.83), sv = minjerk((w - 0.04) / 0.9), H = P.swingLiftH ?? 0.09, bump = H * Math.pow(x, 1.2) * Math.pow(1 - x, 2) / (Math.pow(0.375, 1.2) * Math.pow(0.625, 2));
+      // ((G2b walker, P.swingHorizEnd) the horizontal travel completes at swingHorizEnd of the swing (default 0.85): completed before the final
+      // descent, the touchdown TIME no longer moves the foothold — the forward foothold scattered 6 cm (rms) about its target while the width,
+      // which the path does not move late, scattered 2.5 cm)
+      const hE = P.swingHorizEnd ?? 0.85, sh = minjerk((w - 0.02) / (hE - 0.02)), sv = minjerk((w - 0.04) / 0.9), H = P.swingLiftH ?? 0.09, bump = H * Math.pow(x, 1.2) * Math.pow(1 - x, 2) / (Math.pow(0.375, 1.2) * Math.pow(0.625, 2));
       let pos = [p0[0] + (land.pos[0] - p0[0]) * sh, p0[1] + (land.pos[1] - p0[1]) * sv + bump, p0[2] + (land.pos[2] - p0[2]) * sh];
       // ((G2b, P.swingRetract = δ m — not of_loco's own `retract` parameter, a name collision that applied 1 m of 'retraction' to every walking swing) SWING-LEG RETRACTION: the horizontal target passes the foothold by δ late in the swing and comes back to it, so the
       // foot is moving slightly BACKWARD relative to the turf when it lands (human terminal swing: the foot stops moving forward and may move
       // back over the last ≈ 3–5 % of the cycle) — it had arrived with 0.4–3.4 m/s forward and braked the body against the turf)
       if (P.swingRetract) { const x2 = Math.max(0, Math.min(1, (w - 0.55) / 0.45)), b2 = P.swingRetract * Math.sin(Math.PI * x2), hdr = [Math.sin(R.yawT), 0, Math.cos(R.yawT)]; pos = [pos[0] + hdr[0] * b2, pos[1], pos[2] + hdr[2] * b2]; }
-      let rho = Hs.rho0 * (1 - minjerk(w / 0.45)) + land.rho * minjerk((w - 0.55) / 0.4); const yaw = Hs.yaw0 + (R.yawT - Hs.yaw0) * minjerk(w);
+      // ((G2b walker, P.rhoFadeW) the toes-down toe-off pitch is taken out by rhoFadeW of the swing (default 0.45): a rigid boot pivoting on its
+      // tip leaves its toe as the last point on the turf — the earlier the ankle dorsiflexes, the sooner the toe clears)
+      let rho = Hs.rho0 * (1 - minjerk(w / (P.rhoFadeW ?? 0.45))) + land.rho * minjerk((w - 0.55) / 0.4); const yaw = Hs.yaw0 + (R.yawT - Hs.yaw0) * minjerk(w);
       // ((G2b) the guard is on from liftoff — the toe leaves the turf at w = 0, so its margin, not the guard, ramps in: a guard ramped over the
       // first 10 % let the hanging toe re-contact ≈ 25 ms after liftoff with ≈ 200–380 N, braking the body and pushing ξ sideways)
       // ((G2b) the guard holds until P.clrOff[0] of the swing (default 0.7) and fades over clrOff[1]: faded from 70 %, the heel-strike pitch put
