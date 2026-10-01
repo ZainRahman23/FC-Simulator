@@ -132,6 +132,25 @@ After the reboot the preserved state was verified, the user reviewed the overnig
 - **Review:** `foot_gate/FOOT_GATE_REVIEW.md`; side-by-side page `foot_gate/viewer/index.html`; harness `?suite=G2` tests `FG_same_*` / `FG_own_*`.
 - **Next: the user's decisions** (review "The decisions I need from you"). **Do not promote F1/F2, do not start G2c–e / running / Reference Tackle.**
 
+**G2b speed regulation + swing execution (2026-10-01 late; the user approved the foot gate: keep F0, F2h opt-in, foot-agnostic logic, yaw separate): STOPPED for review — the walk is NOT materially longer; committed `c7fd98b` (local).**
+- **Causal account:**
+  - Controller A's target x* (its map fixed point, 0.067) is a ≈ 0.63 m/s state through the measured x_S ≈ −0.147 + 0.341·v.
+  - In-swing lengthening (+7.8 cm) and the swing overshoot (+7 cm, its plan running 50 ms behind real time) give 0.28–0.34 m steps.
+  - The trailing leg is at 98–100 % extension at every swing start.
+  - Terminal falls are time-infeasible swings (`g2_speed/analysis/classify.py`).
+- **Built (opt-in):**
+  - `walk.dcmRef`: capture-point tracking in single and double support toward the desired speed's measured capture point; the double-support part now runs before the `latDS "lipm"` return.
+  - `walk.vReg`, `ctrl.ankle2`, `ctrl.reach`, `ctrl.inSwingT`, `walk.swingLead`.
+  - The generic swing `pc_swing.js` (`swingGen "v2"`, not adopted).
+  - Per-step diagnostics `tools/g2walk_diag.js`; the `iterate.py` identify → fit → evaluate loop.
+- **Result:**
+  - Speed is held at 0.45 ± 0.08 m/s (target 0.45–0.5) vs 0.65 ± 0.25 and creeping.
+  - Survival is 10.2 (7–15) at best vs the baseline 11.2 (9–13).
+  - The closed-loop speed gain is ≈ 1.6, still unstable.
+- **Review:** `g2_speed/G2_SPEED_SWING_REVIEW.md`; side-by-side page `g2_speed/viewer/index.html` (speed trace, terminal failure, swing on identical requests); every experiment in `g2_speed/SPEED_LOG.md`.
+- **Verified:** `regress.sh` 12/12; G2W_A8 hashes; F0 / F2h foot-gate slow protocol 42/42 each. The identification JSONs (361 MB) are local only.
+- **Next: the user's decisions:** adopt ground-reaction speed regulation; replace x* with a speed-derived target; operating speed 0.45–0.5 first; swing reliability. F2h rerun (F) pending a stable F0 walk. **No G2c–e / running.**
+
 ## Where
 
 - **Worktree:** `/Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1`
