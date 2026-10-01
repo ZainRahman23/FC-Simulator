@@ -122,6 +122,16 @@ After the reboot the preserved state was verified, the user reviewed the overnig
 - **Code:** `pc_walker.js`, `pc_walker_models.js`, `tools/g2walk_ident.js`, `tools/g2walk_eval.js`, TESTS_G2W.
 - **Next: the user's decisions** — the foot (collider / toe segment / neither), the walking pelvis height, Controller A as the path.
 
+**Foot-architecture gate (2026-10-01 evening; the user's decisions: Controller A stays the path, B = baseline, no Option C, pelvis height unchanged): STOPPED for review — nothing promoted.**
+- **Compared** F0 (current boot) · F1 (rigid human-sized outline) · F2 (passive articulated MTP on the boot outline) · F2h (same on the human outline), as opt-in `footModel` bodies (mass / COM / inertia preserved, passive MTP, no propulsion).
+- **Result:** at MATCHED states (identification transitions conditioned on previous step length × speed, failures kept) no alternative foot continues walking more often than F0. Maximum viable step at 0.55–0.75 m/s: F0 0.42 · F1 0.39 · F2 0.32 · F2h 0.38 m. Walks (own maps): F0 9.5–11.2 · F1 5.0 · F2 5.0 · F2h 6.2.
+- **F2:** the stance mechanism works (heel rise, MTP rollover, lower ankle torque); the swing does not — the steep toe-off pitch plus 12.6 cm of boot toe hang under the rigid-boot swing generator → 94–99 % swing failure after ≥ 0.32 m steps.
+- **F1:** the swing gain is collision geometry; it loses stance authority (CoP range, width) → no continuation gain.
+- **Correction:** the G2b review's "the window is mostly the body / 74 % → 14 %" was on inner loop v7; not supported on v8 at matched states.
+- **Recommendation:** keep F0; neither A nor B as a body change now; next = forward-speed regulation + swing execution, foot-agnostic; re-run this gate (F2h vs F0) before running/sprinting. MTP end stop would need an absolute stiffness if B is revisited.
+- **Review:** `foot_gate/FOOT_GATE_REVIEW.md`; side-by-side page `foot_gate/viewer/index.html`; harness `?suite=G2` tests `FG_same_*` / `FG_own_*`.
+- **Next: the user's decisions** (review "The decisions I need from you"). **Do not promote F1/F2, do not start G2c–e / running / Reference Tackle.**
+
 ## Where
 
 - **Worktree:** `/Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1`

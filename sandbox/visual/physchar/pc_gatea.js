@@ -77,7 +77,7 @@ export const frictionPolicy = (spec) => (i1, i2) => {
 // limit already act, and the contact and the joint fight (measured: 12 J injected, 23 mm overlap in drop A) — the hip limit is the
 // anatomical stop. Toggle with cfg.keepAbdomenThigh to reproduce.
 export const I = (spec, n) => spec.bodies.findIndex(b => b.name === n);
-export function disabledPairs(spec, cfg) { const out = [...spec.joints.map(j => [j.parentIndex, j.childIndex]), [0, 2]];
+export function disabledPairs(spec, cfg) { const out = [...spec.joints.map(j => [j.parentIndex, j.childIndex]), ...(spec.passiveJoints || []).map(j => [j.parentIndex, j.childIndex]), [0, 2]];
   if (!(cfg && cfg.keepAbdomenThigh)) out.push([I(spec, "abdomen"), I(spec, "thigh_L")], [I(spec, "abdomen"), I(spec, "thigh_R")]); return out; }
 export function initialSelfOverlaps(J, spec, dropKey, cfg) {
   const D = DROPS[dropKey], w = new JoltCharacterWorld(J, spec, Object.assign({}, cfg, { gravity: 0 }), () => 0.5);

@@ -4,7 +4,7 @@
 //               planned pelvis posture and the swing foot's path; the heading is the INTENDED heading (pc_balance headingIntent)
 //   rhythm.human the executor's human swing (toe pivot → reference swing-leg motion from the actual pelvis → forefoot contact)
 // Diagnostic variants remove one contribution at a time to attribute the yaw regulation (arms / trunk counter-rotation / intended heading).
-import { M5A, M8A } from "./pc_walker_models.js";
+import { M5A, M8A, M8F0R2, M8F1R2, M8F2R2, M8F2HR2 } from "./pc_walker_models.js";
 import { runG1a } from "./pc_gateg1a.js";
 const alt = (n, first) => Array.from({ length: n }, (_, i) => ({ sw: (i % 2 === 0) === (first === "R") ? "R" : "L", fwd: 0, out: 0 }));
 const RH = (x) => ({ at: 0.5, steps: alt(16, "R"), Tss: 0.45, Tds: 0.15, Tfirst: 0.5, Tlast: 0.6, human: true, wA: 0.2, ...(x || {}) });
@@ -77,10 +77,19 @@ export const TESTS_G2W = {
   G2W_A_L: wTest("G2b walker — Controller A, first step LEFT, start 0.55 s", ctrlA(), { first: "L", at: 0.55 }),
   G2W_B: wTest("G2b walker — Controller B (SIMBICON-style), 0.4 m/s", ctrlB()),
 };
+// ── FOOT-ARCHITECTURE GATE (opt-in comparison only; nothing promoted): Controller A on each foot model (pc_body footModel — F0 current boot,
+// F1 diagnostic human-sized rigid outline, F2 articulated toe on the boot outline, F2h articulated toe on the human outline), start R@0.5.
+// FG_same_*: Part 1, the EQUIVALENT controller — F0's maps (M8A) and F0's first step on every foot. FG_own_*: Part 2, the SEPARATED
+// recalibration — each foot's own round-2 maps and its own measured first step; structure, bounds and inner loop unchanged. The harness
+// builds the matching body (and keeps the rendered mesh); node callers pass that foot's spec themselves.
+const FG_FIRST = { F0: { df: 0.224, dl: 0.343, T: 0.47 }, F1: { df: 0.217, dl: 0.354, T: 0.456 }, F2: { df: 0.299, dl: 0.303, T: 0.465 }, F2h: { df: 0.286, dl: 0.32, T: 0.461 } };
+const FG_MAPS = { F0: M8F0R2, F1: M8F1R2, F2: M8F2R2, F2h: M8F2HR2 };
+const fgTest = (f, own) => { const t = wTest8(`Foot gate — ${f}, Controller A with ${own ? "its OWN maps (Part 2)" : "F0's maps (Part 1)"}`, ctrlA8(own ? { models: FG_MAPS[f] } : {})); if (own) t.loco.rhythm.walk.char = { 0: FG_FIRST[f] }; t.group = "Foot gate (opt-in comparison)"; t.footModel = f === "F0" ? undefined : f; return t; };
+export const TESTS_FG = Object.fromEntries(["F0", "F1", "F2", "F2h"].flatMap(f => [[`FG_same_${f}`, fgTest(f, false)], [`FG_own_${f}`, fgTest(f, true)]]));
 // every G2 scenario (the review page's list)
-export const TESTS_G2 = Object.assign({}, TESTS_G2A, TESTS_G2B, TESTS_G2C, TESTS_G2W);
+export const TESTS_G2 = Object.assign({}, TESTS_G2A, TESTS_G2B, TESTS_G2C, TESTS_G2W, TESTS_FG);
 // (opts.rhythmOver — probes / variants: merged into the test's rhythm, its walk object merged one level deep)
-export function runG2a(J, spec, key, opts) { let test = TESTS_G2A[key] || TESTS_G2B[key] || TESTS_G2C[key] || TESTS_G2W[key]; const ro = opts && opts.rhythmOver;
+export function runG2a(J, spec, key, opts) { let test = TESTS_G2A[key] || TESTS_G2B[key] || TESTS_G2C[key] || TESTS_G2W[key] || TESTS_FG[key]; const ro = opts && opts.rhythmOver;
   if (ro) { const rh = test.loco.rhythm; test = { ...test, loco: { ...test.loco, rhythm: { ...rh, ...ro, ...(ro.walk ? { walk: { ...rh.walk, ...ro.walk } } : {}) } } }; }
   const ho = opts && opts.humanOver; if (ho) test = { ...test, loco: { ...test.loco, human: { ...test.loco.human, over: { ...(test.loco.human.over || {}), ...ho } } } };
   const lo = opts && opts.locoOver; if (lo) test = { ...test, loco: { ...test.loco, ...lo } };

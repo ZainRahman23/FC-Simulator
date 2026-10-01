@@ -59,7 +59,7 @@ export function runG1a(J, spec, key, opts) {
   const locoOpts = Object.assign({}, TST.loco, opts.loco || {}); if (locoOpts.task === "cycle") locoOpts.task = cycleTask(spec);
   const loco = new LocoController(spec, P, locoOpts, hz), ctrl = loco.ctrl; if (opts.onLoco) opts.onLoco(loco);   // (probe hook: diagnostics only)
   ctrl.gain.forEach((gn, k) => w.setMotor(k, { kp: gn.kp, kd: gn.kdStance, tau: 1 }));
-  const expectBodies = nb + 1 + (w.plate ? 1 : 0) + obst.length; if (w.support || w.cons.length !== nj || (w.obstacles || []).length !== obst.length || w.ps.GetNumBodies() !== expectBodies) throw new Error("G1a world is not clean");
+  const expectBodies = nb + 1 + (w.plate ? 1 : 0) + obst.length; if (w.support || w.cons.length !== nj + (spec.passiveJoints || []).length || (w.obstacles || []).length !== obst.length || w.ps.GetNumBodies() !== expectBodies) throw new Error("G1a world is not clean");
   P.N.S.forEach((s, i) => w.setPose(i, [s.pos[0], s.pos[1] + (TST.lift || 0), s.pos[2]], s.rot));
   const fIx = { L: fI("L"), R: fI("R") };
   const sensor = new Sensor(spec, { supportTouching: true, muSettle: 0.15 }), ji = (n) => spec.joints.findIndex(j => j.name === n), aL = ji("ankle_L"), aR = ji("ankle_R");
@@ -123,6 +123,8 @@ export function runG1a(J, spec, key, opts) {
       ctl: u.debug ? { pStar: u.debug.pStar, pRaw: u.debug.pRaw, xiRef: u.debug.xiRef, r: u.debug.r, tauTrunk: u.debug.tauTrunk || null, stance: u.debug.stance, fricR: u.debug.fricR, hipCap: u.debug.hipCapHere, reason: u.cls.reason } : null, swingTgt: u.plan && u.plan.swing ? Object.values(u.plan.swing)[0] || null : null };
     if (opts.keepStates) { rec.states = states.map(s => ({ pos: s.pos, rot: s.rot, com: s.com, v: s.v, w: s.w })); rec.cts = cts.map(c => ({ ...c })); rec.region = obs.region; rec.polyReliable = obs.polyReliable; rec.prosp = u.monitor.prosp; rec.tgt = { T: u.final };
       rec.arb = u.arb.led.map(e => ({ joint: e.joint, owner: e.owner, terms: e.terms, pred: e.pred, env: e.env, real: e.real, sat: e.sat, yielded: e.yielded, kp: e.kp, kd: e.kd, off: e.clampOff })); rec.obstacles = obst.map(o => ({ kind: o.kind, pos: o.pos, he: o.he })); }
+    // (FOOT-ARCHITECTURE GATE, F2: the passive MTP joints — angle (+ = dorsiflexion) and the torque its spring-damper applied this step)
+    if (spec.passiveJoints && spec.passiveJoints.length) rec.mtp = Object.fromEntries(spec.passiveJoints.map((j, q) => { const k = nj + q; return [j.name.slice(-1), { a: w.hingeAngle(k), tau: w.motorLambda(k) * hz }]; }));
     recs.push(rec);
   }
   const audit = Object.assign({}, w.audit), support = !!w.support; w.destroy();

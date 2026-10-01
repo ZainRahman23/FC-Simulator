@@ -1,5 +1,10 @@
 # G2b walker — review: inner loop first, Controller A (measured response) vs Controller B (SIMBICON-style)
 
+> **Correction (2026-10-01, foot-architecture gate — `../foot_gate/FOOT_GATE_REVIEW.md`):** point 4 below ("what makes that window so narrow
+> is mostly the body"; the diagnostic foot's "50 % → 18 %, 74 % → 14 %") was measured on inner loop v7. On v8, at matched states, neither the
+> human-sized rigid foot nor an articulated toe lets the walker continue more often than the current boot; the binding links are the
+> forward-speed creep, the step-request bound and the straight trailing leg. The text below is kept unchanged as the record.
+
 **2026-10-01 night. G2b NOT achieved — not promoted. G2c–e not started.** Everything below is opt-in; every approved gate is bit-identical
 (A / B / C1 / C2 for V1 and V1.1, C3 29/29, D 7/7, G1 26/26, G2a 10/10; the Option-1 and characterisation review cases unchanged).
 

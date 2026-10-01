@@ -88,7 +88,7 @@ export const CALIBS = {
 };
 // friction class per body (Touchline's per-pair friction policy, applied through the contact listener)
 export const MATERIALS = { pairs: { "boot|turf": 0.9, "hand|turf": 0.6, "body|turf": 0.5, "body|body": 0.4, "boot|body": 0.4, "hand|body": 0.4 }, restitution: 0 };
-const materialOf = (name) => /^foot_/.test(name) ? "boot" : /^foreArm_/.test(name) ? "hand" : "body";
+const materialOf = (name) => /^(foot|toe)_/.test(name) ? "boot" : /^foreArm_/.test(name) ? "hand" : "body";
 
 // ── helpers: signed distance of a point to a collider (body frame), for the mesh-fit report ────────────────────────────────────────
 function segClosestT(p, a, b) { const ab = V.sub(b, a), d = V.dot(ab, ab); return d < 1e-12 ? 0 : Math.max(0, Math.min(1, V.dot(V.sub(p, a), ab) / d)); }
@@ -222,14 +222,17 @@ export function buildBodySpec(rig, mesh, opts) {
     const out = sd.filter(x => x > 0.005);
     const fit = { verts: fitVs.length, insidePct: +(100 * (1 - out.length / Math.max(1, fitVs.length))).toFixed(1), p95OutsideMm: +(1000 * pct(out.length ? out : [0], 95)).toFixed(1), maxOutsideMm: +(1000 * (out.length ? Math.max(...out) : 0)).toFixed(1) };
     return { index: i, name: d.name, bone: d.bone, parent: d.parent, parentIndex: d.parent ? BODY_DEFS.findIndex(x => x.name === d.parent) : -1, origin: o,
-             mass, com, inertia: I, cmNote, seg: d.seg, shapes, fit, material: materialOf(d.name) };
+             mass, com, inertia: I, cmNote, seg: d.seg, shapes, fit, material: materialOf(d.name), bones: d.bones.slice() };
   });
   // joints (engine-agnostic): world axes at bind, limits in radians; position = the child's origin
   const joints = JOINT_DEFS.map((j0) => { const j = romOf(j0, CAL, bodies), pi = bodies.findIndex(b => b.name === j.parent), ci = bodies.findIndex(b => b.name === j.child), at = bodies[ci].origin.slice();
     if (j.type === "hinge") return { ...j, parentIndex: pi, childIndex: ci, at, lo: rad(j.range[0]), hi: rad(j.range[1]) };
     const Z = V.cross(j.X, j.Y); return { ...j, Z, parentIndex: pi, childIndex: ci, at, limits: { twist: j.twist.map(rad), swingY: j.swingY.map(rad), swingZ: j.swingZ.map(rad) } }; });
+  // (FOOT-ARCHITECTURE GATE, opt-in opts.footModel: "F1" human-sized rigid collider / "F2" articulated forefoot on the current boot outline /
+  //  "F2h" articulated forefoot on the human-sized outline — see applyFootModel; F0 = no option = the approved body, untouched)
+  const passiveJoints = opts && opts.footModel && opts.footModel !== "F0" ? applyFootModel(bodies, rig, opts) : [];
   const totalMass = bodies.reduce((s, b) => s + b.mass, 0);
-  return { player: { id: rig.playerId, name: rig.identity.name, heightCm: rig.identity.heightCm, weightKg: W, H }, bodies, joints, totalMass, calib: CAL.name === "V1" ? undefined : { ...CAL },
+  return { ...(passiveJoints.length || (opts && opts.footModel && opts.footModel !== "F0") ? { footModel: opts.footModel, passiveJoints } : {}), player: { id: rig.playerId, name: rig.identity.name, heightCm: rig.identity.heightCm, weightKg: W, H }, bodies, joints, totalMass, calib: CAL.name === "V1" ? undefined : { ...CAL },
            sources: { mass: "de Leva 1996 (male), fractions × identity.weightKg", inertia: "de Leva radii of gyration × de Leva mean segment length × (H / 1.741 m)", colliders: "fitted to the player's skinned mesh (dominant-bone vertices, percentiles)", rom: "AAOS / Norkin & White norms, CDC (Soucie 2011) cross-check; spine split by us" } };
 }
 
@@ -250,3 +253,54 @@ function romOf(j, CAL, bodies) { const r = CAL.rom; if (!r) return j; const out 
   if (/^knee_/.test(j.name) && CAL.centres && CAL.centres.shin) { const side = j.name.slice(-1), k = bodies.find(b => b.name === "shin_" + side), a = bodies.find(b => b.name === "foot_" + side);
     const n = V.norm(V.sub(a.origin, k.origin)); out.normal = n; out.axis = V.norm([-n[1], n[0], 0]); }        // axis = ẑ × leg (= +x in V1)
   return out; }
+
+// ═══ FOOT-ARCHITECTURE GATE (opt-in; the approved body is F0 and never passes through here) ═══════════════════════════════════════════════
+// F1  — a HUMAN-SIZED RIGID foot collider: width 0.11 m, toe edge 0.20 m ahead of the ankle (heel unchanged), mass / COM / inertia unchanged.
+// F2  — the current boot outline SPLIT at the metatarsophalangeal joint into the main foot (heel → MTP) and a TOE segment (MTP → boot tip),
+//        joined by a PASSIVE MTP hinge (not an actuator of the controller). F2h — the same articulation on the F1 (human-sized) outline.
+// Evidence and scaling (this character: stature 1.9 m, foot ≈ 0.152·H ≈ 0.29 m (Winter), heel ≈ 0.22 of foot length behind the ankle):
+//   • MTP location: the first MTP joint lies at 70–79 % of foot length from the heel (footwear-flex study, PubMed 30321980); the shoemaking
+//     heel-to-ball ratio 8/11 = 72.7 % → 0.064 + … ≈ 0.15 m ahead of the ankle (range 0.138–0.164). The rig's own toe bone sits at 0.1805 m —
+//     73 % of the oversized BOOT, not of the foot inside it; the physical hinge uses the anatomical 0.15 m (opts.mtpZ overrides).
+//   • MTP height: the rig's toe joint height (0.031 m above the stud plane).
+//   • range: dorsiflexion up to 60° (passive 60–90°; walking peak 14–40°, mean ≈ 25°), plantarflexion 30° (30–40°).
+//   • passive stiffness: human propulsion-phase quasi-stiffness ≈ 0.11 N·m/kg/rad (≈ 0.15 N·m/deg for 78 kg, J Appl Biomech 2018 / 2022);
+//     ≈ 1 N·m/deg was optimal in a walking model / prototype boot (PMC12475067). Default 0.5 N·m/deg (opts.mtpK in N·m/deg).
+//   • torque cap: 15 N·m — maximal isometric toe-flexor moment 6.3 ± 2.6 … 14.2 ± 5.8 N·m (Goldmann & Brüggemann 2012, J Anat); the joint is a
+//     spring-damper toward neutral (fixed target 0): it stores and returns energy, it cannot add propulsion.
+//   • mass: the de Leva foot mass is SPLIT (never added): the toe segment takes opts.toeMassFrac (default 0.18 ≈ 0.19 kg; a 0.2 kg toe in the
+//     bipedal model of PMC12475067); the whole-foot COM and inertia (about that COM) are preserved exactly (parallel-axis split).
+function applyFootModel(bodies, rig, opts) {
+  const M = opts.footModel, human = M === "F1" || M === "F2h", art = M === "F2" || M === "F2h", out = [];
+  for (const side of ["L", "R"]) {
+    const fi = bodies.findIndex(b => b.name === "foot_" + side), F = bodies[fi], box0 = F.shapes[0], f = rig.feet[side];
+    // the outline (foot-local): heel unchanged; human-sized: width 0.11, toe edge at 0.20 (F1) / 0.225 (F2h: the anatomical toe tip, 0.29 m foot)
+    const z0 = box0.pos[2] - box0.he[2], z1full = box0.pos[2] + box0.he[2], toeZ = M === "F1" ? 0.20 : M === "F2h" ? 0.225 : z1full, hx = human ? 0.055 : box0.he[0];
+    const outline = { type: "box", pos: [box0.pos[0], box0.pos[1], (z0 + toeZ) / 2], rot: Q.id(), he: [hx, box0.he[1], (toeZ - z0) / 2], cr: box0.cr };
+    if (!art) { F.shapes = [outline]; F.footModel = M; continue; }
+    const zm = opts.mtpZ ?? 0.15, ym = (rig.feet[side].toe[1] - f.ankle[1]), yb = box0.pos[1] - box0.he[1];   // MTP (foot-local): 0.15 ahead, at the rig's toe-joint height
+    // main foot: heel → MTP, full boot height; toe: MTP → toe edge, the toe box's height (the boot's toe vertices reach ≈ 0.071 m above the studs)
+    const hind = { type: "box", pos: [outline.pos[0], outline.pos[1], (z0 + zm) / 2], rot: Q.id(), he: [hx, outline.he[1], (zm - z0) / 2], cr: box0.cr };
+    const toeTop = Math.min(yb + 0.071 + f.ankle[1] - f.ankle[1], outline.pos[1] + outline.he[1]);
+    const toeBoxF = { pos: [outline.pos[0], (yb + toeTop) / 2, (zm + toeZ) / 2], he: [hx, (toeTop - yb) / 2, (toeZ - zm) / 2] };   // (foot-local)
+    // mass split (preserve total mass, COM and inertia about the COM)
+    // (the toes' mass lies ≈ 3.5 cm beyond the MTP and ≈ 3 cm above the sole — the boot's toe cap beyond the toes is light shoe material: the
+    //  toe COM and inertia are those of an ANATOMICAL toe block (7 × 3 cm, the outline's width), the collider still covers the boot's toe box)
+    const mf = F.mass, mt = mf * (opts.toeMassFrac ?? 0.18), mh = mf - mt, cf = F.com, ct = [toeBoxF.pos[0], yb + 0.03, zm + 0.035], ch = V.sc(V.sub(V.sc(cf, mf), V.sc(ct, mt)), 1 / mh);
+    const box = (m, he) => { const [a, b, c] = he.map(x => 2 * x); return [m / 12 * (b * b + c * c), m / 12 * (a * a + c * c), m / 12 * (a * a + b * b)]; };
+    const par = (m, d) => [m * (d[1] * d[1] + d[2] * d[2]), m * (d[0] * d[0] + d[2] * d[2]), m * (d[0] * d[0] + d[1] * d[1])];
+    const It = box(mt, [hx, 0.015, 0.035]), dT = par(mt, V.sub(ct, cf)), dH = par(mh, V.sub(ch, cf));
+    const Ih = [0, 1, 2].map(k => F.inertia[k] - It[k] - dT[k] - dH[k]); if (Ih.some(x => x <= 0)) throw new Error(`foot model ${M}: the toe split exceeds the de Leva foot inertia (${Ih.map(x => x.toExponential(2))})`);
+    const mtpW = V.add(F.origin, [0, ym, zm]);                                  // the MTP hinge point (world, bind)
+    F.shapes = [hind]; F.mass = mh; F.com = ch; F.inertia = Ih; F.planBox = outline; F.footModel = M; F.bones = ["foot_" + side];
+    F.cmNote += ` · ${M}: main foot (heel → MTP ${zm} m), ${mh.toFixed(3)} kg`;
+    const T = { index: bodies.length, name: "toe_" + side, bone: "toe_" + side, parent: "foot_" + side, parentIndex: fi, origin: mtpW, mass: mt, com: V.sub(ct, [0, ym, zm]), inertia: It,
+      cmNote: `${M}: toe segment (MTP → ${toeZ.toFixed(3)} m), ${(100 * mt / mf).toFixed(0)} % of the de Leva foot mass`, seg: "toes", material: "boot", bones: ["toe_" + side],
+      shapes: [{ type: "box", pos: V.sub(toeBoxF.pos, [0, ym, zm]), rot: Q.id(), he: toeBoxF.he, cr: Math.min(0.01, 0.4 * Math.min(...toeBoxF.he)) }], fit: null, footModel: M };
+    bodies.push(T);
+    const kNm = (opts.mtpK ?? 0.5) * 180 / Math.PI;                             // N·m/rad
+    out.push({ name: "mtp_" + side, parent: "foot_" + side, child: "toe_" + side, type: "hinge", axis: [-1, 0, 0], normal: [0, 0, 1], range: [-30, 60], fr: 0.05, parentIndex: fi, childIndex: T.index, at: mtpW,
+      lo: rad(-30), hi: rad(60), passive: { kp: kNm, kd: opts.mtpD ?? 0.3, tau: opts.mtpTau ?? 15 }, note: "PASSIVE (spring-damper to neutral, fixed target 0; + = dorsiflexion)" });
+  }
+  return out;
+}

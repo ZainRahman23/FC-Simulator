@@ -86,7 +86,7 @@ const yawOf = (q) => { const f = Q.rot(q, [0, 0, 1]); return datan2(f[0], f[2]);
 export class SupportSequencer {
   constructor(spec, poses, ctrl, requests) {
     this.spec = spec; this.ctrl = ctrl; this.queue = (requests || []).map((r, i) => ({ ...r, id: i })); this.cur = null; this.log = []; this.reports = [];
-    const bi = (n) => spec.bodies.findIndex(b => b.name === n); this.foot = { L: bi("foot_L"), R: bi("foot_R") }; this.box = spec.bodies[this.foot.L].shapes[0];
+    const bi = (n) => spec.bodies.findIndex(b => b.name === n); this.foot = { L: bi("foot_L"), R: bi("foot_R") }; this.box = spec.bodies[this.foot.L].planBox || spec.bodies[this.foot.L].shapes[0];   // (F2: the whole foot's outline, main foot + toe at neutral)
     const N = poses.N; this.yFlat = N.feet.L[1]; this.W = W_BW(spec);
     this.phase = "DOUBLE_SUPPORT"; this.role = { L: "LOADED", R: "LOADED" }; this.hist = [];
     // single-support statics (bind pose, both legs vertical under their hips, pelvis level): stance-hip abduction moment

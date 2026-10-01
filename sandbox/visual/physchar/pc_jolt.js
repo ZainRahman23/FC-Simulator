@@ -50,6 +50,9 @@ export class JoltCharacterWorld {
     for (const b of spec.bodies) this._addBody(b);
     if (this.cfg.plateLate) this._addPlate();   // (experiment: the plate created AFTER the character's bodies — body-ID order in the contact pair)
     this.cons = []; for (const j of spec.joints) this._addJoint(j);
+    // (FOOT-ARCHITECTURE GATE) PASSIVE joints (spec.passiveJoints, F2: the MTP hinges): created after the controller's joints (their indices
+    // follow), driven ONLY by a fixed spring-damper toward their neutral (target 0, finite torque) — never by the controller or the arbiter
+    for (const j of spec.passiveJoints || []) { this._addJoint(j); const k = this.cons.length - 1; this.setMotor(k, j.passive); this.setJointTarget(k, 0, 0); }
     this.contacts = []; this._listen();
   }
   disablePair(i, j) { this.gft.DisableCollision(i, j); }

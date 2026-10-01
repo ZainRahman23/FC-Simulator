@@ -37,6 +37,7 @@ export function runChar(J, spec, poses, x) {
   const opts = { poses, keepStates: true, seconds: x.seconds ?? (1.6 + nSteps * 0.62), rhythmOver: ro, humanOver: { ...base.human, ...(x.humanOver || {}) }, onLoco: (l) => { LOCO = l; } };
   if (x.push) opts.locoOver = undefined;
   const r = x.push ? runG2a(J, spec, test, { ...opts, pushChar: x.push }) : runG2a(J, spec, test, opts);
+  if (x.onRun) x.onRun(r, LOCO);   // (opt-in: the raw run, e.g. for the foot-gate frame dump)
   const out = analyseChar(spec, r, LOCO, x); if (x.series) out.series = yawSeries(spec, r, LOCO); out.walkerLog = LOCO.planner.rhythm && LOCO.planner.rhythm.walkerLog ? LOCO.planner.rhythm.walkerLog : null; return out;
 }
 

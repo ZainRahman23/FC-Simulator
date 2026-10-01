@@ -26,6 +26,7 @@ export function fk(spec, rootPos, rootRot, T) {
   const S = spec.bodies.map(() => null); S[0] = { pos: rootPos.slice(), rot: rootRot.slice() };
   spec.joints.forEach((j, k) => { const P = S[j.parentIndex], pb = spec.bodies[j.parentIndex], cb = spec.bodies[j.childIndex];
     S[j.childIndex] = { pos: V.add(P.pos, Q.rot(P.rot, V.sub(cb.origin, pb.origin))), rot: Q.norm(Q.mul(P.rot, relOf(j, T[k]))) }; });
+  for (const j of spec.passiveJoints || []) { const P = S[j.parentIndex], pb = spec.bodies[j.parentIndex], cb = spec.bodies[j.childIndex]; S[j.childIndex] = { pos: V.add(P.pos, Q.rot(P.rot, V.sub(cb.origin, pb.origin))), rot: P.rot.slice() }; }   // (F2: the passive toes at neutral)
   return S;
 }
 export const comOf = (spec, S) => { let c = [0, 0, 0]; spec.bodies.forEach((b, i) => { c = V.add(c, V.sc(V.add(S[i].pos, Q.rot(S[i].rot, b.com)), b.mass)); }); return V.sc(c, 1 / spec.totalMass); };
@@ -58,7 +59,7 @@ export const POSES = {
          shoulder_L: { y: -30, z: -14 }, elbow_L: { a: 55 }, shoulder_R: { y: 20, z: 16 }, elbow_R: { a: 40 } } },
 };
 const bi = (spec, n) => spec.bodies.findIndex(b => b.name === n), ji = (spec, n) => spec.joints.findIndex(j => j.name === n);
-const footCenter = (spec, S, side) => { const f = bi(spec, "foot_" + side), sh = spec.bodies[f].shapes[0]; return V.add(S[f].pos, Q.rot(S[f].rot, sh.pos)); };
+const footCenter = (spec, S, side) => { const f = bi(spec, "foot_" + side), sh = spec.bodies[f].planBox || spec.bodies[f].shapes[0]; return V.add(S[f].pos, Q.rot(S[f].rot, sh.pos)); };
 const lowestFoot = (spec, S, side) => { const f = bi(spec, "foot_" + side); return shapeLowestY(spec.bodies[f].shapes[0], S[f].pos, S[f].rot); };
 // stance-foot-consistent pose: the stance foot (or both) is FLAT on the turf at a fixed place; single stance also puts the whole-body COM
 // over the stance foot (bisection on the stance hip's ab/adduction and flexion). The ankle targets of stance feet are solved (foot flat);

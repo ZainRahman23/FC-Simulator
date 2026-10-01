@@ -12,14 +12,14 @@ export const GAIT = { touchLoad: 25, warmupSteps: 12 };
 
 export class GaitState {
   constructor(spec) { const bi = (n) => spec.bodies.findIndex(b => b.name === n);
-    this.body = { L: { foot: bi("foot_L"), shin: bi("shin_L") }, R: { foot: bi("foot_R"), shin: bi("shin_R") } };
+    this.body = { L: { foot: bi("foot_L"), shin: bi("shin_L"), toe: bi("toe_L") }, R: { foot: bi("foot_R"), shin: bi("shin_R"), toe: bi("toe_R") } };   // (toe: F2 only, else −1)
     this.role = { L: "STANCE", R: "STANCE" }; this.support = "DOUBLE"; this.phase = 0.25; this.events = []; this.stepEvents = []; this.touch = { L: true, R: true }; this.obst = { L: null, R: null }; this.tdLatch = { L: false, R: false }; }
   ev(t, kind, what, x) { if (this.quiet) return null; const e = { t, kind, what, ...(x || {}) }; this.events.push(e); this.stepEvents.push(e); return e; }
   // truth: the undelayed observation; intent: { sw, stage, plannedTd: { t, center }, u, dsU, phase0 } from the step executor (or null)
   update(truth, intent) {
     this.stepEvents = []; const t = truth.t, F = truth.feet; this.quiet = truth.n <= GAIT.warmupSteps;   // (the sensor's first observations only establish contact)
     // non-turf contacts on each leg's foot / shank (another character: index ≤ −1000; an obstacle: −2 − k) — in THIS character's own view
-    const ext = { L: [], R: [] }; for (const c of truth.contacts || []) for (const s of ["L", "R"]) { const own = [this.body[s].foot, this.body[s].shin];
+    const ext = { L: [], R: [] }; for (const c of truth.contacts || []) for (const s of ["L", "R"]) { const own = [this.body[s].foot, this.body[s].shin, ...(this.body[s].toe >= 0 ? [this.body[s].toe] : [])];
       if ((own.includes(c.a) && c.b < -1) || (own.includes(c.b) && c.a < -1)) ext[s].push(c); }
     // a turf contact the foot cannot stand on (the vertical face / edge of raised turf — pc_sense edgeContact) is an obstruction too
     for (const s of ["L", "R"]) if (F[s].edgeContact) ext[s].push({ edge: true });

@@ -296,7 +296,7 @@ export class BalanceController {
     // (G2a, with the gait's pelvis posture) the height is referenced to the GROUND under the stance feet — each foot's lowest sole point plus
     // the flat foot's ankle height — not to the ankle: a forefoot landing (heel up, ankle 5 cm above its flat height) raised the planned
     // pelvis by half of that and lifted the landed foot back off the turf
-    const gY = ps && stance.length ? stance.reduce((a, s) => { const sh = this.spec.bodies[this.legs[s].foot].shapes[0]; return a + Math.min(...o.feet[s].sole.map(c => c[1])) - (sh.pos[1] - sh.he[1]); }, 0) / stance.length : footY;
+    const gY = ps && stance.length ? stance.reduce((a, s) => { const sh = this.spec.bodies[this.legs[s].foot].planBox || this.spec.bodies[this.legs[s].foot].shapes[0]; return a + Math.min(...o.feet[s].sole.map(c => c[1])) - (sh.pos[1] - sh.he[1]); }, 0) / stance.length : footY;
     const Pd = [S[0].pos[0], gY + this.hPelvis + (ps ? ps.dy : 0), S[0].pos[2]];
     // GATE C2 (only with a plan): in a wide or split stance the nominal pelvis height may be out of the legs' reach — lower it so every stance
     // leg stays within 99.5 % extension (the feasibility check limits how much lowering a placement may need)
@@ -409,15 +409,15 @@ export class BalanceController {
       this.replant.push(s); }
     // ── desired ground reaction (LIPM line of action through the COM), split between the stance feet by the lever rule ──
     const feetForce = (p) => { const F = [W * (c[0] - p[0]) / h, W, W * (c[2] - p[1]) / h], res = {};
-      if (stance.length === 2 && plan) { const cenOf = (s) => { const f = this.legs[s].foot, q = V.add(S[f].pos, Q.rot(S[f].rot, spec.bodies[f].shapes[0].pos)); return [q[0], q[2]]; };
-        if (plan.unloading && plan.heelRise && plan.heelRise.toeOnly && plan.heelRise.foot === plan.unloading.foot && !plan.unloading.toeRegion) { const f = this.legs[plan.unloading.foot].foot, sh = spec.bodies[f].shapes[0], zf = sh.pos[2] + sh.he[2], yb = sh.pos[1] - sh.he[1];
+      if (stance.length === 2 && plan) { const cenOf = (s) => { const f = this.legs[s].foot, q = V.add(S[f].pos, Q.rot(S[f].rot, (spec.bodies[f].planBox || spec.bodies[f].shapes[0]).pos)); return [q[0], q[2]]; };
+        if (plan.unloading && plan.heelRise && plan.heelRise.toeOnly && plan.heelRise.foot === plan.unloading.foot && !plan.unloading.toeRegion) { const f = this.legs[plan.unloading.foot].foot, sh = spec.bodies[f].planBox || spec.bodies[f].shapes[0], zf = sh.pos[2] + sh.he[2], yb = sh.pos[1] - sh.he[1];
           plan.unloading = { ...plan.unloading, toeRegion: [[-1, zf], [1, zf], [1, zf - 0.05], [-1, zf - 0.05]].map(([sx, z]) => { const q = V.add(S[f].pos, Q.rot(S[f].rot, [sh.pos[0] + sx * sh.he[0], yb, z])); return [q[0], q[2]]; }) }; }
         if (plan.unloading && plan.unloading.bandCap && !plan.unloading.band) { const bi = {}, li = {}; for (const s of ["L", "R"]) { const f = this.legs[s].foot, q = S[f].pos, x = Q.rot(S[f].rot, [1, 0, 0]), n = Math.hypot(x[0], x[2]) || 1; bi[s] = [q[0], q[2]]; li[s] = [x[0] / n, x[2] / n]; }
           plan.unloading = { ...plan.unloading, band: { cap: plan.unloading.bandCap, ank: bi, lat: li } }; }
         const du = this.opts.unloadPlan && plan.unloading && !plan.preload ? split2u(o, p, cenOf, plan.unloading) : this.opts.unloadPlan && plan.loading && !plan.preload ? split2u(o, p, cenOf, plan.loading) : null; if (du && recordUnload) this.unloadInfo = du.info;
         const d2 = du || split2(o, p, cenOf, plan.preload, this.opts.diagUnload ? plan.unload : null);
         for (const s of ["L", "R"]) res[s] = { F: V.sc(F, d2.share[s]), at: [d2.at[s][0], groundY(o.feet[s]), d2.at[s][1]], share: d2.share[s] }; }
-      else if (stance.length === 2) { const cen = (s) => { const f = this.legs[s].foot, q = V.add(S[f].pos, Q.rot(S[f].rot, spec.bodies[f].shapes[0].pos)); return [q[0], q[2]]; };
+      else if (stance.length === 2) { const cen = (s) => { const f = this.legs[s].foot, q = V.add(S[f].pos, Q.rot(S[f].rot, (spec.bodies[f].planBox || spec.bodies[f].shapes[0]).pos)); return [q[0], q[2]]; };
         const cL = cen("L"), cR = cen("R"), e = [cR[0] - cL[0], cR[1] - cL[1]], ee = e[0] * e[0] + e[1] * e[1];
         let aR = Math.max(0, Math.min(1, ((p[0] - cL[0]) * e[0] + (p[1] - cL[1]) * e[1]) / ee)); const proj = [cL[0] + aR * e[0], cL[1] + aR * e[1]], off = [p[0] - proj[0], p[1] - proj[1]];
         // GATE C2: a foot being loaded after touchdown keeps a minimum commanded share (it is pressed onto the turf, not held weightless)

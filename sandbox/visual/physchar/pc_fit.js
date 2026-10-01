@@ -6,8 +6,8 @@
 import { V, Q } from "./pc_math.js";
 import { BODY_DEFS } from "./pc_body.js";
 
-export function boneBodyMap(rig) { const m = new Int32Array(rig.bones.length).fill(-1);
-  rig.bones.forEach((b, i) => { const k = BODY_DEFS.findIndex(d => d.bones.includes(b.name)); m[i] = k; }); return m; }
+export function boneBodyMap(rig, spec) { const m = new Int32Array(rig.bones.length).fill(-1), defs = spec && spec.bodies.every(b => b.bones) ? spec.bodies : BODY_DEFS;   // (F2: the toe bone rides the toe body)
+  rig.bones.forEach((b, i) => { const k = defs.findIndex(d => d.bones.includes(b.name)); m[i] = k; }); return m; }
 // states: array of { pos, rot } per body; returns Float32Array(23·16) column-major skin matrices
 export function skinMatrices(rig, spec, states, map, out) {
   out = out || new Float32Array(rig.bones.length * 16);

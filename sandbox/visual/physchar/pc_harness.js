@@ -93,6 +93,10 @@ function simulate() {
   setTimeout(() => {
     const t0 = performance.now();
     const extra = Object.assign({}, H.arms ? { reactiveArms: true } : {}, H.prot ? { protective: true } : {});
+    // (FOOT-ARCHITECTURE GATE) a G2 test may name its foot model (F1 / F2 / F2h): the run uses that body (V1.1 + the foot model); the magenta
+    // ghost is shown only when it uses the same body (a different body count cannot share the drawing)
+    if (isG2()) { const fm = TESTS_G2[H.testG2].footModel, fs = fm ? footSpec(fm) : null; H.spec = fs ? fs.spec : H.specs[H.calib]; H.poses = fs ? fs.poses : H.posesBy[H.calib]; H.map = fs ? fs.map : H.mapBase; H.skin = null;
+      if (H.g1cmp) { const cf = TESTS_G2[H.g1cmp.key || H.testG2].footModel; if ((cf || null) !== (fm || null)) H.g1cmp = null; } }
     const dg = isD6() ? new D6Diag(H.spec) : null; H.diag = dg;   // D6 diagnostic: the causal-chain measurement (read-only onStep hook, the same code as tools/d6x_run.js)
     H.run = isG2() ? runG2a(H.J, H.spec, H.testG2, { keepStates: true, poses: H.poses, ...(H.g1main || {}) }) : isG1() ? runG1a(H.J, H.spec, H.testG1, { keepStates: true, poses: H.poses, ...(H.g1main || {}) }) : isD() ? runD(H.J, H.spec, H.testD, { keepStates: true, poses: H.poses, ctrlExtra: extra, onStep: dg ? (x) => dg.onStep(x) : undefined }) : isC3() ? runC3(H.J, H.spec, H.testC3, { keepStates: true, poses: H.poses, ctrlExtra: extra }) : isC2() ? runC2(H.J, H.spec, H.testC2, { keepStates: true, poses: H.poses, ctrl: ctrlOpts() }) : isC() ? runC1(H.J, H.spec, H.testC, { keepStates: true, poses: H.poses, ctrlExtra: extra }) : isB() ? runTest(H.J, H.spec, H.test, { keepStates: true, poses: H.poses }) : runDrop(H.J, H.spec, H.drop, { tsc: GATE_A_TSC, world: GATE_A_WORLD, keepStates: true, seconds: 6 });
     H.cmpRun = isG2() && H.g1cmp ? runG2a(H.J, H.spec, H.g1cmp.key || H.testG2, { keepStates: true, poses: H.poses, ...(H.g1cmp.opts || {}) }) : isG1() && H.g1cmp ? runG1a(H.J, H.spec, H.g1cmp.key || H.testG1, { keepStates: true, poses: H.poses, ...(H.g1cmp.opts || {}) }) : null;
@@ -107,6 +111,8 @@ function simulate() {
 // approved Gate C2 controller; "recal" / "diag" = the historical V1.1-report variants (R1·R2 / + D1)
 function ctrlOpts() { if (H.ctrlv === "approved") return {}; if (H.ctrlv === "recal") return { anticipateReach: true, reachToGround: true }; if (H.ctrlv === "diag") return { anticipateReach: true, reachToGround: true, diagUnload: true }; return undefined; }
 function applySuites() { const b = H.suitesBy[H.calib] || {}; H.suiteD = b.D || null; H.suiteC3 = b.C3 || null; H.suite = b.A || null; H.suiteB = b.B || null; H.suiteC = b.C || null; H.suiteC2 = (H.calib === "V1.1" ? b["C2" + (H.ctrlv || "working")] : b.C2) || null; }
+// (FOOT-ARCHITECTURE GATE) the V1.1 body with a foot model, built on demand
+H.footSpecs = {}; function footSpec(fm) { if (!H.footSpecs[fm]) { const spec = buildBodySpec(H.entry.rig, H.entry.mesh, { calib: "V1.1", footModel: fm }); H.footSpecs[fm] = { spec, poses: buildPoses(spec), map: boneBodyMap(H.entry.rig, spec) }; } return H.footSpecs[fm]; }
 function setCalib(c, ctrlv) { H.calib = c; if (ctrlv != null) H.ctrlv = ctrlv; H.spec = H.specs[c]; H.poses = H.posesBy[c]; H.skin = null; $("calib").value = c; $("ctrlv").value = H.ctrlv; applySuites(); document.title = `Physical character — ${c}${isC2() && H.ctrlv ? " + " + H.ctrlv : ""}`; }
 const hz = () => TIMESTEP_CONFIGS[isBal() || isD() || isG1() ? GATE_C1_TSC : isB() ? GATE_B_TSC : GATE_A_TSC].hz;
 // ── camera ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -957,7 +963,7 @@ function g1Shot() { const ts = QS.get("shot").split(",").map(Number), cols = +(Q
   try {
     ui();
     const [J, entry] = await Promise.all([loadJolt(new URL("./vendor/jolt-physics.wasm-compat.js", import.meta.url).href), ofCharLoad("gabriel")]);
-    H.J = J; H.entry = entry; H.map = boneBodyMap(entry.rig); H.ref = referencedVertices(entry.mesh);
+    H.J = J; H.entry = entry; H.map = H.mapBase = boneBodyMap(entry.rig); H.ref = referencedVertices(entry.mesh);
     try { initOfLoco(await (await fetch("../anim3d/of_loco.js")).text()); } catch (e) { console.warn("of_loco reference unavailable", e); }   // G1a: the P3 style reference
     for (const c of ["V1", "V1.1"]) { H.specs[c] = buildBodySpec(entry.rig, entry.mesh, { calib: c }); H.posesBy[c] = buildPoses(H.specs[c]); }
     H.visHip = visibleHipWidth(entry.rig, entry.mesh, H.specs.V1);

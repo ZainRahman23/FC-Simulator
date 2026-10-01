@@ -177,3 +177,10 @@ controller's tuning).
   shorter walks).
 - Controller B on v8 (80-run grid): best 9, typically 5–7 (`eval/G2W_B8.json`: 6.0 / 5 / 7).
 - Stopped: see G2B_WALKER_REVIEW.md (decisions: the foot — collider / toe segment; the walking pelvis height; Controller A as the path).
+
+## 2026-10-01 evening — foot-architecture gate (separate review: `../foot_gate/FOOT_GATE_REVIEW.md`)
+- F0 / F1 / F2 / F2h compared under F0's Controller A (Part 1) and each foot's own identified maps (Part 2: round-1 + round-2 identification,
+  seeds 71 / 72; maps `json/m8F1_tau*`, `m8F2_tau*`, `m8F2h_tau*` (round 1), `m8{F0,F1,F2,F2h}r2_tau*` (round 2); F0's r2 under m8a).
+- State-matched capability (previous step × speed cells, failures kept): no foot continues more often than F0; max viable step F0 0.42 m.
+- F2 swing failures traced: the swing generator holds the (steeper) toe-off pitch and the boot toe hangs (`foot_gate/fig/FG5`).
+- Controlled step protocol (own-map run-up → test step) NOT state-matched (test-step speed F0 0.25 · F1 −0.13 · F2 0.96 · F2h 0.95 m/s) — kept, not used.

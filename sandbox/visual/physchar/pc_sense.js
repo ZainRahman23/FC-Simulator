@@ -63,8 +63,9 @@ export class Sensor {
     // 0 = the C1/C2 behaviour (identical).
     this.muSettle = (opts && opts.muSettle) || 0;
     const bi = (n) => spec.bodies.findIndex(b => b.name === n), ji = (n) => spec.joints.findIndex(j => j.name === n);
-    this.feet = {}; for (const s of ["L", "R"]) { const i = bi("foot_" + s), sh = spec.bodies[i].shapes[0];
-      this.feet[s] = { side: s, body: i, ankle: ji("ankle_" + s), box: sh, state: "AIR", slipCnt: 0, stickCnt: 0, tdCnt: 0, loaded: false, anchor: null, slipping: false }; }
+    this.feet = {}; for (const s of ["L", "R"]) { const i = bi("foot_" + s), sh = spec.bodies[i].planBox || spec.bodies[i].shapes[0], ti = bi("toe_" + s);
+      // (FOOT-ARCHITECTURE GATE, F2: a foot = main foot + its passive toe segment — contacts, load and sole are the pair's)
+      this.feet[s] = { side: s, body: i, toe: ti >= 0 ? ti : null, ankle: ji("ankle_" + s), box: sh, hind: spec.bodies[i].shapes[0], toeBox: ti >= 0 ? spec.bodies[ti].shapes[0] : null, state: "AIR", slipCnt: 0, stickCnt: 0, tdCnt: 0, loaded: false, anchor: null, slipping: false }; }
     this.chest = bi("chest"); this.cop = null;
   }
   // states: w.read(i) for all bodies; contacts: w.contacts; ankleLam: { L: [3], R: [3] } N·s; ext: { J: [3], at: [3] } or null (N·s this step)
@@ -87,15 +88,17 @@ export class Sensor {
     for (const k of contacts) { const oth = k.a === -1 ? k.b : k.b === -1 ? k.a : null;
       // a foot in contact with ANOTHER body (another character: index ≤ −1000; an obstacle: −2 − k) — any manifold, since the solver may act
       // on a speculative one: that body's push is part of the foot's measured horizontal force, so it is no measurement of the turf's friction
-      if (oth == null) { for (const s of ["L", "R"]) { const fb = this.feet[s].body; if ((k.a === fb && k.b < -1) || (k.b === fb && k.a < -1)) extOn[s] = true; }
-        if ((k.a === this.feet.L.body || k.b === this.feet.L.body || k.a === this.feet.R.body || k.b === this.feet.R.body) && k.a >= 0 && k.b >= 0 && k.depth > SENSE.touchDepth) footSelf = true; continue; }
-      if (oth < 0) continue; const side = oth === this.feet.L.body ? "L" : oth === this.feet.R.body ? "R" : null;
+      const isF = (i, s) => i === this.feet[s].body || (this.feet[s].toe != null && i === this.feet[s].toe);
+      if (oth == null) { for (const s of ["L", "R"]) { if ((isF(k.a, s) && k.b < -1) || (isF(k.b, s) && k.a < -1)) extOn[s] = true; }
+        if ((isF(k.a, "L") || isF(k.b, "L") || isF(k.a, "R") || isF(k.b, "R")) && k.a >= 0 && k.b >= 0 && k.depth > SENSE.touchDepth && !((isF(k.a, "L") && isF(k.b, "L")) || (isF(k.a, "R") && isF(k.b, "R")))) footSelf = true; continue; }
+      if (oth < 0) continue; const side = isF(oth, "L") ? "L" : isF(oth, "R") ? "R" : null;
       if (side && k.normal && Math.abs(k.normal[1]) < 1 / Math.sqrt(1 + (k.mu ?? 0.5) ** 2) - 1e-6) { if (k.depth > SENSE.touchDepth) edgeOn[side] = true; continue; }
       if (side) { manifold[side] = true; turfMu[side].push(k.mu); }       // any manifold, speculative included: the solver may act on it this step
       if (k.depth <= SENSE.touchDepth) continue;
       if (side) turfPts[side].push(...k.pts); else nonFootGround = true; }
     for (const s of ["L", "R"]) { const F = this.feet[s], st = states[F.body], m = spec.bodies[F.body].mass, box = F.box;
-      let force = [0, 0, 0]; if (this.prev) { const a = V.sc(V.sub(st.v, this.prev.states[F.body].v), 1 / dt); force = V.sub(V.sub(V.sc(a, m), [0, -g * m, 0]), V.sc(ankleLam[s], 1 / dt)); }
+      let force = [0, 0, 0]; if (this.prev) { const a = V.sc(V.sub(st.v, this.prev.states[F.body].v), 1 / dt); force = V.sub(V.sub(V.sc(a, m), [0, -g * m, 0]), V.sc(ankleLam[s], 1 / dt));
+        if (F.toe != null) { const mt = spec.bodies[F.toe].mass, at = V.sc(V.sub(states[F.toe].v, this.prev.states[F.toe].v), 1 / dt); force = V.add(force, V.sub(V.sc(at, mt), [0, -g * mt, 0])); } }   // (F2: the toe's dynamics are part of the foot's ground force)
       // in contact = touching points, OR a (speculative) manifold through which the solver is already pushing (measured load > loadOn):
       // Jolt acts on contacts up to 2 cm apart, so the load can arrive one step before the 0.5 mm geometric test says "touching"
       const load = force[1], pts = turfPts[s], touching = pts.length > 0 || (manifold[s] && load > SENSE.loadOn), shear = [force[0], 0, force[2]], shearMag = Math.sqrt(force[0] * force[0] + force[2] * force[2]);
@@ -103,7 +106,8 @@ export class Sensor {
       // about its toe or heel keeps a stationary pivot corner; impact jitter does not accumulate displacement; a real slide moves every
       // corner. (Gate C1 findings: a centroid velocity, and then an instantaneous per-point velocity, both flagged the heel-strike after a
       // toe stand as "slip" on both feet — the foot rotates about an axis above the sole during the impact — and caused a false release.)
-      const corners = []; { const b = F.box; for (const sx of [-1, 1]) for (const sz of [-1, 1]) corners.push(V.add(st.pos, Q.rot(st.rot, [b.pos[0] + sx * b.he[0], b.pos[1] - b.he[1], b.pos[2] + sz * b.he[2]]))); }
+      const corners = []; if (F.toe == null) { const b = F.box; for (const sx of [-1, 1]) for (const sz of [-1, 1]) corners.push(V.add(st.pos, Q.rot(st.rot, [b.pos[0] + sx * b.he[0], b.pos[1] - b.he[1], b.pos[2] + sz * b.he[2]]))); }
+      else { const b = F.hind, tb = F.toeBox, tS = states[F.toe]; for (const sx of [-1, 1]) corners.push(V.add(st.pos, Q.rot(st.rot, [b.pos[0] + sx * b.he[0], b.pos[1] - b.he[1], b.pos[2] - b.he[2]]))); for (const sx of [-1, 1]) corners.push(V.add(tS.pos, Q.rot(tS.rot, [tb.pos[0] + sx * tb.he[0], tb.pos[1] - tb.he[1], tb.pos[2] + tb.he[2]]))); }   // (F2: [heel L, heel R, toe L, toe R] — the order the window compares)
       // the window only holds samples taken while this foot was LOADED and in contact (C1 finding PR30: a window spanning the pre-touchdown
       // travel of a foot being put back down read as a 13–18 cm/s "slide" the instant it loaded; the loaded slide was 0.06 mm)
       F.hist = F.hist || []; if (!(touching && load > SENSE.loadOff)) F.hist.length = 0; else { F.hist.push(corners); if (F.hist.length > SENSE.slipWindow + 1) F.hist.shift(); }
@@ -115,7 +119,7 @@ export class Sensor {
       if (F.loaded && touching) F.slid = (F.slid || 0) + step1;
       // which part of the boot touches (heel / toe / medial / lateral), in the foot's own frame
       let heel = false, toe = false, lat = false, med = false; const zc = box.pos[2], hz = box.he[2], xc = box.pos[0];
-      for (const p of pts) { const lp = Q.rot(Q.conj(st.rot), V.sub(p, st.pos)); if (lp[2] < zc - 0.35 * hz) heel = true; if (lp[2] > zc + 0.35 * hz) toe = true;
+      for (const p of pts) { const lp = Q.rot(Q.conj(st.rot), V.sub(p, st.pos)); if (lp[2] < zc - 0.35 * hz) heel = true; if (lp[2] > zc + 0.35 * hz || (F.toe != null && lp[2] > F.hind.pos[2] + F.hind.he[2] - 0.01)) toe = true;
         const outward = s === "L" ? -(lp[0] - xc) : (lp[0] - xc); if (outward > 0.35 * box.he[0]) lat = true; if (outward < -0.35 * box.he[0]) med = true; }
       // hysteresis: loaded / unloaded, slip / stick (integer step counters → deterministic)
       if (!F.loaded && touching && load > SENSE.loadOn) F.loaded = true; else if (F.loaded && (!touching || load < SENSE.loadOff)) F.loaded = false;
@@ -149,7 +153,9 @@ export class Sensor {
     const loadFeet = ["L", "R"].filter(s => (feet[s].loaded || (ST && !feet[s].slipping)) && feet[s].touching);
     const raw = hull2([...(feet.L.touching ? feet.L.points : []), ...(feet.R.touching ? feet.R.points : [])]);
     const reliable = hull2(relFeet.flatMap(s => feet[s].points));
-    const sole = (s) => { const F = this.feet[s], st = states[F.body], b = F.box, out = []; for (const sx of [-1, 1]) for (const sz of [-1, 1]) out.push(V.add(st.pos, Q.rot(st.rot, [b.pos[0] + sx * b.he[0], b.pos[1] - b.he[1], b.pos[2] + sz * b.he[2]]))); return out; };
+    const sole = (s) => { const F = this.feet[s], st = states[F.body], b = F.toe == null ? F.box : F.hind, out = []; for (const sx of [-1, 1]) for (const sz of [-1, 1]) out.push(V.add(st.pos, Q.rot(st.rot, [b.pos[0] + sx * b.he[0], b.pos[1] - b.he[1], b.pos[2] + sz * b.he[2]])));
+      if (F.toe != null) { const tS = states[F.toe], tb = F.toeBox; for (const sx of [-1, 1]) for (const sz of [-1, 1]) out.push(V.add(tS.pos, Q.rot(tS.rot, [tb.pos[0] + sx * tb.he[0], tb.pos[1] - tb.he[1], tb.pos[2] + sz * tb.he[2]]))); }   // (F2: main foot + toe)
+      return out; };
     for (const s of ["L", "R"]) feet[s].sole = sole(s);
     // A SLIDING foot still carries vertical load, so it stays in the support region; what it cannot supply is friction. Support is then
     // flagged DEGRADED and the controller limits its CoP demand to what the feet's friction can deliver (Gate C1 finding, H3: excluding
