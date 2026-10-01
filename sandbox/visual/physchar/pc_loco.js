@@ -175,7 +175,11 @@ export class LocoController {
         // clearance let the hanging toe scuff the turf at 41 % of a swing, which ended the step 46 cm short; a scuff is a real trip, so the
         // swing must actually clear)
         const fq = o.states[g.foot[R.sw]].rot, fz = Q.rot(fq, [0, 0, 1]), rAct = P.clrActual ? datan2(fz[1], Math.hypot(fz[0], fz[2])) : 1;   // (opt-in, P.clrActual: default-on it broke the in-place baseline, 20/20 → 2 steps)
-        let rA = rho; for (let it = 0; it < 2; it++) { rA = Math.min(rho, rhoMax(pos)); pos = [pos[0], pos[1] + G * sp(yg + m - lowAt(Math.min(rA, rAct)), 0.003), pos[2]]; }   // (the actual pitch only for the clearance — commanding it fed back: −38° → −55°)
+        // ((G2b walker, P.clrActualUntil = [w1, dw]) the actual pitch counts only until w1 of the swing, fading over dw: through the landing
+        // approach the foot is MEANT to pitch toes-up for the heel strike, and the still toes-down actual pitch held the ankle up — the descent
+        // started late and the foot landed +7 ± 10 cm beyond its target (identification, clrActual on vs off: +6.9 ± 10.3 vs +0.2 ± 5.2 cm))
+        const aU = P.clrActualUntil, rAw = P.clrActual && aU ? rho + (rAct - rho) * (1 - minjerk(Math.max(0, Math.min(1, (w - aU[0]) / aU[1])))) : rAct;
+        let rA = rho; for (let it = 0; it < 2; it++) { rA = Math.min(rho, rhoMax(pos)); pos = [pos[0], pos[1] + G * sp(yg + m - lowAt(Math.min(rA, rAw)), 0.003), pos[2]]; }   // (the actual pitch only for the clearance — commanding it fed back: −38° → −55°)
         // ((G2b) the commanded pitch is the one the leg can give — the foot hangs plantar-flexed from a shank tilted back, as a human foot does
         // in initial swing — instead of a level target the ankle could only press against its dorsiflexion stop)
         if (!P.walkClrRamp) rho = rho + G * (rA - rho); }

@@ -284,7 +284,12 @@ export class BalanceController {
     // (rad), dy (m) }: the reference's small pelvis yaw and swing-side drop, and the stance knee's loading bend as a lower pelvis) — offsets on
     // the controller's own desired pelvis pose; the stance legs realise them through their finite joints like any posture target
     const ps = this.opts.pelvisStyle && this.pelvisStyle ? this.pelvisStyle : null;
-    const Rpd = ps ? Q.norm(Q.mul(Q.mul(yawQ(psi + ps.yaw), Q.axis([1, 0, 0], this.rootPitch)), Q.axis([0, 0, 1], ps.roll))) : Q.norm(Q.mul(yawQ(psi), Q.axis([1, 0, 0], this.rootPitch))), footY = ankles.length ? ankles.reduce((a, p) => a + p[1], 0) / ankles.length : S[0].pos[1] - this.hPelvis;
+    // ((G2b walker, opts.pelvisYawFollow = β ∈ [0, 1)) a COMPLIANT pelvis yaw: the desired pelvis yaw follows the actual one by β — the stance legs
+    // correct (1 − β) of the yaw error per tick instead of all of it. Tracked stiffly, the heading correction went through the planted feet as
+    // free moments of ±3.5 kg·m²/s per support phase (≈ 30 N·m), the dominant source of the gait's whole-body yaw momentum; the heading is
+    // still regulated (turning unchanged), only more softly, and nothing external is added)
+    let psiP = psi + (ps ? ps.yaw : 0); if (this.opts.pelvisYawFollow) { const f0 = Q.rot(S[0].rot, [0, 0, 1]), ya = datan2(f0[0], f0[2]), e = Math.atan2(Math.sin(ya - psiP), Math.cos(ya - psiP)); psiP += this.opts.pelvisYawFollow * e; }
+    const Rpd = ps ? Q.norm(Q.mul(Q.mul(yawQ(psiP), Q.axis([1, 0, 0], this.rootPitch)), Q.axis([0, 0, 1], ps.roll))) : Q.norm(Q.mul(yawQ(psi), Q.axis([1, 0, 0], this.rootPitch))), footY = ankles.length ? ankles.reduce((a, p) => a + p[1], 0) / ankles.length : S[0].pos[1] - this.hPelvis;
     // (G2a, with the gait's pelvis posture) the height is referenced to the GROUND under the stance feet — each foot's lowest sole point plus
     // the flat foot's ankle height — not to the ankle: a forefoot landing (heel up, ankle 5 cm above its flat height) raised the planned
     // pelvis by half of that and lifted the landed foot back off the turf
@@ -585,7 +590,11 @@ function clipConvex(subject, clip) { let out = subject;
 function nearestIn(poly, c) { if (!poly.length) return null; if (poly.length >= 3 && polyDist(poly, c) >= 0) return c.slice();
   if (poly.length >= 3) return polyNearest(poly, c); let best = poly[0], bd = 1e18; for (const q of poly) { const d = (q[0] - c[0]) ** 2 + (q[1] - c[1]) ** 2; if (d < bd) { bd = d; best = q; } } return best.slice(); }
 function split2u(o, p, cen, unl) {
-  const poly = (s) => { const f = o.feet[s]; let P = f.points.length >= 3 ? hullOf(f.points) : []; if (P.length < 3) P = hullOf(f.sole); return ccw2(P); };
+  const poly = (s) => { const f = o.feet[s]; let P = f.points.length >= 3 && !(unl.soleFor === s && f.sole && f.sole.length >= 3) ? hullOf(f.points) : []; if (P.length < 3) P = hullOf(f.sole); return ccw2(P); };
+  // ((G2b walker, unl.soleFor) the LANDING foot still settling onto its sole (heel or toe contact only) is given its WHOLE SOLE as its support
+  // region: with only its contact points the split put its CoP on the heel edge, and the ankle feed-forward that realises that CoP held the
+  // toes up — the heel rocker stalled for up to 0.2 s with 60 % of the weight on the heel. The CoP demand on the full sole is a plantar-flexion
+  // moment that lowers the forefoot; Jolt decides when the sole is down.)
   // ((G2b) a foot in PRE-SWING carries its load on its TOE edge only (unl.toeRegion): with the heel rising, the rest of the sole is no support)
   // ((G2b) unl.band = { cap, ank: { L, R } (ankle [x, z]), lat: { L, R } (each foot's sideways unit [x, z]) } — each foot's usable CoP region is
   // limited SIDEWAYS to ± cap about its ankle: the roll torque that puts a foot's CoP at its sole edge (≈ 6 cm × 700 N ≈ 42 N·m) exceeds the

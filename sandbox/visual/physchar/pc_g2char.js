@@ -37,7 +37,7 @@ export function runChar(J, spec, poses, x) {
   const opts = { poses, keepStates: true, seconds: x.seconds ?? (1.6 + nSteps * 0.62), rhythmOver: ro, humanOver: { ...base.human, ...(x.humanOver || {}) }, onLoco: (l) => { LOCO = l; } };
   if (x.push) opts.locoOver = undefined;
   const r = x.push ? runG2a(J, spec, test, { ...opts, pushChar: x.push }) : runG2a(J, spec, test, opts);
-  const out = analyseChar(spec, r, LOCO, x); if (x.series) out.series = yawSeries(spec, r, LOCO); return out;
+  const out = analyseChar(spec, r, LOCO, x); if (x.series) out.series = yawSeries(spec, r, LOCO); out.walkerLog = LOCO.planner.rhythm && LOCO.planner.rhythm.walkerLog ? LOCO.planner.rhythm.walkerLog : null; return out;
 }
 
 // per rhythmic step: events (start, liftoff, touchdown), the state at liftoff (= single-support start) and at touchdown relative to the
@@ -51,11 +51,16 @@ export function analyseChar(spec, r, LOCO, x) {
     const xi = V.add(d, V.sc(B.v, 1 / w)), y = yawOf(S[0].rot) - h0;
     return { t: q.t, com: [V.dot(d, hd), V.dot(d, inw), B.com[1]], v: [V.dot(B.v, hd), V.dot(B.v, inw), B.v[1]], xi: [V.dot(xi, hd), V.dot(xi, inw)], omega: w,
       p: [V.dot(B.p, hd), V.dot(B.p, inw)], L: [V.dot(B.L, hd), B.L[1], V.dot(B.L, inw)], seg: B.seg, yaw: Math.atan2(Math.sin(y), Math.cos(y)) * 57.3, yawRate: S[0].w[1] * 57.3,
-      pelvis: [V.dot(V.sub(S[0].pos, pS), hd), V.dot(V.sub(S[0].pos, pS), inw), S[0].pos[1]], pelvisV: [V.dot(S[0].v, hd), V.dot(S[0].v, inw)] }; };
+      pelvis: [V.dot(V.sub(S[0].pos, pS), hd), V.dot(V.sub(S[0].pos, pS), inw), S[0].pos[1]], pelvisV: [V.dot(S[0].v, hd), V.dot(S[0].v, inw)],
+      // (G2b walker) the SENSOR's capture point (what the planner's view holds: obs.xi, its own ω) — the quantity Controller A is identified on
+      xiS: q.xi ? [V.dot([q.xi[0] - pS[0], 0, q.xi[1] - pS[2]], hd), V.dot([q.xi[0] - pS[0], 0, q.xi[1] - pS[2]], inw)] : null }; };
   const D = LOCO.planner.exec.done.filter(R => R.kind === "rhythmic"), out = [];
   for (let i = 0; i < D.length; i++) { const R = D[i], st = R.sw === "R" ? "L" : "R", lift = R.liftoff ? R.liftoff.t : null, td = R.td ? R.td.t : null, nx = D[i + 1];
     const e = { k: R.stepIndex, sw: R.sw, tStart: R.tSw0, lift, td, T: R.walkK ? R.walkK.Tss : null, char: (x && x.steps && x.steps[R.stepIndex]) || null, upright: (td ?? lift ?? R.tSw0) < tFall };
     if (lift != null && lift < tFall) e.atLift = rel(at(lift), st, R.sw);
+    if (R.tSw0 != null && R.tSw0 < tFall) e.atStart = rel(at(R.tSw0), st, R.sw);   // (G2b walker identification: the state the planner's view held when it decided this step)
+    // ((G2b walker) the state at fixed times into the step (view time) — the instants of an in-swing re-decision; only before touchdown)
+    if (R.tSw0 != null) { e.atDec = {}; for (const dt of [0.1, 0.15, 0.2, 0.25]) { const tt = R.tSw0 + dt; if (tt < tFall && (td == null || tt < td)) e.atDec[dt] = rel(at(tt), st, R.sw); } }
     if (td != null && td < tFall) { const q = at(td); e.atTd = rel(q, st, R.sw); const pS = center(q.states, st), pL = center(q.states, R.sw), d = V.sub(pL, pS), inw = V.sc(rt, st === "L" ? 1 : -1);
       e.foothold = [V.dot(d, hd), -V.dot(d, inw)]; e.tdNew = rel(q, R.sw, st); e.ds = nx && nx.liftoff ? nx.liftoff.t - td : null; }
     // human-compatibility measures over this step (liftoff → touchdown): the swing foot's lowest sole point (mid-swing clearance: 25–80 % of the swing), the landing knee flexion at touchdown, the peak pelvis yaw from the heading, saturated motor-steps
