@@ -19,8 +19,9 @@ import { polyDist } from "./pc_sense.js";
 import { BAL, kXiErr } from "./pc_balance.js";
 import { STEP } from "./pc_step.js";
 import { SUP, footprint } from "./pc_support.js";
-import { decideA, decideB, adjustA, adaptBias, predictA, modelAt } from "./pc_walker.js";
+import { decideA, decideB, adjustA, adaptBias, predictA, modelAt, solveStep } from "./pc_walker.js";
 import { swPhase } from "./pc_loco.js";
+import { UnifiedWalker, reachRange, latWidth, peakAcc, solveReg } from "./pc_unified.js";
 
 export const PLAN = {
   planHz: 60,                // viability / candidate search rate (plus immediately when the verdict changes)
@@ -161,7 +162,7 @@ export class StepExecutor {
         tg = { pos: [R.obst.pos[0], y, R.obst.pos[2]], rot: Q.axis([0, 1, 0], yaw), vel: [0, -PLAN.obstruct.descendV, 0], u: R.u, reach: [R.obst.pos[0], g.yFlat + SUP.touchDepth, R.obst.pos[2]] }; }
       // ((G2b speed work, walk.swingLead "late") the delay compensation of the swing's time ramps in over the swing (0 before 30 % of it, the full
       //  feedback delay from 70 %): the LANDING is compensated (the overshoot), the START is not moved ahead of the foot's actual unloading)
-      else if (R.timed) { const lw = R.walkK && R.walkK.swingLead === "late" && this.lead ? this.lead * minjerk(((t - R.tSw0) / R.T - 0.3) / 0.4) : (this.lead || 0); R.leadNow = lw; tg = this._timedAt(R, t + lw, o); if (R.stage === "DESCEND") { const y = (R.human ? tg.pos[1] : R.tpT[1]) - Math.min(0.04, PLAN.obstruct.descendV * (t - R.tD)); tg = { ...tg, pos: [tg.pos[0], y, tg.pos[2]], vel: [0, -PLAN.obstruct.descendV, 0] }; } }
+      else if (R.timed) { const lw = R.walkK && R.walkK.swingLead === "late" && this.lead ? this.lead * minjerk(((t - R.tSw0) / R.T - 0.3) / 0.4) : (this.lead || 0); R.leadNow = lw; tg = this._timedAt(R, t + lw, this.oTruth ? { ...this.oTruth, t: o.t } : o); if (R.stage === "DESCEND") { const y = (R.human ? tg.pos[1] : R.tpT[1]) - Math.min(0.04, PLAN.obstruct.descendV * (t - R.tD)); tg = { ...tg, pos: [tg.pos[0], y, tg.pos[2]], vel: [0, -PLAN.obstruct.descendV, 0] }; } }
       else { tg = R.xo ? T._swingCross(R, t) : R.heelUp ? T._swingHeelUp(R, t) : g._swingAt(R, t);
         if (R.fastDescend && R.stage === "DESCEND") { const y = R.pT[1] - Math.min(0.04, PLAN.obstruct.descendV * (t - R.tD)); tg = { ...tg, pos: [tg.pos[0], y, tg.pos[2]], vel: [0, -PLAN.obstruct.descendV, 0] }; } }
       // ((G2b WALKER, ctrl.ankle = { k, max, min }) Controller A's ANKLE term in single support: the CoP demand is shifted forward (braking) or back by
@@ -186,7 +187,22 @@ export class StepExecutor {
         plan.copShift = [hd[0] * d, hd[1] * d]; (R.vreg = R.vreg || []).push(d); (R.vregD = R.vregD || []).push([o.t, this.vBar, vdNow, this.vBarT0]); }
       if (R.walkK && R.walkK.ctrlA && R.walkK.ctrlA.C.ankle) { const A = R.walkK.ctrlA, ak = A.C.ankle, lg = A.log, pr = lg.adj.length ? lg.adj[lg.adj.length - 1].pred : lg.info.pred;
         if (pr) { const d = Math.max(ak.min ?? -0.03, Math.min(ak.max ?? 0.06, ak.k * (pr[0] - A.yt[0]))); plan.copShift = [R.walkK.hd[0] * d, R.walkK.hd[1] * d]; lg.ank = d; } }
-      plan.copFoot = st; plan.xiRef = R.kind === "rhythmic" ? this._xiD(R, t, o) : o.xi.slice(); if (R.kind === "rhythmic") plan.xiDot = R.xiDotNow; if (R.walkK) { plan.kXi = R.dcm0 ? { hd: R.walkK.hd, along: R.walkK.dcmRef.k, across: R.walkK.kXiAcross ?? BAL.kXi } : (R.walkK.kXi ?? { hd: R.walkK.hd, along: R.walkK.kXiAlong ?? 0, across: R.walkK.kXiAcross ?? BAL.kXi }); if (R.walkK.latCop) plan.latCop = { foot: st, cap: R.walkK.latCop }; if (R.walkK.swingKpDrop != null) plan.swingKpDrop = R.walkK.swingKpDrop; if (R.walkK.swingPredict) plan.swingPredict = this.dFb || 0; } plan.swing[sw] = tg; R.u = tg.u; R.lastTgt = tg;
+      // ((G2b unified, opt-in walk.ssHeelRise = { e0, eMax, H }) TERMINAL-STANCE HEEL RISE: the stance foot's heel rises about its toe in late single
+      //  support in proportion to how far the stance leg is beyond e0 of its full extension (hip → ankle) — the same rule as the trailing foot's
+      //  pre-swing rise, applied where it begins in human gait: once the body has passed over the foot. Measured: with the foot held flat the stance
+      //  leg reached 99–100 % extension by touchdown, so the trailing leg could not stay down (double support 0.07–0.10 s, no authority) and late
+      //  single support pivoted the boot on its tip passively)
+      if (R.kind === "rhythmic" && R.walkK && R.walkK.ssHeelRise && R.liftoff) { const HR = R.walkK.ssHeelRise, Lg = this.tool.ctrl.legs[st], hip = o.states[Lg.thigh].pos, an = o.states[g.foot[st]].pos, ext = Math.hypot(hip[0] - an[0], hip[1] - an[1], hip[2] - an[2]) / (Lg.L1 + Lg.L2);
+        const need = Math.max(0, Math.min(1, (ext - (HR.e0 ?? 0.95)) / ((HR.eMax ?? 0.99) - (HR.e0 ?? 0.95)))); R.ssRise = Math.max(R.ssRise || 0, need); R.ssExt = ext;
+        if (R.ssRise > 0) plan.heelRise = { foot: st, rad: Math.asin(Math.min(0.95, (HR.H ?? 0.08) / (2 * g.box.he[2]))) * R.ssRise }; }
+      plan.copFoot = st; plan.xiRef = R.kind === "rhythmic" ? this._xiD(R, t, o) : o.xi.slice(); if (R.kind === "rhythmic") plan.xiDot = R.xiDotNow; if (R.walkK) { plan.kXi = R.dcm0 ? { hd: R.walkK.hd, along: R.walkK.ctrlU ? R.walkK.ctrlU.U.C.k : R.walkK.dcmRef.k, across: R.walkK.kXiAcross ?? BAL.kXi } : (R.walkK.kXi ?? { hd: R.walkK.hd, along: R.walkK.kXiAlong ?? 0, across: R.walkK.kXiAcross ?? BAL.kXi }); if (R.walkK.latCop) plan.latCop = { foot: st, cap: R.walkK.latCop }; if (R.walkK.swingKpDrop != null) plan.swingKpDrop = R.walkK.swingKpDrop; if (R.walkK.swingPredict) plan.swingPredict = this.dFb || 0; if (R.walkK.swingBase) { plan.swingBase = R.walkK.swingBase;
+          // ((G2b unified, swingBase.w "model") the forward model's inputs: the swing's command phase now (view time + dFb — the controller's own clock)
+          //  and at the view; swingBase.learn: the pelvis-rate profile is learned ONLINE from the delayed measurements (EMA per phase bin))
+          if (plan.swingBase.w === "model") { const SBc = plan.swingBase, nb = 10, side = R.sw === "R" ? 1 : -1, uV = swPhase(R, o.t), uN = swPhase(R, o.t + (this.dFb || 0));
+            if (SBc.learn) { this.wProf = this.wProf || (SBc.P ? SBc.P.map(r => r.slice()) : Array.from({ length: nb }, () => [0, 0, 0])); if (R.liftoff && R.stage === "SWING") { const wl = Q.rot(Q.conj(o.states[0].rot), o.states[0].w), b = Math.min(nb - 1, Math.floor(uV * nb)), g = SBc.learn.rate ?? 0.02;
+                const smp = [wl[0], wl[1] * side, wl[2] * side]; for (let j = 0; j < 3; j++) this.wProf[b][j] += g * (smp[j] - this.wProf[b][j]); } }
+            plan.swingBase = { ...SBc, P: SBc.learn ? this.wProf : SBc.P, uNow: uN, uView: uV, side }; } }
+        } plan.swing[sw] = tg; R.u = tg.u; R.lastTgt = tg;
       if (!R.liftoff) { if (!F[sw].touching && F[sw].load < 25) R.air++; else R.air = 0;
         if (R.air >= 3) { R.liftoff = { t }; this.lastEventT = t; this.ev(t, "liftoff", `${sw} ${(t - R.tNeed).toFixed(3)} s after the step started`); }
         else if (t - R.tSw0 > STEP.liftTimeout) { R.stage = "FAILED"; R.fail = `the ${sw} foot did not leave the ground within ${STEP.liftTimeout} s (load ${F[sw].load.toFixed(0)} N)`; this.ev(t, "FAILED", R.fail); } }
@@ -224,6 +240,17 @@ export class StepExecutor {
     if (Math.hypot(tc[0] - R.proj.target[0], tc[1] - R.proj.target[1]) < PLAN.adjustTol) return;
     const dC = dComAt(o, pS, Trem), ok = (p) => this.tool._feasible(o, R.sw, p, R.proj.yaw, R.cur0, dC, null).ok; if (!ok(tc)) { const a = R.proj.target; let lo = 0, hi = 1; for (let i = 0; i < 16; i++) { const m = (lo + hi) / 2; if (ok([a[0] + (tc[0] - a[0]) * m, a[1] + (tc[1] - a[1]) * m])) lo = m; else hi = m; } tc = [a[0] + (tc[0] - a[0]) * lo, a[1] + (tc[1] - a[1]) * lo]; }
     const c = { ...R.cand, target: tc, tSw: R.T }; const T0 = R.T; this.tool._aim(R, o, c); R.T = T0; R.tSw = R.tSw0; this._groundEnd(R); this._timedRetarget(o, R, tc, o.t); R.plannedTd.center = tc.slice(); R.adjusted = (R.adjusted || 0) + 1; R.adjustCm = Math.hypot(tc[0] - R.nominalTarget[0], tc[1] - R.nominalTarget[1]) * 100; }
+  // ((G2b unified) the in-swing re-decision: the same decision from the latest measured state, every planning cycle, until commitRem before the
+  //  planned touchdown; a new touchdown time warps the swing's remaining phase; the foothold retargets the swing)
+  _adjustU(o, R) { const K = R.walkK, CU = K.ctrlU, U = CU.U, P = U.ctx.planner, C = U.C; if (R.tSw0 + K.Tss - o.t < C.commitRem) return; if (C.inSwingUntil != null && o.t - R.tSw0 > C.inSwingUntil) return;
+    const hd = K.hd, rt = [hd[1], -hd[0]], side = K.side;
+    const dec = P._uniDecide(o, { pSt: R.pSt, hd, rt, side, sw: R.sw, st: R.st, tSw0: R.tSw0, xi: o.xi, liftT: R.liftoff ? R.liftoff.t : null, Tcur: K.Tss, dl0: CU.u[1], yaw: R.proj.yaw, cur0: R.cur0, E0: CU.E0, ytL: CU.ytL, ytF: CU.ytF }, CU.log);
+    if (Math.abs(dec.T - K.Tss) > 1e-3) { const st = R.T / Math.max(1e-3, K.Tss), Tn = dec.T * st, wc = swPhase(R, o.t + (R.leadNow || 0));
+      R.warp = { tc: o.t + (R.leadNow || 0), wc, tEnd: R.tSw0 + Tn, T0: R.warp ? R.warp.T0 : R.T }; if (R.warp.tEnd - R.warp.tc < 0.05) R.warp.tEnd = R.warp.tc + 0.05;
+      R.T = Tn; K.Tss = dec.T; R.plannedTd.t = R.tSw0 + Tn; R.Tchanged = (R.Tchanged || 0) + 1; }
+    CU.u = [dec.df, dec.dl, dec.T]; const tc = [R.pSt[0] + hd[0] * dec.df + rt[0] * side * dec.dl, R.pSt[1] + hd[1] * dec.df + rt[1] * side * dec.dl];
+    if (Math.hypot(tc[0] - R.proj.target[0], tc[1] - R.proj.target[1]) < PLAN.adjustTol) return;
+    const c = { ...R.cand, target: tc, tSw: R.T }; const T0 = R.T; this.tool._aim(R, o, c); R.T = T0; R.tSw = R.tSw0; this._groundEnd(R); this._timedRetarget(o, R, tc, o.t); R.plannedTd.center = tc.slice(); R.adjusted = (R.adjusted || 0) + 1; }
   // ((G2b WALKER) Controller A's in-swing re-decision: the foothold re-solved from the view's measured capture point with the map measured at
   // this instant of the step, toward the step-start target; retargeted as a late adjustment (feasibility-checked, blended by the swing))
   // (no later than commitMargin before the planned touchdown: the foot must still be able to get there)
@@ -251,11 +278,24 @@ export class StepExecutor {
   //  this body: the capture point's offset at liftoff vs the walking speed) and the measured sideways ξ, propagated under the planned heel→toe
   //  CoP roll over the remaining single support; the stance ankle then tracks it, p = p_ref + (1 + k)(ξ − ξ_ref) along the walk — capture-point
   //  (DCM) tracking through the ground reaction: an error converges at k·ω within the step instead of diverging at ω, within the sole / torque)
-  _dcmRef(R, t, o) { const K = R.walkK, D = K.dcmRef; if (!D || !R.liftoff || (R.stepIndex ?? 0) < (D.from ?? 2)) return null;
+  _dcmRef(R, t, o) { const K = R.walkK, D = K.dcmRef;
+    // ((G2b unified) the orbit of the unified controller: from the measured liftoff, x_L(vd) + I → ξ_td(T) at the CURRENT planned touchdown;
+    //  sideways the measured offset propagated as before)
+    if (K.ctrlU) { const U = K.ctrlU.U; if ((R.stepIndex ?? 0) < (U.C.from ?? 2)) return null; const hd = K.hd, rt = [hd[1], -hd[0]], w = o.omega0, tau = t - R.tSw0;
+      const tauL = R.liftoff ? R.liftoff.t - R.tSw0 : Math.max(tau, U.C.liftDelay), orb = U.orbit(t, K.Tss);
+      if (U.C.funnel == null) { if (!R.liftoff) return null; }
+      if (R.liftoff && !R.dcm0) R.dcm0 = { t: R.liftoff.t, lat: (o.xi[0] - R.pSt[0]) * rt[0] + (o.xi[1] - R.pSt[1]) * rt[1] };
+      // (sideways EXACTLY as the validated inner loop: before liftoff the step-start offset propagated from the step's start, after it the
+      //  liftoff offset propagated — the CoP on the walk line)
+      const latIni = ((R.xiIni[0] - R.pSt[0]) * rt[0] + (R.xiIni[1] - R.pSt[1]) * rt[1]) * Math.exp(w * Math.max(0, tau)), lat = U.C.latReanchor && R.dcm0 ? R.dcm0.lat * Math.exp(w * Math.max(0, t - R.dcm0.t)) : latIni;
+      let f, pf; if (U.C.funnel != null) { const q = U.refFn(orb, K.ctrlU.E0 ?? 0, tauL, K.r, w)(tau); f = q.xi; pf = q.p; }
+      else { const P = U.path(orb, tauL, K.r, w), sN = Math.max(0, t - R.liftoff.t); f = P.at(Math.min(sN, P.Ts + 0.2)); pf = P.pa + (P.pb - P.pa) * Math.min(1, sN / P.Ts); }
+      return { xi: [R.pSt[0] + hd[0] * f + rt[0] * lat, R.pSt[1] + hd[1] * f + rt[1] * lat], p: [R.pSt[0] + hd[0] * pf, R.pSt[1] + hd[1] * pf] }; }
+    if (!D || !R.liftoff || (R.stepIndex ?? 0) < (D.from ?? 2)) return null;
     if (!R.dcm0) { const tL = R.liftoff.t, hd = K.hd, rt = [hd[1], -hd[0]], x0 = D.xL[0] + D.xL[1] * D.vd, lat = (o.xi[0] - R.pSt[0]) * rt[0] + (o.xi[1] - R.pSt[1]) * rt[1], fr = Math.max(0, Math.min(1, (tL - R.tSw0) / K.Tss));
       R.dcm0 = { t: tL, xi: [R.pSt[0] + hd[0] * x0 + rt[0] * lat, R.pSt[1] + hd[1] * x0 + rt[1] * lat], pa: [R.pSt[0] + hd[0] * K.r * (2 * fr - 1), R.pSt[1] + hd[1] * K.r * (2 * fr - 1)], pb: [R.pSt[0] + hd[0] * K.r, R.pSt[1] + hd[1] * K.r], T: Math.max(0.05, R.tSw0 + K.Tss - tL) }; }
     const Z = R.dcm0, q = segXi(Z.xi, Z.pa, Z.pb, Z.T, Math.max(0, t - Z.t), o.omega0); return q; }
-  _xiD(R, t, o) { if (R.walkK && R.walkK.dcmRef) { const q = this._dcmRef(R, t, o); if (q) { R.xiDotNow = [o.omega0 * (q.xi[0] - q.p[0]), o.omega0 * (q.xi[1] - q.p[1])]; R.pNomNow = q.p; return q.xi; } }
+  _xiD(R, t, o) { if (R.walkK && (R.walkK.dcmRef || R.walkK.ctrlU)) { const q = this._dcmRef(R, t, o); if (q) { R.xiDotNow = [o.omega0 * (q.xi[0] - q.p[0]), o.omega0 * (q.xi[1] - q.p[1])]; R.pNomNow = q.p; return q.xi; } }
     if (R.walkK && R.walkK.r) { const K = R.walkK, w = o.omega0, q = segXi(R.xiIni, [R.pSt[0] - K.hd[0] * K.r, R.pSt[1] - K.hd[1] * K.r], [R.pSt[0] + K.hd[0] * K.r, R.pSt[1] + K.hd[1] * K.r], K.Tss, Math.max(0, t - R.tSw0), w);
       R.xiDotNow = [w * (q.xi[0] - q.p[0]), w * (q.xi[1] - q.p[1])]; R.pNomNow = q.p; return q.xi; }   // ((G2b) the stance CoP rolls heel → toe)
     const w = o.omega0, e = dexp(w * Math.max(0, t - R.tSw0)), xi = [R.pSt[0] + (R.xiIni[0] - R.pSt[0]) * e, R.pSt[1] + (R.xiIni[1] - R.pSt[1]) * e]; R.xiDotNow = [w * (xi[0] - R.pSt[0]), w * (xi[1] - R.pSt[1])]; return xi; }
@@ -275,7 +315,7 @@ export class StepExecutor {
       xi = [xi[0] + h * w * (xi[0] - p[0]), xi[1] + h * w * (xi[1] - p[1])]; tt += h; }
     return xi; }
   _nearest(P, x) { let best = null, bd = 1e18; for (let i = 0; i < P.length; i++) { const a = P[i], b = P[(i + 1) % P.length], e = [b[0] - a[0], b[1] - a[1]], L2 = e[0] * e[0] + e[1] * e[1] || 1, tq = Math.max(0, Math.min(1, ((x[0] - a[0]) * e[0] + (x[1] - a[1]) * e[1]) / L2)), q = [a[0] + e[0] * tq, a[1] + e[1] * tq], d = (q[0] - x[0]) ** 2 + (q[1] - x[1]) ** 2; if (d < bd) { bd = d; best = q; } } return best; }
-  _adjust(o, R) { if (R.walkK && R.walkK.ctrlA) return this._adjustCtrl(o, R); if (R.walkK) return this._adjustWalk(o, R); const Trem = Math.max(0, R.tSw0 + R.T - o.t), pred = this._predictTd(o, R, Trem);
+  _adjust(o, R) { if (R.walkK && R.walkK.ctrlU) return R.walkK.ctrlU.fixed ? undefined : this._adjustU(o, R); if (R.walkK && R.walkK.ctrlA) return this._adjustCtrl(o, R); if (R.walkK) return this._adjustWalk(o, R); const Trem = Math.max(0, R.tSw0 + R.T - o.t), pred = this._predictTd(o, R, Trem);
     let d = [pred[0] - R.xiTdNom[0], pred[1] - R.xiTdNom[1]]; const n = Math.hypot(d[0], d[1]); (R.adjLog = R.adjLog || []).push({ t: o.t, xi: o.xi.slice(), pred, nom: R.xiTdNom.slice(), d: d.slice(), Trem }); if (n > PLAN.adjustMax) d = [d[0] * PLAN.adjustMax / n, d[1] * PLAN.adjustMax / n];
     let tc = [R.nominalTarget[0] + d[0], R.nominalTarget[1] + d[1]]; if (Math.hypot(tc[0] - R.proj.target[0], tc[1] - R.proj.target[1]) < PLAN.adjustTol) return;
     const ok = (p) => this.tool._feasible(o, R.sw, p, R.proj.yaw, R.cur0, [0, 0], null).ok; if (!ok(tc)) { let lo = 0, hi = 1; for (let i = 0; i < 16; i++) { const m = (lo + hi) / 2; if (ok([R.nominalTarget[0] + d[0] * m, R.nominalTarget[1] + d[1] * m])) lo = m; else hi = m; } tc = [R.nominalTarget[0] + d[0] * lo, R.nominalTarget[1] + d[1] * lo]; }
@@ -306,6 +346,7 @@ export class LocoPlanner {
     // ((G2b speed work, opt-in rhythm.walk.swingLead) the walking swing's trajectory is evaluated at the view time + the feedback delay — the
     //  time the commands act: the plan is a function of absolute time, the view is dFb old; evaluated at the view time every swing target and
     //  every feed-forward torque arrived dFb late (a lagging then overshooting foot: +7 cm landing overshoot, 1–2 cm with no delay))
+    if (this._uni && this.rhythm && this.rhythm.wk) { const h0 = this._hdg(); this._uni.observe(oFb, [Math.sin(h0), Math.cos(h0)]); }
     this.exec.lead = this.opts.timedLead ? dt : (this.rhythm && this.rhythm.walk && this.rhythm.walk.swingLead ? (this.exec.dFb || 0) : 0);
     const t = oFb.t, g = this.geo; let plan = null;
     // 1. the step under way (execution on the feedback view)
@@ -372,6 +413,13 @@ export class LocoPlanner {
       // dragged under the hip with up to 1.2 BW and the swing never left the ground (the C8 failure; identification: 60–89 % swing failures
       // after steps ≥ 0.30 m). The timing follows the body's measured geometry, not a clock.)
       if (u < 1 && next && r.walk && r.walk.dsExtEnd && !r.first && r.trailExt != null && r.trailExt >= r.walk.dsExtEnd && r.lastLanded && o.feet[r.lastLanded].load >= 0.6 * this.spec.totalMass * 9.81) { u = 1; r.extEnded = (r.extEnded || 0) + 1; }
+      // ((G2b unified, ctrl.dsState = { tol, min, max }) the double support ENDS ON THE STATE: once the capture point has reached the next step's
+      //  start target x_S(vd) + I ahead of the landed foot (within tol) — after at least `min` s, and the landed foot loaded (60 % BW) — instead of
+      //  on the clock; while it is still short, the double support extends up to `max` s past its planned end (the trailing-leg extension end
+      //  above still applies): the next step then starts from a consistent state, not a timing-dependent one)
+      let dsHold = false; if (next && r.walk && this._uni && this._uni.C.dsState && !r.first && r.wds && r.lastLanded) { const DSs = this._uni.C.dsState, ps2 = this._hdg(), hd2 = [Math.sin(ps2), Math.cos(ps2)], pL = this._wkP(o, r.lastLanded), fN = (o.xi[0] - pL[0]) * hd2[0] + (o.xi[1] - pL[1]) * hd2[1], tgt = this._uni.orbit(t, this._uni.C.Tr).xS, el = t - r.tDs, loaded = o.feet[r.lastLanded].load >= 0.6 * this.spec.totalMass * 9.81;
+        r.dsStateLog = { fN, tgt, el }; if (u < 1 && el >= (DSs.min ?? 0.06) && loaded && fN >= tgt - (DSs.tol ?? 0.01)) { u = 1; r.stateEnded = (r.stateEnded || 0) + 1; } else if (u >= 1 && fN < tgt - (DSs.tol ?? 0.01) && el < T + (DSs.max ?? 0.1) && !(r.trailExt != null && r.walk.dsExtEnd && r.trailExt >= r.walk.dsExtEnd)) dsHold = true; }
+      if (dsHold) return plan;
       // (G2a) a human double support ends on the CONTACT, not the clock: the trailing foot lifts once the landed foot's sole is down (heel and
       // toe) and it carries its planned share (≥ 35 % BW), or at the latest 0.3 s after the planned end (phase follows measured progress)
       if (u >= 1 && next && r.humanLand && r.humanLand === r.lastLanded && t - r.tDs < T + 0.3) { const F = o.feet[r.humanLand], W = this.spec.totalMass * 9.81;
@@ -408,6 +456,9 @@ export class LocoPlanner {
       // (the narrowest step this body can take: its collider boots are 16.4 cm wide, so below ≈ 20 cm centre-to-centre the swinging boot's
       // path meets the stance boot — a body-geometry limit, a human foot is ≈ 10 cm wide)
       wMin: W.wMin ?? 0.20, wMax: W.wMax ?? 0.34, w0: Math.hypot(r.home.L[0] - r.home.R[0], r.home.L[1] - r.home.R[1]) };   // (Lmax ≈ 0.73 leg: the reachable step)
+    // ((G2b unified, walk.ctrl.kind "U") the unified walking controller: one reference orbit for the requested velocity, served by the ground
+    //  reaction and the foothold together (pc_unified.js))
+    if (W.ctrl && W.ctrl.kind === "U") this._uni = new UnifiedWalker(W.ctrl, { planner: this });
     if (W.vReg) { this.exec.vBarTau = W.vReg.tau ?? 0.5; this.exec.vBarHd = [Math.sin(h0), Math.cos(h0)]; this.exec.vBarT0 = o.t; }   // (the speed regulator's low-passed walking velocity)
     this.ev(o.t, "walk", `${v} m/s · cadence ${cad.toFixed(0)} steps/min · step ${(r.wk.L * 100).toFixed(0)} cm · single support ${r.Tss.toFixed(3)} s · double support ${r.Tds.toFixed(3)} s · width ${(r.wk.w * 100).toFixed(0)} cm`); }
   _stepL(st) { const K = this.rhythm.wk; return st.fwd ?? (st.fwdK != null ? st.fwdK * K.L : K.L); }
@@ -461,7 +512,25 @@ export class LocoPlanner {
     let CH = r.walk.char && r.walk.char[r.i], ctrlA = null; this._ctrlStep = null;
     // ((G2b WALKER, rhythm.walk.ctrl — pc_walker.js) a STEPPING CONTROLLER decides this step from the measured state the view holds now:
     // Controller A (measured-response foothold + timing) or B (SIMBICON-style baseline). It returns a foothold and a duration only.)
-    if (!CH && r.walk.ctrl && r.i >= (r.walk.ctrl.fromStep ?? 1)) { const Cc = r.walk.ctrl, e = [xi0[0] - pSt[0], xi0[1] - pSt[1]], x = [e[0] * hd[0] + e[1] * hd[1], (e[0] * rt[0] + e[1] * rt[1]) * side];
+    // ((G2b unified, identification) a COMMANDED step (walk.char[i]) under the unified inner loop: the controller still owns the stance reference
+    //  (its orbit, funnel, the double support's target) but the foothold and timing are the commanded ones and are not re-decided in the swing)
+    const uFixed = !!(CH && r.walk.ctrl && r.walk.ctrl.kind === "U" && this._uni && r.walk.ctrl.identFixed && r.i >= (r.walk.ctrl.fromStep ?? 1));
+    let ctrlU = null; if ((!CH || uFixed) && r.walk.ctrl && r.walk.ctrl.kind === "U" && this._uni && r.i >= (r.walk.ctrl.fromStep ?? 1)) { const U = this._uni;
+      if (r.tTd != null && !r.first && r.i >= 2) U.dsMeas.push(o.t - r.tTd);   // (the double support just ended: its measured duration)
+      // ((G2b unified, C.adapt = { gain, max }) the maps' ONLINE bias (Controller A's integral action on a persistent model error): the previous step's
+      //  last prediction of this step's start state vs the state measured now)
+      if (U.C.adapt) { U.bias = U.bias || [0, 0]; const pl = U.stepLog[U.stepLog.length - 1]; if (pl && pl.i === r.i - 1 && pl.dec.length) { const pr = pl.dec[pl.dec.length - 1].mapPred, ex = [xi0[0] - pSt[0], xi0[1] - pSt[1]], xm = [ex[0] * hd[0] + ex[1] * hd[1], (ex[0] * rt[0] + ex[1] * rt[1]) * side];
+          if (pr) { const g = U.C.adapt.gain ?? 0.3, mx = U.C.adapt.max ?? 0.06; pl.err = [xm[0] - pr[0], xm[1] - pr[1]]; U.bias = U.bias.map((b, j) => Math.max(-mx, Math.min(mx, b + g * pl.err[j]))); } } }
+      U.rampStart(o.t); U.stepUpdate(o.t, r.i); const lg = { i: r.i, t: o.t, sw: step.sw, I: U.I, vBar: U.vBar, vd: U.vd(o.t), dec: [], ds: U.Tds() };
+      const qd = { pSt, hd, rt, side, sw: step.sw, st, tSw0: o.t, xi: xi0, liftT: null, Tcur: U.C.Tr, dl0: U.C.lat.dl0 ?? 0.28, yaw: ps + (K.toeOut[step.sw] || 0), cur0: this.geo._center(o, step.sw), out: {} }, dec = this._uniDecide(o, qd, lg); lg.E0 = qd.out.E0;
+      // (identification only, ctrl.dither = { seed, sd } with ctrl.identStart: a seeded, logged perturbation of the step-start decision, executed
+      //  without in-swing re-decision — the commanded step is the executed one; the unified inner loop (stance orbit, funnel) still runs)
+      let dz = [0, 0, 0]; if (U.C.dither) { const gg = this._dz = this._dz || { s: U.C.dither.seed >>> 0 }, rn = () => { gg.s = (gg.s + 0x6D2B79F5) >>> 0; let tq = gg.s; tq = Math.imul(tq ^ (tq >>> 15), tq | 1); tq ^= tq + Math.imul(tq ^ (tq >>> 7), tq | 61); return ((tq ^ (tq >>> 14)) >>> 0) / 4294967296; };
+        dz = U.C.dither.sd.map(sdv => sdv * Math.sqrt(-2 * Math.log(Math.max(1e-12, rn()))) * Math.cos(2 * Math.PI * rn())); }
+      if (!uFixed) CH = { df: dec.df + dz[0], dl: Math.max(0.15, dec.dl + dz[1]), T: dec.T + dz[2] }; const fixedU = uFixed || !!U.C.identStart; lg.u0 = [CH.df, CH.dl, CH.T]; lg.fixed = fixedU; lg.dz = dz; U.stepLog.push(lg);
+      { const ex = [xi0[0] - pSt[0], xi0[1] - pSt[1]]; (r.walkerLog = r.walkerLog || []).push({ i: r.i, t: o.t, sw: step.sw, x: [ex[0] * hd[0] + ex[1] * hd[1], (ex[0] * rt[0] + ex[1] * rt[1]) * side], u: [CH.df, CH.dl, CH.T], dec: [dec.df, dec.dl, dec.T], dz, info: { unified: true }, adj: [] }); }
+      ctrlU = { U, log: lg, u: [CH.df, CH.dl, CH.T], E0: qd.out.E0, ytL: qd.out.ytL, ytF: qd.out.ytF, fixed: fixedU }; }
+    if (!CH && r.walk.ctrl && r.walk.ctrl.kind !== "U" && r.i >= (r.walk.ctrl.fromStep ?? 1)) { const Cc = r.walk.ctrl, e = [xi0[0] - pSt[0], xi0[1] - pSt[1]], x = [e[0] * hd[0] + e[1] * hd[1], (e[0] * rt[0] + e[1] * rt[1]) * side];
       let dec; if (Cc.kind === "B") { const c = [o.com[0] - pSt[0], o.com[2] - pSt[1]], v = [o.vcom[0], o.vcom[2]]; dec = decideB(Cc, { d: [c[0] * hd[0] + c[1] * hd[1], (c[0] * rt[0] + c[1] * rt[1]) * side], v: [v[0] * hd[0] + v[1] * hd[1], (v[0] * rt[0] + v[1] * rt[1]) * side] }); }
       else { // (Controller A's online bias: the previous controller step's last prediction vs the state measured now)
         if (Cc.adapt) { r.wb = r.wb || [0, 0]; const pl = r.walkerLog && r.walkerLog[r.walkerLog.length - 1]; if (pl && pl.i === r.i - 1) { const pr = pl.adj.length ? pl.adj[pl.adj.length - 1].pred : pl.info.pred; if (pr) { pl.err = [x[0] - pr[0], x[1] - pr[1]]; r.wb = adaptBias(Cc, r.wb, [pl.err[0] + r.wb[0], pl.err[1] + r.wb[1]]); } } }
@@ -479,7 +548,49 @@ export class LocoPlanner {
       if (Cc.kind !== "B") this._ctrlStep = { C: Cc, yt: dec.yt, b: Cc.adapt && r.wb ? r.wb.slice() : null }; }   // (B: SIMBICON's swing hip is servoed continuously — the same in-swing re-evaluation of its own law)
     if (CH) { target = [pSt[0] + hd[0] * CH.df + rt[0] * side * CH.dl, pSt[1] + hd[1] * CH.df + rt[1] * side * CH.dl]; if (CH.T) Tk = CH.T; }
     return { target, pSt, pSw: target, xiIni: xi0.slice(), xiTd: eos, yaw: ps + (K.toeOut[step.sw] || 0), dcm: { df: df0, dl: dl0, clamped: df !== df0 || dl !== dl0 }, char: CH || null,
-      walkK: { vReg: r.walk.vReg || null, dcmRef: r.walk.dcmRef || null, ...(this._ctrlStep && CH && !(r.walk.char && r.walk.char[r.i]) ? { ctrlC: this._ctrlStep.C, ctrlYt: this._ctrlStep.yt, ctrlB: this._ctrlStep.b } : {}), cNext: cN, side, hd, E2: K.E2, k: K.k, r: K.r, Tss: Tk, kXi: r.walk.kXiSS, latCop: r.walk.latCop, swingKpDrop: r.walk.swingKpDrop, swingPredict: !!r.walk.swingPredict, swingLead: r.walk.swingLead, adjustUntil: CH ? (ctrlA ? 1 : 0) : r.walk.adjustUntil, ctrlA, latPred: r.walk.latPred, kXiAcross: r.walk.kXiAcross, kXiAlong: r.walk.kXiAlong, dcm: (eos2, pS2) => this._dcmD(K, hd, rt, eos2, pS2, cN), Lmax: K.Lmax || 0.9, g: r.walk.placeGain ?? 0.6, gf: r.walk.placeGainFwd ?? 1, Ln, w: Wn, wMin: K.wMin, wMax: K.wMax } }; }
+      walkK: { ctrlU, vReg: r.walk.vReg || null, dcmRef: r.walk.dcmRef || null, ...(this._ctrlStep && CH && !(r.walk.char && r.walk.char[r.i]) ? { ctrlC: this._ctrlStep.C, ctrlYt: this._ctrlStep.yt, ctrlB: this._ctrlStep.b } : {}), cNext: cN, side, hd, E2: K.E2, k: K.k, r: K.r, Tss: Tk, kXi: r.walk.kXiSS, latCop: r.walk.latCop, swingKpDrop: r.walk.swingKpDrop, swingPredict: !!r.walk.swingPredict, swingBase: r.walk.swingBase || null, ssHeelRise: r.walk.ssHeelRise || null, swingLead: r.walk.swingLead, adjustUntil: CH ? (ctrlA || (ctrlU && !ctrlU.fixed) ? 1 : 0) : r.walk.adjustUntil, ctrlA, latPred: r.walk.latPred, kXiAcross: r.walk.kXiAcross, kXiAlong: r.walk.kXiAlong, dcm: (eos2, pS2) => this._dcmD(K, hd, rt, eos2, pS2, cN), Lmax: K.Lmax || 0.9, g: r.walk.placeGain ?? 0.6, gf: r.walk.placeGainFwd ?? 1, Ln, w: Wn, wMin: K.wMin, wMax: K.wMax } }; }
+  // ((G2b unified) the UNIFIED decision for the step under way (or about to start): the predicted touchdown error that the ground reaction will
+  //  not remove → the absorbing foothold for each candidate touchdown time → the reachable range at that time from the actual state → the time
+  //  closest to the nominal whose foothold is reachable (least squared violation + timing change); the width from Controller A's map)
+  _uniDecide(o, q, lg) { const U = this._uni, C = U.C, g = this.geo, w = o.omega0, tau = o.t - q.tSw0, hd = q.hd, rt = q.rt, rollR = this.rhythm.wk.r;
+    const rel = (p) => [(p[0] - q.pSt[0]) * hd[0] + (p[1] - q.pSt[1]) * hd[1], ((p[0] - q.pSt[0]) * rt[0] + (p[1] - q.pSt[1]) * rt[1]) * q.side];
+    const x = rel(q.xi), lifted = q.liftT != null, tauL = lifted ? q.liftT - q.tSw0 : Math.max(tau, C.liftDelay);
+    const fs = o.states[g.foot[q.sw]], footF = rel([fs.pos[0], fs.pos[2]])[0], footV = lifted ? fs.v[0] * hd[0] + fs.v[2] * hd[1] : 0, vc = [o.vcom[0], o.vcom[2]];
+    const Cc = { ...C, models: C.models }, wLo = C.lat.lo ?? 0.17, wHi = C.lat.hi ?? 0.40;
+    // (the prediction: the closed-loop stance simulated from the measured capture point now, with the orbit of the NOMINAL timing — a longer or
+    //  shorter single support is the body's own capture point running on, not a stretched reference; the stance sole's actual extent bounds the CoP)
+    const orbN = U.orbit(o.t, C.Tr), stS = o.feet[q.st] && o.feet[q.st].sole && o.feet[q.st].sole.length >= 3 ? o.feet[q.st].sole.map(pp => rel([pp[0], pp[2]])[0]) : [-0.16, 0.18], sole = [Math.min(...stS), Math.max(...stS)];
+    const Ls = this.ctrl.legs[q.st], hipS = o.states[Ls.thigh].pos, ankS = o.states[g.foot[q.st]].pos, comF = rel([o.com[0], o.com[2]])[0];
+    const geo = { c: comF, hipOff: rel([hipS[0], hipS[2]])[0] - comF, ankF: rel([ankS[0], ankS[2]])[0], hipH: hipS[1] - ankS[1], Lr: C.stanceExt * (Ls.L1 + Ls.L2) };
+    const E0 = q.E0 != null ? q.E0 : x[0] - orbN.xS; if (q.out) q.out.E0 = E0; if (q.ytL == null) q.ytL = C.lat.xStar + C.lat.rho * (x[1] - C.lat.xStar); if (q.out) q.out.ytL = q.ytL;
+    const sim = U.simulate(x[0], tau, tauL, Math.max(C.Tmax, q.Tcur) + 0.01, orbN, rollR, w, sole, C.pivot === false ? null : geo, C.funnel != null ? U.refFn(orbN, E0, tauL, rollR, w) : null);
+    const evalT = (T) => { const orb = U.orbit(o.t, T), xiTd = sim(T), eps = xiTd - orb.xiTd, uStar = C.G === 1 ? xiTd - orbN.e : orbN.L + C.G * (xiTd - orbN.xiTd), Trem = Math.max(0, T - tau), dCom = [vc[0] * Trem, vc[1] * Trem];
+      // (sideways: lat.kind "dcm" — the capture-point placement of the walking plan: the touchdown offset predicted with the CoP on the foot's line,
+      //  the foothold that brings the next start to the periodic inward offset of width W, a partial gain g; otherwise Controller A's map)
+      let lw; if (C.lat.kind === "dcm") { const wl = C.lat.w ?? w, Wd = C.lat.W ?? 0.26, Tds_ = U.Tds(), E1 = Math.exp(wl * T), E2 = Math.exp(wl * Tds_), kk = (E2 - 1) / (wl * Tds_), elRt = x[1] * q.side * Math.exp(wl * Math.max(0, T - tau)), clRt = (-q.side * Wd) * kk / (E1 * E2 + 1);
+        const dlRt = (E2 * elRt - clRt) / kk, dead = dlRt * q.side; lw = { dl: Wd + (C.lat.g ?? 0.6) * (dead - Wd), dead }; }
+      else lw = C.models ? latWidth(U, Cc, x, tau, Math.max(C.dfMin, Math.min(C.dfMax, uStar)), T, q.dl0, null, q.ytL) : { dl: q.dl0 };
+      const dl = Math.max(wLo, Math.min(wHi, lw.dl)), violL = lw.f ? Math.abs(lw.f(dl) - lw.yt) : 0;   // (the sideways target's residual once the width is within its bounds)
+      const tgt = (df) => [q.pSt[0] + hd[0] * df + rt[0] * q.side * dl, q.pSt[1] + hd[1] * df + rt[1] * q.side * dl], ankF = (df) => rel(g._ankleFromCenter(tgt(df), q.yaw))[0];
+      const Tair = Math.max(0.05, T - Math.max(tau, tauL)), geomOK = (df) => this.tool._feasible(o, q.sw, tgt(df), q.yaw, q.cur0, dCom, null).ok, accOK = (df) => peakAcc(ankF(df) - footF, footV, Tair) <= C.aCap;
+      const rr = reachRange(U, { dfRef: uStar, geomOK, accOK }), u = rr.none ? uStar : Math.max(rr.lo, Math.min(rr.hi, uStar)), viol = rr.none ? 1 : Math.abs(u - uStar);
+      return { T, orb, eps, uStar, lo: rr.lo, hi: rr.hi, none: !!rr.none, u, viol, dl, violL, cost: C.wT * (T - C.Tr) ** 2 + (C.wC ?? 1) * (T - q.Tcur) ** 2 + viol * viol + (C.wL ?? 1) * violL * violL }; };
+    let best = evalT(q.Tcur);
+    if ((best.viol > 1e-3 || (C.Tlat && best.violL > 1e-3)) && C.Tadapt !== false) { const t0 = Math.max(C.Tmin, tau + C.remMin); for (let T = t0; T <= C.Tmax + 1e-9; T += C.Tstep) { const e = evalT(T); if (e.cost < best.cost - 1e-9) best = e; } }
+    // ((G2b unified, C.place "maps") the PLACEMENT LAYER as one joint solve on the step maps MEASURED UNDER THIS INNER LOOP (the stance orbit
+    //  tracking included — the maps predict the error the ground reaction leaves): foothold, width and touchdown time toward ONE target, the
+    //  orbit's next-step start x_S(vd) + I forward (the same state the double support and the stance orbit serve), Controller A's x*_l sideways,
+    //  each with partial convergence from the step-start state; bounded by the physical reach range at the reference timing)
+    if (C.place === "maps" && C.models) { const M = modelAt(C, tau), xsF = orbN.xS, rhoF = C.rhoF ?? 0.5;
+      if (q.ytF == null) q.ytF = xsF + rhoF * (x[0] - xsF); if (q.out) q.out.ytF = q.ytF;
+      // (timing: chosen at the step's start within [Tmin, Tmax]; in the swing the timing is held, as Controller A's in-swing re-decision does)
+      const atStart = q.liftT == null && tau < 0.02, lo = [best.lo != null ? best.lo : C.dfMin, wLo, C.TinSwing ? Math.min(C.Tmax, Math.max(C.Tmin, tau + C.remMin)) : C.Tmin], hi = [best.hi != null ? best.hi : C.dfMax, wHi, C.Tmax];
+      const uRef = [Math.max(lo[0], Math.min(hi[0], C.uRefSim === false ? orbN.L : best.uStar)), Math.max(wLo, Math.min(wHi, q.dl0)), Math.max(lo[2], Math.min(hi[2], q.Tcur))];
+      const fixT = C.Tadapt === false || (!atStart && !C.TinSwing), sv = C.reg ? solveReg(M, x, [q.ytF, q.ytL], uRef, C.reg.q, C.reg.r, lo, hi, fixT, C.adapt ? U.bias : null) : solveStep(M, x, [q.ytF, q.ytL], uRef, C.sigM || [0.05, 0.05, 0.03], lo, hi, fixT, C.adapt ? U.bias : null, null);
+      best = { ...best, u: sv.u[0], dl: sv.u[1], T: sv.u[2], mapPred: sv.info.pred, mapClamped: sv.info.clamped, viol: 0 }; }
+    if (lg && C.logSim) (lg.sim = lg.sim || []).push({ tau, x: x.slice(), tauL, T: best.T, orbN: { ...orbN }, E0, sole, geo, rollR, w, lat: { side: q.side, xl: x[1] } });
+    if (lg) lg.dec.push({ t: o.t, tau, x, lifted, eps: best.eps, mapPred: best.mapPred, mapClamped: best.mapClamped, uStar: best.uStar, lo: best.lo, hi: best.hi, u: best.u, T: best.T, viol: best.viol, violL: best.violL, dl: best.dl, none: best.none, xiTd: best.orb.xiTd, L: best.orb.L, pred: sim(best.T), sole });
+    return { df: best.u, dl: best.dl, T: best.T, info: best }; }
   // the walking double support's reference at the current time (and the CoP reference)
   // ((G2b walker, walk.dsLead) the double support's plan is evaluated AHEAD by the feedback view's age: its t0 is the contact as the 50 ms-old
   // view saw it, and on the hand-over tick the physical foot has been loading for those 50 ms (≈ 50 % of the weight) — evaluated at s = 0 the
@@ -499,7 +610,9 @@ export class LocoPlanner {
     const lat0 = (D.xi0[0] - D.p1[0]) * rt[0] + (D.xi0[1] - D.p1[1]) * rt[1], latT = sideN * (r.walk.dsLatTarget != null ? r.walk.dsLatTarget : this._stepW(r.i) * K.lK / (K.E1 * K.lE2 + 1)), x = Math.min(1, s / T), sm = minjerk(x), dsm = x < 1 ? 30 * x * x * (1 - x) * (1 - x) / T : 0;
     // ((G2b speed work) with latDS "lipm" the function returned here, before the forward closed-loop options below were reached: the desired-gait
     //  forward tracking (walk.dcmRef.ds) is applied first, along the walk only — the lateral stays the analytic LIPM)
-    if (r.walk.latDS === "lipm" && r.walk.dcmRef && r.walk.dcmRef.ds && r.i >= (r.walk.dcmRef.from ?? 2)) { const fN = (o.xi[0] - D.pC[0]) * hd[0] + (o.xi[1] - D.pC[1]) * hd[1], fT = r.walk.dcmRef.xS[0] + r.walk.dcmRef.xS[1] * r.walk.dcmRef.vd, tau = Math.max(0.04, T - s), E = dexp(w * tau), kq = (E - 1) / (w * tau), pb = -K.r;
+    // ((G2b unified) the double support aims at the orbit's next-step start x_S(vd) + I)
+    const dsU = this._uni && r.i >= (this._uni.C.from ?? 2) && this._uni.C.ds !== false ? this._uni.orbit(o.t, this._uni.C.Tr).xS : null;
+    if (r.walk.latDS === "lipm" && ((r.walk.dcmRef && r.walk.dcmRef.ds && r.i >= (r.walk.dcmRef.from ?? 2)) || dsU != null)) { const fN = (o.xi[0] - D.pC[0]) * hd[0] + (o.xi[1] - D.pC[1]) * hd[1], fT = dsU != null ? dsU : r.walk.dcmRef.xS[0] + r.walk.dcmRef.xS[1] * r.walk.dcmRef.vd, tau = Math.max(0.04, T - s), E = dexp(w * tau), kq = (E - 1) / (w * tau), pb = -K.r;
       let pf = (E * fN + pb * (1 - kq) - fT) / (E - kq); const tr = (D.pT[0] - D.pC[0]) * hd[0] + (D.pT[1] - D.pC[1]) * hd[1], ex = this.geo.box.he[2] - 0.02; pf = Math.max(Math.min(tr + ex, -ex), Math.min(ex, pf));
       r.wdsFwd = { fN, fT, pf }; const latP = (p[0] - D.pC[0]) * rt[0] + (p[1] - D.pC[1]) * rt[1], latX = (xi[0] - D.pC[0]) * rt[0] + (xi[1] - D.pC[1]) * rt[1];
       p = [D.pC[0] + hd[0] * pf + rt[0] * latP, D.pC[1] + hd[1] * pf + rt[1] * latP]; xi = [D.pC[0] + hd[0] * fN + rt[0] * latX, D.pC[1] + hd[1] * fN + rt[1] * latX]; }

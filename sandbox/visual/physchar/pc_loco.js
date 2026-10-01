@@ -182,7 +182,11 @@ export class LocoController {
       // (the clearance uses the pitch the leg can actually give: from the leg's IK at the ACTUAL hip, the shank's backward tilt β limits the
       // foot to −(β − 25°) — the ankle's dorsiflexion range less a 5° margin; the toe of the long boot hangs from there, and the ankle is
       // lifted until it clears — two passes, as the lift itself tilts the shank)
-      if (G > 0) { const yg = g.yFlat + SUP.touchDepth + box.pos[1] - box.he[1], mIn = (AP ? AP.m0 : 0.03) * (P.walkClrRamp ? 1 : minjerk(Math.min(1, w / 0.12))), m = AP ? (w < AP.wd ? mIn : mIn - (mIn + (P.landPress || 0)) * (w - AP.wd) / (1 - AP.wd)) : mIn * G, kS = 0.004, Lg = this.ctrl.legs[R.sw], hip = S0 ? o.states[Lg.thigh].pos : null, hdw = [Math.sin(yaw), 0, Math.cos(yaw)];
+      // ((G2b unified, opt-in P.descentGate = { d }) the controlled descent waits for the foot's HORIZONTAL arrival: its floor lowers only as far as
+      //  the ACTUAL foot (the view advanced by its own velocity over the feedback delay) has come within d of the landing point — a late foothold
+      //  change followed with the usual tracking lag put the foot on the turf 4 cm short at an on-schedule descent (matched-state bench))
+      const DG = P.descentGate, dGate = DG ? (() => { const fA = o.states[g.foot[R.sw]], dP = this.dFb || 0, lp = land.pos, dx = fA.pos[0] + fA.v[0] * dP - lp[0], dz = fA.pos[2] + fA.v[2] * dP - lp[2]; const gd = Math.max(0, Math.min(1, 1 - Math.hypot(dx, dz) / DG.d)), wO = DG.wOpen ?? 1.01; return w >= wO ? 1 : (R.stepIndex ?? 0) < (DG.from ?? 0) ? 1 : gd; })() : 1;
+      if (G > 0) { const yg = g.yFlat + SUP.touchDepth + box.pos[1] - box.he[1], mIn = (AP ? AP.m0 : 0.03) * (P.walkClrRamp ? 1 : minjerk(Math.min(1, w / 0.12))), m = AP ? (w < AP.wd ? (DG && DG.h ? mIn + (DG.h - mIn) * (1 - dGate) * minjerk(Math.min(1, w / AP.wd)) : mIn) : DG ? (() => { const mH = DG.h ? mIn + (DG.h - mIn) * (1 - dGate) : mIn, fr = Math.min((w - AP.wd) / (1 - AP.wd), dGate); return mH - (mH + (P.landPress || 0)) * fr; })() : mIn - (mIn + (P.landPress || 0)) * (w - AP.wd) / (1 - AP.wd)) : mIn * G, kS = 0.004, Lg = this.ctrl.legs[R.sw], hip = S0 ? o.states[Lg.thigh].pos : null, hdw = [Math.sin(yaw), 0, Math.cos(yaw)];
         const rhoMax = (pp) => { if (!hip) return 1; const ik = this.ctrl._legIK(Lg, hip, pp, hdw), sv2 = V.sub(pp, ik.pKnee), beta = Math.atan2(-(sv2[0] * hdw[0] + sv2[2] * hdw[2]), -sv2[1]); return -(beta - (this.ankDorsi ?? 25 * d2r)); };
         const lowAt = (r0) => { const rot = footRot(yaw, r0); let e = 0; for (const sx of [-1, 1]) for (const sz of [-1, 1]) e += Math.exp(-(pos[1] + Q.rot(rot, [box.pos[0] + sx * box.he[0], box.pos[1] - box.he[1], box.pos[2] + sz * box.he[2]])[1] - yg) / kS); return yg - kS * Math.log(e); };
         const dMax = 10 * d2r; rho += G * dMax * (1 - Math.exp(-sp(yg + m - lowAt(rho), 0.003) / (dMax * 0.25)));
@@ -224,6 +228,7 @@ export class LocoController {
     for (const s of ["L", "R"]) if (this.obstructedAt[s] != null && !(this.planner.exec.R && this.planner.exec.R.sw === s)) this.obstructedAt[s] = null;
     // L4 + execution
     this.planner.exec.dFb = this.dFb;
+    { const os = this.opts.oracleSwing, on = (k) => os === true || (typeof os === "string" && os.split(",").includes(k)); this.ctrl.swingTruth = on("ik") || on("ikRot") || on("ikPos") || on("ikVel") || on("ikW") || on("ikV") || on("ikW0") || on("ikW1") || on("ikW2") ? truth : null; this.ctrl.swingTruthParts = on("ik") ? null : { rot: on("ikRot"), pos: on("ikPos"), vel: on("ikVel"), w: on("ikW"), v: on("ikV"), wAx: on("ikW0") ? 0 : on("ikW1") ? 1 : on("ikW2") ? 2 : null }; this.planner.exec.oTruth = on("path") ? truth : null; this._oracleFF = on("ff"); }   // (DIAGNOSTIC ONLY: see pc_balance swingTruth; "ik" / "ff" / "path" attribute the parts)
     const pr = this.planner.update(oFb, oPl, { obstructedAt: { ...this.obstructedAt } }, x.dt, this.lastR);
     // L2: the balance controller on the feedback view
     const hs = this.human ? this._humanStyle(oFb) : null;
@@ -236,7 +241,7 @@ export class LocoController {
     // P1 swing feed-forward: the inverse dynamics of the planned TIMED swing (Newton–Euler over thigh, shank, foot about each leg joint) —
     // the inertial torque an equilibrium-point spring otherwise only produces after an error has built up (G1a finding: a 0.4 s in-place
     // swing lagged 3 cm on the way up and overshot 7 cm forward on the way down, unsaturated, with every foothold landing forward / outward)
-    const R = this.planner.exec.R; if (R && R.timed && (R.stage === "SWING" || R.stage === "DESCEND") && !this.opts.noSwingFF) for (const e of this._swingFF(oFb, R, u)) extra.push(e);
+    const R = this.planner.exec.R; if (R && R.timed && (R.stage === "SWING" || R.stage === "DESCEND") && !this.opts.noSwingFF) for (const e of this._swingFF(this._oracleFF ? { ...truth, t: oFb.t } : oFb, R, u)) extra.push(e);
     // L1: the arbiter (the controller's own frames for its feed-forward torques; the CURRENT joint state for the predicted spring / damping)
     const own0 = ownerOf(this.spec, u.parts), owner = this.human ? (k) => { const o0 = own0(k); return this.human.styleIdx.has(k) && o0.cls === "P0" && o0.module === "posture" ? { module: "style(of_loco WALK, in place)", cls: "P3" } : o0; } : own0;
     const a = this.arb.step({ u, S: oFb.states, qCur: x.qCur, owner, extra, dt: x.dt, naive: !!this.opts.naive });

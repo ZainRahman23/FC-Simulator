@@ -382,8 +382,30 @@ export class BalanceController {
     // With it, the moving base of the swing's VELOCITY feed-forward is the hip JOINT's velocity (the pelvis's), not the thigh's centre of mass
     // (which moves with the swinging leg itself: the target joint velocities came out wrong and the damping cancelled the swing's hip
     // abduction / rotation drive — ≈ 90 N·m against ≈ 100 N·m — leaving the foot 2–8 cm outside its target at touchdown).)
-    const dP = plan && plan.swingPredict ? plan.swingPredict : 0, wP = S[0].w, nwP = Math.hypot(wP[0], wP[1], wP[2]), RpPred = dP && nwP > 1e-9 ? Q.norm(Q.mul(Q.axis(V.sc(wP, 1 / nwP), nwP * dP), S[0].rot)) : S[0].rot;
-    const hipPred = (L) => { if (!dP) return S[L.thigh].pos; const hp = S[L.thigh].pos, vh = V.add(S[0].v, V.cross(wP, V.sub(hp, S[0].com))); return V.add(hp, V.sc(vh, dP)); };
+    // ((G2b unified, DIAGNOSTIC ONLY — never a controller option: opts.oracleSwing) the swing leg's IK reads the TRUE current state instead of
+    //  the feedback view, to ATTRIBUTE swing error to the view's age; a real controller cannot do this)
+    const TT = this.swingTruth ? this.swingTruth.states : null, TP = this.swingTruthParts || { rot: true, pos: true, vel: true };
+    // ((G2b unified, opt-in plan.swingBase = { w: "zero" | "yaw" | "lp", tau }) the MOVING BASE of the swing's velocity target: which pelvis rotation
+    //  rate the leg's joint velocities assume. Measured over the 50 ms delay in walking swings (pelvis frame): the pitch rate's change is as large
+    //  as the rate itself (view 0.99 vs zero 1.07 rad/s rms error) — the delayed pitch rate does not predict the current one, and fed into the
+    //  hip's velocity target it drove the foot ≈ 0.9 m/s past its command mid-swing (+6.7 cm landing overshoot; true rates: −1.5 ± 1.1 cm).
+    //  "zero": a translating base (no pelvis rotation rate); "yaw": only the vertical (yaw) component, which the view does predict (1.0 vs 2.0);
+    //  "lp": the rate low-passed over tau. Joint POSITION targets keep the predicted pelvis pose.)
+    const SB = plan && plan.swingBase, wBase = (w0) => { if (!SB || !SB.w || SB.use === false) return w0; if (SB.w === "zero") return [0, 0, 0]; if (SB.w === "yaw") { const up = Q.rot(S[0].rot, [0, 1, 0]), k = V.dot(w0, up); return V.sc(up, k); }
+      // ("model": an INTERNAL FORWARD MODEL of the swing's own effect on the pelvis — the pelvis rate now = the rate the view measured + the change
+      //  the swing's motor program produces over the delay, P(u_now) − P(u_view), P the pelvis-frame rate profile over the swing phase (side-
+      //  mirrored yaw / roll), identified or learned online from the delayed measurements; realistic latency: anything else that happened in the
+      //  last dFb is still unknown)
+      if (SB.w === "model" && SB.P && SB.uNow != null) { const Pf = SB.P, nb = Pf.length, at = (u) => { const x = Math.max(0, Math.min(nb - 1, u * nb - 0.5)), i = Math.min(nb - 2, Math.floor(x)), f = x - i; return [0, 1, 2].map(j => Pf[i][j] + (Pf[i + 1][j] - Pf[i][j]) * f); };
+        const a = at(SB.uNow), b = at(SB.uView), dl = [a[0] - b[0], (a[1] - b[1]) * SB.side, (a[2] - b[2]) * SB.side];
+        // (SB.pure = [axes]: those pelvis-frame axes take the profile's expected rate at u_now alone — no delayed measurement)
+        if (SB.pure) { const wl = Q.rot(Q.conj(S[0].rot), w0), pr = [a[0], a[1] * SB.side, a[2] * SB.side]; for (let j = 0; j < 3; j++) wl[j] = SB.pure.includes(j) ? pr[j] : wl[j] + dl[j]; return Q.rot(S[0].rot, wl); }
+        return V.add(w0, Q.rot(S[0].rot, dl)); }
+      if (SB.w === "lp") { const a = Math.min(1, (o.t - (this.wLPt ?? o.t - 1)) / (SB.tau ?? 0.1)); this.wLP = this.wLP && this.wLPt != null ? V.add(this.wLP, V.sc(V.sub(w0, this.wLP), a)) : w0.slice(); this.wLPt = o.t; return this.wLP; } return w0; };
+    const dP = plan && plan.swingPredict ? plan.swingPredict : 0, wP = TT && (TP.vel || TP.w) ? TT[0].w : TT && TP.wAx != null ? (() => { const a = Q.rot(Q.conj(S[0].rot), S[0].w), b = Q.rot(Q.conj(S[0].rot), TT[0].w); a[TP.wAx] = b[TP.wAx]; return Q.rot(S[0].rot, a); })() : wBase(S[0].w), nwP = Math.hypot(wP[0], wP[1], wP[2]), wS = S[0].w, nwS = Math.hypot(wS[0], wS[1], wS[2]);
+    const RpPred = TT && TP.rot ? TT[0].rot : dP && nwS > 1e-9 ? Q.norm(Q.mul(Q.axis(V.sc(wS, 1 / nwS), nwS * dP), S[0].rot)) : S[0].rot;
+    const hipPred = (L) => { if (TT && TP.pos) return TT[L.thigh].pos; if (!dP) return S[L.thigh].pos; const hp = S[L.thigh].pos, vh = V.add(S[0].v, V.cross(wS, V.sub(hp, S[0].com))); return V.add(hp, V.sc(vh, dP)); };
+    const hipVel = (L) => { if (TT && TP.v && !TP.vel) return V.add(TT[0].v, V.cross(S[0].w, V.sub(TT[L.thigh].pos, TT[0].com))); if (TT && TP.vel) return V.add(TT[0].v, V.cross(TT[0].w, V.sub(TT[L.thigh].pos, TT[0].com))); return dP ? V.add(S[0].v, V.cross(SB && SB.w && SB.use !== false ? wP : wS, V.sub(S[L.thigh].pos, S[0].com))) : S[L.thigh].v; };
     this.swingIK = {}; this.swingVel = {}; if (!released) for (const s of swingCtl) { const L = this.legs[s], tg = plan.swing[s], Rp = RpPred, pole = V.norm(V.sub(Q.rot(Rp, [0, 0, 1]), [0, Q.rot(Rp, [0, 0, 1])[1], 0]));
       const solve = (pos, hipP, RpX) => { hipP = hipP || hipPred(L); RpX = RpX || Rp; const ik = this._legIK(L, hipP, pos, pole); return { ik, hip: csOfRel(spec.joints[L.hip], Q.mul(Q.conj(RpX), ik.Rt)), knee: ik.kappa, ankle: romClamp(spec.joints[L.ankle], csOfRel(spec.joints[L.ankle], Q.mul(Q.conj(ik.Rs), tg.rot)), rad(5)) }; };
       const a = solve(tg.pos); nominal[L.hip] = a.hip; nominal[L.knee] = a.knee; nominal[L.ankle] = a.ankle; this.swingIK[s] = { knee: a.ik.pKnee, target: tg.pos };
@@ -391,7 +413,7 @@ export class BalanceController {
       // foot along its WORLD trajectory while the hip and pelvis themselves move (hip joint velocity, pelvis angular velocity). The
       // stationary-base form asked the critically damped swing motors to hold the leg's configuration while the pelvis drifted, so the
       // swing foot was carried with the pelvis (G1a finding: 3 cm of pelvis drift in late swing → 5 cm foothold error)
-      if (tg.vel) { const dT = 1 / 60, mb = this.opts.swingMovingBase, b = solve(V.add(tg.pos, V.sc(tg.vel, dT)), mb ? V.add(hipPred(L), V.sc(dP ? V.add(S[0].v, V.cross(wP, V.sub(S[L.thigh].pos, S[0].com))) : S[L.thigh].v, dT)) : null, mb && Math.hypot(...S[0].w) > 1e-9 ? Q.norm(Q.mul(Q.axis(S[0].w, Math.hypot(...S[0].w) * dT), Rp)) : null);
+      if (tg.vel) { const dT = 1 / 60, mb = this.opts.swingMovingBase, b = solve(V.add(tg.pos, V.sc(tg.vel, dT)), mb ? V.add(hipPred(L), V.sc(hipVel(L), dT)) : null, mb && nwP > 1e-9 ? Q.norm(Q.mul(Q.axis(wP, nwP * dT), Rp)) : null);
         this.swingVel[L.hip] = rotRate(a.hip, b.hip, dT); this.swingVel[L.knee] = (b.knee - a.knee) / dT; this.swingVel[L.ankle] = rotRate(a.ankle, b.ankle, dT); } }
     this.replant = []; if (!released) for (const s of ["L", "R"]) { const f = o.feet[s], L = this.legs[s]; if (stance.includes(s) || swingCtl.includes(s) || !(f.anchor || (plan && plan.anchors && plan.anchors[s]))) continue;
       // V1.1 controller (unloadPlan): the foot a planned transfer is UNLOADING is not pressed back into the turf when it loses contact — it is
