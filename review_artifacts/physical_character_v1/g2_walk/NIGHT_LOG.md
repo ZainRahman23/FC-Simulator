@@ -75,3 +75,26 @@ Every change below is OPT-IN under `rhythm.walk` / `human.walk` (G1 / G2a code p
   - the step's exponential sensitivity.
 - The yaw coupling of a wide gait makes it worse.
 - No change so far has been a hidden force. All are planner / gain / timing / compliance changes.
+
+## 4. Morning (10:00 → 11:15) — more mechanisms found and fixed; still no stable walk
+
+The user said "keep going". Same rule: one measured mechanism → one general, opt-in change. Batch matrix runs (`$SP/g2/mat.mjs`, 12–32 configurations each, sequential).
+
+| # | Problem (measured) | Change (opt-in) | Result |
+|---|---|---|---|
+| k | **Support-model mismatch.** The weight-split solver lets each foot's CoP go anywhere in its sole outline. A sideways sole-edge CoP needs ≈ 42 N·m of ankle roll (> 35 N·m limit, ≫ the shared budget), so the realised CoP sat 5 cm from the demand and double-support transfers stalled. | `copBand`: each foot's usable CoP is limited sideways to ± 2.5 cm about its ankle in the split, so the share between the feet carries the sideways CoP. | First transfer: CoP now follows the demand (−0.10 vs −0.09); ξ arrives within 1 cm. **A real, general finding about the support layer.** |
+| l | The first transfer from standing unloaded the stepping foot on the clock, before ξ arrived. The foot lifted, the CoP jumped under the stance foot and pushed ξ the wrong way. | `firstProg`: that foot unloads by ξ's progress toward its target. | With (k): the first stance starts on plan. |
+| m | Sideways double-support models (analytic / min-jerk / tracking) all mispredict, because loads shift late. | `latDS: "freeze"`: across the walk, the double support HOLDS ξ (CoP on ξ). Placement = the XCoM offset rule (Hof): the step map has no double-support term. | Sideways ξ is flat through double support. Each foot lands with ξ consistently 11–12 cm inside it. The placement follows ξ. |
+| n | **Mid-swing toe scuffs** (55 N at 41 % of the swing). The foot hangs 5° further toes-down than commanded, and the guard used the commanded pitch. The executor took the scuff as the touchdown → steps ended 30–46 cm short. | The clearance guard uses the more toes-down of commanded / actual pitch (actual for the clearance only — commanding it fed back to −55°). It holds until 85 % of the swing (`clrOff`). | Foothold errors fell from 30–80 cm to 7–12 cm in most runs. |
+| o | Pelvis yaw ±20–30° | `armsFromLegs` (the G2a counter-swing from actual thigh angles, applied to walking); `releaseAxisSel` (the release keeps hip / ankle twist and roll stiffness) | Small or no improvement. **Open.** |
+| p | Hard touchdowns: ≈ 1470 N (2 BW) with a 240 N braking component at a foot ≈ 0.2 m to the side of the COM → a ≈ 48 N·m yaw spike at each touchdown (likely yaw source) | landPress 0 / 0.004 / 0.012 and a later final descent tested | No improvement. **Open.** |
+| q | Diagnostic only: a human-width boot collider (10 cm, `diagFootWidth`, NOT adopted) | — | Still falls within 2–4 steps → **the boot width is not the gating limit yet.** |
+
+### Where it stands at 11:15
+
+- **Best configuration** (0.4–0.8 m/s, G2a timing, freeze, band, firstProg, release, clearance fixes, arms from legs): 5–7 steps, then a fall. Typically:
+  - pelvis yaw swings ±20–30° at every touchdown;
+  - step lengths oscillate (6–75 cm);
+  - widths saturate at the clamp.
+- **Not achieved.** No stable 20-step walk at any speed above ≈ 0.
+- **G2c / G2d / G2e not started** (not earned).

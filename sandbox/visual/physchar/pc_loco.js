@@ -74,6 +74,12 @@ export class LocoController {
     u = ((u % 1) + 1) % 1; if (tq == null) { this.refU = u; this.refW = w; } return { u, w }; }
   // the style posture, the planned pelvis posture and the full reference pose (for the overlay) at the measured phase
   _humanStyle(o) { const H = this.human, ph = this._refPhase(o), styled = (u, w) => { const pose = refPose(H.P, u, w); if (!H.arms) { for (const n of ["upperArm_L", "upperArm_R", "foreArm_L", "foreArm_R"]) pose[n] = idlePose()[n]; }
+      // ((G2b, P.armsFromLegs) WALKING COUNTER-SWING from the legs' ACTUAL fore-aft angles — G2a's in-place finding applied to walking: the walk's
+      // own clock left the arms adding to the legs' momentum in double support (arms +0.8 with legs +1.0 kg·m²/s) and the pelvis yawed ±15–30°;
+      // c = (φ_R − φ_L) / (2·legAmp) from each thigh's sagittal angle to the pelvis, the arms / thorax / pelvis yaw as in place (pc_ref)
+      else if (H.P.walk && H.P.armsFromLegs && cLeg != null) { const P = H.P, c = cLeg, aR = P.arm * c, aL = -aR, cl = (v) => Math.max(0, Math.min(1, v));
+        pose.upperArm_R = [aR, 0, P.abd]; pose.upperArm_L = [aL, 0, -P.abd]; pose.foreArm_R = [-P.elbow - 14 * cl(-aR / Math.max(1, P.arm)), 0, 0]; pose.foreArm_L = [-P.elbow - 14 * cl(-aL / Math.max(1, P.arm)), 0, 0];
+        pose.spine = [pose.spine[0], P.sYaw * c * 0.5, pose.spine[2]]; pose.chest = [pose.chest[0], P.sYaw * c * 0.5, pose.chest[2]]; pose.pelvis = [pose.pelvis[0], -P.pYaw * c, pose.pelvis[2]]; }
       if (!H.trunk) { pose.spine = [pose.spine[0], 0, pose.spine[2]]; pose.chest = [pose.chest[0], 0, pose.chest[2]]; }
       else if (H.trunk === "stabilize" && tw != null) { pose.spine = [pose.spine[0], tw * 0.5, pose.spine[2]]; pose.chest = [pose.chest[0], tw * 0.5, pose.chest[2]]; } return pose; };
     // TRUNK COUNTER-ROTATION in place = THORAX STABILISATION (H.trunk "stabilize"): the thorax counter-rotates against the pelvis's STEP-TO-STEP
@@ -81,6 +87,8 @@ export class LocoController {
     // keeps its heading while the pelvis rotates beneath it with the legs. The walk's feed-forward thorax twist compensates a stride's pelvis
     // rotation; in place the arms already cancel the legs' momentum and that twist added its own (G2a attribution). (Stabilising against the
     // INTENDED heading instead was positive feedback in a turn: the lagging pelvis was twisted further away and he spun.)
+    let cLeg = null; if (H.P.walk && H.P.armsFromLegs) { const Rp = o.states[0].rot, fw = Q.rot(Rp, [0, 0, 1]), up = Q.rot(Rp, [0, 1, 0]), ang = (s) => { const d = Q.rot(o.states[this.ctrl.legs[s].thigh].rot, [0, -1, 0]); return Math.atan2(V.dot(d, fw), -V.dot(d, up)); };
+      cLeg = Math.max(-1.2, Math.min(1.2, (ang("R") - ang("L")) / (2 * (H.P.legAmp ?? 0.35)))); }
     let tw = null; if (H.trunk === "stabilize") { const f = Q.rot(o.states[0].rot, [0, 0, 1]), yp = datan2(f[0], f[2]), wr = (a) => Math.atan2(Math.sin(a), Math.cos(a));
       if (this.pelLP == null || this.pelLPt == null) { this.pelLP = yp; this.pelLPt = o.t; } const dt = Math.max(0, o.t - this.pelLPt); this.pelLPt = o.t; this.pelLP = wr(this.pelLP + wr(yp - this.pelLP) * Math.min(1, dt / 0.6));
       tw = Math.max(-10, Math.min(10, -wr(yp - this.pelLP) * 180 / Math.PI)); }
@@ -143,7 +151,9 @@ export class LocoController {
       let rho = Hs.rho0 * (1 - minjerk(w / 0.45)) + land.rho * minjerk((w - 0.55) / 0.4); const yaw = Hs.yaw0 + (R.yawT - Hs.yaw0) * minjerk(w);
       // ((G2b) the guard is on from liftoff — the toe leaves the turf at w = 0, so its margin, not the guard, ramps in: a guard ramped over the
       // first 10 % let the hanging toe re-contact ≈ 25 ms after liftoff with ≈ 200–380 N, braking the body and pushing ξ sideways)
-      const G = (P.walkClrRamp ? minjerk(Math.min(1, w / 0.1)) : 1) * (1 - minjerk(Math.max(0, Math.min(1, (w - 0.7) / 0.22))));
+      // ((G2b) the guard holds until P.clrOff[0] of the swing (default 0.7) and fades over clrOff[1]: faded from 70 %, the heel-strike pitch put
+      // the heel on the turf at ≈ 67 % of a long step, 30 cm short — a human heel descends to contact only at the end of the swing)
+      const cO = P.clrOff || [0.7, 0.22], G = (P.walkClrRamp ? minjerk(Math.min(1, w / 0.1)) : 1) * (1 - minjerk(Math.max(0, Math.min(1, (w - cO[0]) / cO[1]))));
       // (the clearance uses the pitch the leg can actually give: from the leg's IK at the ACTUAL hip, the shank's backward tilt β limits the
       // foot to −(β − 25°) — the ankle's dorsiflexion range less a 5° margin; the toe of the long boot hangs from there, and the ankle is
       // lifted until it clears — two passes, as the lift itself tilts the shank)
@@ -151,7 +161,11 @@ export class LocoController {
         const rhoMax = (pp) => { if (!hip) return 1; const ik = this.ctrl._legIK(Lg, hip, pp, hdw), sv2 = V.sub(pp, ik.pKnee), beta = Math.atan2(-(sv2[0] * hdw[0] + sv2[2] * hdw[2]), -sv2[1]); return -(beta - (this.ankDorsi ?? 25 * d2r)); };
         const lowAt = (r0) => { const rot = footRot(yaw, r0); let e = 0; for (const sx of [-1, 1]) for (const sz of [-1, 1]) e += Math.exp(-(pos[1] + Q.rot(rot, [box.pos[0] + sx * box.he[0], box.pos[1] - box.he[1], box.pos[2] + sz * box.he[2]])[1] - yg) / kS); return yg - kS * Math.log(e); };
         const dMax = 10 * d2r; rho += G * dMax * (1 - Math.exp(-sp(yg + m - lowAt(rho), 0.003) / (dMax * 0.25)));
-        let rA = rho; for (let it = 0; it < 2; it++) { rA = Math.min(rho, rhoMax(pos)); pos = [pos[0], pos[1] + G * sp(yg + m - lowAt(rA), 0.003), pos[2]]; }
+        // ((G2b) and the foot's ACTUAL pitch when it hangs further toes-down than commanded (the ankle dorsiflexes at a finite rate — a target-pitch
+        // clearance let the hanging toe scuff the turf at 41 % of a swing, which ended the step 46 cm short; a scuff is a real trip, so the
+        // swing must actually clear)
+        const fq = o.states[g.foot[R.sw]].rot, fz = Q.rot(fq, [0, 0, 1]), rAct = P.clrActual === false ? 1 : datan2(fz[1], Math.hypot(fz[0], fz[2]));
+        let rA = rho; for (let it = 0; it < 2; it++) { rA = Math.min(rho, rhoMax(pos)); pos = [pos[0], pos[1] + G * sp(yg + m - lowAt(Math.min(rA, rAct)), 0.003), pos[2]]; }   // (the actual pitch only for the clearance — commanding it fed back: −38° → −55°)
         // ((G2b) the commanded pitch is the one the leg can give — the foot hangs plantar-flexed from a shank tilted back, as a human foot does
         // in initial swing — instead of a level target the ankle could only press against its dorsiflexion stop)
         if (!P.walkClrRamp) rho = rho + G * (rA - rho); }

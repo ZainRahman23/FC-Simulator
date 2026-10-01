@@ -210,7 +210,8 @@ export function buildBodySpec(rig, mesh, opts) {
       shapes.push({ type: "capsule", pos: V.sc(hj, 0.5), rot: Q.id(), half: Math.max(0.01, hj[1] / 2), r: nr });
     } else if (d.kind === "foot") {
       const f = rig.feet[d.side], mn = V.sub(f.footwearMin, o), mx = V.sub(f.footwearMax, o);
-      shapes.push({ type: "box", pos: V.sc(V.add(mn, mx), 0.5), rot: Q.id(), he: V.sc(V.sub(mx, mn), 0.5), cr: 0.01 });
+      const heF = V.sc(V.sub(mx, mn), 0.5); if (opts && opts.diagFootWidth) heF[0] = opts.diagFootWidth / 2;   // (DIAGNOSTIC ONLY, never a calibration: a narrower boot collider)
+      shapes.push({ type: "box", pos: V.sc(V.add(mn, mx), 0.5), rot: Q.id(), he: heF, cr: 0.01 });
     }
     // ── fit report: how well the colliders occupy the space of the mesh this body carries ──
     const fitVs = fitSet || (d.kind === "head" ? [...(boneVerts.head || []), ...(boneVerts.neck || [])].map(local) : vs);   // trunk: its height slice; head: no hair shell

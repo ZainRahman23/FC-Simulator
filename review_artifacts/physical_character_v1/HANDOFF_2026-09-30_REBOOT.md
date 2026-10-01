@@ -82,6 +82,20 @@ After the reboot the preserved state was verified, the user reviewed the overnig
   - But long double support (≈ 45 %) and no heel rise before toe-off. Both are deferred to G2b with reasons (report §7).
 - **Proposed sub-gates:** G2b forward walk · G2c start/stop · G2d speed + turning · G2e qualification.
 
+**G2a APPROVED by the user (2026-10-01), committed `6f1ef85`. G2b (overnight + morning runway, 2026-10-01): forward walking NOT achieved.**
+- **Result.** The best configurations land 5–7 steps, then fall. G2c / G2d / G2e not started (not earned).
+- **Trail.** Every mechanism, attempt and number is in `g2_walk/NIGHT_LOG.md` §3–4.
+- **Checkpoints.** Local WIP commits `dbc1ddb` and its follow-up. All walking code is opt-in (`rhythm.walk` / `human.walk`). All prior gates are bit-identical.
+- **General findings** (support layer / body), not tuning:
+  - the stance ankle's sideways CoP authority is ≈ 1 cm in late stance (approved shared budget);
+  - the weight-split solver assumed sole-edge CoPs the ankles cannot realise (fixed opt-in with a ± 2.5 cm ankle band);
+  - a trailing leg posed from the desired pelvis regulates body height and stays loaded;
+  - the step-to-step sideways sensitivity is ≈ 6.5–12×.
+- **Open problems.**
+  - Pelvis yaw ±20–30° at every touchdown: hard landings ≈ 2 BW, braking off-centre.
+  - Step-length oscillation.
+- **Next.** The next step is the user's decision (options in the log and in memory `physical-character-g2b`).
+
 ## Where
 
 - **Worktree:** `/Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1`

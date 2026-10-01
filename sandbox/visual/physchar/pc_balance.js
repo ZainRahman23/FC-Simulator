@@ -392,6 +392,8 @@ export class BalanceController {
       if (stance.length === 2 && plan) { const cenOf = (s) => { const f = this.legs[s].foot, q = V.add(S[f].pos, Q.rot(S[f].rot, spec.bodies[f].shapes[0].pos)); return [q[0], q[2]]; };
         if (plan.unloading && plan.heelRise && plan.heelRise.toeOnly && plan.heelRise.foot === plan.unloading.foot && !plan.unloading.toeRegion) { const f = this.legs[plan.unloading.foot].foot, sh = spec.bodies[f].shapes[0], zf = sh.pos[2] + sh.he[2], yb = sh.pos[1] - sh.he[1];
           plan.unloading = { ...plan.unloading, toeRegion: [[-1, zf], [1, zf], [1, zf - 0.05], [-1, zf - 0.05]].map(([sx, z]) => { const q = V.add(S[f].pos, Q.rot(S[f].rot, [sh.pos[0] + sx * sh.he[0], yb, z])); return [q[0], q[2]]; }) }; }
+        if (plan.unloading && plan.unloading.bandCap && !plan.unloading.band) { const bi = {}, li = {}; for (const s of ["L", "R"]) { const f = this.legs[s].foot, q = S[f].pos, x = Q.rot(S[f].rot, [1, 0, 0]), n = Math.hypot(x[0], x[2]) || 1; bi[s] = [q[0], q[2]]; li[s] = [x[0] / n, x[2] / n]; }
+          plan.unloading = { ...plan.unloading, band: { cap: plan.unloading.bandCap, ank: bi, lat: li } }; }
         const du = this.opts.unloadPlan && plan.unloading && !plan.preload ? split2u(o, p, cenOf, plan.unloading) : this.opts.unloadPlan && plan.loading && !plan.preload ? split2u(o, p, cenOf, plan.loading) : null; if (du && recordUnload) this.unloadInfo = du.info;
         const d2 = du || split2(o, p, cenOf, plan.preload, this.opts.diagUnload ? plan.unload : null);
         for (const s of ["L", "R"]) res[s] = { F: V.sc(F, d2.share[s]), at: [d2.at[s][0], groundY(o.feet[s]), d2.at[s][1]], share: d2.share[s] }; }
@@ -483,9 +485,13 @@ export class BalanceController {
     // stiffness is one number per joint, so the ankle's twist and roll went soft with it (× 0.07 in early double support) and the landed
     // foot could not brake the whole-body yaw the landing leg brings in (G2a finding: the pelvis yawed ~9° in every double support). The
     // twist (X) and roll (Z) errors are scaled by 1 / k in the posture target — the equilibrium-point form of their full stiffness.
+    // ((G2b) the PRE-SWING RELEASE is axis-selective too, at the hip as well as the ankle: released in every axis the trailing leg let the pelvis
+    // yaw ±25–30° about it and its foot twisted 27–40° on its toe in every double support)
+    const relKs = (s) => relax && relax.release != null && relax.axisSel && relax.foot === s ? relax.release + (1 - relax.release) * relax.relax : 1;
     if (this.opts.settleAxes && plan && !released) for (const s of ["L", "R"]) { let kS = 1; if (plan.settle && plan.settle.foot === s) kS *= BAL.settleKp; if (plan.soften && plan.soften.foot === s) kS *= plan.soften.k;
-      if (kS >= 0.999 || !stance.includes(s)) continue; const k = this.legs[s].ankle, j = spec.joints[k], qAct = csOfRel(j, Q.mul(Q.conj(S[j.parentIndex].rot), S[j.childIndex].rot));
-      let d = Q.mul(Q.conj(qAct), nominal[k]); if (d[3] < 0) d = d.map(x => -x); const e = logmap(d); nominal[k] = Q.norm(Q.mul(qAct, expmap(clampVec([e[0] / kS, e[1], e[2] / kS], 0.7)))); }
+      const kR = relKs(s); kS *= kR; if (kS >= 0.999 || !stance.includes(s)) continue;
+      for (const [k, kk] of [[this.legs[s].ankle, kS], [this.legs[s].hip, kR]]) { if (kk >= 0.999 || (k === this.legs[s].hip && !(relax && relax.axisSel))) continue; const j = spec.joints[k], qAct = csOfRel(j, Q.mul(Q.conj(S[j.parentIndex].rot), S[j.childIndex].rot));
+        let d = Q.mul(Q.conj(qAct), nominal[k]); if (d[3] < 0) d = d.map(x => -x); const e = logmap(d); nominal[k] = Q.norm(Q.mul(qAct, expmap(clampVec([e[0] / kk, e[1], e[2] / kk], 0.7)))); } }
     // ── torques → target offsets in each joint's own constraint space (equilibrium-point shift Δθ = τ / kp) ──
     const final = nominal.map((x, k) => Array.isArray(x) ? x.slice() : x);
     spec.joints.forEach((j, k) => { const Rc = S[j.childIndex].rot, kp = motor[k].kp;
@@ -572,7 +578,14 @@ function nearestIn(poly, c) { if (!poly.length) return null; if (poly.length >= 
 function split2u(o, p, cen, unl) {
   const poly = (s) => { const f = o.feet[s]; let P = f.points.length >= 3 ? hullOf(f.points) : []; if (P.length < 3) P = hullOf(f.sole); return ccw2(P); };
   // ((G2b) a foot in PRE-SWING carries its load on its TOE edge only (unl.toeRegion): with the heel rising, the rest of the sole is no support)
-  const sw = unl.foot, st = sw === "R" ? "L" : "R", A = poly(st), B = unl.toeRegion ? ccw2(hullOf(unl.toeRegion.map(q => [q[0], 0, q[1]]))) : poly(sw), cA = cen(st), cB = cen(sw), sq = (u, v) => (u[0] - v[0]) ** 2 + (u[1] - v[1]) ** 2;
+  // ((G2b) unl.band = { cap, ank: { L, R } (ankle [x, z]), lat: { L, R } (each foot's sideways unit [x, z]) } — each foot's usable CoP region is
+  // limited SIDEWAYS to ± cap about its ankle: the roll torque that puts a foot's CoP at its sole edge (≈ 6 cm × 700 N ≈ 42 N·m) exceeds the
+  // ankle's limit and shared budget, so a split that relied on it was not realised (measured CoP 5 cm from the demand); the share between the
+  // feet then carries the sideways CoP, as it physically must)
+  const band = (s, P) => { if (!unl.band || P.length < 3) return P; const a = unl.band.ank[s], l = unl.band.lat[s], c = unl.band.cap, BIG = 5, fw = [-l[1], l[0]];
+    const rect = [[a[0] - l[0] * c - fw[0] * BIG, a[1] - l[1] * c - fw[1] * BIG], [a[0] + l[0] * c - fw[0] * BIG, a[1] + l[1] * c - fw[1] * BIG], [a[0] + l[0] * c + fw[0] * BIG, a[1] + l[1] * c + fw[1] * BIG], [a[0] - l[0] * c + fw[0] * BIG, a[1] - l[1] * c + fw[1] * BIG]];
+    const Q2 = clipConvex(P, ccw2(rect)); return Q2.length >= 3 ? ccw2(Q2) : P; };
+  const sw = unl.foot, st = sw === "R" ? "L" : "R", A = band(st, poly(st)), B = unl.toeRegion ? ccw2(hullOf(unl.toeRegion.map(q => [q[0], 0, q[1]]))) : band(sw, poly(sw)), cA = cen(st), cB = cen(sw), sq = (u, v) => (u[0] - v[0]) ** 2 + (u[1] - v[1]) ** 2;
   if (A.length < 3 || B.length < 3) return null;
   const TA = (a) => A.map(v => [(p[0] - (1 - a) * v[0]) / a, (p[1] - (1 - a) * v[1]) / a]);          // swing CoPs compatible with a stance CoP in A
   const TB = (a) => B.map(v => [(p[0] - a * v[0]) / (1 - a), (p[1] - a * v[1]) / (1 - a)]);          // stance CoPs compatible with a swing CoP in B
