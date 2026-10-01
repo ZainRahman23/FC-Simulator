@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Broadcast embed check (dev harness)</title>
+<link rel="icon" href="data:,">
+<style>
+  html, body { margin: 0; height: 100%; background: #101418; color: #d8dee6; font: 12px/1.4 monospace; }
+  #bar { position: fixed; top: 0; left: 0; right: 0; height: 28px; padding: 5px 8px; box-sizing: border-box; background: #171c22; }
+  #bar button { font: inherit; }
+  iframe { position: fixed; top: 28px; left: 0; width: 100%; height: calc(100% - 28px); border: 0; display: block; }
+</style>
+</head>
+<body>
+<!-- Dev harness for the TouchlineBroadcast embed contract: plays the app's role
+     (starts a match via the API, feeds frames, owns the presentation clock).
+     Driven by embed_check.py; also usable by hand. -->
+<div id="bar">
+  <button onclick="H.start()">start</button>
+  <button onclick="H.speed = 1">1x</button><button onclick="H.speed = 8">8x</button>
+  <button onclick="H.playing = !H.playing">play/pause</button>
+  <button onclick="H.rewind(Math.max(0, H.clock - 60))">rewind 60s</button>
+  <button onclick="H.opts({labels: 'numbers'})">numbers</button>
+  <button onclick="H.opts({labels: 'names'})">names</button>
+  <button onclick="H.opts({labels: 'off'})">labels off</button>
+  <span id="st"></span>
+</div>
+<iframe id="bc" src="/sandbox/visual/match.html?embed=1"></iframe>
+<script>
+"use strict";
+const NUM = { GK: 1, RB: 2, LB: 3, CB: 4, LCB: 5, RCB: 4, CDM: 6, DM: 6, CM: 8, LCM: 8, RCM: 6, CAM: 10, AM: 10, RW: 7, RM: 7, LW: 11, LM: 11, ST: 9, CF: 9 };
+const H = {
+  mid: null, clock: 0, speed: 1, playing: true, fetching: false, bufEnd: 0, ft: false,
+  players: {}, log: [], clicks: [], withPositions: true,
+  kits: {
+    home: { name: "Liverpool", short: "LIV", kit: { primary: "#c8102e", secondary: "#c8102e", gk: "#23c45e" } },
+    away: { name: "Everton", short: "EVE", kit: { primary: "#1b44b8", secondary: "#ffffff", gk: "#f2dc1b" } },
+  },
+  get B() { return document.getElementById("bc").contentWindow.TouchlineBroadcast; },
+  async post(path, body) {
+    const r = await fetch("/api" + path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+    if (!r.ok) throw new Error(path + " " + r.status);
+    return r.json();
+  },
+  mapPlayers(ps) {
+    const out = {};
+    for (const [pid, p] of Object.entries(ps || {})) {
+      const prev = H.players[pid];
+      const slot = p.slot || "";
+      let n = prev && prev.number;
+      if (n == null) {
+        const taken = new Set(Object.values(H.players).filter(q => q.team === p.team).map(q => q.number));
+        n = NUM[slot] || 12; if (taken.has(n)) { n = 12; while (taken.has(n)) n++; }
+      }
+      out[pid] = { name: p.name, team: p.team, number: n };
+      if (H.withPositions) out[pid].position = slot;
+      H.players[pid] = out[pid];
+    }
+    return out;
+  },
+  async fetchMore(seconds = 120) {
+    if (H.fetching || H.ft || !H.mid) return;
+    H.fetching = true;
+    try {
+      const r = await H.post(`/matches/${H.mid}/advance`, { seconds, frames: true });
+      if (r.players) H.B.setPlayers(H.mapPlayers(r.players));
+      if (r.frames && r.frames.length) { H.B.ingest(r.frames, r.roster); H.bufEnd = r.frames[r.frames.length - 1][0]; H.acts = r.act_names; H.roster = r.roster; }
+      if (r.full_time || r.status === "ft") H.ft = true;
+      return r;
+    } finally { H.fetching = false; }
+  },
+  async start(opts = {}) {
+    await H.B.ready;
+    const fx = await (await fetch("/sandbox/visual/fixture_liv_eve.json")).json();
+    if (opts.seed) fx.seed = opts.seed;
+    if (opts.fixture) fx.fixture_id = opts.fixture;
+    const s = await H.post("/matches/start", fx);
+    H.mid = s.match_id; H.clock = 0; H.bufEnd = 0; H.ft = false; H.players = {};
+    H.withPositions = opts.positions !== false;
+    const kits = opts.kits || H.kits;
+    const players = H.mapPlayers(s.players);
+    // first chunk with frames -> init (roster/act_names come from it)
+    const r = await H.post(`/matches/${H.mid}/advance`, { seconds: 120, frames: true });
+    H.B.init({ home: kits.home, away: kits.away, players, roster: r.roster, act_names: r.act_names,
+               weather: opts.weather || "light", ball: opts.ball });
+    if (r.players) H.B.setPlayers(H.mapPlayers(r.players));
+    H.B.ingest(r.frames, r.roster);
+    H.bufEnd = r.frames[r.frames.length - 1][0];
+    H.clock = r.frames[0][0];
+    H.B.onPlayerClick = (pid) => H.clicks.push(pid);
+    return H.mid;
+  },
+  async rewind(to) {
+    await H.post(`/matches/${H.mid}/seek`, { to_clock: to });
+    H.ft = false;
+    H.B.reset(to);
+    H.clock = to; H.bufEnd = to;
+    await H.fetchMore(120);
+  },
+  async seekForward(to) {       // jump ahead without frames, then resume framed advance
+    await H.post(`/matches/${H.mid}/seek`, { to_clock: to });
+    H.B.reset(to); H.clock = to; H.bufEnd = to;
+    await H.fetchMore(120);
+  },
+  async sub(team, off, on) {
+    const r = await H.post(`/matches/${H.mid}/substitution`, { team, player_off: off, player_on: on });
+    return r;
+  },
+  opts(o) { H.B.setOptions(o); },
+};
+let last = 0;
+function loop(ts) {
+  const dt = Math.min(0.1, (ts - last) / 1000 || 0); last = ts;
+  if (H.mid && H.B) {
+    if (H.playing) H.clock = Math.min(H.clock + dt * H.speed, H.ft ? H.bufEnd : H.clock + dt * H.speed);
+    H.B.setClock(H.clock, { playing: H.playing, speed: H.speed });
+    if (!H.ft && H.bufEnd - H.clock < 40) H.fetchMore(120).catch(e => H.log.push(String(e)));
+    const st = H.B.stats();
+    document.getElementById("st").textContent =
+      ` clock ${H.clock.toFixed(1)} buf ${st.frames} fps ${st.fps.toFixed(0)} render ${st.renderMs.toFixed(1)}ms`;
+  }
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>

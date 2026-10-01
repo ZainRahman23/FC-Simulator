@@ -581,6 +581,11 @@ table.market th.num{text-align:right}
   .corner.tl{left:8px;top:8px} .corner.tr{right:8px;top:8px}
 }
 </style>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="coach-match.css">
+<link rel="stylesheet" href="coach-career.css">
+<link rel="stylesheet" href="coach-build.css">
+<link rel="stylesheet" href="coach-run.css">
 </head>
 <body>
 <div id="app"></div>
@@ -942,8 +947,8 @@ const ROLES = {
         def:['Hold Wide','Press Wide','Tuck In','Track Runner']},
   CDM: {atk:['Anchor','Deep Playmaker','Drop Between CBs','Advance Support'],
         def:['Screen','Ball Hunt','Track Runners','Backline Cover']},
-  CM:  {atk:['Controller','Creator','Runner','Roamer'],
-        def:['Hold Zone','Press','Track','Ball Hunt']},
+  CM:  {atk:['Controller','Creator','Runner','Roamer','Anchor','Deep Playmaker','Drop Between CBs','Advance Support'],
+        def:['Hold Zone','Press','Track','Ball Hunt','Screen','Track Runners','Backline Cover']},
   CAM: {atk:['Creator','Connector','Second Striker','Free Roam'],
         def:['Stay High','Screen Pivot','Press','Track Midfield']},
   LM:  {atk:['Wide Support','Winger','Invert','Wide Runner'],
@@ -2564,7 +2569,7 @@ function openManager(){
     <div class="tgroup"><h4>SELECTION</h4>
       <p style="margin-bottom:10px">${startingIds().length}/11 starters · ${S.current.bench.length} on the bench${oop?` · <span style="color:var(--bad)">${oop} out of position</span>`:''}</p>
       ${isLiveMatch()
-        ? `<p style="color:var(--dim);font-size:12.5px">Match in progress — the XI changes only by substitution or formation change. FC Simulator v0.7 owns the live state.</p>`
+        ? `<p style="color:var(--dim);font-size:12.5px">Match in progress — the XI changes only by substitution or formation change. Changes happen through substitutions, shape and tactics.</p>`
         : `<div style="display:flex;gap:8px;flex-wrap:wrap">
         <button class="btn sec sm" onclick="autoFill()">Auto-pick best XI</button>
         <button class="btn sec sm" onclick="fillBench()">Fill bench (7)</button>
@@ -2800,7 +2805,7 @@ async function checkEngineHealth(){
   if(!had && ENGINE_HEALTH && S.ui.view === 'match' && S.matchFixture && !S.match) renderMatch();
   const el = $('#engineStatus');
   if(el) el.innerHTML = ENGINE_HEALTH
-    ? `<span style="color:var(--good)">●</span> ${esc(ENGINE_HEALTH.engine)} v${esc(ENGINE_HEALTH.engine_version)}`
+    ? `<span style="color:var(--good)" title="${esc(ENGINE_HEALTH.engine)} v${esc(ENGINE_HEALTH.engine_version)}">●</span> Online`
     : `<span style="color:var(--bad)">●</span> ENGINE OFFLINE`;
   return ENGINE_HEALTH;
 }
@@ -3038,7 +3043,7 @@ async function kickOff(){
   if(!fixture || S.match) return;
   if(ENGINE_MODE === 'mock') return mockKickOff();
   if(!SUPPORTED_ENGINE_FORMATIONS.includes(S.current.formationId)){
-    toast(`${curForm().name} is not yet supported by FC Simulator v0.7 — use 4-3-3, 4-2-3-1 or 4-1-4-1.`);
+    toast(`${curForm().name} isn't available in matches yet — use 4-3-3, 4-2-3-1 or 4-1-4-1.`);
     return;
   }
   if(startingIds().length < 11){ toast('You need 11 starters to kick off.'); return; }
@@ -3065,6 +3070,8 @@ async function kickOff(){
     home: condenseSide(req.home_team), away: condenseSide(req.away_team)};
   S.match = makeLiveMatch(snap);
   setActiveMatchHandle(snap.match_id, fixture.id);
+  // the pre-kickoff plan must survive a reload (it is what the next fixture starts from)
+  try{ localStorage.setItem('touchline:base', JSON.stringify({matchId: snap.match_id, base: S.base})); }catch(e){}
   renderMatch(); renderPitch();
   clearInterval(matchTimer);
   matchTimer = setInterval(tick, TICK_MS);
@@ -3135,6 +3142,8 @@ async function resumeActiveMatch(){
     S.matchFixture = fixture;
     S.match = makeLiveMatch(snap);
     S.match.status = 'paused';        // resume paused; the manager presses play
+    try{ const b = JSON.parse(localStorage.getItem('touchline:base') || 'null');
+         if(b && b.matchId === h.matchId && b.base) S.base = b.base; }catch(e){}
     show('match'); renderMatch();
     toast('Reconnected to your live match');
     return true;
@@ -3255,13 +3264,13 @@ function renderMatch(){
         </div>
         <div style="display:flex;gap:8px;justify-content:center;margin-top:16px;flex-wrap:wrap">
           <button class="btn pri" style="flex:0 0 auto;padding:12px 28px" ${online ? '' : 'disabled style="opacity:.5"'} onclick="kickOff()">Kick off</button>
-          <button class="btn sec" onclick="show('squad')">Touchline</button>
+          <button class="btn sec" onclick="show('squad')">Edit team &amp; tactics</button>
           <button class="btn sec" onclick="S.matchFixture=null;show('schedule')">Back</button>
         </div>
         ${!online ? `<p style="color:var(--bad);margin:12px 0 0;font-size:13px">Match engine unavailable.
           Start the Touchline server (<code>python server.py</code>) and try again.</p>` : ''}
         ${!SUPPORTED_ENGINE_FORMATIONS.includes(S.current.formationId) ? `<p style="color:var(--warn);margin:12px 0 0;font-size:13px">
-          ${curForm().name} is not yet supported by FC Simulator v0.7 — use 4-3-3, 4-2-3-1 or 4-1-4-1.</p>` : ''}
+          ${curForm().name} isn't available in matches yet — use 4-3-3, 4-2-3-1 or 4-1-4-1.</p>` : ''}
         ${startingIds().length < 11 ? `<p style="color:var(--warn);margin:12px 0 0;font-size:13px">Only ${startingIds().length} of 11 selected.</p>` : ''}
       </div>`;
     return;
@@ -3300,7 +3309,7 @@ function buildLiveShell(wrap, m){
           </div>
         </div>
         <div style="display:flex;gap:8px">
-          <button class="btn sec sm" style="flex:1" onclick="show('squad')">Touchline (tactics & subs)</button>
+          <button class="btn sec sm" style="flex:1" onclick="show('squad')">Tactics &amp; subs</button>
           <button class="btn sec sm" onclick="abandonMatch()">Abandon</button>
         </div>
       </div>
@@ -3722,7 +3731,21 @@ const AnimR2 = {
   bufferedUntil(){ return this.frames.length ? this.frames[this.frames.length-1][0] : this.S; },
   remaining(){ return Math.max(0, this.bufferedUntil() - this.S); },
   reset(clock){ this.frames = []; this.S = clock; this.P = clock / (this.totalSim / this.targetLen);
-                this.evq = []; this.interest = {}; this.holdS = null; this.ball.state = 'LOOSE'; },
+                this.evq = []; this.interest = {}; this.holdS = null; this.ball.state = 'LOOSE';
+                this.goalSeq = null; this.celebrate = null; },
+  /* ── GOAL CHOREOGRAPHY (presentation only, v2 §6.5.1) ──
+     SHOT/PENALTY that scores → the ball flies INTO the net (past the line), the
+     keeper dives, the scorer runs off to celebrate while the play slows; the ball
+     then sits on the centre spot through the walk-backs until the first touch of
+     the kick-off. `goalSeq.netAt` (performance.now) marks the ball crossing the
+     line — the app shows its goal banner only after it. Never touches the sim. */
+  goalSeq: null, celebrate: null, lastNet: null,
+  goalRate(){                                   // sim-s per real-s during the sequence, or null
+    const g = this.goalSeq; if(!g) return null;
+    if(this.S < g.ts + 0.5) return 2.2;          // the strike + flight
+    if(this.S < g.ts + 6) return 1.6;            // celebration beat
+    return 7;                                    // walk-backs, brisk but visible
+  },
 
   /* world coords: meters, same visual orientation as liveScreen (LIV attacks a fixed way) */
   flip(){ return S.matchFixture && !isLivHome(S.matchFixture); },
@@ -3836,12 +3859,16 @@ const AnimR2 = {
       // rate shaping from interest, budget-corrected (deterministic)
       const i = this.interestAt(this.S + 1);
       let shape = i >= 8 ? 2.0 : i >= 6 ? 3.5 : i >= 4 ? 6 : i >= 2 ? 12 : 24;
+      const gr = this.goalRate();
+      if(gr != null) shape = gr / Math.max(0.2, (this.totalSim / this.targetLen) / 12);
+      else if(this.slowWindows && this.slowWindows.some(w => this.S >= w[0] && this.S <= w[1])) shape = Math.min(shape, 1.8);   // combo slow-mo (presentation)
       const pace = this.totalSim / this.targetLen;                    // avg sim-s per real-s
       // deficit-proportional pacing: keep S tracking P*pace without ever
       // skipping events; a 45-sim-s deficit doubles the local rate.
       const deficit = this.P * pace - this.S;
       const g = Math.min(4.0, Math.max(0.45, 1 + deficit / 35));
-      const rDes = Math.min(40, Math.max(1.6, shape * g * (pace / 12)));
+      const rDes = gr != null ? Math.min(40, Math.max(1.2, shape * Math.min(g, 1.25) * (pace / 12)))
+                              : Math.min(40, Math.max(1.6, shape * g * (pace / 12)));
       this.rate += (rDes - this.rate) * Math.min(1, dt * 3);
       let limit = this.bufferedUntil();
       // ball-flight sync: hold the sim clock just past the launch event until the
@@ -3870,8 +3897,10 @@ const AnimR2 = {
       }
       p.active = A.active; p.team = (names[pid]||{}).team || p.team; p.name = (names[pid]||{}).name || p.name;
       if(!A.active) continue;
+      const cel = this.celebrate && this.S < this.celebrate.until ? this.celebrate.who[pid] : null;
+      if(cel){ A.x = cel[0]; A.y = cel[1]; }
       const dx = A.x - p.x, dy = A.y - p.y, dist = Math.hypot(dx, dy);
-      if(dist > 25){ p.x = A.x; p.y = A.y; p.vx = p.vy = 0; continue; }   // restart/half snap
+      if(dist > 25 && !this.goalSeq){ p.x = A.x; p.y = A.y; p.vx = p.vy = 0; continue; }   // restart/half snap
       const catchup = dist > 10 ? 1 + (dist - 10) * 0.35 : 1;             // laggards accelerate, never teleport
       const vmax = Math.min(14, 9.2 * catchup);                            // hard human ceiling
       let sp = Math.min(vmax, dist / 0.38);
@@ -3897,6 +3926,8 @@ const AnimR2 = {
     }
     // ── ball ──
     this.stepBall(dt, live ? spd : 0);
+    if(this.goalSeq && this.S > this.goalSeq.ts + 75) this.goalSeq = null;   // safety net
+    if(this.celebrate && this.S >= this.celebrate.until) this.celebrate = null;
     // ── camera ──
     this.stepCam(dt);
   },
@@ -3927,20 +3958,37 @@ const AnimR2 = {
     const dist = Math.hypot(toX - fromX, toY - fromY);
     const pr = this.flightProfile(kind, dist);
     b.state = 'FLIGHT'; b.fx = fromX; b.fy = fromY; b.tx = toX; b.ty = toY;
-    b.x = fromX; b.y = fromY; b.apex = pr.apex; b.holder = null;
+    b.x = fromX; b.y = fromY; b.apex = pr.apex; b.holder = null; b.goal = false; b.endZ = 0;
     b.p0 = this.P; b.p1 = this.P + Math.min(1.0, Math.max(0.22, dist / pr.v));
     this.holdS = simReconcile;                    // sim clock waits here until the ball lands
   },
 
   stepBall(dt, spd){
-    const b = this.ball;
+    const b = this.ball, g = this.goalSeq;
+    if(g && b.state !== 'FLIGHT' && g.netAt){
+      if(this.S < g.ts + 6){                      // in the net: it rolls to a stop against the mesh
+        b.state = 'NET'; b.holder = null;
+        b.x += (g.nx - b.x) * Math.min(1, dt * 3); b.y += (g.ny - b.y) * Math.min(1, dt * 3);
+        b.z = Math.max(0, b.z - dt * 3);
+        return;
+      }
+      if(!g.kicked){                              // walk-backs: ball waits on the centre spot
+        b.state = 'SPOT'; b.holder = null; b.x = 52.5; b.y = 34; b.z = 0;
+        return;
+      }
+    }
     if(b.state === 'FLIGHT'){
       const al = Math.min(1, (this.P - b.p0) / Math.max(0.001, b.p1 - b.p0));
       b.x = b.fx + (b.tx - b.fx) * al; b.y = b.fy + (b.ty - b.fy) * al;
-      b.z = b.apex * 4 * al * (1 - al);
+      b.z = b.apex * 4 * al * (1 - al) + (b.endZ || 0) * al;
+      if(g && !g.netAt && b.goal){                // crossed the line into the net
+        const out = g.out, past = (b.x - g.gx) * out;
+        if(past >= 0.2 || al >= 1){ g.netAt = performance.now(); g.netP = this.P; this.lastNet = {ts: g.ts, at: g.netAt, team: g.team}; }
+      }
       if(al >= 1){
         b.z = 0;
         this.holdS = null;
+        if(b.goal){ b.goal = false; b.state = 'NET'; return; }
         // bounce/roll reconstruction if the sim gives us quiet room (Part O)
         b.state = b.apex > 2 ? 'BOUNCE' : 'LOOSE'; b.bv = b.apex * 0.35; b.bt = 0;
       }
@@ -3979,10 +4027,74 @@ const AnimR2 = {
     return null;
   },
 
+  /* the goal a team attacks, in world metres (x) */
+  goalX(team){ const home = team === 'HOME'; return this.flip() ? (home ? 0 : 105) : (home ? 105 : 0); },
+  gkOf(team){                                   // the defending keeper (presented snapshot)
+    const pl = (S.match && S.match.snap && S.match.snap.players) || {};
+    const e = Object.entries(pl).find(([pid, p]) => p.team !== team && p.slot === 'GK' && p.active !== false && this.players[pid]);
+    return e ? e[0] : null;
+  },
+  shotEvent(e, actor){
+    const d = e.detail || {};
+    const team = (S.match.snap.players[e.actor_id] || {}).team || actor.team;
+    const gx = this.goalX(team), gy = 34, out = gx > 52 ? 1 : -1;
+    const h = a2hash(String(e.event_id || e.timestamp + (e.actor_id || '')));
+    let fx = actor.x, fy = actor.y;
+    if(e.event_type === 'PENALTY'){                 // from the spot, the taker placed on it
+      fx = gx - out * 11; fy = 34; actor.x = fx - out * 0.8; actor.y = 34.4; actor.vx = actor.vy = 0;
+    }
+    let tx = gx, ty = gy, kind = e.event_type === 'PENALTY' ? 'DRIVEN' : 'SHOT';
+    const o = String(d.outcome || '');
+    if(o === 'MISS'){ ty = gy + (h % 2 ? 5.3 : -5.3); }
+    if(o === 'BLOCKED'){ tx = fx + (gx - fx)*0.25; ty = fy + (gy - fy)*0.25; }
+    if(d.shot_type === 'HEADER') kind = 'DRIVEN';
+    if(o.startsWith('SAVED')){ ty = gy + ((h % 100) / 100 - 0.5) * 4.2; tx = gx - out * 0.6; }
+    this.setPose(e.actor_id, A2.SHOT, 0.5, gx, gy);
+    if(o === 'GOAL'){ this.startGoal(e, actor, fx, fy, false, kind); return; }
+    this.launch(fx, fy, tx, ty, kind, e.timestamp + 1.0);
+    const gk = this.gkOf(team);
+    if(gk && ['SAVED_PARRIED','SAVED_CAUGHT','SAVED','MISS'].includes(o))
+      this.setPose(gk, o === 'SAVED_CAUGHT' ? A2.RECEIVE : A2.GKDIVE, 0.8, tx, ty);
+  },
+  startGoal(e, actor, fx, fy, late, kind){
+    const team = e.team_id || (actor && actor.team) || 'HOME';
+    const gx = this.goalX(team), out = gx > 52 ? 1 : -1;
+    const h = a2hash('goal|' + e.timestamp + '|' + (e.actor_id || ''));
+    // where it goes in: between the posts, inside the net (never on the line)
+    const ty = 34 + ((h % 1000) / 1000 - 0.5) * 5.6;
+    const high = (h >> 10) % 3 === 0;
+    this.goalSeq = {ts: e.timestamp, team, gx, out, nx: gx + out * 1.5, ny: ty, scorer: e.actor_id, netAt: null, kicked: false};
+    const b = this.ball;
+    this.launch(fx, fy, gx + out * 1.3, ty, kind || 'SHOT', e.timestamp + (late ? 0.6 : 1.0));
+    b.goal = true; b.endZ = high ? 1.7 : 0.35;
+    if(late) b.p1 = b.p0 + Math.min(b.p1 - b.p0, 0.45);
+    const gk = this.gkOf(team);
+    if(gk) this.setPose(gk, A2.GKDIVE, 0.9, gx, ty);
+    // celebration: the scorer peels away toward the corner, the nearest team-mates follow him
+    if(actor && e.actor_id){
+      const cx = gx - out * 6, cy = ty < 34 ? 6 : 62;
+      const who = {}; who[e.actor_id] = [cx, cy];
+      const snapPl = (S.match && S.match.snap && S.match.snap.players) || {};
+      const mates = Object.entries(this.players).filter(([pid, p]) => pid !== e.actor_id && p.team === team && p.active
+        && Math.hypot(p.x - actor.x, p.y - actor.y) < 26 && (snapPl[pid] || {}).slot !== 'GK')
+        .sort((a, c) => Math.hypot(a[1].x - actor.x, a[1].y - actor.y) - Math.hypot(c[1].x - actor.x, c[1].y - actor.y)).slice(0, 3);
+      mates.forEach(([pid], k) => { const a = (k + 1) * 2.1; who[pid] = [cx - out * Math.cos(a) * 2.2, cy + (cy < 34 ? 1 : -1) * (1.2 + Math.sin(a) * 1.6)]; });
+      this.celebrate = {until: e.timestamp + 6, who};
+      this.setPose(e.actor_id, A2.RECEIVE, 3.2, cx, cy);
+    }
+  },
+
   applyEvent(e){
     const d = e.detail || {};
     const actor = this.players[e.actor_id];
     const bx = k => this.wx(k[0]), by = k => this.wy(k[1]);
+    // first touch after the restart = the kick-off: release the ball from the spot
+    const gs = this.goalSeq;
+    if(gs && !gs.kicked && e.timestamp >= gs.ts + 3 && e.event_type !== 'GOAL' && e.event_type !== 'POSSESSION_CHANGE'){
+      gs.kicked = true;
+      this.goalSeq = null; this.ball.state = 'LOOSE'; this.ball.x = 52.5; this.ball.y = 34;
+      this.lastKickoff = {ts: e.timestamp, at: performance.now()};
+    }
     switch(e.event_type){
       case 'PASS': {
         if(!d.actual_target || !actor) break;
@@ -4012,21 +4124,9 @@ const AnimR2 = {
         this.launch(actor.x, actor.y, actor.x + Math.cos(actor.face)*26, actor.y + Math.sin(actor.face)*10, 'CLEAR', e.timestamp + 1.2);
         break;
       }
-      case 'SHOT': {
+      case 'SHOT': case 'PENALTY': {
         if(!actor) break;
-        const home = (S.match.snap.players[e.actor_id]||{}).team === 'HOME';
-        const gx = this.flip() ? (home ? 0 : 105) : (home ? 105 : 0);
-        const gy = 34;
-        let tx = gx, ty = gy, kind = 'SHOT';
-        if(d.outcome === 'MISS'){ ty = gy + (a2hash(String(e.event_id)) % 2 ? 5.3 : -5.3); }
-        if(d.outcome === 'BLOCKED'){ tx = actor.x + (gx - actor.x)*0.25; ty = actor.y + (gy - actor.y)*0.25; }
-        if(d.shot_type === 'HEADER') kind = 'DRIVEN';
-        this.setPose(e.actor_id, A2.SHOT, 0.5, gx, gy);
-        this.launch(actor.x, actor.y, tx, ty, kind, e.timestamp + 1.0);
-        // GK reaction — pose only, side from shot geometry (deterministic)
-        const gk = Object.entries(S.match.snap.players).find(([pid, p]) => p.team !== (home?'HOME':'AWAY') && p.slot === 'GK');
-        if(gk && ['SAVED_PARRIED','SAVED_CAUGHT','MISS','GOAL'].includes(d.outcome))
-          this.setPose(gk[0], d.outcome === 'SAVED_CAUGHT' ? A2.RECEIVE : A2.GKDIVE, 0.8, tx, ty);
+        this.shotEvent(e, actor);
         break;
       }
       case 'DRIBBLE': {
@@ -4063,8 +4163,14 @@ const AnimR2 = {
         break;
       }
       case 'POSSESSION_CHANGE': this.ball.holder = null; break;
-      case 'GOAL': break;
+      case 'GOAL': {
+        // a goal without a scoring shot animation (own goal, scramble): put it in now
+        const g = this.goalSeq;
+        if(!g || Math.abs(g.ts - e.timestamp) > 2) this.startGoal(e, this.players[e.actor_id], this.ball.x, this.ball.y, true);
+        break;
+      }
     }
+
     // reception pose when a completed pass lands
     if(this._pendingRecv && this.P >= this._pendingRecv.at - 0.05){ /* handled in draw loop tick below */ }
   },
@@ -4124,9 +4230,13 @@ const AnimR2 = {
     c.beginPath(); const [a2x,a2y]=this.toScr(105-16.5,34); c.arc(a2x + 16.5*sc - 11*sc, a2y, 9.15*sc, Math.PI-0.93, Math.PI+0.93); c.stroke();
     // goals
     c.fillStyle = 'rgba(255,255,255,.55)';
+    const ln = this.lastNet, nt = ln ? (performance.now() - ln.at) / 900 : 9;
     for(const [gx, dxs] of [[0,-1],[105,1]]){
       const [px, py] = this.toScr(gx, 34 - 3.66);
-      c.fillRect(px + (dxs<0 ? -sc*1.6 : 0), py, sc*1.6, 7.32*sc);
+      const hit = nt < 1 && this.goalSeq && Math.abs(this.goalSeq.gx - gx) < 1;
+      const bulge = hit ? Math.sin(nt * Math.PI) * sc * 0.9 : 0;
+      c.fillStyle = hit ? `rgba(255,255,255,${(0.55 + 0.35 * (1 - nt)).toFixed(3)})` : 'rgba(255,255,255,.55)';
+      c.fillRect(px + (dxs<0 ? -sc*1.6 - bulge : 0), py, sc*1.6 + bulge, 7.32*sc);
     }
   },
 
@@ -4136,11 +4246,19 @@ const AnimR2 = {
     const cv = this.canvas;
     if(px < -40 || py < -40 || px > cv.width + 40 || py > cv.height + 40) return;
     const isLiv = p.team === livTeamId();
-    const shirt = isLiv ? '#d33c47' : '#5b84d6';
-    const shirt2 = isLiv ? '#a92835' : '#3f66b5';
-    const shorts = isLiv ? '#7c1420' : '#233a63';
+    const K = this.kits && this.kits[p.team];                // match kits (set by the app; presentation only)
+    const isGK = !!K && ((S.match && S.match.snap && S.match.snap.players[pid]) || {}).slot === 'GK';
+    const shirt = K ? (isGK ? K.gk : K.shirt) : isLiv ? '#d33c47' : '#5b84d6';
+    const shirt2 = K ? K.shirt2 : isLiv ? '#a92835' : '#3f66b5';
+    const shorts = K ? K.shorts : isLiv ? '#7c1420' : '#233a63';
     const skin = '#e8b98a', hair = ['#2b2019','#4a331f','#151210','#6b4f2c','#83552e'][a2hash(pid) % 5];
     const h = sc * 1.9;                                      // ~1.9 m tall, upright 3/4 view
+    const fxg = this.fx && this.fx.glow && this.fx.glow.has(pid);
+    if(fxg){                                                 // card play: affected players glow
+      const pulse = 0.55 + 0.45 * Math.sin(performance.now() / 160);
+      c.save(); c.fillStyle = `rgba(255,214,90,${(0.18 + 0.2 * pulse).toFixed(3)})`;
+      c.beginPath(); c.ellipse(px, py - h*0.35, h*0.42, h*0.62, 0, 0, Math.PI*2); c.fill(); c.restore();
+    }
     const v = Math.hypot(p.vx, p.vy);
     const ph = p.gait;
     const stride = p.pose === A2.SPRINT ? 1 : p.pose === A2.RUN ? 0.75 : p.pose === A2.JOG ? 0.5 : 0.1;
@@ -4204,11 +4322,57 @@ const AnimR2 = {
     c.fillStyle = hair;
     c.beginPath(); c.arc(h*0.015, -h*0.75, h*0.115, Math.PI*0.95, Math.PI*2.05); c.fill();
     c.restore();
-    if(this.cam.scale > 9){
+    const lab = this.labelFor ? this.labelFor(pid, p) : null;
+    if(lab){ lab.x = px; lab.y = py - h*0.98; lab.d = Math.hypot(p.x - this.ball.x, p.y - this.ball.y); (this._chips || (this._chips = [])).push(lab); }
+    else if(!this.labelFor && this.cam.scale > 9){
       c.fillStyle = 'rgba(255,255,255,.72)';
       c.font = `${Math.max(8, Math.round(sc*0.5))}px system-ui`;
       c.textAlign = 'center';
       c.fillText(shortName(p.name), px, py + h*0.24);
+    }
+  },
+  /* team-coloured label chips, decluttered (highlighted + carrier first, then by distance to the ball) */
+  drawChips(c){
+    const L = this._chips; this._chips = [];
+    if(!L || !L.length) return;
+    L.sort((a, b) => (b.hi ? 2 : b.carrier ? 1 : 0) - (a.hi ? 2 : a.carrier ? 1 : 0) || a.d - b.d);
+    const placed = [];
+    c.save(); c.textAlign = 'center'; c.textBaseline = 'middle';
+    const fpx = Math.max(9, Math.min(12, Math.round(this.cam.scale * 0.55 + 4)));
+    c.font = `700 ${fpx}px system-ui, -apple-system, sans-serif`;
+    for(const l of L){
+      const tw = c.measureText(l.text).width, w = tw + fpx * 0.8, hh = fpx * 1.35;
+      const r = {x0: l.x - w/2, x1: l.x + w/2, y0: l.y - hh, y1: l.y};
+      if(!l.hi && placed.some(q => r.x0 < q.x1 && r.x1 > q.x0 && r.y0 < q.y1 && r.y1 > q.y0)) continue;
+      placed.push(r);
+      c.fillStyle = l.bg; c.strokeStyle = l.hi ? '#ffd23c' : l.edge; c.lineWidth = l.hi ? 1.6 : 1;
+      c.beginPath(); c.roundRect(r.x0, r.y0, w, hh, hh * 0.32); c.fill(); c.stroke();
+      c.fillStyle = l.fg; c.fillText(l.text, l.x, l.y - hh/2 + 0.5);
+    }
+    c.restore();
+  },
+  /* card-play effects in world metres: role arrows + ghosted new shape */
+  drawFx(c){
+    const F = this.fx; if(!F) return;
+    const now = performance.now();
+    if(F.ghost && now < F.ghost.until){
+      const a = Math.min(1, (F.ghost.until - now) / 600) * 0.85;
+      c.save(); c.globalAlpha = a; c.setLineDash([4, 4]); c.strokeStyle = F.ghost.color || '#ffd65a'; c.lineWidth = 1.5;
+      c.fillStyle = 'rgba(255,214,90,.16)';
+      for(const pt of F.ghost.pts){ const [x, y] = this.toScr(pt[0], pt[1]); c.beginPath(); c.arc(x, y, Math.max(5, this.cam.scale * 0.9), 0, Math.PI*2); c.fill(); c.stroke(); }
+      for(const ln of F.ghost.lines || []){ c.beginPath(); ln.forEach((pt, k) => { const [x, y] = this.toScr(pt[0], pt[1]); k ? c.lineTo(x, y) : c.moveTo(x, y); }); c.stroke(); }
+      c.restore();
+    }
+    for(const ar of F.arrows || []){
+      if(now > ar.until) continue;
+      const p = this.players[ar.pid]; if(!p) continue;
+      const [x0, y0] = this.toScr(p.x, p.y), [x1, y1] = this.toScr(p.x + ar.dx, p.y + ar.dy);
+      const a = Math.min(1, (ar.until - now) / 500);
+      const ang = Math.atan2(y1 - y0, x1 - x0), hl = Math.max(7, this.cam.scale * 0.9);
+      c.save(); c.globalAlpha = a; c.strokeStyle = ar.color || '#ffd65a'; c.fillStyle = ar.color || '#ffd65a'; c.lineWidth = Math.max(2, this.cam.scale * 0.22); c.lineCap = 'round';
+      c.beginPath(); c.moveTo(x0, y0); c.lineTo(x1 - Math.cos(ang) * hl * 0.6, y1 - Math.sin(ang) * hl * 0.6); c.stroke();
+      c.beginPath(); c.moveTo(x1, y1); c.lineTo(x1 - Math.cos(ang - 0.45) * hl, y1 - Math.sin(ang - 0.45) * hl);
+      c.lineTo(x1 - Math.cos(ang + 0.45) * hl, y1 - Math.sin(ang + 0.45) * hl); c.closePath(); c.fill(); c.restore();
     }
   },
 
@@ -4248,6 +4412,8 @@ const AnimR2 = {
       this.drawPlayer(c, p, pid);
     }
     if(!ballDrawn) this.drawBall(c);
+    this.drawFx(c);
+    this.drawChips(c);
     if(this.dbg.on && this.dbg.panel){
       const el = this.dbg.panel.querySelector('#a2status');
       if(el) el.textContent =
@@ -5672,7 +5838,7 @@ function updateHtPanel(m){
       adjust tactics or make substitutions from the Touchline, then restart.</div>
     <div style="display:flex;gap:8px;justify-content:center;margin-top:12px">
       <button class="btn pri" style="flex:0 0 auto;padding:10px 24px" onclick="startSecondHalf()">Start second half</button>
-      <button class="btn sec" onclick="show('squad')">Touchline</button>
+      <button class="btn sec" onclick="show('squad')">Edit team &amp; tactics</button>
     </div></div>`;
 }
 
@@ -5692,7 +5858,7 @@ function renderFullTimeView(wrap, m){
   wrap.innerHTML = `
     <div class="board">
       <div style="font-family:var(--cond);letter-spacing:.18em;font-size:12px;color:var(--dim)">
-        MATCHWEEK ${f.mw} · FULL TIME · ${esc(m.engine.name)} v${esc(m.engine.engine_version)}</div>
+        MATCHWEEK ${f.mw} · FULL TIME</div>
       <div class="scoreline">
         <div class="tm">${clubName(f.home)}</div>
         <div class="sc">${m.score[0]}<span style="color:var(--dim);margin:0 6px">–</span>${m.score[1]}</div>
@@ -6458,7 +6624,7 @@ function toggleBench(){
 function renderTopBar(){
   const el = $('#recordLabel'); if(!el || !S.season) return;
   const row = livRow();
-  el.textContent = `MW ${S.season.matchweek} · P${row.pos} · ${row.w}W ${row.d}D ${row.l}L · ${row.pts}pts`;
+  el.textContent = row.p ? `MW ${S.season.matchweek} · ${row.pos}${['th','st','nd','rd'][(row.pos % 100 > 10 && row.pos % 100 < 14) ? 0 : (row.pos % 10 < 4 ? row.pos % 10 : 0)]} · ${row.w}W ${row.d}D ${row.l}L · ${row.pts}pts` : `MW ${S.season.matchweek} · season starts`;
 }
 
 /* Card size follows the space left over after the dock. */
@@ -6654,8 +6820,17 @@ window.TOUCHLINE = {
   DETAILED_PLAYER_PROFILES, ATTRIBUTE_PROFILES, PLAYERS
 };
 
-boot();
+/* Coach MVP modules (web/coach-*.js) load after this script and wrap globals.
+   boot() waits for DOMContentLoaded so every module has registered its
+   overrides first; modules chain post-boot work on TL.booted. */
+window.TL = window.TL || {hooks: {}, bus: new EventTarget()};
+TL.booted = new Promise(resolve =>
+  document.addEventListener('DOMContentLoaded', () => resolve(boot())));
 
 </script>
+<script src="coach-match.js"></script>
+<script src="coach-career.js"></script>
+<script src="coach-build.js"></script>
+<script src="coach-run.js"></script>
 </body>
 </html>

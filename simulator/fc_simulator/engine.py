@@ -5,8 +5,8 @@ from dataclasses import replace
 from typing import Any
 
 from .calibration import CalibrationConfig
-from .fatigue import add_explosive_load, effective_attribute, halftime_recovery, update_fatigue
-from .formations import anchors_for, slot_map_between
+from .fatigue import add_explosive_load, effective_attribute, halftime_recovery, modded_attr, update_fatigue
+from .formations import BACK_THREE_FORMATIONS, anchors_for, slot_map_between
 from .geometry import (
     attack_relative_x,
     distance_m,
@@ -86,6 +86,16 @@ class MatchEngine:
     meaningful chances without borrowing the transition ecology of open games. It
     preserves the core invariant that OVR never enters resolution.
     """
+
+    # ── Core Loop v2 hooks (ENGINE CHANGE). Class-level defaults keep every
+    # hook inert (and legacy pickles loadable) until its input is provided;
+    # instance values are only ever created by the v2 entry points below.
+    set_pieces = None            # E1/E4: {team_id: {corner, free_kick, penalty, corner_routine}}
+    _mod_layers = ()             # E2: [{team, pid, deltas, until}]
+    _mod_next_expiry = None      # E2: earliest until_clock among layers
+    _scheduled = ()              # E2: [(at_clock, seq, kind, payload)]
+    _sched_seq = 0
+    _sched_dispatch = None       # E2: callable(engine, kind, payload) (management.dispatch)
 
     def __init__(
         self,
@@ -198,7 +208,7 @@ class MatchEngine:
 
     def _kickoff_player(self, team_id: str) -> PlayerState:
         active = self._team_states(team_id)
-        st = next((s for s in active if s.slot == "ST"), None)
+        st = next((s for s in active if s.slot in {"ST", "LST", "RST"}), None)
         return st or active[0]
 
     def _carrier(self) -> PlayerState:
@@ -442,7 +452,7 @@ class MatchEngine:
         goal_side_ratio = len(goal_side) / len(defenders)
         central_cover = sum(1 for s in goal_side if abs(s.pos.y - 50.0) <= 27.0)
         central_ratio = min(1.0, central_cover / 4.0)
-        backline = [s for s in defenders if s.slot in {"LB", "LCB", "RCB", "RB"}]
+        backline = [s for s in defenders if s.slot in {"LB", "LCB", "RCB", "RB", "LWB", "RWB", "CB"}]
         if len(backline) >= 2:
             xs = [attack_relative_x(attacking_team, s.pos) for s in backline]
             mean_x = sum(xs) / len(xs)
@@ -512,10 +522,10 @@ class MatchEngine:
         line = max(50.0, ball_rel, self._offside_line(carrier.team_id))
         return target_rel - line
 
-    _ST_LINE = {"LB": "back", "LCB": "back", "RCB": "back", "RB": "back",
+    _ST_LINE = {"LB": "back", "LWB": "back", "LCB": "back", "RCB": "back", "CB": "back", "RB": "back", "RWB": "back",
                 "CDM": "dm", "LDM": "dm", "RDM": "dm",
                 "LCM": "mid", "RCM": "mid", "LM": "mid", "RM": "mid",
-                "LW": "att", "RW": "att", "LAM": "att", "CAM": "att", "RAM": "att", "ST": "att"}
+                "LW": "att", "RW": "att", "LAM": "att", "CAM": "att", "RAM": "att", "ST": "att", "LST": "att", "RST": "att"}
 
     def _ai_recovery_duty(self, team_id: str) -> set:
         """F1: deterministic per-second set of stranded high players who owe a
@@ -580,7 +590,7 @@ class MatchEngine:
             # fullback advance is a role/effort/tactic identity. Rest defense:
             # CBs never exceed their cap, and the transition machinery is
             # untouched, so space behind an advanced line is genuinely losable.
-            if grp == "back" and s.slot in {"LB", "RB"}:
+            if grp == "back" and s.slot in {"LB", "RB", "LWB", "RWB"}:
                 cap_fb = {"SECURE": 56.0, "BALANCED": 64.0, "AMBITIOUS": 72.0}.get(risk, 64.0)
                 role_up = s.instructions.attack_role.upper()
                 role_adv = 10.0 if role_up in {"OVERLAP", "WIDE_RUNNER", "UNDERLAP"} else 0.0
@@ -607,9 +617,9 @@ class MatchEngine:
                            "mid": 0.62 * ball_rel_x + 10.0}[grp] + adj
             line_target = min(line_target, cap)
         if PD["P1"] and grp == "back":
-            fb = s.slot in {"LB", "RB"}
+            fb = s.slot in {"LB", "RB", "LWB", "RWB"}
             mates = [m for m in self._team_states(s.team_id)
-                     if m.active and ((m.slot in {"LB", "RB"}) == fb) and self._ST_LINE.get(m.slot) == "back"]
+                     if m.active and ((m.slot in {"LB", "RB", "LWB", "RWB"}) == fb) and self._ST_LINE.get(m.slot) == "back"]
         else:
             mates = [m for m in self._team_states(s.team_id)
                      if m.active and self._ST_LINE.get(m.slot) == grp]
@@ -666,11 +676,11 @@ class MatchEngine:
             # they cap their height relative to the ball so the block stays
             # connected. Direct teams keep more stretch (early outlets), short
             # teams compress more; runner roles hold the higher edge of the cap.
-            if ST["B"] and ball_rel_x <= 42.0 and s.slot in {"LW","RW","LM","RM","LAM","CAM","RAM","ST"} \
+            if ST["B"] and ball_rel_x <= 42.0 and s.slot in {"LW","RW","LM","RM","LAM","CAM","RAM","ST","LST","RST"} \
                     and self._transition_age(team_id) > self.cal.transition_window_seconds:
                 cap_gap = 34.0
                 cap_gap += {"SHORT": -4.0, "MIXED": 0.0, "DIRECT": 6.0}.get(team.tactics.passing_directness, 0.0)
-                if s.slot == "ST":
+                if s.slot in {"ST", "LST", "RST"}:
                     cap_gap += 4.0
                 if role in {"RUN_BEHIND", "POACHER"}:
                     cap_gap += 4.0
@@ -681,10 +691,10 @@ class MatchEngine:
             transition_age = self._transition_age(team_id)
             if transition_age <= self.cal.transition_window_seconds:
                 if team.tactics.after_winning_possession == "COUNTER":
-                    transition_run = 8.0 if s.slot in {"LW","RW","LM","RM","ST","LAM","CAM","RAM"} else 4.5
+                    transition_run = 8.0 if s.slot in {"LW","RW","LM","RM","ST","LAM","CAM","RAM","LST","RST"} else 4.5
                     target_rel_x += transition_run * atk_eff
                 elif team.tactics.after_winning_possession == "SECURE":
-                    secure_hold = 5.0 if s.slot in {"LW","RW","LM","RM","ST","LAM","CAM","RAM"} else 2.5
+                    secure_hold = 5.0 if s.slot in {"LW","RW","LM","RM","ST","LAM","CAM","RAM","LST","RST"} else 2.5
                     target_rel_x -= secure_hold * atk_eff
 
             # Post-regain stabilization.  Winning the ball deep does not instantly mean the
@@ -701,7 +711,7 @@ class MatchEngine:
                 if hold_strength > 0.0:
                     current_rel = attack_relative_x(team_id, s.pos)
                     allowance = {
-                        "LB": 2.0, "LCB": 1.5, "RCB": 1.5, "RB": 2.0,
+                        "LB": 2.0, "LWB": 2.0, "LCB": 1.5, "RCB": 1.5, "CB": 1.5, "RB": 2.0, "RWB": 2.0,
                         "CDM": 2.5, "LDM": 2.5, "RDM": 2.5,
                         "LCM": 4.0, "RCM": 4.0, "LM": 4.5, "RM": 4.5,
                     }.get(s.slot)
@@ -710,30 +720,30 @@ class MatchEngine:
                         target_rel_x = (1.0 - hold_strength) * target_rel_x + hold_strength * min(target_rel_x, expansion_cap)
 
             # Risk/directness affect supporting depth, never player attributes.
-            if s.slot not in {"GK", "LCB", "RCB"}:
+            if s.slot not in {"GK", "LCB", "RCB", "CB"}:
                 target_rel_x += {"SECURE": -1.2, "BALANCED": 0.0, "AMBITIOUS": 2.2}.get(team.tactics.progression_risk, 0.0) * atk_eff
                 target_rel_x += {"SHORT": -1.0, "MIXED": 0.0, "DIRECT": 1.6}.get(team.tactics.passing_directness, 0.0) * atk_eff
 
             # Box commitment controls how many supporting players occupy the final line.
             # The ST still attacks the box in cautious systems, but fullbacks/midfielders stay safer.
-            if ball_rel_x >= 62 and s.slot not in {"LCB", "RCB", "GK"}:
+            if ball_rel_x >= 62 and s.slot not in {"LCB", "RCB", "GK", "CB"}:
                 if team.tactics.box_commitment == "CAUTIOUS":
-                    by_slot = {"ST": 1.0, "LW": 0.5, "RW": 0.5, "LM": 0.0, "RM": 0.0, "LAM": 0.5, "CAM": 1.0, "RAM": 0.5,
-                               "LCM": -2.0, "RCM": -2.0, "LDM": -4.0, "RDM": -4.0, "CDM": -5.0, "LB": -5.0, "RB": -5.0}
+                    by_slot = {"ST": 1.0, "LST": 1.0, "RST": 1.0, "LW": 0.5, "RW": 0.5, "LM": 0.0, "RM": 0.0, "LAM": 0.5, "CAM": 1.0, "RAM": 0.5,
+                               "LCM": -2.0, "RCM": -2.0, "LDM": -4.0, "RDM": -4.0, "CDM": -5.0, "LB": -5.0, "LWB": -5.0, "RB": -5.0, "RWB": -5.0}
                 elif team.tactics.box_commitment == "COMMIT":
                     if team.tactics.chance_creation_focus == "WIDE":
                         # Wide attacks still commit bodies, but most midfield/fullback support
                         # occupies the edge/cutback lanes instead of stacking six players on
                         # the six-yard line. Far-side forwards remain the primary extra targets.
-                        by_slot = {"ST": 3.0, "LW": 5.0, "RW": 5.0, "LM": 4.0, "RM": 4.0, "LAM": 5.0, "CAM": 5.0, "RAM": 5.0,
-                                   "LCM": 3.0, "RCM": 3.0, "LDM": 1.5, "RDM": 1.5, "CDM": 0.5, "LB": 2.0, "RB": 2.0}
+                        by_slot = {"ST": 3.0, "LST": 3.0, "RST": 3.0, "LW": 5.0, "RW": 5.0, "LM": 4.0, "RM": 4.0, "LAM": 5.0, "CAM": 5.0, "RAM": 5.0,
+                                   "LCM": 3.0, "RCM": 3.0, "LDM": 1.5, "RDM": 1.5, "CDM": 0.5, "LB": 2.0, "LWB": 2.0, "RB": 2.0, "RWB": 2.0}
                     else:
                         # Commit means more forward occupation, not every supporting player
                         # charging the six-yard box. Midfield/fullback depth is deliberately
                         # bounded so open games create more chances through broken geometry
                         # without turning every settled attack into a five-yard shot.
-                        by_slot = {"ST": 3.0, "LW": 5.0, "RW": 5.0, "LM": 4.0, "RM": 4.0, "LAM": 5.0, "CAM": 5.5, "RAM": 5.0,
-                                   "LCM": 4.0, "RCM": 4.0, "LDM": 2.0, "RDM": 2.0, "CDM": 1.0, "LB": 3.5, "RB": 3.5}
+                        by_slot = {"ST": 3.0, "LST": 3.0, "RST": 3.0, "LW": 5.0, "RW": 5.0, "LM": 4.0, "RM": 4.0, "LAM": 5.0, "CAM": 5.5, "RAM": 5.0,
+                                   "LCM": 4.0, "RCM": 4.0, "LDM": 2.0, "RDM": 2.0, "CDM": 1.0, "LB": 3.5, "LWB": 3.5, "RB": 3.5, "RWB": 3.5}
                 else:
                     by_slot = {}
                 target_rel_x += by_slot.get(s.slot, 0.0) * atk_eff
@@ -742,19 +752,19 @@ class MatchEngine:
             # primary scorer and selected support players into useful scoring zones once the
             # ball is established high up the pitch; cautious systems simply send fewer of
             # them. Attacking Position controls how effectively each player finds that depth.
-            if ball_rel_x >= 64.0 and s.slot in {"LM","RM","LW","RW","LCM","RCM","LAM","CAM","RAM","ST","LB","RB"}:
+            if ball_rel_x >= 64.0 and s.slot in {"LM","RM","LW","RW","LCM","RCM","LAM","CAM","RAM","ST","LB","RB","LWB","RWB","LST","RST"}:
                 final_phase = clamp((ball_rel_x - 64.0) / 20.0, 0.0, 1.0)
                 pos_skill = sigmoid(1.2 * self._g_eff(s, "attacking_position"))
                 commit = {"CAUTIOUS": 0.45, "BALANCED": 0.95, "COMMIT": 1.15}.get(team.tactics.box_commitment, 0.95)
                 slot_depth = {
-                    "ST": 5.5, "LW": 3.0, "RW": 3.0, "LM": 2.8, "RM": 2.8,
+                    "ST": 5.5, "LST": 5.5, "RST": 5.5, "LW": 3.0, "RW": 3.0, "LM": 2.8, "RM": 2.8,
                     "LAM": 3.4, "CAM": 3.6, "RAM": 3.4, "LCM": 1.8, "RCM": 1.8,
-                    "LB": 1.0, "RB": 1.0,
+                    "LB": 1.0, "LWB": 1.0, "RB": 1.0, "RWB": 1.0,
                 }.get(s.slot, 0.0)
                 target_rel_x += slot_depth * final_phase * commit * atk_eff * (0.65 + 0.55 * pos_skill)
 
             # Chance-creation focus changes occupation of lanes/space.
-            if team.tactics.chance_creation_focus == "VERTICAL" and s.slot in {"LW","RW","LM","RM","ST","LAM","CAM","RAM","LCM","RCM"}:
+            if team.tactics.chance_creation_focus == "VERTICAL" and s.slot in {"LW","RW","LM","RM","ST","LAM","CAM","RAM","LCM","RCM","LST","RST"}:
                 target_rel_x += 2.8 * atk_eff
 
             # Against a genuinely set deep shell, intelligent attacking occupation becomes
@@ -775,7 +785,7 @@ class MatchEngine:
                         # removes the diagnosed double-subtraction that pinned the
                         # rest-attack at 3v6 in settled sieges (Live Case #3).
                         station_gap = {
-                            "LB": 14.0, "RB": 14.0, "CDM": 18.0, "LDM": 17.0, "RDM": 17.0,
+                            "LB": 14.0, "LWB": 14.0, "RB": 14.0, "RWB": 14.0, "CDM": 18.0, "LDM": 17.0, "RDM": 17.0,
                             "LCM": 11.0, "RCM": 11.0, "LM": 6.0, "RM": 6.0,
                             "LW": 5.0, "RW": 5.0, "LAM": 7.0, "CAM": 8.0, "RAM": 7.0,
                         }.get(s.slot)
@@ -787,7 +797,7 @@ class MatchEngine:
                             target_rel_x = max(min(target_rel_x, station + 6.0), station)
                     else:
                         stagger = {
-                            "LB": 9.0, "RB": 9.0, "CDM": 8.5, "LDM": 8.0, "RDM": 8.0,
+                            "LB": 9.0, "LWB": 9.0, "RB": 9.0, "RWB": 9.0, "CDM": 8.5, "LDM": 8.0, "RDM": 8.0,
                             "LCM": 7.5, "RCM": 7.5, "LM": 4.8, "RM": 4.8,
                             "LW": 4.5, "RW": 4.5, "LAM": 5.5, "CAM": 6.0, "RAM": 5.5,
                         }.get(s.slot, 0.0)
@@ -814,11 +824,11 @@ class MatchEngine:
                 back_depth = {"DEEP": 11.5, "MID": 16.0, "HIGH": 23.0}.get(block, 16.0)
                 back_depth += {"DROP": -1.5, "HOLD": 0.0, "STEP_UP": 2.0}.get(team.tactics.defensive_line_behavior, 0.0)
                 band_gap = {
-                    "LB": 2.0, "LCB": 0.0, "RCB": 0.0, "RB": 2.0,
+                    "LB": 2.0, "LWB": 2.0, "LCB": 0.0, "RCB": 0.0, "CB": 0.0, "RB": 2.0, "RWB": 2.0,
                     "CDM": 10.0, "LDM": 10.0, "RDM": 10.0,
                     "LCM": 19.0, "RCM": 19.0, "LM": 19.0, "RM": 19.0,
                     "LW": 25.0, "RW": 25.0, "LAM": 23.0, "CAM": 23.0, "RAM": 23.0,
-                    "ST": 31.0,
+                    "ST": 31.0, "LST": 31.0, "RST": 31.0,
                 }.get(s.slot, 20.0)
                 target_rel_x = min(target_rel_x, back_depth + band_gap)
             # Regroup immediately pulls players toward the protected side of the ball;
@@ -870,9 +880,9 @@ class MatchEngine:
         elif not in_possession and role in {"TUCK_IN", "TUCK_INTO_BLOCK", "SCREEN", "BACKLINE_COVER"}:
             target_y += (50.0 - target_y) * (0.25 + 0.35 * def_eff)
 
-        if in_possession and team.tactics.chance_creation_focus == "CENTRAL" and s.slot not in {"GK","LCB","RCB"}:
+        if in_possession and team.tactics.chance_creation_focus == "CENTRAL" and s.slot not in {"GK","LCB","RCB","CB"}:
             target_y += (50.0 - target_y) * 0.16
-        elif in_possession and team.tactics.chance_creation_focus == "WIDE" and s.slot in {"LB","RB","LW","RW","LAM","RAM"}:
+        elif in_possession and team.tactics.chance_creation_focus == "WIDE" and s.slot in {"LB","RB","LW","RW","LAM","RAM","LWB","RWB"}:
             edge = 8.0 if s.home_anchor.y < 50 else 92.0
             target_y += (edge - target_y) * 0.16
 
@@ -882,7 +892,7 @@ class MatchEngine:
         # Attack Effort + Attacking Position, so weak/passive attackers still create little.
         if in_possession:
             probe = self._settled_probe(team_id)
-            if probe > 0 and s.slot in {"LM","RM","LW","RW","LCM","RCM","LAM","CAM","RAM","ST"}:
+            if probe > 0 and s.slot in {"LM","RM","LW","RW","LCM","RCM","LAM","CAM","RAM","ST","LST","RST"}:
                 pos_skill = sigmoid(1.15 * self._g_eff(s, "attacking_position"))
                 role_factor = {
                     "LINK": 0.70, "CONTROLLER": 0.62, "CREATOR": 0.88, "WIDE_SUPPORT": 0.72,
@@ -893,7 +903,7 @@ class MatchEngine:
                 target_rel_x += self.cal.settled_probe_forward_depth * probe * atk_eff * (0.55 + 0.65 * pos_skill) * role_factor * commitment
                 # Advanced central attackers find pockets between lines; wide support keeps
                 # enough width to avoid turning patient attacks into a central pile-up.
-                if s.slot in {"LCM","RCM","LAM","CAM","RAM","ST"}:
+                if s.slot in {"LCM","RCM","LAM","CAM","RAM","ST","LST","RST"}:
                     target_y += (50.0 - target_y) * (0.06 + 0.12 * probe * pos_skill)
             # Receiving pockets and coordinated box occupation. Advanced supporters do
             # not run to a formation-relative spot regardless of who is standing there:
@@ -902,8 +912,8 @@ class MatchEngine:
             # the box approach, toward a role-appropriate arrival lane. This changes
             # only movement targets; reaching the pocket costs real fatigue-limited
             # movement and no pass/shot/duel probability reads it directly.
-            support_slots = {"ST", "LW", "RW", "LM", "RM", "LAM", "CAM", "RAM", "LCM", "RCM"}
-            if ball_rel_x >= 55.0 and (s.slot in support_slots or (s.slot in {"LB", "RB"} and ball_rel_x >= 66.0)):
+            support_slots = {"ST", "LW", "RW", "LM", "RM", "LAM", "CAM", "RAM", "LCM", "RCM", "LST", "RST"}
+            if ball_rel_x >= 55.0 and (s.slot in support_slots or (s.slot in {"LB", "RB", "LWB", "RWB"} and ball_rel_x >= 66.0)):
                 target_rel_x, target_y = self._support_pocket(s, team_id, target_rel_x, target_y, atk_eff)
             # Family C: deep-phase support/checking movement. Designated nearby
             # players genuinely offer for the ball, creating the passing
@@ -982,10 +992,10 @@ class MatchEngine:
         aggressive_line = team.tactics.defensive_block_height == "HIGH" or team.tactics.defensive_line_behavior == "STEP_UP"
         line_broken = aggressive_line and ball_rel_x <= 34.0 and ball_rel_x < s_rel_x - 2.0
         if not in_possession and (deep_penetration or line_broken):
-            if s.slot in {"LCB", "RCB"}:
+            if s.slot in {"LCB", "RCB", "CB"}:
                 target_rel_x = min(target_rel_x, max(4.5, ball_rel_x - 1.8))
                 target_y += (ball.y - target_y) * 0.20
-            elif s.slot in {"LB", "RB"}:
+            elif s.slot in {"LB", "RB", "LWB", "RWB"}:
                 target_rel_x = min(target_rel_x, max(5.5, ball_rel_x + 0.5))
             elif s.slot in {"CDM", "LDM", "RDM"}:
                 target_rel_x = min(target_rel_x, max(8.0, ball_rel_x + 5.0))
@@ -997,13 +1007,13 @@ class MatchEngine:
         # the near-post and cutback corridors. This changes real geometry only.
         if not in_possession and ball_rel_x <= 22.0 and abs(ball.y - 50.0) >= 24.0:
             side_left = ball.y < 50.0
-            if (side_left and s.slot == "LB") or ((not side_left) and s.slot == "RB"):
+            if (side_left and s.slot in {"LB", "LWB"}) or ((not side_left) and s.slot in {"RB", "RWB"}):
                 target_y += (ball.y - target_y) * (0.38 + 0.24 * def_eff)
                 target_rel_x = min(target_rel_x, 16.0)
-            if s.slot in {"LCB","RCB","CDM","LDM","RDM","LCM","RCM"}:
+            if s.slot in {"LCB","RCB","CDM","LDM","RDM","LCM","RCM","CB"}:
                 central_strength = 0.18 if s.slot in {"LCM","RCM"} else 0.30
                 target_y += (50.0 - target_y) * (central_strength + 0.18 * def_eff)
-                if s.slot in {"LCB","RCB"}:
+                if s.slot in {"LCB","RCB","CB"}:
                     target_rel_x = min(target_rel_x, 13.5)
                 elif s.slot in {"CDM","LDM","RDM"}:
                     target_rel_x = min(target_rel_x, 20.0)
@@ -1014,9 +1024,9 @@ class MatchEngine:
         if not in_possession and ball_rel_x <= 48.0:
             opponents = [o for o in self._team_states(self._opp_id(team_id)) if o.slot != "GK"]
             central_threats = [o for o in opponents if attack_relative_x(self._opp_id(team_id), o.pos) >= 72.0 and abs(o.pos.y - 50.0) <= 25.0]
-            if central_threats and s.slot in {"LCB", "RCB"}:
+            if central_threats and s.slot in {"LCB", "RCB", "CB"}:
                 threat = min(central_threats, key=lambda o: abs(o.pos.y - s.home_anchor.y))
-                cb_states = [d for d in self._team_states(team_id) if d.slot in {"LCB", "RCB"}]
+                cb_states = [d for d in self._team_states(team_id) if d.slot in {"LCB", "RCB", "CB"}]
                 primary = min(cb_states, key=lambda d: abs(threat.pos.y - d.home_anchor.y)) if cb_states else s
                 if primary is s:
                     threat_rel = attack_relative_x(team_id, threat.pos)
@@ -1075,7 +1085,7 @@ class MatchEngine:
             # moves faster, more players simply choose (not) to go.
             n_pressers = {"PASSIVE": 1, "SELECTIVE": 2, "AGGRESSIVE": 3, "RELENTLESS": 3}.get(intensity, 2)
             nearest = sorted(self._team_states(team_id), key=lambda p: distance_m(p.pos, carrier.pos))[:n_pressers]
-            protect_cutback = ball_rel_x <= 22.0 and abs(ball.y - 50.0) >= 24.0 and s.slot in {"LCB","RCB","CDM","LDM","RDM"}
+            protect_cutback = ball_rel_x <= 22.0 and abs(ball.y - 50.0) >= 24.0 and s.slot in {"LCB","RCB","CDM","LDM","RDM","CB"}
             # Passive/low-block defending means conceding territory, not refusing to close
             # down a ball carrier who has already entered the box.  In deep central danger
             # the nearest CB becomes the primary engager while the other centre-back holds
@@ -1084,10 +1094,10 @@ class MatchEngine:
             deep_central_danger = ball_rel_x <= 22.0 and abs(ball.y - 50.0) <= 27.0
             primary_cb = None
             if deep_central_danger:
-                cb_states = [dstate for dstate in self._team_states(team_id) if dstate.slot in {"LCB", "RCB"}]
+                cb_states = [dstate for dstate in self._team_states(team_id) if dstate.slot in {"LCB", "RCB", "CB"}]
                 if cb_states:
                     primary_cb = min(cb_states, key=lambda dstate: distance_m(dstate.pos, carrier.pos))
-                if s.slot in {"LCB", "RCB"} and s is primary_cb:
+                if s.slot in {"LCB", "RCB", "CB"} and s is primary_cb:
                     max_press = max(max_press, 6.2 * (0.72 + 0.35 * def_eff))
                 elif s.slot in {"CDM", "LDM", "RDM"}:
                     max_press = max(max_press, 5.0 * (0.72 + 0.35 * def_eff))
@@ -1095,7 +1105,7 @@ class MatchEngine:
             # nearby carrier. HOLD_LINE/COVER CBs engage only when the ball is genuinely
             # threatening their box and close enough to challenge; midfield/forward pressers
             # do the bulk of settled pressing.
-            cb_line_discipline = s.slot in {"LCB","RCB"} and role not in {"STEP_OUT","TIGHT_MARK"} and (ball_rel_x > 26.0 or d > 5.2)
+            cb_line_discipline = s.slot in {"LCB","RCB","CB"} and role not in {"STEP_OUT","TIGHT_MARK"} and (ball_rel_x > 26.0 or d > 5.2)
             if deep_central_danger and s is primary_cb:
                 cb_line_discipline = False
             # Pursuit persistence with a structural leash. Once a player has chosen
@@ -1140,7 +1150,7 @@ class MatchEngine:
                     # in byline zones - the stepper is the nearest UNCOMMITTED
                     # defender (typically the fullback/winger on that side).
                     _byline = ball_rel_x <= 22.0 and abs(ball.y - 50.0) >= 24.0
-                    _locked = {"LCB", "RCB", "CDM", "LDM", "RDM"} if _byline else set()
+                    _locked = {"LCB", "RCB", "CDM", "LDM", "RDM", "CB"} if _byline else set()
                     _steppers = sorted((x for x in self._team_states(team_id)
                                         if x.active and x.slot != "GK" and x.slot not in _locked),
                                        key=lambda x: (round(distance_m(x.pos, carrier.pos), 4), x.player.player_id))
@@ -1212,7 +1222,7 @@ class MatchEngine:
         # Forward runners work off the actual second-last-defender line. High Attacking
         # Position means tighter timing; lower values create a wider timing oscillation
         # and therefore occasional marginal offsides rather than a hidden success bonus.
-        if in_possession and s.slot in {"LW", "RW", "LM", "RM", "ST", "LCM", "RCM", "LAM", "CAM", "RAM"} and target_rel_x > 50:
+        if in_possession and s.slot in {"LW", "RW", "LM", "RM", "ST", "LCM", "RCM", "LAM", "CAM", "RAM", "LST", "RST"} and target_rel_x > 50:
             line = max(50.0, attack_relative_x(team_id, ball), self._offside_line(team_id))
             pos_skill = sigmoid(1.1 * self._g_eff(s, "attacking_position"))
             base_buffer = 1.7 - 1.0 * pos_skill
@@ -1221,9 +1231,9 @@ class MatchEngine:
                 target_rel_x = min(target_rel_x, line - base_buffer + timing_error)
         # Final byline-cover priority is applied after micro-adjustments/run timing so
         # central protectors cannot be accidentally pulled out of the cutback lane.
-        if not in_possession and ball_rel_x <= 22.0 and abs(ball.y - 50.0) >= 24.0 and s.slot in {"LCB","RCB","CDM","LDM","RDM"}:
+        if not in_possession and ball_rel_x <= 22.0 and abs(ball.y - 50.0) >= 24.0 and s.slot in {"LCB","RCB","CDM","LDM","RDM","CB"}:
             target_y += (50.0 - target_y) * 0.58
-            if s.slot in {"LCB","RCB"}:
+            if s.slot in {"LCB","RCB","CB"}:
                 target_rel_x = min(target_rel_x, 13.5)
             else:
                 target_rel_x = min(target_rel_x, 20.0)
@@ -1238,17 +1248,17 @@ class MatchEngine:
             ball_behind_player = ball_rel_x < current_rel - 1.5
             penetrated = ball_rel_x <= 26.0 or (ball_rel_x <= 36.0 and ball_behind_player)
             if penetrated:
-                if s.slot in {"LCB", "RCB"}:
+                if s.slot in {"LCB", "RCB", "CB"}:
                     target_rel_x = min(target_rel_x, max(4.5, ball_rel_x - 1.2))
                     # When one centre-back has recovered and the other is stranded,
                     # reconnect the pair.  The reference is actual current geometry,
                     # not a tactical or attribute bonus.
-                    cb_rel = [attack_relative_x(team_id, d.pos) for d in self._team_states(team_id) if d.active and d.slot in {"LCB", "RCB"}]
+                    cb_rel = [attack_relative_x(team_id, d.pos) for d in self._team_states(team_id) if d.active and d.slot in {"LCB", "RCB", "CB"}]
                     if len(cb_rel) >= 2 and ball_rel_x <= 32.0:
                         coherent_cap = min(cb_rel) + 5.5
                         target_rel_x = min(target_rel_x, coherent_cap)
                     target_y += (ball.y - target_y) * 0.12
-                elif s.slot in {"LB", "RB"}:
+                elif s.slot in {"LB", "RB", "LWB", "RWB"}:
                     target_rel_x = min(target_rel_x, max(5.5, ball_rel_x + 1.0))
                 elif s.slot in {"CDM", "LDM", "RDM"}:
                     target_rel_x = min(target_rel_x, max(8.0, ball_rel_x + 5.5))
@@ -1258,13 +1268,13 @@ class MatchEngine:
         # Broad positional envelopes prevent tactical settings from collapsing players
         # onto their own goal line. These are structural floors, not attribute bonuses.
         min_rel_x = {
-            "LB": 10.0, "LCB": 9.0, "RCB": 9.0, "RB": 10.0,
+            "LB": 10.0, "LWB": 10.0, "LCB": 9.0, "RCB": 9.0, "CB": 9.0, "RB": 10.0, "RWB": 10.0,
             "CDM": 15.0, "LDM": 15.0, "RDM": 15.0,
             "LCM": 20.0, "RCM": 20.0,
-            "LW": 27.0, "RW": 27.0, "LM": 24.0, "RM": 24.0, "LAM": 27.0, "CAM": 27.0, "RAM": 27.0, "ST": 29.0,
+            "LW": 27.0, "RW": 27.0, "LM": 24.0, "RM": 24.0, "LAM": 27.0, "CAM": 27.0, "RAM": 27.0, "ST": 29.0, "LST": 29.0, "RST": 29.0,
         }.get(s.slot, 4.0)
         if not in_possession and ball_rel_x <= 20.0:
-            emergency_floor = {"LB": 5.0, "LCB": 4.0, "RCB": 4.0, "RB": 5.0,
+            emergency_floor = {"LB": 5.0, "LWB": 5.0, "LCB": 4.0, "RCB": 4.0, "CB": 4.0, "RB": 5.0, "RWB": 5.0,
                                "CDM": 8.0, "LDM": 8.0, "RDM": 8.0,
                                "LCM": 12.0, "RCM": 12.0, "LM": 14.0, "RM": 14.0}.get(s.slot)
             if emergency_floor is not None:
@@ -1324,6 +1334,10 @@ class MatchEngine:
             role = s.instructions.attack_role.upper()
             if s.slot == "ST" or role == "POACHER":
                 lane_y, lane_w = near_y, 0.55
+            elif s.slot in {"LST", "RST"}:
+                # strike pair: the ball-side striker attacks the near post, his
+                # partner the far post (two strikers never share one lane)
+                lane_y, lane_w = (near_y, 0.55) if (s.slot == "LST") == side_left else (far_y, 0.55)
             elif role in {"SECOND_STRIKER", "RUN_BEHIND"} or s.slot == "CAM":
                 lane_y, lane_w = 50.0, 0.45
             elif s.slot in {"LW", "LM", "LAM"} and not side_left:
@@ -1369,7 +1383,7 @@ class MatchEngine:
         n = {"SHORT": 3, "MIXED": 2, "DIRECT": 1}.get(self.teams[team_id].tactics.passing_directness, 2)
         elig = [m for m in self._team_states(team_id)
                 if m.active and m is not carrier
-                and m.slot in {"LCB", "RCB", "LB", "RB", "CDM", "LDM", "RDM", "LCM", "RCM", "LM", "RM", "LW", "RW"}]
+                and m.slot in {"LCB", "RCB", "LB", "RB", "CDM", "LDM", "RDM", "LCM", "RCM", "LM", "RM", "LW", "RW", "LWB", "RWB", "CB"}]
         if PD["P3"]:
             # P3: participation ROTATES. Recent supporters pay a re-selection
             # penalty so different players take turns offering (relay), the
@@ -1436,13 +1450,15 @@ class MatchEngine:
         opponents = [o.pos for o in self._team_states(self._opp_id(team_id)) if o.slot != "GK" and o.active]
         mates = [m.pos for m in self._team_states(team_id) if m.slot != "GK" and m.active and m is not s]
         r = radius / 1.05
-        if s.slot in {"LCB", "RCB"}:
+        if s.slot in {"LCB", "RCB", "CB"}:
             side = -1.0 if s.slot == "LCB" else 1.0
+            if s.slot == "CB":   # centre of a back three: relief on the far side of the carrier
+                side = 1.0 if carrier.pos.y < 50.0 else -1.0
             cands = [(car_rel - r * 0.45, carrier.pos.y + side * 14.0),
                      (car_rel - r * 0.30, carrier.pos.y + side * 20.0),
                      (car_rel - r * 0.60, 50.0)]
-        elif s.slot in {"LB", "RB"}:
-            edge = 12.0 if s.slot == "LB" else 88.0
+        elif s.slot in {"LB", "RB", "LWB", "RWB"}:
+            edge = 12.0 if s.slot in {"LB", "LWB"} else 88.0
             cands = [(car_rel + 2.0, edge), (car_rel + 7.0, edge), (car_rel - 2.0, edge)]
         elif s.slot in {"CDM", "LDM", "RDM"}:
             cands = [(car_rel + r * 0.8, carrier.pos.y), (car_rel + r * 0.5, carrier.pos.y - 10.0),
@@ -1547,7 +1563,7 @@ class MatchEngine:
             score -= 2.5 if role in self._ST_PRESS_ROLES else 0.0
             score += 1.5 if role in self._ST_HOLD_ROLES else 0.0
             score -= 2.0 * effort01(d0.instructions.defense_effort)
-            if d0.slot in {"LCB", "RCB"} and attack_relative_x(carrier.team_id, carrier.pos) < 70.0:
+            if d0.slot in {"LCB", "RCB", "CB"} and attack_relative_x(carrier.team_id, carrier.pos) < 70.0:
                 score += 3.0  # CBs do not leave the line to own midfield carriers
             key = (round(score, 4), d0.player.player_id)
             if best_score is None or key < best_score:
@@ -1917,7 +1933,7 @@ class MatchEngine:
         if crossed_opponent_goal_line:
             self._goal_kick(opponent, reason)
         else:
-            self._execute_corner(opponent)
+            self._execute_corner(opponent, raw.y)
         return True
 
     # ------------------------------------------------------------------
@@ -2325,7 +2341,7 @@ class MatchEngine:
             return
         cands = [m for m in self._team_states(team_id)
                  if m.active and m.slot != "GK" and m is not receiver and m is not carrier
-                 and m.slot in {"LB", "RB", "LCM", "RCM", "LM", "RM", "LW", "RW", "LAM", "CAM", "RAM", "ST"}]
+                 and m.slot in {"LB", "RB", "LCM", "RCM", "LM", "RM", "LW", "RW", "LAM", "CAM", "RAM", "ST", "LWB", "RWB", "LST", "RST"}]
         cands.sort(key=lambda m: (round(distance_m(m.pos, self.ball.pos), 4), m.player.player_id))
         assigned = 0
         for m in cands:
@@ -2338,10 +2354,10 @@ class MatchEngine:
             wideness = abs(m.pos.y - 50.0)
             role = m.instructions.attack_role.upper()
             kind = None
-            if wideness >= 18.0 and rel <= ball_rel + 2.0 and m.slot in {"LB", "RB", "LM", "RM", "LW", "RW"}:
+            if wideness >= 18.0 and rel <= ball_rel + 2.0 and m.slot in {"LB", "RB", "LM", "RM", "LW", "RW", "LWB", "RWB"}:
                 edge = 12.0 if m.pos.y < 50.0 else 88.0
                 kind, tx, ty = "OVERLAP", min(ball_rel + 10.0, 86.0), edge
-            elif wideness < 24.0 and rel >= ball_rel - 4.0 and (role in {"RUN_BEHIND", "POACHER", "SECOND_STRIKER", "INSIDE_FORWARD", "RUNNER", "WIDE_RUNNER"} or m.slot == "ST"):
+            elif wideness < 24.0 and rel >= ball_rel - 4.0 and (role in {"RUN_BEHIND", "POACHER", "SECOND_STRIKER", "INSIDE_FORWARD", "RUNNER", "WIDE_RUNNER"} or m.slot in {"ST", "LST", "RST"}):
                 lane = clamp(m.pos.y + (50.0 - m.pos.y) * 0.3, 30.0, 70.0)
                 kind, tx, ty = "RUN_BEYOND", min(ball_rel + 12.0, 90.0), lane
             elif ball_rel >= 70.0 and m.slot in {"LCM", "RCM", "LAM", "CAM", "RAM"}:
@@ -2851,7 +2867,7 @@ class MatchEngine:
         if attacking:
             read = 0.38 * self._g_eff(s, "attacking_position") + 0.18 * self._g_eff(s, "reactions")
             aerial = 0.16 * self._g_eff(s, "jumping") + 0.10 * self._height_term(s)
-            role = 0.16 if s.slot == "ST" or s.instructions.attack_role.upper() in {"POACHER","RUN_BEHIND","TARGET","SECOND_STRIKER","INSIDE_FORWARD"} else 0.0
+            role = 0.16 if s.slot in {"ST", "LST", "RST"} or s.instructions.attack_role.upper() in {"POACHER","RUN_BEHIND","TARGET","SECOND_STRIKER","INSIDE_FORWARD"} else 0.0
             return -0.72 * t + read + aerial + role
         read = 0.40 * self._g_eff(s, "defensive_awareness") + 0.18 * self._g_eff(s, "reactions")
         aerial = 0.16 * self._g_eff(s, "jumping") + 0.10 * self._height_term(s)
@@ -3408,6 +3424,8 @@ class MatchEngine:
         card = "NONE"
         if self.rng.uniform("red_card", self.rng_context, offender.player.player_id) < p_red:
             offender.red_cards += 1
+            if self._mod_layers:
+                self._expire_mods(offender.player.player_id)
             offender.active = False
             card = "RED"
             add_performance(offender, -0.85, 1.5, component="discipline")
@@ -3415,6 +3433,8 @@ class MatchEngine:
             offender.yellow_cards += 1
             if offender.yellow_cards >= 2:
                 offender.red_cards += 1
+                if self._mod_layers:
+                    self._expire_mods(offender.player.player_id)
                 offender.active = False
                 card = "SECOND_YELLOW_RED"
                 add_performance(offender, -0.65, 1.3, component="discipline")
@@ -3454,7 +3474,8 @@ class MatchEngine:
                 # placement stage, with Shot Power still carrying velocity inside
                 # the staged shot pipeline.
                 takers = [s for s in self._team_states(victim.team_id) if s.active and s.slot != "GK"]
-                taker = max(takers, key=lambda s: s.player.attr("free_kick_accuracy", 50.0)) if takers else victim
+                taker = self._designated(victim.team_id, "free_kick", takers) or (
+                    max(takers, key=lambda s: self._battr(s, "free_kick_accuracy", 50.0)) if takers else victim)
                 p_direct = clamp(0.05 + 0.42 * direct_value + 0.10 * max(0.0, self._g_eff(taker, "free_kick_accuracy")), 0.02, 0.48)
                 self._record_event("FREE_KICK", victim.team_id, victim, {"location": [round(victim.pos.x, 2), round(victim.pos.y, 2)], "p_direct": round(p_direct,4), "taker": taker.player.name})
                 d_fk = distance_m(victim.pos, goal_center(victim.team_id))
@@ -3478,7 +3499,8 @@ class MatchEngine:
         # Penalties attribute replaces the finishing/reactions proxy at the
         # execution stage; the keeper contest is unchanged.
         candidates = [s for s in self._team_states(attacking_team) if s.active and s.slot != "GK"]
-        taker = max(candidates, key=lambda s: s.player.attr("penalties", 50.0)) if candidates else victim
+        taker = self._designated(attacking_team, "penalty", candidates) or (
+            max(candidates, key=lambda s: self._battr(s, "penalties", 50.0)) if candidates else victim)
         shoot = 0.85 * self._g_eff(taker, "penalties") + 0.15 * self._g_eff(taker, "finishing")
         keep = 0.55 * self._g_eff(gk, "gk_reflexes") + 0.45 * self._g_eff(gk, "gk_positioning")
         p_goal = clamp(sigmoid(1.20 + 0.55 * shoot - 0.32 * keep), 0.50, 0.92)
@@ -3594,7 +3616,7 @@ class MatchEngine:
             add_performance(block, 0.10 + 0.18 * xg, 0.8, component="defense")
             # Some blocks go out for a corner; otherwise they become loose.
             if self.rng.uniform("block_corner", self.rng_context, block.player.player_id) < clamp(0.18 + 0.30 * xg, 0.15, 0.48):
-                self._execute_corner(shooter.team_id)
+                self._execute_corner(shooter.team_id, block.pos.y)
             else:
                 self._resolve_loose_ball(block.pos, block.team_id, "shot_block")
             return
@@ -3678,15 +3700,44 @@ class MatchEngine:
             rebound = Vec2(clamp(gk.pos.x + (4.0 if shooter.team_id == "HOME" else -4.0), 0.0, 100.0), clamp(50 + self.rng.normal("rebound_y", self.rng_context) * 8.0, 4.0, 96.0))
             self._resolve_loose_ball(rebound, shooter.team_id, "gk_parry")
 
-    def _execute_corner(self, attacking_team: str) -> None:
+    def _execute_corner(self, attacking_team: str, side_y: float | None = None) -> None:
         attackers = [s for s in self._team_states(attacking_team) if s.slot != "GK"]
         defenders = [s for s in self._team_states(self._opp_id(attacking_team)) if s.slot != "GK"]
-        taker = max(attackers, key=lambda s: 0.75 * s.player.attr("crossing") + 0.25 * s.player.attr("vision"))
+        ba = self._battr
+        taker = self._designated(attacking_team, "corner", attackers) or \
+            max(attackers, key=lambda s: 0.75 * ba(s, "crossing") + 0.25 * ba(s, "vision"))
         target_pool = [s for s in attackers if s is not taker]
-        target = max(target_pool, key=lambda s: (s.player.height_cm or 183) + 0.35 * s.player.attr("jumping") + 0.20 * s.player.attr("heading_accuracy"))
-        defender = max(defenders, key=lambda s: (s.player.height_cm or 183) + 0.35 * s.player.attr("jumping") + 0.18 * s.player.attr("defensive_awareness"))
-        landing = from_attack_frame(attacking_team, 92.0, clamp(50 + self.rng.normal("corner_zone", self.rng_context) * 8, 30, 70))
-        self._record_event("CORNER", attacking_team, taker, {"target": target.player.name, "landing": [round(landing.x, 2), round(landing.y, 2)]})
+        routine = ((self.set_pieces or {}).get(attacking_team) or {}).get("corner_routine") if self.set_pieces else None
+        zone = routine["zone"] if routine else "auto"
+        target = None
+        if routine and routine.get("target_pid"):
+            target = self._designated_target(routine["target_pid"], target_pool)
+        if zone == "short":
+            self._execute_short_corner(attacking_team, taker, target, target_pool, side_y)
+            return
+        if target is None:
+            target = max(target_pool, key=lambda s: (s.player.height_cm or 183) + 0.35 * ba(s, "jumping") + 0.20 * ba(s, "heading_accuracy"))
+        defender = max(defenders, key=lambda s: (s.player.height_cm or 183) + 0.35 * ba(s, "jumping") + 0.18 * ba(s, "defensive_awareness"))
+        header_distance = 8.5
+        if zone in {"near", "far"}:
+            # E4: the delivery is aimed at the near / far post relative to the
+            # corner flag; the same keyed spread as an unplanned delivery, but
+            # tighter (a rehearsed ball). Geometry then decides the keeper's
+            # reach, the aerial contest's positioning and the header distance.
+            flag_low = (side_y if side_y is not None else self.ball.pos.y) < 50.0
+            toward = -1.0 if flag_low else 1.0
+            if zone == "near":
+                lx, ly = 94.0, 50.0 + toward * 5.0
+            else:
+                lx, ly = 91.0, 50.0 - toward * 7.0
+            landing = from_attack_frame(attacking_team, lx, clamp(ly + self.rng.normal("corner_zone", self.rng_context) * 3.5, 30, 70))
+            header_distance = max(4.0, distance_m(landing, goal_center(attacking_team)))
+        else:
+            landing = from_attack_frame(attacking_team, 92.0, clamp(50 + self.rng.normal("corner_zone", self.rng_context) * 8, 30, 70))
+        detail = {"target": target.player.name, "landing": [round(landing.x, 2), round(landing.y, 2)]}
+        if routine:
+            detail["routine"] = zone
+        self._record_event("CORNER", attacking_team, taker, detail)
         self._start_dead_ball(8, "corner_setup")
         if self._try_gk_high_ball(attacking_team, landing, "CORNER"):
             return
@@ -3698,13 +3749,42 @@ class MatchEngine:
         if self.rng.uniform("corner_aerial", self.rng_context, target.player.player_id, defender.player.player_id) < p:
             target.aerial_duels_won += 1
             self._record_event("AERIAL_DUEL", attacking_team, target, {"opponent": defender.player.name, "context": "CORNER", "p_attacker_win": round(p, 4), "winner": target.player.name})
-            self._execute_shot(target, pressure=0.45, xg=clamp(0.10 + 0.16 * p, 0.08, 0.30), shot_type="HEADER", distance_override=8.5)
+            self._execute_shot(target, pressure=0.45, xg=clamp(0.10 + 0.16 * p, 0.08, 0.30), shot_type="HEADER", distance_override=header_distance)
         else:
             defender.aerial_duels_won += 1
             defender.clearances += 1
             self._record_event("AERIAL_DUEL", defender.team_id, defender, {"opponent": target.player.name, "context": "CORNER", "p_attacker_win": round(p, 4), "winner": defender.player.name})
             clear_point = from_attack_frame(defender.team_id, 35, clamp(landing.y + self.rng.normal("corner_clear", self.rng_context) * 9, 5, 95))
             self._resolve_loose_ball(clear_point, defender.team_id, "corner_clearance")
+
+    def _designated_target(self, pid: str, pool) -> PlayerState | None:
+        st = self.states.get(str(pid))
+        return st if st is not None and st.active and any(st is x for x in pool) else None
+
+    def _execute_short_corner(self, attacking_team: str, taker: PlayerState, receiver: PlayerState | None,
+                              pool, side_y: float | None) -> None:
+        """E4 short corner: the taker plays it short to a nearby teammate who
+        receives near the flag; open play continues from there (the normal
+        decision machinery, no special resolution)."""
+        flag_low = (side_y if side_y is not None else self.ball.pos.y) < 50.0
+        flag = from_attack_frame(attacking_team, 99.5, 0.5 if flag_low else 99.5)
+        spot = from_attack_frame(attacking_team, 90.0, 9.0 if flag_low else 91.0)
+        if receiver is None:
+            cands = [s for s in pool if s.active]
+            if not cands:
+                return
+            receiver = min(cands, key=lambda s: (distance_m(s.pos, spot), s.player.player_id))
+        taker.pos = flag
+        receiver.pos = spot
+        taker.touches += 1
+        taker.passes_attempted += 1
+        taker.passes_completed += 1
+        self._record_event("CORNER", attacking_team, taker, {
+            "target": receiver.player.name, "routine": "short",
+            "landing": [round(spot.x, 2), round(spot.y, 2)]})
+        self._change_possession(attacking_team, receiver, "short_corner")
+        self._start_dead_ball(8, "corner_setup")
+        self.next_decision_at = max(self.next_decision_at, self.clock + 8)
 
     def _execute_clearance(self, carrier: PlayerState, pressure: float) -> None:
         """Emergency/controlled clearance when safe buildup is no longer viable."""
@@ -3758,7 +3838,7 @@ class MatchEngine:
             clear_u += {"DIRECT": 0.18, "MIXED": 0.05, "SHORT": -0.12}.get(tactic.passing_directness, 0.0)
             own_danger = clamp((36.0 - relx) / 30.0, 0.0, 1.0)
             clear_u += own_danger * (0.28 + 0.82 * pressure)
-            if carrier.slot in {"GK", "LCB", "RCB", "LB", "RB"}:
+            if carrier.slot in {"GK", "LCB", "RCB", "LB", "RB", "LWB", "RWB", "CB"}:
                 clear_u += 0.18 + 0.16 * own_danger
             if tactic.after_winning_possession == "SECURE" and tactic.defensive_block_height == "DEEP":
                 # An ultra-conservative side that regains the ball inside its own shell
@@ -3845,7 +3925,7 @@ class MatchEngine:
             # clearly worth taking, and even better geometry changes little.
             p_blk_choice = self._shot_block_candidate(carrier)[1]
             xg_eff = xg * (1.0 - p_blk_choice)
-            shoot_u = -2.72 + 1.6 * xg + 9.5 * min(xg_eff, 0.13) + (0.26 if carrier.slot == "ST" else 0.0) + 0.15 * self._g_eff(carrier, "finishing")
+            shoot_u = -2.72 + 1.6 * xg + 9.5 * min(xg_eff, 0.13) + (0.26 if carrier.slot in {"ST", "LST", "RST"} else 0.0) + 0.15 * self._g_eff(carrier, "finishing")
             if tactic.chance_creation_focus == "VERTICAL":
                 shoot_u += 0.08
             probe = self._settled_probe(carrier.team_id)
@@ -4004,13 +4084,13 @@ class MatchEngine:
             eff = effort01(m.instructions.attack_effort)
             role = m.instructions.attack_role.upper()
             aff = 0.0
-            if m.slot == "ST":
+            if m.slot in {"ST", "LST", "RST"}:
                 aff = 1.0
             elif m.slot in {"LW", "RW", "LM", "RM", "LAM", "CAM", "RAM"}:
                 aff = 0.8
             elif m.slot in {"LCM", "RCM"}:
                 aff = 0.45
-            elif m.slot in {"LB", "RB"} and role in {"OVERLAP", "UNDERLAP", "WIDE_RUNNER"}:
+            elif m.slot in {"LB", "RB", "LWB", "RWB"} and role in {"OVERLAP", "UNDERLAP", "WIDE_RUNNER"}:
                 aff = 0.30
             if aff <= 0.0 or eff < 0.35:
                 continue
@@ -4100,7 +4180,7 @@ class MatchEngine:
     # Basic coach AI: tactical mode + substitutions
     # ------------------------------------------------------------------
     def _bench_candidates_for_slot(self, team: Team, slot: str):
-        if slot in {"LCB", "RCB"}:
+        if slot in {"LCB", "RCB", "CB"}:
             allowed = {"CB"}
         elif slot in {"LCM", "RCM", "LDM", "RDM"}:
             allowed = {"CM", "CAM", "CDM"}
@@ -4108,19 +4188,23 @@ class MatchEngine:
             allowed = {"CAM", "LW", "RW", "CM"}
         elif slot in {"LM", "RM"}:
             allowed = {"LW", "RW", "CM"}
+        elif slot in {"LWB", "RWB"}:        # E3 slots (never present in legacy shapes)
+            allowed = {slot, slot[0] + "B", slot[0] + "M"}
+        elif slot in {"LST", "RST"}:
+            allowed = {"ST", "CF"}
         else:
             allowed = {slot}
         return [p for p in team.bench if p.primary_position in allowed]
 
     def _replacement_score(self, p, slot: str) -> float:
         # Coach selection utility only; never enters match-event execution.
-        if slot == "ST":
+        if slot in {"ST", "LST", "RST"}:
             keys = ("finishing", "attacking_position", "acceleration", "ball_control")
         elif slot in {"LW", "RW", "LM", "RM"}:
             keys = ("dribbling", "acceleration", "sprint_speed", "ball_control")
-        elif slot in {"LCB", "RCB"}:
+        elif slot in {"LCB", "RCB", "CB"}:
             keys = ("defensive_awareness", "standing_tackle", "interceptions", "strength")
-        elif slot in {"LB", "RB"}:
+        elif slot in {"LB", "RB", "LWB", "RWB"}:
             keys = ("acceleration", "stamina", "standing_tackle", "crossing")
         elif slot in {"LAM", "RAM", "CAM"}:
             keys = ("vision", "dribbling", "ball_control", "attacking_position")
@@ -4128,12 +4212,13 @@ class MatchEngine:
             keys = ("short_passing", "ball_control", "reactions", "stamina")
         return sum(p.attr(k) for k in keys) / len(keys)
 
-    def _change_formation(self, team_id: str, new_formation: str, reason: str = "COACH_TACTICAL_CHANGE") -> None:
+    def _change_formation(self, team_id: str, new_formation: str, reason: str = "COACH_TACTICAL_CHANGE",
+                          extended: bool = False) -> None:
         team = self.teams[team_id]
         old_formation = team.formation_name
         if new_formation == old_formation:
             return
-        mapping = slot_map_between(old_formation, new_formation)
+        mapping = slot_map_between(old_formation, new_formation, extended=extended)
         new_anchors = anchors_for(team_id, new_formation)
         new_lineup = {}
         new_instructions = {}
@@ -4160,10 +4245,162 @@ class MatchEngine:
             "from": old_formation, "to": new_formation, "reason": reason, "active_players": len(active),
         })
 
+    # ------------------------------------------------------------------
+    # Core Loop v2 hooks (ENGINE CHANGE): E1 takers, E2 modifiers +
+    # scheduled commands, E4 corner routine. All inert unless configured.
+    # ------------------------------------------------------------------
+    def _battr(self, s: PlayerState, name: str, default: float = 50.0) -> float:
+        """Base attribute (+ E2 modifier) for selection utilities; identical to
+        ``s.player.attr`` when no modifier is active."""
+        return modded_attr(s, name, default)
+
+    def _designated(self, team_id: str, kind: str, pool) -> PlayerState | None:
+        """E1: the team's chosen taker for ``kind`` if he is in ``pool`` (on the
+        pitch, outfield); otherwise None -> the automatic choice is used."""
+        sp = self.set_pieces
+        if not sp:
+            return None
+        pid = (sp.get(team_id) or {}).get(kind)
+        if not pid:
+            return None
+        st = self.states.get(str(pid))
+        return st if st is not None and st.active and any(st is x for x in pool) else None
+
+    def configure_set_pieces(self, team_id: str, cfg: dict[str, Any]) -> dict[str, Any]:
+        """Merge ``cfg`` ({corner, free_kick, penalty, corner_routine}) into the
+        team's set-piece config; a key given as None clears it."""
+        sp = dict(self.set_pieces or {})
+        cur = dict(sp.get(team_id) or {})
+        for k in ("corner", "free_kick", "penalty"):
+            if k in cfg:
+                cur[k] = str(cfg[k]) if cfg[k] else None
+        if "corner_routine" in cfg:
+            r = cfg["corner_routine"]
+            if not r or (str(r.get("zone") or "auto").lower() == "auto" and not r.get("target_pid")):
+                cur["corner_routine"] = None
+            else:
+                zone = str(r.get("zone") or "auto").lower()
+                if zone not in {"auto", "near", "far", "short"}:
+                    raise ValueError(f"Unknown corner zone '{zone}'")
+                cur["corner_routine"] = {"zone": zone,
+                                         "target_pid": str(r["target_pid"]) if r.get("target_pid") else None}
+        cur = {k: v for k, v in cur.items() if v}
+        if cur:
+            sp[team_id] = cur
+        else:
+            sp.pop(team_id, None)
+        self.set_pieces = sp or None
+        return cur
+
+    def add_modifiers(self, team_id: str, deltas: dict[str, dict[str, float]],
+                      until_clock: int | None = None, source: str | None = None,
+                      dependency_pids: list[str] | None = None) -> None:
+        """E2: match-scoped attribute deltas for on-pitch players of ``team_id``.
+        Layers stack additively; each ends at ``until_clock`` (after that
+        second) or when its player or a required partner leaves the pitch.
+        Other layers on the remaining partners keep their own lifetime."""
+        dependencies = tuple(str(pid) for pid in (dependency_pids or []))
+        for pid in dependencies:
+            st = self.states.get(pid)
+            if st is None or st.team_id != team_id or not st.active:
+                raise ValueError(f"Modifier partner '{pid}' is not on the pitch for {team_id}")
+        layers = list(self._mod_layers)
+        touched = []
+        for pid, dd in deltas.items():
+            st = self.states.get(str(pid))
+            if st is None or st.team_id != team_id or not st.active:
+                raise ValueError(f"Player '{pid}' is not on the pitch for {team_id}")
+            clean = {str(k): float(v) for k, v in dd.items() if float(v) != 0.0}
+            if not clean:
+                continue
+            layers.append({"team": team_id, "pid": st.player.player_id, "deltas": clean,
+                           "until": None if until_clock is None else int(until_clock),
+                           "dependency_pids": dependencies})
+            touched.append(st.player.player_id)
+        if not touched:
+            return
+        self._mod_layers = layers
+        for pid in touched:
+            self._recompute_mods(pid)
+        self._refresh_mod_expiry()
+        self._record_event("MODIFIERS", team_id, None, {
+            "players": touched, "until_clock": until_clock, "source": source,
+            "minute": round(self.clock / 60.0, 1)})
+        if until_clock is not None and int(until_clock) <= self.clock:
+            self._expire_mods()
+
+    def _recompute_mods(self, pid: str) -> None:
+        st = self.states.get(pid)
+        if st is None:
+            return
+        tot: dict[str, float] = {}
+        for layer in self._mod_layers:
+            if layer["pid"] == pid:
+                for k, v in layer["deltas"].items():
+                    tot[k] = tot.get(k, 0.0) + v
+        tot = {k: v for k, v in tot.items() if v != 0.0}
+        st.mods = tot or None
+
+    def _refresh_mod_expiry(self) -> None:
+        ends = [l["until"] for l in self._mod_layers if l["until"] is not None]
+        self._mod_next_expiry = min(ends) if ends else None
+
+    def _expire_mods(self, pid: str | None = None) -> None:
+        """Drop expired layers, or those belonging to/dependent on a departing player."""
+        if not self._mod_layers:
+            return
+        keep, gone = [], set()
+        for l in self._mod_layers:
+            departed = pid is not None and (l["pid"] == pid or pid in l.get("dependency_pids", ()))
+            expired = pid is None and l["until"] is not None and l["until"] <= self.clock
+            if departed or expired:
+                gone.add(l["pid"])
+            else:
+                keep.append(l)
+        if not gone:
+            return
+        self._mod_layers = keep
+        for g in gone:
+            self._recompute_mods(g)
+        self._refresh_mod_expiry()
+        if pid is None:
+            self._record_event("MODIFIERS_EXPIRED", None, None, {"players": sorted(gone)})
+
+    def schedule_command(self, at_clock: int, kind: str, payload: dict[str, Any]) -> None:
+        """E2: apply management command ``kind`` right after second
+        ``at_clock`` is simulated (exactly where the server applies a command
+        logged at sim_clock == at_clock). Pending entries are engine state, so
+        checkpoints / rewinds / replays reproduce them."""
+        if self._sched_dispatch is None:
+            raise ValueError("No scheduled-command dispatcher installed (build the engine via management)")
+        self._sched_seq += 1
+        item = (int(at_clock), self._sched_seq, str(kind), dict(payload))
+        self._scheduled = sorted(list(self._scheduled) + [item], key=lambda t: (t[0], t[1]))
+        if int(at_clock) <= self.clock:
+            self._run_scheduled()
+
+    def _run_scheduled(self) -> None:
+        while self._scheduled and self._scheduled[0][0] <= self.clock:
+            at, _seq, kind, payload = self._scheduled[0]
+            self._scheduled = list(self._scheduled[1:])
+            try:
+                self._sched_dispatch(self, kind, payload)
+            except (ValueError, KeyError) as e:   # BridgeError is a ValueError
+                self._record_event("SCHEDULED_SKIPPED", payload.get("team"), None,
+                                   {"kind": kind, "at_clock": at, "reason": str(e)[:160]})
+
+    def _v2_end_of_second(self) -> None:
+        if self._mod_next_expiry is not None and self._mod_next_expiry <= self.clock:
+            self._expire_mods()
+        if self._scheduled:
+            self._run_scheduled()
+
     def _make_substitution(self, team_id: str, outgoing: PlayerState, incoming, target_slot: str | None = None, reason: str = "FATIGUE_PERFORMANCE_DISCIPLINE") -> None:
         team = self.teams[team_id]
         if incoming not in team.bench or not outgoing.active:
             return
+        if self._mod_layers:
+            self._expire_mods(outgoing.player.player_id)   # E2: boosts end when he leaves
         outgoing.active = False
         outgoing.subbed_off = True
         outgoing.minute_off = self.clock // 60
@@ -4329,7 +4566,8 @@ class MatchEngine:
                 if desired == "CHASE":
                     target_formation = "4-2-3-1"
                 elif desired == "PROTECT":
-                    target_formation = "4-3-3"
+                    # E3: a back-three side protects in its back five (legacy shapes unchanged)
+                    target_formation = "5-3-2" if self.base_formations[team_id] in BACK_THREE_FORMATIONS else "4-3-3"
                 try:
                     self._change_formation(team_id, target_formation, reason=desired)
                 except ValueError:
@@ -4350,7 +4588,7 @@ class MatchEngine:
             if sent_off:
                 missing = sent_off[-1].slot
                 bench_for_gap = self._bench_candidates_for_slot(team, missing)
-                active_attackers = [s for s in self._team_states(team_id) if s.slot in {"LW","RW","ST","LCM","RCM","LAM","CAM","RAM"} and s.player.player_id != self.ball.controlling_player_id]
+                active_attackers = [s for s in self._team_states(team_id) if s.slot in {"LW","RW","ST","LCM","RCM","LAM","CAM","RAM","LST","RST"} and s.player.player_id != self.ball.controlling_player_id]
                 if bench_for_gap and active_attackers:
                     outgoing_red_fix = min(active_attackers, key=lambda s: (s.match_rating, s.energy))
                     incoming_red_fix = max(bench_for_gap, key=lambda p: self._replacement_score(p, missing))
@@ -4432,6 +4670,8 @@ class MatchEngine:
             self._decision()
             self._schedule_next_decision()
         self._record_timeline()
+        if self._scheduled or self._mod_next_expiry is not None:
+            self._v2_end_of_second()
 
     def advance(self, seconds: int) -> None:
         for _ in range(int(seconds)):

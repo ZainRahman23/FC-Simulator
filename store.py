@@ -51,6 +51,16 @@ def init(data_dir: str | Path) -> Path:
         CREATE INDEX IF NOT EXISTS idx_cmd_req ON match_commands(match_id, request_id);
         CREATE TABLE IF NOT EXISTS errors(
             error_id TEXT PRIMARY KEY, ts REAL, path TEXT, detail TEXT);
+        -- coach MVP (additive; schema_version unchanged: old DBs gain these
+        -- tables on first boot and nothing else changes)
+        CREATE TABLE IF NOT EXISTS scenarios(
+            scenario_id TEXT PRIMARY KEY, kind TEXT, team TEXT, seed INTEGER,
+            takeover_clock INTEGER, request_json TEXT, result_json TEXT, created_ts REAL);
+        CREATE TABLE IF NOT EXISTS challenge_entries(
+            scenario_id TEXT, manager_name TEXT, match_id TEXT, stars INTEGER,
+            goals_for INTEGER, goals_against INTEGER, decisions INTEGER, ts REAL,
+            PRIMARY KEY(scenario_id, manager_name));
+        CREATE INDEX IF NOT EXISTS idx_chal_match ON challenge_entries(match_id);
         """)
         c.execute("INSERT OR IGNORE INTO meta(key, value) VALUES('schema_version', ?)",
                   (str(SCHEMA_VERSION),))
@@ -140,6 +150,17 @@ def complete_match(match_id: str, score_home: int, score_away: int,
                   (time.time(), score_home, score_away, result_json, blob, match_id))
 
 
+def reopen_match(match_id: str, clock: int) -> None:
+    """A finished match was rewound (exact-minute decision after the server
+    had already reached full time): it is live again from ``clock``. The
+    stale result/ledger are cleared so recovery replays from the command log
+    and the next full time re-persists the authoritative outcome."""
+    with _lock, _conn() as c:
+        c.execute("""UPDATE matches SET status='live', completed_ts=NULL, score_home=NULL,
+                     score_away=NULL, result_json=NULL, ledger_gz=NULL, last_clock=?
+                     WHERE match_id=?""", (clock, match_id))
+
+
 def abandon_match(match_id: str) -> None:
     with _lock, _conn() as c:
         c.execute("UPDATE matches SET status='abandoned', completed_ts=? WHERE match_id=? AND status='live'",
@@ -180,6 +201,57 @@ def commands(match_id: str) -> list[dict[str, Any]]:
     with _conn() as c:
         rows = c.execute("SELECT * FROM match_commands WHERE match_id=? ORDER BY seq",
                          (match_id,)).fetchall()
+        return [dict(r) for r in rows]
+
+
+# ── scenarios & challenges ───────────────────────────────────────────────────
+def get_scenario(scenario_id: str) -> dict[str, Any] | None:
+    with _conn() as c:
+        r = c.execute("SELECT * FROM scenarios WHERE scenario_id=?", (scenario_id,)).fetchone()
+        return dict(r) if r else None
+
+
+def put_scenario(scenario_id: str, kind: str, team: str, seed: int, takeover_clock: int,
+                 request_json: str, result_json: str) -> None:
+    with _lock, _conn() as c:
+        c.execute("""INSERT OR IGNORE INTO scenarios(scenario_id, kind, team, seed, takeover_clock,
+                     request_json, result_json, created_ts) VALUES(?,?,?,?,?,?,?,?)""",
+                  (scenario_id, kind, team, seed, takeover_clock, request_json, result_json,
+                   time.time()))
+
+
+def challenge_entry(scenario_id: str, manager_name: str) -> dict[str, Any] | None:
+    with _conn() as c:
+        r = c.execute("SELECT * FROM challenge_entries WHERE scenario_id=? AND manager_name=?",
+                      (scenario_id, manager_name)).fetchone()
+        return dict(r) if r else None
+
+
+def challenge_entry_for_match(match_id: str) -> dict[str, Any] | None:
+    with _conn() as c:
+        r = c.execute("SELECT * FROM challenge_entries WHERE match_id=?", (match_id,)).fetchone()
+        return dict(r) if r else None
+
+
+def put_challenge_entry(scenario_id: str, manager_name: str, match_id: str, stars: int,
+                        goals_for: int, goals_against: int, decisions: int) -> None:
+    with _lock, _conn() as c:
+        c.execute("""INSERT INTO challenge_entries(scenario_id, manager_name, match_id, stars,
+                     goals_for, goals_against, decisions, ts) VALUES(?,?,?,?,?,?,?,?)
+                     ON CONFLICT(scenario_id, manager_name) DO UPDATE SET match_id=excluded.match_id,
+                       stars=excluded.stars, goals_for=excluded.goals_for,
+                       goals_against=excluded.goals_against, decisions=excluded.decisions,
+                       ts=excluded.ts""",
+                  (scenario_id, manager_name, match_id, stars, goals_for, goals_against,
+                   decisions, time.time()))
+
+
+def challenge_entries(scenario_id: str) -> list[dict[str, Any]]:
+    """Leaderboard order: stars desc, goal difference desc, fewer decisions, earlier."""
+    with _conn() as c:
+        rows = c.execute("""SELECT * FROM challenge_entries WHERE scenario_id=?
+                            ORDER BY stars DESC, (goals_for - goals_against) DESC,
+                                     decisions ASC, ts ASC""", (scenario_id,)).fetchall()
         return [dict(r) for r in rows]
 
 
