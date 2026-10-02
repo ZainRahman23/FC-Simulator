@@ -38,7 +38,7 @@ const fmt = (x, n = 4) => (typeof x === "number" ? +x.toFixed(n) : x);
 
 // ── one body: every spec-level and engine-level check ─────────────────────────────────────────────────────────────────────────────────
 export function g0Body(J, human, opts = {}) {
-  const checks = [], add_ = (id, name, pass, value, limit, detail) => checks.push({ id, name, pass: !!pass, value, limit, detail });
+  const checks = [], add_ = (id, name, pass, value, limit, detail, reportOnly) => checks.push({ id, name, pass: !!pass, value, limit, detail, reportOnly: !!reportOnly });
   const S = generateSpec(human), H = human.H, M = human.M, L = S.landmarks, sole = L.sole;
   const byName = Object.fromEntries(S.bodies.map(b => [b.name, b])), J_ = Object.fromEntries(S.joints.map(j => [j.name, j]));
   // 0.1 determinism of the generator (×3)
@@ -62,21 +62,32 @@ export function g0Body(J, human, opts = {}) {
   // 0.4 whole-body COM
   const down = posedBodies(S, {}), wbDown = wholeBody(S.bodies, down, true), wbDownEq = wholeBody(S.bodies, down, false), wbCan = wholeBody(S.bodies);
   const comH = (wbDown.com[1] - sole) / H, comHeq = (wbDownEq.com[1] - sole) / H;
-  add_("0.4a", "standing arms-down COM height, barefoot-equivalent (no equipment)", comH >= TOL.comHband[0] && comH <= TOL.comHband[1], comH.toFixed(4) + " H", `${TOL.comHband[0]}–${TOL.comHband[1]} H`, `with equipment ${comHeq.toFixed(4)} H; canonical T-pose COM y = ${wbCan.com[1].toFixed(4)} m`);
+  const population = (human.kind || "population") === "population";   // spec §22 0.12 as amended (C2): population bands apply to population bodies only
+  if (population) add_("0.4a", "standing arms-down COM height, barefoot-equivalent (no equipment) — population band", comH >= TOL.comHband[0] && comH <= TOL.comHband[1], comH.toFixed(4) + " H", `${TOL.comHband[0]}–${TOL.comHband[1]} H`, `with equipment ${comHeq.toFixed(4)} H; canonical T-pose COM y = ${wbCan.com[1].toFixed(4)} m`);
+  else add_("0.4a-R", "standing arms-down COM height — REPORTED (morphology variant: population band not applicable, spec §22 0.12 / C2)", true, comH.toFixed(4) + " H", "report only", `population band ${TOL.comHband[0]}–${TOL.comHband[1]} H is for normally proportioned bodies`, true);
   add_("0.4b", "canonical COM AP within ±1 cm of the ankle line", Math.abs(wbCan.com[2]) <= TOL.comAP, (100 * wbCan.com[2]).toFixed(2) + " cm", `|z| ≤ ${100 * TOL.comAP} cm`, `x = ${wbCan.com[0].toExponential(1)} m`);
   // 0.5 whole-body inertia (arms down, no equipment) — band defined at V2-REF size, scaled ∝ M·H²
   const sc = (M * H * H) / (V2_REF.M * V2_REF.H * V2_REF.H), Iw = wbDown.I, band = TOL.inertiaBandREF;
   const inB = (v, b) => v >= b[0] * sc && v <= b[1] * sc;
-  add_("0.5", "whole-body inertia about COM in the literature band (Santschi 1963, recalled; scaled ∝ M·H²)", inB(Iw[0][0], band.pitch) && inB(Iw[2][2], band.roll) && inB(Iw[1][1], band.yaw),
+  if (population) add_("0.5", "whole-body inertia about COM in the literature band (Santschi 1963, recalled; scaled ∝ M·H²) — population band", inB(Iw[0][0], band.pitch) && inB(Iw[2][2], band.roll) && inB(Iw[1][1], band.yaw),
     `pitch ${Iw[0][0].toFixed(2)} · roll ${Iw[2][2].toFixed(2)} · yaw ${Iw[1][1].toFixed(3)} kg·m²`, `pitch/roll ${(band.pitch[0] * sc).toFixed(1)}–${(band.pitch[1] * sc).toFixed(1)}, yaw ${(band.yaw[0] * sc).toFixed(2)}–${(band.yaw[1] * sc).toFixed(2)}`,
     `independent de Leva assembly (research pass, 1.82 m / 78 kg): 13.2 / 14.0 / 1.1`);
+  else add_("0.5-R", "whole-body inertia about COM — REPORTED (morphology variant: population band not applicable, spec §22 0.12 / C2)", true,
+    `pitch ${Iw[0][0].toFixed(2)} · roll ${Iw[2][2].toFixed(2)} · yaw ${Iw[1][1].toFixed(3)} kg·m²`, "report only", `population band at this size: pitch/roll ${(band.pitch[0] * sc).toFixed(1)}–${(band.pitch[1] * sc).toFixed(1)}, yaw ${(band.yaw[0] * sc).toFixed(2)}–${(band.yaw[1] * sc).toFixed(2)}`, true);
+  // 0.4c requested morphology realised (every body; the internal-consistency check C2 requires for variants)
+  { const ov = human.overrides || {}, ls = ov.legScale ?? 1, as = ov.armScale ?? 1;
+    const legOK = Math.abs(L.legLength - (PROFILE.hipH - PROFILE.ankleH) * H * ls) < 1e-12, statOK = Math.abs(L.yVERT - sole - H) < 1e-12;
+    const c7OK = Math.abs((L.yCERV - sole) - (1 - 242.9 / 1741) * H) < 1e-12, armOK = Math.abs(L.segLen.upperArm - 281.7 / 1741 * H * as) < 1e-12 && Math.abs(L.segLen.forearm - 268.9 / 1741 * H * as) < 1e-12;
+    const trunk = (L.yCERV - L.yH), trunkRef = (1 - 242.9 / 1741) * H - (PROFILE.hipH + (PROFILE.hipH - PROFILE.ankleH) * (ls - 1)) * H - sole + sole;
+    add_("0.4c", "requested morphology realised exactly (stature, leg length × legScale, trunk refit keeping C7, arm lengths × armScale)", legOK && statOK && c7OK && armOK,
+      `stature ${(L.yVERT - sole).toFixed(4)} m, leg ${(L.legLength / H).toFixed(4)} H (legScale ${ls}), C7 ${((L.yCERV - sole) / H).toFixed(4)} H, HJC→C7 ${(trunk / H).toFixed(4)} H`, "exact", Math.abs(trunk - trunkRef) < 1e-12 ? "" : "trunk refit residual " + (trunk - trunkRef).toExponential(1)); }
   // 0.6 joint-centre geometry + generated height
   const interHJC = 2 * L.hipHalf / H, interSJC = 2 * L.shoulderHalf / H, sjcExpect = 2 * PROFILE.shoulderHalf;
   add_("0.6a", "inter-HJC distance", interHJC >= TOL.interHJC[0] && interHJC <= TOL.interHJC[1], `${interHJC.toFixed(4)} H = ${(2 * L.hipHalf).toFixed(3)} m`, `${TOL.interHJC[0]}–${TOL.interHJC[1]} H`);
   add_("0.6b", "inter-SJC distance within ±10 % of the spec value", Math.abs(interSJC - sjcExpect) / sjcExpect <= TOL.interSJCrel, `${interSJC.toFixed(4)} H = ${(2 * L.shoulderHalf).toFixed(3)} m`, `${sjcExpect.toFixed(3)} H ± 10 %`);
   add_("0.6c", "generated stature: vertex landmark − sole = H", Math.abs(L.yVERT - sole - H) <= 1e-12, (L.yVERT - sole).toFixed(6) + " m", `${H} m exact`, `stature closure (HJC + de Leva trunk + head − H) = ${(1000 * L.closure).toFixed(1)} mm`);
-  const headTop = byName.head.origin[1] + byName.head.shapes[0].pos[1] + byName.head.shapes[0].r;
-  add_("0.6d", "collider stature: top of the head sphere vs vertex", headTop - L.yVERT >= TOL.headTol[0] && headTop - L.yVERT <= TOL.headTol[1], (1000 * (headTop - L.yVERT)).toFixed(1) + " mm", "−15 … +5 mm");
+  const hdS = byName.head.shapes[0], headTop = byName.head.origin[1] + hdS.pos[1] + hdS.r;            // AP capsule (C1): vertical half-extent = r
+  add_("0.6d", "collider stature: top of the head collider vs vertex", headTop - L.yVERT >= TOL.headTol[0] && headTop - L.yVERT <= TOL.headTol[1], (1000 * (headTop - L.yVERT)).toFixed(1) + " mm", "−15 … +5 mm");
   const sjcDrop = (PROFILE.sjcH - 0.818) * H;
   add_("0.6e", "segment lengths = profile fractions (leg = 0.476 H, thigh / shank / upper arm / forearm)", Math.abs(L.legLength - (PROFILE.hipH - PROFILE.ankleH) * H * (human.overrides?.legScale ?? 1)) < 1e-12 && Math.abs(L.segLen.upperArm - 281.7 / 1741 * H * (human.overrides?.armScale ?? 1)) < 1e-12,
     `leg ${L.legLength.toFixed(4)} m (${(L.legLength / H).toFixed(4)} H), thigh ${L.segLen.thigh.toFixed(4)}, shank ${L.segLen.shank.toFixed(4)}, upper arm ${L.segLen.upperArm.toFixed(4)}, forearm ${L.segLen.forearm.toFixed(4)}`, "exact", `SJC ${(1000 * -sjcDrop).toFixed(1)} mm below the Drillis acromion height`);
@@ -204,14 +215,16 @@ export function g0Body(J, human, opts = {}) {
   // 0.10 colliders vs anthropometric surfaces
   const surf = [];
   const delt = byName.upperArm_R.shapes[0], bidel = 2 * (byName.upperArm_R.origin[0] + delt.pos[0] + delt.r); surf.push({ what: "bideltoid (deltoid spheres)", v: (bidel - PROFILE.bideltoid * H) / 2, tol: TOL.limbTol });
-  const hd = byName.head.shapes[0]; surf.push({ what: "head sphere vs head length / 2", v: hd.r - PROFILE.headLength * H / 2, tol: TOL.headTol });
-  surf.push({ what: "head sphere vs head breadth / 2", v: hd.r - PROFILE.headBreadth * H / 2, tol: TOL.headTol });
+  const hd = byName.head.shapes[0], apAxis = Q.rot(hd.rot, [0, 1, 0]);                                 // C1 AP capsule: axis must be anatomical AP (+Z)
+  surf.push({ what: "head capsule AP half-extent vs head length / 2", v: hd.half + hd.r - PROFILE.headLength * H / 2, tol: TOL.headTol });
+  surf.push({ what: "head capsule lateral half-extent vs head breadth / 2", v: hd.r - PROFILE.headBreadth * H / 2, tol: TOL.headTol });
+  surf.push({ what: "head capsule axis = anterior–posterior", v: (1 - Math.abs(apAxis[2])) * 0, tol: [-1e-12, 1e-12], ok: hd.type === "capsule" && Math.abs(apAxis[2]) > 1 - 1e-12 });
   const pb = byName.pelvis.shapes[0]; surf.push({ what: "pelvis box vs hip breadth / 2", v: pb.he[0] - 0.190 * H / 2, tol: TOL.trunkTol });
   const cb = byName.thorax.shapes[0]; surf.push({ what: "thorax box vs chest depth / 2", v: cb.he[2] - PROFILE.chestDepth * H / 2, tol: TOL.trunkTol }, { what: "thorax box vs Drillis chest breadth 0.174 H / 2", v: cb.he[0] - 0.174 * H / 2, tol: TOL.trunkTol });
   const ab = byName.abdomen.shapes[0]; surf.push({ what: "abdomen box vs waist depth / 2", v: ab.he[2] - PROFILE.waistDepth * H / 2, tol: TOL.trunkTol });
-  const surfBad = surf.filter(x => x.v < x.tol[0] - 1e-12 || x.v > x.tol[1] + 1e-12);
+  const surfBad = surf.filter(x => x.v < x.tol[0] - 1e-12 || x.v > x.tol[1] + 1e-12 || x.ok === false);
   add_("0.10a", "colliders vs anthropometric surfaces (§15.1 tolerances: limbs −10…+3, trunk −20…+5, head −15…+5 mm)", surfBad.length === 0,
-    surf.map(x => `${x.what} ${(1000 * x.v).toFixed(1)} mm`).join("; "), "within tolerance", surfBad.length ? "OUTSIDE: " + surfBad.map(x => x.what).join(", ") : "");
+    surf.filter(x => x.ok === undefined).map(x => `${x.what} ${(1000 * x.v).toFixed(1)} mm`).join("; ") + `; head axis AP ${surf.find(x => x.ok !== undefined).ok}`, "within tolerance", surfBad.length ? "OUTSIDE: " + surfBad.map(x => x.what).join(", ") : "");
   const ft = byName.foot_R, hull = ft.shapes[0].points, ext = (k, f) => f(...hull.map(p => p[k]));
   const footDims = { length: ext(2, Math.max) - ext(2, Math.min), width: ext(0, Math.max) - ext(0, Math.min), heel: -ext(2, Math.min), tip: ext(2, Math.max), soleY: ext(1, Math.min) + ft.origin[1] };
   const fdOK = Math.abs(footDims.length - ft.boot.length) <= TOL.bootTol && Math.abs(footDims.width - ft.boot.ballWidth) <= TOL.bootTol && Math.abs(footDims.heel - ft.boot.heelBehindAJC) <= 1e-12 &&
@@ -236,6 +249,12 @@ function engineChecks(J, S, opts) {
     dI = Math.max(dI, ...b.inertia.flatMap((row, a) => row.map((x, c) => Math.abs(r.inertia[a][c] - x) / Imax)));
     dc = Math.max(dc, dist(r.comWorld, add(b.origin, b.comLocal)), dist(w.shapeInfo[i].comLocal, b.comLocal));
     damp = Math.max(damp, Math.abs(r.linDamp), Math.abs(r.angDamp)); mav = Math.max(mav, Math.abs(r.maxAngVel - G0_WORLD.maxAngVel)); });
+  { // 0.5b COM / inertia calculation consistent: whole body recomposed independently from the ENGINE readback vs the spec composition (canonical)
+    const Mr = rb.reduce((a, r) => a + r.mass, 0); let cr = [0, 0, 0]; rb.forEach(r => { cr = add(cr, V.sc(r.comWorld, r.mass)); }); cr = V.sc(cr, 1 / Mr);
+    let Ir = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]; rb.forEach(r => { const d = sub(r.comWorld, cr), dd = V.dot(d, d); for (let a = 0; a < 3; a++) for (let c = 0; c < 3; c++) Ir[a][c] += r.inertia[a][c] + r.mass * ((a === c ? dd : 0) - d[a] * d[c]); });
+    const ws = wholeBody(S.bodies), Imax = Math.max(...ws.I.flat().map(Math.abs)), dI2 = Math.max(...ws.I.flatMap((row, a) => row.map((x, c) => Math.abs(Ir[a][c] - x) / Imax)));
+    add_("0.5b", "COM / inertia calculation consistent: whole body recomposed from the Jolt readback = spec composition (canonical)", Math.abs(Mr - ws.M) / ws.M <= TOL.readRel && dist(cr, ws.com) <= TOL.readM && dI2 <= TOL.readRel,
+      `mass ${(Math.abs(Mr - ws.M) / ws.M).toExponential(1)} rel · COM ${dist(cr, ws.com).toExponential(1)} m · inertia ${dI2.toExponential(1)} rel`, `≤ ${TOL.readRel} rel / ${TOL.readM} m`); }
   add_("0.11a", "Jolt bodies: mass, full inertia tensor, COM read back = spec", dm <= TOL.readRel && dI <= TOL.readRel && dc <= TOL.readM,
     `mass ${dm.toExponential(1)} rel · inertia ${dI.toExponential(1)} rel · COM ${dc.toExponential(1)} m`, `≤ ${TOL.readRel} rel / ${TOL.readM} m`);
   add_("0.11b", "Jolt bodies: zero linear / angular damping; max angular velocity 100 rad/s; no sleeping", damp === 0 && mav < 1e-4, `damping ${damp}, maxAngVel Δ ${mav.toExponential(1)}`, "0 / 100 rad/s");
@@ -296,7 +315,7 @@ export function specAgreement(S, ref) {
     if (m > wm) { wm = m; at.m = b.name; } if (c > wc) { wc = c; at.c = b.name; } if (I > wi) { wi = I; at.i = b.name; } }
   for (const s of ref.skeleton) { const d = Math.max(...S.skeleton.positions[s.bone].map((x, i) => Math.abs(x - s.pos_ccs[i]))); if (d > ws) { ws = d; at.s = s.bone; } }
   const rc = ref.colliders, b = (n) => S.bodies.find(x => x.name === n);
-  const cDiff = Math.max(Math.abs(b("pelvis").shapes[0].he[0] * 2 - rc.pelvis.size_m[0]), Math.abs(b("thorax").shapes[0].he[2] * 2 - rc.thorax.size_m[2]), Math.abs(b("head").shapes[0].r - rc.head.sphere_r),
+  const cDiff = Math.max(Math.abs(b("pelvis").shapes[0].he[0] * 2 - rc.pelvis.size_m[0]), Math.abs(b("thorax").shapes[0].he[2] * 2 - rc.thorax.size_m[2]), Math.abs(b("head").shapes[0].r - rc.head.capsule_r), Math.abs(b("head").shapes[0].half - rc.head.capsule_halfLength),
     Math.abs(b("thigh_R").shapes[0].rTop - rc.thigh.r_prox), Math.abs(b("shank_R").shapes[0].rTop - rc.shank.r_prox), Math.abs(b("shank_R").shapes[0].rBot - rc.shank.r_dist),
     Math.abs(b("upperArm_R").shapes[1].rTop - rc.upperArm.r_prox), Math.abs(b("forearm_R").shapes[0].rBot - rc.forearm.r_dist),
     Math.abs(b("foot_R").boot.length - rc.foot.boot_len), Math.abs(b("foot_R").boot.ballWidth - rc.foot.ball_w), Math.abs(b("foot_R").boot.tipAheadAJC - rc.foot.tip_ahead_AJC), Math.abs(b("foot_R").boot.heelBehindAJC - rc.foot.heel_behind_AJC));

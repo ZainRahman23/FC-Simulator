@@ -35,7 +35,12 @@ export function buildColliders(Lm, bodies) {
       pos: loc("thorax", [0, (ySUPR + yXYPH) / 2, 0]), rot: [0, 0, 0, 1], note: "chest box xiphion → suprasternale" },
     { type: "capsule", material: "body", r: 0.033 * H, half: gird.half, pos: gird.pos, rot: gird.rot, note: "shoulder-girdle capsule (trapezius / clavicle contact)" }];
   const headPt = [0, P.headJointH * H + sole, P.headJointAP * H], nk = between(loc("head", headPt), loc("head", by.head.origin));
-  out.head = [{ type: "sphere", material: "body", r: 0.0525 * H, pos: loc("head", [0, H + sole - 0.0575 * H, 0.0055 * H]), rot: [0, 0, 0, 1], note: "skull sphere (diameter 0.105 H between head length 0.114 H and breadth 0.088 H)" },
+  // C1 (approved 2026-10-02): front-to-back (AP) capsule — r = head breadth / 2 = 0.044 H, cylinder half-length = (head length − head breadth) / 2
+  // = 0.013 H, so the AP extent = head length and the lateral extent = head breadth (a sphere cannot satisfy both within the §15.1 tolerance).
+  // Placement rule unchanged from the approved sphere: top of the skull collider 0.005 H below the vertex, AP centre +0.0055 H.
+  const hr = P.headBreadth * H / 2, hh = (P.headLength - P.headBreadth) * H / 2;
+  out.head = [{ type: "capsule", material: "body", r: hr, half: hh, pos: loc("head", [0, H + sole - 0.005 * H - hr, 0.0055 * H]), rot: alignY([0, 0, 1]),
+      note: "skull: AP capsule (length 0.114 H, breadth 0.088 H; C1)" },
     { type: "capsule", material: "body", r: 0.030 * H, half: nk.half, pos: nk.pos, rot: nk.rot, note: "neck capsule C7 → skull base" }];
   // ── arms ──
   const ua = frustumRadii(mf("upperArm"), Ls.upperArm, RHO.upperArm, TAPER.upperArm), fa = frustumRadii(mf("forearm"), Ls.forearm, RHO.forearm, TAPER.forearm);

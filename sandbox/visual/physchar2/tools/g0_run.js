@@ -30,7 +30,7 @@ for (const h of VARIATION_SET) {
 const rep = [0, 1, 2].map(() => g0Body(J, V2_REF, {})), eh = rep.map(r => r.engine.stateHash + "/" + r.engine.readHash + "/" + r.specHash);
 const global = [
   { id: "0.1b", name: "V2-REF ×3 fresh builds: identical spec hash, engine readback hash and post-step state hash", pass: eh.every(x => x === eh[0]), value: eh.join("  "), limit: "identical" },
-  { id: "0.12", name: `topology identical across the ${VARIATION_SET.length}-body variation set (names, order, parents, joints, bones, classes)`, pass: topo.every(t => t === topo[0]), value: `${new Set(topo).size} distinct topology`, limit: "1" },
+  { id: "0.12", name: `topology identical across the ${VARIATION_SET.length}-body variation set (names, order, parents, joints, bones, classes); kinds: ${VARIATION_SET.map(h => h.id + "=" + h.kind).join(", ")}`, pass: topo.every(t => t === topo[0]), value: `${new Set(topo).size} distinct topology`, limit: "1" },
   { id: "0.E", name: "vendored Jolt build = V1's pinned build (sha256)", pass: sha === SHA_EXPECT, value: sha.slice(0, 16) + "…", limit: SHA_EXPECT.slice(0, 16) + "…" },
 ];
 let guard = ""; try { guard = execSync(JSON.stringify(path.join(here, "guard_v1.sh")), { encoding: "utf8", cwd: here }).trim(); global.push({ id: "0.V1", name: "V1 frozen: runtime + evidence identical to the freeze tag", pass: true, value: guard, limit: "identical" }); }

@@ -63,18 +63,18 @@
   "bootTol": 0.005,
   "sjcDropMax": 0.015
  },
- "allPass": false,
+ "allPass": true,
  "global": [
   {
    "id": "0.1b",
    "name": "V2-REF ×3 fresh builds: identical spec hash, engine readback hash and post-step state hash",
    "pass": true,
-   "value": "54f413c9/54add0b4/c2bda4e0  54f413c9/54add0b4/c2bda4e0  54f413c9/54add0b4/c2bda4e0",
+   "value": "54f413c9/54add0b4/7843eefe  54f413c9/54add0b4/7843eefe  54f413c9/54add0b4/7843eefe",
    "limit": "identical"
   },
   {
    "id": "0.12",
-   "name": "topology identical across the 8-body variation set (names, order, parents, joints, bones, classes)",
+   "name": "topology identical across the 8-body variation set (names, order, parents, joints, bones, classes); kinds: V2-165-62=population, V2-175-70=population, V2-REF=population, V2-190-85=population, V2-198-92=population, V2-long-legs=morphology-variant, V2-short-legs=morphology-variant, V1-matched=population",
    "pass": true,
    "value": "1 distinct topology",
    "limit": "1"
@@ -99,9 +99,10 @@
    "human": {
     "id": "V2-165-62",
     "H": 1.65,
-    "M": 62
+    "M": 62,
+    "kind": "population"
    },
-   "specHash": "11759f65",
+   "specHash": "2fc1171f",
    "engine": {
     "stateHash": "aa46c502",
     "readHash": "3cd69055",
@@ -145,58 +146,66 @@
      "id": "0.1",
      "name": "spec generation deterministic (×3 identical hash)",
      "pass": true,
-     "value": "11759f65 11759f65 11759f65",
-     "limit": "identical"
+     "value": "2fc1171f 2fc1171f 2fc1171f",
+     "limit": "identical",
+     "reportOnly": false
     },
     {
      "id": "0.2a",
      "name": "total mass = M + equipment",
      "pass": true,
      "value": 62.91,
-     "limit": "62 + 0.91 ± 1e-9"
+     "limit": "62 + 0.91 ± 1e-9",
+     "reportOnly": false
     },
     {
      "id": "0.2b",
      "name": "segment mass sum = M (body only)",
      "pass": true,
      "value": 62,
-     "limit": "62 ± 1e-9"
+     "limit": "62 ± 1e-9",
+     "reportOnly": false
     },
     {
      "id": "0.2c",
      "name": "every segment = de Leva fraction × M (relative error)",
      "pass": true,
      "value": "0.00e+0",
-     "limit": "≤ 1e-12"
+     "limit": "≤ 1e-12",
+     "reportOnly": false
     },
     {
      "id": "0.3a",
      "name": "inertia tensors symmetric",
      "pass": true,
      "value": "2.71e-20",
-     "limit": "≤ 1e-12"
+     "limit": "≤ 1e-12",
+     "reportOnly": false
     },
     {
      "id": "0.3b",
      "name": "inertia tensors positive definite (min principal moment)",
      "pass": true,
      "value": "1.241e-3 kg·m²",
-     "limit": "> 0"
+     "limit": "> 0",
+     "reportOnly": false
     },
     {
      "id": "0.3c",
      "name": "triangle inequality I_a + I_b ≥ I_c with margin",
      "pass": true,
      "value": "3.72 % (forearm_L)",
-     "limit": "≥ 1 %"
+     "limit": "≥ 1 %",
+     "reportOnly": false
     },
     {
      "id": "0.4a",
-     "name": "standing arms-down COM height, barefoot-equivalent (no equipment)",
+     "name": "standing arms-down COM height, barefoot-equivalent (no equipment) — population band",
      "pass": true,
      "value": "0.5569 H",
      "limit": "0.55–0.58 H",
-     "detail": "with equipment 0.5528 H; canonical T-pose COM y = 0.9597 m"
+     "detail": "with equipment 0.5528 H; canonical T-pose COM y = 0.9597 m",
+     "reportOnly": false
     },
     {
      "id": "0.4b",
@@ -204,29 +213,42 @@
      "pass": true,
      "value": "0.20 cm",
      "limit": "|z| ≤ 1 cm",
-     "detail": "x = -1.5e-18 m"
+     "detail": "x = -1.5e-18 m",
+     "reportOnly": false
     },
     {
      "id": "0.5",
-     "name": "whole-body inertia about COM in the literature band (Santschi 1963, recalled; scaled ∝ M·H²)",
+     "name": "whole-body inertia about COM in the literature band (Santschi 1963, recalled; scaled ∝ M·H²) — population band",
      "pass": true,
      "value": "pitch 8.64 · roll 9.12 · yaw 0.720 kg·m²",
      "limit": "pitch/roll 7.2–9.1, yaw 0.65–0.98",
-     "detail": "independent de Leva assembly (research pass, 1.82 m / 78 kg): 13.2 / 14.0 / 1.1"
+     "detail": "independent de Leva assembly (research pass, 1.82 m / 78 kg): 13.2 / 14.0 / 1.1",
+     "reportOnly": false
+    },
+    {
+     "id": "0.4c",
+     "name": "requested morphology realised exactly (stature, leg length × legScale, trunk refit keeping C7, arm lengths × armScale)",
+     "pass": true,
+     "value": "stature 1.6500 m, leg 0.4760 H (legScale 1), C7 0.8605 H, HJC→C7 0.3455 H",
+     "limit": "exact",
+     "detail": "",
+     "reportOnly": false
     },
     {
      "id": "0.6a",
      "name": "inter-HJC distance",
      "pass": true,
      "value": "0.1000 H = 0.165 m",
-     "limit": "0.09–0.11 H"
+     "limit": "0.09–0.11 H",
+     "reportOnly": false
     },
     {
      "id": "0.6b",
      "name": "inter-SJC distance within ±10 % of the spec value",
      "pass": true,
      "value": "0.2180 H = 0.360 m",
-     "limit": "0.218 H ± 10 %"
+     "limit": "0.218 H ± 10 %",
+     "reportOnly": false
     },
     {
      "id": "0.6c",
@@ -234,14 +256,16 @@
      "pass": true,
      "value": "1.650000 m",
      "limit": "1.65 m exact",
-     "detail": "stature closure (HJC + de Leva trunk + head − H) = 1.7 mm"
+     "detail": "stature closure (HJC + de Leva trunk + head − H) = 1.7 mm",
+     "reportOnly": false
     },
     {
      "id": "0.6d",
-     "name": "collider stature: top of the head sphere vs vertex",
+     "name": "collider stature: top of the head collider vs vertex",
      "pass": true,
      "value": "-8.3 mm",
-     "limit": "−15 … +5 mm"
+     "limit": "−15 … +5 mm",
+     "reportOnly": false
     },
     {
      "id": "0.6e",
@@ -249,14 +273,16 @@
      "pass": true,
      "value": "leg 0.7854 m (0.4760 H), thigh 0.3877, shank 0.3977, upper arm 0.2670, forearm 0.2548",
      "limit": "exact",
-     "detail": "SJC 33.0 mm below the Drillis acromion height"
+     "detail": "SJC 33.0 mm below the Drillis acromion height",
+     "reportOnly": false
     },
     {
      "id": "0.7a",
      "name": "semantic hierarchy valid (31 bones, unique, one root, parent-first, twist branches are leaves, no hip_L/R or heel bones)",
      "pass": true,
      "value": "31 bones, root 'root'",
-     "limit": "31 / valid"
+     "limit": "31 / valid",
+     "reportOnly": false
     },
     {
      "id": "0.7b",
@@ -264,21 +290,24 @@
      "pass": true,
      "value": "22 mapped (15/15 required, 7/7 Touchline-required)",
      "limit": "complete",
-     "detail": ""
+     "detail": "",
+     "reportOnly": false
     },
     {
      "id": "0.7c",
      "name": "every bone has one driver class; every body drives ≥ 1 bone",
      "pass": true,
      "value": "min bones per body 1",
-     "limit": "≥ 1"
+     "limit": "≥ 1",
+     "reportOnly": false
     },
     {
      "id": "0.7d",
      "name": "skeleton round trip: canonical bodies → 31 bones reproduce §6 positions and local-axis frames",
      "pass": true,
      "value": "0.00e+0 m / 0.00e+0 rad",
-     "limit": "≤ 1e-9"
+     "limit": "≤ 1e-9",
+     "reportOnly": false
     },
     {
      "id": "0.7e",
@@ -286,70 +315,80 @@
      "pass": true,
      "value": "2.48e-16 m (deepSquat upperArm_R→lowerArm_R)",
      "limit": "≤ 1e-9 m",
-     "detail": "root→hips translation is free by design"
+     "detail": "root→hips translation is free by design",
+     "reportOnly": false
     },
     {
      "id": "0.7f",
      "name": "AIM twist split about the bone axis: spine_02 = 50 % of the thorax twist; neck = 27 % of the head twist",
      "pass": true,
      "value": "spine_02 10.0000° (expect 10.0000° of a 20° thoracic rotation); neck 7.9761° (expect 7.9761° of a 30° cervical rotation about vertical)",
-     "limit": "≤ 1e-9°"
+     "limit": "≤ 1e-9°",
+     "reportOnly": false
     },
     {
      "id": "0.7g",
      "name": "DEFORM twist branch: thigh_twist carries 50 % of a 20° hip axial rotation",
      "pass": true,
      "value": "10.0000°",
-     "limit": "10°"
+     "limit": "10°",
+     "reportOnly": false
     },
     {
      "id": "0.7h",
      "name": "PROC toe (rigid F0 foot): 0° at canonical; heel raised 20° → toes dorsiflex so the render toe tip lies on the turf",
      "pass": true,
      "value": "canonical 0°, heel-up 12.14°, tip y 0.00 mm",
-     "limit": "0° · > 0° · |tip y| ≤ 1 mm"
+     "limit": "0° · > 0° · |tip y| ≤ 1 mm",
+     "reportOnly": false
     },
     {
      "id": "0.8a",
      "name": "chirality: anatomical right at +X; facing pitch +x (ψ = h + 90°) puts the right foot at pitch y > 0 (south); render foot_R = physical foot_R",
      "pass": true,
      "value": "upperLeg_R x = 0.083, facing x 1.000, right foot pitch y = 0.082",
-     "limit": "all true"
+     "limit": "all true",
+     "reportOnly": false
     },
     {
      "id": "0.8b",
      "name": "no mirrored-coordinate mistake: a deliberately mirrored copy FAILS the chirality test",
      "pass": true,
      "value": "mirrored copy rejected",
-     "limit": "rejected"
+     "limit": "rejected",
+     "reportOnly": false
     },
     {
      "id": "0.8c",
      "name": "bilateral symmetry: bones / bodies / joint motions mirror exactly (q → (x, −y, −z, w), p → (−x, y, z))",
      "pass": true,
      "value": "bones 0.0e+0 m / 0.0e+0 rad · bodies 0.0e+0 · +20° motions 2.2e-16 (shoulder abd)",
-     "limit": "≤ 1e-12 m / 1e-9 rad"
+     "limit": "≤ 1e-12 m / 1e-9 rad",
+     "reportOnly": false
     },
     {
      "id": "0.9a",
      "name": "canonical pose inside every joint's hard limits (margin)",
      "pass": true,
      "value": "5.00° (elbow_L y)",
-     "limit": "≥ 5°"
+     "limit": "≥ 5°",
+     "reportOnly": false
     },
     {
      "id": "0.9b",
      "name": "swing–twist singularity margin over every joint's full engine box",
      "pass": true,
      "value": "55.1° (shoulder_L)",
-     "limit": "≥ 20°"
+     "limit": "≥ 20°",
+     "reportOnly": false
     },
     {
      "id": "0.9c",
      "name": "joint axes: every anatomical motion moves the body in its anatomical direction, both sides (35 probes)",
      "pass": true,
      "value": "35 / 35",
-     "limit": "all"
+     "limit": "all",
+     "reportOnly": false
     },
     {
      "id": "0.9d",
@@ -357,36 +396,48 @@
      "pass": true,
      "value": "all inside",
      "limit": "all inside",
-     "detail": "largest widening beyond (anatomical limit − centre) from swing–twist coupling: 29.4° (shoulder_L abd)"
+     "detail": "largest widening beyond (anatomical limit − centre) from swing–twist coupling: 29.4° (shoulder_L abd)",
+     "reportOnly": false
     },
     {
      "id": "0.9e",
      "name": "passive end-range law: 0 inside the soft range, opposes excursion, equals 25 % of the opposing isometric capacity at the hard limit",
      "pass": true,
      "value": "all joints",
-     "limit": "all"
+     "limit": "all",
+     "reportOnly": false
     },
     {
      "id": "0.9f",
      "name": "actuator capacity functions: f(0)=1, eccentric plateau, zero at ω₀; activation τ 15 ms; knee-extension 180/300°/s ratios vs Fousekis 0.70/0.57",
      "pass": true,
      "value": "ratios 0.736 / 0.550; a(15 ms) = 0.632",
-     "limit": "0.74 / 0.55 (spec fit)"
+     "limit": "0.74 / 0.55 (spec fit)",
+     "reportOnly": false
     },
     {
      "id": "0.10a",
      "name": "colliders vs anthropometric surfaces (§15.1 tolerances: limbs −10…+3, trunk −20…+5, head −15…+5 mm)",
-     "pass": false,
-     "value": "bideltoid (deltoid spheres) 0.2 mm; head sphere vs head length / 2 -7.4 mm; head sphere vs head breadth / 2 14.0 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -7.4 mm; abdomen box vs waist depth / 2 0.0 mm",
+     "pass": true,
+     "value": "bideltoid (deltoid spheres) 0.2 mm; head capsule AP half-extent vs head length / 2 0.0 mm; head capsule lateral half-extent vs head breadth / 2 0.0 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -7.4 mm; abdomen box vs waist depth / 2 0.0 mm; head axis AP true",
      "limit": "within tolerance",
-     "detail": "OUTSIDE: head sphere vs head breadth / 2"
+     "detail": "",
+     "reportOnly": false
     },
     {
      "id": "0.10b",
      "name": "boot hull dimensions = specification (length, ball width, heel behind / tip ahead of the AJC, sole on the stud plane)",
      "pass": true,
      "value": "length 26.75 cm, width 10.29 cm, heel 6.05 cm behind / tip 20.69 cm ahead of the AJC, AJC 8.43 cm up, MTP1 13.15 cm ahead",
-     "limit": "spec 26.75 × 10.29 cm ± 5 mm"
+     "limit": "spec 26.75 × 10.29 cm ± 5 mm",
+     "reportOnly": false
+    },
+    {
+     "id": "0.5b",
+     "name": "COM / inertia calculation consistent: whole body recomposed from the Jolt readback = spec composition (canonical)",
+     "pass": true,
+     "value": "mass 1.7e-8 rel · COM 1.8e-9 m · inertia 3.1e-8 rel",
+     "limit": "≤ 0.00001 rel / 0.000001 m"
     },
     {
      "id": "0.11a",
@@ -525,20 +576,29 @@
      ]
     },
     {
-     "what": "head sphere vs head length / 2",
-     "v": -0.007425000000000001,
+     "what": "head capsule AP half-extent vs head length / 2",
+     "v": 1.3877787807814457e-17,
      "tol": [
       -0.015,
       0.005
      ]
     },
     {
-     "what": "head sphere vs head breadth / 2",
-     "v": 0.014024999999999996,
+     "what": "head capsule lateral half-extent vs head breadth / 2",
+     "v": 0,
      "tol": [
       -0.015,
       0.005
      ]
+    },
+    {
+     "what": "head capsule axis = anterior–posterior",
+     "v": 0,
+     "tol": [
+      -1e-12,
+      1e-12
+     ],
+     "ok": true
     },
     {
      "what": "pelvis box vs hip breadth / 2",
@@ -585,9 +645,10 @@
    "human": {
     "id": "V2-175-70",
     "H": 1.75,
-    "M": 70
+    "M": 70,
+    "kind": "population"
    },
-   "specHash": "1eaef7b3",
+   "specHash": "a89bf594",
    "engine": {
     "stateHash": "bbb73448",
     "readHash": "8d15cc89",
@@ -631,58 +692,66 @@
      "id": "0.1",
      "name": "spec generation deterministic (×3 identical hash)",
      "pass": true,
-     "value": "1eaef7b3 1eaef7b3 1eaef7b3",
-     "limit": "identical"
+     "value": "a89bf594 a89bf594 a89bf594",
+     "limit": "identical",
+     "reportOnly": false
     },
     {
      "id": "0.2a",
      "name": "total mass = M + equipment",
      "pass": true,
      "value": 70.91,
-     "limit": "70 + 0.91 ± 1e-9"
+     "limit": "70 + 0.91 ± 1e-9",
+     "reportOnly": false
     },
     {
      "id": "0.2b",
      "name": "segment mass sum = M (body only)",
      "pass": true,
      "value": 70,
-     "limit": "70 ± 1e-9"
+     "limit": "70 ± 1e-9",
+     "reportOnly": false
     },
     {
      "id": "0.2c",
      "name": "every segment = de Leva fraction × M (relative error)",
      "pass": true,
      "value": "0.00e+0",
-     "limit": "≤ 1e-12"
+     "limit": "≤ 1e-12",
+     "reportOnly": false
     },
     {
      "id": "0.3a",
      "name": "inertia tensors symmetric",
      "pass": true,
      "value": "2.71e-20",
-     "limit": "≤ 1e-12"
+     "limit": "≤ 1e-12",
+     "reportOnly": false
     },
     {
      "id": "0.3b",
      "name": "inertia tensors positive definite (min principal moment)",
      "pass": true,
      "value": "1.511e-3 kg·m²",
-     "limit": "> 0"
+     "limit": "> 0",
+     "reportOnly": false
     },
     {
      "id": "0.3c",
      "name": "triangle inequality I_a + I_b ≥ I_c with margin",
      "pass": true,
      "value": "3.72 % (forearm_L)",
-     "limit": "≥ 1 %"
+     "limit": "≥ 1 %",
+     "reportOnly": false
     },
     {
      "id": "0.4a",
-     "name": "standing arms-down COM height, barefoot-equivalent (no equipment)",
+     "name": "standing arms-down COM height, barefoot-equivalent (no equipment) — population band",
      "pass": true,
      "value": "0.5569 H",
      "limit": "0.55–0.58 H",
-     "detail": "with equipment 0.5533 H; canonical T-pose COM y = 1.0175 m"
+     "detail": "with equipment 0.5533 H; canonical T-pose COM y = 1.0175 m",
+     "reportOnly": false
     },
     {
      "id": "0.4b",
@@ -690,29 +759,42 @@
      "pass": true,
      "value": "0.21 cm",
      "limit": "|z| ≤ 1 cm",
-     "detail": "x = 2.3e-18 m"
+     "detail": "x = 2.3e-18 m",
+     "reportOnly": false
     },
     {
      "id": "0.5",
-     "name": "whole-body inertia about COM in the literature band (Santschi 1963, recalled; scaled ∝ M·H²)",
+     "name": "whole-body inertia about COM in the literature band (Santschi 1963, recalled; scaled ∝ M·H²) — population band",
      "pass": true,
      "value": "pitch 10.97 · roll 11.58 · yaw 0.915 kg·m²",
      "limit": "pitch/roll 9.1–11.6, yaw 0.83–1.24",
-     "detail": "independent de Leva assembly (research pass, 1.82 m / 78 kg): 13.2 / 14.0 / 1.1"
+     "detail": "independent de Leva assembly (research pass, 1.82 m / 78 kg): 13.2 / 14.0 / 1.1",
+     "reportOnly": false
+    },
+    {
+     "id": "0.4c",
+     "name": "requested morphology realised exactly (stature, leg length × legScale, trunk refit keeping C7, arm lengths × armScale)",
+     "pass": true,
+     "value": "stature 1.7500 m, leg 0.4760 H (legScale 1), C7 0.8605 H, HJC→C7 0.3455 H",
+     "limit": "exact",
+     "detail": "",
+     "reportOnly": false
     },
     {
      "id": "0.6a",
      "name": "inter-HJC distance",
      "pass": true,
      "value": "0.1000 H = 0.175 m",
-     "limit": "0.09–0.11 H"
+     "limit": "0.09–0.11 H",
+     "reportOnly": false
     },
     {
      "id": "0.6b",
      "name": "inter-SJC distance within ±10 % of the spec value",
      "pass": true,
      "value": "0.2180 H = 0.382 m",
-     "limit": "0.218 H ± 10 %"
+     "limit": "0.218 H ± 10 %",
+     "reportOnly": false
     },
     {
      "id": "0.6c",
@@ -720,14 +802,16 @@
      "pass": true,
      "value": "1.750000 m",
      "limit": "1.75 m exact",
-     "detail": "stature closure (HJC + de Leva trunk + head − H) = 1.8 mm"
+     "detail": "stature closure (HJC + de Leva trunk + head − H) = 1.8 mm",
+     "reportOnly": false
     },
     {
      "id": "0.6d",
-     "name": "collider stature: top of the head sphere vs vertex",
+     "name": "collider stature: top of the head collider vs vertex",
      "pass": true,
      "value": "-8.8 mm",
-     "limit": "−15 … +5 mm"
+     "limit": "−15 … +5 mm",
+     "reportOnly": false
     },
     {
      "id": "0.6e",
@@ -735,14 +819,16 @@
      "pass": true,
      "value": "leg 0.8330 m (0.4760 H), thigh 0.4113, shank 0.4218, upper arm 0.2832, forearm 0.2703",
      "limit": "exact",
-     "detail": "SJC 35.0 mm below the Drillis acromion height"
+     "detail": "SJC 35.0 mm below the Drillis acromion height",
+     "reportOnly": false
     },
     {
      "id": "0.7a",
      "name": "semantic hierarchy valid (31 bones, unique, one root, parent-first, twist branches are leaves, no hip_L/R or heel bones)",
      "pass": true,
      "value": "31 bones, root 'root'",
-     "limit": "31 / valid"
+     "limit": "31 / valid",
+     "reportOnly": false
     },
     {
      "id": "0.7b",
@@ -750,21 +836,24 @@
      "pass": true,
      "value": "22 mapped (15/15 required, 7/7 Touchline-required)",
      "limit": "complete",
-     "detail": ""
+     "detail": "",
+     "reportOnly": false
     },
     {
      "id": "0.7c",
      "name": "every bone has one driver class; every body drives ≥ 1 bone",
      "pass": true,
      "value": "min bones per body 1",
-     "limit": "≥ 1"
+     "limit": "≥ 1",
+     "reportOnly": false
     },
     {
      "id": "0.7d",
      "name": "skeleton round trip: canonical bodies → 31 bones reproduce §6 positions and local-axis frames",
      "pass": true,
      "value": "1.39e-17 m / 2.78e-17 rad",
-     "limit": "≤ 1e-9"
+     "limit": "≤ 1e-9",
+     "reportOnly": false
     },
     {
      "id": "0.7e",
@@ -772,70 +861,80 @@
      "pass": true,
      "value": "2.24e-16 m (deepSquat clavicle_L→upperArm_L)",
      "limit": "≤ 1e-9 m",
-     "detail": "root→hips translation is free by design"
+     "detail": "root→hips translation is free by design",
+     "reportOnly": false
     },
     {
      "id": "0.7f",
      "name": "AIM twist split about the bone axis: spine_02 = 50 % of the thorax twist; neck = 27 % of the head twist",
      "pass": true,
      "value": "spine_02 10.0000° (expect 10.0000° of a 20° thoracic rotation); neck 7.9761° (expect 7.9761° of a 30° cervical rotation about vertical)",
-     "limit": "≤ 1e-9°"
+     "limit": "≤ 1e-9°",
+     "reportOnly": false
     },
     {
      "id": "0.7g",
      "name": "DEFORM twist branch: thigh_twist carries 50 % of a 20° hip axial rotation",
      "pass": true,
      "value": "10.0000°",
-     "limit": "10°"
+     "limit": "10°",
+     "reportOnly": false
     },
     {
      "id": "0.7h",
      "name": "PROC toe (rigid F0 foot): 0° at canonical; heel raised 20° → toes dorsiflex so the render toe tip lies on the turf",
      "pass": true,
      "value": "canonical 0°, heel-up 12.55°, tip y 0.00 mm",
-     "limit": "0° · > 0° · |tip y| ≤ 1 mm"
+     "limit": "0° · > 0° · |tip y| ≤ 1 mm",
+     "reportOnly": false
     },
     {
      "id": "0.8a",
      "name": "chirality: anatomical right at +X; facing pitch +x (ψ = h + 90°) puts the right foot at pitch y > 0 (south); render foot_R = physical foot_R",
      "pass": true,
      "value": "upperLeg_R x = 0.088, facing x 1.000, right foot pitch y = 0.087",
-     "limit": "all true"
+     "limit": "all true",
+     "reportOnly": false
     },
     {
      "id": "0.8b",
      "name": "no mirrored-coordinate mistake: a deliberately mirrored copy FAILS the chirality test",
      "pass": true,
      "value": "mirrored copy rejected",
-     "limit": "rejected"
+     "limit": "rejected",
+     "reportOnly": false
     },
     {
      "id": "0.8c",
      "name": "bilateral symmetry: bones / bodies / joint motions mirror exactly (q → (x, −y, −z, w), p → (−x, y, z))",
      "pass": true,
      "value": "bones 0.0e+0 m / 2.8e-17 rad · bodies 0.0e+0 · +20° motions 2.2e-16 (shoulder abd)",
-     "limit": "≤ 1e-12 m / 1e-9 rad"
+     "limit": "≤ 1e-12 m / 1e-9 rad",
+     "reportOnly": false
     },
     {
      "id": "0.9a",
      "name": "canonical pose inside every joint's hard limits (margin)",
      "pass": true,
      "value": "5.00° (elbow_L y)",
-     "limit": "≥ 5°"
+     "limit": "≥ 5°",
+     "reportOnly": false
     },
     {
      "id": "0.9b",
      "name": "swing–twist singularity margin over every joint's full engine box",
      "pass": true,
      "value": "55.1° (shoulder_L)",
-     "limit": "≥ 20°"
+     "limit": "≥ 20°",
+     "reportOnly": false
     },
     {
      "id": "0.9c",
      "name": "joint axes: every anatomical motion moves the body in its anatomical direction, both sides (35 probes)",
      "pass": true,
      "value": "35 / 35",
-     "limit": "all"
+     "limit": "all",
+     "reportOnly": false
     },
     {
      "id": "0.9d",
@@ -843,36 +942,48 @@
      "pass": true,
      "value": "all inside",
      "limit": "all inside",
-     "detail": "largest widening beyond (anatomical limit − centre) from swing–twist coupling: 29.4° (shoulder_L abd)"
+     "detail": "largest widening beyond (anatomical limit − centre) from swing–twist coupling: 29.4° (shoulder_L abd)",
+     "reportOnly": false
     },
     {
      "id": "0.9e",
      "name": "passive end-range law: 0 inside the soft range, opposes excursion, equals 25 % of the opposing isometric capacity at the hard limit",
      "pass": true,
      "value": "all joints",
-     "limit": "all"
+     "limit": "all",
+     "reportOnly": false
     },
     {
      "id": "0.9f",
      "name": "actuator capacity functions: f(0)=1, eccentric plateau, zero at ω₀; activation τ 15 ms; knee-extension 180/300°/s ratios vs Fousekis 0.70/0.57",
      "pass": true,
      "value": "ratios 0.736 / 0.550; a(15 ms) = 0.632",
-     "limit": "0.74 / 0.55 (spec fit)"
+     "limit": "0.74 / 0.55 (spec fit)",
+     "reportOnly": false
     },
     {
      "id": "0.10a",
      "name": "colliders vs anthropometric surfaces (§15.1 tolerances: limbs −10…+3, trunk −20…+5, head −15…+5 mm)",
-     "pass": false,
-     "value": "bideltoid (deltoid spheres) 0.2 mm; head sphere vs head length / 2 -7.9 mm; head sphere vs head breadth / 2 14.9 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -7.9 mm; abdomen box vs waist depth / 2 0.0 mm",
+     "pass": true,
+     "value": "bideltoid (deltoid spheres) 0.2 mm; head capsule AP half-extent vs head length / 2 0.0 mm; head capsule lateral half-extent vs head breadth / 2 0.0 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -7.9 mm; abdomen box vs waist depth / 2 0.0 mm; head axis AP true",
      "limit": "within tolerance",
-     "detail": "OUTSIDE: head sphere vs head breadth / 2"
+     "detail": "",
+     "reportOnly": false
     },
     {
      "id": "0.10b",
      "name": "boot hull dimensions = specification (length, ball width, heel behind / tip ahead of the AJC, sole on the stud plane)",
      "pass": true,
      "value": "length 28.27 cm, width 10.86 cm, heel 6.39 cm behind / tip 21.88 cm ahead of the AJC, AJC 8.83 cm up, MTP1 13.95 cm ahead",
-     "limit": "spec 28.27 × 10.86 cm ± 5 mm"
+     "limit": "spec 28.27 × 10.86 cm ± 5 mm",
+     "reportOnly": false
+    },
+    {
+     "id": "0.5b",
+     "name": "COM / inertia calculation consistent: whole body recomposed from the Jolt readback = spec composition (canonical)",
+     "pass": true,
+     "value": "mass 1.8e-9 rel · COM 5.6e-9 m · inertia 2.4e-8 rel",
+     "limit": "≤ 0.00001 rel / 0.000001 m"
     },
     {
      "id": "0.11a",
@@ -1011,20 +1122,29 @@
      ]
     },
     {
-     "what": "head sphere vs head length / 2",
-     "v": -0.007875000000000007,
+     "what": "head capsule AP half-extent vs head length / 2",
+     "v": 0,
      "tol": [
       -0.015,
       0.005
      ]
     },
     {
-     "what": "head sphere vs head breadth / 2",
-     "v": 0.014875,
+     "what": "head capsule lateral half-extent vs head breadth / 2",
+     "v": 0,
      "tol": [
       -0.015,
       0.005
      ]
+    },
+    {
+     "what": "head capsule axis = anterior–posterior",
+     "v": 0,
+     "tol": [
+      -1e-12,
+      1e-12
+     ],
+     "ok": true
     },
     {
      "what": "pelvis box vs hip breadth / 2",
@@ -1071,9 +1191,10 @@
    "human": {
     "id": "V2-REF",
     "H": 1.82,
-    "M": 78
+    "M": 78,
+    "kind": "population"
    },
-   "specHash": "c2bda4e0",
+   "specHash": "7843eefe",
    "engine": {
     "stateHash": "54f413c9",
     "readHash": "54add0b4",
@@ -1117,58 +1238,66 @@
      "id": "0.1",
      "name": "spec generation deterministic (×3 identical hash)",
      "pass": true,
-     "value": "c2bda4e0 c2bda4e0 c2bda4e0",
-     "limit": "identical"
+     "value": "7843eefe 7843eefe 7843eefe",
+     "limit": "identical",
+     "reportOnly": false
     },
     {
      "id": "0.2a",
      "name": "total mass = M + equipment",
      "pass": true,
      "value": 78.91,
-     "limit": "78 + 0.91 ± 1e-9"
+     "limit": "78 + 0.91 ± 1e-9",
+     "reportOnly": false
     },
     {
      "id": "0.2b",
      "name": "segment mass sum = M (body only)",
      "pass": true,
      "value": 78,
-     "limit": "78 ± 1e-9"
+     "limit": "78 ± 1e-9",
+     "reportOnly": false
     },
     {
      "id": "0.2c",
      "name": "every segment = de Leva fraction × M (relative error)",
      "pass": true,
      "value": "0.00e+0",
-     "limit": "≤ 1e-12"
+     "limit": "≤ 1e-12",
+     "reportOnly": false
     },
     {
      "id": "0.3a",
      "name": "inertia tensors symmetric",
      "pass": true,
      "value": "0.00e+0",
-     "limit": "≤ 1e-12"
+     "limit": "≤ 1e-12",
+     "reportOnly": false
     },
     {
      "id": "0.3b",
      "name": "inertia tensors positive definite (min principal moment)",
      "pass": true,
      "value": "1.761e-3 kg·m²",
-     "limit": "> 0"
+     "limit": "> 0",
+     "reportOnly": false
     },
     {
      "id": "0.3c",
      "name": "triangle inequality I_a + I_b ≥ I_c with margin",
      "pass": true,
      "value": "3.72 % (forearm_L)",
-     "limit": "≥ 1 %"
+     "limit": "≥ 1 %",
+     "reportOnly": false
     },
     {
      "id": "0.4a",
-     "name": "standing arms-down COM height, barefoot-equivalent (no equipment)",
+     "name": "standing arms-down COM height, barefoot-equivalent (no equipment) — population band",
      "pass": true,
      "value": "0.5569 H",
      "limit": "0.55–0.58 H",
-     "detail": "with equipment 0.5537 H; canonical T-pose COM y = 1.0581 m"
+     "detail": "with equipment 0.5537 H; canonical T-pose COM y = 1.0581 m",
+     "reportOnly": false
     },
     {
      "id": "0.4b",
@@ -1176,29 +1305,42 @@
      "pass": true,
      "value": "0.21 cm",
      "limit": "|z| ≤ 1 cm",
-     "detail": "x = 2.1e-18 m"
+     "detail": "x = 2.1e-18 m",
+     "reportOnly": false
     },
     {
      "id": "0.5",
-     "name": "whole-body inertia about COM in the literature band (Santschi 1963, recalled; scaled ∝ M·H²)",
+     "name": "whole-body inertia about COM in the literature band (Santschi 1963, recalled; scaled ∝ M·H²) — population band",
      "pass": true,
      "value": "pitch 13.22 · roll 13.96 · yaw 1.102 kg·m²",
      "limit": "pitch/roll 11.0–14.0, yaw 1.00–1.50",
-     "detail": "independent de Leva assembly (research pass, 1.82 m / 78 kg): 13.2 / 14.0 / 1.1"
+     "detail": "independent de Leva assembly (research pass, 1.82 m / 78 kg): 13.2 / 14.0 / 1.1",
+     "reportOnly": false
+    },
+    {
+     "id": "0.4c",
+     "name": "requested morphology realised exactly (stature, leg length × legScale, trunk refit keeping C7, arm lengths × armScale)",
+     "pass": true,
+     "value": "stature 1.8200 m, leg 0.4760 H (legScale 1), C7 0.8605 H, HJC→C7 0.3455 H",
+     "limit": "exact",
+     "detail": "",
+     "reportOnly": false
     },
     {
      "id": "0.6a",
      "name": "inter-HJC distance",
      "pass": true,
      "value": "0.1000 H = 0.182 m",
-     "limit": "0.09–0.11 H"
+     "limit": "0.09–0.11 H",
+     "reportOnly": false
     },
     {
      "id": "0.6b",
      "name": "inter-SJC distance within ±10 % of the spec value",
      "pass": true,
      "value": "0.2180 H = 0.397 m",
-     "limit": "0.218 H ± 10 %"
+     "limit": "0.218 H ± 10 %",
+     "reportOnly": false
     },
     {
      "id": "0.6c",
@@ -1206,14 +1348,16 @@
      "pass": true,
      "value": "1.820000 m",
      "limit": "1.82 m exact",
-     "detail": "stature closure (HJC + de Leva trunk + head − H) = 1.9 mm"
+     "detail": "stature closure (HJC + de Leva trunk + head − H) = 1.9 mm",
+     "reportOnly": false
     },
     {
      "id": "0.6d",
-     "name": "collider stature: top of the head sphere vs vertex",
+     "name": "collider stature: top of the head collider vs vertex",
      "pass": true,
      "value": "-9.1 mm",
-     "limit": "−15 … +5 mm"
+     "limit": "−15 … +5 mm",
+     "reportOnly": false
     },
     {
      "id": "0.6e",
@@ -1221,14 +1365,16 @@
      "pass": true,
      "value": "leg 0.8663 m (0.4760 H), thigh 0.4277, shank 0.4386, upper arm 0.2945, forearm 0.2811",
      "limit": "exact",
-     "detail": "SJC 36.4 mm below the Drillis acromion height"
+     "detail": "SJC 36.4 mm below the Drillis acromion height",
+     "reportOnly": false
     },
     {
      "id": "0.7a",
      "name": "semantic hierarchy valid (31 bones, unique, one root, parent-first, twist branches are leaves, no hip_L/R or heel bones)",
      "pass": true,
      "value": "31 bones, root 'root'",
-     "limit": "31 / valid"
+     "limit": "31 / valid",
+     "reportOnly": false
     },
     {
      "id": "0.7b",
@@ -1236,21 +1382,24 @@
      "pass": true,
      "value": "22 mapped (15/15 required, 7/7 Touchline-required)",
      "limit": "complete",
-     "detail": ""
+     "detail": "",
+     "reportOnly": false
     },
     {
      "id": "0.7c",
      "name": "every bone has one driver class; every body drives ≥ 1 bone",
      "pass": true,
      "value": "min bones per body 1",
-     "limit": "≥ 1"
+     "limit": "≥ 1",
+     "reportOnly": false
     },
     {
      "id": "0.7d",
      "name": "skeleton round trip: canonical bodies → 31 bones reproduce §6 positions and local-axis frames",
      "pass": true,
      "value": "1.73e-18 m / 0.00e+0 rad",
-     "limit": "≤ 1e-9"
+     "limit": "≤ 1e-9",
+     "reportOnly": false
     },
     {
      "id": "0.7e",
@@ -1258,70 +1407,80 @@
      "pass": true,
      "value": "2.48e-16 m (neutral lowerArm_L→hand_L)",
      "limit": "≤ 1e-9 m",
-     "detail": "root→hips translation is free by design"
+     "detail": "root→hips translation is free by design",
+     "reportOnly": false
     },
     {
      "id": "0.7f",
      "name": "AIM twist split about the bone axis: spine_02 = 50 % of the thorax twist; neck = 27 % of the head twist",
      "pass": true,
      "value": "spine_02 10.0000° (expect 10.0000° of a 20° thoracic rotation); neck 7.9761° (expect 7.9761° of a 30° cervical rotation about vertical)",
-     "limit": "≤ 1e-9°"
+     "limit": "≤ 1e-9°",
+     "reportOnly": false
     },
     {
      "id": "0.7g",
      "name": "DEFORM twist branch: thigh_twist carries 50 % of a 20° hip axial rotation",
      "pass": true,
      "value": "10.0000°",
-     "limit": "10°"
+     "limit": "10°",
+     "reportOnly": false
     },
     {
      "id": "0.7h",
      "name": "PROC toe (rigid F0 foot): 0° at canonical; heel raised 20° → toes dorsiflex so the render toe tip lies on the turf",
      "pass": true,
      "value": "canonical 0°, heel-up 12.81°, tip y 0.00 mm",
-     "limit": "0° · > 0° · |tip y| ≤ 1 mm"
+     "limit": "0° · > 0° · |tip y| ≤ 1 mm",
+     "reportOnly": false
     },
     {
      "id": "0.8a",
      "name": "chirality: anatomical right at +X; facing pitch +x (ψ = h + 90°) puts the right foot at pitch y > 0 (south); render foot_R = physical foot_R",
      "pass": true,
      "value": "upperLeg_R x = 0.091, facing x 1.000, right foot pitch y = 0.091",
-     "limit": "all true"
+     "limit": "all true",
+     "reportOnly": false
     },
     {
      "id": "0.8b",
      "name": "no mirrored-coordinate mistake: a deliberately mirrored copy FAILS the chirality test",
      "pass": true,
      "value": "mirrored copy rejected",
-     "limit": "rejected"
+     "limit": "rejected",
+     "reportOnly": false
     },
     {
      "id": "0.8c",
      "name": "bilateral symmetry: bones / bodies / joint motions mirror exactly (q → (x, −y, −z, w), p → (−x, y, z))",
      "pass": true,
      "value": "bones 0.0e+0 m / 0.0e+0 rad · bodies 0.0e+0 · +20° motions 2.2e-16 (shoulder abd)",
-     "limit": "≤ 1e-12 m / 1e-9 rad"
+     "limit": "≤ 1e-12 m / 1e-9 rad",
+     "reportOnly": false
     },
     {
      "id": "0.9a",
      "name": "canonical pose inside every joint's hard limits (margin)",
      "pass": true,
      "value": "5.00° (elbow_L y)",
-     "limit": "≥ 5°"
+     "limit": "≥ 5°",
+     "reportOnly": false
     },
     {
      "id": "0.9b",
      "name": "swing–twist singularity margin over every joint's full engine box",
      "pass": true,
      "value": "55.1° (shoulder_L)",
-     "limit": "≥ 20°"
+     "limit": "≥ 20°",
+     "reportOnly": false
     },
     {
      "id": "0.9c",
      "name": "joint axes: every anatomical motion moves the body in its anatomical direction, both sides (35 probes)",
      "pass": true,
      "value": "35 / 35",
-     "limit": "all"
+     "limit": "all",
+     "reportOnly": false
     },
     {
      "id": "0.9d",
@@ -1329,36 +1488,48 @@
      "pass": true,
      "value": "all inside",
      "limit": "all inside",
-     "detail": "largest widening beyond (anatomical limit − centre) from swing–twist coupling: 29.4° (shoulder_L abd)"
+     "detail": "largest widening beyond (anatomical limit − centre) from swing–twist coupling: 29.4° (shoulder_L abd)",
+     "reportOnly": false
     },
     {
      "id": "0.9e",
      "name": "passive end-range law: 0 inside the soft range, opposes excursion, equals 25 % of the opposing isometric capacity at the hard limit",
      "pass": true,
      "value": "all joints",
-     "limit": "all"
+     "limit": "all",
+     "reportOnly": false
     },
     {
      "id": "0.9f",
      "name": "actuator capacity functions: f(0)=1, eccentric plateau, zero at ω₀; activation τ 15 ms; knee-extension 180/300°/s ratios vs Fousekis 0.70/0.57",
      "pass": true,
      "value": "ratios 0.736 / 0.550; a(15 ms) = 0.632",
-     "limit": "0.74 / 0.55 (spec fit)"
+     "limit": "0.74 / 0.55 (spec fit)",
+     "reportOnly": false
     },
     {
      "id": "0.10a",
      "name": "colliders vs anthropometric surfaces (§15.1 tolerances: limbs −10…+3, trunk −20…+5, head −15…+5 mm)",
-     "pass": false,
-     "value": "bideltoid (deltoid spheres) 0.2 mm; head sphere vs head length / 2 -8.2 mm; head sphere vs head breadth / 2 15.5 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -8.2 mm; abdomen box vs waist depth / 2 0.0 mm",
+     "pass": true,
+     "value": "bideltoid (deltoid spheres) 0.2 mm; head capsule AP half-extent vs head length / 2 0.0 mm; head capsule lateral half-extent vs head breadth / 2 0.0 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -8.2 mm; abdomen box vs waist depth / 2 0.0 mm; head axis AP true",
      "limit": "within tolerance",
-     "detail": "OUTSIDE: head sphere vs head breadth / 2"
+     "detail": "",
+     "reportOnly": false
     },
     {
      "id": "0.10b",
      "name": "boot hull dimensions = specification (length, ball width, heel behind / tip ahead of the AJC, sole on the stud plane)",
      "pass": true,
      "value": "length 29.35 cm, width 11.27 cm, heel 6.63 cm behind / tip 22.72 cm ahead of the AJC, AJC 9.10 cm up, MTP1 14.51 cm ahead",
-     "limit": "spec 29.35 × 11.27 cm ± 5 mm"
+     "limit": "spec 29.35 × 11.27 cm ± 5 mm",
+     "reportOnly": false
+    },
+    {
+     "id": "0.5b",
+     "name": "COM / inertia calculation consistent: whole body recomposed from the Jolt readback = spec composition (canonical)",
+     "pass": true,
+     "value": "mass 2.4e-8 rel · COM 1.2e-8 m · inertia 1.0e-7 rel",
+     "limit": "≤ 0.00001 rel / 0.000001 m"
     },
     {
      "id": "0.11a",
@@ -1429,7 +1600,7 @@
      "id": "0.S",
      "name": "agreement with the approved calculation (PHYSICAL_CHARACTER_V2_SPEC.json, rounded to 4–5 decimals)",
      "pass": true,
-     "value": "mass 1.8e-15 kg · COM 4.7e-5 m · inertia 4.8e-6 · skeleton 5.0e-5 m · colliders 0.0e+0 m",
+     "value": "mass 1.8e-15 kg · COM 4.7e-5 m · inertia 4.8e-6 · skeleton 5.0e-5 m · colliders 1.0e-17 m",
      "limit": "≤ 0.0001 kg / 0.00015 m / 0.00002 kg·m²"
     }
    ],
@@ -1504,20 +1675,29 @@
      ]
     },
     {
-     "what": "head sphere vs head length / 2",
-     "v": -0.008190000000000017,
+     "what": "head capsule AP half-extent vs head length / 2",
+     "v": 0,
      "tol": [
       -0.015,
       0.005
      ]
     },
     {
-     "what": "head sphere vs head breadth / 2",
-     "v": 0.015469999999999998,
+     "what": "head capsule lateral half-extent vs head breadth / 2",
+     "v": 0,
      "tol": [
       -0.015,
       0.005
      ]
+    },
+    {
+     "what": "head capsule axis = anterior–posterior",
+     "v": 0,
+     "tol": [
+      -1e-12,
+      1e-12
+     ],
+     "ok": true
     },
     {
      "what": "pelvis box vs hip breadth / 2",
@@ -1564,9 +1744,10 @@
    "human": {
     "id": "V2-190-85",
     "H": 1.9,
-    "M": 85
+    "M": 85,
+    "kind": "population"
    },
-   "specHash": "db8f67b1",
+   "specHash": "ab84bbe3",
    "engine": {
     "stateHash": "26a6bd66",
     "readHash": "4eaeb429",
@@ -1610,58 +1791,66 @@
      "id": "0.1",
      "name": "spec generation deterministic (×3 identical hash)",
      "pass": true,
-     "value": "db8f67b1 db8f67b1 db8f67b1",
-     "limit": "identical"
+     "value": "ab84bbe3 ab84bbe3 ab84bbe3",
+     "limit": "identical",
+     "reportOnly": false
     },
     {
      "id": "0.2a",
      "name": "total mass = M + equipment",
      "pass": true,
      "value": 85.91,
-     "limit": "85 + 0.91 ± 1e-9"
+     "limit": "85 + 0.91 ± 1e-9",
+     "reportOnly": false
     },
     {
      "id": "0.2b",
      "name": "segment mass sum = M (body only)",
      "pass": true,
      "value": 85,
-     "limit": "85 ± 1e-9"
+     "limit": "85 ± 1e-9",
+     "reportOnly": false
     },
     {
      "id": "0.2c",
      "name": "every segment = de Leva fraction × M (relative error)",
      "pass": true,
      "value": "0.00e+0",
-     "limit": "≤ 1e-12"
+     "limit": "≤ 1e-12",
+     "reportOnly": false
     },
     {
      "id": "0.3a",
      "name": "inertia tensors symmetric",
      "pass": true,
      "value": "0.00e+0",
-     "limit": "≤ 1e-12"
+     "limit": "≤ 1e-12",
+     "reportOnly": false
     },
     {
      "id": "0.3b",
      "name": "inertia tensors positive definite (min principal moment)",
      "pass": true,
      "value": "2.038e-3 kg·m²",
-     "limit": "> 0"
+     "limit": "> 0",
+     "reportOnly": false
     },
     {
      "id": "0.3c",
      "name": "triangle inequality I_a + I_b ≥ I_c with margin",
      "pass": true,
      "value": "3.72 % (forearm_L)",
-     "limit": "≥ 1 %"
+     "limit": "≥ 1 %",
+     "reportOnly": false
     },
     {
      "id": "0.4a",
-     "name": "standing arms-down COM height, barefoot-equivalent (no equipment)",
+     "name": "standing arms-down COM height, barefoot-equivalent (no equipment) — population band",
      "pass": true,
      "value": "0.5569 H",
      "limit": "0.55–0.58 H",
-     "detail": "with equipment 0.5539 H; canonical T-pose COM y = 1.1043 m"
+     "detail": "with equipment 0.5539 H; canonical T-pose COM y = 1.1043 m",
+     "reportOnly": false
     },
     {
      "id": "0.4b",
@@ -1669,29 +1858,42 @@
      "pass": true,
      "value": "0.22 cm",
      "limit": "|z| ≤ 1 cm",
-     "detail": "x = -1.3e-18 m"
+     "detail": "x = -1.3e-18 m",
+     "reportOnly": false
     },
     {
      "id": "0.5",
-     "name": "whole-body inertia about COM in the literature band (Santschi 1963, recalled; scaled ∝ M·H²)",
+     "name": "whole-body inertia about COM in the literature band (Santschi 1963, recalled; scaled ∝ M·H²) — population band",
      "pass": true,
      "value": "pitch 15.70 · roll 16.58 · yaw 1.309 kg·m²",
      "limit": "pitch/roll 13.1–16.6, yaw 1.19–1.78",
-     "detail": "independent de Leva assembly (research pass, 1.82 m / 78 kg): 13.2 / 14.0 / 1.1"
+     "detail": "independent de Leva assembly (research pass, 1.82 m / 78 kg): 13.2 / 14.0 / 1.1",
+     "reportOnly": false
+    },
+    {
+     "id": "0.4c",
+     "name": "requested morphology realised exactly (stature, leg length × legScale, trunk refit keeping C7, arm lengths × armScale)",
+     "pass": true,
+     "value": "stature 1.9000 m, leg 0.4760 H (legScale 1), C7 0.8605 H, HJC→C7 0.3455 H",
+     "limit": "exact",
+     "detail": "",
+     "reportOnly": false
     },
     {
      "id": "0.6a",
      "name": "inter-HJC distance",
      "pass": true,
      "value": "0.1000 H = 0.190 m",
-     "limit": "0.09–0.11 H"
+     "limit": "0.09–0.11 H",
+     "reportOnly": false
     },
     {
      "id": "0.6b",
      "name": "inter-SJC distance within ±10 % of the spec value",
      "pass": true,
      "value": "0.2180 H = 0.414 m",
-     "limit": "0.218 H ± 10 %"
+     "limit": "0.218 H ± 10 %",
+     "reportOnly": false
     },
     {
      "id": "0.6c",
@@ -1699,14 +1901,16 @@
      "pass": true,
      "value": "1.900000 m",
      "limit": "1.9 m exact",
-     "detail": "stature closure (HJC + de Leva trunk + head − H) = 2.0 mm"
+     "detail": "stature closure (HJC + de Leva trunk + head − H) = 2.0 mm",
+     "reportOnly": false
     },
     {
      "id": "0.6d",
-     "name": "collider stature: top of the head sphere vs vertex",
+     "name": "collider stature: top of the head collider vs vertex",
      "pass": true,
      "value": "-9.5 mm",
-     "limit": "−15 … +5 mm"
+     "limit": "−15 … +5 mm",
+     "reportOnly": false
     },
     {
      "id": "0.6e",
@@ -1714,14 +1918,16 @@
      "pass": true,
      "value": "leg 0.9044 m (0.4760 H), thigh 0.4465, shank 0.4579, upper arm 0.3074, forearm 0.2935",
      "limit": "exact",
-     "detail": "SJC 38.0 mm below the Drillis acromion height"
+     "detail": "SJC 38.0 mm below the Drillis acromion height",
+     "reportOnly": false
     },
     {
      "id": "0.7a",
      "name": "semantic hierarchy valid (31 bones, unique, one root, parent-first, twist branches are leaves, no hip_L/R or heel bones)",
      "pass": true,
      "value": "31 bones, root 'root'",
-     "limit": "31 / valid"
+     "limit": "31 / valid",
+     "reportOnly": false
     },
     {
      "id": "0.7b",
@@ -1729,21 +1935,24 @@
      "pass": true,
      "value": "22 mapped (15/15 required, 7/7 Touchline-required)",
      "limit": "complete",
-     "detail": ""
+     "detail": "",
+     "reportOnly": false
     },
     {
      "id": "0.7c",
      "name": "every bone has one driver class; every body drives ≥ 1 bone",
      "pass": true,
      "value": "min bones per body 1",
-     "limit": "≥ 1"
+     "limit": "≥ 1",
+     "reportOnly": false
     },
     {
      "id": "0.7d",
      "name": "skeleton round trip: canonical bodies → 31 bones reproduce §6 positions and local-axis frames",
      "pass": true,
      "value": "1.73e-18 m / 0.00e+0 rad",
-     "limit": "≤ 1e-9"
+     "limit": "≤ 1e-9",
+     "reportOnly": false
     },
     {
      "id": "0.7e",
@@ -1751,70 +1960,80 @@
      "pass": true,
      "value": "2.48e-16 m (neutral upperArm_L→lowerArm_L)",
      "limit": "≤ 1e-9 m",
-     "detail": "root→hips translation is free by design"
+     "detail": "root→hips translation is free by design",
+     "reportOnly": false
     },
     {
      "id": "0.7f",
      "name": "AIM twist split about the bone axis: spine_02 = 50 % of the thorax twist; neck = 27 % of the head twist",
      "pass": true,
      "value": "spine_02 10.0000° (expect 10.0000° of a 20° thoracic rotation); neck 7.9761° (expect 7.9761° of a 30° cervical rotation about vertical)",
-     "limit": "≤ 1e-9°"
+     "limit": "≤ 1e-9°",
+     "reportOnly": false
     },
     {
      "id": "0.7g",
      "name": "DEFORM twist branch: thigh_twist carries 50 % of a 20° hip axial rotation",
      "pass": true,
      "value": "10.0000°",
-     "limit": "10°"
+     "limit": "10°",
+     "reportOnly": false
     },
     {
      "id": "0.7h",
      "name": "PROC toe (rigid F0 foot): 0° at canonical; heel raised 20° → toes dorsiflex so the render toe tip lies on the turf",
      "pass": true,
      "value": "canonical 0°, heel-up 13.09°, tip y 0.00 mm",
-     "limit": "0° · > 0° · |tip y| ≤ 1 mm"
+     "limit": "0° · > 0° · |tip y| ≤ 1 mm",
+     "reportOnly": false
     },
     {
      "id": "0.8a",
      "name": "chirality: anatomical right at +X; facing pitch +x (ψ = h + 90°) puts the right foot at pitch y > 0 (south); render foot_R = physical foot_R",
      "pass": true,
      "value": "upperLeg_R x = 0.095, facing x 1.000, right foot pitch y = 0.095",
-     "limit": "all true"
+     "limit": "all true",
+     "reportOnly": false
     },
     {
      "id": "0.8b",
      "name": "no mirrored-coordinate mistake: a deliberately mirrored copy FAILS the chirality test",
      "pass": true,
      "value": "mirrored copy rejected",
-     "limit": "rejected"
+     "limit": "rejected",
+     "reportOnly": false
     },
     {
      "id": "0.8c",
      "name": "bilateral symmetry: bones / bodies / joint motions mirror exactly (q → (x, −y, −z, w), p → (−x, y, z))",
      "pass": true,
      "value": "bones 0.0e+0 m / 0.0e+0 rad · bodies 0.0e+0 · +20° motions 2.2e-16 (shoulder abd)",
-     "limit": "≤ 1e-12 m / 1e-9 rad"
+     "limit": "≤ 1e-12 m / 1e-9 rad",
+     "reportOnly": false
     },
     {
      "id": "0.9a",
      "name": "canonical pose inside every joint's hard limits (margin)",
      "pass": true,
      "value": "5.00° (elbow_L y)",
-     "limit": "≥ 5°"
+     "limit": "≥ 5°",
+     "reportOnly": false
     },
     {
      "id": "0.9b",
      "name": "swing–twist singularity margin over every joint's full engine box",
      "pass": true,
      "value": "55.1° (shoulder_L)",
-     "limit": "≥ 20°"
+     "limit": "≥ 20°",
+     "reportOnly": false
     },
     {
      "id": "0.9c",
      "name": "joint axes: every anatomical motion moves the body in its anatomical direction, both sides (35 probes)",
      "pass": true,
      "value": "35 / 35",
-     "limit": "all"
+     "limit": "all",
+     "reportOnly": false
     },
     {
      "id": "0.9d",
@@ -1822,36 +2041,48 @@
      "pass": true,
      "value": "all inside",
      "limit": "all inside",
-     "detail": "largest widening beyond (anatomical limit − centre) from swing–twist coupling: 29.4° (shoulder_L abd)"
+     "detail": "largest widening beyond (anatomical limit − centre) from swing–twist coupling: 29.4° (shoulder_L abd)",
+     "reportOnly": false
     },
     {
      "id": "0.9e",
      "name": "passive end-range law: 0 inside the soft range, opposes excursion, equals 25 % of the opposing isometric capacity at the hard limit",
      "pass": true,
      "value": "all joints",
-     "limit": "all"
+     "limit": "all",
+     "reportOnly": false
     },
     {
      "id": "0.9f",
      "name": "actuator capacity functions: f(0)=1, eccentric plateau, zero at ω₀; activation τ 15 ms; knee-extension 180/300°/s ratios vs Fousekis 0.70/0.57",
      "pass": true,
      "value": "ratios 0.736 / 0.550; a(15 ms) = 0.632",
-     "limit": "0.74 / 0.55 (spec fit)"
+     "limit": "0.74 / 0.55 (spec fit)",
+     "reportOnly": false
     },
     {
      "id": "0.10a",
      "name": "colliders vs anthropometric surfaces (§15.1 tolerances: limbs −10…+3, trunk −20…+5, head −15…+5 mm)",
-     "pass": false,
-     "value": "bideltoid (deltoid spheres) 0.2 mm; head sphere vs head length / 2 -8.6 mm; head sphere vs head breadth / 2 16.1 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -8.5 mm; abdomen box vs waist depth / 2 0.0 mm",
+     "pass": true,
+     "value": "bideltoid (deltoid spheres) 0.2 mm; head capsule AP half-extent vs head length / 2 0.0 mm; head capsule lateral half-extent vs head breadth / 2 0.0 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -8.5 mm; abdomen box vs waist depth / 2 0.0 mm; head axis AP true",
      "limit": "within tolerance",
-     "detail": "OUTSIDE: head sphere vs head breadth / 2"
+     "detail": "",
+     "reportOnly": false
     },
     {
      "id": "0.10b",
      "name": "boot hull dimensions = specification (length, ball width, heel behind / tip ahead of the AJC, sole on the stud plane)",
      "pass": true,
      "value": "length 30.57 cm, width 11.72 cm, heel 6.90 cm behind / tip 23.67 cm ahead of the AJC, AJC 9.41 cm up, MTP1 15.15 cm ahead",
-     "limit": "spec 30.57 × 11.72 cm ± 5 mm"
+     "limit": "spec 30.57 × 11.72 cm ± 5 mm",
+     "reportOnly": false
+    },
+    {
+     "id": "0.5b",
+     "name": "COM / inertia calculation consistent: whole body recomposed from the Jolt readback = spec composition (canonical)",
+     "pass": true,
+     "value": "mass 1.5e-8 rel · COM 9.2e-9 m · inertia 5.4e-8 rel",
+     "limit": "≤ 0.00001 rel / 0.000001 m"
     },
     {
      "id": "0.11a",
@@ -1990,20 +2221,29 @@
      ]
     },
     {
-     "what": "head sphere vs head length / 2",
-     "v": -0.008550000000000002,
+     "what": "head capsule AP half-extent vs head length / 2",
+     "v": 1.3877787807814457e-17,
      "tol": [
       -0.015,
       0.005
      ]
     },
     {
-     "what": "head sphere vs head breadth / 2",
-     "v": 0.016149999999999998,
+     "what": "head capsule lateral half-extent vs head breadth / 2",
+     "v": 0,
      "tol": [
       -0.015,
       0.005
      ]
+    },
+    {
+     "what": "head capsule axis = anterior–posterior",
+     "v": 0,
+     "tol": [
+      -1e-12,
+      1e-12
+     ],
+     "ok": true
     },
     {
      "what": "pelvis box vs hip breadth / 2",
@@ -2050,9 +2290,10 @@
    "human": {
     "id": "V2-198-92",
     "H": 1.98,
-    "M": 92
+    "M": 92,
+    "kind": "population"
    },
-   "specHash": "d0ca1f45",
+   "specHash": "d544af79",
    "engine": {
     "stateHash": "bcb5cd8e",
     "readHash": "3d384f6d",
@@ -2096,58 +2337,66 @@
      "id": "0.1",
      "name": "spec generation deterministic (×3 identical hash)",
      "pass": true,
-     "value": "d0ca1f45 d0ca1f45 d0ca1f45",
-     "limit": "identical"
+     "value": "d544af79 d544af79 d544af79",
+     "limit": "identical",
+     "reportOnly": false
     },
     {
      "id": "0.2a",
      "name": "total mass = M + equipment",
      "pass": true,
      "value": 92.91,
-     "limit": "92 + 0.91 ± 1e-9"
+     "limit": "92 + 0.91 ± 1e-9",
+     "reportOnly": false
     },
     {
      "id": "0.2b",
      "name": "segment mass sum = M (body only)",
      "pass": true,
      "value": 92,
-     "limit": "92 ± 1e-9"
+     "limit": "92 ± 1e-9",
+     "reportOnly": false
     },
     {
      "id": "0.2c",
      "name": "every segment = de Leva fraction × M (relative error)",
      "pass": true,
      "value": "0.00e+0",
-     "limit": "≤ 1e-12"
+     "limit": "≤ 1e-12",
+     "reportOnly": false
     },
     {
      "id": "0.3a",
      "name": "inertia tensors symmetric",
      "pass": true,
      "value": "2.71e-20",
-     "limit": "≤ 1e-12"
+     "limit": "≤ 1e-12",
+     "reportOnly": false
     },
     {
      "id": "0.3b",
      "name": "inertia tensors positive definite (min principal moment)",
      "pass": true,
      "value": "2.343e-3 kg·m²",
-     "limit": "> 0"
+     "limit": "> 0",
+     "reportOnly": false
     },
     {
      "id": "0.3c",
      "name": "triangle inequality I_a + I_b ≥ I_c with margin",
      "pass": true,
      "value": "3.72 % (forearm_L)",
-     "limit": "≥ 1 %"
+     "limit": "≥ 1 %",
+     "reportOnly": false
     },
     {
      "id": "0.4a",
-     "name": "standing arms-down COM height, barefoot-equivalent (no equipment)",
+     "name": "standing arms-down COM height, barefoot-equivalent (no equipment) — population band",
      "pass": true,
      "value": "0.5569 H",
      "limit": "0.55–0.58 H",
-     "detail": "with equipment 0.5541 H; canonical T-pose COM y = 1.1504 m"
+     "detail": "with equipment 0.5541 H; canonical T-pose COM y = 1.1504 m",
+     "reportOnly": false
     },
     {
      "id": "0.4b",
@@ -2155,29 +2404,42 @@
      "pass": true,
      "value": "0.22 cm",
      "limit": "|z| ≤ 1 cm",
-     "detail": "x = 3.9e-18 m"
+     "detail": "x = 3.9e-18 m",
+     "reportOnly": false
     },
     {
      "id": "0.5",
-     "name": "whole-body inertia about COM in the literature band (Santschi 1963, recalled; scaled ∝ M·H²)",
+     "name": "whole-body inertia about COM in the literature band (Santschi 1963, recalled; scaled ∝ M·H²) — population band",
      "pass": true,
      "value": "pitch 18.45 · roll 19.49 · yaw 1.539 kg·m²",
      "limit": "pitch/roll 15.4–19.5, yaw 1.40–2.09",
-     "detail": "independent de Leva assembly (research pass, 1.82 m / 78 kg): 13.2 / 14.0 / 1.1"
+     "detail": "independent de Leva assembly (research pass, 1.82 m / 78 kg): 13.2 / 14.0 / 1.1",
+     "reportOnly": false
+    },
+    {
+     "id": "0.4c",
+     "name": "requested morphology realised exactly (stature, leg length × legScale, trunk refit keeping C7, arm lengths × armScale)",
+     "pass": true,
+     "value": "stature 1.9800 m, leg 0.4760 H (legScale 1), C7 0.8605 H, HJC→C7 0.3455 H",
+     "limit": "exact",
+     "detail": "",
+     "reportOnly": false
     },
     {
      "id": "0.6a",
      "name": "inter-HJC distance",
      "pass": true,
      "value": "0.1000 H = 0.198 m",
-     "limit": "0.09–0.11 H"
+     "limit": "0.09–0.11 H",
+     "reportOnly": false
     },
     {
      "id": "0.6b",
      "name": "inter-SJC distance within ±10 % of the spec value",
      "pass": true,
      "value": "0.2180 H = 0.432 m",
-     "limit": "0.218 H ± 10 %"
+     "limit": "0.218 H ± 10 %",
+     "reportOnly": false
     },
     {
      "id": "0.6c",
@@ -2185,14 +2447,16 @@
      "pass": true,
      "value": "1.980000 m",
      "limit": "1.98 m exact",
-     "detail": "stature closure (HJC + de Leva trunk + head − H) = 2.1 mm"
+     "detail": "stature closure (HJC + de Leva trunk + head − H) = 2.1 mm",
+     "reportOnly": false
     },
     {
      "id": "0.6d",
-     "name": "collider stature: top of the head sphere vs vertex",
+     "name": "collider stature: top of the head collider vs vertex",
      "pass": true,
      "value": "-9.9 mm",
-     "limit": "−15 … +5 mm"
+     "limit": "−15 … +5 mm",
+     "reportOnly": false
     },
     {
      "id": "0.6e",
@@ -2200,14 +2464,16 @@
      "pass": true,
      "value": "leg 0.9425 m (0.4760 H), thigh 0.4653, shank 0.4772, upper arm 0.3204, forearm 0.3058",
      "limit": "exact",
-     "detail": "SJC 39.6 mm below the Drillis acromion height"
+     "detail": "SJC 39.6 mm below the Drillis acromion height",
+     "reportOnly": false
     },
     {
      "id": "0.7a",
      "name": "semantic hierarchy valid (31 bones, unique, one root, parent-first, twist branches are leaves, no hip_L/R or heel bones)",
      "pass": true,
      "value": "31 bones, root 'root'",
-     "limit": "31 / valid"
+     "limit": "31 / valid",
+     "reportOnly": false
     },
     {
      "id": "0.7b",
@@ -2215,21 +2481,24 @@
      "pass": true,
      "value": "22 mapped (15/15 required, 7/7 Touchline-required)",
      "limit": "complete",
-     "detail": ""
+     "detail": "",
+     "reportOnly": false
     },
     {
      "id": "0.7c",
      "name": "every bone has one driver class; every body drives ≥ 1 bone",
      "pass": true,
      "value": "min bones per body 1",
-     "limit": "≥ 1"
+     "limit": "≥ 1",
+     "reportOnly": false
     },
     {
      "id": "0.7d",
      "name": "skeleton round trip: canonical bodies → 31 bones reproduce §6 positions and local-axis frames",
      "pass": true,
      "value": "1.73e-18 m / 2.78e-17 rad",
-     "limit": "≤ 1e-9"
+     "limit": "≤ 1e-9",
+     "reportOnly": false
     },
     {
      "id": "0.7e",
@@ -2237,70 +2506,80 @@
      "pass": true,
      "value": "2.48e-16 m (neutral upperArm_L→lowerArm_L)",
      "limit": "≤ 1e-9 m",
-     "detail": "root→hips translation is free by design"
+     "detail": "root→hips translation is free by design",
+     "reportOnly": false
     },
     {
      "id": "0.7f",
      "name": "AIM twist split about the bone axis: spine_02 = 50 % of the thorax twist; neck = 27 % of the head twist",
      "pass": true,
      "value": "spine_02 10.0000° (expect 10.0000° of a 20° thoracic rotation); neck 7.9761° (expect 7.9761° of a 30° cervical rotation about vertical)",
-     "limit": "≤ 1e-9°"
+     "limit": "≤ 1e-9°",
+     "reportOnly": false
     },
     {
      "id": "0.7g",
      "name": "DEFORM twist branch: thigh_twist carries 50 % of a 20° hip axial rotation",
      "pass": true,
      "value": "10.0000°",
-     "limit": "10°"
+     "limit": "10°",
+     "reportOnly": false
     },
     {
      "id": "0.7h",
      "name": "PROC toe (rigid F0 foot): 0° at canonical; heel raised 20° → toes dorsiflex so the render toe tip lies on the turf",
      "pass": true,
      "value": "canonical 0°, heel-up 13.35°, tip y 0.00 mm",
-     "limit": "0° · > 0° · |tip y| ≤ 1 mm"
+     "limit": "0° · > 0° · |tip y| ≤ 1 mm",
+     "reportOnly": false
     },
     {
      "id": "0.8a",
      "name": "chirality: anatomical right at +X; facing pitch +x (ψ = h + 90°) puts the right foot at pitch y > 0 (south); render foot_R = physical foot_R",
      "pass": true,
      "value": "upperLeg_R x = 0.099, facing x 1.000, right foot pitch y = 0.099",
-     "limit": "all true"
+     "limit": "all true",
+     "reportOnly": false
     },
     {
      "id": "0.8b",
      "name": "no mirrored-coordinate mistake: a deliberately mirrored copy FAILS the chirality test",
      "pass": true,
      "value": "mirrored copy rejected",
-     "limit": "rejected"
+     "limit": "rejected",
+     "reportOnly": false
     },
     {
      "id": "0.8c",
      "name": "bilateral symmetry: bones / bodies / joint motions mirror exactly (q → (x, −y, −z, w), p → (−x, y, z))",
      "pass": true,
      "value": "bones 0.0e+0 m / 2.8e-17 rad · bodies 0.0e+0 · +20° motions 2.2e-16 (shoulder abd)",
-     "limit": "≤ 1e-12 m / 1e-9 rad"
+     "limit": "≤ 1e-12 m / 1e-9 rad",
+     "reportOnly": false
     },
     {
      "id": "0.9a",
      "name": "canonical pose inside every joint's hard limits (margin)",
      "pass": true,
      "value": "5.00° (elbow_L y)",
-     "limit": "≥ 5°"
+     "limit": "≥ 5°",
+     "reportOnly": false
     },
     {
      "id": "0.9b",
      "name": "swing–twist singularity margin over every joint's full engine box",
      "pass": true,
      "value": "55.1° (shoulder_L)",
-     "limit": "≥ 20°"
+     "limit": "≥ 20°",
+     "reportOnly": false
     },
     {
      "id": "0.9c",
      "name": "joint axes: every anatomical motion moves the body in its anatomical direction, both sides (35 probes)",
      "pass": true,
      "value": "35 / 35",
-     "limit": "all"
+     "limit": "all",
+     "reportOnly": false
     },
     {
      "id": "0.9d",
@@ -2308,36 +2587,48 @@
      "pass": true,
      "value": "all inside",
      "limit": "all inside",
-     "detail": "largest widening beyond (anatomical limit − centre) from swing–twist coupling: 29.4° (shoulder_L abd)"
+     "detail": "largest widening beyond (anatomical limit − centre) from swing–twist coupling: 29.4° (shoulder_L abd)",
+     "reportOnly": false
     },
     {
      "id": "0.9e",
      "name": "passive end-range law: 0 inside the soft range, opposes excursion, equals 25 % of the opposing isometric capacity at the hard limit",
      "pass": true,
      "value": "all joints",
-     "limit": "all"
+     "limit": "all",
+     "reportOnly": false
     },
     {
      "id": "0.9f",
      "name": "actuator capacity functions: f(0)=1, eccentric plateau, zero at ω₀; activation τ 15 ms; knee-extension 180/300°/s ratios vs Fousekis 0.70/0.57",
      "pass": true,
      "value": "ratios 0.736 / 0.550; a(15 ms) = 0.632",
-     "limit": "0.74 / 0.55 (spec fit)"
+     "limit": "0.74 / 0.55 (spec fit)",
+     "reportOnly": false
     },
     {
      "id": "0.10a",
      "name": "colliders vs anthropometric surfaces (§15.1 tolerances: limbs −10…+3, trunk −20…+5, head −15…+5 mm)",
-     "pass": false,
-     "value": "bideltoid (deltoid spheres) 0.2 mm; head sphere vs head length / 2 -8.9 mm; head sphere vs head breadth / 2 16.8 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -8.9 mm; abdomen box vs waist depth / 2 0.0 mm",
+     "pass": true,
+     "value": "bideltoid (deltoid spheres) 0.2 mm; head capsule AP half-extent vs head length / 2 0.0 mm; head capsule lateral half-extent vs head breadth / 2 0.0 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -8.9 mm; abdomen box vs waist depth / 2 0.0 mm; head axis AP true",
      "limit": "within tolerance",
-     "detail": "OUTSIDE: head sphere vs head breadth / 2"
+     "detail": "",
+     "reportOnly": false
     },
     {
      "id": "0.10b",
      "name": "boot hull dimensions = specification (length, ball width, heel behind / tip ahead of the AJC, sole on the stud plane)",
      "pass": true,
      "value": "length 31.79 cm, width 12.19 cm, heel 7.16 cm behind / tip 24.63 cm ahead of the AJC, AJC 9.72 cm up, MTP1 15.78 cm ahead",
-     "limit": "spec 31.79 × 12.19 cm ± 5 mm"
+     "limit": "spec 31.79 × 12.19 cm ± 5 mm",
+     "reportOnly": false
+    },
+    {
+     "id": "0.5b",
+     "name": "COM / inertia calculation consistent: whole body recomposed from the Jolt readback = spec composition (canonical)",
+     "pass": true,
+     "value": "mass 2.2e-11 rel · COM 1.5e-8 m · inertia 3.3e-8 rel",
+     "limit": "≤ 0.00001 rel / 0.000001 m"
     },
     {
      "id": "0.11a",
@@ -2476,20 +2767,29 @@
      ]
     },
     {
-     "what": "head sphere vs head length / 2",
-     "v": -0.008910000000000001,
+     "what": "head capsule AP half-extent vs head length / 2",
+     "v": 0,
      "tol": [
       -0.015,
       0.005
      ]
     },
     {
-     "what": "head sphere vs head breadth / 2",
-     "v": 0.01683000000000001,
+     "what": "head capsule lateral half-extent vs head breadth / 2",
+     "v": 0,
      "tol": [
       -0.015,
       0.005
      ]
+    },
+    {
+     "what": "head capsule axis = anterior–posterior",
+     "v": 0,
+     "tol": [
+      -1e-12,
+      1e-12
+     ],
+     "ok": true
     },
     {
      "what": "pelvis box vs hip breadth / 2",
@@ -2539,9 +2839,10 @@
     "M": 78,
     "overrides": {
      "legScale": 1.05
-    }
+    },
+    "kind": "morphology-variant"
    },
-   "specHash": "abf62487",
+   "specHash": "b1c7c059",
    "engine": {
     "stateHash": "0cf363b2",
     "readHash": "951ed393",
@@ -2585,58 +2886,66 @@
      "id": "0.1",
      "name": "spec generation deterministic (×3 identical hash)",
      "pass": true,
-     "value": "abf62487 abf62487 abf62487",
-     "limit": "identical"
+     "value": "b1c7c059 b1c7c059 b1c7c059",
+     "limit": "identical",
+     "reportOnly": false
     },
     {
      "id": "0.2a",
      "name": "total mass = M + equipment",
      "pass": true,
      "value": 78.91,
-     "limit": "78 + 0.91 ± 1e-9"
+     "limit": "78 + 0.91 ± 1e-9",
+     "reportOnly": false
     },
     {
      "id": "0.2b",
      "name": "segment mass sum = M (body only)",
      "pass": true,
      "value": 78,
-     "limit": "78 ± 1e-9"
+     "limit": "78 ± 1e-9",
+     "reportOnly": false
     },
     {
      "id": "0.2c",
      "name": "every segment = de Leva fraction × M (relative error)",
      "pass": true,
      "value": "0.00e+0",
-     "limit": "≤ 1e-12"
+     "limit": "≤ 1e-12",
+     "reportOnly": false
     },
     {
      "id": "0.3a",
      "name": "inertia tensors symmetric",
      "pass": true,
      "value": "2.71e-20",
-     "limit": "≤ 1e-12"
+     "limit": "≤ 1e-12",
+     "reportOnly": false
     },
     {
      "id": "0.3b",
      "name": "inertia tensors positive definite (min principal moment)",
      "pass": true,
      "value": "1.761e-3 kg·m²",
-     "limit": "> 0"
+     "limit": "> 0",
+     "reportOnly": false
     },
     {
      "id": "0.3c",
      "name": "triangle inequality I_a + I_b ≥ I_c with margin",
      "pass": true,
      "value": "3.72 % (forearm_L)",
-     "limit": "≥ 1 %"
+     "limit": "≥ 1 %",
+     "reportOnly": false
     },
     {
-     "id": "0.4a",
-     "name": "standing arms-down COM height, barefoot-equivalent (no equipment)",
+     "id": "0.4a-R",
+     "name": "standing arms-down COM height — REPORTED (morphology variant: population band not applicable, spec §22 0.12 / C2)",
      "pass": true,
      "value": "0.5675 H",
-     "limit": "0.55–0.58 H",
-     "detail": "with equipment 0.5643 H; canonical T-pose COM y = 1.0774 m"
+     "limit": "report only",
+     "detail": "population band 0.55–0.58 H is for normally proportioned bodies",
+     "reportOnly": true
     },
     {
      "id": "0.4b",
@@ -2644,29 +2953,42 @@
      "pass": true,
      "value": "0.21 cm",
      "limit": "|z| ≤ 1 cm",
-     "detail": "x = 2.1e-18 m"
+     "detail": "x = 2.1e-18 m",
+     "reportOnly": false
     },
     {
-     "id": "0.5",
-     "name": "whole-body inertia about COM in the literature band (Santschi 1963, recalled; scaled ∝ M·H²)",
+     "id": "0.5-R",
+     "name": "whole-body inertia about COM — REPORTED (morphology variant: population band not applicable, spec §22 0.12 / C2)",
      "pass": true,
      "value": "pitch 12.90 · roll 13.61 · yaw 1.056 kg·m²",
-     "limit": "pitch/roll 11.0–14.0, yaw 1.00–1.50",
-     "detail": "independent de Leva assembly (research pass, 1.82 m / 78 kg): 13.2 / 14.0 / 1.1"
+     "limit": "report only",
+     "detail": "population band at this size: pitch/roll 11.0–14.0, yaw 1.00–1.50",
+     "reportOnly": true
+    },
+    {
+     "id": "0.4c",
+     "name": "requested morphology realised exactly (stature, leg length × legScale, trunk refit keeping C7, arm lengths × armScale)",
+     "pass": true,
+     "value": "stature 1.8200 m, leg 0.4998 H (legScale 1.05), C7 0.8605 H, HJC→C7 0.3217 H",
+     "limit": "exact",
+     "detail": "",
+     "reportOnly": false
     },
     {
      "id": "0.6a",
      "name": "inter-HJC distance",
      "pass": true,
      "value": "0.1000 H = 0.182 m",
-     "limit": "0.09–0.11 H"
+     "limit": "0.09–0.11 H",
+     "reportOnly": false
     },
     {
      "id": "0.6b",
      "name": "inter-SJC distance within ±10 % of the spec value",
      "pass": true,
      "value": "0.2180 H = 0.397 m",
-     "limit": "0.218 H ± 10 %"
+     "limit": "0.218 H ± 10 %",
+     "reportOnly": false
     },
     {
      "id": "0.6c",
@@ -2674,14 +2996,16 @@
      "pass": true,
      "value": "1.820000 m",
      "limit": "1.82 m exact",
-     "detail": "stature closure (HJC + de Leva trunk + head − H) = 45.2 mm"
+     "detail": "stature closure (HJC + de Leva trunk + head − H) = 45.2 mm",
+     "reportOnly": false
     },
     {
      "id": "0.6d",
-     "name": "collider stature: top of the head sphere vs vertex",
+     "name": "collider stature: top of the head collider vs vertex",
      "pass": true,
      "value": "-9.1 mm",
-     "limit": "−15 … +5 mm"
+     "limit": "−15 … +5 mm",
+     "reportOnly": false
     },
     {
      "id": "0.6e",
@@ -2689,14 +3013,16 @@
      "pass": true,
      "value": "leg 0.9096 m (0.4998 H), thigh 0.4491, shank 0.4606, upper arm 0.2945, forearm 0.2811",
      "limit": "exact",
-     "detail": "SJC 36.4 mm below the Drillis acromion height"
+     "detail": "SJC 36.4 mm below the Drillis acromion height",
+     "reportOnly": false
     },
     {
      "id": "0.7a",
      "name": "semantic hierarchy valid (31 bones, unique, one root, parent-first, twist branches are leaves, no hip_L/R or heel bones)",
      "pass": true,
      "value": "31 bones, root 'root'",
-     "limit": "31 / valid"
+     "limit": "31 / valid",
+     "reportOnly": false
     },
     {
      "id": "0.7b",
@@ -2704,21 +3030,24 @@
      "pass": true,
      "value": "22 mapped (15/15 required, 7/7 Touchline-required)",
      "limit": "complete",
-     "detail": ""
+     "detail": "",
+     "reportOnly": false
     },
     {
      "id": "0.7c",
      "name": "every bone has one driver class; every body drives ≥ 1 bone",
      "pass": true,
      "value": "min bones per body 1",
-     "limit": "≥ 1"
+     "limit": "≥ 1",
+     "reportOnly": false
     },
     {
      "id": "0.7d",
      "name": "skeleton round trip: canonical bodies → 31 bones reproduce §6 positions and local-axis frames",
      "pass": true,
      "value": "1.73e-18 m / 0.00e+0 rad",
-     "limit": "≤ 1e-9"
+     "limit": "≤ 1e-9",
+     "reportOnly": false
     },
     {
      "id": "0.7e",
@@ -2726,70 +3055,80 @@
      "pass": true,
      "value": "2.48e-16 m (neutral lowerArm_L→hand_L)",
      "limit": "≤ 1e-9 m",
-     "detail": "root→hips translation is free by design"
+     "detail": "root→hips translation is free by design",
+     "reportOnly": false
     },
     {
      "id": "0.7f",
      "name": "AIM twist split about the bone axis: spine_02 = 50 % of the thorax twist; neck = 27 % of the head twist",
      "pass": true,
      "value": "spine_02 10.0000° (expect 10.0000° of a 20° thoracic rotation); neck 7.9761° (expect 7.9761° of a 30° cervical rotation about vertical)",
-     "limit": "≤ 1e-9°"
+     "limit": "≤ 1e-9°",
+     "reportOnly": false
     },
     {
      "id": "0.7g",
      "name": "DEFORM twist branch: thigh_twist carries 50 % of a 20° hip axial rotation",
      "pass": true,
      "value": "10.0000°",
-     "limit": "10°"
+     "limit": "10°",
+     "reportOnly": false
     },
     {
      "id": "0.7h",
      "name": "PROC toe (rigid F0 foot): 0° at canonical; heel raised 20° → toes dorsiflex so the render toe tip lies on the turf",
      "pass": true,
      "value": "canonical 0°, heel-up 12.81°, tip y 0.00 mm",
-     "limit": "0° · > 0° · |tip y| ≤ 1 mm"
+     "limit": "0° · > 0° · |tip y| ≤ 1 mm",
+     "reportOnly": false
     },
     {
      "id": "0.8a",
      "name": "chirality: anatomical right at +X; facing pitch +x (ψ = h + 90°) puts the right foot at pitch y > 0 (south); render foot_R = physical foot_R",
      "pass": true,
      "value": "upperLeg_R x = 0.091, facing x 1.000, right foot pitch y = 0.091",
-     "limit": "all true"
+     "limit": "all true",
+     "reportOnly": false
     },
     {
      "id": "0.8b",
      "name": "no mirrored-coordinate mistake: a deliberately mirrored copy FAILS the chirality test",
      "pass": true,
      "value": "mirrored copy rejected",
-     "limit": "rejected"
+     "limit": "rejected",
+     "reportOnly": false
     },
     {
      "id": "0.8c",
      "name": "bilateral symmetry: bones / bodies / joint motions mirror exactly (q → (x, −y, −z, w), p → (−x, y, z))",
      "pass": true,
      "value": "bones 0.0e+0 m / 0.0e+0 rad · bodies 0.0e+0 · +20° motions 2.2e-16 (shoulder abd)",
-     "limit": "≤ 1e-12 m / 1e-9 rad"
+     "limit": "≤ 1e-12 m / 1e-9 rad",
+     "reportOnly": false
     },
     {
      "id": "0.9a",
      "name": "canonical pose inside every joint's hard limits (margin)",
      "pass": true,
      "value": "5.00° (elbow_L y)",
-     "limit": "≥ 5°"
+     "limit": "≥ 5°",
+     "reportOnly": false
     },
     {
      "id": "0.9b",
      "name": "swing–twist singularity margin over every joint's full engine box",
      "pass": true,
      "value": "55.1° (shoulder_L)",
-     "limit": "≥ 20°"
+     "limit": "≥ 20°",
+     "reportOnly": false
     },
     {
      "id": "0.9c",
      "name": "joint axes: every anatomical motion moves the body in its anatomical direction, both sides (35 probes)",
      "pass": true,
      "value": "35 / 35",
-     "limit": "all"
+     "limit": "all",
+     "reportOnly": false
     },
     {
      "id": "0.9d",
@@ -2797,36 +3136,48 @@
      "pass": true,
      "value": "all inside",
      "limit": "all inside",
-     "detail": "largest widening beyond (anatomical limit − centre) from swing–twist coupling: 29.4° (shoulder_L abd)"
+     "detail": "largest widening beyond (anatomical limit − centre) from swing–twist coupling: 29.4° (shoulder_L abd)",
+     "reportOnly": false
     },
     {
      "id": "0.9e",
      "name": "passive end-range law: 0 inside the soft range, opposes excursion, equals 25 % of the opposing isometric capacity at the hard limit",
      "pass": true,
      "value": "all joints",
-     "limit": "all"
+     "limit": "all",
+     "reportOnly": false
     },
     {
      "id": "0.9f",
      "name": "actuator capacity functions: f(0)=1, eccentric plateau, zero at ω₀; activation τ 15 ms; knee-extension 180/300°/s ratios vs Fousekis 0.70/0.57",
      "pass": true,
      "value": "ratios 0.736 / 0.550; a(15 ms) = 0.632",
-     "limit": "0.74 / 0.55 (spec fit)"
+     "limit": "0.74 / 0.55 (spec fit)",
+     "reportOnly": false
     },
     {
      "id": "0.10a",
      "name": "colliders vs anthropometric surfaces (§15.1 tolerances: limbs −10…+3, trunk −20…+5, head −15…+5 mm)",
-     "pass": false,
-     "value": "bideltoid (deltoid spheres) 0.2 mm; head sphere vs head length / 2 -8.2 mm; head sphere vs head breadth / 2 15.5 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -8.2 mm; abdomen box vs waist depth / 2 0.0 mm",
+     "pass": true,
+     "value": "bideltoid (deltoid spheres) 0.2 mm; head capsule AP half-extent vs head length / 2 0.0 mm; head capsule lateral half-extent vs head breadth / 2 0.0 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -8.2 mm; abdomen box vs waist depth / 2 0.0 mm; head axis AP true",
      "limit": "within tolerance",
-     "detail": "OUTSIDE: head sphere vs head breadth / 2"
+     "detail": "",
+     "reportOnly": false
     },
     {
      "id": "0.10b",
      "name": "boot hull dimensions = specification (length, ball width, heel behind / tip ahead of the AJC, sole on the stud plane)",
      "pass": true,
      "value": "length 29.35 cm, width 11.27 cm, heel 6.63 cm behind / tip 22.72 cm ahead of the AJC, AJC 9.10 cm up, MTP1 14.51 cm ahead",
-     "limit": "spec 29.35 × 11.27 cm ± 5 mm"
+     "limit": "spec 29.35 × 11.27 cm ± 5 mm",
+     "reportOnly": false
+    },
+    {
+     "id": "0.5b",
+     "name": "COM / inertia calculation consistent: whole body recomposed from the Jolt readback = spec composition (canonical)",
+     "pass": true,
+     "value": "mass 2.4e-8 rel · COM 7.9e-10 m · inertia 1.2e-7 rel",
+     "limit": "≤ 0.00001 rel / 0.000001 m"
     },
     {
      "id": "0.11a",
@@ -2965,20 +3316,29 @@
      ]
     },
     {
-     "what": "head sphere vs head length / 2",
-     "v": -0.008190000000000017,
+     "what": "head capsule AP half-extent vs head length / 2",
+     "v": 0,
      "tol": [
       -0.015,
       0.005
      ]
     },
     {
-     "what": "head sphere vs head breadth / 2",
-     "v": 0.015469999999999998,
+     "what": "head capsule lateral half-extent vs head breadth / 2",
+     "v": 0,
      "tol": [
       -0.015,
       0.005
      ]
+    },
+    {
+     "what": "head capsule axis = anterior–posterior",
+     "v": 0,
+     "tol": [
+      -1e-12,
+      1e-12
+     ],
+     "ok": true
     },
     {
      "what": "pelvis box vs hip breadth / 2",
@@ -3028,9 +3388,10 @@
     "M": 78,
     "overrides": {
      "legScale": 0.95
-    }
+    },
+    "kind": "morphology-variant"
    },
-   "specHash": "aa5532da",
+   "specHash": "bea02504",
    "engine": {
     "stateHash": "f038548c",
     "readHash": "7e6d7ba2",
@@ -3074,58 +3435,66 @@
      "id": "0.1",
      "name": "spec generation deterministic (×3 identical hash)",
      "pass": true,
-     "value": "aa5532da aa5532da aa5532da",
-     "limit": "identical"
+     "value": "bea02504 bea02504 bea02504",
+     "limit": "identical",
+     "reportOnly": false
     },
     {
      "id": "0.2a",
      "name": "total mass = M + equipment",
      "pass": true,
      "value": 78.91,
-     "limit": "78 + 0.91 ± 1e-9"
+     "limit": "78 + 0.91 ± 1e-9",
+     "reportOnly": false
     },
     {
      "id": "0.2b",
      "name": "segment mass sum = M (body only)",
      "pass": true,
      "value": 78,
-     "limit": "78 ± 1e-9"
+     "limit": "78 ± 1e-9",
+     "reportOnly": false
     },
     {
      "id": "0.2c",
      "name": "every segment = de Leva fraction × M (relative error)",
      "pass": true,
      "value": "0.00e+0",
-     "limit": "≤ 1e-12"
+     "limit": "≤ 1e-12",
+     "reportOnly": false
     },
     {
      "id": "0.3a",
      "name": "inertia tensors symmetric",
      "pass": true,
      "value": "0.00e+0",
-     "limit": "≤ 1e-12"
+     "limit": "≤ 1e-12",
+     "reportOnly": false
     },
     {
      "id": "0.3b",
      "name": "inertia tensors positive definite (min principal moment)",
      "pass": true,
      "value": "1.761e-3 kg·m²",
-     "limit": "> 0"
+     "limit": "> 0",
+     "reportOnly": false
     },
     {
      "id": "0.3c",
      "name": "triangle inequality I_a + I_b ≥ I_c with margin",
      "pass": true,
      "value": "3.72 % (forearm_L)",
-     "limit": "≥ 1 %"
+     "limit": "≥ 1 %",
+     "reportOnly": false
     },
     {
-     "id": "0.4a",
-     "name": "standing arms-down COM height, barefoot-equivalent (no equipment)",
-     "pass": false,
+     "id": "0.4a-R",
+     "name": "standing arms-down COM height — REPORTED (morphology variant: population band not applicable, spec §22 0.12 / C2)",
+     "pass": true,
      "value": "0.5462 H",
-     "limit": "0.55–0.58 H",
-     "detail": "with equipment 0.5431 H; canonical T-pose COM y = 1.0388 m"
+     "limit": "report only",
+     "detail": "population band 0.55–0.58 H is for normally proportioned bodies",
+     "reportOnly": true
     },
     {
      "id": "0.4b",
@@ -3133,29 +3502,42 @@
      "pass": true,
      "value": "0.21 cm",
      "limit": "|z| ≤ 1 cm",
-     "detail": "x = 2.1e-18 m"
+     "detail": "x = 2.1e-18 m",
+     "reportOnly": false
     },
     {
-     "id": "0.5",
-     "name": "whole-body inertia about COM in the literature band (Santschi 1963, recalled; scaled ∝ M·H²)",
-     "pass": false,
+     "id": "0.5-R",
+     "name": "whole-body inertia about COM — REPORTED (morphology variant: population band not applicable, spec §22 0.12 / C2)",
+     "pass": true,
      "value": "pitch 13.58 · roll 14.35 · yaw 1.154 kg·m²",
-     "limit": "pitch/roll 11.0–14.0, yaw 1.00–1.50",
-     "detail": "independent de Leva assembly (research pass, 1.82 m / 78 kg): 13.2 / 14.0 / 1.1"
+     "limit": "report only",
+     "detail": "population band at this size: pitch/roll 11.0–14.0, yaw 1.00–1.50",
+     "reportOnly": true
+    },
+    {
+     "id": "0.4c",
+     "name": "requested morphology realised exactly (stature, leg length × legScale, trunk refit keeping C7, arm lengths × armScale)",
+     "pass": true,
+     "value": "stature 1.8200 m, leg 0.4522 H (legScale 0.95), C7 0.8605 H, HJC→C7 0.3693 H",
+     "limit": "exact",
+     "detail": "",
+     "reportOnly": false
     },
     {
      "id": "0.6a",
      "name": "inter-HJC distance",
      "pass": true,
      "value": "0.1000 H = 0.182 m",
-     "limit": "0.09–0.11 H"
+     "limit": "0.09–0.11 H",
+     "reportOnly": false
     },
     {
      "id": "0.6b",
      "name": "inter-SJC distance within ±10 % of the spec value",
      "pass": true,
      "value": "0.2180 H = 0.397 m",
-     "limit": "0.218 H ± 10 %"
+     "limit": "0.218 H ± 10 %",
+     "reportOnly": false
     },
     {
      "id": "0.6c",
@@ -3163,14 +3545,16 @@
      "pass": true,
      "value": "1.820000 m",
      "limit": "1.82 m exact",
-     "detail": "stature closure (HJC + de Leva trunk + head − H) = -41.4 mm"
+     "detail": "stature closure (HJC + de Leva trunk + head − H) = -41.4 mm",
+     "reportOnly": false
     },
     {
      "id": "0.6d",
-     "name": "collider stature: top of the head sphere vs vertex",
+     "name": "collider stature: top of the head collider vs vertex",
      "pass": true,
      "value": "-9.1 mm",
-     "limit": "−15 … +5 mm"
+     "limit": "−15 … +5 mm",
+     "reportOnly": false
     },
     {
      "id": "0.6e",
@@ -3178,14 +3562,16 @@
      "pass": true,
      "value": "leg 0.8230 m (0.4522 H), thigh 0.4063, shank 0.4167, upper arm 0.2945, forearm 0.2811",
      "limit": "exact",
-     "detail": "SJC 36.4 mm below the Drillis acromion height"
+     "detail": "SJC 36.4 mm below the Drillis acromion height",
+     "reportOnly": false
     },
     {
      "id": "0.7a",
      "name": "semantic hierarchy valid (31 bones, unique, one root, parent-first, twist branches are leaves, no hip_L/R or heel bones)",
      "pass": true,
      "value": "31 bones, root 'root'",
-     "limit": "31 / valid"
+     "limit": "31 / valid",
+     "reportOnly": false
     },
     {
      "id": "0.7b",
@@ -3193,21 +3579,24 @@
      "pass": true,
      "value": "22 mapped (15/15 required, 7/7 Touchline-required)",
      "limit": "complete",
-     "detail": ""
+     "detail": "",
+     "reportOnly": false
     },
     {
      "id": "0.7c",
      "name": "every bone has one driver class; every body drives ≥ 1 bone",
      "pass": true,
      "value": "min bones per body 1",
-     "limit": "≥ 1"
+     "limit": "≥ 1",
+     "reportOnly": false
     },
     {
      "id": "0.7d",
      "name": "skeleton round trip: canonical bodies → 31 bones reproduce §6 positions and local-axis frames",
      "pass": true,
      "value": "1.73e-18 m / 0.00e+0 rad",
-     "limit": "≤ 1e-9"
+     "limit": "≤ 1e-9",
+     "reportOnly": false
     },
     {
      "id": "0.7e",
@@ -3215,70 +3604,80 @@
      "pass": true,
      "value": "2.48e-16 m (neutral lowerArm_L→hand_L)",
      "limit": "≤ 1e-9 m",
-     "detail": "root→hips translation is free by design"
+     "detail": "root→hips translation is free by design",
+     "reportOnly": false
     },
     {
      "id": "0.7f",
      "name": "AIM twist split about the bone axis: spine_02 = 50 % of the thorax twist; neck = 27 % of the head twist",
      "pass": true,
      "value": "spine_02 10.0000° (expect 10.0000° of a 20° thoracic rotation); neck 7.9761° (expect 7.9761° of a 30° cervical rotation about vertical)",
-     "limit": "≤ 1e-9°"
+     "limit": "≤ 1e-9°",
+     "reportOnly": false
     },
     {
      "id": "0.7g",
      "name": "DEFORM twist branch: thigh_twist carries 50 % of a 20° hip axial rotation",
      "pass": true,
      "value": "10.0000°",
-     "limit": "10°"
+     "limit": "10°",
+     "reportOnly": false
     },
     {
      "id": "0.7h",
      "name": "PROC toe (rigid F0 foot): 0° at canonical; heel raised 20° → toes dorsiflex so the render toe tip lies on the turf",
      "pass": true,
      "value": "canonical 0°, heel-up 12.81°, tip y 0.00 mm",
-     "limit": "0° · > 0° · |tip y| ≤ 1 mm"
+     "limit": "0° · > 0° · |tip y| ≤ 1 mm",
+     "reportOnly": false
     },
     {
      "id": "0.8a",
      "name": "chirality: anatomical right at +X; facing pitch +x (ψ = h + 90°) puts the right foot at pitch y > 0 (south); render foot_R = physical foot_R",
      "pass": true,
      "value": "upperLeg_R x = 0.091, facing x 1.000, right foot pitch y = 0.091",
-     "limit": "all true"
+     "limit": "all true",
+     "reportOnly": false
     },
     {
      "id": "0.8b",
      "name": "no mirrored-coordinate mistake: a deliberately mirrored copy FAILS the chirality test",
      "pass": true,
      "value": "mirrored copy rejected",
-     "limit": "rejected"
+     "limit": "rejected",
+     "reportOnly": false
     },
     {
      "id": "0.8c",
      "name": "bilateral symmetry: bones / bodies / joint motions mirror exactly (q → (x, −y, −z, w), p → (−x, y, z))",
      "pass": true,
      "value": "bones 0.0e+0 m / 0.0e+0 rad · bodies 0.0e+0 · +20° motions 2.2e-16 (shoulder abd)",
-     "limit": "≤ 1e-12 m / 1e-9 rad"
+     "limit": "≤ 1e-12 m / 1e-9 rad",
+     "reportOnly": false
     },
     {
      "id": "0.9a",
      "name": "canonical pose inside every joint's hard limits (margin)",
      "pass": true,
      "value": "5.00° (elbow_L y)",
-     "limit": "≥ 5°"
+     "limit": "≥ 5°",
+     "reportOnly": false
     },
     {
      "id": "0.9b",
      "name": "swing–twist singularity margin over every joint's full engine box",
      "pass": true,
      "value": "55.1° (shoulder_L)",
-     "limit": "≥ 20°"
+     "limit": "≥ 20°",
+     "reportOnly": false
     },
     {
      "id": "0.9c",
      "name": "joint axes: every anatomical motion moves the body in its anatomical direction, both sides (35 probes)",
      "pass": true,
      "value": "35 / 35",
-     "limit": "all"
+     "limit": "all",
+     "reportOnly": false
     },
     {
      "id": "0.9d",
@@ -3286,36 +3685,48 @@
      "pass": true,
      "value": "all inside",
      "limit": "all inside",
-     "detail": "largest widening beyond (anatomical limit − centre) from swing–twist coupling: 29.4° (shoulder_L abd)"
+     "detail": "largest widening beyond (anatomical limit − centre) from swing–twist coupling: 29.4° (shoulder_L abd)",
+     "reportOnly": false
     },
     {
      "id": "0.9e",
      "name": "passive end-range law: 0 inside the soft range, opposes excursion, equals 25 % of the opposing isometric capacity at the hard limit",
      "pass": true,
      "value": "all joints",
-     "limit": "all"
+     "limit": "all",
+     "reportOnly": false
     },
     {
      "id": "0.9f",
      "name": "actuator capacity functions: f(0)=1, eccentric plateau, zero at ω₀; activation τ 15 ms; knee-extension 180/300°/s ratios vs Fousekis 0.70/0.57",
      "pass": true,
      "value": "ratios 0.736 / 0.550; a(15 ms) = 0.632",
-     "limit": "0.74 / 0.55 (spec fit)"
+     "limit": "0.74 / 0.55 (spec fit)",
+     "reportOnly": false
     },
     {
      "id": "0.10a",
      "name": "colliders vs anthropometric surfaces (§15.1 tolerances: limbs −10…+3, trunk −20…+5, head −15…+5 mm)",
-     "pass": false,
-     "value": "bideltoid (deltoid spheres) 0.2 mm; head sphere vs head length / 2 -8.2 mm; head sphere vs head breadth / 2 15.5 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -8.2 mm; abdomen box vs waist depth / 2 0.0 mm",
+     "pass": true,
+     "value": "bideltoid (deltoid spheres) 0.2 mm; head capsule AP half-extent vs head length / 2 0.0 mm; head capsule lateral half-extent vs head breadth / 2 0.0 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -8.2 mm; abdomen box vs waist depth / 2 0.0 mm; head axis AP true",
      "limit": "within tolerance",
-     "detail": "OUTSIDE: head sphere vs head breadth / 2"
+     "detail": "",
+     "reportOnly": false
     },
     {
      "id": "0.10b",
      "name": "boot hull dimensions = specification (length, ball width, heel behind / tip ahead of the AJC, sole on the stud plane)",
      "pass": true,
      "value": "length 29.35 cm, width 11.27 cm, heel 6.63 cm behind / tip 22.72 cm ahead of the AJC, AJC 9.10 cm up, MTP1 14.51 cm ahead",
-     "limit": "spec 29.35 × 11.27 cm ± 5 mm"
+     "limit": "spec 29.35 × 11.27 cm ± 5 mm",
+     "reportOnly": false
+    },
+    {
+     "id": "0.5b",
+     "name": "COM / inertia calculation consistent: whole body recomposed from the Jolt readback = spec composition (canonical)",
+     "pass": true,
+     "value": "mass 2.4e-8 rel · COM 7.9e-10 m · inertia 4.5e-8 rel",
+     "limit": "≤ 0.00001 rel / 0.000001 m"
     },
     {
      "id": "0.11a",
@@ -3454,20 +3865,29 @@
      ]
     },
     {
-     "what": "head sphere vs head length / 2",
-     "v": -0.008190000000000017,
+     "what": "head capsule AP half-extent vs head length / 2",
+     "v": 0,
      "tol": [
       -0.015,
       0.005
      ]
     },
     {
-     "what": "head sphere vs head breadth / 2",
-     "v": 0.015469999999999998,
+     "what": "head capsule lateral half-extent vs head breadth / 2",
+     "v": 0,
      "tol": [
       -0.015,
       0.005
      ]
+    },
+    {
+     "what": "head capsule axis = anterior–posterior",
+     "v": 0,
+     "tol": [
+      -1e-12,
+      1e-12
+     ],
+     "ok": true
     },
     {
      "what": "pelvis box vs hip breadth / 2",
@@ -3514,9 +3934,10 @@
    "human": {
     "id": "V1-matched",
     "H": 1.9,
-    "M": 78
+    "M": 78,
+    "kind": "population"
    },
-   "specHash": "e27b24e5",
+   "specHash": "b80a6563",
    "engine": {
     "stateHash": "26a6bd66",
     "readHash": "2f7d88fb",
@@ -3560,58 +3981,66 @@
      "id": "0.1",
      "name": "spec generation deterministic (×3 identical hash)",
      "pass": true,
-     "value": "e27b24e5 e27b24e5 e27b24e5",
-     "limit": "identical"
+     "value": "b80a6563 b80a6563 b80a6563",
+     "limit": "identical",
+     "reportOnly": false
     },
     {
      "id": "0.2a",
      "name": "total mass = M + equipment",
      "pass": true,
      "value": 78.91,
-     "limit": "78 + 0.91 ± 1e-9"
+     "limit": "78 + 0.91 ± 1e-9",
+     "reportOnly": false
     },
     {
      "id": "0.2b",
      "name": "segment mass sum = M (body only)",
      "pass": true,
      "value": 78,
-     "limit": "78 ± 1e-9"
+     "limit": "78 ± 1e-9",
+     "reportOnly": false
     },
     {
      "id": "0.2c",
      "name": "every segment = de Leva fraction × M (relative error)",
      "pass": true,
      "value": "0.00e+0",
-     "limit": "≤ 1e-12"
+     "limit": "≤ 1e-12",
+     "reportOnly": false
     },
     {
      "id": "0.3a",
      "name": "inertia tensors symmetric",
      "pass": true,
      "value": "2.71e-20",
-     "limit": "≤ 1e-12"
+     "limit": "≤ 1e-12",
+     "reportOnly": false
     },
     {
      "id": "0.3b",
      "name": "inertia tensors positive definite (min principal moment)",
      "pass": true,
      "value": "1.910e-3 kg·m²",
-     "limit": "> 0"
+     "limit": "> 0",
+     "reportOnly": false
     },
     {
      "id": "0.3c",
      "name": "triangle inequality I_a + I_b ≥ I_c with margin",
      "pass": true,
      "value": "3.72 % (forearm_L)",
-     "limit": "≥ 1 %"
+     "limit": "≥ 1 %",
+     "reportOnly": false
     },
     {
      "id": "0.4a",
-     "name": "standing arms-down COM height, barefoot-equivalent (no equipment)",
+     "name": "standing arms-down COM height, barefoot-equivalent (no equipment) — population band",
      "pass": true,
      "value": "0.5569 H",
      "limit": "0.55–0.58 H",
-     "detail": "with equipment 0.5537 H; canonical T-pose COM y = 1.1037 m"
+     "detail": "with equipment 0.5537 H; canonical T-pose COM y = 1.1037 m",
+     "reportOnly": false
     },
     {
      "id": "0.4b",
@@ -3619,29 +4048,42 @@
      "pass": true,
      "value": "0.22 cm",
      "limit": "|z| ≤ 1 cm",
-     "detail": "x = -4.0e-18 m"
+     "detail": "x = -4.0e-18 m",
+     "reportOnly": false
     },
     {
      "id": "0.5",
-     "name": "whole-body inertia about COM in the literature band (Santschi 1963, recalled; scaled ∝ M·H²)",
+     "name": "whole-body inertia about COM in the literature band (Santschi 1963, recalled; scaled ∝ M·H²) — population band",
      "pass": true,
      "value": "pitch 14.41 · roll 15.21 · yaw 1.201 kg·m²",
      "limit": "pitch/roll 12.0–15.3, yaw 1.09–1.63",
-     "detail": "independent de Leva assembly (research pass, 1.82 m / 78 kg): 13.2 / 14.0 / 1.1"
+     "detail": "independent de Leva assembly (research pass, 1.82 m / 78 kg): 13.2 / 14.0 / 1.1",
+     "reportOnly": false
+    },
+    {
+     "id": "0.4c",
+     "name": "requested morphology realised exactly (stature, leg length × legScale, trunk refit keeping C7, arm lengths × armScale)",
+     "pass": true,
+     "value": "stature 1.9000 m, leg 0.4760 H (legScale 1), C7 0.8605 H, HJC→C7 0.3455 H",
+     "limit": "exact",
+     "detail": "",
+     "reportOnly": false
     },
     {
      "id": "0.6a",
      "name": "inter-HJC distance",
      "pass": true,
      "value": "0.1000 H = 0.190 m",
-     "limit": "0.09–0.11 H"
+     "limit": "0.09–0.11 H",
+     "reportOnly": false
     },
     {
      "id": "0.6b",
      "name": "inter-SJC distance within ±10 % of the spec value",
      "pass": true,
      "value": "0.2180 H = 0.414 m",
-     "limit": "0.218 H ± 10 %"
+     "limit": "0.218 H ± 10 %",
+     "reportOnly": false
     },
     {
      "id": "0.6c",
@@ -3649,14 +4091,16 @@
      "pass": true,
      "value": "1.900000 m",
      "limit": "1.9 m exact",
-     "detail": "stature closure (HJC + de Leva trunk + head − H) = 2.0 mm"
+     "detail": "stature closure (HJC + de Leva trunk + head − H) = 2.0 mm",
+     "reportOnly": false
     },
     {
      "id": "0.6d",
-     "name": "collider stature: top of the head sphere vs vertex",
+     "name": "collider stature: top of the head collider vs vertex",
      "pass": true,
      "value": "-9.5 mm",
-     "limit": "−15 … +5 mm"
+     "limit": "−15 … +5 mm",
+     "reportOnly": false
     },
     {
      "id": "0.6e",
@@ -3664,14 +4108,16 @@
      "pass": true,
      "value": "leg 0.9044 m (0.4760 H), thigh 0.4465, shank 0.4579, upper arm 0.3074, forearm 0.2935",
      "limit": "exact",
-     "detail": "SJC 38.0 mm below the Drillis acromion height"
+     "detail": "SJC 38.0 mm below the Drillis acromion height",
+     "reportOnly": false
     },
     {
      "id": "0.7a",
      "name": "semantic hierarchy valid (31 bones, unique, one root, parent-first, twist branches are leaves, no hip_L/R or heel bones)",
      "pass": true,
      "value": "31 bones, root 'root'",
-     "limit": "31 / valid"
+     "limit": "31 / valid",
+     "reportOnly": false
     },
     {
      "id": "0.7b",
@@ -3679,21 +4125,24 @@
      "pass": true,
      "value": "22 mapped (15/15 required, 7/7 Touchline-required)",
      "limit": "complete",
-     "detail": ""
+     "detail": "",
+     "reportOnly": false
     },
     {
      "id": "0.7c",
      "name": "every bone has one driver class; every body drives ≥ 1 bone",
      "pass": true,
      "value": "min bones per body 1",
-     "limit": "≥ 1"
+     "limit": "≥ 1",
+     "reportOnly": false
     },
     {
      "id": "0.7d",
      "name": "skeleton round trip: canonical bodies → 31 bones reproduce §6 positions and local-axis frames",
      "pass": true,
      "value": "1.73e-18 m / 0.00e+0 rad",
-     "limit": "≤ 1e-9"
+     "limit": "≤ 1e-9",
+     "reportOnly": false
     },
     {
      "id": "0.7e",
@@ -3701,70 +4150,80 @@
      "pass": true,
      "value": "2.48e-16 m (neutral upperArm_L→lowerArm_L)",
      "limit": "≤ 1e-9 m",
-     "detail": "root→hips translation is free by design"
+     "detail": "root→hips translation is free by design",
+     "reportOnly": false
     },
     {
      "id": "0.7f",
      "name": "AIM twist split about the bone axis: spine_02 = 50 % of the thorax twist; neck = 27 % of the head twist",
      "pass": true,
      "value": "spine_02 10.0000° (expect 10.0000° of a 20° thoracic rotation); neck 7.9761° (expect 7.9761° of a 30° cervical rotation about vertical)",
-     "limit": "≤ 1e-9°"
+     "limit": "≤ 1e-9°",
+     "reportOnly": false
     },
     {
      "id": "0.7g",
      "name": "DEFORM twist branch: thigh_twist carries 50 % of a 20° hip axial rotation",
      "pass": true,
      "value": "10.0000°",
-     "limit": "10°"
+     "limit": "10°",
+     "reportOnly": false
     },
     {
      "id": "0.7h",
      "name": "PROC toe (rigid F0 foot): 0° at canonical; heel raised 20° → toes dorsiflex so the render toe tip lies on the turf",
      "pass": true,
      "value": "canonical 0°, heel-up 13.09°, tip y 0.00 mm",
-     "limit": "0° · > 0° · |tip y| ≤ 1 mm"
+     "limit": "0° · > 0° · |tip y| ≤ 1 mm",
+     "reportOnly": false
     },
     {
      "id": "0.8a",
      "name": "chirality: anatomical right at +X; facing pitch +x (ψ = h + 90°) puts the right foot at pitch y > 0 (south); render foot_R = physical foot_R",
      "pass": true,
      "value": "upperLeg_R x = 0.095, facing x 1.000, right foot pitch y = 0.095",
-     "limit": "all true"
+     "limit": "all true",
+     "reportOnly": false
     },
     {
      "id": "0.8b",
      "name": "no mirrored-coordinate mistake: a deliberately mirrored copy FAILS the chirality test",
      "pass": true,
      "value": "mirrored copy rejected",
-     "limit": "rejected"
+     "limit": "rejected",
+     "reportOnly": false
     },
     {
      "id": "0.8c",
      "name": "bilateral symmetry: bones / bodies / joint motions mirror exactly (q → (x, −y, −z, w), p → (−x, y, z))",
      "pass": true,
      "value": "bones 0.0e+0 m / 0.0e+0 rad · bodies 0.0e+0 · +20° motions 2.2e-16 (shoulder abd)",
-     "limit": "≤ 1e-12 m / 1e-9 rad"
+     "limit": "≤ 1e-12 m / 1e-9 rad",
+     "reportOnly": false
     },
     {
      "id": "0.9a",
      "name": "canonical pose inside every joint's hard limits (margin)",
      "pass": true,
      "value": "5.00° (elbow_L y)",
-     "limit": "≥ 5°"
+     "limit": "≥ 5°",
+     "reportOnly": false
     },
     {
      "id": "0.9b",
      "name": "swing–twist singularity margin over every joint's full engine box",
      "pass": true,
      "value": "55.1° (shoulder_L)",
-     "limit": "≥ 20°"
+     "limit": "≥ 20°",
+     "reportOnly": false
     },
     {
      "id": "0.9c",
      "name": "joint axes: every anatomical motion moves the body in its anatomical direction, both sides (35 probes)",
      "pass": true,
      "value": "35 / 35",
-     "limit": "all"
+     "limit": "all",
+     "reportOnly": false
     },
     {
      "id": "0.9d",
@@ -3772,36 +4231,48 @@
      "pass": true,
      "value": "all inside",
      "limit": "all inside",
-     "detail": "largest widening beyond (anatomical limit − centre) from swing–twist coupling: 29.4° (shoulder_L abd)"
+     "detail": "largest widening beyond (anatomical limit − centre) from swing–twist coupling: 29.4° (shoulder_L abd)",
+     "reportOnly": false
     },
     {
      "id": "0.9e",
      "name": "passive end-range law: 0 inside the soft range, opposes excursion, equals 25 % of the opposing isometric capacity at the hard limit",
      "pass": true,
      "value": "all joints",
-     "limit": "all"
+     "limit": "all",
+     "reportOnly": false
     },
     {
      "id": "0.9f",
      "name": "actuator capacity functions: f(0)=1, eccentric plateau, zero at ω₀; activation τ 15 ms; knee-extension 180/300°/s ratios vs Fousekis 0.70/0.57",
      "pass": true,
      "value": "ratios 0.736 / 0.550; a(15 ms) = 0.632",
-     "limit": "0.74 / 0.55 (spec fit)"
+     "limit": "0.74 / 0.55 (spec fit)",
+     "reportOnly": false
     },
     {
      "id": "0.10a",
      "name": "colliders vs anthropometric surfaces (§15.1 tolerances: limbs −10…+3, trunk −20…+5, head −15…+5 mm)",
-     "pass": false,
-     "value": "bideltoid (deltoid spheres) 0.2 mm; head sphere vs head length / 2 -8.6 mm; head sphere vs head breadth / 2 16.1 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -8.5 mm; abdomen box vs waist depth / 2 0.0 mm",
+     "pass": true,
+     "value": "bideltoid (deltoid spheres) 0.2 mm; head capsule AP half-extent vs head length / 2 0.0 mm; head capsule lateral half-extent vs head breadth / 2 0.0 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -8.5 mm; abdomen box vs waist depth / 2 0.0 mm; head axis AP true",
      "limit": "within tolerance",
-     "detail": "OUTSIDE: head sphere vs head breadth / 2"
+     "detail": "",
+     "reportOnly": false
     },
     {
      "id": "0.10b",
      "name": "boot hull dimensions = specification (length, ball width, heel behind / tip ahead of the AJC, sole on the stud plane)",
      "pass": true,
      "value": "length 30.57 cm, width 11.72 cm, heel 6.90 cm behind / tip 23.67 cm ahead of the AJC, AJC 9.41 cm up, MTP1 15.15 cm ahead",
-     "limit": "spec 30.57 × 11.72 cm ± 5 mm"
+     "limit": "spec 30.57 × 11.72 cm ± 5 mm",
+     "reportOnly": false
+    },
+    {
+     "id": "0.5b",
+     "name": "COM / inertia calculation consistent: whole body recomposed from the Jolt readback = spec composition (canonical)",
+     "pass": true,
+     "value": "mass 2.4e-8 rel · COM 9.2e-9 m · inertia 7.0e-8 rel",
+     "limit": "≤ 0.00001 rel / 0.000001 m"
     },
     {
      "id": "0.11a",
@@ -3947,20 +4418,29 @@
      ]
     },
     {
-     "what": "head sphere vs head length / 2",
-     "v": -0.008550000000000002,
+     "what": "head capsule AP half-extent vs head length / 2",
+     "v": 1.3877787807814457e-17,
      "tol": [
       -0.015,
       0.005
      ]
     },
     {
-     "what": "head sphere vs head breadth / 2",
-     "v": 0.016149999999999998,
+     "what": "head capsule lateral half-extent vs head breadth / 2",
+     "v": 0,
      "tol": [
       -0.015,
       0.005
      ]
+    },
+    {
+     "what": "head capsule axis = anterior–posterior",
+     "v": 0,
+     "tol": [
+      -1e-12,
+      1e-12
+     ],
+     "ok": true
     },
     {
      "what": "pelvis box vs hip breadth / 2",

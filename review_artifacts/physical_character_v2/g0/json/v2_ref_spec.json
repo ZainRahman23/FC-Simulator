@@ -493,21 +493,22 @@
    "material": "body",
    "shapes": [
     {
-     "type": "sphere",
+     "type": "capsule",
      "material": "body",
-     "r": 0.09555,
+     "r": 0.08008,
+     "half": 0.02366000000000001,
      "pos": [
       0,
-      0.14927188397472713,
+      0.164741883974727,
       0.04095
      ],
      "rot": [
+      0.7071067811865466,
       0,
       0,
-      0,
-      1
+      0.7071067811865476
      ],
-     "note": "skull sphere (diameter 0.105 H between head length 0.114 H and breadth 0.088 H)"
+     "note": "skull: AP capsule (length 0.114 H, breadth 0.088 H; C1)"
     },
     {
      "type": "capsule",

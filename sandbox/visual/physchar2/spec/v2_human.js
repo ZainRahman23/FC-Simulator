@@ -69,14 +69,19 @@ export const PROFILE_EVIDENCE = {
 export const EQUIP = { boot: 0.20, shinPad: 0.08, kitUpper: 0.20, kitLower: 0.15, soleStack: 0.020, bootToe: 0.010, bootHeel: 0.005, bootWidthAdd: 0.008, toeSpring: 0.012 };
 
 // V2-REF: professional male outfield player (CIES 2022 182.3 cm; WC2018 182.4 cm / 77.2 kg; EPL DXA 182.7 cm / 78.9 kg) — approved D1
-export const V2_REF = Object.freeze({ id: "V2-REF", H: 1.82, M: 78.0 });
-export const V1_MATCHED = Object.freeze({ id: "V1-matched", H: 1.90, M: 78.0 });
-// G0 variation set (spec §17): topology must be identical for every body
+export const V2_REF = Object.freeze({ id: "V2-REF", H: 1.82, M: 78.0, kind: "population" });
+export const V1_MATCHED = Object.freeze({ id: "V1-matched", H: 1.90, M: 78.0, kind: "population" });
+// G0 variation set (spec §17): topology must be identical for every body.
+// kind (spec §22 0.12 as amended 2026-10-02, decision C2):
+//   "population"         — normally proportioned population / reference bodies: population COM and inertia bands APPLY;
+//   "morphology-variant" — deliberately extreme morphology / stress tests (±2 SD leg length): population bands do NOT apply; they must pass
+//                          their own internal-consistency checks (requested morphology, mass, segment allocation, COM / inertia calculation,
+//                          bilateral geometry, valid joints / colliders, deterministic construction).
 export const VARIATION_SET = [
-  { id: "V2-165-62", H: 1.65, M: 62 }, { id: "V2-175-70", H: 1.75, M: 70 }, { id: "V2-REF", H: 1.82, M: 78 },
-  { id: "V2-190-85", H: 1.90, M: 85 }, { id: "V2-198-92", H: 1.98, M: 92 },
-  { id: "V2-long-legs", H: 1.82, M: 78, overrides: { legScale: 1.05 } }, { id: "V2-short-legs", H: 1.82, M: 78, overrides: { legScale: 0.95 } },
-  { id: "V1-matched", H: 1.90, M: 78 },
+  { id: "V2-165-62", H: 1.65, M: 62, kind: "population" }, { id: "V2-175-70", H: 1.75, M: 70, kind: "population" }, { id: "V2-REF", H: 1.82, M: 78, kind: "population" },
+  { id: "V2-190-85", H: 1.90, M: 85, kind: "population" }, { id: "V2-198-92", H: 1.98, M: 92, kind: "population" },
+  { id: "V2-long-legs", H: 1.82, M: 78, overrides: { legScale: 1.05 }, kind: "morphology-variant" }, { id: "V2-short-legs", H: 1.82, M: 78, overrides: { legScale: 0.95 }, kind: "morphology-variant" },
+  { id: "V1-matched", H: 1.90, M: 78, kind: "population" },
 ];
 
 // ── generator: human specification → landmarks (CCS heights include the boot sole stack) ─────────────────────────────────────────

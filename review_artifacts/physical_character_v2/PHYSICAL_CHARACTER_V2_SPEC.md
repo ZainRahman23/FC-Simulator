@@ -429,7 +429,7 @@ All lengths are fractions of barefoot stature H unless stated. Every row is a pa
 | pelvis | `hips` (+ derived `root`) | 0.152 (HJC → omphalion) | 8.803 (incl. kit 0.09) | (0, +0.059, 0) | 0.0614 / 0.0696 / 0.0765 | rounded box | — (root body) |
 | abdomen | `spine_01` | 0.225 (omphalion → xiphion) | 12.737 | (0, +0.124, +0.031) | 0.0948 / 0.1416 / 0.1502 | rounded box | lumbar |
 | thorax | `spine_02` (aim), `spine_03`, `clavicle_L/R` | 0.251 (xiphion → C7); de Leva UPT 0.178 | 12.649 (incl. kit 0.20) | (0, +0.125, +0.040) | 0.0817 / 0.1721 / 0.2032 | rounded box + girdle capsule | thoracic |
-| head | `neck` (aim), `head` | 0.254 (vertex → C7) | 5.413 | (0, +0.127, +0.031) | 0.0346 / 0.0238 / 0.0320 | sphere + neck capsule | neck |
+| head | `neck` (aim), `head` | 0.254 (vertex → C7) | 5.413 | (0, +0.127, +0.031) | 0.0346 / 0.0238 / 0.0320 | AP capsule + neck capsule (C1) | neck |
 | upperArm_L/R | `upperArm`, `upperArm_twist` | 0.295 | 2.114 | (±0.170, 0, 0) | 0.0046 / 0.0133 / 0.0149 | deltoid sphere + tapered capsule | shoulder |
 | forearm_L/R (+ hand) | `lowerArm`, `forearm_twist`, `hand` | 0.281 + hand 0.090 | 1.739 (1.264 + 0.476) | (±0.190, 0, 0) | 0.0021 / 0.0253 / 0.0264 | tapered capsule + hand capsule | elbow |
 | thigh_L/R | `upperLeg`, `thigh_twist` | 0.428 | 11.075 (incl. kit 0.03) | (0, −0.175, 0) | 0.2187 / 0.0449 / 0.2187 | tapered capsule | hip |
@@ -707,7 +707,7 @@ These are evidence corrections toward athletes, not tuning. G2–G4 report usage
 | pelvis | rounded box (cr 0.03) | breadth 0.346 × depth 0.228 × height 0.222 m | from 0.07 m below the HJC line to the lumbar joint; centre AP −0.010 (gluteal mass) |
 | abdomen | rounded box (cr 0.03) | breadth 0.282 × depth 0.217 × height 0.225 m | lumbar → thoracic joint; centre AP 0 |
 | thorax | rounded box (cr 0.03) + shoulder-girdle capsule | box breadth 0.300 × depth 0.238 × height 0.178 m (xiphion → suprasternale); capsule r 0.060, ML axis, x ±0.13, at y = 1.500 | girdle capsule = trapezius / clavicle contact for shoulder charges and aerial duels |
-| head | sphere + neck capsule | sphere r 0.0955 (0.0525 H), centre 0.0575 H below the vertex, AP +0.010; neck capsule r 0.055, C7 → skull base | — |
+| head | **front-to-back (AP) capsule** + neck capsule (**amended 2026-10-02, decision C1**) | capsule r = head breadth / 2 = **0.044 H** (0.080 m), cylinder half-length = (head length − head breadth) / 2 = **0.013 H** (0.024 m), axis anterior–posterior: AP extent = head length 0.114 H, lateral extent = head breadth 0.088 H (ANSUR II). Placement rule unchanged from the original sphere: top 0.005 H below the vertex, AP centre +0.0055 H (+0.010 m). Neck capsule r 0.055, C7 → skull base. | Why: the original sphere (r 0.0525 H) was −8.2 mm vs head length but **+15.5 mm** vs head breadth, outside the §15.1 head tolerance (−15…+5 mm); no sphere can satisfy both. The tolerance was NOT widened. |
 | upperArm | deltoid sphere + tapered capsule | sphere r 0.055 (0.030 H), centre 0.012 m lateral of the SJC; capsule r 0.046 → 0.040, SJC + 0.04 → EJC − 0.01 | bideltoid half-breadth 0.265 m = ANSUR II 0.291 H / 2 |
 | forearm | tapered capsule + hand capsule | capsule r 0.039 → 0.026, EJC → WJC; hand capsule r 0.025 (0.0135 H), length 0.110 from the wrist | the hand is part of the forearm body in the core |
 | thigh | tapered capsule | r 0.087 (0.048 H) → 0.062 (0.034 H); axis from 0.02 m lateral / 0.05 m below the HJC to 0.02 m above the KJC | lateral offset = proximal tissue centroid; inter-thigh gap at the top 4.7 cm at canonical |
@@ -748,7 +748,7 @@ Limb radii are volume-matched to segment mass / density for the shank, upper arm
 |---|---|---|
 | Shoulder challenge | deltoid spheres, girdle capsule, thorax box | bideltoid width correct ±1 cm; mass behind the contact = the thorax + arm chain |
 | Leg contact / tackle | shanks (front: shin guard), thighs, boot hulls | first touch ≤ 3 mm (V1 Gate D invariant); contact geometry at the boot, not 4 cm in front of it |
-| Aerial collision | head sphere, girdle capsule, upper arms | head–head and head–shoulder contact at the correct height |
+| Aerial collision | head capsule, girdle capsule, upper arms | head–head and head–shoulder contact at the correct height |
 | Falls | rounded trunk boxes, limb capsules, hand capsule | stable supine / prone / side lying; no trapped-limb energy (G1 1.2) |
 | Ball (later) | boot hull, shank, thigh, thorax, head, hand capsule (handball) | CCD gate (R2) |
 
@@ -829,7 +829,7 @@ V2 controllers must take lengths from the spec and work in leg-length-normalised
 | Kicks / volleys | foot 22.7 m/s, shank 39 rad/s, knee extension 1206–1874°/s; knee muscle moment 130 N·m plus 79 N·m segment interaction (Nunome 2006; Kellis & Katis 2007); hip flexion 194–309 N·m; ball contact ≈ 8–12 ms | thigh / shank / foot chain; capacity allows high ω with low torque (the whip comes from segment interaction, not from knee torque at 2000°/s) | **ball–boot CCD and impact gate (R2)**; motor damping must not brake the whip (controller feed-forward ω targets) |
 | Tackles / shoulder challenges | correct contact geometry, mass behind contact, finite joint compliance | §15.5; Gate D invariant ported | two-body gate after G4 |
 | Shielding | trunk lean, arm bracing, hip strength | 3 trunk bodies, 2-DOF elbow, deltoid sphere | — |
-| Jumping / heading | CMJ peak moments: ankle 2.8, knee 3.3, hip 2.2 N·m/kg (McErlain-Naylor 2014); neck torque (Vasavada 2001); head collider | actuator power; neck 3-DOF; head sphere | F1 helps take-off (toes) |
+| Jumping / heading | CMJ peak moments: ankle 2.8, knee 3.3, hip 2.2 N·m/kg (McErlain-Naylor 2014); neck torque (Vasavada 2001); head collider | actuator power; neck 3-DOF; head capsule | F1 helps take-off (toes) |
 | Aerial collisions | head / shoulder heights, falls from height | §15.5; passive limits | — |
 | Goalkeeper dives | lateral push-off, flight, side landing, overhead reach, hands | trunk lateral ROM, shoulder ROM | **H extension (hands)** and **girdle reach (R8)** before GK gates |
 | Falls | rolling surfaces, bracing, passive limits, energy honesty | rounded boxes, hand capsule, passive torques, zero damping | G1 |
@@ -946,15 +946,15 @@ Each is a leaf extension or a separate gate. None is a topology change.
 | 0.1 | Spec generator determinism | Same human specification → byte-identical spec JSON (hash), ×3, Node = browser |
 | 0.2 | Mass bookkeeping | Σ segment = M + equipment to 1e-9. Each segment = de Leva fraction × M (+ declared equipment) to 1e-9. |
 | 0.3 | Inertia realisability | Every tensor symmetric positive definite and satisfies the triangle inequalities (I_a + I_b ≥ I_c) with ≥ 1 % margin |
-| 0.4 | Whole-body COM | Standing arms-down COM height (barefoot-equivalent) 0.55–0.58 H. Canonical COM within ±1 cm AP of the ankle line. |
-| 0.5 | Whole-body inertia | Arms-down inertias about the COM, normalised by M·H², inside the literature band of §16 |
+| 0.4 | Whole-body COM | **Population bodies:** standing arms-down COM height (barefoot-equivalent) 0.55–0.58 H. Canonical COM within ±1 cm AP of the ankle line (all bodies). **Morphology variants:** COM height reported, not banded (see 0.12). |
+| 0.5 | Whole-body inertia | **Population bodies:** arms-down inertias about the COM, normalised by M·H², inside the literature band of §16. **Morphology variants:** reported, not banded (see 0.12). **All bodies:** the whole-body COM / inertia recomposed independently from the engine readback equals the spec composition. |
 | 0.6 | Joint-centre geometry | Inter-HJC 0.090–0.110 H. Inter-SJC within ±10 % of the §10 value. Leg-length ratio and segment fractions as §10. Exact stature reproduced (vertex at H + sole). |
 | 0.7 | Skeleton round trip | Canonical bodies → 31 render bones reproduce §6 to ≤ 1e-6 m / 1e-6 rad. Every bone has exactly one driver class; every body drives ≥ 1 bone. |
 | 0.8 | Chirality and mirror | §7.2 chirality test passes; a mirrored copy fails. The mirror operator verified on all bones (mirror ∘ mirror = identity; L / R bind frames match). |
 | 0.9 | Joint frames and ROM | Canonical pose inside every ROM with ≥ 5° margin on every axis. Swing–twist decomposition stays ≥ 20° from its singularity over a dense sampling of each joint's full ROM. |
 | 0.10 | Colliders | No collider overlap between allowed (non-filtered) pairs at the canonical pose and at 6 reference poses (arms down, quiet stance, lunge, deep squat 90°, single-leg stance, arms forward). Collider vs anthropometric surface within the §15 tolerances. |
 | 0.11 | Engine readback | Every body, constraint and motor built in Jolt and read back: masses, COM offsets, inertia, constraint frames, limits, motor settings equal to the spec (≤ 1e-6 relative). No stepping, or one zero-gravity step showing zero motion. |
-| 0.12 | Variation set | All of 0.1–0.11 pass for the 7 bodies of §17. Topology identical (names, order, joint count). |
+| 0.12 | Variation set | Topology identical (names, order, joint count) for every body. **Amended 2026-10-02 (decision C2) — two kinds of body, never mixed:** (a) **population / reference bodies** (normally proportioned: V2-REF, the stature / mass series, the V1-matched instance) must pass every criterion 0.1–0.11 **including the population COM and inertia bands** (0.4, 0.5); (b) **morphology / stress-test variants** (deliberately extreme proportions, e.g. ±2 SD leg length) are **not** required to lie inside population bands — those values are reported only — and must instead pass their own internal-consistency checks: requested morphology realised exactly, total mass, segment mass allocation, COM / inertia calculation consistency (spec vs engine readback), bilateral geometry where intended, valid joints and colliders (all of 0.6–0.11), and deterministic construction. Each body in the variation set carries its kind explicitly (`population` / `morphology-variant`). |
 | 0.13 | Viewer | Static body, colliders, COMs, joint frames and ROM cones, semantic skeleton overlay, a body selector for the variation set |
 
 ### V2-G1: passive physics

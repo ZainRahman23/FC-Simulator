@@ -143,15 +143,17 @@
   "evidence": "chest depth 0.131 H (ANSUR subset 237 mm); breadth 0.165 H (< Drillis external chest 0.174 H)"
  },
  "head": {
-  "shape": "sphere + neck capsule",
-  "sphere_r": 0.09555,
-  "sphere_centre": [
+  "shape": "AP capsule + neck capsule (C1, amended 2026-10-02)",
+  "capsule_r": 0.08008,
+  "capsule_halfLength": 0.02366,
+  "capsule_axis": "anterior-posterior",
+  "capsule_centre": [
    0,
-   1.7353500000000002,
+   1.75082,
    0.01001
   ],
   "neck_r": 0.0546,
-  "evidence": "head length 0.114 H, breadth 0.088 H (ANSUR II) -> sphere diameter 0.105 H between them"
+  "evidence": "head length 0.114 H, breadth 0.088 H (ANSUR II): r = breadth / 2, half-length = (length - breadth) / 2; a sphere (r 0.0525 H) was +15.5 mm outside the breadth tolerance"
  },
  "upperArm": {
   "shape": "deltoid sphere + taperedCapsule",

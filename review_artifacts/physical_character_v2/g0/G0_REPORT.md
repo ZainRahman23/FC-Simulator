@@ -1,143 +1,146 @@
 # V2-G0: anatomy and static construction (report)
 
-**Status:** G0 is built and validated. **STOPPED for review.** G1 not started. No standing, no balance, no stepping, no walking. Nothing pushed.
-
-**Result:** **G0 = FAIL on 2 specification contradictions, with zero implementation failures.**
-- The approved spec (§15.1 / §15.2 and §22 0.12) asks for things that cannot both be true.
-- As instructed, the spec was **not** changed to make them pass. They need your decision (§2).
-- Every other criterion passes on all 8 bodies:
-  - generator, mass, COM, inertia;
-  - skeleton, Unity mapping, physics ↔ render mapping, chirality, symmetry;
-  - joint frames, ROM, limits, passive law, actuator tables;
-  - colliders and contacts at 7 poses;
-  - Jolt readback, zero-motion static construction;
-  - browser = Node determinism; V1 frozen.
+**Status: G0 PASS.**
+- Every check passes on all 8 bodies (6 population / reference + 2 morphology variants), plus 4 global checks.
+- **STOPPED for your visual inspection.** G1 not started. No standing, no balance, no stepping, no walking. Nothing pushed.
 
 **Review page:** <http://127.0.0.1:8172/sandbox/visual/physchar2/viewer/index.html>
 - The server is left running: `python3 -m http.server 8172`, from the V2 worktree root.
 - Restart it with: `cd "/Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v2" && python3 -m http.server 8172 --bind 127.0.0.1`.
 
-**Reproduce:**
-- `cd sandbox/visual/physchar2 && node tools/g0_run.js` runs everything and exits 1 while the two contradictions stand.
+**Reproduce** (from `sandbox/visual/physchar2/`):
+- `node tools/g0_run.js` runs every check (exit 0 = pass).
 - `node tools/g0_report_tables.mjs` regenerates the tables.
 - `tools/g0_capture.sh` re-captures the stills.
 
-## 1. Results
+## History
 
-| body | checks | failing |
+| step | commit | result |
 |---|---|---|
-| V2-REF 1.82 m / 78 kg | 43 / 44 | 0.10a head collider vs head breadth (C1) |
-| V1-matched 1.90 / 78 | 43 / 44 | 0.10a (C1) |
-| 1.65 / 62 · 1.75 / 70 · 1.90 / 85 · 1.98 / 92 · long legs (×1.05) | 42 / 43 each | 0.10a (C1) |
-| short legs (×0.95) | 40 / 43 | 0.10a (C1); 0.4a COM 0.5462 H < 0.55; 0.5 roll inertia 14.35 > 14.0 kg·m² (C2) |
-| global | 4 / 4 | — (×3 determinism, topology identity, pinned Jolt build, V1 guard) |
+| First G0 run | `9aacdf3` | FAIL on two specification contradictions, no implementation failures. **C1:** the head sphere was +15.5 mm outside the head-breadth tolerance. **C2:** population bands were applied to the ±2 SD morphology variants. |
+| Resolutions (your decision, 2026-10-02) | this commit | Only these two were applied: C1 AP head capsule; C2 explicit population / morphology-variant distinction. See `DECISIONS.md` and `sources/2026-10-02_user_decision_g0_resolutions_c1_c2.md`. **No other specification value was changed.** |
+
+## 1. Final results
+
+| body | kind | checks |
+|---|---|---|
+| V2-REF 1.82 m / 78 kg | population | **46 / 46** |
+| V1-matched 1.90 / 78 | population | **46 / 46** |
+| 1.65 / 62 · 1.75 / 70 · 1.90 / 85 · 1.98 / 92 | population | **45 / 45** each |
+| long legs (legScale 1.05) · short legs (0.95) | morphology variant | **45 / 45** each (COM / inertia reported, not banded) |
+| global: ×3 determinism, topology identity, pinned Jolt build, V1 guard | — | **4 / 4** |
+| **Browser = Node** | — | **8 / 8** bodies: identical spec, engine-state and readback hashes (headless Chrome) |
+
+The 46th check on V2-REF and V1-matched is the agreement with the approved Python calculation, which exists for those two bodies.
 
 **Headline numbers (V2-REF, exact runner output):**
 
 | quantity | value |
 |---|---|
 | Mass | 78.910 kg (body 78.000 + equipment 0.910). Every segment = de Leva fraction × M, error 0. |
-| Standing arms-down COM | 0.5569 H (barefoot-equivalent, no equipment); with equipment 0.5537 H. Canonical COM 2.1 mm ahead of the ankle line. |
-| Whole-body inertia, arms down, no equipment | pitch 13.22 · roll 13.96 · yaw 1.102 kg·m². Independent de Leva assembly: 13.2 / 14.0 / 1.1. |
-| Inter-HJC / inter-SJC | 0.182 m (0.100 H) / 0.397 m (0.218 H) |
-| Generated stature | exactly 1.820 m. Stature closure +1.9 mm. Head-sphere top 9.1 mm below the vertex. |
-| Boot hull | 29.35 × 11.27 cm. Heel 6.63 cm behind / tip 22.72 cm ahead of the AJC. MTP1 14.51 cm ahead. AJC 9.10 cm up. Soles on the stud plane to 0.00 mm. Lowest other collider 11.5 cm up. |
+| Standing arms-down COM | 0.5569 H (population band 0.55–0.58 H). Canonical COM 2.1 mm ahead of the ankle line. |
+| Whole-body inertia, arms down, no equipment | pitch 13.22 · roll 13.96 · yaw 1.102 kg·m² (band 11–14 / 11–14 / 1.0–1.5). Recomposed from the Jolt readback: 1.0e-7 rel. |
+| Requested morphology | stature exactly 1.820 m; leg 0.4760 H; C7 0.8605 H |
+| Head collider (C1) | AP capsule r 0.0801 m, cylinder half-length 0.0237 m. AP and lateral extents 0.0 mm from ANSUR head length / breadth. Top 9.1 mm below the vertex. |
+| Boot hull | 29.35 × 11.27 cm. Heel 6.63 cm behind / tip 22.72 cm ahead of the AJC. MTP1 14.51 cm ahead. AJC 9.10 cm up. Soles on the stud plane to 0.00 mm. |
 | Skeleton round trip | 1.7e-18 m / 0 rad |
 | Mapping chain at the 7 reference poses | 2.5e-16 m |
-| Joint axes | 35 / 35 anatomical-direction probes, both sides |
-| Canonical-pose limit margin | 5.00° minimum (elbow hyperextension stop at −5°, canonical elbow at 0°) |
-| Singularity margin | 55.1° minimum (shoulder) |
-| Jolt readback | mass 7.7e-8 rel; full inertia tensor 2.4e-7 rel; COM 1.0e-7 m; frames 2.8e-7; limits 5.8e-8 rad; constraint-space rotation exact |
-| Zero-gravity step at canonical | Δpos 1.2e-10 m, Δrot 0, \|v\| 0 |
-| Collider clearance | no interpenetration between allowed pairs at any of the 7 reference poses |
-| **Browser = Node** | 8 / 8 bodies identical spec / engine-state / readback hashes (headless Chrome) |
-| ×3 fresh builds | identical |
+| Joint axes | 35 / 35 anatomical-direction probes |
+| Canonical-pose limit margin | 5.00° minimum (elbow) |
+| Singularity margin | 55.1° minimum |
+| Jolt readback | mass 7.7e-8 rel; inertia 2.4e-7 rel; COM 1.0e-7 m; frames 2.8e-7; limits 5.8e-8 rad; constraint-space rotation exact |
+| Zero-gravity step | Δpos 1.2e-10 m |
+| Collider clearance | no interpenetration at any of the 7 reference poses |
 
-## 2. Specification contradictions: decisions needed (G0 STOPPED here)
+**Morphology variants** (reported values, consistency checks pass):
 
-### C1. Head collider vs the head tolerance (spec §15.2 vs §15.1)
-
-- The approved head collider is a sphere of r = 0.0525 H.
-- Against ANSUR II head **length** / 2 it is **−8.2 mm**: inside the −15…+5 mm head tolerance.
-- Against head **breadth** / 2 it is **+15.5 mm**: outside it.
-- No sphere can satisfy both: length / 2 and breadth / 2 differ by 23.5 mm, and the tolerance window is 20 mm.
-- It fails on every body (+14.0 mm at 1.65 m … +16.8 mm at 1.98 m).
-
-| option | change | note |
-|---|---|---|
-| **A (recommended)** | Replace the sphere with an AP-oriented capsule, r = 0.044 H (− inset), cylinder half-length 0.013 H. Length 0.114 H, breadth 0.088 H: both within tolerance. | Jolt primitive, same cost |
-| B | Keep the sphere and widen the head tolerance to +16 mm laterally | justification: ears at the sphere's equator |
-| C | Two spheres (frontal + occipital) | — |
-
-### C2. Population bands applied to the ±2 SD proportion variants (spec §22 0.12)
-
-- Spec 0.12 requires 0.4 (COM 0.55–0.58 H) and 0.5 (the inertia band) to pass for **all** variation-set bodies.
-- That includes the deliberately long- and short-legged variants (legScale ±5 % ≈ ±2 SD sitting-height ratio).
-- The short-legged body correctly has a lower COM (0.5462 H) and a higher roll inertia (14.35 vs a 14.0 band ceiling at that size).
-- A population-mean band cannot be a pass criterion for a body built to sit 2 SD from the mean. The long-legged variant happens to pass.
-
-| option | change |
-|---|---|
-| **A (recommended)** | Apply population bands only to population-proportion bodies. Check proportion variants for internal consistency instead (same generator, exact stature, topology, etc., all of which already pass) and report their COM / inertia. |
-| B | Widen the bands for variants by the population SD |
-| C | Reduce the variants to ±1 SD |
-
-## 3. Implementation choices and deviations to review
-
-None changes an approved value at V2-REF.
-
-| # | item | what was done | why |
+| variant | COM | pitch / roll / yaw (kg·m²) | leg |
 |---|---|---|---|
-| I1 | Engine hard limits | Derived per axis as the **tight hull of every anatomical hard extreme**, mapped through the ROM-centred frame: single-axis extremes from the anatomical zero, plus shoulder horizontal adduction 140° at 90° elevation from §13.2. Soft limits are the same hull of the active extremes. | Spec §13.1.4: the stop must never undercut an anatomical extreme. Swing–twist coupling widens some axes beyond (limit − centre); the largest is 29.4° at the shoulder abduction axis. |
-| I2 | Shoulder anatomical zero | Anatomical angles are measured from the arm hanging, palm medial. T-pose = abduction 90°. | Spec §13.2 ROM rows are anatomical (arm-at-side) |
-| I3 | ENG geometric offsets | Authored at V2-REF in metres in the spec; implemented as fractions of H (identical at V2-REF, scale with body size) | §17 parameterisation |
-| I4 | Jolt `mMaxAngularVelocity` | 100 rad/s (Jolt default 47.1) | Not in the spec. The default would clip physiological segment speeds (kick: shank ≈ 39 rad/s, foot higher). No hidden limiter, the same spirit as zero damping. |
-| I5 | Passive-only ankle foot ab/adduction | End-range torque 10 N·m at the ±15° hard limit [ENG] | The spec gave no value |
-| I6 | Pose-dependent couplings | Implemented as data and laws (DF vs knee, hamstring hip flexion vs knee, screw-home, hip rotation vs flexion). Parameters fitted at G1. | As specified |
-| I7 | Friction per sub-shape | Materials recorded per sub-shape (boot / hand / body). G0 never exercises friction (the contact listener applies 0.5). Sub-shape decoding from contacts arrives at G1. | The JoltPhysics.js build lacks `GetSubShapeIndexFromID` |
-| I8 | Solver iterations | Jolt defaults (10 / 2) in G0 | Spec: G1's convergence study selects them |
-| I9 | Render toe (PROC) | MTP rotation axis = the foot's lateral axis (the oblique MTP line is used for the F1 extension later). Bisection keeps the toe tip on the turf, clamped 0–60°. | F0 render toe only |
-| I10 | Hand capsule | Extent 0.110 m from the wrist (palm to knuckles), as the spec says. Fingers beyond the knuckles have no collider in the core. | Review item for the GK hands extension |
-| I11 | Canonical limit margin | Exactly 5.00° at the elbow (canonical 0°, hyperextension hard stop −5°): passes at the threshold | Consequence of approved values |
-| I12 | Neck AIM twist | 27 % of the head's twist measured about the neck bone's own axis (C7 → skull base, ≈ 10° from vertical) | Mapping definition. A 30° cervical rotation about vertical gives the neck bone 7.98°. |
-| I13 | Viewer camera | Left-handed look-at (screen right = up × forward) so the image is anatomically correct | The data are left-handed (§7); a standard GL camera would mirror the character |
+| long legs | 0.5675 H | 12.90 / 13.61 / 1.056 | 0.4998 H |
+| short legs | 0.5462 H | 13.58 / 14.35 / 1.154 | 0.4522 H |
 
-## 4. What G0 contains
+Both: stature exact, C7 at 0.8605 H, engine-recomposed COM / inertia ≤ 1.2e-7 rel.
 
-- **Generator**, `sandbox/visual/physchar2/spec/`. Human specification (H, M, overrides) → landmarks → 14 bodies (mass / COM / full inertia, equipment) → 13 joints → colliders → skeleton.
-  - Joint frames, limits, passive law and capacities are in `v2_joints.js` / `v2_actuators.js`.
-  - Colliders and the self-collision matrix are in `v2_colliders.js`.
-  - The 31-bone skeleton, its axes, mirror operator and Unity mapping are in `v2_skeleton.js`.
-  - Pure arithmetic with deterministic trigonometry: bit-identical in Node and the browser.
-- **Mapping**, `map/v2_render_map.js`: DIRECT / AIM / PROC / DEFORM / DERIVED evaluation and the chain-consistency check.
-- **Engine**, `core/v2_jolt.js`: a port of V1's adapter (explicit mass properties, ROM-centred SixDOF frames, pyramid limits, motors structural and OFF, zero damping, readback, triangle export).
-- **Gate**, `gates/v2_g0.js` + `tools/g0_run.js`: 44 per-body checks + 4 global, each with a declared tolerance (`TOL`).
-- **Review page**, `viewer/`: zero-dependency WebGL2.
-  - Toggles: semantic skeleton, physical rigid bodies, colliders, joint centres, joint axes, joint limits, segment COMs, total COM, bone names, body names, physics ↔ render mapping, left / right, ground plane, dimensions.
-  - Cameras: front, back, right, left, ¾, top. Focus views: pelvis / hips, knee axes, foot / ankle / toe, shoulder, spine mapping, proportions.
-  - Poses: T-pose, neutral anatomical, and the five G0 reference poses. Body selector for the variation set.
-  - Numeric tables for every body, joint and bone.
-  - G0 runs live in the page, and the page proves browser = Node against the Node results.
-- **Evidence**:
-  - `g0/json/g0_results.json`: every check, every body, measures, hashes.
-  - `g0/json/v2_ref_spec.json`: the complete generated V2-REF specification.
-  - `g0/shots/`: 12 stills.
-  - `g0/G0_TABLES.md`: generated tables, also appended below.
-- **V1**: untouched. `tools/guard_v1.sh` passes. The vendored Jolt build is byte-identical to V1's (sha256 checked on every run).
+## 2. The two applied resolutions
+
+### C1: head collider
+
+| | |
+|---|---|
+| Before | sphere r 0.0525 H |
+| After | **front-to-back capsule**: r = head breadth / 2 = 0.044 H, cylinder half-length = (head length − head breadth) / 2 = 0.013 H, axis anterior–posterior |
+| Reason | represent the head's different anatomical length (0.114 H) and breadth (0.088 H) within the existing approved tolerance (−15…+5 mm). **The tolerance was not widened.** |
+| Placement | **Implementation note:** the capsule takes the original sphere's placement **rule** (top 0.005 H below the vertex, AP centre +0.0055 H), not its old centre point. With r 0.044 H, the old centre would have put the head top 24.6 mm below the vertex, failing 0.6d. |
+| Unchanged | head mass and inertia (colliders carry no mass) |
+| Amended | spec §11, §15.2, §15.5, §18; calc; JSON |
+
+### C2: population bands vs morphology variants
+
+- Spec §22 0.4 / 0.5 / 0.12 are amended.
+- Every variation-set body carries `kind`.
+- **`population`** bodies must pass the population COM band (0.4a) and inertia band (0.5).
+- **`morphology-variant`** bodies:
+  - report those values (`0.4a-R`, `0.5-R`, report-only);
+  - must pass their own internal-consistency checks, as for every other body:
+    - requested morphology realised exactly (new 0.4c);
+    - total mass (0.2a) and segment allocation (0.2b, 0.2c);
+    - COM / inertia calculation consistency (new 0.5b: whole body recomposed independently from the Jolt readback = spec composition);
+    - bilateral geometry (0.8c);
+    - valid joints and colliders (0.6–0.11);
+    - deterministic construction (0.1, 0.1b).
+- 0.4c and 0.5b run on **every** body.
+
+## 3. Implementation choices to keep in view (unchanged from the first G0 report; none alters an approved value)
+
+| # | item | what was done |
+|---|---|---|
+| I1 | Engine hard limits | Tight hull of every anatomical hard extreme in the ROM-centred frame (stop never undercuts an anatomical extreme). Largest widening from swing–twist coupling: 29.4° (shoulder abduction axis). |
+| I2 | Shoulder angles | Measured from the arm hanging; T-pose = abduction 90° |
+| I3 | Geometric offsets | Spec metres at V2-REF implemented as fractions of H (identical at V2-REF) |
+| I4 | Jolt `mMaxAngularVelocity` | 100 rad/s, so physiological segment speeds are never clipped |
+| I5 | Passive-only foot ab/adduction | 10 N·m at the ±15° stop [ENG] |
+| I6 | Pose-dependent couplings | Implemented as data and laws; parameters fitted at G1 |
+| I7 | Friction per sub-shape | Materials recorded; friction is first exercised at G1 |
+| I8 | Solver iterations | Jolt defaults until G1's convergence study |
+| I9 | Render toe (F0) | Bisection keeps the toe tip on the turf, clamped 0–60°, about the foot's lateral axis |
+| I10 | Hand collider | Ends at the knuckles (as specified) |
+| I11 | Elbow canonical margin | Exactly at the 5° threshold |
+| I12 | Neck AIM twist | 27 % measured about the neck bone's own axis |
+| I13 | Viewer camera | Left-handed look-at: the image is anatomically correct (seen from the front, the character's right is on your left) |
+
+## 4. What to inspect on the review page (focus buttons)
+
+| focus button | what it shows |
+|---|---|
+| **pelvis / hips** | the single Unity `hips` bone at mid-HJC, between the two physical hip joint centres (constraints, not bones) |
+| **knee axes** | flexion axis (green) at each physical knee centre; limit cone with a joint row clicked |
+| **foot / ankle / toe** | the AJC inside the rigid boot hull; heel 6.6 cm behind, MTP1 14.5 cm and tip 22.7 cm ahead; `foot` → `toe` (render toe, procedural) |
+| **shoulder** | `spine_03` → `clavicle` → `upperArm` at the physical shoulder centre; deltoid sphere; axes and limit cone |
+| **spine mapping** | neutral pose: `spine_01` on the physical lumbar joint, `spine_02` on the thoracic joint, `spine_03` on the thorax, `neck` on C7 |
+| **proportions** | front view with dimensions |
+
+Also available:
+- poses: T-pose (canonical), neutral anatomical, and the five G0 reference poses;
+- the body selector, covering all 8 bodies;
+- left / right labels (blue L, red R) and every toggle you listed;
+- numeric tables for bodies, joints and bones;
+- G0 running live, with the browser = Node verdict.
 
 ## 5. Stills (`g0/shots/`)
+
+Re-captured after C1:
 
 | still | shows |
 |---|---|
 | `01_three_quarter` | default ¾ view |
 | `02_front_dimensions` | front view with dimensions |
 | `03_back` | back view |
-| `04_right_side` | right side with dimensions |
-| `05_focus_pelvis_hips` | Unity `hips` at mid-HJC between the two physical hip centres |
-| `06_focus_knee_axes` | knee flexion axes |
-| `07_focus_foot_ankle_toe` | AJC inside the boot hull; heel / forefoot / MTP dimensions; `foot` → `toe` bones |
-| `08_focus_shoulder` | clavicle → upper-arm chain at the physical shoulder centre |
-| `09_focus_spine_mapping` | the three spine bones on the physical lumbar / thoracic joints, neutral pose |
+| `04_right_side` | right side |
+| `05_focus_pelvis_hips` | pelvis / hips |
+| `06_focus_knee_axes` | knee axes |
+| `07_focus_foot_ankle_toe` | foot / ankle / toe |
+| `08_focus_shoulder` | shoulder |
+| `09_focus_spine_mapping` | spine mapping |
 | `10_neutral_front` | neutral pose, front |
 | `11_deep_squat_side` | deep squat, side |
 | `12_top` | top view |
@@ -153,7 +156,7 @@ None changes an approved value at V2-REF.
 | 0 | pelvis | hips, root(derived) | 0.1523 | 8.803 (8.713 + 0.09) | (0.000, 0.059, 0.000) | 0.0614 / 0.0696 / 0.0764 | 0.0e+0 | box | — (root) |
 | 1 | abdomen | spine_01 | 0.2253 | 12.737 (12.737 + 0.00) | (0.000, 0.124, 0.031) | 0.0948 / 0.1416 / 0.1502 | 0.0e+0 | box | lumbar |
 | 2 | thorax | spine_02(aim), spine_03, clavicle | 0.2512 | 12.649 (12.449 + 0.20) | (0.000, 0.125, 0.040) | 0.0817 / 0.1722 / 0.2032 | 0.0e+0 | box + capsule | thoracic |
-| 3 | head | neck(aim), head | 0.2539 | 5.413 (5.413 + 0.00) | (0.000, 0.127, 0.031) | 0.0346 / 0.0238 / 0.0320 | 0.0e+0 | sphere + capsule | neck |
+| 3 | head | neck(aim), head | 0.2539 | 5.413 (5.413 + 0.00) | (0.000, 0.127, 0.031) | 0.0346 / 0.0238 / 0.0320 | 0.0e+0 | capsule + capsule | neck |
 | 4 | upperArm_L | upperArm_L, upperArm_twist_L | 0.2945 | 2.114 (2.114 + 0.00) | (-0.170, 0.000, 0.000) | 0.0046 / 0.0133 / 0.0149 | 0.0e+0 | sphere + tapered | shoulder_L |
 | 5 | forearm_L | lowerArm_L, forearm_twist_L, hand_L | 0.2811 | 1.739 (1.739 + 0.00) | (-0.190, 0.000, 0.000) | 0.0021 / 0.0253 / 0.0264 | 0.0e+0 | tapered + capsule(hand) | elbow_L |
 | 6 | upperArm_R | upperArm_R, upperArm_twist_R | 0.2945 | 2.114 (2.114 + 0.00) | (0.170, 0.000, 0.000) | 0.0046 / 0.0133 / 0.0149 | 0.0e+0 | sphere + tapered | shoulder_R |
@@ -253,14 +256,14 @@ Constraint-space limits in degrees (ROM-centred frames; x = twist, y / z = pyram
 
 | body | H m | M kg | spec hash | engine post-step state hash | engine readback hash | checks pass |
 |---|---|---|---|---|---|---|
-| V2-165-62 | 1.65 | 62 | `11759f65` | `aa46c502` | `3cd69055` | 42/43 |
-| V2-175-70 | 1.75 | 70 | `1eaef7b3` | `bbb73448` | `8d15cc89` | 42/43 |
-| V2-REF | 1.82 | 78 | `c2bda4e0` | `54f413c9` | `54add0b4` | 43/44 |
-| V2-190-85 | 1.9 | 85 | `db8f67b1` | `26a6bd66` | `4eaeb429` | 42/43 |
-| V2-198-92 | 1.98 | 92 | `d0ca1f45` | `bcb5cd8e` | `3d384f6d` | 42/43 |
-| V2-long-legs | 1.82 | 78 | `abf62487` | `0cf363b2` | `951ed393` | 42/43 |
-| V2-short-legs | 1.82 | 78 | `aa5532da` | `f038548c` | `7e6d7ba2` | 40/43 |
-| V1-matched | 1.9 | 78 | `e27b24e5` | `26a6bd66` | `2f7d88fb` | 43/44 |
+| V2-165-62 | 1.65 | 62 | `2fc1171f` | `aa46c502` | `3cd69055` | 45/45 |
+| V2-175-70 | 1.75 | 70 | `a89bf594` | `bbb73448` | `8d15cc89` | 45/45 |
+| V2-REF | 1.82 | 78 | `7843eefe` | `54f413c9` | `54add0b4` | 46/46 |
+| V2-190-85 | 1.9 | 85 | `ab84bbe3` | `26a6bd66` | `4eaeb429` | 45/45 |
+| V2-198-92 | 1.98 | 92 | `d544af79` | `bcb5cd8e` | `3d384f6d` | 45/45 |
+| V2-long-legs | 1.82 | 78 | `b1c7c059` | `0cf363b2` | `951ed393` | 45/45 |
+| V2-short-legs | 1.82 | 78 | `bea02504` | `f038548c` | `7e6d7ba2` | 45/45 |
+| V1-matched | 1.9 | 78 | `b80a6563` | `26a6bd66` | `2f7d88fb` | 46/46 |
 
 ### Every G0 check, every body
 
@@ -273,13 +276,14 @@ Constraint-space limits in degrees (ROM-centred frames; x = twist, y / z = pyram
 | **0.3a** inertia tensors symmetric | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 | **0.3b** inertia tensors positive definite (min principal moment) | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 | **0.3c** triangle inequality I_a + I_b ≥ I_c with margin | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
-| **0.4a** standing arms-down COM height, barefoot-equivalent (no equipment) | PASS | PASS | PASS | PASS | PASS | PASS | **FAIL** | PASS |
+| **0.4a** standing arms-down COM height, barefoot-equivalent (no equipment) — population band | PASS | PASS | PASS | PASS | PASS | — | — | PASS |
 | **0.4b** canonical COM AP within ±1 cm of the ankle line | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
-| **0.5** whole-body inertia about COM in the literature band (Santschi 1963, recalled; scaled ∝ M·H²) | PASS | PASS | PASS | PASS | PASS | PASS | **FAIL** | PASS |
+| **0.5** whole-body inertia about COM in the literature band (Santschi 1963, recalled; scaled ∝ M·H²) — population band | PASS | PASS | PASS | PASS | PASS | — | — | PASS |
+| **0.4c** requested morphology realised exactly (stature, leg length × legScale, trunk refit keeping C7, arm lengths × armScale) | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 | **0.6a** inter-HJC distance | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 | **0.6b** inter-SJC distance within ±10 % of the spec value | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 | **0.6c** generated stature: vertex landmark − sole = H | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
-| **0.6d** collider stature: top of the head sphere vs vertex | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
+| **0.6d** collider stature: top of the head collider vs vertex | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 | **0.6e** segment lengths = profile fractions (leg = 0.476 H, thigh / shank / upper arm / forearm) | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 | **0.7a** semantic hierarchy valid (31 bones, unique, one root, parent-first, twist branches are leaves, no hip_L/R or heel bones) | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 | **0.7b** Unity Humanoid mapping complete (15 required + Touchline-required Chest/UpperChest/Neck/Shoulders/Toes), unique, hierarchy-consistent; root unmapped | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
@@ -298,8 +302,9 @@ Constraint-space limits in degrees (ROM-centred frames; x = twist, y / z = pyram
 | **0.9d** every anatomical ACTIVE extreme inside the engine hard limits (hard limits = tight hull of the anatomical hard extremes) | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 | **0.9e** passive end-range law: 0 inside the soft range, opposes excursion, equals 25 % of the opposing isometric capacity at the hard limit | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 | **0.9f** actuator capacity functions: f(0)=1, eccentric plateau, zero at ω₀; activation τ 15 ms; knee-extension 180/300°/s ratios vs Fousekis 0.70/0.57 | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
-| **0.10a** colliders vs anthropometric surfaces (§15.1 tolerances: limbs −10…+3, trunk −20…+5, head −15…+5 mm) | **FAIL** | **FAIL** | **FAIL** | **FAIL** | **FAIL** | **FAIL** | **FAIL** | **FAIL** |
+| **0.10a** colliders vs anthropometric surfaces (§15.1 tolerances: limbs −10…+3, trunk −20…+5, head −15…+5 mm) | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 | **0.10b** boot hull dimensions = specification (length, ball width, heel behind / tip ahead of the AJC, sole on the stud plane) | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
+| **0.5b** COM / inertia calculation consistent: whole body recomposed from the Jolt readback = spec composition (canonical) | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 | **0.11a** Jolt bodies: mass, full inertia tensor, COM read back = spec | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 | **0.11b** Jolt bodies: zero linear / angular damping; max angular velocity 100 rad/s; no sleeping | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 | **0.11c** Jolt joints: constraint frames (F1 on parent, F2 on child) and positions read back = spec | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
@@ -310,30 +315,33 @@ Constraint-space limits in degrees (ROM-centred frames; x = twist, y / z = pyram
 | **0.11g** static construction: one zero-gravity step at the canonical pose produces zero motion | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 | **0.10d** no collider interpenetration between allowed pairs at the 7 reference poses (Jolt contact query) | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 | **0.S** agreement with the approved calculation (PHYSICAL_CHARACTER_V2_SPEC.json, rounded to 4–5 decimals) | — | — | PASS | — | — | — | — | PASS |
+| **0.4a-R** standing arms-down COM height — REPORTED (morphology variant: population band not applicable, spec §22 0.12 / C2) | — | — | — | — | — | PASS | PASS | — |
+| **0.5-R** whole-body inertia about COM — REPORTED (morphology variant: population band not applicable, spec §22 0.12 / C2) | — | — | — | — | — | PASS | PASS | — |
 
 | global check | result | value |
 |---|---|---|
-| **0.1b** V2-REF ×3 fresh builds: identical spec hash, engine readback hash and post-step state hash | PASS | 54f413c9/54add0b4/c2bda4e0  54f413c9/54add0b4/c2bda4e0  54f413c9/54add0b4/c2bda4e0 |
-| **0.12** topology identical across the 8-body variation set (names, order, parents, joints, bones, classes) | PASS | 1 distinct topology |
+| **0.1b** V2-REF ×3 fresh builds: identical spec hash, engine readback hash and post-step state hash | PASS | 54f413c9/54add0b4/7843eefe  54f413c9/54add0b4/7843eefe  54f413c9/54add0b4/7843eefe |
+| **0.12** topology identical across the 8-body variation set (names, order, parents, joints, bones, classes); kinds: V2-165-62=population, V2-175-70=population, V2-REF=population, V2-190-85=population, V2-198-92=population, V2-long-legs=morphology-variant, V2-short-legs=morphology-variant, V1-matched=population | PASS | 1 distinct topology |
 | **0.E** vendored Jolt build = V1's pinned build (sha256) | PASS | 011233a5fff762d6… |
 | **0.V1** V1 frozen: runtime + evidence identical to the freeze tag | PASS | guard_v1: OK — V1 runtime + evidence identical to checkpoint/physchar-v1-final-research |
 
 ### V2-REF check values (exact runner output)
 
-- **PASS 0.1** spec generation deterministic (×3 identical hash) — c2bda4e0 c2bda4e0 c2bda4e0 [identical]
+- **PASS 0.1** spec generation deterministic (×3 identical hash) — 7843eefe 7843eefe 7843eefe [identical]
 - **PASS 0.2a** total mass = M + equipment — 78.91 [78 + 0.91 ± 1e-9]
 - **PASS 0.2b** segment mass sum = M (body only) — 78 [78 ± 1e-9]
 - **PASS 0.2c** every segment = de Leva fraction × M (relative error) — 0.00e+0 [≤ 1e-12]
 - **PASS 0.3a** inertia tensors symmetric — 0.00e+0 [≤ 1e-12]
 - **PASS 0.3b** inertia tensors positive definite (min principal moment) — 1.761e-3 kg·m² [> 0]
 - **PASS 0.3c** triangle inequality I_a + I_b ≥ I_c with margin — 3.72 % (forearm_L) [≥ 1 %]
-- **PASS 0.4a** standing arms-down COM height, barefoot-equivalent (no equipment) — 0.5569 H [0.55–0.58 H] — with equipment 0.5537 H; canonical T-pose COM y = 1.0581 m
+- **PASS 0.4a** standing arms-down COM height, barefoot-equivalent (no equipment) — population band — 0.5569 H [0.55–0.58 H] — with equipment 0.5537 H; canonical T-pose COM y = 1.0581 m
 - **PASS 0.4b** canonical COM AP within ±1 cm of the ankle line — 0.21 cm [|z| ≤ 1 cm] — x = 2.1e-18 m
-- **PASS 0.5** whole-body inertia about COM in the literature band (Santschi 1963, recalled; scaled ∝ M·H²) — pitch 13.22 · roll 13.96 · yaw 1.102 kg·m² [pitch/roll 11.0–14.0, yaw 1.00–1.50] — independent de Leva assembly (research pass, 1.82 m / 78 kg): 13.2 / 14.0 / 1.1
+- **PASS 0.5** whole-body inertia about COM in the literature band (Santschi 1963, recalled; scaled ∝ M·H²) — population band — pitch 13.22 · roll 13.96 · yaw 1.102 kg·m² [pitch/roll 11.0–14.0, yaw 1.00–1.50] — independent de Leva assembly (research pass, 1.82 m / 78 kg): 13.2 / 14.0 / 1.1
+- **PASS 0.4c** requested morphology realised exactly (stature, leg length × legScale, trunk refit keeping C7, arm lengths × armScale) — stature 1.8200 m, leg 0.4760 H (legScale 1), C7 0.8605 H, HJC→C7 0.3455 H [exact]
 - **PASS 0.6a** inter-HJC distance — 0.1000 H = 0.182 m [0.09–0.11 H]
 - **PASS 0.6b** inter-SJC distance within ±10 % of the spec value — 0.2180 H = 0.397 m [0.218 H ± 10 %]
 - **PASS 0.6c** generated stature: vertex landmark − sole = H — 1.820000 m [1.82 m exact] — stature closure (HJC + de Leva trunk + head − H) = 1.9 mm
-- **PASS 0.6d** collider stature: top of the head sphere vs vertex — -9.1 mm [−15 … +5 mm]
+- **PASS 0.6d** collider stature: top of the head collider vs vertex — -9.1 mm [−15 … +5 mm]
 - **PASS 0.6e** segment lengths = profile fractions (leg = 0.476 H, thigh / shank / upper arm / forearm) — leg 0.8663 m (0.4760 H), thigh 0.4277, shank 0.4386, upper arm 0.2945, forearm 0.2811 [exact] — SJC 36.4 mm below the Drillis acromion height
 - **PASS 0.7a** semantic hierarchy valid (31 bones, unique, one root, parent-first, twist branches are leaves, no hip_L/R or heel bones) — 31 bones, root 'root' [31 / valid]
 - **PASS 0.7b** Unity Humanoid mapping complete (15 required + Touchline-required Chest/UpperChest/Neck/Shoulders/Toes), unique, hierarchy-consistent; root unmapped — 22 mapped (15/15 required, 7/7 Touchline-required) [complete]
@@ -352,8 +360,9 @@ Constraint-space limits in degrees (ROM-centred frames; x = twist, y / z = pyram
 - **PASS 0.9d** every anatomical ACTIVE extreme inside the engine hard limits (hard limits = tight hull of the anatomical hard extremes) — all inside [all inside] — largest widening beyond (anatomical limit − centre) from swing–twist coupling: 29.4° (shoulder_L abd)
 - **PASS 0.9e** passive end-range law: 0 inside the soft range, opposes excursion, equals 25 % of the opposing isometric capacity at the hard limit — all joints [all]
 - **PASS 0.9f** actuator capacity functions: f(0)=1, eccentric plateau, zero at ω₀; activation τ 15 ms; knee-extension 180/300°/s ratios vs Fousekis 0.70/0.57 — ratios 0.736 / 0.550; a(15 ms) = 0.632 [0.74 / 0.55 (spec fit)]
-- **FAIL 0.10a** colliders vs anthropometric surfaces (§15.1 tolerances: limbs −10…+3, trunk −20…+5, head −15…+5 mm) — bideltoid (deltoid spheres) 0.2 mm; head sphere vs head length / 2 -8.2 mm; head sphere vs head breadth / 2 15.5 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -8.2 mm; abdomen box vs waist depth / 2 0.0 mm [within tolerance] — OUTSIDE: head sphere vs head breadth / 2
+- **PASS 0.10a** colliders vs anthropometric surfaces (§15.1 tolerances: limbs −10…+3, trunk −20…+5, head −15…+5 mm) — bideltoid (deltoid spheres) 0.2 mm; head capsule AP half-extent vs head length / 2 0.0 mm; head capsule lateral half-extent vs head breadth / 2 0.0 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -8.2 mm; abdomen box vs waist depth / 2 0.0 mm; head axis AP true [within tolerance]
 - **PASS 0.10b** boot hull dimensions = specification (length, ball width, heel behind / tip ahead of the AJC, sole on the stud plane) — length 29.35 cm, width 11.27 cm, heel 6.63 cm behind / tip 22.72 cm ahead of the AJC, AJC 9.10 cm up, MTP1 14.51 cm ahead [spec 29.35 × 11.27 cm ± 5 mm]
+- **PASS 0.5b** COM / inertia calculation consistent: whole body recomposed from the Jolt readback = spec composition (canonical) — mass 2.4e-8 rel · COM 1.2e-8 m · inertia 1.0e-7 rel [≤ 0.00001 rel / 0.000001 m]
 - **PASS 0.11a** Jolt bodies: mass, full inertia tensor, COM read back = spec — mass 7.7e-8 rel · inertia 2.4e-7 rel · COM 1.0e-7 m [≤ 0.00001 rel / 0.000001 m]
 - **PASS 0.11b** Jolt bodies: zero linear / angular damping; max angular velocity 100 rad/s; no sleeping — damping 0, maxAngVel Δ 0.0e+0 [0 / 100 rad/s]
 - **PASS 0.11c** Jolt joints: constraint frames (F1 on parent, F2 on child) and positions read back = spec — 2.75e-7 [≤ 1e-5]
@@ -363,4 +372,4 @@ Constraint-space limits in degrees (ROM-centred frames; x = twist, y / z = pyram
 - **PASS 0.10c** ground alignment: boot soles on the stud plane y = 0; every other collider clear of the turf — sole -0.00 mm; lowest other 11.5 cm (shank_L) [|sole| ≤ 0.5 mm; others ≥ 3 cm]
 - **PASS 0.11g** static construction: one zero-gravity step at the canonical pose produces zero motion — Δpos 1.2e-10 m, Δrot 0.0e+0 rad, |v| 0.0e+0 [≤ 0.000001 m / 0.000001 rad] — turf contacts: foot_L, foot_R
 - **PASS 0.10d** no collider interpenetration between allowed pairs at the 7 reference poses (Jolt contact query) — none [depth ≤ 1 mm] — canonical: clear; neutral: clear; quietStance: clear; lunge: clear; deepSquat: clear; singleLeg: clear; armsForward: clear
-- **PASS 0.S** agreement with the approved calculation (PHYSICAL_CHARACTER_V2_SPEC.json, rounded to 4–5 decimals) — mass 1.8e-15 kg · COM 4.7e-5 m · inertia 4.8e-6 · skeleton 5.0e-5 m · colliders 0.0e+0 m [≤ 0.0001 kg / 0.00015 m / 0.00002 kg·m²]
+- **PASS 0.S** agreement with the approved calculation (PHYSICAL_CHARACTER_V2_SPEC.json, rounded to 4–5 decimals) — mass 1.8e-15 kg · COM 4.7e-5 m · inertia 4.8e-6 · skeleton 5.0e-5 m · colliders 1.0e-17 m [≤ 0.0001 kg / 0.00015 m / 0.00002 kg·m²]
