@@ -5,7 +5,7 @@
 import fs from "fs"; import { StepPlanner } from "../../pc_stepper.js";
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i < 0 ? d : process.argv[i + 1]; };
 const M = JSON.parse(fs.readFileSync(arg("--model"), "utf8")), V = arg("--V", null) ? JSON.parse(fs.readFileSync(arg("--V"), "utf8")) : null;
-const files = process.argv.slice(2).filter(a => a.endsWith(".json") && !a.includes(arg("--model")) && (!arg("--V", null) || !a.includes(arg("--V")))), states = [];
+const flagVals = new Set(["--model", "--V", "--out"].map(k => arg(k, null)).filter(Boolean)), files = process.argv.slice(2).filter(a => a.endsWith(".json") && !flagVals.has(a)), states = [];
 for (const f of files) { const D = JSON.parse(fs.readFileSync(f, "utf8")); for (const R of D.results || []) for (const s of R.steps) if (s.z && s.uc) states.push({ z: s.z, uc: s.uc }); }
 const q = (a, p) => { const b = a.slice().sort((x, y) => x - y); return b[Math.min(b.length - 1, Math.floor(p * b.length))]; }, out = {};
 for (const [name, cfg] of [["h1", { horizon: 1 }], ...(V ? [["h1+V", { horizon: 1, V }]] : []), ["h2 beam3", { horizon: 2, beam: 3 }], ["h2 beam3 center both", { horizon: 2, beam: 3, center: "both" }]]) {

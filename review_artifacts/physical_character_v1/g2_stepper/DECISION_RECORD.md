@@ -68,3 +68,31 @@ Jolt contacts → ACHIEVED / MISSED / INTERRUPTED / CANCELLED → replan from th
 ```
 
 The full-Jolt oracles stay offline (reference, teacher, diagnostic).
+
+## End-of-phase decisions (2026-10-02 evening, after the evidence in `G2_STEPPER_REVIEW.md`)
+
+| component | decision | basis |
+|---|---|---|
+| Snapshot session (`tools/stepper/session.mjs`) + snapshot oracle (`oracle_fast.mjs`) | **KEEP** (offline infrastructure) | Validated bit-identical to from-scratch replays (16/16) and to the replay oracle (every candidate cost). 5–20× faster. |
+| Physical Stepper run-time (`pc_stepper.js`: contact events, nominal generator, surrogate, `StepPlanner`; `walk.ctrl.stepper`) | **EXPERIMENTAL, opt-in, NOT adopted** | Held-out live: 9.0 / 8.7 / 10.0 upright steps vs the controller's 14.7. Quality gates fail (ξ p95 8.5 cm; false-safe 27 %). The contact-event lifecycle itself works (116 ACHIEVED / 10 MISSED / 18 EXECUTING at the fall, classified only from sensed touchdowns). |
+| Contact-event schema and lifecycle | **KEEP** (as the interface) | Independent of the planner's quality. It is the layer a transition-planned walk (option A) and football actions would use. |
+| `ctrl.speedP` (proportional orbit shift on v̄) | **EXPERIMENTAL, not adopted** | Oracle 17.8 vs 18.2; plain controller worse. |
+| Stance mechanics | **DEFER** | Stepping CAN brake once the action space contains long steps (union / absolute grids: −0.03 to −0.07 m/s per step at 0.55–0.8 m/s). Only the controller-centred neighbourhood lacks braking. Integral authority, a proportional orbit shift and (earlier) the single-support CoP regulator all fail under the oracle anyway. |
+| Next step | **The user's decision** | Recommended: A, transition-planned walking (the double support's duration and stride impulse become planned contact-phase decisions, planned at touchdown). See the review. |
+
+### Corrections to earlier conclusions
+
+1. **Yesterday: "the plant IS controllable by step-start placement for 26–28 steps when the placement looks two steps ahead".**
+   - Corrected: those walks reproduce exactly only with the 4-decimal commit rounding of yesterday's engine.
+   - With exact commits the same search gives 26 / 13 / 20.
+   - The best oracle at HEAD (Gu: two steps, nominal ∪ feedback candidates) held 40 searched steps on R@0.5 (45 upright) but crept and collapsed after 29 on L@0.6.
+   - The plant is steerable by step-start placement only with long steps in the action space, and not yet robustly.
+2. **Yesterday: "the gap is the decision layer's prediction".**
+   - Prediction is one gap: the planner's quality gates fail.
+   - But even a perfect-model planner (the oracle) is not robust: it holds 40 steps on one of two long starts. Speed regulation needs the long-step / long-DS gait, which only a planner with long steps in its action space reaches.
+3. **This morning's withdrawal of "A: stance mechanics first" stands.**
+   - Stepping can brake given long steps, and the tested stance candidates did not help.
+   - The evidence points at the TRANSITION (the double support) as the lever for predictability, not the single-support stance:
+     - the DS is where the good gait differs;
+     - the DS has the largest CoP authority;
+     - the DS's event termination doubles the step response's non-smoothness.

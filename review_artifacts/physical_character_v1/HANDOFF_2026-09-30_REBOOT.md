@@ -187,6 +187,29 @@ After the reboot the preserved state was verified, the user reviewed the overnig
 - **Phases 6–9 not started** (preconditions not met).
 - **Next: the user's decision:** A, gait mechanics (stance braking from touchdown + modulated push-off + longer steps; recommended), or B, a lookahead decision layer with a nonlinear predictive model. See the review.
 
+**PHYSICAL STEPPER consolidation (2026-10-02, the user's Parts 0–29 brief): STOPPED for the user's decision. Local commits only (`157ba0b` + the final one); nothing pushed.**
+- **Read first:**
+  - `g2_stepper/G2_STEPPER_REVIEW.md`: 10-question summary, decision table, all evidence;
+  - viewer `g2_stepper/viewer/index.html` (:8171, three scenarios);
+  - `DECISION_RECORD.md` (KEEP / REPLACE / EXPERIMENTAL / DEFER, plus corrections);
+  - `STEPPER_LOG.md`; `RENDER_SKELETON_CONTRACT.md` (frozen Unity Humanoid mapping, docs only).
+- **Built:**
+  - an exact snapshot session (Jolt `SaveState`/`RestoreState` plus an identity-preserving controller clone; 16/16 bit-identical to replays);
+  - a snapshot oracle (bit-identical to the replay oracle, 5–20× faster);
+  - opt-in `pc_stepper.js` (contact events, walk-ratio nominal, surrogate, `StepPlanner` h1 / h1 + V / h2) plus the `walk.ctrl.stepper` hook. **Not adopted.**
+- **Oracle:**
+  - Yesterday's beam (32 / 34 / 28) reproduces exactly only with its 4-decimal commit rounding. Exact commits give 26 / 13 / 20, so those walks are fragile paths.
+  - Searches around the controller's own decision creep, and no step near that decision brakes above ≈ 0.55 m/s.
+  - Long steps (the union / absolute grids) do brake.
+  - The best oracle (Gu) held 40 searched steps on R@0.5 (45 upright) and collapsed after 29 on L@0.6.
+  - The good gait is long steps with a long braking double support (0.30 s, COM 25–28 cm behind the landing foot).
+- **Matrix** (upright, 6 starts): A 14.7 · B 15.2 · C 20.8 · D 6.5 · E 9.2 · F 15.7 · G 11.3 · Gu (nominal ∪ feedback, depth 2) 26.7, with all 6 starts hitting the 20-step search cap (long-horizon run in the review §6.4).
+- **Physical Stepper, live, held out by start:** 9.0 / 8.7 / 10.0. The gates fail (ξ p95 8.5 cm; false-safe 27 %). Events: 116 ACHIEVED / 10 MISSED / 18 EXECUTING at the fall.
+- **The double support's event termination doubles the step response's non-smoothness:** ξ 1.24 → 1.80 cm, v 1.36 → 2.90 cm/s, timing 10 → 25 ms.
+- **Stance 2×2:** `speedI` authority and `speedP` (opt-in) don't help the oracle (17.8 vs 18.2). Stepping can brake given long steps, so stance changes are not indicated.
+- **Gates:** `regress.sh` 12/12; G2W_A8 6/6; foot gate F0 / F2h 42/42 identical.
+- **Next: the user's decision.** A, transition-planned walking (the DS duration and stride impulse become planned contact-phase decisions at touchdown; recommended), B, a better planner on today's nominal ∪ feedback action space (oracle ceiling: 40 steps on 1 of 2 long starts), or C, a stance redesign (weak evidence).
+
 ## Where
 
 - **Worktree:** `/Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1`

@@ -102,6 +102,7 @@ Branch `prototype/physical-character-v1`. The last commit before this phase is 3
     - Above ≈ 0.55 m/s, on average **no** stepping candidate (15–19 per state, ±12 cm and ±60 ms around the decision) slows the walk.
     - The few that brake leave the capture point 0.3–0.5 m ahead, which is unrecoverable.
     - The stepping layer cannot regulate stride speed under this inner loop. This is the Part-15 evidence for testing stance-phase / ground-reaction speed regulation.
+    - **CORRECTED (evening):** this holds only for grids centred on the controller's decision. The union grid (Gu) and the absolute grid (legacy2) contain braking steps in 72–80 % of states: −0.03 to −0.07 m/s per step at 0.55–0.8 m/s. Gu recovered a 0.69 m/s excursion and held 40 searched steps on R@0.5.
 12. **Stance candidates under the oracle (the 2×2 gate).**
     - (a) `speedI.max` 0.25, the integral speed loop with more authority, on the legacy1 oracle: it still creeps (v 0.57 → 0.68–0.74 by k10–11). The integrator moves ≈ 1.5 cm per step, so it is too slow. Stopped early.
     - (b) `speedP` (opt-in, `pc_unified.orbit`): a proportional term on v̄ shifting the orbit's capture-point offsets, which acts through the single- and double-support CoP solvers that track the orbit.
@@ -109,10 +110,26 @@ Branch `prototype/physical-character-v1`. The last commit before this phase is 3
       - Under the oracle (legacy1 grid): running.
 13. **Previously recorded (g2_speed):** the single-support CoP regulator `vReg` (±4–5 cm) did not help. During creep the CoP is already on the forefoot late in stance. The double support, with CoP authority between the trailing toe and the leading foot, is still propulsive in creep (+5 to +15 N·s per stride).
 
-## Running / pending
+## Outcome (evening)
 
-- Matrix batch 1: legacy2 and B / E running, C and G done.
-- Matrix batch 2: Gu running; Gw, Bu and Ew queued.
-- Part 15 2×2, first cell: the legacy1 oracle with `speedI.max` 0.25.
-- After that: D (fitted linear policy, leave-one-start-out) and F (one step + terminal value).
-- Then the surrogate on all the data, a live Physical Stepper with held-out tests, and data aggregation.
+**The final review is `G2_STEPPER_REVIEW.md`.**
+
+**Summary:**
+- The beam oracle reproduces exactly with rounding (32 / 34 / 28). With exact commits it gives 26 / 13 / 20.
+- Matrix: A 14.7 · B 15.2 · C 20.8 · D 6.5 · E 9.2 · F 15.7 · G 11.3 · Gu 26.7 (all 6 starts hit the 20-step search cap) · legacy2 exact 22.5.
+- Live held-out Physical Stepper: 9.0 / 8.7 / 10.0.
+- Stance oracle cell (`speedP`): 17.8 vs 18.2.
+
+**The double support doubles the step response's non-smoothness:**
+
+| | at touchdown | at the next step start |
+|---|---|---|
+| ξ | 1.24 cm | 1.80 cm |
+| v | 1.36 cm/s | 2.90 cm/s |
+| timing | 10 ms | 25 ms |
+
+**Event-target bug:** the target mixed the foot body origin with the sole centre. Fixed; the event counts were re-run: 116 / 10 / 18.
+
+**Regression:** `regress.sh` 12/12, G2W_A8 6/6, foot gate 42/42 + 42/42.
+
+**STOPPED for the user's decision:** option A, transition-planned walking, is recommended.

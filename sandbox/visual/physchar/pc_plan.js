@@ -588,7 +588,9 @@ export class LocoPlanner {
         z.mem = { I: lg.I, vBar: lg.vBar, vd: lg.vd, Tds: lg.ds, wProf: wp ? [0, 1, 2].map(j => wp.reduce((a, q) => a + q[j], 0) / wp.length) : null };
         const cal = this.stepperCal = this.stepperCal || [], pl = cal[cal.length - 1]; if (pl && pl.i === r.i - 1 && !pl.actual) pl.actual = { "xi.0": z.xi[0], "xi.1": z.xi[1], "v.0": z.v[0], "v.1": z.v[1], achF: -z.swFoot[0], achW: z.swFoot[1], dur: o.t - pl.t };
         const D = SP.decide(z, { vReq: lg.vd, legLen: SPc.legLen, dl0: dec.dl }, [dec.df, dec.dl, dec.T]); stU = D.u; const y = D.pred.y;
-        const tgtW = [pSt[0] + hd[0] * y.achF + rt[0] * side * y.achW, pSt[1] + hd[1] * y.achF + rt[1] * side * y.achW], Tn = D.u[2];
+        // (the predicted landed SOLE CENTRE: the surrogate's realised step is measured from the old stance foot's body origin (z.stFoot, relative
+        //  to this step's stance sole centre pSt) to the new stance sole centre — the event region is in the touchdown's own convention)
+        const aF = z.stFoot[0] + y.achF, aL = z.stFoot[1] + y.achW, tgtW = [pSt[0] + hd[0] * aF + rt[0] * side * aL, pSt[1] + hd[1] * aF + rt[1] * side * aL], Tn = D.u[2];
         const ev = new ContactEvent({ effector: "foot_" + step.sw, type: "support", stepIndex: r.i, heading: hd, target: { center: tgtW, halfExtent: (SPc.tol && SPc.tol.region) || [0.08, 0.06] },
           window: { earliest: o.t + 0.5 * Tn, nominal: o.t + Tn + 0.08, latest: o.t + Tn + 0.35 }, command: { df: D.u[0], dl: D.u[1], T: D.u[2] }, continuation: { require: "a predicted-safe next step", c2: D.c2 }, source: D.why, predicted: { ...y, pFall: D.pred.pFall } }, o.t, "nominal proposal chosen by the planner");
         ev.to("ACCEPTED", o.t, "committed for this step").to("EXECUTING", o.t, "the executor began the step"); evs.push(ev);
