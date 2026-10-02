@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>V2-G0 Body Review</title>
+<style>
+  :root { --bg:#16181c; --panel:#1f2228; --ink:#e7e9ee; --mute:#9aa1ad; --ok:#4cd27a; --bad:#ff6b5b; --line:#2e333b; --acc:#ffd34d; }
+  * { box-sizing: border-box; } html, body { margin:0; height:100%; background:var(--bg); color:var(--ink); font:13px/1.4 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  #wrap { display:grid; grid-template-columns: minmax(0,1fr) 430px; height:100vh; }
+  #view { position:relative; min-width:0; } #gl, #ov { position:absolute; inset:0; width:100%; height:100%; } #ov { pointer-events:none; }
+  #side { overflow:auto; background:var(--panel); border-left:1px solid var(--line); padding:10px 12px 40px; }
+  h1 { font-size:15px; margin:2px 0 4px; } h2 { font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--mute); margin:14px 0 6px; border-bottom:1px solid var(--line); padding-bottom:3px; }
+  .row { display:flex; flex-wrap:wrap; gap:5px; align-items:center; margin:4px 0; } select { background:#2a2e36; color:var(--ink); border:1px solid #3a404a; border-radius:5px; padding:4px; max-width:100%; }
+  button { background:#2a2e36; color:var(--ink); border:1px solid #3a404a; border-radius:5px; padding:4px 8px; cursor:pointer; } button:hover { border-color:var(--acc); }
+  label { display:inline-flex; gap:4px; align-items:center; margin:2px 8px 2px 0; white-space:nowrap; } .grid { display:grid; grid-template-columns: 1fr 1fr; }
+  .legend span { display:inline-block; margin-right:10px; } .sw { display:inline-block; width:10px; height:10px; border-radius:2px; vertical-align:middle; margin-right:3px; }
+  .chk { border-left:3px solid var(--ok); padding:3px 6px; margin:3px 0; background:#23272e; } .chk.bad { border-color:var(--bad); background:#2c2222; } .chk span { color:#cfd5de; } .chk i, .chk small { color:var(--mute); }
+  .hdr { padding:5px 7px; border-radius:5px; margin-bottom:5px; font-weight:600; } .hdr.ok { background:#1d3a28; } .hdr.bad { background:#3d2220; }
+  #hashcheck { padding:6px; border-radius:5px; font-family: ui-monospace, Menlo, monospace; font-size:11px; } #hashcheck.ok { background:#1d3a28; } #hashcheck.bad { background:#3d2220; }
+  table { border-collapse:collapse; width:100%; font-size:11px; } td, th { border-bottom:1px solid var(--line); padding:3px 4px; vertical-align:top; text-align:left; } th { color:var(--mute); font-weight:600; }
+  tr[data-b], tr[data-j] { cursor:pointer; } tr[data-b]:hover, tr[data-j]:hover { background:#2a2e36; }
+  .note { color:var(--mute); font-size:11.5px; } kbd { background:#2a2e36; border:1px solid #3a404a; border-radius:3px; padding:0 4px; font-size:11px; }
+  @media (max-width: 900px) { #wrap { grid-template-columns: 1fr; grid-template-rows: 60vh auto; height:auto; } #side { border-left:none; border-top:1px solid var(--line); } }
+</style></head>
+<body>
+<div id="wrap">
+  <div id="view"><canvas id="gl"></canvas><canvas id="ov"></canvas></div>
+  <div id="side">
+    <h1>Physical Character V2 — G0 static body review</h1>
+    <div class="note">Anatomy / static construction only: no motors on, no balance, no stepping. Everything drawn is generated from the human specification; the solids are exactly the triangles Jolt collides with.</div>
+    <h2>Body · pose</h2>
+    <div class="row"><select id="human"></select></div>
+    <div class="row"><select id="pose"></select></div>
+    <h2>Camera</h2>
+    <div class="row"><button id="c_front">front <kbd>1</kbd></button><button id="c_back">back <kbd>2</kbd></button><button id="c_right">right side <kbd>3</kbd></button><button id="c_left">left side <kbd>4</kbd></button><button id="c_three">¾ <kbd>5</kbd></button><button id="c_top">top <kbd>6</kbd></button><button id="reset">reset</button></div>
+    <div class="row"><b>focus:</b><button id="f_hips">pelvis / hips</button><button id="f_knee">knee axes</button><button id="f_foot">foot / ankle / toe</button><button id="f_shoulder">shoulder</button><button id="f_spine">spine mapping</button><button id="f_proportions">proportions</button></div>
+    <div class="note">Drag = orbit · shift-drag or right-drag = pan · wheel = zoom.</div>
+    <h2>Show</h2>
+    <div class="grid">
+      <label><input type="checkbox" id="t_skeleton">semantic skeleton</label><label><input type="checkbox" id="t_bodies">physical rigid bodies</label>
+      <label><input type="checkbox" id="t_colliders">colliders (edges)</label><label><input type="checkbox" id="t_centres">joint centres</label>
+      <label><input type="checkbox" id="t_axes">joint axes</label><label><input type="checkbox" id="t_limits">joint limits</label>
+      <label><input type="checkbox" id="t_coms">segment COMs</label><label><input type="checkbox" id="t_com">total COM</label>
+      <label><input type="checkbox" id="t_boneNames">bone names</label><label><input type="checkbox" id="t_bodyNames">body names</label>
+      <label><input type="checkbox" id="t_mapping">physics ↔ render mapping</label><label><input type="checkbox" id="t_lr">left / right</label>
+      <label><input type="checkbox" id="t_ground">ground plane</label><label><input type="checkbox" id="t_dims">dimensions</label>
+    </div>
+    <div class="legend note">
+      <span><i class="sw" style="background:#ffd426"></i>semantic bones (31)</span><span><i class="sw" style="background:#f7f7f7"></i>physical joint centres (13)</span>
+      <span><i class="sw" style="background:#528cf2"></i>left bodies</span><span><i class="sw" style="background:#f26b52"></i>right bodies</span><span><i class="sw" style="background:#f43fd9"></i>COM</span><br>
+      mapping: <span style="color:#59f273">DIRECT</span> <span style="color:#4dd9ff">AIM</span> <span style="color:#ff66f2">PROC</span> <span style="color:#ff9e33">DEFORM</span> <span style="color:#b3b3b3">DERIVED</span>
+      · axes: <span style="color:#f55">twist</span> <span style="color:#5f5">flexion</span> <span style="color:#59f">third</span> · limits: <span style="color:#f44">hard</span> <span style="color:#fb3">soft</span><br>
+      Click a body or joint row below to highlight it (joint rows show its axes + limit cone).
+    </div>
+    <h2>Browser = Node determinism</h2><div id="hashcheck">computing…</div>
+    <h2>G0 checks (this body, run live in the browser)</h2><div id="g0"></div>
+    <h2>Dimensions</h2><table id="meas"></table>
+    <h2>Physical bodies (14)</h2><table id="bodies"></table>
+    <h2>Joints (13)</h2><table id="joints"></table>
+    <h2>Semantic skeleton (31) · ✱ Unity-required</h2><table id="bones"></table>
+  </div>
+</div>
+<script type="module" src="./v2_viewer.js"></script>
+</body></html>

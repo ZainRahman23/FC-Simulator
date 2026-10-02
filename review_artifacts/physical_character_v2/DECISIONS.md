@@ -18,3 +18,12 @@ Source: `sources/2026-10-02_user_decision_v2_approved_build_g0.md` (verbatim).
 | D10 | Athlete strength evidence | **APPROVED** where supported by the cited literature, with provenance preserved. Motors are never run continuously at maximum voluntary torque. The actuator architecture keeps velocity-dependent capability and activation behaviour. |
 
 **Standing rule:** if implementing G0 exposes a concrete contradiction in the specification, STOP and report. Never change the specification silently.
+
+## 2026-10-02 — V2-G0 built and validated; STOPPED on two specification contradictions (decisions pending)
+
+See `g0/G0_REPORT.md` §2. Nothing was changed in the specification to make these pass.
+
+| # | contradiction | recommended resolution (awaiting the user) |
+|---|---|---|
+| C1 | Head sphere r = 0.0525 H is +15.5 mm outside the head-breadth tolerance (§15.1: −15…+5 mm) while inside it for head length; no sphere satisfies both | replace with an AP capsule r = 0.044 H, cylinder half-length 0.013 H |
+| C2 | §22 0.12 applies population COM / inertia bands to the ±2 SD proportion variants; the short-legged body (correctly) falls outside | apply population bands to population-proportion bodies only; check variants for internal consistency |
