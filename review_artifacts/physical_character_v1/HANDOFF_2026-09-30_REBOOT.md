@@ -151,6 +151,23 @@ After the reboot the preserved state was verified, the user reviewed the overnig
 - **Verified:** `regress.sh` 12/12; G2W_A8 hashes; F0 / F2h foot-gate slow protocol 42/42 each. The identification JSONs (361 MB) are local only.
 - **Next: the user's decisions:** adopt ground-reaction speed regulation; replace x* with a speed-derived target; operating speed 0.45–0.5 first; swing reliability. F2h rerun (F) pending a stable F0 walk. **No G2c–e / running.**
 
+**G2b unified controller (2026-10-01 night → 10-02; the user approved: one hierarchy, ground reaction adopted, speed-derived targets, 0.45–0.5 first, hard reachability, predicted-state lag fix): STOPPED for review at `fa55c9d` (local). A sustained walk across starts is NOT achieved.**
+- **Built (opt-in):**
+  - `walk.ctrl.kind "U"` (`pc_unified.js` + `pc_plan.js`): vd orbit; funnel stance reference (forward + sideways ankle); double-support target; joint map placement (maps identified under this inner loop: mU1/mU3/mU4); physical reach estimate; speed loop.
+  - `walk.swingBase "model"`: the pelvis-rate internal forward model in the swing velocity target.
+  - `human.descentGate`: arrival-gated descent.
+  - Tools: `tools/g2_stepbench.js` (matched-state bench) and the U identification (`--ctrlKind U`).
+- **Result:**
+  - Best 14.7 (6–40) upright steps over six starts.
+  - One start (L@0.6) walks all 40 steps of its test at ≈ 0.5 m/s (steps 0.255 ± 0.038 m, foothold −0.4 ± 1.2 cm); the others end after 6–11.
+  - Swing landing at matched states: +6.7 → +1.0 cm.
+- **Binding limit:**
+  - Robust regulation needs late (≈ 0.15 s before touchdown) foothold corrections (linear closed loop: τ0 0 %, τ0.25 99 %).
+  - The inherited swing cannot execute them (feed-forward 0.3–1.8 kN·m at liftoff vs 230 N·m; the foot trails 5–9 cm; late shortening ≈ 40 %).
+- **Not the cause:** pelvis yaw is not the hidden state; a 4 cm lower pelvis is worse.
+- **Review:** `g2_unified/G2B_UNIFIED_REVIEW.md` + `viewer/`; trail in `UNIFIED_LOG.md`.
+- **Next: the user's decision:** approve the swing-executor redesign (torque-feasible, re-plannable from the actual state, arrival-gated, reports its reachable set), then late-decision placement. **No G2c–e / running; F2h waits.**
+
 ## Where
 
 - **Worktree:** `/Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1`
