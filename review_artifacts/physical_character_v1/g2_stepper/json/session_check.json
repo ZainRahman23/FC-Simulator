@@ -1,0 +1,84 @@
+{
+ "checks": [
+  {
+   "name": "straight session run == runG2a (9 s, L@0.6)",
+   "pass": true,
+   "detail": "4089b1c8 vs 4089b1c8"
+  },
+  {
+   "name": "K=6 R@0.5: reached step K−1's touchdown",
+   "pass": true,
+   "detail": "t = 4.358"
+  },
+  {
+   "name": "K=6: branch A == from-scratch replay A",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "K=6: branch B == from-scratch replay B",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "K=6: branch A after B == branch A (no leakage)",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "K=6: A and B differ (the branch is real)",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "K=12 R@0.5: reached step K−1's touchdown",
+   "pass": true,
+   "detail": "t = 7.938"
+  },
+  {
+   "name": "K=12: branch A == from-scratch replay A",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "K=12: branch B == from-scratch replay B",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "K=12: branch A after B == branch A (no leakage)",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "K=12: A and B differ (the branch is real)",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "K=9 L@0.55: reached step K−1's touchdown",
+   "pass": true,
+   "detail": "t = 6.325"
+  },
+  {
+   "name": "K=9: branch A == from-scratch replay A",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "K=9: branch B == from-scratch replay B",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "K=9: branch A after B == branch A (no leakage)",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "name": "K=9: A and B differ (the branch is real)",
+   "pass": true,
+   "detail": ""
+  }
+ ]
+}

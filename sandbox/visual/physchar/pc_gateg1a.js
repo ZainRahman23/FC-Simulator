@@ -126,6 +126,8 @@ export function runG1a(J, spec, key, opts) {
     // (FOOT-ARCHITECTURE GATE, F2: the passive MTP joints — angle (+ = dorsiflexion) and the torque its spring-damper applied this step)
     if (spec.passiveJoints && spec.passiveJoints.length) rec.mtp = Object.fromEntries(spec.passiveJoints.map((j, q) => { const k = nj + q; return [j.name.slice(-1), { a: w.hingeAngle(k), tau: w.motorLambda(k) * hz }]; }));
     recs.push(rec);
+    // ((Physical Stepper tooling, opt-in opts.stopWhen(n, obs, loco)) end the run early — the world is still destroyed normally below; unset → unchanged)
+    if (opts.stopWhen && opts.stopWhen(n, obs, loco)) break;
   }
   const audit = Object.assign({}, w.audit), support = !!w.support; w.destroy();
   return summarizeG1a(spec, key, TST, { hash: (h >>> 0).toString(16), nan, audit, support, recs, loco, led, arbSum, ev, puOn, cpuJ, cpuC, steps, sub, P0: P0v, L0, M, worldCfg, obst, supR, obstDepth, delays: { fb: loco.dFb, pl: loco.dPl } });

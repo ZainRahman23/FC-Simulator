@@ -22,6 +22,8 @@ import { SUP, footprint } from "./pc_support.js";
 import { decideA, decideB, adjustA, adaptBias, predictA, modelAt, modelAtBlend, solveStep, solvePreview } from "./pc_walker.js";
 import { swPhase } from "./pc_loco.js";
 import { UnifiedWalker, reachRange, latWidth, peakAcc, solveReg } from "./pc_unified.js";
+import { StepPlanner, ContactEvent, classifySupport } from "./pc_stepper.js";
+import { stepFeatures } from "./pc_stepfeat.js";
 
 export const PLAN = {
   planHz: 60,                // viability / candidate search rate (plus immediately when the verdict changes)
@@ -575,7 +577,24 @@ export class LocoPlanner {
       //  late in-swing re-decisions then lengthen it as the measured state requires — a moving swing executes a late LENGTHENING fully (arrival-
       //  gated descent, matched-state bench: +8 cm at 0.2–0.3 s → ±0.4 cm) but a late shortening only ≈ 40 % (its momentum carries it past))
       if (U.C.lateExtend && !lqrU && dec) dec.df -= U.C.lateExtend.bias ?? 0.04;
-      if (!uFixed) CH = lqrU ? { df: lqrU[0] + dz[0], dl: Math.max(0.15, lqrU[1] + dz[1]), T: lqrU[2] + dz[2] } : { df: dec.df + dz[0], dl: Math.max(0.15, dec.dl + dz[1]), T: dec.T + dz[2] }; const fixedU = uFixed || !!U.C.identStart || !!lqrU; lg.u0 = [CH.df, CH.dl, CH.T]; lg.fixed = fixedU; lg.dz = dz; U.stepLog.push(lg);
+      // ((Physical Stepper, opt-in C.stepper = { model, horizon, beam, … } — pc_stepper.js) the step-start decision is the CONTINUATION-AWARE
+      //  PLANNER's: nominal proposals scored on the surrogate's prediction of the next step start (two transitions, only the first executed), the
+      //  lateral step centred on the feedback law's own width; executed like the oracle's commanded steps (no in-swing re-decision). The step's
+      //  support CONTACT EVENT is accepted and executing from here and is classified only from the executor's SENSED touchdown — never a timer.)
+      let stU = null; if (U.C.stepper && U.C.stepper.model && r.i >= (U.C.stepper.from ?? 2) && !uFixed && !lqrU) { const SPc = U.C.stepper, SP = this._stepper = this._stepper || new StepPlanner(SPc);
+        const evs = this.stepperEvents = this.stepperEvents || [], doneR = this.exec.done.filter(d => d.kind === "rhythmic");
+        for (const ev of evs) if (ev.state === "EXECUTING") { const d = doneR.find(q => q.stepIndex === ev.stepIndex && (q.td || q.status === "FAILED")); if (d) { const c = classifySupport(ev, d, SPc.tol); if (c) ev.to(c.state, o.t, c.why, c.outcome); } }
+        const prevTd = doneR.filter(d => d.td).pop(), z = stepFeatures(this.spec, o, { sw: step.sw, pSt, h0: r.wk.h0, tSw0: o.t, prevTd: prevTd ? prevTd.td.t : null }), wp = this.exec.wProf;
+        z.mem = { I: lg.I, vBar: lg.vBar, vd: lg.vd, Tds: lg.ds, wProf: wp ? [0, 1, 2].map(j => wp.reduce((a, q) => a + q[j], 0) / wp.length) : null };
+        const cal = this.stepperCal = this.stepperCal || [], pl = cal[cal.length - 1]; if (pl && pl.i === r.i - 1 && !pl.actual) pl.actual = { "xi.0": z.xi[0], "xi.1": z.xi[1], "v.0": z.v[0], "v.1": z.v[1], achF: -z.swFoot[0], achW: z.swFoot[1], dur: o.t - pl.t };
+        const D = SP.decide(z, { vReq: lg.vd, legLen: SPc.legLen, dl0: dec.dl }, [dec.df, dec.dl, dec.T]); stU = D.u; const y = D.pred.y;
+        const tgtW = [pSt[0] + hd[0] * y.achF + rt[0] * side * y.achW, pSt[1] + hd[1] * y.achF + rt[1] * side * y.achW], Tn = D.u[2];
+        const ev = new ContactEvent({ effector: "foot_" + step.sw, type: "support", stepIndex: r.i, heading: hd, target: { center: tgtW, halfExtent: (SPc.tol && SPc.tol.region) || [0.08, 0.06] },
+          window: { earliest: o.t + 0.5 * Tn, nominal: o.t + Tn + 0.08, latest: o.t + Tn + 0.35 }, command: { df: D.u[0], dl: D.u[1], T: D.u[2] }, continuation: { require: "a predicted-safe next step", c2: D.c2 }, source: D.why, predicted: { ...y, pFall: D.pred.pFall } }, o.t, "nominal proposal chosen by the planner");
+        ev.to("ACCEPTED", o.t, "committed for this step").to("EXECUTING", o.t, "the executor began the step"); evs.push(ev);
+        cal.push({ i: r.i, t: o.t, pred: { ...y, pFall: D.pred.pFall }, u: D.u.slice(), c1: D.c1, c2: D.c2, tot: D.tot });
+        lg.stepper = { u: D.u.slice(), c1: D.c1, c2: D.c2, tot: D.tot, n1: D.n1, n2: D.n2, why: D.why, ev: ev.id, pFall: D.pred.pFall }; }
+      if (!uFixed) CH = stU ? { df: stU[0], dl: Math.max(0.15, stU[1]), T: stU[2] } : lqrU ? { df: lqrU[0] + dz[0], dl: Math.max(0.15, lqrU[1] + dz[1]), T: lqrU[2] + dz[2] } : { df: dec.df + dz[0], dl: Math.max(0.15, dec.dl + dz[1]), T: dec.T + dz[2] }; const fixedU = uFixed || !!U.C.identStart || !!lqrU || !!stU; lg.u0 = [CH.df, CH.dl, CH.T]; lg.fixed = fixedU; lg.dz = dz; U.stepLog.push(lg);
       { const ex = [xi0[0] - pSt[0], xi0[1] - pSt[1]]; (r.walkerLog = r.walkerLog || []).push({ i: r.i, t: o.t, sw: step.sw, x: [ex[0] * hd[0] + ex[1] * hd[1], (ex[0] * rt[0] + ex[1] * rt[1]) * side], u: [CH.df, CH.dl, CH.T], dec: [dec.df, dec.dl, dec.T], dz, info: { unified: true }, adj: [] }); }
       ctrlU = { U, log: lg, u: [CH.df, CH.dl, CH.T], E0: qd.out.E0, ytL: qd.out.ytL, ytF: qd.out.ytF, fixed: fixedU }; }
     if (!CH && r.walk.ctrl && r.walk.ctrl.kind !== "U" && r.i >= (r.walk.ctrl.fromStep ?? 1)) { const Cc = r.walk.ctrl, e = [xi0[0] - pSt[0], xi0[1] - pSt[1]], x = [e[0] * hd[0] + e[1] * hd[1], (e[0] * rt[0] + e[1] * rt[1]) * side];

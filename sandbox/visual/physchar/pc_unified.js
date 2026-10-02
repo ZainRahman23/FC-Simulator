@@ -69,7 +69,12 @@ export class UnifiedWalker {
   // once per step (at its start): integral action on the walking speed's error — the whole orbit shifts (forward offsets + I)
   stepUpdate(t, i) { const C = this.C, SI = C.speedI; if (i >= (C.from ?? 2) && this.vBar != null) { const e = this.vBar - this.vd(t); this.I = clamp(this.I - SI.gain * e, -SI.max, SI.max); } return this.I; }
   // the reference orbit for the current request at single-support duration T (forward offsets relative to the stance centre)
-  orbit(t, T) { const C = this.C, v = this.vd(t), Tds = this.Tds(), xS = C.xS[0] + C.xS[1] * v + this.I, xL = C.xL[0] + C.xL[1] * v + this.I, e = (xS - C.dsMap[0]) / C.dsMap[1], L = v * (T + Tds);
+  // ((Physical Stepper evidence gate, opt-in C.speedP = { k, max }) a PROPORTIONAL term of the speed loop on the stride-level speed (v̄, the
+  //  low-passed walking velocity — never the within-step pendulum velocity): the orbit's capture-point offsets move back by k·(v̄ − vd) when
+  //  the walk is faster than requested, so the stance and double-support CoP solvers that track the orbit brake through the ground reaction;
+  //  the integral term alone moves ≈ 1.5 cm per step and saturates at its bound while the walk creeps (g2_stepper/STEPPER_LOG.md))
+  orbit(t, T) { const C = this.C, v = this.vd(t), Tds = this.Tds(), sp = C.speedP && this.vBar != null ? clamp(-C.speedP.k * (this.vBar - v), -(C.speedP.max ?? 0.15), C.speedP.max ?? 0.15) : 0;
+    const xS = C.xS[0] + C.xS[1] * v + this.I + sp, xL = C.xL[0] + C.xL[1] * v + this.I + sp, e = (xS - C.dsMap[0]) / C.dsMap[1], L = v * (T + Tds);
     return { v, T, Tds, xS, xL, e, L, xiTd: L + e }; }
   // the orbit's capture-point path from liftoff (at tauL into the step) to touchdown T, with the drift that makes it arrive at ξ_td(T)
   path(orb, tauL, rollR, w) { const Ts = Math.max(0.05, orb.T - tauL), fr = clamp(tauL / orb.T, 0, 1), pa = -rollR + 2 * rollR * fr, pb = rollR, E = Math.exp(w * Ts);
