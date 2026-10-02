@@ -149,3 +149,44 @@ Not better than these:
 - stiff step length;
 - state-ended double support;
 - terminal-stance heel rise (`ssHeelRise`: air time 0.30 → 0.34–0.40 s, but without push-off the walk stalls).
+
+## After the checkpoint (10c8d74)
+
+- **Step model with velocity state:** the forward modes are 2.1 (the capture point) and 0.32 (speed is stable given the capture point).
+
+**Orbit identification** (matched-state bench around the sustained L@0.6 walk, steps 10–26):
+- Local 4-state model (ξf, vf, ξl, vl) with errors of 2.0 / 1.1 / 1.4 / 2.8 cm.
+- With pushes for state variety (E6): 2.5 / 2.8 / 3.1 cm.
+- An LQR on it survives 97–98 % in the linear Monte Carlo.
+- In the walk it failed at step 8: that state lies outside the identified region (sideways error 10 cm; the previous step's geometry is part of the state).
+- Over the whole walk with pushes (E7) the errors are 4.2–7 cm, and the linear test gives 0 % survival.
+
+**The decision time is decisive** (linear test, mU1 maps, real bounds):
+
+| decision at | 60-step survival |
+|---|---|
+| τ 0 | 0 % |
+| τ 0.1 | 0 % |
+| τ 0.2 | 56 % |
+| τ 0.25 | **99 %** |
+
+**Pelvis yaw is not the hidden state:** adding yaw, yaw rate and the stance-foot yaw to the orbit model does not lower its error.
+
+**A lower walking pelvis (4 cm), re-identified (i5 / mU5):** 4.5 upright steps; sideways open-loop gain −4.2. Worse.
+
+**Swing-hip torque by arbiter module:**
+- The swing inverse-dynamics feed-forward requests 0.3–1.8 kN·m in the first 20 ms of every swing (actuator 230 N·m).
+- The cause is the lift bump x^1.2·(1 − x)², whose second derivative is unbounded at liftoff; the lift height is 0.20 m.
+- A min-jerk lift (`liftShape`) halves the peak but changes landing timing (E8).
+
+**Late changes in closed loop:**
+- The in-swing re-decisions keep lengthening (+10–12 cm), and the swing lands near the START decision.
+- Blending the maps continuously in τ (`mapBlend`) and smoothing the target (`tgtSmooth`) did not change that.
+
+**Retarget bench (E9):** the arrival gate executes late lengthening (+8 cm → ±0.4 cm); shortening ≈ 40 %; a capacity-limited blend (`blendACap`) changes nothing.
+
+**Enforcing reach at the solved timing** (the maps mode; now the default, `reachIter`) cuts the best configuration from 14.7 to 7.7 upright steps: the physical reach estimate is too conservative. `reachIter: false` reproduces the 40-step walk (hash 9584c432).
+
+**Plan short / extend late** (`lateExtend`): best 11.5 (9–15).
+
+**STOPPED for review:** `G2B_UNIFIED_REVIEW.md`, `viewer/`. The recommendation is a swing-executor redesign (torque-feasible, re-plannable from the actual state, arrival-gated, reporting its reachable set), then late-decision placement.

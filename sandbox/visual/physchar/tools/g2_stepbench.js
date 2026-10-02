@@ -17,6 +17,7 @@ import { buildPoses } from "../pc_control.js";
 import { initOfLoco } from "../pc_ref.js";
 import { runG2a, TESTS_G2 } from "../pc_gateg2.js";
 import { V, Q } from "../pc_math.js";
+import { dumpFrames } from "./fg_frames.js";
 const here = path.dirname(fileURLToPath(import.meta.url)), PC = path.resolve(here, ".."), ROOT = path.resolve(here, "../../../..");
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i < 0 ? d : (process.argv[i + 1] && !process.argv[i + 1].startsWith("--") ? process.argv[i + 1] : true); };
 const dir = path.join(ROOT, "assets/characters/outfield/gabriel"), rig = JSON.parse(fs.readFileSync(path.join(dir, "rig.json"), "utf8")), buf = fs.readFileSync(path.join(dir, "mesh.bin"));
@@ -40,7 +41,8 @@ export function benchCase(cs) {
   let LOCO = null; const CMD = [], VAR = cs.var || null, mode = cs.mode || "step", saved = {};
   const setVar = (l, on) => { if (!VAR) return; for (const [grp, obj] of Object.entries(VAR)) { const tgt = grp === "human" ? l.human.P : grp === "loco" ? l.opts : grp === "walk" ? l.planner.rhythm.walk : grp === "self" ? l : null; if (!tgt) continue;
     for (const [k, v] of Object.entries(obj)) { const sk = grp + "." + k; if (on) { if (!(sk in saved)) saved[sk] = tgt[k]; tgt[k] = v; } else if (sk in saved) { tgt[k] = saved[sk]; delete saved[sk]; } } } };
-  const r = runG2a(J, spec, key, { poses, keepStates: true, seconds: 1.6 + n * 0.62, rhythmOver: { steps, at, walk }, ...(HUMAN ? { humanOver: HUMAN } : {}),
+  // (cs.push = { step, u, J: [fwd, lat], Lz }: a characterisation push before step K — the state at K varies, for identifying the state dependence)
+  const r = runG2a(J, spec, key, { poses, keepStates: true, seconds: 1.6 + n * 0.62, rhythmOver: { steps, at, walk }, ...(HUMAN ? { humanOver: HUMAN } : {}), ...(cs.push ? { pushChar: cs.push } : {}),
     onLoco: (l) => { LOCO = l; const f = l.planner.exec.refSwing; l.planner.exec.refSwing = (R, t, o, nv) => { const out = f(R, t, o, nv); if (!nv && R.stepIndex === K) CMD.push({ n: l.nStep, t, pos: out.pos, vel: out.vel, reach: out.reach, u: out.u }); return out; };
       const ctl = l.control.bind(l); l.control = (truth, x) => { const R = l.planner.exec.R, rh = l.planner.rhythm, act = !!VAR && ((R && R.kind === "rhythmic" && R.stepIndex === K) || (mode === "ds" && rh && rh.i === K && !(R && R.stepIndex !== K)));
         setVar(l, act); const out = ctl(truth, x);
@@ -61,8 +63,10 @@ export function benchCase(cs) {
   const qV = at_(d.tSw0), qR = at_(d.tSw0 + dFb), fb = bi("foot_" + d.sw), tb = bi("thigh_" + d.sw), stB = bi("thigh_" + st), stF = bi("foot_" + st);
   const ext = (q, a, b) => { const h = q.states[a].pos, f = q.states[b].pos; return Math.hypot(h[0] - f[0], h[1] - f[1], h[2] - f[2]) / legLen; };
   const sv = (q) => ({ xi: rel(q.xi), com: rel([q.com[0], q.com[2]]), vF: fw([q.vcom[0], q.vcom[2]]), vL: (q.vcom[0] * rt[0] + q.vcom[2] * rt[1]) * sd, h: q.com[1], trailExt: ext(q, tb, fb), stExt: ext(q, stB, stF),
-    swFoot: rel([q.states[fb].pos[0], q.states[fb].pos[2]]), swHip: rel([q.states[tb].pos[0], q.states[tb].pos[2]]), hipY: q.states[tb].pos[1], swLoad: q.feet[d.sw].load / W, stLoad: q.feet[st].load / W, swV: fw([q.states[fb].v[0], q.states[fb].v[2]]) });
-  out.dec = { view: sv(qV), real: sv(qR), req: cs.req || null, T: d.walkK ? d.walkK.Tss : null, final: d.proj && d.proj.target ? rel(d.proj.target) : null };
+    swFoot: rel([q.states[fb].pos[0], q.states[fb].pos[2]]), swHip: rel([q.states[tb].pos[0], q.states[tb].pos[2]]), hipY: q.states[tb].pos[1], swLoad: q.feet[d.sw].load / W, stLoad: q.feet[st].load / W, swV: fw([q.states[fb].v[0], q.states[fb].v[2]]),
+    // (hidden-state candidates: pelvis yaw relative to the heading and its rate, the stance foot's yaw, COM vertical velocity, whole-body angular momentum)
+    yaw: (() => { const f = Q.rot(q.states[0].rot, [0, 0, 1]); return Math.atan2(f[0], f[2]) * sd; })(), yawRate: q.states[0].w[1] * sd, stYaw: (() => { const f = Q.rot(q.states[stF].rot, [0, 0, 1]); return Math.atan2(f[0], f[2]) * sd; })(), vY: q.vcom[1] });
+  out.dec = { view: sv(qV), real: sv(qR), view10: sv(at_(d.tSw0 + 0.1)), req: cs.req || null, T: d.walkK ? d.walkK.Tss : null, final: d.proj && d.proj.target ? rel(d.proj.target) : null };
   const lg = (P.rhythm.walkerLog || []).find(w => w.i === K); if (lg) out.dec.ctrl = { x: lg.x, u: lg.u, nAdj: lg.adj.length };
   // the swing in real time: physical liftoff (truth: the foot off the turf and unloaded) and touchdown (truth), the command each tick applied
   const tC = d.tSw0 + dFb, tEnd = d.td ? Math.min(tF, d.td.t + 0.1) : Math.min(tF, tC + 1.0), recs = R_.filter(q => q.t >= d.tSw0 && q.t <= tEnd), cm = new Map(); for (const c of CMD) cm.set(c.n, c);
@@ -87,8 +91,10 @@ export function benchCase(cs) {
   out.swing.ok = out.swing.landed && !!out.land.err && Math.abs(out.land.err[0]) <= 0.08;
   // the state at touchdown and at the next step's start (what this step produced), and the continuation
   if (d.td && d.td.t < tF) { const q = at_(d.td.t); out.td = { xi: rel(q.xi), vF: fw([q.vcom[0], q.vcom[2]]), leadExt: ext(q, tb, fb) }; }
-  const nx = D.find(e => e.stepIndex === K + 1); if (nx && nx.tSw0 < tF) { const q = at_(nx.tSw0), p2 = nx.pSt; out.next = { xi: [fw([q.xi[0] - p2[0], q.xi[1] - p2[1]]), ((q.xi[0] - p2[0]) * rt[0] + (q.xi[1] - p2[1]) * rt[1]) * -sd], vF: fw([q.vcom[0], q.vcom[2]]) }; }
+  const nx = D.find(e => e.stepIndex === K + 1); if (nx && nx.tSw0 < tF) { const q = at_(nx.tSw0), p2 = nx.pSt; out.next = { xi: [fw([q.xi[0] - p2[0], q.xi[1] - p2[1]]), ((q.xi[0] - p2[0]) * rt[0] + (q.xi[1] - p2[1]) * rt[1]) * -sd], vF: fw([q.vcom[0], q.vcom[2]]), vL: (q.vcom[0] * rt[0] + q.vcom[2] * rt[1]) * -sd, viewXi: null }; const qv = at_(nx.tSw0 - LOCO.dFb); if (qv) { out.next.view = { xi: [fw([qv.xi[0] - p2[0], qv.xi[1] - p2[1]]), ((qv.xi[0] - p2[0]) * rt[0] + (qv.xi[1] - p2[1]) * rt[1]) * -sd], vF: fw([qv.vcom[0], qv.vcom[2]]), vL: (qv.vcom[0] * rt[0] + qv.vcom[2] * rt[1]) * -sd }; } }
   out.after = D.filter(e => e.stepIndex > K && e.stepIndex <= K + after && e.td && e.td.t < tF).length;
+  // (cs.frames = { file, tag, sub }: the run's collider frames for the review page — from 0.6 s before step K to 0.6 s after its touchdown)
+  if (cs.frames) { const fr = dumpFrames(cs.frames.file, spec, R_, P, { scenario: cs.frames.tag, foot, test: key, start: cs.start, hash: r.hash, K }, { t0: Math.max(0, d.tSw0 - 0.6), t1: (d.td ? d.td.t : d.tSw0 + 0.6) + 0.6 }); out.frames = fr; }
   return out;
 }
 if (process.argv[1] && process.argv[1].endsWith("g2_stepbench.js")) {

@@ -3,11 +3,11 @@
 import argparse, json, os, subprocess, time
 H = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.abspath(os.path.join(H, "../../../..")); PC = os.path.join(ROOT, "sandbox/visual/physchar"); J = os.path.join(H, "../json")
 ap = argparse.ArgumentParser(); ap.add_argument("--tag", required=True); ap.add_argument("--ucfg", default="{}"); ap.add_argument("--walk", default="{}"); ap.add_argument("--vd", default="0.35,0.6")
-ap.add_argument("--seed", type=int, default=81); ap.add_argument("--n", type=int, default=600); ap.add_argument("--shards", type=int, default=8); ap.add_argument("--models", default="m8a_tau")
+ap.add_argument("--seed", type=int, default=81); ap.add_argument("--n", type=int, default=600); ap.add_argument("--shards", type=int, default=8); ap.add_argument("--models", default="m8a_tau"); ap.add_argument("--human", default="{}")
 a = ap.parse_args(); t0 = time.time(); step = (a.n + a.shards - 1) // a.shards; procs = []
 for k in range(a.shards):
     lo, hi = k * step, min(a.n, (k + 1) * step)
-    cmd = ["nice", "node", "tools/g2walk_ident.js", "--mode", "cl", "--slow", "--inner", "v8", "--ctrlKind", "U", "--ucfg", a.ucfg, "--vd", a.vd, "--n", str(a.n), "--seed", str(a.seed), "--models", a.models,
+    cmd = ["nice", "node", "tools/g2walk_ident.js", "--mode", "cl", "--slow", "--inner", "v8", "--ctrlKind", "U", "--ucfg", a.ucfg, "--vd", a.vd, "--n", str(a.n), "--seed", str(a.seed), "--models", a.models, "--human", a.human,
            "--range", f"{lo},{hi}", "--walk", a.walk, "--out", os.path.join(J, f"uident_{a.tag}_s{k}.json")]
     procs.append(subprocess.Popen(cmd, cwd=PC, stdout=subprocess.DEVNULL, stderr=open(os.path.join(H, "../logs", f"uident_{a.tag}_s{k}.log"), "w")))
 for p in procs: p.wait()

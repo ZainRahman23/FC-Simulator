@@ -47,6 +47,11 @@ export function solveStep(M, x, yt, uRef, sg, lo, hi, fixT, b, auth) { const Wi 
   u = u.map((v, j) => clamp(v, lo[j], hi[j])); info.pred = P(x, u); return { u, info }; }
 // the model for a decision instant τ (s into the step, view time): the measured map of the latest instant ≤ τ
 export const modelAt = (C, tau) => { if (!C.models) return C.model; let best = null; for (const k of Object.keys(C.models).map(Number).sort((a, b) => a - b)) if (k <= tau + 1e-9) best = k; return C.models[best ?? 0]; };
+// ((G2b unified, opt-in C.mapBlend) the maps of the two bracketing instants blended LINEARLY in τ — the decision is continuous in time instead of
+//  jumping when the active map switches (measured: the in-swing target jumped ±5–9 cm at the switches and the swing could not follow)
+export const modelAtBlend = (C, tau) => { if (!C.models || !C.mapBlend) return modelAt(C, tau); const ks = Object.keys(C.models).map(Number).sort((a, b) => a - b); let lo = ks[0], hi = ks[ks.length - 1];
+  for (const k of ks) { if (k <= tau + 1e-9) lo = k; } for (const k of ks.slice().reverse()) { if (k >= tau - 1e-9) hi = k; } if (hi <= lo + 1e-9) return C.models[lo];
+  const f = (tau - lo) / (hi - lo), A = C.models[lo], B = C.models[hi]; return { T0: A.T0, W: A.W.map((row, i) => row.map((v, j) => v + (B.W[i][j] - v) * f)) }; };
 // Controller A's step decision. C = { model | models: {τ: model}, nom: [df, dl, T], rho, sig, lo, hi, xStar? }
 // ONLINE REFINEMENT (opt-in, C.adapt = { gain γ, max }): the measured maps' constant term is corrected by b, the exponentially averaged
 // prediction error of the previous steps (b ← b + γ (e − b), |b| ≤ max per axis) — integral action on a persistent model bias (an

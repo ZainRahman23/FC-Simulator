@@ -162,7 +162,11 @@ export class LocoController {
       // ((G2b walker, P.swingHorizEnd) the horizontal travel completes at swingHorizEnd of the swing (default 0.85): completed before the final
       // descent, the touchdown TIME no longer moves the foothold — the forward foothold scattered 6 cm (rms) about its target while the width,
       // which the path does not move late, scattered 2.5 cm)
-      const hE = P.swingHorizEnd ?? 0.85, sh = minjerk((w - 0.02) / (hE - 0.02)), sv = minjerk((w - 0.04) / 0.9), H = P.swingLiftH ?? 0.09, bump = H * Math.pow(x, 1.2) * Math.pow(1 - x, 2) / (Math.pow(0.375, 1.2) * Math.pow(0.625, 2));
+      const hE = P.swingHorizEnd ?? 0.85, sh = minjerk((w - 0.02) / (hE - 0.02)), sv = minjerk((w - 0.04) / 0.9), H = P.swingLiftH ?? 0.09;
+      // ((G2b unified, opt-in P.liftShape = { peak }) the lift bump x^1.2 (1 − x)² has an UNBOUNDED second derivative at liftoff (x^−0.8): every swing's
+      //  inverse-dynamics feed-forward asked 0.3–1.4 kN·m at the swing hip in its first 20 ms (actuator 230 N·m) — the foot then trailed its path by
+      //  5–9 cm. Min-jerk up to the same early peak and min-jerk down: the same height and timing, bounded acceleration (C² everywhere))
+      const LS = P.liftShape, xp = LS ? (LS.peak ?? 0.375) : 0, bump = LS ? H * (x <= xp ? minjerk(x / xp) : 1 - minjerk((x - xp) / (1 - xp))) : H * Math.pow(x, 1.2) * Math.pow(1 - x, 2) / (Math.pow(0.375, 1.2) * Math.pow(0.625, 2));
       let pos = [p0[0] + (land.pos[0] - p0[0]) * sh, p0[1] + (land.pos[1] - p0[1]) * sv + bump, p0[2] + (land.pos[2] - p0[2]) * sh];
       // ((G2b, P.swingRetract = δ m — not of_loco's own `retract` parameter, a name collision that applied 1 m of 'retraction' to every walking swing) SWING-LEG RETRACTION: the horizontal target passes the foothold by δ late in the swing and comes back to it, so the
       // foot is moving slightly BACKWARD relative to the turf when it lands (human terminal swing: the foot stops moving forward and may move
@@ -207,7 +211,7 @@ export class LocoController {
     // ((G2b, P.lateBlend) a LATE FOOTHOLD CHANGE (the executor adjusts the landing until late in the swing) enters the walking swing as a
     // horizontal offset that decays by min-jerk over the remaining swing — the path stays continuous in position and velocity instead of
     // jumping by the change (the C¹ requirement of the swing's inverse-dynamics feed-forward))
-    let atF = atF0; if (P.walk && P.lateBlend && P.walkSwing !== false) { Hs.blends = Hs.blends || []; if (Hs.landPrev && (Hs.landPrev[0] !== R.landC[0] || Hs.landPrev[1] !== R.landC[1])) { const nw = R.landC; R.landC = Hs.landPrev; const a0 = atF0(t).pos; R.landC = nw; const a1 = atF0(t).pos, rem = Math.max(0.06, (R.tSw0 + R.T - t) * 0.7);
+    let atF = atF0; if (P.walk && P.lateBlend && P.walkSwing !== false) { Hs.blends = Hs.blends || []; if (Hs.landPrev && (Hs.landPrev[0] !== R.landC[0] || Hs.landPrev[1] !== R.landC[1])) { const nw = R.landC; R.landC = Hs.landPrev; const a0 = atF0(t).pos; R.landC = nw; const a1 = atF0(t).pos, rem0 = Math.max(0.06, (R.tSw0 + R.T - t) * 0.7), dMag = Math.hypot(a0[0] - a1[0], a0[2] - a1[2]), rem = P.blendACap ? Math.max(rem0, Math.sqrt(5.77 * dMag / P.blendACap)) : rem0;   // ((G2b unified, opt-in P.blendACap m/s²) the change is blended no faster than the leg can accelerate the foot — a 60 ms blend of a 5 cm late change asked ≈ 60 m/s² and the feed-forward requested up to 1.8 kN·m at the swing hip)
         Hs.blends.push({ d: [a0[0] - a1[0], 0, a0[2] - a1[2]], t0: t, dur: rem }); } Hs.landPrev = R.landC.slice();
       atF = (tt) => { const c = atF0(tt); let pos = c.pos; for (const b of Hs.blends) { const k = 1 - minjerk(Math.max(0, Math.min(1, (tt - b.t0) / b.dur))); pos = [pos[0] + b.d[0] * k, pos[1], pos[2] + b.d[2] * k]; } return { ...c, pos }; }; }
     const c = atF(t), out = { pos: c.pos, rot: footRot(c.yaw, c.rho), u: c.w, reach: landing().pos, rho: c.rho };
