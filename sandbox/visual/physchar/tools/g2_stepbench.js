@@ -18,6 +18,7 @@ import { initOfLoco } from "../pc_ref.js";
 import { runG2a, TESTS_G2 } from "../pc_gateg2.js";
 import { V, Q } from "../pc_math.js";
 import { dumpFrames } from "./fg_frames.js";
+import { swPhase } from "../pc_loco.js";
 const here = path.dirname(fileURLToPath(import.meta.url)), PC = path.resolve(here, ".."), ROOT = path.resolve(here, "../../../..");
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i < 0 ? d : (process.argv[i + 1] && !process.argv[i + 1].startsWith("--") ? process.argv[i + 1] : true); };
 const dir = path.join(ROOT, "assets/characters/outfield/gabriel"), rig = JSON.parse(fs.readFileSync(path.join(dir, "rig.json"), "utf8")), buf = fs.readFileSync(path.join(dir, "mesh.bin"));
@@ -51,7 +52,12 @@ export function benchCase(cs) {
         const RT = cs.retarget, Rx = l.planner.exec.R; if (RT && Rx && Rx.kind === "rhythmic" && Rx.stepIndex === K && !Rx._rtDone && Rx.stage === "SWING" && l.planner.exec._o && l.planner.exec._o.t - Rx.tSw0 >= RT.tau) {
           const ex = l.planner.exec, o2 = ex._o, h0 = l.planner.rhythm.wk.h0, hd2 = [Math.sin(h0), Math.cos(h0)], rt2 = [hd2[1], -hd2[0]], sd2 = Rx.sw === "R" ? 1 : -1, tg = Rx.proj.target;
           const tc = [tg[0] + hd2[0] * RT.d[0] + rt2[0] * sd2 * RT.d[1], tg[1] + hd2[1] * RT.d[0] + rt2[1] * sd2 * RT.d[1]], c = { ...Rx.cand, target: tc, tSw: Rx.T }, T0 = Rx.T;
-          ex.tool._aim(Rx, o2, c); Rx.T = T0; Rx.tSw = Rx.tSw0; ex._groundEnd(Rx); ex._timedRetarget(o2, Rx, tc, o2.t); Rx.plannedTd.center = tc.slice(); Rx._rtDone = { t: o2.t, tau: o2.t - Rx.tSw0 }; }
+          ex.tool._aim(Rx, o2, c); Rx.T = T0; Rx.tSw = Rx.tSw0; ex._groundEnd(Rx); ex._timedRetarget(o2, Rx, tc, o2.t); Rx.plannedTd.center = tc.slice(); Rx._rtDone = { t: o2.t, tau: o2.t - Rx.tSw0 };
+          // ((overnight) RT.dT: the touchdown TIME moves by dT as well — the planner's own in-swing timing path (pc_plan _adjustU): the swing's remaining
+          //  phase is warped to the new planned touchdown, the single support walkK.Tss changes)
+          if (RT.dT) { const K2 = Rx.walkK, Tn0 = K2.Tss + RT.dT, st2 = Rx.T / Math.max(1e-3, K2.Tss), Tn = Tn0 * st2, wc = swPhase(Rx, o2.t + (Rx.leadNow || 0));
+            Rx.warp = { tc: o2.t + (Rx.leadNow || 0), wc, tEnd: Rx.tSw0 + Tn, T0: Rx.warp ? Rx.warp.T0 : Rx.T }; if (Rx.warp.tEnd - Rx.warp.tc < 0.05) Rx.warp.tEnd = Rx.warp.tc + 0.05;
+            Rx.T = Tn; K2.Tss = Tn0; Rx.plannedTd.t = Rx.tSw0 + Tn; Rx._rtDone.dT = RT.dT; } }
         return out; }; } });
   const R_ = r.recs, fall = R_.find(q => q.com[1] < 0.75), tF = fall ? fall.t : Infinity, P = LOCO.planner, h0 = P.rhythm.wk.h0, hd = [Math.sin(h0), Math.cos(h0)], rt = [hd[1], -hd[0]], dFb = LOCO.dFb;
   const D = P.exec.done.filter(d => d.kind === "rhythmic"), d = D.find(e => e.stepIndex === K);
@@ -83,6 +89,9 @@ export function benchCase(cs) {
   const Sd = tdP ? tdP.states[fb] : null;
   out.swing = { liftReal: lift ? lift.t - tC : null, tdReal: tdP ? tdP.t - tC : null, uAtView: d.td ? d.td.uAt : null, uCmdAtTd: tdP && cm.get(tdP.n) ? cm.get(tdP.n).u : null, lagMax: land ? lagMax : null, lagU, leadMax: land ? lead : null, vmax, minClr, recon,
     footVTd: Sd ? [fw([Sd.v[0], Sd.v[2]]), Sd.v[1]] : null, ankleVsLand: Sd ? fwF(Sd.pos) : null, status: d.status };
+  // ((overnight) the swing executor X's own record: its re-plans (time, reason, the reachable forward / sideways interval of the landing from the
+  //  state it planned from, the shortfall it reported) and the landing it last aimed at, in the bench's frame)
+  if (d.swx) { const W2 = d.swx; out.swx = { nPlans: W2.nPlans, nInfeasible: W2.infeasible.length, log: W2.log, tTd: W2.tTd - tC, lastShort: W2.log.length ? W2.log[W2.log.length - 1].short : null }; }
   out.land = { final: out.dec.final, ach: d.td && d.td.t < tF ? rel(d.td.center) : null }; if (out.land.ach && out.land.final) out.land.err = [out.land.ach[0] - out.land.final[0], out.land.ach[1] - out.land.final[1]];
   // (a TRIP: a re-contact carrying > 0.2 BW, or lasting > 40 ms, or after the first 80 ms of the air phase (a mid-swing scuff); a brief light toe
   //  tap during the pivot is recorded but is not a failure)

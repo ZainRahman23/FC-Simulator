@@ -16,6 +16,7 @@ import { poseTargets, idlePose, inPlaceWalkParams, walkParams, refPose } from ".
 import { fk, minjerk } from "./pc_control.js";
 import { SupportSequencer, SUP } from "./pc_support.js";
 import { SwingV2 } from "./pc_swing.js";
+import { SwingX } from "./pc_swingx.js";
 
 // the swing's PHASE at time tt: (tt − tSw0)/T, or — after the planner moved the step's timing in the swing (R.warp = { tc, wc, tEnd, T0 }) —
 // the phase reached at the change, spread over the new remaining time (continuous position; the swing's rate changes once)
@@ -45,6 +46,9 @@ export class LocoController {
     if (H) { this.planner.exec.refSwing = (R, t, o, noVel) => this._refSwingAt(R, t, o, noVel); const jp = (n) => spec.joints.find(j => j.name === n);
       // ((G2b speed/swing, opt-in human.over.swingGen = "v2") the GENERIC swing execution (pc_swing.js): state-anchored, foot-agnostic)
       if (H.P.swingGen === "v2") this.sw2 = new SwingV2(this, H.P.swing2 || null);
+      // ((G2b overnight, opt-in human.over.swingGen = "x") the SWING EXECUTOR X (pc_swingx.js): physical-time plans from the actual foot state,
+      //  re-plannable, capability-bounded with a reported reachable set, arrival-gated descent on the outline's lowest point)
+      //  (resolved at call time, so a matched-state bench can switch it for one step)
       H.shin = V.dist(jp("knee_L").at, jp("ankle_L").at); H.styleIdx = new Set(H.styleJoints.map(n => spec.joints.findIndex(j => j.name === n)));
       H.kIdle = (idlePose() ? idlePose().shin_L[0] : 7) * Math.PI / 180; }
     this.dFb = this.opts.delayFb ?? LOCO.delayFb; this.dPl = this.opts.delayPlan ?? LOCO.delayPlan; this.buf = []; this.obstructedAt = { L: null, R: null }; this.lastR = [0, 0]; this.nStep = 0;
@@ -122,7 +126,15 @@ export class LocoController {
   //   3. blended from mid-swing onto the PLANNED foothold, contacting forefoot-first at the reference's contact pitch (the heel then lowers
   //      under the stance leg's level-foot demand and the landing compliance).
   // A clearance guard keeps the lowest sole point off the turf until the landing blend. The planner still owns the foothold and timing.
-  _refSwingAt(R, t, o, noVel) { if (this.sw2 && R.walkK) return this.sw2.at(R, t, o, noVel); const H = this.human, spec = this.spec, g = this.planner.exec.geo, fi = g.foot[R.sw], box = g.box, P = H.P, wA = R.wA ?? 0.2, S0 = o.states[0], d2r = Math.PI / 180;
+  _refSwingAt(R, t, o, noVel) { if (this.sw2 && R.walkK) return this.sw2.at(R, t, o, noVel);
+    if (R.walkK && this.human.P.swingGen === "x") { const sx = this.human.P.swingX || null; if (!this.swx || this.swx.src !== sx) { this.swx = new SwingX(this, sx); this.swx.src = sx; }
+      // ((overnight, swingX.vertical = "inherited") the HYBRID: executor X owns the horizontal travel (planned from the actual foot, re-plannable,
+      //  capability-bounded, reporting its reachable set, following the planned touchdown time); the height, pitch and yaw are the inherited
+      //  walking swing's (its lift, outline clearance guard and controlled descent), evaluated at the same tick)
+      const xo = this.swx.at(R, t, o, noVel); if (this.swx.P.vertical !== "inherited") return xo; const ih = this._refSwingInh(R, t, o, noVel);
+      return { ...ih, pos: [xo.pos[0], ih.pos[1], xo.pos[2]], vel: ih.vel && xo.vel ? [xo.vel[0], ih.vel[1], xo.vel[2]] : ih.vel, reach: xo.reach, swx: xo.swx }; }
+    return this._refSwingInh(R, t, o, noVel); }
+  _refSwingInh(R, t, o, noVel) { const H = this.human, spec = this.spec, g = this.planner.exec.geo, fi = g.foot[R.sw], box = g.box, P = H.P, wA = R.wA ?? 0.2, S0 = o.states[0], d2r = Math.PI / 180;
     const yawOfQ = (q) => { const f = Q.rot(q, [0, 0, 1]); return datan2(f[0], f[2]); }, footRot = (yaw, rho) => Q.norm(Q.mul(Q.axis([0, 1, 0], yaw), Q.axis([1, 0, 0], -rho)));
     if (!R.hs) { const toeL = [box.pos[0], box.pos[1] - box.he[1], box.pos[2] + box.he[2]], fz0 = Q.rot(R.q0, [0, 0, 1]); R.hs = { toeL, toe0: V.add(R.p0, Q.rot(R.q0, toeL)), yaw0: yawOfQ(R.q0), rho0: Math.min(0, datan2(fz0[1], Math.hypot(fz0[0], fz0[2]))), rhoTO: P.toeOffHeelH != null ? -Math.asin(P.toeOffHeelH / (2 * box.he[2])) : -P.ankleTO * d2r, rhoL: P.landToeH != null ? Math.asin(P.landToeH / (2 * box.he[2])) : P.landHeelH != null ? -Math.asin(P.landHeelH / (2 * box.he[2])) : (-P.kneeStance + P.ankleHS) * d2r, heelL: [box.pos[0], box.pos[1] - box.he[1], box.pos[2] - box.he[2]] }; R.heelStrike = R.hs.rhoL > 0; }
     const Hs = R.hs, pivot = (ww) => { const rho = Hs.rho0 + (Hs.rhoTO - Hs.rho0) * minjerk(Math.min(1, ww / wA)), rot = footRot(Hs.yaw0, rho); return { pos: V.sub(Hs.toe0, Q.rot(rot, Hs.toeL)), rho }; };

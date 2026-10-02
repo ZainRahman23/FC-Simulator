@@ -242,7 +242,7 @@ export class StepExecutor {
     const c = { ...R.cand, target: tc, tSw: R.T }; const T0 = R.T; this.tool._aim(R, o, c); R.T = T0; R.tSw = R.tSw0; this._groundEnd(R); this._timedRetarget(o, R, tc, o.t); R.plannedTd.center = tc.slice(); R.adjusted = (R.adjusted || 0) + 1; R.adjustCm = Math.hypot(tc[0] - R.nominalTarget[0], tc[1] - R.nominalTarget[1]) * 100; }
   // ((G2b unified) the in-swing re-decision: the same decision from the latest measured state, every planning cycle, until commitRem before the
   //  planned touchdown; a new touchdown time warps the swing's remaining phase; the foothold retargets the swing)
-  _adjustU(o, R) { const K = R.walkK, CU = K.ctrlU, U = CU.U, P = U.ctx.planner, C = U.C; if (R.tSw0 + K.Tss - o.t < C.commitRem) return; if (C.inSwingUntil != null && o.t - R.tSw0 > C.inSwingUntil) return;
+  _adjustU(o, R) { const K = R.walkK, CU = K.ctrlU, U = CU.U, P = U.ctx.planner, C = U.C; if (R.tSw0 + K.Tss - o.t < C.commitRem) return; if (C.late) return this._lateU(o, R); if (C.inSwingUntil != null && o.t - R.tSw0 > C.inSwingUntil) return;
     const hd = K.hd, rt = [hd[1], -hd[0]], side = K.side;
     const dec = P._uniDecide(o, { pSt: R.pSt, hd, rt, side, sw: R.sw, st: R.st, tSw0: R.tSw0, xi: o.xi, liftT: R.liftoff ? R.liftoff.t : null, Tcur: K.Tss, dl0: CU.u[1], yaw: R.proj.yaw, cur0: R.cur0, E0: CU.E0, ytL: CU.ytL, ytF: CU.ytF }, CU.log);
     if (Math.abs(dec.T - K.Tss) > 1e-3) { const st = R.T / Math.max(1e-3, K.Tss), Tn = dec.T * st, wc = swPhase(R, o.t + (R.leadNow || 0));
@@ -252,6 +252,27 @@ export class StepExecutor {
     //  changes below `dead` — a swing follows one smooth late correction, not a sequence of jumps)
     if (C.tgtSmooth) { const TS = C.tgtSmooth, a = Math.min(1, (1 / 60) / (TS.tau ?? 0.04)); dec.df = CU.u[0] + (Math.abs(dec.df - CU.u[0]) < (TS.dead ?? 0.015) ? 0 : (dec.df - CU.u[0]) * a); dec.dl = CU.u[1] + (Math.abs(dec.dl - CU.u[1]) < (TS.dead ?? 0.015) ? 0 : (dec.dl - CU.u[1]) * a); }
     CU.u = [dec.df, dec.dl, dec.T]; const tc = [R.pSt[0] + hd[0] * dec.df + rt[0] * side * dec.dl, R.pSt[1] + hd[1] * dec.df + rt[1] * side * dec.dl];
+    if (Math.hypot(tc[0] - R.proj.target[0], tc[1] - R.proj.target[1]) < PLAN.adjustTol) return;
+    const c = { ...R.cand, target: tc, tSw: R.T }; const T0 = R.T; this.tool._aim(R, o, c); R.T = T0; R.tSw = R.tSw0; this._groundEnd(R); this._timedRetarget(o, R, tc, o.t); R.plannedTd.center = tc.slice(); R.adjusted = (R.adjusted || 0) + 1; }
+  // ((G2b overnight, opt-in C.late = { tau, g: [[τ, g], …], gL, dMax, dMaxL, T }) ONE LATE CORRECTION through an INVERSE EXECUTION MODEL: no
+  //  re-decision during the swing except once, at the first tick with τ ≥ late.tau (the measured maps are most informative late: the body's own
+  //  state carries what the step-start prediction lacks). The matched-state bench measured how the swing EXECUTES a mid-swing change: a
+  //  foothold change d at τ lands g(τ)·d further (g ≈ 0.65 / 0.57 / 0.50 at τ 0.15 / 0.20 / 0.25, both directions, sd ≈ 0.5 cm), a
+  //  touchdown-time change is executed fully. So the correction is SOLVED in what the swing can deliver — the foothold within
+  //  [u − g·dMax, u + g·dMax] (the effect of the largest request the bench covers), the timing within its bounds if late.T — and REQUESTED
+  //  through the inverse of that model (Δ/g), so the landing the maps assumed is the one the swing produces. No outcome is forced: the change
+  //  goes to the executor's ordinary retarget path and physics decides where the foot lands.
+  _lateU(o, R) { const K = R.walkK, CU = K.ctrlU, U = CU.U, P = U.ctx.planner, C = U.C, L = C.late, tau = o.t - R.tSw0; if (CU.lateDone || tau < L.tau) return; CU.lateDone = true;
+    const interp = (G, t) => { if (t <= G[0][0]) return G[0][1]; for (let i = 1; i < G.length; i++) if (t <= G[i][0]) { const a = G[i - 1], b = G[i]; return a[1] + (b[1] - a[1]) * (t - a[0]) / (b[0] - a[0]); } return G[G.length - 1][1]; };
+    const g = interp(L.g, tau), gL = L.gL ? interp(L.gL, tau) : g, dM = L.dMax ?? 0.08, dML = L.dMaxL ?? dM, hd = K.hd, rt = [hd[1], -hd[0]], side = K.side, u0 = CU.u.slice();
+    const bnd = { lo: [u0[0] - g * dM, u0[1] - gL * dML], hi: [u0[0] + g * dM, u0[1] + gL * dML] };
+    const dec = P._uniDecide(o, { pSt: R.pSt, hd, rt, side, sw: R.sw, st: R.st, tSw0: R.tSw0, xi: o.xi, liftT: R.liftoff ? R.liftoff.t : null, Tcur: K.Tss, dl0: CU.u[1], yaw: R.proj.yaw, cur0: R.cur0, E0: CU.E0, ytL: CU.ytL, ytF: CU.ytF, bnd, Tfree: !!L.T, uRef: L.uRefCur ? u0 : null }, CU.log);
+    const req = [u0[0] + Math.max(-dM, Math.min(dM, (dec.df - u0[0]) / g)), u0[1] + Math.max(-dML, Math.min(dML, (dec.dl - u0[1]) / gL))];
+    if (L.T && Math.abs(dec.T - K.Tss) > 1e-3) { const st = R.T / Math.max(1e-3, K.Tss), Tn = dec.T * st, wc = swPhase(R, o.t + (R.leadNow || 0));
+      R.warp = { tc: o.t + (R.leadNow || 0), wc, tEnd: R.tSw0 + Tn, T0: R.warp ? R.warp.T0 : R.T }; if (R.warp.tEnd - R.warp.tc < 0.05) R.warp.tEnd = R.warp.tc + 0.05;
+      R.T = Tn; K.Tss = dec.T; R.plannedTd.t = R.tSw0 + Tn; R.Tchanged = (R.Tchanged || 0) + 1; }
+    CU.lateLog = { tau, g, gL, u0, effective: [dec.df, dec.dl, dec.T], req, pred: dec.info && dec.info.mapPred };
+    CU.u = [req[0], req[1], dec.T]; const tc = [R.pSt[0] + hd[0] * req[0] + rt[0] * side * req[1], R.pSt[1] + hd[1] * req[0] + rt[1] * side * req[1]];
     if (Math.hypot(tc[0] - R.proj.target[0], tc[1] - R.proj.target[1]) < PLAN.adjustTol) return;
     const c = { ...R.cand, target: tc, tSw: R.T }; const T0 = R.T; this.tool._aim(R, o, c); R.T = T0; R.tSw = R.tSw0; this._groundEnd(R); this._timedRetarget(o, R, tc, o.t); R.plannedTd.center = tc.slice(); R.adjusted = (R.adjusted || 0) + 1; }
   // ((G2b WALKER) Controller A's in-swing re-decision: the foothold re-solved from the view's measured capture point with the map measured at
@@ -608,12 +629,15 @@ export class LocoPlanner {
     if (C.place === "maps" && C.models) { const M = modelAtBlend(C, tau), xsF = orbN.xS, rhoF = C.rhoF ?? 0.5;
       if (q.ytF == null) q.ytF = xsF + rhoF * (x[0] - xsF); if (q.out) q.out.ytF = q.ytF;
       // (timing: chosen at the step's start within [Tmin, Tmax]; in the swing the timing is held, as Controller A's in-swing re-decision does)
-      const atStart = q.liftT == null && tau < 0.02, lo = [best.lo != null ? best.lo : C.dfMin, wLo, C.TinSwing ? Math.min(C.Tmax, Math.max(C.Tmin, tau + C.remMin)) : C.Tmin], hi = [best.hi != null ? best.hi : C.dfMax, wHi, C.Tmax];
-      const uRef = [Math.max(lo[0], Math.min(hi[0], C.uRefSim === false ? orbN.L : best.uStar)), Math.max(wLo, Math.min(wHi, q.dl0)), Math.max(lo[2], Math.min(hi[2], q.Tcur))];
-      const fixT = C.Tadapt === false || (!atStart && !C.TinSwing), sv = C.reg ? solveReg(M, x, [q.ytF, q.ytL], uRef, C.reg.q, C.reg.r, lo, hi, fixT, C.adapt ? U.bias : null) : solveStep(M, x, [q.ytF, q.ytL], uRef, C.sigM || [0.05, 0.05, 0.03], lo, hi, fixT, C.adapt ? U.bias : null, null);
+      const atStart = q.liftT == null && tau < 0.02, lo = [best.lo != null ? best.lo : C.dfMin, wLo, C.TinSwing || q.Tfree ? Math.min(C.Tmax, Math.max(C.Tmin, tau + C.remMin)) : C.Tmin], hi = [best.hi != null ? best.hi : C.dfMax, wHi, C.Tmax];
+      // ((overnight, the late correction) bounds = what the swing can still deliver (q.bnd, from the measured execution model) within the static limits
+      //  — the in-swing reach estimate above is not used for it (it moved by up to ±20 cm tick to tick in the walks))
+      if (q.bnd) for (let i = 0; i < 2; i++) { const s0 = i === 0 ? [C.dfMin, C.dfMax] : [wLo, wHi]; lo[i] = Math.max(s0[0], q.bnd.lo[i]); hi[i] = Math.min(s0[1], q.bnd.hi[i]); if (lo[i] > hi[i]) lo[i] = hi[i] = Math.max(s0[0], Math.min(s0[1], (q.bnd.lo[i] + q.bnd.hi[i]) / 2)); }
+      const uRef = q.uRef ? [Math.max(lo[0], Math.min(hi[0], q.uRef[0])), Math.max(lo[1], Math.min(hi[1], q.uRef[1])), Math.max(lo[2], Math.min(hi[2], q.Tcur))] : [Math.max(lo[0], Math.min(hi[0], C.uRefSim === false ? orbN.L : best.uStar)), Math.max(wLo, Math.min(wHi, q.dl0)), Math.max(lo[2], Math.min(hi[2], q.Tcur))];
+      const fixT = (C.Tadapt === false && !q.Tfree) || (!atStart && !C.TinSwing && !q.Tfree), sv = C.reg ? solveReg(M, x, [q.ytF, q.ytL], uRef, C.reg.q, C.reg.r, lo, hi, fixT, C.adapt ? U.bias : null) : solveStep(M, x, [q.ytF, q.ytL], uRef, C.sigM || [0.05, 0.05, 0.03], lo, hi, fixT, C.adapt ? U.bias : null, null);
       // (REACHABILITY at the timing the solve chose: the forward range re-evaluated at the solved T and width; if the foothold is outside it, the
       //  foothold is bounded there and the width / timing re-solved — iterated; a reach range evaluated at another timing is not a constraint)
-      let svF = sv; for (let it = 0; it < 3 && C.reachIter !== false; it++) { const e2 = evalT(svF.u[2]); if (e2.none || e2.lo == null) break; const dfC = Math.max(e2.lo, Math.min(e2.hi, svF.u[0])); if (Math.abs(dfC - svF.u[0]) < 1e-3) break;
+      let svF = sv; for (let it = 0; it < 3 && C.reachIter !== false && !q.bnd; it++) { const e2 = evalT(svF.u[2]); if (e2.none || e2.lo == null) break; const dfC = Math.max(e2.lo, Math.min(e2.hi, svF.u[0])); if (Math.abs(dfC - svF.u[0]) < 1e-3) break;
         const lo2 = lo.slice(), hi2 = hi.slice(); lo2[0] = hi2[0] = dfC; svF = C.reg ? solveReg(M, x, [q.ytF, q.ytL], [dfC, uRef[1], svF.u[2]], C.reg.q, C.reg.r, lo2, hi2, fixT, C.adapt ? U.bias : null) : solveStep(M, x, [q.ytF, q.ytL], [dfC, uRef[1], svF.u[2]], C.sigM || [0.05, 0.05, 0.03], lo2, hi2, fixT, C.adapt ? U.bias : null, null); svF.info.reachClamped = true; }
       best = { ...best, u: svF.u[0], dl: svF.u[1], T: svF.u[2], mapPred: svF.info.pred, mapClamped: svF.info.clamped, reachClamped: !!svF.info.reachClamped, viol: 0 }; }
     if (lg && C.logSim) (lg.sim = lg.sim || []).push({ tau, x: x.slice(), tauL, T: best.T, orbN: { ...orbN }, E0, sole, geo, rollR, w, lat: { side: q.side, xl: x[1] } });

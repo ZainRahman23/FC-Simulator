@@ -1,0 +1,23 @@
+// per-tick swing-leg torques for one matched-state commanded step: node tq.mjs '<case json>' [every]
+import { J, body, G2, M } from "./lib.mjs"; import fs from "fs";
+const JDM = "/Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1/review_artifacts/physical_character_v1/g2_walker/json/";
+const MODELS = Object.fromEntries([0, 0.1, 0.15, 0.2, 0.25].map(t => [t, JSON.parse(fs.readFileSync(JDM + "mU1_tau" + t + ".json", "utf8"))]));
+const CTRL = { kind: "U", vd: 0.5, from: 1, ramp: { a: 0.3 }, place: "maps", uRefSim: false, lat: { rho: 0.4 }, adapt: null, reachIter: false, identFixed: true }, WALK = { swingBase: { w: "model", learn: { rate: 0.05 }, pure: [0] } };
+const cs = JSON.parse(process.argv[2]), every = +(process.argv[3] || 4); const { spec, poses } = body("F0");
+const [first, atS] = cs.start.split("@"), at = +atS, K = cs.K, n = K + 4, steps = Array.from({ length: n }, (_, i) => ({ sw: (i % 2 === 0) === (first === "R") ? "R" : "L", ...(i === 0 ? { fwdK: 0.7 } : i === 1 ? { fwdK: 0.9 } : {}) }));
+const base = G2.TESTS_G2W.G2W_A8.loco.rhythm.walk, char = { ...(base.char || {}) }; if (cs.req) char[K] = { df: cs.req[0], dl: cs.req[1], T: cs.req[2] };
+const walk = { ...WALK, char, ctrl: { ...base.ctrl, models: MODELS, ...CTRL } }; let LOCO = null; const CMD = new Map(), saved = {}, VAR = cs.var || null;
+const r = G2.runG2a(J, spec, "G2W_A8", { poses, keepStates: true, seconds: 1.6 + n * 0.62, rhythmOver: { steps, at, walk }, onLoco: (l) => { LOCO = l; const f = l.planner.exec.refSwing; l.planner.exec.refSwing = (R, t, o, nv) => { const out = f(R, t, o, nv); if (!nv && R.stepIndex === K) CMD.set(l.nStep, { out, swx: R.swx ? { ...out.swx } : null }); return out; };
+  const ctl = l.control.bind(l); l.control = (truth, x) => { const R = l.planner.exec.R, act = !!VAR && R && R.kind === "rhythmic" && R.stepIndex === K; if (VAR) for (const [k, v] of Object.entries(VAR.human || {})) { if (act) { if (!(k in saved)) saved[k] = l.human.P[k]; l.human.P[k] = v; } else if (k in saved) { l.human.P[k] = saved[k]; delete saved[k]; } } const out = ctl(truth, x); const RT = cs.retarget, Rx = l.planner.exec.R; if (RT && Rx && Rx.kind === "rhythmic" && Rx.stepIndex === K && !Rx._rtDone && Rx.stage === "SWING" && l.planner.exec._o && l.planner.exec._o.t - Rx.tSw0 >= RT.tau) {
+          const ex = l.planner.exec, o2 = ex._o, h0 = l.planner.rhythm.wk.h0, hd2 = [Math.sin(h0), Math.cos(h0)], rt2 = [hd2[1], -hd2[0]], sd2 = Rx.sw === "R" ? 1 : -1, tg = Rx.proj.target;
+          const tc = [tg[0] + hd2[0] * RT.d[0] + rt2[0] * sd2 * RT.d[1], tg[1] + hd2[1] * RT.d[0] + rt2[1] * sd2 * RT.d[1]], c = { ...Rx.cand, target: tc, tSw: Rx.T }, T0 = Rx.T;
+          ex.tool._aim(Rx, o2, c); Rx.T = T0; Rx.tSw = Rx.tSw0; ex._groundEnd(Rx); ex._timedRetarget(o2, Rx, tc, o2.t); Rx.plannedTd.center = tc.slice(); Rx._rtDone = { t: o2.t, tau: o2.t - Rx.tSw0 }; } return out; }; } });
+const P = LOCO.planner, d = P.exec.done.find(e => e.kind === "rhythmic" && e.stepIndex === K), h0 = P.rhythm.wk.h0, hd = [Math.sin(h0), Math.cos(h0)], fb = spec.bodies.findIndex(b => b.name === "foot_" + d.sw);
+const tC = d.tSw0 + LOCO.dFb, land = [...CMD.values()].pop().out.reach, fw = (p) => (p[0] - land[0]) * hd[0] + (p[2] - land[2]) * hd[1];
+if (d.swx) for (const e of d.swx.log) console.log('   plan', JSON.stringify(e));
+console.log(`step ${K} ${d.sw} lift ${(d.liftoff.t - tC).toFixed(3)} td ${d.td ? (d.td.t - tC).toFixed(3) : "-"} | t  u  | cmd fwd / act fwd | cmd y / act y | hip flex: real (sat) FF PD | knee: real (sat) FF | ankle real`);
+let k = 0; for (const q of r.recs) { if (q.t < d.tSw0 || q.t > (d.td ? d.td.t + 0.05 : d.tSw0 + 0.6)) continue; const c = CMD.get(q.n); if (!c || (k++ % every)) continue; const S = q.states[fb];
+  const jt = (nm, ax) => { const e = q.arb && q.arb.find(x => x.joint === nm); if (!e) return "-"; const re = Array.isArray(e.real) ? e.real[ax] : e.real, sat = Array.isArray(e.sat) ? e.sat[ax] : e.sat;
+    const ff = e.terms.filter(tm => /feed-forward/.test(tm.m)).reduce((a, tm) => a + (Array.isArray(tm.req) ? tm.req[ax] : tm.req), 0), pd = e.terms.filter(tm => !/feed-forward/.test(tm.m)).reduce((a, tm) => a + (Array.isArray(tm.req) ? tm.req[ax] : tm.req), 0);
+    return `${re.toFixed(0).padStart(5)}${sat ? "*" : " "} ${ff.toFixed(0).padStart(5)} ${pd.toFixed(0).padStart(5)}`; };
+  console.log(`${(q.t - tC).toFixed(3)} ${c.out.u.toFixed(2)} | ${fw(c.out.pos).toFixed(3)} ${fw(S.pos).toFixed(3)} | ${c.out.pos[1].toFixed(3)} ${S.pos[1].toFixed(3)} | ${jt("hip_" + d.sw, 1)} | ${jt("knee_" + d.sw, 0)} | ${jt("ankle_" + d.sw, 1)}${c.swx ? " G " + c.swx.G.toFixed(2) + " m " + c.swx.m.toFixed(3) : ""}${q.feet[d.sw].touching ? " T" : ""}`); }
