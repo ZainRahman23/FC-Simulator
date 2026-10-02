@@ -1,0 +1,14 @@
+// ground-reaction authority under DCM tracking: per phase, how often the CoP demand is clamped (single support: by the sole; double support:
+// by the solver's trailing-toe / leading-toe bounds), and the closed-loop speed regression v(k+1) − vd on v(k) − vd
+import fs from "fs"; import { J, body, G2 } from "../fg/lib.mjs";
+const JD = "/Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1/review_artifacts/physical_character_v1/g2_walker/json", models = Object.fromEntries([0, 0.1, 0.15, 0.2, 0.25].map(t => [t, JSON.parse(fs.readFileSync(`${JD}/m_c50b_tau${t}.json`, "utf8"))]));
+const { spec, poses } = body("F0"), base = G2.TESTS_G2.G2W_A8.loco.rhythm.walk; let ss = [0, 0], ds = [0, 0], V = [];
+for (const [first, at] of [["R", 0.5], ["R", 0.55], ["R", 0.6], ["L", 0.5], ["L", 0.55], ["L", 0.6]]) {
+  const steps = Array.from({ length: 30 }, (_, i) => ({ sw: (i % 2 === 0) === (first === "R") ? "R" : "L", ...(i === 0 ? { fwdK: 0.7 } : i === 1 ? { fwdK: 0.9 } : {}) })); let LOCO = null, dsHits = 0, dsN = 0;
+  const r = G2.runG2a(J, spec, "G2W_A8", { poses, keepStates: true, seconds: 12, rhythmOver: { steps, at, walk: { ctrl: { ...base.ctrl, models, xStar: [0.024, 0.081], nom: [0.27, 0.28, 0.40] }, char: { 0: { df: 0.223, dl: 0.343, T: 0.47 } }, dcmRef: { k: 0.5, vd: 0.5, xL: [-0.114, 0.393], ds: true, xS: [-0.147, 0.341] } } }, onLoco: (l) => { LOCO = l; const f = l.planner._walkDSxi.bind(l.planner); l.planner._walkDSxi = (o, rr) => { const q = f(o, rr); if (rr.wdsFwd) { dsN++; const W = rr.wdsFwd; if (Math.abs(W.pf - (W.pfRaw ?? W.pf)) > 1e-4) dsHits++; } return q; }; } });
+  const tF = (r.recs.find(q => q.com[1] < 0.75) || { t: 1e9 }).t, P = LOCO.planner, h0 = P.rhythm.wk.h0, hd = [Math.sin(h0), Math.cos(h0)], fw = (a) => a[0] * hd[0] + a[1] * hd[1];
+  for (const q of r.recs) { if (q.t > tF || !q.ctl || !q.ctl.pRaw || !q.exec) continue; const cl = Math.abs(fw([q.ctl.pRaw[0] - q.ctl.pStar[0], q.ctl.pRaw[1] - q.ctl.pStar[1]])) > 0.005; if (q.exec.stage === "SWING") { ss[0]++; ss[1] += cl ? 1 : 0; } else { ds[0]++; ds[1] += cl ? 1 : 0; } }
+  const D = P.exec.done.filter(d => d.kind === "rhythmic" && d.liftoff && d.liftoff.t < tF), vs = D.map(d => { const q = r.recs.find(q2 => q2.t >= d.liftoff.t); return q.vcom[0] * hd[0] + q.vcom[2] * hd[1]; }); for (let i = 2; i + 1 < vs.length; i++) V.push([vs[i] - 0.5, vs[i + 1] - 0.5]); }
+console.log(`single support: CoP demand clamped by the sole in ${(100 * ss[1] / ss[0]).toFixed(0)} % of ticks · other phases ${(100 * ds[1] / ds[0]).toFixed(0)} %`);
+const x = V.map(p => p[0]), y = V.map(p => p[1]), mx = x.reduce((a, b) => a + b) / x.length, my = y.reduce((a, b) => a + b) / y.length, b = x.reduce((a, v, i) => a + (v - mx) * (y[i] - my), 0) / x.reduce((a, v) => a + (v - mx) ** 2, 0);
+console.log(`closed-loop speed map (liftoff to liftoff, n ${V.length}): (v' − vd) ≈ ${(my - b * mx).toFixed(3)} + ${b.toFixed(2)}·(v − vd)`);

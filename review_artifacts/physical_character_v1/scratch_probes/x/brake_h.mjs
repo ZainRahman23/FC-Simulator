@@ -1,0 +1,20 @@
+import { J, body, G2 } from "../fg/lib.mjs"; import fs from "fs";
+const JDM = "/Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1/review_artifacts/physical_character_v1/g2_walker/json/";
+const withModels = (c) => c.modelsPrefix ? { ...c, models: Object.fromEntries([0, 0.1, 0.15, 0.2, 0.25].map(t => [t, JSON.parse(fs.readFileSync(JDM + c.modelsPrefix + t + ".json", "utf8"))])) } : c;
+const B = { kind: "U", vd: 0.5, from: 1, ramp: { a: 0.3 }, place: "maps", uRefSim: false, lat: { rho: 0.4 }, adapt: null, reachIter: false, modelsPrefix: "mU1_tau" };
+const ctrl = { ...B, ...JSON.parse(process.argv[2] || "{}") }, n = 20, out = [];
+const { spec, poses } = body("F0");
+for (const [first, at] of [["R", 0.5], ["R", 0.55], ["R", 0.6], ["L", 0.5], ["L", 0.55], ["L", 0.6]]) {
+  const steps = Array.from({ length: n }, (_, i) => ({ sw: (i % 2 === 0) === (first === "R") ? "R" : "L", ...(i === 0 ? { fwdK: 0.7 } : i === 1 ? { fwdK: 0.9 } : {}) }));
+  let LOCO = null; const base = G2.TESTS_G2W.G2W_A8.loco.rhythm.walk;
+  const r = G2.runG2a(J, spec, "G2W_A8", { poses, keepStates: true, seconds: 1.6 + n * 0.6, ...(process.env.HUM ? { humanOver: JSON.parse(process.env.HUM) } : {}), rhythmOver: { steps, at, walk: { swingBase: { w: "model", learn: { rate: 0.05 }, pure: [0] }, ctrl: withModels({ ...base.ctrl, ...ctrl }) } }, onLoco: l => { LOCO = l; } });
+  const P = LOCO.planner, D = P.exec.done.filter(d => d.kind === "rhythmic" && d.stepIndex >= 2), h0 = P.rhythm.wk.h0, hd = [Math.sin(h0), Math.cos(h0)], tF = (r.recs.find(q => q.com[1] < 0.75) || { t: 1e9 }).t;
+  const at_ = (t) => { let lo = 0, hi = r.recs.length - 1; while (hi - lo > 1) { const m = (lo + hi) >> 1; if (r.recs[m].t < t) lo = m; else hi = m; } return r.recs[hi]; };
+  for (const d of D) { if (!d.td || d.td.t > tF || !d.liftoff) continue; const ps = d.pSt, rel = (p) => (p[0] - ps[0]) * hd[0] + (p[1] - ps[1]) * hd[1];
+    const q0 = at_(d.tSw0), qL = at_(d.liftoff.t), qT = at_(d.td.t), c2 = (q) => q.copSmooth ? rel(q.copSmooth.length === 3 ? [q.copSmooth[0], q.copSmooth[2]] : q.copSmooth) : null, cm = (q) => rel([q.com[0], q.com[2]]), v = (q) => q.vcom[0] * hd[0] + q.vcom[2] * hd[1];
+    const nx = D.find(e => e.stepIndex === d.stepIndex + 1), fail = !nx || !nx.td || nx.td.t > tF;
+    out.push({ start: first + at, k: d.stepIndex, xi0: rel(q0.xi), com0: cm(q0), copL: c2(qL), comL: cm(qL), v0: v(q0), vL: v(qL), vT: v(qT), xiL: rel(qL.xi), xiT: rel(qT.xi), tL: d.liftoff.t - d.tSw0, tT: d.td.t - d.tSw0, last: fail, stepsToFall: null }); } }
+const f = (x) => x == null ? "  -  " : (x >= 0 ? "+" : "") + x.toFixed(2);
+console.log("start k | ξ0 COM0 | at liftoff: CoP COM ξ | v0 vLift vTd | ξTd | tLift tTd");
+for (const o of out) console.log(`${o.start} ${String(o.k).padStart(2)} | ${f(o.xi0)} ${f(o.com0)} | ${f(o.copL)} ${f(o.comL)} ${f(o.xiL)} | ${f(o.v0)} ${f(o.vL)} ${f(o.vT)} | ${f(o.xiT)} | ${o.tL.toFixed(2)} ${o.tT.toFixed(2)}${o.last ? "  <- last step before the fall" : ""}`);
+fs.writeFileSync(process.argv[3] || "/dev/null", JSON.stringify(out));

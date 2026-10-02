@@ -1,5 +1,10 @@
 # Physical character: handoff after the 2026-09-30 overnight runway (pre-reboot)
 
+> **2026-10-02: V1 IS FROZEN.** Read **`PHYSICAL_CHARACTER_V1_FINAL_HANDOFF.md`** first, then `PHYSICAL_CHARACTER_V1_LESSONS.md` and `PHYSICAL_CHARACTER_V1_MANIFEST.json`.
+> - **Tag:** `checkpoint/physchar-v1-final-research` (local).
+> - **Snapshot:** `_preserved_2026-10-02_physical_character_v1_final/`.
+> - This file remains the chronological record. Some of its later entries' conclusions were corrected; see the final handoff §I and §T.
+
 The state was frozen for a Mac reboot. **No development is in progress. Nothing has been pushed.**
 
 ## Update after the reboot: D6 diagnostic checkpoint (2026-09-30)

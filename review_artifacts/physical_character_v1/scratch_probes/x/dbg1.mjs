@@ -1,0 +1,10 @@
+const PC = "/Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1/sandbox/visual/physchar";
+const BEST = '{"kind":"U","vd":0.5,"from":1,"ramp":{"a":0.3},"place":"maps","uRefSim":false,"lat":{"rho":0.4},"adapt":null,"reachIter":false}', SB = '{"swingBase":{"w":"model","learn":{"rate":0.05},"pure":[0]}}';
+const CSARG = process.argv[2]; process.argv = ["node", "x", "--models", "mU1_tau", "--ctrl", BEST, "--walk", SB];
+const SWm = await import(PC + "/pc_swingx.js"); const { benchCase } = await import(PC + "/tools/g2_stepbench.js");
+const P0 = SWm.SwingX.prototype._plan, E0 = SWm.SwingX.prototype._eval; let on = false;
+SWm.SwingX.prototype._plan = function (R, t0, st, why) { P0.call(this, R, t0, st, why); if (R.stepIndex === 5) { const W = R.swx; console.log(`PLAN ${why} t ${t0.toFixed(4)} h0 ${st.h.map(x => x.toFixed(3))} posY ${st.pos[1] != null ? st.pos[1].toFixed(3) : "-"} rho ${(st.att.rho * 57.3).toFixed(1)} tStart ${W.tStart.toFixed(3)} tClr ${W.tClr.toFixed(3)} tTd ${W.tTd.toFixed(3)} ys ${this._ySurf().toFixed(3)}`); on = true; } };
+SWm.SwingX.prototype._eval = function (R, t, o) { const c = E0.call(this, R, t, o); if (on && R.stepIndex === 5 && !this._q) { this._q = 1; const fA = o.states[this.geo.foot[R.sw]]; console.log(`  eval t ${t.toFixed(4)} hh ${c.hh.toFixed(3)} G ${c.G.toFixed(2)} posY ${c.pos[1].toFixed(3)} rho ${(c.rho * 57.3).toFixed(1)} | view footY ${fA.pos[1].toFixed(3)} vY ${fA.v[1].toFixed(2)} lowA ${this._lowOff(fA.rot).toFixed(3)} hV ${this._evalV(R.swx, t).map(x => x.toFixed(3))}`); this._q = 0; } return c; };
+const cs = JSON.parse(CSARG || 'null') || { id: "x", start: "L@0.6", K: 5, var: { human: { swingGen: "x", swingX: { replan: "plan", replanPos: 1, replanVel: 99 } } } };
+let k = 0; const SW1 = SWm.SwingX.prototype.at; SWm.SwingX.prototype.at = function (R, t, o, nv) { if (!nv && R.stepIndex === 5) { if (k++ % 3) { on = false; } else on = true; } else on = false; return SW1.call(this, R, t, o, nv); };
+const r = benchCase(cs); console.log(JSON.stringify(r.swing).slice(0, 300));

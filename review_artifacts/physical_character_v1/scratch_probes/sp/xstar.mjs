@@ -1,0 +1,4 @@
+// Controller A's periodic state for candidate nominal steps (the measured map M8A at τ = 0) — what gait the controller is actually aiming at
+import { fixedPointA, predictA } from "/Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1/sandbox/visual/physchar/pc_walker.js";
+import { M8A } from "/Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1/sandbox/visual/physchar/pc_walker_models.js";
+for (const u of [[0.22, 0.28, 0.40], [0.26, 0.28, 0.40], [0.30, 0.28, 0.42], [0.33, 0.26, 0.42], [0.36, 0.26, 0.44]]) { const fp = fixedPointA(M8A["0"], u); console.log("u*", u.join(", "), "→ x* (fwd, lat)", fp.x.map(v => v.toFixed(3)).join(", "), "| A eig", (() => { const A = fp.A, tr = A[0][0] + A[1][1], det = A[0][0] * A[1][1] - A[0][1] * A[1][0], d = tr * tr / 4 - det; return d >= 0 ? [tr / 2 + Math.sqrt(d), tr / 2 - Math.sqrt(d)].map(v => v.toFixed(2)).join(", ") : "complex"; })()); }

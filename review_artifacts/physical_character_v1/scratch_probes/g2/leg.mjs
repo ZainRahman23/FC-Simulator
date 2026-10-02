@@ -1,0 +1,12 @@
+import fs from "fs"; import path from "path";
+const PC = process.argv[2], ROOT = path.resolve(PC, "../../..");
+const { buildBodySpec } = await import(PC + "/pc_body.js"); const { loadJolt } = await import(PC + "/pc_jolt.js"); const G = await import(PC + "/pc_gateg1a.js"); const { buildPoses } = await import(PC + "/pc_control.js"); const REF = await import(PC + "/pc_ref.js");
+REF.initOfLoco(fs.readFileSync(path.join(PC, "../anim3d/of_loco.js"), "utf8"));
+const dir = path.join(ROOT, "assets/characters/outfield/gabriel"), rig = JSON.parse(fs.readFileSync(path.join(dir, "rig.json"), "utf8")), buf = fs.readFileSync(path.join(dir, "mesh.bin"));
+const ab = buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength), L = rig.mesh.layout, T = { Float32Array, Uint16Array, Uint32Array, Uint8Array };
+const mesh = {}; for (const k of ["positions", "joints", "weights", "indices"]) mesh[k] = new T[L[k].elementType](ab, L[k].byteOffset, L[k].elementCount);
+const spec = buildBodySpec(rig, mesh, { calib: "V1.1" }), J = await loadJolt(PC + "/vendor/jolt-physics.wasm-compat.js"), poses = buildPoses(spec);
+const B = await import(PC + "/pc_balance.js"); const o = (n) => spec.bodies.find(b => b.name === n).origin, d = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
+console.log("thigh→shin", d(o("thigh_L"), o("shin_L")).toFixed(3), "shin→foot", d(o("shin_L"), o("foot_L")).toFixed(3), "sum", (d(o("thigh_L"), o("shin_L")) + d(o("shin_L"), o("foot_L"))).toFixed(3), "hip–ankle bind", d(o("thigh_L"), o("foot_L")).toFixed(3));
+const c = new B.BalanceController(spec, poses, {}); console.log("ctrl legs L1 L2", c.legs.L.L1.toFixed(3), c.legs.L.L2.toFixed(3), "hipOff", c.legs.L.hipOff.map(v => v.toFixed(3)).join(","));
+const k = spec.joints.find(j => j.name === "knee_L"); console.log("knee lo/hi deg", (k.lo * 57.3).toFixed(1), (k.hi * 57.3).toFixed(1), "axis", k.axis);

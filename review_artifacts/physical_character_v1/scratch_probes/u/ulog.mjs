@@ -1,0 +1,12 @@
+// the unified controller's decision log for one start
+import { J, body, G2, M } from "../fg/lib.mjs"; import fsM from "fs";
+const JDM = "/Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1/review_artifacts/physical_character_v1/g2_walker/json/"; const withModels = (c) => c.modelsPrefix ? { ...c, models: Object.fromEntries([0, 0.1, 0.15, 0.2, 0.25].map(t => [t, JSON.parse(fsM.readFileSync(JDM + c.modelsPrefix + t + ".json", "utf8"))])) } : c;
+const ctrl = JSON.parse(process.argv[2] || '{"kind":"U","vd":0.5}'), walkX = JSON.parse(process.argv[3] || "{}"), first = process.argv[4] || "R", at = +(process.argv[5] || 0.5), every = +(process.argv[6] || 6);
+const { spec, poses } = body("F0"), n = 16, steps = Array.from({ length: n }, (_, i) => ({ sw: (i % 2 === 0) === (first === "R") ? "R" : "L", ...(i === 0 ? { fwdK: 0.7 } : i === 1 ? { fwdK: 0.9 } : {}) }));
+let LOCO = null; const base = G2.TESTS_G2W.G2W_A8.loco.rhythm.walk;
+const r = G2.runG2a(J, spec, "G2W_A8", { poses, keepStates: true, seconds: 1.6 + n * 0.6, rhythmOver: { steps, at, walk: { ...walkX, ctrl: withModels({ ...base.ctrl, ...ctrl }) } }, onLoco: l => { LOCO = l; } });
+const P = LOCO.planner, U = P._uni, tF = (r.recs.find(q => q.com[1] < 0.75) || { t: 1e9 }).t, D = P.exec.done.filter(d => d.kind === "rhythmic");
+console.log("hash", r.hash, "fall", tF.toFixed(2));
+for (const lg of U.stepLog) { const d = D.find(e => e.stepIndex === lg.i); const ach = d && d.td ? ((d.td.center[0] - d.pSt[0]) * Math.sin(P.rhythm.wk.h0) + (d.td.center[1] - d.pSt[1]) * Math.cos(P.rhythm.wk.h0)) : null;
+  console.log(`step ${lg.i} ${lg.sw} t ${lg.t.toFixed(2)} | I ${lg.I.toFixed(3)} vBar ${lg.vBar != null ? lg.vBar.toFixed(2) : "-"} vd ${lg.vd} Tds ${lg.ds.toFixed(2)} | achieved df ${ach != null ? ach.toFixed(3) : "-"} uAt ${d && d.td ? d.td.uAt.toFixed(2) : "-"}${d && d.td && d.td.t > tF ? " (after fall)" : ""}`);
+  lg.dec.forEach((e, j) => { if (j % every && j !== lg.dec.length - 1) return; console.log(`   τ ${e.tau.toFixed(3)} ${e.lifted ? "L" : "-"} x ${e.x[0].toFixed(3)} ${e.x[1].toFixed(3)} | pred ${e.pred != null ? e.pred.toFixed(3) : "-"} ε ${e.eps.toFixed(3)} L ${e.L.toFixed(3)} u* ${e.uStar.toFixed(3)} [${e.lo != null ? e.lo.toFixed(2) : "-"}, ${e.hi != null ? e.hi.toFixed(2) : "-"}] → u ${e.u.toFixed(3)} T ${e.T.toFixed(2)} viol ${e.viol.toFixed(3)} dl ${e.dl.toFixed(3)}${e.none ? " NONE" : ""}${e.mapPred ? " mapPred " + e.mapPred.map(v => v.toFixed(3)).join(",") + " cl " + (e.mapClamped || []).join("") : ""}`); }); }

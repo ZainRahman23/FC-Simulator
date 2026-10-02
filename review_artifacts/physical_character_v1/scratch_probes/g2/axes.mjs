@@ -1,0 +1,16 @@
+import fs from "fs"; import path from "path";
+const PC = process.argv[2], ROOT = path.resolve(PC, "../../..");
+const { buildBodySpec } = await import(PC + "/pc_body.js"); const { loadJolt } = await import(PC + "/pc_jolt.js"); const G = await import(PC + "/pc_gateg1a.js"); const { buildPoses } = await import(PC + "/pc_control.js"); const REF = await import(PC + "/pc_ref.js");
+REF.initOfLoco(fs.readFileSync(path.join(PC, "../anim3d/of_loco.js"), "utf8"));
+const dir = path.join(ROOT, "assets/characters/outfield/gabriel"), rig = JSON.parse(fs.readFileSync(path.join(dir, "rig.json"), "utf8")), buf = fs.readFileSync(path.join(dir, "mesh.bin"));
+const ab = buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength), L = rig.mesh.layout, T = { Float32Array, Uint16Array, Uint32Array, Uint8Array };
+const mesh = {}; for (const k of ["positions", "joints", "weights", "indices"]) mesh[k] = new T[L[k].elementType](ab, L[k].byteOffset, L[k].elementCount);
+const spec = buildBodySpec(rig, mesh, { calib: "V1.1" }), J = await loadJolt(PC + "/vendor/jolt-physics.wasm-compat.js"), poses = buildPoses(spec);
+const { fk, paramTarget } = await import(PC + "/pc_control.js"); const { V, Q } = await import(PC + "/pc_math.js");
+for (const n of ["lumbar", "thoracic", "neck", "hip_R", "hip_L", "shoulder_R", "shoulder_L", "ankle_R"]) { const j = spec.joints.find(q => q.name === n); console.log(n, "X", j.X.map(v => v.toFixed(2)).join(","), "Y", j.Y.map(v => v.toFixed(2)).join(","), "Z", j.Z.map(v => v.toFixed(2)).join(","), j.limits ? "twist " + j.limits.twist.map(v => (v * 57.3).toFixed(0)) + " swY " + j.limits.swingY.map(v => (v * 57.3).toFixed(0)) + " swZ " + j.limits.swingZ.map(v => (v * 57.3).toFixed(0)) : ""); }
+// sign check: FK with lumbar twist +10°, swingZ +10°, shoulder_R y +20: which way does the chest face / lean / arm swing?
+const base = poses.N.T.map(x => Array.isArray(x) ? x.slice() : x), k = (n) => spec.joints.findIndex(j => j.name === n), bi = (n) => spec.bodies.findIndex(b => b.name === n);
+const test = (jn, p, body, what) => { const T = base.slice(); T[k(jn)] = paramTarget(spec.joints[k(jn)], p); const S = fk(spec, [0, 1, 0], [0, 0, 0, 1], T), S0 = fk(spec, [0, 1, 0], [0, 0, 0, 1], base); const f = Q.rot(S[bi(body)].rot, [0, 0, 1]), f0 = Q.rot(S0[bi(body)].rot, [0, 0, 1]), u = Q.rot(S[bi(body)].rot, [0, 1, 0]);
+  console.log(`${jn} ${JSON.stringify(p)} → ${body}: forward ${f.map(v => v.toFixed(2)).join(",")} (was ${f0.map(v => v.toFixed(2)).join(",")}) up ${u.map(v => v.toFixed(2)).join(",")} com ${S[bi(body)].com.map(v => v.toFixed(3)).join(",")} (was ${S0[bi(body)].com.map(v => v.toFixed(3)).join(",")}) ${what}`); };
+test("lumbar", { t: 10 }, "abdomen", "twist +10"); test("lumbar", { z: 10 }, "abdomen", "swingZ +10"); test("lumbar", { y: 10 }, "abdomen", "swingY +10");
+test("shoulder_R", { y: 20 }, "upperArm_R", "shoulder_R y +20"); test("hip_R", { t: 10 }, "thigh_R", "hip twist +10"); test("ankle_R", { y: 10 }, "foot_R", "ankle y +10");

@@ -1,0 +1,9 @@
+import { walk, f3, fallT } from "./lib.mjs";
+export function runB(arg) { const g = arg.gains || { f0: [0.10, 0.12], cd: [0, 0], cv: [0.25, 0.33] };
+  const ctrl = { kind: "B", gains: g, T: arg.T ?? 0.40, lo: arg.lo || [0.05, 0.15], hi: arg.hi || [0.55, 0.45], inSwing: arg.inSwing ?? 0.4, commitMargin: arg.commit ?? 0.14 };
+  const n = arg.n ?? 20; return walk({ n, keep: !!arg.keep, seconds: 1.6 + n * 0.58, first: arg.first || "R", walk: { dsLead: true, dsFlat: false, ...(arg.inner || {}), char: { 0: { df: 0.237, dl: 0.368, T: 0.45 } }, ctrl }, human: { lateBlend: true, ...(arg.human || {}) } }); }
+export function summarize(r, n) { const tF = fallT(r), done = r.LOCO.planner.exec.done.filter(d => d.kind === "rhythmic"); return { tF, up: done.filter(d => d.td && d.td.t < tF).length, n }; }
+if (process.argv[1].endsWith("clB.mjs")) { const arg = JSON.parse(process.argv[2] || "{}"), r = runB(arg), s = summarize(r, arg.n ?? 20), log = r.LOCO.planner.rhythm.walkerLog || [], done = r.LOCO.planner.exec.done;
+  console.log(`outcome ${r.outcome} · fall ${f3(s.tF, 2)} · landed before fall ${s.up}/${s.n}`);
+  if (!arg.quiet) for (const e of log) { const d = done.find(q => q.stepIndex === e.i && q.kind === "rhythmic"), last = e.adj.length ? e.adj[e.adj.length - 1] : null;
+    console.log(`k${e.i} start df ${f3(e.u[0])} dl ${f3(e.u[1])} | last in-swing τ ${last ? f3(last.tau, 2) : "-"} df ${last ? f3(last.df) : "-"} dl ${last ? f3(last.dl) : "-"} | d ${e.info.d.map(v => f3(v)).join(",")} v ${e.info.v.map(v => f3(v)).join(",")} | achieved ${d && d.td ? (() => { const h0 = r.LOCO.planner.rhythm.wk.h0, h = [Math.sin(h0), Math.cos(h0)], rt = [h[1], -h[0]], sd = d.sw === "R" ? 1 : -1, ee = [d.td.center[0] - d.pSt[0], d.td.center[1] - d.pSt[1]]; return f3(ee[0] * h[0] + ee[1] * h[1]) + "," + f3((ee[0] * rt[0] + ee[1] * rt[1]) * sd); })() : "-"}`); } }

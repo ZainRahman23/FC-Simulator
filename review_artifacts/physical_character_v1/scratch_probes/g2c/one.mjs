@@ -1,0 +1,11 @@
+import fs from "fs"; import path from "path";
+const PC = process.argv[2], ROOT = path.resolve(PC, "../../..");
+const { buildBodySpec } = await import(PC + "/pc_body.js"); const { loadJolt } = await import(PC + "/pc_jolt.js"); const { buildPoses } = await import(PC + "/pc_control.js"); const REF = await import(PC + "/pc_ref.js");
+REF.initOfLoco(fs.readFileSync(path.join(PC, "../anim3d/of_loco.js"), "utf8"));
+const dir = path.join(ROOT, "assets/characters/outfield/gabriel"), rig = JSON.parse(fs.readFileSync(path.join(dir, "rig.json"), "utf8")), buf = fs.readFileSync(path.join(dir, "mesh.bin"));
+const ab = buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength), L = rig.mesh.layout, T = { Float32Array, Uint16Array, Uint32Array, Uint8Array };
+const mesh = {}; for (const k of ["positions", "joints", "weights", "indices"]) mesh[k] = new T[L[k].elementType](ab, L[k].byteOffset, L[k].elementCount);
+const spec = buildBodySpec(rig, mesh, { calib: "V1.1" }), J = await loadJolt(PC + "/vendor/jolt-physics.wasm-compat.js"), poses = buildPoses(spec);
+const C = await import(PC + "/pc_g2char.js"); const x = JSON.parse(process.argv[3]); const res = C.runChar(J, spec, poses, x); const f = (v, d = 3) => v == null || !Number.isFinite(v) ? "-" : (+v).toFixed(d);
+console.log(res.outcome, "fall", res.tFall, "hash", res.hash);
+for (const s of res.steps) console.log(`k${s.k} ${s.sw} start ${f(s.tStart, 2)} lift ${f(s.lift, 3)} td ${f(s.td, 3)} | ${s.char ? "CHAR " + s.char.df + "/" + s.char.dl : "planner"} | lift ξ ${s.atLift ? s.atLift.xi.map(v => f(v)).join(",") : "-"} v ${s.atLift ? s.atLift.v.slice(0, 2).map(v => f(v, 2)).join(",") : "-"} yaw ${s.atLift ? f(s.atLift.yaw, 1) : "-"} | td ξ ${s.atTd ? s.atTd.xi.map(v => f(v)).join(",") : "-"} | foothold ${s.foothold ? s.foothold.map(v => f(v)).join(",") : "-"} | ds ${f(s.ds)} | ${s.upright ? "" : "FALLEN"}`);

@@ -1,0 +1,21 @@
+import fs from "fs"; import path from "path";
+const PC = "/Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1/sandbox/visual/physchar", ROOT = path.resolve(PC, "../../..");
+const { buildBodySpec, WORKING_CALIB } = await import(PC + "/pc_body.js"); const { loadJolt } = await import(PC + "/pc_jolt.js"); const { buildPoses } = await import(PC + "/pc_control.js");
+const { initOfLoco } = await import(PC + "/pc_ref.js"); const { TESTS_G2 } = await import(PC + "/pc_gateg2.js"); const { SimSession } = await import(PC + "/tools/stepper/session.mjs");
+const dir = path.join(ROOT, "assets/characters/outfield/gabriel"), rig = JSON.parse(fs.readFileSync(path.join(dir, "rig.json"), "utf8")), buf = fs.readFileSync(path.join(dir, "mesh.bin"));
+const ab = buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength), Ly = rig.mesh.layout, TA = { Float32Array, Uint16Array, Uint32Array, Uint8Array };
+const mesh = {}; for (const k of ["positions", "joints", "weights", "indices"]) mesh[k] = new TA[Ly[k].elementType](ab, Ly[k].byteOffset, Ly[k].elementCount);
+const spec = buildBodySpec(rig, mesh, { calib: WORKING_CALIB }), J = await loadJolt(path.join(PC, "vendor/jolt-physics.wasm-compat.js")), poses = buildPoses(spec);
+initOfLoco(fs.readFileSync(path.join(PC, "../anim3d/of_loco.js"), "utf8"));
+const JD = path.resolve(ROOT, "review_artifacts/physical_character_v1/g2_walker/json"), models = Object.fromEntries([0, 0.1, 0.15, 0.2, 0.25].map(t => [t, JSON.parse(fs.readFileSync(path.join(JD, `mU1_tau${t}.json`), "utf8"))]));
+const n = 20, steps = Array.from({ length: n }, (_, i) => ({ sw: i % 2 === 0 ? "R" : "L", ...(i === 0 ? { fwdK: 0.7 } : i === 1 ? { fwdK: 0.9 } : {}) }));
+const base = TESTS_G2.G2W_A8.loco.rhythm.walk, ctrl = { ...base.ctrl, kind: "U", vd: 0.5, from: 1, ramp: { a: 0.3 }, place: "maps", uRefSim: false, lat: { rho: 0.4 }, adapt: null, reachIter: false, identFixed: true, models };
+const S = new SimSession(J, spec, "G2W_A8", { poses, seconds: 14, rhythmOver: { steps, at: 0.5, walk: { swingBase: { w: "model", learn: { rate: 0.05 }, pure: [0] }, char: { ...(base.char || {}) }, ctrl } } });
+let t0 = performance.now(); for (let i = 0; i < 3000; i++) S.tick(); const tt = (performance.now() - t0) / 3000; console.log("tick ms", tt.toFixed(3), "hz", S.hz);
+t0 = performance.now(); let sn; for (let i = 0; i < 20; i++) { if (sn) S.free(sn); sn = S.snapshot(); } console.log("snapshot ms", ((performance.now() - t0) / 20).toFixed(2));
+t0 = performance.now(); for (let i = 0; i < 20; i++) S.restore(sn); console.log("restore ms", ((performance.now() - t0) / 20).toFixed(2));
+const { deepClone } = await import(PC + "/tools/stepper/session.mjs"); t0 = performance.now(); for (let i = 0; i < 20; i++) deepClone(S.st, S.shared); console.log("deepClone ms", ((performance.now() - t0) / 20).toFixed(2));
+// size of the cloned graph
+let cnt = 0; const seen = new Set(), walk = (x) => { if (!x || typeof x !== "object" || seen.has(x) || S.shared.has(x)) return; seen.add(x); cnt++; for (const k of Object.keys(x)) walk(x[k]); }; walk(S.st); console.log("objects", cnt);
+const big = []; for (const k of Object.keys(S.st.loco)) { const s2 = new Set(); let c = 0; const w2 = (x) => { if (!x || typeof x !== "object" || s2.has(x) || S.shared.has(x)) return; s2.add(x); c++; for (const kk of Object.keys(x)) w2(x[kk]); }; w2(S.st.loco[k]); big.push([k, c]); } big.sort((a, b) => b[1] - a[1]); console.log(big.slice(0, 8));
+const P = S.st.loco.planner, big2 = []; for (const k of Object.keys(P)) { const s2 = new Set(); let c = 0; const w2 = (x) => { if (!x || typeof x !== "object" || s2.has(x) || S.shared.has(x)) return; s2.add(x); c++; for (const kk of Object.keys(x)) w2(x[kk]); }; w2(P[k]); big2.push([k, c]); } big2.sort((a, b) => b[1] - a[1]); console.log("planner", big2.slice(0, 8));

@@ -1,0 +1,2 @@
+import { body } from "./lib.mjs";
+for (const fm of ["F0", "F1", "F2", "F2h"]) { const { spec } = body(fm), b = spec.bodies.find(x => x.name === "foot_L"), P = b.planBox || b.shapes[0]; console.log(fm, "outline he", P.he.map(v => v.toFixed(3)).join(","), "pos", P.pos.map(v => v.toFixed(3)).join(","), "→ heel", (P.pos[2] - P.he[2]).toFixed(3), "tip", (P.pos[2] + P.he[2]).toFixed(3), "width", (2 * P.he[0]).toFixed(3), "| foot mass", (b.mass + (spec.bodies.find(x => x.name === "toe_L") || { mass: 0 }).mass).toFixed(3)); }

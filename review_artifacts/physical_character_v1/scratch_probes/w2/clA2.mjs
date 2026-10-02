@@ -1,0 +1,10 @@
+import fs from "fs"; import { walk, f3, fallT } from "./lib.mjs";
+const J = (p) => JSON.parse(fs.readFileSync("/Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1/review_artifacts/physical_character_v1/g2_walker/json/" + p, "utf8"));
+const arg = JSON.parse(process.argv[2] || "{}"), pre = arg.models || "model0_tau", models = {}; for (const t of [0, 0.1, 0.15, 0.2, 0.25]) models[t] = J(`${pre}${t}.json`);
+const ctrl = { kind: "A", models, nom: arg.nom || [0.34, 0.24, 0.42], rho: arg.rho ?? 0.4, sig: arg.sig || [0.05, 0.05, 0.03], lo: arg.lo, hi: arg.hi, inSwing: arg.inSwing ?? 0.25, dither: arg.dither };
+const n = arg.n ?? 20, r = walk({ n, seconds: 1.6 + n * 0.58, first: arg.first || "R", speed: arg.speed ?? 0.6, walk: { dsLead: true, dsFlat: false, char: { 0: { df: 0.237, dl: 0.368, T: 0.45 } }, ctrl }, human: { lateBlend: true, ...(arg.human || {}) } });
+const tF = fallT(r), log = r.LOCO.planner.rhythm.walkerLog || [], done = r.LOCO.planner.exec.done.filter(d => d.kind === "rhythmic"), up = done.filter(d => d.td && d.td.t < tF).length;
+console.log(`outcome ${r.outcome} · fall ${f3(tF, 2)} · landed before fall ${up}/${n}`);
+if (!arg.quiet) for (const e of log) { const d = done.find(q => q.stepIndex === e.i), last = e.adj.length ? e.adj[e.adj.length - 1] : null;
+  console.log(`k${e.i} x ${e.x.map(v => f3(v)).join(",")} → df ${f3(e.u[0])} dl ${f3(e.u[1])} T ${f3(e.u[2])} | in-swing n${e.adj.length} last τ ${last ? f3(last.tau, 2) : "-"} x ${last ? last.x.map(v => f3(v)).join(",") : "-"} → df ${last ? f3(last.df) : "-"} dl ${last ? f3(last.dl) : "-"} ${last && last.clamped.length ? "clamp " + last.clamped.join("/") : ""} | yt ${e.info.yt.map(v => f3(v)).join(",")} | achieved ${d && d.td ? (() => { const hd = r.LOCO.planner.rhythm.wk.h0, h = [Math.sin(hd), Math.cos(hd)], rt = [h[1], -h[0]], sd = d.sw === "R" ? 1 : -1, e = [d.td.center[0] - d.pSt[0], d.td.center[1] - d.pSt[1]]; return f3(e[0] * h[0] + e[1] * h[1]) + "," + f3((e[0] * rt[0] + e[1] * rt[1]) * sd) + " swing " + f3(d.td.t - (d.liftoff ? d.liftoff.t : d.tSw0), 2); })() : "-"} ${d && d.td ? (d.td.t < tF ? "" : "AFTER FALL") : "no td"}`); }
+export { r };

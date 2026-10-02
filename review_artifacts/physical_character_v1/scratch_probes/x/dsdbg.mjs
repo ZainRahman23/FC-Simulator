@@ -1,0 +1,10 @@
+import { J, body, G2 } from "../fg/lib.mjs"; import fs from "fs";
+const PL = await import("/Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1/sandbox/visual/physchar/pc_plan.js");
+const JDM = "/Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1/review_artifacts/physical_character_v1/g2_walker/json/";
+const models = Object.fromEntries([0, 0.1, 0.15, 0.2, 0.25].map(t => [t, JSON.parse(fs.readFileSync(JDM + "mU1_tau" + t + ".json", "utf8"))]));
+const B = { kind: "U", vd: 0.5, from: 1, ramp: { a: 0.3 }, place: "maps", uRefSim: false, lat: { rho: 0.4 }, adapt: null, reachIter: false, models };
+const o0 = PL.LocoPlanner.prototype._walkDSxi; let n = 0, nU = 0, keys = null; PL.LocoPlanner.prototype._walkDSxi = function (o, r) { n++; if (!keys) keys = { fwdDS: r.walk.fwdDS, latDS: r.walk.latDS, uni: !!this._uni, i: r.i, from: this._uni && this._uni.C.from }; const x = o0.call(this, o, r); if (r.wdsFwd) nU++; return x; };
+const { spec, poses } = body("F0"), steps = Array.from({ length: 8 }, (_, i) => ({ sw: i % 2 === 0 ? "R" : "L", ...(i === 0 ? { fwdK: 0.7 } : i === 1 ? { fwdK: 0.9 } : {}) }));
+const base = G2.TESTS_G2W.G2W_A8.loco.rhythm.walk;
+const r = G2.runG2a(J, spec, "G2W_A8", { poses, keepStates: true, seconds: 6, rhythmOver: { steps, at: 0.5, walk: { swingBase: { w: "model", learn: { rate: 0.05 }, pure: [0] }, fwdDS: "trackU", ctrl: { ...base.ctrl, ...B } } } });
+console.log("calls", n, "with wdsFwd", nU, keys, r.hash);

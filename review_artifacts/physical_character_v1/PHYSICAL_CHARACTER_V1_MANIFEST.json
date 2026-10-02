@@ -1,0 +1,234 @@
+{
+ "name": "Physical Character V1 — final research freeze",
+ "frozen": "2026-10-02",
+ "status": "FROZEN; no development in progress; nothing pushed; V2 not started",
+ "worktree": "/Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1",
+ "branch": "prototype/physical-character-v1",
+ "upstream": null,
+ "tag": "checkpoint/physchar-v1-final-research",
+ "freeze_commit": "the commit that adds this manifest — resolve: git rev-parse checkpoint/physchar-v1-final-research^{commit} (exact hash also in the snapshot README / MANIFEST.json)",
+ "freeze_commit_parent": "d133e1ac6afd57e25a1655a3131fc6ff6973a816",
+ "branch_point": {
+  "commit": "4baf37b81225dc02c6cd06d744fc311f63937fcb",
+  "remote_ref": "fc-simulator/touchline-current"
+ },
+ "commit_range": "4baf37b81225dc02c6cd06d744fc311f63937fcb..checkpoint/physchar-v1-final-research",
+ "local_only_commits": "all of commit_range (49 incl. the freeze commit)",
+ "other_local_tags": {
+  "checkpoint/physchar-pre-crossover": "b0a84d2ffe42ba22357e93e84db522f00f4bb059"
+ },
+ "remote_state_checked_2026-10-02": {
+  "fc-simulator": [
+   "claude/coach-mvp 9addd85",
+   "main ff3a89f",
+   "touchline-current 4baf37b",
+   "visual-integration-v1 cad400a"
+  ],
+  "origin": [
+   "checkpoint0 2a5ebfc",
+   "main a0cd26d"
+  ],
+  "physchar_branch_or_tags_on_remote": false
+ },
+ "documents": {
+  "final_handoff": "review_artifacts/physical_character_v1/PHYSICAL_CHARACTER_V1_FINAL_HANDOFF.md",
+  "lessons": "review_artifacts/physical_character_v1/PHYSICAL_CHARACTER_V1_LESSONS.md",
+  "chronological_handoff": "review_artifacts/physical_character_v1/HANDOFF_2026-09-30_REBOOT.md",
+  "sources": "review_artifacts/physical_character_v1/sources/",
+  "scratch_probes": "review_artifacts/physical_character_v1/scratch_probes/",
+  "reports": [
+   "review_artifacts/physical_character_v1/SUBSTRATE_DECISION.md",
+   "review_artifacts/physical_character_v1/LOCOMOTION_ARCHITECTURE_FINAL.md",
+   "review_artifacts/physical_character_v1/OVERNIGHT_2026-09-30_REPORT.md",
+   "review_artifacts/physical_character_v1/v1_1/PROMOTION.md",
+   "review_artifacts/physical_character_v1/v1_1/ANATOMY_V1_1_REPORT.md",
+   "review_artifacts/physical_character_v1/d6_diagnostic/D6_DIAGNOSTIC_REPORT.md",
+   "review_artifacts/physical_character_v1/g1a/G1A_REPORT.md",
+   "review_artifacts/physical_character_v1/g1b/G1B_REPORT.md",
+   "review_artifacts/physical_character_v1/g2a/G2A_REPORT.md",
+   "review_artifacts/physical_character_v1/g2_char/G2_PLANT_REPORT.md",
+   "review_artifacts/physical_character_v1/g2_walker/G2B_WALKER_REVIEW.md",
+   "review_artifacts/physical_character_v1/foot_gate/FOOT_GATE_REVIEW.md",
+   "review_artifacts/physical_character_v1/g2_speed/G2_SPEED_SWING_REVIEW.md",
+   "review_artifacts/physical_character_v1/g2_unified/G2B_UNIFIED_REVIEW.md",
+   "review_artifacts/physical_character_v1/g2_overnight/G2B_OVERNIGHT_REVIEW.md",
+   "review_artifacts/physical_character_v1/g2_stepper/G2_STEPPER_REVIEW.md",
+   "review_artifacts/physical_character_v1/g2_stepper/DECISION_RECORD.md",
+   "review_artifacts/physical_character_v1/g2_stepper/RENDER_SKELETON_CONTRACT.md"
+  ]
+ },
+ "viewers": [
+  "review_artifacts/physical_character_v1/g2_stepper/viewer/index.html",
+  "review_artifacts/physical_character_v1/g2_overnight/viewer/index.html",
+  "review_artifacts/physical_character_v1/g2_unified/viewer/index.html",
+  "review_artifacts/physical_character_v1/g2_speed/viewer/index.html",
+  "review_artifacts/physical_character_v1/foot_gate/viewer/index.html",
+  "review_artifacts/physical_character_v1/index.html",
+  "sandbox/visual/physchar/index.html"
+ ],
+ "review_server": {
+  "command": "python3 -m http.server 8171 --bind 127.0.0.1",
+  "cwd": "worktree root",
+  "example_url": "http://127.0.0.1:8171/review_artifacts/physical_character_v1/g2_stepper/viewer/index.html"
+ },
+ "baselines": {
+  "sandbox/visual/physchar/results/gatea_final_240x1.json": "78fb4928d2afbf951d3b3f30beede31e099c525ae66bf91be2c4ca23cf830567",
+  "sandbox/visual/physchar/results/gateb_final_240x1.json": "15bd407330058a9c29ced594e5ee4272b1910cf08cad7f0ff578f9215625d4cf",
+  "sandbox/visual/physchar/results/gatec1_final_240x1.json": "e1c7fab8fd44022afdd667fe0153512e64200e72b4f57cd5c8308d0547dffa1e",
+  "sandbox/visual/physchar/results/gatec2_final_240x1.json": "fd85b47ce23cff688ee7417552a030d8508d8cae8f4ad7860711ca66aae6d7e2",
+  "review_artifacts/physical_character_v1/v1_1/json/promotion/gatea_V1.1.json": "a21993b7e758fdefc8722d8ef995b2cd4b046a9ef2eec1a9374291f377d32d20",
+  "review_artifacts/physical_character_v1/v1_1/json/promotion/gateb_V1.1_all.json": "262ae50177dc2d49aeb46aab4a5e14212e8fa91d017871f4216ebf8351afa3f3",
+  "review_artifacts/physical_character_v1/v1_1/json/promotion/gatec1_V1.1_all.json": "6876eeeafd4ea2fae393e1d1856076eb2c3fc405aacf9a929b1319b0c1c08090",
+  "review_artifacts/physical_character_v1/v1_1/json/promotion/gatec2_V1.1_working.json": "3daf55bef1b05d043ecc309b16d2b00239c610cc98a5d11351aac32dcc7f8d02",
+  "review_artifacts/physical_character_v1/gate_c3/json/gatec3_V1.1_x3.json": "30061758dd8a6542b778c2b7ad507c6d8423f2510ef89da9e69ac06a765ba897",
+  "sandbox/visual/physchar/results/v1_1/gated_V1.1.json": "578f7141d1b1b352ba9ead55e92d28e9ebffd9a87163e3a6f3ba5de56bb9ad7d",
+  "sandbox/visual/physchar/results/v1_1/gated_V1.1_post_mu_fix.json": "5d9d7ff162aaa180a238832540665f8cc1390cbfc1e06d5f1dd2345c3c0c083e",
+  "sandbox/visual/physchar/results/v1_1/g1_V1.1.json": "ecd4559b0204ac3c2672618732e6a5604a9d23c5edc49f04b4336d20598056af",
+  "sandbox/visual/physchar/results/v1_1/g2a_V1.1.json": "28da19df4267c746db8c4ca74249c1c234825ac4df0c46a1a175f3def6250c3a",
+  "review_artifacts/physical_character_v1/foot_gate/json/steps_F0_slow.json": "0334c20ae70ee7f56132c3b886a75ad5be25dc035c508c66da3ada8e512f53b9",
+  "review_artifacts/physical_character_v1/foot_gate/json/steps_F2h_slow.json": "695537437db110b05b73aa5e75c4802b05043cc6702d2055fa282f295e16459f"
+ },
+ "regression": {
+  "run": "2026-10-02 16:23-16:26 BST on d133e1a (code identical to the freeze commit)",
+  "regress_sh": "12/12 identical (A5/B20/C1 59/C2 13 on V1; A5/B20/C1 59/C2 14 on V1.1; C3 29; D 7; G1 26; G2a 10)",
+  "G2W_A8": {
+   "result": "6/6 identical",
+   "hashes": [
+    "5780483c",
+    "17d27b5d",
+    "5082d76a",
+    "47427dbb",
+    "1f5445fd",
+    "b373d22e"
+   ],
+   "command": "node tools/g2walk_eval.js --test G2W_A8 --n 30 --out <f>"
+  },
+  "foot_gate": {
+   "F0_slow": "42/42",
+   "F2h_slow": "42/42",
+   "command": "node tools/footgate_steps.js --foot F0|F2h --protocol slow --out <f>"
+  },
+  "stepper_session_check": "16/16 PASS (node tools/stepper/session_check.mjs)",
+  "commands_cwd": "sandbox/visual/physchar",
+  "regress_command": "tools/review/regress.sh [outdir]"
+ },
+ "opt_in_flags": {
+  "body": [
+   "calib V1|V1.1 (WORKING_CALIB V1.1)",
+   "footModel F1|F2|F2h (default F0)"
+  ],
+  "standing": [
+   "ctrlExtra.reactiveArms (C4)",
+   "ctrlExtra.protective (C5)",
+   "step.maxSteps/nStep/h0/heelUp (C3)",
+   "sensor externalSupport",
+   "Gate D opts.world/opts.coll/ctrlExtraA"
+  ],
+  "walking": [
+   "rhythm.walk (G2b)",
+   "walk.ctrl.kind 'A'|'B'|'U'",
+   "walk.ctrl.stepper {model,horizon,beam,center,pMax,V,tol}",
+   "walk.ctrl.speedP {k,max}",
+   "walk.ctrl.speedI {gain,max,tau}",
+   "walk.swingBase {w:'model',learn,pure}",
+   "human.over.swingGen 'x'|'v2'",
+   "human.descentGate",
+   "walk.dcmRef",
+   "walk.vReg",
+   "ctrl.ankle2",
+   "ctrl.reach",
+   "ctrl.inSwingT",
+   "walk.swingLead",
+   "ctrl.late",
+   "ctrl.preview",
+   "ctrl.Lref",
+   "walk.rocker",
+   "walk.ssHeelRise",
+   "walk.dsExtEnd",
+   "walk.ctrl.lqr",
+   "walk.ctrl.lateExtend"
+  ],
+  "characterisation": [
+   "rhythm.walk.char {k:{df,dl,T}}",
+   "walk.ctrl.identFixed",
+   "walk.ctrl.dither / ytDither",
+   "pushChar",
+   "runG1a opts.stopWhen"
+  ]
+ },
+ "best_walking_configuration": {
+  "test": "G2W_A8",
+  "ctrl": {
+   "kind": "U",
+   "vd": 0.5,
+   "from": 1,
+   "ramp": {
+    "a": 0.3
+   },
+   "place": "maps",
+   "uRefSim": false,
+   "lat": {
+    "rho": 0.4
+   },
+   "adapt": null,
+   "reachIter": false,
+   "models": "mU1_tau*"
+  },
+  "walk": {
+   "swingBase": {
+    "w": "model",
+    "learn": {
+     "rate": 0.05
+    },
+    "pure": [
+     0
+    ]
+   }
+  },
+  "upright_steps_6_starts": [
+   9,
+   6,
+   40,
+   11,
+   11,
+   11
+  ]
+ },
+ "snapshot": {
+  "path": "/Users/zainrahman/Downloads/FC Simulator worktrees/_preserved_2026-10-02_physical_character_v1_final/",
+  "archives_sha256": {
+   "untracked_evidence.tgz": "c52be3098460143611d1b26fd39a04116150fdef1f371c01d59ccd21fcf71368",
+   "untracked_evidence.filelist.txt": "723ccad4b7585a1154ea263a999051f567e5a821615c87fc343b84664b9763ce",
+   "untracked_evidence.sha256": "50afd5e718168d519d6e35881b1475bf848f032a93cda58515b1a19508655abd",
+   "volatile_scratch.tgz": "e35f7346902fb479b7dd5f4843219224eefc2247ac01699bd0d8be053a1a8ec2",
+   "volatile_scratch.filelist.txt": "86928dafda4a88d6d1237c83b525767f8e7d782a04b8d6e1355d44c16d8429da",
+   "volatile_scratch.sha256": "6b2ca350e392f76bdcc1e32be20446d0c4c1368fc84c16182a602af175053f4b",
+   "session_transcripts/6a70b682-ea7e-4ecb-991b-1bb65e5cd9c4_2026-09-27_to_09-30.jsonl.gz": "4cd387841696f45bc7d6bb114495814d7ae05ab77822de2c1fdd41607752c025",
+   "session_transcripts/d4761610-c35f-4019-9308-cb83973e7b76_2026-09-30_to_10-02.jsonl.gz": "332594c67353fdd92f5430b9d7dad4faa7c2a61f0d68cb853107d10b72dd49cb"
+  },
+  "bundles": "physical-character-v1_full.bundle (self-contained) and physical-character-v1_since_4baf37b.bundle — sha256 in the snapshot SHA256SUMS (created after the freeze commit)",
+  "earlier_snapshots": [
+   "_preserved_2026-09-29_physical_character_gate_a",
+   "_preserved_2026-09-29_physical_character_gate_b",
+   "_preserved_2026-09-29_physical_character_gate_c1",
+   "_preserved_2026-09-30_physical_character_gate_c2",
+   "_preserved_2026-09-30_physical_character_v1_1",
+   "_preserved_2026-09-30_physical_character_overnight"
+  ],
+  "earlier_snapshots_verified_2026-10-02": "90/90 recorded file sha256 + overnight 3/3 + bundle verify OK"
+ },
+ "untracked_or_volatile": {
+  "worktree_untracked_evidence": "510 files (~950 MB: review stills/sheets, logs, identification JSONs) under review_artifacts/physical_character_v1/ — intentionally outside Git; archived in snapshot untracked_evidence.tgz (+ per-file sha256)",
+  "session_scratch": "/private/tmp/claude-501/-Users-zainrahman-Downloads-FC-Simulator-worktrees-physical-character-v1/d4761610-…/ — VOLATILE; archived in snapshot volatile_scratch.tgz (chrome_prof + pptr/node_modules excluded, regenerable); probe scripts also committed in scratch_probes/",
+  "session_transcripts": "~/.claude/projects/…/6a70b682-….jsonl and …/d4761610-….jsonl — copies (gzip) in snapshot session_transcripts/",
+  "claude_memory": "~/.claude/projects/-Users-zainrahman-Downloads-FC-Simulator/memory/ — copy in snapshot claude_memory/"
+ },
+ "environment": {
+  "os": "macOS 15.7 arm64",
+  "node": "v22.19.0",
+  "python": "3.12.4",
+  "jolt": "vendored sandbox/visual/physchar/vendor/jolt-physics.wasm-compat.js",
+  "assets": "assets/characters/outfield/gabriel/{rig.json,mesh.bin} (tracked)"
+ },
+ "next_decision": "the user's: A transition-planned walking (recommended hypothesis, not implemented/approved) | B better planner on today's action space | C stance redesign (weak). Do not start V2 or further walking work without the user."
+}

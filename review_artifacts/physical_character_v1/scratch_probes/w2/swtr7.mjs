@@ -1,0 +1,11 @@
+import fs from "fs"; import { walk, f3, W, spec, M, bi, fallT } from "./lib.mjs";
+const { Q, V } = M; const J = (p) => JSON.parse(fs.readFileSync("/Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1/review_artifacts/physical_character_v1/g2_walker/json/" + p, "utf8"));
+const models = {}; for (const t of [0, 0.1, 0.15, 0.2, 0.25]) models[t] = J(`m7a_tau${t}.json`); const box = spec.bodies[bi("foot_R")].shapes[0];
+const ctrl = { kind: "A", models, nom: [0.22, 0.28, 0.40], rho: 0.4, sig: [0.05, 0.05, 0.03], lo: [0.10, 0.17, 0.36], hi: [0.30, 0.40, 0.48], inSwing: 0.3, commitMargin: 0.12, adapt: { gain: 0.3, max: 0.06 } };
+const r = walk({ n: 30, keep: true, first: "R", rhythm: { at: 0.5 }, seconds: 7, walk: { dsLead: true, dsFlat: false, dsExtEnd: 0.96, reachExt: 0.96, char: { 0: { df: 0.24, dl: 0.351, T: 0.448 } }, ctrl }, human: { lateBlend: true, clrActual: true, clrActualUntil: [0.5, 0.2] } });
+const K = +(process.argv[2] || 7), d = r.LOCO.planner.exec.done.find(x => x.kind === "rhythmic" && x.stepIndex === K), s = d.sw, st = s === "R" ? "L" : "R", fb = bi("foot_" + s), tb = bi("thigh_" + s);
+console.log("step", K, s, "status", d.status, "tSw0", f3(d.tSw0), "lift", d.liftoff && f3(d.liftoff.t), "td", d.td && f3(d.td.t), "T", f3(d.T, 3), "uAt", d.td && f3(d.td.uAt, 2));
+for (const q of r.recs.filter(q => q.t >= d.tSw0 - 0.05 && q.t <= d.tSw0 + 0.35 && Math.round(q.t * 240) % 4 === 0)) { const S = q.states, F = q.feet[s];
+  const pts = []; for (const sx of [-1, 1]) for (const sz of [-1, 1]) pts.push(V.add(S[fb].pos, Q.rot(S[fb].rot, [box.pos[0] + sx * box.he[0], box.pos[1] - box.he[1], box.pos[2] + sz * box.he[2]])));
+  const toe = Math.min(pts[1][1], pts[3][1]), heel = Math.min(pts[0][1], pts[2][1]), th = S[tb].pos, an = S[fb].pos, ext = Math.hypot(th[0] - an[0], th[1] - an[1], th[2] - an[2]) / 0.924, tg = q.swingTgt;
+  console.log(`t ${f3(q.t, 3)} ${q.rhythm.stage}/${q.exec ? q.exec.stage + " u" + f3(q.exec.u, 2) : "-"} swing foot load ${f3(F.load / W, 2)} heel ${f3(heel * 100, 1)} toe ${f3(toe * 100, 1)} | ext ${f3(ext, 3)} | tgt y ${tg && tg.pos ? f3(tg.pos[1] * 100, 1) : "-"} | stance load ${f3(q.feet[st].load / W, 2)} | vF ${f3(q.vcom[0], 2)},${f3(q.vcom[2], 2)} pelvis y ${f3(S[0].pos[1], 3)}`); }

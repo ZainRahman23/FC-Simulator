@@ -1,0 +1,12 @@
+// the landing overshoot, decomposed at touchdown: commanded swing-foot origin (generator) vs the final landing pose's origin vs the actual foot
+// origin; plus the sole centre (what "achieved" measures) vs the foot origin projection, all forward along the heading
+import { J, body, G2, M } from "../fg/lib.mjs"; const { Q, V } = M;
+const first = process.argv[2] || "R", at = +(process.argv[3] || 0.6), { spec, poses } = body("F0"), bi = (n) => spec.bodies.findIndex(b => b.name === n);
+const steps = Array.from({ length: 30 }, (_, i) => ({ sw: (i % 2 === 0) === (first === "R") ? "R" : "L", ...(i === 0 ? { fwdK: 0.7 } : i === 1 ? { fwdK: 0.9 } : {}) }));
+let LOCO = null; const T = []; const r = G2.runG2a(J, spec, "G2W_A8", { poses, keepStates: true, seconds: 1.6 + 30 * 0.58, rhythmOver: { steps, at }, onLoco: (l) => { LOCO = l; const f = l.planner.exec.refSwing; l.planner.exec.refSwing = (R, t, o, nv) => { const out = f(R, t, o, nv); if (!nv) T.push({ t, k: R.stepIndex, pos: out.pos, reach: out.reach, u: out.u, rho: out.rho }); return out; }; } });
+const P = LOCO.planner, h0 = P.rhythm.wk.h0, hd = [Math.sin(h0), Math.cos(h0)], fw = (p, ps) => (p[0] - ps[0]) * hd[0] + (p[2] - ps[1]) * hd[1], tF = (r.recs.find(q => q.com[1] < 0.75) || { t: 1e9 }).t;
+console.log(first, at, r.hash, "| per step (forward, cm, relative to the final landing target's ANKLE point): commanded at td | actual ankle at td | sole centre − ankle | pitch at td | u at td");
+for (const d of P.exec.done.filter(d => d.kind === "rhythmic")) { if (!d.td || d.td.t > tF) continue; const q = r.recs.find(q2 => q2.t >= d.td.t - 1e-9), c = T.filter(e => e.k === d.stepIndex && e.t <= d.td.t + 1e-9).pop(); if (!q || !c) continue;
+  const fb = bi("foot_" + d.sw), S = q.states[fb], land = c.reach, ps = [land[0], land[2]], fz = Q.rot(S.rot, [0, 0, 1]), pit = Math.atan2(fz[1], Math.hypot(fz[0], fz[2])) * 57.3;
+  const tgtC = d.proj.target, ach = d.td.center;
+  console.log(`k${String(d.stepIndex).padStart(2)} ${d.sw} | cmd ${(fw(c.pos, ps) * 100).toFixed(1).padStart(5)} | act ${(fw(S.pos, ps) * 100).toFixed(1).padStart(5)} | centre: target ${((tgtC[0] - land[0]) * hd[0] * 100 + (tgtC[1] - land[2]) * hd[1] * 100).toFixed(1).padStart(5)} achieved ${((ach[0] - land[0]) * hd[0] * 100 + (ach[1] - land[2]) * hd[1] * 100).toFixed(1).padStart(5)} | pitch ${pit.toFixed(0).padStart(4)}° | u ${d.td.uAt.toFixed(2)} | air ${(d.td.t - d.liftoff.t).toFixed(2)}`); }
