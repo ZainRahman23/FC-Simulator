@@ -633,10 +633,13 @@ export class LocoPlanner {
       if (q.ytF == null) q.ytF = xsF + rhoF * (x[0] - xsF); if (q.out) q.out.ytF = q.ytF;
       // (timing: chosen at the step's start within [Tmin, Tmax]; in the swing the timing is held, as Controller A's in-swing re-decision does)
       const atStart = q.liftT == null && tau < 0.02, lo = [best.lo != null ? best.lo : C.dfMin, wLo, C.TinSwing || q.Tfree ? Math.min(C.Tmax, Math.max(C.Tmin, tau + C.remMin)) : C.Tmin], hi = [best.hi != null ? best.hi : C.dfMax, wHi, C.Tmax];
+      // ((overnight, opt-in C.Lref m) the GAIT the joint solve settles on: with two targets and three inputs the map solve has one free direction,
+      //  resolved by the pull toward the reference step uRef — the orbit's v·(T + Tds) ≈ 0.26 m by default. The oracle placement search (the
+      //  simulator as a perfect model, depth-2 lookahead) held this body for 28 steps with ≈ 0.40 m commanded steps; Lref sets that reference)
       // ((overnight, the late correction) bounds = what the swing can still deliver (q.bnd, from the measured execution model) within the static limits
       //  — the in-swing reach estimate above is not used for it (it moved by up to ±20 cm tick to tick in the walks))
       if (q.bnd) for (let i = 0; i < 2; i++) { const s0 = i === 0 ? [C.dfMin, C.dfMax] : [wLo, wHi]; lo[i] = Math.max(s0[0], q.bnd.lo[i]); hi[i] = Math.min(s0[1], q.bnd.hi[i]); if (lo[i] > hi[i]) lo[i] = hi[i] = Math.max(s0[0], Math.min(s0[1], (q.bnd.lo[i] + q.bnd.hi[i]) / 2)); }
-      const uRef = q.uRef ? [Math.max(lo[0], Math.min(hi[0], q.uRef[0])), Math.max(lo[1], Math.min(hi[1], q.uRef[1])), Math.max(lo[2], Math.min(hi[2], q.Tcur))] : [Math.max(lo[0], Math.min(hi[0], C.uRefSim === false ? orbN.L : best.uStar)), Math.max(wLo, Math.min(wHi, q.dl0)), Math.max(lo[2], Math.min(hi[2], q.Tcur))];
+      const uRef = q.uRef ? [Math.max(lo[0], Math.min(hi[0], q.uRef[0])), Math.max(lo[1], Math.min(hi[1], q.uRef[1])), Math.max(lo[2], Math.min(hi[2], q.Tcur))] : [Math.max(lo[0], Math.min(hi[0], C.Lref != null ? C.Lref : C.uRefSim === false ? orbN.L : best.uStar)), Math.max(wLo, Math.min(wHi, q.dl0)), Math.max(lo[2], Math.min(hi[2], q.Tcur))];
       const fixT = (C.Tadapt === false && !q.Tfree) || (!atStart && !C.TinSwing && !q.Tfree), PV = C.preview, M1 = PV ? (C.models[0] || modelAt(C, 0)) : null;
       // ((overnight, opt-in C.preview = { q1, q2, r, T: [lo, hi] }) the two-step preview solve (pc_walker solvePreview): the next step's start toward the
       //  orbit's partial target, the step after toward the orbit itself, both steps' inputs bounded (the next step's timing within the maps' data range))

@@ -168,6 +168,25 @@ After the reboot the preserved state was verified, the user reviewed the overnig
 - **Review:** `g2_unified/G2B_UNIFIED_REVIEW.md` + `viewer/`; trail in `UNIFIED_LOG.md`.
 - **Next: the user's decision:** approve the swing-executor redesign (torque-feasible, re-plannable from the actual state, arrival-gated, reports its reachable set), then late-decision placement. **No G2c–e / running; F2h waits.**
 
+**G2b OVERNIGHT runway (2026-10-02, phases 1–10 brief): STOPPED with a decision report. Local commits only: `996dd7b`, `37a0849` and the final one.**
+- **Read first:** `g2_overnight/G2B_OVERNIGHT_REVIEW.md`; viewer `g2_overnight/viewer/index.html` (:8171); figure `g2_overnight/stance_mechanism.png`; trail `g2_overnight/OVERNIGHT_LOG.md`.
+- **Phase 1–2: swing executor X** (`pc_swingx.js`, opt-in `human.over.swingGen "x"`) — built and bench-measured, NOT adopted:
+  - step maps under X are 2× less predictable;
+  - the inherited swing (with the pelvis-rate internal model) executes late foothold changes with gain ≈ 0.65 / 0.57 / 0.50 and timing changes fully.
+  - This corrects the unified review's premise.
+- **Phase 3–4:** no robust walk; typical 6–11 steps on every variant.
+  - Tried: late correction via the inverse execution model; timing bounds; wide-dither maps; stance gain; funnel; rocker; flatter landing; two-step preview; heel rise.
+- **Phase 5:** no stable speed range.
+- **Mechanism:** the body gains speed over every single support. After heel strike the CoP stays at the heel, behind the COM, for 0.2–0.3 s; braking happens only at touchdown and in double support.
+- **Oracle** (the simulator as a perfect model, step-start placement, DIAGNOSTIC):
+  - myopic: 17.0 mean upright steps (13–19), ending in the same speed creep;
+  - depth-2 beam: L@0.5 and L@0.6 all 28 searched steps, R@0.5 26 (~0.40 m steps, 0.52 m/s at the step starts).
+  - So the plant is controllable by lookahead placement; the controllers' linear prediction (4–6 cm) is the gap.
+- **Opt-in tonight:** `ctrl.late`, `ctrl.preview`, `ctrl.Lref`, `walk.rocker`, swing X (`swingGen "x"`). None adopted.
+- **Gates:** `regress.sh` 12/12; G2W_A8 hashes; foot gate F0 / F2h 42/42 identical (re-verified after the last code change).
+- **Phases 6–9 not started** (preconditions not met).
+- **Next: the user's decision:** A, gait mechanics (stance braking from touchdown + modulated push-off + longer steps; recommended), or B, a lookahead decision layer with a nonlinear predictive model. See the review.
+
 ## Where
 
 - **Worktree:** `/Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v1`

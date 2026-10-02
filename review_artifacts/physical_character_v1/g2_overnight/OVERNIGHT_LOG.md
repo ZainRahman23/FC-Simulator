@@ -229,3 +229,140 @@ The logs show greedy single-step solves with extreme inputs (T at its bounds, a 
 
 - 0.60 and 0.70 gave the same upright counts per start. Checked: the runs differ (L@0.55: hash 1dff2b2a vs e83d9c2e, falls at 6.41 vs 6.89 s). vd is not clipped; the counts coincide.
 - **No stable range:** outcomes change chaotically with the requested speed. The sustained runs (36–40 steps) are isolated starts. The controller has no robust basin at any speed.
+
+## P4-4. The oracle bound: what can ANY step-placement decision achieve with this inner loop, swing and body? (`analysis/oracle.mjs`, DIAGNOSTIC)
+
+**Method:**
+- At every step k, the deterministic simulator itself is the model:
+  - steps 0..k−1 are fixed (commanded, as chosen);
+  - each candidate command for step k is replayed from scratch;
+  - it is scored by the measured state at the start of step k+1: forward / sideways capture-point offset vs the orbit and forward speed.
+- The best candidate is committed.
+- The stance inner loop is unchanged; commanded steps have no in-swing re-decision.
+
+**Narrow grid** (the controller's foothold ±6 cm, T 0.36 / 0.40 / 0.44, width ±4 cm):
+- It chose the +6 cm edge at almost every step: the controller's step-start decisions are short.
+- Drifting (R@0.5 speed 0.66 m/s by step 7). Stopped and replaced by the wide grid.
+
+**Wide grid** (steps 0.10–0.46 m × T 0.34 / 0.40 / 0.46, then width ±6 cm):
+
+| start | R@0.5 | R@0.55 | R@0.6 | L@0.5 | L@0.55 | L@0.6 | mean |
+|---|---|---|---|---|---|---|---|
+| upright steps | 17 | 19 | 18 | 13 | 18 | 17 | **17.0** |
+
+The controller's typical starts walk 6–11 steps.
+
+Every oracle run ends the same way:
+- forward speed creeps up (0.45 → 0.65–1.0 m/s) while the chosen step sits at the grid maximum (0.46 m);
+- then sideways divergence;
+- then a state from which no candidate survives the next step.
+
+**Speed-weighted** (L@0.5; speed error weight ×6, steps up to 0.52 m): 13 steps. Its last choices show the trap:
+- a state that looked good by capture point and speed (ξ −0.05 m, 0.52 m/s) after a 0.46 m step had no viable continuation;
+- every next command ended ≥ 0.3 m off the orbit.
+
+Viability depends on more than the step-to-step state (e.g. how far back the long step leaves the trailing leg).
+
+**Reading:** better step-start placement is worth ≈ +7–10 steps over the controller, but a myopic perfect-model placement within reach does not hold this body. The speed creep is not stopped by placement alone.
+
+**Next:** a depth-2 beam (the 3 best first choices, each followed by a search of the next step) — the bound for placement WITH lookahead.
+
+## P4-5. Terminal-stance heel rise (gait geometry, `walk.ssHeelRise { e0 0.95, eMax 0.99, H 0.08 }`)
+
+- Identification survival 2267 upright steps vs 2860 without it (same seed 83, same dither): worse.
+- Heel rise alone, without a matching push-off and gait retiming, does not give the trailing leg useful authority.
+- **Not adopted.**
+
+**The same stance analysis on the oracle's walks** (`brake_or.mjs`):
+
+| steps starting | n | speed at the step start → touchdown | CoP − COM at liftoff |
+|---|---|---|---|
+| on the orbit | 61 | 0.49 → 0.56 m/s | −1.0 cm |
+| ahead of it | 19 | 0.78 → 1.00 m/s | −0.4 cm |
+
+The single support accelerates the body in the oracle's walks too: longer steps do not create a stance braking phase.
+
+## P4-6. Double-support length and the pre-swing push (proxy tests)
+
+**Longer double support** (`dsExtEnd` 0.99 instead of 0.96: the double support ends at 99 % trailing-leg extension):
+- Identification survival 2802 vs 2860 (same seed / dither): no improvement.
+- **Not adopted.**
+
+**The pre-swing push** (`stance_mechanism.png`): on the steady orbit the COM speed drops in the double support (heel-strike braking, 0.50 → 0.40 m/s), then rises ≈ +0.14 m/s within ≈ 50 ms around the step start / liftoff. The swing initiation pushes the body forward, and nothing modulates that push with the speed error.
+
+**Is the swing's lift an actuator for it?** Six starts, per step:
+
+| lift height | Δv, step start → liftoff (on-orbit steps) | upright steps in total |
+|---|---|---|
+| 0.20 m (default) | +0.019 m/s | 56 |
+| 0.14 m | −0.003 m/s | 22 |
+| 0.26 m | −0.023 m/s (−0.25 m/s liftoff → touchdown) | 24 |
+
+- The lift changes the whole stance dynamics. It is not a clean push-off actuator.
+- **Open lead:** a push-off modulated by the speed error (human gait's main speed actuator; Kuo 2002) would need a deliberate trailing-ankle mechanism. Not started.
+
+## P4-7. Would a richer step-to-step state help a decision layer? (quick offline check — INCONCLUSIVE)
+
+- Data: i1 + i6 identification, 2709 steps; 5-fold CV by run. The quick fit does not reproduce fit_maps' filtering and mirroring (base error 8.4 / 10.7 cm vs its 4.5 cm).
+- Within that fit:
+  - adding COM, velocity, angular momentum, yaw, the previous step and segment momenta: forward 8.39 → 7.88 cm, sideways unchanged;
+  - adding quadratic terms: 7.31 / 9.53 cm.
+- Only a 6–13 % reduction. Not used as evidence. A proper version would extend fit_maps itself.
+
+## P4-8. Maps covering the oracle's regime (w8: foothold dither σ 0.08 m, timing σ 0.06 s; pooled with i1 + i6 → mU8)
+
+- Identification survival 2756. mU8 forward CV error 4.6 → 3.8–4.0 cm (similar to the others).
+
+| controller with mU8 | mean upright |
+|---|---|
+| plain | 4.5 [4, 5, 5, 7, 3, 3] |
+| + two-step preview, timing [0.34, 0.46] | 4.3 |
+| same, dfMax 0.52 | 4.3 |
+
+**The more data the linear map is fitted on, the worse the controller walks:**
+
+| maps | data | mean upright |
+|---|---|---|
+| mU1 | i1 | 14.7 |
+| mU7 | i1 + i6 | 8.5 |
+| mU8 | i1 + i6 + w8 | 4.5 |
+
+A LINEAR step map trades local accuracy near the orbit for coverage, and the controller needs both. A lookahead decision layer would need a genuinely nonlinear (local or learned) predictive model, not more data in the same form.
+
+## P4-9. The depth-2 beam oracle — placement WITH lookahead and a perfect model (`analysis/oracle.mjs` → oracle2 variant, BEAM=3)
+
+**Method:**
+- The 3 best first choices (by next-start state) are each followed by a search of the next step (foothold 0.10–0.50 m × T 0.34 / 0.40 / 0.46).
+- The first choice with the best two-step outcome is committed.
+- Speed weight σ 0.06 m/s; steps up to 0.52 m; search horizon 28 steps.
+
+| start | controller | myopic oracle | **beam oracle** |
+|---|---|---|---|
+| L@0.5 | 6 | 13 | **all 28 committed (32 upright in the replay)** |
+| L@0.6 | 40 | 17 | **all 28 committed (34 upright)** |
+| R@0.5 | 9 | 17 | **26 committed; no viable candidate at step 28 (28 upright)** |
+
+- The replay's last steps after the search horizon are the controller's own; it falls within a few steps.
+- **Its gait:** commanded steps 0.40 ± 0.11 m, single support 0.40 ± 0.04 s, speed at the step start 0.52 ± 0.06 m/s (myopic: 0.35 m, 0.55 ± 0.13 m/s). Double supports alternate and are often longer (0.04–0.26 s vs a steady ≈ 0.10 s).
+
+**Conclusion:**
+- This plant (today's inner loop, swing and body) IS controllable by step-start placement for at least 26–28 steps, when the placement looks two steps ahead with an accurate model and uses longer steps.
+- The gap is the decision layer's prediction and its gait choice.
+
+## P4-10. Moving the decision layer toward the oracle's gait (opt-in `ctrl.Lref`, the reference step of the joint solve)
+
+The maps solve has one free direction (3 inputs, 2 targets), resolved by the pull toward uRef = the orbit's v·(T + Tds) ≈ 0.26 m. That pins the controller to the short-step gait.
+
+| variant | mean upright |
+|---|---|
+| Lref 0.34 / 0.40 (mU1) | 9.3 / 9.2 |
+| Lref 0.40 + preview | 4.2 |
+| **re-identified: the maps-mode controller's own closed loop with Lref 0.40 + dither (l40)** | identification survival **2999** (best of the night) |
+| mL40 (alone), Lref 0.40 | 5.7 |
+| mL40b (+ i1), Lref 0.40 | 6.0 |
+| **mL40b, Lref 0.34** | **10.8 [14, 14, 15, 10, 6, 6]** |
+
+- mL40's forward CV error is 5.3–6.4 cm: the long-step regime is less predictable.
+- mL40b + Lref 0.34 is the best typical-start result of the night (median 12), but not robust. **Not adopted.**
+
+**Reading:** the oracle's gait is not reachable by retargeting the linear-map controller. The prediction error (4–6 cm) is the binding gap, as the beam result implies.

@@ -37,18 +37,26 @@ window.FG_MANIFEST = {
    "foot": "Collider view, side projection onto the walking direction (viewer on the character's left: left leg dark, right leg light; an outline turns green when that foot carries > 5 % BW). Traces: forward COM speed (dashed: the requested 0.5 m/s), then the focus foot's heel height, toe clearance, ankle plantar-flexion torque (dashed \u00b1150 N\u00b7m) and vertical load; \u25b2 liftoff, \u25bc touchdown. All runs are deterministic replays."
   },
   {
-   "title": "A typical failing start (R@0.5) \u2014 the best controller vs the oracle placement search",
-   "desc": "Left: the unified controller (best configuration of yesterday's review). Watch the stance foot after each heel strike: the CoP stays at the heel for 0.2\u20130.3 s while the body passes over it, so the body speeds up; once a step starts with the capture point ahead of the sole centre the steps cannot catch it (runaway). Right: the ORACLE (a diagnostic, not a controller) \u2014 every step command chosen by trying a grid of commands in the deterministic simulator itself from the identical state.",
+   "title": "A typical failing start (R@0.5) \u2014 the controller vs the oracle placement searches",
+   "desc": "Left: the unified controller (best configuration of yesterday's review). Watch the stance foot after each heel strike: the CoP stays at the heel for 0.2\u20130.3 s while the body passes over it, so the body speeds up; once a step starts with the capture point ahead of the sole centre the steps cannot catch it (runaway). Middle: the MYOPIC ORACLE (a diagnostic, not a controller) \u2014 each step command chosen by trying a grid of commands in the deterministic simulator from the identical state and keeping the best next-step state; it lasts longer, then the same speed creep. Right: the DEPTH-2 BEAM ORACLE \u2014 each step chosen by its best two-step outcome; it holds the walk for its whole 28-step search (then the controller takes over and falls).",
    "vd": 0.5,
    "cols": [
     {
      "key": "ctrl",
      "name": "Unified controller (mU1 maps, continuous in-swing re-decision)"
+    },
+    {
+     "key": "oracle",
+     "name": "ORACLE, myopic (diagnostic: the simulator as a perfect model, best next-step state)"
+    },
+    {
+     "key": "oracle2",
+     "name": "ORACLE, depth-2 beam (diagnostic: best two-step outcome)"
     }
    ],
    "win": [
     -0.3,
-    6.699999999999999
+    19.0
    ],
    "t0": -0.3,
    "runs": {
@@ -59,18 +67,42 @@ window.FG_MANIFEST = {
      "follow": true,
      "sub": "start R@0.5 \u00b7 hash db794057",
      "caption": "9 upright touchdowns \u00b7 forward speed (after the first quarter) 0.64 \u00b1 0.22 m/s \u00b7 falls at 7.22 s"
+    },
+    "oracle": {
+     "file": "oracle_R0.5.js",
+     "anchor": 1.5,
+     "side": "R",
+     "follow": true,
+     "sub": "start R@0.5 \u00b7 hash 3401b5a8",
+     "caption": "17 upright touchdowns \u00b7 forward speed (after the first quarter) 0.62 \u00b1 0.18 m/s \u00b7 falls at 10.57 s"
+    },
+    "oracle2": {
+     "file": "oracle2_R0.5.js",
+     "anchor": 1.5,
+     "side": "R",
+     "follow": true,
+     "sub": "start R@0.5 \u00b7 hash a29a743c",
+     "caption": "28 upright touchdowns \u00b7 forward speed (after the first quarter) 0.64 \u00b1 0.13 m/s \u00b7 falls at 19.52 s"
     }
    },
    "foot": "Collider view, side projection onto the walking direction (viewer on the character's left: left leg dark, right leg light; an outline turns green when that foot carries > 5 % BW). Traces: forward COM speed (dashed: the requested 0.5 m/s), then the focus foot's heel height, toe clearance, ankle plantar-flexion torque (dashed \u00b1150 N\u00b7m) and vertical load; \u25b2 liftoff, \u25bc touchdown. All runs are deterministic replays."
   },
   {
-   "title": "The sustained start (L@0.6) \u2014 the best controller vs the oracle placement search",
-   "desc": "The one start on which the controller walks all 40 steps of the test (the fall after the last step is the end of the test \u2014 stopping is not controlled). Right: the oracle from the same start.",
+   "title": "The sustained start (L@0.6) \u2014 the controller vs the oracle placement searches",
+   "desc": "The one start on which the controller walks all 40 steps of the test (the fall after the last step is the end of the test \u2014 stopping is not controlled). Middle / right: the myopic and the depth-2 beam oracle from the same start (diagnostics: the simulator as a perfect model).",
    "vd": 0.5,
    "cols": [
     {
      "key": "ctrl",
      "name": "Unified controller (mU1 maps, continuous in-swing re-decision)"
+    },
+    {
+     "key": "oracle",
+     "name": "ORACLE, myopic (diagnostic: the simulator as a perfect model, best next-step state)"
+    },
+    {
+     "key": "oracle2",
+     "name": "ORACLE, depth-2 beam (diagnostic: best two-step outcome)"
     }
    ],
    "win": [
@@ -86,6 +118,22 @@ window.FG_MANIFEST = {
      "follow": true,
      "sub": "start L@0.6 \u00b7 hash a634adce",
      "caption": "40 upright touchdowns \u00b7 forward speed (after the first quarter) 0.52 \u00b1 0.10 m/s \u00b7 falls at 23.07 s"
+    },
+    "oracle": {
+     "file": "oracle_L0.6.js",
+     "anchor": 1.6,
+     "side": "L",
+     "follow": true,
+     "sub": "start L@0.6 \u00b7 hash 98501fcb",
+     "caption": "17 upright touchdowns \u00b7 forward speed (after the first quarter) 0.60 \u00b1 0.14 m/s \u00b7 falls at 11.25 s"
+    },
+    "oracle2": {
+     "file": "oracle2_L0.6.js",
+     "anchor": 1.6,
+     "side": "L",
+     "follow": true,
+     "sub": "start L@0.6 \u00b7 hash 8a884d34",
+     "caption": "34 upright touchdowns \u00b7 forward speed (after the first quarter) 0.66 \u00b1 0.16 m/s \u00b7 falls at 20.67 s"
     }
    },
    "foot": "Collider view, side projection onto the walking direction (viewer on the character's left: left leg dark, right leg light; an outline turns green when that foot carries > 5 % BW). Traces: forward COM speed (dashed: the requested 0.5 m/s), then the focus foot's heel height, toe clearance, ankle plantar-flexion torque (dashed \u00b1150 N\u00b7m) and vertical load; \u25b2 liftoff, \u25bc touchdown. All runs are deterministic replays."
