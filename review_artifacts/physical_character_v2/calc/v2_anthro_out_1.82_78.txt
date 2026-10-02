@@ -1,0 +1,215 @@
+
+### V2 H=1.82 M=78.0 (+equipment) T-pose
+body            mass   com x   com y   com z   Ixx     Iyy     Izz   (kg m^2, about own COM, CCS axes)
+pelvis         8.803   0.000   1.016   0.000  0.0614  0.0696  0.0764
+abdomen       12.737   0.000   1.233   0.000  0.0948  0.1416  0.1502
+thorax        12.649   0.000   1.460   0.000  0.0817  0.1722  0.2032
+head           5.413   0.000   1.713   0.000  0.0346  0.0238  0.0320
+upperArm_R     2.114   0.368   1.472   0.000  0.0046  0.0133  0.0149
+forearm_R      1.739   0.683   1.472   0.000  0.0021  0.0253  0.0264
+upperArm_L     2.114  -0.368   1.472   0.000  0.0046  0.0133  0.0149
+forearm_L      1.739  -0.683   1.472   0.000  0.0021  0.0253  0.0264
+thigh_R       11.075   0.091   0.782   0.000  0.2187  0.0449  0.2187
+shank_R        3.457   0.091   0.336   0.001  0.0398  0.0070  0.0414
+foot_R         1.269   0.091   0.042   0.063  0.0067  0.0071  0.0018
+thigh_L       11.075  -0.091   0.782   0.000  0.2187  0.0449  0.2187
+shank_L        3.457  -0.091   0.336   0.001  0.0398  0.0070  0.0414
+foot_L         1.269  -0.091   0.042   0.063  0.0067  0.0071  0.0018
+
+### V1.1 (frozen) bind, arms down
+body            mass   com x   com y   com z   Ixx     Iyy     Izz   (kg m^2, about own COM, CCS axes)
+pelvis         8.713   0.000   1.058   0.000  0.0669  0.0759  0.0833
+abdomen       12.737   0.000   1.257   0.000  0.1033  0.1543  0.1637
+thorax        12.449   0.000   1.552   0.000  0.0890  0.1876  0.2215
+head           5.413   0.000   1.767   0.000  0.0377  0.0259  0.0349
+upperArm_R     2.114   0.253   1.350   0.000  0.0145  0.0050  0.0162
+forearm_R      1.739   0.258   1.048   0.000  0.0284  0.0023  0.0296
+thigh_R       11.045   0.107   0.815   0.000  0.2538  0.0521  0.2538
+shank_R        3.377   0.143   0.333   0.000  0.0472  0.0081  0.0491
+foot_R         1.069   0.162   0.045   0.077  0.0051  0.0056  0.0013
+upperArm_L     2.114  -0.253   1.350   0.000  0.0145  0.0050  0.0162
+forearm_L      1.739  -0.258   1.048   0.000  0.0284  0.0023  0.0296
+thigh_L       11.045  -0.107   0.815   0.000  0.2538  0.0521  0.2538
+shank_L        3.377  -0.143   0.333   0.000  0.0472  0.0081  0.0491
+foot_L         1.069  -0.162   0.045   0.077  0.0051  0.0056  0.0013
+
+### V2 1.90/78 arms down
+body            mass   com x   com y   com z   Ixx     Iyy     Izz   (kg m^2, about own COM, CCS axes)
+pelvis         8.803   0.000   1.060   0.000  0.0669  0.0759  0.0833
+abdomen       12.737   0.000   1.287   0.000  0.1033  0.1543  0.1637
+thorax        12.649   0.000   1.523   0.000  0.0890  0.1876  0.2215
+head           5.413   0.000   1.787   0.000  0.0377  0.0259  0.0349
+upperArm_R     2.114   0.207   1.359   0.000  0.0145  0.0050  0.0162
+forearm_R      1.739   0.207   1.031   0.000  0.0276  0.0023  0.0288
+upperArm_L     2.114  -0.207   1.359   0.000  0.0145  0.0050  0.0162
+forearm_L      1.739  -0.207   1.031   0.000  0.0276  0.0023  0.0288
+thigh_R       11.075   0.095   0.816   0.000  0.2383  0.0489  0.2383
+shank_R        3.457   0.095   0.350   0.001  0.0434  0.0076  0.0451
+foot_R         1.269   0.095   0.043   0.066  0.0073  0.0078  0.0019
+thigh_L       11.075  -0.095   0.816   0.000  0.2383  0.0489  0.2383
+shank_L        3.457  -0.095   0.350   0.001  0.0434  0.0076  0.0451
+foot_L         1.269  -0.095   0.043   0.066  0.0073  0.0078  0.0019
+
+landmarks {'closure_m': 0.0019, 'yA': 0.091, 'yK': 0.5296, 'yH': 0.9573, 'yOMPH': 1.1096, 'yXYPH': 1.3349, 'ySUPR': 1.5133, 'yCERV': 1.5861, 'yVERT': 1.84, 'ySJC': 1.4724, 'hx': 0.091, 'sx': 0.1984, 'sole': 0.02, 'footLen': 0.2785, 'Ls': {'head': 0.2539, 'UPT': 0.1784, 'MPT': 0.2253, 'LPT': 0.1523, 'upperArm': 0.2945, 'forearm': 0.2811, 'hand': 0.0901, 'thigh': 0.4277, 'shank': 0.4386, 'foot': 0.2698}}
+{
+ "V2_1.82_78.0_T": {
+  "label": "V2 1.82 m 78.0 kg pose T",
+  "mass": 78.91,
+  "comY": 1.0581,
+  "comY_over_H": 0.5814,
+  "comZ": 0.0021,
+  "I_wb_about_COM": {
+   "Ixx_frontal_axis(pitch)": 14.832,
+   "Iyy_vertical(yaw)": 3.068,
+   "Izz_AP_axis(roll)": 17.531
+  },
+  "leg_about_hip_straight": 3.0083,
+  "leg_about_hip_knee90": 1.8345,
+  "arm_about_shoulder": 0.0067,
+  "single_leg_hip_abd_Nm": 70.4
+ },
+ "V2_1.82_78.0_T_noequip": {
+  "label": "V2 1.82 m 78.0 kg pose T no equipment",
+  "mass": 78.0,
+  "comY": 1.0643,
+  "comY_over_H": 0.5848,
+  "comZ": 0.0017,
+  "I_wb_about_COM": {
+   "Ixx_frontal_axis(pitch)": 14.252,
+   "Iyy_vertical(yaw)": 3.058,
+   "Izz_AP_axis(roll)": 16.949
+  },
+  "leg_about_hip_straight": 2.7889,
+  "leg_about_hip_knee90": 1.7357,
+  "arm_about_shoulder": 0.0067,
+  "single_leg_hip_abd_Nm": 69.6
+ },
+ "V2_1.90_78_T": {
+  "label": "V2 1.90 m 78 kg pose T (V1-matched instance)",
+  "mass": 78.91,
+  "comY": 1.1037,
+  "comY_over_H": 0.5809,
+  "comZ": 0.0022,
+  "I_wb_about_COM": {
+   "Ixx_frontal_axis(pitch)": 16.164,
+   "Iyy_vertical(yaw)": 3.344,
+   "Izz_AP_axis(roll)": 19.105
+  },
+  "leg_about_hip_straight": 3.2783,
+  "leg_about_hip_knee90": 1.9992,
+  "arm_about_shoulder": 0.0073,
+  "single_leg_hip_abd_Nm": 73.5
+ },
+ "V2_1.90_78_T_noequip": {
+  "label": "V2 1.90 m 78 kg pose T no equipment",
+  "mass": 78.0,
+  "comY": 1.1102,
+  "comY_over_H": 0.5843,
+  "comZ": 0.0018,
+  "I_wb_about_COM": {
+   "Ixx_frontal_axis(pitch)": 15.532,
+   "Iyy_vertical(yaw)": 3.332,
+   "Izz_AP_axis(roll)": 18.472
+  },
+  "leg_about_hip_straight": 3.0395,
+  "leg_about_hip_knee90": 1.8917,
+  "arm_about_shoulder": 0.0073,
+  "single_leg_hip_abd_Nm": 72.7
+ },
+ "V2_1.82_78.0_down": {
+  "label": "V2 1.82 m 78.0 kg pose down",
+  "mass": 78.91,
+  "comY": 1.0277,
+  "comY_over_H": 0.5646,
+  "comZ": 0.0021,
+  "I_wb_about_COM": {
+   "Ixx_frontal_axis(pitch)": 13.77,
+   "Iyy_vertical(yaw)": 1.113,
+   "Izz_AP_axis(roll)": 14.513
+  },
+  "leg_about_hip_straight": 3.0083,
+  "leg_about_hip_knee90": 1.8345,
+  "arm_about_shoulder": 0.5076,
+  "single_leg_hip_abd_Nm": 70.4
+ },
+ "V2_1.82_78.0_down_noequip": {
+  "label": "V2 1.82 m 78.0 kg pose down no equipment",
+  "mass": 78.0,
+  "comY": 1.0335,
+  "comY_over_H": 0.5679,
+  "comZ": 0.0017,
+  "I_wb_about_COM": {
+   "Ixx_frontal_axis(pitch)": 13.218,
+   "Iyy_vertical(yaw)": 1.102,
+   "Izz_AP_axis(roll)": 13.961
+  },
+  "leg_about_hip_straight": 2.7889,
+  "leg_about_hip_knee90": 1.7357,
+  "arm_about_shoulder": 0.5076,
+  "single_leg_hip_abd_Nm": 69.6
+ },
+ "V2_1.90_78_down": {
+  "label": "V2 1.90 m 78 kg pose down (V1-matched instance)",
+  "mass": 78.91,
+  "comY": 1.072,
+  "comY_over_H": 0.5642,
+  "comZ": 0.0022,
+  "I_wb_about_COM": {
+   "Ixx_frontal_axis(pitch)": 15.006,
+   "Iyy_vertical(yaw)": 1.213,
+   "Izz_AP_axis(roll)": 15.816
+  },
+  "leg_about_hip_straight": 3.2783,
+  "leg_about_hip_knee90": 1.9992,
+  "arm_about_shoulder": 0.5532,
+  "single_leg_hip_abd_Nm": 73.5
+ },
+ "V2_1.90_78_down_noequip": {
+  "label": "V2 1.90 m 78 kg pose down no equipment",
+  "mass": 78.0,
+  "comY": 1.078,
+  "comY_over_H": 0.5674,
+  "comZ": 0.0018,
+  "I_wb_about_COM": {
+   "Ixx_frontal_axis(pitch)": 14.406,
+   "Iyy_vertical(yaw)": 1.201,
+   "Izz_AP_axis(roll)": 15.215
+  },
+  "leg_about_hip_straight": 3.0395,
+  "leg_about_hip_knee90": 1.8917,
+  "arm_about_shoulder": 0.5532,
+  "single_leg_hip_abd_Nm": 72.7
+ },
+ "V1.1": {
+  "label": "V1.1 1.90 m 78 kg bind (arms down)",
+  "mass": 78.0,
+  "comY": 1.0745,
+  "comY_over_H": 0.5655,
+  "comZ": 0.0021,
+  "I_wb_about_COM": {
+   "Ixx_frontal_axis(pitch)": 14.657,
+   "Iyy_vertical(yaw)": 1.552,
+   "Izz_AP_axis(roll)": 15.802
+  },
+  "leg_about_hip_straight": 3.3007,
+  "leg_about_hip_knee90": 2.0797,
+  "arm_about_shoulder": 0.4141,
+  "single_leg_hip_abd_Nm": 74.4
+ }
+}
+
+mass ratios parent/child:
+  pelvis    /abdomen        0.69   I_min ratio     0.6
+  abdomen   /thorax         1.01   I_min ratio     1.2
+  thorax    /head           2.34   I_min ratio     3.4
+  thorax    /upperArm_R     5.98   I_min ratio    17.9
+  upperArm_R/forearm_R      1.22   I_min ratio     2.2
+  thorax    /upperArm_L     5.98   I_min ratio    17.9
+  upperArm_L/forearm_L      1.22   I_min ratio     2.2
+  pelvis    /thigh_R        0.79   I_min ratio     1.4
+  thigh_R   /shank_R        3.20   I_min ratio     6.4
+  shank_R   /foot_R         2.73   I_min ratio     4.0
+  pelvis    /thigh_L        0.79   I_min ratio     1.4
+  thigh_L   /shank_L        3.20   I_min ratio     6.4
+  shank_L   /foot_L         2.73   I_min ratio     4.0
+foot R: {'mass': 1.2686, 'com': [0.091, 0.0422, 0.0633], 'heelZ': -0.0663, 'toeZ': 0.2272, 'bootLen': 0.2935, 'bootW': 0.1127, 'heelW': 0.0826, 'mtpZ': 0.1451}

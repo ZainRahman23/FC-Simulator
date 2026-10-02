@@ -1,0 +1,223 @@
+### BODY TABLE (V2-REF)
+| body | mass kg | COM from parent joint (m) | Ixx / Iyy / Izz about COM (kg·m²) |
+|---|---|---|---|
+| pelvis | 8.803 | (+0.000, +0.059, +0.000) | 0.0614 / 0.0696 / 0.0765 |
+| abdomen | 12.737 | (+0.000, +0.124, +0.031) | 0.0948 / 0.1416 / 0.1502 |
+| thorax | 12.649 | (+0.000, +0.125, +0.040) | 0.0817 / 0.1721 / 0.2032 |
+| head | 5.413 | (+0.000, +0.127, +0.031) | 0.0346 / 0.0238 / 0.0320 |
+| upperArm_R | 2.114 | (+0.170, +0.000, +0.000) | 0.0046 / 0.0133 / 0.0149 |
+| forearm_R | 1.739 | (+0.190, +0.000, +0.000) | 0.0021 / 0.0253 / 0.0264 |
+| upperArm_L | 2.114 | (-0.170, +0.000, +0.000) | 0.0046 / 0.0133 / 0.0149 |
+| forearm_L | 1.739 | (-0.190, +0.000, +0.000) | 0.0021 / 0.0253 / 0.0264 |
+| thigh_R | 11.075 | (+0.000, -0.175, +0.000) | 0.2187 / 0.0449 / 0.2187 |
+| shank_R | 3.457 | (-0.000, -0.194, +0.001) | 0.0398 / 0.0070 / 0.0414 |
+| foot_R | 1.269 | (+0.000, -0.049, +0.063) | 0.0067 / 0.0071 / 0.0018 |
+| thigh_L | 11.075 | (+0.000, -0.175, +0.000) | 0.2187 / 0.0449 / 0.2187 |
+| shank_L | 3.457 | (+0.000, -0.194, +0.001) | 0.0398 / 0.0070 / 0.0414 |
+| foot_L | 1.269 | (-0.000, -0.049, +0.063) | 0.0067 / 0.0071 / 0.0018 |
+
+### SKELETON
+| bone | pos |
+|---|---|
+| root | (+0.000, 0.000, +0.000) |
+| hips | (+0.000, 0.957, +0.000) |
+| spine_01 | (+0.000, 1.110, -0.031) |
+| spine_02 | (+0.000, 1.335, -0.040) |
+| spine_03 | (+0.000, 1.460, -0.040) |
+| neck | (+0.000, 1.586, -0.031) |
+| head | (+0.000, 1.702, -0.010) |
+| clavicle_L | (-0.020, 1.513, +0.086) |
+| upperArm_L | (-0.198, 1.472, +0.000) |
+| upperArm_twist_L | (-0.346, 1.472, +0.000) |
+| lowerArm_L | (-0.493, 1.472, +0.000) |
+| forearm_twist_L | (-0.661, 1.472, +0.000) |
+| hand_L | (-0.774, 1.472, +0.000) |
+| clavicle_R | (+0.020, 1.513, +0.086) |
+| upperArm_R | (+0.198, 1.472, +0.000) |
+| upperArm_twist_R | (+0.346, 1.472, +0.000) |
+| lowerArm_R | (+0.493, 1.472, +0.000) |
+| forearm_twist_R | (+0.661, 1.472, +0.000) |
+| hand_R | (+0.774, 1.472, +0.000) |
+| upperLeg_L | (-0.091, 0.957, +0.000) |
+| thigh_twist_L | (-0.091, 0.744, +0.000) |
+| lowerLeg_L | (-0.091, 0.530, +0.000) |
+| calf_twist_L | (-0.091, 0.310, +0.000) |
+| foot_L | (-0.091, 0.091, +0.000) |
+| toe_L | (-0.091, 0.038, +0.130) |
+| upperLeg_R | (+0.091, 0.957, +0.000) |
+| thigh_twist_R | (+0.091, 0.744, +0.000) |
+| lowerLeg_R | (+0.091, 0.530, +0.000) |
+| calf_twist_R | (+0.091, 0.310, +0.000) |
+| foot_R | (+0.091, 0.091, +0.000) |
+| toe_R | (+0.091, 0.038, +0.130) |
+
+### ACTUATORS
+| joint | direction | T_iso N·m/kg | T_iso N·m (78 kg) | V1 cap N·m | T_dyn peak N·m/kg | f(ω) at 3 / 6 / 10 rad/s | evidence (iso; dynamic) |
+|---|---|---|---|---|---|---|---|
+| hip | flexion | 2.70 | 211 | 170 | 4.3 | 0.61 / 0.38 / 0.20 | Anderson & Madigan 2014 2.67; Anderson 2007 1.94 (young males); sprint initial swing (Schache 2011); kicks 194-309 N.m (Kellis & Katis 2007) |
+| hip | extension | 3.60 | 281 | 230 | 4.18 | 0.61 / 0.38 / 0.20 | Anderson 2007 2.76 @53 deg flex; Anderson & Madigan 2014 4.51 @68 deg; sprint terminal swing (Schache 2011) |
+| hip | abduction | 2.35 | 183 | 140 | 3.29 | 0.55 / 0.32 / 0.13 | Thorborg 2011 elite 2.25-2.35; sprint stance (Schache 2011); eccentric 2.6 (Mosler 2017) |
+| hip | adduction | 2.45 | 191 | 140 | 3.0 | 0.55 / 0.32 / 0.13 | Thorborg 2011 elite 2.37-2.45; eccentric 3.0 (Mosler 2017); kick ~115 N.m |
+| hip | internal rot. | 1.20 | 94 | 60 | — | 0.55 / 0.32 / 0.13 | ~1.2 at 90 deg flex (protocol-dependent x2); — |
+| hip | external rot. | 1.00 | 78 | 60 | 0.75 | 0.55 / 0.32 / 0.13 | 0.42-1.0 (protocol-dependent); side-foot kick 56 N.m (Nunome 2002) |
+| knee | extension | 3.60 | 281 | 250 | 3.6 | 0.64 / 0.42 / 0.24 | soccer 60 deg/s concentric 3.1-3.4 (Fousekis 2010) / f(60 deg/s)=0.85; Sarabon 2021 3.19; sprint midstance 3.55 (Schache 2011); deceleration 3.58 (Harper 2022) |
+| knee | flexion | 2.10 | 164 | 130 | 1.76 | 0.70 / 0.51 / 0.33 | soccer 60 deg/s 1.7-1.9 (Fousekis 2010), 1.66-2.11 (Sliwowski 2017); sprint terminal swing, eccentric (Schache 2011) |
+| knee | tibial IR / ER | 0.35 | 27 | — | — | 0.55 / 0.32 / 0.13 | recalled (~25-30 N.m); — |
+| ankle | plantarflexion | 2.60 | 203 | 150 | 4.0 | 0.55 / 0.32 / 0.13 | Anderson & Madigan 2014 2.64; Billot 2022 150 N.m (knee 60 deg); sprint midstance (Schache 2011), with tendon recoil |
+| ankle | dorsiflexion | 0.60 | 47 | 45 | — | 0.59 / 0.36 / 0.18 | Billot 2022 net ~45 N.m; Fousekis ecc 48-52; — |
+| ankle | inversion | 0.50 | 39 | 35 | — | 0.48 / 0.24 / 0.06 | Maciel 2022 34.8 N.m at 30 deg/s (mixed sex, 38 y) -> athlete ENG; — |
+| ankle | eversion | 0.45 | 35 | 35 | — | 0.48 / 0.24 / 0.06 | Maciel 2022 29.9 N.m; — |
+| trunk (lumbar = thoracic, in series) | flexion | 2.00 | 156 | 180 | — | 0.55 / 0.32 / 0.13 | Pan 2025 iso 1.15 (non-athletes); athletes isokinetic 211-297 N.m (Zouita 2020); — |
+| trunk | extension | 3.00 | 234 | 250 | — | 0.55 / 0.32 / 0.13 | Pan 2025 iso 1.74; athletes isokinetic 345-440 N.m (Zouita 2020); — |
+| trunk | lateral bend | 1.50 | 117 | 150 | — | 0.55 / 0.32 / 0.13 | Pan 2025 0.91-0.95; — |
+| trunk | axial rotation | 0.90 | 70 | 80 | — | 0.55 / 0.32 / 0.13 | Pan 2025 0.64-0.74; — |
+| neck | extension | 0.69 | 54 | 45 | — | 0.48 / 0.24 / 0.06 | Vasavada 2001 52 N.m; — |
+| neck | flexion | 0.40 | 31 | 25 | — | 0.48 / 0.24 / 0.06 | Vasavada 2001 30 N.m; — |
+| neck | lateral bend | 0.48 | 37 | 30 | — | 0.48 / 0.24 / 0.06 | Vasavada 2001 36 N.m; — |
+| neck | axial rotation | 0.20 | 16 | 20 | — | 0.48 / 0.24 / 0.06 | Vasavada 2001 15 N.m; — |
+| shoulder | flexion | 0.95 | 74 | 70 | — | 0.55 / 0.32 / 0.13 | recalled 60-80 N.m; — |
+| shoulder | extension | 1.15 | 90 | 80 | — | 0.55 / 0.32 / 0.13 | recalled 70-100 N.m; ext:flex 5:4 (Ivey 1985); — |
+| shoulder | abduction | 0.85 | 66 | 60 | — | 0.55 / 0.32 / 0.13 | recalled 50-75 N.m; — |
+| shoulder | adduction | 1.40 | 109 | 60 | — | 0.55 / 0.32 / 0.13 | add:abd ~2:1 (Holzbaur 2007); 67.9 mixed-sex; — |
+| shoulder | internal rot. | 0.70 | 55 | 45 | — | 0.55 / 0.32 / 0.13 | recalled 40-60; IR:ER 3:2 (Ivey 1985); — |
+| shoulder | external rot. | 0.47 | 37 | 45 | — | 0.55 / 0.32 / 0.13 | recalled 30-45; — |
+| elbow | flexion | 0.98 | 76 | 60 | — | 0.61 / 0.38 / 0.20 | Kotte 2018 76.7 N.m; — |
+| elbow | extension | 0.62 | 48 | 50 | — | 0.61 / 0.38 / 0.20 | Kotte 2018 48.2 N.m; — |
+| elbow | pronation / supination | 0.13 | 10 | — | — | 0.61 / 0.38 / 0.20 | Kotte 2018 10.0 / 10.7 N.m; — |
+
+### COLLIDERS
+{
+ "pelvis": {
+  "shape": "roundedBox",
+  "size_m": [
+   0.3458,
+   0.2223113153360139,
+   0.2275
+  ],
+  "convexRadius": 0.03,
+  "centre": [
+   0,
+   0.9984556576680069,
+   -0.01
+  ],
+  "evidence": "hip breadth 0.19-0.197 H (Drillis / ANSUR II); depth 0.125 H; extends 7 cm below the HJC (gluteal)"
+ },
+ "abdomen": {
+  "shape": "roundedBox",
+  "size_m": [
+   0.2821,
+   0.22527857553130382,
+   0.21658
+  ],
+  "convexRadius": 0.03,
+  "centre": [
+   0,
+   1.2222506031016658,
+   0
+  ],
+  "evidence": "waist depth 0.119 H (ANSUR II footballer-sized subset 215 mm); breadth ENG 0.155 H (arm clearance at 6 deg abduction)"
+ },
+ "thorax": {
+  "shape": "roundedBox + girdle capsule",
+  "size_m": [
+   0.3003,
+   0.17844572085008625,
+   0.23842000000000002
+  ],
+  "convexRadius": 0.03,
+  "centre": [
+   0,
+   1.4241127512923608,
+   0
+  ],
+  "girdleCapsule": {
+   "r": 0.06006,
+   "axis": "ML",
+   "halfLength": 0.13013,
+   "centre": [
+    0,
+    1.5003600000000001,
+    -0.02
+   ]
+  },
+  "evidence": "chest depth 0.131 H (ANSUR subset 237 mm); breadth 0.165 H (< Drillis external chest 0.174 H)"
+ },
+ "head": {
+  "shape": "sphere + neck capsule",
+  "sphere_r": 0.09555,
+  "sphere_centre": [
+   0,
+   1.7353500000000002,
+   0.01001
+  ],
+  "neck_r": 0.0546,
+  "evidence": "head length 0.114 H, breadth 0.088 H (ANSUR II) -> sphere diameter 0.105 H between them"
+ },
+ "upperArm": {
+  "shape": "deltoid sphere + taperedCapsule",
+  "deltoid_r": 0.0546,
+  "deltoid_offset_lateral": 0.012012,
+  "r_prox": 0.04639383312676185,
+  "r_dist": 0.03995115924066248,
+  "evidence": "bideltoid 0.291 H (ANSUR II) reproduced; capsule volume-matched (de Leva mass / Dempster density 1070)"
+ },
+ "forearm": {
+  "shape": "taperedCapsule + hand capsule",
+  "r_prox": 0.03888539287185139,
+  "r_dist": 0.025886477842656134,
+  "hand_r": 0.02457,
+  "hand_len": 0.11011143021252154,
+  "evidence": "volume-matched (density 1130); hand capsule on the forearm body (core)"
+ },
+ "thigh": {
+  "shape": "taperedCapsule",
+  "r_prox": 0.08736000000000001,
+  "r_dist": 0.061880000000000004,
+  "axis": "from 0.02 m lateral / 0.05 m below the HJC to 0.02 m above the KJC",
+  "evidence": "girth-based (proximal thigh circumference ~0.30 H); a volume match gives ~0.10 m and overlaps the opposite thigh"
+ },
+ "shank": {
+  "shape": "taperedCapsule",
+  "r_prox": 0.05281648726603739,
+  "r_dist": 0.035494129148991305,
+  "axis": "KJC-0.03 to AJC+0.06, 0.01 m posterior (calf)",
+  "evidence": "volume-matched (density 1090)"
+ },
+ "foot": {
+  "shape": "convexHull (boot)",
+  "boot_len": 0.29346,
+  "ball_w": 0.11265,
+  "heel_w": 0.08262,
+  "heel_behind_AJC": 0.06626119999999999,
+  "tip_ahead_AJC": 0.2271988,
+  "mtp1_ahead_AJC": 0.14507766,
+  "mtp5_ahead_AJC": 0.11416860000000001,
+  "toeSpring": 0.012,
+  "upper_heights": {
+   "heelCounter": 0.065,
+   "instep": 0.075,
+   "toeBox": 0.045
+  },
+  "convexRadius": 0.005
+ }
+}
+
+### WHOLE BODY
+{
+ "REF": {
+  "mass": 78.0,
+  "com_y": 1.0335,
+  "com_y_barefoot_over_H": 0.5569,
+  "I_pitch": 13.218,
+  "I_yaw": 1.102,
+  "I_roll": 13.961
+ },
+ "V1M": {
+  "mass": 78.0,
+  "com_y": 1.078,
+  "com_y_barefoot_over_H": 0.5569,
+  "I_pitch": 14.406,
+  "I_yaw": 1.201,
+  "I_roll": 15.215
+ }
+}

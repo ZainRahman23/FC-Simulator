@@ -1,0 +1,3193 @@
+{
+ "title": "Touchline Physical Character V2 specification (design, not runtime)",
+ "coordinate": "CCS +X anatomical right, +Y up, +Z forward (left-handed, Unity numeric); metres, kg, s, rad",
+ "profile": {
+  "ankleH": 0.039,
+  "kneeH": 0.28,
+  "hipH": 0.515,
+  "hipHalf": 0.05,
+  "shoulderHalf": 0.109,
+  "sjcH": 0.798,
+  "footLen": 0.153,
+  "footBreadth": 0.0575,
+  "heelBreadth": 0.041,
+  "ankleFromHeel": 0.22,
+  "mtpFromHeel": 0.741,
+  "spineAP": {
+   "lumbar": -0.017,
+   "thoracolumbar": -0.022,
+   "cervical": -0.017
+  },
+  "legScale": 1.0,
+  "armScale": 1.0,
+  "trunkScale": 1.0
+ },
+ "equipment": {
+  "boot": 0.2,
+  "shinPad": 0.08,
+  "kitUpper": 0.2,
+  "kitLower": 0.15,
+  "soleStack": 0.02,
+  "bootToe": 0.01,
+  "bootHeel": 0.005,
+  "bootWidthAdd": 0.008
+ },
+ "deLeva_male": {
+  "head": {
+   "mass_pct": 6.94,
+   "L_mm": 242.9,
+   "com_pct": 50.02,
+   "r_pct_AP_ML_long": [
+    30.3,
+    31.5,
+    26.1
+   ]
+  },
+  "UPT": {
+   "mass_pct": 15.96,
+   "L_mm": 170.7,
+   "com_pct": 29.99,
+   "r_pct_AP_ML_long": [
+    71.6,
+    45.4,
+    65.9
+   ]
+  },
+  "MPT": {
+   "mass_pct": 16.33,
+   "L_mm": 215.5,
+   "com_pct": 45.02,
+   "r_pct_AP_ML_long": [
+    48.2,
+    38.3,
+    46.8
+   ]
+  },
+  "LPT": {
+   "mass_pct": 11.17,
+   "L_mm": 145.7,
+   "com_pct": 61.15,
+   "r_pct_AP_ML_long": [
+    61.5,
+    55.1,
+    58.7
+   ]
+  },
+  "upperArm": {
+   "mass_pct": 2.71,
+   "L_mm": 281.7,
+   "com_pct": 57.72,
+   "r_pct_AP_ML_long": [
+    28.5,
+    26.9,
+    15.8
+   ]
+  },
+  "forearm": {
+   "mass_pct": 1.62,
+   "L_mm": 268.9,
+   "com_pct": 45.74,
+   "r_pct_AP_ML_long": [
+    27.6,
+    26.5,
+    12.1
+   ]
+  },
+  "hand": {
+   "mass_pct": 0.61,
+   "L_mm": 86.2,
+   "com_pct": 79.0,
+   "r_pct_AP_ML_long": [
+    62.8,
+    51.3,
+    40.1
+   ]
+  },
+  "thigh": {
+   "mass_pct": 14.16,
+   "L_mm": 422.2,
+   "com_pct": 40.95,
+   "r_pct_AP_ML_long": [
+    32.9,
+    32.9,
+    14.9
+   ]
+  },
+  "shank": {
+   "mass_pct": 4.33,
+   "L_mm": 440.3,
+   "com_pct": 43.95,
+   "r_pct_AP_ML_long": [
+    25.1,
+    24.6,
+    10.2
+   ]
+  },
+  "foot": {
+   "mass_pct": 1.37,
+   "L_mm": 258.1,
+   "com_pct": 44.15,
+   "r_pct_AP_ML_long": [
+    25.7,
+    24.5,
+    12.4
+   ]
+  }
+ },
+ "joints": [
+  {
+   "name": "lumbar",
+   "parent": "pelvis",
+   "child": "abdomen",
+   "anat": "L3-L5 lumbar spine (lumped)",
+   "dof": 3,
+   "rom": {
+    "flex(+)/ext(-)": [
+     -25,
+     60,
+     -30,
+     70,
+     "Troke 2005 young: flex 73 / ext 29 [H]; ENG split of thoracolumbar total"
+    ],
+    "lat bend R(+)/L(-)": [
+     -25,
+     25,
+     -30,
+     30,
+     "Troke 2005: 28 [H]"
+    ],
+    "axial rot R(+)/L(-)": [
+     -7,
+     7,
+     -10,
+     10,
+     "Troke 2005: 7 [H]"
+    ]
+   },
+   "centre": {
+    "flex": 17.5
+   },
+   "motor": "3 axes",
+   "cap": "trunk"
+  },
+  {
+   "name": "thoracic",
+   "parent": "abdomen",
+   "child": "thorax",
+   "anat": "T9-T12 thoracolumbar + thoracic (lumped)",
+   "dof": 3,
+   "rom": {
+    "flex(+)/ext(-)": [
+     -15,
+     30,
+     -20,
+     40,
+     "AAOS thoracolumbar 80 / 25 total (recalled) minus lumbar [ENG]"
+    ],
+    "lat bend": [
+     -20,
+     20,
+     -25,
+     25,
+     "AAOS 35 total (recalled) minus lumbar [ENG]"
+    ],
+    "axial rot": [
+     -35,
+     35,
+     -40,
+     40,
+     "AAOS 45 total (recalled) minus lumbar 7 [ENG]"
+    ]
+   },
+   "centre": {
+    "flex": 7.5
+   },
+   "motor": "3 axes",
+   "cap": "trunk"
+  },
+  {
+   "name": "neck",
+   "parent": "thorax",
+   "child": "head",
+   "anat": "C0-C7 cervical spine (lumped at C7/T1)",
+   "dof": 3,
+   "rom": {
+    "flex(+)/ext(-)": [
+     -60,
+     50,
+     -70,
+     60,
+     "AAOS / Youdas ranges (recalled)"
+    ],
+    "lat bend": [
+     -40,
+     40,
+     -45,
+     45,
+     "recalled"
+    ],
+    "axial rot": [
+     -70,
+     70,
+     -80,
+     80,
+     "recalled; 73 % of it at C1-C2 (Zhou 2020) [H] -> render split"
+    ]
+   },
+   "centre": {
+    "flex": -5
+   },
+   "motor": "3 axes",
+   "cap": "neck"
+  },
+  {
+   "name": "shoulder",
+   "parent": "thorax",
+   "child": "upperArm",
+   "anat": "glenohumeral + shoulder girdle (lumped; centre fixed in thorax)",
+   "dof": 3,
+   "rom": {
+    "flexion (+)": [
+     0,
+     170,
+     -5,
+     180,
+     "Soucie 2011 168.8 passive [H]"
+    ],
+    "extension (-)": [
+     -55,
+     0,
+     -65,
+     0,
+     "AAOS 50-60 (recalled)"
+    ],
+    "abduction (+)": [
+     0,
+     170,
+     0,
+     180,
+     "AAOS 180 (recalled); scapulohumeral rhythm 1.25-1.7:1 above 30 deg [H]"
+    ],
+    "horizontal adduction": [
+     0,
+     130,
+     0,
+     140,
+     "recalled"
+    ],
+    "IR(+)/ER(-)": [
+     -90,
+     70,
+     -100,
+     80,
+     "AAOS 70 / 90 (recalled); range varies with elevation"
+    ]
+   },
+   "centre": {
+    "elevation": 60,
+    "plane_fwd_of_coronal": 30
+   },
+   "motor": "3 axes",
+   "cap": "shoulder"
+  },
+  {
+   "name": "elbow",
+   "parent": "upperArm",
+   "child": "forearm",
+   "anat": "humeroulnar flexion + radioulnar pronation/supination",
+   "dof": 2,
+   "rom": {
+    "flex(+)/hyperext(-)": [
+     0,
+     145,
+     -5,
+     150,
+     "Soucie 2011 144.6 / 0.8 [H]"
+    ],
+    "pron(+)/sup(-)": [
+     -85,
+     77,
+     -90,
+     85,
+     "Soucie 2011 pron 76.9 / sup 85.0 [H]"
+    ]
+   },
+   "centre": {
+    "flex": 70
+   },
+   "motor": "2 axes (carrying angle locked)",
+   "cap": "elbow"
+  },
+  {
+   "name": "hip",
+   "parent": "pelvis",
+   "child": "thigh",
+   "anat": "hip (femoral head)",
+   "dof": 3,
+   "rom": {
+    "flex(+)/ext(-)": [
+     -15,
+     120,
+     -25,
+     140,
+     "Soucie 2011 flex 130.4 (p95 142) / ext 17.4 passive; Roaas ext 9.4 prone [H]"
+    ],
+    "abd(+)/add(-)": [
+     -25,
+     40,
+     -35,
+     50,
+     "Roaas 1982 38.8 / 30.5 passive; AAOS 48 / 31 [H]"
+    ],
+    "IR(+)/ER(-)": [
+     -40,
+     30,
+     -50,
+     45,
+     "pro soccer IR 28.9, total 65.6 (Tak 2016); sitting active 44 / 44 [H]"
+    ]
+   },
+   "centre": {
+    "flex": 52.5,
+    "abd": 7.5,
+    "rot": -5
+   },
+   "motor": "3 axes",
+   "cap": "hip",
+   "pose": "hamstrings: straight-leg hip flexion ~70-90 deg (passive torque grows with knee extension) [recalled]; rotation range changes with flexion (Han 2015, Simoneau 1998) [H]"
+  },
+  {
+   "name": "knee",
+   "parent": "thigh",
+   "child": "shank",
+   "anat": "tibiofemoral flexion + tibial axial rotation",
+   "dof": 2,
+   "rom": {
+    "flex(+)/hyperext(-)": [
+     0,
+     140,
+     -5,
+     155,
+     "Soucie 2011 137.7, hyperext 1.2 +/- 2.1 (p95 6); loaded deep squat 157 (Hemmerich 2006) [H]"
+    ],
+    "tibial IR(+)/ER(-)": [
+     -30,
+     20,
+     -40,
+     30,
+     "~0 at full extension, tens of degrees at 90 deg flexion (recalled)"
+    ]
+   },
+   "centre": {
+    "flex": 70
+   },
+   "motor": "2 axes (varus/valgus locked)",
+   "cap": "knee",
+   "pose": "axial rotation stiffened near extension (screw-home) by passive torque [ENG]"
+  },
+  {
+   "name": "ankle",
+   "parent": "shank",
+   "child": "foot",
+   "anat": "talocrural + subtalar (orthogonal approximation)",
+   "dof": 3,
+   "rom": {
+    "DF(+)/PF(-)": [
+     -50,
+     20,
+     -60,
+     45,
+     "Soucie 2011 DF 12.7 (knee ext, NWB) / PF 54.6; knee-bent DF 40.5 (Cho 2016); WB lunge 38.8-43.2 [H]"
+    ],
+    "inv(+)/ev(-)": [
+     -20,
+     25,
+     -30,
+     35,
+     "Roaas 1982 whole foot 27.7 / 27.6 passive; AAOS 35 / 15 (recalled)"
+    ],
+    "foot abd/add (passive)": [
+     -10,
+     10,
+     -15,
+     15,
+     "forefoot ab/adduction ~10-20 (recalled) [ENG passive-only]"
+    ]
+   },
+   "centre": {
+    "df": -12.5,
+    "inv": 2.5
+   },
+   "motor": "2 axes (DF/PF, inv/ev) + 1 passive",
+   "cap": "ankle",
+   "pose": "dorsiflexion limit grows with knee flexion (gastrocnemius): ~20 knee straight -> ~40 knee bent [H]"
+  }
+ ],
+ "V2_REF": {
+  "H": 1.82,
+  "M": 78.0,
+  "landmarks": {
+   "closure_m": 0.0019,
+   "yA": 0.091,
+   "yK": 0.5296,
+   "yH": 0.9573,
+   "yOMPH": 1.1096,
+   "yXYPH": 1.3349,
+   "ySUPR": 1.5133,
+   "yCERV": 1.5861,
+   "yVERT": 1.84,
+   "ySJC": 1.4724,
+   "hx": 0.091,
+   "sx": 0.1984,
+   "sole": 0.02,
+   "footLen": 0.2785,
+   "Ls": {
+    "head": 0.2539,
+    "UPT": 0.1784,
+    "MPT": 0.2253,
+    "LPT": 0.1523,
+    "upperArm": 0.2945,
+    "forearm": 0.2811,
+    "hand": 0.0901,
+    "thigh": 0.4277,
+    "shank": 0.4386,
+    "foot": 0.2698
+   }
+  },
+  "bodies": [
+   {
+    "name": "pelvis",
+    "parent": null,
+    "mass": 8.8026,
+    "com_ccs": [
+     0.0,
+     1.0165,
+     0.0
+    ],
+    "com_from_joint": [
+     0.0,
+     0.0592,
+     0.0
+    ],
+    "inertia_about_com_ccs": [
+     [
+      0.06136,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.06964,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.07645
+     ]
+    ],
+    "joint_ccs": [
+     0.0,
+     0.9573,
+     0.0
+    ]
+   },
+   {
+    "name": "abdomen",
+    "parent": "pelvis",
+    "mass": 12.7374,
+    "com_ccs": [
+     0.0,
+     1.2335,
+     0.0
+    ],
+    "com_from_joint": [
+     0.0,
+     0.1239,
+     0.0309
+    ],
+    "inertia_about_com_ccs": [
+     [
+      0.09482,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.14158,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.15018
+     ]
+    ],
+    "joint_ccs": [
+     0.0,
+     1.1096,
+     -0.0309
+    ]
+   },
+   {
+    "name": "thorax",
+    "parent": "abdomen",
+    "mass": 12.6488,
+    "com_ccs": [
+     0.0,
+     1.4598,
+     0.0
+    ],
+    "com_from_joint": [
+     0.0,
+     0.1249,
+     0.04
+    ],
+    "inertia_about_com_ccs": [
+     [
+      0.08171,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.17215,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.20322
+     ]
+    ],
+    "joint_ccs": [
+     0.0,
+     1.3349,
+     -0.04
+    ]
+   },
+   {
+    "name": "head",
+    "parent": "thorax",
+    "mass": 5.4132,
+    "com_ccs": [
+     0.0,
+     1.713,
+     0.0
+    ],
+    "com_from_joint": [
+     0.0,
+     0.1269,
+     0.0309
+    ],
+    "inertia_about_com_ccs": [
+     [
+      0.03463,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.02378,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.03204
+     ]
+    ],
+    "joint_ccs": [
+     0.0,
+     1.5861,
+     -0.0309
+    ]
+   },
+   {
+    "name": "upperArm_R",
+    "parent": "thorax",
+    "mass": 2.1138,
+    "com_ccs": [
+     0.3684,
+     1.4724,
+     0.0
+    ],
+    "com_from_joint": [
+     0.17,
+     0.0,
+     0.0
+    ],
+    "inertia_about_com_ccs": [
+     [
+      0.00458,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.01326,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.01489
+     ]
+    ],
+    "joint_ccs": [
+     0.1984,
+     1.4724,
+     0.0
+    ]
+   },
+   {
+    "name": "forearm_R",
+    "parent": "upperArm_R",
+    "mass": 1.7394,
+    "com_ccs": [
+     0.6826,
+     1.4724,
+     0.0
+    ],
+    "com_from_joint": [
+     0.1898,
+     0.0,
+     0.0
+    ],
+    "inertia_about_com_ccs": [
+     [
+      0.00208,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.02533,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.02643
+     ]
+    ],
+    "joint_ccs": [
+     0.4929,
+     1.4724,
+     0.0
+    ]
+   },
+   {
+    "name": "upperArm_L",
+    "parent": "thorax",
+    "mass": 2.1138,
+    "com_ccs": [
+     -0.3684,
+     1.4724,
+     0.0
+    ],
+    "com_from_joint": [
+     -0.17,
+     0.0,
+     0.0
+    ],
+    "inertia_about_com_ccs": [
+     [
+      0.00458,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.01326,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.01489
+     ]
+    ],
+    "joint_ccs": [
+     -0.1984,
+     1.4724,
+     0.0
+    ]
+   },
+   {
+    "name": "forearm_L",
+    "parent": "upperArm_L",
+    "mass": 1.7394,
+    "com_ccs": [
+     -0.6826,
+     1.4724,
+     0.0
+    ],
+    "com_from_joint": [
+     -0.1898,
+     0.0,
+     0.0
+    ],
+    "inertia_about_com_ccs": [
+     [
+      0.00208,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.02533,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.02643
+     ]
+    ],
+    "joint_ccs": [
+     -0.4929,
+     1.4724,
+     0.0
+    ]
+   },
+   {
+    "name": "thigh_R",
+    "parent": "pelvis",
+    "mass": 11.0748,
+    "com_ccs": [
+     0.091,
+     0.7822,
+     0.0
+    ],
+    "com_from_joint": [
+     0.0,
+     -0.1751,
+     0.0
+    ],
+    "inertia_about_com_ccs": [
+     [
+      0.21869,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.04485,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.21869
+     ]
+    ],
+    "joint_ccs": [
+     0.091,
+     0.9573,
+     0.0
+    ]
+   },
+   {
+    "name": "shank_R",
+    "parent": "thigh_R",
+    "mass": 3.4574,
+    "com_ccs": [
+     0.091,
+     0.3357,
+     0.0009
+    ],
+    "com_from_joint": [
+     -0.0,
+     -0.1939,
+     0.0009
+    ],
+    "inertia_about_com_ccs": [
+     [
+      0.03983,
+      0.0,
+      -0.0
+     ],
+     [
+      0.0,
+      0.00698,
+      0.00015
+     ],
+     [
+      -0.0,
+      0.00015,
+      0.04141
+     ]
+    ],
+    "joint_ccs": [
+     0.091,
+     0.5296,
+     0.0
+    ]
+   },
+   {
+    "name": "foot_R",
+    "parent": "shank_R",
+    "mass": 1.2686,
+    "com_ccs": [
+     0.091,
+     0.0422,
+     0.0633
+    ],
+    "com_from_joint": [
+     0.0,
+     -0.0488,
+     0.0633
+    ],
+    "inertia_about_com_ccs": [
+     [
+      0.0067,
+      -0.0,
+      -0.0
+     ],
+     [
+      -0.0,
+      0.00714,
+      7e-05
+     ],
+     [
+      -0.0,
+      7e-05,
+      0.00176
+     ]
+    ],
+    "joint_ccs": [
+     0.091,
+     0.091,
+     0.0
+    ]
+   },
+   {
+    "name": "thigh_L",
+    "parent": "pelvis",
+    "mass": 11.0748,
+    "com_ccs": [
+     -0.091,
+     0.7822,
+     0.0
+    ],
+    "com_from_joint": [
+     0.0,
+     -0.1751,
+     0.0
+    ],
+    "inertia_about_com_ccs": [
+     [
+      0.21869,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.04485,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.21869
+     ]
+    ],
+    "joint_ccs": [
+     -0.091,
+     0.9573,
+     0.0
+    ]
+   },
+   {
+    "name": "shank_L",
+    "parent": "thigh_L",
+    "mass": 3.4574,
+    "com_ccs": [
+     -0.091,
+     0.3357,
+     0.0009
+    ],
+    "com_from_joint": [
+     0.0,
+     -0.1939,
+     0.0009
+    ],
+    "inertia_about_com_ccs": [
+     [
+      0.03983,
+      -0.0,
+      0.0
+     ],
+     [
+      -0.0,
+      0.00698,
+      0.00015
+     ],
+     [
+      0.0,
+      0.00015,
+      0.04141
+     ]
+    ],
+    "joint_ccs": [
+     -0.091,
+     0.5296,
+     0.0
+    ]
+   },
+   {
+    "name": "foot_L",
+    "parent": "shank_L",
+    "mass": 1.2686,
+    "com_ccs": [
+     -0.091,
+     0.0422,
+     0.0633
+    ],
+    "com_from_joint": [
+     -0.0,
+     -0.0488,
+     0.0633
+    ],
+    "inertia_about_com_ccs": [
+     [
+      0.0067,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.00714,
+      7e-05
+     ],
+     [
+      0.0,
+      7e-05,
+      0.00176
+     ]
+    ],
+    "joint_ccs": [
+     -0.091,
+     0.091,
+     0.0
+    ]
+   }
+  ],
+  "skeleton": [
+   {
+    "bone": "root",
+    "parent": null,
+    "pos_ccs": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "bone": "hips",
+    "parent": "root",
+    "pos_ccs": [
+     0,
+     0.9573,
+     0
+    ]
+   },
+   {
+    "bone": "spine_01",
+    "parent": "hips",
+    "pos_ccs": [
+     0,
+     1.1096,
+     -0.0309
+    ]
+   },
+   {
+    "bone": "spine_02",
+    "parent": "spine_01",
+    "pos_ccs": [
+     0,
+     1.3349,
+     -0.04
+    ]
+   },
+   {
+    "bone": "spine_03",
+    "parent": "spine_02",
+    "pos_ccs": [
+     0,
+     1.4605,
+     -0.04
+    ]
+   },
+   {
+    "bone": "neck",
+    "parent": "spine_03",
+    "pos_ccs": [
+     0,
+     1.5861,
+     -0.0309
+    ]
+   },
+   {
+    "bone": "head",
+    "parent": "neck",
+    "pos_ccs": [
+     0,
+     1.7017,
+     -0.01
+    ]
+   },
+   {
+    "bone": "clavicle_L",
+    "parent": "spine_03",
+    "pos_ccs": [
+     -0.02,
+     1.5133,
+     0.0855
+    ]
+   },
+   {
+    "bone": "upperArm_L",
+    "parent": "clavicle_L",
+    "pos_ccs": [
+     -0.1984,
+     1.4724,
+     0
+    ]
+   },
+   {
+    "bone": "upperArm_twist_L",
+    "parent": "upperArm_L",
+    "pos_ccs": [
+     -0.3456,
+     1.4724,
+     0
+    ]
+   },
+   {
+    "bone": "lowerArm_L",
+    "parent": "upperArm_L",
+    "pos_ccs": [
+     -0.4929,
+     1.4724,
+     0
+    ]
+   },
+   {
+    "bone": "forearm_twist_L",
+    "parent": "lowerArm_L",
+    "pos_ccs": [
+     -0.6615,
+     1.4724,
+     0
+    ]
+   },
+   {
+    "bone": "hand_L",
+    "parent": "lowerArm_L",
+    "pos_ccs": [
+     -0.774,
+     1.4724,
+     0
+    ]
+   },
+   {
+    "bone": "clavicle_R",
+    "parent": "spine_03",
+    "pos_ccs": [
+     0.02,
+     1.5133,
+     0.0855
+    ]
+   },
+   {
+    "bone": "upperArm_R",
+    "parent": "clavicle_R",
+    "pos_ccs": [
+     0.1984,
+     1.4724,
+     0
+    ]
+   },
+   {
+    "bone": "upperArm_twist_R",
+    "parent": "upperArm_R",
+    "pos_ccs": [
+     0.3456,
+     1.4724,
+     0
+    ]
+   },
+   {
+    "bone": "lowerArm_R",
+    "parent": "upperArm_R",
+    "pos_ccs": [
+     0.4929,
+     1.4724,
+     0
+    ]
+   },
+   {
+    "bone": "forearm_twist_R",
+    "parent": "lowerArm_R",
+    "pos_ccs": [
+     0.6615,
+     1.4724,
+     0
+    ]
+   },
+   {
+    "bone": "hand_R",
+    "parent": "lowerArm_R",
+    "pos_ccs": [
+     0.774,
+     1.4724,
+     0
+    ]
+   },
+   {
+    "bone": "upperLeg_L",
+    "parent": "hips",
+    "pos_ccs": [
+     -0.091,
+     0.9573,
+     0
+    ]
+   },
+   {
+    "bone": "thigh_twist_L",
+    "parent": "upperLeg_L",
+    "pos_ccs": [
+     -0.091,
+     0.7435,
+     0
+    ]
+   },
+   {
+    "bone": "lowerLeg_L",
+    "parent": "upperLeg_L",
+    "pos_ccs": [
+     -0.091,
+     0.5296,
+     0
+    ]
+   },
+   {
+    "bone": "calf_twist_L",
+    "parent": "lowerLeg_L",
+    "pos_ccs": [
+     -0.091,
+     0.3103,
+     0
+    ]
+   },
+   {
+    "bone": "foot_L",
+    "parent": "lowerLeg_L",
+    "pos_ccs": [
+     -0.091,
+     0.091,
+     0
+    ]
+   },
+   {
+    "bone": "toe_L",
+    "parent": "foot_L",
+    "pos_ccs": [
+     -0.091,
+     0.0381,
+     0.1296
+    ]
+   },
+   {
+    "bone": "upperLeg_R",
+    "parent": "hips",
+    "pos_ccs": [
+     0.091,
+     0.9573,
+     0
+    ]
+   },
+   {
+    "bone": "thigh_twist_R",
+    "parent": "upperLeg_R",
+    "pos_ccs": [
+     0.091,
+     0.7435,
+     0
+    ]
+   },
+   {
+    "bone": "lowerLeg_R",
+    "parent": "upperLeg_R",
+    "pos_ccs": [
+     0.091,
+     0.5296,
+     0
+    ]
+   },
+   {
+    "bone": "calf_twist_R",
+    "parent": "lowerLeg_R",
+    "pos_ccs": [
+     0.091,
+     0.3103,
+     0
+    ]
+   },
+   {
+    "bone": "foot_R",
+    "parent": "lowerLeg_R",
+    "pos_ccs": [
+     0.091,
+     0.091,
+     0
+    ]
+   },
+   {
+    "bone": "toe_R",
+    "parent": "foot_R",
+    "pos_ccs": [
+     0.091,
+     0.0381,
+     0.1296
+    ]
+   }
+  ],
+  "colliders": {
+   "pelvis": {
+    "shape": "roundedBox",
+    "size_m": [
+     0.3458,
+     0.2223113153360139,
+     0.2275
+    ],
+    "convexRadius": 0.03,
+    "centre": [
+     0,
+     0.9984556576680069,
+     -0.01
+    ],
+    "evidence": "hip breadth 0.19-0.197 H (Drillis / ANSUR II); depth 0.125 H; extends 7 cm below the HJC (gluteal)"
+   },
+   "abdomen": {
+    "shape": "roundedBox",
+    "size_m": [
+     0.2821,
+     0.22527857553130382,
+     0.21658
+    ],
+    "convexRadius": 0.03,
+    "centre": [
+     0,
+     1.2222506031016658,
+     0
+    ],
+    "evidence": "waist depth 0.119 H (ANSUR II footballer-sized subset 215 mm); breadth ENG 0.155 H (arm clearance at 6 deg abduction)"
+   },
+   "thorax": {
+    "shape": "roundedBox + girdle capsule",
+    "size_m": [
+     0.3003,
+     0.17844572085008625,
+     0.23842000000000002
+    ],
+    "convexRadius": 0.03,
+    "centre": [
+     0,
+     1.4241127512923608,
+     0
+    ],
+    "girdleCapsule": {
+     "r": 0.06006,
+     "axis": "ML",
+     "halfLength": 0.13013,
+     "centre": [
+      0,
+      1.5003600000000001,
+      -0.02
+     ]
+    },
+    "evidence": "chest depth 0.131 H (ANSUR subset 237 mm); breadth 0.165 H (< Drillis external chest 0.174 H)"
+   },
+   "head": {
+    "shape": "sphere + neck capsule",
+    "sphere_r": 0.09555,
+    "sphere_centre": [
+     0,
+     1.7353500000000002,
+     0.01001
+    ],
+    "neck_r": 0.0546,
+    "evidence": "head length 0.114 H, breadth 0.088 H (ANSUR II) -> sphere diameter 0.105 H between them"
+   },
+   "upperArm": {
+    "shape": "deltoid sphere + taperedCapsule",
+    "deltoid_r": 0.0546,
+    "deltoid_offset_lateral": 0.012012,
+    "r_prox": 0.04639383312676185,
+    "r_dist": 0.03995115924066248,
+    "evidence": "bideltoid 0.291 H (ANSUR II) reproduced; capsule volume-matched (de Leva mass / Dempster density 1070)"
+   },
+   "forearm": {
+    "shape": "taperedCapsule + hand capsule",
+    "r_prox": 0.03888539287185139,
+    "r_dist": 0.025886477842656134,
+    "hand_r": 0.02457,
+    "hand_len": 0.11011143021252154,
+    "evidence": "volume-matched (density 1130); hand capsule on the forearm body (core)"
+   },
+   "thigh": {
+    "shape": "taperedCapsule",
+    "r_prox": 0.08736000000000001,
+    "r_dist": 0.061880000000000004,
+    "axis": "from 0.02 m lateral / 0.05 m below the HJC to 0.02 m above the KJC",
+    "evidence": "girth-based (proximal thigh circumference ~0.30 H); a volume match gives ~0.10 m and overlaps the opposite thigh"
+   },
+   "shank": {
+    "shape": "taperedCapsule",
+    "r_prox": 0.05281648726603739,
+    "r_dist": 0.035494129148991305,
+    "axis": "KJC-0.03 to AJC+0.06, 0.01 m posterior (calf)",
+    "evidence": "volume-matched (density 1090)"
+   },
+   "foot": {
+    "shape": "convexHull (boot)",
+    "boot_len": 0.29346,
+    "ball_w": 0.11265,
+    "heel_w": 0.08262,
+    "heel_behind_AJC": 0.06626119999999999,
+    "tip_ahead_AJC": 0.2271988,
+    "mtp1_ahead_AJC": 0.14507766,
+    "mtp5_ahead_AJC": 0.11416860000000001,
+    "toeSpring": 0.012,
+    "upper_heights": {
+     "heelCounter": 0.065,
+     "instep": 0.075,
+     "toeBox": 0.045
+    },
+    "convexRadius": 0.005
+   }
+  },
+  "whole_body_arms_down_no_equipment": {
+   "mass": 78.0,
+   "com_y": 1.0335,
+   "com_y_barefoot_over_H": 0.5569,
+   "I_pitch": 13.218,
+   "I_yaw": 1.102,
+   "I_roll": 13.961
+  },
+  "actuators": [
+   {
+    "joint": "hip",
+    "direction": "flexion",
+    "T_iso_Nm_per_kg": 2.7,
+    "T_iso_Nm": 210.6,
+    "iso_evidence": "Anderson & Madigan 2014 2.67; Anderson 2007 1.94 (young males)",
+    "T_dyn_peak_Nm_per_kg": 4.3,
+    "dyn_evidence": "sprint initial swing (Schache 2011); kicks 194-309 N.m (Kellis & Katis 2007)",
+    "w0_rad_s": 18,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "hip",
+    "direction": "extension",
+    "T_iso_Nm_per_kg": 3.6,
+    "T_iso_Nm": 280.8,
+    "iso_evidence": "Anderson 2007 2.76 @53 deg flex; Anderson & Madigan 2014 4.51 @68 deg",
+    "T_dyn_peak_Nm_per_kg": 4.18,
+    "dyn_evidence": "sprint terminal swing (Schache 2011)",
+    "w0_rad_s": 18,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "hip",
+    "direction": "abduction",
+    "T_iso_Nm_per_kg": 2.35,
+    "T_iso_Nm": 183.3,
+    "iso_evidence": "Thorborg 2011 elite 2.25-2.35",
+    "T_dyn_peak_Nm_per_kg": 3.29,
+    "dyn_evidence": "sprint stance (Schache 2011); eccentric 2.6 (Mosler 2017)",
+    "w0_rad_s": 15,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "hip",
+    "direction": "adduction",
+    "T_iso_Nm_per_kg": 2.45,
+    "T_iso_Nm": 191.1,
+    "iso_evidence": "Thorborg 2011 elite 2.37-2.45",
+    "T_dyn_peak_Nm_per_kg": 3.0,
+    "dyn_evidence": "eccentric 3.0 (Mosler 2017); kick ~115 N.m",
+    "w0_rad_s": 15,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "hip",
+    "direction": "internal rot.",
+    "T_iso_Nm_per_kg": 1.2,
+    "T_iso_Nm": 93.6,
+    "iso_evidence": "~1.2 at 90 deg flex (protocol-dependent x2)",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 15,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "hip",
+    "direction": "external rot.",
+    "T_iso_Nm_per_kg": 1.0,
+    "T_iso_Nm": 78.0,
+    "iso_evidence": "0.42-1.0 (protocol-dependent)",
+    "T_dyn_peak_Nm_per_kg": 0.75,
+    "dyn_evidence": "side-foot kick 56 N.m (Nunome 2002)",
+    "w0_rad_s": 15,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "knee",
+    "direction": "extension",
+    "T_iso_Nm_per_kg": 3.6,
+    "T_iso_Nm": 280.8,
+    "iso_evidence": "soccer 60 deg/s concentric 3.1-3.4 (Fousekis 2010) / f(60 deg/s)=0.85; Sarabon 2021 3.19",
+    "T_dyn_peak_Nm_per_kg": 3.6,
+    "dyn_evidence": "sprint midstance 3.55 (Schache 2011); deceleration 3.58 (Harper 2022)",
+    "w0_rad_s": 20,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "knee",
+    "direction": "flexion",
+    "T_iso_Nm_per_kg": 2.1,
+    "T_iso_Nm": 163.8,
+    "iso_evidence": "soccer 60 deg/s 1.7-1.9 (Fousekis 2010), 1.66-2.11 (Sliwowski 2017)",
+    "T_dyn_peak_Nm_per_kg": 1.76,
+    "dyn_evidence": "sprint terminal swing, eccentric (Schache 2011)",
+    "w0_rad_s": 26,
+    "k": 0.45,
+    "eccentric": 1.35
+   },
+   {
+    "joint": "knee",
+    "direction": "tibial IR / ER",
+    "T_iso_Nm_per_kg": 0.35,
+    "T_iso_Nm": 27.3,
+    "iso_evidence": "recalled (~25-30 N.m)",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 15,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "ankle",
+    "direction": "plantarflexion",
+    "T_iso_Nm_per_kg": 2.6,
+    "T_iso_Nm": 202.8,
+    "iso_evidence": "Anderson & Madigan 2014 2.64; Billot 2022 150 N.m (knee 60 deg)",
+    "T_dyn_peak_Nm_per_kg": 4.0,
+    "dyn_evidence": "sprint midstance (Schache 2011), with tendon recoil",
+    "w0_rad_s": 15,
+    "k": 0.45,
+    "eccentric": 1.3
+   },
+   {
+    "joint": "ankle",
+    "direction": "dorsiflexion",
+    "T_iso_Nm_per_kg": 0.6,
+    "T_iso_Nm": 46.8,
+    "iso_evidence": "Billot 2022 net ~45 N.m; Fousekis ecc 48-52",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 17,
+    "k": 0.45,
+    "eccentric": 1.2
+   },
+   {
+    "joint": "ankle",
+    "direction": "inversion",
+    "T_iso_Nm_per_kg": 0.5,
+    "T_iso_Nm": 39.0,
+    "iso_evidence": "Maciel 2022 34.8 N.m at 30 deg/s (mixed sex, 38 y) -> athlete ENG",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 12,
+    "k": 0.45,
+    "eccentric": 1.2
+   },
+   {
+    "joint": "ankle",
+    "direction": "eversion",
+    "T_iso_Nm_per_kg": 0.45,
+    "T_iso_Nm": 35.1,
+    "iso_evidence": "Maciel 2022 29.9 N.m",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 12,
+    "k": 0.45,
+    "eccentric": 1.2
+   },
+   {
+    "joint": "trunk (lumbar = thoracic, in series)",
+    "direction": "flexion",
+    "T_iso_Nm_per_kg": 2.0,
+    "T_iso_Nm": 156.0,
+    "iso_evidence": "Pan 2025 iso 1.15 (non-athletes); athletes isokinetic 211-297 N.m (Zouita 2020)",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 15,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "trunk",
+    "direction": "extension",
+    "T_iso_Nm_per_kg": 3.0,
+    "T_iso_Nm": 234.0,
+    "iso_evidence": "Pan 2025 iso 1.74; athletes isokinetic 345-440 N.m (Zouita 2020)",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 15,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "trunk",
+    "direction": "lateral bend",
+    "T_iso_Nm_per_kg": 1.5,
+    "T_iso_Nm": 117.0,
+    "iso_evidence": "Pan 2025 0.91-0.95",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 15,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "trunk",
+    "direction": "axial rotation",
+    "T_iso_Nm_per_kg": 0.9,
+    "T_iso_Nm": 70.2,
+    "iso_evidence": "Pan 2025 0.64-0.74",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 15,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "neck",
+    "direction": "extension",
+    "T_iso_Nm_per_kg": 0.69,
+    "T_iso_Nm": 53.8,
+    "iso_evidence": "Vasavada 2001 52 N.m",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 12,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "neck",
+    "direction": "flexion",
+    "T_iso_Nm_per_kg": 0.4,
+    "T_iso_Nm": 31.2,
+    "iso_evidence": "Vasavada 2001 30 N.m",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 12,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "neck",
+    "direction": "lateral bend",
+    "T_iso_Nm_per_kg": 0.48,
+    "T_iso_Nm": 37.4,
+    "iso_evidence": "Vasavada 2001 36 N.m",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 12,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "neck",
+    "direction": "axial rotation",
+    "T_iso_Nm_per_kg": 0.2,
+    "T_iso_Nm": 15.6,
+    "iso_evidence": "Vasavada 2001 15 N.m",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 12,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "shoulder",
+    "direction": "flexion",
+    "T_iso_Nm_per_kg": 0.95,
+    "T_iso_Nm": 74.1,
+    "iso_evidence": "recalled 60-80 N.m",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 15,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "shoulder",
+    "direction": "extension",
+    "T_iso_Nm_per_kg": 1.15,
+    "T_iso_Nm": 89.7,
+    "iso_evidence": "recalled 70-100 N.m; ext:flex 5:4 (Ivey 1985)",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 15,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "shoulder",
+    "direction": "abduction",
+    "T_iso_Nm_per_kg": 0.85,
+    "T_iso_Nm": 66.3,
+    "iso_evidence": "recalled 50-75 N.m",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 15,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "shoulder",
+    "direction": "adduction",
+    "T_iso_Nm_per_kg": 1.4,
+    "T_iso_Nm": 109.2,
+    "iso_evidence": "add:abd ~2:1 (Holzbaur 2007); 67.9 mixed-sex",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 15,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "shoulder",
+    "direction": "internal rot.",
+    "T_iso_Nm_per_kg": 0.7,
+    "T_iso_Nm": 54.6,
+    "iso_evidence": "recalled 40-60; IR:ER 3:2 (Ivey 1985)",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 15,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "shoulder",
+    "direction": "external rot.",
+    "T_iso_Nm_per_kg": 0.47,
+    "T_iso_Nm": 36.7,
+    "iso_evidence": "recalled 30-45",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 15,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "elbow",
+    "direction": "flexion",
+    "T_iso_Nm_per_kg": 0.98,
+    "T_iso_Nm": 76.4,
+    "iso_evidence": "Kotte 2018 76.7 N.m",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 18,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "elbow",
+    "direction": "extension",
+    "T_iso_Nm_per_kg": 0.62,
+    "T_iso_Nm": 48.4,
+    "iso_evidence": "Kotte 2018 48.2 N.m",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 18,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "elbow",
+    "direction": "pronation / supination",
+    "T_iso_Nm_per_kg": 0.13,
+    "T_iso_Nm": 10.1,
+    "iso_evidence": "Kotte 2018 10.0 / 10.7 N.m",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 18,
+    "k": 0.45,
+    "eccentric": 1.25
+   }
+  ]
+ },
+ "V1_matched": {
+  "H": 1.9,
+  "M": 78.0,
+  "landmarks": {
+   "closure_m": 0.002,
+   "yA": 0.0941,
+   "yK": 0.552,
+   "yH": 0.9985,
+   "yOMPH": 1.1575,
+   "yXYPH": 1.3927,
+   "ySUPR": 1.579,
+   "yCERV": 1.6549,
+   "yVERT": 1.92,
+   "ySJC": 1.5362,
+   "hx": 0.095,
+   "sx": 0.2071,
+   "sole": 0.02,
+   "footLen": 0.2907,
+   "Ls": {
+    "head": 0.2651,
+    "UPT": 0.1863,
+    "MPT": 0.2352,
+    "LPT": 0.159,
+    "upperArm": 0.3074,
+    "forearm": 0.2935,
+    "hand": 0.0941,
+    "thigh": 0.4465,
+    "shank": 0.4579,
+    "foot": 0.2817
+   }
+  },
+  "bodies": [
+   {
+    "name": "pelvis",
+    "parent": null,
+    "mass": 8.8026,
+    "com_ccs": [
+     0.0,
+     1.0603,
+     0.0
+    ],
+    "com_from_joint": [
+     0.0,
+     0.0618,
+     0.0
+    ],
+    "inertia_about_com_ccs": [
+     [
+      0.06688,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0759,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.08332
+     ]
+    ],
+    "joint_ccs": [
+     0.0,
+     0.9985,
+     0.0
+    ]
+   },
+   {
+    "name": "abdomen",
+    "parent": "pelvis",
+    "mass": 12.7374,
+    "com_ccs": [
+     0.0,
+     1.2868,
+     0.0
+    ],
+    "com_from_joint": [
+     0.0,
+     0.1293,
+     0.0323
+    ],
+    "inertia_about_com_ccs": [
+     [
+      0.10334,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.1543,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.16367
+     ]
+    ],
+    "joint_ccs": [
+     0.0,
+     1.1575,
+     -0.0323
+    ]
+   },
+   {
+    "name": "thorax",
+    "parent": "abdomen",
+    "mass": 12.6488,
+    "com_ccs": [
+     0.0,
+     1.5231,
+     0.0
+    ],
+    "com_from_joint": [
+     0.0,
+     0.1304,
+     0.0418
+    ],
+    "inertia_about_com_ccs": [
+     [
+      0.08905,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.18762,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.22148
+     ]
+    ],
+    "joint_ccs": [
+     0.0,
+     1.3927,
+     -0.0418
+    ]
+   },
+   {
+    "name": "head",
+    "parent": "thorax",
+    "mass": 5.4132,
+    "com_ccs": [
+     0.0,
+     1.7874,
+     0.0
+    ],
+    "com_from_joint": [
+     0.0,
+     0.1325,
+     0.0323
+    ],
+    "inertia_about_com_ccs": [
+     [
+      0.03774,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.02591,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.03492
+     ]
+    ],
+    "joint_ccs": [
+     0.0,
+     1.6549,
+     -0.0323
+    ]
+   },
+   {
+    "name": "upperArm_R",
+    "parent": "thorax",
+    "mass": 2.1138,
+    "com_ccs": [
+     0.3845,
+     1.5362,
+     0.0
+    ],
+    "com_from_joint": [
+     0.1774,
+     0.0,
+     0.0
+    ],
+    "inertia_about_com_ccs": [
+     [
+      0.00499,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.01446,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.01623
+     ]
+    ],
+    "joint_ccs": [
+     0.2071,
+     1.5362,
+     0.0
+    ]
+   },
+   {
+    "name": "forearm_R",
+    "parent": "upperArm_R",
+    "mass": 1.7394,
+    "com_ccs": [
+     0.7126,
+     1.5362,
+     0.0
+    ],
+    "com_from_joint": [
+     0.1981,
+     -0.0,
+     0.0
+    ],
+    "inertia_about_com_ccs": [
+     [
+      0.00227,
+      -0.0,
+      0.0
+     ],
+     [
+      -0.0,
+      0.0276,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.0288
+     ]
+    ],
+    "joint_ccs": [
+     0.5145,
+     1.5362,
+     0.0
+    ]
+   },
+   {
+    "name": "upperArm_L",
+    "parent": "thorax",
+    "mass": 2.1138,
+    "com_ccs": [
+     -0.3845,
+     1.5362,
+     0.0
+    ],
+    "com_from_joint": [
+     -0.1774,
+     0.0,
+     0.0
+    ],
+    "inertia_about_com_ccs": [
+     [
+      0.00499,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.01446,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.01623
+     ]
+    ],
+    "joint_ccs": [
+     -0.2071,
+     1.5362,
+     0.0
+    ]
+   },
+   {
+    "name": "forearm_L",
+    "parent": "upperArm_L",
+    "mass": 1.7394,
+    "com_ccs": [
+     -0.7126,
+     1.5362,
+     0.0
+    ],
+    "com_from_joint": [
+     -0.1981,
+     -0.0,
+     0.0
+    ],
+    "inertia_about_com_ccs": [
+     [
+      0.00227,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0276,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.0288
+     ]
+    ],
+    "joint_ccs": [
+     -0.5145,
+     1.5362,
+     0.0
+    ]
+   },
+   {
+    "name": "thigh_R",
+    "parent": "pelvis",
+    "mass": 11.0748,
+    "com_ccs": [
+     0.095,
+     0.8157,
+     0.0
+    ],
+    "com_from_joint": [
+     0.0,
+     -0.1828,
+     0.0
+    ],
+    "inertia_about_com_ccs": [
+     [
+      0.23834,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.04888,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.23834
+     ]
+    ],
+    "joint_ccs": [
+     0.095,
+     0.9985,
+     0.0
+    ]
+   },
+   {
+    "name": "shank_R",
+    "parent": "thigh_R",
+    "mass": 3.4574,
+    "com_ccs": [
+     0.095,
+     0.3496,
+     0.001
+    ],
+    "com_from_joint": [
+     0.0,
+     -0.2024,
+     0.001
+    ],
+    "inertia_about_com_ccs": [
+     [
+      0.04339,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0076,
+      0.00017
+     ],
+     [
+      0.0,
+      0.00017,
+      0.0451
+     ]
+    ],
+    "joint_ccs": [
+     0.095,
+     0.552,
+     0.0
+    ]
+   },
+   {
+    "name": "foot_R",
+    "parent": "shank_R",
+    "mass": 1.2686,
+    "com_ccs": [
+     0.095,
+     0.0432,
+     0.066
+    ],
+    "com_from_joint": [
+     0.0,
+     -0.0509,
+     0.066
+    ],
+    "inertia_about_com_ccs": [
+     [
+      0.00729,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.00777,
+      7e-05
+     ],
+     [
+      0.0,
+      7e-05,
+      0.00191
+     ]
+    ],
+    "joint_ccs": [
+     0.095,
+     0.0941,
+     0.0
+    ]
+   },
+   {
+    "name": "thigh_L",
+    "parent": "pelvis",
+    "mass": 11.0748,
+    "com_ccs": [
+     -0.095,
+     0.8157,
+     0.0
+    ],
+    "com_from_joint": [
+     0.0,
+     -0.1828,
+     0.0
+    ],
+    "inertia_about_com_ccs": [
+     [
+      0.23834,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.04888,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.23834
+     ]
+    ],
+    "joint_ccs": [
+     -0.095,
+     0.9985,
+     0.0
+    ]
+   },
+   {
+    "name": "shank_L",
+    "parent": "thigh_L",
+    "mass": 3.4574,
+    "com_ccs": [
+     -0.095,
+     0.3496,
+     0.001
+    ],
+    "com_from_joint": [
+     0.0,
+     -0.2024,
+     0.001
+    ],
+    "inertia_about_com_ccs": [
+     [
+      0.04339,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0076,
+      0.00017
+     ],
+     [
+      0.0,
+      0.00017,
+      0.0451
+     ]
+    ],
+    "joint_ccs": [
+     -0.095,
+     0.552,
+     0.0
+    ]
+   },
+   {
+    "name": "foot_L",
+    "parent": "shank_L",
+    "mass": 1.2686,
+    "com_ccs": [
+     -0.095,
+     0.0432,
+     0.066
+    ],
+    "com_from_joint": [
+     0.0,
+     -0.0509,
+     0.066
+    ],
+    "inertia_about_com_ccs": [
+     [
+      0.00729,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.00777,
+      7e-05
+     ],
+     [
+      0.0,
+      7e-05,
+      0.00191
+     ]
+    ],
+    "joint_ccs": [
+     -0.095,
+     0.0941,
+     0.0
+    ]
+   }
+  ],
+  "skeleton": [
+   {
+    "bone": "root",
+    "parent": null,
+    "pos_ccs": [
+     0,
+     0,
+     0
+    ]
+   },
+   {
+    "bone": "hips",
+    "parent": "root",
+    "pos_ccs": [
+     0,
+     0.9985,
+     0
+    ]
+   },
+   {
+    "bone": "spine_01",
+    "parent": "hips",
+    "pos_ccs": [
+     0,
+     1.1575,
+     -0.0323
+    ]
+   },
+   {
+    "bone": "spine_02",
+    "parent": "spine_01",
+    "pos_ccs": [
+     0,
+     1.3927,
+     -0.0418
+    ]
+   },
+   {
+    "bone": "spine_03",
+    "parent": "spine_02",
+    "pos_ccs": [
+     0,
+     1.5238,
+     -0.0418
+    ]
+   },
+   {
+    "bone": "neck",
+    "parent": "spine_03",
+    "pos_ccs": [
+     0,
+     1.6549,
+     -0.0323
+    ]
+   },
+   {
+    "bone": "head",
+    "parent": "neck",
+    "pos_ccs": [
+     0,
+     1.7756,
+     -0.0104
+    ]
+   },
+   {
+    "bone": "clavicle_L",
+    "parent": "spine_03",
+    "pos_ccs": [
+     -0.0209,
+     1.579,
+     0.0893
+    ]
+   },
+   {
+    "bone": "upperArm_L",
+    "parent": "clavicle_L",
+    "pos_ccs": [
+     -0.2071,
+     1.5362,
+     0
+    ]
+   },
+   {
+    "bone": "upperArm_twist_L",
+    "parent": "upperArm_L",
+    "pos_ccs": [
+     -0.3608,
+     1.5362,
+     0
+    ]
+   },
+   {
+    "bone": "lowerArm_L",
+    "parent": "upperArm_L",
+    "pos_ccs": [
+     -0.5145,
+     1.5362,
+     0
+    ]
+   },
+   {
+    "bone": "forearm_twist_L",
+    "parent": "lowerArm_L",
+    "pos_ccs": [
+     -0.6906,
+     1.5362,
+     0
+    ]
+   },
+   {
+    "bone": "hand_L",
+    "parent": "lowerArm_L",
+    "pos_ccs": [
+     -0.808,
+     1.5362,
+     0
+    ]
+   },
+   {
+    "bone": "clavicle_R",
+    "parent": "spine_03",
+    "pos_ccs": [
+     0.0209,
+     1.579,
+     0.0893
+    ]
+   },
+   {
+    "bone": "upperArm_R",
+    "parent": "clavicle_R",
+    "pos_ccs": [
+     0.2071,
+     1.5362,
+     0
+    ]
+   },
+   {
+    "bone": "upperArm_twist_R",
+    "parent": "upperArm_R",
+    "pos_ccs": [
+     0.3608,
+     1.5362,
+     0
+    ]
+   },
+   {
+    "bone": "lowerArm_R",
+    "parent": "upperArm_R",
+    "pos_ccs": [
+     0.5145,
+     1.5362,
+     0
+    ]
+   },
+   {
+    "bone": "forearm_twist_R",
+    "parent": "lowerArm_R",
+    "pos_ccs": [
+     0.6906,
+     1.5362,
+     0
+    ]
+   },
+   {
+    "bone": "hand_R",
+    "parent": "lowerArm_R",
+    "pos_ccs": [
+     0.808,
+     1.5362,
+     0
+    ]
+   },
+   {
+    "bone": "upperLeg_L",
+    "parent": "hips",
+    "pos_ccs": [
+     -0.095,
+     0.9985,
+     0
+    ]
+   },
+   {
+    "bone": "thigh_twist_L",
+    "parent": "upperLeg_L",
+    "pos_ccs": [
+     -0.095,
+     0.7752,
+     0
+    ]
+   },
+   {
+    "bone": "lowerLeg_L",
+    "parent": "upperLeg_L",
+    "pos_ccs": [
+     -0.095,
+     0.552,
+     0
+    ]
+   },
+   {
+    "bone": "calf_twist_L",
+    "parent": "lowerLeg_L",
+    "pos_ccs": [
+     -0.095,
+     0.3231,
+     0
+    ]
+   },
+   {
+    "bone": "foot_L",
+    "parent": "lowerLeg_L",
+    "pos_ccs": [
+     -0.095,
+     0.0941,
+     0
+    ]
+   },
+   {
+    "bone": "toe_L",
+    "parent": "foot_L",
+    "pos_ccs": [
+     -0.095,
+     0.0389,
+     0.1353
+    ]
+   },
+   {
+    "bone": "upperLeg_R",
+    "parent": "hips",
+    "pos_ccs": [
+     0.095,
+     0.9985,
+     0
+    ]
+   },
+   {
+    "bone": "thigh_twist_R",
+    "parent": "upperLeg_R",
+    "pos_ccs": [
+     0.095,
+     0.7752,
+     0
+    ]
+   },
+   {
+    "bone": "lowerLeg_R",
+    "parent": "upperLeg_R",
+    "pos_ccs": [
+     0.095,
+     0.552,
+     0
+    ]
+   },
+   {
+    "bone": "calf_twist_R",
+    "parent": "lowerLeg_R",
+    "pos_ccs": [
+     0.095,
+     0.3231,
+     0
+    ]
+   },
+   {
+    "bone": "foot_R",
+    "parent": "lowerLeg_R",
+    "pos_ccs": [
+     0.095,
+     0.0941,
+     0
+    ]
+   },
+   {
+    "bone": "toe_R",
+    "parent": "foot_R",
+    "pos_ccs": [
+     0.095,
+     0.0389,
+     0.1353
+    ]
+   }
+  ],
+  "colliders": {
+   "pelvis": {
+    "shape": "roundedBox",
+    "size_m": [
+     0.361,
+     0.2290063182079265,
+     0.2375
+    ],
+    "convexRadius": 0.03,
+    "centre": [
+     0,
+     1.0430031591039632,
+     -0.01
+    ],
+    "evidence": "hip breadth 0.19-0.197 H (Drillis / ANSUR II); depth 0.125 H; extends 7 cm below the HJC (gluteal)"
+   },
+   "abdomen": {
+    "shape": "roundedBox",
+    "size_m": [
+     0.2945,
+     0.23518093049971278,
+     0.22609999999999997
+    ],
+    "convexRadius": 0.03,
+    "centre": [
+     0,
+     1.2750967834577827,
+     0
+    ],
+    "evidence": "waist depth 0.119 H (ANSUR II footballer-sized subset 215 mm); breadth ENG 0.155 H (arm clearance at 6 deg abduction)"
+   },
+   "thorax": {
+    "shape": "roundedBox + girdle capsule",
+    "size_m": [
+     0.3135,
+     0.18628948879954055,
+     0.2489
+    ],
+    "convexRadius": 0.03,
+    "centre": [
+     0,
+     1.4858319931074093,
+     0
+    ],
+    "girdleCapsule": {
+     "r": 0.0627,
+     "axis": "ML",
+     "halfLength": 0.13584999999999997,
+     "centre": [
+      0,
+      1.5642,
+      -0.02
+     ]
+    },
+    "evidence": "chest depth 0.131 H (ANSUR subset 237 mm); breadth 0.165 H (< Drillis external chest 0.174 H)"
+   },
+   "head": {
+    "shape": "sphere + neck capsule",
+    "sphere_r": 0.09974999999999999,
+    "sphere_centre": [
+     0,
+     1.8107499999999999,
+     0.01045
+    ],
+    "neck_r": 0.056999999999999995,
+    "evidence": "head length 0.114 H, breadth 0.088 H (ANSUR II) -> sphere diameter 0.105 H between them"
+   },
+   "upperArm": {
+    "shape": "deltoid sphere + taperedCapsule",
+    "deltoid_r": 0.056999999999999995,
+    "deltoid_offset_lateral": 0.012539999999999999,
+    "r_prox": 0.04534278026288714,
+    "r_dist": 0.03903720022859752,
+    "evidence": "bideltoid 0.291 H (ANSUR II) reproduced; capsule volume-matched (de Leva mass / Dempster density 1070)"
+   },
+   "forearm": {
+    "shape": "taperedCapsule + hand capsule",
+    "r_prox": 0.03799411233447142,
+    "r_dist": 0.025271801609980292,
+    "hand_r": 0.02565,
+    "hand_len": 0.11407237219988511,
+    "evidence": "volume-matched (density 1130); hand capsule on the forearm body (core)"
+   },
+   "thigh": {
+    "shape": "taperedCapsule",
+    "r_prox": 0.0912,
+    "r_dist": 0.0646,
+    "axis": "from 0.02 m lateral / 0.05 m below the HJC to 0.02 m above the KJC",
+    "evidence": "girth-based (proximal thigh circumference ~0.30 H); a volume match gives ~0.10 m and overlaps the opposite thigh"
+   },
+   "shank": {
+    "shape": "taperedCapsule",
+    "r_prox": 0.05162876655114902,
+    "r_dist": 0.03467501141458553,
+    "axis": "KJC-0.03 to AJC+0.06, 0.01 m posterior (calf)",
+    "evidence": "volume-matched (density 1090)"
+   },
+   "foot": {
+    "shape": "convexHull (boot)",
+    "boot_len": 0.30569999999999997,
+    "ball_w": 0.11725,
+    "heel_w": 0.0859,
+    "heel_behind_AJC": 0.068954,
+    "tip_ahead_AJC": 0.23674599999999998,
+    "mtp1_ahead_AJC": 0.15145469999999997,
+    "mtp5_ahead_AJC": 0.11918699999999999,
+    "toeSpring": 0.012,
+    "upper_heights": {
+     "heelCounter": 0.065,
+     "instep": 0.075,
+     "toeBox": 0.045
+    },
+    "convexRadius": 0.005
+   }
+  },
+  "whole_body_arms_down_no_equipment": {
+   "mass": 78.0,
+   "com_y": 1.078,
+   "com_y_barefoot_over_H": 0.5569,
+   "I_pitch": 14.406,
+   "I_yaw": 1.201,
+   "I_roll": 15.215
+  },
+  "actuators": [
+   {
+    "joint": "hip",
+    "direction": "flexion",
+    "T_iso_Nm_per_kg": 2.7,
+    "T_iso_Nm": 210.6,
+    "iso_evidence": "Anderson & Madigan 2014 2.67; Anderson 2007 1.94 (young males)",
+    "T_dyn_peak_Nm_per_kg": 4.3,
+    "dyn_evidence": "sprint initial swing (Schache 2011); kicks 194-309 N.m (Kellis & Katis 2007)",
+    "w0_rad_s": 18,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "hip",
+    "direction": "extension",
+    "T_iso_Nm_per_kg": 3.6,
+    "T_iso_Nm": 280.8,
+    "iso_evidence": "Anderson 2007 2.76 @53 deg flex; Anderson & Madigan 2014 4.51 @68 deg",
+    "T_dyn_peak_Nm_per_kg": 4.18,
+    "dyn_evidence": "sprint terminal swing (Schache 2011)",
+    "w0_rad_s": 18,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "hip",
+    "direction": "abduction",
+    "T_iso_Nm_per_kg": 2.35,
+    "T_iso_Nm": 183.3,
+    "iso_evidence": "Thorborg 2011 elite 2.25-2.35",
+    "T_dyn_peak_Nm_per_kg": 3.29,
+    "dyn_evidence": "sprint stance (Schache 2011); eccentric 2.6 (Mosler 2017)",
+    "w0_rad_s": 15,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "hip",
+    "direction": "adduction",
+    "T_iso_Nm_per_kg": 2.45,
+    "T_iso_Nm": 191.1,
+    "iso_evidence": "Thorborg 2011 elite 2.37-2.45",
+    "T_dyn_peak_Nm_per_kg": 3.0,
+    "dyn_evidence": "eccentric 3.0 (Mosler 2017); kick ~115 N.m",
+    "w0_rad_s": 15,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "hip",
+    "direction": "internal rot.",
+    "T_iso_Nm_per_kg": 1.2,
+    "T_iso_Nm": 93.6,
+    "iso_evidence": "~1.2 at 90 deg flex (protocol-dependent x2)",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 15,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "hip",
+    "direction": "external rot.",
+    "T_iso_Nm_per_kg": 1.0,
+    "T_iso_Nm": 78.0,
+    "iso_evidence": "0.42-1.0 (protocol-dependent)",
+    "T_dyn_peak_Nm_per_kg": 0.75,
+    "dyn_evidence": "side-foot kick 56 N.m (Nunome 2002)",
+    "w0_rad_s": 15,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "knee",
+    "direction": "extension",
+    "T_iso_Nm_per_kg": 3.6,
+    "T_iso_Nm": 280.8,
+    "iso_evidence": "soccer 60 deg/s concentric 3.1-3.4 (Fousekis 2010) / f(60 deg/s)=0.85; Sarabon 2021 3.19",
+    "T_dyn_peak_Nm_per_kg": 3.6,
+    "dyn_evidence": "sprint midstance 3.55 (Schache 2011); deceleration 3.58 (Harper 2022)",
+    "w0_rad_s": 20,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "knee",
+    "direction": "flexion",
+    "T_iso_Nm_per_kg": 2.1,
+    "T_iso_Nm": 163.8,
+    "iso_evidence": "soccer 60 deg/s 1.7-1.9 (Fousekis 2010), 1.66-2.11 (Sliwowski 2017)",
+    "T_dyn_peak_Nm_per_kg": 1.76,
+    "dyn_evidence": "sprint terminal swing, eccentric (Schache 2011)",
+    "w0_rad_s": 26,
+    "k": 0.45,
+    "eccentric": 1.35
+   },
+   {
+    "joint": "knee",
+    "direction": "tibial IR / ER",
+    "T_iso_Nm_per_kg": 0.35,
+    "T_iso_Nm": 27.3,
+    "iso_evidence": "recalled (~25-30 N.m)",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 15,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "ankle",
+    "direction": "plantarflexion",
+    "T_iso_Nm_per_kg": 2.6,
+    "T_iso_Nm": 202.8,
+    "iso_evidence": "Anderson & Madigan 2014 2.64; Billot 2022 150 N.m (knee 60 deg)",
+    "T_dyn_peak_Nm_per_kg": 4.0,
+    "dyn_evidence": "sprint midstance (Schache 2011), with tendon recoil",
+    "w0_rad_s": 15,
+    "k": 0.45,
+    "eccentric": 1.3
+   },
+   {
+    "joint": "ankle",
+    "direction": "dorsiflexion",
+    "T_iso_Nm_per_kg": 0.6,
+    "T_iso_Nm": 46.8,
+    "iso_evidence": "Billot 2022 net ~45 N.m; Fousekis ecc 48-52",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 17,
+    "k": 0.45,
+    "eccentric": 1.2
+   },
+   {
+    "joint": "ankle",
+    "direction": "inversion",
+    "T_iso_Nm_per_kg": 0.5,
+    "T_iso_Nm": 39.0,
+    "iso_evidence": "Maciel 2022 34.8 N.m at 30 deg/s (mixed sex, 38 y) -> athlete ENG",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 12,
+    "k": 0.45,
+    "eccentric": 1.2
+   },
+   {
+    "joint": "ankle",
+    "direction": "eversion",
+    "T_iso_Nm_per_kg": 0.45,
+    "T_iso_Nm": 35.1,
+    "iso_evidence": "Maciel 2022 29.9 N.m",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 12,
+    "k": 0.45,
+    "eccentric": 1.2
+   },
+   {
+    "joint": "trunk (lumbar = thoracic, in series)",
+    "direction": "flexion",
+    "T_iso_Nm_per_kg": 2.0,
+    "T_iso_Nm": 156.0,
+    "iso_evidence": "Pan 2025 iso 1.15 (non-athletes); athletes isokinetic 211-297 N.m (Zouita 2020)",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 15,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "trunk",
+    "direction": "extension",
+    "T_iso_Nm_per_kg": 3.0,
+    "T_iso_Nm": 234.0,
+    "iso_evidence": "Pan 2025 iso 1.74; athletes isokinetic 345-440 N.m (Zouita 2020)",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 15,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "trunk",
+    "direction": "lateral bend",
+    "T_iso_Nm_per_kg": 1.5,
+    "T_iso_Nm": 117.0,
+    "iso_evidence": "Pan 2025 0.91-0.95",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 15,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "trunk",
+    "direction": "axial rotation",
+    "T_iso_Nm_per_kg": 0.9,
+    "T_iso_Nm": 70.2,
+    "iso_evidence": "Pan 2025 0.64-0.74",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 15,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "neck",
+    "direction": "extension",
+    "T_iso_Nm_per_kg": 0.69,
+    "T_iso_Nm": 53.8,
+    "iso_evidence": "Vasavada 2001 52 N.m",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 12,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "neck",
+    "direction": "flexion",
+    "T_iso_Nm_per_kg": 0.4,
+    "T_iso_Nm": 31.2,
+    "iso_evidence": "Vasavada 2001 30 N.m",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 12,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "neck",
+    "direction": "lateral bend",
+    "T_iso_Nm_per_kg": 0.48,
+    "T_iso_Nm": 37.4,
+    "iso_evidence": "Vasavada 2001 36 N.m",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 12,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "neck",
+    "direction": "axial rotation",
+    "T_iso_Nm_per_kg": 0.2,
+    "T_iso_Nm": 15.6,
+    "iso_evidence": "Vasavada 2001 15 N.m",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 12,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "shoulder",
+    "direction": "flexion",
+    "T_iso_Nm_per_kg": 0.95,
+    "T_iso_Nm": 74.1,
+    "iso_evidence": "recalled 60-80 N.m",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 15,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "shoulder",
+    "direction": "extension",
+    "T_iso_Nm_per_kg": 1.15,
+    "T_iso_Nm": 89.7,
+    "iso_evidence": "recalled 70-100 N.m; ext:flex 5:4 (Ivey 1985)",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 15,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "shoulder",
+    "direction": "abduction",
+    "T_iso_Nm_per_kg": 0.85,
+    "T_iso_Nm": 66.3,
+    "iso_evidence": "recalled 50-75 N.m",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 15,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "shoulder",
+    "direction": "adduction",
+    "T_iso_Nm_per_kg": 1.4,
+    "T_iso_Nm": 109.2,
+    "iso_evidence": "add:abd ~2:1 (Holzbaur 2007); 67.9 mixed-sex",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 15,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "shoulder",
+    "direction": "internal rot.",
+    "T_iso_Nm_per_kg": 0.7,
+    "T_iso_Nm": 54.6,
+    "iso_evidence": "recalled 40-60; IR:ER 3:2 (Ivey 1985)",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 15,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "shoulder",
+    "direction": "external rot.",
+    "T_iso_Nm_per_kg": 0.47,
+    "T_iso_Nm": 36.7,
+    "iso_evidence": "recalled 30-45",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 15,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "elbow",
+    "direction": "flexion",
+    "T_iso_Nm_per_kg": 0.98,
+    "T_iso_Nm": 76.4,
+    "iso_evidence": "Kotte 2018 76.7 N.m",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 18,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "elbow",
+    "direction": "extension",
+    "T_iso_Nm_per_kg": 0.62,
+    "T_iso_Nm": 48.4,
+    "iso_evidence": "Kotte 2018 48.2 N.m",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 18,
+    "k": 0.45,
+    "eccentric": 1.25
+   },
+   {
+    "joint": "elbow",
+    "direction": "pronation / supination",
+    "T_iso_Nm_per_kg": 0.13,
+    "T_iso_Nm": 10.1,
+    "iso_evidence": "Kotte 2018 10.0 / 10.7 N.m",
+    "T_dyn_peak_Nm_per_kg": null,
+    "dyn_evidence": "",
+    "w0_rad_s": 18,
+    "k": 0.45,
+    "eccentric": 1.25
+   }
+  ]
+ },
+ "V1_1_reference": {
+  "note": "frozen V1.1 body reconstructed from pc_body.js rules",
+  "bodies": [
+   {
+    "name": "pelvis",
+    "mass": 8.713,
+    "com": [
+     0.0,
+     1.0575,
+     0.0
+    ]
+   },
+   {
+    "name": "abdomen",
+    "mass": 12.737,
+    "com": [
+     0.0,
+     1.2569,
+     0.0
+    ]
+   },
+   {
+    "name": "thorax",
+    "mass": 12.449,
+    "com": [
+     0.0,
+     1.5521,
+     0.0
+    ]
+   },
+   {
+    "name": "head",
+    "mass": 5.413,
+    "com": [
+     0.0,
+     1.7666,
+     0.0
+    ]
+   },
+   {
+    "name": "upperArm_R",
+    "mass": 2.114,
+    "com": [
+     0.2532,
+     1.3502,
+     0.0
+    ]
+   },
+   {
+    "name": "forearm_R",
+    "mass": 1.739,
+    "com": [
+     0.2583,
+     1.0476,
+     0.0
+    ]
+   },
+   {
+    "name": "thigh_R",
+    "mass": 11.045,
+    "com": [
+     0.1068,
+     0.815,
+     0.0
+    ]
+   },
+   {
+    "name": "shank_R",
+    "mass": 3.377,
+    "com": [
+     0.1433,
+     0.333,
+     0.0
+    ]
+   },
+   {
+    "name": "foot_R",
+    "mass": 1.069,
+    "com": [
+     0.1615,
+     0.045,
+     0.0767
+    ]
+   },
+   {
+    "name": "upperArm_L",
+    "mass": 2.114,
+    "com": [
+     -0.2532,
+     1.3502,
+     0.0
+    ]
+   },
+   {
+    "name": "forearm_L",
+    "mass": 1.739,
+    "com": [
+     -0.2583,
+     1.0476,
+     0.0
+    ]
+   },
+   {
+    "name": "thigh_L",
+    "mass": 11.045,
+    "com": [
+     -0.1068,
+     0.815,
+     0.0
+    ]
+   },
+   {
+    "name": "shank_L",
+    "mass": 3.377,
+    "com": [
+     -0.1433,
+     0.333,
+     0.0
+    ]
+   },
+   {
+    "name": "foot_L",
+    "mass": 1.069,
+    "com": [
+     -0.1615,
+     0.045,
+     0.0767
+    ]
+   }
+  ]
+ }
+}
