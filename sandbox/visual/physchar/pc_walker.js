@@ -45,6 +45,28 @@ export function solveStep(M, x, yt, uRef, sg, lo, hi, fixT, b, auth) { const Wi 
     let worst = -1, wv = 0; for (let j = 0; j < 3; j++) { if (!free[j]) continue; const v = u[j] < lo[j] ? (lo[j] - u[j]) / sg[j] : u[j] > hi[j] ? (u[j] - hi[j]) / sg[j] : 0; if (v > wv) { wv = v; worst = j; } }
     if (worst < 0) break; u[worst] = clamp(u[worst], lo[worst], hi[worst]); free[worst] = false; info.clamped.push(["df", "dl", "T"][worst]); }
   u = u.map((v, j) => clamp(v, lo[j], hi[j])); info.pred = P(x, u); return { u, info }; }
+// ((G2b overnight, opt-in) TWO-STEP PREVIEW on the measured maps: this step's input u0 (at the decision instant's map M) and the NEXT step's u1
+// (at the step-start map M1) chosen together, so that this step leaves a state from which the next step — within ITS bounds — can return to the
+// orbit. The single-step solve is greedy: it reached its target with extreme inputs (timing at a bound, a 0.17 m step) that left a state the
+// next step could not recover (the stall → runaway pattern measured in the walks). Cost (weighted least squares, boxes by projection):
+//   Σ ((x1 − y1)/q1)² + Σ ((x2 − y2)/q2)² + Σ ((u0 − uRef)/r)² + Σ ((u1 − uRef1)/r)²;  x1 = f(M, x, u0), x2 = f(M1, x1, u1)
+// u0's timing may be fixed (in the swing); returns u0 (u1 is only the plan's assumption — the next step decides for itself).
+export function solvePreview(M, M1, x, y1, y2, uRef, uRef1, r, q1, q2, lo, hi, fixT, b, lo1, hi1) {
+  const P = (MM, xx, uu) => { const y = predictA(MM, xx, uu); return b ? [y[0] + b[0], y[1] + b[1]] : y; };
+  const res = (z) => { const u0 = z.slice(0, 3), u1 = z.slice(3, 6), x1 = P(M, x, u0), x2 = P(M1, x1, u1);
+    return [(x1[0] - y1[0]) / q1[0], (x1[1] - y1[1]) / q1[1], (x2[0] - y2[0]) / q2[0], (x2[1] - y2[1]) / q2[1], ...u0.map((v, j) => (v - uRef[j]) / r[j]), ...u1.map((v, j) => (v - uRef1[j]) / r[j])]; };
+  const L = [...lo, ...(lo1 || lo)], H = [...hi, ...(hi1 || hi)], free = [true, true, !fixT, true, true, true]; let z = [...uRef, ...uRef1].map((v, i) => clamp(v, L[i], H[i])); const n = 6, h = 1e-4;
+  for (let it = 0; it < 12; it++) { const r0 = res(z), m = r0.length, Jm = Array.from({ length: m }, () => new Array(n).fill(0));
+    for (let j = 0; j < n; j++) { if (!free[j]) continue; const zp = z.slice(); zp[j] += h; const rp = res(zp); for (let i = 0; i < m; i++) Jm[i][j] = (rp[i] - r0[i]) / h; }
+    // normal equations on the free, unclamped-or-moving-inward variables (projected Gauss–Newton, tiny damping)
+    const act = z.map((v, j) => free[j]); const A = Array.from({ length: n }, () => new Array(n).fill(0)), g = new Array(n).fill(0);
+    for (let a = 0; a < n; a++) { if (!act[a]) continue; for (let i = 0; i < m; i++) g[a] += Jm[i][a] * r0[i]; for (let c = 0; c < n; c++) { if (!act[c]) continue; for (let i = 0; i < m; i++) A[a][c] += Jm[i][a] * Jm[i][c]; } A[a][a] += 1e-6; }
+    const idx = [...Array(n).keys()].filter(j => act[j]), k = idx.length, Mx = idx.map(a => idx.map(c => A[a][c])), rhs = idx.map(a => -g[a]);
+    for (let c = 0; c < k; c++) { let pv = c; for (let rr = c + 1; rr < k; rr++) if (Math.abs(Mx[rr][c]) > Math.abs(Mx[pv][c])) pv = rr; [Mx[c], Mx[pv]] = [Mx[pv], Mx[c]]; [rhs[c], rhs[pv]] = [rhs[pv], rhs[c]];
+      for (let rr = c + 1; rr < k; rr++) { const f = Mx[rr][c] / Mx[c][c]; for (let cc = c; cc < k; cc++) Mx[rr][cc] -= f * Mx[c][cc]; rhs[rr] -= f * rhs[c]; } }
+    const dz = new Array(k).fill(0); for (let c = k - 1; c >= 0; c--) { let sacc = rhs[c]; for (let cc = c + 1; cc < k; cc++) sacc -= Mx[c][cc] * dz[cc]; dz[c] = sacc / Mx[c][c]; }
+    let step = 0; idx.forEach((j, q) => { const nv = clamp(z[j] + dz[q], L[j], H[j]); step = Math.max(step, Math.abs(nv - z[j])); z[j] = nv; }); if (step < 1e-5) break; }
+  const u0 = z.slice(0, 3), u1 = z.slice(3, 6), x1 = P(M, x, u0); return { u: u0, info: { pred: x1, u1, pred2: P(M1, x1, u1), clamped: u0.map((v, j) => Math.abs(v - lo[j]) < 1e-6 || Math.abs(v - hi[j]) < 1e-6 ? ["df", "dl", "T"][j] : null).filter(Boolean) } }; }
 // the model for a decision instant τ (s into the step, view time): the measured map of the latest instant ≤ τ
 export const modelAt = (C, tau) => { if (!C.models) return C.model; let best = null; for (const k of Object.keys(C.models).map(Number).sort((a, b) => a - b)) if (k <= tau + 1e-9) best = k; return C.models[best ?? 0]; };
 // ((G2b unified, opt-in C.mapBlend) the maps of the two bracketing instants blended LINEARLY in τ — the decision is continuous in time instead of

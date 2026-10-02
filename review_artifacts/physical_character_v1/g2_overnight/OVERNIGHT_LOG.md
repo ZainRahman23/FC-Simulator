@@ -180,3 +180,52 @@ The steady orbit (L@0.6, steps 6–19) is consistent step to step:
 - `regress.sh` 12/12 identical.
 - G2W_A8 hashes 5780483c / 17d27b5d / 5082d76a / 47427dbb / 1f5445fd / b373d22e.
 - Foot gate F0 42/42, F2h 42/42 identical.
+
+## P4-2. The stance phase: why the CoP stays behind the body (`ank.mjs`, per-tick stance-ankle torque terms)
+
+In a runaway step (R@0.5, step 5), from 0.06 to 0.19 s after touchdown:
+- The stance ankle's DAMPING term is −52 … −174 N·m. Its velocity target assumes a foot already flat, so it opposes the forefoot lowering.
+- It outweighs the balance term (+45 … +75 N·m).
+- The net ankle torque sits saturated on the dorsiflexion side (−12 … −32 N·m).
+- Foot-flat comes at 0.16 s. The CoP reaches mid-foot only at 0.36 s, and the toe (+0.2 m, plantar-flexion saturated at 127–146 N·m) at 0.42 s.
+
+**The heel-rocker compliance continued into single support** (opt-in `walk.rocker = { kdF, until }`):
+- Foot-flat 0.158 → 0.142 s.
+- After foot-flat the CoP still stays at −0.08 … −0.16 m for 0.3 s.
+- Walks (mU1, not re-identified): kdF 1.0 → 8.7, kdF 0.3 → 8.5, kdF 0.1 → 4.0.
+- **Not adopted.**
+
+**The deeper reason is the stance law.** The funnel reference starts AT the measured state, so the tracking error is zero at the step start, and the DCM gain k = 0.5 is weak. In the runaway step the balance term even turned negative (−38 N·m) while ξ was 0.2–0.3 m ahead.
+
+**Stronger ground-reaction regulation** (mU1, not re-identified):
+
+| variant | mean upright |
+|---|---|
+| k 1.0 | 8.7 |
+| k 2.0 | 7.8 |
+| funnel 1.0 | 7.8 |
+| k 1.0 + funnel 1.0 | 7.3 |
+
+- **Re-identified with k 1.0 (k1 → mK1):** identification survival 2861 (= i6 2860), maps unchanged in quality, walk 8.2. **No improvement.**
+
+## P4-3. Two-step preview on the measured maps (opt-in `ctrl.preview`, `pc_walker.solvePreview`)
+
+The logs show greedy single-step solves with extreme inputs (T at its bounds, a 0.17 m step) setting up the runaway two steps later. The preview chooses this step's input together with the next step's (each within its bounds, the next timing within the maps' data range).
+
+| maps | timing range | mean upright |
+|---|---|---|
+| mU1 | [0.35, 0.46] | 9.3 |
+| mU1, looser intermediate | [0.35, 0.46] | 7.8 |
+| mU6 | [0.35, 0.46] | 4.7 |
+| mU6 | [0.32, 0.50] | 5.3 |
+
+**Not adopted.**
+
+## P5. Speed envelope (the best configuration, mU1, six starts, 40 steps)
+
+| vd (m/s) | 0.30 | 0.35 | 0.40 | 0.45 | 0.50 | 0.55 | 0.60 / 0.70 |
+|---|---|---|---|---|---|---|---|
+| mean upright steps | 4.7 | 5.2 | 12.7 [2, 2, 2, 9, 36, 25] | 4.7 | 14.7 [9, 11, 11, 6, 11, 40] | 8.0 | 7.7 |
+
+- 0.60 and 0.70 gave the same upright counts per start. Checked: the runs differ (L@0.55: hash 1dff2b2a vs e83d9c2e, falls at 6.41 vs 6.89 s). vd is not clipped; the counts coincide.
+- **No stable range:** outcomes change chaotically with the requested speed. The sustained runs (36–40 steps) are isolated starts. The controller has no robust basin at any speed.

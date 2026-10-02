@@ -219,7 +219,10 @@ export class BalanceController {
       return { kp: g.kp, kd: g.kdSwing + (g.kdStance - g.kdSwing) * s, lo: g.lim.lo, hi: g.lim.hi }; });
     // GATE C2: the ankle of a foot being loaded after touchdown is COMPLIANT (heel rocker: body weight on the heel lowers the sole; an active
     // level-the-foot demand at full stiffness was a push-off — it drove the toe into the turf and launched the leg, finding 2026-09-29)
-    if (plan && plan.settle) { const m = motor[this.legs[plan.settle.foot].ankle]; m.kp *= BAL.settleKp; m.kd *= Math.sqrt(BAL.settleKp); }
+    if (plan && plan.settle) { const m = motor[this.legs[plan.settle.foot].ankle]; m.kp *= BAL.settleKp; m.kd *= Math.sqrt(BAL.settleKp); if (plan.settle.kdF != null) m.kd *= plan.settle.kdF; }
+    // ((G2b overnight, walk.rocker.kdF) the rocker's DAMPING as well: measured in the walks, the landed ankle's damping (its velocity target assumes a
+    //  foot already flat) opposed the forefoot's lowering by up to −174 N·m and held the ankle torque on the dorsiflexion side — the CoP stayed at the
+    //  heel, behind the body, through the first 0.2–0.3 s of stance)
     // GATE C3: LANDING COMPLIANCE — for a moment after a corrective step lands, the landed leg's motors are softer (plan.soften.k): the joint
     // targets carry the gravity / balance torques as equilibrium-point offsets τ/kp, so the static support is unchanged, but the knee can yield
     // to the impact instead of a stiff leg arresting the falling body in one step (finding 2026-09-30: 3.4 kN ≈ 4.4 BW landings bounced the
