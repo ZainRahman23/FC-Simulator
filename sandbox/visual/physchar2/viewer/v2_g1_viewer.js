@@ -40,7 +40,7 @@ async function init() {
   for (const k of Object.keys(ST.show)) { const el = $("t_" + k); if (!el) continue; el.checked = ST.show[k]; el.onchange = () => { ST.show[k] = el.checked; dirty = true; }; }
   for (const k of Object.keys(CAMS)) $("c_" + k).onclick = () => { Object.assign(ST.cam, CAMS[k], { follow: false }); dirty = true; };
   $("c_follow").onclick = () => { ST.cam.follow = true; dirty = true; };
-  orbit(); build(); loop();
+  orbit(); build(); if (!new URLSearchParams(location.search).get("check")) loop();   // check mode: no render loop, so a headless run goes idle (virtual time) once the hashes are in
 }
 function toggle() { if (done) build(); ST.playing = !ST.playing; updPlay(); }
 function updPlay() { $("play").textContent = ST.playing ? "❚❚ pause" : "▶ play"; $("play").classList.toggle("on", ST.playing); }
@@ -141,11 +141,11 @@ function orbit() {
 function loop() { if (ST.playing && SIM) { ST.acc += ST.speed * SIM.cfg.hz / 60; const n = Math.floor(ST.acc); ST.acc -= n; if (n > 0) tick(n); } if (dirty && SIM) { dirty = false; frame(); } requestAnimationFrame(loop); }
 window.addEventListener("resize", () => { dirty = true; });
 // URL parameters for scripted captures / the headless browser = Node check:
-//   ?scenario=&human=&cfg=ref|P|P720&t=<s>&cam=front|side|three|top|follow&dist=&yaw=&pitch=&show=a,b&hide=a,b&joint=   ·   ?check=1 runs every curated scenario
+//   ?scenario=&human=&cfg=ref|cand|DX-R1|DX-B10|DX-150|DX-W0&t=<s>&cam=front|side|three|top|follow&dist=&yaw=&pitch=&show=a,b&hide=a,b&joint=   ·   ?check=1 runs every curated scenario
 const qp = new URLSearchParams(location.search);
 init().then(async () => {
-  if (qp.get("check")) { const C = CONFIGS().ref, rows = []; for (const k of CURATED) { await new Promise(r => setTimeout(r, 0)); const spec = generateSpec(VARIATION_SET.find(x => x.id === "V2-REF")), s = new G1Sim(J, spec, k, { cfg: C.cfg }); while (s.tick()); const n = NODE && NODE.runs.find(r => r.human === "V2-REF" && r.key === k);
-      rows.push({ k, b: s.h.toString(16).padStart(8, "0"), n: n ? n.hash : "—" }); s.destroy(); $("hash").textContent = `checking … ${rows.length}/${CURATED.length}`; }
+  if (qp.get("check")) { const C = CONFIGS().ref, rows = [], KEYS = qp.get("keys") ? qp.get("keys").split(",") : CURATED; for (const k of KEYS) { await new Promise(r => setTimeout(r, 0)); const spec = generateSpec(VARIATION_SET.find(x => x.id === "V2-REF")), s = new G1Sim(J, spec, k, { cfg: C.cfg }); while (s.tick()); const n = NODE && NODE.runs.find(r => r.human === "V2-REF" && r.key === k);
+      rows.push({ k, b: s.h.toString(16).padStart(8, "0"), n: n ? n.hash : "—" }); s.destroy(); $("hash").textContent = `checking … ${rows.length}/${KEYS.length}`; }
     const all = rows.every(r => r.b === r.n); $("hash").className = "mono " + (all ? "ok" : "bad"); $("hash").innerHTML = `<b id="hash-status">${all ? "BROWSER = NODE" : "BROWSER ≠ NODE"}</b> (${rows.filter(r => r.b === r.n).length}/${rows.length} curated scenarios, V2-REF, reference configuration)<br>` + rows.map(r => `${r.b === r.n ? "✓" : "✗"} ${r.k}: ${r.b}${r.b === r.n ? "" : " vs Node " + r.n}`).join("<br>"); }
   if (qp.get("human")) { ST.human = qp.get("human"); $("human").value = ST.human; } if (qp.get("cfg")) { ST.cfg = qp.get("cfg"); $("cfg").value = ST.cfg; }
   if (qp.get("scenario")) { ST.key = qp.get("scenario"); $("scen").value = ST.key; } if (qp.get("joint")) ST.joint = qp.get("joint");

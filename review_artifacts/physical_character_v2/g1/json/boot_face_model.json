@@ -1,0 +1,297 @@
+{
+ "generated": "calc/boot_face_model.py",
+ "spec": "../g0/json/v2_ref_spec.json",
+ "orientations": 12000,
+ "hullToleranceM": 0.001,
+ "qStar": [
+  -0.1,
+  0.187,
+  -0.458,
+  0.863
+ ],
+ "mechanism": "Mechanism (Jolt 5.6.0 source, verified):\n  * ConvexHullShape::GetSupportingFace picks the hull face whose normal is most anti-parallel to the contact\n    direction and returns that face's vertices (ConvexHullShape.cpp, GetSupportingFace).\n  * ManifoldBetweenTwoFaces clips that face against the other shape's face and keeps every clipped point whose\n    distance is < speculative distance + manifold tolerance (0.02 + 0.001 m). Only if NO point survives does it\n    fall back to the deepest (GJK/EPA) contact point (ManifoldBetweenTwoFaces.cpp, the final `if`).\n  * The contact solver acts on the manifold points, not on the EPA depth.\nSo when the chosen face does not contain the piece's deepest vertex but lies within 21 mm of the contact plane, the\ndeepest point is dropped. The boot then sinks until that face reaches the surface. The sink equals\n(lowest vertex of the chosen face) - (lowest vertex of the piece), the \"face offset\".",
+ "rows": [
+  {
+   "rep": "R1: approved single hull",
+   "pieces": 1,
+   "verticesPerPiece": [
+    25
+   ],
+   "facesPerPiece": [
+    32
+   ],
+   "offsetAtQstarMm": 12.25,
+   "pOver2mm": 4.88,
+   "pOver5mm": 3.37,
+   "pOver10mm": 1.575,
+   "p99Mm": 11.81,
+   "maxMm": 35.13
+  },
+  {
+   "rep": "R2: 2 pieces, AP 0.55 (C3, adopted)",
+   "pieces": 2,
+   "verticesPerPiece": [
+    27,
+    22
+   ],
+   "facesPerPiece": [
+    24,
+    21
+   ],
+   "offsetAtQstarMm": 12.25,
+   "pOver2mm": 3.54,
+   "pOver5mm": 2.44,
+   "pOver10mm": 0.983,
+   "p99Mm": 9.98,
+   "maxMm": 31.11
+  },
+  {
+   "rep": "R3: 4 pieces, AP 0.55 x ML 0.5 (C3)",
+   "pieces": 4,
+   "verticesPerPiece": [
+    17,
+    17,
+    20,
+    20
+   ],
+   "facesPerPiece": [
+    13,
+    15,
+    16,
+    14
+   ],
+   "offsetAtQstarMm": 12.25,
+   "pOver2mm": 4.28,
+   "pOver5mm": 3.12,
+   "pOver10mm": 1.392,
+   "p99Mm": 11.49,
+   "maxMm": 31.11
+  },
+  {
+   "rep": "3 pieces, AP 0.35/0.70",
+   "pieces": 3,
+   "verticesPerPiece": [
+    24,
+    29,
+    20
+   ],
+   "facesPerPiece": [
+    19,
+    16,
+    17
+   ],
+   "offsetAtQstarMm": 0.0,
+   "pOver2mm": 1.62,
+   "pOver5mm": 1.06,
+   "pOver10mm": 0.408,
+   "p99Mm": 5.3,
+   "maxMm": 16.46
+  },
+  {
+   "rep": "4 pieces, AP 0.25/0.5/0.75",
+   "pieces": 4,
+   "verticesPerPiece": [
+    24,
+    31,
+    29,
+    19
+   ],
+   "facesPerPiece": [
+    17,
+    18,
+    17,
+    14
+   ],
+   "offsetAtQstarMm": 0.0,
+   "pOver2mm": 0.57,
+   "pOver5mm": 0.43,
+   "pOver10mm": 0.175,
+   "p99Mm": 0.0,
+   "maxMm": 16.56
+  },
+  {
+   "rep": "6 pieces, AP sixths",
+   "pieces": 6,
+   "verticesPerPiece": [
+    17,
+    24,
+    28,
+    26,
+    28,
+    18
+   ],
+   "facesPerPiece": [
+    13,
+    16,
+    15,
+    15,
+    16,
+    14
+   ],
+   "offsetAtQstarMm": 0.0,
+   "pOver2mm": 0.31,
+   "pOver5mm": 0.08,
+   "pOver10mm": 0.0,
+   "p99Mm": 0.0,
+   "maxMm": 6.24
+  },
+  {
+   "rep": "6 pieces, AP 3 x ML 2",
+   "pieces": 6,
+   "verticesPerPiece": [
+    14,
+    14,
+    19,
+    19,
+    20,
+    18
+   ],
+   "facesPerPiece": [
+    11,
+    12,
+    11,
+    13,
+    16,
+    11
+   ],
+   "offsetAtQstarMm": 0.0,
+   "pOver2mm": 1.78,
+   "pOver5mm": 1.06,
+   "pOver10mm": 0.408,
+   "p99Mm": 5.3,
+   "maxMm": 14.24
+  },
+  {
+   "rep": "8 pieces, AP 4 x ML 2",
+   "pieces": 8,
+   "verticesPerPiece": [
+    14,
+    15,
+    19,
+    20,
+    21,
+    18,
+    19,
+    16
+   ],
+   "facesPerPiece": [
+    9,
+    12,
+    11,
+    13,
+    13,
+    11,
+    12,
+    10
+   ],
+   "offsetAtQstarMm": 0.0,
+   "pOver2mm": 0.0,
+   "pOver5mm": 0.0,
+   "pOver10mm": 0.0,
+   "p99Mm": 0.0,
+   "maxMm": 1.35
+  },
+  {
+   "rep": "8 pieces, AP 4 x ML 2 (ML at 0.45)",
+   "pieces": 8,
+   "verticesPerPiece": [
+    16,
+    20,
+    19,
+    24,
+    21,
+    20,
+    19,
+    16
+   ],
+   "facesPerPiece": [
+    9,
+    15,
+    10,
+    14,
+    14,
+    12,
+    12,
+    10
+   ],
+   "offsetAtQstarMm": 0.0,
+   "pOver2mm": 0.57,
+   "pOver5mm": 0.43,
+   "pOver10mm": 0.175,
+   "p99Mm": 0.0,
+   "maxMm": 16.56
+  },
+  {
+   "rep": "10 pieces, AP 5 x ML 2 (candidate)",
+   "pieces": 10,
+   "verticesPerPiece": [
+    11,
+    11,
+    17,
+    16,
+    17,
+    16,
+    21,
+    21,
+    17,
+    15
+   ],
+   "facesPerPiece": [
+    8,
+    9,
+    11,
+    12,
+    10,
+    10,
+    13,
+    11,
+    12,
+    10
+   ],
+   "offsetAtQstarMm": 0.29,
+   "pOver2mm": 0.0,
+   "pOver5mm": 0.0,
+   "pOver10mm": 0.0,
+   "p99Mm": 0.7,
+   "maxMm": 1.25
+  },
+  {
+   "rep": "12 pieces, AP 4 x ML 3",
+   "pieces": 12,
+   "verticesPerPiece": [
+    16,
+    15,
+    17,
+    19,
+    15,
+    21,
+    19,
+    16,
+    18,
+    15,
+    20,
+    14
+   ],
+   "facesPerPiece": [
+    9,
+    10,
+    12,
+    10,
+    10,
+    13,
+    12,
+    8,
+    11,
+    9,
+    12,
+    9
+   ],
+   "offsetAtQstarMm": 0.0,
+   "pOver2mm": 0.0,
+   "pOver5mm": 0.0,
+   "pOver10mm": 0.0,
+   "p99Mm": 0.0,
+   "maxMm": 1.6
+  }
+ ]
+}

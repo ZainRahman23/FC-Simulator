@@ -72,6 +72,7 @@ export class V2JoltWorld {
     bcs.mOverrideMassProperties = J.EOverrideMassProperties_MassAndInertiaProvided;
     const mp = bcs.mMassPropertiesOverride; mp.mMass = b.mass; const I = J.Mat44.prototype.sIdentity(), T = b.inertia;
     I.SetAxisX(new J.Vec3(T[0][0], T[1][0], T[2][0])); I.SetAxisY(new J.Vec3(T[0][1], T[1][1], T[2][1])); I.SetAxisZ(new J.Vec3(T[0][2], T[1][2], T[2][2])); mp.mInertia = I;
+    if (b.holdRotation) bcs.mAllowedDOFs = J.EAllowedDOFs_TranslationX | J.EAllowedDOFs_TranslationY | J.EAllowedDOFs_TranslationZ;   // rigs only (C3 held-edge cases)
     bcs.mFriction = 0.5; bcs.mRestitution = 0; bcs.mLinearDamping = this.cfg.linDamp; bcs.mAngularDamping = this.cfg.angDamp; bcs.mMaxAngularVelocity = this.cfg.maxAngVel;
     bcs.mAllowSleeping = this.cfg.allowSleep; bcs.mGravityFactor = 1; bcs.mUserData = b.index + 1; bcs.mApplyGyroscopicForce = !!this.cfg.gyroscopic;
     if (this.cfg.ccd === "linearcast" || (this.cfg.ccd === "distal" && /^(foot|shank|forearm)_/.test(b.name))) bcs.mMotionQuality = J.EMotionQuality_LinearCast;

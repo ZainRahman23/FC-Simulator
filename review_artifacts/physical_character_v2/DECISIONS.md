@@ -71,7 +71,7 @@ Source: `sources/2026-10-02_user_decision_g0_approved_build_g1.md` (verbatim). G
   - snapshot / restore;
   - diagnostic-only switches (CCD mode, warm start, contact cache, manifold reduction, turf shape, slop / speculative overrides), all defaulting to the approved settings.
 
-**G1 decisions needed (nothing below has been applied):**
+**G1 decisions needed (nothing below has been applied) — RESOLVED by the user 2026-10-03 (C1–C7, below):**
 
 | # | finding (demonstrated) | spec items involved | recommendation |
 |---|---|---|---|
@@ -84,3 +84,129 @@ Source: `sources/2026-10-02_user_decision_g0_approved_build_g1.md` (verbatim). G
 | G1-C7 | **15 m/s first touch.** Discrete contact: first touch 48 mm. 720 Hz physics: 0.3 mm. CCD on every body breaks joints (separation 26 mm). Distal-only CCD does not help. A 0.065 m speculative distance fixes first touch but makes bodies rest 30 mm deep. | §19 (240 Hz), §22 1.4 | Your choice: 720 Hz physics (about 3× cost), or re-scope 1.4's 15 m/s criterion to "no tunnelling" for whole-body impacts at 240 Hz and keep the 3 mm first-touch requirement for the ball's CCD gate |
 
 Observation, not a decision: with the knee straight, the coupled hamstring resistance at 100° hip flexion is only 0.93 N·m. The end-range law spreads 25 % of capacity over the 80°→140° range. A future evidence-based passive fit should check this; nothing was tuned.
+
+## 2026-10-03 — C1–C7 applied; G1 rerun under the autonomous instruction; G1 NOT YET PASSED (4 decisions: D1–D4)
+
+Sources (verbatim):
+- `sources/2026-10-03_user_decision_g1_c1_c7.md`
+- `sources/2026-10-03_user_instruction_autonomous_g1.md`
+
+Criteria v2 were pre-registered in `g1/G1_CRITERIA.md` and committed before the final evidence run. Evidence:
+- `g1/G1_REPORT.md`
+- `g1/G1_TABLES.md`
+- `g1/json/g1_results.json`
+- `g1/json/boot_face_model.json`
+- `calc/boot_face_model.py`
+
+### C1–C7: how each decision was applied, and what changed in the criteria
+
+| # | decision | applied as | criterion change and measured justification |
+|---|---|---|---|
+| C1 | 60 velocity iterations is the validation baseline | `G1_WORLD.velSteps = 60`. Every phase runs at 60. | 1.5 becomes a report: the spec set 10/15/20/30 is still measured. **Measured (final run): none of 10/15/20/30 passes with 2× margin.** |
+| C2 | anatomical end-stop with measured per-joint margins; ROM not redefined | **End-stop:** `PASSIVE.endStopDeg 3`, `endStopTorqueFrac 1.0`. The passive potential adds a linear spring beyond the anatomical hard limit, reaching 100 % of opposing capacity 3° past it. **Margins:** the Jolt stop sits at anatomical ± `ENGINE_MARGIN`, measured by `tools/g1_margins.js`. The procedure: Jolt stops 40° out of the way, the V2-REF scenario envelope at the baseline (impact15 excluded), and a 2/5/10 rad/s rig. Rule: max(2°, ⌈1.5 × overshoot + 1°⌉). **Re-measured three times**, because the passive drive changed (G1-D5 … D8). The installed table is the third measurement. | 1.3b: was "hard-limit excursion ≤ 3°"; now "the emergency stop is never reached (0 ticks)", with anatomical overshoot reported. 1.3d (≤ 0.5° beyond the anatomical hard limit at rest) is unchanged. **Why:** with the end-stop the anatomical limit is a soft passive boundary, so the rigid Jolt stop is a numerical safety net (G1-C2). |
+| C3 | do not adopt the split boot without a contact-manifold experiment; stop if foot geometry would change | **Experiment:** `tools/g1_boot.js`, 3 representations × 5 settings × (8 loaded-boot rig cases + 11 full-body falls), `g1/json/g1_boot.json`. **Adopted** as the experiment's best (identical external geometry): R2 (two convex pieces, rear / front at 55 %) + S3 (manifold reduction off, pair cache off). It dominates R1 on every boot metric: falls 34–40 → 10.7 mm transient; toe loading 24.1 → 3.6 mm. It does not pass 1.4a everywhere. **Root cause found afterwards: decision D1.** **Correction:** the rig's edge and toe cases are not resting tests. A loaded boot rolled 20° with its COM 19 cm up tips over, and is still moving in the "settled" window (0.5 m/s, 4 rad/s) in every representation. Their "settled" values are end states, not rest. | none |
+| C4 | two-sphere head; rerun G0 | `spec/v2_colliders.js`: r 0.044 H at ±0.013 H AP. G0 rerun: PASS, 8/8 bodies. | none |
+| C5 | resting tolerance = the 5 mm slop; separate metrics | 1.4a (turf, transient) and 1.4b (turf at rest ≤ 5 mm); 1.4d (self, transient) and 1.4e (self at rest ≤ 5 mm); 1.4c (disabled pairs); 1.4i (new: unintended initial interpenetration ≤ 1 mm). | 1.4b "≤ 3 mm" and 1.4e "0" → 5 mm. **Why:** Jolt never corrects the last slop (§15.4 value 0.005 m). Measured resting contacts settle at 4.7–5.0 mm, so the old values contradicted the approved contact configuration (G1-C5). |
+| C6 | floor-based momentum tolerances if the free-body tests support them; keep raw values | 1.1a ≤ 2e-5 linear, 1.1b ≤ 5e-3 angular. Raw values are reported, plus the free-body floor table (row 1.1f). | **Free-body floor:** one rigid body, no constraints, no contact, float32, gyroscopic on, 240 Hz, 2 s. Angular 1.5e-3 at 1 rad/s, 5.6e-3 at 3 rad/s, 1.3e-2 at 6 rad/s; linear 0. **Multi-body isolated test:** linear ≈ 6e-6, angular 2.85e-3 at a peak body ω of 4.4 rad/s. The floor is speed-dependent, so 5e-3 is supported for the isolated test as run. A faster isolated test would need a speed-scaled bound. |
+| C7 | no global 720 Hz, no indiscriminate CCD; a credible no-tunnelling envelope; keep 240 Hz; ball separately | **impact15** (15 m/s whole body) is the EXTREME test: HS.1–HS.4 + 1.R, with first touch (1.4g) reported. **Envelope:** 8 scenarios (`HS_ORDER`): dive, side fall, head-first, 15 m/s drop, kick into the turf, kick into a shin proxy at about 20 m/s, goal-post impact, leg into leg at about 20 m/s. Checks: finite, no missed turf collision, no tunnelling / missed limb collision (exact geometry), no catastrophic joint failure. **The ball** is deferred to its own gate. | 1.4g → report for impact15; the envelope (7.HS) is added. |
+
+### G1 causal fixes (demonstrated defects, fixed under the autonomous instruction; nothing anatomical, no criterion)
+
+Each fix states its causal chain, the controlled experiment and the re-check. All are in `sim/v2_passive.js` or `core/v2_jolt.js`.
+
+- **G1-D2: predictive linearisation.**
+  - **Chain:** linearising the end-range law at the start of the step let a joint cross into the stiff end-stop within one step for free. Measured: thoracic U +9.2 J in one step, net +1.1 J.
+  - **Fix:** linearise at the predicted rotation q0·exp(ω·dt).
+- **G1-D3: one-sided restoring limits.**
+  - **Chain:** the linear model can pull a joint toward its stop when the joint moves back out further than predicted.
+  - **Fix:** the drive may restore with the full law but carries at most the damper in the other direction. Restoring sign from the active end. (Refined by G1-D8.)
+- **G1-D4: chord slope when compressing, both slopes anchored at the predicted point.**
+  - **Chain:** the end-range law is convex, so a tangent under-resists a joint moving deeper. Measured: knee drive work −0.86 J against ΔU +1.52 J in one step.
+  - **Fix:** chord slope when compressing, tangent when releasing. A first version anchored the chord at the current point; that created a hysteresis loop with the biarticular cross torques, pumping about 15 mW into a shank limit cycle (upright, 6–12 s). Anchoring both slopes at the predicted point removed it.
+- **G1-D5: drive rows on the LOCKED axis of the knee and elbow.**
+  - **Chain:** when a 2-DOF joint is twisted by t, its swing DOF moves about (0, cos t, −sin t) in body-2 axes. With no row on the locked axis, only cos²t of the end-range torque and of the swing damping was applied. Measured: perturb knee_R at −37° rotation, drive work −0.88 J against ΔU +1.50 J in one step.
+  - **Fix:** every joint with passive tissue drives all three body-2 rows. The component along the locked direction is absorbed by the lock.
+- **G1-D6: Jolt clamps drive targets (engine-interface defect).**
+  - **Chain:** `SixDOFConstraint::SetTargetOrientationCS` clamps the target onto the joint limits (`ClampSwingTwist`: locked axes → 0, limited axes → inside the engine stop). The passive offset written into the target was therefore silently replaced. Measured on a −30°-twisted knee: intended (0, −7.2, −12.4)°, applied (5.5, 10.9, 7.0)°. The knee motor sat at its torque bound at 200 iterations, so this was not solver convergence.
+  - **Fix:** the target is the current rotation. The stored target and Jolt's own constraint-space rotation are read back to get Jolt's exact error C. The offset goes into the target angular velocity, ω_t = k·(δ + C)/(c + dt·k), which Jolt never clamps; Jolt's converged motor law (SpringPart / AngleConstraintPart source) is then exactly λ/dt = k·δ − (c + dt·k)·Jv.
+  - **Verified:** λ/dt equals the intended law within 1.3e-3 N·m (twisted knee) and 4e-11 N·m (pronated elbow). perturb's energy rise above its running minimum after first contact: 0.785 → 0.006 J.
+- **G1-D7: chord cap.**
+  - **Chain:** the per-row chord Δτᵢ/φᵢ blows up when a row barely moves while a coupled row compresses. Measured: knee z-row K = 1.1e5 N·m/rad, torque −1039 N·m.
+  - **Fix:** the chord is capped by the largest tangent stiffness of any term the row moves. For a convex law the secant never exceeds the tangent at the deeper end.
+- **G1-D8: the one-sided limit never cuts the law torque.**
+  - **Chain:** at a large combined swing with two active ends and a non-diagonal Jacobian, the end-sign rule contradicted the gradient on a row. Measured: drop1m, hip_R at θcs (48, 74, −53)°: gradient +28.2 N·m on y, clamped to 0.4 N·m. The applied torque was no longer −∇U and injected about 17 W for 0.12 s (+1.25 J).
+  - **Fix:** the bounds always admit the law torque τᵢ, and the explicit remainder is never zeroed. The rule still cuts the linear model's extrapolation toward the stop.
+  - **Rejected alternatives (measured):**
+    - restoring sign = sign(τᵢ): unstable; the ankle / knee chattered at the step rate, leanF +28 J;
+    - one-sided only where both signs agree: joints reach the engine stop in upright / leanL / leanR.
+- **Adapter bug (fixed):** undefined config values overrode the defaults. That would have re-enabled manifold reduction in some diagnostics. They are now filtered.
+- **Rejected earlier (measured, kept as negative results):**
+  - the "armed" stop: it cancelled the law torque inside the limit (upright +2.98 J);
+  - contact-only warm start off: dropA fixed, the suite worse;
+  - joint-only warm start off: dropA 0.10 J, but leanF +1.56 J, 5.4 mm separation, 5.1 mm resting self-contact;
+  - constraint solve order (priorities): no effect on dropA;
+  - 2 → 4 or 8 position iterations: no effect on the boot sink, which is not a solver effect.
+
+### Check clarifications (measurement only)
+
+- 1.4f counts only touching points (separation ≤ 1 mm). Speculative points are not touches.
+- impact15 runs 10 s, like every fall. At 6 s it was still settling; at 10 s it is at rest.
+
+### Result of the final evidence run (2026-10-03, pre-registered criteria v2)
+
+**G1 NOT YET PASSED**, with 4 failing gate rows.
+
+| result | rows |
+|---|---|
+| **FAIL** | 1.S: V2-REF 10/17 scenarios |
+| **FAIL** | 1.S′: V1-matched 12/17 |
+| **FAIL** | 6: variants 31/40 |
+| **FAIL** | 8: timestep |
+| **PASS** | 1.6a / 1.6b: determinism ×3 across two processes, 17/17, and snapshot / restore 4/4 |
+| **PASS** | 5 / 5c: passive rig 34/34 and couplings |
+| **PASS** | 7.HS: C7 envelope 8/8 |
+| **PASS** | V1 frozen |
+| **PASS** | Jolt build |
+
+Every remaining failure traces to one of the causes D1–D4 below. Evidence: `g1/G1_REPORT.md` and `g1/G1_TABLES.md` (§ 1, 2, 7, 9, 13, 16, 17, 18).
+
+### Decisions needed (nothing below has been applied)
+
+| # | demonstrated cause | gate failures it explains | options (measured) | recommendation |
+|---|---|---|---|---|
+| **D1** | **Boot contact generation.** See the detail below the table. | V2-REF: leanB, leanL, singleLeg, shoulderFirst (1.4a); singleLeg, awkward (1.4b); perturb forearm-into-boot 24.5 mm (1.4d). V1-matched: perturb, singleLeg (1.4a). Long-legs: leanL (1.4a). | **(a)** The identical hull as 10 convex pieces (AP 5 × ML 2) with S3 (reduction off, cache off).<br>• model: max miss 1.2 mm;<br>• Jolt held sweep: max 4.1 mm;<br>• falls: turf ≤ 6.8 / 2.7 mm;<br>• physics +19 % (0.204 vs 0.171 ms/tick);<br>• more contact points, so the impact rebound grows at 60 iterations (2.6 J; needs D2);<br>• with Jolt's default contact settings, many-piece boots are unusable (12 pieces explode in falls);<br>• **in the 20 m/s kick-into-shin envelope test the thinner pieces miss contact for 3 steps (HS.3), where the 2-piece boot misses none.**<br>**(b)** Keep 2 pieces and accept edge sinks up to about 15 mm (a criterion change; not supported by any floor).<br>**(c)** Change the boot geometry (not evaluated; out of authority). | **(a)**. Then decide whether the shin-kick miss is acceptable or should be mitigated, for example with a 12-piece boot, which was not run in the envelope. |
+| **D2** | **Impact solver budget.** At 60 velocity iterations, warm-started impulses at a hard impact are not converged within the step and rebound. | dropA on V2-REF and V1-matched (1.2a / 1.2b: 0.72 / 0.73 J). | **(a)** 150 velocity iterations as the validation baseline.<br>• clean in every tested case: DX-150 worst rise 0.04 J; the candidate shows no gated energy failure on any body;<br>• physics +55 % (0.266 vs 0.171 ms/tick); 22 players: 2.25 vs 1.75 CPU s per simulated s, or 2.36 with D1.<br>**(b)** Warm start off: the rebound is gone, but rest and turf criteria get worse (DX-W0: 7/15).<br>**(c)** Keep 60 and change 1.2a / b. Not justified: this is a budget limit, not a numerical floor. | **(a)** |
+| **D3** | **End-stop compliance** (the [ENG] value chosen when implementing C2). See the detail below the table. | Variants and V1-matched: 1.3b (engine-stop ticks; for example long-legs awkward elbow 114, 198-92 elbow 29–30, shoulder abduction 4–33). V1-matched singleLeg: 1.3d. Timestep: other-rate engine ticks. | **(a)** Keep the 3° stop. Measure the emergency-stop margins over the whole validation set (every body, every rate, the envelope): 1.3b then holds by construction, with no independent hold-out. Tie 1.3d to the end-stop's compliance (for example ≤ 1.5°, the deflection at 50 % of capacity). Measured maximum: 1.35°.<br>**(b)** I make the drive carry a stiffer stop, then re-evaluate (engineering work; not ready).<br>**(c)** Keep 1.3b and 1.3d as they are. G1 cannot pass. | **(a)** now; (b) as a later refinement if you want the ROM tighter at rest |
+| **D4** | **Test-definition items.** See the list below the table. | 8; 1.4h (V2-165-62); 1.4b (two runs at 5.0007–5.0008 mm); impact15 V1-matched HS.4 (25 mm). | As in each item below. | As in each item below. |
+
+**D1 detail.** Jolt builds each boot manifold from the hull face whose normal best matches the contact. When that face lies within 21 mm of the contact plane, Jolt keeps its points and drops the deepest point (verified in the Jolt 5.6.0 source; reproduced exactly by `calc/boot_face_model.py` and in Jolt). The approved polytope has 27 vertices and long heel-to-toe edges, so the boot misses its deepest point:
+
+| representation | misses > 10 mm | worst miss |
+|---|---|---|
+| single hull | 1.6 % of orientations | 35 mm |
+| adopted 2-piece boot | 1.0 % of orientations | 31 mm |
+
+In Jolt (held sweep, 200 orientations) the worst sink is 14.7 mm for both. Solver iterations do not change it: forks of one identical state give 12.4–12.5 mm at 60–250 velocity / 2–8 position iterations.
+
+**D3 detail.** Loaded joints pass the 3° end-stop by up to 20–25° (knee rotation, neck flexion, elbow). How far depends on the body and the rate, so margins measured on V2-REF do not cover the variants or the other rates. Static loads leave joints resting up to 1.35° past the anatomical limit. A 3× stiffer stop (100 % at 1°) removes both effects, but the implicit drive cannot carry it at 240 Hz: 23–70 J injections, ankle +33 J in one tick.
+
+**D4 items:**
+- **(a) Timestep study (8).** At a fixed rate, µm-level initial perturbations move the final COM by up to 0.11 m; the tolerance against 720 Hz is 0.15 m, so the comparison is partly measuring chaos. There are also genuine rate effects:
+  - drop1m first-contact timing converges with rate (27.8 / 18 / 8 ms at 180 / 240 / 360 Hz; the limit is 25 ms);
+  - leanF at 360 Hz lands supine, where every other rate lands prone.
+  - **Recommendation:** keep integrity and timing at every rate, and compare posture / COM against the same-rate perturbation spread.
+- **(b) isoSelfCol arm (1.4h).** Within the approved shoulder ROM the arm cannot strike the trunk at speed from the scenario start. Abduction stops it about 4° short; three alternative starts were tested. It passes only by a 0.07 mm graze, and V2-165-62 gets no graze.
+  - **Recommendation:** remove the arm part from 1.4h and test arm-into-trunk loading in the envelope, as a fall onto the arm.
+- **(c) 1.4b at the slop.** Two rests at 5.0007 / 5.0008 mm (asymptotic convergence to the slop) fail ≤ 5 mm by under 1 µm.
+  - **Recommendation:** evaluate "≤ slop" at 0.01 mm precision.
+- **(d) impact15.** V1-matched shows a 25 mm transient joint separation, against the 20 mm HS.4 threshold.
+  - **Recommendation:** make impact15 report-only. C7 placed 15 m/s whole-body impacts outside the credible envelope, and the envelope passes 8/8.
+
+**If D1a + D2a + D3a + D4 are approved**, the decision candidate (10-piece boot + 150 iterations, its own margins) already passes 63/74 body-scenarios. Its remaining failures:
+- 1.3b, which D3a's margin scope removes;
+- 1.3d (0.86–1.14°), which is ≤ 1.5° under D3a;
+- 1.4h, D4b;
+- impact15 HS.4, D4d;
+- the shin-kick HS.3 (D1 caveat).
+
+The timestep study has not been run on the candidate.

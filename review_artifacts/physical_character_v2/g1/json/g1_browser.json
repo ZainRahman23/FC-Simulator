@@ -1,66 +1,76 @@
 {
- "check": "headless Chrome (swiftshader), viewer/g1.html?check=1 \u2014 curated scenarios, V2-REF, reference configuration, full runs",
+ "check": "headless Chrome (swiftshader) driven over CDP, viewer/g1.html?check=1&keys=<scenario> — one fresh browser per curated scenario, V2-REF, gate baseline, full runs",
  "allPass": true,
  "rows": [
   {
    "key": "upright",
-   "browser": "e5dded18",
+   "browser": "9acff595",
    "pass": true,
-   "node": "e5dded18"
+   "node": "9acff595",
+   "seconds": 4
   },
   {
    "key": "leanF",
-   "browser": "5f8b2497",
+   "browser": "dfb0f08e",
    "pass": true,
-   "node": "5f8b2497"
+   "node": "dfb0f08e",
+   "seconds": 4
   },
   {
    "key": "leanL",
-   "browser": "e69edd7f",
+   "browser": "5e132bd3",
    "pass": true,
-   "node": "e69edd7f"
+   "node": "5e132bd3",
+   "seconds": 4
   },
   {
    "key": "singleLeg",
-   "browser": "eec9884b",
+   "browser": "b9396b83",
    "pass": true,
-   "node": "eec9884b"
+   "node": "b9396b83",
+   "seconds": 4
   },
   {
    "key": "drop1m",
-   "browser": "8af97e35",
+   "browser": "ef254d04",
    "pass": true,
-   "node": "8af97e35"
+   "node": "ef254d04",
+   "seconds": 4
   },
   {
    "key": "sideFirst",
-   "browser": "5bb6b027",
+   "browser": "9b9736ea",
    "pass": true,
-   "node": "5bb6b027"
+   "node": "9b9736ea",
+   "seconds": 4
   },
   {
    "key": "awkward",
-   "browser": "9b16ef6b",
+   "browser": "5aca24cd",
    "pass": true,
-   "node": "9b16ef6b"
+   "node": "5aca24cd",
+   "seconds": 4
   },
   {
    "key": "flatSupine",
-   "browser": "e7815e70",
+   "browser": "fd620ad2",
    "pass": true,
-   "node": "e7815e70"
+   "node": "fd620ad2",
+   "seconds": 4
   },
   {
    "key": "impact15",
-   "browser": "dfcbe449",
+   "browser": "885d8661",
    "pass": true,
-   "node": "dfcbe449"
+   "node": "885d8661",
+   "seconds": 4
   },
   {
    "key": "isoSelfCol",
-   "browser": "658934e8",
+   "browser": "7be9d379",
    "pass": true,
-   "node": "658934e8"
+   "node": "7be9d379",
+   "seconds": 15
   }
  ]
 }
