@@ -8,7 +8,7 @@ import { generateSpec, specJSON, specHash, fnv1a } from "../spec/v2_spec.js";
 import { V2_REF, V1_MATCHED, VARIATION_SET, DE_LEVA, EQUIP, PROFILE, humanLandmarks } from "../spec/v2_human.js";
 import { bootHull, BOOT_GRID } from "../spec/v2_colliders.js";
 import { BONES, UNITY_REQUIRED, TOUCHLINE_REQUIRED_OPTIONAL, UNITY_PARENT, mirrorName, mirrorPos, mirrorQuat, mirroredCopy } from "../spec/v2_skeleton.js";
-import { decompose, constraintParams, childRotation, passiveTorque, anatomicalAngles } from "../spec/v2_joints.js";
+import { decompose, constraintParams, childRotation, passiveTorque, anatomicalAngles, ankleNeutralKPerDeg } from "../spec/v2_joints.js";
 import { wholeBody } from "../spec/v2_body.js";
 import { POSES, REFERENCE_POSES, posedBodies, toWorld } from "../spec/v2_pose.js";
 import { bindData, evaluateSkeleton, chainResidual } from "../map/v2_render_map.js";
@@ -203,11 +203,20 @@ export function g0Body(J, human, opts = {}) {
   add_("0.9d", "every anatomical ACTIVE extreme inside the engine hard limits (hard limits = tight hull of the anatomical hard extremes)", actOut.length === 0, actOut.length ? actOut.join("; ") : "all inside",
     "all inside", `largest widening beyond (anatomical limit − centre) from swing–twist coupling: ${looseMax.toFixed(1)}° (${looseAt})`);
   // passive law sanity: zero inside, opposes excursion, reaches its design torque at the hard limit, monotone
-  let pBad = []; for (const j of S.joints) j.passive.forEach((pp, i) => { if (!pp) return; const mid = (pp.soft[0] + pp.soft[1]) / 2;
+  let pBad = []; for (const j of S.joints) j.passive.forEach((pp0, i) => { if (!pp0) return; const pp = { ...pp0, kN: 0 }, mid = (pp.soft[0] + pp.soft[1]) / 2;   // the END-RANGE law (G3-R7 neutral term checked in 0.9n)
     if (passiveTorque(pp, mid) !== 0) pBad.push(j.name + " inside≠0");
     if (!(passiveTorque(pp, pp.hard[1]) < 0 && passiveTorque(pp, pp.hard[0]) > 0)) pBad.push(j.name + " sign");
     if (Math.abs(-passiveTorque(pp, pp.hard[1]) - pp.tauAtHard[1]) > 1e-6 * Math.max(1, pp.tauAtHard[1])) pBad.push(j.name + " τ(hard)"); });
   add_("0.9e", "passive end-range law: 0 inside the soft range, opposes excursion, equals 25 % of the opposing isometric capacity at the hard limit", pBad.length === 0, pBad.length ? pBad.join(", ") : "all joints", "all");
+  // G3-R7 neutral-zone term (ankle foot ab/adduction only): 0 at the neutral centre, restoring on both sides, linear inside the soft range, saturated
+  // (k·θs) beyond it, identical left / right, value = the spec constant; no other joint / axis carries one
+  { const nBad = [], nz = []; for (const j of S.joints) j.passive.forEach((pp, i) => { if (!pp || !pp.kN) return; nz.push(j.name + "." + j.def.axes[["x", "y", "z"][i]].key); const t = (th) => passiveTorque(pp, th) - passiveTorque({ ...pp, kN: 0 }, th), e = 1e-9 * pp.kN;
+      if (!/^ankle_/.test(j.name) || j.def.axes[["x", "y", "z"][i]].key !== "fabd") nBad.push(j.name + " unexpected neutral term");
+      if (Math.abs(t(pp.c0)) > e) nBad.push(j.name + " τ(c0)≠0"); if (!(t(pp.c0 + 0.5 * pp.zN) < 0 && t(pp.c0 - 0.5 * pp.zN) > 0)) nBad.push(j.name + " not restoring");
+      if (Math.abs(t(pp.c0 + pp.zN) + pp.kN * pp.zN) > e || Math.abs(t(pp.hard[1]) + pp.kN * pp.zN) > e || Math.abs(t(pp.hard[0]) - pp.kN * pp.zN) > e) nBad.push(j.name + " saturation");
+      if (Math.abs(pp.kN - ankleNeutralKPerDeg() * 180 / Math.PI) > 1e-9) nBad.push(j.name + " k≠spec"); });
+    const kl = S.joints.find(j => j.name === "ankle_L"), kr = S.joints.find(j => j.name === "ankle_R"), fi = (j) => j.passive.find(p => p && p.kN); if (ankleNeutralKPerDeg() > 0 && !(fi(kl) && fi(kr) && fi(kl).kN === fi(kr).kN && fi(kl).zN === fi(kr).zN)) nBad.push("L/R not identical");
+    add_("0.9n", "ankle neutral-zone law (G3-R7): 0 at neutral, restoring, linear inside the soft range, saturated beyond, L = R, value = spec", nBad.length === 0, nBad.length ? nBad.join(", ") : (nz.length ? nz.join(", ") + ` k = ${ankleNeutralKPerDeg()} N·m/°` : "no neutral term (historical baseline, k = 0)"), "all"); }
   const capOK = Math.abs(fOmega(CAPACITY.knee.flex[1], 0) - 1) < 1e-12 && Math.abs(fOmega(CAPACITY.knee.flex[1], 3.14159 / 3 * 1) - 0) > 0 &&
     Math.abs(fOmega(CAPACITY.knee.flex[1], -10) - 1.25) < 1e-12 && fOmega(CAPACITY.knee.flex[1], 25) === 0 && activationStep(0, 1, 0.015) > 0.6 && activationStep(0, 1, 0.015) < 0.64;
   const kRatio = [3.1416, 5.236].map(w => fOmega(CAPACITY.knee.flex[1], w) / fOmega(CAPACITY.knee.flex[1], 1.0472));

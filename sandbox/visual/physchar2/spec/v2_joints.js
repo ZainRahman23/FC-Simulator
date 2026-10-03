@@ -73,7 +73,12 @@ export const COUPLINGS = [
   { joint: "knee", axis: "rot", by: "knee.flex", law: "soft axial range × clamp(kneeFlex/60°, 0.1, 1) (screw-home)", evidence: "[ENG] ≈0 at extension (recalled)" },
   { joint: "hip", axis: "rot", by: "hip.flex", law: "soft ER limit −45° (hip extended) → −40° (hip flexed 90°)", evidence: "[H] Han 2015 / Simoneau 1998 direction" },
 ];
-export const PASSIVE = { endRangeFracOfOpposingCapacity: 0.25, B: 6.0, coulomb: 0, passiveOnlyTauAtHard: 10,   // N·m at the hard limit for the passive-only foot ab/adduction axis [ENG]
+export const PASSIVE = { endRangeFracOfOpposingCapacity: 0.25, B: 6.0, coulomb: 0, passiveOnlyTauAtHard: 10,
+  // G3 resolution D2 (user decision 2026-10-03, DECISIONS G3-R7): NEUTRAL-ZONE stiffness of the passive-only ankle foot ab/adduction (whole-complex
+  // internal / external rotation of the foot about the tibial axis). Linear inside the approved soft range (±10°), saturating beyond it
+  // (constant k·θs), so the approved end-range law keeps its shape and stiffness; convex, conservative, mirror-symmetric. Historical accepted
+  // baseline (G1 / G2 accepted): 0. Diagnostic override (Node only): env V2_ANKLE_NEUTRAL_K (N·m/°; 0 reproduces the historical plant).
+  ankleAxialNeutralKPerDeg: 0.1,   // N·m at the hard limit for the passive-only foot ab/adduction axis [ENG]
   // G1 decision C2 (2026-10-03): the ANATOMICAL END-STOP. Beyond the anatomical hard limit a stiff linear spring is added to the passive
   // potential; with it the total passive torque reaches 100 % of the opposing isometric capacity endStopDeg beyond the anatomical limit
   // [ENG: capsule / ligament / bone-contact end feel resists a maximal opposing contraction within a few degrees]. The anatomical ROM is
@@ -179,6 +184,8 @@ export const constraintParams = (j, a) => decompose(Q.norm(Q.mul(Q.conj(j.Cm), a
 
 // ── passive end-range law (per constraint axis) ─────────────────────────────────────────────────────────────────────────────────────
 // capOpp(k, dir): isometric capacity (N·m) resisting an excursion past the soft limit on axis k in direction dir (+1 / −1)
+const ENV_K = typeof process !== "undefined" && process.env && process.env.V2_ANKLE_NEUTRAL_K != null && process.env.V2_ANKLE_NEUTRAL_K !== "" ? +process.env.V2_ANKLE_NEUTRAL_K : null;
+export const ankleNeutralKPerDeg = () => (ENV_K != null ? ENV_K : PASSIVE.ankleAxialNeutralKPerDeg);
 export function passiveParams(j, capOpp) {
   return [0, 1, 2].map(i => {
     const lo = j.limits.soft.lo[i], hi = j.limits.soft.hi[i], hlo = j.limits.hard.lo[i], hhi = j.limits.hard.hi[i];
@@ -189,11 +196,16 @@ export function passiveParams(j, capOpp) {
     // C2 end-stop stiffness per end: law(θh + δ) + k·δ = endStopTorqueFrac · T_opp, with T_opp = tauAtHard / endRangeFracOfOpposingCapacity
     const d = PASSIVE.endStopDeg * Math.PI / 180, f = PASSIVE.endStopTorqueFrac / PASSIVE.endRangeFracOfOpposingCapacity;
     const kStop = (t, A, softEx) => Math.max(0, (f * t - A * (dexp(B * (softEx + d)) - 1)) / d);
-    return { soft: [lo, hi], hard: [hlo, hhi], A: [A_lo, A_hi], B, tauAtHard: [tLo, tHi], kStop: [kStop(tLo, A_lo, ex(lo, hlo)), kStop(tHi, A_hi, ex(hi, hhi))] };
+    const neutral = /^ankle_/.test(j.name) && j.def.axes[KEYS[i]] && j.def.axes[KEYS[i]].key === "fabd" && ankleNeutralKPerDeg() > 0 ? { kN: ankleNeutralKPerDeg() * 180 / Math.PI, c0: (lo + hi) / 2, zN: (hi - lo) / 2 } : {};
+    return { soft: [lo, hi], hard: [hlo, hhi], A: [A_lo, A_hi], B, tauAtHard: [tLo, tHi], kStop: [kStop(tLo, A_lo, ex(lo, hlo)), kStop(tHi, A_hi, ex(hi, hhi))], ...neutral };
   });
 }
+// neutral-zone term (G3-R7): U = ½·kN·x² for |x| ≤ zN, ½·kN·zN² + kN·zN·(|x| − zN) beyond (x = θ − c0) — the same function the passive layer uses
+export function neutralTerm(kN, c0, zN, th) { if (!kN) return { U: 0, tau: 0, k: 0 }; const x = th - c0, ax = Math.abs(x);
+  return ax <= zN ? { U: 0.5 * kN * x * x, tau: -kN * x, k: kN } : { U: 0.5 * kN * zN * zN + kN * zN * (ax - zN), tau: -kN * zN * Math.sign(x), k: 0 }; }
 export function passiveTorque(pp, theta) {          // τ (N·m) on one axis at constraint angle theta (rad); opposes the excursion
   if (!pp) return 0;
+  if (pp.kN) { const { kN, c0, zN } = pp; return passiveTorque({ ...pp, kN: 0 }, theta) + neutralTerm(kN, c0, zN, theta).tau; }
   const ks = pp.kStop || [0, 0];
   if (theta > pp.soft[1]) return -pp.A[1] * (dexp(pp.B * (theta - pp.soft[1])) - 1) - (theta > pp.hard[1] ? ks[1] * (theta - pp.hard[1]) : 0);
   if (theta < pp.soft[0]) return pp.A[0] * (dexp(pp.B * (pp.soft[0] - theta)) - 1) + (theta < pp.hard[0] ? ks[0] * (pp.hard[0] - theta) : 0);

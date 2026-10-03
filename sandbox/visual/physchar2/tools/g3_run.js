@@ -47,7 +47,7 @@ const XSTAND = JSON.parse((process.argv.find(a => a.startsWith("--stand=")) || "
 function runJob(Jolt, job) {
   if (job.key.startsWith("G2:")) return runG2(Jolt, job);
   const def = g3Def(job.key); if (job.sup && def.supervise) def.supervise = { ...def.supervise, ...job.sup }; if (job.xstand) job.stand = { ...(job.stand || {}), ...job.xstand };
-  const spec = generateSpec(VARIATION_SET.find(h => h.id === (def.human || job.human))), s = new G3Sim(Jolt, spec, def, { stand: job.stand || {}, stance: job.stance || undefined }), t0 = Date.now();
+  const spec = generateSpec(VARIATION_SET.find(h => h.id === (def.human || job.human))), s = new G3Sim(Jolt, spec, def, { stand: { timeIK: true, ...(job.stand || {}) }, stance: job.stance || undefined }), t0 = Date.now();
   if (job.group === "snapshot") { const nAt = Math.round(job.at / s.dt); while (s.n < nAt) s.tick(); const snap = s.snapshot(); while (s.tick()) {} const hA = s.h.toString(16); s.restore(snap); while (s.tick()) {} const hB = s.h.toString(16); s.destroy(); return { ...job, res: { hashA: hA, hashB: hB, same: hA === hB } }; }
   let prevCop = [null, null], copJump = [0, 0], apRange = [1e9, -1e9], dLoadMax = 0, prevLoad = null;
   while (s.tick()) { const r = s.g3.last, t = r.t, pr = s.probeRows, W = s.ctrl.M * 9.81;

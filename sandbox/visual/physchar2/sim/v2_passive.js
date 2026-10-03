@@ -14,7 +14,7 @@
 //      an offset beyond DELTA_MAX) is applied as an explicit equal-and-opposite torque pair (small stiffness ⇒ explicit is stable).
 // Motor rows carry ONLY passive tissue (elastic end range + viscous damping). There are no targets toward any posture.
 import { V, Q, dexp, rad, dnorm } from "../core/v2_math.js";
-import { decompose } from "../spec/v2_joints.js";              // Jolt swing–twist split, pyramid components (deterministic atan2)
+import { decompose, neutralTerm } from "../spec/v2_joints.js";              // Jolt swing–twist split, pyramid components (deterministic atan2)
 
 // H: finite-difference rotation (rad); DELTA_MAX: largest implicit-spring offset (rad); drive bound: the drive may never exceed what the
 // passive law + damper could produce this step with generous headroom (DTH_MAX deeper excursion, DW_MAX velocity change) — a guard
@@ -39,7 +39,7 @@ export class PassiveLayer {
     const J = spec.joints; this.nJ = J.length;
     this.jd = J.map((j, k) => {
       const axes = [0, 1, 2].map(i => { const key = ["x", "y", "z"][i], ax = j.def.axes[key]; const p = j.passive[i];
-        return ax && !ax.locked && p ? { i, key: ax.key, s: ax.s, soft: p.soft.slice(), hard: p.hard.slice(), tauH: p.tauAtHard.slice(), B: p.B, kStop: (opts.endStop === false || !p.kStop) ? [0, 0] : p.kStop.slice() } : null; });
+        return ax && !ax.locked && p ? { i, key: ax.key, s: ax.s, soft: p.soft.slice(), hard: p.hard.slice(), tauH: p.tauAtHard.slice(), B: p.B, kN: p.kN || 0, c0: p.c0 || 0, zN: p.zN || 0, kStop: (opts.endStop === false || !p.kStop) ? [0, 0] : p.kStop.slice() } : null; });
       return { k, j, name: j.name, side: j.side, base: j.name.replace(/_[LR]$/, ""), parent: j.parentIndex, child: j.childIndex, F1: j.F1, F2: j.F2, Cm: j.Cm, c: j.damping, axes,
         free: axes.map(a => !!a) };
     });
@@ -54,7 +54,7 @@ export class PassiveLayer {
     // stop: false, damping: false } } — elastic false removes the end-range law AND the end-stop of that joint, stop false only the C2 end-stop,
     // damping false the viscous damper. Default: none (the validated layer is unchanged). PERMANENT diagnostic switch (user decision 2026-10-03; do not remove).
     for (const d of this.jd) { const o = (opts.diagJoint || {})[d.name]; if (!o) continue;
-      for (const a of d.axes) { if (!a) continue; if (o.elastic === false) { a.tauH = [0, 0]; a.kStop = [0, 0]; } if (o.stop === false) a.kStop = [0, 0]; }
+      for (const a of d.axes) { if (!a) continue; if (o.elastic === false) { a.tauH = [0, 0]; a.kStop = [0, 0]; a.kN = 0; } if (o.stop === false) a.kStop = [0, 0]; }
       if (o.damping === false) d.c = 0; }
     // coupling wiring: term (joint k, axis key) ← input (joint m, anatomical key)
     const byName = Object.fromEntries(this.jd.map(d => [d.name, d]));
@@ -84,7 +84,11 @@ export class PassiveLayer {
   // one end-range term: U (J), own-axis generalised torque τ (N·m), own-axis stiffness kθ (N·m/rad) at constraint angle th. Beyond the
   // ANATOMICAL hard limit the C2 end-stop adds ½·kStop·(θ − θh)² (a linear spring), so the passive tissue resists ordinary loading at the
   // anatomical boundary and the Jolt engine stop (further out) is only an emergency stop.
-  term(k, i, th, soft) {
+  term(k, i, th, soft) {   // end-range law (+ C2 end-stop) + the G3-R7 neutral-zone term where the spec defines one (ankle ab/adduction)
+    const r = this.termEnd(k, i, th, soft), a = this.jd[k].axes[i]; if (!a.kN) return r; const n = neutralTerm(a.kN, a.c0, a.zN, th);
+    return { ...r, U: r.U + n.U, tau: r.tau + n.tau, k: r.k + n.k };
+  }
+  termEnd(k, i, th, soft) {
     const a = this.jd[k].axes[i], B = a.B, [slo, shi] = soft, [hlo, hhi] = a.hard;
     if (th > shi) { const A = a.tauH[1] / (dexp(B * Math.max(1e-4, hhi - shi)) - 1), e = dexp(B * (th - shi)), x = th - hhi, ks = x > 0 ? a.kStop[1] : 0;
       return { U: A * ((e - 1) / B - (th - shi)) + (x > 0 ? 0.5 * ks * x * x : 0), tau: -A * (e - 1) - ks * Math.max(0, x), k: A * B * e + ks, side: 1, stop: x > 0 }; }
