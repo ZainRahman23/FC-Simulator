@@ -69,7 +69,7 @@
    "id": "0.1b",
    "name": "V2-REF ×3 fresh builds: identical spec hash, engine readback hash and post-step state hash",
    "pass": true,
-   "value": "54f413c9/54add0b4/95ab53a9  54f413c9/54add0b4/95ab53a9  54f413c9/54add0b4/95ab53a9",
+   "value": "54f413c9/54add0b4/981a0623  54f413c9/54add0b4/981a0623  54f413c9/54add0b4/981a0623",
    "limit": "identical"
   },
   {
@@ -102,7 +102,7 @@
     "M": 62,
     "kind": "population"
    },
-   "specHash": "8d21d2ad",
+   "specHash": "53bb36c3",
    "engine": {
     "stateHash": "aa46c502",
     "readHash": "3cd69055",
@@ -146,7 +146,7 @@
      "id": "0.1",
      "name": "spec generation deterministic (×3 identical hash)",
      "pass": true,
-     "value": "8d21d2ad 8d21d2ad 8d21d2ad",
+     "value": "53bb36c3 53bb36c3 53bb36c3",
      "limit": "identical",
      "reportOnly": false
     },
@@ -433,6 +433,14 @@
      "reportOnly": false
     },
     {
+     "id": "0.10e",
+     "name": "boot collision representation (D1a): 10 convex pieces tile the approved hull — union = hull (support function), Σ piece volume = hull volume (Jolt, hull tolerance as built: 1e-5 m), each piece < 256 points",
+     "pass": true,
+     "value": "foot_L: 10 pieces, |Δsupport| 0.0e+0 m, |ΔV|/V 9.0e-8, ≤ 28 pts; foot_R: 10 pieces, |Δsupport| 0.0e+0 m, |ΔV|/V 1.6e-7, ≤ 28 pts",
+     "limit": "10 pieces, ≤ 1e-12 m, ≤ 1e-5",
+     "reportOnly": false
+    },
+    {
      "id": "0.5b",
      "name": "COM / inertia calculation consistent: whole body recomposed from the Jolt readback = spec composition (canonical)",
      "pass": true,
@@ -656,7 +664,7 @@
     "M": 70,
     "kind": "population"
    },
-   "specHash": "c6911723",
+   "specHash": "b49498a3",
    "engine": {
     "stateHash": "bbb73448",
     "readHash": "8d15cc89",
@@ -700,7 +708,7 @@
      "id": "0.1",
      "name": "spec generation deterministic (×3 identical hash)",
      "pass": true,
-     "value": "c6911723 c6911723 c6911723",
+     "value": "b49498a3 b49498a3 b49498a3",
      "limit": "identical",
      "reportOnly": false
     },
@@ -987,6 +995,14 @@
      "reportOnly": false
     },
     {
+     "id": "0.10e",
+     "name": "boot collision representation (D1a): 10 convex pieces tile the approved hull — union = hull (support function), Σ piece volume = hull volume (Jolt, hull tolerance as built: 1e-5 m), each piece < 256 points",
+     "pass": true,
+     "value": "foot_L: 10 pieces, |Δsupport| 0.0e+0 m, |ΔV|/V 1.0e-7, ≤ 26 pts; foot_R: 10 pieces, |Δsupport| 0.0e+0 m, |ΔV|/V 7.0e-8, ≤ 26 pts",
+     "limit": "10 pieces, ≤ 1e-12 m, ≤ 1e-5",
+     "reportOnly": false
+    },
+    {
      "id": "0.5b",
      "name": "COM / inertia calculation consistent: whole body recomposed from the Jolt readback = spec composition (canonical)",
      "pass": true,
@@ -1210,7 +1226,7 @@
     "M": 78,
     "kind": "population"
    },
-   "specHash": "95ab53a9",
+   "specHash": "981a0623",
    "engine": {
     "stateHash": "54f413c9",
     "readHash": "54add0b4",
@@ -1254,7 +1270,7 @@
      "id": "0.1",
      "name": "spec generation deterministic (×3 identical hash)",
      "pass": true,
-     "value": "95ab53a9 95ab53a9 95ab53a9",
+     "value": "981a0623 981a0623 981a0623",
      "limit": "identical",
      "reportOnly": false
     },
@@ -1541,6 +1557,14 @@
      "reportOnly": false
     },
     {
+     "id": "0.10e",
+     "name": "boot collision representation (D1a): 10 convex pieces tile the approved hull — union = hull (support function), Σ piece volume = hull volume (Jolt, hull tolerance as built: 1e-5 m), each piece < 256 points",
+     "pass": true,
+     "value": "foot_L: 10 pieces, |Δsupport| 0.0e+0 m, |ΔV|/V 1.7e-7, ≤ 28 pts; foot_R: 10 pieces, |Δsupport| 0.0e+0 m, |ΔV|/V 2.0e-7, ≤ 28 pts",
+     "limit": "10 pieces, ≤ 1e-12 m, ≤ 1e-5",
+     "reportOnly": false
+    },
+    {
      "id": "0.5b",
      "name": "COM / inertia calculation consistent: whole body recomposed from the Jolt readback = spec composition (canonical)",
      "pass": true,
@@ -1771,7 +1795,7 @@
     "M": 85,
     "kind": "population"
    },
-   "specHash": "81358b1f",
+   "specHash": "e3b2e81b",
    "engine": {
     "stateHash": "26a6bd66",
     "readHash": "4eaeb429",
@@ -1815,7 +1839,7 @@
      "id": "0.1",
      "name": "spec generation deterministic (×3 identical hash)",
      "pass": true,
-     "value": "81358b1f 81358b1f 81358b1f",
+     "value": "e3b2e81b e3b2e81b e3b2e81b",
      "limit": "identical",
      "reportOnly": false
     },
@@ -2102,6 +2126,14 @@
      "reportOnly": false
     },
     {
+     "id": "0.10e",
+     "name": "boot collision representation (D1a): 10 convex pieces tile the approved hull — union = hull (support function), Σ piece volume = hull volume (Jolt, hull tolerance as built: 1e-5 m), each piece < 256 points",
+     "pass": true,
+     "value": "foot_L: 10 pieces, |Δsupport| 0.0e+0 m, |ΔV|/V 2.5e-9, ≤ 30 pts; foot_R: 10 pieces, |Δsupport| 0.0e+0 m, |ΔV|/V 1.5e-8, ≤ 29 pts",
+     "limit": "10 pieces, ≤ 1e-12 m, ≤ 1e-5",
+     "reportOnly": false
+    },
+    {
      "id": "0.5b",
      "name": "COM / inertia calculation consistent: whole body recomposed from the Jolt readback = spec composition (canonical)",
      "pass": true,
@@ -2325,7 +2357,7 @@
     "M": 92,
     "kind": "population"
    },
-   "specHash": "2ff1f5b8",
+   "specHash": "747b27ee",
    "engine": {
     "stateHash": "bcb5cd8e",
     "readHash": "3d384f6d",
@@ -2369,7 +2401,7 @@
      "id": "0.1",
      "name": "spec generation deterministic (×3 identical hash)",
      "pass": true,
-     "value": "2ff1f5b8 2ff1f5b8 2ff1f5b8",
+     "value": "747b27ee 747b27ee 747b27ee",
      "limit": "identical",
      "reportOnly": false
     },
@@ -2656,6 +2688,14 @@
      "reportOnly": false
     },
     {
+     "id": "0.10e",
+     "name": "boot collision representation (D1a): 10 convex pieces tile the approved hull — union = hull (support function), Σ piece volume = hull volume (Jolt, hull tolerance as built: 1e-5 m), each piece < 256 points",
+     "pass": true,
+     "value": "foot_L: 10 pieces, |Δsupport| 0.0e+0 m, |ΔV|/V 2.0e-7, ≤ 29 pts; foot_R: 10 pieces, |Δsupport| 0.0e+0 m, |ΔV|/V 5.6e-8, ≤ 28 pts",
+     "limit": "10 pieces, ≤ 1e-12 m, ≤ 1e-5",
+     "reportOnly": false
+    },
+    {
      "id": "0.5b",
      "name": "COM / inertia calculation consistent: whole body recomposed from the Jolt readback = spec composition (canonical)",
      "pass": true,
@@ -2882,7 +2922,7 @@
     },
     "kind": "morphology-variant"
    },
-   "specHash": "2441c984",
+   "specHash": "de0a79b0",
    "engine": {
     "stateHash": "0cf363b2",
     "readHash": "951ed393",
@@ -2926,7 +2966,7 @@
      "id": "0.1",
      "name": "spec generation deterministic (×3 identical hash)",
      "pass": true,
-     "value": "2441c984 2441c984 2441c984",
+     "value": "de0a79b0 de0a79b0 de0a79b0",
      "limit": "identical",
      "reportOnly": false
     },
@@ -3213,6 +3253,14 @@
      "reportOnly": false
     },
     {
+     "id": "0.10e",
+     "name": "boot collision representation (D1a): 10 convex pieces tile the approved hull — union = hull (support function), Σ piece volume = hull volume (Jolt, hull tolerance as built: 1e-5 m), each piece < 256 points",
+     "pass": true,
+     "value": "foot_L: 10 pieces, |Δsupport| 0.0e+0 m, |ΔV|/V 1.7e-7, ≤ 28 pts; foot_R: 10 pieces, |Δsupport| 0.0e+0 m, |ΔV|/V 2.0e-7, ≤ 28 pts",
+     "limit": "10 pieces, ≤ 1e-12 m, ≤ 1e-5",
+     "reportOnly": false
+    },
+    {
      "id": "0.5b",
      "name": "COM / inertia calculation consistent: whole body recomposed from the Jolt readback = spec composition (canonical)",
      "pass": true,
@@ -3439,7 +3487,7 @@
     },
     "kind": "morphology-variant"
    },
-   "specHash": "90e7e58b",
+   "specHash": "1e611873",
    "engine": {
     "stateHash": "f038548c",
     "readHash": "7e6d7ba2",
@@ -3483,7 +3531,7 @@
      "id": "0.1",
      "name": "spec generation deterministic (×3 identical hash)",
      "pass": true,
-     "value": "90e7e58b 90e7e58b 90e7e58b",
+     "value": "1e611873 1e611873 1e611873",
      "limit": "identical",
      "reportOnly": false
     },
@@ -3770,6 +3818,14 @@
      "reportOnly": false
     },
     {
+     "id": "0.10e",
+     "name": "boot collision representation (D1a): 10 convex pieces tile the approved hull — union = hull (support function), Σ piece volume = hull volume (Jolt, hull tolerance as built: 1e-5 m), each piece < 256 points",
+     "pass": true,
+     "value": "foot_L: 10 pieces, |Δsupport| 0.0e+0 m, |ΔV|/V 1.7e-7, ≤ 28 pts; foot_R: 10 pieces, |Δsupport| 0.0e+0 m, |ΔV|/V 2.0e-7, ≤ 28 pts",
+     "limit": "10 pieces, ≤ 1e-12 m, ≤ 1e-5",
+     "reportOnly": false
+    },
+    {
      "id": "0.5b",
      "name": "COM / inertia calculation consistent: whole body recomposed from the Jolt readback = spec composition (canonical)",
      "pass": true,
@@ -3993,7 +4049,7 @@
     "M": 78,
     "kind": "population"
    },
-   "specHash": "896b921b",
+   "specHash": "5d129c59",
    "engine": {
     "stateHash": "26a6bd66",
     "readHash": "2f7d88fb",
@@ -4037,7 +4093,7 @@
      "id": "0.1",
      "name": "spec generation deterministic (×3 identical hash)",
      "pass": true,
-     "value": "896b921b 896b921b 896b921b",
+     "value": "5d129c59 5d129c59 5d129c59",
      "limit": "identical",
      "reportOnly": false
     },
@@ -4321,6 +4377,14 @@
      "pass": true,
      "value": "length 30.57 cm, width 11.72 cm, heel 6.90 cm behind / tip 23.67 cm ahead of the AJC, AJC 9.41 cm up, MTP1 15.15 cm ahead",
      "limit": "spec 30.57 × 11.72 cm ± 5 mm",
+     "reportOnly": false
+    },
+    {
+     "id": "0.10e",
+     "name": "boot collision representation (D1a): 10 convex pieces tile the approved hull — union = hull (support function), Σ piece volume = hull volume (Jolt, hull tolerance as built: 1e-5 m), each piece < 256 points",
+     "pass": true,
+     "value": "foot_L: 10 pieces, |Δsupport| 0.0e+0 m, |ΔV|/V 2.5e-9, ≤ 30 pts; foot_R: 10 pieces, |Δsupport| 0.0e+0 m, |ΔV|/V 1.5e-8, ≤ 29 pts",
+     "limit": "10 pieces, ≤ 1e-12 m, ≤ 1e-5",
      "reportOnly": false
     },
     {

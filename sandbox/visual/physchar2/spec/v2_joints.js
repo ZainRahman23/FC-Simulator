@@ -199,12 +199,14 @@ export function passiveTorque(pp, theta) {          // τ (N·m) on one axis at 
   if (theta < pp.soft[0]) return pp.A[0] * (dexp(pp.B * (pp.soft[0] - theta)) - 1) + (theta < pp.hard[0] ? ks[0] * (pp.hard[0] - theta) : 0);
   return 0;
 }
-// G1 decision C2: emergency engine-stop margins (degrees beyond the ANATOMICAL hard limit), per joint class / anatomical axis / direction of
-// motion (pos = the positive anatomical motion, neg = the negative). Derived by tools/g1_margins.js from controlled overshoot tests (see
-// DECISIONS.md C2): margin = ceil(1.5 × the largest overshoot beyond the anatomical hard limit observed with the end-stop and the engine
-// stop moved out of the way, over the V2-REF scenario envelope and the speed-controlled rig, + 1°), at least 2°.
-// Derived 2026-10-03 by tools/g1_margins.js (raw rows: review_artifacts/physical_character_v2/g1/json/g1_margins.json). Degrees.
-export const ENGINE_MARGIN = {"ankle":{"df":{"neg":12,"pos":9},"fabd":{"neg":11,"pos":23},"inv":{"neg":18,"pos":15}},"elbow":{"flex":{"neg":7,"pos":2},"pron":{"neg":5,"pos":2}},"hip":{"abd":{"neg":6,"pos":11},"flex":{"neg":4,"pos":5},"rot":{"neg":6,"pos":10}},"knee":{"flex":{"neg":8,"pos":14},"rot":{"neg":16,"pos":32}},"lumbar":{"flex":{"neg":2,"pos":10},"lat":{"neg":6,"pos":10},"rot":{"neg":7,"pos":8}},"neck":{"flex":{"neg":25,"pos":31},"lat":{"neg":7,"pos":11},"rot":{"neg":7,"pos":10}},"shoulder":{"abd":{"neg":2,"pos":2},"flex":{"neg":11,"pos":4},"rot":{"neg":2,"pos":14}},"thoracic":{"flex":{"neg":6,"pos":10},"lat":{"neg":7,"pos":6},"rot":{"neg":2,"pos":2}}};
+// G1 decisions C2 + D3a: emergency engine-stop margins (degrees beyond the ANATOMICAL hard limit), per joint class / anatomical axis / direction
+// of motion (pos = the positive anatomical motion, neg = the negative). Measured by tools/g1_margins.js from controlled overshoot tests: margin =
+// max(2°, ceil(1.5 × the largest overshoot beyond the anatomical hard limit + 1°)), observed with the C2 3° end-stop ON and the engine stop moved
+// 40° out of the way, over the WHOLE G1 validation set (D3a: V2-REF + V1-matched all scenarios but the impact15 diagnostic, the four variants'
+// essential scenarios, the D4a timestep ensembles at 180/240/360/720 Hz, the C7 envelope; 240 runs) at the D1a + D2a baseline (10-piece boot,
+// 150 iterations). The anatomical ROM is unchanged; these are numerical emergency stops, separate from the 1.5° settled compliance tolerance.
+// History: first measured on V2-REF only (three times, after each passive-drive fix); D3a widened the measured set. Raw rows: g1/json/g1_margins.json.
+export const ENGINE_MARGIN = {"ankle":{"df":{"neg":17,"pos":12},"fabd":{"neg":15,"pos":26},"inv":{"neg":19,"pos":16}},"elbow":{"flex":{"neg":10,"pos":11},"pron":{"neg":12,"pos":6}},"hip":{"abd":{"neg":10,"pos":14},"flex":{"neg":9,"pos":7},"rot":{"neg":9,"pos":11}},"knee":{"flex":{"neg":9,"pos":15},"rot":{"neg":20,"pos":36}},"lumbar":{"flex":{"neg":2,"pos":12},"lat":{"neg":9,"pos":14},"rot":{"neg":8,"pos":17}},"neck":{"flex":{"neg":24,"pos":38},"lat":{"neg":10,"pos":21},"rot":{"neg":7,"pos":14}},"shoulder":{"abd":{"neg":15,"pos":2},"flex":{"neg":11,"pos":6},"rot":{"neg":2,"pos":13}},"thoracic":{"flex":{"neg":6,"pos":11},"lat":{"neg":8,"pos":6},"rot":{"neg":6,"pos":16}}};
 export function engineLimits(j, margin) {
   const lo = j.limits.hard.lo.slice(), hi = j.limits.hard.hi.slice(); if (!margin) return { lo, hi };
   const cls = j.name.replace(/_[LR]$/, ""), M = margin[cls] || {};

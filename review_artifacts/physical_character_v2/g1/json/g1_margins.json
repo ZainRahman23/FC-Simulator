@@ -3,296 +3,387 @@
  "world": {
   "hz": 240,
   "coll": 1,
-  "velSteps": 60,
+  "velSteps": 150,
   "posSteps": 2,
   "ccd": "discrete"
  },
- "rule": "margin = max(2°, ceil(1.5 × envelope overshoot + 1°)); envelope = V2-REF G1 scenarios except impact15, engine stops +40°",
- "envelope": [
-  "upright",
-  "leanF",
-  "leanB",
-  "leanL",
-  "leanR",
-  "perturb",
-  "singleLeg",
-  "dropA",
-  "sideFirst",
-  "shoulderFirst",
-  "rotating",
-  "awkward",
-  "flatSupine",
-  "drop1m",
-  "isoMomentum",
-  "isoSelfCol"
- ],
+ "mods": [],
+ "table": {
+  "ankle": {
+   "df": {
+    "neg": 17,
+    "pos": 12
+   },
+   "fabd": {
+    "neg": 15,
+    "pos": 26
+   },
+   "inv": {
+    "neg": 19,
+    "pos": 16
+   }
+  },
+  "elbow": {
+   "flex": {
+    "neg": 10,
+    "pos": 11
+   },
+   "pron": {
+    "neg": 12,
+    "pos": 6
+   }
+  },
+  "hip": {
+   "abd": {
+    "neg": 10,
+    "pos": 14
+   },
+   "flex": {
+    "neg": 9,
+    "pos": 7
+   },
+   "rot": {
+    "neg": 9,
+    "pos": 11
+   }
+  },
+  "knee": {
+   "flex": {
+    "neg": 9,
+    "pos": 15
+   },
+   "rot": {
+    "neg": 20,
+    "pos": 36
+   }
+  },
+  "lumbar": {
+   "flex": {
+    "neg": 2,
+    "pos": 12
+   },
+   "lat": {
+    "neg": 9,
+    "pos": 14
+   },
+   "rot": {
+    "neg": 8,
+    "pos": 17
+   }
+  },
+  "neck": {
+   "flex": {
+    "neg": 24,
+    "pos": 38
+   },
+   "lat": {
+    "neg": 10,
+    "pos": 21
+   },
+   "rot": {
+    "neg": 7,
+    "pos": 14
+   }
+  },
+  "shoulder": {
+   "abd": {
+    "neg": 15,
+    "pos": 2
+   },
+   "flex": {
+    "neg": 11,
+    "pos": 6
+   },
+   "rot": {
+    "neg": 2,
+    "pos": 13
+   }
+  },
+  "thoracic": {
+   "flex": {
+    "neg": 6,
+    "pos": 11
+   },
+   "lat": {
+    "neg": 8,
+    "pos": 6
+   },
+   "rot": {
+    "neg": 6,
+    "pos": 16
+   }
+  }
+ },
+ "rule": "margin = max(2°, ceil(1.5 × largest overshoot + 1°)); set = V2-REF + V1-matched (all but impact15), 4 variants (essential), timestep ensembles (4 rates × 5 starts), C7 envelope",
+ "runs": 240,
+ "seconds": 122.24,
  "rows": [
   {
    "cls": "ankle",
    "key": "df",
    "dir": "neg",
-   "envOvershootDeg": 6.9,
-   "where": "drop1m ankle_L",
+   "envOvershootDeg": 10.26,
+   "where": "V2-REF drop1m@0.00001 @720 Hz ankle_L",
    "rig": {
     "2": -8.44,
     "5": -6.27,
     "10": -3.1
    },
-   "marginDeg": 12
+   "marginDeg": 17
   },
   {
    "cls": "ankle",
    "key": "df",
    "dir": "pos",
-   "envOvershootDeg": 5.26,
-   "where": "singleLeg ankle_R",
+   "envOvershootDeg": 6.7,
+   "where": "V2-long-legs singleLeg ankle_R",
    "rig": {
     "2": -23.07,
     "5": -20.43,
     "10": -16.58
    },
-   "marginDeg": 9
+   "marginDeg": 12
   },
   {
    "cls": "ankle",
    "key": "fabd",
    "dir": "neg",
-   "envOvershootDeg": 6.01,
-   "where": "perturb ankle_L",
+   "envOvershootDeg": 8.92,
+   "where": "V2-REF hsKickTurf ankle_L",
    "rig": {
     "2": -4.23,
     "5": -3.15,
     "10": -1.45
    },
-   "marginDeg": 11
+   "marginDeg": 15
   },
   {
    "cls": "ankle",
    "key": "fabd",
    "dir": "pos",
-   "envOvershootDeg": 14.42,
-   "where": "awkward ankle_R",
+   "envOvershootDeg": 16.56,
+   "where": "V2-short-legs awkward ankle_R",
    "rig": {
     "2": -4.23,
     "5": -3.15,
     "10": -1.45
    },
-   "marginDeg": 23
+   "marginDeg": 26
   },
   {
    "cls": "ankle",
    "key": "inv",
    "dir": "neg",
-   "envOvershootDeg": 10.92,
-   "where": "leanR ankle_R",
+   "envOvershootDeg": 11.57,
+   "where": "V2-REF leanL ankle_L",
    "rig": {
     "2": -9.44,
     "5": -8.5,
     "10": -7.01
    },
-   "marginDeg": 18
+   "marginDeg": 19
   },
   {
    "cls": "ankle",
    "key": "inv",
    "dir": "pos",
-   "envOvershootDeg": 8.89,
-   "where": "singleLeg ankle_R",
+   "envOvershootDeg": 9.75,
+   "where": "V2-REF leanF@-0.00001 @720 Hz ankle_R",
    "rig": {
     "2": -9.4,
     "5": -8.41,
     "10": -6.9
    },
-   "marginDeg": 15
+   "marginDeg": 16
   },
   {
    "cls": "elbow",
    "key": "flex",
    "dir": "neg",
-   "envOvershootDeg": 3.4,
-   "where": "rotating elbow_R",
+   "envOvershootDeg": 5.52,
+   "where": "V2-REF hsPost elbow_R",
    "rig": {
     "2": -2.87,
     "5": -0.04,
     "10": 2.25
    },
-   "marginDeg": 7
+   "marginDeg": 10
   },
   {
    "cls": "elbow",
    "key": "flex",
    "dir": "pos",
-   "envOvershootDeg": 0,
-   "where": "—",
+   "envOvershootDeg": 6.6,
+   "where": "V2-REF leanR elbow_R",
    "rig": {
     "2": -2.3,
     "5": 0.83,
     "10": 3.49
    },
-   "marginDeg": 2
+   "marginDeg": 11
   },
   {
    "cls": "elbow",
    "key": "pron",
    "dir": "neg",
-   "envOvershootDeg": 2.58,
-   "where": "leanB elbow_R",
+   "envOvershootDeg": 7,
+   "where": "V2-short-legs awkward elbow_R",
    "rig": {
     "2": -4.45,
     "5": -3.65,
     "10": -2.39
    },
-   "marginDeg": 5
+   "marginDeg": 12
   },
   {
    "cls": "elbow",
    "key": "pron",
    "dir": "pos",
-   "envOvershootDeg": 0,
-   "where": "—",
+   "envOvershootDeg": 3.3,
+   "where": "V2-REF leanR elbow_R",
    "rig": {
     "2": -7.31,
     "5": -6.3,
     "10": -4.72
    },
-   "marginDeg": 2
-  },
-  {
-   "cls": "hip",
-   "key": "abd",
-   "dir": "neg",
-   "envOvershootDeg": 2.81,
-   "where": "singleLeg hip_L",
-   "rig": {
-    "2": -1.27,
-    "5": 1.37,
-    "10": 3.6
-   },
    "marginDeg": 6
   },
   {
    "cls": "hip",
    "key": "abd",
+   "dir": "neg",
+   "envOvershootDeg": 5.72,
+   "where": "V2-REF hsKickTurf hip_L",
+   "rig": {
+    "2": -1.19,
+    "5": 1.36,
+    "10": 3.65
+   },
+   "marginDeg": 10
+  },
+  {
+   "cls": "hip",
+   "key": "abd",
    "dir": "pos",
-   "envOvershootDeg": 6.63,
-   "where": "awkward hip_L",
+   "envOvershootDeg": 8.03,
+   "where": "V2-REF awkward@0.000001 @720 Hz hip_L",
    "rig": {
     "2": 0.93,
     "5": 6.28,
     "10": 14.03
    },
-   "marginDeg": 11
+   "marginDeg": 14
   },
   {
    "cls": "hip",
    "key": "flex",
    "dir": "neg",
-   "envOvershootDeg": 1.35,
-   "where": "awkward hip_L",
+   "envOvershootDeg": 4.96,
+   "where": "V2-REF hsKickTurf hip_L",
    "rig": {
     "2": -3.51,
-    "5": 2.02,
+    "5": 2.03,
     "10": 6.2
    },
-   "marginDeg": 4
+   "marginDeg": 9
   },
   {
    "cls": "hip",
    "key": "flex",
    "dir": "pos",
-   "envOvershootDeg": 2.19,
-   "where": "awkward hip_R",
+   "envOvershootDeg": 3.91,
+   "where": "V2-long-legs awkward hip_R",
    "rig": {
     "2": -3.26,
     "5": 4.06,
     "10": 10.19
    },
-   "marginDeg": 5
+   "marginDeg": 7
   },
   {
    "cls": "hip",
    "key": "rot",
    "dir": "neg",
-   "envOvershootDeg": 2.7,
-   "where": "leanF hip_L",
+   "envOvershootDeg": 4.85,
+   "where": "V1-matched singleLeg hip_L",
    "rig": {
     "2": -7.96,
-    "5": -5.2,
-    "10": -1.24
+    "5": -5.21,
+    "10": -1.25
    },
-   "marginDeg": 6
+   "marginDeg": 9
   },
   {
    "cls": "hip",
    "key": "rot",
    "dir": "pos",
-   "envOvershootDeg": 5.96,
-   "where": "perturb hip_R",
+   "envOvershootDeg": 6.43,
+   "where": "V2-REF hsKickTurf hip_L",
    "rig": {
     "2": -11.95,
-    "5": -7.94,
-    "10": -2.47
+    "5": -7.95,
+    "10": -2.46
    },
-   "marginDeg": 10
+   "marginDeg": 11
   },
   {
    "cls": "knee",
    "key": "flex",
    "dir": "neg",
-   "envOvershootDeg": 4.44,
-   "where": "flatSupine knee_L",
+   "envOvershootDeg": 5.12,
+   "where": "V2-REF flatSupine @720 Hz knee_L",
    "rig": {
     "2": -1.81,
     "5": 1.46,
     "10": 4.62
    },
-   "marginDeg": 8
+   "marginDeg": 9
   },
   {
    "cls": "knee",
    "key": "flex",
    "dir": "pos",
-   "envOvershootDeg": 8.59,
-   "where": "dropA knee_R",
+   "envOvershootDeg": 8.92,
+   "where": "V1-matched dropA knee_R",
    "rig": {
     "2": -9.51,
     "5": -3.59,
     "10": 0.31
    },
-   "marginDeg": 14
+   "marginDeg": 15
   },
   {
    "cls": "knee",
    "key": "rot",
    "dir": "neg",
-   "envOvershootDeg": 9.52,
-   "where": "perturb knee_R",
+   "envOvershootDeg": 12.09,
+   "where": "V2-REF hsKickTurf knee_L",
    "rig": {
     "2": -8.68,
     "5": -6.83,
     "10": -3.72
    },
-   "marginDeg": 16
+   "marginDeg": 20
   },
   {
    "cls": "knee",
    "key": "rot",
    "dir": "pos",
-   "envOvershootDeg": 20.07,
-   "where": "awkward knee_R",
+   "envOvershootDeg": 22.85,
+   "where": "V2-long-legs awkward knee_R",
    "rig": {
     "2": -8.68,
     "5": -6.83,
     "10": -3.6
    },
-   "marginDeg": 32
+   "marginDeg": 36
   },
   {
    "cls": "lumbar",
    "key": "flex",
    "dir": "neg",
-   "envOvershootDeg": 0,
-   "where": "—",
+   "envOvershootDeg": 0.39,
+   "where": "V2-REF hsHeadFirst lumbar",
    "rig": {
     "2": 0.34,
     "5": 4.67,
@@ -304,60 +395,47 @@
    "cls": "lumbar",
    "key": "flex",
    "dir": "pos",
-   "envOvershootDeg": 5.34,
-   "where": "leanB lumbar",
+   "envOvershootDeg": 7.25,
+   "where": "V2-REF leanB@-0.00001 @720 Hz lumbar",
    "rig": {
     "2": -3.25,
     "5": 3.04,
     "10": 8.72
    },
-   "marginDeg": 10
+   "marginDeg": 12
   },
   {
    "cls": "lumbar",
    "key": "lat",
    "dir": "neg",
-   "envOvershootDeg": 2.74,
-   "where": "leanL lumbar",
+   "envOvershootDeg": 4.8,
+   "where": "V2-REF hsKickTurf lumbar",
    "rig": {
     "2": 1.46,
-    "5": 6.99,
+    "5": 6.98,
     "10": 15.63
    },
-   "marginDeg": 6
+   "marginDeg": 9
   },
   {
    "cls": "lumbar",
    "key": "lat",
    "dir": "pos",
-   "envOvershootDeg": 5.98,
-   "where": "singleLeg lumbar",
+   "envOvershootDeg": 8.49,
+   "where": "V2-165-62 singleLeg lumbar",
    "rig": {
     "2": 1.46,
     "5": 6.98,
     "10": 15.62
    },
-   "marginDeg": 10
+   "marginDeg": 14
   },
   {
    "cls": "lumbar",
    "key": "rot",
    "dir": "neg",
-   "envOvershootDeg": 3.68,
-   "where": "awkward lumbar",
-   "rig": {
-    "2": -0.91,
-    "5": 1.59,
-    "10": 5.46
-   },
-   "marginDeg": 7
-  },
-  {
-   "cls": "lumbar",
-   "key": "rot",
-   "dir": "pos",
-   "envOvershootDeg": 4.06,
-   "where": "rotating lumbar",
+   "envOvershootDeg": 4.02,
+   "where": "V2-198-92 awkward lumbar",
    "rig": {
     "2": -0.91,
     "5": 1.59,
@@ -366,63 +444,76 @@
    "marginDeg": 8
   },
   {
+   "cls": "lumbar",
+   "key": "rot",
+   "dir": "pos",
+   "envOvershootDeg": 10.08,
+   "where": "V2-REF hsPost lumbar",
+   "rig": {
+    "2": -0.91,
+    "5": 1.59,
+    "10": 5.46
+   },
+   "marginDeg": 17
+  },
+  {
    "cls": "neck",
    "key": "flex",
    "dir": "neg",
-   "envOvershootDeg": 15.46,
-   "where": "drop1m neck",
+   "envOvershootDeg": 14.73,
+   "where": "V2-REF drop1m@0.00001 @720 Hz neck",
    "rig": {
     "2": -3.86,
     "5": 1.82,
     "10": 6.03
    },
-   "marginDeg": 25
+   "marginDeg": 24
   },
   {
    "cls": "neck",
    "key": "flex",
    "dir": "pos",
-   "envOvershootDeg": 19.44,
-   "where": "drop1m neck",
+   "envOvershootDeg": 24.53,
+   "where": "V2-REF drop1m@0.00001 @720 Hz neck",
    "rig": {
     "2": -5.16,
     "5": 0.48,
     "10": 3.88
    },
-   "marginDeg": 31
+   "marginDeg": 38
   },
   {
    "cls": "neck",
    "key": "lat",
    "dir": "neg",
-   "envOvershootDeg": 3.47,
-   "where": "perturb neck",
+   "envOvershootDeg": 5.67,
+   "where": "V2-REF hsSide neck",
    "rig": {
     "2": -1.71,
     "5": 1.58,
     "10": 4.8
    },
-   "marginDeg": 7
+   "marginDeg": 10
   },
   {
    "cls": "neck",
    "key": "lat",
    "dir": "pos",
-   "envOvershootDeg": 6.04,
-   "where": "sideFirst neck",
+   "envOvershootDeg": 12.68,
+   "where": "V2-REF hsPost neck",
    "rig": {
     "2": -1.71,
     "5": 1.58,
     "10": 4.81
    },
-   "marginDeg": 11
+   "marginDeg": 21
   },
   {
    "cls": "neck",
    "key": "rot",
    "dir": "neg",
-   "envOvershootDeg": 3.37,
-   "where": "singleLeg neck",
+   "envOvershootDeg": 3.67,
+   "where": "V2-REF upright@-0.00001 @240 Hz neck",
    "rig": {
     "2": -6.79,
     "5": -2.53,
@@ -434,34 +525,34 @@
    "cls": "neck",
    "key": "rot",
    "dir": "pos",
-   "envOvershootDeg": 5.53,
-   "where": "awkward neck",
+   "envOvershootDeg": 8.22,
+   "where": "V2-REF awkward@-0.000001 @720 Hz neck",
    "rig": {
     "2": -6.79,
     "5": -2.53,
     "10": 1.81
    },
-   "marginDeg": 10
+   "marginDeg": 14
   },
   {
    "cls": "shoulder",
    "key": "abd",
    "dir": "neg",
-   "envOvershootDeg": 0,
-   "where": "—",
+   "envOvershootDeg": 8.98,
+   "where": "V1-matched singleLeg shoulder_R",
    "rig": {
-    "2": -19.67,
-    "5": -19.56,
-    "10": -19.38
+    "2": -19.69,
+    "5": -19.61,
+    "10": -19.5
    },
-   "marginDeg": 2
+   "marginDeg": 15
   },
   {
    "cls": "shoulder",
    "key": "abd",
    "dir": "pos",
-   "envOvershootDeg": 0,
-   "where": "—",
+   "envOvershootDeg": 0.66,
+   "where": "V2-REF upright@-0.000001 @360 Hz shoulder_R",
    "rig": {
     "2": -1.3,
     "5": 2.82,
@@ -473,8 +564,8 @@
    "cls": "shoulder",
    "key": "flex",
    "dir": "neg",
-   "envOvershootDeg": 6.44,
-   "where": "singleLeg shoulder_L",
+   "envOvershootDeg": 6.15,
+   "where": "V2-REF leanF@0.000001 @360 Hz shoulder_R",
    "rig": {
     "2": -1.15,
     "5": 3.21,
@@ -486,14 +577,14 @@
    "cls": "shoulder",
    "key": "flex",
    "dir": "pos",
-   "envOvershootDeg": 1.68,
-   "where": "awkward shoulder_R",
+   "envOvershootDeg": 2.99,
+   "where": "V2-REF awkward @720 Hz shoulder_R",
    "rig": {
     "2": -0.96,
     "5": 0.8,
     "10": 2.97
    },
-   "marginDeg": 4
+   "marginDeg": 6
   },
   {
    "cls": "shoulder",
@@ -512,21 +603,21 @@
    "cls": "shoulder",
    "key": "rot",
    "dir": "pos",
-   "envOvershootDeg": 8.23,
-   "where": "leanL shoulder_L",
+   "envOvershootDeg": 7.77,
+   "where": "V2-165-62 leanL shoulder_L",
    "rig": {
     "2": -9.2,
     "5": -8.06,
     "10": -6.24
    },
-   "marginDeg": 14
+   "marginDeg": 13
   },
   {
    "cls": "thoracic",
    "key": "flex",
    "dir": "neg",
-   "envOvershootDeg": 2.82,
-   "where": "drop1m thoracic",
+   "envOvershootDeg": 2.84,
+   "where": "V2-REF hsHeadFirst thoracic",
    "rig": {
     "2": -1.64,
     "5": 1.56,
@@ -538,34 +629,34 @@
    "cls": "thoracic",
    "key": "flex",
    "dir": "pos",
-   "envOvershootDeg": 5.84,
-   "where": "dropA thoracic",
+   "envOvershootDeg": 6.16,
+   "where": "V1-matched dropA thoracic",
    "rig": {
     "2": -5.24,
     "5": 0.49,
     "10": 3.8
    },
-   "marginDeg": 10
+   "marginDeg": 11
   },
   {
    "cls": "thoracic",
    "key": "lat",
    "dir": "neg",
-   "envOvershootDeg": 3.58,
-   "where": "sideFirst thoracic",
+   "envOvershootDeg": 4.11,
+   "where": "V2-REF sideFirst@0.00001 @720 Hz thoracic",
    "rig": {
     "2": 0.51,
     "5": 4.38,
     "10": 9.69
    },
-   "marginDeg": 7
+   "marginDeg": 8
   },
   {
    "cls": "thoracic",
    "key": "lat",
    "dir": "pos",
    "envOvershootDeg": 3.13,
-   "where": "perturb thoracic",
+   "where": "V2-REF perturb thoracic",
    "rig": {
     "2": 0.51,
     "5": 4.38,
@@ -577,133 +668,27 @@
    "cls": "thoracic",
    "key": "rot",
    "dir": "neg",
-   "envOvershootDeg": 0,
-   "where": "—",
+   "envOvershootDeg": 2.96,
+   "where": "V2-REF hsSide thoracic",
    "rig": {
     "2": -1.23,
     "5": 2.16,
     "10": 7.84
    },
-   "marginDeg": 2
+   "marginDeg": 6
   },
   {
    "cls": "thoracic",
    "key": "rot",
    "dir": "pos",
-   "envOvershootDeg": 0,
-   "where": "—",
+   "envOvershootDeg": 9.52,
+   "where": "V2-REF hsPost thoracic",
    "rig": {
     "2": -1.23,
     "5": 2.16,
     "10": 7.84
    },
-   "marginDeg": 2
+   "marginDeg": 16
   }
- ],
- "table": {
-  "ankle": {
-   "df": {
-    "neg": 12,
-    "pos": 9
-   },
-   "fabd": {
-    "neg": 11,
-    "pos": 23
-   },
-   "inv": {
-    "neg": 18,
-    "pos": 15
-   }
-  },
-  "elbow": {
-   "flex": {
-    "neg": 7,
-    "pos": 2
-   },
-   "pron": {
-    "neg": 5,
-    "pos": 2
-   }
-  },
-  "hip": {
-   "abd": {
-    "neg": 6,
-    "pos": 11
-   },
-   "flex": {
-    "neg": 4,
-    "pos": 5
-   },
-   "rot": {
-    "neg": 6,
-    "pos": 10
-   }
-  },
-  "knee": {
-   "flex": {
-    "neg": 8,
-    "pos": 14
-   },
-   "rot": {
-    "neg": 16,
-    "pos": 32
-   }
-  },
-  "lumbar": {
-   "flex": {
-    "neg": 2,
-    "pos": 10
-   },
-   "lat": {
-    "neg": 6,
-    "pos": 10
-   },
-   "rot": {
-    "neg": 7,
-    "pos": 8
-   }
-  },
-  "neck": {
-   "flex": {
-    "neg": 25,
-    "pos": 31
-   },
-   "lat": {
-    "neg": 7,
-    "pos": 11
-   },
-   "rot": {
-    "neg": 7,
-    "pos": 10
-   }
-  },
-  "shoulder": {
-   "abd": {
-    "neg": 2,
-    "pos": 2
-   },
-   "flex": {
-    "neg": 11,
-    "pos": 4
-   },
-   "rot": {
-    "neg": 2,
-    "pos": 14
-   }
-  },
-  "thoracic": {
-   "flex": {
-    "neg": 6,
-    "pos": 10
-   },
-   "lat": {
-    "neg": 7,
-    "pos": 6
-   },
-   "rot": {
-    "neg": 2,
-    "pos": 2
-   }
-  }
- }
+ ]
 }

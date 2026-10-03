@@ -5,7 +5,8 @@
 import { V, Q, hashNums } from "../core/v2_math.js";
 import { V2JoltWorld, G0_WORLD } from "../core/v2_jolt.js";
 import { generateSpec, specJSON, specHash, fnv1a } from "../spec/v2_spec.js";
-import { V2_REF, V1_MATCHED, VARIATION_SET, DE_LEVA, EQUIP, PROFILE } from "../spec/v2_human.js";
+import { V2_REF, V1_MATCHED, VARIATION_SET, DE_LEVA, EQUIP, PROFILE, humanLandmarks } from "../spec/v2_human.js";
+import { bootHull, BOOT_GRID } from "../spec/v2_colliders.js";
 import { BONES, UNITY_REQUIRED, TOUCHLINE_REQUIRED_OPTIONAL, UNITY_PARENT, mirrorName, mirrorPos, mirrorQuat, mirroredCopy } from "../spec/v2_skeleton.js";
 import { decompose, constraintParams, childRotation, passiveTorque, anatomicalAngles } from "../spec/v2_joints.js";
 import { wholeBody } from "../spec/v2_body.js";
@@ -233,6 +234,18 @@ export function g0Body(J, human, opts = {}) {
   add_("0.10b", "boot hull dimensions = specification (length, ball width, heel behind / tip ahead of the AJC, sole on the stud plane)", fdOK,
     `length ${(100 * footDims.length).toFixed(2)} cm, width ${(100 * footDims.width).toFixed(2)} cm, heel ${(100 * footDims.heel).toFixed(2)} cm behind / tip ${(100 * footDims.tip).toFixed(2)} cm ahead of the AJC, AJC ${(100 * ft.origin[1]).toFixed(2)} cm up, MTP1 ${(100 * ft.boot.mtp1AheadAJC).toFixed(2)} cm ahead`,
     `spec ${(100 * ft.boot.length).toFixed(2)} × ${(100 * ft.boot.ballWidth).toFixed(2)} cm ± 5 mm`);
+  // D1a: the boot's collision REPRESENTATION — 10 convex pieces (AP 5 × ML 2) that tile the approved hull exactly. Union support function =
+  // the approved hull's in 2000 directions; Jolt piece volumes sum to the hull volume (no overlap, no gap). Mass / COM / inertia / ankle are
+  // collider-independent spec values (checked by 0.4–0.6 / 0.9 against the Python calculation).
+  { const Lm = humanLandmarks(human), dirs = []; for (let k = 0; k < 2000; k++) { const z = 1 - 2 * (k + 0.5) / 2000, r = Math.sqrt(1 - z * z), ph = k * Math.PI * (3 - Math.sqrt(5)); dirs.push([r * Math.cos(ph), r * Math.sin(ph), z]); }
+    const sup = (P, d) => Math.max(...P.map(p => p[0] * d[0] + p[1] * d[1] + p[2] * d[2]));
+    const vol = (P) => { const hs = new J.ConvexHullShapeSettings(); for (const q of P) hs.mPoints.push_back(new J.Vec3(q[0], q[1], q[2])); hs.mMaxConvexRadius = 0; hs.mHullTolerance = 1e-5; const r = hs.Create(), sh = r.Get(), v = sh.GetVolume(); J.destroy(hs); return v; };
+    const rows = ["foot_L", "foot_R"].map(n => { const ftb = byName[n], lat = n === "foot_R" ? 1 : -1, ref = bootHull(Lm, ftb, lat), pcs = ftb.shapes.filter(x => x.type === "hull"), U = pcs.flatMap(x => x.points);
+      const dSup = Math.max(...dirs.map(d => Math.abs(sup(U, d) - sup(ref, d)))), vSum = pcs.reduce((a, x) => a + vol(x.points), 0), vRef = vol(ref);
+      return { n, pieces: pcs.length, dSup, dVol: Math.abs(vSum - vRef) / vRef, maxPts: Math.max(...pcs.map(x => x.points.length)) }; });
+    const want = (BOOT_GRID.ap.length + 1) * (BOOT_GRID.ml.length + 1), ok = rows.every(r => r.pieces === want && r.dSup <= 1e-12 && r.dVol <= 1e-5 && r.maxPts < 256);
+    add_("0.10e", "boot collision representation (D1a): 10 convex pieces tile the approved hull — union = hull (support function), Σ piece volume = hull volume (Jolt, hull tolerance as built: 1e-5 m), each piece < 256 points", ok,
+      rows.map(r => `${r.n}: ${r.pieces} pieces, |Δsupport| ${r.dSup.toExponential(1)} m, |ΔV|/V ${r.dVol.toExponential(1)}, ≤ ${r.maxPts} pts`).join("; "), `${want} pieces, ≤ 1e-12 m, ≤ 1e-5`); }
   // ── engine build + readback + contacts ──
   const eng = engineChecks(J, S, opts);
   for (const c of eng.checks) checks.push(c);

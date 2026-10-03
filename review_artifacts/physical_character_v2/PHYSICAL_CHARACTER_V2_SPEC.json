@@ -1355,7 +1355,17 @@
     "evidence": "volume-matched (density 1090)"
    },
    "foot": {
-    "shape": "convexHull (boot)",
+    "shape": "convexHull (boot); collision representation D1a (2026-10-03): 10 convex pieces tiling the hull (grid AP 0.2/0.4/0.6/0.8 x ML 0.5), hull tolerance 1e-5 m, identical external geometry and mass properties",
+    "collision_pieces": 10,
+    "grid_ap": [
+     0.2,
+     0.4,
+     0.6,
+     0.8
+    ],
+    "grid_ml": [
+     0.5
+    ],
     "boot_len": 0.29346,
     "ball_w": 0.11265,
     "heel_w": 0.08262,
@@ -2675,7 +2685,17 @@
     "evidence": "volume-matched (density 1090)"
    },
    "foot": {
-    "shape": "convexHull (boot)",
+    "shape": "convexHull (boot); collision representation D1a (2026-10-03): 10 convex pieces tiling the hull (grid AP 0.2/0.4/0.6/0.8 x ML 0.5), hull tolerance 1e-5 m, identical external geometry and mass properties",
+    "collision_pieces": 10,
+    "grid_ap": [
+     0.2,
+     0.4,
+     0.6,
+     0.8
+    ],
+    "grid_ml": [
+     0.5
+    ],
     "boot_len": 0.30569999999999997,
     "ball_w": 0.11725,
     "heel_w": 0.0859,

@@ -19,10 +19,10 @@ const ST = { key: "upright", human: "V2-REF", cfg: "ref", playing: false, speed:
 let J = null, NODE = null, SPEC = null, SIM = null, MESH = [], BIND = null, dirty = true, done = false, REFCFG = { velSteps: G1_WORLD.velSteps }, CAND_MARGINS = null;
 const checksFor = (r, key) => (SCENARIOS[key].group === "envelope" ? hsChecks(r, SCENARIOS[key]) : scenarioChecks(r, SCENARIOS[key]));
 const CAMS = { front: { yaw: 0, pitch: 6 }, side: { yaw: 90, pitch: 6 }, three: { yaw: 35, pitch: 16 }, top: { yaw: 0, pitch: 88 } };
-const CONFIGS = () => ({ ref: { label: `G1 gate — validated baseline (240 Hz, ${REFCFG.velSteps} velocity iterations, 2-piece boot)`, cfg: { ...REFCFG }, mods: [] },
-  cand: { label: "DECISION CANDIDATE (not adopted): 10-piece boot + 150 iterations, own margins", cfg: { ...REFCFG, velSteps: 150 }, mods: ["bootGridAP5xML2"], cand: true },
-  "DX-R1": { label: "diagnostic: the approved single boot hull (C3 reference)", ...pick("DX-R1") }, "DX-B10": { label: "diagnostic: 10-piece boot at 60 iterations", ...pick("DX-B10") },
-  "DX-150": { label: "diagnostic: 150 velocity iterations (2-piece boot)", ...pick("DX-150") }, "DX-W0": { label: "diagnostic: warm starting off", ...pick("DX-W0") } });
+const CONFIGS = () => ({ ref: { label: `G1 gate — validated baseline (240 Hz, ${REFCFG.velSteps} velocity iterations, 10-piece boot)`, cfg: { ...REFCFG }, mods: [] },
+  "DX-PREV": { label: "diagnostic: previous baseline (C3 two-piece boot, 60 iterations)", ...pick("DX-PREV") }, "DX-C3": { label: "diagnostic: C3 two-piece boot (150 iterations)", ...pick("DX-C3") },
+  "DX-R1": { label: "diagnostic: the approved single boot hull", ...pick("DX-R1") }, "DX-60": { label: "diagnostic: 60 velocity iterations", ...pick("DX-60") },
+  "DX-W0": { label: "diagnostic: warm starting off", ...pick("DX-W0") } });
 const pick = (id) => { const d = DX_CONFIGS.find(x => x.id === id); return { cfg: { ...REFCFG, ...d.cfg }, mods: d.mods || [], dx: id }; };
 
 async function init() {
@@ -141,7 +141,7 @@ function orbit() {
 function loop() { if (ST.playing && SIM) { ST.acc += ST.speed * SIM.cfg.hz / 60; const n = Math.floor(ST.acc); ST.acc -= n; if (n > 0) tick(n); } if (dirty && SIM) { dirty = false; frame(); } requestAnimationFrame(loop); }
 window.addEventListener("resize", () => { dirty = true; });
 // URL parameters for scripted captures / the headless browser = Node check:
-//   ?scenario=&human=&cfg=ref|cand|DX-R1|DX-B10|DX-150|DX-W0&t=<s>&cam=front|side|three|top|follow&dist=&yaw=&pitch=&show=a,b&hide=a,b&joint=   ·   ?check=1 runs every curated scenario
+//   ?scenario=&human=&cfg=ref|DX-PREV|DX-C3|DX-R1|DX-60|DX-W0&t=<s>&cam=front|side|three|top|follow&dist=&yaw=&pitch=&show=a,b&hide=a,b&joint=   ·   ?check=1 runs every curated scenario
 const qp = new URLSearchParams(location.search);
 init().then(async () => {
   if (qp.get("check")) { const C = CONFIGS().ref, rows = [], KEYS = qp.get("keys") ? qp.get("keys").split(",") : CURATED; for (const k of KEYS) { await new Promise(r => setTimeout(r, 0)); const spec = generateSpec(VARIATION_SET.find(x => x.id === "V2-REF")), s = new G1Sim(J, spec, k, { cfg: C.cfg }); while (s.tick()); const n = NODE && NODE.runs.find(r => r.human === "V2-REF" && r.key === k);

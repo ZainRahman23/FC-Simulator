@@ -57,7 +57,7 @@ export class V2JoltWorld {
     if (s.type === "capsule") return new J.CapsuleShapeSettings(s.half, s.r, null);
     if (s.type === "tapered") return new J.TaperedCapsuleShapeSettings(s.half, s.rTop, s.rBot, null);
     if (s.type === "box") return new J.BoxShapeSettings(new J.Vec3(s.he[0], s.he[1], s.he[2]), s.cr, null);
-    if (s.type === "hull") { const hs = new J.ConvexHullShapeSettings(); for (const q of s.points) hs.mPoints.push_back(new J.Vec3(q[0], q[1], q[2])); hs.mMaxConvexRadius = s.cr; return hs; }
+    if (s.type === "hull") { const hs = new J.ConvexHullShapeSettings(); for (const q of s.points) hs.mPoints.push_back(new J.Vec3(q[0], q[1], q[2])); hs.mMaxConvexRadius = s.cr; if (s.hullTol != null) hs.mHullTolerance = s.hullTol; return hs; }   // hullTol: D1a boot pieces keep every specified vertex
     throw new Error("shape " + s.type);
   }
   _addBody(b) {

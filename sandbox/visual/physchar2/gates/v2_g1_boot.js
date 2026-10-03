@@ -11,15 +11,17 @@ import { V, Q, rad } from "../core/v2_math.js";
 import { V2JoltWorld } from "../core/v2_jolt.js";
 import { bodyLowest } from "../sim/v2_geom.js";
 import { splitBootHull, splitBootHull4, singleHull, splitBootGrid, BOOT_GRIDS } from "./v2_g1_dx.js";
+import { VARIATION_SET, humanLandmarks } from "../spec/v2_human.js";
+import { bootHull } from "../spec/v2_colliders.js";
 import { G1_WORLD } from "./v2_g1.js";
 
 export { singleHull };
-// the ORIGINAL approved hull vertices: the union of the spec's C3 pieces minus the points on their shared cut plane (the cut points are on that
-// plane by construction; the hull of what remains is the approved hull). Rebuilding R2 / R3 from the 387-point union instead made the pairwise
-// cut-point construction blow up quadratically (stack overflow and WASM out-of-memory in the v2 run).
-export function originalHull(spec) { const s = singleHull(spec); for (const b of s.bodies) { if (!/^foot_/.test(b.name)) continue; const sp = spec.bodies.find(x => x.name === b.name).shapes.filter(x => x.type === "hull");
-  if (sp.length !== 2) continue; const zc = Math.max(...sp[0].points.map(p => p[2])), seen = new Set(), h = b.shapes.find(x => x.type === "hull");
-  h.points = h.points.filter(p => Math.abs(p[2] - zc) > 1e-9).filter(p => { const k = p.map(v => v.toFixed(9)).join(","); if (seen.has(k)) return false; seen.add(k); return true; }); } return s; }
+// the ORIGINAL approved hull vertices, regenerated exactly from the specification (spec/v2_colliders.bootHull) — independent of how the spec
+// currently represents the boot (C3: 2 pieces; D1a: 10 pieces). (A first version stripped the C3 cut plane from the union, which only works for
+// 2 pieces; rebuilding pieces from a union with section points made the pairwise cut construction blow up — stack / WASM out of memory.)
+export function originalHull(spec) { const s = singleHull(spec), h = VARIATION_SET.find(x => x.id === spec.human.id), Lm = humanLandmarks(h);
+  for (const b of s.bodies) { if (!/^foot_/.test(b.name)) continue; const hs = b.shapes.find(x => x.type === "hull"); hs.points = bootHull(Lm, spec.bodies.find(x => x.name === b.name), b.name === "foot_R" ? 1 : -1); hs.note = "approved single boot hull (27 vertices, regenerated)"; }
+  return s; }
 export const BOOT_REPS = { R1_hull: (s) => originalHull(s), R2_split2: (s) => splitBootHull(originalHull(s), 0.55), R3_split4: (s) => splitBootGrid(originalHull(s), [0.55], [0.5]),   // same pieces as splitBootHull4 (AP 0.55 × ML mid-width), cut points hull-reduced
   // added after the root cause was found (Jolt's supporting-face rule; calc/boot_face_model.py): finer grids of the same hull
   R4_grid10: (s) => splitBootGrid(originalHull(s), ...BOOT_GRIDS.AP5xML2), R5_grid12: (s) => splitBootGrid(originalHull(s), ...BOOT_GRIDS.AP4xML3) };
@@ -92,4 +94,40 @@ export function heldSweep(J, spec, n = 200, cfg0 = {}, seed = 12345) {
   w.destroy();
   const s = out.map(o => o.settledMm).sort((a, b) => a - b), pct = (p) => s[Math.min(s.length - 1, Math.floor(p * s.length))];
   return { n, overSlopPlus2: out.filter(o => o.settledMm > 7).length / n, over10: out.filter(o => o.settledMm > 10).length / n, p50: pct(0.5), p95: pct(0.95), p99: pct(0.99), max: s.at(-1), worst: out.reduce((a, o) => (o.settledMm > a.settledMm ? o : a), out[0]) };
+}
+// ── D1a SEAM VERIFICATION (ordinary foot–ground loading across the internal seams of the multi-piece boot) ─────────────────────────────────
+// (1) seamSweep: the loaded boot (39.2 kg, COM 10 cm above the AJC), rotation LOCKED, settled at every 1° of pitch (heel → toe, about foot x)
+//     and roll (medial → lateral, about foot z) from −30° to +30°: the settled depth of the exact lowest point vs angle. A seam artifact would
+//     show as a depth spike / step at the angles where a seam becomes the lowest feature. Compared with the single hull (no seams).
+export function seamSweep(J, spec, cfg0 = {}) {
+  const cfg = Object.assign({}, G1_WORLD, cfg0), dt = 1 / cfg.hz, N = Math.round(0.4 * cfg.hz), foot = spec.bodies.find(b => b.name === "foot_R"), m = 39.2, I = m * 0.12 * 0.12;
+  const body = { ...foot, index: 0, parentIndex: -1, mass: m, comLocal: [0, 0.10, 0], inertia: [[I, 0, 0], [0, I, 0], [0, 0, I]], holdRotation: true };
+  const w = new V2JoltWorld(J, { bodies: [body], joints: [], disabledPairs: [], contact: spec.contact }, spec.contact, { velSteps: cfg.velSteps, posSteps: cfg.posSteps, manifoldReduction: cfg.manifoldReduction, pairCache: cfg.pairCache, recordContacts: true });
+  const out = {};
+  for (const [name, ax] of [["pitch", [1, 0, 0]], ["roll", [0, 0, 1]]]) { const rows = [];
+    for (let a = -30; a <= 30; a++) { const q = Q.axis(ax, rad(a)), lr = bodyLowest(body, { pos: [0, 0, 0], rot: q });
+      w.setPose(0, [0, 0.05 - lr.y, 0], q); w.setVel(0, [0, 0, 0], [0, 0, 0]); w.step(dt, cfg.coll); w.setPose(0, [0, 0.002 - lr.y, 0], q); w.setVel(0, [0, 0, 0], [0, 0, 0]);
+      for (let i = 0; i < N; i++) w.step(dt, cfg.coll); const tc = w.contacts.filter(c => c.a < 0 || c.b < 0);
+      rows.push({ deg: a, depthMm: -bodyLowest(body, w.read(0)).y * 1000, manifolds: tc.length, points: tc.reduce((s, c) => s + c.pts.length, 0) }); }
+    let step = 0; for (let i = 1; i < rows.length; i++) step = Math.max(step, Math.abs(rows[i].depthMm - rows[i - 1].depthMm));
+    out[name] = { rows, maxDepthMm: Math.max(...rows.map(r => r.depthMm)), maxStepMm: step }; }
+  w.destroy(); return out;
+}
+// (2) rollOver: the loaded boot, rotation FREE, released 1 mm above the turf tilted on its heel (25° toe-up), toe (20° toe-down), medial or
+//     lateral edge (20°) with 2 rad/s toward flat — it rolls across the seams onto the sole. Per tick: the deepest turf contact normal (jump
+//     between ticks), the vertical COM speed change beyond gravity (a bump / catch), energy (KE + PE) rise, exact lowest-point depth.
+export function rollOver(J, spec, mode, cfg0 = {}) {
+  const C = { heel: [[1, 0, 0], -25], toe: [[1, 0, 0], 20], medial: [[0, 0, 1], 20], lateral: [[0, 0, 1], -20] }[mode];
+  const cfg = Object.assign({}, G1_WORLD, cfg0), dt = 1 / cfg.hz, N = Math.round(0.8 * cfg.hz), foot = spec.bodies.find(b => b.name === "foot_R"), m = 39.2, I = m * 0.12 * 0.12;
+  const body = { ...foot, index: 0, parentIndex: -1, mass: m, comLocal: [0, 0.10, 0], inertia: [[I, 0, 0], [0, I, 0], [0, 0, I]] };
+  const w = new V2JoltWorld(J, { bodies: [body], joints: [], disabledPairs: [], contact: spec.contact }, spec.contact, { velSteps: cfg.velSteps, posSteps: cfg.posSteps, manifoldReduction: cfg.manifoldReduction, pairCache: cfg.pairCache, recordContacts: true });
+  const q = Q.axis(C[0], rad(C[1])), lr = bodyLowest(body, { pos: [0, 0, 0], rot: q }); w.setPose(0, [0, 0.001 - lr.y, 0], q); w.setVel(0, [0, 0, 0], V.sc(C[0], -Math.sign(C[1]) * 2));
+  let prevN = null, prevV = null, prevE = null, jump = 0, bump = 0, rise = 0, maxDepth = 0, path = [];
+  for (let n = 0; n < N; n++) { w.step(dt, cfg.coll); const s = w.read(0), tc = w.contacts.filter(c => c.a < 0 || c.b < 0), deep = tc.reduce((a, c) => (!a || c.depth > a.depth ? c : a), null);
+    const E = 0.5 * m * V.dot(s.v, s.v) + 0.5 * I * V.dot(s.w, s.w) + m * 9.81 * s.com[1]; if (prevE != null) rise = Math.max(rise, E - prevE); prevE = E;
+    if (deep) { const nrm = V.norm(deep.a < 0 ? deep.normal : V.sc(deep.normal, -1)); if (prevN) jump = Math.max(jump, Math.acos(Math.max(-1, Math.min(1, V.dot(nrm, prevN)))) * 180 / Math.PI); prevN = nrm; }
+    if (prevV != null && n > 3) bump = Math.max(bump, Math.abs(s.v[1] - prevV + 9.81 * dt)); prevV = s.v[1];
+    maxDepth = Math.max(maxDepth, -bodyLowest(body, s).y * 1000); if (n % 12 === 0) path.push(+(s.com[1] * 1000).toFixed(2)); }
+  const s = w.read(0); w.destroy();
+  return { mode, maxDepthMm: maxDepth, settledDepthMm: -bodyLowest(body, s).y * 1000, maxNormalJumpDeg: jump, maxVyChangeMs: bump, maxEnergyRiseJ: rise, finalSpeed: V.len(s.v), comPathMm: path };
 }

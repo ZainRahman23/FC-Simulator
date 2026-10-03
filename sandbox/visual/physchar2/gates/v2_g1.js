@@ -13,8 +13,12 @@ import { bodyLowest, lowestOf, bootSole, hull2, insideDist, shapePenetration } f
 // ── world configuration (spec §19 / §15.4; solver iterations are chosen by the 1.5 study) ─────────────────────────────────────────────
 // G1 decision C1 (2026-10-03): 60 velocity iterations is the validated V2 baseline (removes the warm-start impact injection measured at
 // 10–30; ≈ +12 % solver cost). Not necessarily the production optimum.
-export const G1_WORLD = { hz: 240, coll: 1, velSteps: 60, posSteps: 2, ccd: "discrete" };
-export const ITERATION_SET = [10, 15, 20, 30, 60];              // spec §22 1.5 set + the C1 baseline (informational study)
+// D2a (decided 2026-10-03): 150 velocity iterations is the G1 VALIDATION baseline — it removes the measured false hard-landing rebound
+// (warm-started impulses not converged at 60: dropA 0.72 J). A validated CORRECTNESS configuration, not yet the accepted production-performance
+// configuration (debt: obtain equivalent correctness more cheaply — solver / substep / contact / constraint configuration or the native path).
+// History: C1 60 iterations (superseded by D2a), spec §22 1.5 set 10/15/20/30.
+export const G1_WORLD = { hz: 240, coll: 1, velSteps: 150, posSteps: 2, ccd: "discrete" };
+export const ITERATION_SET = [10, 15, 20, 30, 60, 150];         // spec §22 1.5 set + C1 (60) + D2a baseline (150): informational study
 export const RATE_SET = [180, 240, 360, 720];                    // brief §8: bounded sensitivity around 240 Hz (720 Hz = converged reference)
 export const G = 9.81;
 
@@ -80,7 +84,7 @@ Object.assign(SCENARIOS, {
   hsDrop15: { group: "envelope", title: "Envelope: feet-first landing from 1.5 m (5.4 m/s)", note: "Quiet stance released with the boots 1.5 m above the turf.", pose: QS, lift: 1.5, seconds: 3 },
   hsKickTurf: { group: "envelope", title: "Envelope: kicking leg into the turf (boot ≈ 20 m/s)", note: "Left boot on the turf; the straight right leg 20° behind the hip swings forward at 22 rad/s about the right hip, so the boot strikes the turf at about 20 m/s (a scuffed kick).",
     pose: { ...both({ shoulder: { abd: 6 } }), hip_R: { flex: -20 } }, lift: 0.0005, vfield: legSwing([-22, 0, 0]), seconds: 2 },
-  hsKickShin: { group: "envelope", title: "Envelope: kicking boot into an opponent's shin (static shin proxy, ≈ 20 m/s, no gravity)", note: "Isolated (gravity off, 2 m up) so only the limb–limb contact is tested: the straight right leg 20° behind the hip swings forward at 22 rad/s (boot ≈ 20 m/s) into a static shin-size capsule (r 5 cm, 40 cm long, vertical) in the boot's path.",
+  hsKickShin: { knownIssue: "D1a-shin", group: "envelope", title: "Envelope: kicking boot into an opponent's shin (static shin proxy, ≈ 20 m/s, no gravity)", note: "Isolated (gravity off, 2 m up) so only the limb–limb contact is tested: the straight right leg 20° behind the hip swings forward at 22 rad/s (boot ≈ 20 m/s) into a static shin-size capsule (r 5 cm, 40 cm long, vertical) in the boot's path.",
     pose: { ...both({ shoulder: { abd: 6 } }), hip_R: { flex: -20 } }, lift: 2.0, gravity: 0, vfield: legSwing([-22, 0, 0]), seconds: 1,
     obstacles: [(spec, S) => { const f = footAt(spec, S, "foot_R"); return { r: 0.05, half: 0.15, pos: [f[0], f[1] - 0.05, f[2] + 0.40], rot: [0, 0, 0, 1], what: "opponent shin proxy" }; }] },
   hsPost: { group: "envelope", title: "Envelope: sprint into a goalpost (9 m/s)", note: "Quiet stance, boots 2 cm up, (0, 0, 9) m/s into a static post (r 6 cm) 0.35 m ahead of the chest.", pose: QS, lift: 0.02, v: [0, 0, 9], seconds: 2,
@@ -92,6 +96,13 @@ export const HS_ORDER = Object.keys(SCENARIOS).filter(k => SCENARIOS[k].group ==
 export const SCENARIO_ORDER = Object.keys(SCENARIOS).filter(k => SCENARIOS[k].group !== "envelope");
 export const CURATED = ["upright", "leanF", "leanL", "singleLeg", "drop1m", "sideFirst", "awkward", "flatSupine", "impact15", "isoSelfCol"];
 export const ESSENTIAL = ["upright", "leanF", "leanL", "singleLeg", "drop1m", "sideFirst", "awkward", "flatSupine", "isoMomentum", "isoSelfCol"];   // run on every body variant
+// D4a (decided 2026-10-03) — timestep study: chaotic passive falls are compared as DISTRIBUTIONS, not single end poses. Each rate scenario runs at
+// every rate as an ENSEMBLE: the nominal start + the initial lift perturbed by ±1 µm and ±10 µm (same-rate chaos spread). Key "base@eps".
+export const RATE_KEYS = ["upright", "leanF", "leanB", "flatSupine", "drop1m", "sideFirst", "awkward", "isoMomentum"];
+export const RATE_EPS = [0, 1e-6, -1e-6, 1e-5, -1e-5];
+export const ensembleKey = (key, eps) => (eps ? `${key}@${eps}` : key);
+export function ensureScenario(key) { if (SCENARIOS[key]) return SCENARIOS[key]; const m = /^(.+)@(-?[0-9.e+-]+)$/.exec(key); if (!m || !SCENARIOS[m[1]]) throw new Error("unknown scenario " + key);
+  const b = SCENARIOS[m[1]], e = +m[2]; return (SCENARIOS[key] = { ...b, lift: (b.lift || 0) + e, base: m[1], eps: e, title: `${b.title} [lift ${e > 0 ? "+" : ""}${e} m]` }); }
 
 // ── initial condition ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 const comW = (spec, S, i) => V.add(S[i].pos, Q.rot(S[i].rot, spec.bodies[i].comLocal));
@@ -111,7 +122,7 @@ export function initialState(spec, sc) {
 const KEYS = ["x", "y", "z"], D = 180 / Math.PI;
 export class G1Sim {
   constructor(J, spec, key, opts = {}) {
-    this.J = J; this.spec = spec; this.key = key; this.sc = SCENARIOS[key]; this.opts = opts;
+    this.J = J; this.spec = spec; this.key = key; this.sc = ensureScenario(key); this.opts = opts;
     this.cfg = Object.assign({}, G1_WORLD, opts.cfg || {}); this.dt = 1 / this.cfg.hz; this.N = Math.round((opts.seconds || this.sc.seconds) * this.cfg.hz);
     const init = initialState(spec, this.sc); this.init = init;
     const contact = { ...spec.contact, ...(this.cfg.slop != null ? { slop: this.cfg.slop } : {}), ...(this.cfg.speculative != null ? { speculative: this.cfg.speculative } : {}) };
@@ -178,7 +189,7 @@ export class G1Sim {
     A.pAbsMax = Math.max(A.pAbsMax, pAbs); A.lAbsMax = Math.max(A.lAbsMax, lAbs);
     const U = this.P.enabled ? this.up.U : 0, E = ke + pe + U; A.E.push(E); A.P.push(Pm); A.L.push(L); A.com.push(com); A.Ulist.push(U);
     // joints: angles, limits, separation, frame continuity
-    const ev = this.up.ev; let sepMax = 0, hardExc = 0, jump = 0;
+    const ev = this.up.ev; let sepMax = 0, hardExc = 0, hardWho = null, jump = 0;
     spec.joints.forEach((j, k) => {
       const a = this.anchors[k], pP = V.add(S[j.parentIndex].pos, Q.rot(S[j.parentIndex].rot, a.p)), pC = V.add(S[j.childIndex].pos, Q.rot(S[j.childIndex].rot, a.c)), sep = V.dist(pP, pC);
       if (sep > sepMax) sepMax = sep; if (sep > A.sepMax) { A.sepMax = sep; A.sepMaxAt = { t, joint: j.name }; }
@@ -191,14 +202,14 @@ export class G1Sim {
         const E = j.limits.engine || j.limits.hard, me = Math.min(th - E.lo[i], E.hi[i] - th), atEng = me < rad(0.25);   // C2: contact with the Jolt emergency stop
         if (atEng) X.engineTicks++; if (atEng !== X.engAt) { X.engToggles++; X.engAt = atEng; }
         const atHard = (j.limits.engine ? me : m) < rad(0.25); if (atHard) X.hardSteps++; if (atHard !== X.at) { X.toggles.push(n); X.at = atHard; }
-        if (-m > hardExc) hardExc = -m; if (rest) X.restMarginMin = Math.min(X.restMarginMin, m); }
+        if (-m > hardExc) { hardExc = -m; hardWho = j.name + "." + j.def.axes[KEYS[i]].key; } if (rest) X.restMarginMin = Math.min(X.restMarginMin, m); }
     });
     this.prevQ = ev.per.map(p => p.q);
-    if (hardExc > A.hardExcMax) { A.hardExcMax = hardExc; A.hardExcAt = t; }
+    if (hardExc > A.hardExcMax) { A.hardExcMax = hardExc; A.hardExcAt = t; A.hardExcWho = hardWho; }
     // turf penetration from the exact collider geometry (post-solve state)
     let pen = 0, penBody = -1; for (let i = 0; i < this.nb; i++) { const l = bodyLowest(spec.bodies[i], S[i]); if (-l.y > pen) { pen = -l.y; penBody = i; } }
     if (pen > A.turfPenMax) { A.turfPenMax = pen; A.turfPenAt = { t, body: spec.bodies[penBody].name }; }
-    if (rest) { A.sepRest = Math.max(A.sepRest, sepMax); A.hardExcRest = Math.max(A.hardExcRest, hardExc); if (pen > A.turfPenRest) { A.turfPenRest = pen; A.turfPenRestBody = spec.bodies[penBody].name; }
+    if (rest) { A.sepRest = Math.max(A.sepRest, sepMax); if (hardExc > A.hardExcRest) { A.hardExcRest = hardExc; A.hardExcRestWho = hardWho; } if (pen > A.turfPenRest) { A.turfPenRest = pen; A.turfPenRestBody = spec.bodies[penBody].name; }
       A.restKEmax = Math.max(A.restKEmax, ke); let wsq = 0, cnt = 0; spec.joints.forEach(j => { const wr = V.sub(S[j.childIndex].w, S[j.parentIndex].w); wsq += V.dot(wr, wr); cnt++; }); A.restW.push(Math.sqrt(wsq / cnt)); }
     if (this.key === "isoSelfCol") this.minDxFeet = Math.min(this.minDxFeet, S[this.footI[1]].com[0] - S[this.footI[0]].com[0]);
     if (this.series) { const s = this.series; s.t.push(t); s.E.push(E); s.KE.push(ke); s.PE.push(pe); s.U.push(U); s.D.push(this.Dcum); s.comY.push(com[1]); s.turfPen.push(pen); s.sep.push(sepMax); s.hardExc.push(hardExc); s.P.push(Pm); s.L.push(L); }
@@ -269,7 +280,7 @@ export class G1Sim {
       energy: { E0: E[0], Eend: E[N], maxRiseJ: maxRise, maxRiseAt, unexplainedJ: unexplained, firstContactT: tc < 0 ? null : tc * dt, monoViolJ: mono, monoAt, airborneClosureJ: airClose, airGainMaxJ: airGain, airLossSumJ: airLoss, dampingJ: this.Dcum, Uend: A.Ulist[N] },
       freeFall: { steps: ffSteps, maxAccDev: ffDev }, momentum: { dP: dPm, dL: dLm, P0, L0, pScale: A.pAbsMax, lScale: A.lAbsMax, dPrel: dPm / Math.max(1e-12, A.pAbsMax), dLrel: dLm / Math.max(1e-12, A.lAbsMax) },
       engine: { ticks: axes.reduce((s, a) => s + a.engineTicks, 0), axes: axes.filter(a => a.engineTicks > 0).map(a => `${a.joint}.${a.key}:${a.engineTicks}`) },
-      joints: { sepMaxMm: A.sepMax * 1000, sepMaxAt: A.sepMaxAt, sepRestMm: A.sepRest * 1000, hardExcMaxDeg: A.hardExcMax * D, hardExcAt: A.hardExcAt, hardExcRestDeg: A.hardExcRest * D,
+      joints: { sepMaxMm: A.sepMax * 1000, sepMaxAt: A.sepMaxAt, sepRestMm: A.sepRest * 1000, hardExcMaxDeg: A.hardExcMax * D, hardExcAt: A.hardExcAt, hardExcWho: A.hardExcWho || null, hardExcRestDeg: A.hardExcRest * D, hardExcRestWho: A.hardExcRestWho || null,
         frameJumpMaxDeg: A.frameJumpMax * D, frameJumpAt: A.frameJumpAt, chatterMax: Math.max(0, ...axes.map(a => a.chatterPer05s)), axes },
       contacts: { turfPenMaxMm: A.turfPenMax * 1000, turfPenAt: A.turfPenAt, turfPenRestMm: A.turfPenRest * 1000, turfPenRestBody: A.turfPenRestBody || null, turfManifoldMaxMm: A.turfManifoldMax * 1000,
         selfPenMaxMm: A.selfPenMax * 1000, selfPenAt: A.selfPenAt, selfPenRestMm: A.selfPenRest * 1000, disabledHits: A.disabledHits,

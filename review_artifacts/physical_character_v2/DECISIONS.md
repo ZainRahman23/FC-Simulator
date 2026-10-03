@@ -210,3 +210,78 @@ In Jolt (held sweep, 200 orientations) the worst sink is 14.7 mm for both. Solve
 - the shin-kick HS.3 (D1 caveat).
 
 The timestep study has not been run on the candidate.
+
+## 2026-10-03 — D1–D4 APPROVED (user decision; source `sources/2026-10-03_user_decision_g1_d1_d4.md`) and integrated
+
+### How each decision was applied
+
+| # | decision (as approved) | applied as | verification / record |
+|---|---|---|---|
+| **D1a** | 10-piece decomposition of the exact same approved boot geometry: a collision-manifold representation change, not anatomy | See the detail below the table. | See the detail below the table. |
+| **D2a** | 150 velocity iterations is the G1 validation baseline | `gates/v2_g1.js` `G1_WORLD.velSteps = 150`. The iteration study adds 150. | **150 iterations is a validated CORRECTNESS configuration, not the accepted production-performance configuration.** Debt item TD-1. The count is not reduced during G1 for performance. |
+| **D3a** | keep the evidence-backed 3° end-stop; reject the 3× stiffer stop; ≤ 1.5° settled excursion as compliance tolerance; ROM unchanged; report actual excursions; emergency-stop margins measured separately | See the detail below the table. | The anatomical ROM is unchanged; the 1.5° is not an anatomical limit. Later active-control gates should normally avoid this region. |
+| **D4a** | timestep: compare distributions / spread and invariants; preserve and report genuine rate effects | Each rate scenario runs at every rate as an ensemble of 5 starts (lift 0, ±1 µm, ±10 µm). **Gated:** invariants for every member; no genuine rate effect at 240 Hz. Genuine effects at 180 / 360 Hz are reported. | Definition pre-registered in `g1/G1_CRITERIA.md` v3 |
+| **D4b** | remove the arm → trunk requirement where the shoulder ROM prevents the impact; keep leg → leg | 1.4h requires leg ↔ leg; arm ↔ trunk is reported | Measured: the arm stops about 4° short of the trunk on every body. Three alternative starts give at most a 0.3 mm end-range touch. |
+| **D4c** | resting ≤ 5 mm with an explicit small numerical comparison tolerance | 1.4b and 1.4e: ≤ 5 mm + 0.01 mm comparison tolerance; the value is reported to 0.1 µm | Measured rests at 5.0007 / 5.0008 mm (asymptotic slop convergence). The physical allowance is unchanged. |
+| **D4d** | 15 m/s impact = diagnostic, report-only | impact15: every check evaluated and reported, none gated | Consistent with C7 (realistic-player envelope) |
+
+**D1a detail.**
+- **Applied as:**
+  - `spec/v2_colliders.js` `splitHullGrid(bootHull, BOOT_GRID)`: AP 0.2/0.4/0.6/0.8 × ML 0.5, 10 pieces of 15–30 points each.
+  - Each piece keeps the approved 5 mm convex radius, with Jolt hull tolerance 1e-5 m.
+  - Manifold reduction and pair cache stay off.
+  - The old 2-piece splitter (`splitHullAP`) is kept for history.
+- **Verified against the previous spec on all 8 bodies:**
+  - support function of the union vs the approved hull: Δ = 0 in 4000 directions;
+  - mass, COM, inertia and ankle origin: Δ = 0;
+  - every other body and joint identical;
+  - semantic mapping: all 31 bone bindings identical (foot / toe → foot body).
+- **New G0 check 0.10e:** 10 pieces, |Δsupport| = 0, Σ piece volume = hull volume to 2e-7.
+- **Defect found and fixed while integrating:** with Jolt's default 1 mm hull tolerance, the pieces lost seam-section vertices (Σ volume −0.28 %, slivers of up to 1 mm missing at the internal seams). At a tolerance of 1e-5 the Jolt pieces equal the specified pieces.
+- **Cost:** +19 % physics, measured at equal iterations (0.204 vs 0.171 ms/tick lying on the turf).
+- **Seam verification:** see `g1/G1_REPORT.md`.
+- **Known unresolved issue (debt TD-2):** the shin-kick contact miss. Not solved by distorting the foot or by indiscriminate CCD.
+
+**D3a detail.**
+- **Applied as:**
+  - `PASSIVE.endStopDeg 3` kept;
+  - `TOL.hardRestDeg 1.5` (1.3d), with the actual excursion and joint reported;
+  - `tools/g1_margins.js` measures the emergency-stop margins over **the whole validation set** (240 runs: V2-REF and V1-matched all scenarios but impact15; 4 variants × essential; timestep ensembles 4 rates × 5 starts; C7 envelope), using the unchanged rule.
+- **Largest overshoots beyond the anatomical limit, with the resulting margins:**
+
+  | joint, direction | overshoot | run | margin |
+  |---|---|---|---|
+  | neck flexion | 24.5° | drop1m at 720 Hz | 38° |
+  | knee rotation | 22.9° | long-legs awkward | 36° |
+  | ankle abduction | 16.6° | short-legs awkward | 26° |
+
+- **Rejected (measured):** a 100 %-at-1° stop removes the excursions but injects 23–70 J at 240 Hz (ankle +33 J in one tick).
+
+### Research history: passive-tissue / drive defects found in G1 (permanent record; all fixed; do not remove)
+
+Found by controlled experiments during G1 (2026-10-03). Each is described in full under "G1 causal fixes" above. They stay in the record although corrected.
+
+| id | defect (where) | cause (measured) | fix |
+|---|---|---|---|
+| G1-D2 | start-of-step linearisation of the end-range law (`sim/v2_passive.js`) | a joint crossed into the stiff end-stop within one step without resistance: thoracic U +9.2 J in one step, net +1.1 J | linearise at the predicted rotation q0·exp(ω·dt) |
+| G1-D3 | two-sided linear passive drive | the linear model could pull a joint toward its stop when it moved back out more than predicted | one-sided restoring limit (the damper is allowed both ways) |
+| G1-D4 | tangent stiffness when compressing; the first chord was anchored at the current point | the tangent under-resists a convex law (knee drive work −0.86 J vs ΔU +1.52 J); the current-point anchor created a hysteresis limit cycle (about 15 mW, shank) | chord when compressing, tangent when releasing, both anchored at the predicted point |
+| G1-D5 | no drive row on the locked axis of the knee and elbow | a twisted 2-DOF joint got only cos²t of its end-range torque and damping (perturb knee −37°: drive work −0.88 J vs ΔU +1.50 J) | every joint with passive tissue drives all three body-2 rows |
+| G1-D6 | the passive offset was written into the Jolt drive target (`core/v2_jolt.js`, engine interface) | `SetTargetOrientationCS` clamps targets onto the joint limits (locked axis → 0), silently replacing the offset: intended (0, −7.2, −12.4)°, applied (5.5, 10.9, 7.0)° | target = current rotation; offset carried by the target angular velocity ω_t = k(δ + C)/(c + dt·k) (verified λ/dt = law within 1.3e-3 N·m) |
+| G1-D7 | per-row chord stiffness unbounded | a barely-moving row coupled to a compressing one gave K = 1.1e5 N·m/rad (−1039 N·m) | chord capped by the largest coupled tangent stiffness |
+| G1-D8 | the one-sided limit could cut the law torque | at a large two-end swing the end-sign rule clamped a real gradient component (hip +28 N·m → 0.4 N·m), injecting about 17 W for 0.12 s | the bounds always admit the law torque |
+
+**Rejected alternatives (negative results, kept):**
+- the armed stop (+2.98 J);
+- the torque-sign one-sided rule (step-rate chatter, +28 J);
+- the hybrid rule (engine-stop contacts);
+- the 3× stiffer end-stop (23–70 J).
+
+### Technical-debt register (opened by D1a / D2a; status at G1)
+
+| id | item | evidence | next step |
+|---|---|---|---|
+| **TD-1** | **150 velocity iterations is a correctness configuration, not a production one** | physics 0.266 vs 0.171 ms/tick at 60 iterations (2-piece boot); the cost of the adopted configuration is measured in the G1 report | Determine whether equivalent correctness (no false hard-landing rebound) can be obtained more cheaply: solver / substep / contact / constraint configuration (for example impact-aware warm-start handling, island velocity-step overrides, sub-stepping only on impact steps) or the eventual native physics path. Do not lower iterations without that evidence. |
+| **TD-2** | **High-speed compound-foot contact** | the 10-piece boot misses contact steps against a static shin proxy at about 20 m/s (HS.3k); the 2-piece boot missed none | Investigate a targeted remedy for high-speed limb-on-limb contact without distorting foot geometry and without indiscriminate CCD (for example per-body speculative distance at speed, or distal-only motion-quality changes in a controlled experiment). Belongs to a later contact / tackle gate. |
+| TD-3 | Passive-layer JavaScript cost | about 0.16 ms/tick per player, now the largest single cost | Vectorise / port with the runtime; no behaviour change |
+| TD-4 | End-stop stiffness is bounded by the implicit drive at 240 Hz | the 1° stop injects 23–70 J | Only if a tighter settled ROM is wanted later: drive work, then re-measure |

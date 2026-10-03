@@ -490,6 +490,15 @@ Values for V2-REF (1.82 m barefoot); every row scales with the human specificati
   1. The heel is ≈ 3.4 cm narrower than the ball. A rectangle overstates heel lateral support.
   2. The oblique MTP break and the toe spring keep the contact on the ball of the foot through the first ≈ 8° of heel rise (atan(12 mm / 82 mm)). A box pivots on its far tip edge immediately. That pivot is the failure V1 measured (the swing pivoting on a 0.276 m tip lever at 136–150 N·m).
 - **Contact behaviour:** Jolt reduces a hull–plane manifold to ≤ 4 points, so the support polygon follows the actual loaded part of the outline.
+- **Collision representation (amended 2026-10-03, decisions G1-C3 → D1a; the geometry above is unchanged):**
+  - The approved hull is handed to Jolt as **10 convex pieces**: a grid of AP planes at 20 / 40 / 60 / 80 % of the hull length × one ML plane at mid-width.
+  - The pieces tile the hull exactly. External geometry, ankle position, mass, COM, inertia and the semantic foot → toe mapping are identical (G0 0.10e).
+  - Each piece keeps the 5 mm convex radius; Jolt hull tolerance is 1e-5 m.
+  - Contact settings: manifold reduction off and body-pair contact cache off (required; with Jolt's defaults, many-piece boots creep or explode).
+  - **Why:** Jolt builds each manifold from the one face whose normal best matches the contact. It drops the deepest point whenever that face lies within 21 mm. On the approved 27-vertex polytope that missed the deepest point by > 10 mm in ≈ 1 % of orientations, up to 31–35 mm (`calc/boot_face_model.py`). With the 10 pieces the worst miss is 1.2 mm (model) and 4.1 mm (Jolt).
+  - **Cost:** physics +19 % at equal iterations.
+  - **Known unresolved issue (D1a, technical debt):** the thinner pieces miss 3 contact steps at ≈ 20 m/s against a static shin proxy. It is not to be solved by distorting the foot geometry or by indiscriminate CCD.
+  - **History:** G1-C3 adopted 2 AP pieces (`splitHullAP`); D1a replaced them.
 
 ### 12.3 V2-F0 vs V2-F1
 
@@ -576,6 +585,8 @@ Degrees. Anatomical sign: flexion / abduction / internal rotation / dorsiflexion
 | Viscous damping | folded into the drive's kd | hip 0.5, knee 0.3, ankle 0.2, spine 1.0, neck 0.3, shoulder 0.3, elbow 0.15 N·m·s/rad | [ENG] order of magnitude. G1 checks free-limb energy decay. |
 | Coulomb joint friction | none | 0 | [ENG]. V1's 0.3–2 N·m friction hid drift. |
 | End-stop stiffness | absolute (N·m/rad), never frequency-scaled | per joint | [V1] foot-gate lesson: a frequency soft stop on a light body overshot 46° |
+| Anatomical end-stop (**amended 2026-10-03, decisions G1-C2, D3a**) | beyond the anatomical hard limit, a linear spring added to the passive potential so the total passive torque reaches 100 % of the opposing isometric capacity 3° past the limit | 3° / 100 % [ENG] | Keeps ordinary loading off the engine stop. A 3× stiffer stop (100 % at 1°) injected 23–70 J at 240 Hz and was rejected (D3a). **Settled compliance tolerance: ≤ 1.5° beyond the ROM boundary at rest. This is not a new anatomical limit; the ROM is unchanged.** Later active-control gates should normally avoid driving into this region. |
+| Emergency (Jolt) stop (**amended 2026-10-03, decisions G1-C2, D3a**) | Jolt's rigid SixDOF limit at anatomical ± `ENGINE_MARGIN` | measured per class / axis / direction | max(2°, ⌈1.5 × overshoot + 1°⌉) over the whole G1 validation set (`tools/g1_margins.js`). A numerical safety net; never reached in the validated set. |
 
 ### 13.4 Expected torque envelope
 
@@ -707,7 +718,7 @@ These are evidence corrections toward athletes, not tuning. G2–G4 report usage
 | pelvis | rounded box (cr 0.03) | breadth 0.346 × depth 0.228 × height 0.222 m | from 0.07 m below the HJC line to the lumbar joint; centre AP −0.010 (gluteal mass) |
 | abdomen | rounded box (cr 0.03) | breadth 0.282 × depth 0.217 × height 0.225 m | lumbar → thoracic joint; centre AP 0 |
 | thorax | rounded box (cr 0.03) + shoulder-girdle capsule | box breadth 0.300 × depth 0.238 × height 0.178 m (xiphion → suprasternale); capsule r 0.060, ML axis, x ±0.13, at y = 1.500 | girdle capsule = trapezius / clavicle contact for shoulder charges and aerial duels |
-| head | **front-to-back (AP) capsule** + neck capsule (**amended 2026-10-02, decision C1**) | capsule r = head breadth / 2 = **0.044 H** (0.080 m), cylinder half-length = (head length − head breadth) / 2 = **0.013 H** (0.024 m), axis anterior–posterior: AP extent = head length 0.114 H, lateral extent = head breadth 0.088 H (ANSUR II). Placement rule unchanged from the original sphere: top 0.005 H below the vertex, AP centre +0.0055 H (+0.010 m). Neck capsule r 0.055, C7 → skull base. | Why: the original sphere (r 0.0525 H) was −8.2 mm vs head length but **+15.5 mm** vs head breadth, outside the §15.1 head tolerance (−15…+5 mm); no sphere can satisfy both. The tolerance was NOT widened. |
+| head | **two spheres along the AP axis** + neck capsule (**amended 2026-10-03, decision G1-C4**; replaced the 2026-10-02 C1 AP capsule) | two spheres r = head breadth / 2 = **0.044 H** (0.080 m), centres at ± (head length − head breadth) / 2 = **±0.013 H** (±0.024 m) along the anterior–posterior axis (the former capsule's segment ends; G1-C4: Jolt's capsule face heuristic let the capsule end cap rest up to 7.5 mm deep; waist at the midpoint 3.6 mm, inside the head tolerance): AP extent = head length 0.114 H, lateral extent = head breadth 0.088 H (ANSUR II). Placement rule unchanged from the original sphere: top 0.005 H below the vertex, AP centre +0.0055 H (+0.010 m). Neck capsule r 0.055, C7 → skull base. | Why: the original sphere (r 0.0525 H) was −8.2 mm vs head length but **+15.5 mm** vs head breadth, outside the §15.1 head tolerance (−15…+5 mm); no sphere can satisfy both. The tolerance was NOT widened. |
 | upperArm | deltoid sphere + tapered capsule | sphere r 0.055 (0.030 H), centre 0.012 m lateral of the SJC; capsule r 0.046 → 0.040, SJC + 0.04 → EJC − 0.01 | bideltoid half-breadth 0.265 m = ANSUR II 0.291 H / 2 |
 | forearm | tapered capsule + hand capsule | capsule r 0.039 → 0.026, EJC → WJC; hand capsule r 0.025 (0.0135 H), length 0.110 from the wrist | the hand is part of the forearm body in the core |
 | thigh | tapered capsule | r 0.087 (0.048 H) → 0.062 (0.034 H); axis from 0.02 m lateral / 0.05 m below the HJC to 0.02 m above the KJC | lateral offset = proximal tissue centroid; inter-thigh gap at the top 4.7 cm at canonical |
@@ -741,6 +752,9 @@ Limb radii are volume-matched to segment mass / density for the shank, upper arm
 | body–turf / hand–turf / body–body / boot–body μ | 0.5 / 0.7 / 0.4 / 0.4 | [V1] values kept as [ENG] |
 | rotational traction | not modelled (Jolt has no torsional friction). Emerges from ≤ 4 sole points. | R3 |
 | friction observer | port with the D6 `muValid` fix | [V1] |
+| manifold reduction / body-pair contact cache (**amended 2026-10-03, G1-C3 / D1a**) | **off / off** | Required by the multi-piece boot (C3 experiment: with both on the boot loses contact points; 12 pieces explode, 10 pieces creep 3.4 mm) |
+| resting penetration tolerance (**amended 2026-10-03, G1-C5, D4c**) | resting contacts ≤ the 5 mm slop, compared with a 0.01 mm numerical tolerance | Jolt never corrects the last slop; rests converge asymptotically onto it (measured 4.7–5.0008 mm). The physical allowance is unchanged. |
+| velocity / position iterations (**amended 2026-10-03, G1-C1 → D2a**) | **150** / 2 | 150 removes the false hard-landing rebound of warm-started impulses at 60 (dropA 0.72 J). **A validated correctness configuration, not the accepted production-performance configuration.** Debt: find equivalent correctness more cheaply (solver / substep / contact / constraint configuration, or the native path). |
 
 ### 15.5 Football interactions the collider set must serve
 
@@ -968,6 +982,19 @@ Each is a leaf extension or a separate gate. None is a topology change.
 | 1.5 | Solver convergence | 1.2–1.4 repeated at 10 / 15 / 20 / 30 velocity iterations. Select the minimum that passes everything with 2× margin. Record cost per tick per player at each. |
 | 1.6 | Determinism | ×3 identical hashes; browser = Node; snapshot / restore bit-exact (port of `session_check`) |
 | 1.7 | Comparison | V1 Gate A scenarios run on V2 and reported side by side (not pass / fail) |
+
+**Amended 2026-10-03 (decisions G1-C1…C7 and D1–D4; the executable criteria are `g1/G1_CRITERIA.md` v3, with each change and its evidence in `DECISIONS.md`):**
+- **1.1:** relative momentum ≤ 2e-5 linear / ≤ 5e-3 angular (C6: float32 free-body floor).
+- **1.3:**
+  - the emergency (Jolt) stop is never reached; actual overshoot beyond the anatomical limit is reported (C2);
+  - settled excursion beyond the ROM boundary ≤ 1.5°, a compliance tolerance with the ROM unchanged (D3a).
+- **1.4:**
+  - at rest: turf and self ≤ the 5 mm slop, compared with a 0.01 mm numerical tolerance (C5, D4c);
+  - the 15 m/s first-touch test is a report-only extreme diagnostic (C7, D4d);
+  - a C7 no-tunnelling envelope of 8 realistic player-collision tests is added;
+  - the isoSelfCol arm → trunk impact requirement is removed, because the approved shoulder ROM cannot reach it (D4b).
+- **1.5:** the iteration set is reported; the validation baseline is 150 velocity iterations (C1 → D2a).
+- **Timestep study (brief §8):** chaotic passive falls are compared as ensemble distributions against same-rate spread. Invariants are required at every rate, with no genuine rate effect at 240 Hz. Genuine effects at other rates are reported (D4a).
 
 ### V2-G2: active standing (finite motors, no stepping)
 

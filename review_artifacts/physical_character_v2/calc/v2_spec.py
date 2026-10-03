@@ -146,7 +146,7 @@ def colliders(H, M):
       "thigh":   {"shape": "taperedCapsule", "r_prox": 0.048 * H, "r_dist": 0.034 * H, "axis": "from 0.02 m lateral / 0.05 m below the HJC to 0.02 m above the KJC",
                   "evidence": "girth-based (proximal thigh circumference ~0.30 H); a volume match gives ~0.10 m and overlaps the opposite thigh"},
       "shank":   {"shape": "taperedCapsule", "r_prox": sh[0], "r_dist": sh[1], "axis": "KJC-0.03 to AJC+0.06, 0.01 m posterior (calf)", "evidence": "volume-matched (density 1090)"},
-      "foot":    {"shape": "convexHull (boot)", "boot_len": fl + E["bootToe"] + E["bootHeel"], "ball_w": PROFILE["footBreadth"] * H + E["bootWidthAdd"],
+      "foot":    {"shape": "convexHull (boot); collision representation D1a (2026-10-03): 10 convex pieces tiling the hull (grid AP 0.2/0.4/0.6/0.8 x ML 0.5), hull tolerance 1e-5 m, identical external geometry and mass properties", "collision_pieces": 10, "grid_ap": [0.2, 0.4, 0.6, 0.8], "grid_ml": [0.5], "boot_len": fl + E["bootToe"] + E["bootHeel"], "ball_w": PROFILE["footBreadth"] * H + E["bootWidthAdd"],
                   "heel_w": PROFILE["heelBreadth"] * H + E["bootWidthAdd"], "heel_behind_AJC": PROFILE["ankleFromHeel"] * fl + E["bootHeel"],
                   "tip_ahead_AJC": (1 - PROFILE["ankleFromHeel"]) * fl + E["bootToe"], "mtp1_ahead_AJC": (0.741 - 0.22) * fl, "mtp5_ahead_AJC": (0.63 - 0.22) * fl,
                   "toeSpring": 0.012, "upper_heights": {"heelCounter": 0.065, "instep": 0.075, "toeBox": 0.045}, "convexRadius": 0.005},

@@ -65,11 +65,18 @@ export function buildColliders(Lm, bodies) {
     out[T.name] = [{ type: "tapered", material: "body", rTop: 0.048 * H, rBot: 0.034 * H, half: t.half, pos: t.pos, rot: t.rot, note: "girth-based (proximal 0.048 H, lateral axis offset)" }];
     const k = between(loc(S.name, [g * hx, yK - 0.03 * s, -0.01 * s]), loc(S.name, [g * hx, yA + 0.06 * s, -0.01 * s]));
     out[S.name] = [{ type: "tapered", material: "body", rTop: sh[0], rBot: sh[1], half: k.half, pos: k.pos, rot: k.rot, note: "volume-matched frustum (density 1090), calf 1 cm posterior" }];
-    // C3 (adopted 2026-10-03 after the boot contact-manifold experiment, g1/G1_C3_BOOT.md): the approved rigid boot hull is REPRESENTED as two
-    // convex pieces whose union is exactly the approved hull (identical external geometry). Jolt builds each contact manifold from one
-    // supporting face per convex shape; on the single hull an edge / toe-loaded boot lost its deepest vertex (toe loading 24 mm, falls 39 mm).
-    out[Ft.name] = splitHullAP(bootHull(Lm, Ft, g), 0.55).map((pts, k) => ({ type: "hull", material: "boot", cr: 0.005, pos: [0, 0, 0], rot: [0, 0, 0, 1], points: pts,
-      note: `rigid boot hull (anatomical outline, oblique MTP break, 12 mm toe spring) — ${k ? "front" : "rear"} convex piece of the approved hull (C3)` }));
+    // D1a (decided 2026-10-03): the approved rigid boot hull is REPRESENTED as 10 convex pieces — a grid AP 5 (planes at 20/40/60/80 % of
+    // the hull's length) × ML 2 (mid-width) of the hull — whose union is exactly the approved hull (identical external geometry, mass
+    // properties and ankle; a collision-manifold representation change, not an anatomical change). Why: Jolt builds each contact manifold
+    // from the ONE face whose normal best matches the contact and drops the deepest point whenever that face lies within 21 mm
+    // (ConvexHullShape::GetSupportingFace + ManifoldBetweenTwoFaces); on the approved 27-vertex polytope that missed the deepest point by
+    // > 10 mm in ≈ 1 % of orientations (single hull 35 mm worst, C3 two pieces 31 mm worst; calc/boot_face_model.py). The 10-piece grid:
+    // worst 1.2 mm (model), 4.1 mm (Jolt held sweep). Requires manifold reduction OFF + body-pair cache OFF (C3 S3). History: C3 adopted 2
+    // AP pieces (splitHullAP, kept below); D1a replaced them.
+    // hullTol 1e-5 m: Jolt's default 1 mm hull tolerance dropped seam-section vertices and shrank the pieces (Σ volume −0.28 %, ≤ 1 mm slivers
+    // missing at the seams); at 1e-5 the Jolt pieces tile the hull exactly (Σ volume = hull volume to 2e-7) — measured, G0 0.10e.
+    out[Ft.name] = splitHullGrid(bootHull(Lm, Ft, g), BOOT_GRID.ap, BOOT_GRID.ml).map((pts, k, all) => ({ type: "hull", material: "boot", cr: 0.005, hullTol: 1e-5, pos: [0, 0, 0], rot: [0, 0, 0, 1], points: pts,
+      note: `rigid boot hull (anatomical outline, oblique MTP break, 12 mm toe spring) — convex piece ${k + 1}/${all.length} of the approved hull (D1a grid AP 5 × ML 2)` }));
   }
   return out;
 }
@@ -109,6 +116,28 @@ export const frictionOf = (ma, mb) => { const k1 = ma + "|" + mb, k2 = mb + "|" 
 // split a convex point hull by the plane z = z0 + frac·(z1 − z0) into two convex pieces whose union is exactly the hull: each piece = the
 // points on its side + the intersections of every crossing point pair with the plane (edge pairs give the section's vertices; interior pairs
 // land inside it and are discarded by the hull builder) (C3)
+// D1a boot collision representation: grid planes (fractions of the hull's AP = foot-z and ML = foot-x extent)
+export const BOOT_GRID = { ap: [0.2, 0.4, 0.6, 0.8], ml: [0.5] };
+// split a convex point hull on a GRID of planes into convex pieces that tile it exactly (union = the hull): each cut keeps the points on each
+// side plus the section of the piece by the plane; the section is the 2D convex hull of the crossing pairs' intersections (the others lie
+// inside it), so a piece carries only its own vertices and section vertices (≈ 15–28 points; Jolt's hull cap is 256)
+export function splitHullGrid(P, apFracs = [], mlFracs = []) {
+  const hull2 = (pts, ax) => { const [u, v] = ax === 2 ? [0, 1] : [1, 2], Qs = pts.slice().sort((a, b) => a[u] - b[u] || a[v] - b[v]), cr = (o, a, b) => (a[u] - o[u]) * (b[v] - o[v]) - (a[v] - o[v]) * (b[u] - o[u]);
+    const lo = [], hi = []; for (const p of Qs) { while (lo.length >= 2 && cr(lo.at(-2), lo.at(-1), p) <= 0) lo.pop(); lo.push(p); }
+    for (const p of Qs.slice().reverse()) { while (hi.length >= 2 && cr(hi.at(-2), hi.at(-1), p) <= 0) hi.pop(); hi.push(p); }
+    return lo.slice(0, -1).concat(hi.slice(0, -1)); };
+  const cutPts = (pts, ax, c) => { const o = []; for (let i = 0; i < pts.length; i++) for (let j = i + 1; j < pts.length; j++) { const a = pts[i], d = pts[j];
+    if ((a[ax] - c) * (d[ax] - c) < 0) { const t = (c - a[ax]) / (d[ax] - a[ax]); const p = [a[0] + t * (d[0] - a[0]), a[1] + t * (d[1] - a[1]), a[2] + t * (d[2] - a[2])]; p[ax] = c; o.push(p); } }
+    return o.length > 2 ? hull2(o, ax) : o; };
+  let pieces = [P];
+  for (const [ax, fr] of [[2, apFracs], [0, mlFracs]]) { const vs = P.map(p => p[ax]), lo = Math.min(...vs), hi = Math.max(...vs);
+    for (const f of fr) { const c = lo + f * (hi - lo), next = [];
+      for (const Qp of pieces) { const qv = Qp.map(p => p[ax]); if (!(Math.min(...qv) < c && Math.max(...qv) > c)) { next.push(Qp); continue; }
+        const X = cutPts(Qp, ax, c); next.push([...Qp.filter(p => p[ax] <= c), ...X], [...Qp.filter(p => p[ax] >= c), ...X]); }
+      pieces = next; } }
+  return pieces;
+}
+// HISTORY (C3, superseded by D1a): split by one AP plane into two pieces
 export function splitHullAP(P, frac) {
   const zs = P.map(p => p[2]), z0 = Math.min(...zs), z1 = Math.max(...zs), zc = z0 + frac * (z1 - z0), cut = [];
   for (let i = 0; i < P.length; i++) for (let j = i + 1; j < P.length; j++) { const a = P[i], c = P[j]; if ((a[2] - zc) * (c[2] - zc) < 0) { const t = (zc - a[2]) / (c[2] - a[2]); cut.push([a[0] + t * (c[0] - a[0]), a[1] + t * (c[1] - a[1]), zc]); } }

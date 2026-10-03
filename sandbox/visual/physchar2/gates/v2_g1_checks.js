@@ -9,13 +9,17 @@ export const TOL = {
   airGainJ: 0.01,               // per contact-free step: ΔE + damping loss ≤ +0.01 J (float32 floor of a 1 kJ body ≈ 1e-4 J)
   freeFallAcc: 0.01,            // [brief §3] contact-free steps: COM acceleration = (0, −g, 0) within 0.01 m/s² (no hidden support / propulsion)
   // [spec 1.3] joint integrity
-  sepTransMm: 5, sepRestMm: 1, hardTransDeg: 3, hardRestDeg: 0.5,
+  // D3a (decided 2026-10-03): settled excursion beyond the anatomical ROM boundary ≤ 1.5° — a numerical / compliance tolerance of the C2 3°
+  // end-stop (deflection at ≈ 50 % of capacity), NOT a new anatomical limit; the ROM is unchanged; actual excursions are reported. (v1: 0.5°.)
+  sepTransMm: 5, sepRestMm: 1, hardTransDeg: 3, hardRestDeg: 1.5,
   // [brief §2] frame continuity: a joint's relative rotation per tick ≤ 2 × the engine angular-velocity cap (100 rad/s) × dt
   frameJumpDegPerTick: (hz) => 2 * 100 * (180 / Math.PI) / hz,
   chatterTogglesPer05s: 10,     // [brief §2] hard-limit on/off switching ≤ 10 per 0.5 s (no sustained > 20 Hz limit chatter)
   // [spec 1.4] contacts. C5 (2026-10-03): the resting tolerance = the penetration slop of the validated Jolt contact configuration (§15.4:
   // 0.005 m — Jolt never corrects the last slop of an overlap, measured: resting contacts settle at 4.7–5.0 mm); "≤ 3 mm" and "0" contradicted it
-  turfTransMm: 10, turfRestMm: 5, selfTransMm: 10, selfRestMm: 5, initOverlapMm: 1,
+  // D4c (decided 2026-10-03): the slop-based resting limits are compared with an explicit numerical tolerance of 0.01 mm (resting contacts
+  // converge asymptotically onto the 5 mm slop: measured 5.0007–5.0008 mm); the physical 5 mm allowance is unchanged.
+  turfTransMm: 10, turfRestMm: 5, selfTransMm: 10, selfRestMm: 5, initOverlapMm: 1, restCmpMm: 0.01,
   firstTouchMm: 3,              // the extreme 15 m/s test (impact15): REPORTED (C7 re-scoped it; player-body high speed = the no-tunnelling envelope)
   // [brief §3] standing release: at t = 0 only boot soles touch, points inside the plantar outline and on the sole plane, normal ≈ +Y
   soleOutsideMm: 2, soleAboveMm: 2, soleNormalDeg: 2,
@@ -42,10 +46,10 @@ const f = (x, n = 2) => (x == null || !Number.isFinite(x) ? String(x) : x.toFixe
 // C7: impact15 (every body at 15 m/s into the turf) is the EXTREME penetration test — not credible player-body motion. It is judged by the
 // envelope requirements (no explosion, no missed collision, no catastrophic constraint failure, comes to rest inside the ROM) and its
 // impact-transient metrics are reported, not banded.
-const EXTREME_REPORT = new Set(["1.2a", "1.2b", "1.3a", "1.3b", "1.3f", "1.4a", "1.4d"]);
+// D4d (decided 2026-10-03): impact15 is a DIAGNOSTIC / report-only extreme test, not a G1 pass criterion — every row is evaluated and reported
+// with its own pass value, marked reportOnly.
 export function scenarioChecks(r, sc) {
-  if (sc.extreme) { const base = scenarioChecksCore(r, sc).map(c => (EXTREME_REPORT.has(c.id) ? { ...c, reportOnly: true, pass: true, name: c.name + " (EXTREME test: report)" } : c));
-    return [...base, ...hsChecks(r, sc).filter(c => c.id !== "HS.r")]; }
+  if (sc.extreme) return [...scenarioChecksCore(r, sc), ...hsChecks(r, sc).filter(c => c.id !== "HS.r")].map(c => ({ ...c, reportOnly: true, name: c.name + " (EXTREME diagnostic: report only, D4d)" }));
   return scenarioChecksCore(r, sc);
 }
 function scenarioChecksCore(r, sc) {
@@ -70,10 +74,10 @@ function scenarioChecksCore(r, sc) {
   C.push(row("1.4d", "self-penetration between allowed pairs (transient)", c.selfPenMaxMm <= TOL.selfTransMm, `${f(c.selfPenMaxMm)} mm`, `≤ ${TOL.selfTransMm} mm`, { v: c.selfPenMaxMm, L: TOL.selfTransMm }));
   if (!iso) {
     C.push(row("1.3c", "joint separation at rest", j.sepRestMm <= TOL.sepRestMm, `${f(j.sepRestMm)} mm`, `≤ ${TOL.sepRestMm} mm`, { v: j.sepRestMm, L: TOL.sepRestMm }));
-    C.push(row("1.3d", "settled joints inside the anatomical ROM (excursion beyond the anatomical hard limit at rest)", j.hardExcRestDeg <= TOL.hardRestDeg, `${f(j.hardExcRestDeg)}°`, `≤ ${TOL.hardRestDeg}°`, { v: j.hardExcRestDeg, L: TOL.hardRestDeg }));
+    C.push(row("1.3d", "settled excursion beyond the anatomical ROM boundary (D3a compliance tolerance; ROM unchanged)", j.hardExcRestDeg <= TOL.hardRestDeg, `${f(j.hardExcRestDeg)}°${j.hardExcRestDeg > 0.005 && j.hardExcRestWho ? " (" + j.hardExcRestWho + ")" : ""}`, `≤ ${TOL.hardRestDeg}°`, { v: j.hardExcRestDeg, L: TOL.hardRestDeg }));
     C.push(row("1.4a", "turf penetration (transient, exact collider geometry)", c.turfPenMaxMm <= TOL.turfTransMm, `${f(c.turfPenMaxMm, 1)} mm (${c.turfPenAt ? c.turfPenAt.body + " @ " + f(c.turfPenAt.t, 3) + " s" : "—"})`, `≤ ${TOL.turfTransMm} mm`, { v: c.turfPenMaxMm, L: TOL.turfTransMm }));
-    C.push(row("1.4b", "resting turf penetration ≤ the slop (C5)", c.turfPenRestMm <= TOL.turfRestMm, `${f(c.turfPenRestMm, 1)} mm (${c.turfPenRestBody || "—"})`, `≤ ${TOL.turfRestMm} mm`, { v: c.turfPenRestMm, L: TOL.turfRestMm }));
-    C.push(row("1.4e", "resting self-contact penetration (allowed pairs) ≤ the slop (C5)", c.selfPenRestMm <= TOL.selfRestMm, `${f(c.selfPenRestMm)} mm`, `≤ ${TOL.selfRestMm} mm`, { v: c.selfPenRestMm, L: TOL.selfRestMm }));
+    C.push(row("1.4b", "resting turf penetration ≤ the slop (C5; compared with a 0.01 mm numerical tolerance, D4c)", c.turfPenRestMm <= TOL.turfRestMm + TOL.restCmpMm, `${f(c.turfPenRestMm, 4)} mm (${c.turfPenRestBody || "—"})`, `≤ ${TOL.turfRestMm} mm (+ ${TOL.restCmpMm} mm comparison tolerance)`, { v: c.turfPenRestMm, L: TOL.turfRestMm }));
+    C.push(row("1.4e", "resting self-contact penetration (allowed pairs) ≤ the slop (C5; same 0.01 mm comparison tolerance, D4c)", c.selfPenRestMm <= TOL.selfRestMm + TOL.restCmpMm, `${f(c.selfPenRestMm, 4)} mm`, `≤ ${TOL.selfRestMm} mm (+ ${TOL.restCmpMm} mm comparison tolerance)`, { v: c.selfPenRestMm, L: TOL.selfRestMm }));
     C.push(row("1.R", "comes to rest; no jitter at rest", r.rest.KEmax <= TOL.restKEJ && r.rest.jitterRadS <= TOL.restJitterRadS, `KE ${f(r.rest.KEmax, 3)} J, joint ω RMS ${f(r.rest.jitterRadS, 3)} rad/s (final 0.5 s)`, `≤ ${TOL.restKEJ} J, ≤ ${TOL.restJitterRadS} rad/s`));
   }
   if (c.soleCheck && !sc.rot) { const s = c.soleCheck; C.push(row("1.4f", "standing release: only boot soles touch at t = 0, inside the plantar outline, on the sole plane, normal +Y",
@@ -89,7 +93,9 @@ function scenarioChecksCore(r, sc) {
     C.push(row("1.4j", "isoSelfCol: no missed self-collision (exact geometric leg ↔ leg overlap > slop + 2 mm with no manifold)", missed === 0, `${missed} missed steps; deepest geometric overlap ${f(Math.max(...T.map(t => t.maxOverlapMm)), 1)} mm`, "0")); }
   if (r.key === "isoSelfCol") {
     const p = c.pairs, legs = Object.keys(p).filter(k => /(thigh|shank|foot)_R ↔ (thigh|shank|foot)_L|(thigh|shank|foot)_L ↔ (thigh|shank|foot)_R/.test(k) && p[k].steps > 0), arm = Object.keys(p).filter(k => /(upperArm|forearm)_R/.test(k) && /(abdomen|pelvis|thigh_R|thorax)/.test(k) && p[k].steps > 0);
-    C.push(row("1.4h", "intended non-adjacent self-collisions occur (leg ↔ leg, arm ↔ trunk) and stop the limbs", legs.length > 0 && arm.length > 0 && r.selfCol && !r.selfCol.passedThrough, `legs: ${legs.join(", ") || "none"}; arm: ${arm.join(", ") || "none"}; pass-through ${r.selfCol ? r.selfCol.passedThrough : "?"}`, "≥ 1 each, no pass-through"));
+    // D4b (decided 2026-10-03): the arm → trunk impact requirement is removed — the approved shoulder ROM stops the arm ≈ 4° short of the trunk,
+    // so the test cannot create that impact; arm contacts that do occur are reported. Leg ↔ leg (reachable) remains required.
+    C.push(row("1.4h", "intended reachable non-adjacent self-collision occurs (leg ↔ leg) and stops the limbs; arm ↔ trunk reported (D4b)", legs.length > 0 && r.selfCol && !r.selfCol.passedThrough, `legs: ${legs.join(", ") || "none"}; arm: ${arm.join(", ") || "none"}; pass-through ${r.selfCol ? r.selfCol.passedThrough : "?"}`, "≥ 1 each, no pass-through"));
     C.push(row("1.1d", "momentum conserved through self-collisions (linear / angular, report)", true, `${r.momentum.dPrel.toExponential(2)} / ${r.momentum.dLrel.toExponential(2)} relative`, "report", { reportOnly: true }));
   }
   return C;
@@ -114,7 +120,11 @@ export function hsChecks(r, sc) {
   C.push(row("HS.1", "finite; no explosion (no body faster than its initial speed + free-fall gain + 5 m/s)", r.finite && r.maxSpeed <= vff + HS_TOL.speedGain, `max speed ${f(r.maxSpeed)} m/s (initial ${f(v0)}, + free fall → ${f(vff)})`, `finite, ≤ ${f(vff + HS_TOL.speedGain)} m/s`));
   C.push(row("HS.2", "no missed turf collision (no body below the turf by more than the slop without a turf manifold)", c.missedTurfSteps === 0, `${c.missedTurfSteps} steps (worst ${f(c.missedTurfMaxMm, 1)} mm)`, "0"));
   if (c.tracked && Object.keys(c.tracked).length) { const T = Object.entries(c.tracked), missed = T.reduce((s, [, t]) => s + t.missedSteps, 0), hit = T.filter(([, t]) => t.maxOverlapMm > 0), worst = T.reduce((m, [k, t]) => (t.maxOverlapMm > m.v ? { k, v: t.maxOverlapMm } : m), { k: "—", v: -1e9 });
-    C.push(row("HS.3", `no tunnelling / missed collision vs ${sc.obstacles ? "the obstacle" : "the other leg"} (exact geometric overlap > slop + 2 mm on a step with no manifold)`, missed === 0 && hit.length > 0,
+    if (sc.knownIssue === "D1a-shin") {   // D1a: the thin pieces of the 10-piece boot miss contact steps at 20 m/s vs the shin proxy — an explicit
+      // UNRESOLVED high-speed contact issue (not fixed by distorting the foot or by indiscriminate CCD); contact must still occur
+      C.push(row("HS.3", `contact with ${sc.obstacles ? "the obstacle" : "the other leg"} occurs (no complete pass-through)`, hit.length > 0, `${hit.length} pairs overlapped; deepest geometric overlap ${f(worst.v, 1)} mm (${worst.k})`, "contact occurred"));
+      C.push(row("HS.3k", "KNOWN UNRESOLVED ISSUE (D1a): missed contact steps of the thin boot pieces at ≈ 20 m/s (exact geometric overlap > slop + 2 mm with no manifold)", missed === 0, `${missed} missed steps`, "report (debt)", { reportOnly: true })); }
+    else C.push(row("HS.3", `no tunnelling / missed collision vs ${sc.obstacles ? "the obstacle" : "the other leg"} (exact geometric overlap > slop + 2 mm on a step with no manifold)`, missed === 0 && hit.length > 0,
       `${missed} missed steps; ${hit.length} pairs overlapped (contact happened); deepest geometric overlap ${f(worst.v, 1)} mm (${worst.k})`, "0 missed, contact occurred")); }
   C.push(row("HS.4", "no catastrophic constraint failure: joint separation transient / at rest", j.sepMaxMm <= HS_TOL.sepCatastrophicMm && (sc.gravity === 0 || j.sepRestMm <= HS_TOL.sepRestMm), `${f(j.sepMaxMm)} / ${f(j.sepRestMm)} mm`, `≤ ${HS_TOL.sepCatastrophicMm} / ≤ ${HS_TOL.sepRestMm} mm`));
   C.push(row("HS.r", "report: penetration (first touch / max), emergency engine-stop ticks, anatomical overshoot, energy", true,

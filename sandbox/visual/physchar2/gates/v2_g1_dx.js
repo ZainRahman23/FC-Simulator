@@ -32,25 +32,21 @@ export function headSpherePair(spec) {
   const sp = (sg) => ({ type: "sphere", material: cap.material, r: cap.r, pos: V.add(cap.pos, V.sc(ax, sg * cap.half)), rot: [0, 0, 0, 1], note: "DX: head sphere pair" });
   b.shapes = [sp(1), sp(-1), ...b.shapes.slice(1)]; return s;
 }
-// G1 diagnostics at the validated baseline (240 Hz × 1, 60 velocity / 2 position iterations, warm start ON, manifold reduction OFF, pair cache
-// OFF, the C3 two-piece boot): each varies ONE thing unless labelled a package. Measured to inform the decision report; NOT adopted.
+// G1 diagnostics at the validated baseline (D1a + D2a: 240 Hz × 1, 150 velocity / 2 position iterations, warm start ON, manifold reduction
+// OFF, pair cache OFF, the 10-piece boot): each varies ONE thing. Measured to inform the record; NOT adopted.
 export const DX_CONFIGS = [
-  { id: "DX-R1", label: "C3 reference: the approved single boot hull (union of the two pieces)", cfg: {}, mods: ["singleHull"] },
-  { id: "DX-W0", label: "warm starting off (joints and contacts)", cfg: { warmStart: false } },
-  { id: "DX-JW0", label: "warm starting off for the joints only", cfg: { jointWarmStart: false } },
-  { id: "DX-CW0", label: "warm starting off for the contacts only", cfg: { contactWarmStart: false } },
-  { id: "DX-100", label: "100 velocity iterations", cfg: { velSteps: 100 } },
-  { id: "DX-150", label: "150 velocity iterations", cfg: { velSteps: 150 } },
-  { id: "DX-200", label: "200 velocity iterations", cfg: { velSteps: 200 } },
-  { id: "DX-POS4", label: "4 position iterations (V1's value)", cfg: { posSteps: 4 } },
-  { id: "DX-B10", label: "boot as 10 convex pieces (AP 5 × ML 2 grid of the approved hull; identical external geometry)", cfg: {}, mods: ["bootGridAP5xML2"] },
-  { id: "DX-B12", label: "boot as 12 convex pieces (AP 4 × ML 3 grid; identical external geometry)", cfg: {}, mods: ["bootGridAP4xML3"] },
-  { id: "DX-B10-150", label: "PACKAGE: 10-piece boot + 150 velocity iterations", cfg: { velSteps: 150 }, mods: ["bootGridAP5xML2"] },
+  { id: "DX-PREV", label: "previous baseline: C3 two-piece boot + 60 velocity iterations", cfg: { velSteps: 60 }, mods: ["bootGridC3"] },
+  { id: "DX-C3", label: "C3 two-piece boot (150 iterations)", cfg: {}, mods: ["bootGridC3"] },
+  { id: "DX-R1", label: "the approved single boot hull (150 iterations)", cfg: {}, mods: ["singleHull"] },
+  { id: "DX-60", label: "60 velocity iterations (10-piece boot)", cfg: { velSteps: 60 } },
+  { id: "DX-100", label: "100 velocity iterations (10-piece boot)", cfg: { velSteps: 100 } },
+  { id: "DX-W0", label: "warm starting off", cfg: { warmStart: false } },
+  { id: "DX-B12", label: "12-piece boot (AP 4 × ML 3)", cfg: {}, mods: ["bootGridAP4xML3"] },
 ];
 // the approved single hull, reconstructed from the spec's convex pieces (the hull of their union = the approved hull, exactly)
 export function singleHull(spec) { const s = clone(spec); for (const b of s.bodies) { if (!/^foot_/.test(b.name)) continue; const H = b.shapes.filter(x => x.type === "hull");
   if (H.length > 1) b.shapes = [{ ...H[0], points: H.flatMap(h => h.points), note: "approved single boot hull (union of the C3 pieces)" }, ...b.shapes.filter(x => x.type !== "hull")]; } return s; }
-export const BOOT_GRIDS = { AP5xML2: [[0.2, 0.4, 0.6, 0.8], [0.5]], AP4xML3: [[0.25, 0.5, 0.75], [1 / 3, 2 / 3]], AP4xML2: [[0.25, 0.5, 0.75], [0.5]], AP6: [[1 / 6, 2 / 6, 3 / 6, 4 / 6, 5 / 6], []] };
+export const BOOT_GRIDS = { C3: [[0.55], []], AP5xML2: [[0.2, 0.4, 0.6, 0.8], [0.5]], AP4xML3: [[0.25, 0.5, 0.75], [1 / 3, 2 / 3]], AP4xML2: [[0.25, 0.5, 0.75], [0.5]], AP6: [[1 / 6, 2 / 6, 3 / 6, 4 / 6, 5 / 6], []] };
 export function applyMods(spec, mods = []) { let s = spec; if (mods.includes("singleHull")) s = singleHull(s);
   for (const m of mods) if (m.startsWith("bootGrid")) s = splitBootGrid(singleHull(s), ...BOOT_GRIDS[m.slice(8)]);
   if (mods.includes("headSpheres")) s = headSpherePair(s); return s; }
