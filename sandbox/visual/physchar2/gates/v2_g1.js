@@ -122,11 +122,11 @@ export function initialState(spec, sc) {
 const KEYS = ["x", "y", "z"], D = 180 / Math.PI;
 export class G1Sim {
   constructor(J, spec, key, opts = {}) {
-    this.J = J; this.spec = spec; this.key = key; this.sc = ensureScenario(key); this.opts = opts;
+    this.J = J; this.spec = spec; this.key = key; this.sc = opts.scenario || ensureScenario(key); this.opts = opts;   // G2: a gate may pass its own scenario object
     this.cfg = Object.assign({}, G1_WORLD, opts.cfg || {}); this.dt = 1 / this.cfg.hz; this.N = Math.round((opts.seconds || this.sc.seconds) * this.cfg.hz);
     const init = initialState(spec, this.sc); this.init = init;
     const contact = { ...spec.contact, ...(this.cfg.slop != null ? { slop: this.cfg.slop } : {}), ...(this.cfg.speculative != null ? { speculative: this.cfg.speculative } : {}) };
-    this.w = new V2JoltWorld(J, spec, contact, { velSteps: this.cfg.velSteps, posSteps: this.cfg.posSteps, ccd: this.cfg.ccd, warmStart: this.cfg.warmStart, pairCache: this.cfg.pairCache, manifoldReduction: this.cfg.manifoldReduction, turf: this.cfg.turf, enhancedEdge: this.cfg.enhancedEdge, contactWarmStart: this.cfg.contactWarmStart, jointOrder: this.cfg.jointOrder, jointWarmStart: this.cfg.jointWarmStart, gravity: init.gravity, recordContacts: true });
+    this.w = new V2JoltWorld(J, spec, contact, { velSteps: this.cfg.velSteps, posSteps: this.cfg.posSteps, ccd: this.cfg.ccd, warmStart: this.cfg.warmStart, pairCache: this.cfg.pairCache, manifoldReduction: this.cfg.manifoldReduction, turf: this.cfg.turf, enhancedEdge: this.cfg.enhancedEdge, contactWarmStart: this.cfg.contactWarmStart, jointOrder: this.cfg.jointOrder, jointWarmStart: this.cfg.jointWarmStart, gravity: init.gravity, recordContacts: true, actuators: this.cfg.actuators });
     init.S.forEach((s, i) => { this.w.setPose(i, s.pos, s.rot); this.w.setVel(i, init.vel[i].v, init.vel[i].w); });
     this.obsShape = []; this.obsState = [];
     for (const o0 of this.sc.obstacles || []) { const o = typeof o0 === "function" ? o0(spec, init.S) : o0; this.w.addStaticCapsule(o); this.obsShape.push({ type: "capsule", r: o.r, half: o.half, pos: [0, 0, 0], rot: [0, 0, 0, 1] }); this.obsState.push({ pos: o.pos, rot: o.rot || [0, 0, 0, 1] }); }

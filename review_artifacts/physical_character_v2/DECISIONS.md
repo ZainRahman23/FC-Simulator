@@ -410,3 +410,137 @@ Browser = Node holds for all ten.
 - Every change is justified here.
 - The research history and the debt register are never removed.
 - Nothing is pushed without approval.
+
+## 2026-10-03 — V2-G2 started (user instruction; source `sources/2026-10-03_user_instruction_g2_active_standing.md`): design decisions and development findings
+
+V1's C1 standing work was studied as evidence only (`g2/V1_C1_STUDY.md`). Nothing below is ported from V1 code. Every mechanism was re-derived and measured on the V2 plant.
+
+**No G0 / G1 plant defect was found.** The plant is unchanged:
+- `core/v2_jolt.js` gains an *opt-in* actuator constraint and test-force calls;
+- `gates/v2_g1.js` gains an optional scenario object and passes the actuator flag through;
+- the default G0 / G1 paths are untouched, and the G1 curated hashes are verified unchanged.
+
+### G2-A1: actuator mechanism (implementation of spec §14)
+
+**Problem:** spec §14 asks for an implicit Jolt motor that solves within the §14 capacity limits, with a ledger that separates active from passive work. The G1 passive tissue already occupies the joint's motor rows. A single row carrying passive + active torque can only be bounded by an *estimate* of the passive part, so the active torque could exceed capacity by that estimate's error.
+
+**Decision:** a **parallel actuator constraint** per joint:
+- a SixDOF between the same two bodies, every axis free, rotational motors only;
+- on the joint's own ROM-centred frames, so the row axes are identical to the joint's;
+- its motor limits are exactly [−τ_cap,−, +τ_cap,+];
+- its impulse readback is the exact active torque.
+
+Capacity integrity (2.3) holds by construction, and the ledger is exact. The joint's passive rows (G1) are untouched.
+
+**Verified:**
+- the target orientation is stored unclamped (free axes);
+- the PD is encoded through the target angular velocity, as in G1;
+- cost about +0.3 ms/tick at 150 iterations, i.e. 13 more constraints (reported under TD-1).
+
+**Activation:** an excitation per axis-direction from the PD request, u = min(1, 1.25·|τ_req|/τ_cap + 0.02 tone). Activation follows Thelen 2003 (15 / 50 ms). Limits = a·τ_cap(θ, ω), with Anderson 2007 g_θ for hip / knee / ankle sagittal; ankle plantar-flexion is reduced with knee flexion (Billot 2022); the other axes are flat (spec).
+
+### G2-A2: quiet-stance reference (`ctrl/v2_stance.js`)
+
+**Values:**
+- feet under the hips (heel centres 16.6 cm apart at 1.82 m);
+- toe-out 7° per foot by hip external rotation (McIlroy & Maki 1997, ≈ 17 cm / 14°, recalled) [H];
+- knees 4°, hips 3° [H];
+- neutral spine and head [ENG];
+- arms hanging, shoulder abduction 6°, elbows 12° [H];
+- COM 4 cm anterior of the mid-ankle point (spec 2.1 band 2–6 cm) [H]→[CTRL].
+
+**Solved, not chosen:** ankle DF / inversion for flat feet (residual tilt 1e-14) and the whole-body lean (pelvis pitch ≈ 2.8°, ankle DF ≈ 3.8° at V2-REF) for the COM target, per body.
+
+The pose is a **preference**: the ankles are never posture-servoed, and balance overrides the pose.
+
+### G2-A3: controller architecture (`ctrl/v2_stand.js`)
+
+1. **State** (exact simulation state; the consumed variables are listed in the code, `CONSUMED`): COM, its velocity, height; ξ = c + v/ω0; the foot poses → the measured usable region.
+2. **Balance objective:** ξ → ξ_ref.
+3. **Desired CoP:** p* = ξ + kξ(ξ − ξ_ref), clamped to the support region.
+   - LIPM ground force through the COM.
+   - Load split by the lever rule, with each foot's CoP allocated so that the load-weighted CoPs reproduce p*.
+   - The CoP actually commanded is the *achievable* one; the residual r = p*_raw − p is reported.
+4. **Commands:**
+   - feed-forward joint torques from the static equilibrium of each joint's distal subtree, under effective gravity g − A and the desired foot wrenches (inverse statics with d'Alembert terms; for the ankles this *is* the balance torque);
+   - plus posture preferences (below).
+   - Gains are body-scaled: K = κ·m_sup·g·L, D = 2ζ√(K·m_sup·L²).
+
+### G2-A4: the controllable CoP region is measured, not assumed
+
+**Method:** slow (1 cm/s) ramps of the balance target in 8 directions on V2-REF (G2 step 2).
+
+**Result:** the onset of foot rotation lies exactly on the edge of the **loaded flat-contact hull** (boot pieces 0–7, Jolt contact points at zero separation):
+- forward 13.2 cm ahead of the ankle on the CoP's line; the hull's front edge slants from 11.4 cm laterally to 14.5 cm medially;
+- heel −6.1 cm;
+- lateral ≈ 3.5 cm at mid-foot under single-foot load.
+
+The toe-spring pieces 8–9 sit 3.5–11 mm above the turf and are **not usable** until the foot pitches. The region used is that hull with a 5 mm control margin [ENG].
+
+**Smoothness:** within the region, the CoP crosses the compound-piece boundaries with no contact-set change and ≤ 2.7 mm per-tick net-CoP change.
+
+### G2-A5: posture preference for the legs (three designs measured)
+
+1. **Joint-space PD toward the fixed reference angles:** **fights lateral balance.** Lateral sway with fixed feet changes the hip abduction angles, so the achieved lateral CoP ran up to 2× past the command, and the unloading foot rolled onto its toe (lean-ramp R / L).
+2. **Task-space pelvis wrench through the legs:** fixes (1), but a **lightly loaded leg goes limp** and its foot is dragged (lateral 15 N·s: 31–76 mm slide).
+3. **Adopted — "ik":** hips and knees servo toward the leg configuration that keeps each foot where it *is*, with the pelvis at its reference orientation and height and its *current* horizontal position (leg inverse kinematics each tick). Horizontal COM motion belongs to balance alone. The ankles are free.
+   - Result: sagittal pushes recover with 0 mm slip.
+
+### G2-A6: minimum foot load share 0.10 in double support
+
+Measured: the ξ law asked for full load transfer under a lateral 15 N·s push. The unloaded foot then lifted 13 mm and moved 75 mm, an *involuntary relocation*.
+
+Each foot now keeps ≥ 10 % of body weight in double support [ENG]. Lateral reach is kept through the per-foot CoP shift.
+
+### G2-A7: DCM gain kξ = 1/3 (human evidence)
+
+The closed-loop ankle stiffness is (1 + kξ)·mgh, so kξ = 1/3 gives **1.33 mgh** (Peterka 2002, ≈ 1.3 mgh; recalled, as cited in V1 C1) and a velocity gain of ≈ 0.43 mgh·s.
+
+Measured on V2-REF (recovered / not, N·s):
+
+| kξ | F | B | L / R | diagonals | recovery time |
+|---|---|---|---|---|---|
+| 1 | 20 / 25 | 15 / 20 | 15 / 20 (20 slides) | — | 0.35–1.3 s |
+| 1/3 | 15 / 20 | 15 / 20 | 20 / 25 | 20–25+ | 1.3–2.2 s |
+
+kξ = 1/3 is adopted: it is human-evidenced and gives the more balanced envelope. Forward capability is lower (the CoP is used less aggressively).
+
+### G2-A8: hip / trunk strategy and arm counter-motion: evaluated, **not adopted** (G2 steps 7–8)
+
+**Hip strategy:** whole-body angular-momentum rate L̇ = M·g·(ŷ × r), applied only on the CoP residual r, through the stance hips, and only through loaded legs (an unloaded hip swept its leg's foot 49 cm).
+
+| variant | effect |
+|---|---|
+| Continuous | +5 N·s backward, but backward-left 25 recovered → fell. The trunk over-rotated 27–33° and reversed its own gain. |
+| Bounded "flywheel" (fades over 10° of pelvis deviation) | no gain anywhere |
+
+**Arm counter-motion** (shoulders, same law, bounded by 60° of arm deviation): **no measurable change** in any direction. Arms do not materially expand the no-step envelope.
+
+The ankle strategy plus load transfer is the minimum mechanism the measurements support. A time-optimal bounded flywheel strategy is future work.
+
+### G2-A9: sensing (report-only)
+
+The controller consumes exact state. V2 specifies no numerical latency or noise.
+- 100–150 ms observation latency of the balance state: stable in quiet stance.
+- A seeded Ornstein–Uhlenbeck motor-noise torque on the ankles gives human-magnitude COM sway (3–9 mm RMS), but CoP speed 84–253 mm/s at ≈ 3 Hz (human < 1 Hz). It is a crude model, reported but not adopted.
+- **Noiseless quiet stance has ≈ 0 sway:** the model has no neural noise.
+
+### Development push boundaries, V2-REF (thorax 100 ms, final configuration)
+
+**V2-REF:** F 15 / 20, B 15 / 20, L = R 20 / 25, FR 20 / 25, BL 25 recovered.
+
+**Physical limits identified:**
+- **Forward / backward:** the measured CoP region edge. The thorax push adds about 0.27 m × J of pitch angular momentum; righting the trunk costs ≈ 2 cm of extra CoP excursion.
+- **Lateral:** ankle eversion capacity (≈ 35 N·m at full activation) at the foot's outer edge, and the hip abductors' activation rise.
+
+**Variants** scale with size, ≈ constant in Δv = J/M ≈ 0.20–0.24 m/s:
+- V2-165-62: F / B fall at 15;
+- V2-198-92: recovers 20 in all four directions.
+
+**Other development results:**
+- angular impulses ≤ 10 N·m·s (yaw / pitch / roll) recover;
+- the 10 initial offsets settle;
+- determinism and snapshot / restore are bit-exact;
+- controller 0.042 ms mean / 0.157 ms p99 per tick.
+
+These were development measurements. **The gate is judged by `g2/G2_CRITERIA.md` v1 (pre-registered) on the final run.**

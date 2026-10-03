@@ -49,6 +49,11 @@ export class V2JoltWorld {
     this.bodies = []; this.shapeInfo = [];
     for (const b of spec.bodies) this._addBody(b);
     this.cons = []; for (const j of spec.joints) this._addJoint(j);
+    // G2: a PARALLEL ACTUATOR constraint per joint (cfg.actuators): a SixDOF between the same two bodies with every axis FREE and only rotational
+    // motors, on the joint's own ROM-centred frames (same row axes as the joint's passive drive). It carries the ACTIVE (muscle) torque only, as
+    // an implicit Jolt motor bounded exactly by its own torque limits (= the §14 instantaneous capacity), with its own impulse readback — so the
+    // active torque never mixes with the passive tissue rows (G1, unchanged) and capacity integrity / the active-work ledger are exact.
+    this.acts = this.cfg.actuators ? spec.joints.map(j => this._addActuator(j)) : null;
     this.contacts = []; this._listen();
   }
   _shapeSettings(s) {
@@ -101,6 +106,24 @@ export class V2JoltWorld {
       ms.mMinTorqueLimit = -cap.minus.Nm; ms.mMaxTorqueLimit = cap.plus.Nm; c.SetMotorState(A.rot[i], J.EMotorState_Off); });
     this.cons.push({ j, c });
   }
+  _addActuator(j) {
+    const J = this.J, A = this._axes, s = new J.SixDOFConstraintSettings();
+    s.mSpace = J.EConstraintSpace_WorldSpace; s.mPosition1 = new J.RVec3(j.at[0], j.at[1], j.at[2]); s.mPosition2 = new J.RVec3(j.at[0], j.at[1], j.at[2]);
+    s.mAxisX1 = new J.Vec3(...j.F1axes.x); s.mAxisY1 = new J.Vec3(...j.F1axes.y); s.mAxisX2 = new J.Vec3(...j.F2axes.x); s.mAxisY2 = new J.Vec3(...j.F2axes.y);
+    s.mSwingType = J.ESwingType_Pyramid; for (const ax of [...A.lin, ...A.rot]) s.MakeFreeAxis(ax);
+    const c = J.castObject(s.Create(this.bodies[j.parentIndex], this.bodies[j.childIndex]), J.SixDOFConstraint); this.ps.AddConstraint(c); J.destroy(s);
+    ["x", "y", "z"].forEach((k, i) => { c.SetMaxFriction(A.rot[i], 0); const ms = c.GetMotorSettings(A.rot[i]), sp = ms.mSpringSettings; sp.mMode = J.ESpringMode_StiffnessAndDamping; sp.mStiffness = 0; sp.mDamping = 0;
+      ms.mMinTorqueLimit = 0; ms.mMaxTorqueLimit = 0; c.SetMotorState(A.rot[i], J.EMotorState_Off); });
+    return { j, c };
+  }
+  // active actuator row (joint k, constraint axis i): implicit spring K + damper D, torque bounded to [lo, hi] (N·m) — the capacity envelope
+  setAct(k, i, K, D, lo, hi) { const ms = this.acts[k].c.GetMotorSettings(this._axes.rot[i]), sp = ms.mSpringSettings; sp.mStiffness = K; sp.mDamping = D; ms.mMinTorqueLimit = lo; ms.mMaxTorqueLimit = hi; }
+  actOn(k, i, on = true) { this.acts[k].c.SetMotorState(this._axes.rot[i], on ? this.J.EMotorState_PositionAndVelocity : this.J.EMotorState_Off); }
+  setActTarget(k, q, w) { const t = this._t, c = this.acts[k].c; t.q.Set(q[0], q[1], q[2], q[3]); c.SetTargetOrientationCS(t.q); if (w) t.w.Set(w[0], w[1], w[2]); else t.w.Set(0, 0, 0); c.SetTargetAngularVelocityCS(t.w); }
+  setActVel(k, w) { const t = this._t; t.w.Set(w[0], w[1], w[2]); this.acts[k].c.SetTargetAngularVelocityCS(t.w); }
+  actTarget(k) { const t = this.acts[k].c.GetTargetOrientationCS(); return [t.GetX(), t.GetY(), t.GetZ(), t.GetW()]; }
+  actRotationCS(k) { const q = this.acts[k].c.GetRotationInConstraintSpace(); return [q.GetX(), q.GetY(), q.GetZ(), q.GetW()]; }
+  lambdaAct(k) { const l = this.acts[k].c.GetTotalLambdaMotorRotation(); return [l.GetX(), l.GetY(), l.GetZ()]; }
   _listen() {
     const J = this.J, L = new J.ContactListenerJS(), self = this;
     L.OnContactValidate = () => J.ValidateResult_AcceptAllContactsForThisBodyPair;
@@ -143,6 +166,9 @@ export class V2JoltWorld {
   rotationCS(k) { const q = this.cons[k].c.GetRotationInConstraintSpace(); return [q.GetX(), q.GetY(), q.GetZ(), q.GetW()]; }
   // equal-and-opposite torque (N·m, world) on a joint's child (+) and parent (−) for the next step — internal, momentum-conserving
   addTorquePair(parent, child, T) { const t = this._t; t.v.Set(T[0], T[1], T[2]); this.bi.AddTorque(this.bodies[child].GetID(), t.v, this.J.EActivation_Activate); t.v.Set(-T[0], -T[1], -T[2]); this.bi.AddTorque(this.bodies[parent].GetID(), t.v, this.J.EActivation_Activate); }
+  // G2 TEST DISTURBANCES (the only external forces besides gravity and contact; ledgered by the gate): a force at a world point / a pure torque
+  addForceAt(i, F, p) { const J = this.J, t = this._t; t.v.Set(F[0], F[1], F[2]); const r = new J.RVec3(p[0], p[1], p[2]); this.bi.AddForce(this.bodies[i].GetID(), t.v, r, J.EActivation_Activate); J.destroy(r); }
+  addTorqueExt(i, T) { const t = this._t; t.v.Set(T[0], T[1], T[2]); this.bi.AddTorque(this.bodies[i].GetID(), t.v, this.J.EActivation_Activate); }
   lambdaPos(k) { const l = this.cons[k].c.GetTotalLambdaPosition(); return [l.GetX(), l.GetY(), l.GetZ()]; }
   lambdaRot(k) { const l = this.cons[k].c.GetTotalLambdaRotation(); return [l.GetX(), l.GetY(), l.GetZ()]; }
   lambdaMotor(k) { const l = this.cons[k].c.GetTotalLambdaMotorRotation(); return [l.GetX(), l.GetY(), l.GetZ()]; }

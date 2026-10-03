@@ -66,8 +66,10 @@ export class AnkleProbe {
     const L0 = Lworld(f0.rot, this.I, f0.w), L1 = Lworld(f1.rot, this.I, f1.w), dL = V.sub(L1, L0);
     const ax0 = pl ? pl.axW : axW, motorImp = [0, 1, 2].reduce((a, i) => V.add(a, V.sc(ax0[i], lm[i])), [0, 0, 0]);
     const limImp = [0, 1, 2].reduce((a, i) => V.add(a, V.sc(ax0[i], lr[i])), [0, 0, 0]);   // swing–twist limit rows (approximate axes; emergency stop)
+    // G2: the joint's parallel ACTUATOR constraint (active muscle torque, same row axes) also acts on the foot — subtract it like the drive rows
+    const la = w.acts ? w.lambdaAct(this.k) : [0, 0, 0], actImp = [0, 1, 2].reduce((a, i) => V.add(a, V.sc(ax0[i], la[i])), [0, 0, 0]);
     const explImp = pl && pl.Tw ? V.sc(pl.Tw, dt) : [0, 0, 0];
-    const Mc_C = V.sub(V.sub(V.sub(V.sub(dL, motorImp), limImp), explImp), V.cross(V.sub(A, C), lp)), Mc_A = V.add(Mc_C, V.cross(V.sub(C, A), Jc));
+    const Mc_C = V.sub(V.sub(V.sub(V.sub(V.sub(dL, motorImp), limImp), explImp), actImp), V.cross(V.sub(A, C), lp)), Mc_A = V.add(Mc_C, V.cross(V.sub(C, A), Jc));
     // centre of pressure on y = 0 and its position along the boot (from the heel's rear edge, along the boot's horizontal long axis)
     let cop = null, copAlong = null; if (Jc[1] > 0.02 * this.m * G * dt + 1e-9 && Jc[1] > 1e-6) { cop = [A[0] + (Mc_A[2] - A[1] * Jc[0]) / Jc[1], 0, A[2] - (Mc_A[0] + A[1] * Jc[2]) / Jc[1]];
       const h = toW(this.heelRear); copAlong = V.dot(V.sub(cop, h), fwd); }   // along the foot's own long axis (3D), from the heel's rear edge
@@ -99,7 +101,7 @@ export class AnkleProbe {
     //   W_contact = the CoP-based direct estimate of the turf part (comparable with W_ext only while no self-contact manifold exists).
     const R0 = mat(f0.rot), C0 = V.add(f0.pos, mv(R0, this.comLocal)), A0 = f0.pos, vmid = V.sc(V.add(f0.v, f1.v), 0.5), wmid = V.sc(V.add(f0.w, f1.w), 0.5), vAt = (p) => V.add(vmid, V.cross(wmid, V.sub(p, C0)));
     const vC1 = f1.v, vCop = cop ? vAt(cop) : vAt(toeW);
-    const W_point = V.dot(lp, vAt(A0)), W_rows = V.dot(V.add(V.add(motorImp, limImp), explImp), wmid), W_contact = V.dot(Jc, vCop), W_grav = -G * this.m * (C[1] - C0[1]);
+    const W_point = V.dot(lp, vAt(A0)), W_rows = V.dot(V.add(V.add(V.add(motorImp, limImp), explImp), actImp), wmid), W_contact = V.dot(Jc, vCop), W_grav = -G * this.m * (C[1] - C0[1]);
     const Ef = (st, Cy) => 0.5 * this.m * V.dot(st.v, st.v) + 0.5 * V.dot(Lworld(st.rot, this.I, st.w), st.w) + this.m * G * Cy, Efoot = Ef(f1, C[1]), Efoot0 = Ef(f0, C0[1]), W_ext = Efoot - Efoot0 - W_point - W_rows;   // E includes the potential energy: ΔE = W_point + W_rows + W_ext (W_grav = −ΔPE is reported, not added)
     const fwdH = V.norm([fwd[0], 0, fwd[2]]), copUnderAnkleMm = cop ? V.dot(V.sub(A, cop), fwdH) * 1000 : null;   // horizontal offset ankle − CoP along the foot (+ = ankle ahead of the CoP)
     const sh0 = this.pre.sh, wrelMid = V.sc(V.add(V.sub(f0.w, sh0.w), wrel), 0.5);
@@ -107,7 +109,7 @@ export class AnkleProbe {
       wDF, Jc, JyN: Jc[1] / dt, JxzN: Math.hypot(Jc[0], Jc[2]) / dt, McA: Mc_A, McA_pitch: pr(Mc_A) / dt, copAlong, copFrac: copAlong != null ? copAlong / this.len : null, cop,
       lawTau, stopTau, motorDF, dampDF, elasticDF: motorDF - dampDF, explDF, limDF, limAny: Math.max(...lr.map(Math.abs)) > 1e-9, gravPitch: gravM,
       motorPitch: pr(motorImp) / dt, limPitch: pr(limImp) / dt, explPitch: pr(explImp) / dt, U_ankle, footKE: 0.5 * this.m * V.dot(f1.v, f1.v),
-      P_motor: [0, 1, 2].reduce((a2, i) => a2 + lm[i] * V.dot(wrelMid, ax0[i]), 0) / dt, P_lim: [0, 1, 2].reduce((a2, i) => a2 + lr[i] * V.dot(wrelMid, ax0[i]), 0) / dt, P_expl: pl && pl.Tw ? V.dot(pl.Tw, wrelMid) : 0,
+      P_motor: [0, 1, 2].reduce((a2, i) => a2 + lm[i] * V.dot(wrelMid, ax0[i]), 0) / dt, P_lim: [0, 1, 2].reduce((a2, i) => a2 + lr[i] * V.dot(wrelMid, ax0[i]), 0) / dt, P_expl: pl && pl.Tw ? V.dot(pl.Tw, wrelMid) : 0, activeDF: la[1] / dt * this.sDF, activeInv: la[2] / dt, P_active: [0, 1, 2].reduce((a2, i) => a2 + la[i] * V.dot(wrelMid, ax0[i]), 0) / dt,
       pieces: pcs.map(p => ({ sub: p.sub, along: +p.along.toFixed(3), ml: +p.ml.toFixed(3), touch: p.touch, spec: p.spec, depthMm: p.depth != null ? +(p.depth * 1000).toFixed(2) : null, share: p.share != null ? +p.share.toFixed(3) : 0 })) };
     this.rows.push(row); return row;
   }
