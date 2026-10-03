@@ -13,7 +13,7 @@ import fs from "fs"; import os from "os"; import { fork } from "child_process"; 
 const arg = (k, d) => { const a = process.argv.find(x => x.startsWith("--" + k + "=")); return a ? a.split("=").slice(1).join("=") : d; };
 const SELF = fileURLToPath(import.meta.url);
 if (process.argv.includes("--worker")) {
-  const { jolt, specOf, makeSim, V, JS, G1 } = await import("./b_lib.mjs"); const J = await jolt(); const specs = new Map(); const CHK = await import("../gates/v2_g1_checks.js");
+  const { jolt, specOf, makeSim, V, Q, JS, G1 } = await import("./b_lib.mjs"); const J = await jolt(); const specs = new Map(); const CHK = await import("../gates/v2_g1_checks.js");
   process.on("message", (job) => { if (job === "exit") process.exit(0); let r;
     try { const spec = specs.get(job.human) || (specs.set(job.human, specOf(job.human)), specs.get(job.human)), names = spec.bodies.map(b => b.name);
       const s = makeSim(J, spec, job.key, { hz: job.hz, velSteps: job.vel || 150 }), inv = [], events = [], res = []; let guarded = 0;
@@ -33,6 +33,9 @@ if (process.argv.includes("--worker")) {
       let pcMax = 0, pcAt = null, pcBody = null, pcRotMax = 0, pcOver = 0, S0 = s.st;
       // turf-contact statistics (healthy-floor measurement for the contact-validity tolerances): normal deviation 1 − n_y, turf-side point height,
       // playable extent |x|, |z|, manifold depth, and the position-solver move of bodies that touch the turf (depth > −0.5 mm) in that step
+      // plane-vs-box comparison metrics: per boot, horizontal COM travel while it touches the turf (slip path) and the largest roll (the boot's
+      // lateral axis vertical component → roll about its AP axis) while touching
+      const footIdx = ["foot_L", "foot_R"].map(n => names.indexOf(n)), FM = footIdx.map(() => ({ slipMm: 0, rollMaxDeg: 0, touchTicks: 0 }));
       const TS = { manifolds: 0, nyDevMax: 0, turfYmaxMm: 0, xzMax: 0, depthMaxMm: -1e9, depthMaxAt: null, corrTurfMaxMm: 0, corrTurfAt: null, corrTurfBody: null };
       while (s.tick()) { const dE = s.last.E - Ep; Ep = s.last.E; const rr = dE + s.A.Dstep[s.A.Dstep.length - 1]; res.push(rr);
         // position-solver displacement of each body beyond its velocity integration (Jolt: COM += v₁·dt): a teleport metric
@@ -41,6 +44,8 @@ if (process.argv.includes("--worker")) {
             if (c.depth * 1000 > TS.depthMaxMm) { TS.depthMaxMm = c.depth * 1000; TS.depthMaxAt = s.n; } if (c.depth > -0.0005) touch.add(tf ? c.b : c.a); }
           let tickMax = 0; for (let i = 0; i < S1.length; i++) { const c = V.dist(S1[i].com, V.add(S0[i].com, V.sc(S1[i].v, s.dt))); if (c > tickMax) tickMax = c; if (c > pcMax) { pcMax = c; pcAt = s.n; pcBody = names[i]; }
             if (touch.has(i) && c * 1000 > TS.corrTurfMaxMm) { TS.corrTurfMaxMm = c * 1000; TS.corrTurfAt = s.n; TS.corrTurfBody = names[i]; } }
+          footIdx.forEach((fi, k) => { if (!touch.has(fi)) return; const m = FM[k]; m.touchTicks++; const d = [S1[fi].com[0] - S0[fi].com[0], S1[fi].com[2] - S0[fi].com[2]]; m.slipMm += Math.hypot(d[0], d[1]) * 1000;
+            const lat = Q.rot(S1[fi].rot, [1, 0, 0]); m.rollMaxDeg = Math.max(m.rollMaxDeg, Math.abs(Math.asin(Math.max(-1, Math.min(1, lat[1])))) * 180 / Math.PI); });
           if (tickMax > 0.005) pcOver++; S0 = S1; }
         if (dE > maxRise) { maxRise = dE; maxAt = s.n; } if (dE > 1) events.push({ n: s.n, t: +(s.n * s.dt).toFixed(4), dE: +dE.toFixed(3) });
         let any = false; for (const c of s.lastContacts || []) { if ((c.a === -1) === (c.b === -1) || c.a < -1 || c.b < -1) continue; const tf = c.a === -1, ny = tf ? c.normal[1] : -c.normal[1], pT = tf ? c.pts : c.pts2;
@@ -53,6 +58,8 @@ if (process.argv.includes("--worker")) {
       try { const sm = s.summary(); r.posture = sm.outcome.posture;
         // ordinary-contact regression view for candidate evaluation: the G1 gate rows of this run (gating failures) + key contact / joint metrics
         const cks = CHK.scenarioChecks(sm, G1.ensureScenario(job.key)); r.g1Fail = cks.filter(c => !c.pass && !c.reportOnly).map(c => c.id);
+        r.compare = { firstContactT: sm.energy.firstContactT, firstNonFoot: sm.outcome.firstNonFoot, firstNonFootT: sm.outcome.firstNonFootT, dissipatedJ: sm.energy.E0 - sm.energy.Eend, dampingJ: sm.energy.dampingJ,
+          hardExcMaxDeg: sm.joints.hardExcMaxDeg, hardExcRestDeg: sm.joints.hardExcRestDeg, feet: FM.map(m => ({ slipMm: +m.slipMm.toFixed(2), rollMaxDeg: +m.rollMaxDeg.toFixed(2), touchS: +(m.touchTicks * s.dt).toFixed(3) })), groundFirst: Object.fromEntries(Object.entries(sm.contacts.ground).map(([k, g]) => [k, g.first])) };
         r.metrics = { turfPenMaxMm: +sm.contacts.turfPenMaxMm.toFixed(2), turfPenRestMm: +sm.contacts.turfPenRestMm.toFixed(3), sepMaxMm: +sm.joints.sepMaxMm.toFixed(2), hardExcRestDeg: +sm.joints.hardExcRestDeg.toFixed(2), restKE: +sm.rest.KEmax.toFixed(4), comEnd: sm.outcome.comEnd.map(x => +x.toFixed(3)) }; } catch (e) { r.summaryErr = String(e).slice(0, 200); }
       s.destroy(); process.send({ id: job.id, r }); } catch (e) { process.send({ id: job.id, err: String(e && e.stack || e) }); } });
   process.send({ ready: true });
