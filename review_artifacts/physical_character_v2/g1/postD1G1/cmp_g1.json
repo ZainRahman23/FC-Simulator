@@ -1,0 +1,63 @@
+{
+ "kind": "G1",
+ "runs": 74,
+ "identicalHashes": 42,
+ "identicalOutcomes": 74,
+ "outcomeChanges": [],
+ "checkChanges": [],
+ "checkChangeCount": 0,
+ "allPass": [
+  true,
+  true
+ ],
+ "maxAbsChange": {
+  "outcome.comEndShiftM": {
+   "d": 0.08132486312999873,
+   "at": "leanR|V2-REF|240"
+  },
+  "energy.unexplainedJ": {
+   "d": 0.033139149664212275,
+   "at": "singleLeg|V1-matched|240 0.5448 → 0.5117"
+  },
+  "energy.maxRiseJ": {
+   "d": 0.00006835944606109479,
+   "at": "leanF|V2-198-92|240 0.0001 → 0.0001"
+  },
+  "energy.dampingJ": {
+   "d": 4.753368274826244,
+   "at": "leanR|V2-REF|240 153.3969 → 158.1503"
+  },
+  "joints.sepMaxMm": {
+   "d": 0.38530750839486627,
+   "at": "leanR|V2-REF|240 2.3910 → 2.7763"
+  },
+  "joints.sepRestMm": {
+   "d": 0.0007582524327054172,
+   "at": "singleLeg|V2-165-62|240 0.0015 → 0.0008"
+  },
+  "joints.hardExcMaxDeg": {
+   "d": 0.061841324714912105,
+   "at": "leanR|V2-REF|240 11.2198 → 11.1580"
+  },
+  "joints.hardExcRestDeg": {
+   "d": 0.4396856587461545,
+   "at": "upright|V2-198-92|240 1.3215 → 0.8818"
+  },
+  "contacts.turfPenMaxMm": {
+   "d": 0.09415955127135489,
+   "at": "upright|V2-198-92|240 0.8671 → 0.9612"
+  },
+  "contacts.turfPenRestMm": {
+   "d": 0.39235275261664126,
+   "at": "leanR|V2-REF|240 0.5940 → 0.2016"
+  },
+  "contacts.selfPenMaxMm": {
+   "d": 0.1969374716281891,
+   "at": "leanL|V2-long-legs|240 1.1049 → 0.9080"
+  },
+  "maxSpeed": {
+   "d": 0.0044105368793116995,
+   "at": "singleLeg|V1-matched|240 4.5137 → 4.5181"
+  }
+ }
+}

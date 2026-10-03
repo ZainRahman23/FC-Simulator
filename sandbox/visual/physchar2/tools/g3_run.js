@@ -21,6 +21,7 @@ function jobs(only) { const J = [], add = (group, o) => { if (!only || only.incl
   for (const st of ["R", "L"]) for (const T of SPEEDS) add("T7", { key: `T7:${st}:${T}` });
   for (const when of ["hold", "ramp"]) for (const d of DIR8) for (const m of PUSH) { add("T8", { key: `T8:${when}:R:${d}:${m}` }); add("T8", { key: `T8:${when}:L:${mirrorDir(d)}:${m}`, mirrorOf: `T8:${when}:R:${d}:${m}` }); }
   for (const h of VARIATION_SET) add("T9", { key: `T9:${h.id}`, human: h.id });
+  for (const h of VARIATION_SET) for (const st of ["R", "L"]) add("T9U", { key: `U:${st}`, human: h.id });   // criteria v2: swing-ready (≤ 2 % BW) on every body
   for (const k of ["T11:over:1.2", "T11:over:1.4", "T11:over:1.4:sup", "T11:fast:0.25", "T11:fast:0.1"]) add("T11", { key: k });
   for (const k of ["T3", "T5", "U:R", "T8:hold:R:R:10"]) for (let rep = 0; rep < 3; rep++) add("determinism", { key: k, rep });
   for (const [k, at] of [["U:R", 8], ["T8:hold:R:L:15", 3.9], ["T3", 10]]) add("snapshot", { key: k, at });

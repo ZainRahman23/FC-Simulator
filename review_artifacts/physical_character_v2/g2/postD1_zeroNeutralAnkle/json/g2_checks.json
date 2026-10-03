@@ -1,0 +1,4679 @@
+{
+ "checks": [
+  {
+   "id": "run",
+   "name": "every job completed without error",
+   "pass": true,
+   "value": "620 ok / 0 errors",
+   "limit": "0 errors"
+  },
+  {
+   "id": "2.1",
+   "name": "quiet stance 60 s, every body (a–g)",
+   "pass": true,
+   "value": "8/8 bodies",
+   "limit": "8/8",
+   "detail": [
+    {
+     "human": "V2-165-62",
+     "items": {
+      "a": true,
+      "b": true,
+      "c": true,
+      "d": true,
+      "e": true,
+      "f": true,
+      "g": true
+     },
+     "ok": true,
+     "v": "slip 0.26 mm tilt 0.17° COM ahead 4.00 cm knee 4.0–4.0° peak ankle_R.y 7.3 % T_iso sat 0 range 0.14 mm sep 0.00 mm turf 0.00 mm eng 0"
+    },
+    {
+     "human": "V2-175-70",
+     "items": {
+      "a": true,
+      "b": true,
+      "c": true,
+      "d": true,
+      "e": true,
+      "f": true,
+      "g": true
+     },
+     "ok": true,
+     "v": "slip 0.25 mm tilt 0.16° COM ahead 4.00 cm knee 4.0–4.0° peak lumbar.y 7.4 % T_iso sat 0 range 0.16 mm sep 0.00 mm turf 0.00 mm eng 0"
+    },
+    {
+     "human": "V2-REF",
+     "items": {
+      "a": true,
+      "b": true,
+      "c": true,
+      "d": true,
+      "e": true,
+      "f": true,
+      "g": true
+     },
+     "ok": true,
+     "v": "slip 0.25 mm tilt 0.16° COM ahead 4.00 cm knee 4.0–4.0° peak lumbar.y 7.6 % T_iso sat 0 range 0.15 mm sep 0.00 mm turf 0.01 mm eng 0"
+    },
+    {
+     "human": "V2-198-92",
+     "items": {
+      "a": true,
+      "b": true,
+      "c": true,
+      "d": true,
+      "e": true,
+      "f": true,
+      "g": true
+     },
+     "ok": true,
+     "v": "slip 0.25 mm tilt 0.14° COM ahead 4.00 cm knee 4.0–4.0° peak lumbar.y 8.1 % T_iso sat 0 range 0.21 mm sep 0.00 mm turf 0.01 mm eng 0"
+    },
+    {
+     "human": "V1-matched",
+     "items": {
+      "a": true,
+      "b": true,
+      "c": true,
+      "d": true,
+      "e": true,
+      "f": true,
+      "g": true
+     },
+     "ok": true,
+     "v": "slip 0.25 mm tilt 0.15° COM ahead 4.00 cm knee 4.0–4.0° peak lumbar.y 7.8 % T_iso sat 0 range 0.13 mm sep 0.00 mm turf 0.01 mm eng 0"
+    },
+    {
+     "human": "V2-short-legs",
+     "items": {
+      "a": true,
+      "b": true,
+      "c": true,
+      "d": true,
+      "e": true,
+      "f": true,
+      "g": true
+     },
+     "ok": true,
+     "v": "slip 0.25 mm tilt 0.16° COM ahead 4.00 cm knee 4.0–4.0° peak lumbar.y 7.8 % T_iso sat 0 range 0.17 mm sep 0.00 mm turf 0.01 mm eng 0"
+    },
+    {
+     "human": "V2-190-85",
+     "items": {
+      "a": true,
+      "b": true,
+      "c": true,
+      "d": true,
+      "e": true,
+      "f": true,
+      "g": true
+     },
+     "ok": true,
+     "v": "slip 0.25 mm tilt 0.15° COM ahead 4.00 cm knee 4.0–4.0° peak lumbar.y 7.8 % T_iso sat 0 range 0.12 mm sep 0.00 mm turf 0.01 mm eng 0"
+    },
+    {
+     "human": "V2-long-legs",
+     "items": {
+      "a": true,
+      "b": true,
+      "c": true,
+      "d": true,
+      "e": true,
+      "f": true,
+      "g": true
+     },
+     "ok": true,
+     "v": "slip 1.08 mm tilt 0.16° COM ahead 4.00 cm knee 4.0–4.0° peak lumbar.y 7.4 % T_iso sat 0 range 1.03 mm sep 0.00 mm turf 0.01 mm eng 0"
+    }
+   ]
+  },
+  {
+   "id": "2.2a",
+   "name": "required envelope: 10 N·s × 8 directions × every body; + 5 / 15 N·s for V2-REF and V1-matched — recovered in place (slip ≤ 10 mm, tilt ≤ 10°)",
+   "pass": true,
+   "value": "96/96 (expected 96)",
+   "limit": "all",
+   "detail": []
+  },
+  {
+   "id": "2.2b",
+   "name": "boundaries measured; monotone (no recover → fail → recover inversion); symmetric L/R, FL/FR, BL/BR",
+   "pass": true,
+   "value": "40 sweeps, 0 inversions, symmetry 12/12",
+   "limit": "0 inversions, all symmetric",
+   "boundaries": {
+    "V2-165-62|F": {
+     "recovered": 10,
+     "fails": 15,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.2571930915913389
+      ],
+      [
+       10,
+       "recovered",
+       0.2571930915913389
+      ],
+      [
+       15,
+       "step required → fell",
+       933.6913708168561
+      ],
+      [
+       20,
+       "step required → fell",
+       847.0824319080162
+      ],
+      [
+       25,
+       "step required → fell",
+       859.7211332397331
+      ],
+      [
+       30,
+       "step required → fell",
+       853.5394230904535
+      ],
+      [
+       35,
+       "step required → fell",
+       928.3842335562274
+      ],
+      [
+       40,
+       "step required → fell",
+       979.1268343515935
+      ],
+      [
+       45,
+       "step required → fell",
+       961.1193917622647
+      ]
+     ]
+    },
+    "V2-165-62|B": {
+     "recovered": 10,
+     "fails": 15,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.2571930915913389
+      ],
+      [
+       10,
+       "recovered",
+       0.2571930915913389
+      ],
+      [
+       15,
+       "step required → fell",
+       311.09693842039684
+      ],
+      [
+       20,
+       "step required → fell",
+       406.3213972902426
+      ],
+      [
+       25,
+       "step required → fell",
+       360.93255486671706
+      ],
+      [
+       30,
+       "step required → fell",
+       282.4734930911298
+      ],
+      [
+       35,
+       "step required → fell",
+       278.01994014800954
+      ],
+      [
+       40,
+       "step required → fell",
+       273.96436555551026
+      ],
+      [
+       45,
+       "step required → fell",
+       275.22198788629754
+      ]
+     ]
+    },
+    "V2-165-62|L": {
+     "recovered": 15,
+     "fails": 20,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.2571930915913389
+      ],
+      [
+       10,
+       "recovered",
+       1.1447276394296042
+      ],
+      [
+       15,
+       "recovered",
+       5.968742331979799
+      ],
+      [
+       20,
+       "step required → fell",
+       1121.0223690229107
+      ],
+      [
+       25,
+       "step required → fell",
+       858.632332624785
+      ],
+      [
+       30,
+       "step required → fell",
+       721.5775691977274
+      ],
+      [
+       35,
+       "step required → fell",
+       736.7396045191102
+      ],
+      [
+       40,
+       "step required → fell",
+       778.150156718936
+      ],
+      [
+       45,
+       "step required → fell",
+       787.9713930215905
+      ]
+     ]
+    },
+    "V2-165-62|R": {
+     "recovered": 15,
+     "fails": 20,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.2571930915913389
+      ],
+      [
+       10,
+       "recovered",
+       1.1362437636343072
+      ],
+      [
+       15,
+       "recovered",
+       5.967405897433169
+      ],
+      [
+       20,
+       "step required → fell",
+       1117.1799407758929
+      ],
+      [
+       25,
+       "step required → fell",
+       730.5525998360738
+      ],
+      [
+       30,
+       "step required → fell",
+       726.7909463373853
+      ],
+      [
+       35,
+       "step required → fell",
+       784.4516767196858
+      ],
+      [
+       40,
+       "step required → fell",
+       841.6368214806437
+      ],
+      [
+       45,
+       "step required → fell",
+       782.5135605988526
+      ]
+     ]
+    },
+    "V2-175-70|F": {
+     "recovered": 15,
+     "fails": 20,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.2534581764668812
+      ],
+      [
+       10,
+       "recovered",
+       0.2534581764668812
+      ],
+      [
+       15,
+       "recovered",
+       0.2534581764668812
+      ],
+      [
+       20,
+       "step required → fell",
+       904.1125193499618
+      ],
+      [
+       25,
+       "step required → fell",
+       931.2958865140785
+      ],
+      [
+       30,
+       "step required → fell",
+       915.05885299315
+      ],
+      [
+       35,
+       "step required → fell",
+       935.376653074706
+      ],
+      [
+       40,
+       "step required → fell",
+       1005.0011567621502
+      ],
+      [
+       45,
+       "step required → fell",
+       1025.0595699187213
+      ]
+     ]
+    },
+    "V2-175-70|B": {
+     "recovered": 15,
+     "fails": 20,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.2534581764668812
+      ],
+      [
+       10,
+       "recovered",
+       0.2534581764668812
+      ],
+      [
+       15,
+       "recovered",
+       0.2534581764668812
+      ],
+      [
+       20,
+       "step required → fell",
+       359.7765963270249
+      ],
+      [
+       25,
+       "step required → fell",
+       515.5051205932023
+      ],
+      [
+       30,
+       "step required → fell",
+       380.05812411372256
+      ],
+      [
+       35,
+       "step required → fell",
+       309.60722973322174
+      ],
+      [
+       40,
+       "step required → fell",
+       301.3980663975488
+      ],
+      [
+       45,
+       "step required → fell",
+       283.64966108476045
+      ]
+     ]
+    },
+    "V2-175-70|L": {
+     "recovered": 20,
+     "fails": 25,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.2534581764668812
+      ],
+      [
+       10,
+       "recovered",
+       0.2534581764668812
+      ],
+      [
+       15,
+       "recovered",
+       2.4404910839128826
+      ],
+      [
+       20,
+       "recovered",
+       9.48346811170423
+      ],
+      [
+       25,
+       "step required → fell",
+       751.714876375939
+      ],
+      [
+       30,
+       "step required → fell",
+       816.640215743996
+      ],
+      [
+       35,
+       "step required → fell",
+       834.617959586702
+      ],
+      [
+       40,
+       "step required → fell",
+       841.6034920079948
+      ],
+      [
+       45,
+       "step required → fell",
+       869.2888484494829
+      ]
+     ]
+    },
+    "V2-175-70|R": {
+     "recovered": 20,
+     "fails": 25,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.2534581764668812
+      ],
+      [
+       10,
+       "recovered",
+       0.2534581764668812
+      ],
+      [
+       15,
+       "recovered",
+       2.441247817206107
+      ],
+      [
+       20,
+       "recovered",
+       9.50703406371205
+      ],
+      [
+       25,
+       "step required → fell",
+       1092.6502666067468
+      ],
+      [
+       30,
+       "step required → fell",
+       840.4059801646406
+      ],
+      [
+       35,
+       "step required → fell",
+       767.310940321643
+      ],
+      [
+       40,
+       "step required → fell",
+       901.7064673084051
+      ],
+      [
+       45,
+       "step required → fell",
+       885.0074550533039
+      ]
+     ]
+    },
+    "V2-REF|F": {
+     "recovered": 15,
+     "fails": 20,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.25117131667844633
+      ],
+      [
+       10,
+       "recovered",
+       0.25117131667844633
+      ],
+      [
+       15,
+       "recovered",
+       0.25117131667844633
+      ],
+      [
+       20,
+       "step required → fell",
+       978.5679162988534
+      ],
+      [
+       25,
+       "step required → fell",
+       953.8682039145976
+      ],
+      [
+       30,
+       "step required → fell",
+       897.5232609981551
+      ],
+      [
+       35,
+       "step required → fell",
+       953.7327943667777
+      ],
+      [
+       40,
+       "step required → fell",
+       988.1687197841128
+      ],
+      [
+       45,
+       "step required → fell",
+       1066.200204548294
+      ]
+     ]
+    },
+    "V2-REF|B": {
+     "recovered": 15,
+     "fails": 20,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.25117131667844633
+      ],
+      [
+       10,
+       "recovered",
+       0.25117131667844633
+      ],
+      [
+       15,
+       "recovered",
+       0.25117131667844633
+      ],
+      [
+       20,
+       "step required → fell",
+       317.4293819999188
+      ],
+      [
+       25,
+       "step required → fell",
+       505.63013581691774
+      ],
+      [
+       30,
+       "step required → fell",
+       488.2407913157356
+      ],
+      [
+       35,
+       "step required → fell",
+       357.62296568455446
+      ],
+      [
+       40,
+       "step required → fell",
+       328.2482601636961
+      ],
+      [
+       45,
+       "step required → fell",
+       292.3232610771369
+      ]
+     ]
+    },
+    "V2-REF|R": {
+     "recovered": 20,
+     "fails": 25,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.25117131667844633
+      ],
+      [
+       10,
+       "recovered",
+       0.25117131667844633
+      ],
+      [
+       15,
+       "recovered",
+       2.1666681349455654
+      ],
+      [
+       20,
+       "recovered",
+       8.96386779037487
+      ],
+      [
+       25,
+       "step required → fell",
+       919.05370191717
+      ],
+      [
+       30,
+       "step required → fell",
+       867.0005269455511
+      ],
+      [
+       35,
+       "step required → fell",
+       940.8510029169187
+      ],
+      [
+       40,
+       "step required → fell",
+       889.369457133494
+      ],
+      [
+       45,
+       "step required → fell",
+       991.2363384684379
+      ]
+     ]
+    },
+    "V2-REF|L": {
+     "recovered": 20,
+     "fails": 25,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.25117131667844633
+      ],
+      [
+       10,
+       "recovered",
+       0.25117131667844633
+      ],
+      [
+       15,
+       "recovered",
+       2.2268635414819196
+      ],
+      [
+       20,
+       "recovered",
+       8.965312713210158
+      ],
+      [
+       25,
+       "step required → fell",
+       707.5969005310351
+      ],
+      [
+       30,
+       "step required → fell",
+       903.3579122111212
+      ],
+      [
+       35,
+       "step required → fell",
+       1189.736030039245
+      ],
+      [
+       40,
+       "step required → fell",
+       931.2032287283686
+      ],
+      [
+       45,
+       "step required → fell",
+       937.8278386813615
+      ]
+     ]
+    },
+    "V2-REF|FR": {
+     "recovered": 20,
+     "fails": 25,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.25117131667844633
+      ],
+      [
+       10,
+       "recovered",
+       0.25117131667844633
+      ],
+      [
+       15,
+       "recovered",
+       1.5955081874987875
+      ],
+      [
+       20,
+       "recovered",
+       7.219331202860586
+      ],
+      [
+       25,
+       "step required → fell",
+       771.4525325811653
+      ],
+      [
+       30,
+       "step required → fell",
+       790.293049857536
+      ],
+      [
+       35,
+       "step required → fell",
+       783.2430096717114
+      ],
+      [
+       40,
+       "step required → fell",
+       896.5481485933805
+      ],
+      [
+       45,
+       "step required → fell",
+       842.4045866358958
+      ]
+     ]
+    },
+    "V2-REF|FL": {
+     "recovered": 20,
+     "fails": 25,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.25117131667844633
+      ],
+      [
+       10,
+       "recovered",
+       0.25117131667844633
+      ],
+      [
+       15,
+       "recovered",
+       1.62920813503217
+      ],
+      [
+       20,
+       "recovered",
+       5.757622620594779
+      ],
+      [
+       25,
+       "step required → fell",
+       785.5890937746707
+      ],
+      [
+       30,
+       "step required → fell",
+       769.5422191218621
+      ],
+      [
+       35,
+       "step required → fell",
+       737.3181779602093
+      ],
+      [
+       40,
+       "step required → fell",
+       853.1731619535414
+      ],
+      [
+       45,
+       "step required → fell",
+       894.2958487484434
+      ]
+     ]
+    },
+    "V2-REF|BR": {
+     "recovered": 25,
+     "fails": 30,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.25117131667844633
+      ],
+      [
+       10,
+       "recovered",
+       0.25117131667844633
+      ],
+      [
+       15,
+       "recovered",
+       0.25117131667844633
+      ],
+      [
+       20,
+       "recovered",
+       5.850036895249346
+      ],
+      [
+       25,
+       "recovered",
+       8.52627065568525
+      ],
+      [
+       30,
+       "step required → fell",
+       397.57196309882005
+      ],
+      [
+       35,
+       "step required → fell",
+       528.3992547110141
+      ],
+      [
+       40,
+       "step required → fell",
+       495.5868206855549
+      ],
+      [
+       45,
+       "step required → fell",
+       518.4224226632276
+      ]
+     ]
+    },
+    "V2-REF|BL": {
+     "recovered": 25,
+     "fails": 30,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.25117131667844633
+      ],
+      [
+       10,
+       "recovered",
+       0.25117131667844633
+      ],
+      [
+       15,
+       "recovered",
+       0.25117131667844633
+      ],
+      [
+       20,
+       "recovered",
+       5.843468997929243
+      ],
+      [
+       25,
+       "recovered",
+       8.61870810233444
+      ],
+      [
+       30,
+       "step required → fell",
+       455.7126273672549
+      ],
+      [
+       35,
+       "step required → fell",
+       494.32633698314163
+      ],
+      [
+       40,
+       "step required → fell",
+       461.4270614513087
+      ],
+      [
+       45,
+       "step required → fell",
+       524.8203765098184
+      ]
+     ]
+    },
+    "V2-190-85|F": {
+     "recovered": 20,
+     "fails": 25,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.248507175091666
+      ],
+      [
+       10,
+       "recovered",
+       0.248507175091666
+      ],
+      [
+       15,
+       "recovered",
+       0.248507175091666
+      ],
+      [
+       20,
+       "recovered",
+       0.248507175091666
+      ],
+      [
+       25,
+       "step required → fell",
+       1042.7465877532156
+      ],
+      [
+       30,
+       "step required → fell",
+       984.5234624826228
+      ],
+      [
+       35,
+       "step required → fell",
+       997.4626047435747
+      ],
+      [
+       40,
+       "step required → fell",
+       988.597201795574
+      ],
+      [
+       45,
+       "step required → fell",
+       1028.3511092780248
+      ]
+     ]
+    },
+    "V2-190-85|B": {
+     "recovered": 20,
+     "fails": 25,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.248507175091666
+      ],
+      [
+       10,
+       "recovered",
+       0.248507175091666
+      ],
+      [
+       15,
+       "recovered",
+       0.248507175091666
+      ],
+      [
+       20,
+       "recovered",
+       0.248507175091666
+      ],
+      [
+       25,
+       "step required → fell",
+       427.67768880251975
+      ],
+      [
+       30,
+       "step required → fell",
+       516.9839630499627
+      ],
+      [
+       35,
+       "step required → fell",
+       462.71876371821634
+      ],
+      [
+       40,
+       "step required → fell",
+       364.7792093708113
+      ],
+      [
+       45,
+       "step required → fell",
+       324.73996404770594
+      ]
+     ]
+    },
+    "V2-190-85|L": {
+     "recovered": 25,
+     "fails": 30,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.248507175091666
+      ],
+      [
+       10,
+       "recovered",
+       0.248507175091666
+      ],
+      [
+       15,
+       "recovered",
+       1.4682602450202138
+      ],
+      [
+       20,
+       "recovered",
+       4.332631174669013
+      ],
+      [
+       25,
+       "recovered",
+       10.55399281487497
+      ],
+      [
+       30,
+       "step required → fell",
+       1068.486105158147
+      ],
+      [
+       35,
+       "step required → fell",
+       629.7148244968159
+      ],
+      [
+       40,
+       "step required → fell",
+       980.1364175737683
+      ],
+      [
+       45,
+       "step required → fell",
+       1053.5092378677368
+      ]
+     ]
+    },
+    "V2-190-85|R": {
+     "recovered": 25,
+     "fails": 30,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.248507175091666
+      ],
+      [
+       10,
+       "recovered",
+       0.248507175091666
+      ],
+      [
+       15,
+       "recovered",
+       1.4635133398224305
+      ],
+      [
+       20,
+       "recovered",
+       4.324475249465197
+      ],
+      [
+       25,
+       "recovered",
+       10.574830218938017
+      ],
+      [
+       30,
+       "step required → fell",
+       972.1898826068233
+      ],
+      [
+       35,
+       "step required → fell",
+       841.6728615099312
+      ],
+      [
+       40,
+       "step required → fell",
+       942.8076347490594
+      ],
+      [
+       45,
+       "step required → fell",
+       950.8708975702276
+      ]
+     ]
+    },
+    "V2-198-92|F": {
+     "recovered": 20,
+     "fails": 25,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.2457063652836942
+      ],
+      [
+       10,
+       "recovered",
+       0.2457063652836942
+      ],
+      [
+       15,
+       "recovered",
+       0.2457063652836942
+      ],
+      [
+       20,
+       "recovered",
+       0.2457063652836942
+      ],
+      [
+       25,
+       "step required → fell",
+       1038.5862727501121
+      ],
+      [
+       30,
+       "step required → fell",
+       952.8154876293185
+      ],
+      [
+       35,
+       "step required → fell",
+       961.3455034010998
+      ],
+      [
+       40,
+       "step required → fell",
+       998.6399218001158
+      ],
+      [
+       45,
+       "step required → fell",
+       1066.0111312278211
+      ]
+     ]
+    },
+    "V2-198-92|B": {
+     "recovered": 20,
+     "fails": 25,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.2457063652836942
+      ],
+      [
+       10,
+       "recovered",
+       0.2457063652836942
+      ],
+      [
+       15,
+       "recovered",
+       0.2457063652836942
+      ],
+      [
+       20,
+       "recovered",
+       0.2457063652836942
+      ],
+      [
+       25,
+       "step required → fell",
+       377.3137236760629
+      ],
+      [
+       30,
+       "step required → fell",
+       521.5859281333765
+      ],
+      [
+       35,
+       "step required → fell",
+       563.1194813010036
+      ],
+      [
+       40,
+       "step required → fell",
+       479.48530860220524
+      ],
+      [
+       45,
+       "step required → fell",
+       387.1810787531656
+      ]
+     ]
+    },
+    "V2-198-92|L": {
+     "recovered": 30,
+     "fails": 35,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.2457063652836942
+      ],
+      [
+       10,
+       "recovered",
+       0.2457063652836942
+      ],
+      [
+       15,
+       "recovered",
+       0.5360389572148404
+      ],
+      [
+       20,
+       "recovered",
+       2.4532842611520733
+      ],
+      [
+       25,
+       "recovered",
+       11.09568818257332
+      ],
+      [
+       30,
+       "recovered",
+       15.011838710516686
+      ],
+      [
+       35,
+       "step required → fell",
+       1144.3373694943255
+      ],
+      [
+       40,
+       "step required → fell",
+       1092.3009704122826
+      ],
+      [
+       45,
+       "step required → fell",
+       1061.0304183883065
+      ]
+     ]
+    },
+    "V2-198-92|R": {
+     "recovered": 30,
+     "fails": 35,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.2457063652836942
+      ],
+      [
+       10,
+       "recovered",
+       0.2457063652836942
+      ],
+      [
+       15,
+       "recovered",
+       0.48990503767811444
+      ],
+      [
+       20,
+       "recovered",
+       2.4128315588989477
+      ],
+      [
+       25,
+       "recovered",
+       11.076369432548793
+      ],
+      [
+       30,
+       "recovered",
+       14.970911949217486
+      ],
+      [
+       35,
+       "step required → fell",
+       1097.6148611716071
+      ],
+      [
+       40,
+       "step required → fell",
+       1155.0847766774523
+      ],
+      [
+       45,
+       "step required → fell",
+       1043.8455602142944
+      ]
+     ]
+    },
+    "V2-long-legs|F": {
+     "recovered": 15,
+     "fails": 20,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.2505265510867831
+      ],
+      [
+       10,
+       "recovered",
+       0.2505265510867831
+      ],
+      [
+       15,
+       "recovered",
+       0.2505265510867831
+      ],
+      [
+       20,
+       "step required → fell",
+       1001.5428844927663
+      ],
+      [
+       25,
+       "step required → fell",
+       888.1532230578586
+      ],
+      [
+       30,
+       "step required → fell",
+       934.3968963437761
+      ],
+      [
+       35,
+       "step required → fell",
+       968.7240736851104
+      ],
+      [
+       40,
+       "step required → fell",
+       912.6354975567976
+      ],
+      [
+       45,
+       "step required → fell",
+       1000.8522912399441
+      ]
+     ]
+    },
+    "V2-long-legs|B": {
+     "recovered": 15,
+     "fails": 20,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.2505265510867831
+      ],
+      [
+       10,
+       "recovered",
+       0.2505265510867831
+      ],
+      [
+       15,
+       "recovered",
+       0.2505265510867831
+      ],
+      [
+       20,
+       "step required → fell",
+       317.00519452482206
+      ],
+      [
+       25,
+       "step required → fell",
+       572.5710400609765
+      ],
+      [
+       30,
+       "step required → fell",
+       549.1739807461577
+      ],
+      [
+       35,
+       "step required → fell",
+       422.8957470188011
+      ],
+      [
+       40,
+       "step required → fell",
+       312.6844184953292
+      ],
+      [
+       45,
+       "step required → fell",
+       300.17492574391997
+      ]
+     ]
+    },
+    "V2-long-legs|L": {
+     "recovered": 20,
+     "fails": 25,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.2505265510867831
+      ],
+      [
+       10,
+       "recovered",
+       0.2505265510867831
+      ],
+      [
+       15,
+       "recovered",
+       1.8895664500439644
+      ],
+      [
+       20,
+       "recovered",
+       9.431588290071858
+      ],
+      [
+       25,
+       "step required → fell",
+       983.6569399705174
+      ],
+      [
+       30,
+       "step required → fell",
+       1021.8499293056893
+      ],
+      [
+       35,
+       "step required → fell",
+       903.7095113117812
+      ],
+      [
+       40,
+       "step required → fell",
+       936.4350885939283
+      ],
+      [
+       45,
+       "step required → fell",
+       984.2205493298892
+      ]
+     ]
+    },
+    "V2-long-legs|R": {
+     "recovered": 20,
+     "fails": 25,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.2505265510867831
+      ],
+      [
+       10,
+       "recovered",
+       0.2505265510867831
+      ],
+      [
+       15,
+       "recovered",
+       1.86059375203415
+      ],
+      [
+       20,
+       "recovered",
+       9.416577238484393
+      ],
+      [
+       25,
+       "step required → fell",
+       793.7175629930947
+      ],
+      [
+       30,
+       "step required → fell",
+       889.56454372596
+      ],
+      [
+       35,
+       "step required → fell",
+       937.1631413079742
+      ],
+      [
+       40,
+       "step required → fell",
+       993.7539321740536
+      ],
+      [
+       45,
+       "step required → fell",
+       946.6067465038736
+      ]
+     ]
+    },
+    "V2-short-legs|F": {
+     "recovered": 15,
+     "fails": 20,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.25175367697956225
+      ],
+      [
+       10,
+       "recovered",
+       0.25175367697956225
+      ],
+      [
+       15,
+       "recovered",
+       0.25175367697956225
+      ],
+      [
+       20,
+       "step required → fell",
+       960.9211943113569
+      ],
+      [
+       25,
+       "step required → fell",
+       921.4994749154588
+      ],
+      [
+       30,
+       "step required → fell",
+       951.0053176477395
+      ],
+      [
+       35,
+       "step required → fell",
+       961.8267965190555
+      ],
+      [
+       40,
+       "step required → fell",
+       961.428320248695
+      ],
+      [
+       45,
+       "step required → fell",
+       975.4036094187817
+      ]
+     ]
+    },
+    "V2-short-legs|B": {
+     "recovered": 15,
+     "fails": 20,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.25175367697956225
+      ],
+      [
+       10,
+       "recovered",
+       0.25175367697956225
+      ],
+      [
+       15,
+       "recovered",
+       0.25175367697956225
+      ],
+      [
+       20,
+       "step required → fell",
+       307.568039295761
+      ],
+      [
+       25,
+       "step required → fell",
+       448.4781182344578
+      ],
+      [
+       30,
+       "step required → fell",
+       420.5452182440784
+      ],
+      [
+       35,
+       "step required → fell",
+       347.10984691204015
+      ],
+      [
+       40,
+       "step required → fell",
+       318.95473174088426
+      ],
+      [
+       45,
+       "step required → fell",
+       313.15010268947185
+      ]
+     ]
+    },
+    "V2-short-legs|L": {
+     "recovered": 20,
+     "fails": 25,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.25175367697956225
+      ],
+      [
+       10,
+       "recovered",
+       0.25175367697956225
+      ],
+      [
+       15,
+       "recovered",
+       2.507178311489706
+      ],
+      [
+       20,
+       "recovered",
+       7.99580305824327
+      ],
+      [
+       25,
+       "step required → fell",
+       876.979143933948
+      ],
+      [
+       30,
+       "step required → fell",
+       911.0490590473809
+      ],
+      [
+       35,
+       "step required → fell",
+       963.3810524995934
+      ],
+      [
+       40,
+       "step required → fell",
+       871.4459092480537
+      ],
+      [
+       45,
+       "step required → fell",
+       950.7510007672878
+      ]
+     ]
+    },
+    "V2-short-legs|R": {
+     "recovered": 20,
+     "fails": 25,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.25175367697956225
+      ],
+      [
+       10,
+       "recovered",
+       0.25175367697956225
+      ],
+      [
+       15,
+       "recovered",
+       2.4936041497898924
+      ],
+      [
+       20,
+       "recovered",
+       7.990498144335668
+      ],
+      [
+       25,
+       "step required → fell",
+       912.8745405290988
+      ],
+      [
+       30,
+       "step required → fell",
+       1011.5941984345085
+      ],
+      [
+       35,
+       "step required → fell",
+       941.6169332935077
+      ],
+      [
+       40,
+       "step required → fell",
+       909.9978707754583
+      ],
+      [
+       45,
+       "step required → fell",
+       928.7410001760619
+      ]
+     ]
+    },
+    "V1-matched|F": {
+     "recovered": 15,
+     "fails": 20,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.24806482276929306
+      ],
+      [
+       10,
+       "recovered",
+       0.24806482276929306
+      ],
+      [
+       15,
+       "recovered",
+       0.24806482276929306
+      ],
+      [
+       20,
+       "step required → fell",
+       1004.9200841487889
+      ],
+      [
+       25,
+       "step required → fell",
+       940.6961735897901
+      ],
+      [
+       30,
+       "step required → fell",
+       933.7684293155088
+      ],
+      [
+       35,
+       "step required → fell",
+       984.3747118474524
+      ],
+      [
+       40,
+       "step required → fell",
+       1023.2057711419504
+      ],
+      [
+       45,
+       "step required → fell",
+       1040.4388926604195
+      ]
+     ]
+    },
+    "V1-matched|B": {
+     "recovered": 15,
+     "fails": 20,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.24806482276929306
+      ],
+      [
+       10,
+       "recovered",
+       0.24806482276929306
+      ],
+      [
+       15,
+       "recovered",
+       0.24806482276929306
+      ],
+      [
+       20,
+       "step required → fell",
+       342.5453332573467
+      ],
+      [
+       25,
+       "step required → fell",
+       484.1627519582338
+      ],
+      [
+       30,
+       "step required → fell",
+       506.9052722484773
+      ],
+      [
+       35,
+       "step required → fell",
+       393.3453313759981
+      ],
+      [
+       40,
+       "step required → fell",
+       358.727707450899
+      ],
+      [
+       45,
+       "step required → fell",
+       317.28890312265145
+      ]
+     ]
+    },
+    "V1-matched|R": {
+     "recovered": 25,
+     "fails": 30,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.24806482276929306
+      ],
+      [
+       10,
+       "recovered",
+       0.24806482276929306
+      ],
+      [
+       15,
+       "recovered",
+       2.0649698940523553
+      ],
+      [
+       20,
+       "recovered",
+       8.417147617690658
+      ],
+      [
+       25,
+       "recovered",
+       13.011943502678898
+      ],
+      [
+       30,
+       "step required → fell",
+       1181.0836172403626
+      ],
+      [
+       35,
+       "step required → fell",
+       1091.0279754928838
+      ],
+      [
+       40,
+       "step required → fell",
+       1084.6895393559344
+      ],
+      [
+       45,
+       "step required → fell",
+       1437.5044399455446
+      ]
+     ]
+    },
+    "V1-matched|L": {
+     "recovered": 25,
+     "fails": 30,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.24806482276929306
+      ],
+      [
+       10,
+       "recovered",
+       0.24806482276929306
+      ],
+      [
+       15,
+       "recovered",
+       2.082269718593716
+      ],
+      [
+       20,
+       "recovered",
+       8.427706199659859
+      ],
+      [
+       25,
+       "recovered",
+       13.022764267742994
+      ],
+      [
+       30,
+       "step required → fell",
+       1240.9311102177337
+      ],
+      [
+       35,
+       "step required → fell",
+       1009.3059167717453
+      ],
+      [
+       40,
+       "step required → fell",
+       1001.9465704130981
+      ],
+      [
+       45,
+       "step required → fell",
+       1017.9844738774952
+      ]
+     ]
+    },
+    "V1-matched|FR": {
+     "recovered": 20,
+     "fails": 25,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.24806482276929306
+      ],
+      [
+       10,
+       "recovered",
+       0.24806482276929306
+      ],
+      [
+       15,
+       "recovered",
+       1.3320782658225627
+      ],
+      [
+       20,
+       "recovered",
+       6.798709431949841
+      ],
+      [
+       25,
+       "step required → fell",
+       836.016667515532
+      ],
+      [
+       30,
+       "step required → fell",
+       751.9387797185443
+      ],
+      [
+       35,
+       "step required → fell",
+       812.6212109533636
+      ],
+      [
+       40,
+       "step required → fell",
+       855.9485519344789
+      ],
+      [
+       45,
+       "step required → fell",
+       848.548047891087
+      ]
+     ]
+    },
+    "V1-matched|FL": {
+     "recovered": 20,
+     "fails": 25,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.24806482276929306
+      ],
+      [
+       10,
+       "recovered",
+       0.24806482276929306
+      ],
+      [
+       15,
+       "recovered",
+       1.3207851737881535
+      ],
+      [
+       20,
+       "recovered",
+       5.275572870990292
+      ],
+      [
+       25,
+       "step required → fell",
+       889.7051239199501
+      ],
+      [
+       30,
+       "step required → fell",
+       740.729915678836
+      ],
+      [
+       35,
+       "step required → fell",
+       797.4095367998448
+      ],
+      [
+       40,
+       "step required → fell",
+       820.4369021058825
+      ],
+      [
+       45,
+       "step required → fell",
+       861.1496707512122
+      ]
+     ]
+    },
+    "V1-matched|BR": {
+     "recovered": 25,
+     "fails": 30,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.24806482276929306
+      ],
+      [
+       10,
+       "recovered",
+       0.24806482276929306
+      ],
+      [
+       15,
+       "recovered",
+       0.24806482276929306
+      ],
+      [
+       20,
+       "recovered",
+       6.008877433724413
+      ],
+      [
+       25,
+       "recovered",
+       9.703084746478682
+      ],
+      [
+       30,
+       "step required → fell",
+       475.57293846227606
+      ],
+      [
+       35,
+       "step required → fell",
+       478.4559658517353
+      ],
+      [
+       40,
+       "step required → fell",
+       532.3921840605886
+      ],
+      [
+       45,
+       "step required → fell",
+       531.3903023690716
+      ]
+     ]
+    },
+    "V1-matched|BL": {
+     "recovered": 25,
+     "fails": 30,
+     "inversion": false,
+     "outcomes": [
+      [
+       5,
+       "recovered",
+       0.24806482276929306
+      ],
+      [
+       10,
+       "recovered",
+       0.24806482276929306
+      ],
+      [
+       15,
+       "recovered",
+       0.24806482276929306
+      ],
+      [
+       20,
+       "recovered",
+       6.073972018468847
+      ],
+      [
+       25,
+       "recovered",
+       9.816620654606568
+      ],
+      [
+       30,
+       "step required → fell",
+       473.6637028326061
+      ],
+      [
+       35,
+       "step required → fell",
+       496.6132897429646
+      ],
+      [
+       40,
+       "step required → fell",
+       518.9559107114131
+      ],
+      [
+       45,
+       "step required → fell",
+       541.0055389055634
+      ]
+     ]
+    }
+   },
+   "symmetry": [
+    {
+     "human": "V2-165-62",
+     "pair": "L/R",
+     "a": 15,
+     "b": 15,
+     "ok": true
+    },
+    {
+     "human": "V2-175-70",
+     "pair": "L/R",
+     "a": 20,
+     "b": 20,
+     "ok": true
+    },
+    {
+     "human": "V2-REF",
+     "pair": "L/R",
+     "a": 20,
+     "b": 20,
+     "ok": true
+    },
+    {
+     "human": "V2-REF",
+     "pair": "FL/FR",
+     "a": 20,
+     "b": 20,
+     "ok": true
+    },
+    {
+     "human": "V2-REF",
+     "pair": "BL/BR",
+     "a": 25,
+     "b": 25,
+     "ok": true
+    },
+    {
+     "human": "V2-190-85",
+     "pair": "L/R",
+     "a": 25,
+     "b": 25,
+     "ok": true
+    },
+    {
+     "human": "V2-198-92",
+     "pair": "L/R",
+     "a": 30,
+     "b": 30,
+     "ok": true
+    },
+    {
+     "human": "V2-long-legs",
+     "pair": "L/R",
+     "a": 20,
+     "b": 20,
+     "ok": true
+    },
+    {
+     "human": "V2-short-legs",
+     "pair": "L/R",
+     "a": 20,
+     "b": 20,
+     "ok": true
+    },
+    {
+     "human": "V1-matched",
+     "pair": "L/R",
+     "a": 25,
+     "b": 25,
+     "ok": true
+    },
+    {
+     "human": "V1-matched",
+     "pair": "FL/FR",
+     "a": 20,
+     "b": 20,
+     "ok": true
+    },
+    {
+     "human": "V1-matched",
+     "pair": "BL/BR",
+     "a": 25,
+     "b": 25,
+     "ok": true
+    }
+   ],
+   "inversions": []
+  },
+  {
+   "id": "2.3",
+   "name": "0 ticks with applied active torque above the instantaneous capacity / activation envelope (every run)",
+   "pass": true,
+   "value": "0 ticks over 617 runs",
+   "limit": "0"
+  },
+  {
+   "id": "2.4",
+   "name": "release: non-recoveries fall / displace a foot physically; no hidden support (authority 0, external impulse = scheduled); every fall preceded by ξ leaving the support",
+   "pass": true,
+   "value": "204 non-recoveries, 204 falls (204 step-required), ledger exact",
+   "limit": "all",
+   "notStepRequired": []
+  },
+  {
+   "id": "2.5",
+   "name": "controller cost mean ≤ 0.15 ms per tick per player (V2-REF quiet stance 60 s); p99 reported",
+   "pass": true,
+   "value": "mean 0.115 ms, p99 0.467 ms",
+   "limit": "mean ≤ 0.15 ms"
+  },
+  {
+   "id": "S4",
+   "name": "angular impulses yaw / pitch / roll at 4 and 8 N·m·s: recovered in place, slip ≤ 10 mm, final trunk within 3°",
+   "pass": true,
+   "value": "6/6",
+   "limit": "6/6",
+   "detail": [
+    {
+     "axis": "yaw",
+     "H": 4,
+     "ok": true,
+     "out": "recovered",
+     "slip": 0.25117131667844633,
+     "trunk": 0.6733155856992169
+    },
+    {
+     "axis": "yaw",
+     "H": 8,
+     "ok": true,
+     "out": "recovered",
+     "slip": 0.4117749983931541,
+     "trunk": 1.0465844591361588
+    },
+    {
+     "axis": "pitch",
+     "H": 4,
+     "ok": true,
+     "out": "recovered",
+     "slip": 0.25117131667844633,
+     "trunk": 0.010652773051638644
+    },
+    {
+     "axis": "pitch",
+     "H": 8,
+     "ok": true,
+     "out": "recovered",
+     "slip": 0.25117131667844633,
+     "trunk": 0.011235965022361528
+    },
+    {
+     "axis": "roll",
+     "H": 4,
+     "ok": true,
+     "out": "recovered",
+     "slip": 0.25117131667844633,
+     "trunk": 0.7290339877986619
+    },
+    {
+     "axis": "roll",
+     "H": 8,
+     "ok": true,
+     "out": "recovered",
+     "slip": 0.25117131667844633,
+     "trunk": 2.3010653494928865
+    }
+   ]
+  },
+  {
+   "id": "S5",
+   "name": "10 initial offsets: no fall, QUIET from ≤ 3 s to the end, slip ≤ 2 mm, final trunk within 3°",
+   "pass": true,
+   "value": "10/10",
+   "limit": "10/10",
+   "detail": [
+    {
+     "name": "knees 12°",
+     "ok": true,
+     "settle": 0,
+     "slip": 0.20887786753217533,
+     "trunk": 0.0011146772523076415
+    },
+    {
+     "name": "hips 10°",
+     "ok": true,
+     "settle": 1,
+     "slip": 0.2735767650149863,
+     "trunk": 0.0014792810920910145
+    },
+    {
+     "name": "COM over ankles",
+     "ok": true,
+     "settle": 0.9583333333333334,
+     "slip": 0.30067652570490877,
+     "trunk": 0.0013155692411204074
+    },
+    {
+     "name": "COM 7 cm ahead",
+     "ok": true,
+     "settle": 0.725,
+     "slip": 0.2809936365466737,
+     "trunk": 0.0018204266892336656
+    },
+    {
+     "name": "trunk 10° flexed",
+     "ok": true,
+     "settle": 0,
+     "slip": 0.22947967599061972,
+     "trunk": 0.010822695531758492
+    },
+    {
+     "name": "arms 30° abducted",
+     "ok": true,
+     "settle": 0,
+     "slip": 0.2522614652889881,
+     "trunk": 0.0031815173899306134
+    },
+    {
+     "name": "head 20° flexed",
+     "ok": true,
+     "settle": 0,
+     "slip": 0.25136119354317155,
+     "trunk": 0.00314235845683161
+    },
+    {
+     "name": "COM 5 cm/s forward",
+     "ok": true,
+     "settle": 0.09583333333333333,
+     "slip": 0.2845307998065576,
+     "trunk": 0.0006831463239125996
+    },
+    {
+     "name": "COM 5 cm/s right",
+     "ok": true,
+     "settle": 0.09166666666666666,
+     "slip": 0.255499643680232,
+     "trunk": 0.31730219224478806
+    },
+    {
+     "name": "COM 5 cm/s back-left",
+     "ok": true,
+     "settle": 0.09166666666666666,
+     "slip": 0.2288420845354408,
+     "trunk": 0.03976200309896417
+    }
+   ]
+  },
+  {
+   "id": "F",
+   "name": "foot / CoP: sweep smoothness (net CoP change ≤ 5 mm/tick, tracking ≤ 5 mm, slip ≤ 2 mm) + turf penetration ≤ 10 / 5 mm in 2.1 / 2.2a / S4 / S5",
+   "pass": true,
+   "value": "sweeps 6/6, max jump 2.68 mm, max track 2.62 mm; penetration ok (max 0.89 mm)",
+   "limit": "all",
+   "detail": [
+    {
+     "dir": "B",
+     "ok": true,
+     "transitions": 0,
+     "maxNetJumpMm": 0.9756150756722765,
+     "maxFootJumpMm": 1.8389063757041288,
+     "maxTrackErrMm": 0.6383281817239509,
+     "ticksInside": 4320,
+     "slip": 0.25117131667844633
+    },
+    {
+     "dir": "F",
+     "ok": true,
+     "transitions": 0,
+     "maxNetJumpMm": 1.3094616855339072,
+     "maxFootJumpMm": 1.5110292815254898,
+     "maxTrackErrMm": 0.918964557413223,
+     "ticksInside": 4560,
+     "slip": 0.25117131667844633
+    },
+    {
+     "dir": "BL",
+     "ok": true,
+     "transitions": 0,
+     "maxNetJumpMm": 1.1059904329664252,
+     "maxFootJumpMm": 3.818979091104598,
+     "maxTrackErrMm": 1.3408118086923875,
+     "ticksInside": 4560,
+     "slip": 0.25117131667844633
+    },
+    {
+     "dir": "FR",
+     "ok": true,
+     "transitions": 0,
+     "maxNetJumpMm": 2.2948205594248043,
+     "maxFootJumpMm": 5.8212776574054885,
+     "maxTrackErrMm": 2.622401660489548,
+     "ticksInside": 4560,
+     "slip": 0.25117131667844633
+    },
+    {
+     "dir": "R",
+     "ok": true,
+     "transitions": 0,
+     "maxNetJumpMm": 2.02970326789482,
+     "maxFootJumpMm": 8.597689614617625,
+     "maxTrackErrMm": 2.4081242205880953,
+     "ticksInside": 6000,
+     "slip": 0.25117131667844633
+    },
+    {
+     "dir": "L",
+     "ok": true,
+     "transitions": 0,
+     "maxNetJumpMm": 2.6808698917751785,
+     "maxFootJumpMm": 12.915858219917636,
+     "maxTrackErrMm": 2.1369215306485705,
+     "ticksInside": 6000,
+     "slip": 0.25117131667844633
+    }
+   ]
+  },
+  {
+   "id": "D",
+   "name": "determinism ×3 (6 curated), snapshot / restore bit-exact (3), browser = Node (curated)",
+   "pass": true,
+   "value": "×3 6/6, snapshot 3/3, browser 6/6",
+   "limit": "all",
+   "hashes": {
+    "{\"kind\":\"quiet\",\"seconds\":10}": [
+     "dc0cac5b",
+     "dc0cac5b",
+     "dc0cac5b"
+    ],
+    "{\"kind\":\"push\",\"dir\":\"F\",\"J\":15}": [
+     "490be479",
+     "490be479",
+     "490be479"
+    ],
+    "{\"kind\":\"push\",\"dir\":\"R\",\"J\":15}": [
+     "e240ab30",
+     "e240ab30",
+     "e240ab30"
+    ],
+    "{\"kind\":\"push\",\"dir\":\"BL\",\"J\":10}": [
+     "c57dbb02",
+     "c57dbb02",
+     "c57dbb02"
+    ],
+    "{\"kind\":\"torque\",\"axis\":\"pitch\",\"H\":8}": [
+     "4461383c",
+     "4461383c",
+     "4461383c"
+    ],
+    "{\"kind\":\"offset\",\"name\":\"COM over ankles\"}": [
+     "3880137a",
+     "3880137a",
+     "3880137a"
+    ]
+   }
+  },
+  {
+   "id": "E",
+   "name": "energy residual ΔE − (W_active + W_ext − damping) ≤ +0.5 J per run; authority writes 0",
+   "pass": true,
+   "value": "max residual -0.285 J, min -938.23 J over 414 runs",
+   "limit": "≤ +0.5 J"
+  },
+  {
+   "id": "R",
+   "name": "G0 8/8; G1 curated hashes and full results unchanged",
+   "pass": true,
+   "value": "G0 8/8, G1 curated 10/10, G1 full unchanged",
+   "limit": "all"
+  }
+ ],
+ "pass": true,
+ "boundaries": {
+  "V2-165-62|F": {
+   "recovered": 10,
+   "fails": 15,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.2571930915913389
+    ],
+    [
+     10,
+     "recovered",
+     0.2571930915913389
+    ],
+    [
+     15,
+     "step required → fell",
+     933.6913708168561
+    ],
+    [
+     20,
+     "step required → fell",
+     847.0824319080162
+    ],
+    [
+     25,
+     "step required → fell",
+     859.7211332397331
+    ],
+    [
+     30,
+     "step required → fell",
+     853.5394230904535
+    ],
+    [
+     35,
+     "step required → fell",
+     928.3842335562274
+    ],
+    [
+     40,
+     "step required → fell",
+     979.1268343515935
+    ],
+    [
+     45,
+     "step required → fell",
+     961.1193917622647
+    ]
+   ]
+  },
+  "V2-165-62|B": {
+   "recovered": 10,
+   "fails": 15,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.2571930915913389
+    ],
+    [
+     10,
+     "recovered",
+     0.2571930915913389
+    ],
+    [
+     15,
+     "step required → fell",
+     311.09693842039684
+    ],
+    [
+     20,
+     "step required → fell",
+     406.3213972902426
+    ],
+    [
+     25,
+     "step required → fell",
+     360.93255486671706
+    ],
+    [
+     30,
+     "step required → fell",
+     282.4734930911298
+    ],
+    [
+     35,
+     "step required → fell",
+     278.01994014800954
+    ],
+    [
+     40,
+     "step required → fell",
+     273.96436555551026
+    ],
+    [
+     45,
+     "step required → fell",
+     275.22198788629754
+    ]
+   ]
+  },
+  "V2-165-62|L": {
+   "recovered": 15,
+   "fails": 20,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.2571930915913389
+    ],
+    [
+     10,
+     "recovered",
+     1.1447276394296042
+    ],
+    [
+     15,
+     "recovered",
+     5.968742331979799
+    ],
+    [
+     20,
+     "step required → fell",
+     1121.0223690229107
+    ],
+    [
+     25,
+     "step required → fell",
+     858.632332624785
+    ],
+    [
+     30,
+     "step required → fell",
+     721.5775691977274
+    ],
+    [
+     35,
+     "step required → fell",
+     736.7396045191102
+    ],
+    [
+     40,
+     "step required → fell",
+     778.150156718936
+    ],
+    [
+     45,
+     "step required → fell",
+     787.9713930215905
+    ]
+   ]
+  },
+  "V2-165-62|R": {
+   "recovered": 15,
+   "fails": 20,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.2571930915913389
+    ],
+    [
+     10,
+     "recovered",
+     1.1362437636343072
+    ],
+    [
+     15,
+     "recovered",
+     5.967405897433169
+    ],
+    [
+     20,
+     "step required → fell",
+     1117.1799407758929
+    ],
+    [
+     25,
+     "step required → fell",
+     730.5525998360738
+    ],
+    [
+     30,
+     "step required → fell",
+     726.7909463373853
+    ],
+    [
+     35,
+     "step required → fell",
+     784.4516767196858
+    ],
+    [
+     40,
+     "step required → fell",
+     841.6368214806437
+    ],
+    [
+     45,
+     "step required → fell",
+     782.5135605988526
+    ]
+   ]
+  },
+  "V2-175-70|F": {
+   "recovered": 15,
+   "fails": 20,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.2534581764668812
+    ],
+    [
+     10,
+     "recovered",
+     0.2534581764668812
+    ],
+    [
+     15,
+     "recovered",
+     0.2534581764668812
+    ],
+    [
+     20,
+     "step required → fell",
+     904.1125193499618
+    ],
+    [
+     25,
+     "step required → fell",
+     931.2958865140785
+    ],
+    [
+     30,
+     "step required → fell",
+     915.05885299315
+    ],
+    [
+     35,
+     "step required → fell",
+     935.376653074706
+    ],
+    [
+     40,
+     "step required → fell",
+     1005.0011567621502
+    ],
+    [
+     45,
+     "step required → fell",
+     1025.0595699187213
+    ]
+   ]
+  },
+  "V2-175-70|B": {
+   "recovered": 15,
+   "fails": 20,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.2534581764668812
+    ],
+    [
+     10,
+     "recovered",
+     0.2534581764668812
+    ],
+    [
+     15,
+     "recovered",
+     0.2534581764668812
+    ],
+    [
+     20,
+     "step required → fell",
+     359.7765963270249
+    ],
+    [
+     25,
+     "step required → fell",
+     515.5051205932023
+    ],
+    [
+     30,
+     "step required → fell",
+     380.05812411372256
+    ],
+    [
+     35,
+     "step required → fell",
+     309.60722973322174
+    ],
+    [
+     40,
+     "step required → fell",
+     301.3980663975488
+    ],
+    [
+     45,
+     "step required → fell",
+     283.64966108476045
+    ]
+   ]
+  },
+  "V2-175-70|L": {
+   "recovered": 20,
+   "fails": 25,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.2534581764668812
+    ],
+    [
+     10,
+     "recovered",
+     0.2534581764668812
+    ],
+    [
+     15,
+     "recovered",
+     2.4404910839128826
+    ],
+    [
+     20,
+     "recovered",
+     9.48346811170423
+    ],
+    [
+     25,
+     "step required → fell",
+     751.714876375939
+    ],
+    [
+     30,
+     "step required → fell",
+     816.640215743996
+    ],
+    [
+     35,
+     "step required → fell",
+     834.617959586702
+    ],
+    [
+     40,
+     "step required → fell",
+     841.6034920079948
+    ],
+    [
+     45,
+     "step required → fell",
+     869.2888484494829
+    ]
+   ]
+  },
+  "V2-175-70|R": {
+   "recovered": 20,
+   "fails": 25,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.2534581764668812
+    ],
+    [
+     10,
+     "recovered",
+     0.2534581764668812
+    ],
+    [
+     15,
+     "recovered",
+     2.441247817206107
+    ],
+    [
+     20,
+     "recovered",
+     9.50703406371205
+    ],
+    [
+     25,
+     "step required → fell",
+     1092.6502666067468
+    ],
+    [
+     30,
+     "step required → fell",
+     840.4059801646406
+    ],
+    [
+     35,
+     "step required → fell",
+     767.310940321643
+    ],
+    [
+     40,
+     "step required → fell",
+     901.7064673084051
+    ],
+    [
+     45,
+     "step required → fell",
+     885.0074550533039
+    ]
+   ]
+  },
+  "V2-REF|F": {
+   "recovered": 15,
+   "fails": 20,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.25117131667844633
+    ],
+    [
+     10,
+     "recovered",
+     0.25117131667844633
+    ],
+    [
+     15,
+     "recovered",
+     0.25117131667844633
+    ],
+    [
+     20,
+     "step required → fell",
+     978.5679162988534
+    ],
+    [
+     25,
+     "step required → fell",
+     953.8682039145976
+    ],
+    [
+     30,
+     "step required → fell",
+     897.5232609981551
+    ],
+    [
+     35,
+     "step required → fell",
+     953.7327943667777
+    ],
+    [
+     40,
+     "step required → fell",
+     988.1687197841128
+    ],
+    [
+     45,
+     "step required → fell",
+     1066.200204548294
+    ]
+   ]
+  },
+  "V2-REF|B": {
+   "recovered": 15,
+   "fails": 20,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.25117131667844633
+    ],
+    [
+     10,
+     "recovered",
+     0.25117131667844633
+    ],
+    [
+     15,
+     "recovered",
+     0.25117131667844633
+    ],
+    [
+     20,
+     "step required → fell",
+     317.4293819999188
+    ],
+    [
+     25,
+     "step required → fell",
+     505.63013581691774
+    ],
+    [
+     30,
+     "step required → fell",
+     488.2407913157356
+    ],
+    [
+     35,
+     "step required → fell",
+     357.62296568455446
+    ],
+    [
+     40,
+     "step required → fell",
+     328.2482601636961
+    ],
+    [
+     45,
+     "step required → fell",
+     292.3232610771369
+    ]
+   ]
+  },
+  "V2-REF|R": {
+   "recovered": 20,
+   "fails": 25,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.25117131667844633
+    ],
+    [
+     10,
+     "recovered",
+     0.25117131667844633
+    ],
+    [
+     15,
+     "recovered",
+     2.1666681349455654
+    ],
+    [
+     20,
+     "recovered",
+     8.96386779037487
+    ],
+    [
+     25,
+     "step required → fell",
+     919.05370191717
+    ],
+    [
+     30,
+     "step required → fell",
+     867.0005269455511
+    ],
+    [
+     35,
+     "step required → fell",
+     940.8510029169187
+    ],
+    [
+     40,
+     "step required → fell",
+     889.369457133494
+    ],
+    [
+     45,
+     "step required → fell",
+     991.2363384684379
+    ]
+   ]
+  },
+  "V2-REF|L": {
+   "recovered": 20,
+   "fails": 25,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.25117131667844633
+    ],
+    [
+     10,
+     "recovered",
+     0.25117131667844633
+    ],
+    [
+     15,
+     "recovered",
+     2.2268635414819196
+    ],
+    [
+     20,
+     "recovered",
+     8.965312713210158
+    ],
+    [
+     25,
+     "step required → fell",
+     707.5969005310351
+    ],
+    [
+     30,
+     "step required → fell",
+     903.3579122111212
+    ],
+    [
+     35,
+     "step required → fell",
+     1189.736030039245
+    ],
+    [
+     40,
+     "step required → fell",
+     931.2032287283686
+    ],
+    [
+     45,
+     "step required → fell",
+     937.8278386813615
+    ]
+   ]
+  },
+  "V2-REF|FR": {
+   "recovered": 20,
+   "fails": 25,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.25117131667844633
+    ],
+    [
+     10,
+     "recovered",
+     0.25117131667844633
+    ],
+    [
+     15,
+     "recovered",
+     1.5955081874987875
+    ],
+    [
+     20,
+     "recovered",
+     7.219331202860586
+    ],
+    [
+     25,
+     "step required → fell",
+     771.4525325811653
+    ],
+    [
+     30,
+     "step required → fell",
+     790.293049857536
+    ],
+    [
+     35,
+     "step required → fell",
+     783.2430096717114
+    ],
+    [
+     40,
+     "step required → fell",
+     896.5481485933805
+    ],
+    [
+     45,
+     "step required → fell",
+     842.4045866358958
+    ]
+   ]
+  },
+  "V2-REF|FL": {
+   "recovered": 20,
+   "fails": 25,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.25117131667844633
+    ],
+    [
+     10,
+     "recovered",
+     0.25117131667844633
+    ],
+    [
+     15,
+     "recovered",
+     1.62920813503217
+    ],
+    [
+     20,
+     "recovered",
+     5.757622620594779
+    ],
+    [
+     25,
+     "step required → fell",
+     785.5890937746707
+    ],
+    [
+     30,
+     "step required → fell",
+     769.5422191218621
+    ],
+    [
+     35,
+     "step required → fell",
+     737.3181779602093
+    ],
+    [
+     40,
+     "step required → fell",
+     853.1731619535414
+    ],
+    [
+     45,
+     "step required → fell",
+     894.2958487484434
+    ]
+   ]
+  },
+  "V2-REF|BR": {
+   "recovered": 25,
+   "fails": 30,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.25117131667844633
+    ],
+    [
+     10,
+     "recovered",
+     0.25117131667844633
+    ],
+    [
+     15,
+     "recovered",
+     0.25117131667844633
+    ],
+    [
+     20,
+     "recovered",
+     5.850036895249346
+    ],
+    [
+     25,
+     "recovered",
+     8.52627065568525
+    ],
+    [
+     30,
+     "step required → fell",
+     397.57196309882005
+    ],
+    [
+     35,
+     "step required → fell",
+     528.3992547110141
+    ],
+    [
+     40,
+     "step required → fell",
+     495.5868206855549
+    ],
+    [
+     45,
+     "step required → fell",
+     518.4224226632276
+    ]
+   ]
+  },
+  "V2-REF|BL": {
+   "recovered": 25,
+   "fails": 30,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.25117131667844633
+    ],
+    [
+     10,
+     "recovered",
+     0.25117131667844633
+    ],
+    [
+     15,
+     "recovered",
+     0.25117131667844633
+    ],
+    [
+     20,
+     "recovered",
+     5.843468997929243
+    ],
+    [
+     25,
+     "recovered",
+     8.61870810233444
+    ],
+    [
+     30,
+     "step required → fell",
+     455.7126273672549
+    ],
+    [
+     35,
+     "step required → fell",
+     494.32633698314163
+    ],
+    [
+     40,
+     "step required → fell",
+     461.4270614513087
+    ],
+    [
+     45,
+     "step required → fell",
+     524.8203765098184
+    ]
+   ]
+  },
+  "V2-190-85|F": {
+   "recovered": 20,
+   "fails": 25,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.248507175091666
+    ],
+    [
+     10,
+     "recovered",
+     0.248507175091666
+    ],
+    [
+     15,
+     "recovered",
+     0.248507175091666
+    ],
+    [
+     20,
+     "recovered",
+     0.248507175091666
+    ],
+    [
+     25,
+     "step required → fell",
+     1042.7465877532156
+    ],
+    [
+     30,
+     "step required → fell",
+     984.5234624826228
+    ],
+    [
+     35,
+     "step required → fell",
+     997.4626047435747
+    ],
+    [
+     40,
+     "step required → fell",
+     988.597201795574
+    ],
+    [
+     45,
+     "step required → fell",
+     1028.3511092780248
+    ]
+   ]
+  },
+  "V2-190-85|B": {
+   "recovered": 20,
+   "fails": 25,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.248507175091666
+    ],
+    [
+     10,
+     "recovered",
+     0.248507175091666
+    ],
+    [
+     15,
+     "recovered",
+     0.248507175091666
+    ],
+    [
+     20,
+     "recovered",
+     0.248507175091666
+    ],
+    [
+     25,
+     "step required → fell",
+     427.67768880251975
+    ],
+    [
+     30,
+     "step required → fell",
+     516.9839630499627
+    ],
+    [
+     35,
+     "step required → fell",
+     462.71876371821634
+    ],
+    [
+     40,
+     "step required → fell",
+     364.7792093708113
+    ],
+    [
+     45,
+     "step required → fell",
+     324.73996404770594
+    ]
+   ]
+  },
+  "V2-190-85|L": {
+   "recovered": 25,
+   "fails": 30,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.248507175091666
+    ],
+    [
+     10,
+     "recovered",
+     0.248507175091666
+    ],
+    [
+     15,
+     "recovered",
+     1.4682602450202138
+    ],
+    [
+     20,
+     "recovered",
+     4.332631174669013
+    ],
+    [
+     25,
+     "recovered",
+     10.55399281487497
+    ],
+    [
+     30,
+     "step required → fell",
+     1068.486105158147
+    ],
+    [
+     35,
+     "step required → fell",
+     629.7148244968159
+    ],
+    [
+     40,
+     "step required → fell",
+     980.1364175737683
+    ],
+    [
+     45,
+     "step required → fell",
+     1053.5092378677368
+    ]
+   ]
+  },
+  "V2-190-85|R": {
+   "recovered": 25,
+   "fails": 30,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.248507175091666
+    ],
+    [
+     10,
+     "recovered",
+     0.248507175091666
+    ],
+    [
+     15,
+     "recovered",
+     1.4635133398224305
+    ],
+    [
+     20,
+     "recovered",
+     4.324475249465197
+    ],
+    [
+     25,
+     "recovered",
+     10.574830218938017
+    ],
+    [
+     30,
+     "step required → fell",
+     972.1898826068233
+    ],
+    [
+     35,
+     "step required → fell",
+     841.6728615099312
+    ],
+    [
+     40,
+     "step required → fell",
+     942.8076347490594
+    ],
+    [
+     45,
+     "step required → fell",
+     950.8708975702276
+    ]
+   ]
+  },
+  "V2-198-92|F": {
+   "recovered": 20,
+   "fails": 25,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.2457063652836942
+    ],
+    [
+     10,
+     "recovered",
+     0.2457063652836942
+    ],
+    [
+     15,
+     "recovered",
+     0.2457063652836942
+    ],
+    [
+     20,
+     "recovered",
+     0.2457063652836942
+    ],
+    [
+     25,
+     "step required → fell",
+     1038.5862727501121
+    ],
+    [
+     30,
+     "step required → fell",
+     952.8154876293185
+    ],
+    [
+     35,
+     "step required → fell",
+     961.3455034010998
+    ],
+    [
+     40,
+     "step required → fell",
+     998.6399218001158
+    ],
+    [
+     45,
+     "step required → fell",
+     1066.0111312278211
+    ]
+   ]
+  },
+  "V2-198-92|B": {
+   "recovered": 20,
+   "fails": 25,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.2457063652836942
+    ],
+    [
+     10,
+     "recovered",
+     0.2457063652836942
+    ],
+    [
+     15,
+     "recovered",
+     0.2457063652836942
+    ],
+    [
+     20,
+     "recovered",
+     0.2457063652836942
+    ],
+    [
+     25,
+     "step required → fell",
+     377.3137236760629
+    ],
+    [
+     30,
+     "step required → fell",
+     521.5859281333765
+    ],
+    [
+     35,
+     "step required → fell",
+     563.1194813010036
+    ],
+    [
+     40,
+     "step required → fell",
+     479.48530860220524
+    ],
+    [
+     45,
+     "step required → fell",
+     387.1810787531656
+    ]
+   ]
+  },
+  "V2-198-92|L": {
+   "recovered": 30,
+   "fails": 35,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.2457063652836942
+    ],
+    [
+     10,
+     "recovered",
+     0.2457063652836942
+    ],
+    [
+     15,
+     "recovered",
+     0.5360389572148404
+    ],
+    [
+     20,
+     "recovered",
+     2.4532842611520733
+    ],
+    [
+     25,
+     "recovered",
+     11.09568818257332
+    ],
+    [
+     30,
+     "recovered",
+     15.011838710516686
+    ],
+    [
+     35,
+     "step required → fell",
+     1144.3373694943255
+    ],
+    [
+     40,
+     "step required → fell",
+     1092.3009704122826
+    ],
+    [
+     45,
+     "step required → fell",
+     1061.0304183883065
+    ]
+   ]
+  },
+  "V2-198-92|R": {
+   "recovered": 30,
+   "fails": 35,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.2457063652836942
+    ],
+    [
+     10,
+     "recovered",
+     0.2457063652836942
+    ],
+    [
+     15,
+     "recovered",
+     0.48990503767811444
+    ],
+    [
+     20,
+     "recovered",
+     2.4128315588989477
+    ],
+    [
+     25,
+     "recovered",
+     11.076369432548793
+    ],
+    [
+     30,
+     "recovered",
+     14.970911949217486
+    ],
+    [
+     35,
+     "step required → fell",
+     1097.6148611716071
+    ],
+    [
+     40,
+     "step required → fell",
+     1155.0847766774523
+    ],
+    [
+     45,
+     "step required → fell",
+     1043.8455602142944
+    ]
+   ]
+  },
+  "V2-long-legs|F": {
+   "recovered": 15,
+   "fails": 20,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.2505265510867831
+    ],
+    [
+     10,
+     "recovered",
+     0.2505265510867831
+    ],
+    [
+     15,
+     "recovered",
+     0.2505265510867831
+    ],
+    [
+     20,
+     "step required → fell",
+     1001.5428844927663
+    ],
+    [
+     25,
+     "step required → fell",
+     888.1532230578586
+    ],
+    [
+     30,
+     "step required → fell",
+     934.3968963437761
+    ],
+    [
+     35,
+     "step required → fell",
+     968.7240736851104
+    ],
+    [
+     40,
+     "step required → fell",
+     912.6354975567976
+    ],
+    [
+     45,
+     "step required → fell",
+     1000.8522912399441
+    ]
+   ]
+  },
+  "V2-long-legs|B": {
+   "recovered": 15,
+   "fails": 20,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.2505265510867831
+    ],
+    [
+     10,
+     "recovered",
+     0.2505265510867831
+    ],
+    [
+     15,
+     "recovered",
+     0.2505265510867831
+    ],
+    [
+     20,
+     "step required → fell",
+     317.00519452482206
+    ],
+    [
+     25,
+     "step required → fell",
+     572.5710400609765
+    ],
+    [
+     30,
+     "step required → fell",
+     549.1739807461577
+    ],
+    [
+     35,
+     "step required → fell",
+     422.8957470188011
+    ],
+    [
+     40,
+     "step required → fell",
+     312.6844184953292
+    ],
+    [
+     45,
+     "step required → fell",
+     300.17492574391997
+    ]
+   ]
+  },
+  "V2-long-legs|L": {
+   "recovered": 20,
+   "fails": 25,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.2505265510867831
+    ],
+    [
+     10,
+     "recovered",
+     0.2505265510867831
+    ],
+    [
+     15,
+     "recovered",
+     1.8895664500439644
+    ],
+    [
+     20,
+     "recovered",
+     9.431588290071858
+    ],
+    [
+     25,
+     "step required → fell",
+     983.6569399705174
+    ],
+    [
+     30,
+     "step required → fell",
+     1021.8499293056893
+    ],
+    [
+     35,
+     "step required → fell",
+     903.7095113117812
+    ],
+    [
+     40,
+     "step required → fell",
+     936.4350885939283
+    ],
+    [
+     45,
+     "step required → fell",
+     984.2205493298892
+    ]
+   ]
+  },
+  "V2-long-legs|R": {
+   "recovered": 20,
+   "fails": 25,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.2505265510867831
+    ],
+    [
+     10,
+     "recovered",
+     0.2505265510867831
+    ],
+    [
+     15,
+     "recovered",
+     1.86059375203415
+    ],
+    [
+     20,
+     "recovered",
+     9.416577238484393
+    ],
+    [
+     25,
+     "step required → fell",
+     793.7175629930947
+    ],
+    [
+     30,
+     "step required → fell",
+     889.56454372596
+    ],
+    [
+     35,
+     "step required → fell",
+     937.1631413079742
+    ],
+    [
+     40,
+     "step required → fell",
+     993.7539321740536
+    ],
+    [
+     45,
+     "step required → fell",
+     946.6067465038736
+    ]
+   ]
+  },
+  "V2-short-legs|F": {
+   "recovered": 15,
+   "fails": 20,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.25175367697956225
+    ],
+    [
+     10,
+     "recovered",
+     0.25175367697956225
+    ],
+    [
+     15,
+     "recovered",
+     0.25175367697956225
+    ],
+    [
+     20,
+     "step required → fell",
+     960.9211943113569
+    ],
+    [
+     25,
+     "step required → fell",
+     921.4994749154588
+    ],
+    [
+     30,
+     "step required → fell",
+     951.0053176477395
+    ],
+    [
+     35,
+     "step required → fell",
+     961.8267965190555
+    ],
+    [
+     40,
+     "step required → fell",
+     961.428320248695
+    ],
+    [
+     45,
+     "step required → fell",
+     975.4036094187817
+    ]
+   ]
+  },
+  "V2-short-legs|B": {
+   "recovered": 15,
+   "fails": 20,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.25175367697956225
+    ],
+    [
+     10,
+     "recovered",
+     0.25175367697956225
+    ],
+    [
+     15,
+     "recovered",
+     0.25175367697956225
+    ],
+    [
+     20,
+     "step required → fell",
+     307.568039295761
+    ],
+    [
+     25,
+     "step required → fell",
+     448.4781182344578
+    ],
+    [
+     30,
+     "step required → fell",
+     420.5452182440784
+    ],
+    [
+     35,
+     "step required → fell",
+     347.10984691204015
+    ],
+    [
+     40,
+     "step required → fell",
+     318.95473174088426
+    ],
+    [
+     45,
+     "step required → fell",
+     313.15010268947185
+    ]
+   ]
+  },
+  "V2-short-legs|L": {
+   "recovered": 20,
+   "fails": 25,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.25175367697956225
+    ],
+    [
+     10,
+     "recovered",
+     0.25175367697956225
+    ],
+    [
+     15,
+     "recovered",
+     2.507178311489706
+    ],
+    [
+     20,
+     "recovered",
+     7.99580305824327
+    ],
+    [
+     25,
+     "step required → fell",
+     876.979143933948
+    ],
+    [
+     30,
+     "step required → fell",
+     911.0490590473809
+    ],
+    [
+     35,
+     "step required → fell",
+     963.3810524995934
+    ],
+    [
+     40,
+     "step required → fell",
+     871.4459092480537
+    ],
+    [
+     45,
+     "step required → fell",
+     950.7510007672878
+    ]
+   ]
+  },
+  "V2-short-legs|R": {
+   "recovered": 20,
+   "fails": 25,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.25175367697956225
+    ],
+    [
+     10,
+     "recovered",
+     0.25175367697956225
+    ],
+    [
+     15,
+     "recovered",
+     2.4936041497898924
+    ],
+    [
+     20,
+     "recovered",
+     7.990498144335668
+    ],
+    [
+     25,
+     "step required → fell",
+     912.8745405290988
+    ],
+    [
+     30,
+     "step required → fell",
+     1011.5941984345085
+    ],
+    [
+     35,
+     "step required → fell",
+     941.6169332935077
+    ],
+    [
+     40,
+     "step required → fell",
+     909.9978707754583
+    ],
+    [
+     45,
+     "step required → fell",
+     928.7410001760619
+    ]
+   ]
+  },
+  "V1-matched|F": {
+   "recovered": 15,
+   "fails": 20,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.24806482276929306
+    ],
+    [
+     10,
+     "recovered",
+     0.24806482276929306
+    ],
+    [
+     15,
+     "recovered",
+     0.24806482276929306
+    ],
+    [
+     20,
+     "step required → fell",
+     1004.9200841487889
+    ],
+    [
+     25,
+     "step required → fell",
+     940.6961735897901
+    ],
+    [
+     30,
+     "step required → fell",
+     933.7684293155088
+    ],
+    [
+     35,
+     "step required → fell",
+     984.3747118474524
+    ],
+    [
+     40,
+     "step required → fell",
+     1023.2057711419504
+    ],
+    [
+     45,
+     "step required → fell",
+     1040.4388926604195
+    ]
+   ]
+  },
+  "V1-matched|B": {
+   "recovered": 15,
+   "fails": 20,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.24806482276929306
+    ],
+    [
+     10,
+     "recovered",
+     0.24806482276929306
+    ],
+    [
+     15,
+     "recovered",
+     0.24806482276929306
+    ],
+    [
+     20,
+     "step required → fell",
+     342.5453332573467
+    ],
+    [
+     25,
+     "step required → fell",
+     484.1627519582338
+    ],
+    [
+     30,
+     "step required → fell",
+     506.9052722484773
+    ],
+    [
+     35,
+     "step required → fell",
+     393.3453313759981
+    ],
+    [
+     40,
+     "step required → fell",
+     358.727707450899
+    ],
+    [
+     45,
+     "step required → fell",
+     317.28890312265145
+    ]
+   ]
+  },
+  "V1-matched|R": {
+   "recovered": 25,
+   "fails": 30,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.24806482276929306
+    ],
+    [
+     10,
+     "recovered",
+     0.24806482276929306
+    ],
+    [
+     15,
+     "recovered",
+     2.0649698940523553
+    ],
+    [
+     20,
+     "recovered",
+     8.417147617690658
+    ],
+    [
+     25,
+     "recovered",
+     13.011943502678898
+    ],
+    [
+     30,
+     "step required → fell",
+     1181.0836172403626
+    ],
+    [
+     35,
+     "step required → fell",
+     1091.0279754928838
+    ],
+    [
+     40,
+     "step required → fell",
+     1084.6895393559344
+    ],
+    [
+     45,
+     "step required → fell",
+     1437.5044399455446
+    ]
+   ]
+  },
+  "V1-matched|L": {
+   "recovered": 25,
+   "fails": 30,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.24806482276929306
+    ],
+    [
+     10,
+     "recovered",
+     0.24806482276929306
+    ],
+    [
+     15,
+     "recovered",
+     2.082269718593716
+    ],
+    [
+     20,
+     "recovered",
+     8.427706199659859
+    ],
+    [
+     25,
+     "recovered",
+     13.022764267742994
+    ],
+    [
+     30,
+     "step required → fell",
+     1240.9311102177337
+    ],
+    [
+     35,
+     "step required → fell",
+     1009.3059167717453
+    ],
+    [
+     40,
+     "step required → fell",
+     1001.9465704130981
+    ],
+    [
+     45,
+     "step required → fell",
+     1017.9844738774952
+    ]
+   ]
+  },
+  "V1-matched|FR": {
+   "recovered": 20,
+   "fails": 25,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.24806482276929306
+    ],
+    [
+     10,
+     "recovered",
+     0.24806482276929306
+    ],
+    [
+     15,
+     "recovered",
+     1.3320782658225627
+    ],
+    [
+     20,
+     "recovered",
+     6.798709431949841
+    ],
+    [
+     25,
+     "step required → fell",
+     836.016667515532
+    ],
+    [
+     30,
+     "step required → fell",
+     751.9387797185443
+    ],
+    [
+     35,
+     "step required → fell",
+     812.6212109533636
+    ],
+    [
+     40,
+     "step required → fell",
+     855.9485519344789
+    ],
+    [
+     45,
+     "step required → fell",
+     848.548047891087
+    ]
+   ]
+  },
+  "V1-matched|FL": {
+   "recovered": 20,
+   "fails": 25,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.24806482276929306
+    ],
+    [
+     10,
+     "recovered",
+     0.24806482276929306
+    ],
+    [
+     15,
+     "recovered",
+     1.3207851737881535
+    ],
+    [
+     20,
+     "recovered",
+     5.275572870990292
+    ],
+    [
+     25,
+     "step required → fell",
+     889.7051239199501
+    ],
+    [
+     30,
+     "step required → fell",
+     740.729915678836
+    ],
+    [
+     35,
+     "step required → fell",
+     797.4095367998448
+    ],
+    [
+     40,
+     "step required → fell",
+     820.4369021058825
+    ],
+    [
+     45,
+     "step required → fell",
+     861.1496707512122
+    ]
+   ]
+  },
+  "V1-matched|BR": {
+   "recovered": 25,
+   "fails": 30,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.24806482276929306
+    ],
+    [
+     10,
+     "recovered",
+     0.24806482276929306
+    ],
+    [
+     15,
+     "recovered",
+     0.24806482276929306
+    ],
+    [
+     20,
+     "recovered",
+     6.008877433724413
+    ],
+    [
+     25,
+     "recovered",
+     9.703084746478682
+    ],
+    [
+     30,
+     "step required → fell",
+     475.57293846227606
+    ],
+    [
+     35,
+     "step required → fell",
+     478.4559658517353
+    ],
+    [
+     40,
+     "step required → fell",
+     532.3921840605886
+    ],
+    [
+     45,
+     "step required → fell",
+     531.3903023690716
+    ]
+   ]
+  },
+  "V1-matched|BL": {
+   "recovered": 25,
+   "fails": 30,
+   "inversion": false,
+   "outcomes": [
+    [
+     5,
+     "recovered",
+     0.24806482276929306
+    ],
+    [
+     10,
+     "recovered",
+     0.24806482276929306
+    ],
+    [
+     15,
+     "recovered",
+     0.24806482276929306
+    ],
+    [
+     20,
+     "recovered",
+     6.073972018468847
+    ],
+    [
+     25,
+     "recovered",
+     9.816620654606568
+    ],
+    [
+     30,
+     "step required → fell",
+     473.6637028326061
+    ],
+    [
+     35,
+     "step required → fell",
+     496.6132897429646
+    ],
+    [
+     40,
+     "step required → fell",
+     518.9559107114131
+    ],
+    [
+     45,
+     "step required → fell",
+     541.0055389055634
+    ]
+   ]
+  }
+ }
+}

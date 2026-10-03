@@ -13,7 +13,7 @@
 //   4. any part of −∇U the implicit spring cannot carry (an axis with no own end-range stiffness receiving a biarticular cross term, or
 //      an offset beyond DELTA_MAX) is applied as an explicit equal-and-opposite torque pair (small stiffness ⇒ explicit is stable).
 // Motor rows carry ONLY passive tissue (elastic end range + viscous damping). There are no targets toward any posture.
-import { V, Q, dexp, rad } from "../core/v2_math.js";
+import { V, Q, dexp, rad, dnorm } from "../core/v2_math.js";
 import { decompose } from "../spec/v2_joints.js";              // Jolt swing–twist split, pyramid components (deterministic atan2)
 
 // H: finite-difference rotation (rad); DELTA_MAX: largest implicit-spring offset (rad); drive bound: the drive may never exceed what the
@@ -112,7 +112,7 @@ export class PassiveLayer {
       // PREDICTIVE linearisation (G1 C2 causal fix): the law is linearised at the predicted end-of-step rotation q0·exp(ω·dt), not at q0.
       // A joint that crosses the stiff anatomical end-stop within one step therefore meets the stop's stiffness in that same step instead
       // of entering it for free (measured: thoracic +9.2 J of U in one step, net +1.1 J, with start-of-step linearisation).
-      const phi = [0, 1, 2].map(i => (d.rows[i] ? wi[i] * dt : 0)), pl = Math.hypot(phi[0], phi[1], phi[2]);
+      const phi = [0, 1, 2].map(i => (d.rows[i] ? wi[i] * dt : 0)), pl = dnorm(phi[0], phi[1], phi[2]);   // deterministic norm (G3 resolution D1 for G1, user-approved: Math.hypot is not cross-engine exact)
       const qP = this.predictive && pl > 1e-12 ? Q.norm(Q.mul(q0, Q.axis([phi[0] / pl, phi[1] / pl, phi[2] / pl], pl))) : q0, qsP0 = ev.qs.slice(); qsP0[d.k] = qP;
       const tau0 = [0, 0, 0];
       if (this.chord && qP !== q0) for (let i = 0; i < 3; i++) { if (!d.rows[i]) continue;   // body-frame gradient at the CURRENT rotation (chord rule)

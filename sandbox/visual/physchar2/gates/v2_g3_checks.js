@@ -6,7 +6,7 @@ export const stanceIdx = (s) => (s === "R" ? 1 : 0);
 // T8 outcome class (mirror comparison and boundaries): recovered (continued) / recovered after abort / relocated / not settled / fell (step required)
 export function cls(r) { if (!r) return "?"; const ab = r.g3.abortT != null; if (ok(r)) return ab ? "recovered (aborted)" : "recovered"; return r.outcome + (ab ? " (aborted)" : ""); }
 export function evaluate(R, ext = {}) {
-  const J = R.jobs.filter(j => !j.error), by = (g) => J.filter(j => j.group === g), key = (k) => J.find(j => j.key === k && j.group !== "determinism" && j.group !== "snapshot" && !j.stand && !j.stance && !j.sup), checks = [], add = (id, name, pass, value, limit, extra = {}) => checks.push({ id, name, pass: !!pass, value, limit, ...extra });
+  const J = R.jobs.filter(j => !j.error), by = (g) => J.filter(j => j.group === g), key = (k) => J.find(j => j.key === k && j.group !== "determinism" && j.group !== "snapshot" && j.group !== "T9U" && (j.group === "T9" || j.human === "V2-REF") && !j.stand && !j.stance && !j.sup), checks = [], add = (id, name, pass, value, limit, extra = {}) => checks.push({ id, name, pass: !!pass, value, limit, ...extra });
   const errors = R.jobs.filter(j => j.error); add("run", "every job completed without error", errors.length === 0, `${J.length} ok / ${errors.length} errors`, "0 errors");
   const H = (r, id) => r.g3.holds[id];
   // A — T0

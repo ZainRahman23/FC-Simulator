@@ -4,7 +4,7 @@
 // counterfactuals (single hull, ankle tissue / end-stop / damping disabled, other contact geometries, couplings off). Per tick from just before
 // first foot contact to 1.8 s: kinematics, exact ground-contact wrench + centre of pressure, per-piece contact, ankle torque decomposition,
 // work on the foot by source, ankle and whole-body passive energy audit. Writes g1/heel/heel_<variant>.json, SVG plots and heel_summary.json.
-// usage: node tools/g1_heel.mjs
+// usage: node tools/g1_heel.mjs [--out=<dir>]   (default g1/heel — the accepted investigation; regression runs use --out so it is never overwritten)
 import fs from "fs"; import path from "path"; import { fork } from "child_process"; import { fileURLToPath } from "url";
 import { loadJolt } from "../core/v2_jolt.js";
 import { generateSpec } from "../spec/v2_spec.js";
@@ -14,7 +14,7 @@ import { applyMods } from "../gates/v2_g1_dx.js";
 import { AnkleProbe } from "../gates/v2_g1_ankle.js";
 import { V } from "../core/v2_math.js";
 const G1G = 9.81;
-const here = path.dirname(fileURLToPath(import.meta.url)), ROOT = path.resolve(here, "../../../.."), OUT = path.join(ROOT, "review_artifacts/physical_character_v2/g1/heel"), VEND = path.join(here, "../vendor/jolt-physics.wasm-compat.js");
+const here = path.dirname(fileURLToPath(import.meta.url)), ROOT = path.resolve(here, "../../../.."), OUT = (process.argv.find(a => a.startsWith("--out=")) || "").slice(6) ? path.resolve((process.argv.find(a => a.startsWith("--out=")) || "").slice(6)) : path.join(ROOT, "review_artifacts/physical_character_v2/g1/heel"), VEND = path.join(here, "../vendor/jolt-physics.wasm-compat.js");
 const BOTH = (o) => ({ ankle_L: o, ankle_R: o });
 export const VARIANTS = [
   { id: "V0", label: "validated baseline (10-piece boot)", mods: [], po: {} },

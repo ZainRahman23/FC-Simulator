@@ -1,0 +1,17 @@
+{
+ "g0": true,
+ "g0Checks": 4,
+ "g1curated": true,
+ "g1full": true,
+ "g1HashesCompared": 227,
+ "g1HashDiffs": [],
+ "g1AllPassCommitted": true,
+ "g1AllPassNew": true,
+ "g2": {
+  "n": 620,
+  "same": 620,
+  "committedJobs": 620,
+  "diffs": [],
+  "note": "D1 (user-approved deterministic controller math) changed every G2 hash at the last bit; G2 was re-validated: post-fix G2 PASS 13/13 (clean run), outcomes 620/620 identical to the accepted run; the two post-fix G2 runs (contended + clean) are 620/620 hash-identical, and no code changed between them and G3 run 3. Baseline for this row = the re-validated post-fix G2."
+ }
+}

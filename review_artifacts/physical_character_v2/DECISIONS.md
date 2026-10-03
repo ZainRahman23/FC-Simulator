@@ -912,3 +912,58 @@ Complete G3 gate set plus boundary cases, 190 jobs per configuration:
 - G3 NOT PASSED (run 3: 16/19).
 - Decisions pending: rows I / J / S criterion or methodology; TD-11 option; the G1 passive-layer determinism fix.
 - G4 not started. Nothing pushed.
+
+## 2026-10-03 — Resolution report accepted; next pass D1–D7 (user decision; source `sources/2026-10-03_user_decision_g3_resolution_accepted_ankle_criteria_v2.md`)
+
+### G3-R1b (D1 for G1): passive-layer deterministic norm — applied, G1 re-validated
+
+**The change:** `sim/v2_passive.js:115`. `pl = Math.hypot(φ)` → `dnorm(φ)`. This is the norm of the per-step rotation increment used by the predictive linearisation.
+- It is the same forbidden-math issue: `Math.hypot` is not specified to be cross-engine exact.
+- It computes the same quantity, and `Q.axis` and the other passive-layer maths were already deterministic, so intended mechanics are unchanged.
+- No other G1 change.
+
+**Re-validation:**
+
+| check | result |
+|---|---|
+| G0 | pass |
+| G1 | **PASS (0 failing checks)**. 32 of 74 primary runs have new hashes (117 of 227 hashes overall). Qualitative outcomes 74/74 identical; per-run check changes 0. Physical metrics move only as last-bit chaos in falling runs: final COM ≤ 8 cm in falls, unexplained energy ≤ 0.033 J, rest penetration ≤ 0.39 mm. |
+| G1 browser = Node | 10/10 |
+| Heel-rise regression (`tools/g1_heel.mjs --out=…`) | impact impulse and pitch at the end of the free rise identical in all 13 variants; heel peak ≤ 1.2 mm |
+| G2 (620) | outcomes 620/620 identical; 162 new hashes; recovered slip ≤ 2e-5 mm |
+
+**Artifacts:**
+- `g1/accepted_baseline_zeroNeutralAnkle/`: the accepted G1, preserved.
+- `g1/postD1G1/` and `g2/postD1G1/`: the comparisons.
+- `g1/json/` is now the post-fix G1.
+- `g2/postD1_zeroNeutralAnkle/`: the post-D1 G2 baseline, preserved.
+- `g3/json/run3/`: G3 run 3, preserved.
+
+### G3-R7 (D2): ankle neutral-zone law — primary-source verification BEFORE selection
+
+The question: which stiffness do primary sources support for our coordinate?
+
+**Our coordinate:** the passive-only `fabd` axis, i.e. rotation of the rigid foot about the foot vertical ≈ the tibial long axis. In ISB terms this is foot internal/external rotation (= ab/adduction) of the whole talocrural + subtalar complex.
+
+[FT] = full text read, [AB] = abstract only.
+
+| source | what it measures | condition | stiffness (secant) | maps to our coordinate? |
+|---|---|---|---|---|
+| Hattori 2022 [FT] | calcaneus vs tibia, subtalar FREE, internal rotation | cadaver, 5 N, 15–30° plantarflexion | 1.7 N·m → 11.8–13.7° = **0.12–0.14 N·m/°** | **yes** (whole complex) |
+| Watanabe 2012 Int Orthop [FT] | calcaneus vs tibia, internal rotation | in vivo, unloaded, knee 90° | 1.7 N·m → 11.7–15.4° = **0.11–0.15 N·m/°** | **yes** (skin artefact → underestimates stiffness) |
+| Rasmussen 1982 [FT] | talus vs tibia | cadaver, unloaded | 1.5 N·m → 7° IR / 10° ER = 0.21 / 0.15 | talocrural sub-joint only (series → whole complex softer) |
+| Li 2023 [FT] | foot vs tibia with the **subtalar screwed fixed**, external rotation only | 150 N, knee fixed | 0.43 ± 0.09 at 4 N·m | **no**: talocrural + syndesmosis |
+| Villamar 2022 [FT] | **inversion / eversion** | in vivo, ≈ 3× stiffer 0 → 50 % BW | — | **no**: different axis |
+| Stormont 1985, Tochigi 2006, Watanabe 2012 Clin Biomech [AB] | — | load | load stiffens | direction only; no internal/external magnitude |
+
+**Conclusions:**
+- Near-neutral the complex is most flexible (Chen 1988), so the near-neutral slope is ≈ **0.1 N·m/° (0.05–0.15)**.
+- **0.3–0.5 N·m/° does NOT remain supported for this coordinate.** It is 2–4× the measured whole-complex value, and reaching it requires cross-axis load extrapolation, which the user forbade.
+- The evidence DOES justify a stiffness for this coordinate, so this is not the stop condition.
+
+**Preregistered selection (before any run with the law):**
+- **k = 0.10 N·m/°** (5.73 N·m/rad).
+- Linear inside the approved ±10° soft range, saturating beyond it, so the approved end range keeps its shape and stiffness.
+- Internal = external rotation; L = R.
+- Unloaded basis; load stiffening is NOT modelled (no verified internal/external magnitude). This is an open item.
+- Sensitivity: k = 0.05 / 0.15 (evidence range), plus **0.3 / 0.5 reported separately as unsupported what-ifs**, never candidates.
