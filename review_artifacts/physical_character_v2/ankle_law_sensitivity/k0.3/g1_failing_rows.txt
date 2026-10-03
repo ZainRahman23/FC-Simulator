@@ -1,0 +1,5 @@
+  FAIL 1.S   V2-REF: every scenario passes every criterion
+  FAIL 1.S′  V1-matched instance: every scenario passes every criterion
+  FAIL 6     body variants (165/62, 198/92, ±2 SD legs): every essential scenario passes every criterion, no per-body tuning
+        upright: invariants ok; leanF: invariants ok [reported: 180 Hz: posture prone/on left side vs supine; 240 Hz: posture prone/on right side vs supine; 360 Hz: posture prone vs supine, COM Δ 0.485 m (spread 0.214)]; leanB: invariants ok [reported: 180 Hz: COM Δ 0.162 m (spread 0.002)]; flatSupine: invariants ok; drop1m: invariants ok; sideFirst: invariants ok; awkward: invariants ok; isoMomentum: invariants ok || pre-registered v3 evaluation: FAIL — leanF (v3: genuine effect at 240 Hz)   [all]
+G1 RESULT: FAIL — 3 failing gate check(s)   (325 s)  → review_artifacts/physical_character_v2/g1/json/g1_results.json

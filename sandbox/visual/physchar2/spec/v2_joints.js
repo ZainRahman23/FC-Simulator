@@ -78,7 +78,11 @@ export const PASSIVE = { endRangeFracOfOpposingCapacity: 0.25, B: 6.0, coulomb: 
   // internal / external rotation of the foot about the tibial axis). Linear inside the approved soft range (±10°), saturating beyond it
   // (constant k·θs), so the approved end-range law keeps its shape and stiffness; convex, conservative, mirror-symmetric. Historical accepted
   // baseline (G1 / G2 accepted): 0. Diagnostic override (Node only): env V2_ANKLE_NEUTRAL_K (N·m/°; 0 reproduces the historical plant).
-  ankleAxialNeutralKPerDeg: 0.1,   // N·m at the hard limit for the passive-only foot ab/adduction axis [ENG]
+  // STATUS (G3-R8, 2026-10-03): the evidence-preregistered k = 0.10 N·m/° was implemented and validated and caused material regressions
+  // (G1 row 1.S′ and row 8 — a 720 Hz leanF member reaching a 450 J solver blow-up; G1 passive-fall postures changed in 7/74 runs; G3 rows D and I2;
+  // pelvis yaw in near-single-support up ×3). Per the user's instruction it is NOT adopted: the default is the accepted historical plant (0) pending the
+  // user's decision. The law stays implemented; V2_ANKLE_NEUTRAL_K selects it for diagnostics.
+  ankleAxialNeutralKPerDeg: 0,   // N·m at the hard limit for the passive-only foot ab/adduction axis [ENG]
   // G1 decision C2 (2026-10-03): the ANATOMICAL END-STOP. Beyond the anatomical hard limit a stiff linear spring is added to the passive
   // potential; with it the total passive torque reaches 100 % of the opposing isometric capacity endStopDeg beyond the anatomical limit
   // [ENG: capsule / ligament / bone-contact end feel resists a maximal opposing contraction within a few degrees]. The anatomical ROM is

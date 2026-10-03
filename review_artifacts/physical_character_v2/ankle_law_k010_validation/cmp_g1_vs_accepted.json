@@ -1,0 +1,74 @@
+{
+ "kind": "G1",
+ "runs": 74,
+ "identicalHashes": 0,
+ "identicalOutcomes": 67,
+ "outcomeChanges": [
+  "upright|V2-REF|240: {\"posture\":\"supine\",\"firstNonFoot\":\"forearm_L\",\"firstNonFootT\":0.4458} → {\"posture\":\"on right side\",\"firstNonFoot\":\"forearm_L\",\"firstNonFootT\":0.4458}",
+  "leanF|V2-REF|240: {\"posture\":\"prone\",\"firstNonFoot\":\"forearm_L\",\"firstNonFootT\":0.45} → {\"posture\":\"on right side\",\"firstNonFoot\":\"forearm_L\",\"firstNonFootT\":0.45}",
+  "leanF|V1-matched|240: {\"posture\":\"supine\",\"firstNonFoot\":\"forearm_L\",\"firstNonFootT\":0.4583} → {\"posture\":\"on right side\",\"firstNonFoot\":\"forearm_L\",\"firstNonFootT\":0.4625}",
+  "leanF|V2-165-62|240: {\"posture\":\"on right side\",\"firstNonFoot\":\"forearm_L\",\"firstNonFootT\":0.4333} → {\"posture\":\"prone\",\"firstNonFoot\":\"forearm_L\",\"firstNonFootT\":0.4333}",
+  "upright|V2-198-92|240: {\"posture\":\"on right side\",\"firstNonFoot\":\"forearm_L\",\"firstNonFootT\":0.4583} → {\"posture\":\"supine\",\"firstNonFoot\":\"forearm_L\",\"firstNonFootT\":0.4583}",
+  "leanF|V2-198-92|240: {\"posture\":\"supine\",\"firstNonFoot\":\"forearm_L\",\"firstNonFootT\":0.4667} → {\"posture\":\"on left side\",\"firstNonFoot\":\"forearm_L\",\"firstNonFootT\":0.4667}",
+  "singleLeg|V2-short-legs|240: {\"posture\":\"supine\",\"firstNonFoot\":\"forearm_R\",\"firstNonFootT\":0.5167} → {\"posture\":\"supine\",\"firstNonFoot\":\"forearm_R\",\"firstNonFootT\":0.5125}"
+ ],
+ "checkChanges": [
+  "upright|V1-matched|240 13: true → false",
+  "perturb|V1-matched|240 13: true → false"
+ ],
+ "checkChangeCount": 2,
+ "allPass": [
+  true,
+  false
+ ],
+ "maxAbsChange": {
+  "outcome.comEndShiftM": {
+   "d": 0.8178308033558849,
+   "at": "leanF|V2-198-92|240"
+  },
+  "energy.unexplainedJ": {
+   "d": 0.5443169033140451,
+   "at": "singleLeg|V1-matched|240 0.5448 → 0.0005"
+  },
+  "energy.maxRiseJ": {
+   "d": 0.000058748901295757605,
+   "at": "perturb|V2-REF|240 0.0000 → 0.0001"
+  },
+  "energy.dampingJ": {
+   "d": 32.09143672513416,
+   "at": "leanF|V2-165-62|240 140.1162 → 108.0248"
+  },
+  "joints.sepMaxMm": {
+   "d": 4.040582981879849,
+   "at": "leanF|V2-short-legs|240 4.8821 → 0.8415"
+  },
+  "joints.sepRestMm": {
+   "d": 0.002680334640312809,
+   "at": "isoSelfCol|V2-198-92|240 0.4857 → 0.4830"
+  },
+  "joints.hardExcMaxDeg": {
+   "d": 2.486353978446296,
+   "at": "leanF|V2-long-legs|240 9.5721 → 12.0585"
+  },
+  "joints.hardExcRestDeg": {
+   "d": 1.7321549620823533,
+   "at": "perturb|V1-matched|240 0.0437 → 1.7758"
+  },
+  "contacts.turfPenMaxMm": {
+   "d": 4.061091136731282,
+   "at": "upright|V1-matched|240 0.8832 → 4.9442"
+  },
+  "contacts.turfPenRestMm": {
+   "d": 4.406480348251533,
+   "at": "upright|V1-matched|240 0.4613 → 4.8677"
+  },
+  "contacts.selfPenMaxMm": {
+   "d": 3.2570939511060715,
+   "at": "perturb|V2-REF|240 5.1996 → 1.9425"
+  },
+  "maxSpeed": {
+   "d": 0.4212234793032392,
+   "at": "singleLeg|V2-165-62|240 4.3348 → 3.9135"
+  }
+ }
+}

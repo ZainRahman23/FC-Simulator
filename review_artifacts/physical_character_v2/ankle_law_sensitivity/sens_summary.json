@@ -1,0 +1,167 @@
+[
+ {
+  "k": "0 (historical, post-D1G1)",
+  "g1": "PASS",
+  "g1Failing": [],
+  "leanF720": "supine,supine,supine,supine,supine",
+  "leanF240": "prone,prone,prone,prone,prone",
+  "blowups": [
+   "drop1m@180: +1 J",
+   "drop1m@0.000001@180: +1 J",
+   "drop1m@-0.000001@180: +1 J",
+   "drop1m@-0.00001@180: +1 J"
+  ],
+  "g3err": "Error: k=0 G3 v2 evaluation: see the dedicated post-D1G1 run"
+ },
+ {
+  "k": "0.05",
+  "g1": "FAIL",
+  "g1Failing": [
+   "1.S′"
+  ],
+  "leanF720": "prone,prone,on left side,prone,on left side",
+  "leanF240": "on right side,prone,on right side,on right side,on right side",
+  "blowups": [
+   "awkward@0.00001@180: +9 J"
+  ],
+  "E2": false,
+  "F2": false,
+  "I2": false,
+  "I2fail": "V2-175-70,V2-REF,V2-190-85,V2-198-92,V2-long-legs,V2-short-legs,V1-matched",
+  "D": false,
+  "T4yawEnds": "-4.9,-5.2,0.1,6.7,5.0",
+  "T5twist": "12.1/12.4",
+  "T5pelvisYaw": "7.5",
+  "T5hip": "9.5/9.1",
+  "UtwistR": "11.5/11.5",
+  "T1twist": "11.5/11.5",
+  "Udrag": "V2-190-85 U:L 6.8 mm; V1-matched U:R 5.9 mm; V2-long-legs U:R 4.6 mm"
+ },
+ {
+  "k": "0.10 (selected)",
+  "g1": "FAIL",
+  "g1Failing": [
+   "1.S′",
+   "8"
+  ],
+  "leanF720": "on right side,on right side,prone,on right side!,prone",
+  "leanF240": "on right side,on right side,prone,prone,on right side",
+  "blowups": [
+   "drop1m@0.00001@180: +1 J",
+   "drop1m@-0.00001@180: +1 J",
+   "awkward@180: +7 J",
+   "awkward@-0.000001@180: +7 J",
+   "awkward@-0.00001@180: +7 J",
+   "leanF@0.00001@720: +450 J"
+  ],
+  "E2": true,
+  "F2": true,
+  "I2": false,
+  "I2fail": "V2-198-92,V1-matched",
+  "D": false,
+  "T4yawEnds": "6.4,-3.8,0.1,5.2,-6.5",
+  "T5twist": "10.9/10.8",
+  "T5pelvisYaw": "6.5",
+  "T5hip": "7.9/7.8",
+  "UtwistR": "4.4/4.5",
+  "T1twist": "2.9/2.8",
+  "Udrag": "V2-198-92 U:L 7.1 mm; V2-198-92 U:R 5.4 mm; V1-matched U:L 2.0 mm"
+ },
+ {
+  "k": "0.15",
+  "g1": "FAIL",
+  "g1Failing": [
+   "1.S′"
+  ],
+  "leanF720": "prone,prone!,prone,prone,prone",
+  "leanF240": "prone,prone,prone,prone,prone",
+  "blowups": [
+   "drop1m@0.00001@180: +1 J",
+   "awkward@0.000001@180: +4 J",
+   "awkward@0.00001@180: +4 J"
+  ],
+  "E2": true,
+  "F2": true,
+  "I2": true,
+  "I2fail": "",
+  "D": true,
+  "T4yawEnds": "1.3,1.6,1.7,1.7,1.7",
+  "T5twist": "1.2/1.3",
+  "T5pelvisYaw": "0.2",
+  "T5hip": "1.3/1.3",
+  "UtwistR": "1.3/1.4",
+  "T1twist": "0.9/1.0",
+  "Udrag": "V2-198-92 U:L 0.7 mm; V2-198-92 U:R 0.5 mm; V2-190-85 U:R 0.4 mm"
+ },
+ {
+  "k": "0.3 (unsupported)",
+  "g1": "FAIL",
+  "g1Failing": [
+   "1.S",
+   "1.S′",
+   "6"
+  ],
+  "leanF720": "supine,supine,supine,supine,supine",
+  "leanF240": "prone,prone,on right side,prone,prone",
+  "blowups": [
+   "drop1m@0.00001@180: +1 J",
+   "drop1m@-0.00001@180: +1 J",
+   "awkward@180: +6 J",
+   "awkward@0.000001@180: +6 J",
+   "awkward@-0.000001@180: +6 J",
+   "awkward@0.00001@180: +6 J",
+   "awkward@-0.00001@180: +6 J"
+  ],
+  "E2": true,
+  "F2": true,
+  "I2": true,
+  "I2fail": "",
+  "D": true,
+  "T4yawEnds": "-0.0,-0.0,-0.0,-0.0,-0.0",
+  "T5twist": "0.9/1.0",
+  "T5pelvisYaw": "0.1",
+  "T5hip": "1.1/1.1",
+  "UtwistR": "1.0/1.1",
+  "T1twist": "0.7/0.7",
+  "Udrag": "V2-165-62 U:R 0.3 mm; V2-short-legs U:L 0.3 mm; V2-175-70 U:R 0.3 mm"
+ },
+ {
+  "k": "0.5 (unsupported)",
+  "g1": "FAIL",
+  "g1Failing": [
+   "1.S′",
+   "8"
+  ],
+  "leanF720": "supine!,supine,supine,supine!,supine",
+  "leanF240": "prone,prone,prone,prone,prone",
+  "blowups": [
+   "leanF@180: +142 J",
+   "leanF@0.000001@180: +18 J",
+   "leanF@-0.000001@180: +161 J",
+   "leanF@0.00001@180: +18 J",
+   "leanF@-0.00001@180: +143 J",
+   "awkward@180: +7 J",
+   "awkward@0.000001@180: +6 J",
+   "awkward@-0.000001@180: +6 J",
+   "awkward@0.00001@180: +6 J",
+   "awkward@-0.00001@180: +7 J",
+   "awkward@0.000001@240: +1 J",
+   "awkward@-0.000001@240: +1 J",
+   "awkward@0.00001@240: +1 J",
+   "leanF@720: +18246 J",
+   "leanF@0.00001@720: +45983 J"
+  ],
+  "E2": true,
+  "F2": true,
+  "I2": true,
+  "I2fail": "",
+  "D": true,
+  "T4yawEnds": "-0.0,-0.0,-0.0,-0.0,-0.0",
+  "T5twist": "0.8/0.9",
+  "T5pelvisYaw": "0.1",
+  "T5hip": "1.0/1.0",
+  "UtwistR": "0.9/0.9",
+  "T1twist": "0.6/0.6",
+  "Udrag": "V2-165-62 U:R 0.3 mm; V2-long-legs U:R 0.3 mm; V2-198-92 U:L 0.3 mm"
+ }
+]

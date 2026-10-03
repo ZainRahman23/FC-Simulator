@@ -967,3 +967,48 @@ The question: which stiffness do primary sources support for our coordinate?
 - Internal = external rotation; L = R.
 - Unloaded basis; load stiffening is NOT modelled (no verified internal/external magnitude). This is an open item.
 - Sensitivity: k = 0.05 / 0.15 (evidence range), plus **0.3 / 0.5 reported separately as unsupported what-ifs**, never candidates.
+
+### G3-R8: the ankle neutral-zone law causes a material G1 regression at every stiffness — NOT adopted; STOPPED for the user's decision
+
+**Selected-law validation (k = 0.10, preregistered in `a028bed`):**
+
+| gate | result |
+|---|---|
+| G0 | pass (incl. new row 0.9n) |
+| **G1** | **FAIL, 2 rows** |
+| G1 row 1.S′ | V1-matched settled-pose excursions 1.68° / 1.78° > 1.5° |
+| **G1 row 8** | 720 Hz leanF member +1e-5: **one-step +450 J** explosion at the right ankle |
+| G1, other changes | passive-fall postures changed in 7/74 runs at 240 Hz |
+| Heel rise (V0) | unchanged |
+| G2 | outcomes 620/620 identical |
+| G3 v2 | E2 / F2 pass; I2 (unloaded-foot drag 5.4–7.1 mm) and D (pelvis-yaw wander Δ 12.85°) fail |
+
+**Mechanisms:**
+1. **The blow-up is inside one engine step.**
+   - The passive drive before it is ≤ 0.2 N·m.
+   - The body rests or lands with shank and foot on the turf, at combined large plantarflexion + inversion.
+   - The historical ankle never settles into that configuration.
+   - The same mode appears at k = 0.15 in V1-matched singleLeg at **240 Hz** (+182 J).
+2. **The spring couples the leg twist into the light foot** (5.9° foot yaw = the drag). Below ≈ 0.15 N·m/° the leg is not re-centred against the posture control.
+
+**Sensitivity (report-only):**
+
+| k (N·m/°) | G1 failing rows | G3 support rows |
+|---|---|---|
+| 0.05 | 1.S′ | E2 / F2 / I2 / D all fail |
+| 0.15 | 1.S′ (incl. +182 J at 240 Hz) | all pass (twist 1.3°) |
+| 0.3 | 1.S, 1.S′, 6 | all pass |
+| 0.5 | 1.S′, 8 (blow-ups up to +45,983 J) | all pass |
+
+The passive-joint rig passes 34/34 at every k, so the implementation equals the spec law.
+
+**Status:**
+- **Not adopted.** The spec default is restored to the accepted historical plant (k = 0). The law stays implemented, selectable via `V2_ANKLE_NEUTRAL_K` for diagnostics.
+- **Not switched to 0.15** (that would be choosing by G3 score, and 0.15 also fails G1).
+- Final validation under criteria v2 halted.
+- **New debt:**
+  - TD-12: one-step engine divergence at the ankle in shank–foot–turf loops, exposed by axial ankle stiffness;
+  - TD-13: the twist-following posture control leaves the leg-twist mode unrestored at low stiffness.
+- **Recommendation:** B (investigate the engine-level divergence: a G1 physics-integrity question), then C (an evidence-backed load-dependent law).
+
+Report: `g3/G3_ANKLE_LAW_STOP_REPORT.md`. Evidence: `ankle_law_k010_validation/`, `ankle_law_sensitivity/`.
