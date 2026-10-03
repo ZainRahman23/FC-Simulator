@@ -604,3 +604,140 @@ Across bodies the sagittal boundary is Δv ≈ 0.20–0.25 m/s in body-normalise
   - spec 3.3 "lift one foot 5 cm, hold 10 s" is replaced by the brief's near-single-support hold *without* active lifting ("Do not actively lift it yet");
   - spec 3.1 (rates 0.5 / 1.0 / 2.0 s, load tracking RMS, slip ≤ 2 mm), 3.2 (fore–aft transfer), 3.4 (per-foot wrench vs force-plate twin) and 3.5 (perturbed starts) are adopted into the G3 test matrix where consistent with the brief;
   - every threshold is measured first, then pre-registered.
+
+## 2026-10-03 — V2-G3 development: plant characterisation, mechanisms (each with its measured deficiency), evaluations, and one open finding
+
+Everything below was measured on V2-REF with the accepted G2 plant and controller. Each G3 addition is an **option of `ctrl/v2_stand.js`, off by default**. With the options off, the G2 controller is bit-identical: the G2 regression sample stays 38/38 identical after every change, and the final run re-runs all 620 G2 jobs (criteria row P). The G3 configuration is `G3_STAND` in `gates/v2_g3.js`.
+
+### G3-A1: G2 plant characterisation (brief §4), before any change
+
+Method: a slow lateral target ramp (1 cm/s to 11 cm) with the G2 controller and its foot floor set to 0.
+
+| Quantity | Measured |
+|---|---|
+| Right-foot load vs COM lateral position | Linear: 0.80 at ≈ 7 cm; 1.0 with the COM over the right foot (≈ 9.2 cm) |
+| CoP | Tracks the command |
+| Pelvis and thorax roll | ≤ 1.5° |
+| Stance hip abduction torque | ≈ 75 N·m, i.e. ≈ 41 % of its 183 N·m capacity (spec single-leg estimate ≈ 70 N·m) |
+| Stance knee torque | ≈ 18 N·m |
+
+Measured deficiencies of the G2 controller for G3:
+- **D1:** the G2 foot floor (minShare 0.10) caps any transfer at 90 %.
+- **D2:** once fully unloaded, the left foot lost contact (0/8 pieces), hovered at +4 mm and drifted 23 mm by t ≈ 17.5 s. Its leg IK target is "the foot where it is", so it followed its own drift.
+- **D3:** the G2 support polygon still counted the airborne foot.
+
+### G3-A2: transfer request
+
+- λ_R(t) is a min-jerk profile. It sets the balance target's lateral position to the quasi-static COM for that load split: the λ-weighted point between the feet's region centroids.
+- The foot floor relaxes to the requested share: min(0.10, λ) and min(0.10, 1 − λ).
+- **What measured deficiency required this?** D1.
+- The request is an objective only; the physics decides the load. T11 confirms it: λ 1.2 / 1.4 falls.
+
+### G3-A3: contactSupport and holdUnloaded
+
+- **contactSupport:** the support region and load split use only feet with ≥ 1 touching boot piece, sensed each tick from the boot-piece contact probe.
+- **holdUnloaded:**
+  - Trigger: a foot below 1 % BW is held at the pose it had when it unloaded. It is released above 3 % BW (hysteresis).
+  - How it is held: leg IK to that stored pose, plus an ankle PD with the gains of a joint carrying only its distal subtree.
+  - What it is not: no new target, no relocation, no lift (brief §2).
+- **What measured deficiency required this?** D2 and D3.
+- Result: in full unloading (λ = 1.0) the opposite foot carries 0 N, keeps all 8 pieces touching, and moves 0.3 mm.
+
+### G3-A4: DCM reference feed-forward (dcmFF)
+
+- **What measured deficiency required this?** The static-target law lagged a 4 s ramp: load 0.83 at the end of the ramp, tracking RMS 0.128.
+- Mechanism: the DCM tracking law for a moving target, p* = ξ + kξ(ξ − ξ_ref) − ξ̇_ref/ω0 with ξ_ref = x_ref + ẋ_ref/ω0. It reduces exactly to G2's law when the target is still.
+- **First version: rejected after measurement.**
+  - What it did: ẋ_ref and ẍ_ref came from backward differences of the measured target.
+  - Why that failed: the target is built from the ankle midpoint and foot heading, so the second difference at 240 Hz amplified sub-millimetre rocking of the barely loaded foot by ≈ 240²/ω0² ≈ 5800.
+  - Effect: on the return from the right hold, the load collapsed 0.95 → 0.49 in 0.1 s, the body fell, and pelvis yaw reached −102°.
+- **Adopted version:** the rates come analytically from the request: λ̇ and λ̈ times the lateral centroid separation.
+- Result: full R/L near-single-support cycle with tracking RMS 0.019; holds 0.954/0.965 (R) and 0.953/0.964 (L).
+
+### G3-A5: ikFeasible (posture IK)
+
+- **What measured deficiency required this?**
+  - The geometry: a lateral COM shift of ≥ 7 cm at the fixed G2 pelvis height left both hips ≈ 9 cm lateral of their ankles, which needs ≈ 4.5 mm more leg than the 4° reference knee flexion gives. Newton could not reduce the residual, which grew to 137 mm-equivalent.
+  - The failure path: `legIK` returned the current configuration, which made the hip posture error exactly 0.
+  - The symptom: the 3.4 N·m hip-rotation feed-forward yawed the pelvis freely, creeping to −9.5° with τ ≈ 1.5 s, then snapping back 14° in 0.4 s when the other foot reloaded.
+- Mechanism: the pelvis height target drops to the highest height at which both legs keep their reference hip–ankle length (the pendulum arc of a lateral shift, a few mm).
+- Result: IK residual 0 throughout; pelvis yaw ≤ 1.7° and back to 0.1°.
+
+### G3-A6: continue / abort supervisor (brief §17)
+
+- **First rule: rejected after measurement.** "ξ outside the stance foot while |λ − 0.5| > 0.05" fired at the start of every ramp, where ξ is legitimately between the feet. It aborted every perturbation run, even 5 N·s.
+- **Adopted rule:**
+  - When it applies: only once the stance share is ≥ 0.85, the point from which the plan relies on the stance foot alone.
+  - Trigger: the required CoP p* lies more than 1 cm outside the stance foot's region for 20 ms.
+  - Response: the request returns to bilateral over 0.6 s, so the other foot reloads.
+- **Abort path, measured comparison:**
+  - With the planned min-jerk feed-forward, inward pushes slipped: L 15/20/25 slipped 7/11/18 mm; FL 10–20 slipped 6–12 mm.
+  - Without it (DCM feedback only), the same cases moved 0–3 mm.
+  - The cause: a rest-to-rest plan assumes the COM starts at rest, but on an abort it is already moving.
+  - Adopted: **no feed-forward on the abort path**. An immediate target switch measured equivalent (0–4 mm), so it is a parameter variant, not a competing architecture.
+- No abort occurs in any unperturbed transfer of ≥ 1 s.
+
+### G3-A7: twist-DOF posture reference (ikRefTwist) — evaluated, **not adopted**
+
+- What it does: the IK solves the knee axial rotation and the passive ankle ab/adduction at their reference values instead of their current ones (null-space posture).
+- **Measured worse:** whole-body static yaw stiffness under a constant pelvis torque fell from 2.8 N·m/° bilateral (0.8–1.0 near-single) to 0.1–0.3 N·m/°.
+- Why: the hips then hold the legs to the pelvis, so the pelvis rotates with the legs on the passive ankles.
+- The G2 form ("current" values) is kept. In it the hips hold pelvis yaw and the legs absorb the twist.
+
+### G3-A8: leg-load gain scheduling (gainSched) — evaluated, **not adopted**
+
+- Leg posture gains scaled by each leg's sensed load share (the G2 law with the actually supported mass) made no measurable improvement: yaw and slip unchanged, tracking RMS 0.019 → 0.022.
+
+### G3-A9: knee, hip and arm strategies (brief §9–10) — evaluated, **not adopted**
+
+- **Knee strategy** (reference knee flexion 10 / 15 / 20°): hold load 0.954 → 0.958–0.962. But an outward 10 N·s push during the hold goes from recovered with slip to a fall. No net benefit.
+- **Hip strategy** (bounded 10° and unbounded) and **arm counter-motion:** no outward or AP push boundary extended. Falls show 41–89° trunk lean, and arm counter-motion turns outward 10 N·s from recovered into a fall. This matches G2-A8.
+- **Measured need for a new mechanism: none.**
+  - Nominal transfers: pelvis roll ≤ 0.5°, trunk lean ≤ 0.5°.
+  - The outward-push limit in near-single-support is physical. The capture-point margin inside the stance foot is ≈ 3 cm, so J_max ≈ 0.03 m · M · ω0 ≈ 7.7 N·s. Development grid: 5 recovers, 10 recovers with slip, 15 falls (step required).
+
+### G3-A10: seam audit window
+
+The largest single-tick per-foot CoP jump was 103 mm. It was at t = 0.0125 s, the boots' initial contact settle, identically on both feet. The seam audit therefore starts at t ≥ 0.5 s; G2 used t ≥ 1 s for the same reason. Afterwards, crossings are smooth (≤ 0.13 mm per tick in the cycle test).
+
+### G3-F1 — OPEN FINDING (TD-3, user decision): transverse-plane compliance at the passive ankle ab/adduction
+
+**What it is.** The ankle's foot ab/adduction axis (the foot's vertical axis, `LIMB_DOWN_FRAME` x) is passive-only by approved anatomy.
+
+| Ankle ab/adduction angle | Passive torque (G1 tissue: end-range only, soft range = active ROM ±10°) |
+|---|---|
+| 0–10° | **0 N·m** |
+| 12° | 3.4 N·m |
+| 15° (hard limit) | 10 N·m |
+| 17° | 29.7 N·m |
+
+No actuator spans that axis; the DF and inversion axes are horizontal for a flat foot. So inside ±10° the leg's axial rotation relative to a planted foot is held only by damping.
+
+**What it causes:**
+- In every G3 transfer the legs twist toward the ≈ 10–11° tissue engagement: ±9.7° at mid-ramp in a 4 s ramp, relaxing to ≈ 1.5° while still. The hip rotators counter-rotate ≈ 10°.
+- Pelvis yaw stays ≤ 2° in 4 s transfers, because the IK hip targets hold it. It reaches 5.8° at 2 s ramps, 8.3° at 1 s ramps, and 6–8° under pushes.
+- A constant yaw torque on the pelvis always settles the ankle at its ≈ 10–11° engagement.
+
+**Not introduced by G3.** The accepted G2 controller shows the same mode under bilateral pushes: ankle ab/adduction excursion 10.5–13.6°, hip rotation ≈ 9°, pelvis yaw up to 6.9°. G2 did not audit this axis.
+
+**Not changed.** Fixing it means changing approved anatomy, passive tissue or actuator capability, so it is reported for the user's decision. Options:
+- a load-dependent neutral-zone stiffness for the ankle's axial rotation (the mortise is rotationally stiff when loaded);
+- a small foot ab/adduction actuator;
+- re-axing the ankle so a 2-DOF talocrural/subtalar model carries no free axial play.
+
+**Why it matters before G4:** single support during a step will load this axis far harder.
+
+### Development measurements of the final G3 configuration (exploratory, pre-registration input)
+
+- **Speed envelope** (λ 0.95, mirror-identical R/L):
+  - 4 s and 2 s ramps: clean;
+  - 1 s: stands, but the hold lags (0.92);
+  - 0.5 s and 0.25 s: fail physically. The ankle inversion actuator reaches 85–88 % of capacity, and the unloading foot slides ≈ 6 mm and tilts 3°.
+  - This matches the LIPM limit: a min-jerk 9 cm shift in T needs a CoP offset of ≈ 5.77 · 0.09 / (ω0² T²) ≈ 19 cm at 0.5 s, beyond the support.
+- **Perturbation during the near-single-support hold** (thorax, 100 ms, supervised, no abort feed-forward):
+  - F / B: 15 recovers, 20 falls. These are the G2 bilateral boundaries, because the stance foot length governs.
+  - Outward: 5 recovers, 10 recovers with slip, 15 falls.
+  - Inward: recovers up to 25.
+- **Full unloading** (λ = 1.0): stance load 0.999, opposite foot 0 N with 8 pieces still touching, held still for 4.3 s; clean return.
+- **Body variants:** all 7 non-REF bodies complete the 97 % cycle (hold min 0.948–0.958).
+- **Repeated cycles (T4):** pelvis drift 4.0 mm and yaw offset 2.7° after cycle 1, unchanged through cycle 5.

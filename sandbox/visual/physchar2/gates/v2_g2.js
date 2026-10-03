@@ -57,8 +57,9 @@ export class G2Sim extends G1Sim {
   }
   // SNAPSHOT / RESTORE (spec §19): Jolt SaveState + the explicit controller-state struct (actuator activations, controller tick counter, the
   // already-computed passive / actuator plans for the next step, the hash chain). Measurement accumulators are not dynamics state.
-  snapshot() { return { jolt: this.w.saveState(), act: this.act.state(), ctrlN: this.ctrl.n, ctrlRing: JSON.parse(JSON.stringify(this.ctrl.ring)), ctrlOu: this.ctrl.ou.slice(), ctrlRng: this.ctrl.rng, n: this.n, h: this.h, up: this.up, aplan: JSON.parse(JSON.stringify(this.aplan)), st: JSON.parse(JSON.stringify(this.st)) }; }
-  restore(snap) { this.w.restoreState(snap.jolt); this.act.setState(snap.act); this.ctrl.n = snap.ctrlN; this.ctrl.ring = JSON.parse(JSON.stringify(snap.ctrlRing)); this.ctrl.ou = snap.ctrlOu.slice(); this.ctrl.rng = snap.ctrlRng; this.n = snap.n; this.h = snap.h; this.up = { ...snap.up, applied: false }; this.aplan = JSON.parse(JSON.stringify(snap.aplan)); this.aplan.applied = false; this.st = JSON.parse(JSON.stringify(snap.st)); }
+  _sense() { const pr = this.probeRows; return { Fz: pr.map(r => (r ? Math.max(0, r.JyN) : 0)), touch: pr.map(r => (r ? r.pieces.filter(p => p.touch).length : 0)) }; }
+  snapshot() { return { jolt: this.w.saveState(), act: this.act.state(), ctrlState: this.ctrl.getState(), ctrlN: this.ctrl.n, ctrlRing: JSON.parse(JSON.stringify(this.ctrl.ring)), ctrlOu: this.ctrl.ou.slice(), ctrlRng: this.ctrl.rng, n: this.n, h: this.h, up: this.up, aplan: JSON.parse(JSON.stringify(this.aplan)), st: JSON.parse(JSON.stringify(this.st)) }; }
+  restore(snap) { this.w.restoreState(snap.jolt); this.act.setState(snap.act); this.ctrl.setState(snap.ctrlState); this.ctrl.n = snap.ctrlN; this.ctrl.ring = JSON.parse(JSON.stringify(snap.ctrlRing)); this.ctrl.ou = snap.ctrlOu.slice(); this.ctrl.rng = snap.ctrlRng; this.n = snap.n; this.h = snap.h; this.up = { ...snap.up, applied: false }; this.aplan = JSON.parse(JSON.stringify(snap.aplan)); this.aplan.applied = false; this.st = JSON.parse(JSON.stringify(snap.st)); }
   _wrapAuthority() { const w = this.w, L = this.ledger; for (const f of ["setPose", "setVel"]) { const g = w[f].bind(w); w[f] = (...a) => { L.authorityWrites++; return g(...a); }; } }
   _ctrl(init) { let t0 = now(); const cmd = this.ctrl.compute(this.st, this.up.ev, this.dt), t1 = now(); this.cpu2.ctrl += t1 - t0; this.aplan = this.act.compute(this.st, this.up.ev, cmd, this.dt, init); const t2 = now(); this.cpu2.act += t2 - t1;
     (this.cpuSamples || (this.cpuSamples = [])).push(t2 - t0); }
@@ -82,6 +83,7 @@ export class G2Sim extends G1Sim {
     const L = this.ledger; L.Wact += this.actRes.reduce((s, r) => s + r.W, 0); L.damping += Dstep;
     if (dist.body >= 0) { const i = dist.body, vm = V.sc(V.add(st0[i].v, this.st[i].v), 0.5), wm = V.sc(V.add(st0[i].w, this.st[i].w), 0.5);
       L.Wext += V.dot(dist.F, vm) * this.dt + V.dot(dist.T, wm) * this.dt; L.Jext = V.add(L.Jext, V.sc(dist.F, this.dt)); L.Hext = V.add(L.Hext, V.sc(dist.T, this.dt)); }
+    if (this.ctrl.o.contactSupport || this.ctrl.o.holdUnloaded || this.ctrl.o.gainSched) this.ctrl.sense = this._sense();   // G3: sensed foot loads / contacts (exact foot wrench, contact truth)
     this.lastDist = dist; this._pre(); return true;
   }
   // ── G2 measurement (per tick, after the controller has seen the new state) ──

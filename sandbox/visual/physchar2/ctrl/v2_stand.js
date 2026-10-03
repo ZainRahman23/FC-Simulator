@@ -37,6 +37,28 @@ export const STAND = {
   armUse: 1.0, armMaxDeg: 60,
   hipMaxDeg: 10,
   // REPORT-ONLY sensing / motor tests (V2 specifies neither numerically; off in every gate scenario):
+  // ── G3 deliberate weight transfer (all OFF by default: the G2 controller is bit-identical without them) ──
+  transfer: null,         // (t, ctrl) → requested RIGHT-foot vertical load fraction λ_R (0.5 = bilateral). Sets the balance target's lateral position to the
+                          // quasi-static COM for that load split (λ-weighted point between the feet's region centroids) and relaxes the G2 10 % foot floor to
+                          // the requested share. A REQUEST only: the physics decides the load (G3 brief §1).
+  contactSupport: false,  // support region from the feet that actually have contacting boot pieces (sensed, G3 brief §12); a foot that lost contact is
+                          // excluded from the polygon and from the load split
+  holdUnloaded: false,    // a foot whose sensed load fell below loadOff is HELD where it was when it unloaded (leg IK to that stored pose, ankle held at
+                          // its pose there) — not a new target, not a relocation (G3 brief §2); released back to balance control above loadOn
+  loadOff: 0.01, loadOn: 0.03,   // unloaded / reloaded thresholds (fraction of body weight) for holdUnloaded [ENG]
+  dcmFF: true,            // with a moving target (transfer only): the DCM tracking law p* = ξ + kξ(ξ − ξ_ref) − ξ̇_ref/ω0, ξ_ref = x_ref + ẋ_ref/ω0, the rates
+                          // ANALYTIC from the request (λ̇, λ̈ × the lateral centroid separation). G3 measured deficiency: the static-target law lagged a 4 s
+                          // ramp (load-tracking RMS 0.128); a first version differentiated the measured target and felled the cycle test (G3-A4)
+  ikFeasible: false,      // posture IK: the pelvis height target is lowered to the highest height at which BOTH legs keep their reference hip–ankle length
+                          // (reference knee flexion) — the pendulum arc of a lateral COM shift. G3 measured deficiency: at fixed height a ≥ 7 cm shift made the
+                          // target unreachable, the IK fell back to the current configuration (zero posture error), and pelvis yaw crept 9.5° (G3-A5)
+  ikRefTwist: false,      // EVALUATED, NOT ADOPTED (G3-A7). Posture IK: the redundant axial-twist DOFs (knee axial rotation, PASSIVE ankle ab/adduction) are solved at their REFERENCE
+                          // values instead of their current ones, so the actuated hip / knee rotators turn the leg back until the passive ankle axis is at
+                          // neutral (null-space posture). G3 measured deficiency: a ±10° leg-twist mode at the passive ankle ab/adduction (period ≈ 1.2 s,
+                          // pelvis yaw ±5–8°) excited by the transfer. MEASURED WORSE: whole-body yaw stiffness fell from 2.8 to 0.1–0.3 N·m/° (the hips then
+                          // hold the legs to the pelvis, so the pelvis rotates with the legs on the passive ankles) — the G2 "current" form is kept
+  gainSched: false,       // EVALUATED, NOT ADOPTED (G3-A8: no measured benefit — yaw / slip unchanged, tracking slightly worse). leg posture gains scheduled by each leg's SENSED load share (K = κ·(share·m)·g·L, the G2 law with the
+                          // actually supported mass; floored at the distal-subtree gains) instead of G2's fixed bilateral share 0.5
   delay: 0,               // observation latency (s) of the balance state (COM position / velocity) — a ring buffer; posture uses the current state
   noise: null,            // motor noise: { seed, sd (N·m), tau (s) } — an Ornstein–Uhlenbeck torque on each ankle's DF and inversion rows,
                           // from a named, seeded stream ("motor", spec §19); Gaussian by Irwin–Hall (no transcendental functions)          // the trunk is a BOUNDED flywheel: the strategy fades linearly to 0 as the pelvis deviates hipMaxDeg from its reference
@@ -48,7 +70,7 @@ export const STAND = {
   taskD: 0.1,             // implicit joint damping on the task-space leg rows, as a fraction of the joint's posture damping [ENG]
 };
 export const CONSUMED = ["every body's position, orientation, linear and angular velocity (exact)", "joint constraint-space rotations (from the body states)", "the boots' geometry (proprioceptive foot model)", "gravity magnitude"];
-const G = 9.81, KEYS = ["x", "y", "z"], HIP_LOAD = 0.25;
+const G = 9.81, KEYS = ["x", "y", "z"], HIP_LOAD = 0.25, nowMs = () => (typeof performance !== "undefined" ? performance.now() : Date.now());
 
 export class StandController {
   constructor(spec, passive, stance, opts = {}) {
@@ -80,6 +102,11 @@ export class StandController {
     this.shK = ["shoulder_L", "shoulder_R"].map(n => spec.joints.findIndex(j => j.name === n));
     this.legK = ["L", "R"].map(sd => ["hip_", "knee_", "ankle_"].map(n => spec.joints.findIndex(j => j.name === n + sd)));
     this.info = null; this.n = 0; this.ring = []; this.ou = [0, 0, 0, 0]; this.rng = (this.o.noise ? this.o.noise.seed : 1) >>> 0;
+    // G3 state (snapshot): per foot unloaded flag + the pose it is held at; sensed foot loads / contacts (written by the sim each tick)
+    this.unl = [false, false]; this.hold = [null, null]; this.sense = { Fz: [this.M * G / 2, this.M * G / 2], touch: [8, 8] };
+    this.gainFree = spec.joints.map((j, k) => { const L0 = com(this.sub[k]), at = V.add(S[j.parentIndex].pos, Q.rot(S[j.parentIndex].rot, this.anchor[k])), L = V.dist(L0.c, at), K = this.o.kappa.leg * L0.m * G * L;
+      return { K, D: 2 * this.o.zeta * Math.sqrt(K * L0.m * L * L) }; });   // gains for a joint carrying only its distal subtree (an unloaded leg)
+    this.legLen = ["L", "R"].map(sd => V.dist(this._at(S, "hip_" + sd), this._at(S, "ankle_" + sd)));   // reference hip–ankle distance (G3 ikFeasible)
   }
   _at(S, name) { const k = this.spec.joints.findIndex(j => j.name === name); return this.jointAt(S, k); }
   // world helpers
@@ -95,15 +122,28 @@ export class StandController {
     const ankL = this.jointAt(st, this.spec.joints.findIndex(j => j.name === "ankle_L")), ankR = this.jointAt(st, this.spec.joints.findIndex(j => j.name === "ankle_R"));
     const mid = [(ankL[0] + ankR[0]) / 2, (ankL[2] + ankR[2]) / 2], lat = [hd[1], -hd[0]];   // lat: the character's RIGHT in the turf plane (spec §7.2 CCS: +x anatomical right, +z anterior)
     const off = o.refOffset ? o.refOffset(this.n * dt) : [0, 0];   // DIAGNOSTIC ONLY (G2 step 2 lean ramp): [right, anterior] shift of the target (m); never used by a gate test
-    const xiRef = [mid[0] + hd[0] * (this.stance.comAhead + off[1]) + lat[0] * off[0], mid[1] + hd[1] * (this.stance.comAhead + off[1]) + lat[1] * off[0]];
-    const polys = [0, 1].map(n => this.footPoly(st, n)), support = hull2(polys.flat().map(([x, z]) => [x, 0, z]));
+    const polys = [0, 1].map(n => this.footPoly(st, n)), cen = polys.map(poly => centroid(poly));
+    // G3: requested load split → lateral target (quasi-static: the COM over the λ-weighted point between the region centroids); contact-based support
+    const req = o.transfer ? o.transfer(this.n * dt, this) : null, lam = req == null ? null : (typeof req === "number" ? req : req.lam), dLat = lam == null ? 0 : ((cen[0][0] * (1 - lam) + cen[1][0] * lam - mid[0]) * lat[0] + (cen[0][1] * (1 - lam) + cen[1][1] * lam - mid[1]) * lat[1]);
+    const xiRef = [mid[0] + hd[0] * (this.stance.comAhead + off[1]) + lat[0] * (off[0] + dLat), mid[1] + hd[1] * (this.stance.comAhead + off[1]) + lat[1] * (off[0] + dLat)];
+    // G3 DCM tracking of a MOVING target: ξ_ref = x_ref + ẋ_ref/ω0 and p* gains −ξ̇_ref/ω0. The rates come ANALYTICALLY from the request
+    // (λ̇, λ̈ × the lateral centroid separation) — the first version differentiated the measured target twice at 240 Hz, which amplified
+    // sub-millimetre rocking of the barely loaded foot ~5800× into CoP commands and felled the cycle test (G3-A4, recorded)
+    let xiRefFF = [0, 0]; if (lam != null && o.dcmFF && typeof req === "object") { const sep = (cen[1][0] - cen[0][0]) * lat[0] + (cen[1][1] - cen[0][1]) * lat[1], w = Math.sqrt(G / Math.max(0.3, c[1]));
+      const vl = sep * (req.dl || 0), al = sep * (req.ddl || 0); xiRef[0] += lat[0] * vl / w; xiRef[1] += lat[1] * vl / w; xiRefFF = [-lat[0] * (vl + al / w) / w, -lat[1] * (vl + al / w) / w]; }
+    const inSup = [0, 1].map(n => !o.contactSupport || this.sense.touch[n] > 0), supIdx = [0, 1].filter(n => inSup[n]), supFeet = supIdx.length ? supIdx : [0, 1];
+    if (o.holdUnloaded) for (const n of [0, 1]) { const Fz = this.sense.Fz[n], W = this.M * G;
+      if (!this.unl[n] && Fz < o.loadOff * W) { this.unl[n] = true; this.hold[n] = { pos: st[this.feet[n]].pos.slice(), rot: st[this.feet[n]].rot.slice() }; }
+      else if (this.unl[n] && Fz > o.loadOn * W) { this.unl[n] = false; this.hold[n] = null; } }
+    const support = hull2(supFeet.flatMap(n => polys[n]).map(([x, z]) => [x, 0, z]));
     // 2–3. balance objective → desired CoP (clamped to the support region) → desired foot wrenches
-    const pRaw = [xi[0] + o.kXi * (xi[0] - xiRef[0]), xi[1] + o.kXi * (xi[1] - xiRef[1])], p = clampPoly(support, pRaw), r = [pRaw[0] - p[0], pRaw[1] - p[1]];
+    const pRaw = [xi[0] + o.kXi * (xi[0] - xiRef[0]) + xiRefFF[0], xi[1] + o.kXi * (xi[1] - xiRef[1]) + xiRefFF[1]], p = clampPoly(support, pRaw), r = [pRaw[0] - p[0], pRaw[1] - p[1]];
     const A = [w0 * w0 * (c[0] - p[0]), 0, w0 * w0 * (c[2] - p[1])];
     // load share by the lever rule along the line between the feet's region centroids; each foot's CoP = its centroid + a shift so that the
     // load-weighted CoPs reproduce p (shift shared, the remainder re-assigned to the foot that still has room; both clamped to their regions)
-    const cen = polys.map(poly => centroid(poly)), a = cen[1], b = cen[0], ab = [b[0] - a[0], b[1] - a[1]], L2 = ab[0] * ab[0] + ab[1] * ab[1];
-    const t = Math.max(o.minShare, Math.min(1 - o.minShare, ((p[0] - a[0]) * ab[0] + (p[1] - a[1]) * ab[1]) / L2)), share = [t, 1 - t];
+    const a = cen[1], b = cen[0], ab = [b[0] - a[0], b[1] - a[1]], L2 = ab[0] * ab[0] + ab[1] * ab[1];
+    const flL = lam == null ? o.minShare : Math.min(o.minShare, 1 - lam), flR = lam == null ? o.minShare : Math.min(o.minShare, lam);   // G3: the floor relaxes to the requested share
+    let t = Math.max(flL, Math.min(1 - flR, ((p[0] - a[0]) * ab[0] + (p[1] - a[1]) * ab[1]) / L2)); if (!inSup[0] && inSup[1]) t = 0; if (!inSup[1] && inSup[0]) t = 1; const share = [t, 1 - t];
     const dl = [p[0] - (t * b[0] + (1 - t) * a[0]), p[1] - (t * b[1] + (1 - t) * a[1])], cop = cen.map((q, n) => clampPoly(polys[n], [q[0] + dl[0], q[1] + dl[1]]));
     // ORDER-INDEPENDENT (G2 final-run fix: the first version offered the remainder to the left foot first — an L/R asymmetry, measured as an
     // asymmetric boundary for V2-190-85): the remainder is applied as a COMMON shift to every foot that can still move toward it, scaled by
@@ -118,7 +158,11 @@ export class StandController {
     // and height above the ankles — that the legs deliver (statics, each leg its load share); horizontal pelvis position is NOT a posture target
     let legW = null, ikT = null;
     if (o.posture === "ik") { const ps = st[this.pelvis], yaw = Math.atan2(hd[0], hd[1]), qP = Q.mul(Q.axis([0, 1, 0], yaw), this.stance.pelvisRot), pP = [ps.pos[0], (ankL[1] + ankR[1]) / 2 + this.pel.hRef, ps.pos[2]];
-      ikT = {}; this.ikRes = [0, 1].map(n => { const r = this.legIK(st, ev, n, pP, qP); for (const [k, q] of r.targets) ikT[k] = q; return r.err; }); }
+      if (o.ikFeasible) for (const n of [0, 1]) { const ft = this.unl[n] ? this.hold[n] : st[this.feet[n]], hip = V.add(pP, Q.rot(qP, this.anchor[this.legK[n][0]])), dh = Math.hypot(hip[0] - ft.pos[0], hip[2] - ft.pos[2]), Ln = this.legLen[n];
+        if (dh < Ln) pP[1] = Math.min(pP[1], ft.pos[1] + Math.sqrt(Ln * Ln - dh * dh) - (hip[1] - pP[1])); }
+      this.pelHT = pP[1];
+      const tIK = lam != null ? nowMs() : 0; ikT = {}; this.ikRes = [0, 1].map(n => { const r = this.legIK(st, ev, n, pP, qP, this.unl[n] ? this.hold[n] : null); for (const [k, q] of r.targets) ikT[k] = q; return r.err; });
+      if (lam != null) this.cpuIK = (this.cpuIK || 0) + nowMs() - tIK; }   // G3: IK cost (timing only — no effect on the physics)
     if (o.posture === "task") { const ps = st[this.pelvis], pe = this.pel, yaw = Math.atan2(hd[0], hd[1]), qref = Q.mul(Q.axis([0, 1, 0], yaw), this.stance.pelvisRot);
       let qe = Q.mul(qref, Q.conj(ps.rot)); if (qe[3] < 0) qe = qe.map(x => -x); const eo = [2 * qe[0], 2 * qe[1], 2 * qe[2]];
       const To = [0, 1, 2].map(a => pe.Ko * eo[a] - pe.Do[a] * ps.w[a]), hp = ps.pos[1] - (ankL[1] + ankR[1]) / 2, Fy = pe.Kh * (pe.hRef - hp) - pe.Dh * ps.v[1];
@@ -149,10 +193,13 @@ export class StandController {
       const R2F2 = Q.mul(st[d.child].rot, d.F2), axW = [[1, 0, 0], [0, 1, 0], [0, 0, 1]].map(e => Q.rot(R2F2, e)), g = this.gain[k], isAnkle = g.base === "ankle";
       const q = ev.qs[k], qr = ikT && ikT[k] ? ikT[k] : this.qref[k], sg = q[0] * qr[0] + q[1] * qr[1] + q[2] * qr[2] + q[3] * qr[3] < 0 ? -1 : 1, dq = Q.mul(Q.conj(q), qr.map(x => x * sg)), e = [2 * dq[0], 2 * dq[1], 2 * dq[2]];
       cmd.push(KEYS.map((key, i) => { const tff = V.dot(T, axW[i]), ak = this.spec.joints[k].def.axes[key];
+        if (isAnkle && o.holdUnloaded && this.unl[this.legSide[k]] && ikT && ikT[k]) { const gf = this.gainFree[k]; return { K: gf.K, D: gf.D, tau0: tff + gf.K * e[i], ff: tff }; }   // G3: hold the unloaded foot's pose
         if (isAnkle) { const nz = o.noise && ak && (ak.key === "df" || ak.key === "inv") ? this.ou[(this.spec.joints[k].side === "L" ? 0 : 2) + (ak.key === "df" ? 0 : 1)] : 0; return { K: 0, D: o.ankleD, tau0: tff + nz, ff: tff }; }
         if (legW && this.legSide[k] >= 0 && ak && ak.key !== "rot") return { K: 0, D: o.taskD * g.D, tau0: tff, ff: tff };   // task-space leg rows (flexion / abduction)
+        if (o.gainSched && this.legSide[k] >= 0) { const sd = this.legSide[k], Fs = this.sense.Fz, sc = (Fs[0] + Fs[1] > 1 ? Fs[sd] / (Fs[0] + Fs[1]) : 0.5) / 0.5, gf = this.gainFree[k];
+          const Ks = Math.max(gf.K, g.K * sc), Ds = Math.max(gf.D, g.D * sc); return { K: Ks, D: Ds, tau0: tff + Ks * e[i], ff: tff }; }
         return { K: g.K, D: g.D, tau0: tff + g.K * e[i], ff: tff }; })); }
-    this.info = { c, v, h, w0, xi, xiRef, pRaw, p, r, A, share, cop, F, support, polys, mid, heading: hd, ff, t, Ldot }; this.n++;
+    this.info = { c, v, h, w0, xi, xiRef, pRaw, p, r, A, share, cop, F, support, polys, mid, heading: hd, ff, t, Ldot, lam, inSup, unl: this.unl.slice(), ikRes: this.ikRes ? this.ikRes.slice() : null, pelH: o.posture === "ik" ? this.pelHT : null }; this.n++;
     return cmd;
   }
 }
@@ -161,9 +208,12 @@ StandController.prototype.gauss = function () { let s2 = 0; for (let i = 0; i < 
 // ── leg inverse kinematics (posture targets): hip (3) + knee flexion + ankle DF / inversion so that the chain from the pelvis at pose (pP, qP)
 //    ends exactly at the foot's CURRENT pose; knee axial rotation, the locked knee axis and the passive foot ab/adduction keep their current
 //    values. Newton on the pyramid parameters, finite-difference Jacobian, from the current configuration.
-StandController.prototype.legIK = function (st, ev, n, pP, qP) {
+StandController.prototype.getState = function () { return JSON.parse(JSON.stringify({ n: this.n, ring: this.ring, ou: this.ou, rng: this.rng, unl: this.unl, hold: this.hold, sense: this.sense, g3: this.g3 || null, info: this.info })); };   // info: the G3 supervisor reads the previous tick's controller state
+StandController.prototype.setState = function (x) { const y = JSON.parse(JSON.stringify(x)); Object.assign(this, y); };
+StandController.prototype.legIK = function (st, ev, n, pP, qP, footPose = null) {
   const P = this.P, ks = this.legK[n], d = ks.map(k => P.jd[k]), a = ks.map(k => this.anchor[k]), cur = ks.map(k => { const v = decompose(ev.qs[k]); return [v.tw, v.sy, v.sz]; });
-  const ft = st[this.feet[n]], fk = (x) => { const qh = pyr(x[0], x[1], x[2]), qk = pyr(cur[1][0], x[3], cur[1][2]), qa = pyr(cur[2][0], x[4], x[5]);
+  if (this.o.ikRefTwist) { const rf = ks.map(k => { const v = decompose(this.qref[k]); return v.tw; }); cur[1] = [rf[1], cur[1][1], cur[1][2]]; cur[2] = [rf[2], cur[2][1], cur[2][2]]; }   // twist DOFs at the reference
+  const ft = footPose || st[this.feet[n]], fk = (x) => { const qh = pyr(x[0], x[1], x[2]), qk = pyr(cur[1][0], x[3], cur[1][2]), qa = pyr(cur[2][0], x[4], x[5]);
     const Rt = Q.mul(Q.mul(Q.mul(qP, d[0].F1), qh), Q.conj(d[0].F2)), pt = V.add(pP, Q.rot(qP, a[0]));
     const Rs = Q.mul(Q.mul(Q.mul(Rt, d[1].F1), qk), Q.conj(d[1].F2)), ps = V.add(pt, Q.rot(Rt, a[1]));
     const Rf = Q.mul(Q.mul(Q.mul(Rs, d[2].F1), qa), Q.conj(d[2].F2)), pf = V.add(ps, Q.rot(Rs, a[2]));
@@ -173,7 +223,8 @@ StandController.prototype.legIK = function (st, ev, n, pP, qP) {
   for (let it = 0; it < 6 && err > 1e-9; it++) { const h = 1e-6, Jm = [0, 1, 2, 3, 4, 5].map(c => { const xp = x.slice(); xp[c] += h; const rp = fk(xp); return rp.map((v, i) => (v - r[i]) / h); });   // Jm[c][i] = ∂r_i/∂x_c
     const A = [0, 1, 2, 3, 4, 5].map(i => [0, 1, 2, 3, 4, 5].map(c => Jm[c][i])), dx = solveN(A, r.map(v => -v)); if (!dx) break;
     let step = 1; for (let ls = 0; ls < 6; ls++) { const xn = x.map((v, i) => v + step * dx[i]), rn = fk(xn), en = Math.hypot(...rn); if (en < err) { x = xn; r = rn; err = en; break; } step *= 0.5; } }
-  return { targets: [[ks[0], pyr(x[0], x[1], x[2])], [ks[1], pyr(cur[1][0], x[3], cur[1][2])]], err };
+  const tg = [[ks[0], pyr(x[0], x[1], x[2])], [ks[1], pyr(cur[1][0], x[3], cur[1][2])]]; if (footPose) tg.push([ks[2], pyr(cur[2][0], x[4], x[5])]);   // held foot: the ankle target too
+  return { targets: tg, err };
 };
 function solveN(M, y) { const n = y.length, a = M.map((r, i) => [...r, y[i]]); for (let c = 0; c < n; c++) { let p = c; for (let r = c + 1; r < n; r++) if (Math.abs(a[r][c]) > Math.abs(a[p][c])) p = r; if (Math.abs(a[p][c]) < 1e-14) return null; [a[c], a[p]] = [a[p], a[c]];
     for (let r = 0; r < n; r++) if (r !== c) { const f = a[r][c] / a[c][c]; for (let k = c; k <= n; k++) a[r][k] -= f * a[c][k]; } } return a.map((r, i) => r[n] / r[i]); }
