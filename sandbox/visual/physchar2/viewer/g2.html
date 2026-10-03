@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>V2-G2 Active Standing</title>
+<style>
+  :root { --bg:#16181c; --panel:#1f2228; --ink:#e7e9ee; --mute:#9aa1ad; --ok:#4cd27a; --bad:#ff6b5b; --line:#2e333b; --acc:#ffd34d; }
+  * { box-sizing: border-box; } html, body { margin:0; height:100%; background:var(--bg); color:var(--ink); font:13px/1.4 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  #wrap { display:grid; grid-template-columns: minmax(0,1fr) 440px; height:100vh; }
+  #view { position:relative; min-width:0; } #gl, #ov { position:absolute; inset:0; width:100%; height:100%; } #ov { pointer-events:none; }
+  #side { overflow:auto; background:var(--panel); border-left:1px solid var(--line); padding:10px 12px 40px; }
+  h1 { font-size:15px; margin:2px 0 4px; } h2 { font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--mute); margin:14px 0 6px; border-bottom:1px solid var(--line); padding-bottom:3px; }
+  .row { display:flex; flex-wrap:wrap; gap:5px; align-items:center; margin:4px 0; } select { background:#2a2e36; color:var(--ink); border:1px solid #3a404a; border-radius:5px; padding:4px; max-width:100%; }
+  button { background:#2a2e36; color:var(--ink); border:1px solid #3a404a; border-radius:5px; padding:4px 8px; cursor:pointer; } button:hover { border-color:var(--acc); } button.on { border-color:var(--acc); color:var(--acc); }
+  label { display:inline-flex; gap:4px; align-items:center; margin:2px 8px 2px 0; white-space:nowrap; } .grid { display:grid; grid-template-columns: 1fr 1fr; }
+  .chk { border-left:3px solid var(--ok); padding:3px 6px; margin:3px 0; background:#23272e; } .chk.bad { border-color:var(--bad); background:#2c2222; } .chk span { color:#cfd5de; } .chk i { color:var(--mute); }
+  .hdr { padding:5px 7px; border-radius:5px; margin-bottom:5px; font-weight:600; } .hdr.ok { background:#1d3a28; } .hdr.bad { background:#3d2220; } .hdr.warn { background:#3a3220; }
+  .mono { font-family: ui-monospace, Menlo, monospace; font-size:11px; } #hash.ok { background:#1d3a28; } #hash.bad { background:#3d2220; } #hash { padding:6px; border-radius:5px; }
+  table { border-collapse:collapse; width:100%; font-size:11px; } td, th { border-bottom:1px solid var(--line); padding:2px 4px; text-align:left; } th { color:var(--mute); font-weight:600; }
+  .note { color:var(--mute); font-size:11.5px; } kbd { background:#2a2e36; border:1px solid #3a404a; border-radius:3px; padding:0 4px; font-size:11px; }
+  #plot { width:100%; height:120px; background:#181a1f; border-radius:5px; display:block; } input[type=range] { width:100%; }
+  .legend span { display:inline-block; margin-right:9px; } .sw { display:inline-block; width:10px; height:10px; border-radius:2px; vertical-align:middle; margin-right:3px; }
+  @media (max-width: 900px) { #wrap { grid-template-columns: 1fr; grid-template-rows: 60vh auto; height:auto; } #side { border-left:none; border-top:1px solid var(--line); } }
+  .bar { display:inline-block; height:8px; background:#5aa0ff; vertical-align:middle; }
+</style></head>
+<body>
+<div id="wrap">
+  <div id="view"><canvas id="gl"></canvas><canvas id="ov"></canvas></div>
+  <div id="side">
+    <h1>Physical Character V2 — G2 active standing</h1>
+    <div class="note"><a href="./g1.html" style="color:#8ab4ff">← G1 passive physics</a> · report: review_artifacts/physical_character_v2/g2/G2_REPORT.md</div>
+    <div class="note">Finite internal joint actuation (spec §14 capacity, activation) + ground contact only. No stepping, no root / pelvis writes, no hidden support. Phase: <span style="color:#4cd27a">QUIET</span> · <span style="color:#ffd34d">ACTIVE RECOVERY</span> · <span style="color:#ff9a3c">STEP REQUIRED (ξ outside the support)</span> · <span style="color:#ff5b5b">FALLEN</span>.</div>
+    <h2>Scenario · body</h2>
+    <div class="row"><select id="scen"></select></div>
+    <div class="row"><select id="human"></select></div>
+    <h2>Playback</h2>
+    <div class="row"><button id="play">▶ play <kbd>space</kbd></button><button id="step">step <kbd>.</kbd></button><button id="restart">restart <kbd>r</kbd></button>
+      <select id="speed"><option value="1">1×</option><option value="0.25">0.25×</option><option value="0.1">0.1×</option><option value="0.02">0.02×</option></select></div>
+    <div class="row"><input type="range" id="seek" min="0" max="1000" value="0"></div>
+    <div class="row mono" id="clock">t = 0.000 s</div>
+    <h2>Camera</h2>
+    <div class="row"><button id="c_front">front <kbd>1</kbd></button><button id="c_side">side <kbd>2</kbd></button><button id="c_three">¾ <kbd>3</kbd></button><button id="c_top">top <kbd>4</kbd></button><button id="c_follow">follow <kbd>5</kbd></button></div>
+    <h2>Show</h2>
+    <div class="grid">
+      <label><input type="checkbox" id="t_bodies">bodies</label><label><input type="checkbox" id="t_colliders">colliders</label>
+      <label><input type="checkbox" id="t_com">COM</label><label><input type="checkbox" id="t_xi">ξ (extrapolated COM) + target</label>
+      <label><input type="checkbox" id="t_cop">CoP (command cyan, measured white)</label><label><input type="checkbox" id="t_support">support polygon + foot regions</label>
+      <label><input type="checkbox" id="t_grf">ground reaction per foot</label><label><input type="checkbox" id="t_push">test impulse</label>
+      <label><input type="checkbox" id="t_L">angular momentum</label><label><input type="checkbox" id="t_pieces">boot pieces</label>
+      <label><input type="checkbox" id="t_contacts">contact points</label>
+    </div>
+    <h2>Balance</h2><table id="live"></table>
+    <canvas id="plot" style="width:100%;height:90px;background:#181a1f;border-radius:5px;display:block"></canvas>
+    <div class="legend note"><span style="color:#fa3">|ξ − target| (0–15 cm)</span> <span style="color:#f55">CoP residual (0–15 cm)</span> · bar = phase</div>
+    <h2>Actuators (top by fraction of instantaneous capacity)</h2><table id="act"></table>
+    <h2>Joint target vs actual</h2><div class="row">joint: <select id="joint"></select></div><table id="jt"></table>
+    <h2>Node final run</h2><div id="node"></div>
+    <h2>Browser = Node (this run)</h2><div id="hash" class="mono">run the scenario to the end to compare</div>
+  </div>
+</div>
+<script type="module" src="./v2_g2_viewer.js"></script>
+</body></html>

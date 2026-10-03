@@ -544,3 +544,52 @@ The controller consumes exact state. V2 specifies no numerical latency or noise.
 - controller 0.042 ms mean / 0.157 ms p99 per tick.
 
 These were development measurements. **The gate is judged by `g2/G2_CRITERIA.md` v1 (pre-registered) on the final run.**
+
+### G2-A10: final run 1 → fixes → final run 2 (recorded openly; criteria v1 unchanged)
+
+Run 1 was evaluated against the pre-registered criteria. 11 of 13 rows were evaluable and two failed. Both failures are my implementation errors, not criterion or plant matters. Run 1's checks and tables are kept in `g2/json/run1/`.
+
+1. **2.2b symmetry, V2-190-85:** left 20 N·s, right 25 N·s (at 25 N·s the left run slid 21 mm and the right 19 mm, either side of the 20 mm threshold).
+   - **Root cause:** an L/R asymmetry in the controller. The per-foot CoP allocation offered the leftover shift to the left foot first: an index-order dependence, with 10× amplification on a lightly loaded left foot versus 1.1× on a loaded one.
+   - **Fix (unambiguous implementation defect):** an order-independent common shift over every foot that can still move toward the target.
+2. **F (CoP sweep):** an identical 100.9 mm "jump" in all six sweeps.
+   - **Root cause:** the runner's measurement window started at t = 0 (the release-and-settle tick) instead of at the ramp (t = 1 s), which is what the criterion and its development basis cover.
+   - **Fix:** the window starts at the ramp.
+
+**Run 2:** the full validation was rerun with the criteria unchanged; **13 / 13 rows pass**.
+
+**Superseded development numbers.** The allocation fix changed the controller, so run 2's report-only evaluation supersedes the development numbers in G2-A7 / A8:
+- hip strategy (continuous / bounded) and arm counter-motion: **no boundary change** in any direction;
+- kξ = 1: right 25 N·s (gate 20), otherwise identical;
+- kξ = 0.5: identical.
+
+kξ = 1/3 is retained as pre-registered (human-evidenced stiffness). The lateral trade-off is listed as an open question.
+
+### G2-A11: result — **V2-G2 PASS** (pre-registered criteria v1, final run 2); STOPPED for review
+
+Full evidence: `g2/G2_REPORT.md`, `g2/G2_TABLES.md`, `g2/json/`.
+
+**Measured no-step boundaries.** Thorax, 100 ms; recovered / not recovered, N·s:
+
+| body | F | B | L = R | FL = FR | BL = BR |
+|---|---|---|---|---|---|
+| V2-REF | 15 / 20 | 15 / 20 | 20 / 25 | 20 / 25 | 25 / 30 |
+
+Across bodies the sagittal boundary is Δv ≈ 0.20–0.25 m/s in body-normalised units.
+
+**V1 comparison.** At V1's application point (pelvis COM, 50 ms), V2-REF recovers 25 / 30 in every direction; V1 C1 recovered F 60 / 65, B 30 / 35, R 45 / 50. The difference is explained by V1's box boot: toe edge 22 cm vs V2's 9 cm ahead of the COM projection. V1 also had a hip strategy, engine damping and Coulomb joint friction. V2 performs at its own ankle-only ceiling.
+
+**Debt register additions:**
+
+| id | item | evidence | next step |
+|---|---|---|---|
+| TD-1 (extended) | +13 actuator constraints in the 150-iteration solve | ≈ +0.3 ms per tick single-thread | production-solver study, keeping the exact capacity bound |
+| TD-7 | no numerically specified sensing latency / noise model | noiseless sway ≈ 0; a crude motor-noise model gives human sway magnitude but a too-fast CoP | physiological model before sway realism is judged |
+| TD-8 | engineering constants in balance | minimum foot share 0.10; CoP margin 5 mm; excitation headroom 25 % / tone 2 %; κ 1.5 / ζ 0.7; ankle damping 2 N·m·s/rad | revisit at G3 (weight transfer requires full unloading) |
+| TD-9 | hip / trunk strategy not adopted | no robust gain | time-optimal bounded flywheel if a later gate needs a wider no-step envelope |
+| TD-10 | ankle plantar-flexion vs knee flexion | linear from one data point (Billot 2022) | calibrate at the capacity gate |
+
+**Status:**
+- **G3 (weight transfer) is not started.** It waits for the user's instruction.
+- Nothing pushed.
+- Review server :8172, page `viewer/g2.html`.

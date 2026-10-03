@@ -105,8 +105,12 @@ export class StandController {
     const cen = polys.map(poly => centroid(poly)), a = cen[1], b = cen[0], ab = [b[0] - a[0], b[1] - a[1]], L2 = ab[0] * ab[0] + ab[1] * ab[1];
     const t = Math.max(o.minShare, Math.min(1 - o.minShare, ((p[0] - a[0]) * ab[0] + (p[1] - a[1]) * ab[1]) / L2)), share = [t, 1 - t];
     const dl = [p[0] - (t * b[0] + (1 - t) * a[0]), p[1] - (t * b[1] + (1 - t) * a[1])], cop = cen.map((q, n) => clampPoly(polys[n], [q[0] + dl[0], q[1] + dl[1]]));
-    for (let it = 0; it < 4; it++) { const ach = [share[0] * cop[0][0] + share[1] * cop[1][0], share[0] * cop[0][1] + share[1] * cop[1][1]], res = [p[0] - ach[0], p[1] - ach[1]];
-      if (Math.hypot(res[0], res[1]) < 1e-7) break; const n = it % 2; if (share[n] < 0.02) continue; cop[n] = clampPoly(polys[n], [cop[n][0] + res[0] / share[n], cop[n][1] + res[1] / share[n]]); }
+    // ORDER-INDEPENDENT (G2 final-run fix: the first version offered the remainder to the left foot first — an L/R asymmetry, measured as an
+    // asymmetric boundary for V2-190-85): the remainder is applied as a COMMON shift to every foot that can still move toward it, scaled by
+    // their summed share so the load-weighted CoP moves by the remainder; repeated (each foot clamped to its own region).
+    for (let it = 0; it < 6; it++) { const ach = [share[0] * cop[0][0] + share[1] * cop[1][0], share[0] * cop[0][1] + share[1] * cop[1][1]], res = [p[0] - ach[0], p[1] - ach[1]], rl = Math.hypot(res[0], res[1]);
+      if (rl < 1e-7) break; const u = [res[0] / rl, res[1] / rl], mov = [0, 1].map(n => { const q = clampPoly(polys[n], [cop[n][0] + u[0] * 1e-4, cop[n][1] + u[1] * 1e-4]); return Math.hypot(q[0] - cop[n][0], q[1] - cop[n][1]) > 1e-6 ? 1 : 0; });
+      const S = share[0] * mov[0] + share[1] * mov[1]; if (S < 1e-6) break; for (const n of [0, 1]) if (mov[n]) cop[n] = clampPoly(polys[n], [cop[n][0] + res[0] / S, cop[n][1] + res[1] / S]); }
     const pAch = [share[0] * cop[0][0] + share[1] * cop[1][0], share[0] * cop[0][1] + share[1] * cop[1][1]]; p[0] = pAch[0]; p[1] = pAch[1]; r[0] = pRaw[0] - p[0]; r[1] = pRaw[1] - p[1];
     A[0] = w0 * w0 * (c[0] - p[0]); A[2] = w0 * w0 * (c[2] - p[1]);
     const F = share.map(s => [s * this.M * A[0], s * this.M * G, s * this.M * A[2]]), geff = [-A[0], -G, -A[2]];
