@@ -31,9 +31,16 @@ if (process.argv.includes("--worker")) {
             if (ny < 0.5 || pT.some(q => Math.abs(q[1]) > 0.002)) { J.wrapPointer(csp, J.ContactSettings).mIsSensor = true; guarded++; } } }; } }
       let Ep = s.last.E, invTicks = 0, maxRise = -Infinity, maxAt = null;
       let pcMax = 0, pcAt = null, pcBody = null, pcRotMax = 0, pcOver = 0, S0 = s.st;
+      // turf-contact statistics (healthy-floor measurement for the contact-validity tolerances): normal deviation 1 − n_y, turf-side point height,
+      // playable extent |x|, |z|, manifold depth, and the position-solver move of bodies that touch the turf (depth > −0.5 mm) in that step
+      const TS = { manifolds: 0, nyDevMax: 0, turfYmaxMm: 0, xzMax: 0, depthMaxMm: -1e9, depthMaxAt: null, corrTurfMaxMm: 0, corrTurfAt: null, corrTurfBody: null };
       while (s.tick()) { const dE = s.last.E - Ep; Ep = s.last.E; const rr = dE + s.A.Dstep[s.A.Dstep.length - 1]; res.push(rr);
         // position-solver displacement of each body beyond its velocity integration (Jolt: COM += v₁·dt): a teleport metric
-        { const S1 = s.st; let tickMax = 0; for (let i = 0; i < S1.length; i++) { const c = V.dist(S1[i].com, V.add(S0[i].com, V.sc(S1[i].v, s.dt))); if (c > tickMax) tickMax = c; if (c > pcMax) { pcMax = c; pcAt = s.n; pcBody = names[i]; } }
+        { const S1 = s.st, touch = new Set(); for (const c of s.lastContacts || []) { if ((c.a === -1) === (c.b === -1) || c.a < -1 || c.b < -1) continue; const tf = c.a === -1, ny = tf ? c.normal[1] : -c.normal[1], pT = tf ? c.pts : c.pts2;
+            TS.manifolds++; TS.nyDevMax = Math.max(TS.nyDevMax, 1 - ny); for (const q of pT) { TS.turfYmaxMm = Math.max(TS.turfYmaxMm, Math.abs(q[1]) * 1000); TS.xzMax = Math.max(TS.xzMax, Math.abs(q[0]), Math.abs(q[2])); }
+            if (c.depth * 1000 > TS.depthMaxMm) { TS.depthMaxMm = c.depth * 1000; TS.depthMaxAt = s.n; } if (c.depth > -0.0005) touch.add(tf ? c.b : c.a); }
+          let tickMax = 0; for (let i = 0; i < S1.length; i++) { const c = V.dist(S1[i].com, V.add(S0[i].com, V.sc(S1[i].v, s.dt))); if (c > tickMax) tickMax = c; if (c > pcMax) { pcMax = c; pcAt = s.n; pcBody = names[i]; }
+            if (touch.has(i) && c * 1000 > TS.corrTurfMaxMm) { TS.corrTurfMaxMm = c * 1000; TS.corrTurfAt = s.n; TS.corrTurfBody = names[i]; } }
           if (tickMax > 0.005) pcOver++; S0 = S1; }
         if (dE > maxRise) { maxRise = dE; maxAt = s.n; } if (dE > 1) events.push({ n: s.n, t: +(s.n * s.dt).toFixed(4), dE: +dE.toFixed(3) });
         let any = false; for (const c of s.lastContacts || []) { if ((c.a === -1) === (c.b === -1) || c.a < -1 || c.b < -1) continue; const tf = c.a === -1, ny = tf ? c.normal[1] : -c.normal[1], pT = tf ? c.pts : c.pts2;
@@ -41,7 +48,7 @@ if (process.argv.includes("--worker")) {
             if (inv.length < 30) inv.push({ n: s.n, t: +(s.n * s.dt).toFixed(4), body: names[tf ? c.b : c.a], piece: tf ? c.sb : c.sa, ny: +ny.toFixed(4), turfYmm: [+(yl * 1000).toFixed(1), +(yh * 1000).toFixed(1)], depthMm: +(c.depth * 1000).toFixed(3), dE: +dE.toFixed(3) }); } }
         if (any) invTicks++; }
       const srt = Float64Array.from(res).sort(), q = (p) => srt[Math.min(srt.length - 1, Math.floor(p * (srt.length - 1)))];
-      r = { ...job, k: JS.ankleNeutralKPerDeg(), ticks: s.n, maxRise: +maxRise.toFixed(4), maxRiseTick: maxAt, events, invalid: inv, invalidTicks: invTicks, resid: { max: q(1), p999: q(0.999), p99: q(0.99), p50: q(0.5), min: q(0) }, posCorr: { maxMm: +(pcMax * 1000).toFixed(3), at: pcAt, body: pcBody, ticksOver5mm: pcOver }, cand: cand || null, guarded, hash: null, posture: null };
+      r = { ...job, k: JS.ankleNeutralKPerDeg(), ticks: s.n, maxRise: +maxRise.toFixed(4), maxRiseTick: maxAt, events, invalid: inv, invalidTicks: invTicks, resid: { max: q(1), p999: q(0.999), p99: q(0.99), p50: q(0.5), min: q(0) }, posCorr: { maxMm: +(pcMax * 1000).toFixed(3), at: pcAt, body: pcBody, ticksOver5mm: pcOver }, turfStats: TS, turf: s.w.turf, cand: cand || null, guarded, hash: null, posture: null };
       try { r.hash = s.h.toString(16).padStart(8, "0"); } catch (e) {}
       try { const sm = s.summary(); r.posture = sm.outcome.posture;
         // ordinary-contact regression view for candidate evaluation: the G1 gate rows of this run (gating failures) + key contact / joint metrics

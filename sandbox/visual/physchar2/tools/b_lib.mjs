@@ -24,8 +24,11 @@ export async function jolt() { return Jc || (Jc = await loadJolt(P2 + "/vendor/j
 export const humanOf = (id) => H.VARIATION_SET.find(h => h.id === id) || H.V2_REF;
 export function specOf(id) { return generateSpec(humanOf(id)); }
 
-// a G1 simulation at the G1 validation configuration unless overridden (hz, velSteps, posSteps, ...)
-export function makeSim(J, spec, key, cfg = {}, opts = {}) { G1.ensureScenario(key); return new G1.G1Sim(J, spec, key, { cfg: { ...G1.G1_WORLD, ...cfg }, ...opts }); }
+// TURF of the investigation tools: since the flat-plane decision (2026-10-03) the production turf is a Jolt PlaneShape; the investigation-B tools
+// keep reproducing the HISTORICAL box-turf events by default (B_TURF=box). Validation sweeps of the corrected plant set B_TURF=plane.
+export const TURF_DEFAULT = process.env.B_TURF || "box";
+// a G1 simulation at the G1 validation configuration unless overridden (hz, velSteps, posSteps, turf, ...)
+export function makeSim(J, spec, key, cfg = {}, opts = {}) { G1.ensureScenario(key); return new G1.G1Sim(J, spec, key, { cfg: { ...G1.G1_WORLD, turf: TURF_DEFAULT, ...cfg }, ...opts }); }
 
 // kinetic / potential energy per body from a state array (doubles of Jolt's float32 readback)
 export function bodyEnergy(spec, s, i, g = 9.81) { const b = spec.bodies[i], wl = Q.rot(Q.conj(s.rot), s.w), I = b.inertia, Iw = mat3v(I, wl);

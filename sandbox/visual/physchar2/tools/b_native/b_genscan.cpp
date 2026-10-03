@@ -9,6 +9,7 @@
 #include <Jolt/Core/Factory.h>
 #include <Jolt/Physics/Collision/Shape/ConvexHullShape.h>
 #include <Jolt/Physics/Collision/Shape/BoxShape.h>
+#include <Jolt/Physics/Collision/Shape/PlaneShape.h>
 #include <Jolt/Physics/Collision/CollisionDispatch.h>
 #include <Jolt/Physics/Collision/CollideShape.h>
 #include <Jolt/Physics/Collision/CollisionCollectorImpl.h>
@@ -34,21 +35,25 @@ int main(int argc, char **argv) {
   if (argc > ai) rs = std::strtoull(argv[ai], nullptr, 10) * 2654435761ULL + 1;
   if (std::getenv("B_CR")) hs.mMaxConvexRadius = std::atof(std::getenv("B_CR"));   // override the convex radius (alternative-hypothesis test)
   RefConst<Shape> hull = hs.Create().Get(); const ConvexHullShape *ch = static_cast<const ConvexHullShape *>(hull.GetPtr());
-  BoxShapeSettings bs(he, 0.0f); RefConst<Shape> box = bs.Create().Get(); Mat44 T2 = Mat44::sTranslation(Vec3(0, -he.GetY(), 0));
+  // B_PLANE=1: the turf is the production PlaneShape (plane y = 0, half-extent = hx) instead of the box (flat-plane decision validation)
+  bool plane = std::getenv("B_PLANE") != nullptr; RefConst<Shape> box; Mat44 T2;
+  if (plane) { PlaneShapeSettings ps(Plane(Vec3(0, 1, 0), 0), nullptr, he.GetX()); box = ps.Create().Get(); T2 = Mat44::sIdentity(); label += " vs PLANE"; }
+  else { BoxShapeSettings bs(he, 0.0f); box = bs.Create().Get(); T2 = Mat44::sTranslation(Vec3(0, -he.GetY(), 0)); }
   // the hull's own faces (outward normal, plane offset), in its centre-of-mass frame
   struct F { Vec3 n; float d; }; std::vector<F> faces; for (uint i = 0; i < ch->GetNumFaces(); ++i) { uint vi[64]; uint nv = ch->GetFaceVertices(i, 64, vi); if (nv < 3) continue; Vec3 v[64]; for (uint k = 0; k < nv; ++k) v[k] = ch->GetPoint(vi[k]);
     Vec3 n = (v[1] - v[0]).Cross(v[2] - v[0]).Normalized(); Vec3 c = Vec3::sZero(); for (uint k = 0; k < nv; ++k) c += v[k]; c /= (float)nv; if (n.Dot(c) < 0) n = -n; faces.push_back({ n, n.Dot(v[0]) }); }
   CollideShapeSettings cs; cs.mCollectFacesMode = ECollectFacesMode::CollectFaces; cs.mMaxSeparationDistance = std::getenv("B_SEP") ? (float)std::atof(std::getenv("B_SEP")) : 0.02f;   // override the speculative distance (test) cs.mActiveEdgeMode = EActiveEdgeMode::CollideOnlyWithActive;
-  long hits = 0, rev = 0; long firstRev = -1; Vec3 frP; Quat frQ;
+  long hits = 0, rev = 0, tilt = 0, offf = 0; long firstRev = -1; Vec3 frP; Quat frQ;
   for (long q = 0; q < N; ++q) { const F &f = faces[(size_t)(rnd() * faces.size()) % faces.size()]; float g = gLo + (float)rnd() * (gHi - gLo), yaw = (float)(rnd() * 2 * JPH_PI);
     Vec3 down(0, -1, 0); Vec3 ax = f.n.Cross(down); float s = ax.Length(), c = f.n.Dot(down); Quat r0 = s > 1e-6f ? Quat::sRotation(ax / s, std::atan2(s, c)) : (c > 0 ? Quat::sIdentity() : Quat::sRotation(Vec3(1, 0, 0), JPH_PI));
     Quat rq = (Quat::sRotation(Vec3(0, 1, 0), yaw) * r0).Normalized();
     // face plane (COM frame): n·p = d; after rotation the plane normal is −Y and the plane passes through y = com_y − d → com_y = g + d
     Vec3 pos((float)((rnd() * 2 - 1) * R), g + f.d, (float)((rnd() * 2 - 1) * R)); Mat44 T1 = Mat44::sRotationTranslation(rq, pos);
     AllHitCollisionCollector<CollideShapeCollector> coll; SubShapeIDCreator c1, c2; CollisionDispatch::sCollideShapeVsShape(hull, box, Vec3::sOne(), Vec3::sOne(), T1, T2, c1, c2, cs, coll);
-    for (const CollideShapeResult &r : coll.mHits) { hits++; if (r.mPenetrationAxis.GetY() > 0) { rev++; if (firstRev < 0) { firstRev = q; frP = pos; frQ = rq;
+    for (const CollideShapeResult &r : coll.mHits) { hits++; { Vec3 an = r.mPenetrationAxis.Normalized(); if (an.GetY() > -0.999f) tilt++; for (const Vec3 &v : r.mShape2Face) if (std::fabs(v.GetY()) > 1e-4f) offf++; }
+      if (r.mPenetrationAxis.GetY() > 0) { rev++; if (firstRev < 0) { firstRev = q; frP = pos; frQ = rq;
           if (std::getenv("B_TRACE_FIRST")) { jph_b_trace = 1; std::fprintf(stderr, "--- trace of the first reversed pose (gap %.4f mm):\n", (double)g * 1e3); AllHitCollisionCollector<CollideShapeCollector> c2b; SubShapeIDCreator a1, a2; CollisionDispatch::sCollideShapeVsShape(hull, box, Vec3::sOne(), Vec3::sOne(), T1, T2, a1, a2, cs, c2b); jph_b_trace = 0; } } } } }
-  std::printf("%s (%d faces) vs box (%.3g, %.3g, %.3g): poses %ld gap [%.2f, %.2f] mm R %.1f m | hits %ld | REVERSED %ld", label.c_str(), (int)faces.size(), (double)he.GetX(), (double)he.GetY(), (double)he.GetZ(), N, (double)gLo * 1e3, (double)gHi * 1e3, (double)R, hits, rev);
+  std::printf("%s (%d faces) vs box (%.3g, %.3g, %.3g): poses %ld gap [%.2f, %.2f] mm R %.1f m | hits %ld | REVERSED %ld | axis not within 2.6 deg of vertical %ld | turf-face point off y=0 %ld", label.c_str(), (int)faces.size(), (double)he.GetX(), (double)he.GetY(), (double)he.GetZ(), N, (double)gLo * 1e3, (double)gHi * 1e3, (double)R, hits, rev, tilt, offf);
   if (firstRev >= 0) std::printf(" | first at pose %ld (pos %.6f %.6f %.6f)", firstRev, (double)frP.GetX(), (double)frP.GetY(), (double)frP.GetZ());
   std::printf("\n"); return 0;
 }

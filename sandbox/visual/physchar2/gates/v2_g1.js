@@ -120,12 +120,17 @@ export function initialState(spec, sc) {
 
 // ── the simulation (one scenario, one body, one configuration) ─────────────────────────────────────────────────────────────────────────
 const KEYS = ["x", "y", "z"], D = 180 / Math.PI;
-// INVESTIGATION B invariant tolerances (report-only rows 1.2e / 1.4j / 1.4k until the user gates them). Derivations (no failure magnitude used):
-//   passivityStepJ 0.05 J — G1 D2's measured worst one-step rise at the validation solver budget (150 velocity iterations) was 0.04 J; the
-//     investigation-B sweep of the accepted plant (254 G1 runs) measured ≤ 0.0089 J at 240 Hz (≤ 0.0052 / 0.0023 J at 360 / 720 Hz);
-//   posCorrMm — the accepted plant's measured position-solver displacement floor (see POSCORR_NOTE);
-//   turfNormalMinY / turfFaceMm — geometry: the turf top face's normal is +Y and its surface is y = 0 (zero tolerance up to float slack).
-export const INV_TOL = { passivityStepJ: 0.05, posCorrMm: 5, turfNormalMinY: 0.5, turfFaceMm: 2 };
+// PHYSICS-INTEGRITY tolerances. Investigation B introduced the rows; the flat-plane decision (2026-10-03) made 1.4m / 1.4n GATE and kept 1.2e / 1.4k
+// as permanent report-only diagnostics, with every tolerance RE-ESTABLISHED from healthy flat-plane runs (k = 0, 150 iterations, non-extreme; 1,181
+// development runs incl. the 600-run perturbation class — never from a failure; box-era values retained only where still comfortably valid):
+//   passivityStepJ 0.05 J — healthy-plane one-step rise max 0.0011 J at 240 Hz (490 runs), 0.0067 (360), 0.0001 (480); 720 Hz flags 5 V1-matched
+//     awkward ensemble members (≤ 0.21 J: an upper-arm ↔ abdomen self-contact + shoulder point-constraint convergence residual, not the turf);
+//   posCorrMm 5 mm — healthy-plane teleport max 1.60 mm (all rates ≤ 1.60 mm); envelope tests report larger (hsKickShin 17.3 mm, known D1a issue);
+//   turfNormalMinY 0.999 — the plane gives n_y = 1 exactly (97.6 M manifolds); 0.999 = 2.6° tilt allowance;
+//   turfFaceMm 0.1 mm — healthy-plane turf-side contact points within 0.0009 mm of y = 0;
+//   turfDepthMm 10 mm — the validated transient turf-penetration envelope (1.4a); healthy-plane manifold depth max 7.13 mm;
+//   turfCorrMm 5 mm — healthy-plane position-solver move of a turf-touching body max 0.92 mm at 240 Hz, 1.43 mm at any rate.
+export const INV_TOL = { passivityStepJ: 0.05, posCorrMm: 5, turfNormalMinY: 0.999, turfFaceMm: 0.1, turfDepthMm: 10, turfCorrMm: 5 };
 export class G1Sim {
   constructor(J, spec, key, opts = {}) {
     this.J = J; this.spec = spec; this.key = key; this.sc = opts.scenario || ensureScenario(key); this.opts = opts;   // G2: a gate may pass its own scenario object
@@ -162,7 +167,7 @@ export class G1Sim {
       turfPenMax: 0, turfPenAt: null, turfPenRest: 0, turfManifoldMax: -1, selfPenMax: 0, selfPenAt: null, selfPenRest: 0,
       ground: {}, pairs: {}, disabledHits: 0, seq: [], restKEmax: 0, restJitter: 0, restW: [],
       soleCheck: null, P: [], L: [], com: [], Ulist: [], pAbsMax: 0, lAbsMax: 0, obst: {}, missedTurf: 0, missedTurfMax: 0, initSelfOverlap: [], track: {},
-      inv: { turfInvalid: 0, turfInvalidTicks: 0, turfFirst: null, pcMaxMm: 0, pcAt: null, pcBody: null, pcOver: 0, passMax: -Infinity, passAt: null, passOver: 0, passFirst: null } };
+      inv: { turfInvalid: 0, turfInvalidTicks: 0, turfFirst: null, envViol: 0, envTicks: 0, envFirst: null, depthMaxMm: -Infinity, depthMaxAt: null, corrTurfMaxMm: 0, corrTurfAt: null, corrTurfBody: null, pcMaxMm: 0, pcAt: null, pcBody: null, pcOver: 0, passMax: -Infinity, passAt: null, passOver: 0, passFirst: null } };
   }
   // passive drives for the next step + measurement of the current state
   _pre() {
@@ -182,7 +187,11 @@ export class G1Sim {
   // (1) POSITION-SOLVER TELEPORT: Jolt integrates COM += v₁·dt and then its position solver moves bodies WITHOUT changing velocities. The
   //     displacement of each body beyond its velocity integration is that correction; a contact / joint position correction of centimetres in
   //     one step is a teleport (the one-step energy blow-up was a 76–80 mm push of a boot into the turf, at zero velocity change).
-  _posCorr(st0) { const iv = this.A.inv, S = this.st; let mx = 0, who = -1; for (let i = 0; i < S.length; i++) { const c = V.dist(S[i].com, V.add(st0[i].com, V.sc(S[i].v, this.dt))); if (c > mx) { mx = c; who = i; } }
+  _posCorr(st0) { const iv = this.A.inv, S = this.st, touch = this._turfTouch || new Set(); let mx = 0, who = -1, envBad = 0;
+    for (let i = 0; i < S.length; i++) { const c = V.dist(S[i].com, V.add(st0[i].com, V.sc(S[i].v, this.dt))); if (c > mx) { mx = c; who = i; }
+      if (touch.has(i)) { const cm = c * 1000; if (cm > iv.corrTurfMaxMm) { iv.corrTurfMaxMm = cm; iv.corrTurfAt = this.n * this.dt; iv.corrTurfBody = this.spec.bodies[i].name; }
+        if (cm > INV_TOL.turfCorrMm) { envBad++; iv.envViol++; if (!iv.envFirst) iv.envFirst = { t: this.n * this.dt, kind: "position correction of a turf-touching body", body: this.spec.bodies[i].name, corrMm: +cm.toFixed(3) }; } } }
+    if (envBad) iv.envTicks++;
     const mm = mx * 1000; if (mm > iv.pcMaxMm) { iv.pcMaxMm = mm; iv.pcAt = this.n * this.dt; iv.pcBody = this.spec.bodies[who].name; } if (mm > INV_TOL.posCorrMm) iv.pcOver++; }
   // (2) PASSIVITY: a passive G1 body (gravity, passive tissue, viscous damping, non-propulsive contact) may not gain mechanical energy E = KE +
   //     PE + U in any step beyond the numerical floor (INV_TOL.passivityStepJ, derived from the measured floor — not from any failure).
@@ -252,9 +261,17 @@ export class G1Sim {
     // (3) TURF-MANIFOLD VALIDITY (investigation B): the turf is a flat top surface, so every turf manifold's normal must point up out of it and
     //     its turf-side contact points must lie on it. A manifold built on another face of the turf box (Jolt narrow-phase failure: GJK relative
     //     termination → EPA on a 100 m-scale polytope → reversed / tilted penetration axis) is counted; zero tolerance (geometric impossibility).
-    { const iv = A.inv; let bad = 0; for (const c0 of C) { if ((c0.a === -1) === (c0.b === -1) || c0.a < -1 || c0.b < -1) continue; const tf = c0.a === -1, ny = tf ? c0.normal[1] : -c0.normal[1], pT = tf ? c0.pts : c0.pts2;
-        if (ny < INV_TOL.turfNormalMinY || pT.some(p => Math.abs(p[1]) > INV_TOL.turfFaceMm / 1000)) { bad++; if (!iv.turfFirst) iv.turfFirst = { t, body: spec.bodies[tf ? c0.b : c0.a].name, piece: tf ? c0.sb : c0.sa, ny: +ny.toFixed(4), turfYmm: pT.map(p => +(p[1] * 1000).toFixed(1)), depthMm: +(c0.depth * 1000).toFixed(3) }; } }
-      iv.turfInvalid += bad; if (bad) iv.turfInvalidTicks++; }
+    // FLAT-PLANE DECISION (2026-10-03): rows 1.4m (geometric validity: the turf-side contact points lie ON the playable surface — |y| ≤ turfFaceMm
+    // and |x|, |z| ≤ the turf's half-extent — and the normal points out of it, n_y ≥ turfNormalMinY; anything else is an underside / side-face /
+    // off-surface contact) and 1.4n (penetration / correction envelope: manifold depth ≤ turfDepthMm, position-solver move of a turf-touching body
+    // ≤ turfCorrMm, checked in _posCorr). Violations are RECORDED with tick, body, piece and contact; no contact is ever modified or deleted.
+    { const iv = A.inv, he = (this.w.turf && this.w.turf.halfExtent) || Infinity; let bad = 0, envBad = 0; this._turfTouch = new Set();
+      for (const c0 of C) { if ((c0.a === -1) === (c0.b === -1) || c0.a < -1 || c0.b < -1) continue; const tf = c0.a === -1, bi = tf ? c0.b : c0.a, ny = tf ? c0.normal[1] : -c0.normal[1], pT = tf ? c0.pts : c0.pts2;
+        const off = pT.some(p => Math.abs(p[1]) > INV_TOL.turfFaceMm / 1000 || Math.abs(p[0]) > he || Math.abs(p[2]) > he), dmm = c0.depth * 1000;
+        if (ny < INV_TOL.turfNormalMinY || off) { bad++; if (!iv.turfFirst) iv.turfFirst = { t, body: spec.bodies[bi].name, piece: tf ? c0.sb : c0.sa, normal: (tf ? c0.normal : V.sc(c0.normal, -1)).map(x => +x.toFixed(4)), turfPointsMm: pT.map(p => p.map(x => +(x * 1000).toFixed(2))), depthMm: +dmm.toFixed(3), state: ny < INV_TOL.turfNormalMinY ? (ny < 0 ? "normal into the turf (underside / reversed)" : "normal tilted") : "contact point off the playable surface" }; }
+        if (dmm > iv.depthMaxMm) { iv.depthMaxMm = dmm; iv.depthMaxAt = t; } if (dmm > INV_TOL.turfDepthMm) { envBad++; if (!iv.envFirst) iv.envFirst = { t, kind: "manifold depth", body: spec.bodies[bi].name, piece: tf ? c0.sb : c0.sa, depthMm: +dmm.toFixed(3) }; }
+        if (c0.depth > -0.0005) this._turfTouch.add(bi); }
+      iv.turfInvalid += bad; if (bad) iv.turfInvalidTicks++; iv.envViol += envBad; if (envBad) iv.envTicks++; }
     // C7 missed collision vs obstacles / between the legs: exact geometric overlap > slop + 2 mm on a step with no manifold for that pair
     if (this.track) { const seenPair = new Set(C.map(c => Math.min(c.a, c.b) + "|" + Math.max(c.a, c.b)));
       for (const [ka, kb, la, lb] of this.track) { const sa = ka < 0 ? [this.obsShape[-2 - ka]] : spec.bodies[ka].shapes, sb = spec.bodies[kb].shapes, stA = ka < 0 ? this.obsState[-2 - ka] : this.st[ka], stB = this.st[kb];
@@ -312,7 +329,8 @@ export class G1Sim {
         sequence: A.seq.slice(0, 14), soleCheck: A.soleCheck, missedTurfSteps: A.missedTurf, missedTurfMaxMm: A.missedTurfMax * 1000, initSelfOverlap: A.initSelfOverlap,
         tracked: A.track, obstacle: Object.fromEntries(Object.entries(A.obst).map(([k, o]) => [k, { first: o.first, firstDepthMm: o.firstDepth == null ? null : o.firstDepth * 1000, maxDepthMm: o.maxDepth * 1000, steps: o.steps }])) },
       rest: { KEmax: A.restKEmax, jitterRadS: restJitter },
-      invariants: { tol: INV_TOL, turfInvalidManifolds: A.inv.turfInvalid, turfInvalidTicks: A.inv.turfInvalidTicks, turfInvalidFirst: A.inv.turfFirst, posCorrMaxMm: A.inv.pcMaxMm, posCorrAt: A.inv.pcAt, posCorrBody: A.inv.pcBody, posCorrTicksOver: A.inv.pcOver,
+      invariants: { tol: INV_TOL, turf: this.w.turf || null, turfInvalidManifolds: A.inv.turfInvalid, turfInvalidTicks: A.inv.turfInvalidTicks, turfInvalidFirst: A.inv.turfFirst,
+        turfEnvViolations: A.inv.envViol, turfEnvTicks: A.inv.envTicks, turfEnvFirst: A.inv.envFirst, turfDepthMaxMm: A.inv.depthMaxMm, turfDepthMaxAt: A.inv.depthMaxAt, turfCorrMaxMm: A.inv.corrTurfMaxMm, turfCorrAt: A.inv.corrTurfAt, turfCorrBody: A.inv.corrTurfBody, posCorrMaxMm: A.inv.pcMaxMm, posCorrAt: A.inv.pcAt, posCorrBody: A.inv.pcBody, posCorrTicksOver: A.inv.pcOver,
         passivityMaxStepJ: A.inv.passMax, passivityMaxAt: A.inv.passAt, passivityViolations: A.inv.passOver, passivityFirst: A.inv.passFirst },
       selfCol: this.key === "isoSelfCol" || this.key === "hsSelfCol20" ? (() => { const legContact = Object.keys(A.pairs).some(k => /(thigh|shank|foot)_[LR] ↔ (thigh|shank|foot)_[LR]/.test(k) && A.pairs[k].steps > 0);
         const missed = Object.values(A.track || {}).reduce((s, t) => s + t.missedSteps, 0);   // geometric missed-collision detector (C7)

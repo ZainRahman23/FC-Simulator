@@ -10133,6 +10133,7 @@
    "B": 6,
    "coulomb": 0,
    "passiveOnlyTauAtHard": 10,
+   "ankleAxialNeutralKPerDeg": 0,
    "endStopDeg": 3,
    "endStopTorqueFrac": 1,
    "note": "τ = A·(e^{B·(θ−θ_soft)} − 1) beyond each soft limit, A chosen so τ(θ_hard) = 0.25·T_iso(opposing direction); folded into the implicit motor drive at run time (spec §13.1.5); [ENG] form after Riener & Edrich 1999 / Yoon & Mansour 1982 (recalled), parameters fitted at G1"

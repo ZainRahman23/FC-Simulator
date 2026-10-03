@@ -69,7 +69,7 @@
    "id": "0.1b",
    "name": "V2-REF ×3 fresh builds: identical spec hash, engine readback hash and post-step state hash",
    "pass": true,
-   "value": "54f413c9/54add0b4/981a0623  54f413c9/54add0b4/981a0623  54f413c9/54add0b4/981a0623",
+   "value": "54f413c9/54add0b4/ceda2998  54f413c9/54add0b4/ceda2998  54f413c9/54add0b4/ceda2998",
    "limit": "identical"
   },
   {
@@ -102,7 +102,7 @@
     "M": 62,
     "kind": "population"
    },
-   "specHash": "53bb36c3",
+   "specHash": "13fa5bfa",
    "engine": {
     "stateHash": "aa46c502",
     "readHash": "3cd69055",
@@ -146,7 +146,7 @@
      "id": "0.1",
      "name": "spec generation deterministic (×3 identical hash)",
      "pass": true,
-     "value": "53bb36c3 53bb36c3 53bb36c3",
+     "value": "13fa5bfa 13fa5bfa 13fa5bfa",
      "limit": "identical",
      "reportOnly": false
     },
@@ -408,6 +408,14 @@
      "reportOnly": false
     },
     {
+     "id": "0.9n",
+     "name": "ankle neutral-zone law (G3-R7): 0 at neutral, restoring, linear inside the soft range, saturated beyond, L = R, value = spec",
+     "pass": true,
+     "value": "no neutral term (historical baseline, k = 0)",
+     "limit": "all",
+     "reportOnly": false
+    },
+    {
      "id": "0.9f",
      "name": "actuator capacity functions: f(0)=1, eccentric plateau, zero at ω₀; activation τ 15 ms; knee-extension 180/300°/s ratios vs Fousekis 0.70/0.57",
      "pass": true,
@@ -664,7 +672,7 @@
     "M": 70,
     "kind": "population"
    },
-   "specHash": "b49498a3",
+   "specHash": "0ca23788",
    "engine": {
     "stateHash": "bbb73448",
     "readHash": "8d15cc89",
@@ -708,7 +716,7 @@
      "id": "0.1",
      "name": "spec generation deterministic (×3 identical hash)",
      "pass": true,
-     "value": "b49498a3 b49498a3 b49498a3",
+     "value": "0ca23788 0ca23788 0ca23788",
      "limit": "identical",
      "reportOnly": false
     },
@@ -970,6 +978,14 @@
      "reportOnly": false
     },
     {
+     "id": "0.9n",
+     "name": "ankle neutral-zone law (G3-R7): 0 at neutral, restoring, linear inside the soft range, saturated beyond, L = R, value = spec",
+     "pass": true,
+     "value": "no neutral term (historical baseline, k = 0)",
+     "limit": "all",
+     "reportOnly": false
+    },
+    {
      "id": "0.9f",
      "name": "actuator capacity functions: f(0)=1, eccentric plateau, zero at ω₀; activation τ 15 ms; knee-extension 180/300°/s ratios vs Fousekis 0.70/0.57",
      "pass": true,
@@ -1226,7 +1242,7 @@
     "M": 78,
     "kind": "population"
    },
-   "specHash": "981a0623",
+   "specHash": "ceda2998",
    "engine": {
     "stateHash": "54f413c9",
     "readHash": "54add0b4",
@@ -1270,7 +1286,7 @@
      "id": "0.1",
      "name": "spec generation deterministic (×3 identical hash)",
      "pass": true,
-     "value": "981a0623 981a0623 981a0623",
+     "value": "ceda2998 ceda2998 ceda2998",
      "limit": "identical",
      "reportOnly": false
     },
@@ -1528,6 +1544,14 @@
      "name": "passive end-range law: 0 inside the soft range, opposes excursion, equals 25 % of the opposing isometric capacity at the hard limit",
      "pass": true,
      "value": "all joints",
+     "limit": "all",
+     "reportOnly": false
+    },
+    {
+     "id": "0.9n",
+     "name": "ankle neutral-zone law (G3-R7): 0 at neutral, restoring, linear inside the soft range, saturated beyond, L = R, value = spec",
+     "pass": true,
+     "value": "no neutral term (historical baseline, k = 0)",
      "limit": "all",
      "reportOnly": false
     },
@@ -1795,7 +1819,7 @@
     "M": 85,
     "kind": "population"
    },
-   "specHash": "e3b2e81b",
+   "specHash": "9044adba",
    "engine": {
     "stateHash": "26a6bd66",
     "readHash": "4eaeb429",
@@ -1839,7 +1863,7 @@
      "id": "0.1",
      "name": "spec generation deterministic (×3 identical hash)",
      "pass": true,
-     "value": "e3b2e81b e3b2e81b e3b2e81b",
+     "value": "9044adba 9044adba 9044adba",
      "limit": "identical",
      "reportOnly": false
     },
@@ -2101,6 +2125,14 @@
      "reportOnly": false
     },
     {
+     "id": "0.9n",
+     "name": "ankle neutral-zone law (G3-R7): 0 at neutral, restoring, linear inside the soft range, saturated beyond, L = R, value = spec",
+     "pass": true,
+     "value": "no neutral term (historical baseline, k = 0)",
+     "limit": "all",
+     "reportOnly": false
+    },
+    {
      "id": "0.9f",
      "name": "actuator capacity functions: f(0)=1, eccentric plateau, zero at ω₀; activation τ 15 ms; knee-extension 180/300°/s ratios vs Fousekis 0.70/0.57",
      "pass": true,
@@ -2357,7 +2389,7 @@
     "M": 92,
     "kind": "population"
    },
-   "specHash": "747b27ee",
+   "specHash": "f86d3971",
    "engine": {
     "stateHash": "bcb5cd8e",
     "readHash": "3d384f6d",
@@ -2401,7 +2433,7 @@
      "id": "0.1",
      "name": "spec generation deterministic (×3 identical hash)",
      "pass": true,
-     "value": "747b27ee 747b27ee 747b27ee",
+     "value": "f86d3971 f86d3971 f86d3971",
      "limit": "identical",
      "reportOnly": false
     },
@@ -2659,6 +2691,14 @@
      "name": "passive end-range law: 0 inside the soft range, opposes excursion, equals 25 % of the opposing isometric capacity at the hard limit",
      "pass": true,
      "value": "all joints",
+     "limit": "all",
+     "reportOnly": false
+    },
+    {
+     "id": "0.9n",
+     "name": "ankle neutral-zone law (G3-R7): 0 at neutral, restoring, linear inside the soft range, saturated beyond, L = R, value = spec",
+     "pass": true,
+     "value": "no neutral term (historical baseline, k = 0)",
      "limit": "all",
      "reportOnly": false
     },
@@ -2922,7 +2962,7 @@
     },
     "kind": "morphology-variant"
    },
-   "specHash": "de0a79b0",
+   "specHash": "d5920ded",
    "engine": {
     "stateHash": "0cf363b2",
     "readHash": "951ed393",
@@ -2966,7 +3006,7 @@
      "id": "0.1",
      "name": "spec generation deterministic (×3 identical hash)",
      "pass": true,
-     "value": "de0a79b0 de0a79b0 de0a79b0",
+     "value": "d5920ded d5920ded d5920ded",
      "limit": "identical",
      "reportOnly": false
     },
@@ -3224,6 +3264,14 @@
      "name": "passive end-range law: 0 inside the soft range, opposes excursion, equals 25 % of the opposing isometric capacity at the hard limit",
      "pass": true,
      "value": "all joints",
+     "limit": "all",
+     "reportOnly": false
+    },
+    {
+     "id": "0.9n",
+     "name": "ankle neutral-zone law (G3-R7): 0 at neutral, restoring, linear inside the soft range, saturated beyond, L = R, value = spec",
+     "pass": true,
+     "value": "no neutral term (historical baseline, k = 0)",
      "limit": "all",
      "reportOnly": false
     },
@@ -3487,7 +3535,7 @@
     },
     "kind": "morphology-variant"
    },
-   "specHash": "1e611873",
+   "specHash": "5b56bcc8",
    "engine": {
     "stateHash": "f038548c",
     "readHash": "7e6d7ba2",
@@ -3531,7 +3579,7 @@
      "id": "0.1",
      "name": "spec generation deterministic (×3 identical hash)",
      "pass": true,
-     "value": "1e611873 1e611873 1e611873",
+     "value": "5b56bcc8 5b56bcc8 5b56bcc8",
      "limit": "identical",
      "reportOnly": false
     },
@@ -3793,6 +3841,14 @@
      "reportOnly": false
     },
     {
+     "id": "0.9n",
+     "name": "ankle neutral-zone law (G3-R7): 0 at neutral, restoring, linear inside the soft range, saturated beyond, L = R, value = spec",
+     "pass": true,
+     "value": "no neutral term (historical baseline, k = 0)",
+     "limit": "all",
+     "reportOnly": false
+    },
+    {
      "id": "0.9f",
      "name": "actuator capacity functions: f(0)=1, eccentric plateau, zero at ω₀; activation τ 15 ms; knee-extension 180/300°/s ratios vs Fousekis 0.70/0.57",
      "pass": true,
@@ -4049,7 +4105,7 @@
     "M": 78,
     "kind": "population"
    },
-   "specHash": "5d129c59",
+   "specHash": "dd54edaa",
    "engine": {
     "stateHash": "26a6bd66",
     "readHash": "2f7d88fb",
@@ -4093,7 +4149,7 @@
      "id": "0.1",
      "name": "spec generation deterministic (×3 identical hash)",
      "pass": true,
-     "value": "5d129c59 5d129c59 5d129c59",
+     "value": "dd54edaa dd54edaa dd54edaa",
      "limit": "identical",
      "reportOnly": false
     },
@@ -4351,6 +4407,14 @@
      "name": "passive end-range law: 0 inside the soft range, opposes excursion, equals 25 % of the opposing isometric capacity at the hard limit",
      "pass": true,
      "value": "all joints",
+     "limit": "all",
+     "reportOnly": false
+    },
+    {
+     "id": "0.9n",
+     "name": "ankle neutral-zone law (G3-R7): 0 at neutral, restoring, linear inside the soft range, saturated beyond, L = R, value = spec",
+     "pass": true,
+     "value": "no neutral term (historical baseline, k = 0)",
      "limit": "all",
      "reportOnly": false
     },

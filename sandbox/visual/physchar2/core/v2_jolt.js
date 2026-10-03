@@ -20,7 +20,14 @@ export async function loadJolt(url) { const mod = await import(url); return awai
 const L_STATIC = 0, L_MOVING = 1, GROUND_UD = 1000, OBST_UD = 2000;   // contact index: turf −1, obstacle k → −(2 + k), body i → i
 // C3 (adopted 2026-10-03): Jolt manifold reduction OFF and the body-pair contact cache OFF for the V2 world (the boot experiment: both measured
 // to matter for the convex boot pieces; the cache also reused stale manifolds on slowly rolling rounded bodies, G1 diagnosis)
-export const G0_WORLD = { gravity: -9.81, velSteps: 10, posSteps: 2, linDamp: 0, angDamp: 0, maxAngVel: 100, allowSleep: false, gyroscopic: true, ccd: "discrete", recordContacts: true, manifoldReduction: false, pairCache: false,
+// TURF (user decision 2026-10-03 after Investigation B, sources/2026-10-03_user_decision_flat_plane_turf_reopen_g1.md): the playable surface y = 0 is
+// a Jolt PLANE shape. Convex-vs-plane collision is analytic (PlaneShape::sCollideConvexVsPlane: support point opposite the plane normal, contact
+// normal = the plane normal by construction) — no GJK / EPA, no finite bottom or side face. The historical 100 × 2 × 100 m BOX (top face at y = 0)
+// exposed a Jolt v5.6.0 EPA defect (reversed manifolds on its bottom face → position-solver teleports; engine_blowup_B/B_REPORT.md) and is kept
+// ONLY as a diagnostic historical configuration (turf: "box"); "small" = an 8 × 2 × 8 m diagnostic box. Half-extent = the plane's bounding box
+// (Jolt returns no collision outside it): ±100 m covers a full pitch centred on the origin with margin.
+export const TURF = { shape: "plane", halfExtent: 100, historical: "box (100 × 2 × 100 m, top face at y = 0)" };
+export const G0_WORLD = { gravity: -9.81, velSteps: 10, posSteps: 2, linDamp: 0, angDamp: 0, maxAngVel: 100, allowSleep: false, gyroscopic: true, ccd: "discrete", recordContacts: true, manifoldReduction: false, pairCache: false, turf: TURF.shape,
   note: "solver iterations are Jolt defaults here; G1's convergence study selects them. maxAngVel 100 rad/s (Jolt default 47.1) so kicks (shank ≈ 39 rad/s) are never clipped. gyroscopic: Euler's rigid-body equations (G1-D1)." };
 const MAT_TURF = "turf";
 
@@ -38,8 +45,10 @@ export class V2JoltWorld {
     this.ps.SetGravity(new J.Vec3(0, this.cfg.gravity, 0));
     const p = this.ps.GetPhysicsSettings(); p.mSpeculativeContactDistance = contact.speculative; p.mPenetrationSlop = contact.slop; p.mBaumgarte = contact.baumgarte;
     p.mNumVelocitySteps = this.cfg.velSteps; p.mNumPositionSteps = this.cfg.posSteps; if (this.cfg.warmStart === false) p.mConstraintWarmStart = false; p.mUseBodyPairContactCache = this.cfg.pairCache !== false; p.mUseManifoldReduction = this.cfg.manifoldReduction !== false; if (this.cfg.contactWarmStart === false) p.mContactPointPreserveLambdaMaxDistSq = 0; this.ps.SetPhysicsSettings(p);
-    const turfShape = this.cfg.turf === "plane" ? new J.PlaneShape(new J.Plane(new J.Vec3(0, 1, 0), 0), null, 50) : this.cfg.turf === "small" ? new J.BoxShape(new J.Vec3(4, 1, 4), 0.0, null) : new J.BoxShape(new J.Vec3(50, 1, 50), 0.0, null);
-    const gs = new J.BodyCreationSettings(turfShape, new J.RVec3(0, this.cfg.turf === "plane" ? 0 : -1, 0), new J.Quat(0, 0, 0, 1), J.EMotionType_Static, L_STATIC);
+    const turf = this.cfg.turf || TURF.shape; if (!["plane", "box", "small"].includes(turf)) throw new Error("turf " + turf);
+    this.turf = { kind: turf, halfExtent: turf === "plane" ? TURF.halfExtent : turf === "small" ? 4 : 50 };   // playable extent of the turf representation (contact-validity check)
+    const turfShape = turf === "plane" ? new J.PlaneShape(new J.Plane(new J.Vec3(0, 1, 0), 0), null, TURF.halfExtent) : turf === "small" ? new J.BoxShape(new J.Vec3(4, 1, 4), 0.0, null) : new J.BoxShape(new J.Vec3(50, 1, 50), 0.0, null);
+    const gs = new J.BodyCreationSettings(turfShape, new J.RVec3(0, turf === "plane" ? 0 : -1, 0), new J.Quat(0, 0, 0, 1), J.EMotionType_Static, L_STATIC);
     gs.mUserData = GROUND_UD; gs.mFriction = 0.5; gs.mRestitution = 0; this.ground = this.bi.CreateBody(gs); this.bi.AddBody(this.ground.GetID(), J.EActivation_DontActivate); J.destroy(gs);
     this.mats = spec.bodies.map(b => b.shapes.map(s => s.material || "body"));           // sub-shape index → contact material (spec §15.4)
     this.subBits = spec.bodies.map(b => b.shapes.length > 1 ? Math.ceil(Math.log2(b.shapes.length)) : 0);

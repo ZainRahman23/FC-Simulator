@@ -145,7 +145,7 @@ export class G2Sim extends G1Sim {
       Lmax: a.Lmax, ledger: { Wact: L.Wact, Wext: L.Wext, Jext: L.Jext, Hext: L.Hext, damping: L.damping, dE, closure, authorityWrites: L.authorityWrites },
       actuators: { overCapTicks: ax.reduce((s2, x) => s2 + x.overCap, 0), top: ax.slice().sort((x, y) => y.peakFrac - x.peakFrac).slice(0, 6), axes: ax },
       final: r ? { xiDevCm: Math.hypot(r.xi[0] - r.xiRef[0], r.xi[1] - r.xiRef[1]) * 100, vCm: Math.hypot(r.v[0], r.v[2]) * 100, phase: r.phase } : null,
-      g1: (() => { const g = this.summary(); return { joints: g.joints, contacts: { turfPenMaxMm: g.contacts.turfPenMaxMm, turfPenRestMm: g.contacts.turfPenRestMm, selfPenMaxMm: g.contacts.selfPenMaxMm, missedTurfSteps: g.contacts.missedTurfSteps }, engine: g.engine, finite: g.finite }; })(),
+      g1: (() => { const g = this.summary(); return { joints: g.joints, contacts: { turfPenMaxMm: g.contacts.turfPenMaxMm, turfPenRestMm: g.contacts.turfPenRestMm, selfPenMaxMm: g.contacts.selfPenMaxMm, missedTurfSteps: g.contacts.missedTurfSteps }, engine: g.engine, finite: g.finite, invariants: g.invariants }; })(),   // + physics-integrity counters (turf-contact validity 1.4m / envelope 1.4n, teleport, passivity: report)
       cpu: { stepMs: this.cpu.step / this.n, passiveMs: this.cpu.passive / this.n, ctrlMs: this.cpu2.ctrl / this.n, actMs: this.cpu2.act / this.n, probeMs: this.cpu2.probe / this.n, measureMs: this.cpu.measure / this.n } };
   }
 }

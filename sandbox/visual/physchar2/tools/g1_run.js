@@ -93,7 +93,7 @@ async function main() {
   // never reached, frame continuity); dt-dependent ACCURACY (joint separation, self-penetration) reported at non-validation rates (gated at
   // 240 Hz by the main suite); landing-outcome effects (posture class, final COM) REPORTED at every rate; the deterministic first-contact TIMING
   // stays gated at 240 Hz. Both evaluations are recorded.
-  const INV = ["1.F", "1.2c", "1.2d", "1.1a", "1.1b", "1.4c", "1.3b", "1.3e"], INV_V3 = ["1.F", "1.3a", "1.3b", "1.3e", "1.4c", "1.4d", "1.2c", "1.2d", "1.1a", "1.1b"], ACC = ["1.3a", "1.4d"], med = (a) => { const b = a.slice().sort((x, y) => x - y), n = b.length; return n ? (n % 2 ? b[(n - 1) / 2] : (b[n / 2 - 1] + b[n / 2]) / 2) : null; };
+  const INV = ["1.F", "1.2c", "1.2d", "1.1a", "1.1b", "1.4c", "1.3b", "1.3e", "1.4m"],   // + 1.4m turf-contact validity (flat-plane decision 2026-10-03: a physical invariant at every rate; 1.4n = accuracy, gated at 240 Hz by the main suite) INV_V3 = ["1.F", "1.3a", "1.3b", "1.3e", "1.4c", "1.4d", "1.2c", "1.2d", "1.1a", "1.1b"], ACC = ["1.3a", "1.4d"], med = (a) => { const b = a.slice().sort((x, y) => x - y), n = b.length; return n ? (n % 2 ? b[(n - 1) / 2] : (b[n / 2 - 1] + b[n / 2]) / 2) : null; };
   const comOf = (r) => [r.outcome.comEnd[0], r.outcome.comEnd[2]], dist2 = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
   const ens = (k, hz) => { const R0 = rateRuns.filter(r => r.base === k && r.cfg.hz === hz), T = R0.map(r => r.outcome.firstNonFootT).filter(x => x != null), C = R0.map(comOf);
     let spread = 0; for (const a of C) for (const b of C) spread = Math.max(spread, dist2(a, b));
