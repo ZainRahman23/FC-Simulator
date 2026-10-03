@@ -700,7 +700,7 @@ Measured deficiencies of the G2 controller for G3:
 
 The largest single-tick per-foot CoP jump was 103 mm. It was at t = 0.0125 s, the boots' initial contact settle, identically on both feet. The seam audit therefore starts at t ≥ 0.5 s; G2 used t ≥ 1 s for the same reason. Afterwards, crossings are smooth (≤ 0.13 mm per tick in the cycle test).
 
-### G3-F1 — OPEN FINDING (TD-3, user decision): transverse-plane compliance at the passive ankle ab/adduction
+### G3-F1 — OPEN FINDING (TD-11, user decision): transverse-plane compliance at the passive ankle ab/adduction
 
 **What it is.** The ankle's foot ab/adduction axis (the foot's vertical axis, `LIMB_DOWN_FRAME` x) is passive-only by approved anatomy.
 
@@ -741,3 +741,84 @@ No actuator spans that axis; the DF and inversion axes are horizontal for a flat
 - **Full unloading** (λ = 1.0): stance load 0.999, opposite foot 0 N with 8 pieces still touching, held still for 4.3 s; clean return.
 - **Body variants:** all 7 non-REF bodies complete the 97 % cycle (hold min 0.948–0.958).
 - **Repeated cycles (T4):** pelvis drift 4.0 mm and yaw offset 2.7° after cycle 1, unchanged through cycle 5.
+
+### G3-A11: final run 1 → run 2 (recorded openly; criteria v1 unchanged)
+
+**Run 1 (299 jobs, 0 errors): 11/19 before rows O and P were measured.** Every evaluation is kept in `g3/json/run1/`.
+- **Rows A, B, C failed on a measurement artifact.**
+  - What happened: on the first physics step after release (t = 0.0042 s), the boot probe's per-piece touch flags lag the contact by one step. Both boots read 0 touching pieces while already carrying 76 N each.
+  - Effect: the contact-loss accumulator counted 1 tick (0.00417 s) on one foot in every run. Rows E and F test hold windows, so they were unaffected.
+- **Correction (measurement only):** the class, contact-loss and unloaded accumulators start at t ≥ 0.5 s. This is the same window as the seam audit; G2-A10 handled its CoP window the same way.
+- **Run 2:** physics hashes 299/299 identical to run 1. Rows A, B and C pass.
+- **Genuine misses, unchanged between runs and reported as FAIL (no post-hoc tuning):**
+  - **Row I:** V2-short-legs near-single-support min 0.9487 / 0.9483 (< 0.95).
+  - **Row J:** Δ slip 0.76 / 0.60 mm (> 0.5) in the two fastest T7 ramps, where a foot slides. The accepted G2 plant shows up to 1.5 mm in mirrored sliding pushes, so the tolerance was set too tight. This is my criterion-design error and is not corrected.
+  - **Row S:** controller cost 0.152 ms in run 2, 0.168 ms in run 1 (> 0.15), with 9 processes in parallel.
+- **Label correction:** the transverse-plane finding was filed as "TD-3" in the pre-registration commit. TD-3 already exists (passive-layer cost), so the finding is renamed **TD-11** in the criteria, DECISIONS and tables. No criterion changed.
+
+**Minimality finding (report-only ablations).**
+
+| Ablation | Result |
+|---|---|
+| Final configuration minus **contactSupport** | Bit-identical in T3, T5, U:R and 9 disturbed cases (outward / inward pushes, fast ramps). No foot ever loses contact in G3: even at 0 N the opposite foot keeps all 8 pieces touching. |
+| Final configuration minus **holdUnloaded** | Engages (5.6 s in U:R, briefly in outward pushes and fast ramps) but has no material effect. Outward 10 N·s slip 12.8 vs 13.5 mm without, lift 4.7 vs 4.2 mm, tilt 7.7 vs 6.8°. U:R metrics identical. |
+
+- D2 (drift of the unloaded foot) and D3 (airborne foot in the polygon) were measured with the G2 controller *before* D5 (infeasible IK) was found. With ikFeasible, the IK holds the light foot with stiffness, so D2 was most likely a symptom of D5.
+- Both options remain in the final-run configuration; nothing was changed after the run.
+- **User decision:** remove both and re-run, or keep them as guards for G4, where a foot will leave the turf.
+
+### G3-A12: browser ≠ Node on one scenario — root cause (G2-era controller math), confirmed fix NOT applied; regression comparator bug
+
+**What failed.** Row O: T5, U:R and T3 are bit-identical, but **T8 hold R push R 10 differs** (browser 75d36a75 vs Node 99648bf9). Node is self-consistent: fresh process, pooled workers and ×3 determinism all agree.
+
+**How it was located** (viewer diagnostic `?tickhash=<key>&dump=<n0>-<n1>`):
+- The first divergence is at tick 1008 (t = 4.20 s).
+- At that tick every body state is bit-identical, but the left-leg IK result differs at 1e-16: residual 1.3887339e-11 vs 1.3887019e-11. The hip / knee commands therefore differ at 1e-13.
+
+**Cause:**
+- `ctrl/v2_stand.js` uses `Math.hypot` in the IK residual, the line-search acceptance (`en < err`), `norm2`, the allocation loop and the polygon distance, plus `Math.atan2` for the heading yaw. This is G2-era code; G3's `ikFeasible` adds one more `Math.hypot`.
+- JavaScript does not specify either function to be bit-identical across engines. `core/v2_math.js` restricts `Math.*` to measurement / display and provides `dlen` / `datan2` for physics.
+- G2's browser check passed 6/6 because its curated set did not hit such an input.
+
+**Confirmed.** A temporary patch replacing the 11 `Math.hypot` and 3 `Math.atan2` calls with deterministic equivalents made browser = Node on all 2880 ticks of the case. The patch was reverted (`ctrl/v2_stand.js` == `871ab62`), and the final-run hashes were re-verified.
+
+**Not applied — user decision.** The fix changes the accepted G2 controller's results at the last-bit level, which means new G2 hashes, a G2 re-validation and a G3 run 3. **Recommended before G4.**
+
+**Regression comparator bug.** The G3 regression script first read G2's 3 snapshot jobs, stored as top-level `hashA` / `hashB` / `exact`, as missing hashes and reported 617/620. Compared on the right fields, the result is **620/620 identical**. The script is fixed, and the note is kept in `g3/json/g3_regression.json`.
+
+### G3 result (final run 2): **V2-G3 NOT PASSED — 15/19** (pre-registered criteria v1); STOPPED for review
+
+**Passing rows:**
+
+| Row | Test | Result |
+|---|---|---|
+| A | T0 bilateral baseline | 0.500 |
+| B, C | strong transfers and cycle | 0.838 / 0.846, RMS 0.014–0.015 |
+| D | 5 repeated cycles | no drift growth (Δ 0.02 mm, 0.07°) |
+| E | near-single-support 10 s, both sides | min 0.9536 / mean 0.9678 |
+| F | unloading the opposite foot | ≤ 1 % BW for 5.3 s, 0 contact loss, 0.26 mm |
+| G | speed 4 / 2 s | clean |
+| H | perturbations | 32/32 at 5 N·s, 18/18 inward ≤ 15, 0 false aborts |
+| K | excessive requests | fall physically |
+| L | authority, energy, capacity | exact |
+| M | CoP across seams | smooth (≤ 0.65 mm per tick) |
+| N | determinism and snapshot | ✓ |
+| P | earlier gates | G0 ✓, G1 ✓, G2 620/620 |
+| Q | force-plate twin | ≤ 4.1e-6 |
+
+**Failing rows:**
+- **I:** V2-short-legs 0.9487 / 0.9483 < 0.95.
+- **J:** sliding fast-ramp slip Δ 0.76 / 0.60 mm > 0.5. The plant's own sliding asymmetry reaches 1.5 mm at G2, so the tolerance was set too tight.
+- **O:** browser = Node 3/4 (G3-A12).
+- **S:** controller cost 0.152 ms > 0.15 with 9 parallel processes; 0.038 ms single-process.
+
+**Open decisions for the user:**
+1. Determinism fix (G3-A12).
+2. G3-F1 / TD-11 ankle axial compliance.
+3. Accept rows I / J / S as reported, or instruct fixes.
+4. Minimality: keep or remove contactSupport / holdUnloaded.
+
+**Status:**
+- G4 not started. Nothing pushed.
+- Review server :8172, page `viewer/g3.html`.
+- Report `g3/G3_REPORT.md`, tables `g3/G3_TABLES.md`.

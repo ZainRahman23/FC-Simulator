@@ -75,7 +75,7 @@ export function evaluate(R, ext = {}) {
   { const b = ext.browser; add("O", "browser = Node (T5, U:R, T3, T8 hold R push R 10)", b && b.allPass, b ? b.rows.map(r => `${r.pass ? "✓" : "✗"} ${r.key}`).join(" ") : "not run", "4/4 identical"); }
   // P — regressions
   { const g = ext.regression; add("P", "G0 8/8; G1 curated + full unchanged; G2 final run (620) unchanged", g && g.g0 && g.g1curated && g.g1full && g.g2 && g.g2.same === g.g2.n && g.g2.n === 620,
-    g ? `G0 ${g.g0 ? "8/8" : "FAIL"}; G1 curated ${g.g1curated ? "10/10" : "FAIL"}; G1 full ${g.g1full ? "unchanged (" + g.g1HashesCompared + " hashes)" : "CHANGED"}; G2 ${g.g2 ? g.g2.same + "/" + g.g2.n + " hashes identical" : "not run"}` : "not run", "all"); }
+    g ? `G0 ${g.g0 ? "all checks pass" : "FAIL"}; G1 curated ${g.g1curated ? "10/10" : "FAIL"}; G1 full ${g.g1full ? "unchanged (" + g.g1HashesCompared + " hashes)" : "CHANGED"}; G2 ${g.g2 ? g.g2.same + "/" + g.g2.n + " hashes identical" : "not run"}` : "not run", "all"); }
   // Q — twin
   { const G = J.filter(j => ["T0", "T1", "T2", "T3", "T4", "T5", "T6", "U"].includes(j.group)), m = mx(G.map(j => j.res.g3.twin.max)); add("Q", "force-plate twin: whole-body momentum = Σ foot contact impulses + gravity (+ test impulse)", m <= 1e-3, `residual max ${m.toExponential(2)} of M·g·dt over ${G.length} runs`, "≤ 1e-3"); }
   // S — cost

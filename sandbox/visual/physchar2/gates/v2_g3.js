@@ -52,8 +52,9 @@ export class G3Sim extends G2Sim {
     // transfer classification per tick, for the side carrying more (stance) and the other: partial / strong / near-single / unloaded / contact loss
     const st = load[1] >= load[0] ? 1 : 0, ot = 1 - st, side = st ? "R" : "L", ls = load[st], fo = Fz[ot] / W;
     const cls = touch[ot] === 0 ? "contact loss" : fo <= 0.01 ? "unloaded" : ls >= 0.95 ? "near-single-support" : ls >= 0.85 ? "strong" : ls >= 0.60 ? "partial" : "bilateral";
-    a.catT[side + ":" + cls] = (a.catT[side + ":" + cls] || 0) + this.dt;
-    if (touch[ot] === 0) a.contactLossT[ot] += this.dt; if (fo <= 0.01) a.unlT[ot] += this.dt;
+    // class / contact-loss / unloaded times from t ≥ 0.5 s (G3 final run 1 → 2, recorded: on the FIRST step after release the per-piece touch
+    // flags lag the contact by one step — both boots read 0 touching pieces while carrying 76 N each — a probe artifact, not a contact loss)
+    if (t >= SEAM_T0) { a.catT[side + ":" + cls] = (a.catT[side + ":" + cls] || 0) + this.dt; if (touch[ot] === 0) a.contactLossT[ot] += this.dt; if (fo <= 0.01) a.unlT[ot] += this.dt; }
     // feet: slip (origin horizontal displacement), lift (origin height change), tilt; per-foot CoP seam crossings (piece cell containing the CoP)
     ft.forEach((f, n) => { const s = this.st[f], p0 = a.foot0[n].pos, slip = Math.hypot(s.pos[0] - p0[0], s.pos[2] - p0[2]), lift = s.pos[1] - p0[1], u = Q.rot(s.rot, [0, 1, 0]), tilt = Math.acos(Math.min(1, u[1])) * D, m = a.footMax[n];
       m.slip = Math.max(m.slip, slip); m.lift = Math.max(m.lift, lift); m.tilt = Math.max(m.tilt, tilt);

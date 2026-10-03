@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>V2-G3 Weight Transfer</title>
+<style>
+  :root { --bg:#16181c; --panel:#1f2228; --ink:#e7e9ee; --mute:#9aa1ad; --ok:#4cd27a; --bad:#ff6b5b; --line:#2e333b; --acc:#ffd34d; }
+  * { box-sizing: border-box; } html, body { margin:0; height:100%; background:var(--bg); color:var(--ink); font:13px/1.4 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  #wrap { display:grid; grid-template-columns: minmax(0,1fr) 460px; height:100vh; }
+  #view { position:relative; min-width:0; } #gl, #ov { position:absolute; inset:0; width:100%; height:100%; } #ov { pointer-events:none; }
+  #side { overflow:auto; background:var(--panel); border-left:1px solid var(--line); padding:10px 12px 40px; }
+  h1 { font-size:15px; margin:2px 0 4px; } h2 { font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--mute); margin:14px 0 6px; border-bottom:1px solid var(--line); padding-bottom:3px; }
+  .row { display:flex; flex-wrap:wrap; gap:5px; align-items:center; margin:4px 0; } select { background:#2a2e36; color:var(--ink); border:1px solid #3a404a; border-radius:5px; padding:4px; max-width:100%; }
+  button { background:#2a2e36; color:var(--ink); border:1px solid #3a404a; border-radius:5px; padding:4px 8px; cursor:pointer; } button:hover { border-color:var(--acc); } button.on { border-color:var(--acc); color:var(--acc); }
+  label { display:inline-flex; gap:4px; align-items:center; margin:2px 8px 2px 0; white-space:nowrap; } .grid { display:grid; grid-template-columns: 1fr 1fr; }
+  .hdr { padding:5px 7px; border-radius:5px; margin-bottom:5px; font-weight:600; } .hdr.ok { background:#1d3a28; } .hdr.bad { background:#3d2220; } .hdr.warn { background:#3a3220; }
+  .mono { font-family: ui-monospace, Menlo, monospace; font-size:11px; } #hash.ok { background:#1d3a28; } #hash.bad { background:#3d2220; } #hash { padding:6px; border-radius:5px; }
+  table { border-collapse:collapse; width:100%; font-size:11px; } td, th { border-bottom:1px solid var(--line); padding:2px 4px; text-align:left; } th { color:var(--mute); font-weight:600; }
+  .note { color:var(--mute); font-size:11.5px; } kbd { background:#2a2e36; border:1px solid #3a404a; border-radius:3px; padding:0 4px; font-size:11px; }
+  canvas.plot { width:100%; background:#181a1f; border-radius:5px; display:block; } input[type=range] { width:100%; }
+  .legend span { display:inline-block; margin-right:9px; } .bar { display:inline-block; height:8px; background:#5aa0ff; vertical-align:middle; }
+  @media (max-width: 900px) { #wrap { grid-template-columns: 1fr; grid-template-rows: 60vh auto; height:auto; } #side { border-left:none; border-top:1px solid var(--line); } }
+</style></head>
+<body>
+<div id="wrap">
+  <div id="view"><canvas id="gl"></canvas><canvas id="ov"></canvas></div>
+  <div id="side">
+    <h1>Physical Character V2 — G3 deliberate weight transfer</h1>
+    <div class="note"><a href="./g2.html" style="color:#8ab4ff">← G2 active standing</a> · report: review_artifacts/physical_character_v2/g3/G3_REPORT.md</div>
+    <div class="note">The controller requests a right-foot load fraction λ_R; the physics decides the load. Internal finite actuation + ground contact only: no root / pelvis writes, no hidden support, no assigned foot loads, no foot pinning, no step. Classes: <span style="color:#9aa1ad">bilateral</span> · <span style="color:#5aa0ff">partial ≥ 60 %</span> · <span style="color:#b48cff">strong ≥ 85 %</span> · <span style="color:#4cd27a">near-single-support ≥ 95 %</span> · <span style="color:#ffd34d">opposite foot unloaded ≤ 1 % BW</span> · <span style="color:#ff6b5b">contact loss</span></div>
+    <h2>Scenario · body</h2>
+    <div class="row"><select id="scen"></select></div>
+    <div class="row"><select id="human"></select></div>
+    <h2>Playback</h2>
+    <div class="row"><button id="play">▶ play <kbd>space</kbd></button><button id="step">step <kbd>.</kbd></button><button id="restart">restart <kbd>r</kbd></button>
+      <select id="speed"><option value="1">1×</option><option value="0.5">0.5×</option><option value="0.25">0.25×</option><option value="0.1">0.1×</option><option value="0.02">0.02×</option></select></div>
+    <div class="row"><input type="range" id="seek" min="0" max="1000" value="0"></div>
+    <div class="row mono" id="clock">t = 0.000 s</div>
+    <h2>Camera</h2>
+    <div class="row"><button id="c_front">front <kbd>1</kbd></button><button id="c_side">side <kbd>2</kbd></button><button id="c_three">¾ <kbd>3</kbd></button><button id="c_top">top <kbd>4</kbd></button><button id="c_feet">feet <kbd>6</kbd></button><button id="c_follow">follow <kbd>5</kbd></button></div>
+    <h2>Show</h2>
+    <div class="grid">
+      <label><input type="checkbox" id="t_bodies">bodies</label><label><input type="checkbox" id="t_colliders">colliders</label>
+      <label><input type="checkbox" id="t_com">COM</label><label><input type="checkbox" id="t_xi">ξ + target</label>
+      <label><input type="checkbox" id="t_cop">CoP (cmd cyan, measured white, per foot)</label><label><input type="checkbox" id="t_support">active support geometry</label>
+      <label><input type="checkbox" id="t_grf">ground reaction per foot</label><label><input type="checkbox" id="t_push">test impulse</label>
+      <label><input type="checkbox" id="t_L">angular momentum</label><label><input type="checkbox" id="t_pieces">boot pieces (touching blue)</label>
+      <label><input type="checkbox" id="t_contacts">contact points</label><label><input type="checkbox" id="t_hud">load HUD</label>
+    </div>
+    <h2>Transfer</h2><table id="xfer"></table>
+    <canvas id="plot" class="plot" style="height:110px"></canvas>
+    <div class="legend note"><span style="color:#ffd34d">requested λ_R</span> <span style="color:#fff">measured load_R</span> <span style="color:#f88">pelvis yaw (±10°)</span> · band = class</div>
+    <h2>Balance · posture</h2><table id="live"></table>
+    <h2>Actuators (top by fraction of instantaneous capacity)</h2><table id="act"></table>
+    <h2>Joint target vs actual</h2><div class="row">joint: <select id="joint"></select></div><table id="jt"></table>
+    <h2>Node final run</h2><div id="node"></div>
+    <h2>Browser = Node (this run)</h2><div id="hash" class="mono">run the scenario to the end to compare</div>
+  </div>
+</div>
+<script type="module" src="./v2_g3_viewer.js"></script>
+</body></html>

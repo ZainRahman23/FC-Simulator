@@ -72,7 +72,7 @@ The transfer request is λ_R(t), a min-jerk profile. Everything else is at G2 de
   - abort variants: with planned feed-forward, or an immediate switch;
   - leg-load gain scheduling;
   - twist-DOF posture reference.
-- **Transverse plane (open finding, TD-3, decision item):**
+- **Transverse plane (open finding G3-F1, debt TD-11, decision item):**
   - the excursions of the passive ankle ab/adduction, knee rotation and hip rotation;
   - pelvis yaw;
   - the static yaw stiffness (constant 1 / 2 / 4 N·m pelvis torque at λ 0.5 / 0.95);
