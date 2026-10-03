@@ -35,12 +35,15 @@ export function buildColliders(Lm, bodies) {
       pos: loc("thorax", [0, (ySUPR + yXYPH) / 2, 0]), rot: [0, 0, 0, 1], note: "chest box xiphion → suprasternale" },
     { type: "capsule", material: "body", r: 0.033 * H, half: gird.half, pos: gird.pos, rot: gird.rot, note: "shoulder-girdle capsule (trapezius / clavicle contact)" }];
   const headPt = [0, P.headJointH * H + sole, P.headJointAP * H], nk = between(loc("head", headPt), loc("head", by.head.origin));
-  // C1 (approved 2026-10-02): front-to-back (AP) capsule — r = head breadth / 2 = 0.044 H, cylinder half-length = (head length − head breadth) / 2
-  // = 0.013 H, so the AP extent = head length and the lateral extent = head breadth (a sphere cannot satisfy both within the §15.1 tolerance).
-  // Placement rule unchanged from the approved sphere: top of the skull collider 0.005 H below the vertex, AP centre +0.0055 H.
-  const hr = P.headBreadth * H / 2, hh = (P.headLength - P.headBreadth) * H / 2;
-  out.head = [{ type: "capsule", material: "body", r: hr, half: hh, pos: loc("head", [0, H + sole - 0.005 * H - hr, 0.0055 * H]), rot: alignY([0, 0, 1]),
-      note: "skull: AP capsule (length 0.114 H, breadth 0.088 H; C1)" },
+  // C1 (approved 2026-10-02) fixed the head dimensions: r = head breadth / 2 = 0.044 H, AP offset = (head length − head breadth) / 2 = 0.013 H,
+  // so the AP extent = head length and the lateral extent = head breadth. C4 (approved 2026-10-03) changes only the COLLISION REPRESENTATION:
+  // two spheres of radius r at ±offset along AP instead of the AP capsule (G1 showed Jolt's capsule face heuristic rests a short, fat capsule's
+  // end cap up to 7.5 mm into the turf; a sphere has no supporting face). Same AP extent and breadth; the sides between the sphere centres
+  // are 3.7 mm inside the capsule (within the −15…+5 mm head tolerance). Placement rule unchanged: skull top 0.005 H below the vertex, AP centre
+  // +0.0055 H. Colliders never carry mass: head mass / COM / inertia unchanged.
+  const hr = P.headBreadth * H / 2, hh = (P.headLength - P.headBreadth) * H / 2, hc = [0, H + sole - 0.005 * H - hr, 0.0055 * H];
+  out.head = [{ type: "sphere", material: "body", r: hr, pos: loc("head", [hc[0], hc[1], hc[2] + hh]), rot: [0, 0, 0, 1], note: "skull: anterior sphere of the AP pair (C4; length 0.114 H, breadth 0.088 H)" },
+    { type: "sphere", material: "body", r: hr, pos: loc("head", [hc[0], hc[1], hc[2] - hh]), rot: [0, 0, 0, 1], note: "skull: posterior sphere of the AP pair (C4)" },
     { type: "capsule", material: "body", r: 0.030 * H, half: nk.half, pos: nk.pos, rot: nk.rot, note: "neck capsule C7 → skull base" }];
   // ── arms ──
   const ua = frustumRadii(mf("upperArm"), Ls.upperArm, RHO.upperArm, TAPER.upperArm), fa = frustumRadii(mf("forearm"), Ls.forearm, RHO.forearm, TAPER.forearm);

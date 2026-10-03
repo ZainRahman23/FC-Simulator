@@ -74,7 +74,11 @@ export const COUPLINGS = [
   { joint: "hip", axis: "rot", by: "hip.flex", law: "soft ER limit −45° (hip extended) → −40° (hip flexed 90°)", evidence: "[H] Han 2015 / Simoneau 1998 direction" },
 ];
 export const PASSIVE = { endRangeFracOfOpposingCapacity: 0.25, B: 6.0, coulomb: 0, passiveOnlyTauAtHard: 10,   // N·m at the hard limit for the passive-only foot ab/adduction axis [ENG]
- 
+  // G1 decision C2 (2026-10-03): the ANATOMICAL END-STOP. Beyond the anatomical hard limit a stiff linear spring is added to the passive
+  // potential; with it the total passive torque reaches 100 % of the opposing isometric capacity endStopDeg beyond the anatomical limit
+  // [ENG: capsule / ligament / bone-contact end feel resists a maximal opposing contraction within a few degrees]. The anatomical ROM is
+  // unchanged; the Jolt hard constraint becomes an emergency numerical stop at anatomical hard ± ENGINE_MARGIN (derived from overshoot tests).
+  endStopDeg: 3, endStopTorqueFrac: 1.0,
   note: "τ = A·(e^{B·(θ−θ_soft)} − 1) beyond each soft limit, A chosen so τ(θ_hard) = 0.25·T_iso(opposing direction); folded into the implicit motor drive at run time (spec §13.1.5); [ENG] form after Riener & Edrich 1999 / Yoon & Mansour 1982 (recalled), parameters fitted at G1" };
 
 // ── frame maths ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -129,7 +133,10 @@ function horizAddDir(def, c) {
 function swingTo(from, to) { const ax = V.cross(from, to), s = V.len(ax), c = V.dot(from, to); return s < 1e-12 ? Q.id() : Q.axis(V.sc(ax, 1 / s), datan2(s, c)); }
 
 // build the joint table for a body set (positions from the child body's origin)
-export function buildJoints(bodies) {
+export function buildJoints(bodies, margin = ENGINE_MARGIN) {
+  const J = buildJointsAnatomical(bodies); if (margin) for (const j of J) j.limits.engine = engineLimits(j, margin); return J;
+}
+function buildJointsAnatomical(bodies) {
   const byName = Object.fromEntries(bodies.map(b => [b.name, b]));
   return JOINT_DEFS.map((def, k) => {
     const child = byName[def.child], parent = byName[def.parent];
@@ -179,12 +186,29 @@ export function passiveParams(j, capOpp) {
     const ex = (soft, hard) => Math.max(1e-4, Math.abs(hard - soft));
     const tHi = PASSIVE.endRangeFracOfOpposingCapacity * capOpp(KEYS[i], +1), tLo = PASSIVE.endRangeFracOfOpposingCapacity * capOpp(KEYS[i], -1);
     const B = PASSIVE.B, A_hi = tHi / (dexp(B * ex(hi, hhi)) - 1), A_lo = tLo / (dexp(B * ex(lo, hlo)) - 1);
-    return { soft: [lo, hi], hard: [hlo, hhi], A: [A_lo, A_hi], B, tauAtHard: [tLo, tHi] };
+    // C2 end-stop stiffness per end: law(θh + δ) + k·δ = endStopTorqueFrac · T_opp, with T_opp = tauAtHard / endRangeFracOfOpposingCapacity
+    const d = PASSIVE.endStopDeg * Math.PI / 180, f = PASSIVE.endStopTorqueFrac / PASSIVE.endRangeFracOfOpposingCapacity;
+    const kStop = (t, A, softEx) => Math.max(0, (f * t - A * (dexp(B * (softEx + d)) - 1)) / d);
+    return { soft: [lo, hi], hard: [hlo, hhi], A: [A_lo, A_hi], B, tauAtHard: [tLo, tHi], kStop: [kStop(tLo, A_lo, ex(lo, hlo)), kStop(tHi, A_hi, ex(hi, hhi))] };
   });
 }
 export function passiveTorque(pp, theta) {          // τ (N·m) on one axis at constraint angle theta (rad); opposes the excursion
   if (!pp) return 0;
-  if (theta > pp.soft[1]) return -pp.A[1] * (dexp(pp.B * (theta - pp.soft[1])) - 1);
-  if (theta < pp.soft[0]) return pp.A[0] * (dexp(pp.B * (pp.soft[0] - theta)) - 1);
+  const ks = pp.kStop || [0, 0];
+  if (theta > pp.soft[1]) return -pp.A[1] * (dexp(pp.B * (theta - pp.soft[1])) - 1) - (theta > pp.hard[1] ? ks[1] * (theta - pp.hard[1]) : 0);
+  if (theta < pp.soft[0]) return pp.A[0] * (dexp(pp.B * (pp.soft[0] - theta)) - 1) + (theta < pp.hard[0] ? ks[0] * (pp.hard[0] - theta) : 0);
   return 0;
+}
+// G1 decision C2: emergency engine-stop margins (degrees beyond the ANATOMICAL hard limit), per joint class / anatomical axis / direction of
+// motion (pos = the positive anatomical motion, neg = the negative). Derived by tools/g1_margins.js from controlled overshoot tests (see
+// DECISIONS.md C2): margin = ceil(1.5 × the largest overshoot beyond the anatomical hard limit observed with the end-stop and the engine
+// stop moved out of the way, over the V2-REF scenario envelope and the speed-controlled rig, + 1°), at least 2°.
+// Derived 2026-10-03 by tools/g1_margins.js (raw rows: review_artifacts/physical_character_v2/g1/json/g1_margins.json). Degrees.
+export const ENGINE_MARGIN = {"ankle":{"df":{"neg":14,"pos":9},"fabd":{"neg":12,"pos":23},"inv":{"neg":17,"pos":15}},"elbow":{"flex":{"neg":7,"pos":2},"pron":{"neg":4,"pos":2}},"hip":{"abd":{"neg":8,"pos":12},"flex":{"neg":4,"pos":6},"rot":{"neg":5,"pos":11}},"knee":{"flex":{"neg":8,"pos":15},"rot":{"neg":12,"pos":26}},"lumbar":{"flex":{"neg":2,"pos":9},"lat":{"neg":5,"pos":10},"rot":{"neg":7,"pos":10}},"neck":{"flex":{"neg":25,"pos":32},"lat":{"neg":5,"pos":11},"rot":{"neg":4,"pos":11}},"shoulder":{"abd":{"neg":2,"pos":2},"flex":{"neg":7,"pos":5},"rot":{"neg":2,"pos":10}},"thoracic":{"flex":{"neg":6,"pos":10},"lat":{"neg":7,"pos":6},"rot":{"neg":2,"pos":3}}};
+export function engineLimits(j, margin) {
+  const lo = j.limits.hard.lo.slice(), hi = j.limits.hard.hi.slice(); if (!margin) return { lo, hi };
+  const cls = j.name.replace(/_[LR]$/, ""), M = margin[cls] || {};
+  ["x", "y", "z"].forEach((k, i) => { const ax = j.def.axes[k]; if (!ax || ax.locked || !M[ax.key]) return; const m = M[ax.key], toHi = ax.s > 0 ? m.pos : m.neg, toLo = ax.s > 0 ? m.neg : m.pos;
+    hi[i] = Math.min(hi[i] + toHi * Math.PI / 180, i === 0 ? 179 * Math.PI / 180 : 160 * Math.PI / 180); lo[i] = Math.max(lo[i] - toLo * Math.PI / 180, i === 0 ? -179 * Math.PI / 180 : -160 * Math.PI / 180); });
+  return { lo, hi };
 }

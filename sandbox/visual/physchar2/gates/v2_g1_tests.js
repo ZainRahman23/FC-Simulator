@@ -36,6 +36,7 @@ export function passiveRig(J, spec, test, opts = {}) {
   const cfg = Object.assign({}, G1_WORLD, opts.cfg || {}), dt = 1 / cfg.hz, j = spec.joints.find(x => x.name === test.joint), i = KEYS.findIndex(k => j.def.axes[k] && j.def.axes[k].key === test.key);
   const pp = j.passive[i], frac = opts.frac ?? 0.6; if (test.dir) test = { ...test, end: (test.dir > 0) === (j.def.axes[KEYS[i]].s > 0) ? "hi" : "lo" };
   const th0 = test.end === "hi" ? pp.soft[1] + frac * (pp.hard[1] - pp.soft[1]) : test.end === "lo" ? pp.soft[0] + frac * (pp.hard[0] - pp.soft[0]) : 0;
+  let thLo = Infinity, thHi = -Infinity;
   const th = [0, 0, 0]; th[i] = th0; const { S, desc } = rigPose(spec, j, th), w = rigWorld(J, spec, cfg);
   S.forEach((s, b) => w.setPose(b, s.pos, s.rot));
   if (test.w0) { const ax = Q.rot(Q.mul(S[j.childIndex].rot, j.F2), [[1, 0, 0], [0, 1, 0], [0, 0, 1]][i]), at = V.add(S[j.parentIndex].pos, Q.rot(S[j.parentIndex].rot, V.sub(j.at, spec.bodies[j.parentIndex].origin)));
@@ -53,13 +54,13 @@ export function passiveRig(J, spec, test, opts = {}) {
     const tauApplied = lam / dt + Texp, tauSpec = passiveTorque(pp, thE), tauExpect = tauSpec - j.damping * wE;
     const err = Math.abs(tauApplied - tauExpect); maxAbsErr = Math.max(maxAbsErr, err); if (Math.abs(tauExpect) > 0.5) maxRelErr = Math.max(maxRelErr, err / Math.abs(tauExpect));
     if (n === 0) firstTau = { tauApplied, tauSpec, tauExpect, th: thE * D };
-    if (thE >= pp.soft[0] && thE <= pp.soft[1]) returned = true;
+    if (thE >= pp.soft[0] && thE <= pp.soft[1]) returned = true; thLo = Math.min(thLo, thE); thHi = Math.max(thHi, thE);
     Dsum += P.dampingLoss(st, dt); up = P.update(st, dt); const E = energy(st, up.U); Erise = Math.max(Erise, E - Eprev); Eprev = E;
     if (n % 6 === 0) rows.push({ t: (n + 1) * dt, th: thE * D, tauApplied, tauSpec, tauExpect, wE, E });
   }
   w.destroy();
-  const restoring = test.end === "hi" ? firstTau.tauApplied < 0 : test.end === "lo" ? firstTau.tauApplied > 0 : null;
-  return { ...test, th0Deg: th0 * D, softDeg: pp.soft.map(x => x * D), hardDeg: pp.hard.map(x => x * D), tauAtHard: pp.tauAtHard, damping: j.damping, firstTau, restoring, returnedToSoft: returned,
+  const restoring = test.approach ? null : test.end === "hi" ? firstTau.tauApplied < 0 : test.end === "lo" ? firstTau.tauApplied > 0 : null;
+  return { ...test, thMinDeg: thLo * D, thMaxDeg: thHi * D, overshootDeg: test.end === "hi" ? (thHi - pp.hard[1]) * D : test.end === "lo" ? (pp.hard[0] - thLo) * D : null, th0Deg: th0 * D, softDeg: pp.soft.map(x => x * D), hardDeg: pp.hard.map(x => x * D), tauAtHard: pp.tauAtHard, damping: j.damping, firstTau, restoring, returnedToSoft: returned,
     maxAbsErrNm: maxAbsErr, maxRelErr, maxEnergyRiseJ: Erise, E0, Eend: Eprev, dampingJ: Dsum, selfContacts: contacts, rows };
 }
 // damping-only test: joint at its ROM centre (inside every soft range), child spun about the tested axis at w0 → no elastic torque, the

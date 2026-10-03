@@ -35,10 +35,11 @@ export const COUPLING_LAWS = [
 export class PassiveLayer {
   constructor(spec, world, opts = {}) {
     this.spec = spec; this.w = world; this.opts = opts; this.enabled = opts.enabled !== false; this.couplings = opts.couplings !== false;
+    this.predictive = opts.predictive !== false; this.oneSided = opts.oneSided !== false;   // C2 causal fix (default on); switchable for the A/B record
     const J = spec.joints; this.nJ = J.length;
     this.jd = J.map((j, k) => {
       const axes = [0, 1, 2].map(i => { const key = ["x", "y", "z"][i], ax = j.def.axes[key]; const p = j.passive[i];
-        return ax && !ax.locked && p ? { i, key: ax.key, s: ax.s, soft: p.soft.slice(), hard: p.hard.slice(), tauH: p.tauAtHard.slice(), B: p.B } : null; });
+        return ax && !ax.locked && p ? { i, key: ax.key, s: ax.s, soft: p.soft.slice(), hard: p.hard.slice(), tauH: p.tauAtHard.slice(), B: p.B, kStop: (opts.endStop === false || !p.kStop) ? [0, 0] : p.kStop.slice() } : null; });
       return { k, j, name: j.name, side: j.side, base: j.name.replace(/_[LR]$/, ""), parent: j.parentIndex, child: j.childIndex, F1: j.F1, F2: j.F2, Cm: j.Cm, c: j.damping, axes,
         free: axes.map(a => !!a) };
     });
@@ -67,11 +68,15 @@ export class PassiveLayer {
       else { const dAn = rad(L.f(x) - L.base), anatHi = L.end === "hi", toHi = anatHi === (a.s > 0); if (toHi) hi += a.s * dAn; else lo += a.s * dAn; } }
     return [lo, hi];
   }
-  // one end-range term: U (J), own-axis generalised torque τ (N·m), own-axis stiffness kθ (N·m/rad) at constraint angle th
+  // one end-range term: U (J), own-axis generalised torque τ (N·m), own-axis stiffness kθ (N·m/rad) at constraint angle th. Beyond the
+  // ANATOMICAL hard limit the C2 end-stop adds ½·kStop·(θ − θh)² (a linear spring), so the passive tissue resists ordinary loading at the
+  // anatomical boundary and the Jolt engine stop (further out) is only an emergency stop.
   term(k, i, th, soft) {
     const a = this.jd[k].axes[i], B = a.B, [slo, shi] = soft, [hlo, hhi] = a.hard;
-    if (th > shi) { const A = a.tauH[1] / (dexp(B * Math.max(1e-4, hhi - shi)) - 1), e = dexp(B * (th - shi)); return { U: A * ((e - 1) / B - (th - shi)), tau: -A * (e - 1), k: A * B * e, side: 1 }; }
-    if (th < slo) { const A = a.tauH[0] / (dexp(B * Math.max(1e-4, slo - hlo)) - 1), e = dexp(B * (slo - th)); return { U: A * ((e - 1) / B - (slo - th)), tau: A * (e - 1), k: A * B * e, side: -1 }; }
+    if (th > shi) { const A = a.tauH[1] / (dexp(B * Math.max(1e-4, hhi - shi)) - 1), e = dexp(B * (th - shi)), x = th - hhi, ks = x > 0 ? a.kStop[1] : 0;
+      return { U: A * ((e - 1) / B - (th - shi)) + (x > 0 ? 0.5 * ks * x * x : 0), tau: -A * (e - 1) - ks * Math.max(0, x), k: A * B * e + ks, side: 1, stop: x > 0 }; }
+    if (th < slo) { const A = a.tauH[0] / (dexp(B * Math.max(1e-4, slo - hlo)) - 1), e = dexp(B * (slo - th)), x = hlo - th, ks = x > 0 ? a.kStop[0] : 0;
+      return { U: A * ((e - 1) / B - (slo - th)) + (x > 0 ? 0.5 * ks * x * x : 0), tau: A * (e - 1) + ks * Math.max(0, x), k: A * B * e + ks, side: -1, stop: x > 0 }; }
     return { U: 0, tau: 0, k: 0, side: 0 };
   }
   termU(k, i, qs) { const v = decompose(qs[k]), th = i === 0 ? v.tw : i === 1 ? v.sy : v.sz; return this.term(k, i, th, this.softOf(k, i, qs)).U; }
@@ -90,23 +95,33 @@ export class PassiveLayer {
     if (!this.enabled) { this.last = out; return out; }
     for (const d of this.jd) {
       const q0 = ev.qs[d.k], tau = [0, 0, 0], Jm = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];   // Jm[row θ_m][col φ_i]
+      const R2F2 = Q.mul(R[d.child], d.F2), axW = E.map(e => Q.rot(R2F2, e)), wrel = V.sub(states[d.child].w, states[d.parent].w), wi = axW.map(a => V.dot(wrel, a));
+      // PREDICTIVE linearisation (G1 C2 causal fix): the law is linearised at the predicted end-of-step rotation q0·exp(ω·dt), not at q0.
+      // A joint that crosses the stiff anatomical end-stop within one step therefore meets the stop's stiffness in that same step instead
+      // of entering it for free (measured: thoracic +9.2 J of U in one step, net +1.1 J, with start-of-step linearisation).
+      const phi = [0, 1, 2].map(i => (d.free[i] ? wi[i] * dt : 0)), pl = Math.hypot(phi[0], phi[1], phi[2]);
+      const qP = this.predictive && pl > 1e-12 ? Q.norm(Q.mul(q0, Q.axis([phi[0] / pl, phi[1] / pl, phi[2] / pl], pl))) : q0, qsP0 = ev.qs.slice(); qsP0[d.k] = qP;
       for (let i = 0; i < 3; i++) {
         if (!d.free[i]) continue;
-        const qp = Q.norm(Q.mul(q0, Q.axis(E[i], H))), qm = Q.norm(Q.mul(q0, Q.axis(E[i], -H)));
-        const qsP = ev.qs.slice(), qsM = ev.qs.slice(); qsP[d.k] = qp; qsM[d.k] = qm; let dU = 0;
+        const qp = Q.norm(Q.mul(qP, Q.axis(E[i], H))), qm = Q.norm(Q.mul(qP, Q.axis(E[i], -H)));
+        const qsP = qsP0.slice(), qsM = qsP0.slice(); qsP[d.k] = qp; qsM[d.k] = qm; let dU = 0;
         for (const [k, ii] of this.dep[d.k]) dU += this.termU(k, ii, qsP) - this.termU(k, ii, qsM);
         tau[i] = -dU / (2 * H);
         const vp = decompose(qp), vm = decompose(qm), tp = [vp.tw, vp.sy, vp.sz], tm = [vm.tw, vm.sy, vm.sz];
         for (let m = 0; m < 3; m++) { let dd = tp[m] - tm[m]; if (dd > Math.PI) dd -= 2 * Math.PI; if (dd < -Math.PI) dd += 2 * Math.PI; Jm[m][i] = dd / (2 * H); }
       }
-      // implicit stiffness per body-2 axis: diag(Jᵀ·diag(kθ)·J), own end-range stiffness only
-      const kth = ev.per[d.k].T.map(t => (t ? t.k : 0)), K = [0, 1, 2].map(i => kth.reduce((s, kk, m) => s + Jm[m][i] * Jm[m][i] * kk, 0));
-      const R2F2 = Q.mul(R[d.child], d.F2), axW = E.map(e => Q.rot(R2F2, e)), wrel = V.sub(states[d.child].w, states[d.parent].w), wi = axW.map(a => V.dot(wrel, a));
-      const delta = [0, 0, 0], Texp = [0, 0, 0], Kset = [0, 0, 0], lim = [0, 0, 0];
+      // implicit stiffness per body-2 axis at the predicted rotation: diag(Jᵀ·diag(kθ)·J), own end-range (+ end-stop) stiffness only
+      const vP = decompose(qP), thP = [vP.tw, vP.sy, vP.sz], kth = d.axes.map((a, i) => (a ? this.term(d.k, i, thP[i], this.softOf(d.k, i, qsP0)).k : 0));
+      const K = [0, 1, 2].map(i => kth.reduce((s, kk, m) => s + Jm[m][i] * Jm[m][i] * kk, 0));
+      const delta = [0, 0, 0], Texp = [0, 0, 0], Kset = [0, 0, 0], lim = [[0, 0], [0, 0], [0, 0]];
       for (let i = 0; i < 3; i++) { if (!d.free[i]) { continue; }
-        if (K[i] > K_MIN) { delta[i] = clamp(tau[i] / K[i], -DELTA_MAX, DELTA_MAX); Kset[i] = K[i]; }
-        Texp[i] = tau[i] - Kset[i] * delta[i];
-        lim[i] = Math.abs(tau[i]) + Kset[i] * (Math.abs(wi[i]) * dt + DTH_MAX) + d.c * (Math.abs(wi[i]) + DW_MAX) + LIM_MARGIN; }
+        let off = 0; if (K[i] > K_MIN) { off = clamp(tau[i] / K[i], -DELTA_MAX, DELTA_MAX); Kset[i] = K[i]; }
+        delta[i] = (this.predictive ? phi[i] : 0) + off; Texp[i] = tau[i] - Kset[i] * off;
+        // the elastic tissue only ever RESTORES: the drive may push toward the neutral range with the full linearised law, but in the other
+        // direction it carries at most the viscous damper — so an over-predicted step can never pull a joint toward its stop (a soft unilateral
+        // constraint, like a contact)
+        const big = Math.abs(tau[i]) + Kset[i] * (Math.abs(phi[i]) + DTH_MAX) + d.c * (Math.abs(wi[i]) + DW_MAX) + LIM_MARGIN, anti = d.c * Math.abs(wi[i]) + 0.05, damp = d.c * (Math.abs(wi[i]) + DW_MAX) + LIM_MARGIN;
+        lim[i] = !this.oneSided || Math.abs(tau[i]) < 1e-9 ? [-Math.max(big, damp), Math.max(big, damp)] : tau[i] > 0 ? [-anti, big] : [-big, anti]; }
       // target = q0 · exp(δ') with 2·sin(|δ'|/2) = |δ| so Jolt's error approximation (−2·Im(q⁻¹·target)) returns exactly δ per axis
       const dl = Math.hypot(delta[0], delta[1], delta[2]); let tgt = q0;
       if (dl > 0) { const ang = 2 * Math.asin(Math.min(1, dl / 2)); tgt = Q.norm(Q.mul(q0, Q.axis([delta[0] / dl, delta[1] / dl, delta[2] / dl], ang))); }

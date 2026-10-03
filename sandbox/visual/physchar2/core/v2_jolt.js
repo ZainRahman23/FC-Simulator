@@ -84,7 +84,8 @@ export class V2JoltWorld {
     s.mAxisX1 = new J.Vec3(...j.F1axes.x); s.mAxisY1 = new J.Vec3(...j.F1axes.y); s.mAxisX2 = new J.Vec3(...j.F2axes.x); s.mAxisY2 = new J.Vec3(...j.F2axes.y);
     s.mSwingType = J.ESwingType_Pyramid;
     for (const ax of A.lin) s.MakeFixedAxis(ax);
-    ["x", "y", "z"].forEach((k, i) => { if (j.locked.includes(k)) s.MakeFixedAxis(A.rot[i]); else s.SetLimitedAxis(A.rot[i], j.limits.hard.lo[i], j.limits.hard.hi[i]); });
+    const E = j.limits.engine || j.limits.hard;   // C2: the Jolt hard constraint is the emergency stop (anatomical hard ± ENGINE_MARGIN)
+    ["x", "y", "z"].forEach((k, i) => { if (j.locked.includes(k)) s.MakeFixedAxis(A.rot[i]); else s.SetLimitedAxis(A.rot[i], E.lo[i], E.hi[i]); });
     const c = J.castObject(s.Create(this.bodies[j.parentIndex], this.bodies[j.childIndex]), J.SixDOFConstraint); this.ps.AddConstraint(c); J.destroy(s);
     // motors: structural only (OFF). Directional torque limits = isometric capacity in that param direction; spring k = c = 0.
     ["x", "y", "z"].forEach((k, i) => { c.SetMaxFriction(A.rot[i], 0); const cap = j.capacity[k]; if (!cap) return;
@@ -118,8 +119,8 @@ export class V2JoltWorld {
   setVel(i, v, w) { const id = this.bodies[i].GetID(), t = this._t; t.v.Set(v[0], v[1], v[2]); this.bi.SetLinearVelocity(id, t.v); t.v.Set(w[0], w[1], w[2]); this.bi.SetAngularVelocity(id, t.v); }
   get _t() { const J = this.J; return this.__t || (this.__t = { q: new J.Quat(0, 0, 0, 1), v: new J.Vec3(0, 0, 0), w: new J.Vec3(0, 0, 0) }); }
   // passive drive on joint k, constraint axis i (0 twist, 1 swing Y, 2 swing Z): implicit spring k (N·m/rad) + damper c (N·m·s/rad), |τ| ≤ lim
-  setDrive(k, i, stiffness, damping, lim) { const ms = this.cons[k].c.GetMotorSettings(this._axes.rot[i]), sp = ms.mSpringSettings;
-    sp.mMode = this.J.ESpringMode_StiffnessAndDamping; sp.mStiffness = stiffness; sp.mDamping = damping; ms.mMinTorqueLimit = -lim; ms.mMaxTorqueLimit = lim; }
+  setDrive(k, i, stiffness, damping, lim) { const ms = this.cons[k].c.GetMotorSettings(this._axes.rot[i]), sp = ms.mSpringSettings, [lo, hi] = Array.isArray(lim) ? lim : [-lim, lim];
+    sp.mMode = this.J.ESpringMode_StiffnessAndDamping; sp.mStiffness = stiffness; sp.mDamping = damping; ms.mMinTorqueLimit = lo; ms.mMaxTorqueLimit = hi; }
   driveOn(k, i) { this.cons[k].c.SetMotorState(this._axes.rot[i], this.J.EMotorState_PositionAndVelocity); }
   setDriveTarget(k, q) { const t = this._t, c = this.cons[k].c; t.q.Set(q[0], q[1], q[2], q[3]); c.SetTargetOrientationCS(t.q); t.w.Set(0, 0, 0); c.SetTargetAngularVelocityCS(t.w); }
   // equal-and-opposite torque (N·m, world) on a joint's child (+) and parent (−) for the next step — internal, momentum-conserving

@@ -1312,17 +1312,17 @@
     "evidence": "chest depth 0.131 H (ANSUR subset 237 mm); breadth 0.165 H (< Drillis external chest 0.174 H)"
    },
    "head": {
-    "shape": "AP capsule + neck capsule (C1, amended 2026-10-02)",
-    "capsule_r": 0.08008,
-    "capsule_halfLength": 0.02366,
-    "capsule_axis": "anterior-posterior",
-    "capsule_centre": [
+    "shape": "AP sphere pair + neck capsule (collision representation C4, 2026-10-03; dimensions of the C1 AP capsule)",
+    "sphere_r": 0.08008,
+    "sphere_offset_AP": 0.02366,
+    "pair_axis": "anterior-posterior",
+    "pair_centre": [
      0,
      1.75082,
      0.01001
     ],
     "neck_r": 0.0546,
-    "evidence": "head length 0.114 H, breadth 0.088 H (ANSUR II): r = breadth / 2, half-length = (length - breadth) / 2; a sphere (r 0.0525 H) was +15.5 mm outside the breadth tolerance"
+    "evidence": "head length 0.114 H, breadth 0.088 H (ANSUR II): r = breadth / 2, sphere centres at +/-(length - breadth) / 2 along AP -> AP extent = length, breadth = 2r (3.7 mm waist at the sides, inside the -15..+5 mm head tolerance). C1 chose an AP capsule; G1 showed Jolt's capsule face heuristic rests its end cap up to 7.5 mm into the turf; C4 keeps the dimensions with two spheres"
    },
    "upperArm": {
     "shape": "deltoid sphere + taperedCapsule",
@@ -2632,17 +2632,17 @@
     "evidence": "chest depth 0.131 H (ANSUR subset 237 mm); breadth 0.165 H (< Drillis external chest 0.174 H)"
    },
    "head": {
-    "shape": "AP capsule + neck capsule (C1, amended 2026-10-02)",
-    "capsule_r": 0.0836,
-    "capsule_halfLength": 0.024699999999999996,
-    "capsule_axis": "anterior-posterior",
-    "capsule_centre": [
+    "shape": "AP sphere pair + neck capsule (collision representation C4, 2026-10-03; dimensions of the C1 AP capsule)",
+    "sphere_r": 0.0836,
+    "sphere_offset_AP": 0.024699999999999996,
+    "pair_axis": "anterior-posterior",
+    "pair_centre": [
      0,
      1.8269,
      0.01045
     ],
     "neck_r": 0.056999999999999995,
-    "evidence": "head length 0.114 H, breadth 0.088 H (ANSUR II): r = breadth / 2, half-length = (length - breadth) / 2; a sphere (r 0.0525 H) was +15.5 mm outside the breadth tolerance"
+    "evidence": "head length 0.114 H, breadth 0.088 H (ANSUR II): r = breadth / 2, sphere centres at +/-(length - breadth) / 2 along AP -> AP extent = length, breadth = 2r (3.7 mm waist at the sides, inside the -15..+5 mm head tolerance). C1 chose an AP capsule; G1 showed Jolt's capsule face heuristic rests its end cap up to 7.5 mm into the turf; C4 keeps the dimensions with two spheres"
    },
    "upperArm": {
     "shape": "deltoid sphere + taperedCapsule",

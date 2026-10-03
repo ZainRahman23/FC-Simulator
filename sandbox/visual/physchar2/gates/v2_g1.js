@@ -11,8 +11,10 @@ import { PassiveLayer } from "../sim/v2_passive.js";
 import { bodyLowest, lowestOf, bootSole, hull2, insideDist } from "../sim/v2_geom.js";
 
 // ── world configuration (spec §19 / §15.4; solver iterations are chosen by the 1.5 study) ─────────────────────────────────────────────
-export const G1_WORLD = { hz: 240, coll: 1, velSteps: 10, posSteps: 2, ccd: "discrete" };
-export const ITERATION_SET = [10, 15, 20, 30];                  // spec §22 1.5
+// G1 decision C1 (2026-10-03): 60 velocity iterations is the validated V2 baseline (removes the warm-start impact injection measured at
+// 10–30; ≈ +12 % solver cost). Not necessarily the production optimum.
+export const G1_WORLD = { hz: 240, coll: 1, velSteps: 60, posSteps: 2, ccd: "discrete" };
+export const ITERATION_SET = [10, 15, 20, 30, 60];              // spec §22 1.5 set + the C1 baseline (informational study)
 export const RATE_SET = [180, 240, 360, 720];                    // brief §8: bounded sensitivity around 240 Hz (720 Hz = converged reference)
 export const G = 9.81;
 
@@ -106,7 +108,7 @@ export class G1Sim {
     const nj = this.spec.joints.length;
     return { finite: true, firstNaN: null, maxSpeed: 0, maxW: 0, E: [], Dstep: [], turfContactStep: [], anyContactStep: [],
       axis: this.spec.joints.map(j => [0, 1, 2].map(i => (j.locked.includes(KEYS[i]) ? null : { thMin: Infinity, thMax: -Infinity, anMin: Infinity, anMax: -Infinity, marginMin: Infinity, softExcMax: 0,
-        hardSteps: 0, toggles: [], at: false, restMarginMin: Infinity }))),
+        hardSteps: 0, toggles: [], at: false, restMarginMin: Infinity, overLo: 0, overHi: 0, engineTicks: 0, engAt: false, engToggles: 0 }))),
       sepMax: 0, sepMaxAt: null, sepRest: 0, frameJumpMax: 0, frameJumpAt: null, hardExcMax: 0, hardExcAt: null, hardExcRest: 0,
       turfPenMax: 0, turfPenAt: null, turfPenRest: 0, turfManifoldMax: -1, selfPenMax: 0, selfPenAt: null, selfPenRest: 0,
       ground: {}, pairs: {}, disabledHits: 0, seq: [], restKEmax: 0, restJitter: 0, restW: [],
@@ -153,7 +155,10 @@ export class G1Sim {
       for (let i = 0; i < 3; i++) { const X = A.axis[k][i]; if (!X) continue; const th = per.th[i], lo = j.limits.hard.lo[i], hi = j.limits.hard.hi[i], m = Math.min(th - lo, hi - th), soft = per.T[i] ? per.T[i].soft : [j.limits.soft.lo[i], j.limits.soft.hi[i]];
         X.thMin = Math.min(X.thMin, th); X.thMax = Math.max(X.thMax, th); const anat = anv[i] * j.def.axes[KEYS[i]].s * D; X.anMin = Math.min(X.anMin, anat); X.anMax = Math.max(X.anMax, anat);
         if (m < X.marginMin) { X.marginMin = m; X.marginAt = t; } X.softExcMax = Math.max(X.softExcMax, th - soft[1], soft[0] - th, 0);
-        const atHard = m < rad(0.25); if (atHard) X.hardSteps++; if (atHard !== X.at) { X.toggles.push(n); X.at = atHard; }
+        X.overLo = Math.max(X.overLo, lo - th); X.overHi = Math.max(X.overHi, th - hi);              // overshoot beyond the ANATOMICAL hard limit, per end
+        const E = j.limits.engine || j.limits.hard, me = Math.min(th - E.lo[i], E.hi[i] - th), atEng = me < rad(0.25);   // C2: contact with the Jolt emergency stop
+        if (atEng) X.engineTicks++; if (atEng !== X.engAt) { X.engToggles++; X.engAt = atEng; }
+        const atHard = (j.limits.engine ? me : m) < rad(0.25); if (atHard) X.hardSteps++; if (atHard !== X.at) { X.toggles.push(n); X.at = atHard; }
         if (-m > hardExc) hardExc = -m; if (rest) X.restMarginMin = Math.min(X.restMarginMin, m); }
     });
     this.prevQ = ev.per.map(p => p.q);
@@ -205,7 +210,8 @@ export class G1Sim {
     const axes = [];
     spec.joints.forEach((j, k) => A.axis[k].forEach((X, i) => { if (!X) return; const W = Math.round(0.5 * hz); let chat = 0; for (let a = 0, b = 0; b < X.toggles.length; b++) { while (X.toggles[b] - X.toggles[a] > W) a++; chat = Math.max(chat, b - a + 1); }
       axes.push({ joint: j.name, axis: KEYS[i], motion: `${j.def.axes[KEYS[i]].pos} / ${j.def.axes[KEYS[i]].neg}`, anMin: X.anMin, anMax: X.anMax, thMin: X.thMin * D, thMax: X.thMax * D, hardLo: j.limits.hard.lo[i] * D, hardHi: j.limits.hard.hi[i] * D,
-        softLo: j.limits.soft.lo[i] * D, softHi: j.limits.soft.hi[i] * D, marginMinDeg: X.marginMin * D, marginAt: X.marginAt, softExcMaxDeg: X.softExcMax * D, hardSteps: X.hardSteps, chatterPer05s: chat, restMarginMinDeg: X.restMarginMin * D }); }));
+        softLo: j.limits.soft.lo[i] * D, softHi: j.limits.soft.hi[i] * D, marginMinDeg: X.marginMin * D, marginAt: X.marginAt, softExcMaxDeg: X.softExcMax * D, hardSteps: X.hardSteps, chatterPer05s: chat, restMarginMinDeg: X.restMarginMin * D,
+        overLoDeg: X.overLo * D, overHiDeg: X.overHi * D, engineTicks: X.engineTicks, engineLo: (j.limits.engine || j.limits.hard).lo[i] * D, engineHi: (j.limits.engine || j.limits.hard).hi[i] * D, sign: j.def.axes[KEYS[i]].s, key: j.def.axes[KEYS[i]].key }); }));
     const thorax = this.st[spec.bodies.findIndex(b => b.name === "thorax")], ant = Q.rot(thorax.rot, [0, 0, 1]), posture = ant[1] > 0.5 ? "supine" : ant[1] < -0.5 ? "prone" : (Q.rot(thorax.rot, [1, 0, 0])[1] > 0 ? "on left side" : "on right side");
     const firstNonFoot = A.seq.find(s => !/^foot_/.test(s.who)) || null;
     const restJitter = A.restW.length ? Math.max(...A.restW) : 0;
@@ -213,6 +219,7 @@ export class G1Sim {
       finite: A.finite, firstNaN: A.firstNaN, maxSpeed: A.maxSpeed, maxW: A.maxW,
       energy: { E0: E[0], Eend: E[N], maxRiseJ: maxRise, maxRiseAt, unexplainedJ: unexplained, firstContactT: tc < 0 ? null : tc * dt, monoViolJ: mono, monoAt, airborneClosureJ: airClose, airGainMaxJ: airGain, airLossSumJ: airLoss, dampingJ: this.Dcum, Uend: A.Ulist[N] },
       freeFall: { steps: ffSteps, maxAccDev: ffDev }, momentum: { dP: dPm, dL: dLm, P0, L0, pScale: A.pAbsMax, lScale: A.lAbsMax, dPrel: dPm / Math.max(1e-12, A.pAbsMax), dLrel: dLm / Math.max(1e-12, A.lAbsMax) },
+      engine: { ticks: axes.reduce((s, a) => s + a.engineTicks, 0), axes: axes.filter(a => a.engineTicks > 0).map(a => `${a.joint}.${a.key}:${a.engineTicks}`) },
       joints: { sepMaxMm: A.sepMax * 1000, sepMaxAt: A.sepMaxAt, sepRestMm: A.sepRest * 1000, hardExcMaxDeg: A.hardExcMax * D, hardExcAt: A.hardExcAt, hardExcRestDeg: A.hardExcRest * D,
         frameJumpMaxDeg: A.frameJumpMax * D, frameJumpAt: A.frameJumpAt, chatterMax: Math.max(0, ...axes.map(a => a.chatterPer05s)), axes },
       contacts: { turfPenMaxMm: A.turfPenMax * 1000, turfPenAt: A.turfPenAt, turfPenRestMm: A.turfPenRest * 1000, turfPenRestBody: A.turfPenRestBody || null, turfManifoldMaxMm: A.turfManifoldMax * 1000,

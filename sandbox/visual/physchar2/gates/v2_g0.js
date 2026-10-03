@@ -86,7 +86,7 @@ export function g0Body(J, human, opts = {}) {
   add_("0.6a", "inter-HJC distance", interHJC >= TOL.interHJC[0] && interHJC <= TOL.interHJC[1], `${interHJC.toFixed(4)} H = ${(2 * L.hipHalf).toFixed(3)} m`, `${TOL.interHJC[0]}–${TOL.interHJC[1]} H`);
   add_("0.6b", "inter-SJC distance within ±10 % of the spec value", Math.abs(interSJC - sjcExpect) / sjcExpect <= TOL.interSJCrel, `${interSJC.toFixed(4)} H = ${(2 * L.shoulderHalf).toFixed(3)} m`, `${sjcExpect.toFixed(3)} H ± 10 %`);
   add_("0.6c", "generated stature: vertex landmark − sole = H", Math.abs(L.yVERT - sole - H) <= 1e-12, (L.yVERT - sole).toFixed(6) + " m", `${H} m exact`, `stature closure (HJC + de Leva trunk + head − H) = ${(1000 * L.closure).toFixed(1)} mm`);
-  const hdS = byName.head.shapes[0], headTop = byName.head.origin[1] + hdS.pos[1] + hdS.r;            // AP capsule (C1): vertical half-extent = r
+  const hdS = byName.head.shapes[0], headTop = byName.head.origin[1] + Math.max(hdS.pos[1], byName.head.shapes[1].pos[1]) + hdS.r;   // AP sphere pair (C4): top = centre + r
   add_("0.6d", "collider stature: top of the head collider vs vertex", headTop - L.yVERT >= TOL.headTol[0] && headTop - L.yVERT <= TOL.headTol[1], (1000 * (headTop - L.yVERT)).toFixed(1) + " mm", "−15 … +5 mm");
   const sjcDrop = (PROFILE.sjcH - 0.818) * H;
   add_("0.6e", "segment lengths = profile fractions (leg = 0.476 H, thigh / shank / upper arm / forearm)", Math.abs(L.legLength - (PROFILE.hipH - PROFILE.ankleH) * H * (human.overrides?.legScale ?? 1)) < 1e-12 && Math.abs(L.segLen.upperArm - 281.7 / 1741 * H * (human.overrides?.armScale ?? 1)) < 1e-12,
@@ -164,7 +164,7 @@ export function g0Body(J, human, opts = {}) {
     const d = decompose(j.qCanon), v = [d.tw, d.sy, d.sz];
     for (let i = 0; i < 3; i++) { if (j.locked.includes("xyz"[i])) { if (Math.abs(v[i]) > 1e-9) { minMargin = -1; mmAt = j.name + " locked axis " + "xyz"[i]; } continue; }
       const m = Math.min(v[i] - j.limits.hard.lo[i], j.limits.hard.hi[i] - v[i]) * D; if (m < minMargin) { minMargin = m; mmAt = `${j.name} ${"xyz"[i]}`; } }
-    const t = (a) => Math.tan(a / 2); for (const sy of [j.limits.hard.lo[1], j.limits.hard.hi[1]]) for (const sz of [j.limits.hard.lo[2], j.limits.hard.hi[2]]) {
+    const E = j.limits.engine || j.limits.hard, t = (a) => Math.tan(a / 2); for (const sy of [E.lo[1], E.hi[1]]) for (const sz of [E.lo[2], E.hi[2]]) {   // C2: the engine box (≥ anatomical)
       const sw = 2 * Math.atan(Math.sqrt(t(sy) ** 2 + t(sz) ** 2)) * D, marg = 180 - sw; if (marg < minSing) { minSing = marg; msAt = j.name; } }
   }
   add_("0.9a", "canonical pose inside every joint's hard limits (margin)", minMargin >= TOL.canonicalMarginDeg, `${minMargin.toFixed(2)}° (${mmAt})`, `≥ ${TOL.canonicalMarginDeg}°`);
@@ -215,16 +215,17 @@ export function g0Body(J, human, opts = {}) {
   // 0.10 colliders vs anthropometric surfaces
   const surf = [];
   const delt = byName.upperArm_R.shapes[0], bidel = 2 * (byName.upperArm_R.origin[0] + delt.pos[0] + delt.r); surf.push({ what: "bideltoid (deltoid spheres)", v: (bidel - PROFILE.bideltoid * H) / 2, tol: TOL.limbTol });
-  const hd = byName.head.shapes[0], apAxis = Q.rot(hd.rot, [0, 1, 0]);                                 // C1 AP capsule: axis must be anatomical AP (+Z)
-  surf.push({ what: "head capsule AP half-extent vs head length / 2", v: hd.half + hd.r - PROFILE.headLength * H / 2, tol: TOL.headTol });
-  surf.push({ what: "head capsule lateral half-extent vs head breadth / 2", v: hd.r - PROFILE.headBreadth * H / 2, tol: TOL.headTol });
-  surf.push({ what: "head capsule axis = anterior–posterior", v: (1 - Math.abs(apAxis[2])) * 0, tol: [-1e-12, 1e-12], ok: hd.type === "capsule" && Math.abs(apAxis[2]) > 1 - 1e-12 });
+  const hA = byName.head.shapes[0], hP = byName.head.shapes[1], sep = V.sub(hA.pos, hP.pos), hOff = V.len(sep) / 2;   // C4 AP sphere pair (C1 dimensions)
+  surf.push({ what: "head sphere-pair AP half-extent vs head length / 2", v: hOff + hA.r - PROFILE.headLength * H / 2, tol: TOL.headTol });
+  surf.push({ what: "head sphere-pair lateral half-extent vs head breadth / 2", v: hA.r - PROFILE.headBreadth * H / 2, tol: TOL.headTol });
+  surf.push({ what: "head sphere-pair side waist (between the centres) vs head breadth / 2", v: Math.sqrt(hA.r * hA.r - hOff * hOff) - PROFILE.headBreadth * H / 2, tol: TOL.headTol });
+  surf.push({ what: "head sphere pair along anterior–posterior", v: 0, tol: [-1e-12, 1e-12], ok: hA.type === "sphere" && hP.type === "sphere" && Math.abs(hA.r - hP.r) < 1e-15 && Math.abs(sep[0]) < 1e-12 && Math.abs(sep[1]) < 1e-12 && sep[2] > 0 });
   const pb = byName.pelvis.shapes[0]; surf.push({ what: "pelvis box vs hip breadth / 2", v: pb.he[0] - 0.190 * H / 2, tol: TOL.trunkTol });
   const cb = byName.thorax.shapes[0]; surf.push({ what: "thorax box vs chest depth / 2", v: cb.he[2] - PROFILE.chestDepth * H / 2, tol: TOL.trunkTol }, { what: "thorax box vs Drillis chest breadth 0.174 H / 2", v: cb.he[0] - 0.174 * H / 2, tol: TOL.trunkTol });
   const ab = byName.abdomen.shapes[0]; surf.push({ what: "abdomen box vs waist depth / 2", v: ab.he[2] - PROFILE.waistDepth * H / 2, tol: TOL.trunkTol });
   const surfBad = surf.filter(x => x.v < x.tol[0] - 1e-12 || x.v > x.tol[1] + 1e-12 || x.ok === false);
   add_("0.10a", "colliders vs anthropometric surfaces (§15.1 tolerances: limbs −10…+3, trunk −20…+5, head −15…+5 mm)", surfBad.length === 0,
-    surf.filter(x => x.ok === undefined).map(x => `${x.what} ${(1000 * x.v).toFixed(1)} mm`).join("; ") + `; head axis AP ${surf.find(x => x.ok !== undefined).ok}`, "within tolerance", surfBad.length ? "OUTSIDE: " + surfBad.map(x => x.what).join(", ") : "");
+    surf.filter(x => x.ok === undefined).map(x => `${x.what} ${(1000 * x.v).toFixed(1)} mm`).join("; ") + `; head pair along AP ${surf.find(x => x.ok !== undefined).ok}`, "within tolerance", surfBad.length ? "OUTSIDE: " + surfBad.map(x => x.what).join(", ") : "");
   const ft = byName.foot_R, hull = ft.shapes[0].points, ext = (k, f) => f(...hull.map(p => p[k]));
   const footDims = { length: ext(2, Math.max) - ext(2, Math.min), width: ext(0, Math.max) - ext(0, Math.min), heel: -ext(2, Math.min), tip: ext(2, Math.max), soleY: ext(1, Math.min) + ft.origin[1] };
   const fdOK = Math.abs(footDims.length - ft.boot.length) <= TOL.bootTol && Math.abs(footDims.width - ft.boot.ballWidth) <= TOL.bootTol && Math.abs(footDims.heel - ft.boot.heelBehindAJC) <= 1e-12 &&
@@ -262,7 +263,7 @@ function engineChecks(J, S, opts) {
   S.joints.forEach((j, k) => { const r = w.readbackJoint(k), b1 = S.bodies[j.parentIndex], b2 = S.bodies[j.childIndex];
     const c1 = add(b1.origin, b1.comLocal), c2 = add(b2.origin, b2.comLocal);
     fr = Math.max(fr, dist(r.toBody1.x, j.F1axes.x), dist(r.toBody1.y, j.F1axes.y), dist(r.toBody2.x, j.F2axes.x), dist(r.toBody2.y, j.F2axes.y), dist(r.toBody1.t, sub(j.at, c1)), dist(r.toBody2.t, sub(j.at, c2)));
-    for (let i = 0; i < 3; i++) { if (j.locked.includes("xyz"[i])) { if (!r.fixedRot[i]) fixOK = false; continue; } lim = Math.max(lim, Math.abs(r.rotLo[i] - j.limits.hard.lo[i]), Math.abs(r.rotHi[i] - j.limits.hard.hi[i])); }
+    for (let i = 0; i < 3; i++) { if (j.locked.includes("xyz"[i])) { if (!r.fixedRot[i]) fixOK = false; continue; } const E = j.limits.engine || j.limits.hard; lim = Math.max(lim, Math.abs(r.rotLo[i] - E.lo[i]), Math.abs(r.rotHi[i] - E.hi[i])); }   // C2: Jolt holds the engine (emergency) stop
     if (!r.fixedLin.every(Boolean)) fixOK = false; if (!r.motorState.every(s => s === r.motorOff)) motorOK = false;
     ["x", "y", "z"].forEach((ak, i) => { const cap = j.capacity[ak]; if (cap) motLim = Math.max(motLim, Math.abs(r.motorLimits[i][0] + cap.minus.Nm), Math.abs(r.motorLimits[i][1] - cap.plus.Nm)); fric = Math.max(fric, Math.abs(r.friction[i])); });
     qcs = Math.max(qcs, qAngle(r.qCS, j.qCanon)); });
@@ -315,7 +316,7 @@ export function specAgreement(S, ref) {
     if (m > wm) { wm = m; at.m = b.name; } if (c > wc) { wc = c; at.c = b.name; } if (I > wi) { wi = I; at.i = b.name; } }
   for (const s of ref.skeleton) { const d = Math.max(...S.skeleton.positions[s.bone].map((x, i) => Math.abs(x - s.pos_ccs[i]))); if (d > ws) { ws = d; at.s = s.bone; } }
   const rc = ref.colliders, b = (n) => S.bodies.find(x => x.name === n);
-  const cDiff = Math.max(Math.abs(b("pelvis").shapes[0].he[0] * 2 - rc.pelvis.size_m[0]), Math.abs(b("thorax").shapes[0].he[2] * 2 - rc.thorax.size_m[2]), Math.abs(b("head").shapes[0].r - rc.head.capsule_r), Math.abs(b("head").shapes[0].half - rc.head.capsule_halfLength),
+  const cDiff = Math.max(Math.abs(b("pelvis").shapes[0].he[0] * 2 - rc.pelvis.size_m[0]), Math.abs(b("thorax").shapes[0].he[2] * 2 - rc.thorax.size_m[2]), Math.abs(b("head").shapes[0].r - rc.head.sphere_r), Math.abs(V.len(V.sub(b("head").shapes[0].pos, b("head").shapes[1].pos)) / 2 - rc.head.sphere_offset_AP),
     Math.abs(b("thigh_R").shapes[0].rTop - rc.thigh.r_prox), Math.abs(b("shank_R").shapes[0].rTop - rc.shank.r_prox), Math.abs(b("shank_R").shapes[0].rBot - rc.shank.r_dist),
     Math.abs(b("upperArm_R").shapes[1].rTop - rc.upperArm.r_prox), Math.abs(b("forearm_R").shapes[0].rBot - rc.forearm.r_dist),
     Math.abs(b("foot_R").boot.length - rc.foot.boot_len), Math.abs(b("foot_R").boot.ballWidth - rc.foot.ball_w), Math.abs(b("foot_R").boot.tipAheadAJC - rc.foot.tip_ahead_AJC), Math.abs(b("foot_R").boot.heelBehindAJC - rc.foot.heel_behind_AJC));

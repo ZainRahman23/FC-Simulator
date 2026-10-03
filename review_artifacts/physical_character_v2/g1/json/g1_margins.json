@@ -1,0 +1,709 @@
+{
+ "generated": "tools/g1_margins.js",
+ "world": {
+  "hz": 240,
+  "coll": 1,
+  "velSteps": 60,
+  "posSteps": 2,
+  "ccd": "discrete"
+ },
+ "rule": "margin = max(2°, ceil(1.5 × envelope overshoot + 1°)); envelope = V2-REF G1 scenarios except impact15, engine stops +40°",
+ "envelope": [
+  "upright",
+  "leanF",
+  "leanB",
+  "leanL",
+  "leanR",
+  "perturb",
+  "singleLeg",
+  "dropA",
+  "sideFirst",
+  "shoulderFirst",
+  "rotating",
+  "awkward",
+  "flatSupine",
+  "drop1m",
+  "isoMomentum",
+  "isoSelfCol"
+ ],
+ "rows": [
+  {
+   "cls": "ankle",
+   "key": "df",
+   "dir": "neg",
+   "envOvershootDeg": 8.48,
+   "where": "drop1m ankle_L",
+   "rig": {
+    "2": -8.44,
+    "5": -6.26,
+    "10": -3.08
+   },
+   "marginDeg": 14
+  },
+  {
+   "cls": "ankle",
+   "key": "df",
+   "dir": "pos",
+   "envOvershootDeg": 4.89,
+   "where": "singleLeg ankle_R",
+   "rig": {
+    "2": -23.07,
+    "5": -20.43,
+    "10": -16.56
+   },
+   "marginDeg": 9
+  },
+  {
+   "cls": "ankle",
+   "key": "fabd",
+   "dir": "neg",
+   "envOvershootDeg": 6.76,
+   "where": "perturb ankle_R",
+   "rig": {
+    "2": -4.23,
+    "5": -3.14,
+    "10": -1.41
+   },
+   "marginDeg": 12
+  },
+  {
+   "cls": "ankle",
+   "key": "fabd",
+   "dir": "pos",
+   "envOvershootDeg": 14.42,
+   "where": "awkward ankle_R",
+   "rig": {
+    "2": -4.23,
+    "5": -3.14,
+    "10": -1.41
+   },
+   "marginDeg": 23
+  },
+  {
+   "cls": "ankle",
+   "key": "inv",
+   "dir": "neg",
+   "envOvershootDeg": 10.63,
+   "where": "leanL ankle_L",
+   "rig": {
+    "2": -9.44,
+    "5": -8.49,
+    "10": -6.97
+   },
+   "marginDeg": 17
+  },
+  {
+   "cls": "ankle",
+   "key": "inv",
+   "dir": "pos",
+   "envOvershootDeg": 9.02,
+   "where": "singleLeg ankle_R",
+   "rig": {
+    "2": -9.39,
+    "5": -8.41,
+    "10": -6.84
+   },
+   "marginDeg": 15
+  },
+  {
+   "cls": "elbow",
+   "key": "flex",
+   "dir": "neg",
+   "envOvershootDeg": 3.4,
+   "where": "rotating elbow_R",
+   "rig": {
+    "2": -2.87,
+    "5": 0.02,
+    "10": 2.3
+   },
+   "marginDeg": 7
+  },
+  {
+   "cls": "elbow",
+   "key": "flex",
+   "dir": "pos",
+   "envOvershootDeg": 0,
+   "where": "—",
+   "rig": {
+    "2": -2.3,
+    "5": 0.86,
+    "10": 3.52
+   },
+   "marginDeg": 2
+  },
+  {
+   "cls": "elbow",
+   "key": "pron",
+   "dir": "neg",
+   "envOvershootDeg": 1.83,
+   "where": "leanB elbow_R",
+   "rig": {
+    "2": -4.45,
+    "5": -3.64,
+    "10": -2.35
+   },
+   "marginDeg": 4
+  },
+  {
+   "cls": "elbow",
+   "key": "pron",
+   "dir": "pos",
+   "envOvershootDeg": 0,
+   "where": "—",
+   "rig": {
+    "2": -7.31,
+    "5": -6.3,
+    "10": -4.69
+   },
+   "marginDeg": 2
+  },
+  {
+   "cls": "hip",
+   "key": "abd",
+   "dir": "neg",
+   "envOvershootDeg": 4.04,
+   "where": "awkward hip_R",
+   "rig": {
+    "2": -1.27,
+    "5": 1.37,
+    "10": 3.61
+   },
+   "marginDeg": 8
+  },
+  {
+   "cls": "hip",
+   "key": "abd",
+   "dir": "pos",
+   "envOvershootDeg": 7.01,
+   "where": "awkward hip_L",
+   "rig": {
+    "2": 0.94,
+    "5": 6.29,
+    "10": 14.02
+   },
+   "marginDeg": 12
+  },
+  {
+   "cls": "hip",
+   "key": "flex",
+   "dir": "neg",
+   "envOvershootDeg": 1.53,
+   "where": "awkward hip_L",
+   "rig": {
+    "2": -3.51,
+    "5": 2.03,
+    "10": 6.22
+   },
+   "marginDeg": 4
+  },
+  {
+   "cls": "hip",
+   "key": "flex",
+   "dir": "pos",
+   "envOvershootDeg": 2.73,
+   "where": "awkward hip_R",
+   "rig": {
+    "2": -3.26,
+    "5": 4.06,
+    "10": 10.19
+   },
+   "marginDeg": 6
+  },
+  {
+   "cls": "hip",
+   "key": "rot",
+   "dir": "neg",
+   "envOvershootDeg": 2.41,
+   "where": "perturb hip_L",
+   "rig": {
+    "2": -7.96,
+    "5": -5.19,
+    "10": -1.2
+   },
+   "marginDeg": 5
+  },
+  {
+   "cls": "hip",
+   "key": "rot",
+   "dir": "pos",
+   "envOvershootDeg": 6.13,
+   "where": "perturb hip_R",
+   "rig": {
+    "2": -11.95,
+    "5": -7.94,
+    "10": -2.43
+   },
+   "marginDeg": 11
+  },
+  {
+   "cls": "knee",
+   "key": "flex",
+   "dir": "neg",
+   "envOvershootDeg": 4.47,
+   "where": "flatSupine knee_L",
+   "rig": {
+    "2": -1.81,
+    "5": 1.48,
+    "10": 4.64
+   },
+   "marginDeg": 8
+  },
+  {
+   "cls": "knee",
+   "key": "flex",
+   "dir": "pos",
+   "envOvershootDeg": 9.25,
+   "where": "dropA knee_L",
+   "rig": {
+    "2": -9.51,
+    "5": -3.58,
+    "10": 0.33
+   },
+   "marginDeg": 15
+  },
+  {
+   "cls": "knee",
+   "key": "rot",
+   "dir": "neg",
+   "envOvershootDeg": 7.29,
+   "where": "perturb knee_R",
+   "rig": {
+    "2": -8.68,
+    "5": -6.83,
+    "10": -3.39
+   },
+   "marginDeg": 12
+  },
+  {
+   "cls": "knee",
+   "key": "rot",
+   "dir": "pos",
+   "envOvershootDeg": 16.56,
+   "where": "awkward knee_R",
+   "rig": {
+    "2": -8.68,
+    "5": -6.83,
+    "10": -3.2
+   },
+   "marginDeg": 26
+  },
+  {
+   "cls": "lumbar",
+   "key": "flex",
+   "dir": "neg",
+   "envOvershootDeg": 0,
+   "where": "—",
+   "rig": {
+    "2": 0.34,
+    "5": 4.68,
+    "10": 11.73
+   },
+   "marginDeg": 2
+  },
+  {
+   "cls": "lumbar",
+   "key": "flex",
+   "dir": "pos",
+   "envOvershootDeg": 5.32,
+   "where": "leanB lumbar",
+   "rig": {
+    "2": -3.25,
+    "5": 3.07,
+    "10": 8.77
+   },
+   "marginDeg": 9
+  },
+  {
+   "cls": "lumbar",
+   "key": "lat",
+   "dir": "neg",
+   "envOvershootDeg": 2.59,
+   "where": "singleLeg lumbar",
+   "rig": {
+    "2": 1.47,
+    "5": 7,
+    "10": 15.64
+   },
+   "marginDeg": 5
+  },
+  {
+   "cls": "lumbar",
+   "key": "lat",
+   "dir": "pos",
+   "envOvershootDeg": 5.42,
+   "where": "singleLeg lumbar",
+   "rig": {
+    "2": 1.47,
+    "5": 7,
+    "10": 15.64
+   },
+   "marginDeg": 10
+  },
+  {
+   "cls": "lumbar",
+   "key": "rot",
+   "dir": "neg",
+   "envOvershootDeg": 3.51,
+   "where": "awkward lumbar",
+   "rig": {
+    "2": -0.91,
+    "5": 1.59,
+    "10": 5.45
+   },
+   "marginDeg": 7
+  },
+  {
+   "cls": "lumbar",
+   "key": "rot",
+   "dir": "pos",
+   "envOvershootDeg": 5.57,
+   "where": "rotating lumbar",
+   "rig": {
+    "2": -0.91,
+    "5": 1.59,
+    "10": 5.45
+   },
+   "marginDeg": 10
+  },
+  {
+   "cls": "neck",
+   "key": "flex",
+   "dir": "neg",
+   "envOvershootDeg": 16,
+   "where": "drop1m neck",
+   "rig": {
+    "2": -3.86,
+    "5": 1.83,
+    "10": 6.05
+   },
+   "marginDeg": 25
+  },
+  {
+   "cls": "neck",
+   "key": "flex",
+   "dir": "pos",
+   "envOvershootDeg": 20.31,
+   "where": "drop1m neck",
+   "rig": {
+    "2": -5.16,
+    "5": 0.51,
+    "10": 3.9
+   },
+   "marginDeg": 32
+  },
+  {
+   "cls": "neck",
+   "key": "lat",
+   "dir": "neg",
+   "envOvershootDeg": 2.26,
+   "where": "leanL neck",
+   "rig": {
+    "2": -1.71,
+    "5": 1.59,
+    "10": 4.82
+   },
+   "marginDeg": 5
+  },
+  {
+   "cls": "neck",
+   "key": "lat",
+   "dir": "pos",
+   "envOvershootDeg": 6.39,
+   "where": "sideFirst neck",
+   "rig": {
+    "2": -1.71,
+    "5": 1.59,
+    "10": 4.83
+   },
+   "marginDeg": 11
+  },
+  {
+   "cls": "neck",
+   "key": "rot",
+   "dir": "neg",
+   "envOvershootDeg": 1.67,
+   "where": "leanL neck",
+   "rig": {
+    "2": -6.79,
+    "5": -2.52,
+    "10": 1.83
+   },
+   "marginDeg": 4
+  },
+  {
+   "cls": "neck",
+   "key": "rot",
+   "dir": "pos",
+   "envOvershootDeg": 6.08,
+   "where": "awkward neck",
+   "rig": {
+    "2": -6.79,
+    "5": -2.52,
+    "10": 1.83
+   },
+   "marginDeg": 11
+  },
+  {
+   "cls": "shoulder",
+   "key": "abd",
+   "dir": "neg",
+   "envOvershootDeg": 0,
+   "where": "—",
+   "rig": {
+    "2": -19.67,
+    "5": -19.56,
+    "10": -19.38
+   },
+   "marginDeg": 2
+  },
+  {
+   "cls": "shoulder",
+   "key": "abd",
+   "dir": "pos",
+   "envOvershootDeg": 0,
+   "where": "—",
+   "rig": {
+    "2": -1.3,
+    "5": 2.83,
+    "10": 7.16
+   },
+   "marginDeg": 2
+  },
+  {
+   "cls": "shoulder",
+   "key": "flex",
+   "dir": "neg",
+   "envOvershootDeg": 3.51,
+   "where": "upright shoulder_R",
+   "rig": {
+    "2": -1.15,
+    "5": 3.21,
+    "10": 8.35
+   },
+   "marginDeg": 7
+  },
+  {
+   "cls": "shoulder",
+   "key": "flex",
+   "dir": "pos",
+   "envOvershootDeg": 2.01,
+   "where": "awkward shoulder_R",
+   "rig": {
+    "2": -0.96,
+    "5": 0.82,
+    "10": 3
+   },
+   "marginDeg": 5
+  },
+  {
+   "cls": "shoulder",
+   "key": "rot",
+   "dir": "neg",
+   "envOvershootDeg": 0,
+   "where": "—",
+   "rig": {
+    "2": -13.04,
+    "5": -11.8,
+    "10": -9.86
+   },
+   "marginDeg": 2
+  },
+  {
+   "cls": "shoulder",
+   "key": "rot",
+   "dir": "pos",
+   "envOvershootDeg": 5.46,
+   "where": "leanL shoulder_L",
+   "rig": {
+    "2": -9.2,
+    "5": -8.04,
+    "10": -6.21
+   },
+   "marginDeg": 10
+  },
+  {
+   "cls": "thoracic",
+   "key": "flex",
+   "dir": "neg",
+   "envOvershootDeg": 2.81,
+   "where": "drop1m thoracic",
+   "rig": {
+    "2": -1.64,
+    "5": 1.58,
+    "10": 4.66
+   },
+   "marginDeg": 6
+  },
+  {
+   "cls": "thoracic",
+   "key": "flex",
+   "dir": "pos",
+   "envOvershootDeg": 5.89,
+   "where": "dropA thoracic",
+   "rig": {
+    "2": -5.24,
+    "5": 0.52,
+    "10": 3.83
+   },
+   "marginDeg": 10
+  },
+  {
+   "cls": "thoracic",
+   "key": "lat",
+   "dir": "neg",
+   "envOvershootDeg": 3.54,
+   "where": "sideFirst thoracic",
+   "rig": {
+    "2": 0.52,
+    "5": 4.38,
+    "10": 9.69
+   },
+   "marginDeg": 7
+  },
+  {
+   "cls": "thoracic",
+   "key": "lat",
+   "dir": "pos",
+   "envOvershootDeg": 2.87,
+   "where": "perturb thoracic",
+   "rig": {
+    "2": 0.52,
+    "5": 4.38,
+    "10": 9.7
+   },
+   "marginDeg": 6
+  },
+  {
+   "cls": "thoracic",
+   "key": "rot",
+   "dir": "neg",
+   "envOvershootDeg": 0,
+   "where": "—",
+   "rig": {
+    "2": -1.23,
+    "5": 2.16,
+    "10": 7.85
+   },
+   "marginDeg": 2
+  },
+  {
+   "cls": "thoracic",
+   "key": "rot",
+   "dir": "pos",
+   "envOvershootDeg": 1.16,
+   "where": "singleLeg thoracic",
+   "rig": {
+    "2": -1.23,
+    "5": 2.16,
+    "10": 7.85
+   },
+   "marginDeg": 3
+  }
+ ],
+ "table": {
+  "ankle": {
+   "df": {
+    "neg": 14,
+    "pos": 9
+   },
+   "fabd": {
+    "neg": 12,
+    "pos": 23
+   },
+   "inv": {
+    "neg": 17,
+    "pos": 15
+   }
+  },
+  "elbow": {
+   "flex": {
+    "neg": 7,
+    "pos": 2
+   },
+   "pron": {
+    "neg": 4,
+    "pos": 2
+   }
+  },
+  "hip": {
+   "abd": {
+    "neg": 8,
+    "pos": 12
+   },
+   "flex": {
+    "neg": 4,
+    "pos": 6
+   },
+   "rot": {
+    "neg": 5,
+    "pos": 11
+   }
+  },
+  "knee": {
+   "flex": {
+    "neg": 8,
+    "pos": 15
+   },
+   "rot": {
+    "neg": 12,
+    "pos": 26
+   }
+  },
+  "lumbar": {
+   "flex": {
+    "neg": 2,
+    "pos": 9
+   },
+   "lat": {
+    "neg": 5,
+    "pos": 10
+   },
+   "rot": {
+    "neg": 7,
+    "pos": 10
+   }
+  },
+  "neck": {
+   "flex": {
+    "neg": 25,
+    "pos": 32
+   },
+   "lat": {
+    "neg": 5,
+    "pos": 11
+   },
+   "rot": {
+    "neg": 4,
+    "pos": 11
+   }
+  },
+  "shoulder": {
+   "abd": {
+    "neg": 2,
+    "pos": 2
+   },
+   "flex": {
+    "neg": 7,
+    "pos": 5
+   },
+   "rot": {
+    "neg": 2,
+    "pos": 10
+   }
+  },
+  "thoracic": {
+   "flex": {
+    "neg": 6,
+    "pos": 10
+   },
+   "lat": {
+    "neg": 7,
+    "pos": 6
+   },
+   "rot": {
+    "neg": 2,
+    "pos": 3
+   }
+  }
+ }
+}
