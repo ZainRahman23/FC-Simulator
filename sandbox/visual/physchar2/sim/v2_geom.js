@@ -32,6 +32,20 @@ export function hull2(pts) { const P = pts.map(p => [p[0], p[2]]).sort((a, b) =>
   const lo = [], up = []; for (const p of P) { while (lo.length >= 2 && cr(lo[lo.length - 2], lo[lo.length - 1], p) <= 0) lo.pop(); lo.push(p); }
   for (let i = P.length - 1; i >= 0; i--) { const p = P[i]; while (up.length >= 2 && cr(up[up.length - 2], up[up.length - 1], p) <= 0) up.pop(); up.push(p); }
   return lo.slice(0, -1).concat(up.slice(0, -1)); }
+// CANONICAL convex hull (user decision 2026-10-04 §1; G3 J2a finding 1). A convex region is defined by its STRICTLY convex vertices; a vertex lying on
+// the chord of its neighbours carries no geometric information, yet hull2's `cr <= 0` test keeps or drops an exactly collinear sole point depending
+// on floating-point rounding — so the mirrored left / right boots got 14 / 13 vertices, and the radial inset of the usable region (which moves every
+// vertex) turned that into a 4.8 µm L/R region difference. The canonical form: (1) the monotone-chain hull; (2) every vertex whose distance from its
+// neighbours' chord is ≤ 1 nm removed (repeated to a fixed point) — the distance |cross| / |chord| is exactly sign-symmetric under a reflection, so
+// mirrored inputs give mirrored vertex sets; 1 nm is ~10⁻⁸ of the boot size, far below any geometric meaning; (3) counter-clockwise, starting at the
+// vertex with the smallest z (then smallest x): a deterministic canonical ordering. The region itself is unchanged (only collinear points go).
+export function hull2Canonical(pts, collinearTol = 1e-9) {
+  const P = hull2(pts); let changed = true;
+  while (changed && P.length > 3) { changed = false;
+    for (let i = 0; i < P.length; i++) { const a = P[(i - 1 + P.length) % P.length], p = P[i], b = P[(i + 1) % P.length], ex = b[0] - a[0], ez = b[1] - a[1], L = Math.sqrt(ex * ex + ez * ez);
+      if (L > 0 && Math.abs((p[0] - a[0]) * ez - (p[1] - a[1]) * ex) / L <= collinearTol) { P.splice(i, 1); changed = true; break; } } }
+  let s = 0; for (let i = 1; i < P.length; i++) if (P[i][1] < P[s][1] || (P[i][1] === P[s][1] && P[i][0] < P[s][0])) s = i;
+  return P.slice(s).concat(P.slice(0, s)); }
 export function insideDist(poly, x, z) { let d = Infinity, inside = true; for (let i = 0; i < poly.length; i++) { const a = poly[i], b = poly[(i + 1) % poly.length], ex = b[0] - a[0], ez = b[1] - a[1], L = Math.hypot(ex, ez);
     const c = ((x - a[0]) * ez - (z - a[1]) * ex) / L; // >0 = right of edge; for a CCW polygon inside is left (c < 0)
     if (c > 0) inside = false; d = Math.min(d, Math.abs(c)); } return inside ? d : -d; }

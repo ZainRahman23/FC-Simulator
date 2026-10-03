@@ -30,6 +30,14 @@ export const TURF = { shape: "plane", halfExtent: 100, historical: "box (100 × 
 export const G0_WORLD = { gravity: -9.81, velSteps: 10, posSteps: 2, linDamp: 0, angDamp: 0, maxAngVel: 100, allowSleep: false, gyroscopic: true, ccd: "discrete", recordContacts: true, manifoldReduction: false, pairCache: false, turf: TURF.shape,
   note: "solver iterations are Jolt defaults here; G1's convergence study selects them. maxAngVel 100 rad/s (Jolt default 47.1) so kicks (shank ≈ 39 rad/s) are never clipped. gyroscopic: Euler's rigid-body equations (G1-D1)." };
 const MAT_TURF = "turf";
+// QUATERNION CORRECTION (user decision 2026-10-04 §3; G3 J2a finding 3): every orientation Jolt returns is a float32-normalised quaternion, so read
+// as doubles ‖q‖² − 1 is up to ~3e-7. Our formulas (Q.rot, the passive-layer and controller frame algebra) assume unit quaternions; with a non-unit q
+// Q.rot adds an unrotated (1 − ‖q‖²)·v term, which lands differently on the L / R joints (their frames differ by a handedness rotation). Every
+// Jolt-sourced orientation is therefore normalised HERE, at the boundary: removal of numerical error only (‖Δ‖ ≈ 1e-7, direction unchanged).
+// Deterministic: IEEE sqrt and division (correctly rounded) — browser = Node. No degenerate case exists for an orientation (‖q‖ ≈ 1 always, also
+// near identity and near 180°); anything else is an engine fault and throws rather than producing NaN.
+export function unitQ(x, y, z, w) { const l = Math.sqrt(x * x + y * y + z * z + w * w); if (!(l > 0.5 && l < 2)) throw new Error(`degenerate Jolt quaternion (‖q‖ = ${l})`); return [x / l, y / l, z / l, w / l]; }
+const uq = (q) => unitQ(q.GetX(), q.GetY(), q.GetZ(), q.GetW());
 
 export class V2JoltWorld {
   constructor(J, spec, contact, cfg) {
@@ -130,8 +138,8 @@ export class V2JoltWorld {
   actOn(k, i, on = true) { this.acts[k].c.SetMotorState(this._axes.rot[i], on ? this.J.EMotorState_PositionAndVelocity : this.J.EMotorState_Off); }
   setActTarget(k, q, w) { const t = this._t, c = this.acts[k].c; t.q.Set(q[0], q[1], q[2], q[3]); c.SetTargetOrientationCS(t.q); if (w) t.w.Set(w[0], w[1], w[2]); else t.w.Set(0, 0, 0); c.SetTargetAngularVelocityCS(t.w); }
   setActVel(k, w) { const t = this._t; t.w.Set(w[0], w[1], w[2]); this.acts[k].c.SetTargetAngularVelocityCS(t.w); }
-  actTarget(k) { const t = this.acts[k].c.GetTargetOrientationCS(); return [t.GetX(), t.GetY(), t.GetZ(), t.GetW()]; }
-  actRotationCS(k) { const q = this.acts[k].c.GetRotationInConstraintSpace(); return [q.GetX(), q.GetY(), q.GetZ(), q.GetW()]; }
+  actTarget(k) { return uq(this.acts[k].c.GetTargetOrientationCS()); }
+  actRotationCS(k) { return uq(this.acts[k].c.GetRotationInConstraintSpace()); }
   lambdaAct(k) { const l = this.acts[k].c.GetTotalLambdaMotorRotation(); return [l.GetX(), l.GetY(), l.GetZ()]; }
   _listen() {
     const J = this.J, L = new J.ContactListenerJS(), self = this;
@@ -171,8 +179,8 @@ export class V2JoltWorld {
   // Jolt CLAMPS a target orientation onto the joint's limits (SixDOFConstraint::SetTargetOrientationCS → ClampSwingTwist: locked axes → 0,
   // limited axes → inside the engine stop). The stored target and Jolt's own constraint-space rotation give the exact motor error it will use.
   setDriveVel(k, w) { const t = this._t; t.w.Set(w[0], w[1], w[2]); this.cons[k].c.SetTargetAngularVelocityCS(t.w); }
-  driveTarget(k) { const t = this.cons[k].c.GetTargetOrientationCS(); return [t.GetX(), t.GetY(), t.GetZ(), t.GetW()]; }
-  rotationCS(k) { const q = this.cons[k].c.GetRotationInConstraintSpace(); return [q.GetX(), q.GetY(), q.GetZ(), q.GetW()]; }
+  driveTarget(k) { return uq(this.cons[k].c.GetTargetOrientationCS()); }
+  rotationCS(k) { return uq(this.cons[k].c.GetRotationInConstraintSpace()); }
   // equal-and-opposite torque (N·m, world) on a joint's child (+) and parent (−) for the next step — internal, momentum-conserving
   addTorquePair(parent, child, T) { const t = this._t; t.v.Set(T[0], T[1], T[2]); this.bi.AddTorque(this.bodies[child].GetID(), t.v, this.J.EActivation_Activate); t.v.Set(-T[0], -T[1], -T[2]); this.bi.AddTorque(this.bodies[parent].GetID(), t.v, this.J.EActivation_Activate); }
   // G2 TEST DISTURBANCES (the only external forces besides gravity and contact; ledgered by the gate): a force at a world point / a pure torque
@@ -181,13 +189,13 @@ export class V2JoltWorld {
   lambdaPos(k) { const l = this.cons[k].c.GetTotalLambdaPosition(); return [l.GetX(), l.GetY(), l.GetZ()]; }
   lambdaRot(k) { const l = this.cons[k].c.GetTotalLambdaRotation(); return [l.GetX(), l.GetY(), l.GetZ()]; }
   lambdaMotor(k) { const l = this.cons[k].c.GetTotalLambdaMotorRotation(); return [l.GetX(), l.GetY(), l.GetZ()]; }
-  rotCS(k) { const q = this.cons[k].c.GetRotationInConstraintSpace(); return [q.GetX(), q.GetY(), q.GetZ(), q.GetW()]; }
+  rotCS(k) { return uq(this.cons[k].c.GetRotationInConstraintSpace()); }
   setKinematic(i) { this.bi.SetMotionType(this.bodies[i].GetID(), this.J.EMotionType_Kinematic, this.J.EActivation_Activate); }
   saveState() { const rec = new this.J.StateRecorderImpl(); this.ps.SaveState(rec, this.J.EStateRecorderState_All); return rec; }
   restoreState(rec) { rec.Rewind(); this.ps.RestoreState(rec); this.contacts = []; }
   freeState(rec) { this.J.destroy(rec); }
   read(i) { const b = this.bodies[i], p = b.GetPosition(), r = b.GetRotation(), c = b.GetCenterOfMassPosition(), v = b.GetLinearVelocity(), w = b.GetAngularVelocity();
-    return { pos: [p.GetX(), p.GetY(), p.GetZ()], rot: [r.GetX(), r.GetY(), r.GetZ(), r.GetW()], com: [c.GetX(), c.GetY(), c.GetZ()], v: [v.GetX(), v.GetY(), v.GetZ()], w: [w.GetX(), w.GetY(), w.GetZ()] }; }
+    return { pos: [p.GetX(), p.GetY(), p.GetZ()], rot: uq(r), com: [c.GetX(), c.GetY(), c.GetZ()], v: [v.GetX(), v.GetY(), v.GetZ()], w: [w.GetX(), w.GetY(), w.GetZ()] }; }
   // ── readback of everything the spec asked for (G0 0.11) ──
   readbackBody(i) {
     const J = this.J, b = this.bodies[i], mp = b.GetMotionProperties(), invM = mp.GetInverseMass(), Ii = mp.GetLocalSpaceInverseInertia();
@@ -200,7 +208,7 @@ export class V2JoltWorld {
       return [0, 1, 2].map(r => [0, 1, 2].map(c => cof(c, r) / det)); };
     const com = b.GetCenterOfMassPosition(), pos = b.GetPosition(), rot = b.GetRotation();
     // Jolt stores the inertia in the body's principal frame internally; GetLocalSpaceInverseInertia returns it in body space (rotation identity at build)
-    return { mass: 1 / invM, inertia: inv3(invI), comWorld: [com.GetX(), com.GetY(), com.GetZ()], origin: [pos.GetX(), pos.GetY(), pos.GetZ()], rot: [rot.GetX(), rot.GetY(), rot.GetZ(), rot.GetW()],
+    return { mass: 1 / invM, inertia: inv3(invI), comWorld: [com.GetX(), com.GetY(), com.GetZ()], origin: [pos.GetX(), pos.GetY(), pos.GetZ()], rot: uq(rot),
       linDamp: mp.GetLinearDamping(), angDamp: mp.GetAngularDamping(), maxAngVel: mp.GetMaxAngularVelocity(), volume: this.shapeInfo[i].volume, gravityFactor: mp.GetGravityFactor ? mp.GetGravityFactor() : null };
   }
   readbackJoint(k) {
@@ -208,7 +216,7 @@ export class V2JoltWorld {
     const m4 = (M) => { const ax = [M.GetAxisX(), M.GetAxisY(), M.GetAxisZ()].map(v => [v.GetX(), v.GetY(), v.GetZ()]), t = M.GetTranslation(); return { x: ax[0], y: ax[1], z: ax[2], t: [t.GetX(), t.GetY(), t.GetZ()] }; };
     const lo = c.GetRotationLimitsMin(), hi = c.GetRotationLimitsMax(), q = c.GetRotationInConstraintSpace();
     return { toBody1: m4(c.GetConstraintToBody1Matrix()), toBody2: m4(c.GetConstraintToBody2Matrix()),
-      rotLo: [lo.GetX(), lo.GetY(), lo.GetZ()], rotHi: [hi.GetX(), hi.GetY(), hi.GetZ()], qCS: [q.GetX(), q.GetY(), q.GetZ(), q.GetW()],
+      rotLo: [lo.GetX(), lo.GetY(), lo.GetZ()], rotHi: [hi.GetX(), hi.GetY(), hi.GetZ()], qCS: uq(q),
       fixedLin: A.lin.map(ax => c.IsFixedAxis(ax)), fixedRot: A.rot.map(ax => c.IsFixedAxis(ax)),
       motorState: A.rot.map(ax => c.GetMotorState(ax)), motorOff: J.EMotorState_Off,
       motorLimits: A.rot.map(ax => { const ms = c.GetMotorSettings(ax); return [ms.mMinTorqueLimit, ms.mMaxTorqueLimit]; }),

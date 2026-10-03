@@ -16,7 +16,7 @@
 // The controller writes nothing to bodies; Jolt owns the state; the only outputs are per-axis actuator requests.
 import { V, Q, dexp, datan2, dasin, dnorm } from "../core/v2_math.js";   // deterministic math only in anything that feeds physics (G3 resolution D1)
 import { posedBodies } from "../spec/v2_pose.js";
-import { bootSole, hull2 } from "../sim/v2_geom.js";
+import { bootSole, hull2, hull2Canonical } from "../sim/v2_geom.js";
 import { pyr, decompose } from "../spec/v2_joints.js";
 
 export const STAND = {
@@ -83,7 +83,9 @@ export class StandController {
     this.sub = spec.joints.map(j => sub(j.childIndex)); this.subFeet = this.sub.map(s => this.feet.filter(f => s.includes(f)));
     this.anchor = spec.joints.map(j => V.sub(j.at, B[j.parentIndex].origin));
     // the usable sole region of each foot (foot-local x lateral / z forward at the sole plane): default = the boot's plantar contact hull
-    this.sole = this.feet.map(f => { const s = bootSole(B[f]); return { y0: s.y0, poly: opts.footRegion ? opts.footRegion(f) : insetPoly(hull2(s.pts), this.o.footInset) }; });
+    // the usable region = the radial 5 mm inset of the CANONICAL hull (strictly convex vertices, canonical order): mirrored boots give mirrored regions
+    // (user decision 2026-10-04 §1; the earlier hull2-based region differed by 4.8 µm L/R — G3 J2a finding 1, evidence in g3/G3_V3_EVALUATION.md)
+    this.sole = this.feet.map(f => { const s = bootSole(B[f]); return { y0: s.y0, poly: opts.footRegion ? opts.footRegion(f) : insetPoly(hull2Canonical(s.pts), this.o.footInset) }; });
     // reference pose (posture preference) and body-scaled gains from it
     const S = posedBodies(spec, stance.angles, { pos: null, rot: stance.pelvisRot }), com = (ids) => { let m = 0, c = [0, 0, 0]; for (const i of ids) { c = V.add(c, V.sc(V.add(S[i].pos, Q.rot(S[i].rot, B[i].comLocal)), B[i].mass)); m += B[i].mass; } return { m, c: V.sc(c, 1 / m) }; };
     this.qref = passive.jd.map(d => passive.qcs(d, S.map(s => s.rot)));
@@ -211,6 +213,20 @@ StandController.prototype.gauss = function () { let s2 = 0; for (let i = 0; i < 
 //    values. Newton on the pyramid parameters, finite-difference Jacobian, from the current configuration.
 StandController.prototype.getState = function () { return JSON.parse(JSON.stringify({ n: this.n, ring: this.ring, ou: this.ou, rng: this.rng, unl: this.unl, hold: this.hold, sense: this.sense, g3: this.g3 || null, info: this.info })); };   // info: the G3 supervisor reads the previous tick's controller state
 StandController.prototype.setState = function (x) { const y = JSON.parse(JSON.stringify(x)); Object.assign(this, y); };
+// LEG IK (user decision 2026-10-04 §2; G3 J2a finding 2). Unknowns x = hip (twist, swing-y, swing-z), knee swing-y, ankle (swing-y, swing-z); the knee
+// and ankle twists stay at their current values. Residual r(x) = [ankle position − target, foot orientation error] (6 × 6). The former solver
+// (one-sided finite-difference Jacobian x_c + h, undamped Newton, stop at 1e-9, ≤ 6 iterations) was not mirror-equivariant: a reflection flips
+// the sign of some DOFs, so the mirrored solve sampled different points, and the result was whichever iterate first crossed 1e-9 — or, for an
+// unreachable target, wherever 6 undamped steps on a near-singular Jacobian ended. The method now addresses both causes:
+//   • CENTRAL differences (x_c ± h): the sample set maps onto itself under the reflection;
+//   • Levenberg–Marquardt (Marquardt-scaled damping μ·(1 + H_ii), μ0 = 1e-2, ÷10 on an accepted step, ×10 on a rejected one) converged to a
+//     residual of 1e-12 (≤ 12 iterations), so the answer is the solution itself, not a path-dependent iterate; for an unreachable target it
+//     converges to the least-squares optimum (stop when the gradient vanishes) and REPORTS the residual — the target is never moved and
+//     reachability is never relaxed (classification is the caller's: err ≤ 1e-6 ⇔ reached).
+// Method chosen by tools/ik_study.mjs over 10,880 problems × 8 bodies (ordinary, near-single-support, swing-ready held foot, reach-boundary sweep
+// s = 0.8 … 1.05 in 13 directions, mirrored, perturbed starts): every reachable target converged ≤ 1e-12, mirror difference ≤ 3e-15 m (≤ 1e-8 m
+// at / beyond the boundary), no reachability flip from start perturbations, and — unlike undamped LM — no solution on the hyperextended-knee
+// branch from the controller's warm start. Returns { targets, err, it, x }.
 StandController.prototype.legIK = function (st, ev, n, pP, qP, footPose = null) {
   const P = this.P, ks = this.legK[n], d = ks.map(k => P.jd[k]), a = ks.map(k => this.anchor[k]), cur = ks.map(k => { const v = decompose(ev.qs[k]); return [v.tw, v.sy, v.sz]; });
   if (this.o.ikRefTwist) { const rf = ks.map(k => { const v = decompose(this.qref[k]); return v.tw; }); cur[1] = [rf[1], cur[1][1], cur[1][2]]; cur[2] = [rf[2], cur[2][1], cur[2][2]]; }   // twist DOFs at the reference
@@ -220,13 +236,20 @@ StandController.prototype.legIK = function (st, ev, n, pP, qP, footPose = null) 
     const Rf = Q.mul(Q.mul(Q.mul(Rs, d[2].F1), qa), Q.conj(d[2].F2)), pf = V.add(ps, Q.rot(Rs, a[2]));
     let qe = Q.mul(ft.rot, Q.conj(Rf)); if (qe[3] < 0) qe = qe.map(v => -v);
     return [pf[0] - ft.pos[0], pf[1] - ft.pos[1], pf[2] - ft.pos[2], -2 * qe[0], -2 * qe[1], -2 * qe[2]]; };
-  let x = [cur[0][0], cur[0][1], cur[0][2], cur[1][1], cur[2][1], cur[2][2]], r = fk(x), err = dnorm(...r);
-  for (let it = 0; it < 6 && err > 1e-9; it++) { const h = 1e-6, Jm = [0, 1, 2, 3, 4, 5].map(c => { const xp = x.slice(); xp[c] += h; const rp = fk(xp); return rp.map((v, i) => (v - r[i]) / h); });   // Jm[c][i] = ∂r_i/∂x_c
-    const A = [0, 1, 2, 3, 4, 5].map(i => [0, 1, 2, 3, 4, 5].map(c => Jm[c][i])), dx = solveN(A, r.map(v => -v)); if (!dx) break;
-    let step = 1; for (let ls = 0; ls < 6; ls++) { const xn = x.map((v, i) => v + step * dx[i]), rn = fk(xn), en = dnorm(...rn); if (en < err) { x = xn; r = rn; err = en; break; } step *= 0.5; } }
+  let x = [cur[0][0], cur[0][1], cur[0][2], cur[1][1], cur[2][1], cur[2][2]], r = fk(x), err = dnorm(...r), it = 0, mu = IK.mu0;
+  for (; it < IK.maxIt && err > IK.tol; it++) {
+    const Jm = [0, 1, 2, 3, 4, 5].map(c => { const xp = x.slice(), xm = x.slice(); xp[c] += IK.h; xm[c] -= IK.h; const rp = fk(xp), rm = fk(xm); return rp.map((v, i) => (v - rm[i]) / (2 * IK.h)); });   // Jm[c][i] = ∂r_i/∂x_c
+    const g = Jm.map(col => col[0] * r[0] + col[1] * r[1] + col[2] * r[2] + col[3] * r[3] + col[4] * r[4] + col[5] * r[5]);
+    if (dnorm(...g) < IK.gradTol) break;   // stationary: the least-squares optimum of an unreachable target
+    const H = Jm.map(ci => Jm.map(cj => ci[0] * cj[0] + ci[1] * cj[1] + ci[2] * cj[2] + ci[3] * cj[3] + ci[4] * cj[4] + ci[5] * cj[5]));
+    let accepted = false;
+    for (let tries = 0; tries < 8; tries++) { const A = H.map((row, i) => row.map((v, c) => (i === c ? v + mu * (1 + v) : v))), dx = solveN(A, g.map(v => -v)); if (!dx) { mu *= 10; continue; }
+      const xn = x.map((v, i) => v + dx[i]), rn = fk(xn), en = dnorm(...rn); if (en < err) { x = xn; r = rn; err = en; mu = Math.max(IK.muMin, mu / 10); accepted = true; break; } mu *= 10; }
+    if (!accepted) break; }
   const tg = [[ks[0], pyr(x[0], x[1], x[2])], [ks[1], pyr(cur[1][0], x[3], cur[1][2])]]; if (footPose) tg.push([ks[2], pyr(cur[2][0], x[4], x[5])]);   // held foot: the ankle target too
-  return { targets: tg, err };
+  return { targets: tg, err, it, x };
 };
+export const IK = { h: 1e-6, tol: 1e-12, maxIt: 12, mu0: 1e-2, muMin: 1e-12, gradTol: 1e-14 };
 function solveN(M, y) { const n = y.length, a = M.map((r, i) => [...r, y[i]]); for (let c = 0; c < n; c++) { let p = c; for (let r = c + 1; r < n; r++) if (Math.abs(a[r][c]) > Math.abs(a[p][c])) p = r; if (Math.abs(a[p][c]) < 1e-14) return null; [a[c], a[p]] = [a[p], a[c]];
     for (let r = 0; r < n; r++) if (r !== c) { const f = a[r][c] / a[c][c]; for (let k = c; k <= n; k++) a[r][k] -= f * a[c][k]; } } return a.map((r, i) => r[n] / r[i]); }
 // inertia tensor (world axes) of a set of bodies about point o, in pose S
