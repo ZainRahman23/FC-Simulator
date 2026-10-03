@@ -19,8 +19,12 @@
 import fs from "fs"; import path from "path"; import os from "os"; import { fork } from "child_process"; import { fileURLToPath } from "url";
 import { loadJolt } from "../core/v2_jolt.js"; import { generateSpec } from "../spec/v2_spec.js"; import { VARIATION_SET } from "../spec/v2_human.js";
 import { G3Sim, g3Def, mirrorDir } from "../gates/v2_g3.js"; import { cls } from "../gates/v2_g3_checks.js"; import { Q } from "../core/v2_math.js";
+
 const here = path.dirname(fileURLToPath(import.meta.url)), ROOT = path.resolve(here, "../../../.."), VEND = path.join(here, "../vendor/jolt-physics.wasm-compat.js");
-const FLOOR = process.argv.includes("--floor"), OUT = path.join(ROOT, "review_artifacts/physical_character_v2/g3/json", FLOOR ? "g3_mirror_floor.json" : "g3_mirror_v3.json");
+// DIAGNOSTIC ONLY (never a gate configuration): run under `node --import ./tools/b_sym_patch.mjs` with B_SYM=<fixes>; the output is then
+// g3_mirror_v3_sym-<fixes>.json so the gate result is never overwritten
+const SYMTAG = (process.env.B_SYM || "").split(",").filter(Boolean).join("+");
+const FLOOR = process.argv.includes("--floor"), OUT = path.join(ROOT, "review_artifacts/physical_character_v2/g3/json", FLOOR ? "g3_mirror_floor.json" : SYMTAG ? `g3_mirror_v3_sym-${SYMTAG}.json` : "g3_mirror_v3.json");
 const DIR8 = ["F", "B", "L", "R", "FL", "FR", "BL", "BR"], SLIDE = 1.0e-3, FLOOR_EVERY = 8, FLOOR_DRAWS = 2;
 function pairs() { const P = [["T1", "T2"], ["T5", "T6"], ["U:R", "U:L"], ...[4, 2, 1, 0.75, 0.5, 0.25].map(T => [`T7:R:${T}`, `T7:L:${T}`])];
   for (const w of ["hold", "ramp"]) for (const d of DIR8) for (const m of [5, 10, 15, 20]) P.push([`T8:${w}:R:${d}:${m}`, `T8:${w}:L:${mirrorDir(d)}:${m}`]);
@@ -48,7 +52,7 @@ function rng(seed) { let s = seed >>> 0; return () => { s = (s + 0x6D2B79F5) >>>
 function perturb(x, R) { if (typeof x === "number") return Number.isInteger(x) ? x : x * (1 + (2 * R() - 1) * Math.pow(2, -50)); if (Array.isArray(x)) return x.map(v => perturb(v, R)); if (x && typeof x === "object") { const o = {}; for (const [k, v] of Object.entries(x)) o[k] = k === "n" ? v : perturb(v, R); return o; } return x; }
 // ── capture: wrap the controller and actuator compute of a stepping sim ──
 function capture(s) { const io = { cur: null }, oc = s.ctrl.compute.bind(s.ctrl), oa = s.act.compute.bind(s.act);
-  s.ctrl.compute = (st, ev, dt) => { const pre = s.ctrl.getState(), cmd = oc(st, ev, dt); io.cur = { pre, st, dt, cmd, info: s.ctrl.info, post: { unl: s.ctrl.unl.slice(), hold: JSON.parse(JSON.stringify(s.ctrl.hold)), g3: s.ctrl.g3 ? { ...s.ctrl.g3 } : null, ikRes: s.ctrl.ikRes ? s.ctrl.ikRes.slice() : null } }; return cmd; };
+  s.ctrl.compute = (st, ev, dt) => { const pre = s.ctrl.getState(), cmd = oc(st, ev, dt); io.cur = { pre, st, dt, cmd, info: s.ctrl.info, post: { unl: s.ctrl.unl.slice(), hold: JSON.parse(JSON.stringify(s.ctrl.hold)), g3: s.ctrl.g3 ? { ...s.ctrl.g3 } : null, ikRes: s.ctrl.ikRes ? s.ctrl.ikRes.slice() : null, posture: s.ctrl.postureInfo ? JSON.parse(JSON.stringify(s.ctrl.postureInfo)) : null } }; return cmd; };
   s.act.compute = (st, ev, cmd, dt, init) => { const actPre = JSON.parse(JSON.stringify(s.act.a)), plan = oa(st, ev, cmd, dt, init); if (io.cur) { io.cur.actPre = actPre; io.cur.init = init; io.cur.plan = plan; io.cur.actPost = JSON.parse(JSON.stringify(s.act.a)); } return plan; };
   return io; }
 // ── evaluate a captured input on a probe instance (mirrored or not) and compare with the captured output ──
@@ -67,7 +71,7 @@ function probe(X, S, Qs, map, jmap, mode, R) {   // mode: "mirror" (Qs = partner
   for (let k = 0; k < act.length; k++) for (let i = 0; i < 3; i++) if (act[k][i]) { Qs.act.a[k][i][0] = act[k][i][0]; Qs.act.a[k][i][1] = act[k][i][1]; }
   const plan = Qs.act.compute(st, ev, cmd, X.dt, X.init);
   // expected = the mirror image of S's output (identity in "same" mode)
-  const IS = X.info, M2 = mir ? m2 : (p) => p, M3 = mir ? m3 : (p) => p, SW = mir ? swap : (a) => a, D = {}, bad = [];
+  const IS = X.info, M2 = mir ? m2 : (p) => p, M3 = mir ? m3 : (p) => p, SW = mir ? swap : (a) => a, D = {}, bad = [], det = {};
   const up = (k, v) => { if (!(v <= (D[k] ?? -1))) D[k] = v; };
   up("lam", IS.lam == null && IQ.lam == null ? 0 : Math.abs(IQ.lam - (mir ? 1 - IS.lam : IS.lam)));
   up("copMm", d2(IQ.p, M2(IS.p)) * 1000); up("copMm", d2(IQ.pRaw, M2(IS.pRaw)) * 1000); up("copMm", d2(IQ.xiRef, M2(IS.xiRef)) * 1000);
@@ -82,12 +86,18 @@ function probe(X, S, Qs, map, jmap, mode, R) {   // mode: "mirror" (Qs = partner
   // joint commands (rows follow P.jd) and actuator rows, through σ
   jdS.forEach((ds, n) => { const nq = rowQ[n], cS = X.cmd[n], cQ = cmd[nq], pS = X.plan.joints[n].rows, pQ = plan.joints[nq].rows;
     for (let i = 0; i < 3; i++) { const s = sig[n][i] > 0 ? 1 : -1; up("sigmaErr", Math.abs(Math.abs(sig[n][i]) - 1));
-      const a = cS && cS[i], b = cQ && cQ[i]; if (!a !== !b) bad.push("cmdStructure"); else if (a) { up("cmdTauNm", Math.abs(b.tau0 - s * a.tau0)); up("cmdTauNm", Math.abs(b.ff - s * a.ff)); up("cmdGain", Math.max(Math.abs(b.K - a.K), Math.abs(b.D - a.D))); }
+      const a = cS && cS[i], b = cQ && cQ[i]; if (!a !== !b) bad.push("cmdStructure"); else if (a) { const dt0 = Math.abs(b.tau0 - s * a.tau0), dff = Math.abs(b.ff - s * a.ff); up("cmdTauNm", dt0); up("cmdTauNm", dff); up("cmdGain", Math.max(Math.abs(b.K - a.K), Math.abs(b.D - a.D)));
+        const dfb = Math.abs((b.tau0 - b.ff) - s * (a.tau0 - a.ff)); if (!(Math.max(dt0, dff) <= (det.tau?.d ?? -1))) det.tau = { d: Math.max(dt0, dff), joint: S.spec.joints[ds.k].name, axis: i, sigma: sig[n][i], ffA: a.ff, ffB: b.ff, fbA: a.tau0 - a.ff, fbB: b.tau0 - b.ff, dff, dfb, K: a.K }; }
       const r = pS[i], q = pQ[i]; if (!r !== !q || (r && !!r.off !== !!q.off)) bad.push("actStructure"); else if (r && !r.off) {
         up("actTauNm", Math.max(Math.abs(q.tau0 - s * r.tau0), Math.abs(q.req - s * r.req))); up("actGain", Math.max(Math.abs(q.K - r.K), Math.abs(q.D - r.D)));
         const [hi, lo, cP, cM] = s > 0 ? [r.hi, r.lo, r.capP, r.capM] : [-r.lo, -r.hi, r.capM, r.capP]; up("actBoundNm", Math.max(Math.abs(q.hi - hi), Math.abs(q.lo - lo))); up("actCapNm", Math.max(Math.abs(q.capP - cP), Math.abs(q.capM - cM)));
         const aS = X.actPost[ds.k][i], aQ = Qs.act.a[jdQ[nq].k][i], ae = s > 0 ? aS : [aS[1], aS[0]]; up("activation", Math.max(Math.abs(aQ[0] - ae[0]), Math.abs(aQ[1] - ae[1]))); } } });
-  return { D, bad }; }
+  if (process.env.B_DEBUG_T && mir && Math.abs(Qs.ctrl.n * X.dt - +process.env.B_DEBUG_T) < 1e-6) {   // DIAGNOSTIC dump at one tick (B_DEBUG_T = t in s); never set in gate runs
+    const pS = X.post.posture, pQ = Qs.ctrl.postureInfo, ffd = jdS.map((ds, n) => { const a = IS.ff[n], b = IQ.ff[rowQ[n]]; return `${S.spec.joints[ds.k].name} ${d3(b, mw(a)).toExponential(2)}`; });
+    console.error("DEBUG ff |T_B − mirror(T_A)| per joint:", ffd.join(", ")); for (const nm of ["ankle_R", "hip_R"]) { const n = jdS.findIndex(ds => S.spec.joints[ds.k].name === nm), nq = rowQ[n], aS = axesOf(jdS[n], X.st), aQ = axesOf(jdQ[nq], st), TA = IS.ff[n], TB = IQ.ff[nq];
+      console.error(`DEBUG ${nm}: T_A ${JSON.stringify(TA)} T_B ${JSON.stringify(TB)} | a_A0 ${JSON.stringify(aS[0])} a_B0 ${JSON.stringify(aQ[0])} | T_A·a_A0 ${dot(TA, aS[0])} T_B·a_B0 ${dot(TB, aQ[0])} | cmd ff A ${X.cmd[n][0] && X.cmd[n][0].ff} B ${cmd[nq][0] && cmd[nq][0].ff} | child rot A ${JSON.stringify(X.st[jdS[n].child].rot)} B ${JSON.stringify(st[jdQ[nq].child].rot)}`); }
+    console.error("DEBUG posture S", JSON.stringify(pS)); console.error("DEBUG posture Q", JSON.stringify(pQ)); console.error("DEBUG Ldot", JSON.stringify(IS.Ldot), JSON.stringify(IQ.Ldot), "xi", JSON.stringify(IS.xi), JSON.stringify(IQ.xi), "c", JSON.stringify(IS.c), JSON.stringify(IQ.c)); }
+  return { D, bad, det }; }
 const merge = (A, B) => { for (const [k, v] of Object.entries(B)) if (!(v <= (A[k] ?? -1))) A[k] = v; return A; };
 // ── one pair ──
 function runPair(Jolt, job) { const spec = generateSpec(VARIATION_SET.find(h => h.id === job.human)), map = spec.bodies.map(b => spec.bodies.findIndex(x => x.name === lrName(b.name))), jmap = spec.joints.map(j => spec.joints.findIndex(x => x.name === lrName(j.name)));
@@ -97,7 +107,7 @@ function runPair(Jolt, job) { const spec = generateSpec(VARIATION_SET.find(h => 
       if (FLOOR) { if (side === "A" && !fallen && S.n % FLOOR_EVERY === 0) { const ref = probe(X, S, P_self, map, jmap, "same", null); floor.selfMax = Math.max(floor.selfMax, ...Object.values(ref.D)); for (const [k, v] of Object.entries(ref.D)) if (v > 0 && (floor.selfNZ || (floor.selfNZ = [])).length < 8) floor.selfNZ.push({ t, k, v, hS: X.post.hold, hQ: P_self.ctrl.hold, unl: X.post.unl }); if (ref.bad.length) floor.flips.push({ t, self: ref.bad });
           for (let d = 0; d < FLOOR_DRAWS; d++) { const r = probe(X, S, P_self, map, jmap, "same", rng(1 + S.n * 7 + d * 1000003)); if (r.bad.length) floor.flips.push({ t, draw: d, bad: r.bad }); merge(floor.D, r.D); } floor.samples++; } }
       else { if (side === "A" && !fallen && S.n % 97 === 0) { const ref = probe(X, S, P_self, map, jmap, "same", null); j2a.selfMax = Math.max(j2a.selfMax, ...Object.values(ref.D)); if (ref.bad.length) j2a.bad.push({ t, self: true, bad: ref.bad }); }
-        const r = probe(X, S, P_partner, map, jmap, "mirror", null); if (fallen) { merge(j2a.post, r.D); j2a.postTicks++; } else { merge(j2a.pre, r.D); j2a.ticks++; if (r.bad.length && j2a.bad.length < 20) j2a.bad.push({ side, t, bad: r.bad }); } }
+        const r = probe(X, S, P_partner, map, jmap, "mirror", null); if (!fallen && r.det.tau && !(r.det.tau.d <= (j2a.tauWorst?.d ?? -1))) j2a.tauWorst = { ...r.det.tau, t, side }; if (fallen) { merge(j2a.post, r.D); j2a.postTicks++; } else { merge(j2a.pre, r.D); j2a.ticks++; if (r.bad.length && j2a.bad.length < 20) j2a.bad.push({ side, t, bad: r.bad }); } }
       const fp = ft.map(f => [S.st[f].pos[0], S.st[f].pos[2]]); tr[side].push({ t, fp }); return !(S.g2acc.fallT != null && t > S.g2acc.fallT + 0.5); };
   let goA = true, goB = !FLOOR; while (goA || goB) { if (goA) goA = step(A, ioA, PA, PB, "A"); if (goB) goB = step(B, ioB, PB, PA, "B"); }
   if (FLOOR) { for (const s of [A, B, PA, PB]) s.destroy(); return { ...job, floor }; }

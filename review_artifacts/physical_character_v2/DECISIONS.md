@@ -1170,3 +1170,22 @@ Candidates and their regression implications: report §13.
 - **Observation (new, minor):** after a fall, with leg-IK targets 0.46–2.3 m out of reach, the leg IK is not mirror-exact (torque differences up to 654 N·m from 0.15 s after the fall). It affects no gate. Noted for G4 swing-leg IK.
 - **Ankle re-investigation:** **not started** (the user decision requires a clean G1 → G3). Its plan is drafted (`ankle_plane/ANKLE_REINVESTIGATION_PREREG.md`, DRAFT).
 - **Probe correction recorded:** the first version of `b_ctrl_mirror` snapshot the controller state after the previous tick, so it injected the sensed foot loads one tick stale. It also kept a mirrored polygon's reversed winding. Both were fixed before any result was used.
+
+## 2026-10-03/04 — G3 row J2 split into J2a / J2b (criteria v3; user decision `sources/2026-10-03_user_decision_j2_split_ankle_reinvestigation.md`)
+
+### FP-8: criteria v3 pre-registered (`97a0c5d`); evaluated: NOT PASSED 19/20 (J2a); STOPPED for a decision (`g3/G3_V3_EVALUATION.md`)
+- **J2a floor:** 27,709 states, ≤ 4-ulp input perturbations, 0 discrete flips. Tolerance = max(10 × floor, 100·ε·scale).
+- **J2b passes 81/81** (0.086 / 1.28 / 0.27 mm).
+- **J2a fails 0/81**, with no discrete mismatch and a bit-exact self-check. Three genuine controller mirror defects:
+  1. the usable foot regions: `hull2` keeps an exactly collinear vertex on the left boot only, and the radial inset makes it a 4.8 µm region difference; up to 1.66 mm CoP / 1.7 N·m in BR pushes;
+  2. the leg IK: one-sided FD Jacobian plus a hard 1e-9 threshold;
+  3. `Q.rot`'s unit-quaternion formula on Jolt's non-unit (float32) orientations: 3e-7 rad axis distortion, different on L and R.
+- **Diagnostic package** (`tools/b_sym_patch.mjs`: region + central-difference IK + 1e-12 IK tolerance + orientation normalisation): J2a within every controller-output tolerance on all 81 pairs. G2 619/620 outcomes and 0 boundary changes; G3 rows pass; S2 0.046 → 0.065 ms; G2 in-run 2.5 0.109 → 0.212 ms.
+- **But J2b then fails 2/81** (0.126 mm vs 0.1; 2.08 mm vs 2.0). The old left-only region bias partly offset the plant's own L/R floor; the region fix alone raises paired differences by a median 1.2–1.3×.
+- **My errors recorded:**
+  - `sigmaErr` was gated at 2.2e-14 although it is a metric artifact of non-unit quaternions (~1e-6);
+  - the first floor smoke test perturbed supervisor time stamps;
+  - the first hold-angle metric (2·acos) read ‖q‖² < 1 as 5e-4 rad.
+- **Post-fall IK** stays non-equivariant even with the package. Pre-fall equivariance holds in every reachable state tested; near-reach-limit swing targets are untested.
+- **Options put to the user:** 1 (recommended) adopt the fixes, correct `sigmaErr`, re-measure the J2b floor by D4's method for explicit approval, measure G2 2.5 isolated or optimise the IK; 2 keep D4 numbers (blocked); 3 keep the controller (J2a deviation); 4 region + norm only with an IK-tolerance torque floor.
+- **The ankle re-investigation has not started.**
