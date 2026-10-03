@@ -7,12 +7,20 @@
 //   • no Coulomb joint friction; no sleeping; mMaxAngularVelocity raised so the engine never clips physiological segment speeds;
 //   • per-sub-shape materials for the friction policy (decoded from contacts from G1 on);
 //   • readback of every built parameter (G0 0.11).
+// G1 additions (passive physics; G0 never calls them):
+//   • gyroscopic force ON (mApplyGyroscopicForce) — G1 defect fix G1-D1: without it Jolt keeps a free body's ω constant instead of its
+//     angular momentum (Euler's equations violated; measured |ΔL|/|L| = 1.53 over 2 s on a single free asymmetric body vs 2.5e-3 with it);
+//   • the approved per-sub-shape contact friction policy (spec §15.4; G0 used a flat 0.5 — it never exercised friction);
+//   • contact facts per manifold (bodies, sub-shapes, materials, depth, normal, points on both bodies), velocity writes for initial
+//     conditions, constraint impulse readback, passive-drive motor access, equal-and-opposite explicit torques, Jolt SaveState /
+//     RestoreState, optional linear-cast CCD and kinematic test rigs.
 import { V, Q } from "./v2_math.js";
 
 export async function loadJolt(url) { const mod = await import(url); return await mod.default(); }
 const L_STATIC = 0, L_MOVING = 1, GROUND_UD = 1000;
-export const G0_WORLD = { gravity: -9.81, velSteps: 10, posSteps: 2, linDamp: 0, angDamp: 0, maxAngVel: 100, allowSleep: false,
-  note: "solver iterations are Jolt defaults here; G1's convergence study selects them. maxAngVel 100 rad/s (Jolt default 47.1) so kicks (shank ≈ 39 rad/s) are never clipped." };
+export const G0_WORLD = { gravity: -9.81, velSteps: 10, posSteps: 2, linDamp: 0, angDamp: 0, maxAngVel: 100, allowSleep: false, gyroscopic: true, ccd: "discrete", recordContacts: true,
+  note: "solver iterations are Jolt defaults here; G1's convergence study selects them. maxAngVel 100 rad/s (Jolt default 47.1) so kicks (shank ≈ 39 rad/s) are never clipped. gyroscopic: Euler's rigid-body equations (G1-D1)." };
+const MAT_TURF = "turf";
 
 export class V2JoltWorld {
   constructor(J, spec, contact, cfg) {
@@ -25,9 +33,13 @@ export class V2JoltWorld {
     this.ps = this.jolt.GetPhysicsSystem(); this.bi = this.ps.GetBodyInterface();
     this.ps.SetGravity(new J.Vec3(0, this.cfg.gravity, 0));
     const p = this.ps.GetPhysicsSettings(); p.mSpeculativeContactDistance = contact.speculative; p.mPenetrationSlop = contact.slop; p.mBaumgarte = contact.baumgarte;
-    p.mNumVelocitySteps = this.cfg.velSteps; p.mNumPositionSteps = this.cfg.posSteps; this.ps.SetPhysicsSettings(p);
-    const gs = new J.BodyCreationSettings(new J.BoxShape(new J.Vec3(50, 1, 50), 0.0, null), new J.RVec3(0, -1, 0), new J.Quat(0, 0, 0, 1), J.EMotionType_Static, L_STATIC);
+    p.mNumVelocitySteps = this.cfg.velSteps; p.mNumPositionSteps = this.cfg.posSteps; if (this.cfg.warmStart === false) p.mConstraintWarmStart = false; if (this.cfg.pairCache === false) p.mUseBodyPairContactCache = false; if (this.cfg.manifoldReduction === false) p.mUseManifoldReduction = false; this.ps.SetPhysicsSettings(p);
+    const turfShape = this.cfg.turf === "plane" ? new J.PlaneShape(new J.Plane(new J.Vec3(0, 1, 0), 0), null, 50) : this.cfg.turf === "small" ? new J.BoxShape(new J.Vec3(4, 1, 4), 0.0, null) : new J.BoxShape(new J.Vec3(50, 1, 50), 0.0, null);
+    const gs = new J.BodyCreationSettings(turfShape, new J.RVec3(0, this.cfg.turf === "plane" ? 0 : -1, 0), new J.Quat(0, 0, 0, 1), J.EMotionType_Static, L_STATIC);
     gs.mUserData = GROUND_UD; gs.mFriction = 0.5; gs.mRestitution = 0; this.ground = this.bi.CreateBody(gs); this.bi.AddBody(this.ground.GetID(), J.EActivation_DontActivate); J.destroy(gs);
+    this.mats = spec.bodies.map(b => b.shapes.map(s => s.material || "body"));           // sub-shape index → contact material (spec §15.4)
+    this.subBits = spec.bodies.map(b => b.shapes.length > 1 ? Math.ceil(Math.log2(b.shapes.length)) : 0);
+    this.frictionOf = (ma, mb) => { const F = contact.friction || {}; return F[ma + "|" + mb] ?? F[mb + "|" + ma] ?? 0.4; };
     this.gft = new J.GroupFilterTable(spec.bodies.length);
     for (const [a, b] of spec.disabledPairs) this.gft.DisableCollision(a, b);
     this.bodies = []; this.shapeInfo = [];
@@ -46,7 +58,7 @@ export class V2JoltWorld {
   }
   _addBody(b) {
     const J = this.J, cs = new J.StaticCompoundShapeSettings();
-    for (const s of b.shapes) cs.AddShape(new J.Vec3(s.pos[0], s.pos[1], s.pos[2]), new J.Quat(s.rot[0], s.rot[1], s.rot[2], s.rot[3]), this._shapeSettings(s), 0);
+    b.shapes.forEach((s, k) => cs.AddShape(new J.Vec3(s.pos[0], s.pos[1], s.pos[2]), new J.Quat(s.rot[0], s.rot[1], s.rot[2], s.rot[3]), this._shapeSettings(s), k));   // sub-shape user data = index
     const r0 = cs.Create(); if (r0.HasError()) throw new Error(b.name + ": " + r0.GetError().c_str());
     const nat = r0.Get().GetCenterOfMass(), c = b.comLocal, off = [c[0] - nat.GetX(), c[1] - nat.GetY(), c[2] - nat.GetZ()];
     const oc = new J.OffsetCenterOfMassShapeSettings(new J.Vec3(off[0], off[1], off[2]), cs), r1 = oc.Create(); if (r1.HasError()) throw new Error(b.name + " com: " + r1.GetError().c_str());
@@ -57,7 +69,8 @@ export class V2JoltWorld {
     const mp = bcs.mMassPropertiesOverride; mp.mMass = b.mass; const I = J.Mat44.prototype.sIdentity(), T = b.inertia;
     I.SetAxisX(new J.Vec3(T[0][0], T[1][0], T[2][0])); I.SetAxisY(new J.Vec3(T[0][1], T[1][1], T[2][1])); I.SetAxisZ(new J.Vec3(T[0][2], T[1][2], T[2][2])); mp.mInertia = I;
     bcs.mFriction = 0.5; bcs.mRestitution = 0; bcs.mLinearDamping = this.cfg.linDamp; bcs.mAngularDamping = this.cfg.angDamp; bcs.mMaxAngularVelocity = this.cfg.maxAngVel;
-    bcs.mAllowSleeping = this.cfg.allowSleep; bcs.mGravityFactor = 1; bcs.mUserData = b.index + 1;
+    bcs.mAllowSleeping = this.cfg.allowSleep; bcs.mGravityFactor = 1; bcs.mUserData = b.index + 1; bcs.mApplyGyroscopicForce = !!this.cfg.gyroscopic;
+    if (this.cfg.ccd === "linearcast" || (this.cfg.ccd === "distal" && /^(foot|shank|forearm)_/.test(b.name))) bcs.mMotionQuality = J.EMotionQuality_LinearCast;
     bcs.mCollisionGroup.SetGroupFilter(this.gft); bcs.mCollisionGroup.SetGroupID(0); bcs.mCollisionGroup.SetSubGroupID(b.index);
     const body = this.bi.CreateBody(bcs); this.bi.AddBody(body.GetID(), J.EActivation_Activate); J.destroy(bcs);
     this.bodies.push(body);
@@ -85,17 +98,40 @@ export class V2JoltWorld {
     const on = (b1p, b2p, mp, sp) => {
       const b1 = J.wrapPointer(b1p, J.Body), b2 = J.wrapPointer(b2p, J.Body), m = J.wrapPointer(mp, J.ContactManifold), cs = J.wrapPointer(sp, J.ContactSettings);
       const idx = (u) => (u === GROUND_UD ? -1 : u - 1), i1 = idx(b1.GetUserData()), i2 = idx(b2.GetUserData());
-      cs.mCombinedFriction = 0.5; cs.mCombinedRestitution = self.contactCfg.restitution;   // G0 does not exercise friction; G1 applies the per-sub-shape policy
-      const n = m.mWorldSpaceNormal, np = m.mRelativeContactPointsOn1.size(), pts = [];
-      for (let k = 0; k < np; k++) { const p = m.GetWorldSpaceContactPointOn1(k); pts.push([p.GetX(), p.GetY(), p.GetZ()]); }
-      self.contacts.push({ a: i1, b: i2, normal: [n.GetX(), n.GetY(), n.GetZ()], depth: m.mPenetrationDepth, pts });
+      const s1 = i1 < 0 ? 0 : self._sub(i1, m.mSubShapeID1.GetValue()), s2 = i2 < 0 ? 0 : self._sub(i2, m.mSubShapeID2.GetValue());
+      const m1 = i1 < 0 ? MAT_TURF : self.mats[i1][s1], m2 = i2 < 0 ? MAT_TURF : self.mats[i2][s2], mu = self.frictionOf(m1, m2);
+      cs.mCombinedFriction = mu; cs.mCombinedRestitution = self.contactCfg.restitution;     // spec §15.4 per-sub-shape friction policy
+      if (!self.cfg.recordContacts) return;
+      const n = m.mWorldSpaceNormal, np = m.mRelativeContactPointsOn1.size(), pts = [], pts2 = [];
+      for (let k = 0; k < np; k++) { const p = m.GetWorldSpaceContactPointOn1(k), q = m.GetWorldSpaceContactPointOn2(k); pts.push([p.GetX(), p.GetY(), p.GetZ()]); pts2.push([q.GetX(), q.GetY(), q.GetZ()]); }
+      self.contacts.push({ a: i1, b: i2, sa: s1, sb: s2, ma: m1, mb: m2, mu, normal: [n.GetX(), n.GetY(), n.GetZ()], depth: m.mPenetrationDepth, pts, pts2 });
     };
     L.OnContactAdded = on; L.OnContactPersisted = on; L.OnContactRemoved = () => {};
     this.ps.SetContactListener(L); this.listener = L;
   }
+  _sub(i, v) { const b = this.subBits[i]; return b ? (v & ((1 << b) - 1)) : 0; }               // first-level sub-shape index of the body's compound
+  subShapeUserData(i, v) { const id = new this.J.SubShapeID(); id.SetValue(v); const u = this.bodies[i].GetShape().GetSubShapeUserData(id); this.J.destroy(id); return u; }
   setPose(i, pos, rot) { this.bi.SetPositionAndRotation(this.bodies[i].GetID(), new this.J.RVec3(pos[0], pos[1], pos[2]), new this.J.Quat(rot[0], rot[1], rot[2], rot[3]), this.J.EActivation_Activate); }
   setGravity(g) { this.ps.SetGravity(new this.J.Vec3(0, g, 0)); }
-  step(dt) { this.contacts = []; this.jolt.Step(dt, 1); }
+  step(dt, collisionSteps) { this.contacts = []; this.jolt.Step(dt, collisionSteps || 1); }
+  // ── G1 surface ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  setVel(i, v, w) { const id = this.bodies[i].GetID(), t = this._t; t.v.Set(v[0], v[1], v[2]); this.bi.SetLinearVelocity(id, t.v); t.v.Set(w[0], w[1], w[2]); this.bi.SetAngularVelocity(id, t.v); }
+  get _t() { const J = this.J; return this.__t || (this.__t = { q: new J.Quat(0, 0, 0, 1), v: new J.Vec3(0, 0, 0), w: new J.Vec3(0, 0, 0) }); }
+  // passive drive on joint k, constraint axis i (0 twist, 1 swing Y, 2 swing Z): implicit spring k (N·m/rad) + damper c (N·m·s/rad), |τ| ≤ lim
+  setDrive(k, i, stiffness, damping, lim) { const ms = this.cons[k].c.GetMotorSettings(this._axes.rot[i]), sp = ms.mSpringSettings;
+    sp.mMode = this.J.ESpringMode_StiffnessAndDamping; sp.mStiffness = stiffness; sp.mDamping = damping; ms.mMinTorqueLimit = -lim; ms.mMaxTorqueLimit = lim; }
+  driveOn(k, i) { this.cons[k].c.SetMotorState(this._axes.rot[i], this.J.EMotorState_PositionAndVelocity); }
+  setDriveTarget(k, q) { const t = this._t, c = this.cons[k].c; t.q.Set(q[0], q[1], q[2], q[3]); c.SetTargetOrientationCS(t.q); t.w.Set(0, 0, 0); c.SetTargetAngularVelocityCS(t.w); }
+  // equal-and-opposite torque (N·m, world) on a joint's child (+) and parent (−) for the next step — internal, momentum-conserving
+  addTorquePair(parent, child, T) { const t = this._t; t.v.Set(T[0], T[1], T[2]); this.bi.AddTorque(this.bodies[child].GetID(), t.v, this.J.EActivation_Activate); t.v.Set(-T[0], -T[1], -T[2]); this.bi.AddTorque(this.bodies[parent].GetID(), t.v, this.J.EActivation_Activate); }
+  lambdaPos(k) { const l = this.cons[k].c.GetTotalLambdaPosition(); return [l.GetX(), l.GetY(), l.GetZ()]; }
+  lambdaRot(k) { const l = this.cons[k].c.GetTotalLambdaRotation(); return [l.GetX(), l.GetY(), l.GetZ()]; }
+  lambdaMotor(k) { const l = this.cons[k].c.GetTotalLambdaMotorRotation(); return [l.GetX(), l.GetY(), l.GetZ()]; }
+  rotCS(k) { const q = this.cons[k].c.GetRotationInConstraintSpace(); return [q.GetX(), q.GetY(), q.GetZ(), q.GetW()]; }
+  setKinematic(i) { this.bi.SetMotionType(this.bodies[i].GetID(), this.J.EMotionType_Kinematic, this.J.EActivation_Activate); }
+  saveState() { const rec = new this.J.StateRecorderImpl(); this.ps.SaveState(rec, this.J.EStateRecorderState_All); return rec; }
+  restoreState(rec) { rec.Rewind(); this.ps.RestoreState(rec); this.contacts = []; }
+  freeState(rec) { this.J.destroy(rec); }
   read(i) { const b = this.bodies[i], p = b.GetPosition(), r = b.GetRotation(), c = b.GetCenterOfMassPosition(), v = b.GetLinearVelocity(), w = b.GetAngularVelocity();
     return { pos: [p.GetX(), p.GetY(), p.GetZ()], rot: [r.GetX(), r.GetY(), r.GetZ(), r.GetW()], com: [c.GetX(), c.GetY(), c.GetZ()], v: [v.GetX(), v.GetY(), v.GetZ()], w: [w.GetX(), w.GetY(), w.GetZ()] }; }
   // ── readback of everything the spec asked for (G0 0.11) ──

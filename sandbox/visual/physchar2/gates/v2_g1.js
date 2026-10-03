@@ -1,0 +1,231 @@
+// ═══ physchar2/gates/v2_g1.js — V2-G1: PASSIVE physics. No controller, no balance, no support, no posture effort. ══════════════════════
+// After release only gravity, inertia, the articulation (rigid joints + engine hard stops), the specified passive joint tissue (end-range
+// elastic law + viscous damping, sim/v2_passive.js) and contact (turf + self) move the body. An initial condition is a pose (anatomical
+// joint angles, spec/v2_pose.js), a rigid placement and a velocity field; everything after it is the solver. Shared by the Node runner
+// (tools/g1_run.js) and the review page (viewer/g1.html): the same code path produces the same per-tick hash in both.
+import { V, Q, hashNums, rad } from "../core/v2_math.js";
+import { V2JoltWorld } from "../core/v2_jolt.js";
+import { POSES, posedBodies } from "../spec/v2_pose.js";
+import { decompose } from "../spec/v2_joints.js";
+import { PassiveLayer } from "../sim/v2_passive.js";
+import { bodyLowest, lowestOf, bootSole, hull2, insideDist } from "../sim/v2_geom.js";
+
+// ── world configuration (spec §19 / §15.4; solver iterations are chosen by the 1.5 study) ─────────────────────────────────────────────
+export const G1_WORLD = { hz: 240, coll: 1, velSteps: 10, posSteps: 2, ccd: "discrete" };
+export const ITERATION_SET = [10, 15, 20, 30];                  // spec §22 1.5
+export const RATE_SET = [180, 240, 360, 720];                    // brief §8: bounded sensitivity around 240 Hz (720 Hz = converged reference)
+export const G = 9.81;
+
+const Rx = (d) => Q.axis([1, 0, 0], rad(d)), Ry = (d) => Q.axis([0, 1, 0], rad(d)), Rz = (d) => Q.axis([0, 0, 1], rad(d));
+const mul = (...qs) => qs.reduce((a, b) => Q.norm(Q.mul(a, b)));
+const both = (o) => { const r = {}; for (const [k, v] of Object.entries(o)) { r[k + "_L"] = { ...v }; r[k + "_R"] = { ...v }; } return r; };
+const QS = POSES.quietStance.angles, NEUTRAL = POSES.neutral.angles;
+
+// ── the scenarios (curated; each tests something the others do not) ───────────────────────────────────────────────────────────────────
+// pose: anatomical degrees (v2_joints conventions; shoulder from the arm-hanging zero); rot: rigid rotation of the posed body about
+// `pivot` ("ankles" = mid-ankle-joint point, "com"); lift: lowest collider point above the turf (m); v / w: rigid velocity field about the
+// total COM (m/s, rad/s) unless vfield is given; gravity 0 + lift 2 m = isolated (no turf contact possible).
+export const SCENARIOS = {
+  upright: { group: "release", title: "Quiet upright release", note: "Quiet stance (knees 10°, hips 5°, ankles 5° DF, arms 6° abducted) with both boots on the turf, released from rest. Passive: the legs must buckle and the body collapse under gravity alone.",
+    pose: QS, lift: 0.0005, seconds: 7 },
+  leanF: { group: "release", title: "Forward lean 5°", note: "Quiet stance tilted 5° forward about the ankle line, boots on the turf, released from rest.", pose: QS, rot: Rx(5), pivot: "ankles", lift: 0.0005, seconds: 7 },
+  leanB: { group: "release", title: "Backward lean 5°", note: "Quiet stance tilted 5° backward about the ankle line.", pose: QS, rot: Rx(-5), pivot: "ankles", lift: 0.0005, seconds: 7 },
+  leanL: { group: "release", title: "Lateral lean 5° left", note: "Quiet stance tilted 5° to the character's LEFT about the AP axis through the mid-ankle point. Mirror of leanR.", pose: QS, rot: Rz(5), pivot: "ankles", lift: 0.0005, seconds: 7, mirrorOf: "leanR" },
+  leanR: { group: "release", title: "Lateral lean 5° right", note: "Quiet stance tilted 5° to the character's RIGHT. Mirror of leanL.", pose: QS, rot: Rz(-5), pivot: "ankles", lift: 0.0005, seconds: 7, mirrorOf: "leanL" },
+  perturb: { group: "release", title: "Angular perturbation", note: "Quiet stance on the turf with a modest whole-body angular velocity (0.6, 0.4, −0.5) rad/s about the COM.", pose: QS, lift: 0.0005, w: [0.6, 0.4, -0.5], seconds: 7 },
+  singleLeg: { group: "release", title: "Single-support release", note: "Single-leg stance (left boot on the turf, right hip 30° / knee 60° flexed), released from rest.", pose: POSES.singleLeg.angles, lift: 0.0005, seconds: 7 },
+  dropA: { group: "V1 Gate A", v1: "A", title: "Relaxed upright drop 3 cm (V1 Gate A · A)", note: "V1 A re-authored in V2 anatomical angles: standing, joints slightly relaxed (knees 4°, elbows 12°, shoulders 8° abducted, hips 4° flexed), 3 cm above the turf, released from rest.",
+    pose: { ...both({ knee: { flex: 4 }, elbow: { flex: 12 }, shoulder: { abd: 8 }, hip: { flex: 4 } }) }, lift: 0.03, seconds: 7 },
+  sideFirst: { group: "V1 Gate A", v1: "B", title: "Hip / side-first fall (V1 Gate A · B)", note: "V1 B re-authored: rolled 92° onto the right side, trunk bent up away from the turf, right arm 170° abducted (10° inside its limit), legs lightly flexed; 20 cm up, 0.5 m/s down.",
+    pose: { lumbar: { lat: -20 }, thoracic: { lat: -15 }, hip_R: { flex: 25, abd: 10 }, knee_R: { flex: 35 }, hip_L: { flex: 60, abd: 15 }, knee_L: { flex: 70 },
+      shoulder_R: { abd: 170 }, elbow_R: { flex: 70 }, shoulder_L: { flex: 40, abd: 20 }, elbow_L: { flex: 40 } }, rot: Rz(-92), pivot: "com", lift: 0.20, v: [0, -0.5, 0], seconds: 7 },
+  shoulderFirst: { group: "V1 Gate A", v1: "C", title: "Shoulder / upper-body-first fall (V1 Gate A · C)", note: "V1 C re-authored: pitched 70° forward and rolled 35° right with a bend at the hips so the right shoulder / arm meets the turf first; right arm forward, left arm back; 30 cm up, (0, −0.3, 0.4) m/s.",
+    pose: { hip_L: { flex: 30 }, hip_R: { flex: 20 }, knee_L: { flex: 15 }, knee_R: { flex: 30 }, shoulder_R: { flex: 60, abd: 10 }, elbow_R: { flex: 20 }, shoulder_L: { flex: -35, abd: 15 }, elbow_L: { flex: 60 },
+      lumbar: { flex: 10 }, neck: { flex: -15 } }, rot: mul(Rz(-35), Rx(70)), pivot: "com", lift: 0.30, v: [0, -0.3, 0.4], seconds: 7 },
+  rotating: { group: "V1 Gate A", v1: "D", title: "Rotating fall (V1 Gate A · D)", note: "V1 D re-authored: nearly upright (15° back), boots 2 cm above the turf, initial tumble + yaw ω = (1.5, 2.0, −2.5) rad/s and a drift of (1.2, 0, 0.6) m/s.",
+    pose: { knee_L: { flex: 10 }, knee_R: { flex: 25 }, elbow_L: { flex: 30 }, elbow_R: { flex: 15 }, shoulder_R: { abd: 25 }, shoulder_L: { abd: 10, flex: 20 } }, rot: Rx(-15), pivot: "com", lift: 0.02, v: [1.2, 0, 0.6], w: [1.5, 2.0, -2.5], seconds: 7 },
+  awkward: { group: "V1 Gate A", v1: "E", title: "Awkward asymmetric fall (V1 Gate A · E)", note: "V1 E re-authored: root turned 30° / pitched 25° / rolled −35°; right leg flexed-abducted-rotated, left extended; arms in opposite configurations; spine twisted and bent; 40 cm up with a small tumble.",
+    pose: { hip_R: { flex: 70, abd: 20, rot: 15 }, hip_L: { flex: -15, abd: 10, rot: -20 }, knee_R: { flex: 90 }, knee_L: { flex: 20 }, ankle_R: { df: 15 }, ankle_L: { df: -10 },
+      lumbar: { rot: 5, lat: -10, flex: 15 }, thoracic: { rot: 15 }, neck: { rot: 30, flex: 10 }, shoulder_R: { flex: 110, abd: 20, rot: 30 }, shoulder_L: { flex: -20, abd: 60, rot: -20 }, elbow_R: { flex: 80 }, elbow_L: { flex: 30 } },
+    rot: mul(Ry(30), Rx(25), Rz(-35)), pivot: "com", lift: 0.40, v: [0.3, -0.5, 0.2], w: [0.5, -0.8, 0.3], seconds: 7 },
+  flatSupine: { group: "impact", title: "Flat supine drop 0.5 m with roll", note: "Lying supine (face up), arms 6° abducted, horizontal, 0.5 m above the turf, rolling 2 rad/s about the long axis: flat back impact, then a supine roll.",
+    pose: NEUTRAL, rot: Rx(-90), pivot: "com", lift: 0.5, w: [0, 0, 2], seconds: 7 },
+  drop1m: { group: "impact", title: "Feet-first drop 1.0 m", note: "Quiet stance released with the boots 1.0 m above the turf (touchdown at 4.4 m/s): knees, ankles and hips are driven into their end range under impact.", pose: QS, lift: 1.0, seconds: 7 },
+  impact15: { group: "impact", title: "15 m/s body into the turf", note: "Prone (face down), horizontal, 10 cm above the turf, every body moving at 15 m/s downward: tunnelling / first-touch test (spec 1.4).", pose: NEUTRAL, rot: Rx(90), pivot: "com", lift: 0.10, v: [0, -15, 0], seconds: 2 },
+  isoMomentum: { group: "isolated", title: "Isolated: end-range release + tumble (no gravity, no contact)", note: "Gravity off, 2 m above the turf. Many joints start beyond their soft limits (knees / elbows −3° hyperextended, hips 45° abducted, shoulders 175° abducted, ankles 55° PF, lumbar 28° extended, neck 65° extended, thoracic 38° rotated) with a whole-body tumble: internal passive motion only. Momentum and energy accounting (spec 1.1).",
+    pose: { ...both({ knee: { flex: -3 }, elbow: { flex: -3 }, hip: { abd: 45 }, shoulder: { abd: 175 }, ankle: { df: -55 } }), lumbar: { flex: -28 }, neck: { flex: -65 }, thoracic: { rot: 38 } },
+    lift: 2.0, gravity: 0, v: [0.3, 0, -0.2], w: [0.8, -0.5, 0.6], seconds: 2 },
+  isoSelfCol: { group: "isolated", title: "Isolated: self-collision at football speed (no gravity)", note: "Gravity off, 2 m up. The right leg swings across into the left leg at 15 rad/s about the right hip (boot ≈ 13 m/s) and the right arm swings into the trunk at 8 rad/s about the shoulder: non-adjacent self-contacts must occur, stop the limbs and conserve momentum.",
+    pose: NEUTRAL, lift: 2.0, gravity: 0, seconds: 2,
+    vfield: (spec, S, at) => { const leg = ["thigh_R", "shank_R", "foot_R"], arm = ["upperArm_R", "forearm_R"];
+      const pH = at("hip_R"), pS = at("shoulder_R"), wl = [0, 0, -15], wa = [0, 0, -8];
+      return spec.bodies.map((b, i) => { const c = V.add(S[i].pos, Q.rot(S[i].rot, b.comLocal));
+        if (leg.includes(b.name)) return { v: V.cross(wl, V.sub(c, pH)), w: wl.slice() }; if (arm.includes(b.name)) return { v: V.cross(wa, V.sub(c, pS)), w: wa.slice() }; return { v: [0, 0, 0], w: [0, 0, 0] }; }); } },
+};
+export const SCENARIO_ORDER = Object.keys(SCENARIOS);
+export const CURATED = ["upright", "leanF", "leanL", "singleLeg", "drop1m", "sideFirst", "awkward", "flatSupine", "impact15", "isoSelfCol"];
+export const ESSENTIAL = ["upright", "leanF", "leanL", "singleLeg", "drop1m", "sideFirst", "awkward", "flatSupine", "isoMomentum", "isoSelfCol"];   // run on every body variant
+
+// ── initial condition ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+const comW = (spec, S, i) => V.add(S[i].pos, Q.rot(S[i].rot, spec.bodies[i].comLocal));
+export function comOf(spec, S) { let m = 0, c = [0, 0, 0]; spec.bodies.forEach((b, i) => { c = V.add(c, V.sc(comW(spec, S, i), b.mass)); m += b.mass; }); return V.sc(c, 1 / m); }
+const jointAt = (spec, S, name) => { const j = spec.joints.find(x => x.name === name), pb = spec.bodies[j.parentIndex]; return V.add(S[j.parentIndex].pos, Q.rot(S[j.parentIndex].rot, V.sub(j.at, pb.origin))); };
+export function initialState(spec, sc) {
+  let S = posedBodies(spec, sc.pose || {});
+  if (sc.rot) { const piv = sc.pivot === "ankles" ? V.sc(V.add(jointAt(spec, S, "ankle_L"), jointAt(spec, S, "ankle_R")), 0.5) : comOf(spec, S);
+    S = S.map(s => ({ pos: V.add(piv, Q.rot(sc.rot, V.sub(s.pos, piv))), rot: Q.norm(Q.mul(sc.rot, s.rot)) })); }
+  const lo = lowestOf(spec, S); S = S.map(s => ({ pos: V.add(s.pos, [0, sc.lift - lo.y, 0]), rot: s.rot }));
+  const com = comOf(spec, S), v0 = sc.v || [0, 0, 0], w0 = sc.w || [0, 0, 0];
+  const vel = sc.vfield ? sc.vfield(spec, S, (n) => jointAt(spec, S, n)) : S.map((s, i) => ({ v: V.add(v0, V.cross(w0, V.sub(comW(spec, S, i), com))), w: w0.slice() }));
+  return { S, vel, gravity: sc.gravity ?? -G, lowestBody: lo.body };
+}
+
+// ── the simulation (one scenario, one body, one configuration) ─────────────────────────────────────────────────────────────────────────
+const KEYS = ["x", "y", "z"], D = 180 / Math.PI;
+export class G1Sim {
+  constructor(J, spec, key, opts = {}) {
+    this.J = J; this.spec = spec; this.key = key; this.sc = SCENARIOS[key]; this.opts = opts;
+    this.cfg = Object.assign({}, G1_WORLD, opts.cfg || {}); this.dt = 1 / this.cfg.hz; this.N = Math.round((opts.seconds || this.sc.seconds) * this.cfg.hz);
+    const init = initialState(spec, this.sc); this.init = init;
+    const contact = { ...spec.contact, ...(this.cfg.slop != null ? { slop: this.cfg.slop } : {}), ...(this.cfg.speculative != null ? { speculative: this.cfg.speculative } : {}) };
+    this.w = new V2JoltWorld(J, spec, contact, { velSteps: this.cfg.velSteps, posSteps: this.cfg.posSteps, ccd: this.cfg.ccd, warmStart: this.cfg.warmStart, pairCache: this.cfg.pairCache, manifoldReduction: this.cfg.manifoldReduction, turf: this.cfg.turf, gravity: init.gravity, recordContacts: true });
+    init.S.forEach((s, i) => { this.w.setPose(i, s.pos, s.rot); this.w.setVel(i, init.vel[i].v, init.vel[i].w); });
+    this.P = new PassiveLayer(spec, this.w, { enabled: opts.passive !== false, couplings: opts.couplings !== false });
+    this.nb = spec.bodies.length; this.M = spec.bodies.reduce((s, b) => s + b.mass, 0); this.g = -init.gravity;
+    this.disabled = new Set(spec.disabledPairs.map(([a, b]) => Math.min(a, b) + "-" + Math.max(a, b)));
+    this.anchors = spec.joints.map(j => ({ p: V.sub(j.at, spec.bodies[j.parentIndex].origin), c: V.sub(j.at, spec.bodies[j.childIndex].origin) }));
+    this.sole = ["foot_L", "foot_R"].map(n => { const i = spec.bodies.findIndex(b => b.name === n), s = bootSole(spec.bodies[i]); return { i, y0: s.y0, poly: hull2(s.pts) }; });
+    this.n = 0; this.h = 2166136261; this.hashAt = {}; this.cpu = { step: 0, passive: 0, measure: 0 };
+    this.series = opts.series ? { t: [], E: [], KE: [], PE: [], U: [], D: [], comY: [], turfPen: [], selfPen: [], sep: [], hardExc: [], P: [], L: [] } : null;
+    this.A = this._acc(); this.prevQ = null; this.prevAt = null; this.Dcum = 0;
+    this.footI = ["foot_L", "foot_R"].map(n => spec.bodies.findIndex(b => b.name === n)); this.minDxFeet = Infinity;
+    this.st = this.read(); this._pre();
+  }
+  read() { const o = []; for (let i = 0; i < this.nb; i++) o.push(this.w.read(i)); return o; }
+  _acc() {
+    const nj = this.spec.joints.length;
+    return { finite: true, firstNaN: null, maxSpeed: 0, maxW: 0, E: [], Dstep: [], turfContactStep: [], anyContactStep: [],
+      axis: this.spec.joints.map(j => [0, 1, 2].map(i => (j.locked.includes(KEYS[i]) ? null : { thMin: Infinity, thMax: -Infinity, anMin: Infinity, anMax: -Infinity, marginMin: Infinity, softExcMax: 0,
+        hardSteps: 0, toggles: [], at: false, restMarginMin: Infinity }))),
+      sepMax: 0, sepMaxAt: null, sepRest: 0, frameJumpMax: 0, frameJumpAt: null, hardExcMax: 0, hardExcAt: null, hardExcRest: 0,
+      turfPenMax: 0, turfPenAt: null, turfPenRest: 0, turfManifoldMax: -1, selfPenMax: 0, selfPenAt: null, selfPenRest: 0,
+      ground: {}, pairs: {}, disabledHits: 0, seq: [], restKEmax: 0, restJitter: 0, restW: [],
+      soleCheck: null, P: [], L: [], com: [], Ulist: [], pAbsMax: 0, lAbsMax: 0 };
+  }
+  // passive drives for the next step + measurement of the current state
+  _pre() {
+    let t0 = now(); this.up = this.P.compute(this.st, this.dt); this.cpu.passive += now() - t0;
+    t0 = now(); this._measure(); this.cpu.measure += now() - t0;
+  }
+  tick() {
+    if (this.n >= this.N) return false;
+    let t0 = now(); this.P.apply(this.up); this.cpu.passive += now() - t0;
+    t0 = now(); this.w.step(this.dt, this.cfg.coll); this.cpu.step += now() - t0;
+    t0 = now(); this._contacts(this.w.contacts); this.cpu.measure += now() - t0;
+    this.n++; this.st = this.read();
+    const Dstep = this.P.enabled ? this.P.dampingLoss(this.st, this.dt) : 0; this.A.Dstep.push(Dstep); this.Dcum += Dstep;
+    this._pre(); return true;
+  }
+  run() { while (this.tick()); return this.summary(); }
+  // ── per-state measurement ──
+  _measure() {
+    const S = this.st, spec = this.spec, A = this.A, n = this.n, t = n * this.dt, rest = n >= this.N - Math.round(0.5 * this.cfg.hz);
+    const flat = []; for (const s of S) flat.push(...s.pos, ...s.rot, ...s.v, ...s.w);
+    if (A.finite && !flat.every(Number.isFinite)) { A.finite = false; A.firstNaN = t; }
+    this.h = hashNums(flat, this.h); if (n % 60 === 0 || n === this.N) this.hashAt[n] = this.h.toString(16).padStart(8, "0");
+    // energy, momentum
+    let ke = 0, pe = 0, Pm = [0, 0, 0], com = [0, 0, 0];
+    S.forEach((s, i) => { const b = spec.bodies[i], wl = Q.rot(Q.conj(s.rot), s.w), I = b.inertia, Iw = [I[0][0] * wl[0] + I[0][1] * wl[1] + I[0][2] * wl[2], I[1][0] * wl[0] + I[1][1] * wl[1] + I[1][2] * wl[2], I[2][0] * wl[0] + I[2][1] * wl[1] + I[2][2] * wl[2]];
+      ke += 0.5 * b.mass * V.dot(s.v, s.v) + 0.5 * V.dot(wl, Iw); pe += b.mass * this.g * s.com[1]; Pm = V.add(Pm, V.sc(s.v, b.mass)); com = V.add(com, V.sc(s.com, b.mass));
+      A.maxSpeed = Math.max(A.maxSpeed, V.len(s.v)); A.maxW = Math.max(A.maxW, V.len(s.w)); });
+    com = V.sc(com, 1 / this.M);
+    let L = [0, 0, 0], pAbs = 0, lAbs = 0; S.forEach((s, i) => { const b = spec.bodies[i], wl = Q.rot(Q.conj(s.rot), s.w), I = b.inertia, Il = [I[0][0] * wl[0] + I[0][1] * wl[1] + I[0][2] * wl[2], I[1][0] * wl[0] + I[1][1] * wl[1] + I[1][2] * wl[2], I[2][0] * wl[0] + I[2][1] * wl[1] + I[2][2] * wl[2]];
+      const Li = V.add(V.cross(V.sub(s.com, com), V.sc(s.v, b.mass)), Q.rot(s.rot, Il)); L = V.add(L, Li); pAbs += b.mass * V.len(s.v); lAbs += V.len(Li); });
+    A.pAbsMax = Math.max(A.pAbsMax, pAbs); A.lAbsMax = Math.max(A.lAbsMax, lAbs);
+    const U = this.P.enabled ? this.up.U : 0, E = ke + pe + U; A.E.push(E); A.P.push(Pm); A.L.push(L); A.com.push(com); A.Ulist.push(U);
+    // joints: angles, limits, separation, frame continuity
+    const ev = this.up.ev; let sepMax = 0, hardExc = 0, jump = 0;
+    spec.joints.forEach((j, k) => {
+      const a = this.anchors[k], pP = V.add(S[j.parentIndex].pos, Q.rot(S[j.parentIndex].rot, a.p)), pC = V.add(S[j.childIndex].pos, Q.rot(S[j.childIndex].rot, a.c)), sep = V.dist(pP, pC);
+      if (sep > sepMax) sepMax = sep; if (sep > A.sepMax) { A.sepMax = sep; A.sepMaxAt = { t, joint: j.name }; }
+      const per = ev.per[k], q = per.q; if (this.prevQ) { const r = Q.mul(Q.conj(this.prevQ[k]), q), ang = 2 * Math.atan2(Math.hypot(r[0], r[1], r[2]), Math.abs(r[3])); if (ang > jump) jump = ang; if (ang > A.frameJumpMax) { A.frameJumpMax = ang; A.frameJumpAt = { t, joint: j.name }; } }
+      const an = decompose(Q.norm(Q.mul(j.Cm, q))), anv = [an.tw, an.sy, an.sz];
+      for (let i = 0; i < 3; i++) { const X = A.axis[k][i]; if (!X) continue; const th = per.th[i], lo = j.limits.hard.lo[i], hi = j.limits.hard.hi[i], m = Math.min(th - lo, hi - th), soft = per.T[i] ? per.T[i].soft : [j.limits.soft.lo[i], j.limits.soft.hi[i]];
+        X.thMin = Math.min(X.thMin, th); X.thMax = Math.max(X.thMax, th); const anat = anv[i] * j.def.axes[KEYS[i]].s * D; X.anMin = Math.min(X.anMin, anat); X.anMax = Math.max(X.anMax, anat);
+        if (m < X.marginMin) { X.marginMin = m; X.marginAt = t; } X.softExcMax = Math.max(X.softExcMax, th - soft[1], soft[0] - th, 0);
+        const atHard = m < rad(0.25); if (atHard) X.hardSteps++; if (atHard !== X.at) { X.toggles.push(n); X.at = atHard; }
+        if (-m > hardExc) hardExc = -m; if (rest) X.restMarginMin = Math.min(X.restMarginMin, m); }
+    });
+    this.prevQ = ev.per.map(p => p.q);
+    if (hardExc > A.hardExcMax) { A.hardExcMax = hardExc; A.hardExcAt = t; }
+    // turf penetration from the exact collider geometry (post-solve state)
+    let pen = 0, penBody = -1; for (let i = 0; i < this.nb; i++) { const l = bodyLowest(spec.bodies[i], S[i]); if (-l.y > pen) { pen = -l.y; penBody = i; } }
+    if (pen > A.turfPenMax) { A.turfPenMax = pen; A.turfPenAt = { t, body: spec.bodies[penBody].name }; }
+    if (rest) { A.sepRest = Math.max(A.sepRest, sepMax); A.hardExcRest = Math.max(A.hardExcRest, hardExc); if (pen > A.turfPenRest) { A.turfPenRest = pen; A.turfPenRestBody = spec.bodies[penBody].name; }
+      A.restKEmax = Math.max(A.restKEmax, ke); let wsq = 0, cnt = 0; spec.joints.forEach(j => { const wr = V.sub(S[j.childIndex].w, S[j.parentIndex].w); wsq += V.dot(wr, wr); cnt++; }); A.restW.push(Math.sqrt(wsq / cnt)); }
+    if (this.key === "isoSelfCol") this.minDxFeet = Math.min(this.minDxFeet, S[this.footI[1]].com[0] - S[this.footI[0]].com[0]);
+    if (this.series) { const s = this.series; s.t.push(t); s.E.push(E); s.KE.push(ke); s.PE.push(pe); s.U.push(U); s.D.push(this.Dcum); s.comY.push(com[1]); s.turfPen.push(pen); s.sep.push(sepMax); s.hardExc.push(hardExc); s.P.push(Pm); s.L.push(L); }
+    this.last = { t, ke, pe, U, E, com, P: Pm, L, pen, sepMax, hardExc, jump };
+  }
+  // contacts reported during the step that leaves state n (pre-solve manifolds computed from state n's positions)
+  _contacts(C) {
+    const A = this.A, n = this.n, t = n * this.dt, rest = n >= this.N - Math.round(0.5 * this.cfg.hz), spec = this.spec; let turf = false, any = C.length > 0, selfPen = 0;
+    this.lastContacts = C;
+    for (const c0 of C) { let c = c0; if (c.a >= 0 && c.b < 0) c = { ...c0, a: c0.b, b: c0.a, sa: c0.sb, sb: c0.sa, ma: c0.mb, mb: c0.ma, normal: V.sc(c0.normal, -1), pts: c0.pts2, pts2: c0.pts };
+      if (c.a < 0) { turf = true; const b = spec.bodies[c.b].name, g = A.ground[b] || (A.ground[b] = { first: null, firstDepth: null, maxDepth: -1, steps: 0, materials: new Set() });
+        g.maxDepth = Math.max(g.maxDepth, c.depth); A.turfManifoldMax = Math.max(A.turfManifoldMax, c.depth); if (c.depth > -0.0005) { g.steps++; g.materials.add(c.mb); if (g.first == null) { g.first = t; g.firstDepth = c.depth; A.seq.push({ t, who: b }); } }
+        if (n === 0 && this.sc.lift < 0.002) this._sole(c); continue; }
+      const a = Math.min(c.a, c.b), b = Math.max(c.a, c.b), key = a + "-" + b, nm = spec.bodies[a].name + " ↔ " + spec.bodies[b].name;
+      if (this.disabled.has(key)) { A.disabledHits++; continue; }
+      const p = A.pairs[nm] || (A.pairs[nm] = { first: null, firstDepth: null, maxDepth: -1, steps: 0 }); p.maxDepth = Math.max(p.maxDepth, c.depth);
+      if (c.depth > -0.0005) { p.steps++; if (p.first == null) { p.first = t; p.firstDepth = c.depth; } }
+      if (c.depth > selfPen) selfPen = c.depth; }
+    if (selfPen > A.selfPenMax) { A.selfPenMax = selfPen; A.selfPenAt = t; } if (rest) A.selfPenRest = Math.max(A.selfPenRest, selfPen);
+    A.turfContactStep.push(turf); A.anyContactStep.push(any); if (this.series) this.series.selfPen.push(selfPen);
+  }
+  // t = 0: every turf contact of a standing release must be a boot sole contact inside the plantar outline, normal +Y
+  _sole(c) {
+    const S = this.st, f = this.sole.find(s => s.i === c.b), A = this.A; A.soleCheck = A.soleCheck || { contacts: 0, nonBoot: [], maxOutsideMm: 0, maxAboveSoleMm: 0, normalDevDeg: 0 };
+    const sc = A.soleCheck; sc.contacts++; if (!f) { sc.nonBoot.push(this.spec.bodies[c.b].name); return; }
+    sc.normalDevDeg = Math.max(sc.normalDevDeg, Math.acos(Math.min(1, Math.abs(c.normal[1]))) * D);
+    for (const p of c.pts2) { const l = Q.rot(Q.conj(S[f.i].rot), V.sub(p, S[f.i].pos)), d = insideDist(f.poly, l[0], l[2]); sc.maxOutsideMm = Math.max(sc.maxOutsideMm, -d * 1000); sc.maxAboveSoleMm = Math.max(sc.maxAboveSoleMm, (l[1] - f.y0) * 1000); }
+  }
+  // ── run summary ──
+  summary() {
+    const A = this.A, dt = this.dt, E = A.E, N = E.length - 1, spec = this.spec, hz = this.cfg.hz;
+    let maxRise = 0, maxRiseAt = null, unexplained = 0; for (let n = 0; n < N; n++) { const r = E[n + 1] - E[n]; if (r > maxRise) { maxRise = r; maxRiseAt = (n + 1) * dt; } const res = r + A.Dstep[n]; if (res > 0) unexplained += res; }
+    const tc = A.turfContactStep.findIndex(Boolean), nc = tc < 0 ? N + 1 : tc;
+    let mono = 0, minE = Infinity, monoAt = null; for (let n = Math.max(0, nc); n <= N; n++) { minE = Math.min(minE, E[n]); if (E[n] - minE > mono) { mono = E[n] - minE; monoAt = n * dt; } }
+    // airborne (no turf manifold on the step) energy closure and free-fall acceleration: ΔE + damping = 0 and ΔP = M·g·dt when nothing but gravity acts externally
+    let airClose = 0, airGain = 0, airLoss = 0, ffDev = 0, ffSteps = 0; for (let n = 0; n < N; n++) { if (!A.anyContactStep[n]) { const res = E[n + 1] - E[n] + A.Dstep[n]; airClose = Math.max(airClose, Math.abs(res)); airGain = Math.max(airGain, res); if (res < 0) airLoss += res; }
+      if (A.turfContactStep[n]) continue;
+      const dP = V.sub(A.P[n + 1], A.P[n]), a = V.sc(dP, 1 / (this.M * dt)); ffDev = Math.max(ffDev, V.len(V.sub(a, [0, -this.g, 0]))); ffSteps++; }
+    // momentum drift (isolated): relative to the characteristic momentum Σ m_i |v_i| (max over the run) / Σ |L_i| scale
+    const P0 = A.P[0], L0 = A.L[0]; let dPm = 0, dLm = 0; for (let n = 0; n <= N; n++) { dPm = Math.max(dPm, V.len(V.sub(A.P[n], P0))); dLm = Math.max(dLm, V.len(V.sub(A.L[n], L0))); }
+    const axes = [];
+    spec.joints.forEach((j, k) => A.axis[k].forEach((X, i) => { if (!X) return; const W = Math.round(0.5 * hz); let chat = 0; for (let a = 0, b = 0; b < X.toggles.length; b++) { while (X.toggles[b] - X.toggles[a] > W) a++; chat = Math.max(chat, b - a + 1); }
+      axes.push({ joint: j.name, axis: KEYS[i], motion: `${j.def.axes[KEYS[i]].pos} / ${j.def.axes[KEYS[i]].neg}`, anMin: X.anMin, anMax: X.anMax, thMin: X.thMin * D, thMax: X.thMax * D, hardLo: j.limits.hard.lo[i] * D, hardHi: j.limits.hard.hi[i] * D,
+        softLo: j.limits.soft.lo[i] * D, softHi: j.limits.soft.hi[i] * D, marginMinDeg: X.marginMin * D, marginAt: X.marginAt, softExcMaxDeg: X.softExcMax * D, hardSteps: X.hardSteps, chatterPer05s: chat, restMarginMinDeg: X.restMarginMin * D }); }));
+    const thorax = this.st[spec.bodies.findIndex(b => b.name === "thorax")], ant = Q.rot(thorax.rot, [0, 0, 1]), posture = ant[1] > 0.5 ? "supine" : ant[1] < -0.5 ? "prone" : (Q.rot(thorax.rot, [1, 0, 0])[1] > 0 ? "on left side" : "on right side");
+    const firstNonFoot = A.seq.find(s => !/^foot_/.test(s.who)) || null;
+    const restJitter = A.restW.length ? Math.max(...A.restW) : 0;
+    return { key: this.key, human: spec.human.id, cfg: this.cfg, seconds: N * dt, ticks: N, hash: this.h.toString(16).padStart(8, "0"), hashAt: this.hashAt,
+      finite: A.finite, firstNaN: A.firstNaN, maxSpeed: A.maxSpeed, maxW: A.maxW,
+      energy: { E0: E[0], Eend: E[N], maxRiseJ: maxRise, maxRiseAt, unexplainedJ: unexplained, firstContactT: tc < 0 ? null : tc * dt, monoViolJ: mono, monoAt, airborneClosureJ: airClose, airGainMaxJ: airGain, airLossSumJ: airLoss, dampingJ: this.Dcum, Uend: A.Ulist[N] },
+      freeFall: { steps: ffSteps, maxAccDev: ffDev }, momentum: { dP: dPm, dL: dLm, P0, L0, pScale: A.pAbsMax, lScale: A.lAbsMax, dPrel: dPm / Math.max(1e-12, A.pAbsMax), dLrel: dLm / Math.max(1e-12, A.lAbsMax) },
+      joints: { sepMaxMm: A.sepMax * 1000, sepMaxAt: A.sepMaxAt, sepRestMm: A.sepRest * 1000, hardExcMaxDeg: A.hardExcMax * D, hardExcAt: A.hardExcAt, hardExcRestDeg: A.hardExcRest * D,
+        frameJumpMaxDeg: A.frameJumpMax * D, frameJumpAt: A.frameJumpAt, chatterMax: Math.max(0, ...axes.map(a => a.chatterPer05s)), axes },
+      contacts: { turfPenMaxMm: A.turfPenMax * 1000, turfPenAt: A.turfPenAt, turfPenRestMm: A.turfPenRest * 1000, turfPenRestBody: A.turfPenRestBody || null, turfManifoldMaxMm: A.turfManifoldMax * 1000,
+        selfPenMaxMm: A.selfPenMax * 1000, selfPenAt: A.selfPenAt, selfPenRestMm: A.selfPenRest * 1000, disabledHits: A.disabledHits,
+        ground: Object.fromEntries(Object.entries(A.ground).map(([k, g]) => [k, { first: g.first, firstDepthMm: g.firstDepth == null ? null : g.firstDepth * 1000, maxDepthMm: g.maxDepth * 1000, steps: g.steps, materials: [...g.materials] }])),
+        pairs: Object.fromEntries(Object.entries(A.pairs).map(([k, p]) => [k, { first: p.first, firstDepthMm: p.firstDepth == null ? null : p.firstDepth * 1000, maxDepthMm: p.maxDepth * 1000, steps: p.steps }])),
+        sequence: A.seq.slice(0, 14), soleCheck: A.soleCheck },
+      rest: { KEmax: A.restKEmax, jitterRadS: restJitter },
+      selfCol: this.key === "isoSelfCol" ? (() => { const legContact = Object.keys(A.pairs).some(k => /(thigh|shank|foot)_[LR] ↔ (thigh|shank|foot)_[LR]/.test(k) && A.pairs[k].steps > 0);
+        return { minDxFeetM: this.minDxFeet, legContact, passedThrough: !legContact || A.selfPenMax > 0.010 }; })() : null, outcome: { posture, comEnd: A.com[N], firstNonFootT: firstNonFoot ? firstNonFoot.t : null, firstNonFoot: firstNonFoot ? firstNonFoot.who : null },
+      cpu: { stepMs: this.cpu.step / N, passiveMs: this.cpu.passive / (N + 1), measureMs: this.cpu.measure / (N + 1) } };
+  }
+  destroy() { this.w.destroy(); }
+}
+const now = () => (typeof performance !== "undefined" ? performance.now() : Date.now());
+export function runScenario(J, spec, key, opts = {}) { const s = new G1Sim(J, spec, key, opts); const r = s.run(); if (opts.keepSeries) r.series = s.series; s.destroy(); return r; }
