@@ -1,0 +1,50 @@
+V2-165-62 upright: rest KE 0 J | foot_L: 0/6601 offsets invalid ; foot_R: 0/6601 offsets invalid
+V2-165-62 leanF: rest KE 0 J | foot_L: 0/6601 offsets invalid ; foot_R: 0/6601 offsets invalid
+V2-165-62 leanL: rest KE 0 J | foot_L: 0/6601 offsets invalid ; foot_R: 0/6601 offsets invalid
+V2-165-62 singleLeg: rest KE 0 J | foot_L: 0/6601 offsets invalid ; foot_R: 0/6601 offsets invalid
+V2-165-62 drop1m: rest KE 0 J | foot_L: 0/6601 offsets invalid ; foot_R: 0/6601 offsets invalid
+V2-165-62 sideFirst: rest KE 0 J | foot_L: 0/6601 offsets invalid ; foot_R: 0/6601 offsets invalid
+V2-165-62 awkward: rest KE 0 J | foot_L: 0/6601 offsets invalid ; foot_R: 0/6601 offsets invalid
+V2-165-62 flatSupine: rest KE 0 J | foot_L: 0/6601 offsets invalid ; foot_R: 0/6601 offsets invalid
+V2-175-70 upright: rest KE 0 J | foot_L: 0/6601 offsets invalid ; foot_R: 0/6601 offsets invalid
+V2-175-70 leanF: rest KE 0 J | foot_L: 0/6601 offsets invalid ; foot_R: 0/6601 offsets invalid
+V2-175-70 leanL: rest KE 0 J | foot_L: 0/6601 offsets invalid ; foot_R: 0/6601 offsets invalid
+V2-175-70 singleLeg: rest KE 0 J | foot_L: 0/6601 offsets invalid ; foot_R: 0/6601 offsets invalid
+V2-175-70 drop1m: rest KE 0 J | foot_L: 0/6601 offsets invalid ; foot_R: 0/6601 offsets invalid
+V2-175-70 sideFirst: rest KE 0 J | foot_L: 0/6601 offsets invalid ; foot_R: 0/6601 offsets invalid
+V2-175-70 awkward: rest KE 0 J | foot_L: 0/6601 offsets invalid ; foot_R: 0/6601 offsets invalid
+V2-175-70 flatSupine: rest KE 0 J | foot_L: 0/6601 offsets invalid ; foot_R: 0/6601 offsets invalid
+V2-190-85 upright: rest KE 0 J | foot_L: 0/6601 offsets invalid ; foot_R: 0/6601 offsets invalid
+V2-190-85 leanF: rest KE 0.00016 J | foot_L: 0/6601 offsets invalid ; foot_R: 0/6601 offsets invalid
+V2-190-85 leanL: rest KE 0 J | foot_L: 0/6601 offsets invalid ; foot_R: 0/6601 offsets invalid
+V2-190-85 singleLeg: rest KE 0 J | foot_L: 0/6601 offsets invalid ; foot_R: 0/6601 offsets invalid
+V2-190-85 drop1m: rest KE 0 J | foot_L: 0/6601 offsets invalid ; foot_R: 0/6601 offsets invalid
+V2-190-85 sideFirst: rest KE 0.00001 J | foot_L: 0/6601 offsets invalid ; foot_R: 0/6601 offsets invalid
+V2-190-85 awkward: rest KE 0 J | foot_L: 0/6601 offsets invalid ; foot_R: 0/6601 offsets invalid
+V2-190-85 flatSupine: rest KE 0 J | foot_L: 0/6601 offsets invalid ; foot_R: 0/6601 offsets invalid
+V2-198-92 upright: rest KE 0.00003 J | foot_L: 0/6601 offsets invalid ; foot_R: 0/6601 offsets invalid
+V2-198-92 leanF: rest KE 0 J | foot_L: 0/6601 offsets invalid ; foot_R: 0/6601 offsets invalid
+V2-198-92 leanL: rest KE 0 J | foot_L: 0/6601 offsets invalid ; foot_R: 0/6601 offsets invalid
+V2-198-92 singleLeg: rest KE 0 J | foot_L: 0/6601 offsets invalid ; foot_R: 0/6601 offsets invalid
+V2-198-92 drop1m: rest KE 0 J | foot_L: 0/6601 offsets invalid ; foot_R: 0/6601 offsets invalid
+V2-198-92 sideFirst: rest KE 0.00001 J | foot_L: 0/6601 offsets invalid ; foot_R: 0/6601 offsets invalid
+V2-198-92 awkward: rest KE 0 J | foot_L: 0/6601 offsets invalid ; foot_R: 0/6601 offsets invalid
+V2-198-92 flatSupine: rest KE 0 J | foot_L: 0/6601 offsets invalid ; foot_R: 0/6601 offsets invalid
+Aborted(OOM)
+file:///Users/zainrahman/Downloads/FC%20Simulator%20worktrees/physical-character-v2/sandbox/visual/physchar2/vendor/jolt-physics.wasm-compat.js:5
+console.log.bind(console),fa=console.error.bind(console),ha=!1;function caa(a){for(var b=0,d=a.length,c=new Uint8Array(d),f;b<d;++b)f=a.charCodeAt(b),c[b]=~f>>8&f;return c}var ia=!1;function daa(){var a=Module.preRun;a&&(typeof a=="function"&&(a=[a]),ja.push(...a));ka(ja)}function eaa(){var a=Module.postRun;a&&(typeof a=="function"&&(a=[a]),la.push(...a));ka(la)}function ma(a){Module.onAbort?.(a);a=`Aborted(${a})`;fa(a);ha=!0;throw new WebAssembly.RuntimeError(a+". Build with -sASSERTIONS for more info.");
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    ^
+
+RuntimeError: Aborted(OOM). Build with -sASSERTIONS for more info.
+    at ma (file:///Users/zainrahman/Downloads/FC%20Simulator%20worktrees/physical-character-v2/sandbox/visual/physchar2/vendor/jolt-physics.wasm-compat.js:5:437)
+    at h (file:///Users/zainrahman/Downloads/FC%20Simulator%20worktrees/physical-character-v2/sandbox/visual/physchar2/vendor/jolt-physics.wasm-compat.js:75:64)
+    at wasm://wasm/007b6306:wasm-function[296]:0x1d9b4
+    at wasm://wasm/007b6306:wasm-function[53]:0xe03e
+    at wasm://wasm/007b6306:wasm-function[1167]:0x75caf
+    at wasm://wasm/007b6306:wasm-function[106]:0x141df
+    at wasm://wasm/007b6306:wasm-function[1378]:0x96761
+    at wasm://wasm/007b6306:wasm-function[3590]:0x1a5106
+    at new $$ (file:///Users/zainrahman/Downloads/FC%20Simulator%20worktrees/physical-character-v2/sandbox/visual/physchar2/vendor/jolt-physics.wasm-compat.js:1847:1)
+    at new V2JoltWorld (file:///Users/zainrahman/Downloads/FC%20Simulator%20worktrees/physical-character-v2/sandbox/visual/physchar2/core/v2_jolt.js:36:17)
+
+Node.js v22.19.0

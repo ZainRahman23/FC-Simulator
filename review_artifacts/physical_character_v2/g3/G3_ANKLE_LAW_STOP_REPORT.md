@@ -77,7 +77,7 @@ The accepted G1 is preserved in `g1/accepted_baseline_zeroNeutralAnkle/`.
 
 ### 3.2 Diagnosed mechanisms
 
-**Mechanism 1 — the G1 blow-up is an engine-level event.**
+**Mechanism 1 — the G1 blow-up is an engine-level event.** *(Explained by Investigation B, `../engine_blowup_B/B_REPORT.md`: a reversed boot–turf contact manifold from Jolt's GJK → EPA on the 100 m turf box, then a contact position-solver teleport. Not an ankle or engine-joint defect, and also present at k = 0. Original text kept below.)*
 - In both cases, the 720 Hz leanF member at k = 0.10 and V1-matched singleLeg at **240 Hz** at k = 0.15, the body is resting or landing with shank **and** foot on the turf.
 - The passive drive before the event is negligible: ≤ 0.2 N·m, neutral stiffness 6–9 N·m/rad. The singleLeg body had been completely still for ≥ 40 ms.
 - Then **within one Jolt step** the ankle jumps to 57–85° inversion, with +182 / +450 J and ≈ 105 mm separation.
@@ -181,6 +181,7 @@ The last isolated benchmark, on the post-D1 plant, gave controller 0.036 ms and 
 
 - **TD-11** (ankle axial free play) remains open; this report is its investigation.
 - **TD-12 (new):** one-step engine divergence at the ankle in shank–foot–turf contact loops at combined large plantarflexion + inversion, observed only with axial ankle stiffness: +182 J at 240 Hz, up to +45,983 J at 720 Hz.
+  - **[Superseded by Investigation B, `../engine_blowup_B/B_REPORT.md`; the original wording is kept above.]** The cause is a Jolt narrow-phase reversed turf manifold on the 100 m turf box, followed by a contact position-solver teleport. It is independent of the ankle law and present in the accepted k = 0 plant.
 - **TD-13 (new):** at low axial stiffness the posture control's twist-following leaves the leg-twist mode un-restored (probe offsets at k ≤ 0.10).
 - **Carried over:** TD-1 … TD-10. D7 is a G4 input.
 

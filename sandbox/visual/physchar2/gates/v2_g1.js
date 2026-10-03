@@ -120,6 +120,12 @@ export function initialState(spec, sc) {
 
 // ── the simulation (one scenario, one body, one configuration) ─────────────────────────────────────────────────────────────────────────
 const KEYS = ["x", "y", "z"], D = 180 / Math.PI;
+// INVESTIGATION B invariant tolerances (report-only rows 1.2e / 1.4j / 1.4k until the user gates them). Derivations (no failure magnitude used):
+//   passivityStepJ 0.05 J — G1 D2's measured worst one-step rise at the validation solver budget (150 velocity iterations) was 0.04 J; the
+//     investigation-B sweep of the accepted plant (254 G1 runs) measured ≤ 0.0089 J at 240 Hz (≤ 0.0052 / 0.0023 J at 360 / 720 Hz);
+//   posCorrMm — the accepted plant's measured position-solver displacement floor (see POSCORR_NOTE);
+//   turfNormalMinY / turfFaceMm — geometry: the turf top face's normal is +Y and its surface is y = 0 (zero tolerance up to float slack).
+export const INV_TOL = { passivityStepJ: 0.05, posCorrMm: 5, turfNormalMinY: 0.5, turfFaceMm: 2 };
 export class G1Sim {
   constructor(J, spec, key, opts = {}) {
     this.J = J; this.spec = spec; this.key = key; this.sc = opts.scenario || ensureScenario(key); this.opts = opts;   // G2: a gate may pass its own scenario object
@@ -155,7 +161,8 @@ export class G1Sim {
       sepMax: 0, sepMaxAt: null, sepRest: 0, frameJumpMax: 0, frameJumpAt: null, hardExcMax: 0, hardExcAt: null, hardExcRest: 0,
       turfPenMax: 0, turfPenAt: null, turfPenRest: 0, turfManifoldMax: -1, selfPenMax: 0, selfPenAt: null, selfPenRest: 0,
       ground: {}, pairs: {}, disabledHits: 0, seq: [], restKEmax: 0, restJitter: 0, restW: [],
-      soleCheck: null, P: [], L: [], com: [], Ulist: [], pAbsMax: 0, lAbsMax: 0, obst: {}, missedTurf: 0, missedTurfMax: 0, initSelfOverlap: [], track: {} };
+      soleCheck: null, P: [], L: [], com: [], Ulist: [], pAbsMax: 0, lAbsMax: 0, obst: {}, missedTurf: 0, missedTurfMax: 0, initSelfOverlap: [], track: {},
+      inv: { turfInvalid: 0, turfInvalidTicks: 0, turfFirst: null, pcMaxMm: 0, pcAt: null, pcBody: null, pcOver: 0, passMax: -Infinity, passAt: null, passOver: 0, passFirst: null } };
   }
   // passive drives for the next step + measurement of the current state
   _pre() {
@@ -167,10 +174,20 @@ export class G1Sim {
     let t0 = now(); this.P.apply(this.up); this.cpu.passive += now() - t0;
     t0 = now(); this.w.step(this.dt, this.cfg.coll); this.cpu.step += now() - t0;
     t0 = now(); this._contacts(this.w.contacts); this.cpu.measure += now() - t0;
-    this.n++; this.st = this.read();
+    this.n++; const st0 = this.st; this.st = this.read(); this._posCorr(st0);
     const Dstep = this.P.enabled ? this.P.dampingLoss(this.st, this.dt) : 0; this.A.Dstep.push(Dstep); this.Dcum += Dstep;
-    this._pre(); return true;
+    this._pre(); this._passivity(); return true;
   }
+  // ── INVESTIGATION B permanent invariants (user decision 2026-10-03; observation only — never change the simulation) ──
+  // (1) POSITION-SOLVER TELEPORT: Jolt integrates COM += v₁·dt and then its position solver moves bodies WITHOUT changing velocities. The
+  //     displacement of each body beyond its velocity integration is that correction; a contact / joint position correction of centimetres in
+  //     one step is a teleport (the one-step energy blow-up was a 76–80 mm push of a boot into the turf, at zero velocity change).
+  _posCorr(st0) { const iv = this.A.inv, S = this.st; let mx = 0, who = -1; for (let i = 0; i < S.length; i++) { const c = V.dist(S[i].com, V.add(st0[i].com, V.sc(S[i].v, this.dt))); if (c > mx) { mx = c; who = i; } }
+    const mm = mx * 1000; if (mm > iv.pcMaxMm) { iv.pcMaxMm = mm; iv.pcAt = this.n * this.dt; iv.pcBody = this.spec.bodies[who].name; } if (mm > INV_TOL.posCorrMm) iv.pcOver++; }
+  // (2) PASSIVITY: a passive G1 body (gravity, passive tissue, viscous damping, non-propulsive contact) may not gain mechanical energy E = KE +
+  //     PE + U in any step beyond the numerical floor (INV_TOL.passivityStepJ, derived from the measured floor — not from any failure).
+  _passivity() { const E = this.A.E, n = E.length - 1; if (n < 1) return; const r = E[n] - E[n - 1], iv = this.A.inv; if (r > iv.passMax) { iv.passMax = r; iv.passAt = this.n * this.dt; }
+    if (r > INV_TOL.passivityStepJ) { iv.passOver++; if (!iv.passFirst) iv.passFirst = { t: this.n * this.dt, dJ: r }; } }
   run() { while (this.tick()); return this.summary(); }
   // ── per-state measurement ──
   _measure() {
@@ -232,6 +249,12 @@ export class G1Sim {
       if (c.depth > selfPen) selfPen = c.depth; }
     if (selfPen > A.selfPenMax) { A.selfPenMax = selfPen; A.selfPenAt = t; } if (rest) A.selfPenRest = Math.max(A.selfPenRest, selfPen);
     A.turfContactStep.push(turf); A.anyContactStep.push(any); if (this.series) this.series.selfPen.push(selfPen);
+    // (3) TURF-MANIFOLD VALIDITY (investigation B): the turf is a flat top surface, so every turf manifold's normal must point up out of it and
+    //     its turf-side contact points must lie on it. A manifold built on another face of the turf box (Jolt narrow-phase failure: GJK relative
+    //     termination → EPA on a 100 m-scale polytope → reversed / tilted penetration axis) is counted; zero tolerance (geometric impossibility).
+    { const iv = A.inv; let bad = 0; for (const c0 of C) { if ((c0.a === -1) === (c0.b === -1) || c0.a < -1 || c0.b < -1) continue; const tf = c0.a === -1, ny = tf ? c0.normal[1] : -c0.normal[1], pT = tf ? c0.pts : c0.pts2;
+        if (ny < INV_TOL.turfNormalMinY || pT.some(p => Math.abs(p[1]) > INV_TOL.turfFaceMm / 1000)) { bad++; if (!iv.turfFirst) iv.turfFirst = { t, body: spec.bodies[tf ? c0.b : c0.a].name, piece: tf ? c0.sb : c0.sa, ny: +ny.toFixed(4), turfYmm: pT.map(p => +(p[1] * 1000).toFixed(1)), depthMm: +(c0.depth * 1000).toFixed(3) }; } }
+      iv.turfInvalid += bad; if (bad) iv.turfInvalidTicks++; }
     // C7 missed collision vs obstacles / between the legs: exact geometric overlap > slop + 2 mm on a step with no manifold for that pair
     if (this.track) { const seenPair = new Set(C.map(c => Math.min(c.a, c.b) + "|" + Math.max(c.a, c.b)));
       for (const [ka, kb, la, lb] of this.track) { const sa = ka < 0 ? [this.obsShape[-2 - ka]] : spec.bodies[ka].shapes, sb = spec.bodies[kb].shapes, stA = ka < 0 ? this.obsState[-2 - ka] : this.st[ka], stB = this.st[kb];
@@ -289,6 +312,8 @@ export class G1Sim {
         sequence: A.seq.slice(0, 14), soleCheck: A.soleCheck, missedTurfSteps: A.missedTurf, missedTurfMaxMm: A.missedTurfMax * 1000, initSelfOverlap: A.initSelfOverlap,
         tracked: A.track, obstacle: Object.fromEntries(Object.entries(A.obst).map(([k, o]) => [k, { first: o.first, firstDepthMm: o.firstDepth == null ? null : o.firstDepth * 1000, maxDepthMm: o.maxDepth * 1000, steps: o.steps }])) },
       rest: { KEmax: A.restKEmax, jitterRadS: restJitter },
+      invariants: { tol: INV_TOL, turfInvalidManifolds: A.inv.turfInvalid, turfInvalidTicks: A.inv.turfInvalidTicks, turfInvalidFirst: A.inv.turfFirst, posCorrMaxMm: A.inv.pcMaxMm, posCorrAt: A.inv.pcAt, posCorrBody: A.inv.pcBody, posCorrTicksOver: A.inv.pcOver,
+        passivityMaxStepJ: A.inv.passMax, passivityMaxAt: A.inv.passAt, passivityViolations: A.inv.passOver, passivityFirst: A.inv.passFirst },
       selfCol: this.key === "isoSelfCol" || this.key === "hsSelfCol20" ? (() => { const legContact = Object.keys(A.pairs).some(k => /(thigh|shank|foot)_[LR] ↔ (thigh|shank|foot)_[LR]/.test(k) && A.pairs[k].steps > 0);
         const missed = Object.values(A.track || {}).reduce((s, t) => s + t.missedSteps, 0);   // geometric missed-collision detector (C7)
         return { minDxFeetM: this.minDxFeet, legContact, missedSteps: missed, passedThrough: !legContact || missed > 0 }; })() : null, outcome: { posture, comEnd: A.com[N], firstNonFootT: firstNonFoot ? firstNonFoot.t : null, firstNonFoot: firstNonFoot ? firstNonFoot.who : null },

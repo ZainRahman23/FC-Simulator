@@ -1,0 +1,51 @@
+{
+ "human": "V2-REF",
+ "N": 100000,
+ "hLo": -0.001,
+ "hHi": 0.001,
+ "tiltMaxDeg": 14.999999999999998,
+ "xy": 3,
+ "results": [
+  {
+   "turf": "box 100×2×100 m (approved)",
+   "boot": "10-piece (approved)",
+   "poses": 100000,
+   "hits": 852061,
+   "invalidHits": 2,
+   "invalidPoses": 2,
+   "ratePerPose": 0.00002,
+   "byGapMm": {
+    "0": [
+     50062,
+     2
+    ],
+    "-1": [
+     49938,
+     0
+    ]
+   },
+   "examples": [
+    {
+     "k": 28048,
+     "piece": 7,
+     "h": 0.234,
+     "x": 0.814,
+     "z": -0.679,
+     "axisY": -0.2098,
+     "depthMm": -3.581,
+     "offFace": true
+    },
+    {
+     "k": 38478,
+     "piece": 7,
+     "h": 0.131,
+     "x": -2.233,
+     "z": -2.387,
+     "axisY": -0.0155,
+     "depthMm": -7.464,
+     "offFace": true
+    }
+   ]
+  }
+ ]
+}

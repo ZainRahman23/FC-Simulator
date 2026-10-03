@@ -1012,3 +1012,75 @@ The passive-joint rig passes 34/34 at every k, so the implementation equals the 
 - **Recommendation:** B (investigate the engine-level divergence: a G1 physics-integrity question), then C (an evidence-backed load-dependent law).
 
 Report: `g3/G3_ANKLE_LAW_STOP_REPORT.md`. Evidence: `ankle_law_k010_validation/`, `ankle_law_sensitivity/`.
+
+## 2026-10-03 — Investigation B: the one-step energy blow-up (user decision "approve B only", then autonomous continuation)
+
+**Sources:**
+- `sources/2026-10-03_user_decision_b_engine_blowup_investigation.md`;
+- `sources/2026-10-03_user_instruction_b_autonomous_two_hours.md`.
+
+**Report:** `engine_blowup_B/B_REPORT.md`. **Evidence:** `engine_blowup_B/`.
+
+### B-1: root cause — a Jolt v5.6.0 narrow-phase failure on the 100 m turf box (not the ankle law, not an engine joint)
+
+**Mechanism** (13 events, k = 0 … 0.5, 240 / 360 / 720 Hz, 30 / 60 / 150 iterations, all identical):
+1. A boot hull piece sits in the 20 mm speculative band of the 100 × 2 × 100 m turf box.
+2. GJK's relative termination test (|v|² ≤ FLT_EPSILON·max|y|², with max|y| ≈ 71 m: a 24.5 mm threshold) declares an overlap and hands the query to EPA.
+3. EPA's polytope is a slab ~100 m wide and a few cm thick. Float32 resolution (~7.6 µm at 71 m) cannot certify convergence on the true face.
+4. EPA pops the opposite slab face at a numerically equal distance, frees the converged face, and leaves its loop on the empty queue ("exit E").
+5. The returned penetration axis is reversed. The turf's supporting face becomes the box's **bottom** face (y = −2 m).
+6. Jolt's contact position solver clamps the −2 m separations to −0.2 m (mMaxPenetrationDistance) at Baumgarte 0.2. The boot is teleported 25–160 mm and rotated 45–173° in one step with **no velocity change**.
+7. The ankle is forced far beyond its anatomical and engine limits, and the passive end-range + end-stop potential of that pose is the "+182 J … +56 kJ".
+
+**Proof:**
+- the reduction ladder down to one hull vs one box;
+- bit-exact native reproduction with traces of every GJK / EPA decision;
+- the saved-state ablation k → 0 leaves the event unchanged;
+- two opt-in diagnostic Jolt patches each remove the reversal on all fixtures. P2 (EPA returns the best, not the last, triangle) also takes the near-event scan from 1,634 to 0 and adds none in 300k random / flush poses.
+
+**Not** our implementation bug. It is a Jolt limitation / bug, exposed by our configuration (a 100 m convex turf with small boot pieces) and amplified by Jolt's position-correction defaults.
+
+### B-2: the accepted k = 0 plant is vulnerable — **G1 potentially reopened** (not repaired, not redefined)
+
+- Monitored accepted-plant G1-scenario runs:
+  - 4 distinct reversed-manifold blow-ups in 1,054 runs: +6,874 J, +2,241 J and +443 J at 720 Hz; +205 J at **240 Hz with 60 iterations**;
+  - 7 of 254 accepted-configuration runs contain benign tilted invalid manifolds.
+- **Direct demonstration:** the V2-REF drop1m resting state, untouched, with only the static turf slid 341 mm (a physically identical state) → the next step reverses the manifold, teleports the boot 160 mm / 173° and adds **+34,300 J**.
+- G2: 620 jobs, 16.3 M turf manifolds checked, **0 invalid**, state hashes identical to the accepted post-D1G1 baseline. G3: see the report.
+- The accepted G1 run list passes as measured, but G1's physics-integrity claim does not hold in general.
+
+### B-3: permanent observation-only invariants (report-only rows; physics bit-identical, verified by state hash)
+
+`gates/v2_g1.js` `INV_TOL`, `_posCorr`, `_passivity`, turf check in `_contacts`; `gates/v2_g2.js`; `gates/v2_g1_checks.js`:
+- **1.2e passivity:** ≤ 0.05 J per step. Derived from G1 D2's measured 0.04 J and the healthy sweep maxima (0.0089 J at 240 Hz). False positives: 0 of 1,838 healthy runs at 240 / 360 / 480 Hz; 1 of 361 at 720 Hz (0.069 J, a genuine self-contact / point-constraint residual).
+- **1.4j turf-manifold validity:** zero tolerance.
+- **1.4k position-solver teleport:** ≤ 5 mm. Healthy accepted floor 2.32 mm over 951 runs.
+
+They remain report-only until the user gates them.
+
+### B-4: diagnostic tools and opt-in patches (none adopted)
+
+- Tools: `tools/b_lib.mjs`, `b_capture`, `b_reduce`, `b_ablate`, `b_narrow`, `b_flipscan`, `b_sweep`, `b_summarize`, `b_ledger_table`, `b_k0reach`, `b_k0resim`, `b_k0turf`, `b_monitor_preload`, `tools/b_native/` (`b_query`, `b_scan`, `scan_poses`, `dump2bits`, `README.md`).
+- Native Jolt instrumentation and the P1 / P2 patches are runtime-opt-in, in a native diagnostic build only. **The vendored WASM is unchanged.**
+
+### B-5: corrections recorded openly
+
+1. **TD-12 wording superseded.** It was recorded as "one-step engine divergence at the ankle in shank–foot–turf loops, exposed by axial ankle stiffness" (G3 stop report §10). It is in fact a **turf-contact narrow-phase defect, independent of the ankle law; the ankle is only where the potential appears.** New wording:
+   > TD-12: Jolt narrow-phase reversed / tilted turf manifolds on the 100 m turf box (GJK relative termination → EPA unconverged reversed triangle); present in the accepted plant.
+2. **Diagnostic-code bugs found and fixed during the investigation** (no effect on any reported result after the fix):
+   - `b_reduce` freed constraints by removal: memory error; now disables them;
+   - per-query Jolt temporaries exhausted the WASM heap: now reused;
+   - a `//` comment in `b_scan` silently disabled the P1 / P2 / trace switches for a few runs; those runs were discarded and every native scan re-run;
+   - `b_reduce` scaffolding typo.
+3. **Claim correction in the draft report:** the accepted-plant event count was first written as "5 of ~2,800"; it is **4 distinct runs of 1,054**.
+4. **Production note (not changed):** `V2JoltWorld.setPose` allocates two Jolt temporaries per call. Harmless in production (initial conditions only); diagnostics use reused temporaries.
+
+### Decision requested (not taken)
+
+The turf representation; my recommendation is PlaneShape. Then:
+- gate 1.4j;
+- G1 → G2 → G3 re-validation of the accepted plant;
+- an upstream Jolt report;
+- only then the ankle-law question.
+
+Candidates and their regression implications: report §13.

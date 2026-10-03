@@ -75,7 +75,7 @@ export class G2Sim extends G1Sim {
     if (this.probes) this.probes.forEach(p => p.before());
     const st0 = this.st; t0 = now(); this.w.step(this.dt, this.cfg.coll); this.cpu.step += now() - t0;
     t0 = now(); this._contacts(this.w.contacts); this.cpu.measure += now() - t0;
-    this.n++; this.st = this.read();
+    this.n++; this.st = this.read(); this._posCorr(st0);   // investigation B teleport invariant (observation only)
     const Dstep = this.P.enabled ? this.P.dampingLoss(this.st, this.dt) : 0; this.A.Dstep.push(Dstep); this.Dcum += Dstep;
     t0 = now(); this.actRes = this.act.after(st0, this.st, this.aplan); this.cpu2.act += now() - t0;
     t0 = now(); this.probeRows = this.probes ? this.probes.map(p => { const r = p.after(); p.rows.length = 0; return r; }) : null; this.cpu2.probe += now() - t0;

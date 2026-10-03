@@ -1,0 +1,17 @@
+  [GJK] exit: RELATIVE test: |v| = 19.7826 mm <= sqrt(FLT_EPSILON)*maxY = 24.4953 mm (maxY = 70.946 m: largest Minkowski support point) -> declared overlap (0)
+ [GJK step] core distance 0 mm (combined radius 25 mm) -> Indeterminate -> EPA
+  [EPA] start: GJK simplex points 3: (-26.707 -31.989 -56.887) (26.961 32.29 57.13) (-24.179 -52.201 41.017)
+  [EPA]   tri verts (-26.707 -31.989 -56.887) (-24.179 -52.201 41.017) (26.905 32.286 57.137) | new support w (-24.187 -52.153 41.024) | hull points 5
+  [EPA] iter: tri n (-8597.38 4960.55 1246.08) |n| 10003.7 closestLenSq 1.23449036e-05 dot 359.976562 dist 35.9842 mm newTris 3 defect 0
+  [EPA]   tri verts (26.905 32.286 57.137) (-26.707 -31.989 -56.887) (-24.187 -52.153 41.024) | new support w (-26.715 -31.942 -56.879) | hull points 6
+  [EPA] iter: tri n (-8592.37 4961.97 1242.93) |n| 9999.75 closestLenSq 1.25712677e-05 dot 359.546875 dist 35.9556 mm newTris 5 defect 0
+  [EPA]   tri verts (-24.187 -52.153 41.024) (26.905 32.286 57.137) (-26.715 -31.942 -56.879) | new support w (-26.715 -31.942 -56.879) | hull points 7
+  [EPA] iter: tri n (-8592.51 4961.45 1246.13) |n| 10000 closestLenSq 0.000391313079 dot 197.84375 dist 19.7844 mm newTris 3 defect 0
+  [EPA]   tri verts (-24.187 -52.153 41.024) (26.905 32.286 57.137) (-26.715 -31.942 -56.879) | new support w (-24.187 -52.153 41.024) | hull points 8
+  [EPA] iter: tri n (-8592.51 4961.44 1246.13) |n| 10000 closestLenSq 0.000391320849 dot 197.832031 dist 19.7832 mm newTris 3 defect 0
+  [EPA]   tri verts (-26.707 -31.989 -56.887) (26.961 32.29 57.13) (-24.179 -52.201 41.017) | new support w (-24.919 -32.997 -57.194) | hull points 9
+  [EPA] iter: tri n (8597.65 -4966.04 -1247.22) |n| 10006.8 closestLenSq 0.000391358015 dot 20952.8203 dist 2093.85 mm newTris 4 defect 0
+  [EPA] exit E: no next triangle in the queue
+  [EPA] result before flip: outV (0.0169969 -0.00981749 -0.00246567) last->n (8597.65 -4966.04 -1247.22) centroid.n 197.962891 flip 0
+hull convex radius used by Jolt: 0.00499999989 (requested 0.00499999989), points 19
+hit: axis 0.000143 1.000000 -0.000001 depth -0.216808 mm | p1.y -0.2189 mm p2.y -0.0021 mm | box face y: -2.000 -2.000 -2.000 -2.000

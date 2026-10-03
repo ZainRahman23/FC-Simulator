@@ -1,0 +1,19 @@
+  [GJK] exit: RELATIVE test: |v| = 18.8137 mm <= sqrt(FLT_EPSILON)*maxY = 24.6142 mm (maxY = 71.2905 m: largest Minkowski support point) -> declared overlap (0)
+ [GJK step] core distance 0 mm (combined radius 25 mm) -> Indeterminate -> EPA
+  [EPA] start: GJK simplex points 3: (13.24 36.6 -58.392) (-13.595 -37.426 59.133) (36.695 46.496 38.354)
+  [EPA]   tri verts (36.695 46.496 38.354) (13.24 36.6 -58.392) (-13.642 -37.393 59.088) | new support w (36.648 46.509 38.317) | hull points 5
+  [EPA] iter: tri n (-8321.05 5356.14 1469.43) |n| 10004.4 closestLenSq 3.41629857e-05 dot 461.121094 dist 46.092 mm newTris 3 defect 0
+  [EPA]   tri verts (13.24 36.6 -58.392) (-13.642 -37.393 59.088) (36.648 46.509 38.317) | new support w (13.217 36.612 -58.394) | hull points 6
+  [EPA] iter: tri n (-8319.86 5349.69 1465.64) |n| 9999.37 closestLenSq 3.53976648e-05 dot 315.5 dist 31.552 mm newTris 4 defect 0
+  [EPA]   tri verts (-13.642 -37.393 59.088) (36.648 46.509 38.317) (13.217 36.612 -58.394) | new support w (-13.642 -37.393 59.088) | hull points 7
+  [EPA] iter: tri n (-8319.79 5350.29 1468.2) |n| 10000 closestLenSq 0.000353887765 dot 188.148438 dist 18.8148 mm newTris 5 defect 0
+  [EPA]   tri verts (36.648 46.509 38.317) (13.217 36.612 -58.394) (-13.642 -37.393 59.088) | new support w (36.648 46.509 38.317) | hull points 8
+  [EPA] iter: tri n (-8319.79 5350.29 1468.2) |n| 10000 closestLenSq 0.000353865733 dot 188.195312 dist 18.8195 mm newTris 5 defect 0
+  [EPA]   tri verts (13.217 36.612 -58.394) (-13.642 -37.393 59.088) (36.648 46.509 38.317) | new support w (-37.073 -47.29 -37.623) | hull points 9
+  [EPA] iter: tri n (-8319.79 5350.29 1468.2) |n| 10000 closestLenSq 0.000353895186 dot 188.183594 dist 18.8184 mm newTris 6 defect 0
+  [EPA]   tri verts (13.24 36.6 -58.392) (36.695 46.496 38.354) (-13.595 -37.426 59.133) | new support w (14.949 35.486 -58.694) | hull points 10
+  [EPA] iter: tri n (8324.75 -5352.73 -1470.67) |n| 10005.8 closestLenSq 0.000353962416 dot 20815.3203 dist 2080.32 mm newTris 5 defect 0
+  [EPA] exit E: no next triangle in the queue
+  [EPA] result before flip: outV (0.015653 -0.0100647 -0.0027653) last->n (8324.75 -5352.73 -1470.67) centroid.n 188.248047 flip 0
+hull convex radius used by Jolt: 0.00499999989 (requested 0.00499999989), points 19
+hit: axis 0.000096 1.000000 0.000146 depth -1.188168 mm | p1.y -1.1867 mm p2.y 0.0014 mm | box face y: -2.000 -2.000 -2.000 -2.000

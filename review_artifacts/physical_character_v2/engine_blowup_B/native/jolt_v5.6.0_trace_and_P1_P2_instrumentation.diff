@@ -1,0 +1,184 @@
+--- /private/tmp/claude-501/-Users-zainrahman/8af3fa3f-f134-4178-b7ae-7855027dda6e/scratchpad/b/GJKClosestPoint.h.orig	2026-10-03 17:45:17
++++ Geometry/GJKClosestPoint.h	2026-10-03 18:21:22
+@@ -3,6 +3,8 @@
+ // SPDX-License-Identifier: MIT
+ 
+ #pragma once
++#include <cstdio>
++extern int jph_b_trace; extern int jph_b_p1;
+ 
+ #include <Jolt/Core/NonCopyable.h>
+ #include <Jolt/Geometry/ClosestPoint.h>
+@@ -406,6 +408,7 @@
+ 			uint32 set;
+ 			if (!GetClosest<true>(prev_v_len_sq, ioV, v_len_sq, set))
+ 			{
++				if (jph_b_trace) std::fprintf(stderr, "  [GJK] exit: GetClosest failed (no closer point) npts %d v_len_sq %.9g\n", (int)mNumPoints, (double)v_len_sq);
+ 				--mNumPoints; // Undo add last point
+ 				break;
+ 			}
+@@ -413,6 +416,7 @@
+ 			// If there are 4 points, the origin is inside the tetrahedron and we're done
+ 			if (set == 0xf)
+ 			{
++				if (jph_b_trace) std::fprintf(stderr, "  [GJK] exit: origin inside tetrahedron -> overlap (0)\n");
+ #ifdef JPH_GJK_DEBUG
+ 				Trace("Full simplex");
+ #endif
+@@ -427,6 +431,7 @@
+ 			// If v is very close to zero, we consider this a collision
+ 			if (v_len_sq <= tolerance_sq)
+ 			{
++				if (jph_b_trace) std::fprintf(stderr, "  [GJK] exit: v_len_sq %.9g <= tolerance_sq %.9g -> overlap (0)\n", (double)v_len_sq, (double)tolerance_sq);
+ #ifdef JPH_GJK_DEBUG
+ 				Trace("Distance zero");
+ #endif
+@@ -439,8 +444,9 @@
+ #ifdef JPH_GJK_DEBUG
+ 			Trace("Check v small compared to y: %g <= %g", (double)v_len_sq, (double)(FLT_EPSILON * GetMaxYLengthSq()));
+ #endif
+-			if (v_len_sq <= FLT_EPSILON * GetMaxYLengthSq())
++			if (!jph_b_p1 && v_len_sq <= FLT_EPSILON * GetMaxYLengthSq())   // DIAGNOSTIC P1: jph_b_p1 disables the relative test
+ 			{
++				if (jph_b_trace) std::fprintf(stderr, "  [GJK] exit: RELATIVE test: |v| = %.6g mm <= sqrt(FLT_EPSILON)*maxY = %.6g mm (maxY = %.6g m: largest Minkowski support point) -> declared overlap (0)\n", (double)sqrt(v_len_sq)*1000.0, (double)sqrt(FLT_EPSILON * GetMaxYLengthSq())*1000.0, (double)sqrt(GetMaxYLengthSq()));
+ #ifdef JPH_GJK_DEBUG
+ 				Trace("Machine precision reached");
+ #endif
+@@ -460,6 +466,7 @@
+ 			JPH_ASSERT(prev_v_len_sq >= v_len_sq);
+ 			if (prev_v_len_sq - v_len_sq <= FLT_EPSILON * prev_v_len_sq)
+ 			{
++				if (jph_b_trace) std::fprintf(stderr, "  [GJK] exit: converged, separated |v| %.6g mm\n", (double)sqrt(v_len_sq)*1000.0);
+ 				// v is a separating axis
+ #ifdef JPH_GJK_DEBUG
+ 				Trace("Converged");
+--- /private/tmp/claude-501/-Users-zainrahman/8af3fa3f-f134-4178-b7ae-7855027dda6e/scratchpad/b/EPAPenetrationDepth.h.orig	2026-10-03 17:45:17
++++ Geometry/EPAPenetrationDepth.h	2026-10-03 18:24:34
+@@ -3,6 +3,8 @@
+ // SPDX-License-Identifier: MIT
+ 
+ #pragma once
++#include <cstdio>
++extern int jph_b_trace; extern int jph_b_p2;
+ 
+ #include <Jolt/Core/StaticArray.h>
+ #include <Jolt/Core/Profiler.h>
+@@ -116,6 +118,8 @@
+ 		float combined_radius = inConvexRadiusA + inConvexRadiusB;
+ 		float combined_radius_sq = combined_radius * combined_radius;
+ 		float closest_points_dist_sq = mGJK.GetClosestPoints(inAExcludingConvexRadius, inBExcludingConvexRadius, inTolerance, combined_radius_sq, ioV, outPointA, outPointB);
++		if (jph_b_trace) std::fprintf(stderr, " [GJK step] core distance %.6g mm (combined radius %.6g mm) -> %s\n", closest_points_dist_sq < FLT_MAX ? (double)sqrt(closest_points_dist_sq)*1000.0 : -1.0, (double)combined_radius*1000.0,
++			closest_points_dist_sq > combined_radius_sq ? "NotColliding" : closest_points_dist_sq > 0.0f ? "Colliding (GJK axis)" : "Indeterminate -> EPA");
+ 		if (closest_points_dist_sq > combined_radius_sq)
+ 		{
+ 			// No collision
+@@ -157,6 +161,7 @@
+ 		SupportPoints support_points;
+ 		mGJK.GetClosestPointsSimplex(support_points.mY.data(), support_points.mP, support_points.mQ, support_points.mY.GetSizeRef());
+ 
++		if (jph_b_trace) { std::fprintf(stderr, "  [EPA] start: GJK simplex points %d:", (int)support_points.mY.size()); for (const Vec3 &y : support_points.mY) std::fprintf(stderr, " (%.5g %.5g %.5g)", (double)y.GetX(), (double)y.GetY(), (double)y.GetZ()); std::fprintf(stderr, "\n"); }
+ 		// Fill up the amount of support points to 4
+ 		switch (support_points.mY.size())
+ 		{
+@@ -311,6 +316,7 @@
+ 
+ 		// Remember last good triangle
+ 		Triangle *last = nullptr;
++		Triangle *best = nullptr; float best_dist_sq = FLT_MAX;   // DIAGNOSTIC P2
+ 
+ 		// If we want to flip the penetration depth
+ 		bool flip_v_sign = false;
+@@ -340,10 +346,10 @@
+ #endif
+ 			// Check if next triangle is further away than closest point, we've found the closest point
+ 			if (t->mClosestLenSq >= closest_dist_sq)
+-				break;
++			{ if (jph_b_trace) std::fprintf(stderr, "  [EPA] exit A: next triangle closestLenSq %.9g >= closest_dist_sq %.9g (converged on last)\n", (double)t->mClosestLenSq, (double)closest_dist_sq); break; }
+ 
+ 			// Replace last good with this triangle
+-			if (last != nullptr)
++			if (last != nullptr && last != best)
+ 				hull.FreeTriangle(last);
+ 			last = t;
+ 
+@@ -363,6 +369,7 @@
+ 
+ 			// Get the distance squared (along normal) to the support point
+ 			float dist_sq = Square(dot) / t->mNormal.LengthSq();
++			if (jph_b_p2 && dist_sq < best_dist_sq) { best = t; best_dist_sq = dist_sq; }
+ 
+ #ifdef JPH_EPA_PENETRATION_DEPTH_DEBUG
+ 			Trace("FindClosest: w = (%g, %g, %g), dot = %g, dist_sq = %g",
+@@ -378,7 +385,7 @@
+ 
+ 			// If the error became small enough, we've converged
+ 			if (dist_sq - t->mClosestLenSq < t->mClosestLenSq * inTolerance)
+-			{
++			{ if (jph_b_trace) std::fprintf(stderr, "  [EPA] exit B: converged (support dist^2 %.9g vs plane %.9g)\n", (double)dist_sq, (double)t->mClosestLenSq);
+ #ifdef JPH_EPA_PENETRATION_DEPTH_DEBUG
+ 				Trace("Converged");
+ #endif // JPH_EPA_PENETRATION_DEPTH_DEBUG
+@@ -390,7 +397,7 @@
+ 
+ 			// If the triangle thinks this point is not front facing, we've reached numerical precision and we're done
+ 			if (!t->IsFacing(w))
+-			{
++			{ if (jph_b_trace) std::fprintf(stderr, "  [EPA] exit C: support point not front-facing\n");
+ #ifdef JPH_EPA_PENETRATION_DEPTH_DEBUG
+ 				Trace("Not facing triangle");
+ #endif // JPH_EPA_PENETRATION_DEPTH_DEBUG
+@@ -400,7 +407,7 @@
+ 			// Add point to hull
+ 			EPAConvexHullBuilder::NewTriangles new_triangles;
+ 			if (!hull.AddPoint(t, new_index, closest_dist_sq, new_triangles))
+-			{
++			{ if (jph_b_trace) std::fprintf(stderr, "  [EPA] exit D: AddPoint failed (hull could not be extended with the support point; the unconverged triangle stays 'last')\n");
+ #ifdef JPH_EPA_PENETRATION_DEPTH_DEBUG
+ 				Trace("Could not add point");
+ #endif // JPH_EPA_PENETRATION_DEPTH_DEBUG
+@@ -415,6 +422,9 @@
+ 					has_defect = true;
+ 					break;
+ 				}
++			if (jph_b_trace) { const Vec3 &y0 = support_points.mY[t->mEdge[0].mStartIdx], &y1 = support_points.mY[t->mEdge[1].mStartIdx], &y2 = support_points.mY[t->mEdge[2].mStartIdx];
++				std::fprintf(stderr, "  [EPA]   tri verts (%.5g %.5g %.5g) (%.5g %.5g %.5g) (%.5g %.5g %.5g) | new support w (%.5g %.5g %.5g) | hull points %d\n", (double)y0.GetX(), (double)y0.GetY(), (double)y0.GetZ(), (double)y1.GetX(), (double)y1.GetY(), (double)y1.GetZ(), (double)y2.GetX(), (double)y2.GetY(), (double)y2.GetZ(), (double)w.GetX(), (double)w.GetY(), (double)w.GetZ(), (int)support_points.mY.size()); }
++			if (jph_b_trace) std::fprintf(stderr, "  [EPA] iter: tri n (%.6g %.6g %.6g) |n| %.6g closestLenSq %.9g dot %.9g dist %.6g mm newTris %d defect %d\n", (double)t->mNormal.GetX(), (double)t->mNormal.GetY(), (double)t->mNormal.GetZ(), (double)t->mNormal.Length(), (double)t->mClosestLenSq, (double)dot, (double)sqrt(dist_sq)*1000.0, (int)new_triangles.size(), (int)has_defect);
+ 			if (has_defect)
+ 			{
+ #ifdef JPH_EPA_PENETRATION_DEPTH_DEBUG
+@@ -427,14 +437,16 @@
+ 				float dot2 = -t->mNormal.Dot(w2);
+ 				if (dot2 < dot)
+ 					flip_v_sign = true;
++				if (jph_b_trace) std::fprintf(stderr, "  [EPA] HULL DEFECT: dot %.9g dot2 %.9g -> flip_v_sign %d ; t->n (%.6g %.6g %.6g) centroid.n %.9g\n", (double)dot, (double)dot2, (int)flip_v_sign, (double)t->mNormal.GetX(), (double)t->mNormal.GetY(), (double)t->mNormal.GetZ(), (double)t->mCentroid.Dot(t->mNormal));
+ 				break;
+ 			}
+ 		}
+-		while (hull.HasNextTriangle() && support_points.mY.size() < cMaxPoints);
++		while ((hull.HasNextTriangle() || (jph_b_trace && (std::fprintf(stderr, "  [EPA] exit E: no next triangle in the queue\n"), false))) && (support_points.mY.size() < cMaxPoints || (jph_b_trace && (std::fprintf(stderr, "  [EPA] exit F: max points\n"), false))));
+ 
+ 		// Determine closest points, if last == null it means the hull was a plane so there's no penetration
+ 		if (last == nullptr)
+ 			return false;
++		if (jph_b_p2 && best != nullptr && best != last) { if (jph_b_trace) std::fprintf(stderr, "  [EPA][P2] returning best triangle (support dist %.6g mm) instead of last\n", (double)sqrt(best_dist_sq) * 1000.0); last = best; }
+ 
+ #ifdef JPH_EPA_CONVEX_BUILDER_DRAW
+ 		hull.DrawLabel("Closest found");
+@@ -451,6 +463,7 @@
+ 		if (outV.IsNearZero())
+ 			return false;
+ 
++		if (jph_b_trace) std::fprintf(stderr, "  [EPA] result before flip: outV (%.6g %.6g %.6g) last->n (%.6g %.6g %.6g) centroid.n %.9g flip %d\n", (double)outV.GetX(), (double)outV.GetY(), (double)outV.GetZ(), (double)last->mNormal.GetX(), (double)last->mNormal.GetY(), (double)last->mNormal.GetZ(), (double)last->mCentroid.Dot(last->mNormal), (int)flip_v_sign);
+ 		// Check if we have to flip the sign of the penetration depth
+ 		if (flip_v_sign)
+ 			outV = -outV;
+--- /private/tmp/claude-501/-Users-zainrahman/8af3fa3f-f134-4178-b7ae-7855027dda6e/scratchpad/b/ConvexShape.cpp.orig	2026-10-03 17:45:17
++++ Physics/Collision/Shape/ConvexShape.cpp	2026-10-03 18:21:22
+@@ -23,6 +23,7 @@
+ #include <Jolt/Geometry/OrientedBox.h>
+ #include <Jolt/ObjectStream/TypeDeclarations.h>
+ 
++int jph_b_trace = 0; int jph_b_p1 = 0; int jph_b_p2 = 0;   // DIAGNOSTIC (investigation B): trace + opt-in patches P1 / P2
+ JPH_NAMESPACE_BEGIN
+ 
+ JPH_IMPLEMENT_SERIALIZABLE_ABSTRACT(ConvexShapeSettings)

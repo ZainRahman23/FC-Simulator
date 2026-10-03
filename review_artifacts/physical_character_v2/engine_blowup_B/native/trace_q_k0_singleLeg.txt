@@ -1,0 +1,15 @@
+  [GJK] exit: RELATIVE test: |v| = 20.0021 mm <= sqrt(FLT_EPSILON)*maxY = 24.5074 mm (maxY = 70.9809 m: largest Minkowski support point) -> declared overlap (0)
+ [GJK step] core distance 0 mm (combined radius 25 mm) -> Indeterminate -> EPA
+  [EPA] start: GJK simplex points 3: (-20.133 -34.027 -58.391) (20.337 34.328 58.705) (-21.038 -54.721 39.492)
+  [EPA]   tri verts (-20.133 -34.027 -58.391) (-21.038 -54.721 39.492) (20.277 34.332 58.655) | new support w (-21.058 -54.676 39.442) | hull points 5
+  [EPA] iter: tri n (-9113.25 4061.3 774.351) |n| 10007.3 closestLenSq 4.19671996e-05 dot 393.90625 dist 39.3621 mm newTris 3 defect 0
+  [EPA]   tri verts (20.277 34.332 58.655) (-20.133 -34.027 -58.391) (-21.058 -54.676 39.442) | new support w (-20.142 -33.983 -58.39) | hull points 6
+  [EPA] iter: tri n (-9104.53 4061.65 771.142) |n| 9999.21 closestLenSq 4.23646889e-05 dot 334.410156 dist 33.4437 mm newTris 4 defect 0
+  [EPA]   tri verts (-21.058 -54.676 39.442) (20.277 34.332 58.655) (-20.142 -33.983 -58.39) | new support w (20.277 34.332 58.655) | hull points 7
+  [EPA] iter: tri n (-9105.28 4061.41 773.838) |n| 10000 closestLenSq 0.000399995857 dot 200.011719 dist 20.0012 mm newTris 5 defect 0
+  [EPA]   tri verts (-20.133 -34.027 -58.391) (20.337 34.328 58.705) (-21.038 -54.721 39.492) | new support w (-18.241 -34.853 -58.552) | hull points 8
+  [EPA] iter: tri n (9113.89 -4067.31 -775.614) |n| 10010.4 closestLenSq 0.000400037185 dot 20925.9883 dist 2090.43 mm newTris 5 defect 0
+  [EPA] exit E: no next triangle in the queue
+  [EPA] result before flip: outV (0.0182097 -0.00812656 -0.00154969) last->n (9113.89 -4067.31 -775.614) centroid.n 200.216797 flip 0
+hull convex radius used by Jolt: 0.00499999989 (requested 0.00499999989), points 27
+hit: axis 0.000203 1.000000 -0.000060 depth 0.002086 mm | p1.y 0.0008 mm p2.y -0.0013 mm | box face y: -2.000 -2.000 -2.000 -2.000

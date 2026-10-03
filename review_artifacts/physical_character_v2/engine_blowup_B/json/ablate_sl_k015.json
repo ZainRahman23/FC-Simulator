@@ -1,0 +1,652 @@
+{
+ "human": "V1-matched",
+ "key": "singleLeg",
+ "hz": 240,
+ "event": 923,
+ "window": 120,
+ "kNeutral": 0.15,
+ "ablations": [
+  {
+   "id": "baseline",
+   "what": "none (bit-identical re-run)",
+   "eventStep_dE": 182.427,
+   "eventStep_footJumpMm": 75.86,
+   "eventStep_footRotDeg": 44.57,
+   "eventStep_invalidTurfManifolds": [
+    {
+     "body": "foot_L",
+     "piece": 4,
+     "ny": -1
+    }
+   ],
+   "windowMaxRiseJ": 182.427,
+   "windowMaxRiseTick": 923,
+   "invalidTicksInWindow": 1,
+   "sepMaxMm": 102.2
+  },
+  {
+   "id": "k0",
+   "what": "ankle neutral stiffness off (k = 0, both ankles)",
+   "eventStep_dE": 182.178,
+   "eventStep_footJumpMm": 75.86,
+   "eventStep_footRotDeg": 44.57,
+   "eventStep_invalidTurfManifolds": [
+    {
+     "body": "foot_L",
+     "piece": 4,
+     "ny": -1
+    }
+   ],
+   "windowMaxRiseJ": 182.178,
+   "windowMaxRiseTick": 923,
+   "invalidTicksInWindow": 1,
+   "sepMaxMm": 102.2
+  },
+  {
+   "id": "ankDamp0",
+   "what": "ankle damping off",
+   "eventStep_dE": 182.427,
+   "eventStep_footJumpMm": 75.86,
+   "eventStep_footRotDeg": 44.57,
+   "eventStep_invalidTurfManifolds": [
+    {
+     "body": "foot_L",
+     "piece": 4,
+     "ny": -1
+    }
+   ],
+   "windowMaxRiseJ": 182.427,
+   "windowMaxRiseTick": 923,
+   "invalidTicksInWindow": 1,
+   "sepMaxMm": 102.2
+  },
+  {
+   "id": "ankStopOff",
+   "what": "ankle engine hard stop off (Jolt rotation limits ±180°)",
+   "eventStep_dE": 182.427,
+   "eventStep_footJumpMm": 75.86,
+   "eventStep_footRotDeg": 44.57,
+   "eventStep_invalidTurfManifolds": [
+    {
+     "body": "foot_L",
+     "piece": 4,
+     "ny": -1
+    }
+   ],
+   "windowMaxRiseJ": 182.427,
+   "windowMaxRiseTick": 923,
+   "invalidTicksInWindow": 1,
+   "sepMaxMm": 102.2
+  },
+  {
+   "id": "ankOtherAxesOff",
+   "what": "other passive ankle axes off (DF / inversion end-range law + end-stop)",
+   "eventStep_dE": -0.535,
+   "eventStep_footJumpMm": 75.86,
+   "eventStep_footRotDeg": 44.57,
+   "eventStep_invalidTurfManifolds": [
+    {
+     "body": "foot_L",
+     "piece": 4,
+     "ny": -1
+    }
+   ],
+   "windowMaxRiseJ": 3.207,
+   "windowMaxRiseTick": 924,
+   "invalidTicksInWindow": 1,
+   "sepMaxMm": 102.2
+  },
+  {
+   "id": "drivesOff",
+   "what": "all passive drives / motors off (no joint tissue at all)",
+   "eventStep_dE": -4.048,
+   "eventStep_footJumpMm": 75.86,
+   "eventStep_footRotDeg": 44.57,
+   "eventStep_invalidTurfManifolds": [
+    {
+     "body": "foot_L",
+     "piece": 4,
+     "ny": -1
+    }
+   ],
+   "windowMaxRiseJ": 0.71,
+   "windowMaxRiseTick": 924,
+   "invalidTicksInWindow": 2,
+   "sepMaxMm": 146.7
+  },
+  {
+   "id": "restitution0",
+   "what": "contact restitution 0 (already 0 in the spec: no-op check)",
+   "eventStep_dE": 182.427,
+   "eventStep_footJumpMm": 75.86,
+   "eventStep_footRotDeg": 44.57,
+   "eventStep_invalidTurfManifolds": [
+    {
+     "body": "foot_L",
+     "piece": 4,
+     "ny": -1
+    }
+   ],
+   "windowMaxRiseJ": 182.427,
+   "windowMaxRiseTick": 923,
+   "invalidTicksInWindow": 1,
+   "sepMaxMm": 102.2
+  },
+  {
+   "id": "friction0",
+   "what": "contact friction 0 (all pairs)",
+   "eventStep_dE": 181.68,
+   "eventStep_footJumpMm": 75.86,
+   "eventStep_footRotDeg": 44.56,
+   "eventStep_invalidTurfManifolds": [
+    {
+     "body": "foot_L",
+     "piece": 4,
+     "ny": -1
+    }
+   ],
+   "windowMaxRiseJ": 181.68,
+   "windowMaxRiseTick": 923,
+   "invalidTicksInWindow": 1,
+   "sepMaxMm": 102.2
+  },
+  {
+   "id": "specOff",
+   "what": "speculative contact distance 0",
+   "eventStep_dE": -0.099,
+   "eventStep_footJumpMm": 0.01,
+   "eventStep_footRotDeg": 0.01,
+   "eventStep_invalidTurfManifolds": [],
+   "windowMaxRiseJ": 0.323,
+   "windowMaxRiseTick": 1021,
+   "invalidTicksInWindow": 0,
+   "sepMaxMm": 6.2
+  },
+  {
+   "id": "warmOff",
+   "what": "warm starting off (constraints and contacts)",
+   "eventStep_dE": 182.442,
+   "eventStep_footJumpMm": 75.86,
+   "eventStep_footRotDeg": 44.57,
+   "eventStep_invalidTurfManifolds": [
+    {
+     "body": "foot_L",
+     "piece": 4,
+     "ny": -1
+    }
+   ],
+   "windowMaxRiseJ": 182.442,
+   "windowMaxRiseTick": 923,
+   "invalidTicksInWindow": 1,
+   "sepMaxMm": 102.2
+  },
+  {
+   "id": "jointWarmOff",
+   "what": "joint-only warm start off",
+   "eventStep_dE": 182.434,
+   "eventStep_footJumpMm": 75.86,
+   "eventStep_footRotDeg": 44.57,
+   "eventStep_invalidTurfManifolds": [
+    {
+     "body": "foot_L",
+     "piece": 4,
+     "ny": -1
+    }
+   ],
+   "windowMaxRiseJ": 182.434,
+   "windowMaxRiseTick": 923,
+   "invalidTicksInWindow": 1,
+   "sepMaxMm": 102.2
+  },
+  {
+   "id": "contactWarmOff",
+   "what": "contact-only warm start off",
+   "eventStep_dE": 182.437,
+   "eventStep_footJumpMm": 75.86,
+   "eventStep_footRotDeg": 44.57,
+   "eventStep_invalidTurfManifolds": [
+    {
+     "body": "foot_L",
+     "piece": 4,
+     "ny": -1
+    }
+   ],
+   "windowMaxRiseJ": 182.437,
+   "windowMaxRiseTick": 923,
+   "invalidTicksInWindow": 1,
+   "sepMaxMm": 102.2
+  },
+  {
+   "id": "selfColOff",
+   "what": "self-collision off (all body pairs)",
+   "eventStep_dE": 182.415,
+   "eventStep_footJumpMm": 75.86,
+   "eventStep_footRotDeg": 44.57,
+   "eventStep_invalidTurfManifolds": [
+    {
+     "body": "foot_L",
+     "piece": 4,
+     "ny": -1
+    }
+   ],
+   "windowMaxRiseJ": 182.415,
+   "windowMaxRiseTick": 923,
+   "invalidTicksInWindow": 1,
+   "sepMaxMm": 102.2
+  },
+  {
+   "id": "bootTurfOff",
+   "what": "boot–turf contact removed (pair rejected in OnContactValidate)",
+   "eventStep_dE": -0.023,
+   "eventStep_footJumpMm": 0.1,
+   "eventStep_footRotDeg": 0.07,
+   "eventStep_invalidTurfManifolds": [],
+   "windowMaxRiseJ": -0.003,
+   "windowMaxRiseTick": 1042,
+   "invalidTicksInWindow": 0,
+   "sepMaxMm": 0.1
+  },
+  {
+   "id": "singleHullBoot",
+   "what": "single-hull diagnostic boot (the unsplit approved hull, same mass properties)",
+   "eventStep_dE": -0.018,
+   "eventStep_footJumpMm": 0,
+   "eventStep_footRotDeg": 0,
+   "eventStep_invalidTurfManifolds": [],
+   "windowMaxRiseJ": -0.001,
+   "windowMaxRiseTick": 1042,
+   "invalidTicksInWindow": 0,
+   "sepMaxMm": 2.6
+  },
+  {
+   "id": "boxBoot",
+   "what": "simplified boot: its bounding box as one hull",
+   "eventStep_dE": 0.072,
+   "eventStep_footJumpMm": 3.18,
+   "eventStep_footRotDeg": 3.7,
+   "eventStep_invalidTurfManifolds": [],
+   "windowMaxRiseJ": 0.072,
+   "windowMaxRiseTick": 923,
+   "invalidTicksInWindow": 0,
+   "sepMaxMm": 3.3
+  },
+  {
+   "id": "turfPlane",
+   "what": "turf = PlaneShape at y = 0 (instead of the 100 × 2 × 100 m box)",
+   "eventStep_dE": 0,
+   "eventStep_footJumpMm": 0,
+   "eventStep_footRotDeg": 0,
+   "eventStep_invalidTurfManifolds": [],
+   "windowMaxRiseJ": 0,
+   "windowMaxRiseTick": 1042,
+   "invalidTicksInWindow": 0,
+   "sepMaxMm": 0
+  },
+  {
+   "id": "turfBox4",
+   "what": "turf = 8 × 2 × 8 m box (half extents 4, 1, 4)",
+   "eventStep_dE": 0,
+   "eventStep_footJumpMm": 0,
+   "eventStep_footRotDeg": 0,
+   "eventStep_invalidTurfManifolds": [],
+   "windowMaxRiseJ": 0,
+   "windowMaxRiseTick": 1039,
+   "invalidTicksInWindow": 0,
+   "sepMaxMm": 0
+  },
+  {
+   "id": "turfThin",
+   "what": "turf = 100 × 0.1 × 100 m box (bottom face 0.1 m down)",
+   "eventStep_dE": 0,
+   "eventStep_footJumpMm": 0,
+   "eventStep_footRotDeg": 0,
+   "eventStep_invalidTurfManifolds": [],
+   "windowMaxRiseJ": 0,
+   "windowMaxRiseTick": 1042,
+   "invalidTicksInWindow": 0,
+   "sepMaxMm": 0
+  },
+  {
+   "id": "pos0",
+   "what": "position iterations 0",
+   "eventStep_dE": 0,
+   "eventStep_footJumpMm": 0,
+   "eventStep_footRotDeg": 0,
+   "eventStep_invalidTurfManifolds": [
+    {
+     "body": "foot_L",
+     "piece": 4,
+     "ny": -1
+    }
+   ],
+   "windowMaxRiseJ": 0,
+   "windowMaxRiseTick": 1040,
+   "invalidTicksInWindow": 1,
+   "sepMaxMm": 0
+  },
+  {
+   "id": "pos1",
+   "what": "position iterations 1",
+   "eventStep_dE": 1.177,
+   "eventStep_footJumpMm": 51.1,
+   "eventStep_footRotDeg": 14.75,
+   "eventStep_invalidTurfManifolds": [
+    {
+     "body": "foot_L",
+     "piece": 4,
+     "ny": -1
+    }
+   ],
+   "windowMaxRiseJ": 13.022,
+   "windowMaxRiseTick": 924,
+   "invalidTicksInWindow": 1,
+   "sepMaxMm": 64.9
+  },
+  {
+   "id": "pos4",
+   "what": "position iterations 4",
+   "eventStep_dE": 10648284.678,
+   "eventStep_footJumpMm": 157.14,
+   "eventStep_footRotDeg": 146.89,
+   "eventStep_invalidTurfManifolds": [
+    {
+     "body": "foot_L",
+     "piece": 4,
+     "ny": -1
+    }
+   ],
+   "windowMaxRiseJ": 10648284.678,
+   "windowMaxRiseTick": 923,
+   "invalidTicksInWindow": 1,
+   "sepMaxMm": 143.4
+  },
+  {
+   "id": "pos10",
+   "what": "position iterations 10",
+   "eventStep_dE": 11738.741,
+   "eventStep_footJumpMm": 191.06,
+   "eventStep_footRotDeg": 158.64,
+   "eventStep_invalidTurfManifolds": [
+    {
+     "body": "foot_L",
+     "piece": 4,
+     "ny": -1
+    }
+   ],
+   "windowMaxRiseJ": 2092096.038,
+   "windowMaxRiseTick": 924,
+   "invalidTicksInWindow": 2,
+   "sepMaxMm": 225.9
+  },
+  {
+   "id": "baum0",
+   "what": "Baumgarte 0 (no position correction)",
+   "eventStep_dE": 0,
+   "eventStep_footJumpMm": 0,
+   "eventStep_footRotDeg": 0,
+   "eventStep_invalidTurfManifolds": [
+    {
+     "body": "foot_L",
+     "piece": 4,
+     "ny": -1
+    }
+   ],
+   "windowMaxRiseJ": 0,
+   "windowMaxRiseTick": 1040,
+   "invalidTicksInWindow": 1,
+   "sepMaxMm": 0
+  },
+  {
+   "id": "baum005",
+   "what": "Baumgarte 0.05",
+   "eventStep_dE": -0.448,
+   "eventStep_footJumpMm": 37.11,
+   "eventStep_footRotDeg": 4.25,
+   "eventStep_invalidTurfManifolds": [
+    {
+     "body": "foot_L",
+     "piece": 4,
+     "ny": -1
+    }
+   ],
+   "windowMaxRiseJ": 0.292,
+   "windowMaxRiseTick": 924,
+   "invalidTicksInWindow": 1,
+   "sepMaxMm": 31.7
+  },
+  {
+   "id": "maxPen002",
+   "what": "max penetration correction distance 0.2 → 0.02 m",
+   "eventStep_dE": -0.141,
+   "eventStep_footJumpMm": 11.13,
+   "eventStep_footRotDeg": 3.01,
+   "eventStep_invalidTurfManifolds": [
+    {
+     "body": "foot_L",
+     "piece": 4,
+     "ny": -1
+    }
+   ],
+   "windowMaxRiseJ": 0.034,
+   "windowMaxRiseTick": 924,
+   "invalidTicksInWindow": 1,
+   "sepMaxMm": 12.6
+  },
+  {
+   "id": "maxPen0005",
+   "what": "max penetration correction distance 0.2 → 0.005 m",
+   "eventStep_dE": -0.056,
+   "eventStep_footJumpMm": 4.39,
+   "eventStep_footRotDeg": 0.9,
+   "eventStep_invalidTurfManifolds": [
+    {
+     "body": "foot_L",
+     "piece": 4,
+     "ny": -1
+    }
+   ],
+   "windowMaxRiseJ": 0,
+   "windowMaxRiseTick": 1034,
+   "invalidTicksInWindow": 1,
+   "sepMaxMm": 3
+  },
+  {
+   "id": "vel30",
+   "what": "velocity iterations 30",
+   "eventStep_dE": 182.433,
+   "eventStep_footJumpMm": 75.86,
+   "eventStep_footRotDeg": 44.57,
+   "eventStep_invalidTurfManifolds": [
+    {
+     "body": "foot_L",
+     "piece": 4,
+     "ny": -1
+    }
+   ],
+   "windowMaxRiseJ": 182.433,
+   "windowMaxRiseTick": 923,
+   "invalidTicksInWindow": 1,
+   "sepMaxMm": 102.2
+  },
+  {
+   "id": "vel600",
+   "what": "velocity iterations 600",
+   "eventStep_dE": 182.428,
+   "eventStep_footJumpMm": 75.86,
+   "eventStep_footRotDeg": 44.57,
+   "eventStep_invalidTurfManifolds": [
+    {
+     "body": "foot_L",
+     "piece": 4,
+     "ny": -1
+    }
+   ],
+   "windowMaxRiseJ": 182.428,
+   "windowMaxRiseTick": 923,
+   "invalidTicksInWindow": 1,
+   "sepMaxMm": 102.2
+  },
+  {
+   "id": "dtHalf",
+   "what": "timestep halved from the saved state (480 Hz)",
+   "eventStep_dE": 182.442,
+   "eventStep_footJumpMm": 75.86,
+   "eventStep_footRotDeg": 44.57,
+   "eventStep_invalidTurfManifolds": [
+    {
+     "body": "foot_L",
+     "piece": 4,
+     "ny": -1
+    }
+   ],
+   "windowMaxRiseJ": 182.442,
+   "windowMaxRiseTick": 923,
+   "invalidTicksInWindow": 1,
+   "sepMaxMm": 102.2
+  },
+  {
+   "id": "dtThird",
+   "what": "timestep / 3 from the saved state (720 Hz)",
+   "eventStep_dE": 182.438,
+   "eventStep_footJumpMm": 75.86,
+   "eventStep_footRotDeg": 44.57,
+   "eventStep_invalidTurfManifolds": [
+    {
+     "body": "foot_L",
+     "piece": 4,
+     "ny": -1
+    }
+   ],
+   "windowMaxRiseJ": 182.438,
+   "windowMaxRiseTick": 923,
+   "invalidTicksInWindow": 1,
+   "sepMaxMm": 102.2
+  },
+  {
+   "id": "grav0",
+   "what": "zero gravity from the saved state",
+   "eventStep_dE": 182.652,
+   "eventStep_footJumpMm": 75.87,
+   "eventStep_footRotDeg": 44.58,
+   "eventStep_invalidTurfManifolds": [
+    {
+     "body": "foot_L",
+     "piece": 4,
+     "ny": -1
+    }
+   ],
+   "windowMaxRiseJ": 182.652,
+   "windowMaxRiseTick": 923,
+   "invalidTicksInWindow": 1,
+   "sepMaxMm": 102.2
+  },
+  {
+   "id": "kneeOff",
+   "what": "knee constraint (same side) disabled",
+   "eventStep_dE": 181.859,
+   "eventStep_footJumpMm": 75.86,
+   "eventStep_footRotDeg": 44.57,
+   "eventStep_invalidTurfManifolds": [
+    {
+     "body": "foot_L",
+     "piece": 4,
+     "ny": -1
+    }
+   ],
+   "windowMaxRiseJ": 370.071,
+   "windowMaxRiseTick": 997,
+   "invalidTicksInWindow": 1,
+   "sepMaxMm": 102.2
+  },
+  {
+   "id": "hipOff",
+   "what": "hip constraint (same side) disabled",
+   "eventStep_dE": 182.44,
+   "eventStep_footJumpMm": 75.86,
+   "eventStep_footRotDeg": 44.57,
+   "eventStep_invalidTurfManifolds": [
+    {
+     "body": "foot_L",
+     "piece": 4,
+     "ny": -1
+    }
+   ],
+   "windowMaxRiseJ": 182.44,
+   "windowMaxRiseTick": 923,
+   "invalidTicksInWindow": 1,
+   "sepMaxMm": 102.2
+  },
+  {
+   "id": "ankleOff",
+   "what": "ankle constraint (same side) disabled",
+   "eventStep_dE": 265.937,
+   "eventStep_footJumpMm": 79.91,
+   "eventStep_footRotDeg": 49.83,
+   "eventStep_invalidTurfManifolds": [
+    {
+     "body": "foot_L",
+     "piece": 4,
+     "ny": -1
+    }
+   ],
+   "windowMaxRiseJ": 357.595,
+   "windowMaxRiseTick": 924,
+   "invalidTicksInWindow": 1,
+   "sepMaxMm": 114.2
+  },
+  {
+   "id": "orderLeafLast",
+   "what": "constraint order: leaf joints solved last",
+   "eventStep_dE": 182.427,
+   "eventStep_footJumpMm": 75.86,
+   "eventStep_footRotDeg": 44.57,
+   "eventStep_invalidTurfManifolds": [
+    {
+     "body": "foot_L",
+     "piece": 4,
+     "ny": -1
+    }
+   ],
+   "windowMaxRiseJ": 182.427,
+   "windowMaxRiseTick": 923,
+   "invalidTicksInWindow": 1,
+   "sepMaxMm": 102.2
+  },
+  {
+   "id": "orderRootLast",
+   "what": "constraint order: root joints solved last",
+   "eventStep_dE": 180.229,
+   "eventStep_footJumpMm": 75.86,
+   "eventStep_footRotDeg": 44.57,
+   "eventStep_invalidTurfManifolds": [
+    {
+     "body": "foot_L",
+     "piece": 4,
+     "ny": -1
+    }
+   ],
+   "windowMaxRiseJ": 180.229,
+   "windowMaxRiseTick": 923,
+   "invalidTicksInWindow": 1,
+   "sepMaxMm": 102.9
+  },
+  {
+   "id": "manifoldRed",
+   "what": "Jolt manifold reduction ON (approved OFF)",
+   "eventStep_dE": -1.989,
+   "eventStep_footJumpMm": 164.17,
+   "eventStep_footRotDeg": 24.82,
+   "eventStep_invalidTurfManifolds": [
+    {
+     "body": "foot_L",
+     "piece": 4,
+     "ny": -1
+    }
+   ],
+   "windowMaxRiseJ": 0.476,
+   "windowMaxRiseTick": 925,
+   "invalidTicksInWindow": 1,
+   "sepMaxMm": 124.1
+  }
+ ]
+}
