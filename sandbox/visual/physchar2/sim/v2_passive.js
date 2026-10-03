@@ -35,7 +35,7 @@ export const COUPLING_LAWS = [
 export class PassiveLayer {
   constructor(spec, world, opts = {}) {
     this.spec = spec; this.w = world; this.opts = opts; this.enabled = opts.enabled !== false; this.couplings = opts.couplings !== false;
-    this.predictive = opts.predictive !== false; this.oneSided = opts.oneSided !== false; this.armed = opts.armed === true; this.chord = opts.chord !== false;   // C2 causal fixes: predictive + one-sided ON; "armed" stop OFF (measured harmful: the linear stop extension cancels the law torque inside the limit)
+    this.predictive = opts.predictive !== false; this.oneSided = opts.oneSided !== false; this.armed = opts.armed === true; this.chord = opts.chord !== false; this.lockedRows = opts.lockedRows !== false; this.signRule = opts.signRule || "ends"; this.allowLaw = opts.allowLaw !== false;   // C2 causal fixes: predictive + one-sided ON; "armed" stop OFF (measured harmful: the linear stop extension cancels the law torque inside the limit)
     const J = spec.joints; this.nJ = J.length;
     this.jd = J.map((j, k) => {
       const axes = [0, 1, 2].map(i => { const key = ["x", "y", "z"][i], ax = j.def.axes[key]; const p = j.passive[i];
@@ -43,6 +43,13 @@ export class PassiveLayer {
       return { k, j, name: j.name, side: j.side, base: j.name.replace(/_[LR]$/, ""), parent: j.parentIndex, child: j.childIndex, F1: j.F1, F2: j.F2, Cm: j.Cm, c: j.damping, axes,
         free: axes.map(a => !!a) };
     });
+    // drive ROWS: every body-2 constraint axis of a joint that has passive tissue — including a LOCKED axis (knee varus, elbow carrying
+    // angle). G1 causal fix (locked-axis rows): when a 2-DOF joint is twisted by t, its swing DOF moves about T*·ŷ = (0, cos t, −sin t)
+    // in body-2 axes, so part of the swing motion, of −∇U and of the damper lies on body-2 z. Dropping that row (the first version) applied
+    // only cos²t of the end-range restoring torque and of the swing damping (measured: perturb knee_R at t = −37°, drive work −0.88 J vs
+    // ΔU +1.50 J in one step, net gain). With the z row the y + z rows carry the full gradient (power = Σ τᵢ·ωᵢ = −dU/dt) and the full
+    // damper (c·(cos²t + sin²t)·ṡ² = c·ṡ²); the component on the locked direction is absorbed by the lock.
+    for (const d of this.jd) d.rows = this.lockedRows && d.free.some(Boolean) ? [true, true, true] : d.free.slice();
     // coupling wiring: term (joint k, axis key) ← input (joint m, anatomical key)
     const byName = Object.fromEntries(this.jd.map(d => [d.name, d]));
     this.coup = []; if (this.couplings) for (const L of COUPLING_LAWS) for (const s of ["L", "R"]) {
@@ -53,7 +60,7 @@ export class PassiveLayer {
     for (const d of this.jd) for (const a of d.axes) if (a) this.dep[d.k].push([d.k, a.i]);
     for (const c of this.coup) if (c.in !== c.t && !this.dep[c.in].some(([k, i]) => k === c.t && i === c.axis)) this.dep[c.in].push([c.t, c.axis]);
     this.last = null;
-    if (this.enabled) for (const d of this.jd) d.axes.forEach((a, i) => { if (a) { world.driveOn(d.k, i); } });
+    if (this.enabled) for (const d of this.jd) d.rows.forEach((on, i) => { if (on) world.driveOn(d.k, i); });
   }
   // constraint-space rotation of joint d from body rotations (doubles from float32 readback)
   qcs(d, R) { return Q.norm(Q.mul(Q.conj(d.F1), Q.mul(Q.conj(R[d.parent]), Q.mul(R[d.child], d.F2)))); }
@@ -99,14 +106,14 @@ export class PassiveLayer {
       // PREDICTIVE linearisation (G1 C2 causal fix): the law is linearised at the predicted end-of-step rotation q0·exp(ω·dt), not at q0.
       // A joint that crosses the stiff anatomical end-stop within one step therefore meets the stop's stiffness in that same step instead
       // of entering it for free (measured: thoracic +9.2 J of U in one step, net +1.1 J, with start-of-step linearisation).
-      const phi = [0, 1, 2].map(i => (d.free[i] ? wi[i] * dt : 0)), pl = Math.hypot(phi[0], phi[1], phi[2]);
+      const phi = [0, 1, 2].map(i => (d.rows[i] ? wi[i] * dt : 0)), pl = Math.hypot(phi[0], phi[1], phi[2]);
       const qP = this.predictive && pl > 1e-12 ? Q.norm(Q.mul(q0, Q.axis([phi[0] / pl, phi[1] / pl, phi[2] / pl], pl))) : q0, qsP0 = ev.qs.slice(); qsP0[d.k] = qP;
       const tau0 = [0, 0, 0];
-      if (this.chord && qP !== q0) for (let i = 0; i < 3; i++) { if (!d.free[i]) continue;   // body-frame gradient at the CURRENT rotation (chord rule)
+      if (this.chord && qP !== q0) for (let i = 0; i < 3; i++) { if (!d.rows[i]) continue;   // body-frame gradient at the CURRENT rotation (chord rule)
         const qp = Q.norm(Q.mul(q0, Q.axis(E[i], H))), qm = Q.norm(Q.mul(q0, Q.axis(E[i], -H))), qsP = ev.qs.slice(), qsM = ev.qs.slice(); qsP[d.k] = qp; qsM[d.k] = qm; let dU = 0;
         for (const [k, ii] of this.dep[d.k]) dU += this.termU(k, ii, qsP) - this.termU(k, ii, qsM); tau0[i] = -dU / (2 * H); }
       for (let i = 0; i < 3; i++) {
-        if (!d.free[i]) continue;
+        if (!d.rows[i]) continue;
         const qp = Q.norm(Q.mul(qP, Q.axis(E[i], H))), qm = Q.norm(Q.mul(qP, Q.axis(E[i], -H)));
         const qsP = qsP0.slice(), qsM = qsP0.slice(); qsP[d.k] = qp; qsM[d.k] = qm; let dU = 0;
         for (const [k, ii] of this.dep[d.k]) dU += this.termU(k, ii, qsP) - this.termU(k, ii, qsM);
@@ -127,8 +134,13 @@ export class PassiveLayer {
         if (this.armed && a.kStop[0] > 0 && thP[m] >= a.hard[0] && thP[m] < a.hard[0] + L) { kx[m] = a.kStop[0]; tx[m] = -a.kStop[0] * (thP[m] - a.hard[0]); rs[m] = 1; } });
       const K = [0, 1, 2].map(i => kth.reduce((s2, kk, m) => s2 + Jm[m][i] * Jm[m][i] * (kk + kx[m]), 0)), tauX = [0, 1, 2].map(i => tx.reduce((s2, t, m) => s2 + Jm[m][i] * t, 0));
       const delta = [0, 0, 0], Texp = [0, 0, 0], Kset = [0, 0, 0], lim = [[0, 0], [0, 0], [0, 0]];
-      for (let i = 0; i < 3; i++) { if (!d.free[i]) { continue; }
-        const r0 = Math.sign(rs.reduce((s2, x, m) => s2 + Jm[m][i] * x, 0));
+      for (let i = 0; i < 3; i++) { if (!d.rows[i]) { continue; }
+        // restoring direction of THIS row = the sign of the law torque on it at the predicted rotation (−∂U/∂φᵢ, couplings included).
+        // G1 causal fix: the first version took it from the signs of the active ends only (Σₘ Jₘᵢ·sₘ); at a large combined swing with two
+        // active ends and a non-diagonal J that sign contradicted the gradient (measured: drop1m, hip_R at θcs (48, 74, −53)°, gradient
+        // +28.2 N·m on y clamped to 0.4 N·m by the one-sided limit → the applied torque was no longer −∇U and injected ≈ 17 W for 0.12 s).
+        const tl0 = tau[i] + tauX[i], rEnd = Math.sign(rs.reduce((s2, x, m) => s2 + Jm[m][i] * x, 0)), rTau = Math.abs(tl0) > 1e-4 ? Math.sign(tl0) : 0;
+        const r0 = this.signRule === "ends" ? rEnd : this.signRule === "tau" ? rTau : (rEnd !== 0 && rEnd === rTau ? rEnd : 0);   // "hybrid": one-sided only where both agree
         // ENERGY-SAFE linearisation (G1 C2 causal fix, third part): the end-range law is convex, so a TANGENT under-resists a joint moving
         // deeper (it absorbs less work than the potential stores: measured knee W −0.86 J vs ΔU +1.52 J in one step) and a CHORD over-resists.
         // Moving deeper → chord between the current and the predicted rotation (from the current torque); moving back out → tangent at the
@@ -138,34 +150,48 @@ export class PassiveLayer {
         // measured, upright 6–12 s, and removed by this anchoring); only the slope depends on the direction: chord when compressing, tangent
         // when releasing.
         const compressing = this.chord && qP !== q0 && r0 !== 0 && phi[i] * r0 < 0 && Math.abs(phi[i]) > 1e-7;
-        if (compressing) { const kc = -(tau[i] - tau0[i]) / phi[i]; if (kc > K_MIN) K[i] = kc; }
+        // the per-axis chord is capped by the largest tangent stiffness (at the predicted rotation) of any term this row moves: for a convex law
+        // the secant never exceeds the tangent at the deeper end, but the per-axis ratio Δτᵢ/φᵢ blows up when a row barely moves while a
+        // coupled row compresses (measured: knee z row K = 1.1e5 N·m/rad from φ_z ≈ 0, first locked-row version)
+        if (compressing) { const kc = -(tau[i] - tau0[i]) / phi[i], cap = kth.reduce((mx, kk, m) => (Math.abs(Jm[m][i]) > 0.05 ? Math.max(mx, kk + kx[m]) : mx), 0); if (kc > K_MIN) K[i] = Math.min(kc, Math.max(cap, K[i])); }
         const tl = tau[i] + tauX[i]; let off = 0; if (K[i] > K_MIN) { off = clamp(tl / K[i], -DELTA_MAX, DELTA_MAX); Kset[i] = K[i]; }
         delta[i] = (this.predictive ? phi[i] : 0) + off;
         // the elastic tissue only ever RESTORES: the drive may push toward the neutral range with the full linearised law, but in the other
         // direction it carries at most the viscous damper — so an over-predicted (or armed but unreached) step can never pull a joint toward
         // its stop (a soft unilateral constraint, like a contact). Restoring direction from the active end, not from the linear model.
         const r = this.oneSided ? r0 : 0;
-        Texp[i] = tl - Kset[i] * off; if (r !== 0 && Math.sign(Texp[i]) === -r) Texp[i] = 0;
+        // the clamp may cut the linear model's extrapolation toward the stop, but NEVER the law torque itself (G1 causal fix, see r0 above):
+        // the bounds always admit τᵢ, and the explicit remainder (a part of τᵢ) is never zeroed
+        Texp[i] = tl - Kset[i] * off; if (!this.allowLaw && r !== 0 && Math.sign(Texp[i]) === -r) Texp[i] = 0;
         const big = Math.abs(tau[i]) + Math.abs(tauX[i]) + Kset[i] * (Math.abs(phi[i]) + DTH_MAX) + d.c * (Math.abs(wi[i]) + DW_MAX) + LIM_MARGIN, anti = d.c * Math.abs(wi[i]) + 0.05, damp = d.c * (Math.abs(wi[i]) + DW_MAX) + LIM_MARGIN;
-        lim[i] = r === 0 ? [-Math.max(big, damp), Math.max(big, damp)] : r > 0 ? [-anti, big] : [-big, anti]; }
-      // target = q0 · exp(δ') with 2·sin(|δ'|/2) = |δ| so Jolt's error approximation (−2·Im(q⁻¹·target)) returns exactly δ per axis
-      const dl = Math.hypot(delta[0], delta[1], delta[2]); let tgt = q0;
-      if (dl > 0) { const ang = 2 * Math.asin(Math.min(1, dl / 2)); tgt = Q.norm(Q.mul(q0, Q.axis([delta[0] / dl, delta[1] / dl, delta[2] / dl], ang))); }
+        lim[i] = r === 0 ? [-Math.max(big, damp), Math.max(big, damp)] : r > 0 ? [Math.min(-anti, this.allowLaw ? tl - anti : -anti), big] : [-big, Math.max(anti, this.allowLaw ? tl + anti : anti)]; }
+      // ENCODING (G1 causal fix): the spring offset δ is NOT written into the target orientation. Jolt clamps any target onto the joint's
+      // limits (locked axis → 0, limited axis → inside the engine stop; SixDOFConstraint::SetTargetOrientationCS), which silently replaced δ
+      // by a different error — measured on a −30°-twisted knee: intended (0, −7.2, −12.4)°, applied (5.5, 10.9, 7.0)°. Instead the target is
+      // the current rotation (apply() reads back what Jolt stored and its own constraint-space rotation → Jolt's exact error C) and the offset
+      // goes into the drive's target angular velocity ω_t, which Jolt never clamps. Jolt's converged motor impulse (SpringPart / Angle-
+      // ConstraintPart) is λ/dt = −k·C − (c + dt·k)·(Jv − ω_t); choosing ω_t = k·(δ + C)/(c + dt·k) gives exactly λ/dt = k·δ − (c + dt·k)·Jv,
+      // the intended implicit spring (anchored at the predicted rotation) + damper.
+      const tgt = q0;
       const Tw = [0, 1, 2].reduce((acc, i) => V.add(acc, V.sc(axW[i], Texp[i])), [0, 0, 0]);
-      out.joints.push({ k: d.k, tau, K: Kset, delta, Texp, wi, axW, lim, tgt, Tw, Jm });
+      out.joints.push({ k: d.k, tau, K: Kset, delta, Texp, wi, axW, lim, tgt, Tw, Jm, dt });
     }
     this.last = out; return out;
   }
   apply(plan) {
     if (!this.enabled || plan.applied) return; plan.applied = true;
     for (const p of plan.joints) { const d = this.jd[p.k];
-      for (let i = 0; i < 3; i++) if (d.free[i]) this.w.setDrive(d.k, i, p.K[i], d.c, p.lim[i]);
-      this.w.setDriveTarget(d.k, p.tgt);
+      for (let i = 0; i < 3; i++) if (d.rows[i]) this.w.setDrive(d.k, i, p.K[i], d.c, p.lim[i]);
+      this.w.setDriveTarget(d.k, p.tgt);   // target = current rotation; Jolt may clamp it — read back the stored target and Jolt's own q
+      const T = this.w.driveTarget(d.k), qJ = this.w.rotationCS(d.k), sg = qJ[0] * T[0] + qJ[1] * T[1] + qJ[2] * T[2] + qJ[3] * T[3] > 0 ? 1 : -1, df = Q.mul(Q.conj(qJ), T.map(x => x * sg));
+      p.C = [0, 1, 2].map(i => -2 * df[i]);   // Jolt's motor error (all three rows are position motors → the full diff, no projection)
+      p.wt = [0, 1, 2].map(i => (d.rows[i] && p.K[i] > 0 ? p.K[i] * (p.delta[i] + p.C[i]) / (d.c + p.dt * p.K[i]) : 0));
+      this.w.setDriveVel(d.k, p.wt);
       if (p.Tw[0] || p.Tw[1] || p.Tw[2]) this.w.addTorquePair(d.parent, d.child, p.Tw); }
   }
   // viscous dissipation of the last step (J): Σ c·|ω_rel|² dt with the post-step relative velocity (the drive is implicit in ω)
   dampingLoss(states, dt) { let D = 0; for (const d of this.jd) { if (!d.axes.some(Boolean)) continue; const w = V.sub(states[d.child].w, states[d.parent].w);
-      // locked axes carry no damper: project out the locked directions
-      const R2F2 = Q.mul(states[d.child].rot, d.F2); let s = 0; for (let i = 0; i < 3; i++) if (d.free[i]) { const a = Q.rot(R2F2, E[i]), x = V.dot(w, a); s += x * x; }
+      // every drive row carries the damper (a locked row's relative ω is the swing DOF's share on that axis; the lock takes the rest)
+      const R2F2 = Q.mul(states[d.child].rot, d.F2); let s = 0; for (let i = 0; i < 3; i++) if (d.rows[i]) { const a = Q.rot(R2F2, E[i]), x = V.dot(w, a); s += x * x; }
       D += d.c * s * dt; } return D; }
 }

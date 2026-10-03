@@ -69,7 +69,7 @@
    "id": "0.1b",
    "name": "V2-REF ×3 fresh builds: identical spec hash, engine readback hash and post-step state hash",
    "pass": true,
-   "value": "54f413c9/54add0b4/7843eefe  54f413c9/54add0b4/7843eefe  54f413c9/54add0b4/7843eefe",
+   "value": "54f413c9/54add0b4/95ab53a9  54f413c9/54add0b4/95ab53a9  54f413c9/54add0b4/95ab53a9",
    "limit": "identical"
   },
   {
@@ -102,7 +102,7 @@
     "M": 62,
     "kind": "population"
    },
-   "specHash": "2fc1171f",
+   "specHash": "8d21d2ad",
    "engine": {
     "stateHash": "aa46c502",
     "readHash": "3cd69055",
@@ -146,7 +146,7 @@
      "id": "0.1",
      "name": "spec generation deterministic (×3 identical hash)",
      "pass": true,
-     "value": "2fc1171f 2fc1171f 2fc1171f",
+     "value": "8d21d2ad 8d21d2ad 8d21d2ad",
      "limit": "identical",
      "reportOnly": false
     },
@@ -378,7 +378,7 @@
      "id": "0.9b",
      "name": "swing–twist singularity margin over every joint's full engine box",
      "pass": true,
-     "value": "55.1° (shoulder_L)",
+     "value": "50.3° (shoulder_L)",
      "limit": "≥ 20°",
      "reportOnly": false
     },
@@ -419,7 +419,7 @@
      "id": "0.10a",
      "name": "colliders vs anthropometric surfaces (§15.1 tolerances: limbs −10…+3, trunk −20…+5, head −15…+5 mm)",
      "pass": true,
-     "value": "bideltoid (deltoid spheres) 0.2 mm; head capsule AP half-extent vs head length / 2 0.0 mm; head capsule lateral half-extent vs head breadth / 2 0.0 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -7.4 mm; abdomen box vs waist depth / 2 0.0 mm; head axis AP true",
+     "value": "bideltoid (deltoid spheres) 0.2 mm; head sphere-pair AP half-extent vs head length / 2 0.0 mm; head sphere-pair lateral half-extent vs head breadth / 2 0.0 mm; head sphere-pair side waist (between the centres) vs head breadth / 2 -3.2 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -7.4 mm; abdomen box vs waist depth / 2 0.0 mm; head pair along AP true",
      "limit": "within tolerance",
      "detail": "",
      "reportOnly": false
@@ -464,7 +464,7 @@
      "id": "0.11d",
      "name": "Jolt joints: rotation limits = spec; translations fixed; knee / elbow locked axis fixed",
      "pass": true,
-     "value": "5.8e-8 rad, fixed axes true",
+     "value": "9.9e-8 rad, fixed axes true",
      "limit": "≤ 0.000001 rad"
     },
     {
@@ -576,7 +576,7 @@
      ]
     },
     {
-     "what": "head capsule AP half-extent vs head length / 2",
+     "what": "head sphere-pair AP half-extent vs head length / 2",
      "v": 1.3877787807814457e-17,
      "tol": [
       -0.015,
@@ -584,7 +584,7 @@
      ]
     },
     {
-     "what": "head capsule lateral half-extent vs head breadth / 2",
+     "what": "head sphere-pair lateral half-extent vs head breadth / 2",
      "v": 0,
      "tol": [
       -0.015,
@@ -592,7 +592,15 @@
      ]
     },
     {
-     "what": "head capsule axis = anterior–posterior",
+     "what": "head sphere-pair side waist (between the centres) vs head breadth / 2",
+     "v": -0.0032410964619537935,
+     "tol": [
+      -0.015,
+      0.005
+     ]
+    },
+    {
+     "what": "head sphere pair along anterior–posterior",
      "v": 0,
      "tol": [
       -1e-12,
@@ -648,7 +656,7 @@
     "M": 70,
     "kind": "population"
    },
-   "specHash": "a89bf594",
+   "specHash": "c6911723",
    "engine": {
     "stateHash": "bbb73448",
     "readHash": "8d15cc89",
@@ -692,7 +700,7 @@
      "id": "0.1",
      "name": "spec generation deterministic (×3 identical hash)",
      "pass": true,
-     "value": "a89bf594 a89bf594 a89bf594",
+     "value": "c6911723 c6911723 c6911723",
      "limit": "identical",
      "reportOnly": false
     },
@@ -924,7 +932,7 @@
      "id": "0.9b",
      "name": "swing–twist singularity margin over every joint's full engine box",
      "pass": true,
-     "value": "55.1° (shoulder_L)",
+     "value": "50.3° (shoulder_L)",
      "limit": "≥ 20°",
      "reportOnly": false
     },
@@ -965,7 +973,7 @@
      "id": "0.10a",
      "name": "colliders vs anthropometric surfaces (§15.1 tolerances: limbs −10…+3, trunk −20…+5, head −15…+5 mm)",
      "pass": true,
-     "value": "bideltoid (deltoid spheres) 0.2 mm; head capsule AP half-extent vs head length / 2 0.0 mm; head capsule lateral half-extent vs head breadth / 2 0.0 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -7.9 mm; abdomen box vs waist depth / 2 0.0 mm; head axis AP true",
+     "value": "bideltoid (deltoid spheres) 0.2 mm; head sphere-pair AP half-extent vs head length / 2 0.0 mm; head sphere-pair lateral half-extent vs head breadth / 2 0.0 mm; head sphere-pair side waist (between the centres) vs head breadth / 2 -3.4 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -7.9 mm; abdomen box vs waist depth / 2 0.0 mm; head pair along AP true",
      "limit": "within tolerance",
      "detail": "",
      "reportOnly": false
@@ -1010,7 +1018,7 @@
      "id": "0.11d",
      "name": "Jolt joints: rotation limits = spec; translations fixed; knee / elbow locked axis fixed",
      "pass": true,
-     "value": "5.8e-8 rad, fixed axes true",
+     "value": "9.9e-8 rad, fixed axes true",
      "limit": "≤ 0.000001 rad"
     },
     {
@@ -1122,7 +1130,7 @@
      ]
     },
     {
-     "what": "head capsule AP half-extent vs head length / 2",
+     "what": "head sphere-pair AP half-extent vs head length / 2",
      "v": 0,
      "tol": [
       -0.015,
@@ -1130,7 +1138,7 @@
      ]
     },
     {
-     "what": "head capsule lateral half-extent vs head breadth / 2",
+     "what": "head sphere-pair lateral half-extent vs head breadth / 2",
      "v": 0,
      "tol": [
       -0.015,
@@ -1138,7 +1146,15 @@
      ]
     },
     {
-     "what": "head capsule axis = anterior–posterior",
+     "what": "head sphere-pair side waist (between the centres) vs head breadth / 2",
+     "v": -0.0034375265505570407,
+     "tol": [
+      -0.015,
+      0.005
+     ]
+    },
+    {
+     "what": "head sphere pair along anterior–posterior",
      "v": 0,
      "tol": [
       -1e-12,
@@ -1194,7 +1210,7 @@
     "M": 78,
     "kind": "population"
    },
-   "specHash": "7843eefe",
+   "specHash": "95ab53a9",
    "engine": {
     "stateHash": "54f413c9",
     "readHash": "54add0b4",
@@ -1238,7 +1254,7 @@
      "id": "0.1",
      "name": "spec generation deterministic (×3 identical hash)",
      "pass": true,
-     "value": "7843eefe 7843eefe 7843eefe",
+     "value": "95ab53a9 95ab53a9 95ab53a9",
      "limit": "identical",
      "reportOnly": false
     },
@@ -1470,7 +1486,7 @@
      "id": "0.9b",
      "name": "swing–twist singularity margin over every joint's full engine box",
      "pass": true,
-     "value": "55.1° (shoulder_L)",
+     "value": "50.3° (shoulder_L)",
      "limit": "≥ 20°",
      "reportOnly": false
     },
@@ -1511,7 +1527,7 @@
      "id": "0.10a",
      "name": "colliders vs anthropometric surfaces (§15.1 tolerances: limbs −10…+3, trunk −20…+5, head −15…+5 mm)",
      "pass": true,
-     "value": "bideltoid (deltoid spheres) 0.2 mm; head capsule AP half-extent vs head length / 2 0.0 mm; head capsule lateral half-extent vs head breadth / 2 0.0 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -8.2 mm; abdomen box vs waist depth / 2 0.0 mm; head axis AP true",
+     "value": "bideltoid (deltoid spheres) 0.2 mm; head sphere-pair AP half-extent vs head length / 2 0.0 mm; head sphere-pair lateral half-extent vs head breadth / 2 0.0 mm; head sphere-pair side waist (between the centres) vs head breadth / 2 -3.6 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -8.2 mm; abdomen box vs waist depth / 2 0.0 mm; head pair along AP true",
      "limit": "within tolerance",
      "detail": "",
      "reportOnly": false
@@ -1556,7 +1572,7 @@
      "id": "0.11d",
      "name": "Jolt joints: rotation limits = spec; translations fixed; knee / elbow locked axis fixed",
      "pass": true,
-     "value": "5.8e-8 rad, fixed axes true",
+     "value": "9.9e-8 rad, fixed axes true",
      "limit": "≤ 0.000001 rad"
     },
     {
@@ -1675,7 +1691,7 @@
      ]
     },
     {
-     "what": "head capsule AP half-extent vs head length / 2",
+     "what": "head sphere-pair AP half-extent vs head length / 2",
      "v": 0,
      "tol": [
       -0.015,
@@ -1683,7 +1699,7 @@
      ]
     },
     {
-     "what": "head capsule lateral half-extent vs head breadth / 2",
+     "what": "head sphere-pair lateral half-extent vs head breadth / 2",
      "v": 0,
      "tol": [
       -0.015,
@@ -1691,7 +1707,15 @@
      ]
     },
     {
-     "what": "head capsule axis = anterior–posterior",
+     "what": "head sphere-pair side waist (between the centres) vs head breadth / 2",
+     "v": -0.003575027612579329,
+     "tol": [
+      -0.015,
+      0.005
+     ]
+    },
+    {
+     "what": "head sphere pair along anterior–posterior",
      "v": 0,
      "tol": [
       -1e-12,
@@ -1747,7 +1771,7 @@
     "M": 85,
     "kind": "population"
    },
-   "specHash": "ab84bbe3",
+   "specHash": "81358b1f",
    "engine": {
     "stateHash": "26a6bd66",
     "readHash": "4eaeb429",
@@ -1791,7 +1815,7 @@
      "id": "0.1",
      "name": "spec generation deterministic (×3 identical hash)",
      "pass": true,
-     "value": "ab84bbe3 ab84bbe3 ab84bbe3",
+     "value": "81358b1f 81358b1f 81358b1f",
      "limit": "identical",
      "reportOnly": false
     },
@@ -2023,7 +2047,7 @@
      "id": "0.9b",
      "name": "swing–twist singularity margin over every joint's full engine box",
      "pass": true,
-     "value": "55.1° (shoulder_L)",
+     "value": "50.3° (shoulder_L)",
      "limit": "≥ 20°",
      "reportOnly": false
     },
@@ -2064,7 +2088,7 @@
      "id": "0.10a",
      "name": "colliders vs anthropometric surfaces (§15.1 tolerances: limbs −10…+3, trunk −20…+5, head −15…+5 mm)",
      "pass": true,
-     "value": "bideltoid (deltoid spheres) 0.2 mm; head capsule AP half-extent vs head length / 2 0.0 mm; head capsule lateral half-extent vs head breadth / 2 0.0 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -8.5 mm; abdomen box vs waist depth / 2 0.0 mm; head axis AP true",
+     "value": "bideltoid (deltoid spheres) 0.2 mm; head sphere-pair AP half-extent vs head length / 2 0.0 mm; head sphere-pair lateral half-extent vs head breadth / 2 0.0 mm; head sphere-pair side waist (between the centres) vs head breadth / 2 -3.7 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -8.5 mm; abdomen box vs waist depth / 2 0.0 mm; head pair along AP true",
      "limit": "within tolerance",
      "detail": "",
      "reportOnly": false
@@ -2109,7 +2133,7 @@
      "id": "0.11d",
      "name": "Jolt joints: rotation limits = spec; translations fixed; knee / elbow locked axis fixed",
      "pass": true,
-     "value": "5.8e-8 rad, fixed axes true",
+     "value": "9.9e-8 rad, fixed axes true",
      "limit": "≤ 0.000001 rad"
     },
     {
@@ -2221,7 +2245,7 @@
      ]
     },
     {
-     "what": "head capsule AP half-extent vs head length / 2",
+     "what": "head sphere-pair AP half-extent vs head length / 2",
      "v": 1.3877787807814457e-17,
      "tol": [
       -0.015,
@@ -2229,7 +2253,7 @@
      ]
     },
     {
-     "what": "head capsule lateral half-extent vs head breadth / 2",
+     "what": "head sphere-pair lateral half-extent vs head breadth / 2",
      "v": 0,
      "tol": [
       -0.015,
@@ -2237,7 +2261,15 @@
      ]
     },
     {
-     "what": "head capsule axis = anterior–posterior",
+     "what": "head sphere-pair side waist (between the centres) vs head breadth / 2",
+     "v": -0.0037321716834619323,
+     "tol": [
+      -0.015,
+      0.005
+     ]
+    },
+    {
+     "what": "head sphere pair along anterior–posterior",
      "v": 0,
      "tol": [
       -1e-12,
@@ -2293,7 +2325,7 @@
     "M": 92,
     "kind": "population"
    },
-   "specHash": "d544af79",
+   "specHash": "2ff1f5b8",
    "engine": {
     "stateHash": "bcb5cd8e",
     "readHash": "3d384f6d",
@@ -2337,7 +2369,7 @@
      "id": "0.1",
      "name": "spec generation deterministic (×3 identical hash)",
      "pass": true,
-     "value": "d544af79 d544af79 d544af79",
+     "value": "2ff1f5b8 2ff1f5b8 2ff1f5b8",
      "limit": "identical",
      "reportOnly": false
     },
@@ -2569,7 +2601,7 @@
      "id": "0.9b",
      "name": "swing–twist singularity margin over every joint's full engine box",
      "pass": true,
-     "value": "55.1° (shoulder_L)",
+     "value": "50.3° (shoulder_L)",
      "limit": "≥ 20°",
      "reportOnly": false
     },
@@ -2610,7 +2642,7 @@
      "id": "0.10a",
      "name": "colliders vs anthropometric surfaces (§15.1 tolerances: limbs −10…+3, trunk −20…+5, head −15…+5 mm)",
      "pass": true,
-     "value": "bideltoid (deltoid spheres) 0.2 mm; head capsule AP half-extent vs head length / 2 0.0 mm; head capsule lateral half-extent vs head breadth / 2 0.0 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -8.9 mm; abdomen box vs waist depth / 2 0.0 mm; head axis AP true",
+     "value": "bideltoid (deltoid spheres) 0.2 mm; head sphere-pair AP half-extent vs head length / 2 0.0 mm; head sphere-pair lateral half-extent vs head breadth / 2 0.0 mm; head sphere-pair side waist (between the centres) vs head breadth / 2 -3.9 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -8.9 mm; abdomen box vs waist depth / 2 0.0 mm; head pair along AP true",
      "limit": "within tolerance",
      "detail": "",
      "reportOnly": false
@@ -2655,7 +2687,7 @@
      "id": "0.11d",
      "name": "Jolt joints: rotation limits = spec; translations fixed; knee / elbow locked axis fixed",
      "pass": true,
-     "value": "5.8e-8 rad, fixed axes true",
+     "value": "9.9e-8 rad, fixed axes true",
      "limit": "≤ 0.000001 rad"
     },
     {
@@ -2767,7 +2799,7 @@
      ]
     },
     {
-     "what": "head capsule AP half-extent vs head length / 2",
+     "what": "head sphere-pair AP half-extent vs head length / 2",
      "v": 0,
      "tol": [
       -0.015,
@@ -2775,7 +2807,7 @@
      ]
     },
     {
-     "what": "head capsule lateral half-extent vs head breadth / 2",
+     "what": "head sphere-pair lateral half-extent vs head breadth / 2",
      "v": 0,
      "tol": [
       -0.015,
@@ -2783,7 +2815,15 @@
      ]
     },
     {
-     "what": "head capsule axis = anterior–posterior",
+     "what": "head sphere-pair side waist (between the centres) vs head breadth / 2",
+     "v": -0.0038893157543445495,
+     "tol": [
+      -0.015,
+      0.005
+     ]
+    },
+    {
+     "what": "head sphere pair along anterior–posterior",
      "v": 0,
      "tol": [
       -1e-12,
@@ -2842,7 +2882,7 @@
     },
     "kind": "morphology-variant"
    },
-   "specHash": "b1c7c059",
+   "specHash": "2441c984",
    "engine": {
     "stateHash": "0cf363b2",
     "readHash": "951ed393",
@@ -2886,7 +2926,7 @@
      "id": "0.1",
      "name": "spec generation deterministic (×3 identical hash)",
      "pass": true,
-     "value": "b1c7c059 b1c7c059 b1c7c059",
+     "value": "2441c984 2441c984 2441c984",
      "limit": "identical",
      "reportOnly": false
     },
@@ -3118,7 +3158,7 @@
      "id": "0.9b",
      "name": "swing–twist singularity margin over every joint's full engine box",
      "pass": true,
-     "value": "55.1° (shoulder_L)",
+     "value": "50.3° (shoulder_L)",
      "limit": "≥ 20°",
      "reportOnly": false
     },
@@ -3159,7 +3199,7 @@
      "id": "0.10a",
      "name": "colliders vs anthropometric surfaces (§15.1 tolerances: limbs −10…+3, trunk −20…+5, head −15…+5 mm)",
      "pass": true,
-     "value": "bideltoid (deltoid spheres) 0.2 mm; head capsule AP half-extent vs head length / 2 0.0 mm; head capsule lateral half-extent vs head breadth / 2 0.0 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -8.2 mm; abdomen box vs waist depth / 2 0.0 mm; head axis AP true",
+     "value": "bideltoid (deltoid spheres) 0.2 mm; head sphere-pair AP half-extent vs head length / 2 0.0 mm; head sphere-pair lateral half-extent vs head breadth / 2 0.0 mm; head sphere-pair side waist (between the centres) vs head breadth / 2 -3.6 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -8.2 mm; abdomen box vs waist depth / 2 0.0 mm; head pair along AP true",
      "limit": "within tolerance",
      "detail": "",
      "reportOnly": false
@@ -3204,7 +3244,7 @@
      "id": "0.11d",
      "name": "Jolt joints: rotation limits = spec; translations fixed; knee / elbow locked axis fixed",
      "pass": true,
-     "value": "5.8e-8 rad, fixed axes true",
+     "value": "9.9e-8 rad, fixed axes true",
      "limit": "≤ 0.000001 rad"
     },
     {
@@ -3316,7 +3356,7 @@
      ]
     },
     {
-     "what": "head capsule AP half-extent vs head length / 2",
+     "what": "head sphere-pair AP half-extent vs head length / 2",
      "v": 0,
      "tol": [
       -0.015,
@@ -3324,7 +3364,7 @@
      ]
     },
     {
-     "what": "head capsule lateral half-extent vs head breadth / 2",
+     "what": "head sphere-pair lateral half-extent vs head breadth / 2",
      "v": 0,
      "tol": [
       -0.015,
@@ -3332,7 +3372,15 @@
      ]
     },
     {
-     "what": "head capsule axis = anterior–posterior",
+     "what": "head sphere-pair side waist (between the centres) vs head breadth / 2",
+     "v": -0.003575027612579329,
+     "tol": [
+      -0.015,
+      0.005
+     ]
+    },
+    {
+     "what": "head sphere pair along anterior–posterior",
      "v": 0,
      "tol": [
       -1e-12,
@@ -3391,7 +3439,7 @@
     },
     "kind": "morphology-variant"
    },
-   "specHash": "bea02504",
+   "specHash": "90e7e58b",
    "engine": {
     "stateHash": "f038548c",
     "readHash": "7e6d7ba2",
@@ -3435,7 +3483,7 @@
      "id": "0.1",
      "name": "spec generation deterministic (×3 identical hash)",
      "pass": true,
-     "value": "bea02504 bea02504 bea02504",
+     "value": "90e7e58b 90e7e58b 90e7e58b",
      "limit": "identical",
      "reportOnly": false
     },
@@ -3667,7 +3715,7 @@
      "id": "0.9b",
      "name": "swing–twist singularity margin over every joint's full engine box",
      "pass": true,
-     "value": "55.1° (shoulder_L)",
+     "value": "50.3° (shoulder_L)",
      "limit": "≥ 20°",
      "reportOnly": false
     },
@@ -3708,7 +3756,7 @@
      "id": "0.10a",
      "name": "colliders vs anthropometric surfaces (§15.1 tolerances: limbs −10…+3, trunk −20…+5, head −15…+5 mm)",
      "pass": true,
-     "value": "bideltoid (deltoid spheres) 0.2 mm; head capsule AP half-extent vs head length / 2 0.0 mm; head capsule lateral half-extent vs head breadth / 2 0.0 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -8.2 mm; abdomen box vs waist depth / 2 0.0 mm; head axis AP true",
+     "value": "bideltoid (deltoid spheres) 0.2 mm; head sphere-pair AP half-extent vs head length / 2 0.0 mm; head sphere-pair lateral half-extent vs head breadth / 2 0.0 mm; head sphere-pair side waist (between the centres) vs head breadth / 2 -3.6 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -8.2 mm; abdomen box vs waist depth / 2 0.0 mm; head pair along AP true",
      "limit": "within tolerance",
      "detail": "",
      "reportOnly": false
@@ -3753,7 +3801,7 @@
      "id": "0.11d",
      "name": "Jolt joints: rotation limits = spec; translations fixed; knee / elbow locked axis fixed",
      "pass": true,
-     "value": "5.8e-8 rad, fixed axes true",
+     "value": "9.9e-8 rad, fixed axes true",
      "limit": "≤ 0.000001 rad"
     },
     {
@@ -3865,7 +3913,7 @@
      ]
     },
     {
-     "what": "head capsule AP half-extent vs head length / 2",
+     "what": "head sphere-pair AP half-extent vs head length / 2",
      "v": 0,
      "tol": [
       -0.015,
@@ -3873,7 +3921,7 @@
      ]
     },
     {
-     "what": "head capsule lateral half-extent vs head breadth / 2",
+     "what": "head sphere-pair lateral half-extent vs head breadth / 2",
      "v": 0,
      "tol": [
       -0.015,
@@ -3881,7 +3929,15 @@
      ]
     },
     {
-     "what": "head capsule axis = anterior–posterior",
+     "what": "head sphere-pair side waist (between the centres) vs head breadth / 2",
+     "v": -0.003575027612579329,
+     "tol": [
+      -0.015,
+      0.005
+     ]
+    },
+    {
+     "what": "head sphere pair along anterior–posterior",
      "v": 0,
      "tol": [
       -1e-12,
@@ -3937,7 +3993,7 @@
     "M": 78,
     "kind": "population"
    },
-   "specHash": "b80a6563",
+   "specHash": "896b921b",
    "engine": {
     "stateHash": "26a6bd66",
     "readHash": "2f7d88fb",
@@ -3981,7 +4037,7 @@
      "id": "0.1",
      "name": "spec generation deterministic (×3 identical hash)",
      "pass": true,
-     "value": "b80a6563 b80a6563 b80a6563",
+     "value": "896b921b 896b921b 896b921b",
      "limit": "identical",
      "reportOnly": false
     },
@@ -4213,7 +4269,7 @@
      "id": "0.9b",
      "name": "swing–twist singularity margin over every joint's full engine box",
      "pass": true,
-     "value": "55.1° (shoulder_L)",
+     "value": "50.3° (shoulder_L)",
      "limit": "≥ 20°",
      "reportOnly": false
     },
@@ -4254,7 +4310,7 @@
      "id": "0.10a",
      "name": "colliders vs anthropometric surfaces (§15.1 tolerances: limbs −10…+3, trunk −20…+5, head −15…+5 mm)",
      "pass": true,
-     "value": "bideltoid (deltoid spheres) 0.2 mm; head capsule AP half-extent vs head length / 2 0.0 mm; head capsule lateral half-extent vs head breadth / 2 0.0 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -8.5 mm; abdomen box vs waist depth / 2 0.0 mm; head axis AP true",
+     "value": "bideltoid (deltoid spheres) 0.2 mm; head sphere-pair AP half-extent vs head length / 2 0.0 mm; head sphere-pair lateral half-extent vs head breadth / 2 0.0 mm; head sphere-pair side waist (between the centres) vs head breadth / 2 -3.7 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -8.5 mm; abdomen box vs waist depth / 2 0.0 mm; head pair along AP true",
      "limit": "within tolerance",
      "detail": "",
      "reportOnly": false
@@ -4299,7 +4355,7 @@
      "id": "0.11d",
      "name": "Jolt joints: rotation limits = spec; translations fixed; knee / elbow locked axis fixed",
      "pass": true,
-     "value": "5.8e-8 rad, fixed axes true",
+     "value": "9.9e-8 rad, fixed axes true",
      "limit": "≤ 0.000001 rad"
     },
     {
@@ -4418,7 +4474,7 @@
      ]
     },
     {
-     "what": "head capsule AP half-extent vs head length / 2",
+     "what": "head sphere-pair AP half-extent vs head length / 2",
      "v": 1.3877787807814457e-17,
      "tol": [
       -0.015,
@@ -4426,7 +4482,7 @@
      ]
     },
     {
-     "what": "head capsule lateral half-extent vs head breadth / 2",
+     "what": "head sphere-pair lateral half-extent vs head breadth / 2",
      "v": 0,
      "tol": [
       -0.015,
@@ -4434,7 +4490,15 @@
      ]
     },
     {
-     "what": "head capsule axis = anterior–posterior",
+     "what": "head sphere-pair side waist (between the centres) vs head breadth / 2",
+     "v": -0.0037321716834619323,
+     "tol": [
+      -0.015,
+      0.005
+     ]
+    },
+    {
+     "what": "head sphere pair along anterior–posterior",
      "v": 0,
      "tol": [
       -1e-12,

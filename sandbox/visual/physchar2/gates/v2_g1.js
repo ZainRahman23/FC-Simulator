@@ -53,7 +53,7 @@ export const SCENARIOS = {
   flatSupine: { group: "impact", title: "Flat supine drop 0.5 m with roll", note: "Lying supine (face up), arms 6° abducted, horizontal, 0.5 m above the turf, rolling 2 rad/s about the long axis: flat back impact, then a supine roll.",
     pose: NEUTRAL, rot: Rx(-90), pivot: "com", lift: 0.5, w: [0, 0, 2], seconds: 10 },
   drop1m: { group: "impact", title: "Feet-first drop 1.0 m", note: "Quiet stance released with the boots 1.0 m above the turf (touchdown at 4.4 m/s): knees, ankles and hips are driven into their end range under impact.", pose: QS, lift: 1.0, seconds: 10 },
-  impact15: { group: "impact", extreme: true, title: "15 m/s body into the turf (EXTREME penetration test; C7)", note: "Prone (face down), horizontal, 10 cm above the turf, every body moving at 15 m/s downward: tunnelling / first-touch test (spec 1.4).", pose: NEUTRAL, rot: Rx(90), pivot: "com", lift: 0.10, v: [0, -15, 0], seconds: 6 },
+  impact15: { group: "impact", extreme: true, title: "15 m/s body into the turf (EXTREME penetration test; C7)", note: "Prone (face down), horizontal, 10 cm above the turf, every body moving at 15 m/s downward: tunnelling / first-touch test (spec 1.4).", pose: NEUTRAL, rot: Rx(90), pivot: "com", lift: 0.10, v: [0, -15, 0], seconds: 10 },
   isoMomentum: { group: "isolated", title: "Isolated: end-range release + tumble (no gravity, no contact)", note: "Gravity off, 2 m above the turf. Many joints start beyond their soft limits (knees / elbows −3° hyperextended, hips 45° abducted, shoulders 175° abducted, ankles 55° PF, lumbar 28° extended, neck 65° extended, thoracic 38° rotated) with a whole-body tumble: internal passive motion only. Momentum and energy accounting (spec 1.1).",
     pose: { ...both({ knee: { flex: -3 }, elbow: { flex: -3 }, hip: { abd: 45 }, shoulder: { abd: 175 }, ankle: { df: -55 } }), lumbar: { flex: -28 }, neck: { flex: -65 }, thoracic: { rot: 38 } },
     lift: 2.0, gravity: 0, v: [0.3, 0, -0.2], w: [0.8, -0.5, 0.6], seconds: 2 },
@@ -115,7 +115,7 @@ export class G1Sim {
     this.cfg = Object.assign({}, G1_WORLD, opts.cfg || {}); this.dt = 1 / this.cfg.hz; this.N = Math.round((opts.seconds || this.sc.seconds) * this.cfg.hz);
     const init = initialState(spec, this.sc); this.init = init;
     const contact = { ...spec.contact, ...(this.cfg.slop != null ? { slop: this.cfg.slop } : {}), ...(this.cfg.speculative != null ? { speculative: this.cfg.speculative } : {}) };
-    this.w = new V2JoltWorld(J, spec, contact, { velSteps: this.cfg.velSteps, posSteps: this.cfg.posSteps, ccd: this.cfg.ccd, warmStart: this.cfg.warmStart, pairCache: this.cfg.pairCache, manifoldReduction: this.cfg.manifoldReduction, turf: this.cfg.turf, enhancedEdge: this.cfg.enhancedEdge, contactWarmStart: this.cfg.contactWarmStart, gravity: init.gravity, recordContacts: true });
+    this.w = new V2JoltWorld(J, spec, contact, { velSteps: this.cfg.velSteps, posSteps: this.cfg.posSteps, ccd: this.cfg.ccd, warmStart: this.cfg.warmStart, pairCache: this.cfg.pairCache, manifoldReduction: this.cfg.manifoldReduction, turf: this.cfg.turf, enhancedEdge: this.cfg.enhancedEdge, contactWarmStart: this.cfg.contactWarmStart, jointOrder: this.cfg.jointOrder, jointWarmStart: this.cfg.jointWarmStart, gravity: init.gravity, recordContacts: true });
     init.S.forEach((s, i) => { this.w.setPose(i, s.pos, s.rot); this.w.setVel(i, init.vel[i].v, init.vel[i].w); });
     this.obsShape = []; this.obsState = [];
     for (const o0 of this.sc.obstacles || []) { const o = typeof o0 === "function" ? o0(spec, init.S) : o0; this.w.addStaticCapsule(o); this.obsShape.push({ type: "capsule", r: o.r, half: o.half, pos: [0, 0, 0], rot: [0, 0, 0, 1] }); this.obsState.push({ pos: o.pos, rot: o.rot || [0, 0, 0, 1] }); }
@@ -233,12 +233,16 @@ export class G1Sim {
     for (let i = 0; i < this.nb; i++) { const l = bodyLowest(spec.bodies[i], this.st[i]); if (-l.y > spec.contact.slop && !seen.has(i)) { A.missedTurf++; A.missedTurfMax = Math.max(A.missedTurfMax, -l.y); } }
     if (n === 0) for (const c of C) if (c.a >= 0 && c.b >= 0 && c.depth > 0.001 && !this.disabled.has(Math.min(c.a, c.b) + "-" + Math.max(c.a, c.b))) A.initSelfOverlap.push(`${spec.bodies[c.a].name}–${spec.bodies[c.b].name} ${(c.depth * 1000).toFixed(1)} mm`);
   }
-  // t = 0: every turf contact of a standing release must be a boot sole contact inside the plantar outline, normal +Y
+  // t = 0: every turf contact of a standing release must be a boot sole contact inside the plantar outline, normal +Y. Only TOUCHING points
+  // count (separation along the normal ≤ SOLE_TOUCH): a speculative point (Jolt reports points up to 20 mm apart) is not a touch — with a
+  // multi-piece boot the raised toe pieces carry speculative points 11 mm above the turf at t = 0 (G1 clarification 6).
   _sole(c) {
+    const SOLE_TOUCH = 0.001, sep = (k) => V.dot(V.sub(c.pts2[k], c.pts[k]), c.normal) * (c.a < 0 ? 1 : -1), touch = c.pts2.map((_, k) => k).filter(k => sep(k) <= SOLE_TOUCH);
+    if (!touch.length) return;
     const S = this.st, f = this.sole.find(s => s.i === c.b), A = this.A; A.soleCheck = A.soleCheck || { contacts: 0, nonBoot: [], maxOutsideMm: 0, maxAboveSoleMm: 0, normalDevDeg: 0 };
     const sc = A.soleCheck; sc.contacts++; if (!f) { sc.nonBoot.push(this.spec.bodies[c.b].name); return; }
     sc.normalDevDeg = Math.max(sc.normalDevDeg, Math.acos(Math.min(1, Math.abs(c.normal[1]))) * D);
-    for (const p of c.pts2) { const l = Q.rot(Q.conj(S[f.i].rot), V.sub(p, S[f.i].pos)), d = insideDist(f.poly, l[0], l[2]); sc.maxOutsideMm = Math.max(sc.maxOutsideMm, -d * 1000); sc.maxAboveSoleMm = Math.max(sc.maxAboveSoleMm, (l[1] - f.y0) * 1000); }
+    for (const p of touch.map(k => c.pts2[k])) { const l = Q.rot(Q.conj(S[f.i].rot), V.sub(p, S[f.i].pos)), d = insideDist(f.poly, l[0], l[2]); sc.maxOutsideMm = Math.max(sc.maxOutsideMm, -d * 1000); sc.maxAboveSoleMm = Math.max(sc.maxAboveSoleMm, (l[1] - f.y0) * 1000); }
   }
   // ── run summary ──
   summary() {

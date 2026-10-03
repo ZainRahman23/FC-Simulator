@@ -1,105 +1,118 @@
-# V2-G1 pass criteria: pre-registered
+# V2-G1 pass criteria — v2 (pre-registered)
 
-This file was written and committed **before** the final G1 gate run. The same values are encoded in `sandbox/visual/physchar2/gates/v2_g1_checks.js` (`TOL`).
+This file was written and committed **before** the final G1 evidence run of 2026-10-03. It replaces v1 (commit `5e4548d`). The same values are encoded in `sandbox/visual/physchar2/gates/v2_g1_checks.js` (`TOL`, `HS_TOL`).
 
-## Sources and rules
+Every change from v1 comes from one of these sources:
+- a decision in `sources/2026-10-03_user_decision_g1_c1_c7.md` (C1–C7);
+- a clarification of how a check is measured (numbered below).
 
-- Numbers from the approved specification (§22 V2-G1, 1.1–1.7) are used **verbatim**. They are marked **[spec 1.x]**.
-- Where the brief (`sources/2026-10-02_user_decision_g0_approved_build_g1.md`) asks for something with no spec number, the criterion is defined here with its rationale. These are marked **[brief §n]**.
-- No value was chosen to make a run pass.
-- Development runs were made before this file was written, to build and debug the harness. Five definitions were clarified during that work; they are listed under "Clarifications" below. None of them is a spec value.
+Each change is recorded with its measured justification in `DECISIONS.md`. No value was changed because a run failed.
 
-## Configuration under test
+## Configuration under test (the gate)
 
-- **Engine:** pinned JoltPhysics.js 1.1.0 / Jolt 5.6.0 wasm-compat, single-threaded, sha256 `011233a5…57de`. It is checked on every run.
-- **Physics rate:** 240 Hz × 1 collision step [spec §19].
-- **Contact parameters [spec §15.4]:**
+- **Engine:** pinned JoltPhysics.js 1.1.0 / Jolt 5.6.0 wasm-compat, single-threaded, sha256 `011233a5…57de`. Checked on every run.
+- **Rate:** 240 Hz × 1 collision step [spec §19, C7: no global rate increase].
+- **Velocity iterations:** 60 [C1: the validation baseline]. Position iterations: 2. Warm starting on.
+- **Contacts [spec §15.4]:**
   - speculative distance 0.02 m;
-  - penetration slop 0.005 m;
+  - slop 0.005 m;
   - Baumgarte 0.2;
   - restitution 0;
-  - per-sub-shape friction: boot–turf 1.2, hand–turf 0.7, body–turf 0.5, body–body 0.4.
-- **Body properties:**
-  - linear and angular body damping 0;
+  - per-sub-shape friction.
+- **Contact manager [C3]:** manifold reduction off, body-pair contact cache off.
+- **Boot [C3]:** the approved hull as two convex pieces (rear / front at 55 % of the length). The external geometry is identical: the hull of the union is the approved hull.
+- **Head [C4]:** two spheres plus the neck capsule.
+- **Bodies:**
+  - zero body damping;
   - gravity factor 1;
   - no sleeping;
   - maxAngVel 100 rad/s;
-  - gyroscopic force on (G1 defect fix G1-D1, see DECISIONS.md).
-- **Velocity iterations:** chosen by the 1.5 study from {10, 15, 20, 30}. If none qualifies, 30 is used as the reference for every other phase, and 1.5 is reported as FAIL.
-- **Position iterations:** 2 (the G0 world value).
-- **Passive joints [spec §13.1.5, §13.3, §13.2]:**
-  - the end-range law τ = A·(e^{B(θ−θs)} − 1), reaching 0.25·T_iso(opposing) at the hard limit, B = 6;
-  - the four pose-dependent couplings;
-  - viscous damping per joint;
-  - all folded into the implicit motor rows;
-  - no muscle activation, no targets toward any posture.
+  - gyroscopic force on [G1-D1].
+- **Passive joints [spec §13.1.5, §13.3, §13.2; C2]:**
+  - the end-range law (25 % of opposing capacity at the hard limit, B = 6);
+  - the four couplings;
+  - viscous damping;
+  - the C2 anatomical end-stop (a linear spring beyond the hard limit reaching 100 % capacity 3° beyond it).
+  - All of this is folded into the implicit motor rows, with the causal fixes listed in `DECISIONS.md` (G1-D2 … G1-D8).
+  - The Jolt hard stop is an emergency stop at anatomical ± `ENGINE_MARGIN`. The margins are measured by `tools/g1_margins.js` for this configuration (C2).
+- **Run lengths:**
+  - every fall: 10 s, including impact15;
+  - isolated tests: 2 s;
+  - envelope: 1–1.5 s.
+  - The rest window is the final 0.5 s.
+- **Bodies:**
+  - V2-REF and V1-matched run every scenario.
+  - V2-165-62, V2-198-92, V2-long-legs and V2-short-legs run the ten essential scenarios.
+  - There is no per-body tuning.
 
-## Scenarios (fixed list)
-
-| key | what it tests |
-|---|---|
-| upright | quiet upright release, boots on the turf |
-| leanF / leanB | 5° forward / backward lean about the ankle line |
-| leanL / leanR | 5° lateral lean, mirror pair |
-| perturb | quiet stance with a modest whole-body angular velocity |
-| singleLeg | single-support release |
-| dropA / sideFirst / shoulderFirst / rotating / awkward | V1 Gate A A–E, re-authored in V2 anatomical angles |
-| flatSupine | flat supine drop from 0.5 m with a roll |
-| drop1m | feet-first drop from 1.0 m |
-| impact15 | 15 m/s body into the turf |
-| isoMomentum | gravity off, no contact, end-range release plus a tumble |
-| isoSelfCol | gravity off, leg-into-leg and arm-into-trunk at football speed |
-
-- **Run lengths:** falls 7 s (rest window: the final 0.5 s), impact15 2 s, isolated 2 s.
-- **Bodies:** V2-REF and V1-matched run every scenario [spec §22]. V2-165-62, V2-198-92, V2-long-legs and V2-short-legs run the ten "essential" scenarios [brief §6]. No per-body tuning.
-
-## Criteria
+## Criteria (gate)
 
 | id | criterion | pass | source |
 |---|---|---|---|
-| 1.F | finite state, no explosion | no NaN / Inf; no body faster than 25 m/s | [brief §2] |
-| 1.2a | net mechanical-energy increase per step (E = KE + PE + passive elastic energy U) | ≤ 0.5 J | [spec 1.2] |
+| 1.F | finite, no explosion | no NaN/Inf; ≤ 25 m/s | [brief §2] |
+| 1.2a | net mechanical-energy increase per step (E = KE + PE + U) | ≤ 0.5 J | [spec 1.2] |
 | 1.2b | E non-increasing after first contact | ≤ 0.5 J above the running minimum | [spec 1.2] |
-| 1.2c | contact-free steps: ΔE + damping loss (no unexplained gain) | ≤ +0.01 J per step. Losses (numerical dissipation) are reported. | [brief §4] |
-| 1.2d | contact-free steps: COM acceleration = (0, −g, 0); isolated: ΔP = 0 | ≤ 0.01 m/s² | [brief §3] |
-| 1.3a / 1.3c | joint separation (transient / at rest) | ≤ 5 mm / ≤ 1 mm | [spec 1.3] |
-| 1.3b / 1.3d | hard-limit excursion (transient / at rest) | ≤ 3° / ≤ 0.5° | [spec 1.3] |
-| 1.3e | frame continuity: per-tick joint rotation | ≤ 2 × 100 rad/s × dt (47.7° at 240 Hz) | [brief §2] |
-| 1.3f | hard-limit chatter | ≤ 10 on/off toggles in any 0.5 s | [brief §2] |
-| 1.4a / 1.4b | turf penetration (exact collider geometry; transient / at rest) | ≤ 10 mm / ≤ 3 mm | [spec 1.4] |
-| 1.4d / 1.4e | self-penetration between allowed pairs (transient / at rest) | ≤ 10 mm / "0" read as ≤ 0.1 mm | [spec 1.4] |
-| 1.4c | disabled pairs never in contact | 0 manifolds | [brief §3] |
-| 1.4f | standing releases (unrotated): at t = 0 only boot soles touch, inside the plantar outline, on the sole plane, normal +Y | 0 non-boot / ≤ 2 mm / ≤ 2 mm / ≤ 2° | [brief §3] |
-| 1.4g | first touch for a 15 m/s body | ≤ 3 mm | [spec 1.4] |
-| 1.4h | isoSelfCol: leg ↔ leg and arm ↔ trunk contacts occur, no pass-through | ≥ 1 each | [brief §3] |
-| 1.R | the passive body comes to rest; no jitter at rest | KE ≤ 0.1 J, joint ω RMS ≤ 0.05 rad/s (final 0.5 s) | [brief / spec 1.2] |
-| 1.1a / 1.1b | isoMomentum: linear / angular momentum constant over 2 s | ≤ 1e-6 relative | [spec 1.1] |
-| 5.a | passive rig: applied torque at release = spec law − c·ω | ≤ max(0.1 N·m, 2 %) | [brief §5] |
-| 5.b | passive rig: restoring sign; returns into the soft range | true / true | [brief §5] |
-| 5.c | passive rig: tracks the spec law through the motion | ≤ 10 % of that end's τ at the hard limit | [brief §5] |
-| 5.d | passive rig: never injects energy (no self-contact) | ≤ 1e-6 J per step | [brief §5] |
-| 5c | couplings (soft-limit shifts, cross-torque signs) as specified | ±0.1° | [spec §13.2] |
-| 1.5 | min of 10/15/20/30 velocity iterations passing every 1.2–1.4 criterion with 2× margin (≤ 50 % of tolerance) | one exists | [spec 1.5] |
-| 1.6a | ×3 runs across two processes: identical per-tick hash, contact sequence, joint extrema, fall timing | all scenarios | [spec 1.6] |
-| 1.6b | Jolt SaveState / RestoreState mid-run: bit-exact with the from-scratch run | all tested | [spec 1.6] |
-| 1.6c | browser = Node, curated scenarios (headless Chrome, same code path) | identical hashes | [spec 1.6] |
-| 8 | timestep 180 / 240 / 360 / 720 Hz: integrity checks pass at every rate, same posture and first non-foot contact as 720 Hz, fall timing ≤ 25 ms, final COM ≤ 0.15 m from 720 Hz | all | [brief §8] |
-| 1.7 | V1 Gate A A–E side by side | report only | [spec 1.7] |
-| 9 | performance per player per tick | report only (diagnostic) | [brief §9] |
+| 1.2c | contact-free steps: ΔE + damping loss | ≤ +0.01 J per step | [brief §4] |
+| 1.2d | contact-free: COM acceleration = (0, −g, 0) | ≤ 0.01 m/s² | [brief §3] |
+| 1.3a / 1.3c | joint separation, transient / at rest | ≤ 5 / ≤ 1 mm | [spec 1.3] |
+| 1.3b | the emergency (Jolt) stop is never reached | 0 engine-stop ticks; anatomical overshoot reported | **[C2]** |
+| 1.3d | settled joints inside the anatomical ROM | ≤ 0.5° beyond the anatomical hard limit at rest | [spec 1.3] |
+| 1.3e / 1.3f | frame continuity / hard-limit chatter | ≤ 2 × 100 rad/s × dt per tick / ≤ 10 toggles per 0.5 s | [brief §2] |
+| 1.4a | turf penetration, transient (exact collider geometry) | ≤ 10 mm | [spec 1.4] |
+| 1.4b | resting turf penetration | ≤ 5 mm (the slop) | **[C5]** |
+| 1.4d | self-penetration between allowed pairs, transient | ≤ 10 mm | [spec 1.4] |
+| 1.4e | resting self-contact penetration | ≤ 5 mm (the slop) | **[C5]** |
+| 1.4c | disabled pairs never in contact | 0 | [brief §3] |
+| 1.4i | no allowed pair overlaps in the initial condition | ≤ 1 mm | **[C5]** |
+| 1.4f | standing release: at t = 0 only boot soles **touch** (separation ≤ 1 mm), inside the plantar outline, on the sole plane, normal +Y | 0 / ≤ 2 mm / ≤ 2 mm / ≤ 2° | [brief §3] (clarification 6) |
+| 1.4h / 1.4j | isoSelfCol: intended self-contacts occur; no missed self-collision (geometric overlap > slop + 2 mm with no manifold) | ≥ 1 each / 0 | [brief §3] |
+| 1.R | comes to rest; no jitter | KE ≤ 0.1 J, joint ω RMS ≤ 0.05 rad/s | [brief / spec 1.2] |
+| 1.1a / 1.1b | isoMomentum: linear / angular momentum, relative | ≤ 2e-5 / ≤ 5e-3 | **[C6]** |
+| 5.a–5.d, 5c | passive rig and couplings | as v1 | [brief §5, spec §13.2] |
+| 1.6a / b / c | ×3 determinism (two processes) / SaveState-RestoreState bit-exact / browser = Node | identical | [spec 1.6] |
+| 8 | timestep 180/240/360/720 Hz: integrity at every rate, same qualitative outcome, fall timing ≤ 25 ms, final COM ≤ 0.15 m vs 720 Hz | all | [brief §8] |
+| 7.HS | **C7 no-tunnelling envelope** (V2-REF, 8 scenarios, 10–20 m/s limbs and bodies; see the table below) | HS.1–HS.4 pass in each | **[C7]** |
 
-**Relative momentum** is |ΔP| / max Σᵢ mᵢ|vᵢ| and |ΔL| / max Σᵢ |Lᵢ| (about the COM), over the run.
+**impact15** (15 m/s body into the turf) is the EXTREME test [C7]:
+- It is checked with HS.1–HS.4 plus 1.R.
+- Its first-touch depth (1.4g) is reported, not gated.
 
-**Turf penetration** is measured from the exact collider geometry: capsules, spheres, rounded boxes with their convex radius, and the boot hull's raw points (the hull's 5 mm rounding makes this conservative). Jolt's own manifold depth is reported alongside.
+### C7 envelope checks
 
-## Clarifications made while building the harness (before this file; none is a spec value)
+| id | check | pass |
+|---|---|---|
+| HS.1 | finite; max body speed ≤ initial + free-fall gain + 5 m/s | yes |
+| HS.2 | no missed turf collision (a body below the turf by more than the slop with no turf manifold) | 0 steps |
+| HS.3 | no tunnelling / missed limb collision (exact geometric overlap > slop + 2 mm on a step with no manifold), and contact did occur | 0 |
+| HS.4 | no catastrophic constraint failure: joint separation | ≤ 20 mm transient; ≤ 1 mm at rest (with gravity) |
+| HS.r | penetration, engine-stop ticks, anatomical overshoot, energy | report |
 
-1. **Self-penetration "0 at rest".** A manifold depth is a float: "0" is read as ≤ 0.1 mm.
-2. **Contact-free energy.** Only a gain is a failure. Every measured contact-free residual was a loss: numerical dissipation of the implicit drive and release transients.
-3. **Frame continuity** is bounded by the physical cap (two bodies at 100 rad/s), not a fixed angle. A real forearm pronation spin reached 95 rad/s.
-4. **The sole check** applies only to unrotated standing releases. A deliberately tilted boot touches with its edge by construction.
-5. **Rig tracking** uses one rule for every rig test: 10 % of τ at the hard limit.
+### Report-only rows
+
+| id | what is reported |
+|---|---|
+| 1.5 | iteration study 10/15/20/30/60 [C1] |
+| 1.1f | the free-body angular-momentum floor [C6] |
+| 1.7 | V1 Gate A A–E side by side |
+| 9 | performance |
+| D.cand | the decision candidate (below) |
+
+## Clarifications (how a check is measured; none is a tolerance)
+
+1–5 are as in v1.
+
+6. **Sole check (1.4f) counts only touching points.** These are points whose separation along the contact normal is ≤ 1 mm. Jolt reports speculative points up to 20 mm apart, and those are not touches. With a multi-piece boot, the raised toe pieces carry speculative points 11 mm above the turf at t = 0.
+7. **impact15 runs 10 s, like every other fall.** At 6 s it was still settling (joint ω RMS 0.40 rad/s, energy decreasing); at 10 s it is at rest.
+8. **Engine-stop margins are re-measured whenever the passive drive or the contact configuration changes** (the C2 procedure: `tools/g1_margins.js`; rule max(2°, ⌈1.5 × overshoot + 1°⌉) over the V2-REF scenario envelope without impact15).
+
+## Decision candidate (measured, NOT part of the gate)
+
+The runner also evaluates one candidate package on every body and the envelope. It is reported as `D.cand` to inform the decision report and does not count toward PASS. The package:
+- the approved boot hull as 10 convex pieces (an AP 5 × ML 2 grid; identical external geometry);
+- 150 velocity iterations;
+- its own engine-stop margins, measured by the same C2 procedure (`g1/json/g1_margins_candidate.json`).
 
 ## What the result means
 
-- **PASS** requires every gate check.
-- **Diagnostic remedies** (`gates/v2_g1_dx.js`) are measured to inform decisions. They are **not adopted** and do not count toward the gate.
+- **PASS** requires every gate row.
+- Diagnostics (`DX-*`) and the candidate are measured, not adopted.

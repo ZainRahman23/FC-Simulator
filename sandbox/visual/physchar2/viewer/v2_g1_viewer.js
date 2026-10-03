@@ -5,8 +5,9 @@ import { generateSpec } from "../spec/v2_spec.js";
 import { VARIATION_SET } from "../spec/v2_human.js";
 import { BONES } from "../spec/v2_skeleton.js";
 import { bindData, evaluateSkeleton } from "../map/v2_render_map.js";
-import { G1Sim, SCENARIOS, SCENARIO_ORDER, CURATED, ESSENTIAL } from "../gates/v2_g1.js";
-import { scenarioChecks } from "../gates/v2_g1_checks.js";
+import { G1Sim, SCENARIOS, SCENARIO_ORDER, HS_ORDER, CURATED, ESSENTIAL, G1_WORLD } from "../gates/v2_g1.js";
+import { scenarioChecks, hsChecks } from "../gates/v2_g1_checks.js";
+import { engineLimits } from "../spec/v2_joints.js";
 import { DX_CONFIGS, applyMods } from "../gates/v2_g1_dx.js";
 import { createGL } from "./v2_gl.js";
 
@@ -15,16 +16,20 @@ const canvas = $("gl"), ov = $("ov"), R = createGL(canvas), g2 = ov.getContext("
 const bodyColor = (b) => { if (b.side === "L") return [0.32, 0.55, 0.95]; if (b.side === "R") return [0.95, 0.42, 0.32]; return { pelvis: [0.55, 0.72, 0.5], abdomen: [0.5, 0.66, 0.6], thorax: [0.45, 0.62, 0.68], head: [0.75, 0.68, 0.5] }[b.name] || [0.6, 0.6, 0.6]; };
 const ST = { key: "upright", human: "V2-REF", cfg: "ref", playing: false, speed: 1, acc: 0, cam: { yaw: 35, pitch: 14, dist: 3.4, target: [0, 0.6, 0], fov: 0.62, follow: true }, joint: "knee_R",
   show: { bodies: true, skeleton: false, colliders: false, centres: true, axes: false, limits: false, contacts: true, normals: true, pen: true, com: true, coms: false, vel: false, ground: true, names: false } };
-let J = null, NODE = null, SPEC = null, SIM = null, MESH = [], BIND = null, dirty = true, done = false, REFCFG = { velSteps: 30 };
+let J = null, NODE = null, SPEC = null, SIM = null, MESH = [], BIND = null, dirty = true, done = false, REFCFG = { velSteps: G1_WORLD.velSteps }, CAND_MARGINS = null;
+const checksFor = (r, key) => (SCENARIOS[key].group === "envelope" ? hsChecks(r, SCENARIOS[key]) : scenarioChecks(r, SCENARIOS[key]));
 const CAMS = { front: { yaw: 0, pitch: 6 }, side: { yaw: 90, pitch: 6 }, three: { yaw: 35, pitch: 16 }, top: { yaw: 0, pitch: 88 } };
-const CONFIGS = () => ({ ref: { label: `reference — spec settings (${REFCFG.velSteps} velocity iterations, 240 Hz)`, cfg: { ...REFCFG }, mods: [] },
-  P: { label: "diagnostic package P (NOT adopted): 60 it · reduction/cache off · split boot · sphere-pair head", ...pick("P") }, P720: { label: "diagnostic package P at 720 Hz (NOT adopted)", ...pick("P720") } });
+const CONFIGS = () => ({ ref: { label: `G1 gate — validated baseline (240 Hz, ${REFCFG.velSteps} velocity iterations, 2-piece boot)`, cfg: { ...REFCFG }, mods: [] },
+  cand: { label: "DECISION CANDIDATE (not adopted): 10-piece boot + 150 iterations, own margins", cfg: { ...REFCFG, velSteps: 150 }, mods: ["bootGridAP5xML2"], cand: true },
+  "DX-R1": { label: "diagnostic: the approved single boot hull (C3 reference)", ...pick("DX-R1") }, "DX-B10": { label: "diagnostic: 10-piece boot at 60 iterations", ...pick("DX-B10") },
+  "DX-150": { label: "diagnostic: 150 velocity iterations (2-piece boot)", ...pick("DX-150") }, "DX-W0": { label: "diagnostic: warm starting off", ...pick("DX-W0") } });
 const pick = (id) => { const d = DX_CONFIGS.find(x => x.id === id); return { cfg: { ...REFCFG, ...d.cfg }, mods: d.mods || [], dx: id }; };
 
 async function init() {
   J = await loadJolt(new URL("../vendor/jolt-physics.wasm-compat.js", import.meta.url).href);
   try { NODE = await (await fetch(new URL("../../../../review_artifacts/physical_character_v2/g1/json/g1_results.json", import.meta.url))).json(); REFCFG = { velSteps: NODE.reference.velSteps }; } catch (e) { NODE = null; }
-  const order = [...CURATED, ...SCENARIO_ORDER.filter(k => !CURATED.includes(k))];
+  try { CAND_MARGINS = (await (await fetch(new URL("../../../../review_artifacts/physical_character_v2/g1/json/g1_margins_candidate.json", import.meta.url))).json()).table; } catch (e) { CAND_MARGINS = null; }
+  const order = [...CURATED, ...SCENARIO_ORDER.filter(k => !CURATED.includes(k)), ...HS_ORDER];
   for (const k of order) $("scen").add(new Option(`${CURATED.includes(k) ? "★ " : ""}${SCENARIOS[k].title}`, k));
   for (const h of VARIATION_SET) $("human").add(new Option(`${h.id} (${h.H} m, ${h.M} kg)`, h.id));
   for (const [k, c] of Object.entries(CONFIGS())) $("cfg").add(new Option(c.label, k));
@@ -41,7 +46,7 @@ function toggle() { if (done) build(); ST.playing = !ST.playing; updPlay(); }
 function updPlay() { $("play").textContent = ST.playing ? "❚❚ pause" : "▶ play"; $("play").classList.toggle("on", ST.playing); }
 function build() {
   if (SIM) SIM.destroy(); const h = VARIATION_SET.find(x => x.id === ST.human), C = CONFIGS()[ST.cfg];
-  SPEC = applyMods(generateSpec(h), C.mods); BIND = bindData(SPEC); SIM = new G1Sim(J, SPEC, ST.key, { cfg: C.cfg, series: true }); done = false; ST.acc = 0;
+  SPEC = applyMods(generateSpec(h), C.mods); if (C.cand && CAND_MARGINS) for (const j of SPEC.joints) j.limits.engine = engineLimits(j, CAND_MARGINS); BIND = bindData(SPEC); SIM = new G1Sim(J, SPEC, ST.key, { cfg: C.cfg, series: true }); done = false; ST.acc = 0;
   MESH = SPEC.bodies.map((b, i) => R.mesh(SIM.w.bodyTriangles(i)));
   $("joint").innerHTML = ""; for (const j of SPEC.joints) $("joint").add(new Option(j.name, j.name)); $("joint").value = ST.joint; $("joint").onchange = () => { ST.joint = $("joint").value; dirty = true; };
   $("scnote").textContent = SCENARIOS[ST.key].note; $("hash").textContent = "run the scenario to the end to compare"; $("hash").className = "mono"; $("live_checks").textContent = "—";
@@ -49,11 +54,13 @@ function build() {
 }
 function tick(n) { for (let i = 0; i < n; i++) { if (!SIM.tick()) { finish(); break; } } dirty = true; }
 function seek(n) { const was = ST.playing; build(); ST.playing = false; tick(Math.round(n)); ST.playing = was && !done; updPlay(); }
-function finish() { if (done) return; done = true; ST.playing = false; updPlay(); const r = SIM.summary(), cs = scenarioChecks(r, SCENARIOS[ST.key]), nr = nodeRun();
+function finish() { if (done) return; done = true; ST.playing = false; updPlay(); const r = SIM.summary(), cs = checksFor(r, ST.key), nr = nodeRun();
   const ok = nr && nr.hash === r.hash; $("hash").className = "mono " + (nr ? (ok ? "ok" : "bad") : ""); $("hash").innerHTML = nr ? `<b>${ok ? "BROWSER = NODE" : "BROWSER ≠ NODE"}</b><br>browser ${r.hash} · node ${nr.hash}` : `browser ${r.hash} (no Node run for this combination)`;
   $("live_checks").innerHTML = checksHtml(cs, `browser run: ${cs.filter(c => c.pass || c.reportOnly).length}/${cs.length} pass`); }
 // Node results for this scenario / body / configuration
-function nodeRun() { if (!NODE) return null; const C = CONFIGS()[ST.cfg];
+function nodeRun() { if (!NODE) return null; const C = CONFIGS()[ST.cfg], env = SCENARIOS[ST.key].group === "envelope";
+  if (C.cand) { const c = NODE.candidate; if (!c) return null; return (env ? c.envelope : c.runs).find(r => r.human === ST.human && r.key === ST.key) || null; }
+  if (env) return ST.human === "V2-REF" && !C.dx ? (NODE.envelope || []).find(r => r.key === ST.key) || null : null;
   if (C.dx) { if (ST.human !== "V2-REF") return null; const d = NODE.diagnostics.find(x => x.id === C.dx); const r = d && d.runs.find(x => x.key === ST.key); return r ? { hash: r.hash, dx: r } : null; }
   return NODE.runs.find(r => r.human === ST.human && r.key === ST.key) || null; }
 function checksHtml(cs, head) { const nF = cs.filter(c => !c.pass && !c.reportOnly).length;

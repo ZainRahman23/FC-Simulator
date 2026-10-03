@@ -10,12 +10,10 @@
 import { V, Q, rad } from "../core/v2_math.js";
 import { V2JoltWorld } from "../core/v2_jolt.js";
 import { bodyLowest } from "../sim/v2_geom.js";
-import { splitBootHull, splitBootHull4 } from "./v2_g1_dx.js";
+import { splitBootHull, splitBootHull4, singleHull } from "./v2_g1_dx.js";
 import { G1_WORLD } from "./v2_g1.js";
 
-// the approved single hull, reconstructed from the spec's convex pieces (the hull of their union = the approved hull, exactly)
-export function singleHull(spec) { const s = JSON.parse(JSON.stringify(spec)); for (const b of s.bodies) { if (!/^foot_/.test(b.name)) continue; const H = b.shapes.filter(x => x.type === "hull");
-  if (H.length > 1) b.shapes = [{ ...H[0], points: H.flatMap(h => h.points), note: "approved single boot hull (union of the C3 pieces)" }, ...b.shapes.filter(x => x.type !== "hull")]; } return s; }
+export { singleHull };
 export const BOOT_REPS = { R1_hull: (s) => singleHull(s), R2_split2: (s) => splitBootHull(singleHull(s), 0.55), R3_split4: (s) => splitBootHull4(singleHull(s), 0.55) };
 // explicit (the V2 world default changed to S3 when C3 was adopted): S0 = Jolt defaults (reduction ON, cache ON)
 export const BOOT_SETTINGS = { S0_default: { manifoldReduction: true, pairCache: true }, S1_reductionOff: { manifoldReduction: false, pairCache: true }, S2_cacheOff: { manifoldReduction: true, pairCache: false },

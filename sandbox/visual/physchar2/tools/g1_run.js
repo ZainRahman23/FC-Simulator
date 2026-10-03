@@ -1,26 +1,32 @@
-// ═══ physchar2/tools/g1_run.js — V2-G1 runner (Node). usage: node tools/g1_run.js [--workers 8] [--no-dx] [--no-v1]
-// Phases: 1.5 iteration study → reference configuration → main suite (V2-REF + V1-matched) → body variants → determinism (×3, two
-// processes) + snapshot / restore → timestep sensitivity → passive joint rig + couplings → diagnostic remedies (not adopted) →
-// performance (alone, after the workers exit) → V1 Gate A comparison. Exit code 0 only if every gate check passes.
+// ═══ physchar2/tools/g1_run.js — V2-G1 runner (Node). usage: node tools/g1_run.js [--workers 8] [--no-dx] [--no-cand] [--no-v1]
+// Phases: 1.5 iteration study (report; decision C1 fixes the validation baseline at 60) → main suite at the baseline (V2-REF + V1-matched)
+// → body variants → determinism (×3, two processes) + snapshot / restore → timestep sensitivity → passive joint rig + couplings → C7
+// high-speed envelope → C6 free-body momentum floor → diagnostics (not adopted) → decision candidate package on every body (not adopted; its
+// own measured engine-stop margins) → performance (alone, after the workers exit) → V1 Gate A comparison. Exit 0 only if every gate check passes.
 import fs from "fs"; import path from "path"; import os from "os"; import crypto from "crypto"; import { fork, execSync } from "child_process"; import { fileURLToPath } from "url";
 import { loadJolt } from "../core/v2_jolt.js";
 import { generateSpec } from "../spec/v2_spec.js";
 import { VARIATION_SET, V2_REF, V1_MATCHED } from "../spec/v2_human.js";
-import { SCENARIOS, SCENARIO_ORDER, ESSENTIAL, ITERATION_SET, RATE_SET, G1_WORLD, runScenario } from "../gates/v2_g1.js";
-import { RIG_TESTS, DAMP_TESTS, passiveRig, couplingProbe, snapshotRestore, perfBreakdown } from "../gates/v2_g1_tests.js";
-import { TOL, scenarioChecks, rigChecks } from "../gates/v2_g1_checks.js";
+import { SCENARIOS, SCENARIO_ORDER, HS_ORDER, ESSENTIAL, ITERATION_SET, RATE_SET, G1_WORLD, runScenario } from "../gates/v2_g1.js";
+import { RIG_TESTS, DAMP_TESTS, passiveRig, couplingProbe, snapshotRestore, perfBreakdown, freeBodyFloor } from "../gates/v2_g1_tests.js";
+import { TOL, scenarioChecks, rigChecks, hsChecks } from "../gates/v2_g1_checks.js";
 import { DX_CONFIGS, applyMods } from "../gates/v2_g1_dx.js";
+import { engineLimits } from "../spec/v2_joints.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url)), ROOT = path.resolve(here, "../../../.."), VEND = path.join(here, "../vendor/jolt-physics.wasm-compat.js");
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i < 0 ? d : (process.argv[i + 1] && !process.argv[i + 1].startsWith("--") ? process.argv[i + 1] : true); };
-const specCache = new Map(); const specFor = (id, mods) => { const k = id + "|" + (mods || []).join(","); if (!specCache.has(k)) { const h = VARIATION_SET.find(x => x.id === id); specCache.set(k, applyMods(generateSpec(h), mods)); } return specCache.get(k); };
+const CAND_MARGINS = path.join(ROOT, "review_artifacts/physical_character_v2/g1/json/g1_margins_candidate.json");
+const CAND = { id: "CAND", label: "decision candidate: 10-piece boot (AP 5 × ML 2 grid, identical external geometry) + 150 velocity iterations, engine-stop margins re-measured for it (C2 procedure)", cfg: { velSteps: 150 }, mods: ["bootGridAP5xML2"], margins: "candidate" };
+const specCache = new Map(); const specFor = (id, mods, margins) => { const k = id + "|" + (mods || []).join(",") + "|" + (margins || ""); if (!specCache.has(k)) { const h = VARIATION_SET.find(x => x.id === id); const sp = applyMods(generateSpec(h), mods);
+  if (margins === "candidate") { const T = JSON.parse(fs.readFileSync(CAND_MARGINS, "utf8")).table; for (const j of sp.joints) j.limits.engine = engineLimits(j, T); }
+  specCache.set(k, sp); } return specCache.get(k); };
 const slim = (r) => { const o = { ...r }; o.joints = { ...r.joints, axes: r.joints.axes }; return o; };
 // ── worker ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 async function worker() {
   const J = await loadJolt(VEND);
   process.on("message", (job) => { if (job === "exit") process.exit(0); let r;
     try {
-      if (job.kind === "scen") r = slim(runScenario(J, specFor(job.human, job.mods), job.key, { cfg: job.cfg }));
+      if (job.kind === "scen") r = slim(runScenario(J, specFor(job.human, job.mods, job.margins), job.key, { cfg: job.cfg }));
       else if (job.kind === "repeat") r = [0, 1].map(() => { const x = runScenario(J, specFor(job.human), job.key, { cfg: job.cfg }); return { hash: x.hash, hashAt: x.hashAt, seq: x.contacts.sequence, ext: x.joints.axes.map(a => [a.thMin, a.thMax]), fall: x.outcome.firstNonFootT }; });
       else if (job.kind === "rig") { const x = passiveRig(J, specFor("V2-REF"), job.test, { cfg: job.cfg }); r = { ...x, rows: x.rows.filter((q, i) => i % 4 === 0) }; }
       else if (job.kind === "snap") r = snapshotRestore(J, specFor(job.human), job.key, { cfg: job.cfg });
@@ -50,8 +56,9 @@ async function main() {
   const study = ITERATION_SET.map(v => { const rows = itJobs.filter(j => j.cfg.velSteps === v).map(j => { const r = itRes.get(j.id).r, cs = scenarioChecks(r, SCENARIOS[j.key]).filter(c => /^1\.[234]/.test(c.id) && !c.reportOnly);
       const margin = cs.every(c => c.pass && marginOk(c)); return { key: j.key, pass: cs.every(c => c.pass), margin2x: margin, failing: cs.filter(c => !c.pass).map(c => c.id), ms: r.cpu.stepMs + r.cpu.passiveMs }; });
     return { velSteps: v, allPass: rows.every(x => x.pass), allMargin: rows.every(x => x.margin2x), nPass: rows.filter(x => x.pass).length, n: rows.length, stepMs: avg(rows.map(x => x.ms)), rows }; });
-  const sel = study.find(s => s.allMargin), REFCFG = { velSteps: sel ? sel.velSteps : Math.max(...ITERATION_SET) };
-  console.log("  " + study.map(s => `${s.velSteps} it: ${s.nPass}/${s.n} scenarios pass${s.allMargin ? " (2× margin)" : ""}, ${s.stepMs.toFixed(3)} ms/tick`).join(" · ") + ` → reference ${REFCFG.velSteps} iterations${sel ? "" : " (NONE passes; the highest of the spec set is used as the reference for the remaining phases)"}`);
+  // decision C1: the validation baseline is 60 velocity iterations (G1_WORLD); the spec 1.5 selection (min of 10/15/20/30 with 2× margin) is reported
+  const sel = study.filter(s => s.velSteps <= 30).find(s => s.allMargin), REFCFG = { velSteps: G1_WORLD.velSteps };
+  console.log("  " + study.map(s => `${s.velSteps} it: ${s.nPass}/${s.n} scenarios pass${s.allMargin ? " (2× margin)" : ""}, ${s.stepMs.toFixed(3)} ms/tick`).join(" · ") + ` → baseline ${REFCFG.velSteps} iterations (C1)${sel ? "" : " (none of 10/15/20/30 passes with 2× margin)"}`);
   // 2.–7. everything else at the reference configuration
   console.log("main suite, variants, determinism, timestep, rig, diagnostics …");
   const main = ["V2-REF", "V1-matched"].flatMap(h => SCENARIO_ORDER.map(k => J({ kind: "scen", human: h, key: k, cfg: REFCFG, tag: "main" })));
@@ -59,8 +66,13 @@ async function main() {
   const reps = SCENARIO_ORDER.map(k => J({ kind: "repeat", human: "V2-REF", key: k, cfg: REFCFG, tag: "rep" })), snaps = ["upright", "awkward", "drop1m", "isoSelfCol"].map(k => J({ kind: "snap", human: "V2-REF", key: k, cfg: REFCFG, tag: "snap" }));
   const RATE_KEYS = ["upright", "leanF", "leanB", "flatSupine", "drop1m", "sideFirst", "awkward", "isoMomentum"], rates = RATE_SET.flatMap(hz => RATE_KEYS.map(k => J({ kind: "scen", human: "V2-REF", key: k, cfg: { ...REFCFG, hz }, tag: "rate" })));
   const rigs = [...RIG_TESTS, ...DAMP_TESTS].map(t => J({ kind: "rig", test: t, cfg: REFCFG, tag: "rig" })), coup = [J({ kind: "coupling", tag: "coupling" })];
+  const hs = HS_ORDER.map(k => J({ kind: "scen", human: "V2-REF", key: k, cfg: REFCFG, tag: "hs" }));
+  const doCand = !arg("--no-cand", false) && fs.existsSync(CAND_MARGINS);
+  const cand = doCand ? [...["V2-REF", "V1-matched"].flatMap(h => SCENARIO_ORDER.map(k => J({ kind: "scen", human: h, key: k, cfg: { ...REFCFG, ...CAND.cfg }, mods: CAND.mods, margins: CAND.margins, tag: "cand" }))),
+    ...VARS.flatMap(h => ESSENTIAL.map(k => J({ kind: "scen", human: h, key: k, cfg: { ...REFCFG, ...CAND.cfg }, mods: CAND.mods, margins: CAND.margins, tag: "cand" }))),
+    ...HS_ORDER.map(k => J({ kind: "scen", human: "V2-REF", key: k, cfg: { ...REFCFG, ...CAND.cfg }, mods: CAND.mods, margins: CAND.margins, tag: "candhs" }))] : [];
   const dxKeys = SCENARIO_ORDER.filter(k => SCENARIOS[k].group !== "isolated"), dx = doDX ? DX_CONFIGS.flatMap(d => dxKeys.map(k => J({ kind: "scen", human: "V2-REF", key: k, cfg: { ...REFCFG, ...d.cfg }, mods: d.mods, tag: "dx", dx: d.id }))) : [];
-  const all = [...main, ...vars, ...reps, ...snaps, ...rates, ...rigs, ...coup, ...dx], res = await pool(all, nW), R = (j) => { const m = res.get(j.id); if (m.err) throw new Error(`${j.kind} ${j.key || ""}: ${m.err}`); return m.r; };
+  const all = [...main, ...vars, ...reps, ...snaps, ...rates, ...rigs, ...coup, ...hs, ...dx, ...cand], res = await pool(all, nW), R = (j) => { const m = res.get(j.id); if (m.err) throw new Error(`${j.kind} ${j.key || ""}: ${m.err}`); return m.r; };
   // ── assemble ──
   const runs = [...main, ...vars].map(j => { const r = R(j); return { ...r, checks: scenarioChecks(r, SCENARIOS[j.key]) }; });
   const det = reps.map(j => { const rr = R(j), m = runs.find(r => r.human === "V2-REF" && r.key === j.key), a = { hash: m.hash, hashAt: m.hashAt, seq: m.contacts.sequence, ext: m.joints.axes.map(x => [x.thMin, x.thMax]), fall: m.outcome.firstNonFootT };
@@ -77,8 +89,17 @@ async function main() {
   const coupChecks = coupling(coupRes);
   const dxRes = DX_CONFIGS.map(d => ({ ...d, runs: dx.filter(j => j.dx === d.id).map(j => { const r = R(j); const cs = scenarioChecks(r, SCENARIOS[j.key]); return { key: j.key, pass: cs.every(c => c.pass || c.reportOnly), failing: cs.filter(c => !c.pass && !c.reportOnly).map(c => c.id),
     rise: r.energy.maxRiseJ, sep: r.joints.sepMaxMm, hard: r.joints.hardExcMaxDeg, turf: r.contacts.turfPenMaxMm, turfRest: r.contacts.turfPenRestMm, turfRestBody: r.contacts.turfPenRestBody, selfRest: r.contacts.selfPenRestMm, first: j.key === "impact15" ? Math.max(...Object.values(r.contacts.ground).map(g => g.firstDepthMm ?? -99)) : null, ms: r.cpu.stepMs + r.cpu.passiveMs, hash: r.hash }; }) }));
+  // C7 high-speed envelope (V2-REF, baseline) — the envelope checks HS.1–HS.4 + report
+  const hsRuns = hs.map(j => { const r = R(j); return { ...r, checks: hsChecks(r, SCENARIOS[j.key]) }; });
+  // C6 free-body floor (single rigid body, no constraints, no contact): the numerical floor of angular-momentum conservation per body
+  console.log("free-body momentum floor …"); const Jf = await loadJolt(VEND), floor = freeBodyFloor(Jf, specFor("V2-REF"));
+  // decision candidate on every body (not adopted)
+  const candRuns = cand.filter(j => j.tag === "cand").map(j => { const r = R(j); return { ...r, checks: scenarioChecks(r, SCENARIOS[j.key]) }; });
+  const candHs = cand.filter(j => j.tag === "candhs").map(j => { const r = R(j); return { ...r, checks: hsChecks(r, SCENARIOS[j.key]) }; });
   // 8. performance (alone)
-  console.log("performance …"); const Jm = await loadJolt(VEND), perf = { byIterations: ITERATION_SET.concat([60]).map(v => ({ velSteps: v, ...perfBreakdown(Jm, specFor("V2-REF"), { cfg: { velSteps: v }, ticks: 2400 }) })) };
+  console.log("performance …"); const Jm = await loadJolt(VEND), perf = { byIterations: [...new Set(ITERATION_SET.concat([60, 100, 150]))].map(v => ({ velSteps: v, ...perfBreakdown(Jm, specFor("V2-REF"), { cfg: { velSteps: v }, ticks: 2400 }) })),
+    candidate: doCand ? { label: CAND.label, ...perfBreakdown(Jm, specFor("V2-REF", CAND.mods, CAND.margins), { cfg: CAND.cfg, ticks: 2400 }) } : null,
+    boot10at60: perfBreakdown(Jm, specFor("V2-REF", CAND.mods), { cfg: {}, ticks: 2400 }) };
   // 9. V1 Gate A comparison (V1 code imported read-only; nothing in V1 is written)
   let v1 = null; if (doV1) { try { v1 = await v1Compare(runs); } catch (e) { v1 = { error: String(e && e.message || e) }; } }
   // ── gate checks ──
@@ -86,7 +107,7 @@ async function main() {
   const add = (id, name, pass, value, limit, extra = {}) => G.push({ id, name, pass: !!pass, value, limit, ...extra });
   const refRuns = runs.filter(r => r.human === "V2-REF"), v1mRuns = runs.filter(r => r.human === "V1-matched"), varRuns = runs.filter(r => VARS.includes(r.human));
   const failOf = (rs) => rs.flatMap(r => r.checks.filter(c => !c.pass && !c.reportOnly).map(c => `${r.human}/${r.key}:${c.id}`));
-  add("1.5", "iteration study: the minimum of 10/15/20/30 velocity iterations that passes every 1.2–1.4 criterion with 2× margin", !!sel, sel ? `${sel.velSteps} iterations` : `none: ${study.map(s => `${s.velSteps} it ${s.nPass}/${s.n}`).join(", ")}`, "one exists");
+  add("1.5", "iteration study 10/15/20/30/60 (report; decision C1: the validation baseline is 60 velocity iterations)", true, study.map(s => `${s.velSteps} it: ${s.nPass}/${s.n} pass${s.allMargin ? " (2× margin)" : ""}`).join(", ") + (sel ? ` → spec selection ${sel.velSteps}` : " → none of 10/15/20/30 qualifies"), "report (C1)", { reportOnly: true });
   add("1.S", "V2-REF: every scenario passes every criterion", failOf(refRuns).length === 0, `${refRuns.filter(r => r.checks.every(c => c.pass || c.reportOnly)).length}/${refRuns.length} scenarios; failing: ${uniq(failOf(refRuns).map(x => x.split(":")[1])).join(", ") || "none"}`, "all");
   add("1.S′", "V1-matched instance: every scenario passes every criterion", failOf(v1mRuns).length === 0, `${v1mRuns.filter(r => r.checks.every(c => c.pass || c.reportOnly)).length}/${v1mRuns.length} scenarios`, "all");
   add("6", "body variants (165/62, 198/92, ±2 SD legs): every essential scenario passes every criterion, no per-body tuning", failOf(varRuns).length === 0, `${varRuns.filter(r => r.checks.every(c => c.pass || c.reportOnly)).length}/${varRuns.length} runs; failing criteria: ${uniq(failOf(varRuns).map(x => x.split(":")[1])).join(", ") || "none"}`, "all");
@@ -96,18 +117,26 @@ async function main() {
   add("5c", "pose-dependent passive limits (couplings) as specified", coupChecks.every(c => c.pass), coupChecks.map(c => `${c.name}: ${c.value}`).join("; "), `±${TOL.couplingDeg}°`);
   add("8", "timestep 180/240/360/720 Hz: stable at every rate, same qualitative outcome, timing / final COM within tolerance of 720 Hz", rateEval.every(e => e.rows.every(x => x.stable) && e.qualitative && e.timingOk && e.comOk),
     rateEval.map(e => `${e.key}: ${e.rows.every(x => x.stable) ? "stable" : "UNSTABLE"}${e.qualitative ? "" : " (outcome differs)"}${e.timingOk ? "" : " (timing)"}${e.comOk ? "" : " (COM)"}`).join("; "), `≤ ${TOL.rateTimingMs} ms, ≤ ${TOL.rateComM} m`);
+  const hsFail = hsRuns.flatMap(r => r.checks.filter(c => !c.pass && !c.reportOnly).map(c => `${r.key}:${c.id}`));
+  add("7.HS", "C7 high-speed envelope (V2-REF, baseline): finite, no missed turf collision, no tunnelling / missed limb collision, no catastrophic constraint failure", hsFail.length === 0, `${hsRuns.filter(r => r.checks.every(c => c.pass || c.reportOnly)).length}/${hsRuns.length} envelope scenarios${hsFail.length ? "; failing: " + hsFail.join(", ") : ""}`, "all");
+  const fl = (w) => Math.max(...floor.filter(x => x.w === w).map(x => x.dLrel)); add("1.1f", "C6 free-body floor: one rigid body, no constraint, no contact — the engine's own relative angular-momentum drift (max over bodies)", true, `ΔL/L ${[1, 3, 6].map(w => `${fl(w).toExponential(2)} at ${w} rad/s`).join(", ")}; linear ${Math.max(...floor.map(x => x.dPrel)).toExponential(1)}`, "report (C6)", { reportOnly: true });
+  if (doCand) { const cf = failOf(candRuns), chf = candHs.flatMap(r => r.checks.filter(c => !c.pass && !c.reportOnly).map(c => `${r.key}:${c.id}`));
+    add("D.cand", "DECISION CANDIDATE (not adopted): " + CAND.label + " — every body, every scenario, every criterion; envelope", true, `${candRuns.filter(r => r.checks.every(c => c.pass || c.reportOnly)).length}/${candRuns.length} body-scenarios pass${cf.length ? "; failing: " + cf.join(", ") : ""}; envelope ${candHs.length - new Set(chf.map(x => x.split(":")[0])).size}/${candHs.length}${chf.length ? " (" + chf.join(", ") + ")" : ""}`, "report (decision item)", { reportOnly: true }); }
   let guard = ""; try { guard = execSync(JSON.stringify(path.join(here, "guard_v1.sh")), { encoding: "utf8", cwd: here }).trim(); add("1.V1", "V1 frozen", true, guard, "identical"); } catch (e) { add("1.V1", "V1 frozen", false, String(e.stdout || e.message).trim(), "identical"); }
   add("1.E", "vendored Jolt = V1's pinned build", sha === "011233a5fff762d6f0f5b50726b315246bf68cb182f0a10024559d04f4c257de", sha.slice(0, 16) + "…", "011233a5fff762d6…");
   const allPass = G.every(c => c.pass || c.reportOnly);
   // ── write ──
   const results = { generated: "V2-G1 runner", date: new Date().toISOString().slice(0, 10), node: process.version, joltSha256: sha, world: { ...G1_WORLD, ...REFCFG }, tolerances: serialTol(), allPass, gate: G, study, reference: REFCFG,
     runs: runs.map(r => ({ ...r, joints: { ...r.joints, axes: r.human === "V2-REF" || r.human === "V1-matched" ? r.joints.axes : undefined } })), determinism: det, snapshot: snapRes, rates: rateEval, rateRuns: rateRuns.map(r => ({ key: r.key, hz: r.cfg.hz, hash: r.hash, checks: r.checks })),
-    rig: rigRows, couplings: { probe: coupRes, checks: coupChecks }, diagnostics: dxRes, perf, v1, seconds: (Date.now() - t0) / 1000 };
+    rig: rigRows, couplings: { probe: coupRes, checks: coupChecks }, diagnostics: dxRes, envelope: hsRuns, freeBodyFloor: floor,
+    candidate: doCand ? { ...CAND, margins: JSON.parse(fs.readFileSync(CAND_MARGINS, "utf8")), runs: candRuns.map(r => ({ ...r, joints: { ...r.joints, axes: undefined } })), envelope: candHs } : null, perf, v1, seconds: (Date.now() - t0) / 1000 };
   fs.writeFileSync(path.join(OUT, "g1_results.json"), JSON.stringify(results, null, 1));
   // console summary
   console.log(`\n■ gate`); for (const c of G) console.log(`  ${c.pass ? "PASS" : "FAIL"} ${c.id.padEnd(5)} ${c.name}\n        ${c.value}   [${c.limit}]`);
   console.log(`\n■ V2-REF per scenario (${REFCFG.velSteps} it)`); for (const r of refRuns) { const f = r.checks.filter(c => !c.pass && !c.reportOnly); console.log(`  ${r.key.padEnd(14)} ${r.checks.length - f.length}/${r.checks.length}  ${r.hash}  ${f.map(c => c.id + "=" + c.value.split(" ")[0]).join("  ")}`); }
   if (doDX) { console.log(`\n■ diagnostics (not adopted): contact scenarios passing every criterion`); for (const d of dxRes) console.log(`  ${d.id} ${d.label.padEnd(86)} ${d.runs.filter(r => r.pass).length}/${d.runs.length}  worst: rise ${mx(d.runs, "rise").toFixed(2)} J · sep ${mx(d.runs, "sep").toFixed(1)} mm · hard ${mx(d.runs, "hard").toFixed(1)}° · turf ${mx(d.runs, "turf").toFixed(1)}/${mx(d.runs, "turfRest").toFixed(1)} mm · ${avg(d.runs.map(r => r.ms)).toFixed(3)} ms/tick`); }
+  console.log(`\n■ C7 envelope (V2-REF)`); for (const r of hsRuns) { const f = r.checks.filter(c => !c.pass && !c.reportOnly); console.log(`  ${r.key.padEnd(14)} ${r.checks.length - f.length}/${r.checks.length}  ${f.map(c => c.id + " " + c.value).join("; ")}`); }
+  if (doCand) { console.log(`\n■ decision candidate (not adopted): ${CAND.label}`); for (const r of candRuns) { const f = r.checks.filter(c => !c.pass && !c.reportOnly); if (f.length) console.log(`  ${r.human}/${r.key}: ${f.map(c => c.id + " " + c.value).join("; ")}`); } console.log(`  ${candRuns.filter(r => r.checks.every(c => c.pass || c.reportOnly)).length}/${candRuns.length} pass`); }
   console.log(`\nG1 RESULT: ${allPass ? "PASS" : "FAIL"} — ${G.filter(c => !c.pass && !c.reportOnly).length} failing gate check(s)   (${((Date.now() - t0) / 1000).toFixed(0)} s)  → ${path.relative(ROOT, OUT)}/g1_results.json`);
   process.exit(allPass ? 0 : 1);
 }

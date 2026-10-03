@@ -92,6 +92,8 @@ export class V2JoltWorld {
     const E = j.limits.engine || j.limits.hard;   // C2: the Jolt hard constraint is the emergency stop (anatomical hard ± ENGINE_MARGIN)
     ["x", "y", "z"].forEach((k, i) => { if (j.locked.includes(k)) s.MakeFixedAxis(A.rot[i]); else s.SetLimitedAxis(A.rot[i], E.lo[i], E.hi[i]); });
     const c = J.castObject(s.Create(this.bodies[j.parentIndex], this.bodies[j.childIndex]), J.SixDOFConstraint); this.ps.AddConstraint(c); J.destroy(s);
+    if (this.cfg.jointOrder) { let d = 0; for (let b = j.childIndex; this.spec.bodies[b].parentIndex >= 0; b = this.spec.bodies[b].parentIndex) d++;   // solve order (lower priority first): diagnostic
+      c.SetConstraintPriority(this.cfg.jointOrder === "leafLast" ? d : 100 - d); }
     // motors: structural only (OFF). Directional torque limits = isometric capacity in that param direction; spring k = c = 0.
     ["x", "y", "z"].forEach((k, i) => { c.SetMaxFriction(A.rot[i], 0); const cap = j.capacity[k]; if (!cap) return;
       const ms = c.GetMotorSettings(A.rot[i]), sp = ms.mSpringSettings; sp.mMode = J.ESpringMode_StiffnessAndDamping; sp.mStiffness = 0; sp.mDamping = 0;
@@ -124,7 +126,7 @@ export class V2JoltWorld {
     this.obstacles.push({ body, o }); return k; }
   setPose(i, pos, rot) { this.bi.SetPositionAndRotation(this.bodies[i].GetID(), new this.J.RVec3(pos[0], pos[1], pos[2]), new this.J.Quat(rot[0], rot[1], rot[2], rot[3]), this.J.EActivation_Activate); }
   setGravity(g) { this.ps.SetGravity(new this.J.Vec3(0, g, 0)); }
-  step(dt, collisionSteps) { this.contacts = []; this.jolt.Step(dt, collisionSteps || 1); }
+  step(dt, collisionSteps) { this.contacts = []; if (this.cfg.jointWarmStart === false) for (const { c } of this.cons) c.ResetWarmStart(); this.jolt.Step(dt, collisionSteps || 1); }   // jointWarmStart false: diagnostic (joint-only warm start off)
   // ── G1 surface ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────
   setVel(i, v, w) { const id = this.bodies[i].GetID(), t = this._t; t.v.Set(v[0], v[1], v[2]); this.bi.SetLinearVelocity(id, t.v); t.v.Set(w[0], w[1], w[2]); this.bi.SetAngularVelocity(id, t.v); }
   get _t() { const J = this.J; return this.__t || (this.__t = { q: new J.Quat(0, 0, 0, 1), v: new J.Vec3(0, 0, 0), w: new J.Vec3(0, 0, 0) }); }
@@ -132,7 +134,12 @@ export class V2JoltWorld {
   setDrive(k, i, stiffness, damping, lim) { const ms = this.cons[k].c.GetMotorSettings(this._axes.rot[i]), sp = ms.mSpringSettings, [lo, hi] = Array.isArray(lim) ? lim : [-lim, lim];
     sp.mMode = this.J.ESpringMode_StiffnessAndDamping; sp.mStiffness = stiffness; sp.mDamping = damping; ms.mMinTorqueLimit = lo; ms.mMaxTorqueLimit = hi; }
   driveOn(k, i) { this.cons[k].c.SetMotorState(this._axes.rot[i], this.J.EMotorState_PositionAndVelocity); }
-  setDriveTarget(k, q) { const t = this._t, c = this.cons[k].c; t.q.Set(q[0], q[1], q[2], q[3]); c.SetTargetOrientationCS(t.q); t.w.Set(0, 0, 0); c.SetTargetAngularVelocityCS(t.w); }
+  setDriveTarget(k, q, w) { const t = this._t, c = this.cons[k].c; t.q.Set(q[0], q[1], q[2], q[3]); c.SetTargetOrientationCS(t.q); if (w) t.w.Set(w[0], w[1], w[2]); else t.w.Set(0, 0, 0); c.SetTargetAngularVelocityCS(t.w); }
+  // Jolt CLAMPS a target orientation onto the joint's limits (SixDOFConstraint::SetTargetOrientationCS → ClampSwingTwist: locked axes → 0,
+  // limited axes → inside the engine stop). The stored target and Jolt's own constraint-space rotation give the exact motor error it will use.
+  setDriveVel(k, w) { const t = this._t; t.w.Set(w[0], w[1], w[2]); this.cons[k].c.SetTargetAngularVelocityCS(t.w); }
+  driveTarget(k) { const t = this.cons[k].c.GetTargetOrientationCS(); return [t.GetX(), t.GetY(), t.GetZ(), t.GetW()]; }
+  rotationCS(k) { const q = this.cons[k].c.GetRotationInConstraintSpace(); return [q.GetX(), q.GetY(), q.GetZ(), q.GetW()]; }
   // equal-and-opposite torque (N·m, world) on a joint's child (+) and parent (−) for the next step — internal, momentum-conserving
   addTorquePair(parent, child, T) { const t = this._t; t.v.Set(T[0], T[1], T[2]); this.bi.AddTorque(this.bodies[child].GetID(), t.v, this.J.EActivation_Activate); t.v.Set(-T[0], -T[1], -T[2]); this.bi.AddTorque(this.bodies[parent].GetID(), t.v, this.J.EActivation_Activate); }
   lambdaPos(k) { const l = this.cons[k].c.GetTotalLambdaPosition(); return [l.GetX(), l.GetY(), l.GetZ()]; }
