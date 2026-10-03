@@ -593,3 +593,14 @@ Across bodies the sagittal boundary is Δv ≈ 0.20–0.25 m/s in body-normalise
 - **G3 (weight transfer) is not started.** It waits for the user's instruction.
 - Nothing pushed.
 - Review server :8172, page `viewer/g2.html`.
+
+## 2026-10-03 — **V2-G2 ACCEPTED** (user, in the G3 instruction: "V2-G0, G1 and G2 are accepted"); V2-G3 started (source `sources/2026-10-03_user_instruction_g3_weight_transfer.md`)
+
+- G2 is accepted as reported in `g2/G2_REPORT.md`: final run 2, the pre-registered criteria v1, and the run-1 corrections G2-A10.
+- The G2 technical debt (TD-1 extended, TD-7…TD-10) remains open.
+- **Open question from G2 (kξ = 1/3 vs 1):** no instruction was given. kξ = 1/3 stays.
+- **The G2 controller, actuators and measured CoP region form the G3 baseline.**
+- **Spec §22 G3 table vs the user's G3 brief.** The brief governs where they differ:
+  - spec 3.3 "lift one foot 5 cm, hold 10 s" is replaced by the brief's near-single-support hold *without* active lifting ("Do not actively lift it yet");
+  - spec 3.1 (rates 0.5 / 1.0 / 2.0 s, load tracking RMS, slip ≤ 2 mm), 3.2 (fore–aft transfer), 3.4 (per-foot wrench vs force-plate twin) and 3.5 (perturbed starts) are adopted into the G3 test matrix where consistent with the brief;
+  - every threshold is measured first, then pre-registered.

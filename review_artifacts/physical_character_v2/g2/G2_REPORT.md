@@ -1,6 +1,6 @@
 # V2-G2: active standing / balance report
 
-**Status: G2 PASS.** All 13 rows of the pre-registered criteria (`G2_CRITERIA.md` v1, committed in `3bd8533` before the final run) pass on final run 2. Run 1 failed two rows, both traced to my own implementation errors; both evaluations are kept (§2).
+**Status: G2 PASS — ACCEPTED by the user (2026-10-03, G3 instruction).** All 13 rows of the pre-registered criteria (`G2_CRITERIA.md` v1, committed in `3bd8533` before the final run) pass on final run 2. Run 1 failed two rows, both traced to my own implementation errors; both evaluations are kept (§2).
 
 - No stepping, walking or gait planning was implemented. V1's controller was not ported.
 - No G0 / G1 plant change, and no change to any approved anatomy, topology, contact architecture, passive-tissue specification, actuator capability or authority rule.
