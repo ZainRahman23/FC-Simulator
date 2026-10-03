@@ -1,4 +1,5 @@
 // ═══ physchar2/gates/v2_g1_ankle.js — FOOT / ANKLE INSTRUMENT for a running G1Sim (measurement only: writes nothing to the simulation) ════════
+// PERMANENT INSTRUMENTATION (user decision 2026-10-03, review_artifacts/physical_character_v2/DECISIONS.md): preserve; do not remove.
 // Per physics tick, for one foot: kinematics (heel / forefoot / toe heights, foot and shank pitch, ankle anatomical angles, DF angular velocity),
 // the EXACT ground-contact wrench on the foot and the exact torque decomposition about the ankle.
 //

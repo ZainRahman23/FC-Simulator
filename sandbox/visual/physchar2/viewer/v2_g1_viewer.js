@@ -135,6 +135,7 @@ function drawPlot() { const s = SIM.series, w = plot.width = plot.clientWidth * 
   for (const [a, col] of ser) { pg.strokeStyle = col; pg.lineWidth = devicePixelRatio; pg.beginPath(); a.forEach((v, i) => { const X = sx(s.t[i]), Y = sy(v); i ? pg.lineTo(X, Y) : pg.moveTo(X, Y); }); pg.stroke(); }
   pg.fillStyle = "#9aa1ad"; pg.font = `${10 * devicePixelRatio}px ui-sans-serif`; pg.fillText(`${hi.toFixed(0)} J`, 4, 12 * devicePixelRatio); pg.fillText(`${lo.toFixed(0)} J`, 4, h - 4); }
 // ── ankle probe (?probe=L|R): CoP, turf force, the CoP → ankle strut line, piece contact states, torque decomposition ──
+// PERMANENT INSTRUMENTATION (user decision 2026-10-03): preserve; do not remove.
 function probeOverlay(r, S, push, sph, labels, H) {
   const fi = PROBE.fi, ank = S[fi].pos, F = r.Jc.map(x => x / r.dt), Fn = Math.hypot(...F), mg = SPEC.bodies.reduce((a, b) => a + b.mass, 0) * 9.81;
   if (r.cop && r.JyN > 20) { const cop = r.cop; sph(cop, 0.011, [1, 0.2, 0.9, 1]);

@@ -3,6 +3,11 @@
 - **Instruction:** `sources/2026-10-03_user_instruction_g1_heel_rise_investigation.md`
 - **Run:** the exact G1 validated baseline: drop1m, V2-REF, 240 Hz, 150 velocity iterations, 10-piece boot, hash `958b785c`.
 - **Status:** measurement only. Nothing in the specification, the gate or the validated configuration was changed. No counterfactual was adopted. G2 has not been started.
+- **ACCEPTED by the user, 2026-10-03.** Source: `../../sources/2026-10-03_user_decision_g1_heel_rise_accepted_g1_passed.md`.
+  - This report is supporting evidence for the G1 passive-physics validation.
+  - It and its instrumentation are preserved permanently (see `../../DECISIONS.md`).
+  - No simulation change. Do not tune the body to make this passive fall look more human.
+  - The 1 m passive drop is a mechanical stress test, not a target model of a controlled human landing.
 
 ## 1. Verdict
 

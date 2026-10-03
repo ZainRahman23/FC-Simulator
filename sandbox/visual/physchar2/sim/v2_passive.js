@@ -52,7 +52,7 @@ export class PassiveLayer {
     for (const d of this.jd) d.rows = this.lockedRows && d.free.some(Boolean) ? [true, true, true] : d.free.slice();
     // DIAGNOSIS-ONLY per-joint switches (counterfactual experiments; never used by the gate): opts.diagJoint = { "ankle_L": { elastic: false,
     // stop: false, damping: false } } — elastic false removes the end-range law AND the end-stop of that joint, stop false only the C2 end-stop,
-    // damping false the viscous damper. Default: none (the validated layer is unchanged).
+    // damping false the viscous damper. Default: none (the validated layer is unchanged). PERMANENT diagnostic switch (user decision 2026-10-03; do not remove).
     for (const d of this.jd) { const o = (opts.diagJoint || {})[d.name]; if (!o) continue;
       for (const a of d.axes) { if (!a) continue; if (o.elastic === false) { a.tauH = [0, 0]; a.kStop = [0, 0]; } if (o.stop === false) a.kStop = [0, 0]; }
       if (o.damping === false) d.c = 0; }

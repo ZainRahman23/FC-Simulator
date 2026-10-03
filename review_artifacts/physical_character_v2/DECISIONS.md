@@ -326,3 +326,87 @@ If v3.1 is not accepted, row 8 is the only open item.
 | TD-6 | Joint-integrity accuracy below the validation rate | awkward at 180 Hz: 5.3–5.4 mm | Do not run the character below 240 Hz without re-validation |
 
 TD-1 is extended: at 180 Hz, 150 iterations leaves a 0.83 J hard-landing rebound in drop1m.
+
+## 2026-10-03 — Heel-rise investigation ACCEPTED; **V2-G1 ACCEPTED AS PASSED** (user decision; source `sources/2026-10-03_user_decision_g1_heel_rise_accepted_g1_passed.md`)
+
+Before promoting G1, the user ordered a focused investigation of the drop1m heel rise. The instruction is in `sources/2026-10-03_user_instruction_g1_heel_rise_investigation.md`; the report is `g1/heel/HEEL_RISE_REPORT.md` (commit `dd9026a`).
+
+**Finding (accepted):** the heel rise in the passive 1 m feet-first drop is mechanically explained. The collapsing leg transmits energy through the ankle *joint force* into an almost-unloaded foot whose toe stays planted. It is not explained by:
+- active or passive ankle propulsion;
+- end-stop energy injection;
+- hidden support;
+- a numerical launch.
+
+**Key evidence**, free rise 0.458–0.679 s, heel 0 → 231 mm:
+- **Work on the foot:** the shank force at the ankle supplies +2.75 J. The ankle rows remove −1.03 J (damping only; elastic law 0, stored energy 0, end-stop 0, emergency 0). The turf removes −0.21 J.
+- **Unloaded feet:** less than 10 % of body weight until about 0.61 s; the centre of mass falls at 0.85 g.
+- **Where the rise stops:** at the torque-free strut pose. The turf force passes 6.8 mm from the ankle at a pitch of 70.2°; the geometric pose for a vertical force is 70.84°.
+- **Counterfactuals, all diagnostic and none adopted:**
+  - ankle tissue / end-stop / all tissue off: identical until the heel is at 235–238 mm;
+  - pose couplings off: bit-identical;
+  - foot self-contact off: the rise persists;
+  - boot representation: changes the magnitude by about 15 %;
+  - 480 / 720 Hz and 300 iterations: free rise 232–236 mm, peak 236–240 mm (converged).
+
+**What the user decided:**
+1. **No simulation change** results from this investigation. **Do not tune the body to make this passive fall look more human.**
+2. **The 1 m passive feet-first drop is a mechanical stress test of the passive plant, not a target model of a controlled human landing.** The test has no active anticipatory or eccentric landing control and no shoe or midsole compliance: the impact is rigid, with 54 kN in one tick, about 69× body weight. Its collapse is not a realistic human landing animation and must not be judged as one.
+3. **The heel-rise investigation is supporting evidence** for the G1 passive-physics validation.
+4. **The G1 technical debt is unchanged:** TD-1 … TD-6 as registered above. The investigation's modelling observations do not open new debt items:
+   - the late phase after the second impact is rate- and iteration-sensitive (the TD-5 kind);
+   - 960 Hz shows a 1.08 J impact-tick energy rise (outside the validated rate set).
+5. **V2-G1 is accepted as passed.** This is the PASS as reported in `g1/G1_REPORT.md`, including the v3.1 evaluation of row 8 on which it rests.
+6. **G2 is not started.** It waits for the user's explicit instruction. Nothing is pushed.
+
+### Permanent instrumentation (user decision: preserve permanently; do not remove)
+
+The user expects this to be reused for heel strike, toe-off, walking, acceleration, braking, planting, cutting and kicking.
+
+| item | where |
+|---|---|
+| Heel-rise report | `g1/heel/HEEL_RISE_REPORT.md` |
+| Foot / ankle measurement probe (AnkleProbe), measurement only. It provides:<br>• the exact foot contact wrench and centre of pressure;<br>• per-boot-piece contact state, depth and NNLS normal-impulse share;<br>• the ankle torque decomposition (drive applied, elastic law, end-stop part, damping, emergency stop, explicit remainder, contact moment about the ankle);<br>• mid-step work by source (shank point force, ankle rows, turf + self-contact residual), with verified closure | `sandbox/visual/physchar2/gates/v2_g1_ankle.js` |
+| Investigation runner: the counterfactual set, whole-body momentum / turf-force / COM / kinetic-energy record, passive energy audit, SVG plots, summary | `sandbox/visual/physchar2/tools/g1_heel.mjs` |
+| Diagnostic passive-joint switches `opts.diagJoint = { <joint>: { elastic, stop, damping } }`. Default none; never used by a gate; verified bit-identical when absent | `sandbox/visual/physchar2/sim/v2_passive.js` |
+| Viewer probe overlay `?probe=L\|R`: CoP, turf force, CoP → ankle line, boot-piece contacts, readout panel | `sandbox/visual/physchar2/viewer/v2_g1_viewer.js`, `viewer/g1.html` |
+| Counterfactual results: V0–V12 time series, summary, plots, stills | `g1/heel/` |
+
+### G1 checkpoint (handoff for G2)
+
+**Gate baseline:**
+- Jolt 5.6.0 wasm-compat, 240 Hz;
+- 150 velocity iterations, 2 position iterations, warm start on;
+- manifold reduction off, pair cache off;
+- 10-piece boot (AP 5 × ML 2, hullTol 1e-5);
+- 3° end-stop.
+
+**Validation:**
+- criteria: `g1/G1_CRITERIA.md` (v3 + v3.1);
+- evidence: `g1/G1_REPORT.md`, `g1/G1_TABLES.md`, `g1/json/`;
+- supporting investigation: `g1/heel/`;
+- research history and the debt register are in this file.
+
+**Reference hashes (V2-REF, curated):**
+
+| scenario | hash |
+|---|---|
+| upright | `28eaa640` |
+| leanF | `de35686e` |
+| leanL | `40332389` |
+| singleLeg | `5a491ea6` |
+| drop1m | `958b785c` |
+| sideFirst | `eebe5e01` |
+| awkward | `c6cfa410` |
+| flatSupine | `003aace3` |
+| impact15 | `f4e35f0b` |
+| isoSelfCol | `5d464bfe` |
+
+Browser = Node holds for all ten.
+
+**Review:** `python3 -m http.server 8172` from the worktree root, then `http://127.0.0.1:8172/sandbox/visual/physchar2/viewer/g1.html`.
+
+**Standing rules for the next gate:**
+- G2 starts only on the user's instruction.
+- Every change is justified here.
+- The research history and the debt register are never removed.
+- Nothing is pushed without approval.

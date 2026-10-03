@@ -1,4 +1,5 @@
 // ═══ physchar2/tools/g1_heel.mjs — focused investigation of the feet-first 1.0 m drop heel rise (measurement only; nothing adopted) ═══════════
+// PERMANENT INSTRUMENTATION (user decision 2026-10-03, review_artifacts/physical_character_v2/DECISIONS.md): preserve; do not remove.
 // Runs the EXACT G1 validated-baseline drop1m (V2-REF, 240 Hz, 150 it, 10-piece boot) with gates/v2_g1_ankle.js on both feet, plus diagnostic
 // counterfactuals (single hull, ankle tissue / end-stop / damping disabled, other contact geometries, couplings off). Per tick from just before
 // first foot contact to 1.8 s: kinematics, exact ground-contact wrench + centre of pressure, per-piece contact, ankle torque decomposition,

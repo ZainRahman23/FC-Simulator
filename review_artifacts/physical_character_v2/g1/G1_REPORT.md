@@ -1,6 +1,14 @@
 # V2-G1: passive physics report (after decisions D1–D4)
 
-**Status: G1 PASS** (criteria v3, with the post-run v3.1 correction of row 8 to the approved D4a text).
+**Status: G1 PASS — ACCEPTED by the user on 2026-10-03.** The pass rests on criteria v3 with the post-run v3.1 correction of row 8 to the approved D4a text; the acceptance includes v3.1. Sources: `../sources/2026-10-03_user_decision_g1_heel_rise_accepted_g1_passed.md` and `../DECISIONS.md`.
+
+**Supporting evidence.** `heel/HEEL_RISE_REPORT.md` is the drop1m heel-rise investigation, accepted by the user. The rise is the collapsing passive leg towing an almost-unloaded foot around its planted toe. All of the foot's energy arrives through the ankle joint force; the ankle tissue only dissipates. No simulation change resulted.
+
+**The 1 m passive feet-first drop is a mechanical stress test, not a target model of a controlled human landing.** It has no active anticipatory or eccentric landing control and no shoe or midsole compliance. Do not tune the body to make it look more human.
+
+---
+
+The original status text follows, as reported before acceptance.
 
 - **Every gate row passes.**
 - **The pre-registered v3 evaluation of row 8 failed** on two genuine rate effects, both diagnosed below:
@@ -9,7 +17,7 @@
 
   It is recorded alongside the v3.1 evaluation. **If you do not accept v3.1, row 8 is the only open item.**
 - No approved anatomy, ROM, topology or authority rule was changed. V1 is untouched (guard OK).
-- **Stopped. G2 not started. Nothing pushed.** The review server is running on :8172.
+- **Stopped. G2 not started. Nothing pushed.** The review server is running on :8172. G2 waits for the user's explicit instruction, also after acceptance.
 
 **Supporting files:**
 - `G1_CRITERIA.md`: v3, pre-registered in commit `03a12b6`, plus the v3.1 note;
