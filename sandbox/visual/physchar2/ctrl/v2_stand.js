@@ -14,7 +14,7 @@
 //      angle is left to balance. Gains are body-scaled: K = κ·m_sup·g·L (m_sup, L: the load the joint supports and its lever in the reference
 //      pose), D = 2ζ·√(K·m_sup·L²) — no per-body tuning.
 // The controller writes nothing to bodies; Jolt owns the state; the only outputs are per-axis actuator requests.
-import { V, Q, dexp } from "../core/v2_math.js";
+import { V, Q, dexp, datan2, dasin, dnorm } from "../core/v2_math.js";   // deterministic math only in anything that feeds physics (G3 resolution D1)
 import { posedBodies } from "../spec/v2_pose.js";
 import { bootSole, hull2 } from "../sim/v2_geom.js";
 import { pyr, decompose } from "../spec/v2_joints.js";
@@ -148,8 +148,8 @@ export class StandController {
     // ORDER-INDEPENDENT (G2 final-run fix: the first version offered the remainder to the left foot first — an L/R asymmetry, measured as an
     // asymmetric boundary for V2-190-85): the remainder is applied as a COMMON shift to every foot that can still move toward it, scaled by
     // their summed share so the load-weighted CoP moves by the remainder; repeated (each foot clamped to its own region).
-    for (let it = 0; it < 6; it++) { const ach = [share[0] * cop[0][0] + share[1] * cop[1][0], share[0] * cop[0][1] + share[1] * cop[1][1]], res = [p[0] - ach[0], p[1] - ach[1]], rl = Math.hypot(res[0], res[1]);
-      if (rl < 1e-7) break; const u = [res[0] / rl, res[1] / rl], mov = [0, 1].map(n => { const q = clampPoly(polys[n], [cop[n][0] + u[0] * 1e-4, cop[n][1] + u[1] * 1e-4]); return Math.hypot(q[0] - cop[n][0], q[1] - cop[n][1]) > 1e-6 ? 1 : 0; });
+    for (let it = 0; it < 6; it++) { const ach = [share[0] * cop[0][0] + share[1] * cop[1][0], share[0] * cop[0][1] + share[1] * cop[1][1]], res = [p[0] - ach[0], p[1] - ach[1]], rl = dnorm(res[0], res[1]);
+      if (rl < 1e-7) break; const u = [res[0] / rl, res[1] / rl], mov = [0, 1].map(n => { const q = clampPoly(polys[n], [cop[n][0] + u[0] * 1e-4, cop[n][1] + u[1] * 1e-4]); return dnorm(q[0] - cop[n][0], q[1] - cop[n][1]) > 1e-6 ? 1 : 0; });
       const S = share[0] * mov[0] + share[1] * mov[1]; if (S < 1e-6) break; for (const n of [0, 1]) if (mov[n]) cop[n] = clampPoly(polys[n], [cop[n][0] + res[0] / S, cop[n][1] + res[1] / S]); }
     const pAch = [share[0] * cop[0][0] + share[1] * cop[1][0], share[0] * cop[0][1] + share[1] * cop[1][1]]; p[0] = pAch[0]; p[1] = pAch[1]; r[0] = pRaw[0] - p[0]; r[1] = pRaw[1] - p[1];
     A[0] = w0 * w0 * (c[0] - p[0]); A[2] = w0 * w0 * (c[2] - p[1]);
@@ -157,13 +157,13 @@ export class StandController {
     // posture preference for the legs (task space): a desired wrench on the pelvis — orientation toward the reference (heading from the feet)
     // and height above the ankles — that the legs deliver (statics, each leg its load share); horizontal pelvis position is NOT a posture target
     let legW = null, ikT = null;
-    if (o.posture === "ik") { const ps = st[this.pelvis], yaw = Math.atan2(hd[0], hd[1]), qP = Q.mul(Q.axis([0, 1, 0], yaw), this.stance.pelvisRot), pP = [ps.pos[0], (ankL[1] + ankR[1]) / 2 + this.pel.hRef, ps.pos[2]];
-      if (o.ikFeasible) for (const n of [0, 1]) { const ft = this.unl[n] ? this.hold[n] : st[this.feet[n]], hip = V.add(pP, Q.rot(qP, this.anchor[this.legK[n][0]])), dh = Math.hypot(hip[0] - ft.pos[0], hip[2] - ft.pos[2]), Ln = this.legLen[n];
+    if (o.posture === "ik") { const ps = st[this.pelvis], yaw = datan2(hd[0], hd[1]), qP = Q.mul(Q.axis([0, 1, 0], yaw), this.stance.pelvisRot), pP = [ps.pos[0], (ankL[1] + ankR[1]) / 2 + this.pel.hRef, ps.pos[2]];
+      if (o.ikFeasible) for (const n of [0, 1]) { const ft = this.unl[n] ? this.hold[n] : st[this.feet[n]], hip = V.add(pP, Q.rot(qP, this.anchor[this.legK[n][0]])), dh = dnorm(hip[0] - ft.pos[0], hip[2] - ft.pos[2]), Ln = this.legLen[n];
         if (dh < Ln) pP[1] = Math.min(pP[1], ft.pos[1] + Math.sqrt(Ln * Ln - dh * dh) - (hip[1] - pP[1])); }
       this.pelHT = pP[1];
       const tIK = lam != null ? nowMs() : 0; ikT = {}; this.ikRes = [0, 1].map(n => { const r = this.legIK(st, ev, n, pP, qP, this.unl[n] ? this.hold[n] : null); for (const [k, q] of r.targets) ikT[k] = q; return r.err; });
       if (lam != null) this.cpuIK = (this.cpuIK || 0) + nowMs() - tIK; }   // G3: IK cost (timing only — no effect on the physics)
-    if (o.posture === "task") { const ps = st[this.pelvis], pe = this.pel, yaw = Math.atan2(hd[0], hd[1]), qref = Q.mul(Q.axis([0, 1, 0], yaw), this.stance.pelvisRot);
+    if (o.posture === "task") { const ps = st[this.pelvis], pe = this.pel, yaw = datan2(hd[0], hd[1]), qref = Q.mul(Q.axis([0, 1, 0], yaw), this.stance.pelvisRot);
       let qe = Q.mul(qref, Q.conj(ps.rot)); if (qe[3] < 0) qe = qe.map(x => -x); const eo = [2 * qe[0], 2 * qe[1], 2 * qe[2]];
       const To = [0, 1, 2].map(a => pe.Ko * eo[a] - pe.Do[a] * ps.w[a]), hp = ps.pos[1] - (ankL[1] + ankR[1]) / 2, Fy = pe.Kh * (pe.hRef - hp) - pe.Dh * ps.v[1];
       legW = [0, 1].map(n => { const hc = this.jointAt(st, this.hipK[n]), Fi = [0, share[n] * Fy, 0]; return { hc, F: Fi, T: V.add(V.sc(To, share[n]), V.cross(V.sub(ps.com, hc), Fi)) }; });
@@ -173,13 +173,13 @@ export class StandController {
     // actuators clamp it; the posture preference (pelvis orientation) remains and returns the trunk afterwards.
     // Applied at the hips only (torque on the pelvis = share·L̇, reaction on the thigh): NOT propagated down the legs — the saturated CoP cannot take it.
     let Ldot = o.hip && (r[0] || r[1]) ? V.sc(V.cross([0, 1, 0], [r[0], 0, r[1]]), this.M * G * o.hipUse) : [0, 0, 0];
-    if (Ldot[0] || Ldot[2]) { const yaw = Math.atan2(hd[0], hd[1]), qref = Q.mul(Q.axis([0, 1, 0], yaw), this.stance.pelvisRot); let qe = Q.mul(Q.conj(qref), st[this.pelvis].rot); if (qe[3] < 0) qe = qe.map(x => -x);
-      const dev = 2 * Math.asin(Math.min(1, Math.hypot(qe[0], qe[2]))) * 180 / Math.PI; Ldot = V.sc(Ldot, Math.max(0, 1 - dev / o.hipMaxDeg)); }
+    if (Ldot[0] || Ldot[2]) { const yaw = datan2(hd[0], hd[1]), qref = Q.mul(Q.axis([0, 1, 0], yaw), this.stance.pelvisRot); let qe = Q.mul(Q.conj(qref), st[this.pelvis].rot); if (qe[3] < 0) qe = qe.map(x => -x);
+      const dev = 2 * dasin(Math.min(1, dnorm(qe[0], qe[2]))) * 180 / Math.PI; Ldot = V.sc(Ldot, Math.max(0, 1 - dev / o.hipMaxDeg)); }
     // only a LOADED leg can pass the trunk's reaction to the ground: the strategy torque is shared by the legs with load share above HIP_LOAD
     // (measured: 10 % of it on an unloaded hip swept that leg's foot 49 cm, backward-left 25 N·s)
     const hw = share.map(x => Math.max(0, x - HIP_LOAD)), hs = hw[0] + hw[1] || 1, hipShare = hw.map(x => x / hs);
     let armL = null, armF = [0, 0]; if (o.arms && (r[0] || r[1])) { armL = V.sc(V.cross([0, 1, 0], [r[0], 0, r[1]]), this.M * G * o.armUse * 0.5);
-      armF = this.shK.map(k => { const q = ev.qs[k], qr = this.qref[k]; let qe = Q.mul(Q.conj(qr), q); if (qe[3] < 0) qe = qe.map(x => -x); const dev = 2 * Math.asin(Math.min(1, Math.hypot(qe[0], qe[1], qe[2]))) * 180 / Math.PI; return Math.max(0, 1 - dev / o.armMaxDeg); }); }
+      armF = this.shK.map(k => { const q = ev.qs[k], qr = this.qref[k]; let qe = Q.mul(Q.conj(qr), q); if (qe[3] < 0) qe = qe.map(x => -x); const dev = 2 * dasin(Math.min(1, dnorm(qe[0], qe[1], qe[2]))) * 180 / Math.PI; return Math.max(0, 1 - dev / o.armMaxDeg); }); }
     if (o.noise) { const nz = o.noise, a = dexp(-dt / nz.tau), b = nz.sd * Math.sqrt(1 - a * a); for (let i = 0; i < 4; i++) this.ou[i] = a * this.ou[i] + b * this.gauss(); }
     // 4. feed-forward torques (inverse statics with d'Alembert) + posture preference → per-axis requests
     const cmd = [], ff = [];
@@ -219,10 +219,10 @@ StandController.prototype.legIK = function (st, ev, n, pP, qP, footPose = null) 
     const Rf = Q.mul(Q.mul(Q.mul(Rs, d[2].F1), qa), Q.conj(d[2].F2)), pf = V.add(ps, Q.rot(Rs, a[2]));
     let qe = Q.mul(ft.rot, Q.conj(Rf)); if (qe[3] < 0) qe = qe.map(v => -v);
     return [pf[0] - ft.pos[0], pf[1] - ft.pos[1], pf[2] - ft.pos[2], -2 * qe[0], -2 * qe[1], -2 * qe[2]]; };
-  let x = [cur[0][0], cur[0][1], cur[0][2], cur[1][1], cur[2][1], cur[2][2]], r = fk(x), err = Math.hypot(...r);
+  let x = [cur[0][0], cur[0][1], cur[0][2], cur[1][1], cur[2][1], cur[2][2]], r = fk(x), err = dnorm(...r);
   for (let it = 0; it < 6 && err > 1e-9; it++) { const h = 1e-6, Jm = [0, 1, 2, 3, 4, 5].map(c => { const xp = x.slice(); xp[c] += h; const rp = fk(xp); return rp.map((v, i) => (v - r[i]) / h); });   // Jm[c][i] = ∂r_i/∂x_c
     const A = [0, 1, 2, 3, 4, 5].map(i => [0, 1, 2, 3, 4, 5].map(c => Jm[c][i])), dx = solveN(A, r.map(v => -v)); if (!dx) break;
-    let step = 1; for (let ls = 0; ls < 6; ls++) { const xn = x.map((v, i) => v + step * dx[i]), rn = fk(xn), en = Math.hypot(...rn); if (en < err) { x = xn; r = rn; err = en; break; } step *= 0.5; } }
+    let step = 1; for (let ls = 0; ls < 6; ls++) { const xn = x.map((v, i) => v + step * dx[i]), rn = fk(xn), en = dnorm(...rn); if (en < err) { x = xn; r = rn; err = en; break; } step *= 0.5; } }
   const tg = [[ks[0], pyr(x[0], x[1], x[2])], [ks[1], pyr(cur[1][0], x[3], cur[1][2])]]; if (footPose) tg.push([ks[2], pyr(cur[2][0], x[4], x[5])]);   // held foot: the ankle target too
   return { targets: tg, err };
 };
@@ -236,7 +236,7 @@ function inertiaAbout(B, S, ids, o) { const I = [[0, 0, 0], [0, 0, 0], [0, 0, 0]
     const d = V.sub(V.add(S[i].pos, Q.rot(R, B[i].comLocal)), o), m = B[i].mass, dd = V.dot(d, d);
     for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) I[r][c] += RIRt[r][c] + m * ((r === c ? dd : 0) - d[r] * d[c]); }
   return I; }
-const norm2 = (a) => { const l = Math.hypot(a[0], a[1]) || 1; return [a[0] / l, a[1] / l]; };
+const norm2 = (a) => { const l = dnorm(a[0], a[1]) || 1; return [a[0] / l, a[1] / l]; };
 function centroid(poly) { let A = 0, x = 0, z = 0; for (let i = 0; i < poly.length; i++) { const p = poly[i], q = poly[(i + 1) % poly.length], cr = p[0] * q[1] - q[0] * p[1]; A += cr; x += (p[0] + q[0]) * cr; z += (p[1] + q[1]) * cr; } return [x / (3 * A), z / (3 * A)]; }
 // nearest point of a convex polygon (CCW or CW) to q (q itself if inside)
 export function clampPoly(poly, q) { if (insidePoly(poly, q)) return q.slice(); let best = null, bd = Infinity;
@@ -244,5 +244,5 @@ export function clampPoly(poly, q) { if (insidePoly(poly, q)) return q.slice(); 
     if (d < bd) { bd = d; best = [x, z]; } } return best; }
 export function insidePoly(poly, q) { let s = 0; for (let i = 0; i < poly.length; i++) { const a = poly[i], b = poly[(i + 1) % poly.length], cr = (b[0] - a[0]) * (q[1] - a[1]) - (b[1] - a[1]) * (q[0] - a[0]); if (cr !== 0) { if (s === 0) s = Math.sign(cr); else if (Math.sign(cr) !== s) return false; } } return true; }
 // signed distance of q to a convex polygon (+ inside)
-export function polyDist(poly, q) { let d = Infinity; for (let i = 0; i < poly.length; i++) { const a = poly[i], b = poly[(i + 1) % poly.length], ex = b[0] - a[0], ez = b[1] - a[1], L = Math.hypot(ex, ez), t = Math.max(0, Math.min(1, ((q[0] - a[0]) * ex + (q[1] - a[1]) * ez) / (L * L))); d = Math.min(d, Math.hypot(q[0] - a[0] - t * ex, q[1] - a[1] - t * ez)); } return insidePoly(poly, q) ? d : -d; }
-export function insetPoly(poly, d) { if (!d) return poly; const c = centroid(poly); return poly.map(([x, z]) => { const dx = x - c[0], dz = z - c[1], L = Math.hypot(dx, dz) || 1; return [x - dx / L * d, z - dz / L * d]; }); }
+export function polyDist(poly, q) { let d = Infinity; for (let i = 0; i < poly.length; i++) { const a = poly[i], b = poly[(i + 1) % poly.length], ex = b[0] - a[0], ez = b[1] - a[1], L = dnorm(ex, ez), t = Math.max(0, Math.min(1, ((q[0] - a[0]) * ex + (q[1] - a[1]) * ez) / (L * L))); d = Math.min(d, dnorm(q[0] - a[0] - t * ex, q[1] - a[1] - t * ez)); } return insidePoly(poly, q) ? d : -d; }
+export function insetPoly(poly, d) { if (!d) return poly; const c = centroid(poly); return poly.map(([x, z]) => { const dx = x - c[0], dz = z - c[1], L = dnorm(dx, dz) || 1; return [x - dx / L * d, z - dz / L * d]; }); }

@@ -37,12 +37,15 @@ function jobs(only) { const J = [], add = (group, o) => { if (!only || only.incl
   for (const lt of [0.5, 0.95]) for (const tq of [1, 2, 4]) { add("yaw", { key: `Y:${lt}:${tq}` }); add("yaw", { key: `Y:${lt}:${tq}`, stand: { ikRefTwist: true }, eval: "twist DOFs at reference" }); }
   add("FA", { key: "FA" }); for (let sd = 1; sd <= 10; sd++) add("PS", { key: `PS:${sd}` });
   for (const sc of ["quiet", "R:10", "R:20", "F:15", "L:15"]) add("G2plant", { key: "G2:" + sc });
+  // boundary cases for the mechanism-removal diagnostics (D6): light-foot disturbances, pushes while the opposite foot is unloaded, contact-losing requests
+  for (const k of ["T8:hold:R:R:12.5", "T8:hold:R:FR:12.5", "T8:ramp:R:R:12.5", ...["R", "L", "F", "B", "FR", "BL"].flatMap(d => [5, 10].map(m => `UP:R:${d}:${m}`)), "UP:L:L:10", "UP:L:R:10"]) add("boundary", { key: k });
   return J; }
 // per-tick extras the summary does not carry: per-foot CoP jump per tick (seam smoothness), heel ↔ forefoot CoP range on the stance foot, peak
 // load-rate, other-foot vertical force range during the hold, ankle fabd twist trace extrema
+const XSTAND = JSON.parse((process.argv.find(a => a.startsWith("--stand=")) || "--stand={}").slice(8)), TAG = (process.argv.find(a => a.startsWith("--tag=")) || "").slice(6);   // D6 diagnostic configurations
 function runJob(Jolt, job) {
   if (job.key.startsWith("G2:")) return runG2(Jolt, job);
-  const def = g3Def(job.key); if (job.sup && def.supervise) def.supervise = { ...def.supervise, ...job.sup };
+  const def = g3Def(job.key); if (job.sup && def.supervise) def.supervise = { ...def.supervise, ...job.sup }; if (job.xstand) job.stand = { ...(job.stand || {}), ...job.xstand };
   const spec = generateSpec(VARIATION_SET.find(h => h.id === (def.human || job.human))), s = new G3Sim(Jolt, spec, def, { stand: job.stand || {}, stance: job.stance || undefined }), t0 = Date.now();
   if (job.group === "snapshot") { const nAt = Math.round(job.at / s.dt); while (s.n < nAt) s.tick(); const snap = s.snapshot(); while (s.tick()) {} const hA = s.h.toString(16); s.restore(snap); while (s.tick()) {} const hB = s.h.toString(16); s.destroy(); return { ...job, res: { hashA: hA, hashB: hB, same: hA === hB } }; }
   let prevCop = [null, null], copJump = [0, 0], apRange = [1e9, -1e9], dLoadMax = 0, prevLoad = null;
@@ -63,14 +66,14 @@ function runG2(Jolt, job) { const sc = job.key.slice(3), spec = generateSpec(VAR
 // ── main / workers ──
 if (process.argv.includes("--worker")) { const Jolt = await loadJolt(VEND); process.on("message", (m) => { if (m === "exit") process.exit(0); try { process.send({ ok: true, out: runJob(Jolt, m) }); } catch (e) { process.send({ ok: false, err: String(e.stack || e), job: m }); } }); process.send({ ready: true }); }
 else {
-  const only = (process.argv.find(a => a.startsWith("--only=")) || "").slice(7).split(",").filter(Boolean), list = jobs(only.length ? only : null), t0 = Date.now(), outs = [], W = Math.max(2, Math.min(10, os.cpus().length - 1));
+  const only = (process.argv.find(a => a.startsWith("--only=")) || "").slice(7).split(",").filter(Boolean), list = jobs(only.length ? only : null).map(j => (Object.keys(XSTAND).length ? { ...j, xstand: XSTAND } : j)), t0 = Date.now(), outs = [], W = Math.max(2, Math.min(10, os.cpus().length - 1));
   console.log(`G3 final run: ${list.length} jobs on ${W} workers`); fs.mkdirSync(OUT, { recursive: true });
   await new Promise((resolve) => { let next = 0, live = 0;
     const spawn = () => { if (next >= list.length) { if (live === 0) resolve(); return; } live++; const cp = fork(fileURLToPath(import.meta.url), ["--worker"], { stdio: ["ignore", "inherit", "inherit", "ipc"] }); let done = 0;
       const feed = () => { if (next >= list.length || done >= 12) { cp.send("exit"); live--; if (next < list.length) spawn(); else if (live === 0) resolve(); return; } cp.send(list[next++]); };
       cp.on("message", (m) => { if (m.ready) return feed(); if (m.ok) outs.push(m.out); else { console.error("FAILED", JSON.stringify(m.job), m.err); outs.push({ ...m.job, error: m.err }); } done++; process.stdout.write(`  ${outs.length}/${list.length}\r`); feed(); }); };
     for (let i = 0; i < W; i++) spawn(); });
-  const file = path.join(OUT, only.length ? `g3_results_${only.join("_")}.json` : "g3_results.json");
-  fs.writeFileSync(file, JSON.stringify({ generated: "tools/g3_run.js", criteria: "g3/G3_CRITERIA.md v1", date: new Date().toISOString().slice(0, 10), wallS: (Date.now() - t0) / 1000, jobs: outs }, null, 0));
+  const file = path.join(OUT, TAG ? `g3_results_${TAG}.json` : only.length ? `g3_results_${only.join("_")}.json` : "g3_results.json");
+  fs.writeFileSync(file, JSON.stringify({ generated: "tools/g3_run.js", criteria: "g3/G3_CRITERIA.md v1", xstand: XSTAND, tag: TAG || null, date: new Date().toISOString().slice(0, 10), wallS: (Date.now() - t0) / 1000, jobs: outs }, null, 0));
   console.log(`\n${outs.length} jobs in ${((Date.now() - t0) / 1000).toFixed(0)} s → ${path.relative(ROOT, file)} (${outs.filter(o => o.error).length} errors)`);
 }

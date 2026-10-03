@@ -1,34 +1,34 @@
 {
  "check": "headless Chrome (swiftshader) driven over CDP, viewer/g3.html?check=1&keys=<scenario> — one fresh browser per curated G3 scenario, V2-REF, gate configuration, full runs",
- "allPass": true,
+ "allPass": false,
  "rows": [
   {
    "key": "T5",
-   "browser": "afe0430e",
+   "browser": "fb8e5a6c",
    "pass": true,
-   "node": "afe0430e",
-   "seconds": 7
+   "node": "fb8e5a6c",
+   "seconds": 18
   },
   {
    "key": "U:R",
-   "browser": "e843e194",
+   "browser": "bec7f604",
    "pass": true,
-   "node": "e843e194",
-   "seconds": 6
+   "node": "bec7f604",
+   "seconds": 10
   },
   {
    "key": "T3",
-   "browser": "d90d5774",
+   "browser": "c4d69771",
    "pass": true,
-   "node": "d90d5774",
-   "seconds": 7
+   "node": "c4d69771",
+   "seconds": 14
   },
   {
    "key": "T8:hold:R:R:10",
-   "browser": "c5b7a4a7",
-   "pass": true,
-   "node": "c5b7a4a7",
-   "seconds": 5
+   "browser": "75d36a75",
+   "pass": false,
+   "node": "99648bf9",
+   "seconds": 11
   }
  ]
 }

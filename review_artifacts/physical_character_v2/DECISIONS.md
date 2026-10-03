@@ -822,3 +822,93 @@ No actuator spans that axis; the DF and inversion axes are horizontal for a flat
 - G4 not started. Nothing pushed.
 - Review server :8172, page `viewer/g3.html`.
 - Report `g3/G3_REPORT.md`, tables `g3/G3_TABLES.md`.
+
+## 2026-10-03 — G3 resolution / diagnostic pass D1–D6 (user decision; source `sources/2026-10-03_user_decision_g3_resolution_pass.md`)
+
+G3 is **not** declared passed and G4 is not started. Full report: `g3/G3_RESOLUTION_REPORT.md`.
+
+### G3-R1 (D1): deterministic controller math — implemented, G2 re-validated
+
+**The change:**
+- `ctrl/v2_stand.js`: 11 `Math.hypot`, 3 `Math.atan2` and 2 `Math.asin` replaced by `dnorm` / `datan2` / `dasin`.
+- `ctrl/v2_stance.js`: 1 `Math.hypot` replaced.
+- `dnorm` and `dasin` added to `core/v2_math.js`.
+- Same quantities, no other logic. No compensation of controller behaviour.
+
+**Re-validation:**
+- G0 passes; G1 is unchanged (227 hashes).
+- **G2 PASS 13/13**, with outcomes 620/620 identical to the accepted run and all hashes new. In recovered runs foot slip changed ≤ 0.012 mm.
+- Browser = Node 6/6; snapshot 3/3.
+- **The first post-fix G2 run evaluated 12/13:** row 2.5 measured 0.190 ms with extra diagnostic processes running. That evaluation is kept. The isolated benchmark shows no cost from the deterministic math (T5 0.0358 → 0.0364 ms). The clean re-run gives 0.115 ms: PASS.
+- **G3 final run 3** (criteria v1 unchanged): **16/19**. Row O now passes (4/4). I, J and S fail, preserved.
+
+**Audit, not fixed:** `sim/v2_passive.js:115` uses `Math.hypot` in the G1 passive layer. Same hazard class; it changes G1 → user decision.
+
+### G3-R2 (D2): the ankle twist is a modelling defect of the passive-only ankle ab/adduction — diagnosis only, no change
+
+**What the twist is:**
+- One coordinate, the passive ab/adduction: shank axial rotation on the planted foot.
+- Knee rotation ≤ 0.4°; the hip counter-rotates ≈ 10°.
+- The ground's vertical moment at the ankle equals the passive torque, so the tissue is the only yaw path.
+- It appears in both loaded and unloading legs and peaks during transitions.
+
+**How it behaves:**
+- Neutral free play inside ±10°: the leg wanders ±7–14° for ≥ 6 s after a release.
+- It is the same in accepted G2.
+- It becomes more compliant near single support: 13.7–14.1° at 0.5 N·m, and 15.6–17.8° at 2 N·m, past the 15° hard limit.
+
+**Primary literature contradicts both magnitude and stiffness:**
+- humans show ≈ 7–8° talocrural over a whole walking stance, and ≈ 4° opposed under static single-leg load;
+- an unloaded talocrural joint carries 1.5 N·m at 7–10°;
+- loaded joints stiffen.
+
+**Option A recommended:** a neutral-zone stiffness for the passive-only axis. It is an approved-tissue change → user decision.
+
+### G3-R3 (D3): the 95 % threshold
+
+- **Origin:** the brief's example number, adopted as an engineering definition. It is neither evidence-derived nor swing-derived. It equals the spec's 5 % BW event threshold, whereas the spec's liftoff rule is ≤ 2 % BW.
+- **Short-legs:** 0.9487 / 0.9483 occurs at the first tick of the hold window (convergence). The steady state is 0.9685 (REF 0.9690). The other foot carries 5.13 % BW on 8/8 pieces with friction demand 0.006. On request it unloads to ≤ 0.71 % BW.
+- **Correction:** my run-2 "steady state 0.6 % lower" was wrong (it came from the hold mean).
+- **Recommendation (not applied):** define near-single-support by the unloaded-foot requirement, i.e. a settled ≤ 5 % BW plus on-request ≤ 2 % BW.
+
+### G3-R4 (D4): mirror floor
+
+| measure | non-sliding | sliding |
+|---|---|---|
+| self-symmetry | 6.5e-5 mm | — |
+| mirrored pairs | ≤ 0.046 mm (G2), ≤ 0.077 mm (G3) | ≤ 1.52 mm (G2), ≤ 1.45 mm (G3) |
+| last-bit sensitivity | 0.004–0.005 mm | 0.07–0.19 mm |
+
+- The plant has a deterministic L/R asymmetry only when a foot slides. Solver ordering is suspected; this is unverified.
+- The controller is mirror-exact.
+- **Recommendation (not applied):** non-sliding ≤ 0.1 mm; sliding = same class and ≤ 2 mm; plus controller-decision symmetry.
+
+### G3-R5 (D5): performance
+
+The isolated reproducible benchmark (`tools/g3_bench.mjs`; warm-up; 7 trials; per-tick median / p95 / p99):
+
+| | mean | median | p95 | p99 |
+|---|---|---|---|---|
+| G3 controller | 0.036–0.043 ms | 0.032–0.041 ms | 0.042–0.053 ms | 0.151–0.163 ms |
+| G3 controller + actuators (G2 scope) | 0.047–0.054 ms | — | — | — |
+
+- **Not over the 0.15 ms averaged budget.**
+- The gate figures of 0.152–0.173 ms are 9-process contention.
+- **Ambiguity reported for decision:** spec §20 defines neither measurement conditions nor scope, and G2's row included actuators while G3's row S did not. The budget is unchanged.
+
+### G3-R6 (D6): both mechanisms kept
+
+Complete G3 gate set plus boundary cases, 190 jobs per configuration:
+
+| removed | outcome classes | effect |
+|---|---|---|
+| contactSupport | 190/190 identical | Zero change in non-falling runs, but it changes failure dynamics whenever a foot has left the turf (up to 0.58 s more balancing on the true support). It is required by brief §12. |
+| holdUnloaded | 189/190 identical | `UP:R:B:5` recovered → relocated. Without it, a push while the foot is unloaded drags that foot 53–230 mm instead of 31–67 mm. |
+
+- My run-2 "minimality" note was based on nominal scenes only. It is corrected: **recommend keeping both**.
+- **New boundary finding:** 5–10 N·s pushes relocate a fully unloaded foot by 31–67 mm. This is G4 design input.
+
+**Status:**
+- G3 NOT PASSED (run 3: 16/19).
+- Decisions pending: rows I / J / S criterion or methodology; TD-11 option; the G1 passive-layer determinism fix.
+- G4 not started. Nothing pushed.

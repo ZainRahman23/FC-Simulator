@@ -15,20 +15,6 @@
    "limit": "8/8",
    "detail": [
     {
-     "human": "V2-165-62",
-     "items": {
-      "a": true,
-      "b": true,
-      "c": true,
-      "d": true,
-      "e": true,
-      "f": true,
-      "g": true
-     },
-     "ok": true,
-     "v": "slip 0.26 mm tilt 0.17° COM ahead 4.00 cm knee 4.0–4.0° peak ankle_R.y 7.3 % T_iso sat 0 range 0.14 mm sep 0.00 mm turf 0.00 mm eng 0"
-    },
-    {
      "human": "V2-175-70",
      "items": {
       "a": true,
@@ -43,7 +29,7 @@
      "v": "slip 0.25 mm tilt 0.16° COM ahead 4.00 cm knee 4.0–4.0° peak lumbar.y 7.4 % T_iso sat 0 range 0.16 mm sep 0.00 mm turf 0.00 mm eng 0"
     },
     {
-     "human": "V2-REF",
+     "human": "V2-165-62",
      "items": {
       "a": true,
       "b": true,
@@ -54,35 +40,7 @@
       "g": true
      },
      "ok": true,
-     "v": "slip 0.25 mm tilt 0.16° COM ahead 4.00 cm knee 4.0–4.0° peak lumbar.y 7.6 % T_iso sat 0 range 0.15 mm sep 0.00 mm turf 0.01 mm eng 0"
-    },
-    {
-     "human": "V2-198-92",
-     "items": {
-      "a": true,
-      "b": true,
-      "c": true,
-      "d": true,
-      "e": true,
-      "f": true,
-      "g": true
-     },
-     "ok": true,
-     "v": "slip 0.25 mm tilt 0.14° COM ahead 4.00 cm knee 4.0–4.0° peak lumbar.y 8.1 % T_iso sat 0 range 0.21 mm sep 0.00 mm turf 0.01 mm eng 0"
-    },
-    {
-     "human": "V1-matched",
-     "items": {
-      "a": true,
-      "b": true,
-      "c": true,
-      "d": true,
-      "e": true,
-      "f": true,
-      "g": true
-     },
-     "ok": true,
-     "v": "slip 0.25 mm tilt 0.15° COM ahead 4.00 cm knee 4.0–4.0° peak lumbar.y 7.8 % T_iso sat 0 range 0.13 mm sep 0.00 mm turf 0.01 mm eng 0"
+     "v": "slip 0.26 mm tilt 0.17° COM ahead 4.00 cm knee 4.0–4.0° peak ankle_R.y 7.3 % T_iso sat 0 range 0.14 mm sep 0.00 mm turf 0.00 mm eng 0"
     },
     {
      "human": "V2-short-legs",
@@ -99,7 +57,7 @@
      "v": "slip 0.25 mm tilt 0.16° COM ahead 4.00 cm knee 4.0–4.0° peak lumbar.y 7.8 % T_iso sat 0 range 0.17 mm sep 0.00 mm turf 0.01 mm eng 0"
     },
     {
-     "human": "V2-190-85",
+     "human": "V2-REF",
      "items": {
       "a": true,
       "b": true,
@@ -110,7 +68,35 @@
       "g": true
      },
      "ok": true,
-     "v": "slip 0.25 mm tilt 0.15° COM ahead 4.00 cm knee 4.0–4.0° peak lumbar.y 7.8 % T_iso sat 0 range 0.12 mm sep 0.00 mm turf 0.01 mm eng 0"
+     "v": "slip 0.25 mm tilt 0.16° COM ahead 4.00 cm knee 4.0–4.0° peak lumbar.y 7.6 % T_iso sat 0 range 0.15 mm sep 0.00 mm turf 0.01 mm eng 0"
+    },
+    {
+     "human": "V1-matched",
+     "items": {
+      "a": true,
+      "b": true,
+      "c": true,
+      "d": true,
+      "e": true,
+      "f": true,
+      "g": true
+     },
+     "ok": true,
+     "v": "slip 0.25 mm tilt 0.15° COM ahead 4.00 cm knee 4.0–4.0° peak lumbar.y 7.8 % T_iso sat 0 range 0.13 mm sep 0.00 mm turf 0.01 mm eng 0"
+    },
+    {
+     "human": "V2-198-92",
+     "items": {
+      "a": true,
+      "b": true,
+      "c": true,
+      "d": true,
+      "e": true,
+      "f": true,
+      "g": true
+     },
+     "ok": true,
+     "v": "slip 0.25 mm tilt 0.14° COM ahead 4.00 cm knee 4.0–4.0° peak lumbar.y 8.1 % T_iso sat 0 range 0.21 mm sep 0.00 mm turf 0.01 mm eng 0"
     },
     {
      "human": "V2-long-legs",
@@ -125,6 +111,20 @@
      },
      "ok": true,
      "v": "slip 1.08 mm tilt 0.16° COM ahead 4.00 cm knee 4.0–4.0° peak lumbar.y 7.4 % T_iso sat 0 range 1.03 mm sep 0.00 mm turf 0.01 mm eng 0"
+    },
+    {
+     "human": "V2-190-85",
+     "items": {
+      "a": true,
+      "b": true,
+      "c": true,
+      "d": true,
+      "e": true,
+      "f": true,
+      "g": true
+     },
+     "ok": true,
+     "v": "slip 0.25 mm tilt 0.15° COM ahead 4.00 cm knee 4.0–4.0° peak lumbar.y 7.8 % T_iso sat 0 range 0.12 mm sep 0.00 mm turf 0.01 mm eng 0"
     }
    ]
   },
@@ -2330,8 +2330,8 @@
   {
    "id": "2.5",
    "name": "controller cost mean ≤ 0.15 ms per tick per player (V2-REF quiet stance 60 s); p99 reported",
-   "pass": true,
-   "value": "mean 0.115 ms, p99 0.467 ms",
+   "pass": false,
+   "value": "mean 0.190 ms, p99 1.151 ms",
    "limit": "mean ≤ 0.15 ms"
   },
   {
@@ -2434,18 +2434,18 @@
      "trunk": 0.010822695531758492
     },
     {
-     "name": "arms 30° abducted",
-     "ok": true,
-     "settle": 0,
-     "slip": 0.2522614652889881,
-     "trunk": 0.0031815173899306134
-    },
-    {
      "name": "head 20° flexed",
      "ok": true,
      "settle": 0,
      "slip": 0.25136119354317155,
      "trunk": 0.00314235845683161
+    },
+    {
+     "name": "arms 30° abducted",
+     "ok": true,
+     "settle": 0,
+     "slip": 0.2522614652889881,
+     "trunk": 0.0031815173899306134
     },
     {
      "name": "COM 5 cm/s forward",
@@ -2593,7 +2593,7 @@
    "limit": "all"
   }
  ],
- "pass": true,
+ "pass": false,
  "boundaries": {
   "V2-165-62|F": {
    "recovered": 10,

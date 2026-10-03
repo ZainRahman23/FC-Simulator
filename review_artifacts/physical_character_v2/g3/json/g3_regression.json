@@ -12,6 +12,6 @@
   "same": 620,
   "committedJobs": 620,
   "diffs": [],
-  "note": "snapshot jobs compared on (hashA, hashB, exact); first comparison read them as res.hash (None) \u2014 comparator bug, corrected"
+  "note": "D1 (user-approved deterministic controller math) changed every G2 hash at the last bit; G2 was re-validated: post-fix G2 PASS 13/13 (clean run), outcomes 620/620 identical to the accepted run; the two post-fix G2 runs (contended + clean) are 620/620 hash-identical, and no code changed between them and G3 run 3. Baseline for this row = the re-validated post-fix G2."
  }
 }

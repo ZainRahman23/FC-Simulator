@@ -2,7 +2,7 @@
 // Each value is tagged: [H] human quiet-standing evidence (recalled literature unless a source is in the G2 report), [ENG] engineering choice,
 // [CTRL] controller target. The controller (ctrl/v2_stand.js) uses the joint angles below only as weak posture preferences; the ankles are
 // not posture-servoed at all (their sagittal angle follows from balance), and if balance needs a deviation from this pose, balance wins.
-import { V, Q, rad } from "../core/v2_math.js";
+import { V, Q, rad, dnorm } from "../core/v2_math.js";
 import { posedBodies } from "../spec/v2_pose.js";
 
 export const STANCE = {
@@ -35,7 +35,7 @@ export function solveStance(spec, st = STANCE) {
   const pose = (pitch, a) => posedBodies(spec, stanceAngles(st, a), { pos: null, rot: Q.axis([1, 0, 0], rad(pitch)) });
   const tilt = (S) => { const u = Q.rot(S[fL].rot, up), w = Q.rot(S[fR].rot, up); return [u[0], u[2], w[0], w[2]]; };   // flatness residual (x, z of each foot's up axis)
   const flatten = (pitch) => { let a = { df: st.kneeFlexDeg - st.hipFlexDeg + pitch, inv: 0 };
-    for (let it = 0; it < 30; it++) { const r = tilt(pose(pitch, a)), e = [(r[1] + r[3]) / 2, (r[0] - r[2]) / 2]; if (Math.hypot(...e) < 1e-10) break;   // z-tilt ↔ DF, mirrored x-tilt ↔ inversion
+    for (let it = 0; it < 30; it++) { const r = tilt(pose(pitch, a)), e = [(r[1] + r[3]) / 2, (r[0] - r[2]) / 2]; if (dnorm(...e) < 1e-10) break;   // z-tilt ↔ DF, mirrored x-tilt ↔ inversion
       const h = 1e-3, rd = tilt(pose(pitch, { df: a.df + h, inv: a.inv })), ri = tilt(pose(pitch, { df: a.df, inv: a.inv + h }));
       const Jm = [[((rd[1] + rd[3]) / 2 - e[0]) / h, ((ri[1] + ri[3]) / 2 - e[0]) / h], [((rd[0] - rd[2]) / 2 - e[1]) / h, ((ri[0] - ri[2]) / 2 - e[1]) / h]], det = Jm[0][0] * Jm[1][1] - Jm[0][1] * Jm[1][0];
       a = { df: a.df - (Jm[1][1] * e[0] - Jm[0][1] * e[1]) / det, inv: a.inv - (-Jm[1][0] * e[0] + Jm[0][0] * e[1]) / det }; }

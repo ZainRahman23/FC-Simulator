@@ -1,0 +1,415 @@
+{
+ "generated": "tools/g3_mirror.mjs",
+ "date": "2026-10-03",
+ "A": [
+  {
+   "name": "G2 quiet 20 s",
+   "outcome": "stood",
+   "slipMm": [
+    0.2511,
+    0.2512
+   ],
+   "dSlipMm": 0.000065,
+   "comLateralMaxMm": 0.031602,
+   "pelvisRollMaxDeg": 0.001983
+  },
+  {
+   "name": "G2 push F 10",
+   "outcome": "recovered",
+   "slipMm": [
+    0.2511,
+    0.2512
+   ],
+   "dSlipMm": 0.000065,
+   "comLateralMaxMm": 0.011453,
+   "pelvisRollMaxDeg": 0.002773
+  },
+  {
+   "name": "G2 push F 15",
+   "outcome": "recovered",
+   "slipMm": [
+    0.2511,
+    0.2512
+   ],
+   "dSlipMm": 0.000065,
+   "comLateralMaxMm": 0.810289,
+   "pelvisRollMaxDeg": 0.086289
+  },
+  {
+   "name": "G2 push B 10",
+   "outcome": "recovered",
+   "slipMm": [
+    0.2511,
+    0.2512
+   ],
+   "dSlipMm": 0.000065,
+   "comLateralMaxMm": 0.005533,
+   "pelvisRollMaxDeg": 0.001983
+  },
+  {
+   "name": "G2 push B 15",
+   "outcome": "recovered",
+   "slipMm": [
+    0.2511,
+    0.2512
+   ],
+   "dSlipMm": 0.000065,
+   "comLateralMaxMm": 0.005258,
+   "pelvisRollMaxDeg": 0.00272
+  },
+  {
+   "name": "G2 push F 20 (falls)",
+   "outcome": "step required → fell",
+   "slipMm": [
+    1063.3661,
+    1073.5809
+   ],
+   "dSlipMm": 10.214795,
+   "comLateralMaxMm": 27.878175,
+   "pelvisRollMaxDeg": 13.388455
+  },
+  {
+   "name": "G3 T0",
+   "outcome": "stood",
+   "slipMm": [
+    0.2611,
+    0.2879
+   ],
+   "dSlipMm": 0.026853,
+   "pelvisRollMaxDeg": 0.002007
+  }
+ ],
+ "B": {
+  "g2": {
+   "pairs": 120,
+   "sameOutcome": 120,
+   "nonSlidingRecovered": {
+    "n": 43,
+    "max": 0.0461,
+    "p95": 0.029,
+    "median": 0
+   },
+   "slidingRecovered": {
+    "n": 22,
+    "max": 1.5231,
+    "p95": 0.1135,
+    "median": 0.0173
+   },
+   "worst": [
+    {
+     "h": "V1-matched",
+     "pair": "FL/FR",
+     "J": 20,
+     "both": true,
+     "sameOutcome": true,
+     "slip": [
+      5.276,
+      6.799
+     ],
+     "d": 1.5231,
+     "sliding": true
+    },
+    {
+     "h": "V2-REF",
+     "pair": "FL/FR",
+     "J": 20,
+     "both": true,
+     "sameOutcome": true,
+     "slip": [
+      5.758,
+      7.219
+     ],
+     "d": 1.4617,
+     "sliding": true
+    },
+    {
+     "h": "V1-matched",
+     "pair": "BL/BR",
+     "J": 25,
+     "both": true,
+     "sameOutcome": true,
+     "slip": [
+      9.817,
+      9.703
+     ],
+     "d": 0.1135,
+     "sliding": true
+    },
+    {
+     "h": "V2-REF",
+     "pair": "BL/BR",
+     "J": 25,
+     "both": true,
+     "sameOutcome": true,
+     "slip": [
+      8.619,
+      8.526
+     ],
+     "d": 0.0924,
+     "sliding": true
+    },
+    {
+     "h": "V1-matched",
+     "pair": "BL/BR",
+     "J": 20,
+     "both": true,
+     "sameOutcome": true,
+     "slip": [
+      6.074,
+      6.009
+     ],
+     "d": 0.0651,
+     "sliding": true
+    },
+    {
+     "h": "V2-REF",
+     "pair": "L/R",
+     "J": 15,
+     "both": true,
+     "sameOutcome": true,
+     "slip": [
+      2.227,
+      2.167
+     ],
+     "d": 0.0602,
+     "sliding": true
+    }
+   ]
+  },
+  "g3": {
+   "results": "g3/G3_CRITERIA.md v1 2026-10-03",
+   "pairs": 70,
+   "sameOutcome": 70,
+   "nonSliding": {
+    "n": 42,
+    "max": 0.6001,
+    "p95": 0.0368
+   },
+   "sliding": {
+    "n": 28,
+    "max": 349.7211,
+    "p95": 163.5404
+   },
+   "worst": [
+    {
+     "k": "T8:ramp:R:F:20",
+     "d": 349.7211,
+     "sliding": true,
+     "same": true
+    },
+    {
+     "k": "T8:ramp:R:B:20",
+     "d": 247.4033,
+     "sliding": true,
+     "same": true
+    },
+    {
+     "k": "T8:hold:R:BR:20",
+     "d": 163.5404,
+     "sliding": true,
+     "same": true
+    },
+    {
+     "k": "T8:hold:R:R:20",
+     "d": 75.3218,
+     "sliding": true,
+     "same": true
+    },
+    {
+     "k": "T8:hold:R:R:15",
+     "d": 56.7028,
+     "sliding": true,
+     "same": true
+    },
+    {
+     "k": "T8:ramp:R:FR:20",
+     "d": 38.5167,
+     "sliding": true,
+     "same": true
+    }
+   ]
+  }
+ },
+ "C": [
+  {
+   "name": "G3 T7:R:0.5",
+   "eps": [
+    -4e-9,
+    -3e-9,
+    -2e-9,
+    -1e-9,
+    0,
+    1e-9,
+    2e-9,
+    3e-9,
+    4e-9
+   ],
+   "slipMm": [
+    5.8406,
+    5.8732,
+    5.8387,
+    5.8505,
+    5.8915,
+    5.8431,
+    5.9019,
+    5.8344,
+    5.8793
+   ],
+   "outcomes": [
+    "stood"
+   ],
+   "spreadMm": 0.0675,
+   "sdMm": 0.0239
+  },
+  {
+   "name": "G3 T7:R:0.25",
+   "eps": [
+    -4e-9,
+    -3e-9,
+    -2e-9,
+    -1e-9,
+    0,
+    1e-9,
+    2e-9,
+    3e-9,
+    4e-9
+   ],
+   "slipMm": [
+    1.3217,
+    1.3188,
+    1.3222,
+    1.3213,
+    1.3195,
+    1.3223,
+    1.3194,
+    1.3225,
+    1.3186
+   ],
+   "outcomes": [
+    "stood"
+   ],
+   "spreadMm": 0.0039,
+   "sdMm": 0.0015
+  },
+  {
+   "name": "G3 T8:hold:R:R:10",
+   "eps": [
+    -4e-9,
+    -3e-9,
+    -2e-9,
+    -1e-9,
+    0,
+    1e-9,
+    2e-9,
+    3e-9,
+    4e-9
+   ],
+   "slipMm": [
+    12.7071,
+    12.7029,
+    12.7338,
+    12.7198,
+    12.7904,
+    12.7263,
+    12.7348,
+    12.7231,
+    12.7469
+   ],
+   "outcomes": [
+    "recovered"
+   ],
+   "spreadMm": 0.0875,
+   "sdMm": 0.0244
+  },
+  {
+   "name": "G2 push FL 20 (V2-REF)",
+   "eps": [
+    -4e-9,
+    -3e-9,
+    -2e-9,
+    -1e-9,
+    0,
+    1e-9,
+    2e-9,
+    3e-9,
+    4e-9
+   ],
+   "slipMm": [
+    5.592,
+    5.5859,
+    5.5636,
+    5.5755,
+    5.7576,
+    5.5788,
+    5.6012,
+    5.6226,
+    5.6015
+   ],
+   "outcomes": [
+    "recovered"
+   ],
+   "spreadMm": 0.194,
+   "sdMm": 0.0551
+  },
+  {
+   "name": "G2 push L 20 (V2-REF)",
+   "eps": [
+    -4e-9,
+    -3e-9,
+    -2e-9,
+    -1e-9,
+    0,
+    1e-9,
+    2e-9,
+    3e-9,
+    4e-9
+   ],
+   "slipMm": [
+    8.97,
+    8.9689,
+    8.967,
+    8.9678,
+    8.9653,
+    8.9706,
+    8.9691,
+    8.9705,
+    8.9688
+   ],
+   "outcomes": [
+    "recovered"
+   ],
+   "spreadMm": 0.0053,
+   "sdMm": 0.0016
+  },
+  {
+   "name": "G3 T5 (non-sliding control)",
+   "eps": [
+    -4e-9,
+    -3e-9,
+    -2e-9,
+    -1e-9,
+    0,
+    1e-9,
+    2e-9,
+    3e-9,
+    4e-9
+   ],
+   "slipMm": [
+    0.2684,
+    0.2643,
+    0.2666,
+    0.2658,
+    0.2666,
+    0.2668,
+    0.2659,
+    0.2668,
+    0.2648
+   ],
+   "outcomes": [
+    "stood"
+   ],
+   "spreadMm": 0.0041,
+   "sdMm": 0.0011
+  }
+ ]
+}

@@ -1,0 +1,46 @@
+{
+ "D6_noContactSupport": {
+  "compared": 190,
+  "identicalHashes": 153,
+  "identicalClass": 190,
+  "sameAbortDecision": 190,
+  "classChanges": [],
+  "maxAbsChangeInNonFallingRuns": {
+   "holdMin": 0,
+   "holdMean": 0,
+   "slip": 0,
+   "lift": 0,
+   "tilt": 0,
+   "rms": 0
+  },
+  "changesOver0_2": [],
+  "contactLossInFinalConfig": [],
+  "contactLossInRemoval": []
+ },
+ "D6_noHoldUnloaded": {
+  "compared": 190,
+  "identicalHashes": 130,
+  "identicalClass": 189,
+  "sameAbortDecision": 190,
+  "classChanges": [
+   "UP:R:B:5 : recovered → foot relocated"
+  ],
+  "maxAbsChangeInNonFallingRuns": {
+   "holdMin": 0.028335261569857884,
+   "holdMean": 0.00022868476087345435,
+   "slip": 0.940278917641562,
+   "lift": 0.509217381477356,
+   "tilt": 0.9228740805361282,
+   "rms": 0.0010158155422250285
+  },
+  "changesOver0_2": [
+   "T8:hold:R:R:10: slip 12.79→13.52 mm, lift 4.69→4.19 mm, tilt 7.73→6.83°",
+   "T8:hold:L:L:10: slip 12.61→13.55 mm, lift 4.71→4.20 mm, tilt 7.77→6.84°",
+   "T8:hold:R:BR:5: slip 1.18→1.69 mm, lift 0.00→0.00 mm, tilt 0.18→0.16°",
+   "T8:hold:R:BR:10: slip 4.72→5.06 mm, lift 1.82→1.62 mm, tilt 3.01→2.71°",
+   "T8:hold:L:BL:10: slip 4.63→4.92 mm, lift 1.82→1.63 mm, tilt 3.01→2.73°"
+  ],
+  "contactLossInFinalConfig": [],
+  "contactLossInRemoval": []
+ }
+}

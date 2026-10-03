@@ -304,3 +304,29 @@ Stills: `shots/g2_01…g2_10`.
 | `gates/v2_g1_ankle.js` | subtracts the actuator impulses (permanent probe, extended) |
 
 G0 / G1 results are unchanged.
+
+## 12. Addendum (2026-10-03): post-D1 deterministic-math re-validation (user-approved, G3 resolution pass)
+
+**Why this was needed.** G3's browser check exposed `Math.hypot` / `Math.atan2` / `Math.asin` in physics-feeding standing-controller code: the leg IK, heading, CoP allocation and polygon distance. These functions are not specified to be bit-identical across JavaScript engines, and the project's own rule (`core/v2_math.js`) forbids them in physics code. The user approved the fix (`../sources/2026-10-03_user_decision_g3_resolution_pass.md`, D1). They are replaced by the deterministic `dnorm` / `datan2` / `dasin`, which compute the same quantities. No other logic changed.
+
+**Result: G2 PASS 13/13 again.**
+
+| check | result |
+|---|---|
+| G0 / G1 | unchanged (G1: 227 hashes, 0 differences) |
+| outcomes | all 620 identical to the accepted run |
+| hashes | all changed at the last bit (expected) |
+| recovered runs, size of the change | foot slip ≤ 0.012 mm; ξ deviation ≤ 0.014 mm |
+| determinism ×3 | 6/6 |
+| snapshot / restore | 3/3 |
+| browser = Node | 6/6 |
+
+**Row 2.5:**
+- The clean run measured 0.115 ms mean, 0.467 ms p99 (accepted: 0.108 / 0.507).
+- The first post-fix run had extra diagnostic processes running beside it. It measured 0.190 ms and evaluated 12/13. That evaluation is kept in `postD1_contended/`.
+- An isolated benchmark shows no cost from the deterministic math (`../g3/json/g3_bench*.json`).
+
+**Artifacts:**
+- The accepted pre-fix artifacts are preserved in `accepted_pre_D1/`.
+- The current `json/` and `G2_TABLES.md` are the post-fix clean run.
+- Details: `../g3/G3_RESOLUTION_REPORT.md` §1.

@@ -12,26 +12,26 @@
 | 2.2b | boundaries measured; monotone (no recover → fail → recover inversion); symmetric L/R, FL/FR, BL/BR | **PASS** | 40 sweeps, 0 inversions, symmetry 12/12 | 0 inversions, all symmetric |
 | 2.3 | 0 ticks with applied active torque above the instantaneous capacity / activation envelope (every run) | **PASS** | 0 ticks over 617 runs | 0 |
 | 2.4 | release: non-recoveries fall / displace a foot physically; no hidden support (authority 0, external impulse = scheduled); every fall preceded by ξ leaving the support | **PASS** | 204 non-recoveries, 204 falls (204 step-required), ledger exact | all |
-| 2.5 | controller cost mean ≤ 0.15 ms per tick per player (V2-REF quiet stance 60 s); p99 reported | **PASS** | mean 0.115 ms, p99 0.467 ms | mean ≤ 0.15 ms |
+| 2.5 | controller cost mean ≤ 0.15 ms per tick per player (V2-REF quiet stance 60 s); p99 reported | **PASS** | mean 0.108 ms, p99 0.507 ms | mean ≤ 0.15 ms |
 | S4 | angular impulses yaw / pitch / roll at 4 and 8 N·m·s: recovered in place, slip ≤ 10 mm, final trunk within 3° | **PASS** | 6/6 | 6/6 |
 | S5 | 10 initial offsets: no fall, QUIET from ≤ 3 s to the end, slip ≤ 2 mm, final trunk within 3° | **PASS** | 10/10 | 10/10 |
-| F | foot / CoP: sweep smoothness (net CoP change ≤ 5 mm/tick, tracking ≤ 5 mm, slip ≤ 2 mm) + turf penetration ≤ 10 / 5 mm in 2.1 / 2.2a / S4 / S5 | **PASS** | sweeps 6/6, max jump 2.68 mm, max track 2.62 mm; penetration ok (max 0.89 mm) | all |
+| F | foot / CoP: sweep smoothness (net CoP change ≤ 5 mm/tick, tracking ≤ 5 mm, slip ≤ 2 mm) + turf penetration ≤ 10 / 5 mm in 2.1 / 2.2a / S4 / S5 | **PASS** | sweeps 6/6, max jump 2.68 mm, max track 2.62 mm; penetration ok (max 0.90 mm) | all |
 | D | determinism ×3 (6 curated), snapshot / restore bit-exact (3), browser = Node (curated) | **PASS** | ×3 6/6, snapshot 3/3, browser 6/6 | all |
-| E | energy residual ΔE − (W_active + W_ext − damping) ≤ +0.5 J per run; authority writes 0 | **PASS** | max residual -0.285 J, min -938.23 J over 414 runs | ≤ +0.5 J |
+| E | energy residual ΔE − (W_active + W_ext − damping) ≤ +0.5 J per run; authority writes 0 | **PASS** | max residual -0.285 J, min -942.42 J over 414 runs | ≤ +0.5 J |
 | R | G0 8/8; G1 curated hashes and full results unchanged | **PASS** | G0 8/8, G1 curated 10/10, G1 full unchanged | all |
 
 ## 2. Quiet stance (S0, 60 s) per body
 
 | body | COM ahead of ankles (cm) | knee range (°) | COM range (mm) | foot slip (mm) / tilt (°) | top actuator (% of T_iso) | saturated ticks after 1 s | turf pen. rest (mm) | joint sep. rest (mm) | ctrl ms mean / p99 |
 |---|---|---|---|---|---|---|---|---|---|
-| V2-165-62 | 4.00 | 4.0–4.0 | 0.14 | 0.26 / 0.17 | ankle_R.y 7.3, ankle_L.y 7.3, lumbar.y 7.0 | 0 | 0.00 | 0.00 | 0.111 / 0.475 |
-| V2-175-70 | 4.00 | 4.0–4.0 | 0.16 | 0.25 / 0.16 | lumbar.y 7.4, ankle_R.y 7.3, ankle_L.y 7.3 | 0 | 0.00 | 0.00 | 0.110 / 0.469 |
-| V2-REF | 4.00 | 4.0–4.0 | 0.15 | 0.25 / 0.16 | lumbar.y 7.6, ankle_R.y 7.3, ankle_L.y 7.3 | 0 | 0.01 | 0.00 | 0.115 / 0.467 |
-| V2-190-85 | 4.00 | 4.0–4.0 | 0.12 | 0.25 / 0.15 | lumbar.y 7.8, ankle_R.y 7.3, ankle_L.y 7.3 | 0 | 0.01 | 0.00 | 0.131 / 0.550 |
-| V2-198-92 | 4.00 | 4.0–4.0 | 0.21 | 0.25 / 0.14 | lumbar.y 8.1, ankle_R.y 7.3, ankle_L.y 7.3 | 0 | 0.01 | 0.00 | 0.115 / 0.513 |
-| V2-long-legs | 4.00 | 4.0–4.0 | 1.03 | 1.08 / 0.16 | lumbar.y 7.4, ankle_R.y 7.3, ankle_L.y 7.3 | 0 | 0.01 | 0.00 | 0.129 / 0.528 |
-| V2-short-legs | 4.00 | 4.0–4.0 | 0.17 | 0.25 / 0.16 | lumbar.y 7.8, ankle_R.y 7.3, ankle_L.y 7.3 | 0 | 0.01 | 0.00 | 0.112 / 0.470 |
-| V1-matched | 4.00 | 4.0–4.0 | 0.13 | 0.25 / 0.15 | lumbar.y 7.8, ankle_R.y 7.3, ankle_L.y 7.3 | 0 | 0.01 | 0.00 | 0.113 / 0.493 |
+| V2-165-62 | 4.00 | 4.0–4.0 | 0.14 | 0.26 / 0.17 | ankle_R.y 7.3, ankle_L.y 7.3, lumbar.y 7.0 | 0 | 0.00 | 0.00 | 0.104 / 0.463 |
+| V2-175-70 | 4.00 | 4.0–4.0 | 0.16 | 0.25 / 0.16 | lumbar.y 7.4, ankle_R.y 7.3, ankle_L.y 7.3 | 0 | 0.00 | 0.00 | 0.110 / 0.498 |
+| V2-REF | 4.00 | 4.0–4.0 | 0.15 | 0.25 / 0.16 | lumbar.y 7.6, ankle_R.y 7.3, ankle_L.y 7.3 | 0 | 0.01 | 0.00 | 0.108 / 0.507 |
+| V2-190-85 | 4.00 | 4.0–4.0 | 0.12 | 0.25 / 0.15 | lumbar.y 7.8, ankle_R.y 7.3, ankle_L.y 7.3 | 0 | 0.01 | 0.00 | 0.121 / 0.565 |
+| V2-198-92 | 4.00 | 4.0–4.0 | 0.21 | 0.25 / 0.14 | lumbar.y 8.1, ankle_R.y 7.3, ankle_L.y 7.3 | 0 | 0.01 | 0.00 | 0.105 / 0.479 |
+| V2-long-legs | 4.00 | 4.0–4.0 | 1.03 | 1.08 / 0.16 | lumbar.y 7.4, ankle_R.y 7.3, ankle_L.y 7.3 | 0 | 0.01 | 0.00 | 0.127 / 0.605 |
+| V2-short-legs | 4.00 | 4.0–4.0 | 0.17 | 0.25 / 0.16 | lumbar.y 7.8, ankle_R.y 7.3, ankle_L.y 7.3 | 0 | 0.01 | 0.00 | 0.103 / 0.512 |
+| V1-matched | 4.00 | 4.0–4.0 | 0.13 | 0.25 / 0.15 | lumbar.y 7.8, ankle_R.y 7.3, ankle_L.y 7.3 | 0 | 0.01 | 0.00 | 0.111 / 0.466 |
 
 ## 3. No-step recovery boundary (S7): highest impulse recovered in place / first impulse not recovered (N·s), thorax 100 ms; body-normalised Δv = J/M (m/s)
 
@@ -96,19 +96,19 @@
 | roll | 4 | recovered | 0.00 | 0.3 | 14.7 / 0.7 |
 | roll | 8 | recovered | 0.00 | 0.3 | 27.4 / 2.3 |
 | roll | 12 | recovered | 0.33 | 4.2 | 34.8 / 7.1 |
-| roll | 16 | foot relocated | — | 23.8 | 43.5 / 1.3 |
+| roll | 16 | foot relocated | — | 23.8 | 43.5 / 1.4 |
 | yaw | 4 | recovered | 0.00 | 0.3 | 37.0 / 0.7 |
 | yaw | 8 | recovered | 0.00 | 0.4 | 68.5 / 1.0 |
 | yaw | 12 | recovered | 0.00 | 7.6 | 89.8 / 2.6 |
-| yaw | 16 | foot relocated | — | 43.4 | 90.8 / 0.8 |
+| yaw | 16 | foot relocated | — | 46.4 | 90.8 / 1.0 |
 
 ## 7. Varied initial state (S5, V2-REF)
 
 | offset | outcome | QUIET from (s) | ξ max (cm) | foot slip (mm) | trunk final (°) | top actuator |
 |---|---|---|---|---|---|---|
 | knees 12° | stood | 0.00 | 0.4 | 0.2 | 0.0 | knee_L.y 22 % |
-| hips 10° | stood | 1.00 | 3.8 | 0.3 | 0.0 | ankle_R.y 13 % |
 | COM over ankles | stood | 0.96 | 4.0 | 0.3 | 0.0 | knee_R.y 20 % |
+| hips 10° | stood | 1.00 | 3.8 | 0.3 | 0.0 | ankle_R.y 13 % |
 | COM 7 cm ahead | stood | 0.72 | 3.0 | 0.3 | 0.0 | ankle_R.y 20 % |
 | trunk 10° flexed | stood | 0.00 | 0.4 | 0.2 | 0.0 | lumbar.y 21 % |
 | arms 30° abducted | stood | 0.00 | 0.1 | 0.3 | 0.0 | ankle_L.y 10 % |
@@ -166,8 +166,8 @@ Peak fraction of the instantaneous capacity and saturation time per axis, over t
 
 | configuration | outcome | CoP RMS AP / ML (mm) | CoP mean speed (mm/s) | CoP char. freq. (Hz) | COM RMS AP / ML (mm) |
 |---|---|---|---|---|---|
-| noiseless | stood | 0.01 / 0.01 | 0.0 | 0.02 | 0.01 / 0.01 |
 | latency 50 ms | stood | 0.02 / 0.02 | 0.0 | 0.02 | 0.02 / 0.02 |
+| noiseless | stood | 0.01 / 0.01 | 0.0 | 0.02 | 0.01 / 0.01 |
 | latency 100 ms | stood | 0.01 / 0.00 | 0.0 | 0.02 | 0.01 / 0.00 |
 | latency 150 ms | stood | 0.02 / 0.03 | 0.7 | 0.55 | 0.02 / 0.03 |
 | motor noise sd 1 N·m | stood | 3.66 / 3.42 | 83.6 | 3.29 | 2.98 / 2.75 |
@@ -178,8 +178,8 @@ Peak fraction of the instantaneous capacity and saturation time per axis, over t
 | latency 50 ms | F 10 N·s | recovered | 1.38 |
 | latency 50 ms | F 15 N·s | recovered | 1.88 |
 | latency 50 ms | R 10 N·s | recovered | 1.05 |
-| latency 100 ms | F 15 N·s | step required → fell | — |
 | latency 50 ms | R 15 N·s | recovered | 1.68 |
+| latency 100 ms | F 15 N·s | step required → fell | — |
 | latency 100 ms | F 10 N·s | recovered | 1.77 |
 | latency 100 ms | R 10 N·s | recovered | 1.04 |
 | latency 100 ms | R 15 N·s | recovered | 1.74 |
@@ -192,14 +192,14 @@ Peak fraction of the instantaneous capacity and saturation time per axis, over t
 
 | component | ms per tick |
 |---|---|
-| physics step (Jolt, 150 iterations, incl. 13 actuator constraints) | 0.624 |
-| passive tissue layer | 0.367 |
-| controller (state estimation, balance, leg IK) | 0.086 |
-| actuators (capacity, activation, motor commands, ledger) | 0.039 |
+| physics step (Jolt, 150 iterations, incl. 13 actuator constraints) | 0.620 |
+| passive tissue layer | 0.355 |
+| controller (state estimation, balance, leg IK) | 0.078 |
+| actuators (capacity, activation, motor commands, ledger) | 0.040 |
 | instrumentation (foot probes) | 0.105 |
-| measurement / hashing | 0.137 |
-| controller + actuators mean / p99 | 0.115 / 0.467 |
+| measurement / hashing | 0.132 |
+| controller + actuators mean / p99 | 0.108 / 0.507 |
 
 ## 13. Energy / authority ledger
 
-Runs: 414. Authority writes: 0. Energy residual ΔE − (W_active + W_ext − damping): max -0.285 J, min -938.23 J (negative = energy absorbed by contact / the implicit solver; never an unexplained source).
+Runs: 414. Authority writes: 0. Energy residual ΔE − (W_active + W_ext − damping): max -0.285 J, min -942.42 J (negative = energy absorbed by contact / the implicit solver; never an unexplained source).

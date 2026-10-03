@@ -20,6 +20,10 @@ export function datan(x) { let sg = 1; if (x < 0) { x = -x; sg = -1; } let inv =
   const r = 4 * s; return sg * (inv ? Math.PI / 2 - r : r); }
 export function datan2(y, x) { if (x > 0) return datan(y / x); if (x < 0) return y >= 0 ? datan(y / x) + Math.PI : datan(y / x) - Math.PI; return y > 0 ? Math.PI / 2 : y < 0 ? -Math.PI / 2 : 0; }
 export const dacos = (c) => { const x = Math.max(-1, Math.min(1, c)); return datan2(Math.sqrt(Math.max(0, 1 - x * x)), x); };
+export const dasin = (c) => { const x = Math.max(-1, Math.min(1, c)); return datan2(x, Math.sqrt(Math.max(0, 1 - x * x))); };
+// deterministic Euclidean norm of any number of components (√ of the in-order sum of squares; Math.hypot is not specified to be bit-identical
+// across engines — G3 resolution D1: the standing controller's leg IK used it and diverged browser vs Node on one push scenario)
+export const dnorm = (...a) => { let s = 0; for (let i = 0; i < a.length; i++) s += a[i] * a[i]; return Math.sqrt(s); };
 // exp by x = k·ln2 + r (|r| ≤ ln2/2), Taylor on r, then exact scaling by powers of two
 export function dexp(x) { const LN2 = 0.6931471805599453, k = Math.round(x / LN2), r = x - k * LN2; let s = 1, t = 1; for (let n = 1; n < 22; n++) { t *= r / n; s += t; }
   let p = 1; const b = k < 0 ? 0.5 : 2; for (let i = 0; i < Math.abs(k); i++) p *= b; return s * p; }

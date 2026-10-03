@@ -1,5 +1,11 @@
 # V2-G3: deliberate weight transfer report
 
+> **Superseded in part (2026-10-03).** This report describes final run 2 (15/19). After the user's resolution pass (D1–D6), the deterministic-math fix made browser = Node 4/4, and **final run 3 evaluates 16/19 (rows I, J, S still fail, preserved)**. See `G3_RESOLUTION_REPORT.md`. Two statements below are corrected there:
+> - The short-legs steady state is *not* lower. Its 94.9 % is a hold-window-start transient.
+> - The two "redundant" mechanisms are *not* redundant in the boundary cases.
+>
+> Run-2 artifacts are in `json/run2/`.
+
 **Status: G3 NOT PASSED on the pre-registered criteria v1. 15/19 rows pass on final run 2.** The criteria are in `G3_CRITERIA.md` v1, committed in `871ab62` before the final run.
 
 **Failing rows: I, J, O, S.** None is a failure of balance or of the transfer itself.
