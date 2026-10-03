@@ -46,6 +46,7 @@ function toggle() { if (done) build(); ST.playing = !ST.playing; updPlay(); }
 function updPlay() { $("play").textContent = ST.playing ? "❚❚ pause" : "▶ play"; $("play").classList.toggle("on", ST.playing); }
 function build() {
   if (SIM) SIM.destroy(); const h = VARIATION_SET.find(x => x.id === ST.human), C = CONFIGS()[ST.cfg];
+  const HZ = +new URLSearchParams(location.search).get("hz"); if (HZ) C.cfg = { ...C.cfg, hz: HZ };   // review: ?hz= shows a scenario at another physics rate (D4a)
   SPEC = applyMods(generateSpec(h), C.mods); if (C.cand && CAND_MARGINS) for (const j of SPEC.joints) j.limits.engine = engineLimits(j, CAND_MARGINS); BIND = bindData(SPEC); SIM = new G1Sim(J, SPEC, ST.key, { cfg: C.cfg, series: true }); done = false; ST.acc = 0;
   MESH = SPEC.bodies.map((b, i) => R.mesh(SIM.w.bodyTriangles(i)));
   $("joint").innerHTML = ""; for (const j of SPEC.joints) $("joint").add(new Option(j.name, j.name)); $("joint").value = ST.joint; $("joint").onchange = () => { ST.joint = $("joint").value; dirty = true; };

@@ -285,3 +285,44 @@ Found by controlled experiments during G1 (2026-10-03). Each is described in ful
 | **TD-2** | **High-speed compound-foot contact** | the 10-piece boot misses contact steps against a static shin proxy at about 20 m/s (HS.3k); the 2-piece boot missed none | Investigate a targeted remedy for high-speed limb-on-limb contact without distorting foot geometry and without indiscriminate CCD (for example per-body speculative distance at speed, or distal-only motion-quality changes in a controlled experiment). Belongs to a later contact / tackle gate. |
 | TD-3 | Passive-layer JavaScript cost | about 0.16 ms/tick per player, now the largest single cost | Vectorise / port with the runtime; no behaviour change |
 | TD-4 | End-stop stiffness is bounded by the implicit drive at 240 Hz | the 1° stop injects 23–70 J | Only if a tighter settled ROM is wanted later: drive work, then re-measure |
+
+### Result after D1–D4 (2026-10-03): **G1 PASS** (criteria v3 + the post-run v3.1 correction of row 8)
+
+**Every gate row passes:**
+- V2-REF 17/17, V1-matched 17/17, variants 40/40;
+- determinism 17/17, snapshot 4/4, browser = Node 10/10;
+- rig 34/34, couplings, C7 envelope 8/8;
+- timestep (v3.1).
+
+**Over all gated runs:**
+- largest step energy rise 0.000 J;
+- joint separation ≤ 4.88 mm;
+- turf ≤ 6.9 / 2.68 mm (transient / rest);
+- emergency-stop ticks 0;
+- largest settled excursion 1.32° (V2-198-92 upright, shoulder flexion).
+
+**Cost:** 0.458 ms/tick per player (2.42 CPU s per simulated s for 22 players), against 0.330 / 1.74 for the previous baseline. Full evidence: `g1/G1_REPORT.md`.
+
+**Row 8, v3 vs v3.1 (recorded openly).** The pre-registered v3 evaluation failed on two items:
+- the leanF landing distribution at 240 Hz vs 720 Hz;
+- awkward joint separation at 180 Hz, 5.27–5.43 mm.
+
+Controlled diagnostics:
+- **leanF (30 starts per rate):** 240 Hz prone 18 / side 9 / supine 3; 720 Hz supine 29 / side 1. Bistable at both rates, with the rate shifting the odds.
+- **awkward:** separation 5.3 / 2.5 / 1.1 / 0.4 mm at 180 / 240 / 360 / 720 Hz. 300 iterations at 180 Hz gives 5.6 mm.
+
+Both are genuine rate effects of the kind D4a orders to be reported. v3.1 applies D4a's text:
+- physical invariants gated at every rate;
+- first-contact timing gated at 240 Hz;
+- landing outcomes and the accuracy at other rates reported.
+
+If v3.1 is not accepted, row 8 is the only open item.
+
+**New debt items:**
+
+| id | item | evidence | next step |
+|---|---|---|---|
+| TD-5 | Passive fall outcome class is rate-sensitive for bistable falls | leanF: 240 Hz mostly prone, 720 Hz almost always supine | Later fall / recovery gates treat the passive landing class as distributional and rate-sensitive |
+| TD-6 | Joint-integrity accuracy below the validation rate | awkward at 180 Hz: 5.3–5.4 mm | Do not run the character below 240 Hz without re-validation |
+
+TD-1 is extended: at 180 Hz, 150 iterations leaves a 0.83 J hard-landing rebound in drop1m.

@@ -1,5 +1,7 @@
 // ═══ physchar2/gates/v2_g1_dx.js — G1 DIAGNOSTIC experiments (NOT adopted): candidate remedies measured so the open decisions can be
 // taken on evidence. Every modifier here returns a modified COPY of a spec for a diagnostic run only; the approved spec is untouched.
+import { VARIATION_SET, humanLandmarks } from "../spec/v2_human.js";
+import { bootHull, splitHullGrid } from "../spec/v2_colliders.js";
 import { V, Q } from "../core/v2_math.js";
 
 const clone = (o) => JSON.parse(JSON.stringify(o));
@@ -41,36 +43,27 @@ export const DX_CONFIGS = [
   { id: "DX-60", label: "60 velocity iterations (10-piece boot)", cfg: { velSteps: 60 } },
   { id: "DX-100", label: "100 velocity iterations (10-piece boot)", cfg: { velSteps: 100 } },
   { id: "DX-W0", label: "warm starting off", cfg: { warmStart: false } },
-  { id: "DX-B12", label: "12-piece boot (AP 4 × ML 3)", cfg: {}, mods: ["bootGridAP4xML3"] },
+  { id: "DX-B12", label: "12-piece boot (AP 4 × ML 3; Jolt default hull tolerance — its thin pieces fail the 1e-5 build)", cfg: {}, mods: ["bootGridAP4xML3"] },
 ];
-// the approved single hull, reconstructed from the spec's convex pieces (the hull of their union = the approved hull, exactly)
-export function singleHull(spec) { const s = clone(spec); for (const b of s.bodies) { if (!/^foot_/.test(b.name)) continue; const H = b.shapes.filter(x => x.type === "hull");
-  if (H.length > 1) b.shapes = [{ ...H[0], points: H.flatMap(h => h.points), note: "approved single boot hull (union of the C3 pieces)" }, ...b.shapes.filter(x => x.type !== "hull")]; } return s; }
+// the approved single hull: the ORIGINAL 27 vertices regenerated exactly from the specification (spec/v2_colliders.bootHull), independent of how
+// the spec represents the boot. (Reconstructing it as the union of the representation's pieces carried the seam-section points, which Jolt's
+// hull builder rejects at the tight 1e-5 m tolerance — "Hull building failed" in the first D1a run.)
+export function singleHull(spec) { const s = clone(spec), h = VARIATION_SET.find(x => x.id === spec.human.id), Lm = humanLandmarks(h);
+  for (const b of s.bodies) { if (!/^foot_/.test(b.name)) continue; const H = b.shapes.filter(x => x.type === "hull");
+    b.shapes = [{ ...H[0], points: bootHull(Lm, spec.bodies.find(x => x.name === b.name), b.name === "foot_R" ? 1 : -1), note: "approved single boot hull (27 vertices, regenerated)" }, ...b.shapes.filter(x => x.type !== "hull")]; }
+  return s; }
 export const BOOT_GRIDS = { C3: [[0.55], []], AP5xML2: [[0.2, 0.4, 0.6, 0.8], [0.5]], AP4xML3: [[0.25, 0.5, 0.75], [1 / 3, 2 / 3]], AP4xML2: [[0.25, 0.5, 0.75], [0.5]], AP6: [[1 / 6, 2 / 6, 3 / 6, 4 / 6, 5 / 6], []] };
 export function applyMods(spec, mods = []) { let s = spec; if (mods.includes("singleHull")) s = singleHull(s);
-  for (const m of mods) if (m.startsWith("bootGrid")) s = splitBootGrid(singleHull(s), ...BOOT_GRIDS[m.slice(8)]);
+  for (const m of mods) if (m.startsWith("bootGrid")) { s = splitBootGrid(singleHull(s), ...BOOT_GRIDS[m.slice(8)]);
+    if (m === "bootGridAP4xML3") for (const b of s.bodies) for (const x of b.shapes) if (x.type === "hull") delete x.hullTol; }   // its thin ML-third pieces fail Jolt's hull check at 1e-5: default 1 mm tolerance (diagnostic only)
   if (mods.includes("headSpheres")) s = headSpherePair(s); return s; }
 // G1 boot contact-generation study: the approved hull (union of the spec's boot pieces = the approved single hull, exactly) split on a GRID of
 // planes — AP fractions along foot z, ML fractions along foot x. Identical external geometry: every piece is hull ∩ slab and the pieces tile
 // the hull. Cut points are reduced to their in-plane convex hull (the interior ones are redundant), so the Jolt hull builder stays far
 // below its 256-vertex cap.
-export function splitBootGrid(spec, apFracs = [], mlFracs = []) {
+export function splitBootGrid(spec, apFracs = [], mlFracs = []) {   // the same splitter as the specification (spec/v2_colliders.splitHullGrid)
   const s = clone(spec);
-  const hull2 = (pts, ax) => {   // 2D convex hull (monotone chain) of points lying in the plane normal to axis ax
-    const [u, v] = ax === 2 ? [0, 1] : [1, 2], Q = pts.slice().sort((a, b) => a[u] - b[u] || a[v] - b[v]), cr = (o, a, b) => (a[u] - o[u]) * (b[v] - o[v]) - (a[v] - o[v]) * (b[u] - o[u]);
-    const lo = [], hi = []; for (const p of Q) { while (lo.length >= 2 && cr(lo.at(-2), lo.at(-1), p) <= 0) lo.pop(); lo.push(p); }
-    for (const p of Q.slice().reverse()) { while (hi.length >= 2 && cr(hi.at(-2), hi.at(-1), p) <= 0) hi.pop(); hi.push(p); }
-    return lo.slice(0, -1).concat(hi.slice(0, -1)); };
-  const cutPts = (pts, ax, c) => { const o = []; for (let i = 0; i < pts.length; i++) for (let j = i + 1; j < pts.length; j++) { const a = pts[i], d = pts[j];
-    if ((a[ax] - c) * (d[ax] - c) < 0) { const t = (c - a[ax]) / (d[ax] - a[ax]); const p = [a[0] + t * (d[0] - a[0]), a[1] + t * (d[1] - a[1]), a[2] + t * (d[2] - a[2])]; p[ax] = c; o.push(p); } }
-    return o.length > 2 ? hull2(o, ax) : o; };
-  for (const b of s.bodies) { if (!/^foot_/.test(b.name)) continue; const H = b.shapes.filter(x => x.type === "hull"), h0 = H[0], P = H.flatMap(h => h.points);
-    let pieces = [P];
-    for (const [ax, fr] of [[2, apFracs], [0, mlFracs]]) { const vs = P.map(p => p[ax]), lo = Math.min(...vs), hi = Math.max(...vs);
-      for (const f of fr) { const c = lo + f * (hi - lo), next = [];
-        for (const Q of pieces) { const qv = Q.map(p => p[ax]); if (!(Math.min(...qv) < c && Math.max(...qv) > c)) { next.push(Q); continue; }
-          const X = cutPts(Q, ax, c); next.push([...Q.filter(p => p[ax] <= c), ...X], [...Q.filter(p => p[ax] >= c), ...X]); }
-        pieces = next; } }
+  for (const b of s.bodies) { if (!/^foot_/.test(b.name)) continue; const H = b.shapes.filter(x => x.type === "hull"), h0 = H[0], pieces = splitHullGrid(H.flatMap(h => h.points), apFracs, mlFracs);
     b.shapes = [...pieces.map((pts, k) => ({ ...h0, points: pts, note: `boot grid piece ${k + 1}/${pieces.length} (AP ${apFracs.join("/")} × ML ${mlFracs.join("/")})` })), ...b.shapes.filter(x => x.type !== "hull")]; }
   return s;
 }

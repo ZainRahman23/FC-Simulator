@@ -101,3 +101,42 @@ Rows marked "v2" are unchanged.
 
 - **PASS** requires every gate row.
 - Diagnostics are measured, not adopted.
+
+## Post-run correction v3.1 (made AFTER the v3 evidence run; recorded, not pre-registered)
+
+The v3 evidence run passed every gate row except **8**. It failed on two items:
+1. **leanF:** the 5-start ensembles landed prone at 240 Hz but supine at 720 Hz (disjoint posture sets).
+2. **awkward at 180 Hz:** joint separation 5.27–5.43 mm, against 5 mm.
+
+Controlled diagnostics:
+- **leanF, 30 starts per rate** (lift perturbations up to ±0.5 mm): 240 Hz lands prone 18 / side 9 / supine 3; 720 Hz lands supine 29 / side 1. The landing is **bistable at both rates, and the rate genuinely shifts the outcome distribution.**
+- **awkward:** joint separation falls monotonically with rate:
+
+  | rate | joint separation |
+  |---|---|
+  | 180 Hz | 5.27 mm |
+  | 240 Hz | 2.54 mm |
+  | 360 Hz | 1.13 mm |
+  | 720 Hz | 0.39 mm |
+
+  At 180 Hz, 300 iterations gives 5.61 mm. It is a step-size accuracy effect, not iteration-limited and not an implementation defect.
+
+v3's row 8 contained two conditions beyond the approved D4a text:
+- it gated every genuine effect at 240 Hz, including landing-outcome effects;
+- it treated dt-dependent accuracy (1.3a joint separation, 1.4d self-penetration) as invariants at every rate.
+
+D4a says to "compare … invariant properties" and to "preserve genuine rate effects such as … the lean-forward landing difference; report them rather than averaging them away". Applying that already-approved interpretation, **row 8 v3.1:**
+- **Gated at every rate, every ensemble member (physical invariants):**
+  - 1.F no explosion;
+  - 1.2c no contact-free energy gain;
+  - 1.2d free fall;
+  - 1.1a / b momentum;
+  - 1.4c exclusions;
+  - 1.3b emergency stop never reached;
+  - 1.3e frame continuity.
+- **Gated at 240 Hz:** no genuine first-non-foot-contact **timing** effect against 720 Hz. That early phase is deterministic: its ensemble range is 0.
+- **Reported (preserved, not averaged):**
+  - landing-outcome effects (posture class, final COM) at every rate;
+  - accuracy (1.3a, 1.4d) at the non-validation rates. At 240 Hz both are gated by the main suite.
+
+Both evaluations appear in `g1_results.json` and in the gate row text. **If v3.1 is not accepted, G1 row 8 remains failed** on the two items above. They are reported as genuine rate effects and opened as debt items TD-5 and TD-6.

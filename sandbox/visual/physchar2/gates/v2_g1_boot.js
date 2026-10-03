@@ -11,20 +11,13 @@ import { V, Q, rad } from "../core/v2_math.js";
 import { V2JoltWorld } from "../core/v2_jolt.js";
 import { bodyLowest } from "../sim/v2_geom.js";
 import { splitBootHull, splitBootHull4, singleHull, splitBootGrid, BOOT_GRIDS } from "./v2_g1_dx.js";
-import { VARIATION_SET, humanLandmarks } from "../spec/v2_human.js";
-import { bootHull } from "../spec/v2_colliders.js";
 import { G1_WORLD } from "./v2_g1.js";
 
 export { singleHull };
-// the ORIGINAL approved hull vertices, regenerated exactly from the specification (spec/v2_colliders.bootHull) — independent of how the spec
-// currently represents the boot (C3: 2 pieces; D1a: 10 pieces). (A first version stripped the C3 cut plane from the union, which only works for
-// 2 pieces; rebuilding pieces from a union with section points made the pairwise cut construction blow up — stack / WASM out of memory.)
-export function originalHull(spec) { const s = singleHull(spec), h = VARIATION_SET.find(x => x.id === spec.human.id), Lm = humanLandmarks(h);
-  for (const b of s.bodies) { if (!/^foot_/.test(b.name)) continue; const hs = b.shapes.find(x => x.type === "hull"); hs.points = bootHull(Lm, spec.bodies.find(x => x.name === b.name), b.name === "foot_R" ? 1 : -1); hs.note = "approved single boot hull (27 vertices, regenerated)"; }
-  return s; }
+export const originalHull = singleHull;   // (the 27-vertex approved hull, regenerated from the spec — see gates/v2_g1_dx.js)
 export const BOOT_REPS = { R1_hull: (s) => originalHull(s), R2_split2: (s) => splitBootHull(originalHull(s), 0.55), R3_split4: (s) => splitBootGrid(originalHull(s), [0.55], [0.5]),   // same pieces as splitBootHull4 (AP 0.55 × ML mid-width), cut points hull-reduced
   // added after the root cause was found (Jolt's supporting-face rule; calc/boot_face_model.py): finer grids of the same hull
-  R4_grid10: (s) => splitBootGrid(originalHull(s), ...BOOT_GRIDS.AP5xML2), R5_grid12: (s) => splitBootGrid(originalHull(s), ...BOOT_GRIDS.AP4xML3) };
+  R4_grid10: (s) => splitBootGrid(originalHull(s), ...BOOT_GRIDS.AP5xML2), R5_grid12: (s) => { const x = splitBootGrid(originalHull(s), ...BOOT_GRIDS.AP4xML3); for (const b of x.bodies) for (const h of b.shapes) if (h.type === "hull") delete h.hullTol; return x; } };   // R5: Jolt default hull tolerance (its thin pieces fail the 1e-5 build)
 // explicit (the V2 world default changed to S3 when C3 was adopted): S0 = Jolt defaults (reduction ON, cache ON)
 export const BOOT_SETTINGS = { S0_default: { manifoldReduction: true, pairCache: true }, S1_reductionOff: { manifoldReduction: false, pairCache: true }, S2_cacheOff: { manifoldReduction: true, pairCache: false },
   S3_bothOff: { manifoldReduction: false, pairCache: false }, S4_edgeRemoval: { manifoldReduction: true, pairCache: true, enhancedEdge: true } };
