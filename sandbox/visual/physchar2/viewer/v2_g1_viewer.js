@@ -10,14 +10,16 @@ import { scenarioChecks, hsChecks } from "../gates/v2_g1_checks.js";
 import { engineLimits } from "../spec/v2_joints.js";
 import { DX_CONFIGS, applyMods } from "../gates/v2_g1_dx.js";
 import { createGL } from "./v2_gl.js";
+import { AnkleProbe } from "../gates/v2_g1_ankle.js";
 
 const $ = (id) => document.getElementById(id), D = 180 / Math.PI;
 const canvas = $("gl"), ov = $("ov"), R = createGL(canvas), g2 = ov.getContext("2d"), plot = $("plot"), pg = plot.getContext("2d");
 const bodyColor = (b) => { if (b.side === "L") return [0.32, 0.55, 0.95]; if (b.side === "R") return [0.95, 0.42, 0.32]; return { pelvis: [0.55, 0.72, 0.5], abdomen: [0.5, 0.66, 0.6], thorax: [0.45, 0.62, 0.68], head: [0.75, 0.68, 0.5] }[b.name] || [0.6, 0.6, 0.6]; };
 const ST = { key: "upright", human: "V2-REF", cfg: "ref", playing: false, speed: 1, acc: 0, cam: { yaw: 35, pitch: 14, dist: 3.4, target: [0, 0.6, 0], fov: 0.62, follow: true }, joint: "knee_R",
   show: { bodies: true, skeleton: false, colliders: false, centres: true, axes: false, limits: false, contacts: true, normals: true, pen: true, com: true, coms: false, vel: false, ground: true, names: false } };
-let J = null, NODE = null, SPEC = null, SIM = null, MESH = [], BIND = null, dirty = true, done = false, REFCFG = { velSteps: G1_WORLD.velSteps }, CAND_MARGINS = null;
+let PROBE = null, PSIDE = null, J = null, NODE = null, SPEC = null, SIM = null, MESH = [], BIND = null, dirty = true, done = false, REFCFG = { velSteps: G1_WORLD.velSteps }, CAND_MARGINS = null;
 const checksFor = (r, key) => (SCENARIOS[key].group === "envelope" ? hsChecks(r, SCENARIOS[key]) : scenarioChecks(r, SCENARIOS[key]));
+PSIDE = ((p) => (p === "L" || p === "R" ? p : null))(new URLSearchParams(location.search).get("probe"));
 const CAMS = { front: { yaw: 0, pitch: 6 }, side: { yaw: 90, pitch: 6 }, three: { yaw: 35, pitch: 16 }, top: { yaw: 0, pitch: 88 } };
 const CONFIGS = () => ({ ref: { label: `G1 gate — validated baseline (240 Hz, ${REFCFG.velSteps} velocity iterations, 10-piece boot)`, cfg: { ...REFCFG }, mods: [] },
   "DX-PREV": { label: "diagnostic: previous baseline (C3 two-piece boot, 60 iterations)", ...pick("DX-PREV") }, "DX-C3": { label: "diagnostic: C3 two-piece boot (150 iterations)", ...pick("DX-C3") },
@@ -48,12 +50,13 @@ function build() {
   if (SIM) SIM.destroy(); const h = VARIATION_SET.find(x => x.id === ST.human), C = CONFIGS()[ST.cfg];
   const HZ = +new URLSearchParams(location.search).get("hz"); if (HZ) C.cfg = { ...C.cfg, hz: HZ };   // review: ?hz= shows a scenario at another physics rate (D4a)
   SPEC = applyMods(generateSpec(h), C.mods); if (C.cand && CAND_MARGINS) for (const j of SPEC.joints) j.limits.engine = engineLimits(j, CAND_MARGINS); BIND = bindData(SPEC); SIM = new G1Sim(J, SPEC, ST.key, { cfg: C.cfg, series: true }); done = false; ST.acc = 0;
+  PROBE = PSIDE ? new AnkleProbe(SIM, PSIDE) : null; $("probe_box").style.display = PROBE ? "" : "none";   // ?probe=L|R: foot / ankle instrument (measurement only: reads the state after each tick)
   MESH = SPEC.bodies.map((b, i) => R.mesh(SIM.w.bodyTriangles(i)));
   $("joint").innerHTML = ""; for (const j of SPEC.joints) $("joint").add(new Option(j.name, j.name)); $("joint").value = ST.joint; $("joint").onchange = () => { ST.joint = $("joint").value; dirty = true; };
   $("scnote").textContent = SCENARIOS[ST.key].note; $("hash").textContent = "run the scenario to the end to compare"; $("hash").className = "mono"; $("live_checks").textContent = "—";
   nodePanel(); dirty = true;
 }
-function tick(n) { for (let i = 0; i < n; i++) { if (!SIM.tick()) { finish(); break; } } dirty = true; }
+function tick(n) { for (let i = 0; i < n; i++) { if (PROBE) PROBE.before(); if (!SIM.tick()) { if (PROBE) PROBE.pre = null; finish(); break; } if (PROBE) PROBE.after(); } dirty = true; }
 function seek(n) { const was = ST.playing; build(); ST.playing = false; tick(Math.round(n)); ST.playing = was && !done; updPlay(); }
 function finish() { if (done) return; done = true; ST.playing = false; updPlay(); const r = SIM.summary(), cs = checksFor(r, ST.key), nr = nodeRun();
   const ok = nr && nr.hash === r.hash; $("hash").className = "mono " + (nr ? (ok ? "ok" : "bad") : ""); $("hash").innerHTML = nr ? `<b>${ok ? "BROWSER = NODE" : "BROWSER ≠ NODE"}</b><br>browser ${r.hash} · node ${nr.hash}` : `browser ${r.hash} (no Node run for this combination)`;
@@ -91,6 +94,7 @@ function frame() {
   if (ST.show.axes) for (const j of SPEC.joints) { const p = at(j), l = 0.08, F1w = Q.mul(S[j.parentIndex].rot, j.F1), F2w = Q.mul(S[j.childIndex].rot, j.F2);
     push(p, V.add(p, V.sc(Q.rot(F2w, [1, 0, 0]), l)), [1, 0.3, 0.3, 1]); push(p, V.add(p, V.sc(Q.rot(F1w, [0, 1, 0]), l)), [0.3, 1, 0.3, 1]); if (!j.locked.includes("z")) push(p, V.add(p, V.sc(Q.rot(F1w, [0, 0, 1]), l * 0.8)), [0.35, 0.55, 1, 1]); }
   if (ST.show.limits) { const j = SPEC.joints.find(x => x.name === ST.joint); if (j) drawLimits(j, S, push, at(j), labels); }
+  if (PROBE && PROBE.rows.length) probeOverlay(PROBE.rows.at(-1), S, push, sph, labels, H);
   // contacts of the last step (pre-solve manifolds): points, normals, depth
   const C = SIM.lastContacts || [], slop = SPEC.contact.slop; let deepest = null;
   if (ST.show.contacts || ST.show.normals || ST.show.pen) for (const k of C) { const col = k.depth > slop ? [1, 0.3, 0.3, 1] : k.depth > -0.0005 ? [1, 0.83, 0.3, 1] : [0.48, 0.51, 0.56, 0.8];
@@ -105,7 +109,7 @@ function frame() {
   for (const lb of labels) { const s = R.project(lb.p, ov.width, ov.height); if (!s) continue; g2.font = `${12 * dpr}px ui-sans-serif, system-ui`; if (lb.bg) { const wd = g2.measureText(lb.t).width; g2.fillStyle = "rgba(0,0,0,0.6)"; g2.fillRect(s[0] + 4, s[1] - 13 * dpr, wd + 6, 16 * dpr); } g2.fillStyle = lb.c; g2.fillText(lb.t, s[0] + 6, s[1]); }
   g2.fillStyle = "rgba(255,255,255,0.8)"; g2.font = `${12 * dpr}px ui-sans-serif, system-ui`;
   g2.fillText(`${SPEC.human.id} · ${SCENARIOS[ST.key].title} · ${CONFIGS()[ST.cfg].label} · t = ${SIM.last.t.toFixed(3)} s${done ? " (end)" : ""}`, 10 * dpr, 20 * dpr);
-  readout(); drawPlot(); $("clock").textContent = `t = ${SIM.last.t.toFixed(3)} s · tick ${SIM.n} / ${SIM.N} · ${SIM.cfg.hz} Hz · ${SIM.cfg.velSteps} velocity iterations`; $("seek").value = Math.round(SIM.n / SIM.N * 1000);
+  readout(); drawPlot(); if (PROBE) probePanel(); $("clock").textContent = `t = ${SIM.last.t.toFixed(3)} s · tick ${SIM.n} / ${SIM.N} · ${SIM.cfg.hz} Hz · ${SIM.cfg.velSteps} velocity iterations`; $("seek").value = Math.round(SIM.n / SIM.N * 1000);
 }
 const name = (i) => (i < 0 ? "turf" : SPEC.bodies[i].name), sub = (i, k) => (i >= 0 && SPEC.bodies[i].shapes.length > 1 ? `[${k}]` : "");
 function drawLimits(j, S, push, p, labels) {
@@ -130,6 +134,31 @@ function drawPlot() { const s = SIM.series, w = plot.width = plot.clientWidth * 
   pg.strokeStyle = "#333"; pg.beginPath(); pg.moveTo(0, sy(0)); pg.lineTo(w, sy(0)); pg.stroke();
   for (const [a, col] of ser) { pg.strokeStyle = col; pg.lineWidth = devicePixelRatio; pg.beginPath(); a.forEach((v, i) => { const X = sx(s.t[i]), Y = sy(v); i ? pg.lineTo(X, Y) : pg.moveTo(X, Y); }); pg.stroke(); }
   pg.fillStyle = "#9aa1ad"; pg.font = `${10 * devicePixelRatio}px ui-sans-serif`; pg.fillText(`${hi.toFixed(0)} J`, 4, 12 * devicePixelRatio); pg.fillText(`${lo.toFixed(0)} J`, 4, h - 4); }
+// ── ankle probe (?probe=L|R): CoP, turf force, the CoP → ankle strut line, piece contact states, torque decomposition ──
+function probeOverlay(r, S, push, sph, labels, H) {
+  const fi = PROBE.fi, ank = S[fi].pos, F = r.Jc.map(x => x / r.dt), Fn = Math.hypot(...F), mg = SPEC.bodies.reduce((a, b) => a + b.mass, 0) * 9.81;
+  if (r.cop && r.JyN > 20) { const cop = r.cop; sph(cop, 0.011, [1, 0.2, 0.9, 1]);
+    push(cop, V.add(cop, V.sc(F, 0.5 / mg)), [1, 0.35, 0.95, 1]);                                       // turf force on the foot, 0.5 m = body weight
+    push(cop, ank, [0.4, 1, 1, 0.9]);                                                                    // strut line CoP → ankle (aligned with the force = torque-free)
+    labels.push({ p: V.add(cop, [0.02, 0.05, 0]), t: `CoP ${(r.copFrac * 100).toFixed(0)} % · F ${Fn.toFixed(0)} N · line of action ${(Math.abs(r.McA_pitch) / Fn * 1000).toFixed(0)} mm from ankle`, c: "#f9c", bg: true }); }
+  const pcs = PROBE.pieces, Rq = S[fi].rot; for (const pc of r.pieces) { const P = pcs.find(x => x.sub === pc.sub); if (!P) continue; const lo = P.P.reduce((a, q) => (q[1] < a[1] ? q : a), P.P[0]), wp = V.add(ank, Q.rot(Rq, [P.cx, lo[1], P.cz]));
+    sph(wp, pc.touch ? 0.006 : 0.004, pc.touch ? [0.3, 0.55, 1, 1] : pc.spec ? [0.6, 0.6, 0.6, 0.9] : [0.25, 0.25, 0.25, 0.5]); }
+  sph(ank, 0.013, [0.4, 1, 1, 1]);
+  labels.push({ p: V.add(ank, [0.03, 0.08, 0]), t: `foot_${PROBE.side}: heel ${r.heelMm.toFixed(0)} mm · pitch ${r.pitchDeg.toFixed(1)}° · ankle ${r.dfDeg.toFixed(1)}° (${r.dfDeg >= 0 ? "DF" : "PF"})`, c: "#9ff", bg: true });
+}
+function probePanel() { const R = PROBE.rows, r = R.at(-1); if (!r) { $("probe").innerHTML = ""; return; } const i0 = R.findIndex(x => x.pieces.some(p => p.touch)), cum = (k) => (i0 < 0 ? 0 : R.slice(i0).reduce((a, x) => a + x[k], 0));
+  const f = (x, n = 1) => (x == null || !Number.isFinite(x) ? "—" : x.toFixed(n)), Fn = Math.hypot(r.JyN, r.JxzN);
+  const rows = [["heel / forefoot / ankle height", `${f(r.heelMm, 0)} / ${f(r.foreMm, 1)} / ${f(r.ankleYmm, 0)} mm`], ["foot pitch (+ heel up) · rate", `${f(r.pitchDeg)}° · ${f(r.footPitchRate, 2)} rad/s`], ["shank tilt · knee flexion", `${f(r.shankPitchDeg)}° · ${f(r.kneeDeg, 0)}°`],
+    ["ankle DF (+) / PF (−) · ω_DF", `${f(r.dfDeg)}° · ${f(r.wDF, 2)} rad/s`], ["turf force on foot vertical / horizontal", `${f(r.JyN, 0)} / ${f(r.JxzN, 0)} N`], ["CoP along boot (0 heel → 1 toe)", r.copFrac != null && r.JyN > 20 ? `${f(r.copFrac, 2)} (ankle at ${f(-PROBE.z0 / PROBE.len, 2)})` : "—"],
+    ["contact moment about ankle (+ heel up)", `${f(r.McA_pitch, 2)} N·m${Fn > 20 ? ` · line of action ${f(Math.abs(r.McA_pitch) / Fn * 1000, 0)} mm` : ""}`],
+    ["ankle drive applied (DF+)", `${f(r.motorDF, 2)} N·m`], ["… elastic law · end-stop part", `${f(r.lawTau, 2)} · ${f(r.stopTau, 2)} N·m`], ["… damping", `${f(r.dampDF, 2)} N·m`], ["emergency stop (Jolt limit)", `${f(r.limDF, 2)} N·m${r.limAny ? " ACTIVE" : ""}`],
+    ["ankle elastic energy U", `${f(r.U_ankle, 3)} J`], ["work on foot since contact: shank point / ankle rows / turf+self", `${f(cum("W_point"), 2)} / ${f(cum("W_rows"), 2)} / ${f(cum("W_ext"), 2)} J`],
+    ["boot pieces touching (speculative)", `${r.pieces.filter(p => p.touch).map(p => p.sub).join(" ") || "—"} (${r.pieces.filter(p => p.spec && !p.touch).map(p => p.sub).join(" ") || "—"})`], ["other manifolds on the foot", r.otherContacts.join(", ") || "—"]];
+  $("probe").innerHTML = rows.map(x => `<tr><td>${x[0]}</td><td class="mono">${x[1]}</td></tr>`).join("");
+  const c = $("aplot"), g = c.getContext("2d"), w = c.width = c.clientWidth * devicePixelRatio, h = c.height = c.clientHeight * devicePixelRatio; g.clearRect(0, 0, w, h); if (R.length < 2) return;
+  const T0 = R[0].t, T1 = Math.max(R.at(-1).t, T0 + 0.5), sx = (t) => (t - T0) / (T1 - T0) * w, ser = [["heelMm", 0, 300, "#9ff"], ["pitchDeg", 0, 90, "#fff"], ["dfDeg", -80, 20, "#fc6"], ["JyN", 0, 1500, "#f9c"], ["motorDF", -40, 120, "#7f7"]];
+  for (const [k, lo, hi, col] of ser) { g.strokeStyle = col; g.lineWidth = devicePixelRatio; g.beginPath(); R.forEach((x, i) => { const Y = h - 4 - (Math.max(lo, Math.min(hi, x[k])) - lo) / (hi - lo) * (h - 8), X = sx(x.t); i ? g.lineTo(X, Y) : g.moveTo(X, Y); }); g.stroke(); }
+}
 function orbit() {
   let drag = null; canvas.onmousedown = (e) => { drag = { x: e.clientX, y: e.clientY, pan: e.shiftKey || e.button === 2 }; e.preventDefault(); }; canvas.oncontextmenu = (e) => e.preventDefault(); window.onmouseup = () => { drag = null; };
   window.onmousemove = (e) => { if (!drag) return; const dx = e.clientX - drag.x, dy = e.clientY - drag.y; drag.x = e.clientX; drag.y = e.clientY;
@@ -143,6 +172,7 @@ function loop() { if (ST.playing && SIM) { ST.acc += ST.speed * SIM.cfg.hz / 60;
 window.addEventListener("resize", () => { dirty = true; });
 // URL parameters for scripted captures / the headless browser = Node check:
 //   ?scenario=&human=&cfg=ref|DX-PREV|DX-C3|DX-R1|DX-60|DX-W0&t=<s>&cam=front|side|three|top|follow&dist=&yaw=&pitch=&show=a,b&hide=a,b&joint=   ·   ?check=1 runs every curated scenario
+//   ?probe=L|R  foot / ankle instrument overlay (CoP, turf force, CoP → ankle strut line, boot pieces, torque decomposition) — e.g. ?scenario=drop1m&probe=R&t=0.6&cam=side
 const qp = new URLSearchParams(location.search);
 init().then(async () => {
   if (qp.get("check")) { const C = CONFIGS().ref, rows = [], KEYS = qp.get("keys") ? qp.get("keys").split(",") : CURATED; for (const k of KEYS) { await new Promise(r => setTimeout(r, 0)); const spec = generateSpec(VARIATION_SET.find(x => x.id === "V2-REF")), s = new G1Sim(J, spec, k, { cfg: C.cfg }); while (s.tick()); const n = NODE && NODE.runs.find(r => r.human === "V2-REF" && r.key === k);
@@ -158,5 +188,5 @@ init().then(async () => {
   for (const k of ["dist", "yaw", "pitch"]) if (qp.get(k)) ST.cam[k] = +qp.get(k);
   if (qp.get("focus")) ST.cam.followBody = qp.get("focus");
   if (qp.get("target")) { ST.cam.target = qp.get("target").split(",").map(Number); ST.cam.follow = false; }
-  dirty = false; frame(); document.body.dataset.ready = "1";
+  dirty = false; frame(); if (PROBE) $("probe_box").scrollIntoView(); document.body.dataset.ready = "1";
 }).catch(e => { document.body.dataset.ready = "error"; $("hash").textContent = "ERROR: " + (e && e.stack || e); console.error(e); });

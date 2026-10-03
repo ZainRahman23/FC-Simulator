@@ -50,6 +50,12 @@ export class PassiveLayer {
     // ΔU +1.50 J in one step, net gain). With the z row the y + z rows carry the full gradient (power = Σ τᵢ·ωᵢ = −dU/dt) and the full
     // damper (c·(cos²t + sin²t)·ṡ² = c·ṡ²); the component on the locked direction is absorbed by the lock.
     for (const d of this.jd) d.rows = this.lockedRows && d.free.some(Boolean) ? [true, true, true] : d.free.slice();
+    // DIAGNOSIS-ONLY per-joint switches (counterfactual experiments; never used by the gate): opts.diagJoint = { "ankle_L": { elastic: false,
+    // stop: false, damping: false } } — elastic false removes the end-range law AND the end-stop of that joint, stop false only the C2 end-stop,
+    // damping false the viscous damper. Default: none (the validated layer is unchanged).
+    for (const d of this.jd) { const o = (opts.diagJoint || {})[d.name]; if (!o) continue;
+      for (const a of d.axes) { if (!a) continue; if (o.elastic === false) { a.tauH = [0, 0]; a.kStop = [0, 0]; } if (o.stop === false) a.kStop = [0, 0]; }
+      if (o.damping === false) d.c = 0; }
     // coupling wiring: term (joint k, axis key) ← input (joint m, anatomical key)
     const byName = Object.fromEntries(this.jd.map(d => [d.name, d]));
     this.coup = []; if (this.couplings) for (const L of COUPLING_LAWS) for (const s of ["L", "R"]) {
