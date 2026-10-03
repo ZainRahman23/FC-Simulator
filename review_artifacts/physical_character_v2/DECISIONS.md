@@ -1106,3 +1106,67 @@ The turf representation; my recommendation is PlaneShape. Then:
 - only then the ankle-law question.
 
 Candidates and their regression implications: report §13.
+
+## 2026-10-03 — Flat-plane turf adopted; G1 reopened and re-validated (user decision; source `sources/2026-10-03_user_decision_flat_plane_turf_reopen_g1.md`)
+
+### FP-1: the production turf is a Jolt `PlaneShape` (candidate 1), subject to full regression validation
+- `core/v2_jolt.js` `TURF`: plane y = 0, normal +Y, half-extent 100 m. Convex-vs-plane collision is analytic (`PlaneShape::sCollideConvexVsPlane`: no GJK / EPA, no finite bottom or side face).
+- **Unchanged:** surface height, coordinates, gravity, friction / restitution (same listener and turf material), boot / body geometry, joint topology, human parameters, solver and contact settings.
+- **Kept as diagnostic history only:** the 100 × 2 × 100 m box (`cfg.turf = "box"`; `B_TURF=box`, the default for the Investigation B tools, so every reproducer still reproduces). The box-era artifacts are in `box_turf_history/`.
+- **Not done, per the decision:**
+  - no Jolt patch (the EPA patch P2, the 175 M-pose evidence and the upstream draft are preserved, unsent);
+  - no listener guard (fix 3) and no maxPenetration change (fix 4);
+  - no ankle stiffness, no G4.
+- **Reinterpretation recorded:** ankle stiffness changed the trajectories enough to expose a pre-existing collision defect more frequently.
+
+### FP-2: G1 criteria v4 (pre-registered, `68693b9`)
+- **1.4m turf-contact validity** (gating: every non-extreme scenario, an invariant at every D4a rate, and HS.5 in the C7 envelope). Every turf manifold lies on the playable surface (turf-side points within 0.1 mm of y = 0, inside the half-extent), with its normal out of the surface (n_y ≥ 0.999). Violations are reported with tick, body, piece, normal, points and state; **nothing is deleted or modified**.
+- **1.4n turf envelope** (gating at 240 Hz): depth ≤ 10 mm; position-solver move of a turf-touching body ≤ 5 mm.
+- 1.2e passivity and 1.4k teleport: permanent report-only diagnostics.
+- Tolerances were set from healthy flat-plane development runs. The box-era 0.05 J and 5 mm were retained (45× and 3× margins).
+- **ID correction:** Investigation B's turf row "1.4j" collided with the existing isoSelfCol row 1.4j. It is renamed **1.4m**.
+
+### FP-3: G1 v4 PASS on the flat plane (`e17bc73`; `g1/G1_REVALIDATION_FLAT_PLANE.md`)
+- **G1 checks:** 0 failing gate checks; 1.S 17/17, 1.S′ 17/17, variants 40/40, determinism, snapshot, browser 10/10, rig 34/34, timestep invariants incl. 1.4m, envelope 8/8.
+- **Reversed-manifold evidence:**
+  - all 19 recorded reversed-manifold states are clean on the plane (box controls +182 … +75,766 J);
+  - 174,914 local-perturbation queries, 1,181 monitored runs (97.6 M manifolds) and 225 M native poses: 0 invalid.
+  - The GJK → EPA → bottom-face chain is structurally absent from the plane code path.
+- **Plane vs box:** no systematic difference over 254 paired runs. Heel-rise V0 is identical. Physics −7 %.
+
+### FP-4: G2 PASS on the flat plane, no material behaviour change (`13b0848`; `g2/G2_REVALIDATION_FLAT_PLANE.md`)
+- **Run:** 620/620, 12/12 behavioural rows. Row R is superseded by the approved plant change; the v2 P2 replacement is in `g3/json/g3_earlier.json`.
+- **Against the accepted box-turf G2:** 0 outcome changes and 0 push-boundary changes.
+- **Follow-ups:**
+  - the S4 yaw slip difference is near-threshold stick-slip (`tools/b_g2_yaw.mjs`);
+  - the L-sweep per-foot CoP jump is one transient at 114 N foot load (`tools/b_g2_cop.mjs`).
+- **Controller:** not tuned.
+
+### FP-5: technical debt after the flat-plane re-validation
+- **TD-12** (reversed turf manifolds) is **resolved for turf contacts** by the plane. The Jolt EPA defect remains for convex–convex pairs (self-contact, obstacles); no reversed self-contact manifold has been observed.
+- **TD-14 (new):** at 720 Hz, a self-contact convergence residual (upper-arm ↔ abdomen plus the shoulder point constraint) gives ≤ 0.21 J one-step rises in 5 V1-matched awkward ensemble members. Report-only diagnostic.
+- **TD-15 (new, from B-6):** the 180 Hz passive-layer explicit-remainder / linearisation gain under extreme triaxial end range. Seen only in k > 0 trajectories, and net dissipative over 2 steps.
+- **Out of scope:** V2-190-85 drop1m reaches the engine stop (1.3b) with either turf. V2-190-85 is not a G1 body.
+
+### FP-6: corrections and tooling caveats recorded openly
+- **`//` comments placed mid-line in this codebase's one-line declarations twice swallowed code:**
+  - the `g1_run.js` INV line: the first final G1 run crashed with a SyntaxError and was re-run;
+  - `g3_earlier.mjs`: `g1b` became undefined and it crashed.
+  - **`node --check` does not catch these for the ESM `.js` files**; comments now go on their own line.
+- **`b_plane_events` probe:** the first version compared the face height with 0 while the plane was lifted, so it raised 4,014 false "off-surface" flags. Fixed to compare with the lifted height; re-run.
+- **An ad-hoc G2 slip ranking first paired repeated `eval` / `sensing` jobs without their `eval` field**, giving nonsense pairs. It was caught before reporting. `tools/b_g2_compare.mjs` keys on group × human × scenario × eval × rep and asserts uniqueness.
+
+### FP-7: G3 (criteria v2, k = 0) on the flat plane: 18/19, row J2 fails; STOPPED for the user's decision on J2 (`g3/G3_REVALIDATION_FLAT_PLANE.md`)
+- **Configuration:** pre-registered addendum `5f91cb1` (flat plane, ankle k = 0; the v2 rows are unchanged). This is the first evaluation of criteria v2.
+- **Passing rows:** every support-state and safety row (A, B, C, D, E2, F2, G, H, I2 8/8, K, L, M, N, O, P2, Q) and **S2** (isolated: 0.046 ms controller + actuators).
+- **Against box run 3:** 0 outcome changes / 308. Integrity: 0 invalid turf manifolds over 324 G3 runs.
+- **J2 fails literally, identically on the box:**
+  - commanded-CoP Δ before sliding > 0.1 mm in 79/81 pairs. This includes 0.104 mm measured in the shared phase, where both trials are the same physical run (2 × the common state's 0.052 mm lateral offset);
+  - the 14 falling excess-push pairs exceed 2.0 mm (12–924 mm) after the loss of balance.
+- **Direct probe (`tools/b_ctrl_mirror.mjs`):** the controller is mirror-equivariant to numerical tolerance up to the fall (commanded CoP 1.7e-4 mm, λ 5.6e-17, torques ≤ 7e-4 N·m).
+- **Falling pairs:** identical abort ticks, falls ≤ 1 tick apart, Δpos ≤ 0.27 mm up to the abort.
+- **Cause:** the J2 operationalisation (written by me in criteria v2) compares two physical runs and bands falls. It is not a plane or controller defect.
+- **Options put to the user:** A (recommended) J3: a direct controller probe plus the D4 floor numbers, with falls banded up to the abort; B keep J2 (G3 cannot pass without an engine change); C accept with J2 as an explained deviation.
+- **Observation (new, minor):** after a fall, with leg-IK targets 0.46–2.3 m out of reach, the leg IK is not mirror-exact (torque differences up to 654 N·m from 0.15 s after the fall). It affects no gate. Noted for G4 swing-leg IK.
+- **Ankle re-investigation:** **not started** (the user decision requires a clean G1 → G3). Its plan is drafted (`ankle_plane/ANKLE_REINVESTIGATION_PREREG.md`, DRAFT).
+- **Probe correction recorded:** the first version of `b_ctrl_mirror` snapshot the controller state after the previous tick, so it injected the sensed foot loads one tick stale. It also kept a mirrored polygon's reversed winding. Both were fixed before any result was used.

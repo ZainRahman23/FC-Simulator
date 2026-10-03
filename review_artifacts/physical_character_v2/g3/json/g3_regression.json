@@ -1,17 +1,40 @@
 {
  "g0": true,
  "g0Checks": 4,
- "g1curated": true,
- "g1full": true,
+ "g1curated": false,
+ "g1full": false,
  "g1HashesCompared": 227,
- "g1HashDiffs": [],
+ "g1HashDiffs": [
+  ".runs[upright|V2-REF|240]",
+  ".runs[leanF|V2-REF|240]",
+  ".runs[leanB|V2-REF|240]",
+  ".runs[leanL|V2-REF|240]",
+  ".runs[leanR|V2-REF|240]",
+  ".runs[perturb|V2-REF|240]",
+  ".runs[singleLeg|V2-REF|240]",
+  ".runs[dropA|V2-REF|240]",
+  ".runs[sideFirst|V2-REF|240]",
+  ".runs[shoulderFirst|V2-REF|240]",
+  ".runs[rotating|V2-REF|240]",
+  ".runs[awkward|V2-REF|240]",
+  ".runs[flatSupine|V2-REF|240]",
+  ".runs[drop1m|V2-REF|240]",
+  ".runs[impact15|V2-REF|240]",
+  ".runs[upright|V1-matched|240]",
+  ".runs[leanF|V1-matched|240]",
+  ".runs[leanB|V1-matched|240]",
+  ".runs[leanL|V1-matched|240]",
+  ".runs[leanR|V1-matched|240]"
+ ],
+ "g1HashDiffCount": 208,
  "g1AllPassCommitted": true,
  "g1AllPassNew": true,
+ "note": "Compared with the ACCEPTED box-turf G1 (post-D1G1, box_turf_history/g1); every difference is the approved plant change of the flat-plane decision (2026-10-03: turf = Jolt PlaneShape; G1 reopened and revalidated under criteria v4). G2 row R ('G1 unchanged') is superseded by that approved change; the replacement is G1 criteria v4 PASS + browser = Node (G3 criteria v2 row P2).",
  "g2": {
   "n": 620,
-  "same": 620,
+  "same": 0,
   "committedJobs": 620,
-  "diffs": [],
-  "note": "D1 (user-approved deterministic controller math) changed every G2 hash at the last bit; G2 was re-validated: post-fix G2 PASS 13/13 (clean run), outcomes 620/620 identical to the accepted run; the two post-fix G2 runs (contended + clean) are 620/620 hash-identical, and no code changed between them and G3 run 3. Baseline for this row = the re-validated post-fix G2."
+  "outcomesSame": 620,
+  "note": "Baseline = the accepted post-D1G1 box-turf G2. Hashes differ by the approved flat-plane turf change (G3 v1 row P is superseded; criteria v2 row P2 replaces it); outcomes compared separately."
  }
 }

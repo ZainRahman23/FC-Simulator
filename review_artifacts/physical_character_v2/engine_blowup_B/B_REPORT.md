@@ -634,3 +634,16 @@ The accepted plant's tilted manifolds (EPA exit A, a sliver triangle toward a bo
 So: no systematic regression in ordinary contact, but outcomes change, so **G1 → G2 → G3 must be re-run** before any acceptance.
 
 *(§8a is completed below.)*
+
+## Addendum (2026-10-03): the decision and what followed
+
+- **Decision:** the user adopted candidate 1, the Jolt `PlaneShape` turf (`../sources/2026-10-03_user_decision_flat_plane_turf_reopen_g1.md`).
+- **Not done, per the decision:** no Jolt patch; P2, the 175 M-pose battery and the upstream draft are preserved and unsent; fixes 3 and 4 were not adopted.
+- **Box turf:** remains as diagnostic history (`B_TURF=box`, the default of these tools, so every reproducer here still reproduces).
+- **Re-validation on the plane:**
+  - **G1 v4 PASS** (`../g1/G1_REVALIDATION_FLAT_PLANE.md`): all 19 recorded reversed-manifold states of this investigation are clean on the plane; the box controls reproduce +182 … +75,766 J. Also 0 invalid in 174,914 local-perturbation queries, 1,181 monitored runs and 225 M native poses;
+  - **G2 PASS** (`../g2/G2_REVALIDATION_FLAT_PLANE.md`);
+  - **G3 18/19** on a criteria-operationalisation issue of row J2 that is identical on the box (`../g3/G3_REVALIDATION_FLAT_PLANE.md`).
+- **Turf-validity invariant:** promoted to gate row **1.4m**. This report called it "1.4j"; it was renamed because 1.4j already exists.
+- **TD-12:** resolved for turf contacts. The EPA defect remains for convex–convex pairs (self-contact, obstacles).
+- **Reinterpretation (user):** ankle stiffness changed the trajectories enough to expose a pre-existing collision defect more frequently.
