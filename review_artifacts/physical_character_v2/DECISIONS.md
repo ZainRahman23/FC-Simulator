@@ -1023,7 +1023,7 @@ Report: `g3/G3_ANKLE_LAW_STOP_REPORT.md`. Evidence: `ankle_law_k010_validation/`
 
 ### B-1: root cause — a Jolt v5.6.0 narrow-phase failure on the 100 m turf box (not the ankle law, not an engine joint)
 
-**Mechanism** (13 events, k = 0 … 0.5, 240 / 360 / 720 Hz, 30 / 60 / 150 iterations, all identical):
+**Mechanism** (12 simulation events + 1 identity-preserving demonstration, k = 0 … 0.5, 240 / 360 / 720 Hz, 30 / 60 / 150 iterations, all identical):
 1. A boot hull piece sits in the 20 mm speculative band of the 100 × 2 × 100 m turf box.
 2. GJK's relative termination test (|v|² ≤ FLT_EPSILON·max|y|², with max|y| ≈ 71 m: a 24.5 mm threshold) declares an overlap and hands the query to EPA.
 3. EPA's polytope is a slab ~100 m wide and a few cm thick. Float32 resolution (~7.6 µm at 71 m) cannot certify convergence on the true face.
@@ -1046,7 +1046,10 @@ Report: `g3/G3_ANKLE_LAW_STOP_REPORT.md`. Evidence: `ankle_law_k010_validation/`
   - 4 distinct reversed-manifold blow-ups in 1,054 runs: +6,874 J, +2,241 J and +443 J at 720 Hz; +205 J at **240 Hz with 60 iterations**;
   - 7 of 254 accepted-configuration runs contain benign tilted invalid manifolds.
 - **Direct demonstration:** the V2-REF drop1m resting state, untouched, with only the static turf slid 341 mm (a physically identical state) → the next step reverses the manifold, teleports the boot 160 mm / 173° and adds **+34,300 J**.
-- G2: 620 jobs, 16.3 M turf manifolds checked, **0 invalid**, state hashes identical to the accepted post-D1G1 baseline. G3: see the report.
+- G2: 620 jobs, 16.3 M turf manifolds checked, **0 invalid**, state hashes identical to the accepted post-D1G1 baseline.
+- G3: 332 jobs, 20.9 M turf manifolds checked, **0 invalid**.
+- G1's own iteration study (102 runs): no reversed manifold.
+- Equal-denominator perturbation set (600 identical runs): k = 0 → 3 events, k = 0.15 → 8 (up to +75,766 J). Stiffness raises the frequency; the mechanism is the same.
 - The accepted G1 run list passes as measured, but G1's physics-integrity claim does not hold in general.
 
 ### B-3: permanent observation-only invariants (report-only rows; physics bit-identical, verified by state hash)
@@ -1074,6 +1077,25 @@ They remain report-only until the user gates them.
    - `b_reduce` scaffolding typo.
 3. **Claim correction in the draft report:** the accepted-plant event count was first written as "5 of ~2,800"; it is **4 distinct runs of 1,054**.
 4. **Production note (not changed):** `V2JoltWorld.setPose` allocates two Jolt temporaries per call. Harmless in production (initial conditions only); diagnostics use reused temporaries.
+
+### B-6: autonomous continuation — falsification and candidate evidence (user instruction 2026-10-03; no production decision taken)
+
+- **The core defect is EPA's final-triangle selection, not the 100 m scale alone.**
+  - GJK enters EPA through the relative test (100 m box) or a false enclosing tetrahedron (4–20 m boxes).
+  - EPA exits on the empty queue ("exit E") with an unconverged opposite-facing triangle. A sliver-triangle "exit A" variant gives the accepted plant's tilted manifolds.
+- **Falsified:**
+  - a smaller turf box: 8 m / 20 m boxes give *more* reversals, 332 / 1,656 per 35 M poses vs 20 for the 100 m box;
+  - convex radius required (no: 0 still reverses);
+  - speculative contact required (no: penetrating poses still reverse);
+  - compound decomposition required (no: the unsplit hull reverses);
+  - any convex shape (no: cuboids show 0 in 80 M poses; irregular hulls are needed).
+- **Opt-in diagnostic EPA patch P2** (return the best triangle): 2,110 → **0** reversals over 175 M flush poses × 5 turf geometries; all 8 fixtures corrected. A first version kept a stale `flip_v_sign` (1 thin-box case); fixed and recorded.
+- **P1** (no GJK relative test) is not viable: it creates new reversals.
+- **PlaneShape turf** (diagnostic SetShape, not adopted): **0 invalid manifolds** in every sweep, including the k = 0 perturbation set where the box had 3 events. Ordinary-contact metrics unchanged in distribution; chaotic-fall outcomes change.
+- **Listener guard** (diagnostic): all events neutralised; the defect still occurs.
+- **mMaxPenetrationDistance 0.02 m** (diagnostic): consequence < 1 J; the defect remains.
+- **Second, separate mechanism** recorded: at **180 Hz only** and in k > 0 trajectories, the passive layer's explicit remainder and linearisation under extreme triaxial end range gain energy in one step (up to +161 J) and lose more in the next. No contact is involved. It is not the blow-up class. It is a known-rate accuracy limit (TD-1 family); flagged.
+- Accepted Jolt v5.6.0 is the latest release. EPA is unchanged on Jolt master, so there is no upgrade path; an upstream issue draft is in `engine_blowup_B/UPSTREAM_JOLT_ISSUE_DRAFT.md` (**not sent**).
 
 ### Decision requested (not taken)
 

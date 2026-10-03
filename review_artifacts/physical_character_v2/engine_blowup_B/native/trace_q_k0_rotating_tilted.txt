@@ -1,0 +1,15 @@
+  [GJK] exit: origin inside tetrahedron -> overlap (0)
+ [GJK step] core distance 0 mm (combined radius 25 mm) -> Indeterminate -> EPA
+  [EPA] start: GJK simplex points 4: (-42.55 -2.989 -56.251) (42.607 5.0057 56.438) (56.463 -0.028814 -42.549) (42.672 2.9953 56.45)
+  [EPA]   tri verts (-42.55 -2.989 -56.251) (56.463 -0.028814 -42.549) (42.672 2.9953 56.45) | new support w (-42.545 -3.0074 -56.251) | hull points 5
+  [EPA] iter: tri n (251.62 -9991.04 340.247) |n| 10000 closestLenSq 3.22507526e-06 dot 203.255859 dist 20.3256 mm newTris 3 defect 0
+  [EPA]   tri verts (56.463 -0.028814 -42.549) (42.672 2.9953 56.45) (-42.545 -3.0074 -56.251) | new support w (56.468 -0.047226 -42.549) | hull points 6
+  [EPA] iter: tri n (253.443 -9990.52 340.485) |n| 9999.53 closestLenSq 0.000122655183 dot 296.042969 dist 29.6057 mm newTris 4 defect 0
+  [EPA]   tri verts (42.672 2.9953 56.45) (-42.545 -3.0074 -56.251) (56.468 -0.047226 -42.549) | new support w (42.677 2.9769 56.45) | hull points 7
+  [EPA] iter: tri n (251.368 -9991.11 342.085) |n| 10000.1 closestLenSq 0.000122707715 dot 296.076172 dist 29.6072 mm newTris 4 defect 0
+  [EPA]   tri verts (42.607 5.0057 56.438) (-42.55 -2.989 -56.251) (42.672 2.9953 56.45) | new support w (-56.408 0.040595 42.814) | hull points 8
+  [EPA] iter: tri n (-226.645 -6.30337 171.72) |n| 284.421 closestLenSq 0.000130099332 dot 20136.2734 dist 70797.3 mm newTris 5 defect 0
+  [EPA] exit A: next triangle closestLenSq 1.00186455 >= closest_dist_sq 0.000413129397 (converged on last)
+  [EPA] result before flip: outV (-0.00908912 -0.000252783 0.00688647) last->n (-226.645 -6.30337 171.72) centroid.n 3.24414062 flip 0
+hull convex radius used by Jolt: 0.00499999989 (requested 0.00499999989), points 28
+hit: axis -0.706926 -0.022634 0.706926 depth -8.590386 mm | p1.y -1.3351 mm p2.y -1.5297 mm | box face y: -2.000 0.000 0.000 -2.000

@@ -53,7 +53,7 @@
  #ifdef JPH_GJK_DEBUG
  				Trace("Converged");
 --- /private/tmp/claude-501/-Users-zainrahman/8af3fa3f-f134-4178-b7ae-7855027dda6e/scratchpad/b/EPAPenetrationDepth.h.orig	2026-10-03 17:45:17
-+++ Geometry/EPAPenetrationDepth.h	2026-10-03 18:24:34
++++ Geometry/EPAPenetrationDepth.h	2026-10-03 18:53:43
 @@ -3,6 +3,8 @@
  // SPDX-License-Identifier: MIT
  
@@ -160,7 +160,7 @@
  		// Determine closest points, if last == null it means the hull was a plane so there's no penetration
  		if (last == nullptr)
  			return false;
-+		if (jph_b_p2 && best != nullptr && best != last) { if (jph_b_trace) std::fprintf(stderr, "  [EPA][P2] returning best triangle (support dist %.6g mm) instead of last\n", (double)sqrt(best_dist_sq) * 1000.0); last = best; }
++		if (jph_b_p2 && best != nullptr && best != last) { if (jph_b_trace) std::fprintf(stderr, "  [EPA][P2] returning best triangle (support dist %.6g mm) instead of last\n", (double)sqrt(best_dist_sq) * 1000.0); last = best; flip_v_sign = false; }   // P2 fix (recorded): the defect-branch flip decision belonged to the discarded triangle
  
  #ifdef JPH_EPA_CONVEX_BUILDER_DRAW
  		hull.DrawLabel("Closest found");

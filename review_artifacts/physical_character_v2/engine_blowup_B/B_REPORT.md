@@ -29,16 +29,16 @@
    - EPA processes the true face but cannot certify convergence: plane distance and support distance agree only to ~1 µm (float32 resolution is ~7.6 µm at 71 m, ~1 µm at 4–14 m).
    - It then pops a slab face with the **opposite normal** at a numerically equal plane distance, frees the converged face, and finds that face's support point 2 m away (the box thickness). No new triangle is queued.
 4. EPA leaves its loop on the **empty queue** ("exit E") and returns that unconverged, opposite-facing triangle. The penetration axis is **reversed**.
-   - This occurs on turf boxes of every size tested (8 m to 200 m).
+   - This occurs on turf boxes of every size tested (8 m to 400 m) and on a 0.1 m-thick box.
    - It needs an irregular hull: **0 reversals in 80 million flush poses of plain cuboids**, against ~1 per million poses for the boot pieces.
    - The opt-in diagnostic EPA patch P2 (return the triangle with the smallest support distance) removes every reversal in every test.
 5. Jolt then gathers the turf's **supporting face for the reversed axis: the bottom face of the box, 2 m below the top**. The manifold's contact points lie on that face (y = −2.000 m), with per-point separations of about −2.05 m.
-6. The **contact position solver** clamps each point's separation to −mMaxPenetrationDistance (−0.2 m) and corrects it with Baumgarte 0.2 per position iteration. The lever arm is the mid-point between the two contact points, ~1 m below the boot. The boot is **teleported 25–138 mm and rotated 45–127° in one step with no velocity change**.
-7. The ankle is forced far beyond its anatomical hard limit and the engine stop, e.g. foot abduction to −57.3° (hard −15°) or inversion to 76° (hard 35°). The **passive end-range law + end-stop potential** of that forced pose is the "+182 J … +56,079 J".
+6. The **contact position solver** clamps each point's separation to −mMaxPenetrationDistance (−0.2 m) and corrects it with Baumgarte 0.2 per position iteration. The lever arm is the mid-point between the two contact points, ~1 m below the boot. The boot is **teleported 25–160 mm and rotated 45–173° in one step with no velocity change**.
+7. The ankle is forced far beyond its anatomical hard limit and the engine stop, e.g. foot abduction to −57.3° (hard −15°) or inversion to 76° (hard 35°). The **passive end-range law + end-stop potential** of that forced pose is the "+182 J … +75,766 J".
 8. The next steps release that potential as kinetic energy through the passive drive rows. Turf contact and damping dissipate it.
 
 **Confidence:**
-- **High** for the mechanism: deterministic; reproduced bit-for-bit natively; traced at source level; each link removed by a specific intervention; 13 independent events, all identical.
+- **High** for the mechanism: deterministic; reproduced bit-for-bit natively; traced at source level; each link removed by a specific intervention; 12 independent simulation events plus 1 identity-preserving demonstration, all identical.
 - **Medium** for a closed-form statement of *which* exact poses trigger it. It is a numerical knife-edge: ~3 µm windows in position, ~10⁻⁴° in yaw, ~1 per 10⁶ flush poses for boot-piece hulls, none for cuboids.
 - **One earlier sub-hypothesis is falsified:** "the 100 m scale alone causes it". Smaller boxes reverse too, some more often. The scale explains the 100 m box's *entry* path, not the defect.
 
@@ -66,8 +66,10 @@ The k = 0 cases are in §2.
 | (the rate study re-ran the 720 Hz singleLeg case) | 720 Hz | +443 J, the same run again |
 
 These are G1 scenarios with 1 µm lift perturbations, or an iteration count from the G1 study. They are not exact members of the accepted G1 run list, which happened not to trigger.
-- The accepted plant also produces **benign tilted manifolds** in 7/254 accepted-configuration runs (the same EPA failure, speculative, no position correction).
-- G2 / G3 (standing) monitoring: see §11.
+- **Identity-preserving demonstration:** the V2-REF drop1m resting state (untouched), with only the static turf slid 341 mm, gives **+34,300 J** in the next step. It is 1 of 30 accepted resting states that a ≤ 1 m turf shift drives into the event.
+- The accepted plant also produces **benign tilted manifolds** in 7/254 accepted-configuration runs (an EPA sliver-triangle failure; speculative, no position correction).
+- **G2 (620 runs) / G3 (332 runs) monitoring of the accepted plant: 0 invalid manifolds in 37.2 M turf contacts.** Standing, pushing and weight transfer did not trigger it; falls do.
+- The accepted G1 run list, including its report-only iteration study, contains no reversed manifold.
 
 **Jolt source-level explanation:** §10, with traces in `native/` and the exits instrumented.
 
@@ -77,19 +79,20 @@ These are G1 scenarios with 1 µm lift perturbations, or an iteration count from
 - warm start (all / joint / contact), velocity iterations 30 / 600, dt ½ or ⅓;
 - gravity, friction, restitution, self-collision, constraint order.
 
-It is removed only by changing the contact query (plane / smaller / thinner turf box, single-hull or box boot, speculative 0, boot–turf contact off) or by disabling position correction (0 position iterations, Baumgarte 0). Its magnitude scales with the position correction: 1 position iteration → 53 J, 4 → 5,267 J – 10.6 MJ; maxPenetration 0.02 m → 12 mm push.
+At the saved state it is removed only by changing the contact query (plane / smaller / thinner turf box, single-hull or box boot, speculative 0, boot–turf contact off) or by disabling position correction (0 position iterations, Baumgarte 0). **Statistically, only the PlaneShape turf and the EPA patch remove it.** Smaller / thinner boxes, the single hull, convex radius 0 and speculative 0 all still reverse (§10a, §13b). Its magnitude scales with the position correction: 1 position iteration → 53 J, 4 → 5,267 J – 10.6 MJ; maxPenetration 0.02 m → 12 mm push.
 
 **Rate / iteration:** events occur at **240, 360 and 720 Hz** and at **30, 60 and 150 velocity iterations**. They persist under refinement. Not a timestep or iteration convergence failure: a discrete contact-generation defect.
 
 **Candidate fixes** (§13; none adopted), ranked by what they correct:
 
-| rank | candidate | what it corrects |
-|---|---|---|
-| 1 | **Turf = PlaneShape** | removes GJK / EPA from every turf contact; the axis is the plane normal by construction |
-| 2 | **Patch Jolt EPA** (P2: return the best triangle, not the last) | the algorithmic defect itself |
-| 3 | **Listener guard** (mark a provably invalid turf manifold as a sensor) | detects and neutralises the bad manifold, not its cause |
-| — | ~~Smaller turf box~~ | **falsified**: 8 m and 20 m boxes produce *more* reversals (up to 546 per 5 M poses vs 3 on the 100 m box) |
-| 4 | Smaller mMaxPenetrationDistance | limits the consequence only |
+| rank | candidate | what it corrects | evidence | regression implication |
+|---|---|---|---|---|
+| 1 | **Turf = PlaneShape** | removes GJK / EPA from every turf contact; the axis is the plane normal by construction | **0 invalid manifolds** in every sweep (G1 set at k = 0 / 0.15 / 0.5, k = 0 perturbation set where the box had 3 events, iteration study); all saved-state events gone | contact architecture change; outcomes of chaotic falls change; ordinary contact metrics unchanged in distribution; **G1 → G2 → G3 re-run** |
+| 2 | **Patch Jolt EPA** (P2: return the best triangle, not the last) | the algorithmic defect itself, for every convex pair | 175 M flush poses × 5 turf geometries: 2,110 → **0**; all fixtures corrected; no new reversals | engine fork (rebuild WASM with emsdk); upstream; bit-level changes, so **full re-run**; also fixes self-contact / obstacle pairs |
+| 3 | **Listener guard** (mark a provably invalid turf manifold as a sensor) | neutralises the bad manifold, not its cause | all 3 k = 0 events, both k = 0.5 and the k = 0.15 events neutralised; 251 / 254 k = 0 runs bit-identical | small adapter change; the defect still occurs (a correct contact can be lost for that step); re-run G1 |
+| 4 | Smaller mMaxPenetrationDistance (0.02 m) | limits the consequence only | +45,983 → +0.82 J; reversals remain | changes deep-penetration recovery for all contacts; re-run G1 |
+| — | ~~Smaller turf box~~ | **falsified** | 8 m and 20 m boxes produce *more* reversals (up to 546 per 5 M poses vs 3 on the 100 m box) | — |
+| — | ~~Single-hull boot / zero convex radius / speculative 0~~ | **falsified** | each still reverses statistically | would also reverse the approved D1a boot decision |
 
 **Recommended next decision:** decide the turf representation. My recommendation:
 - **PlaneShape turf** (it matches spec §15 "ground plane y = 0" literally);
@@ -115,7 +118,7 @@ It is removed only by changing the contact query (plane / smaller / thinner turf
 
 **The same ladder on an accepted-plant (k = 0) event:** V1-matched singleLeg @+1 µm, 720 Hz, tick 1360. R0–R4 are identical (90.6 mm / 68.7°, piece 6), and R6 / R7 reproduce. `json/reduce_*.json`.
 
-**Thirteen events, one mechanism.** Every row reproduces as a single native query.
+**Thirteen events (12 simulation events + 1 identity-preserving demonstration), one mechanism.** Rows 1, 3, 5–8 and 11, plus the accepted-plant rows, reproduce as single native queries (8 fixtures).
 
 | # | k (N·m/°) | run | rate / iterations | t (s) | one-step ΔE | boot piece | gap (mm) |
 |---|---|---|---|---|---|---|---|
@@ -130,8 +133,10 @@ It is removed only by changing the contact query (plane / smaller / thinner turf
 | 9 | 0.15 | V2-REF upright @−1 µm | 240 / **30** | 2.8708 | +307 J | foot_L 6 | — |
 | 10 | 0.15 | V2-REF awkward @+1 µm | 240 / **60** | 0.8458 | +56,079 J | foot_L 0 | — |
 | 11 | 0.5 | V2-REF leanF @+10 µm | 720 / 150 | 9.6792 | +45,983 J | foot_R 1 (heel lateral) | 4.93 |
-| 12 | 0.5 | V2-REF leanF | 720 / 150 | — | +18,246 J | (historical G1 sensitivity run) | — |
-| 13 | 0.5 | historical 180 Hz +142–161 J | 180 | — | — | to be re-classified (§8) | — |
+| 12 | 0.5 | V2-REF leanF | 720 / 150 | 1.9375 | +18,246 J | foot_L 3 (mid lateral) | −0.045 |
+| 13 | **0** | **V2-REF drop1m resting state, turf slid 341 mm (identity-preserving)** | 240 / 150 | rest | **+34,300 J** | foot_L 4 | 0.008 |
+
+**Not in this table:** the historical k = 0.5 **180 Hz +142–161 J** events. They have **no invalid manifold**: the energy enters during velocity integration (ankle_R potential 24 → 194 J; explicit passive torques +49 J), and the next step loses −161 J. They belong to the separate 180 Hz passive-layer mechanism (§8).
 
 ## 2. First bad tick
 
@@ -153,6 +158,25 @@ So the event happens **at rest and in motion**.
   - It is created by the position solver's displacement of foot_L (75.9 mm, 44.6°) and shank_L (1.0 mm, 1.1°).
   - Velocity integration contributes ΔU = −0.002 J; the position correction contributes ΔU = +183.405 J.
 - **k = 0 singleLeg:** ankle_L 0 → 444.19 J. Foot abduction 2.8° → **−57.3°**; inversion 23.2° → 0.7°; DF −30.5° → −10.0°.
+
+**How the bad contact overextends the tissue (Q5), per captured event.**
+- Anatomical hard ROM of the ankle (spec): foot ab/adduction ±15°, DF −60 … +45°, inversion −30 … +35°.
+- The angles are the ankle's anatomical angles before / after the single event step (position solver only).
+
+| run | joint | before | after the event step | passive U before → after |
+|---|---|---|---|---|
+| V2-REF perturb @−1 µm, 720 Hz, **k = 0** | ankle_L | fabd 3.5, DF 37.4, inv 32.3 | **fabd −80.8, DF 24.4, inv 108.4** | 0.7 → 6,877 J |
+| V1-matched awkward @+1 µm, 720 Hz, **k = 0** | ankle_L | fabd 8.6, DF −44.9, inv 19.5 | **fabd −72.4**, DF −17.6, inv −14.5 | 0.0 → 2,241 J |
+| V1-matched singleLeg @+1 µm, 720 Hz, **k = 0** | ankle_L | fabd 2.8, DF −30.5, inv 23.2 | **fabd −57.3**, DF −10.0, inv 0.7 | 0.0 → 444 J |
+| V1-matched singleLeg, 240 Hz, k = 0.15 | ankle_L | fabd −0.9, DF −49.1, inv 23.7 | fabd −22.3, DF −44.0, **inv 76.1** | 0.0 → 183 J |
+| V2-REF leanF @+10 µm, 720 Hz, k = 0.10 | ankle_R | fabd −3.4, DF −47.5, inv 19.3 | **fabd −34.8**, DF −25.3, **inv 84.9** | 0.0 → 451 J |
+| V2-REF leanF @+10 µm, 720 Hz, k = 0.5 | ankle_R | fabd 2.2, DF −50.9, inv 31.8 | **fabd 105.5**, DF −57.4, inv −2.6 | 0.2 → 45,983 J |
+| V2-REF drop1m rest, turf slid 341 mm, **k = 0** | ankle_L | fabd −7.3, DF −26.8, inv −27.6 | **fabd −110.8, DF 116.8, inv 91.8** | → 34,302 J |
+
+**Reading:**
+- The rotation imposed by the contact position correction (45–173°) is far beyond any anatomical or engine limit.
+- The energy is set by **how far past the hard limit** the pose lands. The end-range law is exponential beyond the soft limit, and the C2 end-stop is quadratic beyond the hard limit.
+- So the magnitude is effectively random (183 J … 46 kJ) and unrelated to k.
 
 ## 4. Per-tick energy ledger (10 ticks before → 10 after)
 
@@ -242,7 +266,9 @@ So the event happens **at rest and in motion**.
 
 ## 8. Stiffness-trigger sweep (diagnostic; no value selected)
 
-- **Set:** the G1 validation runs: 17 scenarios × V2-REF / V1-matched, the essential set on 6 more bodies, the D4a rate ensemble (8 scenarios × 180 / 240 / 360 / 720 Hz × 5 lift perturbations), and the high-speed envelope. **254 runs per k.**
+- **Set:** the G1 validation runs (17 scenarios × V2-REF / V1-matched, the essential set on the 4 G1 body variants, the D4a rate ensemble of 8 scenarios × 180 / 240 / 360 / 720 Hz × 5 lift perturbations, the high-speed envelope) **plus** the essential set on V2-175-70 and V2-190-85 (20 runs beyond the G1 scope). **254 runs per k.**
+- All 7 accepted-plant runs with tilted manifolds are inside the G1 scope.
+- Incidental, out of scope and not investigated: V2-190-85 drop1m reaches the engine stop (row 1.3b) at k = 0 with either turf. It is unrelated to the narrow phase.
 - **Monitored:** every turf manifold's validity, every > 1 J one-step rise, the per-step passivity residual, and position-solver moves.
 
 `tools/b_sweep.mjs`, `tools/b_summarize.mjs`; `json/sweep_*.json.gz`.
@@ -265,7 +291,7 @@ So the event happens **at rest and in motion**.
 - Event timing changes **discontinuously**: different runs, not shifted times.
 - Stiffness changes **which configurations are visited**: resting boots lying on a lateral face with the ankle inverted, slowly creeping. Each visited configuration is a fresh draw against a knife-edge trigger.
 - **The accepted plant draws too.** k = 0 has 0/254 here, but **3/600** in the dense perturbation ensemble (§11) and 1 in the iteration study.
-- An equal-denominator comparison (the perturbation set at k = 0.15) is in §8a.
+- An equal-denominator comparison is in §8a: 8 events at k = 0.15 vs 3 at k = 0, out of 600 identical runs.
 
 **Other > 1 J events: a different, separate mechanism** (180 Hz only, k > 0 trajectories; `json/ledger_awk180_k015.json.gz`).
 - V2-REF awkward / drop1m at **180 Hz**: +1.0 to +8.6 J, followed by larger losses (e.g. +3.6 J then −8.2 J).
@@ -381,7 +407,7 @@ It evaluates the end-range law + C2 end-stop at the forced pose. U grows exponen
 2. **Why the opposite triangle:**
    - EPA cannot certify convergence on the true face: the plane and support distances differ by float noise above the 10⁻⁴ relative tolerance.
    - The opposite slab face is popped next at a numerically equal plane distance; the converged face is freed.
-   - The queue empties ("exit E"), and EPA returns the unconverged opposite face. The source path is identical in all 13 events and on every box size.
+   - The queue empties ("exit E"), and EPA returns the unconverged opposite face. The source path is identical in every traced reversed event (8 native fixtures) and on every box size.
    - In one thin-box case Jolt's hull-defect branch (`flip_v_sign`) was also involved.
 3. **Why the bottom face:** the reversed axis selects the box face that faces the other way. For a 2 m-thick box that face is 2 m away. The position solver then sees −2 m separations and applies its clamped 0.2 m correction.
 4. **Objectively invalid by Jolt's own conventions: yes.**
@@ -395,7 +421,7 @@ It evaluates the end-range law + C2 end-stop at the forced pose. U grows exponen
    - It changes which rest poses and slow creeps occur (boots lying on a side face, inverted ankles), i.e. which configurations are sampled.
    - It does not change the narrow phase: the saved-state k = 0 ablation is identical.
    - The accepted plant hits the same defect in its own trajectories: 4 distinct runs (§11).
-   - Event frequency is of the same order with and without stiffness: about one per 250–600 G1-type runs (k = 0: 4 in 1,054). The equal-denominator comparison is in §8a.
+   - Event frequency is higher with stiffness but of the same order: 8 vs 3 of 600 identical runs at k = 0.15 vs k = 0 (§8a); k = 0 overall 4 in 1,054.
 8. **Compound boot decomposition:** **not required.** A single convex hull vs the box reproduces it, and the triggering pieces were all single hulls from the grid. It may raise the frequency: more, smaller, flat-faced pieces near the turf. The single-hull counterfactual sweep is in §13.
 9. **Turf representation: required, but not through its size alone.**
    - **Any convex box turf** exposes it, because EPA is used for box–hull contacts. Statistically, over 5 M flush poses per hull:
@@ -427,9 +453,11 @@ It evaluates the end-range law + C2 end-stop at the forced pose. U grows exponen
 | **dense perturbation ensemble at k = 0** (10 scenarios × V2-REF / V1-matched × 15 lift perturbations 1 µm – 100 µm × 240 / 720 Hz = 600 runs) | **3 reversed-manifold blow-ups: +6,874 J, +2,241 J, +443 J** (all 720 Hz); 0 / 300 at 240 Hz |
 | iteration study at k = 0 (240 Hz) | **+205 J at 60 velocity iterations** (V1 singleLeg, 240 Hz) |
 | rate study at k = 0 | the 720 Hz singleLeg event again |
-| identity-preserving transforms of 82 accepted resting states (vertical ±300 µm in 1 µm steps; x / z ±1 m in 1 mm steps; yaw ±10° in 0.01° steps; both boots; ~1.1 M narrow-phase queries; `tools/b_k0reach.mjs`) | **1** reversed-capable transform (V2-REF drop1m resting state, foot_L piece 4, x + 341 mm) |
+| G1's own iteration study (the accepted run's 102 report-only runs, k = 0) | **no reversed manifold**; 3 runs with tilted ones; its > 1 J rises are the known low-iteration impact rebounds |
+| **turf slid ≤ 1 m under each of 30 accepted resting states** (V2-REF / V1-matched; x / z in 1 mm steps; the simulation's own narrow phase; `tools/b_k0turf.mjs`) | **1 of 30 states** (V2-REF drop1m) → stepped: **+34,300 J** in one step (boot 160 mm / 173°, ankle fabd −110.8°, DF 116.8°, inversion 91.8°, joint separation 221 mm, ΔKE 0) |
+| identity-preserving transforms of **78 accepted resting states** (all 8 bodies; vertical ±300 µm in 1 µm steps; x / z ±1 m in 1 mm steps; yaw ±10° in 0.01° steps; both boots; ~1.0 M narrow-phase queries; `tools/b_k0reach.mjs`) | **2** reversed-capable transforms: V2-REF drop1m (foot_L piece 4, x + 341 mm) and V2-long-legs upright (foot_L piece 0, z + 836 mm) |
 | re-simulating that transform with the body actually placed there (`tools/b_k0resim.mjs`) | not triggered (the float32 knife-edge does not survive re-placing 20 bodies); 30 resting states searched with actual readbacks: 0 |
-| **G2 (620 + report-only runs) and G3 (full run) of the accepted plant, monitored in an isolated mirror** | §11a |
+| **G2 (620 runs) and G3 (332 runs) of the accepted plant, monitored in an isolated mirror** | **0 invalid manifolds in 37.2 M turf contacts** (§11a) |
 
 **Reading:**
 - The accepted plant is **not robust**: the defect lives in the contact query, not in the ankle law.
@@ -489,16 +517,120 @@ Each is tested counterfactually against:
 | invariant | tolerance and derivation (from healthy runs, never from failures) | false-positive rate on healthy runs | detects |
 |---|---|---|---|
 | **1.4j turf-manifold validity**: every turf manifold has normal_y ≥ 0.5 and turf-side points within 2 mm of y = 0 | geometric: zero tolerance | 0 false positives by construction; it **does** flag the accepted plant's benign tilted manifolds (true positives of the same defect) | the root cause, every instance |
-| **1.2e passivity**: no step gains > 0.05 J of E = KE + PE + U (passive G1 runs) | G1 D2's measured worst step at the validation solver budget was 0.04 J; healthy sweep maxima: 0.0089 J (240 Hz, 1,419 runs), 0.0052 (360), 0.0002 (480), 0.069 (720) | **240 / 360 / 480 Hz: 0 of 1,838**; 720 Hz: 1 of 361 (0.069 J, a shoulder point-constraint / self-contact convergence residual: a genuine small non-passive step, not weakened for); 180 Hz: flags the known TD-1 rebound and the end-range events (true positives of known defects) | all 13 events (13 / 13) and smaller non-passive steps |
+| **1.2e passivity**: no step gains > 0.05 J of E = KE + PE + U (passive G1 runs) | G1 D2's measured worst step at the validation solver budget was 0.04 J; healthy sweep maxima: 0.0089 J (240 Hz, 1,419 runs), 0.0052 (360), 0.0002 (480), 0.069 (720) | **240 / 360 / 480 Hz: 0 of 1,838**; 720 Hz: 1 of 361 (0.069 J, a shoulder point-constraint / self-contact convergence residual: a genuine small non-passive step, not weakened for); 180 Hz: flags the known TD-1 rebound and the end-range events (true positives of known defects) | every reversed-manifold event run in the sweeps (13 / 13) and smaller non-passive steps |
 | **1.4k position-solver teleport**: no body moved > 5 mm beyond its velocity integration in one step | healthy accepted-plant floor max 2.32 mm (951 runs, 180–720 Hz; 240 Hz max 0.88 mm) | 0 on healthy accepted runs; it flags the high-speed shin-kick envelope (17.3 mm, the known D1a missed-contact issue) | all events (72–138 mm), including teleports that load no potential |
 | **narrow-phase regression fixtures** (`fixtures/`, `tools/b_narrow.mjs`, native `b_query`, `b_scan`) | expected today: reversed (they document the defect) | — | any candidate fix must make all 8 fixtures and the near-event scan pass |
 
 ---
 
+## 10a. Tests designed to falsify the explanation (and their outcomes)
+
+| hypothesis tested | test | outcome |
+|---|---|---|
+| the ankle stiffness creates the defect | k → 0 from the saved state; k = 0 sweeps | **falsified**: identical event at k = 0; 4 distinct accepted-plant events |
+| an ankle / joint-constraint pathology (swing-limit singularity, conflicting constraints, contact + limit conflict) | reduction to the boot alone; ankle stop off; joints disabled | **falsified**: the boot alone reproduces it |
+| velocity-solver convergence / warm start / iteration count | warm start off (all / joint / contact); velocity iterations 30 / 600; iteration study | **falsified**: unchanged; events at 30 / 60 / 150 iterations |
+| timestep convergence | dt ½ / ⅓ from the saved state; 180–720 Hz study | **falsified**: unchanged; events at 240 / 360 / 720 Hz |
+| restitution / friction / speculative bias in the velocity solve | restitution 0, friction 0; ledger | **falsified**: zero velocity-level work in the event step |
+| the 100 m scale alone (float32 at 71 m) | the same generator against 8, 20, 100 and 400 m boxes and a 0.1 m-thick box | **falsified as the sole cause**: smaller boxes reverse too (8 m up to 104, 20 m up to 546 per 5 M); scale only selects GJK's entry route |
+| the hull's convex radius is required | convex radius 0 (5 M poses × 3 hulls) | **falsified**: 4–8 reversals per 5 M |
+| speculative contact is required | speculative 0, penetrating poses only (5 M × 3 hulls × 2 turfs) | **falsified**: 0–3 reversals per 5 M |
+| the 10-piece compound decomposition is required | the unsplit approved hull (10 M poses × 2 bodies × 2 turfs) | **falsified**: 8–9 per 10 M (100 m box); 1,734–1,878 per 10 M (20 m box) |
+| any convex shape vs a large box | plain cuboids, 4 sizes, with and without convex radius (80 M flush poses) | **not supported**: 0 reversals; irregular hulls are needed |
+| GJK's relative test is the defect | P1 (absolute GJK tolerance only) | **partly**: removes the event fixtures but creates new reversals (1 / 100k random, 1 / 200k flush) via a degenerate GJK tetrahedron → EPA |
+| **EPA's final-triangle selection is the defect** | P2 (best, not last, triangle) on 8 fixtures, 41,616 near-event, 300,000 flush / random poses, 7 hulls × 5 turfs × 5 M | **supported**: every reversal removed (after one recorded P2 flag fix) |
+| our validity interpretation is wrong | Jolt's own contract for `mPenetrationAxis` and EPA's own convergence criterion | **falsified**: the result violates both; the manifold contradicts its own depth |
+| the position solver is only incidental | position iterations 0 / Baumgarte 0 / maxPenetration 0.02 m | **supported**: the reversed manifold is harmless without position correction; the magnitude scales with it |
+
 ## 11a. Accepted-plant G2 / G3 monitoring
+
+Run in an isolated mirror with `tools/b_monitor_preload.mjs` (observation only); the accepted artifacts are untouched.
+
+| gate | jobs | steps | turf manifolds checked | invalid | identity |
+|---|---|---|---|---|---|
+| **G2** (`tools/g2_run.js`, all groups) | 620 | 856,106 | 16,317,680 | **0** | state hashes **617 / 617 identical** to the accepted post-D1G1 baseline (3 bookkeeping jobs unmatched) |
+| **G3** (`tools/g3_run.js`, all groups incl. T9U) | 332 | 1,054,187 | 20,879,129 | **0** | (the committed g3 json predates the approved passive determinism fix, so hashes differ as for G2) |
+
+**Reading:**
+- In quiet stance, pushes, weight transfer and single support, the boot soles are loaded, flush and nearly stationary. No reversed or tilted manifold occurred in 37 M checks.
+- The G1 events all occur with boots lying on a side face (falls) or in impacts. That is consistent with the knife-edge statistics: a standing foot repeats almost the same configuration and therefore samples few distinct states.
+- **This does not prove standing is immune.** The flush-face scans show sole-like faces can reverse at ~1 per 10⁶ poses. Walking (G4+), with constantly changing contacts, will sample far more states.
+
 
 ## 8a. Equal-denominator stiffness comparison; k = 0.5 sweep
 
-## 13a. Candidate sweeps
+**Perturbation set** (10 scenarios × V2-REF / V1-matched × 15 lift perturbations 1 µm – 100 µm × 240 / 720 Hz = 600 runs; identical runs for both k):
 
-*(sections 8a, 11a, 13a are completed below once the runs finish)*
+| k (N·m/°) | runs with reversed manifolds | narrow-phase events | largest | reversed / tilted manifold-ticks |
+|---|---|---|---|---|
+| **0** (accepted) | 3 | **3** (perturb, singleLeg, awkward; all 720 Hz) | +6,874 J | 3 / 19 |
+| 0.15 | 8 | **8** (singleLeg ×3, leanL ×2, perturb ×2, awkward; 7 at 720 Hz, 1 at 240 Hz) | **+75,766 J** | 15 / 3 |
+
+(One further 720 Hz +228 J rise at k = 0.15 is the step after a reversed manifold in the same run: the aftermath, not a new mechanism.)
+
+**Reading (Q7):**
+- The stiffness raises the event frequency about 2.7× in this set (8 vs 3 of 600). That is suggestive, not strongly significant (Poisson p ≈ 0.1).
+- It is consistent with the observed trajectories: k > 0 leaves boots resting on a lateral face with the ankle inverted, so more near-flush irregular-face states are sampled.
+- **The mechanism is the same, and the accepted plant has a nonzero rate of its own.**
+
+**k = 0.5, G1 set:**
+- 2 narrow-phase events: V2-REF leanF 720 Hz +18,246 J (foot_L piece 3); leanF @+10 µm 720 Hz +45,983 J (foot_R piece 1).
+- 15 events of the 180 Hz passive-layer mechanism (≤ 161 J, no invalid manifold), including the historical +142–161 J.
+
+## 13b. Native statistical battery: unpatched Jolt vs the diagnostic EPA patch P2
+
+`tools/b_native/b_genscan.cpp`; `logs/genscan_*.log`.
+- **Poses:** a face of the hull exactly parallel to the turf, gap −5 … +10 mm, random yaw, random position within the box.
+- **Hulls:** the 7 boot hulls from the event fixtures.
+- **Volume:** 5 M poses per hull × turf, 175 M poses in total.
+
+| turf box (m) | poses | reversed, unpatched | reversed, P2 |
+|---|---|---|---|
+| 100 × 2 × 100 (production) | 35 M | 20 | **0** |
+| 100 × 0.1 × 100 | 35 M | 16 | **0** |
+| 400 × 2 × 400 | 35 M | 86 | **0** |
+| 20 × 2 × 20 | 35 M | 1,656 | **0** |
+| 8 × 2 × 8 | 35 M | 332 | **0** |
+| **total** | **175 M** | **2,110** | **0** |
+
+**Further native tests:**
+
+| test | result |
+|---|---|
+| unsplit single-hull boot, V2-REF / V1-matched (10 M poses each) | 100 m box: 9 / 8 reversed; 20 m box: 1,878 / 1,734 |
+| plain cuboids, 4 sizes, convex radius 0 / 5 / 10 mm (80 M poses) | **0** reversed |
+| convex radius 0, 3 hulls (15 M) | 4–8 per 5 M |
+| speculative distance 0, penetrating poses, 3 hulls × 2 turfs (30 M) | 0–3 per 5 M |
+| P2 on the 8 fixtures, the 41,616 near-event queries, 300,000 random / flush poses | **0** |
+
+The accepted plant's tilted manifolds (EPA exit A, a sliver triangle toward a box corner) are also corrected by P2.
+
+## 13a. Candidate sweeps (G1 set, 254 runs per k; diagnostic, none adopted)
+
+| candidate | k = 0.5 | k = 0.15 | k = 0 | reading |
+|---|---|---|---|---|
+| none (reference) | 2 narrow-phase events (+18,246 J, +45,983 J); 15 events of the 180 Hz mechanism (≤ 161 J) | 1 narrow-phase event (+182 J) | 0 events; 7 runs with tilted manifolds | — |
+| **A. PlaneShape turf** | **0 invalid manifolds**; only the 180 Hz mechanism remains (≤ 141 J) | **0 invalid**; 1 event of the 180 Hz mechanism (6.9 J) | **0 invalid**, max rise 0.79 J (180 Hz TD-1) | removes the class in every sweep |
+| **C. listener guard** | reversed manifolds still generated but neutralised (ΔE −0.29 / 0 J); only the 180 Hz mechanism remains | event neutralised (0 J) | identical except the guarded inert manifolds | removes the consequence; the defect remains (invalid manifolds still occur) |
+| G. single-hull boot | 1 tilted / off-face manifold (inert); no narrow-phase event in this sweep | — | — | trajectory changed; the statistical test shows the single hull **does** reverse (§13b) |
+| D. 20 m box | 0 invalid in this sweep | — | — | **sweep absence is not elimination**: the statistical test shows *more* reversals (§13b) |
+| E. mMaxPenetrationDistance 0.02 m | reversed manifolds still generated (2 + 1 tilted); consequences +0.82 J and −0.32 J instead of +45,983 J and +18,246 J | — | — | **limits the consequence to < 1 J; the defect remains** (flagged by 1.2e / 1.4j) |
+
+**Against the accepted-plant events and other conditions:**
+
+| test | box (reference) | **PlaneShape** | **listener guard** |
+|---|---|---|---|
+| perturbation set, k = 0 (600 runs) | 3 reversed-manifold blow-ups (+443 … +6,874 J) | **0 invalid manifolds, 0 events, max rise 0.21 J** | invalid manifolds still generated (17 runs); **all 3 events neutralised**; max rise 0.069 J |
+| iteration study 30 / 60 / 150 / 300 at 240 Hz, k = 0 and 0.15 (200 runs) | 4 narrow-phase events | **0 invalid**; only the known low-iteration impact rebound (≈ 24 J at 30 iterations, G1-C1) | — |
+| G1 set, k = 0: state hashes vs baseline | — | outcomes change (13 postures) | 251 / 254 identical (3 runs touched by a guarded tilted manifold) |
+
+**Ordinary-contact comparison, PlaneShape vs the box at k = 0** (254 runs, G1 rows evaluated per run; same-worker baseline `json/sweep_g1_k0_baseline_metrics.json.gz`):
+- runs with any gating-row failure: 20 vs 21;
+- rows only with the plane: 1.2a / 1.2b (drop1m @+10 µm, 180 Hz: the TD-1 rebound), 1.R (sideFirst, 360 Hz), 1.4b (hsPost, 5.05 mm vs 5 mm);
+- rows only with the box: 1.R ×2, 1.3d ×1;
+- 13 chaotic falls end in a different posture;
+- resting turf penetration median 0.26 vs 0.23 mm (p95 1.85 vs 2.11, max 5.05 vs 4.99); maximum joint separation distribution identical (median 1.12 / p95 4.39 / max 22.75 mm).
+
+So: no systematic regression in ordinary contact, but outcomes change, so **G1 → G2 → G3 must be re-run** before any acceptance.
+
+*(§8a is completed below.)*

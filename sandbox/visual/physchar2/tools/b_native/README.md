@@ -56,3 +56,18 @@ The four reproducer fixtures are in `review_artifacts/physical_character_v2/engi
 | 0.5 | V2-REF leanF@1e-5, 720 Hz |
 
 The native build reproduces each one bit-for-bit: the same reversed penetration axis and the same depth as the WASM build.
+
+## Batch tools (same build)
+
+- **`b_scan.cpp`** (inputs from `scan_poses.mjs --set=near|flush|random`): classifies every hit as reversed / far-face / tilted / valid. `B_ONLY=<index>` runs one query (combine with `B_TRACE=1`).
+- **`b_genscan.cpp`**: generates millions of face-flush poses of a cuboid or a fixture hull against any turf box. Use `B_CR` / `B_SEP` to override the convex radius or the speculative distance, and `B_TRACE_FIRST=1` to trace the first reversed pose.
+
+## Switches (instrumented build only; all opt-in, default off)
+
+| switch | effect |
+|---|---|
+| `B_TRACE=1` | GJK / EPA trace |
+| `B_P1=1` | GJK without the relative overlap test (falsification probe; **not viable**: creates new reversals) |
+| `B_P2=1` | EPA returns the triangle with the smallest support distance instead of the last processed one, and clears `flip_v_sign` when substituting |
+
+`B_P2` removed every reversal in all tests. Its first version kept a stale `flip_v_sign` in one thin-box case; that was fixed and recorded in DECISIONS B-6.

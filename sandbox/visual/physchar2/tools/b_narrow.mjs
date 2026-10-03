@@ -34,7 +34,7 @@ function query(shp, q, c, sep = spec.contact.speculative) {
 const hits = query(shape, rot, com), f = (x, n = 4) => (+x).toFixed(n);
 console.log(`boot ${foot} COM ${com.map(x => f(x, 6))} rot ${rot.map(x => f(x, 7))}`);
 for (const h of hits) console.log(`  piece ${h.piece}: axis(normalised, foot→turf convention) ${V.norm(h.axis).map(x => f(x, 4))} depth ${f(h.depth * 1000, 3)} mm | turf face y ${h.face2.map(p => f(p[1], 3)).join(",")} | p1.y ${f(h.p1[1] * 1000, 2)} p2.y ${f(h.p2[1] * 1000, 2)} mm`);
-const bad = hits.filter(h => V.norm(h.axis)[1] > 0);
+const bad = hits.filter(h => V.norm(h.axis)[1] > -0.5);   // reversed (axis up) or TILTED (|axis y| < 0.5): both invalid for a flat turf top
 console.log(`→ ${bad.length} flipped hit(s): pieces ${bad.map(h => h.piece).join(",") || "none"}`);
 // the offending piece alone, as its own convex hull at its exact world transform (compound sub-shape transform composed in double)
 const res = { turf: isPlane ? "plane" : turfHE, human, key, hz, event: ev, kNeutral: JS.ankleNeutralKPerDeg(), foot, com, rot, hits, single: null, scan: null };

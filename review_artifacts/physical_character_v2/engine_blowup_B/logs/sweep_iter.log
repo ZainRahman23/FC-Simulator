@@ -1,0 +1,20 @@
+k 0: 100 runs | runs with invalid turf manifolds 2 (ticks 2) | runs with a >1 J one-step rise 12 | errors 0 | max rise 204.643 J | 51 s
+   INVALID V1-matched singleLeg 240 Hz vel 60: t 8.7375 foot_L[6] ny -1 turfY -2000,-2000 dE 204.643 ; maxRise 204.6429
+   INVALID V2-REF drop1m@-0.000001 240 Hz vel 150: t 1.6917 foot_L[6] ny 0.1721 turfY 0,0 dE -0.111 ; maxRise 0
+   EVENT (no invalid manifold) V2-REF drop1m 240 Hz: t 0.4625 dE 23.967
+   EVENT (no invalid manifold) V2-REF drop1m@0.000001 240 Hz: t 0.4625 dE 23.969
+   EVENT (no invalid manifold) V2-REF drop1m@-0.000001 240 Hz: t 0.4625 dE 23.964
+   EVENT (no invalid manifold) V2-REF drop1m@0.00001 240 Hz: t 0.4625 dE 23.994
+   EVENT (no invalid manifold) V2-REF drop1m@-0.00001 240 Hz: t 0.4625 dE 23.94
+   EVENT (no invalid manifold) V1-matched singleLeg@0.000001 240 Hz: t 0.5708 dE 3.906
+   EVENT (no invalid manifold) V1-matched singleLeg@0.00001 240 Hz: t 0.5708 dE 3.56
+   EVENT (no invalid manifold) V1-matched singleLeg@0.000001 240 Hz: t 0.55 dE 2.854
+k 0.15: 100 runs | runs with invalid turf manifolds 3 (ticks 3) | runs with a >1 J one-step rise 8 | errors 0 | max rise 56078.923 J | 101 s
+   INVALID V2-REF upright@-0.000001 240 Hz vel 30: t 2.8708 foot_L[6] ny -1 turfY -2000,-2000 dE 306.793 ; maxRise 306.7931
+   INVALID V2-REF awkward@0.000001 240 Hz vel 60: t 0.8458 foot_L[0] ny -1 turfY -2000,-2000 dE 56078.923 ; maxRise 56078.9235
+   INVALID V1-matched singleLeg 240 Hz vel 150: t 3.8458 foot_L[4] ny -1 turfY -2000,-2000 dE 182.427 ; maxRise 182.4275
+   EVENT (no invalid manifold) V2-REF drop1m 240 Hz: t 0.4625 dE 23.961
+   EVENT (no invalid manifold) V2-REF drop1m@0.000001 240 Hz: t 0.4625 dE 23.967
+   EVENT (no invalid manifold) V2-REF drop1m@-0.000001 240 Hz: t 0.4625 dE 23.959
+   EVENT (no invalid manifold) V2-REF drop1m@0.00001 240 Hz: t 0.4625 dE 23.984
+   EVENT (no invalid manifold) V2-REF drop1m@-0.00001 240 Hz: t 0.4625 dE 23.931

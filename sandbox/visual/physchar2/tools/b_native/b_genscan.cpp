@@ -32,12 +32,13 @@ int main(int argc, char **argv) {
   else if (argc > ai) { FILE *f = std::fopen(argv[ai], "r"); unsigned n, u[3]; std::fscanf(f, "%u", &n); for (unsigned i = 0; i < n; ++i) { std::fscanf(f, "%u %u %u", &u[0], &u[1], &u[2]); hs.mPoints.push_back(Vec3(bits(u[0]), bits(u[1]), bits(u[2]))); }
     unsigned cr, has, ht; std::fscanf(f, "%u %u %u", &cr, &has, &ht); hs.mMaxConvexRadius = bits(cr); if (has) hs.mHullTolerance = bits(ht); std::fclose(f); ai++; label = "fixture hull"; }
   if (argc > ai) rs = std::strtoull(argv[ai], nullptr, 10) * 2654435761ULL + 1;
+  if (std::getenv("B_CR")) hs.mMaxConvexRadius = std::atof(std::getenv("B_CR"));   // override the convex radius (alternative-hypothesis test)
   RefConst<Shape> hull = hs.Create().Get(); const ConvexHullShape *ch = static_cast<const ConvexHullShape *>(hull.GetPtr());
   BoxShapeSettings bs(he, 0.0f); RefConst<Shape> box = bs.Create().Get(); Mat44 T2 = Mat44::sTranslation(Vec3(0, -he.GetY(), 0));
   // the hull's own faces (outward normal, plane offset), in its centre-of-mass frame
   struct F { Vec3 n; float d; }; std::vector<F> faces; for (uint i = 0; i < ch->GetNumFaces(); ++i) { uint vi[64]; uint nv = ch->GetFaceVertices(i, 64, vi); if (nv < 3) continue; Vec3 v[64]; for (uint k = 0; k < nv; ++k) v[k] = ch->GetPoint(vi[k]);
     Vec3 n = (v[1] - v[0]).Cross(v[2] - v[0]).Normalized(); Vec3 c = Vec3::sZero(); for (uint k = 0; k < nv; ++k) c += v[k]; c /= (float)nv; if (n.Dot(c) < 0) n = -n; faces.push_back({ n, n.Dot(v[0]) }); }
-  CollideShapeSettings cs; cs.mCollectFacesMode = ECollectFacesMode::CollectFaces; cs.mMaxSeparationDistance = 0.02f; cs.mActiveEdgeMode = EActiveEdgeMode::CollideOnlyWithActive;
+  CollideShapeSettings cs; cs.mCollectFacesMode = ECollectFacesMode::CollectFaces; cs.mMaxSeparationDistance = std::getenv("B_SEP") ? (float)std::atof(std::getenv("B_SEP")) : 0.02f;   // override the speculative distance (test) cs.mActiveEdgeMode = EActiveEdgeMode::CollideOnlyWithActive;
   long hits = 0, rev = 0; long firstRev = -1; Vec3 frP; Quat frQ;
   for (long q = 0; q < N; ++q) { const F &f = faces[(size_t)(rnd() * faces.size()) % faces.size()]; float g = gLo + (float)rnd() * (gHi - gLo), yaw = (float)(rnd() * 2 * JPH_PI);
     Vec3 down(0, -1, 0); Vec3 ax = f.n.Cross(down); float s = ax.Length(), c = f.n.Dot(down); Quat r0 = s > 1e-6f ? Quat::sRotation(ax / s, std::atan2(s, c)) : (c > 0 ? Quat::sIdentity() : Quat::sRotation(Vec3(1, 0, 0), JPH_PI));
