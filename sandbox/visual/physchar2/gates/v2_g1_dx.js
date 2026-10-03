@@ -14,6 +14,18 @@ export function splitBootHull(spec, zcFrac = 0.55) {
     b.shapes = [rear, front, ...b.shapes.filter(x => x !== h)]; }
   return s;
 }
+// C3 representation R3: the hull split into FOUR convex pieces (rear / front × medial / lateral about the hull's mid-width line); the union is
+// exactly the original hull (each piece = original points on its side + the plane intersections of every crossing pair, for both planes)
+export function splitBootHull4(spec, zcFrac = 0.55) {
+  const s = clone(spec);
+  for (const b of s.bodies) { if (!/^foot_/.test(b.name)) continue; const h = b.shapes.find(x => x.type === "hull"), P = h.points, zs = P.map(p => p[2]), xs = P.map(p => p[0]);
+    const zc = Math.min(...zs) + zcFrac * (Math.max(...zs) - Math.min(...zs)), xc = (Math.min(...xs) + Math.max(...xs)) / 2;
+    const cut = (pts, ax, c) => { const o = []; for (let i = 0; i < pts.length; i++) for (let j = i + 1; j < pts.length; j++) { const a = pts[i], d = pts[j]; if ((a[ax] - c) * (d[ax] - c) < 0) { const t = (c - a[ax]) / (d[ax] - a[ax]); o.push([0, 1, 2].map(k => a[k] + t * (d[k] - a[k]))); } } return o; };
+    const half = (pts, ax, c, sgn) => [...pts.filter(p => sgn * (p[ax] - c) >= 0), ...cut(pts, ax, c)];
+    const pieces = []; for (const sz of [-1, 1]) { const pz = half(P, 2, zc, sz); for (const sx of [-1, 1]) pieces.push({ ...h, points: half(pz, 0, xc, sx), note: `C3 R3 piece z${sz > 0 ? "+" : "−"} x${sx > 0 ? "+" : "−"}` }); }
+    b.shapes = [...pieces, ...b.shapes.filter(x => x !== h)]; }
+  return s;
+}
 // head AP capsule → two spheres of the capsule radius at the capsule's segment ends (same AP extent and breadth; 3.7 mm waist at the sides)
 export function headSpherePair(spec) {
   const s = clone(spec), b = s.bodies.find(x => x.name === "head"), cap = b.shapes[0], ax = Q.rot(cap.rot, [0, 1, 0]);
@@ -37,4 +49,4 @@ export const DX_CONFIGS = [
   { id: "P", label: "PACKAGE P: 60 it · 240 Hz · manifold reduction off · pair cache off · split boot · sphere-pair head", cfg: { velSteps: 60, manifoldReduction: false, pairCache: false }, mods: ["bootSplit", "headSpheres"] },
   { id: "P720", label: "PACKAGE P at 720 Hz (30 it)", cfg: { velSteps: 30, hz: 720, manifoldReduction: false, pairCache: false }, mods: ["bootSplit", "headSpheres"] },
 ];
-export function applyMods(spec, mods = []) { let s = spec; if (mods.includes("bootSplit")) s = splitBootHull(s); if (mods.includes("headSpheres")) s = headSpherePair(s); return s; }
+export function applyMods(spec, mods = []) { let s = spec; if (mods.includes("bootSplit")) s = splitBootHull(s); if (mods.includes("bootSplit4")) s = splitBootHull4(s); if (mods.includes("headSpheres")) s = headSpherePair(s); return s; }

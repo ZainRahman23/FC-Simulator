@@ -226,7 +226,7 @@ export function g0Body(J, human, opts = {}) {
   const surfBad = surf.filter(x => x.v < x.tol[0] - 1e-12 || x.v > x.tol[1] + 1e-12 || x.ok === false);
   add_("0.10a", "colliders vs anthropometric surfaces (§15.1 tolerances: limbs −10…+3, trunk −20…+5, head −15…+5 mm)", surfBad.length === 0,
     surf.filter(x => x.ok === undefined).map(x => `${x.what} ${(1000 * x.v).toFixed(1)} mm`).join("; ") + `; head pair along AP ${surf.find(x => x.ok !== undefined).ok}`, "within tolerance", surfBad.length ? "OUTSIDE: " + surfBad.map(x => x.what).join(", ") : "");
-  const ft = byName.foot_R, hull = ft.shapes[0].points, ext = (k, f) => f(...hull.map(p => p[k]));
+  const ft = byName.foot_R, hull = ft.shapes.filter(x => x.type === "hull").flatMap(x => x.points), ext = (k, f) => f(...hull.map(p => p[k]));   // C3: union of the convex pieces
   const footDims = { length: ext(2, Math.max) - ext(2, Math.min), width: ext(0, Math.max) - ext(0, Math.min), heel: -ext(2, Math.min), tip: ext(2, Math.max), soleY: ext(1, Math.min) + ft.origin[1] };
   const fdOK = Math.abs(footDims.length - ft.boot.length) <= TOL.bootTol && Math.abs(footDims.width - ft.boot.ballWidth) <= TOL.bootTol && Math.abs(footDims.heel - ft.boot.heelBehindAJC) <= 1e-12 &&
     Math.abs(footDims.tip - ft.boot.tipAheadAJC) <= 1e-12 && Math.abs(footDims.soleY) <= 1e-12;

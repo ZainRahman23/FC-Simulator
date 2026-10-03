@@ -122,3 +122,27 @@ export function perfBreakdown(J, spec, opts = {}) {
     res.lyingOnTurfMs = (t() - t0 - tp) / N; s.destroy(); }
   return res;
 }
+
+// ── 5. FREE-BODY NUMERICAL FLOOR (decision C6) ───────────────────────────────────────────────────────────────────────────────────────────
+// Each V2 segment's exact mass and full inertia tensor as ONE free rigid body (sphere shape, mass properties overridden, gyroscopic force ON,
+// zero damping, gravity off, nothing else in the world) at |ω| = 1 / 3 / 6 rad/s about a generic axis with v = (0.3, 0, −0.2) m/s, 2 s at the
+// G1 rate. The drift of a body that nothing acts on is the engine's own floor (float32 state + first-order gyroscopic step).
+export function freeBodyFloor(J, spec, opts = {}) {
+  const hz = opts.hz || G1_WORLD.hz, dt = 1 / hz, N = Math.round((opts.seconds || 2) * hz), rows = [];
+  for (const b of spec.bodies) for (const wmag of [1, 3, 6]) {
+    const st = new J.JoltSettings(); st.mMaxWorkerThreads = 1; const opf = new J.ObjectLayerPairFilterTable(1); opf.EnableCollision(0, 0);
+    const bpi = new J.BroadPhaseLayerInterfaceTable(1, 1); bpi.MapObjectToBroadPhaseLayer(0, new J.BroadPhaseLayer(0)); st.mObjectLayerPairFilter = opf; st.mBroadPhaseLayerInterface = bpi;
+    st.mObjectVsBroadPhaseLayerFilter = new J.ObjectVsBroadPhaseLayerFilterTable(bpi, 1, opf, 1); const jolt = new J.JoltInterface(st); J.destroy(st); const ps = jolt.GetPhysicsSystem(); ps.SetGravity(new J.Vec3(0, 0, 0));
+    const bcs = new J.BodyCreationSettings(new J.SphereShape(0.05, null), new J.RVec3(0, 0, 0), new J.Quat(0, 0, 0, 1), J.EMotionType_Dynamic, 0);
+    bcs.mOverrideMassProperties = J.EOverrideMassProperties_MassAndInertiaProvided; bcs.mMassPropertiesOverride.mMass = b.mass; const I = J.Mat44.prototype.sIdentity(), T = b.inertia;
+    I.SetAxisX(new J.Vec3(T[0][0], T[1][0], T[2][0])); I.SetAxisY(new J.Vec3(T[0][1], T[1][1], T[2][1])); I.SetAxisZ(new J.Vec3(T[0][2], T[1][2], T[2][2])); bcs.mMassPropertiesOverride.mInertia = I;
+    bcs.mLinearDamping = 0; bcs.mAngularDamping = 0; bcs.mAllowSleeping = false; bcs.mMaxAngularVelocity = 100; bcs.mApplyGyroscopicForce = true;
+    const body = ps.GetBodyInterface().CreateBody(bcs); ps.GetBodyInterface().AddBody(body.GetID(), J.EActivation_Activate); J.destroy(bcs);
+    const ax = V.norm([0.6, 0.5, -0.62]); body.SetLinearVelocity(new J.Vec3(0.3, 0, -0.2)); body.SetAngularVelocity(new J.Vec3(ax[0] * wmag, ax[1] * wmag, ax[2] * wmag));
+    const read = () => { const w = body.GetAngularVelocity(), v = body.GetLinearVelocity(), r = body.GetRotation(), q = [r.GetX(), r.GetY(), r.GetZ(), r.GetW()], wv = [w.GetX(), w.GetY(), w.GetZ()];
+      const wl = Q.rot(Q.conj(q), wv), Il = [T[0][0] * wl[0] + T[0][1] * wl[1] + T[0][2] * wl[2], T[1][0] * wl[0] + T[1][1] * wl[1] + T[1][2] * wl[2], T[2][0] * wl[0] + T[2][1] * wl[1] + T[2][2] * wl[2]];
+      return { L: Q.rot(q, Il), P: V.sc([v.GetX(), v.GetY(), v.GetZ()], b.mass), KE: 0.5 * V.dot(wl, Il) }; };
+    const s0 = read(); let dL = 0, dP = 0, dK = 0; for (let n = 0; n < N; n++) { jolt.Step(dt, 1); const s = read(); dL = Math.max(dL, V.len(V.sub(s.L, s0.L))); dP = Math.max(dP, V.len(V.sub(s.P, s0.P))); dK = Math.max(dK, Math.abs(s.KE - s0.KE)); }
+    rows.push({ body: b.name, w: wmag, L0: V.len(s0.L), dL, dLrel: dL / V.len(s0.L), P0: V.len(s0.P), dP, dPrel: dP / V.len(s0.P), KE0: s0.KE, dKErel: dK / s0.KE }); J.destroy(jolt); }
+  return rows;
+}

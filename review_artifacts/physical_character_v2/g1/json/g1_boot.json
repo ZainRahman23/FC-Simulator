@@ -1,0 +1,7101 @@
+{
+ "generated": "tools/g1_boot.js",
+ "seconds": 189.253,
+ "reps": [
+  "R1_hull",
+  "R2_split2",
+  "R3_split4"
+ ],
+ "settings": {
+  "S0_default": {},
+  "S1_reductionOff": {
+   "manifoldReduction": false
+  },
+  "S2_cacheOff": {
+   "pairCache": false
+  },
+  "S3_bothOff": {
+   "manifoldReduction": false,
+   "pairCache": false
+  },
+  "S4_edgeRemoval": {
+   "enhancedEdge": true
+  }
+ },
+ "rigCases": {
+  "quiet": {
+   "title": "quiet loading (flat, 1 mm)",
+   "rot": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "lift": 0.001,
+   "vy": 0,
+   "friction": true
+  },
+  "heel": {
+   "title": "heel contact (15° toe-up, 2 cm drop)",
+   "rot": [
+    -0.13052619222005157,
+    0,
+    0,
+    0.9914448613738104
+   ],
+   "lift": 0.02,
+   "vy": 0
+  },
+  "flat": {
+   "title": "flat contact (2 cm drop)",
+   "rot": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "lift": 0.02,
+   "vy": 0
+  },
+  "medialEdge": {
+   "title": "medial-edge loading (rolled 20°, 2 cm drop)",
+   "rot": [
+    0,
+    0,
+    0.17364817766693033,
+    0.984807753012208
+   ],
+   "lift": 0.02,
+   "vy": 0
+  },
+  "lateralEdge": {
+   "title": "lateral-edge loading (rolled 20°, 2 cm drop)",
+   "rot": [
+    0,
+    0,
+    -0.17364817766693033,
+    0.984807753012208
+   ],
+   "lift": 0.02,
+   "vy": 0
+  },
+  "toe": {
+   "title": "toe / forefoot loading (20° toe-down, 2 cm drop)",
+   "rot": [
+    0.17364817766693033,
+    0,
+    0,
+    0.984807753012208
+   ],
+   "lift": 0.02,
+   "vy": 0
+  },
+  "flatFast": {
+   "title": "flat impact at 3 m/s",
+   "rot": [
+    0,
+    0,
+    0,
+    1
+   ],
+   "lift": 0.02,
+   "vy": -3
+  },
+  "heelFast": {
+   "title": "heel impact at 3 m/s (15°)",
+   "rot": [
+    -0.13052619222005157,
+    0,
+    0,
+    0.9914448613738104
+   ],
+   "lift": 0.02,
+   "vy": -3
+  }
+ },
+ "falls": [
+  "upright",
+  "leanF",
+  "leanB",
+  "leanL",
+  "leanR",
+  "perturb",
+  "singleLeg",
+  "dropA",
+  "sideFirst",
+  "awkward",
+  "drop1m"
+ ],
+ "results": [
+  {
+   "id": 0,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S0_default",
+   "case": "quiet",
+   "r": {
+    "case": "quiet",
+    "title": "quiet loading (flat, 1 mm)",
+    "firstTouchManifoldMm": -0.48911571502685547,
+    "firstTouchGeoMm": 0.000006656646733826932,
+    "maxTransientMm": 0.000006656646733826932,
+    "settledMm": 0.000006656646733826932,
+    "settledManifoldMm": 0.000059604644775390625,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 9.736107464744896e-10,
+    "jitterW": 5.0390739602091575e-9,
+    "creepMm": 0.00008994657360055858,
+    "maxSpeed": 0.11737702041890706,
+    "maxEnergyRiseJ": 1.066395327598002e-8,
+    "msPerStep": 0.02399586458333362
+   }
+  },
+  {
+   "id": 1,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S0_default",
+   "case": "heel",
+   "r": {
+    "case": "heel",
+    "title": "heel contact (15° toe-up, 2 cm drop)",
+    "firstTouchManifoldMm": 0.00018067657947540283,
+    "firstTouchGeoMm": -0.00003282187217845678,
+    "maxTransientMm": 4.117943157234405,
+    "settledMm": 0.5073533253496243,
+    "settledManifoldMm": 0.3737212682608515,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 8.537736462515945e-7,
+    "normalMaxJumpDeg": 8.537736462515939e-7,
+    "jitterV": 2.9907570142443703e-9,
+    "jitterW": 1.5656664697934503e-8,
+    "creepMm": null,
+    "maxSpeed": 0.5722501277923584,
+    "maxEnergyRiseJ": 1.0658141036401503e-12,
+    "msPerStep": 0.033080593750000165
+   }
+  },
+  {
+   "id": 2,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S0_default",
+   "case": "flat",
+   "r": {
+    "case": "flat",
+    "title": "flat contact (2 cm drop)",
+    "firstTouchManifoldMm": 0.00010803341865539551,
+    "firstTouchGeoMm": 0.000036458969121522244,
+    "maxTransientMm": 0.000036458969121522244,
+    "settledMm": 0.000036458969121522244,
+    "settledManifoldMm": 0.000059604644775390625,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 1.0718871431209007e-9,
+    "jitterW": 5.520270980891986e-9,
+    "creepMm": null,
+    "maxSpeed": 0.5722501277923584,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.03791708072916652
+   }
+  },
+  {
+   "id": 3,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S0_default",
+   "case": "medialEdge",
+   "r": {
+    "case": "medialEdge",
+    "title": "medial-edge loading (rolled 20°, 2 cm drop)",
+    "firstTouchManifoldMm": -0.00005774199962615967,
+    "firstTouchGeoMm": -0.0017754728004609754,
+    "maxTransientMm": 7.013561554861367,
+    "settledMm": 2.9523151568489094,
+    "settledManifoldMm": 2.9526781290769577,
+    "manifoldsAvg": 1,
+    "pointsAvg": 2.888888888888889,
+    "normalStdDeg": 0.23339979930869434,
+    "normalMaxJumpDeg": 0.9620466898351401,
+    "jitterV": 0.48437517756787973,
+    "jitterW": 3.872220265265779,
+    "creepMm": null,
+    "maxSpeed": 1.5865188534208514,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.024209888020833497
+   }
+  },
+  {
+   "id": 4,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S0_default",
+   "case": "lateralEdge",
+   "r": {
+    "case": "lateralEdge",
+    "title": "lateral-edge loading (rolled 20°, 2 cm drop)",
+    "firstTouchManifoldMm": 0.0015348196029663086,
+    "firstTouchGeoMm": -0.0021586676362400636,
+    "maxTransientMm": 10.531232449653594,
+    "settledMm": 10.531232449653594,
+    "settledManifoldMm": 10.535869747400284,
+    "manifoldsAvg": 1,
+    "pointsAvg": 2.8333333333333335,
+    "normalStdDeg": 0.13921797833155258,
+    "normalMaxJumpDeg": 0.578480056043198,
+    "jitterV": 0.4933244386471675,
+    "jitterW": 3.9726558785101247,
+    "creepMm": null,
+    "maxSpeed": 1.6489607313232475,
+    "maxEnergyRiseJ": 0.23126601084968712,
+    "msPerStep": 0.05278135677083373
+   }
+  },
+  {
+   "id": 5,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S0_default",
+   "case": "toe",
+   "r": {
+    "case": "toe",
+    "title": "toe / forefoot loading (20° toe-down, 2 cm drop)",
+    "firstTouchManifoldMm": -0.002251937985420227,
+    "firstTouchGeoMm": -0.003212825579579359,
+    "maxTransientMm": 24.076659066900742,
+    "settledMm": 7.137822154296557,
+    "settledManifoldMm": 7.136845961213112,
+    "manifoldsAvg": 1,
+    "pointsAvg": 3,
+    "normalStdDeg": 0.0989001246269906,
+    "normalMaxJumpDeg": 0.4767346338389337,
+    "jitterV": 0.48648365354766554,
+    "jitterW": 3.74522230086175,
+    "creepMm": null,
+    "maxSpeed": 1.6431905657583452,
+    "maxEnergyRiseJ": 0.6064415062130877,
+    "msPerStep": 0.033916651041665524
+   }
+  },
+  {
+   "id": 6,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S0_default",
+   "case": "flatFast",
+   "r": {
+    "case": "flatFast",
+    "title": "flat impact at 3 m/s",
+    "firstTouchManifoldMm": -0.00010989606380462646,
+    "firstTouchGeoMm": 0.00008496142425706843,
+    "maxTransientMm": 0.00008496142425706843,
+    "settledMm": 0.00007006026306322077,
+    "settledManifoldMm": 0.00011920928244535389,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 0.000013374615005332401,
+    "jitterW": 0.00006966015075915667,
+    "creepMm": null,
+    "maxSpeed": 3.04087495803833,
+    "maxEnergyRiseJ": 0.00000571242681246531,
+    "msPerStep": 0.05944194270833273
+   }
+  },
+  {
+   "id": 7,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S0_default",
+   "case": "heelFast",
+   "r": {
+    "case": "heelFast",
+    "title": "heel impact at 3 m/s (15°)",
+    "firstTouchManifoldMm": -0.0009462237358093262,
+    "firstTouchGeoMm": -0.0013200471701835248,
+    "maxTransientMm": 3.797188674675267,
+    "settledMm": 1.403059703311782,
+    "settledManifoldMm": 1.40298530459404,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 8.537736462515945e-7,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 1.2141313378521408e-9,
+    "jitterW": 6.25052267405852e-9,
+    "creepMm": null,
+    "maxSpeed": 3.04087495803833,
+    "maxEnergyRiseJ": 0.0000010480561911663244,
+    "msPerStep": 0.03598147135416685
+   }
+  },
+  {
+   "id": 8,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S0_default",
+   "key": "upright",
+   "r": {
+    "key": "upright",
+    "turf": 11.22774989060911,
+    "turfRest": 4.999993876085296,
+    "turfRestBody": "foot_L",
+    "rise": 0.016357542840069073,
+    "sep": 1.7865838836246053,
+    "self": 0.3907401114702225,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.2587854857142851,
+    "hash": "c465f5cf",
+    "finite": true,
+    "maxSpeed": 4.394903708323356
+   }
+  },
+  {
+   "id": 9,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S0_default",
+   "key": "leanF",
+   "r": {
+    "key": "leanF",
+    "turf": 6.82218102450928,
+    "turfRest": 1.4516659448432223,
+    "turfRestBody": "foot_L",
+    "rise": 0.10350213685308063,
+    "sep": 1.8793739819144595,
+    "self": 6.409146822988987,
+    "fails": [],
+    "ms": 0.30243444999999786,
+    "hash": "8d47ddd8",
+    "finite": true,
+    "maxSpeed": 3.626847896235463
+   }
+  },
+  {
+   "id": 10,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S0_default",
+   "key": "leanB",
+   "r": {
+    "key": "leanB",
+    "turf": 25.001953546956432,
+    "turfRest": 5.000804055080021,
+    "turfRestBody": "foot_L",
+    "rise": 0.08423442253456415,
+    "sep": 2.786885350452822,
+    "self": 1.8220067722722888,
+    "fails": [
+     "1.4a",
+     "1.4b"
+    ],
+    "ms": 0.2565860732142888,
+    "hash": "5342eec3",
+    "finite": true,
+    "maxSpeed": 4.089937697585491
+   }
+  },
+  {
+   "id": 11,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S0_default",
+   "key": "leanL",
+   "r": {
+    "key": "leanL",
+    "turf": 38.68198579031648,
+    "turfRest": 5.179998296361482,
+    "turfRestBody": "foot_R",
+    "rise": 0.5193932916118058,
+    "sep": 4.029205393111918,
+    "self": 1.4302755007520318,
+    "fails": [
+     "1.2a",
+     "1.2b",
+     "1.4a",
+     "1.4b"
+    ],
+    "ms": 0.27596096071428666,
+    "hash": "b9adee5f",
+    "finite": true,
+    "maxSpeed": 4.848624487188941
+   }
+  },
+  {
+   "id": 12,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S0_default",
+   "key": "leanR",
+   "r": {
+    "key": "leanR",
+    "turf": 21.02680341428996,
+    "turfRest": 0.3433875349558857,
+    "turfRestBody": "foot_R",
+    "rise": 0.20934988912540575,
+    "sep": 1.5136627183690488,
+    "self": 1.0051069548353553,
+    "fails": [
+     "1.3d",
+     "1.4a"
+    ],
+    "ms": 0.27065360178571485,
+    "hash": "aead76b8",
+    "finite": true,
+    "maxSpeed": 4.894940460975356
+   }
+  },
+  {
+   "id": 13,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S0_default",
+   "key": "perturb",
+   "r": {
+    "key": "perturb",
+    "turf": 37.369951398679795,
+    "turfRest": 4.969021186463168,
+    "turfRestBody": "foot_L",
+    "rise": 0.7269270329326787,
+    "sep": 8.152019507770525,
+    "self": 13.19844275712967,
+    "fails": [
+     "1.2a",
+     "1.2b",
+     "1.3a",
+     "1.4d",
+     "1.4a"
+    ],
+    "ms": 0.2900724124999981,
+    "hash": "1584e6b8",
+    "finite": true,
+    "maxSpeed": 4.72720720534167
+   }
+  },
+  {
+   "id": 14,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S0_default",
+   "key": "singleLeg",
+   "r": {
+    "key": "singleLeg",
+    "turf": 33.960711555257014,
+    "turfRest": 24.534053861923226,
+    "turfRestBody": "foot_R",
+    "rise": 0.0000035701580856084547,
+    "sep": 3.483964916456217,
+    "self": 3.175451885908842,
+    "fails": [
+     "1.4a",
+     "1.4b"
+    ],
+    "ms": 0.24956555297619157,
+    "hash": "d477d3e9",
+    "finite": true,
+    "maxSpeed": 4.462464698287876
+   }
+  },
+  {
+   "id": 15,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S0_default",
+   "key": "dropA",
+   "r": {
+    "key": "dropA",
+    "turf": 26.135210152700164,
+    "turfRest": 3.2948027151193937,
+    "turfRestBody": "foot_L",
+    "rise": 0.6581212885274681,
+    "sep": 3.421254857063916,
+    "self": 4.981891252100468,
+    "fails": [
+     "1.2a",
+     "1.2b",
+     "1.4a"
+    ],
+    "ms": 0.2557709815476164,
+    "hash": "d59be4e1",
+    "finite": true,
+    "maxSpeed": 4.069391968054087
+   }
+  },
+  {
+   "id": 16,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S0_default",
+   "key": "sideFirst",
+   "r": {
+    "key": "sideFirst",
+    "turf": 14.233154541306192,
+    "turfRest": 0.1894821958258984,
+    "turfRestBody": "forearm_L",
+    "rise": 0.0012406784814942284,
+    "sep": 1.5003317877088302,
+    "self": 0,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.2212350684523787,
+    "hash": "21050e8e",
+    "finite": true,
+    "maxSpeed": 4.169592549310531
+   }
+  },
+  {
+   "id": 17,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S0_default",
+   "key": "awkward",
+   "r": {
+    "key": "awkward",
+    "turf": 3.034101224105291,
+    "turfRest": 1.6929872738074558,
+    "turfRestBody": "forearm_R",
+    "rise": 0.00003246710895155047,
+    "sep": 2.6686289659457842,
+    "self": 2.0350152626633644,
+    "fails": [],
+    "ms": 0.25183587738095536,
+    "hash": "c826b9d5",
+    "finite": true,
+    "maxSpeed": 5.724387088159024
+   }
+  },
+  {
+   "id": 18,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S0_default",
+   "key": "drop1m",
+   "r": {
+    "key": "drop1m",
+    "turf": 6.723671917180221,
+    "turfRest": 0.04927206890691094,
+    "turfRestBody": "thigh_L",
+    "rise": 0.0000023301078897475236,
+    "sep": 3.040511709752128,
+    "self": 1.2439374113455415,
+    "fails": [],
+    "ms": 0.2564160154761914,
+    "hash": "35475186",
+    "finite": true,
+    "maxSpeed": 4.930228365556942
+   }
+  },
+  {
+   "id": 19,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S1_reductionOff",
+   "case": "quiet",
+   "r": {
+    "case": "quiet",
+    "title": "quiet loading (flat, 1 mm)",
+    "firstTouchManifoldMm": -0.48911571502685547,
+    "firstTouchGeoMm": 0.000006656646733826932,
+    "maxTransientMm": 0.000006656646733826932,
+    "settledMm": 0.000006656646733826932,
+    "settledManifoldMm": 0.000059604644775390625,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 9.736107464744896e-10,
+    "jitterW": 5.0390739602091575e-9,
+    "creepMm": 0.00008994657360055858,
+    "maxSpeed": 0.11737702041890706,
+    "maxEnergyRiseJ": 1.066395327598002e-8,
+    "msPerStep": 0.014941749999996054
+   }
+  },
+  {
+   "id": 20,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S1_reductionOff",
+   "case": "heel",
+   "r": {
+    "case": "heel",
+    "title": "heel contact (15° toe-up, 2 cm drop)",
+    "firstTouchManifoldMm": 0.00018067657947540283,
+    "firstTouchGeoMm": -0.00003282187217845678,
+    "maxTransientMm": 4.117943157234405,
+    "settledMm": 0.5073533253496243,
+    "settledManifoldMm": 0.3737212682608515,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 8.537736462515945e-7,
+    "normalMaxJumpDeg": 8.537736462515939e-7,
+    "jitterV": 2.9907570142443703e-9,
+    "jitterW": 1.5656664697934503e-8,
+    "creepMm": null,
+    "maxSpeed": 0.5722501277923584,
+    "maxEnergyRiseJ": 1.0658141036401503e-12,
+    "msPerStep": 0.01562707812500541
+   }
+  },
+  {
+   "id": 21,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S1_reductionOff",
+   "case": "flat",
+   "r": {
+    "case": "flat",
+    "title": "flat contact (2 cm drop)",
+    "firstTouchManifoldMm": 0.00010803341865539551,
+    "firstTouchGeoMm": 0.000036458969121522244,
+    "maxTransientMm": 0.000036458969121522244,
+    "settledMm": 0.000036458969121522244,
+    "settledManifoldMm": 0.000059604644775390625,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 1.0718871431209007e-9,
+    "jitterW": 5.520270980891986e-9,
+    "creepMm": null,
+    "maxSpeed": 0.5722501277923584,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.014960083333330468
+   }
+  },
+  {
+   "id": 22,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S1_reductionOff",
+   "case": "medialEdge",
+   "r": {
+    "case": "medialEdge",
+    "title": "medial-edge loading (rolled 20°, 2 cm drop)",
+    "firstTouchManifoldMm": -0.00005774199962615967,
+    "firstTouchGeoMm": -0.0017754728004609754,
+    "maxTransientMm": 7.013561554861367,
+    "settledMm": 2.9523151568489094,
+    "settledManifoldMm": 2.9526781290769577,
+    "manifoldsAvg": 1,
+    "pointsAvg": 2.888888888888889,
+    "normalStdDeg": 0.23339979930869434,
+    "normalMaxJumpDeg": 0.9620466898351401,
+    "jitterV": 0.48437517756787973,
+    "jitterW": 3.872220265265779,
+    "creepMm": null,
+    "maxSpeed": 1.5865188534208514,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.009069520833328681
+   }
+  },
+  {
+   "id": 23,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S1_reductionOff",
+   "case": "lateralEdge",
+   "r": {
+    "case": "lateralEdge",
+    "title": "lateral-edge loading (rolled 20°, 2 cm drop)",
+    "firstTouchManifoldMm": 0.0015348196029663086,
+    "firstTouchGeoMm": -0.0021586676362400636,
+    "maxTransientMm": 10.531232449653594,
+    "settledMm": 10.531232449653594,
+    "settledManifoldMm": 10.535869747400284,
+    "manifoldsAvg": 1,
+    "pointsAvg": 2.8333333333333335,
+    "normalStdDeg": 0.13921797833155258,
+    "normalMaxJumpDeg": 0.578480056043198,
+    "jitterV": 0.4933244386471675,
+    "jitterW": 3.9726558785101247,
+    "creepMm": null,
+    "maxSpeed": 1.6489607313232475,
+    "maxEnergyRiseJ": 0.23126601084968712,
+    "msPerStep": 0.020617518229162357
+   }
+  },
+  {
+   "id": 24,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S1_reductionOff",
+   "case": "toe",
+   "r": {
+    "case": "toe",
+    "title": "toe / forefoot loading (20° toe-down, 2 cm drop)",
+    "firstTouchManifoldMm": -0.002251937985420227,
+    "firstTouchGeoMm": -0.003212825579579359,
+    "maxTransientMm": 24.076659066900742,
+    "settledMm": 7.137822154296557,
+    "settledManifoldMm": 7.136845961213112,
+    "manifoldsAvg": 1,
+    "pointsAvg": 3,
+    "normalStdDeg": 0.0989001246269906,
+    "normalMaxJumpDeg": 0.4767346338389337,
+    "jitterV": 0.48648365354766554,
+    "jitterW": 3.74522230086175,
+    "creepMm": null,
+    "maxSpeed": 1.6431905657583452,
+    "maxEnergyRiseJ": 0.6064415062130877,
+    "msPerStep": 0.00937195833333663
+   }
+  },
+  {
+   "id": 25,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S1_reductionOff",
+   "case": "flatFast",
+   "r": {
+    "case": "flatFast",
+    "title": "flat impact at 3 m/s",
+    "firstTouchManifoldMm": -0.00010989606380462646,
+    "firstTouchGeoMm": 0.00008496142425706843,
+    "maxTransientMm": 0.00008496142425706843,
+    "settledMm": 0.00007006026306322077,
+    "settledManifoldMm": 0.00011920928244535389,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 0.000013374615005332401,
+    "jitterW": 0.00006966015075915667,
+    "creepMm": null,
+    "maxSpeed": 3.04087495803833,
+    "maxEnergyRiseJ": 0.00000571242681246531,
+    "msPerStep": 0.011704544270830416
+   }
+  },
+  {
+   "id": 26,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S1_reductionOff",
+   "case": "heelFast",
+   "r": {
+    "case": "heelFast",
+    "title": "heel impact at 3 m/s (15°)",
+    "firstTouchManifoldMm": -0.0009462237358093262,
+    "firstTouchGeoMm": -0.0013200471701835248,
+    "maxTransientMm": 3.797188674675267,
+    "settledMm": 1.403059703311782,
+    "settledManifoldMm": 1.40298530459404,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 8.537736462515945e-7,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 1.2141313378521408e-9,
+    "jitterW": 6.25052267405852e-9,
+    "creepMm": null,
+    "maxSpeed": 3.04087495803833,
+    "maxEnergyRiseJ": 0.0000010480561911663244,
+    "msPerStep": 0.021213346354166163
+   }
+  },
+  {
+   "id": 27,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S1_reductionOff",
+   "key": "upright",
+   "r": {
+    "key": "upright",
+    "turf": 10.110255238294009,
+    "turfRest": 5.000224807144543,
+    "turfRestBody": "foot_L",
+    "rise": 0.016357542840069073,
+    "sep": 1.3626835193138604,
+    "self": 0.14255009591579437,
+    "fails": [
+     "1.4a",
+     "1.4b"
+    ],
+    "ms": 0.23316134523809448,
+    "hash": "a9316419",
+    "finite": true,
+    "maxSpeed": 4.385738370679686
+   }
+  },
+  {
+   "id": 28,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S1_reductionOff",
+   "key": "leanF",
+   "r": {
+    "key": "leanF",
+    "turf": 7.5551828999003,
+    "turfRest": 1.0071136375343763,
+    "turfRestBody": "foot_L",
+    "rise": 0.10350213685308063,
+    "sep": 1.654442433137445,
+    "self": 6.381346844136715,
+    "fails": [],
+    "ms": 0.22236120654762073,
+    "hash": "23a38e90",
+    "finite": true,
+    "maxSpeed": 3.626847896235463
+   }
+  },
+  {
+   "id": 29,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S1_reductionOff",
+   "key": "leanB",
+   "r": {
+    "key": "leanB",
+    "turf": 24.670844546078417,
+    "turfRest": 8.175312384648734,
+    "turfRestBody": "foot_R",
+    "rise": 0.08423442253456415,
+    "sep": 3.234229535018567,
+    "self": 5.364436190575361,
+    "fails": [
+     "1.4a",
+     "1.4b"
+    ],
+    "ms": 0.23251301130952726,
+    "hash": "f547100e",
+    "finite": true,
+    "maxSpeed": 4.089747924995738
+   }
+  },
+  {
+   "id": 30,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S1_reductionOff",
+   "key": "leanL",
+   "r": {
+    "key": "leanL",
+    "turf": 14.832106229065861,
+    "turfRest": 8.896811046801803,
+    "turfRestBody": "foot_R",
+    "rise": 0.10163319115406466,
+    "sep": 3.647937613573504,
+    "self": 1.0075215250253677,
+    "fails": [
+     "1.4a",
+     "1.4b"
+    ],
+    "ms": 0.2345234565476166,
+    "hash": "04b6dbcb",
+    "finite": true,
+    "maxSpeed": 4.8487391565570235
+   }
+  },
+  {
+   "id": 31,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S1_reductionOff",
+   "key": "leanR",
+   "r": {
+    "key": "leanR",
+    "turf": 22.267293564056157,
+    "turfRest": 0.3088920567001635,
+    "turfRestBody": "head",
+    "rise": 0.20934988912540575,
+    "sep": 1.3840717309166102,
+    "self": 1.73722964245826,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.24372715476190546,
+    "hash": "78117bab",
+    "finite": true,
+    "maxSpeed": 4.894737860999655
+   }
+  },
+  {
+   "id": 32,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S1_reductionOff",
+   "key": "perturb",
+   "r": {
+    "key": "perturb",
+    "turf": 36.421411494042005,
+    "turfRest": 4.999941833775417,
+    "turfRestBody": "foot_L",
+    "rise": 0.980784065022533,
+    "sep": 8.975594276659129,
+    "self": 13.371139764785767,
+    "fails": [
+     "1.2a",
+     "1.2b",
+     "1.3a",
+     "1.4d",
+     "1.4a"
+    ],
+    "ms": 0.25515139404761733,
+    "hash": "fbd718c3",
+    "finite": true,
+    "maxSpeed": 4.727203733223658
+   }
+  },
+  {
+   "id": 33,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S1_reductionOff",
+   "key": "singleLeg",
+   "r": {
+    "key": "singleLeg",
+    "turf": 33.72516323638442,
+    "turfRest": 28.26147379443705,
+    "turfRestBody": "foot_R",
+    "rise": 0.00001896303564308255,
+    "sep": 3.381723071088831,
+    "self": 5.707970354706049,
+    "fails": [
+     "1.4a",
+     "1.4b"
+    ],
+    "ms": 0.2344422744047625,
+    "hash": "9d444a89",
+    "finite": true,
+    "maxSpeed": 4.462390893021673
+   }
+  },
+  {
+   "id": 34,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S1_reductionOff",
+   "key": "dropA",
+   "r": {
+    "key": "dropA",
+    "turf": 24.74477014021989,
+    "turfRest": 4.336713822270869,
+    "turfRestBody": "foot_L",
+    "rise": 0.6581212885274681,
+    "sep": 8.435994126151094,
+    "self": 3.870360553264618,
+    "fails": [
+     "1.2a",
+     "1.2b",
+     "1.3a",
+     "1.4a"
+    ],
+    "ms": 0.22400208809523509,
+    "hash": "da7b417b",
+    "finite": true,
+    "maxSpeed": 4.069385721055185
+   }
+  },
+  {
+   "id": 35,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S1_reductionOff",
+   "key": "sideFirst",
+   "r": {
+    "key": "sideFirst",
+    "turf": 14.233154541306192,
+    "turfRest": 0.04855416808441371,
+    "turfRestBody": "shank_L",
+    "rise": 0.00003907172364847611,
+    "sep": 1.5003317877088302,
+    "self": 0.011872747563757002,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.2260734910714364,
+    "hash": "624657c2",
+    "finite": true,
+    "maxSpeed": 4.168917627979874
+   }
+  },
+  {
+   "id": 36,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S1_reductionOff",
+   "key": "awkward",
+   "r": {
+    "key": "awkward",
+    "turf": 3.0756717206945754,
+    "turfRest": 1.862461267614541,
+    "turfRestBody": "forearm_R",
+    "rise": 0.0005330731144681522,
+    "sep": 2.6595532340887105,
+    "self": 3.5727741196751595,
+    "fails": [],
+    "ms": 0.24622065059524165,
+    "hash": "26b616df",
+    "finite": true,
+    "maxSpeed": 5.724434350479261
+   }
+  },
+  {
+   "id": 37,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S1_reductionOff",
+   "key": "drop1m",
+   "r": {
+    "key": "drop1m",
+    "turf": 6.902925478410316,
+    "turfRest": 0.016992870899401602,
+    "turfRestBody": "foot_L",
+    "rise": 0.00020903141361827693,
+    "sep": 3.040511709752128,
+    "self": 0.915512559004128,
+    "fails": [],
+    "ms": 0.23294515773809454,
+    "hash": "0eee039e",
+    "finite": true,
+    "maxSpeed": 4.930226533583083
+   }
+  },
+  {
+   "id": 38,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S2_cacheOff",
+   "case": "quiet",
+   "r": {
+    "case": "quiet",
+    "title": "quiet loading (flat, 1 mm)",
+    "firstTouchManifoldMm": -0.48912689089775085,
+    "firstTouchGeoMm": 0.000006656646733826932,
+    "maxTransientMm": 0.000006656646733826932,
+    "settledMm": 0.000006656646733826932,
+    "settledManifoldMm": 0.00010803341865539551,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 4.2695871232144717e-10,
+    "jitterW": 2.175869008359392e-9,
+    "creepMm": 0.00009013480677061681,
+    "maxSpeed": 0.11737702041890581,
+    "maxEnergyRiseJ": 1.0665189620340243e-8,
+    "msPerStep": 0.017458221354155274
+   }
+  },
+  {
+   "id": 39,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S2_cacheOff",
+   "case": "heel",
+   "r": {
+    "case": "heel",
+    "title": "heel contact (15° toe-up, 2 cm drop)",
+    "firstTouchManifoldMm": 0.00018067657947540283,
+    "firstTouchGeoMm": -0.00003282187217845678,
+    "maxTransientMm": 4.035699110899557,
+    "settledMm": 0.4348752153428559,
+    "settledManifoldMm": 0.43504126369953156,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 2.014475017103469e-9,
+    "jitterW": 1.0419267791821046e-8,
+    "creepMm": null,
+    "maxSpeed": 0.5722501277923584,
+    "maxEnergyRiseJ": 1.5053558399813483e-10,
+    "msPerStep": 0.01790981770831716
+   }
+  },
+  {
+   "id": 40,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S2_cacheOff",
+   "case": "flat",
+   "r": {
+    "case": "flat",
+    "title": "flat contact (2 cm drop)",
+    "firstTouchManifoldMm": 0.00010803341865539551,
+    "firstTouchGeoMm": 0.000036458969121522244,
+    "maxTransientMm": 0.000036458969121522244,
+    "settledMm": 0.000036458969121522244,
+    "settledManifoldMm": 0.00010803341865539551,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 8.057417330723776e-10,
+    "jitterW": 4.1496087078377945e-9,
+    "creepMm": null,
+    "maxSpeed": 0.5722501277923584,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.008342346354164457
+   }
+  },
+  {
+   "id": 41,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S2_cacheOff",
+   "case": "medialEdge",
+   "r": {
+    "case": "medialEdge",
+    "title": "medial-edge loading (rolled 20°, 2 cm drop)",
+    "firstTouchManifoldMm": -0.00005774199962615967,
+    "firstTouchGeoMm": -0.0017754728004609754,
+    "maxTransientMm": 7.013561554861367,
+    "settledMm": 2.970300416259258,
+    "settledManifoldMm": 2.9707737267017365,
+    "manifoldsAvg": 1,
+    "pointsAvg": 2.888888888888889,
+    "normalStdDeg": 0.0000017857957038173824,
+    "normalMaxJumpDeg": 0.000005853177225625917,
+    "jitterV": 0.4843906294181837,
+    "jitterW": 3.872202718982671,
+    "creepMm": null,
+    "maxSpeed": 1.5865188534208514,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.013634002604174356
+   }
+  },
+  {
+   "id": 42,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S2_cacheOff",
+   "case": "lateralEdge",
+   "r": {
+    "case": "lateralEdge",
+    "title": "lateral-edge loading (rolled 20°, 2 cm drop)",
+    "firstTouchManifoldMm": 0.0015348196029663086,
+    "firstTouchGeoMm": -0.0021586676362400636,
+    "maxTransientMm": 10.531305298842629,
+    "settledMm": 10.531305298842629,
+    "settledManifoldMm": 10.4962307959795,
+    "manifoldsAvg": 1,
+    "pointsAvg": 2.8333333333333335,
+    "normalStdDeg": 0.004251011011609996,
+    "normalMaxJumpDeg": 0.029798788140244947,
+    "jitterV": 0.49364411628477645,
+    "jitterW": 3.9758740841199605,
+    "creepMm": null,
+    "maxSpeed": 1.6489607313232475,
+    "maxEnergyRiseJ": 0.23132593445552985,
+    "msPerStep": 0.01604325520833901
+   }
+  },
+  {
+   "id": 43,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S2_cacheOff",
+   "case": "toe",
+   "r": {
+    "case": "toe",
+    "title": "toe / forefoot loading (20° toe-down, 2 cm drop)",
+    "firstTouchManifoldMm": -0.002251937985420227,
+    "firstTouchGeoMm": -0.003212825579579359,
+    "maxTransientMm": 24.07721489766758,
+    "settledMm": 7.130897345930174,
+    "settledManifoldMm": 7.133135572075844,
+    "manifoldsAvg": 1,
+    "pointsAvg": 3,
+    "normalStdDeg": 0.000002278952007637593,
+    "normalMaxJumpDeg": 0.000006776618231767655,
+    "jitterV": 0.4869972171812335,
+    "jitterW": 3.750300524675652,
+    "creepMm": null,
+    "maxSpeed": 1.6431905657583452,
+    "maxEnergyRiseJ": 0.60648863272894,
+    "msPerStep": 0.02406130989583133
+   }
+  },
+  {
+   "id": 44,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S2_cacheOff",
+   "case": "flatFast",
+   "r": {
+    "case": "flatFast",
+    "title": "flat impact at 3 m/s",
+    "firstTouchManifoldMm": -0.00010989606380462646,
+    "firstTouchGeoMm": 0.00008496142425706843,
+    "maxTransientMm": 0.00008496142425706843,
+    "settledMm": 0.00008496142425706843,
+    "settledManifoldMm": 0.00012852251529693604,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 3.1817267849035656e-9,
+    "jitterW": 1.6660002286788245e-8,
+    "creepMm": null,
+    "maxSpeed": 3.04087495803833,
+    "maxEnergyRiseJ": 1.0702052577471477e-9,
+    "msPerStep": 0.016573031249996244
+   }
+  },
+  {
+   "id": 45,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S2_cacheOff",
+   "case": "heelFast",
+   "r": {
+    "case": "heelFast",
+    "title": "heel impact at 3 m/s (15°)",
+    "firstTouchManifoldMm": -0.0009462237358093262,
+    "firstTouchGeoMm": -0.0013200471701835248,
+    "maxTransientMm": 3.778694202740629,
+    "settledMm": 0.00006091414971043374,
+    "settledManifoldMm": 0.00002421438694000244,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 2.8244651454299834e-9,
+    "jitterW": 1.472999536694492e-8,
+    "creepMm": null,
+    "maxSpeed": 3.04087495803833,
+    "maxEnergyRiseJ": 0.000005730400019388071,
+    "msPerStep": 0.007588104166658856
+   }
+  },
+  {
+   "id": 46,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S2_cacheOff",
+   "key": "upright",
+   "r": {
+    "key": "upright",
+    "turf": 13.586900929310627,
+    "turfRest": 11.703323284409068,
+    "turfRestBody": "foot_R",
+    "rise": 0.04695837935612701,
+    "sep": 3.8439966606250615,
+    "self": 0.0786464661359787,
+    "fails": [
+     "1.3c",
+     "1.4a",
+     "1.4b",
+     "1.R"
+    ],
+    "ms": 0.2729917017857195,
+    "hash": "c8f757b2",
+    "finite": true,
+    "maxSpeed": 4.393555201864498
+   }
+  },
+  {
+   "id": 47,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S2_cacheOff",
+   "key": "leanF",
+   "r": {
+    "key": "leanF",
+    "turf": 7.656522733793233,
+    "turfRest": 1.9643946731297963,
+    "turfRestBody": "foot_R",
+    "rise": 0.027288547491934878,
+    "sep": 1.7448353464586375,
+    "self": 1.0632500052452087,
+    "fails": [],
+    "ms": 0.24634764880951876,
+    "hash": "9c7dbc2d",
+    "finite": true,
+    "maxSpeed": 3.629743579256711
+   }
+  },
+  {
+   "id": 48,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S2_cacheOff",
+   "key": "leanB",
+   "r": {
+    "key": "leanB",
+    "turf": 25.037884629623836,
+    "turfRest": 12.641351345330607,
+    "turfRestBody": "foot_R",
+    "rise": 0.08415151644248908,
+    "sep": 2.778468112154165,
+    "self": 3.4280940890312195,
+    "fails": [
+     "1.4a",
+     "1.4b"
+    ],
+    "ms": 0.253098782738093,
+    "hash": "ffdc2a75",
+    "finite": true,
+    "maxSpeed": 4.082890154273796
+   }
+  },
+  {
+   "id": 49,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S2_cacheOff",
+   "key": "leanL",
+   "r": {
+    "key": "leanL",
+    "turf": 23.723607062560546,
+    "turfRest": 0.18365547096115334,
+    "turfRestBody": "forearm_R",
+    "rise": 0.18334540841749458,
+    "sep": 3.4033740956519867,
+    "self": 0.8435174822807312,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.2692433047619055,
+    "hash": "fc94f8f7",
+    "finite": true,
+    "maxSpeed": 4.85986869414543
+   }
+  },
+  {
+   "id": 50,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S2_cacheOff",
+   "key": "leanR",
+   "r": {
+    "key": "leanR",
+    "turf": 28.19702728948466,
+    "turfRest": 4.994382020276148,
+    "turfRestBody": "foot_L",
+    "rise": 0.21434386329440258,
+    "sep": 2.25641062801862,
+    "self": 0.6750393658876419,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.23335884107142635,
+    "hash": "ca52f4b7",
+    "finite": true,
+    "maxSpeed": 4.883722249276778
+   }
+  },
+  {
+   "id": 51,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S2_cacheOff",
+   "key": "perturb",
+   "r": {
+    "key": "perturb",
+    "turf": 35.08845828807961,
+    "turfRest": 3.4714981029208976,
+    "turfRestBody": "foot_L",
+    "rise": 0.9122904281430522,
+    "sep": 6.648783652986027,
+    "self": 13.148348778486252,
+    "fails": [
+     "1.2a",
+     "1.2b",
+     "1.3a",
+     "1.4d",
+     "1.4a"
+    ],
+    "ms": 0.2747232279761858,
+    "hash": "07069148",
+    "finite": true,
+    "maxSpeed": 4.728840494911809
+   }
+  },
+  {
+   "id": 52,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S2_cacheOff",
+   "key": "singleLeg",
+   "r": {
+    "key": "singleLeg",
+    "turf": 20.742716075556043,
+    "turfRest": 5.590572674310207,
+    "turfRestBody": "foot_L",
+    "rise": 0.005378029753885016,
+    "sep": 1.975452722071581,
+    "self": 1.291101798415184,
+    "fails": [
+     "1.4a",
+     "1.4b"
+    ],
+    "ms": 0.24355470714285973,
+    "hash": "4a5ed833",
+    "finite": true,
+    "maxSpeed": 4.463780124909098
+   }
+  },
+  {
+   "id": 53,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S2_cacheOff",
+   "key": "dropA",
+   "r": {
+    "key": "dropA",
+    "turf": 24.943649012805437,
+    "turfRest": 2.917746622620565,
+    "turfRestBody": "foot_R",
+    "rise": 0.6572057389009842,
+    "sep": 8.462192735090902,
+    "self": 0.0858549028635025,
+    "fails": [
+     "1.2a",
+     "1.2b",
+     "1.3a",
+     "1.4a"
+    ],
+    "ms": 0.23613578869047733,
+    "hash": "5065b222",
+    "finite": true,
+    "maxSpeed": 4.069349776131028
+   }
+  },
+  {
+   "id": 54,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S2_cacheOff",
+   "key": "sideFirst",
+   "r": {
+    "key": "sideFirst",
+    "turf": 14.233154541306192,
+    "turfRest": 0.057162170741101304,
+    "turfRestBody": "foot_L",
+    "rise": 0.0000048819161406754574,
+    "sep": 1.5003317877088302,
+    "self": 0,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.23990436964285156,
+    "hash": "5955c40a",
+    "finite": true,
+    "maxSpeed": 4.170587552933669
+   }
+  },
+  {
+   "id": 55,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S2_cacheOff",
+   "key": "awkward",
+   "r": {
+    "key": "awkward",
+    "turf": 5.165679521163577,
+    "turfRest": 2.853793639721356,
+    "turfRestBody": "forearm_R",
+    "rise": 0.00010539547037069497,
+    "sep": 2.6278777404086915,
+    "self": 1.0933354496955872,
+    "fails": [],
+    "ms": 0.264736149404757,
+    "hash": "b6905ced",
+    "finite": true,
+    "maxSpeed": 5.72358063967646
+   }
+  },
+  {
+   "id": 56,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S2_cacheOff",
+   "key": "drop1m",
+   "r": {
+    "key": "drop1m",
+    "turf": 9.10174755540588,
+    "turfRest": 0.0031919261643739705,
+    "turfRestBody": "forearm_R",
+    "rise": 0.00004268521951189541,
+    "sep": 3.040511709752128,
+    "self": 1.5512630343437195,
+    "fails": [],
+    "ms": 0.24739182559523476,
+    "hash": "82bad742",
+    "finite": true,
+    "maxSpeed": 4.9302157815833505
+   }
+  },
+  {
+   "id": 57,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S3_bothOff",
+   "case": "quiet",
+   "r": {
+    "case": "quiet",
+    "title": "quiet loading (flat, 1 mm)",
+    "firstTouchManifoldMm": -0.48912689089775085,
+    "firstTouchGeoMm": 0.000006656646733826932,
+    "maxTransientMm": 0.000006656646733826932,
+    "settledMm": 0.000006656646733826932,
+    "settledManifoldMm": 0.00010803341865539551,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 4.2695871232144717e-10,
+    "jitterW": 2.175869008359392e-9,
+    "creepMm": 0.00009013480677061681,
+    "maxSpeed": 0.11737702041890581,
+    "maxEnergyRiseJ": 1.0665189620340243e-8,
+    "msPerStep": 0.010258127604154529
+   }
+  },
+  {
+   "id": 58,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S3_bothOff",
+   "case": "heel",
+   "r": {
+    "case": "heel",
+    "title": "heel contact (15° toe-up, 2 cm drop)",
+    "firstTouchManifoldMm": 0.00018067657947540283,
+    "firstTouchGeoMm": -0.00003282187217845678,
+    "maxTransientMm": 4.035699110899557,
+    "settledMm": 0.4348752153428559,
+    "settledManifoldMm": 0.43504126369953156,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 2.014475017103469e-9,
+    "jitterW": 1.0419267791821046e-8,
+    "creepMm": null,
+    "maxSpeed": 0.5722501277923584,
+    "maxEnergyRiseJ": 1.5053558399813483e-10,
+    "msPerStep": 0.013904343749995718
+   }
+  },
+  {
+   "id": 59,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S3_bothOff",
+   "case": "flat",
+   "r": {
+    "case": "flat",
+    "title": "flat contact (2 cm drop)",
+    "firstTouchManifoldMm": 0.00010803341865539551,
+    "firstTouchGeoMm": 0.000036458969121522244,
+    "maxTransientMm": 0.000036458969121522244,
+    "settledMm": 0.000036458969121522244,
+    "settledManifoldMm": 0.00010803341865539551,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 8.057417330723776e-10,
+    "jitterW": 4.1496087078377945e-9,
+    "creepMm": null,
+    "maxSpeed": 0.5722501277923584,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.013623158854166206
+   }
+  },
+  {
+   "id": 60,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S3_bothOff",
+   "case": "medialEdge",
+   "r": {
+    "case": "medialEdge",
+    "title": "medial-edge loading (rolled 20°, 2 cm drop)",
+    "firstTouchManifoldMm": -0.00005774199962615967,
+    "firstTouchGeoMm": -0.0017754728004609754,
+    "maxTransientMm": 7.013561554861367,
+    "settledMm": 2.970300416259258,
+    "settledManifoldMm": 2.9707737267017365,
+    "manifoldsAvg": 1,
+    "pointsAvg": 2.888888888888889,
+    "normalStdDeg": 0.0000017857957038173824,
+    "normalMaxJumpDeg": 0.000005853177225625917,
+    "jitterV": 0.4843906294181837,
+    "jitterW": 3.872202718982671,
+    "creepMm": null,
+    "maxSpeed": 1.5865188534208514,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.019937372395827897
+   }
+  },
+  {
+   "id": 61,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S3_bothOff",
+   "case": "lateralEdge",
+   "r": {
+    "case": "lateralEdge",
+    "title": "lateral-edge loading (rolled 20°, 2 cm drop)",
+    "firstTouchManifoldMm": 0.0015348196029663086,
+    "firstTouchGeoMm": -0.0021586676362400636,
+    "maxTransientMm": 10.531305298842629,
+    "settledMm": 10.531305298842629,
+    "settledManifoldMm": 10.4962307959795,
+    "manifoldsAvg": 1,
+    "pointsAvg": 2.8333333333333335,
+    "normalStdDeg": 0.004251011011609996,
+    "normalMaxJumpDeg": 0.029798788140244947,
+    "jitterV": 0.49364411628477645,
+    "jitterW": 3.9758740841199605,
+    "creepMm": null,
+    "maxSpeed": 1.6489607313232475,
+    "maxEnergyRiseJ": 0.23132593445552985,
+    "msPerStep": 0.011372825520843103
+   }
+  },
+  {
+   "id": 62,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S3_bothOff",
+   "case": "toe",
+   "r": {
+    "case": "toe",
+    "title": "toe / forefoot loading (20° toe-down, 2 cm drop)",
+    "firstTouchManifoldMm": -0.002251937985420227,
+    "firstTouchGeoMm": -0.003212825579579359,
+    "maxTransientMm": 24.07721489766758,
+    "settledMm": 7.130897345930174,
+    "settledManifoldMm": 7.133135572075844,
+    "manifoldsAvg": 1,
+    "pointsAvg": 3,
+    "normalStdDeg": 0.000002278952007637593,
+    "normalMaxJumpDeg": 0.000006776618231767655,
+    "jitterV": 0.4869972171812335,
+    "jitterW": 3.750300524675652,
+    "creepMm": null,
+    "maxSpeed": 1.6431905657583452,
+    "maxEnergyRiseJ": 0.60648863272894,
+    "msPerStep": 0.013874377604165508
+   }
+  },
+  {
+   "id": 63,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S3_bothOff",
+   "case": "flatFast",
+   "r": {
+    "case": "flatFast",
+    "title": "flat impact at 3 m/s",
+    "firstTouchManifoldMm": -0.00010989606380462646,
+    "firstTouchGeoMm": 0.00008496142425706843,
+    "maxTransientMm": 0.00008496142425706843,
+    "settledMm": 0.00008496142425706843,
+    "settledManifoldMm": 0.00012852251529693604,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 3.1817267849035656e-9,
+    "jitterW": 1.6660002286788245e-8,
+    "creepMm": null,
+    "maxSpeed": 3.04087495803833,
+    "maxEnergyRiseJ": 1.0702052577471477e-9,
+    "msPerStep": 0.017678192708324048
+   }
+  },
+  {
+   "id": 64,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S3_bothOff",
+   "case": "heelFast",
+   "r": {
+    "case": "heelFast",
+    "title": "heel impact at 3 m/s (15°)",
+    "firstTouchManifoldMm": -0.0009462237358093262,
+    "firstTouchGeoMm": -0.0013200471701835248,
+    "maxTransientMm": 3.778694202740629,
+    "settledMm": 0.00006091414971043374,
+    "settledManifoldMm": 0.00002421438694000244,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 2.8244651454299834e-9,
+    "jitterW": 1.472999536694492e-8,
+    "creepMm": null,
+    "maxSpeed": 3.04087495803833,
+    "maxEnergyRiseJ": 0.000005730400019388071,
+    "msPerStep": 0.013653114583335698
+   }
+  },
+  {
+   "id": 65,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S3_bothOff",
+   "key": "upright",
+   "r": {
+    "key": "upright",
+    "turf": 12.473215456937387,
+    "turfRest": 9.414874772595367,
+    "turfRestBody": "foot_R",
+    "rise": 0.035305925630908064,
+    "sep": 3.3592223184914545,
+    "self": 0.10315701365470886,
+    "fails": [
+     "1.3c",
+     "1.4a",
+     "1.4b",
+     "1.R"
+    ],
+    "ms": 0.2777967821428514,
+    "hash": "08edb495",
+    "finite": true,
+    "maxSpeed": 4.395520599557957
+   }
+  },
+  {
+   "id": 66,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S3_bothOff",
+   "key": "leanF",
+   "r": {
+    "key": "leanF",
+    "turf": 7.658069696050901,
+    "turfRest": 1.704402157896412,
+    "turfRestBody": "foot_R",
+    "rise": 0.027288547491934878,
+    "sep": 1.8358850324581173,
+    "self": 1.0556615889072418,
+    "fails": [],
+    "ms": 0.25134028035714745,
+    "hash": "faac3634",
+    "finite": true,
+    "maxSpeed": 3.629743579256711
+   }
+  },
+  {
+   "id": 67,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S3_bothOff",
+   "key": "leanB",
+   "r": {
+    "key": "leanB",
+    "turf": 24.386160375337028,
+    "turfRest": 10.696368603801382,
+    "turfRestBody": "foot_R",
+    "rise": 0.08415151644248908,
+    "sep": 2.788446909828,
+    "self": 0.7837209850549698,
+    "fails": [
+     "1.4a",
+     "1.4b"
+    ],
+    "ms": 0.26439052678571867,
+    "hash": "eaa48c29",
+    "finite": true,
+    "maxSpeed": 4.083257400621681
+   }
+  },
+  {
+   "id": 68,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S3_bothOff",
+   "key": "leanL",
+   "r": {
+    "key": "leanL",
+    "turf": 24.337577783056286,
+    "turfRest": 0.17886448379985861,
+    "turfRestBody": "forearm_R",
+    "rise": 0.18334540841749458,
+    "sep": 2.2215586256026305,
+    "self": 0.8732341229915619,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.24514530476191465,
+    "hash": "80418e74",
+    "finite": true,
+    "maxSpeed": 4.859455370411654
+   }
+  },
+  {
+   "id": 69,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S3_bothOff",
+   "key": "leanR",
+   "r": {
+    "key": "leanR",
+    "turf": 29.608640039077233,
+    "turfRest": 0.28617107125049335,
+    "turfRestBody": "foot_L",
+    "rise": 0.21434386329440258,
+    "sep": 2.0295560955699266,
+    "self": 0.6547961384057999,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.261754095238091,
+    "hash": "b0cfb090",
+    "finite": true,
+    "maxSpeed": 4.8843030025732945
+   }
+  },
+  {
+   "id": 70,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S3_bothOff",
+   "key": "perturb",
+   "r": {
+    "key": "perturb",
+    "turf": 34.55686084920143,
+    "turfRest": 3.3144248983775215,
+    "turfRestBody": "foot_L",
+    "rise": 1.1931071101103043,
+    "sep": 6.550363085338088,
+    "self": 13.44689354300499,
+    "fails": [
+     "1.2a",
+     "1.2b",
+     "1.3a",
+     "1.4d",
+     "1.4a"
+    ],
+    "ms": 0.27540747321429265,
+    "hash": "1f4d9ff5",
+    "finite": true,
+    "maxSpeed": 4.72894886374988
+   }
+  },
+  {
+   "id": 71,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S3_bothOff",
+   "key": "singleLeg",
+   "r": {
+    "key": "singleLeg",
+    "turf": 24.949194580115325,
+    "turfRest": 4.107038709134356,
+    "turfRestBody": "foot_L",
+    "rise": 0.00003002007139230045,
+    "sep": 3.583301663987642,
+    "self": 1.152966171503067,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.2658743565476343,
+    "hash": "752c9761",
+    "finite": true,
+    "maxSpeed": 4.462027421782298
+   }
+  },
+  {
+   "id": 72,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S3_bothOff",
+   "key": "dropA",
+   "r": {
+    "key": "dropA",
+    "turf": 25.468260884293006,
+    "turfRest": 2.513107809604384,
+    "turfRestBody": "foot_R",
+    "rise": 0.6572057389009842,
+    "sep": 5.635163608135131,
+    "self": 0.08452683687210083,
+    "fails": [
+     "1.2a",
+     "1.2b",
+     "1.3a",
+     "1.4a"
+    ],
+    "ms": 0.23984485238095746,
+    "hash": "abb3ddfc",
+    "finite": true,
+    "maxSpeed": 4.069352723054863
+   }
+  },
+  {
+   "id": 73,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S3_bothOff",
+   "key": "sideFirst",
+   "r": {
+    "key": "sideFirst",
+    "turf": 14.233154541306192,
+    "turfRest": 0.05523072984249533,
+    "turfRestBody": "thigh_R",
+    "rise": 5.685744497441192e-8,
+    "sep": 1.5003317877088302,
+    "self": 0,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.2632030857142933,
+    "hash": "3f0d87fb",
+    "finite": true,
+    "maxSpeed": 4.170523156692446
+   }
+  },
+  {
+   "id": 74,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S3_bothOff",
+   "key": "awkward",
+   "r": {
+    "key": "awkward",
+    "turf": 5.3868020500090905,
+    "turfRest": 1.581664445330349,
+    "turfRestBody": "forearm_R",
+    "rise": 0.03462296856022817,
+    "sep": 2.6290080348754286,
+    "self": 1.3852212578058243,
+    "fails": [],
+    "ms": 0.28017608749999867,
+    "hash": "ecaf2954",
+    "finite": true,
+    "maxSpeed": 5.723680905369793
+   }
+  },
+  {
+   "id": 75,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S3_bothOff",
+   "key": "drop1m",
+   "r": {
+    "key": "drop1m",
+    "turf": 9.102845425339693,
+    "turfRest": 1.457456439012725,
+    "turfRestBody": "foot_L",
+    "rise": 0.00019359896026571732,
+    "sep": 3.040511709752128,
+    "self": 1.2972541153430939,
+    "fails": [],
+    "ms": 0.26289604345238005,
+    "hash": "b92a1607",
+    "finite": true,
+    "maxSpeed": 4.93021582070372
+   }
+  },
+  {
+   "id": 76,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S4_edgeRemoval",
+   "case": "quiet",
+   "r": {
+    "case": "quiet",
+    "title": "quiet loading (flat, 1 mm)",
+    "firstTouchManifoldMm": -0.48911571502685547,
+    "firstTouchGeoMm": 0.000006656646733826932,
+    "maxTransientMm": 0.000006656646733826932,
+    "settledMm": 0.000006656646733826932,
+    "settledManifoldMm": 0.000059604644775390625,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 9.736107464744896e-10,
+    "jitterW": 5.0390739602091575e-9,
+    "creepMm": 0.00008994657360055858,
+    "maxSpeed": 0.11737702041890706,
+    "maxEnergyRiseJ": 1.066395327598002e-8,
+    "msPerStep": 0.007322789062503905
+   }
+  },
+  {
+   "id": 77,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S4_edgeRemoval",
+   "case": "heel",
+   "r": {
+    "case": "heel",
+    "title": "heel contact (15° toe-up, 2 cm drop)",
+    "firstTouchManifoldMm": 0.00018067657947540283,
+    "firstTouchGeoMm": -0.00003282187217845678,
+    "maxTransientMm": 4.117943157234405,
+    "settledMm": 0.5073533253496243,
+    "settledManifoldMm": 0.3737212682608515,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 8.537736462515945e-7,
+    "normalMaxJumpDeg": 8.537736462515939e-7,
+    "jitterV": 2.9907570142443703e-9,
+    "jitterW": 1.5656664697934503e-8,
+    "creepMm": null,
+    "maxSpeed": 0.5722501277923584,
+    "maxEnergyRiseJ": 1.0658141036401503e-12,
+    "msPerStep": 0.012965833333287454
+   }
+  },
+  {
+   "id": 78,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S4_edgeRemoval",
+   "case": "flat",
+   "r": {
+    "case": "flat",
+    "title": "flat contact (2 cm drop)",
+    "firstTouchManifoldMm": 0.00010803341865539551,
+    "firstTouchGeoMm": 0.000036458969121522244,
+    "maxTransientMm": 0.000036458969121522244,
+    "settledMm": 0.000036458969121522244,
+    "settledManifoldMm": 0.000059604644775390625,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 1.0718871431209007e-9,
+    "jitterW": 5.520270980891986e-9,
+    "creepMm": null,
+    "maxSpeed": 0.5722501277923584,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.005955638020810265
+   }
+  },
+  {
+   "id": 79,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S4_edgeRemoval",
+   "case": "medialEdge",
+   "r": {
+    "case": "medialEdge",
+    "title": "medial-edge loading (rolled 20°, 2 cm drop)",
+    "firstTouchManifoldMm": -0.00005774199962615967,
+    "firstTouchGeoMm": -0.0017754728004609754,
+    "maxTransientMm": 7.013561554861367,
+    "settledMm": 2.9523151568489094,
+    "settledManifoldMm": 2.9526781290769577,
+    "manifoldsAvg": 1,
+    "pointsAvg": 2.888888888888889,
+    "normalStdDeg": 0.23339979930869434,
+    "normalMaxJumpDeg": 0.9620466898351401,
+    "jitterV": 0.48437517756787973,
+    "jitterW": 3.872220265265779,
+    "creepMm": null,
+    "maxSpeed": 1.5865188534208514,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.015727882812501075
+   }
+  },
+  {
+   "id": 80,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S4_edgeRemoval",
+   "case": "lateralEdge",
+   "r": {
+    "case": "lateralEdge",
+    "title": "lateral-edge loading (rolled 20°, 2 cm drop)",
+    "firstTouchManifoldMm": 0.0015348196029663086,
+    "firstTouchGeoMm": -0.0021586676362400636,
+    "maxTransientMm": 10.531232449653594,
+    "settledMm": 10.531232449653594,
+    "settledManifoldMm": 10.535869747400284,
+    "manifoldsAvg": 1,
+    "pointsAvg": 2.8333333333333335,
+    "normalStdDeg": 0.13921797833155258,
+    "normalMaxJumpDeg": 0.578480056043198,
+    "jitterV": 0.4933244386471675,
+    "jitterW": 3.9726558785101247,
+    "creepMm": null,
+    "maxSpeed": 1.6489607313232475,
+    "maxEnergyRiseJ": 0.23126601084968712,
+    "msPerStep": 0.01203398177085783
+   }
+  },
+  {
+   "id": 81,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S4_edgeRemoval",
+   "case": "toe",
+   "r": {
+    "case": "toe",
+    "title": "toe / forefoot loading (20° toe-down, 2 cm drop)",
+    "firstTouchManifoldMm": -0.002251937985420227,
+    "firstTouchGeoMm": -0.003212825579579359,
+    "maxTransientMm": 24.076659066900742,
+    "settledMm": 7.137822154296557,
+    "settledManifoldMm": 7.136845961213112,
+    "manifoldsAvg": 1,
+    "pointsAvg": 3,
+    "normalStdDeg": 0.0989001246269906,
+    "normalMaxJumpDeg": 0.4767346338389337,
+    "jitterV": 0.48648365354766554,
+    "jitterW": 3.74522230086175,
+    "creepMm": null,
+    "maxSpeed": 1.6431905657583452,
+    "maxEnergyRiseJ": 0.6064415062130877,
+    "msPerStep": 0.014667953124984479
+   }
+  },
+  {
+   "id": 82,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S4_edgeRemoval",
+   "case": "flatFast",
+   "r": {
+    "case": "flatFast",
+    "title": "flat impact at 3 m/s",
+    "firstTouchManifoldMm": -0.00010989606380462646,
+    "firstTouchGeoMm": 0.00008496142425706843,
+    "maxTransientMm": 0.00008496142425706843,
+    "settledMm": 0.00007006026306322077,
+    "settledManifoldMm": 0.00011920928244535389,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 0.000013374615005332401,
+    "jitterW": 0.00006966015075915667,
+    "creepMm": null,
+    "maxSpeed": 3.04087495803833,
+    "maxEnergyRiseJ": 0.00000571242681246531,
+    "msPerStep": 0.007987283854177463
+   }
+  },
+  {
+   "id": 83,
+   "kind": "rig",
+   "rep": "R1_hull",
+   "set": "S4_edgeRemoval",
+   "case": "heelFast",
+   "r": {
+    "case": "heelFast",
+    "title": "heel impact at 3 m/s (15°)",
+    "firstTouchManifoldMm": -0.0009462237358093262,
+    "firstTouchGeoMm": -0.0013200471701835248,
+    "maxTransientMm": 3.797188674675267,
+    "settledMm": 1.403059703311782,
+    "settledManifoldMm": 1.40298530459404,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 8.537736462515945e-7,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 1.2141313378521408e-9,
+    "jitterW": 6.25052267405852e-9,
+    "creepMm": null,
+    "maxSpeed": 3.04087495803833,
+    "maxEnergyRiseJ": 0.0000010480561911663244,
+    "msPerStep": 0.009745906249963335
+   }
+  },
+  {
+   "id": 84,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S4_edgeRemoval",
+   "key": "upright",
+   "r": {
+    "key": "upright",
+    "turf": 11.22774989060911,
+    "turfRest": 4.999993876085296,
+    "turfRestBody": "foot_L",
+    "rise": 0.016357542840069073,
+    "sep": 1.7865838836246053,
+    "self": 0.3907401114702225,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.24168394464284282,
+    "hash": "c465f5cf",
+    "finite": true,
+    "maxSpeed": 4.394903708323356
+   }
+  },
+  {
+   "id": 85,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S4_edgeRemoval",
+   "key": "leanF",
+   "r": {
+    "key": "leanF",
+    "turf": 6.82218102450928,
+    "turfRest": 1.4516659448432223,
+    "turfRestBody": "foot_L",
+    "rise": 0.10350213685308063,
+    "sep": 1.8793739819144595,
+    "self": 6.409146822988987,
+    "fails": [],
+    "ms": 0.23933796369048022,
+    "hash": "8d47ddd8",
+    "finite": true,
+    "maxSpeed": 3.626847896235463
+   }
+  },
+  {
+   "id": 86,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S4_edgeRemoval",
+   "key": "leanB",
+   "r": {
+    "key": "leanB",
+    "turf": 25.001953546956432,
+    "turfRest": 5.000804055080021,
+    "turfRestBody": "foot_L",
+    "rise": 0.08423442253456415,
+    "sep": 2.786885350452822,
+    "self": 1.8220067722722888,
+    "fails": [
+     "1.4a",
+     "1.4b"
+    ],
+    "ms": 0.22978650059525632,
+    "hash": "5342eec3",
+    "finite": true,
+    "maxSpeed": 4.089937697585491
+   }
+  },
+  {
+   "id": 87,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S4_edgeRemoval",
+   "key": "leanL",
+   "r": {
+    "key": "leanL",
+    "turf": 39.69714455464401,
+    "turfRest": 5.198365307612626,
+    "turfRestBody": "foot_R",
+    "rise": 0.11936679925788951,
+    "sep": 4.371759833281369,
+    "self": 0.8462779223918915,
+    "fails": [
+     "1.4a",
+     "1.4b"
+    ],
+    "ms": 0.21407185178572458,
+    "hash": "31c71761",
+    "finite": true,
+    "maxSpeed": 4.848624487188941
+   }
+  },
+  {
+   "id": 88,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S4_edgeRemoval",
+   "key": "leanR",
+   "r": {
+    "key": "leanR",
+    "turf": 20.96420687628417,
+    "turfRest": 0.2999128567614945,
+    "turfRestBody": "head",
+    "rise": 0.20934988912540575,
+    "sep": 1.5794059629423827,
+    "self": 1.0051069548353553,
+    "fails": [
+     "1.3d",
+     "1.4a"
+    ],
+    "ms": 0.24123343630951477,
+    "hash": "29d3f5f0",
+    "finite": true,
+    "maxSpeed": 4.894940460975356
+   }
+  },
+  {
+   "id": 89,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S4_edgeRemoval",
+   "key": "perturb",
+   "r": {
+    "key": "perturb",
+    "turf": 37.369951398679795,
+    "turfRest": 4.969021186463168,
+    "turfRestBody": "foot_L",
+    "rise": 0.7269270329326787,
+    "sep": 8.152019507770525,
+    "self": 13.19844275712967,
+    "fails": [
+     "1.2a",
+     "1.2b",
+     "1.3a",
+     "1.4d",
+     "1.4a"
+    ],
+    "ms": 0.26096187023811124,
+    "hash": "1584e6b8",
+    "finite": true,
+    "maxSpeed": 4.72720720534167
+   }
+  },
+  {
+   "id": 90,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S4_edgeRemoval",
+   "key": "singleLeg",
+   "r": {
+    "key": "singleLeg",
+    "turf": 33.960711555257014,
+    "turfRest": 24.534053861923226,
+    "turfRestBody": "foot_R",
+    "rise": 0.0000035701580856084547,
+    "sep": 3.483964916456217,
+    "self": 3.175451885908842,
+    "fails": [
+     "1.4a",
+     "1.4b"
+    ],
+    "ms": 0.2292014369047728,
+    "hash": "d477d3e9",
+    "finite": true,
+    "maxSpeed": 4.462464698287876
+   }
+  },
+  {
+   "id": 91,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S4_edgeRemoval",
+   "key": "dropA",
+   "r": {
+    "key": "dropA",
+    "turf": 26.135210152700164,
+    "turfRest": 3.2948027151193937,
+    "turfRestBody": "foot_L",
+    "rise": 0.6581212885274681,
+    "sep": 3.421254857063916,
+    "self": 4.981891252100468,
+    "fails": [
+     "1.2a",
+     "1.2b",
+     "1.4a"
+    ],
+    "ms": 0.2190152988095238,
+    "hash": "d59be4e1",
+    "finite": true,
+    "maxSpeed": 4.069391968054087
+   }
+  },
+  {
+   "id": 92,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S4_edgeRemoval",
+   "key": "sideFirst",
+   "r": {
+    "key": "sideFirst",
+    "turf": 14.233154541306192,
+    "turfRest": 0.1894821958258984,
+    "turfRestBody": "forearm_L",
+    "rise": 0.0012406784814942284,
+    "sep": 1.5003317877088302,
+    "self": 0,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.21737030238095506,
+    "hash": "21050e8e",
+    "finite": true,
+    "maxSpeed": 4.169592549310531
+   }
+  },
+  {
+   "id": 93,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S4_edgeRemoval",
+   "key": "awkward",
+   "r": {
+    "key": "awkward",
+    "turf": 3.034101224105291,
+    "turfRest": 1.6929872738074558,
+    "turfRestBody": "forearm_R",
+    "rise": 0.00003246710895155047,
+    "sep": 2.6686289659457842,
+    "self": 2.0350152626633644,
+    "fails": [],
+    "ms": 0.24109211428572325,
+    "hash": "c826b9d5",
+    "finite": true,
+    "maxSpeed": 5.724387088159024
+   }
+  },
+  {
+   "id": 94,
+   "kind": "fall",
+   "rep": "R1_hull",
+   "set": "S4_edgeRemoval",
+   "key": "drop1m",
+   "r": {
+    "key": "drop1m",
+    "turf": 6.723671917180221,
+    "turfRest": 0.04927206890691094,
+    "turfRestBody": "thigh_L",
+    "rise": 0.0000023301078897475236,
+    "sep": 3.040511709752128,
+    "self": 1.2439374113455415,
+    "fails": [],
+    "ms": 0.23322063035714108,
+    "hash": "35475186",
+    "finite": true,
+    "maxSpeed": 4.930228365556942
+   }
+  },
+  {
+   "id": 95,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S0_default",
+   "case": "quiet",
+   "r": {
+    "case": "quiet",
+    "title": "quiet loading (flat, 1 mm)",
+    "firstTouchManifoldMm": -0.4889965057373047,
+    "firstTouchGeoMm": -0.000015695095056944552,
+    "maxTransientMm": 0,
+    "settledMm": 0,
+    "settledManifoldMm": 0.000059604644775390625,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 0.000004063603445850649,
+    "jitterW": 0.000020811541455956068,
+    "creepMm": 0.001993475509644465,
+    "maxSpeed": 0.11737430847433858,
+    "maxEnergyRiseJ": 5.033641059526417e-9,
+    "msPerStep": 0.01607888802083816
+   }
+  },
+  {
+   "id": 96,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S0_default",
+   "case": "heel",
+   "r": {
+    "case": "heel",
+    "title": "heel contact (15° toe-up, 2 cm drop)",
+    "firstTouchManifoldMm": 0.00038370490074157715,
+    "firstTouchGeoMm": 0.0000044310308061623616,
+    "maxTransientMm": 4.528669796648218,
+    "settledMm": 2.0813321948806167,
+    "settledManifoldMm": 2.081334823742509,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 8.537736462515945e-7,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 2.8389878572665084e-9,
+    "jitterW": 1.490116163793686e-8,
+    "creepMm": null,
+    "maxSpeed": 0.5722501277923584,
+    "maxEnergyRiseJ": 0.000008941269427964471,
+    "msPerStep": 0.015464744791645538
+   }
+  },
+  {
+   "id": 97,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S0_default",
+   "case": "flat",
+   "r": {
+    "case": "flat",
+    "title": "flat contact (2 cm drop)",
+    "firstTouchManifoldMm": 0.0001043081283569336,
+    "firstTouchGeoMm": 0.00001410722733075076,
+    "maxTransientMm": 0.00001410722733075076,
+    "settledMm": 0.00001410722733075076,
+    "settledManifoldMm": 0.000059604644775390625,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 1.184995283477172e-9,
+    "jitterW": 6.116551484742076e-9,
+    "creepMm": null,
+    "maxSpeed": 0.5722501277923584,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.01374194791663541
+   }
+  },
+  {
+   "id": 98,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S0_default",
+   "case": "medialEdge",
+   "r": {
+    "case": "medialEdge",
+    "title": "medial-edge loading (rolled 20°, 2 cm drop)",
+    "firstTouchManifoldMm": -0.0003241002559661865,
+    "firstTouchGeoMm": -0.0022328514467512273,
+    "maxTransientMm": 8.471003057750982,
+    "settledMm": 8.471003057750982,
+    "settledManifoldMm": 8.472513407468796,
+    "manifoldsAvg": 1,
+    "pointsAvg": 2.8472222222222223,
+    "normalStdDeg": 0.4186893851072219,
+    "normalMaxJumpDeg": 1.9153245475201688,
+    "jitterV": 0.43327530681949517,
+    "jitterW": 4.005058694783095,
+    "creepMm": null,
+    "maxSpeed": 1.6847102777174954,
+    "maxEnergyRiseJ": 0.19707313806907578,
+    "msPerStep": 0.02272177343748183
+   }
+  },
+  {
+   "id": 99,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S0_default",
+   "case": "lateralEdge",
+   "r": {
+    "case": "lateralEdge",
+    "title": "lateral-edge loading (rolled 20°, 2 cm drop)",
+    "firstTouchManifoldMm": 0.00233575701713562,
+    "firstTouchGeoMm": 2.288950075280849,
+    "maxTransientMm": 10.632715343181296,
+    "settledMm": 10.632715343181296,
+    "settledManifoldMm": 9.215164929628372,
+    "manifoldsAvg": 1,
+    "pointsAvg": 3.0833333333333335,
+    "normalStdDeg": 0.4625031419527437,
+    "normalMaxJumpDeg": 1.9355107092899544,
+    "jitterV": 0.4720155367179839,
+    "jitterW": 4.243343778672113,
+    "creepMm": null,
+    "maxSpeed": 1.6391294005816437,
+    "maxEnergyRiseJ": 0.22804232396477886,
+    "msPerStep": 0.021639296874999065
+   }
+  },
+  {
+   "id": 100,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S0_default",
+   "case": "toe",
+   "r": {
+    "case": "toe",
+    "title": "toe / forefoot loading (20° toe-down, 2 cm drop)",
+    "firstTouchManifoldMm": -0.002115964889526367,
+    "firstTouchGeoMm": 0.002140634050379342,
+    "maxTransientMm": 13.522791207611327,
+    "settledMm": 1.318715110900516,
+    "settledManifoldMm": 1.0986588895320892,
+    "manifoldsAvg": 1,
+    "pointsAvg": 3.625,
+    "normalStdDeg": 0.07596700832386807,
+    "normalMaxJumpDeg": 0.3337779802560863,
+    "jitterV": 0.41815664892578996,
+    "jitterW": 3.1731999924105483,
+    "creepMm": null,
+    "maxSpeed": 1.6334250485218171,
+    "maxEnergyRiseJ": 0.247071061694351,
+    "msPerStep": 0.02299513020836012
+   }
+  },
+  {
+   "id": 101,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S0_default",
+   "case": "flatFast",
+   "r": {
+    "case": "flatFast",
+    "title": "flat impact at 3 m/s",
+    "firstTouchManifoldMm": -0.00009872019290924072,
+    "firstTouchGeoMm": 0.000046083482460601566,
+    "maxTransientMm": 0.00007588580484829688,
+    "settledMm": 0.00007588580484829688,
+    "settledManifoldMm": 0.00011920930376163597,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 0.00001337742075196015,
+    "jitterW": 0.00006967475484099824,
+    "creepMm": null,
+    "maxSpeed": 3.04087495803833,
+    "maxEnergyRiseJ": 1.5489831639570184e-10,
+    "msPerStep": 0.01679402864582613
+   }
+  },
+  {
+   "id": 102,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S0_default",
+   "case": "heelFast",
+   "r": {
+    "case": "heelFast",
+    "title": "heel impact at 3 m/s (15°)",
+    "firstTouchManifoldMm": -0.0017862766981124878,
+    "firstTouchGeoMm": -0.0012529919448112103,
+    "maxTransientMm": 3.082709542288314,
+    "settledMm": 1.596275078241463,
+    "settledManifoldMm": 1.5962892211973667,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 8.537736462515945e-7,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 1.4874159279746405e-9,
+    "jitterW": 7.866071453486857e-9,
+    "creepMm": null,
+    "maxSpeed": 3.04087495803833,
+    "maxEnergyRiseJ": 0.000005703170259607759,
+    "msPerStep": 0.014578661458341932
+   }
+  },
+  {
+   "id": 103,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S0_default",
+   "key": "upright",
+   "r": {
+    "key": "upright",
+    "turf": 9.578111514815802,
+    "turfRest": 2.512754159371161,
+    "turfRestBody": "forearm_L",
+    "rise": 0.016357599814341484,
+    "sep": 1.8554391486878439,
+    "self": 6.152388174086809,
+    "fails": [],
+    "ms": 0.24193182738094676,
+    "hash": "1480802e",
+    "finite": true,
+    "maxSpeed": 3.8098557687539416
+   }
+  },
+  {
+   "id": 104,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S0_default",
+   "key": "leanF",
+   "r": {
+    "key": "leanF",
+    "turf": 10.35170465093288,
+    "turfRest": 4.998745831063703,
+    "turfRestBody": "foot_L",
+    "rise": 0.15138652915914008,
+    "sep": 2.577642530584842,
+    "self": 5.469613242894411,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.2325007982142925,
+    "hash": "6893e1dc",
+    "finite": true,
+    "maxSpeed": 3.637103731204564
+   }
+  },
+  {
+   "id": 105,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S0_default",
+   "key": "leanB",
+   "r": {
+    "key": "leanB",
+    "turf": 8.915458150892647,
+    "turfRest": 6.222416033954584,
+    "turfRestBody": "foot_R",
+    "rise": 0.08423982411818542,
+    "sep": 1.3283374130479653,
+    "self": 0.25561079382896423,
+    "fails": [
+     "1.4b"
+    ],
+    "ms": 0.22912357380952622,
+    "hash": "5a96a51b",
+    "finite": true,
+    "maxSpeed": 4.089863162759811
+   }
+  },
+  {
+   "id": 106,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S0_default",
+   "key": "leanL",
+   "r": {
+    "key": "leanL",
+    "turf": 11.658337832088957,
+    "turfRest": 4.181678605810937,
+    "turfRestBody": "foot_R",
+    "rise": 0.10164639653658014,
+    "sep": 2.181575840650278,
+    "self": 1.454520970582962,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.24396117619046598,
+    "hash": "e0281c8d",
+    "finite": true,
+    "maxSpeed": 4.774470615551725
+   }
+  },
+  {
+   "id": 107,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S0_default",
+   "key": "leanR",
+   "r": {
+    "key": "leanR",
+    "turf": 10.523625364492611,
+    "turfRest": 3.367766552831955,
+    "turfRestBody": "foot_R",
+    "rise": 0.20933301472291532,
+    "sep": 2.171856743129415,
+    "self": 0.9730719029903412,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.24823386130953645,
+    "hash": "a977040d",
+    "finite": true,
+    "maxSpeed": 4.818301796302716
+   }
+  },
+  {
+   "id": 108,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S0_default",
+   "key": "perturb",
+   "r": {
+    "key": "perturb",
+    "turf": 12.975164951231758,
+    "turfRest": 0.9624169664798482,
+    "turfRestBody": "foot_L",
+    "rise": 0.47288850127563364,
+    "sep": 3.367498502994644,
+    "self": 1.5632648719474673,
+    "fails": [
+     "1.2b",
+     "1.4a"
+    ],
+    "ms": 0.2529776172619108,
+    "hash": "c9af1aa4",
+    "finite": true,
+    "maxSpeed": 4.726979757979579
+   }
+  },
+  {
+   "id": 109,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S0_default",
+   "key": "singleLeg",
+   "r": {
+    "key": "singleLeg",
+    "turf": 8.5439216167673,
+    "turfRest": 1.8868352663467813,
+    "turfRestBody": "foot_R",
+    "rise": 0.000029849189687070066,
+    "sep": 1.3025753300120217,
+    "self": 1.3639181852340698,
+    "fails": [],
+    "ms": 0.24895277857144613,
+    "hash": "0fc3d6b3",
+    "finite": true,
+    "maxSpeed": 4.482995573558177
+   }
+  },
+  {
+   "id": 110,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S0_default",
+   "key": "dropA",
+   "r": {
+    "key": "dropA",
+    "turf": 13.389252385146849,
+    "turfRest": 4.996069443557752,
+    "turfRestBody": "foot_L",
+    "rise": 0.6581694330154733,
+    "sep": 2.5123586534679885,
+    "self": 0.04176705260761082,
+    "fails": [
+     "1.2a",
+     "1.2b",
+     "1.3b",
+     "1.4a"
+    ],
+    "ms": 0.23945530892858047,
+    "hash": "b401773f",
+    "finite": true,
+    "maxSpeed": 4.0670798276287075
+   }
+  },
+  {
+   "id": 111,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S0_default",
+   "key": "sideFirst",
+   "r": {
+    "key": "sideFirst",
+    "turf": 6.9396715124528106,
+    "turfRest": 4.993612498862376,
+    "turfRestBody": "foot_L",
+    "rise": 0.000015775406680518245,
+    "sep": 0.9263587607789524,
+    "self": 0.04414655268192291,
+    "fails": [],
+    "ms": 0.22565028809524013,
+    "hash": "437c28e1",
+    "finite": true,
+    "maxSpeed": 4.2459450924433675
+   }
+  },
+  {
+   "id": 112,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S0_default",
+   "key": "awkward",
+   "r": {
+    "key": "awkward",
+    "turf": 2.645276602441682,
+    "turfRest": 1.6030610167037698,
+    "turfRestBody": "forearm_R",
+    "rise": 0.07904468413582322,
+    "sep": 2.7668536706362477,
+    "self": 2.011476084589958,
+    "fails": [],
+    "ms": 0.24331976607142916,
+    "hash": "b2a4ff38",
+    "finite": true,
+    "maxSpeed": 5.715566737304441
+   }
+  },
+  {
+   "id": 113,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S0_default",
+   "key": "drop1m",
+   "r": {
+    "key": "drop1m",
+    "turf": 8.357816824765177,
+    "turfRest": 4.964273391612705,
+    "turfRestBody": "foot_R",
+    "rise": 0.060480047169193085,
+    "sep": 3.0405392782994847,
+    "self": 2.0510931499302387,
+    "fails": [
+     "1.R"
+    ],
+    "ms": 0.24350240119047753,
+    "hash": "b30e1820",
+    "finite": true,
+    "maxSpeed": 4.931610683710938
+   }
+  },
+  {
+   "id": 114,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S1_reductionOff",
+   "case": "quiet",
+   "r": {
+    "case": "quiet",
+    "title": "quiet loading (flat, 1 mm)",
+    "firstTouchManifoldMm": -0.4889965057373047,
+    "firstTouchGeoMm": -0.000015695095056944552,
+    "maxTransientMm": 0.000011783258577202638,
+    "settledMm": 0,
+    "settledManifoldMm": 0.000059604644775390625,
+    "manifoldsAvg": 2,
+    "pointsAvg": 8,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 6.518635616673213e-10,
+    "jitterW": 3.124330769272501e-9,
+    "creepMm": 0.0011932171724051933,
+    "maxSpeed": 0.11737458441016034,
+    "maxEnergyRiseJ": 0.0011544570185861858,
+    "msPerStep": 0.01663810677082485
+   }
+  },
+  {
+   "id": 115,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S1_reductionOff",
+   "case": "heel",
+   "r": {
+    "case": "heel",
+    "title": "heel contact (15° toe-up, 2 cm drop)",
+    "firstTouchManifoldMm": 0.00038370490074157715,
+    "firstTouchGeoMm": 0.0000044310308061623616,
+    "maxTransientMm": 4.287785367291824,
+    "settledMm": 0.000018853788669170868,
+    "settledManifoldMm": 0.000059841177346697805,
+    "manifoldsAvg": 2,
+    "pointsAvg": 8,
+    "normalStdDeg": 8.537736462515945e-7,
+    "normalMaxJumpDeg": 0.0000012074182697257333,
+    "jitterV": 0.000002276799377313256,
+    "jitterW": 0.000007898577601241955,
+    "creepMm": null,
+    "maxSpeed": 0.5722501277923584,
+    "maxEnergyRiseJ": 1.6839862837514374e-11,
+    "msPerStep": 0.02464106770834699
+   }
+  },
+  {
+   "id": 116,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S1_reductionOff",
+   "case": "flat",
+   "r": {
+    "case": "flat",
+    "title": "flat contact (2 cm drop)",
+    "firstTouchManifoldMm": 0.0001043081283569336,
+    "firstTouchGeoMm": 0.00001410722733075076,
+    "maxTransientMm": 0.00001410722733075076,
+    "settledMm": 0.00001410722733075076,
+    "settledManifoldMm": 0.000059604644775390625,
+    "manifoldsAvg": 2,
+    "pointsAvg": 8,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 4.3625007136359837e-10,
+    "jitterW": 1.2268347468299211e-9,
+    "creepMm": null,
+    "maxSpeed": 0.5722501277923584,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.017568684895837332
+   }
+  },
+  {
+   "id": 117,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S1_reductionOff",
+   "case": "medialEdge",
+   "r": {
+    "case": "medialEdge",
+    "title": "medial-edge loading (rolled 20°, 2 cm drop)",
+    "firstTouchManifoldMm": 0.0011920928955078125,
+    "firstTouchGeoMm": -0.0021200291675238514,
+    "maxTransientMm": 7.446525237331546,
+    "settledMm": 7.446525237331546,
+    "settledManifoldMm": 7.449878379702568,
+    "manifoldsAvg": 1.5694444444444444,
+    "pointsAvg": 4.611111111111111,
+    "normalStdDeg": 0.32540066139483986,
+    "normalMaxJumpDeg": 1.646905589128981,
+    "jitterV": 0.4965110976830144,
+    "jitterW": 4.130232725400375,
+    "creepMm": null,
+    "maxSpeed": 1.6592112393328116,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.023517468750017183
+   }
+  },
+  {
+   "id": 118,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S1_reductionOff",
+   "case": "lateralEdge",
+   "r": {
+    "case": "lateralEdge",
+    "title": "lateral-edge loading (rolled 20°, 2 cm drop)",
+    "firstTouchManifoldMm": 0.0030025839805603027,
+    "firstTouchGeoMm": -0.0014506684879317389,
+    "maxTransientMm": 8.721326714483995,
+    "settledMm": 8.721326714483995,
+    "settledManifoldMm": 8.720194920897484,
+    "manifoldsAvg": 1.9861111111111112,
+    "pointsAvg": 6.305555555555555,
+    "normalStdDeg": 0.18272134989563732,
+    "normalMaxJumpDeg": 0.8161773092202369,
+    "jitterV": 0.526823325086519,
+    "jitterW": 4.152244964268133,
+    "creepMm": null,
+    "maxSpeed": 1.6446056331688843,
+    "maxEnergyRiseJ": 0.14507884682723926,
+    "msPerStep": 0.02246603385417008
+   }
+  },
+  {
+   "id": 119,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S1_reductionOff",
+   "case": "toe",
+   "r": {
+    "case": "toe",
+    "title": "toe / forefoot loading (20° toe-down, 2 cm drop)",
+    "firstTouchManifoldMm": -0.002115964889526367,
+    "firstTouchGeoMm": 0.002140634050379342,
+    "maxTransientMm": 3.6134196252462503,
+    "settledMm": 2.768978020292287,
+    "settledManifoldMm": 2.7697179466485977,
+    "manifoldsAvg": 1.7777777777777777,
+    "pointsAvg": 5.097222222222222,
+    "normalStdDeg": 0.14351839906538616,
+    "normalMaxJumpDeg": 0.4839454843834016,
+    "jitterV": 0.5159718221416933,
+    "jitterW": 3.9910743664680624,
+    "creepMm": null,
+    "maxSpeed": 1.6441617323765363,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.02500107031253407
+   }
+  },
+  {
+   "id": 120,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S1_reductionOff",
+   "case": "flatFast",
+   "r": {
+    "case": "flatFast",
+    "title": "flat impact at 3 m/s",
+    "firstTouchManifoldMm": -0.000007450580596923828,
+    "firstTouchGeoMm": 0.00001410722733075076,
+    "maxTransientMm": 0.00001410722733075076,
+    "settledMm": 0.00001410722733075076,
+    "settledManifoldMm": 0.000059604644775390625,
+    "manifoldsAvg": 2,
+    "pointsAvg": 8,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 2.3304499996434913e-10,
+    "jitterW": 8.320381601582819e-13,
+    "creepMm": null,
+    "maxSpeed": 3.04087495803833,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.014210835937509122
+   }
+  },
+  {
+   "id": 121,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S1_reductionOff",
+   "case": "heelFast",
+   "r": {
+    "case": "heelFast",
+    "title": "heel impact at 3 m/s (15°)",
+    "firstTouchManifoldMm": -0.0017862766981124878,
+    "firstTouchGeoMm": -0.0012529919448112103,
+    "maxTransientMm": 3.1630747609145553,
+    "settledMm": 0.00006298753416067449,
+    "settledManifoldMm": -6.373717525987033e-8,
+    "manifoldsAvg": 2,
+    "pointsAvg": 8,
+    "normalStdDeg": 1.0061818914381111e-7,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 2.192649560033295e-8,
+    "jitterW": 5.972409679645779e-8,
+    "creepMm": null,
+    "maxSpeed": 3.04087495803833,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.021314057291628313
+   }
+  },
+  {
+   "id": 122,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S1_reductionOff",
+   "key": "upright",
+   "r": {
+    "key": "upright",
+    "turf": 11.320437578814651,
+    "turfRest": 4.998036958576105,
+    "turfRestBody": "foot_R",
+    "rise": 0.025429916715594914,
+    "sep": 2.6585838495002823,
+    "self": 0.13039633631706238,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.2763724535714459,
+    "hash": "fd37365b",
+    "finite": true,
+    "maxSpeed": 4.153481064545839
+   }
+  },
+  {
+   "id": 123,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S1_reductionOff",
+   "key": "leanF",
+   "r": {
+    "key": "leanF",
+    "turf": 9.384784317217578,
+    "turfRest": 1.5418411295851224,
+    "turfRestBody": "foot_R",
+    "rise": 0.06017726494769704,
+    "sep": 3.481389990646546,
+    "self": 6.1496468260884285,
+    "fails": [],
+    "ms": 0.2546877755952372,
+    "hash": "7033c3bd",
+    "finite": true,
+    "maxSpeed": 3.6260624291123036
+   }
+  },
+  {
+   "id": 124,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S1_reductionOff",
+   "key": "leanB",
+   "r": {
+    "key": "leanB",
+    "turf": 1.8066760823627486,
+    "turfRest": 0.6090748240387828,
+    "turfRestBody": "head",
+    "rise": 0.08178990042301848,
+    "sep": 1.3235138580937509,
+    "self": 0.11655692651402205,
+    "fails": [],
+    "ms": 0.28332806250000486,
+    "hash": "ed63358d",
+    "finite": true,
+    "maxSpeed": 4.08175545855346
+   }
+  },
+  {
+   "id": 125,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S1_reductionOff",
+   "key": "leanL",
+   "r": {
+    "key": "leanL",
+    "turf": 12.121909147015636,
+    "turfRest": 0.4358507800908268,
+    "turfRestBody": "forearm_R",
+    "rise": 0.12035807740880955,
+    "sep": 2.6259327184502927,
+    "self": 4.366948734968901,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.24533346666665543,
+    "hash": "3a6a10e7",
+    "finite": true,
+    "maxSpeed": 4.83742137976048
+   }
+  },
+  {
+   "id": 126,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S1_reductionOff",
+   "key": "leanR",
+   "r": {
+    "key": "leanR",
+    "turf": 9.459646879628094,
+    "turfRest": 1.090876647908863,
+    "turfRestBody": "foot_R",
+    "rise": 0.17600014825632115,
+    "sep": 1.974586474266684,
+    "self": 1.9150221487507224,
+    "fails": [],
+    "ms": 0.24931947976190474,
+    "hash": "035adf81",
+    "finite": true,
+    "maxSpeed": 4.827757689265202
+   }
+  },
+  {
+   "id": 127,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S1_reductionOff",
+   "key": "perturb",
+   "r": {
+    "key": "perturb",
+    "turf": 9.066820495581302,
+    "turfRest": 0.38633054130114697,
+    "turfRestBody": "forearm_L",
+    "rise": 0.388760205957567,
+    "sep": 1.996851761168664,
+    "self": 4.117176868021488,
+    "fails": [
+     "1.2b"
+    ],
+    "ms": 0.2722619583333171,
+    "hash": "d149e29c",
+    "finite": true,
+    "maxSpeed": 4.720990602996507
+   }
+  },
+  {
+   "id": 128,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S1_reductionOff",
+   "key": "singleLeg",
+   "r": {
+    "key": "singleLeg",
+    "turf": 9.391543055757456,
+    "turfRest": 4.060708424266535,
+    "turfRestBody": "foot_R",
+    "rise": 0.000001445374294917201,
+    "sep": 2.0035014359587264,
+    "self": 1.3817045837640762,
+    "fails": [],
+    "ms": 0.2616096458333551,
+    "hash": "eab0b011",
+    "finite": true,
+    "maxSpeed": 4.631355241343574
+   }
+  },
+  {
+   "id": 129,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S1_reductionOff",
+   "key": "dropA",
+   "r": {
+    "key": "dropA",
+    "turf": 5.181485475951986,
+    "turfRest": 1.7546120832684087,
+    "turfRestBody": "foot_L",
+    "rise": 0.7176205417428037,
+    "sep": 1.3374286609078394,
+    "self": 3.2183320727199316,
+    "fails": [
+     "1.2a",
+     "1.2b"
+    ],
+    "ms": 0.2413962833333206,
+    "hash": "e92b58b8",
+    "finite": true,
+    "maxSpeed": 4.070438870051561
+   }
+  },
+  {
+   "id": 130,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S1_reductionOff",
+   "key": "sideFirst",
+   "r": {
+    "key": "sideFirst",
+    "turf": 0.4374635349543368,
+    "turfRest": 0.15948523657759173,
+    "turfRestBody": "forearm_L",
+    "rise": 0,
+    "sep": 0.7666365287799798,
+    "self": 0.04385225474834442,
+    "fails": [
+     "1.R"
+    ],
+    "ms": 0.24888934761905993,
+    "hash": "203dd267",
+    "finite": true,
+    "maxSpeed": 4.252499377019513
+   }
+  },
+  {
+   "id": 131,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S1_reductionOff",
+   "key": "awkward",
+   "r": {
+    "key": "awkward",
+    "turf": 3.1780857986279005,
+    "turfRest": 1.7095138010592703,
+    "turfRestBody": "forearm_R",
+    "rise": 0.0001699630479663483,
+    "sep": 2.665817696791748,
+    "self": 1.1762827634811401,
+    "fails": [],
+    "ms": 0.2760296577381014,
+    "hash": "02c535d9",
+    "finite": true,
+    "maxSpeed": 5.728969356597175
+   }
+  },
+  {
+   "id": 132,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S1_reductionOff",
+   "key": "drop1m",
+   "r": {
+    "key": "drop1m",
+    "turf": 2.3137928422897884,
+    "turfRest": 0.11543173490176362,
+    "turfRestBody": "forearm_R",
+    "rise": 0.00011027726226586765,
+    "sep": 3.014854467436594,
+    "self": 0.5783829838037491,
+    "fails": [],
+    "ms": 0.242601607738075,
+    "hash": "b75c7c24",
+    "finite": true,
+    "maxSpeed": 4.931439680556236
+   }
+  },
+  {
+   "id": 133,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S2_cacheOff",
+   "case": "quiet",
+   "r": {
+    "case": "quiet",
+    "title": "quiet loading (flat, 1 mm)",
+    "firstTouchManifoldMm": -0.4890039563179016,
+    "firstTouchGeoMm": -0.000015695095056944552,
+    "maxTransientMm": 0,
+    "settledMm": 0,
+    "settledManifoldMm": 0.0001043081283569336,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 8.569666436621784e-11,
+    "jitterW": 4.433756354549323e-10,
+    "creepMm": 0.00009060599510329578,
+    "maxSpeed": 0.11737430847438532,
+    "maxEnergyRiseJ": 1.0670191841199994e-8,
+    "msPerStep": 0.018494481770832277
+   }
+  },
+  {
+   "id": 134,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S2_cacheOff",
+   "case": "heel",
+   "r": {
+    "case": "heel",
+    "title": "heel contact (15° toe-up, 2 cm drop)",
+    "firstTouchManifoldMm": 0.00038370490074157715,
+    "firstTouchGeoMm": 0.0000044310308061623616,
+    "maxTransientMm": 3.8418209297317594,
+    "settledMm": 0.6059472686023304,
+    "settledManifoldMm": 0.6060469895601273,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 2.2236688771124142e-9,
+    "jitterW": 1.1535100920522938e-8,
+    "creepMm": null,
+    "maxSpeed": 0.5722501277923584,
+    "maxEnergyRiseJ": 0.000029526076019692482,
+    "msPerStep": 0.017436312499979085
+   }
+  },
+  {
+   "id": 135,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S2_cacheOff",
+   "case": "flat",
+   "r": {
+    "case": "flat",
+    "title": "flat contact (2 cm drop)",
+    "firstTouchManifoldMm": 0.0001043081283569336,
+    "firstTouchGeoMm": 0.00001410722733075076,
+    "maxTransientMm": 0.00001410722733075076,
+    "settledMm": 0.00001410722733075076,
+    "settledManifoldMm": 0.0001043081283569336,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 1.3589776763841934e-9,
+    "jitterW": 7.040578545459762e-9,
+    "creepMm": null,
+    "maxSpeed": 0.5722501277923584,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.018753257812489228
+   }
+  },
+  {
+   "id": 136,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S2_cacheOff",
+   "case": "medialEdge",
+   "r": {
+    "case": "medialEdge",
+    "title": "medial-edge loading (rolled 20°, 2 cm drop)",
+    "firstTouchManifoldMm": -0.0003241002559661865,
+    "firstTouchGeoMm": -0.0022328514467512273,
+    "maxTransientMm": 13.706841408399082,
+    "settledMm": 13.706841408399082,
+    "settledManifoldMm": 13.706747442483902,
+    "manifoldsAvg": 1,
+    "pointsAvg": 2.611111111111111,
+    "normalStdDeg": 0.006010326491649012,
+    "normalMaxJumpDeg": 0.021404090843163248,
+    "jitterV": 0.43761115198129164,
+    "jitterW": 4.497499222004321,
+    "creepMm": null,
+    "maxSpeed": 1.6847102777174954,
+    "maxEnergyRiseJ": 0.2521080994548228,
+    "msPerStep": 0.019941940104187
+   }
+  },
+  {
+   "id": 137,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S2_cacheOff",
+   "case": "lateralEdge",
+   "r": {
+    "case": "lateralEdge",
+    "title": "lateral-edge loading (rolled 20°, 2 cm drop)",
+    "firstTouchManifoldMm": 0.00233575701713562,
+    "firstTouchGeoMm": 2.288950075280849,
+    "maxTransientMm": 8.607859590118599,
+    "settledMm": 7.857757129507849,
+    "settledManifoldMm": 7.760440930724144,
+    "manifoldsAvg": 1,
+    "pointsAvg": 3.138888888888889,
+    "normalStdDeg": 0.000002002276682850195,
+    "normalMaxJumpDeg": 0.000008954453545231654,
+    "jitterV": 0.4818570773066229,
+    "jitterW": 4.054405693583562,
+    "creepMm": null,
+    "maxSpeed": 1.635577004092828,
+    "maxEnergyRiseJ": 0.2314082289628132,
+    "msPerStep": 0.022680200520831306
+   }
+  },
+  {
+   "id": 138,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S2_cacheOff",
+   "case": "toe",
+   "r": {
+    "case": "toe",
+    "title": "toe / forefoot loading (20° toe-down, 2 cm drop)",
+    "firstTouchManifoldMm": -0.002115964889526367,
+    "firstTouchGeoMm": 0.002140634050379342,
+    "maxTransientMm": 13.522791207611327,
+    "settledMm": 1.3182943218978949,
+    "settledManifoldMm": 1.1013075709342957,
+    "manifoldsAvg": 1,
+    "pointsAvg": 3.5833333333333335,
+    "normalStdDeg": 0.0000018278201759394482,
+    "normalMaxJumpDeg": 0.000006722620413208828,
+    "jitterV": 0.4181398982674396,
+    "jitterW": 3.1737744993771297,
+    "creepMm": null,
+    "maxSpeed": 1.6334250485218171,
+    "maxEnergyRiseJ": 0.247071061694351,
+    "msPerStep": 0.01760920312500976
+   }
+  },
+  {
+   "id": 139,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S2_cacheOff",
+   "case": "flatFast",
+   "r": {
+    "case": "flatFast",
+    "title": "flat impact at 3 m/s",
+    "firstTouchManifoldMm": -0.00009872019290924072,
+    "firstTouchGeoMm": 0.000046083482460601566,
+    "maxTransientMm": 0.000046083482460601566,
+    "settledMm": 0.000046083482460601566,
+    "settledManifoldMm": 0.00013224780559539795,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 1.0705265965967934e-9,
+    "jitterW": 5.286825231067135e-9,
+    "creepMm": null,
+    "maxSpeed": 3.04087495803833,
+    "maxEnergyRiseJ": 1.0677183581719873e-9,
+    "msPerStep": 0.020904505208335422
+   }
+  },
+  {
+   "id": 140,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S2_cacheOff",
+   "case": "heelFast",
+   "r": {
+    "case": "heelFast",
+    "title": "heel impact at 3 m/s (15°)",
+    "firstTouchManifoldMm": -0.0017862766981124878,
+    "firstTouchGeoMm": -0.0012529919448112103,
+    "maxTransientMm": 3.2750366343654025,
+    "settledMm": 0.00002322449312031072,
+    "settledManifoldMm": -0.000001862645149230957,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 9.950302353428882e-10,
+    "jitterW": 5.1317429203190325e-9,
+    "creepMm": null,
+    "maxSpeed": 3.04087495803833,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.020326059895865
+   }
+  },
+  {
+   "id": 141,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S2_cacheOff",
+   "key": "upright",
+   "r": {
+    "key": "upright",
+    "turf": 12.152772879216261,
+    "turfRest": 5.541164910225965,
+    "turfRestBody": "foot_R",
+    "rise": 0.02296135043599179,
+    "sep": 3.002984638476543,
+    "self": 0.2408139407634735,
+    "fails": [
+     "1.4a",
+     "1.4b"
+    ],
+    "ms": 0.2846493160714231,
+    "hash": "90b215a5",
+    "finite": true,
+    "maxSpeed": 3.8047479588216033
+   }
+  },
+  {
+   "id": 142,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S2_cacheOff",
+   "key": "leanF",
+   "r": {
+    "key": "leanF",
+    "turf": 9.815372215580709,
+    "turfRest": 5.718878791736909,
+    "turfRestBody": "foot_R",
+    "rise": 0.0875018761279307,
+    "sep": 2.0450964523331945,
+    "self": 1.2219510972499847,
+    "fails": [
+     "1.4b",
+     "1.R"
+    ],
+    "ms": 0.2841013708333256,
+    "hash": "482ae082",
+    "finite": true,
+    "maxSpeed": 3.635886477078401
+   }
+  },
+  {
+   "id": 143,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S2_cacheOff",
+   "key": "leanB",
+   "r": {
+    "key": "leanB",
+    "turf": 8.788683751519311,
+    "turfRest": 5.560451772681538,
+    "turfRestBody": "foot_R",
+    "rise": 0.08416359650118466,
+    "sep": 1.9509704992389927,
+    "self": 0.024197623133659363,
+    "fails": [
+     "1.4b",
+     "1.R"
+    ],
+    "ms": 0.30241938809522795,
+    "hash": "f1462095",
+    "finite": true,
+    "maxSpeed": 4.0832074062459744
+   }
+  },
+  {
+   "id": 144,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S2_cacheOff",
+   "key": "leanL",
+   "r": {
+    "key": "leanL",
+    "turf": 11.744284837247863,
+    "turfRest": 0.1826330928647625,
+    "turfRestBody": "forearm_R",
+    "rise": 0.18335188998833019,
+    "sep": 2.7758520774251263,
+    "self": 0.8863788098096848,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.2699897440476369,
+    "hash": "f299d913",
+    "finite": true,
+    "maxSpeed": 4.818572595474833
+   }
+  },
+  {
+   "id": 145,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S2_cacheOff",
+   "key": "leanR",
+   "r": {
+    "key": "leanR",
+    "turf": 12.085756315721286,
+    "turfRest": 3.1800930676390005,
+    "turfRestBody": "foot_R",
+    "rise": 0.21433320481082774,
+    "sep": 2.836340269936026,
+    "self": 0.9194985032081604,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.2825070398809798,
+    "hash": "f394ffa4",
+    "finite": true,
+    "maxSpeed": 4.8328042381495315
+   }
+  },
+  {
+   "id": 146,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S2_cacheOff",
+   "key": "perturb",
+   "r": {
+    "key": "perturb",
+    "turf": 11.353903910975488,
+    "turfRest": 0.6145579398541823,
+    "turfRestBody": "foot_L",
+    "rise": 1.1087949955696672,
+    "sep": 3.234737471853109,
+    "self": 1.441923901438713,
+    "fails": [
+     "1.2a",
+     "1.2b",
+     "1.4a"
+    ],
+    "ms": 0.29226648452381165,
+    "hash": "f2901c32",
+    "finite": true,
+    "maxSpeed": 4.726934620993479
+   }
+  },
+  {
+   "id": 147,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S2_cacheOff",
+   "key": "singleLeg",
+   "r": {
+    "key": "singleLeg",
+    "turf": 13.761269816956911,
+    "turfRest": 1.5002042407891436,
+    "turfRestBody": "foot_R",
+    "rise": 0.00010913338797990946,
+    "sep": 4.207584398573327,
+    "self": 1.0235905647277832,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.29438529940479535,
+    "hash": "47650824",
+    "finite": true,
+    "maxSpeed": 4.4824075947919715
+   }
+  },
+  {
+   "id": 148,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S2_cacheOff",
+   "key": "dropA",
+   "r": {
+    "key": "dropA",
+    "turf": 9.343798113171333,
+    "turfRest": 5.0004810254025145,
+    "turfRestBody": "foot_L",
+    "rise": 0.6572410552856809,
+    "sep": 1.969035857538438,
+    "self": 0.0372324138879776,
+    "fails": [
+     "1.2a",
+     "1.2b",
+     "1.3b",
+     "1.4b"
+    ],
+    "ms": 0.27327201130952483,
+    "hash": "41421082",
+    "finite": true,
+    "maxSpeed": 4.0668374414395005
+   }
+  },
+  {
+   "id": 149,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S2_cacheOff",
+   "key": "sideFirst",
+   "r": {
+    "key": "sideFirst",
+    "turf": 8.11216118530199,
+    "turfRest": 7.4893158455708875,
+    "turfRestBody": "foot_L",
+    "rise": 0.003919470318564322,
+    "sep": 0.9259412165322161,
+    "self": 0.04415959119796753,
+    "fails": [
+     "1.4b",
+     "1.R"
+    ],
+    "ms": 0.279568773809551,
+    "hash": "fcf7916f",
+    "finite": true,
+    "maxSpeed": 4.247926910451198
+   }
+  },
+  {
+   "id": 150,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S2_cacheOff",
+   "key": "awkward",
+   "r": {
+    "key": "awkward",
+    "turf": 2.58980855940108,
+    "turfRest": 1.3698236828130588,
+    "turfRestBody": "forearm_R",
+    "rise": 0.06838185807222885,
+    "sep": 2.7830063424022677,
+    "self": 1.9222628325223923,
+    "fails": [],
+    "ms": 0.28492630119046897,
+    "hash": "73a630c4",
+    "finite": true,
+    "maxSpeed": 5.717519128610252
+   }
+  },
+  {
+   "id": 151,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S2_cacheOff",
+   "key": "drop1m",
+   "r": {
+    "key": "drop1m",
+    "turf": 14.455516802278161,
+    "turfRest": 3.6882090306200737,
+    "turfRestBody": "foot_R",
+    "rise": 0.0003966165457995885,
+    "sep": 3.072511211285568,
+    "self": 0.0030249357223510742,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.29471500595238814,
+    "hash": "ed5de3ca",
+    "finite": true,
+    "maxSpeed": 4.933185276110925
+   }
+  },
+  {
+   "id": 152,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S3_bothOff",
+   "case": "quiet",
+   "r": {
+    "case": "quiet",
+    "title": "quiet loading (flat, 1 mm)",
+    "firstTouchManifoldMm": -0.4890039563179016,
+    "firstTouchGeoMm": -0.000015695095056944552,
+    "maxTransientMm": 0.00011372630299988362,
+    "settledMm": 0,
+    "settledManifoldMm": 0.0001043081283569336,
+    "manifoldsAvg": 2,
+    "pointsAvg": 8,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 7.861888085510845e-11,
+    "jitterW": 3.3621393794432294e-10,
+    "creepMm": 0.0019199476380368924,
+    "maxSpeed": 0.11737457695844533,
+    "maxEnergyRiseJ": 0.0007097884646185548,
+    "msPerStep": 0.024781898437467476
+   }
+  },
+  {
+   "id": 153,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S3_bothOff",
+   "case": "heel",
+   "r": {
+    "case": "heel",
+    "title": "heel contact (15° toe-up, 2 cm drop)",
+    "firstTouchManifoldMm": 0.00038370490074157715,
+    "firstTouchGeoMm": 0.0000044310308061623616,
+    "maxTransientMm": 3.8656557756203136,
+    "settledMm": 0.00011752413954513319,
+    "settledManifoldMm": 0.0001695007085800171,
+    "manifoldsAvg": 2,
+    "pointsAvg": 8,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 3.793522173853221e-10,
+    "jitterW": 1.4739384946498445e-9,
+    "creepMm": null,
+    "maxSpeed": 0.5722501277923584,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.018454658854125228
+   }
+  },
+  {
+   "id": 154,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S3_bothOff",
+   "case": "flat",
+   "r": {
+    "case": "flat",
+    "title": "flat contact (2 cm drop)",
+    "firstTouchManifoldMm": 0.0001043081283569336,
+    "firstTouchGeoMm": 0.00001410722733075076,
+    "maxTransientMm": 0.00001410722733075076,
+    "settledMm": 0.00001410722733075076,
+    "settledManifoldMm": 0.0001043081283569336,
+    "manifoldsAvg": 2,
+    "pointsAvg": 8,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 7.011583745972357e-11,
+    "jitterW": 3.512608765914415e-10,
+    "creepMm": null,
+    "maxSpeed": 0.5722501277923584,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.01751152604169685
+   }
+  },
+  {
+   "id": 155,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S3_bothOff",
+   "case": "medialEdge",
+   "r": {
+    "case": "medialEdge",
+    "title": "medial-edge loading (rolled 20°, 2 cm drop)",
+    "firstTouchManifoldMm": 0.0011920928955078125,
+    "firstTouchGeoMm": -0.0021200291675238514,
+    "maxTransientMm": 7.28562551284035,
+    "settledMm": 7.28562551284035,
+    "settledManifoldMm": 7.283598184585571,
+    "manifoldsAvg": 1.5694444444444444,
+    "pointsAvg": 4.583333333333333,
+    "normalStdDeg": 0.0000020522164394666504,
+    "normalMaxJumpDeg": 0.00000773124918760008,
+    "jitterV": 0.4962794166310984,
+    "jitterW": 4.126289543980786,
+    "creepMm": null,
+    "maxSpeed": 1.6592112393328116,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.015219385416656905
+   }
+  },
+  {
+   "id": 156,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S3_bothOff",
+   "case": "lateralEdge",
+   "r": {
+    "case": "lateralEdge",
+    "title": "lateral-edge loading (rolled 20°, 2 cm drop)",
+    "firstTouchManifoldMm": 0.0030025839805603027,
+    "firstTouchGeoMm": -0.0014506684879317389,
+    "maxTransientMm": 8.721736257338325,
+    "settledMm": 8.721736257338325,
+    "settledManifoldMm": 8.722016587853432,
+    "manifoldsAvg": 2,
+    "pointsAvg": 6.347222222222222,
+    "normalStdDeg": 0.0000017572211289154311,
+    "normalMaxJumpDeg": 0.000009468807791963592,
+    "jitterV": 0.5268768521749649,
+    "jitterW": 4.1523584362237775,
+    "creepMm": null,
+    "maxSpeed": 1.6446056331688843,
+    "maxEnergyRiseJ": 0.14496450326615218,
+    "msPerStep": 0.02248328125004188
+   }
+  },
+  {
+   "id": 157,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S3_bothOff",
+   "case": "toe",
+   "r": {
+    "case": "toe",
+    "title": "toe / forefoot loading (20° toe-down, 2 cm drop)",
+    "firstTouchManifoldMm": -0.002115964889526367,
+    "firstTouchGeoMm": 0.002140634050379342,
+    "maxTransientMm": 3.606796920930286,
+    "settledMm": 2.330234461402167,
+    "settledManifoldMm": 2.3304950445890427,
+    "manifoldsAvg": 1.7777777777777777,
+    "pointsAvg": 5.097222222222222,
+    "normalStdDeg": 0.0000022833900878055357,
+    "normalMaxJumpDeg": 0.000006037091348628668,
+    "jitterV": 0.5173781142295124,
+    "jitterW": 4.003847418113716,
+    "creepMm": null,
+    "maxSpeed": 1.6441617323765363,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.021858291666641588
+   }
+  },
+  {
+   "id": 158,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S3_bothOff",
+   "case": "flatFast",
+   "r": {
+    "case": "flatFast",
+    "title": "flat impact at 3 m/s",
+    "firstTouchManifoldMm": -0.000007450580596923828,
+    "firstTouchGeoMm": 0.00001410722733075076,
+    "maxTransientMm": 0.00001410722733075076,
+    "settledMm": 0.00001410722733075076,
+    "settledManifoldMm": 0.0001043081283569336,
+    "manifoldsAvg": 2,
+    "pointsAvg": 8,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 2.4262137533440054e-10,
+    "jitterW": 8.420581813366262e-11,
+    "creepMm": null,
+    "maxSpeed": 3.04087495803833,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.024205184895829273
+   }
+  },
+  {
+   "id": 159,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S3_bothOff",
+   "case": "heelFast",
+   "r": {
+    "case": "heelFast",
+    "title": "heel impact at 3 m/s (15°)",
+    "firstTouchManifoldMm": -0.0017862766981124878,
+    "firstTouchGeoMm": -0.0012529919448112103,
+    "maxTransientMm": 3.6949189482004403,
+    "settledMm": 0.000036617858231724476,
+    "settledManifoldMm": 0.00003725290298461914,
+    "manifoldsAvg": 2,
+    "pointsAvg": 8,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 4.2497677642190995e-10,
+    "jitterW": 8.05581701332399e-10,
+    "creepMm": null,
+    "maxSpeed": 3.04087495803833,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.025882033854145448
+   }
+  },
+  {
+   "id": 160,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S3_bothOff",
+   "key": "upright",
+   "r": {
+    "key": "upright",
+    "turf": 7.296097688705553,
+    "turfRest": 5.000603724569119,
+    "turfRestBody": "foot_L",
+    "rise": 0.017204612272507802,
+    "sep": 1.2430002057432008,
+    "self": 0.19228458404541016,
+    "fails": [
+     "1.4b"
+    ],
+    "ms": 0.30307440119047335,
+    "hash": "44406142",
+    "finite": true,
+    "maxSpeed": 3.912557154883482
+   }
+  },
+  {
+   "id": 161,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S3_bothOff",
+   "key": "leanF",
+   "r": {
+    "key": "leanF",
+    "turf": 7.286966749788543,
+    "turfRest": 0.3937340464257033,
+    "turfRestBody": "foot_L",
+    "rise": 0.000053824732617613336,
+    "sep": 1.9402720033618752,
+    "self": 0.9013321250677109,
+    "fails": [],
+    "ms": 0.3103674095238267,
+    "hash": "fa538ebf",
+    "finite": true,
+    "maxSpeed": 3.629006233889291
+   }
+  },
+  {
+   "id": 162,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S3_bothOff",
+   "key": "leanB",
+   "r": {
+    "key": "leanB",
+    "turf": 5.409026419919666,
+    "turfRest": 1.737682691022549,
+    "turfRestBody": "foot_R",
+    "rise": 0.08170262172575349,
+    "sep": 1.3233626013378181,
+    "self": 0.24238601326942444,
+    "fails": [],
+    "ms": 0.3013720583333333,
+    "hash": "189c1b45",
+    "finite": true,
+    "maxSpeed": 4.081744878873443
+   }
+  },
+  {
+   "id": 163,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S3_bothOff",
+   "key": "leanL",
+   "r": {
+    "key": "leanL",
+    "turf": 9.289295569576556,
+    "turfRest": 0.5994001911103081,
+    "turfRestBody": "foot_L",
+    "rise": 0.17146470184502505,
+    "sep": 2.558394471321113,
+    "self": 0.9402800351381302,
+    "fails": [],
+    "ms": 0.2929361041666869,
+    "hash": "c71d57d5",
+    "finite": true,
+    "maxSpeed": 4.865950506407968
+   }
+  },
+  {
+   "id": 164,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S3_bothOff",
+   "key": "leanR",
+   "r": {
+    "key": "leanR",
+    "turf": 10.737533933413882,
+    "turfRest": 0.6377491126412991,
+    "turfRestBody": "foot_R",
+    "rise": 0.17349532798743894,
+    "sep": 2.4736436978653344,
+    "self": 1.0049138218164444,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.287259454166671,
+    "hash": "4b592678",
+    "finite": true,
+    "maxSpeed": 4.8579235097225135
+   }
+  },
+  {
+   "id": 165,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S3_bothOff",
+   "key": "perturb",
+   "r": {
+    "key": "perturb",
+    "turf": 9.326678049796241,
+    "turfRest": 0.6301857149354217,
+    "turfRestBody": "foot_R",
+    "rise": 0.5225159792482259,
+    "sep": 2.1864693525579626,
+    "self": 1.0829269886016846,
+    "fails": [
+     "1.2a",
+     "1.2b"
+    ],
+    "ms": 0.321844969047654,
+    "hash": "b5a793a4",
+    "finite": true,
+    "maxSpeed": 4.722190549936013
+   }
+  },
+  {
+   "id": 166,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S3_bothOff",
+   "key": "singleLeg",
+   "r": {
+    "key": "singleLeg",
+    "turf": 8.60586378802941,
+    "turfRest": 3.9565811600095757,
+    "turfRestBody": "foot_R",
+    "rise": 0.000012263576167015344,
+    "sep": 1.4792448079369542,
+    "self": 1.376444473862648,
+    "fails": [],
+    "ms": 0.3091094428571296,
+    "hash": "52b641c0",
+    "finite": true,
+    "maxSpeed": 4.581303231733333
+   }
+  },
+  {
+   "id": 167,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S3_bothOff",
+   "key": "dropA",
+   "r": {
+    "key": "dropA",
+    "turf": 5.7463096620535,
+    "turfRest": 1.6930962646396623,
+    "turfRestBody": "foot_L",
+    "rise": 0.7167549161110855,
+    "sep": 1.3373018253866162,
+    "self": 0.04077516496181488,
+    "fails": [
+     "1.2a",
+     "1.2b"
+    ],
+    "ms": 0.2662112083333059,
+    "hash": "44559602",
+    "finite": true,
+    "maxSpeed": 4.070430834193802
+   }
+  },
+  {
+   "id": 168,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S3_bothOff",
+   "key": "sideFirst",
+   "r": {
+    "key": "sideFirst",
+    "turf": 0.43922012662521437,
+    "turfRest": 0.07783117611762091,
+    "turfRestBody": "foot_L",
+    "rise": 0,
+    "sep": 0.766327525518141,
+    "self": 0.04369765520095825,
+    "fails": [
+     "1.R"
+    ],
+    "ms": 0.26984440773809354,
+    "hash": "bd35f343",
+    "finite": true,
+    "maxSpeed": 4.252960518501691
+   }
+  },
+  {
+   "id": 169,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S3_bothOff",
+   "key": "awkward",
+   "r": {
+    "key": "awkward",
+    "turf": 5.357189380107555,
+    "turfRest": 1.563408959430107,
+    "turfRestBody": "forearm_R",
+    "rise": 0.00004523864822658652,
+    "sep": 2.67486223672746,
+    "self": 1.5271957963705063,
+    "fails": [],
+    "ms": 0.3125849958333306,
+    "hash": "fbb3777a",
+    "finite": true,
+    "maxSpeed": 5.728533074735822
+   }
+  },
+  {
+   "id": 170,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S3_bothOff",
+   "key": "drop1m",
+   "r": {
+    "key": "drop1m",
+    "turf": 2.3137928422897884,
+    "turfRest": 0.01884265076190078,
+    "turfRestBody": "foot_L",
+    "rise": 0.000006846482108358032,
+    "sep": 3.014854467436594,
+    "self": 0.19202381372451782,
+    "fails": [],
+    "ms": 0.2750542410714161,
+    "hash": "88cf8003",
+    "finite": true,
+    "maxSpeed": 4.931440475469746
+   }
+  },
+  {
+   "id": 171,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S4_edgeRemoval",
+   "case": "quiet",
+   "r": {
+    "case": "quiet",
+    "title": "quiet loading (flat, 1 mm)",
+    "firstTouchManifoldMm": -0.4889965057373047,
+    "firstTouchGeoMm": -0.000015695095056944552,
+    "maxTransientMm": 0,
+    "settledMm": 0,
+    "settledManifoldMm": 0.000059604644775390625,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 0.000004063603445850649,
+    "jitterW": 0.000020811541455956068,
+    "creepMm": 0.001993475509644465,
+    "maxSpeed": 0.11737430847433858,
+    "maxEnergyRiseJ": 5.033641059526417e-9,
+    "msPerStep": 0.01699621614584146
+   }
+  },
+  {
+   "id": 172,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S4_edgeRemoval",
+   "case": "heel",
+   "r": {
+    "case": "heel",
+    "title": "heel contact (15° toe-up, 2 cm drop)",
+    "firstTouchManifoldMm": 0.00038370490074157715,
+    "firstTouchGeoMm": 0.0000044310308061623616,
+    "maxTransientMm": 4.528669796648218,
+    "settledMm": 2.0813321948806167,
+    "settledManifoldMm": 2.081334823742509,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 8.537736462515945e-7,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 2.8389878572665084e-9,
+    "jitterW": 1.490116163793686e-8,
+    "creepMm": null,
+    "maxSpeed": 0.5722501277923584,
+    "maxEnergyRiseJ": 0.000008941269427964471,
+    "msPerStep": 0.014141393229200125
+   }
+  },
+  {
+   "id": 173,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S4_edgeRemoval",
+   "case": "flat",
+   "r": {
+    "case": "flat",
+    "title": "flat contact (2 cm drop)",
+    "firstTouchManifoldMm": 0.0001043081283569336,
+    "firstTouchGeoMm": 0.00001410722733075076,
+    "maxTransientMm": 0.00001410722733075076,
+    "settledMm": 0.00001410722733075076,
+    "settledManifoldMm": 0.000059604644775390625,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 1.184995283477172e-9,
+    "jitterW": 6.116551484742076e-9,
+    "creepMm": null,
+    "maxSpeed": 0.5722501277923584,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.013043070312529418
+   }
+  },
+  {
+   "id": 174,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S4_edgeRemoval",
+   "case": "medialEdge",
+   "r": {
+    "case": "medialEdge",
+    "title": "medial-edge loading (rolled 20°, 2 cm drop)",
+    "firstTouchManifoldMm": -0.0003241002559661865,
+    "firstTouchGeoMm": -0.0022328514467512273,
+    "maxTransientMm": 8.471003057750982,
+    "settledMm": 8.471003057750982,
+    "settledManifoldMm": 8.472513407468796,
+    "manifoldsAvg": 1,
+    "pointsAvg": 2.8472222222222223,
+    "normalStdDeg": 0.4186893851072219,
+    "normalMaxJumpDeg": 1.9153245475201688,
+    "jitterV": 0.43327530681949517,
+    "jitterW": 4.005058694783095,
+    "creepMm": null,
+    "maxSpeed": 1.6847102777174954,
+    "maxEnergyRiseJ": 0.19707313806907578,
+    "msPerStep": 0.016738182291722598
+   }
+  },
+  {
+   "id": 175,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S4_edgeRemoval",
+   "case": "lateralEdge",
+   "r": {
+    "case": "lateralEdge",
+    "title": "lateral-edge loading (rolled 20°, 2 cm drop)",
+    "firstTouchManifoldMm": 0.00233575701713562,
+    "firstTouchGeoMm": 2.288950075280849,
+    "maxTransientMm": 10.632715343181296,
+    "settledMm": 10.632715343181296,
+    "settledManifoldMm": 9.215164929628372,
+    "manifoldsAvg": 1,
+    "pointsAvg": 3.0833333333333335,
+    "normalStdDeg": 0.4625031419527437,
+    "normalMaxJumpDeg": 1.9355107092899544,
+    "jitterV": 0.4720155367179839,
+    "jitterW": 4.243343778672113,
+    "creepMm": null,
+    "maxSpeed": 1.6391294005816437,
+    "maxEnergyRiseJ": 0.22804232396477886,
+    "msPerStep": 0.024276570312518213
+   }
+  },
+  {
+   "id": 176,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S4_edgeRemoval",
+   "case": "toe",
+   "r": {
+    "case": "toe",
+    "title": "toe / forefoot loading (20° toe-down, 2 cm drop)",
+    "firstTouchManifoldMm": -0.002115964889526367,
+    "firstTouchGeoMm": 0.002140634050379342,
+    "maxTransientMm": 13.522791207611327,
+    "settledMm": 1.318715110900516,
+    "settledManifoldMm": 1.0986588895320892,
+    "manifoldsAvg": 1,
+    "pointsAvg": 3.625,
+    "normalStdDeg": 0.07596700832386807,
+    "normalMaxJumpDeg": 0.3337779802560863,
+    "jitterV": 0.41815664892578996,
+    "jitterW": 3.1731999924105483,
+    "creepMm": null,
+    "maxSpeed": 1.6334250485218171,
+    "maxEnergyRiseJ": 0.247071061694351,
+    "msPerStep": 0.026221453124951683
+   }
+  },
+  {
+   "id": 177,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S4_edgeRemoval",
+   "case": "flatFast",
+   "r": {
+    "case": "flatFast",
+    "title": "flat impact at 3 m/s",
+    "firstTouchManifoldMm": -0.00009872019290924072,
+    "firstTouchGeoMm": 0.000046083482460601566,
+    "maxTransientMm": 0.00007588580484829688,
+    "settledMm": 0.00007588580484829688,
+    "settledManifoldMm": 0.00011920930376163597,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 0.00001337742075196015,
+    "jitterW": 0.00006967475484099824,
+    "creepMm": null,
+    "maxSpeed": 3.04087495803833,
+    "maxEnergyRiseJ": 1.5489831639570184e-10,
+    "msPerStep": 0.014407968749964084
+   }
+  },
+  {
+   "id": 178,
+   "kind": "rig",
+   "rep": "R2_split2",
+   "set": "S4_edgeRemoval",
+   "case": "heelFast",
+   "r": {
+    "case": "heelFast",
+    "title": "heel impact at 3 m/s (15°)",
+    "firstTouchManifoldMm": -0.0017862766981124878,
+    "firstTouchGeoMm": -0.0012529919448112103,
+    "maxTransientMm": 3.082709542288314,
+    "settledMm": 1.596275078241463,
+    "settledManifoldMm": 1.5962892211973667,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 8.537736462515945e-7,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 1.4874159279746405e-9,
+    "jitterW": 7.866071453486857e-9,
+    "creepMm": null,
+    "maxSpeed": 3.04087495803833,
+    "maxEnergyRiseJ": 0.000005703170259607759,
+    "msPerStep": 0.009925036458255931
+   }
+  },
+  {
+   "id": 179,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S4_edgeRemoval",
+   "key": "upright",
+   "r": {
+    "key": "upright",
+    "turf": 9.578111514815802,
+    "turfRest": 2.512754159371161,
+    "turfRestBody": "forearm_L",
+    "rise": 0.016357599814341484,
+    "sep": 1.8554391486878439,
+    "self": 6.152388174086809,
+    "fails": [],
+    "ms": 0.2402710047619004,
+    "hash": "1480802e",
+    "finite": true,
+    "maxSpeed": 3.8098557687539416
+   }
+  },
+  {
+   "id": 180,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S4_edgeRemoval",
+   "key": "leanF",
+   "r": {
+    "key": "leanF",
+    "turf": 10.35170465093288,
+    "turfRest": 4.998745831063703,
+    "turfRestBody": "foot_L",
+    "rise": 0.15138652915914008,
+    "sep": 2.577642530584842,
+    "self": 5.469613242894411,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.2497531845238059,
+    "hash": "6893e1dc",
+    "finite": true,
+    "maxSpeed": 3.637103731204564
+   }
+  },
+  {
+   "id": 181,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S4_edgeRemoval",
+   "key": "leanB",
+   "r": {
+    "key": "leanB",
+    "turf": 8.915458150892647,
+    "turfRest": 6.222416033954584,
+    "turfRestBody": "foot_R",
+    "rise": 0.08423982411818542,
+    "sep": 1.3283374130479653,
+    "self": 0.25561079382896423,
+    "fails": [
+     "1.4b"
+    ],
+    "ms": 0.23006730476192844,
+    "hash": "5a96a51b",
+    "finite": true,
+    "maxSpeed": 4.089863162759811
+   }
+  },
+  {
+   "id": 182,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S4_edgeRemoval",
+   "key": "leanL",
+   "r": {
+    "key": "leanL",
+    "turf": 11.690568184820199,
+    "turfRest": 4.95213141609857,
+    "turfRestBody": "foot_R",
+    "rise": 0.10164639653658014,
+    "sep": 2.1972359142893323,
+    "self": 1.4626383781433105,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.23459892738092636,
+    "hash": "72df2e6f",
+    "finite": true,
+    "maxSpeed": 4.774470615551725
+   }
+  },
+  {
+   "id": 183,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S4_edgeRemoval",
+   "key": "leanR",
+   "r": {
+    "key": "leanR",
+    "turf": 12.731524776078986,
+    "turfRest": 3.1565037660774564,
+    "turfRestBody": "foot_R",
+    "rise": 0.20933301472291532,
+    "sep": 3.0374888224971306,
+    "self": 0.9720996022224426,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.25636951190472357,
+    "hash": "5b76b89e",
+    "finite": true,
+    "maxSpeed": 4.818301796302716
+   }
+  },
+  {
+   "id": 184,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S4_edgeRemoval",
+   "key": "perturb",
+   "r": {
+    "key": "perturb",
+    "turf": 12.975164951231758,
+    "turfRest": 0.9624169664798482,
+    "turfRestBody": "foot_L",
+    "rise": 0.47288850127563364,
+    "sep": 3.367498502994644,
+    "self": 1.5632648719474673,
+    "fails": [
+     "1.2b",
+     "1.4a"
+    ],
+    "ms": 0.2529426898809334,
+    "hash": "c9af1aa4",
+    "finite": true,
+    "maxSpeed": 4.726979757979579
+   }
+  },
+  {
+   "id": 185,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S4_edgeRemoval",
+   "key": "singleLeg",
+   "r": {
+    "key": "singleLeg",
+    "turf": 8.5439216167673,
+    "turfRest": 1.8868352663467813,
+    "turfRestBody": "foot_R",
+    "rise": 0.000029849189687070066,
+    "sep": 1.3025753300120217,
+    "self": 1.3639181852340698,
+    "fails": [],
+    "ms": 0.2563792547618948,
+    "hash": "0fc3d6b3",
+    "finite": true,
+    "maxSpeed": 4.482995573558177
+   }
+  },
+  {
+   "id": 186,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S4_edgeRemoval",
+   "key": "dropA",
+   "r": {
+    "key": "dropA",
+    "turf": 13.389252385146849,
+    "turfRest": 4.996069443557752,
+    "turfRestBody": "foot_L",
+    "rise": 0.6581694330154733,
+    "sep": 2.5123586534679885,
+    "self": 0.04176705260761082,
+    "fails": [
+     "1.2a",
+     "1.2b",
+     "1.3b",
+     "1.4a"
+    ],
+    "ms": 0.2375673422619446,
+    "hash": "b401773f",
+    "finite": true,
+    "maxSpeed": 4.0670798276287075
+   }
+  },
+  {
+   "id": 187,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S4_edgeRemoval",
+   "key": "sideFirst",
+   "r": {
+    "key": "sideFirst",
+    "turf": 6.9396715124528106,
+    "turfRest": 4.993612498862376,
+    "turfRestBody": "foot_L",
+    "rise": 0.000015775406680518245,
+    "sep": 0.9263587607789524,
+    "self": 0.04414655268192291,
+    "fails": [],
+    "ms": 0.2261731624999822,
+    "hash": "437c28e1",
+    "finite": true,
+    "maxSpeed": 4.2459450924433675
+   }
+  },
+  {
+   "id": 188,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S4_edgeRemoval",
+   "key": "awkward",
+   "r": {
+    "key": "awkward",
+    "turf": 2.645276602441682,
+    "turfRest": 1.6030610167037698,
+    "turfRestBody": "forearm_R",
+    "rise": 0.07904468413582322,
+    "sep": 2.7668536706362477,
+    "self": 2.011476084589958,
+    "fails": [],
+    "ms": 0.25113568571430167,
+    "hash": "b2a4ff38",
+    "finite": true,
+    "maxSpeed": 5.715566737304441
+   }
+  },
+  {
+   "id": 189,
+   "kind": "fall",
+   "rep": "R2_split2",
+   "set": "S4_edgeRemoval",
+   "key": "drop1m",
+   "r": {
+    "key": "drop1m",
+    "turf": 8.357816824765177,
+    "turfRest": 4.964273391612705,
+    "turfRestBody": "foot_R",
+    "rise": 0.060480047169193085,
+    "sep": 3.0405392782994847,
+    "self": 2.0510931499302387,
+    "fails": [
+     "1.R"
+    ],
+    "ms": 0.2484668916666665,
+    "hash": "b30e1820",
+    "finite": true,
+    "maxSpeed": 4.931610683710938
+   }
+  },
+  {
+   "id": 190,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S0_default",
+   "case": "quiet",
+   "r": {
+    "case": "quiet",
+    "title": "quiet loading (flat, 1 mm)",
+    "firstTouchManifoldMm": -0.48911571502685547,
+    "firstTouchGeoMm": 0.000006656646733826932,
+    "maxTransientMm": 0.000006656646733826932,
+    "settledMm": 0.000006656646733826932,
+    "settledManifoldMm": 1.5258107404704144e-15,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 9.86671090748811e-10,
+    "jitterW": 5.11255652463197e-9,
+    "creepMm": 0.00008998875369200747,
+    "maxSpeed": 0.11738059669759388,
+    "maxEnergyRiseJ": 1.0668117056411575e-8,
+    "msPerStep": 0.05553701302081038
+   }
+  },
+  {
+   "id": 191,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S0_default",
+   "case": "heel",
+   "r": {
+    "case": "heel",
+    "title": "heel contact (15° toe-up, 2 cm drop)",
+    "firstTouchManifoldMm": 0.0003241002559661865,
+    "firstTouchGeoMm": 0.00026048039035442283,
+    "maxTransientMm": 4.474535506377331,
+    "settledMm": 1.4953599752419584,
+    "settledManifoldMm": 1.495361328125,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 8.537736462515945e-7,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 0.0000036534733843641067,
+    "jitterW": 0.000018488748966237753,
+    "creepMm": null,
+    "maxSpeed": 0.5722501277923584,
+    "maxEnergyRiseJ": 0.000007616856805725547,
+    "msPerStep": 0.0747690781249825
+   }
+  },
+  {
+   "id": 192,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S0_default",
+   "case": "flat",
+   "r": {
+    "case": "flat",
+    "title": "flat contact (2 cm drop)",
+    "firstTouchManifoldMm": 0.00006891787052154541,
+    "firstTouchGeoMm": 0.000036458969121522244,
+    "maxTransientMm": 0.000036458969121522244,
+    "settledMm": 0.000036458969121522244,
+    "settledManifoldMm": 3.3983915169498497e-15,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 6.843424208484782e-10,
+    "jitterW": 3.5031884545607497e-9,
+    "creepMm": null,
+    "maxSpeed": 0.5722501277923584,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.08495887239569318
+   }
+  },
+  {
+   "id": 193,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S0_default",
+   "case": "medialEdge",
+   "r": {
+    "case": "medialEdge",
+    "title": "medial-edge loading (rolled 20°, 2 cm drop)",
+    "firstTouchManifoldMm": -0.002378597855567932,
+    "firstTouchGeoMm": -0.002436816365525285,
+    "maxTransientMm": 12.604129173358237,
+    "settledMm": 12.604129173358237,
+    "settledManifoldMm": 12.560881674289703,
+    "manifoldsAvg": 1,
+    "pointsAvg": 3.3055555555555554,
+    "normalStdDeg": 0.23314093097423855,
+    "normalMaxJumpDeg": 0.7502864916112246,
+    "jitterV": 0.4285651659992783,
+    "jitterW": 4.2399410811466485,
+    "creepMm": null,
+    "maxSpeed": 1.7897644001055049,
+    "maxEnergyRiseJ": 0.3932788451812961,
+    "msPerStep": 0.12931433333334041
+   }
+  },
+  {
+   "id": 194,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S0_default",
+   "case": "lateralEdge",
+   "r": {
+    "case": "lateralEdge",
+    "title": "lateral-edge loading (rolled 20°, 2 cm drop)",
+    "firstTouchManifoldMm": -0.0002644956111907959,
+    "firstTouchGeoMm": -0.0027151539587488838,
+    "maxTransientMm": 9.255064353155582,
+    "settledMm": 9.255064353155582,
+    "settledManifoldMm": 9.253287687897682,
+    "manifoldsAvg": 1.0138888888888888,
+    "pointsAvg": 2.888888888888889,
+    "normalStdDeg": 10.54125349618697,
+    "normalMaxJumpDeg": 89.7710768413829,
+    "jitterV": 0.44836180440536555,
+    "jitterW": 3.978384044554217,
+    "creepMm": null,
+    "maxSpeed": 1.752082192365917,
+    "maxEnergyRiseJ": 0.2441501680116076,
+    "msPerStep": 0.11976028125003779
+   }
+  },
+  {
+   "id": 195,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S0_default",
+   "case": "toe",
+   "r": {
+    "case": "toe",
+    "title": "toe / forefoot loading (20° toe-down, 2 cm drop)",
+    "firstTouchManifoldMm": 0.00023469328880310059,
+    "firstTouchGeoMm": 2.2860623936123425,
+    "maxTransientMm": 10.587701114496202,
+    "settledMm": 8.662889836561286,
+    "settledManifoldMm": 8.66282731294632,
+    "manifoldsAvg": 1,
+    "pointsAvg": 3.9444444444444446,
+    "normalStdDeg": 0.1258734179212026,
+    "normalMaxJumpDeg": 0.6193484667062056,
+    "jitterV": 0.4384552153161996,
+    "jitterW": 3.296243479860494,
+    "creepMm": null,
+    "maxSpeed": 1.62232048953108,
+    "maxEnergyRiseJ": 0.22348428452230706,
+    "msPerStep": 0.13311837239581337
+   }
+  },
+  {
+   "id": 196,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S0_default",
+   "case": "flatFast",
+   "r": {
+    "case": "flatFast",
+    "title": "flat impact at 3 m/s",
+    "firstTouchManifoldMm": -0.000029802322387695312,
+    "firstTouchGeoMm": 0.00008495987333101418,
+    "maxTransientMm": 0.00011476219571870949,
+    "settledMm": 0.00011476219571870949,
+    "settledManifoldMm": 3.087323962019245e-11,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 0.000013376437562466229,
+    "jitterW": 0.00006966950622491453,
+    "creepMm": null,
+    "maxSpeed": 3.04087495803833,
+    "maxEnergyRiseJ": 5.735216745961225e-10,
+    "msPerStep": 0.09343912239583574
+   }
+  },
+  {
+   "id": 197,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S0_default",
+   "case": "heelFast",
+   "r": {
+    "case": "heelFast",
+    "title": "heel impact at 3 m/s (15°)",
+    "firstTouchManifoldMm": -0.0006686896085739136,
+    "firstTouchGeoMm": -0.0010814947109388795,
+    "maxTransientMm": 3.2654115628939357,
+    "settledMm": 1.3239772649767945,
+    "settledManifoldMm": 1.3239424442872405,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 1.0399355492256207e-9,
+    "jitterW": 5.430474212629371e-9,
+    "creepMm": null,
+    "maxSpeed": 3.04087495803833,
+    "maxEnergyRiseJ": 0.000011520693419697636,
+    "msPerStep": 0.10437989583338474
+   }
+  },
+  {
+   "id": 198,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S0_default",
+   "key": "upright",
+   "r": {
+    "key": "upright",
+    "turf": 10.571206434055666,
+    "turfRest": 3.1245443668729695,
+    "turfRestBody": "foot_R",
+    "rise": 0.01635754220922081,
+    "sep": 3.0173649153285274,
+    "self": 1.523078652098775,
+    "fails": [
+     "1.4a",
+     "1.4f"
+    ],
+    "ms": 0.4303280386904373,
+    "hash": "3166c0c1",
+    "finite": true,
+    "maxSpeed": 4.370373099382708
+   }
+  },
+  {
+   "id": 199,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S0_default",
+   "key": "leanF",
+   "r": {
+    "key": "leanF",
+    "turf": 15.494511047822442,
+    "turfRest": 8.641218961668306,
+    "turfRestBody": "foot_L",
+    "rise": 4.1187518224821815,
+    "sep": 3.8205992919787026,
+    "self": 3.21156345307827,
+    "fails": [
+     "1.2a",
+     "1.2b",
+     "1.3b",
+     "1.4a",
+     "1.4b"
+    ],
+    "ms": 0.48013616309526586,
+    "hash": "97ac3b4b",
+    "finite": true,
+    "maxSpeed": 3.6645028505285953
+   }
+  },
+  {
+   "id": 200,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S0_default",
+   "key": "leanB",
+   "r": {
+    "key": "leanB",
+    "turf": 13.499071835283205,
+    "turfRest": 12.403396766700729,
+    "turfRestBody": "foot_L",
+    "rise": 0.10577132963953773,
+    "sep": 3.883687158940964,
+    "self": 0.1278109848499298,
+    "fails": [
+     "1.3c",
+     "1.4a",
+     "1.4b",
+     "1.R"
+    ],
+    "ms": 0.43940656964278746,
+    "hash": "9bf510c3",
+    "finite": true,
+    "maxSpeed": 4.088880674466492
+   }
+  },
+  {
+   "id": 201,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S0_default",
+   "key": "leanL",
+   "r": {
+    "key": "leanL",
+    "turf": 12.354401548265587,
+    "turfRest": 4.970033927435807,
+    "turfRestBody": "foot_R",
+    "rise": 0.1016346470202052,
+    "sep": 5.076838367423334,
+    "self": 0.7847158121876419,
+    "fails": [
+     "1.3a",
+     "1.3d",
+     "1.4a"
+    ],
+    "ms": 0.4280997559523268,
+    "hash": "b25dc06d",
+    "finite": true,
+    "maxSpeed": 4.882917749341176
+   }
+  },
+  {
+   "id": 202,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S0_default",
+   "key": "leanR",
+   "r": {
+    "key": "leanR",
+    "turf": 12.714911485552733,
+    "turfRest": 0.8723830602485466,
+    "turfRestBody": "head",
+    "rise": 0.20932841510602884,
+    "sep": 4.0680698550439285,
+    "self": 1.3010650873184204,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.43883581428571383,
+    "hash": "ae0628b5",
+    "finite": true,
+    "maxSpeed": 4.875414140261378
+   }
+  },
+  {
+   "id": 203,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S0_default",
+   "key": "perturb",
+   "r": {
+    "key": "perturb",
+    "turf": 11.095508175221674,
+    "turfRest": 1.238482040258948,
+    "turfRestBody": "foot_L",
+    "rise": 0.07822830852740026,
+    "sep": 2.432959652256128,
+    "self": 1.5423167496919632,
+    "fails": [
+     "1.4a",
+     "1.4f"
+    ],
+    "ms": 0.460692589285773,
+    "hash": "6fce1e5a",
+    "finite": true,
+    "maxSpeed": 4.728649209973072
+   }
+  },
+  {
+   "id": 204,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S0_default",
+   "key": "singleLeg",
+   "r": {
+    "key": "singleLeg",
+    "turf": 13.972358808017365,
+    "turfRest": 6.144383613821455,
+    "turfRestBody": "foot_R",
+    "rise": 0.04970167512371404,
+    "sep": 4.067791719853665,
+    "self": 1.981472596526146,
+    "fails": [
+     "1.4a",
+     "1.4b",
+     "1.4f"
+    ],
+    "ms": 0.45096612916667517,
+    "hash": "8b634d4d",
+    "finite": true,
+    "maxSpeed": 4.495025250332734
+   }
+  },
+  {
+   "id": 205,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S0_default",
+   "key": "dropA",
+   "r": {
+    "key": "dropA",
+    "turf": 13.495921576861718,
+    "turfRest": 4.9890170646906675,
+    "turfRestBody": "foot_L",
+    "rise": 0.6581476301226985,
+    "sep": 2.8057468504661602,
+    "self": 2.281883964315057,
+    "fails": [
+     "1.2a",
+     "1.2b",
+     "1.4a"
+    ],
+    "ms": 0.4109451839286456,
+    "hash": "1af10f02",
+    "finite": true,
+    "maxSpeed": 4.06460828103461
+   }
+  },
+  {
+   "id": 206,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S0_default",
+   "key": "sideFirst",
+   "r": {
+    "key": "sideFirst",
+    "turf": 17.831646370645284,
+    "turfRest": 12.96439487615747,
+    "turfRestBody": "foot_R",
+    "rise": 0.012653984209805458,
+    "sep": 1.415078782071926,
+    "self": 0.04443712532520294,
+    "fails": [
+     "1.4a",
+     "1.4b",
+     "1.R"
+    ],
+    "ms": 0.4294202315476685,
+    "hash": "6d2042b7",
+    "finite": true,
+    "maxSpeed": 4.245715744954746
+   }
+  },
+  {
+   "id": 207,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S0_default",
+   "key": "awkward",
+   "r": {
+    "key": "awkward",
+    "turf": 15.326110294280687,
+    "turfRest": 3.17311640400237,
+    "turfRestBody": "forearm_R",
+    "rise": 0.09824984309523188,
+    "sep": 2.7447672784179367,
+    "self": 4.4700149446725845,
+    "fails": [
+     "1.3b",
+     "1.3d",
+     "1.4a"
+    ],
+    "ms": 0.4769265482143445,
+    "hash": "2938794d",
+    "finite": true,
+    "maxSpeed": 5.777211423581779
+   }
+  },
+  {
+   "id": 208,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S0_default",
+   "key": "drop1m",
+   "r": {
+    "key": "drop1m",
+    "turf": 13.443745513049137,
+    "turfRest": 1.0574940302472136,
+    "turfRestBody": "foot_R",
+    "rise": 6.697928256471641e-7,
+    "sep": 3.040539621940073,
+    "self": 0.5699787870980799,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.457085980357204,
+    "hash": "ce80ac97",
+    "finite": true,
+    "maxSpeed": 4.933081921517642
+   }
+  },
+  {
+   "id": 209,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S1_reductionOff",
+   "case": "quiet",
+   "r": {
+    "case": "quiet",
+    "title": "quiet loading (flat, 1 mm)",
+    "firstTouchManifoldMm": -0.48911571502685547,
+    "firstTouchGeoMm": 0.000006656646733826932,
+    "maxTransientMm": 0.00005084848814229659,
+    "settledMm": 0.0000082784380600609,
+    "settledManifoldMm": -3.7048119970071666e-13,
+    "manifoldsAvg": 4,
+    "pointsAvg": 16,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 2.161629760380761e-11,
+    "jitterW": 9.884251229833346e-11,
+    "creepMm": 0.0006570639530213671,
+    "maxSpeed": 0.11737984424323399,
+    "maxEnergyRiseJ": 0.0003657660607245816,
+    "msPerStep": 0.09242588541627583
+   }
+  },
+  {
+   "id": 210,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S1_reductionOff",
+   "case": "heel",
+   "r": {
+    "case": "heel",
+    "title": "heel contact (15° toe-up, 2 cm drop)",
+    "firstTouchManifoldMm": -0.0003632158041000366,
+    "firstTouchGeoMm": 0.00025494426011962723,
+    "maxTransientMm": 0.8577559856756678,
+    "settledMm": 0.00007680574728996525,
+    "settledManifoldMm": -0.0000011932391741353854,
+    "manifoldsAvg": 4,
+    "pointsAvg": 16,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 0.0000017838296901399916,
+    "jitterW": 0.000006944806552758873,
+    "creepMm": null,
+    "maxSpeed": 0.5722501277923584,
+    "maxEnergyRiseJ": 1.0223999424852082e-9,
+    "msPerStep": 0.10502086979151197
+   }
+  },
+  {
+   "id": 211,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S1_reductionOff",
+   "case": "flat",
+   "r": {
+    "case": "flat",
+    "title": "flat contact (2 cm drop)",
+    "firstTouchManifoldMm": 0.00011734664440155029,
+    "firstTouchGeoMm": 0.00005246823486793062,
+    "maxTransientMm": 0.00005246823486793062,
+    "settledMm": 0.00003600459123898059,
+    "settledManifoldMm": 0.000059601120483421255,
+    "manifoldsAvg": 4,
+    "pointsAvg": 16,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 8.537736462515939e-7,
+    "jitterV": 1.0773805170509521e-9,
+    "jitterW": 5.106388201250984e-9,
+    "creepMm": null,
+    "maxSpeed": 0.5722501277923584,
+    "maxEnergyRiseJ": 1.8252563904752606e-9,
+    "msPerStep": 0.10378386197896816
+   }
+  },
+  {
+   "id": 212,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S1_reductionOff",
+   "case": "medialEdge",
+   "r": {
+    "case": "medialEdge",
+    "title": "medial-edge loading (rolled 20°, 2 cm drop)",
+    "firstTouchManifoldMm": -0.0010598450899124146,
+    "firstTouchGeoMm": -0.0029639951448223734,
+    "maxTransientMm": 9.941947581610517,
+    "settledMm": 9.941947581610517,
+    "settledManifoldMm": 9.931715205311775,
+    "manifoldsAvg": 1.8888888888888888,
+    "pointsAvg": 4.680555555555555,
+    "normalStdDeg": 0.43951823537698004,
+    "normalMaxJumpDeg": 1.9392621688350578,
+    "jitterV": 0.44923912244092956,
+    "jitterW": 4.0588527174580875,
+    "creepMm": null,
+    "maxSpeed": 1.60989912756507,
+    "maxEnergyRiseJ": 0.28058776177025635,
+    "msPerStep": 0.11359924739580644
+   }
+  },
+  {
+   "id": 213,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S1_reductionOff",
+   "case": "lateralEdge",
+   "r": {
+    "case": "lateralEdge",
+    "title": "lateral-edge loading (rolled 20°, 2 cm drop)",
+    "firstTouchManifoldMm": 0.00022351741790771484,
+    "firstTouchGeoMm": -0.0026498589577872433,
+    "maxTransientMm": 6.919130739922674,
+    "settledMm": 6.685587785280958,
+    "settledManifoldMm": 6.687572225928307,
+    "manifoldsAvg": 1.7361111111111112,
+    "pointsAvg": 4.583333333333333,
+    "normalStdDeg": 0.42771809200311395,
+    "normalMaxJumpDeg": 1.8171267096112804,
+    "jitterV": 0.4742851903754506,
+    "jitterW": 4.018011507316499,
+    "creepMm": null,
+    "maxSpeed": 1.7313347832051782,
+    "maxEnergyRiseJ": 0.12589398727067191,
+    "msPerStep": 0.1178655468748957
+   }
+  },
+  {
+   "id": 214,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S1_reductionOff",
+   "case": "toe",
+   "r": {
+    "case": "toe",
+    "title": "toe / forefoot loading (20° toe-down, 2 cm drop)",
+    "firstTouchManifoldMm": -0.001821666955947876,
+    "firstTouchGeoMm": 0.0020930024753340604,
+    "maxTransientMm": 3.8583850442885925,
+    "settledMm": 0.821975737048522,
+    "settledManifoldMm": 0.5115624517202377,
+    "manifoldsAvg": 3.486111111111111,
+    "pointsAvg": 9.51388888888889,
+    "normalStdDeg": 0.11164511196764217,
+    "normalMaxJumpDeg": 0.4861976413711981,
+    "jitterV": 0.4962042775495611,
+    "jitterW": 3.530776121515032,
+    "creepMm": null,
+    "maxSpeed": 1.6276828364823641,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.12516014583326296
+   }
+  },
+  {
+   "id": 215,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S1_reductionOff",
+   "case": "flatFast",
+   "r": {
+    "case": "flatFast",
+    "title": "flat impact at 3 m/s",
+    "firstTouchManifoldMm": -0.0003241002559661865,
+    "firstTouchGeoMm": 0.00003097677500618623,
+    "maxTransientMm": 0.00004643621455413527,
+    "settledMm": 0.00004643621455413527,
+    "settledManifoldMm": 0.00011920816689325875,
+    "manifoldsAvg": 4,
+    "pointsAvg": 16,
+    "normalStdDeg": 8.537736462515945e-7,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 1.0473295287814638e-9,
+    "jitterW": 5.337448408188393e-9,
+    "creepMm": null,
+    "maxSpeed": 3.04087495803833,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.10518351822929617
+   }
+  },
+  {
+   "id": 216,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S1_reductionOff",
+   "case": "heelFast",
+   "r": {
+    "case": "heelFast",
+    "title": "heel impact at 3 m/s (15°)",
+    "firstTouchManifoldMm": 0.0003557652235031128,
+    "firstTouchGeoMm": -0.001460290851656998,
+    "maxTransientMm": 0.9760411618530418,
+    "settledMm": 0,
+    "settledManifoldMm": 0.000059534066565447574,
+    "manifoldsAvg": 4,
+    "pointsAvg": 16,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 0.0000010632622759297204,
+    "jitterW": 0.000004840060777059422,
+    "creepMm": null,
+    "maxSpeed": 3.04087495803833,
+    "maxEnergyRiseJ": 3.369393652974395e-11,
+    "msPerStep": 0.10628945312511935
+   }
+  },
+  {
+   "id": 217,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S1_reductionOff",
+   "key": "upright",
+   "r": {
+    "key": "upright",
+    "turf": 6.820346577066594,
+    "turfRest": 2.7029780288077148,
+    "turfRestBody": "foot_R",
+    "rise": 0.016910629811718536,
+    "sep": 1.4493798424070512,
+    "self": 0.18772714247461408,
+    "fails": [
+     "1.3d",
+     "1.4f"
+    ],
+    "ms": 0.46904140773788944,
+    "hash": "4c13426f",
+    "finite": true,
+    "maxSpeed": 4.326223020592133
+   }
+  },
+  {
+   "id": 218,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S1_reductionOff",
+   "key": "leanF",
+   "r": {
+    "key": "leanF",
+    "turf": 8.147135391349966,
+    "turfRest": 4.974255325235127,
+    "turfRestBody": "foot_L",
+    "rise": 0.35504942038460285,
+    "sep": 2.039855013195184,
+    "self": 4.5406087301671505,
+    "fails": [
+     "1.2b"
+    ],
+    "ms": 0.48015241964287614,
+    "hash": "79373e03",
+    "finite": true,
+    "maxSpeed": 3.6225959704682213
+   }
+  },
+  {
+   "id": 219,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S1_reductionOff",
+   "key": "leanB",
+   "r": {
+    "key": "leanB",
+    "turf": 2.493840375313056,
+    "turfRest": 1.9261999641764505,
+    "turfRestBody": "foot_R",
+    "rise": 0.06894796093479272,
+    "sep": 1.3237761488026247,
+    "self": 0.22586435079574585,
+    "fails": [],
+    "ms": 0.4735980690475723,
+    "hash": "03342b95",
+    "finite": true,
+    "maxSpeed": 4.081969344720553
+   }
+  },
+  {
+   "id": 220,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S1_reductionOff",
+   "key": "leanL",
+   "r": {
+    "key": "leanL",
+    "turf": 7.344655597677149,
+    "turfRest": 0.3917482928627661,
+    "turfRestBody": "forearm_R",
+    "rise": 0.00007804568222979924,
+    "sep": 1.2223194749740882,
+    "self": 1.574883470311761,
+    "fails": [],
+    "ms": 0.45300327142851443,
+    "hash": "b4b4189d",
+    "finite": true,
+    "maxSpeed": 4.863651335641518
+   }
+  },
+  {
+   "id": 221,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S1_reductionOff",
+   "key": "leanR",
+   "r": {
+    "key": "leanR",
+    "turf": 12.678112132000457,
+    "turfRest": 0.47082399327287583,
+    "turfRestBody": "head",
+    "rise": 0.000007437115314701259,
+    "sep": 1.7221114445600656,
+    "self": 1.1589671485126019,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.45794933928586296,
+    "hash": "6b01986b",
+    "finite": true,
+    "maxSpeed": 4.8979668274624695
+   }
+  },
+  {
+   "id": 222,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S1_reductionOff",
+   "key": "perturb",
+   "r": {
+    "key": "perturb",
+    "turf": 10.469337799806965,
+    "turfRest": 0.7490088594128558,
+    "turfRestBody": "foot_L",
+    "rise": 1.0656709454338227,
+    "sep": 1.372767225122528,
+    "self": 5.699995905160904,
+    "fails": [
+     "1.2a",
+     "1.2b",
+     "1.4a",
+     "1.R",
+     "1.4f"
+    ],
+    "ms": 0.5390909494049516,
+    "hash": "4d09fa91",
+    "finite": true,
+    "maxSpeed": 4.729796983628289
+   }
+  },
+  {
+   "id": 223,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S1_reductionOff",
+   "key": "singleLeg",
+   "r": {
+    "key": "singleLeg",
+    "turf": 9.766322108646044,
+    "turfRest": 3.6888558765081347,
+    "turfRestBody": "foot_R",
+    "rise": 0.000009820202961918767,
+    "sep": 3.1984482914929,
+    "self": 2.1411627531051636,
+    "fails": [
+     "1.4f"
+    ],
+    "ms": 0.5155992470234326,
+    "hash": "404fa7cc",
+    "finite": true,
+    "maxSpeed": 4.477244480630756
+   }
+  },
+  {
+   "id": 224,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S1_reductionOff",
+   "key": "dropA",
+   "r": {
+    "key": "dropA",
+    "turf": 9.100089810669177,
+    "turfRest": 6.395797266691733,
+    "turfRestBody": "foot_L",
+    "rise": 0.7138339973064376,
+    "sep": 1.5059617324831005,
+    "self": 3.359886584803462,
+    "fails": [
+     "1.2a",
+     "1.2b",
+     "1.4b"
+    ],
+    "ms": 0.4729998327381076,
+    "hash": "f63bbbe7",
+    "finite": true,
+    "maxSpeed": 4.070627289273259
+   }
+  },
+  {
+   "id": 225,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S1_reductionOff",
+   "key": "sideFirst",
+   "r": {
+    "key": "sideFirst",
+    "turf": 0.4388203641982058,
+    "turfRest": 0.17485921120910172,
+    "turfRestBody": "forearm_L",
+    "rise": 0,
+    "sep": 0.7664282061275425,
+    "self": 0.043900683522224426,
+    "fails": [
+     "1.R"
+    ],
+    "ms": 0.46263667261893626,
+    "hash": "acaa7269",
+    "finite": true,
+    "maxSpeed": 4.252393587544239
+   }
+  },
+  {
+   "id": 226,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S1_reductionOff",
+   "key": "awkward",
+   "r": {
+    "key": "awkward",
+    "turf": 6.830199746059473,
+    "turfRest": 1.5885018108862115,
+    "turfRestBody": "forearm_R",
+    "rise": 0.0000494620548607827,
+    "sep": 2.390096681734303,
+    "self": 1.2199431657791138,
+    "fails": [],
+    "ms": 0.5366218779760207,
+    "hash": "40df170b",
+    "finite": true,
+    "maxSpeed": 5.723529845229624
+   }
+  },
+  {
+   "id": 227,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S1_reductionOff",
+   "key": "drop1m",
+   "r": {
+    "key": "drop1m",
+    "turf": 2.054666173862796,
+    "turfRest": 1.6004480139232071,
+    "turfRestBody": "forearm_L",
+    "rise": 0.028908989138727748,
+    "sep": 2.9766766940906257,
+    "self": 0.7625130820088089,
+    "fails": [
+     "1.3d"
+    ],
+    "ms": 0.48299223035730304,
+    "hash": "3a5cd008",
+    "finite": true,
+    "maxSpeed": 4.981340996763812
+   }
+  },
+  {
+   "id": 228,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S2_cacheOff",
+   "case": "quiet",
+   "r": {
+    "case": "quiet",
+    "title": "quiet loading (flat, 1 mm)",
+    "firstTouchManifoldMm": -0.4890467971563339,
+    "firstTouchGeoMm": 0.000006656646733826932,
+    "maxTransientMm": 0.000006656646733826932,
+    "settledMm": 0.000006656646733826932,
+    "settledManifoldMm": 0.00006891787052154541,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 1.294346871323569e-9,
+    "jitterW": 6.696892052931604e-9,
+    "creepMm": 0.00009087301118204731,
+    "maxSpeed": 0.11738059669758945,
+    "maxEnergyRiseJ": 1.0669310768207652e-8,
+    "msPerStep": 0.10468546354180337
+   }
+  },
+  {
+   "id": 229,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S2_cacheOff",
+   "case": "heel",
+   "r": {
+    "case": "heel",
+    "title": "heel contact (15° toe-up, 2 cm drop)",
+    "firstTouchManifoldMm": 0.0003241002559661865,
+    "firstTouchGeoMm": 0.00026048039035442283,
+    "maxTransientMm": 3.8450658187945685,
+    "settledMm": 0.38345258410966976,
+    "settledManifoldMm": 0.38337334990501404,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 3.739434079642586e-9,
+    "jitterW": 1.9557416929969323e-8,
+    "creepMm": null,
+    "maxSpeed": 0.5722501277923584,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.10262797916658428
+   }
+  },
+  {
+   "id": 230,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S2_cacheOff",
+   "case": "flat",
+   "r": {
+    "case": "flat",
+    "title": "flat contact (2 cm drop)",
+    "firstTouchManifoldMm": 0.00006891787052154541,
+    "firstTouchGeoMm": 0.000036458969121522244,
+    "maxTransientMm": 0.000036458969121522244,
+    "settledMm": 0.000036458969121522244,
+    "settledManifoldMm": 0.00006891787052154541,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 7.97971616504056e-10,
+    "jitterW": 4.090418118717256e-9,
+    "creepMm": null,
+    "maxSpeed": 0.5722501277923584,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.11006056770840662
+   }
+  },
+  {
+   "id": 231,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S2_cacheOff",
+   "case": "medialEdge",
+   "r": {
+    "case": "medialEdge",
+    "title": "medial-edge loading (rolled 20°, 2 cm drop)",
+    "firstTouchManifoldMm": -0.002378597855567932,
+    "firstTouchGeoMm": -0.002436816365525285,
+    "maxTransientMm": 12.607196129200068,
+    "settledMm": 12.607196129200068,
+    "settledManifoldMm": 12.609809637069702,
+    "manifoldsAvg": 1,
+    "pointsAvg": 3.2777777777777777,
+    "normalStdDeg": 0.0017468796584629092,
+    "normalMaxJumpDeg": 0.010636203270648157,
+    "jitterV": 0.4274696108512914,
+    "jitterW": 4.2321523605798586,
+    "creepMm": null,
+    "maxSpeed": 1.7897644001055049,
+    "maxEnergyRiseJ": 0.36676184769083875,
+    "msPerStep": 0.10648123697927758
+   }
+  },
+  {
+   "id": 232,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S2_cacheOff",
+   "case": "lateralEdge",
+   "r": {
+    "case": "lateralEdge",
+    "title": "lateral-edge loading (rolled 20°, 2 cm drop)",
+    "firstTouchManifoldMm": -0.0002644956111907959,
+    "firstTouchGeoMm": -0.0027151539587488838,
+    "maxTransientMm": 7.514803266021739,
+    "settledMm": 7.514803266021739,
+    "settledManifoldMm": 7.513763383030891,
+    "manifoldsAvg": 1,
+    "pointsAvg": 2.875,
+    "normalStdDeg": 0.0024706532198944605,
+    "normalMaxJumpDeg": 0.015045355655239075,
+    "jitterV": 0.44625322865402495,
+    "jitterW": 3.8935959351471285,
+    "creepMm": null,
+    "maxSpeed": 1.752082192365917,
+    "maxEnergyRiseJ": 0.14427818670105452,
+    "msPerStep": 0.0960283177082412
+   }
+  },
+  {
+   "id": 233,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S2_cacheOff",
+   "case": "toe",
+   "r": {
+    "case": "toe",
+    "title": "toe / forefoot loading (20° toe-down, 2 cm drop)",
+    "firstTouchManifoldMm": 0.00023469328880310059,
+    "firstTouchGeoMm": 2.2860623936123425,
+    "maxTransientMm": 10.587701114496202,
+    "settledMm": 8.678478270855724,
+    "settledManifoldMm": 8.678490296006203,
+    "manifoldsAvg": 1,
+    "pointsAvg": 3.9305555555555554,
+    "normalStdDeg": 0.0000014086546480133554,
+    "normalMaxJumpDeg": 0.00000490455619685548,
+    "jitterV": 0.43839512147441756,
+    "jitterW": 3.295736047515846,
+    "creepMm": null,
+    "maxSpeed": 1.62232048953108,
+    "maxEnergyRiseJ": 0.22348428452230706,
+    "msPerStep": 0.10408005989571241
+   }
+  },
+  {
+   "id": 234,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S2_cacheOff",
+   "case": "flatFast",
+   "r": {
+    "case": "flatFast",
+    "title": "flat impact at 3 m/s",
+    "firstTouchManifoldMm": -0.000029802322387695312,
+    "firstTouchGeoMm": 0.00008495987333101418,
+    "maxTransientMm": 0.00008495987333101418,
+    "settledMm": 0.00007005871213716652,
+    "settledManifoldMm": 0.0000912696123123169,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 2.9255653504799906e-9,
+    "jitterW": 1.5263735578866e-8,
+    "creepMm": null,
+    "maxSpeed": 3.04087495803833,
+    "maxEnergyRiseJ": 0.000005731726901103684,
+    "msPerStep": 0.11085548437504637
+   }
+  },
+  {
+   "id": 235,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S2_cacheOff",
+   "case": "heelFast",
+   "r": {
+    "case": "heelFast",
+    "title": "heel impact at 3 m/s (15°)",
+    "firstTouchManifoldMm": -0.0006686896085739136,
+    "firstTouchGeoMm": -0.0010814947109388795,
+    "maxTransientMm": 3.2807529797566626,
+    "settledMm": 0.00008312487703721061,
+    "settledManifoldMm": 0.00003725290298461914,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 3.225468122896643e-9,
+    "jitterW": 1.6834541512290904e-8,
+    "creepMm": null,
+    "maxSpeed": 3.04087495803833,
+    "maxEnergyRiseJ": 0.000028904246718752802,
+    "msPerStep": 0.11907625000011042
+   }
+  },
+  {
+   "id": 236,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S2_cacheOff",
+   "key": "upright",
+   "r": {
+    "key": "upright",
+    "turf": 11.284209513172854,
+    "turfRest": 5.000141562149063,
+    "turfRestBody": "foot_R",
+    "rise": 0.05287697212285991,
+    "sep": 2.810754582036065,
+    "self": 0.006008893251419067,
+    "fails": [
+     "1.4a",
+     "1.4b",
+     "1.4f"
+    ],
+    "ms": 0.5485543482143493,
+    "hash": "85867232",
+    "finite": true,
+    "maxSpeed": 3.805131238280026
+   }
+  },
+  {
+   "id": 237,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S2_cacheOff",
+   "key": "leanF",
+   "r": {
+    "key": "leanF",
+    "turf": 14.019264327919057,
+    "turfRest": 4.328576623764347,
+    "turfRestBody": "foot_L",
+    "rise": 1.6526907733258724,
+    "sep": 4.630913600456977,
+    "self": 8.565070107579231,
+    "fails": [
+     "1.2a",
+     "1.2b",
+     "1.3b",
+     "1.4a"
+    ],
+    "ms": 0.6165241999999038,
+    "hash": "7d94e39a",
+    "finite": true,
+    "maxSpeed": 3.642273933010018
+   }
+  },
+  {
+   "id": 238,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S2_cacheOff",
+   "key": "leanB",
+   "r": {
+    "key": "leanB",
+    "turf": 11.798045780362907,
+    "turfRest": 5.970622652119978,
+    "turfRestBody": "foot_L",
+    "rise": 0.08514984700619266,
+    "sep": 2.739143020644207,
+    "self": 0.06292574107646942,
+    "fails": [
+     "1.4a",
+     "1.4b",
+     "1.R"
+    ],
+    "ms": 0.5584970666666691,
+    "hash": "c2cd199e",
+    "finite": true,
+    "maxSpeed": 4.0824456580373525
+   }
+  },
+  {
+   "id": 239,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S2_cacheOff",
+   "key": "leanL",
+   "r": {
+    "key": "leanL",
+    "turf": 12.2874918470723,
+    "turfRest": 3.658287139930966,
+    "turfRestBody": "foot_R",
+    "rise": 0.1833648999632942,
+    "sep": 2.6894695245890126,
+    "self": 0.7796771824359894,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.5913511535714168,
+    "hash": "fe39f8d7",
+    "finite": true,
+    "maxSpeed": 4.890955185172048
+   }
+  },
+  {
+   "id": 240,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S2_cacheOff",
+   "key": "leanR",
+   "r": {
+    "key": "leanR",
+    "turf": 9.124827011730105,
+    "turfRest": 4.993307628922833,
+    "turfRestBody": "foot_L",
+    "rise": 0.21434304091303602,
+    "sep": 1.7765437775897905,
+    "self": 2.048131078481674,
+    "fails": [],
+    "ms": 0.5851916583333756,
+    "hash": "debce4b4",
+    "finite": true,
+    "maxSpeed": 4.896918007224108
+   }
+  },
+  {
+   "id": 241,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S2_cacheOff",
+   "key": "perturb",
+   "r": {
+    "key": "perturb",
+    "turf": 12.648020536655578,
+    "turfRest": 2.199913222575345,
+    "turfRestBody": "foot_L",
+    "rise": 0.16877913097704322,
+    "sep": 3.402673347318133,
+    "self": 1.590874046087265,
+    "fails": [
+     "1.4a",
+     "1.4f"
+    ],
+    "ms": 0.6205863464286484,
+    "hash": "f8ca8f78",
+    "finite": true,
+    "maxSpeed": 4.732037639171161
+   }
+  },
+  {
+   "id": 242,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S2_cacheOff",
+   "key": "singleLeg",
+   "r": {
+    "key": "singleLeg",
+    "turf": 13.60373946252913,
+    "turfRest": 5.002520476925717,
+    "turfRestBody": "foot_R",
+    "rise": 0.039572647971056085,
+    "sep": 2.9752565309994052,
+    "self": 1.5488993376493454,
+    "fails": [
+     "1.4a",
+     "1.4b",
+     "1.4f"
+    ],
+    "ms": 0.6039342035712512,
+    "hash": "8fb8ba9e",
+    "finite": true,
+    "maxSpeed": 4.49153479078253
+   }
+  },
+  {
+   "id": 243,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S2_cacheOff",
+   "key": "dropA",
+   "r": {
+    "key": "dropA",
+    "turf": 11.14601729105108,
+    "turfRest": 8.435492013084703,
+    "turfRestBody": "foot_L",
+    "rise": 0.6572236683531401,
+    "sep": 2.600554458493213,
+    "self": 0.12908689677715302,
+    "fails": [
+     "1.2a",
+     "1.2b",
+     "1.4a",
+     "1.4b"
+    ],
+    "ms": 0.5649482488093694,
+    "hash": "0b32e59a",
+    "finite": true,
+    "maxSpeed": 4.065226810162127
+   }
+  },
+  {
+   "id": 244,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S2_cacheOff",
+   "key": "sideFirst",
+   "r": {
+    "key": "sideFirst",
+    "turf": 15.61691709453049,
+    "turfRest": 14.621949893888985,
+    "turfRestBody": "foot_R",
+    "rise": 0.00342089623210029,
+    "sep": 1.1722993858999198,
+    "self": 0.0442061573266983,
+    "fails": [
+     "1.4a",
+     "1.4b"
+    ],
+    "ms": 0.583658622023731,
+    "hash": "84765d98",
+    "finite": true,
+    "maxSpeed": 4.248163648185842
+   }
+  },
+  {
+   "id": 245,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S2_cacheOff",
+   "key": "awkward",
+   "r": {
+    "key": "awkward",
+    "turf": 15.328537670715015,
+    "turfRest": 3.603089735651356,
+    "turfRestBody": "forearm_R",
+    "rise": 0.08268706071370957,
+    "sep": 2.747984913551928,
+    "self": 0.06375834345817566,
+    "fails": [
+     "1.3b",
+     "1.4a"
+    ],
+    "ms": 0.6158238839286371,
+    "hash": "d4032169",
+    "finite": true,
+    "maxSpeed": 5.775733084015096
+   }
+  },
+  {
+   "id": 246,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S2_cacheOff",
+   "key": "drop1m",
+   "r": {
+    "key": "drop1m",
+    "turf": 13.446937295490082,
+    "turfRest": 1.0391352230476048,
+    "turfRestBody": "foot_R",
+    "rise": 0.000043631228351159734,
+    "sep": 3.040539621940073,
+    "self": 0.18657557666301727,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.6228039333335758,
+    "hash": "8e0e2d88",
+    "finite": true,
+    "maxSpeed": 4.933080729742577
+   }
+  },
+  {
+   "id": 247,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S3_bothOff",
+   "case": "quiet",
+   "r": {
+    "case": "quiet",
+    "title": "quiet loading (flat, 1 mm)",
+    "firstTouchManifoldMm": -0.4890467971563339,
+    "firstTouchGeoMm": 0.000006656646733826932,
+    "maxTransientMm": 0.00003496723786911016,
+    "settledMm": 0,
+    "settledManifoldMm": 0.00006332993507385254,
+    "manifoldsAvg": 4,
+    "pointsAvg": 16,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 2.0002328225972097e-11,
+    "jitterW": 9.415850815464498e-11,
+    "creepMm": 0.0006969759282198735,
+    "maxSpeed": 0.11737984424321284,
+    "maxEnergyRiseJ": 0.00036000243709111146,
+    "msPerStep": 0.12670962239606828
+   }
+  },
+  {
+   "id": 248,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S3_bothOff",
+   "case": "heel",
+   "r": {
+    "case": "heel",
+    "title": "heel contact (15° toe-up, 2 cm drop)",
+    "firstTouchManifoldMm": -0.0003632158041000366,
+    "firstTouchGeoMm": 0.00025494426011962723,
+    "maxTransientMm": 0.7562310767490615,
+    "settledMm": 0.00002525533279729153,
+    "settledManifoldMm": 0.000029802322387695312,
+    "manifoldsAvg": 4,
+    "pointsAvg": 16,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 1.5526913347212226e-10,
+    "jitterW": 7.921134565679552e-11,
+    "creepMm": null,
+    "maxSpeed": 0.5722501277923584,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.1287621536464485
+   }
+  },
+  {
+   "id": 249,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S3_bothOff",
+   "case": "flat",
+   "r": {
+    "case": "flat",
+    "title": "flat contact (2 cm drop)",
+    "firstTouchManifoldMm": 0.00011734664440155029,
+    "firstTouchGeoMm": 0.00005246823486793062,
+    "maxTransientMm": 0.00005246823486793062,
+    "settledMm": 0.00002355582200130879,
+    "settledManifoldMm": 0.000033527612686157227,
+    "manifoldsAvg": 4,
+    "pointsAvg": 16,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 8.317246254299418e-11,
+    "jitterW": 2.631189425912432e-10,
+    "creepMm": null,
+    "maxSpeed": 0.5722501277923584,
+    "maxEnergyRiseJ": 5.823380888614338e-9,
+    "msPerStep": 0.12776445052062022
+   }
+  },
+  {
+   "id": 250,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S3_bothOff",
+   "case": "medialEdge",
+   "r": {
+    "case": "medialEdge",
+    "title": "medial-edge loading (rolled 20°, 2 cm drop)",
+    "firstTouchManifoldMm": -0.0010598450899124146,
+    "firstTouchGeoMm": -0.0029639951448223734,
+    "maxTransientMm": 8.66347300239409,
+    "settledMm": 8.66347300239409,
+    "settledManifoldMm": 8.666297420859337,
+    "manifoldsAvg": 1.8611111111111112,
+    "pointsAvg": 4.597222222222222,
+    "normalStdDeg": 0.003508910338774055,
+    "normalMaxJumpDeg": 0.021362029894894073,
+    "jitterV": 0.44913419579673486,
+    "jitterW": 4.013555339827389,
+    "creepMm": null,
+    "maxSpeed": 1.60989912756507,
+    "maxEnergyRiseJ": 0.1984088921174667,
+    "msPerStep": 0.10931335416709469
+   }
+  },
+  {
+   "id": 251,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S3_bothOff",
+   "case": "lateralEdge",
+   "r": {
+    "case": "lateralEdge",
+    "title": "lateral-edge loading (rolled 20°, 2 cm drop)",
+    "firstTouchManifoldMm": 0.00022351741790771484,
+    "firstTouchGeoMm": -0.0026498589577872433,
+    "maxTransientMm": 6.919130739922674,
+    "settledMm": 6.684617537337255,
+    "settledManifoldMm": 6.684735417366028,
+    "manifoldsAvg": 1.7222222222222223,
+    "pointsAvg": 4.569444444444445,
+    "normalStdDeg": 0.0035188889395845017,
+    "normalMaxJumpDeg": 0.021274095712458283,
+    "jitterV": 0.4718063436792879,
+    "jitterW": 4.0076944713201,
+    "creepMm": null,
+    "maxSpeed": 1.7313347832051782,
+    "maxEnergyRiseJ": 0.12589398727067191,
+    "msPerStep": 0.11923112239636187
+   }
+  },
+  {
+   "id": 252,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S3_bothOff",
+   "case": "toe",
+   "r": {
+    "case": "toe",
+    "title": "toe / forefoot loading (20° toe-down, 2 cm drop)",
+    "firstTouchManifoldMm": -0.001821666955947876,
+    "firstTouchGeoMm": 0.0020930024753340604,
+    "maxTransientMm": 3.8583850442885925,
+    "settledMm": 0.782534097833184,
+    "settledManifoldMm": 0.5118958652019501,
+    "manifoldsAvg": 3.486111111111111,
+    "pointsAvg": 9.51388888888889,
+    "normalStdDeg": 0.0000020398461251977507,
+    "normalMaxJumpDeg": 0.0000056632936810203185,
+    "jitterV": 0.4960289731233345,
+    "jitterW": 3.531989144925922,
+    "creepMm": null,
+    "maxSpeed": 1.6276828364823641,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.12921311718764628
+   }
+  },
+  {
+   "id": 253,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S3_bothOff",
+   "case": "flatFast",
+   "r": {
+    "case": "flatFast",
+    "title": "flat impact at 3 m/s",
+    "firstTouchManifoldMm": -0.0003241002559661865,
+    "firstTouchGeoMm": 0.00003097677500618623,
+    "maxTransientMm": 0.000044803978013763235,
+    "settledMm": 0.000044803978013763235,
+    "settledManifoldMm": 0.0000912696123123169,
+    "manifoldsAvg": 4,
+    "pointsAvg": 16,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 7.849943076674832e-12,
+    "jitterW": 3.640340447178169e-11,
+    "creepMm": null,
+    "maxSpeed": 3.04087495803833,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.14701768229152398
+   }
+  },
+  {
+   "id": 254,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S3_bothOff",
+   "case": "heelFast",
+   "r": {
+    "case": "heelFast",
+    "title": "heel impact at 3 m/s (15°)",
+    "firstTouchManifoldMm": 0.0003557652235031128,
+    "firstTouchGeoMm": -0.001460290851656998,
+    "maxTransientMm": 0.9677368814936665,
+    "settledMm": 0.0000391265680133035,
+    "settledManifoldMm": 0.00005587935447692871,
+    "manifoldsAvg": 4,
+    "pointsAvg": 16,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 1.5752990956224727e-10,
+    "jitterW": 1.9968647335443393e-10,
+    "creepMm": null,
+    "maxSpeed": 3.04087495803833,
+    "maxEnergyRiseJ": 1.5333512237702962e-11,
+    "msPerStep": 0.14731433333315636
+   }
+  },
+  {
+   "id": 255,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S3_bothOff",
+   "key": "upright",
+   "r": {
+    "key": "upright",
+    "turf": 5.762002214039663,
+    "turfRest": 2.90713147238357,
+    "turfRestBody": "foot_R",
+    "rise": 0.01689139801692363,
+    "sep": 1.4484461139442413,
+    "self": 0.08292682468891144,
+    "fails": [
+     "1.3d",
+     "1.4f"
+    ],
+    "ms": 0.6554679547618434,
+    "hash": "9348be63",
+    "finite": true,
+    "maxSpeed": 4.3239130668193155
+   }
+  },
+  {
+   "id": 256,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S3_bothOff",
+   "key": "leanF",
+   "r": {
+    "key": "leanF",
+    "turf": 6.496702230591289,
+    "turfRest": 0.1681899763166378,
+    "turfRestBody": "thigh_R",
+    "rise": 0.3695552413051928,
+    "sep": 1.415127256788422,
+    "self": 0.5424041301012039,
+    "fails": [
+     "1.2b"
+    ],
+    "ms": 0.7186695166665058,
+    "hash": "fe3ca16f",
+    "finite": true,
+    "maxSpeed": 3.6222481360899526
+   }
+  },
+  {
+   "id": 257,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S3_bothOff",
+   "key": "leanB",
+   "r": {
+    "key": "leanB",
+    "turf": 1.514313723224192,
+    "turfRest": 0.09922934938225159,
+    "turfRestBody": "thorax",
+    "rise": 0.06884781573910459,
+    "sep": 1.323857233327456,
+    "self": 0.01671724021434784,
+    "fails": [],
+    "ms": 0.7413009470239211,
+    "hash": "90bd02a6",
+    "finite": true,
+    "maxSpeed": 4.081950630694513
+   }
+  },
+  {
+   "id": 258,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S3_bothOff",
+   "key": "leanL",
+   "r": {
+    "key": "leanL",
+    "turf": 7.262736663033106,
+    "turfRest": 0.21816367419112692,
+    "turfRestBody": "foot_R",
+    "rise": 0.000004620513394115733,
+    "sep": 1.1550464989129252,
+    "self": 0.6225127726793289,
+    "fails": [],
+    "ms": 0.6350967327383149,
+    "hash": "12374cd8",
+    "finite": true,
+    "maxSpeed": 4.861829178960482
+   }
+  },
+  {
+   "id": 259,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S3_bothOff",
+   "key": "leanR",
+   "r": {
+    "key": "leanR",
+    "turf": 12.683447432448036,
+    "turfRest": 1.2065521661198328,
+    "turfRestBody": "forearm_R",
+    "rise": 0.00010790371592861447,
+    "sep": 1.1518803240626228,
+    "self": 0.6230920553207397,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.6447408273807533,
+    "hash": "618c1cfe",
+    "finite": true,
+    "maxSpeed": 4.895506873180154
+   }
+  },
+  {
+   "id": 260,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S3_bothOff",
+   "key": "perturb",
+   "r": {
+    "key": "perturb",
+    "turf": 10.55224959968197,
+    "turfRest": 0.18682615491455445,
+    "turfRestBody": "forearm_L",
+    "rise": 0.9249268572382334,
+    "sep": 1.3743757919332398,
+    "self": 6.685085594654083,
+    "fails": [
+     "1.2a",
+     "1.2b",
+     "1.4a",
+     "1.4f"
+    ],
+    "ms": 0.7124500696426843,
+    "hash": "0247492c",
+    "finite": true,
+    "maxSpeed": 4.729785475534781
+   }
+  },
+  {
+   "id": 261,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S3_bothOff",
+   "key": "singleLeg",
+   "r": {
+    "key": "singleLeg",
+    "turf": 7.895319891857974,
+    "turfRest": 2.8095825056829034,
+    "turfRestBody": "foot_R",
+    "rise": 6.315499234688104e-7,
+    "sep": 2.037872219275559,
+    "self": 2.1684039384126663,
+    "fails": [
+     "1.3b",
+     "1.4f"
+    ],
+    "ms": 0.6818609720234236,
+    "hash": "faba767c",
+    "finite": true,
+    "maxSpeed": 4.476743848641168
+   }
+  },
+  {
+   "id": 262,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S3_bothOff",
+   "key": "dropA",
+   "r": {
+    "key": "dropA",
+    "turf": 9.846852353841834,
+    "turfRest": 9.846852353841834,
+    "turfRestBody": "foot_L",
+    "rise": 0.7139753806599174,
+    "sep": 1.7410007267088308,
+    "self": 0,
+    "fails": [
+     "1.2a",
+     "1.2b",
+     "1.3c",
+     "1.4b",
+     "1.R"
+    ],
+    "ms": 0.6983995744043742,
+    "hash": "80138e27",
+    "finite": true,
+    "maxSpeed": 4.070619265401358
+   }
+  },
+  {
+   "id": 263,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S3_bothOff",
+   "key": "sideFirst",
+   "r": {
+    "key": "sideFirst",
+    "turf": 0.4363371354231538,
+    "turfRest": 0.06874753922025967,
+    "turfRestBody": "foot_L",
+    "rise": 0,
+    "sep": 0.7663604215043349,
+    "self": 0.04357099533081055,
+    "fails": [
+     "1.R"
+    ],
+    "ms": 0.6812374440474828,
+    "hash": "5417f1c4",
+    "finite": true,
+    "maxSpeed": 4.253273454516208
+   }
+  },
+  {
+   "id": 264,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S3_bothOff",
+   "key": "awkward",
+   "r": {
+    "key": "awkward",
+    "turf": 6.830199746059473,
+    "turfRest": 1.528440718123067,
+    "turfRestBody": "forearm_R",
+    "rise": 0.0000292605897982412,
+    "sep": 2.3955309622511196,
+    "self": 0.1323297619819641,
+    "fails": [],
+    "ms": 0.7286703559528784,
+    "hash": "b18e6aa2",
+    "finite": true,
+    "maxSpeed": 5.6923802085716995
+   }
+  },
+  {
+   "id": 265,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S3_bothOff",
+   "key": "drop1m",
+   "r": {
+    "key": "drop1m",
+    "turf": 2.054666173862796,
+    "turfRest": 1.3235397818552423,
+    "turfRestBody": "forearm_R",
+    "rise": 0.0000031872383914333113,
+    "sep": 2.9766766940906257,
+    "self": 0.27178414165973663,
+    "fails": [],
+    "ms": 0.6776659619043044,
+    "hash": "f7e39b95",
+    "finite": true,
+    "maxSpeed": 4.981287390585014
+   }
+  },
+  {
+   "id": 266,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S4_edgeRemoval",
+   "case": "quiet",
+   "r": {
+    "case": "quiet",
+    "title": "quiet loading (flat, 1 mm)",
+    "firstTouchManifoldMm": -0.48911571502685547,
+    "firstTouchGeoMm": 0.000006656646733826932,
+    "maxTransientMm": 0.000006656646733826932,
+    "settledMm": 0.000006656646733826932,
+    "settledManifoldMm": 1.5258107404704144e-15,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 9.86671090748811e-10,
+    "jitterW": 5.11255652463197e-9,
+    "creepMm": 0.00008998875369200747,
+    "maxSpeed": 0.11738059669759388,
+    "maxEnergyRiseJ": 1.0668117056411575e-8,
+    "msPerStep": 0.08045429687543522
+   }
+  },
+  {
+   "id": 267,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S4_edgeRemoval",
+   "case": "heel",
+   "r": {
+    "case": "heel",
+    "title": "heel contact (15° toe-up, 2 cm drop)",
+    "firstTouchManifoldMm": 0.0003241002559661865,
+    "firstTouchGeoMm": 0.00026048039035442283,
+    "maxTransientMm": 4.474535506377331,
+    "settledMm": 1.4953599752419584,
+    "settledManifoldMm": 1.495361328125,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 8.537736462515945e-7,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 0.0000036534733843641067,
+    "jitterW": 0.000018488748966237753,
+    "creepMm": null,
+    "maxSpeed": 0.5722501277923584,
+    "maxEnergyRiseJ": 0.000007616856805725547,
+    "msPerStep": 0.10040340625005229
+   }
+  },
+  {
+   "id": 268,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S4_edgeRemoval",
+   "case": "flat",
+   "r": {
+    "case": "flat",
+    "title": "flat contact (2 cm drop)",
+    "firstTouchManifoldMm": 0.00006891787052154541,
+    "firstTouchGeoMm": 0.000036458969121522244,
+    "maxTransientMm": 0.000036458969121522244,
+    "settledMm": 0.000036458969121522244,
+    "settledManifoldMm": 3.3983915169498497e-15,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 6.843424208484782e-10,
+    "jitterW": 3.5031884545607497e-9,
+    "creepMm": null,
+    "maxSpeed": 0.5722501277923584,
+    "maxEnergyRiseJ": 0,
+    "msPerStep": 0.07719002864594889
+   }
+  },
+  {
+   "id": 269,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S4_edgeRemoval",
+   "case": "medialEdge",
+   "r": {
+    "case": "medialEdge",
+    "title": "medial-edge loading (rolled 20°, 2 cm drop)",
+    "firstTouchManifoldMm": -0.002378597855567932,
+    "firstTouchGeoMm": -0.002436816365525285,
+    "maxTransientMm": 12.604129173358237,
+    "settledMm": 12.604129173358237,
+    "settledManifoldMm": 12.560881674289703,
+    "manifoldsAvg": 1,
+    "pointsAvg": 3.3055555555555554,
+    "normalStdDeg": 0.23314093097423855,
+    "normalMaxJumpDeg": 0.7502864916112246,
+    "jitterV": 0.4285651659992783,
+    "jitterW": 4.2399410811466485,
+    "creepMm": null,
+    "maxSpeed": 1.7897644001055049,
+    "maxEnergyRiseJ": 0.3932788451812961,
+    "msPerStep": 0.12227821354167645
+   }
+  },
+  {
+   "id": 270,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S4_edgeRemoval",
+   "case": "lateralEdge",
+   "r": {
+    "case": "lateralEdge",
+    "title": "lateral-edge loading (rolled 20°, 2 cm drop)",
+    "firstTouchManifoldMm": -0.0002644956111907959,
+    "firstTouchGeoMm": -0.0027151539587488838,
+    "maxTransientMm": 9.255064353155582,
+    "settledMm": 9.255064353155582,
+    "settledManifoldMm": 9.253287687897682,
+    "manifoldsAvg": 1.0138888888888888,
+    "pointsAvg": 2.888888888888889,
+    "normalStdDeg": 10.54125349618697,
+    "normalMaxJumpDeg": 89.7710768413829,
+    "jitterV": 0.44836180440536555,
+    "jitterW": 3.978384044554217,
+    "creepMm": null,
+    "maxSpeed": 1.752082192365917,
+    "maxEnergyRiseJ": 0.2441501680116076,
+    "msPerStep": 0.11469878645918168
+   }
+  },
+  {
+   "id": 271,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S4_edgeRemoval",
+   "case": "toe",
+   "r": {
+    "case": "toe",
+    "title": "toe / forefoot loading (20° toe-down, 2 cm drop)",
+    "firstTouchManifoldMm": 0.00023469328880310059,
+    "firstTouchGeoMm": 2.2860623936123425,
+    "maxTransientMm": 10.587701114496202,
+    "settledMm": 8.662889836561286,
+    "settledManifoldMm": 8.66282731294632,
+    "manifoldsAvg": 1,
+    "pointsAvg": 3.9444444444444446,
+    "normalStdDeg": 0.1258734179212026,
+    "normalMaxJumpDeg": 0.6193484667062056,
+    "jitterV": 0.4384552153161996,
+    "jitterW": 3.296243479860494,
+    "creepMm": null,
+    "maxSpeed": 1.62232048953108,
+    "maxEnergyRiseJ": 0.22348428452230706,
+    "msPerStep": 0.1256625546880817
+   }
+  },
+  {
+   "id": 272,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S4_edgeRemoval",
+   "case": "flatFast",
+   "r": {
+    "case": "flatFast",
+    "title": "flat impact at 3 m/s",
+    "firstTouchManifoldMm": -0.000029802322387695312,
+    "firstTouchGeoMm": 0.00008495987333101418,
+    "maxTransientMm": 0.00011476219571870949,
+    "settledMm": 0.00011476219571870949,
+    "settledManifoldMm": 3.087323962019245e-11,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 0.000013376437562466229,
+    "jitterW": 0.00006966950622491453,
+    "creepMm": null,
+    "maxSpeed": 3.04087495803833,
+    "maxEnergyRiseJ": 5.735216745961225e-10,
+    "msPerStep": 0.08588973697821227
+   }
+  },
+  {
+   "id": 273,
+   "kind": "rig",
+   "rep": "R3_split4",
+   "set": "S4_edgeRemoval",
+   "case": "heelFast",
+   "r": {
+    "case": "heelFast",
+    "title": "heel impact at 3 m/s (15°)",
+    "firstTouchManifoldMm": -0.0006686896085739136,
+    "firstTouchGeoMm": -0.0010814947109388795,
+    "maxTransientMm": 3.2654115628939357,
+    "settledMm": 1.3239772649767945,
+    "settledManifoldMm": 1.3239424442872405,
+    "manifoldsAvg": 1,
+    "pointsAvg": 4,
+    "normalStdDeg": 0,
+    "normalMaxJumpDeg": 0,
+    "jitterV": 1.0399355492256207e-9,
+    "jitterW": 5.430474212629371e-9,
+    "creepMm": null,
+    "maxSpeed": 3.04087495803833,
+    "maxEnergyRiseJ": 0.000011520693419697636,
+    "msPerStep": 0.08940822135408173
+   }
+  },
+  {
+   "id": 274,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S4_edgeRemoval",
+   "key": "upright",
+   "r": {
+    "key": "upright",
+    "turf": 10.571206434055666,
+    "turfRest": 3.1245443668729695,
+    "turfRestBody": "foot_R",
+    "rise": 0.01635754220922081,
+    "sep": 3.0173649153285274,
+    "self": 1.523078652098775,
+    "fails": [
+     "1.4a",
+     "1.4f"
+    ],
+    "ms": 0.5948918166667032,
+    "hash": "3166c0c1",
+    "finite": true,
+    "maxSpeed": 4.370373099382708
+   }
+  },
+  {
+   "id": 275,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S4_edgeRemoval",
+   "key": "leanF",
+   "r": {
+    "key": "leanF",
+    "turf": 12.508824885574796,
+    "turfRest": 4.915597948528417,
+    "turfRestBody": "foot_L",
+    "rise": 4.053149378346916,
+    "sep": 4.141318377756494,
+    "self": 5.688026547431946,
+    "fails": [
+     "1.2a",
+     "1.2b",
+     "1.3b",
+     "1.3d",
+     "1.4a"
+    ],
+    "ms": 0.6657643321421001,
+    "hash": "77dbfc74",
+    "finite": true,
+    "maxSpeed": 3.6645028505285953
+   }
+  },
+  {
+   "id": 276,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S4_edgeRemoval",
+   "key": "leanB",
+   "r": {
+    "key": "leanB",
+    "turf": 13.105876530625892,
+    "turfRest": 11.286849542878507,
+    "turfRestBody": "foot_R",
+    "rise": 0.09343965128695686,
+    "sep": 3.4520488092592148,
+    "self": 0.19209273159503937,
+    "fails": [
+     "1.3c",
+     "1.4a",
+     "1.4b",
+     "1.R"
+    ],
+    "ms": 0.6007704785719225,
+    "hash": "0cafe416",
+    "finite": true,
+    "maxSpeed": 4.088880674466492
+   }
+  },
+  {
+   "id": 277,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S4_edgeRemoval",
+   "key": "leanL",
+   "r": {
+    "key": "leanL",
+    "turf": 13.375597670623392,
+    "turfRest": 4.966609340159412,
+    "turfRestBody": "foot_R",
+    "rise": 0.1016346470202052,
+    "sep": 4.495930169473909,
+    "self": 0.7847158121876419,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.5947011845241442,
+    "hash": "0fcd29b2",
+    "finite": true,
+    "maxSpeed": 4.882917749341176
+   }
+  },
+  {
+   "id": 278,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S4_edgeRemoval",
+   "key": "leanR",
+   "r": {
+    "key": "leanR",
+    "turf": 12.750028987754819,
+    "turfRest": 0.5453155368292661,
+    "turfRestBody": "foot_R",
+    "rise": 0.20932841510602884,
+    "sep": 4.085734648197287,
+    "self": 1.3120099902153015,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.6019378500006236,
+    "hash": "54e007ee",
+    "finite": true,
+    "maxSpeed": 4.875414140261378
+   }
+  },
+  {
+   "id": 279,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S4_edgeRemoval",
+   "key": "perturb",
+   "r": {
+    "key": "perturb",
+    "turf": 11.095508175221674,
+    "turfRest": 1.238482040258948,
+    "turfRestBody": "foot_L",
+    "rise": 0.07822830852740026,
+    "sep": 2.432959652256128,
+    "self": 1.5423167496919632,
+    "fails": [
+     "1.4a",
+     "1.4f"
+    ],
+    "ms": 0.6213374761904561,
+    "hash": "6fce1e5a",
+    "finite": true,
+    "maxSpeed": 4.728649209973072
+   }
+  },
+  {
+   "id": 280,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S4_edgeRemoval",
+   "key": "singleLeg",
+   "r": {
+    "key": "singleLeg",
+    "turf": 14.029263990877158,
+    "turfRest": 6.18917134802717,
+    "turfRestBody": "foot_R",
+    "rise": 0.04645711084144466,
+    "sep": 4.012126540206077,
+    "self": 1.9793827086687088,
+    "fails": [
+     "1.4a",
+     "1.4b",
+     "1.4f"
+    ],
+    "ms": 0.5836867797619475,
+    "hash": "1df4b416",
+    "finite": true,
+    "maxSpeed": 4.495025250332734
+   }
+  },
+  {
+   "id": 281,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S4_edgeRemoval",
+   "key": "dropA",
+   "r": {
+    "key": "dropA",
+    "turf": 13.495921576861718,
+    "turfRest": 4.9890170646906675,
+    "turfRestBody": "foot_L",
+    "rise": 0.6581476301226985,
+    "sep": 2.8057468504661602,
+    "self": 2.281883964315057,
+    "fails": [
+     "1.2a",
+     "1.2b",
+     "1.4a"
+    ],
+    "ms": 0.5537339369046614,
+    "hash": "1af10f02",
+    "finite": true,
+    "maxSpeed": 4.06460828103461
+   }
+  },
+  {
+   "id": 282,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S4_edgeRemoval",
+   "key": "sideFirst",
+   "r": {
+    "key": "sideFirst",
+    "turf": 17.831646370645284,
+    "turfRest": 12.96439487615747,
+    "turfRestBody": "foot_R",
+    "rise": 0.012653984209805458,
+    "sep": 1.415078782071926,
+    "self": 0.04443712532520294,
+    "fails": [
+     "1.4a",
+     "1.4b",
+     "1.R"
+    ],
+    "ms": 0.49093119940414565,
+    "hash": "6d2042b7",
+    "finite": true,
+    "maxSpeed": 4.245715744954746
+   }
+  },
+  {
+   "id": 283,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S4_edgeRemoval",
+   "key": "awkward",
+   "r": {
+    "key": "awkward",
+    "turf": 15.326110294280687,
+    "turfRest": 3.682862367515305,
+    "turfRestBody": "foot_L",
+    "rise": 0.09824984309523188,
+    "sep": 2.7447672784179367,
+    "self": 4.4700149446725845,
+    "fails": [
+     "1.3b",
+     "1.3d",
+     "1.4a"
+    ],
+    "ms": 0.5433210232145073,
+    "hash": "40e38dfc",
+    "finite": true,
+    "maxSpeed": 5.777211423581779
+   }
+  },
+  {
+   "id": 284,
+   "kind": "fall",
+   "rep": "R3_split4",
+   "set": "S4_edgeRemoval",
+   "key": "drop1m",
+   "r": {
+    "key": "drop1m",
+    "turf": 13.443745513049137,
+    "turfRest": 1.0574940302472136,
+    "turfRestBody": "foot_R",
+    "rise": 6.697928256471641e-7,
+    "sep": 3.040539621940073,
+    "self": 0.5699787870980799,
+    "fails": [
+     "1.4a"
+    ],
+    "ms": 0.5268152547620827,
+    "hash": "ce80ac97",
+    "finite": true,
+    "maxSpeed": 4.933081921517642
+   }
+  }
+ ]
+}

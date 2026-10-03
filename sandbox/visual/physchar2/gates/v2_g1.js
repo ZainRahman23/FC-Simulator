@@ -8,7 +8,7 @@ import { V2JoltWorld } from "../core/v2_jolt.js";
 import { POSES, posedBodies } from "../spec/v2_pose.js";
 import { decompose } from "../spec/v2_joints.js";
 import { PassiveLayer } from "../sim/v2_passive.js";
-import { bodyLowest, lowestOf, bootSole, hull2, insideDist } from "../sim/v2_geom.js";
+import { bodyLowest, lowestOf, bootSole, hull2, insideDist, shapePenetration } from "../sim/v2_geom.js";
 
 // ── world configuration (spec §19 / §15.4; solver iterations are chosen by the 1.5 study) ─────────────────────────────────────────────
 // G1 decision C1 (2026-10-03): 60 velocity iterations is the validated V2 baseline (removes the warm-start impact injection measured at
@@ -29,42 +29,67 @@ const QS = POSES.quietStance.angles, NEUTRAL = POSES.neutral.angles;
 // total COM (m/s, rad/s) unless vfield is given; gravity 0 + lift 2 m = isolated (no turf contact possible).
 export const SCENARIOS = {
   upright: { group: "release", title: "Quiet upright release", note: "Quiet stance (knees 10°, hips 5°, ankles 5° DF, arms 6° abducted) with both boots on the turf, released from rest. Passive: the legs must buckle and the body collapse under gravity alone.",
-    pose: QS, lift: 0.0005, seconds: 7 },
-  leanF: { group: "release", title: "Forward lean 5°", note: "Quiet stance tilted 5° forward about the ankle line, boots on the turf, released from rest.", pose: QS, rot: Rx(5), pivot: "ankles", lift: 0.0005, seconds: 7 },
-  leanB: { group: "release", title: "Backward lean 5°", note: "Quiet stance tilted 5° backward about the ankle line.", pose: QS, rot: Rx(-5), pivot: "ankles", lift: 0.0005, seconds: 7 },
-  leanL: { group: "release", title: "Lateral lean 5° left", note: "Quiet stance tilted 5° to the character's LEFT about the AP axis through the mid-ankle point. Mirror of leanR.", pose: QS, rot: Rz(5), pivot: "ankles", lift: 0.0005, seconds: 7, mirrorOf: "leanR" },
-  leanR: { group: "release", title: "Lateral lean 5° right", note: "Quiet stance tilted 5° to the character's RIGHT. Mirror of leanL.", pose: QS, rot: Rz(-5), pivot: "ankles", lift: 0.0005, seconds: 7, mirrorOf: "leanL" },
-  perturb: { group: "release", title: "Angular perturbation", note: "Quiet stance on the turf with a modest whole-body angular velocity (0.6, 0.4, −0.5) rad/s about the COM.", pose: QS, lift: 0.0005, w: [0.6, 0.4, -0.5], seconds: 7 },
-  singleLeg: { group: "release", title: "Single-support release", note: "Single-leg stance (left boot on the turf, right hip 30° / knee 60° flexed), released from rest.", pose: POSES.singleLeg.angles, lift: 0.0005, seconds: 7 },
+    pose: QS, lift: 0.0005, seconds: 10 },
+  leanF: { group: "release", title: "Forward lean 5°", note: "Quiet stance tilted 5° forward about the ankle line, boots on the turf, released from rest.", pose: QS, rot: Rx(5), pivot: "ankles", lift: 0.0005, seconds: 10 },
+  leanB: { group: "release", title: "Backward lean 5°", note: "Quiet stance tilted 5° backward about the ankle line.", pose: QS, rot: Rx(-5), pivot: "ankles", lift: 0.0005, seconds: 10 },
+  leanL: { group: "release", title: "Lateral lean 5° left", note: "Quiet stance tilted 5° to the character's LEFT about the AP axis through the mid-ankle point. Mirror of leanR.", pose: QS, rot: Rz(5), pivot: "ankles", lift: 0.0005, seconds: 10, mirrorOf: "leanR" },
+  leanR: { group: "release", title: "Lateral lean 5° right", note: "Quiet stance tilted 5° to the character's RIGHT. Mirror of leanL.", pose: QS, rot: Rz(-5), pivot: "ankles", lift: 0.0005, seconds: 10, mirrorOf: "leanL" },
+  perturb: { group: "release", title: "Angular perturbation", note: "Quiet stance on the turf with a modest whole-body angular velocity (0.6, 0.4, −0.5) rad/s about the COM.", pose: QS, lift: 0.0005, w: [0.6, 0.4, -0.5], seconds: 10 },
+  singleLeg: { group: "release", title: "Single-support release", note: "Single-leg stance (left boot on the turf, right hip 30° / knee 60° flexed), released from rest.", pose: POSES.singleLeg.angles, lift: 0.0005, seconds: 10 },
   dropA: { group: "V1 Gate A", v1: "A", title: "Relaxed upright drop 3 cm (V1 Gate A · A)", note: "V1 A re-authored in V2 anatomical angles: standing, joints slightly relaxed (knees 4°, elbows 12°, shoulders 8° abducted, hips 4° flexed), 3 cm above the turf, released from rest.",
-    pose: { ...both({ knee: { flex: 4 }, elbow: { flex: 12 }, shoulder: { abd: 8 }, hip: { flex: 4 } }) }, lift: 0.03, seconds: 7 },
+    pose: { ...both({ knee: { flex: 4 }, elbow: { flex: 12 }, shoulder: { abd: 8 }, hip: { flex: 4 } }) }, lift: 0.03, seconds: 10 },
   sideFirst: { group: "V1 Gate A", v1: "B", title: "Hip / side-first fall (V1 Gate A · B)", note: "V1 B re-authored: rolled 92° onto the right side, trunk bent up away from the turf, right arm 170° abducted (10° inside its limit), legs lightly flexed; 20 cm up, 0.5 m/s down.",
     pose: { lumbar: { lat: -20 }, thoracic: { lat: -15 }, hip_R: { flex: 25, abd: 10 }, knee_R: { flex: 35 }, hip_L: { flex: 60, abd: 15 }, knee_L: { flex: 70 },
-      shoulder_R: { abd: 170 }, elbow_R: { flex: 70 }, shoulder_L: { flex: 40, abd: 20 }, elbow_L: { flex: 40 } }, rot: Rz(-92), pivot: "com", lift: 0.20, v: [0, -0.5, 0], seconds: 7 },
+      shoulder_R: { abd: 170 }, elbow_R: { flex: 70 }, shoulder_L: { flex: 40, abd: 20 }, elbow_L: { flex: 40 } }, rot: Rz(-92), pivot: "com", lift: 0.20, v: [0, -0.5, 0], seconds: 10 },
   shoulderFirst: { group: "V1 Gate A", v1: "C", title: "Shoulder / upper-body-first fall (V1 Gate A · C)", note: "V1 C re-authored: pitched 70° forward and rolled 35° right with a bend at the hips so the right shoulder / arm meets the turf first; right arm forward, left arm back; 30 cm up, (0, −0.3, 0.4) m/s.",
     pose: { hip_L: { flex: 30 }, hip_R: { flex: 20 }, knee_L: { flex: 15 }, knee_R: { flex: 30 }, shoulder_R: { flex: 60, abd: 10 }, elbow_R: { flex: 20 }, shoulder_L: { flex: -35, abd: 15 }, elbow_L: { flex: 60 },
-      lumbar: { flex: 10 }, neck: { flex: -15 } }, rot: mul(Rz(-35), Rx(70)), pivot: "com", lift: 0.30, v: [0, -0.3, 0.4], seconds: 7 },
+      lumbar: { flex: 10 }, neck: { flex: -15 } }, rot: mul(Rz(-35), Rx(70)), pivot: "com", lift: 0.30, v: [0, -0.3, 0.4], seconds: 10 },
   rotating: { group: "V1 Gate A", v1: "D", title: "Rotating fall (V1 Gate A · D)", note: "V1 D re-authored: nearly upright (15° back), boots 2 cm above the turf, initial tumble + yaw ω = (1.5, 2.0, −2.5) rad/s and a drift of (1.2, 0, 0.6) m/s.",
-    pose: { knee_L: { flex: 10 }, knee_R: { flex: 25 }, elbow_L: { flex: 30 }, elbow_R: { flex: 15 }, shoulder_R: { abd: 25 }, shoulder_L: { abd: 10, flex: 20 } }, rot: Rx(-15), pivot: "com", lift: 0.02, v: [1.2, 0, 0.6], w: [1.5, 2.0, -2.5], seconds: 7 },
+    pose: { knee_L: { flex: 10 }, knee_R: { flex: 25 }, elbow_L: { flex: 30 }, elbow_R: { flex: 15 }, shoulder_R: { abd: 25 }, shoulder_L: { abd: 10, flex: 20 } }, rot: Rx(-15), pivot: "com", lift: 0.02, v: [1.2, 0, 0.6], w: [1.5, 2.0, -2.5], seconds: 10 },
   awkward: { group: "V1 Gate A", v1: "E", title: "Awkward asymmetric fall (V1 Gate A · E)", note: "V1 E re-authored: root turned 30° / pitched 25° / rolled −35°; right leg flexed-abducted-rotated, left extended; arms in opposite configurations; spine twisted and bent; 40 cm up with a small tumble.",
     pose: { hip_R: { flex: 70, abd: 20, rot: 15 }, hip_L: { flex: -15, abd: 10, rot: -20 }, knee_R: { flex: 90 }, knee_L: { flex: 20 }, ankle_R: { df: 15 }, ankle_L: { df: -10 },
       lumbar: { rot: 5, lat: -10, flex: 15 }, thoracic: { rot: 15 }, neck: { rot: 30, flex: 10 }, shoulder_R: { flex: 110, abd: 20, rot: 30 }, shoulder_L: { flex: -20, abd: 60, rot: -20 }, elbow_R: { flex: 80 }, elbow_L: { flex: 30 } },
-    rot: mul(Ry(30), Rx(25), Rz(-35)), pivot: "com", lift: 0.40, v: [0.3, -0.5, 0.2], w: [0.5, -0.8, 0.3], seconds: 7 },
+    rot: mul(Ry(30), Rx(25), Rz(-35)), pivot: "com", lift: 0.40, v: [0.3, -0.5, 0.2], w: [0.5, -0.8, 0.3], seconds: 10 },
   flatSupine: { group: "impact", title: "Flat supine drop 0.5 m with roll", note: "Lying supine (face up), arms 6° abducted, horizontal, 0.5 m above the turf, rolling 2 rad/s about the long axis: flat back impact, then a supine roll.",
-    pose: NEUTRAL, rot: Rx(-90), pivot: "com", lift: 0.5, w: [0, 0, 2], seconds: 7 },
-  drop1m: { group: "impact", title: "Feet-first drop 1.0 m", note: "Quiet stance released with the boots 1.0 m above the turf (touchdown at 4.4 m/s): knees, ankles and hips are driven into their end range under impact.", pose: QS, lift: 1.0, seconds: 7 },
-  impact15: { group: "impact", title: "15 m/s body into the turf", note: "Prone (face down), horizontal, 10 cm above the turf, every body moving at 15 m/s downward: tunnelling / first-touch test (spec 1.4).", pose: NEUTRAL, rot: Rx(90), pivot: "com", lift: 0.10, v: [0, -15, 0], seconds: 2 },
+    pose: NEUTRAL, rot: Rx(-90), pivot: "com", lift: 0.5, w: [0, 0, 2], seconds: 10 },
+  drop1m: { group: "impact", title: "Feet-first drop 1.0 m", note: "Quiet stance released with the boots 1.0 m above the turf (touchdown at 4.4 m/s): knees, ankles and hips are driven into their end range under impact.", pose: QS, lift: 1.0, seconds: 10 },
+  impact15: { group: "impact", extreme: true, title: "15 m/s body into the turf (EXTREME penetration test; C7)", note: "Prone (face down), horizontal, 10 cm above the turf, every body moving at 15 m/s downward: tunnelling / first-touch test (spec 1.4).", pose: NEUTRAL, rot: Rx(90), pivot: "com", lift: 0.10, v: [0, -15, 0], seconds: 6 },
   isoMomentum: { group: "isolated", title: "Isolated: end-range release + tumble (no gravity, no contact)", note: "Gravity off, 2 m above the turf. Many joints start beyond their soft limits (knees / elbows −3° hyperextended, hips 45° abducted, shoulders 175° abducted, ankles 55° PF, lumbar 28° extended, neck 65° extended, thoracic 38° rotated) with a whole-body tumble: internal passive motion only. Momentum and energy accounting (spec 1.1).",
     pose: { ...both({ knee: { flex: -3 }, elbow: { flex: -3 }, hip: { abd: 45 }, shoulder: { abd: 175 }, ankle: { df: -55 } }), lumbar: { flex: -28 }, neck: { flex: -65 }, thoracic: { rot: 38 } },
     lift: 2.0, gravity: 0, v: [0.3, 0, -0.2], w: [0.8, -0.5, 0.6], seconds: 2 },
   isoSelfCol: { group: "isolated", title: "Isolated: self-collision at football speed (no gravity)", note: "Gravity off, 2 m up. The right leg swings across into the left leg at 15 rad/s about the right hip (boot ≈ 13 m/s) and the right arm swings into the trunk at 8 rad/s about the shoulder: non-adjacent self-contacts must occur, stop the limbs and conserve momentum.",
-    pose: NEUTRAL, lift: 2.0, gravity: 0, seconds: 2,
+    pose: NEUTRAL, lift: 2.0, gravity: 0, seconds: 2, trackLegs: true,
     vfield: (spec, S, at) => { const leg = ["thigh_R", "shank_R", "foot_R"], arm = ["upperArm_R", "forearm_R"];
       const pH = at("hip_R"), pS = at("shoulder_R"), wl = [0, 0, -15], wa = [0, 0, -8];
       return spec.bodies.map((b, i) => { const c = V.add(S[i].pos, Q.rot(S[i].rot, b.comLocal));
         if (leg.includes(b.name)) return { v: V.cross(wl, V.sub(c, pH)), w: wl.slice() }; if (arm.includes(b.name)) return { v: V.cross(wa, V.sub(c, pS)), w: wa.slice() }; return { v: [0, 0, 0], w: [0, 0, 0] }; }); } },
 };
-export const SCENARIO_ORDER = Object.keys(SCENARIOS);
+// ── C7 (2026-10-03): the credible football-player HIGH-SPEED ENVELOPE (separate from the gate's extreme impact15). Speeds from football
+// motion (recalled literature): match sprint peaks ≈ 9–10 m/s; instep-kick foot speed ≈ 18–24 m/s at ball contact (shank ≈ 40 rad/s);
+// falls: vertical trunk / head impact ≤ ≈ 6 m/s (free fall from standing height 5.6 m/s), sliding / diving at sprint speed ≈ 9 m/s
+// horizontal; jump landings ≤ ≈ 5.4 m/s (1.5 m). Requirement per test: no tunnelling, no missed collision, no catastrophic constraint failure;
+// penetration is REPORTED, not banded. The ball is a separate future contact path (CCD), not tested here.
+const legSwing = (w, extra = {}) => (spec, S, at) => { const leg = ["thigh_R", "shank_R", "foot_R"], pH = at("hip_R");
+  return spec.bodies.map((b, i) => { const c = V.add(S[i].pos, Q.rot(S[i].rot, b.comLocal)); return leg.includes(b.name) ? { v: V.cross(w, V.sub(c, pH)), w: w.slice() } : { v: [0, 0, 0], w: [0, 0, 0] }; }); };
+const footAt = (spec, S, name) => { const i = spec.bodies.findIndex(b => b.name === name); return V.add(S[i].pos, Q.rot(S[i].rot, spec.bodies[i].comLocal)); };
+Object.assign(SCENARIOS, {
+  hsDive: { group: "envelope", title: "Envelope: diving fall at sprint speed (9 m/s forward, 2 m/s down)", note: "Prone, arms forward, 0.35 m up, (0, −2, 9) m/s: chest / arms slide onto the turf at sprint speed.",
+    pose: { ...both({ shoulder: { flex: 150 } }) }, rot: Rx(90), pivot: "com", lift: 0.35, v: [0, -2, 9], seconds: 3 },
+  hsSide: { group: "envelope", title: "Envelope: sideways fall at 8 m/s (3 m/s down)", note: "Lying on the right side 0.5 m up, (8, −3, 0) m/s.", pose: NEUTRAL, rot: Rz(-90), pivot: "com", lift: 0.5, v: [8, -3, 0], seconds: 3 },
+  hsHeadFirst: { group: "envelope", title: "Envelope: head-first fall (7 m/s forward, 4 m/s down)", note: "Pitched 60° forward, 0.2 m up, (0, −4, 7) m/s: head / arms / trunk hit first.", pose: QS, rot: Rx(60), pivot: "com", lift: 0.2, v: [0, -4, 7], seconds: 3 },
+  hsDrop15: { group: "envelope", title: "Envelope: feet-first landing from 1.5 m (5.4 m/s)", note: "Quiet stance released with the boots 1.5 m above the turf.", pose: QS, lift: 1.5, seconds: 3 },
+  hsKickTurf: { group: "envelope", title: "Envelope: kicking leg into the turf (boot ≈ 20 m/s)", note: "Left boot on the turf; the straight right leg 20° behind the hip swings forward at 22 rad/s about the right hip, so the boot strikes the turf at about 20 m/s (a scuffed kick).",
+    pose: { ...both({ shoulder: { abd: 6 } }), hip_R: { flex: -20 } }, lift: 0.0005, vfield: legSwing([-22, 0, 0]), seconds: 2 },
+  hsKickShin: { group: "envelope", title: "Envelope: kicking boot into an opponent's shin (static shin proxy, ≈ 20 m/s, no gravity)", note: "Isolated (gravity off, 2 m up) so only the limb–limb contact is tested: the straight right leg 20° behind the hip swings forward at 22 rad/s (boot ≈ 20 m/s) into a static shin-size capsule (r 5 cm, 40 cm long, vertical) in the boot's path.",
+    pose: { ...both({ shoulder: { abd: 6 } }), hip_R: { flex: -20 } }, lift: 2.0, gravity: 0, vfield: legSwing([-22, 0, 0]), seconds: 1,
+    obstacles: [(spec, S) => { const f = footAt(spec, S, "foot_R"); return { r: 0.05, half: 0.15, pos: [f[0], f[1] - 0.05, f[2] + 0.40], rot: [0, 0, 0, 1], what: "opponent shin proxy" }; }] },
+  hsPost: { group: "envelope", title: "Envelope: sprint into a goalpost (9 m/s)", note: "Quiet stance, boots 2 cm up, (0, 0, 9) m/s into a static post (r 6 cm) 0.35 m ahead of the chest.", pose: QS, lift: 0.02, v: [0, 0, 9], seconds: 2,
+    obstacles: [(spec, S) => { const t = footAt(spec, S, "thorax"); return { r: 0.06, half: 1.1, pos: [0.06, 1.2, t[2] + 0.35], rot: [0, 0, 0, 1], what: "goalpost" }; }] },
+  hsSelfCol20: { group: "envelope", title: "Envelope: leg into leg at ≈ 20 m/s (no gravity)", note: "isoSelfCol with the right leg at 22 rad/s about the right hip (boot ≈ 20 m/s).", pose: NEUTRAL, lift: 2.0, gravity: 0, seconds: 1.5, trackLegs: true,
+    vfield: (spec, S, at) => legSwing([0, 0, -22])(spec, S, at) },
+});
+export const HS_ORDER = Object.keys(SCENARIOS).filter(k => SCENARIOS[k].group === "envelope");
+export const SCENARIO_ORDER = Object.keys(SCENARIOS).filter(k => SCENARIOS[k].group !== "envelope");
 export const CURATED = ["upright", "leanF", "leanL", "singleLeg", "drop1m", "sideFirst", "awkward", "flatSupine", "impact15", "isoSelfCol"];
 export const ESSENTIAL = ["upright", "leanF", "leanL", "singleLeg", "drop1m", "sideFirst", "awkward", "flatSupine", "isoMomentum", "isoSelfCol"];   // run on every body variant
 
@@ -90,9 +115,16 @@ export class G1Sim {
     this.cfg = Object.assign({}, G1_WORLD, opts.cfg || {}); this.dt = 1 / this.cfg.hz; this.N = Math.round((opts.seconds || this.sc.seconds) * this.cfg.hz);
     const init = initialState(spec, this.sc); this.init = init;
     const contact = { ...spec.contact, ...(this.cfg.slop != null ? { slop: this.cfg.slop } : {}), ...(this.cfg.speculative != null ? { speculative: this.cfg.speculative } : {}) };
-    this.w = new V2JoltWorld(J, spec, contact, { velSteps: this.cfg.velSteps, posSteps: this.cfg.posSteps, ccd: this.cfg.ccd, warmStart: this.cfg.warmStart, pairCache: this.cfg.pairCache, manifoldReduction: this.cfg.manifoldReduction, turf: this.cfg.turf, gravity: init.gravity, recordContacts: true });
+    this.w = new V2JoltWorld(J, spec, contact, { velSteps: this.cfg.velSteps, posSteps: this.cfg.posSteps, ccd: this.cfg.ccd, warmStart: this.cfg.warmStart, pairCache: this.cfg.pairCache, manifoldReduction: this.cfg.manifoldReduction, turf: this.cfg.turf, enhancedEdge: this.cfg.enhancedEdge, contactWarmStart: this.cfg.contactWarmStart, gravity: init.gravity, recordContacts: true });
     init.S.forEach((s, i) => { this.w.setPose(i, s.pos, s.rot); this.w.setVel(i, init.vel[i].v, init.vel[i].w); });
-    this.P = new PassiveLayer(spec, this.w, { enabled: opts.passive !== false, couplings: opts.couplings !== false });
+    this.obsShape = []; this.obsState = [];
+    for (const o0 of this.sc.obstacles || []) { const o = typeof o0 === "function" ? o0(spec, init.S) : o0; this.w.addStaticCapsule(o); this.obsShape.push({ type: "capsule", r: o.r, half: o.half, pos: [0, 0, 0], rot: [0, 0, 0, 1] }); this.obsState.push({ pos: o.pos, rot: o.rot || [0, 0, 0, 1] }); }
+    // tracked pairs for the geometric missed-collision detector: every body vs each obstacle; the legs against each other in self-collision tests
+    const bi = (n) => spec.bodies.findIndex(b => b.name === n); this.track = [];
+    this.obsShape.forEach((o, k) => spec.bodies.forEach((b, i) => this.track.push([-2 - k, i, "obstacle" + k, b.name])));
+    if (this.sc.trackLegs) for (const a of ["thigh_R", "shank_R", "foot_R"]) for (const b of ["thigh_L", "shank_L", "foot_L"]) this.track.push([bi(a), bi(b), a, b]);
+    if (!this.track.length) this.track = null;
+    this.P = new PassiveLayer(spec, this.w, { enabled: opts.passive !== false, couplings: opts.couplings !== false, ...(opts.passiveOpts || {}) });
     this.nb = spec.bodies.length; this.M = spec.bodies.reduce((s, b) => s + b.mass, 0); this.g = -init.gravity;
     this.disabled = new Set(spec.disabledPairs.map(([a, b]) => Math.min(a, b) + "-" + Math.max(a, b)));
     this.anchors = spec.joints.map(j => ({ p: V.sub(j.at, spec.bodies[j.parentIndex].origin), c: V.sub(j.at, spec.bodies[j.childIndex].origin) }));
@@ -112,7 +144,7 @@ export class G1Sim {
       sepMax: 0, sepMaxAt: null, sepRest: 0, frameJumpMax: 0, frameJumpAt: null, hardExcMax: 0, hardExcAt: null, hardExcRest: 0,
       turfPenMax: 0, turfPenAt: null, turfPenRest: 0, turfManifoldMax: -1, selfPenMax: 0, selfPenAt: null, selfPenRest: 0,
       ground: {}, pairs: {}, disabledHits: 0, seq: [], restKEmax: 0, restJitter: 0, restW: [],
-      soleCheck: null, P: [], L: [], com: [], Ulist: [], pAbsMax: 0, lAbsMax: 0 };
+      soleCheck: null, P: [], L: [], com: [], Ulist: [], pAbsMax: 0, lAbsMax: 0, obst: {}, missedTurf: 0, missedTurfMax: 0, initSelfOverlap: [], track: {} };
   }
   // passive drives for the next step + measurement of the current state
   _pre() {
@@ -139,7 +171,7 @@ export class G1Sim {
     let ke = 0, pe = 0, Pm = [0, 0, 0], com = [0, 0, 0];
     S.forEach((s, i) => { const b = spec.bodies[i], wl = Q.rot(Q.conj(s.rot), s.w), I = b.inertia, Iw = [I[0][0] * wl[0] + I[0][1] * wl[1] + I[0][2] * wl[2], I[1][0] * wl[0] + I[1][1] * wl[1] + I[1][2] * wl[2], I[2][0] * wl[0] + I[2][1] * wl[1] + I[2][2] * wl[2]];
       ke += 0.5 * b.mass * V.dot(s.v, s.v) + 0.5 * V.dot(wl, Iw); pe += b.mass * this.g * s.com[1]; Pm = V.add(Pm, V.sc(s.v, b.mass)); com = V.add(com, V.sc(s.com, b.mass));
-      A.maxSpeed = Math.max(A.maxSpeed, V.len(s.v)); A.maxW = Math.max(A.maxW, V.len(s.w)); });
+      A.maxSpeed = Math.max(A.maxSpeed, V.len(s.v)); A.maxW = Math.max(A.maxW, V.len(s.w)); if (n === 0) A.initMaxSpeed = Math.max(A.initMaxSpeed || 0, V.len(s.v)); });
     com = V.sc(com, 1 / this.M);
     let L = [0, 0, 0], pAbs = 0, lAbs = 0; S.forEach((s, i) => { const b = spec.bodies[i], wl = Q.rot(Q.conj(s.rot), s.w), I = b.inertia, Il = [I[0][0] * wl[0] + I[0][1] * wl[1] + I[0][2] * wl[2], I[1][0] * wl[0] + I[1][1] * wl[1] + I[1][2] * wl[2], I[2][0] * wl[0] + I[2][1] * wl[1] + I[2][2] * wl[2]];
       const Li = V.add(V.cross(V.sub(s.com, com), V.sc(s.v, b.mass)), Q.rot(s.rot, Il)); L = V.add(L, Li); pAbs += b.mass * V.len(s.v); lAbs += V.len(Li); });
@@ -177,6 +209,8 @@ export class G1Sim {
     const A = this.A, n = this.n, t = n * this.dt, rest = n >= this.N - Math.round(0.5 * this.cfg.hz), spec = this.spec; let turf = false, any = C.length > 0, selfPen = 0;
     this.lastContacts = C;
     for (const c0 of C) { let c = c0; if (c.a >= 0 && c.b < 0) c = { ...c0, a: c0.b, b: c0.a, sa: c0.sb, sb: c0.sa, ma: c0.mb, mb: c0.ma, normal: V.sc(c0.normal, -1), pts: c0.pts2, pts2: c0.pts };
+      if (c.a < -1) { const b = spec.bodies[c.b].name, o = A.obst[b] || (A.obst[b] = { first: null, firstDepth: null, maxDepth: -1, steps: 0 }); o.maxDepth = Math.max(o.maxDepth, c.depth);
+        if (c.depth > -0.0005) { o.steps++; if (o.first == null) { o.first = t; o.firstDepth = c.depth; } } any = true; continue; }
       if (c.a < 0) { turf = true; const b = spec.bodies[c.b].name, g = A.ground[b] || (A.ground[b] = { first: null, firstDepth: null, maxDepth: -1, steps: 0, materials: new Set() });
         g.maxDepth = Math.max(g.maxDepth, c.depth); A.turfManifoldMax = Math.max(A.turfManifoldMax, c.depth); if (c.depth > -0.0005) { g.steps++; g.materials.add(c.mb); if (g.first == null) { g.first = t; g.firstDepth = c.depth; A.seq.push({ t, who: b }); } }
         if (n === 0 && this.sc.lift < 0.002) this._sole(c); continue; }
@@ -187,6 +221,17 @@ export class G1Sim {
       if (c.depth > selfPen) selfPen = c.depth; }
     if (selfPen > A.selfPenMax) { A.selfPenMax = selfPen; A.selfPenAt = t; } if (rest) A.selfPenRest = Math.max(A.selfPenRest, selfPen);
     A.turfContactStep.push(turf); A.anyContactStep.push(any); if (this.series) this.series.selfPen.push(selfPen);
+    // C7 missed collision vs obstacles / between the legs: exact geometric overlap > slop + 2 mm on a step with no manifold for that pair
+    if (this.track) { const seenPair = new Set(C.map(c => Math.min(c.a, c.b) + "|" + Math.max(c.a, c.b)));
+      for (const [ka, kb, la, lb] of this.track) { const sa = ka < 0 ? [this.obsShape[-2 - ka]] : spec.bodies[ka].shapes, sb = spec.bodies[kb].shapes, stA = ka < 0 ? this.obsState[-2 - ka] : this.st[ka], stB = this.st[kb];
+        let dmax = -Infinity; for (const x of sa) for (const y of sb) dmax = Math.max(dmax, shapePenetration(x, stA, y, stB));
+        const key = la + " ↔ " + lb, T = A.track[key] || (A.track[key] = { maxOverlapMm: -1e9, missedSteps: 0, missedMaxMm: 0 }); T.maxOverlapMm = Math.max(T.maxOverlapMm, dmax * 1000);
+        if (dmax > spec.contact.slop + 0.002 && !seenPair.has(Math.min(ka, kb) + "|" + Math.max(ka, kb))) { T.missedSteps++; T.missedMaxMm = Math.max(T.missedMaxMm, dmax * 1000); } } }
+    // C7 "missed collision": a body whose exact collider geometry is below the turf by more than the slop on a step where Jolt produced NO
+    // turf manifold for it (the contact was never seen) — the no-tunnelling invariant of articulated player bodies
+    const seen = new Set(C.filter(c => c.a === -1 || c.b === -1).map(c => (c.a === -1 ? c.b : c.a)));
+    for (let i = 0; i < this.nb; i++) { const l = bodyLowest(spec.bodies[i], this.st[i]); if (-l.y > spec.contact.slop && !seen.has(i)) { A.missedTurf++; A.missedTurfMax = Math.max(A.missedTurfMax, -l.y); } }
+    if (n === 0) for (const c of C) if (c.a >= 0 && c.b >= 0 && c.depth > 0.001 && !this.disabled.has(Math.min(c.a, c.b) + "-" + Math.max(c.a, c.b))) A.initSelfOverlap.push(`${spec.bodies[c.a].name}–${spec.bodies[c.b].name} ${(c.depth * 1000).toFixed(1)} mm`);
   }
   // t = 0: every turf contact of a standing release must be a boot sole contact inside the plantar outline, normal +Y
   _sole(c) {
@@ -216,7 +261,7 @@ export class G1Sim {
     const firstNonFoot = A.seq.find(s => !/^foot_/.test(s.who)) || null;
     const restJitter = A.restW.length ? Math.max(...A.restW) : 0;
     return { key: this.key, human: spec.human.id, cfg: this.cfg, seconds: N * dt, ticks: N, hash: this.h.toString(16).padStart(8, "0"), hashAt: this.hashAt,
-      finite: A.finite, firstNaN: A.firstNaN, maxSpeed: A.maxSpeed, maxW: A.maxW,
+      finite: A.finite, firstNaN: A.firstNaN, maxSpeed: A.maxSpeed, maxW: A.maxW, initMaxSpeed: A.initMaxSpeed || 0, initComY: A.com[0][1],
       energy: { E0: E[0], Eend: E[N], maxRiseJ: maxRise, maxRiseAt, unexplainedJ: unexplained, firstContactT: tc < 0 ? null : tc * dt, monoViolJ: mono, monoAt, airborneClosureJ: airClose, airGainMaxJ: airGain, airLossSumJ: airLoss, dampingJ: this.Dcum, Uend: A.Ulist[N] },
       freeFall: { steps: ffSteps, maxAccDev: ffDev }, momentum: { dP: dPm, dL: dLm, P0, L0, pScale: A.pAbsMax, lScale: A.lAbsMax, dPrel: dPm / Math.max(1e-12, A.pAbsMax), dLrel: dLm / Math.max(1e-12, A.lAbsMax) },
       engine: { ticks: axes.reduce((s, a) => s + a.engineTicks, 0), axes: axes.filter(a => a.engineTicks > 0).map(a => `${a.joint}.${a.key}:${a.engineTicks}`) },
@@ -226,10 +271,12 @@ export class G1Sim {
         selfPenMaxMm: A.selfPenMax * 1000, selfPenAt: A.selfPenAt, selfPenRestMm: A.selfPenRest * 1000, disabledHits: A.disabledHits,
         ground: Object.fromEntries(Object.entries(A.ground).map(([k, g]) => [k, { first: g.first, firstDepthMm: g.firstDepth == null ? null : g.firstDepth * 1000, maxDepthMm: g.maxDepth * 1000, steps: g.steps, materials: [...g.materials] }])),
         pairs: Object.fromEntries(Object.entries(A.pairs).map(([k, p]) => [k, { first: p.first, firstDepthMm: p.firstDepth == null ? null : p.firstDepth * 1000, maxDepthMm: p.maxDepth * 1000, steps: p.steps }])),
-        sequence: A.seq.slice(0, 14), soleCheck: A.soleCheck },
+        sequence: A.seq.slice(0, 14), soleCheck: A.soleCheck, missedTurfSteps: A.missedTurf, missedTurfMaxMm: A.missedTurfMax * 1000, initSelfOverlap: A.initSelfOverlap,
+        tracked: A.track, obstacle: Object.fromEntries(Object.entries(A.obst).map(([k, o]) => [k, { first: o.first, firstDepthMm: o.firstDepth == null ? null : o.firstDepth * 1000, maxDepthMm: o.maxDepth * 1000, steps: o.steps }])) },
       rest: { KEmax: A.restKEmax, jitterRadS: restJitter },
-      selfCol: this.key === "isoSelfCol" ? (() => { const legContact = Object.keys(A.pairs).some(k => /(thigh|shank|foot)_[LR] ↔ (thigh|shank|foot)_[LR]/.test(k) && A.pairs[k].steps > 0);
-        return { minDxFeetM: this.minDxFeet, legContact, passedThrough: !legContact || A.selfPenMax > 0.010 }; })() : null, outcome: { posture, comEnd: A.com[N], firstNonFootT: firstNonFoot ? firstNonFoot.t : null, firstNonFoot: firstNonFoot ? firstNonFoot.who : null },
+      selfCol: this.key === "isoSelfCol" || this.key === "hsSelfCol20" ? (() => { const legContact = Object.keys(A.pairs).some(k => /(thigh|shank|foot)_[LR] ↔ (thigh|shank|foot)_[LR]/.test(k) && A.pairs[k].steps > 0);
+        const missed = Object.values(A.track || {}).reduce((s, t) => s + t.missedSteps, 0);   // geometric missed-collision detector (C7)
+        return { minDxFeetM: this.minDxFeet, legContact, missedSteps: missed, passedThrough: !legContact || missed > 0 }; })() : null, outcome: { posture, comEnd: A.com[N], firstNonFootT: firstNonFoot ? firstNonFoot.t : null, firstNonFoot: firstNonFoot ? firstNonFoot.who : null },
       cpu: { stepMs: this.cpu.step / N, passiveMs: this.cpu.passive / (N + 1), measureMs: this.cpu.measure / (N + 1) } };
   }
   destroy() { this.w.destroy(); }

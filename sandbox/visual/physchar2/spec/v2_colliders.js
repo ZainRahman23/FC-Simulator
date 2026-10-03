@@ -65,7 +65,11 @@ export function buildColliders(Lm, bodies) {
     out[T.name] = [{ type: "tapered", material: "body", rTop: 0.048 * H, rBot: 0.034 * H, half: t.half, pos: t.pos, rot: t.rot, note: "girth-based (proximal 0.048 H, lateral axis offset)" }];
     const k = between(loc(S.name, [g * hx, yK - 0.03 * s, -0.01 * s]), loc(S.name, [g * hx, yA + 0.06 * s, -0.01 * s]));
     out[S.name] = [{ type: "tapered", material: "body", rTop: sh[0], rBot: sh[1], half: k.half, pos: k.pos, rot: k.rot, note: "volume-matched frustum (density 1090), calf 1 cm posterior" }];
-    out[Ft.name] = [{ type: "hull", material: "boot", cr: 0.005, pos: [0, 0, 0], rot: [0, 0, 0, 1], points: bootHull(Lm, Ft, g), note: "rigid boot hull: anatomical outline, oblique MTP break, 12 mm toe spring" }];
+    // C3 (adopted 2026-10-03 after the boot contact-manifold experiment, g1/G1_C3_BOOT.md): the approved rigid boot hull is REPRESENTED as two
+    // convex pieces whose union is exactly the approved hull (identical external geometry). Jolt builds each contact manifold from one
+    // supporting face per convex shape; on the single hull an edge / toe-loaded boot lost its deepest vertex (toe loading 24 mm, falls 39 mm).
+    out[Ft.name] = splitHullAP(bootHull(Lm, Ft, g), 0.55).map((pts, k) => ({ type: "hull", material: "boot", cr: 0.005, pos: [0, 0, 0], rot: [0, 0, 0, 1], points: pts,
+      note: `rigid boot hull (anatomical outline, oblique MTP break, 12 mm toe spring) — ${k ? "front" : "rear"} convex piece of the approved hull (C3)` }));
   }
   return out;
 }
@@ -101,3 +105,12 @@ export const CONTACT = { speculative: 0.02, slop: 0.005, baumgarte: 0.2, restitu
   friction: { "boot|turf": 1.2, "hand|turf": 0.7, "body|turf": 0.5, "body|body": 0.4, "boot|body": 0.4, "hand|body": 0.4, "boot|boot": 0.4, "hand|hand": 0.4, "boot|hand": 0.4 },
   frictionNote: "boot–turf 1.2 [ENG] default pending the turf gate (range 1.0–1.6); others [V1] values kept as [ENG]" };
 export const frictionOf = (ma, mb) => { const k1 = ma + "|" + mb, k2 = mb + "|" + ma; return CONTACT.friction[k1] ?? CONTACT.friction[k2] ?? 0.4; };
+
+// split a convex point hull by the plane z = z0 + frac·(z1 − z0) into two convex pieces whose union is exactly the hull: each piece = the
+// points on its side + the intersections of every crossing point pair with the plane (edge pairs give the section's vertices; interior pairs
+// land inside it and are discarded by the hull builder) (C3)
+export function splitHullAP(P, frac) {
+  const zs = P.map(p => p[2]), z0 = Math.min(...zs), z1 = Math.max(...zs), zc = z0 + frac * (z1 - z0), cut = [];
+  for (let i = 0; i < P.length; i++) for (let j = i + 1; j < P.length; j++) { const a = P[i], c = P[j]; if ((a[2] - zc) * (c[2] - zc) < 0) { const t = (zc - a[2]) / (c[2] - a[2]); cut.push([a[0] + t * (c[0] - a[0]), a[1] + t * (c[1] - a[1]), zc]); } }
+  return [[...P.filter(p => p[2] <= zc), ...cut], [...P.filter(p => p[2] >= zc), ...cut]];
+}

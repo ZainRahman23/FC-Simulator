@@ -17,14 +17,18 @@
 import { V, Q } from "./v2_math.js";
 
 export async function loadJolt(url) { const mod = await import(url); return await mod.default(); }
-const L_STATIC = 0, L_MOVING = 1, GROUND_UD = 1000;
-export const G0_WORLD = { gravity: -9.81, velSteps: 10, posSteps: 2, linDamp: 0, angDamp: 0, maxAngVel: 100, allowSleep: false, gyroscopic: true, ccd: "discrete", recordContacts: true,
+const L_STATIC = 0, L_MOVING = 1, GROUND_UD = 1000, OBST_UD = 2000;   // contact index: turf −1, obstacle k → −(2 + k), body i → i
+// C3 (adopted 2026-10-03): Jolt manifold reduction OFF and the body-pair contact cache OFF for the V2 world (the boot experiment: both measured
+// to matter for the convex boot pieces; the cache also reused stale manifolds on slowly rolling rounded bodies, G1 diagnosis)
+export const G0_WORLD = { gravity: -9.81, velSteps: 10, posSteps: 2, linDamp: 0, angDamp: 0, maxAngVel: 100, allowSleep: false, gyroscopic: true, ccd: "discrete", recordContacts: true, manifoldReduction: false, pairCache: false,
   note: "solver iterations are Jolt defaults here; G1's convergence study selects them. maxAngVel 100 rad/s (Jolt default 47.1) so kicks (shank ≈ 39 rad/s) are never clipped. gyroscopic: Euler's rigid-body equations (G1-D1)." };
 const MAT_TURF = "turf";
 
 export class V2JoltWorld {
   constructor(J, spec, contact, cfg) {
-    this.J = J; this.spec = spec; this.cfg = Object.assign({}, G0_WORLD, cfg || {}); this.contactCfg = contact;
+    // undefined option values never override a default (a caller forwarding an unset option must not silently change the world)
+    const given = Object.fromEntries(Object.entries(cfg || {}).filter(([, v]) => v !== undefined));
+    this.J = J; this.spec = spec; this.cfg = Object.assign({}, G0_WORLD, given); this.contactCfg = contact;
     const st = new J.JoltSettings(); st.mMaxWorkerThreads = 1;
     const opf = new J.ObjectLayerPairFilterTable(2); opf.EnableCollision(L_STATIC, L_MOVING); opf.EnableCollision(L_MOVING, L_MOVING);
     const bpi = new J.BroadPhaseLayerInterfaceTable(2, 2); bpi.MapObjectToBroadPhaseLayer(L_STATIC, new J.BroadPhaseLayer(0)); bpi.MapObjectToBroadPhaseLayer(L_MOVING, new J.BroadPhaseLayer(1));
@@ -33,7 +37,7 @@ export class V2JoltWorld {
     this.ps = this.jolt.GetPhysicsSystem(); this.bi = this.ps.GetBodyInterface();
     this.ps.SetGravity(new J.Vec3(0, this.cfg.gravity, 0));
     const p = this.ps.GetPhysicsSettings(); p.mSpeculativeContactDistance = contact.speculative; p.mPenetrationSlop = contact.slop; p.mBaumgarte = contact.baumgarte;
-    p.mNumVelocitySteps = this.cfg.velSteps; p.mNumPositionSteps = this.cfg.posSteps; if (this.cfg.warmStart === false) p.mConstraintWarmStart = false; if (this.cfg.pairCache === false) p.mUseBodyPairContactCache = false; if (this.cfg.manifoldReduction === false) p.mUseManifoldReduction = false; this.ps.SetPhysicsSettings(p);
+    p.mNumVelocitySteps = this.cfg.velSteps; p.mNumPositionSteps = this.cfg.posSteps; if (this.cfg.warmStart === false) p.mConstraintWarmStart = false; p.mUseBodyPairContactCache = this.cfg.pairCache !== false; p.mUseManifoldReduction = this.cfg.manifoldReduction !== false; if (this.cfg.contactWarmStart === false) p.mContactPointPreserveLambdaMaxDistSq = 0; this.ps.SetPhysicsSettings(p);
     const turfShape = this.cfg.turf === "plane" ? new J.PlaneShape(new J.Plane(new J.Vec3(0, 1, 0), 0), null, 50) : this.cfg.turf === "small" ? new J.BoxShape(new J.Vec3(4, 1, 4), 0.0, null) : new J.BoxShape(new J.Vec3(50, 1, 50), 0.0, null);
     const gs = new J.BodyCreationSettings(turfShape, new J.RVec3(0, this.cfg.turf === "plane" ? 0 : -1, 0), new J.Quat(0, 0, 0, 1), J.EMotionType_Static, L_STATIC);
     gs.mUserData = GROUND_UD; gs.mFriction = 0.5; gs.mRestitution = 0; this.ground = this.bi.CreateBody(gs); this.bi.AddBody(this.ground.GetID(), J.EActivation_DontActivate); J.destroy(gs);
@@ -71,6 +75,7 @@ export class V2JoltWorld {
     bcs.mFriction = 0.5; bcs.mRestitution = 0; bcs.mLinearDamping = this.cfg.linDamp; bcs.mAngularDamping = this.cfg.angDamp; bcs.mMaxAngularVelocity = this.cfg.maxAngVel;
     bcs.mAllowSleeping = this.cfg.allowSleep; bcs.mGravityFactor = 1; bcs.mUserData = b.index + 1; bcs.mApplyGyroscopicForce = !!this.cfg.gyroscopic;
     if (this.cfg.ccd === "linearcast" || (this.cfg.ccd === "distal" && /^(foot|shank|forearm)_/.test(b.name))) bcs.mMotionQuality = J.EMotionQuality_LinearCast;
+    if (this.cfg.enhancedEdge && /^foot_/.test(b.name)) bcs.mEnhancedInternalEdgeRemoval = true;   // C3 experiment: Jolt internal-edge removal for the (compound) boot
     bcs.mCollisionGroup.SetGroupFilter(this.gft); bcs.mCollisionGroup.SetGroupID(0); bcs.mCollisionGroup.SetSubGroupID(b.index);
     const body = this.bi.CreateBody(bcs); this.bi.AddBody(body.GetID(), J.EActivation_Activate); J.destroy(bcs);
     this.bodies.push(body);
@@ -98,9 +103,9 @@ export class V2JoltWorld {
     L.OnContactValidate = () => J.ValidateResult_AcceptAllContactsForThisBodyPair;
     const on = (b1p, b2p, mp, sp) => {
       const b1 = J.wrapPointer(b1p, J.Body), b2 = J.wrapPointer(b2p, J.Body), m = J.wrapPointer(mp, J.ContactManifold), cs = J.wrapPointer(sp, J.ContactSettings);
-      const idx = (u) => (u === GROUND_UD ? -1 : u - 1), i1 = idx(b1.GetUserData()), i2 = idx(b2.GetUserData());
+      const idx = (u) => (u === GROUND_UD ? -1 : u >= OBST_UD ? -(2 + u - OBST_UD) : u - 1), i1 = idx(b1.GetUserData()), i2 = idx(b2.GetUserData());
       const s1 = i1 < 0 ? 0 : self._sub(i1, m.mSubShapeID1.GetValue()), s2 = i2 < 0 ? 0 : self._sub(i2, m.mSubShapeID2.GetValue());
-      const m1 = i1 < 0 ? MAT_TURF : self.mats[i1][s1], m2 = i2 < 0 ? MAT_TURF : self.mats[i2][s2], mu = self.frictionOf(m1, m2);
+      const mat = (i, sub) => (i === -1 ? MAT_TURF : i < -1 ? "body" : self.mats[i][sub]), m1 = mat(i1, s1), m2 = mat(i2, s2), mu = self.frictionOf(m1, m2);   // obstacles: body-like (post / opponent limb proxy)
       cs.mCombinedFriction = mu; cs.mCombinedRestitution = self.contactCfg.restitution;     // spec §15.4 per-sub-shape friction policy
       if (!self.cfg.recordContacts) return;
       const n = m.mWorldSpaceNormal, np = m.mRelativeContactPointsOn1.size(), pts = [], pts2 = [];
@@ -112,6 +117,11 @@ export class V2JoltWorld {
   }
   _sub(i, v) { const b = this.subBits[i]; return b ? (v & ((1 << b) - 1)) : 0; }               // first-level sub-shape index of the body's compound
   subShapeUserData(i, v) { const id = new this.J.SubShapeID(); id.SetValue(v); const u = this.bodies[i].GetShape().GetSubShapeUserData(id); this.J.destroy(id); return u; }
+  // G1 / C7 test obstacle: a STATIC capsule (goalpost, an opponent's shin proxy) — never part of the character; contacts report index −(2 + k)
+  addStaticCapsule(o) { const J = this.J, k = (this.obstacles = this.obstacles || []).length, q = o.rot || [0, 0, 0, 1];
+    const bcs = new J.BodyCreationSettings(new J.CapsuleShape(o.half, o.r, null), new J.RVec3(o.pos[0], o.pos[1], o.pos[2]), new J.Quat(q[0], q[1], q[2], q[3]), J.EMotionType_Static, L_STATIC);
+    bcs.mUserData = OBST_UD + k; bcs.mFriction = 0.4; bcs.mRestitution = 0; const body = this.bi.CreateBody(bcs); this.bi.AddBody(body.GetID(), J.EActivation_DontActivate); J.destroy(bcs);
+    this.obstacles.push({ body, o }); return k; }
   setPose(i, pos, rot) { this.bi.SetPositionAndRotation(this.bodies[i].GetID(), new this.J.RVec3(pos[0], pos[1], pos[2]), new this.J.Quat(rot[0], rot[1], rot[2], rot[3]), this.J.EActivation_Activate); }
   setGravity(g) { this.ps.SetGravity(new this.J.Vec3(0, g, 0)); }
   step(dt, collisionSteps) { this.contacts = []; this.jolt.Step(dt, collisionSteps || 1); }
