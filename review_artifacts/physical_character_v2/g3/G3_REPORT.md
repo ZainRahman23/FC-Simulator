@@ -410,7 +410,7 @@ Physics remains the dominant cost (TD-1).
 ## 21. Local commits
 
 - `871ab62`: G3 options, scenario catalogue, runner and checks; criteria v1 pre-registered before the final run.
-- The G3 result commit (final run 2, tables, report, viewer, tools, DECISIONS G3-A11 / A12): see `git log`.
+- `f080253`: the G3 result (final run 2, tables, report, trace, stills, review page, tools, DECISIONS G3-A11 / A12).
 
 Nothing pushed.
 
