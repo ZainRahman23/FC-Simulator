@@ -1,0 +1,134 @@
+{
+ "generated": "tools/phaseG_events.mjs",
+ "human": "V2-REF",
+ "key": "drop1m",
+ "hz": 180,
+ "k": 0,
+ "thr": 0.05,
+ "windowS": 0.25,
+ "ticks": 1800,
+ "events": 3,
+ "maxStepRiseJ": 0.6653914075205876,
+ "maxResidualJ": 0.941967816737654,
+ "runResidualJ": -1279.7400206354341,
+ "maxWindowResidualJ": -30.6824,
+ "eventList": [
+  {
+   "n": 157,
+   "t": 0.8722,
+   "dE": 0.6654,
+   "r": 0.942,
+   "angles": {
+    "ankle_L": [
+     11.75,
+     -47.36,
+     41.42
+    ],
+    "ankle_R": [
+     13.45,
+     -47.47,
+     37.85
+    ],
+    "knee_L": [
+     148.18,
+     31.93
+    ],
+    "knee_R": [
+     149.19,
+     29.64
+    ]
+   },
+   "windowResidualJ": -30.6824
+  },
+  {
+   "n": 159,
+   "t": 0.8833,
+   "dE": 0.487,
+   "r": 0.7115,
+   "angles": {
+    "ankle_L": [
+     11.7,
+     -44.81,
+     40.88
+    ],
+    "ankle_R": [
+     12.92,
+     -46.96,
+     37.95
+    ],
+    "knee_L": [
+     148.88,
+     31.76
+    ],
+    "knee_R": [
+     149.38,
+     30.01
+    ]
+   },
+   "windowResidualJ": -33.4255
+  },
+  {
+   "n": 161,
+   "t": 0.8944,
+   "dE": 0.0808,
+   "r": 0.242,
+   "angles": {
+    "ankle_L": [
+     11.95,
+     -42.35,
+     39.44
+    ],
+    "ankle_R": [
+     12.72,
+     -46.86,
+     37.68
+    ],
+    "knee_L": [
+     149.67,
+     31.53
+    ],
+    "knee_R": [
+     149.61,
+     30.2
+    ]
+   },
+   "windowResidualJ": -35.2731
+  }
+ ],
+ "converge": {
+  "event": 157,
+  "t": 0.8722,
+  "rates": [
+   {
+    "hzEquivalent": 180,
+    "dtMs": 5.5556,
+    "windowResidualJ": -30.6824,
+    "maxStepRiseJ": 0.6654
+   },
+   {
+    "hzEquivalent": 240,
+    "dtMs": 4.1667,
+    "windowResidualJ": -30.6734,
+    "maxStepRiseJ": 0
+   },
+   {
+    "hzEquivalent": 360,
+    "dtMs": 2.7778,
+    "windowResidualJ": -35.1542,
+    "maxStepRiseJ": 0
+   },
+   {
+    "hzEquivalent": 480,
+    "dtMs": 2.0833,
+    "windowResidualJ": -33.9945,
+    "maxStepRiseJ": 0
+   },
+   {
+    "hzEquivalent": 720,
+    "dtMs": 1.3889,
+    "windowResidualJ": -33.2282,
+    "maxStepRiseJ": 0
+   }
+  ]
+ }
+}

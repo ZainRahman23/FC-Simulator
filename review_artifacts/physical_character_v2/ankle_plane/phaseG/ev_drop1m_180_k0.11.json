@@ -1,0 +1,188 @@
+{
+ "generated": "tools/phaseG_events.mjs",
+ "human": "V2-REF",
+ "key": "drop1m",
+ "hz": 180,
+ "k": 0.11,
+ "thr": 0.05,
+ "windowS": 0.25,
+ "ticks": 1800,
+ "events": 5,
+ "maxStepRiseJ": 0.7668309282804557,
+ "maxResidualJ": 1.0455490182241955,
+ "runResidualJ": -1268.971274452762,
+ "maxWindowResidualJ": -3.556,
+ "eventList": [
+  {
+   "n": 156,
+   "t": 0.8667,
+   "dE": 0.1825,
+   "r": 0.4927,
+   "angles": {
+    "ankle_L": [
+     12.62,
+     -51.97,
+     43.39
+    ],
+    "ankle_R": [
+     13.55,
+     -47.74,
+     37.93
+    ],
+    "knee_L": [
+     147.75,
+     30.77
+    ],
+    "knee_R": [
+     149.08,
+     29.87
+    ]
+   },
+   "windowResidualJ": -3.556
+  },
+  {
+   "n": 158,
+   "t": 0.8778,
+   "dE": 0.7484,
+   "r": 1.0173,
+   "angles": {
+    "ankle_L": [
+     12.57,
+     -52.1,
+     43.73
+    ],
+    "ankle_R": [
+     13.26,
+     -46.72,
+     37.86
+    ],
+    "knee_L": [
+     147.77,
+     30.71
+    ],
+    "knee_R": [
+     149.38,
+     29.73
+    ]
+   },
+   "windowResidualJ": -24.4527
+  },
+  {
+   "n": 160,
+   "t": 0.8889,
+   "dE": 0.7668,
+   "r": 1.0455,
+   "angles": {
+    "ankle_L": [
+     12.36,
+     -52.93,
+     43.51
+    ],
+    "ankle_R": [
+     12.88,
+     -45.6,
+     37.52
+    ],
+    "knee_L": [
+     147.73,
+     31.03
+    ],
+    "knee_R": [
+     149.72,
+     30.12
+    ]
+   },
+   "windowResidualJ": -28.5328
+  },
+  {
+   "n": 162,
+   "t": 0.9,
+   "dE": 0.5952,
+   "r": 0.8589,
+   "angles": {
+    "ankle_L": [
+     12.06,
+     -54.24,
+     42.67
+    ],
+    "ankle_R": [
+     12.73,
+     -45.1,
+     37.37
+    ],
+    "knee_L": [
+     147.72,
+     31.44
+    ],
+    "knee_R": [
+     150.05,
+     30.2
+    ]
+   },
+   "windowResidualJ": -42.1005
+  },
+  {
+   "n": 164,
+   "t": 0.9111,
+   "dE": 0.1645,
+   "r": 0.3595,
+   "angles": {
+    "ankle_L": [
+     11.97,
+     -55.75,
+     40.9
+    ],
+    "ankle_R": [
+     12.59,
+     -45.11,
+     37.47
+    ],
+    "knee_L": [
+     147.85,
+     31.55
+    ],
+    "knee_R": [
+     150.33,
+     30.37
+    ]
+   },
+   "windowResidualJ": -55.4153
+  }
+ ],
+ "converge": {
+  "event": 160,
+  "t": 0.8889,
+  "rates": [
+   {
+    "hzEquivalent": 180,
+    "dtMs": 5.5556,
+    "windowResidualJ": -28.5328,
+    "maxStepRiseJ": 0.7668
+   },
+   {
+    "hzEquivalent": 240,
+    "dtMs": 4.1667,
+    "windowResidualJ": -28.4753,
+    "maxStepRiseJ": 0
+   },
+   {
+    "hzEquivalent": 360,
+    "dtMs": 2.7778,
+    "windowResidualJ": -26.9996,
+    "maxStepRiseJ": 0
+   },
+   {
+    "hzEquivalent": 480,
+    "dtMs": 2.0833,
+    "windowResidualJ": -26.7531,
+    "maxStepRiseJ": 0
+   },
+   {
+    "hzEquivalent": 720,
+    "dtMs": 1.3889,
+    "windowResidualJ": -32.5602,
+    "maxStepRiseJ": 0
+   }
+  ]
+ }
+}

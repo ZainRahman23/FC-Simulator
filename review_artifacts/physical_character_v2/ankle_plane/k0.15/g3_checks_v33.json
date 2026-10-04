@@ -1,0 +1,2313 @@
+{
+ "criteria": "G3_CRITERIA_v3.3.md",
+ "pass": false,
+ "declared": false,
+ "rowsPass": 19,
+ "rows": 20,
+ "gatingRows": 19,
+ "checks": [
+  {
+   "id": "run",
+   "name": "every job completed without error",
+   "pass": true,
+   "value": "332 ok / 0 errors",
+   "limit": "0 errors"
+  },
+  {
+   "id": "A",
+   "name": "T0 bilateral baseline (λ_R 0.5, 20 s)",
+   "pass": true,
+   "value": "stood; hold mean load_R 0.500; slip 0.42 mm; contact loss 0.00 s",
+   "limit": "stood; 0.47–0.53; ≤ 1 mm; 0 s"
+  },
+  {
+   "id": "B",
+   "name": "T1 / T2 strong transfer 50 → 85 % → 50, R and L",
+   "pass": true,
+   "value": "T1: stood; holds R 0.838/0.846; RMS 0.014; end 0.502; slip 0.27 mm; roll 0.0°; lean 0.2° · T2: stood; holds L 0.838/0.846; RMS 0.014; end 0.498; slip 0.26 mm; roll 0.0°; lean 0.2°",
+   "limit": "hold min ≥ 0.80, mean ≥ 0.83; RMS ≤ 0.05; end 0.5 ± 0.03; slip ≤ 1 mm; no contact loss; roll, lean ≤ 5°"
+  },
+  {
+   "id": "C",
+   "name": "T3 cycle R 85 % → 50 → L 85 % → 50",
+   "pass": true,
+   "value": "stood; holds R 0.838/0.845, L 0.838/0.845; RMS 0.015; end 0.498; slip 0.27 mm; roll 0.0°; lean 0.2°",
+   "limit": "row B, both holds"
+  },
+  {
+   "id": "D",
+   "name": "T4 five repeated cycles — drift bounded",
+   "pass": true,
+   "value": "stood; pelvis drift cycle 1 → 5: 4.1 → 4.2 mm (Δ 0.11); yaw 1.25 → 1.69° (Δ 0.44); slip 0.31 mm; hold means R 0.875 → 0.873, L 0.871 → 0.871; end 0.499",
+   "limit": "Δ drift ≤ 5 mm; Δ yaw ≤ 1°; slip ≤ 2 mm; Δ hold mean ≤ 0.01; end 0.5 ± 0.03",
+   "marks": [
+    {
+     "t": 0.9916666666666667,
+     "load": 0.500046789997038,
+     "yaw": -0.0006976121074407485,
+     "pelvisDriftMm": 0.005528262025617872,
+     "slipMm": [
+      0.2612043763922873,
+      0.2609721234469279
+     ],
+     "trkRms": 0.0005079846347589495,
+     "twist": null
+    },
+    {
+     "t": 11.991666666666667,
+     "load": 0.4839712287483223,
+     "yaw": 1.2502452441540444,
+     "pelvisDriftMm": 4.0648889101105405,
+     "slipMm": [
+      0.2612043763922873,
+      0.2684374724898382
+     ],
+     "trkRms": 0.03467886703000882,
+     "twist": [
+      2.8514414873574925,
+      3.125319569412864,
+      0.08451476543345401,
+      0.07640141590792686,
+      2.2993731489086997,
+      2.5075781459619106
+     ]
+    },
+    {
+     "t": 22.991666666666667,
+     "load": 0.48402940285225154,
+     "yaw": 1.5848959968916005,
+     "pelvisDriftMm": 4.145140446595051,
+     "slipMm": [
+      0.26791082985037745,
+      0.27533731293433983
+     ],
+     "trkRms": 0.036230800029259706,
+     "twist": [
+      3.9056194365892467,
+      4.136789747177883,
+      0.10352989605774122,
+      0.10146515847064856,
+      3.1367045547024865,
+      3.2280217698814004
+     ]
+    },
+    {
+     "t": 33.99166666666667,
+     "load": 0.4840426560821935,
+     "yaw": 1.6699030450641865,
+     "pelvisDriftMm": 4.161287725510526,
+     "slipMm": [
+      0.2764531392523592,
+      0.2876483093080432
+     ],
+     "trkRms": 0.03675804991098535,
+     "twist": [
+      4.332472561203841,
+      4.431966873381068,
+      0.11118456116760438,
+      0.11173929197702002,
+      3.4490730747784033,
+      3.520120079884969
+     ]
+    },
+    {
+     "t": 44.99166666666667,
+     "load": 0.484040744660042,
+     "yaw": 1.6900803030896228,
+     "pelvisDriftMm": 4.166688237019152,
+     "slipMm": [
+      0.2764531392523592,
+      0.30303026704208946
+     ],
+     "trkRms": 0.03702324215448798,
+     "twist": [
+      4.43510774680683,
+      4.5364390661359915,
+      0.11592094713504215,
+      0.11674021373794928,
+      3.5278152991225653,
+      3.5926013802105095
+     ]
+    },
+    {
+     "t": 55.99166666666667,
+     "load": 0.4840406316248495,
+     "yaw": 1.6945590216804078,
+     "pelvisDriftMm": 4.169921091338231,
+     "slipMm": [
+      0.2764531392523592,
+      0.31296375059780646
+     ],
+     "trkRms": 0.03718259101029062,
+     "twist": [
+      4.458161243185583,
+      4.560068450015445,
+      0.12001053142519773,
+      0.12048547236263407,
+      3.5487205666551165,
+      3.6065100755622757
+     ]
+    }
+   ]
+  },
+  {
+   "id": "E2",
+   "name": "near-single-support (T5 / T6): settled unloaded-foot load ≤ 5 % BW, foot still touching, stance controlled",
+   "pass": true,
+   "value": "T5 stood; R: unloaded foot ≤ 4.08 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.6 cm; stance foot settled min 95.92 % / mean 96.85 % (v1 window min 95.37 %); slip 0.27 mm; end 0.502 · T6 stood; L: unloaded foot ≤ 4.08 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.6 cm; stance foot settled min 95.92 % / mean 96.85 % (v1 window min 95.37 %); slip 0.26 mm; end 0.498",
+   "limit": "≤ 5 % BW; ≥ 1 piece; COM & CoP in stance foot; ξ ≥ 1 cm; slip ≤ 1 mm; roll, lean ≤ 5°; end 0.5 ± 0.03"
+  },
+  {
+   "id": "F2",
+   "name": "swing-ready / full unloading (U:R / U:L): unloaded-foot load ≤ 2 % BW, no material drag, stance controlled",
+   "pass": true,
+   "value": "U:R stood; unloaded foot ≤ 0.52 % BW (contact lost 0.00 s), slip 0.26 mm, lift 0.00 mm, tilt 0.16°; stance 99.48–99.84 %; COM in true, ξ margin 4.3 cm; roll 0.0°, lean 0.3° · U:L stood; unloaded foot ≤ 0.52 % BW (contact lost 0.00 s), slip 0.28 mm, lift 0.00 mm, tilt 0.16°; stance 99.48–99.84 %; COM in true, ξ margin 4.3 cm; roll 0.0°, lean 0.3°",
+   "limit": "≤ 2 % BW; unloaded foot slip ≤ 2 mm, lift ≤ 5 mm, tilt ≤ 3°; COM in stance; ξ ≥ 1 cm; roll, lean ≤ 5°; end 0.5 ± 0.03"
+  },
+  {
+   "id": "G",
+   "name": "T7 speed: 4 s and 2 s ramps clean, both sides (faster ramps: the reported envelope)",
+   "pass": true,
+   "value": "T7:R:2 stood hold mean 0.937 slip 0.27 abort — · T7:R:4 stood hold mean 0.943 slip 0.27 abort — · T7:L:4 stood hold mean 0.943 slip 0.26 abort — · T7:L:2 stood hold mean 0.937 slip 0.27 abort —",
+   "limit": "stood; slip ≤ 1 mm; no abort; hold mean ≥ 0.93",
+   "envelope": [
+    {
+     "key": "T7:R:2",
+     "outcome": "stood",
+     "cls": "recovered",
+     "holdMean": 0.9369297140909592,
+     "slip": 0.26668920260784695,
+     "abortT": null,
+     "trackRms": 0.026006344810218955
+    },
+    {
+     "key": "T7:R:1",
+     "outcome": "stood",
+     "cls": "recovered",
+     "holdMean": 0.9309586926386909,
+     "slip": 0.49107357796261414,
+     "abortT": null,
+     "trackRms": 0.06505703694783672
+    },
+    {
+     "key": "T7:R:0.75",
+     "outcome": "stood",
+     "cls": "recovered (aborted)",
+     "holdMean": 0.6908077442372272,
+     "slip": 3.075151259654028,
+     "abortT": 1.5958333333333332,
+     "trackRms": 0.156954453968925
+    },
+    {
+     "key": "T7:R:0.5",
+     "outcome": "stood",
+     "cls": "recovered (aborted)",
+     "holdMean": 0.6926425787188513,
+     "slip": 6.133636381824581,
+     "abortT": 1.3541666666666667,
+     "trackRms": 0.16579891332983013
+    },
+    {
+     "key": "T7:R:0.25",
+     "outcome": "stood",
+     "cls": "recovered (aborted)",
+     "holdMean": 0.6170363595035848,
+     "slip": 0.7650271508762724,
+     "abortT": 1.1875,
+     "trackRms": 0.1133656848645852
+    },
+    {
+     "key": "T7:R:4",
+     "outcome": "stood",
+     "cls": "recovered",
+     "holdMean": 0.9432584617519866,
+     "slip": 0.2716978059231416,
+     "abortT": null,
+     "trackRms": 0.017407596162386293
+    },
+    {
+     "key": "T7:L:0.5",
+     "outcome": "stood",
+     "cls": "recovered (aborted)",
+     "holdMean": 0.6927114356910417,
+     "slip": 6.652735857115027,
+     "abortT": 1.3541666666666667,
+     "trackRms": 0.16584628761250744
+    },
+    {
+     "key": "T7:L:0.25",
+     "outcome": "stood",
+     "cls": "recovered (aborted)",
+     "holdMean": 0.6170307590711903,
+     "slip": 0.7634020292458095,
+     "abortT": 1.1875,
+     "trackRms": 0.11323574531963582
+    },
+    {
+     "key": "T7:L:0.75",
+     "outcome": "stood",
+     "cls": "recovered (aborted)",
+     "holdMean": 0.6908017862778381,
+     "slip": 3.187103589246859,
+     "abortT": 1.5958333333333332,
+     "trackRms": 0.1569576653687996
+    },
+    {
+     "key": "T7:L:1",
+     "outcome": "stood",
+     "cls": "recovered",
+     "holdMean": 0.9309688067182758,
+     "slip": 0.5027293927722545,
+     "abortT": null,
+     "trackRms": 0.06505882163300164
+    },
+    {
+     "key": "T7:L:4",
+     "outcome": "stood",
+     "cls": "recovered",
+     "holdMean": 0.943276007787324,
+     "slip": 0.2626838143701277,
+     "abortT": null,
+     "trackRms": 0.017403676736073542
+    },
+    {
+     "key": "T7:L:2",
+     "outcome": "stood",
+     "cls": "recovered",
+     "holdMean": 0.9369260131620861,
+     "slip": 0.26878854006494274,
+     "abortT": null,
+     "trackRms": 0.026024226659212002
+    }
+   ]
+  },
+  {
+   "id": "H",
+   "name": "T8 perturbation during transfer: H1 all 5 N·s; H2 inward ≤ 15 N·s at the hold; H3 no false aborts",
+   "pass": true,
+   "value": "H1 32/32; H2 18/18; H3 aborts in nominal T7 ≥ 1 s: 0",
+   "limit": "32/32; 18/18; 0",
+   "grid": [
+    {
+     "when": "hold",
+     "st": "R",
+     "dir": "F",
+     "m": 5,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.26668920260784695,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 0.5697317478215889,
+     "yaw": 1.3308471087018279
+    },
+    {
+     "when": "hold",
+     "st": "L",
+     "dir": "F",
+     "m": 5,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.27144813482330465,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 0.5700885492120145,
+     "yaw": 1.3334224622295823
+    },
+    {
+     "when": "hold",
+     "st": "R",
+     "dir": "F",
+     "m": 20,
+     "outcome": "step required → fell",
+     "cls": "step required → fell (aborted)",
+     "slip": 1389.9382253587094,
+     "abortT": 4.1125,
+     "bilateralOk": true,
+     "lean": 34.56439882827771,
+     "yaw": 169.49814922844607
+    },
+    {
+     "when": "hold",
+     "st": "L",
+     "dir": "F",
+     "m": 20,
+     "outcome": "step required → fell",
+     "cls": "step required → fell (aborted)",
+     "slip": 1428.073381043022,
+     "abortT": 4.1125,
+     "bilateralOk": true,
+     "lean": 34.973616759863276,
+     "yaw": 166.67024184947255
+    },
+    {
+     "when": "hold",
+     "st": "R",
+     "dir": "F",
+     "m": 10,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.28540317700895335,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 0.5697317478215889,
+     "yaw": 1.3308471087018279
+    },
+    {
+     "when": "hold",
+     "st": "L",
+     "dir": "F",
+     "m": 10,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.26883583414949236,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 0.5700885492120145,
+     "yaw": 1.3334224622295823
+    },
+    {
+     "when": "hold",
+     "st": "R",
+     "dir": "F",
+     "m": 15,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.28779806859525714,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 0.5697317478215889,
+     "yaw": 1.511773634471619
+    },
+    {
+     "when": "hold",
+     "st": "L",
+     "dir": "F",
+     "m": 15,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.2808883193280637,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 0.5700885492120145,
+     "yaw": 1.507741762826221
+    },
+    {
+     "when": "hold",
+     "st": "R",
+     "dir": "B",
+     "m": 5,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.26668920260784695,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 0.5911719181102382,
+     "yaw": 1.8513155392513616
+    },
+    {
+     "when": "hold",
+     "st": "R",
+     "dir": "B",
+     "m": 20,
+     "outcome": "step required → fell",
+     "cls": "step required → fell (aborted)",
+     "slip": 933.5904383210449,
+     "abortT": 4.116666666666666,
+     "bilateralOk": true,
+     "lean": 50.01510856469668,
+     "yaw": 179.67580800290432
+    },
+    {
+     "when": "hold",
+     "st": "L",
+     "dir": "B",
+     "m": 20,
+     "outcome": "step required → fell",
+     "cls": "step required → fell (aborted)",
+     "slip": 697.4187149291301,
+     "abortT": 4.116666666666666,
+     "bilateralOk": true,
+     "lean": 62.931074445119734,
+     "yaw": 175.57927259041713
+    },
+    {
+     "when": "hold",
+     "st": "L",
+     "dir": "B",
+     "m": 5,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.2684888659383572,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 0.5906392552134173,
+     "yaw": 1.853818236347158
+    },
+    {
+     "when": "hold",
+     "st": "R",
+     "dir": "B",
+     "m": 10,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.2785072780903285,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 0.6001471618702878,
+     "yaw": 2.116600267335364
+    },
+    {
+     "when": "hold",
+     "st": "L",
+     "dir": "B",
+     "m": 10,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.2912421743173415,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 0.6000737146260126,
+     "yaw": 2.11950909144853
+    },
+    {
+     "when": "hold",
+     "st": "L",
+     "dir": "B",
+     "m": 15,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.2915343639001254,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 0.6082716386185437,
+     "yaw": 2.411998366038628
+    },
+    {
+     "when": "hold",
+     "st": "R",
+     "dir": "B",
+     "m": 15,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.30039604630131594,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 0.6083554905821356,
+     "yaw": 2.408975949665496
+    },
+    {
+     "when": "hold",
+     "st": "R",
+     "dir": "L",
+     "m": 5,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.26719695908212104,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 2.5003763897482894,
+     "yaw": 2.4134923902632033
+    },
+    {
+     "when": "hold",
+     "st": "L",
+     "dir": "R",
+     "m": 10,
+     "outcome": "recovered",
+     "cls": "recovered (aborted)",
+     "slip": 0.27092857562638273,
+     "abortT": 4.095833333333333,
+     "bilateralOk": true,
+     "lean": 4.996578553372077,
+     "yaw": 3.5142313465346624
+    },
+    {
+     "when": "hold",
+     "st": "L",
+     "dir": "R",
+     "m": 5,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.26748889524679004,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 2.5002689525115684,
+     "yaw": 2.41541830275877
+    },
+    {
+     "when": "hold",
+     "st": "R",
+     "dir": "L",
+     "m": 10,
+     "outcome": "recovered",
+     "cls": "recovered (aborted)",
+     "slip": 0.27552079915062294,
+     "abortT": 4.095833333333333,
+     "bilateralOk": true,
+     "lean": 4.997320341691627,
+     "yaw": 3.5106197354890805
+    },
+    {
+     "when": "hold",
+     "st": "R",
+     "dir": "L",
+     "m": 15,
+     "outcome": "recovered",
+     "cls": "recovered (aborted)",
+     "slip": 0.2989038299236688,
+     "abortT": 4.070833333333333,
+     "bilateralOk": true,
+     "lean": 7.1229661778748765,
+     "yaw": 4.88676117000081
+    },
+    {
+     "when": "hold",
+     "st": "L",
+     "dir": "R",
+     "m": 15,
+     "outcome": "recovered",
+     "cls": "recovered (aborted)",
+     "slip": 0.2738274265941985,
+     "abortT": 4.070833333333333,
+     "bilateralOk": true,
+     "lean": 7.122395401276035,
+     "yaw": 4.892835762965809
+    },
+    {
+     "when": "hold",
+     "st": "L",
+     "dir": "R",
+     "m": 20,
+     "outcome": "recovered",
+     "cls": "recovered (aborted)",
+     "slip": 0.28785306864401533,
+     "abortT": 4.058333333333334,
+     "bilateralOk": true,
+     "lean": 9.163020023172571,
+     "yaw": 6.0964287017867544
+    },
+    {
+     "when": "hold",
+     "st": "R",
+     "dir": "L",
+     "m": 20,
+     "outcome": "recovered",
+     "cls": "recovered (aborted)",
+     "slip": 0.2985548284202725,
+     "abortT": 4.058333333333334,
+     "bilateralOk": true,
+     "lean": 9.163578751342328,
+     "yaw": 6.0927248846212745
+    },
+    {
+     "when": "hold",
+     "st": "R",
+     "dir": "R",
+     "m": 5,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 1.7967779232129453,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 2.6471658963883398,
+     "yaw": 1.3308471087018279
+    },
+    {
+     "when": "hold",
+     "st": "R",
+     "dir": "R",
+     "m": 15,
+     "outcome": "step required → fell",
+     "cls": "step required → fell (aborted)",
+     "slip": 1790.986127912831,
+     "abortT": 4.104166666666667,
+     "bilateralOk": false,
+     "lean": 85.58353343915904,
+     "yaw": 14.289947880583039
+    },
+    {
+     "when": "hold",
+     "st": "L",
+     "dir": "L",
+     "m": 15,
+     "outcome": "step required → fell",
+     "cls": "step required → fell (aborted)",
+     "slip": 1819.7662686766291,
+     "abortT": 4.104166666666667,
+     "bilateralOk": false,
+     "lean": 86.94038999812885,
+     "yaw": 14.294130614556323
+    },
+    {
+     "when": "hold",
+     "st": "R",
+     "dir": "R",
+     "m": 20,
+     "outcome": "step required → fell",
+     "cls": "step required → fell (aborted)",
+     "slip": 1152.2688420215234,
+     "abortT": 4.083333333333333,
+     "bilateralOk": false,
+     "lean": 89.52723584434003,
+     "yaw": 9.688846769340241
+    },
+    {
+     "when": "hold",
+     "st": "L",
+     "dir": "L",
+     "m": 20,
+     "outcome": "step required → fell",
+     "cls": "step required → fell (aborted)",
+     "slip": 1151.8119769362395,
+     "abortT": 4.083333333333333,
+     "bilateralOk": false,
+     "lean": 89.53467598154205,
+     "yaw": 9.993035656331744
+    },
+    {
+     "when": "hold",
+     "st": "L",
+     "dir": "L",
+     "m": 5,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 1.8153865488796763,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 2.6478219386348343,
+     "yaw": 1.3334224622295823
+    },
+    {
+     "when": "hold",
+     "st": "L",
+     "dir": "L",
+     "m": 10,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 10.241391527846769,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 5.52913425473132,
+     "yaw": 2.1955519174410316
+    },
+    {
+     "when": "hold",
+     "st": "R",
+     "dir": "R",
+     "m": 10,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 10.246370934534053,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 5.527994121440793,
+     "yaw": 2.1888255112133677
+    },
+    {
+     "when": "hold",
+     "st": "R",
+     "dir": "FL",
+     "m": 5,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.26668920260784695,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 1.7814821872046291,
+     "yaw": 2.249191804868674
+    },
+    {
+     "when": "hold",
+     "st": "L",
+     "dir": "FR",
+     "m": 5,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.265883486529306,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 1.7808480424219475,
+     "yaw": 2.249589620975262
+    },
+    {
+     "when": "hold",
+     "st": "R",
+     "dir": "FL",
+     "m": 10,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.2833140779494067,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 3.6175786572946595,
+     "yaw": 4.008973629590452
+    },
+    {
+     "when": "hold",
+     "st": "L",
+     "dir": "FR",
+     "m": 10,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.27102812121889325,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 3.6161977633250566,
+     "yaw": 4.011086470433659
+    },
+    {
+     "when": "hold",
+     "st": "R",
+     "dir": "FL",
+     "m": 15,
+     "outcome": "recovered",
+     "cls": "recovered (aborted)",
+     "slip": 0.2746243227619289,
+     "abortT": 4.0875,
+     "bilateralOk": true,
+     "lean": 5.180883294638425,
+     "yaw": 6.430377755592774
+    },
+    {
+     "when": "hold",
+     "st": "L",
+     "dir": "FR",
+     "m": 15,
+     "outcome": "recovered",
+     "cls": "recovered (aborted)",
+     "slip": 0.27764415220194416,
+     "abortT": 4.0875,
+     "bilateralOk": true,
+     "lean": 5.180467057453755,
+     "yaw": 6.430547740280086
+    },
+    {
+     "when": "hold",
+     "st": "R",
+     "dir": "FL",
+     "m": 20,
+     "outcome": "recovered",
+     "cls": "recovered (aborted)",
+     "slip": 3.713997894450537,
+     "abortT": 4.070833333333333,
+     "bilateralOk": true,
+     "lean": 7.192843496666781,
+     "yaw": 7.070488521882325
+    },
+    {
+     "when": "hold",
+     "st": "L",
+     "dir": "FR",
+     "m": 20,
+     "outcome": "recovered",
+     "cls": "recovered (aborted)",
+     "slip": 3.7696960915838678,
+     "abortT": 4.070833333333333,
+     "bilateralOk": true,
+     "lean": 7.198676662334358,
+     "yaw": 7.051241647053633
+    },
+    {
+     "when": "hold",
+     "st": "R",
+     "dir": "FR",
+     "m": 5,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.48509257414275075,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 1.8315250628404427,
+     "yaw": 1.3308471087018279
+    },
+    {
+     "when": "hold",
+     "st": "L",
+     "dir": "FL",
+     "m": 5,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.5016421555036251,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 1.832811493660662,
+     "yaw": 1.3334224622295823
+    },
+    {
+     "when": "hold",
+     "st": "R",
+     "dir": "FR",
+     "m": 20,
+     "outcome": "step required → fell",
+     "cls": "step required → fell (aborted)",
+     "slip": 2143.5942474946946,
+     "abortT": 4.1125,
+     "bilateralOk": true,
+     "lean": 72.3497671529296,
+     "yaw": 103.9278234265806
+    },
+    {
+     "when": "hold",
+     "st": "L",
+     "dir": "FL",
+     "m": 20,
+     "outcome": "step required → fell",
+     "cls": "step required → fell (aborted)",
+     "slip": 2057.219079493512,
+     "abortT": 4.1125,
+     "bilateralOk": true,
+     "lean": 49.16053473973355,
+     "yaw": 99.74579148977364
+    },
+    {
+     "when": "hold",
+     "st": "R",
+     "dir": "FR",
+     "m": 10,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 5.144960299525943,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 3.9318381343212843,
+     "yaw": 2.4158560975385788
+    },
+    {
+     "when": "hold",
+     "st": "L",
+     "dir": "FL",
+     "m": 10,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 5.146673146929881,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 3.9331810529436497,
+     "yaw": 2.419650753617407
+    },
+    {
+     "when": "hold",
+     "st": "R",
+     "dir": "FR",
+     "m": 15,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 10.469371538379697,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 6.104738061577649,
+     "yaw": 3.964060920413219
+    },
+    {
+     "when": "hold",
+     "st": "L",
+     "dir": "FL",
+     "m": 15,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 10.473932119835505,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 6.105361757899037,
+     "yaw": 3.9704141253309118
+    },
+    {
+     "when": "hold",
+     "st": "R",
+     "dir": "BL",
+     "m": 5,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.2677322596038376,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 1.7405947277247422,
+     "yaw": 2.096558194946504
+    },
+    {
+     "when": "hold",
+     "st": "L",
+     "dir": "BR",
+     "m": 5,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.2664476155196759,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 1.740503700640012,
+     "yaw": 2.098933772077475
+    },
+    {
+     "when": "hold",
+     "st": "R",
+     "dir": "BL",
+     "m": 10,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.2802218296377042,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 3.492732652360719,
+     "yaw": 2.088306668284503
+    },
+    {
+     "when": "hold",
+     "st": "L",
+     "dir": "BR",
+     "m": 10,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.26959615791355956,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 3.492456074437964,
+     "yaw": 2.092136913625906
+    },
+    {
+     "when": "hold",
+     "st": "R",
+     "dir": "BL",
+     "m": 15,
+     "outcome": "recovered",
+     "cls": "recovered (aborted)",
+     "slip": 0.3055515707317184,
+     "abortT": 4.095833333333333,
+     "bilateralOk": true,
+     "lean": 5.258208093035421,
+     "yaw": 1.5957040666260303
+    },
+    {
+     "when": "hold",
+     "st": "L",
+     "dir": "BR",
+     "m": 15,
+     "outcome": "recovered",
+     "cls": "recovered (aborted)",
+     "slip": 0.2870803013540388,
+     "abortT": 4.095833333333333,
+     "bilateralOk": true,
+     "lean": 5.257139232381622,
+     "yaw": 1.5947520870490093
+    },
+    {
+     "when": "hold",
+     "st": "R",
+     "dir": "BL",
+     "m": 20,
+     "outcome": "recovered",
+     "cls": "recovered (aborted)",
+     "slip": 0.3202789254174726,
+     "abortT": 4.075,
+     "bilateralOk": true,
+     "lean": 7.0504900328061835,
+     "yaw": 2.253726671999367
+    },
+    {
+     "when": "hold",
+     "st": "R",
+     "dir": "BR",
+     "m": 5,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.4796000350931642,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 1.8238872714223213,
+     "yaw": 1.3308471087018279
+    },
+    {
+     "when": "hold",
+     "st": "L",
+     "dir": "BR",
+     "m": 20,
+     "outcome": "recovered",
+     "cls": "recovered (aborted)",
+     "slip": 0.29623029455492716,
+     "abortT": 4.075,
+     "bilateralOk": true,
+     "lean": 7.049186360844503,
+     "yaw": 2.2510667455778597
+    },
+    {
+     "when": "hold",
+     "st": "R",
+     "dir": "BR",
+     "m": 15,
+     "outcome": "step required → fell",
+     "cls": "step required → fell (aborted)",
+     "slip": 1579.5634241355892,
+     "abortT": 4.1125,
+     "bilateralOk": false,
+     "lean": 79.390302985872,
+     "yaw": 16.52213331657366
+    },
+    {
+     "when": "hold",
+     "st": "L",
+     "dir": "BL",
+     "m": 15,
+     "outcome": "step required → fell",
+     "cls": "step required → fell (aborted)",
+     "slip": 1557.5212812902805,
+     "abortT": 4.1125,
+     "bilateralOk": false,
+     "lean": 78.63818631610181,
+     "yaw": 16.366575930553225
+    },
+    {
+     "when": "hold",
+     "st": "L",
+     "dir": "BL",
+     "m": 5,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.5034745041198769,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 1.8245379656024037,
+     "yaw": 1.3334224622295823
+    },
+    {
+     "when": "hold",
+     "st": "L",
+     "dir": "BL",
+     "m": 20,
+     "outcome": "step required → fell",
+     "cls": "step required → fell (aborted)",
+     "slip": 1159.385864351551,
+     "abortT": 4.091666666666667,
+     "bilateralOk": false,
+     "lean": 79.07971597164813,
+     "yaw": 20.647327862986707
+    },
+    {
+     "when": "hold",
+     "st": "R",
+     "dir": "BR",
+     "m": 20,
+     "outcome": "step required → fell",
+     "cls": "step required → fell (aborted)",
+     "slip": 1135.75666273528,
+     "abortT": 4.091666666666667,
+     "bilateralOk": false,
+     "lean": 79.49252453685574,
+     "yaw": 20.55952331952689
+    },
+    {
+     "when": "hold",
+     "st": "R",
+     "dir": "BR",
+     "m": 10,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 5.231757053624726,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 3.8355661704271613,
+     "yaw": 1.4503061546488345
+    },
+    {
+     "when": "ramp",
+     "st": "R",
+     "dir": "F",
+     "m": 20,
+     "outcome": "step required → fell",
+     "cls": "step required → fell (aborted)",
+     "slip": 1605.7487631249824,
+     "abortT": 2.341666666666667,
+     "bilateralOk": false,
+     "lean": 34.493402740889906,
+     "yaw": 173.5497131971937
+    },
+    {
+     "when": "hold",
+     "st": "L",
+     "dir": "BL",
+     "m": 10,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 5.265398047956599,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 3.837502921300012,
+     "yaw": 1.4589587278283158
+    },
+    {
+     "when": "ramp",
+     "st": "L",
+     "dir": "F",
+     "m": 20,
+     "outcome": "step required → fell",
+     "cls": "step required → fell (aborted)",
+     "slip": 1665.0264183882882,
+     "abortT": 2.341666666666667,
+     "bilateralOk": false,
+     "lean": 34.60764944981454,
+     "yaw": 170.60163914631465
+    },
+    {
+     "when": "ramp",
+     "st": "R",
+     "dir": "F",
+     "m": 5,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.26668641651589753,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 0.6000959846268795,
+     "yaw": 1.8513396532533164
+    },
+    {
+     "when": "ramp",
+     "st": "L",
+     "dir": "F",
+     "m": 5,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.2702705108446944,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 0.6009812685329571,
+     "yaw": 1.849976388792134
+    },
+    {
+     "when": "ramp",
+     "st": "R",
+     "dir": "F",
+     "m": 10,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.27897012314167297,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 0.6349602462827669,
+     "yaw": 2.552834759830541
+    },
+    {
+     "when": "ramp",
+     "st": "R",
+     "dir": "F",
+     "m": 15,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 1.102488765492352,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 0.7744768731289231,
+     "yaw": 3.19053606705941
+    },
+    {
+     "when": "ramp",
+     "st": "L",
+     "dir": "F",
+     "m": 10,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.27916244289018294,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 0.6364912817874,
+     "yaw": 2.548053162221924
+    },
+    {
+     "when": "ramp",
+     "st": "L",
+     "dir": "F",
+     "m": 15,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 1.0527643562185898,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 0.7683470976883888,
+     "yaw": 3.1837159943826747
+    },
+    {
+     "when": "ramp",
+     "st": "R",
+     "dir": "B",
+     "m": 20,
+     "outcome": "step required → fell",
+     "cls": "step required → fell (aborted)",
+     "slip": 983.8924051510623,
+     "abortT": 2.341666666666667,
+     "bilateralOk": false,
+     "lean": 49.380289979139974,
+     "yaw": 179.9732059317509
+    },
+    {
+     "when": "ramp",
+     "st": "L",
+     "dir": "B",
+     "m": 20,
+     "outcome": "step required → fell",
+     "cls": "step required → fell (aborted)",
+     "slip": 632.7862213073811,
+     "abortT": 2.341666666666667,
+     "bilateralOk": false,
+     "lean": 89.64322704602122,
+     "yaw": 179.05090202866418
+    },
+    {
+     "when": "ramp",
+     "st": "R",
+     "dir": "B",
+     "m": 5,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.2666907266461098,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 0.5752120824011687,
+     "yaw": 1.5662028572880977
+    },
+    {
+     "when": "ramp",
+     "st": "L",
+     "dir": "B",
+     "m": 5,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.27604200530887973,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 0.574837269987988,
+     "yaw": 1.5658541057781894
+    },
+    {
+     "when": "ramp",
+     "st": "R",
+     "dir": "B",
+     "m": 10,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.2737909493839691,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 0.5720344239566534,
+     "yaw": 1.744583259485859
+    },
+    {
+     "when": "ramp",
+     "st": "L",
+     "dir": "B",
+     "m": 10,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.2712370046987961,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 0.5719810619145436,
+     "yaw": 1.743957013248637
+    },
+    {
+     "when": "ramp",
+     "st": "R",
+     "dir": "B",
+     "m": 15,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.2952790917949344,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 0.5719820445418385,
+     "yaw": 2.0043576127104368
+    },
+    {
+     "when": "ramp",
+     "st": "L",
+     "dir": "B",
+     "m": 15,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.303446107961339,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 0.571980977305773,
+     "yaw": 2.003417147082159
+    },
+    {
+     "when": "ramp",
+     "st": "R",
+     "dir": "L",
+     "m": 5,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.27011984314560633,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 1.9570794637837903,
+     "yaw": 1.0750188868455244
+    },
+    {
+     "when": "ramp",
+     "st": "L",
+     "dir": "R",
+     "m": 10,
+     "outcome": "recovered",
+     "cls": "recovered (aborted)",
+     "slip": 0.267439419128661,
+     "abortT": 2.341666666666667,
+     "bilateralOk": true,
+     "lean": 4.4751067599085905,
+     "yaw": 2.2425078620008785
+    },
+    {
+     "when": "ramp",
+     "st": "L",
+     "dir": "R",
+     "m": 5,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.2636473836635972,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 1.9565095532508194,
+     "yaw": 1.0782594463742026
+    },
+    {
+     "when": "ramp",
+     "st": "R",
+     "dir": "L",
+     "m": 15,
+     "outcome": "recovered",
+     "cls": "recovered (aborted)",
+     "slip": 0.2780883635625326,
+     "abortT": 2.341666666666667,
+     "bilateralOk": true,
+     "lean": 6.643019764395769,
+     "yaw": 3.628813884305215
+    },
+    {
+     "when": "ramp",
+     "st": "R",
+     "dir": "L",
+     "m": 10,
+     "outcome": "recovered",
+     "cls": "recovered (aborted)",
+     "slip": 0.28022384071295064,
+     "abortT": 2.341666666666667,
+     "bilateralOk": true,
+     "lean": 4.476093328628408,
+     "yaw": 2.2446627886027524
+    },
+    {
+     "when": "ramp",
+     "st": "L",
+     "dir": "R",
+     "m": 15,
+     "outcome": "recovered",
+     "cls": "recovered (aborted)",
+     "slip": 0.2735726223962075,
+     "abortT": 2.341666666666667,
+     "bilateralOk": true,
+     "lean": 6.64197585843078,
+     "yaw": 3.6315441764200074
+    },
+    {
+     "when": "ramp",
+     "st": "R",
+     "dir": "L",
+     "m": 20,
+     "outcome": "recovered",
+     "cls": "recovered (aborted)",
+     "slip": 1.436429396047484,
+     "abortT": 2.341666666666667,
+     "bilateralOk": true,
+     "lean": 8.845620688527074,
+     "yaw": 5.177775034442604
+    },
+    {
+     "when": "ramp",
+     "st": "L",
+     "dir": "R",
+     "m": 20,
+     "outcome": "recovered",
+     "cls": "recovered (aborted)",
+     "slip": 1.435917310849438,
+     "abortT": 2.341666666666667,
+     "bilateralOk": true,
+     "lean": 8.842455659066697,
+     "yaw": 5.180235437790483
+    },
+    {
+     "when": "ramp",
+     "st": "R",
+     "dir": "R",
+     "m": 15,
+     "outcome": "step required → fell",
+     "cls": "step required → fell (aborted)",
+     "slip": 1704.9150493446505,
+     "abortT": 2.341666666666667,
+     "bilateralOk": false,
+     "lean": 87.01137496288428,
+     "yaw": 14.740229959276887
+    },
+    {
+     "when": "ramp",
+     "st": "L",
+     "dir": "L",
+     "m": 15,
+     "outcome": "step required → fell",
+     "cls": "step required → fell (aborted)",
+     "slip": 1712.282052145666,
+     "abortT": 2.341666666666667,
+     "bilateralOk": false,
+     "lean": 89.22774615300096,
+     "yaw": 14.923375428833548
+    },
+    {
+     "when": "ramp",
+     "st": "R",
+     "dir": "R",
+     "m": 20,
+     "outcome": "step required → fell",
+     "cls": "step required → fell (aborted)",
+     "slip": 1825.4063878082268,
+     "abortT": 2.341666666666667,
+     "bilateralOk": false,
+     "lean": 89.42670893793279,
+     "yaw": 14.51518256336848
+    },
+    {
+     "when": "ramp",
+     "st": "L",
+     "dir": "L",
+     "m": 20,
+     "outcome": "step required → fell",
+     "cls": "step required → fell (aborted)",
+     "slip": 1833.6687805346003,
+     "abortT": 2.341666666666667,
+     "bilateralOk": false,
+     "lean": 89.56270525835137,
+     "yaw": 15.644529881467847
+    },
+    {
+     "when": "ramp",
+     "st": "R",
+     "dir": "R",
+     "m": 5,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.2715476391829512,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 3.0958132523601547,
+     "yaw": 2.577295735729094
+    },
+    {
+     "when": "ramp",
+     "st": "L",
+     "dir": "L",
+     "m": 5,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.27516140759455265,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 3.0964819915923316,
+     "yaw": 2.576184057743503
+    },
+    {
+     "when": "ramp",
+     "st": "R",
+     "dir": "R",
+     "m": 10,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 11.894449554126394,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 5.866068439094309,
+     "yaw": 4.1967000031214114
+    },
+    {
+     "when": "ramp",
+     "st": "L",
+     "dir": "L",
+     "m": 10,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 11.892052781495329,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 5.868353185465086,
+     "yaw": 4.200723670705743
+    },
+    {
+     "when": "ramp",
+     "st": "R",
+     "dir": "FL",
+     "m": 5,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.26843481838426186,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 1.212392932415634,
+     "yaw": 1.0674786260628988
+    },
+    {
+     "when": "ramp",
+     "st": "L",
+     "dir": "FR",
+     "m": 5,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.27893274447376015,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 1.2116570981896004,
+     "yaw": 1.0646967301791783
+    },
+    {
+     "when": "ramp",
+     "st": "L",
+     "dir": "FR",
+     "m": 10,
+     "outcome": "recovered",
+     "cls": "recovered (aborted)",
+     "slip": 0.2700801173200018,
+     "abortT": 2.341666666666667,
+     "bilateralOk": true,
+     "lean": 3.0159396693380125,
+     "yaw": 3.528887245053233
+    },
+    {
+     "when": "ramp",
+     "st": "R",
+     "dir": "FL",
+     "m": 10,
+     "outcome": "recovered",
+     "cls": "recovered (aborted)",
+     "slip": 0.28233311122267696,
+     "abortT": 2.341666666666667,
+     "bilateralOk": true,
+     "lean": 3.017324248275897,
+     "yaw": 3.532269906009963
+    },
+    {
+     "when": "ramp",
+     "st": "R",
+     "dir": "FL",
+     "m": 15,
+     "outcome": "recovered",
+     "cls": "recovered (aborted)",
+     "slip": 0.28352977626711245,
+     "abortT": 2.341666666666667,
+     "bilateralOk": true,
+     "lean": 4.630358031136789,
+     "yaw": 6.580072547346565
+    },
+    {
+     "when": "ramp",
+     "st": "L",
+     "dir": "FR",
+     "m": 15,
+     "outcome": "recovered",
+     "cls": "recovered (aborted)",
+     "slip": 0.2768732997884896,
+     "abortT": 2.341666666666667,
+     "bilateralOk": true,
+     "lean": 4.629170973731599,
+     "yaw": 6.572787958166302
+    },
+    {
+     "when": "ramp",
+     "st": "R",
+     "dir": "FL",
+     "m": 20,
+     "outcome": "recovered",
+     "cls": "recovered (aborted)",
+     "slip": 2.7940860294587067,
+     "abortT": 2.341666666666667,
+     "bilateralOk": true,
+     "lean": 6.587915715068062,
+     "yaw": 7.391299594527868
+    },
+    {
+     "when": "ramp",
+     "st": "L",
+     "dir": "FR",
+     "m": 20,
+     "outcome": "recovered",
+     "cls": "recovered (aborted)",
+     "slip": 2.8369324998206276,
+     "abortT": 2.341666666666667,
+     "bilateralOk": true,
+     "lean": 6.59175050118927,
+     "yaw": 7.393539655800521
+    },
+    {
+     "when": "ramp",
+     "st": "R",
+     "dir": "FR",
+     "m": 20,
+     "outcome": "step required → fell",
+     "cls": "step required → fell (aborted)",
+     "slip": 2111.725499014106,
+     "abortT": 2.341666666666667,
+     "bilateralOk": false,
+     "lean": 40.68390369112577,
+     "yaw": 121.82810273919127
+    },
+    {
+     "when": "ramp",
+     "st": "R",
+     "dir": "FR",
+     "m": 5,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.26822231295664595,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 2.3915299958428493,
+     "yaw": 2.884860219657147
+    },
+    {
+     "when": "ramp",
+     "st": "L",
+     "dir": "FL",
+     "m": 20,
+     "outcome": "step required → fell",
+     "cls": "step required → fell (aborted)",
+     "slip": 2104.2432743865834,
+     "abortT": 2.341666666666667,
+     "bilateralOk": false,
+     "lean": 40.64797950088768,
+     "yaw": 118.28046366829906
+    },
+    {
+     "when": "ramp",
+     "st": "L",
+     "dir": "FL",
+     "m": 5,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.2796850434194078,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 2.392363804856449,
+     "yaw": 2.88256797252159
+    },
+    {
+     "when": "ramp",
+     "st": "R",
+     "dir": "FR",
+     "m": 10,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 3.467168152975476,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 4.551186185901166,
+     "yaw": 4.615634347567869
+    },
+    {
+     "when": "ramp",
+     "st": "L",
+     "dir": "FL",
+     "m": 10,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 3.4909450246976985,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 4.554328070832687,
+     "yaw": 4.615592090373304
+    },
+    {
+     "when": "ramp",
+     "st": "R",
+     "dir": "FR",
+     "m": 15,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 14.005646945765564,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 6.745689074043365,
+     "yaw": 5.301610432962484
+    },
+    {
+     "when": "ramp",
+     "st": "L",
+     "dir": "FL",
+     "m": 15,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 14.025471752373678,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 6.747877385346088,
+     "yaw": 5.305010410828944
+    },
+    {
+     "when": "ramp",
+     "st": "R",
+     "dir": "BL",
+     "m": 5,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.27014800375959075,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 1.2264825980204157,
+     "yaw": 1.3799478820428055
+    },
+    {
+     "when": "ramp",
+     "st": "L",
+     "dir": "BR",
+     "m": 5,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.27835387307785614,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 1.2260141215275813,
+     "yaw": 1.3802449021000496
+    },
+    {
+     "when": "ramp",
+     "st": "R",
+     "dir": "BL",
+     "m": 10,
+     "outcome": "recovered",
+     "cls": "recovered (aborted)",
+     "slip": 0.2762338209642131,
+     "abortT": 2.341666666666667,
+     "bilateralOk": true,
+     "lean": 3.0100243394211676,
+     "yaw": 1.2508705426276587
+    },
+    {
+     "when": "ramp",
+     "st": "L",
+     "dir": "BR",
+     "m": 10,
+     "outcome": "recovered",
+     "cls": "recovered (aborted)",
+     "slip": 0.2710193643082462,
+     "abortT": 2.341666666666667,
+     "bilateralOk": true,
+     "lean": 3.0087631867522715,
+     "yaw": 1.2535493877132335
+    },
+    {
+     "when": "ramp",
+     "st": "R",
+     "dir": "BL",
+     "m": 15,
+     "outcome": "recovered",
+     "cls": "recovered (aborted)",
+     "slip": 0.2927890355165769,
+     "abortT": 2.341666666666667,
+     "bilateralOk": true,
+     "lean": 4.813630362460095,
+     "yaw": 1.7589333655213952
+    },
+    {
+     "when": "ramp",
+     "st": "L",
+     "dir": "BR",
+     "m": 15,
+     "outcome": "recovered",
+     "cls": "recovered (aborted)",
+     "slip": 0.28088685354855025,
+     "abortT": 2.341666666666667,
+     "bilateralOk": true,
+     "lean": 4.812019814624389,
+     "yaw": 1.7599101181491985
+    },
+    {
+     "when": "ramp",
+     "st": "R",
+     "dir": "BR",
+     "m": 15,
+     "outcome": "step required → fell",
+     "cls": "step required → fell (aborted)",
+     "slip": 1670.6230515899747,
+     "abortT": 2.4833333333333334,
+     "bilateralOk": true,
+     "lean": 89.31189967155818,
+     "yaw": 15.830110899250874
+    },
+    {
+     "when": "ramp",
+     "st": "R",
+     "dir": "BL",
+     "m": 20,
+     "outcome": "recovered",
+     "cls": "recovered (aborted)",
+     "slip": 0.43941273780497986,
+     "abortT": 2.341666666666667,
+     "bilateralOk": true,
+     "lean": 6.65514077000579,
+     "yaw": 4.089602715092577
+    },
+    {
+     "when": "ramp",
+     "st": "L",
+     "dir": "BR",
+     "m": 20,
+     "outcome": "recovered",
+     "cls": "recovered (aborted)",
+     "slip": 0.37523772181116494,
+     "abortT": 2.341666666666667,
+     "bilateralOk": true,
+     "lean": 6.653129268928754,
+     "yaw": 4.085020438049243
+    },
+    {
+     "when": "ramp",
+     "st": "R",
+     "dir": "BR",
+     "m": 5,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.2702682749481845,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 2.3287383735710554,
+     "yaw": 1.7622301365816295
+    },
+    {
+     "when": "ramp",
+     "st": "L",
+     "dir": "BL",
+     "m": 15,
+     "outcome": "step required → fell",
+     "cls": "step required → fell (aborted)",
+     "slip": 1621.0595037295384,
+     "abortT": 2.4833333333333334,
+     "bilateralOk": true,
+     "lean": 88.53373745895327,
+     "yaw": 15.915812501062748
+    },
+    {
+     "when": "ramp",
+     "st": "R",
+     "dir": "BR",
+     "m": 20,
+     "outcome": "step required → fell",
+     "cls": "step required → fell (aborted)",
+     "slip": 1095.90252692098,
+     "abortT": 2.341666666666667,
+     "bilateralOk": false,
+     "lean": 81.25061755967982,
+     "yaw": 20.149690063889526
+    },
+    {
+     "when": "ramp",
+     "st": "L",
+     "dir": "BL",
+     "m": 20,
+     "outcome": "step required → fell",
+     "cls": "step required → fell (aborted)",
+     "slip": 1165.9138851527719,
+     "abortT": 2.341666666666667,
+     "bilateralOk": false,
+     "lean": 83.14647775322527,
+     "yaw": 20.136666648599462
+    },
+    {
+     "when": "ramp",
+     "st": "R",
+     "dir": "BR",
+     "m": 10,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 1.5962649390347914,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 4.109662200452553,
+     "yaw": 1.8012779114320827
+    },
+    {
+     "when": "ramp",
+     "st": "L",
+     "dir": "BL",
+     "m": 10,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 1.5669868709484314,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 4.110221411199539,
+     "yaw": 1.7998484461633335
+    },
+    {
+     "when": "ramp",
+     "st": "L",
+     "dir": "BL",
+     "m": 5,
+     "outcome": "recovered",
+     "cls": "recovered",
+     "slip": 0.27468800878183974,
+     "abortT": null,
+     "bilateralOk": null,
+     "lean": 2.329287786707529,
+     "yaw": 1.7640854826412418
+    }
+   ]
+  },
+  {
+   "id": "I2",
+   "name": "every body variant: near-single-support (T9, both holds) and swing-ready (U, both sides)",
+   "pass": true,
+   "value": "8/8 · V2-165-62: T9 stood, R: unloaded foot ≤ 4.07 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.3 cm; stance foot settled min 95.93 % / mean 96.60 % (v1 window min 95.36 %); L: unloaded foot ≤ 4.09 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.3 cm; stance foot settled min 95.91 % / mean 96.59 % (v1 window min 95.33 %); U:R ✓ ( unloaded foot ≤ 0.50 % BW (contact lost 0.00 s), slip 0.26 mm, lift 0.00 mm, tilt 0.17°), U:L ✓ ( unloaded foot ≤ 0.49 % BW (contact lost 0.00 s), slip 0.26 mm, lift 0.00 mm, tilt 0.17°) · V2-175-70: T9 stood, R: unloaded foot ≤ 4.08 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.5 cm; stance foot settled min 95.92 % / mean 96.59 % (v1 window min 95.36 %); L: unloaded foot ≤ 4.10 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.5 cm; stance foot settled min 95.90 % / mean 96.58 % (v1 window min 95.33 %); U:R ✓ ( unloaded foot ≤ 0.51 % BW (contact lost 0.00 s), slip 0.26 mm, lift 0.00 mm, tilt 0.16°), U:L ✓ ( unloaded foot ≤ 0.51 % BW (contact lost 0.00 s), slip 0.26 mm, lift 0.00 mm, tilt 0.16°) · V2-REF: T9 stood, R: unloaded foot ≤ 4.08 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.6 cm; stance foot settled min 95.92 % / mean 96.59 % (v1 window min 95.37 %); L: unloaded foot ≤ 4.10 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.6 cm; stance foot settled min 95.90 % / mean 96.58 % (v1 window min 95.34 %); U:R ✓ ( unloaded foot ≤ 0.52 % BW (contact lost 0.00 s), slip 0.26 mm, lift 0.00 mm, tilt 0.16°), U:L ✓ ( unloaded foot ≤ 0.52 % BW (contact lost 0.00 s), slip 0.28 mm, lift 0.00 mm, tilt 0.16°) · V2-190-85: T9 stood, R: unloaded foot ≤ 4.09 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.8 cm; stance foot settled min 95.91 % / mean 96.57 % (v1 window min 95.36 %); L: unloaded foot ≤ 4.13 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.8 cm; stance foot settled min 95.87 % / mean 96.57 % (v1 window min 95.34 %); U:R ✓ ( unloaded foot ≤ 0.53 % BW (contact lost 0.00 s), slip 0.29 mm, lift 0.00 mm, tilt 0.15°), U:L ✓ ( unloaded foot ≤ 0.53 % BW (contact lost 0.00 s), slip 0.35 mm, lift 0.00 mm, tilt 0.15°) · V2-198-92: T9 stood, R: unloaded foot ≤ 4.10 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 4.0 cm; stance foot settled min 95.90 % / mean 96.56 % (v1 window min 95.33 %); L: unloaded foot ≤ 4.12 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 4.0 cm; stance foot settled min 95.88 % / mean 96.55 % (v1 window min 95.25 %); U:R ✓ ( unloaded foot ≤ 0.56 % BW (contact lost 0.00 s), slip 0.73 mm, lift 0.00 mm, tilt 0.14°), U:L ✓ ( unloaded foot ≤ 0.56 % BW (contact lost 0.00 s), slip 0.66 mm, lift 0.00 mm, tilt 0.14°) · V2-long-legs: T9 stood, R: unloaded foot ≤ 3.81 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.7 cm; stance foot settled min 96.19 % / mean 96.70 % (v1 window min 95.76 %); L: unloaded foot ≤ 3.82 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.7 cm; stance foot settled min 96.18 % / mean 96.70 % (v1 window min 95.74 %); U:R ✓ ( unloaded foot ≤ 0.37 % BW (contact lost 0.00 s), slip 0.26 mm, lift 0.00 mm, tilt 0.16°), U:L ✓ ( unloaded foot ≤ 0.37 % BW (contact lost 0.00 s), slip 0.27 mm, lift 0.00 mm, tilt 0.16°) · V2-short-legs: T9 stood, R: unloaded foot ≤ 4.44 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.6 cm; stance foot settled min 95.56 % / mean 96.43 % (v1 window min 94.88 %); L: unloaded foot ≤ 4.47 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.6 cm; stance foot settled min 95.53 % / mean 96.42 % (v1 window min 94.83 %); U:R ✓ ( unloaded foot ≤ 0.72 % BW (contact lost 0.00 s), slip 0.26 mm, lift 0.00 mm, tilt 0.16°), U:L ✓ ( unloaded foot ≤ 0.72 % BW (contact lost 0.00 s), slip 0.26 mm, lift 0.00 mm, tilt 0.16°) · V1-matched: T9 stood, R: unloaded foot ≤ 4.11 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.8 cm; stance foot settled min 95.89 % / mean 96.57 % (v1 window min 95.33 %); L: unloaded foot ≤ 4.14 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.8 cm; stance foot settled min 95.86 % / mean 96.56 % (v1 window min 95.30 %); U:R ✓ ( unloaded foot ≤ 0.54 % BW (contact lost 0.00 s), slip 0.26 mm, lift 0.00 mm, tilt 0.15°), U:L ✓ ( unloaded foot ≤ 0.54 % BW (contact lost 0.00 s), slip 0.26 mm, lift 0.00 mm, tilt 0.15°)",
+   "limit": "8/8",
+   "rows": [
+    {
+     "human": "V2-165-62",
+     "pass": true,
+     "v": "V2-165-62: T9 stood, R: unloaded foot ≤ 4.07 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.3 cm; stance foot settled min 95.93 % / mean 96.60 % (v1 window min 95.36 %); L: unloaded foot ≤ 4.09 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.3 cm; stance foot settled min 95.91 % / mean 96.59 % (v1 window min 95.33 %); U:R ✓ ( unloaded foot ≤ 0.50 % BW (contact lost 0.00 s), slip 0.26 mm, lift 0.00 mm, tilt 0.17°), U:L ✓ ( unloaded foot ≤ 0.49 % BW (contact lost 0.00 s), slip 0.26 mm, lift 0.00 mm, tilt 0.17°)"
+    },
+    {
+     "human": "V2-175-70",
+     "pass": true,
+     "v": "V2-175-70: T9 stood, R: unloaded foot ≤ 4.08 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.5 cm; stance foot settled min 95.92 % / mean 96.59 % (v1 window min 95.36 %); L: unloaded foot ≤ 4.10 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.5 cm; stance foot settled min 95.90 % / mean 96.58 % (v1 window min 95.33 %); U:R ✓ ( unloaded foot ≤ 0.51 % BW (contact lost 0.00 s), slip 0.26 mm, lift 0.00 mm, tilt 0.16°), U:L ✓ ( unloaded foot ≤ 0.51 % BW (contact lost 0.00 s), slip 0.26 mm, lift 0.00 mm, tilt 0.16°)"
+    },
+    {
+     "human": "V2-REF",
+     "pass": true,
+     "v": "V2-REF: T9 stood, R: unloaded foot ≤ 4.08 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.6 cm; stance foot settled min 95.92 % / mean 96.59 % (v1 window min 95.37 %); L: unloaded foot ≤ 4.10 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.6 cm; stance foot settled min 95.90 % / mean 96.58 % (v1 window min 95.34 %); U:R ✓ ( unloaded foot ≤ 0.52 % BW (contact lost 0.00 s), slip 0.26 mm, lift 0.00 mm, tilt 0.16°), U:L ✓ ( unloaded foot ≤ 0.52 % BW (contact lost 0.00 s), slip 0.28 mm, lift 0.00 mm, tilt 0.16°)"
+    },
+    {
+     "human": "V2-190-85",
+     "pass": true,
+     "v": "V2-190-85: T9 stood, R: unloaded foot ≤ 4.09 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.8 cm; stance foot settled min 95.91 % / mean 96.57 % (v1 window min 95.36 %); L: unloaded foot ≤ 4.13 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.8 cm; stance foot settled min 95.87 % / mean 96.57 % (v1 window min 95.34 %); U:R ✓ ( unloaded foot ≤ 0.53 % BW (contact lost 0.00 s), slip 0.29 mm, lift 0.00 mm, tilt 0.15°), U:L ✓ ( unloaded foot ≤ 0.53 % BW (contact lost 0.00 s), slip 0.35 mm, lift 0.00 mm, tilt 0.15°)"
+    },
+    {
+     "human": "V2-198-92",
+     "pass": true,
+     "v": "V2-198-92: T9 stood, R: unloaded foot ≤ 4.10 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 4.0 cm; stance foot settled min 95.90 % / mean 96.56 % (v1 window min 95.33 %); L: unloaded foot ≤ 4.12 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 4.0 cm; stance foot settled min 95.88 % / mean 96.55 % (v1 window min 95.25 %); U:R ✓ ( unloaded foot ≤ 0.56 % BW (contact lost 0.00 s), slip 0.73 mm, lift 0.00 mm, tilt 0.14°), U:L ✓ ( unloaded foot ≤ 0.56 % BW (contact lost 0.00 s), slip 0.66 mm, lift 0.00 mm, tilt 0.14°)"
+    },
+    {
+     "human": "V2-long-legs",
+     "pass": true,
+     "v": "V2-long-legs: T9 stood, R: unloaded foot ≤ 3.81 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.7 cm; stance foot settled min 96.19 % / mean 96.70 % (v1 window min 95.76 %); L: unloaded foot ≤ 3.82 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.7 cm; stance foot settled min 96.18 % / mean 96.70 % (v1 window min 95.74 %); U:R ✓ ( unloaded foot ≤ 0.37 % BW (contact lost 0.00 s), slip 0.26 mm, lift 0.00 mm, tilt 0.16°), U:L ✓ ( unloaded foot ≤ 0.37 % BW (contact lost 0.00 s), slip 0.27 mm, lift 0.00 mm, tilt 0.16°)"
+    },
+    {
+     "human": "V2-short-legs",
+     "pass": true,
+     "v": "V2-short-legs: T9 stood, R: unloaded foot ≤ 4.44 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.6 cm; stance foot settled min 95.56 % / mean 96.43 % (v1 window min 94.88 %); L: unloaded foot ≤ 4.47 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.6 cm; stance foot settled min 95.53 % / mean 96.42 % (v1 window min 94.83 %); U:R ✓ ( unloaded foot ≤ 0.72 % BW (contact lost 0.00 s), slip 0.26 mm, lift 0.00 mm, tilt 0.16°), U:L ✓ ( unloaded foot ≤ 0.72 % BW (contact lost 0.00 s), slip 0.26 mm, lift 0.00 mm, tilt 0.16°)"
+    },
+    {
+     "human": "V1-matched",
+     "pass": true,
+     "v": "V1-matched: T9 stood, R: unloaded foot ≤ 4.11 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.8 cm; stance foot settled min 95.89 % / mean 96.57 % (v1 window min 95.33 %); L: unloaded foot ≤ 4.14 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.8 cm; stance foot settled min 95.86 % / mean 96.56 % (v1 window min 95.30 %); U:R ✓ ( unloaded foot ≤ 0.54 % BW (contact lost 0.00 s), slip 0.26 mm, lift 0.00 mm, tilt 0.15°), U:L ✓ ( unloaded foot ≤ 0.54 % BW (contact lost 0.00 s), slip 0.26 mm, lift 0.00 mm, tilt 0.15°)"
+    }
+   ]
+  },
+  {
+   "id": "J2a",
+   "name": "controller mirror-equivariance: mirrored real input → mirrored output (λ, CoP, share, per-foot CoP / force, joint + actuator commands, support / hold / abort decisions) to the numerical floor",
+   "pass": true,
+   "value": "81/81 pairs; 443496 ticks probed (both directions, up to each fall) · worst: lam 1.11e-16, copMm 6.66e-13, share 1.80e-15, footCopMm 9.38e-13, forceN 1.96e-12, g3OutS 0.00e+0, ikResM 1.62e-15, cmdTauNm 3.21e-11, cmdGain 5.68e-14, actTauNm 3.21e-11, actGain 5.68e-14, actBoundNm 8.78e-12, actCapNm 3.55e-13, activation 1.21e-13, holdMm 0.00e+0, holdRad 0.00e+0 · post-fall ticks (reported, not gated): 3414",
+   "limit": "per-output tolerance = max(10 × floor, 100·ε·scale); discrete decisions identical; replay self-check bit-exact",
+   "worst": {
+    "lam": {
+     "v": 1.1102230246251565e-16,
+     "at": "T7:R:0.25/T7:L:0.25"
+    },
+    "copMm": {
+     "v": 6.661338147750939e-13,
+     "at": "T7:R:0.25/T7:L:0.25"
+    },
+    "share": {
+     "v": 1.8041124150158794e-15,
+     "at": "T8:ramp:R:FR:20/T8:ramp:L:FL:20"
+    },
+    "footCopMm": {
+     "v": 9.381630906110979e-13,
+     "at": "T8:hold:R:BR:10/T8:hold:L:BL:10"
+    },
+    "forceN": {
+     "v": 1.9584702714753794e-12,
+     "at": "T8:ramp:R:FR:20/T8:ramp:L:FL:20"
+    },
+    "g3OutS": {
+     "v": 0,
+     "at": "T7:R:0.25/T7:L:0.25"
+    },
+    "ikResM": {
+     "v": 1.6204958627603824e-15,
+     "at": "T8:ramp:R:BL:10/T8:ramp:L:BR:10"
+    },
+    "cmdTauNm": {
+     "v": 3.205524734539722e-11,
+     "at": "U:R/U:L V2-198-92"
+    },
+    "cmdGain": {
+     "v": 5.684341886080802e-14,
+     "at": "T7:R:0.25/T7:L:0.25"
+    },
+    "actTauNm": {
+     "v": 3.205524734539722e-11,
+     "at": "U:R/U:L V2-198-92"
+    },
+    "actGain": {
+     "v": 5.684341886080802e-14,
+     "at": "T7:R:0.25/T7:L:0.25"
+    },
+    "actBoundNm": {
+     "v": 8.782308213994838e-12,
+     "at": "T5/T6"
+    },
+    "actCapNm": {
+     "v": 3.552713678800501e-13,
+     "at": "T8:ramp:R:FR:5/T8:ramp:L:FL:5"
+    },
+    "activation": {
+     "v": 1.2090328738167955e-13,
+     "at": "T7:R:0.5/T7:L:0.5"
+    },
+    "holdMm": {
+     "v": 0,
+     "at": "U:R/U:L"
+    },
+    "holdRad": {
+     "v": 0,
+     "at": "U:R/U:L"
+    }
+   },
+   "bad": []
+  },
+  {
+   "id": "J2b",
+   "reportOnly": true,
+   "pass": true,
+   "diagnostic": {
+    "pairs": 81,
+    "classes": {
+     "A": {
+      "n": 52,
+      "median": 0.025803685178242643,
+      "p90": 0.07839405036220841,
+      "p99": 0.21864182469268229,
+      "max": 0.27688627275835564
+     },
+     "B": {
+      "n": 15,
+      "median": 0.044598499749112896,
+      "p90": 0.11807721336608229,
+      "p99": 0.12054012679691367,
+      "max": 0.5443794819216288
+     },
+     "C": {
+      "n": 14,
+      "median": 0.03580540614869034,
+      "p90": 0.10583543338978466,
+      "p99": 0.18418978722562673,
+      "max": 0.6646932057621339
+     }
+    },
+    "abortTicks": {
+     "0": 14
+    },
+    "classMismatch": [],
+    "failureWithoutCommonAbort": [],
+    "referenceValues": {
+     "A": 0.5,
+     "B": 10,
+     "C": 2,
+     "abortTicks": 5
+    },
+    "aboveReference": []
+   },
+   "name": "J2b — DIAGNOSTIC (not gating since v3.3): plant mirror divergence of independently evolved mirrored runs, by class",
+   "value": "81 pairs · A (no meaningful slide) n 52: median 0.0258 / p99 0.2186 / max 0.2769 mm · B (slide + recovery) n 15: median 0.045 / max 0.544 mm · C (failure through the common abort) n 14: median 0.036 / max 0.665 mm; abort Δ ticks {\"0\":14} · class mismatches 0; failures without a common abort 0; above the v3.2 reference values (A 0.5 / B 10 / C 2 mm, 5 ticks) 0",
+   "limit": "reported, not gated (v3.3)"
+  },
+  {
+   "id": "K",
+   "name": "T11 excessive request (λ 1.2 / 1.4 / 1.4 supervised) is not realised — it fails physically",
+   "pass": true,
+   "value": "T11:over:1.2: step required → fell · T11:over:1.4: step required → fell · T11:over:1.4:sup: step required → fell (abort 3.93 s, bilateral recovery impossible) · T11:fast:0.25: step required → fell · T11:fast:0.1: stood",
+   "limit": "not stood / recovered; row L"
+  },
+  {
+   "id": "L",
+   "name": "authority 0 / external impulse = scheduled / no over-capacity / energy residual ≤ +0.5 J — every gate run",
+   "pass": true,
+   "value": "162/162 runs; energy residual max -0.295 J, min -691.051 J",
+   "limit": "all"
+  },
+  {
+   "id": "M",
+   "name": "per-foot CoP smooth across boot-piece seams (≤ 5 mm per tick)",
+   "pass": true,
+   "value": "max per-tick per-foot CoP change 0.214 mm over 16 runs; seam crossings per run (L+R) 2–46",
+   "limit": "≤ 5 mm",
+   "rows": [
+    {
+     "k": "T1",
+     "jump": 0.02003138837397393,
+     "seams": [
+      2,
+      0
+     ]
+    },
+    {
+     "k": "T2",
+     "jump": 0.019904912105430942,
+     "seams": [
+      0,
+      2
+     ]
+    },
+    {
+     "k": "U:R",
+     "jump": 0.15147285097140503,
+     "seams": [
+      2,
+      2
+     ]
+    },
+    {
+     "k": "U:L",
+     "jump": 0.1515647348764293,
+     "seams": [
+      2,
+      2
+     ]
+    },
+    {
+     "k": "T6",
+     "jump": 0.12814168609353463,
+     "seams": [
+      2,
+      2
+     ]
+    },
+    {
+     "k": "T5",
+     "jump": 0.12814743347128135,
+     "seams": [
+      2,
+      2
+     ]
+    },
+    {
+     "k": "T3",
+     "jump": 0.03862322714682721,
+     "seams": [
+      2,
+      2
+     ]
+    },
+    {
+     "k": "T4",
+     "jump": 0.21370785330940856,
+     "seams": [
+      26,
+      20
+     ]
+    },
+    {
+     "k": "T9:V2-165-62",
+     "jump": 0.11373285350968057,
+     "seams": [
+      4,
+      4
+     ]
+    },
+    {
+     "k": "T9:V2-175-70",
+     "jump": 0.12217682174153223,
+     "seams": [
+      4,
+      4
+     ]
+    },
+    {
+     "k": "T9:V2-REF",
+     "jump": 0.1279699182968868,
+     "seams": [
+      4,
+      4
+     ]
+    },
+    {
+     "k": "T9:V2-190-85",
+     "jump": 0.1348436891198916,
+     "seams": [
+      4,
+      4
+     ]
+    },
+    {
+     "k": "T9:V2-198-92",
+     "jump": 0.1431510886553002,
+     "seams": [
+      4,
+      6
+     ]
+    },
+    {
+     "k": "T9:V2-long-legs",
+     "jump": 0.12967930150681664,
+     "seams": [
+      4,
+      4
+     ]
+    },
+    {
+     "k": "T9:V2-short-legs",
+     "jump": 0.12596332874591304,
+     "seams": [
+      4,
+      4
+     ]
+    },
+    {
+     "k": "T9:V1-matched",
+     "jump": 0.13476111674751692,
+     "seams": [
+      4,
+      4
+     ]
+    }
+   ]
+  },
+  {
+   "id": "N",
+   "name": "determinism ×3 + snapshot / restore",
+   "pass": true,
+   "value": "U:R ×3 b32be1c7; T5 ×3 601142b0; T3 ×3 4bc1a908; T8:hold:R:R:10 ×3 2c284259 · snapshot T8:hold:R:L:15@3.9s bit-exact, U:R@8s bit-exact, T3@10s bit-exact",
+   "limit": "identical"
+  },
+  {
+   "id": "O",
+   "name": "browser = Node (T5, U:R, T3, T8 hold R push R 10)",
+   "pass": true,
+   "value": "✓ T5 ✓ U:R ✓ T3 ✓ T8:hold:R:R:10",
+   "limit": "4/4 identical"
+  },
+  {
+   "id": "P2",
+   "name": "earlier gates valid: G0 pass; G1 criteria PASS; G1 browser = Node; G2 criteria rows except R (superseded) and 2.5 (→ isolated benchmark ≤ 0.15 ms, controller + actuators, V2-REF quiet stance); G2 browser = Node",
+   "pass": false,
+   "value": "G0 pass; G1 FAIL; G1 browser = Node; G2 rows 10/11 (excl. R, 2.5) FAIL: S4; isolated 2.5 0.0928 ms (in-run, reported: mean 0.436 ms, p99 2.735 ms); G2 browser = Node",
+   "limit": "all"
+  },
+  {
+   "id": "Q",
+   "name": "force-plate twin: whole-body momentum = Σ foot contact impulses + gravity (+ test impulse)",
+   "pass": true,
+   "value": "residual max 4.41e-6 of M·g·dt over 9 runs",
+   "limit": "≤ 1e-3"
+  },
+  {
+   "id": "S2",
+   "name": "controller + actuator computation ≤ 0.15 ms per tick averaged (isolated benchmark, G3 T5; scope B per spec §20)",
+   "pass": true,
+   "value": "controller + actuators: mean 0.0971 ms (trial range 0.0958–0.1012), median 0.0909, p99 0.2165 · controller only: mean 0.0857, median 0.0800, p99 0.2047 · actuator computation ≈ 0.0114 ms · optional IK-timer instrumentation 0.00203 ms/tick; now() 27.5 ns/call; 7 trials, warm-up discarded, load 2.2/4.2/9.5",
+   "limit": "≤ 0.15 ms (mean); median / p99 reported"
+  }
+ ]
+}

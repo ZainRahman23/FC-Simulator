@@ -1,0 +1,134 @@
+{
+ "generated": "tools/phaseG_events.mjs",
+ "human": "V2-REF",
+ "key": "awkward@-0.000001",
+ "hz": 180,
+ "k": 0.11,
+ "thr": 0.05,
+ "windowS": 0.25,
+ "ticks": 1800,
+ "events": 3,
+ "maxStepRiseJ": 7.212623610130208,
+ "maxResidualJ": 8.821239755246516,
+ "runResidualJ": -764.5650404952256,
+ "maxWindowResidualJ": -690.5879,
+ "eventList": [
+  {
+   "n": 55,
+   "t": 0.3056,
+   "dE": 0.7525,
+   "r": 2.0604,
+   "angles": {
+    "ankle_L": [
+     0.33,
+     -14.64,
+     0.19
+    ],
+    "ankle_R": [
+     13.74,
+     50.18,
+     29.69
+    ],
+    "knee_L": [
+     17.41,
+     -0.03
+    ],
+    "knee_R": [
+     113.74,
+     4.85
+    ]
+   },
+   "windowResidualJ": -690.5879
+  },
+  {
+   "n": 56,
+   "t": 0.3111,
+   "dE": 7.2126,
+   "r": 8.8212,
+   "angles": {
+    "ankle_L": [
+     0.32,
+     -14.69,
+     0.25
+    ],
+    "ankle_R": [
+     20.91,
+     45.94,
+     38.05
+    ],
+    "knee_L": [
+     17.41,
+     -0.1
+    ],
+    "knee_R": [
+     117.61,
+     1.23
+    ]
+   },
+   "windowResidualJ": -694.4112
+  },
+  {
+   "n": 58,
+   "t": 0.3222,
+   "dE": 0.7689,
+   "r": 1.6412,
+   "angles": {
+    "ankle_L": [
+     0.28,
+     -14.78,
+     0.37
+    ],
+    "ankle_R": [
+     15.85,
+     45.51,
+     36.67
+    ],
+    "knee_L": [
+     17.44,
+     -0.27
+    ],
+    "knee_R": [
+     125.96,
+     11.12
+    ]
+   },
+   "windowResidualJ": -695.9277
+  }
+ ],
+ "converge": {
+  "event": 56,
+  "t": 0.3111,
+  "rates": [
+   {
+    "hzEquivalent": 180,
+    "dtMs": 5.5556,
+    "windowResidualJ": -694.4112,
+    "maxStepRiseJ": 7.2126
+   },
+   {
+    "hzEquivalent": 240,
+    "dtMs": 4.1667,
+    "windowResidualJ": -677.676,
+    "maxStepRiseJ": 0.5735
+   },
+   {
+    "hzEquivalent": 360,
+    "dtMs": 2.7778,
+    "windowResidualJ": -659.3117,
+    "maxStepRiseJ": 0
+   },
+   {
+    "hzEquivalent": 480,
+    "dtMs": 2.0833,
+    "windowResidualJ": -621.9066,
+    "maxStepRiseJ": 0
+   },
+   {
+    "hzEquivalent": 720,
+    "dtMs": 1.3889,
+    "windowResidualJ": -633.8589,
+    "maxStepRiseJ": 0
+   }
+  ]
+ }
+}

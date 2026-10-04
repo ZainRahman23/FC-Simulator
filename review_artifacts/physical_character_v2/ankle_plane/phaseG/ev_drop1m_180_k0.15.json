@@ -1,0 +1,107 @@
+{
+ "generated": "tools/phaseG_events.mjs",
+ "human": "V2-REF",
+ "key": "drop1m",
+ "hz": 180,
+ "k": 0.15,
+ "thr": 0.05,
+ "windowS": 0.25,
+ "ticks": 1800,
+ "events": 2,
+ "maxStepRiseJ": 0.3820030642132224,
+ "maxResidualJ": 0.7252112947490373,
+ "runResidualJ": -1269.3526008834276,
+ "maxWindowResidualJ": -3.3989,
+ "eventList": [
+  {
+   "n": 152,
+   "t": 0.8444,
+   "dE": 0.382,
+   "r": 0.7252,
+   "angles": {
+    "ankle_L": [
+     12.32,
+     -52.91,
+     40.82
+    ],
+    "ankle_R": [
+     12.29,
+     -51.79,
+     40.37
+    ],
+    "knee_L": [
+     148.36,
+     31.93
+    ],
+    "knee_R": [
+     148.72,
+     31.29
+    ]
+   },
+   "windowResidualJ": -3.3989
+  },
+  {
+   "n": 154,
+   "t": 0.8556,
+   "dE": 0.1476,
+   "r": 0.42,
+   "angles": {
+    "ankle_L": [
+     12.53,
+     -51.39,
+     41.21
+    ],
+    "ankle_R": [
+     12,
+     -49.37,
+     40.02
+    ],
+    "knee_L": [
+     148.56,
+     31.1
+    ],
+    "knee_R": [
+     149.08,
+     31.14
+    ]
+   },
+   "windowResidualJ": -3.7492
+  }
+ ],
+ "converge": {
+  "event": 152,
+  "t": 0.8444,
+  "rates": [
+   {
+    "hzEquivalent": 180,
+    "dtMs": 5.5556,
+    "windowResidualJ": -3.3989,
+    "maxStepRiseJ": 0.382
+   },
+   {
+    "hzEquivalent": 240,
+    "dtMs": 4.1667,
+    "windowResidualJ": -3.4874,
+    "maxStepRiseJ": 0
+   },
+   {
+    "hzEquivalent": 360,
+    "dtMs": 2.7778,
+    "windowResidualJ": -2.9104,
+    "maxStepRiseJ": 0
+   },
+   {
+    "hzEquivalent": 480,
+    "dtMs": 2.0833,
+    "windowResidualJ": -2.5365,
+    "maxStepRiseJ": 0
+   },
+   {
+    "hzEquivalent": 720,
+    "dtMs": 1.3889,
+    "windowResidualJ": -2.2524,
+    "maxStepRiseJ": 0
+   }
+  ]
+ }
+}

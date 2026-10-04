@@ -78,6 +78,8 @@ if (process.argv.includes("--worker")) {
     for (const e of G1.RATE_EPS) jobs.push({ human: "V1-matched", key: G1.ensembleKey("singleLeg", e), hz: 240, vel }); } }
   if (set === "g1iter") for (const vel of G1.ITERATION_SET) for (const key of G1.SCENARIO_ORDER) jobs.push({ human: "V2-REF", key, hz: 240, vel });   // the G1 1.5 iteration study (report-only part of the accepted G1 run)
   if (set === "test") jobs = [{ human: "V2-REF", key: "isoMomentum", hz: 240 }, { human: "V1-matched", key: "rotating", hz: 240 }];
+  if (set === "perturb240") { const E = [0, 1e-6, -1e-6, 2e-6, -2e-6, 5e-6, -5e-6, 1e-5, -1e-5, 2e-5, -2e-5, 5e-5, -5e-5, 1e-4, -1e-4];   // the perturb ensembles at the 240 Hz validation rate only (ankle reinvestigation: G1 failure-rate attribution)
+    for (const h of ["V2-REF", "V1-matched"]) for (const key of ["singleLeg", "leanF", "leanL", "leanR", "leanB", "upright", "perturb", "drop1m", "awkward", "sideFirst"]) for (const e of E) jobs.push({ human: h, key: G1.ensembleKey(key, e), hz: 240 }); }
   if (set === "perturb") { const E = [0, 1e-6, -1e-6, 2e-6, -2e-6, 5e-6, -5e-6, 1e-5, -1e-5, 2e-5, -2e-5, 5e-5, -5e-5, 1e-4, -1e-4];   // k = 0 reachability: dense lift ensembles
     for (const h of ["V2-REF", "V1-matched"]) for (const key of ["singleLeg", "leanF", "leanL", "leanR", "leanB", "upright", "perturb", "drop1m", "awkward", "sideFirst"]) for (const e of E) for (const hz of [240, 720]) jobs.push({ human: h, key: G1.ensembleKey(key, e), hz }); }
   const all = [], t0 = Date.now(); let id = 0;

@@ -10,7 +10,7 @@ import fs from "fs"; import path from "path"; import { fileURLToPath } from "url
 import { loadJolt } from "../core/v2_jolt.js"; import { generateSpec } from "../spec/v2_spec.js"; import { VARIATION_SET } from "../spec/v2_human.js";
 import { G3Sim, g3Def, profile } from "../gates/v2_g3.js"; import { G2Sim, pushScenario } from "../gates/v2_g2.js"; import { V, Q } from "../core/v2_math.js";
 const here = path.dirname(fileURLToPath(import.meta.url)), ROOT = path.resolve(here, "../../../.."), OUT = (process.argv.find(a => a.startsWith("--out=")) || "").slice(6) ? path.resolve((process.argv.find(a => a.startsWith("--out=")) || "").slice(6)) : path.join(ROOT, "review_artifacts/physical_character_v2/g3/json/g3_twist.json");
-const Jolt = await loadJolt(path.join(here, "../vendor/jolt-physics.wasm-compat.js")), HUMAN = (process.argv.find(a => a.startsWith("--human=")) || "--human=V2-REF").slice(8), spec = generateSpec(VARIATION_SET.find(h => h.id === HUMAN) || (() => { throw new Error("unknown --human " + HUMAN); })()), D = 180 / Math.PI, G = 9.81;
+const Jolt = await loadJolt(path.join(here, "../vendor/jolt-physics.wasm-compat.js")), HUMAN = (process.argv.find(a => a.startsWith("--human=")) || "--human=V2-REF").slice(8), XST = JSON.parse((process.argv.find(a => a.startsWith("--stand=")) || "--stand={}").slice(8)), XO = Object.keys(XST).length ? { stand: XST } : {},   /* --stand: DIAGNOSTIC controller options */ spec = generateSpec(VARIATION_SET.find(h => h.id === HUMAN) || (() => { throw new Error("unknown --human " + HUMAN); })()), D = 180 / Math.PI, G = 9.81;
 const B = spec.bodies, bi = (n) => B.findIndex(b => b.name === n), J = (n) => spec.joints.findIndex(j => j.name === n);
 const SH = [bi("shank_L"), bi("shank_R")], FT = [bi("foot_L"), bi("foot_R")], PEL = bi("pelvis"), AK = [J("ankle_L"), J("ankle_R")], KN = [J("knee_L"), J("knee_R")], HP = [J("hip_L"), J("hip_R")];
 const axI = (k, key) => ["x", "y", "z"].findIndex(a => spec.joints[k].def.axes[a] && spec.joints[k].def.axes[a].key === key);
@@ -42,15 +42,15 @@ function run(name, mk, every = 12) { const s = mk(); let b = null; const series 
   const res = { name, outcome: s.g3summary ? s.g3summary().outcome : s.g2summary().outcome, excursionDeg: Object.fromEntries(Object.entries(ex).map(([k, v]) => [k, +v.toFixed(3)])), passiveFabdMaxNm: maxPass.map(v => +v.toFixed(3)), groundVerticalMomentAtAnkleMaxNm: maxMz.map(v => +v.toFixed(3)), freeMomentMaxNm: maxFree.map(v => +v.toFixed(3)),
     stanceLegFabdByLoad: loadBins, unloadingLegFabdByLoad: uloadBins, series: { columns: ["t", ...["L", "R"].flatMap(sd => ["fabd", "twistRel", "shankYaw", "footYaw", "inv", "hipRot", "kneeRot", "passiveFabdNm", "activeInvNm", "groundMzAnkleNm", "freeMomentNm", "load", "pieces"].map(c => c + "_" + sd)), "pelvisYaw", "Ly"], rows: series } };
   s.destroy(); return res; }
-const out = { generated: "tools/g3_twist.mjs", human: HUMAN, date: new Date().toISOString().slice(0, 10), ankleNeutralKPerDeg: (await import("../spec/v2_joints.js")).ankleNeutralKPerDeg(), scenarios: [], probes: [] };
-const g2 = (sc) => () => new G2Sim(Jolt, spec, sc === "quiet" ? { title: "Quiet stance (10 s)", seconds: 10 } : pushScenario(sc.split(":")[0], +sc.split(":")[1]), {});
+const out = { generated: "tools/g3_twist.mjs", human: HUMAN, stand: XST, date: new Date().toISOString().slice(0, 10), ankleNeutralKPerDeg: (await import("../spec/v2_joints.js")).ankleNeutralKPerDeg(), scenarios: [], probes: [] };
+const g2 = (sc) => () => new G2Sim(Jolt, spec, sc === "quiet" ? { title: "Quiet stance (10 s)", seconds: 10 } : pushScenario(sc.split(":")[0], +sc.split(":")[1]), XO);
 for (const sc of ["quiet", "R:10", "R:20", "F:15", "L:15"]) out.scenarios.push(run("G2 " + sc, g2(sc)));
-for (const k of ["T1", "T5", "U:R", "T7:R:2", "T7:R:1", "T8:hold:R:R:10", "T8:hold:R:F:15"]) out.scenarios.push(run("G3 " + k, () => new G3Sim(Jolt, spec, g3Def(k), {})));
+for (const k of ["T1", "T5", "U:R", "T7:R:2", "T7:R:1", "T8:hold:R:R:10", "T8:hold:R:F:15"]) out.scenarios.push(run("G3 " + k, () => new G3Sim(Jolt, spec, g3Def(k), XO)));
 // torque-step probe: hold at λ (3 s ramp, then still); from t = 6 s a constant axial torque on one shank (world vertical, ≈ the shank long axis)
 // for 1 s, then released; the leg's ankle ab/adduction before / during / after → compliance and restoring vs neutral vs unstable
 for (const lam of [0.5, 0.7, 0.85, 0.95, 1.0]) for (const side of ["R", "L"]) for (const T of [0.5, 2]) {
   const def = { key: `TWP:${lam}:${side}:${T}`, title: `twist probe λ_R ${lam}, ${T} N·m on shank_${side}`, lam: profile([{ to: lam, dur: 3 }, { dur: 9 }], 0.5, 1.0), holds: [], seconds: 13, torque: { t0: 6, dur: 1, H: [0, T, 0], body: "shank_" + side } };
-  const s = new G3Sim(Jolt, spec, def, {}), n = side === "R" ? 1 : 0, at = {}; let peak = 0;
+  const s = new G3Sim(Jolt, spec, def, XO), n = side === "R" ? 1 : 0, at = {}; let peak = 0;
   while (s.tick()) { const t = s.n * s.dt, x = sample(s), L = x.legs[n]; for (const m of [5.95, 6.5, 6.95, 7.5, 8, 9, 10, 12.9]) if (Math.abs(t - m) < s.dt / 2) at[m] = { fabd: L.fabd, hipRot: L.hipRot, kneeRot: L.kneeRot, shYaw: L.shYaw, pelYaw: x.pelYaw, passive: L.passive ? L.passive.fabd : null, load: L.load, Fz: L.Fz };
     if (t >= 6 && at[5.95]) peak = Math.max(peak, Math.abs(L.fabd - at[5.95].fabd)); }
   const b0 = at[5.95], rel = (m) => (at[m] ? +(at[m].fabd - b0.fabd).toFixed(3) : null);

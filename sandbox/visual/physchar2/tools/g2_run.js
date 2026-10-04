@@ -40,8 +40,11 @@ function scenarioOf(sc) {
   if (sc.kind === "offset") return offsetScenario(sc.name, OFFSETS[sc.name]);
   if (sc.kind === "ramp") { const u = DIRS[sc.dir], T = sc.len / 0.01; return { title: `CoP sweep ${sc.dir}`, seconds: 1 + 2 * T + 1, ramp: { u, len: sc.len, T } }; }
 }
+// DIAGNOSTIC controller options for every job (env V2_XSTAND=<json>, inherited by the workers; e.g. {"ikRefTwist":true}); never a gate
+// configuration — the output then goes to g2_results_xstand.json so the gate result is never overwritten
+const XSTAND = JSON.parse(process.env.V2_XSTAND || "{}");
 function runJob(Jolt, job) {
-  const spec = generateSpec(VARIATION_SET.find(h => h.id === job.human)), base = scenarioOf(job.sc), stand = { ...(job.stand || {}) };
+  const spec = generateSpec(VARIATION_SET.find(h => h.id === job.human)), base = scenarioOf(job.sc), stand = { ...XSTAND, ...(job.stand || {}) };   // XSTAND: diagnostic only
   if (base.ramp) { const { u, len, T } = base.ramp; stand.refOffset = (t) => { const k = t < 1 ? 0 : t < 1 + T ? (t - 1) * 0.01 : Math.max(0, len - (t - 1 - T) * 0.01); return [u[0] * k, u[1] * k]; }; }
   const s = new G2Sim(Jolt, spec, base, { stand }); const t0 = Date.now();
   if (job.group === "snapshot") { for (let i = 0; i < 300; i++) s.tick(); const snap = s.snapshot(); for (let i = 0; i < 600; i++) s.tick(); const hA = s.h.toString(16); s.restore(snap); for (let i = 0; i < 600; i++) s.tick(); const hB = s.h.toString(16); s.w.freeState(snap.jolt); s.destroy(); return { ...job, hashA: hA, hashB: hB, exact: hA === hB }; }
@@ -74,7 +77,7 @@ else {
       const feed = () => { if (next >= list.length || done >= 12) { cp.send("exit"); live--; if (next < list.length) spawn(); else if (live === 0) resolve(); return; } cp.send(list[next++]); };
       cp.on("message", (m) => { if (m.ready) return feed(); if (m.ok) outs.push(m.out); else { console.error("FAILED", JSON.stringify(m.job), m.err); outs.push({ ...m.job, error: m.err }); } done++; process.stdout.write(`  ${outs.length}/${list.length}\r`); feed(); }); };
     for (let i = 0; i < W; i++) spawn(); });
-  const file = path.join(OUT, only.length ? `g2_results_${only.join("_")}.json` : "g2_results.json");
-  fs.writeFileSync(file, JSON.stringify({ generated: "tools/g2_run.js", criteria: "g2/G2_CRITERIA.md v1", date: new Date().toISOString().slice(0, 10), wallS: (Date.now() - t0) / 1000, jobs: outs }, null, 0));
+  const file = path.join(OUT, Object.keys(XSTAND).length ? "g2_results_xstand.json" : only.length ? `g2_results_${only.join("_")}.json` : "g2_results.json");
+  fs.writeFileSync(file, JSON.stringify({ generated: "tools/g2_run.js", criteria: "g2/G2_CRITERIA.md v1", date: new Date().toISOString().slice(0, 10), wallS: (Date.now() - t0) / 1000, xstand: XSTAND, jobs: outs }, null, 0));
   console.log(`\n${outs.length} jobs in ${((Date.now() - t0) / 1000).toFixed(0)} s → ${path.relative(ROOT, file)} (${outs.filter(o => o.error).length} errors)`);
 }
