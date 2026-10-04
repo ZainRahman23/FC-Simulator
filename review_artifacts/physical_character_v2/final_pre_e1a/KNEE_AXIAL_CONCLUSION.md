@@ -49,8 +49,26 @@
 | left knee flexion 146.3°, axial rotation **+32.4° (internal)**, 23 N·m at the end-stop | at about 150° flexion the tibia rotates internally about 30° in vivo (weight-bearing lunge, full text) |
 
 **The rest the fall settles into is close to the natural internally rotated position of a deeply flexed human knee.** Our fixed-zero envelope places that position at its internal hard limit (+30°), so the ankle ab/adduction and knee axial end ranges load each other in series (23–25 N·m each).
-- **Interpretation (strong, but not tested by a counterfactual run):** this G1 failure at k > 0 is mainly an artefact of the knee envelope. It is not a defect of a nonzero ankle stiffness.
-- **The counterfactual that would test it:** a knee envelope whose zero shifts internally with flexion and narrows at extension. It needs the Jolt emergency limits widened to the flexion-dependent outer envelope, which is an anatomy / engine-limit change. It was not run.
+**Counterfactual (diagnostic, not adopted):** `tools/knee_envelope_counterfactual.mjs`, `evidence/knee/`.
+- **The envelope tested (`KNEE_ENVELOPE_LIT1`, not fitted):**
+  - zero c = flex/6, internal;
+  - width scale w = 0.55 + 0.45·clamp(flex/40°, 0, 1);
+  - soft [c − 9w, c + 4w];
+  - hard [c − 25w, c + 15w].
+- **The Jolt emergency limits** (hard ± 20° / 36° for the knee axial) already enclose this envelope, so the engine is untouched.
+- **The run:** G1 V1-matched "perturb", the runway's 15-member lift ensemble, 240 Hz. Measured: the settled excursion beyond the anatomical hard limit in force (row 1.3d, tolerance 1.5°).
+
+| ankle k | current knee | literature-shaped knee envelope |
+|---|---|---|
+| 0 | 2 / 15 members fail (as accepted: chaotic marginality) | **0 / 15** |
+| 0.13 | **13 / 15 fail** (knee 17–21 N·m at its end-stop, ankle 9–23 N·m) | **0 / 15** (knee ≈ 0 N·m; the fall settles at about 121–125° flexion, inside the envelope) |
+
+- **Transparency on "loosening":** at 146° flexion the envelope's internal hard limit is +39°, wider than the current +30°. That comes from the evidence-based internal shift of the zero.
+  - Its external limit there is about 0° (current −40°).
+  - Total width is 40° vs 70° at deep flexion, and 22° vs 70° at extension.
+  - So the envelope is narrower everywhere and only relocated in deep flexion. It is not a loosening.
+- **This G1 failure at k > 0 is an artefact of the knee envelope,** not a defect of a nonzero ankle stiffness.
+- **The full G1 of the proposed configuration** (envelope + k = 0.13) is in `ANKLE_LAW_RESULTS.md`.
 
 ## 4. Answers (§3 of the instruction)
 

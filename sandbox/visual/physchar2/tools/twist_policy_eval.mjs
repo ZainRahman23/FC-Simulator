@@ -1,10 +1,13 @@
 // ═══ physchar2/tools/twist_policy_eval.mjs — evaluates the PREREGISTERED twist-policy battery (final_pre_e1a/TWIST_POLICY_PREREG.md §3–4)
 // over the r_<k>_<policy>_<body>_<scen>.json files of tools/twist_policy_battery.mjs. Criteria exactly as preregistered; prints per (k, policy)
 // the pass / fail per criterion per body, the eligibility, and the reported (non-gating) metrics.
-// usage: node tools/twist_policy_eval.mjs <dir> [out.json]
+// usage: node tools/twist_policy_eval.mjs <dir> [out.json] [--lift=<dir>]   (--lift: LIFT results taken ONLY from that directory — the battery's LIFT
+// runs mixed lifecycle code versions (edits during the run) and were re-run on the final code; recorded in TWIST_POLICY_RESULTS.md)
 import fs from "fs";
-const DIR = process.argv[2], OUT = process.argv[3], files = fs.readdirSync(DIR).filter(f => /^r_.*\.json$/.test(f)), R = {};
-for (const f of files) { const j = JSON.parse(fs.readFileSync(DIR + "/" + f)), kk = String(j.k); ((R[kk] ||= {})[j.policy] ||= {})[j.human] ||= {}; R[kk][j.policy][j.human][j.scen] = j; }
+const DIR = process.argv[2], OUT = process.argv.slice(3).find(a => a.endsWith(".json")), LIFTDIR = (process.argv.find(a => a.startsWith("--lift=")) || "").slice(7), R = {};
+const add = (d, f) => { const j = JSON.parse(fs.readFileSync(d + "/" + f)), kk = String(j.k); ((R[kk] ||= {})[j.policy] ||= {})[j.human] ||= {}; R[kk][j.policy][j.human][j.scen] = j; };
+for (const f of fs.readdirSync(DIR).filter(f => /^r_.*\.json$/.test(f) && !(LIFTDIR && /_LIFT\.json$/.test(f)))) add(DIR, f);
+if (LIFTDIR) for (const f of fs.readdirSync(LIFTDIR).filter(f => /^r_.*_LIFT\.json$/.test(f))) add(LIFTDIR, f);
 const BODIES = ["V2-165-62", "V2-175-70", "V2-REF", "V2-190-85", "V2-198-92", "V2-long-legs", "V2-short-legs", "V1-matched"], POLS = ["current", "ref", "b50", "b35", "d1", "d2"];
 const okOut = (o) => o === "stood" || o === "recovered", med = (a) => { const s = a.filter(x => x != null).sort((x, y) => x - y); return s.length ? s[Math.floor((s.length - 1) / 2)] : null; };
 const crit = (S, base) => {   // S: scenario results for one (k, policy, body); base: the same body's "current" results (C7 exemption)

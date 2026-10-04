@@ -13,7 +13,8 @@ for (const h of VARIATION_SET) { const spec = generateSpec(h), n = 0, s = new G3
   while (s.n * s.dt < 8 - 1e-9 && s.tick()); want = true; s.tick(); s.ctrl.legIK = o; const c = s.ctrl, st = cap.st, ft0 = cap.foot || st[c.feet[n]];
   const fw = Q.rot(st[c.feet[1 - n]].rot, [0, 0, 1]), hd = V.norm([fw[0], 0, fw[2]]), latOut = V.sc([hd[2], 0, -hd[0]], -1);
   const Lh = c.legK[n].map(k => spec.joints[k].limits.hard), lo = [Lh[0].lo[0], Lh[0].lo[1], Lh[0].lo[2], Lh[1].lo[1], Lh[2].lo[1], Lh[2].lo[2]], hi = [Lh[0].hi[0], Lh[0].hi[1], Lh[0].hi[2], Lh[1].hi[1], Lh[2].hi[1], Lh[2].hi[2]], o0 = { ...c.o };
-  for (const [name, fwd, lat] of [["E2a 10 cm forward", 0.10, 0], ["E2b 10 cm lateral", 0, 0.10], ["E2a' 5 cm forward", 0.05, 0], ["E2b' 5 cm lateral", 0, 0.05]]) for (const drop of [0, 0.025, 0.05, 0.075, 0.10]) {
+  const DROPS = process.argv.includes("--fine") ? [0, 0.005, 0.01, 0.015, 0.02, 0.025, 0.03] : [0, 0.025, 0.05, 0.075, 0.10];   // --fine: the smallest sufficient drop (final pre-E1a §8)
+  for (const [name, fwd, lat] of [["E2a 10 cm forward", 0.10, 0], ["E2b 10 cm lateral", 0, 0.10], ["E2a' 5 cm forward", 0.05, 0], ["E2b' 5 cm lateral", 0, 0.05]]) for (const drop of DROPS) {
     const pP = [cap.pP[0], cap.pP[1] - drop, cap.pP[2]], foot = { pos: V.add(V.add(ft0.pos, V.sc(hd, fwd)), V.sc(latOut, lat)), rot: ft0.rot }, row = { body: h.id, target: name, drop };
     for (const [def, opts] of [["instantaneous", {}], ["reference", { ikRefTwist: true }]]) { c.o = { ...o0, ...opts }; const U = c.legIK(st, cap.ev, n, pP, cap.qP, foot), B = c.legIKBounded(st, cap.ev, n, pP, cap.qP, foot); c.o = { ...o0 };
       const m = B.x.map((v, i) => Math.min(v - lo[i], hi[i] - v) * D), j = m.indexOf(Math.min(...m));
