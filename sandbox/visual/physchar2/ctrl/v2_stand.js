@@ -217,7 +217,7 @@ export class StandController {
       // a resting foot into the turf (measured: with a bent stance knee the sinking pelvis made the world-space hold load the "unsupported" foot 29 → 58 N
       // after touchdown — the balance model did not count it and the body fell after an abort, 60 N lift + 2.5 cm drop, 8 / 8 bodies)
       const lcT = sw ? [0, 1].map(n => { if (sw[n] >= 1) return null; const f = LC[n], cur = { pos: st[this.feet[n]].pos, rot: st[this.feet[n]].rot }, t0 = this.lc.target(n);
-        const t1 = f.swing || f.state === "AIRBORNE" ? t0 : { pos: [t0.pos[0], cur.pos[1], t0.pos[2]], rot: t0.rot }; return blendPose(t1, cur, sw[n]); }) : null;
+        const t1 = f.swing ? t0 : { pos: [t0.pos[0], t0.pos[1] + (1 - f.a) * (cur.pos[1] - t0.pos[1]), t0.pos[2]], rot: t0.rot }; return blendPose(t1, cur, sw[n]); }) : null;   // height: the foot's own (a = 0, contact) → the anchor's (a = 1, airborne), continuous in a (measured: a state-switched height stepped the target 3.7 mm → 88 N·m τ0 jump at a bounce re-liftoff)
       if (o.ikFeasible) for (const n of [0, 1]) { const ft = lcT ? (lcT[n] || st[this.feet[n]]) : this.unl[n] ? this.hold[n] : st[this.feet[n]], hip = V.add(pP, Q.rot(qP, this.anchor[this.legK[n][0]])), dh = dnorm(hip[0] - ft.pos[0], hip[2] - ft.pos[2]), Ln = this.legLen[n];
         if (dh < Ln) pP[1] = Math.min(pP[1], ft.pos[1] + Math.sqrt(Ln * Ln - dh * dh) - (hip[1] - pP[1])); }
       this.pelHT = pP[1];

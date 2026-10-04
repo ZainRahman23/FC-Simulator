@@ -211,6 +211,60 @@
    "name": "tight twist levers (opt-in): 8-D rate claims hold (position rate ≤ lever incl. knee axial ≈ 0; ankle coordinates 0; orientation ≤ 1)",
    "pass": true,
    "value": "knee-axial lever 1.00e-9 m, hip-twist 0.4386 m (generic 0.8663); max pos rate / lever 1.000000000, ankle 0, orientation 0.999999998"
+  },
+  {
+   "id": "R7.a",
+   "name": "lifecycle: contact flicker (8/0 pieces every tick, 0.2 s) never confirms AIRBORNE; the control weights s, a stay 0",
+   "pass": true,
+   "value": "start TOUCHING; states TOUCHING/LIFTOFF"
+  },
+  {
+   "id": "R7.b",
+   "name": "lifecycle: liftoff confirmed after the debounce; airborne weight continuous (Δa per tick ≤ 1.5·dt/release)",
+   "pass": true,
+   "value": "AIRBORNE at tick 3, max Δa 0.0624"
+  },
+  {
+   "id": "R7.c",
+   "name": "lifecycle: a touchdown impact without intent is not support; intent + contact starts load acceptance after acceptDebounce; s continuous to SUPPORT",
+   "pass": true,
+   "value": "impact phase: TOUCHDOWN; LOAD_ACCEPT at tick 11; end SUPPORT; max Δs 0.0624"
+  },
+  {
+   "id": "R7.d",
+   "name": "lifecycle: a load reading taken during self-contact is ignored (no support); the same load from the turf alone is accepted",
+   "pass": true,
+   "value": "with self-contact: TOUCHING; without: TOUCHING/LOAD_ACCEPT/SUPPORT"
+  },
+  {
+   "id": "R7.e",
+   "name": "lifecycle: contact anchor captured on the turf, frozen while airborne, re-captured flat (landing x/z/yaw, previous height and tilt) at touchdown",
+   "pass": true,
+   "value": "frozen true; touchdown anchor x/z 0.11/0.21, y 0, flat true"
+  },
+  {
+   "id": "R7.f",
+   "name": "lifecycle: low load releases support only when the plan does not want load on that foot",
+   "pass": true,
+   "value": "wanted: SUPPORT; not wanted: SUPPORT/UNLOADING/TOUCHING"
+  },
+  {
+   "id": "R7.g",
+   "name": "lifecycle: deterministic; getState / setState round trip mid-sequence continues bit-identically",
+   "pass": true,
+   "value": "identical true"
+  },
+  {
+   "id": "R7.h",
+   "name": "lifecycle: a commanded swing target is the leg's target in a contact state; clearing it returns to the contact anchor",
+   "pass": true,
+   "value": "commanded used true; back to anchor true"
+  },
+  {
+   "id": "R7.i",
+   "name": "lifecycle option off by default; the default controller state / info carry no lifecycle key",
+   "pass": true,
+   "value": "off true"
   }
  ]
 }
