@@ -193,10 +193,68 @@ Each traced to its first bad tick with the full ledger (`tools/phaseG_events.mjs
 
 **Also recorded:** the per-step passivity residual r = ΔE + D peaks at 1.27–1.28 J at 360 Hz identically at every k (ΔE there never exceeds 0.007 J). This is a k-independent property of the dissipation estimate D, not energy creation.
 
-## 5. Perturbed-ensemble G1 failure rates at 240 Hz (attribution of B)
+## 5. Perturbed-ensemble G1 failure rates at 240 Hz (attribution of B; `phaseG/sweep_perturb240_plane.json.gz`)
 
-*(filled in from `phaseG/sweep_perturb240_plane.json.gz` below)*
+**Set:** 2 bodies (V2-REF, V1-matched) × 10 scenarios (singleLeg, leanF / L / R / B, upright, perturb, drop1m, awkward, sideFirst) × 15 lift perturbations (0, ±1e-6 … ±1e-4 m), at 240 Hz; 300 runs per k.
 
-## 6. Recommendation (no adoption; stop for decision)
+| k | runs failing a G1 criterion | by check | V1-matched "perturb" failing (of 15) | settled excursion beyond the hard limits: p90 / max |
+|---|---|---|---|---|
+| **0** (accepted) | **15 (5.0 %)** | 1.3d 8, 1.R 5, 1.3b 2, 1.4e 1 | 2 | 0.32° / 2.68° |
+| 0.11 | 19 (6.3 %) | 1.3d 14, 1.R 4, 1.3a 1 | **13** | 0.66° / 2.33° |
+| 0.13 | 34 (11.3 %) | 1.3d 24, 1.R 6, 1.3b 3, others 3 | **13** | 1.15° / 2.39° |
+| 0.15 | 23 (7.7 %) | 1.3d 17, 1.4e 6, 1.3b 2, 1.R 2, 1.3a 1 | **14** | 0.88° / 2.55° |
 
-*(below)*
+**Reading:**
+- **The accepted plant itself** fails a G1 criterion in 5 % of perturbed ensemble members. This is the known chaotic marginality of 1.3d / 1.3b (FP-9 lesson). The nominal G1 run passes.
+- **At every k > 0, V1-matched "perturb" fails in 13–14 of 15 members** (2 of 15 at k = 0). This is **systematic**, not marginal: the knee axial end range in prone rest (§3).
+- **k = 0.13 additionally raises the upright failures** (V2-REF 5, V1-matched 6).
+- **So requirement B's failures at k > 0 are real,** not chaotic noise around a passing configuration.
+
+## 6. Diagnostic (not pre-registered, not a selection): the same battery with the twist DOFs solved at reference (`ikRefTwist`)
+
+**Purpose:** to test whether the mechanism of §3 is the obstacle, and what the combined design would cost. This is a controller option (G3-A7, evaluated, not adopted): a **controller design decision**, not taken here.
+
+**How it was run:**
+- `V2_XSTAND='{"ikRefTwist":true}' g2_run.js`, `g3_run.js --stand=… --tag=reftwist`, and `g3_twist.mjs --stand=…` (V2-REF, V2-190-85, V2-198-92).
+- Evaluated with the gate evaluators (`tools/ank_reftwist_eval.mjs`). J2a and the browser / bench rows are not re-measured.
+- G1 is passive physics and is unaffected by the controller.
+
+| | k = 0 + ikRefTwist | k = 0.13 + ikRefTwist | k = 0.15 + ikRefTwist |
+|---|---|---|---|
+| G2 rows (excl. R, 2.5, browser) | S4 **fails** (yaw 8: final trunk 4.7°) | **all pass** (S4 6/6: yaw 8 1.33°) | **all pass** (S4 6/6: yaw 8 1.70°, roll 8 0.23°) |
+| G2 push boundaries vs validated k = 0 | 0 changes | 0 changes | 0 changes |
+| G3-native v3.3 rows (excl. J2a / O / P2 / S2) | 15/15 | **15/15** | **15/15** |
+| twist T5 / U:R (V2-REF) | 5.1° / 5.1° | **1.3° / 1.3°** | **1.2° / 1.3°** |
+| twist G2 push R 10 / R 20 / T7 1 s | 10.4 / 12.0 / 9.8° | **3.7 / 8.6 / 4.6°** | **3.4 / 7.9 / 4.6°** |
+| probes not re-centred (V2-REF / 190-85 / 198-92) | 1 / 2 / 2 of 20 | **0 / 0 / 0 of 20** | **0 / 0 / 0 of 20** |
+| static whole-body yaw stiffness | 0.10–0.40 N·m/° | 0.26–0.34 N·m/° (≈ 2k) | 0.30–0.35 N·m/° (≈ 2k) |
+| requirement B (G1) | (k = 0 baseline passes) | **still fails** (§3, §5) | **still fails**: V1-matched perturb knee axial end range (§3, §5), independent of the controller |
+
+**What this shows:**
+1. **The twist pathology is solved by the combination.** A posture IK that no longer feeds the twist DOFs, plus an evidence-supported passive stiffness (0.13, the centre, or 0.15, the upper bound), meets every controller-dependent requirement (C, D, E, F, G) in this diagnostic.
+2. **Its cost is a far softer yaw stance:** about 0.3 N·m/° from the passive ankles, against the validated controller's actively produced 2.8 N·m/°.
+3. **One plant-level obstacle remains for every k > 0:** in prone rest, the stiffened ankle loads the knee's narrow axial end range (screw-home −3…+2° near extension). G1 1.3d / 1.4e fail in 13–14 of 15 perturbed members.
+4. **Fixing that would touch anatomy** (the knee axial hard limit / end-stop compliance) **or G1 criteria** (the 1.5° settled tolerance). Neither is within my autonomy.
+
+## 7. Recommendation (no adoption; stop for decision)
+
+**No candidate is evidence-supported** under the pre-registration with the validated controller. Per the decision, **no other value is tuned or added**, and nothing is adopted.
+
+**Why each failed:**
+- **All three** fail B (G1 knee-axial / rest), C (probes do not re-centre) and D (G2 S4 final trunk).
+- **0.11 and 0.13** also fail E, F and G, through the twist limit cycle: T4 yaw drift, heavy-body unloaded-foot drag, I2.
+
+**The evidence implies two decisions, in order:**
+1. **Controller (prerequisite):** the posture IK's twist-DOF policy.
+   - The validated "twist at current" policy produces the actuator-powered twist limit cycle that defeats any passive law.
+   - "Twist at reference" removes it at every k and body tested, but leaves only the passive ankles to resist whole-body yaw (≈ 2k N·m/°).
+   - A middle policy (e.g. a weighted twist target) is possible but is a design task.
+2. **Plant (for any k > 0):** what to do with the prone-rest knee-axial interaction (G1 1.S′).
+
+**If both are decided as "twist at reference" plus a G1 resolution:**
+- **The evidence centre is 0.13** (both studies).
+- **The diagnostic** shows 0.13 and 0.15 both meeting the controller-dependent requirements (0.15 has slightly smaller twist after pushes).
+- **The candidates would then need a re-preregistered run** under the chosen controller. The ranking (biomechanics → integrity → twist → G2 → G3 → morphology → rate → simplicity) would be decided on that run, not on this one.
+- **Trade-off on integrity:** perturbed G1 failure rates are 6.3 % (0.11), 11.3 % (0.13) and 7.7 % (0.15), against 5.0 % at k = 0.
+
+**This involves meaningful trade-offs** (yaw stiffness, anatomy / criteria). Per the decision: **stop for your decision.**
