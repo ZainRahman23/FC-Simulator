@@ -1245,3 +1245,16 @@ Candidates and their regression implications: report §13.
   1. J2b: (a) J2a as the gate with J2b reported, (b) a re-defined J2b with re-preregistration, or (c) other;
   2. the G4 foothold-IK policy;
   3. then the ankle.
+
+## 2026-10-04 — User decision: J2 Option (a); IK research; Phase F ankle + Phase G 180 Hz (`sources/2026-10-04_user_decision_j2a_gate_ankle_ik_research.md`)
+
+### FP-11: G3 criteria v3.3 — J2a the normative symmetry gate, J2b a permanent diagnostic; **G3 PASS 20/20** (`g3/G3_CRITERIA_v3.3.md`)
+- **Why:** a test-design correction backed by the pre-registered test-of-the-test.
+  - J2a detects all three injected asymmetries by 9–12 orders of magnitude.
+  - J2b cannot both keep a margin above the measured floor and detect them.
+  - Not a relaxation: every row also passes under v3.2.
+- **The change:** J2b is reported by class (distributions, maxima, abort timing, mismatches) and never gates. Every other row is v3.2's.
+- **Result:** G3 **PASS** 20/20 (19 gating, J2b reported).
+  - J2a 81/81.
+  - J2b diagnostic: A max 0.203 / B 2.46 / C 0.460 mm; abort Δ 0.
+- **History preserved:** v1 … v3.2 files, evaluators and results are unchanged.
