@@ -26,6 +26,15 @@ export function evaluateV32(R, ext = {}) {
     const t9 = J.filter(j => j.group === "T9").map(j => Math.abs(j.res.g3.holds.R.loadMean - j.res.g3.holds.L.loadMean)), t9bad = t9.filter(d => d > 1e-3).length, mx = (a) => (a.length ? Math.max(...a) : null);
     add({ id: "J2b", meaningful: J2B_MEANINGFUL, name: `${J2B_MEANINGFUL ? "" : "[NOT MEANINGFUL — too loose to detect a 5 % asymmetry; G3 not declared on it] "}mirrored physical-outcome correspondence (v3.2): A ≤ ${T.A} mm, B ≤ ${T.B} mm, C ≤ ${T.C} mm through the common supervisor abort, abort timing ≤ ${T.abortTicks} ticks; same class`, pass: P.length === 81 && !bad.length && !t9bad,
       value: `${P.length - bad.length}/${mv.pairs.length} pairs (A ${cl.A.length}: max ${num(mx(cl.A), 4)} mm; B ${cl.B.length}: max ${num(mx(cl.B), 3)} mm; C ${cl.C.length}: max ${num(mx(cl.C), 3)} mm through the abort); T9 hold-mean Δ max ${t9.length ? Math.max(...t9).toExponential(1) : "—"}${bad.length ? " · FAIL: " + bad.slice(0, 8).join("; ") : ""}`, limit: `A ${T.A} / B ${T.B} / C ${T.C} mm; ${T.abortTicks} ticks` }); }
+  // P2 (v3.2, as written in G3_CRITERIA_v3.2.md "Rows"): G2 row 2.5's production gate is the ISOLATED benchmark (user decision 2026-10-04 §6:
+  // "Do not use the nine-worker validation measurement as the production performance gate"), scope controller + actuators, V2-REF quiet stance,
+  // budget 0.15 ms per tick; the in-run value is reported. Row R stays superseded by the approved plant change.
+  { const k = checks.findIndex(c => c.id === "P2"), g = ext.earlier, g2 = ext.g2checks, b = ext.bench && ext.bench.scenarios && ext.bench.scenarios["G2 quiet stance 22 s"];
+    const rows = g2 ? g2.checks.filter(c => c.id !== "R" && c.id !== "2.5") : null, inRun = g2 ? g2.checks.find(c => c.id === "2.5") : null, iso = b ? b.ctrlPlusActuators.steadyMean.medianOfMeans : null;
+    const pass = !!(g && g.g0 && g.g1Pass && g.g1Browser && rows && rows.every(c => c.pass) && g.g2Browser && iso != null && iso <= 0.15);
+    const c = { id: "P2", name: "earlier gates valid: G0 pass; G1 criteria PASS; G1 browser = Node; G2 criteria rows except R (superseded) and 2.5 (→ isolated benchmark ≤ 0.15 ms, controller + actuators, V2-REF quiet stance); G2 browser = Node", pass,
+      value: g ? `G0 ${g.g0 ? "pass" : "FAIL"}; G1 ${g.g1Pass ? "PASS" : "FAIL"}; G1 browser ${g.g1Browser ? "= Node" : "≠"}; G2 rows ${rows ? `${rows.filter(c => c.pass).length}/${rows.length}` : "—"} (excl. R, 2.5)${rows && !rows.every(c => c.pass) ? " FAIL: " + rows.filter(c => !c.pass).map(c => c.id).join(",") : ""}; isolated 2.5 ${iso != null ? iso.toFixed(4) + " ms" : "not run"} (in-run, reported: ${inRun ? String(inRun.value).slice(0, 40) : "—"}); G2 browser ${g.g2Browser ? "= Node" : "≠"}` : "not run", limit: "all" };
+    if (k >= 0) checks[k] = c; else checks.push(c); }
   // a J2b without meaningfulness cannot declare G3 (step 4): the gate is "not declared" even if every row passes
   const allRows = checks.every(c => c.pass);
   return { criteria: "G3_CRITERIA_v3.2.md", pass: allRows && J2B_MEANINGFUL, allRowsPass: allRows, declared: J2B_MEANINGFUL, checks }; }

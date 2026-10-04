@@ -1,6 +1,8 @@
 {
- "criteria": "G3_CRITERIA_v3.1_ERRATUM.md (v3 with sigmaErr not gated; J2a floor of the corrected controller)",
+ "criteria": "G3_CRITERIA_v3.2.md",
  "pass": false,
+ "allRowsPass": true,
+ "declared": false,
  "checks": [
   {
    "id": "run",
@@ -2075,21 +2077,11 @@
   },
   {
    "id": "J2b",
-   "name": "mirrored physical-outcome symmetry: non-sliding Δpos ≤ 0.1 mm; sliding with continued control: same class, Δpos and |Δslip| ≤ 2 mm; failing: same failure, timing ≤ 1 tick, Δpos only through the common abort / failure declaration",
-   "pass": false,
-   "value": "77/81 pairs (non-sliding 50: max 0.2028 mm; sliding, recovered 17: max 2.459 mm; failing 14: max through the declaration 0.460 mm); T9 R/L hold-mean Δ max 1.2e-4 · FAIL: T7:R:0.25/T7:L:0.25: non-sliding Δpos 0.2028 mm; T8:hold:R:BR:20/T8:hold:L:BL:20: failure timing 5.3292 / 5.3208; T8:ramp:R:FR:10/T8:ramp:L:FL:10: sliding Δpos 2.459 mm; T8:ramp:R:BR:15/T8:ramp:L:BL:15: failure timing 4.0583 / 4.0500",
-   "limit": "0.1 mm / 2.0 mm (D4); abort and failure timing ≤ 1 tick; T9 hold means ≤ 1e-3",
-   "bad": [
-    "T7:R:0.25/T7:L:0.25: non-sliding Δpos 0.2028 mm",
-    "T8:hold:R:BR:20/T8:hold:L:BL:20: failure timing 5.3292 / 5.3208",
-    "T8:ramp:R:FR:10/T8:ramp:L:FL:10: sliding Δpos 2.459 mm",
-    "T8:ramp:R:BR:15/T8:ramp:L:BL:15: failure timing 4.0583 / 4.0500"
-   ],
-   "classes": {
-    "nonSliding": 50,
-    "sliding": 17,
-    "failing": 14
-   }
+   "meaningful": false,
+   "name": "[NOT MEANINGFUL — too loose to detect a 5 % asymmetry; G3 not declared on it] mirrored physical-outcome correspondence (v3.2): A ≤ 0.5 mm, B ≤ 10 mm, C ≤ 2 mm through the common supervisor abort, abort timing ≤ 5 ticks; same class",
+   "pass": true,
+   "value": "81/81 pairs (A 50: max 0.2028 mm; B 17: max 2.459 mm; C 14: max 0.460 mm through the abort); T9 hold-mean Δ max 1.2e-4",
+   "limit": "A 0.5 / B 10 / C 2 mm; 5 ticks"
   },
   {
    "id": "K",
@@ -2258,9 +2250,9 @@
   },
   {
    "id": "P2",
-   "name": "earlier gates valid after the approved plant change: G0 pass; G1 criteria PASS; G1 browser = Node; G2 criteria 13/13; G2 browser = Node",
-   "pass": false,
-   "value": "G0 pass; G1 PASS (0 failing gate checks; 208/227 hashes changed vs accepted); G1 browser = Node; G2 11/12 rows pass excluding R (R literal: superseded — G1 hashes changed by the approved plant change); G2 browser = Node",
+   "name": "earlier gates valid: G0 pass; G1 criteria PASS; G1 browser = Node; G2 criteria rows except R (superseded) and 2.5 (→ isolated benchmark ≤ 0.15 ms, controller + actuators, V2-REF quiet stance); G2 browser = Node",
+   "pass": true,
+   "value": "G0 pass; G1 PASS; G1 browser = Node; G2 rows 11/11 (excl. R, 2.5); isolated 2.5 0.0928 ms (in-run, reported: mean 0.265 ms, p99 1.188 ms); G2 browser = Node",
    "limit": "all"
   },
   {

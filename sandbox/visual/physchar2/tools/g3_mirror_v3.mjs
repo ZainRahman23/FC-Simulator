@@ -18,13 +18,24 @@
 // usage: node tools/g3_mirror_v3.mjs [--floor] [--only=<a>,...]   → g3/json/g3_mirror_v3.json  (--floor → g3/json/g3_mirror_floor.json)
 import fs from "fs"; import path from "path"; import os from "os"; import { fork } from "child_process"; import { fileURLToPath } from "url";
 import { loadJolt } from "../core/v2_jolt.js"; import { generateSpec } from "../spec/v2_spec.js"; import { VARIATION_SET } from "../spec/v2_human.js";
-import { G3Sim, g3Def, mirrorDir } from "../gates/v2_g3.js"; import { cls } from "../gates/v2_g3_checks.js"; import { Q } from "../core/v2_math.js";
+import { G3Sim, g3Def, mirrorDir } from "../gates/v2_g3.js"; import { usableRegion, STAND } from "../ctrl/v2_stand.js"; import { bootSole } from "../sim/v2_geom.js"; import { cls } from "../gates/v2_g3_checks.js"; import { Q } from "../core/v2_math.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url)), ROOT = path.resolve(here, "../../../.."), VEND = path.join(here, "../vendor/jolt-physics.wasm-compat.js");
 // DIAGNOSTIC ONLY (never a gate configuration): run under `node --import ./tools/b_sym_patch.mjs` with B_SYM=<fixes>; the output is then
 // g3_mirror_v3_sym-<fixes>.json so the gate result is never overwritten
 const SYMTAG = (process.env.B_SYM || "").split(",").filter(Boolean).join("+");
-const FLOOR = process.argv.includes("--floor"), OUT = path.join(ROOT, "review_artifacts/physical_character_v2/g3/json", FLOOR ? "g3_mirror_floor.json" : SYMTAG ? `g3_mirror_v3_sym-${SYMTAG}.json` : "g3_mirror_v3.json");
+// DIAGNOSTIC ONLY (overnight Phase B, J2a sensitivity): G3M_INJECT=strengthR95 | footMassR105 | regionR2mm runs the pairs on a body with the SAME
+// deliberately injected L/R asymmetry as tools/j2b_floor.mjs --set=inject (identical edits, applied to a diagnostic copy of the spec) → output
+// g3_mirror_v3_inject-<name>.json. Question: does the controller-level check J2a detect the asymmetries that J2b could not?
+const INJECT = process.env.G3M_INJECT || "";
+function injected(spec, inj) { if (!inj) return { spec, opts: {} };   // = tools/j2b_floor.mjs injected()
+  const S = JSON.parse(JSON.stringify(spec));
+  if (inj === "strengthR95") for (const j of S.joints) if (j.side === "R") for (const k of ["x", "y", "z"]) { const c = j.capacity[k]; if (!c) continue; for (const dir of ["plus", "minus"]) { c[dir].Nm *= 0.95; c[dir].cap.Tiso *= 0.95; if (c[dir].cap.Tdyn) c[dir].cap.Tdyn *= 0.95; } }
+  if (inj === "footMassR105") { const f = S.bodies.find(b => b.name === "foot_R"); f.mass *= 1.05; f.inertia = f.inertia.map(r => r.map(v => v * 1.05)); }
+  if (inj === "regionR2mm") { const fR = S.bodies.findIndex(b => b.name === "foot_R"); return { spec: S, opts: { footRegion: (f) => { const r = usableRegion(bootSole(S.bodies[f]).pts, STAND.footInset); return f === fR ? r.map(([x, z]) => [x + 0.002, z]) : r; } } }; }
+  if (!["strengthR95", "footMassR105"].includes(inj)) throw new Error("unknown G3M_INJECT " + inj);
+  return { spec: S, opts: {} }; }
+const FLOOR = process.argv.includes("--floor"), OUT = path.join(ROOT, "review_artifacts/physical_character_v2/g3/json", FLOOR ? "g3_mirror_floor.json" : INJECT ? `g3_mirror_v3_inject-${INJECT}.json` : SYMTAG ? `g3_mirror_v3_sym-${SYMTAG}.json` : "g3_mirror_v3.json");
 const DIR8 = ["F", "B", "L", "R", "FL", "FR", "BL", "BR"], SLIDE = 1.0e-3, FLOOR_EVERY = 8, FLOOR_DRAWS = 2;
 function pairs() { const P = [["T1", "T2"], ["T5", "T6"], ["U:R", "U:L"], ...[4, 2, 1, 0.75, 0.5, 0.25].map(T => [`T7:R:${T}`, `T7:L:${T}`])];
   for (const w of ["hold", "ramp"]) for (const d of DIR8) for (const m of [5, 10, 15, 20]) P.push([`T8:${w}:R:${d}:${m}`, `T8:${w}:L:${mirrorDir(d)}:${m}`]);
@@ -100,8 +111,8 @@ function probe(X, S, Qs, map, jmap, mode, R) {   // mode: "mirror" (Qs = partner
   return { D, bad, det }; }
 const merge = (A, B) => { for (const [k, v] of Object.entries(B)) if (!(v <= (A[k] ?? -1))) A[k] = v; return A; };
 // ── one pair ──
-function runPair(Jolt, job) { const spec = generateSpec(VARIATION_SET.find(h => h.id === job.human)), map = spec.bodies.map(b => spec.bodies.findIndex(x => x.name === lrName(b.name))), jmap = spec.joints.map(j => spec.joints.findIndex(x => x.name === lrName(j.name)));
-  const mk = (key) => new G3Sim(Jolt, spec, g3Def(key), {}), A = mk(job.a), B = mk(job.b), PA = mk(job.a), PB = mk(job.b), ioA = capture(A), ioB = capture(B), ft = A.ctrl.feet;
+function runPair(Jolt, job) { const INJ = injected(generateSpec(VARIATION_SET.find(h => h.id === job.human)), INJECT), spec = INJ.spec, map = spec.bodies.map(b => spec.bodies.findIndex(x => x.name === lrName(b.name))), jmap = spec.joints.map(j => spec.joints.findIndex(x => x.name === lrName(j.name)));
+  const mk = (key) => new G3Sim(Jolt, spec, g3Def(key), { ...INJ.opts }), A = mk(job.a), B = mk(job.b), PA = mk(job.a), PB = mk(job.b), ioA = capture(A), ioB = capture(B), ft = A.ctrl.feet;
   const tr = { A: [], B: [] }, j2a = { pre: {}, post: {}, bad: [], ticks: 0, postTicks: 0, selfMax: 0 }, floor = { D: {}, flips: [], samples: 0, selfMax: 0 };
   const step = (S, io, P_self, P_partner, side) => { if (!S.tick()) return false; const X = io.cur, t = S.n * S.dt, fallen = S.g2acc.fallT != null && t >= S.g2acc.fallT;
       if (FLOOR) { if (side === "A" && !fallen && S.n % FLOOR_EVERY === 0) { const ref = probe(X, S, P_self, map, jmap, "same", null); floor.selfMax = Math.max(floor.selfMax, ...Object.values(ref.D)); for (const [k, v] of Object.entries(ref.D)) if (v > 0 && (floor.selfNZ || (floor.selfNZ = [])).length < 8) floor.selfNZ.push({ t, k, v, hS: X.post.hold, hQ: P_self.ctrl.hold, unl: X.post.unl }); if (ref.bad.length) floor.flips.push({ t, self: ref.bad });

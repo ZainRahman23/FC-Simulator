@@ -171,11 +171,45 @@ The pelvis pose is the controller's own posture target at that tick. It is also 
 
 ## 4. Do the validated G2/G3 behaviours ever need a limit-violating solution? (`tools/ik_limit_audit.mjs`)
 
-*(result below, §4.1)*
+**Scope:** 226 validated runs.
+- G2: quiet stance (8 bodies), plus the push at each body's largest recovered magnitude in F / B / R / L / FR / BL.
+- G3: U:R, U:L and T9 for all 8 bodies; V2-REF T1–T6; T7 R / L at all 6 ramp times; all 128 T8 pushes.
+
+`legIK` is wrapped and every pre-fall solve is checked against the anatomical hard limits: 1,199,474 solves.
+
+### 4.1 Result (`evidence/ik_limit_audit_226runs.json`, `evidence/ik_limit_audit_25runs_abort_timing.json`)
+
+- **0 solves beyond the hard limits before a supervisor abort**, in any run. Every standing, recovering and transferring behaviour of the validated gates stays inside the anatomical box.
+- **1,526 beyond-limit solves (0.13 %)**, all in **25 T8 runs that are physically failed requests** ("step required → fell", V2-REF, 15 / 20 N·s), and **all after the supervisor abort**:
+  - the first one is 0.88–1.58 s after the abort, and 0.01–0.33 s before the fall declaration;
+  - that is, during the uncontrolled collapse, when the leg IK is asked to place a foot from a falling pelvis.
+- **Excursions there:** hip abduction ≤ 33.3°, hip flexion ≤ 26.1°, hip rotation ≤ 22.9°, knee ≤ 8.4° beyond the limit; the ankle never.
+- **Implication for option O3:**
+  - Up to any abort, the bounded IK would return the unconstrained solution to ≤ 1e-9 rad (R4.c; bit-identity is not established, because the LM path can touch the box).
+  - After an abort in failed trials, it would change the falling trajectory, which is report-only.
+  - Adopting it would still need a full revalidation.
 
 ## 5. IK G4 readiness: verdict
 
-*(after §4.1)*
+**Ready:**
+- the LM leg IK gives a **unique** solution for every anatomically reachable G4-style target, and the warm start finds it;
+- it is mirror-exact (classification and solution);
+- it is continuous across the workspace boundary;
+- it costs ~0.1–0.2 ms per solve;
+- geometric reachability is classified correctly, and an unreachable target is reported, never moved.
+
+**Not ready without a decision:**
+- The production IK **accepts anatomically invalid poses for 8 % of geometrically reachable G4-style targets**. These are mostly the hip rotation that a ±45° foot yaw demands, plus ankle range on far or lifted targets.
+- A G4 that trusts `legIK`'s "reached" would plan such footholds.
+- The opt-in bounded IK fixes the classification (exact, mirror-equivariant, tested). But its fallback pose for unreachable targets is not converged (§3).
+- The choice between O1–O4 and the unreachable-foothold policy (§6) must be made before G4.
+
+**Not a G2/G3 problem:** the validated behaviours never need a limit-violating solution before an abort (§4.1).
+
+**Post-fall IK non-equivariance** (earlier finding, measured in post-fall states):
+- In the G4-relevant swing-leg states measured here (U:R / U:L swing-ready, T5 / T6 near-single-support, all 8 bodies, 20,736 targets), the IK is mirror-exact: 0 class mismatches; ≤ 5e-11 m reached.
+- §4.1's limit-violating solves also occur only after the abort.
+- Not shown: that no other pre-fall state is affected. This study samples four states per body.
 
 ## 6. Alternatives for the G4 decision (not decided here)
 

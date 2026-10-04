@@ -1,0 +1,481 @@
+{
+ "generated": "tools/ik_limit_audit.mjs",
+ "runs": [
+  {
+   "body": "V2-REF",
+   "run": "T8:hold:R:F:20",
+   "solves": 2738,
+   "solvesBeyondLimits": 77,
+   "solvesBeyondLimitsBeforeAbort": 0,
+   "firstBeyondT": 5.3875,
+   "abortT": 4.1125,
+   "fallT": 5.704166666666667,
+   "maxBeyondDeg": [
+    0,
+    25.845291626411466,
+    6.290062066775001,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "body": "V2-REF",
+   "run": "T8:hold:L:F:20",
+   "solves": 2740,
+   "solvesBeyondLimits": 78,
+   "solvesBeyondLimitsBeforeAbort": 0,
+   "firstBeyondT": 5.3875,
+   "abortT": 4.1125,
+   "fallT": 5.708333333333333,
+   "maxBeyondDeg": [
+    0,
+    26.143906692067937,
+    7.483735528432949,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "body": "V2-REF",
+   "run": "T8:hold:R:R:15",
+   "solves": 2614,
+   "solvesBeyondLimits": 57,
+   "solvesBeyondLimitsBeforeAbort": 0,
+   "firstBeyondT": 5.2125,
+   "abortT": 4.104166666666667,
+   "fallT": 5.445833333333333,
+   "maxBeyondDeg": [
+    0,
+    0,
+    19.75736095428561,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "body": "V2-REF",
+   "run": "T8:hold:L:L:15",
+   "solves": 2614,
+   "solvesBeyondLimits": 57,
+   "solvesBeyondLimitsBeforeAbort": 0,
+   "firstBeyondT": 5.2125,
+   "abortT": 4.104166666666667,
+   "fallT": 5.445833333333333,
+   "maxBeyondDeg": [
+    0,
+    0,
+    19.763359550877812,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "body": "V2-REF",
+   "run": "T8:hold:R:R:20",
+   "solves": 2506,
+   "solvesBeyondLimits": 56,
+   "solvesBeyondLimitsBeforeAbort": 0,
+   "firstBeyondT": 4.991666666666666,
+   "abortT": 4.083333333333333,
+   "fallT": 5.220833333333333,
+   "maxBeyondDeg": [
+    0,
+    0,
+    20.18446689508707,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "body": "V2-REF",
+   "run": "T8:hold:L:L:20",
+   "solves": 2506,
+   "solvesBeyondLimits": 56,
+   "solvesBeyondLimitsBeforeAbort": 0,
+   "firstBeyondT": 4.991666666666666,
+   "abortT": 4.083333333333333,
+   "fallT": 5.220833333333333,
+   "maxBeyondDeg": [
+    0,
+    0,
+    20.214579489812373,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "body": "V2-REF",
+   "run": "T8:hold:R:FR:20",
+   "solves": 2700,
+   "solvesBeyondLimits": 72,
+   "solvesBeyondLimitsBeforeAbort": 0,
+   "firstBeyondT": 5.354166666666667,
+   "abortT": 4.1125,
+   "fallT": 5.625,
+   "maxBeyondDeg": [
+    22.876877396473215,
+    0,
+    30.899592175505617,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "body": "V2-REF",
+   "run": "T8:hold:L:FL:20",
+   "solves": 2700,
+   "solvesBeyondLimits": 73,
+   "solvesBeyondLimitsBeforeAbort": 0,
+   "firstBeyondT": 5.354166666666667,
+   "abortT": 4.1125,
+   "fallT": 5.625,
+   "maxBeyondDeg": [
+    22.6037418547582,
+    0,
+    30.853479968953827,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "body": "V2-REF",
+   "run": "T8:hold:R:BR:15",
+   "solves": 2688,
+   "solvesBeyondLimits": 59,
+   "solvesBeyondLimitsBeforeAbort": 0,
+   "firstBeyondT": 5.366666666666666,
+   "abortT": 4.1125,
+   "fallT": 5.6,
+   "maxBeyondDeg": [
+    0,
+    0,
+    20.54739298979532,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "body": "V2-REF",
+   "run": "T8:hold:L:BL:15",
+   "solves": 2686,
+   "solvesBeyondLimits": 58,
+   "solvesBeyondLimitsBeforeAbort": 0,
+   "firstBeyondT": 5.3625,
+   "abortT": 4.1125,
+   "fallT": 5.595833333333333,
+   "maxBeyondDeg": [
+    0,
+    0,
+    20.30498192186754,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "body": "V2-REF",
+   "run": "T8:hold:R:BR:20",
+   "solves": 2558,
+   "solvesBeyondLimits": 57,
+   "solvesBeyondLimitsBeforeAbort": 0,
+   "firstBeyondT": 5.125,
+   "abortT": 4.091666666666667,
+   "fallT": 5.329166666666667,
+   "maxBeyondDeg": [
+    0,
+    0,
+    19.354811369139345,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "body": "V2-REF",
+   "run": "T8:hold:L:BL:20",
+   "solves": 2554,
+   "solvesBeyondLimits": 64,
+   "solvesBeyondLimitsBeforeAbort": 0,
+   "firstBeyondT": 5.120833333333334,
+   "abortT": 4.091666666666667,
+   "fallT": 5.320833333333333,
+   "maxBeyondDeg": [
+    0,
+    0,
+    12.654012697760761,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "body": "V2-REF",
+   "run": "T8:ramp:R:F:20",
+   "solves": 1822,
+   "solvesBeyondLimits": 78,
+   "solvesBeyondLimitsBeforeAbort": 0,
+   "firstBeyondT": 3.475,
+   "abortT": 2.341666666666667,
+   "fallT": 3.7958333333333334,
+   "maxBeyondDeg": [
+    0,
+    25.11232803073722,
+    10.368831047607923,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "body": "V2-REF",
+   "run": "T8:ramp:L:F:20",
+   "solves": 1822,
+   "solvesBeyondLimits": 77,
+   "solvesBeyondLimitsBeforeAbort": 0,
+   "firstBeyondT": 3.4791666666666665,
+   "abortT": 2.341666666666667,
+   "fallT": 3.7958333333333334,
+   "maxBeyondDeg": [
+    0,
+    24.816871634118296,
+    10.951665671680617,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "body": "V2-REF",
+   "run": "T8:ramp:R:B:20",
+   "solves": 1886,
+   "solvesBeyondLimits": 3,
+   "solvesBeyondLimitsBeforeAbort": 0,
+   "firstBeyondT": 3.9208333333333334,
+   "abortT": 2.341666666666667,
+   "fallT": 3.9291666666666667,
+   "maxBeyondDeg": [
+    0,
+    0,
+    0,
+    8.36613789018239,
+    0,
+    0
+   ]
+  },
+  {
+   "body": "V2-REF",
+   "run": "T8:ramp:R:R:15",
+   "solves": 1774,
+   "solvesBeyondLimits": 58,
+   "solvesBeyondLimitsBeforeAbort": 0,
+   "firstBeyondT": 3.4583333333333335,
+   "abortT": 2.341666666666667,
+   "fallT": 3.6958333333333333,
+   "maxBeyondDeg": [
+    0,
+    0,
+    19.743147351271357,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "body": "V2-REF",
+   "run": "T8:ramp:L:L:15",
+   "solves": 1774,
+   "solvesBeyondLimits": 58,
+   "solvesBeyondLimitsBeforeAbort": 0,
+   "firstBeyondT": 3.4583333333333335,
+   "abortT": 2.341666666666667,
+   "fallT": 3.6958333333333333,
+   "maxBeyondDeg": [
+    0,
+    0,
+    19.816783081749545,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "body": "V2-REF",
+   "run": "T8:ramp:R:R:20",
+   "solves": 1606,
+   "solvesBeyondLimits": 58,
+   "solvesBeyondLimitsBeforeAbort": 0,
+   "firstBeyondT": 3.1083333333333334,
+   "abortT": 2.341666666666667,
+   "fallT": 3.345833333333333,
+   "maxBeyondDeg": [
+    0,
+    0,
+    20.12367098128799,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "body": "V2-REF",
+   "run": "T8:ramp:L:L:20",
+   "solves": 1606,
+   "solvesBeyondLimits": 58,
+   "solvesBeyondLimitsBeforeAbort": 0,
+   "firstBeyondT": 3.1083333333333334,
+   "abortT": 2.341666666666667,
+   "fallT": 3.345833333333333,
+   "maxBeyondDeg": [
+    0,
+    0,
+    20.105948536530292,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "body": "V2-REF",
+   "run": "T8:ramp:R:FR:20",
+   "solves": 1836,
+   "solvesBeyondLimits": 66,
+   "solvesBeyondLimitsBeforeAbort": 0,
+   "firstBeyondT": 3.595833333333333,
+   "abortT": 2.341666666666667,
+   "fallT": 3.8249999999999997,
+   "maxBeyondDeg": [
+    22.736394839234357,
+    0.5973623355506077,
+    33.27563743817606,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "body": "V2-REF",
+   "run": "T8:ramp:L:FL:20",
+   "solves": 1836,
+   "solvesBeyondLimits": 66,
+   "solvesBeyondLimitsBeforeAbort": 0,
+   "firstBeyondT": 3.595833333333333,
+   "abortT": 2.341666666666667,
+   "fallT": 3.8249999999999997,
+   "maxBeyondDeg": [
+    22.563630058049185,
+    0.2622516156676454,
+    33.15160095082406,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "body": "V2-REF",
+   "run": "T8:ramp:R:BR:15",
+   "solves": 1948,
+   "solvesBeyondLimits": 59,
+   "solvesBeyondLimitsBeforeAbort": 0,
+   "firstBeyondT": 3.8249999999999997,
+   "abortT": 2.4875,
+   "fallT": 4.058333333333334,
+   "maxBeyondDeg": [
+    0,
+    0,
+    20.38520767761109,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "body": "V2-REF",
+   "run": "T8:ramp:L:BL:15",
+   "solves": 1944,
+   "solvesBeyondLimits": 58,
+   "solvesBeyondLimitsBeforeAbort": 0,
+   "firstBeyondT": 3.8208333333333333,
+   "abortT": 2.4875,
+   "fallT": 4.05,
+   "maxBeyondDeg": [
+    0,
+    0,
+    20.239489265390382,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "body": "V2-REF",
+   "run": "T8:ramp:R:BR:20",
+   "solves": 1676,
+   "solvesBeyondLimits": 61,
+   "solvesBeyondLimitsBeforeAbort": 0,
+   "firstBeyondT": 3.275,
+   "abortT": 2.341666666666667,
+   "fallT": 3.4916666666666667,
+   "maxBeyondDeg": [
+    0,
+    0,
+    19.6411192780655,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "body": "V2-REF",
+   "run": "T8:ramp:L:BL:20",
+   "solves": 1676,
+   "solvesBeyondLimits": 62,
+   "solvesBeyondLimitsBeforeAbort": 0,
+   "firstBeyondT": 3.275,
+   "abortT": 2.341666666666667,
+   "fallT": 3.4916666666666667,
+   "maxBeyondDeg": [
+    0,
+    0,
+    19.742015458286325,
+    0,
+    0,
+    0
+   ]
+  }
+ ],
+ "worst": [
+  {
+   "v": 22.876877396473215,
+   "at": "V2-REF T8:hold:R:FR:20"
+  },
+  {
+   "v": 26.143906692067937,
+   "at": "V2-REF T8:hold:L:F:20"
+  },
+  {
+   "v": 33.27563743817606,
+   "at": "V2-REF T8:ramp:R:FR:20"
+  },
+  {
+   "v": 8.36613789018239,
+   "at": "V2-REF T8:ramp:R:B:20"
+  },
+  {
+   "v": 0,
+   "at": null
+  },
+  {
+   "v": 0,
+   "at": null
+  }
+ ]
+}

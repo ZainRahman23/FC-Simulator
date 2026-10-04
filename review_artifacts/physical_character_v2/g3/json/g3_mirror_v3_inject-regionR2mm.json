@@ -1,0 +1,360 @@
+{
+ "generated": "tools/g3_mirror_v3.mjs",
+ "date": "2026-10-04",
+ "slideThresholdMm": 1,
+ "floorEvery": null,
+ "floorDraws": null,
+ "wallS": 17.491,
+ "pairs": [
+  {
+   "a": "T7:R:1",
+   "b": "T7:L:1",
+   "human": "V2-REF",
+   "j2a": {
+    "pre": {
+     "lam": 1.1102230246251565e-16,
+     "copMm": 1.9851403740104687,
+     "share": 0.014344467326630417,
+     "footCopMm": 4.667585261811604,
+     "forceN": 11.138562044820846,
+     "g3OutS": 0,
+     "ikResM": 1.458283958415387e-15,
+     "sigmaErr": 9.345067777388749e-7,
+     "cmdTauNm": 2.9072014356425484,
+     "cmdGain": 5.684341886080802e-14,
+     "actTauNm": 2.9072014356425484,
+     "actGain": 5.684341886080802e-14,
+     "actBoundNm": 0.8813721586471672,
+     "actCapNm": 3.126388037344441e-13,
+     "activation": 0.012629730645057617
+    },
+    "post": {},
+    "bad": [],
+    "ticks": 4320,
+    "postTicks": 0,
+    "selfMax": 0,
+    "tauWorst": {
+     "d": 2.9072014356425484,
+     "joint": "hip_R",
+     "axis": 2,
+     "sigma": -1.0000000143840375,
+     "ffA": -62.7308355442901,
+     "ffB": 65.63803697993264,
+     "fbA": -0.3023440661365555,
+     "fbB": 0.3023440661365697,
+     "dff": 2.907201435642534,
+     "dfb": 1.4210854715202004e-14,
+     "K": 95.70741686281941,
+     "t": 3.7583333333333333,
+     "side": "A"
+    }
+   },
+   "j2b": {
+    "clsA": "recovered",
+    "clsB": "recovered",
+    "outcomeA": "stood",
+    "outcomeB": "stood",
+    "abortA": null,
+    "abortB": null,
+    "fallA": null,
+    "fallB": null,
+    "slipA": [
+     0.4631768834383527,
+     0.2644986319117587
+    ],
+    "slipB": [
+     0.2673392027553244,
+     0.36223818822537485
+    ],
+    "ticksA": 2160,
+    "ticksB": 2160,
+    "slidingOnsetS": null,
+    "posDiffAllMm": 0.1706892324523793,
+    "posDiffToAbortMm": null,
+    "posDiffToFallMm": null,
+    "abortCommon": null,
+    "fallFirst": null
+   }
+  },
+  {
+   "a": "T8:hold:R:FR:15",
+   "b": "T8:hold:L:FL:15",
+   "human": "V2-REF",
+   "j2a": {
+    "pre": {
+     "lam": 1.1102230246251565e-16,
+     "copMm": 1.9892680788397406,
+     "share": 0.01437198046014046,
+     "footCopMm": 7.940309979278179,
+     "forceN": 11.136168703230826,
+     "g3OutS": 0,
+     "ikResM": 1.4121453102055822e-15,
+     "sigmaErr": 9.781746672654634e-7,
+     "cmdTauNm": 2.882716745553026,
+     "cmdGain": 5.684341886080802e-14,
+     "actTauNm": 2.8827167455530116,
+     "actGain": 5.684341886080802e-14,
+     "actBoundNm": 0.8739491696882737,
+     "actCapNm": 3.126388037344441e-13,
+     "activation": 0.011927124658362261
+    },
+    "post": {},
+    "bad": [],
+    "ticks": 5760,
+    "postTicks": 0,
+    "selfMax": 0,
+    "tauWorst": {
+     "d": 2.882716745553026,
+     "joint": "hip_R",
+     "axis": 2,
+     "sigma": -1.000000145173114,
+     "ffA": -60.601132149833916,
+     "ffB": 63.48384889538694,
+     "fbA": 0.34056677403437163,
+     "fbB": -0.34056677403438584,
+     "dff": 2.882716745553026,
+     "dfb": 1.4210854715202004e-14,
+     "K": 95.70741686281941,
+     "t": 4,
+     "side": "A"
+    }
+   },
+   "j2b": {
+    "clsA": "recovered",
+    "clsB": "recovered",
+    "outcomeA": "recovered",
+    "outcomeB": "recovered",
+    "abortA": null,
+    "abortB": null,
+    "fallA": null,
+    "fallB": null,
+    "slipA": [
+     7.298672433642337,
+     0.2575046126476292
+    ],
+    "slipB": [
+     0.2609925201518103,
+     6.102752447882067
+    ],
+    "ticksA": 2880,
+    "ticksB": 2880,
+    "slidingOnsetS": 4.0875,
+    "posDiffAllMm": 3.9980208101631405,
+    "posDiffToAbortMm": null,
+    "posDiffToFallMm": null,
+    "abortCommon": null,
+    "fallFirst": null
+   }
+  },
+  {
+   "a": "T8:hold:R:R:10",
+   "b": "T8:hold:L:L:10",
+   "human": "V2-REF",
+   "j2a": {
+    "pre": {
+     "lam": 1.1102230246251565e-16,
+     "copMm": 1.9934199131039712,
+     "share": 0.014341158791711273,
+     "footCopMm": 4.84195970639794,
+     "forceN": 11.109387594382653,
+     "g3OutS": 0,
+     "ikResM": 1.385324262600491e-15,
+     "sigmaErr": 9.358184196450736e-7,
+     "cmdTauNm": 2.882716745553026,
+     "cmdGain": 5.684341886080802e-14,
+     "actTauNm": 2.8827167455530116,
+     "actGain": 5.684341886080802e-14,
+     "actBoundNm": 0.8739491696882737,
+     "actCapNm": 3.126388037344441e-13,
+     "activation": 0.011884597282514852,
+     "holdMm": 0,
+     "holdRad": 0
+    },
+    "post": {},
+    "bad": [],
+    "ticks": 5760,
+    "postTicks": 0,
+    "selfMax": 0,
+    "tauWorst": {
+     "d": 2.882716745553026,
+     "joint": "hip_R",
+     "axis": 2,
+     "sigma": -1.000000145173114,
+     "ffA": -60.601132149833916,
+     "ffB": 63.48384889538694,
+     "fbA": 0.34056677403437163,
+     "fbB": -0.34056677403438584,
+     "dff": 2.882716745553026,
+     "dfb": 1.4210854715202004e-14,
+     "K": 95.70741686281941,
+     "t": 4,
+     "side": "A"
+    }
+   },
+   "j2b": {
+    "clsA": "recovered",
+    "clsB": "recovered",
+    "outcomeA": "recovered",
+    "outcomeB": "recovered",
+    "abortA": null,
+    "abortB": null,
+    "fallA": null,
+    "fallB": null,
+    "slipA": [
+     12.651761838070373,
+     0.2575046126476292
+    ],
+    "slipB": [
+     0.2609925201518103,
+     12.047614477377607
+    ],
+    "ticksA": 2880,
+    "ticksB": 2880,
+    "slidingOnsetS": 4.079166666666667,
+    "posDiffAllMm": 1.6016174754586554,
+    "posDiffToAbortMm": null,
+    "posDiffToFallMm": null,
+    "abortCommon": null,
+    "fallFirst": null
+   }
+  },
+  {
+   "a": "T1",
+   "b": "T2",
+   "human": "V2-REF",
+   "j2a": {
+    "pre": {
+     "lam": 1.1102230246251565e-16,
+     "copMm": 1.9850953915247507,
+     "share": 0.014341158791711273,
+     "footCopMm": 2.0241202443830653,
+     "forceN": 11.104783160048095,
+     "ikResM": 1.4069439694365401e-15,
+     "sigmaErr": 9.57209303376061e-7,
+     "cmdTauNm": 2.567489553657964,
+     "cmdGain": 5.684341886080802e-14,
+     "actTauNm": 2.567489553657964,
+     "actGain": 5.684341886080802e-14,
+     "actBoundNm": 0.7783821865482139,
+     "actCapNm": 3.126388037344441e-13,
+     "activation": 0.008204471662719742
+    },
+    "post": {},
+    "bad": [],
+    "ticks": 7680,
+    "postTicks": 0,
+    "selfMax": 0,
+    "tauWorst": {
+     "d": 2.567489553657964,
+     "joint": "hip_R",
+     "axis": 2,
+     "sigma": -0.9999997548219719,
+     "ffA": -46.838206111315145,
+     "ffB": 49.4056956649731,
+     "fbA": -0.0052020698584342995,
+     "fbB": 0.005202069858441405,
+     "dff": 2.567489553657957,
+     "dfb": 7.105427357601002e-15,
+     "K": 95.70741686281941,
+     "t": 9.4125,
+     "side": "A"
+    }
+   },
+   "j2b": {
+    "clsA": "recovered",
+    "clsB": "recovered",
+    "outcomeA": "stood",
+    "outcomeB": "stood",
+    "abortA": null,
+    "abortB": null,
+    "fallA": null,
+    "fallB": null,
+    "slipA": [
+     0.2609925201518103,
+     0.25670493497949054
+    ],
+    "slipB": [
+     0.2609925201518103,
+     0.25670493497949054
+    ],
+    "ticksA": 3840,
+    "ticksB": 3840,
+    "slidingOnsetS": null,
+    "posDiffAllMm": 0.028656125557213235,
+    "posDiffToAbortMm": null,
+    "posDiffToFallMm": null,
+    "abortCommon": null,
+    "fallFirst": null
+   }
+  },
+  {
+   "a": "T5",
+   "b": "T6",
+   "human": "V2-REF",
+   "j2a": {
+    "pre": {
+     "lam": 1.1102230246251565e-16,
+     "copMm": 1.9850953915247507,
+     "share": 0.014341158791711273,
+     "footCopMm": 2.034645012872526,
+     "forceN": 11.106238524859908,
+     "ikResM": 1.5063261195410909e-15,
+     "sigmaErr": 9.822245583546163e-7,
+     "cmdTauNm": 2.9923459781850426,
+     "cmdGain": 5.684341886080802e-14,
+     "actTauNm": 2.9923459781850283,
+     "actGain": 5.684341886080802e-14,
+     "actBoundNm": 0.9064733232618494,
+     "actCapNm": 3.126388037344441e-13,
+     "activation": 0.00956727424843875
+    },
+    "post": {},
+    "bad": [],
+    "ticks": 10560,
+    "postTicks": 0,
+    "selfMax": 0,
+    "tauWorst": {
+     "d": 2.9923459781850426,
+     "joint": "hip_L",
+     "axis": 2,
+     "sigma": -0.9999998616762154,
+     "ffA": 70.40476647374032,
+     "ffB": -67.41242049555528,
+     "fbA": -0.00015518374145528924,
+     "fbB": 0.00015518374144107838,
+     "dff": 2.9923459781850426,
+     "dfb": 1.4210854715202004e-14,
+     "K": 95.70741686281941,
+     "t": 14.995833333333334,
+     "side": "B"
+    }
+   },
+   "j2b": {
+    "clsA": "recovered",
+    "clsB": "recovered",
+    "outcomeA": "stood",
+    "outcomeB": "stood",
+    "abortA": null,
+    "abortB": null,
+    "fallA": null,
+    "fallB": null,
+    "slipA": [
+     0.2609925201518103,
+     0.25670493497949054
+    ],
+    "slipB": [
+     0.26107001974726035,
+     0.26641091465198846
+    ],
+    "ticksA": 5280,
+    "ticksB": 5280,
+    "slidingOnsetS": null,
+    "posDiffAllMm": 0.03278034752933043,
+    "posDiffToAbortMm": null,
+    "posDiffToFallMm": null,
+    "abortCommon": null,
+    "fallFirst": null
+   }
+  }
+ ]
+}
