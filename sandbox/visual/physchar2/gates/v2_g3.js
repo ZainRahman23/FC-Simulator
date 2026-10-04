@@ -27,7 +27,12 @@ export function supervised(fn, opts = {}) { const margin = opts.margin ?? 0.01, 
     if (g.aborted == null && I && I.lam != null && Math.max(I.lam, 1 - I.lam) >= minShare) { const st = I.lam > 0.5 ? 1 : 0;
       g.out = polyDist(I.polys[st], I.pRaw) < -margin ? g.out + dtt : 0;
       if (g.out >= dwell - 1e-9) { g.aborted = t; g.from = r.lam; g.bilateralOk = polyDist(I.support, I.xi) >= 0; } }
-    if (g.aborted != null) { const u = abortDur > 0 ? Math.min(1, (t - g.aborted) / abortDur) : 1, dv = 0.5 - g.from, ff = abortFF && u < 1;
+    // EXPERIMENTAL lifecycle (H9): with a foot OFF the turf, the abort first puts it down on its contact anchor (swing target cleared) and holds the
+    // request at stance; the return to bilateral starts only once that foot is in contact again (then load acceptance follows the request)
+    if (g.aborted != null && ctrl.lc) { const air = ctrl.lc.feet.findIndex(f => f.state === "AIRBORNE" || f.state === "LIFTOFF");
+      if (air >= 0) { ctrl.lc.setSwingTarget(air, null); g.rampFrom = null; return { lam: g.from, dl: 0, ddl: 0 }; }
+      if (g.rampFrom == null) g.rampFrom = t; }
+    if (g.aborted != null) { const t0a = ctrl.lc && g.rampFrom != null ? g.rampFrom : g.aborted, u = abortDur > 0 ? Math.min(1, (t - t0a) / abortDur) : 1, dv = 0.5 - g.from, ff = abortFF && u < 1;
       r = { lam: g.from + dv * u * u * u * (10 - 15 * u + 6 * u * u), dl: ff ? dv * 30 * u * u * (1 - u) * (1 - u) / abortDur : 0, ddl: ff ? dv * 60 * u * (1 - u) * (1 - 2 * u) / (abortDur * abortDur) : 0 }; }
     return r; }; }
 export function g3Scenario(def) { return { title: def.title, seconds: def.seconds, push: def.push || null, torque: def.torque || null, initStance: def.initStance || null, v: def.v || null, g3: def }; }
