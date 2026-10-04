@@ -1,0 +1,11 @@
+anchors IR (T N·m → °): 2.5→4, 5→7, 10→10, 15→12, 30→14.5 | ER: 2.5→8.5, 5→13, 10→18.5, 15→21, 30→23.5
+V2 generic: B 6/rad, tauH 6.8 (25 % cap), end-stop 27.3 @ +3°
+   IR: soft 0, hard 10, pred 5.0/8.2/10.5/11.2/13.4, rms 0.94°   ER: soft 0, hard 18, pred 10.7/15.6/18.5/19.2/21.4, rms 1.95°
+B 11.5/rad (lit 0.2/°), tauH 6.8, end-stop 27.3 @ +3°
+   IR: soft 0, hard 9.5, pred 5.6/8.2/10.0/10.8/12.9, rms 1.30°   ER: soft 0, hard 17.25, pred 12.5/15.8/17.8/18.5/20.6, rms 2.79°
+B 6/rad, tauH 15, end-stop 30 @ +3°
+   IR: soft 1.75, hard 12, pred 4.4/6.5/9.6/12.0/15.0, rms 0.40°   ER: soft 1.75, hard 21, pred 8.8/12.8/17.7/21.0/24.0, rms 0.44°
+B 11.5/rad, tauH 15 (hard = clinical end-feel), end-stop 30 @ +3°
+   IR: soft 0, hard 11.5, pred 4.6/6.9/9.7/11.5/14.5, rms 0.37°   ER: soft 0, hard 19.5, pred 11.0/14.2/17.5/19.5/22.5, rms 1.56°
+B 8.6/rad (0.15/°), tauH 15, end-stop 30 @ +3°
+   IR: soft 0.25, hard 12, pred 4.2/6.6/9.8/12.0/15.0, rms 0.29°   ER: soft 0, hard 20.25, pred 9.7/13.5/17.7/20.2/23.2, rms 0.79°

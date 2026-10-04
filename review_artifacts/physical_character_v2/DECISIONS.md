@@ -1355,3 +1355,35 @@ Candidates and their regression implications: report §13.
 1. a fitted knee envelope;
 2. a perturbed-rate comparison;
 3. your decisions on the knee revision, the G1 rest-tolerance interpretation, reference semantics, and enabling the lifecycle.
+
+## 2026-10-04 — Knee axial research review (user instruction `sources/2026-10-04_user_instruction_knee_axial_research_review.md`)
+
+### KR-1: review delivered; nothing adopted; no code changed; no simulation run (`knee_axial_review/KNEE_AXIAL_MODEL_REVIEW.md`)
+
+**Evidence:**
+- Four tagged primary-literature reports (`knee_axial_review/literature/`).
+- Spot-checked against Seiferheld 2026 S4 and Blankevoort 1988 Fig. 5.
+- Supporting calculations only (`knee_axial_review/evidence/`).
+
+**Findings:**
+- **The current knee axial model is 2.6–4× too wide at physiological torques** (64–66° total at 5 N·m at every flexion vs in vivo bone-level 16° at 0°, about 23° at 30°, about 24–26° at 90°).
+  - Its screw-home term is nearly inert: soft-onset only, so the range at a given torque changes by 2° from 0° to 90°.
+  - Its zero is fixed.
+- **Moving neutral θ0:** 0 → about 15° by 90–120° → about 20° (11–30°) at 145–150°. This corrects the earlier "30° at 150°".
+- **Envelope:** narrowest at extension (in vivo mainly ER), plateau 30° → ≥ 120°, probably narrower beyond about 125° (low confidence).
+- **Torque–rotation:** a J-curve, no wall below about 25 N·m.
+- **Weight-bearing:** stiffens strongly (cadaver), but is unmeasured in vivo.
+- **Planted-leg yaw:** belongs mainly to the hip, the shoe–ground pivot and the foot chain.
+
+**Recommendation (proposal; needs approval under the anatomy / joint-limit rule):**
+- θ0(φ) = the Walker curve to 120°, rising to about 20° at 150°;
+- per-side widths from θ0 (plateau: soft IR 3 / ER 1.5°, hard IR 14 / ER 24°), with ER ×0.5 at extension and a deep-flexion factor of 0.6 (0.3–1.0);
+- the existing law shape with a knee-specific torque at hard of about 15 N·m (≈ 0.55 × capacity) and the existing 3° end-stop;
+- a conservative potential formulation;
+- the old screw-home coupling disabled;
+- engine stops moved with the envelope;
+- a separate active box;
+- no compression term until the stance test V6 requires one;
+- validation V0–V11, to be preregistered.
+
+**E1a:** the evidence supports changing the knee before E1a (ankle-law blocker, the stance knee at 4–25° flexion, θ0 for reference semantics, order of work). **It does not by itself authorise E1a.**
