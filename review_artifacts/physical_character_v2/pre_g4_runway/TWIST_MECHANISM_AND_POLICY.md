@@ -126,6 +126,7 @@ Per joint axis: τ = feed-forward (inverse statics) + K·e − (D + dt·K)·ω_e
 - The validated controller's 2.8 N·m/° is not a genuine anchor (it is the ankle end range plus leg twist). Still, a human also uses active ankle-foot musculature and the two-foot force couple, and reference alone does neither.
 - **A fixed reference cannot accept a legitimately rotated foot.** For example, after a foot lands toed-out, a fixed reference keeps pulling the leg twist back toward reference. The **state-dependent reference** (drift τ ≈ 2 s) accepts such an offset slowly, and is still stable at τ = 2 s. At τ = 0.5 s it is not stable (k = 0.13).
 - **Not falsified on legitimate turning:** commanded turns of up to 30° are achieved accurately with no saturation. No over-constraint was found.
+- **Not falsified on toed-out stances** (`tools/twist_toeout.mjs`, k = 0.13; feet toed out 7 / 30 / 40 / 45° each, near the hip external-rotation limit): current, reference and drift τ 2 s all stand. All carry the toe-out at the hips (hip rotation = −toe-out within 0.5°) with the passive twist ≤ 0.4°. Hip-rotation actuator ≤ 1 % of capacity, no saturation, passive hip torque ≤ 1.2 N·m at 45°. A reference twist target does not fight a legitimately rotated foot that the hip can accommodate.
 
 **Architecture suggested by the evidence (for decision; not adopted):**
 1. The posture twist target should be **reference-like on short time scales** (α ≥ 0.5, or drift τ ≥ 2 s). That removes the non-passive loop.

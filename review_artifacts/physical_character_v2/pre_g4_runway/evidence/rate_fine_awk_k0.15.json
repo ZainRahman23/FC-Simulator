@@ -1,0 +1,170 @@
+{
+ "generated": "tools/phaseG_events.mjs",
+ "human": "V2-REF",
+ "key": "awkward@0.00001",
+ "hz": 180,
+ "k": 0.15,
+ "thr": 0.05,
+ "windowS": 0.25,
+ "ticks": 1800,
+ "events": 3,
+ "maxStepRiseJ": 6.9245320758356,
+ "maxResidualJ": 8.503398385674567,
+ "runResidualJ": -764.2890730964942,
+ "maxWindowResidualJ": -690.3797,
+ "eventList": [
+  {
+   "n": 55,
+   "t": 0.3056,
+   "dE": 0.6895,
+   "r": 1.9828,
+   "angles": {
+    "ankle_L": [
+     0.32,
+     -14.64,
+     0.19
+    ],
+    "ankle_R": [
+     13.72,
+     50.14,
+     29.63
+    ],
+    "knee_L": [
+     17.41,
+     -0.03
+    ],
+    "knee_R": [
+     113.78,
+     4.78
+    ]
+   },
+   "windowResidualJ": -690.3797
+  },
+  {
+   "n": 56,
+   "t": 0.3111,
+   "dE": 6.9245,
+   "r": 8.5034,
+   "angles": {
+    "ankle_L": [
+     0.31,
+     -14.69,
+     0.25
+    ],
+    "ankle_R": [
+     20.79,
+     45.96,
+     37.91
+    ],
+    "knee_L": [
+     17.41,
+     -0.1
+    ],
+    "knee_R": [
+     117.64,
+     1.22
+    ]
+   },
+   "windowResidualJ": -694.1201
+  },
+  {
+   "n": 58,
+   "t": 0.3222,
+   "dE": 0.7112,
+   "r": 1.5798,
+   "angles": {
+    "ankle_L": [
+     0.28,
+     -14.78,
+     0.37
+    ],
+    "ankle_R": [
+     15.78,
+     45.54,
+     36.6
+    ],
+    "knee_L": [
+     17.44,
+     -0.27
+    ],
+    "knee_R": [
+     125.98,
+     11.06
+    ]
+   },
+   "windowResidualJ": -695.5974
+  }
+ ],
+ "converge": {
+  "event": 56,
+  "t": 0.3111,
+  "rates": [
+   {
+    "hzEquivalent": 180,
+    "dtMs": 5.5556,
+    "windowResidualJ": -694.1201,
+    "maxStepRiseJ": 6.9245
+   },
+   {
+    "hzEquivalent": 190,
+    "dtMs": 5.2632,
+    "windowResidualJ": -681.0492,
+    "maxStepRiseJ": 5.6662
+   },
+   {
+    "hzEquivalent": 200,
+    "dtMs": 5,
+    "windowResidualJ": -682.1581,
+    "maxStepRiseJ": 4.5506
+   },
+   {
+    "hzEquivalent": 210,
+    "dtMs": 4.7619,
+    "windowResidualJ": -680.6524,
+    "maxStepRiseJ": 3.5572
+   },
+   {
+    "hzEquivalent": 220,
+    "dtMs": 4.5455,
+    "windowResidualJ": -674.3228,
+    "maxStepRiseJ": 2.6712
+   },
+   {
+    "hzEquivalent": 230,
+    "dtMs": 4.3478,
+    "windowResidualJ": -675.9714,
+    "maxStepRiseJ": 0.5933
+   },
+   {
+    "hzEquivalent": 240,
+    "dtMs": 4.1667,
+    "windowResidualJ": -677.1854,
+    "maxStepRiseJ": 0.5092
+   },
+   {
+    "hzEquivalent": 260,
+    "dtMs": 3.8462,
+    "windowResidualJ": -671.9444,
+    "maxStepRiseJ": 0
+   },
+   {
+    "hzEquivalent": 280,
+    "dtMs": 3.5714,
+    "windowResidualJ": -650.8735,
+    "maxStepRiseJ": 0
+   },
+   {
+    "hzEquivalent": 300,
+    "dtMs": 3.3333,
+    "windowResidualJ": -649.5466,
+    "maxStepRiseJ": 0
+   },
+   {
+    "hzEquivalent": 360,
+    "dtMs": 2.7778,
+    "windowResidualJ": -658.6233,
+    "maxStepRiseJ": 0
+   }
+  ]
+ }
+}
