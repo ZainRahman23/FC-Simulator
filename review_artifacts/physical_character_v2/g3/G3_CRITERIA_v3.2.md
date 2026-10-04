@@ -78,4 +78,34 @@
 | g3OutS | 0 | 2.2e-14 s |
 | ikResM | 1.50e-15 | 2.2e-14 |
 
-**J2b tolerances:** to be entered here by the procedure above, from the final characterisation and held-out runs, before the J2b gate evaluation.
+**J2b tolerances** (procedure steps 1–3 applied by `tools/j2b_tol_v32.mjs` → `json/j2b_tol_v32.json`, before the 81-pair J2b gate run).
+
+**Data:** characterisation 1,027 pairs plus held-out 230 pairs, final configuration (commits 833ec4a / f7b8a0c, bit-identical), 0 errors.
+- Population: 1,163 base pairs; 1,072 used; 91 G2 falls excluded (not a G3 criterion); 0 G3 falls without a common abort.
+- 0 class mismatches; 0 one-sided aborts; 0 pairs above 3 × class p99.
+
+| class | n | median | p99 | max (char / held-out) | provisional | 2 · max | provisional accepted? | **v3.2 tolerance** | margin |
+|---|---|---|---|---|---|---|---|---|---|
+| A | 524 | 0.034 mm | 0.162 mm | 0.206 mm (0.206 / 0.162) | 0.25 mm | 0.411 mm | **no** | **0.5 mm** | 2.4 × max |
+| B | 375 | 0.151 mm | 2.92 mm | 3.58 mm (2.49 / 3.58) | 5 mm | 7.16 mm | **no** | **10 mm** | 2.8 × max |
+| C | 173 | 0.045 mm | 0.558 mm | 0.683 mm (0.533 / 0.683) | 1 mm | 1.37 mm | **no** | **2 mm** | 2.9 × max |
+| C abort timing | 173 | — | — | 1 tick (0: 168, 1: 5) | 5 ticks | 2 | **yes** | **5 ticks** | — |
+
+- The held-out set raised the maxima of B (+44 %) and C (+28 %) over the characterisation alone. This is why the procedure uses both sets.
+
+**Meaningfulness (step 4): NOT MET.**
+
+The injection set is 19 G3-gate-like pairs per injection plus 19 uninjected control pairs. Every injected run differs from its control (hashes), so no injection is a no-op.
+
+| injection | J2b failures with the tolerances above | max by class: A / B / C (mm) |
+|---|---|---|
+| control (none) | 0 / 19 | 0.203 / 1.118 / 0.038 |
+| right actuator capacity −5 % | **0 / 19** | 0.171 / 1.033 / 0.037 |
+| right foot mass +5 % | **0 / 19** | 0.152 / 1.201 / 0.060 |
+| right usable region +2 mm lateral | **0 / 19** | 0.373 / 3.998 / 0.569 |
+
+- **0 of 3** injected asymmetries produce an exceedance. As pre-registered, **J2b v3.2 is reported as too loose to detect a 5 % asymmetry, and G3 is not declared on it.**
+- **The region shift is visible above the measured floor** in A (0.373 vs 0.206 mm) and B (3.998 vs 3.579 mm), but not above the 2 × margin. In C it stays below the floor maximum.
+- **The strength and foot-mass injections** stay inside the uninjected scatter in every class. Foot displacement does not respond to them in these trials.
+
+The tolerances above are entered in `gates/v2_g3_checks_v32.js` unchanged. The 81-pair J2b evaluation is run and reported; its PASS / FAIL cannot by itself declare G3.

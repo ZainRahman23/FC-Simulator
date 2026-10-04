@@ -1,0 +1,266 @@
+{
+ "generated": "tools/j2b_tol_v32.mjs",
+ "criteria": "g3/G3_CRITERIA_v3.2.md (J2b tolerance procedure, pre-registered at 5b9d756)",
+ "inputs": {
+  "characterisation": 1027,
+  "heldout": 230,
+  "inject": 76,
+  "errors": [
+   0,
+   0,
+   0
+  ]
+ },
+ "population": {
+  "pairs": 1163,
+  "used": 1072,
+  "excluded": 91,
+  "excludedWhy": {
+   "G2 fall (not a G3 criterion)": 91
+  },
+  "classMismatch": [],
+  "abortOneSided": []
+ },
+ "classes": {
+  "A": {
+   "n": 524,
+   "median": 0.033611795419433994,
+   "p90": 0.06120140023310929,
+   "p99": 0.1621267678133858,
+   "max": 0.20564827248691536,
+   "bySet": {
+    "characterisation": {
+     "n": 450,
+     "median": 0.03263723598862772,
+     "p90": 0.05984280594157357,
+     "p99": 0.1670545215352399,
+     "max": 0.20564827248691536
+    },
+    "heldout": {
+     "n": 74,
+     "median": 0.037134055645918124,
+     "p90": 0.06314135501228743,
+     "p99": 0.15290800347870545,
+     "max": 0.1621267678133858
+    }
+   },
+   "provisional": 0.25,
+   "twiceMax": 0.4112965449738307,
+   "provisionalAccepted": false,
+   "toleranceMm": 0.5,
+   "marginFactor": 2.4313357654478382
+  },
+  "B": {
+   "n": 375,
+   "median": 0.15114703954622866,
+   "p90": 1.1589824791792476,
+   "p99": 2.9220476266390762,
+   "max": 3.57934305053911,
+   "bySet": {
+    "characterisation": {
+     "n": 294,
+     "median": 0.12643949646692887,
+     "p90": 1.1176307847811673,
+     "p99": 2.4536077454802716,
+     "max": 2.4942656128653518
+    },
+    "heldout": {
+     "n": 81,
+     "median": 0.34072815779726073,
+     "p90": 1.8759956034331582,
+     "p99": 3.221917487017432,
+     "max": 3.57934305053911
+    }
+   },
+   "provisional": 5,
+   "twiceMax": 7.15868610107822,
+   "provisionalAccepted": false,
+   "toleranceMm": 10,
+   "marginFactor": 2.7938087684816435
+  },
+  "C": {
+   "n": 173,
+   "median": 0.04507813520719548,
+   "p90": 0.29029046788433205,
+   "p99": 0.5581847771579951,
+   "max": 0.6832209648764054,
+   "bySet": {
+    "characterisation": {
+     "n": 98,
+     "median": 0.04200699929317316,
+     "p90": 0.27829935100207265,
+     "p99": 0.4603308623067442,
+     "max": 0.5331526133045061
+    },
+    "heldout": {
+     "n": 75,
+     "median": 0.05617087350595464,
+     "p90": 0.3426670485648649,
+     "p99": 0.6026144095084804,
+     "max": 0.6832209648764054
+    }
+   },
+   "provisional": 1,
+   "twiceMax": 1.3664419297528108,
+   "provisionalAccepted": false,
+   "toleranceMm": 2,
+   "marginFactor": 2.927310640067668
+  }
+ },
+ "timing": {
+  "n": 173,
+  "maxTicks": 1,
+  "dist": {
+   "0": 168,
+   "1": 5
+  },
+  "provisional": 5,
+  "provisionalAccepted": true,
+  "toleranceTicks": 5
+ },
+ "tolerances": {
+  "A": 0.5,
+  "B": 10,
+  "C": 2,
+  "abortTicks": 5
+ },
+ "flags": [],
+ "inject": {
+  "none": {
+   "pairs": 19,
+   "failures": 0,
+   "detected": false,
+   "detail": [],
+   "posDiffMm": {
+    "n": 19,
+    "median": 0.04452685779630536,
+    "p90": 0.47576380579993255,
+    "p99": 0.6948517249687453,
+    "max": 1.1176307847811673
+   }
+  },
+  "strengthR95": {
+   "pairs": 19,
+   "failures": 0,
+   "detected": false,
+   "detail": [],
+   "posDiffMm": {
+    "n": 19,
+    "median": 0.042490564468192875,
+    "p90": 0.46346135155280943,
+    "p99": 0.8912886499169229,
+    "max": 1.0326568333271005
+   }
+  },
+  "footMassR105": {
+   "pairs": 19,
+   "failures": 0,
+   "detected": false,
+   "detail": [],
+   "posDiffMm": {
+    "n": 19,
+    "median": 0.05154880825436541,
+    "p90": 0.6021236781080147,
+    "p99": 0.9276181730936085,
+    "max": 1.2007251579522376
+   }
+  },
+  "regionR2mm": {
+   "pairs": 19,
+   "failures": 0,
+   "detected": false,
+   "detail": [],
+   "posDiffMm": {
+    "n": 19,
+    "median": 0.1706892324523793,
+    "p90": 1.6736315396891859,
+    "p99": 1.7626433790843712,
+    "max": 3.9980208101631405
+   }
+  }
+ },
+ "meaningful": false,
+ "meaningfulDetail": "0 of 3 injected asymmetries produce ≥ 1 J2b failure (control \"none\": 0 failures)",
+ "injectByClass": {
+  "none": {
+   "A": {
+    "n": 10,
+    "max": 0.2027759565262172,
+    "populationMax": 0.20564827248691536,
+    "tolerance": 0.5
+   },
+   "B": {
+    "n": 6,
+    "max": 1.1176307847811673,
+    "populationMax": 3.57934305053911,
+    "tolerance": 10
+   },
+   "C": {
+    "n": 3,
+    "max": 0.03835370975900919,
+    "populationMax": 0.6832209648764054,
+    "tolerance": 2
+   }
+  },
+  "strengthR95": {
+   "A": {
+    "n": 10,
+    "max": 0.17104853216653151,
+    "populationMax": 0.20564827248691536,
+    "tolerance": 0.5
+   },
+   "B": {
+    "n": 6,
+    "max": 1.0326568333271005,
+    "populationMax": 3.57934305053911,
+    "tolerance": 10
+   },
+   "C": {
+    "n": 3,
+    "max": 0.03742889559481297,
+    "populationMax": 0.6832209648764054,
+    "tolerance": 2
+   }
+  },
+  "footMassR105": {
+   "A": {
+    "n": 10,
+    "max": 0.15157001064805498,
+    "populationMax": 0.20564827248691536,
+    "tolerance": 0.5
+   },
+   "B": {
+    "n": 6,
+    "max": 1.2007251579522376,
+    "populationMax": 3.57934305053911,
+    "tolerance": 10
+   },
+   "C": {
+    "n": 3,
+    "max": 0.06028578589287145,
+    "populationMax": 0.6832209648764054,
+    "tolerance": 2
+   }
+  },
+  "regionR2mm": {
+   "A": {
+    "n": 10,
+    "max": 0.37299507858209213,
+    "populationMax": 0.20564827248691536,
+    "tolerance": 0.5
+   },
+   "B": {
+    "n": 6,
+    "max": 3.9980208101631405,
+    "populationMax": 3.57934305053911,
+    "tolerance": 10
+   },
+   "C": {
+    "n": 3,
+    "max": 0.5691891835486745,
+    "populationMax": 0.6832209648764054,
+    "tolerance": 2
+   }
+  }
+ }
+}

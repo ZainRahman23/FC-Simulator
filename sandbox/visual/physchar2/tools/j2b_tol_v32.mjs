@@ -44,7 +44,10 @@ for (const name of [...new Set(injRows.map(j => j.inject))]) { const r = injRows
     if (!c.k && j.kind === "G3" && (j.abortA == null) !== (j.abortB == null)) why.push("abort in one trial only");
     if (why.length) fails.push(`${j.a}: ${why.join("; ")}`); }
   out.inject[name] = { pairs: r.length, failures: fails.length, detected: fails.length > 0, detail: fails, posDiffMm: dist(r.map(j => j.posDiffMm)) }; }
-const nDet = Object.values(out.inject).filter(x => x.detected).length; out.meaningful = nDet >= 2; out.meaningfulDetail = `${nDet} of ${Object.keys(out.inject).length} injected asymmetries produce ≥ 1 J2b failure`;
+const injK = Object.keys(out.inject).filter(k => k !== "none"), nDet = injK.filter(k => out.inject[k].detected).length;   // "none" = the uninjected control pairs (reported, not counted)
+out.meaningful = nDet >= 2; out.meaningfulDetail = `${nDet} of ${injK.length} injected asymmetries produce ≥ 1 J2b failure (control "none": ${out.inject.none ? out.inject.none.failures : "—"} failures)`;
+// diagnostic context (not part of the rule): per injection, the largest mirrored difference by class next to the population maximum of that class
+out.injectByClass = Object.fromEntries(Object.keys(out.inject).map(k => [k, Object.fromEntries(["A", "B", "C"].map(c => { const v = injRows.filter(j => j.inject === k && cls32(j).k === c).map(j => j.posDiffMm); return [c, { n: v.length, max: v.length ? Math.max(...v) : null, populationMax: out.classes[c].max, tolerance: T[c] }]; }))]));
 fs.writeFileSync(path.join(JD, "j2b_tol_v32.json"), JSON.stringify(out, null, 1));
 const f = (x, n = 4) => (x == null || !isFinite(x) ? "—" : (+x).toFixed(n));
 console.log(`population: ${rows.length} pairs (char ${char.jobs.length}, held-out ${held.jobs.length}; errors ${errs.join("/")}), used ${use.length}, excluded ${excl.length} ${JSON.stringify(out.population.excludedWhy)}`);
@@ -53,4 +56,5 @@ console.log(`timing (C): n ${out.timing.n}, max ${out.timing.maxTicks} ticks ${J
 console.log(`flags (> 3 × class p99): ${out.flags.length}`); for (const x of out.flags) console.log(`  ${x.class} ${x.set} ${x.human} ${x.a} δ=${x.pert}: ${f(x.posDiffMm)} mm (3·p99 ${f(x.threshold3p99)})`);
 console.log(`population class mismatches: ${out.population.classMismatch.length}; one-sided aborts: ${out.population.abortOneSided.length}`);
 for (const [k, v] of Object.entries(out.inject)) { console.log(`inject ${k}: ${v.failures}/${v.pairs} pairs fail J2b (posDiff max ${f(v.posDiffMm.max)} mm)`); for (const d of v.detail.slice(0, 6)) console.log(`    ${d}`); }
-console.log(`MEANINGFUL: ${out.meaningful} (${out.meaningfulDetail})`);
+for (const [k, v] of Object.entries(out.injectByClass)) console.log(`  ${k.padEnd(13)} max by class (population max / tolerance): ` + ["A", "B", "C"].map(c => `${c} ${f(v[c].max, 3)} (${f(v[c].populationMax, 3)} / ${v[c].tolerance})`).join(", "));
+console.log(`MEANINGFUL: ${out.meaningful} (${out.meaningfulDetail})${out.meaningful ? "" : " → too loose to detect a 5 % asymmetry: G3 is NOT declared on J2b (G3_CRITERIA_v3.2.md step 4)"}`);

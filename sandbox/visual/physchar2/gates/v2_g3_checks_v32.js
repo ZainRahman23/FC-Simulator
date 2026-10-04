@@ -5,8 +5,11 @@
 import { evaluateV3 } from "./v2_g3_checks_v3.js";
 export const J2A_TOL_V32 = { lam: 2.2e-14, copMm: 2.3e-11, share: 1.2e-13, footCopMm: 2.2e-11, forceN: 1.2e-10, g3OutS: 2.2e-14, ikResM: 2.2e-14, cmdTauNm: 3.1e-10, cmdGain: 2.2e-10,
   actTauNm: 3.1e-10, actGain: 2.2e-10, actBoundNm: 8.8e-11, actCapNm: 2.2e-11, activation: 9.5e-13, holdMm: 2.2e-11, holdRad: 7e-14 };
-// J2b v3.2 tolerances — FILLED by the procedure (G3_CRITERIA_v3.2.md) before the J2b gate evaluation; null = not yet fixed (evaluation refuses)
-export const J2B_TOL_V32 = { A: null, B: null, C: null, abortTicks: null };
+// J2b v3.2 tolerances — FILLED by the pre-registered procedure (tools/j2b_tol_v32.mjs → g3/json/j2b_tol_v32.json) before the J2b gate evaluation:
+// population maxima A 0.206 / B 3.58 / C 0.683 mm, abort Δ 1 tick → provisional 0.25 / 5 / 1 mm rejected (< 2 × max), 5 ticks accepted.
+// Meaningfulness NOT met (0 of 3 injected asymmetries detected): J2b is reported, and G3 is NOT declared on it (J2B_MEANINGFUL = false).
+export const J2B_TOL_V32 = { A: 0.5, B: 10, C: 2, abortTicks: 5 };
+export const J2B_MEANINGFUL = false;
 const num = (x, n = 3) => (x == null || !Number.isFinite(x) ? "—" : (+x).toFixed(n));
 export function evaluateV32(R, ext = {}) {
   const base = evaluateV3(R, ext, { tol: J2A_TOL_V32, label: "G3_CRITERIA_v3.2.md" }), checks = base.checks.filter(c => c.id !== "J2b"), mv = ext.mirrorV3, T = J2B_TOL_V32, tick = 1 / 240 + 1e-9;
@@ -21,6 +24,8 @@ export function evaluateV32(R, ext = {}) {
         if (b.ticksA !== b.ticksB) why.push("run lengths differ"); if (b.abortA != null || b.abortB != null) { if ((b.abortA == null) !== (b.abortB == null) || Math.abs(b.abortA - b.abortB) > T.abortTicks * (1 / 240) + 1e-9) why.push(`abort ${num(b.abortA, 4)} / ${num(b.abortB, 4)}`); } }
       if (why.length) bad.push(`${lab}: ${why.join(", ")}`); }
     const t9 = J.filter(j => j.group === "T9").map(j => Math.abs(j.res.g3.holds.R.loadMean - j.res.g3.holds.L.loadMean)), t9bad = t9.filter(d => d > 1e-3).length, mx = (a) => (a.length ? Math.max(...a) : null);
-    add({ id: "J2b", name: `mirrored physical-outcome correspondence (v3.2): A ≤ ${T.A} mm, B ≤ ${T.B} mm, C ≤ ${T.C} mm through the common supervisor abort, abort timing ≤ ${T.abortTicks} ticks; same class`, pass: P.length === 81 && !bad.length && !t9bad,
+    add({ id: "J2b", meaningful: J2B_MEANINGFUL, name: `${J2B_MEANINGFUL ? "" : "[NOT MEANINGFUL — too loose to detect a 5 % asymmetry; G3 not declared on it] "}mirrored physical-outcome correspondence (v3.2): A ≤ ${T.A} mm, B ≤ ${T.B} mm, C ≤ ${T.C} mm through the common supervisor abort, abort timing ≤ ${T.abortTicks} ticks; same class`, pass: P.length === 81 && !bad.length && !t9bad,
       value: `${P.length - bad.length}/${mv.pairs.length} pairs (A ${cl.A.length}: max ${num(mx(cl.A), 4)} mm; B ${cl.B.length}: max ${num(mx(cl.B), 3)} mm; C ${cl.C.length}: max ${num(mx(cl.C), 3)} mm through the abort); T9 hold-mean Δ max ${t9.length ? Math.max(...t9).toExponential(1) : "—"}${bad.length ? " · FAIL: " + bad.slice(0, 8).join("; ") : ""}`, limit: `A ${T.A} / B ${T.B} / C ${T.C} mm; ${T.abortTicks} ticks` }); }
-  return { criteria: "G3_CRITERIA_v3.2.md", pass: checks.every(c => c.pass), checks }; }
+  // a J2b without meaningfulness cannot declare G3 (step 4): the gate is "not declared" even if every row passes
+  const allRows = checks.every(c => c.pass);
+  return { criteria: "G3_CRITERIA_v3.2.md", pass: allRows && J2B_MEANINGFUL, allRowsPass: allRows, declared: J2B_MEANINGFUL, checks }; }
