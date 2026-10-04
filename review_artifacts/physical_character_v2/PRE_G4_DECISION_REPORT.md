@@ -54,6 +54,8 @@
 | G2 rows, k = 0.13 (diagnostic) | S4 fails | pass | **pass** | **pass** |
 | G2 push boundaries vs accepted | 0 changes | 0 | 0 | 0 |
 | G3-native rows, k = 0.13 | D, I2 fail (twist cycle) | 15 / 15 | **15 / 15** | 15 / 15 after the snapshot fix* |
+| rate attack, worst body, 180 / 480 Hz | sustained / growing (≈ 11°) | — | decaying (≤ 0.06°) | decaying (≤ 0.09°) |
+| held-out T4 drift on V2-198-92 / V2-190-85 (row D limit 1°) | **5.5° / 7.1° (fail)** | — | 0.06° / 0.00° | 0.02° / 0.04° |
 | twist probes not re-centred, 3 bodies, k = 0.13 | 5 (V2-REF) / 18 / 8 | 0 / 0 / 0 | 0 / 0 / 0 | 1 / 1 / 1 |
 | k = 0 batteries | — | — | (§2a) | (§2a) |
 
@@ -148,7 +150,7 @@
 4. a planning margin rule (≥ 5° per axis proposed; excludes fewer than 5 % of the ±30° ground class);
 5. L3 must include single-support yaw anchoring (item 5) and the abort-path foothold.
 
-## 9. G3 → G4 transition hazards (external-lift harness; 12 hazards, 7 confirmed)
+## 9. G3 → G4 transition hazards (external-lift harness; 12 hazards, 8 confirmed)
 
 **Confirmed:**
 - **H1:** an airborne "loaded" foot has no position stiffness.
@@ -156,12 +158,12 @@
 - **H3:** the load flag chatters at touchdown, even slow touchdown, with **one-tick torque steps of 6.6–158 N·m**.
 - **H4:** the sensed load is a residual, so self-contact reads as load.
 - **H6:** the heading uses the airborne foot.
+- **H7:** the balance midpoint uses the airborne ankle (a 9 cm foot drift moved it 4.6 cm).
 - **H9:** the abort returns to bilateral with the foot in the air (falls).
 - **Lateral drift of the airborne foot:** 5–9 cm.
 
 **From code:**
 - **H5:** support by touching pieces, with the whole region as the support geometry;
-- **H7:** the balance midpoint uses the airborne ankle;
 - **H8:** the pelvis height target uses the airborne ankle;
 - **H10:** swing-foot yaw is uncontrolled under "current";
 - **H11:** stance gains on a swing leg.

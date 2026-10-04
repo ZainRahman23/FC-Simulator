@@ -133,4 +133,45 @@ Per joint axis: τ = feed-forward (inverse statics) + K·e − (D + dt·K)·ω_e
 2. **Yaw anchoring must be designed explicitly.** It should come from (a) the passive ankle's axial stiffness, which is plausibly load-dependent (`ANKLE_KNEE_AND_RATE.md`), and/or (b) an explicit yaw-balance term using the two-foot shear-force couple. It should not come from a hip spring reacting against free legs.
 3. **The drift time constant**, or blend α, is a design parameter with a measured stability boundary: τ = 0.5 s unstable at k = 0.13, τ = 2 s stable; α = 0.25 marginal at k = 0.13, α = 0.5 stable.
 
-**Gate-level results for blend 0.5 and drift τ = 2 s:** see §6.
+## 6. Gate-level, morphology and held-out results (k = 0.13 unless stated; diagnostic)
+
+**All 8 bodies** (5 disturbances each; `evidence/policy8`, together with the 3-body set):
+
+| policy | non-decaying cases (of 40) | worst |
+|---|---|---|
+| current | **25** | 10.6° (V2-190-85 yaw 8) |
+| reference | 0 | — |
+| blend 0.5 | 0 | — |
+| drift τ 2 s | 0 | — |
+
+**Stability boundary** (worst body V2-198-92; `evidence/tauscan`):
+
+| policy | worst final twist |
+|---|---|
+| drift τ 0.5 s | **sustained** (6.5°) |
+| drift τ 1 / 1.5 / 2 / 4 s | decaying (≤ 0.62 / 0.15 / 0.07 / 0.03°) |
+| blend α 0.25 | decaying slowly (2.3° at 20 s) |
+| blend α 0.35 / 0.5 | decaying (≤ 0.34 / 0.06°) |
+
+**G2 / G3 batteries** (`tools/ank_reftwist_eval.mjs`; J2a and the browser / bench rows are not re-measured):
+
+| | blend 0.5 | drift τ 2 s |
+|---|---|---|
+| G2 rows (excl. R, 2.5, browser) | **all pass** (S4: yaw 8 0.64°) | **all pass** (S4: yaw 8 2.48°) |
+| G2 push boundaries vs accepted | 0 changes | 0 changes |
+| G3-native rows | **15 / 15** | 14 / 15 → **15 / 15 after the fix**: row N (snapshot) failed because the diagnostic's filter state was not in `getState`; fixed, snapshot and determinism ×3 bit-exact, default state unchanged |
+| static yaw stiffness | 0.46–0.60 N·m/° | 1.43–2.22 N·m/° |
+| twist T5 / U:R | 1.3–1.6° | 1.3–1.5° |
+| G2 R10 / R20 / T7 1 s | 4.1–4.6 / 8.6–10.6 / 6.8–7.1° | 3.3–3.8 / 7.1–9.0 / 4.5–5.1° |
+| probes not re-centred, 3 bodies | 0 / 0 / 0 | 1 / 1 / 1 |
+
+**Held-out T4** (5 repeated transfers) on the heavy bodies:
+- **current:** pelvis yaw Δ 5.5° (V2-198-92) and 7.1° (V2-190-85). It **fails** row D's 1° on bodies the gate does not test.
+- **blend 0.5 / drift τ 2 s:** Δ ≤ 0.06°. There is a constant offset of up to 1.9° from the first transfer (the weak yaw anchor).
+
+**Rate attack** (worst body V2-198-92, `twist_mode --hz`; `evidence/rateattack`):
+- **blend 0.5 and drift τ 2 s decay at 180 and 480 Hz** (worst final 0.06–0.09°).
+- **current stays sustained or growing at both rates** (≈ 11°).
+- The result is rate-independent, as the mechanism predicts.
+
+**Near-single support** (`tools/ss_yaw_anchor.mjs`): **no policy anchors yaw.** The stance ankle reaches its end range at 1–2 N·m·s yaw impulses under current, reference, blend and drift alike (`ANKLE_KNEE_AND_RATE.md` §3b).

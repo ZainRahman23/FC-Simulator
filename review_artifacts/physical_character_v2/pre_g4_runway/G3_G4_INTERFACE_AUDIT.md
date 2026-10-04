@@ -20,7 +20,7 @@
 
 **The stance controller cannot position an airborne foot** (vertical or horizontal), and **its contact-reacquisition path produces flag chatter and torque discontinuities even at low touchdown speed.** This is the V1-style transition hazard.
 
-## Hazards (each confirmed in code; ✓ = also confirmed empirically)
+## Hazards (each confirmed in code; ✓ = also confirmed empirically: 8 of 12)
 
 | # | assumption that breaks at foot lift | where | effect when the foot leaves the turf | severity |
 |---|---|---|---|---|
@@ -30,7 +30,7 @@
 | H4 ✓ | **The sensed foot load is the residual foot wrench** (momentum change − gravity − ankle constraint impulse) | `g1_ankle.js` (`Jc`) | correct for ground contact, **but any other force on the foot reads as load**: self-contact with the other leg (likely in swing), diagnostic forces | medium |
 | H5 | **Support membership by touching pieces** (`contactSupport`: any piece touching → in support) and **the support region = the whole usable foot region** | `inSup`, `footPoly` | at touchdown with 1 piece touching, the support polygon jumps to the full foot and the CoP may be commanded where there is no contact | high |
 | H6 ✓ | **Heading = mean forward vector of both feet**, including an airborne foot | `hd` | a rotating swing foot rotates the pelvis yaw target and the balance frame (measured 1–2° heading wander with a lifted foot) | medium |
-| H7 | **Balance reference midpoint = the midpoint of both ankles** | `mid`, `xiRef` | a swinging ankle moves the COM / DCM target during single support | high |
+| H7 ✓ | **Balance reference midpoint = the midpoint of both ankles** | `mid`, `xiRef` | a swinging ankle moves the COM / DCM target during single support (measured: a 9 cm airborne-foot drift moved the midpoint 4.6 cm) | high |
 | H8 | **Pelvis height target = mean ankle height + h_ref** (capped by `ikFeasible`) | `pP[1]` | lifting one foot raises the stance pelvis target by half the lift; the cap uses the (possibly stale) hold pose | medium |
 | H9 ✓ | **Supervisor abort = smooth return to bilateral (λ → 0.5 over 0.6 s)** | `supervised` | in single support the abort shifts weight onto a foot that is not on the ground (the fall in the 20 N probe) | high |
 | H10 | **The twist policy "current" leaves an airborne leg's axial twist uncontrolled** | posture IK | swing-foot yaw floats within ±10° (k = 0), so touchdown yaw is uncontrolled | medium |
