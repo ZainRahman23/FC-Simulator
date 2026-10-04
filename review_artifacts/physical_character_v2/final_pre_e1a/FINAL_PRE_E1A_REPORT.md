@@ -40,7 +40,7 @@
 - HO3 is a 15 N·s push that fells that body under **every** policy, "current" included. The fallen body's twist is then classified as oscillation.
 - **That is my preregistration flaw.** I sized HO3 from V2-REF's boundary. It is not re-scored.
 - **Why reference is right independently of scores:**
-  - it is the only candidate whose target never depends on the accumulated state;
+  - it is the only candidate whose twist target never depends on the twist state, neither current (blend) nor accumulated (drift);
   - so accidental twist is always a deviation, and voluntary orientation is always a command.
 - **At k = 0 no policy meets the semantics.** The zero-stiffness ankle zone defeats turn settling and the single-support anchor. **The policy needs k > 0** (§5).
 
@@ -94,7 +94,9 @@
 - **Its zero should shift internally with flexion:** about 10° by 60° and about 30° at 150°.
 - **The G1 prone-rest blocker at k > 0 is a knee-envelope artefact.** The rest is near the natural deep-flexion internal rotation (32° at 146°).
   - The counterfactual takes failures from 13 / 15 to 0 / 15 with a literature-shaped envelope.
-  - But that unfitted envelope is too narrow for violent falls: it breaks other G1 rows even at k = 0.
+  - **Neither diagnostic envelope is a usable remedy.** The narrow `lit1` and the zero-shift-only `shift` both make the awkward fall hit the knee engine stop (15 / 15).
+  - Perturbed G1 failure rates are 10.7–16.3 %, vs the accepted 5.0 %.
+  - A usable revision needs a fitted width, the internal zero shift, Jolt emergency limits moved with the envelope, and ensemble validation.
 - **It cannot become live in E1a / E1b**, which have no deep flexion and no passive falls.
 - **It must be fixed before the evidence-supported ankle law can be adopted.**
 
@@ -105,7 +107,7 @@
   - current knee: systematic prone rest;
   - `lit1`: awkward-fall knee engine stops, also at k = 0;
   - `shift`: an awkward-fall elbow rest.
-  - Perturbed failure rates: ⟨SWEEP⟩.
+  - Perturbed G1 failure rates at k = 0.13: current knee 11.3 %, `lit1` 15.0 %, `shift` 16.3 %, vs the accepted 5.0 %. Both diagnostic knees fail the awkward fall systematically (15 / 15).
 - **Per the preregistered rule it is not adopted, and k = 0 remains.**
 - **No law is sufficiently validated**, and no load-dependent law is supported by a measurement.
 
@@ -224,7 +226,7 @@
 - R2.f: the G1 passive-plant hashes;
 - component regressions 44/44.
 
-**The proposed G4 configuration** (reference + lifecycle + k = 0.13 + a knee envelope) **does not pass G1** (§5). Its G2 / G3, evaluated with the accepted evaluators in a scratch tree: **G2 (all 13 rows; R / 2.5 / D not re-measured):** every re-measured gating row passes.
+**The proposed G4 configuration** (reference + lifecycle + k = 0.13 + a knee envelope) **does not pass G1** (§5). **The k = 0 alternative** (reference + lifecycle) fails G2 S4 and G3 I2 / K. The proposed configuration's G2 / G3, evaluated with the accepted evaluators in a scratch tree: **G2 (all 13 rows; R / 2.5 / D not re-measured):** every re-measured gating row passes.
 
 **G3 v3.3 native rows: 13 / 15.** Two fail, both lifecycle behaviours at standing pelvis height (G3 has no pelvis drop):
 
@@ -257,14 +259,20 @@
 **Smallest remaining blocker:** a passive leg-axial model with the evidence-supported nonzero ankle neutral stiffness that keeps G1 valid.
 
 **Evidence and decisions required:**
-1. **Fit** a knee axial envelope to the cited bone-level data: width at 0 / 30 / 90° flexion, internal zero shift, and room for violent falls, unlike `lit1`.
-2. **Show** its G1 perturbed failure rate at k = 0.13 is comparable to the accepted plant's 5 %, with no systematic scenario.
+1. **Fit** a knee axial envelope to the cited bone-level data:
+   - width at 0 / 30 / 90° flexion;
+   - the internal zero shift with flexion;
+   - **the Jolt emergency limits moved with it.** The two diagnostic envelopes tried here fail the awkward fall 15 / 15: one is too narrow, the other's limits sit beyond the unmoved engine stop.
+2. **Show** its G1 perturbed failure rate at k = 0.13 is comparable to the accepted plant's 5.0 %, with no systematic scenario. Measured so far: 11.3 % (current knee), 15.0 % (`lit1`), 16.3 % (`shift`).
 3. **Your decisions:**
    - (a) approve that knee anatomy revision;
    - (b) how G1's settled end-range tolerance is judged for passive-fall rests (nominal vs perturbed rate);
    - (c) adopt reference semantics despite the HO3 preregistration flaw;
-   - (d) enable the lifecycle components for E1.
+   - (d) enable the lifecycle components **for E1**. Before they become the G3 / G4 default, the two G3 findings at standing pelvis height must be fixed: I2 (touching-foot drift 5 mm on long legs) and K (an excessive request stands).
 
 **Then** E1a can be authorised against the frozen criteria. Everything else E1a needs is built and validated as far as is possible without running it.
 
-**Alternative, not recommended:** run E1a at k = 0 with reference semantics. That is G1-valid, but it knowingly accepts unanchored single-support yaw in the ±10° free zone and failed preregistered posture criteria; E1a-14 (twist recovery) and E1a-3 (swing-foot yaw) are then likely to fail.
+**Alternative, not recommended:** run E1a at k = 0 with reference semantics. It is G1-valid, but:
+- it knowingly accepts unanchored single-support yaw in the ±10° free zone, and the preregistered posture criteria it failed;
+- in the gate check of that configuration (reference + lifecycle, current knee), **G2 fails S4** (the trunk does not return after the yaw impulse without ankle stiffness), and G3 shows the same I2 / K lifecycle findings;
+- E1a-14 (twist recovery) and E1a-3 (swing-foot yaw) are then likely to fail.

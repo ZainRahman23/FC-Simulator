@@ -14,6 +14,11 @@
    - Two of my edits briefly broke a shared module: a missing import, then a mid-line comment in `gates/v2_g1.js` that swallowed the rest of a line, fixed in 6c8140c.
    - The crashed jobs produced no result files. They were re-run on the fixed code (0 errors).
 
+3. **Final-code LIFT recheck for reference.**
+   - The lifecycle changed again after the LIFT re-runs: frame height, bounce debounce, continuous target height. So reference's LIFT scenario was re-run on the frozen code (`evidence/policy/lift_final/`).
+   - **k = 0.13:** 8 / 8 stood; stance ankle 1.2–1.6° (C6 ≤ 5° ✓); touchdown yaw ≤ 0.18°; stance slip ≈ 0.26 mm.
+   - **k = 0:** stance ankle 1.6–10.6°; C6 fails on 6 bodies, as before.
+
 ## 1. Result (criteria exactly as preregistered)
 
 | k | policy | eligible? | failing criteria (bodies) |

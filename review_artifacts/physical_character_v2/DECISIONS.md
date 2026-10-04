@@ -1306,3 +1306,52 @@ Candidates and their regression implications: report §13.
 - Permanent regressions: R5.a–d and R6.a–e; suite 35/35.
 - All controller options are diagnostic and default-off; the default path is bit-identical.
 - **Recommendation:** not ready for G4 experiment runs. Ready for G4 preparation after the twist-policy, single-support yaw-anchor and boundary-component decisions.
+
+## 2026-10-04 — Final pre-E1a resolution stage (user instruction `sources/2026-10-04_user_instruction_final_pre_e1a_resolution.md`)
+
+### FP-14: resolution complete; recommendation DO NOT AUTHORISE E1a; nothing adopted; E1 not run (`final_pre_e1a/FINAL_PRE_E1A_REPORT.md`)
+
+**Twist policy** (preregistered, d22a1e7; `final_pre_e1a/TWIST_POLICY_RESULTS.md`):
+- **Strictly no policy is eligible.**
+- **Reference** meets every criterion on all 8 bodies at k = 0.13, except HO3 on V2-165-62. That is a capacity fall under every policy, "current" included: a preregistration flaw, not re-scored.
+- "current" is rejected: an energy source, adopts twist, oscillates.
+- Drift is falsified. Blend creeps on heavy bodies.
+- **No policy meets the semantics at k = 0.**
+
+**Single-support yaw** (`SINGLE_SUPPORT_YAW.md`):
+- The passive stance-ankle ab/adduction is the only anchor in our model.
+- Human resistance is distributed, including an **active subtalar path our orthogonal ankle omits**.
+- Unloaded stiffness is 0.10–0.15 N·m/°; loaded small-angle stiffness is unmeasured.
+- Recommended **architecture D**. The runway's 5° / ≥ 1 N·m/° target is withdrawn.
+
+**Knee** (`KNEE_AXIAL_CONCLUSION.md`):
+- The ROM is about twice too wide, the limits are flexion-blind, and the zero is fixed.
+- **The k > 0 prone-rest G1 blocker is a knee-envelope artefact:** 13 / 15 → 0 / 15 with a literature-shaped envelope.
+- But that unfitted envelope breaks other G1 rows: awkward knee engine stops, C7, lean energy events.
+- A zero-shift-only variant fixes the prone rest too, but its limits sit beyond the unmoved Jolt emergency stop.
+- **Perturbed G1 failure rates at k = 0.13:** current knee 11.3 %, `lit1` 15.0 %, `shift` 16.3 %, vs the accepted 5.0 %. Both diagnostic knees fail awkward 15 / 15.
+- **Not live in E1a / E1b.**
+
+**Ankle law** (preregistered, 1926df6; `ANKLE_LAW_RESULTS.md`):
+- k ≈ 0.13 is evidence-supported and meets every controller-level requirement.
+- **It fails G1 under every available knee model**, so it is not adopted. k = 0 remains, and no law is sufficiently validated.
+
+**Boundary components** (`BOUNDARY_COMPONENTS.md`):
+- The support / contact lifecycle is built (default off) with R7 unit regressions.
+- The external-lift harness, 88 runs on the frozen code: 0 falls, 0 chatter, torque steps only at touchdown, energy OK, rate-robust. Eight counterexamples were fixed.
+- G2 passes. **G3 13 / 15:** I2 (touching-foot drift 5 mm on long legs at standing height) and K (excessive request stands).
+
+**Contract:** finalised (`REACHABILITY_CONTRACT_FINAL.md`).
+
+**E1:** preregistered and frozen (`E1_PREREGISTRATION.md`). 5 mm is a genuine liftoff; a 2.5 cm pelvis drop.
+
+**E2:** needs a planned drop of ≥ 2 cm (lateral 10 cm).
+
+**Rate:** no E1 risk. **Performance:** +0.4 % median.
+
+**G0–G3:** the accepted baseline is bit-identical; suite 44/44.
+
+**Smallest blocker:** a passive leg-axial model with nonzero ankle neutral stiffness that keeps G1 valid:
+1. a fitted knee envelope;
+2. a perturbed-rate comparison;
+3. your decisions on the knee revision, the G1 rest-tolerance interpretation, reference semantics, and enabling the lifecycle.

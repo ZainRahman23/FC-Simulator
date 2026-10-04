@@ -6,7 +6,7 @@
 
 | criterion | k = 0 (control) | k = 0.13, current knee | k = 0.13, diagnostic envelope `lit1` | k = 0.13, diagnostic `shift` (zero shift only) |
 |---|---|---|---|---|
-| AL1 full G1 (gating rows; 1.V1 n/a in a scratch tree; rows 5 / 5c test conformance to the current spec, so they fail by construction for any knee change) | passes (accepted) | **fails 1.S, 1.S′:** prone-rest knee 2.39° (systematic: 13 / 15 perturbed members), plus elbow / lumbar settled excursions, impact15 elbow engine-stop ticks | **fails 1.S, 1.S′, 6, 8:** awkward knee engine-stop on every body (the envelope is too narrow for violent falls), upright hip 1.5–1.9°, impact15 elbow. The same failures appear at k = 0 with this envelope, plus 7.HS, so **the envelope itself breaks G1** | targeted: prone rest **0 / 15**, upright 0 / 15, V1-matched awkward 0 / 15; **V2-REF awkward 15 / 15 fail at the ELBOW** (settled 1.7–1.9°: the changed fall leaves the arm pinned). Full ensemble rates: ⟨SWEEP⟩ |
+| AL1 full G1 (gating rows; 1.V1 n/a in a scratch tree; rows 5 / 5c test conformance to the current spec, so they fail by construction for any knee change) | passes (accepted) | **fails 1.S, 1.S′:** prone-rest knee 2.39° (systematic: 13 / 15 perturbed members), plus elbow / lumbar settled excursions, impact15 elbow engine-stop ticks | **fails 1.S, 1.S′, 6, 8:** awkward knee engine-stop on every body (the envelope is too narrow for violent falls), upright hip 1.5–1.9°, impact15 elbow. The same failures appear at k = 0 with this envelope, plus 7.HS, so **the envelope itself breaks G1** | targeted: prone rest **0 / 15**, upright 0 / 15, V1-matched awkward 0 / 15; **V2-REF awkward 15 / 15 fail at the ELBOW** (settled 1.7–1.9°: the changed fall leaves the arm pinned). Ensemble: 16.3 % (§2) |
 | AL2 energy | ✓ | ✓ (G1 energy rows pass) | ✓ | ✓ |
 | AL3 unloaded plausibility (evidence 0.10–0.15 N·m/°) | ✗ (zero stiffness in ±10°) | ✓ | ✓ | ✓ |
 | AL4 loaded behaviour (HO1 ≤ 15° and back within 3°; LIFT ≤ 5°) | HO1 12.5° / 4.3° back (**✗**); LIFT 7.9° (**✗**) | HO1 9.8° / 2.7°; LIFT 1.3° (✓) | (same controller behaviour) | (same) |
@@ -38,7 +38,18 @@
 3. **The accepted plant itself fails a G1 criterion in 5 % of perturbed members** (chaotic marginality of rows 1.3d / 1.3b).
    - The established method (FP-9 lesson) compares perturbed failure **rates** before calling a regression.
    - With the current knee, k = 0.13 raised the rate to 11.3 % (runway) with a systematic case.
-   - The envelope variants' rates: ⟨SWEEP⟩.
+   - The envelope variants' rates are worse; see the table below.
+
+**Perturbed G1 ensembles** (240 Hz; plane turf; V2-REF + V1-matched × 10 scenarios × 15 lift perturbations; 300 runs per cell; `evidence/sweep/`):
+
+| knee model | k = 0 | k = 0.13 | scenarios failing systematically (≥ 3 of 15 members) |
+|---|---|---|---|
+| current (accepted; runway data) | **5.0 %** | 11.3 % | k = 0: none ≥ 5 (perturb 4 / 15, leanR 4 / 15); k = 0.13: **V1-matched perturb 13 / 15** (prone knee), upright 5–6 / 15 |
+| diagnostic `lit1` (narrow, literature-shaped) | 14.7 % | 15.0 % | **awkward 15 / 15 on both bodies** (knee engine stop), V2-REF upright 7–13 / 15; 4 energy events at k = 0 |
+| diagnostic `shift` (zero shift only) | 10.7 % | 16.3 % | **awkward 15 / 15 on both bodies.** The shifted internal hard limit lies beyond the unchanged Jolt emergency stop, so the knee meets the engine stop before its passive end-stop. At k = 0.13 also V1-matched upright 10 / 15, leanF 6 / 15 |
+
+- **Neither diagnostic knee is a usable remedy.** The prone-rest failure disappears, but a systematic awkward-fall failure replaces it.
+- **The engine emergency limits must follow any revised envelope.** For `shift` they did not.
 
 ## 3. Decision (by the preregistered rule)
 

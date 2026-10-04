@@ -68,7 +68,15 @@
   - Total width is 40° vs 70° at deep flexion, and 22° vs 70° at extension.
   - So the envelope is narrower everywhere and only relocated in deep flexion. It is not a loosening.
 - **This G1 failure at k > 0 is an artefact of the knee envelope,** not a defect of a nonzero ankle stiffness.
-- **The full G1 of the proposed configuration** (envelope + k = 0.13) is in `ANKLE_LAW_RESULTS.md`.
+- **But the unfitted envelope is not a remedy.** Full G1 and the perturbed ensembles (`ANKLE_LAW_RESULTS.md`) show:
+  - its narrowness makes the "awkward" fall hit the knee engine stop in every member (15 / 15);
+  - it fails other rows even at k = 0 (14.7 % vs the accepted 5.0 %).
+- **A zero-shift-only variant** fixes the prone rest too. It fails awkward 15 / 15 because its internal hard limit lies beyond the unchanged Jolt emergency stop (10.7 % at k = 0, 16.3 % at k = 0.13).
+- **What a usable revision needs:**
+  - a width fitted to the bone-level torque data;
+  - the internal zero shift;
+  - the **Jolt emergency limits moved with the envelope**;
+  - perturbed G1 rates comparable to 5 % with no systematic scenario.
 
 ## 4. Answers (§3 of the instruction)
 
