@@ -228,7 +228,7 @@
 - **Twist policies:** no measurable cost (same IK chain; drift adds 6 `decompose` per tick).
 - **Validated tick budget** (isolated): controller + actuators 0.093–0.103 ms (budget 0.15); IK ≈ 86 % of the controller; physics 0.31–0.34 and passive 0.14–0.15 ms per tick.
 - **Foothold queries:** bounded IK classification ≈ 0.13 ms; a converged fallback 1–8 ms.
-- **Infeasibility certificates:** ≈ 4 s (isolated; 12 s under 9-way load) median, max 135 s under load (the 19 µm near-miss, 79 M cells) per target (single core; 10⁶–10⁷ cells). **Offline only.** 8-D (twist-free) certificates did not finish within 4·10⁸ cells (≈ 12 min per target under load).
+- **Infeasibility certificates:** ≈ 4 s (isolated; 12 s under 9-way load) median, max 135 s under load (the 19 µm near-miss, 79 M cells) per target (single core; p50 5.6 M cells, max 79 M). **Offline only.** 8-D (twist-free) certificates did not finish within 4·10⁸ cells (≈ 12 min per target under load).
 - **A rate of 260 Hz** (if chosen for the 180 Hz-type margin): physics and passive cost roughly +8 %.
 - **G4's swing-leg inverse-dynamics feed-forward:** estimated small next to the IK.
 
@@ -255,7 +255,7 @@
 - `turn_test.mjs`, `twist_toeout.mjs`, `ss_yaw_anchor.mjs`;
 - `liftoff_probe.mjs` (`--body`, `--profile=ramp`);
 - `ik_taxonomy.mjs`;
-- `ik_certificate.mjs` (`--soundness`), `ik_cert_core.mjs`, `ik_twist_free.mjs` (`--sens`, `--refall`, `--cert`), `e2_target_check.mjs`;
+- `ik_certificate.mjs` (`--soundness`, `--tight`), `ik_cert_core.mjs`, `ik_twist_free.mjs` (`--sens`, `--refall`, `--cert`, `--tight`), `e2_target_check.mjs`;
 - `phaseG_events.mjs --rates`;
 - `twist_mode.mjs --bodies --stand`;
 - `ank_reftwist_eval.mjs` (tag).
