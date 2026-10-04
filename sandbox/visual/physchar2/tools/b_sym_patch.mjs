@@ -13,6 +13,7 @@
 //   norm   — Q.rot uses the unit-quaternion formula; Jolt's float32-derived body orientations have |q|² − 1 ≈ 3e-7, which adds an unrotated
 //            (1 − |q|²)·v term. The L / R joint frames differ by a fixed handedness rotation, so the term lands differently on the two sides
 //            (≈ 3e-7 rad axis distortion). Candidate fix: normalise the body orientations at the controller's and actuator layer's input.
+//   polish — (on the CORRECTED controller, e9bcf96) the production LM leg IK plus one LM step after convergence (J2a v3.1 finding).
 // Nothing here is a production configuration.
 import { StandController, insetPoly } from "../ctrl/v2_stand.js"; import { ActuatorLayer } from "../sim/v2_actuation.js"; import { bootSole, hull2 } from "../sim/v2_geom.js"; import { pyr, decompose } from "../spec/v2_joints.js"; import { V, Q, dnorm } from "../core/v2_math.js";
 const SYM = (process.env.B_SYM || "").split(",").filter(Boolean);
@@ -43,4 +44,33 @@ if (SYM.includes("norm")) { const nq = (q) => { const l = Math.sqrt(q[0] * q[0] 
   const oc = StandController.prototype.compute, oa = ActuatorLayer.prototype.compute;
   StandController.prototype.compute = function (st, ev, dt) { return oc.call(this, normSt(st), ev, dt); };
   ActuatorLayer.prototype.compute = function (st, ev, cmd, dt, init) { return oa.call(this, normSt(st), ev, cmd, dt, init); }; }
+import { IK } from "../ctrl/v2_stand.js";
+const legIK_polish = function (st, ev, n, pP, qP, footPose = null) {
+  const P = this.P, ks = this.legK[n], d = ks.map(k => P.jd[k]), a = ks.map(k => this.anchor[k]), cur = ks.map(k => { const v = decompose(ev.qs[k]); return [v.tw, v.sy, v.sz]; });
+  if (this.o.ikRefTwist) { const rf = ks.map(k => { const v = decompose(this.qref[k]); return v.tw; }); cur[1] = [rf[1], cur[1][1], cur[1][2]]; cur[2] = [rf[2], cur[2][1], cur[2][2]]; }   // twist DOFs at the reference
+  const ft = footPose || st[this.feet[n]], fk = (x) => { const qh = pyr(x[0], x[1], x[2]), qk = pyr(cur[1][0], x[3], cur[1][2]), qa = pyr(cur[2][0], x[4], x[5]);
+    const Rt = Q.mul(Q.mul(Q.mul(qP, d[0].F1), qh), Q.conj(d[0].F2)), pt = V.add(pP, Q.rot(qP, a[0]));
+    const Rs = Q.mul(Q.mul(Q.mul(Rt, d[1].F1), qk), Q.conj(d[1].F2)), ps = V.add(pt, Q.rot(Rt, a[1]));
+    const Rf = Q.mul(Q.mul(Q.mul(Rs, d[2].F1), qa), Q.conj(d[2].F2)), pf = V.add(ps, Q.rot(Rs, a[2]));
+    let qe = Q.mul(ft.rot, Q.conj(Rf)); if (qe[3] < 0) qe = qe.map(v => -v);
+    return [pf[0] - ft.pos[0], pf[1] - ft.pos[1], pf[2] - ft.pos[2], -2 * qe[0], -2 * qe[1], -2 * qe[2]]; };
+  let x = [cur[0][0], cur[0][1], cur[0][2], cur[1][1], cur[2][1], cur[2][2]], r = fk(x), err = dnorm(...r), it = 0, mu = IK.mu0;
+  for (; it < IK.maxIt && err > IK.tol; it++) {
+    const Jm = [0, 1, 2, 3, 4, 5].map(c => { const xp = x.slice(), xm = x.slice(); xp[c] += IK.h; xm[c] -= IK.h; const rp = fk(xp), rm = fk(xm); return rp.map((v, i) => (v - rm[i]) / (2 * IK.h)); });   // Jm[c][i] = ∂r_i/∂x_c
+    const g = Jm.map(col => col[0] * r[0] + col[1] * r[1] + col[2] * r[2] + col[3] * r[3] + col[4] * r[4] + col[5] * r[5]);
+    if (dnorm(...g) < IK.gradTol) break;   // stationary: the least-squares optimum of an unreachable target
+    const H = Jm.map(ci => Jm.map(cj => ci[0] * cj[0] + ci[1] * cj[1] + ci[2] * cj[2] + ci[3] * cj[3] + ci[4] * cj[4] + ci[5] * cj[5]));
+    let accepted = false;
+    for (let tries = 0; tries < 8; tries++) { const A = H.map((row, i) => row.map((v, c) => (i === c ? v + mu * (1 + v) : v))), dx = solveN(A, g.map(v => -v)); if (!dx) { mu *= 10; continue; }
+      const xn = x.map((v, i) => v + dx[i]), rn = fk(xn), en = dnorm(...rn); if (en < err) { x = xn; r = rn; err = en; mu = Math.max(IK.muMin, mu / 10); accepted = true; break; } mu *= 10; }
+    if (!accepted) break; }
+  // POLISH (diagnostic candidate): one more LM step after convergence, so the returned solution is at the rounding floor whichever side of the
+  // 1e-12 threshold the last iterate fell (J2a v3.1 finding: 2 pairs where mirrored solves stopped one iteration apart, Δ ≈ 1e-12 rad)
+  if (err <= IK.tol && err > 0) { const Jm = [0, 1, 2, 3, 4, 5].map(c => { const xp = x.slice(), xm = x.slice(); xp[c] += IK.h; xm[c] -= IK.h; const rp = fk(xp), rm = fk(xm); return rp.map((v, i) => (v - rm[i]) / (2 * IK.h)); });
+    const g = Jm.map(col => col[0] * r[0] + col[1] * r[1] + col[2] * r[2] + col[3] * r[3] + col[4] * r[4] + col[5] * r[5]), H = Jm.map(ci => Jm.map(cj => ci[0] * cj[0] + ci[1] * cj[1] + ci[2] * cj[2] + ci[3] * cj[3] + ci[4] * cj[4] + ci[5] * cj[5]));
+    const A = H.map((row, i) => row.map((v, c) => (i === c ? v + mu * (1 + v) : v))), dx = solveN(A, g.map(v => -v)); if (dx) { const xn = x.map((v, i) => v + dx[i]), rn = fk(xn), en = dnorm(...rn); if (en <= err) { x = xn; r = rn; err = en; } } }
+  const tg = [[ks[0], pyr(x[0], x[1], x[2])], [ks[1], pyr(cur[1][0], x[3], cur[1][2])]]; if (footPose) tg.push([ks[2], pyr(cur[2][0], x[4], x[5])]);   // held foot: the ankle target too
+  return { targets: tg, err, it, x };
+};
+if (SYM.includes("polish")) StandController.prototype.legIK = legIK_polish;
 if (SYM.length) console.error(`[b_sym_patch] DIAGNOSTIC controller patch active: ${SYM.join(", ")}`);

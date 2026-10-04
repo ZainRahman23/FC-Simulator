@@ -1189,3 +1189,31 @@ Candidates and their regression implications: report §13.
 - **Post-fall IK** stays non-equivariant even with the package. Pre-fall equivariance holds in every reachable state tested; near-reach-limit swing targets are untested.
 - **Options put to the user:** 1 (recommended) adopt the fixes, correct `sigmaErr`, re-measure the J2b floor by D4's method for explicit approval, measure G2 2.5 isolated or optimise the IK; 2 keep D4 numbers (blocked); 3 keep the controller (J2a deviation); 4 region + norm only with an IK-tolerance torque floor.
 - **The ankle re-investigation has not started.**
+
+## 2026-10-04 — Option 1: controller symmetry corrections, independent J2b floor, near-reach IK (user decision `sources/2026-10-04_user_decision_option1_controller_symmetry.md`)
+
+### FP-9: corrections adopted (`e9bcf96`); validation done; STOPPED for decisions (`symmetry_corrections/SYMMETRY_CORRECTIONS_REPORT.md`)
+- **The three corrections:**
+  1. **canonical foot regions:** strictly convex hull, collinear points ≤ 1 nm removed, CCW from min z. The old regions had ≤ 0.72 mm notches at exactly collinear sole points; the corrected region contains the old one (+0.11 … +0.29 % area);
+  2. **leg IK:** central-difference Levenberg–Marquardt (μ0 1e-2), converged to 1e-12, gradient stop when unreachable. Chosen over 10,880 problems × 8 bodies;
+  3. **quaternions:** every Jolt-sourced orientation normalised at the boundary.
+- **Permanent component regressions:** `tools/v2_component_regressions.mjs`, 14/14.
+- **v3.1 erratum** (`39c9ad0`): `sigmaErr` not gated (category error recorded, v3 unchanged); J2a tolerances re-derived from the corrected controller's floor by the same rule.
+- **J2a:** 0/81 → **79/81**. The remaining 2 pairs are IK stop-threshold coincidences (1e-12 rad → 2.4e-8 N·m vs a 1.2e-10 tolerance). A diagnostic one-step polish gives 81/81 (not adopted).
+- **G2:** 619/620 outcomes identical and 0 boundary changes. The one change is a report-only kξ 0.5 job at its own boundary (region or quaternion fix). CoP-sweep jump 3.48 → 0.54 mm. Browser 6/6.
+- **G3:** 323/324 outcome classes identical. The one change is the report-only arms variant (region fix). 10 abort shifts, all from the region fix (nominal T7 0.75 s: +1 tick on both sides). Browser 4/4.
+- **Independent J2b floor** (1,027 runs; repeats 94/94 identical): A max 0.106, B 2.10, C (no slide) 0.069, C (sliding) 14.8 mm (G3 abort windows ≤ 0.42 mm); abort Δ ≤ 1 tick, fall Δ ≤ 5 ticks.
+  - **Not** explained by Jolt creation / solver / contact order: swapped-order worlds give ×0.87–1.17.
+  - It is chaotic amplification of rounding-level differences, growing with sliding.
+  - Rule-based recommendation for approval: **A 0.5 mm, B 5 mm, C-no-slide 0.2 mm, C-slide 50 mm (1 mm for the abort-window subset), timing ≤ 10 ticks.**
+- **Isolated cost:** controller + actuators 0.046 → 0.129–0.135 ms (budget 0.15); IK 0.023 → 0.107 ms per tick. Not optimised (within budget, per the decision).
+- **Near-reach IK:** reachable ≤ 1e-12, unreachable classified exactly (residual = shortfall), 0 L/R classification mismatches in 10,880, mirror ≤ 3e-15 m (≤ 1e-8 at the boundary). Concerns for G4: no joint limits (hyperextended branch from ±5° starts in ~5 %), singular full extension (12 iterations, 1e-8), unconverged post-fall solves.
+- **G1 FAILS 2 rows** after the quaternion correction: 1.S′, V1-matched leanR elbow 1.93° vs 1.5°; row 8, upright @ 360 Hz, 1 engine-stop tick. These are **pre-existing chaotic marginality**: the old code failed the same scenarios in perturbed runs, and over 854 perturbed runs the corrected plant has 43 per-run failures vs 53 for the old code. Decision requested.
+- **Diagnostics added:**
+  - `cfg.mirrorOrder` (swapped L/R creation order; default off, bit-identical);
+  - `tools/j2b_floor.mjs`, `tools/j2b_report.mjs`, `tools/ik_study.mjs`;
+  - the polish option in `tools/b_sym_patch.mjs`.
+- **Errors caught on the way:**
+  - the R1.d region test first demanded an unchanged area (wrong: the requirement is no reduction);
+  - the R2 threshold was tighter than a rounded 4-term norm;
+  - `mirrorOrder` was first not forwarded by G1Sim (caught by an invalid-value test before use).

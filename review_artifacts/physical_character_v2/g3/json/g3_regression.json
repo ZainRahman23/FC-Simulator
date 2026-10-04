@@ -20,21 +20,21 @@
   ".runs[flatSupine|V2-REF|240]",
   ".runs[drop1m|V2-REF|240]",
   ".runs[impact15|V2-REF|240]",
+  ".runs[isoMomentum|V2-REF|240]",
+  ".runs[isoSelfCol|V2-REF|240]",
   ".runs[upright|V1-matched|240]",
   ".runs[leanF|V1-matched|240]",
-  ".runs[leanB|V1-matched|240]",
-  ".runs[leanL|V1-matched|240]",
-  ".runs[leanR|V1-matched|240]"
+  ".runs[leanB|V1-matched|240]"
  ],
- "g1HashDiffCount": 208,
+ "g1HashDiffCount": 227,
  "g1AllPassCommitted": true,
- "g1AllPassNew": true,
+ "g1AllPassNew": false,
  "note": "Compared with the ACCEPTED box-turf G1 (post-D1G1, box_turf_history/g1); every difference is the approved plant change of the flat-plane decision (2026-10-03: turf = Jolt PlaneShape; G1 reopened and revalidated under criteria v4). G2 row R ('G1 unchanged') is superseded by that approved change; the replacement is G1 criteria v4 PASS + browser = Node (G3 criteria v2 row P2).",
  "g2": {
   "n": 620,
   "same": 0,
   "committedJobs": 620,
-  "outcomesSame": 620,
+  "outcomesSame": 619,
   "note": "Baseline = the accepted post-D1G1 box-turf G2. Hashes differ by the approved flat-plane turf change (G3 v1 row P is superseded; criteria v2 row P2 replaces it); outcomes compared separately."
  }
 }
