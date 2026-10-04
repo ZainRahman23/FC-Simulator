@@ -1258,3 +1258,20 @@ Candidates and their regression implications: report §13.
   - J2a 81/81.
   - J2b diagnostic: A max 0.203 / B 2.46 / C 0.460 mm; abort Δ 0.
 - **History preserved:** v1 … v3.2 files, evaluators and results are unchanged.
+
+### FP-12: anatomical-IK research (Decision 2) and the ankle reinvestigation (Phase F / G); STOPPED for decisions (`PRE_G4_REPORT_ANKLE_IK.md`)
+
+**IK** (`ik_anatomical/`):
+- Ground-level footholds at foot yaw within ±30°: 0 of 2,256 invalid.
+- The invalid 8 % is ±45° yaw with a non-turning pelvis (a pelvis yaw ≤ 20° resolves 1,023 of 1,208), plus flat feet held in the air (ankle DF).
+- The opt-in bounded IK's fallback is refined by projected Newton (KKT ≤ 4.4e-9) and gated by R4.g (26/26). Not adopted.
+- A foothold-reachability contract (L1 / L2 / L3) is proposed for approval.
+
+**Ankle** (pre-registration `4b544ca`; `ankle_plane/ANKLE_RESULTS.md`):
+- **No candidate meets the pre-registered requirements** with the validated controller: B, C and D fail for 0.11 / 0.13 / 0.15; E, F and G also fail for 0.11 / 0.13.
+- **Mechanism:**
+  - an actuator-powered leg-twist limit cycle created by the posture IK's "twist DOFs at current" policy (present at k = 0);
+  - a prone-rest knee-axial end-range interaction at every k > 0 (perturbed G1: V1-matched perturb 13–14 / 15 vs 2 / 15).
+- **Phase G:** 180 Hz-only end-range integration error. It converges with dt, is net dissipative, is present at k = 0, and occurs only in passive-fall stress states. Not a foundational defect; H passes.
+- **Diagnostic `ikRefTwist`** at k = 0.13 / 0.15: every controller-dependent requirement met; yaw stiffness ≈ 2k; G1 knee-axial still fails.
+- **Nothing adopted.** Decisions put to the user: the twist-DOF policy → the knee-axial question → a re-pre-registered ankle run; the foothold contract.
