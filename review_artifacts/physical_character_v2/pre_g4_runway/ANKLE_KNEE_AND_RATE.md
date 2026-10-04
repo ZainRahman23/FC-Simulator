@@ -72,6 +72,44 @@
 - **Knee state:** the ankle law is knee-independent. Knee axial coupling to flexion is modelled at the knee (screw-home), not needed at the ankle.
 - **Contact state:** relevant for the airborne swing foot (G4 interface hazard H10). An unloaded foot under a reference policy with k = 0 has no yaw restoring at all.
 
+**3b. Single-support yaw anchoring: the G4-critical finding** (`tools/ss_yaw_anchor.mjs`; G3 U:R swing-ready, the other foot unloaded; pelvis yaw impulse at 8 s; V2-REF).
+
+| impulse | stance-ankle ab/adduction peak | pelvis yaw peak | outcome |
+|---|---|---|---|
+| 1 N·m·s | 13.0–13.4° (k = 0) → **11.0–11.2° (k = 0.13 / 0.15)**: end range at every k | 10–12° | recovered at every k / policy |
+| 2 N·m·s | 15–16° (at the ±15° hard limit) | 14–17° | current (k = 0) recovers; blend 0.5 **relocates a foot** at k = 0 / 0.13 / 0.15 |
+| 4 N·m·s | 16–18° | 25–29° | **foot relocated** for every policy and k |
+
+**With one foot down, the body's only yaw anchor is the stance ankle's axial stiffness.** The evidence-range values (0.11–0.15 N·m/°, measured unloaded) barely change the response, and modest yaw impulses still reach the end range.
+- A swing leg's reaction moments are of this order (rough estimate ~1–2 N·m·s for a short step; not measured, no swing controller exists).
+- **So single-support yaw anchoring is a G4 prerequisite,** independent of the twist policy.
+- **Candidate sources (decisions / evidence, none adopted):**
+  - (a) the **loaded** ankle–subtalar axial stiffness (expected to be much higher; no local evidence);
+  - (b) active stabilisation through the actuated ankle axes (inversion couples to axial rotation through subtalar geometry, but the model's ab/adduction axis is passive-only);
+  - (c) a deliberate hip-rotation pelvis-yaw hold during single support with **explicit damping of the leg twist** (the validated "current" form holds the pelvis but feeds the twist; see the twist mechanism document).
+- **Policy attempt (falsified as a fix):** the stable drifting reference (τ 2 s), which has the highest static double-stance yaw stiffness of the stable policies (1.5 N·m/°), **does not improve near-single-support anchoring**:
+
+  | impulse | stance-ankle peak (k = 0 / 0.13) | outcome |
+  |---|---|---|
+  | 1 N·m·s | 15.3 / 10.1° | recovered |
+  | 2 N·m·s | 18.0 / 13.9° | recovered at k = 0; relocated at k = 0.13 |
+  | 4 N·m·s | 20.5 / 16.7° | relocated |
+
+  **No twist policy solves it.** It needs a stiffer loaded ankle axial path or an active yaw source.
+- **Requirement scoping (SENSITIVITY ONLY; out-of-evidence stiffnesses, never candidates).** Blend 0.5, near-single support:
+
+  | k (N·m/°) | stance-ankle peak at 1 N·m·s | at 2 N·m·s | pelvis yaw at 2 N·m·s |
+  |---|---|---|---|
+  | 0.3 | 9.2° | 14.1° | — |
+  | 0.6 | 6.7° | 12.5° | — |
+  | 1.2 | **4.7°** | 9.5° | 12.8° |
+
+  At 2 N·m·s the foot is still relocated at every one of these values.
+
+  **What this implies for the evidence search:** keeping the stance ankle within a few degrees under swing-sized yaw impulses (~1 N·m·s) would need a **loaded** axial stiffness of order **≥ 1 N·m/°, about 10× the unloaded evidence range**. Larger impulses still need an active pelvis-yaw strategy at the stance hip (in human gait the pelvis rotates over the stance femur while the loaded foot stays put).
+
+  **The evidence question:** what is the axial (internal / external) rotational stiffness of the loaded ankle–subtalar complex in vivo, at 0.5–1 BW? If it is ≈ 1 N·m/° or more, a load-dependent law is the anchor. If it is ≈ 0.15, an active strategy is unavoidable.
+
 **4. Attacks on the apparently successful configurations:**
 - **twist probes:** under reference, all re-centre at k = 0.13 / 0.15 in three bodies (the k = 0 + reference case leaves 1–2 / 20);
 - **commanded turns:** reference achieves 10 / 20 / 30° through the hips at k = 0.13 (oscillation ≤ 0.12°);

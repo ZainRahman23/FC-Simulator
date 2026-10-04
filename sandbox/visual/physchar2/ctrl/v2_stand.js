@@ -229,7 +229,7 @@ StandController.prototype.gauss = function () { let s2 = 0; for (let i = 0; i < 
 // ── leg inverse kinematics (posture targets): hip (3) + knee flexion + ankle DF / inversion so that the chain from the pelvis at pose (pP, qP)
 //    ends exactly at the foot's CURRENT pose; knee axial rotation, the locked knee axis and the passive foot ab/adduction keep their current
 //    values. Newton on the pyramid parameters, finite-difference Jacobian, from the current configuration.
-StandController.prototype.getState = function () { return JSON.parse(JSON.stringify({ n: this.n, ring: this.ring, ou: this.ou, rng: this.rng, unl: this.unl, hold: this.hold, sense: this.sense, g3: this.g3 || null, info: this.info })); };   // info: the G3 supervisor reads the previous tick's controller state
+StandController.prototype.getState = function () { return JSON.parse(JSON.stringify({ n: this.n, ring: this.ring, ou: this.ou, rng: this.rng, unl: this.unl, hold: this.hold, sense: this.sense, g3: this.g3 || null, info: this.info, twFilt: this.twFilt })); };   // info: the G3 supervisor reads the previous tick's controller state; twFilt: the DIAGNOSTIC drifting twist reference (pre-G4 runway; undefined → omitted, so the default state is unchanged)
 StandController.prototype.setState = function (x) { const y = JSON.parse(JSON.stringify(x)); Object.assign(this, y); };
 // LEG IK (user decision 2026-10-04 §2; G3 J2a finding 2). Unknowns x = hip (twist, swing-y, swing-z), knee swing-y, ankle (swing-y, swing-z); the knee
 // and ankle twists stay at their current values. Residual r(x) = [ankle position − target, foot orientation error] (6 × 6). The former solver
