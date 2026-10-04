@@ -1,0 +1,318 @@
+{
+ "generated": "tools/v2_component_regressions.mjs",
+ "date": "2026-10-04",
+ "results": [
+  {
+   "id": "R1.a",
+   "name": "boot sole geometry mirror-identical L vs R (all 8 bodies)",
+   "pass": true,
+   "value": "max point mismatch 0.00e+0 m"
+  },
+  {
+   "id": "R1.b",
+   "name": "usable regions are mirror images (vertex count, vertices)",
+   "pass": true,
+   "value": "count mismatches 0, max vertex mismatch 3.47e-18 m"
+  },
+  {
+   "id": "R1.c",
+   "name": "usable regions are mirror images (boundary, area, centroid)",
+   "pass": true,
+   "value": "Hausdorff 3.47e-18 m, area 2.18e-16 rel, centroid 6.97e-18 m  (former construction: Hausdorff 4.76e-6 m)"
+  },
+  {
+   "id": "R1.d",
+   "name": "no CoP-area loss: the corrected region contains the former one",
+   "pass": true,
+   "value": "former region outside the corrected one by ≤ 0.00e+0 m; area change +1.19 … +1.43 %"
+  },
+  {
+   "id": "R1.e",
+   "name": "deterministic construction",
+   "pass": true,
+   "value": "bit-identical"
+  },
+  {
+   "id": "R1.f",
+   "name": "strictly convex: no reflex vertex; insidePoly exact (winding) on a 1 mm grid",
+   "pass": true,
+   "value": "reflex vertices 0, inside-test disagreements 0"
+  },
+  {
+   "id": "R1.g",
+   "name": "CoP projection onto the region is 1-Lipschitz (continuous boundary behaviour)",
+   "pass": true,
+   "value": "max |Δ projection| / |Δ target| 1.000000"
+  },
+  {
+   "id": "R1.h",
+   "name": "invariant to the sampling of the same outline (extra collinear points, order, 1e-15 perturbation)",
+   "pass": true,
+   "value": "max region change 3.10e-17 m"
+  },
+  {
+   "id": "R2.a",
+   "name": "unit normalisation: unit length, direction unchanged, no NaN (identity / 180° / 90°); degenerate Jolt input throws",
+   "pass": true,
+   "value": "‖u‖² − 1 ≤ 6.66e-16, direction change ≤ 2.22e-16, NaN 0, unitQ(0) throws: true"
+  },
+  {
+   "id": "R2.b",
+   "name": "controller-side inputs are unit (body orientations, joint quaternions)",
+   "pass": true,
+   "value": "‖q‖² − 1 ≤ 4.44e-16 (orientations), 2.22e-16 (joint quaternions) over 24 states (raw Jolt: 2.01e-7)"
+  },
+  {
+   "id": "R2.c",
+   "name": "no material orientation change (numerical error only)",
+   "pass": true,
+   "value": "max |Q.rot(raw) − Q.rot(unit)| 2.51e-7"
+  },
+  {
+   "id": "R2.d",
+   "name": "mirrored states: exact L/R joint-axis correspondence on the controller side",
+   "pass": true,
+   "value": "max ||σ| − 1| 1.67e-15"
+  },
+  {
+   "id": "R2.e",
+   "name": "deterministic (re-reading the same state)",
+   "pass": true,
+   "value": "bit-identical"
+  },
+  {
+   "id": "R2.f",
+   "name": "passive plant bit-identical to the historical G1 (normalisation does not reach it)",
+   "pass": true,
+   "value": "V2-REF upright 271f9e58, V1-matched leanR c3600c78, V2-REF drop1m 2581f5a3"
+  },
+  {
+   "id": "R3.a",
+   "name": "IK: identical reachability classification for every mirrored problem pair",
+   "pass": true,
+   "value": "0 mismatches over 558 pairs (3 bodies)"
+  },
+  {
+   "id": "R3.b",
+   "name": "IK: reachable targets solved to the rounding floor (polished, ≤ 1e-14) and mirrored (≤ 1e-12 m)",
+   "pass": true,
+   "value": "288 pairs: residual ≤ 1.39e-15, mirror Δ ≤ 3.33e-15 m"
+  },
+  {
+   "id": "R3.c",
+   "name": "IK: unreachable targets reported unreachable, optima mirrored (≤ 1e-6 m)",
+   "pass": true,
+   "value": "270 pairs: all reported (residual > 1e-6): true; mirror Δ ≤ 4.77e-11 m"
+  },
+  {
+   "id": "R3.d",
+   "name": "IK: the target is never modified",
+   "pass": true,
+   "value": "0 modified"
+  },
+  {
+   "id": "R3.e",
+   "name": "IK: production (staged FK) equals the plain reference implementation bit for bit",
+   "pass": true,
+   "value": "0 of 558 solves differ"
+  },
+  {
+   "id": "R4.a",
+   "name": "bounded IK: opt-in (STAND.ikBounds false by default; the option routes legIK to legIKBounded)",
+   "pass": true,
+   "value": "default off, option honoured: true"
+  },
+  {
+   "id": "R4.b",
+   "name": "bounded IK: every returned solution inside the anatomical hard limits",
+   "pass": true,
+   "value": "420 solves"
+  },
+  {
+   "id": "R4.c",
+   "name": "bounded IK: equals the unconstrained IK wherever that solution is anatomically valid (≤ 1e-9 rad, solved ≤ 1e-12)",
+   "pass": true,
+   "value": "0 of 166 differ"
+  },
+  {
+   "id": "R4.d",
+   "name": "bounded IK: an anatomically invalid unconstrained solution is never accepted — solved on a valid branch (≤ 1e-12) or reported unreachable (> 1e-6)",
+   "pass": true,
+   "value": "14 invalid: 0 valid branch, 14 reported"
+  },
+  {
+   "id": "R4.g",
+   "name": "bounded IK fallback: every unreached target returns the box-constrained least-squares optimum (KKT ≤ 1e-7)",
+   "pass": true,
+   "value": "254 unreached solves: KKT max 3.80e-10"
+  },
+  {
+   "id": "R4.e",
+   "name": "bounded IK: L/R mirror-equivariant (classification; solution reached ≤ 1e-12 rad, unreached ≤ 1e-6 rad)",
+   "pass": true,
+   "value": "0 classification mismatches; Δ reached ≤ 1.22e-14, unreached ≤ 3.97e-8 rad"
+  },
+  {
+   "id": "R4.f",
+   "name": "bounded IK: the target is never modified",
+   "pass": true,
+   "value": "0 modified"
+  },
+  {
+   "id": "R5.a",
+   "name": "twist-policy diagnostic options off by default (ikTwistBlend null, ikTwistTau 0, yawCmd null)",
+   "pass": true,
+   "value": "default off: true"
+  },
+  {
+   "id": "R5.b",
+   "name": "ikTwistBlend 0 ≡ validated 'current' and 1 ≡ ikRefTwist (bit-identical IK solutions)",
+   "pass": true,
+   "value": "blend 0 ≡ current: true; blend 1 ≡ reference: true"
+  },
+  {
+   "id": "R5.c",
+   "name": "mechanism: hip-rotation IK target follows the leg twist under 'current' (slope ≈ −1) and not under reference (≈ 0)",
+   "pass": true,
+   "value": "slope current -0.985, reference 0.000"
+  },
+  {
+   "id": "R5.d",
+   "name": "drifting-reference filter state is saved by getState; the default controller state is unchanged (no new key)",
+   "pass": true,
+   "value": "filter state saved: true; default state has no twFilt key: true"
+  },
+  {
+   "id": "R6.a",
+   "name": "certificate bound: Lipschitz rate claims hold (position rate ≤ lever for hip / knee, 0 for ankle; orientation rate ≤ 1)",
+   "pass": true,
+   "value": "2000 points × 6: max pos rate / lever 1.000000000, ankle position rate 0, max orientation rate 0.999999853"
+  },
+  {
+   "id": "R6.b",
+   "name": "certificate bound: no cell containing a known anatomical solution is pruned (bisection path to Σ LIP·h < 1e-9)",
+   "pass": true,
+   "value": "80 valid targets: 0 pruned"
+  },
+  {
+   "id": "R6.c",
+   "name": "certificate decides: a known invalid target → PROVEN-INFEASIBLE; the same target with the held knee axial twist moved (now solvable) → not certified",
+   "pass": true,
+   "value": "as defined: warm residual 5.33e-2 → PROVEN-INFEASIBLE (3290881 cells); knee axial -5°: solvable, certificate UNDECIDED"
+  },
+  {
+   "id": "R6.d",
+   "name": "the 8-D (twist-free) chain equals the production legChain bit for bit at the held twist values",
+   "pass": true,
+   "value": "max |Δr| 0"
+  },
+  {
+   "id": "R6.e",
+   "name": "tight twist levers (opt-in): 8-D rate claims hold (position rate ≤ lever incl. knee axial ≈ 0; ankle coordinates 0; orientation ≤ 1)",
+   "pass": true,
+   "value": "knee-axial lever 1.00e-9 m, hip-twist 0.4386 m (generic 0.8663); max pos rate / lever 1.000000000, ankle 0, orientation 0.999999998"
+  },
+  {
+   "id": "R7.a",
+   "name": "lifecycle: contact flicker (8/0 pieces every tick, 0.2 s) never confirms AIRBORNE; the control weights s, a stay 0",
+   "pass": true,
+   "value": "start TOUCHING; states TOUCHING/LIFTOFF"
+  },
+  {
+   "id": "R7.b",
+   "name": "lifecycle: liftoff confirmed after the debounce; airborne weight continuous (Δa per tick ≤ 1.5·dt/release)",
+   "pass": true,
+   "value": "AIRBORNE at tick 3, max Δa 0.0624"
+  },
+  {
+   "id": "R7.c",
+   "name": "lifecycle: a touchdown impact without intent is not support; intent + contact starts load acceptance after acceptDebounce; s continuous to SUPPORT",
+   "pass": true,
+   "value": "impact phase: TOUCHDOWN; LOAD_ACCEPT at tick 11; end SUPPORT; max Δs 0.0624"
+  },
+  {
+   "id": "R7.d",
+   "name": "lifecycle: a load reading taken during self-contact is ignored (no support); the same load from the turf alone is accepted",
+   "pass": true,
+   "value": "with self-contact: TOUCHING; without: TOUCHING/LOAD_ACCEPT/SUPPORT"
+  },
+  {
+   "id": "R7.e",
+   "name": "lifecycle: contact anchor captured on the turf, frozen while airborne, re-captured flat (landing x/z/yaw, previous height and tilt) at touchdown",
+   "pass": true,
+   "value": "frozen true; touchdown anchor x/z 0.11/0.21, y 0, flat true"
+  },
+  {
+   "id": "R7.f",
+   "name": "lifecycle: low load releases support only when the plan does not want load on that foot",
+   "pass": true,
+   "value": "wanted: SUPPORT; not wanted: SUPPORT/UNLOADING/TOUCHING"
+  },
+  {
+   "id": "R7.g",
+   "name": "lifecycle: deterministic; getState / setState round trip mid-sequence continues bit-identically",
+   "pass": true,
+   "value": "identical true"
+  },
+  {
+   "id": "R7.h",
+   "name": "lifecycle: a commanded swing target is the leg's target in a contact state; clearing it returns to the contact anchor",
+   "pass": true,
+   "value": "commanded used true; back to anchor true"
+  },
+  {
+   "id": "R7.i",
+   "name": "lifecycle option off by default; the default controller state / info carry no lifecycle key",
+   "pass": true,
+   "value": "off true"
+  },
+  {
+   "id": "R8.a",
+   "name": "corrected knee off by default: no v2k term, the old knee axial law",
+   "pass": true,
+   "value": "v2k false"
+  },
+  {
+   "id": "R8.b",
+   "name": "v2k envelope: θ0 = Walker polynomial, slack / calibrated bounds at 0 / 30 / 90°, deep-flexion defaults (no extra shift, no narrowing)",
+   "pass": true,
+   "value": "θ0(30) 8.6298, bounds(0) [-12.5,14], (90) [-10.116,28.884]"
+  },
+  {
+   "id": "R8.c",
+   "name": "v2k: the passive layer's knee axial generalised torque equals the specification law (both knees, slack / law / end-stop)",
+   "pass": true,
+   "value": "worst excess 0.00e+0 N·m"
+  },
+  {
+   "id": "R8.d",
+   "name": "v2k + reference policy: the knee twist in the posture-IK chain is θ0(solved flexion); old knee: the unchanged twist value",
+   "pass": true,
+   "value": "max |rot − θ0| 5.33e-15°; old knee unchanged true"
+  },
+  {
+   "id": "R8.e",
+   "name": "v2k: closed flexion–axial loop through the end range does no net passive work",
+   "pass": true,
+   "value": "∮τ·dq -2.41e-5 J (∮|τ·dq| 9.627 J)"
+  },
+  {
+   "id": "R8.f",
+   "name": "v2k sensitivity override (deep δ150 = +5°) shifts θ0(150°) by 5° and nothing below 120°; the frozen set is unchanged",
+   "pass": true,
+   "value": "Δθ0(150) 5, Δθ0(120) 0"
+  },
+  {
+   "id": "R9.a",
+   "name": "ankle-stiffness override absent by default: k = the env value, else the spec default",
+   "pass": true,
+   "value": "k 0"
+  },
+  {
+   "id": "R9.b",
+   "name": "the override sets k exactly and clearing it restores the previous value",
+   "pass": true,
+   "value": "on 0.13, cleared 0"
+  }
+ ]
+}

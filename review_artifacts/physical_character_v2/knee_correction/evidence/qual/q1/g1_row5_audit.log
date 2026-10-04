@@ -1,0 +1,4 @@
+v2k, original criterion (v1): FAIL — 5.a ✗ (-1.152 vs -0.896 N·m); 5.c ✓ (max |error| 0.517 N·m); 5.d ✓ (max step rise 0.0e+0 J; E 2.513 → 0.182 J (damping 2.024 J))
+v2k, superseding G1-5′ (v2): PASS — 5.a ✓ (-1.152 vs -1.138 N·m); 5.c ✓ (max |error| 0.517 N·m); 5.d ✓ (max step rise 0.0e+0 J; E 2.513 → 0.182 J (damping 2.024 J))
+old knee, superseding G1-5′ (v2): PASS — 5.a ✓ (-0.897 vs -0.897 N·m); 5.c ✓ (max |error| 0.003 N·m); 5.d ✓ (max step rise 0.0e+0 J; E 2.173 → 0.197 J (damping 1.711 J))
+ADVERSARIAL naive v2k, superseding G1-5′ (v2): FAIL — 5.a ✗ (-0.897 vs -1.139 N·m); 5.c ✓ (max |error| 0.520 N·m); 5.d ✓ (max step rise 0.0e+0 J; E 2.513 → 0.184 J (damping 2.035 J))

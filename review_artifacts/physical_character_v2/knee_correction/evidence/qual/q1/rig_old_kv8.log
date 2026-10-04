@@ -1,0 +1,14 @@
+     KV2b kv4b R20 180Hz: |W_pas + ΔU + D| 6.59e-1 J (signed -6.59e-1; implicit dissipation 6.89e-1; + it: 2.99e-2) (lim 0.128)
+     KV2b kv3b 0-30 T5 180Hz: |W_pas + ΔU + D| 2.33e-1 J (signed -2.33e-1; implicit dissipation 3.17e-1; + it: 8.48e-2) (lim 0.103)
+     KV2b kv4b R20 240Hz: |W_pas + ΔU + D| 5.48e-1 J (signed -5.48e-1; implicit dissipation 5.61e-1; + it: 1.29e-2) (lim 0.131)
+     KV2b kv3b 0-30 T5 240Hz: |W_pas + ΔU + D| 1.95e-1 J (signed -1.95e-1; implicit dissipation 2.53e-1; + it: 5.80e-2) (lim 0.104)
+     KV2b kv4b R20 480Hz: |W_pas + ΔU + D| 3.39e-1 J (signed -3.39e-1; implicit dissipation 3.50e-1; + it: 1.03e-2) (lim 0.139)
+     KV2b kv3b 0-30 T5 480Hz: |W_pas + ΔU + D| 1.22e-1 J (signed -1.22e-1; implicit dissipation 1.49e-1; + it: 2.70e-2) (lim 0.105)
+FAIL KV2b passive work = −ΔU − viscous loss in every rig run: 6 / 6 runs outside (limit ≤ 0.02 J + 2 % ∫|P_pas|)
+     report (erratum view): with the implicit-drive dissipation added and the strict residual dissipative (≤ 0): 6 / 6 runs within the same limit
+PASS KV2b′.ab elastic part creates no energy (W_el + ΔU ≤ 0.02 J + 0.5 % ∫|P_el|); viscous part dissipative (W_visc ≤ 0.02 J) — every rig run: 6 runs (limit all)
+     KV2b′.c kv4b_R20: |W_el + ΔU| 7.03e-1 / 5.79e-1 / 3.51e-1 J at 180 / 240 / 480 Hz → order 0.72
+     KV2b′.c kv3b_0_30_5: |W_el + ΔU| 2.50e-1 / 2.07e-1 / 1.26e-1 J at 180 / 240 / 480 Hz → order 0.72
+PASS KV2b′.c consistency: the elastic energy mismatch converges with the timestep (order ≥ 0.5, monotone), or stays below 5 mJ: 2 run families (limit all)
+
+2 / 3 rig checks pass

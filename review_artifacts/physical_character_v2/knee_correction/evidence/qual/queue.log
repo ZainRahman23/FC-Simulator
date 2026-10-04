@@ -1,0 +1,21 @@
+23:56:34 start (commit 56a87b8e451ad091e1e9715ac4b783aa980410c8, worktree status:        0 changed)
+23:56:45 Q0a hashcmp IDENTICAL
+23:57:12 Q0a suite: component regressions: 52/52 pass
+23:57:12 Q0a guard: guard_v1: OK — V1 runtime + evidence identical to checkpoint/physchar-v1-final-research
+23:57:12 component jobs: 247
+00:00:44 KV6c re-run on ed59b3b1bf06929fd16ded79008d738d0e484621 (15 jobs) start
+00:02:03 KV6c re-run done
+00:04:23 component jobs done
+00:04:24 Q3a G0: exit 1
+00:09:05 Q3b G1: G1 RESULT: FAIL — 2 failing gate check(s)   (282 s)  → review_artifacts/physical_character_v2/g1/json/g1_results.json
+00:11:20 Q3c sweep done
+00:16:02 Q3d G2 done
+00:21:38 Q3e G3 done
+00:25:40 Q3e J2a mirror done
+00:26:30 Q5b G1 browser: BROWSER = NODE 10/10
+00:27:00 Q5b G2 browser: BROWSER = NODE 6/6
+00:27:30 Q5b G3 browser: BROWSER = NODE 4/4
+00:28:18 Q5c g1 browser default: BROWSER = NODE 10/10
+00:28:46 Q5c g2 browser default: BROWSER = NODE 6/6
+00:29:14 Q5c g3 browser default: BROWSER = NODE 4/4
+00:29:14 ALL DONE

@@ -1,0 +1,49 @@
+{
+ "check": "headless Chrome (swiftshader) driven over CDP, viewer/g2.html?check=1&keys=<scenario> — one fresh browser per curated G2 scenario, V2-REF, gate configuration, full runs",
+ "allPass": true,
+ "rows": [
+  {
+   "key": "quiet:10",
+   "browser": "280e2599",
+   "pass": true,
+   "node": "280e2599",
+   "seconds": 5
+  },
+  {
+   "key": "push:F:15",
+   "browser": "be517668",
+   "pass": true,
+   "node": "be517668",
+   "seconds": 5
+  },
+  {
+   "key": "push:R:15",
+   "browser": "2dbf47c1",
+   "pass": true,
+   "node": "2dbf47c1",
+   "seconds": 5
+  },
+  {
+   "key": "push:BL:10",
+   "browser": "dc07817b",
+   "pass": true,
+   "node": "dc07817b",
+   "seconds": 5
+  },
+  {
+   "key": "torque:pitch:8",
+   "browser": "79b24d6e",
+   "pass": true,
+   "node": "79b24d6e",
+   "seconds": 5
+  },
+  {
+   "key": "offset:COM over ankles",
+   "browser": "251c0903",
+   "pass": true,
+   "node": "251c0903",
+   "seconds": 5
+  }
+ ],
+ "qs": "knee=v2k&ankleK=0.13&stand=%7B%22ikRefTwist%22%3Atrue%2C%22lifecycle%22%3Atrue%7D&results=../../knee_correction/evidence/qual/g2_results_qual.json"
+}

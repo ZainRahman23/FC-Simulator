@@ -1448,3 +1448,31 @@ Then freeze `E1_PREREGISTRATION_V2.md` §2. Nothing adopted; not pushed.
 **Configuration frozen** for qualification and E1a: `v2k` central + k 0.13 + reference + lifecycle.
 
 Qualification tooling added (default-off; KV0 4 / 4, suite 52 / 52). **E1a not run; not pushed.**
+
+### KC-3: qualification v2 on frozen code: everything qualifies except the preregistered hip-rest G1 finding → E1a NOT READY, one blocker (`knee_correction/QUALIFICATION_V2_RESULTS.md`)
+**Frozen at 56a87b8.** A tool bug in the KV6c report found during the run was fixed in ed59b3b (tool only); Q2a / Q2b / Q6b were re-run on it.
+
+**PASS:**
+- Q0: KV0 4 / 4, suite 52 / 52, guard OK. G1 74 / 74, G3 332 / 332 and sweep 300 / 300 identical to the official 097dcb7 runs.
+- Q1: mechanics with KV2b′ / KV3b′ / KV4a.3′; the old knee passes; the adversarials fail.
+- Q2: KV6c 8 / 8 bodies within 1.40° of θ0; deep family bit-identical.
+- Q3a G0.
+- Q3d G2 11 / 11.
+- Q3e G3 17 / 17, with K′ and J2a 81 / 81 re-measured with the lifecycle.
+- Q3f twist battery: reference meets C1′ / C7′ and the rest.
+- Q4 energy.
+- Q5 browser = Node: adopted 10 / 6 / 4, default 10 / 6 / 4.
+- Q6 timestep 180 / 240 / 480 Hz.
+- Q7 yaw decomposition: no masking flag.
+
+**FAIL (predicted in the prereg, not waived):**
+- Q3b G1 1.S′: V1-matched upright 1.3d 2.09° at hip_L.rot.
+- Q3c: V1-matched upright 15 / 15, although the rate is 5.3 % ≤ 8.1 %.
+
+**Why it does not touch E1a:** E1a-like support keeps the hips ≥ 27.4° from every hard limit, and E1a-10 forbids any joint beyond its hard limit.
+
+**Recommendation for the user:**
+- A: scope the finding as a non-E1a-gating G1 exception (no tolerance, hip or knee change), carried as debt before any passive-fall certification;
+- B: schedule an approved evidence-first review of the hip's combined end range.
+
+Not applied. **E1a not run; not pushed.**
