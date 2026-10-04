@@ -14,7 +14,7 @@
 //      angle is left to balance. Gains are body-scaled: K = κ·m_sup·g·L (m_sup, L: the load the joint supports and its lever in the reference
 //      pose), D = 2ζ·√(K·m_sup·L²) — no per-body tuning.
 // The controller writes nothing to bodies; Jolt owns the state; the only outputs are per-axis actuator requests.
-import { V, Q, dexp, datan2, dasin, dnorm } from "../core/v2_math.js";   // deterministic math only in anything that feeds physics (G3 resolution D1)
+import { V, Q, dexp, datan2, dasin, dnorm, unitStates, unitEv } from "../core/v2_math.js";   // deterministic math only in anything that feeds physics (G3 resolution D1)
 import { posedBodies } from "../spec/v2_pose.js";
 import { bootSole, hull2, hull2Canonical } from "../sim/v2_geom.js";
 import { pyr, decompose } from "../spec/v2_joints.js";
@@ -83,9 +83,13 @@ export class StandController {
     this.sub = spec.joints.map(j => sub(j.childIndex)); this.subFeet = this.sub.map(s => this.feet.filter(f => s.includes(f)));
     this.anchor = spec.joints.map(j => V.sub(j.at, B[j.parentIndex].origin));
     // the usable sole region of each foot (foot-local x lateral / z forward at the sole plane): default = the boot's plantar contact hull
-    // the usable region = the radial 5 mm inset of the CANONICAL hull (strictly convex vertices, canonical order): mirrored boots give mirrored regions
-    // (user decision 2026-10-04 §1; the earlier hull2-based region differed by 4.8 µm L/R — G3 J2a finding 1, evidence in g3/G3_V3_EVALUATION.md)
-    this.sole = this.feet.map(f => { const s = bootSole(B[f]); return { y0: s.y0, poly: opts.footRegion ? opts.footRegion(f) : insetPoly(hull2Canonical(s.pts), this.o.footInset) }; });
+    // the usable region = the radial 5 mm inset of the CANONICAL hull (strictly convex vertices, canonical order), made convex again: the radial inset
+    // turns a nearly straight hull vertex (lateral midfoot) into a shallow REFLEX vertex, and the controller's region operations (projection clampPoly,
+    // supervisor polyDist) assume a convex region — on the non-convex inset the CoP projection jumped up to ~9 mm across the dent's bisector
+    // (overnight A1, tools/region_study.mjs). Region = canonical convex hull of the inset vertices: every true vertex keeps its 5 mm radial inset,
+    // only the dent fills (+1.0 … 1.3 % area); mirrored boots give mirrored regions (user decision 2026-10-04 §1; the earlier hull2-based region
+    // differed by 4.8 µm L/R — G3 J2a finding 1). Former constructions preserved in the history and in symmetry_corrections/.
+    this.sole = this.feet.map(f => { const s = bootSole(B[f]); return { y0: s.y0, poly: opts.footRegion ? opts.footRegion(f) : usableRegion(s.pts, this.o.footInset) }; });
     // reference pose (posture preference) and body-scaled gains from it
     const S = posedBodies(spec, stance.angles, { pos: null, rot: stance.pelvisRot }), com = (ids) => { let m = 0, c = [0, 0, 0]; for (const i of ids) { c = V.add(c, V.sc(V.add(S[i].pos, Q.rot(S[i].rot, B[i].comLocal)), B[i].mass)); m += B[i].mass; } return { m, c: V.sc(c, 1 / m) }; };
     this.qref = passive.jd.map(d => passive.qcs(d, S.map(s => s.rot)));
@@ -116,6 +120,10 @@ export class StandController {
   jointAt(st, k) { const j = this.spec.joints[k]; return V.add(st[j.parentIndex].pos, Q.rot(st[j.parentIndex].rot, this.anchor[k])); }
   footPoly(st, n) { const f = this.feet[n], s = this.sole[n]; return s.poly.map(([x, z]) => { const p = V.add(st[f].pos, Q.rot(st[f].rot, [x, s.y0, z])); return [p[0], p[2]]; }); }
   compute(st, ev, dt) {
+    // UNIT-QUATERNION BOUNDARY (overnight A2, narrow scope): the controller's frame algebra (Q.rot of body orientations, small-angle errors
+    // 2·vec(q⁻¹·q_ref)) assumes unit quaternions; Jolt's float32-derived orientations and the passive layer's relative rotations carry
+    // ‖q‖² − 1 ≈ 3e-7 (with a non-unit q, Q.rot adds an unrotated (1 − ‖q‖²)·v term that differs L/R — G3 J2a finding 3). Normalise HERE, once.
+    st = unitStates(st); ev = unitEv(ev);
     const o = this.o, B = this.spec.bodies, P = this.P;
     // 1. state estimation
     let c = [0, 0, 0], v = [0, 0, 0]; st.forEach((s, i) => { c = V.add(c, V.sc(s.com, B[i].mass)); v = V.add(v, V.sc(s.v, B[i].mass)); }); c = V.sc(c, 1 / this.M); v = V.sc(v, 1 / this.M);
@@ -230,26 +238,39 @@ StandController.prototype.setState = function (x) { const y = JSON.parse(JSON.st
 StandController.prototype.legIK = function (st, ev, n, pP, qP, footPose = null) {
   const P = this.P, ks = this.legK[n], d = ks.map(k => P.jd[k]), a = ks.map(k => this.anchor[k]), cur = ks.map(k => { const v = decompose(ev.qs[k]); return [v.tw, v.sy, v.sz]; });
   if (this.o.ikRefTwist) { const rf = ks.map(k => { const v = decompose(this.qref[k]); return v.tw; }); cur[1] = [rf[1], cur[1][1], cur[1][2]]; cur[2] = [rf[2], cur[2][1], cur[2][2]]; }   // twist DOFs at the reference
-  const ft = footPose || st[this.feet[n]], fk = (x) => { const qh = pyr(x[0], x[1], x[2]), qk = pyr(cur[1][0], x[3], cur[1][2]), qa = pyr(cur[2][0], x[4], x[5]);
-    const Rt = Q.mul(Q.mul(Q.mul(qP, d[0].F1), qh), Q.conj(d[0].F2)), pt = V.add(pP, Q.rot(qP, a[0]));
-    const Rs = Q.mul(Q.mul(Q.mul(Rt, d[1].F1), qk), Q.conj(d[1].F2)), ps = V.add(pt, Q.rot(Rt, a[1]));
-    const Rf = Q.mul(Q.mul(Q.mul(Rs, d[2].F1), qa), Q.conj(d[2].F2)), pf = V.add(ps, Q.rot(Rs, a[2]));
-    let qe = Q.mul(ft.rot, Q.conj(Rf)); if (qe[3] < 0) qe = qe.map(v => -v);
+  // forward kinematics, staged so that a Jacobian column only recomputes the segments its DOF moves (overnight D: exact reuse — every reused value
+  // is the identical expression on identical inputs, so results are bit-identical to the unstaged chain; verified on 10,880 problems + J2a)
+  const ft = footPose || st[this.feet[n]], A0 = Q.mul(qP, d[0].F1), C0 = Q.conj(d[0].F2), C1 = Q.conj(d[1].F2), C2 = Q.conj(d[2].F2), pt = V.add(pP, Q.rot(qP, a[0]));
+  const thigh = (qh) => { const Rt = Q.mul(Q.mul(A0, qh), C0); return { Rt, B1: Q.mul(Rt, d[1].F1), ps: V.add(pt, Q.rot(Rt, a[1])) }; };
+  const shank = (T, qk) => { const Rs = Q.mul(Q.mul(T.B1, qk), C1); return { Rs, B2: Q.mul(Rs, d[2].F1), pf: V.add(T.ps, Q.rot(Rs, a[2])) }; };
+  const res = (S, qa) => { const Rf = Q.mul(Q.mul(S.B2, qa), C2); let qe = Q.mul(ft.rot, Q.conj(Rf)); if (qe[3] < 0) qe = qe.map(v => -v); const pf = S.pf;
     return [pf[0] - ft.pos[0], pf[1] - ft.pos[1], pf[2] - ft.pos[2], -2 * qe[0], -2 * qe[1], -2 * qe[2]]; };
-  let x = [cur[0][0], cur[0][1], cur[0][2], cur[1][1], cur[2][1], cur[2][2]], r = fk(x), err = dnorm(...r), it = 0, mu = IK.mu0;
+  const qhOf = (x) => pyr(x[0], x[1], x[2]), qkOf = (x) => pyr(cur[1][0], x[3], cur[1][2]), qaOf = (x) => pyr(cur[2][0], x[4], x[5]);
+  const fk = (x) => res(shank(thigh(qhOf(x)), qkOf(x)), qaOf(x));
+  const jac = (x) => { const T0 = thigh(qhOf(x)), qk0 = qkOf(x), S0 = shank(T0, qk0), qa0 = qaOf(x);   // Jm[c][i] = ∂r_i/∂x_c, central differences
+    return [0, 1, 2, 3, 4, 5].map(c => { const xp = x.slice(), xm = x.slice(); xp[c] += IK.h; xm[c] -= IK.h;
+      const ev2 = (y) => (c < 3 ? res(shank(thigh(qhOf(y)), qk0), qa0) : c === 3 ? res(shank(T0, qkOf(y)), qa0) : res(S0, qaOf(y)));
+      const rp = ev2(xp), rm = ev2(xm); return rp.map((v, i) => (v - rm[i]) / (2 * IK.h)); }); };
+  let x = [cur[0][0], cur[0][1], cur[0][2], cur[1][1], cur[2][1], cur[2][2]], r = fk(x), err = dnorm(...r), it = 0, mu = IK.mu0, lastJ = null, lastH = null;
   for (; it < IK.maxIt && err > IK.tol; it++) {
-    const Jm = [0, 1, 2, 3, 4, 5].map(c => { const xp = x.slice(), xm = x.slice(); xp[c] += IK.h; xm[c] -= IK.h; const rp = fk(xp), rm = fk(xm); return rp.map((v, i) => (v - rm[i]) / (2 * IK.h)); });   // Jm[c][i] = ∂r_i/∂x_c
-    const g = Jm.map(col => col[0] * r[0] + col[1] * r[1] + col[2] * r[2] + col[3] * r[3] + col[4] * r[4] + col[5] * r[5]);
+    const Jm = jac(x), g = Jm.map(col => col[0] * r[0] + col[1] * r[1] + col[2] * r[2] + col[3] * r[3] + col[4] * r[4] + col[5] * r[5]);
     if (dnorm(...g) < IK.gradTol) break;   // stationary: the least-squares optimum of an unreachable target
-    const H = Jm.map(ci => Jm.map(cj => ci[0] * cj[0] + ci[1] * cj[1] + ci[2] * cj[2] + ci[3] * cj[3] + ci[4] * cj[4] + ci[5] * cj[5]));
+    const H = Jm.map(ci => Jm.map(cj => ci[0] * cj[0] + ci[1] * cj[1] + ci[2] * cj[2] + ci[3] * cj[3] + ci[4] * cj[4] + ci[5] * cj[5])); lastJ = Jm; lastH = H;
     let accepted = false;
     for (let tries = 0; tries < 8; tries++) { const A = H.map((row, i) => row.map((v, c) => (i === c ? v + mu * (1 + v) : v))), dx = solveN(A, g.map(v => -v)); if (!dx) { mu *= 10; continue; }
       const xn = x.map((v, i) => v + dx[i]), rn = fk(xn), en = dnorm(...rn); if (en < err) { x = xn; r = rn; err = en; mu = Math.max(IK.muMin, mu / 10); accepted = true; break; } mu *= 10; }
     if (!accepted) break; }
+  // POLISH (overnight A3, adopted): once converged (err ≤ 1e-12), one more LM step with the last iteration's Jacobian, kept if it does not increase
+  // the residual — the returned solution then sits at the rounding floor whichever side of the 1e-12 threshold the last iterate fell (J2a v3.1
+  // finding: mirrored solves stopping one iteration apart, Δ ≈ 1e-12 rad). No new Jacobian; targets, reachability and the basin are unchanged.
+  if (IK.polish === "stale" && err <= IK.tol && err > 0 && lastH) {
+    const g = lastJ.map(col => col[0] * r[0] + col[1] * r[1] + col[2] * r[2] + col[3] * r[3] + col[4] * r[4] + col[5] * r[5]), A = lastH.map((row, i) => row.map((v, c) => (i === c ? v + mu * (1 + v) : v))), dx = solveN(A, g.map(v => -v));
+    if (dx) { const xn = x.map((v, i) => v + dx[i]), rn = fk(xn), en = dnorm(...rn); if (en <= err) { x = xn; r = rn; err = en; } } }
   const tg = [[ks[0], pyr(x[0], x[1], x[2])], [ks[1], pyr(cur[1][0], x[3], cur[1][2])]]; if (footPose) tg.push([ks[2], pyr(cur[2][0], x[4], x[5])]);   // held foot: the ankle target too
   return { targets: tg, err, it, x };
 };
-export const IK = { h: 1e-6, tol: 1e-12, maxIt: 12, mu0: 1e-2, muMin: 1e-12, gradTol: 1e-14 };
+export const IK = { h: 1e-6, tol: 1e-12, maxIt: 12, mu0: 1e-2, muMin: 1e-12, gradTol: 1e-14,
+  polish: (typeof process !== "undefined" && process.env && process.env.V2_IK_POLISH) || "stale" };   // "stale" (adopted) | "none" (diagnostic env selector, Node only)
 function solveN(M, y) { const n = y.length, a = M.map((r, i) => [...r, y[i]]); for (let c = 0; c < n; c++) { let p = c; for (let r = c + 1; r < n; r++) if (Math.abs(a[r][c]) > Math.abs(a[p][c])) p = r; if (Math.abs(a[p][c]) < 1e-14) return null; [a[c], a[p]] = [a[p], a[c]];
     for (let r = 0; r < n; r++) if (r !== c) { const f = a[r][c] / a[c][c]; for (let k = c; k <= n; k++) a[r][k] -= f * a[c][k]; } } return a.map((r, i) => r[n] / r[i]); }
 // inertia tensor (world axes) of a set of bodies about point o, in pose S
@@ -266,7 +287,18 @@ function centroid(poly) { let A = 0, x = 0, z = 0; for (let i = 0; i < poly.leng
 export function clampPoly(poly, q) { if (insidePoly(poly, q)) return q.slice(); let best = null, bd = Infinity;
   for (let i = 0; i < poly.length; i++) { const a = poly[i], b = poly[(i + 1) % poly.length], ex = b[0] - a[0], ez = b[1] - a[1], L = ex * ex + ez * ez, t = Math.max(0, Math.min(1, ((q[0] - a[0]) * ex + (q[1] - a[1]) * ez) / L)), x = a[0] + t * ex, z = a[1] + t * ez, d = (q[0] - x) ** 2 + (q[1] - z) ** 2;
     if (d < bd) { bd = d; best = [x, z]; } } return best; }
-export function insidePoly(poly, q) { let s = 0; for (let i = 0; i < poly.length; i++) { const a = poly[i], b = poly[(i + 1) % poly.length], cr = (b[0] - a[0]) * (q[1] - a[1]) - (b[1] - a[1]) * (q[0] - a[0]); if (cr !== 0) { if (s === 0) s = Math.sign(cr); else if (Math.sign(cr) !== s) return false; } } return true; }
-// signed distance of q to a convex polygon (+ inside)
+// INSIDE TEST, exact for any simple polygon (overnight A1 finding). The former sign-consistency test was valid only for CONVEX polygons, but the
+// usable foot region (a radial 5 mm inset of the convex contact hull) is not always convex — the inset turns a nearly straight lateral-midfoot hull
+// vertex into a shallow reflex vertex — so ~2.7 % of the true region was reported outside and clampPoly / polyDist acted on wrong membership there
+// (both the former and the canonical regions; tools/region_study.mjs). Crossing-number test; points on the boundary count as inside, as before;
+// identical answers for convex polygons; mirror-invariant (the parity of crossings is the same to either side).
+export function insidePoly(poly, q) { let inside = false;
+  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) { const a = poly[j], b = poly[i], cr = (b[0] - a[0]) * (q[1] - a[1]) - (b[1] - a[1]) * (q[0] - a[0]);
+    if (cr === 0 && Math.min(a[0], b[0]) <= q[0] && q[0] <= Math.max(a[0], b[0]) && Math.min(a[1], b[1]) <= q[1] && q[1] <= Math.max(a[1], b[1])) return true;
+    if ((a[1] > q[1]) !== (b[1] > q[1]) && q[0] < (b[0] - a[0]) * (q[1] - a[1]) / (b[1] - a[1]) + a[0]) inside = !inside; }
+  return inside; }
+// signed distance of q to a simple polygon (+ inside)
 export function polyDist(poly, q) { let d = Infinity; for (let i = 0; i < poly.length; i++) { const a = poly[i], b = poly[(i + 1) % poly.length], ex = b[0] - a[0], ez = b[1] - a[1], L = dnorm(ex, ez), t = Math.max(0, Math.min(1, ((q[0] - a[0]) * ex + (q[1] - a[1]) * ez) / (L * L))); d = Math.min(d, dnorm(q[0] - a[0] - t * ex, q[1] - a[1] - t * ez)); } return insidePoly(poly, q) ? d : -d; }
+// the usable CoP region of one boot (foot-local [x, z]): canonical hull → radial inset d → canonical convex hull (strictly convex, CCW from min z)
+export function usableRegion(pts, d) { return hull2Canonical(insetPoly(hull2Canonical(pts), d).map(([x, z]) => [x, 0, z])); }
 export function insetPoly(poly, d) { if (!d) return poly; const c = centroid(poly); return poly.map(([x, z]) => { const dx = x - c[0], dz = z - c[1], L = dnorm(dx, dz) || 1; return [x - dx / L * d, z - dz / L * d]; }); }

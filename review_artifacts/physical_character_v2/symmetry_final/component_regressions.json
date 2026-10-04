@@ -1,0 +1,120 @@
+{
+ "generated": "tools/v2_component_regressions.mjs",
+ "date": "2026-10-04",
+ "results": [
+  {
+   "id": "R1.a",
+   "name": "boot sole geometry mirror-identical L vs R (all 8 bodies)",
+   "pass": true,
+   "value": "max point mismatch 0.00e+0 m"
+  },
+  {
+   "id": "R1.b",
+   "name": "usable regions are mirror images (vertex count, vertices)",
+   "pass": true,
+   "value": "count mismatches 0, max vertex mismatch 3.47e-18 m"
+  },
+  {
+   "id": "R1.c",
+   "name": "usable regions are mirror images (boundary, area, centroid)",
+   "pass": true,
+   "value": "Hausdorff 3.47e-18 m, area 2.18e-16 rel, centroid 6.97e-18 m  (former construction: Hausdorff 4.76e-6 m)"
+  },
+  {
+   "id": "R1.d",
+   "name": "no CoP-area loss: the corrected region contains the former one",
+   "pass": true,
+   "value": "former region outside the corrected one by ≤ 0.00e+0 m; area change +1.19 … +1.43 %"
+  },
+  {
+   "id": "R1.e",
+   "name": "deterministic construction",
+   "pass": true,
+   "value": "bit-identical"
+  },
+  {
+   "id": "R1.f",
+   "name": "strictly convex: no reflex vertex; insidePoly exact (winding) on a 1 mm grid",
+   "pass": true,
+   "value": "reflex vertices 0, inside-test disagreements 0"
+  },
+  {
+   "id": "R1.g",
+   "name": "CoP projection onto the region is 1-Lipschitz (continuous boundary behaviour)",
+   "pass": true,
+   "value": "max |Δ projection| / |Δ target| 1.000000"
+  },
+  {
+   "id": "R1.h",
+   "name": "invariant to the sampling of the same outline (extra collinear points, order, 1e-15 perturbation)",
+   "pass": true,
+   "value": "max region change 3.10e-17 m"
+  },
+  {
+   "id": "R2.a",
+   "name": "unit normalisation: unit length, direction unchanged, no NaN (identity / 180° / 90°); degenerate Jolt input throws",
+   "pass": true,
+   "value": "‖u‖² − 1 ≤ 6.66e-16, direction change ≤ 2.22e-16, NaN 0, unitQ(0) throws: true"
+  },
+  {
+   "id": "R2.b",
+   "name": "controller-side inputs are unit (body orientations, joint quaternions)",
+   "pass": true,
+   "value": "‖q‖² − 1 ≤ 4.44e-16 (orientations), 2.22e-16 (joint quaternions) over 24 states (raw Jolt: 2.01e-7)"
+  },
+  {
+   "id": "R2.c",
+   "name": "no material orientation change (numerical error only)",
+   "pass": true,
+   "value": "max |Q.rot(raw) − Q.rot(unit)| 2.51e-7"
+  },
+  {
+   "id": "R2.d",
+   "name": "mirrored states: exact L/R joint-axis correspondence on the controller side",
+   "pass": true,
+   "value": "max ||σ| − 1| 1.67e-15"
+  },
+  {
+   "id": "R2.e",
+   "name": "deterministic (re-reading the same state)",
+   "pass": true,
+   "value": "bit-identical"
+  },
+  {
+   "id": "R2.f",
+   "name": "passive plant bit-identical to the historical G1 (normalisation does not reach it)",
+   "pass": true,
+   "value": "V2-REF upright 271f9e58, V1-matched leanR c3600c78, V2-REF drop1m 2581f5a3"
+  },
+  {
+   "id": "R3.a",
+   "name": "IK: identical reachability classification for every mirrored problem pair",
+   "pass": true,
+   "value": "0 mismatches over 558 pairs (3 bodies)"
+  },
+  {
+   "id": "R3.b",
+   "name": "IK: reachable targets solved to the rounding floor (polished, ≤ 1e-14) and mirrored (≤ 1e-12 m)",
+   "pass": true,
+   "value": "288 pairs: residual ≤ 1.39e-15, mirror Δ ≤ 3.33e-15 m"
+  },
+  {
+   "id": "R3.c",
+   "name": "IK: unreachable targets reported unreachable, optima mirrored (≤ 1e-6 m)",
+   "pass": true,
+   "value": "270 pairs: all reported (residual > 1e-6): true; mirror Δ ≤ 4.77e-11 m"
+  },
+  {
+   "id": "R3.d",
+   "name": "IK: the target is never modified",
+   "pass": true,
+   "value": "0 modified"
+  },
+  {
+   "id": "R3.e",
+   "name": "IK: production (staged FK) equals the plain reference implementation bit for bit",
+   "pass": true,
+   "value": "0 of 558 solves differ"
+  }
+ ]
+}

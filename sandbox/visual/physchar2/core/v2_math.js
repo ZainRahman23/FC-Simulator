@@ -70,3 +70,7 @@ export const pct = (arr, p) => { if (!arr.length) return 0; const s = Float64Arr
 // FNV-1a over the exact IEEE-754 bits of a list of numbers (bit-level repeatability, not a rounded print)
 export const hashNums = (nums, h = 2166136261) => { const f = new Float64Array(1), b = new Uint8Array(f.buffer);
   for (const x of nums) { f[0] = x; for (let i = 0; i < 8; i++) { h ^= b[i]; h = Math.imul(h, 16777619) >>> 0; } } return h >>> 0; };
+// unit-quaternion boundary helpers (overnight A2): copies with unit body orientations / unit joint quaternions (Q.norm: IEEE sqrt, deterministic).
+// Used where controller-side formulas assume unit quaternions (StandController.compute, ActuatorLayer.compute); the plant's states are never modified.
+export const unitStates = (st) => st.map(b => ({ pos: b.pos, rot: Q.norm(b.rot), com: b.com, v: b.v, w: b.w }));
+export const unitEv = (ev) => ({ ...ev, qs: ev.qs.map(q => Q.norm(q)) });

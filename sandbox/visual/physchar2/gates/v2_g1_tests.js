@@ -1,6 +1,6 @@
 // ═══ physchar2/gates/v2_g1_tests.js — V2-G1 component tests: passive joint rig, couplings, snapshot / restore, performance breakdown ════
 import { V, Q, rad } from "../core/v2_math.js";
-import { V2JoltWorld, unitQ } from "../core/v2_jolt.js";
+import { V2JoltWorld } from "../core/v2_jolt.js";
 import { posedBodies, POSES } from "../spec/v2_pose.js";
 import { decompose, pyr, passiveTorque } from "../spec/v2_joints.js";
 import { PassiveLayer } from "../sim/v2_passive.js";
@@ -139,7 +139,7 @@ export function freeBodyFloor(J, spec, opts = {}) {
     bcs.mLinearDamping = 0; bcs.mAngularDamping = 0; bcs.mAllowSleeping = false; bcs.mMaxAngularVelocity = 100; bcs.mApplyGyroscopicForce = true;
     const body = ps.GetBodyInterface().CreateBody(bcs); ps.GetBodyInterface().AddBody(body.GetID(), J.EActivation_Activate); J.destroy(bcs);
     const ax = V.norm([0.6, 0.5, -0.62]); body.SetLinearVelocity(new J.Vec3(0.3, 0, -0.2)); body.SetAngularVelocity(new J.Vec3(ax[0] * wmag, ax[1] * wmag, ax[2] * wmag));
-    const read = () => { const w = body.GetAngularVelocity(), v = body.GetLinearVelocity(), r = body.GetRotation(), q = unitQ(r.GetX(), r.GetY(), r.GetZ(), r.GetW()), wv = [w.GetX(), w.GetY(), w.GetZ()];
+    const read = () => { const w = body.GetAngularVelocity(), v = body.GetLinearVelocity(), r = body.GetRotation(), q = [r.GetX(), r.GetY(), r.GetZ(), r.GetW()], wv = [w.GetX(), w.GetY(), w.GetZ()];
       const wl = Q.rot(Q.conj(q), wv), Il = [T[0][0] * wl[0] + T[0][1] * wl[1] + T[0][2] * wl[2], T[1][0] * wl[0] + T[1][1] * wl[1] + T[1][2] * wl[2], T[2][0] * wl[0] + T[2][1] * wl[1] + T[2][2] * wl[2]];
       return { L: Q.rot(q, Il), P: V.sc([v.GetX(), v.GetY(), v.GetZ()], b.mass), KE: 0.5 * V.dot(wl, Il) }; };
     const s0 = read(); let dL = 0, dP = 0, dK = 0; for (let n = 0; n < N; n++) { jolt.Step(dt, 1); const s = read(); dL = Math.max(dL, V.len(V.sub(s.L, s0.L))); dP = Math.max(dP, V.len(V.sub(s.P, s0.P))); dK = Math.max(dK, Math.abs(s.KE - s0.KE)); }

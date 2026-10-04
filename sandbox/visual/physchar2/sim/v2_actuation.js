@@ -12,7 +12,7 @@
 // rests at U_TONE. The actuator is the joint's PARALLEL actuator constraint (core/v2_jolt.js, cfg.actuators): an implicit Jolt motor whose
 // torque limits are EXACTLY [−τ_cap,−, +τ_cap,+] — so the active torque can never exceed the instantaneous capacity (spec 2.3), and its
 // impulse readback is the exact active torque for the ledger. Passive tissue stays in the joint's own motor rows (G1, unchanged).
-import { V, Q } from "../core/v2_math.js";
+import { V, Q, unitStates, unitEv } from "../core/v2_math.js";
 import { CAP_OF_JOINT, ANDERSON_2007, fOmega, gTheta, activationStep } from "../spec/v2_actuators.js";
 
 export const ACT = { U_MARGIN: 0.25, U_TONE: 0.02, D_MIN: 0.02, SAT_TOL: 1e-3 };   // [ENG] excitation headroom over the request, resting tone, smallest implicit damping (N·m·s/rad)
@@ -45,6 +45,7 @@ export class ActuatorLayer {
   }
   // cmd[k][i] = { K, D, tau0 } (N·m/rad, N·m·s/rad, N·m) for motorised axes; st = body states; init: activations start at their excitation
   compute(st, ev, cmd, dt, init = false) {
+    st = unitStates(st); ev = unitEv(ev);   // unit-quaternion boundary (overnight A2): the axis algebra below assumes unit quaternions
     const P = this.P, out = [];
     for (const d of P.jd) { const k = d.k, R2F2 = Q.mul(st[d.child].rot, d.F2), axW = E.map(e => Q.rot(R2F2, e)), wrel = V.sub(st[d.child].w, st[d.parent].w);
       const kneeDeg = this.kneeOf[k] != null ? P.anat(P.jd[this.kneeOf[k]], ev.qs[this.kneeOf[k]], "flex") : null;
@@ -64,7 +65,8 @@ export class ActuatorLayer {
     for (const p of plan.joints) { const k = p.k; let any = false;
       p.rows.forEach((r, i) => { if (!r) return; if (r.off) { w.actOn(k, i, false); return; } w.setAct(k, i, r.K, r.D, r.lo, r.hi); w.actOn(k, i, true); any = true; });
       if (!any) continue;
-      const q = w.actRotationCS(k); w.setActTarget(k, q); const T = w.actTarget(k), sg = q[0] * T[0] + q[1] * T[1] + q[2] * T[2] + q[3] * T[3] > 0 ? 1 : -1, df = Q.mul(Q.conj(q), T.map(x => x * sg)), C = [0, 1, 2].map(i => -2 * df[i]);
+      const q = Q.norm(w.actRotationCS(k)); w.setActTarget(k, q); const T = Q.norm(w.actTarget(k)),   // small-angle motor error below assumes unit quaternions
+        sg = q[0] * T[0] + q[1] * T[1] + q[2] * T[2] + q[3] * T[3] > 0 ? 1 : -1, df = Q.mul(Q.conj(q), T.map(x => x * sg)), C = [0, 1, 2].map(i => -2 * df[i]);
       p.C = C; w.setActVel(k, p.rows.map((r, i) => (r && !r.off ? (r.tau0 + r.K * C[i]) / (r.D + plan.dt * r.K) : 0))); }
   }
   // after the step: exact active torque per axis from the actuator constraint's impulse, ledger (work with the mid-step relative ω), saturation

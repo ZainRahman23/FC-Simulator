@@ -10,8 +10,8 @@
 // usage: node tools/v2_component_regressions.mjs [--json=<out>]     exit code 1 on any failure
 import fs from "fs"; import path from "path"; import { fileURLToPath } from "url";
 import { loadJolt, unitQ } from "../core/v2_jolt.js"; import { generateSpec } from "../spec/v2_spec.js"; import { VARIATION_SET } from "../spec/v2_human.js";
-import { G2Sim } from "../gates/v2_g2.js"; import { G3Sim, g3Def } from "../gates/v2_g3.js"; import { STAND, insetPoly } from "../ctrl/v2_stand.js";
-import { bootSole, hull2, hull2Canonical } from "../sim/v2_geom.js"; import { pyr, decompose } from "../spec/v2_joints.js"; import { V, Q } from "../core/v2_math.js";
+import { G2Sim } from "../gates/v2_g2.js"; import { G3Sim, g3Def } from "../gates/v2_g3.js"; import { G1Sim } from "../gates/v2_g1.js"; import { STAND, insetPoly, insidePoly, clampPoly, usableRegion, IK } from "../ctrl/v2_stand.js";
+import { bootSole, hull2, hull2Canonical } from "../sim/v2_geom.js"; import { pyr, decompose } from "../spec/v2_joints.js"; import { V, Q, unitStates, unitEv, dnorm as dn } from "../core/v2_math.js";
 const here = path.dirname(fileURLToPath(import.meta.url)), J = await loadJolt(path.join(here, "../vendor/jolt-physics.wasm-compat.js")), results = [];
 const check = (id, name, pass, value) => { results.push({ id, name, pass: !!pass, value }); console.log(`${pass ? "PASS" : "FAIL"} ${id.padEnd(6)} ${name}: ${value}`); };
 const m3 = (p) => [-p[0], p[1], p[2]], mq = (q) => [q[0], -q[1], -q[2], q[3]], mw = (w) => [w[0], -w[1], -w[2]], e = (x) => (+x).toExponential(2);
@@ -20,51 +20,76 @@ const area = (P) => { let A = 0; for (let i = 0; i < P.length; i++) { const p = 
 const cen = (P) => { let A = 0, x = 0, z = 0; for (let i = 0; i < P.length; i++) { const p = P[i], q = P[(i + 1) % P.length], c = p[0] * q[1] - q[0] * p[1]; A += c; x += (p[0] + q[0]) * c; z += (p[1] + q[1]) * c; } return [x / (3 * A), z / (3 * A)]; };
 const segD = (p, a, b) => { const ex = b[0] - a[0], ez = b[1] - a[1], t = Math.max(0, Math.min(1, ((p[0] - a[0]) * ex + (p[1] - a[1]) * ez) / (ex * ex + ez * ez))); return Math.hypot(p[0] - a[0] - t * ex, p[1] - a[1] - t * ez); };
 const haus = (P, R) => Math.max(...P.map(p => Math.min(...R.map((a, i) => segD(p, a, R[(i + 1) % R.length])))), ...R.map(p => Math.min(...P.map((a, i) => segD(p, a, P[(i + 1) % P.length])))));
-// ── R1 usable foot regions ──
-{ let ptMis = 0, vtxMis = 0, cntMis = 0, regH = 0, regA = 0, regC = 0, areaChange = Infinity, areaGain = 0, notch = 0, outside = 0, legacyH = 0, det = true;
+// ── R1 usable foot regions (final construction: usableRegion = canonical hull → radial inset → canonical convex hull) ──
+{ let ptMis = 0, vtxMis = 0, cntMis = 0, regH = 0, regA = 0, regC = 0, areaMin = Infinity, areaMax = 0, outside = 0, legacyH = 0, det = true, reflexN = 0, wrongIn = 0, lip = 0, inv = 0;
+  const reflex = (P) => P.filter((p, i) => { const a = P[(i - 1 + P.length) % P.length], b = P[(i + 1) % P.length]; return (p[0] - a[0]) * (b[1] - p[1]) - (p[1] - a[1]) * (b[0] - p[0]) < -1e-15; }).length;
+  const winding = (P, q) => { let w = 0; for (let i = 0; i < P.length; i++) { const a = P[i], b = P[(i + 1) % P.length]; if (a[1] <= q[1]) { if (b[1] > q[1] && (b[0] - a[0]) * (q[1] - a[1]) - (q[0] - a[0]) * (b[1] - a[1]) > 0) w++; } else if (b[1] <= q[1] && (b[0] - a[0]) * (q[1] - a[1]) - (q[0] - a[0]) * (b[1] - a[1]) < 0) w--; } return w !== 0; };
   for (const h of VARIATION_SET) { const spec = generateSpec(h), B = spec.bodies, fL = B.find(b => b.name === "foot_L"), fR = B.find(b => b.name === "foot_R"), sL = bootSole(fL), sR = bootSole(fR);
     for (const p of sL.pts) ptMis = Math.max(ptMis, Math.min(...sR.pts.map(q => Math.hypot(p[0] + q[0], p[1] - q[1], p[2] - q[2]))));
-    const cL = hull2Canonical(sL.pts), cR = hull2Canonical(sR.pts), cRm = cR.map(([x, z]) => [-x, z]); if (cL.length !== cR.length) cntMis++;
-    for (const p of cL) vtxMis = Math.max(vtxMis, Math.min(...cRm.map(q => Math.hypot(p[0] - q[0], p[1] - q[1]))));
-    const rL = insetPoly(cL, STAND.footInset), rRm = insetPoly(cR, STAND.footInset).map(([x, z]) => [-x, z]).reverse();
+    const rL = usableRegion(sL.pts, STAND.footInset), rR = usableRegion(sR.pts, STAND.footInset), rRm = rR.map(([x, z]) => [-x, z]).reverse(); if (rL.length !== rR.length) cntMis++;
+    for (const p of rL) vtxMis = Math.max(vtxMis, Math.min(...rRm.map(q => Math.hypot(p[0] - q[0], p[1] - q[1]))));
     regH = Math.max(regH, haus(rL, rRm)); regA = Math.max(regA, Math.abs(area(rL) - area(rRm)) / area(rL)); const a = cen(rL), b = cen(rRm); regC = Math.max(regC, Math.hypot(a[0] - b[0], a[1] - b[1]));
-    for (const s of [sL, sR]) { const old = insetPoly(hull2(s.pts), STAND.footInset), nw = insetPoly(hull2Canonical(s.pts), STAND.footInset); areaChange = Math.min(areaChange, (area(nw) - area(old)) / area(old)); areaGain = Math.max(areaGain, (area(nw) - area(old)) / area(old));
-      const dir = (A, Bp) => Math.max(...A.map(p => Math.min(...Bp.map((a, i) => segD(p, a, Bp[(i + 1) % Bp.length]))))); notch = Math.max(notch, dir(old, nw)); outside = Math.max(outside, dir(nw, old)); }
+    for (const [s, r] of [[sL, rL], [sR, rR]]) { const old = insetPoly(hull2(s.pts), STAND.footInset), dA = (area(r) - area(old)) / area(old); areaMin = Math.min(areaMin, dA); areaMax = Math.max(areaMax, dA);
+      outside = Math.max(outside, ...old.map(p => (insidePoly(r, p) ? 0 : Math.min(...r.map((q, i) => segD(p, q, r[(i + 1) % r.length]))))));   // the former region lies inside the corrected one
+      reflexN += reflex(r); let xmin = Infinity, xmax = -Infinity, zmin = Infinity, zmax = -Infinity; for (const [x, z] of r) { xmin = Math.min(xmin, x); xmax = Math.max(xmax, x); zmin = Math.min(zmin, z); zmax = Math.max(zmax, z); }
+      for (let x = xmin - 0.003; x <= xmax + 0.003; x += 0.001) for (let z = zmin - 0.003; z <= zmax + 0.003; z += 0.001) if (insidePoly(r, [x, z]) !== winding(r, [x, z])) wrongIn++;
+      const c = [(xmin + xmax) / 2, (zmin + zmax) / 2]; for (const R of [0.07, 0.15]) { let prev = null, prevT = null; const N = Math.round(2 * Math.PI * R / 0.0001); for (let k = 0; k <= N; k++) { const ang = 2 * Math.PI * k / N, t = [c[0] + R * Math.cos(ang), c[1] + R * Math.sin(ang)], q = clampPoly(r, t); if (prev) lip = Math.max(lip, Math.hypot(q[0] - prev[0], q[1] - prev[1]) / Math.hypot(t[0] - prevT[0], t[1] - prevT[1])); prev = q; prevT = t; } }
+      const C = hull2Canonical(s.pts), extra = C.flatMap((p, i) => { const q = C[(i + 1) % C.length]; return [0.25, 0.5, 0.75].map(tt => [p[0] + tt * (q[0] - p[0]), s.y0, p[1] + tt * (q[1] - p[1])]); });
+      for (const pts of [[...s.pts, ...extra], s.pts.slice().reverse(), s.pts.map(p => p.map(v => v * (1 + 2e-16)))]) inv = Math.max(inv, haus(usableRegion(pts, STAND.footInset), r)); }
     legacyH = Math.max(legacyH, haus(insetPoly(hull2(sL.pts), STAND.footInset), insetPoly(hull2(sR.pts), STAND.footInset).map(([x, z]) => [-x, z]).reverse()));
-    if (JSON.stringify(hull2Canonical(sL.pts)) !== JSON.stringify(cL)) det = false; }
+    if (JSON.stringify(usableRegion(sL.pts, STAND.footInset)) !== JSON.stringify(rL)) det = false; }
   check("R1.a", "boot sole geometry mirror-identical L vs R (all 8 bodies)", ptMis === 0, `max point mismatch ${e(ptMis)} m`);
-  check("R1.b", "canonical hulls are mirror images (vertex count, vertices)", cntMis === 0 && vtxMis <= 1e-15, `count mismatches ${cntMis}, max vertex mismatch ${e(vtxMis)} m`);
+  check("R1.b", "usable regions are mirror images (vertex count, vertices)", cntMis === 0 && vtxMis <= 1e-15, `count mismatches ${cntMis}, max vertex mismatch ${e(vtxMis)} m`);
   check("R1.c", "usable regions are mirror images (boundary, area, centroid)", regH <= 1e-12 && regA <= 1e-12 && regC <= 1e-12, `Hausdorff ${e(regH)} m, area ${e(regA)} rel, centroid ${e(regC)} m  (former construction: Hausdorff ${e(legacyH)} m)`);
-  // the former regions carried radial-inset notches at exactly collinear sole points (kept by hull2 depending on rounding); the canonical region is
-  // the same convex footprint inset without them, so it CONTAINS the former region (every canonical vertex lies on the former boundary)
-  check("R1.d", "no CoP-area loss: the corrected region contains the former one", areaChange >= -1e-12 && outside <= 1e-12, `area change ${(areaChange * 100).toFixed(3)} … +${(areaGain * 100).toFixed(3)} %; former notches filled ≤ ${(notch * 1000).toFixed(3)} mm; corrected boundary outside the former by ≤ ${e(outside)} m`);
-  check("R1.e", "deterministic construction", det, det ? "bit-identical" : "differs"); }
-// ── R2 quaternion handling ──
+  check("R1.d", "no CoP-area loss: the corrected region contains the former one", outside <= 1e-12 && areaMin >= 0, `former region outside the corrected one by ≤ ${e(outside)} m; area change +${(areaMin * 100).toFixed(2)} … +${(areaMax * 100).toFixed(2)} %`);
+  check("R1.e", "deterministic construction", det, det ? "bit-identical" : "differs");
+  check("R1.f", "strictly convex: no reflex vertex; insidePoly exact (winding) on a 1 mm grid", reflexN === 0 && wrongIn === 0, `reflex vertices ${reflexN}, inside-test disagreements ${wrongIn}`);
+  check("R1.g", "CoP projection onto the region is 1-Lipschitz (continuous boundary behaviour)", lip <= 1 + 1e-6, `max |Δ projection| / |Δ target| ${lip.toFixed(6)}`);
+  check("R1.h", "invariant to the sampling of the same outline (extra collinear points, order, 1e-15 perturbation)", inv <= 1e-12, `max region change ${e(inv)} m`); }
+// ── R2 quaternion handling (final scope: normalisation at the controller-side boundary only; the passive plant is untouched) ──
 { let maxN = 0, maxDir = 0, nan = 0; const special = [[0, 0, 0, 1], [1e-12, 0, 0, 1], [0, 0, 0, -1], [1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 1e-12], [0.70710678, 0, 0, 0.70710678], [0.5, 0.5, 0.5, 0.5]];
   let s = 12345; const rnd = () => { s = (s * 1103515245 + 12345) >>> 0; return s / 4294967296; };
   const sample = []; for (let i = 0; i < 20000; i++) { let q = [rnd() - 0.5, rnd() - 0.5, rnd() - 0.5, rnd() - 0.5]; const l = Math.hypot(...q); q = q.map(v => v / l); const d = 1 + (rnd() - 0.5) * 6e-7; sample.push(q.map(v => v * Math.sqrt(d))); }
-  for (const q of [...special.map(q => { const l = Math.hypot(...q); return q.map(v => v / l * (1 + 1e-7)); }), ...sample]) { const u = unitQ(...q); if (u.some(v => !Number.isFinite(v))) nan++;
+  for (const q of [...special.map(q => { const l = Math.hypot(...q); return q.map(v => v / l * (1 + 1e-7)); }), ...sample]) { const u = Q.norm(q); if (u.some(v => !Number.isFinite(v))) nan++;
     maxN = Math.max(maxN, Math.abs(u[0] * u[0] + u[1] * u[1] + u[2] * u[2] + u[3] * u[3] - 1)); const l = Math.hypot(...q), r = q.map(v => v / l); maxDir = Math.max(maxDir, Math.max(...r.map((v, i) => Math.abs(v - u[i])))); }
   let threw = false; try { unitQ(0, 0, 0, 0); } catch (err) { threw = true; }
-  check("R2.a", "unitQ: unit length, direction unchanged, no NaN (incl. identity / 180° / 90°)", maxN <= 1e-15 && maxDir <= 4.5e-16 && nan === 0 && threw, `‖u‖² − 1 ≤ ${e(maxN)}, direction change ≤ ${e(maxDir)}, NaN ${nan}, degenerate input throws: ${threw}`);
-  // a real run: every orientation read from Jolt is unit; the orientation change is numerical only; mirrored states give exactly corresponding axes
+  check("R2.a", "unit normalisation: unit length, direction unchanged, no NaN (identity / 180° / 90°); degenerate Jolt input throws", maxN <= 1e-15 && maxDir <= 4.5e-16 && nan === 0 && threw, `‖u‖² − 1 ≤ ${e(maxN)}, direction change ≤ ${e(maxDir)}, NaN ${nan}, unitQ(0) throws: ${threw}`);
   const spec = generateSpec(VARIATION_SET.find(h => h.id === "V2-REF")), sim = new G3Sim(J, spec, g3Def("T5"), {}), map = spec.bodies.map(b => spec.bodies.findIndex(x => x.name === lr(b.name)));
-  let readN = 0, rawN = 0, rotChange = 0, sigma = 0, ticks = 0, again = true;
-  for (let t = 0; t < 720 && sim.tick(); t++) { if (t % 30) continue; ticks++;
-    for (let i = 0; i < sim.st.length; i++) { const q = sim.st[i].rot; readN = Math.max(readN, Math.abs(q[0] * q[0] + q[1] * q[1] + q[2] * q[2] + q[3] * q[3] - 1));
-      const r = sim.w.bodies[i].GetRotation(), raw = [r.GetX(), r.GetY(), r.GetZ(), r.GetW()]; rawN = Math.max(rawN, Math.abs(raw.reduce((a, v) => a + v * v, 0) - 1));
+  let ctrlN = 0, evN = 0, rawN = 0, rotChange = 0, sigma = 0, ticks = 0, again = true;
+  for (let t = 0; t < 720 && sim.tick(); t++) { if (t % 30) continue; ticks++; const U = unitStates(sim.st), E = unitEv(sim.up.ev);
+    for (let i = 0; i < sim.st.length; i++) { const q = U[i].rot; ctrlN = Math.max(ctrlN, Math.abs(q[0] * q[0] + q[1] * q[1] + q[2] * q[2] + q[3] * q[3] - 1)); const raw = sim.st[i].rot; rawN = Math.max(rawN, Math.abs(raw.reduce((a, v) => a + v * v, 0) - 1));
       for (const v of [[1, 0, 0], [0, 1, 0], [0, 0, 1]]) rotChange = Math.max(rotChange, V.len(V.sub(Q.rot(raw, v), Q.rot(q, v)))); }
-    const stM = map.map(i => ({ ...sim.st[i], rot: mq(sim.st[i].rot) }));
-    for (const d of sim.P.jd) { const k2 = sim.P.jd.find(x => x.k === spec.joints.findIndex(j => j.name === lr(spec.joints[d.k].name))); const aA = [[1, 0, 0], [0, 1, 0], [0, 0, 1]].map(v => Q.rot(Q.mul(sim.st[d.child].rot, d.F2), v)), aB = [[1, 0, 0], [0, 1, 0], [0, 0, 1]].map(v => Q.rot(Q.mul(stM[k2.child].rot, k2.F2), v));
+    for (const q of E.qs) evN = Math.max(evN, Math.abs(q[0] * q[0] + q[1] * q[1] + q[2] * q[2] + q[3] * q[3] - 1));
+    const stM = unitStates(map.map(i => ({ ...sim.st[i], rot: mq(sim.st[i].rot) })));
+    for (const d of sim.P.jd) { const k2 = sim.P.jd.find(x => x.k === spec.joints.findIndex(j => j.name === lr(spec.joints[d.k].name))); const aA = [[1, 0, 0], [0, 1, 0], [0, 0, 1]].map(v => Q.rot(Q.mul(U[d.child].rot, d.F2), v)), aB = [[1, 0, 0], [0, 1, 0], [0, 0, 1]].map(v => Q.rot(Q.mul(stM[k2.child].rot, k2.F2), v));
       for (let i = 0; i < 3; i++) sigma = Math.max(sigma, Math.abs(Math.abs(V.dot(mw(aA[i]), aB[i])) - 1)); }
-    const st2 = sim.read(); if (JSON.stringify(st2.map(b => b.rot)) !== JSON.stringify(sim.st.map(b => b.rot))) again = false; }
+    if (JSON.stringify(unitStates(sim.read()).map(b => b.rot)) !== JSON.stringify(U.map(b => b.rot))) again = false; }
   sim.destroy();
-  check("R2.b", "every Jolt-sourced orientation is unit after the boundary normalisation", readN <= 1e-15, `‖q‖² − 1 ≤ ${e(readN)} over ${ticks} states (raw Jolt: ${e(rawN)})`);
-  check("R2.c", "no material orientation change (numerical error only)", rotChange <= 1e-6, `max |Q.rot(raw) − Q.rot(normalised)| ${e(rotChange)} (unit-length basis vectors)`);
-  check("R2.d", "mirrored states: exact L/R joint-axis correspondence", sigma <= 1e-14, `max ||σ| − 1| ${e(sigma)}`);
-  check("R2.e", "deterministic (re-reading the same state)", again, again ? "bit-identical" : "differs"); }
+  check("R2.b", "controller-side inputs are unit (body orientations, joint quaternions)", ctrlN <= 1e-15 && evN <= 1e-15, `‖q‖² − 1 ≤ ${e(ctrlN)} (orientations), ${e(evN)} (joint quaternions) over ${ticks} states (raw Jolt: ${e(rawN)})`);
+  check("R2.c", "no material orientation change (numerical error only)", rotChange <= 1e-6, `max |Q.rot(raw) − Q.rot(unit)| ${e(rotChange)}`);
+  check("R2.d", "mirrored states: exact L/R joint-axis correspondence on the controller side", sigma <= 1e-14, `max ||σ| − 1| ${e(sigma)}`);
+  check("R2.e", "deterministic (re-reading the same state)", again, again ? "bit-identical" : "differs");
+  // the passive physical plant is untouched by the quaternion correction: G1 runs reproduce the historical (accepted flat-plane G1) hashes exactly
+  const plant = [["V2-REF", "upright", "271f9e58"], ["V1-matched", "leanR", "c3600c78"], ["V2-REF", "drop1m", "2581f5a3"]].map(([h, k, ref]) => { const g = new G1Sim(J, generateSpec(VARIATION_SET.find(x => x.id === h)), k, {}); while (g.tick()); const hh = g.summary().hash; g.destroy(); return { h, k, ref, hh }; });
+  check("R2.f", "passive plant bit-identical to the historical G1 (normalisation does not reach it)", plant.every(p => p.hh === p.ref), plant.map(p => `${p.h} ${p.k} ${p.hh}${p.hh === p.ref ? "" : " ≠ " + p.ref}`).join(", ")); }
+// reference implementation of the ADOPTED leg IK with plain (unstaged) forward kinematics — the production staged version must equal it bit for bit
+function refLegIK(ctrl, st, ev, n, pP, qP, footPose) { const P = ctrl.P, ks = ctrl.legK[n], d = ks.map(k => P.jd[k]), a = ks.map(k => ctrl.anchor[k]), cur = ks.map(k => { const v = decompose(ev.qs[k]); return [v.tw, v.sy, v.sz]; });
+  const ft = footPose || st[ctrl.feet[n]], fk = (x) => { const qh = pyr(x[0], x[1], x[2]), qk = pyr(cur[1][0], x[3], cur[1][2]), qa = pyr(cur[2][0], x[4], x[5]);
+    const Rt = Q.mul(Q.mul(Q.mul(qP, d[0].F1), qh), Q.conj(d[0].F2)), pt = V.add(pP, Q.rot(qP, a[0])), Rs = Q.mul(Q.mul(Q.mul(Rt, d[1].F1), qk), Q.conj(d[1].F2)), ps = V.add(pt, Q.rot(Rt, a[1]));
+    const Rf = Q.mul(Q.mul(Q.mul(Rs, d[2].F1), qa), Q.conj(d[2].F2)), pf = V.add(ps, Q.rot(Rs, a[2])); let qe = Q.mul(ft.rot, Q.conj(Rf)); if (qe[3] < 0) qe = qe.map(v => -v);
+    return [pf[0] - ft.pos[0], pf[1] - ft.pos[1], pf[2] - ft.pos[2], -2 * qe[0], -2 * qe[1], -2 * qe[2]]; };
+  const nrm = (v) => { let m = 0; for (const x of v) m = Math.max(m, Math.abs(x)); if (m === 0) return 0; let s2 = 0; for (const x of v) { const y = x / m; s2 += y * y; } return m * Math.sqrt(s2); };
+  const solve = (M, y) => { const nn = y.length, A = M.map((r, i) => [...r, y[i]]); for (let c = 0; c < nn; c++) { let p = c; for (let r = c + 1; r < nn; r++) if (Math.abs(A[r][c]) > Math.abs(A[p][c])) p = r; if (Math.abs(A[p][c]) < 1e-14) return null; [A[c], A[p]] = [A[p], A[c]]; for (let r = 0; r < nn; r++) if (r !== c) { const f = A[r][c] / A[c][c]; for (let k = c; k <= nn; k++) A[r][k] -= f * A[c][k]; } } return A.map((r, i) => r[nn] / r[i]); };
+  let x = [cur[0][0], cur[0][1], cur[0][2], cur[1][1], cur[2][1], cur[2][2]], r = fk(x), err = dn(...r), it = 0, mu = IK.mu0, lastJ = null, lastH = null;
+  for (; it < IK.maxIt && err > IK.tol; it++) { const Jm = [0, 1, 2, 3, 4, 5].map(c => { const xp = x.slice(), xm = x.slice(); xp[c] += IK.h; xm[c] -= IK.h; const rp = fk(xp), rm = fk(xm); return rp.map((v, i) => (v - rm[i]) / (2 * IK.h)); });
+    const g = Jm.map(col => col[0] * r[0] + col[1] * r[1] + col[2] * r[2] + col[3] * r[3] + col[4] * r[4] + col[5] * r[5]); if (dn(...g) < IK.gradTol) break;
+    const H = Jm.map(ci => Jm.map(cj => ci[0] * cj[0] + ci[1] * cj[1] + ci[2] * cj[2] + ci[3] * cj[3] + ci[4] * cj[4] + ci[5] * cj[5])); lastJ = Jm; lastH = H; let ok = false;
+    for (let tries = 0; tries < 8; tries++) { const A = H.map((row, i) => row.map((v, c) => (i === c ? v + mu * (1 + v) : v))), dx = solve(A, g.map(v => -v)); if (!dx) { mu *= 10; continue; } const xn = x.map((v, i) => v + dx[i]), rn = fk(xn), en = dn(...rn); if (en < err) { x = xn; r = rn; err = en; mu = Math.max(IK.muMin, mu / 10); ok = true; break; } mu *= 10; }
+    if (!ok) break; }
+  if (err <= IK.tol && err > 0 && lastH) { const g = lastJ.map(col => col[0] * r[0] + col[1] * r[1] + col[2] * r[2] + col[3] * r[3] + col[4] * r[4] + col[5] * r[5]), A = lastH.map((row, i) => row.map((v, c) => (i === c ? v + mu * (1 + v) : v))), dx = solve(A, g.map(v => -v)); if (dx) { const xn = x.map((v, i) => v + dx[i]), rn = fk(xn), en = dn(...rn); if (en <= err) { x = xn; err = en; } } }
+  return { x, err, it }; }
 // ── R3 leg-IK mirror-equivariance ──
-{ let n = 0, reach = 0, unre = 0, clsMis = 0, mirR = 0, mirU = 0, errR = 0, unreachReported = true, moved = 0;
+{ let n = 0, reach = 0, unre = 0, clsMis = 0, mirR = 0, mirU = 0, errR = 0, unreachReported = true, moved = 0, refMis = 0;
   for (const id of ["V2-REF", "V2-short-legs", "V2-198-92"]) { const spec = generateSpec(VARIATION_SET.find(h => h.id === id)), map = spec.bodies.map(b => spec.bodies.findIndex(x => x.name === lr(b.name)));
     const probs = []; for (const [key, T] of [[null, 1.0], ["T5", 6.0], ["U:R", 8.0]]) { const s = key ? new G3Sim(J, spec, g3Def(key), {}) : new G2Sim(J, spec, { title: "quiet", seconds: 1.2 }, {}); const orig = s.ctrl.legIK.bind(s.ctrl); let want = false;
       s.ctrl.legIK = (st, ev, nn, pP, qP, fp) => { if (want) probs.push({ st: st.map(b => ({ ...b })), n: nn, pP: pP.slice(), qP: qP.slice(), foot: fp ? { pos: fp.pos.slice(), rot: fp.rot.slice() } : null }); return orig(st, ev, nn, pP, qP, fp); };
@@ -78,14 +103,16 @@ const haus = (P, R) => Math.max(...P.map(p => Math.min(...R.map((a, i) => segD(p
       const tg = [{ s: null, foot: { pos: ft.pos.slice(), rot: ft.rot.slice() } }]; for (const [ax, az] of [[0, 0], [20, 0], [-20, 0], [0, 20], [0, -20]]) for (const sv of [0.9, 0.99, 0.999, 1.001, 1.01, 1.05]) { const u = Q.rot(Q.mul(Q.axis([1, 0, 0], ax * Math.PI / 180), Q.axis([0, 0, 1], az * Math.PI / 180)), u0); tg.push({ s: sv, foot: { pos: V.add(hip, V.sc(u, sv * L[b.n])), rot: ft.rot.slice() } }); }
       for (const t of tg) { const footA = { pos: t.foot.pos.slice(), rot: t.foot.rot.slice() }, footB = { pos: m3(t.foot.pos), rot: mq(t.foot.rot) }, A = ctrl.legIK(b.st, ev, b.n, b.pP, b.qP, footA), B = ctrl.legIK(stM, evM, 1 - b.n, m3(b.pP), mq(b.qP), footB);
         if (footA.pos.some((v, i) => v !== t.foot.pos[i]) || footB.pos.some((v, i) => v !== m3(t.foot.pos)[i])) moved++;   // the target is never modified
+        const Rf = refLegIK(ctrl, b.st, ev, b.n, b.pP, b.qP, footA); if (Rf.err !== A.err || Rf.it !== A.it || Rf.x.some((v, i) => v !== A.x[i])) refMis++;
         const cA = chain(sim.P, A.x, { ...b, foot: footA }, ev), cB = chain(sim.P, B.x, { n: 1 - b.n, pP: m3(b.pP), qP: mq(b.qP) }, evM), d = Math.max(V.len(V.sub(cA.ps, m3(cB.ps))), V.len(V.sub(cA.pf, m3(cB.pf))));
         n++; const rA = A.err <= 1e-6, rB = B.err <= 1e-6; if (rA !== rB) clsMis++;
         if (t.s == null || t.s <= 0.999) { reach++; mirR = Math.max(mirR, d); errR = Math.max(errR, A.err, B.err); } else { unre++; mirU = Math.max(mirU, d); if (rA || rB) unreachReported = false; } } }
     sim.destroy(); }
   check("R3.a", "IK: identical reachability classification for every mirrored problem pair", clsMis === 0, `${clsMis} mismatches over ${n} pairs (3 bodies)`);
-  check("R3.b", "IK: reachable targets solved and mirrored (≤ 1e-12 residual, ≤ 1e-12 m)", errR <= 1e-12 && mirR <= 1e-12, `${reach} pairs: residual ≤ ${e(errR)}, mirror Δ ≤ ${e(mirR)} m`);
+  check("R3.b", "IK: reachable targets solved to the rounding floor (polished, ≤ 1e-14) and mirrored (≤ 1e-12 m)", errR <= 1e-14 && mirR <= 1e-12, `${reach} pairs: residual ≤ ${e(errR)}, mirror Δ ≤ ${e(mirR)} m`);
   check("R3.c", "IK: unreachable targets reported unreachable, optima mirrored (≤ 1e-6 m)", unreachReported && mirU <= 1e-6, `${unre} pairs: all reported (residual > 1e-6): ${unreachReported}; mirror Δ ≤ ${e(mirU)} m`);
-  check("R3.d", "IK: the target is never modified", moved === 0, `${moved} modified`); }
+  check("R3.d", "IK: the target is never modified", moved === 0, `${moved} modified`);
+  check("R3.e", "IK: production (staged FK) equals the plain reference implementation bit for bit", refMis === 0, `${refMis} of ${n} solves differ`); }
 const fail = results.filter(r => !r.pass).length; console.log(`\ncomponent regressions: ${results.length - fail}/${results.length} pass`);
 const jo = process.argv.find(a => a.startsWith("--json=")); if (jo) fs.writeFileSync(jo.slice(7), JSON.stringify({ generated: "tools/v2_component_regressions.mjs", date: new Date().toISOString().slice(0, 10), results }, null, 1));
 process.exit(fail ? 1 : 0);
