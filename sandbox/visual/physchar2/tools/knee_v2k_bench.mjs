@@ -5,9 +5,9 @@
 import fs from "fs"; import path from "path"; import { fileURLToPath } from "url";
 import { loadJolt, V2JoltWorld } from "../core/v2_jolt.js"; import { generateSpec } from "../spec/v2_spec.js"; import { VARIATION_SET } from "../spec/v2_human.js";
 import { posedBodies } from "../spec/v2_pose.js"; import { anatToFrameQ, decompose } from "../spec/v2_joints.js"; import { V, Q } from "../core/v2_math.js";
-import { PassiveLayer } from "../sim/v2_passive.js"; import { kneeEnvelopeV2K, kneeAxialTorque, kneeTheta0, KNEE_V2K } from "../spec/v2_knee.js";
+import { PassiveLayer } from "../sim/v2_passive.js"; import { kneeEnvelopeV2K, kneeAxialTorque, kneeTheta0, kneeEndTerm, KNEE_V2K } from "../spec/v2_knee.js";
 const here = path.dirname(fileURLToPath(import.meta.url)), J = await loadJolt(path.join(here, "../vendor/jolt-physics.wasm-compat.js")), arg = (k, d) => (process.argv.find(a => a.startsWith(`--${k}=`)) || `--${k}=${d}`).split("=").slice(1).join("=");
-const HUMAN = arg("human", "V2-REF"), OUT = arg("out", ""), D = 180 / Math.PI, R = Math.PI / 180;
+const HUMAN = arg("human", "V2-REF"), OUT = arg("out", ""), CRIT = arg("crit", "v1"), D = 180 / Math.PI, R = Math.PI / 180;
 const spec = generateSpec(VARIATION_SET.find(h => h.id === HUMAN)), w = new V2JoltWorld(J, spec, spec.contact, { gravity: 0 }), P = new PassiveLayer(spec, w, { kneeModel: "v2k" });
 if (!P.kneeIsV2K) throw new Error("v2k not active");
 const jk = (n) => spec.joints.findIndex(j => j.name === n), KN = { R: jk("knee_R"), L: jk("knee_L") }, res = { human: HUMAN, params: KNEE_V2K, checks: [] };
@@ -97,5 +97,28 @@ const mulberry = (a) => () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imu
       if (Math.min(mIR, mER) < minM) { minM = Math.min(mIR, mER); at = { side, f, engineAnat: eA.map(x => +x.toFixed(2)), bound: e.hard.map(x => +x.toFixed(2)) }; } } }
   chk("KV7a", "Jolt stop ≥ 10° beyond the calibrated bound + 3° end-stop over the engine-reachable flexion range, both knees", minM >= 10, `min margin ${minM.toFixed(2)}° at ${JSON.stringify(at)}`, "≥ 10°"); }
 
+// ── superseding criterion KV4a.3′ (QUALIFICATION_V2_PREREG.md; --crit=v2): CONTINUITY of the law across flexion, tested by refinement — over
+// φ ∈ [−5, 40]° at 2.5 / 5 / 10 / 15 N·m per side: (a) the largest increment over a 0.05° step ≤ 0.75 × the largest over a 0.1° step (a continuous,
+// Lipschitz law halves its increments when the step halves; a jump does not — 0.75 is the midpoint between the two behaviours); (b) no increment
+// > 0.1° per 0.05° step (a jump detector at 2°/°, ≥ 3.6× the steepest evidence slope 0.55°/°, Boguszewski 2015). C¹ (slope continuity) reported.
+// Run on the v2k specification law, on the OLD knee law (spec soft range × clamp(φ/60°, 0.1, 1); comparator) and on a deliberately STEPPED
+// envelope (v2k with the ER width factor switching 0.5 → 1.0 at 20°: a discontinuity — must fail).
+if (CRIT === "v2") { const capR = 0.35 * 78, B = KNEE_V2K.B, r = Math.PI / 180, kj = spec.joints[KN.R], pIR = kj.passive[C.R.i];
+  const invLaw = (torqueAt, f, T, side) => { let lo = 0, hi = 60; for (let n = 0; n < 90; n++) { const m = (lo + hi) / 2; if (torqueAt(f, m, side) < T) lo = m; else hi = m; } return lo; };
+  const v2kT = (f, x, side) => Math.abs(kneeAxialTorque(f, kneeTheta0(f) + (side === "IR" ? x : -x), capR, capR).tau);
+  const steppedT = (f, x, side) => { const e = kneeEnvelopeV2K(f), fe = f < 20 ? 0.5 : 1.0, t0 = e.theta0, P = KNEE_V2K;
+    if (side === "IR") return Math.abs(kneeAxialTorque(f, t0 + x, capR, capR).tau);
+    const sl = P.ER.slack * fe, a = P.ER.a15 * fe; if (x <= sl) return 0; return kneeEndTerm((x - sl) * r, (a - sl) * r, P.tauCalFracOfCapacity * capR, capR).T; };
+  const oldT = (f, x, side) => { const sc = Math.min(1, Math.max(0.1, f / 60)), soft = side === "IR" ? 20 * sc : 30 * sc, hard = side === "IR" ? 30 : 40, tauH = pIR.tauAtHard[side === "IR" ? 1 : 0], ks = (pIR.kStop || [0, 0])[side === "IR" ? 1 : 0];
+    if (x <= soft) return 0; const A = tauH / (Math.exp(B * (hard - soft) * r) - 1); return A * (Math.exp(B * (x - soft) * r) - 1) + (x > hard ? ks * (x - hard) * r : 0); };
+  const cont = (law) => { let worstRatio = 0, worstJump = 0, c1 = 0, at = null;
+    for (const T of [2.5, 5, 10, 15]) for (const side of ["IR", "ER"]) { const grid = (h) => { const a = []; for (let f = -5; f <= 40 + 1e-9; f += h) a.push(invLaw(law, +f.toFixed(4), T, side)); return a; };
+      const g1 = grid(0.1), g05 = grid(0.05), inc = (g) => Math.max(...g.slice(1).map((v, n) => Math.abs(v - g[n]))), m1 = inc(g1), m05 = inc(g05), ratio = m05 / Math.max(1e-12, m1);
+      if (ratio > worstRatio) { worstRatio = ratio; at = { T, side, m1: +m1.toFixed(4), m05: +m05.toFixed(4) }; } worstJump = Math.max(worstJump, m05);
+      for (let n = 2; n < g05.length; n++) c1 = Math.max(c1, Math.abs((g05[n] - g05[n - 1]) - (g05[n - 1] - g05[n - 2])) / 0.05); }
+    return { worstRatio, worstJump, c1, at, pass: worstRatio <= 0.75 + 1e-6 && worstJump <= 0.1 }; };
+  const cv = cont(v2kT), co = cont(oldT), cs = cont(steppedT); res.kv4a3v2 = { v2k: cv, old: co, stepped: cs };
+  console.log(`     KV4a.3′ comparators: old knee law ${co.pass ? "PASS" : "FAIL"} (ratio ${co.worstRatio.toFixed(3)}, max step ${co.worstJump.toFixed(4)}°, C¹ jump ${co.c1.toFixed(3)}°/° per step); STEPPED adversarial ${cs.pass ? "PASS" : "FAIL"} (ratio ${cs.worstRatio.toFixed(3)}, max step ${cs.worstJump.toFixed(3)}° at ${JSON.stringify(cs.at)})`);
+  chk("KV4a.3′", "law continuity across flexion by refinement (increment ratio 0.05°/0.1° ≤ 0.75; no step > 0.1° per 0.05°)", cv.pass, `ratio ${cv.worstRatio.toFixed(3)} at ${JSON.stringify(cv.at)}, max step ${cv.worstJump.toFixed(4)}°; C¹ report ${cv.c1.toFixed(4)}°/° per step`, "≤ 0.75; ≤ 0.1°"); }
 const nf = res.checks.filter(c => !c.pass).length; console.log(`\n${res.checks.length - nf} / ${res.checks.length} bench checks pass`); res.allPass = nf === 0;
 if (OUT) fs.writeFileSync(OUT, JSON.stringify(res, null, 1)); w.destroy();

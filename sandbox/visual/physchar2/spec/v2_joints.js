@@ -189,7 +189,10 @@ export const constraintParams = (j, a) => decompose(Q.norm(Q.mul(Q.conj(j.Cm), a
 // ── passive end-range law (per constraint axis) ─────────────────────────────────────────────────────────────────────────────────────
 // capOpp(k, dir): isometric capacity (N·m) resisting an excursion past the soft limit on axis k in direction dir (+1 / −1)
 const ENV_K = typeof process !== "undefined" && process.env && process.env.V2_ANKLE_NEUTRAL_K != null && process.env.V2_ANKLE_NEUTRAL_K !== "" ? +process.env.V2_ANKLE_NEUTRAL_K : null;
-export const ankleNeutralKPerDeg = () => (ENV_K != null ? ENV_K : PASSIVE.ankleAxialNeutralKPerDeg);
+// close-decisions stage: an explicit override for configurations that cannot use the Node env (browser equivalence checks of an experimental
+// configuration). Default null → the env / the spec default exactly as before (bit-identical).
+let K_OVERRIDE = null; export const setAnkleNeutralKOverride = (k) => { K_OVERRIDE = k == null ? null : +k; };
+export const ankleNeutralKPerDeg = () => (K_OVERRIDE != null ? K_OVERRIDE : ENV_K != null ? ENV_K : PASSIVE.ankleAxialNeutralKPerDeg);
 // DIAGNOSTIC knee axial envelope (final pre-E1a §3; NOT adopted — the spec knee limits are unchanged): a literature-shaped flexion-dependent envelope
 // (final_pre_e1a/literature/lit2_knee_axial.md): zero c = flex/6 (internal), width scale w = 0.55 + 0.45·clamp(flex/40°, 0, 1), soft [c − 9w, c + 4w],
 // hard [c − 25w, c + 15w] (anatomical deg, + = tibial internal rotation). Selected by PassiveLayer opts.kneeEnvelope or env V2_KNEE_ENVELOPE=lit1 (Node only).

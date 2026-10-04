@@ -39,11 +39,19 @@ export function passiveRig(J, spec, test, opts = {}) {
   // CORRECTED KNEE (v2k; knee_correction/KNEE_CORRECTION_PREREG.md KV9b(i)): the knee axial rig is checked against the v2k SPECIFICATION law
   // (spec/v2_knee.js kneeAxialTorque — independent of the passive layer) at the rig flexion (constraint swing 0 → anatomical 70°) and, each
   // step, at the actual flexion; capacities = the spec's opposing capacities (tauAtHard / 0.25). Off: the spec law exactly as before.
-  const sg = j.def.axes[KEYS[i]].s, v2k = (opts.kneeModel !== undefined ? opts.kneeModel : kneeModelEnv()) === "v2k" && /^knee_/.test(j.name) && test.key === "rot";
+  const sg = j.def.axes[KEYS[i]].s, v2kOn = (opts.kneeModel !== undefined ? opts.kneeModel : kneeModelEnv()) === "v2k" && /^knee_/.test(j.name), v2k = v2kOn && test.key === "rot";
+  // SUPERSEDING criterion G1-5′ (close-decisions stage, QUALIFICATION_V2_PREREG.md; env V2_KNEE_CRIT=v2 or opts.kneeCrit "v2"): under v2k the knee
+  // FLEXION row also carries the coupled flexion reaction of the axial term (approved decision 4). Its expected torque is therefore −c·ω + the
+  // specification coupling cos(tw)·(−∂U_spec/∂φ) from the independent spec law (kneeAxialTorque), not −c·ω alone (the v1 premise "no elastic torque
+  // at the ROM centre" is false under v2k: the rig's centre pose, axial 0 at 70° flexion, lies 14° outside the zero-torque zone).
+  const kneeCrit = opts.kneeCrit !== undefined ? opts.kneeCrit : (typeof process !== "undefined" && process.env ? process.env.V2_KNEE_CRIT : null), v2kFlexCouple = v2kOn && test.key === "flex" && kneeCrit === "v2";
+  const sxK = /^knee_/.test(j.name) ? j.def.axes.x.s : 1, capKI = /^knee_/.test(j.name) ? (sxK > 0 ? j.passive[0].tauAtHard[1] : j.passive[0].tauAtHard[0]) / 0.25 : 0, capKE = /^knee_/.test(j.name) ? (sxK > 0 ? j.passive[0].tauAtHard[0] : j.passive[0].tauAtHard[1]) / 0.25 : 0;
   let capVsInt = 0, capVsExt = 0;
   if (v2k) { const capLo = pp.tauAtHard[0] / 0.25, capHi = pp.tauAtHard[1] / 0.25, e = kneeEnvelopeV2K(70), cs = (lohi) => (sg > 0 ? lohi.map(v => v / D) : [-lohi[1] / D, -lohi[0] / D]);
     capVsInt = sg > 0 ? capHi : capLo; capVsExt = sg > 0 ? capLo : capHi; pp = { ...pp, soft: cs(e.soft), hard: cs(e.hard), tauAtHard: [0.55 * capLo, 0.55 * capHi] }; }
-  const specTau = (q2, thE) => { if (!v2k) return passiveTorque(pp, thE); const fl = decompose(Q.norm(Q.mul(j.Cm, q2))).sy * j.def.axes.y.s * D; return sg * kneeAxialTorque(fl, sg * thE * D, capVsInt, capVsExt).tau; };
+  const specTau = (q2, thE) => { if (v2kFlexCouple) { const dd = decompose(Q.norm(Q.mul(j.Cm, q2))), fl = dd.sy * j.def.axes.y.s * D, rot = sxK * dd.tw * D, h = 1e-4, Uf = (f) => kneeAxialTorque(f, rot, capKI, capKE).U;
+      return passiveTorque(pp, thE) + Math.cos(dd.tw) * -((Uf(fl + h) - Uf(fl - h)) / (2 * h)) * D; }
+    if (!v2k) return passiveTorque(pp, thE); const fl = decompose(Q.norm(Q.mul(j.Cm, q2))).sy * j.def.axes.y.s * D; return sg * kneeAxialTorque(fl, sg * thE * D, capVsInt, capVsExt).tau; };
   const th0 = test.end === "hi" ? pp.soft[1] + frac * (pp.hard[1] - pp.soft[1]) : test.end === "lo" ? pp.soft[0] + frac * (pp.hard[0] - pp.soft[0]) : 0;
   let thLo = Infinity, thHi = -Infinity;
   const th = [0, 0, 0]; th[i] = th0; const { S, desc } = rigPose(spec, j, th), w = rigWorld(J, spec, cfg);
@@ -51,7 +59,7 @@ export function passiveRig(J, spec, test, opts = {}) {
   if (test.w0) { const ax = Q.rot(Q.mul(S[j.childIndex].rot, j.F2), [[1, 0, 0], [0, 1, 0], [0, 0, 1]][i]), at = V.add(S[j.parentIndex].pos, Q.rot(S[j.parentIndex].rot, V.sub(j.at, spec.bodies[j.parentIndex].origin)));
     const wv = V.sc(ax, test.w0); for (const b of desc) { const c = V.add(S[b].pos, Q.rot(S[b].rot, spec.bodies[b].comLocal)); w.setVel(b, V.cross(wv, V.sub(c, at)), wv); } }
   w.setKinematic(j.parentIndex);
-  const P = new PassiveLayer(spec, w, { couplings: false }), rd = () => spec.bodies.map((b, n) => w.read(n));
+  const P = new PassiveLayer(spec, w, { couplings: false, ...(opts.kneeModel !== undefined ? { kneeModel: opts.kneeModel } : {}) }), rd = () => spec.bodies.map((b, n) => w.read(n)); if (opts.passiveHook) opts.passiveHook(P, j);   // passiveHook: discrimination tests only (default none)
   const k = j.index, N = Math.round((opts.seconds || 1.5) * cfg.hz); let st = rd(), rows = [], maxRelErr = 0, maxAbsErr = 0, Erise = 0, firstTau = null, contacts = 0;
   const energy = (st, U) => st.reduce((a, s, n) => { if (n === j.parentIndex) return a; const b = spec.bodies[n], wl = Q.rot(Q.conj(s.rot), s.w), I = b.inertia;
     return a + 0.5 * b.mass * V.dot(s.v, s.v) + 0.5 * (wl[0] * (I[0][0] * wl[0] + I[0][1] * wl[1] + I[0][2] * wl[2]) + wl[1] * (I[1][0] * wl[0] + I[1][1] * wl[1] + I[1][2] * wl[2]) + wl[2] * (I[2][0] * wl[0] + I[2][1] * wl[1] + I[2][2] * wl[2])); }, 0) + U;

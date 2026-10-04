@@ -1424,3 +1424,27 @@ Candidates and their regression implications: report §13.
 4. reference semantics + lifecycle (row K).
 
 Then freeze `E1_PREREGISTRATION_V2.md` §2. Nothing adopted; not pushed.
+
+## 2026-10-04 — Close the decisions before E1a (user instruction `sources/2026-10-04_user_instruction_close_decisions_before_e1a.md`)
+
+### KC-2: decision audit and superseding preregistration (`knee_correction/DECISION_CLOSURE.md`, `QUALIFICATION_V2_PREREG.md`, `E1_PREREGISTRATION_V2_CONFIG.md`)
+**Four preregistration failures**, each audited; the original FAILs stay recorded and the v1 preregistration is unchanged:
+- KV2b, KV3b, KV4a.3 and G1 row 5 are superseded by KV2b′, KV3b′, KV4a.3′ and G1-5′.
+- Each is derived from its invariant (no elastic creation + timestep consistency; one-sided cycle energy; continuity by refinement; the designed flexion reaction).
+- Each discriminates: the corrected and the old knee pass; the naive / inject / spring / stepped adversarials fail.
+
+**Splayed-leg hip rest:** a genuine finding.
+- The evidence-calibrated reference path (≤ 120°) turns the femurs outward during the buckle, so the body collapses splayed onto the hip's combined end range.
+- It occurs in 15 / 15 members of all 35 deep-flexion cells. The provisional deep parameters only move the hip excursion (0.56–2.26°, median 1.25°) across the 1.5° tolerance. **This corrects the KC-1 reading "depends on deep flexion".**
+- The literature cannot separate δ150 −4 or w150 0.3 from the central values, so deep flexion stays a provisional uncertainty family.
+- The family is irrelevant to E1a: the pelvis drop is bit-identical across members, knees ≤ 29.7°.
+
+**Ankle k = 0.13:** adopted as the passive unloaded tissue value only (AL criteria); not a yaw-stability device. The active subtalar yaw path is absent from the reduced ankle (E1b-17).
+
+**Reference twist semantics:** adopted, with voluntary heading via the active command. C7 (unloaded-foot drag) and C1 (HO3 capacity fall) are superseded by C7′ / C1′ with discrimination (ice-turf plant flagged; "current" still fails C1′).
+
+**Row K:** an obsolete premise. λ 1.2 is feasible on every body (target 1.1 cm inside the stance foot), so K′ uses the feasibility rule. A silent-rescue controller fails K′.
+
+**Configuration frozen** for qualification and E1a: `v2k` central + k 0.13 + reference + lifecycle.
+
+Qualification tooling added (default-off; KV0 4 / 4, suite 52 / 52). **E1a not run; not pushed.**

@@ -7,11 +7,17 @@
 import { V, Q } from "../core/v2_math.js";
 import { loadJolt } from "../core/v2_jolt.js";
 import { generateSpec } from "../spec/v2_spec.js";
+import { setAnkleNeutralKOverride } from "../spec/v2_joints.js";
 import { VARIATION_SET } from "../spec/v2_human.js";
 import { G3Sim, g3Def } from "../gates/v2_g3.js";
 import { createGL } from "./v2_gl.js";
 
 const $ = (id) => document.getElementById(id), D = 180 / Math.PI, qp = new URLSearchParams(location.search);
+// close-decisions stage: check-mode configuration from the URL (defaults = the gate configuration, unchanged): knee=v2k, ankleK=<N·m/°>,
+// stand=<json> (controller options), results=<file in this gate's json dir> (the Node run of the same configuration to compare with)
+const QCFG = (() => { const st = qp.get("stand"); return { knee: qp.get("knee") || null, ankleK: qp.get("ankleK"), stand: st ? JSON.parse(st) : null, results: qp.get("results") || null }; })();
+if (QCFG.ankleK != null) setAnkleNeutralKOverride(+QCFG.ankleK);
+const qOpts = () => ({ ...(QCFG.stand ? { stand: QCFG.stand } : {}), ...(QCFG.knee ? { passiveOpts: { kneeModel: QCFG.knee } } : {}) });
 const canvas = $("gl"), ov = $("ov"), R = createGL(canvas), g2 = ov.getContext("2d");
 const CURATED = ["T5", "U:R", "T3", "T8:hold:R:R:10"];
 const LIST = [["T0", "T0 bilateral baseline (20 s)"], ["T1", "T1 strong transfer 50 → R 85 % → 50"], ["T2", "T2 strong transfer 50 → L 85 % → 50"], ["T3", "T3 cycle R 85 → 50 → L 85 → 50"], ["T4", "T4 five repeated cycles (drift)"],
@@ -30,7 +36,7 @@ const CAMS = { front: { yaw: 0, pitch: 6, dist: 3.0 }, side: { yaw: 90, pitch: 6
 let J = null, NODE = null, SPEC = null, SIM = null, MESH = [], dirty = true, done = false, HIST = [];
 async function init() {
   J = await loadJolt(new URL("../vendor/jolt-physics.wasm-compat.js", import.meta.url).href);
-  try { NODE = await (await fetch(new URL("../../../../review_artifacts/physical_character_v2/g3/json/g3_results.json", import.meta.url))).json(); } catch (e) { NODE = null; }
+  try { NODE = await (await fetch(new URL("../../../../review_artifacts/physical_character_v2/g3/json/" + (QCFG.results || "g3_results.json"), import.meta.url))).json(); } catch (e) { NODE = null; }
   for (const [k, t] of LIST) $("scen").add(new Option(t, k)); for (const h of VARIATION_SET) $("human").add(new Option(`${h.id} (${h.H} m, ${h.M} kg)`, h.id));
   $("scen").value = ST.key; $("human").value = ST.human; $("scen").onchange = () => { ST.key = $("scen").value; build(); }; $("human").onchange = () => { ST.human = $("human").value; build(); };
   $("play").onclick = () => toggle(); $("step").onclick = () => { ST.playing = false; tick(1); updPlay(); }; $("restart").onclick = () => build(); $("speed").onchange = () => { ST.speed = +$("speed").value; };
@@ -137,7 +143,7 @@ init().then(async () => {
     while (s.tick()) { const I = s.ctrl.info; window.__H.push([s.n, s.h >>> 0, I.pRaw[0], I.pRaw[1], I.xi[0], I.xi[1], I.lam, s.ctrl.g3 ? s.ctrl.g3.out : 0, (qp.get("dump") || "").split("-").map(Number).length === 2 && s.n >= +qp.get("dump").split("-")[0] && s.n <= +qp.get("dump").split("-")[1] ? { plan: s.aplan.joints.map(j => j.rows.map(r => (r && !r.off ? [r.tau0, r.K, r.D, r.hi, r.lo] : null))), ik: s.ctrl.ikRes, unl: s.ctrl.unl.slice(), sense: s.ctrl.sense, st: s.st.map(b => [...b.pos, ...b.rot, ...b.v, ...b.w]) } : null]); if (s.g2acc.fallT != null && s.n * s.dt > s.g2acc.fallT + 0.5) break; }
     s.destroy(); $("hash").textContent = "tickhash done " + window.__H.length; document.body.dataset.ready = "1"; return; }
   if (qp.get("check")) { const rows = [], KEYS = qp.get("keys") ? qp.get("keys").split("|") : CURATED;
-    for (const k of KEYS) { await new Promise(r => setTimeout(r, 0)); const d = g3Def(k), s = new G3Sim(J, generateSpec(VARIATION_SET.find(x => x.id === (d.human || "V2-REF"))), d, {}); while (s.tick()) { if (s.g2acc.fallT != null && s.n * s.dt > s.g2acc.fallT + 0.5) break; }
+    for (const k of KEYS) { await new Promise(r => setTimeout(r, 0)); const d = g3Def(k), s = new G3Sim(J, generateSpec(VARIATION_SET.find(x => x.id === (d.human || "V2-REF"))), d, qOpts()); while (s.tick()) { if (s.g2acc.fallT != null && s.n * s.dt > s.g2acc.fallT + 0.5) break; }
       const hb = s.g3summary().hash, nd = NODE && NODE.jobs.find(j => j.group === "determinism" && j.rep === 0 && j.key === k && j.res); rows.push({ k, b: hb, n: nd ? nd.res.hash : "—" }); s.destroy(); $("hash").textContent = `checking … ${rows.length}/${KEYS.length}`; }
     const all = rows.every(r => r.b === r.n); $("hash").className = "mono " + (all ? "ok" : "bad"); $("hash").innerHTML = `<b id="hash-status">${all ? "BROWSER = NODE" : "BROWSER ≠ NODE"}</b> (${rows.filter(r => r.b === r.n).length}/${rows.length})<br>` + rows.map(r => `${r.b === r.n ? "✓" : "✗"} ${r.k}: ${r.b} / ${r.n}`).join("<br>");
     document.body.dataset.ready = "1"; return; }

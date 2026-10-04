@@ -5,10 +5,10 @@
 // usage: node tools/g1_browser.mjs [port]   → review_artifacts/physical_character_v2/g1/json/g1_browser.json
 import fs from "fs"; import path from "path"; import os from "os"; import { spawn } from "child_process"; import { fileURLToPath } from "url";
 import { CURATED } from "../gates/v2_g1.js";
-const here = path.dirname(fileURLToPath(import.meta.url)), ROOT = path.resolve(here, "../../../.."), PORT = +(process.argv[2] || 8172);
+const here = path.dirname(fileURLToPath(import.meta.url)), ROOT = path.resolve(here, "../../../.."), PORT = +(process.argv.slice(2).find(a => /^[0-9]+$/.test(a)) || 8172), XQS = (process.argv.find(a => a.startsWith("--qs=")) || "").slice(5), XOUT = (process.argv.find(a => a.startsWith("--out=")) || "").slice(6);   // close-decisions stage: --qs extra check-mode query (configuration), --out result file (default: the gate json, unchanged)
 const CH = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", sleep = (ms) => new Promise(r => setTimeout(r, ms)), rows = [];
 for (const [n, key] of CURATED.entries()) {
-  const dbg = 9300 + n, prof = path.join(os.tmpdir(), `v2g1_cdp_${n}`), url = `http://127.0.0.1:${PORT}/sandbox/visual/physchar2/viewer/g1.html?check=1&keys=${key}`;
+  const dbg = 9300 + n, prof = path.join(os.tmpdir(), `v2g1_cdp_${n}`), url = `http://127.0.0.1:${PORT}/sandbox/visual/physchar2/viewer/g1.html?check=1&keys=${key}${XQS ? "&" + XQS : ""}`;
   const ch = spawn(CH, ["--headless=new", "--use-angle=swiftshader", "--enable-unsafe-swiftshader", `--user-data-dir=${prof}`, `--remote-debugging-port=${dbg}`, "--window-size=1200,800", url], { stdio: "ignore" });
   let text = "", t0 = Date.now();
   try {
@@ -26,4 +26,4 @@ for (const [n, key] of CURATED.entries()) {
   rows.push(row); console.log(`${row.pass ? "✓" : "✗"} ${key}: browser ${row.browser} node ${row.node} (${Math.round((Date.now() - t0) / 1000)} s)${row.error ? " " + row.error : ""}`);
 }
 const out = { check: "headless Chrome (swiftshader) driven over CDP, viewer/g1.html?check=1&keys=<scenario> — one fresh browser per curated scenario, V2-REF, gate baseline, full runs", allPass: rows.length === CURATED.length && rows.every(r => r.pass), rows };
-fs.writeFileSync(path.join(ROOT, "review_artifacts/physical_character_v2/g1/json/g1_browser.json"), JSON.stringify(out, null, 1)); console.log(out.allPass ? "BROWSER = NODE" : "BROWSER ≠ NODE (or incomplete)", `${rows.filter(r => r.pass).length}/${rows.length}`);
+fs.writeFileSync(XOUT || path.join(ROOT, "review_artifacts/physical_character_v2/g1/json/g1_browser.json"), JSON.stringify({ ...out, qs: XQS || null }, null, 1)); console.log(out.allPass ? "BROWSER = NODE" : "BROWSER ≠ NODE (or incomplete)", `${rows.filter(r => r.pass).length}/${rows.length}`);

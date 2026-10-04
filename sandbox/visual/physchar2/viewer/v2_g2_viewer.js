@@ -6,11 +6,17 @@
 import { V, Q } from "../core/v2_math.js";
 import { loadJolt } from "../core/v2_jolt.js";
 import { generateSpec } from "../spec/v2_spec.js";
+import { setAnkleNeutralKOverride } from "../spec/v2_joints.js";
 import { VARIATION_SET } from "../spec/v2_human.js";
 import { G2Sim, pushScenario, torqueScenario, offsetScenario, DIRS } from "../gates/v2_g2.js";
 import { createGL } from "./v2_gl.js";
 
 const $ = (id) => document.getElementById(id), D = 180 / Math.PI, qp = new URLSearchParams(location.search);
+// close-decisions stage: check-mode configuration from the URL (defaults = the gate configuration, unchanged): knee=v2k, ankleK=<N·m/°>,
+// stand=<json> (controller options), results=<file in this gate's json dir> (the Node run of the same configuration to compare with)
+const QCFG = (() => { const st = qp.get("stand"); return { knee: qp.get("knee") || null, ankleK: qp.get("ankleK"), stand: st ? JSON.parse(st) : null, results: qp.get("results") || null }; })();
+if (QCFG.ankleK != null) setAnkleNeutralKOverride(+QCFG.ankleK);
+const qOpts = () => ({ ...(QCFG.stand ? { stand: QCFG.stand } : {}), ...(QCFG.knee ? { passiveOpts: { kneeModel: QCFG.knee } } : {}) });
 const canvas = $("gl"), ov = $("ov"), R = createGL(canvas), g2 = ov.getContext("2d");
 const OFFSETS = { "knees 12°": { stance: { kneeFlexDeg: 12 } }, "hips 10°": { stance: { hipFlexDeg: 10 } }, "COM over ankles": { stance: { comAheadOfAnklesM: 0.0 } }, "COM 7 cm ahead": { stance: { comAheadOfAnklesM: 0.07 } },
   "trunk 10° flexed": { stance: { lumbar: { flex: 10 } } }, "arms 30° abducted": { stance: { shoulderAbdDeg: 30 } }, "head 20° flexed": { stance: { neck: { flex: 20 } } },
@@ -33,7 +39,7 @@ const CAMS = { front: { yaw: 0, pitch: 6 }, side: { yaw: 90, pitch: 6 }, three: 
 let J = null, NODE = null, SPEC = null, SIM = null, MESH = [], dirty = true, done = false, HIST = [];
 async function init() {
   J = await loadJolt(new URL("../vendor/jolt-physics.wasm-compat.js", import.meta.url).href);
-  try { NODE = await (await fetch(new URL("../../../../review_artifacts/physical_character_v2/g2/json/g2_results.json", import.meta.url))).json(); } catch (e) { NODE = null; }
+  try { NODE = await (await fetch(new URL("../../../../review_artifacts/physical_character_v2/g2/json/" + (QCFG.results || "g2_results.json"), import.meta.url))).json(); } catch (e) { NODE = null; }
   for (const [k, t] of LIST) $("scen").add(new Option(t, k)); for (const h of VARIATION_SET) $("human").add(new Option(`${h.id} (${h.H} m, ${h.M} kg)`, h.id));
   $("scen").value = ST.key; $("human").value = ST.human; $("scen").onchange = () => { ST.key = $("scen").value; build(); }; $("human").onchange = () => { ST.human = $("human").value; build(); };
   $("play").onclick = () => toggle(); $("step").onclick = () => { ST.playing = false; tick(1); updPlay(); }; $("restart").onclick = () => build(); $("speed").onchange = () => { ST.speed = +$("speed").value; };
@@ -110,7 +116,7 @@ function loop() { if (ST.playing && SIM) { ST.acc += ST.speed * SIM.cfg.hz / 60;
 window.addEventListener("resize", () => { dirty = true; });
 init().then(async () => {
   if (qp.get("check")) { const rows = [], KEYS = qp.get("keys") ? qp.get("keys").split("|") : CURATED;
-    for (const k of KEYS) { await new Promise(r => setTimeout(r, 0)); const s = new G2Sim(J, generateSpec(VARIATION_SET.find(x => x.id === "V2-REF")), scenarioOf(k), {}); while (s.tick()) { if (s.g2acc.fallT != null && s.n * s.dt > s.g2acc.fallT + 0.5) break; }
+    for (const k of KEYS) { await new Promise(r => setTimeout(r, 0)); const s = new G2Sim(J, generateSpec(VARIATION_SET.find(x => x.id === "V2-REF")), scenarioOf(k), qOpts()); while (s.tick()) { if (s.g2acc.fallT != null && s.n * s.dt > s.g2acc.fallT + 0.5) break; }
       const hb = s.g2summary().hash, sc = k.split(":"), nd = NODE && NODE.jobs.find(j => j.group === "determinism" && j.res && ((sc[0] === "quiet" && j.sc.kind === "quiet") || (sc[0] === "push" && j.sc.kind === "push" && j.sc.dir === sc[1] && j.sc.J === +sc[2]) || (sc[0] === "torque" && j.sc.kind === "torque" && j.sc.axis === sc[1] && j.sc.H === +sc[2]) || (sc[0] === "offset" && j.sc.kind === "offset" && j.sc.name === sc[1])));
       rows.push({ k, b: hb, n: nd ? nd.res.hash : "—" }); s.destroy(); $("hash").textContent = `checking … ${rows.length}/${KEYS.length}`; }
     const all = rows.every(r => r.b === r.n); $("hash").className = "mono " + (all ? "ok" : "bad"); $("hash").innerHTML = `<b id="hash-status">${all ? "BROWSER = NODE" : "BROWSER ≠ NODE"}</b> (${rows.filter(r => r.b === r.n).length}/${rows.length})<br>` + rows.map(r => `${r.b === r.n ? "✓" : "✗"} ${r.k}: ${r.b} / ${r.n}`).join("<br>");

@@ -8,7 +8,8 @@
 // upper body = Δ(ψ_thorax − ψ_pelvis). Joint-coordinate cross-check (closure): Δψ_pelvis vs Δψ_foot + Σ c_j·Δθ_j (ankle ab/adduction, knee axial,
 // hip rotation), c_j = ∂(heading difference)/∂θ_j measured at the analysis-window start pose (also reported: at the initial stance pose). Range use: each element's anatomical value vs its passive
 // soft (zero-torque) range and calibrated / hard bound; foot slip and foot yaw.
-// usage: V2_ANKLE_NEUTRAL_K=<k> node tools/yaw_decomp.mjs --scen=A|B [--human=V2-REF] [--policy=current|reference] [--model=v2k|old] [--out=<json>]
+// usage: V2_ANKLE_NEUTRAL_K=<k> node tools/yaw_decomp.mjs --scen=A|B [--human=V2-REF] [--policy=current|reference] [--model=v2k|old] [--stand=<json>] [--out=<json>]
+//   --stand: extra controller options merged last (close-decisions stage; e.g. {"lifecycle":true} = the adopted E1a configuration in scenario A too)
 import fs from "fs"; import path from "path"; import { fileURLToPath } from "url";
 import { loadJolt } from "../core/v2_jolt.js"; import { generateSpec } from "../spec/v2_spec.js"; import { VARIATION_SET } from "../spec/v2_human.js"; import { G3Sim, g3Def } from "../gates/v2_g3.js";
 import { ankleNeutralKPerDeg, anatomicalAngles } from "../spec/v2_joints.js"; import { posedBodies } from "../spec/v2_pose.js"; import { V, Q } from "../core/v2_math.js";
@@ -16,7 +17,7 @@ const here = path.dirname(fileURLToPath(import.meta.url)), J = await loadJolt(pa
 const SC = arg("scen", "A"), HUMAN = arg("human", "V2-REF"), POLICY = arg("policy", "reference"), MODEL = arg("model", "v2k"), OUT = arg("out", ""), D = 180 / Math.PI;
 const spec = generateSpec(VARIATION_SET.find(h => h.id === HUMAN)), bi = (n) => spec.bodies.findIndex(b => b.name === n), ji = (n) => spec.joints.findIndex(j => j.name === n);
 const def = SC === "A" ? { ...g3Def("T0"), seconds: 16, torque: { t0: 2, dur: 6, H: [0, 12, 0], body: "pelvis" } } : { ...g3Def("U:R"), supervise: {}, seconds: 18, torque: { t0: 7.3, dur: 0.1, H: [0, 0.5, 0], body: "pelvis" } };
-const stand = { ...(POLICY === "reference" ? { ikRefTwist: true } : {}), ...(SC === "B" ? { lifecycle: true, pelvisDrop: { t0: 1, dur: 2, dz: 0.025 } } : {}) };
+const stand = { ...(POLICY === "reference" ? { ikRefTwist: true } : {}), ...(SC === "B" ? { lifecycle: true, pelvisDrop: { t0: 1, dur: 2, dz: 0.025 } } : {}), ...JSON.parse(arg("stand", "{}")) };
 const s = new G3Sim(J, spec, def, { stand, passiveOpts: { kneeModel: MODEL === "v2k" ? "v2k" : null } }); if ((MODEL === "v2k") !== s.P.kneeIsV2K) throw new Error("model selection");
 if (SC === "B") { const sh = bi("shank_L"), base = s._disturb.bind(s);   // the boundary-probe lift (ledgered as an external force)
   s._disturb = function () { const out = base(), t = this.n * this.dt, f = t < 7.0 ? 0 : t < 7.2 ? (t - 7.0) / 0.2 : t < 7.5 ? 1 : t < 8.5 ? 1 - (t - 7.5) / 1.0 : 0;

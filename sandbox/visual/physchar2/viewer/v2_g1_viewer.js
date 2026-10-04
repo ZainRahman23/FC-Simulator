@@ -2,6 +2,7 @@
 import { V, Q } from "../core/v2_math.js";
 import { loadJolt } from "../core/v2_jolt.js";
 import { generateSpec } from "../spec/v2_spec.js";
+import { setAnkleNeutralKOverride } from "../spec/v2_joints.js";
 import { VARIATION_SET } from "../spec/v2_human.js";
 import { BONES } from "../spec/v2_skeleton.js";
 import { bindData, evaluateSkeleton } from "../map/v2_render_map.js";
@@ -29,7 +30,7 @@ const pick = (id) => { const d = DX_CONFIGS.find(x => x.id === id); return { cfg
 
 async function init() {
   J = await loadJolt(new URL("../vendor/jolt-physics.wasm-compat.js", import.meta.url).href);
-  try { NODE = await (await fetch(new URL("../../../../review_artifacts/physical_character_v2/g1/json/g1_results.json", import.meta.url))).json(); REFCFG = { velSteps: NODE.reference.velSteps }; } catch (e) { NODE = null; }
+  try { NODE = await (await fetch(new URL("../../../../review_artifacts/physical_character_v2/g1/json/" + (QCFG.results || "g1_results.json"), import.meta.url))).json(); REFCFG = { velSteps: NODE.reference.velSteps }; } catch (e) { NODE = null; }
   try { CAND_MARGINS = (await (await fetch(new URL("../../../../review_artifacts/physical_character_v2/g1/json/g1_margins_candidate.json", import.meta.url))).json()).table; } catch (e) { CAND_MARGINS = null; }
   const order = [...CURATED, ...SCENARIO_ORDER.filter(k => !CURATED.includes(k)), ...HS_ORDER];
   for (const k of order) $("scen").add(new Option(`${CURATED.includes(k) ? "★ " : ""}${SCENARIOS[k].title}`, k));
@@ -175,8 +176,13 @@ window.addEventListener("resize", () => { dirty = true; });
 //   ?scenario=&human=&cfg=ref|DX-PREV|DX-C3|DX-R1|DX-60|DX-W0&t=<s>&cam=front|side|three|top|follow&dist=&yaw=&pitch=&show=a,b&hide=a,b&joint=   ·   ?check=1 runs every curated scenario
 //   ?probe=L|R  foot / ankle instrument overlay (CoP, turf force, CoP → ankle strut line, boot pieces, torque decomposition) — e.g. ?scenario=drop1m&probe=R&t=0.6&cam=side
 const qp = new URLSearchParams(location.search);
+// close-decisions stage: check-mode configuration from the URL (defaults = the gate configuration, unchanged): knee=v2k, ankleK=<N·m/°>,
+// stand=<json> (controller options), results=<file in this gate's json dir> (the Node run of the same configuration to compare with)
+const QCFG = (() => { const st = qp.get("stand"); return { knee: qp.get("knee") || null, ankleK: qp.get("ankleK"), stand: st ? JSON.parse(st) : null, results: qp.get("results") || null }; })();
+if (QCFG.ankleK != null) setAnkleNeutralKOverride(+QCFG.ankleK);
+const qOpts = () => ({ ...(QCFG.stand ? { stand: QCFG.stand } : {}), ...(QCFG.knee ? { passiveOpts: { kneeModel: QCFG.knee } } : {}) });
 init().then(async () => {
-  if (qp.get("check")) { const C = CONFIGS().ref, rows = [], KEYS = qp.get("keys") ? qp.get("keys").split(",") : CURATED; for (const k of KEYS) { await new Promise(r => setTimeout(r, 0)); const spec = generateSpec(VARIATION_SET.find(x => x.id === "V2-REF")), s = new G1Sim(J, spec, k, { cfg: C.cfg }); while (s.tick()); const n = NODE && NODE.runs.find(r => r.human === "V2-REF" && r.key === k);
+  if (qp.get("check")) { const C = CONFIGS().ref, rows = [], KEYS = qp.get("keys") ? qp.get("keys").split(",") : CURATED; for (const k of KEYS) { await new Promise(r => setTimeout(r, 0)); const spec = generateSpec(VARIATION_SET.find(x => x.id === "V2-REF")), s = new G1Sim(J, spec, k, { cfg: C.cfg, ...(QCFG.knee ? { passiveOpts: { kneeModel: QCFG.knee } } : {}) }); while (s.tick()); const n = NODE && NODE.runs.find(r => r.human === "V2-REF" && r.key === k);
       rows.push({ k, b: s.h.toString(16).padStart(8, "0"), n: n ? n.hash : "—" }); s.destroy(); $("hash").textContent = `checking … ${rows.length}/${KEYS.length}`; }
     const all = rows.every(r => r.b === r.n); $("hash").className = "mono " + (all ? "ok" : "bad"); $("hash").innerHTML = `<b id="hash-status">${all ? "BROWSER = NODE" : "BROWSER ≠ NODE"}</b> (${rows.filter(r => r.b === r.n).length}/${rows.length} curated scenarios, V2-REF, reference configuration)<br>` + rows.map(r => `${r.b === r.n ? "✓" : "✗"} ${r.k}: ${r.b}${r.b === r.n ? "" : " vs Node " + r.n}`).join("<br>"); }
   if (qp.get("human")) { ST.human = qp.get("human"); $("human").value = ST.human; } if (qp.get("cfg")) { ST.cfg = qp.get("cfg"); $("cfg").value = ST.cfg; }

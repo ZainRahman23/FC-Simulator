@@ -35,7 +35,9 @@ function injected(spec, inj) { if (!inj) return { spec, opts: {} };   // = tools
   if (inj === "regionR2mm") { const fR = S.bodies.findIndex(b => b.name === "foot_R"); return { spec: S, opts: { footRegion: (f) => { const r = usableRegion(bootSole(S.bodies[f]).pts, STAND.footInset); return f === fR ? r.map(([x, z]) => [x + 0.002, z]) : r; } } }; }
   if (!["strengthR95", "footMassR105"].includes(inj)) throw new Error("unknown G3M_INJECT " + inj);
   return { spec: S, opts: {} }; }
-const FLOOR = process.argv.includes("--floor"), OUT = path.join(ROOT, "review_artifacts/physical_character_v2/g3/json", FLOOR ? "g3_mirror_floor.json" : INJECT ? `g3_mirror_v3_inject-${INJECT}.json` : SYMTAG ? `g3_mirror_v3_sym-${SYMTAG}.json` : "g3_mirror_v3.json");
+// close-decisions stage (defaults unchanged): --stand=<json> extra controller options for every trial (the adopted E1a configuration), --out=<file>
+const XSTAND = JSON.parse((process.argv.find(a => a.startsWith("--stand=")) || "--stand={}").slice(8)), OUTARG = (process.argv.find(a => a.startsWith("--out=")) || "").slice(6);
+const FLOOR = process.argv.includes("--floor"), OUT = OUTARG ? path.resolve(OUTARG) : path.join(ROOT, "review_artifacts/physical_character_v2/g3/json", FLOOR ? "g3_mirror_floor.json" : INJECT ? `g3_mirror_v3_inject-${INJECT}.json` : SYMTAG ? `g3_mirror_v3_sym-${SYMTAG}.json` : "g3_mirror_v3.json");
 const DIR8 = ["F", "B", "L", "R", "FL", "FR", "BL", "BR"], SLIDE = 1.0e-3, FLOOR_EVERY = 8, FLOOR_DRAWS = 2;
 function pairs() { const P = [["T1", "T2"], ["T5", "T6"], ["U:R", "U:L"], ...[4, 2, 1, 0.75, 0.5, 0.25].map(T => [`T7:R:${T}`, `T7:L:${T}`])];
   for (const w of ["hold", "ramp"]) for (const d of DIR8) for (const m of [5, 10, 15, 20]) P.push([`T8:${w}:R:${d}:${m}`, `T8:${w}:L:${mirrorDir(d)}:${m}`]);
@@ -56,7 +58,12 @@ function mirrorInfo(I, jdS, jdQ, jmap) { if (!I) return I; const o = { ...I };
   if (I.Ldot) o.Ldot = mw(I.Ldot); if (I.ff) { o.ff = jdQ.map(dq => mw(I.ff[jdS.findIndex(ds => jmap[ds.k] === dq.k)])); }
   for (const k of ["inSup", "unl", "ikRes"]) if (I[k]) o[k] = swap(I[k]); return o; }
 function mirrorCtrlState(S, jdS, jdQ, jmap) { const o = JSON.parse(JSON.stringify(S)); o.unl = swap(S.unl); o.hold = swap(S.hold).map(h => (h ? { pos: m3(h.pos), rot: mq(h.rot) } : null));
-  o.sense = { Fz: swap(S.sense.Fz), touch: swap(S.sense.touch) }; if (S.g3) o.g3 = { ...S.g3, from: S.g3.from != null ? 1 - S.g3.from : S.g3.from }; o.info = mirrorInfo(S.info, jdS, jdQ, jmap); return o; }
+  o.sense = { Fz: swap(S.sense.Fz), touch: swap(S.sense.touch) }; if (S.g3) o.g3 = { ...S.g3, from: S.g3.from != null ? 1 - S.g3.from : S.g3.from }; o.info = mirrorInfo(S.info, jdS, jdQ, jmap);
+  // close-decisions stage: the EXPERIMENTAL lifecycle's state (absent by default → unchanged): feet swapped; contact-anchor / previous-anchor / swing
+  // poses reflected; phase scalars (phi, s, psi, a), timers, condition and log are side-free. The diagnostic drifting twist reference is not mirrored.
+  if (S.lc) { const mp = (h) => (h ? { pos: m3(h.pos), rot: mq(h.rot) } : null); o.lc = { t: S.lc.t, feet: swap(S.lc.feet).map(f => ({ ...f, hold: mp(f.hold), prevHold: mp(f.prevHold), swing: mp(f.swing), log: f.log.slice() })) }; }
+  if (S.twFilt !== undefined) throw new Error("J2a: the diagnostic drifting twist reference (twFilt) has no mirror mapping");
+  return o; }
 const axesOf = (d, st) => { const R = Q.mul(st[d.child].rot, d.F2); return [[1, 0, 0], [0, 1, 0], [0, 0, 1]].map(e => Q.rot(R, e)); };
 // ── the seeded perturbation for the floor experiment: every floating-point leaf × (1 + U[−1, 1] · 2^-50) (≤ 4 ulps); integers / booleans untouched ──
 function rng(seed) { let s = seed >>> 0; return () => { s = (s + 0x6D2B79F5) >>> 0; let t = s; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
@@ -112,7 +119,7 @@ function probe(X, S, Qs, map, jmap, mode, R) {   // mode: "mirror" (Qs = partner
 const merge = (A, B) => { for (const [k, v] of Object.entries(B)) if (!(v <= (A[k] ?? -1))) A[k] = v; return A; };
 // ── one pair ──
 function runPair(Jolt, job) { const INJ = injected(generateSpec(VARIATION_SET.find(h => h.id === job.human)), INJECT), spec = INJ.spec, map = spec.bodies.map(b => spec.bodies.findIndex(x => x.name === lrName(b.name))), jmap = spec.joints.map(j => spec.joints.findIndex(x => x.name === lrName(j.name)));
-  const mk = (key) => new G3Sim(Jolt, spec, g3Def(key), { ...INJ.opts }), A = mk(job.a), B = mk(job.b), PA = mk(job.a), PB = mk(job.b), ioA = capture(A), ioB = capture(B), ft = A.ctrl.feet;
+  const mk = (key) => new G3Sim(Jolt, spec, g3Def(key), Object.keys(XSTAND).length ? { ...INJ.opts, stand: { ...(INJ.opts.stand || {}), ...XSTAND } } : { ...INJ.opts }), A = mk(job.a), B = mk(job.b), PA = mk(job.a), PB = mk(job.b), ioA = capture(A), ioB = capture(B), ft = A.ctrl.feet;
   const tr = { A: [], B: [] }, j2a = { pre: {}, post: {}, bad: [], ticks: 0, postTicks: 0, selfMax: 0 }, floor = { D: {}, flips: [], samples: 0, selfMax: 0 };
   const step = (S, io, P_self, P_partner, side) => { if (!S.tick()) return false; const X = io.cur, t = S.n * S.dt, fallen = S.g2acc.fallT != null && t >= S.g2acc.fallT;
       if (FLOOR) { if (side === "A" && !fallen && S.n % FLOOR_EVERY === 0) { const ref = probe(X, S, P_self, map, jmap, "same", null); floor.selfMax = Math.max(floor.selfMax, ...Object.values(ref.D)); for (const [k, v] of Object.entries(ref.D)) if (v > 0 && (floor.selfNZ || (floor.selfNZ = [])).length < 8) floor.selfNZ.push({ t, k, v, hS: X.post.hold, hQ: P_self.ctrl.hold, unl: X.post.unl }); if (ref.bad.length) floor.flips.push({ t, self: ref.bad });
@@ -139,5 +146,5 @@ else { const only = (process.argv.find(a => a.startsWith("--only=")) || "").slic
       const feed = () => { if (next >= list.length || done >= 6) { cp.send("exit"); live--; if (next < list.length) spawn(); else if (live === 0) resolve(); return; } cp.send(list[next++]); };
       cp.on("message", (m) => { if (m.ready) return feed(); outs.push(m.ok ? m.out : { ...m.job, error: m.err }); done++; process.stdout.write(`  ${outs.length}/${list.length}\r`); feed(); }); };
     for (let i = 0; i < W; i++) spawn(); });
-  fs.writeFileSync(OUT, JSON.stringify({ generated: "tools/g3_mirror_v3.mjs" + (FLOOR ? " --floor" : ""), date: new Date().toISOString().slice(0, 10), slideThresholdMm: SLIDE * 1000, floorEvery: FLOOR ? FLOOR_EVERY : null, floorDraws: FLOOR ? FLOOR_DRAWS : null, wallS: (Date.now() - t0) / 1000, pairs: outs }, null, 1));
+  fs.writeFileSync(OUT, JSON.stringify({ generated: "tools/g3_mirror_v3.mjs" + (FLOOR ? " --floor" : ""), xstand: XSTAND, date: new Date().toISOString().slice(0, 10), slideThresholdMm: SLIDE * 1000, floorEvery: FLOOR ? FLOOR_EVERY : null, floorDraws: FLOOR ? FLOOR_DRAWS : null, wallS: (Date.now() - t0) / 1000, pairs: outs }, null, 1));
   console.log(`\n${outs.length} pairs → ${path.relative(ROOT, OUT)} (${outs.filter(o => o.error).length} errors)`); }

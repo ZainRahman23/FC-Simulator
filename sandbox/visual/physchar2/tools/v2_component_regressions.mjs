@@ -31,7 +31,7 @@
 import fs from "fs"; import path from "path"; import { fileURLToPath } from "url";
 import { loadJolt, unitQ } from "../core/v2_jolt.js"; import { generateSpec } from "../spec/v2_spec.js"; import { VARIATION_SET } from "../spec/v2_human.js";
 import { G2Sim } from "../gates/v2_g2.js"; import { G3Sim, g3Def } from "../gates/v2_g3.js"; import { G1Sim } from "../gates/v2_g1.js"; import { STAND, insetPoly, insidePoly, clampPoly, usableRegion, IK } from "../ctrl/v2_stand.js";
-import { bootSole, hull2, hull2Canonical } from "../sim/v2_geom.js"; import { pyr, decompose } from "../spec/v2_joints.js"; import { V, Q, unitStates, unitEv, dnorm as dn } from "../core/v2_math.js"; import { certLevers, branchAndBound, knownSolutionPath, chain8 } from "./ik_cert_core.mjs"; import { SupportLifecycle, LIFECYCLE } from "../ctrl/v2_support.js";
+import { bootSole, hull2, hull2Canonical } from "../sim/v2_geom.js"; import { pyr, decompose, ankleNeutralKPerDeg, setAnkleNeutralKOverride, PASSIVE as PASSIVE_SPEC } from "../spec/v2_joints.js"; import { V, Q, unitStates, unitEv, dnorm as dn } from "../core/v2_math.js"; import { certLevers, branchAndBound, knownSolutionPath, chain8 } from "./ik_cert_core.mjs"; import { SupportLifecycle, LIFECYCLE } from "../ctrl/v2_support.js";
 const here = path.dirname(fileURLToPath(import.meta.url)), J = await loadJolt(path.join(here, "../vendor/jolt-physics.wasm-compat.js")), results = [];
 const check = (id, name, pass, value) => { results.push({ id, name, pass: !!pass, value }); console.log(`${pass ? "PASS" : "FAIL"} ${id.padEnd(6)} ${name}: ${value}`); };
 const m3 = (p) => [-p[0], p[1], p[2]], mq = (q) => [q[0], -q[1], -q[2], q[3]], mw = (w) => [w[0], -w[1], -w[2]], e = (x) => (+x).toExponential(2);
@@ -290,6 +290,11 @@ function refLegIK(ctrl, st, ev, n, pP, qP, footPose) { const P = ctrl.P, ks = ct
   // R8.f sensitivity overrides are local: an override changes only its own parameter; the frozen central set is untouched
   { const o = K.kneeV2KParams({ deep: { delta150: 5 } }), d = K.kneeTheta0(150, o) - K.kneeTheta0(150), d120 = K.kneeTheta0(120, o) - K.kneeTheta0(120);
     check("R8.f", "v2k sensitivity override (deep δ150 = +5°) shifts θ0(150°) by 5° and nothing below 120°; the frozen set is unchanged", Math.abs(d - 5) < 1e-12 && Math.abs(d120) < 1e-12 && K.KNEE_V2K.deep.delta150 === 0 && Object.isFrozen(K.KNEE_V2K), `Δθ0(150) ${d}, Δθ0(120) ${d120}`); } }
+// R9 close-decisions stage: the ankle-stiffness override used by the browser equivalence checks is inert by default and fully reversible
+{ const envK = process.env.V2_ANKLE_NEUTRAL_K, base = ankleNeutralKPerDeg();
+  check("R9.a", "ankle-stiffness override absent by default: k = the env value, else the spec default", envK != null && envK !== "" ? base === +envK : base === PASSIVE_SPEC.ankleAxialNeutralKPerDeg, `k ${base}`);
+  setAnkleNeutralKOverride(0.13); const kOn = ankleNeutralKPerDeg(); setAnkleNeutralKOverride(null); const kOff = ankleNeutralKPerDeg();
+  check("R9.b", "the override sets k exactly and clearing it restores the previous value", kOn === 0.13 && kOff === base, `on ${kOn}, cleared ${kOff}`); }
 const fail = results.filter(r => !r.pass).length; console.log(`\ncomponent regressions: ${results.length - fail}/${results.length} pass`);
 const jo = process.argv.find(a => a.startsWith("--json=")); if (jo) fs.writeFileSync(jo.slice(7), JSON.stringify({ generated: "tools/v2_component_regressions.mjs", date: new Date().toISOString().slice(0, 10), results }, null, 1));
 process.exit(fail ? 1 : 0);
