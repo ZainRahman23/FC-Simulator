@@ -5,12 +5,12 @@
 // per-foot CoP and load, pelvis yaw, whole-body yaw momentum. Scenarios: accepted-G2 pushes (bilateral), G3 transfers / pushes, and a
 // torque-step probe (constant axial torque on one shank for 1 s, then release) at several support levels → restoring / neutral / unstable.
 // No anatomy, tissue, actuator or controller change; external probe torques are diagnostic disturbances (ledgered like the G2 tests).
-// usage: node tools/g3_twist.mjs → review_artifacts/physical_character_v2/g3/json/g3_twist.json
+// usage: node tools/g3_twist.mjs [--human=<body id>] [--out=<json>] → review_artifacts/physical_character_v2/g3/json/g3_twist.json (V2-REF by default; pass --out= for another body)
 import fs from "fs"; import path from "path"; import { fileURLToPath } from "url";
 import { loadJolt } from "../core/v2_jolt.js"; import { generateSpec } from "../spec/v2_spec.js"; import { VARIATION_SET } from "../spec/v2_human.js";
 import { G3Sim, g3Def, profile } from "../gates/v2_g3.js"; import { G2Sim, pushScenario } from "../gates/v2_g2.js"; import { V, Q } from "../core/v2_math.js";
 const here = path.dirname(fileURLToPath(import.meta.url)), ROOT = path.resolve(here, "../../../.."), OUT = (process.argv.find(a => a.startsWith("--out=")) || "").slice(6) ? path.resolve((process.argv.find(a => a.startsWith("--out=")) || "").slice(6)) : path.join(ROOT, "review_artifacts/physical_character_v2/g3/json/g3_twist.json");
-const Jolt = await loadJolt(path.join(here, "../vendor/jolt-physics.wasm-compat.js")), spec = generateSpec(VARIATION_SET.find(h => h.id === "V2-REF")), D = 180 / Math.PI, G = 9.81;
+const Jolt = await loadJolt(path.join(here, "../vendor/jolt-physics.wasm-compat.js")), HUMAN = (process.argv.find(a => a.startsWith("--human=")) || "--human=V2-REF").slice(8), spec = generateSpec(VARIATION_SET.find(h => h.id === HUMAN) || (() => { throw new Error("unknown --human " + HUMAN); })()), D = 180 / Math.PI, G = 9.81;
 const B = spec.bodies, bi = (n) => B.findIndex(b => b.name === n), J = (n) => spec.joints.findIndex(j => j.name === n);
 const SH = [bi("shank_L"), bi("shank_R")], FT = [bi("foot_L"), bi("foot_R")], PEL = bi("pelvis"), AK = [J("ankle_L"), J("ankle_R")], KN = [J("knee_L"), J("knee_R")], HP = [J("hip_L"), J("hip_R")];
 const axI = (k, key) => ["x", "y", "z"].findIndex(a => spec.joints[k].def.axes[a] && spec.joints[k].def.axes[a].key === key);
@@ -42,7 +42,7 @@ function run(name, mk, every = 12) { const s = mk(); let b = null; const series 
   const res = { name, outcome: s.g3summary ? s.g3summary().outcome : s.g2summary().outcome, excursionDeg: Object.fromEntries(Object.entries(ex).map(([k, v]) => [k, +v.toFixed(3)])), passiveFabdMaxNm: maxPass.map(v => +v.toFixed(3)), groundVerticalMomentAtAnkleMaxNm: maxMz.map(v => +v.toFixed(3)), freeMomentMaxNm: maxFree.map(v => +v.toFixed(3)),
     stanceLegFabdByLoad: loadBins, unloadingLegFabdByLoad: uloadBins, series: { columns: ["t", ...["L", "R"].flatMap(sd => ["fabd", "twistRel", "shankYaw", "footYaw", "inv", "hipRot", "kneeRot", "passiveFabdNm", "activeInvNm", "groundMzAnkleNm", "freeMomentNm", "load", "pieces"].map(c => c + "_" + sd)), "pelvisYaw", "Ly"], rows: series } };
   s.destroy(); return res; }
-const out = { generated: "tools/g3_twist.mjs", date: new Date().toISOString().slice(0, 10), ankleNeutralKPerDeg: (await import("../spec/v2_joints.js")).ankleNeutralKPerDeg(), scenarios: [], probes: [] };
+const out = { generated: "tools/g3_twist.mjs", human: HUMAN, date: new Date().toISOString().slice(0, 10), ankleNeutralKPerDeg: (await import("../spec/v2_joints.js")).ankleNeutralKPerDeg(), scenarios: [], probes: [] };
 const g2 = (sc) => () => new G2Sim(Jolt, spec, sc === "quiet" ? { title: "Quiet stance (10 s)", seconds: 10 } : pushScenario(sc.split(":")[0], +sc.split(":")[1]), {});
 for (const sc of ["quiet", "R:10", "R:20", "F:15", "L:15"]) out.scenarios.push(run("G2 " + sc, g2(sc)));
 for (const k of ["T1", "T5", "U:R", "T7:R:2", "T7:R:1", "T8:hold:R:R:10", "T8:hold:R:F:15"]) out.scenarios.push(run("G3 " + k, () => new G3Sim(Jolt, spec, g3Def(k), {})));
