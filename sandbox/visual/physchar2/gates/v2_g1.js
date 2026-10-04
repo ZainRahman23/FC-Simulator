@@ -221,7 +221,8 @@ export class G1Sim {
       if (sep > sepMax) sepMax = sep; if (sep > A.sepMax) { A.sepMax = sep; A.sepMaxAt = { t, joint: j.name }; }
       const per = ev.per[k], q = per.q; if (this.prevQ) { const r = Q.mul(Q.conj(this.prevQ[k]), q), ang = 2 * Math.atan2(Math.hypot(r[0], r[1], r[2]), Math.abs(r[3])); if (ang > jump) jump = ang; if (ang > A.frameJumpMax) { A.frameJumpMax = ang; A.frameJumpAt = { t, joint: j.name }; } }
       const an = decompose(Q.norm(Q.mul(j.Cm, q))), anv = [an.tw, an.sy, an.sz];
-      for (let i = 0; i < 3; i++) { const X = A.axis[k][i]; if (!X) continue; const th = per.th[i], hT = per.T[i] && per.T[i].hard, lo = hT ? hT[0] : j.limits.hard.lo[i], hi = hT ? hT[1] : j.limits.hard.hi[i], m = Math.min(th - lo, hi - th),   // hT: the passive layer's anatomical hard limits when they are pose-dependent (DIAGNOSTIC knee envelope only; absent by default) soft = per.T[i] ? per.T[i].soft : [j.limits.soft.lo[i], j.limits.soft.hi[i]];
+      // hT: the passive layer's anatomical hard limits when they are pose-dependent (DIAGNOSTIC knee envelope only; absent by default)
+      for (let i = 0; i < 3; i++) { const X = A.axis[k][i]; if (!X) continue; const th = per.th[i], hT = per.T[i] && per.T[i].hard, lo = hT ? hT[0] : j.limits.hard.lo[i], hi = hT ? hT[1] : j.limits.hard.hi[i], m = Math.min(th - lo, hi - th), soft = per.T[i] ? per.T[i].soft : [j.limits.soft.lo[i], j.limits.soft.hi[i]];
         X.thMin = Math.min(X.thMin, th); X.thMax = Math.max(X.thMax, th); const anat = anv[i] * j.def.axes[KEYS[i]].s * D; X.anMin = Math.min(X.anMin, anat); X.anMax = Math.max(X.anMax, anat);
         if (m < X.marginMin) { X.marginMin = m; X.marginAt = t; } X.softExcMax = Math.max(X.softExcMax, th - soft[1], soft[0] - th, 0);
         X.overLo = Math.max(X.overLo, lo - th); X.overHi = Math.max(X.overHi, th - hi);              // overshoot beyond the ANATOMICAL hard limit, per end
