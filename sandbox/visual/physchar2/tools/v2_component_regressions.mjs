@@ -11,6 +11,10 @@
 //      identical to the unconstrained IK wherever that one's solution is anatomically valid; anatomically invalid targets either solved on a valid
 //      branch or reported unreachable; L/R mirror-equivariant (with the σ coordinate correspondence); the target never moved; the unreached
 //      fallback is the box-constrained optimum (Newton refinement; KKT gated).
+//   R5 posture-IK twist semantics (pre-G4 runway; DIAGNOSTIC options, none adopted): the options are off by default; ikTwistBlend 0 ≡ the validated
+//      "current" form and 1 ≡ ikRefTwist bit for bit; the defining mechanism measurement — under "current" the hip-rotation IK target FOLLOWS
+//      the leg twist (slope ≈ −1: the twist direction has zero restoring stiffness, the root of the actuator-powered twist limit cycle), under
+//      a reference target it does not (≈ 0). Static (no simulation step).
 // usage: node tools/v2_component_regressions.mjs [--json=<out>]     exit code 1 on any failure
 import fs from "fs"; import path from "path"; import { fileURLToPath } from "url";
 import { loadJolt, unitQ } from "../core/v2_jolt.js"; import { generateSpec } from "../spec/v2_spec.js"; import { VARIATION_SET } from "../spec/v2_human.js";
@@ -149,6 +153,20 @@ function refLegIK(ctrl, st, ev, n, pP, qP, footPose) { const P = ctrl.P, ks = ct
   check("R4.g", "bounded IK fallback: every unreached target returns the box-constrained least-squares optimum (KKT ≤ 1e-7)", kkt <= 1e-7 && nUnr > 0, `${nUnr} unreached solves: KKT max ${e(kkt)}`);
   check("R4.e", "bounded IK: L/R mirror-equivariant (classification; solution reached ≤ 1e-12 rad, unreached ≤ 1e-6 rad)", clsMis === 0 && mirR <= 1e-12 && mirU <= 1e-6, `${clsMis} classification mismatches; Δ reached ≤ ${e(mirR)}, unreached ≤ ${e(mirU)} rad`);
   check("R4.f", "bounded IK: the target is never modified", moved === 0, `${moved} modified`); }
+// ── R5 posture-IK twist semantics (static, on a captured U:R swing-ready state of V2-REF, left = stance-side probe of both legs) ──
+{ const spec = generateSpec(VARIATION_SET.find(h => h.id === "V2-REF")), sim = new G3Sim(J, spec, g3Def("U:R"), {}), orig = sim.ctrl.legIK.bind(sim.ctrl); let cap = null, want = false;
+  sim.ctrl.legIK = (st, ev, nn, pP, qP, fp) => { if (want && nn === 1 && !cap) cap = { st: st.map(b => ({ ...b })), ev: { ...ev, qs: ev.qs.map(q => q.slice()) }, pP: pP.slice(), qP: qP.slice() }; return orig(st, ev, nn, pP, qP, fp); };
+  while (sim.n * sim.dt < 8 - 1e-9 && sim.tick()); want = true; sim.tick(); sim.ctrl.legIK = orig; const c = sim.ctrl, n = 1, ks = c.legK[n], o0 = { ...c.o };
+  const solve = (opts, ev) => { c.o = { ...o0, ...opts }; const r = c.legIK(cap.st, ev, n, cap.pP, cap.qP, null); c.o = { ...o0 }; return r; };
+  const defOff = STAND.ikTwistBlend == null && !STAND.ikTwistTau && STAND.yawCmd == null && c.o.ikTwistBlend == null;
+  const eq = (a, b) => a.x.every((v, i) => v === b.x[i]) && a.err === b.err, b0 = eq(solve({ ikTwistBlend: 0 }, cap.ev), solve({}, cap.ev)), b1 = eq(solve({ ikTwistBlend: 1 }, cap.ev), solve({ ikRefTwist: true }, cap.ev));
+  // twist the knee axial DOF of the probed leg by ±δ in the controller input, re-solve, slope of the hip-rotation solution vs the twist
+  const twistBy = (d) => { const qs = cap.ev.qs.map(q => q.slice()), k = ks[1], v = decompose(qs[k]); qs[k] = pyr(v.tw + d, v.sy, v.sz); return { ...cap.ev, qs }; }, dl = 0.02;
+  const slope = (opts) => (solve(opts, twistBy(dl)).x[0] - solve(opts, twistBy(-dl)).x[0]) / (2 * dl), sCur = slope({}), sRef = slope({ ikRefTwist: true });
+  check("R5.a", "twist-policy diagnostic options off by default (ikTwistBlend null, ikTwistTau 0, yawCmd null)", defOff, `default off: ${defOff}`);
+  check("R5.b", "ikTwistBlend 0 ≡ validated 'current' and 1 ≡ ikRefTwist (bit-identical IK solutions)", b0 && b1, `blend 0 ≡ current: ${b0}; blend 1 ≡ reference: ${b1}`);
+  check("R5.c", "mechanism: hip-rotation IK target follows the leg twist under 'current' (slope ≈ −1) and not under reference (≈ 0)", Math.abs(sCur + 1) < 0.1 && Math.abs(sRef) < 0.1, `slope current ${sCur.toFixed(3)}, reference ${sRef.toFixed(3)}`);
+  sim.destroy(); }
 const fail = results.filter(r => !r.pass).length; console.log(`\ncomponent regressions: ${results.length - fail}/${results.length} pass`);
 const jo = process.argv.find(a => a.startsWith("--json=")); if (jo) fs.writeFileSync(jo.slice(7), JSON.stringify({ generated: "tools/v2_component_regressions.mjs", date: new Date().toISOString().slice(0, 10), results }, null, 1));
 process.exit(fail ? 1 : 0);

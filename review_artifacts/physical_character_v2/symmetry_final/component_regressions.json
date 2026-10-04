@@ -157,6 +157,24 @@
    "name": "bounded IK: the target is never modified",
    "pass": true,
    "value": "0 modified"
+  },
+  {
+   "id": "R5.a",
+   "name": "twist-policy diagnostic options off by default (ikTwistBlend null, ikTwistTau 0, yawCmd null)",
+   "pass": true,
+   "value": "default off: true"
+  },
+  {
+   "id": "R5.b",
+   "name": "ikTwistBlend 0 ≡ validated 'current' and 1 ≡ ikRefTwist (bit-identical IK solutions)",
+   "pass": true,
+   "value": "blend 0 ≡ current: true; blend 1 ≡ reference: true"
+  },
+  {
+   "id": "R5.c",
+   "name": "mechanism: hip-rotation IK target follows the leg twist under 'current' (slope ≈ −1) and not under reference (≈ 0)",
+   "pass": true,
+   "value": "slope current -0.985, reference 0.000"
   }
  ]
 }

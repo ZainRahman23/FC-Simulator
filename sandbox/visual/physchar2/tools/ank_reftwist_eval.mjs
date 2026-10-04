@@ -3,11 +3,11 @@
 // evaluators as the gates (G2 criteria v1 rows; G3 criteria v3.3 rows — J2a / J2b and the browser / bench rows are taken from the k's
 // validated-controller run, i.e. not re-measured here), plus the twist probes and the static yaw stiffness. It shows whether the twist mechanism
 // identified in ankle_plane/ANKLE_RESULTS.md §3 is the obstacle, and what the combined design would cost — for the user's decision.
-// usage: node tools/ank_reftwist_eval.mjs <scratch review_artifacts/physical_character_v2 dir> <twist_reftwist dir>
+// usage: node tools/ank_reftwist_eval.mjs <scratch review_artifacts/physical_character_v2 dir> <twist dir> [tag]
 import fs from "fs"; import path from "path";
 import { evaluate as evalG2 } from "../gates/v2_g2_checks.js"; import { evaluateV33 } from "../gates/v2_g3_checks_v33.js";
-const [RA, TW] = process.argv.slice(2), rd = (f) => { try { return JSON.parse(fs.readFileSync(path.join(RA, f))); } catch (e) { return null; } };
-const g2 = rd("g2/json/g2_results_xstand.json"), g3 = rd("g3/json/g3_results_reftwist.json");
+const [RA, TW, TAG] = process.argv.slice(2), rd = (f) => { try { return JSON.parse(fs.readFileSync(path.join(RA, f))); } catch (e) { return null; } };
+const g2 = rd(TAG ? `g2/json/g2_results_${TAG}.json` : "g2/json/g2_results_xstand.json"), g3 = rd(`g3/json/g3_results_${TAG || "reftwist"}.json`);   // TAG: blend50 / tau2 (pre-G4 runway batteries)
 // the run-wide diagnostic option is merged into every job's stand: strip exactly those keys so the evaluator treats the jobs as the gate jobs
 for (const j of g3.jobs) if (j.xstand && j.stand) { const st = { ...j.stand }; for (const k of Object.keys(j.xstand)) if (st[k] === j.xstand[k]) delete st[k]; if (Object.keys(st).length) j.stand = st; else delete j.stand; delete j.xstand; }
 const E2 = evalG2(g2, { browser: null, regression: null }), fail2 = E2.checks.filter(c => !c.pass && !["R", "2.5", "D"].includes(c.id));
