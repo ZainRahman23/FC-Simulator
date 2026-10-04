@@ -1,0 +1,12 @@
+V2-165-62: 236 invalid targets so far
+V2-175-70: 415 invalid targets so far
+V2-REF: 573 invalid targets so far
+V2-190-85: 719 invalid targets so far
+V2-198-92: 888 invalid targets so far
+V2-long-legs: 1021 invalid targets so far
+V2-short-legs: 1200 invalid targets so far
+V1-matched: 1336 invalid targets so far
+1336 geometric-but-not-anatomical targets
+smallest pelvis yaw toward the foot that makes the target anatomical, by foot yaw: {"0":{"5":4,"10":2,"15":3,"20":11,"25":1,"30":3,"35":8,"45":2,">45":2},"45":{"5":304,"10":163,"15":66,"20":19,">45":53},"-45":{"5":342,"10":129,">45":132},"-30":{">45":92}}
+… by family: {"inward (crossing)":{"5":12,">45":8},"far crossing":{"5":75,"10":16},"medium forward":{"5":68,"10":57,"15":6},"far outward":{"5":128,"10":96,">45":41},"diagonal in":{"5":104,"10":58,"15":40,"20":4},"narrower short step":{"5":8},"diagonal out":{"5":137,"10":33},"long forward":{"5":54,"10":30,"15":20,"20":15,">45":41},"slight backward":{"10":2,"15":3,"20":11,"25":1,"30":3,"35":8,"45":2,">45":126},"outward":{"5":38,">45":51},"very long forward":{"5":6,"10":2,">45":12},"wider short step":{"5":20}}
+pelvis yaw = foot yaw / 2 reaches 944 of 1300 yawed invalid targets
