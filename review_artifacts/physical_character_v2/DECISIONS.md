@@ -1217,3 +1217,31 @@ Candidates and their regression implications: report §13.
   - the R1.d region test first demanded an unchanged area (wrong: the requirement is no reduction);
   - the R2 threshold was tighter than a rounded 4-term norm;
   - `mirrorOrder` was first not forwarded by G1Sim (caught by an invalid-value test before use).
+
+## 2026-10-04 — Overnight pre-G4 work (user instruction `sources/2026-10-04_user_instruction_overnight_pre_g4.md`)
+
+### FP-10: symmetry package final; G3 v3.2 all rows pass but NOT DECLARED (J2b not meaningful); ankle / 180 Hz not started; STOPPED at the pre-G4 decision point (`PRE_G4_OVERNIGHT_REPORT.md`)
+
+- **Adopted** (`833ec4a`):
+  - convex mirror-exact usable regions + exact inside test (projection Lipschitz 201.7 → 1.000);
+  - narrow quaternion scope (the plant is bit-identical to the historical G1);
+  - IK post-convergence polish;
+  - staged FK (bit-identical, −25 % IK).
+- **G3 v3.2 pre-registered** (`5b9d756`). J2b tolerances by the procedure (`8e57a3e`, before the gate run):
+  - your provisional 0.25 / 5 / 1 mm were rejected by the 2× margin; the rule gives **A 0.5 / B 10 / C 2 mm, 5 ticks**;
+  - **meaningfulness NOT met:** 0 of 3 injected 5 % / 2 mm asymmetries detected;
+  - **J2a detects all three** by 9–12 orders of magnitude.
+- **Results:** G0 PASS; G1 PASS (browser 10/10); G2 PASS (row 2.5 → isolated benchmark 0.093 ms; 0 outcome changes vs `13b0848`).
+- **G3 v3.2:** 20/20 rows pass, including J2a 81/81 and J2b 81/81. **Not declared.**
+- **G3 changes vs `7eb6248`:** 0 outcome changes (an earlier "1 change" was a pairing artifact, corrected). 22 abort-timing changes, reproduced 22/22 by reverting the region alone.
+- **IK for G4** (`f7b8a0c`):
+  - 1,336 of 16,704 geometrically reachable G4-style targets are anatomically invalid in the production IK (hip rotation / ankle DF);
+  - solutions are unique and mirror-exact;
+  - validated runs need 0 beyond-limit solves before any abort;
+  - opt-in `legIKBounded` (default off; R4 tests) is not adopted, a G4 decision; its unreachable fallback pose is not converged.
+- **Performance:** controller + actuators 0.093–0.103 ms (isolated); the IK is ≈ 86 % of the controller; no further optimisation.
+- **Not started:** ankle (Phase F) and 180 Hz (Phase G), because G3 is not declared. The pre-registration draft is updated (k = 0 / 0.11 / 0.13 / 0.15). G4 not started. Nothing pushed.
+- **Decisions for the user:**
+  1. J2b: (a) J2a as the gate with J2b reported, (b) a re-defined J2b with re-preregistration, or (c) other;
+  2. the G4 foothold-IK policy;
+  3. then the ankle.
