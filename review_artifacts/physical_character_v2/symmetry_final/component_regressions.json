@@ -138,13 +138,19 @@
    "id": "R4.d",
    "name": "bounded IK: an anatomically invalid unconstrained solution is never accepted — solved on a valid branch (≤ 1e-12) or reported unreachable (> 1e-6)",
    "pass": true,
-   "value": "14 invalid: 0 valid branch, 14 reported; KKT residual of unreached iterates ≤ 7.49e-4 (reported)"
+   "value": "14 invalid: 0 valid branch, 14 reported"
+  },
+  {
+   "id": "R4.g",
+   "name": "bounded IK fallback: every unreached target returns the box-constrained least-squares optimum (KKT ≤ 1e-7)",
+   "pass": true,
+   "value": "254 unreached solves: KKT max 3.80e-10"
   },
   {
    "id": "R4.e",
    "name": "bounded IK: L/R mirror-equivariant (classification; solution reached ≤ 1e-12 rad, unreached ≤ 1e-6 rad)",
    "pass": true,
-   "value": "0 classification mismatches; Δ reached ≤ 1.22e-14, unreached ≤ 3.72e-8 rad"
+   "value": "0 classification mismatches; Δ reached ≤ 1.22e-14, unreached ≤ 3.97e-8 rad"
   },
   {
    "id": "R4.f",

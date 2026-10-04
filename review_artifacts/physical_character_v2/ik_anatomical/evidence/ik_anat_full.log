@@ -1,0 +1,69 @@
+V2-165-62: 2592 rows
+V2-175-70: 5184 rows
+V2-REF: 7776 rows
+V2-190-85: 10368 rows
+V2-198-92: 12960 rows
+V2-long-legs: 15552 rows
+V2-short-legs: 18144 rows
+V1-matched: 20736 rows
+PART 1 — 20736 targets; geometric 16704; anatomical 15368; geometric-but-not-anatomical 1336
+by foot yaw: {"0":{"geom":4800,"inval":36},"30":{"geom":2976,"inval":0},"45":{"geom":2976,"inval":605},"-30":{"geom":2976,"inval":92},"-45":{"geom":2976,"inval":603}}
+by family: {"inward (crossing)":{"geom":1440,"inval":20},"far crossing":{"geom":1440,"inval":91},"short forward":{"geom":1280,"inval":0},"medium forward":{"geom":1280,"inval":131},"slight backward":{"geom":1280,"inval":156},"outward":{"geom":1280,"inval":89},"far outward":{"geom":1280,"inval":265},"diagonal in":{"geom":1280,"inval":206},"wider short step":{"geom":1280,"inval":20},"narrower short step":{"geom":1280,"inval":8},"diagonal out":{"geom":960,"inval":170},"reach sweep forward":{"geom":608,"inval":0},"reach sweep outward":{"geom":608,"inval":0},"reach sweep down-forward":{"geom":608,"inval":0},"long forward":{"geom":720,"inval":160},"very long forward":{"geom":80,"inval":20}}
+by body: {"V2-165-62":{"geom":2048,"inval":236},"V2-175-70":{"geom":2048,"inval":179},"V2-REF":{"geom":2048,"inval":158},"V2-190-85":{"geom":2128,"inval":146},"V2-198-92":{"geom":2128,"inval":169},"V2-long-legs":{"geom":2128,"inval":133},"V2-short-legs":{"geom":2048,"inval":179},"V1-matched":{"geom":2128,"inval":136}}
+by state: {"swing-ready":{"geom":8352,"inval":652},"near-single-support":{"geom":8352,"inval":684}}
+by pelvis drop: {"0":{"geom":4240,"inval":272},"0.05":{"geom":6032,"inval":411},"0.1":{"geom":6432,"inval":653}}
+by height: {"0":{"geom":3760,"inval":272},"0.05":{"geom":5360,"inval":411},"0.1":{"geom":5760,"inval":653},"null":{"geom":1824,"inval":0}}
+hip rot: 1110 invalid targets bind it; excess median 3.0° p90 6.8° max 14.7°; U solution anatomical angle range -74.3 … 61.7°
+hip flex: 0 invalid targets bind it; excess median —° p90 —° max —°; U solution anatomical angle range — … —°
+hip abd: 0 invalid targets bind it; excess median —° p90 —° max —°; U solution anatomical angle range — … —°
+knee flex: 0 invalid targets bind it; excess median —° p90 —° max —°; U solution anatomical angle range — … —°
+ankle DF: 260 invalid targets bind it; excess median 3.1° p90 6.8° max 10.4°; U solution anatomical angle range 45.2 … 55.4°
+ankle inv: 5 invalid targets bind it; excess median 1.2° p90 1.4° max 1.4°; U solution anatomical angle range -31.2 … -30.9°
+knee flexion (anatomical) in invalid U solutions: median 44.4°, range 5.4 … 85.0°; ankle DF -20.0 … 55.4°; inversion -31.2 … 29.6°
+invalid at foot yaw 0 (plausible in normal gait): 36
+  V2-165-62 swing-ready L drop 0.1 slight backward h 0.1 s 0.7654: viol 0,0,0,0,5.23,0 | U angles -0.299,31.778,11.876,80.121,50.619,13.45
+  V2-165-62 swing-ready L drop 0.1 inward (crossing) h 0.1 s 0.7376: viol 0,0,0,0,0.21,0 | U angles -8.215,42.11,8.122,84.952,45.252,2.323
+  V2-165-62 swing-ready R drop 0.1 slight backward h 0.1 s 0.7654: viol 0,0,0,0,5.24,0 | U angles -0.254,31.775,11.845,80.119,50.629,13.442
+  V2-165-62 swing-ready R drop 0.1 inward (crossing) h 0.1 s 0.7376: viol 0,0,0,0,0.213,0 | U angles -8.164,42.113,8.085,84.952,45.255,2.323
+  V2-165-62 near-single-support L drop 0.1 slight backward h 0.1 s 0.7649: viol 0,0,0,0,5.371,0 | U angles -0.693,31.781,11.334,80.208,50.727,12.605
+  V2-165-62 near-single-support L drop 0.1 inward (crossing) h 0.1 s 0.7386: viol 0,0,0,0,0.255,0 | U angles -8.678,41.975,7.595,84.778,45.28,1.46
+  V2-165-62 near-single-support R drop 0.1 slight backward h 0.1 s 0.7649: viol 0,0,0,0,5.381,0 | U angles -0.639,31.781,11.298,80.206,50.737,12.597
+  V2-165-62 near-single-support R drop 0.1 inward (crossing) h 0.1 s 0.7386: viol 0,0,0,0,0.256,0 | U angles -8.617,41.981,7.553,84.777,45.281,1.461
+  V2-175-70 swing-ready L drop 0.1 slight backward h 0.1 s 0.7773: viol 0,0,0,0,3.68,0 | U angles 1.22,31.441,10.402,77.971,49.028,12.498
+  V2-175-70 swing-ready R drop 0.1 slight backward h 0.1 s 0.7773: viol 0,0,0,0,3.713,0 | U angles 1.365,31.438,10.294,77.971,49.059,12.459
+  V2-175-70 near-single-support L drop 0.1 slight backward h 0.1 s 0.7769: viol 0,0,0,0,3.779,0 | U angles 0.752,31.443,9.924,78.049,49.096,11.691
+  V2-175-70 near-single-support R drop 0.1 slight backward h 0.1 s 0.7769: viol 0,0,0,0,3.801,0 | U angles 0.853,31.442,9.847,78.05,49.117,11.661
+  V2-REF swing-ready L drop 0.1 slight backward h 0.1 s 0.785: viol 0,0,0,0,2.767,0 | U angles 2.681,31.166,9.147,76.564,48.086,11.822
+  V2-REF swing-ready R drop 0.1 slight backward h 0.1 s 0.785: viol 0,0,0,0,2.814,0 | U angles 2.907,31.156,8.983,76.563,48.131,11.77
+  V2-REF near-single-support L drop 0.1 slight backward h 0.1 s 0.7846: viol 0,0,0,0,2.87,0 | U angles 2.345,31.163,8.578,76.636,48.16,10.998
+  V2-REF near-single-support R drop 0.1 slight backward h 0.1 s 0.7846: viol 0,0,0,0,2.903,0 | U angles 2.51,31.155,8.459,76.634,48.192,10.959
+  V2-190-85 swing-ready L drop 0.1 slight backward h 0.1 s 0.7932: viol 0,0,0,0,1.75,0 | U angles 4.132,30.821,7.943,75.04,47.043,11.182
+  V2-190-85 swing-ready R drop 0.1 slight backward h 0.1 s 0.7932: viol 0,0,0,0,1.796,0 | U angles 4.364,30.808,7.778,75.039,47.087,11.129
+  V2-190-85 near-single-support L drop 0.1 slight backward h 0.1 s 0.7928: viol 0,0,0,0,1.916,0 | U angles 4.26,30.791,7.055,75.104,47.178,10.27
+  V2-190-85 near-single-support R drop 0.1 slight backward h 0.1 s 0.7928: viol 0,0,0,0,1.951,0 | U angles 4.447,30.779,6.922,75.104,47.211,10.226
+  V2-198-92 swing-ready L drop 0.1 slight backward h 0.1 s 0.8008: viol 0,0,0,0,0.813,0 | U angles 5.618,30.447,6.776,73.601,46.084,10.599
+  V2-198-92 swing-ready R drop 0.1 slight backward h 0.1 s 0.8008: viol 0,0,0,0,0.828,0 | U angles 5.687,30.44,6.729,73.599,46.098,10.58
+  V2-198-92 near-single-support L drop 0.1 slight backward h 0.1 s 0.8004: viol 0,0,0,0,1.092,0 | U angles 6.574,30.35,5.334,73.661,46.326,9.524
+  V2-198-92 near-single-support R drop 0.1 slight backward h 0.1 s 0.8005: viol 0,0,0,0,1.105,0 | U angles 6.64,30.343,5.288,73.659,46.339,9.504
+  V2-long-legs swing-ready L drop 0.1 slight backward h 0.1 s 0.7943: viol 0,0,0,0,1.731,0 | U angles 4.024,30.736,7.508,74.837,47.005,10.632
+  V2-long-legs swing-ready R drop 0.1 slight backward h 0.1 s 0.7943: viol 0,0,0,0,1.77,0 | U angles 4.228,30.724,7.367,74.835,47.042,10.587
+  V2-long-legs near-single-support L drop 0.1 slight backward h 0.1 s 0.7939: viol 0,0,0,0,1.857,0 | U angles 4.103,30.727,6.74,74.897,47.103,9.823
+  V2-long-legs near-single-support R drop 0.1 slight backward h 0.1 s 0.7939: viol 0,0,0,0,1.883,0 | U angles 4.249,30.717,6.638,74.896,47.129,9.789
+  V2-short-legs swing-ready L drop 0.1 slight backward h 0.1 s 0.7749: viol 0,0,0,0,3.82,0 | U angles 1.213,31.574,11.021,78.408,49.196,13.203
+  V2-short-legs swing-ready R drop 0.1 slight backward h 0.1 s 0.775: viol 0,0,0,0,3.874,0 | U angles 1.449,31.567,10.849,78.406,49.248,13.152
+  V2-short-legs near-single-support L drop 0.1 slight backward h 0.1 s 0.7745: viol 0,0,0,0,3.918,0 | U angles 0.531,31.56,10.594,78.495,49.26,12.328
+  V2-short-legs near-single-support R drop 0.1 slight backward h 0.1 s 0.7745: viol 0,0,0,0,3.956,0 | U angles 0.703,31.554,10.468,78.493,49.296,12.289
+  V1-matched swing-ready L drop 0.1 slight backward h 0.1 s 0.7932: viol 0,0,0,0,1.585,0 | U angles 3.285,30.856,8.541,75.038,46.885,11.371
+  V1-matched swing-ready R drop 0.1 slight backward h 0.1 s 0.7932: viol 0,0,0,0,1.634,0 | U angles 3.531,30.845,8.366,75.038,46.932,11.316
+  V1-matched near-single-support L drop 0.1 slight backward h 0.1 s 0.7928: viol 0,0,0,0,1.735,0 | U angles 3.259,30.837,7.759,75.105,47.004,10.492
+  V1-matched near-single-support R drop 0.1 slight backward h 0.1 s 0.7928: viol 0,0,0,0,1.771,0 | U angles 3.45,30.827,7.624,75.104,47.038,10.449
+
+PART 2 — methods (unreached = M0 not reached; reference M1 = 400 iterations)
+M0 production bounded: classification L/R mismatches 0; determinism 20736/20736; µs p50 127.0 p99 1903.2; unreached 5368: KKT p50 1.02e-10 max 7.49e-4; residual gap to M1 max 3.98e-4 m; Δx to M1 p50 0.0° p99 0.7° max 3.5°; mirror Δ unreached max 5.44e-8 rad
+M1 reference (400 it): iterations p50 21 max 400; KKT max 8.83e-5; at the cap: 24; µs p50 482.8 max 44968.3
+M2 ε=0.0001: unreached 5368: iterations p50 15 max 60; KKT (own problem) max 1.77e-4; residual cost vs M1 max 7.56e-4 m (p50 1.58e-6); Δx to M1 max 8.9°; distance to current pose: M2 p50 57.8° vs M1 57.8°; mirror Δ max 8.84e-6°; determinism 5368/5368; µs total p50 891.5 p99 6467.4
+M2 ε=0.000001: unreached 5368: iterations p50 10 max 60; KKT (own problem) max 1.62e-4; residual cost vs M1 max 3.33e-5 m (p50 1.63e-10); Δx to M1 max 1.5°; distance to current pose: M2 p50 57.8° vs M1 57.8°; mirror Δ max 1.20e-5°; determinism 5368/5368; µs total p50 768.2 p99 5989.0
+M5 Newton ε=0: unreached 5368: iterations p50 1 max 11; KKT (own problem) p50 3.65e-12 p99 5.01e-10 max 4.39e-9; residual vs M1 (− = better) max 2.22e-16 m, min -1.12e-5; Δx to M1 max 0.6°; mirror Δ max 7.53e-6°; determinism 5368/5368; µs total p50 1155.4 p99 8276.9
+M5 Newton ε=0.000001: unreached 5368: iterations p50 4 max 12; KKT (own problem) p50 2.83e-12 p99 9.78e-11 max 1.61e-9; residual vs M1 (− = better) max 1.87e-6 m, min -1.12e-5; Δx to M1 max 0.6°; mirror Δ max 1.02e-6°; determinism 5368/5368; µs total p50 1520.7 p99 11169.7
+M3 log-barrier: classification vs M0 mismatches 0 (reached by M3 not M0 0, by M0 not M3 0); reached-solution Δ vs M0 max 8.48e-4 rad; mirror Δ max 1.87e-5 rad; iterations p50 31; µs p50 803.6 p99 7221.3; unreached residual vs M0 (− = better) p50 1.39e-17
+M4 unconstrained + post-check: classification vs M0 mismatches 0; µs p50 118.2

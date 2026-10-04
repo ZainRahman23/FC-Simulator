@@ -286,9 +286,8 @@ StandController.prototype.legIK = function (st, ev, n, pP, qP, footPose = null) 
 //   • active set: a coordinate on a bound whose descent direction leaves the box is held; the damped Gauss–Newton step is solved on the free
 //     coordinates only and the trial point is projected onto the box (accepted iff the residual decreases);
 //   • stop at a residual of 1e-12 (anatomically reached); otherwise the target is anatomically unreachable — err REPORTED (> 1e-6), the target
-//     never moved — and the returned pose is the descent iterate after ≤ IK.maxItBounded iterations or at a vanishing projected gradient. It is
-//     NOT guaranteed to be the exact box-constrained optimum: where the target is also geometrically unreachable the cost is nearly flat there,
-//     and 30 iterations stop within 0.2 mm (residual) but up to 1.9° (joint coordinates) of it (tools/v2_component_regressions.mjs R4.d note).
+//     never moved — and the returned pose is the box-constrained least-squares optimum, refined by the Newton fallback below (the LM iterate
+//     alone stopped up to 3.5° short of it; with the refinement the KKT residual is ≤ 4.4e-9 over the study's 5,368 unreached targets).
 // The non-solved twist DOFs (knee axial rotation, passive ankle ab/adduction) stay at their current values, as in legIK. Study evidence
 // (tools/ik_g4_study.mjs): on 20,736 targets × 8 bodies, 0 L/R classification mismatches, one valid solution per reachable target from 12
 // seeded starts, and the warm-start solution is the closest valid one. Returns { targets, err, it, x, atBound }.
@@ -309,10 +308,31 @@ StandController.prototype.legIKBounded = function (st, ev, n, pP, qP, footPose =
     if (!accepted) break; }
   if (IK.polish === "stale" && err <= IK.tol && err > 0 && lastH) { const dx = step(lastH, gOf(lastJ, r), lastFree, mu);   // the adopted polish, on the last free set
     if (dx) { const xn = x.slice(); lastFree.forEach((i, k) => { xn[i] += dx[k]; }); const xc = clamp(xn), rn = fk(xc), en = dnorm(...rn); if (en <= err) { x = xc; r = rn; err = en; } } }
+  // FALLBACK REFINEMENT (user decision 2026-10-04, Decision 2; tools/ik_anat_study.mjs method M5): for an anatomically UNREACHED target the
+  // Gauss–Newton steps above stop short of the box-constrained optimum (large-residual problem: JᵀJ omits Σ rᵢ∇²rᵢ; KKT residual up to 7.5e-4,
+  // up to 3.5° from the optimum). A projected damped Newton method with the FULL Hessian of ½‖r‖² (central differences of the gradient) then
+  // converges to it: study over 5,368 unreached targets × 8 bodies — KKT ≤ 4.4e-9, ≤ 11 iterations, never a worse residual than 400 LM
+  // iterations, deterministic, mirror Δ ≤ 1.3e-7 rad. Reached targets never enter this branch. IK.boundedFallback = "none" skips it (cheaper
+  // classification-only queries).
+  let fbIt = 0;
+  if (err > 1e-6 && IK.boundedFallback === "newton") {
+    const grad = (y) => { const Jm = jac(y), r2 = fk(y); return { g: gOf(Jm, r2), r: r2 }; };
+    let G = grad(x); const half = (r2) => 0.5 * (r2[0] * r2[0] + r2[1] * r2[1] + r2[2] * r2[2] + r2[3] * r2[3] + r2[4] * r2[4] + r2[5] * r2[5]); let fv = half(G.r);
+    for (; fbIt < IK.fallbackMaxIt; fbIt++) { const g = G.g, free = [0, 1, 2, 3, 4, 5].filter(i => !((x[i] <= lo[i] && g[i] > 0) || (x[i] >= hi[i] && g[i] < 0)));
+      if (!free.length || Math.sqrt(free.reduce((s2, i) => s2 + g[i] * g[i], 0)) < IK.gradTol) break;
+      const H = [0, 1, 2, 3, 4, 5].map(() => [0, 0, 0, 0, 0, 0]); for (let c = 0; c < 6; c++) { const xp = x.slice(), xm = x.slice(); xp[c] += IK.hNewton; xm[c] -= IK.hNewton; const gp = grad(xp).g, gm = grad(xm).g; for (let i = 0; i < 6; i++) H[i][c] = (gp[i] - gm[i]) / (2 * IK.hNewton); }
+      for (let i = 0; i < 6; i++) for (let c = i + 1; c < 6; c++) { const m = 0.5 * (H[i][c] + H[c][i]); H[i][c] = m; H[c][i] = m; }
+      let moved = false;
+      for (let lam = 0, t = 0; t < 12; t++, lam = lam ? lam * 10 : 1e-10) { const dx = solveN(free.map(i => free.map(c => (i === c ? H[i][c] + lam : H[i][c]))), free.map(i => -g[i]));
+        if (!dx || free.reduce((s2, i, k) => s2 + g[i] * dx[k], 0) >= 0) continue;   // not a descent direction: more damping
+        const xn = x.slice(); free.forEach((i, k) => { xn[i] += dx[k]; }); const xc = clamp(xn); if (xc.every((v, i) => v === x[i])) break;
+        const Gn = grad(xc), fn = half(Gn.r); if (fn < fv) { x = xc; G = Gn; fv = fn; moved = true; break; } }
+      if (!moved) break; }
+    r = G.r; err = dnorm(...r); }
   const tg = [[ks[0], pyr(x[0], x[1], x[2])], [ks[1], pyr(cur[1][0], x[3], cur[1][2])]]; if (footPose) tg.push([ks[2], pyr(cur[2][0], x[4], x[5])]);
-  return { targets: tg, err, it, x, atBound: x.map((v, i) => v <= lo[i] || v >= hi[i]) };
+  return { targets: tg, err, it, x, atBound: x.map((v, i) => v <= lo[i] || v >= hi[i]), fallbackIt: fbIt };
 };
-export const IK = { h: 1e-6, tol: 1e-12, maxIt: 12, maxItBounded: 30, mu0: 1e-2, muMin: 1e-12, gradTol: 1e-14,
+export const IK = { h: 1e-6, tol: 1e-12, maxIt: 12, maxItBounded: 30, mu0: 1e-2, muMin: 1e-12, gradTol: 1e-14, boundedFallback: "newton", fallbackMaxIt: 25, hNewton: 1e-5,   // bounded (opt-in) solver only
   polish: (typeof process !== "undefined" && process.env && process.env.V2_IK_POLISH) || "stale" };   // "stale" (adopted) | "none" (diagnostic env selector, Node only)
 function solveN(M, y) { const n = y.length, a = M.map((r, i) => [...r, y[i]]); for (let c = 0; c < n; c++) { let p = c; for (let r = c + 1; r < n; r++) if (Math.abs(a[r][c]) > Math.abs(a[p][c])) p = r; if (Math.abs(a[p][c]) < 1e-14) return null; [a[c], a[p]] = [a[p], a[c]];
     for (let r = 0; r < n; r++) if (r !== c) { const f = a[r][c] / a[c][c]; for (let k = c; k <= n; k++) a[r][k] -= f * a[c][k]; } } return a.map((r, i) => r[n] / r[i]); }

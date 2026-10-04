@@ -9,7 +9,8 @@
 //      targets solved to ≤ 1e-12, unreachable ones reported (residual > 1e-6), the target never moved.
 //   R4 opt-in BOUNDED leg IK (overnight Phase C; o.ikBounds, NOT adopted): off by default; every solution inside the anatomical hard limits;
 //      identical to the unconstrained IK wherever that one's solution is anatomically valid; anatomically invalid targets either solved on a valid
-//      branch or reported unreachable; L/R mirror-equivariant (with the σ coordinate correspondence); the target never moved.
+//      branch or reported unreachable; L/R mirror-equivariant (with the σ coordinate correspondence); the target never moved; the unreached
+//      fallback is the box-constrained optimum (Newton refinement; KKT gated).
 // usage: node tools/v2_component_regressions.mjs [--json=<out>]     exit code 1 on any failure
 import fs from "fs"; import path from "path"; import { fileURLToPath } from "url";
 import { loadJolt, unitQ } from "../core/v2_jolt.js"; import { generateSpec } from "../spec/v2_spec.js"; import { VARIATION_SET } from "../spec/v2_human.js";
@@ -117,7 +118,7 @@ function refLegIK(ctrl, st, ev, n, pP, qP, footPose) { const P = ctrl.P, ks = ct
   check("R3.d", "IK: the target is never modified", moved === 0, `${moved} modified`);
   check("R3.e", "IK: production (staged FK) equals the plain reference implementation bit for bit", refMis === 0, `${refMis} of ${n} solves differ`); }
 // ── R4 opt-in bounded leg IK: real swing-ready / near-single-support states, G4-style targets (forward, outward, crossing, lifted, foot yaw ±45°) ──
-{ let n = 0, inBox = true, same = 0, sameMis = 0, inval = 0, invalAlt = 0, invalRep = 0, kkt = 0, clsMis = 0, mirR = 0, mirU = 0, moved = 0, routed = true; const D = Math.PI / 180;
+{ let n = 0, nUnr = 0, inBox = true, same = 0, sameMis = 0, inval = 0, invalAlt = 0, invalRep = 0, kkt = 0, clsMis = 0, mirR = 0, mirU = 0, moved = 0, routed = true; const D = Math.PI / 180;
   const SIG = [-1, 1, -1, 1, 1, -1];   // mirror correspondence of the solved coordinates (hip twist, flexion, abduction; knee flexion; ankle DF, inversion): L x_i ↔ R σ_i·x_i (the hard-limit boxes map onto each other)
   for (const id of ["V2-REF", "V2-short-legs", "V2-198-92"]) { const spec = generateSpec(VARIATION_SET.find(h => h.id === id)), map = spec.bodies.map(b => spec.bodies.findIndex(x => x.name === lr(b.name)));
     for (const [key, T, leg] of [["U:R", 8.0, 0], ["T5", 6.0, 0]]) { const s = new G3Sim(J, spec, g3Def(key), {}), orig = s.ctrl.legIK.bind(s.ctrl); let want = false, cap = null;
@@ -134,16 +135,18 @@ function refLegIK(ctrl, st, ev, n, pP, qP, footPose) { const P = ctrl.P, ks = ct
         if (!inside(B.x)) inBox = false;
         if (U.err <= 1e-6 && inside(U.x)) { same++; if (!(B.err <= 1e-12 && Math.max(...B.x.map((v, i) => Math.abs(v - U.x[i]))) <= 1e-9)) sameMis++; }
         else if (U.err <= 1e-6) { inval++; if (B.err <= 1e-12) invalAlt++; else if (B.err > 1e-6) invalRep++; }
-        if (B.err > 1e-6) { const F = ctrl.legChain(cap.st, ev, leg, cap.pP, cap.qP, footA), r = F.fk(B.x), Jm = F.jac(B.x), g = Jm.map(col => col.reduce((a, v, i) => a + v * r[i], 0));   // KKT of ½‖r‖² on the box
+        if (B.err > 1e-6) { nUnr++; const F = ctrl.legChain(cap.st, ev, leg, cap.pP, cap.qP, footA), r = F.fk(B.x), Jm = F.jac(B.x), g = Jm.map(col => col.reduce((a, v, i) => a + v * r[i], 0));   // KKT of ½‖r‖² on the box
           kkt = Math.max(kkt, ...g.map((gi, i) => (B.x[i] <= lo[i] ? Math.max(0, -gi) : B.x[i] >= hi[i] ? Math.max(0, gi) : Math.abs(gi)))); }
         if ((B.err <= 1e-6) !== (BM.err <= 1e-6)) clsMis++; else { const d = Math.max(...B.x.map((v, i) => Math.abs(v - SIG[i] * BM.x[i]))); if (B.err <= 1e-6) mirR = Math.max(mirR, d); else mirU = Math.max(mirU, d); } }
       s.destroy(); } }
   check("R4.a", "bounded IK: opt-in (STAND.ikBounds false by default; the option routes legIK to legIKBounded)", routed, `default off, option honoured: ${routed}`);
   check("R4.b", "bounded IK: every returned solution inside the anatomical hard limits", inBox, `${n} solves`);
   check("R4.c", "bounded IK: equals the unconstrained IK wherever that solution is anatomically valid (≤ 1e-9 rad, solved ≤ 1e-12)", sameMis === 0, `${sameMis} of ${same} differ`);
-  // KKT residual of the unreached iterates is REPORTED, not gated: on targets both geometrically and anatomically unreachable the cost is nearly flat at the
-  // box optimum and ≤ 30 LM iterations stop short of it (overnight Phase C finding: residual within 0.2 mm of the optimum, joint coordinates up to 1.9°)
-  check("R4.d", "bounded IK: an anatomically invalid unconstrained solution is never accepted — solved on a valid branch (≤ 1e-12) or reported unreachable (> 1e-6)", invalAlt + invalRep === inval, `${inval} invalid: ${invalAlt} valid branch, ${invalRep} reported; KKT residual of unreached iterates ≤ ${e(kkt)} (reported)`);
+  // overnight Phase C: the LM iterate alone stopped short of the box optimum on unreached targets (KKT up to 7.5e-4; reported then). Since the Newton
+  // fallback refinement (user decision 2026-10-04, Decision 2) the returned fallback pose IS the box-constrained optimum: KKT gated at 1e-7
+  // (study max 4.4e-9 over 5,368 unreached targets)
+  check("R4.d", "bounded IK: an anatomically invalid unconstrained solution is never accepted — solved on a valid branch (≤ 1e-12) or reported unreachable (> 1e-6)", invalAlt + invalRep === inval, `${inval} invalid: ${invalAlt} valid branch, ${invalRep} reported`);
+  check("R4.g", "bounded IK fallback: every unreached target returns the box-constrained least-squares optimum (KKT ≤ 1e-7)", kkt <= 1e-7 && nUnr > 0, `${nUnr} unreached solves: KKT max ${e(kkt)}`);
   check("R4.e", "bounded IK: L/R mirror-equivariant (classification; solution reached ≤ 1e-12 rad, unreached ≤ 1e-6 rad)", clsMis === 0 && mirR <= 1e-12 && mirU <= 1e-6, `${clsMis} classification mismatches; Δ reached ≤ ${e(mirR)}, unreached ≤ ${e(mirU)} rad`);
   check("R4.f", "bounded IK: the target is never modified", moved === 0, `${moved} modified`); }
 const fail = results.filter(r => !r.pass).length; console.log(`\ncomponent regressions: ${results.length - fail}/${results.length} pass`);
