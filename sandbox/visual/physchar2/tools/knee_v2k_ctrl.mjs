@@ -27,7 +27,8 @@ while (true) { const up0 = s.up, st0 = s.st; if (!s.tick()) break; const t = s.n
     // knee axial (twist row 0): passive = motor impulse / dt + explicit remainder; actuator = the actuation layer's own ledger
     const j = spec.joints[k], ax = Q.rot(Q.mul(st0[j.childIndex].rot, j.F2), AX[0]), wm = (b) => V.sc(V.add(st0[b].w, s.st[b].w), 0.5), wr = V.dot(V.sub(wm(j.childIndex), wm(j.parentIndex)), ax);
     a.Wpas += (s.w.lambdaMotor(k)[0] / s.dt + up0.joints[k].Texp[0]) * wr * s.dt; });
-  LJ.forEach((k, n) => { const v = decompose(ev.qs[k]), th = [v.tw, v.sy, v.sz]; s.P.jd[k].axes.forEach((a, i) => { if (!a || !a.hard || a.v2k) return; const h = s.P.hardOf(k, i, ev.qs);   // v2k knee axial: its calibrated bound is reported above (boundMargin) lim[n][i] = Math.min(lim[n][i], (th[i] - h[0]) * D, (h[1] - th[i]) * D); }); });
+  // hard-limit margins (report); the v2k knee axial is skipped: its calibrated bound is reported above (boundMargin)
+  LJ.forEach((k, n) => { const v = decompose(ev.qs[k]), th = [v.tw, v.sy, v.sz]; s.P.jd[k].axes.forEach((a, i) => { if (!a || !a.hard || a.v2k) return; const h = s.P.hardOf(k, i, ev.qs); lim[n][i] = Math.min(lim[n][i], (th[i] - h[0]) * D, (h[1] - th[i]) * D); }); });
   slip = Math.max(slip, ...FT.map((i, n) => Math.hypot(s.st[i].pos[0] - ft0[n][0], s.st[i].pos[2] - ft0[n][2]) * 1000));
   if (s.n % 24 === 0) rows.push({ t, knees: KN.map(k => ({ flex: s.P.anat(s.P.jd[k], ev.qs[k], "flex"), rot: s.P.anat(s.P.jd[k], ev.qs[k], "rot") })) }); }
 KN.forEach((k, n) => { const L = s.act.led[k] && s.act.led[k][0]; acc[n].Wact = L ? L.W : 0; });
