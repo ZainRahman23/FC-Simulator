@@ -52,6 +52,10 @@ export const STAND = {
   ikFeasible: false,      // posture IK: the pelvis height target is lowered to the highest height at which BOTH legs keep their reference hip–ankle length
                           // (reference knee flexion) — the pendulum arc of a lateral COM shift. G3 measured deficiency: at fixed height a ≥ 7 cm shift made the
                           // target unreachable, the IK fell back to the current configuration (zero posture error), and pelvis yaw crept 9.5° (G3-A5)
+  ikBounds: false,        // OPT-IN, NOT ADOPTED (overnight Phase C — a G4 design decision): the leg IK keeps its six solved coordinates inside the ANATOMICAL
+                          // hard limits (active-set projected LM, legIKBounded). Off = the validated unconstrained IK. Measured (tools/ik_g4_study.mjs, 20,736
+                          // G4-style targets × 8 bodies): the unconstrained IK reaches 1,336 targets only with an anatomically invalid pose (hip rotation ≤ 14.7°,
+                          // ankle DF ≤ 10.4° beyond the limit, 18 hyperextended knees); the bounded IK classifies them unreachable and returns the closest valid pose
   timeIK: false,          // DIAGNOSTIC instrumentation (G3 tables): time the leg IK; OFF in production — not part of the controller budget (D5)
   ikRefTwist: false,      // EVALUATED, NOT ADOPTED (G3-A7). Posture IK: the redundant axial-twist DOFs (knee axial rotation, PASSIVE ankle ab/adduction) are solved at their REFERENCE
                           // values instead of their current ones, so the actuated hip / knee rotators turn the leg back until the passive ankle axis is at
@@ -235,7 +239,8 @@ StandController.prototype.setState = function (x) { const y = JSON.parse(JSON.st
 // s = 0.8 … 1.05 in 13 directions, mirrored, perturbed starts): every reachable target converged ≤ 1e-12, mirror difference ≤ 3e-15 m (≤ 1e-8 m
 // at / beyond the boundary), no reachability flip from start perturbations, and — unlike undamped LM — no solution on the hyperextended-knee
 // branch from the controller's warm start. Returns { targets, err, it, x }.
-StandController.prototype.legIK = function (st, ev, n, pP, qP, footPose = null) {
+// The chain (staged FK, central-difference Jacobian, warm start) is built by legChain, shared with the opt-in bounded variant below.
+StandController.prototype.legChain = function (st, ev, n, pP, qP, footPose) {
   const P = this.P, ks = this.legK[n], d = ks.map(k => P.jd[k]), a = ks.map(k => this.anchor[k]), cur = ks.map(k => { const v = decompose(ev.qs[k]); return [v.tw, v.sy, v.sz]; });
   if (this.o.ikRefTwist) { const rf = ks.map(k => { const v = decompose(this.qref[k]); return v.tw; }); cur[1] = [rf[1], cur[1][1], cur[1][2]]; cur[2] = [rf[2], cur[2][1], cur[2][2]]; }   // twist DOFs at the reference
   // forward kinematics, staged so that a Jacobian column only recomputes the segments its DOF moves (overnight D: exact reuse — every reused value
@@ -251,7 +256,12 @@ StandController.prototype.legIK = function (st, ev, n, pP, qP, footPose = null) 
     return [0, 1, 2, 3, 4, 5].map(c => { const xp = x.slice(), xm = x.slice(); xp[c] += IK.h; xm[c] -= IK.h;
       const ev2 = (y) => (c < 3 ? res(shank(thigh(qhOf(y)), qk0), qa0) : c === 3 ? res(shank(T0, qkOf(y)), qa0) : res(S0, qaOf(y)));
       const rp = ev2(xp), rm = ev2(xm); return rp.map((v, i) => (v - rm[i]) / (2 * IK.h)); }); };
-  let x = [cur[0][0], cur[0][1], cur[0][2], cur[1][1], cur[2][1], cur[2][2]], r = fk(x), err = dnorm(...r), it = 0, mu = IK.mu0, lastJ = null, lastH = null;
+  return { ks, cur, fk, jac, x0: [cur[0][0], cur[0][1], cur[0][2], cur[1][1], cur[2][1], cur[2][2]] };
+};
+StandController.prototype.legIK = function (st, ev, n, pP, qP, footPose = null) {
+  if (this.o.ikBounds) return this.legIKBounded(st, ev, n, pP, qP, footPose);
+  const { ks, cur, fk, jac, x0 } = this.legChain(st, ev, n, pP, qP, footPose);
+  let x = x0, r = fk(x), err = dnorm(...r), it = 0, mu = IK.mu0, lastJ = null, lastH = null;
   for (; it < IK.maxIt && err > IK.tol; it++) {
     const Jm = jac(x), g = Jm.map(col => col[0] * r[0] + col[1] * r[1] + col[2] * r[2] + col[3] * r[3] + col[4] * r[4] + col[5] * r[5]);
     if (dnorm(...g) < IK.gradTol) break;   // stationary: the least-squares optimum of an unreachable target
@@ -269,7 +279,40 @@ StandController.prototype.legIK = function (st, ev, n, pP, qP, footPose = null) 
   const tg = [[ks[0], pyr(x[0], x[1], x[2])], [ks[1], pyr(cur[1][0], x[3], cur[1][2])]]; if (footPose) tg.push([ks[2], pyr(cur[2][0], x[4], x[5])]);   // held foot: the ankle target too
   return { targets: tg, err, it, x };
 };
-export const IK = { h: 1e-6, tol: 1e-12, maxIt: 12, mu0: 1e-2, muMin: 1e-12, gradTol: 1e-14,
+// BOUNDED leg IK (opt-in, o.ikBounds; overnight Phase C candidate, NOT adopted — which limits and what to do with an anatomically unreachable
+// foothold are G4 decisions). The same LM, residual, staged FK, Jacobian and polish as legIK, with the six solved coordinates (hip twist /
+// flexion / abduction, knee flexion, ankle DF / inversion) kept inside the joint's ANATOMICAL hard limits (spec joints[k].limits.hard):
+//   • the warm start is clamped into the box;
+//   • active set: a coordinate on a bound whose descent direction leaves the box is held; the damped Gauss–Newton step is solved on the free
+//     coordinates only and the trial point is projected onto the box (accepted iff the residual decreases);
+//   • stop at a residual of 1e-12 (anatomically reached); otherwise the target is anatomically unreachable — err REPORTED (> 1e-6), the target
+//     never moved — and the returned pose is the descent iterate after ≤ IK.maxItBounded iterations or at a vanishing projected gradient. It is
+//     NOT guaranteed to be the exact box-constrained optimum: where the target is also geometrically unreachable the cost is nearly flat there,
+//     and 30 iterations stop within 0.2 mm (residual) but up to 1.9° (joint coordinates) of it (tools/v2_component_regressions.mjs R4.d note).
+// The non-solved twist DOFs (knee axial rotation, passive ankle ab/adduction) stay at their current values, as in legIK. Study evidence
+// (tools/ik_g4_study.mjs): on 20,736 targets × 8 bodies, 0 L/R classification mismatches, one valid solution per reachable target from 12
+// seeded starts, and the warm-start solution is the closest valid one. Returns { targets, err, it, x, atBound }.
+StandController.prototype.legIKBounded = function (st, ev, n, pP, qP, footPose = null) {
+  const { ks, cur, fk, jac, x0 } = this.legChain(st, ev, n, pP, qP, footPose), lim = ks.map(k => this.spec.joints[k].limits.hard);
+  const lo = [lim[0].lo[0], lim[0].lo[1], lim[0].lo[2], lim[1].lo[1], lim[2].lo[1], lim[2].lo[2]], hi = [lim[0].hi[0], lim[0].hi[1], lim[0].hi[2], lim[1].hi[1], lim[2].hi[1], lim[2].hi[2]];
+  const clamp = (y) => y.map((v, i) => Math.min(hi[i], Math.max(lo[i], v))), gOf = (Jm, r) => Jm.map(col => col[0] * r[0] + col[1] * r[1] + col[2] * r[2] + col[3] * r[3] + col[4] * r[4] + col[5] * r[5]);
+  const step = (H, g, free, mu) => solveN(free.map(i => free.map(c => (i === c ? H[i][c] + mu * (1 + H[i][i]) : H[i][c]))), free.map(i => -g[i]));
+  let x = clamp(x0), r = fk(x), err = dnorm(...r), it = 0, mu = IK.mu0, lastJ = null, lastH = null, lastFree = null;
+  for (; it < IK.maxItBounded && err > IK.tol; it++) {
+    const Jm = jac(x), g = gOf(Jm, r), free = [0, 1, 2, 3, 4, 5].filter(i => !((x[i] <= lo[i] && g[i] > 0) || (x[i] >= hi[i] && g[i] < 0)));
+    if (!free.length || Math.sqrt(free.reduce((s2, i) => s2 + g[i] * g[i], 0)) < IK.gradTol) break;   // stationary on the box: the constrained optimum
+    const H = Jm.map(ci => Jm.map(cj => ci[0] * cj[0] + ci[1] * cj[1] + ci[2] * cj[2] + ci[3] * cj[3] + ci[4] * cj[4] + ci[5] * cj[5])); lastJ = Jm; lastH = H; lastFree = free;
+    let accepted = false;
+    for (let tries = 0; tries < 8; tries++) { const dx = step(H, g, free, mu); if (!dx) { mu *= 10; continue; }
+      const xn = x.slice(); free.forEach((i, k) => { xn[i] += dx[k]; }); const xc = clamp(xn), rn = fk(xc), en = dnorm(...rn);
+      if (en < err) { x = xc; r = rn; err = en; mu = Math.max(IK.muMin, mu / 10); accepted = true; break; } mu *= 10; }
+    if (!accepted) break; }
+  if (IK.polish === "stale" && err <= IK.tol && err > 0 && lastH) { const dx = step(lastH, gOf(lastJ, r), lastFree, mu);   // the adopted polish, on the last free set
+    if (dx) { const xn = x.slice(); lastFree.forEach((i, k) => { xn[i] += dx[k]; }); const xc = clamp(xn), rn = fk(xc), en = dnorm(...rn); if (en <= err) { x = xc; r = rn; err = en; } } }
+  const tg = [[ks[0], pyr(x[0], x[1], x[2])], [ks[1], pyr(cur[1][0], x[3], cur[1][2])]]; if (footPose) tg.push([ks[2], pyr(cur[2][0], x[4], x[5])]);
+  return { targets: tg, err, it, x, atBound: x.map((v, i) => v <= lo[i] || v >= hi[i]) };
+};
+export const IK = { h: 1e-6, tol: 1e-12, maxIt: 12, maxItBounded: 30, mu0: 1e-2, muMin: 1e-12, gradTol: 1e-14,
   polish: (typeof process !== "undefined" && process.env && process.env.V2_IK_POLISH) || "stale" };   // "stale" (adopted) | "none" (diagnostic env selector, Node only)
 function solveN(M, y) { const n = y.length, a = M.map((r, i) => [...r, y[i]]); for (let c = 0; c < n; c++) { let p = c; for (let r = c + 1; r < n; r++) if (Math.abs(a[r][c]) > Math.abs(a[p][c])) p = r; if (Math.abs(a[p][c]) < 1e-14) return null; [a[c], a[p]] = [a[p], a[c]];
     for (let r = 0; r < n; r++) if (r !== c) { const f = a[r][c] / a[c][c]; for (let k = c; k <= n; k++) a[r][k] -= f * a[c][k]; } } return a.map((r, i) => r[n] / r[i]); }

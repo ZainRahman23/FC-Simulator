@@ -1,0 +1,36 @@
+--- /Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v2/sandbox/visual/physchar2/ctrl/v2_stand.js	2026-10-04 03:52:20
++++ ctrl/v2_stand.js	2026-10-04 03:57:13
+@@ -93,7 +93,7 @@
+     // (overnight A1, tools/region_study.mjs). Region = canonical convex hull of the inset vertices: every true vertex keeps its 5 mm radial inset,
+     // only the dent fills (+1.0 … 1.3 % area); mirrored boots give mirrored regions (user decision 2026-10-04 §1; the earlier hull2-based region
+     // differed by 4.8 µm L/R — G3 J2a finding 1). Former constructions preserved in the history and in symmetry_corrections/.
+-    this.sole = this.feet.map(f => { const s = bootSole(B[f]); return { y0: s.y0, poly: opts.footRegion ? opts.footRegion(f) : usableRegion(s.pts, this.o.footInset) }; });
++    this.sole = this.feet.map(f => { const s = bootSole(B[f]); return { y0: s.y0, poly: opts.footRegion ? opts.footRegion(f) : insetPoly(hull2Canonical(s.pts), this.o.footInset) }   /* ATTRIBUTION TREE: 7eb6248 region */; });
+     // reference pose (posture preference) and body-scaled gains from it
+     const S = posedBodies(spec, stance.angles, { pos: null, rot: stance.pelvisRot }), com = (ids) => { let m = 0, c = [0, 0, 0]; for (const i of ids) { c = V.add(c, V.sc(V.add(S[i].pos, Q.rot(S[i].rot, B[i].comLocal)), B[i].mass)); m += B[i].mass; } return { m, c: V.sc(c, 1 / m) }; };
+     this.qref = passive.jd.map(d => passive.qcs(d, S.map(s => s.rot)));
+@@ -335,11 +335,7 @@
+ // vertex into a shallow reflex vertex — so ~2.7 % of the true region was reported outside and clampPoly / polyDist acted on wrong membership there
+ // (both the former and the canonical regions; tools/region_study.mjs). Crossing-number test; points on the boundary count as inside, as before;
+ // identical answers for convex polygons; mirror-invariant (the parity of crossings is the same to either side).
+-export function insidePoly(poly, q) { let inside = false;
+-  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) { const a = poly[j], b = poly[i], cr = (b[0] - a[0]) * (q[1] - a[1]) - (b[1] - a[1]) * (q[0] - a[0]);
+-    if (cr === 0 && Math.min(a[0], b[0]) <= q[0] && q[0] <= Math.max(a[0], b[0]) && Math.min(a[1], b[1]) <= q[1] && q[1] <= Math.max(a[1], b[1])) return true;
+-    if ((a[1] > q[1]) !== (b[1] > q[1]) && q[0] < (b[0] - a[0]) * (q[1] - a[1]) / (b[1] - a[1]) + a[0]) inside = !inside; }
+-  return inside; }
++export function insidePoly(poly, q) { let s = 0; for (let i = 0; i < poly.length; i++) { const a = poly[i], b = poly[(i + 1) % poly.length], cr = (b[0] - a[0]) * (q[1] - a[1]) - (b[1] - a[1]) * (q[0] - a[0]); if (cr !== 0) { if (s === 0) s = Math.sign(cr); else if (Math.sign(cr) !== s) return false; } } return true; }   /* ATTRIBUTION TREE: 7eb6248 inside test */
+ // signed distance of q to a simple polygon (+ inside)
+ export function polyDist(poly, q) { let d = Infinity; for (let i = 0; i < poly.length; i++) { const a = poly[i], b = poly[(i + 1) % poly.length], ex = b[0] - a[0], ez = b[1] - a[1], L = dnorm(ex, ez), t = Math.max(0, Math.min(1, ((q[0] - a[0]) * ex + (q[1] - a[1]) * ez) / (L * L))); d = Math.min(d, dnorm(q[0] - a[0] - t * ex, q[1] - a[1] - t * ez)); } return insidePoly(poly, q) ? d : -d; }
+ // the usable CoP region of one boot (foot-local [x, z]): canonical hull → radial inset d → canonical convex hull (strictly convex, CCW from min z)
+--- /Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v2/sandbox/visual/physchar2/tools/g3_run.js	2026-10-03 16:14:21
++++ tools/g3_run.js	2026-10-04 03:57:13
+@@ -15,7 +15,8 @@
+ const here = path.dirname(fileURLToPath(import.meta.url)), ROOT = path.resolve(here, "../../../.."), OUT = path.join(ROOT, "review_artifacts/physical_character_v2/g3/json"), VEND = path.join(here, "../vendor/jolt-physics.wasm-compat.js");
+ const DIR8 = ["F", "B", "L", "R", "FL", "FR", "BL", "BR"], PUSH = [5, 10, 15, 20], SPEEDS = [4, 2, 1, 0.75, 0.5, 0.25];
+ // ── the job list ── (key = g3Def scenario key; stand / stance / sup = report-only overrides)
+-function jobs(only) { const J = [], add = (group, o) => { if (!only || only.includes(group)) J.push({ group, human: "V2-REF", ...o }); };
++const ATTR = process.env.ATTR_KEYS ? process.env.ATTR_KEYS.split(";") : null;   /* ATTRIBUTION TREE: run only the listed group|key|eval jobs */
++function jobs(only) { const J = [], add = (group, o) => { if ((!only || only.includes(group)) && (!ATTR || ATTR.includes(group + "|" + o.key + "|" + (o.eval || "")))) J.push({ group, human: "V2-REF", ...o }); };
+   for (const k of ["T0", "T1", "T2", "T3", "T4", "T5", "T6"]) add(k, { key: k });
+   for (const st of ["R", "L"]) add("U", { key: `U:${st}` });
+   for (const st of ["R", "L"]) for (const T of SPEEDS) add("T7", { key: `T7:${st}:${T}` });

@@ -1,0 +1,33 @@
+V2-165-62: 2592 rows
+V2-175-70: 5184 rows
+V2-REF: 7776 rows
+V2-190-85: 10368 rows
+V2-198-92: 12960 rows
+V2-long-legs: 15552 rows
+V2-short-legs: 18144 rows
+V1-matched: 20736 rows
+| target family | n | geometrically reachable | anatomically reachable (bounded) | U solution violates a limit | knee hyperextension (U) | ≥2 valid solutions | warm start = closest | L/R class mismatch U / B |
+|---|---|---|---|---|---|---|---|---|
+| short forward | 1440 | 1280 | 1280 | 0 | 0 | 0 | 1280/1280 | 0 / 0 |
+| medium forward | 1440 | 1280 | 1149 | 131 | 0 | 0 | 1149/1149 | 0 / 0 |
+| long forward | 1440 | 720 | 560 | 160 | 0 | 0 | 560/560 | 0 / 0 |
+| very long forward | 1440 | 80 | 60 | 20 | 16 | 0 | 60/60 | 0 / 0 |
+| slight backward | 1440 | 1280 | 1124 | 156 | 0 | 0 | 1124/1124 | 0 / 0 |
+| inward (crossing) | 1440 | 1440 | 1420 | 20 | 0 | 0 | 1420/1420 | 0 / 0 |
+| far crossing | 1440 | 1440 | 1349 | 91 | 0 | 0 | 1349/1349 | 0 / 0 |
+| outward | 1440 | 1280 | 1191 | 89 | 0 | 0 | 1191/1191 | 0 / 0 |
+| far outward | 1440 | 1280 | 1015 | 265 | 0 | 0 | 1015/1015 | 0 / 0 |
+| diagonal out | 1440 | 960 | 790 | 170 | 0 | 0 | 790/790 | 0 / 0 |
+| diagonal in | 1440 | 1280 | 1074 | 206 | 2 | 0 | 1074/1074 | 0 / 0 |
+| wider short step | 1440 | 1280 | 1260 | 20 | 0 | 0 | 1260/1260 | 0 / 0 |
+| narrower short step | 1440 | 1280 | 1272 | 8 | 0 | 0 | 1272/1272 | 0 / 0 |
+| reach sweep forward | 672 | 608 | 608 | 0 | 0 | 0 | 608/608 | 0 / 0 |
+| reach sweep outward | 672 | 608 | 608 | 0 | 0 | 0 | 608/608 | 0 / 0 |
+| reach sweep down-forward | 672 | 608 | 608 | 0 | 0 | 0 | 608/608 | 0 / 0 |
+pelvis lowered 0 cm: 6912 targets, geometric 4240, anatomical 3968, U violates a limit 272, knee hyperextension (U) 2, bounds active in B 0, ≥2 valid solutions 0
+pelvis lowered 5 cm: 6912 targets, geometric 6032, anatomical 5621, U violates a limit 411, knee hyperextension (U) 8, bounds active in B 0, ≥2 valid solutions 0
+pelvis lowered 10 cm: 6912 targets, geometric 6432, anatomical 5779, U violates a limit 653, knee hyperextension (U) 8, bounds active in B 0, ≥2 valid solutions 0
+
+all: 20736 targets; geometric 16704, anatomical 15368; geometric-but-not-anatomical 1336; anatomical-but-not-geometric 0
+mirror: U class mismatches 0, B class mismatches 0; solution mirror Δ U max 5.20e-11 m, B max 8.46e-8 m
+cost: U iterations mean 7.4, µs p50 125; B iterations mean 10.1, µs p50 164; knee/ankle twists inside limits at the start: true

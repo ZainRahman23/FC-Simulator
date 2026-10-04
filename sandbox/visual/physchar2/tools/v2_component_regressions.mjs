@@ -7,6 +7,9 @@
 //   R3 leg-IK mirror-equivariance (§2): the production legIK, on real and reach-boundary problems of several morphologies, and on their exact mirror
 //      images (other leg): identical reachability classification, mirrored solutions (reachable ≤ 1e-12 m, unreachable ≤ 1e-6 m), reachable
 //      targets solved to ≤ 1e-12, unreachable ones reported (residual > 1e-6), the target never moved.
+//   R4 opt-in BOUNDED leg IK (overnight Phase C; o.ikBounds, NOT adopted): off by default; every solution inside the anatomical hard limits;
+//      identical to the unconstrained IK wherever that one's solution is anatomically valid; anatomically invalid targets either solved on a valid
+//      branch or reported unreachable; L/R mirror-equivariant (with the σ coordinate correspondence); the target never moved.
 // usage: node tools/v2_component_regressions.mjs [--json=<out>]     exit code 1 on any failure
 import fs from "fs"; import path from "path"; import { fileURLToPath } from "url";
 import { loadJolt, unitQ } from "../core/v2_jolt.js"; import { generateSpec } from "../spec/v2_spec.js"; import { VARIATION_SET } from "../spec/v2_human.js";
@@ -113,6 +116,36 @@ function refLegIK(ctrl, st, ev, n, pP, qP, footPose) { const P = ctrl.P, ks = ct
   check("R3.c", "IK: unreachable targets reported unreachable, optima mirrored (≤ 1e-6 m)", unreachReported && mirU <= 1e-6, `${unre} pairs: all reported (residual > 1e-6): ${unreachReported}; mirror Δ ≤ ${e(mirU)} m`);
   check("R3.d", "IK: the target is never modified", moved === 0, `${moved} modified`);
   check("R3.e", "IK: production (staged FK) equals the plain reference implementation bit for bit", refMis === 0, `${refMis} of ${n} solves differ`); }
+// ── R4 opt-in bounded leg IK: real swing-ready / near-single-support states, G4-style targets (forward, outward, crossing, lifted, foot yaw ±45°) ──
+{ let n = 0, inBox = true, same = 0, sameMis = 0, inval = 0, invalAlt = 0, invalRep = 0, kkt = 0, clsMis = 0, mirR = 0, mirU = 0, moved = 0, routed = true; const D = Math.PI / 180;
+  const SIG = [-1, 1, -1, 1, 1, -1];   // mirror correspondence of the solved coordinates (hip twist, flexion, abduction; knee flexion; ankle DF, inversion): L x_i ↔ R σ_i·x_i (the hard-limit boxes map onto each other)
+  for (const id of ["V2-REF", "V2-short-legs", "V2-198-92"]) { const spec = generateSpec(VARIATION_SET.find(h => h.id === id)), map = spec.bodies.map(b => spec.bodies.findIndex(x => x.name === lr(b.name)));
+    for (const [key, T, leg] of [["U:R", 8.0, 0], ["T5", 6.0, 0]]) { const s = new G3Sim(J, spec, g3Def(key), {}), orig = s.ctrl.legIK.bind(s.ctrl); let want = false, cap = null;
+      s.ctrl.legIK = (st, ev, nn, pP, qP, fp) => { if (want && nn === leg && !cap) cap = { st: st.map(b => ({ ...b })), pP: pP.slice(), qP: qP.slice(), foot: fp ? { pos: fp.pos.slice(), rot: fp.rot.slice() } : null }; return orig(st, ev, nn, pP, qP, fp); };
+      while (s.n * s.dt < T - 1e-9 && s.tick()); want = true; s.tick(); s.ctrl.legIK = orig; const ctrl = s.ctrl;
+      if (n === 0) { const sb = new G3Sim(J, spec, g3Def(key), { stand: { ikBounds: true } }); routed = STAND.ikBounds === false && ctrl.o.ikBounds === false && sb.ctrl.o.ikBounds === true; sb.destroy(); }
+      const lim = ctrl.legK[leg].map(k => spec.joints[k].limits.hard), lo = [lim[0].lo[0], lim[0].lo[1], lim[0].lo[2], lim[1].lo[1], lim[2].lo[1], lim[2].lo[2]], hi = [lim[0].hi[0], lim[0].hi[1], lim[0].hi[2], lim[1].hi[1], lim[2].hi[1], lim[2].hi[2]];
+      const inside = (x) => x.every((v, i) => v >= lo[i] && v <= hi[i]), ev = s.P.compute(cap.st, s.dt).ev, stM = map.map(i => cap.st[i]).map(q => ({ pos: m3(q.pos), rot: mq(q.rot), com: m3(q.com), v: m3(q.v), w: mw(q.w) })), evM = s.P.compute(stM, s.dt).ev;
+      const ft0 = cap.foot || cap.st[ctrl.feet[leg]], fw = Q.rot(cap.st[ctrl.feet[1 - leg]].rot, [0, 0, 1]), hd = V.norm([fw[0], 0, fw[2]]), out = V.sc([hd[2], 0, -hd[0]], leg === 0 ? -1 : 1);
+      for (const hgt of [0, 0.05]) for (const [f, l] of [[0.15, 0], [0.30, 0], [0.45, 0], [0, 0.10], [0, 0.20], [0, -0.08], [0.30, 0.10]]) for (const yaw of [0, 30, -30, 45, -45]) {
+        const pos = V.add(V.add(V.add(ft0.pos, V.sc(hd, f)), V.sc(out, l)), [0, hgt, 0]), rot = Q.norm(Q.mul(Q.axis([0, 1, 0], (leg === 0 ? -1 : 1) * yaw * D), ft0.rot)), footA = { pos: pos.slice(), rot: rot.slice() }, footB = { pos: m3(pos), rot: mq(rot) };
+        const U = ctrl.legIK(cap.st, ev, leg, cap.pP, cap.qP, footA), B = ctrl.legIKBounded(cap.st, ev, leg, cap.pP, cap.qP, footA), BM = ctrl.legIKBounded(stM, evM, 1 - leg, m3(cap.pP), mq(cap.qP), footB); n++;
+        if (footA.pos.some((v, i) => v !== pos[i]) || footB.pos.some((v, i) => v !== m3(pos)[i])) moved++;
+        if (!inside(B.x)) inBox = false;
+        if (U.err <= 1e-6 && inside(U.x)) { same++; if (!(B.err <= 1e-12 && Math.max(...B.x.map((v, i) => Math.abs(v - U.x[i]))) <= 1e-9)) sameMis++; }
+        else if (U.err <= 1e-6) { inval++; if (B.err <= 1e-12) invalAlt++; else if (B.err > 1e-6) invalRep++; }
+        if (B.err > 1e-6) { const F = ctrl.legChain(cap.st, ev, leg, cap.pP, cap.qP, footA), r = F.fk(B.x), Jm = F.jac(B.x), g = Jm.map(col => col.reduce((a, v, i) => a + v * r[i], 0));   // KKT of ½‖r‖² on the box
+          kkt = Math.max(kkt, ...g.map((gi, i) => (B.x[i] <= lo[i] ? Math.max(0, -gi) : B.x[i] >= hi[i] ? Math.max(0, gi) : Math.abs(gi)))); }
+        if ((B.err <= 1e-6) !== (BM.err <= 1e-6)) clsMis++; else { const d = Math.max(...B.x.map((v, i) => Math.abs(v - SIG[i] * BM.x[i]))); if (B.err <= 1e-6) mirR = Math.max(mirR, d); else mirU = Math.max(mirU, d); } }
+      s.destroy(); } }
+  check("R4.a", "bounded IK: opt-in (STAND.ikBounds false by default; the option routes legIK to legIKBounded)", routed, `default off, option honoured: ${routed}`);
+  check("R4.b", "bounded IK: every returned solution inside the anatomical hard limits", inBox, `${n} solves`);
+  check("R4.c", "bounded IK: equals the unconstrained IK wherever that solution is anatomically valid (≤ 1e-9 rad, solved ≤ 1e-12)", sameMis === 0, `${sameMis} of ${same} differ`);
+  // KKT residual of the unreached iterates is REPORTED, not gated: on targets both geometrically and anatomically unreachable the cost is nearly flat at the
+  // box optimum and ≤ 30 LM iterations stop short of it (overnight Phase C finding: residual within 0.2 mm of the optimum, joint coordinates up to 1.9°)
+  check("R4.d", "bounded IK: an anatomically invalid unconstrained solution is never accepted — solved on a valid branch (≤ 1e-12) or reported unreachable (> 1e-6)", invalAlt + invalRep === inval, `${inval} invalid: ${invalAlt} valid branch, ${invalRep} reported; KKT residual of unreached iterates ≤ ${e(kkt)} (reported)`);
+  check("R4.e", "bounded IK: L/R mirror-equivariant (classification; solution reached ≤ 1e-12 rad, unreached ≤ 1e-6 rad)", clsMis === 0 && mirR <= 1e-12 && mirU <= 1e-6, `${clsMis} classification mismatches; Δ reached ≤ ${e(mirR)}, unreached ≤ ${e(mirU)} rad`);
+  check("R4.f", "bounded IK: the target is never modified", moved === 0, `${moved} modified`); }
 const fail = results.filter(r => !r.pass).length; console.log(`\ncomponent regressions: ${results.length - fail}/${results.length} pass`);
 const jo = process.argv.find(a => a.startsWith("--json=")); if (jo) fs.writeFileSync(jo.slice(7), JSON.stringify({ generated: "tools/v2_component_regressions.mjs", date: new Date().toISOString().slice(0, 10), results }, null, 1));
 process.exit(fail ? 1 : 0);

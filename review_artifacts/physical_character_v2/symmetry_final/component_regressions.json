@@ -115,6 +115,42 @@
    "name": "IK: production (staged FK) equals the plain reference implementation bit for bit",
    "pass": true,
    "value": "0 of 558 solves differ"
+  },
+  {
+   "id": "R4.a",
+   "name": "bounded IK: opt-in (STAND.ikBounds false by default; the option routes legIK to legIKBounded)",
+   "pass": true,
+   "value": "default off, option honoured: true"
+  },
+  {
+   "id": "R4.b",
+   "name": "bounded IK: every returned solution inside the anatomical hard limits",
+   "pass": true,
+   "value": "420 solves"
+  },
+  {
+   "id": "R4.c",
+   "name": "bounded IK: equals the unconstrained IK wherever that solution is anatomically valid (≤ 1e-9 rad, solved ≤ 1e-12)",
+   "pass": true,
+   "value": "0 of 166 differ"
+  },
+  {
+   "id": "R4.d",
+   "name": "bounded IK: an anatomically invalid unconstrained solution is never accepted — solved on a valid branch (≤ 1e-12) or reported unreachable (> 1e-6)",
+   "pass": true,
+   "value": "14 invalid: 0 valid branch, 14 reported; KKT residual of unreached iterates ≤ 7.49e-4 (reported)"
+  },
+  {
+   "id": "R4.e",
+   "name": "bounded IK: L/R mirror-equivariant (classification; solution reached ≤ 1e-12 rad, unreached ≤ 1e-6 rad)",
+   "pass": true,
+   "value": "0 classification mismatches; Δ reached ≤ 1.22e-14, unreached ≤ 3.72e-8 rad"
+  },
+  {
+   "id": "R4.f",
+   "name": "bounded IK: the target is never modified",
+   "pass": true,
+   "value": "0 modified"
   }
  ]
 }
