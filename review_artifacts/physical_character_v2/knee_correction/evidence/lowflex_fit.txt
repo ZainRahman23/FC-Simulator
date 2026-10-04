@@ -1,0 +1,46 @@
+
+INTERNAL: best slack s = 0°, 15 N·m point a15 = 14°, extension factor f0 = 1.2; Σz² = 1.62 over 8 points
+   compatible (Δχ² ≤ 3): s 0–4°, a15 10–16°, f0 0.7–1.2
+   φ  0°    5 N·m: data 9.6 ± 3.5 → model 9.1 (z -0.12)  Hemmerich 2011 0° (M 9.6±4.3, F 9.5±2.7) [SEC Zee 2020]
+   φ 20°    5 N·m: data 10.8 ± 4 → model 7.9 (z -0.72)  Nordt 1999 20° CT n=21 (SD not reported: 4 assumed) [SEC]
+   φ 30°    5 N·m: data 8.8 ± 4.3 → model 7.2 (z -0.37)  Hemmerich 2011 30° (M 8.9±4.8, F 8.8±3.7)
+   φ 30°  2.5 N·m: data 3.7 ± 1.4 → model 4.3 (z 0.42)  Moewis 2016 30° [FT]
+   φ 90°  2.5 N·m: data 4.0 ± 2 → model 4.2 (z 0.11)  Moewis 2016 90° [FT]
+   φ 90°    6 N·m: data 10.0 ± 4 → model 8.1 (z -0.48)  Almquist 2002 90° RSA n=5 (SD not reported: 4 assumed) [SEC]
+   φ 30°   10 N·m: data 11.0 ± 3 → model 11.3 (z 0.10)  Neumann 2015a 30° CT 7–15 (n=6; centre, SD 3 assumed) [FT]
+   φ 30°   15 N·m: data 12.0 ± 3 → model 14.2 (z 0.72)  Neumann 2015a 30° CT 9–15 (centre, SD 3 assumed)
+
+EXTERNAL: best slack s = 0°, 15 N·m point a15 = 25°, extension factor f0 = 0.5; Σz² = 3.19 over 9 points
+   compatible (Δχ² ≤ 3): s 0–5°, a15 22.5–27.5°, f0 0.3–0.75
+   φ  0°    5 N·m: data 6.6 ± 2.8 → model 6.1 (z -0.17)  Hemmerich 2011 0° (M 6.2±3.0, F 7.0±2.6)
+   φ 20°    5 N·m: data 7.4 ± 4 → model 11.7 (z 1.07)  Nordt 1999 20° (SD 4 assumed)
+   φ 30°    5 N·m: data 14.3 ± 5.2 → model 15.2 (z 0.18)  Hemmerich 2011 30° (M 14.6±5.6, F 13.9±4.7)
+   φ 30°  2.5 N·m: data 7.6 ± 3.5 → model 10.4 (z 0.79)  Moewis 2016 30°
+   φ 90°  2.5 N·m: data 10.0 ± 3.1 → model 10.9 (z 0.28)  Moewis 2016 90°
+   φ 90°    6 N·m: data 16.0 ± 4 → model 17.2 (z 0.31)  Almquist 2002 90° (SD 4 assumed)
+   φ 30°    5 N·m: data 18.0 ± 3 → model 15.2 (z -0.93)  Neumann 2015a 30° CT 16–20 (centre, SD 3 assumed)
+   φ 30°   10 N·m: data 22.5 ± 3 → model 20.8 (z -0.57)  Neumann 2015a 22–23
+   φ 30°   15 N·m: data 24.5 ± 3 → model 24.3 (z -0.06)  Neumann 2015a 24–25
+
+JSON {"IR":{"s":0,"a15":14,"f0":1.2,"range":{"s":[0,4],"a15":[10,16],"f0":[0.7,1.2]}},"ER":{"s":0,"a15":25,"f0":0.5,"range":{"s":[0,5],"a15":[22.5,27.5],"f0":[0.3,0.75]}}}
+
+CHOSEN INTERNAL (s 1°, a15 14°, f0 1): Σz² = 2.51 over 8 points
+   φ  0°    5 N·m: data 9.6 ± 3.5 → chosen 7.5 (z -0.60)
+   φ 20°    5 N·m: data 10.8 ± 4 → chosen 7.5 (z -0.83)
+   φ 30°    5 N·m: data 8.8 ± 4.3 → chosen 7.5 (z -0.32)
+   φ 30°  2.5 N·m: data 3.7 ± 1.4 → chosen 4.8 (z 0.76)
+   φ 90°  2.5 N·m: data 4.0 ± 2 → chosen 4.8 (z 0.38)
+   φ 90°    6 N·m: data 10.0 ± 4 → chosen 8.4 (z -0.41)
+   φ 30°   10 N·m: data 11.0 ± 3 → chosen 11.3 (z 0.09)
+   φ 30°   15 N·m: data 12.0 ± 3 → chosen 14.0 (z 0.67)
+
+CHOSEN EXTERNAL (s 1°, a15 25°, f0 0.5): Σz² = 3.38 over 9 points
+   φ  0°    5 N·m: data 6.6 ± 2.8 → chosen 6.3 (z -0.10)
+   φ 20°    5 N·m: data 7.4 ± 4 → chosen 11.8 (z 1.11)
+   φ 30°    5 N·m: data 14.3 ± 5.2 → chosen 15.3 (z 0.21)
+   φ 30°  2.5 N·m: data 7.6 ± 3.5 → chosen 10.6 (z 0.87)
+   φ 90°  2.5 N·m: data 10.0 ± 3.1 → chosen 11.1 (z 0.37)
+   φ 90°    6 N·m: data 16.0 ± 4 → chosen 17.3 (z 0.34)
+   φ 30°    5 N·m: data 18.0 ± 3 → chosen 15.3 (z -0.88)
+   φ 30°   10 N·m: data 22.5 ± 3 → chosen 20.8 (z -0.55)
+   φ 30°   15 N·m: data 24.5 ± 3 → chosen 24.3 (z -0.06)
