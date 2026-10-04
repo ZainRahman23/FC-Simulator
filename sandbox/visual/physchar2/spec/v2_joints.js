@@ -190,6 +190,11 @@ export const constraintParams = (j, a) => decompose(Q.norm(Q.mul(Q.conj(j.Cm), a
 // capOpp(k, dir): isometric capacity (N·m) resisting an excursion past the soft limit on axis k in direction dir (+1 / −1)
 const ENV_K = typeof process !== "undefined" && process.env && process.env.V2_ANKLE_NEUTRAL_K != null && process.env.V2_ANKLE_NEUTRAL_K !== "" ? +process.env.V2_ANKLE_NEUTRAL_K : null;
 export const ankleNeutralKPerDeg = () => (ENV_K != null ? ENV_K : PASSIVE.ankleAxialNeutralKPerDeg);
+// DIAGNOSTIC knee axial envelope (final pre-E1a §3; NOT adopted — the spec knee limits are unchanged): a literature-shaped flexion-dependent envelope
+// (final_pre_e1a/literature/lit2_knee_axial.md): zero c = flex/6 (internal), width scale w = 0.55 + 0.45·clamp(flex/40°, 0, 1), soft [c − 9w, c + 4w],
+// hard [c − 25w, c + 15w] (anatomical deg, + = tibial internal rotation). Selected by PassiveLayer opts.kneeEnvelope or env V2_KNEE_ENVELOPE=lit1 (Node only).
+export const KNEE_ENVELOPE_LIT1 = (f) => { const c = f / 6, w = 0.55 + 0.45 * Math.min(1, Math.max(0, f / 40)); return { soft: [c - 9 * w, c + 4 * w], hard: [c - 25 * w, c + 15 * w] }; };
+export const kneeEnvelopeEnv = () => (typeof process !== "undefined" && process.env && process.env.V2_KNEE_ENVELOPE === "lit1" ? KNEE_ENVELOPE_LIT1 : null);
 export function passiveParams(j, capOpp) {
   return [0, 1, 2].map(i => {
     const lo = j.limits.soft.lo[i], hi = j.limits.soft.hi[i], hlo = j.limits.hard.lo[i], hhi = j.limits.hard.hi[i];

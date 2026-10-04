@@ -69,7 +69,9 @@ export const STAND = {
                           // lifecycle of ctrl/v2_support.js replaces G3's one-tick unl / contactSupport booleans. Continuous support weights s ∈ [0, 1] drive:
                           // heading and balance midpoint (H6, H7), pelvis-height reference and its feasibility cap (H8), support polygon (scaled toward each
                           // foot's centroid, H5), load-share caps, the leg's IK target / pelvis frame, and the leg gains (stance ↔ swing servo, H1, H11);
-                          // self-contact guard on the load reading (H4); hold pose captured once on the turf (H2); debounced, hysteretic transitions (H3)
+                          // self-contact guard on the load reading (H4); hold pose captured once on the turf (H2); debounced, hysteretic transitions (H3).
+                          // A non-supporting leg servos in the ACTUAL pelvis frame (world-space; measured: the posture-frame hold gave 34–44 N·m commanded-torque
+                          // steps at liftoff/touchdown vs 3–7 N·m), with a soft-limit bounded IK; diagnostic lcFrame: "target" restores the G3 posture frame in contact
   timeIK: false,          // DIAGNOSTIC instrumentation (G3 tables): time the leg IK; OFF in production — not part of the controller budget (D5)
   ikRefTwist: false,      // EVALUATED, NOT ADOPTED (G3-A7). Posture IK: the redundant axial-twist DOFs (knee axial rotation, PASSIVE ankle ab/adduction) are solved at their REFERENCE
                           // values instead of their current ones, so the actuated hip / knee rotators turn the leg back until the passive ankle axis is at
@@ -216,7 +218,7 @@ export class StandController {
         if (dh < Ln) pP[1] = Math.min(pP[1], ft.pos[1] + Math.sqrt(Ln * Ln - dh * dh) - (hip[1] - pP[1])); }
       this.pelHT = pP[1];
       const tIK = o.timeIK ? nowMs() : 0; ikT = {}; this.ikRes = [0, 1].map(n => { let r;
-        if (lcT && lcT[n]) { const fr = blendPose({ pos: pP, rot: qP }, { pos: ps.pos, rot: ps.rot }, LC[n].a);   // contact states: the posture (target) pelvis frame, as G3; airborne: blended to the ACTUAL frame (world-space foot servo)
+        if (lcT && lcT[n]) { const fr = blendPose({ pos: pP, rot: qP }, { pos: ps.pos, rot: ps.rot }, o.lcFrame === "target" ? LC[n].a : 1 - sw[n]);   // non-supporting leg: the ACTUAL pelvis frame (world-space hold / servo), blended back to the posture frame by s; (diagnostic lcFrame "target": the posture frame in contact, as G3)
           r = this.legIKBounded(st, ev, n, fr.pos, fr.rot, lcT[n], { limits: "soft", fallback: "none" }); }   // a non-supporting leg never targets beyond its passive (soft) limits — e.g. no hyperextended knee (measured: the unconstrained IK pressed it −2.8° into hyperextension, 18–20 N·m of tissue torque)
         else r = this.legIK(st, ev, n, pP, qP, lcT ? null : this.unl[n] ? this.hold[n] : null);
         for (const [k, q] of r.targets) ikT[k] = q; return r.err; });

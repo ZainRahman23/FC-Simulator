@@ -21,11 +21,17 @@
 //      PROVEN-INFEASIBLE, and the same target made feasible by moving the held knee axial twist is NOT; the 8-D (twist-free) chain equals the
 //      production legChain bit for bit at the held twist values; the opt-in TIGHT twist levers (8-D) also satisfy their rate claims.
 //      Static (no simulation step after the state capture).
+//   R7 G3 → G4 support / contact lifecycle (final pre-E1a stage; ctrl/v2_support.js, EXPERIMENTAL option lifecycle, default OFF): synthetic
+//      sensor sequences (no simulation) — contact flicker never confirms AIRBORNE and leaves the control weights untouched; liftoff is debounced
+//      and the weights move continuously (bounded per-tick change); a touchdown impact without intent is not support, intent + contact is;
+//      a load reading contaminated by self-contact is ignored; the contact anchor is captured on the turf, frozen in the air and re-captured
+//      flat at touchdown; low load does not release a wanted foot; deterministic with an exact getState / setState round trip; a commanded
+//      swing target replaces the anchor; the option is off by default and leaves the default controller state without a key.
 // usage: node tools/v2_component_regressions.mjs [--json=<out>]     exit code 1 on any failure
 import fs from "fs"; import path from "path"; import { fileURLToPath } from "url";
 import { loadJolt, unitQ } from "../core/v2_jolt.js"; import { generateSpec } from "../spec/v2_spec.js"; import { VARIATION_SET } from "../spec/v2_human.js";
 import { G2Sim } from "../gates/v2_g2.js"; import { G3Sim, g3Def } from "../gates/v2_g3.js"; import { G1Sim } from "../gates/v2_g1.js"; import { STAND, insetPoly, insidePoly, clampPoly, usableRegion, IK } from "../ctrl/v2_stand.js";
-import { bootSole, hull2, hull2Canonical } from "../sim/v2_geom.js"; import { pyr, decompose } from "../spec/v2_joints.js"; import { V, Q, unitStates, unitEv, dnorm as dn } from "../core/v2_math.js"; import { certLevers, branchAndBound, knownSolutionPath, chain8 } from "./ik_cert_core.mjs";
+import { bootSole, hull2, hull2Canonical } from "../sim/v2_geom.js"; import { pyr, decompose } from "../spec/v2_joints.js"; import { V, Q, unitStates, unitEv, dnorm as dn } from "../core/v2_math.js"; import { certLevers, branchAndBound, knownSolutionPath, chain8 } from "./ik_cert_core.mjs"; import { SupportLifecycle, LIFECYCLE } from "../ctrl/v2_support.js";
 const here = path.dirname(fileURLToPath(import.meta.url)), J = await loadJolt(path.join(here, "../vendor/jolt-physics.wasm-compat.js")), results = [];
 const check = (id, name, pass, value) => { results.push({ id, name, pass: !!pass, value }); console.log(`${pass ? "PASS" : "FAIL"} ${id.padEnd(6)} ${name}: ${value}`); };
 const m3 = (p) => [-p[0], p[1], p[2]], mq = (q) => [q[0], -q[1], -q[2], q[3]], mw = (w) => [w[0], -w[1], -w[2]], e = (x) => (+x).toExponential(2);
@@ -213,6 +219,45 @@ function refLegIK(ctrl, st, ev, n, pP, qP, footPose) { const P = ctrl.P, ks = ct
     check("R6.e", "tight twist levers (opt-in): 8-D rate claims hold (position rate ≤ lever incl. knee axial ≈ 0; ankle coordinates 0; orientation ≤ 1)", pr <= 1 + 1e-6 && zr === 0 && orr <= 1 + 1e-6,
       `knee-axial lever ${e(T8.lever[3])} m, hip-twist ${T8.lever[0].toFixed(4)} m (generic ${(T8.L1 + T8.L2).toFixed(4)}); max pos rate / lever ${pr.toFixed(9)}, ankle ${zr}, orientation ${orr.toFixed(9)}`); }
   sim.destroy(); }
+// ── R7 support / contact lifecycle (synthetic sequences; W = 700 N, dt = 1/240 s) ──
+{ const W = 700, dt = 1 / 240, pose = (y = 0, yaw = 0, tilt = 0) => ({ pos: [0.1, y, 0.2], rot: Q.norm(Q.mul(Q.axis([0, 1, 0], yaw), Q.axis([1, 0, 0], tilt))) });
+  const run = (L, seq) => { const tr = []; for (const x of seq) { const f = L.update({ Fz: [x.Fz, 600], touch: [x.touch, 8], other: [!!x.other, false] }, () => x.pose || pose(), dt, [x.req ?? null, null]); tr.push({ st: f[0].state, s: f[0].s, a: f[0].a }); } return tr; };
+  const rep = (n, x) => Array.from({ length: n }, () => ({ ...x }));
+  const toTouching = () => { const L = new SupportLifecycle(W); run(L, [...rep(10, { Fz: 300, touch: 8 }), ...rep(60, { Fz: 2, touch: 8, req: 0 })]); return L; };
+  // R7.a flicker: from TOUCHING, touch alternates 8 / 0 every tick for 0.2 s → never AIRBORNE; s and a stay 0
+  { const L = toTouching(), st0 = L.feet[0].state, tr = run(L, Array.from({ length: 48 }, (_, i) => ({ Fz: 0, touch: i % 2 ? 0 : 8, req: 0 })));
+    check("R7.a", "lifecycle: contact flicker (8/0 pieces every tick, 0.2 s) never confirms AIRBORNE; the control weights s, a stay 0", st0 === "TOUCHING" && tr.every(x => x.st !== "AIRBORNE" && x.s === 0 && x.a === 0), `start ${st0}; states ${[...new Set(tr.map(x => x.st))].join("/")}`); }
+  // R7.b liftoff: touch 0 sustained → AIRBORNE after the debounce; a rises continuously (per-tick Δa ≤ 1.5·dt/release)
+  { const L = toTouching(), tr = run(L, rep(80, { Fz: 0, touch: 0, req: 0 })), iA = tr.findIndex(x => x.st === "AIRBORNE"), dA = Math.max(...tr.slice(1).map((x, i) => Math.abs(x.a - tr[i].a)));
+    check("R7.b", "lifecycle: liftoff confirmed after the debounce; airborne weight continuous (Δa per tick ≤ 1.5·dt/release)", iA >= Math.round(LIFECYCLE.debounce / dt) - 1 && tr[tr.length - 1].a === 1 && dA <= 1.5 * dt / LIFECYCLE.release, `AIRBORNE at tick ${iA}, max Δa ${dA.toFixed(4)}`); }
+  // R7.c touchdown: an impact 60 N for 40 ms with no intent → no LOAD_ACCEPT; then intent (requested share 0.5) + contact → LOAD_ACCEPT → SUPPORT with continuous s
+  { const L = toTouching(); run(L, rep(40, { Fz: 0, touch: 0, req: 0 })); const t1 = run(L, [...rep(10, { Fz: 60, touch: 8, req: 0 }), ...rep(30, { Fz: 3, touch: 8, req: 0 })]), noAcc = t1.every(x => x.st !== "LOAD_ACCEPT" && x.st !== "SUPPORT");
+    const t2 = run(L, rep(60, { Fz: 5, touch: 8, req: 0.5 })), iLA = t2.findIndex(x => x.st === "LOAD_ACCEPT"), dS = Math.max(...t2.slice(1).map((x, i) => Math.abs(x.s - t2[i].s)));
+    check("R7.c", "lifecycle: a touchdown impact without intent is not support; intent + contact starts load acceptance after acceptDebounce; s continuous to SUPPORT", noAcc && t1.slice(0, 2).some(x => x.st === "TOUCHDOWN") && iLA >= Math.round(LIFECYCLE.acceptDebounce / dt) - 1 && t2[t2.length - 1].st === "SUPPORT" && dS <= 1.5 * 1.5 * dt / LIFECYCLE.accept,
+      `impact phase: ${[...new Set(t1.map(x => x.st))].join("/")}; LOAD_ACCEPT at tick ${iLA}; end ${t2[t2.length - 1].st}; max Δs ${dS.toFixed(4)}`); }
+  // R7.d self-contact guard: 200 N read while a non-turf contact touches the foot (no request) → not support; the same load without it → LOAD_ACCEPT
+  { const L = toTouching(); L.feet[0].state === "TOUCHING"; const t1 = run(L, rep(40, { Fz: 200, touch: 8, other: true })), t2 = run(L, rep(40, { Fz: 200, touch: 8 }));
+    check("R7.d", "lifecycle: a load reading taken during self-contact is ignored (no support); the same load from the turf alone is accepted", t1.every(x => x.st === "TOUCHING") && t2.some(x => x.st === "LOAD_ACCEPT"), `with self-contact: ${[...new Set(t1.map(x => x.st))].join("/")}; without: ${[...new Set(t2.map(x => x.st))].join("/")}`); }
+  // R7.e anchor: captured on the turf at release; frozen while AIRBORNE (foot pose changes); re-captured at TOUCHDOWN with the landing's position / yaw but the previous height and tilt
+  { const L = new SupportLifecycle(W); run(L, [...rep(10, { Fz: 300, touch: 8, pose: pose(0) }), ...rep(60, { Fz: 2, touch: 8, req: 0, pose: pose(0) })]); const h0 = JSON.stringify(L.feet[0].hold);
+    run(L, rep(40, { Fz: 0, touch: 0, req: 0, pose: pose(0.02, 0.05, 0.03) })); const frozen = JSON.stringify(L.feet[0].hold) === h0, wasAir = L.feet[0].state === "AIRBORNE";
+    run(L, rep(2, { Fz: 0, touch: 2, req: 0, pose: { pos: [0.11, 0.004, 0.21], rot: Q.norm(Q.mul(Q.axis([0, 1, 0], 0.05), Q.axis([1, 0, 0], 0.08))) } })); const h = L.feet[0].hold, yawOf = (q) => { const f = Q.rot(q, [0, 0, 1]); return Math.atan2(f[0], f[2]); };
+    const ok = h.pos[0] === 0.11 && h.pos[2] === 0.21 && h.pos[1] === 0 && Math.abs(yawOf(h.rot) - 0.05) < 1e-12 && Math.abs(Q.rot(h.rot, [0, 1, 0])[1] - 1) < 1e-12;
+    check("R7.e", "lifecycle: contact anchor captured on the turf, frozen while airborne, re-captured flat (landing x/z/yaw, previous height and tilt) at touchdown", frozen && wasAir && L.feet[0].state === "TOUCHDOWN" && ok, `frozen ${frozen}; touchdown anchor x/z ${h.pos[0]}/${h.pos[2]}, y ${h.pos[1]}, flat ${ok}`); }
+  // R7.f low load does not release a foot the plan wants loaded; without intent it does
+  { const L = new SupportLifecycle(W), t1 = run(L, rep(60, { Fz: 2, touch: 8, req: 0.5 })), L2 = new SupportLifecycle(W), t2 = run(L2, rep(60, { Fz: 2, touch: 8, req: 0 }));
+    check("R7.f", "lifecycle: low load releases support only when the plan does not want load on that foot", t1.every(x => x.st === "SUPPORT") && t2.some(x => x.st === "UNLOADING"), `wanted: ${[...new Set(t1.map(x => x.st))].join("/")}; not wanted: ${[...new Set(t2.map(x => x.st))].join("/")}`); }
+  // R7.g determinism + exact getState / setState round trip mid-sequence
+  { const seq = [...rep(10, { Fz: 300, touch: 8 }), ...rep(40, { Fz: 2, touch: 8, req: 0 }), ...rep(30, { Fz: 0, touch: 0, req: 0 }), ...rep(5, { Fz: 50, touch: 8, req: 0.3 }), ...rep(40, { Fz: 80, touch: 8, req: 0.3 })];
+    const A = new SupportLifecycle(W), tA = run(A, seq), B = new SupportLifecycle(W), tB1 = run(B, seq.slice(0, 55)), snap = JSON.parse(JSON.stringify(B.getState())), C = new SupportLifecycle(W); C.setState(snap); const tC = run(C, seq.slice(55));
+    const same = JSON.stringify(tA) === JSON.stringify([...tB1, ...tC]) && JSON.stringify(A.getState()) === JSON.stringify(C.getState());
+    check("R7.g", "lifecycle: deterministic; getState / setState round trip mid-sequence continues bit-identically", same, `identical ${same}`); }
+  // R7.h a commanded swing target replaces the anchor (also in contact); null hands back to the anchor
+  { const L = toTouching(), a0 = JSON.stringify(L.target(0)), sw = pose(0.005); L.setSwingTarget(0, sw); const t1 = JSON.stringify(L.target(0)) === JSON.stringify({ pos: sw.pos, rot: sw.rot }); L.setSwingTarget(0, null);
+    check("R7.h", "lifecycle: a commanded swing target is the leg's target in a contact state; clearing it returns to the contact anchor", t1 && JSON.stringify(L.target(0)) === a0, `commanded used ${t1}; back to anchor ${JSON.stringify(L.target(0)) === a0}`); }
+  // R7.i default off, default controller state without the key
+  { const spec = generateSpec(VARIATION_SET.find(h => h.id === "V2-REF")), s0 = new G3Sim(J, spec, g3Def("T5"), {}); for (let i = 0; i < 12; i++) s0.tick(); const off = STAND.lifecycle == null && !s0.ctrl.lc && !("lc" in s0.ctrl.getState()) && !("lc" in s0.ctrl.info); s0.destroy();
+    check("R7.i", "lifecycle option off by default; the default controller state / info carry no lifecycle key", off, `off ${off}`); } }
 const fail = results.filter(r => !r.pass).length; console.log(`\ncomponent regressions: ${results.length - fail}/${results.length} pass`);
 const jo = process.argv.find(a => a.startsWith("--json=")); if (jo) fs.writeFileSync(jo.slice(7), JSON.stringify({ generated: "tools/v2_component_regressions.mjs", date: new Date().toISOString().slice(0, 10), results }, null, 1));
 process.exit(fail ? 1 : 0);

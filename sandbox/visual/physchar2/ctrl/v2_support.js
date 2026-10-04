@@ -22,7 +22,8 @@
 //                body fell onto it with ξ 10 cm outside the stance foot)
 // A second continuous weight a ∈ [0, 1] (the airborne weight) rises only in confirmed AIRBORNE (smoothstep over `release`) and falls in every
 // contact state (over `accept`). It blends, for a non-supporting leg: the servo's pelvis frame (posture target frame in contact → actual frame
-// airborne), the gains (G3's validated hold gains in contact → the swing servo airborne) and the target (the CONTACT ANCHOR → the swing target).
+// airborne) and the hip / knee gains (G3's validated hold gains in contact → the swing servo airborne). The target is the CONTACT ANCHOR unless a
+// swing target is commanded (setSwingTarget).
 // The contact anchor is the pose captured on the turf when support was released (UNLOADING) and re-captured at TOUCHDOWN: in contact the leg
 // holds the foot where it is on the turf — it never drags it or presses it toward an airborne target (measured: a touchdown 7 mm off the swing
 // target with the swing servo still engaged put 80–180 N on the "unsupported" foot and felled the stance balance).
@@ -33,7 +34,7 @@
 export const LIFECYCLE = {
   loadOff: 0.01, loadOn: 0.03,  // unloaded / loaded thresholds, fraction of body weight (G3's holdUnloaded values) [ENG]
   debounce: 0.0125,             // a transition condition must hold this long (s); 3 ticks at 240 Hz [ENG]
-  touchdownDebounce: 0.0042,    // contact onset after AIRBORNE (s); 1 tick at 240 Hz — touchdown must be seen quickly [ENG]
+  touchdownDebounce: 0.004,     // contact onset after AIRBORNE (s); 1 tick at 240 Hz (≤ dt), 2 at 480 Hz — touchdown must be seen quickly [ENG]
   acceptDebounce: 0.05,         // sustained condition before load acceptance (s): longer than a touchdown impact [ENG]
   wantShare: 0.05,              // requested load share at which a touching foot is brought into support [ENG]
   release: 0.10, accept: 0.10,  // support-weight ramp durations (s) for unloading / load acceptance [ENG]
@@ -81,10 +82,10 @@ export class SupportLifecycle {
     f.state = st; f.cond = null; f.timer = 0; f.since = this.t;
     if (st === "UNLOADING" || (st === "LIFTOFF" && prev === "SUPPORT")) f.prevHold = null;
     if (st === "SUPPORT") { f.hold = null; f.swing = null; f.prevHold = null; } }
-  // the pose the leg servo / IK aims the foot at while s < 1: the contact anchor blended toward the swing target by the airborne weight a
-  // (no swing target set → the anchor itself: the same foothold)
-  target(n) { const f = this.feet[n], anchor = f.prevHold ? blendPose(f.prevHold, f.hold, 1 - f.a) : f.hold;   // after a touchdown the new anchor fades in as a → 0 (no target step)
-    return f.swing && f.a > 0 ? blendPose(anchor, f.swing, f.a) : anchor; }
+  // the pose the leg servo / IK aims the foot at while s < 1: a COMMANDED swing target if one is set (any non-support state — a planned lift
+  // starts from TOUCHING; the commanding script must start its profile at target(n) and hand back with setSwingTarget(n, null) once the foot is
+  // down, so the target is continuous), else the contact anchor (after a touchdown the new anchor fades in as a → 0: no target step)
+  target(n) { const f = this.feet[n]; if (f.swing) return f.swing; return f.prevHold ? blendPose(f.prevHold, f.hold, 1 - f.a) : f.hold; }
   setSwingTarget(n, pose) { this.feet[n].swing = pose ? { pos: pose.pos.slice(), rot: pose.rot.slice() } : null; }
   airborne(n) { const s = this.feet[n].state; return s === "AIRBORNE" || s === "LIFTOFF"; }
   getState() { return { t: this.t, feet: this.feet.map(f => ({ ...f, log: f.log.slice() })) }; }

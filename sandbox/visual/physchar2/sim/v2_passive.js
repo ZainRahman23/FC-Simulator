@@ -14,7 +14,7 @@
 //      an offset beyond DELTA_MAX) is applied as an explicit equal-and-opposite torque pair (small stiffness ⇒ explicit is stable).
 // Motor rows carry ONLY passive tissue (elastic end range + viscous damping). There are no targets toward any posture.
 import { V, Q, dexp, rad, dnorm } from "../core/v2_math.js";
-import { decompose, neutralTerm } from "../spec/v2_joints.js";              // Jolt swing–twist split, pyramid components (deterministic atan2)
+import { decompose, neutralTerm, kneeEnvelopeEnv } from "../spec/v2_joints.js";              // Jolt swing–twist split, pyramid components (deterministic atan2)
 
 // H: finite-difference rotation (rad); DELTA_MAX: largest implicit-spring offset (rad); drive bound: the drive may never exceed what the
 // passive law + damper could produce this step with generous headroom (DTH_MAX deeper excursion, DW_MAX velocity change) — a guard
@@ -65,6 +65,11 @@ export class PassiveLayer {
     this.dep = this.jd.map(() => []);
     for (const d of this.jd) for (const a of d.axes) if (a) this.dep[d.k].push([d.k, a.i]);
     for (const c of this.coup) if (c.in !== c.t && !this.dep[c.in].some(([k, i]) => k === c.t && i === c.axis)) this.dep[c.in].push([c.t, c.axis]);
+    // DIAGNOSTIC (final pre-E1a §3; default off): opts.kneeEnvelope(flexDeg) → { soft: [extDeg, intDeg], hard: [extDeg, intDeg] } (anatomical, + = tibial
+    // internal rotation) REPLACES the knee axial soft (incl. the screw-home scale) and anatomical hard limits by a flexion-dependent envelope. The Jolt
+    // emergency limits are untouched (anatomical hard ± ENGINE_MARGIN, knee axial 20° / 36° — they enclose the diagnostic envelope). Not a model change.
+    this.kneeEnv = typeof opts.kneeEnvelope === "function" ? opts.kneeEnvelope : opts.kneeEnvelope === undefined ? kneeEnvelopeEnv() : null; this.kneeRot = {};
+    if (this.kneeEnv) for (const d of this.jd) if (d.base === "knee") { const i = d.axes.findIndex(a => a && a.key === "rot"); if (i >= 0) this.kneeRot[d.k] = i; }
     this.last = null;
     if (this.enabled) for (const d of this.jd) d.rows.forEach((on, i) => { if (on) world.driveOn(d.k, i); });
   }
@@ -75,32 +80,37 @@ export class PassiveLayer {
     return (ax === "x" ? v.tw : ax === "y" ? v.sy : v.sz) * a.s * 180 / Math.PI; }
   // soft limits of term (k, i) given the current rotations qs (array of all joint q_cs)
   softOf(k, i, qs) {
+    if (this.kneeEnv && this.kneeRot[k] === i) return this.kneeLim(k, i, qs, "soft");
     const a = this.jd[k].axes[i]; let lo = a.soft[0], hi = a.soft[1];
     for (const c of this.coup) { if (c.t !== k || c.axis !== i) continue; const din = this.jd[c.in], x = this.anat(din, qs[c.in], c.inKey), L = c.L;
       if (L.end === "scale") { const f = L.f(x); lo *= f; hi *= f; }
       else { const dAn = rad(L.f(x) - L.base), anatHi = L.end === "hi", toHi = anatHi === (a.s > 0); if (toHi) hi += a.s * dAn; else lo += a.s * dAn; } }
     return [lo, hi];
   }
+  // anatomical hard limits of term (k, i): the spec's, except under the DIAGNOSTIC knee envelope
+  hardOf(k, i, qs) { return this.kneeEnv && this.kneeRot[k] === i ? this.kneeLim(k, i, qs, "hard") : this.jd[k].axes[i].hard; }
+  kneeLim(k, i, qs, which) { const d = this.jd[k], a = d.axes[i], flex = this.anat(d, qs[k], "flex"), e = this.kneeEnv(flex)[which], x = [rad(e[0]), rad(e[1])];   // anatomical [ext, int] → constraint frame (s = axis sign)
+    return a.s > 0 ? x : [-x[1], -x[0]]; }
   // one end-range term: U (J), own-axis generalised torque τ (N·m), own-axis stiffness kθ (N·m/rad) at constraint angle th. Beyond the
   // ANATOMICAL hard limit the C2 end-stop adds ½·kStop·(θ − θh)² (a linear spring), so the passive tissue resists ordinary loading at the
   // anatomical boundary and the Jolt engine stop (further out) is only an emergency stop.
-  term(k, i, th, soft) {   // end-range law (+ C2 end-stop) + the G3-R7 neutral-zone term where the spec defines one (ankle ab/adduction)
-    const r = this.termEnd(k, i, th, soft), a = this.jd[k].axes[i]; if (!a.kN) return r; const n = neutralTerm(a.kN, a.c0, a.zN, th);
+  term(k, i, th, soft, hard) {   // end-range law (+ C2 end-stop) + the G3-R7 neutral-zone term where the spec defines one (ankle ab/adduction); hard: diagnostic knee envelope only
+    const r = this.termEnd(k, i, th, soft, hard), a = this.jd[k].axes[i]; if (!a.kN) return r; const n = neutralTerm(a.kN, a.c0, a.zN, th);
     return { ...r, U: r.U + n.U, tau: r.tau + n.tau, k: r.k + n.k };
   }
-  termEnd(k, i, th, soft) {
-    const a = this.jd[k].axes[i], B = a.B, [slo, shi] = soft, [hlo, hhi] = a.hard;
+  termEnd(k, i, th, soft, hard) {
+    const a = this.jd[k].axes[i], B = a.B, [slo, shi] = soft, [hlo, hhi] = hard || a.hard;
     if (th > shi) { const A = a.tauH[1] / (dexp(B * Math.max(1e-4, hhi - shi)) - 1), e = dexp(B * (th - shi)), x = th - hhi, ks = x > 0 ? a.kStop[1] : 0;
       return { U: A * ((e - 1) / B - (th - shi)) + (x > 0 ? 0.5 * ks * x * x : 0), tau: -A * (e - 1) - ks * Math.max(0, x), k: A * B * e + ks, side: 1, stop: x > 0 }; }
     if (th < slo) { const A = a.tauH[0] / (dexp(B * Math.max(1e-4, slo - hlo)) - 1), e = dexp(B * (slo - th)), x = hlo - th, ks = x > 0 ? a.kStop[0] : 0;
       return { U: A * ((e - 1) / B - (slo - th)) + (x > 0 ? 0.5 * ks * x * x : 0), tau: A * (e - 1) + ks * Math.max(0, x), k: A * B * e + ks, side: -1, stop: x > 0 }; }
     return { U: 0, tau: 0, k: 0, side: 0 };
   }
-  termU(k, i, qs) { const v = decompose(qs[k]), th = i === 0 ? v.tw : i === 1 ? v.sy : v.sz; return this.term(k, i, th, this.softOf(k, i, qs)).U; }
+  termU(k, i, qs) { const v = decompose(qs[k]), th = i === 0 ? v.tw : i === 1 ? v.sy : v.sz; return this.term(k, i, th, this.softOf(k, i, qs), this.kneeEnv ? this.hardOf(k, i, qs) : undefined).U; }
   // full evaluation at the current body state (also used for energy bookkeeping): returns per joint θ, soft, U terms
   evaluate(R) {
     const qs = this.jd.map(d => this.qcs(d, R)); let U = 0; const per = this.jd.map(d => {
-      const v = decompose(qs[d.k]), th = [v.tw, v.sy, v.sz], T = d.axes.map((a, i) => { if (!a) return null; const soft = this.softOf(d.k, i, qs), t = this.term(d.k, i, th[i], soft); U += t.U; return { soft, ...t }; });
+      const v = decompose(qs[d.k]), th = [v.tw, v.sy, v.sz], T = d.axes.map((a, i) => { if (!a) return null; const soft = this.softOf(d.k, i, qs), hard = this.kneeEnv ? this.hardOf(d.k, i, qs) : undefined, t = this.term(d.k, i, th[i], soft, hard); U += t.U; return hard ? { soft, hard, ...t } : { soft, ...t }; });
       return { q: qs[d.k], th, swing: v.swing, T }; });
     return { qs, per, U };
   }
@@ -132,16 +142,16 @@ export class PassiveLayer {
         for (let m = 0; m < 3; m++) { let dd = tp[m] - tm[m]; if (dd > Math.PI) dd -= 2 * Math.PI; if (dd < -Math.PI) dd += 2 * Math.PI; Jm[m][i] = dd / (2 * H); }
       }
       // implicit stiffness per body-2 axis at the predicted rotation: diag(Jᵀ·diag(kθ)·J), own end-range (+ end-stop) stiffness only
-      const vP = decompose(qP), thP = [vP.tw, vP.sy, vP.sz], kth = d.axes.map((a, i) => (a ? this.term(d.k, i, thP[i], this.softOf(d.k, i, qsP0)).k : 0));
+      const vP = decompose(qP), thP = [vP.tw, vP.sy, vP.sz], kth = d.axes.map((a, i) => (a ? this.term(d.k, i, thP[i], this.softOf(d.k, i, qsP0), this.kneeEnv ? this.hardOf(d.k, i, qsP0) : undefined).k : 0));
       // ARMED end-stop (G1 C2 causal fix, second part): a joint predicted to finish the step within (its predicted travel + 1°) of an anatomical
       // hard limit — but not yet across it — gets the stop's stiffness this step with the stop's own equilibrium AT the limit (the exact linear
       // stop spring). A joint accelerating into the stop (perturb: knee U +1.77 J in one step, net +0.52 J) is then resisted from the first step
       // it crosses; if it does not reach the limit the spring would push outward, which the one-sided limit below forbids.
       const kx = [0, 0, 0], tx = [0, 0, 0], rs = [0, 0, 0];
-      d.axes.forEach((a, m) => { if (!a) return; const dth = Math.abs(Jm[m].reduce((s2, jj, i) => s2 + jj * phi[i], 0)), L = dth + rad(1), soft = this.softOf(d.k, m, qsP0);
+      d.axes.forEach((a, m) => { if (!a) return; const dth = Math.abs(Jm[m].reduce((s2, jj, i) => s2 + jj * phi[i], 0)), L = dth + rad(1), soft = this.softOf(d.k, m, qsP0), hd = this.kneeEnv ? this.hardOf(d.k, m, qsP0) : a.hard;
         if (thP[m] > soft[1] || thP[m] < soft[0]) rs[m] = thP[m] > soft[1] ? -1 : 1;
-        if (this.armed && a.kStop[1] > 0 && thP[m] <= a.hard[1] && thP[m] > a.hard[1] - L) { kx[m] = a.kStop[1]; tx[m] = a.kStop[1] * (a.hard[1] - thP[m]); rs[m] = -1; }
-        if (this.armed && a.kStop[0] > 0 && thP[m] >= a.hard[0] && thP[m] < a.hard[0] + L) { kx[m] = a.kStop[0]; tx[m] = -a.kStop[0] * (thP[m] - a.hard[0]); rs[m] = 1; } });
+        if (this.armed && a.kStop[1] > 0 && thP[m] <= hd[1] && thP[m] > hd[1] - L) { kx[m] = a.kStop[1]; tx[m] = a.kStop[1] * (hd[1] - thP[m]); rs[m] = -1; }
+        if (this.armed && a.kStop[0] > 0 && thP[m] >= hd[0] && thP[m] < hd[0] + L) { kx[m] = a.kStop[0]; tx[m] = -a.kStop[0] * (thP[m] - hd[0]); rs[m] = 1; } });
       const K = [0, 1, 2].map(i => kth.reduce((s2, kk, m) => s2 + Jm[m][i] * Jm[m][i] * (kk + kx[m]), 0)), tauX = [0, 1, 2].map(i => tx.reduce((s2, t, m) => s2 + Jm[m][i] * t, 0));
       const delta = [0, 0, 0], Texp = [0, 0, 0], Kset = [0, 0, 0], lim = [[0, 0], [0, 0], [0, 0]];
       for (let i = 0; i < 3; i++) { if (!d.rows[i]) { continue; }
