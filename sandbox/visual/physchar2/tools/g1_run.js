@@ -9,6 +9,7 @@ import { generateSpec } from "../spec/v2_spec.js";
 import { VARIATION_SET, V2_REF, V1_MATCHED } from "../spec/v2_human.js";
 import { SCENARIOS, SCENARIO_ORDER, HS_ORDER, ESSENTIAL, ITERATION_SET, RATE_SET, RATE_KEYS, RATE_EPS, ensembleKey, ensureScenario, G1_WORLD, runScenario } from "../gates/v2_g1.js";
 import { RIG_TESTS, DAMP_TESTS, passiveRig, couplingProbe, snapshotRestore, perfBreakdown, freeBodyFloor } from "../gates/v2_g1_tests.js";
+import { kneeModelEnv, kneeEnvelopeV2K } from "../spec/v2_knee.js";
 import { TOL, scenarioChecks, rigChecks, hsChecks } from "../gates/v2_g1_checks.js";
 import { DX_CONFIGS, applyMods } from "../gates/v2_g1_dx.js";
 import { engineLimits } from "../spec/v2_joints.js";
@@ -177,7 +178,10 @@ function coupling(p) {
   C.push({ name: "ankle-DF soft limit knee 0/45/90°", value: [g("knee 0°, hip flexed 100°"), g("knee 45°, hip flexed 100°"), g("knee 90°, hip flexed 100°")].map(x => x.ankleDfSoftHiDeg.toFixed(1)).join(" / ") + "°", pass: near(g("knee 0°, hip flexed 100°").ankleDfSoftHiDeg, 20) && near(g("knee 45°, hip flexed 100°").ankleDfSoftHiDeg, 27.5) && near(g("knee 90°, hip flexed 100°").ankleDfSoftHiDeg, 35) });
   const h0 = g("knee 0°, hip flexed 100°"); C.push({ name: "hamstring: hip 100° knee straight → hip extension torque, knee flexion cross torque", value: `${h0.hipFlexTorqueNm.toFixed(2)} / +${h0.kneeFlexCrossTorqueNm.toFixed(3)} N·m`, pass: h0.hipFlexTorqueNm < 0 && h0.kneeFlexCrossTorqueNm > 0 });
   const k0 = g("knee 0° (screw-home)").kneeRotSoftDeg, k30 = g("knee 30° (screw-home)").kneeRotSoftDeg, k60 = g("knee 60° (screw-home)").kneeRotSoftDeg;
-  C.push({ name: "screw-home knee axial range at 0/30/60°", value: [k0, k30, k60].map(x => `[${x.map(v => v.toFixed(1))}]`).join(" "), pass: near(k0[0], -3) && near(k0[1], 2) && near(k30[0], -15) && near(k60[0], -30) && near(k60[1], 20) });
+  if (kneeModelEnv() === "v2k") { const ex = [0, 30, 60].map(f => kneeEnvelopeV2K(f).soft);   // CORRECTED KNEE (KV9b(ii)): conformance to the v2k spec under test (zero-torque range θ0 − s·f … θ0 + s·f)
+    C.push({ name: "knee axial zero-torque range at 0/30/60° (v2k spec: θ0(φ) ∓ slack·f)", value: [k0, k30, k60].map(x => `[${x.map(v => v.toFixed(2))}]`).join(" ") + " vs " + ex.map(x => `[${x.map(v => v.toFixed(2))}]`).join(" "),
+      pass: [k0, k30, k60].every((k, n) => near(k[0], ex[n][0]) && near(k[1], ex[n][1])) }); }
+  else C.push({ name: "screw-home knee axial range at 0/30/60°", value: [k0, k30, k60].map(x => `[${x.map(v => v.toFixed(1))}]`).join(" "), pass: near(k0[0], -3) && near(k0[1], 2) && near(k30[0], -15) && near(k60[0], -30) && near(k60[1], 20) });
   const e0 = g("hip flex 0°").hipRotSoftDeg[0], e90 = g("hip flex 90°").hipRotSoftDeg[0]; C.push({ name: "hip ER soft limit hip 0/90°", value: `${e0.toFixed(1)} / ${e90.toFixed(1)}°`, pass: near(e0, -45) && near(e90, -40) });
   return C;
 }

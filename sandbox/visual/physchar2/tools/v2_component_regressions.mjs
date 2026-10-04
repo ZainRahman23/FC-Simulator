@@ -258,6 +258,38 @@ function refLegIK(ctrl, st, ev, n, pP, qP, footPose) { const P = ctrl.P, ks = ct
   // R7.i default off, default controller state without the key
   { const spec = generateSpec(VARIATION_SET.find(h => h.id === "V2-REF")), s0 = new G3Sim(J, spec, g3Def("T5"), {}); for (let i = 0; i < 12; i++) s0.tick(); const off = STAND.lifecycle == null && !s0.ctrl.lc && !("lc" in s0.ctrl.getState()) && !("lc" in s0.ctrl.info); s0.destroy();
     check("R7.i", "lifecycle option off by default; the default controller state / info carry no lifecycle key", off, `off ${off}`); } }
+// ── R8 corrected knee axial model v2k (spec/v2_knee.js; knee_correction/KNEE_PARAMETERIZATION.md; EXPERIMENTAL, default off) ──
+{ const K = await import("../spec/v2_knee.js"), { PassiveLayer } = await import("../sim/v2_passive.js"), { V2JoltWorld } = await import("../core/v2_jolt.js"), { posedBodies } = await import("../spec/v2_pose.js"), { pyr } = await import("../spec/v2_joints.js");
+  const spec = generateSpec(VARIATION_SET.find(h => h.id === "V2-REF")), mkP = (o) => { const w = new V2JoltWorld(J, spec, spec.contact, { gravity: 0 }); return { w, P: new PassiveLayer(spec, w, o) }; };
+  // R8.a default off (no env, no option): the accepted knee — no v2k term, the diagnostic envelope absent
+  { const envSet = typeof process !== "undefined" && process.env.V2_KNEE_MODEL; const { w, P } = mkP({}); const kR = spec.joints.findIndex(j => j.name === "knee_R"), a = P.jd[kR].axes.find(x => x && x.key === "rot");
+    check("R8.a", "corrected knee off by default: no v2k term, the old knee axial law", envSet ? true : !P.kneeIsV2K && !a.v2k && !P.kneeEnv, envSet ? `skipped: V2_KNEE_MODEL=${envSet} set` : `v2k ${P.kneeIsV2K}`); w.destroy(); }
+  // R8.b envelope anchor values (KNEE_PARAMETERIZATION.md §4–6)
+  { const e0 = K.kneeEnvelopeV2K(0), e30 = K.kneeEnvelopeV2K(30), e90 = K.kneeEnvelopeV2K(90), near = (a, b, t = 1e-9) => Math.abs(a - b) <= t, poly = (f) => 0.3695 * f - 2.958e-3 * f * f + 7.666e-6 * f ** 3;
+    const ok = near(e0.theta0, 0) && near(e0.soft[0], -0.5) && near(e0.soft[1], 1) && near(e0.hard[0], -12.5) && near(e0.hard[1], 14) && near(e30.theta0, poly(30)) && near(e30.hard[1], poly(30) + 14) && near(e90.hard[0], poly(90) - 25)
+      && near(K.kneeTheta0(150), poly(150)) && near(K.kneeWidthFactor(150, "IR"), 1) && near(K.kneeWidthFactor(150, "ER"), 1);
+    check("R8.b", "v2k envelope: θ0 = Walker polynomial, slack / calibrated bounds at 0 / 30 / 90°, deep-flexion defaults (no extra shift, no narrowing)", ok, `θ0(30) ${e30.theta0.toFixed(4)}, bounds(0) [${e0.hard}], (90) [${e90.hard.map(x => x.toFixed(3))}]`); }
+  // R8.c the passive layer's knee axial torque = the independent spec law (both knees, inside / IR / ER / end-stop)
+  { const { w, P } = mkP({ kneeModel: "v2k" }); let worst = 0;
+    for (const sd of ["R", "L"]) { const k = spec.joints.findIndex(j => j.name === "knee_" + sd), i = P.kneeRot[k], a = P.jd[k].axes[i], cap = a.v2k.cap;
+      for (const [f, d] of [[10, 0.5], [10, 6], [20, -8], [30, 16], [5, -15], [90, 27]]) { const th = K.kneeTheta0(f) + d, up = P.compute(posedBodies(spec, { hip_L: { abd: 8 }, hip_R: { abd: 8 }, ["knee_" + sd]: { flex: f, rot: th } }).map(x => ({ ...x, v: [0, 0, 0], w: [0, 0, 0] })), 1 / 240);
+        const lay = a.s * up.joints[k].tau[i], spc = K.kneeAxialTorque(f, th, a.s > 0 ? cap[1] : cap[0], a.s > 0 ? cap[0] : cap[1]).tau; worst = Math.max(worst, Math.abs(lay - spc) - 1e-3 * Math.abs(spc)); } }
+    check("R8.c", "v2k: the passive layer's knee axial generalised torque equals the specification law (both knees, slack / law / end-stop)", worst <= 1e-4, `worst excess ${e(worst)} N·m`); w.destroy(); }
+  // R8.d controller: under v2k + the reference policy the posture-IK knee twist is θ0 at the solved flexion; otherwise the current / reference value
+  { const mk = (model) => { const s0 = new G3Sim(J, spec, g3Def("T0"), { stand: { ikRefTwist: true }, passiveOpts: { kneeModel: model } }); for (let i = 0; i < 6; i++) s0.tick(); return s0; };
+    const a = mk("v2k"), ch = a.ctrl.legChain(a.st, a.up.ev, 0, a.st[0].pos, a.st[0].rot), kk = ch.ks[1], d = a.P.jd[kk]; let err = 0;
+    for (const sy of [-1.2, -1.0, -0.6, 0]) { const x = [0, 0, 0, sy, 0, 0], q = pyr(ch.kTw(x), sy, 0), fl = a.P.anat(d, q, "flex"); err = Math.max(err, Math.abs(a.P.anat(d, q, "rot") - K.kneeTheta0(fl))); }
+    const b = mk(null), chb = b.ctrl.legChain(b.st, b.up.ev, 0, b.st[0].pos, b.st[0].rot), same = chb.kTw([0, 0, 0, -1, 0, 0]) === chb.cur[1][0];
+    check("R8.d", "v2k + reference policy: the knee twist in the posture-IK chain is θ0(solved flexion); old knee: the unchanged twist value", err <= 1e-9 && same, `max |rot − θ0| ${e(err)}°; old knee unchanged ${same}`); a.destroy(); b.destroy(); }
+  // R8.e conservative: a closed flexion–axial loop does no net work (the flexion reaction is part of −∇U)
+  { const { w, P } = mkP({ kneeModel: "v2k" }), k = spec.joints.findIndex(j => j.name === "knee_R"), at = (f, th) => P.compute(posedBodies(spec, { hip_L: { abd: 8 }, hip_R: { abd: 8 }, knee_R: { flex: f, rot: th } }).map(x => ({ ...x, v: [0, 0, 0], w: [0, 0, 0] })), 1 / 240);
+    let W = 0, Wabs = 0, u0 = at(5, K.kneeTheta0(5) + 18), q0 = u0.ev.qs[k], t0 = u0.joints[k].tau; const N = 800;
+    for (let n = 1; n <= N; n++) { const tt = 2 * Math.PI * n / N, f = 20 - 15 * Math.cos(tt), u1 = at(f, K.kneeTheta0(f) + 18 * Math.cos(tt) + 4 * Math.sin(tt)), q1 = u1.ev.qs[k], t1 = u1.joints[k].tau;
+      let dq = Q.mul(Q.conj(q0), q1); if (dq[3] < 0) dq = dq.map(x => -x); const sv = Math.hypot(dq[0], dq[1], dq[2]), ang = 2 * Math.atan2(sv, dq[3]); for (let i = 0; i < 3; i++) { const dw = 0.5 * (t0[i] + t1[i]) * (sv > 0 ? dq[i] / sv * ang : 0); W += dw; Wabs += Math.abs(dw); } q0 = q1; t0 = t1; }
+    check("R8.e", "v2k: closed flexion–axial loop through the end range does no net passive work", Math.abs(W) <= 1e-3 + 5e-3 * Wabs, `∮τ·dq ${e(W)} J (∮|τ·dq| ${Wabs.toFixed(3)} J)`); w.destroy(); }
+  // R8.f sensitivity overrides are local: an override changes only its own parameter; the frozen central set is untouched
+  { const o = K.kneeV2KParams({ deep: { delta150: 5 } }), d = K.kneeTheta0(150, o) - K.kneeTheta0(150), d120 = K.kneeTheta0(120, o) - K.kneeTheta0(120);
+    check("R8.f", "v2k sensitivity override (deep δ150 = +5°) shifts θ0(150°) by 5° and nothing below 120°; the frozen set is unchanged", Math.abs(d - 5) < 1e-12 && Math.abs(d120) < 1e-12 && K.KNEE_V2K.deep.delta150 === 0 && Object.isFrozen(K.KNEE_V2K), `Δθ0(150) ${d}, Δθ0(120) ${d120}`); } }
 const fail = results.filter(r => !r.pass).length; console.log(`\ncomponent regressions: ${results.length - fail}/${results.length} pass`);
 const jo = process.argv.find(a => a.startsWith("--json=")); if (jo) fs.writeFileSync(jo.slice(7), JSON.stringify({ generated: "tools/v2_component_regressions.mjs", date: new Date().toISOString().slice(0, 10), results }, null, 1));
 process.exit(fail ? 1 : 0);

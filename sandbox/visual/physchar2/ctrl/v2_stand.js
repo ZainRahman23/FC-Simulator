@@ -310,17 +310,21 @@ StandController.prototype.legChain = function (st, ev, n, pP, qP, footPose) {
   const shank = (T, qk) => { const Rs = Q.mul(Q.mul(T.B1, qk), C1); return { Rs, B2: Q.mul(Rs, d[2].F1), pf: V.add(T.ps, Q.rot(Rs, a[2])) }; };
   const res = (S, qa) => { const Rf = Q.mul(Q.mul(S.B2, qa), C2); let qe = Q.mul(ft.rot, Q.conj(Rf)); if (qe[3] < 0) qe = qe.map(v => -v); const pf = S.pf;
     return [pf[0] - ft.pos[0], pf[1] - ft.pos[1], pf[2] - ft.pos[2], -2 * qe[0], -2 * qe[1], -2 * qe[2]]; };
-  const qhOf = (x) => pyr(x[0], x[1], x[2]), qkOf = (x) => pyr(cur[1][0], x[3], cur[1][2]), qaOf = (x) => pyr(cur[2][0], x[4], x[5]);
+  // CORRECTED KNEE (v2k, EXPERIMENTAL; knee_correction/KNEE_PARAMETERIZATION.md §8): under the REFERENCE twist policy the knee axial reference is
+  // the passive reference path θ0 at the knee flexion being solved — inside the FK, so the IK Jacobian sees it and the hip rotation absorbs the
+  // coupled tibial rotation. Otherwise (old knee, or the "current" policy) the twist value exactly as before (bit-identical).
+  const kTw = this.o.ikRefTwist && this.P.kneeIsV2K ? (x) => this.P.kneeRefTwistCS(ks[1], x[3]) : () => cur[1][0];
+  const qhOf = (x) => pyr(x[0], x[1], x[2]), qkOf = (x) => pyr(kTw(x), x[3], cur[1][2]), qaOf = (x) => pyr(cur[2][0], x[4], x[5]);
   const fk = (x) => res(shank(thigh(qhOf(x)), qkOf(x)), qaOf(x));
   const jac = (x) => { const T0 = thigh(qhOf(x)), qk0 = qkOf(x), S0 = shank(T0, qk0), qa0 = qaOf(x);   // Jm[c][i] = ∂r_i/∂x_c, central differences
     return [0, 1, 2, 3, 4, 5].map(c => { const xp = x.slice(), xm = x.slice(); xp[c] += IK.h; xm[c] -= IK.h;
       const ev2 = (y) => (c < 3 ? res(shank(thigh(qhOf(y)), qk0), qa0) : c === 3 ? res(shank(T0, qkOf(y)), qa0) : res(S0, qaOf(y)));
       const rp = ev2(xp), rm = ev2(xm); return rp.map((v, i) => (v - rm[i]) / (2 * IK.h)); }); };
-  return { ks, cur, fk, jac, x0: [cur[0][0], cur[0][1], cur[0][2], cur[1][1], cur[2][1], cur[2][2]] };
+  return { ks, cur, fk, jac, kTw, x0: [cur[0][0], cur[0][1], cur[0][2], cur[1][1], cur[2][1], cur[2][2]] };
 };
 StandController.prototype.legIK = function (st, ev, n, pP, qP, footPose = null) {
   if (this.o.ikBounds) return this.legIKBounded(st, ev, n, pP, qP, footPose);
-  const { ks, cur, fk, jac, x0 } = this.legChain(st, ev, n, pP, qP, footPose);
+  const { ks, cur, fk, jac, kTw, x0 } = this.legChain(st, ev, n, pP, qP, footPose);
   let x = x0, r = fk(x), err = dnorm(...r), it = 0, mu = IK.mu0, lastJ = null, lastH = null;
   for (; it < IK.maxIt && err > IK.tol; it++) {
     const Jm = jac(x), g = Jm.map(col => col[0] * r[0] + col[1] * r[1] + col[2] * r[2] + col[3] * r[3] + col[4] * r[4] + col[5] * r[5]);
@@ -336,7 +340,7 @@ StandController.prototype.legIK = function (st, ev, n, pP, qP, footPose = null) 
   if (IK.polish === "stale" && err <= IK.tol && err > 0 && lastH) {
     const g = lastJ.map(col => col[0] * r[0] + col[1] * r[1] + col[2] * r[2] + col[3] * r[3] + col[4] * r[4] + col[5] * r[5]), A = lastH.map((row, i) => row.map((v, c) => (i === c ? v + mu * (1 + v) : v))), dx = solveN(A, g.map(v => -v));
     if (dx) { const xn = x.map((v, i) => v + dx[i]), rn = fk(xn), en = dnorm(...rn); if (en <= err) { x = xn; r = rn; err = en; } } }
-  const tg = [[ks[0], pyr(x[0], x[1], x[2])], [ks[1], pyr(cur[1][0], x[3], cur[1][2])]]; if (footPose) tg.push([ks[2], pyr(cur[2][0], x[4], x[5])]);   // held foot: the ankle target too
+  const tg = [[ks[0], pyr(x[0], x[1], x[2])], [ks[1], pyr(kTw(x), x[3], cur[1][2])]]; if (footPose) tg.push([ks[2], pyr(cur[2][0], x[4], x[5])]);   // held foot: the ankle target too
   return { targets: tg, err, it, x };
 };
 // BOUNDED leg IK (opt-in, o.ikBounds; overnight Phase C candidate, NOT adopted — which limits and what to do with an anatomically unreachable
@@ -352,7 +356,7 @@ StandController.prototype.legIK = function (st, ev, n, pP, qP, footPose = null) 
 // (tools/ik_g4_study.mjs): on 20,736 targets × 8 bodies, 0 L/R classification mismatches, one valid solution per reachable target from 12
 // seeded starts, and the warm-start solution is the closest valid one. Returns { targets, err, it, x, atBound }.
 StandController.prototype.legIKBounded = function (st, ev, n, pP, qP, footPose = null, bo = null) {   // bo (EXPERIMENTAL lifecycle only): { limits: "hard" | "soft", fallback: "newton" | "none" }; null = the R4-tested defaults
-  const { ks, cur, fk, jac, x0 } = this.legChain(st, ev, n, pP, qP, footPose), lim = ks.map(k => this.spec.joints[k].limits[bo && bo.limits === "soft" ? "soft" : "hard"]);
+  const { ks, cur, fk, jac, kTw, x0 } = this.legChain(st, ev, n, pP, qP, footPose), lim = ks.map(k => this.spec.joints[k].limits[bo && bo.limits === "soft" ? "soft" : "hard"]);
   const lo = [lim[0].lo[0], lim[0].lo[1], lim[0].lo[2], lim[1].lo[1], lim[2].lo[1], lim[2].lo[2]], hi = [lim[0].hi[0], lim[0].hi[1], lim[0].hi[2], lim[1].hi[1], lim[2].hi[1], lim[2].hi[2]];
   const clamp = (y) => y.map((v, i) => Math.min(hi[i], Math.max(lo[i], v))), gOf = (Jm, r) => Jm.map(col => col[0] * r[0] + col[1] * r[1] + col[2] * r[2] + col[3] * r[3] + col[4] * r[4] + col[5] * r[5]);
   const step = (H, g, free, mu) => solveN(free.map(i => free.map(c => (i === c ? H[i][c] + mu * (1 + H[i][i]) : H[i][c]))), free.map(i => -g[i]));
@@ -389,7 +393,7 @@ StandController.prototype.legIKBounded = function (st, ev, n, pP, qP, footPose =
         const Gn = grad(xc), fn = half(Gn.r); if (fn < fv) { x = xc; G = Gn; fv = fn; moved = true; break; } }
       if (!moved) break; }
     r = G.r; err = dnorm(...r); }
-  const tg = [[ks[0], pyr(x[0], x[1], x[2])], [ks[1], pyr(cur[1][0], x[3], cur[1][2])]]; if (footPose) tg.push([ks[2], pyr(cur[2][0], x[4], x[5])]);
+  const tg = [[ks[0], pyr(x[0], x[1], x[2])], [ks[1], pyr(kTw(x), x[3], cur[1][2])]]; if (footPose) tg.push([ks[2], pyr(cur[2][0], x[4], x[5])]);
   return { targets: tg, err, it, x, atBound: x.map((v, i) => v <= lo[i] || v >= hi[i]), fallbackIt: fbIt };
 };
 export const IK = { h: 1e-6, tol: 1e-12, maxIt: 12, maxItBounded: 30, mu0: 1e-2, muMin: 1e-12, gradTol: 1e-14, boundedFallback: "newton", fallbackMaxIt: 25, hNewton: 1e-5,   // bounded (opt-in) solver only

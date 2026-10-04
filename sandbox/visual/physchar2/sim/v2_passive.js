@@ -14,7 +14,8 @@
 //      an offset beyond DELTA_MAX) is applied as an explicit equal-and-opposite torque pair (small stiffness ⇒ explicit is stable).
 // Motor rows carry ONLY passive tissue (elastic end range + viscous damping). There are no targets toward any posture.
 import { V, Q, dexp, rad, dnorm } from "../core/v2_math.js";
-import { decompose, neutralTerm, kneeEnvelopeEnv } from "../spec/v2_joints.js";              // Jolt swing–twist split, pyramid components (deterministic atan2)
+import { decompose, neutralTerm, kneeEnvelopeEnv, pyr, PASSIVE } from "../spec/v2_joints.js";
+import { kneeModelEnv, kneeV2KParams, kneeEnvelopeV2K, kneeEndTerm, kneeTheta0 } from "../spec/v2_knee.js";   // corrected knee axial model (EXPERIMENTAL, default off)              // Jolt swing–twist split, pyramid components (deterministic atan2)
 
 // H: finite-difference rotation (rad); DELTA_MAX: largest implicit-spring offset (rad); drive bound: the drive may never exceed what the
 // passive law + damper could produce this step with generous headroom (DTH_MAX deeper excursion, DW_MAX velocity change) — a guard
@@ -68,8 +69,20 @@ export class PassiveLayer {
     // DIAGNOSTIC (final pre-E1a §3; default off): opts.kneeEnvelope(flexDeg) → { soft: [extDeg, intDeg], hard: [extDeg, intDeg] } (anatomical, + = tibial
     // internal rotation) REPLACES the knee axial soft (incl. the screw-home scale) and anatomical hard limits by a flexion-dependent envelope. The Jolt
     // emergency limits are untouched (anatomical hard ± ENGINE_MARGIN, knee axial 20° / 36° — they enclose the diagnostic envelope). Not a model change.
-    this.kneeEnv = typeof opts.kneeEnvelope === "function" ? opts.kneeEnvelope : opts.kneeEnvelope === undefined ? kneeEnvelopeEnv() : null; this.kneeRot = {};
+    // CORRECTED KNEE "v2k" (knee_correction/KNEE_PARAMETERIZATION.md; EXPERIMENTAL, default OFF — env V2_KNEE_MODEL=v2k or opts.kneeModel "v2k"):
+    // the knee axial term becomes a function of the knee's own flexion — moving passive reference θ0(φ), flexion-dependent per-side widths, the
+    // V2 law shape with τ = 0.55 × the opposing capacity at the calibrated-range bound and an end-stop reaching the capacity 3° beyond it (its
+    // stiffness recomputed from the current span, inside the potential). One scalar U(θ, φ): −∇U over the joint's full rotation applies the
+    // flexion reaction −∂U/∂φ automatically (no per-tick rest-angle move). opts.kneeV2K: partial parameter override (preregistered sensitivity only).
+    this.kneeModel = opts.kneeModel !== undefined ? opts.kneeModel : kneeModelEnv();
+    if (this.kneeModel && this.kneeModel !== "v2k") throw new Error("unknown knee model " + this.kneeModel);
+    if (this.kneeModel === "v2k" && typeof opts.kneeEnvelope === "function") throw new Error("kneeModel v2k and a diagnostic kneeEnvelope are exclusive");
+    if (this.kneeModel === "v2k") { const KP = opts.kneeV2K ? kneeV2KParams(opts.kneeV2K) : kneeV2KParams(); this.kneeP = KP; this.kneeEnv = (f) => kneeEnvelopeV2K(f, KP); }
+    else this.kneeEnv = typeof opts.kneeEnvelope === "function" ? opts.kneeEnvelope : opts.kneeEnvelope === undefined ? kneeEnvelopeEnv() : null;
+    this.kneeRot = {};
     if (this.kneeEnv) for (const d of this.jd) if (d.base === "knee") { const i = d.axes.findIndex(a => a && a.key === "rot"); if (i >= 0) this.kneeRot[d.k] = i; }
+    if (this.kneeModel === "v2k") for (const k of Object.keys(this.kneeRot)) { const a = this.jd[k].axes[this.kneeRot[k]], cap = a.tauH.map(t => t / PASSIVE.endRangeFracOfOpposingCapacity);
+      a.v2k = { cap, tauCal: cap.map(c => this.kneeP.tauCalFracOfCapacity * c) }; }   // [lo end, hi end] in constraint space, as tauH
     this.last = null;
     if (this.enabled) for (const d of this.jd) d.rows.forEach((on, i) => { if (on) world.driveOn(d.k, i); });
   }
@@ -89,6 +102,12 @@ export class PassiveLayer {
   }
   // anatomical hard limits of term (k, i): the spec's, except under the DIAGNOSTIC knee envelope
   hardOf(k, i, qs) { return this.kneeEnv && this.kneeRot[k] === i ? this.kneeLim(k, i, qs, "hard") : this.jd[k].axes[i].hard; }
+  // end-stop stiffness per end: the spec's (static) — or, for the corrected knee, the value implied by the current span (spec/v2_knee.js kneeEndTerm)
+  kStopOf(a, soft, hd) { if (!a.v2k) return a.kStop; const v = a.v2k, P = this.kneeP;
+    return [kneeEndTerm(1, soft[0] - hd[0], v.tauCal[0], v.cap[0], P).kS, kneeEndTerm(1, hd[1] - soft[1], v.tauCal[1], v.cap[1], P).kS]; }
+  get kneeIsV2K() { return this.kneeModel === "v2k"; }
+  // corrected knee: the constraint-space twist of the passive reference θ0 at the knee flexion of constraint swing sy (reference twist policy)
+  kneeRefTwistCS(k, sy) { const d = this.jd[k], a = d.axes[this.kneeRot[k]], flex = this.anat(d, pyr(0, sy, 0), "flex"); return a.s * rad(kneeTheta0(flex, this.kneeP)); }
   kneeLim(k, i, qs, which) { const d = this.jd[k], a = d.axes[i], flex = this.anat(d, qs[k], "flex"), e = this.kneeEnv(flex)[which], x = [rad(e[0]), rad(e[1])];   // anatomical [ext, int] → constraint frame (s = axis sign)
     return a.s > 0 ? x : [-x[1], -x[0]]; }
   // one end-range term: U (J), own-axis generalised torque τ (N·m), own-axis stiffness kθ (N·m/rad) at constraint angle th. Beyond the
@@ -99,7 +118,12 @@ export class PassiveLayer {
     return { ...r, U: r.U + n.U, tau: r.tau + n.tau, k: r.k + n.k };
   }
   termEnd(k, i, th, soft, hard) {
-    const a = this.jd[k].axes[i], B = a.B, [slo, shi] = soft, [hlo, hhi] = hard || a.hard;
+    const a = this.jd[k].axes[i];
+    if (a.v2k) { const [slo, shi] = soft, [hlo, hhi] = hard, v = a.v2k;   // corrected knee axial (spec/v2_knee.js kneeEndTerm — the same expression as the specification law)
+      if (th > shi) { const t = kneeEndTerm(th - shi, hhi - shi, v.tauCal[1], v.cap[1], this.kneeP); return { U: t.U, tau: -t.T, k: t.k, side: 1, stop: th > hhi }; }
+      if (th < slo) { const t = kneeEndTerm(slo - th, slo - hlo, v.tauCal[0], v.cap[0], this.kneeP); return { U: t.U, tau: t.T, k: t.k, side: -1, stop: th < hlo }; }
+      return { U: 0, tau: 0, k: 0, side: 0 }; }
+    const B = a.B, [slo, shi] = soft, [hlo, hhi] = hard || a.hard;
     if (th > shi) { const A = a.tauH[1] / (dexp(B * Math.max(1e-4, hhi - shi)) - 1), e = dexp(B * (th - shi)), x = th - hhi, ks = x > 0 ? a.kStop[1] : 0;
       return { U: A * ((e - 1) / B - (th - shi)) + (x > 0 ? 0.5 * ks * x * x : 0), tau: -A * (e - 1) - ks * Math.max(0, x), k: A * B * e + ks, side: 1, stop: x > 0 }; }
     if (th < slo) { const A = a.tauH[0] / (dexp(B * Math.max(1e-4, slo - hlo)) - 1), e = dexp(B * (slo - th)), x = hlo - th, ks = x > 0 ? a.kStop[0] : 0;
@@ -150,8 +174,9 @@ export class PassiveLayer {
       const kx = [0, 0, 0], tx = [0, 0, 0], rs = [0, 0, 0];
       d.axes.forEach((a, m) => { if (!a) return; const dth = Math.abs(Jm[m].reduce((s2, jj, i) => s2 + jj * phi[i], 0)), L = dth + rad(1), soft = this.softOf(d.k, m, qsP0), hd = this.kneeEnv ? this.hardOf(d.k, m, qsP0) : a.hard;
         if (thP[m] > soft[1] || thP[m] < soft[0]) rs[m] = thP[m] > soft[1] ? -1 : 1;
-        if (this.armed && a.kStop[1] > 0 && thP[m] <= hd[1] && thP[m] > hd[1] - L) { kx[m] = a.kStop[1]; tx[m] = a.kStop[1] * (hd[1] - thP[m]); rs[m] = -1; }
-        if (this.armed && a.kStop[0] > 0 && thP[m] >= hd[0] && thP[m] < hd[0] + L) { kx[m] = a.kStop[0]; tx[m] = -a.kStop[0] * (thP[m] - hd[0]); rs[m] = 1; } });
+        const ks = this.kStopOf(a, soft, hd);
+        if (this.armed && ks[1] > 0 && thP[m] <= hd[1] && thP[m] > hd[1] - L) { kx[m] = ks[1]; tx[m] = ks[1] * (hd[1] - thP[m]); rs[m] = -1; }
+        if (this.armed && ks[0] > 0 && thP[m] >= hd[0] && thP[m] < hd[0] + L) { kx[m] = ks[0]; tx[m] = -ks[0] * (thP[m] - hd[0]); rs[m] = 1; } });
       const K = [0, 1, 2].map(i => kth.reduce((s2, kk, m) => s2 + Jm[m][i] * Jm[m][i] * (kk + kx[m]), 0)), tauX = [0, 1, 2].map(i => tx.reduce((s2, t, m) => s2 + Jm[m][i] * t, 0));
       const delta = [0, 0, 0], Texp = [0, 0, 0], Kset = [0, 0, 0], lim = [[0, 0], [0, 0], [0, 0]];
       for (let i = 0; i < 3; i++) { if (!d.rows[i]) { continue; }

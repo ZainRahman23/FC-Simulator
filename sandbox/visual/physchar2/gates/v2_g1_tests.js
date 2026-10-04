@@ -4,6 +4,7 @@ import { V2JoltWorld } from "../core/v2_jolt.js";
 import { posedBodies, POSES } from "../spec/v2_pose.js";
 import { decompose, pyr, passiveTorque } from "../spec/v2_joints.js";
 import { PassiveLayer } from "../sim/v2_passive.js";
+import { kneeModelEnv, kneeEnvelopeV2K, kneeAxialTorque } from "../spec/v2_knee.js";
 import { G1Sim, G1_WORLD } from "./v2_g1.js";
 
 const D = 180 / Math.PI, KEYS = ["x", "y", "z"];
@@ -34,7 +35,15 @@ function rigPose(spec, j, th) {
 }
 export function passiveRig(J, spec, test, opts = {}) {
   const cfg = Object.assign({}, G1_WORLD, opts.cfg || {}), dt = 1 / cfg.hz, j = spec.joints.find(x => x.name === test.joint), i = KEYS.findIndex(k => j.def.axes[k] && j.def.axes[k].key === test.key);
-  const pp = j.passive[i], frac = opts.frac ?? 0.6; if (test.dir) test = { ...test, end: (test.dir > 0) === (j.def.axes[KEYS[i]].s > 0) ? "hi" : "lo" };
+  let pp = j.passive[i]; const frac = opts.frac ?? 0.6; if (test.dir) test = { ...test, end: (test.dir > 0) === (j.def.axes[KEYS[i]].s > 0) ? "hi" : "lo" };
+  // CORRECTED KNEE (v2k; knee_correction/KNEE_CORRECTION_PREREG.md KV9b(i)): the knee axial rig is checked against the v2k SPECIFICATION law
+  // (spec/v2_knee.js kneeAxialTorque — independent of the passive layer) at the rig flexion (constraint swing 0 → anatomical 70°) and, each
+  // step, at the actual flexion; capacities = the spec's opposing capacities (tauAtHard / 0.25). Off: the spec law exactly as before.
+  const sg = j.def.axes[KEYS[i]].s, v2k = (opts.kneeModel !== undefined ? opts.kneeModel : kneeModelEnv()) === "v2k" && /^knee_/.test(j.name) && test.key === "rot";
+  let capVsInt = 0, capVsExt = 0;
+  if (v2k) { const capLo = pp.tauAtHard[0] / 0.25, capHi = pp.tauAtHard[1] / 0.25, e = kneeEnvelopeV2K(70), cs = (lohi) => (sg > 0 ? lohi.map(v => v / D) : [-lohi[1] / D, -lohi[0] / D]);
+    capVsInt = sg > 0 ? capHi : capLo; capVsExt = sg > 0 ? capLo : capHi; pp = { ...pp, soft: cs(e.soft), hard: cs(e.hard), tauAtHard: [0.55 * capLo, 0.55 * capHi] }; }
+  const specTau = (q2, thE) => { if (!v2k) return passiveTorque(pp, thE); const fl = decompose(Q.norm(Q.mul(j.Cm, q2))).sy * j.def.axes.y.s * D; return sg * kneeAxialTorque(fl, sg * thE * D, capVsInt, capVsExt).tau; };
   const th0 = test.end === "hi" ? pp.soft[1] + frac * (pp.hard[1] - pp.soft[1]) : test.end === "lo" ? pp.soft[0] + frac * (pp.hard[0] - pp.soft[0]) : 0;
   let thLo = Infinity, thHi = -Infinity;
   const th = [0, 0, 0]; th[i] = th0; const { S, desc } = rigPose(spec, j, th), w = rigWorld(J, spec, cfg);
@@ -51,7 +60,7 @@ export function passiveRig(J, spec, test, opts = {}) {
     const Texp = up.joints[k].Texp[i]; w.step(dt, cfg.coll); contacts += w.contacts.filter(c => c.a >= 0 && c.b >= 0).length; st = rd();
     const lam = w.lambdaMotor(k)[i], q = Q.norm(Q.mul(Q.conj(j.F1), Q.mul(Q.conj(st[j.parentIndex].rot), Q.mul(st[j.childIndex].rot, j.F2)))), dd = decompose(q), thE = [dd.tw, dd.sy, dd.sz][i];
     const ax = Q.rot(Q.mul(st[j.childIndex].rot, j.F2), [[1, 0, 0], [0, 1, 0], [0, 0, 1]][i]), wE = V.dot(V.sub(st[j.childIndex].w, st[j.parentIndex].w), ax);
-    const tauApplied = lam / dt + Texp, tauSpec = passiveTorque(pp, thE), tauExpect = tauSpec - j.damping * wE;
+    const tauApplied = lam / dt + Texp, tauSpec = specTau(q, thE), tauExpect = tauSpec - j.damping * wE;
     const err = Math.abs(tauApplied - tauExpect); maxAbsErr = Math.max(maxAbsErr, err); if (Math.abs(tauExpect) > 0.5) maxRelErr = Math.max(maxRelErr, err / Math.abs(tauExpect));
     if (n === 0) firstTau = { tauApplied, tauSpec, tauExpect, th: thE * D };
     if (thE >= pp.soft[0] && thE <= pp.soft[1]) returned = true; thLo = Math.min(thLo, thE); thHi = Math.max(thHi, thE);
