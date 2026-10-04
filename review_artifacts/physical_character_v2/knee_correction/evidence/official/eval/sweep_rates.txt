@@ -1,0 +1,8 @@
+
+== perturb240_plane_v2k.json (set perturb240)
+k 0: 13/300 runs fail a G1 criterion (4.3 %) | by check {"1.R":1,"1.4e":1,"1.3d":11} | scenarios with ≥ 3 failing members: V1-matched upright 10/15 | energy events (>1 J/step) 0 | settled excursion p90 1.06° max 1.59°
+k 0.13: 16/300 runs fail a G1 criterion (5.3 %) | by check {"1.3a":1,"1.3d":15} | scenarios with ≥ 3 failing members: V1-matched upright 15/15 | energy events (>1 J/step) 0 | settled excursion p90 0.99° max 2.25°
+
+== perturb240_plane_old.json (set perturb240)
+k 0: 15/300 runs fail a G1 criterion (5.0 %) | by check {"1.3d":8,"1.3b":2,"1.R":5,"1.4e":1} | scenarios with ≥ 3 failing members: V2-REF perturb 4/15, V1-matched leanR 4/15 | energy events (>1 J/step) 0 | settled excursion p90 0.32° max 2.68°
+k 0.13: 34/300 runs fail a G1 criterion (11.3 %) | by check {"1.R":6,"1.3a":1,"1.3b":3,"1.3d":24,"1.4b":1,"1.4e":1} | scenarios with ≥ 3 failing members: V2-REF leanL 3/15, V2-REF upright 5/15, V2-REF perturb 3/15, V1-matched upright 6/15, V1-matched perturb 13/15 | energy events (>1 J/step) 0 | settled excursion p90 0.91° max 2.39°

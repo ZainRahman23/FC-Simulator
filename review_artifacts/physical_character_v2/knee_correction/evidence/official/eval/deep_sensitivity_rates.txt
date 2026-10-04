@@ -1,0 +1,10 @@
+== sweep_deepdelta150-4.json
+k 0.13: 0/300 runs fail a G1 criterion (0.0 %) | by check {} | scenarios with ≥ 3 failing members: none | energy events (>1 J/step) 0 | settled excursion p90 0.81° max 1.32°
+== sweep_deepdelta15010.json
+k 0.13: 19/300 runs fail a G1 criterion (6.3 %) | by check {"1.3b":8,"1.4e":8,"1.R":2,"1.3d":2} | scenarios with ≥ 3 failing members: V2-REF leanL 8/15, V2-REF perturb 8/15 | energy events (>1 J/step) 0 | settled excursion p90 0.79° max 1.53°
+== sweep_deepdelta1505.json
+k 0.13: 24/300 runs fail a G1 criterion (8.0 %) | by check {"1.4e":2,"1.4d":1,"1.3b":6,"1.R":1,"1.3d":15} | scenarios with ≥ 3 failing members: V2-REF leanR 5/15, V1-matched upright 15/15 | energy events (>1 J/step) 0 | settled excursion p90 1.02° max 2.22°
+== sweep_deepwidth1500.3.json
+k 0.13: 2/300 runs fail a G1 criterion (0.7 %) | by check {"1.4e":1,"1.R":1} | scenarios with ≥ 3 failing members: none | energy events (>1 J/step) 0 | settled excursion p90 0.85° max 1.47°
+== sweep_deepwidth1500.6.json
+k 0.13: 17/300 runs fail a G1 criterion (5.7 %) | by check {"1.3a":2,"1.3d":14,"1.R":2} | scenarios with ≥ 3 failing members: V1-matched upright 13/15 | energy events (>1 J/step) 0 | settled excursion p90 0.76° max 2.07°

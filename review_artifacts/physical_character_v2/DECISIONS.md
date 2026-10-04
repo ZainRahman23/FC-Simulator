@@ -1387,3 +1387,40 @@ Candidates and their regression implications: report §13.
 - validation V0–V11, to be preregistered.
 
 **E1a:** the evidence supports changing the knee before E1a (ankle-law blocker, the stance knee at 4–25° flexion, θ0 for reference semantics, order of work). **It does not by itself authorise E1a.**
+
+## 2026-10-04 — Corrected knee before E1a (user instruction `sources/2026-10-04_user_instruction_knee_correction_before_e1a.md`)
+
+### KC-1: v2k built (default off), preregistered, qualified on frozen code; strictly NOT QUALIFIED; E1a NOT run (`knee_correction/KNEE_CORRECTION_RESULTS.md`)
+
+**Commits:** parameterization + preregistration 0267291 (before implementation); frozen implementation 097dcb7 (official run on it, scratch tree).
+
+**The knee mechanics validate:**
+- conventions and L/R mirroring;
+- the law equal to its independent spec;
+- generalised-power and closed-loop conservation (the naive moving-rest-angle variant leaks 19 J per loop);
+- the plant within 0.001° of the law;
+- the reference path followed (7.6° of screw-home emerges);
+- the end-stop at bound + 3.00°;
+- the Jolt stop ≥ 31° away;
+- 180 / 240 / 480 Hz;
+- E1a pelvis drop 12 / 12: knee tracks θ0 within 1.4° through 3.6–29.7° flexion.
+
+**Strict FAILs:**
+- KV2b, KV3b and KV4a.3: preregistration threshold flaws. KV2b and KV3b leave dissipative residuals that the accepted plant shares. Errata E1–E3.
+- G1 row 5: the knee-flexion damping-rig premise; the deviation is exactly the designed flexion reaction (erratum E4).
+- G1 1.S′ / KV9c: V1-matched upright collapses into a splayed-leg rest on the hip end range (1.5–2.3° vs 1.5°), systematic at the central parameters. **It depends on the provisional deep-flexion parameters:** θ0(150°) ≈ 11° or width ×0.3 gives 0.0–0.7 % with no systematic scenario. **Not adopted** (that would be selection on the test).
+
+**Gains vs the old knee (same run):**
+- G1 perturbed rate 4.3 / 5.3 % (old 5.0 / 11.3 %); the prone-rest blocker is gone.
+- G2 and G3 15 / 15 at k = 0.
+- E1a configuration: G2 passes; G3 14 / 15 (only lifecycle row K); I2 now passes.
+
+**Yaw decomposition:** the knee masks nothing. The passive foot-axial joint is the model's dominant yaw compliance with either knee, the existing single-support yaw-anchor question.
+
+**E1a: NOT ready.** Your decisions:
+1. errata E1–E4;
+2. the deep-flexion parameters / the splayed-rest G1 finding;
+3. ankle k = 0.13;
+4. reference semantics + lifecycle (row K).
+
+Then freeze `E1_PREREGISTRATION_V2.md` §2. Nothing adopted; not pushed.
