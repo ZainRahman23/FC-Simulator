@@ -5,7 +5,7 @@
 **Status:**
 - **Research only. G4 not started.** No swing / lift / stepping code exists.
 - **Nothing adopted:** no twist policy, ankle stiffness, knee model / limit or reachability contract.
-- **Accepted behaviour preserved:** all new controller options are diagnostic and default-off. The default path is verified bit-identical (4 G3 state hashes + IK checksums), guarded by permanent tests R5.a–c. Component regressions **29/29**.
+- **Accepted behaviour preserved:** all new controller options are diagnostic and default-off. The default path is verified bit-identical (4 G3 state hashes + IK checksums), guarded by permanent tests R5.a–d. Component regressions **35/35** (R6.a–e: certificate soundness; research tooling only, no controller dependency).
 - **Nothing pushed.**
 
 **Details:** `pre_g4_runway/`:
@@ -144,13 +144,22 @@
 
 - **Ground footholds with |yaw| ≤ 30°:** **0 invalid in every one of the 8 morphologies** (2,256).
   - Tightest margin: hip rotation 1.1° (p5 8.8°).
-- **±45°:** 18–26 % invalid per body (28–48 cases). Pelvis yaw ≤ 20° toward the foot resolves 74–91 %.
+- **±45° at ground level:** 15–26 % invalid per body (28 / 192 … 48 / 184), with the twist DOFs held at their instantaneous values. Pelvis yaw ≤ 20° toward the foot resolves 1,023 of the 1,208 ±45° invalid targets (85 %; 78–93 % per body; corrected from an earlier "74–91 %" against `ik_anatomical/evidence/ik_pelvis_yaw.json`).
 - **Raised targets with a flat foot:** fail on ankle DF. This is a convention artefact; swing poses should leave pitch free.
 - **Aggressive multistart** (257 starts × 1,336 invalid targets): **0 solver misses.** The warm start reached the best residual in 1,329 / 1,336.
-  - "Not found" is strongly supported but **not proven** infeasible.
-- **Proposed taxonomy:**
+- **Certificates are practical.** A branch-and-bound with a rigorous Lipschitz bound (`tools/ik_cert_core.mjs`):
+  - **1,336 / 1,336 PROVEN-INFEASIBLE** as the IK problem is defined (0 undecided); ≈ 4 s (isolated; 12 s under 9-way load) median per target;
+  - the bound survived a falsification attempt over 5 body / state combinations: 0 violations in 585,000 random pairs; 0 pruned cells containing a known solution over 2,086 valid targets; permanent regression R6.
+- **But PROVEN-INFEASIBLE is a property of the problem definition, not the leg.** The IK holds knee axial rotation (actuated) and ankle ab/adduction (passive) at their **instantaneous** values.
+  - Freed inside their passively unloaded ranges (soft limits; the knee with its approved screw-home coupling): **1,265 / 1,336 (94.7 %) become FEASIBLE**, including **every ground and 5 cm target**.
+  - The actuated knee axial alone, inside its coupled soft range: 84.4 %.
+  - Freed inside the hard limits: 98.7 %. The remaining 18 are raised backward toe-out targets (8-D certificate: 4 attempted, all undecided at 4·10⁸ cells, so they stay UNKNOWN-NOT-FOUND; 8-D certificates need a tighter bound).
+- **With the instantaneous definition the verdict is knife-edge and state-dependent.** Moving one held twist by ≤ 1° flips 17.5 % of the invalid set to FEASIBLE, ≤ 3° flips 42 %, and ≤ 10° flips 83 % (every ground target). The validated controller's twist moves ±10–12°. The definitions "instantaneous" vs "posture reference" disagree on 468 targets (237 / 231).
+- **Robust across definitions:** ground footholds with |yaw| ≤ 30° are 0 invalid of 2,256.
+- **E2 check:** at standing pelvis height, 10 cm (even 5 cm) lateral footholds are out of reach in all 8 bodies, and 10 cm forward has a margin of only 5.9–8.6°. With a pelvis drop of ≥ 2.5 cm every E2 target is valid in every body, margin ≥ 17°.
+- **Taxonomy** (`pre_g4_runway/REACHABILITY_STRESS_AND_TAXONOMY.md` §4):
   - FEASIBLE (verified solution);
-  - PROVEN-INFEASIBLE (certificate: geometric reach bound, or a branch-and-bound lower bound, which is not implemented);
+  - PROVEN-INFEASIBLE (certificate **plus its problem definition**);
   - UNKNOWN-NOT-FOUND (search record; never reported as impossible).
 
 ## 8. Proposed reachability contract (updates to `ik_anatomical/FOOTHOLD_REACHABILITY_CONTRACT.md`; for approval)
@@ -158,11 +167,16 @@
 **Layers:** L1 geometric ⊇ L2 anatomical (approved limits) ⊇ L3 dynamically executable (G4).
 
 **Additions from this runway:**
-1. the result taxonomy above;
+1. the result taxonomy above; PROVEN-INFEASIBLE carries its problem definition;
 2. the pelvis hypothesis includes **yaw** (a turn yaw-sharing rule);
 3. swing poses leave **foot pitch free**;
 4. a planning margin rule (≥ 5° per axis proposed; excludes fewer than 5 % of the ±30° ground class);
-5. L3 must include single-support yaw anchoring (item 5) and the abort-path foothold.
+5. **the held twist values are a planning input, not the instantaneous joint values.**
+   - Proposal: plan the actuated knee axial rotation as a 7th coordinate inside its screw-home-coupled soft range.
+   - Hold the passive ankle ab/adduction at reference, with ±10° as touchdown tolerance only.
+   - This interacts with the twist-policy decision.
+6. the planner uses FEASIBLE only (one bounded solve); certificates are for offline audits (seconds per target);
+7. L3 must include single-support yaw anchoring (item 5) and the abort-path foothold.
 
 ## 9. G3 → G4 transition hazards (external-lift harness; 12 hazards, 8 confirmed)
 
@@ -178,7 +192,7 @@
 
 **From code:**
 - **H5:** support by touching pieces, with the whole region as the support geometry;
-- **H8:** the pelvis height target uses the airborne ankle;
+- **H8:** the pelvis height target uses the airborne ankle. Checked empirically: **masked in G3** (≤ 0.7 mm at 35–68 mm lifts), because the feasibility cap uses the on-ground hold pose. It becomes live once the unloaded leg's target pose is airborne;
 - **H10:** swing-foot yaw is uncontrolled under "current";
 - **H11:** stance gains on a swing leg.
 
@@ -203,7 +217,8 @@
 ## 11. Proposed second experiment: short reachable step (E2)
 
 - ground-level, yaw 0, 10 cm forward (E2a), then 10 cm lateral (E2b);
-- each target pre-checked L2 with ≥ 5° margin at the planned pelvis height (at standing height a 15 cm forward foothold is beyond reach);
+- each target pre-checked L2 with ≥ 5° margin at the planned pelvis height;
+- **checked:** E2 needs a planned pelvis drop of ≥ 2.5 cm. At standing height E2b is out of reach in all 8 bodies, and E2a is out of reach for V2-165-62. With the drop, every body is valid with ≥ 17° margin;
 - ≥ 15 mm clearance; touchdown ≤ 10 mm / 3°;
 - load acceptance onto the new foothold; the E1 criteria re-scoped;
 - the executed path stays inside the anatomical limits.
@@ -213,13 +228,25 @@
 - **Twist policies:** no measurable cost (same IK chain; drift adds 6 `decompose` per tick).
 - **Validated tick budget** (isolated): controller + actuators 0.093–0.103 ms (budget 0.15); IK ≈ 86 % of the controller; physics 0.31–0.34 and passive 0.14–0.15 ms per tick.
 - **Foothold queries:** bounded IK classification ≈ 0.13 ms; a converged fallback 1–8 ms.
+- **Infeasibility certificates:** ≈ 4 s (isolated; 12 s under 9-way load) median, max 135 s under load (the 19 µm near-miss, 79 M cells) per target (single core; 10⁶–10⁷ cells). **Offline only.** 8-D (twist-free) certificates did not finish within 4·10⁸ cells (≈ 12 min per target under load).
 - **A rate of 260 Hz** (if chosen for the 180 Hz-type margin): physics and passive cost roughly +8 %.
 - **G4's swing-leg inverse-dynamics feed-forward:** estimated small next to the IK.
 
 ## 13. New regressions and instrumentation
 
 **Permanent:**
-- **R5.a–c:** twist-policy options default-off; blend 0 ≡ current and 1 ≡ reference bit-for-bit; mechanism slope current ≈ −1 vs reference ≈ 0. **Suite 29/29.**
+- **R5.a–d:**
+  - twist-policy options default-off;
+  - blend 0 ≡ current and 1 ≡ reference, bit-for-bit;
+  - mechanism slope current ≈ −1 vs reference ≈ 0;
+  - drift filter state saved by `getState`; the default state is unchanged.
+- **R6.a–d: certificate soundness:**
+  - the Lipschitz rate claims hold;
+  - no cell containing a known solution is pruned;
+  - a known invalid target is certified, and the same target made solvable by moving the held knee twist is not;
+  - the 8-D chain ≡ `legChain` bit-for-bit.
+- **R6.e:** the opt-in tight twist levers satisfy their 8-D rate claims.
+- **Suite 35/35.**
 
 **Diagnostic options (default-off, bit-identical):** `ikTwistBlend`, `ikTwistTau` (filter state in `getState`), `yawCmd`.
 
@@ -228,6 +255,7 @@
 - `turn_test.mjs`, `twist_toeout.mjs`, `ss_yaw_anchor.mjs`;
 - `liftoff_probe.mjs` (`--body`, `--profile=ramp`);
 - `ik_taxonomy.mjs`;
+- `ik_certificate.mjs` (`--soundness`), `ik_cert_core.mjs`, `ik_twist_free.mjs` (`--sens`, `--refall`, `--cert`), `e2_target_check.mjs`;
 - `phaseG_events.mjs --rates`;
 - `twist_mode.mjs --bodies --stand`;
 - `ank_reftwist_eval.mjs` (tag).
@@ -242,7 +270,7 @@
 | 4 | The 240 Hz margin for end-range integration in passive-fall stress states (0.51 J). |
 | 5 | Interface hazards H1–H12. |
 | 6 | G2 S4's single-sample "final trunk" criterion is phase-sensitive. |
-| 7 | IK: contract decisions; fallback cost; the branch-and-bound certificate is not implemented. |
+| 7 | IK: contract decisions; fallback cost. The 6-D certificate is implemented. 8-D (twist-free) certificates are undecided at 4·10⁸ cells and need a tighter bound. **The validated IK's reachability depends on the instantaneous twist** (a definition issue, §7). |
 | 8 | Earlier debts: the radial-inset margin; G1 chaotic marginality (5 % of perturbed members at k = 0). |
 
 ## 15. Exact decisions needed from you
@@ -261,7 +289,11 @@
 3. **Ankle law form:** constant vs load-dependent, after the evidence in 2(a).
 4. **Knee:** authorise sourcing knee axial ROM / torque–rotation evidence. **No change now.** Decide how G1 1.3d should treat that interaction, given the evidence.
 5. **G4 boundary components (H1–H12):** approve the design scope.
-6. **Reachability contract:** taxonomy, pelvis-yaw hypothesis, margin rule, limit set.
+6. **Reachability contract:** taxonomy, pelvis-yaw hypothesis, margin rule, limit set, and **how the twist DOFs are defined**:
+   - held at instantaneous (as now; knife-edge);
+   - held at reference;
+   - knee axial planned inside its coupled soft range (proposal);
+   - or both free.
 7. **E1 / E2 designs and the proposed criteria.**
 8. **Rate:** accept the thin 240 Hz margin (report-only in passive-fall stress states), or plan an implicit end-range treatment.
 
@@ -279,3 +311,6 @@
 2. Commission the loaded-ankle evidence and / or the active yaw strategy design (item 2).
 3. Implement the boundary components behind default-off flags, with G0–G3 regressions bit-identical when off.
 4. Then authorise E1a.
+5. **Before E2:** decide how the reachability contract defines the twist DOFs (item 6). Under the validated "instantaneous" definition, the reachability of a foothold changes with the twist state. Plan E2 with a pelvis drop of ≥ 2.5 cm.
+
+**E1 does not depend on the reachability contract** (it lifts and replaces the foot in place). **E2 does.**

@@ -20,7 +20,7 @@
 
 **The stance controller cannot position an airborne foot** (vertical or horizontal), and **its contact-reacquisition path produces flag chatter and torque discontinuities even at low touchdown speed.** This is the V1-style transition hazard.
 
-## Hazards (each confirmed in code; ✓ = also confirmed empirically: 8 of 12)
+## Hazards (each confirmed in code; ✓ = also confirmed empirically: 8 of 12; H8 checked empirically and found masked in G3)
 
 | # | assumption that breaks at foot lift | where | effect when the foot leaves the turf | severity |
 |---|---|---|---|---|
@@ -31,7 +31,7 @@
 | H5 | **Support membership by touching pieces** (`contactSupport`: any piece touching → in support) and **the support region = the whole usable foot region** | `inSup`, `footPoly` | at touchdown with 1 piece touching, the support polygon jumps to the full foot and the CoP may be commanded where there is no contact | high |
 | H6 ✓ | **Heading = mean forward vector of both feet**, including an airborne foot | `hd` | a rotating swing foot rotates the pelvis yaw target and the balance frame (measured 1–2° heading wander with a lifted foot) | medium |
 | H7 ✓ | **Balance reference midpoint = the midpoint of both ankles** | `mid`, `xiRef` | a swinging ankle moves the COM / DCM target during single support (measured: a 9 cm airborne-foot drift moved the midpoint 4.6 cm) | high |
-| H8 | **Pelvis height target = mean ankle height + h_ref** (capped by `ikFeasible`) | `pP[1]` | lifting one foot raises the stance pelvis target by half the lift; the cap uses the (possibly stale) hold pose | medium |
+| H8 (masked) | **Pelvis height target = mean ankle height + h_ref** (capped by `ikFeasible`) | `pP[1]` | uncapped, lifting one foot would raise the stance pelvis target by half the lift. **Measured:** the target moved ≤ 0.7 mm at 35–68 mm lifts (`evidence/liftoff/`, `pelHT`), because the `ikFeasible` cap uses the unloaded leg's **on-ground hold pose**, which binds. **Latent:** once the hold / target pose of the unloaded leg is airborne (any G4 swing target), the cap follows it and the hazard appears. | medium |
 | H9 ✓ | **Supervisor abort = smooth return to bilateral (λ → 0.5 over 0.6 s)** | `supervised` | in single support the abort shifts weight onto a foot that is not on the ground (the fall in the 20 N probe) | high |
 | H10 | **The twist policy "current" leaves an airborne leg's axial twist uncontrolled** | posture IK | swing-foot yaw floats within ±10° (k = 0), so touchdown yaw is uncontrolled | medium |
 | H11 | **Posture gains are stance gains** (sized for half body weight), and the hold stiffness is low at the foot (≈ 600 N/m) | `gain[k]` | a swing leg would track poorly under its own inertia; swing needs explicit trajectory + inverse-dynamics feed-forward | medium |

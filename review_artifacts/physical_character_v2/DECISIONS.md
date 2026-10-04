@@ -1275,3 +1275,34 @@ Candidates and their regression implications: report §13.
 - **Phase G:** 180 Hz-only end-range integration error. It converges with dt, is net dissipative, is present at k = 0, and occurs only in passive-fall stress states. Not a foundational defect; H passes.
 - **Diagnostic `ikRefTwist`** at k = 0.13 / 0.15: every controller-dependent requirement met; yaw stiffness ≈ 2k; G1 knee-axial still fails.
 - **Nothing adopted.** Decisions put to the user: the twist-DOF policy → the knee-axial question → a re-pre-registered ankle run; the foothold contract.
+
+## 2026-10-04 — Pre-G4 research runway (user instruction `sources/2026-10-04_user_instruction_pre_g4_research_runway.md`)
+
+### FP-13: runway complete; nothing adopted; G4 not started; STOPPED with the consolidated decision report (`PRE_G4_DECISION_REPORT.md`)
+
+**Twist** (`pre_g4_runway/TWIST_MECHANISM_AND_POLICY.md`):
+- **Root cause:** the posture IK holds the twist DOFs at their current values. So the hip-rotation target follows the leg twist, and the hip spring pumps energy into it: the stiffness term does +19 to +32 J per hip over 8 s, at a phase lag of 47–57°.
+- Rate, activation and heading are falsified as causes.
+- Across 8 bodies × 5 disturbances: "current" is non-decaying in 25 / 40; reference / blend 0.5 / drift τ 2 s in 0 / 40.
+- Both a reference-like policy and k ≈ 0.13–0.15 are needed in double support.
+- **No policy fixes single-support yaw anchoring.** The stance ankle's passive-only axial path is the only net yaw anchor.
+
+**Knee:** the ankle ab/adduction and knee axial end ranges, loaded in series in a prone rest at 145° flexion. The evidence is "recalled".
+
+**Rate:** the 180 Hz error converges (0.51 J at 240 Hz; 0 at ≥ 260 Hz) and is net dissipative.
+
+**Reachability** (`pre_g4_runway/REACHABILITY_STRESS_AND_TAXONOMY.md`):
+- The branch-and-bound certificate is implemented (`tools/ik_cert_core.mjs`). Its soundness is falsification-tested and guarded by the permanent R6.
+- 1,336 / 1,336 invalid targets are PROVEN-INFEASIBLE as defined.
+- **But the definition decides:** with the held twist DOFs free in their unloaded ranges, 94.7 % are FEASIBLE (all ground and 5 cm targets).
+- The instantaneous-twist definition is knife-edge: a ≤ 1° change flips 17.5 %, and ≤ 10° flips 83 %.
+- E2 needs a pelvis drop of ≥ 2.5 cm.
+
+**Interface** (`pre_g4_runway/G3_G4_INTERFACE_AUDIT.md`): 12 hazards. 8 are confirmed empirically with an external-lift harness; H8 was checked and is masked in G3.
+
+**G4 design** (`pre_g4_runway/G4_FIRST_EXPERIMENTS.md`): E1a / E1b lift → hover → replace (criteria S1–S13), and E2 short step. Both are proposals.
+
+**Status:**
+- Permanent regressions: R5.a–d and R6.a–e; suite 35/35.
+- All controller options are diagnostic and default-off; the default path is bit-identical.
+- **Recommendation:** not ready for G4 experiment runs. Ready for G4 preparation after the twist-policy, single-support yaw-anchor and boundary-component decisions.

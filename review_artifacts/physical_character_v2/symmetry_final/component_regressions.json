@@ -181,6 +181,36 @@
    "name": "drifting-reference filter state is saved by getState; the default controller state is unchanged (no new key)",
    "pass": true,
    "value": "filter state saved: true; default state has no twFilt key: true"
+  },
+  {
+   "id": "R6.a",
+   "name": "certificate bound: Lipschitz rate claims hold (position rate ≤ lever for hip / knee, 0 for ankle; orientation rate ≤ 1)",
+   "pass": true,
+   "value": "2000 points × 6: max pos rate / lever 1.000000000, ankle position rate 0, max orientation rate 0.999999853"
+  },
+  {
+   "id": "R6.b",
+   "name": "certificate bound: no cell containing a known anatomical solution is pruned (bisection path to Σ LIP·h < 1e-9)",
+   "pass": true,
+   "value": "80 valid targets: 0 pruned"
+  },
+  {
+   "id": "R6.c",
+   "name": "certificate decides: a known invalid target → PROVEN-INFEASIBLE; the same target with the held knee axial twist moved (now solvable) → not certified",
+   "pass": true,
+   "value": "as defined: warm residual 5.33e-2 → PROVEN-INFEASIBLE (3290881 cells); knee axial -5°: solvable, certificate UNDECIDED"
+  },
+  {
+   "id": "R6.d",
+   "name": "the 8-D (twist-free) chain equals the production legChain bit for bit at the held twist values",
+   "pass": true,
+   "value": "max |Δr| 0"
+  },
+  {
+   "id": "R6.e",
+   "name": "tight twist levers (opt-in): 8-D rate claims hold (position rate ≤ lever incl. knee axial ≈ 0; ankle coordinates 0; orientation ≤ 1)",
+   "pass": true,
+   "value": "knee-axial lever 1.00e-9 m, hip-twist 0.4386 m (generic 0.8663); max pos rate / lever 1.000000000, ankle 0, orientation 0.999999998"
   }
  ]
 }

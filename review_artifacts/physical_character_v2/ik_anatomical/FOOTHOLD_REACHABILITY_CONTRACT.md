@@ -83,6 +83,15 @@
    - hold them at their current values (as now);
    - solve them with their passive stiffness (relevant if an ankle neutral-zone law is adopted);
    - allow them inside their own limits.
+
+   **Runway evidence** (`../pre_g4_runway/REACHABILITY_STRESS_AND_TAXONOMY.md` §3c–3d):
+   - **"Current values" makes the classification state-dependent and knife-edge.**
+     - Moving one held twist by ≤ 1° flips 17.5 % of the invalid set; ≤ 3° flips 42 %; ≤ 10° flips 83 %, including every ground target. The validated controller's twist moves through ±10–12°.
+     - 237 targets are invalid only under the instantaneous definition, and 231 only under the reference definition.
+   - **Freeing them changes the answer for most of the invalid set:**
+     - the actuated knee axial alone, inside its screw-home-coupled soft range: 84.4 % FEASIBLE;
+     - both twist DOFs inside their unloaded ranges: 94.7 %, including every ground and 5 cm target.
+   - **Controllability:** the knee axial DOF is actuated, so it can be planned. The ankle ab/adduction is passive-only: a plan that needs it relies on where contact puts the foot. That is acceptable only as a touchdown tolerance (±Δψ, decision 4), not as a planned coordinate.
 3. **Pelvis hypothesis policy:** fixed / candidate set / searched; and the yaw-sharing rule for turns.
 4. **Foot-yaw tolerance** at touchdown (exact vs ±Δψ).
 5. **Fallback semantics:** box least-squares optimum (as implemented), or nearest-to-current pose, or "refuse".
@@ -98,11 +107,24 @@
    | `PROVEN-INFEASIBLE` | a certificate: the geometric reach bound (exact, cheap), or a branch-and-bound residual lower bound over the joint box (defined, not implemented) |
    | `UNKNOWN-NOT-FOUND` | no certificate; the search record (starts, best residual). **Never reported as anatomically impossible; never planned on.** |
 
-   - **Evidence so far:** 257-start multistart over all 1,336 current invalid targets found **0 solver misses**. All are `UNKNOWN-NOT-FOUND`; none is certified.
-2. **The pelvis hypothesis includes yaw.** For turning footholds, a yaw-sharing rule between pelvis and hip: pelvis yaw ≤ 20° toward the foot resolves 74–91 % of the ±45° invalid set per body.
+   - **Evidence:**
+     - 257-start multistart over all 1,336 current invalid targets found **0 solver misses**.
+     - **The branch-and-bound certificate is now implemented** (`tools/ik_cert_core.mjs`; soundness regression R6.a–e). **1,336 / 1,336 are PROVEN-INFEASIBLE** as defined (0 undecided), in ≈ 4 s (isolated; 12 s under 9-way load) median per target. That is offline-audit cost, not planner cost.
+   - **Required field:** a `PROVEN-INFEASIBLE` result must state its problem definition: the solved and held DOFs, the held values, the limit set and the pelvis hypothesis. **94.7 % of the 6-D-certified set is FEASIBLE once the held twist DOFs move inside their unloaded ranges.**
+2. **The pelvis hypothesis includes yaw.** For turning footholds, a yaw-sharing rule between pelvis and hip: pelvis yaw ≤ 20° toward the foot resolves 85 % (78–93 % per body; corrected from "74–91 %") of the ±45° invalid set.
 3. **Swing poses leave foot pitch free.** All ankle-DF invalidity came from a flat foot held in the air.
 4. **Planning margin:** ≥ 5° to every hard limit (proposed). For ground footholds with |yaw| ≤ 30° this excludes fewer than 5 %, all of them hip-rotation-limited (margin min 1.1°, p5 8.8°).
-5. **L3 (dynamic executability) must include:**
+5. **Held twist values are a planning input, not the instantaneous joint values.**
+   - Proposal for decision 2: solve the **knee axial** rotation as a 7th planned coordinate, inside the approved screw-home-coupled soft range (actuated; 84.4 % of the current invalid set becomes valid).
+   - Hold the passive ankle ab/adduction at its reference (≈ 0), with its soft ±10° as touchdown tolerance only.
+   - **Interaction with the twist-policy decision:** a planned knee axial value becomes that DOF's posture target during swing. Under "current" the knee axial target is the current value, which has zero stiffness.
+   - Not adopted.
+6. **E2 footholds need pelvis drop ≥ 2.5 cm.** At standing height:
+   - a 10 cm lateral foothold is out of reach in every body;
+   - a 10 cm forward foothold has a margin of only 5.9–8.6° (knee near hyperextension), and is out of reach for V2-165-62.
+
+   With 2.5 cm of drop, every body is valid with ≥ 17° margin.
+7. **L3 (dynamic executability) must include:**
    - **single-support yaw anchoring:** the stance ankle reaches its ab/adduction end range at 1–2 N·m·s yaw impulses under every posture policy at evidence-range stiffness;
    - the single-support abort foothold;
    - the interface requirements of `../pre_g4_runway/G3_G4_INTERFACE_AUDIT.md`.

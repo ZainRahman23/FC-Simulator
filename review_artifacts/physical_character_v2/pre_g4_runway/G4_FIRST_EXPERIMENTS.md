@@ -78,6 +78,17 @@ E1a tests the boundary with the least dynamics. E1b tests that the airborne leg 
 
 **Note:** at standing pelvis height, a 15 cm ground-level forward foothold is already beyond full extension for most bodies (reachability study). E2 therefore needs either step length ≤ 10 cm or a planned pelvis drop / knee-flexed stance, which is decided in the E2 pre-registration.
 
+**Checked (`tools/e2_target_check.mjs`; G3 U:R swing-ready state of every body; `REACHABILITY_STRESS_AND_TAXONOMY.md` §3e):**
+
+| | standing pelvis height | pelvis drop ≥ 2.5 cm |
+|---|---|---|
+| E2a, 10 cm forward | 7 / 8 valid, but margin only 5.9–8.6° (knee near its hyperextension limit): passes the proposed 5° rule, narrowly; **V2-165-62 out of reach** | 8 / 8 valid, margin ≥ 23.0° |
+| E2b, 10 cm lateral | **out of reach in 8 / 8** | 8 / 8 valid, margin ≥ 17.3° |
+| 5 cm forward / 5 cm lateral | 8 / 8 valid, margin 13.1–13.6° / **out of reach in 8 / 8** | — |
+
+- **Proposed for the E2 pre-registration:** the plan holds a pelvis drop of ≥ 2.5 cm (equivalently, a few degrees of stance-knee flexion) before the lift.
+- The twist definition does not change these margins (≤ 0.5°).
+
 **Script:**
 1. as E1 to the lift;
 2. swing along a minimum-jerk path with ≥ 15 mm clearance at mid-swing over 0.5 s;

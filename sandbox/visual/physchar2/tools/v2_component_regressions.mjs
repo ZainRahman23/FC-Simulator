@@ -15,11 +15,17 @@
 //      "current" form and 1 ≡ ikRefTwist bit for bit; the defining mechanism measurement — under "current" the hip-rotation IK target FOLLOWS
 //      the leg twist (slope ≈ −1: the twist direction has zero restoring stiffness, the root of the actuator-powered twist limit cycle), under
 //      a reference target it does not (≈ 0). Static (no simulation step).
+//   R6 reachability-certificate soundness (pre-G4 runway; research instrumentation tools/ik_cert_core.mjs, no controller dependency): the
+//      Lipschitz rate claims hold on random box points (hip / knee position rate ≤ lever, ankle coordinates do not move the ankle centre,
+//      orientation rate ≤ 1); no cell containing a known anatomical solution is ever pruned; a known invalid target is certified
+//      PROVEN-INFEASIBLE, and the same target made feasible by moving the held knee axial twist is NOT; the 8-D (twist-free) chain equals the
+//      production legChain bit for bit at the held twist values; the opt-in TIGHT twist levers (8-D) also satisfy their rate claims.
+//      Static (no simulation step after the state capture).
 // usage: node tools/v2_component_regressions.mjs [--json=<out>]     exit code 1 on any failure
 import fs from "fs"; import path from "path"; import { fileURLToPath } from "url";
 import { loadJolt, unitQ } from "../core/v2_jolt.js"; import { generateSpec } from "../spec/v2_spec.js"; import { VARIATION_SET } from "../spec/v2_human.js";
 import { G2Sim } from "../gates/v2_g2.js"; import { G3Sim, g3Def } from "../gates/v2_g3.js"; import { G1Sim } from "../gates/v2_g1.js"; import { STAND, insetPoly, insidePoly, clampPoly, usableRegion, IK } from "../ctrl/v2_stand.js";
-import { bootSole, hull2, hull2Canonical } from "../sim/v2_geom.js"; import { pyr, decompose } from "../spec/v2_joints.js"; import { V, Q, unitStates, unitEv, dnorm as dn } from "../core/v2_math.js";
+import { bootSole, hull2, hull2Canonical } from "../sim/v2_geom.js"; import { pyr, decompose } from "../spec/v2_joints.js"; import { V, Q, unitStates, unitEv, dnorm as dn } from "../core/v2_math.js"; import { certLevers, branchAndBound, knownSolutionPath, chain8 } from "./ik_cert_core.mjs";
 const here = path.dirname(fileURLToPath(import.meta.url)), J = await loadJolt(path.join(here, "../vendor/jolt-physics.wasm-compat.js")), results = [];
 const check = (id, name, pass, value) => { results.push({ id, name, pass: !!pass, value }); console.log(`${pass ? "PASS" : "FAIL"} ${id.padEnd(6)} ${name}: ${value}`); };
 const m3 = (p) => [-p[0], p[1], p[2]], mq = (q) => [q[0], -q[1], -q[2], q[3]], mw = (w) => [w[0], -w[1], -w[2]], e = (x) => (+x).toExponential(2);
@@ -172,6 +178,41 @@ function refLegIK(ctrl, st, ev, n, pP, qP, footPose) { const P = ctrl.P, ks = ct
   const sd = new G3Sim(J, spec, g3Def("T5"), { stand: { ikTwistBlend: 1, ikTwistTau: 2 } }), s0 = new G3Sim(J, spec, g3Def("T5"), {}); for (let i = 0; i < 24; i++) { sd.tick(); s0.tick(); }
   const hasF = Array.isArray(sd.ctrl.getState().twFilt), noKey = !("twFilt" in s0.ctrl.getState()); sd.destroy(); s0.destroy();
   check("R5.d", "drifting-reference filter state is saved by getState; the default controller state is unchanged (no new key)", hasF && noKey, `filter state saved: ${hasF}; default state has no twFilt key: ${noKey}`); }
+// ── R6 reachability-certificate soundness (V2-REF, G3 U:R swing-ready capture of the left leg with its held foot target, as tools/ik_certificate.mjs) ──
+{ const spec = generateSpec(VARIATION_SET.find(h => h.id === "V2-REF")), sim = new G3Sim(J, spec, g3Def("U:R"), {}), orig = sim.ctrl.legIK.bind(sim.ctrl), n = 0; let cap = null, want = false;
+  sim.ctrl.legIK = (st, ev, nn, pP, qP, fp) => { if (want && nn === n && !cap) cap = { st: unitStates(st), ev: unitEv(ev), pP: pP.slice(), qP: qP.slice(), foot: fp ? { pos: fp.pos.slice(), rot: Q.norm(fp.rot) } : null }; return orig(st, ev, nn, pP, qP, fp); };
+  while (sim.n * sim.dt < 8 - 1e-9 && sim.tick()); want = true; sim.tick(); sim.ctrl.legIK = orig; const c = sim.ctrl, D = 180 / Math.PI, TOL = 1e-6;
+  const st = cap.st, ft0 = cap.foot || st[c.feet[n]], fw = Q.rot(st[c.feet[1 - n]].rot, [0, 0, 1]), hd = V.norm([fw[0], 0, fw[2]]), latOut = V.sc([hd[2], 0, -hd[0]], -1), sg = -1;
+  const Lh = c.legK[n].map(k => spec.joints[k].limits.hard), lo = [Lh[0].lo[0], Lh[0].lo[1], Lh[0].lo[2], Lh[1].lo[1], Lh[2].lo[1], Lh[2].lo[2]], hi = [Lh[0].hi[0], Lh[0].hi[1], Lh[0].hi[2], Lh[1].hi[1], Lh[2].hi[1], Lh[2].hi[2]], { lever, LIP } = certLevers(c, n, 6);
+  const tgt = (fwd, lat, hgt, yaw, drop) => ({ pP: [cap.pP[0], cap.pP[1] - drop, cap.pP[2]], foot: { pos: V.add(V.add(V.add(ft0.pos, V.sc(hd, fwd)), V.sc(latOut, lat)), [0, hgt, 0]), rot: Q.norm(Q.mul(Q.axis([0, 1, 0], sg * yaw / D), ft0.rot)) } });
+  // R6.a rate claims on 2,000 seeded random box points (central differences, h = 1e-6; tolerance 1e-6 relative for rounding)
+  let seed = 12345; const rnd = () => (seed = (Math.imul(seed, 1103515245) + 12345) >>> 0) / 4294967296, C0 = c.legChain(st, cap.ev, n, cap.pP, cap.qP, ft0); let posR = 0, ankPos = 0, oriR = 0;
+  for (let k = 0; k < 2000; k++) { const x = lo.map((l, i) => l + (hi[i] - l) * rnd()); for (let i = 0; i < 6; i++) { const xp = x.slice(), xm = x.slice(); xp[i] += 1e-6; xm[i] -= 1e-6; const rp = C0.fk(xp), rm = C0.fk(xm), d = rp.map((v, j) => (v - rm[j]) / 2e-6), dp = Math.hypot(d[0], d[1], d[2]);
+      if (lever[i] > 0) posR = Math.max(posR, dp / lever[i]); else ankPos = Math.max(ankPos, dp); oriR = Math.max(oriR, Math.hypot(d[3], d[4], d[5])); } }
+  check("R6.a", "certificate bound: Lipschitz rate claims hold (position rate ≤ lever for hip / knee, 0 for ankle; orientation rate ≤ 1)", posR <= 1 + 1e-6 && ankPos === 0 && oriR <= 1 + 1e-6, `2000 points × 6: max pos rate / lever ${posR.toFixed(9)}, ankle position rate ${ankPos}, max orientation rate ${oriR.toFixed(9)}`);
+  // R6.b known-solution path on the anatomically valid targets of a ground / raised set; R6.d chain8 ≡ legChain at the held twists on the same set
+  let nv = 0, pruned = 0, chainDiff = 0;
+  for (const [fwd, lat] of [[0.15, 0], [0.30, 0], [-0.10, 0], [0, -0.08], [0, 0.10], [0.30, 0.10], [0.15, 0.05]]) for (const hgt of [0, 0.05]) for (const yaw of [0, 30, -30]) for (const drop of [0.05, 0.10]) {
+    const { pP, foot } = tgt(fwd, lat, hgt, yaw, drop), C = c.legChain(st, cap.ev, n, pP, cap.qP, foot), C8 = chain8(c, st, cap.ev, n, pP, cap.qP, foot);
+    for (const x of [C.x0, lo.map((l, i) => (l + hi[i]) / 2)]) { const a = C.fk(x), b = C8.fk(C8.embed(x)); chainDiff = Math.max(chainDiff, ...a.map((v, j) => Math.abs(v - b[j]))); }
+    const B = c.legIKBounded(st, cap.ev, n, pP, cap.qP, foot); if (!(B.err <= TOL)) continue; nv++; if (knownSolutionPath(C.fk, lo, hi, LIP, B.x, TOL).pruned) pruned++; }
+  check("R6.b", "certificate bound: no cell containing a known anatomical solution is pruned (bisection path to Σ LIP·h < 1e-9)", nv > 20 && pruned === 0, `${nv} valid targets: ${pruned} pruned`);
+  // R6.c far outward, foot yaw −45°, raised 5 cm, no pelvis drop: certified infeasible as defined; moving the held knee axial twist makes it feasible
+  { const { pP, foot } = tgt(0, 0.20, 0.05, -45, 0), C = c.legChain(st, cap.ev, n, pP, cap.qP, foot), B = c.legIKBounded(st, cap.ev, n, pP, cap.qP, foot), R = branchAndBound(C.fk, lo, hi, LIP, 2e7, TOL);
+    let feasD = null, R2 = null; for (const d of [-3, -5, -7.5]) { const qs = cap.ev.qs.map(q => q.slice()), k = c.legK[n][1], v = decompose(qs[k]); qs[k] = pyr(v.tw + d / D, v.sy, v.sz); const ev2 = { ...cap.ev, qs };
+      if (c.legIKBounded(st, ev2, n, pP, cap.qP, foot).err <= TOL) { feasD = d; R2 = branchAndBound(c.legChain(st, ev2, n, pP, cap.qP, foot).fk, lo, hi, LIP, 2e6, TOL); break; } }
+    check("R6.c", "certificate decides: a known invalid target → PROVEN-INFEASIBLE; the same target with the held knee axial twist moved (now solvable) → not certified", B.err > TOL && R.verdict === "PROVEN-INFEASIBLE" && feasD != null && R2.verdict !== "PROVEN-INFEASIBLE",
+      `as defined: warm residual ${e(B.err)} → ${R.verdict} (${R.evals} cells); knee axial ${feasD}°: solvable, certificate ${R2 && R2.verdict}`); }
+  check("R6.d", "the 8-D (twist-free) chain equals the production legChain bit for bit at the held twist values", chainDiff === 0, `max |Δr| ${chainDiff}`);
+  // R6.e the opt-in tight levers on the 8-D chain (knee axial lever = the ankle's distance from the shank twist axis + 1 nm; hip twist = the knee's
+  // distance from the thigh twist axis + shank + 1 nm): 1,000 seeded random points of the 8-D hard box
+  { const T8 = certLevers(c, n, 8, true), C8 = chain8(c, st, cap.ev, n, cap.pP, cap.qP, ft0), Lh8 = c.legK[n].map(k => spec.joints[k].limits.hard);
+    const lo8 = [Lh8[0].lo[0], Lh8[0].lo[1], Lh8[0].lo[2], Lh8[1].lo[0], Lh8[1].lo[1], Lh8[2].lo[0], Lh8[2].lo[1], Lh8[2].lo[2]], hi8 = [Lh8[0].hi[0], Lh8[0].hi[1], Lh8[0].hi[2], Lh8[1].hi[0], Lh8[1].hi[1], Lh8[2].hi[0], Lh8[2].hi[1], Lh8[2].hi[2]]; let pr = 0, zr = 0, orr = 0;
+    for (let k = 0; k < 1000; k++) { const x = lo8.map((l, i) => l + (hi8[i] - l) * rnd()); for (let i = 0; i < 8; i++) { const xp = x.slice(), xm = x.slice(); xp[i] += 1e-6; xm[i] -= 1e-6; const rp = C8.fk(xp), rm = C8.fk(xm), d = rp.map((v, j) => (v - rm[j]) / 2e-6), dp = Math.hypot(d[0], d[1], d[2]);
+        if (T8.lever[i] > 0) pr = Math.max(pr, dp / T8.lever[i]); else zr = Math.max(zr, dp); orr = Math.max(orr, Math.hypot(d[3], d[4], d[5])); } }
+    check("R6.e", "tight twist levers (opt-in): 8-D rate claims hold (position rate ≤ lever incl. knee axial ≈ 0; ankle coordinates 0; orientation ≤ 1)", pr <= 1 + 1e-6 && zr === 0 && orr <= 1 + 1e-6,
+      `knee-axial lever ${e(T8.lever[3])} m, hip-twist ${T8.lever[0].toFixed(4)} m (generic ${(T8.L1 + T8.L2).toFixed(4)}); max pos rate / lever ${pr.toFixed(9)}, ankle ${zr}, orientation ${orr.toFixed(9)}`); }
+  sim.destroy(); }
 const fail = results.filter(r => !r.pass).length; console.log(`\ncomponent regressions: ${results.length - fail}/${results.length} pass`);
 const jo = process.argv.find(a => a.startsWith("--json=")); if (jo) fs.writeFileSync(jo.slice(7), JSON.stringify({ generated: "tools/v2_component_regressions.mjs", date: new Date().toISOString().slice(0, 10), results }, null, 1));
 process.exit(fail ? 1 : 0);

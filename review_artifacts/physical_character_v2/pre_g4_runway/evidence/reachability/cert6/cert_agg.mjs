@@ -1,0 +1,10 @@
+import fs from "fs"; const fl = fs.readdirSync(".").filter(f => /^cert_.*\.json$/.test(f)); const rows = [];
+for (const f of fl) { const j = JSON.parse(fs.readFileSync(f)); for (const r of j.rows) rows.push({ ...r, body: j.body, state: j.state, cap: j.cap }); }
+const q = (a, p) => { const s = a.slice().sort((x, y) => x - y); return s[Math.min(s.length - 1, Math.floor(p * (s.length - 1)))]; }, f = (x) => x.toLocaleString("en-US");
+console.log("jobs", fl.length, "targets", rows.length); const V = {}; for (const r of rows) V[r.verdict] = (V[r.verdict] || 0) + 1; console.log(V);
+console.log("| body | invalid targets (4 states) | PROVEN-INFEASIBLE | UNDECIDED | cells p50 / max | time p50 / max (s, under load) |"); console.log("|---|---|---|---|---|---|");
+for (const b of ["V2-165-62", "V2-175-70", "V2-REF", "V2-190-85", "V2-198-92", "V2-long-legs", "V2-short-legs", "V1-matched"]) { const rs = rows.filter(r => r.body === b); if (!rs.length) continue; const st = [...new Set(rs.map(r => r.state))];
+  console.log(`| ${b} | ${rs.length}${st.length < 4 ? ` (${st.join(", ")} only)` : ""} | ${rs.filter(r => r.verdict === "PROVEN-INFEASIBLE").length} | ${rs.filter(r => r.verdict === "UNDECIDED").length} | ${f(q(rs.map(r => r.evals), .5))} / ${f(Math.max(...rs.map(r => r.evals)))} | ${(q(rs.map(r => r.ms), .5) / 1000).toFixed(1)} / ${(Math.max(...rs.map(r => r.ms)) / 1000).toFixed(1)} |`); }
+const e = rows.map(r => r.evals), m = rows.map(r => r.ms); console.log(`| **all** | **${rows.length}** | **${V["PROVEN-INFEASIBLE"] || 0}** | **${V.UNDECIDED || 0}** | ${f(q(e, .5))} / ${f(Math.max(...e))} | ${(q(m, .5) / 1000).toFixed(1)} / ${(Math.max(...m) / 1000).toFixed(1)} |`);
+const wr = rows.map(r => r.warmResidual); console.log("warm residual min", Math.min(...wr).toExponential(2), "p50", q(wr, .5).toExponential(2)); const near = rows.reduce((a, b) => (b.warmResidual < a.warmResidual ? b : a)); console.log("closest near-miss:", JSON.stringify(near));
+console.log("cells p90", f(q(e, .9)), "time p90 s", (q(m, .9) / 1000).toFixed(1));
