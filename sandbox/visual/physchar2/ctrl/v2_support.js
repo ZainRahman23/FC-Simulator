@@ -36,6 +36,8 @@ export const LIFECYCLE = {
   debounce: 0.0125,             // a transition condition must hold this long (s); 3 ticks at 240 Hz [ENG]
   touchdownDebounce: 0.004,     // contact onset after AIRBORNE (s); 1 tick at 240 Hz (≤ dt), 2 at 480 Hz — touchdown must be seen quickly [ENG]
   acceptDebounce: 0.05,         // sustained condition before load acceptance (s): longer than a touchdown impact [ENG]
+  bounceDebounce: 0.05,         // TOUCHDOWN → AIRBORNE needs this long without contact (s): a foot resting at the contact threshold (touch flickering 8 ↔ 0
+                                // at ~0.5 mm) must not re-arm the airborne servo (measured: repeated TOUCHDOWN ↔ AIRBORNE with 12–18 N·m steps) [ENG]
   wantShare: 0.05,              // requested load share at which a touching foot is brought into support [ENG]
   release: 0.10, accept: 0.10,  // support-weight ramp durations (s) for unloading / load acceptance [ENG]
   swingHz: 4, swingZeta: 0.8,   // swing-leg servo bandwidth and damping ratio (joint-space PD sized from each joint's distal-subtree inertia) [ENG]
@@ -60,7 +62,7 @@ export class SupportLifecycle {
         case "TOUCHING": if (!contact) { want = "LIFTOFF"; need = 0; } else if (accept) { want = "LOAD_ACCEPT"; need = o.acceptDebounce; } break;
         case "LIFTOFF": if (contact) { want = "TOUCHING"; need = 0; } else want = "AIRBORNE"; break;
         case "AIRBORNE": if (contact) { want = "TOUCHDOWN"; need = o.touchdownDebounce; } break;
-        case "TOUCHDOWN": if (!contact) want = "AIRBORNE"; else if (accept) { want = "LOAD_ACCEPT"; need = o.acceptDebounce; } break;
+        case "TOUCHDOWN": if (!contact) { want = "AIRBORNE"; need = o.bounceDebounce; } else if (accept) { want = "LOAD_ACCEPT"; need = o.acceptDebounce; } break;
         case "LOAD_ACCEPT": if (!contact && unloaded) want = "LIFTOFF"; else if (release) want = "UNLOADING"; else if (f.phi >= 1) want = "SUPPORT"; break; }
       // LIFTOFF → AIRBORNE is itself the debounce of contact loss; UNLOADING / LOAD_ACCEPT ends are ramp completions (no extra debounce)
       if (want === "SUPPORT" || (f.state === "UNLOADING" && f.phi <= 0)) need = 0;

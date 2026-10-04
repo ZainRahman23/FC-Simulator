@@ -213,12 +213,20 @@ export class StandController {
       // lifecycle: the pose each leg aims its foot at — "where it is" in support (s = 1, the G3 path), the lifecycle target (hold / swing) blended
       // toward the current pose by s otherwise; a non-supporting leg solves from the ACTUAL pelvis frame (world-space foot servo), blended by s
       if (o.pelvisDrop) { const pd = o.pelvisDrop, u = Math.min(1, Math.max(0, (this.n * dt - pd.t0) / pd.dur)); pP[1] -= pd.dz * u * u * u * (10 - 15 * u + 6 * u * u); }   // EXPERIMENTAL planned drop (default off)
-      const lcT = sw ? [0, 1].map(n => (sw[n] >= 1 ? null : blendPose(this.lc.target(n), { pos: st[this.feet[n]].pos, rot: st[this.feet[n]].rot }, sw[n]))) : null;
+      // in a CONTACT state with no commanded swing target the hold is horizontal + yaw only: the target height follows the foot, so the leg never presses
+      // a resting foot into the turf (measured: with a bent stance knee the sinking pelvis made the world-space hold load the "unsupported" foot 29 → 58 N
+      // after touchdown — the balance model did not count it and the body fell after an abort, 60 N lift + 2.5 cm drop, 8 / 8 bodies)
+      const lcT = sw ? [0, 1].map(n => { if (sw[n] >= 1) return null; const f = LC[n], cur = { pos: st[this.feet[n]].pos, rot: st[this.feet[n]].rot }, t0 = this.lc.target(n);
+        const t1 = f.swing || f.state === "AIRBORNE" ? t0 : { pos: [t0.pos[0], cur.pos[1], t0.pos[2]], rot: t0.rot }; return blendPose(t1, cur, sw[n]); }) : null;
       if (o.ikFeasible) for (const n of [0, 1]) { const ft = lcT ? (lcT[n] || st[this.feet[n]]) : this.unl[n] ? this.hold[n] : st[this.feet[n]], hip = V.add(pP, Q.rot(qP, this.anchor[this.legK[n][0]])), dh = dnorm(hip[0] - ft.pos[0], hip[2] - ft.pos[2]), Ln = this.legLen[n];
         if (dh < Ln) pP[1] = Math.min(pP[1], ft.pos[1] + Math.sqrt(Ln * Ln - dh * dh) - (hip[1] - pP[1])); }
       this.pelHT = pP[1];
       const tIK = o.timeIK ? nowMs() : 0; ikT = {}; this.ikRes = [0, 1].map(n => { let r;
-        if (lcT && lcT[n]) { const fr = blendPose({ pos: pP, rot: qP }, { pos: ps.pos, rot: ps.rot }, o.lcFrame === "target" ? LC[n].a : 1 - sw[n]);   // non-supporting leg: the ACTUAL pelvis frame (world-space hold / servo), blended back to the posture frame by s; (diagnostic lcFrame "target": the posture frame in contact, as G3)
+        if (lcT && lcT[n]) { const a1 = LC[n].a, hC = o.lcFrameH === "target" ? pP[1] : o.lcFrameH === "actual" ? ps.pos[1] : Math.min(pP[1], ps.pos[1]), ns = { pos: [pP[0], hC + a1 * (ps.pos[1] - hC), pP[2]], rot: ps.rot };   // non-supporting leg frame: the ACTUAL pelvis position / orientation (world-space servo) with the posture TARGET height while in contact (a = 0) → actual height once airborne (a = 1)
+          // contact height hC = min(target, actual) (diagnostic lcFrameH "target" / "actual"): measured — the ACTUAL height with a pelvis 1 cm above its target made the touching leg
+          // a straight strut (knee 0°, ~60 N) that held the pelvis up, rolled the body over the stance foot's edge and felled it (60 N lift + 2.5 cm drop); the TARGET height
+          // with the pelvis above target lifted the touching foot to the contact threshold (repeated TOUCHDOWN ↔ AIRBORNE, 12–18 N·m steps)
+          const fr = o.lcFrame === "target" ? blendPose({ pos: pP, rot: qP }, { pos: ps.pos, rot: ps.rot }, a1) : blendPose(ns, { pos: pP, rot: qP }, sw[n]);   // blended back to the full posture frame by s; diagnostic lcFrame "target": the G3 posture frame in contact
           r = this.legIKBounded(st, ev, n, fr.pos, fr.rot, lcT[n], { limits: "soft", fallback: "none" }); }   // a non-supporting leg never targets beyond its passive (soft) limits — e.g. no hyperextended knee (measured: the unconstrained IK pressed it −2.8° into hyperextension, 18–20 N·m of tissue torque)
         else r = this.legIK(st, ev, n, pP, qP, lcT ? null : this.unl[n] ? this.hold[n] : null);
         for (const [k, q] of r.targets) ikT[k] = q; return r.err; });
