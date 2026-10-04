@@ -175,6 +175,12 @@
    "name": "mechanism: hip-rotation IK target follows the leg twist under 'current' (slope ≈ −1) and not under reference (≈ 0)",
    "pass": true,
    "value": "slope current -0.985, reference 0.000"
+  },
+  {
+   "id": "R5.d",
+   "name": "drifting-reference filter state is saved by getState; the default controller state is unchanged (no new key)",
+   "pass": true,
+   "value": "filter state saved: true; default state has no twFilt key: true"
   }
  ]
 }

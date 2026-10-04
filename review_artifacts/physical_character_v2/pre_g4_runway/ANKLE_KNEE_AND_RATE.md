@@ -85,7 +85,7 @@
 - **So single-support yaw anchoring is a G4 prerequisite,** independent of the twist policy.
 - **Candidate sources (decisions / evidence, none adopted):**
   - (a) the **loaded** ankle–subtalar axial stiffness (expected to be much higher; no local evidence);
-  - (b) active stabilisation through the actuated ankle axes (inversion couples to axial rotation through subtalar geometry, but the model's ab/adduction axis is passive-only);
+  - (b) active stabilisation through the actuated ankle axes (inversion couples to axial rotation through subtalar geometry, but the model's ab/adduction axis is passive-only). **Physics constraint:** in single support the net body yaw moment comes only from the stance foot's free moment, which passes through that passive axis. Actuators above the ankle can only redistribute angular momentum internally (trunk / arms) or move the twist between pelvis and legs, so a genuine active anchor needs an actuated axial / subtalar path (an anatomy / actuator decision);
   - (c) a deliberate hip-rotation pelvis-yaw hold during single support with **explicit damping of the leg twist** (the validated "current" form holds the pelvis but feeds the twist; see the twist mechanism document).
 - **Policy attempt (falsified as a fix):** the stable drifting reference (τ 2 s), which has the highest static double-stance yaw stiffness of the stable policies (1.5 N·m/°), **does not improve near-single-support anchoring**:
 

@@ -166,7 +166,12 @@ function refLegIK(ctrl, st, ev, n, pP, qP, footPose) { const P = ctrl.P, ks = ct
   check("R5.a", "twist-policy diagnostic options off by default (ikTwistBlend null, ikTwistTau 0, yawCmd null)", defOff, `default off: ${defOff}`);
   check("R5.b", "ikTwistBlend 0 ≡ validated 'current' and 1 ≡ ikRefTwist (bit-identical IK solutions)", b0 && b1, `blend 0 ≡ current: ${b0}; blend 1 ≡ reference: ${b1}`);
   check("R5.c", "mechanism: hip-rotation IK target follows the leg twist under 'current' (slope ≈ −1) and not under reference (≈ 0)", Math.abs(sCur + 1) < 0.1 && Math.abs(sRef) < 0.1, `slope current ${sCur.toFixed(3)}, reference ${sRef.toFixed(3)}`);
-  sim.destroy(); }
+  sim.destroy();
+  // R5.d (bug found by the runway's G3 row-N run): the drifting-reference filter state is controller state → it must be in getState (snapshot /
+  // restore), and the DEFAULT controller state must not gain a key
+  const sd = new G3Sim(J, spec, g3Def("T5"), { stand: { ikTwistBlend: 1, ikTwistTau: 2 } }), s0 = new G3Sim(J, spec, g3Def("T5"), {}); for (let i = 0; i < 24; i++) { sd.tick(); s0.tick(); }
+  const hasF = Array.isArray(sd.ctrl.getState().twFilt), noKey = !("twFilt" in s0.ctrl.getState()); sd.destroy(); s0.destroy();
+  check("R5.d", "drifting-reference filter state is saved by getState; the default controller state is unchanged (no new key)", hasF && noKey, `filter state saved: ${hasF}; default state has no twFilt key: ${noKey}`); }
 const fail = results.filter(r => !r.pass).length; console.log(`\ncomponent regressions: ${results.length - fail}/${results.length} pass`);
 const jo = process.argv.find(a => a.startsWith("--json=")); if (jo) fs.writeFileSync(jo.slice(7), JSON.stringify({ generated: "tools/v2_component_regressions.mjs", date: new Date().toISOString().slice(0, 10), results }, null, 1));
 process.exit(fail ? 1 : 0);

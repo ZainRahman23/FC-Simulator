@@ -1,0 +1,7 @@
+G2 (ikRefTwist, xstand {"ikTwistBlend":0.5}): rows failing (excl. R, 2.5, D-browser): none
+   S4: pass 6/6 ["yaw4:0.31°","yaw8:0.64°","pitch4:0.84°","pitch8:0.87°","roll4:0.25°","roll8:0.48°"]
+G3 (ikRefTwist) G3-native rows: 15/15; failing: none
+   static yaw stiffness N·m/° (all jobs run with ikRefTwist): 0.5/1: 0.47; 0.5/1 ref: 0.26; 0.5/2: 0.47; 0.5/2 ref: 0.26; 0.5/4: 0.60; 0.5/4 ref: 0.34; 0.95/1: 0.46; 0.95/1 ref: 0.27; 0.95/2: 0.47; 0.95/2 ref: 0.27; 0.95/4: 0.60; 0.95/4 ref: 0.34
+   twist V2-190-85 k 0.13: T5 1.4° U:R 1.5° G2 R:10 4.3° G2 R:20 9.6° T7:R:1 6.8°; probes not re-centred 0/20
+   twist V2-198-92 k 0.13: T5 1.5° U:R 1.6° G2 R:10 4.1° G2 R:20 8.6° T7:R:1 6.8°; probes not re-centred 0/20
+   twist V2-REF k 0.13: T5 1.3° U:R 1.4° G2 R:10 4.6° G2 R:20 10.6° T7:R:1 7.1°; probes not re-centred 0/20

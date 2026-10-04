@@ -61,7 +61,21 @@
 
 \* The drift policy first failed G3 row N (snapshot / restore) because its filter state was not in the controller's saved state. That was a defect of the diagnostic option. It is fixed and verified bit-exact; the default state is unchanged.
 
-**§2a, k = 0 gate batteries:** *(filled below when finished)*
+**§2a, k = 0 gate batteries** (no ankle law; `pre_g4_runway/evidence/gates/`):
+
+| | blend 0.5, k = 0 | drift τ 2 s, k = 0 |
+|---|---|---|
+| G2 rows | pass (S4 yaw 8: 2.98°, at the 3° limit) | **S4 fails** (yaw 8 leaves the trunk 7.1° off) |
+| G3-native | 15 / 15 | 15 / 15 (row N passes: the snapshot fix confirmed) |
+| twist T5 / U:R | **8.2–8.7°** | **6.3–6.7°** |
+| probes not re-centred (3 bodies) | 9–12 / 20 | 12–14 / 20 |
+| static yaw stiffness | 0.18–0.71 N·m/° | 1.0–12 N·m/° |
+
+**Reading:**
+- **A reference-like policy removes the limit cycle, but not the free ±10° ankle twist.**
+- **The ankle stiffness reduces the twist and re-centres it, but cannot remove the limit cycle under "current".**
+- **Double-support twist suppression needs both** (policy + k ≈ 0.13–0.15), which gives 1.3–1.6° and 0–1 / 20 un-re-centred.
+- **Single support needs more** (item 5).
 
 ## 3. Strongest evidence for and against changing the policy
 
@@ -236,9 +250,14 @@
 1. **Twist policy:** leave "current" for a reference-like target? If so, which form:
    - **blend α ≥ 0.35–0.5** (simple, no state); or
    - **drifting reference τ ≥ 1–2 s** (accepts sustained foot rotation; adds state).
-2. **Single-support yaw anchor** (the G4 prerequisite):
-   - (a) authorise sourcing **loaded** ankle–subtalar axial stiffness evidence (the requirement scoping says ≳ 1 N·m/° would be needed); and / or
-   - (b) authorise designing an active single-support yaw strategy (stance-hip pelvis-yaw hold with explicit leg-twist damping).
+2. **Single-support yaw anchor** (the G4 prerequisite).
+
+   **The physics:** in single support the net yaw moment on the body comes only from the stance foot's free moment, which passes through the ankle's ab/adduction axis. That axis is **passive-only** in this model. **No actuator above the ankle can create net body yaw torque against the ground.** Active control can only redistribute angular momentum internally (trunk / arm counter-rotation, bounded), or hold the pelvis while the legs twist (what "current" does).
+
+   **So the options are:**
+   - (a) a stiffer **loaded** passive axial path: authorise sourcing loaded ankle–subtalar axial stiffness evidence (the scoping says ≳ 1 N·m/°, ≈ 10× the unloaded range);
+   - (b) an **actuated** ankle axial / subtalar path: an anatomy / actuator decision;
+   - (c) accept that single-support yaw disturbances are absorbed by stance-ankle deflection, plus internal counter-rotation (trunk / arms), within bounded amplitudes. That would make E1's perturbation criteria the test.
 3. **Ankle law form:** constant vs load-dependent, after the evidence in 2(a).
 4. **Knee:** authorise sourcing knee axial ROM / torque–rotation evidence. **No change now.** Decide how G1 1.3d should treat that interaction, given the evidence.
 5. **G4 boundary components (H1–H12):** approve the design scope.
@@ -250,7 +269,7 @@
 
 **Not yet for G4 experiment runs. Yes for G4 preparation once decisions 1, 2 and 5 are taken.**
 
-**The biggest remaining blocker is single-support yaw anchoring.**
+**The biggest remaining blocker is single-support yaw anchoring.** It is set by the stance ankle's axial torque path, which is passive-only here, so no posture policy or hip strategy can supply it.
 - With one foot down, the only yaw anchor is the stance ankle's axial path.
 - At the evidence-range stiffness, and under every posture policy tested, modest yaw impulses (about what a swing leg will produce) drive the stance ankle into its end range and can relocate a foot.
 - E1's hover would expose it immediately.
