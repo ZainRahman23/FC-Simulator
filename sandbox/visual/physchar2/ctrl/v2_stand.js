@@ -56,6 +56,11 @@ export const STAND = {
                           // hard limits (active-set projected LM, legIKBounded). Off = the validated unconstrained IK. Measured (tools/ik_g4_study.mjs, 20,736
                           // G4-style targets × 8 bodies): the unconstrained IK reaches 1,336 targets only with an anatomically invalid pose (hip rotation ≤ 14.7°,
                           // ankle DF ≤ 10.4° beyond the limit, 18 hyperextended knees); the bounded IK classifies them unreachable and returns the closest valid pose
+  ikTwistBlend: null,     // DIAGNOSTIC ONLY (pre-G4 runway; NOT adopted): posture-IK twist-DOF target = (1 − α)·current + α·reference (α = this value);
+                          // null = the validated "current" form; 1 ≡ ikRefTwist. With ikTwistTau the "reference" is the slowly filtered current twist.
+  ikTwistTau: 0,          // DIAGNOSTIC ONLY: time constant (s) of a first-order filter of the current twist DOFs used as the twist reference
+                          // (a state-dependent reference: a twist held longer than ~τ is accepted); 0 = off
+  yawCmd: null,           // DIAGNOSTIC ONLY: (t) → pelvis yaw command offset (rad) added to the heading from the feet (legitimate-turning test)
   timeIK: false,          // DIAGNOSTIC instrumentation (G3 tables): time the leg IK; OFF in production — not part of the controller budget (D5)
   ikRefTwist: false,      // EVALUATED, NOT ADOPTED (G3-A7). Posture IK: the redundant axial-twist DOFs (knee axial rotation, PASSIVE ankle ab/adduction) are solved at their REFERENCE
                           // values instead of their current ones, so the actuated hip / knee rotators turn the leg back until the passive ankle axis is at
@@ -172,7 +177,8 @@ export class StandController {
     // posture preference for the legs (task space): a desired wrench on the pelvis — orientation toward the reference (heading from the feet)
     // and height above the ankles — that the legs deliver (statics, each leg its load share); horizontal pelvis position is NOT a posture target
     let legW = null, ikT = null;
-    if (o.posture === "ik") { const ps = st[this.pelvis], yaw = datan2(hd[0], hd[1]), qP = Q.mul(Q.axis([0, 1, 0], yaw), this.stance.pelvisRot), pP = [ps.pos[0], (ankL[1] + ankR[1]) / 2 + this.pel.hRef, ps.pos[2]];
+    if (o.ikTwistBlend != null && o.ikTwistTau > 0) { const now = this.legK.map(ks => ks.map(k => decompose(ev.qs[k]).tw)); if (!this.twFilt) this.twFilt = now; else this.twFilt = this.twFilt.map((f, n) => f.map((v, j) => v + (now[n][j] - v) * Math.min(1, dt / o.ikTwistTau))); }   // DIAGNOSTIC
+    if (o.posture === "ik") { const ps = st[this.pelvis], yaw = o.yawCmd ? datan2(hd[0], hd[1]) + o.yawCmd(this.n * dt) : datan2(hd[0], hd[1]), qP = Q.mul(Q.axis([0, 1, 0], yaw), this.stance.pelvisRot), pP = [ps.pos[0], (ankL[1] + ankR[1]) / 2 + this.pel.hRef, ps.pos[2]];
       if (o.ikFeasible) for (const n of [0, 1]) { const ft = this.unl[n] ? this.hold[n] : st[this.feet[n]], hip = V.add(pP, Q.rot(qP, this.anchor[this.legK[n][0]])), dh = dnorm(hip[0] - ft.pos[0], hip[2] - ft.pos[2]), Ln = this.legLen[n];
         if (dh < Ln) pP[1] = Math.min(pP[1], ft.pos[1] + Math.sqrt(Ln * Ln - dh * dh) - (hip[1] - pP[1])); }
       this.pelHT = pP[1];
@@ -242,7 +248,9 @@ StandController.prototype.setState = function (x) { const y = JSON.parse(JSON.st
 // The chain (staged FK, central-difference Jacobian, warm start) is built by legChain, shared with the opt-in bounded variant below.
 StandController.prototype.legChain = function (st, ev, n, pP, qP, footPose) {
   const P = this.P, ks = this.legK[n], d = ks.map(k => P.jd[k]), a = ks.map(k => this.anchor[k]), cur = ks.map(k => { const v = decompose(ev.qs[k]); return [v.tw, v.sy, v.sz]; });
-  if (this.o.ikRefTwist) { const rf = ks.map(k => { const v = decompose(this.qref[k]); return v.tw; }); cur[1] = [rf[1], cur[1][1], cur[1][2]]; cur[2] = [rf[2], cur[2][1], cur[2][2]]; }   // twist DOFs at the reference
+  if (this.o.ikRefTwist) { const rf = ks.map(k => { const v = decompose(this.qref[k]); return v.tw; }); cur[1] = [rf[1], cur[1][1], cur[1][2]]; cur[2] = [rf[2], cur[2][1], cur[2][2]]; }
+  if (this.o.ikTwistBlend != null) { const al = this.o.ikTwistBlend, rf = this.o.ikTwistTau > 0 && this.twFilt ? this.twFilt[n] : ks.map(k => decompose(this.qref[k]).tw);   // DIAGNOSTIC (pre-G4 runway)
+    cur[1] = [(1 - al) * cur[1][0] + al * rf[1], cur[1][1], cur[1][2]]; cur[2] = [(1 - al) * cur[2][0] + al * rf[2], cur[2][1], cur[2][2]]; }   // twist DOFs at the reference
   // forward kinematics, staged so that a Jacobian column only recomputes the segments its DOF moves (overnight D: exact reuse — every reused value
   // is the identical expression on identical inputs, so results are bit-identical to the unstaged chain; verified on 10,880 problems + J2a)
   const ft = footPose || st[this.feet[n]], A0 = Q.mul(qP, d[0].F1), C0 = Q.conj(d[0].F2), C1 = Q.conj(d[1].F2), C2 = Q.conj(d[2].F2), pt = V.add(pP, Q.rot(qP, a[0]));

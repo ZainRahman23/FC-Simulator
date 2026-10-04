@@ -1,0 +1,5 @@
+const P = process.argv[2], human = process.argv[3], key = process.argv[4]; const { jolt, specOf, makeSim, JS } = await import(P + "/tools/b_lib.mjs"); const { AnkleProbe } = await import(P + "/gates/v2_g1_ankle.js"); const J = await jolt();
+const spec = specOf(human), s = makeSim(J, spec, key, { turf: "plane" }), pr = ["L", "R"].map(sd => new AnkleProbe(s, sd)), acc = [[], []], M = spec.bodies.reduce((a, b) => a + b.mass, 0);
+while (true) { pr.forEach(p => p.before()); const more = s.tick(); const rows = pr.map(p => { const r = p.after(); p.rows.length = 0; return r; }); if (!more) break; if (s.n * s.dt > s.A ? 0 : 0) {} rows.forEach((r, n) => acc[n].push(r ? r.JyN : 0)); }
+const last = (a) => { const b = a.slice(-240); return b.reduce((x, y) => x + y, 0) / b.length; };
+console.log(`k ${JS.ankleNeutralKPerDeg()} ${human} ${key}: mean ground normal force over the last 1 s — foot L ${last(acc[0]).toFixed(1)} N, foot R ${last(acc[1]).toFixed(1)} N (body weight ${(M * 9.81).toFixed(0)} N)`); s.destroy();
