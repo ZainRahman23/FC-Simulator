@@ -194,7 +194,10 @@ export const ankleNeutralKPerDeg = () => (ENV_K != null ? ENV_K : PASSIVE.ankleA
 // (final_pre_e1a/literature/lit2_knee_axial.md): zero c = flex/6 (internal), width scale w = 0.55 + 0.45·clamp(flex/40°, 0, 1), soft [c − 9w, c + 4w],
 // hard [c − 25w, c + 15w] (anatomical deg, + = tibial internal rotation). Selected by PassiveLayer opts.kneeEnvelope or env V2_KNEE_ENVELOPE=lit1 (Node only).
 export const KNEE_ENVELOPE_LIT1 = (f) => { const c = f / 6, w = 0.55 + 0.45 * Math.min(1, Math.max(0, f / 40)); return { soft: [c - 9 * w, c + 4 * w], hard: [c - 25 * w, c + 15 * w] }; };
-export const kneeEnvelopeEnv = () => (typeof process !== "undefined" && process.env && process.env.V2_KNEE_ENVELOPE === "lit1" ? KNEE_ENVELOPE_LIT1 : null);
+// DIAGNOSTIC "shift" variant (NOT adopted): today's widths and screw-home soft scaling kept, only the axial zero shifts internally with flexion (c = flex/6,
+// the best-evidenced part of the review): soft [c − 30·f, c + 20·f] with f = clamp(flex/60°, 0.1, 1), hard [c − 40, c + 30]. Env V2_KNEE_ENVELOPE=shift.
+export const KNEE_ENVELOPE_SHIFT = (fl) => { const c = fl / 6, f = Math.min(1, Math.max(0.1, fl / 60)); return { soft: [c - 30 * f, c + 20 * f], hard: [c - 40, c + 30] }; };
+export const kneeEnvelopeEnv = () => { const e = typeof process !== "undefined" && process.env ? process.env.V2_KNEE_ENVELOPE : null; return e === "lit1" ? KNEE_ENVELOPE_LIT1 : e === "shift" ? KNEE_ENVELOPE_SHIFT : null; };
 export function passiveParams(j, capOpp) {
   return [0, 1, 2].map(i => {
     const lo = j.limits.soft.lo[i], hi = j.limits.soft.hi[i], hlo = j.limits.hard.lo[i], hhi = j.limits.hard.hi[i];
