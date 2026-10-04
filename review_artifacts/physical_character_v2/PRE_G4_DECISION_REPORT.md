@@ -153,7 +153,7 @@
 - **But PROVEN-INFEASIBLE is a property of the problem definition, not the leg.** The IK holds knee axial rotation (actuated) and ankle ab/adduction (passive) at their **instantaneous** values.
   - Freed inside their passively unloaded ranges (soft limits; the knee with its approved screw-home coupling): **1,265 / 1,336 (94.7 %) become FEASIBLE**, including **every ground and 5 cm target**.
   - The actuated knee axial alone, inside its coupled soft range: 84.4 %.
-  - Freed inside the hard limits: 98.7 %. The remaining 18 are raised backward toe-out targets (8-D certificate: 4 attempted, all undecided at 4·10⁸ cells, so they stay UNKNOWN-NOT-FOUND; 8-D certificates need a tighter bound).
+  - Freed inside the hard limits: 98.7 %. The remaining 18 are raised backward toe-out targets (8-D certificate: 4 attempted with the generic and again with the tight twist levers, all undecided at 4·10⁸ cells, so they stay UNKNOWN-NOT-FOUND; 8-D certificates need a better method).
 - **With the instantaneous definition the verdict is knife-edge and state-dependent.** Moving one held twist by ≤ 1° flips 17.5 % of the invalid set to FEASIBLE, ≤ 3° flips 42 %, and ≤ 10° flips 83 % (every ground target). The validated controller's twist moves ±10–12°. The definitions "instantaneous" vs "posture reference" disagree on 468 targets (237 / 231).
 - **Robust across definitions:** ground footholds with |yaw| ≤ 30° are 0 invalid of 2,256.
 - **E2 check:** at standing pelvis height, 10 cm (even 5 cm) lateral footholds are out of reach in all 8 bodies, and 10 cm forward has a margin of only 5.9–8.6°. With a pelvis drop of ≥ 2.5 cm every E2 target is valid in every body, margin ≥ 17°.
@@ -270,7 +270,7 @@
 | 4 | The 240 Hz margin for end-range integration in passive-fall stress states (0.51 J). |
 | 5 | Interface hazards H1–H12. |
 | 6 | G2 S4's single-sample "final trunk" criterion is phase-sensitive. |
-| 7 | IK: contract decisions; fallback cost. The 6-D certificate is implemented. 8-D (twist-free) certificates are undecided at 4·10⁸ cells and need a tighter bound. **The validated IK's reachability depends on the instantaneous twist** (a definition issue, §7). |
+| 7 | IK: contract decisions; fallback cost. The 6-D certificate is implemented. 8-D (twist-free) certificates are undecided at 4·10⁸ cells, even with the tight twist levers; they need a better method (interval arithmetic or a reparameterisation). **The validated IK's reachability depends on the instantaneous twist** (a definition issue, §7). |
 | 8 | Earlier debts: the radial-inset margin; G1 chaotic marginality (5 % of perturbed members at k = 0). |
 
 ## 15. Exact decisions needed from you

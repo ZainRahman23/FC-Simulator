@@ -138,7 +138,9 @@ A 6-D certificate proves nothing about the leg with those DOFs free.
 
 **The 18 V8 NOT-FOUND targets** (all "slight backward, yaw −30° / −45°, raised 10 cm, pelvis drop 10 cm"; 4 bodies × 4 states): 8-D certificate (`--cert`, cap 4·10⁸ cells): attempted for 4 of the 18 (V2-165-62 / V2-175-70 / V2-REF / V2-short-legs, U:R). **All 4 are UNDECIDED at the cap.** The other 14 were not attempted: I stopped the jobs to free the CPU, since each takes ≈ 12 min under load.
 - So **the 18 stay UNKNOWN-NOT-FOUND under V8**.
-- With the generic Lipschitz levers the 8-D bound is too loose. A practical 8-D certificate needs a tighter bound, for example the knee-axial lever as the ankle's perpendicular distance from the shank twist axis, or interval arithmetic. That is a research item (debt).
+- **The tight twist levers did not change this:** a second attempt on the same 4 targets with `--tight` (knee-axial lever 0) was also UNDECIDED at 4·10⁸ cells. The other 14 were not attempted.
+- In 6-D, the tight levers cut cells by a uniform 1.30× (V2-REF U:R, 41 targets, identical verdicts).
+- **A practical 8-D certificate needs a better method**, for example interval / affine arithmetic, or a reparameterisation that merges the nearly parallel knee-axial and ankle-ab/adduction rotations. Research item (debt).
 
 **How much twist is needed:** the median change from the held value is 3.8° (knee) / 3.6° (ankle); p90 22° / 11°. The knee axial and the ankle ab/adduction substitute for each other almost one for one: both are axial rotations about the shank.
 
