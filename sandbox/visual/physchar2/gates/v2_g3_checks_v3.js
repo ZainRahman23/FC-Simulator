@@ -13,7 +13,8 @@ const num = (x, n = 2) => (x == null || !Number.isFinite(x) ? "—" : (+x).toFix
 export const J2A_TOL = { lam: 2.2e-14, copMm: 2.2e-11, share: 7.7e-14, footCopMm: 2.4e-11, forceN: 7.2e-11, g3OutS: 2.2e-14, ikResM: 2.2e-10, sigmaErr: 2.2e-14, cmdTauNm: 2.1e-6, cmdGain: 2.2e-10,
   actTauNm: 2.1e-6, actGain: 2.2e-10, actBoundNm: 6.5e-7, actCapNm: 2.2e-11, activation: 4.2e-9, holdMm: 2.2e-11, holdRad: 7e-14 };
 export const J2B = { nonSlidingMm: 0.1, slidingMm: 2.0, tick: 1 / 240 + 1e-9, t9HoldMean: 1e-3 };
-export function evaluateV3(R, ext = {}) {
+export function evaluateV3(R, ext = {}, opt = {}) {   // opt (v3.1, G3_CRITERIA_v3.1_ERRATUM.md): { tol, label } — the v3 defaults are unchanged
+  const TOL = opt.tol || J2A_TOL;
   const v2 = evaluateV2(R, ext), checks = [], add = (id, name, pass, value, limit, extra = {}) => checks.push({ id, name, pass: !!pass, value, limit, ...extra });
   const mv = ext.mirrorV3, J = R.jobs.filter(j => !j.error);
   for (const c of v2.checks) {
@@ -25,7 +26,7 @@ export function evaluateV3(R, ext = {}) {
       for (const p of P) { const a = p.j2a, why = []; ticks += a.ticks; post += a.postTicks;
         if (!(a.ticks > 0)) why.push("no ticks probed"); if (a.selfMax !== 0) why.push(`self-check replay not bit-exact (${sci(a.selfMax)})`);
         for (const b of a.bad) why.push(`${b.self ? "self-check" : b.side + "→mirror"} t ${num(b.t, 3)}: ${b.bad.join("/")} differs`);
-        for (const [k, tol] of Object.entries(J2A_TOL)) { const v = a.pre[k]; if (v == null) continue; if (!(v <= (worst[k]?.v ?? -1))) worst[k] = { v, at: lab(p) }; if (v > tol) why.push(`${k} ${sci(v)} > ${sci(tol)}`); }
+        for (const [k, tol] of Object.entries(TOL)) { const v = a.pre[k]; if (v == null) continue; if (!(v <= (worst[k]?.v ?? -1))) worst[k] = { v, at: lab(p) }; if (v > tol) why.push(`${k} ${sci(v)} > ${sci(tol)}`); }
         if (why.length) bad.push(`${lab(p)}: ${why.slice(0, 4).join(", ")}${why.length > 4 ? ` (+${why.length - 4})` : ""}`); }
       add("J2a", "controller mirror-equivariance: mirrored real input → mirrored output (λ, CoP, share, per-foot CoP / force, joint + actuator commands, support / hold / abort decisions) to the numerical floor", P.length === mv.pairs.length && P.length === 81 && !bad.length,
         `${P.length - bad.length}/${mv.pairs.length} pairs; ${ticks} ticks probed (both directions, up to each fall) · worst: ${Object.entries(worst).map(([k, w]) => `${k} ${sci(w.v)}`).join(", ")}${bad.length ? " · FAIL: " + bad.slice(0, 8).join("; ") + (bad.length > 8 ? ` … (+${bad.length - 8})` : "") : ""} · post-fall ticks (reported, not gated): ${post}`,
@@ -48,4 +49,4 @@ export function evaluateV3(R, ext = {}) {
         `${P.length - bad.length}/${mv.pairs.length} pairs (non-sliding ${cls.nonSliding}: max ${num(wmax.nonSliding, 4)} mm; sliding, recovered ${cls.sliding}: max ${num(wmax.sliding, 3)} mm; failing ${cls.failing}: max through the declaration ${num(wmax.failing, 3)} mm); T9 R/L hold-mean Δ max ${t9.length ? Math.max(...t9.map(x => x.d)).toExponential(1) : "—"}${bad.length ? " · FAIL: " + bad.slice(0, 8).join("; ") : ""}${t9bad.length ? " · T9: " + t9bad.map(x => x.h).join(", ") : ""}`,
         "0.1 mm / 2.0 mm (D4); abort and failure timing ≤ 1 tick; T9 hold means ≤ 1e-3", { bad, classes: cls }); }
   }
-  return { criteria: "G3_CRITERIA_v3.md (post-investigation correction of v2 row J2)", pass: checks.every(c => c.pass), checks }; }
+  return { criteria: opt.label || "G3_CRITERIA_v3.md (post-investigation correction of v2 row J2)", pass: checks.every(c => c.pass), checks }; }

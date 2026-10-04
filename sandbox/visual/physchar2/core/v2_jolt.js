@@ -64,13 +64,18 @@ export class V2JoltWorld {
     this.gft = new J.GroupFilterTable(spec.bodies.length);
     for (const [a, b] of spec.disabledPairs) this.gft.DisableCollision(a, b);
     this.bodies = []; this.shapeInfo = [];
-    for (const b of spec.bodies) this._addBody(b);
-    this.cons = []; for (const j of spec.joints) this._addJoint(j);
+    // DIAGNOSTIC (cfg.mirrorOrder, default off → the creation order is the spec order, bit-identical): create every L/R pair in SWAPPED order —
+    // "bodies" (Jolt body IDs → contact-pair / island order), "joints" (constraint + actuator order) or "all". J2b floor attribution only.
+    const lrIdx = (arr) => arr.map(x => { const nm = x.name, m = nm.endsWith("_L") ? nm.slice(0, -2) + "_R" : nm.endsWith("_R") ? nm.slice(0, -2) + "_L" : nm; return arr.findIndex(y => y.name === m); });
+    const mo = this.cfg.mirrorOrder || null; if (mo && !["bodies", "joints", "all"].includes(mo)) throw new Error("mirrorOrder " + mo);
+    const bOrder = mo === "bodies" || mo === "all" ? lrIdx(spec.bodies) : spec.bodies.map((_, i) => i), jOrder = mo === "joints" || mo === "all" ? lrIdx(spec.joints) : spec.joints.map((_, k) => k);
+    for (const i of bOrder) this._addBody(spec.bodies[i], i);
+    this.cons = []; for (const k of jOrder) this._addJoint(spec.joints[k], k);
     // G2: a PARALLEL ACTUATOR constraint per joint (cfg.actuators): a SixDOF between the same two bodies with every axis FREE and only rotational
     // motors, on the joint's own ROM-centred frames (same row axes as the joint's passive drive). It carries the ACTIVE (muscle) torque only, as
     // an implicit Jolt motor bounded exactly by its own torque limits (= the §14 instantaneous capacity), with its own impulse readback — so the
     // active torque never mixes with the passive tissue rows (G1, unchanged) and capacity integrity / the active-work ledger are exact.
-    this.acts = this.cfg.actuators ? spec.joints.map(j => this._addActuator(j)) : null;
+    this.acts = null; if (this.cfg.actuators) { this.acts = []; for (const k of jOrder) this.acts[k] = this._addActuator(spec.joints[k]); }
     this.contacts = []; this._listen();
   }
   _shapeSettings(s) {
@@ -82,14 +87,14 @@ export class V2JoltWorld {
     if (s.type === "hull") { const hs = new J.ConvexHullShapeSettings(); for (const q of s.points) hs.mPoints.push_back(new J.Vec3(q[0], q[1], q[2])); hs.mMaxConvexRadius = s.cr; if (s.hullTol != null) hs.mHullTolerance = s.hullTol; return hs; }   // hullTol: D1a boot pieces keep every specified vertex
     throw new Error("shape " + s.type);
   }
-  _addBody(b) {
+  _addBody(b, idx = this.bodies.length) {
     const J = this.J, cs = new J.StaticCompoundShapeSettings();
     b.shapes.forEach((s, k) => cs.AddShape(new J.Vec3(s.pos[0], s.pos[1], s.pos[2]), new J.Quat(s.rot[0], s.rot[1], s.rot[2], s.rot[3]), this._shapeSettings(s), k));   // sub-shape user data = index
     const r0 = cs.Create(); if (r0.HasError()) throw new Error(b.name + ": " + r0.GetError().c_str());
     const nat = r0.Get().GetCenterOfMass(), c = b.comLocal, off = [c[0] - nat.GetX(), c[1] - nat.GetY(), c[2] - nat.GetZ()];
     const oc = new J.OffsetCenterOfMassShapeSettings(new J.Vec3(off[0], off[1], off[2]), cs), r1 = oc.Create(); if (r1.HasError()) throw new Error(b.name + " com: " + r1.GetError().c_str());
     const shape = r1.Get(), sc = shape.GetCenterOfMass();
-    this.shapeInfo.push({ comLocal: [sc.GetX(), sc.GetY(), sc.GetZ()], volume: shape.GetVolume(), shape });
+    this.shapeInfo[idx] = { comLocal: [sc.GetX(), sc.GetY(), sc.GetZ()], volume: shape.GetVolume(), shape };
     const bcs = new J.BodyCreationSettings(shape, new J.RVec3(b.origin[0], b.origin[1], b.origin[2]), new J.Quat(0, 0, 0, 1), J.EMotionType_Dynamic, L_MOVING);
     bcs.mOverrideMassProperties = J.EOverrideMassProperties_MassAndInertiaProvided;
     const mp = bcs.mMassPropertiesOverride; mp.mMass = b.mass; const I = J.Mat44.prototype.sIdentity(), T = b.inertia;
@@ -101,12 +106,12 @@ export class V2JoltWorld {
     if (this.cfg.enhancedEdge && /^foot_/.test(b.name)) bcs.mEnhancedInternalEdgeRemoval = true;   // C3 experiment: Jolt internal-edge removal for the (compound) boot
     bcs.mCollisionGroup.SetGroupFilter(this.gft); bcs.mCollisionGroup.SetGroupID(0); bcs.mCollisionGroup.SetSubGroupID(b.index);
     const body = this.bi.CreateBody(bcs); this.bi.AddBody(body.GetID(), J.EActivation_Activate); J.destroy(bcs);
-    this.bodies.push(body);
+    this.bodies[idx] = body;
   }
   get _axes() { const J = this.J; return this.__ax || (this.__ax = {
     lin: [J.SixDOFConstraintSettings_EAxis_TranslationX, J.SixDOFConstraintSettings_EAxis_TranslationY, J.SixDOFConstraintSettings_EAxis_TranslationZ],
     rot: [J.SixDOFConstraintSettings_EAxis_RotationX, J.SixDOFConstraintSettings_EAxis_RotationY, J.SixDOFConstraintSettings_EAxis_RotationZ] }); }
-  _addJoint(j) {
+  _addJoint(j, idx = this.cons.length) {
     const J = this.J, A = this._axes, s = new J.SixDOFConstraintSettings();
     s.mSpace = J.EConstraintSpace_WorldSpace; s.mPosition1 = new J.RVec3(j.at[0], j.at[1], j.at[2]); s.mPosition2 = new J.RVec3(j.at[0], j.at[1], j.at[2]);
     s.mAxisX1 = new J.Vec3(...j.F1axes.x); s.mAxisY1 = new J.Vec3(...j.F1axes.y); s.mAxisX2 = new J.Vec3(...j.F2axes.x); s.mAxisY2 = new J.Vec3(...j.F2axes.y);
@@ -121,7 +126,7 @@ export class V2JoltWorld {
     ["x", "y", "z"].forEach((k, i) => { c.SetMaxFriction(A.rot[i], 0); const cap = j.capacity[k]; if (!cap) return;
       const ms = c.GetMotorSettings(A.rot[i]), sp = ms.mSpringSettings; sp.mMode = J.ESpringMode_StiffnessAndDamping; sp.mStiffness = 0; sp.mDamping = 0;
       ms.mMinTorqueLimit = -cap.minus.Nm; ms.mMaxTorqueLimit = cap.plus.Nm; c.SetMotorState(A.rot[i], J.EMotorState_Off); });
-    this.cons.push({ j, c });
+    this.cons[idx] = { j, c };
   }
   _addActuator(j) {
     const J = this.J, A = this._axes, s = new J.SixDOFConstraintSettings();
