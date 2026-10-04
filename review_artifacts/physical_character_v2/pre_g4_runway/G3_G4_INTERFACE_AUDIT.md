@@ -15,7 +15,10 @@
 | 60 N | shank | 182 mm | re-contact with **1 boot piece touching** → **55 N·m one-tick knee torque step**; flag chatter; 30 N·m steps; **falls** |
 | 100 N | shank | 984 mm | the leg is flung; 158 N·m step at re-contact; falls |
 
-**The stance controller cannot position an airborne foot, and its contact-reacquisition path produces torque discontinuities.** This is the V1-style transition hazard.
+| 30 N, **ramped** (up 0.2 s, hold, down over 1 s: slow lowering) | shank | 35 mm | airborne foot **drifts ≈ 5 cm laterally** (hold ineffective); slow touchdown still **chatters** (3 transitions in 60 ms); 6.6 N·m knee step; **foot relocated** |
+| 45 N, ramped | shank | 68 mm | ≈ 9 cm lateral drift; chatter; **11 N·m** step; foot relocated |
+
+**The stance controller cannot position an airborne foot** (vertical or horizontal), and **its contact-reacquisition path produces flag chatter and torque discontinuities even at low touchdown speed.** This is the V1-style transition hazard.
 
 ## Hazards (each confirmed in code; ✓ = also confirmed empirically)
 

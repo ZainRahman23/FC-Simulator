@@ -87,3 +87,22 @@
 4. **Foot-yaw tolerance** at touchdown (exact vs ±Δψ).
 5. **Fallback semantics:** box least-squares optimum (as implemented), or nearest-to-current pose, or "refuse".
 6. **The solver of record for L2:** M0 + M5 (as now) vs a closed-form branch enumerator (not prototyped).
+
+## 7. Additions from the pre-G4 research runway (proposal; `../pre_g4_runway/REACHABILITY_STRESS_AND_TAXONOMY.md`)
+
+1. **The result taxonomy** replaces the binary `level`:
+
+   | class | required evidence |
+   |---|---|
+   | `FEASIBLE` | a verified solution: FK re-check, residual ≤ 1e-6, inside L |
+   | `PROVEN-INFEASIBLE` | a certificate: the geometric reach bound (exact, cheap), or a branch-and-bound residual lower bound over the joint box (defined, not implemented) |
+   | `UNKNOWN-NOT-FOUND` | no certificate; the search record (starts, best residual). **Never reported as anatomically impossible; never planned on.** |
+
+   - **Evidence so far:** 257-start multistart over all 1,336 current invalid targets found **0 solver misses**. All are `UNKNOWN-NOT-FOUND`; none is certified.
+2. **The pelvis hypothesis includes yaw.** For turning footholds, a yaw-sharing rule between pelvis and hip: pelvis yaw ≤ 20° toward the foot resolves 74–91 % of the ±45° invalid set per body.
+3. **Swing poses leave foot pitch free.** All ankle-DF invalidity came from a flat foot held in the air.
+4. **Planning margin:** ≥ 5° to every hard limit (proposed). For ground footholds with |yaw| ≤ 30° this excludes fewer than 5 %, all of them hip-rotation-limited (margin min 1.1°, p5 8.8°).
+5. **L3 (dynamic executability) must include:**
+   - **single-support yaw anchoring:** the stance ankle reaches its ab/adduction end range at 1–2 N·m·s yaw impulses under every posture policy at evidence-range stiffness;
+   - the single-support abort foothold;
+   - the interface requirements of `../pre_g4_runway/G3_G4_INTERFACE_AUDIT.md`.
