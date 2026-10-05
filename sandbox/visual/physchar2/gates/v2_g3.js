@@ -3,6 +3,7 @@
 // target laterally; the support region comes from the feet that actually have contacting boot pieces; a foot that unloads is held where it was.
 // Nothing here writes a body or assigns a foot load — the request is an objective, the physics decides (brief §1, §2). Measurement adds the
 // load fractions, support state, unloaded-foot behaviour, CoP seam crossings, pelvis roll / trunk lean, drift and the transfer classification.
+import { blendPose } from "../ctrl/v2_support.js";
 import { V, Q } from "../core/v2_math.js";
 import { G2Sim, DIRS } from "./v2_g2.js";
 import { polyDist, insidePoly } from "../ctrl/v2_stand.js";
@@ -30,7 +31,17 @@ export function supervised(fn, opts = {}) { const margin = opts.margin ?? 0.01, 
     // EXPERIMENTAL lifecycle (H9): with a foot OFF the turf, the abort first puts it down on its contact anchor (swing target cleared) and holds the
     // request at stance; the return to bilateral starts only once that foot is in contact again (then load acceptance follows the request)
     if (g.aborted != null && ctrl.lc) { const air = ctrl.lc.feet.findIndex(f => f.state === "AIRBORNE" || f.state === "LIFTOFF");
-      if (air >= 0) { ctrl.lc.setSwingTarget(air, null); g.rampFrom = null; return { lam: g.from, dl: 0, ddl: 0 }; }
+      // DIAGNOSTIC (default off; stand option lcAbortRamp, e1a/E1B results): CONTINUOUS put-down — instead of clearing the swing target in one tick (a target step of the
+      // lift height: measured 20 mm → 114–218 N·m τ0 steps in E1b's 15 N·s aborts), the target moves min-jerk from where it was to the contact anchor over the lifecycle's
+      // own `release` time, and is handed back (cleared) once the foot is in contact and the ramp has ended
+      if (ctrl.o.lcAbortRamp) { const pd = g.putDown;
+        if (air >= 0 && (pd || ctrl.lc.feet[air].swing)) { const f = ctrl.lc.feet[air]; if (!pd) g.putDown = { n: air, from: { pos: f.swing.pos.slice(), rot: f.swing.rot.slice() }, t0: t };
+          const P = g.putDown, u = Math.min(1, (t - P.t0) / ctrl.lc.o.release), w = u * u * u * (10 - 15 * u + 6 * u * u), h = ctrl.lc.feet[P.n].hold;
+          ctrl.lc.setSwingTarget(P.n, { pos: P.from.pos.map((v, i) => v + w * (h.pos[i] - v)), rot: blendPose(P.from, h, w).rot }); g.rampFrom = null; return { lam: g.from, dl: 0, ddl: 0 }; }
+        if (pd && air < 0) { const u = (t - pd.t0) / ctrl.lc.o.release; if (u >= 1) { ctrl.lc.setSwingTarget(pd.n, null); g.putDown = null; }
+          else { const w = u * u * u * (10 - 15 * u + 6 * u * u), h = ctrl.lc.feet[pd.n].hold; ctrl.lc.setSwingTarget(pd.n, { pos: pd.from.pos.map((v, i) => v + w * (h.pos[i] - v)), rot: blendPose(pd.from, h, w).rot }); } } }
+      if (air >= 0 && !ctrl.o.lcAbortRamp) { ctrl.lc.setSwingTarget(air, null); g.rampFrom = null; return { lam: g.from, dl: 0, ddl: 0 }; }
+      if (air >= 0) { g.rampFrom = null; return { lam: g.from, dl: 0, ddl: 0 }; }
       if (g.rampFrom == null) g.rampFrom = t; }
     if (g.aborted != null) { const t0a = ctrl.lc && g.rampFrom != null ? g.rampFrom : g.aborted, u = abortDur > 0 ? Math.min(1, (t - t0a) / abortDur) : 1, dv = 0.5 - g.from, ff = abortFF && u < 1;
       r = { lam: g.from + dv * u * u * u * (10 - 15 * u + 6 * u * u), dl: ff ? dv * 30 * u * u * (1 - u) * (1 - u) / abortDur : 0, ddl: ff ? dv * 60 * u * (1 - u) * (1 - 2 * u) / (abortDur * abortDur) : 0 }; }

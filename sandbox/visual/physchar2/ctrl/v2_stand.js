@@ -93,6 +93,7 @@ export const STAND = {
                           // SURFACE (vertical target = the anchor height, not the foot's own height) — and while in contact RESTS on it with a seating force of
                           // loadOff / 2 of body weight (the midpoint of the lifecycle's own "unloaded" band [0, loadOff)), scaled (1 − s)(1 − a), through its own
                           // leg's feed-forward (finite actuators; the other foot's commanded force reduced by the same amount). = lcTouch { vert: "anchor", seat: loadOff / 2 }
+  lcAbortRamp: false,     // DIAGNOSTIC (gates/v2_g3.js supervised(); default OFF): the single-support abort puts an airborne foot down CONTINUOUSLY (target ramp to the anchor over the lifecycle's release) instead of clearing its swing target in one tick
   lcVff: false,           // DIAGNOSTIC (preswing/; default OFF): desired-velocity feed-forward for a NON-SUPPORTING leg — the target joint velocity ω* = d/dt of its IK
                           // targets (backward difference) enters as τ0 += (1 − s)(D + dt·K)·ω*, i.e. the implicit damping acts on (ω − ω*) instead of ω: a foot whose
                           // target is still while the pelvis moves is not dragged by the leg's damping, and a swing target is tracked without velocity lag

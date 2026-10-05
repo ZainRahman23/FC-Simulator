@@ -1775,3 +1775,27 @@ Not pushed.
 **Next:** E1b, under its existing preregistration (tooling committed earlier, 9ef02bf).
 
 Not pushed.
+
+### E1-4: E1b (configuration PSTAR) → FAIL on E1b-7 (3 aborts) and E1b-17 (V2-REF yaw); everything else passes (`e1a/E1B_RESULTS.md`)
+
+**Run:** frozen prereg, operational definitions and tools (9ef02bf); clean copy of d499453; 28 runs.
+
+**PASS:**
+- All unperturbed E1b-1 … 14: 8 bodies + mirrored, 20 mm lift, 1.5 s hover, hover error ≤ 0.9 mm.
+- Determinism.
+- E1b-16: all 5 N·s pushes and the yaw impulse recovered, no abort.
+- E1b-18: the 15 N·s abort puts the foot down in ≤ 0.1 s and returns to bilateral.
+
+**FAIL E1b-7 (P15):**
+- The supervisor's abort clears the swing target in one tick: a 20 mm target step, 114–218 N·m τ0. This is pre-existing (H9) and newly exercised.
+- A diagnostic continuous put-down (`lcAbortRamp`, default off) gives τ0 ≤ 29.4 N·m, applied ≤ 13.1 N·m (one body > 10).
+
+**FAIL E1b-17 (V2-REF):**
+- The stance-ankle yaw mode is under-damped (±6–8°, about 2 s period) in all bodies.
+- This is the pre-declared active-ankle-yaw-path decision (E1 prereg §6), not a tuning change.
+
+**Errata E1b-e1:** the evaluator summary's label collision hid nothing (knee criteria 27 / 27 per run).
+
+**Status:** stopped for your decisions (active ankle-yaw path; abort put-down). G4 not started.
+
+Not pushed.
