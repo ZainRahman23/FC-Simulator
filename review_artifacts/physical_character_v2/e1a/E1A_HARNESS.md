@@ -107,3 +107,9 @@ Definitions:
 - hashes and energy terms present.
 
 The evaluator refuses that file. Any harness fix it prompts is recorded.
+
+## Erratum E1-3 (2026-10-05, recorded after the PSTAR rerun)
+
+**The defect:** the bounded-IK capture in `tools/e1a_run.mjs` used `IKcap[a[3]]` (the pelvis-position argument) instead of `IKcap[a[2]]` (the leg index). So E1a-10's swing-leg soft-limit sub-check never evaluated ("bounded IK not used"), in both the official run and the PSTAR rerun.
+
+**The independent check:** with a corrected diagnostic copy (hash-identical runs), the swing-leg solved coordinates stay ≥ 0.88° inside their soft limits. Details: `E1A_PSTAR_RESULTS.md` §2.

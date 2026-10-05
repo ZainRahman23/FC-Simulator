@@ -1757,3 +1757,21 @@ Not pushed.
 - V6 replaces R3.
 
 Not pushed.
+
+### E1-3: E1a rerun with configuration PSTAR → E1a PASS (`e1a/E1A_PSTAR_RESULTS.md`)
+
+**Run:** frozen protocol, criteria and harness; configuration-version option only. Clean copy of 3da5e5e.
+
+**Result:**
+- All E1a-1 … 17 pass on 8 bodies + the mirrored run; determinism 21 / 21.
+- Hover error ≤ 1.3 mm (limit 3); clearance ≥ 4.4 mm.
+- Torque steps ≤ 6.2 N·m.
+- Touchdown 0.25 mm from the foothold, impact ≤ 0.2 % BW.
+- One LOAD_ACCEPT; load tracking ≤ 0.007.
+- No abort.
+
+**Erratum E1-3:** E1a-10's soft-limit sub-check was vacuous because of a harness capture-index defect. An independent corrected measurement gives ≥ 0.88° inside the soft limits. The verdict is unchanged.
+
+**Next:** E1b, under its existing preregistration (tooling committed earlier, 9ef02bf).
+
+Not pushed.

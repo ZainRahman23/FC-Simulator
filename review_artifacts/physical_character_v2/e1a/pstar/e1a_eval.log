@@ -1,0 +1,185 @@
+
+■ V2-REF (left foot lifted) — outcome stood; lift 8.308 s, clear 9.608 s (contact state TOUCHDOWN), end 20.81 s
+  PASS E1a-1   120/120 hover ticks with 0 touching pieces and load < 0.05 N (100.0 %)
+  PASS E1a-2   s = 0 & nSup = 1 & stance ≥ 99.9 %: 120/120 hover ticks; stance share min 100.000 %
+  PASS E1a-3   error max 1.21 mm, RMS 0.40 mm; drift 1.18 mm; tilt max 0.14°; yaw error max 0.10°; clearance ≥ 3 mm 120/120 (min 4.47 mm, mean 4.92 mm)
+  PASS E1a-4   stance slip max 0.326 mm, yaw change max 0.005°
+  PASS E1a-5   ξ margin in the stance foot during hover min 4.30 cm; COM excursion lift–replace 0.10 cm; abort none
+  PASS E1a-6   LIFTOFF→AIRBORNE 1, TOUCHDOWN 1, bounce 0, re-entries < 60 ms L 0 / R 0, unload reached (lift at 8.308 s); lifted-foot path UNLOADING→TOUCHING→LIFTOFF→AIRBORNE→TOUCHDOWN→LOAD_ACCEPT→SUPPORT
+  PASS E1a-7   applied Δτ max 4.83 N·m (hip_R.z at 10.854 s); outside onset windows max 4.83 N·m (hip_R.z at 10.854 s); commanded Δτ0 max 4.84 N·m (hip_R.z at 10.850 s); violations 0 / 0
+  PASS E1a-8   closure increment max 1.21e-2 J/tick; Σ positive 0.108 J; authority writes 0; external impulse 0
+  PASS E1a-9   over-capacity events 0; saturation in hover: none
+  PASS E1a-10  smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin — (bounded IK not used); swing-leg knee flexion min 3.96°
+  PASS E1a-12  at TOUCHDOWN (9.571 s): 0.25 mm, yaw -0.06° from the original foothold; impact peak 1.5 N (0.2 % BW); bounce 0; end of run 0.90 mm
+  PASS E1a-13  LOAD_ACCEPT entries 1; s monotone to 1 true; load tracking |Δ| max 0.007 over 1440 ticks from λ-ramp end + 1 s
+  PASS E1a-14  end 20.81 s: states SUPPORT/SUPPORT; |ξ − ξ_ref| 0.06 cm; pelvis yaw Δ -0.09°; ankle ab/adduction Δ 0.03 / 0.03°; knee |θ−θ0| Δ 0.03 / 0.03°
+  PASS E1a-16  knee flexion 3.96–28.12° (certified envelope 0–40°)
+  PASS E1a-17  knee |θ − θ0| max 1.39° at 0.004 s (from 1 s: 0.08° at 18.592 s); violations 0
+  rep     stance-ankle ab/adduction excursion lift–replace 1.27°; pelvis yaw max 0.58°; lifted foot: 7.700 SUPPORT→UNLOADING, 7.804 UNLOADING→TOUCHING, 8.483 TOUCHING→LIFTOFF, 8.496 LIFTOFF→AIRBORNE, 9.571 AIRBORNE→TOUCHDOWN, 10.842 TOUCHDOWN→LOAD_ACCEPT, 10.946 LOAD_ACCEPT→SUPPORT
+
+■ V2-165-62 (left foot lifted) — outcome stood; lift 8.287 s, clear 9.588 s (contact state TOUCHDOWN), end 20.79 s
+  PASS E1a-1   120/120 hover ticks with 0 touching pieces and load < 0.05 N (100.0 %)
+  PASS E1a-2   s = 0 & nSup = 1 & stance ≥ 99.9 %: 120/120 hover ticks; stance share min 100.000 %
+  PASS E1a-3   error max 1.14 mm, RMS 0.38 mm; drift 1.12 mm; tilt max 0.10°; yaw error max 0.10°; clearance ≥ 3 mm 120/120 (min 4.51 mm, mean 4.93 mm)
+  PASS E1a-4   stance slip max 0.319 mm, yaw change max 0.007°
+  PASS E1a-5   ξ margin in the stance foot during hover min 3.90 cm; COM excursion lift–replace 0.09 cm; abort none
+  PASS E1a-6   LIFTOFF→AIRBORNE 1, TOUCHDOWN 1, bounce 0, re-entries < 60 ms L 0 / R 0, unload reached (lift at 8.287 s); lifted-foot path UNLOADING→TOUCHING→LIFTOFF→AIRBORNE→TOUCHDOWN→LOAD_ACCEPT→SUPPORT
+  PASS E1a-7   applied Δτ max 3.48 N·m (hip_R.z at 10.833 s); outside onset windows max 3.48 N·m (hip_R.z at 10.833 s); commanded Δτ0 max 3.49 N·m (hip_R.z at 10.829 s); violations 0 / 0
+  PASS E1a-8   closure increment max 9.91e-3 J/tick; Σ positive 0.085 J; authority writes 0; external impulse 0
+  PASS E1a-9   over-capacity events 0; saturation in hover: none
+  PASS E1a-10  smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin — (bounded IK not used); swing-leg knee flexion min 3.96°
+  PASS E1a-12  at TOUCHDOWN (9.550 s): 0.24 mm, yaw -0.07° from the original foothold; impact peak 1.1 N (0.2 % BW); bounce 0; end of run 0.95 mm
+  PASS E1a-13  LOAD_ACCEPT entries 1; s monotone to 1 true; load tracking |Δ| max 0.007 over 1441 ticks from λ-ramp end + 1 s
+  PASS E1a-14  end 20.79 s: states SUPPORT/SUPPORT; |ξ − ξ_ref| 0.06 cm; pelvis yaw Δ -0.12°; ankle ab/adduction Δ 0.02 / 0.02°; knee |θ−θ0| Δ 0.03 / 0.03°
+  PASS E1a-16  knee flexion 3.96–29.55° (certified envelope 0–40°)
+  PASS E1a-17  knee |θ − θ0| max 1.39° at 0.004 s (from 1 s: 0.09° at 18.579 s); violations 0
+  rep     stance-ankle ab/adduction excursion lift–replace 1.20°; pelvis yaw max 0.54°; lifted foot: 7.679 SUPPORT→UNLOADING, 7.783 UNLOADING→TOUCHING, 8.463 TOUCHING→LIFTOFF, 8.475 LIFTOFF→AIRBORNE, 9.550 AIRBORNE→TOUCHDOWN, 10.821 TOUCHDOWN→LOAD_ACCEPT, 10.925 LOAD_ACCEPT→SUPPORT
+
+■ V2-198-92 (left foot lifted) — outcome stood; lift 8.358 s, clear 9.658 s (contact state TOUCHDOWN), end 20.86 s
+  PASS E1a-1   120/120 hover ticks with 0 touching pieces and load < 0.05 N (100.0 %)
+  PASS E1a-2   s = 0 & nSup = 1 & stance ≥ 99.9 %: 120/120 hover ticks; stance share min 100.000 %
+  PASS E1a-3   error max 1.28 mm, RMS 0.42 mm; drift 1.25 mm; tilt max 0.17°; yaw error max 0.11°; clearance ≥ 3 mm 120/120 (min 4.44 mm, mean 4.92 mm)
+  PASS E1a-4   stance slip max 0.300 mm, yaw change max 0.004°
+  PASS E1a-5   ξ margin in the stance foot during hover min 4.68 cm; COM excursion lift–replace 0.11 cm; abort none
+  PASS E1a-6   LIFTOFF→AIRBORNE 1, TOUCHDOWN 1, bounce 0, re-entries < 60 ms L 0 / R 0, unload reached (lift at 8.358 s); lifted-foot path UNLOADING→TOUCHING→LIFTOFF→AIRBORNE→TOUCHDOWN→LOAD_ACCEPT→SUPPORT
+  PASS E1a-7   applied Δτ max 6.22 N·m (hip_R.z at 10.904 s); outside onset windows max 6.22 N·m (hip_R.z at 10.904 s); commanded Δτ0 max 6.24 N·m (hip_R.z at 10.900 s); violations 0 / 0
+  PASS E1a-8   closure increment max 1.39e-2 J/tick; Σ positive 0.120 J; authority writes 0; external impulse 0
+  PASS E1a-9   over-capacity events 0; saturation in hover: none
+  PASS E1a-10  smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin — (bounded IK not used); swing-leg knee flexion min 3.96°
+  PASS E1a-12  at TOUCHDOWN (9.621 s): 0.26 mm, yaw -0.05° from the original foothold; impact peak 1.5 N (0.2 % BW); bounce 0; end of run 0.88 mm
+  PASS E1a-13  LOAD_ACCEPT entries 1; s monotone to 1 true; load tracking |Δ| max 0.007 over 1440 ticks from λ-ramp end + 1 s
+  PASS E1a-14  end 20.86 s: states SUPPORT/SUPPORT; |ξ − ξ_ref| 0.06 cm; pelvis yaw Δ -0.06°; ankle ab/adduction Δ 0.04 / 0.03°; knee |θ−θ0| Δ 0.04 / 0.04°
+  PASS E1a-16  knee flexion 3.96–26.96° (certified envelope 0–40°)
+  PASS E1a-17  knee |θ − θ0| max 1.40° at 0.004 s (from 1 s: 0.08° at 18.633 s); violations 0
+  rep     stance-ankle ab/adduction excursion lift–replace 1.29°; pelvis yaw max 0.61°; lifted foot: 7.750 SUPPORT→UNLOADING, 7.854 UNLOADING→TOUCHING, 8.533 TOUCHING→LIFTOFF, 8.546 LIFTOFF→AIRBORNE, 9.621 AIRBORNE→TOUCHDOWN, 10.892 TOUCHDOWN→LOAD_ACCEPT, 10.996 LOAD_ACCEPT→SUPPORT
+
+■ V2-175-70 (left foot lifted) — outcome stood; lift 8.300 s, clear 9.600 s (contact state TOUCHDOWN), end 20.80 s
+  PASS E1a-1   120/120 hover ticks with 0 touching pieces and load < 0.05 N (100.0 %)
+  PASS E1a-2   s = 0 & nSup = 1 & stance ≥ 99.9 %: 120/120 hover ticks; stance share min 100.000 %
+  PASS E1a-3   error max 1.15 mm, RMS 0.37 mm; drift 1.13 mm; tilt max 0.12°; yaw error max 0.10°; clearance ≥ 3 mm 120/120 (min 4.52 mm, mean 4.93 mm)
+  PASS E1a-4   stance slip max 0.306 mm, yaw change max 0.005°
+  PASS E1a-5   ξ margin in the stance foot during hover min 4.14 cm; COM excursion lift–replace 0.10 cm; abort none
+  PASS E1a-6   LIFTOFF→AIRBORNE 1, TOUCHDOWN 1, bounce 0, re-entries < 60 ms L 0 / R 0, unload reached (lift at 8.300 s); lifted-foot path UNLOADING→TOUCHING→LIFTOFF→AIRBORNE→TOUCHDOWN→LOAD_ACCEPT→SUPPORT
+  PASS E1a-7   applied Δτ max 4.17 N·m (hip_R.z at 10.846 s); outside onset windows max 4.17 N·m (hip_R.z at 10.846 s); commanded Δτ0 max 4.18 N·m (hip_R.z at 10.842 s); violations 0 / 0
+  PASS E1a-8   closure increment max 1.09e-2 J/tick; Σ positive 0.093 J; authority writes 0; external impulse 0
+  PASS E1a-9   over-capacity events 0; saturation in hover: none
+  PASS E1a-10  smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin — (bounded IK not used); swing-leg knee flexion min 3.96°
+  PASS E1a-12  at TOUCHDOWN (9.563 s): 0.25 mm, yaw -0.06° from the original foothold; impact peak 1.0 N (0.2 % BW); bounce 0; end of run 0.93 mm
+  PASS E1a-13  LOAD_ACCEPT entries 1; s monotone to 1 true; load tracking |Δ| max 0.007 over 1441 ticks from λ-ramp end + 1 s
+  PASS E1a-14  end 20.80 s: states SUPPORT/SUPPORT; |ξ − ξ_ref| 0.06 cm; pelvis yaw Δ -0.08°; ankle ab/adduction Δ 0.03 / 0.03°; knee |θ−θ0| Δ 0.03 / 0.03°
+  PASS E1a-16  knee flexion 3.96–28.69° (certified envelope 0–40°)
+  PASS E1a-17  knee |θ − θ0| max 1.39° at 0.004 s (from 1 s: 0.09° at 18.579 s); violations 0
+  rep     stance-ankle ab/adduction excursion lift–replace 1.23°; pelvis yaw max 0.54°; lifted foot: 7.692 SUPPORT→UNLOADING, 7.796 UNLOADING→TOUCHING, 8.475 TOUCHING→LIFTOFF, 8.488 LIFTOFF→AIRBORNE, 9.563 AIRBORNE→TOUCHDOWN, 10.833 TOUCHDOWN→LOAD_ACCEPT, 10.938 LOAD_ACCEPT→SUPPORT
+
+■ V2-190-85 (left foot lifted) — outcome stood; lift 8.329 s, clear 9.629 s (contact state TOUCHDOWN), end 20.83 s
+  PASS E1a-1   120/120 hover ticks with 0 touching pieces and load < 0.05 N (100.0 %)
+  PASS E1a-2   s = 0 & nSup = 1 & stance ≥ 99.9 %: 120/120 hover ticks; stance share min 100.000 %
+  PASS E1a-3   error max 1.24 mm, RMS 0.41 mm; drift 1.22 mm; tilt max 0.16°; yaw error max 0.11°; clearance ≥ 3 mm 120/120 (min 4.45 mm, mean 4.92 mm)
+  PASS E1a-4   stance slip max 0.301 mm, yaw change max 0.005°
+  PASS E1a-5   ξ margin in the stance foot during hover min 4.49 cm; COM excursion lift–replace 0.11 cm; abort none
+  PASS E1a-6   LIFTOFF→AIRBORNE 1, TOUCHDOWN 1, bounce 0, re-entries < 60 ms L 0 / R 0, unload reached (lift at 8.329 s); lifted-foot path UNLOADING→TOUCHING→LIFTOFF→AIRBORNE→TOUCHDOWN→LOAD_ACCEPT→SUPPORT
+  PASS E1a-7   applied Δτ max 5.49 N·m (hip_R.z at 10.875 s); outside onset windows max 5.49 N·m (hip_R.z at 10.875 s); commanded Δτ0 max 5.51 N·m (hip_R.z at 10.871 s); violations 0 / 0
+  PASS E1a-8   closure increment max 1.31e-2 J/tick; Σ positive 0.113 J; authority writes 0; external impulse 0
+  PASS E1a-9   over-capacity events 0; saturation in hover: none
+  PASS E1a-10  smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin — (bounded IK not used); swing-leg knee flexion min 3.96°
+  PASS E1a-12  at TOUCHDOWN (9.592 s): 0.25 mm, yaw -0.06° from the original foothold; impact peak 1.6 N (0.2 % BW); bounce 0; end of run 0.88 mm
+  PASS E1a-13  LOAD_ACCEPT entries 1; s monotone to 1 true; load tracking |Δ| max 0.007 over 1441 ticks from λ-ramp end + 1 s
+  PASS E1a-14  end 20.83 s: states SUPPORT/SUPPORT; |ξ − ξ_ref| 0.06 cm; pelvis yaw Δ -0.06°; ankle ab/adduction Δ 0.04 / 0.02°; knee |θ−θ0| Δ 0.04 / 0.04°
+  PASS E1a-16  knee flexion 3.96–27.52° (certified envelope 0–40°)
+  PASS E1a-17  knee |θ − θ0| max 1.39° at 0.004 s (from 1 s: 0.08° at 18.613 s); violations 0
+  rep     stance-ankle ab/adduction excursion lift–replace 1.28°; pelvis yaw max 0.60°; lifted foot: 7.721 SUPPORT→UNLOADING, 7.825 UNLOADING→TOUCHING, 8.504 TOUCHING→LIFTOFF, 8.517 LIFTOFF→AIRBORNE, 9.592 AIRBORNE→TOUCHDOWN, 10.863 TOUCHDOWN→LOAD_ACCEPT, 10.967 LOAD_ACCEPT→SUPPORT
+
+■ V2-short-legs (left foot lifted) — outcome stood; lift 8.596 s, clear 9.896 s (contact state TOUCHDOWN), end 21.10 s
+  PASS E1a-1   120/120 hover ticks with 0 touching pieces and load < 0.05 N (100.0 %)
+  PASS E1a-2   s = 0 & nSup = 1 & stance ≥ 99.9 %: 120/120 hover ticks; stance share min 100.000 %
+  PASS E1a-3   error max 1.24 mm, RMS 0.39 mm; drift 1.22 mm; tilt max 0.16°; yaw error max 0.11°; clearance ≥ 3 mm 120/120 (min 4.40 mm, mean 4.91 mm)
+  PASS E1a-4   stance slip max 0.308 mm, yaw change max 0.004°
+  PASS E1a-5   ξ margin in the stance foot during hover min 4.30 cm; COM excursion lift–replace 0.10 cm; abort none
+  PASS E1a-6   LIFTOFF→AIRBORNE 1, TOUCHDOWN 1, bounce 0, re-entries < 60 ms L 0 / R 0, unload reached (lift at 8.596 s); lifted-foot path UNLOADING→TOUCHING→LIFTOFF→AIRBORNE→TOUCHDOWN→LOAD_ACCEPT→SUPPORT
+  PASS E1a-7   applied Δτ max 4.84 N·m (hip_R.z at 11.142 s); outside onset windows max 4.84 N·m (hip_R.z at 11.142 s); commanded Δτ0 max 4.85 N·m (hip_R.z at 11.137 s); violations 0 / 0
+  PASS E1a-8   closure increment max 1.24e-2 J/tick; Σ positive 0.107 J; authority writes 0; external impulse 0
+  PASS E1a-9   over-capacity events 0; saturation in hover: none
+  PASS E1a-10  smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin — (bounded IK not used); swing-leg knee flexion min 3.96°
+  PASS E1a-12  at TOUCHDOWN (9.858 s): 0.23 mm, yaw -0.06° from the original foothold; impact peak 1.4 N (0.2 % BW); bounce 0; end of run 0.98 mm
+  PASS E1a-13  LOAD_ACCEPT entries 1; s monotone to 1 true; load tracking |Δ| max 0.009 over 1440 ticks from λ-ramp end + 1 s
+  PASS E1a-14  end 21.10 s: states SUPPORT/SUPPORT; |ξ − ξ_ref| 0.06 cm; pelvis yaw Δ -0.08°; ankle ab/adduction Δ 0.03 / 0.02°; knee |θ−θ0| Δ 0.03 / 0.03°
+  PASS E1a-16  knee flexion 3.96–28.85° (certified envelope 0–40°)
+  PASS E1a-17  knee |θ − θ0| max 1.39° at 0.004 s (from 1 s: 0.09° at 18.879 s); violations 0
+  rep     stance-ankle ab/adduction excursion lift–replace 1.19°; pelvis yaw max 0.45°; lifted foot: 7.987 SUPPORT→UNLOADING, 8.092 UNLOADING→TOUCHING, 8.775 TOUCHING→LIFTOFF, 8.787 LIFTOFF→AIRBORNE, 9.858 AIRBORNE→TOUCHDOWN, 11.129 TOUCHDOWN→LOAD_ACCEPT, 11.233 LOAD_ACCEPT→SUPPORT
+
+■ V2-long-legs (left foot lifted) — outcome stood; lift 7.192 s, clear 8.492 s (contact state TOUCHDOWN), end 19.69 s
+  PASS E1a-1   120/120 hover ticks with 0 touching pieces and load < 0.05 N (100.0 %)
+  PASS E1a-2   s = 0 & nSup = 1 & stance ≥ 99.9 %: 120/120 hover ticks; stance share min 100.000 %
+  PASS E1a-3   error max 1.10 mm, RMS 0.39 mm; drift 1.08 mm; tilt max 0.12°; yaw error max 0.10°; clearance ≥ 3 mm 120/120 (min 4.58 mm, mean 4.95 mm)
+  PASS E1a-4   stance slip max 0.279 mm, yaw change max 0.006°
+  PASS E1a-5   ξ margin in the stance foot during hover min 4.24 cm; COM excursion lift–replace 0.18 cm; abort none
+  PASS E1a-6   LIFTOFF→AIRBORNE 1, TOUCHDOWN 1, bounce 0, re-entries < 60 ms L 0 / R 0, unload reached (lift at 7.192 s); lifted-foot path UNLOADING→TOUCHING→LIFTOFF→AIRBORNE→TOUCHDOWN→LOAD_ACCEPT→SUPPORT
+  PASS E1a-7   applied Δτ max 4.83 N·m (hip_R.z at 9.738 s); outside onset windows max 4.83 N·m (hip_R.z at 9.738 s); commanded Δτ0 max 4.84 N·m (hip_R.z at 9.733 s); violations 0 / 0
+  PASS E1a-8   closure increment max 1.20e-2 J/tick; Σ positive 0.101 J; authority writes 0; external impulse 0
+  PASS E1a-9   over-capacity events 0; saturation in hover: none
+  PASS E1a-10  smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin — (bounded IK not used); swing-leg knee flexion min 3.96°
+  PASS E1a-12  at TOUCHDOWN (8.454 s): 0.27 mm, yaw -0.06° from the original foothold; impact peak 15.8 N (2.0 % BW); bounce 0; end of run 0.82 mm
+  PASS E1a-13  LOAD_ACCEPT entries 1; s monotone to 1 true; load tracking |Δ| max 0.006 over 1441 ticks from λ-ramp end + 1 s
+  PASS E1a-14  end 19.69 s: states SUPPORT/SUPPORT; |ξ − ξ_ref| 0.06 cm; pelvis yaw Δ -0.05°; ankle ab/adduction Δ 0.03 / 0.03°; knee |θ−θ0| Δ 0.03 / 0.03°
+  PASS E1a-16  knee flexion 3.96–27.45° (certified envelope 0–40°)
+  PASS E1a-17  knee |θ − θ0| max 1.40° at 0.004 s (from 1 s: 0.08° at 17.462 s); violations 0
+  rep     stance-ankle ab/adduction excursion lift–replace 1.06°; pelvis yaw max 0.59°; lifted foot: 6.583 SUPPORT→UNLOADING, 6.688 UNLOADING→TOUCHING, 7.358 TOUCHING→LIFTOFF, 7.371 LIFTOFF→AIRBORNE, 8.454 AIRBORNE→TOUCHDOWN, 9.725 TOUCHDOWN→LOAD_ACCEPT, 9.829 LOAD_ACCEPT→SUPPORT
+
+■ V1-matched (left foot lifted) — outcome stood; lift 8.350 s, clear 9.650 s (contact state TOUCHDOWN), end 20.85 s
+  PASS E1a-1   120/120 hover ticks with 0 touching pieces and load < 0.05 N (100.0 %)
+  PASS E1a-2   s = 0 & nSup = 1 & stance ≥ 99.9 %: 120/120 hover ticks; stance share min 100.000 %
+  PASS E1a-3   error max 1.24 mm, RMS 0.41 mm; drift 1.22 mm; tilt max 0.15°; yaw error max 0.10°; clearance ≥ 3 mm 120/120 (min 4.46 mm, mean 4.92 mm)
+  PASS E1a-4   stance slip max 0.280 mm, yaw change max 0.005°
+  PASS E1a-5   ξ margin in the stance foot during hover min 4.49 cm; COM excursion lift–replace 0.11 cm; abort none
+  PASS E1a-6   LIFTOFF→AIRBORNE 1, TOUCHDOWN 1, bounce 0, re-entries < 60 ms L 0 / R 0, unload reached (lift at 8.350 s); lifted-foot path UNLOADING→TOUCHING→LIFTOFF→AIRBORNE→TOUCHDOWN→LOAD_ACCEPT→SUPPORT
+  PASS E1a-7   applied Δτ max 5.05 N·m (hip_R.z at 10.896 s); outside onset windows max 5.05 N·m (hip_R.z at 10.896 s); commanded Δτ0 max 5.06 N·m (hip_R.z at 10.892 s); violations 0 / 0
+  PASS E1a-8   closure increment max 1.17e-2 J/tick; Σ positive 0.099 J; authority writes 0; external impulse 0
+  PASS E1a-9   over-capacity events 0; saturation in hover: none
+  PASS E1a-10  smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin — (bounded IK not used); swing-leg knee flexion min 3.96°
+  PASS E1a-12  at TOUCHDOWN (9.613 s): 0.25 mm, yaw -0.06° from the original foothold; impact peak 1.1 N (0.1 % BW); bounce 0; end of run 0.89 mm
+  PASS E1a-13  LOAD_ACCEPT entries 1; s monotone to 1 true; load tracking |Δ| max 0.007 over 1441 ticks from λ-ramp end + 1 s
+  PASS E1a-14  end 20.85 s: states SUPPORT/SUPPORT; |ξ − ξ_ref| 0.06 cm; pelvis yaw Δ -0.06°; ankle ab/adduction Δ 0.04 / 0.03°; knee |θ−θ0| Δ 0.04 / 0.04°
+  PASS E1a-16  knee flexion 3.96–27.52° (certified envelope 0–40°)
+  PASS E1a-17  knee |θ − θ0| max 1.39° at 0.004 s (from 1 s: 0.08° at 18.629 s); violations 0
+  rep     stance-ankle ab/adduction excursion lift–replace 1.26°; pelvis yaw max 0.58°; lifted foot: 7.742 SUPPORT→UNLOADING, 7.846 UNLOADING→TOUCHING, 8.525 TOUCHING→LIFTOFF, 8.537 LIFTOFF→AIRBORNE, 9.613 AIRBORNE→TOUCHDOWN, 10.883 TOUCHDOWN→LOAD_ACCEPT, 10.988 LOAD_ACCEPT→SUPPORT
+
+■ V2-REF (MIRRORED: right foot lifted) — outcome stood; lift 8.304 s, clear 9.604 s (contact state TOUCHDOWN), end 20.80 s
+  PASS E1a-1   120/120 hover ticks with 0 touching pieces and load < 0.05 N (100.0 %)
+  PASS E1a-2   s = 0 & nSup = 1 & stance ≥ 99.9 %: 120/120 hover ticks; stance share min 100.000 %
+  PASS E1a-3   error max 1.18 mm, RMS 0.38 mm; drift 1.15 mm; tilt max 0.14°; yaw error max 0.10°; clearance ≥ 3 mm 120/120 (min 4.51 mm, mean 4.93 mm)
+  PASS E1a-4   stance slip max 0.288 mm, yaw change max 0.006°
+  PASS E1a-5   ξ margin in the stance foot during hover min 4.30 cm; COM excursion lift–replace 0.10 cm; abort none
+  PASS E1a-6   LIFTOFF→AIRBORNE 1, TOUCHDOWN 1, bounce 0, re-entries < 60 ms L 0 / R 0, unload reached (lift at 8.304 s); lifted-foot path UNLOADING→TOUCHING→LIFTOFF→AIRBORNE→TOUCHDOWN→LOAD_ACCEPT→SUPPORT
+  PASS E1a-7   applied Δτ max 4.84 N·m (hip_L.z at 10.850 s); outside onset windows max 4.84 N·m (hip_L.z at 10.850 s); commanded Δτ0 max 4.84 N·m (hip_L.z at 10.846 s); violations 0 / 0
+  PASS E1a-8   closure increment max 1.21e-2 J/tick; Σ positive 0.104 J; authority writes 0; external impulse 0
+  PASS E1a-9   over-capacity events 0; saturation in hover: none
+  PASS E1a-10  smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin — (bounded IK not used); swing-leg knee flexion min 3.96°
+  PASS E1a-12  at TOUCHDOWN (9.567 s): 0.25 mm, yaw 0.06° from the original foothold; impact peak 1.5 N (0.2 % BW); bounce 0; end of run 0.90 mm
+  PASS E1a-13  LOAD_ACCEPT entries 1; s monotone to 1 true; load tracking |Δ| max 0.007 over 1441 ticks from λ-ramp end + 1 s
+  PASS E1a-14  end 20.80 s: states SUPPORT/SUPPORT; |ξ − ξ_ref| 0.06 cm; pelvis yaw Δ 0.07°; ankle ab/adduction Δ 0.03 / 0.03°; knee |θ−θ0| Δ 0.03 / 0.03°
+  PASS E1a-16  knee flexion 3.96–28.12° (certified envelope 0–40°)
+  PASS E1a-17  knee |θ − θ0| max 1.39° at 0.004 s (from 1 s: 0.08° at 18.583 s); violations 0
+  rep     stance-ankle ab/adduction excursion lift–replace 1.26°; pelvis yaw max 0.58°; lifted foot: 7.696 SUPPORT→UNLOADING, 7.800 UNLOADING→TOUCHING, 8.479 TOUCHING→LIFTOFF, 8.492 LIFTOFF→AIRBORNE, 9.567 AIRBORNE→TOUCHDOWN, 10.838 TOUCHDOWN→LOAD_ACCEPT, 10.942 LOAD_ACCEPT→SUPPORT
+
+PASS E1a-11  determinism (V2-REF ×2): 21/21 hash marks identical (end cec8d7f8 / cec8d7f8)
+
+══ E1a criteria (8 bodies + mirrored V2-REF) ══
+  PASS E1a-1
+  PASS E1a-2
+  PASS E1a-3
+  PASS E1a-4
+  PASS E1a-5
+  PASS E1a-6
+  PASS E1a-7
+  PASS E1a-8
+  PASS E1a-9
+  PASS E1a-10
+  PASS E1a-11  21/21 hash marks identical (end cec8d7f8 / cec8d7f8)
+  PASS E1a-12
+  PASS E1a-13
+  PASS E1a-14
+  PASS E1a-16
+  PASS E1a-17
+  PASS E1a-15  all 8 bodies and the mirrored run pass E1a-1 … 14, 16, 17
+
+E1a RESULT: PASS
