@@ -1,6 +1,6 @@
 // ═══ physchar2/tools/e1b_eval.mjs — E1b criteria (FROZEN: final_pre_e1a/E1_PREREGISTRATION.md §5 E1b-1 … 18; operational definitions e1a/E1B_HARNESS.md §2, committed
 // before any E1b run). Built from tools/e1a_eval.mjs: E1a's computations unchanged except the §5 / E1B_HARNESS changes (E1b-3, E1b-5, E1b-8, P15, E1b-16 … 18).
-// usage: node tools/e1b_eval.mjs --dir=<runs dir> [--config=V2|PSTAR|PSTAR2|PSTAR3] [--out=<json>]   (files: e1b_<body>_L_none.json.gz × 8, e1b_V2-REF_R_none.json.gz, e1b_V2-REF_L_none_rep.json.gz,
+// usage: node tools/e1b_eval.mjs --dir=<runs dir> [--config=V2|PSTAR|PSTARY|PSTAR2|PSTAR3|PSTAR4] [--out=<json>]   (files: e1b_<body>_L_none.json.gz × 8, e1b_V2-REF_R_none.json.gz, e1b_V2-REF_L_none_rep.json.gz,
 //        e1b_<V2-REF|V2-165-62|V2-198-92>_L_<PF|PB|PL|PR|YAW|P15>.json.gz)
 import fs from "fs"; import path from "path"; import zlib from "zlib"; import { fileURLToPath } from "url";
 const arg = (k, d) => (process.argv.find(a => a.startsWith(`--${k}=`)) || `--${k}=${d}`).split("=").slice(1).join("=");
@@ -12,7 +12,7 @@ export function judge(r, cfgName = CONFIG, opts = {}) { const CONFIG = cfgName; 
   const c = r.cfg; if (!(c.kneeV2K && c.ankleK === 0.13 && c.lifecycle && c.ikRefTwist && c.contactSupport && c.holdUnloaded && c.ikFeasible && Math.abs(c.hz - (opts.hz ?? 240)) < 1e-9 && c.pelvisDrop)) throw new Error("configuration");
   // configuration VERSION (preswing/PRESWING_VALIDATION_PREREG.md §5): --config=V2 (default; the official runs carry no version field) or PSTAR; the criteria below are unchanged
   // PSTAR2 (e1b_fix/E1B_FIX_DESIGN.md, e1b_fix/E1B_FIX_VALIDATION_PREREG.md): PSTAR + the active foot-yaw path at its nominal capacity + the quintic abort put-down
-  if (CONFIG === "PSTAR" ? !(c.config === "PSTAR" && c.ffLockedAxis && c.touchRest && c.lcVff === "lin" && c.reseed) : CONFIG === "PSTAR2" || CONFIG === "PSTAR3" ? !(c.config === CONFIG && c.ffLockedAxis && c.touchRest && c.lcVff === "lin" && c.reseed && c.footYaw === (opts.yawk ?? true) && c.lcPutDown && c.footYawAxes === 2 && !!c.abortCapture === (CONFIG === "PSTAR3"))
+  if (CONFIG === "PSTAR" ? !(c.config === "PSTAR" && c.ffLockedAxis && c.touchRest && c.lcVff === "lin" && c.reseed) : ["PSTARY", "PSTAR2", "PSTAR3", "PSTAR4"].includes(CONFIG) ? !(c.config === CONFIG && c.ffLockedAxis && c.touchRest && c.lcVff === "lin" && c.reseed && c.footYaw === (opts.yawk ?? true) && c.footYawAxes === 2 && !!c.lcPutDown === (CONFIG !== "PSTARY") && (c.abortCapture ?? false) === ({ PSTAR3: true, PSTAR4: 2 }[CONFIG] ?? false))
     : !((c.config == null || c.config === "V2") && !c.ffLockedAxis && !c.touchRest && !c.lcVff && !c.reseed)) throw new Error("configuration version");
   const R = r.rows, H = r.events, n = r.lifted, m = r.stance, W = r.W, C = {}, add = (id, pass, v) => { C[id] = { pass: !!pass, v }; };
   const lifted = H.tL != null, hov = R.filter(x => x.ph === "hover"), win = lifted ? R.filter(x => x.t >= H.tL - 1e-9 && x.t < H.tL + r.protocol.LT + r.protocol.HOV + r.protocol.RT - 1e-9) : [], hovU = pert && HE != null ? hov.filter(x => x.t < HE - 1e-9) : hov;
@@ -42,8 +42,11 @@ export function judge(r, cfgName = CONFIG, opts = {}) { const CONFIG = cfgName; 
     add("E1a-6", la === 1 && td === 1 && bounce === 0 && chatter[0] === 0 && chatter[1] === 0 && !H.unloadTimeout && lifted, `LIFTOFF→AIRBORNE ${la}, TOUCHDOWN ${td}, bounce ${bounce}, re-entries < 60 ms L ${chatter[0]} / R ${chatter[1]}, unload ${H.unloadTimeout ? "TIME-OUT" : lifted ? "reached (lift at " + H.tL.toFixed(3) + " s)" : "—"}; lifted-foot path ${T.map(x => x.to).join("→")}`); }
   // E1a-7 no discontinuous torque commands (t ≥ 0.5 s: the G3 initial-contact-settle convention); contact-onset exception: the onset tick and the next tick
   // at a physics rate other than 240 Hz (e1b_fix validation battery RATE set only): the same torque RATE (limits × 240 / hz) and an onset window of the same duration (≥ 2 ticks)
-  { const exc = new Set(), rs = c.hz === 240 ? 1 : 240 / c.hz, nw = c.hz === 240 ? 2 : Math.max(2, Math.ceil(2 * c.hz / 240)); R.forEach((x, i) => { if (x.onset[0] || x.onset[1]) for (let j = 0; j < nw; j++) exc.add(i + j); });
-    const A = R.map((x, i) => ({ x, i })).filter(o => o.x.t >= 0.5 - 1e-9), badA = A.filter(o => o.x.dTau > (exc.has(o.i) ? 25 : 10) * rs), badC = A.filter(o => o.x.dTau0 > 30 * rs), wA = A.reduce((b, o) => (o.x.dTau > b.x.dTau ? o : b), A[0]), wC = A.reduce((b, o) => (o.x.dTau0 > b.x.dTau0 ? o : b), A[0]);
+  // opts.rateRule "maxJumpSmooth" (e1b_close/E1B_CLOSE_PREREG.md; default "scaled" = the frozen rule): the APPLIED-torque limit × max(1, 240 / hz) — an impact response
+  // through the implicit damping is rate-independent (measured: the same stance-foot re-loading gives 6.17 / 6.43 / 6.61 N·m per tick at 180 / 240 / 480 Hz), a smooth
+  // ramp is rate-proportional; the COMMANDED limit stays × 240 / hz (smooth controller output)
+  { const exc = new Set(), rs = c.hz === 240 ? 1 : 240 / c.hz, rsA = opts.rateRule === "maxJumpSmooth" ? Math.max(1, rs) : rs, nw = c.hz === 240 ? 2 : Math.max(2, Math.ceil(2 * c.hz / 240)); R.forEach((x, i) => { if (x.onset[0] || x.onset[1]) for (let j = 0; j < nw; j++) exc.add(i + j); });
+    const A = R.map((x, i) => ({ x, i })).filter(o => o.x.t >= 0.5 - 1e-9), badA = A.filter(o => o.x.dTau > (exc.has(o.i) ? 25 : 10) * rsA), badC = A.filter(o => o.x.dTau0 > 30 * rs), wA = A.reduce((b, o) => (o.x.dTau > b.x.dTau ? o : b), A[0]), wC = A.reduce((b, o) => (o.x.dTau0 > b.x.dTau0 ? o : b), A[0]);
     const wN = A.filter(o => !exc.has(o.i)).reduce((b, o) => (!b || o.x.dTau > b.x.dTau ? o : b), null);
     add("E1a-7", badA.length === 0 && badC.length === 0, `applied Δτ max ${f2(wA.x.dTau)} N·m (${wA.x.dTauWho} at ${wA.x.t.toFixed(3)} s${exc.has(wA.i) ? ", contact-onset window" : ""}); outside onset windows max ${f2(wN.x.dTau)} N·m (${wN.x.dTauWho} at ${wN.x.t.toFixed(3)} s); commanded Δτ0 max ${f2(wC.x.dTau0)} N·m (${wC.x.dTau0Who} at ${wC.x.t.toFixed(3)} s); violations ${badA.length} / ${badC.length}`); }
   // E1a-8 no unexplained energy creation

@@ -58,7 +58,10 @@ export function planDescent(cx, { elapsed, kFrom, TputMax, lamFrom, dt, remNow =
   const sp = splitK(kMin(TputMax), TputMax); return { k: kMin(TputMax), ...sp, rem: Math.max(2 * dt, sp.Tput - elapsed), verdict: "step required" }; }
 // acceptance ramp after measured contact: the LONGEST Tr on the grid [TrMax … TrMin] that the model predicts recovers with LOAD_ACCEPT at the remaining debounce
 // (delayed by the margin); λ return already started at the first contact (lam0 ≤ 0)
-export function planRamp(cx, { debounceLeft, lam0, lamFrom }) { const n = Math.round((TA.TrMax - TA.TrMin) / TA.TrStep);
-  for (let i = 0; i <= n; i++) { const Tr = TA.TrMax - i * TA.TrStep, tAcc = debounceLeft + TA.margin;
+// rule revision 2 (e1b_close/; abortCapture: 2): margin = 0 here — the timing margin covers the touchdown / acceptance-time uncertainty BEFORE measured contact;
+// after measured contact LOAD_ACCEPT follows at exactly the debounce (measured: contact → accept = acceptDebounce in 23 / 23 T-A P15 runs), so revision 1's extra
+// margin double-counted it and declared feasible ramps infeasible (audit: e1b_close/research/TA_RULE_AUDIT.md)
+export function planRamp(cx, { debounceLeft, lam0, lamFrom, margin = TA.margin }) { const n = Math.round((TA.TrMax - TA.TrMin) / TA.TrStep);
+  for (let i = 0; i <= n; i++) { const Tr = TA.TrMax - i * TA.TrStep, tAcc = debounceLeft + margin;
     if (simulate(cx, { tc: Math.min(0, lam0), lam0, tAcc, Tr, lamFrom, floorRule: "ta" }).recovers) return { Tr, verdict: "in place" }; }
   return { Tr: TA.TrMin, verdict: "step required" }; }

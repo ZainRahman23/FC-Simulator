@@ -93,7 +93,7 @@ export const STAND = {
                           // SURFACE (vertical target = the anchor height, not the foot's own height) — and while in contact RESTS on it with a seating force of
                           // loadOff / 2 of body weight (the midpoint of the lifecycle's own "unloaded" band [0, loadOff)), scaled (1 − s)(1 − a), through its own
                           // leg's feed-forward (finite actuators; the other foot's commanded force reduced by the same amount). = lcTouch { vert: "anchor", seat: loadOff / 2 }
-  abortCapture: false,    // EXPERIMENTAL T-A (gates/v2_g3.js supervised(); default OFF; needs lcPutDown; e1b_ta/): at an abort with an airborne foot, the descent and the
+  abortCapture: false,    // (true = rule revision 1, PSTAR3; 2 = revision 2, PSTAR4: no timing margin after measured contact — e1b_close/) EXPERIMENTAL T-A (gates/v2_g3.js supervised(); default OFF; needs lcPutDown; e1b_ta/): at an abort with an airborne foot, the descent and the
                           // post-contact load-acceptance ramp are the smoothest that the online capture model (ctrl/v2_capture.js) predicts still recover, with the
                           // abort plan's acceptance intent (measured contact still required) and the quiet-standing floor removed for the abort transition
   lcPutDown: false,       // EXPERIMENTAL (gates/v2_g3.js supervised(); default OFF; e1b_fix/ABORT_PUTDOWN_DESIGN.md): the single-support abort puts an airborne foot down along a

@@ -43,19 +43,19 @@ export function supervised(fn, opts = {}) { const margin = opts.margin ?? 0.01, 
         if (!P && air >= 0 && ctrl.lc.feet[air].swing) { const f = ctrl.lc.feet[air], goal = { pos: f.hold.pos.slice(), rot: f.hold.rot.slice() }, Tbw = putDownDuration(ctrl.lc.o.swingHz), ref = refState(H[air].length ? H[air] : [{ pos: f.swing.pos, rot: f.swing.rot }], goal.rot, g.dt);
           // T-A (abortCapture): the descent is the smoothest the online capture model predicts still recovers (equal-fraction split with the acceptance ramp; e1b_ta/)
           let T = Tbw, C = null; if (ctrl.o.abortCapture && ctrl.info) { const lamFrom = air === 1 ? 1 - g.from : g.from, cx = captureContext(ctrl.info, air, capK(ctrl, g)), pl = planDescent(cx, { elapsed: 0, kFrom: 1, TputMax: Tbw, lamFrom, dt: g.dt });
-            T = pl.rem; C = g.cap = { n: air, t0: t, Tbw, lamFrom, k: pl.k, Tput: pl.Tput, Tr: pl.Tr, verdict: pl.verdict, verdict0: pl.verdict, miss: !!cx.miss, cx0: { u: cx.u, w: cx.w, Sin: cx.Sin, Aout: cx.Aout, cS: cx.cS, cA: cx.cA }, replans: [], tContact: null, tAccept: null, TrFinal: null, done: false, doneT: null }; }
+            T = pl.rem; C = g.cap = { n: air, t0: t, Tbw, lamFrom, k: pl.k, Tput: pl.Tput, Tr: pl.Tr, verdict: pl.verdict, verdict0: pl.verdict, miss: !!cx.miss, cx0: { u: cx.u, w: cx.w, Sin: cx.Sin, Aout: cx.Aout, cS: cx.cS, cA: cx.cA }, replans: [], tContact: null, tAccept: null, TrFinal: null, done: false, doneT: null, vlog: [{ t, v: pl.verdict }] }; }
           P = g.putDown = { n: air, t0: t, segT0: t, seg: segment(ref, goal, T), log: { t0: t, T, v0: ref.v.slice(), a0: ref.a.slice(), contactT: null, handBackT: null, ...(C ? { cap: C } : {}) } }; (g.putDownLog || (g.putDownLog = [])).push(P.log); }
         if (ctrl.o.abortCapture && g.cap && !g.cap.done && ctrl.info) { const C = g.cap, fc = ctrl.lc.feet[C.n], stc = fc.state, inAirC = stc === "AIRBORNE" || stc === "LIFTOFF";
           if (!inAirC && C.tContact == null) C.tContact = t;
           if (inAirC && P && P.n === C.n && t - P.segT0 < P.seg.T) {   // before contact: re-check each tick from the measured state; SPEED-UP ONLY re-plan (from the current reference state)
             const cx = captureContext(ctrl.info, C.n, capK(ctrl, g)), rem = P.seg.T - (t - P.segT0), tc = rem + TA.margin;
             if (!capSim(cx, { tc, tAcc: tc + cx.acceptDebounce, Tr: C.Tr, lamFrom: C.lamFrom, floorRule: "ta" }).recovers) { const pl = planDescent(cx, { elapsed: t - C.t0, kFrom: C.k - TA.kStep, TputMax: C.Tbw, lamFrom: C.lamFrom, dt: g.dt, remNow: rem });
-              if (pl.verdict !== "in place") C.verdict = "step required";
+              if (pl.verdict !== "in place" && C.verdict === "in place") { C.verdict = "step required"; C.vlog.push({ t, v: C.verdict, stage: "descent" }); }
               if (pl.rem < rem - 1e-9) { const rf = segRef(P.seg, t - P.segT0); P.seg = segment(rf, P.seg.goal, pl.rem); P.segT0 = t; C.k = pl.k; C.Tput = t - C.t0 + pl.rem; C.Tr = pl.Tr; }
               C.replans.push({ t, rem, remNew: Math.min(rem, pl.rem), k: C.k, Tr: C.Tr, verdict: pl.verdict }); } }
           else if (!inAirC && (stc === "TOUCHDOWN" || stc === "TOUCHING") && C.tAccept == null) {   // measured contact, not yet accepted: the LONGEST ramp the model still predicts recovers
-            const cx = captureContext(ctrl.info, C.n, capK(ctrl, g)), pr = planRamp(cx, { debounceLeft: Math.max(0, cx.acceptDebounce - (t - C.tContact)), lam0: (g.rampFrom ?? t) - t, lamFrom: C.lamFrom });
-            C.Tr = pr.Tr; if (pr.verdict !== "in place") C.verdict = "step required"; }
+            const cx = captureContext(ctrl.info, C.n, capK(ctrl, g)), pr = planRamp(cx, { debounceLeft: Math.max(0, cx.acceptDebounce - (t - C.tContact)), lam0: (g.rampFrom ?? t) - t, lamFrom: C.lamFrom, ...(ctrl.o.abortCapture === 2 ? { margin: 0 } : {}) });
+            C.Tr = pr.Tr; if (pr.verdict !== "in place" && C.verdict === "in place") { C.verdict = "step required"; C.vlog.push({ t, v: C.verdict, stage: "ramp" }); } }
           else if ((stc === "LOAD_ACCEPT" || stc === "SUPPORT") && C.tAccept == null) { C.tAccept = t; C.TrFinal = C.Tr; } }
         if (P) { const f = ctrl.lc.feet[P.n], inAir = f.state === "AIRBORNE" || f.state === "LIFTOFF", e = segAt(P.seg, t - P.segT0);
           if (!inAir && P.log.contactT == null) P.log.contactT = t;
