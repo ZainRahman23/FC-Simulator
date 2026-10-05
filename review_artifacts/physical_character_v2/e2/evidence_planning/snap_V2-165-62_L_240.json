@@ -1,0 +1,2224 @@
+{
+ "generated": "tools/e2_plan_audit.mjs",
+ "human": "V2-165-62",
+ "side": "L",
+ "pert": "P15",
+ "hz": 240,
+ "tcap": "tcls",
+ "t": 9.754166666666666,
+ "config": "PSTAR4",
+ "gapMin": 0.01,
+ "grids": {
+  "snapshot": {
+   "nodes": [
+    {
+     "dx": -0.03,
+     "dy": 0,
+     "geo": {
+      "ok": true,
+      "gap": 0.0878597835595762,
+      "side": 0.15707710846997872
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.01,
+     "geo": {
+      "ok": true,
+      "gap": 0.09774601697034759,
+      "side": 0.1670771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.02,
+     "geo": {
+      "ok": true,
+      "gap": 0.10763225038111897,
+      "side": 0.1770771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.03,
+     "geo": {
+      "ok": true,
+      "gap": 0.11751848379189035,
+      "side": 0.18707710846997871
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.04,
+     "geo": {
+      "ok": true,
+      "gap": 0.12740471720266175,
+      "side": 0.19707710846997872
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.05,
+     "geo": {
+      "ok": true,
+      "gap": 0.1372909506134331,
+      "side": 0.2070771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.06,
+     "geo": {
+      "ok": true,
+      "gap": 0.1471771840242045,
+      "side": 0.21707710846997874
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.07,
+     "geo": {
+      "ok": true,
+      "gap": 0.15706341743497587,
+      "side": 0.22707710846997872
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.08,
+     "geo": {
+      "ok": true,
+      "gap": 0.16694965084574723,
+      "side": 0.23707710846997868
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.09,
+     "geo": {
+      "ok": true,
+      "gap": 0.17683588425651858,
+      "side": 0.24707710846997868
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.1,
+     "geo": {
+      "ok": true,
+      "gap": 0.18672211766729,
+      "side": 0.25707710846997867
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.11,
+     "geo": {
+      "ok": true,
+      "gap": 0.19660835107806138,
+      "side": 0.2670771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.12,
+     "geo": {
+      "ok": true,
+      "gap": 0.20649458448883273,
+      "side": 0.27707710846997874
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.13,
+     "geo": {
+      "ok": true,
+      "gap": 0.21638081789960414,
+      "side": 0.2870771084699787
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.14,
+     "geo": {
+      "ok": true,
+      "gap": 0.22626705131037553,
+      "side": 0.2970771084699787
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.15,
+     "geo": {
+      "ok": true,
+      "gap": 0.23615328472114688,
+      "side": 0.3070771084699787
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.16,
+     "geo": {
+      "ok": true,
+      "gap": 0.24603951813191824,
+      "side": 0.3170771084699787
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.17,
+     "geo": {
+      "ok": true,
+      "gap": 0.25592575154268965,
+      "side": 0.32707710846997873
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.18,
+     "geo": {
+      "ok": true,
+      "gap": 0.26581198495346103,
+      "side": 0.33707710846997874
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.19,
+     "geo": {
+      "ok": true,
+      "gap": 0.2757014814753477,
+      "side": 0.3470771084699787
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.2,
+     "geo": {
+      "ok": true,
+      "gap": 0.28559862734658603,
+      "side": 0.3570771084699787
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": -0.02,
+     "dy": 0,
+     "geo": {
+      "ok": true,
+      "gap": 0.08635565957939781,
+      "side": 0.15707710846997872
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.01,
+     "geo": {
+      "ok": true,
+      "gap": 0.09624189299016918,
+      "side": 0.1670771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.02,
+     "geo": {
+      "ok": true,
+      "gap": 0.10612812640094056,
+      "side": 0.17707710846997873
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.03,
+     "geo": {
+      "ok": true,
+      "gap": 0.11601435981171195,
+      "side": 0.18707710846997871
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.04,
+     "geo": {
+      "ok": true,
+      "gap": 0.12590059322248334,
+      "side": 0.19707710846997872
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.05,
+     "geo": {
+      "ok": true,
+      "gap": 0.1357868266332547,
+      "side": 0.20707710846997873
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.06,
+     "geo": {
+      "ok": true,
+      "gap": 0.14567306004402608,
+      "side": 0.21707710846997874
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.07,
+     "geo": {
+      "ok": true,
+      "gap": 0.1555592934547975,
+      "side": 0.22707710846997872
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.08,
+     "geo": {
+      "ok": true,
+      "gap": 0.16544552686556882,
+      "side": 0.2370771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.09,
+     "geo": {
+      "ok": true,
+      "gap": 0.1753317602763402,
+      "side": 0.2470771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.1,
+     "geo": {
+      "ok": true,
+      "gap": 0.18521799368711162,
+      "side": 0.2570771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.11,
+     "geo": {
+      "ok": true,
+      "gap": 0.19510422709788297,
+      "side": 0.26707710846997873
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.12,
+     "geo": {
+      "ok": true,
+      "gap": 0.20499165137519496,
+      "side": 0.2770771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.13,
+     "geo": {
+      "ok": true,
+      "gap": 0.21488798521109115,
+      "side": 0.2870771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.14,
+     "geo": {
+      "ok": true,
+      "gap": 0.22479349466262308,
+      "side": 0.29707710846997876
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.15,
+     "geo": {
+      "ok": true,
+      "gap": 0.23470701799730526,
+      "side": 0.3070771084699787
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.16,
+     "geo": {
+      "ok": true,
+      "gap": 0.24462758093015596,
+      "side": 0.3170771084699787
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.17,
+     "geo": {
+      "ok": true,
+      "gap": 0.25455436041500573,
+      "side": 0.32707710846997873
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.18,
+     "geo": {
+      "ok": true,
+      "gap": 0.2644866564892174,
+      "side": 0.33707710846997874
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.19,
+     "geo": {
+      "ok": true,
+      "gap": 0.2744238701632894,
+      "side": 0.34707710846997875
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.2,
+     "geo": {
+      "ok": true,
+      "gap": 0.2843654858979031,
+      "side": 0.35707710846997875
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": -0.01,
+     "dy": 0,
+     "geo": {
+      "ok": true,
+      "gap": 0.08485153559921942,
+      "side": 0.1570771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.01,
+     "geo": {
+      "ok": true,
+      "gap": 0.0947377690099908,
+      "side": 0.1670771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.02,
+     "geo": {
+      "ok": true,
+      "gap": 0.10462400242076217,
+      "side": 0.1770771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.03,
+     "geo": {
+      "ok": true,
+      "gap": 0.11451023583153355,
+      "side": 0.1870771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.04,
+     "geo": {
+      "ok": true,
+      "gap": 0.1243964692423049,
+      "side": 0.19707710846997872
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.05,
+     "geo": {
+      "ok": true,
+      "gap": 0.13428271437291345,
+      "side": 0.2070771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.06,
+     "geo": {
+      "ok": true,
+      "gap": 0.14417737837091538,
+      "side": 0.2170771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.07,
+     "geo": {
+      "ok": true,
+      "gap": 0.15408564335609834,
+      "side": 0.2270771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.08,
+     "geo": {
+      "ok": true,
+      "gap": 0.16400504426088655,
+      "side": 0.23707710846997873
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.09,
+     "geo": {
+      "ok": true,
+      "gap": 0.173933675858265,
+      "side": 0.2470771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.1,
+     "geo": {
+      "ok": true,
+      "gap": 0.18387004283493447,
+      "side": 0.2570771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.11,
+     "geo": {
+      "ok": true,
+      "gap": 0.19381295546653549,
+      "side": 0.2670771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.12,
+     "geo": {
+      "ok": true,
+      "gap": 0.2037614555337341,
+      "side": 0.27707710846997874
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.13,
+     "geo": {
+      "ok": true,
+      "gap": 0.21371476274646667,
+      "side": 0.28707710846997875
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.14,
+     "geo": {
+      "ok": true,
+      "gap": 0.2236710015547311,
+      "side": 0.2970771084699787
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.15,
+     "geo": {
+      "ok": true,
+      "gap": 0.23362732542763576,
+      "side": 0.3070771084699787
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.16,
+     "geo": {
+      "ok": true,
+      "gap": 0.24358364930054036,
+      "side": 0.3170771084699788
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.17,
+     "geo": {
+      "ok": true,
+      "gap": 0.25353997317344495,
+      "side": 0.32707710846997873
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.18,
+     "geo": {
+      "ok": true,
+      "gap": 0.2634962970463496,
+      "side": 0.33707710846997874
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.19,
+     "geo": {
+      "ok": true,
+      "gap": 0.27345262091925415,
+      "side": 0.34707710846997875
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.2,
+     "geo": {
+      "ok": true,
+      "gap": 0.2834089447921588,
+      "side": 0.35707710846997875
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": 0,
+     "dy": 0,
+     "geo": {
+      "ok": true,
+      "gap": 0.0833825865171543,
+      "side": 0.15707710846997872
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0,
+     "dy": 0.01,
+     "geo": {
+      "ok": true,
+      "gap": 0.09331626218855615,
+      "side": 0.1670771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0,
+     "dy": 0.02,
+     "geo": {
+      "ok": true,
+      "gap": 0.10326274179681648,
+      "side": 0.1770771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0,
+     "dy": 0.03,
+     "geo": {
+      "ok": true,
+      "gap": 0.1132178357512918,
+      "side": 0.18707710846997871
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0,
+     "dy": 0.04,
+     "geo": {
+      "ok": true,
+      "gap": 0.12317415962419641,
+      "side": 0.19707710846997872
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0,
+     "dy": 0.05,
+     "geo": {
+      "ok": true,
+      "gap": 0.13313048349710102,
+      "side": 0.2070771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0,
+     "dy": 0.06,
+     "geo": {
+      "ok": true,
+      "gap": 0.14308680737000565,
+      "side": 0.2170771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0,
+     "dy": 0.07,
+     "geo": {
+      "ok": true,
+      "gap": 0.15304313124291027,
+      "side": 0.22707710846997872
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0,
+     "dy": 0.08,
+     "geo": {
+      "ok": true,
+      "gap": 0.16299945511581487,
+      "side": 0.23707710846997873
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0,
+     "dy": 0.09,
+     "geo": {
+      "ok": true,
+      "gap": 0.17295577898871947,
+      "side": 0.2470771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0,
+     "dy": 0.1,
+     "geo": {
+      "ok": true,
+      "gap": 0.18291210286162413,
+      "side": 0.2570771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0,
+     "dy": 0.11,
+     "geo": {
+      "ok": true,
+      "gap": 0.19286842673452873,
+      "side": 0.26707710846997873
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0,
+     "dy": 0.12,
+     "geo": {
+      "ok": true,
+      "gap": 0.20282475060743332,
+      "side": 0.27707710846997874
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0,
+     "dy": 0.13,
+     "geo": {
+      "ok": true,
+      "gap": 0.21278107448033798,
+      "side": 0.2870771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0,
+     "dy": 0.14,
+     "geo": {
+      "ok": true,
+      "gap": 0.22273739835324258,
+      "side": 0.29707710846997876
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": 0,
+     "dy": 0.15,
+     "geo": {
+      "ok": true,
+      "gap": 0.23269372222614715,
+      "side": 0.30707710846997877
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": 0,
+     "dy": 0.16,
+     "geo": {
+      "ok": true,
+      "gap": 0.24265004609905177,
+      "side": 0.3170771084699787
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": 0,
+     "dy": 0.17,
+     "geo": {
+      "ok": true,
+      "gap": 0.25260636997195635,
+      "side": 0.32707710846997873
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": 0,
+     "dy": 0.18,
+     "geo": {
+      "ok": true,
+      "gap": 0.26256269384486103,
+      "side": 0.3370771084699788
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": 0,
+     "dy": 0.19,
+     "geo": {
+      "ok": true,
+      "gap": 0.27251901771776565,
+      "side": 0.34707710846997875
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": 0,
+     "dy": 0.2,
+     "geo": {
+      "ok": true,
+      "gap": 0.2824753415906702,
+      "side": 0.35707710846997875
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": 0.01,
+     "dy": 0,
+     "geo": {
+      "ok": true,
+      "gap": 0.08241526093108939,
+      "side": 0.15707710846997872
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.01,
+     "geo": {
+      "ok": true,
+      "gap": 0.092371584803994,
+      "side": 0.16707710846997872
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.02,
+     "geo": {
+      "ok": true,
+      "gap": 0.10232790867689862,
+      "side": 0.17707710846997873
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.03,
+     "geo": {
+      "ok": true,
+      "gap": 0.11228423254980324,
+      "side": 0.18707710846997871
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.04,
+     "geo": {
+      "ok": true,
+      "gap": 0.12224055642270784,
+      "side": 0.1970771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.05,
+     "geo": {
+      "ok": true,
+      "gap": 0.1321968802956125,
+      "side": 0.20707710846997873
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.06,
+     "geo": {
+      "ok": true,
+      "gap": 0.14215320416851707,
+      "side": 0.2170771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.07,
+     "geo": {
+      "ok": true,
+      "gap": 0.1521095280414217,
+      "side": 0.22707710846997872
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.08,
+     "geo": {
+      "ok": true,
+      "gap": 0.16206585191432632,
+      "side": 0.2370771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.09,
+     "geo": {
+      "ok": true,
+      "gap": 0.17202217578723092,
+      "side": 0.2470771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.1,
+     "geo": {
+      "ok": true,
+      "gap": 0.18197849966013555,
+      "side": 0.2570771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.11,
+     "geo": {
+      "ok": true,
+      "gap": 0.19193482353304017,
+      "side": 0.2670771084699788
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.12,
+     "geo": {
+      "ok": true,
+      "gap": 0.20189114740594477,
+      "side": 0.27707710846997874
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.13,
+     "geo": {
+      "ok": true,
+      "gap": 0.2118474712788494,
+      "side": 0.28707710846997875
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.14,
+     "geo": {
+      "ok": true,
+      "gap": 0.22180379515175402,
+      "side": 0.29707710846997876
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.15,
+     "geo": {
+      "ok": true,
+      "gap": 0.2317601190246586,
+      "side": 0.30707710846997865
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.16,
+     "geo": {
+      "ok": true,
+      "gap": 0.2417164428975632,
+      "side": 0.3170771084699787
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.17,
+     "geo": {
+      "ok": true,
+      "gap": 0.25167276677046785,
+      "side": 0.3270771084699788
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.18,
+     "geo": {
+      "ok": true,
+      "gap": 0.2616290906433724,
+      "side": 0.3370771084699787
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.19,
+     "geo": {
+      "ok": true,
+      "gap": 0.27158541451627705,
+      "side": 0.3470771084699787
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.2,
+     "geo": {
+      "ok": true,
+      "gap": 0.28154173838918173,
+      "side": 0.3570771084699788
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": 0.02,
+     "dy": 0,
+     "geo": {
+      "ok": true,
+      "gap": 0.08148165772960082,
+      "side": 0.1570771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.01,
+     "geo": {
+      "ok": true,
+      "gap": 0.09143798160250545,
+      "side": 0.16707710846997872
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.02,
+     "geo": {
+      "ok": true,
+      "gap": 0.10139430547541006,
+      "side": 0.1770771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.03,
+     "geo": {
+      "ok": true,
+      "gap": 0.11135062934831468,
+      "side": 0.18707710846997871
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.04,
+     "geo": {
+      "ok": true,
+      "gap": 0.12130695322121929,
+      "side": 0.1970771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.05,
+     "geo": {
+      "ok": true,
+      "gap": 0.1312632770941239,
+      "side": 0.2070771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.06,
+     "geo": {
+      "ok": true,
+      "gap": 0.14121960096702854,
+      "side": 0.2170771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.07,
+     "geo": {
+      "ok": true,
+      "gap": 0.15117592483993314,
+      "side": 0.2270771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.08,
+     "geo": {
+      "ok": true,
+      "gap": 0.1611322487128377,
+      "side": 0.2370771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.09,
+     "geo": {
+      "ok": true,
+      "gap": 0.17108857258574237,
+      "side": 0.24707710846997868
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.1,
+     "geo": {
+      "ok": true,
+      "gap": 0.181044896458647,
+      "side": 0.2570771084699788
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.11,
+     "geo": {
+      "ok": true,
+      "gap": 0.19100122033155156,
+      "side": 0.2670771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.12,
+     "geo": {
+      "ok": true,
+      "gap": 0.20095754420445622,
+      "side": 0.2770771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.13,
+     "geo": {
+      "ok": true,
+      "gap": 0.21091386807736084,
+      "side": 0.2870771084699788
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.14,
+     "geo": {
+      "ok": true,
+      "gap": 0.22087019195026544,
+      "side": 0.29707710846997876
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.15,
+     "geo": {
+      "ok": true,
+      "gap": 0.23082651582317004,
+      "side": 0.3070771084699787
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.16,
+     "geo": {
+      "ok": true,
+      "gap": 0.24078283969607467,
+      "side": 0.3170771084699787
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.17,
+     "geo": {
+      "ok": true,
+      "gap": 0.2507391635689793,
+      "side": 0.32707710846997873
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.18,
+     "geo": {
+      "ok": true,
+      "gap": 0.2606954874418839,
+      "side": 0.33707710846997874
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.19,
+     "geo": {
+      "ok": true,
+      "gap": 0.2706518113147885,
+      "side": 0.34707710846997875
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.2,
+     "geo": {
+      "ok": true,
+      "gap": 0.2806081351876931,
+      "side": 0.35707710846997875
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": 0.03,
+     "dy": 0,
+     "geo": {
+      "ok": true,
+      "gap": 0.08054805452811228,
+      "side": 0.15707710846997872
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.03,
+     "dy": 0.01,
+     "geo": {
+      "ok": true,
+      "gap": 0.0905043784010169,
+      "side": 0.16707710846997872
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.03,
+     "dy": 0.02,
+     "geo": {
+      "ok": true,
+      "gap": 0.10046070227392151,
+      "side": 0.1770771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.03,
+     "dy": 0.03,
+     "geo": {
+      "ok": true,
+      "gap": 0.11041702614682614,
+      "side": 0.18707710846997871
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.03,
+     "dy": 0.04,
+     "geo": {
+      "ok": true,
+      "gap": 0.12037335001973075,
+      "side": 0.19707710846997872
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.03,
+     "dy": 0.05,
+     "geo": {
+      "ok": true,
+      "gap": 0.13032967389263536,
+      "side": 0.20707710846997873
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.03,
+     "dy": 0.06,
+     "geo": {
+      "ok": true,
+      "gap": 0.14028599776553996,
+      "side": 0.2170771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.03,
+     "dy": 0.07,
+     "geo": {
+      "ok": true,
+      "gap": 0.15024232163844461,
+      "side": 0.22707710846997872
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.03,
+     "dy": 0.08,
+     "geo": {
+      "ok": true,
+      "gap": 0.16019864551134919,
+      "side": 0.2370771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.03,
+     "dy": 0.09,
+     "geo": {
+      "ok": true,
+      "gap": 0.17015496938425378,
+      "side": 0.24707710846997868
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.03,
+     "dy": 0.1,
+     "geo": {
+      "ok": true,
+      "gap": 0.18011129325715847,
+      "side": 0.2570771084699787
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.03,
+     "dy": 0.11,
+     "geo": {
+      "ok": true,
+      "gap": 0.19006761713006304,
+      "side": 0.26707710846997873
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.03,
+     "dy": 0.12,
+     "geo": {
+      "ok": true,
+      "gap": 0.20002394100296764,
+      "side": 0.27707710846997874
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.03,
+     "dy": 0.13,
+     "geo": {
+      "ok": true,
+      "gap": 0.2099802648758723,
+      "side": 0.28707710846997875
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.03,
+     "dy": 0.14,
+     "geo": {
+      "ok": true,
+      "gap": 0.21993658874877692,
+      "side": 0.29707710846997876
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": 0.03,
+     "dy": 0.15,
+     "geo": {
+      "ok": true,
+      "gap": 0.2298929126216815,
+      "side": 0.30707710846997877
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": 0.03,
+     "dy": 0.16,
+     "geo": {
+      "ok": true,
+      "gap": 0.23984923649458612,
+      "side": 0.3170771084699787
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": 0.03,
+     "dy": 0.17,
+     "geo": {
+      "ok": true,
+      "gap": 0.24980556036749077,
+      "side": 0.3270771084699788
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": 0.03,
+     "dy": 0.18,
+     "geo": {
+      "ok": true,
+      "gap": 0.25976188424039537,
+      "side": 0.33707710846997874
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": 0.03,
+     "dy": 0.19,
+     "geo": {
+      "ok": true,
+      "gap": 0.2697182081133,
+      "side": 0.3470771084699787
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": 0.03,
+     "dy": 0.2,
+     "geo": {
+      "ok": true,
+      "gap": 0.27967453198620457,
+      "side": 0.3570771084699788
+     },
+     "verdict": "UNDECIDED"
+    }
+   ],
+   "cells": [
+    {
+     "dx": -0.03,
+     "dy": 0,
+     "candidate": true
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.01,
+     "candidate": true
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.02,
+     "candidate": true
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.03,
+     "candidate": true
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.04,
+     "candidate": true
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.05,
+     "candidate": true
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.06,
+     "candidate": true
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.07,
+     "candidate": true
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.08,
+     "candidate": true
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.09,
+     "candidate": true
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.1,
+     "candidate": true
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.11,
+     "candidate": true
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.12,
+     "candidate": false
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.13,
+     "candidate": false
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.14,
+     "candidate": false
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.15,
+     "candidate": false
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.16,
+     "candidate": false
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.17,
+     "candidate": false
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.18,
+     "candidate": false
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.19,
+     "candidate": false
+    },
+    {
+     "dx": -0.02,
+     "dy": 0,
+     "candidate": true
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.01,
+     "candidate": true
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.02,
+     "candidate": true
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.03,
+     "candidate": true
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.04,
+     "candidate": true
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.05,
+     "candidate": true
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.06,
+     "candidate": true
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.07,
+     "candidate": true
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.08,
+     "candidate": true
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.09,
+     "candidate": true
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.1,
+     "candidate": true
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.11,
+     "candidate": true
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.12,
+     "candidate": true
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.13,
+     "candidate": false
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.14,
+     "candidate": false
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.15,
+     "candidate": false
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.16,
+     "candidate": false
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.17,
+     "candidate": false
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.18,
+     "candidate": false
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.19,
+     "candidate": false
+    },
+    {
+     "dx": -0.01,
+     "dy": 0,
+     "candidate": true
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.01,
+     "candidate": true
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.02,
+     "candidate": true
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.03,
+     "candidate": true
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.04,
+     "candidate": true
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.05,
+     "candidate": true
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.06,
+     "candidate": true
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.07,
+     "candidate": true
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.08,
+     "candidate": true
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.09,
+     "candidate": true
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.1,
+     "candidate": true
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.11,
+     "candidate": true
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.12,
+     "candidate": true
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.13,
+     "candidate": false
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.14,
+     "candidate": false
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.15,
+     "candidate": false
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.16,
+     "candidate": false
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.17,
+     "candidate": false
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.18,
+     "candidate": false
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.19,
+     "candidate": false
+    },
+    {
+     "dx": 0,
+     "dy": 0,
+     "candidate": true
+    },
+    {
+     "dx": 0,
+     "dy": 0.01,
+     "candidate": true
+    },
+    {
+     "dx": 0,
+     "dy": 0.02,
+     "candidate": true
+    },
+    {
+     "dx": 0,
+     "dy": 0.03,
+     "candidate": true
+    },
+    {
+     "dx": 0,
+     "dy": 0.04,
+     "candidate": true
+    },
+    {
+     "dx": 0,
+     "dy": 0.05,
+     "candidate": true
+    },
+    {
+     "dx": 0,
+     "dy": 0.06,
+     "candidate": true
+    },
+    {
+     "dx": 0,
+     "dy": 0.07,
+     "candidate": true
+    },
+    {
+     "dx": 0,
+     "dy": 0.08,
+     "candidate": true
+    },
+    {
+     "dx": 0,
+     "dy": 0.09,
+     "candidate": true
+    },
+    {
+     "dx": 0,
+     "dy": 0.1,
+     "candidate": true
+    },
+    {
+     "dx": 0,
+     "dy": 0.11,
+     "candidate": true
+    },
+    {
+     "dx": 0,
+     "dy": 0.12,
+     "candidate": true
+    },
+    {
+     "dx": 0,
+     "dy": 0.13,
+     "candidate": false
+    },
+    {
+     "dx": 0,
+     "dy": 0.14,
+     "candidate": false
+    },
+    {
+     "dx": 0,
+     "dy": 0.15,
+     "candidate": false
+    },
+    {
+     "dx": 0,
+     "dy": 0.16,
+     "candidate": false
+    },
+    {
+     "dx": 0,
+     "dy": 0.17,
+     "candidate": false
+    },
+    {
+     "dx": 0,
+     "dy": 0.18,
+     "candidate": false
+    },
+    {
+     "dx": 0,
+     "dy": 0.19,
+     "candidate": false
+    },
+    {
+     "dx": 0.01,
+     "dy": 0,
+     "candidate": true
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.01,
+     "candidate": true
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.02,
+     "candidate": true
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.03,
+     "candidate": true
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.04,
+     "candidate": true
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.05,
+     "candidate": true
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.06,
+     "candidate": true
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.07,
+     "candidate": true
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.08,
+     "candidate": true
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.09,
+     "candidate": true
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.1,
+     "candidate": true
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.11,
+     "candidate": true
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.12,
+     "candidate": true
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.13,
+     "candidate": false
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.14,
+     "candidate": false
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.15,
+     "candidate": false
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.16,
+     "candidate": false
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.17,
+     "candidate": false
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.18,
+     "candidate": false
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.19,
+     "candidate": false
+    },
+    {
+     "dx": 0.02,
+     "dy": 0,
+     "candidate": true
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.01,
+     "candidate": true
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.02,
+     "candidate": true
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.03,
+     "candidate": true
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.04,
+     "candidate": true
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.05,
+     "candidate": true
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.06,
+     "candidate": true
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.07,
+     "candidate": true
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.08,
+     "candidate": true
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.09,
+     "candidate": true
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.1,
+     "candidate": true
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.11,
+     "candidate": true
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.12,
+     "candidate": true
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.13,
+     "candidate": false
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.14,
+     "candidate": false
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.15,
+     "candidate": false
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.16,
+     "candidate": false
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.17,
+     "candidate": false
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.18,
+     "candidate": false
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.19,
+     "candidate": false
+    }
+   ],
+   "counts": {
+    "FEASIBLE": 97,
+    "UNDECIDED": 50
+   },
+   "candidateCells": 77,
+   "nCells": 120,
+   "nominal": {
+    "dxdy": [
+     0,
+     0
+    ],
+    "verdict": "FEASIBLE",
+    "path": {
+     "ok": true,
+     "verdicts": [
+      "FEASIBLE",
+      "FEASIBLE",
+      "FEASIBLE",
+      "FEASIBLE",
+      "FEASIBLE",
+      "FEASIBLE",
+      "FEASIBLE",
+      "FEASIBLE",
+      "FEASIBLE",
+      "FEASIBLE",
+      "FEASIBLE"
+     ]
+    }
+   }
+  }
+ },
+ "snapshot": {
+  "verdict": "NO_CERTIFIED_ONE_STEP",
+  "h": 0.9086945025424235,
+  "omega": 3.285682187618938,
+  "xiWholeBody": [
+   -0.0016228983266908248,
+   0.007830255097999776
+  ],
+  "xiController": [
+   -0.0016228983266908248,
+   0.007830255097999776
+  ],
+  "xiDiffMm": 0,
+  "comVyMs": -0.057109450130105134,
+  "angMom": [
+   -0.09311466865095538,
+   0.0955341876620975,
+   4.5646869686435085
+  ],
+  "angMomNorm": 4.566635987708468,
+  "lamFrom": 1,
+  "margins": {
+   "copSS": 0.0023,
+   "copRamp": 0.0152,
+   "copFull": 0.004,
+   "shareLag": 0.008,
+   "landBase": 0.00164,
+   "timing": 0.04,
+   "eLandRule": "landBase + 5.77·d/(ωn²T²) (servo-bandwidth tracking bound)"
+  },
+  "inPlace": {
+   "captures": false,
+   "best": null
+  },
+  "nCandidatesCapturing": 0,
+  "marginAblation": [
+   {
+    "dy": 0,
+    "d": 0.01632077837051709,
+    "Tmin": 0.2,
+    "all": "none",
+    "noCopRamp": "none",
+    "noTrackTerm": "none",
+    "noTimingMargin": "none",
+    "noTmin": "none",
+    "none": "none",
+    "bestCaseAllMargins": "T 0.20 Tr 0.1",
+    "bestCaseNoMargins": "T 0.20 Tr 0.1"
+   },
+   {
+    "dy": 0.03,
+    "d": 0.03658917081878933,
+    "Tmin": 0.2,
+    "all": "none",
+    "noCopRamp": "none",
+    "noTrackTerm": "none",
+    "noTimingMargin": "none",
+    "noTmin": "none",
+    "none": "T 0.20 Tr 0.1",
+    "bestCaseAllMargins": "T 0.20 Tr 0.1",
+    "bestCaseNoMargins": "T 0.20 Tr 0.1"
+   },
+   {
+    "dy": 0.06,
+    "d": 0.06489350534370564,
+    "Tmin": 0.24347179853103332,
+    "all": "none",
+    "noCopRamp": "none",
+    "noTrackTerm": "none",
+    "noTimingMargin": "none",
+    "noTmin": "none",
+    "none": "T 0.20 Tr 0.1",
+    "bestCaseAllMargins": "T 0.24 Tr 0.1",
+    "bestCaseNoMargins": "T 0.20 Tr 0.1"
+   },
+   {
+    "dy": 0.09,
+    "d": 0.09425267449988121,
+    "Tmin": 0.293423496646947,
+    "all": "none",
+    "noCopRamp": "none",
+    "noTrackTerm": "none",
+    "noTimingMargin": "none",
+    "noTmin": "none",
+    "none": "T 0.20 Tr 0.1",
+    "bestCaseAllMargins": "T 0.29 Tr 0.1",
+    "bestCaseNoMargins": "T 0.20 Tr 0.1"
+   },
+   {
+    "dy": 0.12,
+    "d": 0.12391919248029164,
+    "Tmin": 0.3364475221878746,
+    "all": "none",
+    "noCopRamp": "none",
+    "noTrackTerm": "none",
+    "noTimingMargin": "none",
+    "noTmin": "none",
+    "none": "T 0.20 Tr 0.1",
+    "bestCaseAllMargins": "T 0.34 Tr 0.1",
+    "bestCaseNoMargins": "T 0.20 Tr 0.1"
+   }
+  ],
+  "chosen": null,
+  "top": []
+ },
+ "summary": "snapshot: 97/147 nodes feasible, 77/120 candidate cells, nominal FEASIBLE, nominal path certified | snapshot: NO_CERTIFIED_ONE_STEP"
+}

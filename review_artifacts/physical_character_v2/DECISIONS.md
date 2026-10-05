@@ -1961,3 +1961,36 @@ Not pushed.
 **Awaiting review before any implementation.**
 
 Not pushed.
+
+## 2026-10-06: E2 audit corrections (`sources/2026-10-05_user_instruction_e2_audit_corrections.md`)
+
+### E2-1: E2 architecture and preregistration revised (v2); planning-only prerequisites done; FROZEN FOR REVIEW, not implemented (`e2/E2_DESIGN_v2.md`, `e2/E2_PREREGISTRATION_v2.md`)
+
+**Revised per the audit:**
+- planning primitive = (foothold, timing, support / load plan), with the full capture horizon and explicit partial loading, and explicit CERTIFIED_ONE_STEP / NO_CERTIFIED_ONE_STEP;
+- a minimal PyPnC-structured DCM reference layer feeding the existing law;
+- reach from Touchline's IK certifier (no Valkyrie constants);
+- foothold from timed safe capture region ∩ certified reach ∩ valid geometry, with measured margins;
+- explicit BLF quintic swing, C2 re-targeting, bounded contact handling;
+- one planner for commanded and recovery steps;
+- the added validation checks.
+
+**Prerequisites** (`e2/research/E2_TIMING_LOAD_ASSUMPTIONS.md`, `E2_REACH_AND_SNAPSHOTS.md`; tools `tools/e2_plan_lib.mjs`, `tools/e2_plan_audit.mjs`; evidence `e2/evidence_planning/`):
+- **Measured timing chain:** liftoff 154–171 ms after the E1b lift command; touchdown leads the reference by 13–25 ms; contact → accept 0.050 s; realised-load lag ≤ 8 ms.
+- **Measured margins:** CoP shortfall 2.3 / 15.2 / 4.0 mm (single support / ramp / full); landing 1.64 mm + bandwidth term.
+- **Per-body h / ω**, with model-assumption deviations logged.
+- **Reach:** forward 0.10 m and lateral 0.08 m nominals plus paths certified for all 8 bodies × L / R. Snapshot reach to 0.12–0.13 m.
+- **The four STEP_REQUIRED snapshots:**
+  - NO_CERTIFIED_ONE_STEP under the current λ-return reference;
+  - CERTIFIED_ONE_STEP under DCM-plan tracking (4 cm outward, T ≈ 0.207 s, T_r 0.10 s, slack 53–64 ms, path certified).
+
+**Disagreements / clarifications reported** (`E2_DESIGN_v2.md` §7):
+- apex was already 50 % (0.6 = IHMC's touchdown-acceptance gate);
+- E1a-8 is a ledger closure, not "energy never increases";
+- v1 never required bitwise identity across rates;
+- certification depends on the not-yet-validated DCM law (gate PG-2);
+- stance-foot lift-off is outside the planning model.
+
+Awaiting review. No E2 implementation or physical step.
+
+Not pushed.

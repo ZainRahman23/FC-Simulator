@@ -1,0 +1,1023 @@
+{
+ "generated": "tools/e2_plan_audit.mjs",
+ "human": "V2-REF",
+ "side": "L",
+ "pert": "none",
+ "hz": 240,
+ "tcap": "hover",
+ "t": 9.658333333333333,
+ "config": "PSTAR4",
+ "gapMin": 0.01,
+ "grids": {
+  "forward": {
+   "nodes": [
+    {
+     "dx": 0.07,
+     "dy": -0.02,
+     "geo": {
+      "ok": true,
+      "gap": 0.06578454110706711,
+      "side": 0.15325077263916528
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.07,
+     "dy": -0.01,
+     "geo": {
+      "ok": true,
+      "gap": 0.07574119281191845,
+      "side": 0.16325077263916526
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.07,
+     "dy": 0,
+     "geo": {
+      "ok": true,
+      "gap": 0.0856978445167698,
+      "side": 0.17325077263916527
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.07,
+     "dy": 0.01,
+     "geo": {
+      "ok": true,
+      "gap": 0.09565449622162114,
+      "side": 0.18325077263916528
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.07,
+     "dy": 0.02,
+     "geo": {
+      "ok": true,
+      "gap": 0.10561114792647248,
+      "side": 0.19325077263916526
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.08,
+     "dy": -0.02,
+     "geo": {
+      "ok": true,
+      "gap": 0.06485444066717864,
+      "side": 0.15325077263916528
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.08,
+     "dy": -0.01,
+     "geo": {
+      "ok": true,
+      "gap": 0.07481109237202999,
+      "side": 0.16325077263916526
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.08,
+     "dy": 0,
+     "geo": {
+      "ok": true,
+      "gap": 0.08476774407688134,
+      "side": 0.17325077263916525
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.08,
+     "dy": 0.01,
+     "geo": {
+      "ok": true,
+      "gap": 0.0947243957817327,
+      "side": 0.18325077263916528
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.08,
+     "dy": 0.02,
+     "geo": {
+      "ok": true,
+      "gap": 0.10468104748658404,
+      "side": 0.19325077263916526
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.09,
+     "dy": -0.02,
+     "geo": {
+      "ok": true,
+      "gap": 0.0639243402272902,
+      "side": 0.15325077263916526
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.09,
+     "dy": -0.01,
+     "geo": {
+      "ok": true,
+      "gap": 0.07388099193214155,
+      "side": 0.16325077263916526
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.09,
+     "dy": 0,
+     "geo": {
+      "ok": true,
+      "gap": 0.08383764363699289,
+      "side": 0.17325077263916527
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.09,
+     "dy": 0.01,
+     "geo": {
+      "ok": true,
+      "gap": 0.09379429534184425,
+      "side": 0.18325077263916523
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.09,
+     "dy": 0.02,
+     "geo": {
+      "ok": true,
+      "gap": 0.1037509470466956,
+      "side": 0.1932507726391653
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.1,
+     "dy": -0.02,
+     "geo": {
+      "ok": true,
+      "gap": 0.06299423978740178,
+      "side": 0.15325077263916528
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.1,
+     "dy": -0.01,
+     "geo": {
+      "ok": true,
+      "gap": 0.07295089149225312,
+      "side": 0.1632507726391653
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.1,
+     "dy": 0,
+     "geo": {
+      "ok": true,
+      "gap": 0.08290754319710446,
+      "side": 0.17325077263916527
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.1,
+     "dy": 0.01,
+     "geo": {
+      "ok": true,
+      "gap": 0.09286419490195581,
+      "side": 0.18325077263916525
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.1,
+     "dy": 0.02,
+     "geo": {
+      "ok": true,
+      "gap": 0.10282084660680715,
+      "side": 0.19325077263916524
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.11,
+     "dy": -0.02,
+     "geo": {
+      "ok": true,
+      "gap": 0.062064139347513314,
+      "side": 0.15325077263916526
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.11,
+     "dy": -0.01,
+     "geo": {
+      "ok": true,
+      "gap": 0.07202079105236467,
+      "side": 0.1632507726391653
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.11,
+     "dy": 0,
+     "geo": {
+      "ok": true,
+      "gap": 0.08197744275721601,
+      "side": 0.17325077263916527
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.11,
+     "dy": 0.01,
+     "geo": {
+      "ok": true,
+      "gap": 0.09193409446206736,
+      "side": 0.18325077263916528
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.11,
+     "dy": 0.02,
+     "geo": {
+      "ok": true,
+      "gap": 0.10189074616691873,
+      "side": 0.19325077263916526
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.12,
+     "dy": -0.02,
+     "geo": {
+      "ok": true,
+      "gap": 0.06113403890762489,
+      "side": 0.15325077263916528
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.12,
+     "dy": -0.01,
+     "geo": {
+      "ok": true,
+      "gap": 0.07109069061247623,
+      "side": 0.1632507726391653
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.12,
+     "dy": 0,
+     "geo": {
+      "ok": true,
+      "gap": 0.08104734231732758,
+      "side": 0.17325077263916527
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.12,
+     "dy": 0.01,
+     "geo": {
+      "ok": true,
+      "gap": 0.09100399402217893,
+      "side": 0.18325077263916528
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.12,
+     "dy": 0.02,
+     "geo": {
+      "ok": true,
+      "gap": 0.10096064572703027,
+      "side": 0.19325077263916526
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.13,
+     "dy": -0.02,
+     "geo": {
+      "ok": true,
+      "gap": 0.060203938467736424,
+      "side": 0.15325077263916528
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.13,
+     "dy": -0.01,
+     "geo": {
+      "ok": true,
+      "gap": 0.07016059017258779,
+      "side": 0.16325077263916526
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.13,
+     "dy": 0,
+     "geo": {
+      "ok": true,
+      "gap": 0.08011724187743913,
+      "side": 0.17325077263916527
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.13,
+     "dy": 0.01,
+     "geo": {
+      "ok": true,
+      "gap": 0.09007389358229048,
+      "side": 0.18325077263916525
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.13,
+     "dy": 0.02,
+     "geo": {
+      "ok": true,
+      "gap": 0.10003054528714182,
+      "side": 0.19325077263916526
+     },
+     "verdict": "FEASIBLE"
+    }
+   ],
+   "cells": [
+    {
+     "dx": 0.07,
+     "dy": -0.02,
+     "candidate": true
+    },
+    {
+     "dx": 0.07,
+     "dy": -0.01,
+     "candidate": true
+    },
+    {
+     "dx": 0.07,
+     "dy": 0,
+     "candidate": true
+    },
+    {
+     "dx": 0.07,
+     "dy": 0.01,
+     "candidate": true
+    },
+    {
+     "dx": 0.08,
+     "dy": -0.02,
+     "candidate": true
+    },
+    {
+     "dx": 0.08,
+     "dy": -0.01,
+     "candidate": true
+    },
+    {
+     "dx": 0.08,
+     "dy": 0,
+     "candidate": true
+    },
+    {
+     "dx": 0.08,
+     "dy": 0.01,
+     "candidate": true
+    },
+    {
+     "dx": 0.09,
+     "dy": -0.02,
+     "candidate": true
+    },
+    {
+     "dx": 0.09,
+     "dy": -0.01,
+     "candidate": true
+    },
+    {
+     "dx": 0.09,
+     "dy": 0,
+     "candidate": true
+    },
+    {
+     "dx": 0.09,
+     "dy": 0.01,
+     "candidate": true
+    },
+    {
+     "dx": 0.1,
+     "dy": -0.02,
+     "candidate": true
+    },
+    {
+     "dx": 0.1,
+     "dy": -0.01,
+     "candidate": true
+    },
+    {
+     "dx": 0.1,
+     "dy": 0,
+     "candidate": true
+    },
+    {
+     "dx": 0.1,
+     "dy": 0.01,
+     "candidate": true
+    },
+    {
+     "dx": 0.11,
+     "dy": -0.02,
+     "candidate": true
+    },
+    {
+     "dx": 0.11,
+     "dy": -0.01,
+     "candidate": true
+    },
+    {
+     "dx": 0.11,
+     "dy": 0,
+     "candidate": true
+    },
+    {
+     "dx": 0.11,
+     "dy": 0.01,
+     "candidate": true
+    },
+    {
+     "dx": 0.12,
+     "dy": -0.02,
+     "candidate": true
+    },
+    {
+     "dx": 0.12,
+     "dy": -0.01,
+     "candidate": true
+    },
+    {
+     "dx": 0.12,
+     "dy": 0,
+     "candidate": true
+    },
+    {
+     "dx": 0.12,
+     "dy": 0.01,
+     "candidate": true
+    }
+   ],
+   "counts": {
+    "FEASIBLE": 35
+   },
+   "candidateCells": 24,
+   "nCells": 24,
+   "nominal": {
+    "dxdy": [
+     0.1,
+     0
+    ],
+    "verdict": "FEASIBLE",
+    "path": {
+     "ok": true,
+     "verdicts": [
+      "FEASIBLE",
+      "FEASIBLE",
+      "FEASIBLE",
+      "FEASIBLE",
+      "FEASIBLE",
+      "FEASIBLE",
+      "FEASIBLE",
+      "FEASIBLE",
+      "FEASIBLE",
+      "FEASIBLE",
+      "FEASIBLE"
+     ]
+    }
+   }
+  },
+  "lateral": {
+   "nodes": [
+    {
+     "dx": -0.02,
+     "dy": 0.05,
+     "geo": {
+      "ok": true,
+      "gap": 0.1446471092188441,
+      "side": 0.22325077263916526
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.06,
+     "geo": {
+      "ok": true,
+      "gap": 0.15453287081029882,
+      "side": 0.23325077263916527
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.07,
+     "geo": {
+      "ok": true,
+      "gap": 0.1644186324017535,
+      "side": 0.24325077263916525
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.08,
+     "geo": {
+      "ok": true,
+      "gap": 0.1743043939932082,
+      "side": 0.25325077263916523
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.09,
+     "geo": {
+      "ok": true,
+      "gap": 0.18419015558466295,
+      "side": 0.2632507726391652
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.1,
+     "geo": {
+      "ok": true,
+      "gap": 0.19407591717611763,
+      "side": 0.2732507726391652
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.11,
+     "geo": {
+      "ok": true,
+      "gap": 0.20396167876757237,
+      "side": 0.2832507726391653
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.05,
+     "geo": {
+      "ok": true,
+      "gap": 0.14314048262579465,
+      "side": 0.22325077263916526
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.06,
+     "geo": {
+      "ok": true,
+      "gap": 0.15303769395718203,
+      "side": 0.23325077263916524
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.07,
+     "geo": {
+      "ok": true,
+      "gap": 0.16294745710540803,
+      "side": 0.24325077263916528
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.08,
+     "geo": {
+      "ok": true,
+      "gap": 0.17286761345754004,
+      "side": 0.2532507726391653
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.09,
+     "geo": {
+      "ok": true,
+      "gap": 0.1827964709393816,
+      "side": 0.2632507726391653
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.1,
+     "geo": {
+      "ok": true,
+      "gap": 0.19273268480794545,
+      "side": 0.2732507726391653
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.11,
+     "geo": {
+      "ok": true,
+      "gap": 0.2026751731186273,
+      "side": 0.28325077263916526
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": 0,
+     "dy": 0.05,
+     "geo": {
+      "ok": true,
+      "gap": 0.14199180612024564,
+      "side": 0.2232507726391653
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0,
+     "dy": 0.06,
+     "geo": {
+      "ok": true,
+      "gap": 0.151948457825097,
+      "side": 0.23325077263916527
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0,
+     "dy": 0.07,
+     "geo": {
+      "ok": true,
+      "gap": 0.16190510952994835,
+      "side": 0.24325077263916528
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0,
+     "dy": 0.08,
+     "geo": {
+      "ok": true,
+      "gap": 0.17186176123479968,
+      "side": 0.25325077263916523
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0,
+     "dy": 0.09,
+     "geo": {
+      "ok": true,
+      "gap": 0.18181841293965104,
+      "side": 0.26325077263916524
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0,
+     "dy": 0.1,
+     "geo": {
+      "ok": true,
+      "gap": 0.19177506464450242,
+      "side": 0.27325077263916525
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0,
+     "dy": 0.11,
+     "geo": {
+      "ok": true,
+      "gap": 0.20173171634935372,
+      "side": 0.2832507726391652
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.05,
+     "geo": {
+      "ok": true,
+      "gap": 0.1410617056803572,
+      "side": 0.22325077263916526
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.06,
+     "geo": {
+      "ok": true,
+      "gap": 0.15101835738520855,
+      "side": 0.23325077263916527
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.07,
+     "geo": {
+      "ok": true,
+      "gap": 0.1609750090900599,
+      "side": 0.24325077263916525
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.08,
+     "geo": {
+      "ok": true,
+      "gap": 0.17093166079491126,
+      "side": 0.2532507726391653
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.09,
+     "geo": {
+      "ok": true,
+      "gap": 0.1808883124997626,
+      "side": 0.26325077263916524
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.1,
+     "geo": {
+      "ok": true,
+      "gap": 0.19084496420461397,
+      "side": 0.2732507726391653
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.11,
+     "geo": {
+      "ok": true,
+      "gap": 0.2008016159094653,
+      "side": 0.28325077263916526
+     },
+     "verdict": "UNDECIDED"
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.05,
+     "geo": {
+      "ok": true,
+      "gap": 0.14013160524046875,
+      "side": 0.22325077263916526
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.06,
+     "geo": {
+      "ok": true,
+      "gap": 0.1500882569453201,
+      "side": 0.2332507726391653
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.07,
+     "geo": {
+      "ok": true,
+      "gap": 0.16004490865017146,
+      "side": 0.24325077263916528
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.08,
+     "geo": {
+      "ok": true,
+      "gap": 0.1700015603550228,
+      "side": 0.2532507726391653
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.09,
+     "geo": {
+      "ok": true,
+      "gap": 0.17995821205987414,
+      "side": 0.2632507726391653
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.1,
+     "geo": {
+      "ok": true,
+      "gap": 0.18991486376472552,
+      "side": 0.27325077263916525
+     },
+     "verdict": "FEASIBLE"
+    },
+    {
+     "dx": 0.02,
+     "dy": 0.11,
+     "geo": {
+      "ok": true,
+      "gap": 0.19987151546957688,
+      "side": 0.28325077263916526
+     },
+     "verdict": "UNDECIDED"
+    }
+   ],
+   "cells": [
+    {
+     "dx": -0.02,
+     "dy": 0.05,
+     "candidate": true
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.06,
+     "candidate": true
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.07,
+     "candidate": true
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.08,
+     "candidate": true
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.09,
+     "candidate": true
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.1,
+     "candidate": false
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.05,
+     "candidate": true
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.06,
+     "candidate": true
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.07,
+     "candidate": true
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.08,
+     "candidate": true
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.09,
+     "candidate": true
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.1,
+     "candidate": false
+    },
+    {
+     "dx": 0,
+     "dy": 0.05,
+     "candidate": true
+    },
+    {
+     "dx": 0,
+     "dy": 0.06,
+     "candidate": true
+    },
+    {
+     "dx": 0,
+     "dy": 0.07,
+     "candidate": true
+    },
+    {
+     "dx": 0,
+     "dy": 0.08,
+     "candidate": true
+    },
+    {
+     "dx": 0,
+     "dy": 0.09,
+     "candidate": true
+    },
+    {
+     "dx": 0,
+     "dy": 0.1,
+     "candidate": false
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.05,
+     "candidate": true
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.06,
+     "candidate": true
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.07,
+     "candidate": true
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.08,
+     "candidate": true
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.09,
+     "candidate": true
+    },
+    {
+     "dx": 0.01,
+     "dy": 0.1,
+     "candidate": false
+    }
+   ],
+   "counts": {
+    "FEASIBLE": 30,
+    "UNDECIDED": 5
+   },
+   "candidateCells": 20,
+   "nCells": 24,
+   "nominal": {
+    "dxdy": [
+     0,
+     0.08
+    ],
+    "verdict": "FEASIBLE",
+    "path": {
+     "ok": true,
+     "verdicts": [
+      "FEASIBLE",
+      "FEASIBLE",
+      "FEASIBLE",
+      "FEASIBLE",
+      "FEASIBLE",
+      "FEASIBLE",
+      "FEASIBLE",
+      "FEASIBLE",
+      "FEASIBLE",
+      "FEASIBLE",
+      "FEASIBLE"
+     ]
+    }
+   }
+  }
+ },
+ "summary": "forward: 35/35 nodes feasible, 24/24 candidate cells, nominal FEASIBLE, nominal path certified | lateral: 30/35 nodes feasible, 20/24 candidate cells, nominal FEASIBLE, nominal path certified"
+}
