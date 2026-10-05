@@ -116,3 +116,11 @@ Same items and pass rules as the unload-fix V3 (`../unload_fix/UNLOAD_FIX_PREREG
 - New runner `tools/touchrest_char.mjs`, manifest generator and evaluator.
 - Suite 58 / 58, incl. R11.a–b.
 - KV0 identical.
+
+## Addendum A (before any validation or regression result was read): the §4 regression tooling
+
+- **Evaluator:** `tools/touchrest_regress_eval.mjs` applies the V3 items exactly as `../unload_fix/UNLOAD_FIX_PREREG.md` §4 (rules copied from the qualification-v2 evaluator: Q2a → V3.8, Q6c → V3.9, Q7 → V3.10).
+- **Frozen sub-evaluators:** G2 / G3 use `qual_eval.mjs`; the twist battery uses `twist_policy_eval.mjs` + `close_eval.mjs --policy` (C1 / C7 superseded by C1′ / C7′).
+- **Dry check:** run on the qualification-v2 evidence (the adopted configuration without the flags), the evaluator reproduces that recorded verdict: every item PASS.
+- **Battery:** `scripts/regress_battery.sh`, run from a scratch copy of the committed tree.
+- No criterion was added or changed.
