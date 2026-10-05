@@ -1,0 +1,16 @@
+18:48:15 start (commit 99c71e9767330e8f4fa9b259998a15f8eef3d6b0, worktree status:        1 changed)
+18:48:26 V3.1 KV0 IDENTICAL
+18:48:56 V3.1 suite: component regressions: 58/58 pass
+18:48:56 V3.1 guard: guard_v1: OK — V1 runtime + evidence identical to checkpoint/physchar-v1-final-research
+18:48:56 component jobs: 225
+18:54:46 component jobs done
+18:54:47 V3.3 G0: G0 RESULT: FAIL — 1 failing check(s)
+18:59:25 V3.4 G1: G1 RESULT: FAIL — 2 failing gate check(s)   (277 s)  → review_artifacts/physical_character_v2/g1/json/g1_results.json
+19:04:10 V3.5 G2 done
+19:09:50 V3.6 G3 done
+19:13:41 V3.6 J2a done
+19:14:32 V3 G1 browser: BROWSER = NODE 10/10
+19:15:02 V3 G2 browser: BROWSER = NODE 6/6
+19:15:32 V3 G3 browser: BROWSER = NODE 4/4
+19:15:32 REGRESSION: G0–G3 REGRESSION (configuration C): FAIL
+19:15:32 ALL DONE

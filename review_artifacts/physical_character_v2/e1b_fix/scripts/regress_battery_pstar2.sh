@@ -1,5 +1,6 @@
 #!/bin/zsh
 # E1b-FIX regression (e1b_fix/E1B_FIX_VALIDATION_PREREG.md §3 set G): configuration PSTAR2 = PSTAR + footYaw (nominal) + lcPutDown; the same items, rules and frozen
+# Erratum E1bF-e3 (fixed after the run): a double sed rename wrote *_vP22.json, so the copy to the frozen evaluator's *_v4 names missed three files.
 # evaluators as the PSTAR regression (preswing/scripts/regress_battery_pstar.sh, V15). Runs from a clean copy of the committed tree.
 W="/Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v2"; S=/private/tmp/claude-501/-Users-zainrahman/8af3fa3f-f134-4178-b7ae-7855027dda6e/scratchpad
 C=$S/vP2; T=$C/tree; log() { echo "$(date +%H:%M:%S) $*" >> $C/queue.log; }
@@ -31,7 +32,7 @@ R=$T/review_artifacts/physical_character_v2
 ( export V2_KNEE_MODEL=v2k V2_ANKLE_NEUTRAL_K=0.13 V2_KNEE_CRIT=v2; node tools/g1_run.js --no-dx --no-v1 > $C/q3/g1.log 2>&1 ); cp $R/g1/json/g1_results.json $C/q3/g1_results_vP2.json; log "V3.4 G1: $(grep 'G1 RESULT' $C/q3/g1.log | tail -1)"
 ( export V2_KNEE_MODEL=v2k V2_ANKLE_NEUTRAL_K=0.13 V2_XSTAND=$ST; node tools/g2_run.js > $C/q3/g2.log 2>&1 ); cp $R/g2/json/g2_results_xstand.json $C/q3/g2_results_vP2.json; log "V3.5 G2 done"
 ( export V2_KNEE_MODEL=v2k V2_ANKLE_NEUTRAL_K=0.13; node tools/g3_run.js --stand=$ST --tag=vP2 > $C/q3/g3.log 2>&1 ); cp $R/g3/json/g3_results_vP2.json $C/q3/g3_results_vP2.json; log "V3.6 G3 done"
-( export V2_KNEE_MODEL=v2k V2_ANKLE_NEUTRAL_K=0.13; node tools/g3_mirror_v3.mjs --stand=$ST --out=$C/q3/g3_mirror_vP22.json > $C/q3/g3_mirror.log 2>&1 ); log "V3.6 J2a done"
+( export V2_KNEE_MODEL=v2k V2_ANKLE_NEUTRAL_K=0.13; node tools/g3_mirror_v3.mjs --stand=$ST --out=$C/q3/g3_mirror_vP2.json > $C/q3/g3_mirror.log 2>&1 ); log "V3.6 J2a done"
 Q="$W/review_artifacts/physical_character_v2/e1b_fix/evidence_regression"; mkdir -p "$Q"; cp $C/q3/g1_results_vP2.json $C/q3/g2_results_vP2.json $C/q3/g3_results_vP2.json "$Q/"
 STQ=$(python3 -c "import urllib.parse;print(urllib.parse.quote('$ST'))"); REL=../../e1b_fix/evidence_regression
 cd "$W/sandbox/visual/physchar2"
@@ -39,8 +40,8 @@ node tools/g1_browser.mjs --qs="knee=v2k&ankleK=0.13&results=$REL/g1_results_vP2
 node tools/g2_browser.mjs --qs="knee=v2k&ankleK=0.13&stand=$STQ&results=$REL/g2_results_vP2.json" --out=$C/q5/g2_browser.json > $C/q5/g2_browser.log 2>&1; log "V3 G2 browser: $(tail -1 $C/q5/g2_browser.log)"
 node tools/g3_browser.mjs --qs="knee=v2k&ankleK=0.13&stand=$STQ&results=$REL/g3_results_vP2.json" --out=$C/q5/g3_browser.json > $C/q5/g3_browser.log 2>&1; log "V3 G3 browser: $(tail -1 $C/q5/g3_browser.log)"
 RA="$W/review_artifacts/physical_character_v2"
-node tools/qual_eval.mjs --g2=$C/q3/g2_results_vP2.json --g2browser=$C/q5/g2_browser.json --g3=$C/q3/g3_results_vP2.json --g3browser=$C/q5/g3_browser.json --mirror=$C/q3/g3_mirror_vP22.json --margins=$C/q3/k_margins.json --ra="$RA" --out=$C/q3/qual_eval_vP22.json > $C/q3/qual_eval_vP2.log 2>&1
-node tools/twist_policy_eval.mjs $C/policy $C/q3/twist_eval_vP22.json > $C/q3/twist_eval_vP2.log 2>&1; node tools/close_eval.mjs --policy=$C/policy --out=$C/q3/close_eval_policy_vP22.json > $C/q3/close_eval_policy_vP2.log 2>&1
+node tools/qual_eval.mjs --g2=$C/q3/g2_results_vP2.json --g2browser=$C/q5/g2_browser.json --g3=$C/q3/g3_results_vP2.json --g3browser=$C/q5/g3_browser.json --mirror=$C/q3/g3_mirror_vP2.json --margins=$C/q3/k_margins.json --ra="$RA" --out=$C/q3/qual_eval_vP2.json > $C/q3/qual_eval_vP2.log 2>&1
+node tools/twist_policy_eval.mjs $C/policy $C/q3/twist_eval_vP2.json > $C/q3/twist_eval_vP2.log 2>&1; node tools/close_eval.mjs --policy=$C/policy --out=$C/q3/close_eval_policy_vP2.json > $C/q3/close_eval_policy_vP2.log 2>&1
 # the frozen evaluator reads the *_v4 file names (7b0ecf6): copied inside this battery directory only
 for f in g1_results qual_eval twist_eval close_eval_policy; do cp $C/q3/${f}_vP2.json $C/q3/${f}_v4.json; done
 node tools/touchrest_regress_eval.mjs $C "$RA/knee_correction/evidence/qual" "$RA/unload_fix/evidence" $C/regress_eval.json > $C/regress_eval.log 2>&1; log "REGRESSION: $(tail -1 $C/regress_eval.log)"

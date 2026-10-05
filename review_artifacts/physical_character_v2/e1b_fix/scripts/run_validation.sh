@@ -1,6 +1,7 @@
 #!/bin/zsh
 # E1b-FIX VALIDATION (e1b_fix/E1B_FIX_VALIDATION_PREREG.md): configuration PSTAR2 — the official E1b rerun (set E, 28 runs), the E1a rerun (set A, 10 runs),
 # the extended battery (set X, 133 runs), the browser = Node set (W, 3 runs). The G0–G3 regression is scripts/regress_battery_pstar2.sh.
+# Erratum E1bF-e2 (fixed after the validation): the W viewer-relative paths need four ../ (the 8172 server root is the worktree).
 # Runs from a clean copy of the COMMITTED tree (git archive HEAD); refuses to start if the worktree has uncommitted changes under sandbox/visual/physchar2.
 W="/Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v2"; S=/private/tmp/claude-501/-Users-zainrahman/8af3fa3f-f134-4178-b7ae-7855027dda6e/scratchpad
 C=$S/e1bfix/val; T=$C/tree; P=$T/sandbox/visual/physchar2; EV="$W/review_artifacts/physical_character_v2/e1b_fix/evidence"; log() { echo "$(date +%H:%M:%S) $*" | tee -a $C/queue.log; }
@@ -32,7 +33,7 @@ log "jobs: $n"; ls $C/jobs/*.sh | xargs -P 8 -n 1 zsh; log "runs done"
 # set W: browser = Node (Node side here; browser side against the review server on 8172, which serves the worktree = the committed tree)
 (cd $P && node tools/preswing_char.mjs --manifest="$W/review_artifacts/physical_character_v2/e1b_fix/manifest_w.json" --outdir=$C/Wn > $C/Wn/char.log 2>&1); log "W Node done"
 mkdir -p "$EV/w_node"; cp $C/Wn/*.json "$EV/w_node/"
-(cd "$W/sandbox/visual/physchar2" && node tools/unload_browser.mjs --ids=W_P15_V2-REF_L,W_PT5_V2-REF_R,W_TUn15_V2-REF_L --results=../../../review_artifacts/physical_character_v2/e1b_fix/evidence/w_node --manifest=../../../review_artifacts/physical_character_v2/e1b_fix/manifest_w.json --out=$C/Wn/browser.json > $C/Wn/browser.log 2>&1); log "W browser: $(tail -1 $C/Wn/browser.log)"
+(cd "$W/sandbox/visual/physchar2" && node tools/unload_browser.mjs --ids=W_P15_V2-REF_L,W_PT5_V2-REF_R,W_TUn15_V2-REF_L --results=../../../../review_artifacts/physical_character_v2/e1b_fix/evidence/w_node --manifest=../../../../review_artifacts/physical_character_v2/e1b_fix/manifest_w.json --out=$C/Wn/browser.json > $C/Wn/browser.log 2>&1); log "W browser: $(tail -1 $C/Wn/browser.log)"
 # evaluation (frozen tools in the clean copy)
 (cd $P && node tools/e1b_eval.mjs --dir=$C/E --config=PSTAR2 --out=$C/e1b_eval.json > $C/e1b_eval.log 2>&1); log "E: $(tail -1 $C/e1b_eval.log)"
 (cd $P && node tools/e1a_eval.mjs --dir=$C/A --config=PSTAR2 --out=$C/e1a_eval.json > $C/e1a_eval.log 2>&1); log "A: $(tail -1 $C/e1a_eval.log)"

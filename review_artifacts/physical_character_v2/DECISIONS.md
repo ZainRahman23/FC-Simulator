@@ -1799,3 +1799,42 @@ Not pushed.
 **Status:** stopped for your decisions (active ankle-yaw path; abort put-down). G4 not started.
 
 Not pushed.
+
+## 2026-10-05: Close E1b, reuse-first (`sources/2026-10-05_user_instruction_close_e1b_prepare_e2_reuse_first.md`)
+
+### E1-5: E1b fix, configuration PSTAR2 → VALIDATION FAIL; E1b still fails; stopped for decision (`e1b_fix/E1B_FIX_RESULTS.md`)
+
+**Research (reuse-first):** `e1b_fix/research/` (yaw path review, swing / put-down study of BLF / IHMC / PyPnC / Cheetah / OCS2) and `e2/research/E2_REUSE_STUDY.md`.
+
+**Design** (`e1b_fix/E1B_FIX_DESIGN.md`, a89c307; default off; KV0 identical):
+- **footYaw:** an actuator on the passive-only foot ab/adduction axis.
+  - Capacity 0.64 × the approved subtalar capacity, i.e. 0.320 / 0.288 N·m/kg.
+  - Shared budget with inversion, inversion first.
+  - Driven by the existing ankle rows (D = ankleD 2.0).
+- **lcPutDown:** a BLF quintic from the current reference state to the contact anchor.
+  - Duration 0.302 s, from the 4 Hz servo bandwidth.
+  - Physics decides touchdown.
+
+**Prereg** 99c71e9. **Validation:** E (official E1b), A (E1a), X (133 extended runs), W, G.
+
+**Result:**
+- **E1b-17 fixed:** 56 / 56 yaw runs, +3 s values 0.13–0.95°.
+  - It works through active damping: peak about 1.1 N·m, capacity non-binding, sensitivity identical.
+- **The put-down descent is smooth:** 0.9–2.2 N·m.
+- **But 13 / 23 P15 aborts now fall.** Touchdown comes at +0.3 s, support at +0.5 s, and the DCM escapes the bilateral hull. The causal diagnostic points to the put-down alone.
+- **A second, pre-existing E1b-7 source:** post-abort load acceptance under a large DCM error, about 10 N·m per tick (PSTAR V2-198-92: 12.69, previously masked).
+  - This corrects E1-4's single-cause E1b-7 diagnosis.
+- **Passing:** A, X-U, X-P5, X-Y, X-DET, W 3 / 3, G (V3.1–V3.10), each after the tooling errata where marked.
+
+**Errata (tooling, mechanical, originals kept):**
+- E1bF-e1: the YAWN scheduled impulse was missing.
+- E1bF-e2: the W relative path.
+- E1bF-e3: the regression file rename.
+
+None changes set E.
+
+**Decision options:** P1 capture-timed put-down / P2 earlier acceptance intent / P3 abort acceptance profile / P4 recovery step / P5 criterion decision; or partial adoption of footYaw alone. Multiple materially different architectures remain with no evidence-based winner (stop condition).
+
+PSTAR2 is not adopted. No E2 implementation, preregistration or run.
+
+Not pushed.

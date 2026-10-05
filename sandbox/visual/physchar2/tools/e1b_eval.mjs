@@ -48,7 +48,7 @@ export function judge(r, cfgName = CONFIG, opts = {}) { const CONFIG = cfgName; 
     add("E1a-7", badA.length === 0 && badC.length === 0, `applied Δτ max ${f2(wA.x.dTau)} N·m (${wA.x.dTauWho} at ${wA.x.t.toFixed(3)} s${exc.has(wA.i) ? ", contact-onset window" : ""}); outside onset windows max ${f2(wN.x.dTau)} N·m (${wN.x.dTauWho} at ${wN.x.t.toFixed(3)} s); commanded Δτ0 max ${f2(wC.x.dTau0)} N·m (${wC.x.dTau0Who} at ${wC.x.t.toFixed(3)} s); violations ${badA.length} / ${badC.length}`); }
   // E1a-8 no unexplained energy creation
   { const d = R.map(x => x.E.dClos), pos = d.reduce((a, x) => a + Math.max(0, x), 0), L = r.summary.ledger, jx = Math.hypot(...L.Jext) + Math.hypot(...L.Hext);
-    const sched = { PF: 5, PB: 5, PL: 5, PR: 5, P15: 15, YAW: 0.5, none: 0 }[P];
+    const sched = { PF: 5, PB: 5, PL: 5, PR: 5, P15: 15, YAW: 0.5, YAWN: 0.5, none: 0 }[P];   // YAWN added AFTER the e1b_fix validation (erratum E1bF-e1: missing → NaN comparison; set E unaffected)
     add("E1a-8", mx(d) <= 0.05 && pos <= 0.5 && L.authorityWrites === 0 && Math.abs(jx - sched) <= 1e-6 * Math.max(1, sched), `closure increment max ${mx(d).toExponential(2)} J/tick; Σ positive ${f2(pos, 3)} J; authority writes ${L.authorityWrites}; external impulse ${jx}`); }
   // E1a-9 actuator capacities respected
   { const oc = r.actAxes.reduce((a, x) => a + x.overCap, 0), cnt = {}; hov.forEach(x => x.sat.forEach(k => { cnt[k] = (cnt[k] || 0) + 1; })); const worst = Object.entries(cnt).sort((a, b) => b[1] - a[1])[0];

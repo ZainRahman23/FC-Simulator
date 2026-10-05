@@ -1,0 +1,77 @@
+{
+ "check": "headless Chrome (swiftshader) driven over CDP, viewer/g1.html?check=1&keys=<scenario> — one fresh browser per curated scenario, V2-REF, gate baseline, full runs",
+ "allPass": true,
+ "rows": [
+  {
+   "key": "upright",
+   "browser": "c3316738",
+   "pass": true,
+   "node": "c3316738",
+   "seconds": 6
+  },
+  {
+   "key": "leanF",
+   "browser": "4e16b54a",
+   "pass": true,
+   "node": "4e16b54a",
+   "seconds": 5
+  },
+  {
+   "key": "leanL",
+   "browser": "7cf326fb",
+   "pass": true,
+   "node": "7cf326fb",
+   "seconds": 5
+  },
+  {
+   "key": "singleLeg",
+   "browser": "b9159e28",
+   "pass": true,
+   "node": "b9159e28",
+   "seconds": 5
+  },
+  {
+   "key": "drop1m",
+   "browser": "492b326f",
+   "pass": true,
+   "node": "492b326f",
+   "seconds": 5
+  },
+  {
+   "key": "sideFirst",
+   "browser": "cb3d0d14",
+   "pass": true,
+   "node": "cb3d0d14",
+   "seconds": 5
+  },
+  {
+   "key": "awkward",
+   "browser": "ac12adca",
+   "pass": true,
+   "node": "ac12adca",
+   "seconds": 5
+  },
+  {
+   "key": "flatSupine",
+   "browser": "00d782d4",
+   "pass": true,
+   "node": "00d782d4",
+   "seconds": 5
+  },
+  {
+   "key": "impact15",
+   "browser": "cb16191c",
+   "pass": true,
+   "node": "cb16191c",
+   "seconds": 5
+  },
+  {
+   "key": "isoSelfCol",
+   "browser": "739e16f1",
+   "pass": true,
+   "node": "739e16f1",
+   "seconds": 7
+  }
+ ],
+ "qs": "knee=v2k&ankleK=0.13&results=../../e1b_fix/evidence_regression/g1_results_vP2.json"
+}
