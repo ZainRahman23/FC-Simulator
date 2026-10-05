@@ -116,3 +116,17 @@ The current P15 run would score "fixed-foothold infeasible because of support la
 - No passive ankle tuning.
 - P15 is not changed.
 - No E2 implementation.
+
+## Correction (2026-10-05, after the T-A validation; `../e1b_ta/E1B_TA_RESULTS.md` §2–§3)
+
+The statement that the original foothold can recover **all eight bodies** with timely support was **too strong**. The offline LIPM envelope:
+- started from the push end, while the abort fires 4–29 ms before the push ends;
+- assumed the 10 % floor removed for the whole recovery;
+- had no friction or foot-unloading limit.
+
+T-A's online model, from the measured state after the push, gives **"step required"** for V2-165-62. Physically, catching that body needs full weight transfer, and its momentum then lifts or slides the old stance foot 6.8–7.9 mm (E1b-18's slip limit is 5 mm).
+
+**Corrected:**
+- All 8 bodies are caught with the landed foot on its original foothold.
+- 7 of 8 keep both feet in place.
+- For the lightest body, the 15 N·s push is at or beyond the feet-in-place envelope, and a capture-aware step is the appropriate recovery.

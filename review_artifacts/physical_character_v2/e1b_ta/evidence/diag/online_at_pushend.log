@@ -1,0 +1,19 @@
+node:fs:561
+  return binding.open(
+                 ^
+
+Error: ENOENT: no such file or directory, open 'cap_V2-165-62_L_pd.json.gz'
+    at Object.openSync (node:fs:561:18)
+    at Object.readFileSync (node:fs:445:35)
+    at rd (file:///private/tmp/claude-501/-Users-zainrahman/8af3fa3f-f134-4178-b7ae-7855027dda6e/scratchpad/p15cap/online_at_pushend.mjs:3:49)
+    at file:///private/tmp/claude-501/-Users-zainrahman/8af3fa3f-f134-4178-b7ae-7855027dda6e/scratchpad/p15cap/online_at_pushend.mjs:5:96
+    at ModuleJob.run (node:internal/modules/esm/module_job:345:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:651:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'cap_V2-165-62_L_pd.json.gz'
+}
+
+Node.js v22.19.0

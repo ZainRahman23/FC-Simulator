@@ -1881,3 +1881,38 @@ Not pushed.
 **Correction:** an interim message said 11 / 16 put-down runs fell; the count is 10 / 16.
 
 Not pushed.
+
+## 2026-10-05: T-A capture-timed put-down (`sources/2026-10-05_user_decision_ta_capture_timed_putdown.md`)
+
+### TA-1: T-A (configuration PSTAR3) → VALIDATION FAIL for substantive reasons; E1b not closed; stopped (`e1b_ta/E1B_TA_RESULTS.md`)
+
+**Implemented** (7369b1f; `abortCapture`, default off; KV0 identical):
+- an online capture model (a port of the validated P15 model, 32 / 32);
+- the smoothest (descent, ramp) predicted to recover, equal-fraction split, with a 0.04 s margin (descent 0.20–0.302 s, ramp 0.10–0.225 s);
+- speed-up-only re-plans before contact; the longest feasible ramp after measured contact;
+- the abort plan's intent, still needing sustained measured contact;
+- the quiet-standing floor removed for the abort transition;
+- verdict "step required" when no feasible pair exists;
+- preregistered before any official run (10 mm smoke disclosed).
+
+**Result:**
+- **All 23 P15 aborts are caught with the original foothold; 0 fall.**
+- E1b-7 passes in all 28 set-E runs. TA-1 authority (no load before sustained measured contact) PASS. A, X-U / P5 / Y / DET, W 3 / 3 and G0–G3 PASS.
+- **FAIL:**
+  - E1b-18 on **V2-165-62** (L / R, 180 / 480 Hz): stance foot 6.8–7.9 mm. Its own capture model said "step required" after the push (the abort fires 4–29 ms before the push ends). Catching it needs full weight transfer, and its momentum lifts or slides the old stance foot.
+  - E1b-7 V2-long-legs 10.23 / 10.21 N·m (forced 0.10 s ramp after a "step required" flag).
+  - V2-REF 480 Hz, one tick over the rate-scaled 5 N·m.
+- **P15 classes:** recovered without changing foothold 11 / 23, step required 12 / 23 (all physically caught), stepping 0, fell 0.
+
+**Correction:** the P15 study's "original foothold recovers all eight bodies" was too strong. The LIPM had no friction / unloading limit, started at the push end, and assumed a permanent floor removal. Correction notes were added to `p15_capture/`.
+
+**Erratum E1bTA-e1:** `e1bta_checks.mjs` mid-line comment (tool crash), fixed and re-run on the same runs.
+
+**Decision needed:**
+1. split P15 into in-place-recoverable vs "step required" (T-A verdict) → deferred to E2 stepping; or
+2. keep P15 unchanged → E1b waits for E2 capture-aware stepping; or
+3. classify the old-stance-foot lift-off as a support change.
+
+PSTAR3 not adopted. No E2 work.
+
+Not pushed.

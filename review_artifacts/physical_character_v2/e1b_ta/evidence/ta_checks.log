@@ -1,0 +1,11 @@
+file:///private/tmp/claude-501/-Users-zainrahman/8af3fa3f-f134-4178-b7ae-7855027dda6e/scratchpad/e1bta/val/tree/sandbox/visual/physchar2/tools/e1bta_checks.mjs:18
+  const C = caps[0].cap, n = C.n, ab = C.t0, R = r.rows, dt = 1 / r.cfg.hz, acc = R.find(x => x.t >= ab - 1e-9 && (x.st[n] === "LOAD_ACCEPT" || x.st[n] === "SUPPORT"));
+                    ^
+
+TypeError: Cannot read properties of undefined (reading 'cap')
+    at file:///private/tmp/claude-501/-Users-zainrahman/8af3fa3f-f134-4178-b7ae-7855027dda6e/scratchpad/e1bta/val/tree/sandbox/visual/physchar2/tools/e1bta_checks.mjs:18:21
+    at ModuleJob.run (node:internal/modules/esm/module_job:345:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:651:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v22.19.0

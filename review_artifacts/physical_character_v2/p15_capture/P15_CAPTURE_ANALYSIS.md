@@ -99,3 +99,17 @@ From the validated model. The capture time comes from the model, not from the ob
 - The model is lateral 1-D LIPM. It ignores AP motion, angular-momentum (hip-strategy) margin, ankle torque limits on the landed foot under load, and the acceptance-time torque ramp (§2.3 of `../e1b_fix/E1B_FIX_RESULTS.md`), which is a torque-level effect.
 - It predicts the 32 observed outcomes. Its counterfactual envelopes are predictions, not simulations.
 - The establishment comparison (IHMC / BLF / PyPnC / literature) is in `P15_EVIDENCE_COMPARISON.md`.
+
+## Correction (2026-10-05, after the T-A validation; `../e1b_ta/E1B_TA_RESULTS.md` §2–§3)
+
+The statement that the original foothold can recover **all eight bodies** with timely support was **too strong**. The offline LIPM envelope:
+- started from the push end, while the abort fires 4–29 ms before the push ends;
+- assumed the 10 % floor removed for the whole recovery;
+- had no friction or foot-unloading limit.
+
+T-A's online model, from the measured state after the push, gives **"step required"** for V2-165-62. Physically, catching that body needs full weight transfer, and its momentum then lifts or slides the old stance foot 6.8–7.9 mm (E1b-18's slip limit is 5 mm).
+
+**Corrected:**
+- All 8 bodies are caught with the landed foot on its original foothold.
+- 7 of 8 keep both feet in place.
+- For the lightest body, the 15 N·s push is at or beyond the feet-in-place envelope, and a capture-aware step is the appropriate recovery.
