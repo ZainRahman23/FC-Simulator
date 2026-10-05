@@ -1476,3 +1476,37 @@ Qualification tooling added (default-off; KV0 4 / 4, suite 52 / 52). **E1a not r
 - B: schedule an approved evidence-first review of the hip's combined end range.
 
 Not applied. **E1a not run; not pushed.**
+
+## 2026-10-05 — User decision: Option A + mandatory Option B; configuration adopted; E1a authorised (`sources/2026-10-05_user_decision_option_a_authorise_e1a.md`)
+
+### KC-4: the splayed-leg hip rest is a recorded, NON-E1a-GATING G1 exception (Option A); the combined hip end-range review is MANDATORY follow-up (Option B)
+**What is recorded:**
+- G1 row 1.S′ (V1-matched upright, 1.3d 2.09° at hip_L.rot vs 1.5°) and the perturbed-ensemble systematic failure (V1-matched upright 15 / 15) are **preserved as FAIL** (`knee_correction/QUALIFICATION_V2_RESULTS.md`, `evidence/qual/q3/`; the closure-stage map `knee_correction/evidence/audit/splay_map/`).
+- They are scoped as **not gating E1a only**.
+- This is **not**:
+  - an acceptance that the hip excursion is anatomically correct;
+  - a tolerance change;
+  - permission to tune around it.
+- **Frozen, unchanged:** the hip, the knee, the 1.5° tolerance and the deep-flexion parameters.
+
+**TD-16 (mandatory, Option B): evidence-first review of the hip's combined flexion–abduction–rotation end range** (limits and end-stop behaviour in deep flexion + abduction, which the splayed rest loads at about 45–72 N·m).
+- It must be resolved **before any stage claims to certify passive falls or collapse behaviour** (e.g. G4 falls / ragdoll).
+- Its outcome may touch approved anatomy, which needs the user's approval.
+
+### KC-5: adopted pre-E1a configuration (user acceptance)
+**Accepted as reported:**
+- the corrected-knee architecture (`v2k` central);
+- k = 0.13 as the passive ankle tissue value, for its evidentiary reason and not as a whole-body yaw fix;
+- reference twist semantics, with voluntary heading kept as an active command;
+- the support / contact lifecycle;
+- the versioned corrections KV2b′ / KV3b′ / KV4a.3′ / G1-5′, with the original FAILs preserved;
+- the corrected G3 row K (K′);
+- deep flexion kept as an uncertainty family, not outcome-selected.
+
+**Not masked:** the unresolved active single-support ankle / subtalar yaw-path limitation (E1b-17).
+
+**E1a authorised:**
+- the frozen `E1_PREREGISTRATION_V2.md` + `E1_PREREGISTRATION_V2_CONFIG.md`, on the qualified configuration;
+- no change to criteria, configuration, controller, anatomy, gains, thresholds, target, timing or lifecycle after any E1a outcome.
+
+**Not authorised:** E1b, E2 or anything later.
