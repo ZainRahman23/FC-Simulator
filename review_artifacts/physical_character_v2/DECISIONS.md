@@ -1510,3 +1510,29 @@ Not applied. **E1a not run; not pushed.**
 - no change to criteria, configuration, controller, anatomy, gains, thresholds, target, timing or lifecycle after any E1a outcome.
 
 **Not authorised:** E1b, E2 or anything later.
+
+### E1-1: E1a run on frozen c3b09d1 → E1a FAIL: the unload step never releases support (`e1a/E1A_RESULTS.md`)
+**Result:** all 10 runs (8 bodies, the mirrored run, the repeat) hit the preregistered unload time-out. No lift was ever commanded.
+- **FAIL:** E1a-1/2/3/5/6/9/12/13 (consequences of no lift), and therefore E1a-15.
+- **PASS:** E1a-4/7/8/10/11/14/16/17.
+
+**Cause:**
+- The lifecycle releases support only below 1 % BW.
+- At the preregistered 2.5 cm planned drop, the to-be-lifted foot at zero requested share keeps 1.02–1.25 % BW (flat 7–9 s) on every body.
+- That load is applied by the actuated support leg (passive torques ≈ 0).
+
+**Diagnostic factors** (pre-lift only, no lift, not E1a):
+- released at drops ≤ 2.0 cm;
+- released with the old knee, or with "current" twist semantics;
+- not released at k = 0.
+
+**Validation gap:** pre-E1a lifecycle tests at the planned drop used an external lift, which forced release.
+
+**Nothing tuned.** The rest of the E1a chain is untested, not failed.
+
+**Recommendation (not applied):**
+- isolate the support-path term producing the residual;
+- then an approved, versioned, intent-gated release (symmetric with acceptance), with preregistered validation;
+- then re-run E1a unchanged.
+
+E1b not authorised and not started. Not pushed.
