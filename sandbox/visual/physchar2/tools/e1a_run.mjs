@@ -26,6 +26,9 @@ import { G3Sim, g3Def } from "../gates/v2_g3.js"; import { ankleNeutralKPerDeg, 
 import { V, Q } from "../core/v2_math.js"; import { kneeEnvelopeV2K } from "../spec/v2_knee.js";
 const here = path.dirname(fileURLToPath(import.meta.url)), J = await loadJolt(path.join(here, "../vendor/jolt-physics.wasm-compat.js")), arg = (k, d) => (process.argv.find(a => a.startsWith(`--${k}=`)) || `--${k}=${d}`).split("=").slice(1).join("=");
 const HUMAN = arg("human", "V2-REF"), SIDE = arg("side", "L"), LIFT = +arg("lift", 0.005), OUT = arg("out", ""), D = 180 / Math.PI, AX = [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
+// CONFIGURATION VERSION (preswing/PRESWING_VALIDATION_PREREG.md §5; knee_correction/E1_PREREGISTRATION_V2_CONFIG_PSTAR.md): "V2" (default) = the configuration of the frozen
+// E1a run (E1_PREREGISTRATION_V2_CONFIG.md; must reproduce the official runs hash-identically); "PSTAR" = + the adopted pre-swing fixes. Protocol and criteria are unchanged.
+const CONFIG = arg("config", "V2"), PSTAR = { ffLockedAxis: true, touchRest: true, lcVff: "lin", lcTouch: { reseed: true } }; if (!["V2", "PSTAR"].includes(CONFIG)) throw new Error("config");
 if (process.env.V2_KNEE_MODEL !== "v2k" || process.env.V2_ANKLE_NEUTRAL_K !== "0.13") throw new Error("E1a configuration: V2_KNEE_MODEL=v2k and V2_ANKLE_NEUTRAL_K=0.13 are required");
 if (!["L", "R"].includes(SIDE)) throw new Error("side");
 const nL = SIDE === "L" ? 0 : 1, nS = 1 - nL;   // lifted / stance foot (0 = left, 1 = right)
@@ -39,8 +42,9 @@ const sig = (t) => { if (t <= 3) return [0.5, 0, 0]; if (t < 7) return seg(t, 3,
 const lamFn = (t) => lamFn.d(t)[0]; lamFn.d = (t) => { const [v, d1, d2] = sig(t); return nS === 1 ? [v, d1, d2] : [1 - v, -d1, -d2]; };
 const spec = generateSpec(VARIATION_SET.find(h => h.id === HUMAN)), base = g3Def(nS === 1 ? "U:R" : "U:L"), pd = { t0: 1, dur: 2, dz: 0.025 };
 const def = { ...base, key: `E1a:${SIDE}`, title: `E1a: ${SIDE} foot lifted ${(LIFT * 1000).toFixed(1)} mm (preregistered protocol)`, lam: lamFn, supervise: {}, holds: [], seconds: 34, push: null, torque: null };
-const s = new G3Sim(J, spec, def, { stand: { ikRefTwist: true, lifecycle: true, pelvisDrop: pd }, passiveOpts: { kneeModel: "v2k" } });
-const cfg = { kneeV2K: s.P.kneeIsV2K, ankleK: ankleNeutralKPerDeg(), lifecycle: !!s.ctrl.lc, ikRefTwist: !!s.ctrl.o.ikRefTwist, contactSupport: !!s.ctrl.o.contactSupport, holdUnloaded: !!s.ctrl.o.holdUnloaded, ikFeasible: !!s.ctrl.o.ikFeasible, hz: 1 / s.dt, pelvisDrop: s.ctrl.o.pelvisDrop === pd };
+const s = new G3Sim(J, spec, def, { stand: { ikRefTwist: true, lifecycle: true, pelvisDrop: pd, ...(CONFIG === "PSTAR" ? PSTAR : {}) }, passiveOpts: { kneeModel: "v2k" } });
+const cfg = { kneeV2K: s.P.kneeIsV2K, ankleK: ankleNeutralKPerDeg(), lifecycle: !!s.ctrl.lc, ikRefTwist: !!s.ctrl.o.ikRefTwist, contactSupport: !!s.ctrl.o.contactSupport, holdUnloaded: !!s.ctrl.o.holdUnloaded, ikFeasible: !!s.ctrl.o.ikFeasible, hz: 1 / s.dt, pelvisDrop: s.ctrl.o.pelvisDrop === pd, config: CONFIG, ffLockedAxis: !!s.ctrl.o.ffLockedAxis, touchRest: !!s.ctrl.o.touchRest, lcVff: s.ctrl.o.lcVff || null, reseed: !!(s.ctrl.o.lcTouch && s.ctrl.o.lcTouch.reseed) };
+if (CONFIG === "PSTAR" ? !(cfg.ffLockedAxis && cfg.touchRest && cfg.lcVff === "lin" && cfg.reseed) : (cfg.ffLockedAxis || cfg.touchRest || cfg.lcVff || cfg.reseed)) throw new Error("E1a configuration version mismatch " + JSON.stringify(cfg));
 if (!cfg.kneeV2K || cfg.ankleK !== 0.13 || !cfg.lifecycle || !cfg.ikRefTwist || !cfg.contactSupport || !cfg.holdUnloaded || !cfg.ikFeasible || Math.abs(s.dt - 1 / 240) > 1e-12 || !cfg.pelvisDrop) throw new Error("E1a configuration mismatch " + JSON.stringify(cfg));
 const B = spec.bodies, bi = (n) => B.findIndex(b => b.name === n), FT = ["foot_L", "foot_R"].map(bi), sd = ["L", "R"], JI = (n) => spec.joints.findIndex(j => j.name === n);
 const LEGJ = ["hip_L", "hip_R", "knee_L", "knee_R", "ankle_L", "ankle_R"].map(JI), KN = [JI("knee_L"), JI("knee_R")], ANK = [JI("ankle_L"), JI("ankle_R")], HIP = [JI("hip_L"), JI("hip_R")];
@@ -115,7 +119,7 @@ while (true) { const up0 = s.up, st0 = s.st; if (!s.tick()) break; const t = s.n
   if (H.tEnd != null && t >= H.tEnd - 1e-9) break; }
 hashes.end = (s.h >>> 0).toString(16).padStart(8, "0");
 const g = s.g3summary(), actAxes = []; s.act.led.forEach((row, k) => row.forEach((x, i) => { if (x && x.n) actAxes.push({ axis: spec.joints[k].name + "." + "xyz"[i], k, i, overCap: x.overCap, satTicks: x.satTicks, W: x.W, peakNm: x.peakNm, peakFrac: x.peakFrac }); }));
-const out = { generated: "tools/e1a_run.mjs", prereg: ["final_pre_e1a/E1_PREREGISTRATION.md", "knee_correction/E1_PREREGISTRATION_V2.md", "knee_correction/E1_PREREGISTRATION_V2_CONFIG.md", "e1a/E1A_HARNESS.md"], date: new Date().toISOString().slice(0, 10),
+const out = { generated: "tools/e1a_run.mjs", prereg: ["final_pre_e1a/E1_PREREGISTRATION.md", "knee_correction/E1_PREREGISTRATION_V2.md", "knee_correction/E1_PREREGISTRATION_V2_CONFIG.md", ...(CONFIG === "PSTAR" ? ["knee_correction/E1_PREREGISTRATION_V2_CONFIG_PSTAR.md"] : []), "e1a/E1A_HARNESS.md"], date: new Date().toISOString().slice(0, 10),
   human: HUMAN, side: SIDE, lifted: nL, stance: nS, liftM: LIFT, isE1a: LIFT === 0.005, cfg, events: { ...H, cmd: undefined }, ref, foot0, hashes, mass: s.ctrl.M, W: s.ctrl.M * 9.81,
   summary: { outcome: g.outcome, fell: g.fell, abortT: g.abortT, ledger: g.ledger, feet: g.feet }, actAxes, legJoints: LEGJ.map(k => spec.joints[k].name), joints: spec.joints.map(j => j.name),
   axisNames: Object.fromEntries((s.actRes || []).map(r => [r.k * 3 + r.i, spec.joints[r.k].name + "." + "xyz"[r.i]])), lcLog: s.ctrl.lc.feet.map(f => f.log), bodies: B.map(b => b.name), rows, poses };
