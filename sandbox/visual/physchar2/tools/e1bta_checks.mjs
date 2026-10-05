@@ -14,7 +14,8 @@ const DIRS = arg("dirs", "").split(",").filter(Boolean), OUT = arg("out", ""), r
 const out = { runs: [], classes: {}, gating: {} }, bad = { TA1: [], TA2: [], TA4: [] };
 for (const D of DIRS) for (const f of fs.readdirSync(D).filter(f => f.endsWith(".json.gz"))) { const r = rd(path.join(D, f)); if (!r.rows || !r.rows.length) continue;
   const isP15 = r.pert === "P15", logs = r.putDown || [], caps = logs.filter(l => l.cap), key = `${path.basename(D)}/${f}`;
-  if (isP15 && r.isE1b && !caps.length) { bad.TA4.push(key); continue; }   // non-protocol lifts (e.g. the declared 10 mm smoke) are checked for TA-1/2 only if (!caps.length) continue;
+  // non-protocol lifts (e.g. the declared 10 mm smoke) are checked for TA-1/2 only (erratum E1bTA-e1: this comment was mid-line and swallowed the next statement)
+  if (isP15 && r.isE1b && !caps.length) { bad.TA4.push(key); continue; } if (!caps.length) continue;
   const C = caps[0].cap, n = C.n, ab = C.t0, R = r.rows, dt = 1 / r.cfg.hz, acc = R.find(x => x.t >= ab - 1e-9 && (x.st[n] === "LOAD_ACCEPT" || x.st[n] === "SUPPORT"));
   // TA-1 (a row's sensed contact is that tick's lifecycle input; the debounce counts the ticks after the TOUCHDOWN entry up to and including the LOAD_ACCEPT entry)
   const pre = R.filter(x => x.t >= ab - 1e-9 && (!acc || x.t < acc.t - 1e-9)), leak = pre.filter(x => x.s[n] > 0 || (x.share && x.share[n] > 1e-9)), win = acc ? R.filter(x => x.t >= acc.t - ACC_DB + dt - 1e-9 && x.t <= acc.t + 1e-9) : [], noContact = win.filter(x => !(x.touch[n] > 0));
