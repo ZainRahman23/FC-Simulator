@@ -1686,3 +1686,42 @@ Not pushed.
 **Status:** both findings are now inputs to the pre-swing design.
 
 Not pushed.
+
+### PS-1: pre-swing / contact-boundary investigation → candidate P\*; final validation preregistered (`preswing/PRESWING_INVESTIGATION.md`, `preswing/PRESWING_VALIDATION_PREREG.md`)
+
+**Research:** biomechanics, plus humanoid and animation controllers (`preswing/research/`).
+- A lightly loaded foot in contact should be held by contact and friction, not servoed.
+- The leg's joint PD needs a contact-consistent velocity reference, so the moving pelvis does not drag the foot through joint damping.
+
+**Candidate P\*:**
+- B1;
+- touchRest;
+- `lcVff: "lin"` (contact-consistent desired-velocity feed-forward from the linearised bounded-IK rate, damped with the solver's μ0);
+- `lcTouch.reseed`;
+- the min(target, actual) leg frame.
+
+**Measured against C:**
+- turn slip 8–13 → ≤ 1.9 mm;
+- 20 mm hover error 6.5 → 0.9 mm (C fails E1b-3);
+- external-lift matrix 0 falls, Δτ ≤ 11 N·m;
+- G2 2.2b 12 / 12.
+
+**Refuted and kept:**
+- backward-difference / follow feed-forward;
+- IK re-solve rate;
+- passivity bound;
+- minimum damping in contact;
+- the actual-pelvis frame (reproduces strut counterexample 6);
+- the no-plan intent rules (`nullWanted` fall; `nullAccept` 1-piece slide).
+
+**R3:** spatial hysteresis is not justified (slow crossings do not flicker). The boundary test is redesigned (slow crossing + clear dwell), and the servo improvement is justified by E1b-3.
+
+**R1:** pre-existing lever-rule share leak during slow COM convergence; not contact semantics. It matters for G4 allocation design but does not block E1.
+
+**G2, no plan:** the landed foot stays resting (semantic gap, documented).
+
+**Prereg:**
+- 924 runs + external-lift matrix + G0–G3; criteria V1–V15.
+- Visible criteria changes for your review: V3 = R7's threshold on contact-point slip; REL0 reported; V6 replaces R3.
+
+Not pushed.

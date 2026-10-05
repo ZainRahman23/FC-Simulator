@@ -8,7 +8,7 @@ import { loadJolt } from "../core/v2_jolt.js"; import { unloadSim, unloadSpec } 
 const here = path.dirname(fileURLToPath(import.meta.url)), J = await loadJolt(path.join(here, "../vendor/jolt-physics.wasm-compat.js")), arg = (k, d) => (process.argv.find(a => a.startsWith(`--${k}=`)) || `--${k}=${d}`).split("=").slice(1).join("=");
 const HUMAN = arg("human", "V2-REF"), OUT = process.argv.slice(2).find(a => a.endsWith(".json")), spec = unloadSpec(HUMAN), res = [];
 const q = (a, p) => { if (!a.length) return null; const s = a.slice().sort((x, y) => x - y); return s[Math.min(s.length - 1, Math.floor(p * (s.length - 1)))]; }, st = (a) => ({ medMs: q(a, 0.5), p95Ms: q(a, 0.95), maxMs: a.length ? Math.max(...a) : null, n: a.length });
-const ARMS = [["adopted", {}], ["+B1", { ffLockedAxis: true }], ["C (+B1 +touchRest)", { ffLockedAxis: true, touchRest: true }], ["C2 (+touchRestRamp)", { ffLockedAxis: true, touchRest: true, touchRestRamp: true }]];
+const ARMS = [["adopted", {}], ["+B1", { ffLockedAxis: true }], ["C (+B1 +touchRest)", { ffLockedAxis: true, touchRest: true }], ["C2 (+touchRestRamp)", { ffLockedAxis: true, touchRest: true, touchRestRamp: true }], ["P* (preswing)", { ffLockedAxis: true, touchRest: true, lcVff: "lin", lcTouch: { reseed: true } }]];
 for (const [name, flags] of ARMS) for (let rep = 0; rep < 2; rep++) {
   const { s, nL, H } = unloadSim(J, spec, { foot: "L", drop: 0.025, r: 0, ramp: 4, flags, lift: { h: 0.005, hover: 0.5 }, end: 16 }), ph = [];
   while (s.tick()) { const f = s.ctrl.lc.feet[nL], t = s.n * s.dt; ph.push(H.tL != null && t >= H.tL ? "lift" : f.state === "SUPPORT" ? "support" : "released"); }
