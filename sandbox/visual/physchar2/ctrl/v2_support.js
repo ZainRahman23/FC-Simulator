@@ -55,10 +55,12 @@ const smooth = (u) => { const x = Math.min(1, Math.max(0, u)); return x * x * (3
 export class SupportLifecycle {
   constructor(W, opts = {}) { this.W = W; this.o = { ...LIFECYCLE, ...opts }; this.feet = [0, 1].map(() => ({ state: "SUPPORT", phi: 1, s: 1, psi: 0, a: 0, rho: 1, timer: 0, cond: null, hold: null, prevHold: null, swing: null, since: 0, log: [] })); this.t = 0; }
   // one update per controller tick. sense: { Fz: [N, N], touch: [n, n], other: [bool, bool] }; footPose(n) → { pos, rot } (current pose)
-  update(sense, footPose, dt, req = [null, null]) {   // req[n]: the requested load share of foot n (null = no transfer request: allowed, no intent)
+  // ext (T-A abort, option abortCapture; default null → unchanged): { intent: [bool, bool] — the abort PLAN wants foot n loaded once in contact (acceptance still
+  //   needs measured contact sustained for acceptDebounce; nothing is credited before), acceptDur: [s|null, s|null] — that foot's load-acceptance ramp duration }
+  update(sense, footPose, dt, req = [null, null], ext = null) {   // req[n]: the requested load share of foot n (null = no transfer request: allowed, no intent)
     const o = this.o, W = this.W; this.t += dt;
     for (const n of [0, 1]) { const f = this.feet[n], Fz = sense.Fz[n], contact = sense.touch[n] > 0, other = !!(sense.other && sense.other[n]);
-      const loaded = !other && Fz >= o.loadOn * W, rq = req[n], wanted = (rq != null && rq >= o.wantShare) || (o.nullWanted && rq == null), unloaded = !other && Fz < o.loadOff * W, release = unloaded && !wanted;   // low load releases support only when the plan does not want load there
+      const loaded = !other && Fz >= o.loadOn * W, rq = req[n], wanted = (rq != null && rq >= o.wantShare) || (o.nullWanted && rq == null) || !!(ext && ext.intent && ext.intent[n]), unloaded = !other && Fz < o.loadOff * W, release = unloaded && !wanted;   // low load releases support only when the plan does not want load there
       const accept = contact && ((loaded && (rq == null || rq >= 0.02)) || wanted || (o.nullAccept && rq == null && (f.state === "TOUCHING" || f.state === "TOUCHDOWN")));
       // candidate transition from the current state (null = stay)
       let want = null, need = o.debounce;
@@ -76,7 +78,7 @@ export class SupportLifecycle {
       if (want) { f.timer += dt; if (f.timer >= need - 1e-12) this._enter(n, want, footPose); }
       // support-weight phase: rises in LOAD_ACCEPT / SUPPORT, falls otherwise (UNLOADING ramps; non-support states sit at 0)
       const up = f.state === "SUPPORT" || f.state === "LOAD_ACCEPT";
-      f.phi = up ? Math.min(1, f.phi + dt / o.accept) : Math.max(0, f.phi - dt / o.release);
+      f.phi = up ? Math.min(1, f.phi + dt / (ext && ext.acceptDur && ext.acceptDur[n] ? ext.acceptDur[n] : o.accept)) : Math.max(0, f.phi - dt / o.release);
       if (f.state === "SUPPORT") f.phi = 1;
       f.s = f.state === "SUPPORT" ? 1 : smooth(f.phi);
       f.psi = f.state === "AIRBORNE" ? Math.min(1, f.psi + dt / o.release) : Math.max(0, f.psi - dt / o.accept); f.a = smooth(f.psi);

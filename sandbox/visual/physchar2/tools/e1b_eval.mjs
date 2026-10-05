@@ -1,6 +1,6 @@
 // ═══ physchar2/tools/e1b_eval.mjs — E1b criteria (FROZEN: final_pre_e1a/E1_PREREGISTRATION.md §5 E1b-1 … 18; operational definitions e1a/E1B_HARNESS.md §2, committed
 // before any E1b run). Built from tools/e1a_eval.mjs: E1a's computations unchanged except the §5 / E1B_HARNESS changes (E1b-3, E1b-5, E1b-8, P15, E1b-16 … 18).
-// usage: node tools/e1b_eval.mjs --dir=<runs dir> [--config=V2|PSTAR|PSTAR2] [--out=<json>]   (files: e1b_<body>_L_none.json.gz × 8, e1b_V2-REF_R_none.json.gz, e1b_V2-REF_L_none_rep.json.gz,
+// usage: node tools/e1b_eval.mjs --dir=<runs dir> [--config=V2|PSTAR|PSTAR2|PSTAR3] [--out=<json>]   (files: e1b_<body>_L_none.json.gz × 8, e1b_V2-REF_R_none.json.gz, e1b_V2-REF_L_none_rep.json.gz,
 //        e1b_<V2-REF|V2-165-62|V2-198-92>_L_<PF|PB|PL|PR|YAW|P15>.json.gz)
 import fs from "fs"; import path from "path"; import zlib from "zlib"; import { fileURLToPath } from "url";
 const arg = (k, d) => (process.argv.find(a => a.startsWith(`--${k}=`)) || `--${k}=${d}`).split("=").slice(1).join("=");
@@ -12,7 +12,7 @@ export function judge(r, cfgName = CONFIG, opts = {}) { const CONFIG = cfgName; 
   const c = r.cfg; if (!(c.kneeV2K && c.ankleK === 0.13 && c.lifecycle && c.ikRefTwist && c.contactSupport && c.holdUnloaded && c.ikFeasible && Math.abs(c.hz - (opts.hz ?? 240)) < 1e-9 && c.pelvisDrop)) throw new Error("configuration");
   // configuration VERSION (preswing/PRESWING_VALIDATION_PREREG.md §5): --config=V2 (default; the official runs carry no version field) or PSTAR; the criteria below are unchanged
   // PSTAR2 (e1b_fix/E1B_FIX_DESIGN.md, e1b_fix/E1B_FIX_VALIDATION_PREREG.md): PSTAR + the active foot-yaw path at its nominal capacity + the quintic abort put-down
-  if (CONFIG === "PSTAR" ? !(c.config === "PSTAR" && c.ffLockedAxis && c.touchRest && c.lcVff === "lin" && c.reseed) : CONFIG === "PSTAR2" ? !(c.config === "PSTAR2" && c.ffLockedAxis && c.touchRest && c.lcVff === "lin" && c.reseed && c.footYaw === (opts.yawk ?? true) && c.lcPutDown && c.footYawAxes === 2)
+  if (CONFIG === "PSTAR" ? !(c.config === "PSTAR" && c.ffLockedAxis && c.touchRest && c.lcVff === "lin" && c.reseed) : CONFIG === "PSTAR2" || CONFIG === "PSTAR3" ? !(c.config === CONFIG && c.ffLockedAxis && c.touchRest && c.lcVff === "lin" && c.reseed && c.footYaw === (opts.yawk ?? true) && c.lcPutDown && c.footYawAxes === 2 && !!c.abortCapture === (CONFIG === "PSTAR3"))
     : !((c.config == null || c.config === "V2") && !c.ffLockedAxis && !c.touchRest && !c.lcVff && !c.reseed)) throw new Error("configuration version");
   const R = r.rows, H = r.events, n = r.lifted, m = r.stance, W = r.W, C = {}, add = (id, pass, v) => { C[id] = { pass: !!pass, v }; };
   const lifted = H.tL != null, hov = R.filter(x => x.ph === "hover"), win = lifted ? R.filter(x => x.t >= H.tL - 1e-9 && x.t < H.tL + r.protocol.LT + r.protocol.HOV + r.protocol.RT - 1e-9) : [], hovU = pert && HE != null ? hov.filter(x => x.t < HE - 1e-9) : hov;

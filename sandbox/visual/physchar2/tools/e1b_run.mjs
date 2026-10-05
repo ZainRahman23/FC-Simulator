@@ -3,7 +3,7 @@
 // definitions: e1a/E1B_HARNESS.md, committed before any E1b run). E1b runs only after a genuine E1a pass (preswing/PRESWING_VALIDATION_PREREG.md §5).
 //   perturbations (--pert, at t_lift + 0.6 + 0.75 s, through the scenario's own push / torque mechanism, ledgered): PF / PB / PL / PR = thorax 5 N·s, 100 ms, anterior /
 //   posterior / character-left / character-right; YAW = pelvis yaw impulse 0.5 N·m·s (+y, 100 ms); P15 = thorax 15 N·s toward the lifted side (the beyond-capacity case).
-// usage: V2_KNEE_MODEL=v2k V2_ANKLE_NEUTRAL_K=0.13 node tools/e1b_run.mjs --human=V2-REF --side=L [--config=V2|PSTAR|PSTAR2] [--pert=none|PF|PB|PL|PR|YAW|P15|YAWN] [--hz=240] [--yawk=<axial share>] --out=<file.json.gz>
+// usage: V2_KNEE_MODEL=v2k V2_ANKLE_NEUTRAL_K=0.13 node tools/e1b_run.mjs --human=V2-REF --side=L [--config=V2|PSTAR|PSTAR2|PSTAR3] [--pert=none|PF|PB|PL|PR|YAW|P15|YAWN] [--hz=240] [--yawk=<axial share>] --out=<file.json.gz>
 import fs from "fs"; import path from "path"; import zlib from "zlib"; import { fileURLToPath } from "url";
 import { loadJolt } from "../core/v2_jolt.js"; import { generateSpec } from "../spec/v2_spec.js"; import { VARIATION_SET } from "../spec/v2_human.js";
 import { G3Sim, g3Def } from "../gates/v2_g3.js"; import { ankleNeutralKPerDeg, decompose } from "../spec/v2_joints.js"; import { polyDist } from "../ctrl/v2_stand.js";
@@ -16,8 +16,9 @@ const HUMAN = arg("human", "V2-REF"), SIDE = arg("side", "L"), LIFT = +arg("lift
 // Validation-battery options only (e1b_fix/ prereg; the official E1b protocol uses neither): --hz (default 240 = the protocol rate), --yawk (capacity sensitivity:
 // the subtalar axial share k instead of the nominal), --pert=YAWN (the yaw impulse reversed)
 const CONFIG = arg("config", "V2"), PSTAR = { ffLockedAxis: true, touchRest: true, lcVff: "lin", lcTouch: { reseed: true } }, HZ = +arg("hz", 240), YAWK = arg("yawk", "") || null;
-const PSTAR2 = { ...PSTAR, footYaw: YAWK == null ? true : +YAWK, lcPutDown: true }; if (!["V2", "PSTAR", "PSTAR2"].includes(CONFIG)) throw new Error("config"); if (!["none", "PF", "PB", "PL", "PR", "YAW", "P15", "YAWN"].includes(PERT)) throw new Error("pert");
-if (YAWK != null && CONFIG !== "PSTAR2") throw new Error("--yawk needs --config=PSTAR2");
+const PSTAR2 = { ...PSTAR, footYaw: YAWK == null ? true : +YAWK, lcPutDown: true }, PSTAR3 = { ...PSTAR2, abortCapture: true }; if (!["V2", "PSTAR", "PSTAR2", "PSTAR3"].includes(CONFIG)) throw new Error("config");   // PSTAR3 (e1b_ta/E1B_TA_DESIGN.md) = PSTAR2 + the T-A capture-timed abort (abortCapture)
+const P2UP = CONFIG === "PSTAR2" || CONFIG === "PSTAR3"; if (!["none", "PF", "PB", "PL", "PR", "YAW", "P15", "YAWN"].includes(PERT)) throw new Error("pert");
+if (YAWK != null && !P2UP) throw new Error("--yawk needs --config=PSTAR2|PSTAR3");
 if (process.env.V2_KNEE_MODEL !== "v2k" || process.env.V2_ANKLE_NEUTRAL_K !== "0.13") throw new Error("E1a configuration: V2_KNEE_MODEL=v2k and V2_ANKLE_NEUTRAL_K=0.13 are required");
 if (!["L", "R"].includes(SIDE)) throw new Error("side");
 const nL = SIDE === "L" ? 0 : 1, nS = 1 - nL;   // lifted / stance foot (0 = left, 1 = right)
@@ -31,12 +32,12 @@ const sig = (t) => { if (t <= 3) return [0.5, 0, 0]; if (t < 7) return seg(t, 3,
 const lamFn = (t) => lamFn.d(t)[0]; lamFn.d = (t) => { const [v, d1, d2] = sig(t); return nS === 1 ? [v, d1, d2] : [1 - v, -d1, -d2]; };
 const spec = generateSpec(VARIATION_SET.find(h => h.id === HUMAN)), base = g3Def(nS === 1 ? "U:R" : "U:L"), pd = { t0: 1, dur: 2, dz: 0.025 };
 const def = { ...base, key: `E1b:${SIDE}:${PERT}`, title: `E1b: ${SIDE} foot lifted ${(LIFT * 1000).toFixed(1)} mm, perturbation ${PERT} (preregistered protocol)`, lam: lamFn, supervise: {}, holds: [], seconds: 34, push: null, torque: null };
-const s = new G3Sim(J, spec, def, { stand: { ikRefTwist: true, lifecycle: true, pelvisDrop: pd, ...(CONFIG === "PSTAR" ? PSTAR : CONFIG === "PSTAR2" ? PSTAR2 : {}) }, passiveOpts: { kneeModel: "v2k" }, ...(HZ !== 240 ? { cfg: { hz: HZ } } : {}) });
+const s = new G3Sim(J, spec, def, { stand: { ikRefTwist: true, lifecycle: true, pelvisDrop: pd, ...(CONFIG === "PSTAR" ? PSTAR : CONFIG === "PSTAR2" ? PSTAR2 : CONFIG === "PSTAR3" ? PSTAR3 : {}) }, passiveOpts: { kneeModel: "v2k" }, ...(HZ !== 240 ? { cfg: { hz: HZ } } : {}) });
 const cfg = { kneeV2K: s.P.kneeIsV2K, ankleK: ankleNeutralKPerDeg(), lifecycle: !!s.ctrl.lc, ikRefTwist: !!s.ctrl.o.ikRefTwist, contactSupport: !!s.ctrl.o.contactSupport, holdUnloaded: !!s.ctrl.o.holdUnloaded, ikFeasible: !!s.ctrl.o.ikFeasible, hz: 1 / s.dt, pelvisDrop: s.ctrl.o.pelvisDrop === pd, config: CONFIG, ffLockedAxis: !!s.ctrl.o.ffLockedAxis, touchRest: !!s.ctrl.o.touchRest, lcVff: s.ctrl.o.lcVff || null, reseed: !!(s.ctrl.o.lcTouch && s.ctrl.o.lcTouch.reseed) };
 const fyAx = s.act.ax.flat().filter(x => x && x.footYaw);   // the actuator layer's active foot-yaw axes (PSTAR2: one per ankle)
-if (CONFIG === "PSTAR2") Object.assign(cfg, { footYaw: s.ctrl.o.footYaw, lcPutDown: !!s.ctrl.o.lcPutDown, footYawAxes: fyAx.length, footYawTiso: fyAx.length ? [fyAx[0].plus.cap.Tiso, fyAx[0].minus.cap.Tiso] : null });
+if (P2UP) Object.assign(cfg, { footYaw: s.ctrl.o.footYaw, lcPutDown: !!s.ctrl.o.lcPutDown, abortCapture: !!s.ctrl.o.abortCapture, footYawAxes: fyAx.length, footYawTiso: fyAx.length ? [fyAx[0].plus.cap.Tiso, fyAx[0].minus.cap.Tiso] : null });
 if (CONFIG !== "V2" ? !(cfg.ffLockedAxis && cfg.touchRest && cfg.lcVff === "lin" && cfg.reseed) : (cfg.ffLockedAxis || cfg.touchRest || cfg.lcVff || cfg.reseed)) throw new Error("E1a configuration version mismatch " + JSON.stringify(cfg));
-if (CONFIG === "PSTAR2" ? !(cfg.lcPutDown && cfg.footYawAxes === 2) : (s.ctrl.o.lcPutDown || s.ctrl.o.footYaw || fyAx.length)) throw new Error("E1b configuration version mismatch (PSTAR2 flags) " + JSON.stringify(cfg));
+if (P2UP ? !(cfg.lcPutDown && cfg.footYawAxes === 2 && cfg.abortCapture === (CONFIG === "PSTAR3")) : (s.ctrl.o.lcPutDown || s.ctrl.o.footYaw || s.ctrl.o.abortCapture || fyAx.length)) throw new Error("E1b configuration version mismatch (PSTAR2/3 flags) " + JSON.stringify(cfg));
 if (!cfg.kneeV2K || cfg.ankleK !== 0.13 || !cfg.lifecycle || !cfg.ikRefTwist || !cfg.contactSupport || !cfg.holdUnloaded || !cfg.ikFeasible || Math.abs(s.dt - 1 / HZ) > 1e-12 || !cfg.pelvisDrop) throw new Error("E1a configuration mismatch " + JSON.stringify(cfg));
 const B = spec.bodies, bi = (n) => B.findIndex(b => b.name === n), FT = ["foot_L", "foot_R"].map(bi), sd = ["L", "R"], JI = (n) => spec.joints.findIndex(j => j.name === n);
 const LEGJ = ["hip_L", "hip_R", "knee_L", "knee_R", "ankle_L", "ankle_R"].map(JI), KN = [JI("knee_L"), JI("knee_R")], ANK = [JI("ankle_L"), JI("ankle_R")], HIP = [JI("hip_L"), JI("hip_R")];
@@ -72,7 +73,7 @@ function protocol(tc) { const lc = s.ctrl.lc, f = lc.feet[nL], g = s.ctrl.g3, ab
     else if (tc >= 7 - 1e-9 && H.touchT0 != null && tc - H.touchT0 >= 0.5 - 1e-9) { H.tL = tc; const a = lc.target(nL); H.anchor = { pos: a.pos.slice(), rot: a.rot.slice() }; schedulePert(tc + LT + HOV / 2); }
     else if (tc >= 9 - 1e-9) { H.unloadTimeout = true; setTimeline(9); } }
   if (H.tL != null && H.cleared == null) { const u = tc - H.tL;
-    if (aborted) { H.cleared = tc; H.clearReason = CONFIG === "PSTAR2" ? "abort (supervisor put-down: quintic to the anchor)" : "abort (supervisor clears the swing target)"; if (H.tR == null) setTimeline(tc); return; }
+    if (aborted) { H.cleared = tc; H.clearReason = P2UP ? (CONFIG === "PSTAR3" ? "abort (supervisor put-down: capture-timed quintic to the anchor)" : "abort (supervisor put-down: quintic to the anchor)") : "abort (supervisor clears the swing target)"; if (H.tR == null) setTimeline(tc); return; }
     const UR = LT + HOV + RT; if (u >= UR - 1e-9 && H.tR == null) setTimeline(H.tL + UR);
     if (u >= UR - 1e-9 && (CONTACT.includes(f.state) || u >= UR + GRACE - 1e-9)) { lc.setSwingTarget(nL, null); H.cleared = tc; H.clearReason = CONTACT.includes(f.state) ? `contact state ${f.state}` : "grace 0.3 s expired"; return; }
     const h = u < LT ? LIFT * mj(u / LT) : u < LT + HOV ? LIFT : u < UR ? LIFT * (1 - mj((u - LT - HOV) / RT)) : 0, A = H.anchor;
@@ -110,14 +111,14 @@ while (true) { const up0 = s.up, st0 = s.st; if (!s.tick()) break; const t = s.n
     E: { E, ke: s.last.ke, pe: s.last.pe, U: s.last.U, Wact: L.Wact, Wext: L.Wext, damp: L.damping, dClos }, passW: passW.slice(),
     yaw: dY ? { ground: dY[0], ankle: wrap(dY[1] - dY[0]), knee: wrap(dY[2] - dY[1]), hip: wrap(dY[3] - dY[2]), upper: wrap(dY[4] - dY[3]), pelvis: dY[3] } : null,
     abort: s.ctrl.g3 ? s.ctrl.g3.aborted : null, cmdH: H.cmd && H.cmd.tc > t - s.dt - 1e-9 ? H.cmd.h : null,
-    ...(CONFIG === "PSTAR2" && s.act.plan ? { fy: s.act.plan.joints.flatMap(p => p.rows.map((r, i) => (r && r.share != null ? { k: p.k, i, share: r.share, req: r.req, hi: r.hi, lo: r.lo } : null)).filter(Boolean)) } : {}) });
+    ...(P2UP && s.act.plan ? { fy: s.act.plan.joints.flatMap(p => p.rows.map((r, i) => (r && r.share != null ? { k: p.k, i, share: r.share, req: r.req, hi: r.hi, lo: r.lo } : null)).filter(Boolean)) } : {}) });
   if (s.n % 2 === 0) poses.push([+t.toFixed(5), ...st.flatMap(b => [...b.pos, ...b.rot].map(x => +x.toFixed(6)))]);
   if (s.n % 240 === 0) hashes[String(Math.round(t))] = (s.h >>> 0).toString(16).padStart(8, "0");
   if (H.tEnd != null && t >= H.tEnd - 1e-9) break; }
 hashes.end = (s.h >>> 0).toString(16).padStart(8, "0");
 const g = s.g3summary(), actAxes = []; s.act.led.forEach((row, k) => row.forEach((x, i) => { if (x && x.n) actAxes.push({ axis: spec.joints[k].name + "." + "xyz"[i], k, i, overCap: x.overCap, satTicks: x.satTicks, W: x.W, peakNm: x.peakNm, peakFrac: x.peakFrac }); }));
-const out = { generated: "tools/e1b_run.mjs", prereg: ["final_pre_e1a/E1_PREREGISTRATION.md §4–§6", "e1a/E1B_HARNESS.md", "knee_correction/E1_PREREGISTRATION_V2.md", "knee_correction/E1_PREREGISTRATION_V2_CONFIG.md", ...(CONFIG === "PSTAR" ? ["knee_correction/E1_PREREGISTRATION_V2_CONFIG_PSTAR.md"] : CONFIG === "PSTAR2" ? ["knee_correction/E1_PREREGISTRATION_V2_CONFIG_PSTAR.md", "e1b_fix/E1B_FIX_DESIGN.md", "e1b_fix/E1B_FIX_VALIDATION_PREREG.md"] : []), "e1a/E1A_HARNESS.md"], date: new Date().toISOString().slice(0, 10),
-  human: HUMAN, side: SIDE, lifted: nL, stance: nS, liftM: LIFT, isE1b: LIFT === 0.02, pert: PERT, protocol: { LT, HOV, RT, GRACE }, cfg, events: { ...H, cmd: undefined }, ...(CONFIG === "PSTAR2" ? { putDown: s.ctrl.g3 && s.ctrl.g3.putDownLog ? s.ctrl.g3.putDownLog : [] } : {}), ref, foot0, hashes, mass: s.ctrl.M, W: s.ctrl.M * 9.81,
+const out = { generated: "tools/e1b_run.mjs", prereg: ["final_pre_e1a/E1_PREREGISTRATION.md §4–§6", "e1a/E1B_HARNESS.md", "knee_correction/E1_PREREGISTRATION_V2.md", "knee_correction/E1_PREREGISTRATION_V2_CONFIG.md", ...(CONFIG === "PSTAR" ? ["knee_correction/E1_PREREGISTRATION_V2_CONFIG_PSTAR.md"] : CONFIG === "PSTAR2" ? ["knee_correction/E1_PREREGISTRATION_V2_CONFIG_PSTAR.md", "e1b_fix/E1B_FIX_DESIGN.md", "e1b_fix/E1B_FIX_VALIDATION_PREREG.md"] : CONFIG === "PSTAR3" ? ["knee_correction/E1_PREREGISTRATION_V2_CONFIG_PSTAR.md", "e1b_fix/E1B_FIX_DESIGN.md", "e1b_ta/E1B_TA_DESIGN.md", "e1b_ta/E1B_TA_PREREG.md"] : []), "e1a/E1A_HARNESS.md"], date: new Date().toISOString().slice(0, 10),
+  human: HUMAN, side: SIDE, lifted: nL, stance: nS, liftM: LIFT, isE1b: LIFT === 0.02, pert: PERT, protocol: { LT, HOV, RT, GRACE }, cfg, events: { ...H, cmd: undefined }, ...(P2UP ? { putDown: s.ctrl.g3 && s.ctrl.g3.putDownLog ? s.ctrl.g3.putDownLog : [] } : {}), ref, foot0, hashes, mass: s.ctrl.M, W: s.ctrl.M * 9.81,
   summary: { outcome: g.outcome, fell: g.fell, abortT: g.abortT, ledger: g.ledger, feet: g.feet }, actAxes, legJoints: LEGJ.map(k => spec.joints[k].name), joints: spec.joints.map(j => j.name),
   axisNames: Object.fromEntries((s.actRes || []).map(r => [r.k * 3 + r.i, spec.joints[r.k].name + "." + "xyz"[r.i]])), lcLog: s.ctrl.lc.feet.map(f => f.log), bodies: B.map(b => b.name), rows, poses };
 s.destroy();

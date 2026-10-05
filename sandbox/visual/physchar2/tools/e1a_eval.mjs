@@ -13,7 +13,7 @@ function judge(r) {
   const c = r.cfg; if (!(c.kneeV2K && c.ankleK === 0.13 && c.lifecycle && c.ikRefTwist && c.contactSupport && c.holdUnloaded && c.ikFeasible && Math.abs(c.hz - 240) < 1e-9 && c.pelvisDrop)) throw new Error("configuration");
   // configuration VERSION (preswing/PRESWING_VALIDATION_PREREG.md §5): --config=V2 (default; the official runs carry no version field) or PSTAR; the criteria below are unchanged
   // PSTAR2 (e1b_fix/E1B_FIX_DESIGN.md): PSTAR + footYaw (nominal) + lcPutDown; criteria unchanged
-  if (CONFIG === "PSTAR" ? !(c.config === "PSTAR" && c.ffLockedAxis && c.touchRest && c.lcVff === "lin" && c.reseed) : CONFIG === "PSTAR2" ? !(c.config === "PSTAR2" && c.ffLockedAxis && c.touchRest && c.lcVff === "lin" && c.reseed && c.footYaw === true && c.lcPutDown && c.footYawAxes === 2)
+  if (CONFIG === "PSTAR" ? !(c.config === "PSTAR" && c.ffLockedAxis && c.touchRest && c.lcVff === "lin" && c.reseed) : CONFIG === "PSTAR2" || CONFIG === "PSTAR3" ? !(c.config === CONFIG && c.ffLockedAxis && c.touchRest && c.lcVff === "lin" && c.reseed && c.footYaw === true && c.lcPutDown && c.footYawAxes === 2 && !!c.abortCapture === (CONFIG === "PSTAR3"))
     : !((c.config == null || c.config === "V2") && !c.ffLockedAxis && !c.touchRest && !c.lcVff && !c.reseed)) throw new Error("configuration version");
   const R = r.rows, H = r.events, n = r.lifted, m = r.stance, W = r.W, C = {}, add = (id, pass, v) => { C[id] = { pass: !!pass, v }; };
   const lifted = H.tL != null, hov = R.filter(x => x.ph === "hover"), win = lifted ? R.filter(x => x.t >= H.tL - 1e-9 && x.t < H.tL + 1.3 - 1e-9) : [];

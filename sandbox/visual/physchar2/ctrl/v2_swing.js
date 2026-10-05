@@ -33,6 +33,10 @@ export function segment(ref, goal, T, vzEnd = 0) {
 export function segAt(sg, t) { const u = Math.min(Math.max(t, 0), sg.T), p = sg.cp.map(c => qeval(c, u)), th = sg.cr.map(c => qeval(c, u)[0]);
   return { pos: p.map(x => x[0]), vel: p.map(x => x[1]), acc: p.map(x => x[2]), rot: Q.norm(Q.mul(sg.goal.rot, qexp(th))), done: t >= sg.T }; }
 
+// the full reference state of a segment at time t, in the segment's goal frame (θ relative to goal.rot) — the start state of a re-plan to the SAME goal (BLF pattern)
+export function segRef(sg, t) { const u = Math.min(Math.max(t, 0), sg.T), p = sg.cp.map(c => qeval(c, u)), r = sg.cr.map(c => qeval(c, u));
+  return { p: p.map(x => x[0]), v: p.map(x => x[1]), a: p.map(x => x[2]), th: r.map(x => x[0]), w: r.map(x => x[1]), al: r.map(x => x[2]) }; }
+
 // duration from the swing servo's bandwidth (no failure data): with PD + velocity feed-forward the tracking error obeys ë + 2ζω ė + ω² e = p̈_d,
 // so |e| ≲ max|p̈_d|/ω²; a rest-to-rest quintic of amplitude Δ peaks at |p̈_d| = (10/√3)·Δ/T² (Flash & Hogan 1985) → relative error ε needs
 // T ≥ √(10/(√3·ε))/ω. ε = 0.10 at the lifecycle's swingHz 4 → 0.302 s (≈ 1.2 servo periods)

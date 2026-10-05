@@ -93,6 +93,9 @@ export const STAND = {
                           // SURFACE (vertical target = the anchor height, not the foot's own height) — and while in contact RESTS on it with a seating force of
                           // loadOff / 2 of body weight (the midpoint of the lifecycle's own "unloaded" band [0, loadOff)), scaled (1 − s)(1 − a), through its own
                           // leg's feed-forward (finite actuators; the other foot's commanded force reduced by the same amount). = lcTouch { vert: "anchor", seat: loadOff / 2 }
+  abortCapture: false,    // EXPERIMENTAL T-A (gates/v2_g3.js supervised(); default OFF; needs lcPutDown; e1b_ta/): at an abort with an airborne foot, the descent and the
+                          // post-contact load-acceptance ramp are the smoothest that the online capture model (ctrl/v2_capture.js) predicts still recover, with the
+                          // abort plan's acceptance intent (measured contact still required) and the quiet-standing floor removed for the abort transition
   lcPutDown: false,       // EXPERIMENTAL (gates/v2_g3.js supervised(); default OFF; e1b_fix/ABORT_PUTDOWN_DESIGN.md): the single-support abort puts an airborne foot down along a
                           // QUINTIC from the current reference state to the contact anchor over the swing servo's bandwidth duration (ctrl/v2_swing.js; BLF SwingFootPlanner
                           // min-jerk segment), held at the anchor until the lifecycle's physical contact; supersedes lcAbortRamp when both are set
@@ -206,7 +209,7 @@ export class StandController {
     // (intent: the transfer request's share per foot gates / starts load acceptance — ctrl/v2_support.js; the request is evaluated here once per
     //  tick and reused below, so the request function is still called exactly once)
     const reqLC = this.lc && o.transfer ? o.transfer(this.n * dt, this) : null, lamLC = reqLC == null ? null : (typeof reqLC === "number" ? reqLC : reqLC.lam);
-    const LC = this.lc ? this.lc.update(this.sense, (n) => ({ pos: st[this.feet[n]].pos.slice(), rot: st[this.feet[n]].rot.slice() }), dt, lamLC == null ? [null, null] : [1 - lamLC, lamLC]) : null, sw = LC ? LC.map(f => f.s) : null, swSum = sw ? sw[0] + sw[1] : 0;
+    const LC = this.lc ? this.lc.update(this.sense, (n) => ({ pos: st[this.feet[n]].pos.slice(), rot: st[this.feet[n]].rot.slice() }), dt, lamLC == null ? [null, null] : [1 - lamLC, lamLC], reqLC && typeof reqLC === "object" && (reqLC.intent || reqLC.acceptDur) ? { intent: reqLC.intent || null, acceptDur: reqLC.acceptDur || null } : null) : null, sw = LC ? LC.map(f => f.s) : null, swSum = sw ? sw[0] + sw[1] : 0;
     if (LC && o.lcTouch && o.lcTouch.reseed) for (const n of [0, 1]) { const f = LC[n]; if (f.s < 1 && !f.swing && ["UNLOADING", "TOUCHING", "TOUCHDOWN", "LOAD_ACCEPT"].includes(f.state)) this.lc.reseed(n, { pos: st[this.feet[n]].pos, rot: st[this.feet[n]].rot }); }   // DIAGNOSTIC (preswing/): resting foot's horizontal place / yaw follow it
     const fwd = this.feet.map(f => Q.rot(st[f].rot, [0, 0, 1])), fc = sw ? fwd.map((f, n) => { const c = Math.cos(this.footYawRef[n]), sn = Math.sin(this.footYawRef[n]); return [f[0] * c - f[2] * sn, 0, f[0] * sn + f[2] * c]; }) : null;   // lifecycle: forward vectors corrected by each foot's reference toe-out
     const hd = sw && swSum > 1e-9 ? norm2([sw[0] * fc[0][0] + sw[1] * fc[1][0], sw[0] * fc[0][2] + sw[1] * fc[1][2]]) : norm2([fwd[0][0] + fwd[1][0], fwd[0][2] + fwd[1][2]]);   // lifecycle: the heading from the SUPPORTING feet only (H6)
@@ -236,7 +239,8 @@ export class StandController {
     // load share by the lever rule along the line between the feet's region centroids; each foot's CoP = its centroid + a shift so that the
     // load-weighted CoPs reproduce p (shift shared, the remainder re-assigned to the foot that still has room; both clamped to their regions)
     const a = cen[1], b = cen[0], ab = [b[0] - a[0], b[1] - a[1]], L2 = ab[0] * ab[0] + ab[1] * ab[1];
-    const flL = lam == null ? o.minShare : Math.min(o.minShare, 1 - lam), flR = lam == null ? o.minShare : Math.min(o.minShare, lam);   // G3: the floor relaxes to the requested share
+    const fsc = req && typeof req === "object" && req.floorScale != null ? req.floorScale : 1;   // T-A abort transition (abortCapture): the quiet-standing floor scaled 0 → 1 (default 1: unchanged)
+    const flL = lam == null ? o.minShare : Math.min(o.minShare * fsc, 1 - lam), flR = lam == null ? o.minShare : Math.min(o.minShare * fsc, lam);   // G3: the floor relaxes to the requested share
     let t = Math.max(flL, Math.min(1 - flR, ((p[0] - a[0]) * ab[0] + (p[1] - a[1]) * ab[1]) / L2)); if (!inSup[0] && inSup[1]) t = 0; if (!inSup[1] && inSup[0]) t = 1;
     if (sw && swSum >= 1) t = Math.max(1 - sw[1], Math.min(sw[0], t));   // lifecycle: a foot's load share never exceeds its support weight (continuous load acceptance)
     if (o.shareCap && lam != null) t = shareClamp(t, lam, this.lc ? this.lc.o.loadOff : o.loadOff);   // UNLOAD FIX B3 (default off)

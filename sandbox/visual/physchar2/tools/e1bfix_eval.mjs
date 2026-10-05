@@ -8,11 +8,11 @@
 //   X-RATE YAW / YAWN / P15 × {V2-REF, V2-165-62, V2-198-92} × L × {180, 480} Hz                  gating: RATE_GATE ∩ the run's set; the rest reported
 //   X-SENS footYaw axial share k ∈ {0.38, 0.90} × YAW / YAWN × the 3 bodies × L                   reported only (capacity sensitivity)
 //   X-DET  repeats of V2-REF L YAW and V2-REF L P15 vs the official PSTAR2 runs                    gating: every hash mark identical
-// usage: node tools/e1bfix_eval.mjs --ext=<ext runs dir> --official=<official PSTAR2 E1b runs dir> [--out=<json>]
+// usage: node tools/e1bfix_eval.mjs --ext=<ext runs dir> --official=<official E1b runs dir> [--config=PSTAR2|PSTAR3] [--out=<json>]   (e1b_ta/ reuses it with --config=PSTAR3)
 import fs from "fs"; import path from "path"; import zlib from "zlib";
 import { judge, idsOfRun, nm } from "./e1b_eval.mjs";
 const arg = (k, d) => (process.argv.find(a => a.startsWith(`--${k}=`)) || `--${k}=${d}`).split("=").slice(1).join("=");
-const EXT = arg("ext", ""), OFF = arg("official", ""), OUT = arg("out", ""), rd = (f) => JSON.parse(zlib.gunzipSync(fs.readFileSync(f)));
+const EXT = arg("ext", ""), OFF = arg("official", ""), OUT = arg("out", ""), CFG = arg("config", "PSTAR2"), rd = (f) => JSON.parse(zlib.gunzipSync(fs.readFileSync(f)));
 const BODIES = ["V2-REF", "V2-165-62", "V2-198-92", "V2-175-70", "V2-190-85", "V2-short-legs", "V2-long-legs", "V1-matched"], B3 = BODIES.slice(0, 3);
 const RATE_GATE = ["E1a-6", "E1a-7", "E1a-8", "E1a-9", "E1a-9p15", "E1a-10", "E1b-16", "E1b-17", "E1b-18"];
 const f2 = (x, d = 2) => (x == null || !isFinite(x) ? "—" : x.toFixed(d)), mx = (a) => a.reduce((m, x) => Math.max(m, x), -Infinity), mn = (a) => a.reduce((m, x) => Math.min(m, x), Infinity);
@@ -35,7 +35,7 @@ for (const [set, keys] of Object.entries(expect)) { const S = out.sets[set] = { 
   for (const k of keys) { const x = runs[k]; if (!x) { out.missing.push(k); S.gatingFail.push(k + " (missing)"); continue; } S.ran++;
     if (set === "X-DET") { const [b, sd, p] = k.split("|"), fo = path.join(OFF, `e1b_${b}_${sd}_${p}.json.gz`), a = fs.existsSync(fo) ? rd(fo).hashes : null, h = x.r.hashes, ks = a ? [...new Set([...Object.keys(a), ...Object.keys(h)])] : [], diff = ks.filter(q => a[q] !== h[q]);
       const ok = !!a && ks.length > 1 && diff.length === 0; out.runs[k] = { set, det: `${ks.length - diff.length}/${ks.length} marks identical (end ${a ? a.end : "—"} / ${h.end})`, pass: ok }; if (!ok) S.gatingFail.push(k); continue; }
-    const c = x.r.cfg, j = judge(x.r, "PSTAR2", { hz: Math.round(c.hz), yawk: c.footYaw }), ids = idsOfRun(x.r.pert), gate = set === "X-SENS" ? [] : set === "X-RATE" ? ids.filter(id => RATE_GATE.includes(id)) : ids;
+    const c = x.r.cfg, j = judge(x.r, CFG, { hz: Math.round(c.hz), yawk: c.footYaw }), ids = idsOfRun(x.r.pert), gate = set === "X-SENS" ? [] : set === "X-RATE" ? ids.filter(id => RATE_GATE.includes(id)) : ids;
     const fails = ids.filter(id => !(j.C[id] && j.C[id].pass)), gf = fails.filter(id => gate.includes(id)), rf = fails.filter(id => !gate.includes(id));
     out.runs[k] = { set, outcome: j.rep.outcome, gating: gate.map(nm), failsGating: gf.map(nm), failsReported: rf.map(nm), C: Object.fromEntries(ids.map(id => [nm(id), j.C[id] || null])), events: j.rep.events, ...extra(x.r) };
     if (gf.length) S.gatingFail.push(`${k} [${gf.map(nm).join(", ")}]`); if (rf.length) S.reportedFail.push(`${k} [${rf.map(nm).join(", ")}]`); }
