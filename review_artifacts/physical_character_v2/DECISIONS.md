@@ -1536,3 +1536,35 @@ Not applied. **E1a not run; not pushed.**
 - then re-run E1a unchanged.
 
 E1b not authorised and not started. Not pushed.
+
+### E1-2: E1a unload blocker, causal investigation (diagnostic only; nothing adopted; `e1a/E1A_UNLOAD_INVESTIGATION.md`, source `sources/2026-10-05_user_instruction_e1a_unload_causal_investigation.md`)
+**Root cause:** a latent support-controller bug.
+- The knee flexion feed-forward lacks the locked-axis twist term −tan t·(T·ẑ). This is the geometry the passive layer already handles (its G1 locked-axis rows).
+- Under the corrected knee's reference path the stance knee is twisted about 7.1° and carries about 47.5 N·m frontal moment.
+- So it is 5.9 N·m short. The stance posture PD compensates with about a 1° error, leaving the pelvis 0.94 mm low.
+- The zero-share leg, still in SUPPORT, servos to the same pelvis target and presses that deficit into the turf at about 8.3 N/mm: 8.75 N, 1.13 % BW.
+- The lifecycle releases only below 1 % BW and the controller withdraws authority only after release, so it deadlocks.
+
+**Causal evidence (counterfactuals, one at a time):**
+- Adding only the missing term gives 0.12 N, a stance PD of −5.05 → +0.13 N·m, and release. The 8-body table, dose-response with drop and old-knee / current-twist explanations all fit (twist 0° / 4.0°).
+- Left knee posture PD removed: 1.03 N. IK from the actual pelvis height: 0.62 N.
+- No effect from the passive, contact, twist-servo or orientation terms.
+
+**Second mechanism:** commanded-share leakage. The lever rule assigns 0.25–0.67 % BW to a zero-request foot; the request relaxes the floor but does not cap the share. Capping it on top of the missing term gives 0.15–0.36 N on all bodies (0.04–0.36 N across drops 0–3 cm) and release at 6.5–7.3 s.
+
+**Classification:**
+- bug (primary) + posture-strut amplifier + lifecycle circularity;
+- not unavoidable contact.
+
+**Recommendation (NOT implemented):**
+- B = B1 (locked-axis-consistent feed-forward, `ffLockedAxis`, default off) + B3 (requested share caps the commanded share below `loadOff`, `shareCap`, default off);
+- keep the load-based release; no intent release (A);
+- B2 (posture-authority withdrawal) deferred as debt D-2.
+
+Preregistered validation V1–V4 is proposed in the report.
+
+**Tracer development errors (recorded):**
+- an ablation dispatch bug, found by an identity check;
+- two badly designed layered ablations (25 runs), marked VOID.
+
+KV0 identical. E1a not rerun; E1b unauthorised; not pushed.
