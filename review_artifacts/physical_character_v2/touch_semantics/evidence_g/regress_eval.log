@@ -1,0 +1,12 @@
+PASS V3.1: KV0 4 G3 hashes IDENTICAL to hash_head; suite 58/58; V1 guard (worktree): guard_v1: OK — V1 runtime + evidence identical to checkpoint/physchar-v1-final-research
+PASS V3.2: knee bench identical; rig (all parts, crit v2) identical; B1 bench identical to unload_fix/evidence/b1_bench.json
+PASS V3.3: 51/52 rows pass; failing: 0.V1 (0.V1 = the V1 freeze guard, run in the worktree: V3.1)
+PASS V3.4: 74/74 run hashes identical to qualification v2 (missing 0); failing rows 1.S′,1.V1 (qualification: 1.S′,1.V1; 1.S′ = the KC-4 exception, 1.V1 = the guard)
+FAIL V3.5: G2: 10/11 gating rows; failing 2.2b
+PASS V3.6: G3 v3.3 (K → K′): failing none; J2a 81/81 pairs; 443498 ticks probed (both directions, up to each fall) · worst: lam 1.11e-16, copMm 6.07e-13, share 2.61e-15, footCopMm 9.54e-13, forceN 2.83e-12, g3OutS 0.00e+0, ikResM 1.68e-15, cmdTauNm 3.11e-11, cmdGain ; O ✓ T5 ✓ U:R ✓ T3 ✓ T8:hold:R:R:10
+PASS V3.7: reference: other criteria failing none; C1′ fails none; C7′ fails none; (frozen C1 V2-165-62, C7 none); missing 0
+PASS V3.8: 8/8 bodies (no fall, slip ≤ 0.5 mm, |θ−θ0| ≤ 2.0°): V2-REF stood slip 0.251 dev 1.39°; V2-165-62 stood slip 0.257 dev 1.39°; V2-198-92 stood slip 0.246 dev 1.40°; V2-175-70 stood slip 0.253 dev 1.39°; V2-190-85 stood slip 0.248 dev 1.39°; V2-short-legs stood slip 0.251 dev 1.39°; V2-long-legs stood slip 0.250 dev 1.40°; V1-matched stood slip 0.248 dev 1.39°
+PASS V3.9: V2-REF 180 Hz foot relocated, chatter 0, closure max/tick 6.54e-3 J; V2-REF 240 Hz foot relocated, chatter 0, closure max/tick 5.67e-3 J; V2-REF 480 Hz foot relocated, chatter 0, closure max/tick 1.43e-3 J; V2-165-62 180 Hz foot relocated, chatter 0, closure max/tick 5.57e-3 J; V2-165-62 240 Hz foot relocated, chatter 0, closure max/tick 3.82e-3 J; V2-165-62 480 Hz foot relocated, chatter 0, closure max/tick 9.14e-4 J; V2-198-92 180 Hz foot relocated, chatter 0, closure max/tick 8.02e-3 J; V2-198-92 240 Hz foot relocated, chatter 0, closure max/tick 4.53e-3 J; V2-198-92 480 Hz foot relocated, chatter 0, closure max/tick 1.30e-3 J
+PASS V3.10: 9 stance-leg decompositions (complete: true); telescoping max 1.8e-15° (≤ 1e-6); A closure max 0.017° (≤ 0.3); masking flags none
+
+G0–G3 REGRESSION (configuration C): FAIL

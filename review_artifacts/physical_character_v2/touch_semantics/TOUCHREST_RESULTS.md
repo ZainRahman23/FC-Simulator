@@ -123,3 +123,52 @@ touchRest applies its seat only when there is no swing command. When the lift co
 - The prereg is not modified (the diagnostics above are post-verdict).
 - Default path: KV0 identical; suite 58 / 58.
 - Commits: 63543e8 (freeze), 7b0ecf6 (regression tooling), and this record.
+
+## 5. G0–G3 regression of C (run as information after the §3 FAIL; frozen battery `scripts/regress_battery.sh`, evaluator 7b0ecf6; `evidence_g/`)
+
+**Verdict: REGRESSION FAIL** (V3.5) (`evidence_g/regress_eval.log`). Not an adoption step: §3 had already failed.
+
+| item | result | values |
+|---|---|---|
+| V3.1 KV0 + suite + V1 guard | PASS | 4 / 4 hashes identical; 58 / 58; guard OK |
+| V3.2 bench | PASS | Knee bench and rig identical to qualification v2; B1 bench identical to the unload-fix evidence |
+| V3.3 G0 | PASS | 51 / 52; only 0.V1, which needs the git checkout (guard OK in the worktree) |
+| V3.4 G1 | PASS | 74 / 74 run hashes identical to qualification v2; failing rows 1.S′ (KC-4) and 1.V1 (guard), as there; browser 10 / 10 |
+| **V3.5 G2** | **FAIL** | 10 / 11. **2.2b symmetry 9 / 12** (V2-REF, V1-matched, V2-198-92 lateral). Browser 6 / 6 |
+| V3.6 G3 v3.3 | PASS | 17 / 17 with K′; J2a 81 / 81 with the flags (cmd τ mirror ≤ 3.1e-11 N·m); browser 4 / 4 |
+| V3.7 twist battery | PASS | C1′, C1q, C2–C6, C7′ on all 8 bodies. The frozen C1 now fails on V2-165-62: its HO3 run falls in every arm (original, B1, TR; shared with "current"), and B1 only changes the fallen run's decay label (DECAYING → GROWING) |
+| V3.8 KV6c | PASS | 8 / 8: slip ≤ 0.257 mm, knee deviation ≤ 1.40° |
+| V3.9 boundary harness | PASS (by its rule) | No fall, no chatter, closure ≤ 8.0 mJ / tick. **But every outcome changed from "stood" to "foot relocated"** (below) |
+| V3.10 yaw | PASS | Telescoping 1.8e-15°; A closure ≤ 0.017°; no masking flag |
+
+**Attribution** (`evidence_g/attribution_B1_TR.tgz`: G2 full with B1 only and with touchRest only; boundary harness and HO3 per arm):
+
+- **G2 2.2b is caused by touchRest:**
+  - Symmetry: B1 only 12 / 12; touchRest only 10 / 12; C 9 / 12.
+  - **No capacity loss:** every 30 N·s lateral push falls at the same time in all arms, and every 20 N·s push recovers.
+  - **The cause is classification at G2's 20 mm relocation threshold.** touchRest raises the maximum foot slip of 25–30 N·s lateral pushes by 0.1–1.1 mm, and the L and R directions then fall on different sides of 20 mm:
+
+    | push | L (mm) | R (mm) | qualification L / R (mm) |
+    |---|---|---|---|
+    | V2-REF 25 N·s | 20.1 | 19.2 | 19.1 / 19.1 |
+    | V1-matched 25 N·s | 20.2 | 19.3 | 19.6 / 19.6 |
+    | V2-198-92 30 N·s | 20.6 | 19.8 | 20.3 / 20.3 |
+
+- **Boundary harness "foot relocated" is caused by touchRest:**
+  - The harness lifts the unloaded foot with an external 30 N shank force, with no swing command.
+  - With touchRest, the airborne foot's horizontal excursion reaches 24.7 mm (16.4 mm in the base configuration and with B1 only), over the 20 mm relocation threshold. Touchdown error is about 7 mm in all arms.
+  - touchRest holds the vertical target at the surface (and presses the seat in LIFTOFF) while the external force lifts the foot.
+
+**Common root with R7:** a lightly loaded foot that touchRest keeps in frictional, surface-anchored contact (or pulls toward the surface) is dragged when the body moves fast. The effect is about 1 mm of extra slip.
+
+## 6. Performance (`tools/touchrest_perf.mjs`; V2-REF; median of the second of two repetitions, repeated twice)
+
+| scenario | adopted | + B1 | C | C2 |
+|---|---|---|---|---|
+| unload + 5 mm lift, all ticks (ms / tick, controller + actuators) | 0.112* | 0.102 | 0.101 | 0.101 |
+| released, touching phase | — | 0.111 | 0.099 | 0.100 |
+| G3 U:R hold | 0.112 | 0.113 | 0.114 | 0.114 |
+
+\* The adopted configuration never releases at 2.5 cm, so its run is a support-phase run.
+
+No measurable cost. The p95 alternates between about 0.12 and 0.22 ms from run to run in every arm (machine noise; load average 4–9 during the runs).

@@ -1645,3 +1645,28 @@ Not pushed.
 **Status:** C2 is kept as a refuted, default-off record. `touch_semantics/TOUCHREST_RESULTS.md` §0 / §3 revised.
 
 Not pushed.
+
+### TR-2: G0–G3 regression of C (informational): FAIL on G2 2.2b; attributed to touchRest
+
+**Run:** after TR-1's FAIL, as information; frozen battery and evaluator.
+
+**PASS:** V3.1–V3.4, V3.6–V3.10:
+- G1 hash-identical to qualification v2;
+- G3 17 / 17, J2a 81 / 81;
+- browser all;
+- KV6c; yaw.
+
+**FAIL V3.5 (G2 2.2b symmetry 9 / 12):**
+- touchRest raises the maximum foot slip of 25–30 N·s lateral pushes by 0.1–1.1 mm.
+- L / R then straddle G2's 20 mm relocation threshold.
+- No capacity change: falls are identical in all arms. B1 alone is 12 / 12.
+
+**Boundary harness:** passes by rule, but its outcome label changes to "foot relocated" (airborne excursion 24.7 vs 16.4 mm under the external lift), also from touchRest.
+
+**Performance:** no measurable controller cost.
+
+**Common root with R7:** the surface-anchored, lightly seated resting foot is dragged when the body moves fast.
+
+**B1 alone shows no regression.**
+
+Not pushed.
