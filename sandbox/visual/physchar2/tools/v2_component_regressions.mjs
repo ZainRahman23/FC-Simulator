@@ -30,7 +30,7 @@
 // usage: node tools/v2_component_regressions.mjs [--json=<out>]     exit code 1 on any failure
 import fs from "fs"; import path from "path"; import { fileURLToPath } from "url";
 import { loadJolt, unitQ } from "../core/v2_jolt.js"; import { generateSpec } from "../spec/v2_spec.js"; import { VARIATION_SET } from "../spec/v2_human.js";
-import { G2Sim } from "../gates/v2_g2.js"; import { G3Sim, g3Def } from "../gates/v2_g3.js"; import { G1Sim } from "../gates/v2_g1.js"; import { STAND, insetPoly, insidePoly, clampPoly, usableRegion, IK } from "../ctrl/v2_stand.js";
+import { G2Sim } from "../gates/v2_g2.js"; import { G3Sim, g3Def } from "../gates/v2_g3.js"; import { G1Sim } from "../gates/v2_g1.js"; import { STAND, insetPoly, insidePoly, clampPoly, usableRegion, IK, lockedAxisFF, shareClamp } from "../ctrl/v2_stand.js";
 import { bootSole, hull2, hull2Canonical } from "../sim/v2_geom.js"; import { pyr, decompose, ankleNeutralKPerDeg, setAnkleNeutralKOverride, PASSIVE as PASSIVE_SPEC } from "../spec/v2_joints.js"; import { V, Q, unitStates, unitEv, dnorm as dn } from "../core/v2_math.js"; import { certLevers, branchAndBound, knownSolutionPath, chain8 } from "./ik_cert_core.mjs"; import { SupportLifecycle, LIFECYCLE } from "../ctrl/v2_support.js";
 const here = path.dirname(fileURLToPath(import.meta.url)), J = await loadJolt(path.join(here, "../vendor/jolt-physics.wasm-compat.js")), results = [];
 const check = (id, name, pass, value) => { results.push({ id, name, pass: !!pass, value }); console.log(`${pass ? "PASS" : "FAIL"} ${id.padEnd(6)} ${name}: ${value}`); };
@@ -295,6 +295,17 @@ function refLegIK(ctrl, st, ev, n, pP, qP, footPose) { const P = ctrl.P, ks = ct
   check("R9.a", "ankle-stiffness override absent by default: k = the env value, else the spec default", envK != null && envK !== "" ? base === +envK : base === PASSIVE_SPEC.ankleAxialNeutralKPerDeg, `k ${base}`);
   setAnkleNeutralKOverride(0.13); const kOn = ankleNeutralKPerDeg(); setAnkleNeutralKOverride(null); const kOff = ankleNeutralKPerDeg();
   check("R9.b", "the override sets k exactly and clearing it restores the previous value", kOn === 0.13 && kOff === base, `on ${kOn}, cleared ${kOff}`); }
+// R10 unload fix (unload_fix/UNLOAD_FIX_PREREG.md): B1 / B3 default off; B1 = the generalized-force identity; B3 clamp semantics; B1 scope
+{ check("R10.a", "unload-fix flags default OFF (ffLockedAxis, shareCap)", STAND.ffLockedAxis === false && STAND.shareCap === false, `ffLockedAxis ${STAND.ffLockedAxis}, shareCap ${STAND.shareCap}`);
+  const sp = generateSpec(VARIATION_SET.find(h => h.id === "V2-REF")), j = sp.joints.find(x => x.name === "knee_L"), Rp = Q.norm([0.1, -0.2, 0.05, 0.97]), H = 1e-5;
+  const child = (x) => Q.norm(Q.mul(Q.mul(Q.mul(Rp, j.F1), pyr(x[0], x[1], x[2])), Q.conj(j.F2))), rv = (q) => { let w = q[3], v = [q[0], q[1], q[2]]; if (w < 0) { w = -w; v = v.map(a => -a); } const n = Math.hypot(...v); return V.sc(v, 2 * Math.atan2(n, w) / n); };
+  const x = [7 * Math.PI / 180, 24 * Math.PI / 180, 0], axW = [[1, 0, 0], [0, 1, 0], [0, 0, 1]].map(e => Q.rot(Q.mul(child(x), j.F2), e)), xp = x.slice(), xm = x.slice(); xp[1] += H; xm[1] -= H;
+  const jsy = V.sc(rv(Q.mul(child(xp), Q.conj(child(xm)))), 1 / (2 * H)), T = [12.5, -48.1, 31.7], tau = V.add(V.sc(axW[0], V.dot(T, axW[0])), V.sc(axW[1], lockedAxisFF(T, axW, x[0], 2))), err = Math.abs(V.dot(tau, jsy) - V.dot(T, jsy));
+  check("R10.b", "B1 lockedAxisFF reproduces the free-swing generalized force (knee, twist 7°, flexion 24°)", err <= 1e-9 * V.len(T), `|ΔQ_sy| ${err.toExponential(2)} N·m`);
+  const c = [[0.003, 1, 0.01, 0], [0.003, 0.97, 0.01, 0.003], [0.997, 0, 0.01, 1], [0.6, 0.5, 0.01, 0.6], [0.02, 0.98, 0.01, 0.02]], bad = c.filter(([t, l, lo, e]) => shareClamp(t, l, lo) !== e);
+  check("R10.c", "B3 shareClamp: a request below loadOff caps the commanded share; requests ≥ loadOff are untouched", bad.length === 0, `${c.length - bad.length}/${c.length} cases`);
+  const w = new G3Sim(J, sp, g3Def("T0"), {}), scope = sp.joints.filter((jj, k) => w.ctrl.lockedFix[k] != null).map(jj => jj.name).sort().join(","); w.destroy();
+  check("R10.d", "B1 scope = the joints with one locked swing axis, actuated twist and swing (knees, elbows)", scope === "elbow_L,elbow_R,knee_L,knee_R", scope); }
 const fail = results.filter(r => !r.pass).length; console.log(`\ncomponent regressions: ${results.length - fail}/${results.length} pass`);
 const jo = process.argv.find(a => a.startsWith("--json=")); if (jo) fs.writeFileSync(jo.slice(7), JSON.stringify({ generated: "tools/v2_component_regressions.mjs", date: new Date().toISOString().slice(0, 10), results }, null, 1));
 process.exit(fail ? 1 : 0);

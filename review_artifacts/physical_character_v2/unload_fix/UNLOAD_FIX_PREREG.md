@@ -190,3 +190,31 @@ A regression failure is not reinterpreted.
 - slow pelvis settling (D-3);
 - hip combined end-range review (TD-16);
 - any elbow consequence beyond the mapping correction itself.
+
+## Erratum E-1 (recorded 2026-10-05, BEFORE any characterization run; no result existed)
+
+**The flaw:** §3.2 set R specified release suppression as `lifecycle: {loadOff: −1}`. B3 reads the lifecycle's `loadOff` (§1). With −1, B3 would be inactive in every R run, so the B3 / B1B3 residual arms would not test B3, which invalidates CS3–CS5.
+
+**Correction (measurement mode only):** release is suppressed by a diagnostic hook in `gates/v2_unload.js`. It blocks the lifecycle's SUPPORT → UNLOADING / LIFTOFF transition and leaves `loadOff` (0.01) and every other constant unchanged.
+
+**Unchanged:** the runs, factors, criteria and thresholds. Set R remains a measurement mode, never a candidate.
+
+## Development record (before the official runs; recorded at the implementation freeze)
+
+**Development smoke checks** (4 manifest runs on V2-REF plus the bench). Not official evidence; the official runs repeat everything on the frozen code.
+
+**Harness bug found by the A7 smoke:**
+- The ankle neutral-zone stiffness is baked into the body spec at generation (`spec/v2_joints.js`).
+- The runner generated the spec before setting the 0.13 override, so the smoke runs carried k = 0 and the original arm did not reproduce the official E1a hashes.
+- **Fixed:** `unloadSpec()` sets the override before generating the spec, and `unloadSim()` asserts the spec's ankle k. After the fix, the original arm is hash-identical to the official E1a run at 1–9 s.
+
+**Implementation fix found by the A6 smoke:**
+- B1 used `Math.tan`, which broke browser = Node (Node and Chrome run different V8 versions).
+- **Fixed:** the codebase's deterministic `dtan` (`core/v2_math.js`), the project convention for anything that feeds physics. After the fix, browser = Node.
+
+**Observed in the smoke (correct configuration; criteria unchanged in response):**
+- B1B3, V2-REF L, 2.5 cm, zero share: release at 6.475 s.
+- After release, the unloaded foot did not remain TOUCHING. With no lift command it cycled TOUCHING → LIFTOFF → AIRBORNE → TOUCHDOWN → AIRBORNE … about 6 times by 11 s, without chatter under the 60 ms definition.
+- If the official runs reproduce this, A1 ("TOUCHING through the end") fails as frozen.
+
+**B1 bench smoke:** V1.1–V1.3 pass on all four joints.

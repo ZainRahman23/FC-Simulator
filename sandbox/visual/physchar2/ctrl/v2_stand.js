@@ -14,11 +14,21 @@
 //      angle is left to balance. Gains are body-scaled: K = κ·m_sup·g·L (m_sup, L: the load the joint supports and its lever in the reference
 //      pose), D = 2ζ·√(K·m_sup·L²) — no per-body tuning.
 // The controller writes nothing to bodies; Jolt owns the state; the only outputs are per-axis actuator requests.
-import { V, Q, dexp, datan2, dasin, dnorm, unitStates, unitEv } from "../core/v2_math.js";   // deterministic math only in anything that feeds physics (G3 resolution D1)
+import { V, Q, dexp, datan2, dasin, dnorm, dtan, unitStates, unitEv } from "../core/v2_math.js";   // deterministic math only in anything that feeds physics (G3 resolution D1)
 import { posedBodies } from "../spec/v2_pose.js";
 import { bootSole, hull2, hull2Canonical } from "../sim/v2_geom.js";
 import { pyr, decompose } from "../spec/v2_joints.js";
 import { SupportLifecycle, LIFECYCLE, blendPose } from "./v2_support.js";
+// UNLOAD FIX B1 — the free-swing row feed-forward of a joint with one locked swing axis (index L ∈ {1: y, 2: z}), actuated twist x and actuated free
+// swing F = 3 − L. Relative rotation q = q_swing ⊗ q_twist(t) with the locked swing at 0: the free swing DOF moves about rot_x(−t)·ê_F in body-2 axes,
+// i.e. (0, cos t, −sin t) for F = y and (0, sin t, cos t) for F = z; the twist DOF about x̂. With row torques τ_x x̂ + τ_F ê_F (no actuator on the
+// locked axis, whose constraint does no work on admissible motion) the generalized forces of the statics torque T are reproduced iff
+// τ_x = T·x̂ and τ_F = T·ê_F − tan t·(T·ê_L) (F = y) / T·ê_F + tan t·(T·ê_L) (F = z). axW: the joint's body-2 axes (world); returns τ_F.
+export function lockedAxisFF(T, axW, tw, L) { const tt = dtan(tw),   // deterministic tan (core/v2_math.js; browser = Node)
+  TL = V.dot(T, axW[L]); return L === 2 ? V.dot(T, axW[1]) - tt * TL : V.dot(T, axW[2]) + tt * TL; }
+// UNLOAD FIX B3 — the commanded left-foot share t clamped so that a foot whose requested share (left 1 − λ_R, right λ_R) is below the unloaded level
+// `lo` is never commanded more than its request; requests ≥ lo leave t untouched
+export function shareClamp(t, lam, lo) { const rL = 1 - lam, rR = lam; if (rL < lo) t = Math.min(t, Math.max(0, rL)); if (rR < lo) t = Math.max(t, 1 - Math.max(0, rR)); return t; }
 
 export const STAND = {
   kXi: 1 / 3,             // DCM gain (dimensionless). With p* = ξ + kξ(ξ − ξ_ref) the closed-loop ankle stiffness is (1 + kξ)·m·g·h and the velocity
@@ -72,6 +82,11 @@ export const STAND = {
                           // self-contact guard on the load reading (H4); hold pose captured once on the turf (H2); debounced, hysteretic transitions (H3).
                           // A non-supporting leg servos in the ACTUAL pelvis frame (world-space; measured: the posture-frame hold gave 34–44 N·m commanded-torque
                           // steps at liftoff/touchdown vs 3–7 N·m), with a soft-limit bounded IK; diagnostic lcFrame: "target" restores the G3 posture frame in contact
+  ffLockedAxis: false,    // UNLOAD FIX B1 (unload_fix/UNLOAD_FIX_PREREG.md §1; default OFF until qualified): locked-axis-consistent feed-forward. For a joint with
+                          // one locked swing axis, an actuated twist (x) and one actuated swing (knees, elbows), the free swing moves about rot_x(−t)·ŷ in
+                          // body-2 axes (the passive layer's G1 locked-axis geometry), so its actuated row must carry T·ŷ − tan t·(T·ẑ) (lockedAxisFF)
+  shareCap: false,        // UNLOAD FIX B3 (default OFF until qualified): a foot whose REQUESTED share is below the lifecycle's unloaded level (loadOff) is never
+                          // commanded more than its requested share (shareClamp); a foot with a request ≥ loadOff is untouched; nothing is lifted or forced
   timeIK: false,          // DIAGNOSTIC instrumentation (G3 tables): time the leg IK; OFF in production — not part of the controller budget (D5)
   ikRefTwist: false,      // EVALUATED, NOT ADOPTED (G3-A7). Posture IK: the redundant axial-twist DOFs (knee axial rotation, PASSIVE ankle ab/adduction) are solved at their REFERENCE
                           // values instead of their current ones, so the actuated hip / knee rotators turn the leg back until the passive ankle axis is at
@@ -102,6 +117,7 @@ export class StandController {
     const sub = (i) => [i, ...this.kids[i].flatMap(sub)];
     this.sub = spec.joints.map(j => sub(j.childIndex)); this.subFeet = this.sub.map(s => this.feet.filter(f => s.includes(f)));
     this.anchor = spec.joints.map(j => V.sub(j.at, B[j.parentIndex].origin));
+    this.lockedFix = spec.joints.map(j => (j.locked && j.locked.length === 1 && !j.locked.includes("x") ? (j.locked[0] === "z" ? 2 : j.locked[0] === "y" ? 1 : null) : null));   // B1 scope: knees, elbows
     // the usable sole region of each foot (foot-local x lateral / z forward at the sole plane): default = the boot's plantar contact hull
     // the usable region = the radial 5 mm inset of the CANONICAL hull (strictly convex vertices, canonical order), made convex again: the radial inset
     // turns a nearly straight hull vertex (lateral midfoot) into a shallow REFLEX vertex, and the controller's region operations (projection clampPoly,
@@ -194,6 +210,7 @@ export class StandController {
     const flL = lam == null ? o.minShare : Math.min(o.minShare, 1 - lam), flR = lam == null ? o.minShare : Math.min(o.minShare, lam);   // G3: the floor relaxes to the requested share
     let t = Math.max(flL, Math.min(1 - flR, ((p[0] - a[0]) * ab[0] + (p[1] - a[1]) * ab[1]) / L2)); if (!inSup[0] && inSup[1]) t = 0; if (!inSup[1] && inSup[0]) t = 1;
     if (sw && swSum >= 1) t = Math.max(1 - sw[1], Math.min(sw[0], t));   // lifecycle: a foot's load share never exceeds its support weight (continuous load acceptance)
+    if (o.shareCap && lam != null) t = shareClamp(t, lam, this.lc ? this.lc.o.loadOff : o.loadOff);   // UNLOAD FIX B3 (default off)
     const share = [t, 1 - t];
     const dl = [p[0] - (t * b[0] + (1 - t) * a[0]), p[1] - (t * b[1] + (1 - t) * a[1])], cop = cen.map((q, n) => clampPoly(polysSup[n], [q[0] + dl[0], q[1] + dl[1]]));
     // ORDER-INDEPENDENT (G2 final-run fix: the first version offered the remainder to the left foot first — an L/R asymmetry, measured as an
@@ -260,7 +277,8 @@ export class StandController {
       ff.push(T);
       const R2F2 = Q.mul(st[d.child].rot, d.F2), axW = [[1, 0, 0], [0, 1, 0], [0, 0, 1]].map(e => Q.rot(R2F2, e)), g = this.gain[k], isAnkle = g.base === "ankle";
       const q = ev.qs[k], qr = ikT && ikT[k] ? ikT[k] : this.qref[k], sg = q[0] * qr[0] + q[1] * qr[1] + q[2] * qr[2] + q[3] * qr[3] < 0 ? -1 : 1, dq = Q.mul(Q.conj(q), qr.map(x => x * sg)), e = [2 * dq[0], 2 * dq[1], 2 * dq[2]];
-      cmd.push(KEYS.map((key, i) => { const tff = V.dot(T, axW[i]), ak = this.spec.joints[k].def.axes[key];
+      const Lk = o.ffLockedAxis ? this.lockedFix[k] : null, tffB1 = Lk != null ? lockedAxisFF(T, axW, decompose(q).tw, Lk) : 0;   // UNLOAD FIX B1 (default off)
+      cmd.push(KEYS.map((key, i) => { const tff = Lk != null && i === 3 - Lk ? tffB1 : V.dot(T, axW[i]), ak = this.spec.joints[k].def.axes[key];
         if (sw && this.legSide[k] >= 0 && sw[this.legSide[k]] < 1 && ikT && ikT[k]) { const sd = this.legSide[k], s1 = sw[sd], a1 = LC[sd].a, gs = this.gainSwing[k], gf = this.gainFree[k];   // lifecycle: continuous in s (support) and a (airborne)
           // non-supporting hip / knee: in contact (a = 0) G3's validated hold (posture) gains; airborne (a = 1) the swing servo
           const Kn = isAnkle ? gs.K : g.K + a1 * (gs.K - g.K), Dn = isAnkle ? gs.D : g.D + a1 * (gs.D - g.D);   // the ankle of a non-supporting foot: the swing ankle gains in every state (G3's free-leg 1.5 N·m/rad let a held foot tilt onto 2 pieces)
