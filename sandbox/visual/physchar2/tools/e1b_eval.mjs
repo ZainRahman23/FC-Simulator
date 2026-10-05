@@ -1,17 +1,19 @@
 // ═══ physchar2/tools/e1b_eval.mjs — E1b criteria (FROZEN: final_pre_e1a/E1_PREREGISTRATION.md §5 E1b-1 … 18; operational definitions e1a/E1B_HARNESS.md §2, committed
 // before any E1b run). Built from tools/e1a_eval.mjs: E1a's computations unchanged except the §5 / E1B_HARNESS changes (E1b-3, E1b-5, E1b-8, P15, E1b-16 … 18).
-// usage: node tools/e1b_eval.mjs --dir=<runs dir> [--config=V2|PSTAR] [--out=<json>]   (files: e1b_<body>_L_none.json.gz × 8, e1b_V2-REF_R_none.json.gz, e1b_V2-REF_L_none_rep.json.gz,
+// usage: node tools/e1b_eval.mjs --dir=<runs dir> [--config=V2|PSTAR|PSTAR2] [--out=<json>]   (files: e1b_<body>_L_none.json.gz × 8, e1b_V2-REF_R_none.json.gz, e1b_V2-REF_L_none_rep.json.gz,
 //        e1b_<V2-REF|V2-165-62|V2-198-92>_L_<PF|PB|PL|PR|YAW|P15>.json.gz)
-import fs from "fs"; import path from "path"; import zlib from "zlib";
+import fs from "fs"; import path from "path"; import zlib from "zlib"; import { fileURLToPath } from "url";
 const arg = (k, d) => (process.argv.find(a => a.startsWith(`--${k}=`)) || `--${k}=${d}`).split("=").slice(1).join("=");
 const DIR = arg("dir", "."), OUT = arg("out", ""), CONFIG = arg("config", "V2"), rd = (f) => JSON.parse(zlib.gunzipSync(fs.readFileSync(path.join(DIR, f))));
 const BODIES = ["V2-REF", "V2-165-62", "V2-198-92", "V2-175-70", "V2-190-85", "V2-short-legs", "V2-long-legs", "V1-matched"];
 const mx = (a) => a.reduce((m, x) => Math.max(m, x), -Infinity), mn = (a) => a.reduce((m, x) => Math.min(m, x), Infinity), f2 = (x, d = 2) => (x == null || !isFinite(x) ? "—" : x.toFixed(d));
-function judge(r) {
+export function judge(r, cfgName = CONFIG, opts = {}) { const CONFIG = cfgName;   // opts (e1b_fix validation battery only): { hz: allowed physics rate, yawk: the footYaw capacity setting (default true = nominal) }
   if (!r.isE1b || r.liftM !== 0.02) throw new Error(`${r.human} ${r.side}: lift ${r.liftM} m is not the preregistered 20 mm`); const P = r.pert || "none", pert = P !== "none", P5 = pert && P !== "P15", HE = r.events.pertT, pEnd = HE != null ? HE + 0.1 : null;
-  const c = r.cfg; if (!(c.kneeV2K && c.ankleK === 0.13 && c.lifecycle && c.ikRefTwist && c.contactSupport && c.holdUnloaded && c.ikFeasible && Math.abs(c.hz - 240) < 1e-9 && c.pelvisDrop)) throw new Error("configuration");
+  const c = r.cfg; if (!(c.kneeV2K && c.ankleK === 0.13 && c.lifecycle && c.ikRefTwist && c.contactSupport && c.holdUnloaded && c.ikFeasible && Math.abs(c.hz - (opts.hz ?? 240)) < 1e-9 && c.pelvisDrop)) throw new Error("configuration");
   // configuration VERSION (preswing/PRESWING_VALIDATION_PREREG.md §5): --config=V2 (default; the official runs carry no version field) or PSTAR; the criteria below are unchanged
-  if (CONFIG === "PSTAR" ? !(c.config === "PSTAR" && c.ffLockedAxis && c.touchRest && c.lcVff === "lin" && c.reseed) : !((c.config == null || c.config === "V2") && !c.ffLockedAxis && !c.touchRest && !c.lcVff && !c.reseed)) throw new Error("configuration version");
+  // PSTAR2 (e1b_fix/E1B_FIX_DESIGN.md, e1b_fix/E1B_FIX_VALIDATION_PREREG.md): PSTAR + the active foot-yaw path at its nominal capacity + the quintic abort put-down
+  if (CONFIG === "PSTAR" ? !(c.config === "PSTAR" && c.ffLockedAxis && c.touchRest && c.lcVff === "lin" && c.reseed) : CONFIG === "PSTAR2" ? !(c.config === "PSTAR2" && c.ffLockedAxis && c.touchRest && c.lcVff === "lin" && c.reseed && c.footYaw === (opts.yawk ?? true) && c.lcPutDown && c.footYawAxes === 2)
+    : !((c.config == null || c.config === "V2") && !c.ffLockedAxis && !c.touchRest && !c.lcVff && !c.reseed)) throw new Error("configuration version");
   const R = r.rows, H = r.events, n = r.lifted, m = r.stance, W = r.W, C = {}, add = (id, pass, v) => { C[id] = { pass: !!pass, v }; };
   const lifted = H.tL != null, hov = R.filter(x => x.ph === "hover"), win = lifted ? R.filter(x => x.t >= H.tL - 1e-9 && x.t < H.tL + r.protocol.LT + r.protocol.HOV + r.protocol.RT - 1e-9) : [], hovU = pert && HE != null ? hov.filter(x => x.t < HE - 1e-9) : hov;
   // transitions per foot from the per-tick lifecycle states
@@ -39,8 +41,9 @@ function judge(r) {
   { const T = tr[n], la = T.filter(x => x.from === "LIFTOFF" && x.to === "AIRBORNE").length, td = T.filter(x => x.to === "TOUCHDOWN").length, bounce = T.filter(x => x.from === "TOUCHDOWN" && x.to === "AIRBORNE").length;
     add("E1a-6", la === 1 && td === 1 && bounce === 0 && chatter[0] === 0 && chatter[1] === 0 && !H.unloadTimeout && lifted, `LIFTOFF→AIRBORNE ${la}, TOUCHDOWN ${td}, bounce ${bounce}, re-entries < 60 ms L ${chatter[0]} / R ${chatter[1]}, unload ${H.unloadTimeout ? "TIME-OUT" : lifted ? "reached (lift at " + H.tL.toFixed(3) + " s)" : "—"}; lifted-foot path ${T.map(x => x.to).join("→")}`); }
   // E1a-7 no discontinuous torque commands (t ≥ 0.5 s: the G3 initial-contact-settle convention); contact-onset exception: the onset tick and the next tick
-  { const exc = new Set(); R.forEach((x, i) => { if (x.onset[0] || x.onset[1]) { exc.add(i); exc.add(i + 1); } });
-    const A = R.map((x, i) => ({ x, i })).filter(o => o.x.t >= 0.5 - 1e-9), badA = A.filter(o => o.x.dTau > (exc.has(o.i) ? 25 : 10)), badC = A.filter(o => o.x.dTau0 > 30), wA = A.reduce((b, o) => (o.x.dTau > b.x.dTau ? o : b), A[0]), wC = A.reduce((b, o) => (o.x.dTau0 > b.x.dTau0 ? o : b), A[0]);
+  // at a physics rate other than 240 Hz (e1b_fix validation battery RATE set only): the same torque RATE (limits × 240 / hz) and an onset window of the same duration (≥ 2 ticks)
+  { const exc = new Set(), rs = c.hz === 240 ? 1 : 240 / c.hz, nw = c.hz === 240 ? 2 : Math.max(2, Math.ceil(2 * c.hz / 240)); R.forEach((x, i) => { if (x.onset[0] || x.onset[1]) for (let j = 0; j < nw; j++) exc.add(i + j); });
+    const A = R.map((x, i) => ({ x, i })).filter(o => o.x.t >= 0.5 - 1e-9), badA = A.filter(o => o.x.dTau > (exc.has(o.i) ? 25 : 10) * rs), badC = A.filter(o => o.x.dTau0 > 30 * rs), wA = A.reduce((b, o) => (o.x.dTau > b.x.dTau ? o : b), A[0]), wC = A.reduce((b, o) => (o.x.dTau0 > b.x.dTau0 ? o : b), A[0]);
     const wN = A.filter(o => !exc.has(o.i)).reduce((b, o) => (!b || o.x.dTau > b.x.dTau ? o : b), null);
     add("E1a-7", badA.length === 0 && badC.length === 0, `applied Δτ max ${f2(wA.x.dTau)} N·m (${wA.x.dTauWho} at ${wA.x.t.toFixed(3)} s${exc.has(wA.i) ? ", contact-onset window" : ""}); outside onset windows max ${f2(wN.x.dTau)} N·m (${wN.x.dTauWho} at ${wN.x.t.toFixed(3)} s); commanded Δτ0 max ${f2(wC.x.dTau0)} N·m (${wC.x.dTau0Who} at ${wC.x.t.toFixed(3)} s); violations ${badA.length} / ${badC.length}`); }
   // E1a-8 no unexplained energy creation
@@ -77,7 +80,7 @@ function judge(r) {
   // E1b-16 (5 N·s / YAW): recovered without abort or foot relocation
   if (P5) add("E1b-16", H.abortT == null && !/fell|step|relocated/.test(r.summary.outcome || ""), `outcome ${r.summary.outcome}; abort ${H.abortT == null ? "none" : H.abortT.toFixed(3) + " s"}`);
   // E1b-17 (YAW): stance-ankle ab/adduction excursion from the impulse onset ≤ 10°, back within 2° within 3 s
-  if (P === "YAW" && HE != null) { const i0 = R.findIndex(x => x.t >= HE - 1e-9), a0 = R[i0].jnt.ankle[m][1], seg = R.filter(x => x.t >= HE - 1e-9 && x.t <= HE + 3 + 1e-9), ex = mx(seg.map(x => Math.abs(x.jnt.ankle[m][1] - a0))), end = seg.length ? Math.abs(seg[seg.length - 1].jnt.ankle[m][1] - a0) : 99;
+  if ((P === "YAW" || P === "YAWN") && HE != null) { const i0 = R.findIndex(x => x.t >= HE - 1e-9), a0 = R[i0].jnt.ankle[m][1], seg = R.filter(x => x.t >= HE - 1e-9 && x.t <= HE + 3 + 1e-9), ex = mx(seg.map(x => Math.abs(x.jnt.ankle[m][1] - a0))), end = seg.length ? Math.abs(seg[seg.length - 1].jnt.ankle[m][1] - a0) : 99;
     add("E1b-17", ex <= 10 && end <= 2 && seg.length && seg[seg.length - 1].t >= HE + 3 - 0.01, `stance-ankle ab/adduction excursion max ${f2(ex)}° (≤ 10); at +3 s ${f2(end)}° (≤ 2)`); }
   // E1b-18 (P15): recovered, or the abort puts the foot down (TOUCHDOWN ≤ 0.4 s after the trigger) and returns to bilateral without a fall; stance slip ≤ 5 mm; no hard-limit excursion
   if (P === "P15") { const f0 = r.foot0[m], sl = mx(R.map(x => Math.hypot(x.foot[m].p[0] - f0.pos[0], x.foot[m].p[2] - f0.pos[2]) * 1000)), hmin = mn(R.map(x => mn(x.hard))), last = R[R.length - 1], fell = /fell|step/.test(r.summary.outcome || "");
@@ -90,10 +93,13 @@ function judge(r) {
     events: { tL: H.tL, tR: H.tR, tA: H.tA, tEnd: H.tEnd, cleared: H.cleared, clearReason: H.clearReason, abortT: H.abortT, unloadTimeout: H.unloadTimeout }, outcome: r.summary.outcome,
     lifecycle: tr.map(T => T.map(x => `${x.t.toFixed(3)} ${x.from}→${x.to}`)), yawAtHoverEnd: hov.length ? hov[hov.length - 1].yaw : null };
   return { C, rep }; }
+export const idsOfRun = (P, rep = false) => (P === "P15" ? ["E1a-7", "E1a-8", "E1a-9p15", "E1a-10", "E1b-18"] : P !== "none" && !rep ? [...IDS, "E1b-16", ...(P === "YAW" || P === "YAWN" ? ["E1b-17"] : [])] : IDS);
+export const nm = (id) => (id === "E1a-16" || id === "E1a-17" ? id.replace("E1a-", "E1b-knee") : id.replace("E1a-", "E1b-"));   // erratum E1b-e1 (e1a/E1B_RESULTS.md §4): E1a-16 / -17 (knee envelope / path) get distinct keys — they collided with the real E1b-16 / -17
+const IDS = ["E1a-1", "E1a-2", "E1a-3", "E1a-4", "E1a-5", "E1a-6", "E1a-7", "E1a-8", "E1a-9", "E1a-10", "E1a-12", "E1a-13", "E1a-14", "E1a-16", "E1a-17"];
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
 const runs = {}, PB = ["V2-REF", "V2-165-62", "V2-198-92"], PS = ["PF", "PB", "PL", "PR", "YAW", "P15"];
 const files = [...BODIES.map(b => [`${b}|L`, `e1b_${b}_L_none.json.gz`]), ["V2-REF|R", "e1b_V2-REF_R_none.json.gz"], ["V2-REF|L|rep", "e1b_V2-REF_L_none_rep.json.gz"], ...PB.flatMap(b => PS.map(p => [`${b}|L|${p}`, `e1b_${b}_L_${p}.json.gz`]))];
 for (const [k, f] of files) { const r = rd(f); runs[k] = { r, j: judge(r) }; }
-const IDS = ["E1a-1", "E1a-2", "E1a-3", "E1a-4", "E1a-5", "E1a-6", "E1a-7", "E1a-8", "E1a-9", "E1a-10", "E1a-12", "E1a-13", "E1a-14", "E1a-16", "E1a-17"], nm = (id) => id.replace("E1a-", "E1b-");
 const main = [...BODIES.map(b => `${b}|L`), "V2-REF|R"], pert5 = PB.flatMap(b => ["PF", "PB", "PL", "PR", "YAW"].map(p => `${b}|L|${p}`)), p15 = PB.map(b => `${b}|L|P15`), out = { runs: {}, criteria: {} };
 const idsOf = (k) => (k.endsWith("|P15") ? ["E1a-7", "E1a-8", "E1a-9p15", "E1a-10", "E1b-18"] : k.split("|").length === 3 && !k.endsWith("|rep") ? [...IDS, "E1b-16", ...(k.endsWith("|YAW") ? ["E1b-17"] : [])] : IDS);
 for (const k of [...main, ...pert5, ...p15]) { const { j } = runs[k]; console.log(`\n■ ${k} — outcome ${j.rep.outcome}; lift ${f2(j.rep.events.tL, 3)} s, clear ${f2(j.rep.events.cleared, 3)} s (${j.rep.events.clearReason}), end ${f2(j.rep.events.tEnd, 2)} s`);
@@ -107,3 +113,4 @@ const all = cids.every(id => out.criteria[nm(id)].pass); out.criteria["E1b-15"] 
 console.log(`\n══ E1b criteria ══`); for (const [id, c] of Object.entries(out.criteria)) console.log(`  ${c.pass ? "PASS" : "FAIL"} ${id}${c.n ? ` (${c.n} runs)` : ""}${c.failing && c.failing.length ? "  failing: " + c.failing.join(", ") : ""}${c.v ? "  " + c.v : ""}`);
 const pass = all && out.criteria["E1b-11"].pass; out.E1b = pass ? "PASS" : "FAIL"; console.log(`\nE1b RESULT: ${out.E1b}`);
 if (OUT) fs.writeFileSync(OUT, JSON.stringify(out, null, 1));
+}

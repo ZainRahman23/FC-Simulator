@@ -7,6 +7,7 @@
 import { V, Q, hashNums, rad } from "../core/v2_math.js";
 import { G1Sim, G1_WORLD } from "./v2_g1.js";
 import { ActuatorLayer } from "../sim/v2_actuation.js";
+import { footYawFromSubtalar } from "../spec/v2_actuators.js";
 import { StandController, polyDist, insidePoly } from "../ctrl/v2_stand.js";
 import { solveStance, STANCE } from "../ctrl/v2_stance.js";
 import { AnkleProbe } from "./v2_g1_ankle.js";
@@ -46,7 +47,8 @@ export class G2Sim extends G1Sim {
     const sc = buildScenario(spec, key, opts);
     super(J, spec, typeof key === "string" ? key : "custom", { ...opts, scenario: sc, cfg: { ...G2_WORLD, ...(opts.cfg || {}) } });
     this.g2 = sc.g2; this.stance = sc.g2.stance; this.base = sc.g2.base;
-    this.act = new ActuatorLayer(spec, this.w, this.P, opts.act || {});
+    const fy = opts.stand && opts.stand.footYaw ? opts.stand.footYaw : null;   // stand.footYaw (E1b work; default off): true = the evidence-based capacity, a number = its axial share k, or a capacity object
+    this.act = new ActuatorLayer(spec, this.w, this.P, { ...(opts.act || {}), ...(fy ? { footYaw: fy === true ? footYawFromSubtalar() : typeof fy === "number" ? footYawFromSubtalar(fy) : fy } : {}) });
     this.ctrl = new StandController(spec, this.P, this.stance, opts);
     this.probes = opts.probes === false ? null : ["L", "R"].map(s => new AnkleProbe(this, s));
     this.ledger = { Wact: 0, Wext: 0, Jext: [0, 0, 0], Hext: [0, 0, 0], damping: 0, E0: null, residual: 0, authorityWrites: 0 };

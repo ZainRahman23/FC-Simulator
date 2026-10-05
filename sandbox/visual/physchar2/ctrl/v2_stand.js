@@ -93,6 +93,12 @@ export const STAND = {
                           // SURFACE (vertical target = the anchor height, not the foot's own height) — and while in contact RESTS on it with a seating force of
                           // loadOff / 2 of body weight (the midpoint of the lifecycle's own "unloaded" band [0, loadOff)), scaled (1 − s)(1 − a), through its own
                           // leg's feed-forward (finite actuators; the other foot's commanded force reduced by the same amount). = lcTouch { vert: "anchor", seat: loadOff / 2 }
+  lcPutDown: false,       // EXPERIMENTAL (gates/v2_g3.js supervised(); default OFF; e1b_fix/ABORT_PUTDOWN_DESIGN.md): the single-support abort puts an airborne foot down along a
+                          // QUINTIC from the current reference state to the contact anchor over the swing servo's bandwidth duration (ctrl/v2_swing.js; BLF SwingFootPlanner
+                          // min-jerk segment), held at the anchor until the lifecycle's physical contact; supersedes lcAbortRamp when both are set
+  footYaw: null,          // EXPERIMENTAL (default OFF = null; read by gates/v2_g2.js → the actuator layer): the active foot-yaw path's capacity, e.g. footYawFromSubtalar()
+                          // (spec/v2_actuators.js) — an actuator on the ankle's passive-only foot ab/adduction axis sharing the subtalar budget with inversion; the
+                          // controller's existing ankle rows drive it (support: K 0, D ankleD, statics feed-forward; non-support: the swing ankle gains)
   lcAbortRamp: false,     // DIAGNOSTIC (gates/v2_g3.js supervised(); default OFF): the single-support abort puts an airborne foot down CONTINUOUSLY (target ramp to the anchor over the lifecycle's release) instead of clearing its swing target in one tick
   lcVff: false,           // DIAGNOSTIC (preswing/; default OFF): desired-velocity feed-forward for a NON-SUPPORTING leg — the target joint velocity ω* = d/dt of its IK
                           // targets (backward difference) enters as τ0 += (1 − s)(D + dt·K)·ω*, i.e. the implicit damping acts on (ω − ω*) instead of ω: a foot whose

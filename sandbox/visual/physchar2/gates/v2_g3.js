@@ -4,6 +4,7 @@
 // Nothing here writes a body or assigns a foot load — the request is an objective, the physics decides (brief §1, §2). Measurement adds the
 // load fractions, support state, unloaded-foot behaviour, CoP seam crossings, pelvis roll / trunk lean, drift and the transfer classification.
 import { blendPose } from "../ctrl/v2_support.js";
+import { refState, segment, segAt, putDownDuration } from "../ctrl/v2_swing.js";
 import { V, Q } from "../core/v2_math.js";
 import { G2Sim, DIRS } from "./v2_g2.js";
 import { polyDist, insidePoly } from "../ctrl/v2_stand.js";
@@ -24,13 +25,29 @@ export const asRequest = (fn) => (t) => { const [lam, dl, ddl] = fn.d ? fn.d(t) 
 // is not, nothing rescues it without a step. (First version tested "ξ outside the stance foot" at |λ − 0.5| > 0.05 — that fired at the start
 // of every ramp, where ξ is legitimately between the feet; measured, replaced before any gate run.)
 export function supervised(fn, opts = {}) { const margin = opts.margin ?? 0.01, dwell = opts.dwell ?? 0.02, abortDur = opts.abortDur ?? 0.6, minShare = opts.minShare ?? 0.85, abortFF = opts.abortFF ?? false, req = asRequest(fn);
-  return (t, ctrl) => { const g = ctrl.g3 || (ctrl.g3 = { aborted: null, from: 0.5, out: 0, bilateralOk: null, prevT: null }), I = ctrl.info, dtt = g.prevT == null ? 0 : t - g.prevT; g.prevT = t; let r = req(t);   // I: the previous tick's controller state (causal)
+  return (t, ctrl) => { const g = ctrl.g3 || (ctrl.g3 = { aborted: null, from: 0.5, out: 0, bilateralOk: null, prevT: null }), I = ctrl.info, dtt = g.prevT == null ? 0 : t - g.prevT; g.prevT = t; let r = req(t); if (dtt > 0 && ctrl.o.lcPutDown) g.dt = dtt;   // I: the previous tick's controller state (causal)
     if (g.aborted == null && I && I.lam != null && Math.max(I.lam, 1 - I.lam) >= minShare) { const st = I.lam > 0.5 ? 1 : 0;
       g.out = polyDist(I.polys[st], I.pRaw) < -margin ? g.out + dtt : 0;
       if (g.out >= dwell - 1e-9) { g.aborted = t; g.from = r.lam; g.bilateralOk = polyDist(I.support, I.xi) >= 0; } }
     // EXPERIMENTAL lifecycle (H9): with a foot OFF the turf, the abort first puts it down on its contact anchor (swing target cleared) and holds the
     // request at stance; the return to bilateral starts only once that foot is in contact again (then load acceptance follows the request)
-    if (g.aborted != null && ctrl.lc) { const air = ctrl.lc.feet.findIndex(f => f.state === "AIRBORNE" || f.state === "LIFTOFF");
+    // ABORT PUT-DOWN (stand option lcPutDown; default OFF; e1b_fix/ABORT_PUTDOWN_DESIGN.md): the airborne foot's swing target follows a QUINTIC from the
+    // CURRENT REFERENCE state (target pose, velocity, acceleration — second-order differences of the commanded target's last ticks, the BLF re-plan pattern)
+    // to the contact anchor (captured at the abort, then fixed) at rest, over the swing servo's bandwidth duration putDownDuration(swingHz); it then holds
+    // the anchor. The trajectory only schedules the reference: the lifecycle's physical contact decides touchdown; hand-back (swing target cleared) at the
+    // first contact-state tick once the segment has ended (as the frozen protocol's replace); the request stays at stance until contact (H9). Never declares contact
+    if (ctrl.o.lcPutDown && ctrl.lc) { const H = g.refHist || (g.refHist = [[], []]);
+      if (g.aborted == null) for (const n of [0, 1]) { const sw = ctrl.lc.feet[n].swing; if (sw) { H[n].push({ pos: sw.pos.slice(), rot: sw.rot.slice() }); if (H[n].length > 3) H[n].shift(); } else H[n].length = 0; }
+      if (g.aborted != null) { const air = ctrl.lc.feet.findIndex(f => f.state === "AIRBORNE" || f.state === "LIFTOFF"); let P = g.putDown;
+        if (!P && air >= 0 && ctrl.lc.feet[air].swing) { const f = ctrl.lc.feet[air], goal = { pos: f.hold.pos.slice(), rot: f.hold.rot.slice() }, T = putDownDuration(ctrl.lc.o.swingHz), ref = refState(H[air].length ? H[air] : [{ pos: f.swing.pos, rot: f.swing.rot }], goal.rot, g.dt);
+          P = g.putDown = { n: air, t0: t, seg: segment(ref, goal, T), log: { t0: t, T, v0: ref.v.slice(), a0: ref.a.slice(), contactT: null, handBackT: null } }; (g.putDownLog || (g.putDownLog = [])).push(P.log); }
+        if (P) { const f = ctrl.lc.feet[P.n], inAir = f.state === "AIRBORNE" || f.state === "LIFTOFF", e = segAt(P.seg, t - P.t0);
+          if (!inAir && P.log.contactT == null) P.log.contactT = t;
+          if (!inAir && e.done) { ctrl.lc.setSwingTarget(P.n, null); P.log.handBackT = t; g.putDown = null; }
+          else ctrl.lc.setSwingTarget(P.n, { pos: e.pos, rot: e.rot }); }
+        if (air >= 0) { g.rampFrom = null; return { lam: g.from, dl: 0, ddl: 0 }; }
+        if (g.rampFrom == null) g.rampFrom = t; } }
+    else if (g.aborted != null && ctrl.lc) { const air = ctrl.lc.feet.findIndex(f => f.state === "AIRBORNE" || f.state === "LIFTOFF");
       // DIAGNOSTIC (default off; stand option lcAbortRamp, e1a/E1B results): CONTINUOUS put-down — instead of clearing the swing target in one tick (a target step of the
       // lift height: measured 20 mm → 114–218 N·m τ0 steps in E1b's 15 N·s aborts), the target moves min-jerk from where it was to the contact anchor over the lifecycle's
       // own `release` time, and is handed back (cleared) once the foot is in contact and the ramp has ended

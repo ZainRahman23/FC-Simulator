@@ -33,6 +33,11 @@ export class ActuatorLayer {
     this.ax = spec.joints.map((j, k) => KEYS.map((key, i) => { const c = j.capacity[key], def = j.def.axes[key]; if (!c) return null;
       const base = j.name.replace(/_[LR]$/, "");
       return { k, i, key: def.key, s: def.s, base, plus: { ...c.plus, g: andersonOf(base, def.key, c.plus.dir) }, minus: { ...c.minus, g: andersonOf(base, def.key, c.minus.dir) } }; }));
+    // ACTIVE FOOT-YAW PATH (opts.footYaw = footYawCapacity(...); DEFAULT OFF): an actuator on the ankle's passive-only foot ab/adduction axis, from the actuator layer only (the spec
+    // capacity table and the passive layer are untouched). Parameter + direction = s · anatomical (adduction positive), as jointAxisCapacities.
+    if (opts.footYaw) spec.joints.forEach((j, k) => { if (!/^ankle_/.test(j.name)) return; KEYS.forEach((key, i) => { const def = j.def.axes[key]; if (!def || def.key !== "fabd" || this.ax[k][i]) return;
+      const M = this.M, pos = opts.footYaw.add, neg = opts.footYaw.abd, plus = def.s > 0 ? pos : neg, minus = def.s > 0 ? neg : pos;
+      this.ax[k][i] = { k, i, key: "fabd", s: def.s, base: "ankle", plus: { dir: plus.dir, Nm: plus.Tiso * M, cap: plus, g: null }, minus: { dir: minus.dir, Nm: minus.Tiso * M, cap: minus, g: null }, footYaw: true }; }); });
     this.a = this.ax.map(r => r.map(x => (x ? [0, 0] : null)));          // activation [+, −] per axis — controller-state (snapshot / hash)
     this.plan = null; this.led = this.ax.map(r => r.map(x => (x ? { W: 0, satTicks: 0, satPlus: 0, satMinus: 0, peakFrac: 0, sumFrac: 0, n: 0, peakNm: 0, overCap: 0 } : null)));
     this.ticks = 0;
@@ -49,12 +54,19 @@ export class ActuatorLayer {
     const P = this.P, out = [];
     for (const d of P.jd) { const k = d.k, R2F2 = Q.mul(st[d.child].rot, d.F2), axW = E.map(e => Q.rot(R2F2, e)), wrel = V.sub(st[d.child].w, st[d.parent].w);
       const kneeDeg = this.kneeOf[k] != null ? P.anat(P.jd[this.kneeOf[k]], ev.qs[this.kneeOf[k]], "flex") : null;
-      const rows = KEYS.map((key, i) => { const x = this.ax[k][i]; if (!x) return null; const c = cmd[k] && cmd[k][i]; if (!c) return { off: true };
+      const row = (i, share) => { const x = this.ax[k][i]; if (!x) return null; const c = cmd[k] && cmd[k][i]; if (!c) return { off: true };
         const w = V.dot(wrel, axW[i]), anat = P.anat(d, ev.qs[k], x.key) * 1, K = Math.max(0, c.K), D = Math.max(ACT.D_MIN, c.D);
-        const capP = this.capFull(x, 1, anat, w, kneeDeg), capM = this.capFull(x, -1, anat, -w, kneeDeg), req = c.tau0 - (D + dt * K) * w;
+        let capP = this.capFull(x, 1, anat, w, kneeDeg), capM = this.capFull(x, -1, anat, -w, kneeDeg); const req = c.tau0 - (D + dt * K) * w;
+        if (share != null) { capP *= share; capM *= share; }
         const uP = req > 0 ? Math.min(1, req * (1 + ACT.U_MARGIN) / Math.max(1e-9, capP) + ACT.U_TONE) : ACT.U_TONE, uM = req < 0 ? Math.min(1, -req * (1 + ACT.U_MARGIN) / Math.max(1e-9, capM) + ACT.U_TONE) : ACT.U_TONE;
         const a = this.a[k][i]; if (init) { a[0] = uP; a[1] = uM; } else { a[0] = activationStep(a[0], uP, dt); a[1] = activationStep(a[1], uM, dt); }
-        return { K, D, tau0: c.tau0, req, capP, capM, hi: a[0] * capP, lo: -a[1] * capM, w, anat }; });
+        return { K, D, tau0: c.tau0, req, capP, capM, hi: a[0] * capP, lo: -a[1] * capM, w, anat, ...(share != null ? { share } : {}) }; };
+      // the ACTIVE FOOT-YAW axis (opts.footYaw only) is computed AFTER the joint's other axes: it shares the subtalar muscles' capacity with inversion / eversion,
+      // |τ_inv|/T_inv + |τ_yaw|/T_yaw ≤ 1 (the conservative sum bound, YAW_PATH_REVIEW), with INVERSION FIRST — the yaw path gets the remainder of the inversion row's
+      // budget at its request (clipped to its activation limits), so frontal balance is never starved by yaw; without footYaw the order and values are unchanged
+      const rows = KEYS.map((key, i) => (this.ax[k][i] && this.ax[k][i].footYaw ? undefined : row(i, null)));
+      KEYS.forEach((key, i) => { if (rows[i] !== undefined) return; const iv = KEYS.findIndex((kk, j) => this.ax[k][j] && this.ax[k][j].key === "inv"), r = iv >= 0 ? rows[iv] : null;
+        const used = r && !r.off ? Math.min(1, Math.abs(Math.min(r.hi, Math.max(r.lo, r.req))) / Math.max(1e-9, r.req >= 0 ? r.capP : r.capM)) : 0; rows[i] = row(i, 1 - used); });
       out.push({ k, axW, rows, wrel }); }
     return (this.plan = { joints: out, dt, applied: false });
   }

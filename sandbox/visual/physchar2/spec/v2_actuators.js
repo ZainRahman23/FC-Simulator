@@ -52,6 +52,15 @@ export const gTheta = (coef, theta) => { if (!coef) return 1; const v = dcos(coe
 // activation first-order step (exact exponential; deterministic dexp)
 export function activationStep(a, u, dt) { const tau = u > a ? ACTIVATION.tauAct : ACTIVATION.tauDeact; return u + (a - u) * dexp(-dt / tau); }
 // instantaneous capacity (N·m) of one axis / direction
+// ACTIVE FOOT-YAW PATH (E1b-17 work, e1a/E1B_*; DEFAULT OFF; NOT part of CAPACITY so jointAxisCapacities / the passive layer are unchanged): the subtalar-type active
+// path our orthogonal ankle omits — capacity per direction (N·m/kg) set from evidence in footYawCapacity(); only the actuator layer reads it (sim/v2_actuation.js opts.footYaw)
+export function footYawCapacity(Tadd, Tabd, src) { return { add: A("foot adduction", Tadd, src, null, "", 12, 0.45, 1.20), abd: A("foot abduction", Tabd, src, null, "", 12, 0.45, 1.20) }; }
+// the evidence-based capacity (e1b_fix/research/YAW_PATH_REVIEW.md): the foot-axial share of the APPROVED subtalar (inversion / eversion) capacity, T_yaw = k·T_inv|ev,
+// k = the vertical direction cosine of the subtalar axis (sin of its elevation: Inman 0.669, gait2392 0.605 → nominal 0.64; review range 0.60–0.67, sensitivity
+// k 0.38 / 0.90 ≈ 15 / 35 N·m at 78 kg). Adduction (supination side) pairs with inversion, abduction (pronation side) with eversion. Nominal: 0.32 / 0.288 N·m/kg (25.0 / 22.5 N·m at 78 kg)
+export const FOOT_AXIAL_SHARE = 0.64;
+export function footYawFromSubtalar(k = FOOT_AXIAL_SHARE) { const [inv, ev] = CAPACITY.ankle.inv;
+  return footYawCapacity(k * inv.Tiso, k * ev.Tiso, `${k} × subtalar ${inv.dir} / ${ev.dir} capacity (axial share of the subtalar axis; YAW_PATH_REVIEW) [H]→[ENG]`); }
 export function capacity(cap, M, w, opt = {}) {
   const s = opt.strength ?? 1, a = opt.activation ?? 1, phi = opt.fatigue ?? 0, c = opt.injury ?? 1, g = opt.gTheta ?? 1;
   return s * cap.Tiso * M * g * fOmega(cap, w) * a * (1 - phi) * c;
