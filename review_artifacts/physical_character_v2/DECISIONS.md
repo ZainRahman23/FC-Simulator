@@ -1838,3 +1838,46 @@ None changes set E.
 PSTAR2 is not adopted. No E2 implementation, preregistration or run.
 
 Not pushed.
+
+### P15-1: P15 capture / reuse study → in-place architecture selected by evidence; timing design needs your decision (`p15_capture/`)
+
+**Source:** `sources/2026-10-05_user_instruction_p15_capture_evidence_reuse.md`. No code, criterion or parameter changed. Diagnostic runs only.
+
+**Research:**
+- IHMC code (`p15_capture/research/IHMC_EMERGENCY_SWING.md`):
+  - walking: speed-up + capture-region step adjustment + **full support on the measured foot-switch tick**;
+  - **`FlamingoStanceState`** (one foot lifted, ICP outside the stance foot but inside the two-foot hull): a **straight-down in-place touchdown**, support on the measured switch.
+- BLF / walking-controllers / PyPnC / literature (`research/LITERATURE_CAPTURE.md`):
+  - timing + location adaptation (Griffin / Khadiv);
+  - planned contact drives states, measured contact only advances;
+  - PyPnC 0.225 s load ramp;
+  - no stack pre-loads before measured contact;
+  - humans side-step.
+
+**Capture analysis** (`p15_capture/P15_CAPTURE_ANALYSIS.md`): a lateral LIPM with the controller's constraints predicts 32 / 32 outcomes.
+- P15 is beyond the 0-step envelope: ξ is 1.2–4.4 cm outside the stance foot at push end.
+- **In place is physically recoverable for all 8 bodies:** latest touchdown 0.44–0.96 s if support follows contact.
+- The failure comes from the **acceptance pipeline**:
+  - an intent delay of about 0.15 s (the λ min-jerk reaching `wantShare`);
+  - the quiet-standing 10 % stance floor capping the landed foot at 90 %;
+  - the fixed 0.1 s ramp.
+- The naive P2 (λ return at the abort) harms the heavy body. P4 (step) is not required once acceptance follows measured contact (V2-165-62: 1.5 cm at the 0.29 s touchdown, 0 at 0.20 s).
+
+**Touchline-specific constraint:** the post-abort E1b-7 transient is the stance hip **abductor** releasing about 1.2 N·m/kg (erratum E1bF-e4: `hip_*.z` = abduction). Heavy bodies need a slower load ramp (≥ 0.15 s for ≤ 8 N·m / tick), while the light body then needs touchdown ≤ 0.23–0.25 s.
+
+**Selected:**
+- in-place BLF quintic put-down;
+- acceptance intent from the abort plan (LOAD_ACCEPT still on measured contact + the existing debounce; the λ / ξ_ref return still at contact);
+- no 10 % floor during the abort recovery;
+- no timeout contact.
+
+**Open (your decision):** the timing design.
+- T-A: capture-timed online (recommended).
+- T-B: fixed emergency timings.
+- T-C: in-place now, stepping in E2.
+
+**Recommended:** P15 outcome labels (fixed-foothold / step required / step / fall). Information only.
+
+**Correction:** an interim message said 11 / 16 put-down runs fell; the count is 10 / 16.
+
+Not pushed.
