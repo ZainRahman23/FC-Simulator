@@ -1,0 +1,74 @@
+{
+ "missing": 0,
+ "criteria": {
+  "R1": {
+   "pass": false,
+   "v": "238/240 zero-share runs: released by ramp end + 2 s (t_rel − ramp end -0.86–2.40 s), then no contact loss / LOAD_ACCEPT / chatter; post-release load max 9.09 N; resting load (mean last 2 s) 0.85–3.04 N; failing P_V2-short-legs_L_d0_r0_R2_B1TR [TOUCHING], P_V2-short-legs_R_d0_r0_R2_B1TR [TOUCHING]"
+  },
+  "R2": {
+   "pass": true,
+   "v": "720/720 runs with r ≥ 2 %: never released; 240/240 ramp-4 runs hash-identical to the unload-fix B1 runs"
+  },
+  "R2c": {
+   "pass": true,
+   "v": "240/240 r = 0.5 % runs released (permitted); post-release rules hold in 240/240"
+  },
+  "R3": {
+   "pass": false,
+   "v": "127/144 lift runs pass; 5 mm lifts: liftoff 0.25–0.38 s after the command, hover clearance min 0.78 mm (mean 3.92–4.84), servo error ≤ 4.91 mm; boundary lifts: max AIRBORNE entries 3, max hover transitions 6; failing L_V2-REF_L_d0.03_r0_R4_B1TR_L0.0005 {\"a\":2,\"td\":2,\"b\":1,\"la\":1,\"f\":\"SUPPORT\",\"ch\":0,\"pre\":0}, L_V2-REF_R_d0.03_r0_R4_B1TR_L0.0005 {\"a\":2,\"td\":2,\"b\":1,\"la\":1,\"f\":\"SUPPORT\",\"ch\":0,\"pre\":0}, L_V2-198-92_L_d0.03_r0_R4_B1TR_L0.0005 {\"a\":2,\"td\":2,\"b\":1,\"la\":1,\"f\":\"SUPPORT\",\"ch\":0,\"pre\":0}, L_V2-198-92_R_d0.03_r0_R4_B1TR_L0.0005 {\"a\":2,\"td\":2,\"b\":1,\"la\":1,\"f\":\"SUPPORT\",\"ch\":0,\"pre\":0}, L_V2-175-70_R_d0.01_r0_R4_B1TR_L0.0005 {\"a\":2,\"td\":2,\"b\":1,\"la\":1,\"f\":\"SUPPORT\",\"ch\":0,\"pre\":0}, L_V2-190-85_L_d0.025_r0_R4_B1TR_L0.0005 {\"a\":2,\"td\":2,\"b\":1,\"la\":1,\"f\":\"SUPPORT\",\"ch\":0,\"pre\":0}, L_V2-190-85_L_d0.03_r0_R4_B1TR_L0.0005 {\"a\":2,\"td\":2,\"b\":1,\"la\":1,\"f\":\"SUPPORT\",\"ch\":0,\"pre\":0}, L_V2-190-85_R_d0.025_r0_R4_B1TR_L0.0005 {\"a\":2,\"td\":2,\"b\":1,\"la\":1,\"f\":\"SUPPORT\",\"ch\":0,\"pre\":0}"
+  },
+  "R4": {
+   "pass": true,
+   "v": "64/64 bump runs (±2, ±5 mm): no contact loss after release, load ≤ loadOn (max 9.06 N)"
+  },
+  "R5": {
+   "pass": true,
+   "v": "128 push runs: falls at 2.5 N·s 0; worse than ORIG 0; >1 re-acceptance/release or chatter 0; slip > 20 mm 0; outcomes {\"recovered\":128} (ORIG {\"recovered\":128})"
+  },
+  "R6": {
+   "pass": true,
+   "v": "1447/1447: closure ≤ 2.40e-2 J/tick, Σ+ ≤ 0.111 J; applied Δτ ≤ 6.92 N·m (non-onset) / 6.92 (all); Δτ0 ≤ 6.97 N·m; over-capacity 0; max saturation fraction 0.17 %; authority 0; impulse 0"
+  },
+  "R6x": {
+   "pass": true,
+   "v": "128/128 push runs: closure ≤ 1.39e-2 J/tick, Σ+ ≤ 0.094 J, impulse = scheduled, over-capacity 0; Δτ reported ≤ 6.57 N·m"
+  },
+  "R7": {
+   "pass": false,
+   "v": "330/480 released runs: displacement across release ≤ 1.430 mm (≤ 0.5); failing P_V2-REF_L_d0_r0_R2_B1TR 0.97, P_V2-REF_L_d0_r0.005_R2_B1TR 0.79, P_V2-REF_L_d0.01_r0_R2_B1TR 1.24, P_V2-REF_L_d0.01_r0.005_R2_B1TR 1.02, P_V2-REF_L_d0.02_r0_R2_B1TR 1.00, P_V2-REF_L_d0.02_r0.005_R2_B1TR 0.78"
+  },
+  "R8": {
+   "pass": true,
+   "v": "1344/1344: stance slip ≤ 0.320 mm (≤ 1.0)"
+  },
+  "R9": {
+   "pass": true,
+   "v": "32/32 runs at 180 / 480 Hz: release, no contact loss, 5 mm lift sequence, energy"
+  },
+  "R10": {
+   "pass": true,
+   "v": "3/3 pairs bit-identical"
+  },
+  "R11": {
+   "pass": true,
+   "v": "3/3: W_V2-REF_L_d0.025_r0_R4_B1TR_L0.005 30008210/30008210, W_V2-REF_L_d0.025_r0_R4_B1TR 0d6c1145/0d6c1145, W_V2-REF_R_d0.025_r0_R4_B1TR 782ad402/782ad402"
+  },
+  "R12": {
+   "pass": true,
+   "v": "9/9 ORIG runs hash-identical to the official E1a at 1–9 s and unreleased by 9.0 s"
+  },
+  "TS1": {
+   "pass": true,
+   "v": "240/240 B1TR zero-share runs hash-identical to their B1 runs at every 1 s mark before the release"
+  },
+  "TS2": {
+   "pass": false,
+   "v": "122/352 B1-only runs lose contact after release before any lift command (the defect exists without touchRest: P-B1_V2-REF_L_d0.01_r0_R2_B1, P-B1_V2-REF_L_d0.02_r0_R2_B1, P-B1_V2-REF_L_d0.025_r0_R2_B1, P-B1_V2-REF_L_d0.03_r0_R2_B1, P-B1_V2-REF_R_d0.01_r0_R2_B1 …); matched B1TR runs: none (R1 / R3 / R4)"
+  },
+  "TS3": {
+   "pass": true,
+   "v": "32/32 TR-only runs at d ≥ 2.5 cm: release outcome by 9 s = the ORIG outcome (touchRest does not remove the mapping residual); TR-only releases 0/32"
+  }
+ },
+ "pass": false
+}

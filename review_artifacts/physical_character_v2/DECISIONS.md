@@ -1600,3 +1600,35 @@ KV0 identical. E1a not rerun; E1b unauthorised; not pushed.
 - **Debt:** B3 boundary discontinuity, TOUCHING-hold vertical anchoring (new); D-3 now implicated.
 
 Not pushed.
+
+## 2026-10-05 — Touch semantics: candidate C (B1 + touchRest) preregistered and validated — NOT qualified (`sources/2026-10-05_user_instruction_autonomous_runway_touching_foot.md`)
+
+### TR-1: candidate C fails its preregistered validation; E1a not rerun (`touch_semantics/TOUCHREST_RESULTS.md`)
+
+**Sequence:**
+- Phase 1–2 diagnostics (`touch_semantics/TOUCH_SEMANTICS.md`, checkpoint 1ce8cd2);
+- prereg + implementation freeze 63543e8;
+- regression tooling 7b0ecf6;
+- 2,146 official runs plus browser.
+
+**FAIL:**
+- **R1** 238 / 240: 2 straight-legged, 2 s unloads released 2.40 s after the ramp end.
+- **R3** 127 / 144: 17 0.5 mm boundary hovers bounce once.
+- **R7** 330 / 480: 2 s unloads drift 0.5–1.43 mm after release.
+- **TS2:** formal fail only.
+
+**PASS:** R2, R2c, R4, R5, R6, R6x, R8–R12, TS1, TS3. These cover no false release, bumps, pushes, energy, torque continuity, limits, determinism, browser = Node, 180 / 480 Hz, and the E1a-reproduction check.
+
+**Causes:**
+- **R1:** pre-existing straight-leg load rebound after a fast transfer; the original configuration fails the same way.
+- **R3:** mainly the candidate's own one-tick seat removal at the lift command (2 / 48 without the seat).
+- **R7:** pre-existing friction-limited drift of a 1–2 N resting foot during a fast transfer; touchRest halves it.
+
+**Finding F4:** the delivered resting load is 0.14–0.39 % BW, not the nominal 0.5 %.
+
+**Outcomes:**
+- C not adopted; E1a not rerun; E1b not started.
+- None of the failures occurs at E1a's protocol values (reported, not a pass).
+- Decisions required: see the results file and the morning report.
+
+Not pushed.
