@@ -1,0 +1,78 @@
+{
+ "missing": 0,
+ "criteria": {
+  "V1": {
+   "pass": true,
+   "v": "240/240: released by ramp end + 2 s (t_rel − ramp end -0.61…1.75 s); then no contact loss / LOAD_ACCEPT / chatter, load max 2.17 N ≤ loadOn, resting load 0.90–1.49 N in (0, loadOff)"
+  },
+  "V2": {
+   "pass": true,
+   "v": "240/240 runs at 2 % never released"
+  },
+  "V3": {
+   "pass": true,
+   "v": "240/240: contact-point slip over [t_rel − 0.1, t_rel + 0.5] ≤ 0.038 mm (≤ 0.5); whole rest window ≤ 0.089 mm; rotation tilt ≤ 0.22°, yaw ≤ 0.37°"
+  },
+  "V4": {
+   "pass": true,
+   "v": "608/608: stance slip ≤ 0.312 mm (≤ 1.0)"
+  },
+  "V5": {
+   "pass": true,
+   "v": "128/128 lifts (2 mm slow crossing, 5, 10, 20 mm; drops 1.5 / 2.5 cm): exactly 1 AIRBORNE, 1 TOUCHDOWN, 0 bounce, 1 LOAD_ACCEPT, final SUPPORT, no chatter, no pre-lift contact loss"
+  },
+  "V6": {
+   "pass": true,
+   "v": "32/32: 2 mm dwell clearance min 1.99 mm (> 0.5 mm touch gap) after a slow crossing (2 s)"
+  },
+  "V7": {
+   "pass": true,
+   "v": "2.5 cm: 5 mm hover error ≤ 1.28 mm (≤ 3), RMS ≤ 0.42 (≤ 2), clearance ≥ 3 mm fraction ≥ 1.00 (≥ 0.8); 20 mm hover error ≤ 0.89 mm (≤ 5); all lifts: touchdown error ≤ 1.39 mm (≤ 5), impact ≤ 0.02 % BW (≤ 25)"
+  },
+  "V8": {
+   "pass": true,
+   "v": "128/128: no fall, no chatter, resting-foot contact-point slip from the perturbation ≤ 1.89 mm (≤ 20), outcome no worse than C; P {\"recovered\":64,\"stood\":64} vs C {\"recovered\":64,\"stood\":64}"
+  },
+  "V9": {
+   "pass": true,
+   "v": "793/793: closure ≤ 2.40e-2 J/tick, Σ+ ≤ 0.114 J; applied Δτ ≤ 6.89 N·m non-onset / 6.89 all; Δτ0 ≤ 11.08 N·m; over-capacity 0; authority 0; impulse = scheduled"
+  },
+  "V10": {
+   "pass": true,
+   "v": "32/32 at 180 / 480 Hz: 5 mm lift sequence / 15° turn without fall or chatter; energy"
+  },
+  "V11": {
+   "pass": true,
+   "v": "3/3 pairs bit-identical"
+  },
+  "V12": {
+   "pass": true,
+   "v": "3/3: W_E5_V2-REF_L b3116c3e/b3116c3e, W_PT4_V2-REF_L e8322c2a/e8322c2a, W_TUn15_V2-REF_R fe00791a/fe00791a"
+  },
+  "V13": {
+   "pass": true,
+   "v": "32/32 (8 bodies × 30 / 60 N × drop 0 / 2.5 cm): no fall, no chatter, closure ≤ 7.11e-3 J/tick; applied Δτ ≤ 11.07 N·m, τ0 Δ ≤ 60.50 (reported)"
+  },
+  "V14": {
+   "pass": true,
+   "v": "3/3 official touch-rest runs hash-identical"
+  },
+  "V15": {
+   "pass": true,
+   "v": "V3.1 PASS, V3.2 PASS, V3.3 PASS, V3.4 PASS, V3.5 PASS, V3.6 PASS, V3.7 PASS, V3.8 PASS, V3.9 PASS, V3.10 PASS"
+  }
+ },
+ "reported": {
+  "V7.1p5": "1.5 cm (reported): 5 mm hover error ≤ 2.90 mm, 20 mm ≤ 1.06 mm; liftoff after the command 0.16–1.07 s",
+  "V8.PF4": "slip P ≤ 1.89 mm vs C ≤ 7.87 mm; yaw P ≤ 0.56°",
+  "V8.PB4": "slip P ≤ 0.04 mm vs C ≤ 0.06 mm; yaw P ≤ 0.24°",
+  "V8.PT4": "slip P ≤ 0.09 mm vs C ≤ 0.15 mm; yaw P ≤ 0.33°",
+  "V8.PA4": "slip P ≤ 0.48 mm vs C ≤ 5.17 mm; yaw P ≤ 0.43°",
+  "V8.TUp15": "slip P ≤ 1.33 mm vs C ≤ 7.75 mm; yaw P ≤ 2.76°",
+  "V8.TUn15": "slip P ≤ 1.38 mm vs C ≤ 9.12 mm; yaw P ≤ 3.38°",
+  "V8.BU3": "slip P ≤ 0.31 mm vs C ≤ 0.14 mm; yaw P ≤ 0.89°",
+  "V8.BD3": "slip P ≤ 0.08 mm vs C ≤ 0.05 mm; yaw P ≤ 0.33°",
+  "REL0": "drop 0, 2 s transfer: release − ramp end -0.35…2.40 s; 16/16 with clean rest after release"
+ },
+ "pass": true
+}

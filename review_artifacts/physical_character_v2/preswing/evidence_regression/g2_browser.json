@@ -1,0 +1,49 @@
+{
+ "check": "headless Chrome (swiftshader) driven over CDP, viewer/g2.html?check=1&keys=<scenario> — one fresh browser per curated G2 scenario, V2-REF, gate configuration, full runs",
+ "allPass": true,
+ "rows": [
+  {
+   "key": "quiet:10",
+   "browser": "458b9f9a",
+   "pass": true,
+   "node": "458b9f9a",
+   "seconds": 5
+  },
+  {
+   "key": "push:F:15",
+   "browser": "29d50b14",
+   "pass": true,
+   "node": "29d50b14",
+   "seconds": 4
+  },
+  {
+   "key": "push:R:15",
+   "browser": "dfa16835",
+   "pass": true,
+   "node": "dfa16835",
+   "seconds": 4
+  },
+  {
+   "key": "push:BL:10",
+   "browser": "e2912cb5",
+   "pass": true,
+   "node": "e2912cb5",
+   "seconds": 4
+  },
+  {
+   "key": "torque:pitch:8",
+   "browser": "bf36b615",
+   "pass": true,
+   "node": "bf36b615",
+   "seconds": 4
+  },
+  {
+   "key": "offset:COM over ankles",
+   "browser": "24a9927b",
+   "pass": true,
+   "node": "24a9927b",
+   "seconds": 4
+  }
+ ],
+ "qs": "knee=v2k&ankleK=0.13&stand=%7B%22ikRefTwist%22%3Atrue%2C%22lifecycle%22%3Atrue%2C%22ffLockedAxis%22%3Atrue%2C%22touchRest%22%3Atrue%2C%22lcVff%22%3A%22lin%22%2C%22lcTouch%22%3A%7B%22reseed%22%3Atrue%7D%7D&results=../../preswing/evidence_regression/g2_results_vP.json"
+}

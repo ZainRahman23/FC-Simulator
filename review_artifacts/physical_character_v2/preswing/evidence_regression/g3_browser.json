@@ -1,0 +1,35 @@
+{
+ "check": "headless Chrome (swiftshader) driven over CDP, viewer/g3.html?check=1&keys=<scenario> — one fresh browser per curated G3 scenario, V2-REF, gate configuration, full runs",
+ "allPass": true,
+ "rows": [
+  {
+   "key": "T5",
+   "browser": "a6aae777",
+   "pass": true,
+   "node": "a6aae777",
+   "seconds": 7
+  },
+  {
+   "key": "U:R",
+   "browser": "4b50ac60",
+   "pass": true,
+   "node": "4b50ac60",
+   "seconds": 7
+  },
+  {
+   "key": "T3",
+   "browser": "1377d400",
+   "pass": true,
+   "node": "1377d400",
+   "seconds": 9
+  },
+  {
+   "key": "T8:hold:R:R:10",
+   "browser": "dc0eb592",
+   "pass": true,
+   "node": "dc0eb592",
+   "seconds": 5
+  }
+ ],
+ "qs": "knee=v2k&ankleK=0.13&stand=%7B%22ikRefTwist%22%3Atrue%2C%22lifecycle%22%3Atrue%2C%22ffLockedAxis%22%3Atrue%2C%22touchRest%22%3Atrue%2C%22lcVff%22%3A%22lin%22%2C%22lcTouch%22%3A%7B%22reseed%22%3Atrue%7D%7D&results=../../preswing/evidence_regression/g3_results_vP.json"
+}

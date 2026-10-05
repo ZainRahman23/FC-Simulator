@@ -1725,3 +1725,35 @@ Not pushed.
 - Visible criteria changes for your review: V3 = R7's threshold on contact-point slip; REL0 reported; V6 replaces R3.
 
 Not pushed.
+
+### PS-2: P\* passes its preregistered validation (V1–V15) → adopted as configuration version PSTAR; E1a to be rerun as frozen (`preswing/PRESWING_RESULTS.md`)
+
+**Official run:** abdd3da (924 runs, 32-run external-lift matrix, browser); G0–G3 on 9ef02bf.
+
+**Result: all 15 criteria pass.**
+- Release and rest on 8 bodies × both feet × 5 drops × 3 ramps.
+- Partial loads never released.
+- Contact-point slip ≤ 0.04 mm.
+- Lifts: 1 / 1 / 0 sequence; the redesigned boundary holds (1.99 mm dwell after a slow gap crossing).
+- Hover error: 5 mm ≤ 1.28 mm; 20 mm ≤ 0.89 mm.
+- Fast motion over the released foot: slip ≤ 1.9 mm (C: ≤ 9.1 mm); no falls.
+- Energy, torque continuity and limits; 180 / 480 Hz; determinism; browser = Node.
+- External-lift matrix: 0 falls.
+- G0–G3: G1 hash-identical, G2 11 / 11, G3 17 / 17, J2a 81 / 81, browser.
+
+**Adoption:**
+- **Adopted** (configuration version **PSTAR** for E1 and later): `ffLockedAxis` + `touchRest` + `lcVff: "lin"` + `lcTouch.reseed`.
+- **Defaults stay OFF**, so the default gate path is bit-identical (KV0).
+
+**B1 on its own merits:**
+- A verified fix. Alone it fails G3 I2: it makes the pre-existing touching-hold defect reachable.
+- So it is adopted only together with the hold.
+
+**E1a configuration:** `knee_correction/E1_PREREGISTRATION_V2_CONFIG_PSTAR.md`. The harness gains a config-version option only (6413a6b); the default reproduces the official E1a run.
+
+**Your visible decisions to review:**
+- V3 replaces R7's quantity: contact-point slip instead of origin displacement; same 0.5 mm threshold.
+- The REL0 straight-leg deadline is reported, not gating.
+- V6 replaces R3.
+
+Not pushed.
