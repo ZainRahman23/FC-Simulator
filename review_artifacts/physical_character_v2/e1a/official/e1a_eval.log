@@ -1,0 +1,185 @@
+
+■ V2-REF (left foot lifted) — outcome stood; lift — s, clear — s (null), end 20.20 s
+  FAIL E1a-1   no lift
+  FAIL E1a-2   no lift
+  FAIL E1a-3   no lift
+  PASS E1a-4   stance slip max 0.309 mm, yaw change max 0.005°
+  FAIL E1a-5   no lift; abort null
+  FAIL E1a-6   LIFTOFF→AIRBORNE 0, TOUCHDOWN 0, bounce 0, re-entries < 60 ms L 0 / R 0, unload TIME-OUT; lifted-foot path 
+  PASS E1a-7   applied Δτ max 0.18 N·m (hip_R.z at 10.912 s); outside onset windows max 0.18 N·m (hip_R.z at 10.912 s); commanded Δτ0 max 0.41 N·m (knee_L.y at 18.092 s); violations 0 / 0
+  PASS E1a-8   closure increment max 1.21e-2 J/tick; Σ positive 0.100 J; authority writes 0; external impulse 0
+  FAIL E1a-9   over-capacity events 0; saturation in hover: none
+  PASS E1a-10  smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin — (bounded IK not used); swing-leg knee flexion min 3.96°
+  FAIL E1a-12  no touchdown
+  FAIL E1a-13  LOAD_ACCEPT entries 0; s monotone to 1 false; load tracking |Δ| max 0.016 over 1441 ticks from λ-ramp end + 1 s
+  PASS E1a-14  end 20.20 s: states SUPPORT/SUPPORT; |ξ − ξ_ref| 0.06 cm; pelvis yaw Δ 0.00°; ankle ab/adduction Δ 0.03 / 0.03°; knee |θ−θ0| Δ 0.03 / 0.03°
+  PASS E1a-16  knee flexion 3.96–28.31° (certified envelope 0–40°)
+  PASS E1a-17  knee |θ − θ0| max 1.39° at 0.004 s (from 1 s: 0.26° at 6.608 s); violations 0
+  rep     stance-ankle ab/adduction excursion lift–replace —°; pelvis yaw max 0.44°; lifted foot: 
+
+■ V2-165-62 (left foot lifted) — outcome stood; lift — s, clear — s (null), end 20.20 s
+  FAIL E1a-1   no lift
+  FAIL E1a-2   no lift
+  FAIL E1a-3   no lift
+  PASS E1a-4   stance slip max 0.293 mm, yaw change max 0.006°
+  FAIL E1a-5   no lift; abort null
+  FAIL E1a-6   LIFTOFF→AIRBORNE 0, TOUCHDOWN 0, bounce 0, re-entries < 60 ms L 0 / R 0, unload TIME-OUT; lifted-foot path 
+  PASS E1a-7   applied Δτ max 0.13 N·m (hip_R.z at 10.933 s); outside onset windows max 0.13 N·m (hip_R.z at 10.933 s); commanded Δτ0 max 0.34 N·m (knee_R.y at 18.071 s); violations 0 / 0
+  PASS E1a-8   closure increment max 9.91e-3 J/tick; Σ positive 0.079 J; authority writes 0; external impulse 0
+  FAIL E1a-9   over-capacity events 0; saturation in hover: none
+  PASS E1a-10  smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin — (bounded IK not used); swing-leg knee flexion min 3.96°
+  FAIL E1a-12  no touchdown
+  FAIL E1a-13  LOAD_ACCEPT entries 0; s monotone to 1 false; load tracking |Δ| max 0.016 over 1441 ticks from λ-ramp end + 1 s
+  PASS E1a-14  end 20.20 s: states SUPPORT/SUPPORT; |ξ − ξ_ref| 0.06 cm; pelvis yaw Δ 0.00°; ankle ab/adduction Δ 0.02 / 0.02°; knee |θ−θ0| Δ 0.03 / 0.03°
+  PASS E1a-16  knee flexion 3.96–29.76° (certified envelope 0–40°)
+  PASS E1a-17  knee |θ − θ0| max 1.39° at 0.004 s (from 1 s: 0.27° at 6.612 s); violations 0
+  rep     stance-ankle ab/adduction excursion lift–replace —°; pelvis yaw max 0.30°; lifted foot: 
+
+■ V2-198-92 (left foot lifted) — outcome stood; lift — s, clear — s (null), end 20.20 s
+  FAIL E1a-1   no lift
+  FAIL E1a-2   no lift
+  FAIL E1a-3   no lift
+  PASS E1a-4   stance slip max 0.288 mm, yaw change max 0.004°
+  FAIL E1a-5   no lift; abort null
+  FAIL E1a-6   LIFTOFF→AIRBORNE 0, TOUCHDOWN 0, bounce 0, re-entries < 60 ms L 0 / R 0, unload TIME-OUT; lifted-foot path 
+  PASS E1a-7   applied Δτ max 0.23 N·m (hip_R.z at 10.963 s); outside onset windows max 0.23 N·m (hip_R.z at 10.963 s); commanded Δτ0 max 0.49 N·m (knee_R.y at 18.104 s); violations 0 / 0
+  PASS E1a-8   closure increment max 1.39e-2 J/tick; Σ positive 0.117 J; authority writes 0; external impulse 0
+  FAIL E1a-9   over-capacity events 0; saturation in hover: none
+  PASS E1a-10  smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin — (bounded IK not used); swing-leg knee flexion min 3.96°
+  FAIL E1a-12  no touchdown
+  FAIL E1a-13  LOAD_ACCEPT entries 0; s monotone to 1 false; load tracking |Δ| max 0.016 over 1441 ticks from λ-ramp end + 1 s
+  PASS E1a-14  end 20.20 s: states SUPPORT/SUPPORT; |ξ − ξ_ref| 0.06 cm; pelvis yaw Δ 0.00°; ankle ab/adduction Δ 0.04 / 0.03°; knee |θ−θ0| Δ 0.04 / 0.04°
+  PASS E1a-16  knee flexion 3.96–27.12° (certified envelope 0–40°)
+  PASS E1a-17  knee |θ − θ0| max 1.40° at 0.004 s (from 1 s: 0.25° at 6.625 s); violations 0
+  rep     stance-ankle ab/adduction excursion lift–replace —°; pelvis yaw max 0.56°; lifted foot: 
+
+■ V2-175-70 (left foot lifted) — outcome stood; lift — s, clear — s (null), end 20.20 s
+  FAIL E1a-1   no lift
+  FAIL E1a-2   no lift
+  FAIL E1a-3   no lift
+  PASS E1a-4   stance slip max 0.298 mm, yaw change max 0.005°
+  FAIL E1a-5   no lift; abort null
+  FAIL E1a-6   LIFTOFF→AIRBORNE 0, TOUCHDOWN 0, bounce 0, re-entries < 60 ms L 0 / R 0, unload TIME-OUT; lifted-foot path 
+  PASS E1a-7   applied Δτ max 0.16 N·m (hip_R.z at 10.946 s); outside onset windows max 0.16 N·m (hip_R.z at 10.946 s); commanded Δτ0 max 0.38 N·m (knee_R.y at 18.083 s); violations 0 / 0
+  PASS E1a-8   closure increment max 1.09e-2 J/tick; Σ positive 0.089 J; authority writes 0; external impulse 0
+  FAIL E1a-9   over-capacity events 0; saturation in hover: none
+  PASS E1a-10  smallest hard-limit margin 8.96° (knee_R at 0.00 s); swing-leg solved coordinates: smallest soft margin — (bounded IK not used); swing-leg knee flexion min 3.96°
+  FAIL E1a-12  no touchdown
+  FAIL E1a-13  LOAD_ACCEPT entries 0; s monotone to 1 false; load tracking |Δ| max 0.016 over 1441 ticks from λ-ramp end + 1 s
+  PASS E1a-14  end 20.20 s: states SUPPORT/SUPPORT; |ξ − ξ_ref| 0.06 cm; pelvis yaw Δ -0.00°; ankle ab/adduction Δ 0.03 / 0.03°; knee |θ−θ0| Δ 0.03 / 0.03°
+  PASS E1a-16  knee flexion 3.96–28.88° (certified envelope 0–40°)
+  PASS E1a-17  knee |θ − θ0| max 1.39° at 0.004 s (from 1 s: 0.26° at 6.612 s); violations 0
+  rep     stance-ankle ab/adduction excursion lift–replace —°; pelvis yaw max 0.37°; lifted foot: 
+
+■ V2-190-85 (left foot lifted) — outcome stood; lift — s, clear — s (null), end 20.20 s
+  FAIL E1a-1   no lift
+  FAIL E1a-2   no lift
+  FAIL E1a-3   no lift
+  PASS E1a-4   stance slip max 0.314 mm, yaw change max 0.005°
+  FAIL E1a-5   no lift; abort null
+  FAIL E1a-6   LIFTOFF→AIRBORNE 0, TOUCHDOWN 0, bounce 0, re-entries < 60 ms L 0 / R 0, unload TIME-OUT; lifted-foot path 
+  PASS E1a-7   applied Δτ max 0.21 N·m (hip_R.z at 10.967 s); outside onset windows max 0.21 N·m (hip_R.z at 10.967 s); commanded Δτ0 max 0.45 N·m (knee_R.y at 18.096 s); violations 0 / 0
+  PASS E1a-8   closure increment max 1.31e-2 J/tick; Σ positive 0.111 J; authority writes 0; external impulse 0
+  FAIL E1a-9   over-capacity events 0; saturation in hover: none
+  PASS E1a-10  smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin — (bounded IK not used); swing-leg knee flexion min 3.96°
+  FAIL E1a-12  no touchdown
+  FAIL E1a-13  LOAD_ACCEPT entries 0; s monotone to 1 false; load tracking |Δ| max 0.016 over 1441 ticks from λ-ramp end + 1 s
+  PASS E1a-14  end 20.20 s: states SUPPORT/SUPPORT; |ξ − ξ_ref| 0.06 cm; pelvis yaw Δ 0.01°; ankle ab/adduction Δ 0.04 / 0.03°; knee |θ−θ0| Δ 0.04 / 0.04°
+  PASS E1a-16  knee flexion 3.96–27.70° (certified envelope 0–40°)
+  PASS E1a-17  knee |θ − θ0| max 1.39° at 0.004 s (from 1 s: 0.25° at 6.621 s); violations 0
+  rep     stance-ankle ab/adduction excursion lift–replace —°; pelvis yaw max 0.50°; lifted foot: 
+
+■ V2-short-legs (left foot lifted) — outcome stood; lift — s, clear — s (null), end 20.20 s
+  FAIL E1a-1   no lift
+  FAIL E1a-2   no lift
+  FAIL E1a-3   no lift
+  PASS E1a-4   stance slip max 0.299 mm, yaw change max 0.005°
+  FAIL E1a-5   no lift; abort null
+  FAIL E1a-6   LIFTOFF→AIRBORNE 0, TOUCHDOWN 0, bounce 0, re-entries < 60 ms L 0 / R 0, unload TIME-OUT; lifted-foot path 
+  PASS E1a-7   applied Δτ max 0.18 N·m (hip_R.z at 10.963 s); outside onset windows max 0.18 N·m (hip_R.z at 10.963 s); commanded Δτ0 max 0.43 N·m (knee_R.y at 18.087 s); violations 0 / 0
+  PASS E1a-8   closure increment max 1.24e-2 J/tick; Σ positive 0.100 J; authority writes 0; external impulse 0
+  FAIL E1a-9   over-capacity events 0; saturation in hover: none
+  PASS E1a-10  smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin — (bounded IK not used); swing-leg knee flexion min 3.96°
+  FAIL E1a-12  no touchdown
+  FAIL E1a-13  LOAD_ACCEPT entries 0; s monotone to 1 false; load tracking |Δ| max 0.020 over 1441 ticks from λ-ramp end + 1 s
+  PASS E1a-14  end 20.20 s: states SUPPORT/SUPPORT; |ξ − ξ_ref| 0.06 cm; pelvis yaw Δ 0.00°; ankle ab/adduction Δ 0.03 / 0.03°; knee |θ−θ0| Δ 0.03 / 0.03°
+  PASS E1a-16  knee flexion 3.96–29.04° (certified envelope 0–40°)
+  PASS E1a-17  knee |θ − θ0| max 1.39° at 0.004 s (from 1 s: 0.26° at 6.583 s); violations 0
+  rep     stance-ankle ab/adduction excursion lift–replace —°; pelvis yaw max 0.45°; lifted foot: 
+
+■ V2-long-legs (left foot lifted) — outcome stood; lift — s, clear — s (null), end 20.20 s
+  FAIL E1a-1   no lift
+  FAIL E1a-2   no lift
+  FAIL E1a-3   no lift
+  PASS E1a-4   stance slip max 0.293 mm, yaw change max 0.005°
+  FAIL E1a-5   no lift; abort null
+  FAIL E1a-6   LIFTOFF→AIRBORNE 0, TOUCHDOWN 0, bounce 0, re-entries < 60 ms L 0 / R 0, unload TIME-OUT; lifted-foot path 
+  PASS E1a-7   applied Δτ max 0.18 N·m (hip_R.z at 10.887 s); outside onset windows max 0.18 N·m (hip_R.z at 10.887 s); commanded Δτ0 max 0.40 N·m (knee_R.y at 18.096 s); violations 0 / 0
+  PASS E1a-8   closure increment max 1.20e-2 J/tick; Σ positive 0.099 J; authority writes 0; external impulse 0
+  FAIL E1a-9   over-capacity events 0; saturation in hover: none
+  PASS E1a-10  smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin — (bounded IK not used); swing-leg knee flexion min 3.96°
+  FAIL E1a-12  no touchdown
+  FAIL E1a-13  LOAD_ACCEPT entries 0; s monotone to 1 false; load tracking |Δ| max 0.013 over 1441 ticks from λ-ramp end + 1 s
+  PASS E1a-14  end 20.20 s: states SUPPORT/SUPPORT; |ξ − ξ_ref| 0.06 cm; pelvis yaw Δ 0.00°; ankle ab/adduction Δ 0.03 / 0.03°; knee |θ−θ0| Δ 0.03 / 0.03°
+  PASS E1a-16  knee flexion 3.96–27.64° (certified envelope 0–40°)
+  PASS E1a-17  knee |θ − θ0| max 1.40° at 0.004 s (from 1 s: 0.26° at 6.642 s); violations 0
+  rep     stance-ankle ab/adduction excursion lift–replace —°; pelvis yaw max 0.43°; lifted foot: 
+
+■ V1-matched (left foot lifted) — outcome stood; lift — s, clear — s (null), end 20.20 s
+  FAIL E1a-1   no lift
+  FAIL E1a-2   no lift
+  FAIL E1a-3   no lift
+  PASS E1a-4   stance slip max 0.284 mm, yaw change max 0.005°
+  FAIL E1a-5   no lift; abort null
+  FAIL E1a-6   LIFTOFF→AIRBORNE 0, TOUCHDOWN 0, bounce 0, re-entries < 60 ms L 0 / R 0, unload TIME-OUT; lifted-foot path 
+  PASS E1a-7   applied Δτ max 0.19 N·m (hip_R.z at 10.912 s); outside onset windows max 0.19 N·m (hip_R.z at 10.912 s); commanded Δτ0 max 0.42 N·m (knee_R.y at 18.096 s); violations 0 / 0
+  PASS E1a-8   closure increment max 1.17e-2 J/tick; Σ positive 0.096 J; authority writes 0; external impulse 0
+  FAIL E1a-9   over-capacity events 0; saturation in hover: none
+  PASS E1a-10  smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin — (bounded IK not used); swing-leg knee flexion min 3.96°
+  FAIL E1a-12  no touchdown
+  FAIL E1a-13  LOAD_ACCEPT entries 0; s monotone to 1 false; load tracking |Δ| max 0.016 over 1441 ticks from λ-ramp end + 1 s
+  PASS E1a-14  end 20.20 s: states SUPPORT/SUPPORT; |ξ − ξ_ref| 0.06 cm; pelvis yaw Δ 0.00°; ankle ab/adduction Δ 0.04 / 0.03°; knee |θ−θ0| Δ 0.04 / 0.04°
+  PASS E1a-16  knee flexion 3.96–27.70° (certified envelope 0–40°)
+  PASS E1a-17  knee |θ − θ0| max 1.39° at 0.004 s (from 1 s: 0.26° at 6.612 s); violations 0
+  rep     stance-ankle ab/adduction excursion lift–replace —°; pelvis yaw max 0.45°; lifted foot: 
+
+■ V2-REF (MIRRORED: right foot lifted) — outcome stood; lift — s, clear — s (null), end 20.20 s
+  FAIL E1a-1   no lift
+  FAIL E1a-2   no lift
+  FAIL E1a-3   no lift
+  PASS E1a-4   stance slip max 0.284 mm, yaw change max 0.007°
+  FAIL E1a-5   no lift; abort null
+  FAIL E1a-6   LIFTOFF→AIRBORNE 0, TOUCHDOWN 0, bounce 0, re-entries < 60 ms L 0 / R 0, unload TIME-OUT; lifted-foot path 
+  PASS E1a-7   applied Δτ max 0.18 N·m (hip_L.z at 10.917 s); outside onset windows max 0.18 N·m (hip_L.z at 10.917 s); commanded Δτ0 max 0.41 N·m (knee_L.y at 18.092 s); violations 0 / 0
+  PASS E1a-8   closure increment max 1.21e-2 J/tick; Σ positive 0.097 J; authority writes 0; external impulse 0
+  FAIL E1a-9   over-capacity events 0; saturation in hover: none
+  PASS E1a-10  smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin — (bounded IK not used); swing-leg knee flexion min 3.96°
+  FAIL E1a-12  no touchdown
+  FAIL E1a-13  LOAD_ACCEPT entries 0; s monotone to 1 false; load tracking |Δ| max 0.016 over 1441 ticks from λ-ramp end + 1 s
+  PASS E1a-14  end 20.20 s: states SUPPORT/SUPPORT; |ξ − ξ_ref| 0.06 cm; pelvis yaw Δ -0.00°; ankle ab/adduction Δ 0.03 / 0.03°; knee |θ−θ0| Δ 0.03 / 0.03°
+  PASS E1a-16  knee flexion 3.96–28.31° (certified envelope 0–40°)
+  PASS E1a-17  knee |θ − θ0| max 1.39° at 0.004 s (from 1 s: 0.26° at 6.608 s); violations 0
+  rep     stance-ankle ab/adduction excursion lift–replace —°; pelvis yaw max 0.44°; lifted foot: 
+
+PASS E1a-11  determinism (V2-REF ×2): 21/21 hash marks identical (end d359ac5c / d359ac5c)
+
+══ E1a criteria (8 bodies + mirrored V2-REF) ══
+  FAIL E1a-1  failing: V2-REF|L, V2-165-62|L, V2-198-92|L, V2-175-70|L, V2-190-85|L, V2-short-legs|L, V2-long-legs|L, V1-matched|L, V2-REF|R
+  FAIL E1a-2  failing: V2-REF|L, V2-165-62|L, V2-198-92|L, V2-175-70|L, V2-190-85|L, V2-short-legs|L, V2-long-legs|L, V1-matched|L, V2-REF|R
+  FAIL E1a-3  failing: V2-REF|L, V2-165-62|L, V2-198-92|L, V2-175-70|L, V2-190-85|L, V2-short-legs|L, V2-long-legs|L, V1-matched|L, V2-REF|R
+  PASS E1a-4
+  FAIL E1a-5  failing: V2-REF|L, V2-165-62|L, V2-198-92|L, V2-175-70|L, V2-190-85|L, V2-short-legs|L, V2-long-legs|L, V1-matched|L, V2-REF|R
+  FAIL E1a-6  failing: V2-REF|L, V2-165-62|L, V2-198-92|L, V2-175-70|L, V2-190-85|L, V2-short-legs|L, V2-long-legs|L, V1-matched|L, V2-REF|R
+  PASS E1a-7
+  PASS E1a-8
+  FAIL E1a-9  failing: V2-REF|L, V2-165-62|L, V2-198-92|L, V2-175-70|L, V2-190-85|L, V2-short-legs|L, V2-long-legs|L, V1-matched|L, V2-REF|R
+  PASS E1a-10
+  PASS E1a-11  21/21 hash marks identical (end d359ac5c / d359ac5c)
+  FAIL E1a-12  failing: V2-REF|L, V2-165-62|L, V2-198-92|L, V2-175-70|L, V2-190-85|L, V2-short-legs|L, V2-long-legs|L, V1-matched|L, V2-REF|R
+  FAIL E1a-13  failing: V2-REF|L, V2-165-62|L, V2-198-92|L, V2-175-70|L, V2-190-85|L, V2-short-legs|L, V2-long-legs|L, V1-matched|L, V2-REF|R
+  PASS E1a-14
+  PASS E1a-16
+  PASS E1a-17
+  FAIL E1a-15  failing: E1a-1 [V2-REF|L, V2-165-62|L, V2-198-92|L, V2-175-70|L, V2-190-85|L, V2-short-legs|L, V2-long-legs|L, V1-matched|L, V2-REF|R]; E1a-2 [V2-REF|L, V2-165-62|L, V2-198-92|L, V2-175-70|L, V2-190-85|L, V2-short-legs|L, V2-long-legs|L, V1-matched|L, V2-REF|R]; E1a-3 [V2-REF|L, V2-165-62|L, V2-198-92|L, V2-175-70|L, V2-190-85|L, V2-short-legs|L, V2-long-legs|L, V1-matched|L, V2-REF|R]; E1a-5 [V2-REF|L, V2-165-62|L, V2-198-92|L, V2-175-70|L, V2-190-85|L, V2-short-legs|L, V2-long-legs|L, V1-matched|L, V2-REF|R]; E1a-6 [V2-REF|L, V2-165-62|L, V2-198-92|L, V2-175-70|L, V2-190-85|L, V2-short-legs|L, V2-long-legs|L, V1-matched|L, V2-REF|R]; E1a-9 [V2-REF|L, V2-165-62|L, V2-198-92|L, V2-175-70|L, V2-190-85|L, V2-short-legs|L, V2-long-legs|L, V1-matched|L, V2-REF|R]; E1a-12 [V2-REF|L, V2-165-62|L, V2-198-92|L, V2-175-70|L, V2-190-85|L, V2-short-legs|L, V2-long-legs|L, V1-matched|L, V2-REF|R]; E1a-13 [V2-REF|L, V2-165-62|L, V2-198-92|L, V2-175-70|L, V2-190-85|L, V2-short-legs|L, V2-long-legs|L, V1-matched|L, V2-REF|R]
+
+E1a RESULT: FAIL

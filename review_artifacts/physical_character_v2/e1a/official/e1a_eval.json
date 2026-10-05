@@ -1,0 +1,956 @@
+{
+ "runs": {
+  "V2-REF|L": {
+   "C": {
+    "E1a-1": {
+     "pass": false,
+     "v": "no lift"
+    },
+    "E1a-2": {
+     "pass": false,
+     "v": "no lift"
+    },
+    "E1a-3": {
+     "pass": false,
+     "v": "no lift"
+    },
+    "E1a-4": {
+     "pass": true,
+     "v": "stance slip max 0.309 mm, yaw change max 0.005°"
+    },
+    "E1a-5": {
+     "pass": false,
+     "v": "no lift; abort null"
+    },
+    "E1a-6": {
+     "pass": false,
+     "v": "LIFTOFF→AIRBORNE 0, TOUCHDOWN 0, bounce 0, re-entries < 60 ms L 0 / R 0, unload TIME-OUT; lifted-foot path "
+    },
+    "E1a-7": {
+     "pass": true,
+     "v": "applied Δτ max 0.18 N·m (hip_R.z at 10.912 s); outside onset windows max 0.18 N·m (hip_R.z at 10.912 s); commanded Δτ0 max 0.41 N·m (knee_L.y at 18.092 s); violations 0 / 0"
+    },
+    "E1a-8": {
+     "pass": true,
+     "v": "closure increment max 1.21e-2 J/tick; Σ positive 0.100 J; authority writes 0; external impulse 0"
+    },
+    "E1a-9": {
+     "pass": false,
+     "v": "over-capacity events 0; saturation in hover: none"
+    },
+    "E1a-10": {
+     "pass": true,
+     "v": "smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin — (bounded IK not used); swing-leg knee flexion min 3.96°"
+    },
+    "E1a-12": {
+     "pass": false,
+     "v": "no touchdown"
+    },
+    "E1a-13": {
+     "pass": false,
+     "v": "LOAD_ACCEPT entries 0; s monotone to 1 false; load tracking |Δ| max 0.016 over 1441 ticks from λ-ramp end + 1 s"
+    },
+    "E1a-14": {
+     "pass": true,
+     "v": "end 20.20 s: states SUPPORT/SUPPORT; |ξ − ξ_ref| 0.06 cm; pelvis yaw Δ 0.00°; ankle ab/adduction Δ 0.03 / 0.03°; knee |θ−θ0| Δ 0.03 / 0.03°"
+    },
+    "E1a-16": {
+     "pass": true,
+     "v": "knee flexion 3.96–28.31° (certified envelope 0–40°)"
+    },
+    "E1a-17": {
+     "pass": true,
+     "v": "knee |θ − θ0| max 1.39° at 0.004 s (from 1 s: 0.26° at 6.608 s); violations 0"
+    }
+   },
+   "rep": {
+    "hoverErrMm": [],
+    "clearMm": {
+     "min": null,
+     "max": null
+    },
+    "stanceAnkleFabdExcDeg": null,
+    "pelvisYawMaxDeg": 0.4354136898545777,
+    "events": {
+     "tL": null,
+     "tR": 9,
+     "tA": 13.2,
+     "tEnd": 20.2,
+     "cleared": null,
+     "clearReason": null,
+     "abortT": null,
+     "unloadTimeout": true
+    },
+    "outcome": "stood",
+    "lifecycle": [
+     [],
+     []
+    ],
+    "yawAtHoverEnd": null
+   }
+  },
+  "V2-165-62|L": {
+   "C": {
+    "E1a-1": {
+     "pass": false,
+     "v": "no lift"
+    },
+    "E1a-2": {
+     "pass": false,
+     "v": "no lift"
+    },
+    "E1a-3": {
+     "pass": false,
+     "v": "no lift"
+    },
+    "E1a-4": {
+     "pass": true,
+     "v": "stance slip max 0.293 mm, yaw change max 0.006°"
+    },
+    "E1a-5": {
+     "pass": false,
+     "v": "no lift; abort null"
+    },
+    "E1a-6": {
+     "pass": false,
+     "v": "LIFTOFF→AIRBORNE 0, TOUCHDOWN 0, bounce 0, re-entries < 60 ms L 0 / R 0, unload TIME-OUT; lifted-foot path "
+    },
+    "E1a-7": {
+     "pass": true,
+     "v": "applied Δτ max 0.13 N·m (hip_R.z at 10.933 s); outside onset windows max 0.13 N·m (hip_R.z at 10.933 s); commanded Δτ0 max 0.34 N·m (knee_R.y at 18.071 s); violations 0 / 0"
+    },
+    "E1a-8": {
+     "pass": true,
+     "v": "closure increment max 9.91e-3 J/tick; Σ positive 0.079 J; authority writes 0; external impulse 0"
+    },
+    "E1a-9": {
+     "pass": false,
+     "v": "over-capacity events 0; saturation in hover: none"
+    },
+    "E1a-10": {
+     "pass": true,
+     "v": "smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin — (bounded IK not used); swing-leg knee flexion min 3.96°"
+    },
+    "E1a-12": {
+     "pass": false,
+     "v": "no touchdown"
+    },
+    "E1a-13": {
+     "pass": false,
+     "v": "LOAD_ACCEPT entries 0; s monotone to 1 false; load tracking |Δ| max 0.016 over 1441 ticks from λ-ramp end + 1 s"
+    },
+    "E1a-14": {
+     "pass": true,
+     "v": "end 20.20 s: states SUPPORT/SUPPORT; |ξ − ξ_ref| 0.06 cm; pelvis yaw Δ 0.00°; ankle ab/adduction Δ 0.02 / 0.02°; knee |θ−θ0| Δ 0.03 / 0.03°"
+    },
+    "E1a-16": {
+     "pass": true,
+     "v": "knee flexion 3.96–29.76° (certified envelope 0–40°)"
+    },
+    "E1a-17": {
+     "pass": true,
+     "v": "knee |θ − θ0| max 1.39° at 0.004 s (from 1 s: 0.27° at 6.612 s); violations 0"
+    }
+   },
+   "rep": {
+    "hoverErrMm": [],
+    "clearMm": {
+     "min": null,
+     "max": null
+    },
+    "stanceAnkleFabdExcDeg": null,
+    "pelvisYawMaxDeg": 0.30019673951036446,
+    "events": {
+     "tL": null,
+     "tR": 9,
+     "tA": 13.2,
+     "tEnd": 20.2,
+     "cleared": null,
+     "clearReason": null,
+     "abortT": null,
+     "unloadTimeout": true
+    },
+    "outcome": "stood",
+    "lifecycle": [
+     [],
+     []
+    ],
+    "yawAtHoverEnd": null
+   }
+  },
+  "V2-198-92|L": {
+   "C": {
+    "E1a-1": {
+     "pass": false,
+     "v": "no lift"
+    },
+    "E1a-2": {
+     "pass": false,
+     "v": "no lift"
+    },
+    "E1a-3": {
+     "pass": false,
+     "v": "no lift"
+    },
+    "E1a-4": {
+     "pass": true,
+     "v": "stance slip max 0.288 mm, yaw change max 0.004°"
+    },
+    "E1a-5": {
+     "pass": false,
+     "v": "no lift; abort null"
+    },
+    "E1a-6": {
+     "pass": false,
+     "v": "LIFTOFF→AIRBORNE 0, TOUCHDOWN 0, bounce 0, re-entries < 60 ms L 0 / R 0, unload TIME-OUT; lifted-foot path "
+    },
+    "E1a-7": {
+     "pass": true,
+     "v": "applied Δτ max 0.23 N·m (hip_R.z at 10.963 s); outside onset windows max 0.23 N·m (hip_R.z at 10.963 s); commanded Δτ0 max 0.49 N·m (knee_R.y at 18.104 s); violations 0 / 0"
+    },
+    "E1a-8": {
+     "pass": true,
+     "v": "closure increment max 1.39e-2 J/tick; Σ positive 0.117 J; authority writes 0; external impulse 0"
+    },
+    "E1a-9": {
+     "pass": false,
+     "v": "over-capacity events 0; saturation in hover: none"
+    },
+    "E1a-10": {
+     "pass": true,
+     "v": "smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin — (bounded IK not used); swing-leg knee flexion min 3.96°"
+    },
+    "E1a-12": {
+     "pass": false,
+     "v": "no touchdown"
+    },
+    "E1a-13": {
+     "pass": false,
+     "v": "LOAD_ACCEPT entries 0; s monotone to 1 false; load tracking |Δ| max 0.016 over 1441 ticks from λ-ramp end + 1 s"
+    },
+    "E1a-14": {
+     "pass": true,
+     "v": "end 20.20 s: states SUPPORT/SUPPORT; |ξ − ξ_ref| 0.06 cm; pelvis yaw Δ 0.00°; ankle ab/adduction Δ 0.04 / 0.03°; knee |θ−θ0| Δ 0.04 / 0.04°"
+    },
+    "E1a-16": {
+     "pass": true,
+     "v": "knee flexion 3.96–27.12° (certified envelope 0–40°)"
+    },
+    "E1a-17": {
+     "pass": true,
+     "v": "knee |θ − θ0| max 1.40° at 0.004 s (from 1 s: 0.25° at 6.625 s); violations 0"
+    }
+   },
+   "rep": {
+    "hoverErrMm": [],
+    "clearMm": {
+     "min": null,
+     "max": null
+    },
+    "stanceAnkleFabdExcDeg": null,
+    "pelvisYawMaxDeg": 0.5634077445109722,
+    "events": {
+     "tL": null,
+     "tR": 9,
+     "tA": 13.2,
+     "tEnd": 20.2,
+     "cleared": null,
+     "clearReason": null,
+     "abortT": null,
+     "unloadTimeout": true
+    },
+    "outcome": "stood",
+    "lifecycle": [
+     [],
+     []
+    ],
+    "yawAtHoverEnd": null
+   }
+  },
+  "V2-175-70|L": {
+   "C": {
+    "E1a-1": {
+     "pass": false,
+     "v": "no lift"
+    },
+    "E1a-2": {
+     "pass": false,
+     "v": "no lift"
+    },
+    "E1a-3": {
+     "pass": false,
+     "v": "no lift"
+    },
+    "E1a-4": {
+     "pass": true,
+     "v": "stance slip max 0.298 mm, yaw change max 0.005°"
+    },
+    "E1a-5": {
+     "pass": false,
+     "v": "no lift; abort null"
+    },
+    "E1a-6": {
+     "pass": false,
+     "v": "LIFTOFF→AIRBORNE 0, TOUCHDOWN 0, bounce 0, re-entries < 60 ms L 0 / R 0, unload TIME-OUT; lifted-foot path "
+    },
+    "E1a-7": {
+     "pass": true,
+     "v": "applied Δτ max 0.16 N·m (hip_R.z at 10.946 s); outside onset windows max 0.16 N·m (hip_R.z at 10.946 s); commanded Δτ0 max 0.38 N·m (knee_R.y at 18.083 s); violations 0 / 0"
+    },
+    "E1a-8": {
+     "pass": true,
+     "v": "closure increment max 1.09e-2 J/tick; Σ positive 0.089 J; authority writes 0; external impulse 0"
+    },
+    "E1a-9": {
+     "pass": false,
+     "v": "over-capacity events 0; saturation in hover: none"
+    },
+    "E1a-10": {
+     "pass": true,
+     "v": "smallest hard-limit margin 8.96° (knee_R at 0.00 s); swing-leg solved coordinates: smallest soft margin — (bounded IK not used); swing-leg knee flexion min 3.96°"
+    },
+    "E1a-12": {
+     "pass": false,
+     "v": "no touchdown"
+    },
+    "E1a-13": {
+     "pass": false,
+     "v": "LOAD_ACCEPT entries 0; s monotone to 1 false; load tracking |Δ| max 0.016 over 1441 ticks from λ-ramp end + 1 s"
+    },
+    "E1a-14": {
+     "pass": true,
+     "v": "end 20.20 s: states SUPPORT/SUPPORT; |ξ − ξ_ref| 0.06 cm; pelvis yaw Δ -0.00°; ankle ab/adduction Δ 0.03 / 0.03°; knee |θ−θ0| Δ 0.03 / 0.03°"
+    },
+    "E1a-16": {
+     "pass": true,
+     "v": "knee flexion 3.96–28.88° (certified envelope 0–40°)"
+    },
+    "E1a-17": {
+     "pass": true,
+     "v": "knee |θ − θ0| max 1.39° at 0.004 s (from 1 s: 0.26° at 6.612 s); violations 0"
+    }
+   },
+   "rep": {
+    "hoverErrMm": [],
+    "clearMm": {
+     "min": null,
+     "max": null
+    },
+    "stanceAnkleFabdExcDeg": null,
+    "pelvisYawMaxDeg": 0.3692355514086497,
+    "events": {
+     "tL": null,
+     "tR": 9,
+     "tA": 13.2,
+     "tEnd": 20.2,
+     "cleared": null,
+     "clearReason": null,
+     "abortT": null,
+     "unloadTimeout": true
+    },
+    "outcome": "stood",
+    "lifecycle": [
+     [],
+     []
+    ],
+    "yawAtHoverEnd": null
+   }
+  },
+  "V2-190-85|L": {
+   "C": {
+    "E1a-1": {
+     "pass": false,
+     "v": "no lift"
+    },
+    "E1a-2": {
+     "pass": false,
+     "v": "no lift"
+    },
+    "E1a-3": {
+     "pass": false,
+     "v": "no lift"
+    },
+    "E1a-4": {
+     "pass": true,
+     "v": "stance slip max 0.314 mm, yaw change max 0.005°"
+    },
+    "E1a-5": {
+     "pass": false,
+     "v": "no lift; abort null"
+    },
+    "E1a-6": {
+     "pass": false,
+     "v": "LIFTOFF→AIRBORNE 0, TOUCHDOWN 0, bounce 0, re-entries < 60 ms L 0 / R 0, unload TIME-OUT; lifted-foot path "
+    },
+    "E1a-7": {
+     "pass": true,
+     "v": "applied Δτ max 0.21 N·m (hip_R.z at 10.967 s); outside onset windows max 0.21 N·m (hip_R.z at 10.967 s); commanded Δτ0 max 0.45 N·m (knee_R.y at 18.096 s); violations 0 / 0"
+    },
+    "E1a-8": {
+     "pass": true,
+     "v": "closure increment max 1.31e-2 J/tick; Σ positive 0.111 J; authority writes 0; external impulse 0"
+    },
+    "E1a-9": {
+     "pass": false,
+     "v": "over-capacity events 0; saturation in hover: none"
+    },
+    "E1a-10": {
+     "pass": true,
+     "v": "smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin — (bounded IK not used); swing-leg knee flexion min 3.96°"
+    },
+    "E1a-12": {
+     "pass": false,
+     "v": "no touchdown"
+    },
+    "E1a-13": {
+     "pass": false,
+     "v": "LOAD_ACCEPT entries 0; s monotone to 1 false; load tracking |Δ| max 0.016 over 1441 ticks from λ-ramp end + 1 s"
+    },
+    "E1a-14": {
+     "pass": true,
+     "v": "end 20.20 s: states SUPPORT/SUPPORT; |ξ − ξ_ref| 0.06 cm; pelvis yaw Δ 0.01°; ankle ab/adduction Δ 0.04 / 0.03°; knee |θ−θ0| Δ 0.04 / 0.04°"
+    },
+    "E1a-16": {
+     "pass": true,
+     "v": "knee flexion 3.96–27.70° (certified envelope 0–40°)"
+    },
+    "E1a-17": {
+     "pass": true,
+     "v": "knee |θ − θ0| max 1.39° at 0.004 s (from 1 s: 0.25° at 6.621 s); violations 0"
+    }
+   },
+   "rep": {
+    "hoverErrMm": [],
+    "clearMm": {
+     "min": null,
+     "max": null
+    },
+    "stanceAnkleFabdExcDeg": null,
+    "pelvisYawMaxDeg": 0.4987158861223534,
+    "events": {
+     "tL": null,
+     "tR": 9,
+     "tA": 13.2,
+     "tEnd": 20.2,
+     "cleared": null,
+     "clearReason": null,
+     "abortT": null,
+     "unloadTimeout": true
+    },
+    "outcome": "stood",
+    "lifecycle": [
+     [],
+     []
+    ],
+    "yawAtHoverEnd": null
+   }
+  },
+  "V2-short-legs|L": {
+   "C": {
+    "E1a-1": {
+     "pass": false,
+     "v": "no lift"
+    },
+    "E1a-2": {
+     "pass": false,
+     "v": "no lift"
+    },
+    "E1a-3": {
+     "pass": false,
+     "v": "no lift"
+    },
+    "E1a-4": {
+     "pass": true,
+     "v": "stance slip max 0.299 mm, yaw change max 0.005°"
+    },
+    "E1a-5": {
+     "pass": false,
+     "v": "no lift; abort null"
+    },
+    "E1a-6": {
+     "pass": false,
+     "v": "LIFTOFF→AIRBORNE 0, TOUCHDOWN 0, bounce 0, re-entries < 60 ms L 0 / R 0, unload TIME-OUT; lifted-foot path "
+    },
+    "E1a-7": {
+     "pass": true,
+     "v": "applied Δτ max 0.18 N·m (hip_R.z at 10.963 s); outside onset windows max 0.18 N·m (hip_R.z at 10.963 s); commanded Δτ0 max 0.43 N·m (knee_R.y at 18.087 s); violations 0 / 0"
+    },
+    "E1a-8": {
+     "pass": true,
+     "v": "closure increment max 1.24e-2 J/tick; Σ positive 0.100 J; authority writes 0; external impulse 0"
+    },
+    "E1a-9": {
+     "pass": false,
+     "v": "over-capacity events 0; saturation in hover: none"
+    },
+    "E1a-10": {
+     "pass": true,
+     "v": "smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin — (bounded IK not used); swing-leg knee flexion min 3.96°"
+    },
+    "E1a-12": {
+     "pass": false,
+     "v": "no touchdown"
+    },
+    "E1a-13": {
+     "pass": false,
+     "v": "LOAD_ACCEPT entries 0; s monotone to 1 false; load tracking |Δ| max 0.020 over 1441 ticks from λ-ramp end + 1 s"
+    },
+    "E1a-14": {
+     "pass": true,
+     "v": "end 20.20 s: states SUPPORT/SUPPORT; |ξ − ξ_ref| 0.06 cm; pelvis yaw Δ 0.00°; ankle ab/adduction Δ 0.03 / 0.03°; knee |θ−θ0| Δ 0.03 / 0.03°"
+    },
+    "E1a-16": {
+     "pass": true,
+     "v": "knee flexion 3.96–29.04° (certified envelope 0–40°)"
+    },
+    "E1a-17": {
+     "pass": true,
+     "v": "knee |θ − θ0| max 1.39° at 0.004 s (from 1 s: 0.26° at 6.583 s); violations 0"
+    }
+   },
+   "rep": {
+    "hoverErrMm": [],
+    "clearMm": {
+     "min": null,
+     "max": null
+    },
+    "stanceAnkleFabdExcDeg": null,
+    "pelvisYawMaxDeg": 0.446665568056603,
+    "events": {
+     "tL": null,
+     "tR": 9,
+     "tA": 13.2,
+     "tEnd": 20.2,
+     "cleared": null,
+     "clearReason": null,
+     "abortT": null,
+     "unloadTimeout": true
+    },
+    "outcome": "stood",
+    "lifecycle": [
+     [],
+     []
+    ],
+    "yawAtHoverEnd": null
+   }
+  },
+  "V2-long-legs|L": {
+   "C": {
+    "E1a-1": {
+     "pass": false,
+     "v": "no lift"
+    },
+    "E1a-2": {
+     "pass": false,
+     "v": "no lift"
+    },
+    "E1a-3": {
+     "pass": false,
+     "v": "no lift"
+    },
+    "E1a-4": {
+     "pass": true,
+     "v": "stance slip max 0.293 mm, yaw change max 0.005°"
+    },
+    "E1a-5": {
+     "pass": false,
+     "v": "no lift; abort null"
+    },
+    "E1a-6": {
+     "pass": false,
+     "v": "LIFTOFF→AIRBORNE 0, TOUCHDOWN 0, bounce 0, re-entries < 60 ms L 0 / R 0, unload TIME-OUT; lifted-foot path "
+    },
+    "E1a-7": {
+     "pass": true,
+     "v": "applied Δτ max 0.18 N·m (hip_R.z at 10.887 s); outside onset windows max 0.18 N·m (hip_R.z at 10.887 s); commanded Δτ0 max 0.40 N·m (knee_R.y at 18.096 s); violations 0 / 0"
+    },
+    "E1a-8": {
+     "pass": true,
+     "v": "closure increment max 1.20e-2 J/tick; Σ positive 0.099 J; authority writes 0; external impulse 0"
+    },
+    "E1a-9": {
+     "pass": false,
+     "v": "over-capacity events 0; saturation in hover: none"
+    },
+    "E1a-10": {
+     "pass": true,
+     "v": "smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin — (bounded IK not used); swing-leg knee flexion min 3.96°"
+    },
+    "E1a-12": {
+     "pass": false,
+     "v": "no touchdown"
+    },
+    "E1a-13": {
+     "pass": false,
+     "v": "LOAD_ACCEPT entries 0; s monotone to 1 false; load tracking |Δ| max 0.013 over 1441 ticks from λ-ramp end + 1 s"
+    },
+    "E1a-14": {
+     "pass": true,
+     "v": "end 20.20 s: states SUPPORT/SUPPORT; |ξ − ξ_ref| 0.06 cm; pelvis yaw Δ 0.00°; ankle ab/adduction Δ 0.03 / 0.03°; knee |θ−θ0| Δ 0.03 / 0.03°"
+    },
+    "E1a-16": {
+     "pass": true,
+     "v": "knee flexion 3.96–27.64° (certified envelope 0–40°)"
+    },
+    "E1a-17": {
+     "pass": true,
+     "v": "knee |θ − θ0| max 1.40° at 0.004 s (from 1 s: 0.26° at 6.642 s); violations 0"
+    }
+   },
+   "rep": {
+    "hoverErrMm": [],
+    "clearMm": {
+     "min": null,
+     "max": null
+    },
+    "stanceAnkleFabdExcDeg": null,
+    "pelvisYawMaxDeg": 0.42675334805428367,
+    "events": {
+     "tL": null,
+     "tR": 9,
+     "tA": 13.2,
+     "tEnd": 20.2,
+     "cleared": null,
+     "clearReason": null,
+     "abortT": null,
+     "unloadTimeout": true
+    },
+    "outcome": "stood",
+    "lifecycle": [
+     [],
+     []
+    ],
+    "yawAtHoverEnd": null
+   }
+  },
+  "V1-matched|L": {
+   "C": {
+    "E1a-1": {
+     "pass": false,
+     "v": "no lift"
+    },
+    "E1a-2": {
+     "pass": false,
+     "v": "no lift"
+    },
+    "E1a-3": {
+     "pass": false,
+     "v": "no lift"
+    },
+    "E1a-4": {
+     "pass": true,
+     "v": "stance slip max 0.284 mm, yaw change max 0.005°"
+    },
+    "E1a-5": {
+     "pass": false,
+     "v": "no lift; abort null"
+    },
+    "E1a-6": {
+     "pass": false,
+     "v": "LIFTOFF→AIRBORNE 0, TOUCHDOWN 0, bounce 0, re-entries < 60 ms L 0 / R 0, unload TIME-OUT; lifted-foot path "
+    },
+    "E1a-7": {
+     "pass": true,
+     "v": "applied Δτ max 0.19 N·m (hip_R.z at 10.912 s); outside onset windows max 0.19 N·m (hip_R.z at 10.912 s); commanded Δτ0 max 0.42 N·m (knee_R.y at 18.096 s); violations 0 / 0"
+    },
+    "E1a-8": {
+     "pass": true,
+     "v": "closure increment max 1.17e-2 J/tick; Σ positive 0.096 J; authority writes 0; external impulse 0"
+    },
+    "E1a-9": {
+     "pass": false,
+     "v": "over-capacity events 0; saturation in hover: none"
+    },
+    "E1a-10": {
+     "pass": true,
+     "v": "smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin — (bounded IK not used); swing-leg knee flexion min 3.96°"
+    },
+    "E1a-12": {
+     "pass": false,
+     "v": "no touchdown"
+    },
+    "E1a-13": {
+     "pass": false,
+     "v": "LOAD_ACCEPT entries 0; s monotone to 1 false; load tracking |Δ| max 0.016 over 1441 ticks from λ-ramp end + 1 s"
+    },
+    "E1a-14": {
+     "pass": true,
+     "v": "end 20.20 s: states SUPPORT/SUPPORT; |ξ − ξ_ref| 0.06 cm; pelvis yaw Δ 0.00°; ankle ab/adduction Δ 0.04 / 0.03°; knee |θ−θ0| Δ 0.04 / 0.04°"
+    },
+    "E1a-16": {
+     "pass": true,
+     "v": "knee flexion 3.96–27.70° (certified envelope 0–40°)"
+    },
+    "E1a-17": {
+     "pass": true,
+     "v": "knee |θ − θ0| max 1.39° at 0.004 s (from 1 s: 0.26° at 6.612 s); violations 0"
+    }
+   },
+   "rep": {
+    "hoverErrMm": [],
+    "clearMm": {
+     "min": null,
+     "max": null
+    },
+    "stanceAnkleFabdExcDeg": null,
+    "pelvisYawMaxDeg": 0.45184485961967463,
+    "events": {
+     "tL": null,
+     "tR": 9,
+     "tA": 13.2,
+     "tEnd": 20.2,
+     "cleared": null,
+     "clearReason": null,
+     "abortT": null,
+     "unloadTimeout": true
+    },
+    "outcome": "stood",
+    "lifecycle": [
+     [],
+     []
+    ],
+    "yawAtHoverEnd": null
+   }
+  },
+  "V2-REF|R": {
+   "C": {
+    "E1a-1": {
+     "pass": false,
+     "v": "no lift"
+    },
+    "E1a-2": {
+     "pass": false,
+     "v": "no lift"
+    },
+    "E1a-3": {
+     "pass": false,
+     "v": "no lift"
+    },
+    "E1a-4": {
+     "pass": true,
+     "v": "stance slip max 0.284 mm, yaw change max 0.007°"
+    },
+    "E1a-5": {
+     "pass": false,
+     "v": "no lift; abort null"
+    },
+    "E1a-6": {
+     "pass": false,
+     "v": "LIFTOFF→AIRBORNE 0, TOUCHDOWN 0, bounce 0, re-entries < 60 ms L 0 / R 0, unload TIME-OUT; lifted-foot path "
+    },
+    "E1a-7": {
+     "pass": true,
+     "v": "applied Δτ max 0.18 N·m (hip_L.z at 10.917 s); outside onset windows max 0.18 N·m (hip_L.z at 10.917 s); commanded Δτ0 max 0.41 N·m (knee_L.y at 18.092 s); violations 0 / 0"
+    },
+    "E1a-8": {
+     "pass": true,
+     "v": "closure increment max 1.21e-2 J/tick; Σ positive 0.097 J; authority writes 0; external impulse 0"
+    },
+    "E1a-9": {
+     "pass": false,
+     "v": "over-capacity events 0; saturation in hover: none"
+    },
+    "E1a-10": {
+     "pass": true,
+     "v": "smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin — (bounded IK not used); swing-leg knee flexion min 3.96°"
+    },
+    "E1a-12": {
+     "pass": false,
+     "v": "no touchdown"
+    },
+    "E1a-13": {
+     "pass": false,
+     "v": "LOAD_ACCEPT entries 0; s monotone to 1 false; load tracking |Δ| max 0.016 over 1441 ticks from λ-ramp end + 1 s"
+    },
+    "E1a-14": {
+     "pass": true,
+     "v": "end 20.20 s: states SUPPORT/SUPPORT; |ξ − ξ_ref| 0.06 cm; pelvis yaw Δ -0.00°; ankle ab/adduction Δ 0.03 / 0.03°; knee |θ−θ0| Δ 0.03 / 0.03°"
+    },
+    "E1a-16": {
+     "pass": true,
+     "v": "knee flexion 3.96–28.31° (certified envelope 0–40°)"
+    },
+    "E1a-17": {
+     "pass": true,
+     "v": "knee |θ − θ0| max 1.39° at 0.004 s (from 1 s: 0.26° at 6.608 s); violations 0"
+    }
+   },
+   "rep": {
+    "hoverErrMm": [],
+    "clearMm": {
+     "min": null,
+     "max": null
+    },
+    "stanceAnkleFabdExcDeg": null,
+    "pelvisYawMaxDeg": 0.43714061980171737,
+    "events": {
+     "tL": null,
+     "tR": 9,
+     "tA": 13.2,
+     "tEnd": 20.2,
+     "cleared": null,
+     "clearReason": null,
+     "abortT": null,
+     "unloadTimeout": true
+    },
+    "outcome": "stood",
+    "lifecycle": [
+     [],
+     []
+    ],
+    "yawAtHoverEnd": null
+   }
+  }
+ },
+ "criteria": {
+  "E1a-11": {
+   "pass": true,
+   "v": "21/21 hash marks identical (end d359ac5c / d359ac5c)"
+  },
+  "E1a-1": {
+   "pass": false,
+   "failing": [
+    "V2-REF|L",
+    "V2-165-62|L",
+    "V2-198-92|L",
+    "V2-175-70|L",
+    "V2-190-85|L",
+    "V2-short-legs|L",
+    "V2-long-legs|L",
+    "V1-matched|L",
+    "V2-REF|R"
+   ]
+  },
+  "E1a-2": {
+   "pass": false,
+   "failing": [
+    "V2-REF|L",
+    "V2-165-62|L",
+    "V2-198-92|L",
+    "V2-175-70|L",
+    "V2-190-85|L",
+    "V2-short-legs|L",
+    "V2-long-legs|L",
+    "V1-matched|L",
+    "V2-REF|R"
+   ]
+  },
+  "E1a-3": {
+   "pass": false,
+   "failing": [
+    "V2-REF|L",
+    "V2-165-62|L",
+    "V2-198-92|L",
+    "V2-175-70|L",
+    "V2-190-85|L",
+    "V2-short-legs|L",
+    "V2-long-legs|L",
+    "V1-matched|L",
+    "V2-REF|R"
+   ]
+  },
+  "E1a-4": {
+   "pass": true,
+   "failing": []
+  },
+  "E1a-5": {
+   "pass": false,
+   "failing": [
+    "V2-REF|L",
+    "V2-165-62|L",
+    "V2-198-92|L",
+    "V2-175-70|L",
+    "V2-190-85|L",
+    "V2-short-legs|L",
+    "V2-long-legs|L",
+    "V1-matched|L",
+    "V2-REF|R"
+   ]
+  },
+  "E1a-6": {
+   "pass": false,
+   "failing": [
+    "V2-REF|L",
+    "V2-165-62|L",
+    "V2-198-92|L",
+    "V2-175-70|L",
+    "V2-190-85|L",
+    "V2-short-legs|L",
+    "V2-long-legs|L",
+    "V1-matched|L",
+    "V2-REF|R"
+   ]
+  },
+  "E1a-7": {
+   "pass": true,
+   "failing": []
+  },
+  "E1a-8": {
+   "pass": true,
+   "failing": []
+  },
+  "E1a-9": {
+   "pass": false,
+   "failing": [
+    "V2-REF|L",
+    "V2-165-62|L",
+    "V2-198-92|L",
+    "V2-175-70|L",
+    "V2-190-85|L",
+    "V2-short-legs|L",
+    "V2-long-legs|L",
+    "V1-matched|L",
+    "V2-REF|R"
+   ]
+  },
+  "E1a-10": {
+   "pass": true,
+   "failing": []
+  },
+  "E1a-12": {
+   "pass": false,
+   "failing": [
+    "V2-REF|L",
+    "V2-165-62|L",
+    "V2-198-92|L",
+    "V2-175-70|L",
+    "V2-190-85|L",
+    "V2-short-legs|L",
+    "V2-long-legs|L",
+    "V1-matched|L",
+    "V2-REF|R"
+   ]
+  },
+  "E1a-13": {
+   "pass": false,
+   "failing": [
+    "V2-REF|L",
+    "V2-165-62|L",
+    "V2-198-92|L",
+    "V2-175-70|L",
+    "V2-190-85|L",
+    "V2-short-legs|L",
+    "V2-long-legs|L",
+    "V1-matched|L",
+    "V2-REF|R"
+   ]
+  },
+  "E1a-14": {
+   "pass": true,
+   "failing": []
+  },
+  "E1a-16": {
+   "pass": true,
+   "failing": []
+  },
+  "E1a-17": {
+   "pass": true,
+   "failing": []
+  },
+  "E1a-15": {
+   "pass": false,
+   "v": "failing: E1a-1 [V2-REF|L, V2-165-62|L, V2-198-92|L, V2-175-70|L, V2-190-85|L, V2-short-legs|L, V2-long-legs|L, V1-matched|L, V2-REF|R]; E1a-2 [V2-REF|L, V2-165-62|L, V2-198-92|L, V2-175-70|L, V2-190-85|L, V2-short-legs|L, V2-long-legs|L, V1-matched|L, V2-REF|R]; E1a-3 [V2-REF|L, V2-165-62|L, V2-198-92|L, V2-175-70|L, V2-190-85|L, V2-short-legs|L, V2-long-legs|L, V1-matched|L, V2-REF|R]; E1a-5 [V2-REF|L, V2-165-62|L, V2-198-92|L, V2-175-70|L, V2-190-85|L, V2-short-legs|L, V2-long-legs|L, V1-matched|L, V2-REF|R]; E1a-6 [V2-REF|L, V2-165-62|L, V2-198-92|L, V2-175-70|L, V2-190-85|L, V2-short-legs|L, V2-long-legs|L, V1-matched|L, V2-REF|R]; E1a-9 [V2-REF|L, V2-165-62|L, V2-198-92|L, V2-175-70|L, V2-190-85|L, V2-short-legs|L, V2-long-legs|L, V1-matched|L, V2-REF|R]; E1a-12 [V2-REF|L, V2-165-62|L, V2-198-92|L, V2-175-70|L, V2-190-85|L, V2-short-legs|L, V2-long-legs|L, V1-matched|L, V2-REF|R]; E1a-13 [V2-REF|L, V2-165-62|L, V2-198-92|L, V2-175-70|L, V2-190-85|L, V2-short-legs|L, V2-long-legs|L, V1-matched|L, V2-REF|R]"
+  }
+ },
+ "E1a": "FAIL"
+}
