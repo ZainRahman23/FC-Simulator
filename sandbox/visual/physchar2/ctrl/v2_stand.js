@@ -29,6 +29,7 @@ export function lockedAxisFF(T, axW, tw, L) { const tt = dtan(tw),   // determin
 // UNLOAD FIX B3 — the commanded left-foot share t clamped so that a foot whose requested share (left 1 − λ_R, right λ_R) is below the unloaded level
 // `lo` is never commanded more than its request; requests ≥ lo leave t untouched
 export function shareClampC(t, lam, lo, hi) { const cap = (r) => (r <= lo ? Math.max(0, r) : r >= hi ? 1 : r + (1 - r) * (r - lo) / (hi - lo)); const rL = 1 - lam, rR = lam; if (rL < hi) t = Math.min(t, cap(rL)); if (rR < hi) t = Math.max(t, 1 - cap(rR)); return t; }
+const smooth01 = (u) => { const x = Math.min(1, Math.max(0, u ?? 1)); return x * x * (3 - 2 * x); };   // touchRestRamp (C2): smoothstep of the lifecycle's rest weight
 export function shareClamp(t, lam, lo) { const rL = 1 - lam, rR = lam; if (rL < lo) t = Math.min(t, Math.max(0, rL)); if (rR < lo) t = Math.max(t, 1 - Math.max(0, rR)); return t; }
 
 export const STAND = {
@@ -91,6 +92,11 @@ export const STAND = {
                           // SURFACE (vertical target = the anchor height, not the foot's own height) — and while in contact RESTS on it with a seating force of
                           // loadOff / 2 of body weight (the midpoint of the lifecycle's own "unloaded" band [0, loadOff)), scaled (1 − s)(1 − a), through its own
                           // leg's feed-forward (finite actuators; the other foot's commanded force reduced by the same amount). = lcTouch { vert: "anchor", seat: loadOff / 2 }
+  touchRestRamp: false,   // EXPERIMENTAL correction C2 of touchRest (touch_semantics/TOUCHREST_RESULTS.md §3; default OFF; needs touchRest): the seat is weighted by the
+                          // lifecycle's rest weight smooth(ρ) instead of switching with the swing command / state — ρ ramps (over the lifecycle's `release`) to 1 while
+                          // the foot has no swing command and is not AIRBORNE, to 0 otherwise. Measured with C: the one-tick seat removal at a lift command made 0.5 mm
+                          // hovers overshoot, graze and bounce (17 / 48; 2 / 48 without the seat).
+                          // REFUTED (diagnostic lab, touch_semantics/TOUCHREST_RESULTS.md §3): 18 / 48 with the ramp — the 0.5 mm hover sits AT the 0.5 mm touch-sensing gap; kept as a record
   shareCapC: false,       // EXPERIMENTAL (touch_semantics/; default OFF): B3 with CONTINUOUS engagement — the cap on a foot's commanded share blends from none at
                           // the lifecycle's wantShare to its requested share at loadOff (shareClampC); a step-free alternative to shareCap
   ffLockedAxis: false,    // UNLOAD FIX B1 (unload_fix/UNLOAD_FIX_PREREG.md §1; default OFF until qualified): locked-axis-consistent feed-forward. For a joint with
@@ -238,7 +244,8 @@ export class StandController {
     // the foot's own leg presses it onto the turf with seat·M·g·(1 − s)·(1 − a) through its feed-forward (finite actuators; the ground reaction is physical), and the
     // other foot's commanded vertical force is reduced by the same amount so the commanded total stays M·g. Vertical compliance with a small bounded seating force
     const seatFrac = o.touchRest && this.lc ? this.lc.o.loadOff / 2 : o.lcTouch && o.lcTouch.seat > 0 ? o.lcTouch.seat : 0;
-    if (sw && seatFrac > 0) for (const n of [0, 1]) { const f = LC[n]; if (sw[n] < 1 && !f.swing && ["TOUCHING", "TOUCHDOWN", "LIFTOFF", "UNLOADING", "LOAD_ACCEPT"].includes(f.state)) { const fs = seatFrac * this.M * G * (1 - sw[n]) * (1 - f.a); F[n][1] += fs; F[1 - n][1] -= fs; } }
+    if (sw && seatFrac > 0) for (const n of [0, 1]) { const f = LC[n], rr = o.touchRest && o.touchRestRamp ? smooth01(f.rho) : null;   // C2: continuous rest weight (default off)
+      if (rr != null ? sw[n] < 1 && rr > 0 : sw[n] < 1 && !f.swing && ["TOUCHING", "TOUCHDOWN", "LIFTOFF", "UNLOADING", "LOAD_ACCEPT"].includes(f.state)) { const fs = seatFrac * this.M * G * (1 - sw[n]) * (1 - f.a) * (rr ?? 1); F[n][1] += fs; F[1 - n][1] -= fs; } }
     // posture preference for the legs (task space): a desired wrench on the pelvis — orientation toward the reference (heading from the feet)
     // and height above the ankles — that the legs deliver (statics, each leg its load share); horizontal pelvis position is NOT a posture target
     let legW = null, ikT = null;

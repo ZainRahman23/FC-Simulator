@@ -1632,3 +1632,16 @@ Not pushed.
 - Decisions required: see the results file and the morning report.
 
 Not pushed.
+
+### TR-1a: correction to TR-1's R3 cause (after the C2 diagnostic)
+
+**C2 test:** the seat with a continuous rest-weight ramp (`touchRestRamp`, default off, diagnostic) gives R3 18 / 144 in a 384-run lab, against C's 17. So the one-tick seat removal is **not** the cause; TR-1's R3 line is superseded.
+
+**Mechanism:**
+- The 0.5 mm boundary hover is commanded exactly at the lifecycle's 0.5 mm touch-sensing gap.
+- The swing servo's mm-level error band straddles that gap: one debounced re-touch / bounce, no chatter.
+- The seat only raises how often the foot leaves the turf at all.
+
+**Status:** C2 is kept as a refuted, default-off record. `touch_semantics/TOUCHREST_RESULTS.md` §0 / §3 revised.
+
+Not pushed.

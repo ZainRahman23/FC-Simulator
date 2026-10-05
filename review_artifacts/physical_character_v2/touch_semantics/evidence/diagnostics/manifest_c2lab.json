@@ -1,0 +1,8037 @@
+{
+ "generated": "C2 diagnostic lab (not validation)",
+ "runs": [
+  {
+   "set": "P",
+   "body": "V2-REF",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "P_V2-REF_L_d0.025_r0_R4_C2"
+  },
+  {
+   "set": "P",
+   "body": "V2-REF",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "P_V2-REF_R_d0.025_r0_R4_C2"
+  },
+  {
+   "set": "P",
+   "body": "V2-165-62",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "P_V2-165-62_L_d0.025_r0_R4_C2"
+  },
+  {
+   "set": "P",
+   "body": "V2-165-62",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "P_V2-165-62_R_d0.025_r0_R4_C2"
+  },
+  {
+   "set": "P",
+   "body": "V2-198-92",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "P_V2-198-92_L_d0.025_r0_R4_C2"
+  },
+  {
+   "set": "P",
+   "body": "V2-198-92",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "P_V2-198-92_R_d0.025_r0_R4_C2"
+  },
+  {
+   "set": "P",
+   "body": "V2-175-70",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "P_V2-175-70_L_d0.025_r0_R4_C2"
+  },
+  {
+   "set": "P",
+   "body": "V2-175-70",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "P_V2-175-70_R_d0.025_r0_R4_C2"
+  },
+  {
+   "set": "P",
+   "body": "V2-190-85",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "P_V2-190-85_L_d0.025_r0_R4_C2"
+  },
+  {
+   "set": "P",
+   "body": "V2-190-85",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "P_V2-190-85_R_d0.025_r0_R4_C2"
+  },
+  {
+   "set": "P",
+   "body": "V2-short-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "P_V2-short-legs_L_d0.025_r0_R4_C2"
+  },
+  {
+   "set": "P",
+   "body": "V2-short-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "P_V2-short-legs_R_d0.025_r0_R4_C2"
+  },
+  {
+   "set": "P",
+   "body": "V2-long-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "P_V2-long-legs_L_d0.025_r0_R4_C2"
+  },
+  {
+   "set": "P",
+   "body": "V2-long-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "P_V2-long-legs_R_d0.025_r0_R4_C2"
+  },
+  {
+   "set": "P",
+   "body": "V1-matched",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "P_V1-matched_L_d0.025_r0_R4_C2"
+  },
+  {
+   "set": "P",
+   "body": "V1-matched",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "P_V1-matched_R_d0.025_r0_R4_C2"
+  },
+  {
+   "set": "L",
+   "body": "V2-REF",
+   "foot": "L",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-REF_L_d0.01_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-REF",
+   "foot": "L",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-REF_L_d0.01_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-REF",
+   "foot": "L",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-REF_L_d0.01_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-REF",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-REF_L_d0.025_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-REF",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-REF_L_d0.025_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-REF",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-REF_L_d0.025_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-REF",
+   "foot": "L",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-REF_L_d0.03_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-REF",
+   "foot": "L",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-REF_L_d0.03_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-REF",
+   "foot": "L",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-REF_L_d0.03_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-REF",
+   "foot": "R",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-REF_R_d0.01_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-REF",
+   "foot": "R",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-REF_R_d0.01_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-REF",
+   "foot": "R",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-REF_R_d0.01_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-REF",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-REF_R_d0.025_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-REF",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-REF_R_d0.025_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-REF",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-REF_R_d0.025_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-REF",
+   "foot": "R",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-REF_R_d0.03_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-REF",
+   "foot": "R",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-REF_R_d0.03_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-REF",
+   "foot": "R",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-REF_R_d0.03_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-165-62",
+   "foot": "L",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-165-62_L_d0.01_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-165-62",
+   "foot": "L",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-165-62_L_d0.01_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-165-62",
+   "foot": "L",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-165-62_L_d0.01_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-165-62",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-165-62_L_d0.025_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-165-62",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-165-62_L_d0.025_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-165-62",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-165-62_L_d0.025_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-165-62",
+   "foot": "L",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-165-62_L_d0.03_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-165-62",
+   "foot": "L",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-165-62_L_d0.03_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-165-62",
+   "foot": "L",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-165-62_L_d0.03_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-165-62",
+   "foot": "R",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-165-62_R_d0.01_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-165-62",
+   "foot": "R",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-165-62_R_d0.01_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-165-62",
+   "foot": "R",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-165-62_R_d0.01_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-165-62",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-165-62_R_d0.025_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-165-62",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-165-62_R_d0.025_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-165-62",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-165-62_R_d0.025_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-165-62",
+   "foot": "R",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-165-62_R_d0.03_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-165-62",
+   "foot": "R",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-165-62_R_d0.03_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-165-62",
+   "foot": "R",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-165-62_R_d0.03_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-198-92",
+   "foot": "L",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-198-92_L_d0.01_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-198-92",
+   "foot": "L",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-198-92_L_d0.01_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-198-92",
+   "foot": "L",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-198-92_L_d0.01_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-198-92",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-198-92_L_d0.025_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-198-92",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-198-92_L_d0.025_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-198-92",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-198-92_L_d0.025_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-198-92",
+   "foot": "L",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-198-92_L_d0.03_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-198-92",
+   "foot": "L",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-198-92_L_d0.03_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-198-92",
+   "foot": "L",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-198-92_L_d0.03_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-198-92",
+   "foot": "R",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-198-92_R_d0.01_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-198-92",
+   "foot": "R",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-198-92_R_d0.01_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-198-92",
+   "foot": "R",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-198-92_R_d0.01_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-198-92",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-198-92_R_d0.025_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-198-92",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-198-92_R_d0.025_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-198-92",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-198-92_R_d0.025_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-198-92",
+   "foot": "R",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-198-92_R_d0.03_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-198-92",
+   "foot": "R",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-198-92_R_d0.03_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-198-92",
+   "foot": "R",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-198-92_R_d0.03_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-175-70",
+   "foot": "L",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-175-70_L_d0.01_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-175-70",
+   "foot": "L",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-175-70_L_d0.01_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-175-70",
+   "foot": "L",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-175-70_L_d0.01_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-175-70",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-175-70_L_d0.025_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-175-70",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-175-70_L_d0.025_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-175-70",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-175-70_L_d0.025_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-175-70",
+   "foot": "L",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-175-70_L_d0.03_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-175-70",
+   "foot": "L",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-175-70_L_d0.03_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-175-70",
+   "foot": "L",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-175-70_L_d0.03_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-175-70",
+   "foot": "R",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-175-70_R_d0.01_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-175-70",
+   "foot": "R",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-175-70_R_d0.01_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-175-70",
+   "foot": "R",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-175-70_R_d0.01_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-175-70",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-175-70_R_d0.025_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-175-70",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-175-70_R_d0.025_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-175-70",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-175-70_R_d0.025_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-175-70",
+   "foot": "R",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-175-70_R_d0.03_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-175-70",
+   "foot": "R",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-175-70_R_d0.03_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-175-70",
+   "foot": "R",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-175-70_R_d0.03_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-190-85",
+   "foot": "L",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-190-85_L_d0.01_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-190-85",
+   "foot": "L",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-190-85_L_d0.01_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-190-85",
+   "foot": "L",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-190-85_L_d0.01_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-190-85",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-190-85_L_d0.025_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-190-85",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-190-85_L_d0.025_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-190-85",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-190-85_L_d0.025_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-190-85",
+   "foot": "L",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-190-85_L_d0.03_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-190-85",
+   "foot": "L",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-190-85_L_d0.03_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-190-85",
+   "foot": "L",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-190-85_L_d0.03_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-190-85",
+   "foot": "R",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-190-85_R_d0.01_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-190-85",
+   "foot": "R",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-190-85_R_d0.01_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-190-85",
+   "foot": "R",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-190-85_R_d0.01_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-190-85",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-190-85_R_d0.025_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-190-85",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-190-85_R_d0.025_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-190-85",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-190-85_R_d0.025_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-190-85",
+   "foot": "R",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-190-85_R_d0.03_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-190-85",
+   "foot": "R",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-190-85_R_d0.03_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-190-85",
+   "foot": "R",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-190-85_R_d0.03_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-short-legs",
+   "foot": "L",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-short-legs_L_d0.01_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-short-legs",
+   "foot": "L",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-short-legs_L_d0.01_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-short-legs",
+   "foot": "L",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-short-legs_L_d0.01_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-short-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-short-legs_L_d0.025_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-short-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-short-legs_L_d0.025_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-short-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-short-legs_L_d0.025_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-short-legs",
+   "foot": "L",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-short-legs_L_d0.03_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-short-legs",
+   "foot": "L",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-short-legs_L_d0.03_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-short-legs",
+   "foot": "L",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-short-legs_L_d0.03_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-short-legs",
+   "foot": "R",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-short-legs_R_d0.01_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-short-legs",
+   "foot": "R",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-short-legs_R_d0.01_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-short-legs",
+   "foot": "R",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-short-legs_R_d0.01_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-short-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-short-legs_R_d0.025_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-short-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-short-legs_R_d0.025_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-short-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-short-legs_R_d0.025_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-short-legs",
+   "foot": "R",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-short-legs_R_d0.03_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-short-legs",
+   "foot": "R",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-short-legs_R_d0.03_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-short-legs",
+   "foot": "R",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-short-legs_R_d0.03_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-long-legs",
+   "foot": "L",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-long-legs_L_d0.01_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-long-legs",
+   "foot": "L",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-long-legs_L_d0.01_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-long-legs",
+   "foot": "L",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-long-legs_L_d0.01_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-long-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-long-legs_L_d0.025_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-long-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-long-legs_L_d0.025_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-long-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-long-legs_L_d0.025_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-long-legs",
+   "foot": "L",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-long-legs_L_d0.03_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-long-legs",
+   "foot": "L",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-long-legs_L_d0.03_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-long-legs",
+   "foot": "L",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-long-legs_L_d0.03_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-long-legs",
+   "foot": "R",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-long-legs_R_d0.01_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-long-legs",
+   "foot": "R",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-long-legs_R_d0.01_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-long-legs",
+   "foot": "R",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-long-legs_R_d0.01_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-long-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-long-legs_R_d0.025_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-long-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-long-legs_R_d0.025_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-long-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-long-legs_R_d0.025_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V2-long-legs",
+   "foot": "R",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-long-legs_R_d0.03_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V2-long-legs",
+   "foot": "R",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-long-legs_R_d0.03_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V2-long-legs",
+   "foot": "R",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V2-long-legs_R_d0.03_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V1-matched",
+   "foot": "L",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V1-matched_L_d0.01_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V1-matched",
+   "foot": "L",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V1-matched_L_d0.01_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V1-matched",
+   "foot": "L",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V1-matched_L_d0.01_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V1-matched",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V1-matched_L_d0.025_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V1-matched",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V1-matched_L_d0.025_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V1-matched",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V1-matched_L_d0.025_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V1-matched",
+   "foot": "L",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V1-matched_L_d0.03_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V1-matched",
+   "foot": "L",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V1-matched_L_d0.03_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V1-matched",
+   "foot": "L",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V1-matched_L_d0.03_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V1-matched",
+   "foot": "R",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V1-matched_R_d0.01_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V1-matched",
+   "foot": "R",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V1-matched_R_d0.01_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V1-matched",
+   "foot": "R",
+   "drop": 0.01,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V1-matched_R_d0.01_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V1-matched",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V1-matched_R_d0.025_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V1-matched",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V1-matched_R_d0.025_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V1-matched",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V1-matched_R_d0.025_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "L",
+   "body": "V1-matched",
+   "foot": "R",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.0005,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V1-matched_R_d0.03_r0_R4_C2_L0.0005"
+  },
+  {
+   "set": "L",
+   "body": "V1-matched",
+   "foot": "R",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.001,
+    "hover": 2
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V1-matched_R_d0.03_r0_R4_C2_L0.001"
+  },
+  {
+   "set": "L",
+   "body": "V1-matched",
+   "foot": "R",
+   "drop": 0.03,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "L_V1-matched_R_d0.03_r0_R4_C2_L0.005"
+  },
+  {
+   "set": "XB",
+   "body": "V2-REF",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": 0.002,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-REF_L_d0.025_r0_R4_C2_B0.002"
+  },
+  {
+   "set": "XB",
+   "body": "V2-REF",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": -0.002,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-REF_L_d0.025_r0_R4_C2_B-0.002"
+  },
+  {
+   "set": "XB",
+   "body": "V2-REF",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": 0.005,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-REF_L_d0.025_r0_R4_C2_B0.005"
+  },
+  {
+   "set": "XB",
+   "body": "V2-REF",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": -0.005,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-REF_L_d0.025_r0_R4_C2_B-0.005"
+  },
+  {
+   "set": "XB",
+   "body": "V2-REF",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": 0.002,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-REF_R_d0.025_r0_R4_C2_B0.002"
+  },
+  {
+   "set": "XB",
+   "body": "V2-REF",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": -0.002,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-REF_R_d0.025_r0_R4_C2_B-0.002"
+  },
+  {
+   "set": "XB",
+   "body": "V2-REF",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": 0.005,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-REF_R_d0.025_r0_R4_C2_B0.005"
+  },
+  {
+   "set": "XB",
+   "body": "V2-REF",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": -0.005,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-REF_R_d0.025_r0_R4_C2_B-0.005"
+  },
+  {
+   "set": "XB",
+   "body": "V2-165-62",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": 0.002,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-165-62_L_d0.025_r0_R4_C2_B0.002"
+  },
+  {
+   "set": "XB",
+   "body": "V2-165-62",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": -0.002,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-165-62_L_d0.025_r0_R4_C2_B-0.002"
+  },
+  {
+   "set": "XB",
+   "body": "V2-165-62",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": 0.005,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-165-62_L_d0.025_r0_R4_C2_B0.005"
+  },
+  {
+   "set": "XB",
+   "body": "V2-165-62",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": -0.005,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-165-62_L_d0.025_r0_R4_C2_B-0.005"
+  },
+  {
+   "set": "XB",
+   "body": "V2-165-62",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": 0.002,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-165-62_R_d0.025_r0_R4_C2_B0.002"
+  },
+  {
+   "set": "XB",
+   "body": "V2-165-62",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": -0.002,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-165-62_R_d0.025_r0_R4_C2_B-0.002"
+  },
+  {
+   "set": "XB",
+   "body": "V2-165-62",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": 0.005,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-165-62_R_d0.025_r0_R4_C2_B0.005"
+  },
+  {
+   "set": "XB",
+   "body": "V2-165-62",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": -0.005,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-165-62_R_d0.025_r0_R4_C2_B-0.005"
+  },
+  {
+   "set": "XB",
+   "body": "V2-198-92",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": 0.002,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-198-92_L_d0.025_r0_R4_C2_B0.002"
+  },
+  {
+   "set": "XB",
+   "body": "V2-198-92",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": -0.002,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-198-92_L_d0.025_r0_R4_C2_B-0.002"
+  },
+  {
+   "set": "XB",
+   "body": "V2-198-92",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": 0.005,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-198-92_L_d0.025_r0_R4_C2_B0.005"
+  },
+  {
+   "set": "XB",
+   "body": "V2-198-92",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": -0.005,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-198-92_L_d0.025_r0_R4_C2_B-0.005"
+  },
+  {
+   "set": "XB",
+   "body": "V2-198-92",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": 0.002,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-198-92_R_d0.025_r0_R4_C2_B0.002"
+  },
+  {
+   "set": "XB",
+   "body": "V2-198-92",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": -0.002,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-198-92_R_d0.025_r0_R4_C2_B-0.002"
+  },
+  {
+   "set": "XB",
+   "body": "V2-198-92",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": 0.005,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-198-92_R_d0.025_r0_R4_C2_B0.005"
+  },
+  {
+   "set": "XB",
+   "body": "V2-198-92",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": -0.005,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-198-92_R_d0.025_r0_R4_C2_B-0.005"
+  },
+  {
+   "set": "XB",
+   "body": "V2-175-70",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": 0.002,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-175-70_L_d0.025_r0_R4_C2_B0.002"
+  },
+  {
+   "set": "XB",
+   "body": "V2-175-70",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": -0.002,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-175-70_L_d0.025_r0_R4_C2_B-0.002"
+  },
+  {
+   "set": "XB",
+   "body": "V2-175-70",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": 0.005,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-175-70_L_d0.025_r0_R4_C2_B0.005"
+  },
+  {
+   "set": "XB",
+   "body": "V2-175-70",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": -0.005,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-175-70_L_d0.025_r0_R4_C2_B-0.005"
+  },
+  {
+   "set": "XB",
+   "body": "V2-175-70",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": 0.002,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-175-70_R_d0.025_r0_R4_C2_B0.002"
+  },
+  {
+   "set": "XB",
+   "body": "V2-175-70",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": -0.002,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-175-70_R_d0.025_r0_R4_C2_B-0.002"
+  },
+  {
+   "set": "XB",
+   "body": "V2-175-70",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": 0.005,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-175-70_R_d0.025_r0_R4_C2_B0.005"
+  },
+  {
+   "set": "XB",
+   "body": "V2-175-70",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": -0.005,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-175-70_R_d0.025_r0_R4_C2_B-0.005"
+  },
+  {
+   "set": "XB",
+   "body": "V2-190-85",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": 0.002,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-190-85_L_d0.025_r0_R4_C2_B0.002"
+  },
+  {
+   "set": "XB",
+   "body": "V2-190-85",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": -0.002,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-190-85_L_d0.025_r0_R4_C2_B-0.002"
+  },
+  {
+   "set": "XB",
+   "body": "V2-190-85",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": 0.005,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-190-85_L_d0.025_r0_R4_C2_B0.005"
+  },
+  {
+   "set": "XB",
+   "body": "V2-190-85",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": -0.005,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-190-85_L_d0.025_r0_R4_C2_B-0.005"
+  },
+  {
+   "set": "XB",
+   "body": "V2-190-85",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": 0.002,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-190-85_R_d0.025_r0_R4_C2_B0.002"
+  },
+  {
+   "set": "XB",
+   "body": "V2-190-85",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": -0.002,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-190-85_R_d0.025_r0_R4_C2_B-0.002"
+  },
+  {
+   "set": "XB",
+   "body": "V2-190-85",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": 0.005,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-190-85_R_d0.025_r0_R4_C2_B0.005"
+  },
+  {
+   "set": "XB",
+   "body": "V2-190-85",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": -0.005,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-190-85_R_d0.025_r0_R4_C2_B-0.005"
+  },
+  {
+   "set": "XB",
+   "body": "V2-short-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": 0.002,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-short-legs_L_d0.025_r0_R4_C2_B0.002"
+  },
+  {
+   "set": "XB",
+   "body": "V2-short-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": -0.002,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-short-legs_L_d0.025_r0_R4_C2_B-0.002"
+  },
+  {
+   "set": "XB",
+   "body": "V2-short-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": 0.005,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-short-legs_L_d0.025_r0_R4_C2_B0.005"
+  },
+  {
+   "set": "XB",
+   "body": "V2-short-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": -0.005,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-short-legs_L_d0.025_r0_R4_C2_B-0.005"
+  },
+  {
+   "set": "XB",
+   "body": "V2-short-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": 0.002,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-short-legs_R_d0.025_r0_R4_C2_B0.002"
+  },
+  {
+   "set": "XB",
+   "body": "V2-short-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": -0.002,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-short-legs_R_d0.025_r0_R4_C2_B-0.002"
+  },
+  {
+   "set": "XB",
+   "body": "V2-short-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": 0.005,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-short-legs_R_d0.025_r0_R4_C2_B0.005"
+  },
+  {
+   "set": "XB",
+   "body": "V2-short-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": -0.005,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-short-legs_R_d0.025_r0_R4_C2_B-0.005"
+  },
+  {
+   "set": "XB",
+   "body": "V2-long-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": 0.002,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-long-legs_L_d0.025_r0_R4_C2_B0.002"
+  },
+  {
+   "set": "XB",
+   "body": "V2-long-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": -0.002,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-long-legs_L_d0.025_r0_R4_C2_B-0.002"
+  },
+  {
+   "set": "XB",
+   "body": "V2-long-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": 0.005,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-long-legs_L_d0.025_r0_R4_C2_B0.005"
+  },
+  {
+   "set": "XB",
+   "body": "V2-long-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": -0.005,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-long-legs_L_d0.025_r0_R4_C2_B-0.005"
+  },
+  {
+   "set": "XB",
+   "body": "V2-long-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": 0.002,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-long-legs_R_d0.025_r0_R4_C2_B0.002"
+  },
+  {
+   "set": "XB",
+   "body": "V2-long-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": -0.002,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-long-legs_R_d0.025_r0_R4_C2_B-0.002"
+  },
+  {
+   "set": "XB",
+   "body": "V2-long-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": 0.005,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-long-legs_R_d0.025_r0_R4_C2_B0.005"
+  },
+  {
+   "set": "XB",
+   "body": "V2-long-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": -0.005,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V2-long-legs_R_d0.025_r0_R4_C2_B-0.005"
+  },
+  {
+   "set": "XB",
+   "body": "V1-matched",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": 0.002,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V1-matched_L_d0.025_r0_R4_C2_B0.002"
+  },
+  {
+   "set": "XB",
+   "body": "V1-matched",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": -0.002,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V1-matched_L_d0.025_r0_R4_C2_B-0.002"
+  },
+  {
+   "set": "XB",
+   "body": "V1-matched",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": 0.005,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V1-matched_L_d0.025_r0_R4_C2_B0.005"
+  },
+  {
+   "set": "XB",
+   "body": "V1-matched",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": -0.005,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V1-matched_L_d0.025_r0_R4_C2_B-0.005"
+  },
+  {
+   "set": "XB",
+   "body": "V1-matched",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": 0.002,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V1-matched_R_d0.025_r0_R4_C2_B0.002"
+  },
+  {
+   "set": "XB",
+   "body": "V1-matched",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": -0.002,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V1-matched_R_d0.025_r0_R4_C2_B-0.002"
+  },
+  {
+   "set": "XB",
+   "body": "V1-matched",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": 0.005,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V1-matched_R_d0.025_r0_R4_C2_B0.005"
+  },
+  {
+   "set": "XB",
+   "body": "V1-matched",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "bump": {
+    "dz": -0.005,
+    "t": 8
+   },
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 11,
+   "id": "XB_V1-matched_R_d0.025_r0_R4_C2_B-0.005"
+  },
+  {
+   "set": "XP",
+   "body": "V2-REF",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 2.5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-REF_L_d0.025_r0_R4_C2_ptoward2.5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-REF",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 2.5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-REF_L_d0.025_r0_R4_C2_ptoward2.5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-REF",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-REF_L_d0.025_r0_R4_C2_ptoward5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-REF",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-REF_L_d0.025_r0_R4_C2_ptoward5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-REF",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 2.5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-REF_L_d0.025_r0_R4_C2_paway2.5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-REF",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 2.5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-REF_L_d0.025_r0_R4_C2_paway2.5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-REF",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-REF_L_d0.025_r0_R4_C2_paway5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-REF",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-REF_L_d0.025_r0_R4_C2_paway5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-REF",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 2.5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-REF_R_d0.025_r0_R4_C2_ptoward2.5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-REF",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 2.5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-REF_R_d0.025_r0_R4_C2_ptoward2.5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-REF",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-REF_R_d0.025_r0_R4_C2_ptoward5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-REF",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-REF_R_d0.025_r0_R4_C2_ptoward5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-REF",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 2.5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-REF_R_d0.025_r0_R4_C2_paway2.5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-REF",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 2.5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-REF_R_d0.025_r0_R4_C2_paway2.5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-REF",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-REF_R_d0.025_r0_R4_C2_paway5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-REF",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-REF_R_d0.025_r0_R4_C2_paway5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-165-62",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 2.5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-165-62_L_d0.025_r0_R4_C2_ptoward2.5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-165-62",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 2.5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-165-62_L_d0.025_r0_R4_C2_ptoward2.5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-165-62",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-165-62_L_d0.025_r0_R4_C2_ptoward5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-165-62",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-165-62_L_d0.025_r0_R4_C2_ptoward5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-165-62",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 2.5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-165-62_L_d0.025_r0_R4_C2_paway2.5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-165-62",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 2.5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-165-62_L_d0.025_r0_R4_C2_paway2.5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-165-62",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-165-62_L_d0.025_r0_R4_C2_paway5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-165-62",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-165-62_L_d0.025_r0_R4_C2_paway5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-165-62",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 2.5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-165-62_R_d0.025_r0_R4_C2_ptoward2.5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-165-62",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 2.5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-165-62_R_d0.025_r0_R4_C2_ptoward2.5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-165-62",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-165-62_R_d0.025_r0_R4_C2_ptoward5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-165-62",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-165-62_R_d0.025_r0_R4_C2_ptoward5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-165-62",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 2.5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-165-62_R_d0.025_r0_R4_C2_paway2.5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-165-62",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 2.5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-165-62_R_d0.025_r0_R4_C2_paway2.5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-165-62",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-165-62_R_d0.025_r0_R4_C2_paway5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-165-62",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-165-62_R_d0.025_r0_R4_C2_paway5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-198-92",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 2.5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-198-92_L_d0.025_r0_R4_C2_ptoward2.5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-198-92",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 2.5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-198-92_L_d0.025_r0_R4_C2_ptoward2.5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-198-92",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-198-92_L_d0.025_r0_R4_C2_ptoward5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-198-92",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-198-92_L_d0.025_r0_R4_C2_ptoward5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-198-92",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 2.5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-198-92_L_d0.025_r0_R4_C2_paway2.5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-198-92",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 2.5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-198-92_L_d0.025_r0_R4_C2_paway2.5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-198-92",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-198-92_L_d0.025_r0_R4_C2_paway5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-198-92",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-198-92_L_d0.025_r0_R4_C2_paway5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-198-92",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 2.5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-198-92_R_d0.025_r0_R4_C2_ptoward2.5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-198-92",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 2.5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-198-92_R_d0.025_r0_R4_C2_ptoward2.5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-198-92",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-198-92_R_d0.025_r0_R4_C2_ptoward5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-198-92",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-198-92_R_d0.025_r0_R4_C2_ptoward5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-198-92",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 2.5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-198-92_R_d0.025_r0_R4_C2_paway2.5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-198-92",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 2.5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-198-92_R_d0.025_r0_R4_C2_paway2.5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-198-92",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-198-92_R_d0.025_r0_R4_C2_paway5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-198-92",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-198-92_R_d0.025_r0_R4_C2_paway5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-175-70",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 2.5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-175-70_L_d0.025_r0_R4_C2_ptoward2.5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-175-70",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 2.5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-175-70_L_d0.025_r0_R4_C2_ptoward2.5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-175-70",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-175-70_L_d0.025_r0_R4_C2_ptoward5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-175-70",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-175-70_L_d0.025_r0_R4_C2_ptoward5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-175-70",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 2.5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-175-70_L_d0.025_r0_R4_C2_paway2.5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-175-70",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 2.5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-175-70_L_d0.025_r0_R4_C2_paway2.5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-175-70",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-175-70_L_d0.025_r0_R4_C2_paway5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-175-70",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-175-70_L_d0.025_r0_R4_C2_paway5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-175-70",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 2.5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-175-70_R_d0.025_r0_R4_C2_ptoward2.5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-175-70",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 2.5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-175-70_R_d0.025_r0_R4_C2_ptoward2.5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-175-70",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-175-70_R_d0.025_r0_R4_C2_ptoward5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-175-70",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-175-70_R_d0.025_r0_R4_C2_ptoward5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-175-70",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 2.5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-175-70_R_d0.025_r0_R4_C2_paway2.5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-175-70",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 2.5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-175-70_R_d0.025_r0_R4_C2_paway2.5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-175-70",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-175-70_R_d0.025_r0_R4_C2_paway5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-175-70",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-175-70_R_d0.025_r0_R4_C2_paway5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-190-85",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 2.5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-190-85_L_d0.025_r0_R4_C2_ptoward2.5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-190-85",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 2.5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-190-85_L_d0.025_r0_R4_C2_ptoward2.5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-190-85",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-190-85_L_d0.025_r0_R4_C2_ptoward5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-190-85",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-190-85_L_d0.025_r0_R4_C2_ptoward5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-190-85",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 2.5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-190-85_L_d0.025_r0_R4_C2_paway2.5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-190-85",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 2.5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-190-85_L_d0.025_r0_R4_C2_paway2.5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-190-85",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-190-85_L_d0.025_r0_R4_C2_paway5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-190-85",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-190-85_L_d0.025_r0_R4_C2_paway5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-190-85",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 2.5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-190-85_R_d0.025_r0_R4_C2_ptoward2.5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-190-85",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 2.5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-190-85_R_d0.025_r0_R4_C2_ptoward2.5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-190-85",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-190-85_R_d0.025_r0_R4_C2_ptoward5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-190-85",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-190-85_R_d0.025_r0_R4_C2_ptoward5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-190-85",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 2.5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-190-85_R_d0.025_r0_R4_C2_paway2.5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-190-85",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 2.5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-190-85_R_d0.025_r0_R4_C2_paway2.5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-190-85",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-190-85_R_d0.025_r0_R4_C2_paway5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-190-85",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-190-85_R_d0.025_r0_R4_C2_paway5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-short-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 2.5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-short-legs_L_d0.025_r0_R4_C2_ptoward2.5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-short-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 2.5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-short-legs_L_d0.025_r0_R4_C2_ptoward2.5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-short-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-short-legs_L_d0.025_r0_R4_C2_ptoward5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-short-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-short-legs_L_d0.025_r0_R4_C2_ptoward5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-short-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 2.5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-short-legs_L_d0.025_r0_R4_C2_paway2.5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-short-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 2.5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-short-legs_L_d0.025_r0_R4_C2_paway2.5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-short-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-short-legs_L_d0.025_r0_R4_C2_paway5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-short-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-short-legs_L_d0.025_r0_R4_C2_paway5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-short-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 2.5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-short-legs_R_d0.025_r0_R4_C2_ptoward2.5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-short-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 2.5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-short-legs_R_d0.025_r0_R4_C2_ptoward2.5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-short-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-short-legs_R_d0.025_r0_R4_C2_ptoward5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-short-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-short-legs_R_d0.025_r0_R4_C2_ptoward5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-short-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 2.5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-short-legs_R_d0.025_r0_R4_C2_paway2.5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-short-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 2.5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-short-legs_R_d0.025_r0_R4_C2_paway2.5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-short-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-short-legs_R_d0.025_r0_R4_C2_paway5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-short-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-short-legs_R_d0.025_r0_R4_C2_paway5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-long-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 2.5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-long-legs_L_d0.025_r0_R4_C2_ptoward2.5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-long-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 2.5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-long-legs_L_d0.025_r0_R4_C2_ptoward2.5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-long-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-long-legs_L_d0.025_r0_R4_C2_ptoward5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-long-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-long-legs_L_d0.025_r0_R4_C2_ptoward5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-long-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 2.5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-long-legs_L_d0.025_r0_R4_C2_paway2.5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-long-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 2.5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-long-legs_L_d0.025_r0_R4_C2_paway2.5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-long-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-long-legs_L_d0.025_r0_R4_C2_paway5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-long-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-long-legs_L_d0.025_r0_R4_C2_paway5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-long-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 2.5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-long-legs_R_d0.025_r0_R4_C2_ptoward2.5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-long-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 2.5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-long-legs_R_d0.025_r0_R4_C2_ptoward2.5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-long-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-long-legs_R_d0.025_r0_R4_C2_ptoward5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-long-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-long-legs_R_d0.025_r0_R4_C2_ptoward5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-long-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 2.5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-long-legs_R_d0.025_r0_R4_C2_paway2.5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-long-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 2.5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-long-legs_R_d0.025_r0_R4_C2_paway2.5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V2-long-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-long-legs_R_d0.025_r0_R4_C2_paway5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V2-long-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V2-long-legs_R_d0.025_r0_R4_C2_paway5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V1-matched",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 2.5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V1-matched_L_d0.025_r0_R4_C2_ptoward2.5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V1-matched",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 2.5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V1-matched_L_d0.025_r0_R4_C2_ptoward2.5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V1-matched",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V1-matched_L_d0.025_r0_R4_C2_ptoward5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V1-matched",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V1-matched_L_d0.025_r0_R4_C2_ptoward5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V1-matched",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 2.5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V1-matched_L_d0.025_r0_R4_C2_paway2.5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V1-matched",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 2.5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V1-matched_L_d0.025_r0_R4_C2_paway2.5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V1-matched",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V1-matched_L_d0.025_r0_R4_C2_paway5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V1-matched",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V1-matched_L_d0.025_r0_R4_C2_paway5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V1-matched",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 2.5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V1-matched_R_d0.025_r0_R4_C2_ptoward2.5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V1-matched",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 2.5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V1-matched_R_d0.025_r0_R4_C2_ptoward2.5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V1-matched",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V1-matched_R_d0.025_r0_R4_C2_ptoward5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V1-matched",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "toward",
+    "J": 5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V1-matched_R_d0.025_r0_R4_C2_ptoward5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V1-matched",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 2.5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V1-matched_R_d0.025_r0_R4_C2_paway2.5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V1-matched",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 2.5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V1-matched_R_d0.025_r0_R4_C2_paway2.5@8"
+  },
+  {
+   "set": "XP",
+   "body": "V1-matched",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 5,
+    "t": 6.46,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V1-matched_R_d0.025_r0_R4_C2_paway5@6.46"
+  },
+  {
+   "set": "XP",
+   "body": "V1-matched",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "push": {
+    "dir": "away",
+    "J": 5,
+    "t": 8,
+    "dur": 0.1,
+    "body": "thorax"
+   },
+   "end": 12,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "id": "XP_V1-matched_R_d0.025_r0_R4_C2_paway5@8"
+  },
+  {
+   "set": "HZ",
+   "body": "V2-REF",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "hz": 180,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "HZ_V2-REF_L_d0.025_r0_R4_C2_L0.005_hz180"
+  },
+  {
+   "set": "HZ",
+   "body": "V2-REF",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "hz": 180,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "HZ_V2-REF_R_d0.025_r0_R4_C2_L0.005_hz180"
+  },
+  {
+   "set": "HZ",
+   "body": "V2-165-62",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "hz": 180,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "HZ_V2-165-62_L_d0.025_r0_R4_C2_L0.005_hz180"
+  },
+  {
+   "set": "HZ",
+   "body": "V2-165-62",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "hz": 180,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "HZ_V2-165-62_R_d0.025_r0_R4_C2_L0.005_hz180"
+  },
+  {
+   "set": "HZ",
+   "body": "V2-198-92",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "hz": 180,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "HZ_V2-198-92_L_d0.025_r0_R4_C2_L0.005_hz180"
+  },
+  {
+   "set": "HZ",
+   "body": "V2-198-92",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "hz": 180,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "HZ_V2-198-92_R_d0.025_r0_R4_C2_L0.005_hz180"
+  },
+  {
+   "set": "HZ",
+   "body": "V2-175-70",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "hz": 180,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "HZ_V2-175-70_L_d0.025_r0_R4_C2_L0.005_hz180"
+  },
+  {
+   "set": "HZ",
+   "body": "V2-175-70",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "hz": 180,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "HZ_V2-175-70_R_d0.025_r0_R4_C2_L0.005_hz180"
+  },
+  {
+   "set": "HZ",
+   "body": "V2-190-85",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "hz": 180,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "HZ_V2-190-85_L_d0.025_r0_R4_C2_L0.005_hz180"
+  },
+  {
+   "set": "HZ",
+   "body": "V2-190-85",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "hz": 180,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "HZ_V2-190-85_R_d0.025_r0_R4_C2_L0.005_hz180"
+  },
+  {
+   "set": "HZ",
+   "body": "V2-short-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "hz": 180,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "HZ_V2-short-legs_L_d0.025_r0_R4_C2_L0.005_hz180"
+  },
+  {
+   "set": "HZ",
+   "body": "V2-short-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "hz": 180,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "HZ_V2-short-legs_R_d0.025_r0_R4_C2_L0.005_hz180"
+  },
+  {
+   "set": "HZ",
+   "body": "V2-long-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "hz": 180,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "HZ_V2-long-legs_L_d0.025_r0_R4_C2_L0.005_hz180"
+  },
+  {
+   "set": "HZ",
+   "body": "V2-long-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "hz": 180,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "HZ_V2-long-legs_R_d0.025_r0_R4_C2_L0.005_hz180"
+  },
+  {
+   "set": "HZ",
+   "body": "V1-matched",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "hz": 180,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "HZ_V1-matched_L_d0.025_r0_R4_C2_L0.005_hz180"
+  },
+  {
+   "set": "HZ",
+   "body": "V1-matched",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "hz": 180,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "HZ_V1-matched_R_d0.025_r0_R4_C2_L0.005_hz180"
+  },
+  {
+   "set": "HZ",
+   "body": "V2-REF",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "hz": 480,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "HZ_V2-REF_L_d0.025_r0_R4_C2_L0.005_hz480"
+  },
+  {
+   "set": "HZ",
+   "body": "V2-REF",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "hz": 480,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "HZ_V2-REF_R_d0.025_r0_R4_C2_L0.005_hz480"
+  },
+  {
+   "set": "HZ",
+   "body": "V2-165-62",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "hz": 480,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "HZ_V2-165-62_L_d0.025_r0_R4_C2_L0.005_hz480"
+  },
+  {
+   "set": "HZ",
+   "body": "V2-165-62",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "hz": 480,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "HZ_V2-165-62_R_d0.025_r0_R4_C2_L0.005_hz480"
+  },
+  {
+   "set": "HZ",
+   "body": "V2-198-92",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "hz": 480,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "HZ_V2-198-92_L_d0.025_r0_R4_C2_L0.005_hz480"
+  },
+  {
+   "set": "HZ",
+   "body": "V2-198-92",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "hz": 480,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "HZ_V2-198-92_R_d0.025_r0_R4_C2_L0.005_hz480"
+  },
+  {
+   "set": "HZ",
+   "body": "V2-175-70",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "hz": 480,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "HZ_V2-175-70_L_d0.025_r0_R4_C2_L0.005_hz480"
+  },
+  {
+   "set": "HZ",
+   "body": "V2-175-70",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "hz": 480,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "HZ_V2-175-70_R_d0.025_r0_R4_C2_L0.005_hz480"
+  },
+  {
+   "set": "HZ",
+   "body": "V2-190-85",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "hz": 480,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "HZ_V2-190-85_L_d0.025_r0_R4_C2_L0.005_hz480"
+  },
+  {
+   "set": "HZ",
+   "body": "V2-190-85",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "hz": 480,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "HZ_V2-190-85_R_d0.025_r0_R4_C2_L0.005_hz480"
+  },
+  {
+   "set": "HZ",
+   "body": "V2-short-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "hz": 480,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "HZ_V2-short-legs_L_d0.025_r0_R4_C2_L0.005_hz480"
+  },
+  {
+   "set": "HZ",
+   "body": "V2-short-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "hz": 480,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "HZ_V2-short-legs_R_d0.025_r0_R4_C2_L0.005_hz480"
+  },
+  {
+   "set": "HZ",
+   "body": "V2-long-legs",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "hz": 480,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "HZ_V2-long-legs_L_d0.025_r0_R4_C2_L0.005_hz480"
+  },
+  {
+   "set": "HZ",
+   "body": "V2-long-legs",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "hz": 480,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "HZ_V2-long-legs_R_d0.025_r0_R4_C2_L0.005_hz480"
+  },
+  {
+   "set": "HZ",
+   "body": "V1-matched",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "hz": 480,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "HZ_V1-matched_L_d0.025_r0_R4_C2_L0.005_hz480"
+  },
+  {
+   "set": "HZ",
+   "body": "V1-matched",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "arm": "C2",
+   "lift": {
+    "h": 0.005,
+    "hover": 0.5
+   },
+   "hz": 480,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "touchRestRamp": true
+   },
+   "end": 16,
+   "id": "HZ_V1-matched_R_d0.025_r0_R4_C2_L0.005_hz480"
+  }
+ ]
+}

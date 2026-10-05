@@ -47,7 +47,7 @@ export const LC_STATES = ["SUPPORT", "UNLOADING", "TOUCHING", "LIFTOFF", "AIRBOR
 const smooth = (u) => { const x = Math.min(1, Math.max(0, u)); return x * x * (3 - 2 * x); };
 
 export class SupportLifecycle {
-  constructor(W, opts = {}) { this.W = W; this.o = { ...LIFECYCLE, ...opts }; this.feet = [0, 1].map(() => ({ state: "SUPPORT", phi: 1, s: 1, psi: 0, a: 0, timer: 0, cond: null, hold: null, prevHold: null, swing: null, since: 0, log: [] })); this.t = 0; }
+  constructor(W, opts = {}) { this.W = W; this.o = { ...LIFECYCLE, ...opts }; this.feet = [0, 1].map(() => ({ state: "SUPPORT", phi: 1, s: 1, psi: 0, a: 0, rho: 1, timer: 0, cond: null, hold: null, prevHold: null, swing: null, since: 0, log: [] })); this.t = 0; }
   // one update per controller tick. sense: { Fz: [N, N], touch: [n, n], other: [bool, bool] }; footPose(n) → { pos, rot } (current pose)
   update(sense, footPose, dt, req = [null, null]) {   // req[n]: the requested load share of foot n (null = no transfer request: allowed, no intent)
     const o = this.o, W = this.W; this.t += dt;
@@ -73,7 +73,10 @@ export class SupportLifecycle {
       f.phi = up ? Math.min(1, f.phi + dt / o.accept) : Math.max(0, f.phi - dt / o.release);
       if (f.state === "SUPPORT") f.phi = 1;
       f.s = f.state === "SUPPORT" ? 1 : smooth(f.phi);
-      f.psi = f.state === "AIRBORNE" ? Math.min(1, f.psi + dt / o.release) : Math.max(0, f.psi - dt / o.accept); f.a = smooth(f.psi); }
+      f.psi = f.state === "AIRBORNE" ? Math.min(1, f.psi + dt / o.release) : Math.max(0, f.psi - dt / o.accept); f.a = smooth(f.psi);
+      // rest weight ρ (read only by the default-off touchRestRamp option, C2): → 1 over `release` while the foot has no commanded swing target and is not
+      // AIRBORNE, → 0 otherwise; a continuous weight for a resting (seated) foot, so seating never switches in one tick
+      f.rho = f.state !== "AIRBORNE" && !f.swing ? Math.min(1, (f.rho ?? 1) + dt / o.release) : Math.max(0, (f.rho ?? 1) - dt / o.release); }
     return this.feet;
   }
   _enter(n, st, footPose) { const f = this.feet[n], prev = f.state;

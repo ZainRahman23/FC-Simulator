@@ -86,6 +86,21 @@ touchRest applies its seat only when there is no swing command. When the lift co
 
 **Same 48 cases with the seat removed** (surface target only): 2 / 48 failures (V2-long-legs, a 17 ms re-touch). **With B1 only:** 4 / 48 (all from its pre-lift hold defect; otherwise the foot never leaves the turf on a 0.5 mm command).
 
+**Correction C2 tested and REFUTED:**
+- **What C2 is:** `touchRestRamp`, default off. The seat is weighted by a lifecycle rest weight ρ that ramps over the lifecycle's own `release` time (0.10 s), so it fades out at a lift command instead of switching off.
+- **Default-path safety:** KV0 identical; suite 58 / 58; official ORIG / B1TR runs hash-identical; the P sample hash-identical to C.
+- **Diagnostic lab:** 384 runs (all L, XB, HZ, XP entries, plus the P sample; `evidence/diagnostics/`), scored by the frozen evaluator as a composite.
+- **Result:** R3 18 / 144, against C's 17. Every other criterion is unchanged. The one-tick step was not the cause.
+
+**The mechanism** (trace of V2-REF L, 3 cm, 0.5 mm, C2):
+- After the command the foot unloads fully (Fz = 0 from +0.10 s) and hovers 0.1–0.3 mm above the turf while the lifecycle still reads TOUCHING.
+- The lifecycle's "touch" is a **proximity sense**: a contact point with separation ≤ 0.5 mm (`gates/v2_g1_ankle.js`). So a 0.5 mm hover target sits **exactly at the touch-sensing threshold**.
+- Whether a run shows 0, 1 or 2 AIRBORNE entries depends on whether the servo error band (mm-level, below) straddles 0.5 mm.
+- The debounces keep every transition ≥ 60 ms apart (no chatter in any run), but a single re-touch / bounce is likely.
+- The seat makes the foot actually leave the turf more often at 0.5 mm: without the seat only 12 / 48 lift off at all. That is why it raises the count, not because it is discontinuous.
+- **All 1 mm hovers pass.**
+- **The earlier lab basis for the R3 boundary rule** (2 bodies, `TOUCH_SEMANTICS.md` §5) was not representative.
+
 **Below the candidate:** a 0.5 mm hover is inside the swing servo's accuracy band. Measured over all bodies, 5 mm hover servo error max:
 - 1.85–2.67 mm at 2.5–3 cm drops;
 - **3.7–4.9 mm at 1 cm** (clearance min 0.78–2.26 mm; B1-only the same).
