@@ -1,0 +1,39 @@
+set E (non-P15): PASS
+set X (non-P15): PASS
+
+P15 runs: run | class (verdict at t_cls) | final verdict | Tput / Tr | outcome | stance lift-off / slip | landed-from-anchor | four-way
+  E/e1b_V2-165-62_L_P15.json.gz | B (step required @ +0.033 s) | step required | 0.200 / 0.1 | recovered | LIFT-OFF / 6.86 mm | 1.6 mm | step required
+  E/e1b_V2-198-92_L_P15.json.gz | A (in place @ +0.008 s) | in place | 0.302 / 0.225 | recovered | down / 0.37 mm | 1.0 mm | recovered without changing foothold
+  E/e1b_V2-REF_L_P15.json.gz | A (in place @ +0.021 s) | in place | 0.260 / 0.215 | recovered | down / 2.81 mm | 0.3 mm | recovered without changing foothold
+  X/e1b_V1-matched_L_P15.json.gz | A (in place @ +0.021 s) | in place | 0.278 / 0.225 | recovered | down / 2.28 mm | 0.4 mm | recovered without changing foothold
+  X/e1b_V1-matched_R_P15.json.gz | A (in place @ +0.021 s) | in place | 0.278 / 0.225 | recovered | down / 1.96 mm | 0.4 mm | recovered without changing foothold
+  X/e1b_V2-165-62_L_P15_hz180.json.gz | B (step required @ +0.033 s) | step required | 0.200 / 0.1 | recovered | LIFT-OFF / 7.12 mm | 1.6 mm | step required
+  X/e1b_V2-165-62_L_P15_hz480.json.gz | B (step required @ +0.033 s) | step required | 0.200 / 0.1 | recovered | down / 7.88 mm | 1.6 mm | step required
+  X/e1b_V2-165-62_R_P15.json.gz | B (step required @ +0.033 s) | step required | 0.200 / 0.1 | recovered | LIFT-OFF / 6.78 mm | 1.5 mm | step required
+  X/e1b_V2-175-70_L_P15.json.gz | A (in place @ +0.025 s) | step required | 0.200 / 0.165 | recovered | down / 3.19 mm | 1.2 mm | recovered without changing foothold
+  X/e1b_V2-175-70_R_P15.json.gz | A (in place @ +0.025 s) | step required | 0.200 / 0.165 | recovered | down / 2.97 mm | 1.3 mm | recovered without changing foothold
+  X/e1b_V2-190-85_L_P15.json.gz | A (in place @ +0.012 s) | in place | 0.302 / 0.225 | recovered | down / 0.87 mm | 0.8 mm | recovered without changing foothold
+  X/e1b_V2-190-85_R_P15.json.gz | A (in place @ +0.012 s) | in place | 0.302 / 0.225 | recovered | down / 0.54 mm | 0.7 mm | recovered without changing foothold
+  X/e1b_V2-198-92_L_P15_hz180.json.gz | A (in place @ +0.006 s) | in place | 0.302 / 0.225 | recovered | down / 0.35 mm | 1.2 mm | recovered without changing foothold
+  X/e1b_V2-198-92_L_P15_hz480.json.gz | A (in place @ +0.006 s) | in place | 0.302 / 0.225 | recovered | down / 0.35 mm | 0.8 mm | recovered without changing foothold
+  X/e1b_V2-198-92_R_P15.json.gz | A (in place @ +0.008 s) | in place | 0.302 / 0.225 | recovered | down / 0.31 mm | 1.1 mm | recovered without changing foothold
+  X/e1b_V2-REF_L_P15_hz180.json.gz | A (in place @ +0.017 s) | in place | 0.257 / 0.185 | recovered | down / 2.61 mm | 0.2 mm | recovered without changing foothold
+  X/e1b_V2-REF_L_P15_hz480.json.gz | A (in place @ +0.019 s) | in place | 0.260 / 0.225 | recovered | down / 2.51 mm | 0.2 mm | recovered without changing foothold
+  X/e1b_V2-REF_L_P15_rep.json.gz | A (in place @ +0.021 s) | in place | 0.260 / 0.215 | recovered | down / 2.81 mm | 0.3 mm | recovered without changing foothold
+  X/e1b_V2-REF_R_P15.json.gz | A (in place @ +0.021 s) | in place | 0.260 / 0.215 | recovered | down / 2.55 mm | 0.3 mm | recovered without changing foothold
+  X/e1b_V2-long-legs_L_P15.json.gz | A (in place @ +0.021 s) | in place | 0.260 / 0.215 | recovered | down / 2.35 mm | 0.2 mm | recovered without changing foothold
+  X/e1b_V2-long-legs_R_P15.json.gz | A (in place @ +0.021 s) | in place | 0.260 / 0.215 | recovered | down / 2.05 mm | 0.2 mm | recovered without changing foothold
+  X/e1b_V2-short-legs_L_P15.json.gz | A (in place @ +0.021 s) | in place | 0.260 / 0.225 | recovered | down / 3.38 mm | 0.2 mm | recovered without changing foothold
+  X/e1b_V2-short-legs_R_P15.json.gz | A (in place @ +0.021 s) | in place | 0.260 / 0.225 | recovered | down / 3.19 mm | 0.2 mm | recovered without changing foothold
+
+four-way:
+  recovered without changing foothold: 19
+  step required: 4
+  recovered by stepping: 0
+  fell: 0
+  class A failure (not recovered in place): 0
+
+STEP_REQUIRED (E2 obligations): V2-165-62 L 240 Hz; V2-165-62 L 180 Hz; V2-165-62 L 480 Hz; V2-165-62 R 240 Hz
+P15 gating: PASS
+
+E1b CLOSING EVALUATION: PASS

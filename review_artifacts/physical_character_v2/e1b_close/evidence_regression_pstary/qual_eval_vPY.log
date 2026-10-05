@@ -1,0 +1,39 @@
+G2 (xstand {"ikRefTwist":true,"lifecycle":true,"ffLockedAxis":true,"touchRest":true,"lcVff":"lin","lcTouch":{"reseed":true},"footYaw":true}): 11/11 gating rows pass → PASS
+   PASS run: 620 ok / 0 errors
+   PASS 2.1: 8/8 bodies
+   PASS 2.2a: 96/96 (expected 96)
+   PASS 2.2b: 40 sweeps, 0 inversions, symmetry 12/12
+   PASS 2.3: 0 ticks over 617 runs
+   PASS 2.4: 194 non-recoveries, 194 falls (194 step-required), ledger exact
+   —    2.5: (controller cost: not re-measured (RATE_PERFORMANCE.md §2)) mean 0.389 ms, p99 1.852 ms
+   PASS S4: 6/6
+   PASS S5: 10/10
+   PASS F: sweeps 6/6, max jump 0.42 mm, max track 2.18 mm; penetration ok (max 0.69 mm)
+   PASS D: ×3 6/6, snapshot 3/3, browser undefined/undefined
+   PASS E: max residual -0.285 J, min -912.70 J over 414 runs
+   —    R: (replaced by Q3a–c (earlier gates in the adopted configuration)) not run
+G3 v3.3 (adopted configuration; K → K′): 17/17 gating rows pass → PASS
+   PASS run: 332 ok / 0 errors
+   PASS A: stood; hold mean load_R 0.500; slip 0.43 mm; contact loss 0.00 s
+   PASS B: T1: stood; holds R 0.838/0.846; RMS 0.014; end 0.502; slip 0.31 mm; roll 0.0°; lean 0.2° · T2: stood; holds L 0.838/0.846; RMS 0.014; end 0.498; slip 0.31 mm; roll 0.0°; lean 0.2°
+   PASS C: stood; holds R 0.838/0.845, L 0.838/0.845; RMS 0.015; end 0.498; slip 0.29 mm; roll 0.0°; lean 0.2°
+   PASS D: stood; pelvis drift cycle 1 → 5: 3.7 → 3.7 mm (Δ 0.02); yaw -0.01 → -0.01° (Δ 0.00); slip 0.34 mm; hold means R 0.875 → 0.873, L 0.871 → 0.871; end 0.499
+   PASS E2: T5 stood; R: unloaded foot ≤ 4.08 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.6 cm; stance foot settled min 95.92 % / mean 96.84 % (v1 window min 95.38 %); slip 0.30 mm; end 0.502 · T6 stood; L: unlo
+   PASS F2: U:R stood; unloaded foot ≤ 0.15 % BW (contact lost 0.00 s), slip 0.26 mm, lift 0.00 mm, tilt 0.16°; stance 99.85–99.86 %; COM in true, ξ margin 4.3 cm; roll 0.1°, lean 0.3° · U:L stood; unloaded foot ≤ 0.15 % BW (contact
+   PASS G: T7:R:2 stood hold mean 0.937 slip 0.28 abort — · T7:R:4 stood hold mean 0.943 slip 0.28 abort — · T7:L:4 stood hold mean 0.943 slip 0.26 abort — · T7:L:2 stood hold mean 0.937 slip 0.28 abort —
+   PASS H: H1 32/32; H2 18/18; H3 aborts in nominal T7 ≥ 1 s: 0
+   PASS I2: 8/8 · V2-165-62: T9 stood, R: unloaded foot ≤ 4.07 % BW (settled), ≥ 8 pieces, COM in true, CoP in true, ξ margin 3.3 cm; stance foot settled min 95.93 % / mean 96.60 % (v1 window min 95.37 %); L: unloaded foot ≤ 4.09 % 
+   PASS J2a: 81/81 pairs; 443498 ticks probed (both directions, up to each fall) · worst: lam 1.11e-16, copMm 6.07e-13, share 2.61e-15, footCopMm 9.54e-13, forceN 2.83e-12, g3OutS 0.00e+0, ikResM 1.68e-15, cmdTauNm 3.11e-11, cmdGain 
+   rep  J2b: 81 pairs · A (no meaningful slide) n 49: median 0.0275 / p99 0.1422 / max 0.5841 mm · B (slide + recovery) n 18: median 0.053 / max 2.430 mm · C (failure through the common abort) n 14: median 0.037 / max 0.624 mm; abort
+   PASS K: [original K FAIL; K′ PASS] T11:over:1.4: step required → fell · T11:over:1.4:sup: step required → fell (abort 4.04 s, bilateral recovery impossible) · T11:fast:0.25: step required → fell · T11:fast:0.1: stood · T11:over:1.2: stood
+   PASS L: 162/162 runs; energy residual max -0.305 J, min -664.451 J
+   PASS M: max per-tick per-foot CoP change 3.714 mm over 16 runs; seam crossings per run (L+R) 2–40
+   PASS N: U:R ×3 551b8095; T5 ×3 a236a90e; T3 ×3 121199ea; T8:hold:R:R:10 ×3 a12278f1 · snapshot T8:hold:R:L:15@3.9s bit-exact, U:R@8s bit-exact, T3@10s bit-exact
+   PASS O: ✓ T5 ✓ U:R ✓ T3 ✓ T8:hold:R:R:10
+   —    P2: (replaced by Q3a–d and Q5 (earlier gates and browser checks in the adopted configuration)) G0 pass; G1 PASS; G1 browser = Node; G2 rows 11/11 (excl. R, 2.5); isolated 2.5 0.0928 ms (in-run, reported: mean 0.265 ms, p99 1.188 ms); G2 browser = Node
+   PASS Q: residual max 3.91e-6 of M·g·dt over 9 runs
+   —    S2: (controller cost: not re-measured (RATE_PERFORMANCE.md §2)) controller + actuators: mean 0.0971 ms (trial range 0.0958–0.1012), median 0.0909, p99 0.2165 · controller only: mean 0.0857, median 0.0800, p99 0.2047 · actuator computation ≈ 0.0114 ms · optional IK-timer instrumentati
+      T11:over:1.4 V2-REF: target margin -2.45 cm → EXCESSIVE; outcome step required → fell
+      T11:over:1.4:sup V2-REF: target margin -2.45 cm → EXCESSIVE; outcome step required → fell
+      T11:over:1.2 V2-REF: target margin 1.1 cm → feasible; outcome stood
+   G3 outcomes: {"stood":88,"recovered":178,"step required → fell":62,"undefined":3,"foot relocated":1} over 332 jobs

@@ -1,0 +1,35 @@
+run | verdict (abort → final) | k | Tput | Tr | replans | contact / accept after abort | P15 class | outcome
+  E/e1b_V2-165-62_L_P15.json.gz | in place → step required | 0.66 | 0.200 | 0.100 | 46 | 0.204 / 0.254 | step required | recovered
+  E/e1b_V2-198-92_L_P15.json.gz | in place → in place | 1.00 | 0.302 | 0.225 | 0 | 0.317 / 0.367 | recovered without changing foothold | recovered
+  E/e1b_V2-REF_L_P15.json.gz | in place → in place | 0.86 | 0.260 | 0.215 | 14 | 0.292 / 0.342 | recovered without changing foothold | recovered
+  X/e1b_V1-matched_L_P15.json.gz | in place → in place | 0.92 | 0.278 | 0.225 | 8 | 0.300 / 0.350 | recovered without changing foothold | recovered
+  X/e1b_V1-matched_R_P15.json.gz | in place → in place | 0.92 | 0.278 | 0.225 | 8 | 0.300 / 0.350 | recovered without changing foothold | recovered
+  X/e1b_V2-165-62_L_P15_hz180.json.gz | in place → step required | 0.66 | 0.200 | 0.100 | 34 | 0.211 / 0.261 | step required | recovered
+  X/e1b_V2-165-62_L_P15_hz480.json.gz | in place → step required | 0.66 | 0.200 | 0.100 | 90 | 0.200 / 0.250 | step required | recovered
+  X/e1b_V2-165-62_R_P15.json.gz | in place → step required | 0.66 | 0.200 | 0.100 | 46 | 0.204 / 0.254 | step required | recovered
+  X/e1b_V2-175-70_L_P15.json.gz | in place → step required | 0.66 | 0.200 | 0.165 | 28 | 0.221 / 0.271 | step required | recovered
+  X/e1b_V2-175-70_R_P15.json.gz | in place → step required | 0.66 | 0.200 | 0.165 | 29 | 0.221 / 0.271 | step required | recovered
+  X/e1b_V2-190-85_L_P15.json.gz | in place → in place | 1.00 | 0.302 | 0.225 | 0 | 0.313 / 0.362 | recovered without changing foothold | recovered
+  X/e1b_V2-190-85_R_P15.json.gz | in place → in place | 1.00 | 0.302 | 0.225 | 0 | 0.313 / 0.362 | recovered without changing foothold | recovered
+  X/e1b_V2-198-92_L_P15_hz180.json.gz | in place → in place | 1.00 | 0.302 | 0.225 | 0 | 0.322 / 0.372 | recovered without changing foothold | recovered
+  X/e1b_V2-198-92_L_P15_hz480.json.gz | in place → in place | 1.00 | 0.302 | 0.225 | 0 | 0.313 / 0.362 | recovered without changing foothold | recovered
+  X/e1b_V2-198-92_R_P15.json.gz | in place → in place | 1.00 | 0.302 | 0.225 | 0 | 0.317 / 0.367 | recovered without changing foothold | recovered
+  X/e1b_V2-REF_L_P15_hz180.json.gz | in place → in place | 0.85 | 0.257 | 0.185 | 15 | 0.294 / 0.344 | recovered without changing foothold | recovered
+  X/e1b_V2-REF_L_P15_hz480.json.gz | in place → in place | 0.86 | 0.260 | 0.225 | 14 | 0.285 / 0.335 | recovered without changing foothold | recovered
+  X/e1b_V2-REF_L_P15_rep.json.gz | in place → in place | 0.86 | 0.260 | 0.215 | 14 | 0.292 / 0.342 | recovered without changing foothold | recovered
+  X/e1b_V2-REF_R_P15.json.gz | in place → in place | 0.86 | 0.260 | 0.215 | 14 | 0.292 / 0.342 | recovered without changing foothold | recovered
+  X/e1b_V2-long-legs_L_P15.json.gz | in place → in place | 0.86 | 0.260 | 0.215 | 14 | 0.292 / 0.342 | recovered without changing foothold | recovered
+  X/e1b_V2-long-legs_R_P15.json.gz | in place → in place | 0.86 | 0.260 | 0.215 | 14 | 0.292 / 0.342 | recovered without changing foothold | recovered
+  X/e1b_V2-short-legs_L_P15.json.gz | in place → in place | 0.86 | 0.260 | 0.225 | 14 | 0.287 / 0.338 | recovered without changing foothold | recovered
+  X/e1b_V2-short-legs_R_P15.json.gz | in place → in place | 0.86 | 0.260 | 0.225 | 14 | 0.287 / 0.338 | recovered without changing foothold | recovered
+
+P15 classes:
+  recovered without changing foothold: 17
+  step required: 6
+  recovered by stepping: 0
+  fell: 0
+
+TA-1 authority: PASS
+TA-2 rule bounds: PASS
+TA-4 engagement: PASS
+T-A CHECKS: PASS

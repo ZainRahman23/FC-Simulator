@@ -1916,3 +1916,48 @@ Not pushed.
 PSTAR3 not adopted. No E2 work.
 
 Not pushed.
+
+## 2026-10-05: Close E1b, adopt foot-yaw, prepare E2 (`sources/2026-10-05_user_decision_p15_split_close_e1b_e2_prep.md`)
+
+### EC-1: foot-yaw actuator adopted independently, configuration PSTARY (`e1b_close/CONFIG_PSTARY.md`)
+
+- **Evidence:** Y identity (no-abort runs hash-identical to PSTAR4, 5 / 5) + GY G0–G3 regression PASS + the yaw-path validation (E1b-17, X-Y, X-RATE yaw).
+- **Configuration:** PSTAR + `footYaw`.
+
+### EC-2: E1b CLOSED with configuration PSTAR4; P15 split; STEP_REQUIRED → E2 obligations (`e1b_close/E1B_CLOSE_RESULTS.md`)
+
+**Prereg** ca4aad6.
+
+**P15 split** (user Decision 1): class A / B by T-A's capture verdict at the end of the disturbance.
+
+**Corrections, evidence-based and not tuned:**
+- **T-A rule revision 2:** no timing margin after measured contact. Revision 1 double-counted it and forced the minimum ramp, which caused the V2-long-legs E1b-7.
+- **RATE-set applied-torque limit × max(1, 240/hz):** impact responses are rate-independent (6.17 / 6.43 / 6.61 N·m at 180 / 240 / 480 Hz), which explains the V2-REF 480 Hz item.
+
+**Result:**
+- E1b closing evaluation PASS: class A 19 / 19 recovered without changing foothold (E1b-7 ≤ 9.86 N·m, slip ≤ 3.38 mm); class B 4 STEP_REQUIRED (V2-165-62), integrity pass; 0 falls.
+- E1a, TA, W 3 / 3, G4 PASS.
+- The frozen evaluators' "FAIL" consists only of the 4 class-B E1b-18 items.
+
+**Obligations:** `e2/E2_OBLIGATIONS.md`.
+
+### E2-0: E2 architecture and criteria frozen for review (`e2/E2_DESIGN.md`, `e2/E2_PREREGISTRATION.md`); NOT implemented
+
+**Research:** `e2/research/E2_REUSE_STUDY.md`, `FOOT_PLACEMENT_SPEC.md`; BLF swing study.
+
+**Architecture** (reuse-first; all default-off; base PSTAR4):
+- a step sequencer advanced by measured lifecycle events;
+- quasi-static DCM (d = 0) during swing;
+- BLF via-apex swing (0.60 s, apex 0.025 m, landing velocity 0);
+- **IHMC error-based capture-aware placement ported unchanged in substance** (one-step capture region + safety heuristics + reach octagon + projection, deadband 0.02 m), with T = remaining swing + acceptance latency;
+- `xiRef2D` (2-D λ-weighted reference);
+- `recoveryStep` (class-B aborts take a capture-aware step);
+- T-A acceptance for recovery steps.
+
+**Test set:** forward 0.10 m and lateral 0.08 m steps (8 bodies × L / R), rates, perturbed steps, the 4 obligations (R-B), class-A regression, DET, W, E1 and G0–G3.
+
+**Criteria:** E2-1 … 16, R-1 … 6.
+
+**Awaiting review before any implementation.**
+
+Not pushed.

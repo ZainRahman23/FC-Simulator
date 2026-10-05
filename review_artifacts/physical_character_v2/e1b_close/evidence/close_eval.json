@@ -1,0 +1,849 @@
+{
+ "e": {
+  "failing": [],
+  "pass": true
+ },
+ "x": {
+  "failing": [],
+  "pass": true
+ },
+ "p15": [
+  {
+   "key": "E/e1b_V2-165-62_L_P15.json.gz",
+   "human": "V2-165-62",
+   "side": "L",
+   "hz": 240,
+   "cls": "B",
+   "verdictAtCls": "step required",
+   "tCls": 0.033333333333333215,
+   "finalVerdict": "step required",
+   "vlog": [
+    {
+     "t": 0,
+     "v": "in place"
+    },
+    {
+     "t": 0.029166666666666785,
+     "v": "step required",
+     "stage": "descent"
+    }
+   ],
+   "Tput": 0.2,
+   "TrFinal": 0.1,
+   "outcome": "recovered",
+   "fell": false,
+   "stanceLiftOff": true,
+   "stanceSlipMm": 6.864053110635036,
+   "landedFromAnchorMm": 1.5509032256768014,
+   "four": "step required",
+   "failsGating": [],
+   "C": {
+    "E1b-7": "applied Δτ max 9.78 N·m (hip_R.z at 10.204 s); outside onset windows max 9.78 N·m (hip_R.z at 10.204 s); commanded Δτ0 max 22.63 N·m (hip_R.z at 10.200 s); violations 0 / 0",
+    "E1b-8": "closure increment max 9.92e-3 J/tick; Σ positive 0.256 J; authority writes 0; external impulse 15",
+    "E1b-9p15": "over-capacity events 0",
+    "E1b-10": "smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin 0.92°; swing-leg knee flexion min 3.96°"
+   }
+  },
+  {
+   "key": "E/e1b_V2-198-92_L_P15.json.gz",
+   "human": "V2-198-92",
+   "side": "L",
+   "hz": 240,
+   "cls": "A",
+   "verdictAtCls": "in place",
+   "tCls": 0.008333333333331083,
+   "finalVerdict": "in place",
+   "vlog": [
+    {
+     "t": 0,
+     "v": "in place"
+    }
+   ],
+   "Tput": 0.30232901327267625,
+   "TrFinal": 0.225,
+   "outcome": "recovered",
+   "fell": false,
+   "stanceLiftOff": false,
+   "stanceSlipMm": 0.37304785042836874,
+   "landedFromAnchorMm": 1.0399907415633043,
+   "four": "recovered without changing foothold",
+   "failsGating": [],
+   "C": {
+    "E1b-7": "applied Δτ max 8.25 N·m (knee_R.y at 10.292 s); outside onset windows max 8.25 N·m (knee_R.y at 10.292 s); commanded Δτ0 max 7.10 N·m (hip_L.y at 8.571 s); violations 0 / 0",
+    "E1b-8": "closure increment max 1.40e-2 J/tick; Σ positive 0.234 J; authority writes 0; external impulse 15",
+    "E1b-9p15": "over-capacity events 0",
+    "E1b-10": "smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin 0.87°; swing-leg knee flexion min 3.96°",
+    "E1b-18": "abort at 9.800 s, TOUCHDOWN +0.313 s, end SUPPORT/SUPPORT; stance slip 0.37 mm (≤ 5); smallest hard margin 8.96°"
+   }
+  },
+  {
+   "key": "E/e1b_V2-REF_L_P15.json.gz",
+   "human": "V2-REF",
+   "side": "L",
+   "hz": 240,
+   "cls": "A",
+   "verdictAtCls": "in place",
+   "tCls": 0.02083333333333215,
+   "finalVerdict": "in place",
+   "vlog": [
+    {
+     "t": 0,
+     "v": "in place"
+    }
+   ],
+   "Tput": 0.2600029514145015,
+   "TrFinal": 0.215,
+   "outcome": "recovered",
+   "fell": false,
+   "stanceLiftOff": false,
+   "stanceSlipMm": 2.808343687132171,
+   "landedFromAnchorMm": 0.2762540892323465,
+   "four": "recovered without changing foothold",
+   "failsGating": [],
+   "C": {
+    "E1b-7": "applied Δτ max 4.94 N·m (knee_R.y at 10.208 s); outside onset windows max 4.94 N·m (knee_R.y at 10.208 s); commanded Δτ0 max 5.16 N·m (hip_L.y at 9.842 s); violations 0 / 0",
+    "E1b-8": "closure increment max 1.21e-2 J/tick; Σ positive 0.227 J; authority writes 0; external impulse 15",
+    "E1b-9p15": "over-capacity events 0",
+    "E1b-10": "smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin 0.89°; swing-leg knee flexion min 3.96°",
+    "E1b-18": "abort at 9.742 s, TOUCHDOWN +0.288 s, end SUPPORT/SUPPORT; stance slip 2.81 mm (≤ 5); smallest hard margin 8.96°"
+   }
+  },
+  {
+   "key": "X/e1b_V1-matched_L_P15.json.gz",
+   "human": "V1-matched",
+   "side": "L",
+   "hz": 240,
+   "cls": "A",
+   "verdictAtCls": "in place",
+   "tCls": 0.02083333333333215,
+   "finalVerdict": "in place",
+   "vlog": [
+    {
+     "t": 0,
+     "v": "in place"
+    }
+   ],
+   "Tput": 0.27814269221086213,
+   "TrFinal": 0.225,
+   "outcome": "recovered",
+   "fell": false,
+   "stanceLiftOff": false,
+   "stanceSlipMm": 2.275353286377106,
+   "landedFromAnchorMm": 0.3721067780512859,
+   "four": "recovered without changing foothold",
+   "failsGating": [],
+   "C": {
+    "E1b-7": "applied Δτ max 6.35 N·m (knee_R.y at 10.496 s); outside onset windows max 6.35 N·m (knee_R.y at 10.496 s); commanded Δτ0 max 5.61 N·m (hip_L.y at 8.567 s); violations 0 / 0",
+    "E1b-8": "closure increment max 1.17e-2 J/tick; Σ positive 0.234 J; authority writes 0; external impulse 15",
+    "E1b-9p15": "over-capacity events 0",
+    "E1b-10": "smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin 0.88°; swing-leg knee flexion min 3.96°",
+    "E1b-18": "abort at 9.783 s, TOUCHDOWN +0.296 s, end SUPPORT/SUPPORT; stance slip 2.28 mm (≤ 5); smallest hard margin 8.96°"
+   }
+  },
+  {
+   "key": "X/e1b_V1-matched_R_P15.json.gz",
+   "human": "V1-matched",
+   "side": "R",
+   "hz": 240,
+   "cls": "A",
+   "verdictAtCls": "in place",
+   "tCls": 0.02083333333333215,
+   "finalVerdict": "in place",
+   "vlog": [
+    {
+     "t": 0,
+     "v": "in place"
+    }
+   ],
+   "Tput": 0.27814269221086213,
+   "TrFinal": 0.225,
+   "outcome": "recovered",
+   "fell": false,
+   "stanceLiftOff": false,
+   "stanceSlipMm": 1.9640634677223152,
+   "landedFromAnchorMm": 0.36782333153685953,
+   "four": "recovered without changing foothold",
+   "failsGating": [],
+   "C": {
+    "E1b-7": "applied Δτ max 6.48 N·m (knee_L.y at 10.496 s); outside onset windows max 6.48 N·m (knee_L.y at 10.496 s); commanded Δτ0 max 5.61 N·m (hip_R.y at 8.571 s); violations 0 / 0",
+    "E1b-8": "closure increment max 1.17e-2 J/tick; Σ positive 0.229 J; authority writes 0; external impulse 15",
+    "E1b-9p15": "over-capacity events 0",
+    "E1b-10": "smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin 0.88°; swing-leg knee flexion min 3.96°",
+    "E1b-18": "abort at 9.787 s, TOUCHDOWN +0.296 s, end SUPPORT/SUPPORT; stance slip 1.96 mm (≤ 5); smallest hard margin 8.96°"
+   }
+  },
+  {
+   "key": "X/e1b_V2-165-62_L_P15_hz180.json.gz",
+   "human": "V2-165-62",
+   "side": "L",
+   "hz": 180,
+   "cls": "B",
+   "verdictAtCls": "step required",
+   "tCls": 0.033333333333333215,
+   "finalVerdict": "step required",
+   "vlog": [
+    {
+     "t": 0,
+     "v": "in place"
+    },
+    {
+     "t": 0.02777777777777679,
+     "v": "step required",
+     "stage": "descent"
+    }
+   ],
+   "Tput": 0.2,
+   "TrFinal": 0.1,
+   "outcome": "recovered",
+   "fell": false,
+   "stanceLiftOff": true,
+   "stanceSlipMm": 7.115728837391429,
+   "landedFromAnchorMm": 1.610828378224412,
+   "four": "step required",
+   "failsGating": [],
+   "C": {
+    "E1b-7": "applied Δτ max 11.07 N·m (hip_R.z at 10.228 s); outside onset windows max 11.07 N·m (hip_R.z at 10.228 s); commanded Δτ0 max 25.37 N·m (hip_R.z at 10.228 s); violations 0 / 0",
+    "E1b-8": "closure increment max 1.66e-2 J/tick; Σ positive 0.356 J; authority writes 0; external impulse 15.000000000000004",
+    "E1b-9p15": "over-capacity events 0",
+    "E1b-10": "smallest hard-limit margin 8.98° (knee_R at 0.01 s); swing-leg solved coordinates: smallest soft margin 0.92°; swing-leg knee flexion min 3.98°"
+   }
+  },
+  {
+   "key": "X/e1b_V2-165-62_L_P15_hz480.json.gz",
+   "human": "V2-165-62",
+   "side": "L",
+   "hz": 480,
+   "cls": "B",
+   "verdictAtCls": "step required",
+   "tCls": 0.033333333333333215,
+   "finalVerdict": "step required",
+   "vlog": [
+    {
+     "t": 0,
+     "v": "in place"
+    },
+    {
+     "t": 0.02708333333333357,
+     "v": "step required",
+     "stage": "descent"
+    }
+   ],
+   "Tput": 0.2,
+   "TrFinal": 0.1,
+   "outcome": "recovered",
+   "fell": false,
+   "stanceLiftOff": false,
+   "stanceSlipMm": 7.87993563305262,
+   "landedFromAnchorMm": 1.64377080041285,
+   "four": "step required",
+   "failsGating": [],
+   "C": {
+    "E1b-7": "applied Δτ max 4.96 N·m (hip_L.z at 9.944 s); outside onset windows max 4.96 N·m (hip_L.z at 9.944 s); commanded Δτ0 max 7.08 N·m (hip_L.z at 9.942 s); violations 0 / 0",
+    "E1b-8": "closure increment max 4.23e-3 J/tick; Σ positive 0.122 J; authority writes 0; external impulse 15",
+    "E1b-9p15": "over-capacity events 0",
+    "E1b-10": "smallest hard-limit margin 8.98° (knee_R at 0.01 s); swing-leg solved coordinates: smallest soft margin 0.92°; swing-leg knee flexion min 3.99°"
+   }
+  },
+  {
+   "key": "X/e1b_V2-165-62_R_P15.json.gz",
+   "human": "V2-165-62",
+   "side": "R",
+   "hz": 240,
+   "cls": "B",
+   "verdictAtCls": "step required",
+   "tCls": 0.033333333333333215,
+   "finalVerdict": "step required",
+   "vlog": [
+    {
+     "t": 0,
+     "v": "in place"
+    },
+    {
+     "t": 0.029166666666666785,
+     "v": "step required",
+     "stage": "descent"
+    }
+   ],
+   "Tput": 0.2,
+   "TrFinal": 0.1,
+   "outcome": "recovered",
+   "fell": false,
+   "stanceLiftOff": true,
+   "stanceSlipMm": 6.781140104215499,
+   "landedFromAnchorMm": 1.5360138382455721,
+   "four": "step required",
+   "failsGating": [],
+   "C": {
+    "E1b-7": "applied Δτ max 9.77 N·m (hip_L.z at 10.204 s); outside onset windows max 9.77 N·m (hip_L.z at 10.204 s); commanded Δτ0 max 22.61 N·m (hip_L.z at 10.200 s); violations 0 / 0",
+    "E1b-8": "closure increment max 9.92e-3 J/tick; Σ positive 0.256 J; authority writes 0; external impulse 15",
+    "E1b-9p15": "over-capacity events 0",
+    "E1b-10": "smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin 0.92°; swing-leg knee flexion min 3.96°"
+   }
+  },
+  {
+   "key": "X/e1b_V2-175-70_L_P15.json.gz",
+   "human": "V2-175-70",
+   "side": "L",
+   "hz": 240,
+   "cls": "A",
+   "verdictAtCls": "in place",
+   "tCls": 0.025000000000000355,
+   "finalVerdict": "step required",
+   "vlog": [
+    {
+     "t": 0,
+     "v": "in place"
+    },
+    {
+     "t": 0.1416666666666675,
+     "v": "step required",
+     "stage": "descent"
+    }
+   ],
+   "Tput": 0.2,
+   "TrFinal": 0.165,
+   "outcome": "recovered",
+   "fell": false,
+   "stanceLiftOff": false,
+   "stanceSlipMm": 3.1864166979095243,
+   "landedFromAnchorMm": 1.2171490505377485,
+   "four": "recovered without changing foothold",
+   "failsGating": [],
+   "C": {
+    "E1b-7": "applied Δτ max 6.45 N·m (knee_R.y at 10.429 s); outside onset windows max 6.45 N·m (knee_R.y at 10.429 s); commanded Δτ0 max 7.01 N·m (hip_L.y at 9.825 s); violations 0 / 0",
+    "E1b-8": "closure increment max 1.09e-2 J/tick; Σ positive 0.228 J; authority writes 0; external impulse 15",
+    "E1b-9p15": "over-capacity events 0",
+    "E1b-10": "smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin 0.90°; swing-leg knee flexion min 3.96°",
+    "E1b-18": "abort at 9.733 s, TOUCHDOWN +0.217 s, end SUPPORT/SUPPORT; stance slip 3.19 mm (≤ 5); smallest hard margin 8.96°"
+   }
+  },
+  {
+   "key": "X/e1b_V2-175-70_R_P15.json.gz",
+   "human": "V2-175-70",
+   "side": "R",
+   "hz": 240,
+   "cls": "A",
+   "verdictAtCls": "in place",
+   "tCls": 0.02499999999999858,
+   "finalVerdict": "step required",
+   "vlog": [
+    {
+     "t": 0,
+     "v": "in place"
+    },
+    {
+     "t": 0.14166666666666572,
+     "v": "step required",
+     "stage": "descent"
+    }
+   ],
+   "Tput": 0.2,
+   "TrFinal": 0.165,
+   "outcome": "recovered",
+   "fell": false,
+   "stanceLiftOff": false,
+   "stanceSlipMm": 2.970973306388856,
+   "landedFromAnchorMm": 1.2565980661991059,
+   "four": "recovered without changing foothold",
+   "failsGating": [],
+   "C": {
+    "E1b-7": "applied Δτ max 5.18 N·m (knee_L.y at 10.425 s); outside onset windows max 5.18 N·m (knee_L.y at 10.425 s); commanded Δτ0 max 7.01 N·m (hip_R.y at 9.825 s); violations 0 / 0",
+    "E1b-8": "closure increment max 1.09e-2 J/tick; Σ positive 0.219 J; authority writes 0; external impulse 15",
+    "E1b-9p15": "over-capacity events 0",
+    "E1b-10": "smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin 0.90°; swing-leg knee flexion min 3.96°",
+    "E1b-18": "abort at 9.738 s, TOUCHDOWN +0.217 s, end SUPPORT/SUPPORT; stance slip 2.97 mm (≤ 5); smallest hard margin 8.96°"
+   }
+  },
+  {
+   "key": "X/e1b_V2-190-85_L_P15.json.gz",
+   "human": "V2-190-85",
+   "side": "L",
+   "hz": 240,
+   "cls": "A",
+   "verdictAtCls": "in place",
+   "tCls": 0.012499999999997513,
+   "finalVerdict": "in place",
+   "vlog": [
+    {
+     "t": 0,
+     "v": "in place"
+    }
+   ],
+   "Tput": 0.30232901327267625,
+   "TrFinal": 0.225,
+   "outcome": "recovered",
+   "fell": false,
+   "stanceLiftOff": false,
+   "stanceSlipMm": 0.8660787604817703,
+   "landedFromAnchorMm": 0.7636719597335281,
+   "four": "recovered without changing foothold",
+   "failsGating": [],
+   "C": {
+    "E1b-7": "applied Δτ max 5.69 N·m (knee_R.y at 10.279 s); outside onset windows max 5.69 N·m (knee_R.y at 10.279 s); commanded Δτ0 max 6.08 N·m (hip_L.y at 8.546 s); violations 0 / 0",
+    "E1b-8": "closure increment max 1.31e-2 J/tick; Σ positive 0.242 J; authority writes 0; external impulse 15",
+    "E1b-9p15": "over-capacity events 0",
+    "E1b-10": "smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin 0.88°; swing-leg knee flexion min 3.96°",
+    "E1b-18": "abort at 9.771 s, TOUCHDOWN +0.308 s, end SUPPORT/SUPPORT; stance slip 0.87 mm (≤ 5); smallest hard margin 8.96°"
+   }
+  },
+  {
+   "key": "X/e1b_V2-190-85_R_P15.json.gz",
+   "human": "V2-190-85",
+   "side": "R",
+   "hz": 240,
+   "cls": "A",
+   "verdictAtCls": "in place",
+   "tCls": 0.012499999999997513,
+   "finalVerdict": "in place",
+   "vlog": [
+    {
+     "t": 0,
+     "v": "in place"
+    }
+   ],
+   "Tput": 0.30232901327267625,
+   "TrFinal": 0.225,
+   "outcome": "recovered",
+   "fell": false,
+   "stanceLiftOff": false,
+   "stanceSlipMm": 0.5437621908366097,
+   "landedFromAnchorMm": 0.7380922437814442,
+   "four": "recovered without changing foothold",
+   "failsGating": [],
+   "C": {
+    "E1b-7": "applied Δτ max 5.79 N·m (knee_L.y at 10.279 s); outside onset windows max 5.79 N·m (knee_L.y at 10.279 s); commanded Δτ0 max 6.08 N·m (hip_R.y at 8.546 s); violations 0 / 0",
+    "E1b-8": "closure increment max 1.31e-2 J/tick; Σ positive 0.232 J; authority writes 0; external impulse 15",
+    "E1b-9p15": "over-capacity events 0",
+    "E1b-10": "smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin 0.88°; swing-leg knee flexion min 3.96°",
+    "E1b-18": "abort at 9.771 s, TOUCHDOWN +0.308 s, end SUPPORT/SUPPORT; stance slip 0.54 mm (≤ 5); smallest hard margin 8.96°"
+   }
+  },
+  {
+   "key": "X/e1b_V2-198-92_L_P15_hz180.json.gz",
+   "human": "V2-198-92",
+   "side": "L",
+   "hz": 180,
+   "cls": "A",
+   "verdictAtCls": "in place",
+   "tCls": 0.005555555555556424,
+   "finalVerdict": "in place",
+   "vlog": [
+    {
+     "t": 0,
+     "v": "in place"
+    }
+   ],
+   "Tput": 0.30232901327267625,
+   "TrFinal": 0.225,
+   "outcome": "recovered",
+   "fell": false,
+   "stanceLiftOff": false,
+   "stanceSlipMm": 0.3465194344901659,
+   "landedFromAnchorMm": 1.1924111940872273,
+   "four": "recovered without changing foothold",
+   "failsGating": [],
+   "C": {
+    "E1b-7": "applied Δτ max 9.86 N·m (knee_R.y at 10.317 s); outside onset windows max 9.86 N·m (knee_R.y at 10.317 s); commanded Δτ0 max 9.93 N·m (hip_L.y at 8.594 s); violations 0 / 0",
+    "E1b-8": "closure increment max 2.41e-2 J/tick; Σ positive 0.308 J; authority writes 0; external impulse 15.000000000000004",
+    "E1b-9p15": "over-capacity events 0",
+    "E1b-10": "smallest hard-limit margin 8.97° (knee_L at 0.01 s); swing-leg solved coordinates: smallest soft margin 0.87°; swing-leg knee flexion min 3.97°",
+    "E1b-18": "abort at 9.822 s, TOUCHDOWN +0.317 s, end SUPPORT/SUPPORT; stance slip 0.35 mm (≤ 5); smallest hard margin 8.97°"
+   }
+  },
+  {
+   "key": "X/e1b_V2-198-92_L_P15_hz480.json.gz",
+   "human": "V2-198-92",
+   "side": "L",
+   "hz": 480,
+   "cls": "A",
+   "verdictAtCls": "in place",
+   "tCls": 0.006249999999997868,
+   "finalVerdict": "in place",
+   "vlog": [
+    {
+     "t": 0,
+     "v": "in place"
+    }
+   ],
+   "Tput": 0.30232901327267625,
+   "TrFinal": 0.225,
+   "outcome": "recovered",
+   "fell": false,
+   "stanceLiftOff": false,
+   "stanceSlipMm": 0.3470011254085214,
+   "landedFromAnchorMm": 0.849538494209092,
+   "four": "recovered without changing foothold",
+   "failsGating": [],
+   "C": {
+    "E1b-7": "applied Δτ max 4.36 N·m (knee_R.y at 10.258 s); outside onset windows max 4.36 N·m (knee_R.y at 10.258 s); commanded Δτ0 max 3.46 N·m (hip_L.y at 8.535 s); violations 0 / 0",
+    "E1b-8": "closure increment max 3.77e-3 J/tick; Σ positive 0.131 J; authority writes 0; external impulse 15",
+    "E1b-9p15": "over-capacity events 0",
+    "E1b-10": "smallest hard-limit margin 8.98° (knee_L at 0.01 s); swing-leg solved coordinates: smallest soft margin 0.87°; swing-leg knee flexion min 3.98°",
+    "E1b-18": "abort at 9.771 s, TOUCHDOWN +0.310 s, end SUPPORT/SUPPORT; stance slip 0.35 mm (≤ 5); smallest hard margin 8.98°"
+   }
+  },
+  {
+   "key": "X/e1b_V2-198-92_R_P15.json.gz",
+   "human": "V2-198-92",
+   "side": "R",
+   "hz": 240,
+   "cls": "A",
+   "verdictAtCls": "in place",
+   "tCls": 0.008333333333331083,
+   "finalVerdict": "in place",
+   "vlog": [
+    {
+     "t": 0,
+     "v": "in place"
+    }
+   ],
+   "Tput": 0.30232901327267625,
+   "TrFinal": 0.225,
+   "outcome": "recovered",
+   "fell": false,
+   "stanceLiftOff": false,
+   "stanceSlipMm": 0.3066635379419053,
+   "landedFromAnchorMm": 1.054814598326019,
+   "four": "recovered without changing foothold",
+   "failsGating": [],
+   "C": {
+    "E1b-7": "applied Δτ max 6.81 N·m (knee_R.y at 10.287 s); outside onset windows max 6.81 N·m (knee_R.y at 10.287 s); commanded Δτ0 max 7.10 N·m (hip_R.y at 8.575 s); violations 0 / 0",
+    "E1b-8": "closure increment max 1.40e-2 J/tick; Σ positive 0.234 J; authority writes 0; external impulse 15",
+    "E1b-9p15": "over-capacity events 0",
+    "E1b-10": "smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin 0.87°; swing-leg knee flexion min 3.96°",
+    "E1b-18": "abort at 9.804 s, TOUCHDOWN +0.313 s, end SUPPORT/SUPPORT; stance slip 0.31 mm (≤ 5); smallest hard margin 8.96°"
+   }
+  },
+  {
+   "key": "X/e1b_V2-REF_L_P15_hz180.json.gz",
+   "human": "V2-REF",
+   "side": "L",
+   "hz": 180,
+   "cls": "A",
+   "verdictAtCls": "in place",
+   "tCls": 0.016666666666667496,
+   "finalVerdict": "in place",
+   "vlog": [
+    {
+     "t": 0,
+     "v": "in place"
+    }
+   ],
+   "Tput": 0.2569796612817748,
+   "TrFinal": 0.185,
+   "outcome": "recovered",
+   "fell": false,
+   "stanceLiftOff": false,
+   "stanceSlipMm": 2.6128030486186677,
+   "landedFromAnchorMm": 0.22676617030966276,
+   "four": "recovered without changing foothold",
+   "failsGating": [],
+   "C": {
+    "E1b-7": "applied Δτ max 7.19 N·m (knee_R.y at 10.494 s); outside onset windows max 7.19 N·m (knee_R.y at 10.494 s); commanded Δτ0 max 7.41 N·m (hip_L.y at 10.017 s); violations 0 / 0",
+    "E1b-8": "closure increment max 1.94e-2 J/tick; Σ positive 0.319 J; authority writes 0; external impulse 15.000000000000004",
+    "E1b-9p15": "over-capacity events 0",
+    "E1b-10": "smallest hard-limit margin 8.97° (knee_R at 0.01 s); swing-leg solved coordinates: smallest soft margin 0.89°; swing-leg knee flexion min 3.97°",
+    "E1b-18": "abort at 9.761 s, TOUCHDOWN +0.289 s, end SUPPORT/SUPPORT; stance slip 2.61 mm (≤ 5); smallest hard margin 8.97°"
+   }
+  },
+  {
+   "key": "X/e1b_V2-REF_L_P15_hz480.json.gz",
+   "human": "V2-REF",
+   "side": "L",
+   "hz": 480,
+   "cls": "A",
+   "verdictAtCls": "in place",
+   "tCls": 0.018749999999998934,
+   "finalVerdict": "in place",
+   "vlog": [
+    {
+     "t": 0,
+     "v": "in place"
+    }
+   ],
+   "Tput": 0.2600029514145015,
+   "TrFinal": 0.225,
+   "outcome": "recovered",
+   "fell": false,
+   "stanceLiftOff": false,
+   "stanceSlipMm": 2.5079689798327185,
+   "landedFromAnchorMm": 0.2360210657317544,
+   "four": "recovered without changing foothold",
+   "failsGating": [],
+   "C": {
+    "E1b-7": "applied Δτ max 5.79 N·m (knee_R.y at 10.442 s); outside onset windows max 5.79 N·m (knee_R.y at 10.442 s); commanded Δτ0 max 3.00 N·m (knee_R.y at 10.177 s); violations 0 / 0",
+    "E1b-8": "closure increment max 4.36e-3 J/tick; Σ positive 0.131 J; authority writes 0; external impulse 15",
+    "E1b-9p15": "over-capacity events 0",
+    "E1b-10": "smallest hard-limit margin 8.98° (knee_R at 0.01 s); swing-leg solved coordinates: smallest soft margin 0.89°; swing-leg knee flexion min 3.98°",
+    "E1b-18": "abort at 9.713 s, TOUCHDOWN +0.283 s, end SUPPORT/SUPPORT; stance slip 2.51 mm (≤ 5); smallest hard margin 8.98°"
+   }
+  },
+  {
+   "key": "X/e1b_V2-REF_L_P15_rep.json.gz",
+   "human": "V2-REF",
+   "side": "L",
+   "hz": 240,
+   "cls": "A",
+   "verdictAtCls": "in place",
+   "tCls": 0.02083333333333215,
+   "finalVerdict": "in place",
+   "vlog": [
+    {
+     "t": 0,
+     "v": "in place"
+    }
+   ],
+   "Tput": 0.2600029514145015,
+   "TrFinal": 0.215,
+   "outcome": "recovered",
+   "fell": false,
+   "stanceLiftOff": false,
+   "stanceSlipMm": 2.808343687132171,
+   "landedFromAnchorMm": 0.2762540892323465,
+   "four": "recovered without changing foothold",
+   "failsGating": [],
+   "C": {
+    "E1b-7": "applied Δτ max 4.94 N·m (knee_R.y at 10.208 s); outside onset windows max 4.94 N·m (knee_R.y at 10.208 s); commanded Δτ0 max 5.16 N·m (hip_L.y at 9.842 s); violations 0 / 0",
+    "E1b-8": "closure increment max 1.21e-2 J/tick; Σ positive 0.227 J; authority writes 0; external impulse 15",
+    "E1b-9p15": "over-capacity events 0",
+    "E1b-10": "smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin 0.89°; swing-leg knee flexion min 3.96°",
+    "E1b-18": "abort at 9.742 s, TOUCHDOWN +0.288 s, end SUPPORT/SUPPORT; stance slip 2.81 mm (≤ 5); smallest hard margin 8.96°"
+   }
+  },
+  {
+   "key": "X/e1b_V2-REF_R_P15.json.gz",
+   "human": "V2-REF",
+   "side": "R",
+   "hz": 240,
+   "cls": "A",
+   "verdictAtCls": "in place",
+   "tCls": 0.02083333333333215,
+   "finalVerdict": "in place",
+   "vlog": [
+    {
+     "t": 0,
+     "v": "in place"
+    }
+   ],
+   "Tput": 0.2600029514145015,
+   "TrFinal": 0.215,
+   "outcome": "recovered",
+   "fell": false,
+   "stanceLiftOff": false,
+   "stanceSlipMm": 2.5506375046549734,
+   "landedFromAnchorMm": 0.29984739934992755,
+   "four": "recovered without changing foothold",
+   "failsGating": [],
+   "C": {
+    "E1b-7": "applied Δτ max 5.11 N·m (knee_L.y at 10.475 s); outside onset windows max 5.11 N·m (knee_L.y at 10.475 s); commanded Δτ0 max 5.16 N·m (hip_R.y at 9.842 s); violations 0 / 0",
+    "E1b-8": "closure increment max 1.21e-2 J/tick; Σ positive 0.227 J; authority writes 0; external impulse 15",
+    "E1b-9p15": "over-capacity events 0",
+    "E1b-10": "smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin 0.89°; swing-leg knee flexion min 3.96°",
+    "E1b-18": "abort at 9.742 s, TOUCHDOWN +0.288 s, end SUPPORT/SUPPORT; stance slip 2.55 mm (≤ 5); smallest hard margin 8.96°"
+   }
+  },
+  {
+   "key": "X/e1b_V2-long-legs_L_P15.json.gz",
+   "human": "V2-long-legs",
+   "side": "L",
+   "hz": 240,
+   "cls": "A",
+   "verdictAtCls": "in place",
+   "tCls": 0.020833333333333925,
+   "finalVerdict": "in place",
+   "vlog": [
+    {
+     "t": 0,
+     "v": "in place"
+    }
+   ],
+   "Tput": 0.2600029514145015,
+   "TrFinal": 0.215,
+   "outcome": "recovered",
+   "fell": false,
+   "stanceLiftOff": false,
+   "stanceSlipMm": 2.35448255070919,
+   "landedFromAnchorMm": 0.2296826106666043,
+   "four": "recovered without changing foothold",
+   "failsGating": [],
+   "C": {
+    "E1b-7": "applied Δτ max 5.24 N·m (knee_R.y at 9.346 s); outside onset windows max 5.24 N·m (knee_R.y at 9.346 s); commanded Δτ0 max 6.08 N·m (hip_L.y at 8.725 s); violations 0 / 0",
+    "E1b-8": "closure increment max 1.20e-2 J/tick; Σ positive 0.235 J; authority writes 0; external impulse 15",
+    "E1b-9p15": "over-capacity events 0",
+    "E1b-10": "smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin 0.89°; swing-leg knee flexion min 3.96°",
+    "E1b-18": "abort at 8.633 s, TOUCHDOWN +0.287 s, end SUPPORT/SUPPORT; stance slip 2.35 mm (≤ 5); smallest hard margin 8.96°"
+   }
+  },
+  {
+   "key": "X/e1b_V2-long-legs_R_P15.json.gz",
+   "human": "V2-long-legs",
+   "side": "R",
+   "hz": 240,
+   "cls": "A",
+   "verdictAtCls": "in place",
+   "tCls": 0.02083333333333215,
+   "finalVerdict": "in place",
+   "vlog": [
+    {
+     "t": 0,
+     "v": "in place"
+    }
+   ],
+   "Tput": 0.2600029514145015,
+   "TrFinal": 0.215,
+   "outcome": "recovered",
+   "fell": false,
+   "stanceLiftOff": false,
+   "stanceSlipMm": 2.04680031909018,
+   "landedFromAnchorMm": 0.23200073526743872,
+   "four": "recovered without changing foothold",
+   "failsGating": [],
+   "C": {
+    "E1b-7": "applied Δτ max 4.81 N·m (knee_L.y at 9.338 s); outside onset windows max 4.81 N·m (knee_L.y at 9.338 s); commanded Δτ0 max 6.08 N·m (hip_R.y at 8.721 s); violations 0 / 0",
+    "E1b-8": "closure increment max 1.20e-2 J/tick; Σ positive 0.230 J; authority writes 0; external impulse 15",
+    "E1b-9p15": "over-capacity events 0",
+    "E1b-10": "smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin 0.89°; swing-leg knee flexion min 3.96°",
+    "E1b-18": "abort at 8.629 s, TOUCHDOWN +0.288 s, end SUPPORT/SUPPORT; stance slip 2.05 mm (≤ 5); smallest hard margin 8.96°"
+   }
+  },
+  {
+   "key": "X/e1b_V2-short-legs_L_P15.json.gz",
+   "human": "V2-short-legs",
+   "side": "L",
+   "hz": 240,
+   "cls": "A",
+   "verdictAtCls": "in place",
+   "tCls": 0.02083333333333215,
+   "finalVerdict": "in place",
+   "vlog": [
+    {
+     "t": 0,
+     "v": "in place"
+    }
+   ],
+   "Tput": 0.2600029514145015,
+   "TrFinal": 0.225,
+   "outcome": "recovered",
+   "fell": false,
+   "stanceLiftOff": false,
+   "stanceSlipMm": 3.3770862527274046,
+   "landedFromAnchorMm": 0.16597440214764467,
+   "four": "recovered without changing foothold",
+   "failsGating": [],
+   "C": {
+    "E1b-7": "applied Δτ max 5.75 N·m (knee_R.y at 10.792 s); outside onset windows max 5.75 N·m (knee_R.y at 10.792 s); commanded Δτ0 max 4.61 N·m (hip_L.y at 10.287 s); violations 0 / 0",
+    "E1b-8": "closure increment max 1.23e-2 J/tick; Σ positive 0.227 J; authority writes 0; external impulse 15",
+    "E1b-9p15": "over-capacity events 0",
+    "E1b-10": "smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin 0.90°; swing-leg knee flexion min 3.96°",
+    "E1b-18": "abort at 10.029 s, TOUCHDOWN +0.283 s, end SUPPORT/SUPPORT; stance slip 3.38 mm (≤ 5); smallest hard margin 8.96°"
+   }
+  },
+  {
+   "key": "X/e1b_V2-short-legs_R_P15.json.gz",
+   "human": "V2-short-legs",
+   "side": "R",
+   "hz": 240,
+   "cls": "A",
+   "verdictAtCls": "in place",
+   "tCls": 0.02083333333333215,
+   "finalVerdict": "in place",
+   "vlog": [
+    {
+     "t": 0,
+     "v": "in place"
+    }
+   ],
+   "Tput": 0.2600029514145015,
+   "TrFinal": 0.225,
+   "outcome": "recovered",
+   "fell": false,
+   "stanceLiftOff": false,
+   "stanceSlipMm": 3.18914199586057,
+   "landedFromAnchorMm": 0.19728313393991959,
+   "four": "recovered without changing foothold",
+   "failsGating": [],
+   "C": {
+    "E1b-7": "applied Δτ max 5.84 N·m (knee_L.y at 10.792 s); outside onset windows max 5.84 N·m (knee_L.y at 10.792 s); commanded Δτ0 max 4.62 N·m (hip_R.y at 10.283 s); violations 0 / 0",
+    "E1b-8": "closure increment max 1.23e-2 J/tick; Σ positive 0.230 J; authority writes 0; external impulse 15",
+    "E1b-9p15": "over-capacity events 0",
+    "E1b-10": "smallest hard-limit margin 8.96° (knee_L at 0.00 s); swing-leg solved coordinates: smallest soft margin 0.90°; swing-leg knee flexion min 3.96°",
+    "E1b-18": "abort at 10.025 s, TOUCHDOWN +0.283 s, end SUPPORT/SUPPORT; stance slip 3.19 mm (≤ 5); smallest hard margin 8.96°"
+   }
+  }
+ ],
+ "classes": {
+  "step required": [
+   "E/e1b_V2-165-62_L_P15.json.gz",
+   "X/e1b_V2-165-62_L_P15_hz180.json.gz",
+   "X/e1b_V2-165-62_L_P15_hz480.json.gz",
+   "X/e1b_V2-165-62_R_P15.json.gz"
+  ],
+  "recovered without changing foothold": [
+   "E/e1b_V2-198-92_L_P15.json.gz",
+   "E/e1b_V2-REF_L_P15.json.gz",
+   "X/e1b_V1-matched_L_P15.json.gz",
+   "X/e1b_V1-matched_R_P15.json.gz",
+   "X/e1b_V2-175-70_L_P15.json.gz",
+   "X/e1b_V2-175-70_R_P15.json.gz",
+   "X/e1b_V2-190-85_L_P15.json.gz",
+   "X/e1b_V2-190-85_R_P15.json.gz",
+   "X/e1b_V2-198-92_L_P15_hz180.json.gz",
+   "X/e1b_V2-198-92_L_P15_hz480.json.gz",
+   "X/e1b_V2-198-92_R_P15.json.gz",
+   "X/e1b_V2-REF_L_P15_hz180.json.gz",
+   "X/e1b_V2-REF_L_P15_hz480.json.gz",
+   "X/e1b_V2-REF_L_P15_rep.json.gz",
+   "X/e1b_V2-REF_R_P15.json.gz",
+   "X/e1b_V2-long-legs_L_P15.json.gz",
+   "X/e1b_V2-long-legs_R_P15.json.gz",
+   "X/e1b_V2-short-legs_L_P15.json.gz",
+   "X/e1b_V2-short-legs_R_P15.json.gz"
+  ],
+  "recovered by stepping": []
+ },
+ "gating": {
+  "E": true,
+  "X": true,
+  "P15": true,
+  "p15Failing": [],
+  "pass": true
+ },
+ "stepRequired": [
+  {
+   "run": "E/e1b_V2-165-62_L_P15.json.gz",
+   "human": "V2-165-62",
+   "side": "L",
+   "hz": 240,
+   "physicalOutcome": "recovered",
+   "stanceLiftOff": true,
+   "stanceSlipMm": 6.86
+  },
+  {
+   "run": "X/e1b_V2-165-62_L_P15_hz180.json.gz",
+   "human": "V2-165-62",
+   "side": "L",
+   "hz": 180,
+   "physicalOutcome": "recovered",
+   "stanceLiftOff": true,
+   "stanceSlipMm": 7.12
+  },
+  {
+   "run": "X/e1b_V2-165-62_L_P15_hz480.json.gz",
+   "human": "V2-165-62",
+   "side": "L",
+   "hz": 480,
+   "physicalOutcome": "recovered",
+   "stanceLiftOff": false,
+   "stanceSlipMm": 7.88
+  },
+  {
+   "run": "X/e1b_V2-165-62_R_P15.json.gz",
+   "human": "V2-165-62",
+   "side": "R",
+   "hz": 240,
+   "physicalOutcome": "recovered",
+   "stanceLiftOff": true,
+   "stanceSlipMm": 6.78
+  }
+ ]
+}

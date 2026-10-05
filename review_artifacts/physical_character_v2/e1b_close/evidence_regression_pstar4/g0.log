@@ -1,0 +1,396 @@
+fatal: not a git repository (or any of the parent directories): .git
+warning: Not a git repository. Use --no-index to compare two paths outside a working tree
+usage: git diff --no-index [<options>] <path> <path>
+
+Diff output format options
+    -p, --patch           generate patch
+    -s, --no-patch        suppress diff output
+    -u                    generate patch
+    -U, --unified[=<n>]   generate diffs with <n> lines context
+    -W, --function-context
+                          generate diffs with <n> lines context
+    --raw                 generate the diff in raw format
+    --patch-with-raw      synonym for '-p --raw'
+    --patch-with-stat     synonym for '-p --stat'
+    --numstat             machine friendly --stat
+    --shortstat           output only the last line of --stat
+    -X, --dirstat[=<param1,param2>...]
+                          output the distribution of relative amount of changes for each sub-directory
+    --cumulative          synonym for --dirstat=cumulative
+    --dirstat-by-file[=<param1,param2>...]
+                          synonym for --dirstat=files,param1,param2...
+    --check               warn if changes introduce conflict markers or whitespace errors
+    --summary             condensed summary such as creations, renames and mode changes
+    --name-only           show only names of changed files
+    --name-status         show only names and status of changed files
+    --stat[=<width>[,<name-width>[,<count>]]]
+                          generate diffstat
+    --stat-width <width>  generate diffstat with a given width
+    --stat-name-width <width>
+                          generate diffstat with a given name width
+    --stat-graph-width <width>
+                          generate diffstat with a given graph width
+    --stat-count <count>  generate diffstat with limited lines
+    --compact-summary     generate compact summary in diffstat
+    --binary              output a binary diff that can be applied
+    --full-index          show full pre- and post-image object names on the "index" lines
+    --color[=<when>]      show colored diff
+    --ws-error-highlight <kind>
+                          highlight whitespace errors in the 'context', 'old' or 'new' lines in the diff
+    -z                    do not munge pathnames and use NULs as output field terminators in --raw or --numstat
+    --abbrev[=<n>]        use <n> digits to display object names
+    --src-prefix <prefix>
+                          show the given source prefix instead of "a/"
+    --dst-prefix <prefix>
+                          show the given destination prefix instead of "b/"
+    --line-prefix <prefix>
+                          prepend an additional prefix to every line of output
+    --no-prefix           do not show any source or destination prefix
+    --inter-hunk-context <n>
+                          show context between diff hunks up to the specified number of lines
+    --output-indicator-new <char>
+                          specify the character to indicate a new line instead of '+'
+    --output-indicator-old <char>
+                          specify the character to indicate an old line instead of '-'
+    --output-indicator-context <char>
+                          specify the character to indicate a context instead of ' '
+
+Diff rename options
+    -B, --break-rewrites[=<n>[/<m>]]
+                          break complete rewrite changes into pairs of delete and create
+    -M, --find-renames[=<n>]
+                          detect renames
+    -D, --irreversible-delete
+                          omit the preimage for deletes
+    -C, --find-copies[=<n>]
+                          detect copies
+    --find-copies-harder  use unmodified files as source to find copies
+    --no-renames          disable rename detection
+    --rename-empty        use empty blobs as rename source
+    --follow              continue listing the history of a file beyond renames
+    -l <n>                prevent rename/copy detection if the number of rename/copy targets exceeds given limit
+
+Diff algorithm options
+    --minimal             produce the smallest possible diff
+    -w, --ignore-all-space
+                          ignore whitespace when comparing lines
+    -b, --ignore-space-change
+                          ignore changes in amount of whitespace
+    --ignore-space-at-eol
+                          ignore changes in whitespace at EOL
+    --ignore-cr-at-eol    ignore carrier-return at the end of line
+    --ignore-blank-lines  ignore changes whose lines are all blank
+    -I, --ignore-matching-lines <regex>
+                          ignore changes whose all lines match <regex>
+    --indent-heuristic    heuristic to shift diff hunk boundaries for easy reading
+    --patience            generate diff using the "patience diff" algorithm
+    --histogram           generate diff using the "histogram diff" algorithm
+    --diff-algorithm <algorithm>
+                          choose a diff algorithm
+    --anchored <text>     generate diff using the "anchored diff" algorithm
+    --word-diff[=<mode>]  show word diff, using <mode> to delimit changed words
+    --word-diff-regex <regex>
+                          use <regex> to decide what a word is
+    --color-words[=<regex>]
+                          equivalent to --word-diff=color --word-diff-regex=<regex>
+    --color-moved[=<mode>]
+                          moved lines of code are colored differently
+    --color-moved-ws <mode>
+                          how white spaces are ignored in --color-moved
+
+Other diff options
+    --relative[=<prefix>]
+                          when run from subdir, exclude changes outside and show relative paths
+    -a, --text            treat all files as text
+    -R                    swap two inputs, reverse the diff
+    --exit-code           exit with 1 if there were differences, 0 otherwise
+    --quiet               disable all output of the program
+    --ext-diff            allow an external diff helper to be executed
+    --textconv            run external text conversion filters when comparing binary files
+    --ignore-submodules[=<when>]
+                          ignore changes to submodules in the diff generation
+    --submodule[=<format>]
+                          specify how differences in submodules are shown
+    --ita-invisible-in-index
+                          hide 'git add -N' entries from the index
+    --ita-visible-in-index
+                          treat 'git add -N' entries as real in the index
+    -S <string>           look for differences that change the number of occurrences of the specified string
+    -G <regex>            look for differences that change the number of occurrences of the specified regex
+    --pickaxe-all         show all changes in the changeset with -S or -G
+    --pickaxe-regex       treat <string> in -S as extended POSIX regular expression
+    -O <file>             control the order in which files appear in the output
+    --rotate-to <path>    show the change in the specified path first
+    --skip-to <path>      skip the output to the specified path
+    --find-object <object-id>
+                          look for differences that change the number of occurrences of the specified object
+    --diff-filter [(A|C|D|M|R|T|U|X|B)...[*]]
+                          select files by diff type
+    --output <file>       output to a specific file
+
+warning: Not a git repository. Use --no-index to compare two paths outside a working tree
+usage: git diff --no-index [<options>] <path> <path>
+
+Diff output format options
+    -p, --patch           generate patch
+    -s, --no-patch        suppress diff output
+    -u                    generate patch
+    -U, --unified[=<n>]   generate diffs with <n> lines context
+    -W, --function-context
+                          generate diffs with <n> lines context
+    --raw                 generate the diff in raw format
+    --patch-with-raw      synonym for '-p --raw'
+    --patch-with-stat     synonym for '-p --stat'
+    --numstat             machine friendly --stat
+    --shortstat           output only the last line of --stat
+    -X, --dirstat[=<param1,param2>...]
+                          output the distribution of relative amount of changes for each sub-directory
+    --cumulative          synonym for --dirstat=cumulative
+    --dirstat-by-file[=<param1,param2>...]
+                          synonym for --dirstat=files,param1,param2...
+    --check               warn if changes introduce conflict markers or whitespace errors
+    --summary             condensed summary such as creations, renames and mode changes
+    --name-only           show only names of changed files
+    --name-status         show only names and status of changed files
+    --stat[=<width>[,<name-width>[,<count>]]]
+                          generate diffstat
+    --stat-width <width>  generate diffstat with a given width
+    --stat-name-width <width>
+                          generate diffstat with a given name width
+    --stat-graph-width <width>
+                          generate diffstat with a given graph width
+    --stat-count <count>  generate diffstat with limited lines
+    --compact-summary     generate compact summary in diffstat
+    --binary              output a binary diff that can be applied
+    --full-index          show full pre- and post-image object names on the "index" lines
+    --color[=<when>]      show colored diff
+    --ws-error-highlight <kind>
+                          highlight whitespace errors in the 'context', 'old' or 'new' lines in the diff
+    -z                    do not munge pathnames and use NULs as output field terminators in --raw or --numstat
+    --abbrev[=<n>]        use <n> digits to display object names
+    --src-prefix <prefix>
+                          show the given source prefix instead of "a/"
+    --dst-prefix <prefix>
+                          show the given destination prefix instead of "b/"
+    --line-prefix <prefix>
+                          prepend an additional prefix to every line of output
+    --no-prefix           do not show any source or destination prefix
+    --inter-hunk-context <n>
+                          show context between diff hunks up to the specified number of lines
+    --output-indicator-new <char>
+                          specify the character to indicate a new line instead of '+'
+    --output-indicator-old <char>
+                          specify the character to indicate an old line instead of '-'
+    --output-indicator-context <char>
+                          specify the character to indicate a context instead of ' '
+
+Diff rename options
+    -B, --break-rewrites[=<n>[/<m>]]
+                          break complete rewrite changes into pairs of delete and create
+    -M, --find-renames[=<n>]
+                          detect renames
+    -D, --irreversible-delete
+                          omit the preimage for deletes
+    -C, --find-copies[=<n>]
+                          detect copies
+    --find-copies-harder  use unmodified files as source to find copies
+    --no-renames          disable rename detection
+    --rename-empty        use empty blobs as rename source
+    --follow              continue listing the history of a file beyond renames
+    -l <n>                prevent rename/copy detection if the number of rename/copy targets exceeds given limit
+
+Diff algorithm options
+    --minimal             produce the smallest possible diff
+    -w, --ignore-all-space
+                          ignore whitespace when comparing lines
+    -b, --ignore-space-change
+                          ignore changes in amount of whitespace
+    --ignore-space-at-eol
+                          ignore changes in whitespace at EOL
+    --ignore-cr-at-eol    ignore carrier-return at the end of line
+    --ignore-blank-lines  ignore changes whose lines are all blank
+    -I, --ignore-matching-lines <regex>
+                          ignore changes whose all lines match <regex>
+    --indent-heuristic    heuristic to shift diff hunk boundaries for easy reading
+    --patience            generate diff using the "patience diff" algorithm
+    --histogram           generate diff using the "histogram diff" algorithm
+    --diff-algorithm <algorithm>
+                          choose a diff algorithm
+    --anchored <text>     generate diff using the "anchored diff" algorithm
+    --word-diff[=<mode>]  show word diff, using <mode> to delimit changed words
+    --word-diff-regex <regex>
+                          use <regex> to decide what a word is
+    --color-words[=<regex>]
+                          equivalent to --word-diff=color --word-diff-regex=<regex>
+    --color-moved[=<mode>]
+                          moved lines of code are colored differently
+    --color-moved-ws <mode>
+                          how white spaces are ignored in --color-moved
+
+Other diff options
+    --relative[=<prefix>]
+                          when run from subdir, exclude changes outside and show relative paths
+    -a, --text            treat all files as text
+    -R                    swap two inputs, reverse the diff
+    --exit-code           exit with 1 if there were differences, 0 otherwise
+    --quiet               disable all output of the program
+    --ext-diff            allow an external diff helper to be executed
+    --textconv            run external text conversion filters when comparing binary files
+    --ignore-submodules[=<when>]
+                          ignore changes to submodules in the diff generation
+    --submodule[=<format>]
+                          specify how differences in submodules are shown
+    --ita-invisible-in-index
+                          hide 'git add -N' entries from the index
+    --ita-visible-in-index
+                          treat 'git add -N' entries as real in the index
+    -S <string>           look for differences that change the number of occurrences of the specified string
+    -G <regex>            look for differences that change the number of occurrences of the specified regex
+    --pickaxe-all         show all changes in the changeset with -S or -G
+    --pickaxe-regex       treat <string> in -S as extended POSIX regular expression
+    -O <file>             control the order in which files appear in the output
+    --rotate-to <path>    show the change in the specified path first
+    --skip-to <path>      skip the output to the specified path
+    --find-object <object-id>
+                          look for differences that change the number of occurrences of the specified object
+    --diff-filter [(A|C|D|M|R|T|U|X|B)...[*]]
+                          select files by diff type
+    --output <file>       output to a specific file
+
+fatal: not a git repository (or any of the parent directories): .git
+
+V2-G0 — anatomy / static construction   (0.7 s, Node v22.19.0, Jolt sha 011233a5fff7)
+
+■ V2-165-62  H 1.65 m  M 62 kg  spec 13fa5bfa  engine aa46c502/3cd69055   47/47 pass
+
+■ V2-175-70  H 1.75 m  M 70 kg  spec 0ca23788  engine bbb73448/8d15cc89   47/47 pass
+
+■ V2-REF  H 1.82 m  M 78 kg  spec ceda2998  engine 54f413c9/54add0b4   48/48 pass
+  PASS 0.1    spec generation deterministic (×3 identical hash)
+         ceda2998 ceda2998 ceda2998   [identical]
+  PASS 0.2a   total mass = M + equipment
+         78.91   [78 + 0.91 ± 1e-9]
+  PASS 0.2b   segment mass sum = M (body only)
+         78   [78 ± 1e-9]
+  PASS 0.2c   every segment = de Leva fraction × M (relative error)
+         0.00e+0   [≤ 1e-12]
+  PASS 0.3a   inertia tensors symmetric
+         0.00e+0   [≤ 1e-12]
+  PASS 0.3b   inertia tensors positive definite (min principal moment)
+         1.761e-3 kg·m²   [> 0]
+  PASS 0.3c   triangle inequality I_a + I_b ≥ I_c with margin
+         3.72 % (forearm_L)   [≥ 1 %]
+  PASS 0.4a   standing arms-down COM height, barefoot-equivalent (no equipment) — population band
+         0.5569 H   [0.55–0.58 H]
+         with equipment 0.5537 H; canonical T-pose COM y = 1.0581 m
+  PASS 0.4b   canonical COM AP within ±1 cm of the ankle line
+         0.21 cm   [|z| ≤ 1 cm]
+         x = 2.1e-18 m
+  PASS 0.5    whole-body inertia about COM in the literature band (Santschi 1963, recalled; scaled ∝ M·H²) — population band
+         pitch 13.22 · roll 13.96 · yaw 1.102 kg·m²   [pitch/roll 11.0–14.0, yaw 1.00–1.50]
+         independent de Leva assembly (research pass, 1.82 m / 78 kg): 13.2 / 14.0 / 1.1
+  PASS 0.4c   requested morphology realised exactly (stature, leg length × legScale, trunk refit keeping C7, arm lengths × armScale)
+         stature 1.8200 m, leg 0.4760 H (legScale 1), C7 0.8605 H, HJC→C7 0.3455 H   [exact]
+  PASS 0.6a   inter-HJC distance
+         0.1000 H = 0.182 m   [0.09–0.11 H]
+  PASS 0.6b   inter-SJC distance within ±10 % of the spec value
+         0.2180 H = 0.397 m   [0.218 H ± 10 %]
+  PASS 0.6c   generated stature: vertex landmark − sole = H
+         1.820000 m   [1.82 m exact]
+         stature closure (HJC + de Leva trunk + head − H) = 1.9 mm
+  PASS 0.6d   collider stature: top of the head collider vs vertex
+         -9.1 mm   [−15 … +5 mm]
+  PASS 0.6e   segment lengths = profile fractions (leg = 0.476 H, thigh / shank / upper arm / forearm)
+         leg 0.8663 m (0.4760 H), thigh 0.4277, shank 0.4386, upper arm 0.2945, forearm 0.2811   [exact]
+         SJC 36.4 mm below the Drillis acromion height
+  PASS 0.7a   semantic hierarchy valid (31 bones, unique, one root, parent-first, twist branches are leaves, no hip_L/R or heel bones)
+         31 bones, root 'root'   [31 / valid]
+  PASS 0.7b   Unity Humanoid mapping complete (15 required + Touchline-required Chest/UpperChest/Neck/Shoulders/Toes), unique, hierarchy-consistent; root unmapped
+         22 mapped (15/15 required, 7/7 Touchline-required)   [complete]
+  PASS 0.7c   every bone has one driver class; every body drives ≥ 1 bone
+         min bones per body 1   [≥ 1]
+  PASS 0.7d   skeleton round trip: canonical bodies → 31 bones reproduce §6 positions and local-axis frames
+         1.73e-18 m / 0.00e+0 rad   [≤ 1e-9]
+  PASS 0.7e   physics→render mapping consistent at the 7 reference poses (rigid bind chain; DIRECT bones exact)
+         2.48e-16 m (neutral lowerArm_L→hand_L)   [≤ 1e-9 m]
+         root→hips translation is free by design
+  PASS 0.7f   AIM twist split about the bone axis: spine_02 = 50 % of the thorax twist; neck = 27 % of the head twist
+         spine_02 10.0000° (expect 10.0000° of a 20° thoracic rotation); neck 7.9761° (expect 7.9761° of a 30° cervical rotation about vertical)   [≤ 1e-9°]
+  PASS 0.7g   DEFORM twist branch: thigh_twist carries 50 % of a 20° hip axial rotation
+         10.0000°   [10°]
+  PASS 0.7h   PROC toe (rigid F0 foot): 0° at canonical; heel raised 20° → toes dorsiflex so the render toe tip lies on the turf
+         canonical 0°, heel-up 12.81°, tip y 0.00 mm   [0° · > 0° · |tip y| ≤ 1 mm]
+  PASS 0.8a   chirality: anatomical right at +X; facing pitch +x (ψ = h + 90°) puts the right foot at pitch y > 0 (south); render foot_R = physical foot_R
+         upperLeg_R x = 0.091, facing x 1.000, right foot pitch y = 0.091   [all true]
+  PASS 0.8b   no mirrored-coordinate mistake: a deliberately mirrored copy FAILS the chirality test
+         mirrored copy rejected   [rejected]
+  PASS 0.8c   bilateral symmetry: bones / bodies / joint motions mirror exactly (q → (x, −y, −z, w), p → (−x, y, z))
+         bones 0.0e+0 m / 0.0e+0 rad · bodies 0.0e+0 · +20° motions 2.2e-16 (shoulder abd)   [≤ 1e-12 m / 1e-9 rad]
+  PASS 0.9a   canonical pose inside every joint's hard limits (margin)
+         5.00° (elbow_L y)   [≥ 5°]
+  PASS 0.9b   swing–twist singularity margin over every joint's full engine box
+         50.3° (shoulder_L)   [≥ 20°]
+  PASS 0.9c   joint axes: every anatomical motion moves the body in its anatomical direction, both sides (35 probes)
+         35 / 35   [all]
+  PASS 0.9d   every anatomical ACTIVE extreme inside the engine hard limits (hard limits = tight hull of the anatomical hard extremes)
+         all inside   [all inside]
+         largest widening beyond (anatomical limit − centre) from swing–twist coupling: 29.4° (shoulder_L abd)
+  PASS 0.9e   passive end-range law: 0 inside the soft range, opposes excursion, equals 25 % of the opposing isometric capacity at the hard limit
+         all joints   [all]
+  PASS 0.9n   ankle neutral-zone law (G3-R7): 0 at neutral, restoring, linear inside the soft range, saturated beyond, L = R, value = spec
+         no neutral term (historical baseline, k = 0)   [all]
+  PASS 0.9f   actuator capacity functions: f(0)=1, eccentric plateau, zero at ω₀; activation τ 15 ms; knee-extension 180/300°/s ratios vs Fousekis 0.70/0.57
+         ratios 0.736 / 0.550; a(15 ms) = 0.632   [0.74 / 0.55 (spec fit)]
+  PASS 0.10a  colliders vs anthropometric surfaces (§15.1 tolerances: limbs −10…+3, trunk −20…+5, head −15…+5 mm)
+         bideltoid (deltoid spheres) 0.2 mm; head sphere-pair AP half-extent vs head length / 2 0.0 mm; head sphere-pair lateral half-extent vs head breadth / 2 0.0 mm; head sphere-pair side waist (between the centres) vs head breadth / 2 -3.6 mm; pelvis box vs hip breadth / 2 0.0 mm; thorax box vs chest depth / 2 0.0 mm; thorax box vs Drillis chest breadth 0.174 H / 2 -8.2 mm; abdomen box vs waist depth / 2 0.0 mm; head pair along AP true   [within tolerance]
+  PASS 0.10b  boot hull dimensions = specification (length, ball width, heel behind / tip ahead of the AJC, sole on the stud plane)
+         length 29.35 cm, width 11.27 cm, heel 6.63 cm behind / tip 22.72 cm ahead of the AJC, AJC 9.10 cm up, MTP1 14.51 cm ahead   [spec 29.35 × 11.27 cm ± 5 mm]
+  PASS 0.10e  boot collision representation (D1a): 10 convex pieces tile the approved hull — union = hull (support function), Σ piece volume = hull volume (Jolt, hull tolerance as built: 1e-5 m), each piece < 256 points
+         foot_L: 10 pieces, |Δsupport| 0.0e+0 m, |ΔV|/V 1.7e-7, ≤ 28 pts; foot_R: 10 pieces, |Δsupport| 0.0e+0 m, |ΔV|/V 2.0e-7, ≤ 28 pts   [10 pieces, ≤ 1e-12 m, ≤ 1e-5]
+  PASS 0.5b   COM / inertia calculation consistent: whole body recomposed from the Jolt readback = spec composition (canonical)
+         mass 2.4e-8 rel · COM 1.2e-8 m · inertia 1.0e-7 rel   [≤ 0.00001 rel / 0.000001 m]
+  PASS 0.11a  Jolt bodies: mass, full inertia tensor, COM read back = spec
+         mass 7.7e-8 rel · inertia 2.4e-7 rel · COM 1.0e-7 m   [≤ 0.00001 rel / 0.000001 m]
+  PASS 0.11b  Jolt bodies: zero linear / angular damping; max angular velocity 100 rad/s; no sleeping
+         damping 0, maxAngVel Δ 0.0e+0   [0 / 100 rad/s]
+  PASS 0.11c  Jolt joints: constraint frames (F1 on parent, F2 on child) and positions read back = spec
+         2.75e-7   [≤ 1e-5]
+  PASS 0.11d  Jolt joints: rotation limits = spec; translations fixed; knee / elbow locked axis fixed
+         9.9e-8 rad, fixed axes true   [≤ 0.000001 rad]
+  PASS 0.11e  Jolt joints: constraint-space rotation at canonical = predicted Cm⁻¹·P(canonical)
+         1.49e-7 rad   [≤ 0.00001 rad]
+  PASS 0.11f  Jolt motors exist structurally, OFF, directional torque limits = isometric capacity, Coulomb friction 0
+         state OFF true, limit Δ 1.2e-5 N·m, friction 0   [OFF / exact / 0]
+  PASS 0.10c  ground alignment: boot soles on the stud plane y = 0; every other collider clear of the turf
+         sole -0.00 mm; lowest other 11.5 cm (shank_L)   [|sole| ≤ 0.5 mm; others ≥ 3 cm]
+  PASS 0.11g  static construction: one zero-gravity step at the canonical pose produces zero motion
+         Δpos 1.2e-10 m, Δrot 0.0e+0 rad, |v| 0.0e+0   [≤ 0.000001 m / 0.000001 rad]
+         turf contacts: foot_L, foot_R
+  PASS 0.10d  no collider interpenetration between allowed pairs at the 7 reference poses (Jolt contact query)
+         none   [depth ≤ 1 mm]
+         canonical: clear; neutral: clear; quietStance: clear; lunge: clear; deepSquat: clear; singleLeg: clear; armsForward: clear
+  PASS 0.S    agreement with the approved calculation (PHYSICAL_CHARACTER_V2_SPEC.json, rounded to 4–5 decimals)
+         mass 1.8e-15 kg · COM 4.7e-5 m · inertia 4.8e-6 · skeleton 5.0e-5 m · colliders 1.0e-17 m   [≤ 0.0001 kg / 0.00015 m / 0.00002 kg·m²]
+
+■ V2-190-85  H 1.9 m  M 85 kg  spec 9044adba  engine 26a6bd66/4eaeb429   47/47 pass
+
+■ V2-198-92  H 1.98 m  M 92 kg  spec f86d3971  engine bcb5cd8e/3d384f6d   47/47 pass
+
+■ V2-long-legs  H 1.82 m  M 78 kg  spec d5920ded  engine 0cf363b2/951ed393   47/47 pass
+
+■ V2-short-legs  H 1.82 m  M 78 kg  spec 5b56bcc8  engine f038548c/7e6d7ba2   47/47 pass
+
+■ V1-matched  H 1.9 m  M 78 kg  spec dd54edaa  engine 26a6bd66/2f7d88fb   48/48 pass
+
+■ global
+  PASS 0.1b   V2-REF ×3 fresh builds: identical spec hash, engine readback hash and post-step state hash
+         54f413c9/54add0b4/ceda2998  54f413c9/54add0b4/ceda2998  54f413c9/54add0b4/ceda2998   [identical]
+  PASS 0.12   topology identical across the 8-body variation set (names, order, parents, joints, bones, classes); kinds: V2-165-62=population, V2-175-70=population, V2-REF=population, V2-190-85=population, V2-198-92=population, V2-long-legs=morphology-variant, V2-short-legs=morphology-variant, V1-matched=population
+         1 distinct topology   [1]
+  PASS 0.E    vendored Jolt build = V1's pinned build (sha256)
+         011233a5fff762d6…   [011233a5fff762d6…]
+  FAIL 0.V1   V1 frozen: runtime + evidence identical to the freeze tag
+         guard_v1: FAIL — V1 files differ from checkpoint/physchar-v1-final-research:   [identical]
+
+G0 RESULT: FAIL — 1 failing check(s)
+wrote ../q3/g0/g0_results.json, v2_ref_spec.json
