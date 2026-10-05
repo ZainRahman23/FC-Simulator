@@ -172,3 +172,19 @@ touchRest applies its seat only when there is no swing command. When the lift co
 \* The adopted configuration never releases at 2.5 cm, so its run is a support-phase run.
 
 No measurable cost. The p95 alternates between about 0.12 and 0.22 ms from run to run in every arm (machine noise; load average 4–9 during the runs).
+
+## Erratum TR-3 (2026-10-05, pre-swing runway; the frozen verdicts are unchanged — only the causal interpretation of R7 and G2 2.2b is corrected)
+
+**R7: the resting foot does NOT slide.**
+- 6-DOF trace (V2-REF L, 2.5 cm, 2 s, C): during the "≈ 1 mm drift" the measured contact point (CoP) stays fixed to ≤ 0.1 mm.
+- Friction utilisation is 0.3–0.5. Boot–turf μ is **1.2** (`spec/v2_colliders.js`), not the 0.4 default assumed in §3.
+- The foot **rotates about the fixed contact point**: tilt up to 0.4°, yaw ±0.45°, touching pieces 8 → 5 → 8 (rocking on an edge). The origin displacement that R7 measures is that rotation.
+- With B1 alone (no touchRest), the foot lifts off and slides at zero load during TOUCHDOWN (utilisation 1.2 at Fz ≈ 0, up to 2.4 mm).
+- §0 / §3's "friction-limited drag / slide" is therefore wrong for C. The correct description: the leg's servo moments rock a lightly loaded foot about its contact point during fast body motion.
+
+**G2 2.2b: the "slip" is the released foot's AIRBORNE excursion during push recovery** (25 N·s lateral push, V2-REF: 0.80–0.85 s airborne, landing 16–17 mm away), in both the qualification configuration and C. It is not a slide.
+- **The real behavioural difference:** in C the landed foot is **never re-accepted into support**. It stays in TOUCHDOWN at 0.9 N, and the body ends on one leg (773 N / 0.9 N).
+- In qualification it reached LOAD_ACCEPT (428 / 346 N).
+- **Cause:** G2 has no transfer plan (request null), so acceptance is load-only. touchRest keeps the foot lightly seated, which removes the passive re-loading that the old hold produced through its pressing side effect. The lifecycle header already documents this as the load-only acceptance deadlock.
+
+See `../preswing/`.

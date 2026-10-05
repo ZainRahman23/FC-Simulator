@@ -20,9 +20,12 @@ export function unloadSim(J, spec, run) {
   const RAMP = run.ramp || 4, sig = (t) => (t <= 3 ? [0.5, 0, 0] : seg(t, 3, RAMP, 0.5, sEnd));   // run.ramp: transfer (unloading) duration, default 4 s
   const lam = (t) => lam.d(t)[0]; lam.d = (t) => { const [v, d1, d2] = sig(t); return nS === 1 ? [v, d1, d2] : [1 - v, -d1, -d2]; };   // λ_R
   const base = g3Def(nS === 1 ? "U:R" : "U:L"), pd = { t0: 1, dur: 2, dz: run.drop };
-  let push = null; if (run.push) { const toward = run.foot === "L" ? -1 : 1, sx = run.push.dir === "toward" ? toward : -toward; push = { t0: run.push.t, dur: run.push.dur || 0.1, J: [sx * run.push.J, 0, 0], body: "thorax" }; }   // +x = the character's right (spec §7.2)
+  let push = null; if (run.push) { const toward = run.foot === "L" ? -1 : 1, d = run.push.dir, sx = d === "toward" ? toward : d === "away" ? -toward : 0, sz = d === "F" ? 1 : d === "B" ? -1 : 0;
+    push = { t0: run.push.t, dur: run.push.dur || 0.1, J: [sx * run.push.J, 0, sz * run.push.J], body: "thorax" }; }   // +x = the character's right, +z anterior (spec §7.2); dir "F" / "B" (pre-swing lab)
   const def = { ...base, key: `UNLOAD:${run.foot}`, title: `unloading characterization (${run.foot} unloads to ${(run.r * 100).toFixed(1)} %)`, lam, supervise: {}, holds: [], seconds: run.end + 1e-9, push, torque: null };
   const stand = { ikRefTwist: true, lifecycle: true, pelvisDrop: pd, ...(run.flags || {}) };
+  // optional voluntary TURN (pre-swing lab; the existing heading command): run.turn = { deg (+ = toward the character's left, about +y), t (s), dur (s) } min-jerk
+  if (run.turn) { const T = run.turn, mj = (u) => { u = Math.min(1, Math.max(0, u)); return u * u * u * (10 - 15 * u + 6 * u * u); }; stand.yawCmd = (t) => T.deg * Math.PI / 180 * mj((t - T.t) / T.dur); }
   const s = new G3Sim(J, spec, def, { stand, passiveOpts: { kneeModel: UNLOAD_CFG.kneeModel }, ...(run.hz && run.hz !== 240 ? { cfg: { hz: run.hz } } : {}) });   // run.hz: physics-rate checks (default 240 Hz)
   if (!s.P.kneeIsV2K || !s.ctrl.lc || Math.abs(ankleKOf(spec) - UNLOAD_CFG.ankleK) > 1e-12) throw new Error("unload configuration (knee " + s.P.kneeIsV2K + ", ankle k " + ankleKOf(spec) + ")");
   // residual MEASUREMENT mode (set R; never a candidate): the support → release transitions (SUPPORT → UNLOADING / LIFTOFF) are blocked by a diagnostic
@@ -35,14 +38,14 @@ export function unloadSim(J, spec, run) {
   const H = { tL: null, tR: null, cleared: null, touchT0: null, anchor: null }, mjf = (u) => { u = Math.min(1, Math.max(0, u)); return u * u * u * (10 - 15 * u + 6 * u * u); }, C = s.ctrl, nL = 1 - nS;
   if (run.lift) { const orig = C.o.transfer; C.o.transfer = (t, c) => { const r = orig(t, c); if ((c.g3 && c.g3.aborted != null) || H.tR == null || t < H.tR + 0.2) return r;
       const u = Math.min(1, (t - H.tR - 0.2) / 4), sg = 1.0 - 0.5 * mjf(u), dsg = t < H.tR + 4.2 ? -0.5 * 30 * u * u * (1 - u) * (1 - u) / 4 : 0; return nS === 1 ? { lam: sg, dl: dsg, ddl: 0 } : { lam: 1 - sg, dl: -dsg, ddl: 0 }; }; }
-  if (run.bump || run.lift) { const oc = C.compute.bind(C), RAMPE = 3 + (run.ramp || 4), LH = run.lift ? run.lift.h : 0, HOV = run.lift ? run.lift.hover : 0;
+  if (run.bump || run.lift) { const oc = C.compute.bind(C), RAMPE = 3 + (run.ramp || 4), LH = run.lift ? run.lift.h : 0, HOV = run.lift ? run.lift.hover : 0, LT = run.lift && run.lift.T ? run.lift.T : 0.4;   // LT: lift / replace duration (E1a 0.4 s, E1b 0.6 s)
     C.compute = (st, ev, dt) => { const tc = C.n * dt;
       if (run.bump && tc >= run.bump.t) pd.dz = run.drop - run.bump.dz * mjf((tc - run.bump.t) / 1);
       if (run.lift && !(C.g3 && C.g3.aborted != null)) { const lf = C.lc.feet[nL];
         if (H.tL == null) { if (lf.state === "TOUCHING") { if (H.touchT0 == null) H.touchT0 = tc; } else H.touchT0 = null; if (tc >= RAMPE && H.touchT0 != null && tc - H.touchT0 >= 0.5 - 1e-9) { H.tL = tc; const a = C.lc.target(nL); H.anchor = { pos: a.pos.slice(), rot: a.rot.slice() }; } }
-        if (H.tL != null && H.cleared == null) { const u = tc - H.tL, A = H.anchor; if (u >= 0.8 + HOV - 1e-9 && H.tR == null) H.tR = H.tL + 0.8 + HOV;
-          if (u >= 0.8 + HOV - 1e-9 && (["TOUCHDOWN", "TOUCHING", "LOAD_ACCEPT", "SUPPORT", "UNLOADING"].includes(lf.state) || u >= 1.1 + HOV - 1e-9)) { C.lc.setSwingTarget(nL, null); H.cleared = tc; }
-          else { const h = u < 0.4 ? LH * mjf(u / 0.4) : u < 0.4 + HOV ? LH : u < 0.8 + HOV ? LH * (1 - mjf((u - 0.4 - HOV) / 0.4)) : 0; C.lc.setSwingTarget(nL, { pos: [A.pos[0], A.pos[1] + h, A.pos[2]], rot: A.rot }); } } }
+        if (H.tL != null && H.cleared == null) { const u = tc - H.tL, A = H.anchor; if (u >= 2 * LT + HOV - 1e-9 && H.tR == null) H.tR = H.tL + 2 * LT + HOV;
+          if (u >= 2 * LT + HOV - 1e-9 && (["TOUCHDOWN", "TOUCHING", "LOAD_ACCEPT", "SUPPORT", "UNLOADING"].includes(lf.state) || u >= 2 * LT + 0.3 + HOV - 1e-9)) { C.lc.setSwingTarget(nL, null); H.cleared = tc; }
+          else { const h = u < LT ? LH * mjf(u / LT) : u < LT + HOV ? LH : u < 2 * LT + HOV ? LH * (1 - mjf((u - LT - HOV) / LT)) : 0; C.lc.setSwingTarget(nL, { pos: [A.pos[0], A.pos[1] + h, A.pos[2]], rot: A.rot }); } } }
       return oc(st, ev, dt); }; }
   return { s, nL, nS, lam, pd, H };   // pd: the posture pelvisDrop target object; H: protocol event times
 }

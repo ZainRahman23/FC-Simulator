@@ -41,6 +41,12 @@ export const LIFECYCLE = {
   wantShare: 0.05,              // requested load share at which a touching foot is brought into support [ENG]
   release: 0.10, accept: 0.10,  // support-weight ramp durations (s) for unloading / load acceptance [ENG]
   swingHz: 4, swingZeta: 0.8,   // swing-leg servo bandwidth and damping ratio (joint-space PD sized from each joint's distal-subtree inertia) [ENG]
+  nullWanted: false,            // DIAGNOSTIC (preswing/; default OFF): with NO transfer plan (request null — quiet standing, G2), the default plan is BILATERAL, so a foot
+                                // in contact is WANTED (intent-gated acceptance after a touchdown; no low-load release while touching). Measured with touchRest: with
+                                // load-only acceptance a landed foot stayed TOUCHDOWN at 0.9 N for the rest of a 25 N·s push run (the deadlock the header describes)
+                                // REFUTED (preswing/ lab): no low-load release while touching kept an unloadable foot in support — V2-REF 25 N·s lateral push FELL
+  nullAccept: false,            // DIAGNOSTIC (preswing/; default OFF): with NO transfer plan (request null) the default plan is bilateral for ACCEPTANCE only — a foot in
+                                // contact (TOUCHING / TOUCHDOWN) is accepted after acceptDebounce; release on low load is unchanged (support still needs load)
 };
 import { Q, datan2 } from "../core/v2_math.js";
 export const LC_STATES = ["SUPPORT", "UNLOADING", "TOUCHING", "LIFTOFF", "AIRBORNE", "TOUCHDOWN", "LOAD_ACCEPT"];
@@ -52,8 +58,8 @@ export class SupportLifecycle {
   update(sense, footPose, dt, req = [null, null]) {   // req[n]: the requested load share of foot n (null = no transfer request: allowed, no intent)
     const o = this.o, W = this.W; this.t += dt;
     for (const n of [0, 1]) { const f = this.feet[n], Fz = sense.Fz[n], contact = sense.touch[n] > 0, other = !!(sense.other && sense.other[n]);
-      const loaded = !other && Fz >= o.loadOn * W, rq = req[n], wanted = rq != null && rq >= o.wantShare, unloaded = !other && Fz < o.loadOff * W, release = unloaded && !wanted;   // low load releases support only when the plan does not want load there
-      const accept = contact && ((loaded && (rq == null || rq >= 0.02)) || wanted);
+      const loaded = !other && Fz >= o.loadOn * W, rq = req[n], wanted = (rq != null && rq >= o.wantShare) || (o.nullWanted && rq == null), unloaded = !other && Fz < o.loadOff * W, release = unloaded && !wanted;   // low load releases support only when the plan does not want load there
+      const accept = contact && ((loaded && (rq == null || rq >= 0.02)) || wanted || (o.nullAccept && rq == null && (f.state === "TOUCHING" || f.state === "TOUCHDOWN")));
       // candidate transition from the current state (null = stay)
       let want = null, need = o.debounce;
       switch (f.state) {
@@ -91,6 +97,10 @@ export class SupportLifecycle {
   // starts from TOUCHING; the commanding script must start its profile at target(n) and hand back with setSwingTarget(n, null) once the foot is
   // down, so the target is continuous), else the contact anchor (after a touchdown the new anchor fades in as a → 0: no target step)
   target(n) { const f = this.feet[n]; if (f.swing) return f.swing; return f.prevHold ? blendPose(f.prevHold, f.hold, 1 - f.a) : f.hold; }
+  // DIAGNOSTIC (preswing/, StandController lcTouch.reseed): re-seed the contact anchor's horizontal position and yaw to the foot's current pose (the anchor
+  // height and tilt are kept): a resting foot's horizontal place and pivot are then left to friction / contact, and target(n) stays the pose it rests at
+  reseed(n, pose) { const f = this.feet[n]; if (!f.hold) return; const fH = Q.rot(f.hold.rot, [0, 0, 1]), fC = Q.rot(pose.rot, [0, 0, 1]); let d = datan2(fC[0], fC[2]) - datan2(fH[0], fH[2]);
+    if (d > Math.PI) d -= 2 * Math.PI; if (d < -Math.PI) d += 2 * Math.PI; f.hold = { pos: [pose.pos[0], f.hold.pos[1], pose.pos[2]], rot: Q.norm(Q.mul(Q.axis([0, 1, 0], d), f.hold.rot)) }; f.prevHold = null; }
   setSwingTarget(n, pose) { this.feet[n].swing = pose ? { pos: pose.pos.slice(), rot: pose.rot.slice() } : null; }
   airborne(n) { const s = this.feet[n].state; return s === "AIRBORNE" || s === "LIFTOFF"; }
   getState() { return { t: this.t, feet: this.feet.map(f => ({ ...f, log: f.log.slice() })) }; }

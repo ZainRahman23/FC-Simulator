@@ -1670,3 +1670,19 @@ Not pushed.
 **B1 alone shows no regression.**
 
 Not pushed.
+
+## 2026-10-05 — Pre-swing / contact-boundary runway (`sources/2026-10-05_user_instruction_preswing_contact_boundary_runway.md`)
+
+### TR-3: erratum to TR-1 / TR-2 causes (frozen verdicts unchanged)
+
+**R7:** the resting foot under C does not slide.
+- The contact point stays fixed; utilisation is 0.3–0.5 against boot–turf μ 1.2.
+- The foot rocks about it (tilt ≤ 0.4°, yaw ≤ 0.45°); R7's origin metric measured that rotation.
+- B1 alone does slide, at zero load after its spontaneous liftoff.
+
+**G2 2.2b:** the "slip" is the released foot's airborne excursion during push recovery (both configurations).
+- The real difference: C never re-accepts the landed foot. With no plan in G2, acceptance is load-only, the documented deadlock; the old hold's pressing used to break it.
+
+**Status:** both findings are now inputs to the pre-swing design.
+
+Not pushed.
