@@ -17,16 +17,16 @@ const seg = (t, a, T, v0, v1) => { const u = Math.min(1, Math.max(0, (t - a) / T
 export function unloadSim(J, spec, run) {
   setAnkleNeutralKOverride(UNLOAD_CFG.ankleK);
   const nS = run.foot === "L" ? 1 : 0, sEnd = 1 - run.r;   // stance foot index; its final requested share
-  const sig = (t) => (t <= 3 ? [0.5, 0, 0] : seg(t, 3, 4, 0.5, sEnd));
+  const RAMP = run.ramp || 4, sig = (t) => (t <= 3 ? [0.5, 0, 0] : seg(t, 3, RAMP, 0.5, sEnd));   // run.ramp: transfer (unloading) duration, default 4 s
   const lam = (t) => lam.d(t)[0]; lam.d = (t) => { const [v, d1, d2] = sig(t); return nS === 1 ? [v, d1, d2] : [1 - v, -d1, -d2]; };   // λ_R
   const base = g3Def(nS === 1 ? "U:R" : "U:L"), pd = { t0: 1, dur: 2, dz: run.drop };
   let push = null; if (run.push) { const toward = run.foot === "L" ? -1 : 1, sx = run.push.dir === "toward" ? toward : -toward; push = { t0: run.push.t, dur: run.push.dur || 0.1, J: [sx * run.push.J, 0, 0], body: "thorax" }; }   // +x = the character's right (spec §7.2)
   const def = { ...base, key: `UNLOAD:${run.foot}`, title: `unloading characterization (${run.foot} unloads to ${(run.r * 100).toFixed(1)} %)`, lam, supervise: {}, holds: [], seconds: run.end + 1e-9, push, torque: null };
   const stand = { ikRefTwist: true, lifecycle: true, pelvisDrop: pd, ...(run.flags || {}) };
-  const s = new G3Sim(J, spec, def, { stand, passiveOpts: { kneeModel: UNLOAD_CFG.kneeModel } });
+  const s = new G3Sim(J, spec, def, { stand, passiveOpts: { kneeModel: UNLOAD_CFG.kneeModel }, ...(run.hz && run.hz !== 240 ? { cfg: { hz: run.hz } } : {}) });   // run.hz: physics-rate checks (default 240 Hz)
   if (!s.P.kneeIsV2K || !s.ctrl.lc || Math.abs(ankleKOf(spec) - UNLOAD_CFG.ankleK) > 1e-12) throw new Error("unload configuration (knee " + s.P.kneeIsV2K + ", ankle k " + ankleKOf(spec) + ")");
   // residual MEASUREMENT mode (set R; never a candidate): the support → release transitions (SUPPORT → UNLOADING / LIFTOFF) are blocked by a diagnostic
   // hook, so the support-state residual stays measurable; loadOff is NOT changed (B3 reads it) — prereg erratum E-1 (unload_fix/UNLOAD_FIX_PREREG.md)
   if (run.suppressRelease) { const lc = s.ctrl.lc, oe = lc._enter.bind(lc); lc._enter = (n, st, fp) => { if (lc.feet[n].state === "SUPPORT" && (st === "UNLOADING" || st === "LIFTOFF")) return; oe(n, st, fp); }; }
-  return { s, nL: 1 - nS, nS, lam };
+  return { s, nL: 1 - nS, nS, lam, pd };   // pd: the posture pelvisDrop target object (diagnostic harnesses may move it: a planned pelvis-height change)
 }

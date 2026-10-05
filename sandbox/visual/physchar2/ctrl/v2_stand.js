@@ -28,6 +28,7 @@ export function lockedAxisFF(T, axW, tw, L) { const tt = dtan(tw),   // determin
   TL = V.dot(T, axW[L]); return L === 2 ? V.dot(T, axW[1]) - tt * TL : V.dot(T, axW[2]) + tt * TL; }
 // UNLOAD FIX B3 — the commanded left-foot share t clamped so that a foot whose requested share (left 1 − λ_R, right λ_R) is below the unloaded level
 // `lo` is never commanded more than its request; requests ≥ lo leave t untouched
+export function shareClampC(t, lam, lo, hi) { const cap = (r) => (r <= lo ? Math.max(0, r) : r >= hi ? 1 : r + (1 - r) * (r - lo) / (hi - lo)); const rL = 1 - lam, rR = lam; if (rL < hi) t = Math.min(t, cap(rL)); if (rR < hi) t = Math.max(t, 1 - cap(rR)); return t; }
 export function shareClamp(t, lam, lo) { const rL = 1 - lam, rR = lam; if (rL < lo) t = Math.min(t, Math.max(0, rL)); if (rR < lo) t = Math.max(t, 1 - Math.max(0, rR)); return t; }
 
 export const STAND = {
@@ -82,6 +83,16 @@ export const STAND = {
                           // self-contact guard on the load reading (H4); hold pose captured once on the turf (H2); debounced, hysteretic transitions (H3).
                           // A non-supporting leg servos in the ACTUAL pelvis frame (world-space; measured: the posture-frame hold gave 34–44 N·m commanded-torque
                           // steps at liftoff/touchdown vs 3–7 N·m), with a soft-limit bounded IK; diagnostic lcFrame: "target" restores the G3 posture frame in contact
+  lcTouch: null,          // DIAGNOSTIC / EXPERIMENTAL (touch_semantics/; default OFF): semantics of a NON-SUPPORTING (s < 1) foot in CONTACT without a swing command.
+                          // { frame: "actual" } leg solved from the actual pelvis height (not min(target, actual)); { gains: "swing" } hip / knee use the swing servo
+                          // gains (sized for the leg's own inertia) instead of the stance posture gains while in contact; { vert: "anchor" } the vertical target is the
+                          // contact anchor's height (the surface) instead of following the foot. Any subset; continuous in s (and a) as before
+  touchRest: false,       // EXPERIMENTAL candidate (touch_semantics/; default OFF): a NON-SUPPORTING foot without a swing command targets its contact anchor — the
+                          // SURFACE (vertical target = the anchor height, not the foot's own height) — and while in contact RESTS on it with a seating force of
+                          // loadOff / 2 of body weight (the midpoint of the lifecycle's own "unloaded" band [0, loadOff)), scaled (1 − s)(1 − a), through its own
+                          // leg's feed-forward (finite actuators; the other foot's commanded force reduced by the same amount). = lcTouch { vert: "anchor", seat: loadOff / 2 }
+  shareCapC: false,       // EXPERIMENTAL (touch_semantics/; default OFF): B3 with CONTINUOUS engagement — the cap on a foot's commanded share blends from none at
+                          // the lifecycle's wantShare to its requested share at loadOff (shareClampC); a step-free alternative to shareCap
   ffLockedAxis: false,    // UNLOAD FIX B1 (unload_fix/UNLOAD_FIX_PREREG.md §1; default OFF until qualified): locked-axis-consistent feed-forward. For a joint with
                           // one locked swing axis, an actuated twist (x) and one actuated swing (knees, elbows), the free swing moves about rot_x(−t)·ŷ in
                           // body-2 axes (the passive layer's G1 locked-axis geometry), so its actuated row must carry T·ŷ − tan t·(T·ẑ) (lockedAxisFF)
@@ -211,6 +222,7 @@ export class StandController {
     let t = Math.max(flL, Math.min(1 - flR, ((p[0] - a[0]) * ab[0] + (p[1] - a[1]) * ab[1]) / L2)); if (!inSup[0] && inSup[1]) t = 0; if (!inSup[1] && inSup[0]) t = 1;
     if (sw && swSum >= 1) t = Math.max(1 - sw[1], Math.min(sw[0], t));   // lifecycle: a foot's load share never exceeds its support weight (continuous load acceptance)
     if (o.shareCap && lam != null) t = shareClamp(t, lam, this.lc ? this.lc.o.loadOff : o.loadOff);   // UNLOAD FIX B3 (default off)
+    if (o.shareCapC && lam != null && this.lc) t = shareClampC(t, lam, this.lc.o.loadOff, this.lc.o.wantShare);   // EXPERIMENTAL continuous B3 (default off)
     const share = [t, 1 - t];
     const dl = [p[0] - (t * b[0] + (1 - t) * a[0]), p[1] - (t * b[1] + (1 - t) * a[1])], cop = cen.map((q, n) => clampPoly(polysSup[n], [q[0] + dl[0], q[1] + dl[1]]));
     // ORDER-INDEPENDENT (G2 final-run fix: the first version offered the remainder to the left foot first — an L/R asymmetry, measured as an
@@ -222,6 +234,11 @@ export class StandController {
     const pAch = [share[0] * cop[0][0] + share[1] * cop[1][0], share[0] * cop[0][1] + share[1] * cop[1][1]]; p[0] = pAch[0]; p[1] = pAch[1]; r[0] = pRaw[0] - p[0]; r[1] = pRaw[1] - p[1];
     A[0] = w0 * w0 * (c[0] - p[0]); A[2] = w0 * w0 * (c[2] - p[1]);
     const F = share.map(s => [s * this.M * A[0], s * this.M * G, s * this.M * A[2]]), geff = [-A[0], -G, -A[2]];
+    // DIAGNOSTIC / EXPERIMENTAL lcTouch.seat (fraction of body weight; default off): a RESTING force for a non-supporting foot in contact without a swing command —
+    // the foot's own leg presses it onto the turf with seat·M·g·(1 − s)·(1 − a) through its feed-forward (finite actuators; the ground reaction is physical), and the
+    // other foot's commanded vertical force is reduced by the same amount so the commanded total stays M·g. Vertical compliance with a small bounded seating force
+    const seatFrac = o.touchRest && this.lc ? this.lc.o.loadOff / 2 : o.lcTouch && o.lcTouch.seat > 0 ? o.lcTouch.seat : 0;
+    if (sw && seatFrac > 0) for (const n of [0, 1]) { const f = LC[n]; if (sw[n] < 1 && !f.swing && ["TOUCHING", "TOUCHDOWN", "LIFTOFF", "UNLOADING", "LOAD_ACCEPT"].includes(f.state)) { const fs = seatFrac * this.M * G * (1 - sw[n]) * (1 - f.a); F[n][1] += fs; F[1 - n][1] -= fs; } }
     // posture preference for the legs (task space): a desired wrench on the pelvis — orientation toward the reference (heading from the feet)
     // and height above the ankles — that the legs deliver (statics, each leg its load share); horizontal pelvis position is NOT a posture target
     let legW = null, ikT = null;
@@ -234,12 +251,12 @@ export class StandController {
       // a resting foot into the turf (measured: with a bent stance knee the sinking pelvis made the world-space hold load the "unsupported" foot 29 → 58 N
       // after touchdown — the balance model did not count it and the body fell after an abort, 60 N lift + 2.5 cm drop, 8 / 8 bodies)
       const lcT = sw ? [0, 1].map(n => { if (sw[n] >= 1) return null; const f = LC[n], cur = { pos: st[this.feet[n]].pos, rot: st[this.feet[n]].rot }, t0 = this.lc.target(n);
-        const t1 = f.swing ? t0 : { pos: [t0.pos[0], t0.pos[1] + (1 - f.a) * (cur.pos[1] - t0.pos[1]), t0.pos[2]], rot: t0.rot }; return blendPose(t1, cur, sw[n]); }) : null;   // height: the foot's own (a = 0, contact) → the anchor's (a = 1, airborne), continuous in a (measured: a state-switched height stepped the target 3.7 mm → 88 N·m τ0 jump at a bounce re-liftoff)
+        const vAnch = (o.lcTouch && o.lcTouch.vert === "anchor") || o.touchRest, t1 = f.swing || vAnch ? t0 : { pos: [t0.pos[0], t0.pos[1] + (1 - f.a) * (cur.pos[1] - t0.pos[1]), t0.pos[2]], rot: t0.rot }; return blendPose(t1, cur, sw[n]); }) : null;   // lcTouch.vert "anchor": the surface (contact anchor height)   // height: the foot's own (a = 0, contact) → the anchor's (a = 1, airborne), continuous in a (measured: a state-switched height stepped the target 3.7 mm → 88 N·m τ0 jump at a bounce re-liftoff)
       if (o.ikFeasible) for (const n of [0, 1]) { const ft = lcT ? (lcT[n] || st[this.feet[n]]) : this.unl[n] ? this.hold[n] : st[this.feet[n]], hip = V.add(pP, Q.rot(qP, this.anchor[this.legK[n][0]])), dh = dnorm(hip[0] - ft.pos[0], hip[2] - ft.pos[2]), Ln = this.legLen[n];
         if (dh < Ln) pP[1] = Math.min(pP[1], ft.pos[1] + Math.sqrt(Ln * Ln - dh * dh) - (hip[1] - pP[1])); }
       this.pelHT = pP[1];
       const tIK = o.timeIK ? nowMs() : 0; ikT = {}; this.ikRes = [0, 1].map(n => { let r;
-        if (lcT && lcT[n]) { const a1 = LC[n].a, hC = o.lcFrameH === "target" ? pP[1] : o.lcFrameH === "actual" ? ps.pos[1] : Math.min(pP[1], ps.pos[1]), ns = { pos: [pP[0], hC + a1 * (ps.pos[1] - hC), pP[2]], rot: ps.rot };   // non-supporting leg frame: the ACTUAL pelvis position / orientation (world-space servo) with the posture TARGET height while in contact (a = 0) → actual height once airborne (a = 1)
+        if (lcT && lcT[n]) { const a1 = LC[n].a, hC = o.lcFrameH === "target" ? pP[1] : o.lcFrameH === "actual" || (o.lcTouch && o.lcTouch.frame === "actual") ? ps.pos[1] : Math.min(pP[1], ps.pos[1]), ns = { pos: [pP[0], hC + a1 * (ps.pos[1] - hC), pP[2]], rot: ps.rot };   // non-supporting leg frame: the ACTUAL pelvis position / orientation (world-space servo) with the posture TARGET height while in contact (a = 0) → actual height once airborne (a = 1)
           // contact height hC = min(target, actual) (diagnostic lcFrameH "target" / "actual"): measured — the ACTUAL height with a pelvis 1 cm above its target made the touching leg
           // a straight strut (knee 0°, ~60 N) that held the pelvis up, rolled the body over the stance foot's edge and felled it (60 N lift + 2.5 cm drop); the TARGET height
           // with the pelvis above target lifted the touching foot to the contact threshold (repeated TOUCHDOWN ↔ AIRBORNE, 12–18 N·m steps)
@@ -281,7 +298,7 @@ export class StandController {
       cmd.push(KEYS.map((key, i) => { const tff = Lk != null && i === 3 - Lk ? tffB1 : V.dot(T, axW[i]), ak = this.spec.joints[k].def.axes[key];
         if (sw && this.legSide[k] >= 0 && sw[this.legSide[k]] < 1 && ikT && ikT[k]) { const sd = this.legSide[k], s1 = sw[sd], a1 = LC[sd].a, gs = this.gainSwing[k], gf = this.gainFree[k];   // lifecycle: continuous in s (support) and a (airborne)
           // non-supporting hip / knee: in contact (a = 0) G3's validated hold (posture) gains; airborne (a = 1) the swing servo
-          const Kn = isAnkle ? gs.K : g.K + a1 * (gs.K - g.K), Dn = isAnkle ? gs.D : g.D + a1 * (gs.D - g.D);   // the ankle of a non-supporting foot: the swing ankle gains in every state (G3's free-leg 1.5 N·m/rad let a held foot tilt onto 2 pieces)
+          const aG = o.lcTouch && o.lcTouch.gains === "swing" ? 1 : a1, Kn = isAnkle ? gs.K : g.K + aG * (gs.K - g.K), Dn = isAnkle ? gs.D : g.D + aG * (gs.D - g.D);   // lcTouch.gains "swing": the unloaded-limb servo in contact too   // the ankle of a non-supporting foot: the swing ankle gains in every state (G3's free-leg 1.5 N·m/rad let a held foot tilt onto 2 pieces)
           const Kb = isAnkle ? (1 - s1) * Kn : s1 * g.K + (1 - s1) * Kn, Db = isAnkle ? s1 * o.ankleD + (1 - s1) * Dn : s1 * g.D + (1 - s1) * Dn; return { K: Kb, D: Db, tau0: tff + Kb * e[i], ff: tff }; }
         if (isAnkle && o.holdUnloaded && this.unl[this.legSide[k]] && ikT && ikT[k]) { const gf = this.gainFree[k]; return { K: gf.K, D: gf.D, tau0: tff + gf.K * e[i], ff: tff }; }   // G3: hold the unloaded foot's pose
         if (isAnkle) { const nz = o.noise && ak && (ak.key === "df" || ak.key === "inv") ? this.ou[(this.spec.joints[k].side === "L" ? 0 : 2) + (ak.key === "df" ? 0 : 1)] : 0; return { K: 0, D: o.ankleD, tau0: tff + nz, ff: tff }; }
