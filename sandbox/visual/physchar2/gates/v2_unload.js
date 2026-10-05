@@ -28,5 +28,21 @@ export function unloadSim(J, spec, run) {
   // residual MEASUREMENT mode (set R; never a candidate): the support → release transitions (SUPPORT → UNLOADING / LIFTOFF) are blocked by a diagnostic
   // hook, so the support-state residual stays measurable; loadOff is NOT changed (B3 reads it) — prereg erratum E-1 (unload_fix/UNLOAD_FIX_PREREG.md)
   if (run.suppressRelease) { const lc = s.ctrl.lc, oe = lc._enter.bind(lc); lc._enter = (n, st, fp) => { if (lc.feet[n].state === "SUPPORT" && (st === "UNLOADING" || st === "LIFTOFF")) return; oe(n, st, fp); }; }
-  return { s, nL: 1 - nS, nS, lam, pd };   // pd: the posture pelvisDrop target object (diagnostic harnesses may move it: a planned pelvis-height change)
+  // optional PROTOCOL (touch-rest validation; commands only through existing mechanisms): run.bump = { dz (m, + = pelvis RISES), t (s) } a planned pelvis-height
+  // change (posture pelvisDrop target, min-jerk 1 s); run.lift = { h (m), hover (s) } the E1a SEQUENCE after release — when foot n has been TOUCHING ≥ 0.5 s and
+  // t ≥ ramp end: swing target from the contact anchor to anchor + h (min-jerk 0.4 s), hover, replace (0.4 s), held at the anchor until a contact state (grace 0.3 s),
+  // cleared; then the request returns to 0.5 over 4 s from replace + 0.2 s (load acceptance); the supervisor's abort keeps precedence. Event times in H.
+  const H = { tL: null, tR: null, cleared: null, touchT0: null, anchor: null }, mjf = (u) => { u = Math.min(1, Math.max(0, u)); return u * u * u * (10 - 15 * u + 6 * u * u); }, C = s.ctrl, nL = 1 - nS;
+  if (run.lift) { const orig = C.o.transfer; C.o.transfer = (t, c) => { const r = orig(t, c); if ((c.g3 && c.g3.aborted != null) || H.tR == null || t < H.tR + 0.2) return r;
+      const u = Math.min(1, (t - H.tR - 0.2) / 4), sg = 1.0 - 0.5 * mjf(u), dsg = t < H.tR + 4.2 ? -0.5 * 30 * u * u * (1 - u) * (1 - u) / 4 : 0; return nS === 1 ? { lam: sg, dl: dsg, ddl: 0 } : { lam: 1 - sg, dl: -dsg, ddl: 0 }; }; }
+  if (run.bump || run.lift) { const oc = C.compute.bind(C), RAMPE = 3 + (run.ramp || 4), LH = run.lift ? run.lift.h : 0, HOV = run.lift ? run.lift.hover : 0;
+    C.compute = (st, ev, dt) => { const tc = C.n * dt;
+      if (run.bump && tc >= run.bump.t) pd.dz = run.drop - run.bump.dz * mjf((tc - run.bump.t) / 1);
+      if (run.lift && !(C.g3 && C.g3.aborted != null)) { const lf = C.lc.feet[nL];
+        if (H.tL == null) { if (lf.state === "TOUCHING") { if (H.touchT0 == null) H.touchT0 = tc; } else H.touchT0 = null; if (tc >= RAMPE && H.touchT0 != null && tc - H.touchT0 >= 0.5 - 1e-9) { H.tL = tc; const a = C.lc.target(nL); H.anchor = { pos: a.pos.slice(), rot: a.rot.slice() }; } }
+        if (H.tL != null && H.cleared == null) { const u = tc - H.tL, A = H.anchor; if (u >= 0.8 + HOV - 1e-9 && H.tR == null) H.tR = H.tL + 0.8 + HOV;
+          if (u >= 0.8 + HOV - 1e-9 && (["TOUCHDOWN", "TOUCHING", "LOAD_ACCEPT", "SUPPORT", "UNLOADING"].includes(lf.state) || u >= 1.1 + HOV - 1e-9)) { C.lc.setSwingTarget(nL, null); H.cleared = tc; }
+          else { const h = u < 0.4 ? LH * mjf(u / 0.4) : u < 0.4 + HOV ? LH : u < 0.8 + HOV ? LH * (1 - mjf((u - 0.4 - HOV) / 0.4)) : 0; C.lc.setSwingTarget(nL, { pos: [A.pos[0], A.pos[1] + h, A.pos[2]], rot: A.rot }); } } }
+      return oc(st, ev, dt); }; }
+  return { s, nL, nS, lam, pd, H };   // pd: the posture pelvisDrop target object; H: protocol event times
 }

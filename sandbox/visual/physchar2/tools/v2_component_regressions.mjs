@@ -306,6 +306,12 @@ function refLegIK(ctrl, st, ev, n, pP, qP, footPose) { const P = ctrl.P, ks = ct
   check("R10.c", "B3 shareClamp: a request below loadOff caps the commanded share; requests ≥ loadOff are untouched", bad.length === 0, `${c.length - bad.length}/${c.length} cases`);
   const w = new G3Sim(J, sp, g3Def("T0"), {}), scope = sp.joints.filter((jj, k) => w.ctrl.lockedFix[k] != null).map(jj => jj.name).sort().join(","); w.destroy();
   check("R10.d", "B1 scope = the joints with one locked swing axis, actuated twist and swing (knees, elbows)", scope === "elbow_L,elbow_R,knee_L,knee_R", scope); }
+// R11 touch rest (touch_semantics/TOUCHREST_PREREG.md): default off; a released touching foot rests on the turf with a load inside (0, loadOff) and keeps contact
+{ check("R11.a", "touchRest default OFF", STAND.touchRest === false, `touchRest ${STAND.touchRest}`);
+  const sp = generateSpec(VARIATION_SET.find(h => h.id === "V2-REF")), d = { ...g3Def("U:R"), seconds: 9 }, w = new G3Sim(J, sp, d, { stand: { lifecycle: true, touchRest: true } }), W = w.ctrl.M * 9.81; let rel = null, loss = 0, fz = [], prev = null;
+  while (w.tick()) { const t = w.n * w.dt, f = w.ctrl.lc.feet[0]; if (prev && prev !== f.state) { if (prev === "SUPPORT" && f.state === "UNLOADING") rel = t; else if (rel != null && (f.state === "LIFTOFF" || f.state === "AIRBORNE")) loss++; } prev = f.state; if (rel != null && t >= 8) fz.push(w.ctrl.sense.Fz[0]); }
+  w.destroy(); const m = fz.reduce((a, x) => a + x, 0) / Math.max(1, fz.length);
+  check("R11.b", "touchRest: the released, touching foot rests (load in (0, loadOff)) without losing contact (G3 U:R, lifecycle)", rel != null && loss === 0 && m > 0 && m < 0.01 * W, `release ${rel == null ? "—" : rel.toFixed(3)} s, contact losses ${loss}, resting load ${m.toFixed(2)} N (loadOff ${(0.01 * W).toFixed(2)} N)`); }
 const fail = results.filter(r => !r.pass).length; console.log(`\ncomponent regressions: ${results.length - fail}/${results.length} pass`);
 const jo = process.argv.find(a => a.startsWith("--json=")); if (jo) fs.writeFileSync(jo.slice(7), JSON.stringify({ generated: "tools/v2_component_regressions.mjs", date: new Date().toISOString().slice(0, 10), results }, null, 1));
 process.exit(fail ? 1 : 0);
