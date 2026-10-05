@@ -1,0 +1,18 @@
+results: 2182/2182 (missing 0)
+FAIL A1: 16/80 zero-share runs released by 9.0 s (release 6.475–6.479 s), TOUCHING after, load after release ≤ 5.62 N (< loadOn), no LOAD_ACCEPT after release, no chatter; failing: P_V2-REF_L_d0.01_r0_B1B3, P_V2-REF_L_d0.02_r0_B1B3, P_V2-REF_L_d0.025_r0_B1B3, P_V2-REF_L_d0.03_r0_B1B3, P_V2-REF_R_d0.01_r0_B1B3, P_V2-REF_R_d0.02_r0_B1B3, P_V2-REF_R_d0.025_r0_B1B3, P_V2-REF_R_d0.03_r0_B1B3
+PASS A2a: 240/240 runs with r ∈ {2, 3, 5 %}: foot n never left SUPPORT (no false release)
+PASS A2b: 240/240 B1B3 runs hash-identical to their B1 runs (B3 inactive when both requests ≥ loadOff)
+PASS A2c: 80/80 r = 0.5 % runs: commanded share ≤ request at every tick below loadOff (max commanded 9.89e-3); released 80/80 (permitted)
+PASS A3: 128 B1B3 perturbation runs: (a) falls at 2.5 N·s 0; (b) worse outcome class than ORIG 0; (c) >1 LOAD_ACCEPT / >1 release after the push or chatter 0; (d) slip > 20 mm (non-falling) 0; outcomes {"recovered":128} (ORIG {"recovered":128})
+FAIL A4: 275/400: closure max 1.39e-2 J/tick, Σ+ max 0.071 J; applied Δτ max 7.56 N·m (non-onset), 7.56 N·m (all); Δτ0 max 9.00 N·m; authority writes 0; external impulse 0; foot displacement across release max 1.096 mm; failing: P_V2-REF_L_d0_r0_B1B3, P_V2-REF_L_d0.01_r0_B1B3, P_V2-REF_L_d0.01_r0.005_B1B3, P_V2-REF_L_d0.02_r0_B1B3, P_V2-REF_L_d0.02_r0.005_B1B3, P_V2-REF_L_d0.025_r0_B1B3
+PASS A4x: 128/128 perturbation runs: closure max 1.39e-2 J/tick, Σ+ max 0.094 J, authority 0, impulse = scheduled; Δτ reported: max 5.66 N·m
+PASS A5: 2/2 pairs bit-identical (D_V2-REF_L_d0.025_r0_B1B3, D_V2-REF_L_d0.025_r0_B1B3_ptoward5@8)
+PASS A6: 2/2 W_V2-REF_L_d0.025_r0_B1B3 6a92bd0d/6a92bd0d, W_V2-REF_R_d0.025_r0_B1B3 3dc29b29/3dc29b29
+PASS A7: 9/9 ORIG runs (2.5 cm, zero share; 8 bodies L + V2-REF R) hash-identical to the official E1a runs at 1–9 s and not released by 9.0 s
+PASS CS1: stance-knee f_PD (d ≥ 1 cm, |term| ≥ 1 N·m): B1/B1B3 max 0.092 (≤ 0.10, n 128); ORIG/B3 min 0.787 (≥ 0.50, n 128)
+PASS CS2: 48/48 (d ≥ 2 cm): R_ORIG − R_B1 ≥ 0.5·R_ORIG; R_ORIG 6.20–11.36 N → R_B1 0.35–0.91 N
+PASS CS3: B3/B1B3 commanded share ≤ request below loadOff at every tick: all; |(R_B1 − R_B1B3) − F_leak,B1| max 0.014 % BW (≤ 0.25; F_leak,B1 0.36–1.60 N)
+PASS CS4: |f_PD(B3) − f_PD(ORIG)| max 0.001 (≤ 0.15, n 64): B3 alone does not remove the mapping residual
+PASS CS5: R_B1B3 max 0.005 % BW over 80 (≤ 0.5 %; all drops incl. 0 cm)
+
+UNLOADING CHARACTERIZATION (B1B3 candidate + causal separation): FAIL

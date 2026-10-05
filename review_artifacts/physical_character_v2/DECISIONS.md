@@ -1568,3 +1568,35 @@ Preregistered validation V1–V4 is proposed in the report.
 - two badly designed layered ablations (25 runs), marked VOID.
 
 KV0 identical. E1a not rerun; E1b unauthorised; not pushed.
+
+## 2026-10-05 — Unload fix B1 + B3: preregistered, implemented behind default-off flags, characterised — NOT qualified (`sources/2026-10-05_user_decision_implement_b1_b3.md`)
+
+### UF-1: B1 + B3 not adopted; new smallest blocker = post-release vertical hold (`unload_fix/UNLOAD_FIX_RESULTS.md`)
+**Sequence:**
+- prereg 312ede8 (erratum E-1 + development record before the runs);
+- implementation freeze 4b2fb93 (flags default off; KV0 4 / 4; suite 56 / 56);
+- 2,182 official runs.
+
+**B1 bench PASS** (knees + elbows; numerical generalized-force reference ≤ 2.5e-11; naive miss = sin t·(T·ẑ); mirror ≤ 6e-14).
+
+**Causal separation PASS (CS1–CS5):**
+- B1 removes the mapping residual: 7.7–9.5 → 0.4–0.8 N at 2.5 cm; f_PD 0.81 → 0.005.
+- B3 removes only the share leak (exact to 0.014 % BW).
+- B1B3 residual ≤ 0.005 % BW.
+
+**Other passes:** A2 (no false release; legitimate shares hash-identical), A3, A5, A6, A7.
+
+**FAIL A1 / A4 (as frozen):**
+- At drops ≥ 1 cm the released, zero-load foot leaves the turf by itself (TOUCHDOWN ↔ AIRBORNE cycling, 16 / 16).
+- Displacement across release is up to 1.1 mm.
+
+**Cause:**
+- A pre-existing TOUCHING-hold defect: no vertical reference (target height follows the foot), so post-transfer pelvis settling (D-3) lifts the foot to the 0.5 mm contact threshold. It is also seen without the fix wherever release happens early.
+- B3's abrupt engagement at loadOff makes release earliest (6.47 s) and so makes the defect systematic.
+
+**Outcomes:**
+- Stop rule applied: V3 (G0–G3) not run; no adoption; E1a not rerun (its unload condition would not be met either); E1b not started.
+- **Recommendation:** H1 contact-hold vertical reference (required) + H2 continuous B3 (or H3: drop B3); keep B1; one preregistered validation incl. V3.
+- **Debt:** B3 boundary discontinuity, TOUCHING-hold vertical anchoring (new); D-3 now implicated.
+
+Not pushed.

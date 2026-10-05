@@ -42,7 +42,8 @@ function scenario(sc) {
   throw new Error("unknown scenario " + sc);
 }
 const S = scenario(SC), spec = generateSpec(VARIATION_SET.find(h => h.id === HUMAN));
-const s = new G3Sim(J, spec, S.def, { stand: { ...POL[PNAME], ...(S.stand || {}) }, cfg: HZ !== 240 ? { hz: HZ } : undefined });
+const XSTAND = JSON.parse(process.env.V2_XSTAND || "{}");   // extra controller options for every run (unload-fix regression V3.7: ffLockedAxis / shareCap); unset = unchanged
+const s = new G3Sim(J, spec, S.def, { stand: { ...POL[PNAME], ...(S.stand || {}), ...XSTAND }, cfg: HZ !== 240 ? { hz: HZ } : undefined });
 if (S.lift) { const bi = spec.bodies.findIndex(b => b.name === "shank_L"), base = s._disturb.bind(s);
   s._disturb = function () { const out = base(), t = this.n * this.dt, f = t < 7.0 ? 0 : t < 7.2 ? (t - 7.0) / 0.2 : t < 7.5 ? 1 : t < 8.5 ? 1 - (t - 7.5) / 1.0 : 0;
     if (f > 0) { const Fv = [0, S.lift * f, 0], at = this.st[bi].com; this.w.addForceAt(bi, Fv, at); out.F = Fv; out.at = at; out.body = bi; } return out; }; }
