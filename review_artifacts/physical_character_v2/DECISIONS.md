@@ -2186,3 +2186,33 @@ Not applied. Not pushed.
 - D: PSTAR4S as the E1 baseline.
 
 No official E2 run. Not pushed.
+
+## 2026-10-06: E2 apex 30 mm (`sources/2026-10-06_user_decision_e2_apex30.md`)
+
+### E2-9: amendment A30 recorded (apex 25 → 30 mm, versioned); PG-1 does NOT certify (0 / 32) → STOPPED; servo-validation v2 PROPOSED (`e2/E2_PREREG_AMENDMENT_A30.md`, `e2/E2_A30_PG1_RESULTS.md`, `e2/SWING_SERVO_VALIDATION_V2_PROPOSAL.md`)
+
+**Decision taken (user):** A1, the nominal apex is 30 mm.
+- Recorded as the versioned trajectory `A30` (`E2TRAJ`, `--traj=A30`; default v2 bit-identical) and a preregistration amendment, before any A30 run.
+- Everything else unchanged: T, knot timing, measured-liftoff semantics, thresholds, controller.
+- The amendment documents the measured φ-resolved tracking uncertainty: 0.75 mm worst at φ 0.75 – 0.80 in both the independent S2 battery and the E2 matrix. The budget is 1.60 mm at φ 0.8 (0.40 at 25 mm).
+- It also corrects the overnight report: the window-restricted per-phase allowance is 2.24 mm, not 0.75.
+
+**PG-1 (A30): 0 / 32.**
+- The gate (PSTAR5CH): the planner refuses, because no validated tracked allowance exists.
+- Envelope model: margin 3.41 – 3.62 mm.
+- S2 rule what-if: 3.46 mm. Window per-phase what-if: 4.39 mm.
+- Only the φ-resolved offline check would certify (5.87 mm, margin 0.87).
+- The swing is path-certified for all bodies.
+- Geometry is no longer limiting; the gate is servo validation.
+
+**Touchdown (existing 25 mm data, analysis only):**
+- the instantaneous peak scales with the solver step (480 / 180 Hz ratio up to 2.30);
+- 10 ms window-mean load does not (≤ 0.95);
+- recommended: E2-5 impact as the max 10 ms-window-mean load ≤ 25 % BW. **Not adopted.**
+
+**Proposed, not adopted:** SV-2, an E2-envelope-representative servo battery.
+- Ground-ending E1a-length step pairs, corridor-edge and harder reachable cases, a reachability pre-check;
+- V-2 gating on |β_ON| only;
+- a φ-resolved allowance in the evaluator's convention.
+
+No 30 mm touchdown matrix, smoke or official run. Not pushed.

@@ -1,0 +1,29 @@
+{
+ "generated": "tools/e2_pg.mjs",
+ "run": {
+  "traj": "A30",
+  "protocol": "step",
+  "human": "V2-190-85",
+  "side": "R",
+  "kind": "lateral",
+  "hz": 240,
+  "variant": null,
+  "pert": null,
+  "config": "PSTAR5CH"
+ },
+ "stopT": null,
+ "refused": {
+  "t": 8.329166666666666,
+  "message": "tracked-clearance allowance not derived (servo validation)"
+ },
+ "events": {
+  "tL": 8.329166666666666,
+  "abortT": null,
+  "pertT": null
+ },
+ "e2dec": null,
+ "calls": [],
+ "seqEvents": [],
+ "taVlog": null,
+ "hash": "be989568"
+}
