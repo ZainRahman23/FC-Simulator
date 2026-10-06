@@ -2048,3 +2048,31 @@ No official E2 run. Not pushed.
 - D3: longer T seed (insufficient alone).
 
 No official E2 run. Not pushed.
+
+### E2-4: D1 swing acceleration feed-forward implemented and verified; independent servo validation FAILS → STOPPED (`e2/SWING_ACCEL_FF_DESIGN.md`, `e2/SWING_SERVO_VALIDATION_PREREG.md`, `e2/SWING_SERVO_VALIDATION_RESULTS.md`)
+
+**Authority:** user decision 2026-10-06 (`sources/2026-10-06_user_decision_e2_D1.md`): D1 only; no change to thresholds, apex, T, bandwidth or semantics.
+
+**Implemented (option `swingAccFF`, PSTAR5C, default off):**
+- the computed-torque inertial term of the swing subtree (resolved acceleration through the IK chain's 6 × 6 foot Jacobian; Newton–Euler in the statics' wrench form, weight (1 − s));
+- the planner's tracked-clearance certificate with a preregistered validation-derived allowance.
+
+**Verified:**
+- Newton–Euler = independent Lagrangian within 0.0006 %;
+- KV0 and PSTAR4 / 5 / 5B identity.
+
+**Preregistered battery** (192 runs: 8 bodies × legs × 180 / 240 / 480 Hz × ON / OFF × 2 sequences): **does not validate.**
+- V-1 fails: RMS ratio 0.6 – 0.9.
+- V-2 fails: β_OFF ≈ −0.4 … 0.8, β_ON ≈ −0.5.
+- V-3 fails: representative RMS 4.0 – 6.6 mm with feed-forward.
+- V-4 fails: energy closure also fails without feed-forward; some liftoff-tick continuity / saturation items.
+- V-5 and V-6 pass.
+
+**Cause:**
+- The dominant residual is a consistent ~30 % shortfall of the existing velocity feed-forward (about 20 ms effective delay, rate-independent; 93 % of the variance on H5), plus the liftoff gain blend.
+- The acceleration term overcompensates (phase lead).
+- Allowance: rise 10.8 mm / descent 4.1 mm. The frozen trajectory cannot certify. (Caveat: the preregistered representative trajectories rise 1.8× more than the E2 swing.)
+
+**Stopped.** Recommended next: a diagnostic-only investigation of the velocity-feed-forward shortfall.
+
+No E2 run. Not pushed.

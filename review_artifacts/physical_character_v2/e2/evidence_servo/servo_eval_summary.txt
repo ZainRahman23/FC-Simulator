@@ -1,0 +1,48 @@
+runs 192/192
+trajectory | β OFF | β ON | RMS OFF mean | RMS ON mean | peak ON max (mm)
+  L1   | 0.32 | -0.73 | 7.66 | 6.19 | 10.71
+  R1   | -0.29 | -0.51 | 5.69 | 3.97 | 6.75
+  L2   | -0.41 | -0.89 | 7.48 | 6.63 | 10.98
+  R2   | -0.41 | -0.51 | 4.68 | 4.03 | 7.69
+  H1   | 0.28 | -0.46 | 9.68 | 6.11 | 8.88
+  H1r  | -0.44 | -0.38 | 8.74 | 5.46 | 9.26
+  H2   | 0.76 | -0.34 | 9.57 | 5.82 | 8.89
+  H2r  | -0.08 | -0.33 | 9.13 | 5.38 | 9.89
+  H3   | 0.13 | -0.56 | 7.44 | 6.14 | 10.39
+  H3r  | -0.89 | -0.90 | 8.00 | 6.12 | 12.34
+  H4   | 0.53 | -0.44 | 10.76 | 6.92 | 10.95
+  H4r  | -0.24 | -0.24 | 9.16 | 5.60 | 10.82
+  H5   | -0.05 | -0.09 | 4.78 | 2.21 | 3.90
+  H5r  | -0.05 | -0.08 | 4.74 | 2.16 | 3.96
+FAIL V-1 (576 failing items)
+FAIL V-2 (14 failing items)
+FAIL V-3 (96 failing items)
+FAIL V-4 (272 failing items)
+PASS V-5 (0 failing items)
+PASS V-6 (0 failing items)
+   V-1: V2-REF|L|180|on|A|L1 RMS ON 6.21 vs OFF 7.87 mm (ratio 0.79)
+   V-1: V2-REF|L|180|on|A|R1 RMS ON 4.07 vs OFF 5.90 mm (ratio 0.69)
+   V-1: V2-REF|L|180|on|A|H1 RMS ON 6.17 vs OFF 10.14 mm (ratio 0.61)
+   V-1: V2-REF|L|180|on|A|H1r RMS ON 5.58 vs OFF 9.03 mm (ratio 0.62)
+   V-1: V2-REF|L|180|on|A|H2 RMS ON 5.89 vs OFF 9.98 mm (ratio 0.59)
+   V-1: V2-REF|L|180|on|A|H2r RMS ON 5.53 vs OFF 9.53 mm (ratio 0.58)
+   V-2: L1 pooled β OFF 0.32 (≥ 0.5), ON -0.73 (|β| ≤ 0.25)
+   V-2: R1 pooled β OFF -0.29 (≥ 0.5), ON -0.51 (|β| ≤ 0.25)
+   V-2: L2 pooled β OFF -0.41 (≥ 0.5), ON -0.89 (|β| ≤ 0.25)
+   V-2: R2 pooled β OFF -0.41 (≥ 0.5), ON -0.51 (|β| ≤ 0.25)
+   V-2: H1 pooled β OFF 0.28 (≥ 0.5), ON -0.46 (|β| ≤ 0.25)
+   V-2: H1r pooled β OFF -0.44 (≥ 0.5), ON -0.38 (|β| ≤ 0.25)
+   V-3: V2-REF|L|180|on|A|L1 peak 10.40 mm, RMS 6.21 mm
+   V-3: V2-REF|L|180|on|B|L2 peak 10.05 mm, RMS 6.62 mm
+   V-3: V2-REF|L|240|on|A|L1 peak 10.21 mm, RMS 6.19 mm
+   V-3: V2-REF|L|240|on|B|L2 peak 9.88 mm, RMS 6.56 mm
+   V-3: V2-REF|L|480|on|A|L1 peak 9.89 mm, RMS 6.16 mm
+   V-3: V2-REF|L|480|on|B|L2 peak 9.58 mm, RMS 6.48 mm
+   V-4: V2-REF|L|180|on|A|L1 saturation 7.3 % / 44 ms
+   V-4: V2-REF|L|180|on|B energy closure max 1.94e-2 Σ+ 0.702
+   V-4: V2-REF|L|180|on|B energy closure max 1.94e-2 Σ+ 0.702
+   V-4: V2-REF|L|180|on|B energy closure max 1.94e-2 Σ+ 0.702
+   V-4: V2-REF|L|180|on|B energy closure max 1.94e-2 Σ+ 0.702
+   V-4: V2-REF|L|180|on|B energy closure max 1.94e-2 Σ+ 0.702
+allowance (mm): rise 10.81, apex 11.33, descent 4.13
+SERVO DOES NOT VALIDATE
