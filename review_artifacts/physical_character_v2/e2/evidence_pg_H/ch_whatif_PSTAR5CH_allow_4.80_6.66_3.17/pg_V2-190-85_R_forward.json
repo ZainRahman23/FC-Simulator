@@ -1,0 +1,91 @@
+{
+ "generated": "tools/e2_pg.mjs",
+ "run": {
+  "protocol": "step",
+  "human": "V2-190-85",
+  "side": "R",
+  "kind": "forward",
+  "hz": 240,
+  "variant": null,
+  "pert": null,
+  "config": "PSTAR5CH"
+ },
+ "stopT": 8.329166666666666,
+ "events": {
+  "tL": 8.329166666666666,
+  "abortT": null,
+  "pertT": null
+ },
+ "e2dec": null,
+ "calls": [
+  {
+   "t": 8.329166666666666,
+   "kind": "decision",
+   "verdict": "NO_CERTIFIED_ONE_STEP",
+   "why": "clearance certificate fails at every capturing, path-certified node (nominal: margin 2.2 mm at φ 0.80, envelope 3.2 mm; need ≥ 5 mm)",
+   "dx": null,
+   "dy": null,
+   "dz": null,
+   "pose": null,
+   "T": null,
+   "Tr": null,
+   "slack": null,
+   "eLand": null,
+   "rMid": null,
+   "nominal": null,
+   "path": null,
+   "cert": null,
+   "top": null,
+   "log": {
+    "mode": "commanded",
+    "evaluated": 35,
+    "reachNodes": 59,
+    "reachCertified": 35,
+    "nominalCertifiedReach": true,
+    "clearanceFail": 35,
+    "clearance": {
+     "margin": 0.002233865008126507,
+     "at": 0.7986111111111104,
+     "envelope": 0.00317,
+     "dx": 0.1,
+     "dy": 0
+    },
+    "ms": 167.67816700000003
+   },
+   "state": {
+    "xi": [
+     -0.094767,
+     0.009044
+    ],
+    "p": [
+     -0.094624,
+     0.009072
+    ],
+    "w": 3.056265,
+    "foot": [
+     0.091123,
+     0.094201,
+     -0.030965
+    ],
+    "A": [
+     0.091123,
+     0.0941,
+     -0.030965
+    ],
+    "pel": [
+     -0.110273,
+     0.972518,
+     -0.017546
+    ]
+   }
+  }
+ ],
+ "seqEvents": [
+  {
+   "t": 8.329166666666666,
+   "what": "NO_CERTIFIED_ONE_STEP at the decision: step not executed (fallback: return to double support)"
+  }
+ ],
+ "taVlog": null,
+ "hash": "650afa09"
+}

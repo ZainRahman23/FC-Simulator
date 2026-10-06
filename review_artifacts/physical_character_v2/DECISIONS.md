@@ -2146,3 +2146,43 @@ Not applied. Not pushed.
 **Liftoff transient:** inertial (forward lag up to 5.8 mm at +0.15 s without D1; 1.7 – 2.1 mm with D1), not a handoff defect.
 
 **Identity:** KV0; PSTAR4 / 5 / 5B / 5BS unchanged.
+
+### E2-8: servo re-validation (S2) DOES NOT VALIDATE; PG-1 0 / 32; corrected physical step measured → STOPPED, BLOCKED ON PLANNING DECISION (`e2/SWING_SERVO_VALIDATION_RESULTS_S2.md`, `e2/E2_OVERNIGHT_REPORT.md`)
+
+**Preregistered battery** (amendment S2, written before any run; 192 runs; PSTAR5BH OFF / PSTAR5CH ON):
+- representative RMS with D1: 1.3 – 2.0 mm (first battery 4.0 – 6.6); peaks ≤ 5.8 mm;
+- V-3, V-5, V-6 pass; V-1, V-2, V-4 fail.
+
+**Cause of each failure, diagnosed and not re-interpreted:**
+- V-1: elevated trajectories beyond the short bodies' reach;
+- V-2: the pelvis-motion residual on return / lateral segments;
+- V-4:
+  - energy Σ+ accumulation ∝ dt over long runs, equally without D1;
+  - activation-limited hip reversal at 180 Hz;
+  - box-switch Δτ0 steps at elevated poses.
+- **No allowance is set.**
+
+**PG-1: 0 / 32** with the bandwidth envelope (PSTAR5BH; margin 2.42 / 2.80 mm at φ 0.80) and with the S2 rule's allowance as a what-if (margin 2.23 mm).
+- The frozen reference is 5.40 mm above the turf at φ 0.80, so any allowance above 0.40 mm fails.
+- A window-consistent allowance is ≈ 0.75 mm.
+
+**PG-2:** 4 / 4 CERTIFIED (unchanged). **PG-3:** pass.
+
+**Physical smoke matrix** (non-test, 96 runs, PSTAR5CH, certificate not enforced):
+- tracking RMS 0.84 – 1.76 mm;
+- E2-3 92 / 96 (clearance 4.96 – 4.98 mm at φ 0.80 for V2-165-62 forward);
+- E2-5 78 / 96 (impact peak 26 – 43.5 % BW: forward, heavier bodies, rate-dependent peak);
+- E2-9 94 / 96;
+- all other criteria 96 / 96.
+
+**Clearance at φ 0.80:** reference 5.7 – 5.85 mm; vertical error +0.5 … +2.4 mm (lag, helps); foot tilt −0.7 … −1.2 mm.
+- The tilt is caused by the ankle's passive damping, which is 33 % of the ankle servo's damping.
+- Counterfactual `vffPassive`: +0.5 – 0.8 mm clearance but higher impact. Not adopted.
+
+**Decisions needed (not taken):**
+- A: apex / window (recommendation 30 mm apex);
+- B: E2-5 impact metric / landing approach;
+- C: servo-battery criteria under the corrected estimator;
+- D: PSTAR4S as the E1 baseline.
+
+No official E2 run. Not pushed.

@@ -1,0 +1,196 @@
+{
+ "generated": "tools/e2_pg.mjs",
+ "run": {
+  "protocol": "p15",
+  "human": "V2-165-62",
+  "side": "L",
+  "kind": null,
+  "hz": 480,
+  "variant": null,
+  "pert": "P15",
+  "config": "PSTAR5B"
+ },
+ "stopT": 9.725,
+ "events": {
+  "tL": 8.272916666666667,
+  "abortT": 9.691666666666666,
+  "pertT": 9.622916666666667
+ },
+ "e2dec": {
+  "t": 9.725,
+  "tCls": 9.725,
+  "verdict": "step required",
+  "planner": "CERTIFIED_ONE_STEP"
+ },
+ "calls": [
+  {
+   "t": 9.725,
+   "kind": "recovery decision",
+   "verdict": "CERTIFIED_ONE_STEP",
+   "why": null,
+   "dx": -0.01,
+   "dy": 0.04,
+   "dz": 0,
+   "pose": {
+    "pos": [
+     -0.120028,
+     0.084349,
+     -0.037246
+    ],
+    "rot": [
+     0,
+     -0.061049,
+     0,
+     0.998135
+    ]
+   },
+   "T": 0.205641,
+   "Tr": 0.1,
+   "slack": 0.01513671875,
+   "eLand": 0.011639990603806247,
+   "rMid": [
+    -0.020282,
+    0.005269
+   ],
+   "nominal": null,
+   "path": [
+    "FEASIBLE",
+    "FEASIBLE",
+    "FEASIBLE",
+    "FEASIBLE",
+    "FEASIBLE",
+    "FEASIBLE",
+    "FEASIBLE",
+    "FEASIBLE",
+    "FEASIBLE",
+    "FEASIBLE",
+    "FEASIBLE"
+   ],
+   "cert": {
+    "geometry": "ok",
+    "reach": true
+   },
+   "top": [
+    {
+     "dx": -0.01,
+     "dy": 0.04,
+     "T": 0.205641,
+     "Tr": 0.1,
+     "slack": 0.01513671875,
+     "pathFail": false
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.04,
+     "T": 0.212186,
+     "Tr": 0.1,
+     "slack": 0.013671875,
+     "pathFail": false
+    },
+    {
+     "dx": 0,
+     "dy": 0.04,
+     "T": 0.203542,
+     "Tr": 0.1,
+     "slack": 0.01171875,
+     "pathFail": false
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.03,
+     "T": 0.2,
+     "Tr": 0.1,
+     "slack": 0.01123046875,
+     "pathFail": false
+    },
+    {
+     "dx": -0.01,
+     "dy": 0.05,
+     "T": 0.225325,
+     "Tr": 0.1,
+     "slack": 0.0107421875,
+     "pathFail": false
+    },
+    {
+     "dx": -0.02,
+     "dy": 0.05,
+     "T": 0.230371,
+     "Tr": 0.1,
+     "slack": 0.01025390625,
+     "pathFail": false
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.03,
+     "T": 0.206268,
+     "Tr": 0.1,
+     "slack": 0.009765625,
+     "pathFail": false
+    },
+    {
+     "dx": -0.03,
+     "dy": 0.04,
+     "T": 0.222088,
+     "Tr": 0.1,
+     "slack": 0.00927734375,
+     "pathFail": false
+    }
+   ],
+   "log": {
+    "mode": "recovery",
+    "evaluated": 15240,
+    "reachNodes": 224,
+    "reachCertified": 97,
+    "capturing": 23,
+    "ms": 2095.678833
+   },
+   "state": {
+    "xi": [
+     -0.000443,
+     0.007597
+    ],
+    "p": [
+     0.043192,
+     0.0055
+    ],
+    "w": 3.285257,
+    "foot": [
+     -0.076907,
+     0.100688,
+     -0.033161
+    ],
+    "A": [
+     -0.079108,
+     0.084349,
+     -0.032194
+    ],
+    "pel": [
+     0.093251,
+     0.841073,
+     -0.021263
+    ]
+   }
+  }
+ ],
+ "seqEvents": [
+  {
+   "t": 9.725,
+   "what": "recovery step: CERTIFIED_ONE_STEP",
+   "T": 0.205641,
+   "Tr": 0.1,
+   "slack": 0.01513671875
+  }
+ ],
+ "taVlog": [
+  {
+   "t": 9.691666666666666,
+   "v": "in place"
+  },
+  {
+   "t": 9.71875,
+   "v": "step required",
+   "stage": "descent"
+  }
+ ],
+ "hash": "272577f0"
+}

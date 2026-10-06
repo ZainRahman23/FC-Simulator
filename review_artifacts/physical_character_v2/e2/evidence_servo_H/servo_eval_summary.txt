@@ -1,0 +1,42 @@
+runs 192/192
+trajectory | β OFF | β ON | RMS OFF mean | RMS ON mean | peak ON max (mm)
+  L1   | 1.28 | 0.24 | 5.47 | 1.50 | 3.12
+  R1   | 0.40 | 0.19 | 4.27 | 1.35 | 3.41
+  L2   | 0.62 | 0.15 | 4.46 | 1.97 | 5.84
+  R2   | 0.42 | 0.33 | 3.15 | 1.32 | 3.60
+  H1   | 0.85 | 0.10 | 8.59 | 2.06 | 4.01
+  H1r  | -0.05 | 0.01 | 6.98 | 2.15 | 5.66
+  H2   | 1.27 | 0.18 | 8.32 | 1.86 | 3.39
+  H2r  | 0.31 | 0.08 | 7.48 | 2.03 | 5.21
+  H3   | 0.91 | 0.22 | 5.21 | 1.75 | 5.42
+  H3r  | -0.03 | -0.05 | 5.71 | 2.64 | 11.32
+  H4   | 1.10 | 0.13 | 9.10 | 2.28 | 4.43
+  H4r  | 0.14 | 0.14 | 7.64 | 2.33 | 6.78
+  H5   | 0.05 | 0.00 | 4.17 | 1.49 | 3.27
+  H5r  | 0.03 | 0.00 | 4.16 | 1.54 | 3.33
+FAIL V-1 (23 failing items)
+FAIL V-2 (8 failing items)
+PASS V-3 (0 failing items)
+FAIL V-4 (314 failing items)
+PASS V-5 (0 failing items)
+PASS V-6 (0 failing items)
+   V-1: V2-165-62|L|180|on|B|L2 RMS ON 2.81 vs OFF 4.78 mm (ratio 0.59)
+   V-1: V2-165-62|L|180|on|B|H3r RMS ON 4.84 vs OFF 7.55 mm (ratio 0.64)
+   V-1: V2-165-62|L|240|on|B|L2 RMS ON 2.72 vs OFF 4.68 mm (ratio 0.58)
+   V-1: V2-165-62|L|240|on|B|H3r RMS ON 4.74 vs OFF 7.22 mm (ratio 0.66)
+   V-1: V2-165-62|L|480|on|B|L2 RMS ON 2.54 vs OFF 4.48 mm (ratio 0.57)
+   V-1: V2-165-62|L|480|on|B|H3r RMS ON 4.58 vs OFF 6.99 mm (ratio 0.65)
+   V-2: R1 pooled β OFF 0.40 (≥ 0.5), ON 0.19 (|β| ≤ 0.25)
+   V-2: R2 pooled β OFF 0.42 (≥ 0.5), ON 0.33 (|β| ≤ 0.25)
+   V-2: H1r pooled β OFF -0.05 (≥ 0.5), ON 0.01 (|β| ≤ 0.25)
+   V-2: H2r pooled β OFF 0.31 (≥ 0.5), ON 0.08 (|β| ≤ 0.25)
+   V-2: H3r pooled β OFF -0.03 (≥ 0.5), ON -0.05 (|β| ≤ 0.25)
+   V-2: H4r pooled β OFF 0.14 (≥ 0.5), ON 0.14 (|β| ≤ 0.25)
+   V-4: V2-REF|L|180|on|A|L1 saturation 8.3 % / 50 ms
+   V-4: V2-REF|L|180|on|B energy closure max 1.94e-2 Σ+ 0.757
+   V-4: V2-REF|L|180|on|B energy closure max 1.94e-2 Σ+ 0.757
+   V-4: V2-REF|L|180|on|B energy closure max 1.94e-2 Σ+ 0.757
+   V-4: V2-REF|L|180|on|B|H3r torque continuity Δτ 9.64 / Δτ0 52.81 N·m
+   V-4: V2-REF|L|180|on|B energy closure max 1.94e-2 Σ+ 0.757
+allowance (mm): rise 4.80, apex 6.66, descent 3.17
+SERVO DOES NOT VALIDATE

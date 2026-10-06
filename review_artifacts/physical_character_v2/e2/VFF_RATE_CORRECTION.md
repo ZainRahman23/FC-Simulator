@@ -163,7 +163,7 @@ V2-REF L 240 Hz, floating pelvis, D1 off. **ω\*** = desired joint velocity, **�
 V2-REF, forward 0.07 m (L) and lateral 0.06 m (R), 240 Hz, `--diag=noclear` (certificate logged, not enforced).
 - Tracking is in the evaluator's convention (the frozen E2-3 definition).
 - e_z = signed vertical error (foot − target), time-matched.
-- Clearance = measured lowest boot point.
+- Clearance = measured lowest boot point, in the time-matched convention of `tools/e2_swing_track.mjs`. The frozen evaluator pairs each row with the target one tick earlier; on the steep descent at φ 0.8 (≈ 0.12 m/s) that reads 0.3 – 0.6 mm lower, e.g. PSTAR5CH forward 5.18 mm (evaluator) vs 5.74 mm here. `E2_OVERNIGHT_REPORT.md` uses the evaluator's numbers.
 
 | configuration | tracking RMS / max (mm) | e_z rising / descending, mean (mm) | min clearance φ ∈ [0.2, 0.8] |
 |---|---|---|---|

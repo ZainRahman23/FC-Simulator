@@ -1,0 +1,108 @@
+
+■ V2-165-62_vp0.json.gz — V2-165-62 L forward 240 Hz [SMOKE {"dx":0.07,"dy":0}]
+  PASS E2-1   before the command: stance share 99.85 %, swing-foot load 0.92 N (0.148 % BW), state TOUCHING; release UNLOADING→TOUCHING
+  PASS E2-2   LIFTOFF→AIRBORNE 1 at +0.117 s (≤ 0.3); touching 0, load 0.000 N; before the command 0
+  FAIL E2-3   tracking max 1.78 mm (≤ 10), RMS 1.07 mm (≤ 5); yaw 0.12°; tilt 1.11°; touching rows before 60 % 0; clearance min over 20–80 % 4.96 mm at φ 0.80 (≥ 5)
+  PASS E2-4   first SUPPORT 10.342 s: 1.34 mm from the final commanded foothold (≤ 10), yaw -0.05° (≤ 2)
+  PASS E2-5   TOUCHDOWN 1 at φ 0.87 (≥ 0.6); re-entries < 60 ms 0/0; rebound 0; impact 119.9 N (19.4 % BW ≤ 25); approach 0.087 m/s down (≤ 0.15), 0.036 m/s horizontal (≤ 0.05); impulse 50 ms 2.05 N·s; penetration 0.00 mm (≤ 2)
+  PASS E2-6   LOAD_ACCEPT 1 at 10.113 s; →SUPPORT 0.229 s (≤ T_r + 0.1 = 0.325); realised − commanded share during the ramp max 0.008 (≤ 0.10); load tracking from t_A + 1 s max 0.011 over 1441 rows
+  PASS E2-7   stance foot from t_L: peak 0.022 mm (≤ 1.0), path 0.047 mm (≤ 2.0), yaw 0.004° (≤ 0.5); rows not SUPPORT 0
+  PASS E2-8   ξ margin in the stance region during the swing min 3.81 cm (≥ 1)
+  PASS E2-9   applied Δτ max 3.87 N·m (knee_L.y at 8.971 s); outside onset windows max 3.87 N·m (knee_L.y at 8.971 s); commanded Δτ0 max 5.23 N·m (hip_L.y at 8.488 s); violations 0 / 0
+  PASS E2-10  closure increment max 9.92e-3 J/tick; Σ positive 0.099 J; authority writes 0; external impulse 0; motor work -0.39 J, external 0.000 J, damping 0.65 J
+  PASS E2-11  over-capacity 0; saturation during the swing none; longest continuous 8 ms (knee_L.y) (≤ 50)
+  PASS E2-12  |ξ_pred − ξ| at planned touchdown 1.8 mm (≤ 30), at LOAD_ACCEPT 2.6 mm (≤ 30), end vs terminal 0.5 mm (≤ 15)
+  PASS E2-13  end 19.95 s (7.00 s after DONE): SUPPORT/SUPPORT; |ξ − terminal| 0.05 cm; pelvis yaw Δ -0.03°; ankle ab/add Δ 0.06/0.08°; knee Δ 0.03/0.03°; step 7.11 × 0.07 cm vs command 7.00 × 0.00 (length 0.11 / width 0.07 cm); outcome foot relocated; abort none
+  PASS E2-14  knee flexion 3.96–39.19° (certified envelope 0–40°); knee |θ − θ0| max 1.39° at 0.004 s (from 1 s: 0.14° at 17.558 s); violations 0
+  PASS E2-17  plan VRP outside the support by > 5 mm: longest 0 ms (worst 0.0 mm outside); p*: longest 0 ms (worst 0.0 mm) (≤ 20 ms)
+  PASS E2-18  2 CERTIFIED planner outputs; violations 0; re-plans 1 (NO_CERTIFIED during the swing 0)
+
+■ V2-165-62_vp1.json.gz — V2-165-62 L forward 240 Hz [SMOKE {"dx":0.07,"dy":0}]
+  PASS E2-1   before the command: stance share 99.85 %, swing-foot load 0.92 N (0.149 % BW), state TOUCHING; release UNLOADING→TOUCHING
+  PASS E2-2   LIFTOFF→AIRBORNE 1 at +0.117 s (≤ 0.3); touching 0, load 0.000 N; before the command 0
+  PASS E2-3   tracking max 1.77 mm (≤ 10), RMS 1.11 mm (≤ 5); yaw 0.07°; tilt 0.32°; touching rows before 60 % 0; clearance min over 20–80 % 5.79 mm at φ 0.80 (≥ 5)
+  PASS E2-4   first SUPPORT 10.354 s: 0.88 mm from the final commanded foothold (≤ 10), yaw -0.19° (≤ 2)
+  FAIL E2-5   TOUCHDOWN 1 at φ 0.90 (≥ 0.6); re-entries < 60 ms 0/0; rebound 0; impact 168.5 N (27.3 % BW ≤ 25); approach 0.069 m/s down (≤ 0.15), 0.023 m/s horizontal (≤ 0.05); impulse 50 ms 2.33 N·s; penetration 0.00 mm (≤ 2)
+  PASS E2-6   LOAD_ACCEPT 1 at 10.125 s; →SUPPORT 0.229 s (≤ T_r + 0.1 = 0.325); realised − commanded share during the ramp max 0.008 (≤ 0.10); load tracking from t_A + 1 s max 0.011 over 1441 rows
+  PASS E2-7   stance foot from t_L: peak 0.020 mm (≤ 1.0), path 0.051 mm (≤ 2.0), yaw 0.004° (≤ 0.5); rows not SUPPORT 0
+  PASS E2-8   ξ margin in the stance region during the swing min 3.81 cm (≥ 1)
+  PASS E2-9   applied Δτ max 3.45 N·m (hip_L.y at 8.967 s); outside onset windows max 3.45 N·m (hip_L.y at 8.967 s); commanded Δτ0 max 5.24 N·m (hip_L.y at 8.967 s); violations 0 / 0
+  PASS E2-10  closure increment max 9.92e-3 J/tick; Σ positive 0.097 J; authority writes 0; external impulse 0; motor work -0.38 J, external 0.000 J, damping 0.65 J
+  PASS E2-11  over-capacity 0; saturation during the swing none; longest continuous 8 ms (ankle_R.z) (≤ 50)
+  PASS E2-12  |ξ_pred − ξ| at planned touchdown 2.1 mm (≤ 30), at LOAD_ACCEPT 2.4 mm (≤ 30), end vs terminal 0.5 mm (≤ 15)
+  PASS E2-13  end 19.96 s (7.00 s after DONE): SUPPORT/SUPPORT; |ξ − terminal| 0.05 cm; pelvis yaw Δ -0.09°; ankle ab/add Δ 0.06/0.08°; knee Δ 0.03/0.03°; step 7.08 × 0.04 cm vs command 7.00 × -0.00 (length 0.08 / width 0.04 cm); outcome foot relocated; abort none
+  PASS E2-14  knee flexion 3.96–39.23° (certified envelope 0–40°); knee |θ − θ0| max 1.39° at 0.004 s (from 1 s: 0.14° at 17.571 s); violations 0
+  PASS E2-17  plan VRP outside the support by > 5 mm: longest 0 ms (worst 0.0 mm outside); p*: longest 0 ms (worst 0.0 mm) (≤ 20 ms)
+  PASS E2-18  2 CERTIFIED planner outputs; violations 0; re-plans 1 (NO_CERTIFIED during the swing 0)
+
+■ V2-198-92_vp0.json.gz — V2-198-92 L forward 240 Hz [SMOKE {"dx":0.07,"dy":0}]
+  PASS E2-1   before the command: stance share 99.85 %, swing-foot load 1.35 N (0.148 % BW), state TOUCHING; release UNLOADING→TOUCHING
+  PASS E2-2   LIFTOFF→AIRBORNE 1 at +0.117 s (≤ 0.3); touching 0, load 0.000 N; before the command 0
+  PASS E2-3   tracking max 1.85 mm (≤ 10), RMS 1.11 mm (≤ 5); yaw 0.08°; tilt 0.62°; touching rows before 60 % 0; clearance min over 20–80 % 5.34 mm at φ 0.80 (≥ 5)
+  PASS E2-4   first SUPPORT 10.550 s: 1.19 mm from the final commanded foothold (≤ 10), yaw -0.06° (≤ 2)
+  FAIL E2-5   TOUCHDOWN 1 at φ 0.88 (≥ 0.6); re-entries < 60 ms 0/0; rebound 0; impact 257.8 N (28.3 % BW ≤ 25); approach 0.113 m/s down (≤ 0.15), 0.033 m/s horizontal (≤ 0.05); impulse 50 ms 3.13 N·s; penetration 0.00 mm (≤ 2)
+  PASS E2-6   LOAD_ACCEPT 1 at 10.321 s; →SUPPORT 0.229 s (≤ T_r + 0.1 = 0.325); realised − commanded share during the ramp max 0.009 (≤ 0.10); load tracking from t_A + 1 s max 0.024 over 1440 rows
+  PASS E2-7   stance foot from t_L: peak 0.019 mm (≤ 1.0), path 0.065 mm (≤ 2.0), yaw 0.003° (≤ 0.5); rows not SUPPORT 0
+  PASS E2-8   ξ margin in the stance region during the swing min 4.59 cm (≥ 1)
+  PASS E2-9   applied Δτ max 6.79 N·m (hip_L.z at 9.021 s); outside onset windows max 6.79 N·m (hip_L.z at 9.021 s); commanded Δτ0 max 10.14 N·m (hip_L.y at 8.537 s); violations 0 / 0
+  PASS E2-10  closure increment max 1.40e-2 J/tick; Σ positive 0.151 J; authority writes 0; external impulse 0; motor work -0.64 J, external 0.000 J, damping 0.56 J
+  PASS E2-11  over-capacity 0; saturation during the swing none; longest continuous 8 ms (knee_L.y) (≤ 50)
+  PASS E2-12  |ξ_pred − ξ| at planned touchdown 2.2 mm (≤ 30), at LOAD_ACCEPT 2.8 mm (≤ 30), end vs terminal 0.4 mm (≤ 15)
+  PASS E2-13  end 20.01 s (7.00 s after DONE): SUPPORT/SUPPORT; |ξ − terminal| 0.04 cm; pelvis yaw Δ -0.03°; ankle ab/add Δ 0.04/0.09°; knee Δ 0.04/0.04°; step 7.10 × 0.06 cm vs command 7.00 × 0.00 (length 0.10 / width 0.06 cm); outcome foot relocated; abort none
+  PASS E2-14  knee flexion 3.96–35.32° (certified envelope 0–40°); knee |θ − θ0| max 1.40° at 0.004 s (from 1 s: 0.11° at 17.650 s); violations 0
+  PASS E2-17  plan VRP outside the support by > 5 mm: longest 0 ms (worst 0.0 mm outside); p*: longest 0 ms (worst 0.0 mm) (≤ 20 ms)
+  PASS E2-18  2 CERTIFIED planner outputs; violations 0; re-plans 1 (NO_CERTIFIED during the swing 0)
+
+■ V2-198-92_vp1.json.gz — V2-198-92 L forward 240 Hz [SMOKE {"dx":0.07,"dy":0}]
+  PASS E2-1   before the command: stance share 99.85 %, swing-foot load 1.34 N (0.148 % BW), state TOUCHING; release UNLOADING→TOUCHING
+  PASS E2-2   LIFTOFF→AIRBORNE 1 at +0.117 s (≤ 0.3); touching 0, load 0.000 N; before the command 0
+  PASS E2-3   tracking max 1.84 mm (≤ 10), RMS 1.13 mm (≤ 5); yaw 0.06°; tilt 0.34°; touching rows before 60 % 0; clearance min over 20–80 % 5.85 mm at φ 0.80 (≥ 5)
+  PASS E2-4   first SUPPORT 10.558 s: 1.05 mm from the final commanded foothold (≤ 10), yaw -0.14° (≤ 2)
+  FAIL E2-5   TOUCHDOWN 1 at φ 0.90 (≥ 0.6); re-entries < 60 ms 0/0; rebound 0; impact 276.4 N (30.3 % BW ≤ 25); approach 0.070 m/s down (≤ 0.15), 0.022 m/s horizontal (≤ 0.05); impulse 50 ms 3.73 N·s; penetration 0.00 mm (≤ 2)
+  PASS E2-6   LOAD_ACCEPT 1 at 10.329 s; →SUPPORT 0.229 s (≤ T_r + 0.1 = 0.325); realised − commanded share during the ramp max 0.009 (≤ 0.10); load tracking from t_A + 1 s max 0.024 over 1441 rows
+  PASS E2-7   stance foot from t_L: peak 0.023 mm (≤ 1.0), path 0.065 mm (≤ 2.0), yaw 0.003° (≤ 0.5); rows not SUPPORT 0
+  PASS E2-8   ξ margin in the stance region during the swing min 4.59 cm (≥ 1)
+  PASS E2-9   applied Δτ max 7.52 N·m (hip_L.z at 9.017 s, contact-onset window); outside onset windows max 5.55 N·m (hip_L.y at 9.021 s); commanded Δτ0 max 12.24 N·m (hip_L.z at 9.017 s); violations 0 / 0
+  PASS E2-10  closure increment max 1.40e-2 J/tick; Σ positive 0.149 J; authority writes 0; external impulse 0; motor work -0.64 J, external 0.000 J, damping 0.56 J
+  PASS E2-11  over-capacity 0; saturation during the swing none; longest continuous 8 ms (knee_L.y) (≤ 50)
+  PASS E2-12  |ξ_pred − ξ| at planned touchdown 2.4 mm (≤ 30), at LOAD_ACCEPT 3.1 mm (≤ 30), end vs terminal 0.4 mm (≤ 15)
+  PASS E2-13  end 20.02 s (7.00 s after DONE): SUPPORT/SUPPORT; |ξ − terminal| 0.04 cm; pelvis yaw Δ -0.07°; ankle ab/add Δ 0.04/0.09°; knee Δ 0.04/0.04°; step 7.09 × 0.05 cm vs command 7.00 × 0.00 (length 0.09 / width 0.05 cm); outcome foot relocated; abort none
+  PASS E2-14  knee flexion 3.96–35.34° (certified envelope 0–40°); knee |θ − θ0| max 1.40° at 0.004 s (from 1 s: 0.11° at 17.658 s); violations 0
+  PASS E2-17  plan VRP outside the support by > 5 mm: longest 0 ms (worst 0.0 mm outside); p*: longest 0 ms (worst 0.0 mm) (≤ 20 ms)
+  PASS E2-18  2 CERTIFIED planner outputs; violations 0; re-plans 1 (NO_CERTIFIED during the swing 0)
+
+■ V2-REF_vp0.json.gz — V2-REF L forward 240 Hz [SMOKE {"dx":0.07,"dy":0}]
+  PASS E2-1   before the command: stance share 99.85 %, swing-foot load 1.15 N (0.148 % BW), state TOUCHING; release UNLOADING→TOUCHING
+  PASS E2-2   LIFTOFF→AIRBORNE 1 at +0.117 s (≤ 0.3); touching 0, load 0.000 N; before the command 0
+  PASS E2-3   tracking max 1.81 mm (≤ 10), RMS 1.08 mm (≤ 5); yaw 0.10°; tilt 0.81°; touching rows before 60 % 0; clearance min over 20–80 % 5.18 mm at φ 0.80 (≥ 5)
+  PASS E2-4   first SUPPORT 10.442 s: 1.22 mm from the final commanded foothold (≤ 10), yaw -0.07° (≤ 2)
+  PASS E2-5   TOUCHDOWN 1 at φ 0.88 (≥ 0.6); re-entries < 60 ms 0/0; rebound 0; impact 168.5 N (21.8 % BW ≤ 25); approach 0.094 m/s down (≤ 0.15), 0.013 m/s horizontal (≤ 0.05); impulse 50 ms 2.73 N·s; penetration 0.00 mm (≤ 2)
+  PASS E2-6   LOAD_ACCEPT 1 at 10.213 s; →SUPPORT 0.229 s (≤ T_r + 0.1 = 0.325); realised − commanded share during the ramp max 0.008 (≤ 0.10); load tracking from t_A + 1 s max 0.017 over 1441 rows
+  PASS E2-7   stance foot from t_L: peak 0.014 mm (≤ 1.0), path 0.058 mm (≤ 2.0), yaw 0.004° (≤ 0.5); rows not SUPPORT 0
+  PASS E2-8   ξ margin in the stance region during the swing min 4.21 cm (≥ 1)
+  PASS E2-9   applied Δτ max 3.63 N·m (knee_L.y at 8.975 s); outside onset windows max 3.63 N·m (knee_L.y at 8.975 s); commanded Δτ0 max 7.56 N·m (hip_L.y at 8.492 s); violations 0 / 0
+  PASS E2-10  closure increment max 1.21e-2 J/tick; Σ positive 0.119 J; authority writes 0; external impulse 0; motor work -0.54 J, external 0.000 J, damping 0.60 J
+  PASS E2-11  over-capacity 0; saturation during the swing none; longest continuous 4 ms (knee_L.y) (≤ 50)
+  PASS E2-12  |ξ_pred − ξ| at planned touchdown 2.0 mm (≤ 30), at LOAD_ACCEPT 2.7 mm (≤ 30), end vs terminal 0.4 mm (≤ 15)
+  PASS E2-13  end 19.96 s (7.00 s after DONE): SUPPORT/SUPPORT; |ξ − terminal| 0.04 cm; pelvis yaw Δ -0.04°; ankle ab/add Δ 0.05/0.09°; knee Δ 0.04/0.03°; step 7.10 × 0.07 cm vs command 7.00 × 0.00 (length 0.10 / width 0.07 cm); outcome foot relocated; abort none
+  PASS E2-14  knee flexion 3.96–37.07° (certified envelope 0–40°); knee |θ − θ0| max 1.40° at 0.004 s (from 1 s: 0.12° at 17.592 s); violations 0
+  PASS E2-17  plan VRP outside the support by > 5 mm: longest 0 ms (worst 0.0 mm outside); p*: longest 0 ms (worst 0.0 mm) (≤ 20 ms)
+  PASS E2-18  2 CERTIFIED planner outputs; violations 0; re-plans 1 (NO_CERTIFIED during the swing 0)
+
+■ V2-REF_vp1.json.gz — V2-REF L forward 240 Hz [SMOKE {"dx":0.07,"dy":0}]
+  PASS E2-1   before the command: stance share 99.85 %, swing-foot load 1.15 N (0.148 % BW), state TOUCHING; release UNLOADING→TOUCHING
+  PASS E2-2   LIFTOFF→AIRBORNE 1 at +0.117 s (≤ 0.3); touching 0, load 0.000 N; before the command 0
+  PASS E2-3   tracking max 1.81 mm (≤ 10), RMS 1.11 mm (≤ 5); yaw 0.07°; tilt 0.33°; touching rows before 60 % 0; clearance min over 20–80 % 5.82 mm at φ 0.80 (≥ 5)
+  PASS E2-4   first SUPPORT 10.450 s: 1.01 mm from the final commanded foothold (≤ 10), yaw -0.16° (≤ 2)
+  FAIL E2-5   TOUCHDOWN 1 at φ 0.90 (≥ 0.6); re-entries < 60 ms 0/0; rebound 0; impact 198.8 N (25.7 % BW ≤ 25); approach 0.051 m/s down (≤ 0.15), 0.015 m/s horizontal (≤ 0.05); impulse 50 ms 2.22 N·s; penetration 0.00 mm (≤ 2)
+  PASS E2-6   LOAD_ACCEPT 1 at 10.221 s; →SUPPORT 0.229 s (≤ T_r + 0.1 = 0.325); realised − commanded share during the ramp max 0.008 (≤ 0.10); load tracking from t_A + 1 s max 0.017 over 1440 rows
+  PASS E2-7   stance foot from t_L: peak 0.012 mm (≤ 1.0), path 0.060 mm (≤ 2.0), yaw 0.004° (≤ 0.5); rows not SUPPORT 0
+  PASS E2-8   ξ margin in the stance region during the swing min 4.21 cm (≥ 1)
+  PASS E2-9   applied Δτ max 5.45 N·m (hip_L.z at 8.971 s, contact-onset window); outside onset windows max 4.41 N·m (hip_L.y at 8.975 s); commanded Δτ0 max 7.71 N·m (hip_L.z at 8.971 s); violations 0 / 0
+  PASS E2-10  closure increment max 1.21e-2 J/tick; Σ positive 0.117 J; authority writes 0; external impulse 0; motor work -0.53 J, external 0.000 J, damping 0.60 J
+  PASS E2-11  over-capacity 0; saturation during the swing none; longest continuous 4 ms (knee_L.y) (≤ 50)
+  PASS E2-12  |ξ_pred − ξ| at planned touchdown 2.3 mm (≤ 30), at LOAD_ACCEPT 2.8 mm (≤ 30), end vs terminal 0.4 mm (≤ 15)
+  PASS E2-13  end 19.97 s (7.00 s after DONE): SUPPORT/SUPPORT; |ξ − terminal| 0.04 cm; pelvis yaw Δ -0.08°; ankle ab/add Δ 0.05/0.09°; knee Δ 0.04/0.03°; step 7.09 × 0.05 cm vs command 7.00 × -0.00 (length 0.09 / width 0.05 cm); outcome foot relocated; abort none
+  PASS E2-14  knee flexion 3.96–37.10° (certified envelope 0–40°); knee |θ − θ0| max 1.40° at 0.004 s (from 1 s: 0.12° at 17.600 s); violations 0
+  PASS E2-17  plan VRP outside the support by > 5 mm: longest 0 ms (worst 0.0 mm outside); p*: longest 0 ms (worst 0.0 mm) (≤ 20 ms)
+  PASS E2-18  2 CERTIFIED planner outputs; violations 0; re-plans 1 (NO_CERTIFIED during the swing 0)

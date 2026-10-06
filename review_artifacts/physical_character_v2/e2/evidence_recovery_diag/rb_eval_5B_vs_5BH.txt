@@ -1,0 +1,16 @@
+
+■ smkR_5B.json.gz — V2-165-62 R P15 180 Hz
+  PASS R-1    recovered by stepping; end SUPPORT/SUPPORT; outcome foot relocated
+  FAIL R-2    old stance foot: LIFTOFF/AIRBORNE entries 2; peak displacement from the abort 4.00 mm (≤ 5)
+  PASS R-3    planner CERTIFIED_ONE_STEP (dx -0.01, dy 0.04, T 0.207 s, T_r 0.1 s, slack 12.2 ms); landed 6.22 mm from it (≤ 20)
+  FAIL R-4    TOUCHDOWN 1; rebound 0; re-entries 0/0; impact 55.4 % BW; approach 0.022 / 0.191 m/s; penetration 0.00 mm; LOAD_ACCEPT 1 (after sustained contact), →SUPPORT 0.100 s (≤ T_r + 0.1); share error in the ramp 0.099; bilateral +0.389 s after the abort (≤ 2)
+  FAIL R-5    E2-9: FAIL (applied Δτ max 14.81 N·m (hip_L.z at 10.267 s); outside onset windows max 14.81 N·m (hip_L.z at 10.267 s); commanded Δτ0 max 18.26 N·m (hip_L.z at 10.261 s); violations 2 / 0); E2-10: pass; over-capacity 0, longest saturation 44 ms; prediction 19.1 / 2.9 / 0.5 mm (≤ 30 / 30 / 15); VRP / p* outside > 5 mm longest 0 / 194 ms (≤ 20); certificate violations 0
+  PASS R-6    predicted slack at the decision 12.2 ms; measured ξ margin in the support at full support 7.25 cm (inside: true)
+
+■ smkR_5BH.json.gz — V2-165-62 R P15 180 Hz
+  PASS R-1    recovered by stepping; end SUPPORT/SUPPORT; outcome recovered
+  PASS R-2    old stance foot: LIFTOFF/AIRBORNE entries 0; peak displacement from the abort 2.52 mm (≤ 5)
+  FAIL R-3    planner CERTIFIED_ONE_STEP (dx -0.01, dy 0.04, T 0.207 s, T_r 0.1 s, slack 12.2 ms); landed 26.72 mm from it (≤ 20)
+  FAIL R-4    TOUCHDOWN 1; rebound 0; re-entries 0/0; impact 64.2 % BW; approach 0.025 / 0.080 m/s; penetration 0.98 mm; LOAD_ACCEPT 1 (after sustained contact), →SUPPORT 0.100 s (≤ T_r + 0.1); share error in the ramp 0.175; bilateral +0.306 s after the abort (≤ 2)
+  FAIL R-5    E2-9: FAIL (applied Δτ max 13.43 N·m (hip_R.z at 9.950 s); outside onset windows max 13.43 N·m (hip_R.z at 9.950 s); commanded Δτ0 max 29.35 N·m (hip_R.z at 9.944 s); violations 1 / 0); E2-10: pass; over-capacity 0, longest saturation 44 ms; prediction 2.0 / 8.3 / 0.6 mm (≤ 30 / 30 / 15); VRP / p* outside > 5 mm longest 0 / 61 ms (≤ 20); certificate violations 0
+  PASS R-6    predicted slack at the decision 12.2 ms; measured ξ margin in the support at full support 8.80 cm (inside: true)
