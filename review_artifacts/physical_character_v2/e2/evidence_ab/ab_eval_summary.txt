@@ -1,0 +1,42 @@
+runs 1728/1728; runtime reachability exclusions 0
+trajectory | β (T-1, pooled) BASE / A / B / AB | β_y BASE / A / B / AB | mean tilt φ .6–.85 (°) BASE / A / B / AB | e_y φ .85 (mm) BASE / AB | worst d_low [.75,.80] (mm) BASE / A / B / AB | contact φ BASE / AB | min soft-limit margin (°) BASE / AB
+  R-F    | 0.212 / -0.065 / 0.215 / -0.066 | 0.378 / 0.128 / 0.379 / 0.126 | 0.818 / 0.709 / 0.054 / 0.101 | -0.51 / -0.25 | -1.11 / -1.35 / -0.07 / -0.41 | 0.886 / 0.911 | 3.7 / 3.5
+  R-L    | 0.232 / 0.081 / 0.233 / 0.080 | 0.246 / 0.133 / 0.247 / 0.130 | 0.828 / 0.789 / 0.067 / 0.067 | 0.99 / -0.08 | 0.10 / -1.25 / 1.17 / -0.14 | 0.908 / 0.920 | 1.3 / 1.1
+  C-F7   | 0.261 / -0.028 / 0.265 / -0.029 | 0.361 / 0.123 / 0.361 / 0.121 | 0.669 / 0.566 / 0.041 / 0.081 | -0.33 / -0.18 | -0.75 / -1.08 / 0.18 / -0.29 | 0.892 / 0.917 | 2.9 / 2.7
+  C-F13  | 0.174 / -0.089 / 0.176 / -0.091 | 0.404 / 0.132 / 0.405 / 0.131 | 0.991 / 0.872 / 0.076 / 0.130 | -0.79 / -0.34 | -1.60 / -1.69 / -0.42 / -0.60 | 0.880 / 0.906 | 4.4 / 4.2
+  C-L5   | 0.276 / 0.086 / 0.277 / 0.084 | 0.283 / 0.125 / 0.283 / 0.122 | 0.648 / 0.581 / 0.049 / 0.059 | 0.53 / -0.10 | 0.00 / -0.95 / 0.96 / -0.09 | 0.904 / 0.919 | 0.9 / 0.7
+  H-T45  | 0.072 / -0.050 / 0.079 / -0.047 | 0.212 / 0.099 / 0.212 / 0.097 | 0.837 / 0.887 / 0.087 / 0.111 | 0.26 / -0.43 | -0.35 / -1.74 / 0.62 / -0.56 | 0.896 / 0.909 | 3.9 / 3.8
+  H-A40  | 0.241 / -0.022 / 0.244 / -0.023 | 0.343 / 0.125 / 0.343 / 0.123 | 0.891 / 0.767 / 0.062 / 0.108 | -0.53 / -0.30 | -1.09 / -1.50 / 0.05 / -0.46 | 0.894 / 0.918 | 2.4 / 2.2
+  H-D    | 0.179 / -0.038 / 0.181 / -0.039 | 0.258 / 0.147 / 0.259 / 0.146 | 1.140 / 1.089 / 0.119 / 0.115 | 0.38 / -0.27 | -0.90 / -1.91 / 0.19 / -0.56 | 0.893 / 0.908 | 4.1 / 3.9
+  H-F15  | 0.154 / -0.103 / 0.155 / -0.106 | 0.426 / 0.135 / 0.427 / 0.134 | 1.121 / 0.992 / 0.099 / 0.154 | -1.03 / -0.43 | -2.01 / -1.97 / -0.75 / -0.79 | 0.874 / 0.901 | 4.7 / 4.5
+per-bin worst d_low (mm), R + C, BASE vs AB (φ 0.20 … 0.75):
+  BASE -3.64 -4.13 -4.15 -3.95 -3.11 -2.05 -0.98 0.23 0.56 -0.02 -0.75 -1.60
+  AB   -1.75 -1.52 -1.21 -0.88 -0.45 -0.17 0.05 0.17 0.08 -0.14 -0.37 -0.60
+PASS AB-8 (0 failing items)
+PASS AB-1 (0 failing items)
+PASS AB-2 (0 failing items)
+PASS AB-3 (0 failing items)
+FAIL AB-4a (1 failing items)
+FAIL AB-4b (1 failing items)
+PASS AB-4c (0 failing items)
+PASS AB-5 (0 failing items)
+PASS AB-6 (0 failing items)
+FAIL AB-7 (1 failing items)
+PASS AB-9 (0 failing items)
+PASS AB-10 (0 failing items)
+PASS I-1 (0 failing items)
+PASS I-4 (0 failing items)
+PASS I-5 (0 failing items)
+PASS I-6 (0 failing items)
+PASS I-7 (0 failing items)
+PASS L-1 (0 failing items)
+PASS L-2 (0 failing items)
+PASS G-3 (0 failing items)
+PASS C-1 (0 failing items)
+PASS C-2 (0 failing items)
+PASS C-3 (0 failing items)
+   AB-4a: PSTAR5CHAB|V2-198-92|L|180|R-L E1a-7 violation in the swing (applied Δτ max in swing 2.23 N·m)
+   AB-4b: set R: runs with E1a-7 violations AB 6 > BASE 0
+   AB-7: R-L β_y AB 0.130 A 0.133 (≤ 0.5 × BASE 0.246)
+AB-4b runs with E1a-7 violations BASE vs AB: R 0 → 6, C 10 → 0, H 36 → 8 | AB-8 worst binding window: BASE -1.60 → AB -0.60 mm
+A + B DOES NOT VALIDATE

@@ -2305,3 +2305,29 @@ Both are needed together. Worst binding-bin deviation −1.11 → −0.37 mm; ap
 **Separate decision:** touchdown and descent design (the δ^0.62 law, hand-back, post-contact hold, the 25 % BW concept).
 
 The φ 0.80 failure is preserved. Not pushed.
+
+## 2026-10-06: A + B implementation and factorial validation (`sources/2026-10-06_user_decision_AB_touchdown.md`)
+
+### E2-12: A + B implemented (default off); validation DOES NOT VALIDATE → STOPPED at stage 2 (`e2/AB_VALIDATION_PREREG.md`, frozen 54629de; `e2/AB_VALIDATION_RESULTS.md`)
+
+**Implemented (default off, bit-identical when off):**
+- **A** (`vffPelvisAir`): the pelvis-motion part of a commanded swing's velocity task gets the same singularity-robust damping as the target part, weighted by airborne weight × commanded-swing weight.
+- **B** (`vffPassiveRef`): passive ankle damping compensated once, on the reference rate.
+- Recording-only torque ledger.
+
+Identity: KV0, E2 hashes, SV-2 record and suite all identical. The external-lift harness is 12/12 bit-identical with A + B.
+
+**Battery: 1,728 runs (4 configurations × 8 bodies × 2 legs × 3 rates × 9 trajectories).**
+
+Passed:
+- T-1, frozen: every id passes under AB (BASE fails C-F7 / C-L5, reproducing SV-2).
+- Causal confirmations C-1…C-3: T-1 collapses by A, not B; tilt is removed by B; β_y is reduced by A.
+- Tilt −90 %.
+- Worst binding-window deviation −1.60 → −0.60 mm.
+- Energy, margins, rate stability, ledger closure, identity and integrity (H-set I-6 78 → 32).
+
+Failed:
+- **AB-4a / 4b:** 7 runs (V2-198-92, R-L, both legs, all rates) exceed the commanded-torque continuity limit by 0.7–6 % within −2 … +5 ticks of contact. Cause: the hip's velocity feed-forward × the contact gain blend × the hand-back, i.e. the touchdown transition. A raises it from 82 % of the limit to just above it.
+- **AB-7:** R-L β_y falls only 47 % (required 50 %). A is only partly active for about 90 ms after liftoff while the airborne weight ramps; after φ 0.2, A reaches the pinned-pelvis level.
+
+Decisions pending (user). Touchdown coordinator not started. Not pushed.
