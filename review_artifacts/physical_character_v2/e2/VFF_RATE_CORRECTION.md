@@ -199,6 +199,31 @@ V2-REF, forward 0.07 m (L) and lateral 0.06 m (R), 240 Hz, `--diag=noclear` (cer
 
 So the old behaviour did depend on the defective estimator, and that dependence was in the safe direction for E1's criteria: lagging lifts and put-downs. The correction is not an unintended regression. It is a behaviour change of the certified E1 configuration nonetheless, so **PSTAR4 stays the certified E1 configuration and its evidence stands**. Whether PSTAR4S replaces PSTAR4 as the E1 baseline is listed as a user decision (`E2_OVERNIGHT_REPORT.md`). E2 is built on it (PSTAR5BH / PSTAR5CH).
 
-### 8a. Pre-swing P\* validation
+### 8a. Pre-swing P\* validation (the validation of lcVff "lin" itself)
 
-Pending; filled in when the battery finishes.
+**Battery:** `scripts/run_preswing_pstars.sh`, commit 4a2807e. The frozen 924-run manifest plus the 32-run external-lift matrix, with `vffRate: "sr"` added to the 793 P\* runs; frozen evaluator.
+
+**Result: PRE-SWING VALIDATION PASS**, V1 – V15 all pass (`evidence_regression_pstar4s/preswing/eval.log`).
+
+**Identity:**
+- all **776 / 776** non-lift runs are hash-identical to the official P\* validation (abdd3da);
+- 147 / 148 lift runs changed (commanded targets), as expected;
+- browser = Node 3 / 3;
+- the official touch-rest REPRO runs are hash-identical.
+
+**Behaviour change in the lift runs** (`lift_metrics_PSTAR_vs_PSTARsr.txt`), per set, max over 16 runs:
+
+| set | hover error max (mm) | touchdown impact max (% BW, limit 25) | touchdown error max (mm) |
+|---|---|---|---|
+| E5, drop 1.5 cm | 2.90 → 1.28 | 0.00 → 7.04 | 0.28 → 0.12 |
+| E5, drop 2.5 cm | 1.28 → 0.93 | 0.00 → 5.76 | 0.27 → 0.02 |
+| M10, 1.5 / 2.5 cm | 1.42 / 0.82 → 1.37 / 1.05 | 0.00 → 10.5 / 10.2 | 0.85 / 0.68 → 0.55 / 0.54 |
+| E20, 1.5 / 2.5 cm | 1.06 / 0.89 → 1.15 / 0.96 | 0.00 → 14.9 / 10.9 | 1.39 / 1.10 → 1.26 / 1.08 |
+| X2 (slow 2 mm) | 0.01 → 0.01 | 0.02 → 0.21 | 0.02 → 0.02 |
+
+**The touchdown impact rise is real and has a mechanism** (empirical finding):
+- The old servo lagged its replace reference and arrived after it had stopped: impact ≈ 0.
+- The corrected servo follows the reference into contact. At contact the velocity feed-forward still carries the reference's last downward rate.
+- Through the leg's weak (vertical) direction that rate acts with a Cartesian damping of order D/σ², so a few mm/s of reference velocity becomes tens of newtons.
+- The impacts stay inside every frozen limit.
+- The same mechanism shows in E2 (`E2_OVERNIGHT_REPORT.md`, touchdown impact 11 – 22 % BW in the corrected smokes vs 9 % before).

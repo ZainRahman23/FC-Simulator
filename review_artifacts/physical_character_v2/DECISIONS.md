@@ -2101,3 +2101,48 @@ No E2 run. Not pushed.
 **Warning:** the 25 mm apex leaves 0.4 mm of certificate slack at φ 0.8; the corrected servo's descent deficit is 0.5 – 2.6 mm.
 
 Not applied. Not pushed.
+
+## 2026-10-06 (overnight): E2 estimator correction, handoff, planning gate (`sources/2026-10-06_user_instruction_overnight_e2_autonomous.md`)
+
+### E2-6: velocity-feed-forward rate correction adopted for E2, scoped to the commanded-target term; general variable damping on both terms REFUTED (`e2/VFF_RATE_CORRECTION.md`)
+
+**Kind:** implementation correction (option `vffRate: "sr"`, default off), within the instruction's authority (Decision 1).
+
+**Mathematics:**
+- the target-motion part of lcVff's desired joint velocity is solved with singularity-robust variable damping (Nakamura & Hanafusa; Chiaverini), written in the solver's own Marquardt form;
+- μ = μmin + (μ0 − μmin)·max(0, 1 − λmin/ε²), with ε = 0.01;
+- ε comes from a 45,458-problem conditioning study against the exact per-tick IK displacement: undamped exact (≤ 1.3 %) for σ_min ≥ 0.03, which covers every airborne / commanded pose; fails only at the straight knee.
+
+**Refuted (kept as diagnostic `srAll`):** the same damping on the pelvis-motion term as well.
+- External-lift harness: 4 falls and τ0 steps up to 11,553 N·m.
+- Cause: an explicit, delayed pelvis-velocity loop through the leg's weak direction.
+
+**General vs E2-only:** general (the estimator is a shared component), scoped to the open-loop term.
+- Every path without a commanded target is bit-identical: external lift 12 / 12, KV0, identity.
+- Configurations: PSTAR4S = PSTAR4 + it; PSTAR5BS / 5CS.
+
+**Prior regressions under PSTAR4S:**
+- E1b closing PASS: 428 / 429 verdicts identical, one improvement;
+- E1a PASS;
+- T-A checks PASS;
+- G0 – G3 PASS;
+- browser = Node;
+- pre-swing P\*: see `VFF_RATE_CORRECTION.md` §8a.
+
+**Not decided here:** PSTAR4 stays the certified E1 configuration. Whether PSTAR4S replaces it as the E1 baseline is the user's decision.
+
+**Effect on E2 smoke steps (D1 off):** tracking RMS 5.6 → 3.6 – 4.1 mm; vertical error now lag-shaped and small (−1 / +2 mm).
+
+### E2-7: contact-to-swing handoff — one continuity correction; the gain blend left unchanged (`e2/E2_HANDOFF.md`)
+
+**Kind:** implementation correction (option `e2reanchorVel`, default off; configurations PSTAR5BH / PSTAR5CH), within the instruction's authority (Decision 2).
+
+**Defect:** I-11 dropped the target-motion velocity feed-forward for the one re-anchor tick at liftoff. Under the corrected rate that is a one-tick 23 N·m τ0 dip at the knee (applied Δτ 9.6 N·m).
+
+**Correction:** the new reference's own pose one tick before its start (its polynomial at u = −dt) replaces the previous target for that tick. Liftoff applied Δτ: 9.6 → 0.8 N·m (D1 off), 8.0 → 1.4 (D1 on). Tracking unchanged.
+
+**Not changed, with evidence:** the contact → swing gain blend. Swing gains in contact (counterfactual) change tracking by ≤ 0.2 mm RMS (≤ 0.01 with D1).
+
+**Liftoff transient:** inertial (forward lag up to 5.8 mm at +0.15 s without D1; 1.7 – 2.1 mm with D1), not a handoff defect.
+
+**Identity:** KV0; PSTAR4 / 5 / 5B / 5BS unchanged.
