@@ -198,6 +198,8 @@ export class V2JoltWorld {
   lambdaMotor(k) { const l = this.cons[k].c.GetTotalLambdaMotorRotation(); return [l.GetX(), l.GetY(), l.GetZ()]; }
   rotCS(k) { return raw(this.cons[k].c.GetRotationInConstraintSpace()); }
   setKinematic(i) { this.bi.SetMotionType(this.bodies[i].GetID(), this.J.EMotionType_Kinematic, this.J.EActivation_Activate); }
+  // DIAGNOSTIC only (e2/VERTICAL_RESIDUAL_DIAGNOSIS.md, pelvis replay): drive a KINEMATIC body to a pose over the next step (Jolt computes the velocities)
+  moveKinematic(i, pos, rot, dt) { const J = this.J, r = new J.RVec3(pos[0], pos[1], pos[2]), q = new J.Quat(rot[0], rot[1], rot[2], rot[3]); this.bi.MoveKinematic(this.bodies[i].GetID(), r, q, dt); J.destroy(r); J.destroy(q); }
   // DIAGNOSTIC only (cfg.diagNoGround): move body i into the no-turf layer (true) or back to the moving layer (false)
   setNoGround(i, on) { if (!this.cfg.diagNoGround) throw new Error("setNoGround needs cfg.diagNoGround"); this.bi.SetObjectLayer(this.bodies[i].GetID(), on ? L_NOGROUND : L_MOVING); }
   saveState() { const rec = new this.J.StateRecorderImpl(); this.ps.SaveState(rec, this.J.EStateRecorderState_All); return rec; }

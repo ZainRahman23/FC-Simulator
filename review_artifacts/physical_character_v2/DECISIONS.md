@@ -2259,3 +2259,49 @@ T-2, T-3, I-1, I-5 and I-7 pass. Tracking RMS with D1 is 1.3 – 2.3 mm, rate-st
 4. the φ 0.80 clearance margin under the round-up.
 
 Not pushed.
+
+## 2026-10-06: vertical-residual diagnosis (`sources/2026-10-06_user_decision_vertical_residual_diag.md`)
+
+### E2-11: descent-end / touchdown vertical residual DIAGNOSED (diagnostic only; nothing adopted) (`e2/VERTICAL_RESIDUAL_DIAGNOSIS.md`)
+
+**Method:**
+- 884 matched diagnostic runs: fixed / floating / replayed pelvis, turf removed, D1 on / off, vertical-only vs full vs harder trajectories, 180 / 240 / 480 Hz, mechanism counterfactuals.
+- Default-off hooks, with the default path verified bit-identical (KV0, E2 hashes, SV-2 record, suite 58 / 58).
+
+**Cause M1: floating-base pelvis-motion coupling** (the ankle-height error and the whole T-1 vertical residual).
+- The velocity feed-forward's pelvis-motion term keeps damping μ0, so the leg's damping drags the foot with the pelvis's vertical velocity.
+- Kinematic pelvis replay reproduces it exactly. An undamped pelvis term removes it.
+- D1 fed the measured pelvis acceleration does not help.
+
+**Cause M2: uncompensated passive ankle damping** (the orientation error, 0.5–1.9 mm of the lowest point).
+- 0.2 N·m·s/rad at about 0.85 rad/s, balanced by the proportional term: 0.99° predicted vs 0.94° measured.
+- Present with or without a moving pelvis.
+
+**Also established:**
+- Servo remainder 0.1–0.4 mm, partly rate-dependent.
+- No contact anticipation: turf-off is bit-identical until geometric contact.
+- The reference itself is consistent: it ends exactly on the turf.
+
+**Touchdown chain:**
+- Contact speed ∝ δ^0.62 (r 0.90, 315 touchdowns), so contact is early and fast.
+- M2's tilt gives edge-first contact, then a foot-flat slap (I-2).
+- M1 makes the landing leg arrest the pelvis. Most of the 10 ms "impact" is premature load: 22.3 → 10.2 % BW with the pelvis term kept through contact.
+- Contact retention also depends on the hand-back start state and the post-contact hold.
+
+**T-1:** meaningful as frozen. C-F7 0.259 → 0.009 and C-L5 0.275 → 0.088 with the causes removed. No amendment.
+
+**Reachability:** V2-long-legs at ≥ 0.095 m lateral. The body's motion during the swing drives the knee target to its 70° soft limit, so the bounded IK fails and the torque runs away. It is clean with the pelvis pinned. The certifier needs execution feasibility (predicted pelvis trajectory, soft-limit margin, torque feasibility). Not changed.
+
+**Proposed, not implemented (smallest principled correction):** in the general swing servo's velocity feed-forward,
+- (A) the pelvis-motion term with singularity-robust damping, weighted by the airborne weight a;
+- (B) the passive joint damping (the `vffPassive` form; your standing instruction keeps it diagnostic-only).
+
+Both are needed together. Worst binding-bin deviation −1.11 → −0.37 mm; approach speed 0.093 → 0.046 m/s.
+
+**Side effects needing decisions:**
+- the flat landing raises the lateral-step load in the swing-only scope;
+- contact retention needs touchdown design.
+
+**Separate decision:** touchdown and descent design (the δ^0.62 law, hand-back, post-contact hold, the 25 % BW concept).
+
+The φ 0.80 failure is preserved. Not pushed.

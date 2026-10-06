@@ -116,6 +116,8 @@ export const STAND = {
                           // reference's own pose one tick earlier (sequencer: e2reanchorPrev) instead of being dropped for that tick (I-11) — continuous actuator output at release
   vffPassive: false,      // DIAGNOSTIC COUNTERFACTUAL (e2/E2_OVERNIGHT_REPORT.md §9; default OFF; NOT adopted): the velocity feed-forward also carries the joint's passive viscous damping
                           // (spec joints[k].damping) for the desired rate — measured: the ankle's passive 0.2 N·m·s/rad is 33 % of its swing-servo damping (0.6), a ≈ 21 ms foot-orientation lag
+  diagD1PelAcc: false,    // DIAGNOSTIC counterfactual (e2/VERTICAL_RESIDUAL_DIAGNOSIS.md; default OFF): D1 (swingAccFF) uses the MEASURED pelvis linear acceleration (backward difference of the
+                          // pelvis velocity) in place of the statics' common acceleration A — tests the floating-base completeness of the acceleration feed-forward; not a candidate as is
   diagRecord: false,      // DIAGNOSTIC (e2/VERTICAL_RESIDUAL_DIAGNOSIS.md; default OFF; recording only, no effect on any output): per non-supporting leg the IK solution x, its frame, D1's resolved
                           // rates (xd, xdd) and the velocity feed-forward's pelvis-motion / target-motion parts per joint, in this.diagRec[n]
   lcVff: false,           // DIAGNOSTIC (preswing/; default OFF): desired-velocity feed-forward for a NON-SUPPORTING leg — the target joint velocity ω* = d/dt of its IK
@@ -317,7 +319,7 @@ export class StandController {
           const fr = o.lcFrame === "target" ? blendPose({ pos: pP, rot: qP }, { pos: ps.pos, rot: ps.rot }, a1) : blendPose(ns, { pos: pP, rot: qP }, sw[n]);   // blended back to the full posture frame by s; diagnostic lcFrame "target": the G3 posture frame in contact
           r = this.legIKBounded(st, ev, n, fr.pos, fr.rot, lcT[n], { limits: "soft", fallback: "none" });
           // swingAccFF (default off): the inverse-dynamics wrench of the swing subtree for the supplied analytic reference, at this IK solution
-          if (o.swingAccFF && this.swingRef && this.swingRef[n] && LC[n].swing) { if (!this.accFF) this.accFF = [null, null]; this.accFF[n] = this.swingAccWrench(st, ev, n, fr, r.x, { ...this.swingRef[n], vPel: ps.v }, A); }
+          if (o.swingAccFF && this.swingRef && this.swingRef[n] && LC[n].swing) { if (!this.accFF) this.accFF = [null, null]; this.accFF[n] = this.swingAccWrench(st, ev, n, fr, r.x, { ...this.swingRef[n], vPel: ps.v }, o.diagD1PelAcc && this.diagPelV ? V.sc(V.sub(ps.v, this.diagPelV), 1 / dt) : A); }
           if (o.diagRecord) { if (!this.diagRec) this.diagRec = [null, null]; const af = this.accFF && this.accFF[n]; this.diagRec[n] = { x: r.x.slice(), err: r.err, fr: { pos: fr.pos.slice(), rot: fr.rot.slice() }, xd: af ? af.xd.slice() : null, xdd: af ? af.xdd.slice() : null, wP: {}, wT: {} }; }   // DIAGNOSTIC (recording only)
           if (o.lcVff === "split" || o.lcVff === "lin" || o.lcVff === "linmin") { const pv = this.vffPrev && this.vffPrev[n], opt = { limits: "soft", fallback: "none" }, now = new Map(r.targets), lg = (qa, qb) => { const sg = qa[0] * qb[0] + qa[1] * qb[1] + qa[2] * qb[2] + qa[3] * qb[3] < 0 ? -1 : 1, d = Q.mul(Q.conj(qa), qb.map(x => x * sg)); return [2 * d[0] / dt, 2 * d[1] / dt, 2 * d[2] / dt]; };
             // lcVff "split" (DIAGNOSTIC, preswing/): ω* = the joint velocity of the SAME target seen from the previous pelvis frame (pelvis motion only: a still foot is not dragged)
@@ -396,6 +398,7 @@ export class StandController {
     // E2 (option e2): e2reanchor = the leg whose swing target the sequencer re-anchored this tick (B1: to the measured foot state at liftoff) — like an anchor re-capture,
     // that one-tick target change is not differentiated into the target-motion velocity feed-forward (rT above); cleared every tick. Never set without e2
     if (o.swingAccFF) { this.info.accFF = this.accFF ? this.accFF.map(x => (x ? { T: x.T, xdd: x.xdd } : null)) : null; this.accFF = null; this.swingRef = null; }   // the reference must be supplied every tick
+    if (o.diagD1PelAcc) this.diagPelV = st[this.pelvis].v.slice();   // DIAGNOSTIC (counterfactual only)
     if (LC) this.info.lc = LC.map(f => ({ state: f.state, s: f.s })); if (o.e2) { this.e2reanchor = null; this.e2reanchorPrev = null; this.info.qsRef = qsRef; this.info.xiRefDot = e2ref ? e2ref.xiRefDot.slice() : null; this.info.xiRefFF = xiRefFF.slice(); } this.n++;
     return cmd;
   }
