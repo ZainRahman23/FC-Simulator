@@ -1,0 +1,95 @@
+{
+ "generated": "e2 VFF-rate regression W set (browser = Node) \u2014 the e1b_close W runs with PSTAR4S flags (PSTAR4 + vffRate sr)",
+ "prereg": "e1b_close/E1B_CLOSE_PREREG.md",
+ "total": 3,
+ "runs": [
+  {
+   "set": "W",
+   "id": "W_P15_V2-REF_L",
+   "body": "V2-REF",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "lift": {
+    "h": 0.02,
+    "hover": 1.5,
+    "T": 0.6
+   },
+   "push": {
+    "dir": "toward",
+    "J": 15,
+    "t": 9.65,
+    "dur": 0.1
+   },
+   "end": 20,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "lcVff": "lin",
+    "lcTouch": {
+     "reseed": true
+    },
+    "footYaw": true,
+    "lcPutDown": true,
+    "abortCapture": 2,
+    "vffRate": "sr"
+   }
+  },
+  {
+   "set": "W",
+   "id": "W_PT5_V2-REF_R",
+   "body": "V2-REF",
+   "foot": "R",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "push": {
+    "dir": "toward",
+    "J": 5,
+    "t": 9,
+    "dur": 0.1
+   },
+   "end": 13,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "lcVff": "lin",
+    "lcTouch": {
+     "reseed": true
+    },
+    "footYaw": true,
+    "lcPutDown": true,
+    "abortCapture": 2,
+    "vffRate": "sr"
+   }
+  },
+  {
+   "set": "W",
+   "id": "W_TUn15_V2-REF_L",
+   "body": "V2-REF",
+   "foot": "L",
+   "drop": 0.025,
+   "r": 0,
+   "ramp": 4,
+   "turn": {
+    "deg": -15,
+    "t": 9,
+    "dur": 1
+   },
+   "end": 13,
+   "flags": {
+    "ffLockedAxis": true,
+    "touchRest": true,
+    "lcVff": "lin",
+    "lcTouch": {
+     "reseed": true
+    },
+    "footYaw": true,
+    "lcPutDown": true,
+    "abortCapture": 2,
+    "vffRate": "sr"
+   }
+  }
+ ]
+}
