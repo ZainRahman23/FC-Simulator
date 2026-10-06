@@ -116,6 +116,8 @@ export const STAND = {
                           // reference's own pose one tick earlier (sequencer: e2reanchorPrev) instead of being dropped for that tick (I-11) — continuous actuator output at release
   vffPassive: false,      // DIAGNOSTIC COUNTERFACTUAL (e2/E2_OVERNIGHT_REPORT.md §9; default OFF; NOT adopted): the velocity feed-forward also carries the joint's passive viscous damping
                           // (spec joints[k].damping) for the desired rate — measured: the ankle's passive 0.2 N·m·s/rad is 33 % of its swing-servo damping (0.6), a ≈ 21 ms foot-orientation lag
+  diagRecord: false,      // DIAGNOSTIC (e2/VERTICAL_RESIDUAL_DIAGNOSIS.md; default OFF; recording only, no effect on any output): per non-supporting leg the IK solution x, its frame, D1's resolved
+                          // rates (xd, xdd) and the velocity feed-forward's pelvis-motion / target-motion parts per joint, in this.diagRec[n]
   lcVff: false,           // DIAGNOSTIC (preswing/; default OFF): desired-velocity feed-forward for a NON-SUPPORTING leg — the target joint velocity ω* = d/dt of its IK
                           // targets (backward difference) enters as τ0 += (1 − s)(D + dt·K)·ω*, i.e. the implicit damping acts on (ω − ω*) instead of ω: a foot whose
                           // target is still while the pelvis moves is not dragged by the leg's damping, and a swing target is tracked without velocity lag
@@ -316,6 +318,7 @@ export class StandController {
           r = this.legIKBounded(st, ev, n, fr.pos, fr.rot, lcT[n], { limits: "soft", fallback: "none" });
           // swingAccFF (default off): the inverse-dynamics wrench of the swing subtree for the supplied analytic reference, at this IK solution
           if (o.swingAccFF && this.swingRef && this.swingRef[n] && LC[n].swing) { if (!this.accFF) this.accFF = [null, null]; this.accFF[n] = this.swingAccWrench(st, ev, n, fr, r.x, { ...this.swingRef[n], vPel: ps.v }, A); }
+          if (o.diagRecord) { if (!this.diagRec) this.diagRec = [null, null]; const af = this.accFF && this.accFF[n]; this.diagRec[n] = { x: r.x.slice(), err: r.err, fr: { pos: fr.pos.slice(), rot: fr.rot.slice() }, xd: af ? af.xd.slice() : null, xdd: af ? af.xdd.slice() : null, wP: {}, wT: {} }; }   // DIAGNOSTIC (recording only)
           if (o.lcVff === "split" || o.lcVff === "lin" || o.lcVff === "linmin") { const pv = this.vffPrev && this.vffPrev[n], opt = { limits: "soft", fallback: "none" }, now = new Map(r.targets), lg = (qa, qb) => { const sg = qa[0] * qb[0] + qa[1] * qb[1] + qa[2] * qb[2] + qa[3] * qb[3] < 0 ? -1 : 1, d = Q.mul(Q.conj(qa), qb.map(x => x * sg)); return [2 * d[0] / dt, 2 * d[1] / dt, 2 * d[2] / dt]; };
             // lcVff "split" (DIAGNOSTIC, preswing/): ω* = the joint velocity of the SAME target seen from the previous pelvis frame (pelvis motion only: a still foot is not dragged)
             // + the joint velocity of the COMMANDED swing target's own motion (only while a swing target is set on both ticks: anchor re-captures are never differentiated)
@@ -338,6 +341,7 @@ export class StandController {
               // singularity / soft-limit switches (measured unbounded there: τ0 steps of 300–31 000 N·m in the external-lift harness)
               for (const [k, q] of now) { const w = rP.has(k) ? lg(rP.get(k), q) : [0, 0, 0], d = P.jd[+k];
                 if (d && bnd && aW < 1) { const R2 = Q.mul(st[d.child].rot, d.F2), wr = V.sub(st[d.child].w, st[d.parent].w); for (const i of [0, 1, 2]) { const wa = V.dot(wr, Q.rot(R2, [[1, 0, 0], [0, 1, 0], [0, 0, 1]][i])), wc = Math.min(Math.max(w[i], Math.min(0, wa)), Math.max(0, wa)); w[i] = (1 - aW) * wc + aW * w[i]; } }
+                if (o.diagRecord && this.diagRec && this.diagRec[n]) { this.diagRec[n].wP[k] = w.slice(); this.diagRec[n].wT[k] = rT && rT.has(k) ? lg(rT.get(k), q) : [0, 0, 0]; }   // DIAGNOSTIC (recording only)
                 if (rT && rT.has(k)) { const w2 = lg(rT.get(k), q); w[0] += w2[0]; w[1] += w2[1]; w[2] += w2[2]; } this.ikW[k] = w; } }
             this.vffNext[n] = { fr: { pos: fr.pos.slice(), rot: fr.rot.slice() }, tgt: { pos: lcT[n].pos.slice(), rot: lcT[n].rot.slice() }, swing: !!LC[n].swing }; } }   // a non-supporting leg never targets beyond its passive (soft) limits — e.g. no hyperextended knee (measured: the unconstrained IK pressed it −2.8° into hyperextension, 18–20 N·m of tissue torque)
         else r = this.legIK(st, ev, n, pP, qP, lcT ? null : this.unl[n] ? this.hold[n] : null);

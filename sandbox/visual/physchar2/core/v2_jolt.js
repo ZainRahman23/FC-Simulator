@@ -17,7 +17,7 @@
 import { V, Q } from "./v2_math.js";
 
 export async function loadJolt(url) { const mod = await import(url); return await mod.default(); }
-const L_STATIC = 0, L_MOVING = 1, GROUND_UD = 1000, OBST_UD = 2000;   // contact index: turf −1, obstacle k → −(2 + k), body i → i
+const L_STATIC = 0, L_MOVING = 1, L_NOGROUND = 2, GROUND_UD = 1000, OBST_UD = 2000;   // contact index: turf −1, obstacle k → −(2 + k), body i → i
 // C3 (adopted 2026-10-03): Jolt manifold reduction OFF and the body-pair contact cache OFF for the V2 world (the boot experiment: both measured
 // to matter for the convex boot pieces; the cache also reused stale manifolds on slowly rolling rounded bodies, G1 diagnosis)
 // TURF (user decision 2026-10-03 after Investigation B, sources/2026-10-03_user_decision_flat_plane_turf_reopen_g1.md): the playable surface y = 0 is
@@ -45,9 +45,11 @@ export class V2JoltWorld {
     const given = Object.fromEntries(Object.entries(cfg || {}).filter(([, v]) => v !== undefined));
     this.J = J; this.spec = spec; this.cfg = Object.assign({}, G0_WORLD, given); this.contactCfg = contact;
     const st = new J.JoltSettings(); st.mMaxWorkerThreads = 1;
-    const opf = new J.ObjectLayerPairFilterTable(2); opf.EnableCollision(L_STATIC, L_MOVING); opf.EnableCollision(L_MOVING, L_MOVING);
-    const bpi = new J.BroadPhaseLayerInterfaceTable(2, 2); bpi.MapObjectToBroadPhaseLayer(L_STATIC, new J.BroadPhaseLayer(0)); bpi.MapObjectToBroadPhaseLayer(L_MOVING, new J.BroadPhaseLayer(1));
-    st.mObjectLayerPairFilter = opf; st.mBroadPhaseLayerInterface = bpi; st.mObjectVsBroadPhaseLayerFilter = new J.ObjectVsBroadPhaseLayerFilterTable(bpi, 2, opf, 2);
+    // DIAGNOSTIC (cfg.diagNoGround, default off → the two-layer tables exactly as before): a third object layer L_NOGROUND that collides with the moving bodies but NOT with the
+    // static turf, so a diagnostic harness can move one body (the swing foot) into it (setObjectLayer) — "turf removed" for that body only (e2/VERTICAL_RESIDUAL_DIAGNOSIS.md)
+    const nOL = this.cfg.diagNoGround ? 3 : 2, opf = new J.ObjectLayerPairFilterTable(nOL); opf.EnableCollision(L_STATIC, L_MOVING); opf.EnableCollision(L_MOVING, L_MOVING); if (nOL === 3) opf.EnableCollision(L_NOGROUND, L_MOVING);
+    const bpi = new J.BroadPhaseLayerInterfaceTable(nOL, 2); bpi.MapObjectToBroadPhaseLayer(L_STATIC, new J.BroadPhaseLayer(0)); bpi.MapObjectToBroadPhaseLayer(L_MOVING, new J.BroadPhaseLayer(1)); if (nOL === 3) bpi.MapObjectToBroadPhaseLayer(L_NOGROUND, new J.BroadPhaseLayer(1));
+    st.mObjectLayerPairFilter = opf; st.mBroadPhaseLayerInterface = bpi; st.mObjectVsBroadPhaseLayerFilter = new J.ObjectVsBroadPhaseLayerFilterTable(bpi, 2, opf, nOL);
     this.jolt = new J.JoltInterface(st); J.destroy(st);
     this.ps = this.jolt.GetPhysicsSystem(); this.bi = this.ps.GetBodyInterface();
     this.ps.SetGravity(new J.Vec3(0, this.cfg.gravity, 0));
@@ -196,6 +198,8 @@ export class V2JoltWorld {
   lambdaMotor(k) { const l = this.cons[k].c.GetTotalLambdaMotorRotation(); return [l.GetX(), l.GetY(), l.GetZ()]; }
   rotCS(k) { return raw(this.cons[k].c.GetRotationInConstraintSpace()); }
   setKinematic(i) { this.bi.SetMotionType(this.bodies[i].GetID(), this.J.EMotionType_Kinematic, this.J.EActivation_Activate); }
+  // DIAGNOSTIC only (cfg.diagNoGround): move body i into the no-turf layer (true) or back to the moving layer (false)
+  setNoGround(i, on) { if (!this.cfg.diagNoGround) throw new Error("setNoGround needs cfg.diagNoGround"); this.bi.SetObjectLayer(this.bodies[i].GetID(), on ? L_NOGROUND : L_MOVING); }
   saveState() { const rec = new this.J.StateRecorderImpl(); this.ps.SaveState(rec, this.J.EStateRecorderState_All); return rec; }
   restoreState(rec) { rec.Rewind(); this.ps.RestoreState(rec); this.contacts = []; }
   freeState(rec) { this.J.destroy(rec); }
