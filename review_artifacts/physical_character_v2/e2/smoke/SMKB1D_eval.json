@@ -1,0 +1,192 @@
+{
+ "smkB1d.json.gz": {
+  "C": {
+   "E2-1": {
+    "pass": true,
+    "v": "before the command: stance share 99.85 %, swing-foot load 1.15 N (0.148 % BW), state TOUCHING; release UNLOADING→TOUCHING"
+   },
+   "E2-2": {
+    "pass": true,
+    "v": "LIFTOFF→AIRBORNE 1 at +0.162 s (≤ 0.3); touching 0, load 0.000 N; before the command 0"
+   },
+   "E2-3": {
+    "pass": false,
+    "v": "tracking max 8.39 mm (≤ 10), RMS 5.59 mm (≤ 5); yaw 0.24°; tilt 1.87°; touching rows before 60 % 0; clearance min over 20–80 % 3.29 mm at φ 0.20 (≥ 5)"
+   },
+   "E2-4": {
+    "pass": true,
+    "v": "first SUPPORT 10.546 s: 3.26 mm from the final commanded foothold (≤ 10), yaw 0.10° (≤ 2)"
+   },
+   "E2-5": {
+    "pass": false,
+    "v": "TOUCHDOWN 1 at φ 0.99 (≥ 0.6); re-entries < 60 ms 0/0; rebound 0; impact 72.6 N (9.4 % BW ≤ 25); approach 0.065 m/s down (≤ 0.15), 0.064 m/s horizontal (≤ 0.05); impulse 50 ms 0.74 N·s; penetration 0.00 mm (≤ 2)"
+   },
+   "E2-6": {
+    "pass": true,
+    "v": "LOAD_ACCEPT 1 at 10.317 s; →SUPPORT 0.229 s (≤ T_r + 0.1 = 0.325); realised − commanded share during the ramp max 0.010 (≤ 0.10); load tracking from t_A + 1 s max 0.017 over 1440 rows"
+   },
+   "E2-7": {
+    "pass": true,
+    "v": "stance foot from t_L: peak 0.013 mm (≤ 1.0), path 0.060 mm (≤ 2.0), yaw 0.004° (≤ 0.5); rows not SUPPORT 0"
+   },
+   "E2-8": {
+    "pass": true,
+    "v": "ξ margin in the stance region during the swing min 4.23 cm (≥ 1)"
+   },
+   "E2-9": {
+    "pass": true,
+    "v": "applied Δτ max 2.98 N·m (knee_L.y at 8.479 s); outside onset windows max 2.98 N·m (knee_L.y at 8.479 s); commanded Δτ0 max 12.66 N·m (knee_L.y at 8.475 s); violations 0 / 0"
+   },
+   "E2-10": {
+    "pass": true,
+    "v": "closure increment max 1.21e-2 J/tick; Σ positive 0.124 J; authority writes 0; external impulse 0; motor work -0.65 J, external 0.000 J, damping 0.56 J"
+   },
+   "E2-14": {
+    "pass": true,
+    "v": "knee flexion 3.96–35.99° (certified envelope 0–40°); knee |θ − θ0| max 1.40° at 0.004 s (from 1 s: 0.12° at 17.696 s); violations 0"
+   },
+   "E2-11": {
+    "pass": true,
+    "v": "over-capacity 0; saturation during the swing none; longest continuous 0 ms (≤ 50)"
+   },
+   "E2-12": {
+    "pass": true,
+    "v": "|ξ_pred − ξ| at planned touchdown 1.2 mm (≤ 30), at LOAD_ACCEPT 2.4 mm (≤ 30), end vs terminal 0.4 mm (≤ 15)"
+   },
+   "E2-13": {
+    "pass": true,
+    "v": "end 20.07 s (7.00 s after DONE): SUPPORT/SUPPORT; |ξ − terminal| 0.04 cm; pelvis yaw Δ 0.05°; ankle ab/add Δ 0.05/0.08°; knee Δ 0.04/0.03°; step 7.32 × -0.05 cm vs command 7.00 × 0.00 (length 0.32 / width -0.05 cm); outcome foot relocated; abort none"
+   },
+   "E2-17": {
+    "pass": true,
+    "v": "plan VRP outside the support by > 5 mm: longest 0 ms (worst 0.0 mm outside); p*: longest 0 ms (worst 0.0 mm) (≤ 20 ms)"
+   },
+   "E2-18": {
+    "pass": true,
+    "v": "1 CERTIFIED planner outputs; violations 0; re-plans 1 (NO_CERTIFIED during the swing 1)"
+   }
+  },
+  "rep": {
+   "DIAGNOSTIC": "run with a diagnostic option ({\"noClearance\":true}): not an official E2 run",
+   "decision": {
+    "verdict": "CERTIFIED_ONE_STEP",
+    "dx": 0.07,
+    "dy": 0,
+    "T": 0.6,
+    "Tr": 0.225,
+    "slack": 0.5,
+    "nominal": true
+   },
+   "defs": "A1: swing phase from the measured liftoff",
+   "times": {
+    "tL": 8.308333333333334,
+    "tAir": 8.475,
+    "tc": 9.070833333333333,
+    "tTD": 9.075,
+    "tA": 13.070833333333333,
+    "liftoffDelay": 0.16666666666666607,
+    "touchdownVsPlan": -0.00416666666666643,
+    "tAcc0": 9.070833333333333,
+    "handBack": 9.175
+   },
+   "swing": {
+    "errMax": 8.385616644600026,
+    "errRms": 5.593119466715624,
+    "yawMax": 0.23626426769713849,
+    "tiltMax": 1.8655959186094617,
+    "clearMin2080": 3.291840696015985,
+    "clearMinAt": 0.20138833333333525,
+    "contactBefore60": 0
+   },
+   "placement": {
+    "firstSupportT": 10.545833,
+    "dMm": 3.2592697823363754,
+    "yawDeg": 0.09775161705026214
+   },
+   "touchdown": {
+    "n": 1,
+    "phi": 0.986111666666669,
+    "impactN": 72.57247617129421,
+    "impactBW": 0.09374991673799943,
+    "vNormal": 0.06512856483459473,
+    "vTangential": 0.06398913072026426,
+    "impulse50": 0.7355162132759568,
+    "penetrationMm": -0.000002990575481698343,
+    "chatter": [
+     0,
+     0
+    ],
+    "bounce": 0
+   },
+   "loading": {
+    "nLA": 1,
+    "laT": 10.316667,
+    "supT": 10.545833,
+    "rampDur": 0.22916599999999931,
+    "rampShareErrMax": 0.009567248773092452,
+    "trackMax": 0.017327913822017482,
+    "Tr": 0.225
+   },
+   "stance": {
+    "peakMm": 0.012574521369323213,
+    "pathMm": 0.05950292949717524,
+    "yawDeg": 0.003985882732684409,
+    "notSupportRows": 0
+   },
+   "xiMarginCm": 4.2275578802687415,
+   "prediction": {
+    "atTD": 1.1800543569655757,
+    "atLA": 2.4460878681449105,
+    "atEnd": 0.4236172653456394,
+    "sampleDtTD": 0,
+    "sampleDtLA": 0.00416599999999967
+   },
+   "final": {
+    "dxiCm": 0.042361726534563944,
+    "pelvisYawDeg": 0.045344309202932045,
+    "ankleDeg": [
+     0.053841825022118775,
+     0.08282383033466656
+    ],
+    "kneeDeg": [
+     0.03503739629475344,
+     0.03425011644925324
+    ],
+    "stepLengthErrCm": 0.32067314251809087,
+    "stepWidthErrCm": -0.045313259085825314,
+    "stepCm": [
+     7.320676408898732,
+     -0.045287561650481784
+    ]
+   },
+   "cop": {
+    "vrpWorstMm": 0,
+    "vrpLongestMs": 0,
+    "pRawWorstMm": 0,
+    "pRawLongestMs": 0
+   },
+   "events": [
+    "8.308 step command: CERTIFIED_ONE_STEP — vertical liftoff phase first",
+    "8.475 measured AIRBORNE",
+    "8.475 liftoff re-certification NO_CERTIFIED_ONE_STEP (best effort continues)",
+    "8.475 measured liftoff confirmed: commanded swing started from the measured foot state",
+    "9.071 measured contact: TOUCHDOWN",
+    "9.071 touchdown accepted: measured contact at 99 % of the swing (≥ 60 % gate)",
+    "9.175 hand-back: swing target cleared (reference at the landed anchor, a = 0)",
+    "10.550 landed foot SUPPORT",
+    "13.071 DONE: plan complete, both feet SUPPORT — reference handed back to the controller's quiet-stance target"
+   ],
+   "lifecycle": [
+    [
+     "8.458 TOUCHING→LIFTOFF",
+     "8.471 LIFTOFF→AIRBORNE",
+     "9.067 AIRBORNE→TOUCHDOWN",
+     "10.317 TOUCHDOWN→LOAD_ACCEPT",
+     "10.546 LOAD_ACCEPT→SUPPORT"
+    ],
+    []
+   ],
+   "outcome": "foot relocated"
+  }
+ }
+}

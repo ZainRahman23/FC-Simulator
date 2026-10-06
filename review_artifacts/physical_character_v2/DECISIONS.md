@@ -2024,3 +2024,27 @@ Not pushed.
 - Recovery architecture (C) deferred.
 
 No official E2 run. Not pushed.
+
+### E2-3: A1 + B1 implemented (PSTAR5B); planning gate still FAILS (clearance at φ 0.80) → STOPPED before the official run (`e2/E2_PREREG_AMENDMENT_A1B1.md`, `e2/E2_A1B1_RESULTS.md`)
+
+**Authority:** user decision 2026-10-06 (`sources/2026-10-06_user_decision_e2_A1_B1.md`): A1 + B1; thresholds, apex and window unchanged.
+
+**Implemented (option `e2: 2`):**
+- A1: swing fractions from the measured, confirmed liftoff;
+- B1: vertical lift phase first, then the commanded swing from the measured liftoff state, T = 0.60 s from liftoff, re-certified online; total step ≈ 0.77 s, not compressed;
+- two implementation defects from the diagnostic smoke corrected: I-11 (re-anchoring differenced by the swing velocity feed-forward), I-12 (early-contact acceptance ignored the planner's priorities).
+
+**Identity:** KV0; PSTAR5 records (including the recovery smoke, unchanged); PSTAR4; PSTAR5B on E1b — all identical. Browser = Node.
+
+**PG-1 FAIL:** 32 / 32 commanded decisions NO_CERTIFIED. The clearance certificate fails at φ 0.80: margin 2.4 mm forward / 2.8 mm lateral. With the 25 mm apex, BLF's spline puts the reference at 5.4 mm there. My previous report omitted that the descent end failed too.
+
+**Diagnostic smoke (non-test, 0.07 m, certificate not enforced):** 13 / 16 pass.
+- E2-3 fails: clearance 3.3 mm at φ 0.20; RMS 5.6 mm. The 4 Hz swing servo, without acceleration feed-forward, lags the reference by about 6 mm.
+- E2-5 fails: 0.064 m/s horizontal approach.
+
+**Stopped for decision.** The remaining levers change architecture or constants:
+- D1: swing acceleration feed-forward plus a predicted-response clearance certificate (**recommended**);
+- D2: swing servo bandwidth;
+- D3: longer T seed (insufficient alone).
+
+No official E2 run. Not pushed.

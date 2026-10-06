@@ -12,6 +12,8 @@ import { generateSpec } from "../spec/v2_spec.js"; import { VARIATION_SET } from
 import { G3Sim, g3Def } from "./v2_g3.js"; import { e2seqOf } from "../ctrl/v2_step.js"; import { setAnkleNeutralKOverride } from "../spec/v2_joints.js";
 export const CFG = { PSTAR: { ffLockedAxis: true, touchRest: true, lcVff: "lin", lcTouch: { reseed: true } } };
 CFG.PSTAR4 = { ...CFG.PSTAR, footYaw: true, lcPutDown: true, abortCapture: 2 }; CFG.PSTAR5 = { ...CFG.PSTAR4, e2: true };
+// PSTAR5B (e2/E2_PREREG_AMENDMENT_A1B1.md): + the B1 sequencing (vertical liftoff phase; swing from the measured liftoff state)
+CFG.PSTAR5B = { ...CFG.PSTAR4, e2: 2 };
 export const E2P = { fwd: { dx: 0.10, dy: 0 }, lat: { dx: 0, dy: 0.08 }, T: 0.60, apex: 0.025, apexLow: 0.008, lateDz: 0.010, pushJ: 5, pushDur: 0.1, LT: 0.6, HOV: 1.5, RT: 0.6, GRACE: 0.3, LIFT: 0.02 };
 const mj = (u) => { u = Math.min(1, Math.max(0, u)); return u * u * u * (10 - 15 * u + 6 * u * u); };
 const seg = (t, a, T, v0, v1) => { const u = Math.min(1, Math.max(0, (t - a) / T)), dv = v1 - v0; return [v0 + dv * u * u * u * (10 - 15 * u + 6 * u * u), t > a && t < a + T ? dv * 30 * u * u * (1 - u) * (1 - u) / T : 0, t > a && t < a + T ? dv * 60 * u * (1 - u) * (1 - 2 * u) / (T * T) : 0]; };
@@ -27,12 +29,13 @@ export function e2Sim(J, spec, run) { const nL = run.side === "L" ? 0 : 1, nS = 
   // step protocol after the command (read from the sequencer itself, same tick): DONE → 0.5; NO_CERTIFIED at the decision (step not executed) → back to double support by
   // E1b's 4 s min-jerk return (the best-effort fallback); otherwise the stance share 1 (the sequencer supplies the request while active)
   const sig = (t) => { if (t <= 3) return [0.5, 0, 0]; if (t < 7) return seg(t, 3, 4, 0.5, 1.0); if (P15) { if (H.tR == null || t < H.tR + 0.2) return [1.0, 0, 0]; return seg(t, H.tR + 0.2, 4, 1.0, 0.5); }
-    if (seq && seq.ph === "DONE") return [0.5, 0, 0]; if (seq && seq.ph === "NOCERT" && seq.ncT != null) return seg(t, seq.ncT, 4, 1.0, 0.5); return [1.0, 0, 0]; };
+    if (seq && seq.ph === "DONE") return [0.5, 0, 0]; if (seq && (seq.ph === "NOCERT" || seq.ph === "NOLIFT") && seq.ncT != null) return seg(t, seq.ncT, 4, 1.0, 0.5); return [1.0, 0, 0]; };
   const lamFn = (t) => lamFn.d(t)[0]; lamFn.d = (t) => { const [v, d1, d2] = sig(t); return nS === 1 ? [v, d1, d2] : [1 - v, -d1, -d2]; };
-  if (!P15 && config === "PSTAR5") lamFn.e2 = (t, ctrl) => { const sq = ctrl.e2seq && ctrl.e2seq.active() && !ctrl.e2seq.rec ? ctrl.e2seq.request(t) : null; if (sq) return sq; const [lam, dl, ddl] = lamFn.d(t); return { lam, dl, ddl }; };
-  const def = { ...base, key: `E2:${run.protocol}:${run.side}`, title: `E2 ${run.protocol} ${run.kind || ""} ${run.side}`, lam: lamFn, supervise: config === "PSTAR5" ? { e2: { pushEnd: () => (H.pertT != null && H.pertDur != null ? H.pertT + H.pertDur : null) } } : {}, holds: [], seconds: 40, push: null, torque: null };
+  const E2C = config === "PSTAR5" || config === "PSTAR5B";
+  if (!P15 && E2C) lamFn.e2 = (t, ctrl) => { const sq = ctrl.e2seq && ctrl.e2seq.active() && !ctrl.e2seq.rec ? ctrl.e2seq.request(t) : null; if (sq) return sq; const [lam, dl, ddl] = lamFn.d(t); return { lam, dl, ddl }; };
+  const def = { ...base, key: `E2:${run.protocol}:${run.side}`, title: `E2 ${run.protocol} ${run.kind || ""} ${run.side}`, lam: lamFn, supervise: E2C ? { e2: { pushEnd: () => (H.pertT != null && H.pertDur != null ? H.pertT + H.pertDur : null) } } : {}, holds: [], seconds: 40, push: null, torque: null };
   const s = new G3Sim(J, spec, def, { stand: { ikRefTwist: true, lifecycle: true, pelvisDrop: pd, ...CFG[config] }, passiveOpts: { kneeModel: "v2k" }, ...(hz !== 240 ? { cfg: { hz } } : {}) });
-  const C = s.ctrl, dt = s.dt, seq = config === "PSTAR5" ? e2seqOf(C) : null, CONTACT = ["TOUCHDOWN", "TOUCHING", "LOAD_ACCEPT", "SUPPORT", "UNLOADING"];
+  const C = s.ctrl, dt = s.dt, seq = E2C ? e2seqOf(C) : null, CONTACT = ["TOUCHDOWN", "TOUCHING", "LOAD_ACCEPT", "SUPPORT", "UNLOADING"];
   const push = (t0, J) => { H.pertT = t0; H.pertDur = E2P.pushDur; H.pert = { t0, J }; s.base.push = { t0, dur: E2P.pushDur, J, body: "thorax" }; };
   const towardSwing = nL === 0 ? -1 : 1, pJ = run.pert && typeof run.pert === "object" ? (run.pert.dir === "lat" ? [E2P.pushJ * towardSwing, 0, 0] : [0, 0, E2P.pushJ]) : null;
   const setTimeline = (tR) => { H.tR = tR; H.tA = tR + 4.2; H.tEnd = H.tA + 7; };

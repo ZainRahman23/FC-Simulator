@@ -121,3 +121,25 @@ Fixed in the `tools/e2_eval.mjs` header before any official run. Points worth st
 | SMK-1 | V2-REF, left swing, **0.07 m** forward (inside the certified corridor, not the 0.10 m nominal), 240 Hz | commanded path |
 | SMK-1D | SMK-1 with the DIAGNOSTIC option `--diag=noclear` (clearance certificate computed and logged, not enforced; the evaluator marks such runs non-official) | the physical commanded step that I-10 / PG-1 otherwise block |
 | SMK-R | V2-165-62, **right** lift, P15 at **180 Hz** (the R-B obligations are L 240 / 180 / 480 and R 240) | recovery path |
+
+## 7. Amendment A1 + B1 (PSTAR5B, option `e2: 2`; `E2_PREREG_AMENDMENT_A1B1.md`)
+
+**B1 sequencing:**
+- LIFT (E1b lift reference) from the command;
+- at the measured AIRBORNE, `startSwing` builds the swing from the measured foot state (origin position, origin velocity, orientation, angular velocity) with the lift reference's acceleration;
+- T = 0.60 s from liftoff, apex knot at liftoff + T/2;
+- online re-certification (path, clearance, timed capture);
+- no liftoff by the end of the lift profile → foot back to the anchor, then E1b's return.
+
+**Decision-time planning:** predicted liftoff delay 0.171 s; predicted liftoff state = the lift reference.
+
+**A1 in the evaluator:** φ from the measured liftoff (t_S = t_air, asserted).
+
+**Defects found in the B1 diagnostic smoke (before any official run):**
+
+| # | defect | correction |
+|---|---|---|
+| I-11 | the one-tick re-anchoring was differenced by the swing velocity feed-forward (88.6 N·m, foot thrown back onto the turf) | `e2reanchor` excludes that tick from the target-motion feed-forward, like the controller's anchor re-captures |
+| I-12 | early-contact acceptance ignored the planner's priorities (accepted a zero-length step) | contact location adopted only if the current foothold no longer certifies |
+
+Results: `E2_A1B1_RESULTS.md`.

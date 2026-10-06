@@ -23,6 +23,9 @@
 //   E2-14 E1a-16 / E1a-17. E2-17 from t_L to DONE: the plan VRP and p* (pRaw) outside the controller's support region by > 5 mm for > 20 ms (consecutive) = fail.
 //   E2-18 every CERTIFIED planner output: valid landing geometry, certified reach node, swing path FEASIBLE at all samples.
 //   R-1 … R-6 per §4 on the p15 records (abort t_ab; class decision e2dec).
+// AMENDMENT A1 (e2/E2_PREREG_AMENDMENT_A1B1.md; PSTAR5B runs, option e2: 2): the swing phase starts at the measured, confirmed liftoff — t_S = t_air (the sequencer starts the
+//   commanded swing there, B1), t_TD = liftoff + T, so φ = (t − t_air)/(t_TD − t_air) for every swing-fraction item above (E2-3 window and no-contact span, E2-5 gate). PSTAR5
+//   records keep the original definition (φ from the command). Thresholds unchanged.
 // usage: node tools/e2_eval.mjs <file.json.gz> [...] [--kind=step|rb] [--json=<out>]
 import fs from "fs"; import path from "path"; import zlib from "zlib"; import { fileURLToPath } from "url";
 import { judge as e1bJudge } from "./e1b_eval.mjs";
@@ -40,7 +43,8 @@ export function evalStep(r) { const R = r.rows, n = r.lifted, m = r.stance, W = 
   if (tL == null || !E2 || !E2.calls.length) { add("E2-0", false, `no step command (tL ${tL}, unload time-out ${H.unloadTimeout}, abort before lift ${H.abortBeforeLift})`); return { C, rep }; }
   const dec = E2.calls[0]; rep.decision = { verdict: dec.verdict, dx: dec.dx, dy: dec.dy, T: dec.T, Tr: dec.Tr, slack: dec.slack, nominal: dec.nominal };
   if (dec.verdict !== "CERTIFIED_ONE_STEP") { add("E2-0", false, `planner: ${dec.verdict} (${dec.why}) — step not executed`); return { C, rep }; }
-  const tS = E2.tStart, tTD = E2.tTD, phi = (t) => (t - tS) / (tTD - tS), tAir = E2.tAir, tc = E2.tTDm ?? E2.tContact, tA = E2.doneT;
+  const A1 = r.cfg.e2 === 2, tS = E2.tStart, tTD = E2.tTD, phi = (t) => (t - tS) / (tTD - tS), tAir = E2.tAir, tc = E2.tTDm ?? E2.tContact, tA = E2.doneT;
+  rep.defs = A1 ? "A1: swing phase from the measured liftoff" : "v1: swing phase from the command"; if (A1 && tAir != null && Math.abs(tS - tAir) > 1e-9) throw new Error("A1: swing start ≠ measured liftoff");
   const tr = [0, 1].map(k => { const o = []; for (let i = 1; i < R.length; i++) if (R[i].st[k] !== R[i - 1].st[k]) o.push({ t: R[i].t, from: R[i - 1].st[k], to: R[i].st[k], i }); return o; });
   const rowAt = (t) => R.find(x => x.t >= t - 1e-9), iL = R.findIndex(x => x.t >= tL - 1e-9);
   rep.times = { tL, tAir, tc, tTD, tA, liftoffDelay: tAir != null ? tAir - tL : null, touchdownVsPlan: tc != null ? tc - tTD : null, tAcc0: E2.tAcc0, handBack: E2.handBackT };

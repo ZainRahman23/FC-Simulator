@@ -32,7 +32,13 @@ export const FS = {
   TdsCmd: 4.0, TdsRec: 0.6,                                  // final double-support transition: commanded = E1b's validated 4 s return; recovery = the supervisor's abortDur
   nPath: 11, topPath: 5, vrpTol: 0.005, vrpDwell: 0.020,     // path samples; path-certified candidates (recovery); E2-17 predicate (5 mm for > 20 ms)
   clearWin: [0.2, 0.8], clearMin: 0.005,                     // commanded-step clearance certificate = the planning counterpart of E2-3 (swept boot geometry − tracking envelope ≥ 5 mm, φ ∈ [0.2, 0.8])
+  // B1 (option e2: 2; e2/E2_PREREG_AMENDMENT_A1B1.md): the vertical liftoff phase = the validated E1b lift reference (20 mm min-jerk over 0.6 s) and its measured AIRBORNE
+  // delay, maximum over the 8 bodies (research/E2_TIMING_LOAD_ASSUMPTIONS.md §2: 167–171 ms) — the planning value of the "remaining liftoff delay"
+  lift: { h: 0.020, T: 0.6 }, liftDelayPlan: 0.171,
 };
+// the B1 lift reference at τ s after the step command: anchor + h·minjerk(τ/T), vertical only → { p, v, a } (plain arithmetic)
+export function liftRef(A, tau) { const T = FS.lift.T, u = Math.min(1, Math.max(0, tau / T)), h = FS.lift.h, mov = tau > 0 && tau < T;
+  return { p: [A.pos[0], A.pos[1] + h * u * u * u * (10 - 15 * u + 6 * u * u), A.pos[2]], v: [0, mov ? h * 30 * u * u * (1 - u) * (1 - u) / T : 0, 0], a: [0, mov ? h * (60 * u - 180 * u * u + 120 * u * u * u) / (T * T) : 0, 0] }; }
 const mj = (u) => { u = Math.min(1, Math.max(0, u)); return u * u * u * (10 - 15 * u + 6 * u * u); };
 // the controller's lateral axis (from its heading) oriented toward the landed foot n — the axis of the validated capture model (ctrl/v2_capture.js captureContext)
 export function latU(info, n) { const hd = info.heading, cS = centroid2(info.polys[1 - n]), cL = centroid2(info.polys[n]); let u = [hd[1], -hd[0]]; if ((cL[0] - cS[0]) * u[0] + (cL[1] - cS[1]) * u[1] < 0) u = [-u[0], -u[1]]; return u; }
@@ -68,9 +74,9 @@ export const eLandOf = (d, T, wn) => PLAN_MARGINS.landBase + 5.77 * d / (wn * wn
 //      plan0 (the current execution plan to continue, or null = a fresh plan from the measured state), contactNow (already in contact: tc = 0) }
 // c: { pose, L (landed region at the pose), T (remaining swing to the planned touchdown), Tr, eLand, rMid }
 export function predict(X, c, delay = 0, keep = false) { const M = PLAN_MARGINS, w = X.w, dt = X.dt, m = 1 - X.n, rec = X.mode === "recovery";
-  const tN = X.tNow ?? 0, S = inset(X.info.polys[m], M.copSS), Lr = inset(c.L, c.eLand + M.copRamp), Lf = inset(c.L, c.eLand + M.copFull), tc = tN + (X.contactNow ? 0 : c.T + TA.margin) + delay, tAcc = tc + X.debounce + M.shareLag;
+  const tN = X.tNow ?? 0, Tlo = c.Tlo || 0, S = inset(X.info.polys[m], M.copSS), Lr = inset(c.L, c.eLand + M.copRamp), Lf = inset(c.L, c.eLand + M.copFull), tc = tN + (X.contactNow ? 0 : Tlo + c.T + TA.margin) + delay, tAcc = tc + X.debounce + M.shareLag;   // Tlo: remaining liftoff delay (B1)
   const horizon = tAcc + c.Tr + TA.horizon, Rfin = realisable(S, Lf, 1, X.minShare);   // all times absolute (plan0 is the execution plan, in simulation time)
-  let xi = X.xi0.slice(), pPrev = X.p0.slice(), P = X.plan0 ? clonePlan(X.plan0) : rec ? recPlan({ t0: tN, xi0: xi, Tds: FS.TdsRec, u: latU(X.info, X.n) }) : cmdPlan({ t0: tN, xi0: xi, xid0: [w * (xi[0] - pPrev[0]), w * (xi[1] - pPrev[1])], rs: X.rs, tTD: tN + c.T });
+  let xi = X.xi0.slice(), pPrev = X.p0.slice(), P = X.plan0 ? clonePlan(X.plan0) : rec ? recPlan({ t0: tN, xi0: xi, Tds: FS.TdsRec, u: latU(X.info, X.n) }) : cmdPlan({ t0: tN, xi0: xi, xid0: [w * (xi[0] - pPrev[0]), w * (xi[1] - pPrev[1])], rs: X.rs, tTD: tN + Tlo + c.T });
   let reinit = X.mode !== "commanded" || (P.kind === "ds"), vrpOut = 0, vrpWorst = 0, out = keep ? [] : null, early = false;
   for (let k = 0; ; k++) { const t = tN + k * dt; if (t > horizon + 1e-9) break;
     const s = t < tAcc ? 0 : smooth01((t - tAcc) / c.Tr), contacted = t >= tc - 1e-12, floor = rec ? X.minShare * (contacted ? mj((t - tc) / X.abortDur) : 0) : X.minShare;
@@ -109,7 +115,7 @@ export function certifyPath(X, sg) { const v = []; for (let i = 0; i < FS.nPath;
 export const moveOf = (X, pose) => (X.F0 ? V.dist(X.F0.pos, pose.pos) : V.dist(X.foot.pos, pose.pos));
 function cand(X, pose, T, Tr, eFix = null) { const d = moveOf(X, pose), wn = 2 * Math.PI * X.ctrl.lc.o.swingHz, T1 = Math.max(T, 1e-3);
   const eLand = eFix != null ? eFix : X.contactNow ? 0 : X.F0 ? X.eLand0 + 5.77 * d / (wn * wn * T1 * T1) : eLandOf(Math.max(d, 1e-9), T1, wn);
-  return { pose, T, Tr, d, eLand, L: footprintAt(X.ctrl, X.n, pose), rMid: [X.rMid0[0] + 0.5 * (pose.pos[0] - X.foot.pos[0]), X.rMid0[1] + 0.5 * (pose.pos[2] - X.foot.pos[2])] }; }
+  return { pose, T, Tr, d, eLand, Tlo: X.liftDelay || 0, L: footprintAt(X.ctrl, X.n, pose), rMid: [X.rMid0[0] + 0.5 * (pose.pos[0] - X.foot.pos[0]), X.rMid0[1] + 0.5 * (pose.pos[2] - X.foot.pos[2])] }; }
 // the swing segment a candidate implies (from the current reference state; apex knot for commanded steps that have not passed it)
 export function segFor(X, pose, T) { const knot = X.apex != null && X.knotT != null && X.knotT > 1e-6 && X.knotT < T - 1e-6 ? { z: X.apexZ, tk: X.knotT } : null; return stepSegment(X.ref, pose, T, knot); }
 // ── the planner ──

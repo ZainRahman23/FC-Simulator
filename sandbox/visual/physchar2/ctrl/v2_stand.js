@@ -306,7 +306,7 @@ export class StandController {
             // keeps it safe; otherwise (airborne / commanded) the solver's damped-least-squares level IK.mu0 — robust near the straight-knee singularity
             // CONTINUOUS in the airborne weight a (no switch in the torque path): μ = μmin + a(μ0 − μmin); passivity-bound weight (1 − a)
             const aW = LC[n].a, mu = o.lcVff === "lin" ? IK.mu0 : IK.muMin + aW * (IK.mu0 - IK.muMin), cur = { pos: fr.pos, rot: fr.rot, tgt: lcT[n] }, bnd = o.lcVff === "split";   // "lin" / "linmin": no passivity bound (DIAGNOSTIC variants)
-            if (pv) { const rP = new Map(this.legIKRate(st, ev, n, pv.fr.pos, pv.fr.rot, lcT[n], r, cur, mu)), rT = LC[n].swing && pv.swing ? new Map(this.legIKRate(st, ev, n, fr.pos, fr.rot, pv.tgt, r, cur, mu)) : null;
+            if (pv) { const rP = new Map(this.legIKRate(st, ev, n, pv.fr.pos, pv.fr.rot, lcT[n], r, cur, mu)), rT = LC[n].swing && pv.swing && this.e2reanchor !== n ? new Map(this.legIKRate(st, ev, n, fr.pos, fr.rot, pv.tgt, r, cur, mu)) : null;
               // PASSIVITY BOUND on the pelvis part (drag cancellation): per axis ω*_P is clamped to [min(0, ω), max(0, ω)] of the joint's ACTUAL relative angular velocity
               // (the actuator's own convention), so the implicit damping on (ω − ω*) is never reversed and never does positive work — bounded near the straight-knee
               // singularity / soft-limit switches (measured unbounded there: τ0 steps of 300–31 000 N·m in the external-lift harness)
@@ -362,7 +362,9 @@ export class StandController {
           const Ks = Math.max(gf.K, g.K * sc), Ds = Math.max(gf.D, g.D * sc); return { K: Ks, D: Ds, tau0: tff + Ks * e[i], ff: tff }; }
         return { K: g.K, D: g.D, tau0: tff + g.K * e[i], ff: tff }; })); }
     this.info = { c, v, h, w0, xi, xiRef, pRaw, p, r, A, share, cop, F, support, polys, mid, heading: hd, ff, t, Ldot, lam, inSup, unl: this.unl.slice(), ikRes: this.ikRes ? this.ikRes.slice() : null, pelH: o.posture === "ik" ? this.pelHT : null };
-    if (LC) this.info.lc = LC.map(f => ({ state: f.state, s: f.s })); if (o.e2) { this.info.qsRef = qsRef; this.info.xiRefDot = e2ref ? e2ref.xiRefDot.slice() : null; this.info.xiRefFF = xiRefFF.slice(); } this.n++;
+    // E2 (option e2): e2reanchor = the leg whose swing target the sequencer re-anchored this tick (B1: to the measured foot state at liftoff) — like an anchor re-capture,
+    // that one-tick target change is not differentiated into the target-motion velocity feed-forward (rT above); cleared every tick. Never set without e2
+    if (LC) this.info.lc = LC.map(f => ({ state: f.state, s: f.s })); if (o.e2) { this.e2reanchor = null; this.info.qsRef = qsRef; this.info.xiRefDot = e2ref ? e2ref.xiRefDot.slice() : null; this.info.xiRefFF = xiRefFF.slice(); } this.n++;
     return cmd;
   }
 }
