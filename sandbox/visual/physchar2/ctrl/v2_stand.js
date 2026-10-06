@@ -102,6 +102,10 @@ export const STAND = {
   footYaw: null,          // EXPERIMENTAL (default OFF = null; read by gates/v2_g2.js → the actuator layer): the active foot-yaw path's capacity, e.g. footYawFromSubtalar()
                           // (spec/v2_actuators.js) — an actuator on the ankle's passive-only foot ab/adduction axis sharing the subtalar budget with inversion; the
                           // controller's existing ankle rows drive it (support: K 0, D ankleD, statics feed-forward; non-support: the swing ankle gains)
+  e2: false,              // EXPERIMENTAL E2 (e2/E2_DESIGN_v2.md; default OFF = bit-identical): the step sequencer (ctrl/v2_step.js, driven from the transfer request / supervisor) may hand the
+                          // balance law a DCM reference — request fields xiRef [x, z] and xiRefDot replace ξ_ref and the −ξ̇_ref/ω0 term of p* = ξ + kξ(ξ − ξ_ref) − ξ̇_ref/ω0 (the
+                          // existing law; no second controller); info.qsRef = the quiet-stance reference with both feet supporting at λ 0.5 (the plan's terminal point);
+                          // the tick's states are kept for the planner's online IK certification (e2st / e2ev / e2dt). Nothing else changes
   lcAbortRamp: false,     // DIAGNOSTIC (gates/v2_g3.js supervised(); default OFF): the single-support abort puts an airborne foot down CONTINUOUSLY (target ramp to the anchor over the lifecycle's release) instead of clearing its swing target in one tick
   lcVff: false,           // DIAGNOSTIC (preswing/; default OFF): desired-velocity feed-forward for a NON-SUPPORTING leg — the target joint velocity ω* = d/dt of its IK
                           // targets (backward difference) enters as τ0 += (1 − s)(D + dt·K)·ω*, i.e. the implicit damping acts on (ω − ω*) instead of ω: a foot whose
@@ -208,6 +212,7 @@ export class StandController {
     // EXPERIMENTAL lifecycle (default off): per-foot support weights from the sensed load / turf contact of the previous step
     // (intent: the transfer request's share per foot gates / starts load acceptance — ctrl/v2_support.js; the request is evaluated here once per
     //  tick and reused below, so the request function is still called exactly once)
+    if (o.e2) { this.e2st = st; this.e2ev = ev; this.e2dt = dt; }   // E2 (default off): the planner's IK certification reads this tick's states
     const reqLC = this.lc && o.transfer ? o.transfer(this.n * dt, this) : null, lamLC = reqLC == null ? null : (typeof reqLC === "number" ? reqLC : reqLC.lam);
     const LC = this.lc ? this.lc.update(this.sense, (n) => ({ pos: st[this.feet[n]].pos.slice(), rot: st[this.feet[n]].rot.slice() }), dt, lamLC == null ? [null, null] : [1 - lamLC, lamLC], reqLC && typeof reqLC === "object" && (reqLC.intent || reqLC.acceptDur) ? { intent: reqLC.intent || null, acceptDur: reqLC.acceptDur || null } : null) : null, sw = LC ? LC.map(f => f.s) : null, swSum = sw ? sw[0] + sw[1] : 0;
     if (LC && o.lcTouch && o.lcTouch.reseed) for (const n of [0, 1]) { const f = LC[n]; if (f.s < 1 && !f.swing && ["UNLOADING", "TOUCHING", "TOUCHDOWN", "LOAD_ACCEPT"].includes(f.state)) this.lc.reseed(n, { pos: st[this.feet[n]].pos, rot: st[this.feet[n]].rot }); }   // DIAGNOSTIC (preswing/): resting foot's horizontal place / yaw follow it
@@ -225,6 +230,12 @@ export class StandController {
     // sub-millimetre rocking of the barely loaded foot ~5800× into CoP commands and felled the cycle test (G3-A4, recorded)
     let xiRefFF = [0, 0]; if (lam != null && o.dcmFF && typeof req === "object") { const sep = (cen[1][0] - cen[0][0]) * lat[0] + (cen[1][1] - cen[0][1]) * lat[1], w = Math.sqrt(G / Math.max(0.3, c[1]));
       const vl = sep * (req.dl || 0), al = sep * (req.ddl || 0); xiRef[0] += lat[0] * vl / w; xiRef[1] += lat[1] * vl / w; xiRefFF = [-lat[0] * (vl + al / w) / w, -lat[1] * (vl + al / w) / w]; }
+    // E2 (default off): the step sequencer's DCM reference replaces ξ_ref and −ξ̇_ref/ω0 in the same law; qsRef = this tick's quiet-stance reference for both feet supporting at λ 0.5
+    let qsRef = null; if (o.e2 && sw) { const hd2 = norm2([fc[0][0] + fc[1][0], fc[0][2] + fc[1][2]]), mid2 = [(ankL[0] + ankR[0]) / 2, (ankL[2] + ankR[2]) / 2], lat2 = [hd2[1], -hd2[0]];
+      const dLat2 = (cen[0][0] * (1 - 0.5) + cen[1][0] * 0.5 - mid2[0]) * lat2[0] + (cen[0][1] * (1 - 0.5) + cen[1][1] * 0.5 - mid2[1]) * lat2[1];
+      qsRef = [mid2[0] + hd2[0] * (this.stance.comAhead + off[1]) + lat2[0] * (off[0] + dLat2), mid2[1] + hd2[1] * (this.stance.comAhead + off[1]) + lat2[1] * (off[0] + dLat2)]; }
+    const e2ref = o.e2 && req && typeof req === "object" && req.xiRef ? req : null;
+    if (e2ref) { const w = Math.sqrt(G / Math.max(0.3, c[1])); xiRef[0] = e2ref.xiRef[0]; xiRef[1] = e2ref.xiRef[1]; xiRefFF = [-e2ref.xiRefDot[0] / w, -e2ref.xiRefDot[1] / w]; }
     const inSup = sw ? sw.map(x => x > 0) : [0, 1].map(n => !o.contactSupport || this.sense.touch[n] > 0), supIdx = [0, 1].filter(n => inSup[n]), supFeet = supIdx.length ? supIdx : [0, 1];
     // lifecycle: a foot's support region grows continuously from its centroid with its weight (contact alone never implies support, H5)
     const polysSup = sw ? polys.map((poly, n) => { if (sw[n] >= 1) return poly; const f = Math.max(sw[n], 1e-6); return poly.map(([x, z]) => [cen[n][0] + (x - cen[n][0]) * f, cen[n][1] + (z - cen[n][1]) * f]); }) : polys;   // (weight 0: a 1e-6-scale region at the centroid, excluded from the support; keeps the per-foot clamp well defined)
@@ -351,7 +362,7 @@ export class StandController {
           const Ks = Math.max(gf.K, g.K * sc), Ds = Math.max(gf.D, g.D * sc); return { K: Ks, D: Ds, tau0: tff + Ks * e[i], ff: tff }; }
         return { K: g.K, D: g.D, tau0: tff + g.K * e[i], ff: tff }; })); }
     this.info = { c, v, h, w0, xi, xiRef, pRaw, p, r, A, share, cop, F, support, polys, mid, heading: hd, ff, t, Ldot, lam, inSup, unl: this.unl.slice(), ikRes: this.ikRes ? this.ikRes.slice() : null, pelH: o.posture === "ik" ? this.pelHT : null };
-    if (LC) this.info.lc = LC.map(f => ({ state: f.state, s: f.s })); this.n++;
+    if (LC) this.info.lc = LC.map(f => ({ state: f.state, s: f.s })); if (o.e2) { this.info.qsRef = qsRef; this.info.xiRefDot = e2ref ? e2ref.xiRefDot.slice() : null; this.info.xiRefFF = xiRefFF.slice(); } this.n++;
     return cmd;
   }
 }

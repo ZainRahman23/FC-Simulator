@@ -41,3 +41,26 @@ export function segRef(sg, t) { const u = Math.min(Math.max(t, 0), sg.T), p = sg
 // so |e| ≲ max|p̈_d|/ω²; a rest-to-rest quintic of amplitude Δ peaks at |p̈_d| = (10/√3)·Δ/T² (Flash & Hogan 1985) → relative error ε needs
 // T ≥ √(10/(√3·ε))/ω. ε = 0.10 at the lifecycle's swingHz 4 → 0.302 s (≈ 1.2 servo periods)
 export const putDownDuration = (swingHz, eps = 0.10) => Math.sqrt(10 / (Math.sqrt(3) * eps)) / (2 * Math.PI * swingHz);
+
+// ═══ E2 STEP SWING (e2/E2_DESIGN_v2.md §4; used only by the default-off E2 option `e2`) ══════════════════════════════════════════════════════════════
+// BLF SwingFootPlanner mathematics (equations only): an explicit quintic per horizontal axis from the CURRENT REFERENCE state (p, v, a) to the foothold at rest;
+// the vertical axis a TWO-SEGMENT quintic through an apex knot { z (absolute height), tk (s from the segment start) } whose interior velocity and acceleration
+// are SOLVED from jerk and snap continuity at the knot (the quintic-spline interior-knot solve: C4 at the knot, so the reference is C2 everywhere), landing
+// velocity 0. Without a knot (recovery steps; re-targets after the knot time) the vertical is one quintic. Orientation as segment(): θ quintic to the goal frame.
+// Re-targeting = a new segment from stepRef() of the current one (never a zero-velocity restart). Plain data (JSON), evaluated by stepAt.
+const jerk5 = (c, t) => 6 * c[3] + 24 * c[4] * t + 60 * c[5] * t * t, snap5 = (c, t) => 24 * c[4] + 120 * c[5] * t;
+function knotSolve(z0, v0, a0, zk, t1, z1, t2) { const seg = (vk, ak) => [quintic(z0, v0, a0, zk, vk, ak, t1), quintic(zk, vk, ak, z1, 0, 0, t2)];
+  const res = (vk, ak) => { const [c1, c2] = seg(vk, ak); return [jerk5(c1, t1) - jerk5(c2, 0), snap5(c1, t1) - snap5(c2, 0)]; };   // affine in (vk, ak): exact from three evaluations
+  const r0 = res(0, 0), rv = res(1, 0), ra = res(0, 1), a00 = rv[0] - r0[0], a01 = ra[0] - r0[0], a10 = rv[1] - r0[1], a11 = ra[1] - r0[1], det = a00 * a11 - a01 * a10;
+  const vk = (-r0[0] * a11 + a01 * r0[1]) / det, ak = (-a00 * r0[1] + r0[0] * a10) / det, [c1, c2] = seg(vk, ak); return [{ T: t1, c: c1 }, { T: t2, c: c2 }]; }
+export function stepSegment(ref, goal, T, knot = null) { const one = (i) => [{ T, c: quintic(ref.p[i], ref.v[i], ref.a[i], goal.pos[i], 0, 0, T) }];
+  const useK = !!knot && knot.tk > 1e-6 && knot.tk < T - 1e-6;
+  return { T, goal: { pos: goal.pos.slice(), rot: goal.rot.slice() }, knot: useK ? { z: knot.z, tk: knot.tk } : null,
+    cp: [one(0), useK ? knotSolve(ref.p[1], ref.v[1], ref.a[1], knot.z, knot.tk, goal.pos[1], T - knot.tk) : one(1), one(2)], cr: [0, 1, 2].map(i => quintic(ref.th[i], ref.w[i], ref.al[i], 0, 0, 0, T)) }; }
+function pieceAt(P, t) { let u = t; for (let i = 0; i < P.length; i++) { if (u <= P[i].T || i === P.length - 1) return qeval(P[i].c, Math.min(Math.max(u, 0), P[i].T)); u -= P[i].T; } }
+export function stepAt(sg, t) { const u = Math.min(Math.max(t, 0), sg.T), p = sg.cp.map(P => pieceAt(P, u)), th = sg.cr.map(c => qeval(c, u)[0]);
+  return { pos: p.map(x => x[0]), vel: p.map(x => x[1]), acc: p.map(x => x[2]), rot: Q.norm(Q.mul(sg.goal.rot, qexp(th))), done: t >= sg.T }; }
+// full reference state at t (θ relative to the segment's goal frame), the start of a re-target; a different goal frame re-expresses θ (rates kept: small-angle)
+export function stepRef(sg, t, goalRot = null) { const u = Math.min(Math.max(t, 0), sg.T), p = sg.cp.map(P => pieceAt(P, u)), r = sg.cr.map(c => qeval(c, u));
+  let th = r.map(x => x[0]); if (goalRot) th = qlog(Q.mul(Q.conj(goalRot), Q.norm(Q.mul(sg.goal.rot, qexp(th)))));
+  return { p: p.map(x => x[0]), v: p.map(x => x[1]), a: p.map(x => x[2]), th, w: r.map(x => x[1]), al: r.map(x => x[2]) }; }

@@ -1994,3 +1994,33 @@ Not pushed.
 Awaiting review. No E2 implementation or physical step.
 
 Not pushed.
+
+### E2-2: E2 v2 implemented (PSTAR5, default-off); identity PASS; planning gate PG-1 FAILS → STOPPED before the official run (`e2/E2_IMPLEMENTATION.md`, `e2/E2_PRE_OFFICIAL_RESULTS.md`)
+
+**Authority:** user authorization 2026-10-06 (`sources/2026-10-06_user_authorization_e2_implementation.md`).
+
+**Implemented** (one planner `ctrl/v2_footstep.js`; DCM layer `ctrl/v2_dcm.js`; apex swing `ctrl/v2_swing.js`; sequencer `ctrl/v2_step.js`; option `e2` in `ctrl/v2_stand.js`; class-B hook in `gates/v2_g3.js`; harness / evaluator / planning gates / W tools).
+- Open choices, all fixed before any physical run: commanded T_ds 4 s (E1b); recovery R3 0.6 s (abortDur); C4 apex-knot solve; commanded acceptance by E1b's request rule; the planner's clearance certificate = E2-3's planning counterpart.
+- 10 implementation defects were found in development / smoke and corrected (`E2_IMPLEMENTATION.md` §3).
+
+**Identity:** KV0 identical; PSTAR4 identical; PSTAR5 inert on non-stepping and class-A runs.
+
+**Planning gates (implemented law):**
+- **PG-1 FAIL** — 32 / 32 commanded decisions NO_CERTIFIED_ONE_STEP. Only the clearance certificate fails: margin 3.0 / 3.2 mm at φ 0.20 against 5 mm with the frozen seeds (T 0.6 s, apex 25 mm).
+- **PG-2** — 4 / 4 obligations CERTIFIED: 4 cm out, 1 cm back, T ≈ 0.206 s, T_r 0.10 s, slack 12–15 ms (the R3 VRP bound).
+- **PG-3** — pass.
+
+**Smoke (non-test):**
+- **SMK-1D** (0.07 m forward, certificate not enforced): 14 / 16 pass. Placement 2.8 mm, stance slip 0.017 mm, DCM prediction 1.2 / 2.5 mm. E2-3 fails (clearance 1.1 mm at φ 0.20, liftoff at φ 0.19; tracking 11.6 mm max / 7.4 mm RMS). E2-5 fails (0.064 m/s horizontal approach).
+- **SMK-R** (V2-165-62 R P15 180 Hz): recovered by stepping. R-2 fails (old stance lift-off, 4 mm); R-4 fails (55 % BW, 0.19 m/s); R-5 fails (torque step at re-acceptance; p* outside 194 ms, the DCM diverging faster than the LIPM after the push).
+- **W:** browser = Node for both.
+
+**Classification:** none is an implementation defect.
+- PG-1 / E2-3 clearance: a bad preregistered assumption (window start vs seeds and measured liftoff).
+- Tracking / approach and the recovery items: model / plant deficiencies.
+
+**Stopped for decision** (`E2_PRE_OFFICIAL_RESULTS.md` §5).
+- Recommendation: A1 (airborne-phase swing fractions) + B1 (vertical-first lift, xy re-planned at measured liftoff) for commanded steps.
+- Recovery architecture (C) deferred.
+
+No official E2 run. Not pushed.

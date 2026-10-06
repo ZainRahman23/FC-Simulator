@@ -1,0 +1,114 @@
+{
+ "smkR.json.gz": {
+  "C": {
+   "R-1": {
+    "pass": true,
+    "v": "recovered by stepping; end SUPPORT/SUPPORT; outcome foot relocated"
+   },
+   "R-2": {
+    "pass": false,
+    "v": "old stance foot: LIFTOFF/AIRBORNE entries 2; peak displacement from the abort 4.00 mm (≤ 5)"
+   },
+   "R-3": {
+    "pass": true,
+    "v": "planner CERTIFIED_ONE_STEP (dx -0.01, dy 0.04, T 0.207 s, T_r 0.1 s, slack 12.2 ms); landed 6.22 mm from it (≤ 20)"
+   },
+   "R-4": {
+    "pass": false,
+    "v": "TOUCHDOWN 1; rebound 0; re-entries 0/0; impact 55.4 % BW; approach 0.022 / 0.191 m/s; penetration 0.00 mm; LOAD_ACCEPT 1 (after sustained contact), →SUPPORT 0.100 s (≤ T_r + 0.1); share error in the ramp 0.099; bilateral +0.389 s after the abort (≤ 2)"
+   },
+   "R-5": {
+    "pass": false,
+    "v": "E2-9: FAIL (applied Δτ max 14.81 N·m (hip_L.z at 10.267 s); outside onset windows max 14.81 N·m (hip_L.z at 10.267 s); commanded Δτ0 max 18.26 N·m (hip_L.z at 10.261 s); violations 2 / 0); E2-10: pass; over-capacity 0, longest saturation 44 ms; prediction 19.1 / 2.9 / 0.5 mm (≤ 30 / 30 / 15); VRP / p* outside > 5 mm longest 0 / 194 ms (≤ 20); certificate violations 0"
+   },
+   "R-6": {
+    "pass": true,
+    "v": "predicted slack at the decision 12.2 ms; measured ξ margin in the support at full support 7.25 cm (inside: true)"
+   }
+  },
+  "rep": {
+   "decision": {
+    "t": 9.766666666666667,
+    "tCls": 9.766666666666667,
+    "verdict": "step required",
+    "planner": "CERTIFIED_ONE_STEP"
+   },
+   "planner": {
+    "verdict": "CERTIFIED_ONE_STEP",
+    "dx": -0.01,
+    "dy": 0.04,
+    "T": 0.207247,
+    "Tr": 0.1,
+    "slack": 0.01220703125
+   },
+   "fourWay": "recovered by stepping",
+   "noCertified": false,
+   "oldStance": {
+    "airborne": 2,
+    "peakMm": 3.995002094610647
+   },
+   "landedMm": 6.221459417347311,
+   "touchdown": {
+    "n": 1,
+    "tc": 9.972222,
+    "impactBW": 0.5540474198705462,
+    "vN": 0.022034654393792152,
+    "vT": 0.1914230795833518,
+    "pen": -0.0026736818204697865,
+    "chat": [
+     0,
+     0
+    ],
+    "bounce": 0,
+    "laT": 10.022222,
+    "supT": 10.122222,
+    "sustained": true,
+    "bilateralT": 0.38888866666666644,
+    "rampShareErrMax": 0.09903874525869433
+   },
+   "integrity": {
+    "e1a7": "applied Δτ max 14.81 N·m (hip_L.z at 10.267 s); outside onset windows max 14.81 N·m (hip_L.z at 10.267 s); commanded Δτ0 max 18.26 N·m (hip_L.z at 10.261 s); violations 2 / 0",
+    "e1a8": "closure increment max 1.69e-2 J/tick; Σ positive 0.350 J; authority writes 0; external impulse 15.000000000000004",
+    "overCap": 0,
+    "longestSatMs": 44.44444444444444,
+    "predTD": 19.098968290177012,
+    "predLA": 2.8961551902106057,
+    "predEnd": 0.5421310628335487,
+    "vrpOutMs": 0,
+    "pRawOutMs": 194.44444444444449,
+    "certViolations": 0,
+    "ledger": {
+     "Wact": -3.39077108873246,
+     "Wext": 4.388765838098152,
+     "damping": 1.0641877308280305
+    }
+   },
+   "R6": {
+    "slackMs": 12.20703125,
+    "xiMarginAtFullSupportCm": 7.247733325093633
+   },
+   "events": [
+    "9.767 recovery step: CERTIFIED_ONE_STEP",
+    "9.978 measured contact: TOUCHDOWN",
+    "9.978 touchdown accepted: measured contact at 102 % of the swing (≥ 60 % gate)",
+    "10.083 hand-back: swing target cleared (reference at the landed anchor, a = 0)",
+    "10.128 landed foot SUPPORT",
+    "10.683 DONE: plan complete, both feet SUPPORT — reference handed back to the controller's quiet-stance target"
+   ],
+   "lifecycle": [
+    [
+     "10.178 SUPPORT→LIFTOFF",
+     "10.194 LIFTOFF→AIRBORNE",
+     "10.211 AIRBORNE→TOUCHDOWN",
+     "10.261 TOUCHDOWN→LOAD_ACCEPT",
+     "10.344 LOAD_ACCEPT→SUPPORT"
+    ],
+    [
+     "9.972 AIRBORNE→TOUCHDOWN",
+     "10.022 TOUCHDOWN→LOAD_ACCEPT",
+     "10.122 LOAD_ACCEPT→SUPPORT"
+    ]
+   ]
+  }
+ }
+}

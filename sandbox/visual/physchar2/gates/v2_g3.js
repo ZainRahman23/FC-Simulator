@@ -6,6 +6,7 @@
 import { blendPose } from "../ctrl/v2_support.js";
 import { refState, segment, segAt, segRef, putDownDuration } from "../ctrl/v2_swing.js";
 import { captureContext, simulate as capSim, planDescent, planRamp, TA } from "../ctrl/v2_capture.js";
+import { e2seqOf } from "../ctrl/v2_step.js";
 import { V, Q } from "../core/v2_math.js";
 import { G2Sim, DIRS } from "./v2_g2.js";
 import { polyDist, insidePoly } from "../ctrl/v2_stand.js";
@@ -26,8 +27,8 @@ export const asRequest = (fn) => (t) => { const [lam, dl, ddl] = fn.d ? fn.d(t) 
 // is not, nothing rescues it without a step. (First version tested "ξ outside the stance foot" at |λ − 0.5| > 0.05 — that fired at the start
 // of every ramp, where ξ is legitimately between the feet; measured, replaced before any gate run.)
 export function supervised(fn, opts = {}) { const margin = opts.margin ?? 0.01, dwell = opts.dwell ?? 0.02, abortDur = opts.abortDur ?? 0.6, minShare = opts.minShare ?? 0.85, abortFF = opts.abortFF ?? false, req = asRequest(fn);
-  return (t, ctrl) => { const g = ctrl.g3 || (ctrl.g3 = { aborted: null, from: 0.5, out: 0, bilateralOk: null, prevT: null }), I = ctrl.info, dtt = g.prevT == null ? 0 : t - g.prevT; g.prevT = t; let r = req(t); if (dtt > 0 && ctrl.o.lcPutDown) g.dt = dtt; if (ctrl.o.abortCapture) g.abortDur = abortDur;   // I: the previous tick's controller state (causal)
-    if (g.aborted == null && I && I.lam != null && Math.max(I.lam, 1 - I.lam) >= minShare) { const st = I.lam > 0.5 ? 1 : 0;
+  return (t, ctrl) => { const g = ctrl.g3 || (ctrl.g3 = { aborted: null, from: 0.5, out: 0, bilateralOk: null, prevT: null }), I = ctrl.info, dtt = g.prevT == null ? 0 : t - g.prevT; g.prevT = t; let r = fn.e2 ? fn.e2(t, ctrl) : req(t), sq = null; if (dtt > 0 && ctrl.o.lcPutDown) g.dt = dtt; if (ctrl.o.abortCapture) g.abortDur = abortDur;   // I: the previous tick's controller state (causal); fn.e2 (E2 harness, default absent): the full request incl. the step sequencer's fields
+    if (g.aborted == null && I && I.lam != null && Math.max(I.lam, 1 - I.lam) >= minShare && !(ctrl.e2seq && ctrl.e2seq.holdSupervisor())) { const st = I.lam > 0.5 ? 1 : 0;   // E2 (holdSupervisor): not after a planned step's accepted touchdown (its DS plan is the return)
       g.out = polyDist(I.polys[st], I.pRaw) < -margin ? g.out + dtt : 0;
       if (g.out >= dwell - 1e-9) { g.aborted = t; g.from = r.lam; g.bilateralOk = polyDist(I.support, I.xi) >= 0; } }
     // EXPERIMENTAL lifecycle (H9): with a foot OFF the turf, the abort first puts it down on its contact anchor (swing target cleared) and holds the
@@ -40,12 +41,12 @@ export function supervised(fn, opts = {}) { const margin = opts.margin ?? 0.01, 
     if (ctrl.o.lcPutDown && ctrl.lc) { const H = g.refHist || (g.refHist = [[], []]);
       if (g.aborted == null) for (const n of [0, 1]) { const sw = ctrl.lc.feet[n].swing; if (sw) { H[n].push({ pos: sw.pos.slice(), rot: sw.rot.slice() }); if (H[n].length > 3) H[n].shift(); } else H[n].length = 0; }
       if (g.aborted != null) { const air = ctrl.lc.feet.findIndex(f => f.state === "AIRBORNE" || f.state === "LIFTOFF"); let P = g.putDown;
-        if (!P && air >= 0 && ctrl.lc.feet[air].swing) { const f = ctrl.lc.feet[air], goal = { pos: f.hold.pos.slice(), rot: f.hold.rot.slice() }, Tbw = putDownDuration(ctrl.lc.o.swingHz), ref = refState(H[air].length ? H[air] : [{ pos: f.swing.pos, rot: f.swing.rot }], goal.rot, g.dt);
+        if (!P && !g.e2rec && air >= 0 && ctrl.lc.feet[air].swing) { const f = ctrl.lc.feet[air], goal = { pos: f.hold.pos.slice(), rot: f.hold.rot.slice() }, Tbw = putDownDuration(ctrl.lc.o.swingHz), ref = refState(H[air].length ? H[air] : [{ pos: f.swing.pos, rot: f.swing.rot }], goal.rot, g.dt);
           // T-A (abortCapture): the descent is the smoothest the online capture model predicts still recovers (equal-fraction split with the acceptance ramp; e1b_ta/)
           let T = Tbw, C = null; if (ctrl.o.abortCapture && ctrl.info) { const lamFrom = air === 1 ? 1 - g.from : g.from, cx = captureContext(ctrl.info, air, capK(ctrl, g)), pl = planDescent(cx, { elapsed: 0, kFrom: 1, TputMax: Tbw, lamFrom, dt: g.dt });
             T = pl.rem; C = g.cap = { n: air, t0: t, Tbw, lamFrom, k: pl.k, Tput: pl.Tput, Tr: pl.Tr, verdict: pl.verdict, verdict0: pl.verdict, miss: !!cx.miss, cx0: { u: cx.u, w: cx.w, Sin: cx.Sin, Aout: cx.Aout, cS: cx.cS, cA: cx.cA }, replans: [], tContact: null, tAccept: null, TrFinal: null, done: false, doneT: null, vlog: [{ t, v: pl.verdict }] }; }
           P = g.putDown = { n: air, t0: t, segT0: t, seg: segment(ref, goal, T), log: { t0: t, T, v0: ref.v.slice(), a0: ref.a.slice(), contactT: null, handBackT: null, ...(C ? { cap: C } : {}) } }; (g.putDownLog || (g.putDownLog = [])).push(P.log); }
-        if (ctrl.o.abortCapture && g.cap && !g.cap.done && ctrl.info) { const C = g.cap, fc = ctrl.lc.feet[C.n], stc = fc.state, inAirC = stc === "AIRBORNE" || stc === "LIFTOFF";
+        if (ctrl.o.abortCapture && g.cap && !g.cap.done && ctrl.info && !g.e2rec) { const C = g.cap, fc = ctrl.lc.feet[C.n], stc = fc.state, inAirC = stc === "AIRBORNE" || stc === "LIFTOFF";
           if (!inAirC && C.tContact == null) C.tContact = t;
           if (inAirC && P && P.n === C.n && t - P.segT0 < P.seg.T) {   // before contact: re-check each tick from the measured state; SPEED-UP ONLY re-plan (from the current reference state)
             const cx = captureContext(ctrl.info, C.n, capK(ctrl, g)), rem = P.seg.T - (t - P.segT0), tc = rem + TA.margin;
@@ -57,11 +58,18 @@ export function supervised(fn, opts = {}) { const margin = opts.margin ?? 0.01, 
             const cx = captureContext(ctrl.info, C.n, capK(ctrl, g)), pr = planRamp(cx, { debounceLeft: Math.max(0, cx.acceptDebounce - (t - C.tContact)), lam0: (g.rampFrom ?? t) - t, lamFrom: C.lamFrom, ...(ctrl.o.abortCapture === 2 ? { margin: 0 } : {}) });
             C.Tr = pr.Tr; if (pr.verdict !== "in place" && C.verdict === "in place") { C.verdict = "step required"; C.vlog.push({ t, v: C.verdict, stage: "ramp" }); } }
           else if ((stc === "LOAD_ACCEPT" || stc === "SUPPORT") && C.tAccept == null) { C.tAccept = t; C.TrFinal = C.Tr; } }
+        // E2 (option e2, default off; e2/E2_PREREGISTRATION_v2.md §4): at the preregistered class time t_cls = max(abort, disturbance end) + 1 tick (e1b_close/), a T-A verdict
+        // "step required" calls the COMMON planner from the measured state; CERTIFIED_ONE_STEP → the step sequencer takes over the airborne foot (swing re-targeted from T-A's
+        // current reference state), the reference and the acceptance; NO_CERTIFIED_ONE_STEP → recorded, no foothold forced, T-A's in-place put-down continues
+        if (ctrl.o.e2 && g.cap && !g.e2dec) { const pe = opts.e2 && opts.e2.pushEnd ? opts.e2.pushEnd() : null, tCls = Math.max(g.cap.t0, pe == null ? -Infinity : pe) + g.dt;
+          if (t >= tCls - 1e-9) { g.e2dec = { t, tCls, verdict: g.cap.verdict, planner: null }; const fa = ctrl.lc.feet[g.cap.n];
+            if (g.cap.verdict === "step required" && (fa.state === "AIRBORNE" || fa.state === "LIFTOFF")) { const R = e2seqOf(ctrl).recover(t, g.cap.n, g); g.e2dec.planner = R.verdict; if (R.verdict === "CERTIFIED_ONE_STEP") { g.e2rec = true; g.putDown = null; P = null; } } } }
+        if (g.e2rec) sq = ctrl.e2seq.request(t);
         if (P) { const f = ctrl.lc.feet[P.n], inAir = f.state === "AIRBORNE" || f.state === "LIFTOFF", e = segAt(P.seg, t - P.segT0);
           if (!inAir && P.log.contactT == null) P.log.contactT = t;
           if (!inAir && e.done) { ctrl.lc.setSwingTarget(P.n, null); P.log.handBackT = t; g.putDown = null; }
           else ctrl.lc.setSwingTarget(P.n, { pos: e.pos, rot: e.rot }); }
-        if (air >= 0) { g.rampFrom = null; return { lam: g.from, dl: 0, ddl: 0, ...taFields(g, t, abortDur) }; }
+        if (air >= 0) { g.rampFrom = null; return sq || { lam: g.from, dl: 0, ddl: 0, ...taFields(g, t, abortDur) }; }
         if (g.rampFrom == null) g.rampFrom = t; } }
     else if (g.aborted != null && ctrl.lc) { const air = ctrl.lc.feet.findIndex(f => f.state === "AIRBORNE" || f.state === "LIFTOFF");
       // DIAGNOSTIC (default off; stand option lcAbortRamp, e1a/E1B results): CONTINUOUS put-down — instead of clearing the swing target in one tick (a target step of the
@@ -78,7 +86,7 @@ export function supervised(fn, opts = {}) { const margin = opts.margin ?? 0.01, 
       if (g.rampFrom == null) g.rampFrom = t; }
     if (g.aborted != null) { const t0a = ctrl.lc && g.rampFrom != null ? g.rampFrom : g.aborted, u = abortDur > 0 ? Math.min(1, (t - t0a) / abortDur) : 1, dv = 0.5 - g.from, ff = abortFF && u < 1;
       r = { lam: g.from + dv * u * u * u * (10 - 15 * u + 6 * u * u), dl: ff ? dv * 30 * u * u * (1 - u) * (1 - u) / abortDur : 0, ddl: ff ? dv * 60 * u * (1 - u) * (1 - 2 * u) / (abortDur * abortDur) : 0 }; }
-    return g.cap ? { ...r, ...taFields(g, t, abortDur) } : r; }; }
+    if (sq) return sq; return g.cap ? { ...r, ...taFields(g, t, abortDur) } : r; }; }
 // T-A model constants from the controller / lifecycle (the validated model's values) and the supervisor's own abort duration
 const capK = (ctrl, g) => ({ dt: g.dt, horizon: TA.horizon, fellBeyond: TA.fellBeyond, kXi: ctrl.o.kXi, minShare: ctrl.o.minShare, acceptDebounce: ctrl.lc.o.acceptDebounce, abortDur: g.abortDur });
 // T-A request fields during the abort transition (until the λ return completes): the plan's acceptance intent for the landed foot, its ramp duration, and the

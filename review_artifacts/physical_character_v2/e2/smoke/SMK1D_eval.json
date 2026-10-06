@@ -1,0 +1,189 @@
+{
+ "smk1d.json.gz": {
+  "C": {
+   "E2-1": {
+    "pass": true,
+    "v": "before the command: stance share 99.85 %, swing-foot load 1.15 N (0.148 % BW), state TOUCHING; release UNLOADING→TOUCHING"
+   },
+   "E2-2": {
+    "pass": true,
+    "v": "LIFTOFF→AIRBORNE 1 at +0.112 s (≤ 0.3); touching 0, load 0.000 N; before the command 0"
+   },
+   "E2-3": {
+    "pass": false,
+    "v": "tracking max 11.63 mm (≤ 10), RMS 7.39 mm (≤ 5); yaw 0.51°; tilt 1.85°; touching rows before 60 % 0; clearance min over 20–80 % 1.06 mm at φ 0.20 (≥ 5)"
+   },
+   "E2-4": {
+    "pass": true,
+    "v": "first SUPPORT 10.379 s: 2.78 mm from the final commanded foothold (≤ 10), yaw 0.09° (≤ 2)"
+   },
+   "E2-5": {
+    "pass": false,
+    "v": "TOUCHDOWN 1 at φ 0.99 (≥ 0.6); re-entries < 60 ms 0/0; rebound 0; impact 78.9 N (10.2 % BW ≤ 25); approach 0.071 m/s down (≤ 0.15), 0.064 m/s horizontal (≤ 0.05); impulse 50 ms 0.67 N·s; penetration 0.00 mm (≤ 2)"
+   },
+   "E2-6": {
+    "pass": true,
+    "v": "LOAD_ACCEPT 1 at 10.150 s; →SUPPORT 0.229 s (≤ T_r + 0.1 = 0.325); realised − commanded share during the ramp max 0.010 (≤ 0.10); load tracking from t_A + 1 s max 0.017 over 1441 rows"
+   },
+   "E2-7": {
+    "pass": true,
+    "v": "stance foot from t_L: peak 0.017 mm (≤ 1.0), path 0.056 mm (≤ 2.0), yaw 0.004° (≤ 0.5); rows not SUPPORT 0"
+   },
+   "E2-8": {
+    "pass": true,
+    "v": "ξ margin in the stance region during the swing min 4.20 cm (≥ 1)"
+   },
+   "E2-9": {
+    "pass": true,
+    "v": "applied Δτ max 2.88 N·m (hip_L.y at 8.912 s); outside onset windows max 2.88 N·m (hip_L.y at 8.912 s); commanded Δτ0 max 16.87 N·m (hip_L.y at 8.475 s); violations 0 / 0"
+   },
+   "E2-10": {
+    "pass": true,
+    "v": "closure increment max 1.21e-2 J/tick; Σ positive 0.127 J; authority writes 0; external impulse 0; motor work -0.55 J, external 0.000 J, damping 0.65 J"
+   },
+   "E2-14": {
+    "pass": true,
+    "v": "knee flexion 3.96–35.52° (certified envelope 0–40°); knee |θ − θ0| max 1.40° at 0.004 s (from 1 s: 0.12° at 17.529 s); violations 0"
+   },
+   "E2-11": {
+    "pass": true,
+    "v": "over-capacity 0; saturation during the swing none; longest continuous 0 ms (≤ 50)"
+   },
+   "E2-12": {
+    "pass": true,
+    "v": "|ξ_pred − ξ| at planned touchdown 1.2 mm (≤ 30), at LOAD_ACCEPT 2.5 mm (≤ 30), end vs terminal 0.4 mm (≤ 15)"
+   },
+   "E2-13": {
+    "pass": true,
+    "v": "end 19.90 s (7.00 s after DONE): SUPPORT/SUPPORT; |ξ − terminal| 0.04 cm; pelvis yaw Δ 0.04°; ankle ab/add Δ 0.05/0.08°; knee Δ 0.04/0.03°; step 7.27 × -0.06 cm vs command 7.00 × 0.00 (length 0.27 / width -0.06 cm); outcome foot relocated; abort none"
+   },
+   "E2-17": {
+    "pass": true,
+    "v": "plan VRP outside the support by > 5 mm: longest 0 ms (worst 0.0 mm outside); p*: longest 0 ms (worst 0.0 mm) (≤ 20 ms)"
+   },
+   "E2-18": {
+    "pass": true,
+    "v": "1 CERTIFIED planner outputs; violations 0; re-plans 0 (NO_CERTIFIED during the swing 0)"
+   }
+  },
+  "rep": {
+   "DIAGNOSTIC": "run with a diagnostic option ({\"noClearance\":true}): not an official E2 run",
+   "decision": {
+    "verdict": "CERTIFIED_ONE_STEP",
+    "dx": 0.07,
+    "dy": 0,
+    "T": 0.6,
+    "Tr": 0.225,
+    "slack": 0.5,
+    "nominal": true
+   },
+   "times": {
+    "tL": 8.308333333333334,
+    "tAir": 8.425,
+    "tc": 8.904166666666667,
+    "tTD": 8.908333333333333,
+    "tA": 12.904166666666667,
+    "liftoffDelay": 0.11666666666666714,
+    "touchdownVsPlan": -0.00416666666666643,
+    "tAcc0": 8.904166666666667,
+    "handBack": 9.008333333333333
+   },
+   "swing": {
+    "errMax": 11.63098823621921,
+    "errRms": 7.3907961787270064,
+    "yawMax": 0.5127022230124316,
+    "tiltMax": 1.8544079445965511,
+    "clearMin2080": 1.0590645295061458,
+    "clearMinAt": 0.20138944444444357,
+    "contactBefore60": 0
+   },
+   "placement": {
+    "firstSupportT": 10.379167,
+    "dMm": 2.7835424000029163,
+    "yawDeg": 0.09405078219251806
+   },
+   "touchdown": {
+    "n": 1,
+    "phi": 0.9861111111111119,
+    "impactN": 78.89927767781353,
+    "impactBW": 0.10192294797168701,
+    "vNormal": 0.07080709934234619,
+    "vTangential": 0.06435753929641395,
+    "impulse50": 0.6737068025180132,
+    "penetrationMm": -0.00005367853116167165,
+    "chatter": [
+     0,
+     0
+    ],
+    "bounce": 0
+   },
+   "loading": {
+    "nLA": 1,
+    "laT": 10.15,
+    "supT": 10.379167,
+    "rampDur": 0.22916700000000034,
+    "rampShareErrMax": 0.009541667742317302,
+    "trackMax": 0.017289673635587643,
+    "Tr": 0.225
+   },
+   "stance": {
+    "peakMm": 0.017278176320858124,
+    "pathMm": 0.05637951862451555,
+    "yawDeg": 0.004418218694464571,
+    "notSupportRows": 0
+   },
+   "xiMarginCm": 4.203533693489655,
+   "prediction": {
+    "atTD": 1.1712608877644695,
+    "atLA": 2.4581482200474376,
+    "atEnd": 0.4242023670860934,
+    "sampleDtTD": -3.3333333249174757e-7,
+    "sampleDtLA": 0.004166999999998922
+   },
+   "final": {
+    "dxiCm": 0.04242023670860934,
+    "pelvisYawDeg": 0.043628858651778235,
+    "ankleDeg": [
+     0.053788156731315415,
+     0.08174199252881294
+    ],
+    "kneeDeg": [
+     0.03503448526263009,
+     0.034266533251510856
+    ],
+    "stepLengthErrCm": 0.2688794423947982,
+    "stepWidthErrCm": -0.06451752166587252,
+    "stepCm": [
+     7.26888270877544,
+     -0.06449182423052899
+    ]
+   },
+   "cop": {
+    "vrpWorstMm": 0,
+    "vrpLongestMs": 0,
+    "pRawWorstMm": 0,
+    "pRawLongestMs": 0
+   },
+   "events": [
+    "8.308 step command: CERTIFIED_ONE_STEP",
+    "8.425 measured AIRBORNE",
+    "8.904 measured contact: TOUCHDOWN",
+    "8.904 touchdown accepted: measured contact at 99 % of the swing (≥ 60 % gate)",
+    "9.008 hand-back: swing target cleared (reference at the landed anchor, a = 0)",
+    "10.383 landed foot SUPPORT",
+    "12.904 DONE: plan complete, both feet SUPPORT — reference handed back to the controller's quiet-stance target"
+   ],
+   "lifecycle": [
+    [
+     "8.408 TOUCHING→LIFTOFF",
+     "8.421 LIFTOFF→AIRBORNE",
+     "8.900 AIRBORNE→TOUCHDOWN",
+     "10.150 TOUCHDOWN→LOAD_ACCEPT",
+     "10.379 LOAD_ACCEPT→SUPPORT"
+    ],
+    []
+   ],
+   "outcome": "foot relocated"
+  }
+ }
+}
