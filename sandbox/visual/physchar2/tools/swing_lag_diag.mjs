@@ -19,6 +19,8 @@ const HUMAN = arg("human", "V2-REF"), SIDE = arg("side", "L"), HZ = +arg("hz", 2
 // (The existing lcVff "linmin" variant is NOT this test: it blends μ by the airborne weight, so airborne it equals "lin".)
 // --vff=sr: the CORRECTED rate (vffRate "sr", configurations PSTAR5BS / PSTAR5CS; e2/VFF_RATE_CORRECTION.md) — a controller option, not a harness wrapper
 const VFF = arg("vff", "lin"); if (!["lin", "undamped", "sr"].includes(VFF)) throw new Error("vff");
+// --handoff=1 (needs --vff=sr): continuous target-motion velocity feed-forward through the liftoff re-anchor (e2reanchorVel; PSTAR5BH / PSTAR5CH; e2/E2_HANDOFF.md)
+const HAND = arg("handoff", "0") === "1"; if (HAND && VFF !== "sr") throw new Error("--handoff=1 needs --vff=sr");
 const nL = SIDE === "L" ? 0 : 1, nS = 1 - nL, HOV = 0.020, TWO_PI = 2 * Math.PI;
 const mj = (u) => { u = Math.min(1, Math.max(0, u)); return u * u * u * (10 - 15 * u + 6 * u * u); }, mjd = (u) => (u <= 0 || u >= 1 ? 0 : 30 * u * u * (1 - u) * (1 - u)), mjdd = (u) => (u <= 0 || u >= 1 ? 0 : 60 * u - 180 * u * u + 120 * u * u * u);
 // ── diagnostic trajectories: displacement d(τ) along a unit direction (forward f / outward o / up), returned as { s, sd, sdd } (m, m/s, m/s²) ──
@@ -38,7 +40,7 @@ const HOLD = 0.4;
 const sig = (t) => (t <= 3 ? [0.5, 0, 0] : t < 7 ? (() => { const u = (t - 3) / 4; return [0.5 + 0.5 * mj(u), 0.5 * mjd(u) / 4, 0.5 * mjdd(u) / 16]; })() : [1.0, 0, 0]);
 const lamFn = (t) => lamFn.d(t)[0]; lamFn.d = (t) => { const [v, d1, d2] = sig(t); return nS === 1 ? [v, d1, d2] : [1 - v, -d1, -d2]; };
 const spec = e2Spec(HUMAN), pd = { t0: 1, dur: 2, dz: 0.025 }, def = { ...g3Def(nS === 1 ? "U:R" : "U:L"), key: "LAGDIAG", title: "swing lag diagnostic", lam: lamFn, supervise: {}, holds: [], seconds: 60, push: null, torque: null };
-const s = new G3Sim(J, spec, def, { stand: { ikRefTwist: true, lifecycle: true, pelvisDrop: pd, ...CFG[(FF === "on" ? "PSTAR5C" : "PSTAR5B") + (VFF === "sr" ? "S" : "")] }, passiveOpts: { kneeModel: "v2k" }, ...(HZ !== 240 ? { cfg: { hz: HZ } } : {}) });
+const s = new G3Sim(J, spec, def, { stand: { ikRefTwist: true, lifecycle: true, pelvisDrop: pd, ...CFG[(FF === "on" ? "PSTAR5C" : "PSTAR5B") + (HAND ? "H" : VFF === "sr" ? "S" : "")] }, passiveOpts: { kneeModel: "v2k" }, ...(HZ !== 240 ? { cfg: { hz: HZ } } : {}) });
 const C = s.ctrl, dt = s.dt, B = spec.bodies, PELVIS = C.pelvis, FTn = C.feet[nL], legK = C.legK[nL];
 if (VFF === "undamped") { const orate = C.legIKRate.bind(C); C.legIKRate = (st, ev, n, pP, qP, fp, sol, now, mu) => orate(st, ev, n, pP, qP, fp, sol, now, IK.muMin); }
 const H = { tCmd: null, touchT0: null, tLo: null, A: null, fr: null, k: -1, t0: null, hold: null, base: null, done: false, ref: null, tEnd: null };
@@ -55,7 +57,7 @@ C.compute = (st, ev, dtt) => { const tc = C.n * dtt, lc = C.lc, f = lc.feet[nL];
       if (tc >= 7 - 1e-9 && H.touchT0 != null && tc - H.touchT0 >= 0.5 - 1e-9) { H.tCmd = tc; const a = lc.target(nL); H.A = { pos: a.pos.slice(), rot: a.rot.slice() }; H.fr = stepFrame(C, st, nL); } }
     if (H.tCmd != null && H.k < 0) { const tau = tc - H.tCmd, L = liftRef(H.A, Math.min(tau, 0.6));
       if (LIFTOFF && f.state === "AIRBORNE" && H.tLo == null) { H.tLo = tc; const b = st[FTn], vb = V.add(b.v, V.cross(b.w, V.sub(b.pos, b.com))); H.base = [b.pos[0], H.A.pos[1] + HOV, b.pos[2]];
-        H.vq = quintic(b.pos[1], vb[1], L.a[1], H.A.pos[1] + HOV, 0, 0, 0.4); H.k = 0; H.t0 = tc; C.e2reanchor = nL; }   // vertical: quintic from the measured state to hover height in 0.4 s
+        H.vq = quintic(b.pos[1], vb[1], L.a[1], H.A.pos[1] + HOV, 0, 0, 0.4); H.k = 0; H.t0 = tc; C.e2reanchor = nL; if (C.o.e2reanchorVel) C.e2reanchorPrev = { pos: [H.base[0], qeval(H.vq, -dtt)[0], H.base[2]], rot: H.A.rot.slice() }; }   // vertical: quintic from the measured state to hover height in 0.4 s
       else if (!LIFTOFF && tau >= 0.6 + 0.5) { H.base = [H.A.pos[0], H.A.pos[1] + HOV, H.A.pos[2]]; H.k = 0; H.t0 = tc; if (PEL === "fixed") { s.w.setKinematic(PELVIS); s.w.setVel(PELVIS, [0, 0, 0], [0, 0, 0]); H.fixedAt = tc; } }
       else setT(L.p, L.v, L.a); }
     if (H.k >= 0 && H.k < TRAJ.length) { const tr = TRAJ[H.k], u = tc - H.t0, d = dirVec(tr.dir), sgn = tr.back ? -1 : 1, [sv, svd, svdd] = tr.f(Math.min(u, tr.T)), back0 = tr.back ? TRAJ[H.k - 1].D : 0;

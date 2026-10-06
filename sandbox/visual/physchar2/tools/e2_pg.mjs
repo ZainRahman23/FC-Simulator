@@ -9,7 +9,7 @@ import { loadJolt } from "../core/v2_jolt.js"; import { e2Sim, e2Spec } from "..
 const here = path.dirname(fileURLToPath(import.meta.url)), J = await loadJolt(path.join(here, "../vendor/jolt-physics.wasm-compat.js")), arg = (k, d) => (process.argv.find(a => a.startsWith(`--${k}=`)) || `--${k}=${d}`).split("=").slice(1).join("=");
 const PROTO = arg("protocol", "step"), HUMAN = arg("human", "V2-REF"), SIDE = arg("side", "L"), KIND = arg("kind", "forward"), HZ = +arg("hz", 240), PERT = arg("pert", PROTO === "p15" ? "P15" : "none"), OUT = arg("out", "");
 const CONFIG = arg("config", "PSTAR5"), run = { protocol: PROTO, human: HUMAN, side: SIDE, kind: PROTO === "step" ? KIND : null, hz: HZ, variant: null, pert: PROTO === "p15" ? PERT : null, config: CONFIG };
-if (!["PSTAR5", "PSTAR5B", "PSTAR5C", "PSTAR5BS", "PSTAR5CS"].includes(CONFIG)) throw new Error("config");
+if (!["PSTAR5", "PSTAR5B", "PSTAR5C", "PSTAR5BS", "PSTAR5CS", "PSTAR5BH", "PSTAR5CH"].includes(CONFIG)) throw new Error("config");
 const { s, H, seq } = e2Sim(J, e2Spec(HUMAN), run); let stopT = null;
 while (s.tick()) { const t = s.n * s.dt, g = s.ctrl.g3; if ((PROTO === "step" && seq.calls.length) || (PROTO === "p15" && g && g.e2dec)) { stopT = t; break; } if (H.tEnd != null && t >= H.tEnd - 1e-9) break; if (t > 20) break; }
 const g = s.ctrl.g3, rec = { generated: "tools/e2_pg.mjs", run, stopT, events: { tL: H.tL, abortT: H.abortT, pertT: H.pertT }, e2dec: g && g.e2dec ? g.e2dec : null, calls: seq.calls, seqEvents: seq.events,

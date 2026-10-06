@@ -107,6 +107,8 @@ export function certifyClearance(X, sg) { const c = X.ctrl, f = c.spec.bodies[c.
   let amax = 0; for (let t = 0; t <= sg.T + 1e-9; t += dt) { const e = stepAt(sg, t); amax = Math.max(amax, Math.sqrt(e.acc[0] * e.acc[0] + e.acc[1] * e.acc[1] + e.acc[2] * e.acc[2])); }
   // PSTAR5C: predicted TRACKED clearance = reference clearance − the validated per-phase allowance (replaces the symmetric bandwidth envelope of the servo without acceleration FF)
   const trk = !!c.o.swingAccFF; if (trk && !FS.clearAllow) throw new Error("tracked-clearance allowance not derived (servo validation)");
+  // the allowance belongs to the servo configuration it was validated on (FS.clearAllow.servo: the controller options that define that servo); another servo has none
+  if (trk && FS.clearAllow.servo && Object.keys(FS.clearAllow.servo).some(k => (c.o[k] ?? false) !== FS.clearAllow.servo[k])) throw new Error("tracked-clearance allowance validated for another swing-servo configuration");
   const env = amax / (wn * wn), allowAt = (phi) => (phi < 0.4 ? FS.clearAllow.rise : phi <= 0.6 ? FS.clearAllow.apex : FS.clearAllow.descent); let worst = Infinity, at = null;   // φ of segment time t: (t + phiOff) / phiDen (a re-plan's segment starts phiOff into the swing)
   for (let t = 0; t <= sg.T + 1e-9; t += dt) { const phi = (t + (X.phiOff || 0)) / (X.phiDen || sg.T); if (phi < FS.clearWin[0] - 1e-9 || phi > FS.clearWin[1] + 1e-9) continue; const e = stepAt(sg, t);
     let low = Infinity; for (const q of pts) low = Math.min(low, e.pos[1] + Q.rot(e.rot, q)[1]); const m = low - (trk ? allowAt(phi) : env); if (m < worst) { worst = m; at = phi; } }

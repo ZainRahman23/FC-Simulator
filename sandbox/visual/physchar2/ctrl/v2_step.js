@@ -16,7 +16,7 @@
 //     recovery — T-A's intent; both with the plan's ramp T_r.
 //   • DONE once the plan has ended and both feet are SUPPORT: the request no longer carries ξ_ref (the controller's own quiet-stance reference = the plan's terminal
 //     point, ctrl/v2_stand.js info.qsRef).
-import { refState, stepSegment, stepAt, stepRef, segRef, segment, segAt, qlog } from "./v2_swing.js";
+import { refState, stepSegment, stepAt, stepRef, stepPrev, segRef, segment, segAt, qlog } from "./v2_swing.js";
 import { V, Q } from "../core/v2_math.js";
 import { cmdPlan, dsPlan, recPlan, dcmTick, lamFromVrp, realisable, inset } from "./v2_dcm.js";
 import { plan as fsPlan, check as fsCheck, trajectory as fsTraj, FS, PLAN_MARGINS, stepFrame, swingFrame, landingValid, ikFeasible, latU, liftRef, certifyPath, certifyClearance } from "./v2_footstep.js";
@@ -56,7 +56,7 @@ export class StepSequencer {
   // noisy difference). T = the seed from liftoff (no compression); apex knot at liftoff + T/2. The recomputed swing is re-certified online (path, clearance, timed capture)
   startSwing(t, L) { const c = this.ctrl, st = c.e2st, b = st[c.feet[this.n]], Rg = this.F.rot, vO = V.add(b.v, V.cross(b.w, V.sub(b.pos, b.com)));
     const ref = { p: b.pos.slice(), v: vO, a: L.a.slice(), th: qlog(Q.mul(Q.conj(Rg), b.rot)), w: Q.rot(Q.conj(Rg), b.w), al: [0, 0, 0] };
-    this.tLo = t; this.tStart = t; this.segT0 = t; this.tTD = t + this.T; this.knotAbs = t + 0.5 * this.T; this.sg = stepSegment(ref, this.F, this.T, { z: this.apexZ, tk: 0.5 * this.T }); this.ph = "SWING"; c.e2reanchor = this.n;
+    this.tLo = t; this.tStart = t; this.segT0 = t; this.tTD = t + this.T; this.knotAbs = t + 0.5 * this.T; this.sg = stepSegment(ref, this.F, this.T, { z: this.apexZ, tk: 0.5 * this.T }); this.ph = "SWING"; c.e2reanchor = this.n; if (c.o.e2reanchorVel) c.e2reanchorPrev = stepPrev(this.sg, this.dt);
     const X = this.ctx(t, this.mode, { plan0: this.plan }), path = certifyPath(X, this.sg), clr = certifyClearance(X, this.sg), chk = fsCheck(X, this.F, this.T, this.Tr, this.eLand), ok = path.ok && clr.ok && chk.ok;
     this.calls.push({ t, kind: "liftoff re-certification", verdict: ok ? "CERTIFIED_ONE_STEP" : "NO_CERTIFIED_ONE_STEP", why: ok ? null : [path.ok ? null : "path", clr.ok ? null : `clearance margin ${(clr.margin * 1000).toFixed(1)} mm at φ ${clr.at != null ? clr.at.toFixed(2) : "—"} (envelope ${(clr.envelope * 1000).toFixed(1)} mm)`, chk.ok ? null : "timed capture: " + chk.why].filter(Boolean).join("; "),
       pose: { pos: r6(this.F.pos), rot: r6(this.F.rot) }, T: this.T, Tr: this.Tr, path: path.verdicts, cert: this.cert || null, clearance: { margin: clr.margin, at: clr.at, envelope: clr.envelope }, state: { p: r6(ref.p), v: r6(ref.v), a: r6(ref.a), th: r6(ref.th), w: r6(ref.w), liftRef: r6(L.p) } });

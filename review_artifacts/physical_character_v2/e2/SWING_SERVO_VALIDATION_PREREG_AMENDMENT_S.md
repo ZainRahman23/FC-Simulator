@@ -1,5 +1,7 @@
 # Swing-servo validation: re-run under the corrected velocity-feed-forward rate (amendment S). Preregistration, written before any run of this battery under PSTAR5BS / PSTAR5CS
 
+> **SUPERSEDED before any run by `SWING_SERVO_VALIDATION_PREREG_AMENDMENT_S2.md`.** The handoff correction (`E2_HANDOFF.md`, option `e2reanchorVel`) was found and measured on non-test smoke steps after this amendment was written. The battery is run once, on the final candidate configurations (PSTAR5BH / PSTAR5CH). No battery run under PSTAR5BS / PSTAR5CS exists.
+
 **Authority:**
 - user decision D1 (`../sources/2026-10-06_user_decision_e2_D1.md`): validate the servo independently, and set the clearance allowance from that validation;
 - the overnight instruction (`../sources/2026-10-06_user_instruction_overnight_e2_autonomous.md`): Decision 1 then re-run the servo diagnostics; keep D1 independently switchable.

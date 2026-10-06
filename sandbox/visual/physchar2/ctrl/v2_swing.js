@@ -58,6 +58,9 @@ export function stepSegment(ref, goal, T, knot = null) { const one = (i) => [{ T
   return { T, goal: { pos: goal.pos.slice(), rot: goal.rot.slice() }, knot: useK ? { z: knot.z, tk: knot.tk } : null,
     cp: [one(0), useK ? knotSolve(ref.p[1], ref.v[1], ref.a[1], knot.z, knot.tk, goal.pos[1], T - knot.tk) : one(1), one(2)], cr: [0, 1, 2].map(i => quintic(ref.th[i], ref.w[i], ref.al[i], 0, 0, 0, T)) }; }
 function pieceAt(P, t) { let u = t; for (let i = 0; i < P.length; i++) { if (u <= P[i].T || i === P.length - 1) return qeval(P[i].c, Math.min(Math.max(u, 0), P[i].T)); u -= P[i].T; } }
+// the segment's own polynomials extended to u = −h: its pose one tick before its start (e2reanchorVel: at a B1 re-anchor this stands in for the previous swing target, so the
+// target-motion velocity feed-forward is the new reference's own rate — continuous — instead of a differenced jump or a dropped term). Plain polynomial evaluation
+export function stepPrev(sg, h) { const p = sg.cp.map(P => qeval(P[0].c, -h)[0]), th = sg.cr.map(c => qeval(c, -h)[0]); return { pos: p, rot: Q.norm(Q.mul(sg.goal.rot, qexp(th))) }; }
 export function stepAt(sg, t) { const u = Math.min(Math.max(t, 0), sg.T), p = sg.cp.map(P => pieceAt(P, u)), r = sg.cr.map(c => qeval(c, u)), th = r.map(x => x[0]);
   // w / al: world angular velocity / acceleration of the reference (rotation-vector rates in the goal frame, small-angle: R_goal·θ̇, R_goal·θ̈) — the swingAccFF reference
   return { pos: p.map(x => x[0]), vel: p.map(x => x[1]), acc: p.map(x => x[2]), rot: Q.norm(Q.mul(sg.goal.rot, qexp(th))), w: Q.rot(sg.goal.rot, r.map(x => x[1])), al: Q.rot(sg.goal.rot, r.map(x => x[2])), done: t >= sg.T }; }

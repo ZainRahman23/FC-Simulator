@@ -18,6 +18,8 @@ CFG.PSTAR5B = { ...CFG.PSTAR4, e2: 2 };
 CFG.PSTAR5C = { ...CFG.PSTAR5B, swingAccFF: true };
 // "S" variants (e2/VFF_RATE_CORRECTION.md): + the velocity feed-forward's rate solved with singularity-robust variable damping (vffRate "sr"); the E1 base PSTAR4S = PSTAR4 + it
 CFG.PSTAR4S = { ...CFG.PSTAR4, vffRate: "sr" }; CFG.PSTAR5BS = { ...CFG.PSTAR5B, vffRate: "sr" }; CFG.PSTAR5CS = { ...CFG.PSTAR5C, vffRate: "sr" };
+// "H" variants (e2/E2_HANDOFF.md): the S variants + the continuous target-motion velocity feed-forward through the B1 re-anchor (e2reanchorVel)
+CFG.PSTAR5BH = { ...CFG.PSTAR5BS, e2reanchorVel: true }; CFG.PSTAR5CH = { ...CFG.PSTAR5CS, e2reanchorVel: true };
 export const E2P = { fwd: { dx: 0.10, dy: 0 }, lat: { dx: 0, dy: 0.08 }, T: 0.60, apex: 0.025, apexLow: 0.008, lateDz: 0.010, pushJ: 5, pushDur: 0.1, LT: 0.6, HOV: 1.5, RT: 0.6, GRACE: 0.3, LIFT: 0.02 };
 const mj = (u) => { u = Math.min(1, Math.max(0, u)); return u * u * u * (10 - 15 * u + 6 * u * u); };
 const seg = (t, a, T, v0, v1) => { const u = Math.min(1, Math.max(0, (t - a) / T)), dv = v1 - v0; return [v0 + dv * u * u * u * (10 - 15 * u + 6 * u * u), t > a && t < a + T ? dv * 30 * u * u * (1 - u) * (1 - u) / T : 0, t > a && t < a + T ? dv * 60 * u * (1 - u) * (1 - 2 * u) / (T * T) : 0]; };

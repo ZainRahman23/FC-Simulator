@@ -112,6 +112,8 @@ export const STAND = {
                           // existing law; no second controller); info.qsRef = the quiet-stance reference with both feet supporting at λ 0.5 (the plan's terminal point);
                           // the tick's states are kept for the planner's online IK certification (e2st / e2ev / e2dt). Nothing else changes
   lcAbortRamp: false,     // DIAGNOSTIC (gates/v2_g3.js supervised(); default OFF): the single-support abort puts an airborne foot down CONTINUOUSLY (target ramp to the anchor over the lifecycle's release) instead of clearing its swing target in one tick
+  e2reanchorVel: false,   // HANDOFF CORRECTION (e2/E2_HANDOFF.md; default OFF = bit-identical; needs e2): at the B1 re-anchor tick the target-motion velocity feed-forward uses the new
+                          // reference's own pose one tick earlier (sequencer: e2reanchorPrev) instead of being dropped for that tick (I-11) — continuous actuator output at release
   lcVff: false,           // DIAGNOSTIC (preswing/; default OFF): desired-velocity feed-forward for a NON-SUPPORTING leg — the target joint velocity ω* = d/dt of its IK
                           // targets (backward difference) enters as τ0 += (1 − s)(D + dt·K)·ω*, i.e. the implicit damping acts on (ω − ω*) instead of ω: a foot whose
                           // target is still while the pelvis moves is not dragged by the leg's damping, and a swing target is tracked without velocity lag
@@ -324,7 +326,11 @@ export class StandController {
             // DIAGNOSTIC) also applies it to rP — external-lift harness at drop 2.5 cm: falls, τ0 steps to 11 553 N·m (an explicit, one-tick-delayed copy of the measured pelvis
             // velocity through the leg's weak (vertical) direction, whose Cartesian damping scales as D/σ²; μ0 had bounded that loop gain at D/μ0)
             const srT = o.vffRate === "sr" || o.vffRate === "srAll", srP = o.vffRate === "srAll";
-            if (pv) { const rP = new Map(this.legIKRate(st, ev, n, pv.fr.pos, pv.fr.rot, lcT[n], r, cur, mu, srP)), rT = LC[n].swing && pv.swing && this.e2reanchor !== n ? new Map(this.legIKRate(st, ev, n, fr.pos, fr.rot, pv.tgt, r, cur, mu, srT)) : null;
+            // e2reanchorVel (default off; e2/E2_HANDOFF.md): at a B1 re-anchor tick the target-motion term is NOT dropped (I-11) but taken from the NEW reference's own pose one tick
+            // earlier (e2reanchorPrev, set by the sequencer from the segment's polynomial): the rate stays continuous through the release (measured with vffRate "sr": the dropped
+            // term was a one-tick 23 N·m dip of the knee's τ0 at liftoff); without the option the re-anchor tick skips rT exactly as before
+            const tPrev = this.e2reanchor === n ? (o.e2reanchorVel ? this.e2reanchorPrev : null) : pv && pv.tgt;
+            if (pv) { const rP = new Map(this.legIKRate(st, ev, n, pv.fr.pos, pv.fr.rot, lcT[n], r, cur, mu, srP)), rT = LC[n].swing && pv.swing && tPrev ? new Map(this.legIKRate(st, ev, n, fr.pos, fr.rot, tPrev, r, cur, mu, srT)) : null;
               // PASSIVITY BOUND on the pelvis part (drag cancellation): per axis ω*_P is clamped to [min(0, ω), max(0, ω)] of the joint's ACTUAL relative angular velocity
               // (the actuator's own convention), so the implicit damping on (ω − ω*) is never reversed and never does positive work — bounded near the straight-knee
               // singularity / soft-limit switches (measured unbounded there: τ0 steps of 300–31 000 N·m in the external-lift harness)
@@ -384,7 +390,7 @@ export class StandController {
     // E2 (option e2): e2reanchor = the leg whose swing target the sequencer re-anchored this tick (B1: to the measured foot state at liftoff) — like an anchor re-capture,
     // that one-tick target change is not differentiated into the target-motion velocity feed-forward (rT above); cleared every tick. Never set without e2
     if (o.swingAccFF) { this.info.accFF = this.accFF ? this.accFF.map(x => (x ? { T: x.T, xdd: x.xdd } : null)) : null; this.accFF = null; this.swingRef = null; }   // the reference must be supplied every tick
-    if (LC) this.info.lc = LC.map(f => ({ state: f.state, s: f.s })); if (o.e2) { this.e2reanchor = null; this.info.qsRef = qsRef; this.info.xiRefDot = e2ref ? e2ref.xiRefDot.slice() : null; this.info.xiRefFF = xiRefFF.slice(); } this.n++;
+    if (LC) this.info.lc = LC.map(f => ({ state: f.state, s: f.s })); if (o.e2) { this.e2reanchor = null; this.e2reanchorPrev = null; this.info.qsRef = qsRef; this.info.xiRefDot = e2ref ? e2ref.xiRefDot.slice() : null; this.info.xiRefFF = xiRefFF.slice(); } this.n++;
     return cmd;
   }
 }

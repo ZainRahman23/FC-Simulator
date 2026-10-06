@@ -1,0 +1,327 @@
+V2-G1 passive physics — 8 workers, Node v22.19.0, Jolt sha 011233a5fff7
+1.5 iteration study …
+  25/102 jobs  50/102 jobs  75/102 jobs  100/102 jobs  102/102 jobs
+  10 it: 8/17 scenarios pass, 1.030 ms/tick · 15 it: 10/17 scenarios pass, 0.911 ms/tick · 20 it: 12/17 scenarios pass, 0.884 ms/tick · 30 it: 12/17 scenarios pass, 0.883 ms/tick · 60 it: 16/17 scenarios pass, 0.969 ms/tick · 150 it: 17/17 scenarios pass, 1.095 ms/tick → baseline 150 iterations (C1) (none of 10/15/20/30 passes with 2× margin)
+main suite, variants, determinism, timestep, rig, diagnostics …
+  25/298 jobs  50/298 jobs  75/298 jobs  100/298 jobs  125/298 jobs  150/298 jobs  175/298 jobs  200/298 jobs  225/298 jobs  250/298 jobs  275/298 jobs  298/298 jobs
+free-body momentum floor …
+performance …
+fatal: not a git repository (or any of the parent directories): .git
+warning: Not a git repository. Use --no-index to compare two paths outside a working tree
+usage: git diff --no-index [<options>] <path> <path>
+
+Diff output format options
+    -p, --patch           generate patch
+    -s, --no-patch        suppress diff output
+    -u                    generate patch
+    -U, --unified[=<n>]   generate diffs with <n> lines context
+    -W, --function-context
+                          generate diffs with <n> lines context
+    --raw                 generate the diff in raw format
+    --patch-with-raw      synonym for '-p --raw'
+    --patch-with-stat     synonym for '-p --stat'
+    --numstat             machine friendly --stat
+    --shortstat           output only the last line of --stat
+    -X, --dirstat[=<param1,param2>...]
+                          output the distribution of relative amount of changes for each sub-directory
+    --cumulative          synonym for --dirstat=cumulative
+    --dirstat-by-file[=<param1,param2>...]
+                          synonym for --dirstat=files,param1,param2...
+    --check               warn if changes introduce conflict markers or whitespace errors
+    --summary             condensed summary such as creations, renames and mode changes
+    --name-only           show only names of changed files
+    --name-status         show only names and status of changed files
+    --stat[=<width>[,<name-width>[,<count>]]]
+                          generate diffstat
+    --stat-width <width>  generate diffstat with a given width
+    --stat-name-width <width>
+                          generate diffstat with a given name width
+    --stat-graph-width <width>
+                          generate diffstat with a given graph width
+    --stat-count <count>  generate diffstat with limited lines
+    --compact-summary     generate compact summary in diffstat
+    --binary              output a binary diff that can be applied
+    --full-index          show full pre- and post-image object names on the "index" lines
+    --color[=<when>]      show colored diff
+    --ws-error-highlight <kind>
+                          highlight whitespace errors in the 'context', 'old' or 'new' lines in the diff
+    -z                    do not munge pathnames and use NULs as output field terminators in --raw or --numstat
+    --abbrev[=<n>]        use <n> digits to display object names
+    --src-prefix <prefix>
+                          show the given source prefix instead of "a/"
+    --dst-prefix <prefix>
+                          show the given destination prefix instead of "b/"
+    --line-prefix <prefix>
+                          prepend an additional prefix to every line of output
+    --no-prefix           do not show any source or destination prefix
+    --inter-hunk-context <n>
+                          show context between diff hunks up to the specified number of lines
+    --output-indicator-new <char>
+                          specify the character to indicate a new line instead of '+'
+    --output-indicator-old <char>
+                          specify the character to indicate an old line instead of '-'
+    --output-indicator-context <char>
+                          specify the character to indicate a context instead of ' '
+
+Diff rename options
+    -B, --break-rewrites[=<n>[/<m>]]
+                          break complete rewrite changes into pairs of delete and create
+    -M, --find-renames[=<n>]
+                          detect renames
+    -D, --irreversible-delete
+                          omit the preimage for deletes
+    -C, --find-copies[=<n>]
+                          detect copies
+    --find-copies-harder  use unmodified files as source to find copies
+    --no-renames          disable rename detection
+    --rename-empty        use empty blobs as rename source
+    --follow              continue listing the history of a file beyond renames
+    -l <n>                prevent rename/copy detection if the number of rename/copy targets exceeds given limit
+
+Diff algorithm options
+    --minimal             produce the smallest possible diff
+    -w, --ignore-all-space
+                          ignore whitespace when comparing lines
+    -b, --ignore-space-change
+                          ignore changes in amount of whitespace
+    --ignore-space-at-eol
+                          ignore changes in whitespace at EOL
+    --ignore-cr-at-eol    ignore carrier-return at the end of line
+    --ignore-blank-lines  ignore changes whose lines are all blank
+    -I, --ignore-matching-lines <regex>
+                          ignore changes whose all lines match <regex>
+    --indent-heuristic    heuristic to shift diff hunk boundaries for easy reading
+    --patience            generate diff using the "patience diff" algorithm
+    --histogram           generate diff using the "histogram diff" algorithm
+    --diff-algorithm <algorithm>
+                          choose a diff algorithm
+    --anchored <text>     generate diff using the "anchored diff" algorithm
+    --word-diff[=<mode>]  show word diff, using <mode> to delimit changed words
+    --word-diff-regex <regex>
+                          use <regex> to decide what a word is
+    --color-words[=<regex>]
+                          equivalent to --word-diff=color --word-diff-regex=<regex>
+    --color-moved[=<mode>]
+                          moved lines of code are colored differently
+    --color-moved-ws <mode>
+                          how white spaces are ignored in --color-moved
+
+Other diff options
+    --relative[=<prefix>]
+                          when run from subdir, exclude changes outside and show relative paths
+    -a, --text            treat all files as text
+    -R                    swap two inputs, reverse the diff
+    --exit-code           exit with 1 if there were differences, 0 otherwise
+    --quiet               disable all output of the program
+    --ext-diff            allow an external diff helper to be executed
+    --textconv            run external text conversion filters when comparing binary files
+    --ignore-submodules[=<when>]
+                          ignore changes to submodules in the diff generation
+    --submodule[=<format>]
+                          specify how differences in submodules are shown
+    --ita-invisible-in-index
+                          hide 'git add -N' entries from the index
+    --ita-visible-in-index
+                          treat 'git add -N' entries as real in the index
+    -S <string>           look for differences that change the number of occurrences of the specified string
+    -G <regex>            look for differences that change the number of occurrences of the specified regex
+    --pickaxe-all         show all changes in the changeset with -S or -G
+    --pickaxe-regex       treat <string> in -S as extended POSIX regular expression
+    -O <file>             control the order in which files appear in the output
+    --rotate-to <path>    show the change in the specified path first
+    --skip-to <path>      skip the output to the specified path
+    --find-object <object-id>
+                          look for differences that change the number of occurrences of the specified object
+    --diff-filter [(A|C|D|M|R|T|U|X|B)...[*]]
+                          select files by diff type
+    --output <file>       output to a specific file
+
+warning: Not a git repository. Use --no-index to compare two paths outside a working tree
+usage: git diff --no-index [<options>] <path> <path>
+
+Diff output format options
+    -p, --patch           generate patch
+    -s, --no-patch        suppress diff output
+    -u                    generate patch
+    -U, --unified[=<n>]   generate diffs with <n> lines context
+    -W, --function-context
+                          generate diffs with <n> lines context
+    --raw                 generate the diff in raw format
+    --patch-with-raw      synonym for '-p --raw'
+    --patch-with-stat     synonym for '-p --stat'
+    --numstat             machine friendly --stat
+    --shortstat           output only the last line of --stat
+    -X, --dirstat[=<param1,param2>...]
+                          output the distribution of relative amount of changes for each sub-directory
+    --cumulative          synonym for --dirstat=cumulative
+    --dirstat-by-file[=<param1,param2>...]
+                          synonym for --dirstat=files,param1,param2...
+    --check               warn if changes introduce conflict markers or whitespace errors
+    --summary             condensed summary such as creations, renames and mode changes
+    --name-only           show only names of changed files
+    --name-status         show only names and status of changed files
+    --stat[=<width>[,<name-width>[,<count>]]]
+                          generate diffstat
+    --stat-width <width>  generate diffstat with a given width
+    --stat-name-width <width>
+                          generate diffstat with a given name width
+    --stat-graph-width <width>
+                          generate diffstat with a given graph width
+    --stat-count <count>  generate diffstat with limited lines
+    --compact-summary     generate compact summary in diffstat
+    --binary              output a binary diff that can be applied
+    --full-index          show full pre- and post-image object names on the "index" lines
+    --color[=<when>]      show colored diff
+    --ws-error-highlight <kind>
+                          highlight whitespace errors in the 'context', 'old' or 'new' lines in the diff
+    -z                    do not munge pathnames and use NULs as output field terminators in --raw or --numstat
+    --abbrev[=<n>]        use <n> digits to display object names
+    --src-prefix <prefix>
+                          show the given source prefix instead of "a/"
+    --dst-prefix <prefix>
+                          show the given destination prefix instead of "b/"
+    --line-prefix <prefix>
+                          prepend an additional prefix to every line of output
+    --no-prefix           do not show any source or destination prefix
+    --inter-hunk-context <n>
+                          show context between diff hunks up to the specified number of lines
+    --output-indicator-new <char>
+                          specify the character to indicate a new line instead of '+'
+    --output-indicator-old <char>
+                          specify the character to indicate an old line instead of '-'
+    --output-indicator-context <char>
+                          specify the character to indicate a context instead of ' '
+
+Diff rename options
+    -B, --break-rewrites[=<n>[/<m>]]
+                          break complete rewrite changes into pairs of delete and create
+    -M, --find-renames[=<n>]
+                          detect renames
+    -D, --irreversible-delete
+                          omit the preimage for deletes
+    -C, --find-copies[=<n>]
+                          detect copies
+    --find-copies-harder  use unmodified files as source to find copies
+    --no-renames          disable rename detection
+    --rename-empty        use empty blobs as rename source
+    --follow              continue listing the history of a file beyond renames
+    -l <n>                prevent rename/copy detection if the number of rename/copy targets exceeds given limit
+
+Diff algorithm options
+    --minimal             produce the smallest possible diff
+    -w, --ignore-all-space
+                          ignore whitespace when comparing lines
+    -b, --ignore-space-change
+                          ignore changes in amount of whitespace
+    --ignore-space-at-eol
+                          ignore changes in whitespace at EOL
+    --ignore-cr-at-eol    ignore carrier-return at the end of line
+    --ignore-blank-lines  ignore changes whose lines are all blank
+    -I, --ignore-matching-lines <regex>
+                          ignore changes whose all lines match <regex>
+    --indent-heuristic    heuristic to shift diff hunk boundaries for easy reading
+    --patience            generate diff using the "patience diff" algorithm
+    --histogram           generate diff using the "histogram diff" algorithm
+    --diff-algorithm <algorithm>
+                          choose a diff algorithm
+    --anchored <text>     generate diff using the "anchored diff" algorithm
+    --word-diff[=<mode>]  show word diff, using <mode> to delimit changed words
+    --word-diff-regex <regex>
+                          use <regex> to decide what a word is
+    --color-words[=<regex>]
+                          equivalent to --word-diff=color --word-diff-regex=<regex>
+    --color-moved[=<mode>]
+                          moved lines of code are colored differently
+    --color-moved-ws <mode>
+                          how white spaces are ignored in --color-moved
+
+Other diff options
+    --relative[=<prefix>]
+                          when run from subdir, exclude changes outside and show relative paths
+    -a, --text            treat all files as text
+    -R                    swap two inputs, reverse the diff
+    --exit-code           exit with 1 if there were differences, 0 otherwise
+    --quiet               disable all output of the program
+    --ext-diff            allow an external diff helper to be executed
+    --textconv            run external text conversion filters when comparing binary files
+    --ignore-submodules[=<when>]
+                          ignore changes to submodules in the diff generation
+    --submodule[=<format>]
+                          specify how differences in submodules are shown
+    --ita-invisible-in-index
+                          hide 'git add -N' entries from the index
+    --ita-visible-in-index
+                          treat 'git add -N' entries as real in the index
+    -S <string>           look for differences that change the number of occurrences of the specified string
+    -G <regex>            look for differences that change the number of occurrences of the specified regex
+    --pickaxe-all         show all changes in the changeset with -S or -G
+    --pickaxe-regex       treat <string> in -S as extended POSIX regular expression
+    -O <file>             control the order in which files appear in the output
+    --rotate-to <path>    show the change in the specified path first
+    --skip-to <path>      skip the output to the specified path
+    --find-object <object-id>
+                          look for differences that change the number of occurrences of the specified object
+    --diff-filter [(A|C|D|M|R|T|U|X|B)...[*]]
+                          select files by diff type
+    --output <file>       output to a specific file
+
+fatal: not a git repository (or any of the parent directories): .git
+
+■ gate
+  PASS 1.5   iteration study 10/15/20/30/60/150 (report; decision D2a: the validation baseline is 150 velocity iterations — a correctness configuration, not the production-performance one)
+        10 it: 8/17 pass, 15 it: 10/17 pass, 20 it: 12/17 pass, 30 it: 12/17 pass, 60 it: 16/17 pass, 150 it: 17/17 pass → none of 10/15/20/30 qualifies   [report (C1)]
+  PASS 1.S   V2-REF: every scenario passes every criterion
+        17/17 scenarios; failing: none   [all]
+  FAIL 1.S′  V1-matched instance: every scenario passes every criterion
+        16/17 scenarios   [all]
+  PASS 6     body variants (165/62, 198/92, ±2 SD legs): every essential scenario passes every criterion, no per-body tuning
+        40/40 runs; failing criteria: none   [all]
+  PASS 1.6a  determinism: ×3 runs (two processes) — identical per-tick hash, contact sequence, joint extrema, fall timing
+        17/17 scenarios   [all]
+  PASS 1.6b  snapshot / restore bit-exact (Jolt SaveState / RestoreState; passive layer stateless)
+        upright ✓, awkward ✓, drop1m ✓, isoSelfCol ✓   [all]
+  PASS 5     passive joint rig: applied torque = spec law (sign + magnitude), restoring, returns, never injects energy; damping-only axes
+        34/34 tests   [all]
+  PASS 5c    pose-dependent passive limits (couplings) as specified
+        hip-flexion soft limit knee 0/45/90°: 80.0 / 100.0 / 120.0°; ankle-DF soft limit knee 0/45/90°: 20.0 / 27.5 / 35.0°; hamstring: hip 100° knee straight → hip extension torque, knee flexion cross torque: -0.93 / +0.061 N·m; knee axial zero-torque range at 0/30/60° (v2k spec: θ0(φ) ∓ slack·f): [-0.50,1.00] [7.66,9.63] [12.18,14.18] vs [-0.50,1.00] [7.66,9.63] [12.18,14.18]; hip ER soft limit hip 0/90°: -45.0 / -40.0°   [±0.1°]
+  PASS 8     timestep 180/240/360/720 Hz (D4a, v3.1): physical invariants hold for every ensemble member at every rate; no genuine first-contact TIMING effect at the 240 Hz validation rate; landing-outcome effects and accuracy at other rates reported
+        upright: invariants ok; leanF: invariants ok; leanB: invariants ok [reported: 180 Hz: COM Δ 0.151 m (spread 0.001)]; flatSupine: invariants ok; drop1m: invariants ok; sideFirst: invariants ok; awkward: invariants ok [reported: 180 Hz: COM Δ 0.195 m (spread 0.005)]; isoMomentum: invariants ok || pre-registered v3 evaluation: pass   [all]
+  PASS 7.HS  C7 high-speed envelope (V2-REF, baseline): finite, no missed turf collision, no tunnelling / missed limb collision, no catastrophic constraint failure
+        8/8 envelope scenarios   [all]
+  PASS 1.1f  C6 free-body floor: one rigid body, no constraint, no contact — the engine's own relative angular-momentum drift (max over bodies)
+        ΔL/L 1.51e-3 at 1 rad/s, 5.57e-3 at 3 rad/s, 1.29e-2 at 6 rad/s; linear 0.0e+0   [report (C6)]
+  FAIL 1.V1  V1 frozen
+        guard_v1: FAIL — V1 files differ from checkpoint/physchar-v1-final-research:   [identical]
+  PASS 1.E   vendored Jolt = V1's pinned build
+        011233a5fff762d6…   [011233a5fff762d6…]
+
+■ V2-REF per scenario (150 it)
+  upright        23/23  c3316738  
+  leanF          22/22  4e16b54a  
+  leanB          22/22  c2e5f438  
+  leanL          22/22  7cf326fb  
+  leanR          22/22  7a735ce6  
+  perturb        23/23  f07f1194  
+  singleLeg      23/23  b9159e28  
+  dropA          22/22  39b323c3  
+  sideFirst      22/22  cb3d0d14  
+  shoulderFirst  22/22  09b75ad1  
+  rotating       22/22  94e55d99  
+  awkward        22/22  ac12adca  
+  flatSupine     22/22  00d782d4  
+  drop1m         22/22  492b326f  
+  impact15       28/28  cb16191c  
+  isoMomentum    16/16  a52c081d  
+  isoSelfCol     16/16  739e16f1  
+
+■ C7 envelope (V2-REF)
+  hsDive         6/6  
+  hsSide         6/6  
+  hsHeadFirst    6/6  
+  hsDrop15       6/6  
+  hsKickTurf     6/6  
+  hsKickShin     8/8  
+  hsPost         7/7  
+  hsSelfCol20    7/7  
+
+G1 RESULT: FAIL — 2 failing gate check(s)   (266 s)  → review_artifacts/physical_character_v2/g1/json/g1_results.json

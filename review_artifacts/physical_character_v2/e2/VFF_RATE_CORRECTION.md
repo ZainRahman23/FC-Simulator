@@ -175,11 +175,30 @@ V2-REF, forward 0.07 m (L) and lateral 0.06 m (R), 240 Hz, `--diag=noclear` (cer
 - With D1 the foot is never more than 1.6 – 2.0 mm below its reference.
 - The pelvis-motion term accounts for about 0.9 mm of the remaining descending error (srAll + D1: e_z descending +0.6 mm).
 
-## 8. Prior regressions under PSTAR4S
+## 8. Prior regressions under PSTAR4S (frozen batteries, run unchanged from a clean copy of commit 6c30e64 / b3eaecf)
 
-Pending. Batteries:
-- E1b closing validation, sets E / A / X / W, with the frozen closing evaluators;
-- G0 – G3 + component regressions + external lift, the PSTAR4 regression battery;
-- the pre-swing validation set (P\*).
+**Evidence:** `evidence_regression_pstar4s/`. Scripts: `scripts/run_validation_close_pstar4s.sh`, `scripts/regress_battery_pstar4s.sh`, `scripts/run_preswing_pstars.sh`.
 
-Each runs from a clean copy of the committed tree.
+| battery (frozen evaluator) | PSTAR4 (closing evidence) | PSTAR4S | verdict-level comparison |
+|---|---|---|---|
+| E1b official set E (`e1b_eval`) | FAIL only on E1b-18 / E1b-15, V2-165-62 L P15 (class B, STEP_REQUIRED) | **same, one item:** V2-165-62 L P15 | 428 / 429 criterion verdicts identical; the one change is an **improvement**: V2-REF L P15 E1a-4 FAIL → PASS |
+| E1a set A (`e1a_eval`) | PASS | **PASS** | 135 / 135 verdicts identical |
+| extended set X (`e1bfix_eval`) | FAIL only on the class-B V2-165-62 P15 runs (X-P15, X-RATE) | **same runs** | the class-B stance slip improves (6.8 – 7.9 → 5.2 – 6.3 mm); put-down contact +0.20 → +0.15 s |
+| **E1b closing evaluation** (`e1bclose_eval`, P15 split) | PASS | **PASS** | — |
+| T-A checks | PASS | **PASS** | W_P15 exercises T-A (verdict in place) |
+| browser = Node (W) | 3 / 3 | **3 / 3** | — |
+| G0 – G3 regression (`touchrest_regress_eval`: V3.1 – V3.10) | PASS | **PASS** | KV0 identical; suite 58 / 58; G1 74 / 74 hashes identical to qualification v2; G2 11 / 11; G3 v3.3 none failing; J2a 81 / 81; external lift 9 / 9; browser 10 / 10, 6 / 6, 4 / 4. The G0 / G1 non-gating rows (0.V1, 1.S′, 1.V1: the freeze guard in a copied tree and the KC-4 exception) are identical to PSTAR4's |
+| pre-swing P\* validation (V1 – V15) | PASS | §8a | |
+
+**E1 hover metrics, unchanged within noise:** E1a-3 hover error max 0.84 – 0.98 mm (PSTAR4: 0.85 – 0.91). Hover is stationary, so the commanded-motion correction barely acts there.
+
+**Reading (the "do not silently bless" check):**
+- Every changed PSTAR4S output differs from PSTAR4 only where a commanded target moves: lifts, put-downs, the abort's descent.
+- Every changed verdict changes toward pass.
+- No previously passing criterion fails.
+
+So the old behaviour did depend on the defective estimator, and that dependence was in the safe direction for E1's criteria: lagging lifts and put-downs. The correction is not an unintended regression. It is a behaviour change of the certified E1 configuration nonetheless, so **PSTAR4 stays the certified E1 configuration and its evidence stands**. Whether PSTAR4S replaces PSTAR4 as the E1 baseline is listed as a user decision (`E2_OVERNIGHT_REPORT.md`). E2 is built on it (PSTAR5BH / PSTAR5CH).
+
+### 8a. Pre-swing P\* validation
+
+Pending; filled in when the battery finishes.
