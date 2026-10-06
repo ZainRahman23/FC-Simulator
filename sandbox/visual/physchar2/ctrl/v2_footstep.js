@@ -36,7 +36,8 @@ export const FS = {
   // delay, maximum over the 8 bodies (research/E2_TIMING_LOAD_ASSUMPTIONS.md §2: 167–171 ms) — the planning value of the "remaining liftoff delay"
   lift: { h: 0.020, T: 0.6 }, liftDelayPlan: 0.171,
   // D1 (PSTAR5C, swingAccFF): tracked-clearance allowance per swing phase (rise φ < 0.4, apex ≤ 0.6, descent) = the worst downward deviation of the actual lowest boot
-  // point from the reference pose's, over the REPRESENTATIVE segments of the independent servo validation (e2/SWING_SERVO_VALIDATION_PREREG.md §4). null = not yet derived
+  // point from the reference pose's, over the REPRESENTATIVE segments of the independent servo validation (e2/SWING_SERVO_VALIDATION_PREREG.md §4). null = not yet derived.
+  // SV-2 form (e2/SWING_SERVO_VALIDATION_V2_PREREG.md §6): { servo: {options}, bins: { phi0, width, mm[] }, source } — set only from a battery that validated
   clearAllow: null,
 };
 // the B1 lift reference at τ s after the step command: anchor + h·minjerk(τ/T), vertical only → { p, v, a } (plain arithmetic)
@@ -109,7 +110,11 @@ export function certifyClearance(X, sg) { const c = X.ctrl, f = c.spec.bodies[c.
   const trk = !!c.o.swingAccFF; if (trk && !FS.clearAllow) throw new Error("tracked-clearance allowance not derived (servo validation)");
   // the allowance belongs to the servo configuration it was validated on (FS.clearAllow.servo: the controller options that define that servo); another servo has none
   if (trk && FS.clearAllow.servo && Object.keys(FS.clearAllow.servo).some(k => (c.o[k] ?? false) !== FS.clearAllow.servo[k])) throw new Error("tracked-clearance allowance validated for another swing-servo configuration");
-  const env = amax / (wn * wn), allowAt = (phi) => (phi < 0.4 ? FS.clearAllow.rise : phi <= 0.6 ? FS.clearAllow.apex : FS.clearAllow.descent); let worst = Infinity, at = null;   // φ of segment time t: (t + phiOff) / phiDen (a re-plan's segment starts phiOff into the swing)
+  // allowance form: per phase { rise, apex, descent } (m; v1 rule), or per φ bin (SV-2, e2/SWING_SERVO_VALIDATION_V2_PREREG.md §6: bins { phi0, width, mm[] }; a sample exactly on a bin
+  // boundary takes the larger of the two bins; outside the table the nearest bin)
+  const allowAt = (phi) => { const A = FS.clearAllow; if (A.bins) { const B = A.bins, k = (phi - B.phi0) / B.width, i = Math.min(B.mm.length - 1, Math.max(0, Math.floor(k + 1e-9))); let v = B.mm[i];
+      const r = Math.round(k); if (Math.abs(k - r) < 1e-9 && r - 1 >= 0 && r - 1 < B.mm.length) v = Math.max(v, B.mm[r - 1]); return v / 1000; } return phi < 0.4 ? A.rise : phi <= 0.6 ? A.apex : A.descent; };
+  const env = amax / (wn * wn); let worst = Infinity, at = null;   // φ of segment time t: (t + phiOff) / phiDen (a re-plan's segment starts phiOff into the swing)
   for (let t = 0; t <= sg.T + 1e-9; t += dt) { const phi = (t + (X.phiOff || 0)) / (X.phiDen || sg.T); if (phi < FS.clearWin[0] - 1e-9 || phi > FS.clearWin[1] + 1e-9) continue; const e = stepAt(sg, t);
     let low = Infinity; for (const q of pts) low = Math.min(low, e.pos[1] + Q.rot(e.rot, q)[1]); const m = low - (trk ? allowAt(phi) : env); if (m < worst) { worst = m; at = phi; } }
   return { ok: worst >= FS.clearMin - 1e-12, margin: worst, at, envelope: trk ? allowAt(at ?? 0.5) : env, aMax: amax, model: trk ? "tracked (validated allowance)" : "bandwidth envelope" }; }
