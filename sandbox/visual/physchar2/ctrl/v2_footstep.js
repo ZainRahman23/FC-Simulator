@@ -16,8 +16,8 @@
 // nominal); T = the seed (≥ the tracking-bound minimum); T_r = the LONGEST certifying ramp (the T-A rule). Recovery — maximise the slack over footholds, swing
 // durations T ∈ [T_min(d), 0.60] and ramps; the best five are path-certified in order. Pure arithmetic + the controller's IK: deterministic, browser = Node.
 import { V, Q } from "../core/v2_math.js";
-import { clampPoly, polyDist } from "./v2_stand.js";
-import { stepSegment, stepAt } from "./v2_swing.js";
+import { clampPoly, polyDist, IK, _eigMinSym } from "./v2_stand.js";
+import { stepSegment, stepAt, qexp } from "./v2_swing.js";
 import { realisable, inset, cmdPlan, dsPlan, recPlan, clonePlan, dcmTick, centroid2, smooth01 } from "./v2_dcm.js";
 import { TA } from "./v2_capture.js";
 
@@ -119,6 +119,48 @@ export function certifyClearance(X, sg) { const c = X.ctrl, f = c.spec.bodies[c.
     let low = Infinity; for (const q of pts) low = Math.min(low, e.pos[1] + Q.rot(e.rot, q)[1]); const m = low - (trk ? allowAt(phi) : env); if (m < worst) { worst = m; at = phi; } }
   return { ok: worst >= FS.clearMin - 1e-12, margin: worst, at, envelope: trk ? allowAt(at ?? 0.5) : env, aMax: amax, model: trk ? "tracked (validated allowance)" : "bandwidth envelope" }; }
 // path certificate: the planned trajectory sampled at FS.nPath points, each pose IK-FEASIBLE from the swing frame
+// ═══ EXECUTION FEASIBILITY, analytic layer (e2/EXECUTION_FEASIBILITY.md; user decision 2026-10-06 AB2_coordinator; used by nothing by default) ═══════════════════════════
+// endpoint geometry → the WHOLE swing path under the PREDICTED PELVIS-MOTION ENVELOPE → (closed-loop finite-actuator replay: tools/exec_qualify.mjs). At N samples of the swing
+// (endpoint included = the final contact-compatible posture) and for the nominal swing frame plus its 12 axis extremes (± translation / ± rotation per pelvis axis, opt.envelope =
+// the validated pelvis excursion over a swing):
+//   • reach: bounded IK in the soft-limit box reaches the target (err ≤ 1e-6), every solved coordinate STRICTLY inside its soft limits (margin > opt.softMargin);
+//   • conditioning: λmin(JᵀJ) of the free coordinates ≥ IK.srEps² — outside the region where the rate solve's singularity-robust damping engages;
+//   • joint rates (nominal frame): coordinate rates between samples ≤ opt.rateMax;
+//   • torque feasibility (nominal frame, opt.act = the actuator layer): gravity + the D1 inertial wrench of the leg at the planned pose and the reference's acceleration, per
+//     actuated axis, ≤ the full-activation capacity at the planned anatomical angle and coordinate rate divided by (1 + ACT.U_MARGIN) — the actuator's own excitation headroom;
+//   • self-collision (nominal): min distance from the swing boot's hull points to the stance boot's ≥ opt.selfDist;
+//   • swept sole clearance: the reference's lowest sole point over φ ∈ [0.2, 0.8] minus the per-bin tracked deviation (opt.binDev, mm) ≥ FS.clearMin.
+// GATING is on the NOMINAL predicted swing frame (reach, conditioning, rates, torque, self-collision, clearance — the final contact posture is the endpoint sample). The 12 envelope
+// extremes are evaluated for reach and conditioning and REPORTED: an "envelope-sensitive" swing (any extreme fails) is never admitted analytically alone — it must pass the
+// closed-loop replay, which is the authority on execution for every commanded swing (independent per-axis extremes ignore how pelvis motions correlate, so they flag, not reject).
+// Returns { ok (nominal gates), envelopeOk, fails[] (nominal), envelopeFails[], minMargin / minMarginNominal (rad), minLambda, maxRate, torqueRatioMax, selfMin (m), clearMin (m) }.
+export function certifyExecution(X, sg, opt) { const c = X.ctrl, n = X.n, m = 1 - n, spec = c.spec, ks = c.legK[n], env = opt.envelope, at = opt.at || ((t) => stepAt(sg, t));
+  const SL = ks.map(k => spec.joints[k].limits.soft), LO = [SL[0].lo[0], SL[0].lo[1], SL[0].lo[2], SL[1].lo[1], SL[2].lo[1], SL[2].lo[2]], HI = [SL[0].hi[0], SL[0].hi[1], SL[0].hi[2], SL[1].hi[1], SL[2].hi[1], SL[2].hi[2]];
+  const poses = [{ tag: "nominal", pos: X.pel.pos, rot: X.pel.rot }]; for (let i = 0; i < 3; i++) for (const sgn of [-1, 1]) { const d = [0, 0, 0]; d[i] = sgn * env.dp[i]; poses.push({ tag: `p${i}${sgn > 0 ? "+" : "-"}`, pos: V.add(X.pel.pos, Q.rot(X.pel.rot, d)), rot: X.pel.rot });
+    const r = [0, 0, 0]; r[i] = sgn * env.dr[i]; poses.push({ tag: `r${i}${sgn > 0 ? "+" : "-"}`, pos: X.pel.pos, rot: Q.norm(Q.mul(X.pel.rot, qexp(r))) }); }
+  const foot = (fi) => spec.bodies[fi].shapes.filter(h => h.type === "hull").flatMap(h => h.points.map(p => V.add(p, h.pos))), sw = foot(c.feet[n]), stP = foot(c.feet[m]).map(p => V.add(X.st[c.feet[m]].pos, Q.rot(X.st[c.feet[m]].rot, p)));
+  const N = opt.samples ?? 21, fails = [], envFails = []; let minMarginNom = Infinity, minMargin = Infinity, minLambda = Infinity, maxRate = 0, torqueRatioMax = 0, selfMin = Infinity, clearMin = Infinity, prevX = null; const T = sg.T, dts = T / (N - 1);
+  c._e2plan = (c._e2plan || 0) + 1;
+  try { for (let i = 0; i < N; i++) { const t = T * i / (N - 1), e = at(t), tgt = { pos: e.pos, rot: e.rot }, phi = t / T;
+      for (const pel of poses) { const r = c.legIKBounded(X.st, X.ev, n, pel.pos, pel.rot, tgt, { limits: "soft", fallback: "none" });
+        const F = pel.tag === "nominal" ? fails : envFails;
+        if (!(r.err <= 1e-6)) { F.push(`φ ${phi.toFixed(2)} ${pel.tag}: IK not reached (${r.err.toExponential(1)})`); continue; }
+        const mg = Math.min(...r.x.map((v, j) => Math.min(v - LO[j], HI[j] - v))); minMargin = Math.min(minMargin, mg); if (pel.tag === "nominal") minMarginNom = Math.min(minMarginNom, mg); if (!(mg > (opt.softMargin ?? 0))) F.push(`φ ${phi.toFixed(2)} ${pel.tag}: soft-limit margin ${(mg * 180 / Math.PI).toFixed(2)}°`);
+        const Jm = c.legChain(X.st, X.ev, n, pel.pos, pel.rot, tgt).jac(r.x), free = [0, 1, 2, 3, 4, 5].filter(j => !r.atBound[j]), H = free.map(a => free.map(b => Jm[a].reduce((s2, _, q) => s2 + Jm[a][q] * Jm[b][q], 0))), lam = _eigMinSym(H);
+        minLambda = Math.min(minLambda, lam); if (!(lam >= IK.srEps * IK.srEps)) F.push(`φ ${phi.toFixed(2)} ${pel.tag}: conditioning λmin ${lam.toExponential(2)} < ε²`);
+        if (pel.tag !== "nominal") continue;
+        if (prevX) { const rate = Math.max(...r.x.map((v, j) => Math.abs(v - prevX[j]) / dts)); maxRate = Math.max(maxRate, rate); if (opt.rateMax && rate > opt.rateMax) fails.push(`φ ${phi.toFixed(2)}: coordinate rate ${rate.toFixed(2)} rad/s`); }
+        if (opt.act) { const ref = { vel: e.vel, acc: e.acc, w: e.w || [0, 0, 0], al: e.al || [0, 0, 0], vPel: [0, 0, 0] }, wr = c.swingAccWrench(X.st, X.ev, n, pel, r.x, ref, [0, 0, 0]);
+          const P = c.legChain(X.st, X.ev, n, pel.pos, pel.rot, null).pose(r.x), bodies = ks.map(k => spec.joints[k].childIndex), cOff = bodies.map(b => Q.rot(Q.conj(X.st[b].rot), V.sub(X.st[b].com, X.st[b].pos))), com = P.R.map((R, b) => V.add(P.p[b], Q.rot(R, cOff[b])));
+          const tgtQ = new Map(r.targets); ks.forEach((k, idx) => { let Tg = [0, 0, 0]; for (let b = idx; b < 3; b++) Tg = V.sub(Tg, V.cross(V.sub(com[b], P.p[idx]), [0, -9.81 * spec.bodies[bodies[b]].mass, 0])); const Treq = V.add(Tg, wr && wr.T[k] ? wr.T[k] : [0, 0, 0]);
+            const d = c.P.jd[k], R2F2 = Q.mul(P.R[idx], d.F2), q = tgtQ.get(k) || X.ev.qs[k], kneeDeg = idx === 2 ? c.P.anat(c.P.jd[ks[1]], tgtQ.get(ks[1]) || X.ev.qs[ks[1]], "flex") : null;
+            [0, 1, 2].forEach(ii => { const ax = opt.act.ax[k] && opt.act.ax[k][ii]; if (!ax) return; const axW = Q.rot(R2F2, [[1, 0, 0], [0, 1, 0], [0, 0, 1]][ii]), tq = V.dot(Treq, axW), anat = c.P.anat(d, q, ax.key), wq = prevX ? Math.max(...r.x.map((v, j) => Math.abs(v - prevX[j]) / dts)) : 0;
+              const cap = opt.act.capFull(ax, tq >= 0 ? 1 : -1, anat, wq, kneeDeg) / (1 + opt.uMargin), ratio = Math.abs(tq) / Math.max(1e-9, cap); torqueRatioMax = Math.max(torqueRatioMax, ratio); if (ratio > 1) fails.push(`φ ${phi.toFixed(2)} ${spec.joints[k].name}.${"xyz"[ii]}: torque ${tq.toFixed(1)} N·m > capacity/headroom ${cap.toFixed(1)}`); }); }); }
+        const swW = sw.map(p => V.add(tgt.pos, Q.rot(tgt.rot, p))); let dmin = Infinity; for (const a of swW) for (const b of stP) dmin = Math.min(dmin, V.dist(a, b)); selfMin = Math.min(selfMin, dmin); if (opt.selfDist && dmin < opt.selfDist) fails.push(`φ ${phi.toFixed(2)}: self-collision distance ${(dmin * 1000).toFixed(1)} mm`);
+        if (opt.binDev && phi >= 0.2 - 1e-9 && phi <= 0.8 + 1e-9) { const low = Math.min(...swW.map(p => p[1])) - X.groundY, b = Math.min(opt.binDev.length - 1, Math.floor((phi - 0.2) / 0.05 + 1e-9)), cl = low - opt.binDev[b] / 1000; clearMin = Math.min(clearMin, cl); if (cl < FS.clearMin) fails.push(`φ ${phi.toFixed(2)}: swept sole clearance ${(cl * 1000).toFixed(2)} mm`); }
+        prevX = r.x.slice(); } } }
+  finally { c._e2plan--; }
+  return { ok: fails.length === 0, envelopeOk: envFails.length === 0, fails, envelopeFails: envFails, minMargin, minMarginNominal: minMarginNom, minLambda, maxRate, torqueRatioMax, selfMin, clearMin }; }
 export function certifyPath(X, sg) { const v = []; for (let i = 0; i < FS.nPath; i++) { const e = stepAt(sg, sg.T * i / (FS.nPath - 1)); v.push(ikFeasible(X.ctrl, X.st, X.ev, X.n, X.pel, { pos: e.pos, rot: e.rot })); } return { ok: v.every(Boolean), verdicts: v.map(b => (b ? "FEASIBLE" : "NOT REACHED")) }; }
 // candidate build: landed region at the pose, timing, landing uncertainty, the predicted new double-support midpoint (rMid0 = the quiet-stance reference with the
 // swing foot where it is now, shifted by half the foot's planned translation — exact for a translation without yaw change).

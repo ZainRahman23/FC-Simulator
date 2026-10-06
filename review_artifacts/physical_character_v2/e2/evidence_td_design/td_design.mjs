@@ -1,0 +1,15 @@
+import fs from "fs"; import zlib from "zlib"; import path from "path";
+const base = "/Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v2/sandbox/visual/physchar2";
+const { Q } = await import(base + "/core/v2_math.js"), { qlog } = await import(base + "/ctrl/v2_swing.js"), { tdPlan, tdAt, TD_BETA } = await import(base + "/ctrl/v2_touchdown.js"), { e2Spec } = await import(base + "/gates/v2_e2.js");
+const dir = "/private/tmp/claude-501/-Users-zainrahman/8af3fa3f-f134-4178-b7ae-7855027dda6e/scratchpad/abval/run/runs", L = (f) => JSON.parse(zlib.gunzipSync(fs.readFileSync(path.join(dir, f))));
+// angular acceleration envelope of the validated references (finite differences of the reference rotation), AB config, all sets
+let alEnv = 0; for (const f of fs.readdirSync(dir).filter(f => f.startsWith("ab_PSTAR5CHAB_") && f.includes("_240_") && f.endsWith(".json.gz"))) { const r = L(f), R = r.rows.filter(x => x.ph === "swing" && x.u >= 0), dt = 1 / r.hz; const w = [];
+  for (let i = 1; i < R.length; i++) { let q = Q.mul(R[i].ref.rot, Q.conj(R[i - 1].ref.rot)); if (q[3] < 0) q = q.map(v => -v); w.push([2 * q[0] / dt, 2 * q[1] / dt, 2 * q[2] / dt]); }
+  for (let i = 2; i < w.length - 1; i++) alEnv = Math.max(alEnv, Math.hypot(...w[i].map((v, k) => (w[i + 1][k] - w[i - 1][k]) / (2 * dt)))); }
+console.log("validated angular-acceleration envelope (AB, 240 Hz refs):", alEnv.toFixed(2), "rad/s²; β* =", TD_BETA.toFixed(4));
+const late = { h: 0.01106, aV: 2.6324, vV: 0.2169 }, env = { aH: 2.8304, aV: 3.7427, al: alEnv }, uDn = 0.001530, uUp = 0.000305, dtMax = 1 / 180;
+for (const body of ["V2-REF", "V2-165-62", "V2-198-92", "V2-long-legs"]) { const spec = e2Spec(body), fi = spec.bodies.findIndex(b => b.name === "foot_L"), sole = spec.bodies[fi].shapes.filter(h => h.type === "hull").flatMap(h => h.points.map(p => [p[0] + h.pos[0], p[1] + h.pos[1], p[2] + h.pos[2]]));
+  for (const tr of ["R-F", "R-L", "C-F7", "C-F13", "C-L5", "H-T45", "H-A40", "H-D", "H-F15"]) { const r = L(`ab_PSTAR5CHAB_${body}_L_240_${tr}.json.gz`), T = r.tr.T, x0 = r.rows.find(x => x.ph === "swing" && x.u >= 0);
+    const ref = { p: x0.ref.p, v: x0.ref.v, a: x0.ref.a, th: qlog(Q.mul(Q.conj(r.goal.rot), x0.ref.rot)), w: [0, 0, 0], al: [0, 0, 0] }, knot = { z: r.anchor.pos[1] + r.tr.apex, tk: 0.5 * T };
+    const pl = tdPlan(ref, r.goal, T, knot, sole, { uDn, uUp, dC: 0.0005, dtMax, env, late });
+    console.log(`${body.padEnd(13)} ${tr.padEnd(6)} feasible ${pl.feasible ? "yes" : "NO "} ${pl.why ? "(" + pl.why + ")" : ""} τ_c ${pl.tauC ? (1000 * pl.tauC).toFixed(1) : "—"} ms  v_max ${pl.vMax ? (1000 * pl.vMax).toFixed(1) : "—"} mm/s  h_e ${pl.hE ? (1000 * pl.hE).toFixed(2) : "—"} mm  peaks aH ${pl.peak ? pl.peak.aH.toFixed(2) : (pl.peakAtMin ? pl.peakAtMin.aH.toFixed(2) : "—")} aV ${pl.peak ? pl.peak.aV.toFixed(2) : (pl.peakAtMin ? pl.peakAtMin.aV.toFixed(2) : "—")} al ${pl.peak ? pl.peak.al.toFixed(2) : "—"} | search d ${pl.search ? (1000 * pl.search.dS).toFixed(2) : "—"} mm`); } }

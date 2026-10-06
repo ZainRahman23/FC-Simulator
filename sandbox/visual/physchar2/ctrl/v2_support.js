@@ -104,6 +104,9 @@ export class SupportLifecycle {
   reseed(n, pose) { const f = this.feet[n]; if (!f.hold) return; const fH = Q.rot(f.hold.rot, [0, 0, 1]), fC = Q.rot(pose.rot, [0, 0, 1]); let d = datan2(fC[0], fC[2]) - datan2(fH[0], fH[2]);
     if (d > Math.PI) d -= 2 * Math.PI; if (d < -Math.PI) d += 2 * Math.PI; f.hold = { pos: [pose.pos[0], f.hold.pos[1], pose.pos[2]], rot: Q.norm(Q.mul(Q.axis([0, 1, 0], d), f.hold.rot)) }; f.prevHold = null; }
   setSwingTarget(n, pose) { this.feet[n].swing = pose ? { pos: pose.pos.slice(), rot: pose.rot.slice() } : null; }
+  // touchdown coordinator (ctrl/v2_touchdown.js; unused by default): the contact anchor it established becomes the lifecycle's hold pose exactly (no prevHold blend), so releasing its
+  // swing target onto the lifecycle's contact-compatible hold leaves the target continuous. Only in a contact state with a hold already captured
+  setHold(n, pose) { const f = this.feet[n]; if (!f.hold || f.state === "AIRBORNE" || f.state === "SUPPORT") return false; f.hold = { pos: pose.pos.slice(), rot: pose.rot.slice() }; f.prevHold = null; return true; }
   airborne(n) { const s = this.feet[n].state; return s === "AIRBORNE" || s === "LIFTOFF"; }
   getState() { return { t: this.t, feet: this.feet.map(f => ({ ...f, log: f.log.slice() })) }; }
   setState(x) { this.t = x.t; this.feet = x.feet.map(f => ({ ...f, log: f.log.slice() })); }

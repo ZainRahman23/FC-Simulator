@@ -1,0 +1,13 @@
+import fs from "fs"; import zlib from "zlib"; import path from "path";
+const base = "/Users/zainrahman/Downloads/FC Simulator worktrees/physical-character-v2/sandbox/visual/physchar2";
+const { Q } = await import(base + "/core/v2_math.js"), { qlog, stepSegment, quintic, qeval } = await import(base + "/ctrl/v2_swing.js"), { e2Spec } = await import(base + "/gates/v2_e2.js");
+const dir = "/private/tmp/claude-501/-Users-zainrahman/8af3fa3f-f134-4178-b7ae-7855027dda6e/scratchpad/abval/run/runs", L = (f) => JSON.parse(zlib.gunzipSync(fs.readFileSync(path.join(dir, f))));
+function pieceJ(P, t) { let u = t; for (let i = 0; i < P.length; i++) { if (u <= P[i].T || i === P.length - 1) { const c = P[i].c, x = Math.min(Math.max(u, 0), P[i].T); return [qeval(c, x)[0], qeval(c, x)[1], qeval(c, x)[2], 6 * c[3] + 24 * c[4] * x + 60 * c[5] * x * x]; } u -= P[i].T; } }
+for (const tr of ["R-F", "R-L"]) { const r = L(`ab_PSTAR5CHAB_V2-REF_L_240_${tr}.json.gz`), T = r.tr.T, x0 = r.rows.find(x => x.ph === "swing" && x.u >= 0);
+  const ref = { p: x0.ref.p, v: x0.ref.v, a: x0.ref.a, th: qlog(Q.mul(Q.conj(r.goal.rot), x0.ref.rot)), w: [0, 0, 0], al: [0, 0, 0] }, knot = { z: r.anchor.pos[1] + r.tr.apex, tk: 0.5 * T }, zg = r.goal.pos[1];
+  const sg = stepSegment(ref, r.goal, T, knot); let jV = 0, jVl = 0, jH = 0; for (let i = 0; i <= 600; i++) { const t = T * i / 600, v = pieceJ(sg.cp[1], t), hx = pieceJ(sg.cp[0], t), hz = pieceJ(sg.cp[2], t); jV = Math.max(jV, Math.abs(v[3])); jH = Math.max(jH, Math.hypot(hx[3], hz[3])); if (v[0] - zg <= 0.01106) jVl = Math.max(jVl, Math.abs(v[3])); }
+  console.log(tr, "ORIGINAL E2 reference: peak jerk vertical", jV.toFixed(1), "horizontal", jH.toFixed(1), "late vertical", jVl.toFixed(1), "m/s³");
+  const { tdPlan } = await import(base + "/ctrl/v2_touchdown.js"), spec = e2Spec("V2-REF"), fi = spec.bodies.findIndex(b => b.name === "foot_L"), sole = spec.bodies[fi].shapes.filter(h => h.type === "hull").flatMap(h => h.points.map(p => [p[0] + h.pos[0], p[1] + h.pos[1], p[2] + h.pos[2]]));
+  for (const tc of [0.03, 0.05, 0.07, 0.09, 0.11, 0.13]) { const pl = tdPlan(ref, r.goal, T, knot, sole, { uDn: 0.00153, uUp: 0.000305, dC: 0.0005, dtMax: 1 / 180, env: { aH: 99, aV: 99, al: 99, jH: 1e9, jV: 1e9 }, late: { h: 0.01106, aV: 99, vV: 99, jV: 1e9, jH: 1e9 }, tauMax: tc });
+    console.log(`   τ_c ${tc.toFixed(2)}: v_e ${(1000 * pl.vMax).toFixed(1)} mm/s | peak aH ${pl.peak.aH.toFixed(2)} aV ${pl.peak.aV.toFixed(2)} jH ${pl.peak.jH.toFixed(1)} jV ${pl.peak.jV.toFixed(1)} | late aV ${pl.late.aV.toFixed(2)} vV ${pl.late.vV.toFixed(3)} jV ${pl.late.jV.toFixed(1)} jH ${pl.late.jH.toFixed(1)}`); } }
+console.log("envelopes: aH 2.83 aV 3.74 jH 63.3 jV 81.8 | late: aV 2.63 vV 0.217 jV 49.5 jH 29.5");
