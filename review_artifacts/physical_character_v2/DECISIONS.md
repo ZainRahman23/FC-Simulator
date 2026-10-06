@@ -2331,3 +2331,33 @@ Failed:
 - **AB-7:** R-L β_y falls only 47 % (required 50 %). A is only partly active for about 90 ms after liftoff while the airborne weight ramps; after φ 0.2, A reaches the pinned-pelvis level.
 
 Decisions pending (user). Touchdown coordinator not started. Not pushed.
+
+## 2026-10-06: AB2, touchdown coordinator, execution feasibility (`sources/2026-10-06_user_decision_AB2_coordinator.md`)
+
+### E2-13: AB2 VALIDATES (A + B qualified as swing mechanisms); touchdown coordinator STOPPED at design (substantive conflict); execution-feasibility extension implemented and verified
+
+**AB2** (`e2/AB2_VALIDATION_PREREG.md` frozen 28f2632; `e2/AB2_VALIDATION_RESULTS.md`): the versioned amendment with ownership split by lifecycle / measured-contact semantics.
+- 1,728 / 1,728 runs, bit-identical to the AB battery (preserved as FAIL).
+- Every item passes: airborne-window β_y −56 … −74 %; swing continuity clean; no regression outside the contact transition; T-1 unchanged.
+- The contact transition (AB: 6 / 0 / 8 runs R / C / H) remains the coordinator's requirement.
+
+**Touchdown coordinator** (`e2/TOUCHDOWN_COORDINATOR_DESIGN_STOP.md`): a default-off draft (`ctrl/v2_touchdown.js`, `SupportLifecycle.setHold`, `tools/td_val.mjs`), checked on design-verification smoke runs. Not preregistered, validated or adopted.
+
+The conflict: within T = 0.6 s, the apex knot at T / 2, the validated A + B acceleration / jerk envelope and the validated uncertainty band (u_dn 1.53 + contact margin 0.5 mm), no C2 final approach can simultaneously:
+- complete tangential motion before the band;
+- bound normal approach speed low (best ≈ 60 mm/s);
+- stay inside the validated jerk envelope.
+
+Also:
+- heavy lateral steps contact with ≈ 0.4 rad/s pelvis-driven foot rotation;
+- near-contact continuity is driven by the pelvis feed-forward × the contact gain blend.
+
+Options pending (user): timing (longer T / earlier knot / contact-seeking placement from the band top), capability (pelvis angular-acceleration feed-forward; a higher-jerk servo validation), a near-contact transition design, the requirement level.
+
+**Execution feasibility** (`e2/EXECUTION_FEASIBILITY.md`):
+- `certifyExecution`: nominal-path gating (soft-limit reach, conditioning, rates, torque vs capacity / headroom, self-collision, swept clearance, final posture) plus pelvis-envelope flagging.
+- `tools/exec_qualify.mjs`: closed-loop replay qualification.
+- 240 Hz sweep: 144 / 160 qualified, no false rejection. All 16 rejections are C-L11, including the V2-long-legs counterexample, rejected by the replay before runtime.
+- Not yet wired into `plan()`.
+
+Stopped before PG-1 / official E2 as instructed. Not pushed.

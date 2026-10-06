@@ -1,0 +1,53 @@
+runs 1728/1728; runtime reachability exclusions 0
+trajectory | β (T-1, pooled) BASE / A / B / AB | β_y BASE / A / B / AB | mean tilt φ .6–.85 (°) BASE / A / B / AB | e_y φ .85 (mm) BASE / AB | worst d_low [.75,.80] (mm) BASE / A / B / AB | contact φ BASE / AB | min soft-limit margin (°) BASE / AB
+  R-F    | 0.212 / -0.065 / 0.215 / -0.066 | 0.378 / 0.128 / 0.379 / 0.126 | 0.818 / 0.709 / 0.054 / 0.101 | -0.51 / -0.25 | -1.11 / -1.35 / -0.07 / -0.41 | 0.886 / 0.911 | 3.7 / 3.5
+  R-L    | 0.232 / 0.081 / 0.233 / 0.080 | 0.246 / 0.133 / 0.247 / 0.130 | 0.828 / 0.789 / 0.067 / 0.067 | 0.99 / -0.08 | 0.10 / -1.25 / 1.17 / -0.14 | 0.908 / 0.920 | 1.3 / 1.1
+  C-F7   | 0.261 / -0.028 / 0.265 / -0.029 | 0.361 / 0.123 / 0.361 / 0.121 | 0.669 / 0.566 / 0.041 / 0.081 | -0.33 / -0.18 | -0.75 / -1.08 / 0.18 / -0.29 | 0.892 / 0.917 | 2.9 / 2.7
+  C-F13  | 0.174 / -0.089 / 0.176 / -0.091 | 0.404 / 0.132 / 0.405 / 0.131 | 0.991 / 0.872 / 0.076 / 0.130 | -0.79 / -0.34 | -1.60 / -1.69 / -0.42 / -0.60 | 0.880 / 0.906 | 4.4 / 4.2
+  C-L5   | 0.276 / 0.086 / 0.277 / 0.084 | 0.283 / 0.125 / 0.283 / 0.122 | 0.648 / 0.581 / 0.049 / 0.059 | 0.53 / -0.10 | 0.00 / -0.95 / 0.96 / -0.09 | 0.904 / 0.919 | 0.9 / 0.7
+  H-T45  | 0.072 / -0.050 / 0.079 / -0.047 | 0.212 / 0.099 / 0.212 / 0.097 | 0.837 / 0.887 / 0.087 / 0.111 | 0.26 / -0.43 | -0.35 / -1.74 / 0.62 / -0.56 | 0.896 / 0.909 | 3.9 / 3.8
+  H-A40  | 0.241 / -0.022 / 0.244 / -0.023 | 0.343 / 0.125 / 0.343 / 0.123 | 0.891 / 0.767 / 0.062 / 0.108 | -0.53 / -0.30 | -1.09 / -1.50 / 0.05 / -0.46 | 0.894 / 0.918 | 2.4 / 2.2
+  H-D    | 0.179 / -0.038 / 0.181 / -0.039 | 0.258 / 0.147 / 0.259 / 0.146 | 1.140 / 1.089 / 0.119 / 0.115 | 0.38 / -0.27 | -0.90 / -1.91 / 0.19 / -0.56 | 0.893 / 0.908 | 4.1 / 3.9
+  H-F15  | 0.154 / -0.103 / 0.155 / -0.106 | 0.426 / 0.135 / 0.427 / 0.134 | 1.121 / 0.992 / 0.099 / 0.154 | -1.03 / -0.43 | -2.01 / -1.97 / -0.75 / -0.79 | 0.874 / 0.901 | 4.7 / 4.5
+A's compensation window: mean φ at which the lifecycle reports a = 1 (AIRBORNE) | pooled β_y over the airborne window BASE / A / B / AB | liftoff-transient β_y (diagnostic) BASE / A / B / AB
+  R-F    | φ_air 0.154 | 0.390 / 0.102 / 0.391 / 0.100 | 0.312 / 0.270 / 0.312 / 0.271
+  R-L    | φ_air 0.154 | 0.229 / 0.104 / 0.229 / 0.101 | 0.344 / 0.293 / 0.344 / 0.293
+  C-F7   | φ_air 0.154 | 0.371 / 0.098 / 0.371 / 0.096 | 0.304 / 0.264 / 0.305 / 0.265
+  C-F13  | φ_air 0.154 | 0.419 / 0.106 / 0.420 / 0.105 | 0.319 / 0.276 / 0.320 / 0.277
+  C-L5   | φ_air 0.154 | 0.276 / 0.098 / 0.276 / 0.094 | 0.322 / 0.277 / 0.323 / 0.277
+  H-T45  | φ_air 0.205 | 0.192 / 0.059 / 0.191 / 0.057 | 0.295 / 0.257 / 0.295 / 0.257
+  H-A40  | φ_air 0.154 | 0.353 / 0.102 / 0.353 / 0.099 | 0.290 / 0.250 / 0.291 / 0.250
+  H-D    | φ_air 0.154 | 0.238 / 0.118 / 0.239 / 0.116 | 0.369 / 0.313 / 0.369 / 0.314
+  H-F15  | φ_air 0.154 | 0.445 / 0.109 / 0.446 / 0.108 | 0.323 / 0.280 / 0.324 / 0.280
+CONTACT-TRANSITION region [step containing the first measured contact, SUPPORT) — owned by the touchdown coordinator (reported, not exempted): runs with E1a-7 violations / max commanded Δτ0 / max applied Δτ
+  R: BASE 0/96 cmd 30.6 app 9.7 | A 0/96 cmd 37.8 app 8.7 | B 10/96 cmd 34.5 app 11.0 | AB 6/96 cmd 40.6 app 8.7
+  C: BASE 10/144 cmd 22.3 app 12.6 | A 0/144 cmd 20.9 app 8.0 | B 22/144 cmd 39.1 app 13.8 | AB 0/144 cmd 25.1 app 8.0
+  H: BASE 36/192 cmd 42.2 app 15.0 | A 2/192 cmd 36.3 app 9.7 | B 89/192 cmd 45.0 app 16.5 | AB 8/192 cmd 37.9 app 10.3
+per-bin worst d_low (mm), R + C, BASE vs AB (φ 0.20 … 0.75):
+  BASE -3.64 -4.13 -4.15 -3.95 -3.11 -2.05 -0.98 0.23 0.56 -0.02 -0.75 -1.60
+  AB   -1.75 -1.52 -1.21 -0.88 -0.45 -0.17 0.05 0.17 0.08 -0.14 -0.37 -0.60
+PASS AB-8 (0 failing items)
+PASS AB-1 (0 failing items)
+PASS AB-2 (0 failing items)
+PASS AB-3 (0 failing items)
+PASS AB-4a (0 failing items)
+PASS AB-4b (0 failing items)
+PASS AB-4c (0 failing items)
+PASS AB-5 (0 failing items)
+PASS AB-6 (0 failing items)
+PASS AB-7 (0 failing items)
+PASS AB-9 (0 failing items)
+PASS AB-10 (0 failing items)
+PASS I-1 (0 failing items)
+PASS I-4 (0 failing items)
+PASS I-5 (0 failing items)
+PASS I-6 (0 failing items)
+PASS I-7 (0 failing items)
+PASS L-1 (0 failing items)
+PASS L-2 (0 failing items)
+PASS G-3 (0 failing items)
+PASS C-1 (0 failing items)
+PASS C-2 (0 failing items)
+PASS C-3 (0 failing items)
+AB-4b runs with E1a-7 violations BASE vs AB: R 0 → 0, C 0 → 0, H 0 → 0 | AB-8 worst binding window: BASE -1.60 → AB -0.60 mm
+AB2: A + B SWING CONTRACT VALIDATES
