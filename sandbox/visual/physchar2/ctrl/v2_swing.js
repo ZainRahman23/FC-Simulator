@@ -58,8 +58,9 @@ export function stepSegment(ref, goal, T, knot = null) { const one = (i) => [{ T
   return { T, goal: { pos: goal.pos.slice(), rot: goal.rot.slice() }, knot: useK ? { z: knot.z, tk: knot.tk } : null,
     cp: [one(0), useK ? knotSolve(ref.p[1], ref.v[1], ref.a[1], knot.z, knot.tk, goal.pos[1], T - knot.tk) : one(1), one(2)], cr: [0, 1, 2].map(i => quintic(ref.th[i], ref.w[i], ref.al[i], 0, 0, 0, T)) }; }
 function pieceAt(P, t) { let u = t; for (let i = 0; i < P.length; i++) { if (u <= P[i].T || i === P.length - 1) return qeval(P[i].c, Math.min(Math.max(u, 0), P[i].T)); u -= P[i].T; } }
-export function stepAt(sg, t) { const u = Math.min(Math.max(t, 0), sg.T), p = sg.cp.map(P => pieceAt(P, u)), th = sg.cr.map(c => qeval(c, u)[0]);
-  return { pos: p.map(x => x[0]), vel: p.map(x => x[1]), acc: p.map(x => x[2]), rot: Q.norm(Q.mul(sg.goal.rot, qexp(th))), done: t >= sg.T }; }
+export function stepAt(sg, t) { const u = Math.min(Math.max(t, 0), sg.T), p = sg.cp.map(P => pieceAt(P, u)), r = sg.cr.map(c => qeval(c, u)), th = r.map(x => x[0]);
+  // w / al: world angular velocity / acceleration of the reference (rotation-vector rates in the goal frame, small-angle: R_goal·θ̇, R_goal·θ̈) — the swingAccFF reference
+  return { pos: p.map(x => x[0]), vel: p.map(x => x[1]), acc: p.map(x => x[2]), rot: Q.norm(Q.mul(sg.goal.rot, qexp(th))), w: Q.rot(sg.goal.rot, r.map(x => x[1])), al: Q.rot(sg.goal.rot, r.map(x => x[2])), done: t >= sg.T }; }
 // full reference state at t (θ relative to the segment's goal frame), the start of a re-target; a different goal frame re-expresses θ (rates kept: small-angle)
 export function stepRef(sg, t, goalRot = null) { const u = Math.min(Math.max(t, 0), sg.T), p = sg.cp.map(P => pieceAt(P, u)), r = sg.cr.map(c => qeval(c, u));
   let th = r.map(x => x[0]); if (goalRot) th = qlog(Q.mul(Q.conj(goalRot), Q.norm(Q.mul(sg.goal.rot, qexp(th)))));

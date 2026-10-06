@@ -24,6 +24,8 @@ import { plan as fsPlan, check as fsCheck, trajectory as fsTraj, FS, PLAN_MARGIN
 const CONTACT = ["TOUCHDOWN", "TOUCHING", "LOAD_ACCEPT", "SUPPORT", "UNLOADING"], mj = (u) => { u = Math.min(1, Math.max(0, u)); return u * u * u * (10 - 15 * u + 6 * u * u); };
 const r6 = (x) => (x == null ? null : Array.isArray(x) ? x.map(r6) : typeof x === "number" ? +x.toFixed(6) : x);
 export function e2seqOf(ctrl) { return ctrl.e2seq || (ctrl.e2seq = new StepSequencer(ctrl)); }
+// the swing target AND its analytic reference (swingAccFF reads ctrl.swingRef; the controller clears it every tick, so it is set with every target)
+function setTarget(c, n, e) { c.lc.setSwingTarget(n, { pos: e.pos, rot: e.rot }); if (!c.swingRef) c.swingRef = [null, null]; c.swingRef[n] = { vel: e.vel.slice(), acc: e.acc.slice(), w: (e.w || [0, 0, 0]).slice(), al: (e.al || [0, 0, 0]).slice() }; }
 export class StepSequencer {
   constructor(ctrl) { this.ctrl = ctrl; this.ph = "IDLE"; this.calls = []; this.events = []; this.last = null; this.rec = false; this.memo = null; this.preds = []; }
   ev(t, what, x = {}) { this.events.push({ t, what, ...x }); }
@@ -98,11 +100,11 @@ export class StepSequencer {
     if (this.ph === "LIFT") { const tau = t - this.liftT0, L = liftRef(this.A, tau);
       if (stt === "AIRBORNE") this.startSwing(t, L);
       else if (tau >= FS.lift.T - 1e-9) { this.ph = "NOLIFT_PD"; this.pd = { t0: t, seg: segment({ p: L.p, v: [0, 0, 0], a: [0, 0, 0], th: [0, 0, 0], w: [0, 0, 0], al: [0, 0, 0] }, this.A, FS.lift.T) }; this.ev(t, "no measured liftoff by the end of the lift profile: step abandoned (foot back to its anchor, then return to double support)"); }
-      else { lc.setSwingTarget(n, { pos: L.p, rot: this.A.rot }); this.swRef = { pos: L.p, vel: L.v, acc: L.a };
+      else { setTarget(c, n, { pos: L.p, rot: this.A.rot, vel: L.v, acc: L.a }); this.swRef = { pos: L.p, vel: L.v, acc: L.a };
         const X = this.ctx(t, this.mode, { plan0: this.plan }), chk = fsCheck(X, this.F, Math.max(this.tTD - t, 2 * this.dt), this.Tr, this.eLand); this.chk = chk.ok; if (!chk.ok) this.replan(t, chk.why || "check failed"); } }
     if (this.ph === "NOLIFT_PD") { const e = segAt(this.pd.seg, t - this.pd.t0);
       if (e.done && inContact) { lc.setSwingTarget(n, null); this.ph = "NOLIFT"; this.ncT = t; this.ev(t, "foot back on its anchor: return to double support"); this.last = null; return null; }
-      lc.setSwingTarget(n, { pos: e.pos, rot: e.rot }); this.last = { ph: this.ph }; return { lam: n === 1 ? 0 : 1, dl: 0, ddl: 0 }; }
+      setTarget(c, n, e); this.last = { ph: this.ph }; return { lam: n === 1 ? 0 : 1, dl: 0, ddl: 0 }; }
     if (this.ph === "SWING") { const u = t - this.segT0;
       if (this.airSeen && inContact) { if (this.tTDm == null) { this.tTDm = t; this.ev(t, "measured contact: " + stt); }
         const frac = (t - this.tStart) / Math.max(1e-9, this.tTD - this.tStart);
@@ -119,9 +121,9 @@ export class StepSequencer {
         if (u > this.sg.T + FS.lateHold - 1e-9 && !this.failedTD) { this.failedTD = t; this.ev(t, "FAILED touchdown: no contact 0.3 s after the planned touchdown — re-plan from the measured state (no contact declared)"); this.replan(t, "failed touchdown", true); }
         else if (u < this.sg.T && (!inContact || !this.airSeen)) { const X = this.ctx(t, this.mode, { plan0: this.plan }), chk = fsCheck(X, this.F, this.sg.T - u, this.Tr, this.eLand); this.chk = chk.ok; if (!chk.ok) this.replan(t, chk.why || "check failed"); }
         if (u >= this.sg.T && !this.lateSeen && !inContact) { this.lateSeen = t; this.ev(t, "late contact: foothold held (≤ 0.3 s)"); }
-        const e = stepAt(this.sg, t - this.segT0); lc.setSwingTarget(n, { pos: e.pos, rot: e.rot }); this.swRef = e; } }
+        const e = stepAt(this.sg, t - this.segT0); setTarget(c, n, e); this.swRef = e; } }
     if (this.ph === "LANDED") { if (stt === "SUPPORT") { this.ph = "DS"; this.ev(t, "landed foot SUPPORT"); }
-      else if (this.hb && this.handBackT == null) { const e = stepAt(this.hb, t - this.hbT0); this.swRef = e; if (e.done && f.a <= 0) { lc.setSwingTarget(n, null); this.handBackT = t; this.ev(t, "hand-back: swing target cleared (reference at the landed anchor, a = 0)"); } else lc.setSwingTarget(n, { pos: e.pos, rot: e.rot }); } }
+      else if (this.hb && this.handBackT == null) { const e = stepAt(this.hb, t - this.hbT0); this.swRef = e; if (e.done && f.a <= 0) { lc.setSwingTarget(n, null); this.handBackT = t; this.ev(t, "hand-back: swing target cleared (reference at the landed anchor, a = 0)"); } else setTarget(c, n, e); } }
     if (this.ph === "DS") { const P = this.plan, tEnd = P.kind === "ds" ? P.t0 + P.Tds : P.h ? P.h.t0 + P.Tds : Infinity;
       if (t >= tEnd - 1e-9 && lc.feet[0].state === "SUPPORT" && lc.feet[1].state === "SUPPORT") { this.ph = "DONE"; this.doneT = t; this.ev(t, "DONE: plan complete, both feet SUPPORT — reference handed back to the controller's quiet-stance target"); this.last = null; return null; } }
     // DCM reference (once per tick) → the request

@@ -35,6 +35,9 @@ export const FS = {
   // B1 (option e2: 2; e2/E2_PREREG_AMENDMENT_A1B1.md): the vertical liftoff phase = the validated E1b lift reference (20 mm min-jerk over 0.6 s) and its measured AIRBORNE
   // delay, maximum over the 8 bodies (research/E2_TIMING_LOAD_ASSUMPTIONS.md §2: 167–171 ms) — the planning value of the "remaining liftoff delay"
   lift: { h: 0.020, T: 0.6 }, liftDelayPlan: 0.171,
+  // D1 (PSTAR5C, swingAccFF): tracked-clearance allowance per swing phase (rise φ < 0.4, apex ≤ 0.6, descent) = the worst downward deviation of the actual lowest boot
+  // point from the reference pose's, over the REPRESENTATIVE segments of the independent servo validation (e2/SWING_SERVO_VALIDATION_PREREG.md §4). null = not yet derived
+  clearAllow: null,
 };
 // the B1 lift reference at τ s after the step command: anchor + h·minjerk(τ/T), vertical only → { p, v, a } (plain arithmetic)
 export function liftRef(A, tau) { const T = FS.lift.T, u = Math.min(1, Math.max(0, tau / T)), h = FS.lift.h, mov = tau > 0 && tau < T;
@@ -102,10 +105,12 @@ export function slackOf(X, c) { if (!ok(predict(X, c, 0))) return -1; let lo = 0
 // planned trajectory e = max|p̈_ref| / ωn² (the bound behind the landing-uncertainty term), ≥ clearMin. Recovery steps carry no clearance criterion (§4 R-1 … R-6)
 export function certifyClearance(X, sg) { const c = X.ctrl, f = c.spec.bodies[c.feet[X.n]], pts = f.shapes.filter(h => h.type === "hull").flatMap(h => h.points.map(q => V.add(q, h.pos))), wn = 2 * Math.PI * c.lc.o.swingHz, dt = X.dt;
   let amax = 0; for (let t = 0; t <= sg.T + 1e-9; t += dt) { const e = stepAt(sg, t); amax = Math.max(amax, Math.sqrt(e.acc[0] * e.acc[0] + e.acc[1] * e.acc[1] + e.acc[2] * e.acc[2])); }
-  const env = amax / (wn * wn); let worst = Infinity, at = null;   // φ of segment time t: (t + phiOff) / phiDen (a re-plan's segment starts phiOff into the swing)
+  // PSTAR5C: predicted TRACKED clearance = reference clearance − the validated per-phase allowance (replaces the symmetric bandwidth envelope of the servo without acceleration FF)
+  const trk = !!c.o.swingAccFF; if (trk && !FS.clearAllow) throw new Error("tracked-clearance allowance not derived (servo validation)");
+  const env = amax / (wn * wn), allowAt = (phi) => (phi < 0.4 ? FS.clearAllow.rise : phi <= 0.6 ? FS.clearAllow.apex : FS.clearAllow.descent); let worst = Infinity, at = null;   // φ of segment time t: (t + phiOff) / phiDen (a re-plan's segment starts phiOff into the swing)
   for (let t = 0; t <= sg.T + 1e-9; t += dt) { const phi = (t + (X.phiOff || 0)) / (X.phiDen || sg.T); if (phi < FS.clearWin[0] - 1e-9 || phi > FS.clearWin[1] + 1e-9) continue; const e = stepAt(sg, t);
-    let low = Infinity; for (const q of pts) low = Math.min(low, e.pos[1] + Q.rot(e.rot, q)[1]); if (low - env < worst) { worst = low - env; at = phi; } }
-  return { ok: worst >= FS.clearMin - 1e-12, margin: worst, at, envelope: env, aMax: amax }; }
+    let low = Infinity; for (const q of pts) low = Math.min(low, e.pos[1] + Q.rot(e.rot, q)[1]); const m = low - (trk ? allowAt(phi) : env); if (m < worst) { worst = m; at = phi; } }
+  return { ok: worst >= FS.clearMin - 1e-12, margin: worst, at, envelope: trk ? allowAt(at ?? 0.5) : env, aMax: amax, model: trk ? "tracked (validated allowance)" : "bandwidth envelope" }; }
 // path certificate: the planned trajectory sampled at FS.nPath points, each pose IK-FEASIBLE from the swing frame
 export function certifyPath(X, sg) { const v = []; for (let i = 0; i < FS.nPath; i++) { const e = stepAt(sg, sg.T * i / (FS.nPath - 1)); v.push(ikFeasible(X.ctrl, X.st, X.ev, X.n, X.pel, { pos: e.pos, rot: e.rot })); } return { ok: v.every(Boolean), verdicts: v.map(b => (b ? "FEASIBLE" : "NOT REACHED")) }; }
 // candidate build: landed region at the pose, timing, landing uncertainty, the predicted new double-support midpoint (rMid0 = the quiet-stance reference with the

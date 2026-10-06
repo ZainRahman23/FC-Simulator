@@ -102,6 +102,11 @@ export const STAND = {
   footYaw: null,          // EXPERIMENTAL (default OFF = null; read by gates/v2_g2.js → the actuator layer): the active foot-yaw path's capacity, e.g. footYawFromSubtalar()
                           // (spec/v2_actuators.js) — an actuator on the ankle's passive-only foot ab/adduction axis sharing the subtalar budget with inversion; the
                           // controller's existing ankle rows drive it (support: K 0, D ankleD, statics feed-forward; non-support: the swing ankle gains)
+  swingAccFF: false,      // EXPERIMENTAL (E2 D1; e2/SWING_ACCEL_FF_DESIGN.md; default OFF = bit-identical): acceleration feed-forward of the swing-foot servo — for a non-supporting leg
+                          // whose commanding code supplies the ANALYTIC swing reference (this.swingRef[n] = { vel, acc, w, al }, world) together with its swing target, the inertial part
+                          // of the leg subtree's Newton–Euler inverse dynamics (resolved-acceleration: the reference's joint acceleration via the IK chain's 6×6 foot Jacobian; segment
+                          // accelerations relative to the statics' common acceleration A) is added to the statics wrench of each leg joint, weighted (1 − s) like the velocity
+                          // feed-forward. No gain; enters τ0 under the actuators' capacity clamp; writes no state. Never derived from differentiated targets or measurements
   e2: false,              // EXPERIMENTAL E2 (e2/E2_DESIGN_v2.md; default OFF = bit-identical): the step sequencer (ctrl/v2_step.js, driven from the transfer request / supervisor) may hand the
                           // balance law a DCM reference — request fields xiRef [x, z] and xiRefDot replace ξ_ref and the −ξ̇_ref/ω0 term of p* = ξ + kξ(ξ − ξ_ref) − ξ̇_ref/ω0 (the
                           // existing law; no second controller); info.qsRef = the quiet-stance reference with both feet supporting at λ 0.5 (the plan's terminal point);
@@ -299,6 +304,8 @@ export class StandController {
           // with the pelvis above target lifted the touching foot to the contact threshold (repeated TOUCHDOWN ↔ AIRBORNE, 12–18 N·m steps)
           const fr = o.lcFrame === "target" ? blendPose({ pos: pP, rot: qP }, { pos: ps.pos, rot: ps.rot }, a1) : blendPose(ns, { pos: pP, rot: qP }, sw[n]);   // blended back to the full posture frame by s; diagnostic lcFrame "target": the G3 posture frame in contact
           r = this.legIKBounded(st, ev, n, fr.pos, fr.rot, lcT[n], { limits: "soft", fallback: "none" });
+          // swingAccFF (default off): the inverse-dynamics wrench of the swing subtree for the supplied analytic reference, at this IK solution
+          if (o.swingAccFF && this.swingRef && this.swingRef[n] && LC[n].swing) { if (!this.accFF) this.accFF = [null, null]; this.accFF[n] = this.swingAccWrench(st, ev, n, fr, r.x, { ...this.swingRef[n], vPel: ps.v }, A); }
           if (o.lcVff === "split" || o.lcVff === "lin" || o.lcVff === "linmin") { const pv = this.vffPrev && this.vffPrev[n], opt = { limits: "soft", fallback: "none" }, now = new Map(r.targets), lg = (qa, qb) => { const sg = qa[0] * qb[0] + qa[1] * qb[1] + qa[2] * qb[2] + qa[3] * qb[3] < 0 ? -1 : 1, d = Q.mul(Q.conj(qa), qb.map(x => x * sg)); return [2 * d[0] / dt, 2 * d[1] / dt, 2 * d[2] / dt]; };
             // lcVff "split" (DIAGNOSTIC, preswing/): ω* = the joint velocity of the SAME target seen from the previous pelvis frame (pelvis motion only: a still foot is not dragged)
             // + the joint velocity of the COMMANDED swing target's own motion (only while a swing target is set on both ticks: anchor re-captures are never differentiated)
@@ -343,6 +350,7 @@ export class StandController {
     for (const d of P.jd) { const k = d.k, pj = this.jointAt(st, k); let T = [0, 0, 0];
       for (const i of this.sub[k]) T = V.sub(T, V.cross(V.sub(st[i].com, pj), V.sc(geff, B[i].mass)));
       for (const f of this.subFeet[k]) { const n = this.feet.indexOf(f), pc = [cop[n][0], 0, cop[n][1]]; T = V.sub(T, V.cross(V.sub(pc, pj), F[n])); }
+      if (o.swingAccFF && this.accFF && this.legSide[k] >= 0 && sw && this.accFF[this.legSide[k]] && this.accFF[this.legSide[k]].T[k]) T = V.add(T, V.sc(this.accFF[this.legSide[k]].T[k], 1 - sw[this.legSide[k]]));   // swingAccFF (default off)
       const side = this.legSide[k]; if (legW && side >= 0) { const w = legW[side]; T = V.sub(T, V.add(w.T, V.cross(V.sub(w.hc, pj), w.F))); }   // deliver the pelvis wrench share
       if (side >= 0 && k === this.hipK[side]) T = V.sub(T, V.sc(Ldot, hipShare[side]));
       if (armL && this.shK.includes(k)) T = V.add(T, V.sc(armL, armF[this.shK.indexOf(k)]));                                         // arm counter-motion                                                   // hip strategy (hips only)
@@ -364,6 +372,7 @@ export class StandController {
     this.info = { c, v, h, w0, xi, xiRef, pRaw, p, r, A, share, cop, F, support, polys, mid, heading: hd, ff, t, Ldot, lam, inSup, unl: this.unl.slice(), ikRes: this.ikRes ? this.ikRes.slice() : null, pelH: o.posture === "ik" ? this.pelHT : null };
     // E2 (option e2): e2reanchor = the leg whose swing target the sequencer re-anchored this tick (B1: to the measured foot state at liftoff) — like an anchor re-capture,
     // that one-tick target change is not differentiated into the target-motion velocity feed-forward (rT above); cleared every tick. Never set without e2
+    if (o.swingAccFF) { this.info.accFF = this.accFF ? this.accFF.map(x => (x ? { T: x.T, xdd: x.xdd } : null)) : null; this.accFF = null; this.swingRef = null; }   // the reference must be supplied every tick
     if (LC) this.info.lc = LC.map(f => ({ state: f.state, s: f.s })); if (o.e2) { this.e2reanchor = null; this.info.qsRef = qsRef; this.info.xiRefDot = e2ref ? e2ref.xiRefDot.slice() : null; this.info.xiRefFF = xiRefFF.slice(); } this.n++;
     return cmd;
   }
@@ -422,7 +431,34 @@ StandController.prototype.legChain = function (st, ev, n, pP, qP, footPose) {
     return [0, 1, 2, 3, 4, 5].map(c => { const xp = x.slice(), xm = x.slice(); xp[c] += IK.h; xm[c] -= IK.h;
       const ev2 = (y) => (c < 3 ? res(shank(thigh(qhOf(y)), qk0), qa0) : c === 3 ? res(shank(T0, qkOf(y)), qa0) : res(S0, qaOf(y)));
       const rp = ev2(xp), rm = ev2(xm); return rp.map((v, i) => (v - rm[i]) / (2 * IK.h)); }); };
-  return { ks, cur, fk, jac, kTw, x0: [cur[0][0], cur[0][1], cur[0][2], cur[1][1], cur[2][1], cur[2][2]] };
+  // segment poses at coordinates x (swingAccFF): rotations of thigh / shank / foot and their origins (= hip / knee / ankle joint positions)
+  const pose = (x) => { const T = thigh(qhOf(x)), S = shank(T, qkOf(x)); return { R: [T.Rt, S.Rs, Q.mul(Q.mul(S.B2, qaOf(x)), C2)], p: [pt, T.ps, S.pf] }; };
+  return { ks, cur, fk, jac, kTw, pose, x0: [cur[0][0], cur[0][1], cur[0][2], cur[1][1], cur[2][1], cur[2][2]] };
+};
+// swingAccFF (E2 D1; e2/SWING_ACCEL_FF_DESIGN.md §3): the inertial part of the Newton–Euler inverse dynamics of leg n's subtree (thigh, shank, foot) for the analytic swing
+// reference ref = { vel, acc, w, al, vPel } (world), at the IK solution x of the swing target in frame fr; A = the statics' common acceleration. Resolved acceleration:
+// J_f ẋ = [v − v_pelvis; ω], J_f ẍ = [a − A; α] − J̇_f ẋ with J_f the 6×6 foot-pose Jacobian of the IK chain; segment accelerations a_b = J_c ẍ + J̇_c ẋ, α_b = J_ω ẍ + J̇_ω ẋ,
+// ω_b = J_ω ẋ (first derivatives by central differences in the coordinates, the velocity products by second differences along ẋ — as the IK computes its Jacobian);
+// ΔT_k = Σ_{b distal to k} (c_b − p_k) × m_b a_b + I_b α_b + ω_b × I_b ω_b (world, about joint k; the statics' wrench convention). Returns { T: { k: ΔT_k }, xd, xdd } or null.
+StandController.prototype.swingAccWrench = function (st, ev, n, fr, x, ref, A) {
+  const B = this.spec.bodies, ks = this.legK[n], ch = this.legChain(st, ev, n, fr.pos, fr.rot, null), bodies = ks.map(k => this.spec.joints[k].childIndex);
+  const cOff = bodies.map(b => Q.rot(Q.conj(st[b].rot), V.sub(st[b].com, st[b].pos)));
+  const kin = (y) => { const P = ch.pose(y); return { R: P.R, p: P.p, c: P.R.map((R, i) => V.add(P.p[i], Q.rot(R, cOff[i]))) }; };
+  const angVel = (Ra, Rb, h) => { let q = Q.mul(Ra, Q.conj(Rb)); if (q[3] < 0) q = q.map(v => -v); return [2 * q[0] / h, 2 * q[1] / h, 2 * q[2] / h]; };
+  const step = (y, d, s) => y.map((v, i) => v + s * d[i]), eps = IK.h, hT = 1e-3, K0 = kin(x);
+  const cols = [0, 1, 2, 3, 4, 5].map(j => { const e = [0, 0, 0, 0, 0, 0]; e[j] = 1; const kp = kin(step(x, e, eps)), km = kin(step(x, e, -eps));
+    return { c: K0.c.map((_, b) => V.sc(V.sub(kp.c[b], km.c[b]), 1 / (2 * eps))), w: K0.R.map((_, b) => angVel(kp.R[b], km.R[b], 2 * eps)), pf: V.sc(V.sub(kp.p[2], km.p[2]), 1 / (2 * eps)) }; });
+  const Jf = [0, 1, 2, 3, 4, 5].map(r => [0, 1, 2, 3, 4, 5].map(j => (r < 3 ? cols[j].pf[r] : cols[j].w[2][r - 3]))), bad = (v) => !v || v.some(q => !isFinite(q));
+  const xd = solveN(Jf, [...V.sub(ref.vel, ref.vPel || [0, 0, 0]), ...ref.w]); if (bad(xd)) return null;
+  const kp = kin(step(x, xd, hT)), km = kin(step(x, xd, -hT)), dd = (b, key) => V.sc(V.add(V.sub(kp[key][b], V.sc(K0[key][b], 2)), km[key][b]), 1 / (hT * hT));
+  const wAt = (y) => { const k1 = kin(step(y, xd, eps)), k2 = kin(step(y, xd, -eps)); return k1.R.map((_, b) => angVel(k1.R[b], k2.R[b], 2 * eps)); };
+  const wP = wAt(step(x, xd, hT)), wM = wAt(step(x, xd, -hT)), wdot = wP.map((w, b) => V.sc(V.sub(w, wM[b]), 1 / (2 * hT)));
+  const xdd = solveN(Jf, [...V.sub(V.sub(ref.acc, A), dd(2, "p")), ...V.sub(ref.al, wdot[2])]); if (bad(xdd)) return null;
+  const lin = (b, key, q) => cols.reduce((s, col, j) => V.add(s, V.sc(col[key][b], q[j])), [0, 0, 0]);
+  const acc = [0, 1, 2].map(b => V.add(dd(b, "c"), lin(b, "c", xdd))), alpha = [0, 1, 2].map(b => V.add(wdot[b], lin(b, "w", xdd))), omega = [0, 1, 2].map(b => lin(b, "w", xd));
+  const Iw = (b, v) => { const R = K0.R[b], I = B[bodies[b]].inertia, l = Q.rot(Q.conj(R), v); return Q.rot(R, [0, 1, 2].map(i => I[i][0] * l[0] + I[i][1] * l[1] + I[i][2] * l[2])); };
+  const T = {}; ks.forEach((k, idx) => { let w = [0, 0, 0]; for (let b = idx; b < 3; b++) w = V.add(w, V.add(V.add(V.cross(V.sub(K0.c[b], K0.p[idx]), V.sc(acc[b], B[bodies[b]].mass)), Iw(b, alpha[b])), V.cross(omega[b], Iw(b, omega[b])))); T[k] = w; });
+  return { T, xd, xdd };
 };
 StandController.prototype.legIK = function (st, ev, n, pP, qP, footPose = null) {
   if (this.o.ikBounds) return this.legIKBounded(st, ev, n, pP, qP, footPose);
