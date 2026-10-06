@@ -34,9 +34,10 @@ const hyp = (a, b) => Math.hypot(a[0] - b[0], a[2] - b[2]), yawOfQ = (q) => { co
 const wrap = (a) => { while (a > 180) a -= 360; while (a < -180) a += 360; return a; };
 // E1a-7 / E1a-8 / E1a-16 / E1a-17 computed by the frozen E1b evaluator's code on an adapted record (its gates other than these are not used)
 function e1bParts(r) { const c = r.cfg, P = r.run.protocol === "p15" ? r.run.pert : "none", ad = { ...r, isE1b: true, liftM: 0.02, pert: P === "none" || P == null ? "none" : P, events: { ...r.events, pertT: r.events.pertT }, protocol: { LT: 0.6, HOV: 1.5, RT: 0.6, GRACE: 0.3 },
-    cfg: { ...c, config: "PSTAR4", footYaw: true }, summary: { ...r.summary, ledger: r.summary.ledger } };
+    cfg: { ...c, config: c.vffRate === "sr" ? "PSTAR4S" : "PSTAR4", footYaw: true }, summary: { ...r.summary, ledger: r.summary.ledger } };
   if (r.run.protocol === "step" && r.events.pertT != null) ad.pert = "PF";   // 5 N·s scheduled impulse (E1a-8 external-impulse check: 5)
-  const j = e1bJudge(ad, "PSTAR4", { hz: c.hz, rateRule: "maxJumpSmooth" }); return j.C; }
+  // the E1b judge's configuration-version check: the "S" / "H" E2 configurations sit on PSTAR4S (e2/VFF_RATE_CORRECTION.md); the rules applied are the same
+  const j = e1bJudge(ad, c.vffRate === "sr" ? "PSTAR4S" : "PSTAR4", { hz: c.hz, rateRule: "maxJumpSmooth" }); return j.C; }
 export function evalStep(r) { const R = r.rows, n = r.lifted, m = r.stance, W = r.W, E2 = r.e2, H = r.events, C = {}, add = (id, pass, v) => { C[id] = { pass: !!pass, v }; }, rep = {};
   const dt = 1 / r.cfg.hz, tL = H.tL, low = r.run.variant === "low", late = r.run.variant === "late", sp = r.run.pert && typeof r.run.pert === "object";
   if (r.run.diag) rep.DIAGNOSTIC = "run with a diagnostic option (" + JSON.stringify(r.run.diag) + "): not an official E2 run";
