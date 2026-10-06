@@ -1,0 +1,48 @@
+runs 876/876; pre-freeze reachability rejections 14; runtime reachability rejections 0
+trajectory | set | n ON | β ON | β OFF | γ OFF | RMS ON / OFF mean (mm) | ON/OFF ratio | peak ON max
+  R-F    | R | 48 | 0.21 | 1.40 | 0.05 | 1.35 / 5.26 | 0.22–0.30 | 2.85
+  R-L    | R | 48 | 0.23 | 0.79 | 0.06 | 1.76 / 4.44 | 0.33–0.45 | 3.65
+  C-F7   | C | 48 | 0.26 | 1.22 | 0.04 | 1.32 / 4.46 | 0.25–0.34 | 2.85
+  C-F13  | C | 48 | 0.17 | 1.50 | 0.07 | 1.41 / 6.15 | 0.20–0.27 | 2.87
+  C-L5   | C | 48 | 0.28 | 0.68 | 0.06 | 1.57 / 3.84 | 0.35–0.46 | 3.31
+  H-T45  | H | 48 | 0.07 | 1.05 | 0.14 | 2.07 / 8.09 | 0.23–0.29 | 4.22
+  H-A40  | H | 48 | 0.24 | 1.20 | 0.04 | 1.70 / 5.97 | 0.24–0.33 | 3.60
+  H-D    | H | 48 | 0.18 | 1.55 | 0.06 | 1.66 / 6.52 | 0.21–0.30 | 3.36
+  H-F15  | H | 48 | 0.15 | 1.54 | 0.07 | 1.45 / 6.79 | 0.19–0.25 | 2.90
+  C-L11  | C | 6 | 0.22 | 0.89 | 0.07 | 2.32 / 5.55 | 0.39–0.44 | 4.13
+FAIL T-1 (2 failing items)
+PASS T-2 (0 failing items)
+PASS T-3 (0 failing items)
+PASS I-1 (0 failing items)
+FAIL I-2 (52 failing items)
+FAIL I-3 (6 failing items)
+FAIL I-4 (4 failing items)
+PASS I-5 (0 failing items)
+FAIL I-6 (84 failing items)
+PASS I-7 (0 failing items)
+   T-1: C-F7 pooled β_ON 0.26 (|β| ≤ 0.25)
+   T-1: C-L5 pooled β_ON 0.28 (|β| ≤ 0.25)
+   I-2: V2-REF|L|480|on|H-T45 E1a-7: applied Δτ max 10.24 (violations 1), commanded Δτ0 max 13.25 (violations 0) N·m
+   I-2: V2-REF|L|480|on|H-A40 E1a-7: applied Δτ max 10.37 (violations 1), commanded Δτ0 max 11.05 (violations 0) N·m
+   I-2: V2-REF|L|480|on|H-F15 E1a-7: applied Δτ max 10.14 (violations 1), commanded Δτ0 max 14.87 (violations 0) N·m
+   I-2: V2-REF|R|480|on|H-T45 E1a-7: applied Δτ max 10.36 (violations 1), commanded Δτ0 max 13.44 (violations 0) N·m
+   I-2: V2-REF|R|480|on|H-A40 E1a-7: applied Δτ max 10.38 (violations 1), commanded Δτ0 max 11.06 (violations 0) N·m
+   I-2: V2-REF|R|480|on|H-F15 E1a-7: applied Δτ max 10.17 (violations 1), commanded Δτ0 max 14.88 (violations 0) N·m
+   I-3: V2-long-legs|L|180|on|C-L11 energy closure max 5.39e+0 J/tick, Σ+ 8.043 J, authority 0
+   I-3: V2-long-legs|L|240|on|C-L11 energy closure max 4.21e-1 J/tick, Σ+ 1.123 J, authority 0
+   I-3: V2-long-legs|L|480|on|C-L11 energy closure max 7.16e-2 J/tick, Σ+ 0.501 J, authority 0
+   I-3: V2-long-legs|R|180|on|C-L11 energy closure max 6.27e-1 J/tick, Σ+ 1.984 J, authority 0
+   I-3: V2-long-legs|R|240|on|C-L11 energy closure max 3.12e+0 J/tick, Σ+ 5.882 J, authority 0
+   I-3: V2-long-legs|R|480|on|C-L11 energy closure max 1.02e-1 J/tick, Σ+ 0.526 J, authority 0
+   I-4: V2-long-legs|L|240|on|C-L11 saturation 5.6 % / 29 ms
+   I-4: V2-long-legs|L|480|on|C-L11 saturation 10.9 % / 60 ms
+   I-4: V2-long-legs|R|240|on|C-L11 saturation 5.6 % / 29 ms
+   I-4: V2-long-legs|R|480|on|C-L11 saturation 7.1 % / 38 ms
+   I-6: V2-REF|L|180|on|H-D TOUCHDOWN entries 2, rebound 1, re-entries < 60 ms 0
+   I-6: V2-REF|L|240|on|H-D TOUCHDOWN entries 2, rebound 1, re-entries < 60 ms 0
+   I-6: V2-REF|L|480|on|H-D TOUCHDOWN entries 2, rebound 1, re-entries < 60 ms 0
+   I-6: V2-REF|L|180|on|H-F15 TOUCHDOWN entries 2, rebound 1, re-entries < 60 ms 0
+   I-6: V2-REF|L|240|on|H-F15 TOUCHDOWN entries 2, rebound 1, re-entries < 60 ms 0
+   I-6: V2-REF|R|180|on|H-D TOUCHDOWN entries 2, rebound 1, re-entries < 60 ms 0
+SERVO DOES NOT VALIDATE
+per-bin allowance (mm, φ 0.20 … 0.80 in 0.05 bins) — NOT VALID (the servo did not validate): 3.65 4.20 4.25 4.05 3.15 2.10 1.00 0.00 0.00 0.05 0.80 1.65

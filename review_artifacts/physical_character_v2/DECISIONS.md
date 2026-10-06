@@ -2216,3 +2216,46 @@ No official E2 run. Not pushed.
 - a φ-resolved allowance in the evaluator's convention.
 
 No 30 mm touchdown matrix, smoke or official run. Not pushed.
+
+## 2026-10-06: SV-2 servo battery (`sources/2026-10-06_user_decision_sv2_battery.md`)
+
+### E2-10: SV-2 frozen and run; DOES NOT VALIDATE → STOPPED; allowance not entered, PG-1 and the touchdown matrix not run (`e2/SWING_SERVO_VALIDATION_V2_PREREG.md`, `e2/SWING_SERVO_VALIDATION_V2_RESULTS.md`, `e2/TOUCHDOWN_A30_ANALYSIS_PLAN.md`)
+
+**Frozen before any run** (84b92b1):
+- one E2-shaped ground-ending step per run;
+- reachability pre-check with the planner's certifier: C-L11 rejected for 7 bodies;
+- 876 runs;
+- four separate verdicts.
+
+The touchdown analysis plan (S1 rule, sourced 10 ms rationale) was committed before the evaluation was read.
+
+**Result:** the representative set R passes everything. Otherwise:
+
+| item | result | where and why |
+|---|---|---|
+| T-1 | FAIL | C-F7 0.26, C-L5 0.28 (≤ 0.25). The residual is vertical and D1-insensitive |
+| I-2 | FAIL (52) | touchdown foot-flat transients 6 – 21 ms after contact, beyond the E1a-7 onset window (C-F13, H), and C-L11 |
+| I-3 / I-4 | FAIL (6 / 4) | C-L11 on V2-long-legs: a servo runaway at φ ≈ 0.8 near the reach boundary, also with D1 off; certified reachable but not executable |
+| I-6 | FAIL (84) | landed-foot contact loss after long fast landings (H-D, H-F15), and C-L11 |
+
+T-2, T-3, I-1, I-5 and I-7 pass. Tracking RMS with D1 is 1.3 – 2.3 mm, rate-stable.
+
+**Allowance:** computed for the record, NOT VALID.
+- The descent-end bin is 1.65 mm (raw 1.6004).
+- What-if PG with these bins: 0 / 32, margin 4.977 mm at φ 0.80, short by 0.023 mm.
+
+**Touchdown at 30 mm** (SV-2 data, reported):
+- the 10 ms mean is rate-robust (ratios ≤ 1.08);
+- but forward 0.10 m landings exceed 25 % BW at 180 Hz (8 / 16, up to 27.8 %), and 0.13 m at every rate.
+
+**Corrections:**
+- the 25 mm touchdown analysis (E2-9) used integer-tick windows, so its numbers are superseded by the exact-window recomputation;
+- the "≥ 2 ticks" justification was wrong.
+
+**Decisions pending (user):**
+1. reachability scope (execution feasibility);
+2. the touchdown and descent-end mechanism: the vertical residual makes contact early and fast;
+3. T-1 axis and gating;
+4. the φ 0.80 clearance margin under the round-up.
+
+Not pushed.

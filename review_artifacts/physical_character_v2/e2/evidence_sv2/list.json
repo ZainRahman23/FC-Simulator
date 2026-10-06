@@ -1,0 +1,6279 @@
+{
+ "generated": "e2/SWING_SERVO_VALIDATION_V2_PREREG.md §3 frozen run list (from the reachability pre-check, tools/swing_servo_val2.mjs --mode=reach, the planner certifier; a (body, side, trajectory) is included iff reachable at 180, 240 AND 480 Hz)",
+ "runs": [
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-L11"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-L11"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-L11"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-L11"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-L11"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-L11"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-L11"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-L11"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-L11"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-L11"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-L11"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-L11"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "R-F"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "R-F"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "R-L"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "R-L"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-F7"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-F13"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "C-L5"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-T45"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-A40"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-D"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-D"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 180,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 180,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 240,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 240,
+   "ff": "on",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 480,
+   "ff": "off",
+   "traj": "H-F15"
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "hz": 480,
+   "ff": "on",
+   "traj": "H-F15"
+  }
+ ],
+ "rejected": [
+  {
+   "body": "V2-REF",
+   "side": "L",
+   "traj": "C-L11",
+   "why": [
+    "180 Hz: goal pose not IK-feasible",
+    "240 Hz: goal pose not IK-feasible",
+    "480 Hz: goal pose not IK-feasible"
+   ]
+  },
+  {
+   "body": "V2-REF",
+   "side": "R",
+   "traj": "C-L11",
+   "why": [
+    "180 Hz: goal pose not IK-feasible",
+    "240 Hz: goal pose not IK-feasible",
+    "480 Hz: goal pose not IK-feasible"
+   ]
+  },
+  {
+   "body": "V2-165-62",
+   "side": "L",
+   "traj": "C-L11",
+   "why": [
+    "180 Hz: goal pose not IK-feasible",
+    "240 Hz: goal pose not IK-feasible",
+    "480 Hz: goal pose not IK-feasible"
+   ]
+  },
+  {
+   "body": "V2-165-62",
+   "side": "R",
+   "traj": "C-L11",
+   "why": [
+    "180 Hz: goal pose not IK-feasible",
+    "240 Hz: goal pose not IK-feasible",
+    "480 Hz: goal pose not IK-feasible"
+   ]
+  },
+  {
+   "body": "V2-198-92",
+   "side": "L",
+   "traj": "C-L11",
+   "why": [
+    "180 Hz: goal pose not IK-feasible",
+    "240 Hz: goal pose not IK-feasible",
+    "480 Hz: goal pose not IK-feasible"
+   ]
+  },
+  {
+   "body": "V2-198-92",
+   "side": "R",
+   "traj": "C-L11",
+   "why": [
+    "180 Hz: goal pose not IK-feasible",
+    "240 Hz: goal pose not IK-feasible",
+    "480 Hz: goal pose not IK-feasible"
+   ]
+  },
+  {
+   "body": "V2-175-70",
+   "side": "L",
+   "traj": "C-L11",
+   "why": [
+    "180 Hz: goal pose not IK-feasible",
+    "240 Hz: goal pose not IK-feasible",
+    "480 Hz: goal pose not IK-feasible"
+   ]
+  },
+  {
+   "body": "V2-175-70",
+   "side": "R",
+   "traj": "C-L11",
+   "why": [
+    "180 Hz: goal pose not IK-feasible",
+    "240 Hz: goal pose not IK-feasible",
+    "480 Hz: goal pose not IK-feasible"
+   ]
+  },
+  {
+   "body": "V2-190-85",
+   "side": "L",
+   "traj": "C-L11",
+   "why": [
+    "180 Hz: goal pose not IK-feasible",
+    "240 Hz: goal pose not IK-feasible",
+    "480 Hz: goal pose not IK-feasible"
+   ]
+  },
+  {
+   "body": "V2-190-85",
+   "side": "R",
+   "traj": "C-L11",
+   "why": [
+    "180 Hz: goal pose not IK-feasible",
+    "240 Hz: goal pose not IK-feasible",
+    "480 Hz: goal pose not IK-feasible"
+   ]
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "L",
+   "traj": "C-L11",
+   "why": [
+    "180 Hz: goal pose not IK-feasible",
+    "240 Hz: goal pose not IK-feasible",
+    "480 Hz: goal pose not IK-feasible"
+   ]
+  },
+  {
+   "body": "V2-short-legs",
+   "side": "R",
+   "traj": "C-L11",
+   "why": [
+    "180 Hz: goal pose not IK-feasible",
+    "240 Hz: goal pose not IK-feasible",
+    "480 Hz: goal pose not IK-feasible"
+   ]
+  },
+  {
+   "body": "V1-matched",
+   "side": "L",
+   "traj": "C-L11",
+   "why": [
+    "180 Hz: goal pose not IK-feasible",
+    "240 Hz: goal pose not IK-feasible",
+    "480 Hz: goal pose not IK-feasible"
+   ]
+  },
+  {
+   "body": "V1-matched",
+   "side": "R",
+   "traj": "C-L11",
+   "why": [
+    "180 Hz: goal pose not IK-feasible",
+    "240 Hz: goal pose not IK-feasible",
+    "480 Hz: goal pose not IK-feasible"
+   ]
+  }
+ ]
+}
