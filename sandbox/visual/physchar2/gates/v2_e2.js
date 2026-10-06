@@ -21,13 +21,16 @@ CFG.PSTAR4S = { ...CFG.PSTAR4, vffRate: "sr" }; CFG.PSTAR5BS = { ...CFG.PSTAR5B,
 // "H" variants (e2/E2_HANDOFF.md): the S variants + the continuous target-motion velocity feed-forward through the B1 re-anchor (e2reanchorVel)
 CFG.PSTAR5BH = { ...CFG.PSTAR5BS, e2reanchorVel: true }; CFG.PSTAR5CH = { ...CFG.PSTAR5CS, e2reanchorVel: true };
 export const E2P = { fwd: { dx: 0.10, dy: 0 }, lat: { dx: 0, dy: 0.08 }, T: 0.60, apex: 0.025, apexLow: 0.008, lateDz: 0.010, pushJ: 5, pushDur: 0.1, LT: 0.6, HOV: 1.5, RT: 0.6, GRACE: 0.3, LIFT: 0.02 };
+// VERSIONED commanded-step trajectory seeds (run.traj; default "v2" = the frozen E2 v2 seeds, bit-identical). "A30" = amendment A30 (e2/E2_PREREG_AMENDMENT_A30.md,
+// user decision 2026-10-06): nominal apex 25 → 30 mm; T 0.6 s, apex knot at T/2, measured-liftoff semantics and every threshold unchanged
+export const E2TRAJ = { v2: { apex: E2P.apex }, A30: { apex: 0.030 } };
 const mj = (u) => { u = Math.min(1, Math.max(0, u)); return u * u * u * (10 - 15 * u + 6 * u * u); };
 const seg = (t, a, T, v0, v1) => { const u = Math.min(1, Math.max(0, (t - a) / T)), dv = v1 - v0; return [v0 + dv * u * u * u * (10 - 15 * u + 6 * u * u), t > a && t < a + T ? dv * 30 * u * u * (1 - u) * (1 - u) / T : 0, t > a && t < a + T ? dv * 60 * u * (1 - u) * (1 - 2 * u) / (T * T) : 0]; };
 // the E1a configuration's ankle neutral stiffness 0.13 N·m/° is baked into the spec at generation: set explicitly (= the Node env value; the browser has no env)
 export const e2Spec = (human) => { setAnkleNeutralKOverride(0.13); return generateSpec(VARIATION_SET.find(h => h.id === human)); };
 // run: { protocol: "step" | "p15", human, side: "L" | "R" (the swing / lifted foot), kind: "forward" | "lateral", hz, variant: null | "low" | "late",
 //        pert: null | { dir: "lat" | "fwd", when: "pre" | "s50" | "s80" | "contact" | "la50" } (step) | "none" | "P15" (p15), config: "PSTAR5" (default) | "PSTAR4", nominal: { dx, dy } (smoke only) }
-export function e2Sim(J, spec, run) { const nL = run.side === "L" ? 0 : 1, nS = 1 - nL, hz = run.hz || 240, config = run.config || "PSTAR5", P15 = run.protocol === "p15";
+export function e2Sim(J, spec, run) { if (run.traj != null && !E2TRAJ[run.traj]) throw new Error("trajectory version"); const nL = run.side === "L" ? 0 : 1, nS = 1 - nL, hz = run.hz || 240, config = run.config || "PSTAR5", P15 = run.protocol === "p15";
   if (typeof process !== "undefined" && process.env && (process.env.V2_KNEE_MODEL !== "v2k" || process.env.V2_ANKLE_NEUTRAL_K !== "0.13")) throw new Error("E1a configuration: V2_KNEE_MODEL=v2k and V2_ANKLE_NEUTRAL_K=0.13 are required");
   const H = { tL: null, tR: null, tA: null, tEnd: null, unloadTimeout: false, touchT0: null, anchor: null, cleared: null, clearReason: null, abortT: null, abortBeforeLift: false, airborneSeen: false, pertT: null, pert: null, tLA: null, timeout: false };
   const pd = { t0: 1, dur: 2, dz: 0.025 }, base = g3Def(nS === 1 ? "U:R" : "U:L");
@@ -75,7 +78,7 @@ export function e2Sim(J, spec, run) { const nL = run.side === "L" ? 0 : 1, nS = 
       if (when === "pre" && H.pertT == null && H.touchT0 != null && tc >= Math.max(7, H.touchT0 + 0.5) - 0.05 - 1e-9) push(tc, pJ);   // 50 ms before the (predicted) swing command
       if (tc >= 7 - 1e-9 && H.touchT0 != null && tc - H.touchT0 >= 0.5 - 1e-9) { H.tL = tc; const a = lc.target(nL); H.anchor = { pos: a.pos.slice(), rot: a.rot.slice() };
         // run.nominal: SMOKE / development runs only (non-test steps, e2/E2_IMPLEMENTATION.md §6)
-        const nom = run.nominal || (run.kind === "lateral" ? E2P.lat : E2P.fwd); seq.command(tc, { n: nL, kind: run.kind, nominal: { dx: nom.dx, dy: nom.dy, dz: run.variant === "late" ? E2P.lateDz : 0 }, T: E2P.T, apex: run.variant === "low" ? E2P.apexLow : E2P.apex, ...(run.diag && run.diag.noClearance ? { diagNoClearance: true } : {}) });
+        const nom = run.nominal || (run.kind === "lateral" ? E2P.lat : E2P.fwd); seq.command(tc, { n: nL, kind: run.kind, nominal: { dx: nom.dx, dy: nom.dy, dz: run.variant === "late" ? E2P.lateDz : 0 }, T: E2P.T, apex: run.variant === "low" ? E2P.apexLow : E2TRAJ[run.traj || "v2"].apex, ...(run.diag && run.diag.noClearance ? { diagNoClearance: true } : {}) });
         if (when === "s50" || when === "s80") push(tc + (when === "s50" ? 0.5 : 0.8) * E2P.T, pJ); }
       else if (tc >= 9 - 1e-9) { H.unloadTimeout = true; H.tA = 9; H.tEnd = 16; }
       return; }
