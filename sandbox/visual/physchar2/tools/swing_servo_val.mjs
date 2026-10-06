@@ -6,9 +6,12 @@
 // usage: V2_KNEE_MODEL=v2k V2_ANKLE_NEUTRAL_K=0.13 node tools/swing_servo_val.mjs --human=V2-REF --side=L --hz=240 --ff=on|off --seq=A|B --out=<file.json.gz>
 import fs from "fs"; import path from "path"; import zlib from "zlib"; import { fileURLToPath } from "url";
 import { loadJolt } from "../core/v2_jolt.js"; import { e2Spec, CFG } from "../gates/v2_e2.js"; import { G3Sim, g3Def } from "../gates/v2_g3.js"; import { V, Q } from "../core/v2_math.js";
-import { stepSegment, stepAt, stepRef, qlog } from "../ctrl/v2_swing.js"; import { liftRef, stepFrame } from "../ctrl/v2_footstep.js";
+import { stepSegment, stepAt, stepRef, qlog } from "../ctrl/v2_swing.js"; import { IK } from "../ctrl/v2_stand.js"; import { liftRef, stepFrame } from "../ctrl/v2_footstep.js";
 const here = path.dirname(fileURLToPath(import.meta.url)), J = await loadJolt(path.join(here, "../vendor/jolt-physics.wasm-compat.js")), arg = (k, d) => (process.argv.find(a => a.startsWith(`--${k}=`)) || `--${k}=${d}`).split("=").slice(1).join("=");
 const HUMAN = arg("human", "V2-REF"), SIDE = arg("side", "L"), HZ = +arg("hz", 240), FF = arg("ff", "on"), SEQ = arg("seq", "A"), OUT = arg("out", "");
+// --vff=undamped: COUNTERFACTUAL diagnostic only (lcVff investigation, sources/2026-10-06_user_decision_lcvff_diagnostic.md) — the velocity feed-forward's one-step IK rate with the
+// solver's terminal damping IK.muMin (harness wrapper of legIKRate). Not part of the preregistered battery (default "lin")
+const VFF = arg("vff", "lin"); if (!["lin", "undamped"].includes(VFF)) throw new Error("vff");
 if (!["L", "R"].includes(SIDE) || !["on", "off"].includes(FF) || !["A", "B"].includes(SEQ)) throw new Error("args");
 if (process.env.V2_KNEE_MODEL !== "v2k" || process.env.V2_ANKLE_NEUTRAL_K !== "0.13") throw new Error("E1a configuration env required");
 const nL = SIDE === "L" ? 0 : 1, nS = 1 - nL, CONFIG = FF === "on" ? "PSTAR5C" : "PSTAR5B", HOV = 0.020, HOLD = 0.5;
@@ -25,6 +28,7 @@ const lamFn = (t) => lamFn.d(t)[0]; lamFn.d = (t) => { const [v, d1, d2] = sig(t
 const spec = e2Spec(HUMAN), pd = { t0: 1, dur: 2, dz: 0.025 }, def = { ...g3Def(nS === 1 ? "U:R" : "U:L"), key: "SERVO", title: "swing servo validation", lam: lamFn, supervise: {}, holds: [], seconds: 60, push: null, torque: null };
 const s = new G3Sim(J, spec, def, { stand: { ikRefTwist: true, lifecycle: true, pelvisDrop: pd, ...CFG[CONFIG] }, passiveOpts: { kneeModel: "v2k" }, ...(HZ !== 240 ? { cfg: { hz: HZ } } : {}) });
 const C = s.ctrl, dt = s.dt; if (!!C.o.swingAccFF !== (FF === "on") || C.o.e2 !== 2) throw new Error("configuration");
+if (VFF === "undamped") { const orate = C.legIKRate.bind(C); C.legIKRate = (st, ev, n, pP, qP, fp, sol, now, mu) => orate(st, ev, n, pP, qP, fp, sol, now, IK.muMin); }
 const setT = (e) => { C.lc.setSwingTarget(nL, { pos: e.pos, rot: e.rot }); if (!C.swingRef) C.swingRef = [null, null]; C.swingRef[nL] = { vel: e.vel.slice(), acc: e.acc.slice(), w: (e.w || [0, 0, 0]).slice(), al: (e.al || [0, 0, 0]).slice() }; H.ref = e; };
 const goalOf = (tr) => ({ pos: [H.A.pos[0] + H.fr.f[0] * tr.dx + H.fr.o[0] * tr.dy, H.A.pos[1] + HOV, H.A.pos[2] + H.fr.f[2] * tr.dx + H.fr.o[2] * tr.dy], rot: H.A.rot.slice() });
 function startSeg(t, ref) { const tr = list[H.k], goal = goalOf(tr), zEnd = H.A.pos[1] + HOV; H.sg = stepSegment(ref, goal, tr.T, tr.apex == null ? null : { z: zEnd + tr.apex, tk: 0.5 * tr.T }); H.segT0 = t; H.holdUntil = null; H.cur = tr; }
@@ -68,7 +72,7 @@ while (true) { const st0 = s.st; if (!s.tick()) break; const t = s.n * dt, st = 
   if (H.tEnd != null && t >= H.tEnd - 1e-9) break; if (t > 60) break; }
 hashes.end = (s.h >>> 0).toString(16).padStart(8, "0");
 const g = s.g3summary(), actAxes = []; s.act.led.forEach((row, k) => row.forEach((x, i) => { if (x && x.n) actAxes.push({ axis: spec.joints[k].name + "." + "xyz"[i], k, i, overCap: x.overCap, satTicks: x.satTicks, peakNm: x.peakNm, peakFrac: x.peakFrac }); }));
-const out = { generated: "tools/swing_servo_val.mjs", prereg: "e2/SWING_SERVO_VALIDATION_PREREG.md", human: HUMAN, side: SIDE, swing: nL, hz: HZ, ff: FF, config: CONFIG, seq: SEQ, list, events: { tCmd: H.tCmd, tLo: H.tLo, abortT: H.abortT, cleared: H.cleared, noLift: !!H.noLift, segments: H.k },
+const out = { generated: "tools/swing_servo_val.mjs", prereg: "e2/SWING_SERVO_VALIDATION_PREREG.md", human: HUMAN, side: SIDE, swing: nL, hz: HZ, ff: FF, config: CONFIG, seq: SEQ, vff: VFF, list, events: { tCmd: H.tCmd, tLo: H.tLo, abortT: H.abortT, cleared: H.cleared, noLift: !!H.noLift, segments: H.k },
   integrity: { closMax, closPos, touchDuringTraj: touchDuring, stanceSlipMm: stanceMax, ledger: g.ledger, authorityWrites: g.ledger.authorityWrites }, actAxes: actAxes.filter(a => legAxes.has(a.k * 3 + a.i)), overCapAll: actAxes.reduce((s2, a) => s2 + a.overCap, 0),
   wn: 2 * Math.PI * C.lc.o.swingHz, outcome: g.outcome, hashes, rows };
 s.destroy(); if (OUT) fs.writeFileSync(OUT, zlib.gzipSync(JSON.stringify(out)));

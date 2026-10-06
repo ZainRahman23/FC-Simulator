@@ -2076,3 +2076,28 @@ No official E2 run. Not pushed.
 **Stopped.** Recommended next: a diagnostic-only investigation of the velocity-feed-forward shortfall.
 
 No E2 run. Not pushed.
+
+### E2-5: swing velocity-lag diagnosis (diagnostic only; nothing changed) (`e2/SWING_LAG_DIAGNOSIS.md`)
+
+**Authority:** user decision 2026-10-06 (`sources/2026-10-06_user_decision_lcvff_diagnostic.md`).
+
+**Instrumented the whole command path** (`tools/swing_lag_diag.mjs`, `swing_lag_analyze.mjs`) on constant-velocity, sinusoid and chirp trajectories; floating vs fixed pelvis; 3 bodies, both legs, 240 / 480 Hz, liftoff start.
+
+**Rejected:**
+- Jolt / actuator realisation: measured torque = the implicit law to 1e-4 N·m;
+- the velocity feed-forward arithmetic (exact);
+- IK conversion / frames: converged-target rates ×0.99 – 1.00 of the Jacobian-ideal.
+
+**Cause:** the velocity feed-forward's desired joint velocity is a one-step Levenberg–Marquardt rate with the solver's initial damping μ0 = 0.01. At swing poses the smallest Gauss–Newton eigenvalue is 0.010 – 0.012, so knee / hip rates come out at ×0.31 – 0.34 for vertical foot motion (×0.86 – 0.88 forward); predicted = measured.
+- The drag residual gives ≈ (1 − k)·64 ms: about 45 ms vertical, about 6 ms forward; the pooled ~20 ms / "~70 %" in E2-like swings.
+- Counterfactual (that one solve with terminal damping): the lag vanishes.
+
+**Secondary:** missing inertial feed-forward (D1's target; D1's overcompensation is explained by the drag); liftoff gain blend; pelvis coupling only amplifies an existing joint lag.
+
+**Predicted:** corrected rate + D1 = 0.3 – 1.4 mm RMS (counterfactual).
+
+**Smallest correction:** singularity-robust variable damping in that rate solve (or an analytic resolved rate for E2 swings). Scope (general vs E2-only) is the user's decision.
+
+**Warning:** the 25 mm apex leaves 0.4 mm of certificate slack at φ 0.8; the corrected servo's descent deficit is 0.5 – 2.6 mm.
+
+Not applied. Not pushed.
