@@ -116,6 +116,15 @@ export const STAND = {
                           // reference's own pose one tick earlier (sequencer: e2reanchorPrev) instead of being dropped for that tick (I-11) — continuous actuator output at release
   vffPassive: false,      // DIAGNOSTIC COUNTERFACTUAL (e2/E2_OVERNIGHT_REPORT.md §9; default OFF; NOT adopted): the velocity feed-forward also carries the joint's passive viscous damping
                           // (spec joints[k].damping) for the desired rate — measured: the ankle's passive 0.2 N·m·s/rad is 33 % of its swing-servo damping (0.6), a ≈ 21 ms foot-orientation lag
+  vffPelvisAir: false,    // A (e2/AB_VALIDATION_PREREG.md; default OFF = bit-identical): the pelvis-motion part rP of a COMMANDED swing's world-space foot velocity task is solved with
+                          // the same singularity-robust variable damping as the commanded-target part rT, weighted w_A = a · c (a = the lifecycle's airborne weight, c = the commanded-swing
+                          // weight, ramped over the lifecycle's release time): airborne, rP and rT are one consistently damped task; in contact (a = 0) and on every path without a
+                          // commanded target (resting foot, external lift, abort hold) rP keeps μ0 exactly as before (the refuted "srAll" destabilised exactly those paths)
+  vffPassiveRef: false,   // B (e2/AB_VALIDATION_PREREG.md; default OFF): the ankle's modelled passive tissue damping c_p (spec joints[k].damping) compensated ONCE in the swing actuator command,
+                          // on the REFERENCE joint rate (rT + w_A·rP), never on the measured rate — nominal trajectory drag is cancelled, contact- or disturbance-induced motion keeps its
+                          // physical damping; zero on every path without a commanded target. Mutually exclusive with the diagnostic vffPassive
+  torqueLedger: false,    // recording only (e2/AB_VALIDATION_PREREG.md): per actuator axis of a non-supporting leg the command split into statics feed-forward (gravity / common
+                          // acceleration / support), D1, proportional, servo-damping velocity feed-forward and B, plus the weights w_A, c — closure τ0 = Σ parts is checked by the harness
   diagD1PelAcc: false,    // DIAGNOSTIC counterfactual (e2/VERTICAL_RESIDUAL_DIAGNOSIS.md; default OFF): D1 (swingAccFF) uses the MEASURED pelvis linear acceleration (backward difference of the
                           // pelvis velocity) in place of the statics' common acceleration A — tests the floating-base completeness of the acceleration feed-forward; not a candidate as is
   diagRecord: false,      // DIAGNOSTIC (e2/VERTICAL_RESIDUAL_DIAGNOSIS.md; default OFF; recording only, no effect on any output): per non-supporting leg the IK solution x, its frame, D1's resolved
@@ -311,7 +320,9 @@ export class StandController {
       if (o.ikFeasible) for (const n of [0, 1]) { const ft = lcT ? (lcT[n] || st[this.feet[n]]) : this.unl[n] ? this.hold[n] : st[this.feet[n]], hip = V.add(pP, Q.rot(qP, this.anchor[this.legK[n][0]])), dh = dnorm(hip[0] - ft.pos[0], hip[2] - ft.pos[2]), Ln = this.legLen[n];
         if (dh < Ln) pP[1] = Math.min(pP[1], ft.pos[1] + Math.sqrt(Ln * Ln - dh * dh) - (hip[1] - pP[1])); }
       this.pelHT = pP[1];
-      const tIK = o.timeIK ? nowMs() : 0; ikT = {}; if (o.lcVff === "split" || o.lcVff === "lin" || o.lcVff === "linmin") { this.ikW = {}; this.vffNext = [null, null]; } this.ikRes = [0, 1].map(n => { let r;
+      if ((o.vffPelvisAir || o.vffPassiveRef) && LC) { if (o.vffPassive && o.vffPassiveRef) throw new Error("vffPassive (diagnostic) and vffPassiveRef (B) are exclusive"); if (!this.cmdW) this.cmdW = [0, 0];
+        const stp = dt / this.lc.o.release; for (const n of [0, 1]) this.cmdW[n] += Math.max(-stp, Math.min(stp, (LC[n].swing ? 1 : 0) - this.cmdW[n])); }   // A / B: continuous commanded-swing weight c
+      const tIK = o.timeIK ? nowMs() : 0; ikT = {}; if (o.vffPassiveRef) this.ikWref = {}; if (o.torqueLedger) this.wAof = [0, 0]; if (o.lcVff === "split" || o.lcVff === "lin" || o.lcVff === "linmin") { this.ikW = {}; this.vffNext = [null, null]; } this.ikRes = [0, 1].map(n => { let r;
         if (lcT && lcT[n]) { const a1 = LC[n].a, hC = o.lcFrameH === "target" ? pP[1] : o.lcFrameH === "actual" || (o.lcTouch && o.lcTouch.frame === "actual") ? ps.pos[1] : Math.min(pP[1], ps.pos[1]), ns = { pos: [pP[0], hC + a1 * (ps.pos[1] - hC), pP[2]], rot: ps.rot };   // non-supporting leg frame: the ACTUAL pelvis position / orientation (world-space servo) with the posture TARGET height while in contact (a = 0) → actual height once airborne (a = 1)
           // contact height hC = min(target, actual) (diagnostic lcFrameH "target" / "actual"): measured — the ACTUAL height with a pelvis 1 cm above its target made the touching leg
           // a straight strut (knee 0°, ~60 N) that held the pelvis up, rolled the body over the stance foot's edge and felled it (60 N lift + 2.5 cm drop); the TARGET height
@@ -337,13 +348,15 @@ export class StandController {
             // earlier (e2reanchorPrev, set by the sequencer from the segment's polynomial): the rate stays continuous through the release (measured with vffRate "sr": the dropped
             // term was a one-tick 23 N·m dip of the knee's τ0 at liftoff); without the option the re-anchor tick skips rT exactly as before
             const tPrev = this.e2reanchor === n ? (o.e2reanchorVel ? this.e2reanchorPrev : null) : pv && pv.tgt;
-            if (pv) { const rP = new Map(this.legIKRate(st, ev, n, pv.fr.pos, pv.fr.rot, lcT[n], r, cur, mu, srP)), rT = LC[n].swing && pv.swing && tPrev ? new Map(this.legIKRate(st, ev, n, fr.pos, fr.rot, tPrev, r, cur, mu, srT)) : null;
+            const wA = o.vffPelvisAir && this.cmdW ? aW * this.cmdW[n] : 0; if (o.torqueLedger) this.wAof[n] = wA;   // A: weight of the singularity-robust treatment of rP
+            if (pv) { const rP = new Map(this.legIKRate(st, ev, n, pv.fr.pos, pv.fr.rot, lcT[n], r, cur, mu, srP, wA)), rT = LC[n].swing && pv.swing && tPrev ? new Map(this.legIKRate(st, ev, n, fr.pos, fr.rot, tPrev, r, cur, mu, srT)) : null;
               // PASSIVITY BOUND on the pelvis part (drag cancellation): per axis ω*_P is clamped to [min(0, ω), max(0, ω)] of the joint's ACTUAL relative angular velocity
               // (the actuator's own convention), so the implicit damping on (ω − ω*) is never reversed and never does positive work — bounded near the straight-knee
               // singularity / soft-limit switches (measured unbounded there: τ0 steps of 300–31 000 N·m in the external-lift harness)
               for (const [k, q] of now) { const w = rP.has(k) ? lg(rP.get(k), q) : [0, 0, 0], d = P.jd[+k];
                 if (d && bnd && aW < 1) { const R2 = Q.mul(st[d.child].rot, d.F2), wr = V.sub(st[d.child].w, st[d.parent].w); for (const i of [0, 1, 2]) { const wa = V.dot(wr, Q.rot(R2, [[1, 0, 0], [0, 1, 0], [0, 0, 1]][i])), wc = Math.min(Math.max(w[i], Math.min(0, wa)), Math.max(0, wa)); w[i] = (1 - aW) * wc + aW * w[i]; } }
                 if (o.diagRecord && this.diagRec && this.diagRec[n]) { this.diagRec[n].wP[k] = w.slice(); this.diagRec[n].wT[k] = rT && rT.has(k) ? lg(rT.get(k), q) : [0, 0, 0]; }   // DIAGNOSTIC (recording only)
+                if (o.vffPassiveRef) { const w2 = rT && rT.has(k) ? lg(rT.get(k), q) : [0, 0, 0]; this.ikWref[k] = [w2[0] + wA * w[0], w2[1] + wA * w[1], w2[2] + wA * w[2]]; }   // B: the reference rate
                 if (rT && rT.has(k)) { const w2 = lg(rT.get(k), q); w[0] += w2[0]; w[1] += w2[1]; w[2] += w2[2]; } this.ikW[k] = w; } }
             this.vffNext[n] = { fr: { pos: fr.pos.slice(), rot: fr.rot.slice() }, tgt: { pos: lcT[n].pos.slice(), rot: lcT[n].rot.slice() }, swing: !!LC[n].swing }; } }   // a non-supporting leg never targets beyond its passive (soft) limits — e.g. no hyperextended knee (measured: the unconstrained IK pressed it −2.8° into hyperextension, 18–20 N·m of tissue torque)
         else r = this.legIK(st, ev, n, pP, qP, lcT ? null : this.unl[n] ? this.hold[n] : null);
@@ -387,7 +400,11 @@ export class StandController {
         if (sw && this.legSide[k] >= 0 && sw[this.legSide[k]] < 1 && ikT && ikT[k]) { const sd = this.legSide[k], s1 = sw[sd], a1 = LC[sd].a, gs = this.gainSwing[k], gf = this.gainFree[k];   // lifecycle: continuous in s (support) and a (airborne)
           // non-supporting hip / knee: in contact (a = 0) G3's validated hold (posture) gains; airborne (a = 1) the swing servo
           const aG = o.lcTouch && o.lcTouch.gains === "swing" ? 1 : a1, Kn = isAnkle ? gs.K : g.K + aG * (gs.K - g.K), Dn = isAnkle ? gs.D : g.D + aG * (gs.D - g.D);   // lcTouch.gains "swing": the unloaded-limb servo in contact too   // the ankle of a non-supporting foot: the swing ankle gains in every state (G3's free-leg 1.5 N·m/rad let a held foot tilt onto 2 pieces)
-          const Kb = isAnkle ? (1 - s1) * Kn : s1 * g.K + (1 - s1) * Kn, Db = isAnkle ? s1 * o.ankleD + (1 - s1) * Dn : s1 * g.D + (1 - s1) * Dn; const wv = o.lcVff && this.ikW && this.ikW[k] ? (1 - s1) * (Db + dt * Kb + (o.vffPassive ? this.spec.joints[k].damping : 0)) * this.ikW[k][i] : 0; return { K: Kb, D: Db, tau0: tff + Kb * e[i] + wv, ff: tff, vff: wv }; }
+          const Kb = isAnkle ? (1 - s1) * Kn : s1 * g.K + (1 - s1) * Kn, Db = isAnkle ? s1 * o.ankleD + (1 - s1) * Dn : s1 * g.D + (1 - s1) * Dn; const wv = o.lcVff && this.ikW && this.ikW[k] ? (1 - s1) * (Db + dt * Kb + (o.vffPassive ? this.spec.joints[k].damping : 0)) * this.ikW[k][i] : 0;
+          if (o.vffPassiveRef || o.torqueLedger) { const wB = o.vffPassiveRef && isAnkle && this.ikWref && this.ikWref[k] ? (1 - s1) * this.spec.joints[k].damping * this.ikWref[k][i] : 0, tau0 = o.vffPassiveRef ? tff + Kb * e[i] + wv + wB : tff + Kb * e[i] + wv;
+            const L = o.torqueLedger ? { statics: tff - (o.swingAccFF && this.accFF && this.accFF[sd] && this.accFF[sd].T[k] ? (1 - s1) * V.dot(this.accFF[sd].T[k], axW[i]) : 0), d1: o.swingAccFF && this.accFF && this.accFF[sd] && this.accFF[sd].T[k] ? (1 - s1) * V.dot(this.accFF[sd].T[k], axW[i]) : 0, kp: Kb * e[i], vffServo: wv, passiveRef: wB, wA: this.wAof ? this.wAof[sd] : 0, c: this.cmdW ? this.cmdW[sd] : 0 } : undefined;
+            return { K: Kb, D: Db, tau0, ff: tff, vff: wv, ...(o.vffPassiveRef ? { vffPas: wB } : {}), ...(L ? { L } : {}) }; }
+          return { K: Kb, D: Db, tau0: tff + Kb * e[i] + wv, ff: tff, vff: wv }; }
         if (isAnkle && o.holdUnloaded && this.unl[this.legSide[k]] && ikT && ikT[k]) { const gf = this.gainFree[k]; return { K: gf.K, D: gf.D, tau0: tff + gf.K * e[i], ff: tff }; }   // G3: hold the unloaded foot's pose
         if (isAnkle) { const nz = o.noise && ak && (ak.key === "df" || ak.key === "inv") ? this.ou[(this.spec.joints[k].side === "L" ? 0 : 2) + (ak.key === "df" ? 0 : 1)] : 0; return { K: 0, D: o.ankleD, tau0: tff + nz, ff: tff }; }
         if (legW && this.legSide[k] >= 0 && ak && ak.key !== "rot") return { K: 0, D: o.taskD * g.D, tau0: tff, ff: tff };   // task-space leg rows (flexion / abduction)
@@ -408,7 +425,7 @@ StandController.prototype.gauss = function () { let s2 = 0; for (let i = 0; i < 
 // ── leg inverse kinematics (posture targets): hip (3) + knee flexion + ankle DF / inversion so that the chain from the pelvis at pose (pP, qP)
 //    ends exactly at the foot's CURRENT pose; knee axial rotation, the locked knee axis and the passive foot ab/adduction keep their current
 //    values. Newton on the pyramid parameters, finite-difference Jacobian, from the current configuration.
-StandController.prototype.getState = function () { return JSON.parse(JSON.stringify({ n: this.n, ring: this.ring, ou: this.ou, rng: this.rng, unl: this.unl, hold: this.hold, sense: this.sense, g3: this.g3 || null, info: this.info, twFilt: this.twFilt, ikPrevT: this.ikPrevT, vffPrev: this.vffPrev, lc: this.lc ? this.lc.getState() : undefined })); };   // info: the G3 supervisor reads the previous tick's controller state; twFilt: the DIAGNOSTIC drifting twist reference (pre-G4 runway; undefined → omitted, so the default state is unchanged)
+StandController.prototype.getState = function () { return JSON.parse(JSON.stringify({ n: this.n, ring: this.ring, ou: this.ou, rng: this.rng, unl: this.unl, hold: this.hold, sense: this.sense, g3: this.g3 || null, info: this.info, twFilt: this.twFilt, ikPrevT: this.ikPrevT, vffPrev: this.vffPrev, cmdW: this.cmdW, lc: this.lc ? this.lc.getState() : undefined })); };   // info: the G3 supervisor reads the previous tick's controller state; twFilt: the DIAGNOSTIC drifting twist reference (pre-G4 runway; undefined → omitted, so the default state is unchanged)
 StandController.prototype.setState = function (x) { const y = JSON.parse(JSON.stringify(x)); if (y.lc && this.lc) { this.lc.setState(y.lc); delete y.lc; } Object.assign(this, y); };   // lc: the EXPERIMENTAL lifecycle (absent by default)
 // LEG IK (user decision 2026-10-04 §2; G3 J2a finding 2). Unknowns x = hip (twist, swing-y, swing-z), knee swing-y, ankle (swing-y, swing-z); the knee
 // and ankle twists stay at their current values. Residual r(x) = [ankle position − target, foot orientation error] (6 × 6). The former solver
@@ -428,13 +445,14 @@ StandController.prototype.setState = function (x) { const y = JSON.parse(JSON.st
 // lcVff "split" (DIAGNOSTIC, preswing/): the RATE of the bounded IK solution — one damped Gauss–Newton step (the solver's own LM damping IK.mu0) of the problem
 // posed with another pelvis frame (pP, qP) or another foot target, taken FROM the current solution `sol`, with its box-active coordinates held: the linearised
 // neighbouring solution, i.e. damped least squares (bounded at the straight-knee singularity; no re-solve, so no branch / tolerance noise between solves).
-StandController.prototype.legIKRate = function (st, ev, n, pP, qP, footPose, sol, now, mu, sr = false) {   // sr (vffRate): singularity-robust variable damping of this solve   // now = { pos, rot, tgt }: the CURRENT problem (frame + target) the solution x solves
+StandController.prototype.legIKRate = function (st, ev, n, pP, qP, footPose, sol, now, mu, sr = false, srW = 0) {   // srW (A, vffPelvisAir): weight of the singularity-robust damping, blended with mu   // sr (vffRate): singularity-robust variable damping of this solve   // now = { pos, rot, tgt }: the CURRENT problem (frame + target) the solution x solves
   const { ks, cur, fk, jac, kTw } = this.legChain(st, ev, n, pP, qP, footPose), x = sol.x, rp = fk(x), rn = this.legChain(st, ev, n, now.pos, now.rot, now.tgt).fk(x), r = rp.map((v, i) => v - rn[i]);   // Δr: only the change of the problem (an unreached target's residual cancels)
   const Jm = jac(x), g = Jm.map(col => col[0] * r[0] + col[1] * r[1] + col[2] * r[2] + col[3] * r[3] + col[4] * r[4] + col[5] * r[5]);
   const free = [0, 1, 2, 3, 4, 5].filter(i => !sol.atBound[i]), xn = x.slice();
   if (free.length) { const H = Jm.map(ci => Jm.map(cj => ci[0] * cj[0] + ci[1] * cj[1] + ci[2] * cj[2] + ci[3] * cj[3] + ci[4] * cj[4] + ci[5] * cj[5]));
     // sr (vffRate, default off): singularity-robust variable damping — the caller's level only inside the singular region λmin < ε² (continuous in λmin)
-    const m = sr ? IK.muMin + (mu - IK.muMin) * Math.max(0, 1 - Math.max(0, eigMinSym(free.map(i => free.map(c => H[i][c])))) / (IK.srEps * IK.srEps)) : mu;
+    const m = sr ? IK.muMin + (mu - IK.muMin) * Math.max(0, 1 - Math.max(0, eigMinSym(free.map(i => free.map(c => H[i][c])))) / (IK.srEps * IK.srEps))
+      : srW > 0 ? (1 - srW) * mu + srW * (IK.muMin + (mu - IK.muMin) * Math.max(0, 1 - Math.max(0, eigMinSym(free.map(i => free.map(c => H[i][c])))) / (IK.srEps * IK.srEps))) : mu;   // A: continuous in w_A
     const dx = solveN(free.map(i => free.map(c => (i === c ? H[i][c] + m * (1 + H[i][i]) : H[i][c]))), free.map(i => -g[i])); if (dx) free.forEach((i, k) => { xn[i] += dx[k]; }); }
   const tg = [[ks[0], pyr(xn[0], xn[1], xn[2])], [ks[1], pyr(kTw(xn), xn[3], cur[1][2])]]; if (footPose) tg.push([ks[2], pyr(cur[2][0], xn[4], xn[5])]); return tg; };
 StandController.prototype.legChain = function (st, ev, n, pP, qP, footPose) {

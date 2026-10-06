@@ -20,6 +20,9 @@ CFG.PSTAR5C = { ...CFG.PSTAR5B, swingAccFF: true };
 CFG.PSTAR4S = { ...CFG.PSTAR4, vffRate: "sr" }; CFG.PSTAR5BS = { ...CFG.PSTAR5B, vffRate: "sr" }; CFG.PSTAR5CS = { ...CFG.PSTAR5C, vffRate: "sr" };
 // "H" variants (e2/E2_HANDOFF.md): the S variants + the continuous target-motion velocity feed-forward through the B1 re-anchor (e2reanchorVel)
 CFG.PSTAR5BH = { ...CFG.PSTAR5BS, e2reanchorVel: true }; CFG.PSTAR5CH = { ...CFG.PSTAR5CS, e2reanchorVel: true };
+// A / B (e2/AB_VALIDATION_PREREG.md; user decision 2026-10-06): A = pelvis-motion compensation of the commanded swing (vffPelvisAir), B = passive ankle damping compensated on the
+// reference rate (vffPassiveRef); validated factorially against PSTAR5CH before any use
+CFG.PSTAR5CHA = { ...CFG.PSTAR5CH, vffPelvisAir: true }; CFG.PSTAR5CHB = { ...CFG.PSTAR5CH, vffPassiveRef: true }; CFG.PSTAR5CHAB = { ...CFG.PSTAR5CH, vffPelvisAir: true, vffPassiveRef: true };
 export const E2P = { fwd: { dx: 0.10, dy: 0 }, lat: { dx: 0, dy: 0.08 }, T: 0.60, apex: 0.025, apexLow: 0.008, lateDz: 0.010, pushJ: 5, pushDur: 0.1, LT: 0.6, HOV: 1.5, RT: 0.6, GRACE: 0.3, LIFT: 0.02 };
 // VERSIONED commanded-step trajectory seeds (run.traj; default "v2" = the frozen E2 v2 seeds, bit-identical). "A30" = amendment A30 (e2/E2_PREREG_AMENDMENT_A30.md,
 // user decision 2026-10-06): nominal apex 25 → 30 mm; T 0.6 s, apex knot at T/2, measured-liftoff semantics and every threshold unchanged
