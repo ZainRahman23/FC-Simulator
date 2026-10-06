@@ -115,6 +115,12 @@ export const STAND = {
   lcVff: false,           // DIAGNOSTIC (preswing/; default OFF): desired-velocity feed-forward for a NON-SUPPORTING leg — the target joint velocity ω* = d/dt of its IK
                           // targets (backward difference) enters as τ0 += (1 − s)(D + dt·K)·ω*, i.e. the implicit damping acts on (ω − ω*) instead of ω: a foot whose
                           // target is still while the pelvis moves is not dragged by the leg's damping, and a swing target is tracked without velocity lag
+  vffRate: false,         // CORRECTION (e2/VFF_RATE_CORRECTION.md; default OFF = bit-identical): "sr" = the part of lcVff's desired joint velocity caused by the COMMANDED swing
+                          // target's own motion (rT) is the one-step rate solved with SINGULARITY-ROBUST VARIABLE DAMPING instead of the fixed level the caller passes (μ0 for "lin"):
+                          // μ = μmin + (μ − μmin)·max(0, 1 − λmin/ε²), λmin = the smallest eigenvalue of the free Gauss–Newton matrix J_Fᵀ J_F of that rate problem, ε = IK.srEps
+                          // (Nakamura & Hanafusa 1986; Chiaverini 1997): the validated damped law at the straight-knee singularity (λmin → 0), the resolved rate where the leg is
+                          // conditioned. The pelvis-motion part (rP, closed loop through the measured frame) is unchanged. Defect corrected (e2/SWING_LAG_DIAGNOSIS.md): μ0 ≈ λmin at
+                          // swing poses scaled the commanded swing's knee / hip rate by 0.26–0.37 (vertical). "srAll" = also rP: REFUTED DIAGNOSTIC (unstable, see the lcVff block)
   touchRestRamp: false,   // EXPERIMENTAL correction C2 of touchRest (touch_semantics/TOUCHREST_RESULTS.md §3; default OFF; needs touchRest): the seat is weighted by the
                           // lifecycle's rest weight smooth(ρ) instead of switching with the swing command / state — ρ ramps (over the lifecycle's `release`) to 1 while
                           // the foot has no swing command and is not AIRBORNE, to 0 otherwise. Measured with C: the one-tick seat removal at a lift command made 0.5 mm
@@ -313,7 +319,12 @@ export class StandController {
             // keeps it safe; otherwise (airborne / commanded) the solver's damped-least-squares level IK.mu0 — robust near the straight-knee singularity
             // CONTINUOUS in the airborne weight a (no switch in the torque path): μ = μmin + a(μ0 − μmin); passivity-bound weight (1 − a)
             const aW = LC[n].a, mu = o.lcVff === "lin" ? IK.mu0 : IK.muMin + aW * (IK.mu0 - IK.muMin), cur = { pos: fr.pos, rot: fr.rot, tgt: lcT[n] }, bnd = o.lcVff === "split";   // "lin" / "linmin": no passivity bound (DIAGNOSTIC variants)
-            if (pv) { const rP = new Map(this.legIKRate(st, ev, n, pv.fr.pos, pv.fr.rot, lcT[n], r, cur, mu)), rT = LC[n].swing && pv.swing && this.e2reanchor !== n ? new Map(this.legIKRate(st, ev, n, fr.pos, fr.rot, pv.tgt, r, cur, mu)) : null;
+            // vffRate (default off; e2/VFF_RATE_CORRECTION.md): "sr" = singularity-robust variable damping for the COMMANDED target's own motion (rT: an exogenous feed-forward of the
+            // reference, outside any feedback loop); the pelvis-motion term (rP: measured frame motion, closed loop) keeps the caller's validated damping. "srAll" (REFUTED
+            // DIAGNOSTIC) also applies it to rP — external-lift harness at drop 2.5 cm: falls, τ0 steps to 11 553 N·m (an explicit, one-tick-delayed copy of the measured pelvis
+            // velocity through the leg's weak (vertical) direction, whose Cartesian damping scales as D/σ²; μ0 had bounded that loop gain at D/μ0)
+            const srT = o.vffRate === "sr" || o.vffRate === "srAll", srP = o.vffRate === "srAll";
+            if (pv) { const rP = new Map(this.legIKRate(st, ev, n, pv.fr.pos, pv.fr.rot, lcT[n], r, cur, mu, srP)), rT = LC[n].swing && pv.swing && this.e2reanchor !== n ? new Map(this.legIKRate(st, ev, n, fr.pos, fr.rot, pv.tgt, r, cur, mu, srT)) : null;
               // PASSIVITY BOUND on the pelvis part (drag cancellation): per axis ω*_P is clamped to [min(0, ω), max(0, ω)] of the joint's ACTUAL relative angular velocity
               // (the actuator's own convention), so the implicit damping on (ω − ω*) is never reversed and never does positive work — bounded near the straight-knee
               // singularity / soft-limit switches (measured unbounded there: τ0 steps of 300–31 000 N·m in the external-lift harness)
@@ -402,12 +413,14 @@ StandController.prototype.setState = function (x) { const y = JSON.parse(JSON.st
 // lcVff "split" (DIAGNOSTIC, preswing/): the RATE of the bounded IK solution — one damped Gauss–Newton step (the solver's own LM damping IK.mu0) of the problem
 // posed with another pelvis frame (pP, qP) or another foot target, taken FROM the current solution `sol`, with its box-active coordinates held: the linearised
 // neighbouring solution, i.e. damped least squares (bounded at the straight-knee singularity; no re-solve, so no branch / tolerance noise between solves).
-StandController.prototype.legIKRate = function (st, ev, n, pP, qP, footPose, sol, now, mu) {   // now = { pos, rot, tgt }: the CURRENT problem (frame + target) the solution x solves
+StandController.prototype.legIKRate = function (st, ev, n, pP, qP, footPose, sol, now, mu, sr = false) {   // sr (vffRate): singularity-robust variable damping of this solve   // now = { pos, rot, tgt }: the CURRENT problem (frame + target) the solution x solves
   const { ks, cur, fk, jac, kTw } = this.legChain(st, ev, n, pP, qP, footPose), x = sol.x, rp = fk(x), rn = this.legChain(st, ev, n, now.pos, now.rot, now.tgt).fk(x), r = rp.map((v, i) => v - rn[i]);   // Δr: only the change of the problem (an unreached target's residual cancels)
   const Jm = jac(x), g = Jm.map(col => col[0] * r[0] + col[1] * r[1] + col[2] * r[2] + col[3] * r[3] + col[4] * r[4] + col[5] * r[5]);
   const free = [0, 1, 2, 3, 4, 5].filter(i => !sol.atBound[i]), xn = x.slice();
   if (free.length) { const H = Jm.map(ci => Jm.map(cj => ci[0] * cj[0] + ci[1] * cj[1] + ci[2] * cj[2] + ci[3] * cj[3] + ci[4] * cj[4] + ci[5] * cj[5]));
-    const dx = solveN(free.map(i => free.map(c => (i === c ? H[i][c] + mu * (1 + H[i][i]) : H[i][c]))), free.map(i => -g[i])); if (dx) free.forEach((i, k) => { xn[i] += dx[k]; }); }
+    // sr (vffRate, default off): singularity-robust variable damping — the caller's level only inside the singular region λmin < ε² (continuous in λmin)
+    const m = sr ? IK.muMin + (mu - IK.muMin) * Math.max(0, 1 - Math.max(0, eigMinSym(free.map(i => free.map(c => H[i][c])))) / (IK.srEps * IK.srEps)) : mu;
+    const dx = solveN(free.map(i => free.map(c => (i === c ? H[i][c] + m * (1 + H[i][i]) : H[i][c]))), free.map(i => -g[i])); if (dx) free.forEach((i, k) => { xn[i] += dx[k]; }); }
   const tg = [[ks[0], pyr(xn[0], xn[1], xn[2])], [ks[1], pyr(kTw(xn), xn[3], cur[1][2])]]; if (footPose) tg.push([ks[2], pyr(cur[2][0], xn[4], xn[5])]); return tg; };
 StandController.prototype.legChain = function (st, ev, n, pP, qP, footPose) {
   const P = this.P, ks = this.legK[n], d = ks.map(k => P.jd[k]), a = ks.map(k => this.anchor[k]), cur = ks.map(k => { const v = decompose(ev.qs[k]); return [v.tw, v.sy, v.sz]; });
@@ -535,7 +548,22 @@ StandController.prototype.legIKBounded = function (st, ev, n, pP, qP, footPose =
   return { targets: tg, err, it, x, atBound: x.map((v, i) => v <= lo[i] || v >= hi[i]), fallbackIt: fbIt };
 };
 export const IK = { h: 1e-6, tol: 1e-12, maxIt: 12, maxItBounded: 30, mu0: 1e-2, muMin: 1e-12, gradTol: 1e-14, boundedFallback: "newton", fallbackMaxIt: 25, hNewton: 1e-5,   // bounded (opt-in) solver only
-  polish: (typeof process !== "undefined" && process.env && process.env.V2_IK_POLISH) || "stale" };   // "stale" (adopted) | "none" (diagnostic env selector, Node only)
+  polish: (typeof process !== "undefined" && process.env && process.env.V2_IK_POLISH) || "stale",   // "stale" (adopted) | "none" (diagnostic env selector, Node only)
+  // vffRate "sr" only: width ε of the singular region in σmin of the free rate problem (m/rad-scaled Gauss–Newton units of the foot-pose residual). From the conditioning
+  // study (e2/VFF_RATE_CORRECTION.md §2, tools/rate_cond_preload.mjs; swing, hover, lift, resting and straight-leg external-lift problems, 7 bodies, 180–480 Hz): above
+  // σmin 0.01 the undamped one-step rate equals the exact per-tick displacement of the IK solution within 4 % (max); below it accuracy degrades (p95 error 3–19 % at
+  // 0.003–0.01) and fails at the straight-knee singularity (σmin < 0.001: errors 10²–10⁵). Airborne / commanded poses measured: σmin ≥ 0.03
+  srEps: 0.01 };
+// smallest eigenvalue of a small symmetric matrix: cyclic Jacobi (vffRate "sr"). Only + − × ÷ √ and comparisons: IEEE-deterministic (browser = Node)
+function eigMinSym(A0) { const n = A0.length, A = A0.map(r => r.slice());
+  for (let sweep = 0; sweep < 50; sweep++) { let off = 0, dia = 0; for (let p = 0; p < n; p++) { dia += A[p][p] * A[p][p]; for (let q = p + 1; q < n; q++) off += A[p][q] * A[p][q]; }
+    if (off <= 1e-30 * dia) break;
+    for (let p = 0; p < n - 1; p++) for (let q = p + 1; q < n; q++) { const apq = A[p][q]; if (apq === 0) continue;
+      const th = (A[q][q] - A[p][p]) / (2 * apq), t = (th >= 0 ? 1 : -1) / (Math.abs(th) + Math.sqrt(th * th + 1)), c = 1 / Math.sqrt(t * t + 1), sn = t * c;
+      for (let k = 0; k < n; k++) { const akp = A[k][p], akq = A[k][q]; A[k][p] = c * akp - sn * akq; A[k][q] = sn * akp + c * akq; }
+      for (let k = 0; k < n; k++) { const apk = A[p][k], aqk = A[q][k]; A[p][k] = c * apk - sn * aqk; A[q][k] = sn * apk + c * aqk; } } }
+  let mn = Infinity; for (let p = 0; p < n; p++) mn = Math.min(mn, A[p][p]); return mn; }
+export const _eigMinSym = eigMinSym;   // test hook (tools/v2_component_regressions.mjs style checks only)
 function solveN(M, y) { const n = y.length, a = M.map((r, i) => [...r, y[i]]); for (let c = 0; c < n; c++) { let p = c; for (let r = c + 1; r < n; r++) if (Math.abs(a[r][c]) > Math.abs(a[p][c])) p = r; if (Math.abs(a[p][c]) < 1e-14) return null; [a[c], a[p]] = [a[p], a[c]];
     for (let r = 0; r < n; r++) if (r !== c) { const f = a[r][c] / a[c][c]; for (let k = c; k <= n; k++) a[r][k] -= f * a[c][k]; } } return a.map((r, i) => r[n] / r[i]); }
 // inertia tensor (world axes) of a set of bodies about point o, in pose S

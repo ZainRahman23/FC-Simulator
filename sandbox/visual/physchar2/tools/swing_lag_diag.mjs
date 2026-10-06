@@ -17,7 +17,8 @@ const HUMAN = arg("human", "V2-REF"), SIDE = arg("side", "L"), HZ = +arg("hz", 2
 // --vff=undamped: COUNTERFACTUAL diagnostic only — the controller's own one-step IK-rate estimate (legIKRate) evaluated with the solver's terminal damping IK.muMin instead of the
 // validated IK.mu0 (harness-level wrapper of that one function; the IK solve itself and everything else unchanged). Default "lin" = the validated configuration.
 // (The existing lcVff "linmin" variant is NOT this test: it blends μ by the airborne weight, so airborne it equals "lin".)
-const VFF = arg("vff", "lin"); if (!["lin", "undamped"].includes(VFF)) throw new Error("vff");
+// --vff=sr: the CORRECTED rate (vffRate "sr", configurations PSTAR5BS / PSTAR5CS; e2/VFF_RATE_CORRECTION.md) — a controller option, not a harness wrapper
+const VFF = arg("vff", "lin"); if (!["lin", "undamped", "sr"].includes(VFF)) throw new Error("vff");
 const nL = SIDE === "L" ? 0 : 1, nS = 1 - nL, HOV = 0.020, TWO_PI = 2 * Math.PI;
 const mj = (u) => { u = Math.min(1, Math.max(0, u)); return u * u * u * (10 - 15 * u + 6 * u * u); }, mjd = (u) => (u <= 0 || u >= 1 ? 0 : 30 * u * u * (1 - u) * (1 - u)), mjdd = (u) => (u <= 0 || u >= 1 ? 0 : 60 * u - 180 * u * u + 120 * u * u * u);
 // ── diagnostic trajectories: displacement d(τ) along a unit direction (forward f / outward o / up), returned as { s, sd, sdd } (m, m/s, m/s²) ──
@@ -37,7 +38,7 @@ const HOLD = 0.4;
 const sig = (t) => (t <= 3 ? [0.5, 0, 0] : t < 7 ? (() => { const u = (t - 3) / 4; return [0.5 + 0.5 * mj(u), 0.5 * mjd(u) / 4, 0.5 * mjdd(u) / 16]; })() : [1.0, 0, 0]);
 const lamFn = (t) => lamFn.d(t)[0]; lamFn.d = (t) => { const [v, d1, d2] = sig(t); return nS === 1 ? [v, d1, d2] : [1 - v, -d1, -d2]; };
 const spec = e2Spec(HUMAN), pd = { t0: 1, dur: 2, dz: 0.025 }, def = { ...g3Def(nS === 1 ? "U:R" : "U:L"), key: "LAGDIAG", title: "swing lag diagnostic", lam: lamFn, supervise: {}, holds: [], seconds: 60, push: null, torque: null };
-const s = new G3Sim(J, spec, def, { stand: { ikRefTwist: true, lifecycle: true, pelvisDrop: pd, ...CFG[FF === "on" ? "PSTAR5C" : "PSTAR5B"] }, passiveOpts: { kneeModel: "v2k" }, ...(HZ !== 240 ? { cfg: { hz: HZ } } : {}) });
+const s = new G3Sim(J, spec, def, { stand: { ikRefTwist: true, lifecycle: true, pelvisDrop: pd, ...CFG[(FF === "on" ? "PSTAR5C" : "PSTAR5B") + (VFF === "sr" ? "S" : "")] }, passiveOpts: { kneeModel: "v2k" }, ...(HZ !== 240 ? { cfg: { hz: HZ } } : {}) });
 const C = s.ctrl, dt = s.dt, B = spec.bodies, PELVIS = C.pelvis, FTn = C.feet[nL], legK = C.legK[nL];
 if (VFF === "undamped") { const orate = C.legIKRate.bind(C); C.legIKRate = (st, ev, n, pP, qP, fp, sol, now, mu) => orate(st, ev, n, pP, qP, fp, sol, now, IK.muMin); }
 const H = { tCmd: null, touchT0: null, tLo: null, A: null, fr: null, k: -1, t0: null, hold: null, base: null, done: false, ref: null, tEnd: null };

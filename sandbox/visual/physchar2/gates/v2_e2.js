@@ -16,6 +16,8 @@ CFG.PSTAR4 = { ...CFG.PSTAR, footYaw: true, lcPutDown: true, abortCapture: 2 }; 
 CFG.PSTAR5B = { ...CFG.PSTAR4, e2: 2 };
 // PSTAR5C (e2/SWING_ACCEL_FF_DESIGN.md, D1): + the swing servo's acceleration feed-forward (and the tracked-clearance certificate in the planner)
 CFG.PSTAR5C = { ...CFG.PSTAR5B, swingAccFF: true };
+// "S" variants (e2/VFF_RATE_CORRECTION.md): + the velocity feed-forward's rate solved with singularity-robust variable damping (vffRate "sr"); the E1 base PSTAR4S = PSTAR4 + it
+CFG.PSTAR4S = { ...CFG.PSTAR4, vffRate: "sr" }; CFG.PSTAR5BS = { ...CFG.PSTAR5B, vffRate: "sr" }; CFG.PSTAR5CS = { ...CFG.PSTAR5C, vffRate: "sr" };
 export const E2P = { fwd: { dx: 0.10, dy: 0 }, lat: { dx: 0, dy: 0.08 }, T: 0.60, apex: 0.025, apexLow: 0.008, lateDz: 0.010, pushJ: 5, pushDur: 0.1, LT: 0.6, HOV: 1.5, RT: 0.6, GRACE: 0.3, LIFT: 0.02 };
 const mj = (u) => { u = Math.min(1, Math.max(0, u)); return u * u * u * (10 - 15 * u + 6 * u * u); };
 const seg = (t, a, T, v0, v1) => { const u = Math.min(1, Math.max(0, (t - a) / T)), dv = v1 - v0; return [v0 + dv * u * u * u * (10 - 15 * u + 6 * u * u), t > a && t < a + T ? dv * 30 * u * u * (1 - u) * (1 - u) / T : 0, t > a && t < a + T ? dv * 60 * u * (1 - u) * (1 - 2 * u) / (T * T) : 0]; };
@@ -33,10 +35,10 @@ export function e2Sim(J, spec, run) { const nL = run.side === "L" ? 0 : 1, nS = 
   const sig = (t) => { if (t <= 3) return [0.5, 0, 0]; if (t < 7) return seg(t, 3, 4, 0.5, 1.0); if (P15) { if (H.tR == null || t < H.tR + 0.2) return [1.0, 0, 0]; return seg(t, H.tR + 0.2, 4, 1.0, 0.5); }
     if (seq && seq.ph === "DONE") return [0.5, 0, 0]; if (seq && (seq.ph === "NOCERT" || seq.ph === "NOLIFT") && seq.ncT != null) return seg(t, seq.ncT, 4, 1.0, 0.5); return [1.0, 0, 0]; };
   const lamFn = (t) => lamFn.d(t)[0]; lamFn.d = (t) => { const [v, d1, d2] = sig(t); return nS === 1 ? [v, d1, d2] : [1 - v, -d1, -d2]; };
-  const E2C = config === "PSTAR5" || config === "PSTAR5B" || config === "PSTAR5C";
+  const E2C = !!CFG[config].e2;   // the configurations carrying the E2 option (PSTAR5 / 5B / 5C and their "S" variants)
   if (!P15 && E2C) lamFn.e2 = (t, ctrl) => { const sq = ctrl.e2seq && ctrl.e2seq.active() && !ctrl.e2seq.rec ? ctrl.e2seq.request(t) : null; if (sq) return sq; const [lam, dl, ddl] = lamFn.d(t); return { lam, dl, ddl }; };
   const def = { ...base, key: `E2:${run.protocol}:${run.side}`, title: `E2 ${run.protocol} ${run.kind || ""} ${run.side}`, lam: lamFn, supervise: E2C ? { e2: { pushEnd: () => (H.pertT != null && H.pertDur != null ? H.pertT + H.pertDur : null) } } : {}, holds: [], seconds: 40, push: null, torque: null };
-  const s = new G3Sim(J, spec, def, { stand: { ikRefTwist: true, lifecycle: true, pelvisDrop: pd, ...CFG[config] }, passiveOpts: { kneeModel: "v2k" }, ...(hz !== 240 ? { cfg: { hz } } : {}) });
+  const s = new G3Sim(J, spec, def, { stand: { ikRefTwist: true, lifecycle: true, pelvisDrop: pd, ...CFG[config], ...(run.xstand || {}) }, passiveOpts: { kneeModel: "v2k" }, ...(hz !== 240 ? { cfg: { hz } } : {}) });
   const C = s.ctrl, dt = s.dt, seq = E2C ? e2seqOf(C) : null, CONTACT = ["TOUCHDOWN", "TOUCHING", "LOAD_ACCEPT", "SUPPORT", "UNLOADING"];
   const push = (t0, J) => { H.pertT = t0; H.pertDur = E2P.pushDur; H.pert = { t0, J }; s.base.push = { t0, dur: E2P.pushDur, J, body: "thorax" }; };
   const towardSwing = nL === 0 ? -1 : 1, pJ = run.pert && typeof run.pert === "object" ? (run.pert.dir === "lat" ? [E2P.pushJ * towardSwing, 0, 0] : [0, 0, E2P.pushJ]) : null;

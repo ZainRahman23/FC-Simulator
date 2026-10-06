@@ -1,0 +1,4 @@
+Counterfactual smoke legend (non-test nominal steps, --diag=noclear; e2_run --xstand / --diagAllow diagnostic switches):
+ f_* = V2-REF L forward 0.07 m, l_* = V2-REF R lateral 0.06 m, 240 Hz
+ A = PSTAR5BS (estimator correction, D1 off) | B = A + lcTouch.gains "swing" (no contact->swing gain blend) | C = PSTAR5CS (+ D1, placeholder allowance 0, certificate logged not enforced)
+ D = C + gains swing | E = A + vffRate srAll (REFUTED variant: both terms) | F = C + srAll | G = F + gains swing

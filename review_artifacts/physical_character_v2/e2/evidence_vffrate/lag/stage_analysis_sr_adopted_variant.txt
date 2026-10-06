@@ -1,0 +1,71 @@
+
+══ lag_REF_L_240_sr.json.gz — V2-REF L 240 Hz, pelvis floating, FF off, vff sr (7412 paired ticks)
+H1 actuator law: rms |τ − (τ0 − (D+dt·K)·ω_end)| 0.0001 N·m vs rms τ 4.37 N·m (worst 0.001); limited rows 0/59296
+H3 vff arithmetic: rms |vff − (1−s)(D+dt·K)·ω*| 0.000000 N·m vs rms vff 9.682 N·m
+  CV-F  v_ref 100 mm/s: foot v 100.5 mm/s (×1.005); mean position error along motion 0.42 mm → delay -4.2 ms
+     ankle.df     ω_id -0.1354 rad/s | ω_tfd ×0.990 | ω* ×0.986 | ω_end ×0.978 | joint error e -3.05 mrad → joint LAG 22.5 ms
+     hip.flex     ω_id 0.0917 rad/s | ω_tfd ×0.994 | ω* ×1.003 | ω_end ×0.994 | joint error e -0.07 mrad → joint LAG -0.7 ms
+  CV-Fb v_ref 100 mm/s: foot v 100.5 mm/s (×1.005); mean position error along motion 0.37 mm → delay -3.7 ms
+     ankle.df     ω_id 0.1225 rad/s | ω_tfd ×0.987 | ω* ×0.986 | ω_end ×0.990 | joint error e 2.84 mrad → joint LAG 23.2 ms
+     hip.flex     ω_id -0.0943 rad/s | ω_tfd ×0.987 | ω* ×1.002 | ω_end ×0.988 | joint error e 0.03 mrad → joint LAG -0.3 ms
+  CV-Z  v_ref 50 mm/s: foot v 39.1 mm/s (×0.782); mean position error along motion -0.15 mm → delay 3.0 ms
+     knee.flex    ω_id 0.3019 rad/s | ω_tfd ×0.768 | ω* ×0.808 | ω_end ×0.772 | joint error e -0.66 mrad → joint LAG -2.2 ms
+     hip.flex     ω_id 0.1139 rad/s | ω_tfd ×0.708 | ω* ×0.790 | ω_end ×0.730 | joint error e -0.65 mrad → joint LAG -5.7 ms
+  CV-Zb v_ref 50 mm/s: foot v 51.4 mm/s (×1.028); mean position error along motion 0.13 mm → delay -2.7 ms
+     knee.flex    ω_id -0.3419 rad/s | ω_tfd ×0.999 | ω* ×1.014 | ω_end ×1.024 | joint error e -0.49 mrad → joint LAG 1.4 ms
+     hip.flex     ω_id -0.1830 rad/s | ω_tfd ×0.996 | ω* ×1.008 | ω_end ×1.025 | joint error e -0.36 mrad → joint LAG 1.9 ms
+  CV-O  v_ref 80 mm/s: foot v 80.1 mm/s (×1.002); mean position error along motion 0.31 mm → delay -3.9 ms
+     knee.flex    ω_id -0.1332 rad/s | ω_tfd ×0.989 | ω* ×0.829 | ω_end ×0.961 | joint error e -1.26 mrad → joint LAG 9.4 ms
+     ankle.inv    ω_id -0.1104 rad/s | ω_tfd ×0.991 | ω* ×0.971 | ω_end ×0.981 | joint error e -2.59 mrad → joint LAG 23.5 ms
+  CV-Ob v_ref 80 mm/s: foot v 80.1 mm/s (×1.001); mean position error along motion 0.31 mm → delay -3.9 ms
+     knee.flex    ω_id 0.1235 rad/s | ω_tfd ×0.992 | ω* ×0.826 | ω_end ×0.958 | joint error e 1.19 mrad → joint LAG 9.7 ms
+     ankle.inv    ω_id 0.1079 rad/s | ω_tfd ×0.989 | ω* ×0.973 | ω_end ×0.978 | joint error e 2.16 mrad → joint LAG 20.0 ms
+  S1-F (1 Hz, 15 mm along f): foot velocity amplitude ratio 1.123, delay 8.1 ms
+     hip.flex     vs ω_id: tfd ×1.011 -2.1 ms | ws ×0.982 6.4 ms | w1 ×1.046 2.6 ms | joint error e amp 1.84 mrad
+     ankle.df     vs ω_id: tfd ×1.009 -5.1 ms | ws ×0.978 -7.0 ms | w1 ×0.824 -15.7 ms | joint error e amp 3.94 mrad
+  S2-Z (2 Hz, 8 mm along z): foot velocity amplitude ratio 1.089, delay 9.7 ms
+     knee.flex    vs ω_id: tfd ×0.987 2.5 ms | ws ×0.863 16.8 ms | w1 ×1.035 8.7 ms | joint error e amp 9.88 mrad
+     hip.flex     vs ω_id: tfd ×1.006 0.4 ms | ws ×0.882 6.9 ms | w1 ×1.017 8.7 ms | joint error e amp 9.43 mrad
+  S1-O (1 Hz, 12 mm along o): foot velocity amplitude ratio 1.073, delay 2.8 ms
+     hip.abd      vs ω_id: tfd ×1.011 -2.2 ms | ws ×0.980 3.9 ms | w1 ×1.044 2.6 ms | joint error e amp 1.17 mrad
+     knee.flex    vs ω_id: tfd ×0.985 -1.9 ms | ws ×0.681 -81.5 ms | w1 ×0.848 8.9 ms | joint error e amp 2.67 mrad
+  S3-F (3 Hz, 5 mm along f): foot velocity amplitude ratio 1.228, delay 38.0 ms
+     hip.flex     vs ω_id: tfd ×1.028 0.4 ms | ws ×0.938 1.4 ms | w1 ×0.991 6.7 ms | joint error e amp 3.73 mrad
+     ankle.df     vs ω_id: tfd ×1.085 -0.4 ms | ws ×1.128 -2.8 ms | w1 ×1.723 -29.9 ms | joint error e amp 7.63 mrad
+  CH-F chirp (approximate, windowed): 0.75 Hz: ×1.10 27 ms | 1.25 Hz: ×1.15 13 ms | 1.75 Hz: ×1.26 23 ms | 2.25 Hz: ×1.28 29 ms | 2.75 Hz: ×1.36 38 ms
+
+══ lag_REF_L_240_sr_lo.json.gz — V2-REF L 240 Hz, pelvis floating, FF off, vff sr, LIFTOFF (7412 paired ticks)
+H1 actuator law: rms |τ − (τ0 − (D+dt·K)·ω_end)| 0.0001 N·m vs rms τ 4.34 N·m (worst 0.001); limited rows 0/59296
+H3 vff arithmetic: rms |vff − (1−s)(D+dt·K)·ω*| 0.000000 N·m vs rms vff 9.897 N·m
+  CV-F  v_ref 81 mm/s: foot v 79.3 mm/s (×0.974); mean position error along motion 0.82 mm → delay -10.1 ms
+     knee.flex    ω_id -0.0073 rad/s | ω_tfd ×0.522 | ω* ×-1.334 | ω_end ×1.813 | joint error e -1.29 mrad → joint LAG 177.1 ms
+     hip.flex     ω_id 0.0618 rad/s | ω_tfd ×0.986 | ω* ×1.131 | ω_end ×0.890 | joint error e -1.31 mrad → joint LAG -21.2 ms
+  CV-Fb v_ref 100 mm/s: foot v 100.5 mm/s (×1.005); mean position error along motion 0.38 mm → delay -3.8 ms
+     ankle.df     ω_id 0.1208 rad/s | ω_tfd ×0.984 | ω* ×0.978 | ω_end ×0.987 | joint error e 2.83 mrad → joint LAG 23.5 ms
+     hip.flex     ω_id -0.0883 rad/s | ω_tfd ×0.984 | ω* ×1.015 | ω_end ×0.985 | joint error e 0.12 mrad → joint LAG -1.3 ms
+  CV-Z  v_ref 50 mm/s: foot v 36.8 mm/s (×0.737); mean position error along motion -0.31 mm → delay 6.2 ms
+     knee.flex    ω_id 0.3011 rad/s | ω_tfd ×0.721 | ω* ×0.765 | ω_end ×0.723 | joint error e -0.78 mrad → joint LAG -2.6 ms
+     hip.flex     ω_id 0.1104 rad/s | ω_tfd ×0.641 | ω* ×0.734 | ω_end ×0.663 | joint error e -0.73 mrad → joint LAG -6.6 ms
+  CV-Zb v_ref 50 mm/s: foot v 51.6 mm/s (×1.032); mean position error along motion 0.10 mm → delay -2.1 ms
+     knee.flex    ω_id -0.3444 rad/s | ω_tfd ×0.999 | ω* ×1.007 | ω_end ×1.027 | joint error e -0.69 mrad → joint LAG 2.0 ms
+     hip.flex     ω_id -0.1886 rad/s | ω_tfd ×0.997 | ω* ×1.001 | ω_end ×1.024 | joint error e -0.48 mrad → joint LAG 2.5 ms
+  CV-O  v_ref 80 mm/s: foot v 80.1 mm/s (×1.002); mean position error along motion 0.31 mm → delay -3.9 ms
+     knee.flex    ω_id -0.1326 rad/s | ω_tfd ×0.989 | ω* ×0.828 | ω_end ×0.961 | joint error e -1.26 mrad → joint LAG 9.5 ms
+     ankle.inv    ω_id -0.1103 rad/s | ω_tfd ×0.991 | ω* ×0.970 | ω_end ×0.981 | joint error e -2.59 mrad → joint LAG 23.5 ms
+  CV-Ob v_ref 80 mm/s: foot v 80.1 mm/s (×1.001); mean position error along motion 0.31 mm → delay -3.9 ms
+     knee.flex    ω_id 0.1228 rad/s | ω_tfd ×0.992 | ω* ×0.824 | ω_end ×0.958 | joint error e 1.20 mrad → joint LAG 9.8 ms
+     ankle.inv    ω_id 0.1078 rad/s | ω_tfd ×0.988 | ω* ×0.973 | ω_end ×0.978 | joint error e 2.16 mrad → joint LAG 20.0 ms
+  S1-F (1 Hz, 15 mm along f): foot velocity amplitude ratio 1.123, delay 8.2 ms
+     hip.flex     vs ω_id: tfd ×1.011 -2.1 ms | ws ×0.981 6.5 ms | w1 ×1.046 2.6 ms | joint error e amp 1.85 mrad
+     ankle.df     vs ω_id: tfd ×1.009 -5.2 ms | ws ×0.978 -7.2 ms | w1 ×0.823 -16.1 ms | joint error e amp 3.94 mrad
+  S2-Z (2 Hz, 8 mm along z): foot velocity amplitude ratio 1.088, delay 9.7 ms
+     knee.flex    vs ω_id: tfd ×0.987 2.5 ms | ws ×0.862 16.8 ms | w1 ×1.035 8.8 ms | joint error e amp 9.90 mrad
+     hip.flex     vs ω_id: tfd ×1.006 0.3 ms | ws ×0.882 6.9 ms | w1 ×1.017 8.7 ms | joint error e amp 9.43 mrad
+  S1-O (1 Hz, 12 mm along o): foot velocity amplitude ratio 1.073, delay 2.8 ms
+     hip.abd      vs ω_id: tfd ×1.011 -2.2 ms | ws ×0.980 3.9 ms | w1 ×1.044 2.6 ms | joint error e amp 1.17 mrad
+     knee.flex    vs ω_id: tfd ×0.985 -1.9 ms | ws ×0.678 -81.7 ms | w1 ×0.847 9.1 ms | joint error e amp 2.67 mrad
+  S3-F (3 Hz, 5 mm along f): foot velocity amplitude ratio 1.229, delay 38.0 ms
+     hip.flex     vs ω_id: tfd ×1.028 0.4 ms | ws ×0.937 1.4 ms | w1 ×0.991 6.7 ms | joint error e amp 3.75 mrad
+     ankle.df     vs ω_id: tfd ×1.086 -0.4 ms | ws ×1.130 -2.8 ms | w1 ×1.730 -30.0 ms | joint error e amp 7.64 mrad
+  CH-F chirp (approximate, windowed): 0.75 Hz: ×1.10 27 ms | 1.25 Hz: ×1.15 13 ms | 1.75 Hz: ×1.26 23 ms | 2.25 Hz: ×1.28 29 ms | 2.75 Hz: ×1.36 38 ms
+H5 liftoff: u 0.02 s a 0.21 err 0.56 mm | u 0.05 s a 0.62 err 1.60 mm | u 0.10 s a 1.00 err 3.29 mm | u 0.15 s a 1.00 err 3.57 mm | u 0.20 s a 1.00 err 1.96 mm | u 0.30 s a 1.00 err 1.45 mm | u 0.45 s a 1.00 err 1.38 mm

@@ -1,0 +1,37 @@
+External-lift harness (tools/boundary_probe.mjs): PSTAR4 flags (lin) vs + vffRate srAll (REFUTED: variable damping on both terms) vs + vffRate sr (adopted: target-motion term only; identical to lin — no commanded swing target)
+lin_V2-165-62_30_d25               foot relocated             chatter 0 | applied Δτ max 4.4 N·m (>5: 0) | τ0 step max 17.2 | closure max/tick 0.0024 J Σ+ 0.065 | hover err max 9.0 mm
+lin_V2-165-62_60_d0                stood                      chatter 0 | applied Δτ max 3.7 N·m (>5: 0) | τ0 step max 11.7 | closure max/tick 0.0057 J Σ+ 0.113 | hover err max 27.2 mm
+lin_V2-198-92_30_d25               foot relocated             chatter 0 | applied Δτ max 7.0 N·m (>5: 6) | τ0 step max 29.9 | closure max/tick 0.0037 J Σ+ 0.083 | hover err max 6.7 mm
+lin_V2-198-92_60_d0                stood                      chatter 0 | applied Δτ max 6.6 N·m (>5: 2) | τ0 step max 19.9 | closure max/tick 0.0078 J Σ+ 0.130 | hover err max 21.7 mm
+lin_V2-REF_30_d25                  foot relocated             chatter 0 | applied Δτ max 5.4 N·m (>5: 3) | τ0 step max 23.5 | closure max/tick 0.0030 J Σ+ 0.073 | hover err max 7.4 mm
+lin_V2-REF_30_d25_hz180            foot relocated             chatter 0 | applied Δτ max 5.9 N·m (>5: 2) | τ0 step max 25.1 | closure max/tick 0.0046 J Σ+ 0.096 | hover err max 7.9 mm
+lin_V2-REF_30_d25_hz480            foot relocated             chatter 0 | applied Δτ max 7.6 N·m (>5: 3) | τ0 step max 22.3 | closure max/tick 0.0012 J Σ+ 0.052 | hover err max 7.3 mm
+lin_V2-REF_60_d0                   stood                      chatter 0 | applied Δτ max 5.2 N·m (>5: 1) | τ0 step max 17.2 | closure max/tick 0.0069 J Σ+ 0.127 | hover err max 23.8 mm
+lin_V2-REF_60_d0_hz180             stood                      chatter 0 | applied Δτ max 5.6 N·m (>5: 3) | τ0 step max 18.7 | closure max/tick 0.0136 J Σ+ 0.191 | hover err max 23.8 mm
+lin_V2-REF_60_d0_hz480             stood                      chatter 0 | applied Δτ max 4.8 N·m (>5: 0) | τ0 step max 12.9 | closure max/tick 0.0020 J Σ+ 0.071 | hover err max 23.7 mm
+lin_V2-short-legs_30_d25           foot relocated             chatter 0 | applied Δτ max 5.3 N·m (>5: 1) | τ0 step max 21.9 | closure max/tick 0.0026 J Σ+ 0.064 | hover err max 6.3 mm
+lin_V2-short-legs_60_d0            stood                      chatter 0 | applied Δτ max 5.2 N·m (>5: 1) | τ0 step max 10.2 | closure max/tick 0.0058 J Σ+ 0.122 | hover err max 21.1 mm
+srAll_REFUTED_V2-165-62_30_d25     foot relocated             chatter 0 | applied Δτ max 84.9 N·m (>5: 76) | τ0 step max 566.9 | closure max/tick 0.0551 J Σ+ 0.401 | hover err max 41.1 mm
+srAll_REFUTED_V2-165-62_60_d0      stood                      chatter 0 | applied Δτ max 13.3 N·m (>5: 4) | τ0 step max 56.2 | closure max/tick 0.0055 J Σ+ 0.108 | hover err max 26.3 mm
+srAll_REFUTED_V2-198-92_30_d25     step required → fell       chatter 4 | applied Δτ max 277.9 N·m (>5: 1045) | τ0 step max 2665.1 | closure max/tick 6.4683 J Σ+ 31.968 | hover err max 256.2 mm
+srAll_REFUTED_V2-198-92_60_d0      stood                      chatter 0 | applied Δτ max 28.8 N·m (>5: 7) | τ0 step max 120.1 | closure max/tick 0.0078 J Σ+ 0.127 | hover err max 20.6 mm
+srAll_REFUTED_V2-REF_30_d25        step required → fell       chatter 0 | applied Δτ max 168.1 N·m (>5: 1008) | τ0 step max 4342.7 | closure max/tick 1.8108 J Σ+ 38.501 | hover err max 48.9 mm
+srAll_REFUTED_V2-REF_30_d25_hz180  step required → fell       chatter 7 | applied Δτ max 212.7 N·m (>5: 788) | τ0 step max 4743.5 | closure max/tick 10.9635 J Σ+ 87.076 | hover err max 57.9 mm
+srAll_REFUTED_V2-REF_30_d25_hz480  step required → fell       chatter 2 | applied Δτ max 194.2 N·m (>5: 1380) | τ0 step max 11553.5 | closure max/tick 0.1566 J Σ+ 5.946 | hover err max 136.6 mm
+srAll_REFUTED_V2-REF_60_d0         stood                      chatter 0 | applied Δτ max 17.4 N·m (>5: 5) | τ0 step max 48.6 | closure max/tick 0.0065 J Σ+ 0.118 | hover err max 22.7 mm
+srAll_REFUTED_V2-REF_60_d0_hz180   stood                      chatter 0 | applied Δτ max 13.8 N·m (>5: 7) | τ0 step max 73.3 | closure max/tick 0.0120 J Σ+ 0.179 | hover err max 22.7 mm
+srAll_REFUTED_V2-REF_60_d0_hz480   stood                      chatter 0 | applied Δτ max 20.3 N·m (>5: 5) | τ0 step max 83.6 | closure max/tick 0.0018 J Σ+ 0.070 | hover err max 22.7 mm
+srAll_REFUTED_V2-short-legs_30_d25 foot relocated             chatter 0 | applied Δτ max 96.3 N·m (>5: 73) | τ0 step max 804.8 | closure max/tick 0.0300 J Σ+ 0.262 | hover err max 39.9 mm
+srAll_REFUTED_V2-short-legs_60_d0  stood                      chatter 0 | applied Δτ max 16.6 N·m (>5: 5) | τ0 step max 78.6 | closure max/tick 0.0069 J Σ+ 0.113 | hover err max 20.0 mm
+sr_V2-165-62_30_d25                foot relocated             chatter 0 | applied Δτ max 4.4 N·m (>5: 0) | τ0 step max 17.2 | closure max/tick 0.0024 J Σ+ 0.065 | hover err max 9.0 mm
+sr_V2-165-62_60_d0                 stood                      chatter 0 | applied Δτ max 3.7 N·m (>5: 0) | τ0 step max 11.7 | closure max/tick 0.0057 J Σ+ 0.113 | hover err max 27.2 mm
+sr_V2-198-92_30_d25                foot relocated             chatter 0 | applied Δτ max 7.0 N·m (>5: 6) | τ0 step max 29.9 | closure max/tick 0.0037 J Σ+ 0.083 | hover err max 6.7 mm
+sr_V2-198-92_60_d0                 stood                      chatter 0 | applied Δτ max 6.6 N·m (>5: 2) | τ0 step max 19.9 | closure max/tick 0.0078 J Σ+ 0.130 | hover err max 21.7 mm
+sr_V2-REF_30_d25                   foot relocated             chatter 0 | applied Δτ max 5.4 N·m (>5: 3) | τ0 step max 23.5 | closure max/tick 0.0030 J Σ+ 0.073 | hover err max 7.4 mm
+sr_V2-REF_30_d25_hz180             foot relocated             chatter 0 | applied Δτ max 5.9 N·m (>5: 2) | τ0 step max 25.1 | closure max/tick 0.0046 J Σ+ 0.096 | hover err max 7.9 mm
+sr_V2-REF_30_d25_hz480             foot relocated             chatter 0 | applied Δτ max 7.6 N·m (>5: 3) | τ0 step max 22.3 | closure max/tick 0.0012 J Σ+ 0.052 | hover err max 7.3 mm
+sr_V2-REF_60_d0                    stood                      chatter 0 | applied Δτ max 5.2 N·m (>5: 1) | τ0 step max 17.2 | closure max/tick 0.0069 J Σ+ 0.127 | hover err max 23.8 mm
+sr_V2-REF_60_d0_hz180              stood                      chatter 0 | applied Δτ max 5.6 N·m (>5: 3) | τ0 step max 18.7 | closure max/tick 0.0136 J Σ+ 0.191 | hover err max 23.8 mm
+sr_V2-REF_60_d0_hz480              stood                      chatter 0 | applied Δτ max 4.8 N·m (>5: 0) | τ0 step max 12.9 | closure max/tick 0.0020 J Σ+ 0.071 | hover err max 23.7 mm
+sr_V2-short-legs_30_d25            foot relocated             chatter 0 | applied Δτ max 5.3 N·m (>5: 1) | τ0 step max 21.9 | closure max/tick 0.0026 J Σ+ 0.064 | hover err max 6.3 mm
+sr_V2-short-legs_60_d0             stood                      chatter 0 | applied Δτ max 5.2 N·m (>5: 1) | τ0 step max 10.2 | closure max/tick 0.0058 J Σ+ 0.122 | hover err max 21.1 mm

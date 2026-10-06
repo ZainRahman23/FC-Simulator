@@ -11,10 +11,11 @@ const here = path.dirname(fileURLToPath(import.meta.url)), J = await loadJolt(pa
 const HUMAN = arg("human", "V2-REF"), SIDE = arg("side", "L"), HZ = +arg("hz", 240), FF = arg("ff", "on"), SEQ = arg("seq", "A"), OUT = arg("out", "");
 // --vff=undamped: COUNTERFACTUAL diagnostic only (lcVff investigation, sources/2026-10-06_user_decision_lcvff_diagnostic.md) — the velocity feed-forward's one-step IK rate with the
 // solver's terminal damping IK.muMin (harness wrapper of legIKRate). Not part of the preregistered battery (default "lin")
-const VFF = arg("vff", "lin"); if (!["lin", "undamped"].includes(VFF)) throw new Error("vff");
+// --vff=sr: the CORRECTED rate (vffRate "sr", configurations PSTAR5BS / PSTAR5CS; e2/VFF_RATE_CORRECTION.md) — a controller option, not a harness wrapper
+const VFF = arg("vff", "lin"); if (!["lin", "undamped", "sr"].includes(VFF)) throw new Error("vff");
 if (!["L", "R"].includes(SIDE) || !["on", "off"].includes(FF) || !["A", "B"].includes(SEQ)) throw new Error("args");
 if (process.env.V2_KNEE_MODEL !== "v2k" || process.env.V2_ANKLE_NEUTRAL_K !== "0.13") throw new Error("E1a configuration env required");
-const nL = SIDE === "L" ? 0 : 1, nS = 1 - nL, CONFIG = FF === "on" ? "PSTAR5C" : "PSTAR5B", HOV = 0.020, HOLD = 0.5;
+const nL = SIDE === "L" ? 0 : 1, nS = 1 - nL, CONFIG = (FF === "on" ? "PSTAR5C" : "PSTAR5B") + (VFF === "sr" ? "S" : ""), HOV = 0.020, HOLD = 0.5;
 // trajectory list (prereg §1): goal offsets in the stance frame (forward f, outward o) at hover height, T, apex above the higher end (null = no knot)
 const TR = { L1: { dx: 0.10, dy: 0, T: 0.60, apex: 0.025, start: "liftoff" }, R1: { dx: 0, dy: 0, T: 0.60, apex: 0.025 }, L2: { dx: 0, dy: 0.08, T: 0.60, apex: 0.025, start: "liftoff" }, R2: { dx: 0, dy: 0, T: 0.60, apex: 0.025 },
   H1: { dx: 0.10, dy: 0, T: 0.40, apex: 0.025, back: true }, H2: { dx: 0.15, dy: 0, T: 0.50, apex: 0.025, back: true }, H3: { dx: 0.10, dy: 0, T: 0.60, apex: 0.040, back: true },
@@ -27,7 +28,7 @@ const sig = (t) => { if (t <= 3) return [0.5, 0, 0]; if (t < 7) return seg4(t, 3
 const lamFn = (t) => lamFn.d(t)[0]; lamFn.d = (t) => { const [v, d1, d2] = sig(t); return nS === 1 ? [v, d1, d2] : [1 - v, -d1, -d2]; };
 const spec = e2Spec(HUMAN), pd = { t0: 1, dur: 2, dz: 0.025 }, def = { ...g3Def(nS === 1 ? "U:R" : "U:L"), key: "SERVO", title: "swing servo validation", lam: lamFn, supervise: {}, holds: [], seconds: 60, push: null, torque: null };
 const s = new G3Sim(J, spec, def, { stand: { ikRefTwist: true, lifecycle: true, pelvisDrop: pd, ...CFG[CONFIG] }, passiveOpts: { kneeModel: "v2k" }, ...(HZ !== 240 ? { cfg: { hz: HZ } } : {}) });
-const C = s.ctrl, dt = s.dt; if (!!C.o.swingAccFF !== (FF === "on") || C.o.e2 !== 2) throw new Error("configuration");
+const C = s.ctrl, dt = s.dt; if (!!C.o.swingAccFF !== (FF === "on") || C.o.e2 !== 2 || (C.o.vffRate === "sr") !== (VFF === "sr")) throw new Error("configuration");
 if (VFF === "undamped") { const orate = C.legIKRate.bind(C); C.legIKRate = (st, ev, n, pP, qP, fp, sol, now, mu) => orate(st, ev, n, pP, qP, fp, sol, now, IK.muMin); }
 const setT = (e) => { C.lc.setSwingTarget(nL, { pos: e.pos, rot: e.rot }); if (!C.swingRef) C.swingRef = [null, null]; C.swingRef[nL] = { vel: e.vel.slice(), acc: e.acc.slice(), w: (e.w || [0, 0, 0]).slice(), al: (e.al || [0, 0, 0]).slice() }; H.ref = e; };
 const goalOf = (tr) => ({ pos: [H.A.pos[0] + H.fr.f[0] * tr.dx + H.fr.o[0] * tr.dy, H.A.pos[1] + HOV, H.A.pos[2] + H.fr.f[2] * tr.dx + H.fr.o[2] * tr.dy], rot: H.A.rot.slice() });
