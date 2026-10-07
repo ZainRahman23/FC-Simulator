@@ -1,0 +1,38 @@
+# DVG design study (scratch prototype, disclosed in e2/DVG_PREREG.md §0): smoke runs, PSTAR5CHABV / PSTAR5CHABTDV; frozen D1G records for the same stress cases in evidence_d1g/records
+TD2CV nominal V2-REF L 240 Hz PSTAR5CHABV R-F: reach OK; liftoff 0.121 s; contact φ 0.910; abort none; outcome foot relocated; final SUPPORT/SUPPORT; class AB; D1G invalid 0/184; hash b63184da
+TD2CV nominal V2-REF L 240 Hz PSTAR5CHABTDV R-F: reach OK; liftoff 0.121 s; contact φ 1.403; abort none; outcome foot relocated; final SUPPORT/SUPPORT; class TOUCHDOWN; D1G invalid 0/255; hash 787cc0c9
+TD2CV nominal V2-long-legs L 180 Hz PSTAR5CHABTDV H-T45: reach OK; liftoff 0.128 s; contact φ 1.519; abort none; outcome foot relocated; final SUPPORT/SUPPORT; class TOUCHDOWN; D1G invalid 0/164; hash d7816939
+TD2CV earlyOOE V2-198-92 L 480 Hz PSTAR5CHABTDV H-D: reach OK; liftoff 0.115 s; contact φ 0.809; abort none; outcome foot relocated; final SUPPORT/SUPPORT; class UNEXPECTED_OBSTACLE; D1G invalid 212/559; hash cb39faeb
+D1GV deep V2-198-92 L 240 Hz PSTAR5CHABV R-F: reach REJECTED; liftoff 0.121 s; contact φ —; abort none; outcome foot relocated; final AIRBORNE/SUPPORT; class —; D1G invalid 264/534; hash a9ff2f0a
+D1GV diag V2-198-92 L 180 Hz PSTAR5CHABV R-F: reach REJECTED; liftoff 0.128 s; contact φ —; abort none; outcome foot relocated; final AIRBORNE/SUPPORT; class —; D1G invalid 205/402; hash 9cf3d575
+D1GV deep V2-165-62 L 180 Hz PSTAR5CHABV R-F: reach REJECTED; liftoff 0.133 s; contact φ —; abort none; outcome fell; final AIRBORNE/SUPPORT; class —; D1G invalid 341/403; hash 0885a4f4
+D1GV far V2-REF L 240 Hz PSTAR5CHABV R-F: reach REJECTED; liftoff 0.121 s; contact φ —; abort none; outcome foot relocated; final AIRBORNE/SUPPORT; class —; D1G invalid 239/534; hash 7e0736b2
+
+R0_V2-165-62_180_deep.json.gz cmdMax 375 dom kp -382 | dTau0 73 | clos 0.0207 Σ+ 0.351 [sw 0.030 hold 0.269] | invalid 344 | guard step max 22.71 (> 40 : 0 ) | fades 2 max len 17 | overCap 0 fell true
+R0_V2-190-85_180_deep.json.gz cmdMax 626 dom kp -637 | dTau0 123 | clos 0.0217 Σ+ 0.555 [sw 0.022 hold 0.458] | invalid 335 | guard step max 22.50 (> 40 : 0 ) | fades 2 max len 19 | overCap 0 fell true
+R0_V2-198-92_180_diag.json.gz cmdMax 476 dom kp -494 | dTau0 125 | clos 0.0241 Σ+ 0.546 [sw 0.014 hold 0.452] | invalid 224 | guard step max 20.00 (> 40 : 0 ) | fades 1 max len 28 | overCap 0 fell false
+R0_V2-198-92_240_deep.json.gz cmdMax 738 dom kp -750 | dTau0 182 | clos 0.0140 Σ+ 0.449 [sw 0.023 hold 0.365] | invalid 309 | guard step max 16.35 (> 30 : 0 ) | fades 2 max len 23 | overCap 0 fell false
+R0_V2-REF_180_diag.json.gz cmdMax 352 dom kp -368 | dTau0 96 | clos 0.0194 Σ+ 0.498 [sw 0.018 hold 0.413] | invalid 213 | guard step max 20.00 (> 40 : 0 ) | fades 1 max len 22 | overCap 0 fell false
+R0_V2-REF_240_far.json.gz cmdMax 241 dom kp -241 | dTau0 82 | clos 0.0121 Σ+ 0.265 [sw 0.031 hold 0.186] | invalid 242 | guard step max 15.00 (> 30 : 0 ) | fades 1 max len 25 | overCap 0 fell false
+V_V2-165-62_180_deep.json.gz cmdMax 418 dom kp -363 | dTau0 58 | clos 0.0237 Σ+ 0.385 [sw 0.039 hold 0.293] | invalid 341 | guard step max 22.93 (> 40 : 0 ) | fades 2 max len 17 | overCap 0 fell true
+V_V2-190-85_180_deep.json.gz cmdMax 636 dom kp -647 | dTau0 130 | clos 0.0217 Σ+ 0.586 [sw 0.043 hold 0.468] | invalid 323 | guard step max 22.82 (> 40 : 0 ) | fades 2 max len 17 | overCap 0 fell true
+V_V2-198-92_180_diag.json.gz cmdMax 928 dom vff -603 | dTau0 102 | clos 0.0241 Σ+ 0.581 [sw 0.036 hold 0.466] | invalid 205 | guard step max 20.00 (> 40 : 0 ) | fades 1 max len 40 | overCap 0 fell false
+V_V2-198-92_240_deep.json.gz cmdMax 1166 dom vff -768 | dTau0 144 | clos 0.0140 Σ+ 0.475 [sw 0.028 hold 0.386] | invalid 264 | guard step max 15.00 (> 30 : 0 ) | fades 1 max len 64 | overCap 0 fell false
+V_V2-REF_180_diag.json.gz cmdMax 663 dom vff -421 | dTau0 77 | clos 0.0194 Σ+ 0.527 [sw 0.037 hold 0.424] | invalid 199 | guard step max 20.00 (> 40 : 0 ) | fades 1 max len 30 | overCap 0 fell false
+V_V2-REF_240_far.json.gz cmdMax 525 dom vff -449 | dTau0 64 | clos 0.0121 Σ+ 0.270 [sw 0.047 hold 0.176] | invalid 239 | guard step max 15.00 (> 30 : 0 ) | fades 1 max len 35 | overCap 0 fell false
+abV.json.gz        cmdMax 178 dom vff 156 | dTau0 12 | clos 0.0121 Σ+ 0.095 [sw 0.039 hold 0.008] | invalid 0 | guard step max 0.00 (> 30 : 0 ) | fades 0 max len 0 | overCap 0 fell false
+deep165V.json.gz   cmdMax 418 dom kp -363 | dTau0 58 | clos 0.0237 Σ+ 0.385 [sw 0.039 hold 0.293] | invalid 341 | guard step max 22.93 (> 40 : 0 ) | fades 2 max len 17 | overCap 0 fell true
+deepV.json.gz      cmdMax 1166 dom vff -768 | dTau0 144 | clos 0.0140 Σ+ 0.475 [sw 0.028 hold 0.386] | invalid 264 | guard step max 15.00 (> 30 : 0 ) | fades 1 max len 64 | overCap 0 fell false
+diagV.json.gz      cmdMax 928 dom vff -603 | dTau0 102 | clos 0.0241 Σ+ 0.581 [sw 0.036 hold 0.466] | invalid 205 | guard step max 20.00 (> 40 : 0 ) | fades 1 max len 40 | overCap 0 fell false
+farV.json.gz       cmdMax 525 dom vff -449 | dTau0 64 | clos 0.0121 Σ+ 0.270 [sw 0.047 hold 0.176] | invalid 239 | guard step max 15.00 (> 30 : 0 ) | fades 1 max len 35 | overCap 0 fell false
+htV.json.gz        cmdMax 313 dom vff 278 | dTau0 29 | clos 0.0192 Σ+ 0.187 [sw 0.100 hold 0.019] | invalid 0 | guard step max 0.00 (> 40 : 0 ) | fades 0 max len 0 | overCap 0 fell false
+nV.json.gz         cmdMax 176 dom vff 154 | dTau0 11 | clos 0.0121 Σ+ 0.112 [sw 0.036 hold 0.028] | invalid 0 | guard step max 0.00 (> 30 : 0 ) | fades 0 max len 0 | overCap 0 fell false
+oV.json.gz         cmdMax 821 dom vff -630 | dTau0 71 | clos 0.0041 Σ+ 0.106 [sw 0.026 hold 0.042] | invalid 212 | guard step max 7.75 (> 15 : 0 ) | fades 2 max len 75 | overCap 0 fell false
+
+# energy independence: DVG-on (V) vs the same run with NO IK-derived feed-forward on commanded targets (R0)
+V2-198-92_240_deep  |  V: Σ+ 0.475 [pre 0.060 sw 0.028 hold 0.386] closure max 0.0140 fell false  |  R0: Σ+ 0.449 [pre 0.060 sw 0.023 hold 0.365] closure max 0.0140 fell false
+V2-198-92_180_diag  |  V: Σ+ 0.581 [pre 0.079 sw 0.036 hold 0.466] closure max 0.0241 fell false  |  R0: Σ+ 0.546 [pre 0.080 sw 0.014 hold 0.452] closure max 0.0241 fell false
+V2-165-62_180_deep  |  V: Σ+ 0.385 [pre 0.052 sw 0.039 hold 0.293] closure max 0.0237 fell true  |  R0: Σ+ 0.351 [pre 0.052 sw 0.030 hold 0.269] closure max 0.0207 fell true
+V2-REF_240_far  |  V: Σ+ 0.270 [pre 0.048 sw 0.047 hold 0.176] closure max 0.0121 fell false  |  R0: Σ+ 0.265 [pre 0.048 sw 0.031 hold 0.186] closure max 0.0121 fell false
+V2-REF_180_diag  |  V: Σ+ 0.527 [pre 0.066 sw 0.037 hold 0.424] closure max 0.0194 fell false  |  R0: Σ+ 0.498 [pre 0.067 sw 0.018 hold 0.413] closure max 0.0194 fell false
+V2-190-85_180_deep  |  V: Σ+ 0.586 [pre 0.074 sw 0.043 hold 0.468] closure max 0.0217 fell true  |  R0: Σ+ 0.555 [pre 0.075 sw 0.022 hold 0.458] closure max 0.0217 fell true

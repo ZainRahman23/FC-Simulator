@@ -1,0 +1,169 @@
+--- ctrl/v2_stand.js	2026-10-07 23:09:03
++++ /private/tmp/claude-501/-Users-zainrahman/8af3fa3f-f134-4178-b7ae-7855027dda6e/scratchpad/dvg/tree/sandbox/visual/physchar2/ctrl/v2_stand.js	2026-10-08 00:32:24
+@@ -390,7 +390,7 @@
+               if (o.vffPassiveRef) { const w2 = rT && rT.has(k) ? lg(rT.get(k), q) : [0, 0, 0]; out.ikWref[k] = [w2[0] + wA * w[0], w2[1] + wA * w[1], w2[2] + wA * w[2]]; }   // B: the reference rate
+               if (rT && rT.has(k)) { const w2 = lg(rT.get(k), q); w[0] += w2[0]; w[1] += w2[1]; w[2] += w2[2]; } out.ikW[k] = w; } }
+           next = { fr: { pos: fr.pos.slice(), rot: fr.rot.slice() }, tgt: { pos: tgt.pos.slice(), rot: tgt.rot.slice() }, swing: !!swg }; }   // a non-supporting leg never targets beyond its passive (soft) limits — e.g. no hyperextended knee (measured: the unconstrained IK pressed it −2.8° into hyperextension, 18–20 N·m of tissue torque)
+-        return { r, fr, ffOn, accFF, wA, next }; };
++        return { r, fr, ffOn, accFF, wA, next, swg: !!swg }; };
+       // 1B (lcTransition "cmd"; e2/FB1A_TR1B_PREREG.md §2): engagement at the swing foot's TOUCHDOWN entry (a commanded swing), disengagement when the blended command equals the default
+       // law again (σ = σ_nom = 0 after a rebound: the approach law is the a = 1 law; σ = 1, a = 0 and no swing target: the accommodation law is the default contact law) or at support
+       let T1B = null; if (o.lcTransition === "cmd" && LC) { if (!o.lifecycle || o.lcVff !== "lin") throw new Error("lcTransition \"cmd\" needs the lifecycle and lcVff \"lin\""); T1B = this.tr1B || (this.tr1B = [{ on: false }, { on: false }]);
+@@ -399,7 +399,11 @@
+           else if (T.on && (!lcT || !lcT[n] || (T.sigma <= 0 && f.a >= 1) || (T.sigma >= 1 && f.a <= 0 && !f.swing))) { T.on = false; if (this.vffPrev) this.vffPrev[n] = T.sigma >= 0.5 ? T.prevC : T.prevA; } } }
+       const tIK = o.timeIK ? nowMs() : 0; ikT = {}; if (o.vffPassiveRef) this.ikWref = {}; if (o.torqueLedger) this.wAof = [0, 0]; if (o.lcVff === "split" || o.lcVff === "lin" || o.lcVff === "linmin") { this.ikW = {}; this.vffNext = [null, null]; } this.ikRes = [0, 1].map(n => { let r;
+         if (lcT && lcT[n] && !(T1B && T1B[n].on)) { const L0 = swLaw(n, LC[n].a, lcT[n], LC[n].swing, this.vffPrev && this.vffPrev[n], { ikW: this.ikW, ikWref: this.ikWref }, true); r = L0.r;
+-          if (L0.ffOn) { if (!this.accFF) this.accFF = [null, null]; this.accFF[n] = o.d1Guard ? this.d1GuardStep(n, L0.r, L0.accFF, dt, st, ev, L0.fr) : L0.accFF; }   // D1G (default off)
++          if (L0.ffOn) { if (!this.accFF) this.accFF = [null, null]; this.accFF[n] = o.d1Guard === true ? this.d1GuardStep(n, L0.r, L0.accFF, dt, st, ev, L0.fr) : L0.accFF; }   // D1G v1 (default off)
++          if (o.d1Guard === 2 && (L0.swg || (this.dvg && this.dvg[n] && this.dvg[n].tick === this.n - 1 && this.dvg[n].mode !== "PASS"))) this.dvgStep(n, L0, dt, st, ev);   // DVG (D1G v2, default off)
++          if (process.env.CF_NOFF === "1" && L0.swg) { if (this.accFF) this.accFF[n] = null; for (const k of this.legK[n]) { if (this.ikW && this.ikW[k]) this.ikW[k] = [0, 0, 0]; if (this.ikWref && this.ikWref[k]) this.ikWref[k] = [0, 0, 0]; } }   // DESIGN-STUDY REFERENCE (scratch): no IK-derived feed-forward on a commanded target
++          if (o.d1Guard === 2) { if (!this.dvgApplied) this.dvgApplied = [null, null]; const ks2 = this.legK[n], cp2 = (v) => (v ? v.slice() : null);
++            this.dvgApplied[n] = { tick: this.n, d1: this.accFF ? this.accFF[n] || null : null, w: Object.fromEntries(ks2.map(k => [k, this.ikW ? cp2(this.ikW[k]) : null])), wr: Object.fromEntries(ks2.map(k => [k, this.ikWref ? cp2(this.ikWref[k]) : null])), C: 0 }; }   // DVG recording: the applied terms
+           if (L0.next) { if (o.torqueLedger) this.wAof[n] = L0.wA; this.vffNext[n] = L0.next; }
+           if (T1B) T1B[n].accPrev = { fr: lawFrame(n, 0), tgt: null, swing: false }; }   // 1B (unused until engaged): the accommodation law's frame, so its pelvis-motion rate is defined on the first engaged tick
+         else if (lcT && lcT[n]) {   // 1B ENGAGED (e2/FB1A_TR1B_PREREG.md §2): the complete approach law (a = 1, the commanded swing target, frozen if cleared) and accommodation law (a = 0, the lifecycle's contact-compatible target)
+@@ -460,6 +464,9 @@
+           // non-supporting hip / knee: in contact (a = 0) G3's validated hold (posture) gains; airborne (a = 1) the swing servo
+           const aG = o.lcTouch && o.lcTouch.gains === "swing" ? 1 : a1, Kn = isAnkle ? gs.K : g.K + aG * (gs.K - g.K), Dn = isAnkle ? gs.D : g.D + aG * (gs.D - g.D);   // lcTouch.gains "swing": the unloaded-limb servo in contact too   // the ankle of a non-supporting foot: the swing ankle gains in every state (G3's free-leg 1.5 N·m/rad let a held foot tilt onto 2 pieces)
+           const Kb = isAnkle ? (1 - s1) * Kn : s1 * g.K + (1 - s1) * Kn, Db = isAnkle ? s1 * o.ankleD + (1 - s1) * Dn : s1 * g.D + (1 - s1) * Dn; const wv = o.lcVff && this.ikW && this.ikW[k] ? (1 - s1) * (Db + dt * Kb + (o.vffPassive ? this.spec.joints[k].damping : 0)) * this.ikW[k][i] : 0;
++          if (o.d1Guard === 2 && this.dvgApplied && this.dvgApplied[sd] && this.dvgApplied[sd].tick === this.n) { const Ap = this.dvgApplied[sd], gw2 = (1 - s1) * (Db + dt * Kb + (o.vffPassive ? this.spec.joints[k].damping : 0)), gb2 = isAnkle && o.vffPassiveRef ? (1 - s1) * this.spec.joints[k].damping : 0, mp2 = (Tv) => (Lk != null && i === 3 - Lk ? lockedAxisFF(Tv, axW, decompose(q).tw, Lk) : V.dot(Tv, axW[i]));
++            Ap.C = Math.max(Ap.C, Math.abs((Ap.d1 && Ap.d1.T[k] ? mp2(V.sc(Ap.d1.T[k], 1 - s1)) : 0) + (Ap.w[k] ? gw2 * Ap.w[k][i] : 0) + (Ap.wr[k] ? gb2 * Ap.wr[k][i] : 0))); }   // DVG recording: the applied terms' unit contribution
++          if (o.d1Guard === 2 && this.dvg && this.dvg[sd] && this.dvg[sd].tick === this.n) this.dvgUnit(sd, k, i, s1, (1 - s1) * (Db + dt * Kb + (o.vffPassive ? this.spec.joints[k].damping : 0)), isAnkle && o.vffPassiveRef ? (1 - s1) * this.spec.joints[k].damping : 0, axW, Lk, q);   // DVG recording (unit-weight contributions; no effect on the command)
+           if (o.vffPassiveRef || o.torqueLedger) { const wB = o.vffPassiveRef && isAnkle && this.ikWref && this.ikWref[k] ? (1 - s1) * this.spec.joints[k].damping * this.ikWref[k][i] : 0, tau0 = o.vffPassiveRef ? tff + Kb * e[i] + wv + wB : tff + Kb * e[i] + wv;
+             const L = o.torqueLedger ? { statics: tff - (o.swingAccFF && this.accFF && this.accFF[sd] && this.accFF[sd].T[k] ? (1 - s1) * V.dot(this.accFF[sd].T[k], axW[i]) : 0), d1: o.swingAccFF && this.accFF && this.accFF[sd] && this.accFF[sd].T[k] ? (1 - s1) * V.dot(this.accFF[sd].T[k], axW[i]) : 0, ...(o.d1Guard ? d1G(k, i, sd, s1, axW, Lk, q) : {}), kp: Kb * e[i], vffServo: wv, passiveRef: wB, wA: this.wAof ? this.wAof[sd] : 0, c: this.cmdW ? this.cmdW[sd] : 0 } : undefined;
+             return { K: Kb, D: Db, tau0, ff: tff, vff: wv, ...(o.vffPassiveRef ? { vffPas: wB } : {}), ...(L ? { L } : {}) }; }
+@@ -629,6 +636,60 @@
+       const cap = act.capFull(ax, tq >= 0 ? 1 : -1, anat, wq, kneeDeg) / (1 + G.uMargin); ratio = Math.max(ratio, Math.abs(tq) / Math.max(1e-9, cap)); }); });
+   return ratio;
+ };
++// ═══ DVG (D1G v2, o.d1Guard === 2; e2/DVG_PREREG.md; default off = bit-identical): the domain-validity guard of ALL feed-forward derived from a non-supporting leg's IK solution — the
++// resolved-acceleration wrench D1 (swingAccFF) and the joint-rate feed-forward (lcVff: the rate ω* of ikW, the B reference rate of ikWref) — on every tick the leg's law evaluates a
++// commanded target (and, once engaged, until it is back in PASS). ONE verdict per leg and tick for both: V1 reached (IK residual ≤ 1e-6), V2 conditioned (λmin(J_fᵀJ_f) ≥ IK.srEps²),
++// V3 finite (D1 and the rates), V4 torque- and rate-feasible (the execution certifier's torque-feasibility item: |(gravity + D1) · axis| ≤ capacity(angle, rate) / (1 + U_MARGIN) at the
++// COMMANDED coordinate rate wq = max(max|ẋ_D1|, max|ω*|) — the actuator's force–velocity envelope). ONE weight w for both: PASS (w = 1, the fresh terms untouched) → FADE (the last valid
++// terms held, w decreasing) → OFF (no IK-derived feed-forward) → RAMP (fresh terms × w) → PASS. The weight step is dt/τ_g (τ_g = the lifecycle's release), slew-limited so the guard's own
++// per-axis command step |Δw|·C ≤ ½ · the E1a-7 commanded bound (15 · 240 / hz N·m), C = the largest unit-weight contribution of the guarded terms on any axis of the leg (previous tick)
++StandController.prototype.dvgStep = function (n, L, dt, st, ev) {
++  if (!this.lc) throw new Error("d1Guard 2 needs the lifecycle");
++  const G = this.dvg || (this.dvg = [null, null]), prev = G[n] && G[n].tick === this.n - 1 ? G[n] : null, ks = this.legK[n], tau = this.lc.o.release, sDt = 15 * 240 * dt;
++  const A0 = this.dvgApplied && this.dvgApplied[n] && this.dvgApplied[n].tick === this.n - 1 ? this.dvgApplied[n] : null;   // entering the domain: the previous tick's APPLIED terms are the last state
++  const g = prev ? { mode: prev.mode, w: prev.w, held: prev.held, last: prev.last } : { mode: "PASS", w: 1, held: null, last: A0 ? { d1: A0.d1, w: A0.w, wr: A0.wr } : null };
++  const a = L.ffOn ? L.accFF : null, r = L.r, cp = (v) => (v ? v.slice() : null);
++  const fresh = { d1: a, w: Object.fromEntries(ks.map(k => [k, this.ikW ? cp(this.ikW[k]) : null])), wr: Object.fromEntries(ks.map(k => [k, this.ikWref ? cp(this.ikWref[k]) : null])) };
++  const rates = ks.flatMap(k => (fresh.w[k] || [])), refs = ks.flatMap(k => (fresh.wr[k] || [])), okR = r.err <= 1e-6, lam = a ? a.lam : this.jfLam(st, ev, n, L.fr, r.x), okC = lam >= IK.srEps * IK.srEps;
++  const okF = (!L.ffOn || (!!a && Object.values(a.T).every(v => v.every(Number.isFinite)) && a.xd.every(Number.isFinite))) && rates.every(Number.isFinite) && refs.every(Number.isFinite);
++  const wq = Math.max(a ? Math.max(...a.xd.map(v => Math.abs(v))) : 0, rates.length ? Math.max(...rates.map(v => Math.abs(v))) : 0);
++  const tRatio = okR && okC && okF ? this.dvgFeasible(st, ev, n, L.fr, r, a ? a.T : null, wq) : null, okT = tRatio != null && tRatio <= 1, valid = okR && okC && okF && okT;
++  const stepOf = (C) => Math.min(dt / tau, C > 0 ? sDt / C : Infinity), dn = (w, C) => (w - stepOf(C) <= 1e-12 ? 0 : w - stepOf(C)), up = (w, C) => (w + stepOf(C) >= 1 - 1e-12 ? 1 : w + stepOf(C));
++  const Cs = prev ? prev.Csrc : 0, Cf = prev ? prev.Cfresh : 0; let src = null;
++  if (g.mode === "PASS" || g.mode === "RAMP") {
++    if (valid) { g.w = g.mode === "RAMP" ? up(g.w, Cf) : 1; if (g.w >= 1) g.mode = "PASS"; g.last = fresh; src = fresh; }
++    else if (g.last) { g.mode = "FADE"; g.held = g.last; g.last = null; g.w = dn(g.w, prev ? Cs : A0 ? A0.C : 0); src = g.held; if (g.w <= 0) { g.mode = "OFF"; g.held = null; } }
++    else { g.mode = "OFF"; g.w = 0; }
++  } else if (g.mode === "FADE") { g.w = dn(g.w, Cs); src = g.held; if (g.w <= 0) { g.mode = "OFF"; g.held = null; } }
++  else if (valid) { g.w = up(0, Cf); g.last = fresh; src = fresh; g.mode = g.w >= 1 ? "PASS" : "RAMP"; }   // OFF → RAMP
++  // outputs (PASS: the fresh terms untouched, the original arithmetic)
++  if (g.mode !== "PASS") { const w = g.w, sc = (b) => ({ T: Object.fromEntries(Object.entries(b.T).map(([k, v]) => [k, V.sc(v, w)])), xd: b.xd, xdd: b.xdd });
++    if (this.accFF) this.accFF[n] = src && src.d1 && w > 0 ? sc(src.d1) : null;
++    for (const k of ks) { if (this.ikW && this.ikW[k]) this.ikW[k] = src && src.w[k] && w > 0 ? V.sc(src.w[k], w) : [0, 0, 0]; if (this.ikWref && this.ikWref[k]) this.ikWref[k] = src && src.wr[k] && w > 0 ? V.sc(src.wr[k], w) : [0, 0, 0]; } }
++  G[n] = { ...g, tick: this.n, valid, okR, okC, okF, okT, tRatio, err: r.err, lam, wq, src, fresh, Csrc: 0, Cfresh: 0 };
++};
++// DVG recording: the unit-weight per-axis contribution of the guard's source terms and of this tick's fresh terms (the larger magnitude per leg is the next tick's slew reference C)
++StandController.prototype.dvgUnit = function (n, k, i, s1, gw, gb, axW, Lk, q) { const G = this.dvg[n], mp = (Tv) => (Lk != null && i === 3 - Lk ? lockedAxisFF(Tv, axW, decompose(q).tw, Lk) : V.dot(Tv, axW[i]));
++  const u = (S) => (S ? (S.d1 && S.d1.T[k] ? mp(V.sc(S.d1.T[k], 1 - s1)) : 0) + (S.w[k] ? gw * S.w[k][i] : 0) + (S.wr[k] ? gb * S.wr[k][i] : 0) : 0);
++  const us = u(G.src), uf = u(G.fresh); G.Csrc = Math.max(G.Csrc, Math.abs(us)); G.Cfresh = Math.max(G.Cfresh, Math.abs(uf)); (G.ax || (G.ax = [])).push([k, i, us, uf]); };
++// λmin(J_fᵀJ_f) at the IK solution x (the same J_f expressions as swingAccWrench; used when no D1 is evaluated)
++StandController.prototype.jfLam = function (st, ev, n, fr, x) { const ch = this.legChain(st, ev, n, fr.pos, fr.rot, null), eps = IK.h, step = (y, d, s2) => y.map((v, i) => v + s2 * d[i]);
++  const angVel = (Ra, Rb, h) => { let q = Q.mul(Ra, Q.conj(Rb)); if (q[3] < 0) q = q.map(v => -v); return [2 * q[0] / h, 2 * q[1] / h, 2 * q[2] / h]; };
++  const cols = [0, 1, 2, 3, 4, 5].map(j => { const e = [0, 0, 0, 0, 0, 0]; e[j] = 1; const kp = ch.pose(step(x, e, eps)), km = ch.pose(step(x, e, -eps)); return { pf: V.sc(V.sub(kp.p[2], km.p[2]), 1 / (2 * eps)), w: angVel(kp.R[2], km.R[2], 2 * eps) }; });
++  const Jf = [0, 1, 2, 3, 4, 5].map(r => [0, 1, 2, 3, 4, 5].map(j => (r < 3 ? cols[j].pf[r] : cols[j].w[r - 3])));
++  return eigMinSym([0, 1, 2, 3, 4, 5].map(a => [0, 1, 2, 3, 4, 5].map(b => Jf.reduce((s2, row) => s2 + row[a] * row[b], 0)))); };
++// V4 of DVG: the certifier's torque-feasibility item with the requested wrench T (D1, or none) at the commanded coordinate rate wq (d1Feasible's expressions)
++StandController.prototype.dvgFeasible = function (st, ev, n, fr, r, Tw, wq) {
++  const G = this.d1gAct; if (!G || !G.act) throw new Error("d1Guard needs the actuator layer (ctrl.d1gAct)");
++  const act = G.act, spec = this.spec, ks = this.legK[n], P = this.legChain(st, ev, n, fr.pos, fr.rot, null).pose(r.x), bodies = ks.map(k => spec.joints[k].childIndex);
++  const cOff = bodies.map(b => Q.rot(Q.conj(st[b].rot), V.sub(st[b].com, st[b].pos))), com = P.R.map((R, b) => V.add(P.p[b], Q.rot(R, cOff[b]))), tgtQ = new Map(r.targets);
++  let ratio = 0;
++  ks.forEach((k, idx) => { let Tg = [0, 0, 0]; for (let b = idx; b < 3; b++) Tg = V.sub(Tg, V.cross(V.sub(com[b], P.p[idx]), [0, -9.81 * spec.bodies[bodies[b]].mass, 0])); const Treq = V.add(Tg, Tw && Tw[k] ? Tw[k] : [0, 0, 0]);
++    const d = this.P.jd[k], R2F2 = Q.mul(P.R[idx], d.F2), q = tgtQ.get(k) || ev.qs[k], kneeDeg = idx === 2 ? this.P.anat(this.P.jd[ks[1]], tgtQ.get(ks[1]) || ev.qs[ks[1]], "flex") : null;
++    [0, 1, 2].forEach(ii => { const ax = act.ax[k] && act.ax[k][ii]; if (!ax) return; const axW = Q.rot(R2F2, [[1, 0, 0], [0, 1, 0], [0, 0, 1]][ii]), tq = V.dot(Treq, axW), anat = this.P.anat(d, q, ax.key);
++      const cap = act.capFull(ax, tq >= 0 ? 1 : -1, anat, wq, kneeDeg) / (1 + G.uMargin); ratio = Math.max(ratio, Math.abs(tq) / Math.max(1e-9, cap)); }); });
++  return ratio;
++};
+ StandController.prototype.legIK = function (st, ev, n, pP, qP, footPose = null) {
+   if (this.o.ikBounds) return this.legIKBounded(st, ev, n, pP, qP, footPose);
+   const { ks, cur, fk, jac, kTw, x0 } = this.legChain(st, ev, n, pP, qP, footPose);
+--- gates/v2_e2.js	2026-10-07 22:57:31
++++ /private/tmp/claude-501/-Users-zainrahman/8af3fa3f-f134-4178-b7ae-7855027dda6e/scratchpad/dvg/tree/sandbox/visual/physchar2/gates/v2_e2.js	2026-10-08 00:29:43
+@@ -28,6 +28,7 @@
+ CFG.PSTAR5CHABTD = { ...CFG.PSTAR5CHAB, e2td: "search" }; CFG.PSTAR5CHABTDB = { ...CFG.PSTAR5CHAB, e2td: "search2" };   // TD2B (e2/TD2B_PREREG.md)
+ // D1G (e2/D1G_TD2C_PREREG.md): the D1 guard on the AB baseline (PSTAR5CHABG) and on TD2B (PSTAR5CHABTDC = TD2C); used by nothing until validated
+ CFG.PSTAR5CHABG = { ...CFG.PSTAR5CHAB, d1Guard: true }; CFG.PSTAR5CHABTDC = { ...CFG.PSTAR5CHABTDB, d1Guard: true };
++CFG.PSTAR5CHABV = { ...CFG.PSTAR5CHAB, d1Guard: 2 }; CFG.PSTAR5CHABTDV = { ...CFG.PSTAR5CHABTDB, d1Guard: 2 };
+ CFG.PSTAR5CHABF = { ...CFG.PSTAR5CHAB, d1FloatBase: true }; CFG.PSTAR5CHABT = { ...CFG.PSTAR5CHAB, lcTransition: "cmd" }; CFG.PSTAR5CHABFT = { ...CFG.PSTAR5CHAB, d1FloatBase: true, lcTransition: "cmd" };
+ export const E2P = { fwd: { dx: 0.10, dy: 0 }, lat: { dx: 0, dy: 0.08 }, T: 0.60, apex: 0.025, apexLow: 0.008, lateDz: 0.010, pushJ: 5, pushDur: 0.1, LT: 0.6, HOV: 1.5, RT: 0.6, GRACE: 0.3, LIFT: 0.02 };
+ // VERSIONED commanded-step trajectory seeds (run.traj; default "v2" = the frozen E2 v2 seeds, bit-identical). "A30" = amendment A30 (e2/E2_PREREG_AMENDMENT_A30.md,
+--- tools/d1g_val.mjs	2026-10-07 23:17:12
++++ /private/tmp/claude-501/-Users-zainrahman/8af3fa3f-f134-4178-b7ae-7855027dda6e/scratchpad/dvg/tree/sandbox/visual/physchar2/tools/d1g_val.mjs	2026-10-08 00:30:08
+@@ -14,7 +14,7 @@
+ const SV2 = { "R-F": { set: "R", dx: 0.10, dy: 0, T: 0.60, apex: 0.030 }, "R-L": { set: "R", dx: 0, dy: 0.08, T: 0.60, apex: 0.030 },
+   "C-F7": { set: "C", dx: 0.07, dy: 0, T: 0.60, apex: 0.030 }, "C-F13": { set: "C", dx: 0.13, dy: 0, T: 0.60, apex: 0.030 }, "C-L5": { set: "C", dx: 0, dy: 0.05, T: 0.60, apex: 0.030 }, "C-L11": { set: "C", dx: 0, dy: 0.11, T: 0.60, apex: 0.030 },
+   "H-T45": { set: "H", dx: 0.10, dy: 0, T: 0.45, apex: 0.030 }, "H-A40": { set: "H", dx: 0.10, dy: 0, T: 0.60, apex: 0.040 }, "H-D": { set: "H", dx: 0.10, dy: 0.08, T: 0.60, apex: 0.030 }, "H-F15": { set: "H", dx: 0.15, dy: 0, T: 0.60, apex: 0.030 } };
+-if (!["L", "R"].includes(SIDE) || !["PSTAR5CHAB", "PSTAR5CHABG"].includes(CFGN) || !SV2[TID] || !["run", "reach"].includes(MODE)) throw new Error("args");
++if (!["L", "R"].includes(SIDE) || !["PSTAR5CHAB", "PSTAR5CHABG", "PSTAR5CHABV"].includes(CFGN) || !SV2[TID] || !["run", "reach"].includes(MODE)) throw new Error("args");
+ if (process.env.V2_KNEE_MODEL !== "v2k" || process.env.V2_ANKLE_NEUTRAL_K !== "0.13") throw new Error("E1a configuration env required");
+ const nL = SIDE === "L" ? 0 : 1, nS = 1 - nL, CONFIG = CFGN, FF = "on", TR = { ...SV2[TID], dx: RS.dx, dy: RS.dy }, HOLD = 0.5, CONTACT = ["TOUCHDOWN", "TOUCHING", "LOAD_ACCEPT", "SUPPORT", "UNLOADING"];
+ const mj = (u) => { u = Math.min(1, Math.max(0, u)); return u * u * u * (10 - 15 * u + 6 * u * u); };
+@@ -24,7 +24,7 @@
+ const lamFn = (t) => lamFn.d(t)[0]; lamFn.d = (t) => { const [v, d1, d2] = sig(t); return nS === 1 ? [v, d1, d2] : [1 - v, -d1, -d2]; };
+ const spec = e2Spec(HUMAN), pd = { t0: 1, dur: 2, dz: 0.025 }, def = { ...g3Def(nS === 1 ? "U:R" : "U:L"), key: "SV2", title: "swing servo validation v2", lam: lamFn, supervise: {}, holds: [], seconds: 60, push: null, torque: null };
+ const s = new G3Sim(J, spec, def, { stand: { ikRefTwist: true, lifecycle: true, pelvisDrop: pd, ...CFG[CONFIG], diagRecord: true, torqueLedger: true }, passiveOpts: { kneeModel: "v2k" }, ...(HZ !== 240 || TURF === "off" ? { cfg: { ...(HZ !== 240 ? { hz: HZ } : {}), ...(TURF === "off" ? { diagNoGround: true } : {}) } } : {}) });
+-const C = s.ctrl, dt = s.dt; if (!C.o.swingAccFF || C.o.e2 !== 2 || C.o.vffRate !== "sr" || !C.o.e2reanchorVel || !!C.o.vffPelvisAir !== CONFIG.slice(8).includes("A") || !!C.o.vffPassiveRef !== CONFIG.slice(8).includes("B") || !!C.o.d1FloatBase || !!C.o.lcTransition || td2bOn(C.o) || !!C.o.d1Guard !== (CONFIG === "PSTAR5CHABG")) throw new Error("configuration");
++const C = s.ctrl, dt = s.dt; if (!C.o.swingAccFF || C.o.e2 !== 2 || C.o.vffRate !== "sr" || !C.o.e2reanchorVel || !!C.o.vffPelvisAir !== CONFIG.slice(8).includes("A") || !!C.o.vffPassiveRef !== CONFIG.slice(8).includes("B") || !!C.o.d1FloatBase || !!C.o.lcTransition || td2bOn(C.o) || !!C.o.d1Guard !== (CONFIG !== "PSTAR5CHAB")) throw new Error("configuration");
+ const TDON = false;
+ const setT = (e) => { C.lc.setSwingTarget(nL, { pos: e.pos, rot: e.rot }); if (!C.swingRef) C.swingRef = [null, null]; C.swingRef[nL] = { vel: e.vel.slice(), acc: e.acc.slice(), w: (e.w || [0, 0, 0]).slice(), al: (e.al || [0, 0, 0]).slice() }; H.ref = e; };
+ // the planner's reachability certifier, posed exactly as the E2 planner poses a commanded step (predicted liftoff state, knot at T/2 of the post-liftoff swing, swing frame now)
+@@ -70,9 +70,9 @@
+   series.wA.push(C.wAof ? +C.wAof[nL].toFixed(6) : 0); series.c.push(C.cmdW ? +C.cmdW[nL].toFixed(6) : 0); series.onS.push(onset[nL] ? 1 : 0);
+   { let cm = 0, fin = true; if (c) c.forEach(ax => ax && ax.forEach(r => { if (r) { if (!Number.isFinite(r.tau0)) fin = false; else cm = Math.max(cm, Math.abs(r.tau0)); } })); for (const k in tau) if (!Number.isFinite(tau[k])) fin = false; if (!fin) nonFinCmd++; series.cmdMax.push(+cm.toFixed(4));
+     if (!st.every(b => [...b.pos, ...b.rot, ...b.v, ...b.w].every(Number.isFinite))) nonFinSt++;
+-    const G = C.d1g && C.d1g[nL] && C.d1g[nL].tick === C.n - 1 ? C.d1g[nL] : null, gm = G ? GM[G.mode] : -1; if (G) { d1gEvals++; if (!G.valid) { d1gInvalid++; if (d1gFirstInvalid == null) d1gFirstInvalid = +t.toFixed(6); } }
++    const GD = C.dvg || C.d1g, G = GD && GD[nL] && GD[nL].tick === C.n - 1 ? GD[nL] : null, gm = G ? GM[G.mode] : -1; if (G) { d1gEvals++; if (!G.valid) { d1gInvalid++; if (d1gFirstInvalid == null) d1gFirstInvalid = +t.toFixed(6); } }
+     series.gm.push(gm); series.gw.push(G ? G.w : null); series.gv.push(G ? (G.okR ? 1 : 0) + (G.okC ? 2 : 0) + (G.okF ? 4 : 0) + (G.okT ? 8 : 0) : null); series.gt = series.gt || []; series.gt.push(G && G.tRatio != null ? +G.tRatio.toFixed(5) : null);
+-    const E = G ? { t: +t.toFixed(6), mode: G.mode, w: G.w, okR: G.okR, okC: G.okC, okF: G.okF, okT: G.okT, tRatio: G.tRatio, err: G.err, lam: G.lam, src: G.src ? Object.fromEntries(Object.entries(G.src.T).map(([k, v]) => [k, v.slice()])) : null,
++    const E = G ? { t: +t.toFixed(6), mode: G.mode, w: G.w, okR: G.okR, okC: G.okC, okF: G.okF, okT: G.okT, tRatio: G.tRatio, err: G.err, lam: G.lam, src: G.src && G.src.T ? Object.fromEntries(Object.entries(G.src.T).map(([k, v]) => [k, v.slice()])) : null, wq: G.wq ?? null, Csrc: G.Csrc ?? null, Cfresh: G.Cfresh ?? null, uax: G.ax ? G.ax.map(x => x.map(v => (typeof v === 'number' ? +v.toPrecision(7) : v))) : null, Lp: C.legK[nL].flatMap(k => (c && c[k] ? c[k].map((r, i) => (r && r.L ? [k, i, r.L.d1, r.L.vffServo, r.L.passiveRef] : null)).filter(Boolean) : [])),
+       ax: C.legK[nL].flatMap(k => (c && c[k] ? c[k].map((r, i) => (r && r.L ? [k, i, r.L.d1x, r.L.d1src, r.L.d1w, r.tau0] : null)).filter(Boolean) : [])) } : null;
+     if (G && (gm !== 0 || prevGm > 0 || !G.valid)) { if (prevGE && (!gtr.length || gtr[gtr.length - 1].t !== prevGE.t)) gtr.push(prevGE); gtr.push(E); }   // with the preceding tick (the held wrench's source)
+     prevGE = E; prevGm = gm; }
+--- tools/td2c_val.mjs	2026-10-07 23:17:12
++++ /private/tmp/claude-501/-Users-zainrahman/8af3fa3f-f134-4178-b7ae-7855027dda6e/scratchpad/dvg/tree/sandbox/visual/physchar2/tools/td2c_val.mjs	2026-10-08 00:30:08
+@@ -17,7 +17,7 @@
+ const SV2 = { "R-F": { set: "R", dx: 0.10, dy: 0, T: 0.60, apex: 0.030 }, "R-L": { set: "R", dx: 0, dy: 0.08, T: 0.60, apex: 0.030 },
+   "C-F7": { set: "C", dx: 0.07, dy: 0, T: 0.60, apex: 0.030 }, "C-F13": { set: "C", dx: 0.13, dy: 0, T: 0.60, apex: 0.030 }, "C-L5": { set: "C", dx: 0, dy: 0.05, T: 0.60, apex: 0.030 }, "C-L11": { set: "C", dx: 0, dy: 0.11, T: 0.60, apex: 0.030 },
+   "H-T45": { set: "H", dx: 0.10, dy: 0, T: 0.45, apex: 0.030 }, "H-A40": { set: "H", dx: 0.10, dy: 0, T: 0.60, apex: 0.040 }, "H-D": { set: "H", dx: 0.10, dy: 0.08, T: 0.60, apex: 0.030 }, "H-F15": { set: "H", dx: 0.15, dy: 0, T: 0.60, apex: 0.030 } };
+-if (!["L", "R"].includes(SIDE) || !["PSTAR5CHABG", "PSTAR5CHABTDC"].includes(CFGN) || !SV2[TID] || !["run", "reach"].includes(MODE)) throw new Error("args");
++if (!["L", "R"].includes(SIDE) || !["PSTAR5CHABG", "PSTAR5CHABTDC", "PSTAR5CHABV", "PSTAR5CHABTDV"].includes(CFGN) || !SV2[TID] || !["run", "reach"].includes(MODE)) throw new Error("args");
+ if (process.env.V2_KNEE_MODEL !== "v2k" || process.env.V2_ANKLE_NEUTRAL_K !== "0.13") throw new Error("E1a configuration env required");
+ const nL = SIDE === "L" ? 0 : 1, nS = 1 - nL, CONFIG = CFGN, FF = "on", TR = SV2[TID], HOLD = 0.5, CONTACT = ["TOUCHDOWN", "TOUCHING", "LOAD_ACCEPT", "SUPPORT", "UNLOADING"];
+ const mj = (u) => { u = Math.min(1, Math.max(0, u)); return u * u * u * (10 - 15 * u + 6 * u * u); };
+@@ -27,7 +27,7 @@
+ const lamFn = (t) => lamFn.d(t)[0]; lamFn.d = (t) => { const [v, d1, d2] = sig(t); return nS === 1 ? [v, d1, d2] : [1 - v, -d1, -d2]; };
+ const spec = e2Spec(HUMAN), pd = { t0: 1, dur: 2, dz: 0.025 }, def = { ...g3Def(nS === 1 ? "U:R" : "U:L"), key: "SV2", title: "swing servo validation v2", lam: lamFn, supervise: {}, holds: [], seconds: 60, push: null, torque: null };
+ const s = new G3Sim(J, spec, def, { stand: { ikRefTwist: true, lifecycle: true, pelvisDrop: pd, ...CFG[CONFIG], diagRecord: true, torqueLedger: true }, passiveOpts: { kneeModel: "v2k" }, ...(HZ !== 240 || TURF === "off" ? { cfg: { ...(HZ !== 240 ? { hz: HZ } : {}), ...(TURF === "off" ? { diagNoGround: true } : {}) } } : {}) });
+-const C = s.ctrl, dt = s.dt; if (!C.o.swingAccFF || C.o.e2 !== 2 || C.o.vffRate !== "sr" || !C.o.e2reanchorVel || !!C.o.vffPelvisAir !== CONFIG.slice(8).includes("A") || !!C.o.vffPassiveRef !== CONFIG.slice(8).includes("B") || !!C.o.d1FloatBase || !!C.o.lcTransition || td2bOn(C.o) !== (CONFIG === "PSTAR5CHABTDC") || (CONFIG === "PSTAR5CHABG" && COND !== "nominal") || !C.o.d1Guard) throw new Error("configuration");
++const C = s.ctrl, dt = s.dt; if (!C.o.swingAccFF || C.o.e2 !== 2 || C.o.vffRate !== "sr" || !C.o.e2reanchorVel || !!C.o.vffPelvisAir !== CONFIG.slice(8).includes("A") || !!C.o.vffPassiveRef !== CONFIG.slice(8).includes("B") || !!C.o.d1FloatBase || !!C.o.lcTransition || td2bOn(C.o) !== CONFIG.includes("TD") || (!CONFIG.includes("TD") && COND !== "nominal") || !C.o.d1Guard) throw new Error("configuration");
+ const TDON = td2bOn(C.o);
+ const setT = (e) => { C.lc.setSwingTarget(nL, { pos: e.pos, rot: e.rot }); if (!C.swingRef) C.swingRef = [null, null]; C.swingRef[nL] = { vel: e.vel.slice(), acc: e.acc.slice(), w: (e.w || [0, 0, 0]).slice(), al: (e.al || [0, 0, 0]).slice() }; H.ref = e; };
+ // the planner's reachability certifier, posed exactly as the E2 planner poses a commanded step (predicted liftoff state, knot at T/2 of the post-liftoff swing, swing frame now)
+@@ -86,9 +86,9 @@
+   series.wA.push(C.wAof ? +C.wAof[nL].toFixed(6) : 0); series.c.push(C.cmdW ? +C.cmdW[nL].toFixed(6) : 0); series.onS.push(onset[nL] ? 1 : 0);
+   { let cm = 0, fin = true; if (c) c.forEach(ax => ax && ax.forEach(r => { if (r) { if (!Number.isFinite(r.tau0)) fin = false; else cm = Math.max(cm, Math.abs(r.tau0)); } })); for (const k in tau) if (!Number.isFinite(tau[k])) fin = false; if (!fin) nonFinCmd++; series.cmdMax.push(+cm.toFixed(4));
+     if (!st.every(b => [...b.pos, ...b.rot, ...b.v, ...b.w].every(Number.isFinite))) nonFinSt++;
+-    const G = C.d1g && C.d1g[nL] && C.d1g[nL].tick === C.n - 1 ? C.d1g[nL] : null, gm = G ? GM[G.mode] : -1; if (G) { d1gEvals++; if (!G.valid) { d1gInvalid++; if (d1gFirstInvalid == null) d1gFirstInvalid = +t.toFixed(6); } }
++    const GD = C.dvg || C.d1g, G = GD && GD[nL] && GD[nL].tick === C.n - 1 ? GD[nL] : null, gm = G ? GM[G.mode] : -1; if (G) { d1gEvals++; if (!G.valid) { d1gInvalid++; if (d1gFirstInvalid == null) d1gFirstInvalid = +t.toFixed(6); } }
+     series.gm.push(gm); series.gw.push(G ? G.w : null); series.gv.push(G ? (G.okR ? 1 : 0) + (G.okC ? 2 : 0) + (G.okF ? 4 : 0) + (G.okT ? 8 : 0) : null); series.gt = series.gt || []; series.gt.push(G && G.tRatio != null ? +G.tRatio.toFixed(5) : null);
+-    const E = G ? { t: +t.toFixed(6), mode: G.mode, w: G.w, okR: G.okR, okC: G.okC, okF: G.okF, okT: G.okT, tRatio: G.tRatio, err: G.err, lam: G.lam, src: G.src ? Object.fromEntries(Object.entries(G.src.T).map(([k, v]) => [k, v.slice()])) : null,
++    const E = G ? { t: +t.toFixed(6), mode: G.mode, w: G.w, okR: G.okR, okC: G.okC, okF: G.okF, okT: G.okT, tRatio: G.tRatio, err: G.err, lam: G.lam, src: G.src && G.src.T ? Object.fromEntries(Object.entries(G.src.T).map(([k, v]) => [k, v.slice()])) : null, wq: G.wq ?? null, Csrc: G.Csrc ?? null, Cfresh: G.Cfresh ?? null, uax: G.ax ? G.ax.map(x => x.map(v => (typeof v === 'number' ? +v.toPrecision(7) : v))) : null, Lp: C.legK[nL].flatMap(k => (c && c[k] ? c[k].map((r, i) => (r && r.L ? [k, i, r.L.d1, r.L.vffServo, r.L.passiveRef] : null)).filter(Boolean) : [])),
+       ax: C.legK[nL].flatMap(k => (c && c[k] ? c[k].map((r, i) => (r && r.L ? [k, i, r.L.d1x, r.L.d1src, r.L.d1w, r.tau0] : null)).filter(Boolean) : [])) } : null;
+     if (G && (gm !== 0 || prevGm > 0 || !G.valid)) { if (prevGE && (!gtr.length || gtr[gtr.length - 1].t !== prevGE.t)) gtr.push(prevGE); gtr.push(E); }   // with the preceding tick (the held wrench's source)
+     prevGE = E; prevGm = gm; }

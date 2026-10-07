@@ -1,0 +1,12 @@
+# Item 3 checks (post-hoc, on existing D1G evidence)
+## (i) soft-limit tables of the 6 solved IK coordinates, L vs R (each coordinate is identical either with the same sign or mirrored: lo_L = −hi_R, hi_L = −lo_R)
+V2-REF: worst per-coordinate mirror mismatch 0.00e+0 rad
+V2-165-62: worst per-coordinate mirror mismatch 0.00e+0 rad
+V2-198-92: worst per-coordinate mirror mismatch 0.00e+0 rad
+V2-175-70: worst per-coordinate mirror mismatch 0.00e+0 rad
+V2-190-85: worst per-coordinate mirror mismatch 0.00e+0 rad
+V2-short-legs: worst per-coordinate mirror mismatch 0.00e+0 rad
+V2-long-legs: worst per-coordinate mirror mismatch 0.00e+0 rad
+V1-matched: worst per-coordinate mirror mismatch 0.00e+0 rad
+## (iv) closed-loop L/R physical outcomes, D1G reach stress (72 pairs, guard on)
+pairs 72; outcome-class (fell / abort) mismatches 0; max |L − R|: max |τ0| 1.08 %, Σ+ 0.0080 J, closure max 0.0010 J/tick, invalid-evaluation count 10.2 %, first invalidity 5.56 ms

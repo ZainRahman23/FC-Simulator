@@ -2507,3 +2507,38 @@ Guard off vs on: commands 10²⁰ – 10²¹ → ≤ 4.2 · 10³ N·m; Σ+ 2,500
 **Decisions pending:** rate feed-forward guard vs B_cmd reading; the 180 Hz end-range energy (TD-15) scope; the IK mirror fold.
 
 Not pushed.
+
+## 2026-10-08: rate-feed-forward guard and combined qualification (`sources/2026-10-08_user_decision_rate_ff_guard_combined_qualification.md`)
+
+### E2-19: DVG (D1G v2) preregistered (freeze step 1, before any repository code)
+
+**Preregistration:** `e2/DVG_PREREG.md`. D1G v1 stays FAIL and unadopted; B_cmd is not redefined.
+
+**DVG:**
+- One validity verdict and one fade weight per leg, for **all** IK-derived feed-forward: D1, the joint-rate feed-forward ω\* and the B reference rate.
+- **Verdict:** V1 reached, V2 conditioned, V3 finite, V4 the certifier's torque feasibility at the **commanded** coordinate rate (the actuator's force–velocity envelope).
+- **Fade:** from the last valid terms (or, entering invalid, from the applied ones). The weight step is slew-limited so the guard's own step is ≤ ½ of the E1a-7 commanded bound.
+- **Domain:** every commanded-target tick. It is bit-identical when never engaged.
+
+**Combined qualification CQ-0 … CQ-6:**
+- identity;
+- bit-identical equivalence (AB, SV-2, E1a / E1b);
+- reach stress against the capacity / rate semantics (finite, over-capacity 0, applied joint rates inside the force–velocity envelope);
+- mirror and L / R;
+- determinism;
+- energy E1a-8, with failures attributed to TD-15 only against a paired no-feed-forward reference (excess ≤ 0.05 J);
+- the exact transition law, with the guard step ≤ the E1a-7 commanded bound.
+
+**Item 2:**
+- The 180 Hz hold-phase build-up is independent of D1, of the guard and of the rate feed-forward: it persists with no IK-derived feed-forward at all, and that reference itself exceeds Σ+ 0.5 J. It is pre-existing integration debt, TD-15-consistent.
+- D1G's per-tick spikes were partly caused by the unguarded rate feed-forward; they are not debt.
+- TD-15 gates any later certification of that regime; it is not investigated now.
+
+**Item 3:** confirmed:
+- identical equations, and soft-limit tables exactly mirrored on 8 bodies;
+- the reached side is an interior solution, while the stalled side parks the knee on its soft bound and reports unreached (conservative);
+- 72 L / R pairs show no outcome bias.
+
+**TD-17 (debt):** bounded-IK branch selection at a soft-bound fold (active-set path dependence). It is not gated in CQ or TD2C.
+
+Not pushed.
