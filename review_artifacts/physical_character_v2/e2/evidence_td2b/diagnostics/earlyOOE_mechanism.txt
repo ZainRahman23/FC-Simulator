@@ -1,0 +1,10 @@
+earlyOOE runs 432; energy-closure failures (> 0.05 J/tick) 169; runs with an unreachable IK target after contact (residual > 1e-6) 121
+closure failure AND unreachable: 111; closure failure with reachable targets: 58; unreachable without closure failure: 10
+contact downward speed median 178 max 255 mm/s | hand-back reference below the landed anchor: median 3.30 max 4.31 mm | max commanded Δτ0 median 1.5e+2 max 2.1e+18 N·m
+aborts 12; not both SUPPORT at the end 15
+  2-198-92_L_180_H-D           vN 189 overshoot 3.27 mm ikMax 1.1e-2 dτ0 3.1e+15 closure 4.77e+2 abort true final TOUCHDOWN/LOAD_ACCEPT
+  2-190-85_R_180_H-D           vN 189 overshoot 3.28 mm ikMax 9.8e-1 dτ0 8.7e+13 closure 3.03e+2 abort true final AIRBORNE/TOUCHDOWN
+  2-165-62_R_180_H-D           vN 189 overshoot 3.28 mm ikMax 2.0e-1 dτ0 6.5e+13 closure 2.82e+2 abort true final AIRBORNE/AIRBORNE
+  2-REF_L_180_H-D              vN 188 overshoot 3.28 mm ikMax 6.9e-2 dτ0 3.4e+14 closure 6.94e+1 abort false final AIRBORNE/SUPPORT
+  2-198-92_L_240_C-L5          vN 168 overshoot 3.44 mm ikMax 1.2e-1 dτ0 6.4e+14 closure 2.01e+1 abort false final AIRBORNE/AIRBORNE
+  1-matched_L_180_R-L          vN 185 overshoot 3.61 mm ikMax 7.1e-2 dτ0 5.7e+16 closure 1.83e+1 abort true final TOUCHDOWN/AIRBORNE

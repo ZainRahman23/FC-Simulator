@@ -1,0 +1,13 @@
+// POST-HOC DIAGNOSTIC (earlyOOE failure mechanism; not a verdict): per earlyOOE run — contact speed, the hand-back reference's overshoot below the landed anchor, the IK residual after
+// contact (unreachable target), the commanded-torque explosion, energy closure, abort / final state; and the association between an unreachable IK target and the integrity failure.
+import fs from "fs"; import zlib from "zlib";
+const D = process.argv[2], out = []; for (const f of fs.readdirSync(D).filter(x => x.startsWith("td2b_PSTAR5CHABTDB_earlyOOE_") && x.endsWith(".json.gz"))) { const r = JSON.parse(zlib.gunzipSync(fs.readFileSync(D + "/" + f))), R = r.rows, se = r.series;
+  const i1 = R.findIndex(x => Math.abs(x.t - r.t1) < 1e-7), post = R.slice(i1), anchorY = r.anchor.pos[1], ikMax = Math.max(...post.map(x => x.ikErr ?? 0)), refMin = Math.min(...post.map(x => x.ref.p[1] - anchorY)) * 1000;
+  const dT0 = Math.max(...se.dTau0), clos = Math.max(...se.closInc); out.push({ f: f.slice(29, -8), vN: R[i1 - 1].pc.vN * 1000, over: -refMin, ikMax, dT0, clos, abort: r.events.abortT != null, final: r.events.finalStates.join("/") }); }
+const bad = out.filter(o => o.clos > 0.05), unreach = out.filter(o => o.ikMax > 1e-6);
+console.log(`earlyOOE runs ${out.length}; energy-closure failures (> 0.05 J/tick) ${bad.length}; runs with an unreachable IK target after contact (residual > 1e-6) ${unreach.length}`);
+console.log(`closure failure AND unreachable: ${bad.filter(o => o.ikMax > 1e-6).length}; closure failure with reachable targets: ${bad.filter(o => o.ikMax <= 1e-6).length}; unreachable without closure failure: ${unreach.filter(o => o.clos <= 0.05).length}`);
+const q = (a, p) => { const b = a.slice().sort((x, y) => x - y); return b[Math.floor(p * (b.length - 1))]; };
+console.log(`contact downward speed median ${q(out.map(o => o.vN), 0.5).toFixed(0)} max ${Math.max(...out.map(o => o.vN)).toFixed(0)} mm/s | hand-back reference below the landed anchor: median ${q(out.map(o => o.over), 0.5).toFixed(2)} max ${Math.max(...out.map(o => o.over)).toFixed(2)} mm | max commanded Δτ0 median ${q(out.map(o => o.dT0), 0.5).toExponential(1)} max ${Math.max(...out.map(o => o.dT0)).toExponential(1)} N·m`);
+console.log(`aborts ${out.filter(o => o.abort).length}; not both SUPPORT at the end ${out.filter(o => o.final !== "SUPPORT/SUPPORT").length}`);
+out.sort((a, b) => b.clos - a.clos).slice(0, 6).forEach(o => console.log(`  ${o.f.padEnd(28)} vN ${o.vN.toFixed(0)} overshoot ${o.over.toFixed(2)} mm ikMax ${o.ikMax.toExponential(1)} dτ0 ${o.dT0.toExponential(1)} closure ${o.clos.toExponential(2)} abort ${o.abort} final ${o.final}`));

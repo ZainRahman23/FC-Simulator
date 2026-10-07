@@ -1,0 +1,5 @@
+# earlyOOE counterfactuals (24 cases: 8 bodies × L × 180 Hz × R-L / C-L5 / H-D); frozen = the TD2B battery records; hbstop = E2 hand-back from rest at the contact reference; d1guard = no D1 for an unreachable IK target (residual > 1e-6); both
+frozen   n 24 | closure>0.05 J/tick: 22 | Σ+>0.5 J: 19 | unreachable IK: 23 | max commanded Δτ0 5.7e+16 N·m | runs with E1a-7 violations 24 | aborts 3 | not both SUPPORT 4 | rebounds 24 | impact max 158 % BW
+hbstop   n 24 | closure>0.05 J/tick: 22 | Σ+>0.5 J: 16 | unreachable IK: 16 | max commanded Δτ0 3.3e+16 N·m | runs with E1a-7 violations 24 | aborts 3 | not both SUPPORT 2 | rebounds 24 | impact max 148 % BW
+d1guard  n 24 | closure>0.05 J/tick: 11 | Σ+>0.5 J: 0 | unreachable IK: 23 | max commanded Δτ0 4.4e+4 N·m | runs with E1a-7 violations 24 | aborts 0 | not both SUPPORT 0 | rebounds 24 | impact max 129 % BW
+both     n 24 | closure>0.05 J/tick: 15 | Σ+>0.5 J: 0 | unreachable IK: 16 | max commanded Δτ0 4.3e+3 N·m | runs with E1a-7 violations 24 | aborts 0 | not both SUPPORT 0 | rebounds 24 | impact max 129 % BW

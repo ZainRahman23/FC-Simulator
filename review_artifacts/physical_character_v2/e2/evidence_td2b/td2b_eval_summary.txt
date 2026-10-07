@@ -1,0 +1,51 @@
+runs 2688/2688; runtime reachability exclusions 0
+REPORTED per configuration / condition / set: runs with any E1a-7 violation (PCI) worst PCI ratio | first touch relative to search start (ms) med [min, max] | contact downward speed med/max, tangential max (pc), foot horizontal max (mm/s) | impact %BW med/max, 10 ms max, first 12 ms max | 50 ms impulse max (N·s) | penetration min (mm) | rebounds | slip max / placement max (mm) | new-region deviation max approach φ .8–1 / search (mm) | contact phases
+  AB nominal R       n  96 | viol 6 (PCI 6) 1.06 | tC -56 [-61, -50] | vN 59.2/76.4 vT 53.2 fvT 51.6 | impact 25.5/38.6 w10 23.8 first12 25.3 | I50 3.25 | pen -0.00 | reb 0 | slip 3.07 place 4.49 | dev 1.14 / — | approach
+  AB nominal C       n 144 | viol 0 (PCI 0) 0.84 | tC -56 [-63, -50] | vN 59.7/77.2 vT 73.0 fvT 72.7 | impact 20.4/48.9 w10 22.3 first12 3.8 | I50 3.82 | pen -0.00 | reb 0 | slip 3.22 place 2.67 | dev 1.38 / — | approach
+  AB nominal H       n 192 | viol 8 (PCI 8) 1.15 | tC -57 [-67, -44] | vN 76.9/122.4 vT 90.9 fvT 91.0 | impact 35.2/60.3 w10 32.0 first12 42.6 | I50 4.87 | pen -0.00 | reb 32 | slip 5.85 place 8.59 | dev 1.53 / — | approach
+  TD nominal R       n  96 | viol 0 (PCI 0) 0.80 | tC 151 [143, 154] | vN 22.9/26.9 vT 33.4 fvT 30.6 | impact 5.8/9.7 w10 7.0 first12 0.0 | I50 0.70 | pen -0.00 | reb 0 | slip 2.72 place 2.77 | dev 1.36 / 0.34 | search
+  TD nominal C       n 144 | viol 0 (PCI 0) 0.73 | tC 152 [148, 154] | vN 22.3/28.2 vT 25.6 fvT 22.5 | impact 4.7/7.3 w10 4.5 first12 0.0 | I50 0.47 | pen -0.00 | reb 0 | slip 1.64 place 1.71 | dev 1.43 / 0.24 | search
+  TD nominal H       n 192 | viol 0 (PCI 0) 0.83 | tC 148 [142, 154] | vN 25.0/30.5 vT 29.1 fvT 25.9 | impact 5.6/12.0 w10 7.6 first12 0.0 | I50 0.92 | pen -0.00 | reb 0 | slip 2.91 place 3.08 | dev 2.17 / 0.48 | search
+  TD earlyC R        n  96 | viol 0 (PCI 0) 0.80 | tC 148 [137, 150] | vN 23.8/27.1 vT 31.4 fvT 29.1 | impact 6.3/12.9 w10 6.9 first12 0.0 | I50 0.78 | pen -0.00 | reb 0 | slip 2.56 place 2.60 | dev 1.36 / 0.35 | search
+  TD earlyC C        n 144 | viol 0 (PCI 0) 0.73 | tC 148 [143, 150] | vN 23.4/28.2 vT 24.8 fvT 22.0 | impact 5.5/9.4 w10 5.0 first12 0.0 | I50 0.59 | pen -0.00 | reb 0 | slip 1.65 place 1.67 | dev 1.44 / 0.23 | search
+  TD earlyC H        n 192 | viol 0 (PCI 0) 0.83 | tC 148 [137, 150] | vN 25.9/31.0 vT 28.3 fvT 25.4 | impact 6.1/14.3 w10 8.5 first12 0.0 | I50 0.99 | pen -0.00 | reb 0 | slip 2.98 place 3.15 | dev 2.17 / 0.48 | search
+  TD lateC R         n  96 | viol 0 (PCI 0) 0.80 | tC 154 [143, 157] | vN 22.5/26.5 vT 33.2 fvT 30.4 | impact 5.6/9.0 w10 6.4 first12 0.0 | I50 0.62 | pen -0.00 | reb 0 | slip 2.77 place 2.86 | dev 1.35 / 0.34 | search
+  TD lateC C         n 144 | viol 0 (PCI 0) 0.73 | tC 154 [148, 157] | vN 22.0/26.8 vT 25.5 fvT 22.4 | impact 4.5/7.2 w10 4.2 first12 0.0 | I50 0.37 | pen -0.00 | reb 0 | slip 1.73 place 1.75 | dev 1.43 / 0.24 | search
+  TD lateC H         n 192 | viol 0 (PCI 0) 0.83 | tC 153 [143, 157] | vN 24.5/30.4 vT 29.1 fvT 25.8 | impact 4.8/10.0 w10 6.7 first12 0.0 | I50 0.81 | pen -0.00 | reb 0 | slip 2.83 place 2.99 | dev 2.17 / 0.48 | search
+  TD earlyOOE R      n  96 | viol 96 (PCI 96) 1434608759679352.50 | tC -197 [-202, -196] | vN 176.4/187.8 vT 122.7 fvT 126.7 | impact 115.1/222.8 w10 109.1 first12 222.8 | I50 26.76 | pen -19.19 | reb 96 | slip 1037.04 place 281.22 | dev 0.51 / — | approach
+  TD earlyOOE C      n 144 | viol 144 (PCI 144) 3962703642699273.50 | tC -199 [-204, -196] | vN 170.4/196.0 vT 161.6 fvT 163.5 | impact 97.6/208.3 w10 87.8 first12 208.3 | I50 23.49 | pen -12.94 | reb 144 | slip 315.11 place 282.72 | dev 0.41 / — | approach
+  TD earlyOOE H      n 192 | viol 192 (PCI 192) 68787331988981016.00 | tC -194 [-206, -168] | vN 195.2/255.4 vT 186.3 fvT 188.5 | impact 123.0/280.7 w10 107.1 first12 280.7 | I50 25.00 | pen -45.68 | reb 192 | slip 2324.81 place 368.42 | dev 0.82 / — | approach
+  TD beyond R        n  96 | viol 0 (PCI 0) 0.79 | tC 1086 [1080, 1087] | vN 8.7/9.2 vT 1.5 fvT 1.4 | impact 3.0/7.7 w10 3.1 first12 0.0 | I50 0.00 | pen -0.00 | reb 0 | slip 1.79 place 1.80 | dev 0.84 / 0.29 | escalated search
+  TD beyond C        n 144 | viol 0 (PCI 0) 0.73 | tC 1086 [1082, 1087] | vN 8.7/9.0 vT 1.2 fvT 1.1 | impact 2.1/5.5 w10 2.6 first12 0.0 | I50 0.00 | pen -0.00 | reb 0 | slip 0.98 place 1.00 | dev 0.98 / 0.25 | escalated search
+  TD beyond H        n 192 | viol 0 (PCI 0) 0.83 | tC 1086 [1080, 1087] | vN 8.7/9.4 vT 2.8 fvT 2.5 | impact 1.0/3.8 w10 1.8 first12 0.0 | I50 0.00 | pen -0.00 | reb 0 | slip 2.37 place 2.35 | dev 1.51 / 0.38 | escalated search
+  TD noground R      n  96 | viol 0 (PCI 0) 0.16 | tC — [—, —] | vN —/— vT — fvT — | impact —/— w10 — first12 — | I50 — | pen — | reb 0 | slip — place — | dev 0.84 / 0.29 | 
+PASS TD-G2 (0 failing items)
+PASS TD-G3 (0 failing items)
+PASS TD-1 (0 failing items)
+PASS TD-2 (0 failing items)
+PASS TD-3 (0 failing items)
+PASS TD-4 (0 failing items)
+PASS TD-5 (0 failing items)
+PASS TD-6 (0 failing items)
+PASS TD-7 (0 failing items)
+PASS TD-8 (0 failing items)
+FAIL TD-9 (170 failing items)
+PASS TD-10 (0 failing items)
+FAIL TD-11 (16 failing items)
+   TD-9: PSTAR5CHABTDB|earlyOOE|V2-REF|L|180|R-L: closure 2.69e+0, Σ+ 3.923, authority 0, over-capacity 0
+   TD-9: PSTAR5CHABTDB|earlyOOE|V2-REF|L|180|C-L5: closure 5.61e-2, Σ+ 0.345, authority 0, over-capacity 0
+   TD-9: PSTAR5CHABTDB|earlyOOE|V2-REF|L|180|H-T45: closure 6.66e-2, Σ+ 0.296, authority 0, over-capacity 0
+   TD-9: PSTAR5CHABTDB|earlyOOE|V2-REF|L|180|H-A40: closure 5.50e-2, Σ+ 0.278, authority 0, over-capacity 0
+   TD-9: PSTAR5CHABTDB|earlyOOE|V2-REF|L|180|H-D: closure 6.94e+1, Σ+ 207.736, authority 0, over-capacity 0
+   TD-9: PSTAR5CHABTDB|earlyOOE|V2-REF|L|180|H-F15: closure 6.27e-2, Σ+ 0.358, authority 0, over-capacity 0
+   TD-11: PSTAR5CHABTDB|earlyOOE|V2-REF|L|180|H-D: earlyOOE — accepted at φ 0.815 (≥ 0.6), abort false, stance-foot transitions before the landed SUPPORT 0, SUPPORT via LOAD_ACCEPT true, final false
+   TD-11: PSTAR5CHABTDB|earlyOOE|V2-REF|L|240|H-D: earlyOOE — accepted at φ 0.812 (≥ 0.6), abort true, stance-foot transitions before the landed SUPPORT 0, SUPPORT via LOAD_ACCEPT true, final false
+   TD-11: PSTAR5CHABTDB|earlyOOE|V2-REF|R|480|H-D: earlyOOE — accepted at φ 0.809 (≥ 0.6), abort true, stance-foot transitions before the landed SUPPORT 0, SUPPORT via LOAD_ACCEPT true, final true
+   TD-11: PSTAR5CHABTDB|earlyOOE|V2-165-62|L|180|H-D: earlyOOE — accepted at φ 0.815 (≥ 0.6), abort true, stance-foot transitions before the landed SUPPORT 0, SUPPORT via LOAD_ACCEPT true, final false
+   TD-11: PSTAR5CHABTDB|earlyOOE|V2-165-62|L|240|R-L: earlyOOE — accepted at φ 0.819 (≥ 0.6), abort true, stance-foot transitions before the landed SUPPORT 0, SUPPORT via LOAD_ACCEPT true, final false
+   TD-11: PSTAR5CHABTDB|earlyOOE|V2-165-62|R|180|H-D: earlyOOE — accepted at φ 0.815 (≥ 0.6), abort true, stance-foot transitions before the landed SUPPORT 0, SUPPORT via LOAD_ACCEPT true, final false
+touchdown time spread across rates (diagnostic) nominal: median 2.1 ms, max 10.4 ms
+touchdown time spread across rates (diagnostic) earlyC: median 0.7 ms, max 11.1 ms
+touchdown time spread across rates (diagnostic) lateC: median 2.4 ms, max 11.8 ms
+touchdown time spread across rates (diagnostic) beyond: median 3.5 ms, max 7.6 ms
+TD2B: TOUCHDOWN COORDINATOR DOES NOT VALIDATE

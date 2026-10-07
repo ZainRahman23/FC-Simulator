@@ -2430,3 +2430,26 @@ Not pushed.
 - the touchdown-time rate criterion.
 
 Not pushed.
+
+## 2026-10-07: TD2B, the next TD2 iteration (`sources/2026-10-07_user_decision_TD2_next_iteration.md`)
+
+### E2-16: TD2B DOES NOT VALIDATE (out-of-envelope early terrain only); clean inside the certified window, for beyond / noground, and on physics-rate invariance
+
+**Preregistration** (`e2/TD2B_PREREG.md`; 13d2d09; freeze 9cab1a9):
+- certified window from contact geometry + qualified tracking + terrain uncertainty (h_B 2.85, D_max 2.75, τ_s 0.21 s);
+- early / late terrain ±0.05 mm inside the window; earlyOOE +10 mm under E2 §2a;
+- escalation = continued bounded search to the planner's turf; noground = explicit failure;
+- TD-10 replaced by derived cross-rate bounds.
+
+**Results** (`e2/TD2B_RESULTS.md`; 2,688 runs):
+- **Pass:** nominal, earlyC, lateC, beyond and noground: 0 E1a-7 violations, impact ≤ 14.3 % BW, no rebounds; B-10 physics-rate invariance.
+- **Fail: earlyOOE** — B-9 integrity in 170 runs, B-11 handling in 16 (aborts / falls). Mechanism:
+  1. a collision at ≈ 180 mm/s;
+  2. E2 hand-back overshoot 3.3 – 4.3 mm into the turf;
+  3. an unreachable IK target;
+  4. D1 evaluated at a singular configuration, so the commanded torque explodes (to 10¹⁸ N·m).
+- Counterfactual: no D1 for unreachable targets removes every Σ+, abort and fall (24 / 24).
+
+**Decisions pending (user):** a D1 robustness guard (versioned controller correction); the earlyOOE requirement.
+
+TD2 stays a FAIL. Not pushed.
