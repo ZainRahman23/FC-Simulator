@@ -1,0 +1,8 @@
+// POST-HOC DIAGNOSTIC (TD-10 failure, not a verdict): touchdown time relative to the search start vs rate, its spread, and the mechanism — time sensitivity = 1 / (actual lowest-point
+// descent speed at contact) times the rate dependence of the tracking deviation before contact. Input: the frozen TD2 battery evaluation (td2_eval.json).
+import fs from "fs"; const j = JSON.parse(fs.readFileSync(process.argv[2])); const R = Object.values(j.runs).filter(x => x.q.cfg === "PSTAR5CHABTD");
+for (const cond of ["nominal", "late"]) { const G = {}; for (const x of R.filter(x => x.q.cond === cond)) { const g = `${x.q.body}|${x.q.side}|${x.q.traj}`; (G[g] = G[g] || {})[x.q.hz] = x.t; }
+  const d = { 180: [], 480: [] }, dev = { 180: [], 480: [] }, sens = []; for (const H of Object.values(G)) { if (!H[240]) continue; for (const hz of [180, 480]) if (H[hz] && H[hz].tC1 != null && H[240].tC1 != null) { d[hz].push((H[hz].tC1 - H[240].tC1) * 1000); dev[hz].push(H[hz].devA - H[240].devA); } if (H[240].vN) sens.push(1 / H[240].vN); }
+  const st = (a) => { const b = a.slice().sort((x, y) => x - y); return `median ${b[b.length >> 1].toFixed(1)} min ${b[0].toFixed(1)} max ${b[b.length - 1].toFixed(1)} |>10| ${a.filter(v => Math.abs(v) > 10).length}/${a.length}`; };
+  console.log(`${cond}: touchdown time (search-start relative) minus 240 Hz, ms — 180 Hz: ${st(d[180])}; 480 Hz: ${st(d[480])}`);
+  console.log(`   approach-end deviation minus 240 Hz (mm) — 180 Hz: ${st(dev[180].map(v => v))}; 480 Hz: ${st(dev[480])}; time sensitivity at 240 Hz contact (1 / descent speed) median ${(sens.sort((a, b) => a - b)[sens.length >> 1]).toFixed(0)} s/m = ${(sens[sens.length >> 1]).toFixed(0)} ms per mm`); }

@@ -2398,3 +2398,35 @@ Stopped before PG-1 / official E2 as instructed. Not pushed.
 - whether to proceed to the coordinator on the AB baseline.
 
 Not pushed.
+
+## 2026-10-07: overnight runway, TD2 touchdown coordinator (`sources/2026-10-07_user_decision_overnight_runway_coordinator.md`)
+
+### E2-15: 1A not adopted, 1B rejected (user); TD2 designed, preregistered, qualified and validated → DOES NOT VALIDATE (clean inside its certified window) → stopped before the prerequisite gates
+
+**Design study** (`e2/TD2_DESIGN_STUDY.md`): finite candidates compared offline.
+- Rejected: C0 the AB baseline; C1 the corridor (infeasible); C5 the clock; C6 the creep.
+- **Selected C2:** the validated swing to the foothold + band height, then a bounded rest-to-rest search, until measured contact; E2 acceptance / hand-back; lifecycle accommodation.
+
+**Preregistration and freeze** (`e2/TD2_PREREG.md`; d14d34f / 5015dc6, A1 – A5):
+- the parameters were re-derived from a turf-off qualification of the new trajectory region (Decision 4): h_B 2.80 mm, D_max 2.70 mm, τ_s 0.205 s, τ_c 0.1459 s;
+- a 0.085 s tangential-settling interval was added (Decision 2);
+- the escalation was made E2-style smooth.
+
+**Results** (`e2/TD2_RESULTS.md`; 1,824 runs):
+- **Nominal and late, 864 runs: all clean:**
+  - 0 E1a-7 violations (AB 14);
+  - impact ≤ 11.9 % BW (AB ≤ 60 %; 261 runs > 25 %);
+  - horizontal contact speed ≤ 34 mm/s (AB 176 runs > 50);
+  - 0 rebounds;
+  - the AB2 contract kept.
+- **Fails:**
+  - early (turf at the band top: bit-identical to AB; predicted);
+  - beyond (the escalation's E2-style T_min drop: 28 / 96 violating runs; counterfactual TD2-step escalation clean 18 / 18);
+  - TD-10 touchdown-time rate stability (up to 18.8 ms vs 10 ms, from the servo's rate-dependent deviation × 42 – 73 ms / mm at low contact speed).
+
+**Decisions pending (user):**
+- uncertified early-contact scope;
+- the escalation continuation as a TD2 step (E2 S-LATE semantics);
+- the touchdown-time rate criterion.
+
+Not pushed.

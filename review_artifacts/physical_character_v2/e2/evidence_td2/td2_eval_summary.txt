@@ -1,0 +1,53 @@
+runs 1824/1824; runtime reachability exclusions 6
+REPORTED per configuration / condition / set: runs with any E1a-7 violation (PCI) worst PCI ratio | first touch relative to search start (ms) med [min, max] | contact downward speed med/max, tangential max (pc), foot horizontal max (mm/s) | impact %BW med/max, 10 ms max, first 12 ms max | 50 ms impulse max (N·s) | penetration min (mm) | rebounds | slip max / placement max (mm) | new-region deviation max approach φ .8–1 / search (mm) | contact phases
+  AB nominal R       n  96 | viol 6 (PCI 6) 1.06 | tC -56 [-61, -50] | vN 59.2/75.5 vT 53.2 fvT 51.6 | impact 25.5/38.6 w10 23.8 first12 25.3 | I50 3.25 | pen -0.00 | reb 0 | slip 3.07 place 4.49 | dev 1.14 / — | approach
+  AB nominal C       n 144 | viol 0 (PCI 0) 0.84 | tC -56 [-63, -50] | vN 59.7/76.3 vT 73.0 fvT 72.7 | impact 20.4/48.9 w10 22.3 first12 3.8 | I50 3.82 | pen -0.00 | reb 0 | slip 3.22 place 2.67 | dev 1.38 / — | approach
+  AB nominal H       n 192 | viol 8 (PCI 8) 1.15 | tC -57 [-67, -44] | vN 76.6/122.4 vT 90.9 fvT 91.0 | impact 35.2/60.3 w10 32.0 first12 42.6 | I50 4.87 | pen -0.00 | reb 32 | slip 5.85 place 8.59 | dev 1.53 / — | approach
+  TD nominal R       n  96 | viol 0 (PCI 0) 0.80 | tC 148 [137, 148] | vN 23.2/27.5 vT 32.5 fvT 30.3 | impact 5.7/9.1 w10 6.8 first12 0.0 | I50 0.71 | pen -0.00 | reb 0 | slip 2.75 place 2.76 | dev 1.36 / 0.34 | search
+  TD nominal C       n 144 | viol 0 (PCI 0) 0.73 | tC 148 [143, 148] | vN 22.9/28.8 vT 25.5 fvT 22.7 | impact 4.7/8.7 w10 4.4 first12 0.0 | I50 0.50 | pen -0.00 | reb 0 | slip 1.62 place 1.65 | dev 1.44 / 0.25 | search
+  TD nominal H       n 192 | viol 0 (PCI 0) 0.83 | tC 144 [137, 148] | vN 25.3/30.6 vT 29.0 fvT 26.4 | impact 5.8/11.9 w10 7.6 first12 0.0 | I50 0.90 | pen -0.00 | reb 0 | slip 2.91 place 3.09 | dev 2.17 / 0.48 | search
+  TD early R         n  96 | viol 6 (PCI 6) 1.06 | tC -141 [-146, -135] | vN 59.2/75.5 vT 53.2 fvT 51.6 | impact 25.5/38.6 w10 23.8 first12 25.3 | I50 3.25 | pen -0.00 | reb 0 | slip 3.07 place 4.49 | dev 1.14 / — | approach
+  TD early C         n 144 | viol 0 (PCI 0) 0.84 | tC -141 [-148, -135] | vN 59.7/76.3 vT 73.0 fvT 72.7 | impact 20.4/48.9 w10 22.3 first12 3.8 | I50 3.82 | pen -0.00 | reb 0 | slip 3.22 place 2.67 | dev 1.38 / — | approach
+  TD early H         n 186 | viol 8 (PCI 8) 1.15 | tC -141 [-152, -129] | vN 77.6/122.4 vT 90.9 fvT 91.0 | impact 35.2/60.0 w10 32.0 first12 42.6 | I50 4.87 | pen -0.00 | reb 28 | slip 4.81 place 7.37 | dev 1.53 / — | approach
+  TD late R          n  96 | viol 0 (PCI 0) 0.80 | tC 173 [159, 184] | vN 13.3/22.8 vT 38.4 fvT 33.8 | impact 2.5/7.4 w10 5.8 first12 0.0 | I50 0.02 | pen -0.00 | reb 0 | slip 3.13 place 3.37 | dev 1.33 / 0.34 | search
+  TD late C          n 144 | viol 0 (PCI 0) 0.73 | tC 177 [165, 186] | vN 12.7/20.4 vT 27.1 fvT 22.8 | impact 3.0/6.3 w10 4.6 first12 0.0 | I50 0.00 | pen -0.00 | reb 0 | slip 1.80 place 2.05 | dev 1.41 / 0.25 | search
+  TD late H          n 192 | viol 0 (PCI 0) 0.84 | tC 173 [157, 192] | vN 15.9/26.0 vT 30.2 fvT 25.2 | impact 0.3/5.7 w10 4.9 first12 0.0 | I50 0.04 | pen -0.00 | reb 0 | slip 3.12 place 3.40 | dev 2.14 / 0.48 | search
+  TD beyond R        n  96 | viol 28 (PCI 28) 1.85 | tC 609 [604, 611] | vN 54.5/80.1 vT 60.3 fvT 64.9 | impact 21.3/49.0 w10 19.9 first12 23.7 | I50 3.72 | pen -0.00 | reb 0 | slip 2.13 place 2.88 | dev 0.84 / 0.64 | retarget
+PASS TD-G2 (0 failing items)
+FAIL TD-G3 (1 failing items)
+PASS TD-1 (0 failing items)
+PASS TD-2 (0 failing items)
+FAIL TD-3 (172 failing items)
+FAIL TD-4 (255 failing items)
+FAIL TD-5 (42 failing items)
+PASS TD-6 (0 failing items)
+PASS TD-7 (0 failing items)
+PASS TD-8 (0 failing items)
+PASS TD-9 (0 failing items)
+FAIL TD-10 (60 failing items)
+   TD-G3: early: runtime reachability exclusions differ from AB's
+   TD-3: PSTAR5CHABTD|early|V2-REF|L|180|R-F: E2-5 foot velocity 0.069 down / 0.050 horizontal m/s (≤ 0.15 / 0.05)
+   TD-3: PSTAR5CHABTD|early|V2-REF|L|180|C-F13: E2-5 foot velocity 0.069 down / 0.066 horizontal m/s (≤ 0.15 / 0.05)
+   TD-3: PSTAR5CHABTD|early|V2-REF|L|180|H-F15: E2-5 foot velocity 0.078 down / 0.085 horizontal m/s (≤ 0.15 / 0.05)
+   TD-3: PSTAR5CHABTD|early|V2-REF|L|240|R-F: E2-5 foot velocity 0.061 down / 0.050 horizontal m/s (≤ 0.15 / 0.05)
+   TD-3: PSTAR5CHABTD|early|V2-REF|L|240|C-F13: E2-5 foot velocity 0.067 down / 0.071 horizontal m/s (≤ 0.15 / 0.05)
+   TD-3: PSTAR5CHABTD|early|V2-REF|L|240|H-T45: E2-5 foot velocity 0.098 down / 0.052 horizontal m/s (≤ 0.15 / 0.05)
+   TD-4: PSTAR5CHABTD|early|V2-REF|L|180|H-T45: TOUCHDOWN 1, rebound 0, re-entries 0, impact 27.8 % BW, penetration -0.00 mm
+   TD-4: PSTAR5CHABTD|early|V2-REF|L|180|H-D: TOUCHDOWN 2, rebound 1, re-entries 0, impact 36.6 % BW, penetration -0.00 mm
+   TD-4: PSTAR5CHABTD|early|V2-REF|L|180|H-F15: TOUCHDOWN 1, rebound 0, re-entries 0, impact 35.6 % BW, penetration -0.00 mm
+   TD-4: PSTAR5CHABTD|early|V2-REF|L|240|R-L: TOUCHDOWN 1, rebound 0, re-entries 0, impact 32.5 % BW, penetration -0.00 mm
+   TD-4: PSTAR5CHABTD|early|V2-REF|L|240|C-F13: TOUCHDOWN 1, rebound 0, re-entries 0, impact 31.9 % BW, penetration -0.00 mm
+   TD-4: PSTAR5CHABTD|early|V2-REF|L|240|H-A40: TOUCHDOWN 1, rebound 0, re-entries 0, impact 30.6 % BW, penetration -0.00 mm
+   TD-5: PSTAR5CHABTD|early|V2-198-92|L|180|R-L: 1 E1a-7 violations (swing 0, PCI 1, other 0); worst ratio 1.01
+   TD-5: PSTAR5CHABTD|early|V2-198-92|L|240|R-L: 1 E1a-7 violations (swing 0, PCI 1, other 0); worst ratio 1.01
+   TD-5: PSTAR5CHABTD|early|V2-198-92|L|240|H-T45: 1 E1a-7 violations (swing 0, PCI 1, other 0); worst ratio 1.03
+   TD-5: PSTAR5CHABTD|early|V2-198-92|L|480|R-L: 1 E1a-7 violations (swing 0, PCI 1, other 0); worst ratio 1.06
+   TD-5: PSTAR5CHABTD|early|V2-198-92|L|480|H-T45: 1 E1a-7 violations (swing 0, PCI 1, other 0); worst ratio 1.15
+   TD-5: PSTAR5CHABTD|early|V2-198-92|R|180|R-L: 1 E1a-7 violations (swing 0, PCI 1, other 0); worst ratio 1.01
+   TD-10: nominal V2-short-legs|L|H-D 480 Hz: touchdown time 137.9 vs 148.3 ms (search-start relative)
+   TD-10: nominal V2-short-legs|R|H-D 480 Hz: touchdown time 137.9 vs 148.3 ms (search-start relative)
+   TD-10: early V2-REF|L|H-D 480 Hz: event sequence TOUCHDOWN>LOAD_ACCEPT>SUPPORT vs 240 Hz TOUCHDOWN>AIRBORNE>TOUCHDOWN>LOAD_ACCEPT>SUPPORT
+   TD-10: early V2-REF|R|H-D 480 Hz: event sequence TOUCHDOWN>LOAD_ACCEPT>SUPPORT vs 240 Hz TOUCHDOWN>AIRBORNE>TOUCHDOWN>LOAD_ACCEPT>SUPPORT
+   TD-10: early V2-165-62|L|H-D 480 Hz: event sequence TOUCHDOWN>LOAD_ACCEPT>SUPPORT vs 240 Hz TOUCHDOWN>AIRBORNE>TOUCHDOWN>LOAD_ACCEPT>SUPPORT
+   TD-10: early V2-165-62|R|H-D 480 Hz: event sequence TOUCHDOWN>LOAD_ACCEPT>SUPPORT vs 240 Hz TOUCHDOWN>AIRBORNE>TOUCHDOWN>LOAD_ACCEPT>SUPPORT
+TD2: TOUCHDOWN COORDINATOR DOES NOT VALIDATE
