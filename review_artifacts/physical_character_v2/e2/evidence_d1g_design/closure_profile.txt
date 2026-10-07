@@ -1,0 +1,65 @@
+# Closure profile around the obstacle collision (post-hoc; disclosed in D1G_TD2C_PREREG.md III.3 (2)). Records: TD2B counterfactual runs (evidence_td2b/diagnostics/counterfactual_runs.tgz). Per-tick closure from t1-3 ticks to t1+13 ticks, cumulative range from t1-3 to t1+60 ticks, run sigma+ / sigma-.
+cf_d1guard_V2-165-62_L_180_H-D t1 8.927778 
+   closure t1-3..t1+13: -0.003 -0.003 -0.002 -0.078 -0.304 0.078 -0.029 -0.024 -0.018 -0.013 -0.012 -0.010 -0.008 -0.007 -0.006 -0.005 -0.005 
+   cum over 17: -0.448  cum range t1-3..t1+60: -0.754 -0.003  run Σ+ 0.202 Σ− -1.206
+cf_d1guard_V2-198-92_L_180_C-L5 t1 8.988889 
+   closure t1-3..t1+13: -0.003 -0.003 -0.003 -0.342 -0.032 0.067 0.052 0.019 -0.012 -0.010 -0.042 -0.045 -0.035 -0.016 0.028 -0.015 -0.013 
+   cum over 17: -0.405  cum range t1-3..t1+60: -0.654 -0.003  run Σ+ 0.356 Σ− -1.344
+cf_d1guard_V2-short-legs_L_180_C-L5 t1 9.227778 
+   closure t1-3..t1+13: -0.002 -0.002 -0.002 -0.269 -0.055 0.058 0.048 0.023 -0.005 -0.026 -0.023 0.001 -0.025 -0.042 -0.064 -0.142 -0.000 
+   cum over 17: -0.526  cum range t1-3..t1+60: -0.739 -0.002  run Σ+ 0.357 Σ− -1.411
+cf_frozen_V2-REF_L_180_R-L t1 8.944444 
+   closure t1-3..t1+13: -0.003 -0.003 -0.006 -0.283 -0.037 0.027 0.189 -0.019 -0.083 -0.467 -0.877 -0.964 -0.814 0.439 -0.647 0.082 2.686 
+   cum over 17: -0.780  cum range t1-3..t1+60: -3.547 -0.003  run Σ+ 3.923 Σ− -7.508
+
+# per-tick closure > 0.05 J in the reachability-only counterfactual (all 24 cases): tick, closure, commanded step, |d1|, IK residual, lifecycle state, Fz
+V1-matched_L_180_C-L5 t1 8.988889 closPos 0.289
+   t 9 (t−t1 0.0111) closure 0.057 J dTau0 85.7 |d1|max 3.2e+1 ikErr 4.463917763428363e-16 st TOUCHDOWN Fz 472
+V2-165-62_L_180_H-D t1 8.927778 closPos 0.202
+   t 8.938889 (t−t1 0.0111) closure 0.078 J dTau0 785.3 |d1|max 0.0e+0 ikErr 0.0007882751940422787 st TOUCHDOWN Fz 472
+V2-175-70_L_180_H-D t1 8.933333 closPos 0.207
+   t 8.944444 (t−t1 0.0111) closure 0.067 J dTau0 1096.3 |d1|max 0.0e+0 ikErr 0.0008398776754311596 st TOUCHDOWN Fz 499
+V2-190-85_L_180_C-L5 t1 8.966667 closPos 0.322
+   t 8.977778 (t−t1 0.0111) closure 0.061 J dTau0 92.6 |d1|max 3.4e+1 ikErr 4.691800958546116e-16 st TOUCHDOWN Fz 512
+V2-198-92_L_180_C-L5 t1 8.988889 closPos 0.356
+   t 9 (t−t1 0.0111) closure 0.067 J dTau0 119.5 |d1|max 5.2e+1 ikErr 2.0109574027322233e-16 st TOUCHDOWN Fz 551
+   t 9.005556 (t−t1 0.0167) closure 0.052 J dTau0 67.1 |d1|max 1.1e+2 ikErr 2.8872341762392745e-16 st TOUCHDOWN Fz 515
+V2-REF_L_180_C-L5 t1 8.944444 closPos 0.345
+   t 8.955556 (t−t1 0.0111) closure 0.056 J dTau0 72.3 |d1|max 2.2e+1 ikErr 6.474233563934448e-16 st TOUCHDOWN Fz 471
+V2-REF_L_180_H-D t1 8.938889 closPos 0.251
+   t 8.95 (t−t1 0.0111) closure 0.057 J dTau0 1461.0 |d1|max 0.0e+0 ikErr 0.0008821387815973483 st TOUCHDOWN Fz 529
+V2-long-legs_L_180_C-L5 t1 7.822222 closPos 0.300
+   t 7.833333 (t−t1 0.0111) closure 0.053 J dTau0 77.9 |d1|max 2.4e+1 ikErr 8.095319274495115e-16 st TOUCHDOWN Fz 429
+V2-long-legs_L_180_H-D t1 7.822222 closPos 0.260
+   t 7.827778 (t−t1 0.0056) closure 0.064 J dTau0 902.3 |d1|max 0.0e+0 ikErr 0.0005578438345432568 st TOUCHDOWN Fz 550
+V2-short-legs_L_180_C-L5 t1 9.227778 closPos 0.357
+   t 9.238889 (t−t1 0.0111) closure 0.058 J dTau0 68.7 |d1|max 2.1e+1 ikErr 2.457497775401511e-16 st TOUCHDOWN Fz 507
+V2-short-legs_L_180_H-D t1 9.222222 closPos 0.243
+   t 9.233333 (t−t1 0.0111) closure 0.053 J dTau0 43764.2 |d1|max 0.0e+0 ikErr 0.0012976627548129556 st TOUCHDOWN Fz 570
+runs with closure>0.05: 11 / 24
+
+# largest non-D1 commanded torque relative to axis capacity (reachability-only counterfactual)
+V2-198-92_L_180_R-L 6.87 knee_L.x -223.5 32.5 9.066667
+V2-long-legs_L_180_H-D 6.60 knee_L.x -182.3 27.6 7.888889
+V2-198-92_L_180_H-D 6.36 knee_L.x -206.7 32.5 9.055556
+V1-matched_L_180_H-D 6.16 knee_L.x -170.1 27.6 9.055556
+V2-190-85_L_180_H-D 6.13 knee_L.x -184.3 30.1 9.033333
+V2-REF_L_180_H-D 5.95 knee_L.x -164.4 27.6 9.011111
+V2-190-85_L_180_R-L 5.89 knee_L.x -177.2 30.1 9.044444
+V2-175-70_L_180_H-D 5.77 knee_L.x -143.2 24.8 9.005556
+
+# largest commanded |tau0| and |tau0 - d1| (frozen and reachability-only counterfactual)
+cf_d1guard max |tau0| overall (top): V2-short-legs_L_180_H-D 4.40e+4; V2-REF_L_180_R-L 2.09e+4; V2-short-legs_L_180_C-L5 9.99e+3
+   max |tau0 - d1| top 5:
+      V2-198-92_L_180_H-D 1389.5 {"t":8.989,"j":0,"i":1,"kp":-49.21,"st":10.13,"v":-1350,"pr":0,"wA":0.9657,"K":2532,"D":161.6}
+      V2-190-85_L_180_H-D 1122.7 {"t":8.967,"j":0,"i":1,"kp":-41.33,"st":9.393,"v":-1091,"pr":0,"wA":0.9657,"K":2165,"D":138.2}
+      V2-198-92_L_180_R-L 1117.5 {"t":8.989,"j":0,"i":1,"kp":-32.26,"st":3.444,"v":-1089,"pr":0,"wA":0.9911,"K":2595,"D":165.3}
+      V1-matched_L_180_H-D 1045.5 {"t":8.989,"j":0,"i":1,"kp":-38.7,"st":8.649,"v":-1015,"pr":0,"wA":0.9657,"K":1999,"D":127.6}
+      V2-175-70_L_180_R-L 1005.2 {"t":8.944,"j":0,"i":1,"kp":-54.83,"st":2.191,"v":-952.6,"pr":0,"wA":0.9657,"K":1534,"D":97.97}
+cf_frozen max |tau0| overall (top): V1-matched_L_180_R-L 5.74e+16; V2-long-legs_L_180_R-L 4.34e+15; V2-190-85_L_180_C-L5 3.75e+15
+   max |tau0 - d1| top 5:
+      V1-matched_L_180_R-L 448349658943847.5 {"t":9.044,"j":1,"i":1,"kp":-41.6,"st":448300000000000,"v":52.46,"pr":0,"wA":0.3361,"K":320.9,"D":65.5}
+      V2-190-85_L_180_C-L5 9502958655538.0 {"t":9.022,"j":1,"i":1,"kp":-47.45,"st":9503000000000,"v":41.95,"pr":0,"wA":0.3361,"K":348.4,"D":71.29}
+      V2-198-92_L_180_H-D 7659882115058.4 {"t":9.078,"j":1,"i":1,"kp":-92.36,"st":7660000000000,"v":147.6,"pr":0,"wA":0,"K":389.1,"D":110.5}
+      V2-short-legs_L_180_H-D 4329323725505.2 {"t":9.317,"j":1,"i":1,"kp":-147,"st":4329000000000,"v":71.34,"pr":0,"wA":0,"K":304.4,"D":82.98}
+      V2-190-85_L_180_R-L 3185889911922.3 {"t":9.011,"j":1,"i":1,"kp":-32.06,"st":3186000000000,"v":1.928e-16,"pr":0,"wA":0.5,"K":350,"D":59.27}

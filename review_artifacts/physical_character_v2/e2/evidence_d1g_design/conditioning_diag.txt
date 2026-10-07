@@ -1,0 +1,49 @@
+# D1 conditioning diagnostic (post-hoc, labelled; design evidence for D1G_TD2C_PREREG.md I.1). 3 TD2B earlyOOE cases, L, 180 Hz, PSTAR5CHABTDB; every D1 evaluation recorded: IK residual err, lam = lambda_min(J_f^T J_f), lamIK = the certifier's lambda_min (free coordinates), |D1| max component. d1diag = frozen controller; d1diagG = reachability-only guard (no D1 for err > 1e-6). eps^2 = 1e-4.
+d1diag.V2-REF.R-L.json.gz: D1 evals 132; unreachable 18; lam<eps2 13; minLam -1.61e-16; |D1|>300 Nm 14; nonfinite 0
+   big by class {"unreach":13,"illcond":1,"valid":0}
+   max |D1| valid class 148.50  max in lam<eps2 reachable 2.00e+4
+   dTau0>500 ticks 14 8.95:20023.0166 8.9556:105602009316865.06 8.9611:105599480313791.53 8.9667:191718152787.7596 8.9722:15559558182781.877 8.9778:5066647441734.695
+     near 8.95 8.938889|err 1.2e-15|lam 9.8e-4|lamIK 9.8e-4|mx 4.3e+1  8.944444|err 5.6e-16|lam 5.8e-4|lamIK 5.8e-4|mx 1.5e+2  8.95|err 3.9e-16|lam 3.4e-5|lamIK 3.4e-5|mx 2.0e+4  8.955556|err 1.4e-3|lam -1.6e-16|lamIK -6.2e-17|mx 1.0e+14  8.961111|err 2.6e-3|lam 1.1e-8|lamIK 1.1e-8|mx 2.5e+9
+     near 8.955556 8.944444|err 5.6e-16|lam 5.8e-4|lamIK 5.8e-4|mx 1.5e+2  8.95|err 3.9e-16|lam 3.4e-5|lamIK 3.4e-5|mx 2.0e+4  8.955556|err 1.4e-3|lam -1.6e-16|lamIK -6.2e-17|mx 1.0e+14  8.961111|err 2.6e-3|lam 1.1e-8|lamIK 1.1e-8|mx 2.5e+9  8.966667|err 4.3e-3|lam 9.4e-12|lamIK 9.4e-12|mx 1.9e+11
+     near 8.961111 8.95|err 3.9e-16|lam 3.4e-5|lamIK 3.4e-5|mx 2.0e+4  8.955556|err 1.4e-3|lam -1.6e-16|lamIK -6.2e-17|mx 1.0e+14  8.961111|err 2.6e-3|lam 1.1e-8|lamIK 1.1e-8|mx 2.5e+9  8.966667|err 4.3e-3|lam 9.4e-12|lamIK 9.4e-12|mx 1.9e+11  8.972222|err 6.1e-3|lam 8.6e-16|lamIK 7.5e-16|mx 1.6e+13
+     near 8.966667 8.955556|err 1.4e-3|lam -1.6e-16|lamIK -6.2e-17|mx 1.0e+14  8.961111|err 2.6e-3|lam 1.1e-8|lamIK 1.1e-8|mx 2.5e+9  8.966667|err 4.3e-3|lam 9.4e-12|lamIK 9.4e-12|mx 1.9e+11  8.972222|err 6.1e-3|lam 8.6e-16|lamIK 7.5e-16|mx 1.6e+13  8.977778|err 7.1e-3|lam 4.5e-15|lamIK 4.6e-15|mx 1.1e+13
+     near 8.972222 8.961111|err 2.6e-3|lam 1.1e-8|lamIK 1.1e-8|mx 2.5e+9  8.966667|err 4.3e-3|lam 9.4e-12|lamIK 9.4e-12|mx 1.9e+11  8.972222|err 6.1e-3|lam 8.6e-16|lamIK 7.5e-16|mx 1.6e+13  8.977778|err 7.1e-3|lam 4.5e-15|lamIK 4.6e-15|mx 1.1e+13  8.983333|err 8.7e-3|lam 6.9e-16|lamIK 2.0e-1|mx 1.1e+13
+     near 8.977778 8.966667|err 4.3e-3|lam 9.4e-12|lamIK 9.4e-12|mx 1.9e+11  8.972222|err 6.1e-3|lam 8.6e-16|lamIK 7.5e-16|mx 1.6e+13  8.977778|err 7.1e-3|lam 4.5e-15|lamIK 4.6e-15|mx 1.1e+13  8.983333|err 8.7e-3|lam 6.9e-16|lamIK 2.0e-1|mx 1.1e+13  8.988889|err 9.3e-3|lam 5.5e-15|lamIK 2.0e-1|mx 8.0e+12
+d1diag.V2-short-legs.C-L5.json.gz: D1 evals 131; unreachable 0; lam<eps2 2; minLam 5.46e-6; |D1|>300 Nm 3; nonfinite 0
+   big by class {"unreach":0,"illcond":2,"valid":1}
+   valid-big {"t":9.261111,"n":0,"err":3.1561393710316135e-16,"lam":0.00011255089673197918,"lamIK":0.00011255089673257756,"nFree":6,"mx":374.20525209975386,"fin":true}
+   max |D1| valid class 374.21  max in lam<eps2 reachable 9.65e+3
+   dTau0>500 ticks 3 9.2667:4492.4296 9.2722:4802.5715 9.2778:10081.9816
+     near 9.266667 9.255556|err 9.7e-16|lam 3.0e-4|lamIK 3.0e-4|mx 1.3e+2  9.261111|err 3.2e-16|lam 1.1e-4|lamIK 1.1e-4|mx 3.7e+2  9.266667|err 6.1e-16|lam 1.5e-5|lamIK 1.5e-5|mx 4.9e+3  9.272222|err 6.1e-16|lam 5.5e-6|lamIK 5.5e-6|mx 9.7e+3  9.277778|err 3.8e-16|lam 1.1e-4|lamIK 1.1e-4|mx 1.1e+2
+     near 9.272222 9.261111|err 3.2e-16|lam 1.1e-4|lamIK 1.1e-4|mx 3.7e+2  9.266667|err 6.1e-16|lam 1.5e-5|lamIK 1.5e-5|mx 4.9e+3  9.272222|err 6.1e-16|lam 5.5e-6|lamIK 5.5e-6|mx 9.7e+3  9.277778|err 3.8e-16|lam 1.1e-4|lamIK 1.1e-4|mx 1.1e+2  9.283333|err 1.2e-16|lam 3.1e-4|lamIK 3.1e-4|mx 2.7e+0
+     near 9.277778 9.266667|err 6.1e-16|lam 1.5e-5|lamIK 1.5e-5|mx 4.9e+3  9.272222|err 6.1e-16|lam 5.5e-6|lamIK 5.5e-6|mx 9.7e+3  9.277778|err 3.8e-16|lam 1.1e-4|lamIK 1.1e-4|mx 1.1e+2  9.283333|err 1.2e-16|lam 3.1e-4|lamIK 3.1e-4|mx 2.7e+0  9.288889|err 6.0e-16|lam 5.7e-4|lamIK 5.7e-4|mx 2.5e+1
+d1diag.V2-short-legs.H-D.json.gz: D1 evals 131; unreachable 19; lam<eps2 20; minLam 1.75e-16; |D1|>300 Nm 20; nonfinite 0
+   big by class {"unreach":19,"illcond":1,"valid":0}
+   max |D1| valid class 130.08  max in lam<eps2 reachable 4.29e+4
+   dTau0>500 ticks 21 9.2278:43342.3781 9.2333:36197895912157.89 9.2389:36197067742591.17 9.2444:100641606269.5457 9.25:3377041618708.839 9.2556:18742088092217.39
+     near 9.227778 9.216667|err 2.4e-16|lam 7.0e-4|lamIK 7.0e-4|mx 6.6e+1  9.222222|err 2.9e-16|lam 4.4e-4|lamIK 4.4e-4|mx 1.3e+2  9.227778|err 2.5e-16|lam 1.6e-5|lamIK 1.6e-5|mx 4.3e+4  9.233333|err 1.3e-3|lam 5.7e-16|lamIK 2.0e-1|mx 3.6e+13  9.238889|err 2.4e-3|lam 2.1e-8|lamIK 2.1e-8|mx 8.1e+8
+     near 9.233333 9.222222|err 2.9e-16|lam 4.4e-4|lamIK 4.4e-4|mx 1.3e+2  9.227778|err 2.5e-16|lam 1.6e-5|lamIK 1.6e-5|mx 4.3e+4  9.233333|err 1.3e-3|lam 5.7e-16|lamIK 2.0e-1|mx 3.6e+13  9.238889|err 2.4e-3|lam 2.1e-8|lamIK 2.1e-8|mx 8.1e+8  9.244444|err 3.9e-3|lam 5.8e-11|lamIK 5.8e-11|mx 1.0e+11
+     near 9.238889 9.227778|err 2.5e-16|lam 1.6e-5|lamIK 1.6e-5|mx 4.3e+4  9.233333|err 1.3e-3|lam 5.7e-16|lamIK 2.0e-1|mx 3.6e+13  9.238889|err 2.4e-3|lam 2.1e-8|lamIK 2.1e-8|mx 8.1e+8  9.244444|err 3.9e-3|lam 5.8e-11|lamIK 5.8e-11|mx 1.0e+11  9.25|err 5.3e-3|lam 4.4e-14|lamIK 4.4e-14|mx 3.5e+12
+     near 9.244444 9.233333|err 1.3e-3|lam 5.7e-16|lamIK 2.0e-1|mx 3.6e+13  9.238889|err 2.4e-3|lam 2.1e-8|lamIK 2.1e-8|mx 8.1e+8  9.244444|err 3.9e-3|lam 5.8e-11|lamIK 5.8e-11|mx 1.0e+11  9.25|err 5.3e-3|lam 4.4e-14|lamIK 4.4e-14|mx 3.5e+12  9.255556|err 6.2e-3|lam 6.9e-16|lamIK 1.2e-15|mx 2.2e+13
+     near 9.25 9.238889|err 2.4e-3|lam 2.1e-8|lamIK 2.1e-8|mx 8.1e+8  9.244444|err 3.9e-3|lam 5.8e-11|lamIK 5.8e-11|mx 1.0e+11  9.25|err 5.3e-3|lam 4.4e-14|lamIK 4.4e-14|mx 3.5e+12  9.255556|err 6.2e-3|lam 6.9e-16|lamIK 1.2e-15|mx 2.2e+13  9.261111|err 7.6e-3|lam 1.7e-16|lamIK 2.4e-16|mx 1.4e+14
+     near 9.255556 9.244444|err 3.9e-3|lam 5.8e-11|lamIK 5.8e-11|mx 1.0e+11  9.25|err 5.3e-3|lam 4.4e-14|lamIK 4.4e-14|mx 3.5e+12  9.255556|err 6.2e-3|lam 6.9e-16|lamIK 1.2e-15|mx 2.2e+13  9.261111|err 7.6e-3|lam 1.7e-16|lamIK 2.4e-16|mx 1.4e+14  9.266667|err 8.0e-3|lam 5.1e-14|lamIK 5.1e-14|mx 4.0e+12
+d1diagG.V2-REF.R-L.json.gz: D1 evals 132; unreachable 12; lam<eps2 13; minLam -5.03e-16; |D1|>300 Nm 1; nonfinite 0
+   big by class {"unreach":0,"illcond":1,"valid":0}
+   max |D1| valid class 229.59  max in lam<eps2 reachable 2.00e+4
+   dTau0>500 ticks 2 8.95:20023.0166 8.9556:20570.9567
+     near 8.95 8.938889|err 1.2e-15|lam 9.8e-4|lamIK 9.8e-4|mx 4.3e+1  8.944444|err 5.6e-16|lam 5.8e-4|lamIK 5.8e-4|mx 1.5e+2  8.95|err 3.9e-16|lam 3.4e-5|lamIK 3.4e-5|mx 2.0e+4  8.955556|err 1.4e-3|lam -1.6e-16|lamIK -6.2e-17|mx undefined  8.961111|err 2.4e-3|lam 2.2e-8|lamIK 2.2e-8|mx undefined
+     near 8.955556 8.944444|err 5.6e-16|lam 5.8e-4|lamIK 5.8e-4|mx 1.5e+2  8.95|err 3.9e-16|lam 3.4e-5|lamIK 3.4e-5|mx 2.0e+4  8.955556|err 1.4e-3|lam -1.6e-16|lamIK -6.2e-17|mx undefined  8.961111|err 2.4e-3|lam 2.2e-8|lamIK 2.2e-8|mx undefined  8.966667|err 3.1e-3|lam 1.1e-9|lamIK 1.1e-9|mx undefined
+d1diagG.V2-short-legs.C-L5.json.gz: D1 evals 131; unreachable 0; lam<eps2 2; minLam 5.46e-6; |D1|>300 Nm 3; nonfinite 0
+   big by class {"unreach":0,"illcond":2,"valid":1}
+   valid-big {"t":9.261111,"n":0,"err":3.1561393710316135e-16,"lam":0.00011255089673197918,"lamIK":0.00011255089673257756,"nFree":6,"mx":374.20525209975386,"fin":true}
+   max |D1| valid class 374.21  max in lam<eps2 reachable 9.65e+3
+   dTau0>500 ticks 3 9.2667:4492.4296 9.2722:4802.5715 9.2778:10081.9816
+     near 9.266667 9.255556|err 9.7e-16|lam 3.0e-4|lamIK 3.0e-4|mx 1.3e+2  9.261111|err 3.2e-16|lam 1.1e-4|lamIK 1.1e-4|mx 3.7e+2  9.266667|err 6.1e-16|lam 1.5e-5|lamIK 1.5e-5|mx 4.9e+3  9.272222|err 6.1e-16|lam 5.5e-6|lamIK 5.5e-6|mx 9.7e+3  9.277778|err 3.8e-16|lam 1.1e-4|lamIK 1.1e-4|mx 1.1e+2
+     near 9.272222 9.261111|err 3.2e-16|lam 1.1e-4|lamIK 1.1e-4|mx 3.7e+2  9.266667|err 6.1e-16|lam 1.5e-5|lamIK 1.5e-5|mx 4.9e+3  9.272222|err 6.1e-16|lam 5.5e-6|lamIK 5.5e-6|mx 9.7e+3  9.277778|err 3.8e-16|lam 1.1e-4|lamIK 1.1e-4|mx 1.1e+2  9.283333|err 1.2e-16|lam 3.1e-4|lamIK 3.1e-4|mx 2.7e+0
+     near 9.277778 9.266667|err 6.1e-16|lam 1.5e-5|lamIK 1.5e-5|mx 4.9e+3  9.272222|err 6.1e-16|lam 5.5e-6|lamIK 5.5e-6|mx 9.7e+3  9.277778|err 3.8e-16|lam 1.1e-4|lamIK 1.1e-4|mx 1.1e+2  9.283333|err 1.2e-16|lam 3.1e-4|lamIK 3.1e-4|mx 2.7e+0  9.288889|err 6.0e-16|lam 5.7e-4|lamIK 5.7e-4|mx 2.5e+1
+d1diagG.V2-short-legs.H-D.json.gz: D1 evals 131; unreachable 11; lam<eps2 13; minLam -1.73e-16; |D1|>300 Nm 2; nonfinite 0
+   big by class {"unreach":0,"illcond":2,"valid":0}
+   max |D1| valid class 130.08  max in lam<eps2 reachable 4.29e+4
+   dTau0>500 ticks 2 9.2278:43342.3781 9.2333:43764.2376
+     near 9.227778 9.216667|err 2.4e-16|lam 7.0e-4|lamIK 7.0e-4|mx 6.6e+1  9.222222|err 2.9e-16|lam 4.4e-4|lamIK 4.4e-4|mx 1.3e+2  9.227778|err 2.5e-16|lam 1.6e-5|lamIK 1.6e-5|mx 4.3e+4  9.233333|err 1.3e-3|lam 5.7e-16|lamIK 2.0e-1|mx undefined  9.238889|err 2.2e-3|lam 3.6e-8|lamIK 3.6e-8|mx undefined
+     near 9.233333 9.222222|err 2.9e-16|lam 4.4e-4|lamIK 4.4e-4|mx 1.3e+2  9.227778|err 2.5e-16|lam 1.6e-5|lamIK 1.6e-5|mx 4.3e+4  9.233333|err 1.3e-3|lam 5.7e-16|lamIK 2.0e-1|mx undefined  9.238889|err 2.2e-3|lam 3.6e-8|lamIK 3.6e-8|mx undefined  9.244444|err 2.9e-3|lam 2.7e-9|lamIK 2.7e-9|mx undefined

@@ -2453,3 +2453,33 @@ Not pushed.
 **Decisions pending (user):** a D1 robustness guard (versioned controller correction); the earlyOOE requirement.
 
 TD2 stays a FAIL. Not pushed.
+
+## 2026-10-07: D1 guard and TD2C (`sources/2026-10-07_user_decision_D1guard_TD2C.md`)
+
+### E2-17: D1G + TD2C preregistered (freeze step 1, before any code)
+
+**Preregistration:** `e2/D1G_TD2C_PREREG.md`.
+
+**D1G** (a versioned controller correction, default off):
+- D1 is used only when the leg's IK target is reached (residual ≤ 1e-6), J_f is conditioned (λ_min(J_fᵀJ_f) ≥ IK.srEps², the certifier's gate) and the result is finite.
+- Otherwise the last valid D1 fades out over the lifecycle's release time (0.10 s), with a ramp back in from zero.
+- It is bit-identical when never engaged.
+- Design evidence: with reachability alone, the remaining D1 spikes occur at reached but ill-conditioned targets (λ_min 5e-6 … 3e-5).
+
+**Independent validation DG-0 … DG-7:**
+- default identity;
+- bit-identical equivalence on AB, in-window TD2C and SV-2 servo-on runs;
+- a reach-stress set without terrain (finite, bounded commands, energy);
+- a controller-level L / R mirror test;
+- determinism and rate consistency;
+- exact transition law, with the guard-attributable step within the E1a-7 commanded bound.
+
+**TD2C** = TD2B (unchanged) + D1G, with the three event classes:
+- TOUCHDOWN: full contract;
+- LATE_TOUCHDOWN: search / escalation contract;
+- UNEXPECTED_OBSTACLE: handling U-1 … U-7 (energy, finite bounded commands, stability, no fabricated support, authoritative collision, explicit classification, safe outcome under E2 §2a; abort / fall allowed);
+- plus TOUCHDOWN_FAILED.
+
+Obstacle heights +5 / +10 / +20 mm. The U-1 collision-window energy reading is disclosed, with the strict verdict reported.
+
+TD2 and TD2B stay FAIL. Not pushed.
