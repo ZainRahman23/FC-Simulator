@@ -1,0 +1,66 @@
+{
+ "window": {
+  "uDn_qualified": 2.2646222667600937,
+  "uUp_qualified": 0.31077128869154436,
+  "dC": 0.5,
+  "dT": 0.05,
+  "earliestRefLow_mm": 2.8146222667600935,
+  "latestRefLow_mm": 0.13922871130845565,
+  "hB": 2.85,
+  "Dmax": 2.75,
+  "searchEnd_mm": 0.1,
+  "tau": {
+   "jerk": 0.14942041698840125,
+   "acc": 0.07766225399241965,
+   "vel": 0.023772475795297367,
+   "sense": 0.057291666666666664,
+   "e25": 0.04583333333333333,
+   "impact": 0.20789999999999997
+  },
+  "tauS": 0.21,
+  "tauC": 0.1499,
+  "tauD": 0.085,
+  "vPeak_mm_s": 24.55,
+  "plannedTD_afterT": 0.2349,
+  "earlyTerrain_mm": 0.05,
+  "lateTerrain_mm": -0.05
+ },
+ "escalation": {
+  "rule": "first search exhausted → E2 late hold (planned TD + 0.3 s) → failed touchdown → the bounded search CONTINUES from the first search end (at rest) down to the planner's turf window's late edge (planner's foothold + (h_B − D_max)), a rest-to-rest quintic with the normal search's peak speed → no contact by its end + 0.3 s → explicit touchdown failure (hold; no further descent)",
+  "S_LATE_depth_mm": 10,
+  "tauE": 0.765,
+  "vPeak_mm_s": 24.51,
+  "aPeak": 0.0987,
+  "jPeak": 1.3402,
+  "withinLateEnvelope": true,
+  "deepestPose": "the planner's own certified foothold + (h_B − D_max) (reach certified by landingValid / ikFeasible at dz 0)",
+  "failureTimeAfterT_s": 1.6
+ },
+ "crossRate": {
+  "inputs": {
+   "dtMax": 0.005555555555555556,
+   "qualifiedCrossRateDeviationRange_mm": 1.162422523295056,
+   "searchPeakAccel": 0.3600255102040817,
+   "actualMinusReferenceDescentSpeedCrossRateRange_mm_s": 4.577857844644289,
+   "k10_BW_per_m_s": 4.45579307368427,
+   "kI_Ns_per_m_s": 56.586131627169614
+  },
+  "bounds": {
+   "contactNormalSpeed_mm_s": 30.78,
+   "tangentialSpeed_mm_s": 62.53,
+   "placement_mm": 3,
+   "tilt_deg": 0.339,
+   "angularSpeed_rad_s": 0.2268,
+   "yawAtSupport_deg": 2,
+   "load10ms_BW": 0.2761,
+   "impulse50_Ns_perBW": null,
+   "impulse50_Ns": 1.742,
+   "impulse50_tickQuantum": "plus one tick of the contract-bounded peak load: 0.25·BW·dt_max (per run, N·s)",
+   "penetration_mm": 2,
+   "rebound": "equal (none at any rate)",
+   "slip_mm": 3,
+   "torqueRate": "E1a-7 at every rate (rate-scaled), whole run",
+   "contactToSupport_s": 0.1267
+  }
+ }
+}
