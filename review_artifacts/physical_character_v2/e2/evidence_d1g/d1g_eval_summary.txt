@@ -1,0 +1,42 @@
+REPORTED reach stress: runs | engaged | fell / aborted | max |τ0| | max |Δτ0| | closure max / Σ+ max | held D1 max | guard-attributable step max | E1a-7 applied / commanded violating runs | non-finite runs
+  guard ON deep    n 48 | eng 48 | fell 36 / abort 0 | τ0 3.99e+3 | Δτ0 3.35e+3 | clos 0.1882 / 0.733 | held 82.0 | attr 4.29 | E1a-7 48 / 48 | nonfinite 0
+  guard OFF deep   n 48 | eng 0 | fell 17 / abort 9 | τ0 4.37e+21 | Δτ0 4.37e+21 | clos 476.6800 / 2312.078 | held 0.0 | attr 0.00 | E1a-7 48 / 48 | nonfinite 0
+  guard ON far     n 48 | eng 48 | fell 0 / abort 0 | τ0 2.07e+3 | Δτ0 1.62e+3 | clos 0.0544 / 0.517 | held 115.5 | attr 6.19 | E1a-7 48 / 48 | nonfinite 0
+  guard OFF far    n 48 | eng 0 | fell 9 / abort 10 | τ0 5.62e+20 | Δτ0 5.62e+20 | clos 310.7500 / 2355.043 | held 0.0 | attr 0.00 | E1a-7 48 / 48 | nonfinite 0
+  guard ON diag    n 48 | eng 48 | fell 0 / abort 0 | τ0 4.23e+3 | Δτ0 3.67e+3 | clos 0.2450 / 0.909 | held 101.1 | attr 5.02 | E1a-7 48 / 48 | nonfinite 0
+  guard OFF diag   n 48 | eng 0 | fell 8 / abort 6 | τ0 6.46e+20 | Δτ0 6.46e+20 | clos 363.0300 / 2499.397 | held 0.0 | attr 0.00 | E1a-7 48 / 48 | nonfinite 0
+DG-3a mirror samples 4056 (near-threshold, reported 0); valid-sample max |ΔD| 1.12e-7 N·m; DG-4a repeats 24; DG-1c compared 432, engaged 6
+PASS DG-G (0 failing items)
+PASS DG-1c (0 failing items)
+FAIL DG-2 (26 failing items)
+FAIL DG-3a (12 failing items)
+PASS DG-3b (0 failing items)
+PASS DG-4a (0 failing items)
+PASS DG-4b (0 failing items)
+FAIL DG-5 (43 failing items)
+PASS DG-6 (0 failing items)
+   DG-2: PSTAR5CHABG|deep|V2-165-62|L|480: max commanded |τ0| 2280.9 N·m > B_cmd 2265
+   DG-2: PSTAR5CHABG|deep|V2-165-62|R|480: max commanded |τ0| 2279.7 N·m > B_cmd 2265
+   DG-2: PSTAR5CHABG|deep|V2-198-92|L|240: max commanded |τ0| 3963.7 N·m > B_cmd 3345
+   DG-2: PSTAR5CHABG|deep|V2-198-92|L|480: max commanded |τ0| 3985.1 N·m > B_cmd 3345
+   DG-2: PSTAR5CHABG|deep|V2-198-92|R|240: max commanded |τ0| 3963.4 N·m > B_cmd 3345
+   DG-2: PSTAR5CHABG|deep|V2-198-92|R|480: max commanded |τ0| 3985.5 N·m > B_cmd 3345
+   DG-2: PSTAR5CHABG|deep|V2-190-85|L|480: max commanded |τ0| 3204.5 N·m > B_cmd 3093
+   DG-2: PSTAR5CHABG|deep|V2-190-85|R|480: max commanded |τ0| 3203.4 N·m > B_cmd 3093
+   DG-3a: V2-165-62 far t 9.8375: validity flags differ (okR)
+   DG-3a: V2-165-62 far t 9.8375: λ -1.4730893352700859e-16 vs 0.00007124908422662274
+   DG-3a: V2-165-62 far t 9.8375: residual classes differ (0.00029321242158642614 vs 6.592728762550936e-16)
+   DG-3a: V2-165-62 far t 9.85: validity flags differ (okR)
+   DG-3a: V2-165-62 far t 9.85: λ -7.276082310321766e-17 vs 0.0000996540272819189
+   DG-3a: V2-165-62 far t 9.85: residual classes differ (0.000409704108055248 vs 5.671597996658863e-16)
+   DG-3a: V2-165-62 far t 9.8625: validity flags differ (okR, okC, okT)
+   DG-3a: V2-165-62 far t 9.8625: λ 0.00012660483867411661 vs -1.2630734957491068e-19
+   DG-5: PSTAR5CHABG|deep|V2-REF|L|180: E1a-8 closure max 0.0196 J / tick, Σ+ 0.552 J
+   DG-5: PSTAR5CHABG|deep|V2-REF|R|180: E1a-8 closure max 0.0194 J / tick, Σ+ 0.551 J
+   DG-5: PSTAR5CHABG|deep|V2-165-62|L|180: E1a-8 closure max 0.1819 J / tick, Σ+ 0.646 J
+   DG-5: PSTAR5CHABG|deep|V2-165-62|L|240: E1a-8 closure max 0.0657 J / tick, Σ+ 0.399 J
+   DG-5: PSTAR5CHABG|deep|V2-165-62|R|180: E1a-8 closure max 0.1814 J / tick, Σ+ 0.645 J
+   DG-5: PSTAR5CHABG|deep|V2-165-62|R|240: E1a-8 closure max 0.0656 J / tick, Σ+ 0.397 J
+   DG-5: PSTAR5CHABG|deep|V2-198-92|L|180: E1a-8 closure max 0.0241 J / tick, Σ+ 0.640 J
+   DG-5: PSTAR5CHABG|deep|V2-198-92|L|240: E1a-8 closure max 0.0479 J / tick, Σ+ 0.522 J
+D1G (DG-1c, DG-2 … DG-6 outside TD2C): FAIL

@@ -1,0 +1,8 @@
+# DG-3a mirror mismatches: IK sensitivity probe (post-hoc). sens = the left solve with the input body states scaled by (1 ± 1e-13), (1 ± 1e-11); sensB = the same for the mirrored right solve
+V2-165-62 t 9.8375: L err 2.93e-4 perturbed [2.9e-4, 2.9e-4, 2.9e-4, 2.9e-4] | R err 6.59e-16
+V2-165-62 t 9.85: L err 4.10e-4 perturbed [4.1e-4, 4.1e-4, 4.1e-4, 4.1e-4] | R err 5.67e-16
+V2-165-62 t 9.8625: L err 5.23e-16 perturbed [5.2e-4, 5.2e-4, 5.2e-4, 5.2e-4] | R err 5.20e-4
+V2-190-85 t 9.875: L err 5.77e-16 perturbed [4.3e-4, 4.3e-4, 4.3e-4, 4.3e-4] | R err 4.34e-4
+V2-165-62 (both sides) t 9.8375: L err 2.93e-4 perturbed [2.9e-4, 2.9e-4, 2.9e-4, 2.9e-4] | R err 6.59e-16 perturbed [6.6e-16, 6.6e-16, 6.6e-16, 6.6e-16]
+V2-165-62 (both sides) t 9.85: L err 4.10e-4 perturbed [4.1e-4, 4.1e-4, 4.1e-4, 4.1e-4] | R err 5.67e-16 perturbed [5.7e-16, 5.7e-16, 5.7e-16, 5.7e-16]
+V2-165-62 (both sides) t 9.8625: L err 5.23e-16 perturbed [5.2e-4, 5.2e-4, 5.2e-4, 5.2e-4] | R err 5.20e-4 perturbed [5.2e-4, 5.2e-4, 5.2e-4, 5.2e-4]

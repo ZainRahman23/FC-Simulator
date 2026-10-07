@@ -1,0 +1,33 @@
+--- ctrl/v2_stand.js	2026-10-07 23:09:03
++++ /private/tmp/claude-501/-Users-zainrahman/8af3fa3f-f134-4178-b7ae-7855027dda6e/scratchpad/d1gcf/tree/sandbox/visual/physchar2/ctrl/v2_stand.js	2026-10-07 23:36:34
+@@ -409,6 +409,7 @@
+           T.prevA = LA.next; T.prevC = LCc.next; T.accPrev = LCc.next; T.tick = this.n; if (o.torqueLedger) this.wAof[n] = LA.wA; }
+         else r = this.legIK(st, ev, n, pP, qP, lcT ? null : this.unl[n] ? this.hold[n] : null);
+         for (const [k, q] of r.targets) ikT[k] = q; return r.err; });
++      if (process.env.CF_NOVFF === "1" && this.d1g && this.ikW) for (const n of [0, 1]) { const G = this.d1g[n]; if (G && G.tick === this.n && !G.valid) for (const k of this.legK[n]) if (this.ikW[k]) this.ikW[k] = [0, 0, 0]; }   // COUNTERFACTUAL (scratch only): no rate feed-forward on an invalid D1 tick
+       if (o.lcVff === "split" || o.lcVff === "lin" || o.lcVff === "linmin") this.vffPrev = this.vffNext;
+       if (o.lcVff === true && sw) { const prev = this.ikPrevT || {}; this.ikW = {}; for (const k in ikT) { const qp = prev[k], qn = ikT[k]; if (!qp) continue; const sg = qp[0] * qn[0] + qp[1] * qn[1] + qp[2] * qn[2] + qp[3] * qn[3] < 0 ? -1 : 1, d = Q.mul(Q.conj(qp), qn.map(x => x * sg)); this.ikW[k] = [2 * d[0] / dt, 2 * d[1] / dt, 2 * d[2] / dt]; }
+         this.ikPrevT = {}; for (const k in ikT) this.ikPrevT[k] = ikT[k].slice(); }   // lcVff (DIAGNOSTIC): target joint velocity in the same joint-frame convention as the error e
+--- tools/d1g_val.mjs	2026-10-07 23:17:12
++++ /private/tmp/claude-501/-Users-zainrahman/8af3fa3f-f134-4178-b7ae-7855027dda6e/scratchpad/d1gcf/tree/sandbox/visual/physchar2/tools/d1g_val.mjs	2026-10-07 23:36:34
+@@ -26,6 +26,7 @@
+ const s = new G3Sim(J, spec, def, { stand: { ikRefTwist: true, lifecycle: true, pelvisDrop: pd, ...CFG[CONFIG], diagRecord: true, torqueLedger: true }, passiveOpts: { kneeModel: "v2k" }, ...(HZ !== 240 || TURF === "off" ? { cfg: { ...(HZ !== 240 ? { hz: HZ } : {}), ...(TURF === "off" ? { diagNoGround: true } : {}) } } : {}) });
+ const C = s.ctrl, dt = s.dt; if (!C.o.swingAccFF || C.o.e2 !== 2 || C.o.vffRate !== "sr" || !C.o.e2reanchorVel || !!C.o.vffPelvisAir !== CONFIG.slice(8).includes("A") || !!C.o.vffPassiveRef !== CONFIG.slice(8).includes("B") || !!C.o.d1FloatBase || !!C.o.lcTransition || td2bOn(C.o) || !!C.o.d1Guard !== (CONFIG === "PSTAR5CHABG")) throw new Error("configuration");
+ const TDON = false;
++if (process.env.CF_NOD1 === "1") { const g0 = C.d1GuardStep.bind(C); C.d1GuardStep = function (...x) { g0(...x); return null; }; }   // COUNTERFACTUAL (scratch only): no D1 command at all
+ const setT = (e) => { C.lc.setSwingTarget(nL, { pos: e.pos, rot: e.rot }); if (!C.swingRef) C.swingRef = [null, null]; C.swingRef[nL] = { vel: e.vel.slice(), acc: e.acc.slice(), w: (e.w || [0, 0, 0]).slice(), al: (e.al || [0, 0, 0]).slice() }; H.ref = e; };
+ // the planner's reachability certifier, posed exactly as the E2 planner poses a commanded step (predicted liftoff state, knot at T/2 of the post-liftoff swing, swing frame now)
+ function reachCheck(st, tr) { const X = { ctrl: C, st: C.e2st, ev: C.e2ev, n: nL, pel: swingFrame(C, st, nL) }, goal = candPose(H.A, H.fr, tr.dx, tr.dy, DZPLAN), L = liftRef(H.A, FS.liftDelayPlan);
+--- tools/d1g_unit.mjs	2026-10-07 23:17:29
++++ /private/tmp/claude-501/-Users-zainrahman/8af3fa3f-f134-4178-b7ae-7855027dda6e/scratchpad/d1gcf/tree/sandbox/visual/physchar2/tools/d1g_unit.mjs	2026-10-07 23:53:49
+@@ -44,7 +44,9 @@
+       const I = lastIn[n], refM = { vel: m3(I.ref.vel), acc: m3(I.ref.acc), w: mw(I.ref.w), al: mw(I.ref.al), vPel: m3(I.ref.vPel) }, rB = CB.legIKBounded(stM, evM, m, frM.pos, frM.rot, tgtM, lastIK[n].bo), aB = CB.swingAccWrench(stM, evM, m, frM, rB.x, refM, m3(I.A), null);
+       const okRB = rB.err <= 1e-6, okCB = !!aB && aB.lam >= IK.srEps * IK.srEps, okFB = !!aB && Object.values(aB.T).every(v => v.every(Number.isFinite)), ratB = okRB && okCB && okFB ? CB.d1Feasible(stM, evM, m, frM, rB, aB) : null, okTB = ratB != null && ratB <= 1;
+       let dRel = 0, dAbs = 0, dTol = -Infinity; if (a && aB) for (const k of C.legK[n]) { const kB = jmap[k], tA = mw(a.T[k]), tB = aB.T[kB]; if (!tA || !tB) continue; for (let i = 0; i < 3; i++) { const d = Math.abs(tA[i] - tB[i]); dAbs = Math.max(dAbs, d); dRel = Math.max(dRel, d / Math.max(1e-6, Math.abs(tA[i]))); dTol = Math.max(dTol, d - (1e-6 * Math.abs(tA[i]) + 1e-6)); } }
+-      PROBE.push({ t: +(C.n * dtt).toFixed(6), A: { okR: G.okR, okC: G.okC, okF: G.okF, okT: G.okT, err: G.err, lam: G.lam, tRatio: G.tRatio }, B: { okR: okRB, okC: okCB, okF: okFB, okT: okTB, err: rB.err, lam: aB ? aB.lam : null, tRatio: ratB }, dAbs, dRel, dTol }); }
++      const pert = (eps) => st.map(b => ({ ...b, pos: b.pos.map(v => v * (1 + eps)), com: b.com.map(v => v * (1 + eps)) })), sens = [1e-13, -1e-13, 1e-11, -1e-11].map(eps => { const stP = pert(eps), evP = s.P.compute(stP, dtt).ev, rP = C.legIKBounded(stP, evP, n, fr.pos, fr.rot, lastIK[n].tgt, lastIK[n].bo); return rP.err; });
++      const sensB = [1e-13, -1e-13, 1e-11, -1e-11].map(eps => { const stP = stM.map(b => ({ ...b, pos: b.pos.map(v => v * (1 + eps)), com: b.com.map(v => v * (1 + eps)) })), evP = sB.P.compute(stP, sB.dt).ev; return CB.legIKBounded(stP, evP, m, frM.pos, frM.rot, tgtM, lastIK[n].bo).err; });
++      PROBE.push({ sensB, sens, t: +(C.n * dtt).toFixed(6), A: { okR: G.okR, okC: G.okC, okF: G.okF, okT: G.okT, err: G.err, lam: G.lam, tRatio: G.tRatio }, B: { okR: okRB, okC: okCB, okF: okFB, okT: okTB, err: rB.err, lam: aB ? aB.lam : null, tRatio: ratB }, dAbs, dRel, dTol }); }
+     return out; }; }
+ const setT = (e) => { C.lc.setSwingTarget(nL, { pos: e.pos, rot: e.rot }); if (!C.swingRef) C.swingRef = [null, null]; C.swingRef[nL] = { vel: e.vel.slice(), acc: e.acc.slice(), w: (e.w || [0, 0, 0]).slice(), al: (e.al || [0, 0, 0]).slice() }; H.ref = e; };
+ // the planner's reachability certifier, posed exactly as the E2 planner poses a commanded step (predicted liftoff state, knot at T/2 of the post-liftoff swing, swing frame now)

@@ -1,0 +1,38 @@
+runs 438/876 MISSING 438; pre-freeze reachability rejections 14; runtime reachability rejections 0
+trajectory | set | n ON | β ON | β OFF | γ OFF | RMS ON / OFF mean (mm) | ON/OFF ratio | peak ON max
+  R-F    | R | 48 | 0.21 | — | — | 1.35 / 0.00 | — | 2.85
+  R-L    | R | 48 | 0.23 | — | — | 1.76 / 0.00 | — | 3.65
+  C-F7   | C | 48 | 0.26 | — | — | 1.32 / 0.00 | — | 2.85
+  C-F13  | C | 48 | 0.17 | — | — | 1.41 / 0.00 | — | 2.87
+  C-L5   | C | 48 | 0.28 | — | — | 1.57 / 0.00 | — | 3.31
+  H-T45  | H | 48 | 0.07 | — | — | 2.07 / 0.00 | — | 4.22
+  H-A40  | H | 48 | 0.24 | — | — | 1.70 / 0.00 | — | 3.60
+  H-D    | H | 48 | 0.18 | — | — | 1.66 / 0.00 | — | 3.36
+  H-F15  | H | 48 | 0.15 | — | — | 1.45 / 0.00 | — | 2.90
+  C-L11  | C | 6 | 0.22 | — | — | 2.32 / 0.00 | — | 4.13
+FAIL T-1 (2 failing items)
+FAIL T-2 (0 failing items)
+FAIL T-3 (0 failing items)
+FAIL I-1 (0 failing items)
+FAIL I-2 (52 failing items)
+FAIL I-3 (0 failing items)
+FAIL I-4 (0 failing items)
+FAIL I-5 (0 failing items)
+FAIL I-6 (84 failing items)
+FAIL I-7 (0 failing items)
+   T-1: C-F7 pooled β_ON 0.26 (|β| ≤ 0.25)
+   T-1: C-L5 pooled β_ON 0.28 (|β| ≤ 0.25)
+   I-2: V2-REF|L|480|on|H-T45 E1a-7: applied Δτ max 10.24 (violations 1), commanded Δτ0 max 13.25 (violations 0) N·m
+   I-2: V2-REF|L|480|on|H-A40 E1a-7: applied Δτ max 10.37 (violations 1), commanded Δτ0 max 11.05 (violations 0) N·m
+   I-2: V2-REF|L|480|on|H-F15 E1a-7: applied Δτ max 10.14 (violations 1), commanded Δτ0 max 14.87 (violations 0) N·m
+   I-2: V2-REF|R|480|on|H-T45 E1a-7: applied Δτ max 10.36 (violations 1), commanded Δτ0 max 13.44 (violations 0) N·m
+   I-2: V2-REF|R|480|on|H-A40 E1a-7: applied Δτ max 10.38 (violations 1), commanded Δτ0 max 11.06 (violations 0) N·m
+   I-2: V2-REF|R|480|on|H-F15 E1a-7: applied Δτ max 10.17 (violations 1), commanded Δτ0 max 14.88 (violations 0) N·m
+   I-6: V2-REF|L|180|on|H-D TOUCHDOWN entries 2, rebound 1, re-entries < 60 ms 0
+   I-6: V2-REF|L|240|on|H-D TOUCHDOWN entries 2, rebound 1, re-entries < 60 ms 0
+   I-6: V2-REF|L|480|on|H-D TOUCHDOWN entries 2, rebound 1, re-entries < 60 ms 0
+   I-6: V2-REF|L|180|on|H-F15 TOUCHDOWN entries 2, rebound 1, re-entries < 60 ms 0
+   I-6: V2-REF|L|240|on|H-F15 TOUCHDOWN entries 2, rebound 1, re-entries < 60 ms 0
+   I-6: V2-REF|R|180|on|H-D TOUCHDOWN entries 2, rebound 1, re-entries < 60 ms 0
+SERVO DOES NOT VALIDATE
+per-bin allowance (mm, φ 0.20 … 0.80 in 0.05 bins) — NOT VALID (the servo did not validate): 3.65 4.20 4.25 4.05 3.15 2.10 1.00 0.00 0.00 0.05 0.80 1.65

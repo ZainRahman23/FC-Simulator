@@ -1,0 +1,26 @@
+# D1G stress counterfactuals (post-hoc, labelled; scratch tree only, never committed code): frozen = battery record (guard on); nod1 = no D1 command at all; novff = guard on + no rate feed-forward (ikW) on invalid-D1 ticks; both
+case | variant | max |τ0| (N·m) | dominant swing-leg term | max |Δτ0| | closure max (J/tick) | Σ+ (J) [swing / hold] | fell
+V2-198-92 L 240 deep | frozen (guard on) |  3964 | vff -3766 | 3339 | 0.0479 | 0.522 [0.084 / 0.377] | false
+V2-198-92 L 240 deep | nod1              |  2967 | vff -2814 | 2256 | 0.0243 | 0.488 [0.048 / 0.380] | false
+V2-198-92 L 240 deep | novff             |   986 | vff -892 | 893 | 0.0140 | 0.479 [0.050 / 0.369] | false
+V2-198-92 L 240 deep | both              |   878 | vff -834 | 831 | 0.0140 | 0.472 [0.042 / 0.370] | false
+V2-165-62 L 180 deep | frozen (guard on) |  2061 | vff -1963 | 1750 | 0.1819 | 0.646 [0.291 / 0.303] | true
+V2-165-62 L 180 deep | nod1              |  1832 | vff -1738 | 1507 | 0.1294 | 0.589 [0.235 / 0.301] | true
+V2-165-62 L 180 deep | novff             |   654 | vff -578 | 579 | 0.0260 | 0.454 [0.113 / 0.288] | true
+V2-165-62 L 180 deep | both              |   614 | vff -555 | 554 | 0.0249 | 0.439 [0.104 / 0.283] | true
+V2-REF L 180 deep | frozen (guard on) |  1807 | vff -1711 | 1275 | 0.0196 | 0.552 [0.066 / 0.419] | true
+V2-REF L 180 deep | nod1              |  1755 | vff -1659 | 1225 | 0.0232 | 0.548 [0.063 / 0.418] | true
+V2-REF L 180 deep | novff             |   865 | vff -777 | 778 | 0.0194 | 0.545 [0.079 / 0.400] | true
+V2-REF L 180 deep | both              |   807 | vff -746 | 743 | 0.0194 | 0.534 [0.067 / 0.401] | true
+V2-190-85 L 180 deep | frozen (guard on) |  2116 | vff -2009 | 1514 | 0.0217 | 0.610 [0.063 / 0.474] | true
+V2-190-85 L 180 deep | nod1              |  2151 | vff -2035 | 1540 | 0.0217 | 0.601 [0.054 / 0.473] | true
+V2-190-85 L 180 deep | novff             |   874 | vff -810 | 809 | 0.0217 | 0.607 [0.068 / 0.464] | true
+V2-190-85 L 180 deep | both              |   868 | vff -812 | 807 | 0.0217 | 0.596 [0.059 / 0.463] | true
+V2-198-92 L 240 far | frozen (guard on) |  2075 | vff -1981 | 1624 | 0.0144 | 0.395 [0.143 / 0.191] | false
+V2-198-92 L 240 far | nod1              |  1899 | vff -1844 | 1482 | 0.0140 | 0.359 [0.105 / 0.194] | false
+V2-198-92 L 240 far | novff             |   690 | vff -591 | 597 | 0.0140 | 0.296 [0.061 / 0.176] | false
+V2-198-92 L 240 far | both              |   530 | vff -522 | 518 | 0.0140 | 0.300 [0.056 / 0.184] | false
+V2-198-92 L 240 diag | frozen (guard on) |  2323 | vff -2206 | 1683 | 0.0140 | 0.444 [0.036 / 0.348] | false
+V2-198-92 L 240 diag | nod1              |  2180 | vff -2089 | 1526 | 0.0140 | 0.448 [0.037 / 0.351] | false
+V2-198-92 L 240 diag | novff             |   839 | vff -746 | 749 | 0.0140 | 0.454 [0.049 / 0.345] | false
+V2-198-92 L 240 diag | both              |   709 | vff -683 | 679 | 0.0140 | 0.447 [0.040 / 0.347] | false

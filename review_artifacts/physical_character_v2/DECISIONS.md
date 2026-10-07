@@ -2483,3 +2483,27 @@ TD2 stays a FAIL. Not pushed.
 Obstacle heights +5 / +10 / +20 mm. The U-1 collision-window energy reading is disclosed, with the strict verdict reported.
 
 TD2 and TD2B stay FAIL. Not pushed.
+
+### E2-18: D1G validation DOES NOT VALIDATE as preregistered → stopped before TD2C
+
+**Battery:** `e2/D1G_RESULTS.md`; frozen 3914a0c; 774 jobs.
+
+**Pass:**
+- DG-0 identity;
+- DG-1 (c): 432 / 432 SV-2 servo-on runs bit-identical with the guard (6 engaged = the already non-executable V2-long-legs C-L11);
+- DG-2 (i – iii, v): finite, no over-capacity, exact guard bound, every stress engaged;
+- DG-3 (b), DG-4 (a, b);
+- DG-6: exact law, guard step ≤ 6.2 N·m, held D1 ≤ 116 N·m.
+
+Guard off vs on: commands 10²⁰ – 10²¹ → ≤ 4.2 · 10³ N·m; Σ+ 2,500 → ≤ 0.9 J.
+
+**Fail:**
+- **DG-2 (iv):** 26 runs above B_cmd, caused by the servo's joint-rate feed-forward (vffServo ≈ 21 rad/s × D at straight-leg unreachable targets), not D1. The no-D1 counterfactual is unchanged; suppressing the rate feed-forward on invalid ticks gives ≤ 1 kN·m.
+- **DG-5:** 43 runs, rate-dependent (180 Hz 37, 240 Hz 6, 480 Hz 0). Unaffected by removing D1 or the rate feed-forward; accrued while the leg is held at end range. Consistent with TD-15 / Phase G.
+- **DG-3 (a):** 4 / 4,056 samples where the bounded IK lands in different basins for mirrored inputs at a reach-boundary fold. The guard rule is leg-agnostic.
+
+**Stop rule applied:** TD2C not run; D1G not adopted.
+
+**Decisions pending:** rate feed-forward guard vs B_cmd reading; the 180 Hz end-range energy (TD-15) scope; the IK mirror fold.
+
+Not pushed.
