@@ -198,3 +198,62 @@ The safety properties (user item 4):
 - The R0 comparison of §2.
 - The item-3 checks of §3.
 - No DVG code is in the repository at this commit.
+
+---
+
+# Part 8. Amendments (dated 2026-10-08; before any CQ battery run, committed with freeze step 2)
+
+## A1. Implementation (`ctrl/v2_stand.js`; default off, `d1Guard: 2`), as §1
+
+**Functions:** `dvgStep` (verdict, state, weight, outputs), `dvgRecordApplied` (the carry-over state), `dvgAxis` (torque-loop recording), `jfLam`, `dvgFeasible`.
+
+**Recording only** (no effect on commands): per-axis unit contributions (applied `dvx`, source `dvu`, fresh `dvf`), the next tick's slew reference C, the source tick, the applied joint-rate command's force–velocity ratio, and a power term.
+
+**D1G v1** (`d1Guard: true`) is untouched: it is selected by `=== true` and keeps its ledger fields. CQ-0 reproduces its record (d823bca7).
+
+The repository implementation reproduces the design-study prototype bit-for-bit (deep V2-198-92 L 240: a9ff2f0a).
+
+## A2. Operational definitions (tools; no criterion change)
+
+1. **Tools:**
+   - `tools/dvg_val.mjs` (stress; a versioned copy of the frozen `d1g_val`);
+   - `tools/dvg_unit.mjs` (mirror; a copy of `d1g_unit`);
+   - `tools/dvg_wrap.mjs` (`--dvgcfg` / `--dvginject`, with an optional guard-trace sidecar);
+   - `tools/dvg_lib.mjs` (`guardLaw`; `ab2Metrics` / `tdMetrics` copied verbatim from `td2b_eval`);
+   - `tools/dvg_eval.mjs`.
+
+   Run list `e2/CQ_RUN_LIST.json`:
+   - stress 432, repeats 24, mirror 24, AB 432, SV-2 438;
+   - E1a 10 (incl. the V2-REF L repeat and V2-REF R of the closing set) and E1b 28 (the official set), each with DVG on and off.
+
+   Runner `e2/scripts/run_dvg_cq.sh`; identity `e2/scripts/dvg_identity.sh` (the D1G DG-0 battery plus the v1 record).
+2. **CQ-1 (c) "no newly failing item":** the frozen `e1a_eval` / `e1b_eval` report aggregate criterion verdicts. Every criterion that passes on the DVG-off set must pass on the DVG-on set, and the E1a RESULT must be PASS.
+3. **CQ-6 guard law** (`dvg_lib.guardLaw`) is checked on the DVG stress runs, the repeats and the engaged CQ-1 runs (sidecars). The slew reference C of a FADE / OFF tick must equal the preceding tick's measured maximum unit source contribution (fresh for RAMP), to 10⁻⁹ relative. The domain-entry carry-over is counted, not compared (its C is measured off-domain).
+4. **R0 runs** (`PSTAR5CHABVR0`) serve CQ-5 only. Their guard records are not meaningful for CQ-6 (the outputs are zeroed after the guard), and they are not gated on CQ-2 / CQ-6.
+5. **"Motor work of the guarded terms" (reported):** realised as the integral over non-PASS ticks of Σ_axes (applied guarded contribution × the joint's axis rate) dt.
+   - This is the **commanded** guarded term's power integral. The actuator's implicit damping (−(D + dt·K)·ω) and capacity clamp sit between that command and the applied torque, so it overstates the actuator work.
+   - The actuator work itself is in the energy ledger (`Wact`), which CQ-5's closure test uses.
+6. **The rate envelope** (CQ-2 (iii)) is checked on the applied joint-rate feed-forward ω\* (ikW). The B reference rate drives the passive damping reference, not an actuator, and is reported.
+
+## A3. Design-verification smoke (disclosed; `evidence_dvg_design/implementation_smoke.txt`)
+
+**Bit-identical with DVG and zero invalid evaluations:**
+- AB nominal V2-REF L 240 R-F b63184da (184 evaluations);
+- E1a V2-REF L PSTAR4 7d0ab4db (312 evaluations; equal to the E1b-closing evidence);
+- E1b V2-165-62 L **P15** (abort, put-down) e6e2b493 (390 evaluations);
+- SV-2 V2-REF L 240 R-F.
+
+**SV-2 V2-long-legs C-L11** engages, as predicted (the unreachable trajectory).
+
+**Mini-set CQ evaluation:**
+- **diag V2-198-92 180 Hz** (both legs): Σ+ 0.581 / 0.579 J vs R0 0.546 J; closure max 0.0241 J (R0 0.0241). Hence **attributed to TD-15** under CQ-5 (excess 0.035 J).
+- Guard step ≤ 20.0 N·m (bound 40); rate envelope ≤ 0.28; mirror-valid D1 to 7 · 10⁻⁸ N·m; L / R Σ+ difference 0.0014 J.
+
+**Tool defects found and fixed before the freeze:**
+- `guardLaw` read a missing `valid` field (now V1 ∧ V2 ∧ V3 ∧ V4);
+- the E1 repeat-run naming;
+- the identity script invoked with zsh instead of bash.
+
+## A4. No other change
+
+The criteria of §4, the sets, the attribution rule and the stop rules are unchanged.

@@ -1,0 +1,90 @@
+# DVG implementation smoke (repository code; disclosed in e2/DVG_PREREG.md A3). Runs:
+== dvg_PSTAR5CHAB_diag_V2-198-92_L_180.log
+DVGV diag V2-198-92 L 180 Hz PSTAR5CHAB R-F: reach REJECTED; liftoff 0.128 s; contact φ —; abort none; outcome foot relocated; final AIRBORNE/SUPPORT; class —; DVG invalid 0/0; hash 35f31615
+== dvg_PSTAR5CHABV_diag_V2-198-92_L_180.log
+DVGV diag V2-198-92 L 180 Hz PSTAR5CHABV R-F: reach REJECTED; liftoff 0.128 s; contact φ —; abort none; outcome foot relocated; final AIRBORNE/SUPPORT; class —; DVG invalid 205/402; hash 9cf3d575
+== dvg_PSTAR5CHABV_diag_V2-198-92_R_180.log
+DVGV diag V2-198-92 R 180 Hz PSTAR5CHABV R-F: reach REJECTED; liftoff 0.128 s; contact φ —; abort none; outcome foot relocated; final SUPPORT/AIRBORNE; class —; DVG invalid 204/402; hash 5703d5f2
+== dvg_PSTAR5CHABVR0_diag_V2-198-92_L_180.log
+DVGV diag V2-198-92 L 180 Hz PSTAR5CHABVR0 R-F: reach REJECTED; liftoff 0.256 s; contact φ —; abort none; outcome foot relocated; final AIRBORNE/SUPPORT; class —; DVG invalid 224/425; hash 05f55b61
+== dvg_PSTAR5CHABVR0_diag_V2-198-92_R_180.log
+DVGV diag V2-198-92 R 180 Hz PSTAR5CHABVR0 R-F: reach REJECTED; liftoff 0.256 s; contact φ —; abort none; outcome foot relocated; final SUPPORT/AIRBORNE; class —; DVG invalid 224/425; hash c6b52da8
+== dvg_PSTAR5CHABV_diag_V2-198-92_L_180.log
+DVGV diag V2-198-92 L 180 Hz PSTAR5CHABV R-F: reach REJECTED; liftoff 0.128 s; contact φ —; abort none; outcome foot relocated; final AIRBORNE/SUPPORT; class —; DVG invalid 205/402; hash 9cf3d575
+== u.log
+DVGU mirror samples 169, IK-fold 0, flag mismatches 0, max |ΔD| 5.57e+20 N·m, max rel 1.17e+3; initial mirror error 0.00e+0 mm | deep V2-REF L 240 Hz PSTAR5CHABV R-F: reach REJECTED; liftoff 0.121 s; contact φ —; abort none; outcome fell; final AIRBORNE/SUPPORT; class —; DVG invalid 441/534; hash 32a18dc7
+== ab_V2-REF_L_240_R-F.log
+TD2BV nominal V2-REF L 240 Hz PSTAR5CHAB R-F: reach OK; liftoff 0.121 s; contact φ 0.910; abort none; outcome foot relocated; final SUPPORT/SUPPORT; hash b63184da
+DVG-WRAP PSTAR5CHAB: evaluations 184, invalid 0
+== sv2g_V2-long-legs_L_240_on_C-L11.log
+SV2 V2-long-legs L 240 Hz on C-L11: reach OK; liftoff 0.121 s; contact φ 1.063; abort none; outcome foot relocated; final SUPPORT/SUPPORT; hash b9822fd7
+DVG-WRAP PSTAR5CH: evaluations 408, invalid 237
+== sv2g_V2-REF_L_240_on_R-F.log
+SV2 V2-REF L 240 Hz on R-F: reach OK; liftoff 0.121 s; contact φ 0.889; abort none; outcome foot relocated; final SUPPORT/SUPPORT; hash 3dd9f13d
+DVG-WRAP PSTAR5CH: evaluations 181, invalid 0
+== e1a_V2-REF_L.log
+E1a run V2-REF L-lift 5.0 mm: outcome stood; lift 8.308 s; clear 9.608 s (contact state TOUCHDOWN); end 20.81 s; 4994 ticks; hash 7d0ab4db
+DVG-WRAP inject: evaluations 312, invalid 0
+== e1b_V2-165-62_L_P15.log
+E1b run (P15) V2-165-62 L-lift 20.0 mm: outcome recovered; lift 8.300 s; ABORT at 9.721 s; clear 9.725 s (abort (supervisor put-down: capture-timed quintic to the anchor)); end 20.93 s; 5022 ticks; hash e6e2b493
+DVG-WRAP inject: evaluations 390, invalid 0
+== e1a_V2-REF_L.log
+E1a run V2-REF L-lift 5.0 mm: outcome stood; lift 8.308 s; clear 9.608 s (contact state TOUCHDOWN); end 20.81 s; 4994 ticks; hash 7d0ab4db
+== e1b_V2-165-62_L_P15.log
+E1b run (P15) V2-165-62 L-lift 20.0 mm: outcome recovered; lift 8.300 s; ABORT at 9.721 s; clear 9.725 s (abort (supervisor put-down: capture-timed quintic to the anchor)); end 20.93 s; 5022 ticks; hash e6e2b493
+== ab.log
+TD2BV nominal V2-REF L 240 Hz PSTAR5CHAB R-F: reach OK; liftoff 0.121 s; contact φ 0.910; abort none; outcome foot relocated; final SUPPORT/SUPPORT; hash b63184da
+DVG-WRAP PSTAR5CHAB: evaluations 184, invalid 0
+== e1a_0.log
+E1a run V2-REF L-lift 5.0 mm: outcome stood; lift 8.308 s; clear 9.608 s (contact state TOUCHDOWN); end 20.81 s; 4994 ticks; hash 7d0ab4db
+== e1a_g.log
+E1a run V2-REF L-lift 5.0 mm: outcome stood; lift 8.308 s; clear 9.608 s (contact state TOUCHDOWN); end 20.81 s; 4994 ticks; hash 7d0ab4db
+DVG-WRAP inject: evaluations 312, invalid 0
+== e1b_p15_g.log
+E1b run (P15) V2-165-62 L-lift 20.0 mm: outcome recovered; lift 8.300 s; ABORT at 9.721 s; clear 9.725 s (abort (supervisor put-down: capture-timed quintic to the anchor)); end 20.93 s; 5022 ticks; hash e6e2b493
+DVG-WRAP inject: evaluations 390, invalid 0
+
+# repository DVG == prototype: deep V2-198-92 L 240 PSTAR5CHABV end hash a9ff2f0a (both)
+
+# dvg_eval on the mini set (expected mini-set failures: CQ-1b needs the runner's SV-2 evaluator step for the engaged C-L11 run; CQ-4b needs all three rates)
+REPORTED reach stress per configuration / condition / rate: runs | engaged | fell / aborted | raw max |τ0| (runs above the historical B_cmd, reported only) | max |Δτ0| | closure max / Σ+ max (E1a-8 failing runs) | held unit max | guard step max | rate-envelope max | max guarded work (J) | E1a-7 commanded runs
+  PSTAR5CHABV diag 180     n 2 | eng 2 | fell 0 / ab 0 | τ0 9.28e+2 (0) | Δτ0 1.02e+2 | clos 0.0241 / 0.581 (2) | held 818 | step 20.00 | rate 0.280 | W 312.017 | 2
+  PSTAR5CHABVR0 diag 180   n 2 | eng 2 | fell 0 / ab 0 | τ0 4.76e+2 (0) | Δτ0 1.25e+2 | clos 0.0241 / 0.546 (2) | held 575 | step 20.00 | rate 0.000 | W 0.000 | 2
+  PSTAR5CHAB diag 180      n 1 | eng 0 | fell 0 / ab 0 | τ0 1.93e+16 (1) | Δτ0 1.93e+16 | clos 133.0900 / 503.926 (1) | held 0 | step 0.00 | rate 0.000 | W 0.000 | 1
+CQ-5 attributed to TD-15: 2
+   PSTAR5CHABV|diag|V2-198-92|L|180: Σ+ 0.581 (R0 0.546), closure max 0.0241 (R0 0.0241)
+   PSTAR5CHABV|diag|V2-198-92|R|180: Σ+ 0.579 (R0 0.546), closure max 0.0241 (R0 0.0241)
+CQ-1 compared: AB 1 (engaged 0), SV-2 1 (engaged 1), E1 2 (engaged 0); CQ-3a {"samples":169,"ikFold":0,"nearThreshold":0,"validDMaxNm":7.316698580339676e-8,"pass":true,"failures":0}; CQ-3b {"pairs":1,"maxRelCmdDiff":0.000005388273607907671,"maxSigmaPlusDiff":0.0014371390750003155}; CQ-4a 1 repeats
+PASS CQ-G (0 failing items)
+PASS CQ-0 (0 failing items)
+PASS CQ-1a (0 failing items)
+FAIL CQ-1b (1 failing items)
+PASS CQ-1c (0 failing items)
+PASS CQ-2 (0 failing items)
+PASS CQ-3a (0 failing items)
+PASS CQ-3b (0 failing items)
+PASS CQ-4a (0 failing items)
+FAIL CQ-4b (2 failing items)
+PASS CQ-5 (0 failing items)
+PASS CQ-6 (0 failing items)
+   CQ-1b: 1 engaged runs need the frozen SV-2 evaluator on the guarded records
+   CQ-4b: V2-198-92|diag|L: engagement across rates {"180":true}
+   CQ-4b: V2-198-92|diag|R: engagement across rates {"180":true}
+DVG COMBINED QUALIFICATION: FAIL
+
+# CQ-0 identity at the implementation
+KV0 IDENTICAL
+PASS R11.b  touchRest: the released, touching foot rests (load in (0, loadOff)) without losing contact (G3 U:R, lifecycle): release 6.196 s, contact losses 0, resting load 1.07 N (loadOff 7.74 N)
+
+component regressions: 58/58 pass
+PASS a 99c29491
+PASS c b62309f5
+PASS sv2 3dd9f13d
+PASS ab b63184da
+PASS td2a b63184da
+PASS td2ba b63184da
+PASS td2n c76cadc7
+PASS td2l 56717579
+PASS td2bn 787cc0c9
+PASS td2bo 83369114
+PASS d1gv1 d823bca7

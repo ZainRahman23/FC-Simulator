@@ -28,6 +28,8 @@ CFG.PSTAR5CHA = { ...CFG.PSTAR5CH, vffPelvisAir: true }; CFG.PSTAR5CHB = { ...CF
 CFG.PSTAR5CHABTD = { ...CFG.PSTAR5CHAB, e2td: "search" }; CFG.PSTAR5CHABTDB = { ...CFG.PSTAR5CHAB, e2td: "search2" };   // TD2B (e2/TD2B_PREREG.md)
 // D1G (e2/D1G_TD2C_PREREG.md): the D1 guard on the AB baseline (PSTAR5CHABG) and on TD2B (PSTAR5CHABTDC = TD2C); used by nothing until validated
 CFG.PSTAR5CHABG = { ...CFG.PSTAR5CHAB, d1Guard: true }; CFG.PSTAR5CHABTDC = { ...CFG.PSTAR5CHABTDB, d1Guard: true };
+// DVG (D1G v2; e2/DVG_PREREG.md): the domain-validity guard of all IK-derived feed-forward on the AB baseline (V) and on TD2B (TDV); VR0 = DIAGNOSTIC energy reference (no IK-derived feed-forward)
+CFG.PSTAR5CHABV = { ...CFG.PSTAR5CHAB, d1Guard: 2 }; CFG.PSTAR5CHABTDV = { ...CFG.PSTAR5CHABTDB, d1Guard: 2 }; CFG.PSTAR5CHABVR0 = { ...CFG.PSTAR5CHABV, diagNoIKFF: true };
 CFG.PSTAR5CHABF = { ...CFG.PSTAR5CHAB, d1FloatBase: true }; CFG.PSTAR5CHABT = { ...CFG.PSTAR5CHAB, lcTransition: "cmd" }; CFG.PSTAR5CHABFT = { ...CFG.PSTAR5CHAB, d1FloatBase: true, lcTransition: "cmd" };
 export const E2P = { fwd: { dx: 0.10, dy: 0 }, lat: { dx: 0, dy: 0.08 }, T: 0.60, apex: 0.025, apexLow: 0.008, lateDz: 0.010, pushJ: 5, pushDur: 0.1, LT: 0.6, HOV: 1.5, RT: 0.6, GRACE: 0.3, LIFT: 0.02 };
 // VERSIONED commanded-step trajectory seeds (run.traj; default "v2" = the frozen E2 v2 seeds, bit-identical). "A30" = amendment A30 (e2/E2_PREREG_AMENDMENT_A30.md,
