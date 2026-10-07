@@ -30,7 +30,7 @@ Default / off paths stay bit-identical. Failed evidence is kept. Nothing is push
 
 ## 1. The coordinator (TD2)
 
-**Parameters, derived in `TD2_DESIGN_STUDY.md` §3 (fixed here):**
+**Parameters, derived in `TD2_DESIGN_STUDY.md` §3 (fixed here; amended before the battery by the same rules from the qualified uncertainty of the new region, and a settling interval added: §8 A2):**
 
 | parameter | value |
 |---|---|
@@ -164,6 +164,66 @@ Any TD-G or TD-1 … TD-10 failure → stop, diagnose causally, no tuning.
 - The offline kinematics of the band-top approach.
 - No TD2 run of any kind exists at this commit.
 
-## 8. Amendments (dated, before any battery run)
+## 8. Amendments (dated 2026-10-07; all before any battery run, committed with the implementation freeze)
 
-(none yet)
+**A1. Escalation continuation.**
+- **Preregistered:** "in the validation harness, release to the lifecycle hold". **Smoke** (beyond, V2-REF L 240 R-F): that release is a **target step** to the old anchor 0.1 m behind. It gave a 9.15× E1a-7 ratio and a rebound. It is not a continuation that the E1a-7 contract admits.
+- **E2's own failed-touchdown behaviour (frozen):** a re-plan from the current reference state to a certified foothold on the turf (dz 0).
+- **The harness now emulates it:** on escalation, a C2 `stepSegment` from the current reference state to the commanded foothold at the planner's turf height (anchor height), over the planner's own `Tmin(d)` (`ctrl/v2_footstep.js`). Acceptance and hand-back then apply as usual. If that re-target also finds no contact by its end + 0.3 s, it releases.
+- Smoke after the change: the beyond case contacts after the re-target at 54 mm/s; impact 15 % BW; no E1a-7 violation; no rebound.
+
+**A2. Parameters re-derived from the qualified uncertainty of the new trajectory region (Decision 4), plus the tangential-settling interval.**
+
+*Why the preregistered values had to change (smoke, nominal):*
+- V2-long-legs L 180 H-T45 touched **22 ms before the search**: its actual lowest point was 1.9 – 2.0 mm below the reference late in the approach, against u_dn = 1.53 mm. That value came from the AB late descent, which ended in contact at φ ≈ 0.9; the region φ 0.9 – 1.0 of the band-top approach had never been measured.
+- The reference itself is monotone (no undershoot, all 432 AB liftoff states; `evidence_td2_design/approach_undershoot.txt`).
+- V2-198-92 L 180 R-L contacted 39 ms into the search with a **horizontal foot speed of 64 mm/s** (E2-5: ≤ 50).
+
+*Qualification* (`tools/td2_val.mjs --turf=off`: no turf for the swing foot from the measured liftoff, `cfg.diagNoGround`; bit-identical to the turf-on run until contact). All 432 body × leg × rate × trajectory cases, TD config, nominal; `evidence_td2_design/`:
+
+| run | result |
+|---|---|
+| (i) the beyond condition, kept | not representative: the +10 mm foothold shortens the descent from the anchor-based apex |
+| (ii) turf off, search at T | downward deviation ≤ 2.24 mm at φ 0.75 – 1.0 and ≤ 2.33 mm in the search; upward ≤ 0.32 mm; horizontal foot speed > 50 mm/s until ≤ 83 ms after T |
+| (iii) the amended timeline (h_B 2.75 mm, τ_d 0.085 s), turf off | downward ≤ 2.18 mm (approach), **≤ 2.26 mm (dwell)**, ≤ 0.49 mm (search, against the moving reference); upward ≤ 0.31 mm; horizontal foot speed ≤ 39 mm/s at the search start and never > 50 mm/s after it; actual search descent ≤ 30.4 mm/s |
+
+*Rules (as §1, the design study §3, with the qualified values):*
+- h_B = ⌈2.26 + 0.5⌉ = **2.80 mm**;
+- D_max = ⌈2.80 − (0.5 − 0.31) + 0.05⌉ = **2.70 mm** (search end 0.10 mm above the foothold);
+- τ_s = **0.205 s** (binding: the E2-5 impact bound 1.875 · D / 24.8 mm/s = 0.204 s; jerk 0.149 s); peak 24.7 mm/s;
+- τ_c = **0.1459 s** (depth fraction 0.852);
+- **τ_d = 0.085 s**: a tangential-settling interval at the band top between the approach end and the low-speed entry. Decision 2: "tangential-motion-complete time … entry into low-speed approach … do not have to coincide". It is ⌈83 ms⌉ from qualification (ii); (iii) confirms it.
+- Planned touchdown = T + τ_d + τ_c = T + 0.2309 s; escalation at T + 0.531 s.
+- The late condition stays dz = D_max − (h_B − d_c) = +0.40 mm.
+
+*Fixed point:* (iii) was run at h_B 2.75 mm; 2.80 mm moves the goal 0.05 mm (< 0.2 % of the descent). It is not re-qualified.
+
+*Disclosure:*
+- **TD-2 in the battery is not independent of qualification (iii).** The turf-on nominal runs are the same trajectories up to contact.
+- The other criteria are not determined by it: contact, the transition, load, support, late, beyond.
+
+**A3. Definitions that follow A2:**
+- The search start (low-speed entry) is liftoff + T + τ_d, for TD-2 and the PCI.
+- TD-3's design bound is 1.875 · D_max / τ_s + 37.5 mm/s = 62.2 mm/s.
+- TD-8's floor is foothold + (h_B − D_max) = +0.10 mm.
+- The early condition keeps its preregistered definition dz = −h_B (now −2.80 mm): the turf at the band top.
+
+**Disclosed before the battery:** this condition ends the approach exactly on the turf. It is **bit-identical to the AB baseline run** (smoke: V2-REF L 240 R-F, hash b63184da = AB). It can only reproduce AB's touchdown (FB battery AB: impact up to 60 % BW, horizontal speed up to 91 mm/s, contact-transition violations in 14 / 432).
+
+**Prediction:** TD2 will **not** validate on the early condition (TD-3 / TD-4, possibly TD-5). The condition and its gating are **not** changed. It lies 56× outside the certified terrain uncertainty Δ_T = 0.05 mm; how such contact must be handled is a decision for the user.
+
+**A4. Implementation details:**
+- the harness records yaw in the post-contact rows;
+- the turf-off option is for qualification only (the runner never passes it);
+- the evaluator follows §3 / §4 with these definitions.
+
+**The E2 sequencer / planner integration (§1) is not part of this freeze.** The battery uses only `ctrl/v2_td2.js` and the harness. The integration is implemented from this design at §6 step 1, with identity checks, before any PG-1 or E2 run.
+
+**A5. Design-verification smoke** (disclosed; 16 runs in total over two parameter sets):
+- With the final parameter set (except h_B 2.75), nominal V2-REF L 240 R-F, V2-198-92 L 180 / 240 R-L, V2-198-92 L 480 H-D and late V2-REF / V2-long-legs H-T45:
+  - contact 137 – 148 ms into the search at 12 – 26 mm/s;
+  - horizontal speed ≤ 27 mm/s;
+  - impact 2.0 – 10.8 % BW;
+  - no E1a-7 violation; one TOUCHDOWN; no rebound.
+- Nominal V2-long-legs L 180 H-T45 touched during the dwell (dev 2.26 > 2.25), gently: 0.2 % BW. That led to h_B 2.80.
+

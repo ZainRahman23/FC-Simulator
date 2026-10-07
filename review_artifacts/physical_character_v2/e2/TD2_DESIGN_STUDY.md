@@ -53,18 +53,20 @@ The AB touchdown therefore violates Decisions 2 – 4:
 
 ### 2.1 C2 is the validated swing, shifted (`evidence_td2_design/approach_kinematics.txt`)
 
-The approach segment was rebuilt from the **measured** liftoff reference states and goals of all 144 AB 240 Hz records, with the goal raised by h_B = 2.05 mm. The apex rule is unchanged (max(start, goal) + 30 mm, H-A40 40 mm, at T / 2) and T is unchanged.
+The approach segment was rebuilt from the **measured** liftoff reference states and goals of all 144 AB 240 Hz records, with the goal raised by h_B = 2.05 mm. The apex rule is unchanged (anchor + 30 mm, H-A40 40 mm, at T / 2) and T is unchanged.
 
 | set | max acceleration, horizontal / vertical (m/s²) | max jerk, horizontal / vertical (m/s³) | late descent (h ≤ 11.06 mm): \|a_V\| / \|v_V\| / \|j_V\| | foot height above the turf at φ 0.8 |
 |---|---|---|---|---|
-| R | 1.59 → 1.59 / 2.12 → 2.13 | 27.5 → 27.5 / 42.9 → 42.5 | 1.51 → 1.48 / 0.163 → 0.151 / 42.9 → 42.5 | 7.05 → **8.99** mm |
-| C | 2.07 → 2.07 / 2.12 → 2.13 | 35.8 → 35.8 / 42.9 → 42.5 | 1.51 → 1.48 / 0.163 → 0.151 / 42.9 → 42.5 | 7.05 → 8.99 mm |
-| H | 2.83 → 2.83 / 3.85 → 3.86 | 65.2 → 65.2 / 103.6 → 102.5 | 2.71 → 2.67 / 0.219 → 0.203 / 103.6 → 102.5 | 7.05 → 8.99 mm |
+| R | 1.59 → 1.59 / 2.05 → 1.97 | 27.5 → 27.5 / 41.5 → 39.4 | 1.46 → 1.38 / 0.160 → 0.144 / 41.5 → 39.4 | 6.81 → **8.49** mm |
+| C | 2.07 → 2.07 / 2.05 → 1.97 | 35.8 → 35.8 / 41.5 → 39.4 | 1.46 → 1.38 / 0.160 → 0.144 / 41.5 → 39.4 | 6.81 → 8.49 mm |
+| H | 2.83 → 2.83 / 3.72 → 3.59 | 65.2 → 65.2 / 100.3 → 95.4 | 2.63 → 2.48 / 0.214 → 0.193 / 100.3 → 95.4 | 6.81 → 8.49 mm |
+
+**Correction (2026-10-07, before any TD2 run; the first committed version of this table):** it rebuilt the segments with the apex knot at max(start, goal) + apex. The harness and the E2 sequencer use **anchor + apex** (z = anchor height + 30 mm; `tools/ab_val.mjs`, `ctrl/v2_step.js` `apexZ`). The table above uses the correct rule (`approach_kinematics.txt`); the first version is kept as `approach_kinematics_v1_maxStartGoalKnot.txt`. The conclusion is unchanged: every peak is equal or lower, and the clearance gain at φ 0.8 is 1.68 mm.
 
 **Reading:**
 - Every kinematic peak is equal or slightly lower (the descent is 2.05 mm shorter).
 - The approach therefore stays inside the conditions under which A + B were validated.
-- The clearance at the certificate's binding point gains 1.94 – 1.96 mm.
+- The clearance at the certificate's binding point gains 1.68 mm.
 - Tangential motion and orientation are complete at T by construction, before the band.
 
 **Not covered offline:**

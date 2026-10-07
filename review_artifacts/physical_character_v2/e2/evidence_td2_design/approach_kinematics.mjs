@@ -16,7 +16,7 @@ const rows = [];
 for (const f of fs.readdirSync(D).filter(x => x.startsWith("fb_PSTAR5CHAB_") && x.includes("_240_") && x.endsWith(".json.gz"))) { const r = JSON.parse(zlib.gunzipSync(fs.readFileSync(D + "/" + f))), tr = f.split("_").slice(-1)[0].replace(".json.gz", "");
   const s0 = r.rows.find(x => x.ph === "swing" && x.u != null && Math.abs(x.u) < 1e-9); if (!s0 || !r.goal) continue; const [T, apex] = TR[tr], ref = { p: s0.ref.p, v: s0.ref.v, a: s0.ref.a, th: [0, 0, 0], w: [0, 0, 0], al: [0, 0, 0] };
   const goal = r.goal, turfY = goal.pos[1], gH = { pos: [goal.pos[0], goal.pos[1] + hB, goal.pos[2]], rot: goal.rot };
-  const s1 = stepSegment(ref, goal, T, { z: Math.max(ref.p[1], goal.pos[1]) + apex, tk: 0.5 * T }), s2 = stepSegment(ref, gH, T, { z: Math.max(ref.p[1], gH.pos[1]) + apex, tk: 0.5 * T });
+  const zK = r.anchor.pos[1] + apex, s1 = stepSegment(ref, goal, T, { z: zK, tk: 0.5 * T }), s2 = stepSegment(ref, gH, T, { z: zK, tk: 0.5 * T });   // the harness / E2 knot rule: anchor + apex (corrected 2026-10-07; first version used max(start, goal) + apex)
   const k1 = kin(s1, turfY, T), k2 = kin(s2, turfY, T), h80 = (sg) => (stepAt(sg, 0.8 * T).pos[1] - turfY) * 1000; rows.push({ f: f.slice(14, -8), tr, k1, k2, h1: h80(s1), h2: h80(s2), dh: h80(s2) - h80(s1) }); }
 const mx = (a) => Math.max(...a), mn = (a) => Math.min(...a), keys = ["aH", "aV", "jH", "jV"];
 console.log(`runs ${rows.length}, h_B ${(hB * 1000).toFixed(2)} mm`);
