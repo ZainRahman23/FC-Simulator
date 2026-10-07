@@ -204,6 +204,28 @@ If E2 passes: stop before repeated stepping / E3.
 
 As in TD2 (A4): implemented from this design only after TD2B validates, with identity checks, before any PG-1 / E2 run.
 
-## 9. Amendments (dated, before any battery run)
+## 9. Amendments (dated 2026-10-07; before any battery run, committed with the freeze)
 
-(none yet)
+**A1. Evaluator scope of B-8.**
+- The search-floor bound applies to the **search phases** (first search, escalated search), as §5 states ("the active search floor").
+- The first evaluator version also applied it to approach rows. In beyond / noground the commanded foothold is 10 mm up, so the early swing lies below that floor; the result was a false flag in smoke.
+- Corrected before the freeze.
+
+**A2. Design-verification smoke** (11 runs, V2-REF L 240 R-F in every condition, plus V2-long-legs L 180 H-T45 nominal, V2-198-92 L 180 R-L beyond, V2-198-92 L 480 H-D earlyOOE and R-L noground; disclosed):
+- **AB:** b63184da.
+- **nominal / earlyC / lateC:** contact 143 – 153 ms into the search at 23 – 31 mm/s; impact 4.6 – 5.8 % BW; 0 E1a-7 violations.
+- **beyond:** escalation, then contact in the escalated search at ≈ 9 mm/s; impact 2 – 3 % BW; 0 violations.
+- **noground:** no contact, explicit failure, stance held, 0 violations.
+- **earlyOOE:** contact in the approach at 175 mm/s; impact 73 % (V2-REF) and 237 % BW (V2-198-92 480 H-D); rebound.
+
+  **V2-198-92 L 480 H-D earlyOOE blew up** (B-9: closure 0.23 J / tick, Σ+ 0.73 J; commanded Δτ0 up to ≈ 10¹⁴ N·m, applied ≤ 227 N·m; foot slid 22 cm). The mechanism:
+  1. E2's existing hand-back starts from the fast-descending approach reference and overshoots ≈ 3.8 mm below the landed anchor.
+  2. On this near-reach diagonal step the IK target becomes unreachable (residual up to 6.5 · 10⁻³).
+  3. The resolved-acceleration feed-forward (D1) and the rate terms are evaluated at the straight-knee singularity and explode in the command; the actuators clamp the applied torque.
+
+  This is a pre-existing controller robustness defect, exposed only by out-of-envelope early terrain.
+
+- **The preregistration is not changed:** B-9 stays gated on every run. **Prediction:** B-9 may fail for some earlyOOE cases (heavy bodies, near-reach steps), and the stop rule then applies.
+
+**A3.** No other change. TD2's regression is reproduced exactly with the parameterised module: TD nominal V2-REF L 240 R-F c76cadc7; TD late V2-198-92 R 480 H-D 56717579.
+
