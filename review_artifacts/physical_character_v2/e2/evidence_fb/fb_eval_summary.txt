@@ -1,0 +1,90 @@
+runs 2160/2160; runtime reachability exclusions 0
+trajectory | β (T-1) BASE / AB / F / T / FT | airborne β_y BASE / AB / F / T / FT | mean tilt φ .6–.85 (°) BASE / AB / F / T / FT | worst d_low [.75,.80] BASE / AB / F / T / FT
+  R-F    | 0.212 / -0.066 / -0.006 / -0.066 / -0.006 | 0.390 / 0.100 / 0.103 / 0.100 / 0.103 | 0.818 / 0.101 / 0.082 / 0.101 / 0.082 | -1.11 / -0.41 / -0.35 / -0.41 / -0.35
+  R-L    | 0.232 / 0.080 / 0.077 / 0.080 / 0.077 | 0.229 / 0.101 / 0.101 / 0.101 / 0.101 | 0.828 / 0.067 / 0.083 / 0.067 / 0.083 | 0.10 / -0.14 / -0.20 / -0.14 / -0.20
+  C-F7   | 0.261 / -0.029 / 0.011 / -0.029 / 0.011 | 0.371 / 0.096 / 0.096 / 0.096 / 0.096 | 0.669 / 0.081 / 0.073 / 0.081 / 0.073 | -0.75 / -0.29 / -0.27 / -0.29 / -0.27
+  C-F13  | 0.174 / -0.091 / -0.014 / -0.091 / -0.014 | 0.419 / 0.105 / 0.109 / 0.105 / 0.109 | 0.991 / 0.130 / 0.096 / 0.130 / 0.096 | -1.60 / -0.60 / -0.47 / -0.60 / -0.47
+  C-L5   | 0.276 / 0.084 / 0.082 / 0.084 / 0.082 | 0.276 / 0.094 / 0.094 / 0.094 / 0.094 | 0.648 / 0.059 / 0.072 / 0.059 / 0.072 | 0.00 / -0.09 / -0.14 / -0.09 / -0.14
+  H-T45  | 0.072 / -0.047 / 0.026 / -0.047 / 0.026 | 0.192 / 0.057 / 0.065 / 0.057 / 0.065 | 0.837 / 0.111 / 0.125 / 0.111 / 0.125 | -0.35 / -0.56 / -0.54 / -0.56 / -0.54
+  H-A40  | 0.241 / -0.023 / 0.021 / -0.023 / 0.021 | 0.353 / 0.099 / 0.101 / 0.099 / 0.101 | 0.891 / 0.108 / 0.096 / 0.108 / 0.096 | -1.09 / -0.46 / -0.42 / -0.46 / -0.42
+  H-D    | 0.179 / -0.039 / 0.001 / -0.039 / 0.001 | 0.238 / 0.116 / 0.122 / 0.116 / 0.122 | 1.140 / 0.115 / 0.101 / 0.115 / 0.101 | -0.90 / -0.56 / -0.52 / -0.56 / -0.52
+  H-F15  | 0.154 / -0.106 / -0.019 / -0.106 / -0.019 | 0.445 / 0.108 / 0.113 / 0.108 / 0.113 | 1.121 / 0.154 / 0.109 / 0.154 / 0.109 | -2.01 / -0.79 / -0.60 / -0.79 / -0.60
+REPORTED per configuration and set: late approach [φ .75, t_nc) violating runs / max cmd / app | transition [t_nc, SUPPORT) violating runs / max cmd / app | 1B stalls, σ = 1 after (s) vs σ_nom | approach vff-rate demand max (N·m/tick)
+  R AB | late 0/96 39.9 2.2 | trans 6/96 40.6 8.7 | stalls 0 σ1 — nom — | demand 36.6
+  R F  | late 0/96 38.9 2.2 | trans 1/96 40.0 8.7 | stalls 0 σ1 — nom — | demand 35.3
+  R T  | late 0/96 39.9 2.2 | trans 10/96 40.8 11.0 | stalls 14 σ1 0.098 nom 0.098 | demand 36.6
+  R FT | late 0/96 38.9 2.2 | trans 6/96 40.5 10.7 | stalls 8 σ1 0.098 nom 0.098 | demand 35.3
+  C AB | late 0/144 22.2 1.1 | trans 0/144 25.1 8.0 | stalls 0 σ1 — nom — | demand 20.7
+  C F  | late 0/144 22.0 1.1 | trans 0/144 22.2 8.0 | stalls 0 σ1 — nom — | demand 20.5
+  C T  | late 0/144 22.2 1.1 | trans 0/144 26.3 8.0 | stalls 0 σ1 0.098 nom 0.098 | demand 20.7
+  C FT | late 0/144 22.0 1.1 | trans 0/144 27.0 8.0 | stalls 0 σ1 0.098 nom 0.098 | demand 20.5
+  H AB | late 0/192 37.0 2.5 | trans 8/192 37.9 10.3 | stalls 0 σ1 — nom — | demand 33.4
+  H F  | late 0/192 36.6 2.5 | trans 12/192 37.3 10.7 | stalls 0 σ1 — nom — | demand 33.3
+  H T  | late 0/192 37.0 2.5 | trans 42/192 64.4 21.0 | stalls 61 σ1 0.098 nom 0.098 | demand 33.4
+  H FT | late 0/192 36.6 2.5 | trans 41/192 64.1 20.0 | stalls 58 σ1 0.098 nom 0.098 | demand 33.3
+REPORTED contact measures per set (median / max): foot |ω| at t1 (rad/s) | max potential-contact downward / tangential speed at t1 (mm/s) | mean tilt φ [.2, t1) (°) | 1A added wrench max hip / knee / ankle (N·m) | α̂ max (rad/s²) | α switch-off step (N·m)
+  R AB | 0.030 / 0.093 | 66.7 / 53.2 | 0.078 | 0.00 / 0.00 / 0.00 | 0.0 | 0.00
+  R F  | 0.027 / 0.100 | 66.5 / 45.6 | 0.080 | 2.16 / 0.43 / 0.00 | 18.2 | 1.03
+  R T  | 0.030 / 0.093 | 66.7 / 53.2 | 0.078 | 0.00 / 0.00 / 0.00 | 0.0 | 0.00
+  R FT | 0.027 / 0.100 | 66.5 / 45.6 | 0.080 | 2.16 / 0.43 / 0.00 | 18.2 | 1.03
+  C AB | 0.023 / 0.208 | 70.7 / 70.4 | 0.082 | 0.00 / 0.00 / 0.00 | 0.0 | 0.00
+  C F  | 0.019 / 0.144 | 65.3 / 64.4 | 0.078 | 1.38 / 0.17 / 0.00 | 10.7 | 0.62
+  C T  | 0.023 / 0.208 | 70.7 / 70.4 | 0.082 | 0.00 / 0.00 / 0.00 | 0.0 | 0.00
+  C FT | 0.019 / 0.144 | 65.3 / 64.4 | 0.078 | 1.38 / 0.17 / 0.00 | 10.7 | 0.62
+  H AB | 0.040 / 0.363 | 108.4 / 87.9 | 0.108 | 0.00 / 0.00 / 0.00 | 0.0 | 0.00
+  H F  | 0.035 / 0.464 | 107.3 / 78.6 | 0.099 | 2.33 / 0.30 / 0.00 | 18.7 | 1.96
+  H T  | 0.040 / 0.363 | 108.4 / 87.9 | 0.108 | 0.00 / 0.00 / 0.00 | 0.0 | 0.00
+  H FT | 0.035 / 0.464 | 107.3 / 78.6 | 0.099 | 2.33 / 0.30 / 0.00 | 18.7 | 1.96
+PASS G-2 (0 failing items)
+PASS G-3 (0 failing items)
+PASS 1A-0 (0 failing items)
+PASS 1A-1 (0 failing items)
+FAIL 1A-2 (1 failing items)
+PASS 1A-3 (0 failing items)
+PASS 1B-0 (0 failing items)
+PASS 1B-1 (0 failing items)
+PASS 1B-2 (0 failing items)
+FAIL 1B-3 (2 failing items)
+PASS 1B-4 (0 failing items)
+FAIL 1B-5 (3 failing items)
+PASS 1B-6 (0 failing items)
+FAIL 1B-7 (5 failing items)
+FAIL FT 1A-1 (437 failing items)
+PASS FT 1A-3 (0 failing items)
+PASS FT 1B-0 (0 failing items)
+PASS FT 1B-1 (0 failing items)
+PASS FT 1B-2 (0 failing items)
+FAIL FT 1B-3 (2 failing items)
+PASS FT 1B-4 (0 failing items)
+FAIL FT 1B-5 (3 failing items)
+PASS FT 1B-6 (0 failing items)
+FAIL FT 1B-7 (6 failing items)
+   1A-2: set H (a) foot |ω| at t1 (rad/s): median 0.0348 / max 0.4643 vs ref 0.0398 / 0.3626 (+0.01)
+   1B-3: set R: transition-region violating runs 10 > ref 6
+   1B-3: set H: transition-region violating runs 42 > ref 8
+   1B-5: set R landed-foot slip t1 → SUPPORT (mm): max 4.257 vs ref 3.071 (+1)
+   1B-5: set R: runs with rebounds 6 > ref 0
+   1B-5: set H landed-foot slip t1 → SUPPORT (mm): max 10.352 vs ref 5.850 (+1)
+   1B-7: set R 240 Hz: transition 4 > 2
+   1B-7: set R 480 Hz: transition 4 > 2
+   1B-7: set H 180 Hz: transition 10 > 0
+   1B-7: set H 240 Hz: transition 16 > 2
+   1B-7: set H 480 Hz: transition 16 > 6
+   FT 1A-1 AB-4c: PSTAR5CHABFT|V2-REF|L|180|R-F w_A steps 1
+   FT 1A-1 AB-4c: PSTAR5CHABFT|V2-REF|L|180|R-L w_A steps 1
+   FT 1A-1 AB-4c: PSTAR5CHABFT|V2-REF|L|180|C-F7 w_A steps 1
+   FT 1A-1 AB-4c: PSTAR5CHABFT|V2-REF|L|180|C-F13 w_A steps 1
+   FT 1A-1 AB-4c: PSTAR5CHABFT|V2-REF|L|180|C-L5 w_A steps 1
+   FT 1A-1 AB-4c: PSTAR5CHABFT|V2-REF|L|180|H-T45 w_A steps 1
+   FT 1B-3: set R: transition-region violating runs 6 > ref 1
+   FT 1B-3: set H: transition-region violating runs 41 > ref 12
+   FT 1B-5: set R landed-foot slip t1 → SUPPORT (mm): max 4.384 vs ref 3.300 (+1)
+   FT 1B-5: set R: runs with rebounds 5 > ref 0
+   FT 1B-5: set H landed-foot slip t1 → SUPPORT (mm): max 9.033 vs ref 5.815 (+1)
+   FT 1B-7: set R 180 Hz: transition 2 > 1
+   FT 1B-7: set R 240 Hz: transition 2 > 0
+   FT 1B-7: set R 480 Hz: transition 2 > 0
+   FT 1B-7: set H 180 Hz: transition 10 > 0
+   FT 1B-7: set H 240 Hz: transition 14 > 2
+   FT 1B-7: set H 480 Hz: transition 17 > 10
+G PASS | 1A DOES NOT VALIDATE | 1B DOES NOT VALIDATE | FT FAIL

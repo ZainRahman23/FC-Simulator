@@ -2361,3 +2361,40 @@ Options pending (user): timing (longer T / earlier knot / contact-seeking placem
 - Not yet wired into `plan()`.
 
 Stopped before PG-1 / official E2 as instructed. Not pushed.
+
+## 2026-10-06/07: 1A / 1B (`sources/2026-10-06_user_decision_1A1B_touchdown_timing.md`)
+
+### E2-14: 1A DOES NOT VALIDATE (one item), 1B DOES NOT VALIDATE → stopped before the touchdown coordinator
+
+**Preregistration** (`e2/FB1A_TR1B_PREREG.md`):
+- design and criteria in d6d4868;
+- freeze in 452cc60 with amendments A1 – A3 (A3 disclosed the smoke prediction that 1B fails).
+
+**Results** (`e2/FB1A_TR1B_RESULTS.md`, `e2/evidence_fb/`): 2,160 / 2,160 runs; G passes (identity; determinism vs AB2 864 / 864).
+
+**1A** (`d1FloatBase`: floating-base angular terms in D1's task conversion; α̂ only while genuinely airborne).
+- Correct: 1A-0's added error ≤ 10⁻⁶ against a like-for-like control.
+- The full AB2 contract passes, as does 1A-3.
+- **Fails 1A-2(a), set H:** max foot angular speed at the first touching tick 0.464 vs AB 0.363 rad/s; the median improves.
+- Diagnosis: on fast H-T45 swings that tick already carries the contact impulse (pivot spike), and AB's spike falls one tick later. Before the impact the configurations do not differ (post-hoc).
+- Behavioural effects are small and mixed.
+
+**1B** (`lcTransition: "cmd"`: complete approach / accommodation laws blended at command level under an E1a-7-certifying governor).
+- Construction checks pass: identity before engagement, closure, 0 transition-caused violations.
+- **Fails 1B-3 / 1B-5 / 1B-7:**
+  - transition-region violating runs R 6 → 10, H 8 → 42 (max commanded 64.4 N·m);
+  - 6 new rebounds;
+  - landed-foot slip up to 10.4 mm.
+- All violating ticks are the approach law's own change: swing damping × A's singularity-robust pelvis rate kept through the impact (the `srAll` mechanism). The per-factor a-blend had partly absorbed it.
+
+**Corrected attribution** (prereg §0):
+- the near-contact commanded rate is swing damping × q̈\* (pelvis rotation + reference) before contact, and the impact jolt after it;
+- the gain blend contributes ≤ 4.5 N·m / tick;
+- the coordinator draft's foot pitch was ankle activation-bound saturation.
+
+**Options pending (user):**
+- 1A: amend the measure to the last contact-free tick, or do not adopt;
+- 1B: put A's singularity-robust treatment out of the terminal regime before the possible-contact band (inside the coordinator design), or share the pelvis-motion rate;
+- whether to proceed to the coordinator on the AB baseline.
+
+Not pushed.
