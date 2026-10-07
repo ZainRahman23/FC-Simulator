@@ -319,4 +319,39 @@ If the user rejects this split, the 1B verdict reverts to "aggregate not certifi
 
 ## 7. Amendments (dated, before any battery run)
 
-(none yet)
+All of the following were committed with the implementation (freeze step 2), before any battery run.
+
+**A1 (2026-10-07), 1A-0 (b) / (c) tolerance: a like-for-like control.**
+- **What happened.** `tools/fb1a_check.mjs` was run during implementation. With the preregistered tolerance applied to the raw finite-difference error, it fails: max relative error 1.2·10⁻² (b) and 1.7·10⁻² (c).
+- **The cause is the existing D1, not 1A.** The original D1, with the pelvis at rest and the same configurations and references, has the **same** error distribution:
+  - median 2·10⁻⁶;
+  - p95 2.5 – 4·10⁻⁴;
+  - max 1.2 – 1.6·10⁻²;
+  - velocities exact to 10⁻⁹.
+
+  The source is D1's own 1 mm second-difference step for J̇ẋ and the segment angular-acceleration terms. That step is unchanged and default behaviour, so it may not be changed.
+- **Amended criterion.** For each case, the check builds a **control**: the original D1, frame at rest, given the relative reference that the check computes independently (v − v_p − ω_p × r, ω − ω_p, and the transport-corrected accelerations). The control resolves the same joint motion with the same discretisation. 1A's **added** error, (1A error in the moving frame) − (control error in its static frame), per component, must be ≤ 1·10⁻⁴ relative.
+- **Disclosure:** the amendment was made after seeing the raw check output (A1 is a numerical-correctness criterion, not a behavioural outcome).
+- **Result at freeze:** (a) 400 / 400 exact; (b) 1A's added error ≤ 1.1·10⁻⁷; (c) ≤ 1.1·10⁻⁶.
+
+**A2 (2026-10-07), evaluator and harness details:**
+- `tools/fb_eval.mjs` copies the AB2 run metrics verbatim from `tools/ab2_eval.mjs`.
+- **AB2-7 within 1A-1:** evaluated for the configuration under test only. A alone is not in this battery, and C-1 … C-3 are not part of 1A-1.
+- **Tick adjacency:** row times are recorded to 10⁻⁶ s, so adjacency is tested to 10⁻⁶.
+- **G-2:** compares the end hashes of BASE / AB with the AB2 run logs (`evidence_ab2/logs/run_logs.tgz`).
+- **1B-0:** compares all series and the listed row fields before the TOUCHDOWN entry.
+- **Harness recording additions** (recording only; hashes unchanged):
+  - K and D in the ledger record;
+  - the velocity feed-forward's pelvis-motion and target-motion parts (wPT), for the reported decomposition.
+- **Archived records:** 240 Hz V2-REF (left leg) and V2-198-92 (both legs).
+
+**A3 (2026-10-07), design-verification smoke results known before the battery (disclosed; the 1B design was NOT changed in response):**
+- **2 cases × 4 configurations.** Identity: AB reproduces b63184da / AB2. On V2-198-92 L 180 R-L, AB+T shows:
+  - one extra transition-region commanded violation (40.4 vs limit 40, at 3 ticks after contact; σ held by the governor, so the approach law's own change);
+  - a rebound at 0.19 s after contact. That rebound occurs after 1B disengaged, under the default contact law; the foot rose 0.96 mm, against 0.40 mm under AB.
+- **32 paired runs** (8 bodies × left leg × 240 Hz × R-F / R-L / C-L5 / H-D, AB vs AB+T):
+  - runs with transition-region E1a-7 violations: **AB 1 → AB+T 9** (max commanded / applied ratio up to 1.66 / 1.46, on H-D);
+  - rebounds: equal (8 / 8, all H-D, present under AB as well).
+- **The evaluator's mini-battery test** (3 groups × 5 configurations) attributes the AB+T violations to the approach law's internal change after the impact, (1 − σ)·Δτ_app ≈ −38 … −40 N·m with σ ≈ 0.07 – 0.1 held. That law keeps the swing damping and A's singularity-robust pelvis-motion rate (w_A = c) at nearly full weight during the impact.
+- Under AB, the per-factor a-blend reduces both within the same ticks.
+- **Prediction recorded here:** 1B-3 and 1B-5 are likely to fail in the battery. If they do, the stop rule applies and the diagnosis goes to the user. 1B is not redesigned before that decision.
