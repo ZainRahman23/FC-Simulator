@@ -249,3 +249,82 @@ Physics, timeline and commanding are otherwise identical, so DG-1 can compare en
 3. **B_cmd (10 × the body's largest isometric capacity) is my engineering threshold** separating saturation-level commands from numerical blow-up, which measured 10⁴ – 10¹⁸ N·m in TD2B. Checked against the counterfactual only to state the prediction above; not adjusted.
 4. **The added obstacle heights (+5, +20 mm)** were chosen as a bracket around E2's 10 mm magnitude. No run at those heights exists.
 5. **No D1G or TD2C code or run exists at this commit.**
+
+---
+
+# Part IV. Amendments (dated 2026-10-07; before any DG / TD2C battery run, committed with freeze step 2)
+
+## A1. Validity item V4: the execution certifier's torque-feasibility item (a design correction; disclosed)
+
+**Finding (design-verification smoke, before any battery run; `evidence_d1g_design/smoke_A1.txt`):**
+- With V1 – V3 only, the TD2B earlyOOE case V2-198-92 L 480 H-D under PSTAR5CHABTDC no longer creates energy (Σ+ 0.12 J; closure ≤ 0.006 J per tick).
+- But the guard engaged only when λ_min fell below ε², and by then the **last valid D1 was ≈ 5,000 N·m**: the fade stepped 104 N·m per tick against the E1a-7 commanded bound of 15 N·m, and the command reached 6,715 N·m, above B_cmd.
+- Traced (same smoke): over the 8 ticks before engagement, λ_min falls from 1.9 · 10⁻³ to 1.0 · 10⁻⁴ while the IK solution moves at up to 24 rad/s. D1 = 36 → 75 → 220 → 853 → 4,916 N·m.
+- The resolved acceleration scales as ≈ |ẋ|²/σ³. **The conditioning gate ε = 0.01 is the rate solve's validity threshold, not D1's**, and a valid-by-V1–V3 D1 is not bounded.
+- **I.2's rule as preregistered would therefore predictably fail DG-6 (ii) and U-2 (d).**
+
+**Correction:** add the remaining per-tick item of the same execution-feasibility certifier (`certifyExecution`), whose items for a swing state are reach, conditioning, joint rate (no bound is configured in the qualification) and torque feasibility.
+
+| # | condition | source |
+|---|---|---|
+| **V4** | **torque-feasible:** for every actuated axis of the leg, \|(gravity of the distal subtree + the D1 wrench) · axis\| ≤ the full-activation capacity at the IK target's anatomical angle and at the reference's coordinate rate max\|ẋ\| (D1's resolved rate), divided by (1 + `ACT.U_MARGIN`) | `certifyExecution`'s torque-feasibility item, the same expressions (gravity −9.81 m/s², `act.capFull`, the knee-angle term of the ankle, U_MARGIN 0.25). Evaluated at the tick's IK solution, frame and reference |
+| V1 – V3 | unchanged | |
+
+- **Valid = V1 ∧ V2 ∧ V3 ∧ V4.** The state machine, τ_g and every DG / U criterion are unchanged.
+- The certifier admits the qualified swings with ratio ≤ 0.20 (`evidence_exec/sweep.txt`), so V4 has a 5× margin there. Measured in smoke: ratio ≤ 0.14 (nominal), ≤ 0.22 (V2-long-legs 180 Hz H-T45), with no engagement and end hashes identical to TD2B.
+- **Consequence:** a held D1 cannot exceed capacity / (1 + U_MARGIN) + gravity. DG-6 (ii)'s 720 N·m limit is then not reachable by any body's capacity (max 3.6 N·m/kg × 92 kg / 1.25 = 265 N·m + gravity).
+- **Same smoke with V4:** engagement at the first contact tick (ratio 1.28); held D1 ≤ 92 N·m; guard-attributable step ≤ 3.7 N·m; Σ+ 0.095 J; command ≤ 1,424 N·m (B_cmd 3,312); classified UNEXPECTED_OBSTACLE; RECOVERED.
+- **Not a +10 mm special case:** the item is the certifier's own, applied to every D1 evaluation. DG-2's reach stress (no terrain) tests it independently.
+- **This amendment was triggered by a smoke run of the obstacle condition.** I judge it a correction toward the user's instruction ("from the existing execution-feasibility / IK machinery"), not a tuning: no number is chosen, and every threshold is the certifier's. The user may judge otherwise. The V1 – V3-only rule's predicted failure is recorded here.
+
+**Implementation** (`ctrl/v2_stand.js`):
+- `StandController.prototype.d1Feasible`;
+- the actuator layer is passed by the sim (`gates/v2_g2.js`: `ctrl.d1gAct = { act, uMargin: ACT.U_MARGIN }`, only when `d1Guard` is on).
+
+## A2. Operational definitions (tools; no criterion change)
+
+1. **Guard records** (`td2c_val`, `d1g_val`, `d1g_unit`): every non-PASS tick, every tick after one, every invalid tick, each with its preceding tick, carrying:
+   - the state, w, V1 – V4, λ_min, residual, the torque ratio, the unscaled source wrench;
+   - per swing-leg axis, the applied D1 part `d1x` and the source part `d1src`. These use the same per-axis mapping as the statics feed-forward, including the knee's locked-axis B1 mapping; ledger fields are recorded only with `d1Guard`.
+2. **DG-6:**
+   - (i) is checked as c = w · src per axis (FADE / RAMP) and c = 0 (OFF), to 10⁻⁹ N·m; FADE's source equals the preceding tick's source; the weight law of §I.3 to 10⁻¹².
+   - (ii) uses the per-axis guard-attributable step |Δw| · |d1src|.
+3. **Weight rounding floor:** the guard snaps w to 0 / 1 within 10⁻¹² of the end, so a fade / ramp lasts exactly τ_g / dt ticks. "Lasts" = from the first FADE (RAMP) tick to the first OFF (PASS) tick inclusive (DG-4 (b)).
+4. **DG-3 (a) D1 comparison:** made on samples where both legs are **valid**. An invalid D1 is never commanded, and at an ill-conditioned solve rounding differences are amplified by construction: smoke, |ΔD| up to 4 · 10¹⁹ N·m on invalid samples vs 6.5 · 10⁻⁸ N·m on valid ones. Flags, λ and residual classes are compared on every sample (except near-threshold samples, which are reported).
+5. **DG-1 (c):**
+   - the guard count comes from the wrapper (`tools/d1g_wrap.mjs`, which prints the evaluations / invalid count after the frozen tool's own line);
+   - engaged SV-2 runs are judged with the frozen SV-2 evaluator (`swing_servo_eval2`) on the guarded records, against `evidence_sv2/sv2_eval.json` (no newly failing item id for that run).
+6. **Engaged AB runs (DG-1 (a)):** the AB2 per-run items of B-1's evaluator (AB-2, AB2-4a, AB-4c, AB-5, AB-9, I-1, I-4, I-5, I-7, L-1, L-2). The pooled items are B-1's own on TDC nominal.
+7. **U-7 outcome:**
+   - ABORTED if the supervisor abort fired;
+   - else FELL if the existing fall detector fired;
+   - else RECOVERED if both feet SUPPORT at the end;
+   - else UNCLASSIFIED (fails).
+
+   §2a acceptance: if a contact was accepted, at ≥ 60 %.
+8. **U-1 windows** start at every swing-foot contact-onset tick (touch 0 → > 0) after liftoff. The cumulative closure is summed from the window's first tick.
+9. **B_cmd per body** = 10 × max over joints and directions of `jointAxisCapacities(...).Nm`.
+
+## A3. Design-verification smoke (disclosed; `evidence_d1g_design/smoke_A1.txt`)
+
+- **Bit-identical end hashes with the guard on:**
+  - AB nominal V2-REF L 240 R-F b63184da;
+  - TDC nominal V2-REF L 240 / 180 / 480 R-F (787cc0c9 at 240);
+  - TDC beyond V2-REF L 240 R-F; TDC noground V2-REF L 240 R-L 6f0f728f;
+  - TDC nominal V2-long-legs L 180 H-T45 d7816939;
+  - SV-2 V2-REF L 240 on R-F 3dd9f13d (0 invalid of 181).
+
+  All with zero invalid evaluations.
+- **Obstacle runs:**
+  - earlyOOE V2-198-92 L 480 H-D, as A1;
+  - obs20 V2-REF L 240 R-L: φ 0.757, 287 mm/s, 180 % BW, held D1 ≤ 63 N·m, Σ+ 0.14 J, window cumulative max 0.016 J, RECOVERED.
+- **Reach stress V2-REF L 240** (deep / far / diag):
+  - **guard off:** command 10¹⁷ – 10²⁰ N·m, closure up to 7.5 J per tick, Σ+ 47 – 87 J;
+  - **guard on:** command ≤ 1.96 kN·m (B_cmd 2,808), closure ≤ 0.024 J per tick, **Σ+ 0.39 – 0.41 J** (bound 0.5: **DG-5 is at risk** on heavier bodies or other rates, accrued mainly while the leg is held against its limits), held D1 ≤ 90 N·m.
+  - **deep falls with the guard off and on** (the posture's reach-feasibility pelvis lowering). Kept as preregistered; a fall does not exempt a run from DG-2 / DG-5.
+- **Mirror test** (V2-REF far): 169 samples, flags identical, λ to 6 · 10⁻⁹ relative, torque ratio to 3 · 10⁻⁹ relative, valid-sample D1 to 6.5 · 10⁻⁸ N·m.
+- **DG-0 at the implementation:** KV0 IDENTICAL, 58 / 58, 99c29491, b62309f5, 3dd9f13d, b63184da × 3, c76cadc7, 56717579, TD2B 787cc0c9 and 83369114 (the TD2B earlyOOE blow-up reproduced exactly with the guard off).
+
+## A4. No other change
+
+The criteria of Parts I – II, the conditions, heights, matrix and stop rules are unchanged.

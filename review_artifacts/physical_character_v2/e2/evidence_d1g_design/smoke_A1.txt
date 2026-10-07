@@ -1,0 +1,128 @@
+# D1G / TD2C design-verification smoke (disclosed in e2/D1G_TD2C_PREREG.md A1 / A3; before any battery run)
+
+## A1 trace: V2-198-92 L 480 H-D earlyOOE, PSTAR5CHABTDC with validity V1-V3 only (pre-A1 code): last D1 evaluations before engagement
+8.902083 lam 1.85e-3 |D1| 35.6 |xd| 4.80 |xdd| 50.2 vrel 0.208 acc 2.27 knee x3 -0.9940
+8.904167 lam 1.72e-3 |D1| 38.2 |xd| 4.91 |xdd| 54.8 vrel 0.205 acc 2.30 knee x3 -1.0023
+8.90625 lam 1.59e-3 |D1| 41.3 |xd| 5.02 |xdd| 60.3 vrel 0.202 acc 2.32 knee x3 -1.0108
+8.908333 lam 1.46e-3 |D1| 45.2 |xd| 5.15 |xdd| 67.1 vrel 0.199 acc 2.34 knee x3 -1.0195
+8.910417 lam 1.33e-3 |D1| 50.0 |xd| 5.30 |xdd| 75.6 vrel 0.196 acc 2.36 knee x3 -1.0285
+8.9125 lam 1.21e-3 |D1| 56.2 |xd| 5.48 |xdd| 86.5 vrel 0.194 acc 2.38 knee x3 -1.0377
+8.914583 lam 1.09e-3 |D1| 64.3 |xd| 5.68 |xdd| 100.6 vrel 0.193 acc 2.40 knee x3 -1.0473
+8.916667 lam 9.64e-4 |D1| 75.1 |xd| 5.93 |xdd| 119.7 vrel 0.193 acc 2.42 knee x3 -1.0573
+8.91875 lam 8.44e-4 |D1| 90.3 |xd| 6.24 |xdd| 146.4 vrel 0.194 acc 2.44 knee x3 -1.0678
+8.920833 lam 7.24e-4 |D1| 112.9 |xd| 6.64 |xdd| 186.1 vrel 0.198 acc 2.45 knee x3 -1.0791
+8.922917 lam 6.04e-4 |D1| 151.8 |xd| 7.25 |xdd| 254.3 vrel 0.205 acc 2.47 knee x3 -1.0914
+8.925 lam 4.84e-4 |D1| 220.3 |xd| 8.12 |xdd| 374.6 vrel 0.215 acc 2.48 knee x3 -1.1051
+8.927083 lam 2.96e-4 |D1| 852.8 |xd| 13.60 |xdd| 1481.8 vrel 0.265 acc 3.37 knee x3 -1.1303
+8.929167 lam 1.01e-4 |D1| 4915.6 |xd| 24.40 |xdd| 8616.4 vrel 0.285 acc 4.16 knee x3 -1.1683
+8.93125 lam 1.48e-9 |D1| 39026695651.0 |xd| 5960.19 |xdd| 68569494685.0 vrel 0.279 acc 4.85 knee x3 -1.2215
+8.933333 lam -6.79e-17 |D1| 1442604627406557.5 |xd| 187037493.59 |xdd| 2384109187200969.5 vrel 0.270 acc 5.45 knee x3 -1.2217
+8.935417 lam 1.21e-16 |D1| 1224483254597413.0 |xd| 145153411.95 |xdd| 2060378905261067.0 vrel 0.260 acc 5.97 knee x3 -1.2217
+pre-A1 run summary: invalid 52 / 343 ; cmdMax 6715.0 N·m; Σ+ 0.1224 J
+
+## smoke runs with V1-V4 (final code): TD2C harness log lines
+TD2CV nominal V2-REF L 240 Hz PSTAR5CHABG R-F: reach OK; liftoff 0.121 s; contact φ 0.910; abort none; outcome foot relocated; final SUPPORT/SUPPORT; class AB; D1G invalid 0/184; hash b63184da
+TD2CV beyond V2-REF L 240 Hz PSTAR5CHABTDC R-F: reach OK; liftoff 0.121 s; contact φ 2.958 FAILED-TD; abort none; outcome foot relocated; final SUPPORT/SUPPORT; class LATE_TOUCHDOWN; D1G invalid 0/486; hash 33bb4e6d
+TD2CV earlyOOE V2-198-92 L 480 Hz PSTAR5CHABTDC H-D: reach OK; liftoff 0.115 s; contact φ 0.809; abort none; outcome foot relocated; final SUPPORT/SUPPORT; class UNEXPECTED_OBSTACLE; D1G invalid 39/343; hash 8eab239f
+TD2CV noground V2-REF L 240 Hz PSTAR5CHABTDC R-L: reach OK; liftoff 0.121 s; contact φ — FAILED-TD; abort none; outcome foot relocated; final AIRBORNE/SUPPORT; class TOUCHDOWN_FAILED; D1G invalid 0/559; hash 6f0f728f
+TD2CV nominal V2-REF L 180 Hz PSTAR5CHABTDC R-F: reach OK; liftoff 0.133 s; contact φ 1.407; abort none; outcome foot relocated; final SUPPORT/SUPPORT; class TOUCHDOWN; D1G invalid 0/194; hash 5d5c319f
+TD2CV nominal V2-REF L 240 Hz PSTAR5CHABTDC R-F: reach OK; liftoff 0.121 s; contact φ 1.403; abort none; outcome foot relocated; final SUPPORT/SUPPORT; class TOUCHDOWN; D1G invalid 0/255; hash 787cc0c9
+TD2CV nominal V2-REF L 480 Hz PSTAR5CHABTDC R-F: reach OK; liftoff 0.115 s; contact φ 1.403; abort none; outcome foot relocated; final SUPPORT/SUPPORT; class TOUCHDOWN; D1G invalid 0/507; hash b8be1118
+TD2CV obs20 V2-REF L 240 Hz PSTAR5CHABTDC R-L: reach OK; liftoff 0.121 s; contact φ 0.757; abort none; outcome foot relocated; final SUPPORT/SUPPORT; class UNEXPECTED_OBSTACLE; D1G invalid 38/173; hash f1649632
+
+## TD2C evaluator on the smoke subset (pooled / cross-rate items need the full battery)
+runs 8/8; runtime reachability exclusions 0
+  AB nominal R       n   1 | viol 0 (PCI 0) 0.52 | tC -58 [-58, -58] | vN 63.4/63.4 vT 48.9 fvT 50.3 | impact 24.3/24.3 w10 15.6 first12 2.8 | I50 2.08 | pen -0.00 | reb 0 | slip 0.78 place 1.29 | dev 0.87 / — | approach
+  TD beyond R        n   1 | viol 0 (PCI 0) 0.52 | tC 1086 [1086, 1086] | vN 8.7/8.7 vT 0.7 fvT 0.6 | impact 1.4/1.4 w10 0.9 first12 0.0 | I50 -0.00 | pen -0.00 | reb 0 | slip 0.28 place 0.28 | dev 0.56 / 0.12 | escalated search
+  TD noground R      n   1 | viol 0 (PCI 0) 0.11 | tC — [—, —] | vN —/— vT — fvT — | impact —/— w10 — first12 — | I50 — | pen — | reb 0 | slip — place — | dev 0.50 / 0.18 | 
+  TD nominal R       n   3 | viol 0 (PCI 0) 0.52 | tC 153 [152, 154] | vN 22.7/24.1 vT 15.0 fvT 12.5 | impact 5.1/6.3 w10 3.4 first12 0.0 | I50 0.38 | pen -0.00 | reb 0 | slip 0.33 place 0.30 | dev 1.06 / 0.13 | search
+PASS TD-G2 (0 failing items)
+PASS TD-G3 (0 failing items)
+FAIL TD-1 (8 failing items)
+PASS TD-2 (0 failing items)
+PASS TD-3 (0 failing items)
+PASS TD-4 (0 failing items)
+PASS TD-5 (0 failing items)
+PASS TD-6 (0 failing items)
+PASS TD-7 (0 failing items)
+PASS TD-8 (0 failing items)
+PASS TD-9 (0 failing items)
+PASS TD-10 (0 failing items)
+PASS C-6x (0 failing items)
+PASS U-1 (0 failing items)
+PASS U-2 (0 failing items)
+PASS U-3 (0 failing items)
+PASS U-4 (0 failing items)
+PASS U-5 (0 failing items)
+PASS U-6 (0 failing items)
+PASS U-7 (0 failing items)
+PASS DG-6 (0 failing items)
+PASS DG-4b (0 failing items)
+   TD-1 AB-1: R-L pooled β —
+   TD-1 AB-1: C-F7 pooled β —
+   TD-1 AB-1: C-F13 pooled β —
+   TD-1 AB-1: C-L5 pooled β —
+   TD-1 AB-1: H-T45 pooled β —
+   TD-1 AB-1: H-A40 pooled β —
+touchdown time spread across rates (diagnostic) nominal: median 1.4 ms, max 1.4 ms
+touchdown time spread across rates (diagnostic) earlyC: median — ms, max — ms
+touchdown time spread across rates (diagnostic) lateC: median — ms, max — ms
+touchdown time spread across rates (diagnostic) beyond: median — ms, max — ms
+OBSTACLE obs5: n 0; outcomes {}; D1G engaged 0 (rate-inconsistent 0); contact φ med —; vN med/max —/— mm/s; impact med/max —/— % BW (10 ms —); I50 — N·s; rebounds 0; pen min — mm; slip max — mm (stance —); E1a-7 runs 0 (worst —); sat R/C runs 0; held D1 max —; |τ0| max —; |Δτ0| max —; strict E1a-8 runs 0; Σ+ max —; window cum. max —; impact-tick closure min —
+OBSTACLE earlyOOE: n 1; outcomes {"RECOVERED":1}; D1G engaged 1 (rate-inconsistent 0); contact φ med 0.809; vN med/max 175/175 mm/s; impact med/max 239/239 % BW (10 ms 79); I50 10.75 N·s; rebounds 1; pen min -0.19 mm; slip max 35.74 mm (stance 0.01); E1a-7 runs 1 (worst 38.27); sat R/C runs 0; held D1 max 92.1; |τ0| max 1424; |Δτ0| max 574; strict E1a-8 runs 0; Σ+ max 0.095; window cum. max 0.002; impact-tick closure min -0.000
+OBSTACLE obs20: n 1; outcomes {"RECOVERED":1}; D1G engaged 1 (rate-inconsistent 0); contact φ med 0.757; vN med/max 287/287 mm/s; impact med/max 180/180 % BW (10 ms 101); I50 10.51 N·s; rebounds 1; pen min -0.01 mm; slip max 29.83 mm (stance 0.02); E1a-7 runs 1 (worst 24.34); sat R/C runs 0; held D1 max 62.9; |τ0| max 1217; |Δτ0| max 730; strict E1a-8 runs 0; Σ+ max 0.137; window cum. max 0.016; impact-tick closure min -0.349
+D1G engagements outside the obstacle class: 0
+TD2C: DOES NOT VALIDATE
+
+## reach stress V2-REF L 240 (guard off / on) and the mirror probe
+(eval):5: no matches found: /private/tmp/claude-501/-Users-zainrahman/8af3fa3f-f134-4178-b7ae-7855027dda6e/scratchpad/d1g/smk2/*.log
+D1GV far V2-REF L 240 Hz PSTAR5CHAB R-F: reach REJECTED; liftoff 0.121 s; contact φ —; abort none; outcome foot relocated; final AIRBORNE/SUPPORT; class —; D1G invalid 0/0; hash f7b99c8a
+D1GV far V2-REF L 240 Hz PSTAR5CHABG R-F: reach REJECTED; liftoff 0.121 s; contact φ —; abort none; outcome foot relocated; final AIRBORNE/SUPPORT; class —; D1G invalid 259/534; hash d823bca7
+D1GV far V2-REF R 240 Hz PSTAR5CHABG R-F: reach REJECTED; liftoff 0.121 s; contact φ —; abort none; outcome foot relocated; final SUPPORT/AIRBORNE; class —; D1G invalid 258/534; hash e1874cd9
+D1GU mirror samples 169, flag mismatches 0, max |ΔD| 4.39e+19 N·m, max rel 1.20e+5; initial mirror error 0.00e+0 mm | far V2-REF L 240 Hz PSTAR5CHABG R-F: reach REJECTED; liftoff 0.121 s; contact φ —; abort none; outcome foot relocated; final AIRBORNE/SUPPORT; class —; D1G invalid 259/534; hash d823bca7
+SV2 V2-REF L 240 Hz on R-F: reach OK; liftoff 0.121 s; contact φ 0.889; abort none; outcome foot relocated; final SUPPORT/SUPPORT; hash 3dd9f13d
+D1G-WRAP PSTAR5CH: evaluations 181, invalid 0
+PSTAR5CHABG_deep.json.gz   fallT 9.654166666666667 closMax 0.0121 Σ+ 0.397 cmdMax 1.96e+3 dTau0 1.46e+3 heldMax 64.3
+PSTAR5CHABG_diag.json.gz   fallT null closMax 0.0121 Σ+ 0.414 cmdMax 1.79e+3 dTau0 1.30e+3 heldMax 84.2
+PSTAR5CHABG_far.json.gz    fallT null closMax 0.0242 Σ+ 0.391 cmdMax 1.75e+3 dTau0 1.41e+3 heldMax 89.7
+PSTAR5CHAB_deep.json.gz    fallT 10.379166666666666 closMax 5.8279 Σ+ 86.559 cmdMax 1.25e+20 dTau0 1.25e+20 heldMax 0.0
+PSTAR5CHAB_diag.json.gz    fallT null closMax 6.1236 Σ+ 47.287 cmdMax 1.33e+19 dTau0 1.33e+19 heldMax 0.0
+PSTAR5CHAB_far.json.gz     fallT null closMax 7.5414 Σ+ 82.878 cmdMax 1.19e+17 dTau0 1.19e+17 heldMax 0.0
+
+## D1G evaluator on the smoke subset
+REPORTED reach stress: runs | engaged | fell / aborted | max |τ0| | max |Δτ0| | closure max / Σ+ max | held D1 max | guard-attributable step max | E1a-7 applied / commanded violating runs | non-finite runs
+  guard ON deep    n 0 | eng 0 | fell 0 / abort 0 | τ0 -Infinity | Δτ0 -Infinity | clos — / — | held — | attr — | E1a-7 0 / 0 | nonfinite 0
+  guard OFF deep   n 0 | eng 0 | fell 0 / abort 0 | τ0 -Infinity | Δτ0 -Infinity | clos — / — | held — | attr — | E1a-7 0 / 0 | nonfinite 0
+  guard ON far     n 2 | eng 2 | fell 0 / abort 0 | τ0 1.75e+3 | Δτ0 1.41e+3 | clos 0.0242 / 0.391 | held 89.7 | attr 3.74 | E1a-7 2 / 2 | nonfinite 0
+  guard OFF far    n 1 | eng 0 | fell 0 / abort 0 | τ0 1.19e+17 | Δτ0 1.19e+17 | clos 7.5414 / 82.878 | held 0.0 | attr 0.00 | E1a-7 1 / 1 | nonfinite 0
+  guard ON diag    n 0 | eng 0 | fell 0 / abort 0 | τ0 -Infinity | Δτ0 -Infinity | clos — / — | held — | attr — | E1a-7 0 / 0 | nonfinite 0
+  guard OFF diag   n 0 | eng 0 | fell 0 / abort 0 | τ0 -Infinity | Δτ0 -Infinity | clos — / — | held — | attr — | E1a-7 0 / 0 | nonfinite 0
+DG-3a mirror samples 169 (near-threshold, reported 0); valid-sample max |ΔD| 6.52e-8 N·m; DG-4a repeats 1; DG-1c compared 1, engaged 0
+PASS DG-G (0 failing items)
+PASS DG-1c (0 failing items)
+PASS DG-2 (0 failing items)
+PASS DG-3a (0 failing items)
+PASS DG-3b (0 failing items)
+PASS DG-4a (0 failing items)
+FAIL DG-4b (2 failing items)
+PASS DG-5 (0 failing items)
+PASS DG-6 (0 failing items)
+   DG-4b: V2-REF|far|L: engagement across rates {"240":true}
+   DG-4b: V2-REF|far|R: engagement across rates {"240":true}
+D1G (DG-1c, DG-2 … DG-6 outside TD2C): FAIL
+
+## DG-0 identity (final code)
+KV0 IDENTICAL
+PASS R11.b  touchRest: the released, touching foot rests (load in (0, loadOff)) without losing contact (G3 U:R, lifecycle): release 6.196 s, contact losses 0, resting load 1.07 N (loadOff 7.74 N)
+
+component regressions: 58/58 pass
+PASS a 99c29491
+PASS c b62309f5
+PASS sv2 3dd9f13d
+PASS ab b63184da
+PASS td2a b63184da
+PASS td2ba b63184da
+PASS td2n c76cadc7
+PASS td2l 56717579
+PASS td2bn 787cc0c9
+PASS td2bo 83369114
