@@ -1,0 +1,37 @@
+# Erratum E1 evidence (e2/DVG_PREREG.md A5)
+## defect: TD2C-amendment smoke, earlyOOE V2-198-92 L 480 H-D with b08b77a — the held D1 dropped when the commanded target ended mid-fade (tick 4339: ffOn false, no D1 array)
+## after the fix: amended TD2C smoke (8 runs) — U-1..U-7, DG-6 PASS
+
+## CQ-6x release-variant smoke (deepRel, corrected code): DVG vs R0 vs guard off
+V2-198-92_180 released 9.100 closure max 0.1473 Σ+ 0.816 [release+0.1 s 0.586] max |τ0| 1.31e+3
+V2-198-92_480 released 9.040 closure max 0.0204 Σ+ 0.333 [release+0.1 s 0.251] max |τ0| 1.34e+3
+V2-REF_180 released 9.056 closure max 0.1393 Σ+ 0.585 [release+0.1 s 0.436] max |τ0| 6.50e+2
+V2-REF_480 released 8.994 closure max 0.0169 Σ+ 0.207 [release+0.1 s 0.144] max |τ0| 6.71e+2
+R0_V2-198-92_180 released 9.228 closure max 0.1289 Σ+ 0.624 [release+0.1 s 0.473] max |τ0| 7.68e+2
+R0_V2-REF_180 released 9.167 closure max 0.1413 Σ+ 0.564 [release+0.1 s 0.438] max |τ0| 5.97e+2
+OFF_V2-198-92_180 released 9.100 closure max 10.7950 Σ+ 47.436 [release+0.1 s 2.127] max |τ0| 4.89e+15
+OFF_V2-REF_180 released 9.056 closure max 9.0505 Σ+ 33.206 [release+0.1 s 1.363] max |τ0| 3.17e+18
+
+## identity at the corrected code
+KV0 IDENTICAL
+PASS R11.b  touchRest: the released, touching foot rests (load in (0, loadOff)) without losing contact (G3 U:R, lifecycle): release 6.196 s, contact losses 0, resting load 1.07 N (loadOff 7.74 N)
+
+component regressions: 58/58 pass
+PASS a 99c29491
+PASS c b62309f5
+PASS sv2 3dd9f13d
+PASS ab b63184da
+PASS td2a b63184da
+PASS td2ba b63184da
+PASS td2n c76cadc7
+PASS td2l 56717579
+PASS td2bn 787cc0c9
+PASS td2bo 83369114
+PASS d1gv1 d823bca7
+
+## corrected-code smoke
+SV2 V2-long-legs L 240 Hz on C-L11: reach OK; liftoff 0.121 s; contact φ 1.063; abort none; outcome foot relocated; final SUPPORT/SUPPORT; hash b9822fd7
+DVG-WRAP PSTAR5CH: evaluations 408, invalid 237
+DVGV deep V2-198-92 L 240 Hz PSTAR5CHABV R-F: reach REJECTED; liftoff 0.121 s; contact φ —; abort none; outcome foot relocated; final AIRBORNE/SUPPORT; class —; DVG invalid 264/534; hash a9ff2f0a
+E1b run (P15) V2-165-62 L-lift 20.0 mm: outcome recovered; lift 8.300 s; ABORT at 9.721 s; clear 9.725 s (abort (supervisor put-down: capture-timed quintic to the anchor)); end 20.93 s; 5022 ticks; hash e6e2b493
+DVG-WRAP inject: evaluations 390, invalid 0

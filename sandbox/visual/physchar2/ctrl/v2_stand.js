@@ -666,8 +666,11 @@ StandController.prototype.dvgStep = function (n, L, dt, st, ev) {
   } else if (g.mode === "FADE") { g.w = dn(g.w, Cs); src = g.held; if (g.w <= 0) { g.mode = "OFF"; g.held = null; } }
   else if (valid) { g.w = up(0, Cf); g.last = fresh; src = fresh; g.mode = g.w >= 1 ? "PASS" : "RAMP"; }   // OFF → RAMP
   if (g.mode !== "PASS") { const w = g.w, sc = (b) => ({ T: Object.fromEntries(Object.entries(b.T).map(([k, v]) => [k, V.sc(v, w)])), xd: b.xd, xdd: b.xdd });   // PASS: the fresh terms untouched
-    if (this.accFF) this.accFF[n] = src && src.d1 && w > 0 ? sc(src.d1) : null;
-    for (const k of ks) { if (this.ikW && this.ikW[k]) this.ikW[k] = src && src.w[k] && w > 0 ? V.sc(src.w[k], w) : [0, 0, 0]; if (this.ikWref && this.ikWref[k]) this.ikWref[k] = src && src.wr[k] && w > 0 ? V.sc(src.wr[k], w) : [0, 0, 0]; } }
+    // the guard owns the leg's IK-derived terms until PASS: the held / ramped terms are applied even on a tick that evaluates no fresh term of that kind (e.g. no D1 once the commanded
+    // target has ended mid-fade) — erratum E1 of e2/DVG_PREREG.md (the first implementation dropped a held term without a fresh slot in one tick)
+    if (src && src.d1 && w > 0) { if (!this.accFF) this.accFF = [null, null]; this.accFF[n] = sc(src.d1); } else if (this.accFF) this.accFF[n] = null;
+    for (const k of ks) { if (this.ikW) { if (src && src.w[k] && w > 0) this.ikW[k] = V.sc(src.w[k], w); else if (this.ikW[k]) this.ikW[k] = [0, 0, 0]; }
+      if (this.ikWref) { if (src && src.wr[k] && w > 0) this.ikWref[k] = V.sc(src.wr[k], w); else if (this.ikWref[k]) this.ikWref[k] = [0, 0, 0]; } } }
   G[n] = { ...g, tick: this.n, valid, okR, okC, okF, okT, tRatio, err: r.err, lam, wq, src, srcTick: src ? src.tick : null, fresh, Cprev: g.mode === "RAMP" ? Cf : Cs, Csrc: 0, Cfresh: 0, rateEnv: 0 };
 };
 // DVG recording: the applied terms of every non-supporting default-path leg (the carry-over state when the leg enters the domain); their unit contribution C is measured in the torque loop

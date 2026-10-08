@@ -257,3 +257,44 @@ The repository implementation reproduces the design-study prototype bit-for-bit 
 ## A4. No other change
 
 The criteria of §4, the sets, the attribution rule and the stop rules are unchanged.
+
+## A5. Erratum E1 (implementation), the aborted first CQ run, and the added set CQ-6x (dated 2026-10-08; before any CQ evaluation)
+
+### Erratum E1 (implementation, not design)
+
+**The defect:**
+- The first implementation (b08b77a) applied the guard's held / ramped terms only into slots the tick had already filled with a fresh term.
+- When the commanded target ended mid-fade, no D1 was evaluated (no swing reference), and the held D1 was dropped in one tick. That violated §1: "once engaged, until back in PASS"; FADE "holds the last valid terms".
+
+**How it was found:**
+- By the smoke of the prepared TD2C amendment (amended `td2c_val` / `td2c_eval`; earlyOOE V2-198-92 L 480 H-D and obs20 V2-198-92 L 180 H-D).
+- `guardLaw` flagged 162 and 18 per-axis law violations on the post-contact hand-back ticks after the target cleared.
+
+**Fix:** the guard now applies its terms whether or not the tick produced a fresh one (`dvgStep` outputs).
+- Re-smoke: 0 law violations; U-1 … U-7 and DG-6 pass on those runs.
+- The stress hash is unchanged (deep V2-198-92 L 240 a9ff2f0a: the target is held there, so the defect could not occur).
+
+### The first CQ run (b08b77a)
+
+- It was started (00:58) and **aborted at 01:05, unevaluated**, as soon as the defect was confirmed: 73 / 1,426 jobs done, CQ-0 12 PASS lines.
+- It was not evaluated, and none of its runs is used.
+- It is kept aside as `scratchpad dvgcq/run_aborted_b08b77a` and listed in the results.
+
+### Added set CQ-6x: domain exit with the guard engaged (a strengthening, prompted by the defect class)
+
+**Condition `deepRel`:** "deep", with the commanded target **released at T**, so the guard must complete its fade under the contact / rest law with no commanded target.
+- 8 bodies × 2 legs × 3 rates × {PSTAR5CHABV, PSTAR5CHABVR0} = 96 runs.
+
+**Gated:**
+- CQ-2 (i) – (iv), (v);
+- CQ-3 (b) pairs and CQ-4 (b) rates;
+- **CQ-6** (the full guard law, incl. after the release).
+
+**Energy reported, not gated**, with its R0 comparison:
+- The release of a fully extended leg produces a per-tick closure burst in the first 0.1 s that is present **without** IK-derived feed-forward: R0 0.47 – 0.56 J; 0.13 – 0.15 J per tick at 180 Hz. This is the unresolved TD-15 end-range regime, which the user ruled gates any certification of that regime.
+- **Disclosed before freezing:** in the smoke, V2-198-92 180 Hz deepRel had Σ+ 0.816 J vs R0 0.624 J (excess 0.19 J > CQ-5's 0.05 J), while V2-REF 180 Hz exceeded R0 by 0.02 J; 480 Hz runs were clean.
+- **The CQ-5 rule for the frozen sets (deep / far / diag) is unchanged.** CQ-6x's energy line is reported as found (`erratum_E1_and_cq6x_smoke.txt`).
+
+**Run list:** stress 528 (432 + 96). Freeze step 2b commits the corrected implementation, `dvg_val` (deepRel) and `dvg_eval` (CQ-6x).
+
+**CQ-0 at the corrected code:** 12 PASS (KV0, 58 / 58, every reference hash, the D1G v1 record d823bca7).
