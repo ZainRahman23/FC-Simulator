@@ -1,0 +1,861 @@
+{
+  "schema_version": 1,
+  "created_on": "2026-10-08",
+  "purpose": "Retrospective extraction, not raw transcript export",
+  "repository": "ZainRahman23/FC-Simulator",
+  "archive_base_commit": "9e95b87ad04adc0cd7fc1ec39bc318acb8153c3e",
+  "source_limitations": [
+    "Personal-context retrieval exposes selected dated excerpts/summary classifications, not an exhaustive raw chat export.",
+    "Original chat UUIDs/message IDs and attachment bytes were not exposed.",
+    "Speaker and timestamp assignments are recorded as supplied; grouped/ambiguous ones are marked.",
+    "Current archive-request messages and unrelated physics results returned by retrieval were excluded."
+  ],
+  "sources": [
+    {
+      "id": "G01",
+      "title": "Repository and archive publication",
+      "source_kind": "GitHub connector inspection",
+      "events": [
+        {
+          "timestamp_utc": "2026-10-08T02:12:04Z",
+          "speaker": "Git commit",
+          "claim": "c1328ef1e9d5b251d45c9cb92a769b965a0fed3c archives 11 original screenshots; 9 concern manager UI.",
+          "status": "git_confirmed"
+        },
+        {
+          "timestamp_utc": "2026-10-08T02:12:04Z",
+          "speaker": "Git commit",
+          "claim": "9e95b87ad04adc0cd7fc1ec39bc318acb8153c3e updates docs/TOUCHLINE_DEVELOPMENT_CHRONICLE.md through the 7 October development day and 8 October publication housekeeping.",
+          "status": "git_confirmed"
+        },
+        {
+          "timestamp_utc": null,
+          "speaker": "Repository metadata",
+          "claim": "Default branch is visual-integration-v1; the chronicle is on touchline-current. Repository permission metadata reports push/admin but an actual documentation-branch create returned HTTP 403 Resource not accessible by integration. No branch or repository files were changed.",
+          "status": "observed_this_session"
+        }
+      ],
+      "limitations": "Commit publication time is not the development time of the archived work. Repository listing/search omitted FC-Simulator; direct get_repo/read succeeded.",
+      "original_locator": "https://github.com/ZainRahman23/FC-Simulator/commit/9e95b87ad04adc0cd7fc1ec39bc318acb8153c3e"
+    },
+    {
+      "id": "G02",
+      "title": "Chronicle format and maintenance policy",
+      "source_kind": "GitHub file inspection",
+      "events": [
+        {
+          "timestamp_utc": null,
+          "speaker": "Committed chronicle",
+          "claim": "One development-day entry, local day running until 06:00 the following morning; bold Evidence, starting state, experiments/decisions, end-of-day and next-step narrative; Fact/Reconstructed/Uncertain distinctions.",
+          "status": "git_confirmed"
+        },
+        {
+          "timestamp_utc": null,
+          "speaker": "Committed Appendix F",
+          "claim": "Unmodified original screenshots in review_artifacts/chronicle_screens/<date>_<subject>/; MANIFEST.tsv records folder,file,original_name,bytes,sha256,original_mtime_local,subject. Documentation-only publication; exclude personal images/third-party footage.",
+          "status": "git_confirmed"
+        },
+        {
+          "timestamp_utc": null,
+          "speaker": "Committed chronicle",
+          "claim": "August 18 broad first website (touchline(1).html rejected, touchline(2).html successor), simulator lineage and integration are already represented. Do not add them again.",
+          "status": "git_confirmed"
+        }
+      ],
+      "limitations": "Historical local timezone must not be inferred from the current account timezone. New chat retrieval is an extraction, not a full raw transcript.",
+      "original_locator": "https://github.com/ZainRahman23/FC-Simulator/blob/9e95b87ad04adc0cd7fc1ec39bc318acb8153c3e/docs/TOUCHLINE_DEVELOPMENT_CHRONICLE.md"
+    },
+    {
+      "id": "G03",
+      "title": "Existing screenshot manifest",
+      "source_kind": "GitHub file inspection",
+      "events": [
+        {
+          "timestamp_utc": null,
+          "speaker": "MANIFEST.tsv",
+          "claim": "11 records: 2 physical/reference records excluded from this supplement and 9 manager-UI records selected by recorded captions.",
+          "status": "git_confirmed"
+        }
+      ],
+      "limitations": "This session inspected manifest metadata and Git paths, not the nine image rasters. Existing image SHA-256 values are recorded by Claude, not recomputed here.",
+      "original_locator": "https://github.com/ZainRahman23/FC-Simulator/blob/9e95b87ad04adc0cd7fc1ec39bc318acb8153c3e/review_artifacts/chronicle_screens/MANIFEST.tsv"
+    },
+    {
+      "id": "G04",
+      "title": "Existing parallel manager-workstream summaries",
+      "source_kind": "GitHub chronicle excerpts",
+      "events": [
+        {
+          "timestamp_utc": null,
+          "speaker": "October 1 entry",
+          "claim": "Two AI-generated Salah card files and Diamond Flip/Glimmer HTML are already noted. Authorship is marked uncertain; images were not archived because they depict a real player.",
+          "status": "git_confirmed"
+        },
+        {
+          "timestamp_utc": null,
+          "speaker": "October 4 entry",
+          "claim": "Touchline_Squad_Updated.html and first captured standings/squad states are recorded.",
+          "status": "git_confirmed"
+        },
+        {
+          "timestamp_utc": null,
+          "speaker": "October 5 entry",
+          "claim": "Thirteen playable-interface iterations and four screenshot subjects are recorded; source HTML is local/outside the repositories. Locomotion reuse research immediately follows the UI bullet block.",
+          "status": "git_confirmed"
+        },
+        {
+          "timestamp_utc": null,
+          "speaker": "Milestone map",
+          "claim": "October 1–7 redesigned manager app is already a summary milestone. Expand it, do not count it as a second implementation.",
+          "status": "git_confirmed"
+        }
+      ],
+      "limitations": "These records corroborate existence/workstream timing, not every interaction, test assertion, or exact byte match to a chat attachment.",
+      "original_locator": "https://github.com/ZainRahman23/FC-Simulator/blob/9e95b87ad04adc0cd7fc1ec39bc318acb8153c3e/docs/TOUCHLINE_DEVELOPMENT_CHRONICLE.md"
+    },
+    {
+      "id": "C01",
+      "title": "Design Salah Card — tiers, photographic direction and flip prototype",
+      "source_kind": "Retrieved ChatGPT history excerpts",
+      "events": [
+        {
+          "timestamp_utc": "2026-10-01T16:36:36Z",
+          "speaker": "User",
+          "claim": "Reusable manager-simulation season cards, not promo/event cards.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-01T17:43:36Z",
+          "speaker": "User",
+          "claim": "Tier thresholds: Diamond 90+, black/gold 85–89, gold 75–84, silver 65–74, bronze 55–64, copper ≤54. Reject AI faces in favour of real photographs.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-01T17:56:04Z",
+          "speaker": "User",
+          "claim": "Real photographic headshots; remove/blacken jersey, preserve face pixels.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-01T18:23:41Z",
+          "speaker": "Assistant",
+          "claim": "Downloaded real Salah photo, began replacing faces across six cards; exports unfinished after editing disconnected during edge cleanup.",
+          "status": "reported_partial_implementation"
+        },
+        {
+          "timestamp_utc": "2026-10-01T21:05:29Z",
+          "speaker": "Assistant",
+          "claim": "Delivered Touchline_Salah_Flip.html and Touchline_Salah_Back_Preview.jpg; later Diamond Flip and Glimmer variants were reported.",
+          "status": "reported_prototype_delivery"
+        },
+        {
+          "timestamp_utc": "2026-10-01T23:14:44Z",
+          "speaker": "Assistant",
+          "claim": "Delivered Touchline_Liverpool_2027_Cards.zip with 19 cards.",
+          "status": "reported_artifact_delivery"
+        }
+      ],
+      "limitations": "No historical card or HTML bytes recovered in this session. Exact individual timestamps for later Diamond/Glimmer outputs are not recovered; Git supplies local file-time corroboration. The repaired six-tier photo export was not demonstrated complete.",
+      "original_locator": "Chat title: Design Salah Card; original conversation UUID not exposed by retrieval"
+    },
+    {
+      "id": "C02",
+      "title": "Liverpool corrected fronts/backs and playable squad",
+      "source_kind": "Retrieved ChatGPT history excerpts",
+      "events": [
+        {
+          "timestamp_utc": "2026-10-02T13:06:25Z",
+          "speaker": "User",
+          "claim": "Correct Liverpool workbook ratings/buckets and make matching backs/positions.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-02T13:39:50Z",
+          "speaker": "Assistant",
+          "claim": "Delivered corrected 21-player fronts/backs, 42 transparent PNGs; tactical fields remained unassigned.",
+          "status": "reported_artifact_delivery"
+        },
+        {
+          "timestamp_utc": "2026-10-02T16:29:41Z",
+          "speaker": "Assistant",
+          "claim": "Touchline_Squad.html delivered: dragging/dropping players, formations, expandable bench, flip cards and tactical controls.",
+          "status": "reported_prototype_delivery"
+        },
+        {
+          "timestamp_utc": "2026-10-02T18:02:32Z",
+          "speaker": "Assistant",
+          "claim": "Workbook-driven live ratings; Szoboszlai CDM; −5 to each attribute for out-of-position selection; Van Dijk CB88 → ST76 → CB88 and Szoboszlai CDM82 reported.",
+          "status": "reported_implementation_test"
+        }
+      ],
+      "limitations": "A later retrieved account says final save/visual sizing remained unresolved after a dropped connection. Do not conflate logic checks with final file persistence or production integration. One retrieval mislabels the Squad output as Matchday; no such renaming is assumed.",
+      "original_locator": "Chat titles: Design Salah Card / Liverpool Player Stats Extraction"
+    },
+    {
+      "id": "C03",
+      "title": "Attribute-based weak-foot flank penalties",
+      "source_kind": "Retrieved ChatGPT history excerpts",
+      "events": [
+        {
+          "timestamp_utc": "2026-10-02T22:10:17Z",
+          "speaker": "Assistant",
+          "claim": "Reported Barcola RW80 at 3★ and no flank penalty at 5★; latest extracted 4★→1★ HIGH penalties −3/−4/−5/−6, MEDIUM −2/−3/−4/−5, LOW −1/−2/−3/−4.",
+          "status": "reported_implementation_test"
+        },
+        {
+          "timestamp_utc": "2026-10-02T22:11:25Z",
+          "speaker": "Assistant",
+          "claim": "Delivered 2026-27-ratings-flank-rules-updated.xlsx; 226 player checks; Szoboszlai CDM and attribute-based flank rules.",
+          "status": "reported_artifact_delivery"
+        }
+      ],
+      "limitations": "A pre-existing saved summary gives a different progression (e.g. 3★ −6/−4/−2). Preserve the discrepancy; original workbook bytes are required before treating either table as an authoritative final implementation.",
+      "original_locator": "sandbox:/workspace/scratch/0352664771fb/outputs/flank-ratings-update/2026-27-ratings-flank-rules-updated.xlsx"
+    },
+    {
+      "id": "C04",
+      "title": "Pack opening and Influence controls",
+      "source_kind": "Retrieved ChatGPT history plus visible prior-conversation excerpt",
+      "events": [
+        {
+          "timestamp_utc": "2026-10-02T23:08:13Z",
+          "speaker": "User",
+          "claim": "Tear the pack from the top, five tier-coloured concealed cards fly left-to-right, click to reveal.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-02T23:27:59Z",
+          "speaker": "Assistant",
+          "claim": "Delivered Touchline_Pack_Opening.html; tear, five-card sequence, reveal/replay and Diamond glints reported.",
+          "status": "reported_prototype_delivery"
+        },
+        {
+          "timestamp_utc": null,
+          "speaker": "User, visible excerpt within Design Salah Card thread",
+          "claim": "Design surrounding match UI without wiring gameplay. Limit ways to spend Influence to at most six; state-dependent losing/tied/winning controls; start0/8, +1 each15min, +1 halftime, intended7/game; player-role cost1. Later Change Formation cost4 and ratings closer to names for a larger stamina bar.",
+          "status": "designed_decided"
+        }
+      ],
+      "limitations": "The exact message dates of the last Influence corrections and a verified final Matchday build were not recovered. Keep them as a session-associated decision, not a dated completed engine feature.",
+      "original_locator": "Chat title: Design Salah Card"
+    },
+    {
+      "id": "C05",
+      "title": "Finance simplification, transfers and staff",
+      "source_kind": "Retrieved ChatGPT history excerpts",
+      "events": [
+        {
+          "timestamp_utc": "2026-10-03T11:33:24Z",
+          "speaker": "User",
+          "claim": "Finance HTML: SCR-style gauge,85% budget, expand scale to150% after100%,115% fine marker, established Touchline quality.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-03T12:03:53Z",
+          "speaker": "Assistant",
+          "claim": "Touchline_Finance.html delivered with interactive revenue/cost charts, forecasts, cash/signing planner; calculations checked, visuals incomplete.",
+          "status": "reported_prototype_delivery"
+        },
+        {
+          "timestamp_utc": "2026-10-03T12:37:37Z",
+          "speaker": "User",
+          "claim": "No amortization; one-time transfer fees; sales return full amount1:1; overage reduces next-season budget; spending95% against85% produces75% next-season budget;24-point threshold120%, not130%.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-03T13:03:59Z",
+          "speaker": "Assistant",
+          "claim": "Updated copies supplied; £100m sale adds£100m room;95% spending →75% budget; existing-file save failed.",
+          "status": "reported_implementation_test"
+        },
+        {
+          "timestamp_utc": "2026-10-03T14:15:14Z",
+          "speaker": "Assistant",
+          "claim": "Finance revision adds POT beside OVR and Transfer player search/popup, illustrative offers, full-fee credit/wage savings, budget impact and Undo.",
+          "status": "reported_prototype_delivery"
+        },
+        {
+          "timestamp_utc": "2026-10-03T17:42:58Z",
+          "speaker": "Assistant",
+          "claim": "Staff artifact delivered with six roles, searchable hiring, traits, manager tiers, contracts and budget updates.",
+          "status": "reported_prototype_delivery"
+        }
+      ],
+      "limitations": "These are the project’s simplified game rules, not claims about real financial regulations. Exact final staff filename and byte identity were not recovered. Saved context mentions 6–8 roles/traits, but do not elevate an undated request to a tested final count.",
+      "original_locator": "sandbox:/Users/zainrahman/Documents/Codex/2026-10-01/new-chat-2/touchline_finance/Touchline_Finance.html"
+    },
+    {
+      "id": "C06",
+      "title": "October 3 consolidated ratings export",
+      "source_kind": "Retrieved ChatGPT history excerpts",
+      "events": [
+        {
+          "timestamp_utc": "2026-10-03T15:37:29Z",
+          "speaker": "Assistant",
+          "claim": "Delivered 2026-27-ratings-final-review-2026-10-03.xlsx:226 players,11 changed profiles, earlier Liverpool edits and original formulas retained; review/position/change/validation tabs; no formula errors reported.",
+          "status": "reported_artifact_delivery"
+        },
+        {
+          "timestamp_utc": "2026-10-03T15:37:29Z",
+          "speaker": "Assistant",
+          "claim": "Reported Haaland PAS71 correction and POT≥OVR correction for Olise/Yamal/Kane. Named11 profiles: Dembélé,Haaland,Mbappé,Olise,Bellingham,Kane,Hakimi,Saliba,Yamal,Messi,Nuno Mendes.",
+          "status": "reported_calculation"
+        }
+      ],
+      "limitations": "Retrieved numeric OVR summaries conflict with pre-existing saved summaries for several players. Do not assert a complete final rating table without recovering the workbook. No formulas were recalculated in this reconstruction.",
+      "original_locator": "sandbox:/mnt/data/2026-27-ratings-final-review-2026-10-03.xlsx"
+    },
+    {
+      "id": "C07",
+      "title": "October 4 re-ranking and pending Araújo",
+      "source_kind": "Retrieved ChatGPT history excerpts",
+      "events": [
+        {
+          "timestamp_utc": "2026-10-04T13:30:53Z",
+          "speaker": "Assistant",
+          "claim": "Delivered 2026-27-ratings-updated-ranked-2026-10-04.xlsx:226 players,416 approved input changes across20 players, physical ranks1–226, Rank changes tab,78 eligible-position calculations, no formula errors reported.",
+          "status": "reported_artifact_delivery"
+        },
+        {
+          "timestamp_utc": "2026-10-04T13:30:53Z",
+          "speaker": "Assistant",
+          "claim": "Anderson87.40→87 and Barcola81.46→81, approved attributes unchanged; Messi rank6→4, Osimhen12→8. Export supersedes October3 file for the reviewed data.",
+          "status": "reported_calculation"
+        },
+        {
+          "timestamp_utc": "2026-10-04T19:53:45Z",
+          "speaker": "User / retrieved pending-edit record",
+          "claim": "Araújo original-baseline edits remain pending.",
+          "status": "designed_pending"
+        },
+        {
+          "timestamp_utc": "2026-10-04T19:55:10Z",
+          "speaker": "Assistant",
+          "claim": "Araújo proposed/current, not locked or workbook-delivered.",
+          "status": "reported_pending"
+        }
+      ],
+      "limitations": "No October4 workbook bytes recovered; numbers are contemporaneous reported calculations, not independent verification. Full Araújo raw attributes appear only in saved context and are not asserted as an applied change.",
+      "original_locator": "sandbox:/mnt/data/2026-27-ratings-updated-ranked-2026-10-04.xlsx"
+    },
+    {
+      "id": "C08",
+      "title": "Broad club-management mockup and Figma limits",
+      "source_kind": "Retrieved ChatGPT history excerpts",
+      "events": [
+        {
+          "timestamp_utc": "2026-10-04T19:48:17Z",
+          "speaker": "User",
+          "claim": "Unify simulator UI; focus team management, with Home destinations Ultimate Team,Draft,Career,Manage a Club.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-04T20:07:50Z",
+          "speaker": "User",
+          "claim": "Use Squad stadium/card theme and Matchday buttons. Manager/Club Runner share full controls; differ in firing/leaving/continuity. Calendar core:match/training/rest. Browser first.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-04T20:29:40Z",
+          "speaker": "User",
+          "claim": "Create mockup from previous session and accepted visual direction.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-04T21:16:54Z",
+          "speaker": "Assistant",
+          "claim": "Touchline_Club_Management_Mockup.html and Touchline_Mockup_Package.zip reported.",
+          "status": "reported_prototype_delivery"
+        },
+        {
+          "timestamp_utc": "2026-10-04T21:18:38Z",
+          "speaker": "Assistant",
+          "claim": "Earlier scope claimed33-screen mockup and Touchline_Mockup_Handoff.zip.",
+          "status": "reported_scope_claim"
+        },
+        {
+          "timestamp_utc": "2026-10-04T21:29:28Z",
+          "speaker": "Assistant",
+          "claim": "Final account:30-screen connected HTML,21-player/stadium assets,23 checks; Touchline_Mockup_Review_Package.zip. Figma retained shells/navigation/tokens/10 components, detailed content/original images unfinished after quota.",
+          "status": "reported_partial_implementation"
+        }
+      ],
+      "limitations": "30/33 counts differ across the session and are not a verified screen inventory. Figma edit access is not proof of completed detailed mockups. Gameplay was not integrated. No current Figma canvas inspection performed.",
+      "original_locator": "Chat titles: Map Touchline Mockup / Check Figma Edit Access"
+    },
+    {
+      "id": "C09",
+      "title": "Standings concepts and first linked HTML",
+      "source_kind": "Retrieved ChatGPT history excerpts",
+      "events": [
+        {
+          "timestamp_utc": "2026-10-04T21:36:58Z",
+          "speaker": "User",
+          "claim": "Refine standings with shared Squad quality, switching,qualification/relegation markers and console-style UI.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-04T21:57:39Z",
+          "speaker": "User",
+          "claim": "Reject concepts2 and5; prefer concept1’s modern console feel and clarity; quieter matchday,no Overall/Home/Away/trophy; Next opponent crest then dash after season.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-04T22:04:38Z",
+          "speaker": "User",
+          "claim": "Reject distracting/AI-looking stadium or pitch backgrounds in these concepts; try clean-charcoal directions.",
+          "status": "exploratory_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-05T02:14:16Z",
+          "speaker": "User",
+          "claim": "Require actual HTML, qualification/relegation bands and Squad navigation.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-05T02:25:27Z",
+          "speaker": "Assistant",
+          "claim": "Touchline_Playable.html and Touchline_HTML_Source.zip reported; standings20 teams, zones,Liverpool highlight,Next crests,navigation.",
+          "status": "reported_prototype_delivery"
+        },
+        {
+          "timestamp_utc": "2026-10-05T02:40:10Z",
+          "speaker": "Assistant",
+          "claim": "Playable HTML: centred single-colour zones,star user indicator,PL/UCL/Carabao/FA; interaction checks reported, browser verification blocked.",
+          "status": "reported_implementation_test"
+        },
+        {
+          "timestamp_utc": "2026-10-05T03:59:36Z",
+          "speaker": "Assistant",
+          "claim": "Solid-gold Liverpool fill/purple rim revision reported.",
+          "status": "reported_prototype_delivery"
+        },
+        {
+          "timestamp_utc": "2026-10-05T04:04:56Z",
+          "speaker": "Assistant",
+          "claim": "User-requested revert to prior treatment, rim removed.",
+          "status": "reported_reversion"
+        }
+      ],
+      "limitations": "The last two UTC times straddle the 06:00 boundary under +01 versus +02 local offsets; retain exact UTC and do not silently assign them. Earlier 02:xx messages unambiguously belong to October4 development day under either documented offset.",
+      "original_locator": "Chat title: Standings Visual Concepts"
+    },
+    {
+      "id": "C10",
+      "title": "Focused standings hierarchy/material/crest revisions",
+      "source_kind": "Retrieved ChatGPT history excerpts",
+      "events": [
+        {
+          "timestamp_utc": "2026-10-05T11:36:12Z",
+          "speaker": "User",
+          "claim": "Fix right-shifted Liverpool row; normalize crests including Chelsea; player-card metal-quality reference.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-05T11:53:12Z",
+          "speaker": "Assistant",
+          "claim": "Touchline_Playable_Fixed.html:20 crest corrections,Liverpool alignment,18px purple frame; Chromium8 widths,navigation/table refresh,no JS errors reported.",
+          "status": "reported_implementation_test"
+        },
+        {
+          "timestamp_utc": "2026-10-05T12:02:01Z",
+          "speaker": "User",
+          "claim": "Reject oversized/neon/nested treatment; require2–4px subtle compound/directional rim; later request one stronger uncluttered strip.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-05T12:52:52Z",
+          "speaker": "Assistant",
+          "claim": "Touchline_Playable_Metallic.html plus Metallic_Rim_Detail.png/Standings_Metallic.png;7px foil band,8px lower curves; desktop/Retina/mobile comparisons reported.",
+          "status": "reported_implementation_test"
+        },
+        {
+          "timestamp_utc": "2026-10-05T13:15:57Z",
+          "speaker": "User",
+          "claim": "Focused hierarchy pass; preserve established theme/geometry.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-05T13:32:04Z",
+          "speaker": "Assistant",
+          "claim": "Touchline_Playable_Hierarchy.html:arrows/chevron removed,integrated/brighter headings;8 viewport/Retina configurations and navigation checked,no JS errors reported.",
+          "status": "reported_implementation_test"
+        },
+        {
+          "timestamp_utc": "2026-10-05T20:33:21Z",
+          "speaker": "User",
+          "claim": "Only requested headers,six teams,centred competition dividers.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-05T20:35:36Z",
+          "speaker": "Assistant",
+          "claim": "Touchline_Playable_Six_Teams.html; code checks pass,rendered layout unverified.",
+          "status": "reported_prototype_delivery"
+        }
+      ],
+      "limitations": "These are revisions, not a single frozen material specification:18px→requested2–4px→reported7px. Do not combine them into a fictitious final design. Test claims were not rerun here.",
+      "original_locator": "Chat titles: Fix Team Logo Wrapping / Update HTML Design"
+    },
+    {
+      "id": "C11",
+      "title": "Knockout refinement and two cup extensions",
+      "source_kind": "Retrieved ChatGPT history excerpts",
+      "events": [
+        {
+          "timestamp_utc": "2026-10-06T01:00:32Z",
+          "speaker": "User",
+          "claim": "Fixed panel size,SEMI-FINALS/FINAL headings,larger final crests,proportional logo scaling,Chelsea correction; dim eliminated score when final leg draws.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-06T01:05:02Z",
+          "speaker": "Assistant",
+          "claim": "Touchline_Playable_Minimal_Knockouts.html updated with headings,larger final crests/names,fixed panel;appearance unverified.",
+          "status": "reported_prototype_delivery"
+        },
+        {
+          "timestamp_utc": "2026-10-06T01:33:03Z",
+          "speaker": "Assistant",
+          "claim": "FA and Carabao from third round to final;own palettes,penalty outcomes;progression checks passed,44 crest links checked;draws illustrative,crests online.",
+          "status": "reported_implementation_test"
+        }
+      ],
+      "limitations": "Chronicle day October5, not October6. Retrieval does not independently establish whether the requested drawn-final-leg loser-dimming fix was in the final bytes.",
+      "original_locator": "sandbox:/Users/zainrahman/Documents/Codex/2026-10-05/new-chat-3/Touchline_Playable_Minimal_Knockouts.html"
+    },
+    {
+      "id": "C12",
+      "title": "Training-ground research prototype",
+      "source_kind": "Retrieved ChatGPT history excerpts",
+      "events": [
+        {
+          "timestamp_utc": "2026-10-05T22:25:01Z",
+          "speaker": "Assistant",
+          "claim": "Harbour Training Centre delivered:Touchline_Training_Ground.html,Touchline_Training_Ground_Research.html,Touchline_Training_Ground_Source.zip,preview PNG. Main/second pitches,GK/technical areas,performance centre,equipment,shelters,fencing,floodlights/landscaping. Canvas render/geometry checks reported.",
+          "status": "reported_prototype_delivery"
+        }
+      ],
+      "limitations": "Browser controls and Mixed×2 unverified; not integrated into live game. Exact preview basename and full source URLs not recovered; research claims not freshly fact-checked.",
+      "original_locator": "Chat title: Training Pitch Research / Branch · Training Pitch Research"
+    },
+    {
+      "id": "C13",
+      "title": "Exposure-only progression: early design",
+      "source_kind": "Retrieved ChatGPT history excerpts",
+      "events": [
+        {
+          "timestamp_utc": "2026-10-06T02:01:31Z",
+          "speaker": "User",
+          "claim": "Remove age from positive development; age drives a separate decline system.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-06T02:12:10Z",
+          "speaker": "User",
+          "claim": "Exposure small/nonnegative; performance separate,larger,bidirectional. For70OVR/85POT:0min light/medium/intense70/71/73–74;60min71/72/75;90min72/73/76.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-06T02:15:35Z",
+          "speaker": "Assistant",
+          "claim": "Early reference52 matches/190 training sessions; season match contribution60min+1,90min+2; approximate light/medium/intense+.25/+1/+3.5.",
+          "status": "exploratory_proposal"
+        }
+      ],
+      "limitations": "Chronicle day October5. The52-match reference was revised to50 the next development day; these are design targets, not tested season outcomes.",
+      "original_locator": "Chat title: Refine Development Model"
+    },
+    {
+      "id": "C14",
+      "title": "Exposure calibration and implementation-ready package",
+      "source_kind": "Retrieved ChatGPT history excerpts",
+      "events": [
+        {
+          "timestamp_utc": "2026-10-06T11:49:19Z",
+          "speaker": "User",
+          "claim": "Reference50 matches/190 sessions; training Light.00125,Medium.005,Intense.0175/session; match credits15min.00187,30.00612,45.01223,60.020,75.02929,90.040.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-06T11:52:13Z",
+          "speaker": "User",
+          "claim": "POT scaling should be curved, little falloff until close to potential.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-06T12:05:32Z",
+          "speaker": "User",
+          "claim": "Medium+90min reference exposure targets by POTgap:0→0,1→.2,2→.4,3→.8,4→1.2,5→1.6,6→2,7→2.2,8→2.4,9→2.6,10→2.8,11+→approximately3.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-06T15:26:45Z",
+          "speaker": "Assistant",
+          "claim": "TOUCHLINE_Exposure_Development_Package.zip delivered:spec Markdown,JSON config,JS module; calibration/POT/example/integration instructions; performance kept separate.",
+          "status": "reported_artifact_delivery"
+        }
+      ],
+      "limitations": "Package was described as implementation-ready; not equivalent to authoritative engine integration. No original JS/config recovered or executed in this reconstruction. Exact interpolation should be recovered, not reinvented from targets.",
+      "original_locator": "sandbox:/mnt/data/TOUCHLINE_Exposure_Development_Package.zip"
+    },
+    {
+      "id": "C15",
+      "title": "Aging curves revised, then packaged",
+      "source_kind": "Retrieved ChatGPT history excerpts",
+      "events": [
+        {
+          "timestamp_utc": "2026-10-06T15:57:50Z",
+          "speaker": "User",
+          "claim": "Wide attackers start decline27;early4.0 annual-base cap accepted.",
+          "status": "designed_decided_then_revised"
+        },
+        {
+          "timestamp_utc": "2026-10-06T19:48:46Z",
+          "speaker": "User",
+          "claim": "Revised wide ages29–33:.8,1.5,3,4,3;CB30–40:.5,1,2,3,4,3,2,2.5,3,3.5,4;ST34–40:2,2.5,3,3.5,4,4,4.5.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-06T20:08:35Z",
+          "speaker": "Assistant",
+          "claim": "Reported midfielder curve≤25:0;26:.1,27:.2,28:.4,29:.6,30:1,31:2,32:4,33:3,34:2,35:1,36:1.25,37:1.5,38:2,39:2.5,40:3.",
+          "status": "reported_intermediate_design"
+        },
+        {
+          "timestamp_utc": "2026-10-06T20:15:04Z",
+          "speaker": "Assistant",
+          "claim": "Reported41+ cliff:41:5,42:7,43:9,44:12,45+:15;described as universal across wide/striker/midfield.",
+          "status": "reported_design"
+        },
+        {
+          "timestamp_utc": "2026-10-06T20:29:33Z",
+          "speaker": "Assistant",
+          "claim": "Later midfield correction:27:.40,28:1,29:1.25,30:1.5,31:1.75,32:4;41+ cliff retained.",
+          "status": "reported_later_design"
+        },
+        {
+          "timestamp_utc": "2026-10-06T21:03:50Z",
+          "speaker": "Assistant",
+          "claim": "Delivered TOUCHLINE_Aging_Fitness_v1-2026-10-06.zip.",
+          "status": "reported_artifact_delivery"
+        }
+      ],
+      "limitations": "Never combine the20:08 and20:29 midfielder values as one final table. Early4cap is incompatible with laterST4.5 and41+ values; full final config/GK rules/age convention/internal package inventory were not recovered.",
+      "original_locator": "sandbox:/mnt/data/TOUCHLINE_Aging_Fitness_v1-2026-10-06.zip"
+    },
+    {
+      "id": "C16",
+      "title": "Fitness exception and role-specific packages",
+      "source_kind": "Retrieved ChatGPT history excerpts",
+      "events": [
+        {
+          "timestamp_utc": "2026-10-06T17:48:18Z",
+          "speaker": "User",
+          "claim": "Fitness bypasses POT suppression; other training remains POT-suppressed.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-06T18:01:18Z",
+          "speaker": "User",
+          "claim": "Accepted halved190-Medium-session Fitness packages by position; exact vector table is reproduced in QUANTITATIVE_RECORD.md.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-06T21:13:42Z",
+          "speaker": "Assistant",
+          "claim": "Fitness direct athletic gains,not generic training credit;no double counting;Normal locked,Light/Intense provisional.",
+          "status": "reported_design"
+        },
+        {
+          "timestamp_utc": "2026-10-06T21:22:44Z",
+          "speaker": "Assistant",
+          "claim": "Preview roles:Wide Stamina/Sprint/Balance;ST Strength/Stamina/Jumping;midfield Stamina/Strength/Balance;CB Strength/Jumping/Balance;provisional fills withheld.",
+          "status": "reported_prototype_delivery"
+        }
+      ],
+      "limitations": "A normal-intensity package does not prove final light/intense calibration. Outfield groups only recovered.",
+      "original_locator": "Chat titles: Refine Development Model / Branch · Training Pitch Research"
+    },
+    {
+      "id": "C17",
+      "title": "Calendar progression implementation and honest UI",
+      "source_kind": "Retrieved ChatGPT history excerpts",
+      "events": [
+        {
+          "timestamp_utc": "2026-10-06T15:32:20Z",
+          "speaker": "User",
+          "claim": "Replace time/load with development and stamina;Rest+25%,Light+15%,Normal+5%,Intense−10%;advance to chosen matchday,auto-sim intervening matches,leave target match unplayed.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-06T21:11:23Z",
+          "speaker": "User",
+          "claim": "Hide tiny OVR decimals;LOW/STANDARD/HIGH with proportional7%/29%/100% meter,not misleading1/2/3 bars.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-06T21:17:39Z",
+          "speaker": "Assistant",
+          "claim": "Calendar HTML updated with meters,Fitness and season-end aging;18 logic checks passed;visual verification unavailable.",
+          "status": "reported_implementation_test"
+        },
+        {
+          "timestamp_utc": "2026-10-06T21:29:00Z",
+          "speaker": "User",
+          "claim": "Set Pieces normal POT-suppressed,role-specific;Jumping excluded.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-06T21:32:08Z",
+          "speaker": "Assistant",
+          "claim": "Set Pieces added;19 logic checks passed;visuals unverified.",
+          "status": "reported_implementation_test"
+        },
+        {
+          "timestamp_utc": "2026-10-06T21:55:50Z",
+          "speaker": "Assistant",
+          "claim": "Remove player selector;automatic role/attribute preview every3seconds with hover pause.",
+          "status": "reported_prototype_delivery"
+        },
+        {
+          "timestamp_utc": "2026-10-06T22:08:30Z",
+          "speaker": "Assistant",
+          "claim": "Preview moved into Set Pieces area and corrected to8-second single timer.",
+          "status": "reported_prototype_delivery"
+        },
+        {
+          "timestamp_utc": "2026-10-06T22:20:24Z",
+          "speaker": "Assistant",
+          "claim": "Initialize starters at45% stamina;rest demonstrates70%.",
+          "status": "reported_implementation_test"
+        }
+      ],
+      "limitations": "Prototype logic checks are historical assistant reports, not independently rerun tests or production game integration. Rotation3seconds was superseded by8seconds.",
+      "original_locator": "sandbox:/Users/zainrahman/Documents/Codex/2026-10-05/new-chat-5/Touchline_Playable_Calendar.html"
+    },
+    {
+      "id": "C18",
+      "title": "Performance benchmark calibration",
+      "source_kind": "Retrieved ChatGPT history excerpts plus visible thread sequence",
+      "events": [
+        {
+          "timestamp_utc": "2026-10-06T22:51:29Z",
+          "speaker": "Assistant",
+          "claim": "Earlier universal expected rating proposal+.03 perOVR:60≈6.1,70≈6.4,80≈6.7,90≈7.0.",
+          "status": "exploratory_proposal"
+        },
+        {
+          "timestamp_utc": null,
+          "speaker": "User, earlier within same session",
+          "claim": "Prefer linear/bucketed league-specific expected ratings;EPL75=6.0,85=7.0. Compare ST,wingers,CAM;99 outputs initially too low,then wing/CAM top end too generous after tests.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-07T00:25:44Z",
+          "speaker": "Assistant",
+          "claim": "Reported75–80OVR stress tests against2025–26 EPL G+A/90;CAM biggest generosity problem,ST high,wings close.",
+          "status": "reported_analysis"
+        },
+        {
+          "timestamp_utc": "2026-10-07T00:31:46Z",
+          "speaker": "User",
+          "claim": "CAM at that level far too generous;wing very close;striker high.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-07T00:32:21Z",
+          "speaker": "Assistant",
+          "claim": "Latest retrieved response supplies proposed ST/wing/CAM curves (quantitative appendix);no implementation/export recorded.",
+          "status": "exploratory_proposal"
+        }
+      ],
+      "limitations": "Earlier anchor adoption timestamps are not separately exposed; retrieval sometimes groups them under the last user correction. G+A/90/minutes-confidence was favoured in the discussion; exact acceptance of every supporting rule is not established. Underlying sports statistics not reverified; do not treat proposed curve as a final calibrated model.",
+      "original_locator": "Chat title: Refine Development Model"
+    },
+    {
+      "id": "C19",
+      "title": "October7 calendar/competition polish",
+      "source_kind": "Retrieved ChatGPT history excerpts",
+      "events": [
+        {
+          "timestamp_utc": "2026-10-07T12:06:03Z",
+          "speaker": "Assistant",
+          "claim": "Removed duplicate Prepare match/debug notices;competition colours in legend;dim out-of-month cells.",
+          "status": "reported_prototype_delivery"
+        },
+        {
+          "timestamp_utc": "2026-10-07T13:09:05Z",
+          "speaker": "Assistant",
+          "claim": "Compact,bolder dark-charcoal cutoff band.",
+          "status": "reported_prototype_delivery"
+        },
+        {
+          "timestamp_utc": "2026-10-07T13:14:45Z",
+          "speaker": "Assistant",
+          "claim": "Apply EPL header fade/charcoal table styling to FA and Carabao.",
+          "status": "reported_prototype_delivery"
+        },
+        {
+          "timestamp_utc": "2026-10-07T13:21:39Z",
+          "speaker": "Assistant",
+          "claim": "Stamina colours/custom emerald bolt updated.",
+          "status": "reported_prototype_delivery"
+        },
+        {
+          "timestamp_utc": "2026-10-07T21:47:23Z",
+          "speaker": "User",
+          "claim": "Only copy left Squad base from supplied HTML;fitness bolt/100%white;keep original gold stars;change nothing else.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-07T21:49:23Z",
+          "speaker": "Assistant",
+          "claim": "Calendar HTML delivered with original left styling/gold stars restored,only fitness icon/percentage white.",
+          "status": "reported_prototype_delivery"
+        },
+        {
+          "timestamp_utc": "2026-10-07T21:53:06Z",
+          "speaker": "User / retrieved iteration summary",
+          "claim": "Try almost-black green,grainy charcoal,then exact standings background;last accepted direction exact standings dark-glass.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-07T22:07:49Z",
+          "speaker": "User",
+          "claim": "Light-green status text→muted/light red distinct from bolt;competition-name text in competition colour.",
+          "status": "designed_decided"
+        },
+        {
+          "timestamp_utc": "2026-10-07T22:09:45Z",
+          "speaker": "Assistant timestamp only",
+          "claim": "Retrieval exposed a response timestamp but not its body;targeted follow-up did not recover it.",
+          "status": "uncertain"
+        }
+      ],
+      "limitations": "Last red-status/league-text request is not promoted to completed implementation. Exact final HTML bytes unavailable; earlier screenshot may predate these changes.",
+      "original_locator": "sandbox:/Users/zainrahman/Documents/Codex/2026-10-05/new-chat-5/Touchline_Playable_Calendar.html"
+    },
+    {
+      "id": "U01",
+      "title": "Unplaced material and search limits",
+      "source_kind": "Saved context / failed targeted retrieval",
+      "events": [
+        {
+          "timestamp_utc": null,
+          "speaker": "Saved summary",
+          "claim": "2026-27-ratings-updated-audited.xlsx:226 players,21 Liverpool,22 validated cards,80 unverified retained club assignments,5 unknown expiries.",
+          "status": "uncertain"
+        },
+        {
+          "timestamp_utc": null,
+          "speaker": "Search result",
+          "claim": "No directly dated September30 card/manager/ratings/progression source recovered. Earlier August18 broad website is already archived.",
+          "status": "retrieval_limit"
+        }
+      ],
+      "limitations": "Do not manufacture aSeptember30 entry or claim the audited workbook delivered on a particular day. Saved summary alone is not a recovered original timestamp or attachment.",
+      "original_locator": null
+    }
+  ]
+}

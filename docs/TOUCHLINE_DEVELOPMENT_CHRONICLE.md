@@ -23,6 +23,7 @@ Touchline's history is spread across more than one place: two GitHub repositorie
 | **[Local]** | A file on the development machine that was never committed: release folders, untracked review folders, exported packages |
 | **[Astra]** | Records of the separate character-art workstream (the "Astra" packages in `~/Downloads`) |
 | **[Later]** | A handoff or recollection written after the events it describes (the 20 Sep history handoff, the 23 Sep memory export and migration handoff) |
+| **[Chat extraction]** | Astra's 8 Oct reconstruction of the user's chat history for 1 – 7 Oct ([`chat_history_reconstruction_2026-10-08/`](../review_artifacts/chat_history_reconstruction_2026-10-08/), ledger C01 – C19): selected dated excerpts with UTC times, not raw transcripts. An assistant's reported delivery or check is recorded as **reported**, not as verified. Used with the local originals it can be checked against |
 | **[Session]** | AI-assistant session records on the development machine (Claude Code `~/.claude/projects/`, Codex `~/.codex/sessions/`): the user's contemporaneous instructions and decisions, with timestamps (UTC, converted to local). Used from 28 Sep. Where a decision was also saved verbatim in a repository `sources/` folder, that copy is cited as [Doc] |
 
 Priority when sources disagree: a contemporaneous source or executable artifact, then contemporaneous tool or file output, then contemporaneous conversation, then later reconstruction. A **[Later]** source is used for colour and for work that left no other trace. Where it overlaps Git, Git wins, and the event is counted once.
@@ -1129,7 +1130,16 @@ From 29 Sep the main line of work left the playable game.
 - **The method:** a sequence of gates, each preregistered, frozen before its battery and stopped at any failure for the user's decision.
 - **Where it lives:** local branches in their own worktrees, until the 8 Oct publication (7 Oct entry).
 
-**In parallel** (1 – 7 Oct, [Local]), a redesigned manager-app interface was iterated as self-contained HTML pages in `~/Downloads`. Its source is outside every repository, and which assistant or session built it is not recorded (Uncertain). It is noted in each day it touches.
+**In parallel** (1 – 7 Oct) a redesigned manager interface, player-ratings workbooks and a player-development model were built as self-contained HTML prototypes, workbooks and design packages, outside every repository.
+- **Where they come from (Reconstructed):** the user's own chat sessions. The evidence is the local Codex workspace paths (`~/Documents/Codex/2026-10-0X/new-chat-N/`, where most originals survive) and Astra's reconstruction of the chat history ([Chat extraction], integrated 8 Oct).
+- **Evidence levels used in each day's block:**
+  - **located:** the original file is present locally; time and SHA-256 are recorded in [`ORIGINALS_STATUS.tsv`](../review_artifacts/chat_history_reconstruction_2026-10-08/ORIGINALS_STATUS.tsv);
+  - **reported:** an assistant's delivery or check report, not re-verified;
+  - **designed:** a user decision;
+  - **incomplete**;
+  - **uncertain / conflicting**.
+- **Times:** local (+01:00, the offset of every commit of 1 – 7 Oct), converted from the extraction's UTC.
+- **Scope:** nothing here is integrated into the playable game or the simulator.
 
 ## Tuesday 29 September 2026 — Follow-through V2 set aside, one reference tackle, then a physical character
 
@@ -1524,10 +1534,16 @@ The day ran as a fixed loop: build → measure → STOP for review → user deci
 
 Identification dumps (up to 361 MB) were kept out of Git.
 
-**[Local] Parallel: card design** (outside the repositories).
-- Two AI-generated "Touchline 2027" Salah card images (`~/Downloads/ChatGPT Image Oct 1, 2026, …` 17:24 and 17:47).
-- `Touchline_Salah_Diamond_Flip.html` and `…_Glimmer.html` (22:39, 22:56).
-- The workstream that built the pages is not recorded (Uncertain). Not archived: they depict a real player.
+**Parallel: player cards** ([Chat extraction] C01; [Local] workspace `~/Documents/Codex/2026-10-01/new-chat-2/`, `~/Downloads`).
+- **Designed** (17:36 – 18:56): reusable season cards for the manager simulation, not promo / event cards.
+  - Six rating tiers: Diamond 90+, black / gold 85 – 89, gold 75 – 84, silver 65 – 74, bronze 55 – 64, copper ≤ 54.
+  - Real photographic headshots with the jersey removed or blackened and the face pixels preserved.
+  - Generated faces were rejected. The two AI-generated Salah images (17:24, 17:47) were an earlier experiment, not the accepted treatment.
+- **Reported, incomplete** (19:23): the six-style photographic replacement began; the export stopped when editing disconnected during edge cleanup.
+- **Reported and located** (22:05): `Touchline_Salah_Flip.html` and `Touchline_Salah_Back_Preview.jpg` (workspace 22:03 / 22:04). The Diamond Flip / Glimmer variants follow: workspace builds 22:50 – 22:55; `~/Downloads` copies 22:39 / 22:56, the Glimmer copy byte-identical to the workspace build.
+- **Reported and located** (00:14, 2 Oct): `Touchline_Liverpool_2027_Cards.zip`, the first 19-card Liverpool batch (workspace, 53 MB). It is superseded the next day by the corrected 21-player set.
+- **Not archived in Git:** the files depict real players; the 8 Oct publication decision is unchanged.
+- **Workstream end of day:** the tier system and photographic direction are set, and the flip / glimmer prototypes and the first batch exist. A fully cleaned six-tier photographic export does not.
 
 **End-of-day state.** 45 local commits, nothing pushed.
 - G2b not achieved.
@@ -1587,6 +1603,28 @@ Identification dumps (up to 361 MB) were kept out of Git.
 - **User decisions C1–C7**, then autonomy ("Under no circumstances begin G2 while I am away"): 60 iterations; end-stop margins measured per joint ("Do not silently redefine human ROM to whatever Jolt permits"); a boot experiment first; a two-sphere head; no global 720 Hz and no indiscriminate CCD.
 - **Applied by 04:31** (`7632dbe`, `e06d177`, `77815db`), with criteria v2 pre-registered.
 - **Seven passive-drive defects (G1-D2…D8)** were found and fixed. Two examples: start-of-step linearisation let a joint enter the stiff stop without doing work (thoracic +9.2 J in one step); Jolt silently clamped drive targets onto the joint limits.
+
+**Parallel: corrected cards, live squad ratings, pack opening** ([Chat extraction] C02 – C04; [Local] the 1 Oct workspace).
+- **Reported and located** (14:40): the corrected Liverpool collection, `Touchline_Liverpool_2027_Fronts_and_Backs.zip` (workspace 14:37, 120 MB).
+  - 21 players, 42 transparent front / back PNGs, with corrected ratings, tiers and eligible positions; tactical fields unassigned.
+  - It supersedes the 19-card batch for that collection; it is not a second player database.
+- **Reported and located** (17:30): `Touchline_Squad.html` — drag and drop, formation switching, an expandable bench, flip cards and tactical controls (workspace build 19:18).
+- **Designed and reported** (19:02): workbook-driven live ratings.
+  - An ineligible position costs −5 on **every attribute**, then the positional OVR is recalculated. It is not a flat OVR penalty.
+  - Reported examples: Van Dijk CB 88 → ST 76 → CB 88; Szoboszlai gains CDM eligibility (82, no penalty). Not re-verified.
+- **Reported, conflicting** (23:11): `2026-27-ratings-flank-rules-updated.xlsx`, attribute-based weak-foot / opposite-flank deductions, 226 player checks.
+  - The chat's last scale (high / medium / low: 4★ 3 / 2 / 1, 3★ 4 / 3 / 2, 2★ 5 / 4 / 3, 1★ 6 / 5 / 4, 5★ none) conflicts with a saved summary (3★ 6 / 4 / 2 …).
+  - A file of that name is on the Desktop (23:13). Its contents were not inspected, so the conflict stands.
+- **Reported and located** (00:28, 3 Oct): `Touchline_Pack_Opening.html` (workspace 00:26).
+  - Top tear, five concealed tier-coloured cards flying left to right, click-to-flip reveal, replay, Diamond glints.
+  - No spending, payment or acquisition backend.
+- **Designed, placement uncertain:** match-interface Influence controls, with gameplay not connected.
+  - At most six options; losing / tied / winning action sets.
+  - 0 / 8 at the start, +1 every 15 minutes and at half-time (7 per match).
+  - A role change costs 1 and a formation change 4; out-of-10 ratings move beside the names.
+  - The exact time and final build are not recovered. A `touchline_matchday/` build exists in the workspace, but that it is the final Influence artifact is not established.
+- **Problems:** a connection drop affected the final squad save and visual sizing.
+- **Workstream end of day:** cards corrected; live-rating squad, flank workbook and pack-opening prototypes exist. The final flank scale and every UI save are unverified.
 
 **End-of-day state.** V1 is frozen and recoverable. V2 is specified; G0 has passed and been approved. G1's criteria v2 are fixed and its final evidence run is under way (it finished at 07:15 on 3 Oct).
 
@@ -1653,7 +1691,23 @@ A day of stop-and-decide cycles: 11 commits stop for a user decision or review, 
 - **Adopted:** the 10-piece boot and 150 iterations; the 3° end-stop with its 1.5° tolerance; parallel finite actuators and the capture-point ankle strategy; the G3 transfer / hold / feasibility options; deterministic maths; the `PlaneShape` turf; the symmetry package.
 - **Not adopted, or left default-off:** the hip / trunk / arm and knee strategies; the ankle neutral-zone law (`V2_ANKLE_NEUTRAL_K`, default 0); the EPA patches, the contact guard and the penetration cap; global quaternion normalisation; bounded leg IK.
 
-**[Local] Parallel: manager-app pages** (outside the repositories; authorship not recorded, Uncertain): `~/Downloads/Touchline_Finance.html` (23:50), `Touchline_Squad.html` (23:54), `Touchline_Matchday.html` (02:01, 4 Oct). These are self-contained pages of 10 – 16 MB.
+**Parallel: finance, transfers, staff; ratings consolidation** ([Chat extraction] C05 – C06; [Local] workspace `touchline_finance/`, `~/Downloads`).
+- **Designed** (12:33 – 13:37), first request: an SCR-style finance page with an 85 % spending-budget marker, the scale expanding to 150 % beyond 100 %, and a 115 % fine marker.
+- **Designed**, then a simplified game model (game rules, not claims about real regulations):
+  - no amortization; one-time transfer fees; sales credited 1 : 1;
+  - overspending reduces next season's budget (example: 95 % against 85 % → next budget 75 %);
+  - the 24-point sanction at **120 %**, not 130 %.
+- **Reported:** `Touchline_Finance.html`.
+  - First pass 13:03; the build survives as the workspace's `before_contracts/` (13:02, 0.3 MB).
+  - Corrected calculations at 14:03 ("a £100m sale adds £100m of room"), with an in-place save **failure**; replacement copies were supplied.
+  - At 15:15: POT beside OVR, and a transfer popup (search, illustrative offers, fee credit, wage savings, budget impact, Undo).
+  - Final workspace build 23:34; `~/Downloads` 23:50.
+- **Reported, partly located** (18:42): a staff screen with six roles, searchable hiring, traits, manager tiers, contracts and budget updates. No staff HTML basename is recovered; staff previews and `staff_model.js` are in the finance workspace.
+- **Reported, not located** (16:37): `2026-27-ratings-final-review-2026-10-03.xlsx`.
+  - 226 players and 11 reviewed profiles (Dembélé, Haaland, Mbappé, Olise, Bellingham, Kane, Hakimi, Saliba, Yamal, Messi, Nuno Mendes); original positional formulas kept; Haaland PAS → 71; POT ≥ OVR enforced.
+  - **Conflicting:** its summary OVRs disagree with an older saved overview (e.g. Mbappé 94 vs 92, Bellingham 94 vs 91). Neither is promoted.
+- **Also in `~/Downloads`:** `Touchline_Squad.html` (23:54) and `Touchline_Matchday.html` (02:01, 4 Oct).
+- **Workstream end of day:** finance / staff prototypes and an 11-profile ratings export are reported. Save identity and some staff details are unverified.
 
 **End-of-day state.**
 - **Gates:** V2-G0, G1 (flat plane, criteria v4) and G2 pass. G3 passes all 20 rows under v3.2 but is not declared.
@@ -1746,7 +1800,29 @@ A day of stop-and-decide cycles: 11 commits stop for a user decision or review, 
 - **Adopted:** G3 criteria v3.3, and the frozen pre-E1a configuration (accepted by the user at 03:23, KC-5).
 - **Not adopted, or left default-off / diagnostic:** the bounded IK, the twist policies other than reference, the diagnostic knees, the deep-flexion alternatives, and B1 + B3.
 
-**[Local] Parallel: manager-app interface.** `Touchline_Squad_Updated.html` (00:42, 5 Oct). The first screenshots of the redesigned standings and squad-management screens (04:13) are archived in [`chronicle_screens/2026-10-04_manager_ui/`](../review_artifacts/chronicle_screens/2026-10-04_manager_ui/).
+**Parallel: re-ranked ratings, the broad manager mockup, standings review** ([Chat extraction] C07 – C09; [Local] `~/Downloads`, workspace `2026-10-04/new-chat-6/`; screenshots).
+- **Reported and located** (14:30): `2026-27-ratings-updated-ranked-2026-10-04.xlsx`.
+  - 226 players; 416 approved input changes across 20 players; physical rank 1 – 226; a rank-changes tab; 78 eligible-position calculations; no formula errors reported.
+  - Anderson 87.40 → 87 and Barcola 81.46 → 81 (inputs unchanged); Messi rank 6 → 4, Osimhen 12 → 8.
+  - A file of that name is in `~/Downloads` (17:37, 733,683 bytes, SHA-256 `d4ddabc8…`). Nothing was recomputed here, so the figures remain reported.
+- **Incomplete:** Araújo's edits were still proposed / pending at 20:53 – 20:55. No later lock, or workbook applying them, is recovered.
+- **Designed** (20:48 – 21:07):
+  - unify the separately built screens around the Squad stadium / card look;
+  - Home destinations for Ultimate Team, Draft, Career and Manage a Club, as placeholders;
+  - Manager and Club Runner differ in firing / leaving / continuity, not in controls;
+  - browser first, with the match / training / rest calendar as the core flow.
+- **Reported, partly located:** a connected HTML mockup.
+  - **Conflicting count:** an earlier reply claimed 33 screens; the final one (22:29) says 30 screens and 23 checks.
+  - `Touchline_Club_Management_Mockup.html` is in `~/Downloads` (22:19, 8.7 MB). The review-package ZIP is not found.
+  - **Figma incomplete:** shells, navigation, tokens and 10 components; detailed content and images unfinished after the quota.
+- **Designed, then reported** (from 03:14, 5 Oct): the standings review.
+  - **Rejected:** concepts 2 and 5, and distracting backgrounds. **Kept:** the console clarity of concept 1, Next-opponent crests (a dash at season end).
+  - The user required real linked HTML with qualification / relegation bands and navigation back to Squad.
+  - `Touchline_Playable.html` and its source ZIP were reported at 03:25 (workspace output 05:21; the `~/Downloads` copy of 20:57 is a later build).
+  - At 03:40: centred zone labels, a user-club star, and PL / UCL / Carabao / FA coverage. Interaction checks were reported; the browser visual check was blocked.
+- **Reconstructed day assignment:** a gold-fill / rim experiment (04:59) and its reversion (05:04) fall inside this day at +01:00. The reconstruction had left them unplaced.
+- **Earlier record:** `Touchline_Squad_Updated.html` (00:42, 5 Oct). The first screenshots of the redesigned standings and squad-management screens (04:13) are archived in [`chronicle_screens/2026-10-04_manager_ui/`](../review_artifacts/chronicle_screens/2026-10-04_manager_ui/).
+- **Workstream end of day:** a ranked workbook and a broad linked mockup are reported (Figma partial). Standings have become a focused page-by-page review; Araújo is pending.
 
 **End-of-day state.** E1a has been run once and failed before any lift. The deadlock is explained (B1), but a released foot then floats off the turf. Candidate C is frozen. **Reconstructed:** its official validation ran across the day boundary, and the result was committed at 06:36. Next blocker: the released-but-touching foot.
 
@@ -1837,16 +1913,33 @@ A day of stop-and-decide cycles: 11 commits stop for a user decision or review, 
 - **Implemented default-off, never officially run:** PSTAR5 / 5B / 5C.
 - **Left to the user:** whether PSTAR4S replaces PSTAR4 as the E1 baseline.
 
-**[Local] Parallel: manager-app interface and research** (outside the repositories).
-- **Thirteen iterations of the playable interface**, 12:59 → 02:40 on 6 Oct, as `~/Downloads/Touchline_Playable_*.html`:
-  - Fixed, Refined, Metallic, Hierarchy;
-  - Glass standings, Carousel, Restored header;
-  - All competitions, Training ground, Schedule;
-  - Knockout rounds, Minimal knockouts.
-- **Screenshots** of the metallic and glass standings, the Champions League knockout view and the schedule are archived in [`chronicle_screens/2026-10-05_manager_ui/`](../review_artifacts/chronicle_screens/2026-10-05_manager_ui/).
+**Parallel: standings, knockouts, training ground, first development design** ([Chat extraction] C10 – C13; [Local] `~/Downloads`, workspaces `2026-10-05/new-chat-3` and `new-chat-5`; screenshots).
+- **Standings, reported with file evidence** (successive revisions, not one final specification):
+  - `Touchline_Playable_Fixed.html` (reported 12:53; `~/Downloads` 12:59): Liverpool row alignment and 20 crest corrections, Chelsea named; Chromium at eight widths reported.
+  - The metal treatment iterated: a reported 18 px first frame; the user's 2 – 4 px compound directional bevel (no neon or nested outlines); then one stronger strip.
+  - `…_Metallic.html` (reported 13:52, a 7 px foil band; `~/Downloads` 13:53).
+  - `…_Hierarchy.html` (reported 14:32; `~/Downloads` 14:34): header chevrons removed, headings integrated; eight viewport configurations reported.
+  - `…_Six_Teams.html` (reported 21:35; workspace 21:34): density and centred dividers; code checks only.
+- **File-time record:** thirteen `Touchline_Playable_*.html` iterations, 12:59 → 02:40 (6 Oct): Fixed, Refined, Metallic, Hierarchy; glass standings, Carousel, Restored header; All competitions, Training ground, Schedule; Knockout rounds, Minimal knockouts.
+- **Knockouts, designed then reported** (02:00 – 02:33, 6 Oct):
+  - fixed outer panel size across rounds; explicit SEMI-FINALS / FINAL labels; larger final crests without a Chelsea regression;
+  - `…_Minimal_Knockouts.html` reported 02:05 (workspace 02:32, `~/Downloads` 02:40); appearance unverified;
+  - FA Cup and Carabao Cup from the third round to the final, with their own colours and penalties; 44 crest links checked (reported 02:33). Draws illustrative, crests online;
+  - **Uncertain:** whether the requested eliminated-team dimming on a drawn final leg is in the final bytes.
+- **Training ground, reported and located** (23:25): the Harbour Training Centre prototype.
+  - Main and second pitches, goalkeeper / technical areas, performance centre, portable goals, shelters, fencing, floodlights, landscaping.
+  - `Touchline_Training_Ground.html`, `…_Research.html`, `…_Source.zip` and `…_Preview.png` are in the workspace (23:23 – 23:24).
+  - Canvas checks were reported; browser controls unverified. Environment / UI work, not live-game integration.
+- **Designed** (03:01 – 03:12, 6 Oct):
+  - age removed from positive development; a separate decline system;
+  - small, nonnegative exposure growth separated from a larger, bidirectional performance effect;
+  - user target end ratings for a 70 OVR / 85 POT player (e.g. Medium training: 71 / 72 / 73 after 0 / 60 / 90 minutes);
+  - an early assistant proposal used 52 matches / 190 sessions.
+- **Screenshots:** the metallic and glass standings, the Champions League knockout view and the schedule are archived in [`chronicle_screens/2026-10-05_manager_ui/`](../review_artifacts/chronicle_screens/2026-10-05_manager_ui/).
 - **`~/Downloads/Touchline_Reuse_Blueprint.md`** with `Touchline_Reuse_Source_Register.json` (13:43): "independent research, not an implementation", ranking 31 reusable locomotion sources (PyPnC, BLF, IHMC first).
   - These are the three references the day's reuse-first instruction names.
   - Its author is not recorded (Uncertain).
+- **Workstream end of day:** focused HTML revisions and two cup extensions are reported, with mixed verification; a separate training-ground prototype exists. The four-way development split is decided but not yet packaged.
 
 **End-of-day state.** E1a passed and E1b closed. E2 is implemented default-off but has had no official run: PG-1 certifies 0/32 commanded steps under the frozen 25 mm apex. Decisions requested: A, the apex and window (recommendation 30 mm); B, the E2-5 impact metric; C, the servo-battery criteria; D, PSTAR4S as the E1 baseline.
 
@@ -1926,6 +2019,42 @@ A day of stop-and-decide cycles: 11 commits stop for a user decision or review, 
 
 **Adopted / not adopted.** Adopted: the A30 trajectory; A + B as qualified swing mechanisms (AB2). Not adopted: the 10 ms impact formulation (E2-5 unchanged), the SV-2 allowance, `vffPassive` (stays diagnostic), the coordinator draft, 1A. Rejected: 1B. Failed: TD2.
 
+**Parallel: development model (exposure, aging, Fitness), calendar, performance calibration** ([Chat extraction] C14 – C18; [Local] workspace `2026-10-05/new-chat-5/`).
+- **Designed — exposure** (12:49):
+  - the reference season is 50 matches + 190 sessions (replacing 52);
+  - per-session credits Light 0.00125, Medium 0.005, Intense 0.0175; per-match 0.00187 (15 min) … 0.020 (60) … 0.040 (90);
+  - exposure falls towards zero near potential: POT gap 1 → 0.2, 6 → 2.0, 11+ → ≈ 3.0 under Medium + 90 min.
+
+  These are targets, not a recovered factor table.
+- **Reported and located** (16:27): `TOUCHLINE_Exposure_Development_Package.zip` (spec, JSON, JS).
+  - The attachment is 16:32, 6,050 bytes, SHA-256 `6e14f8de…`; the three files are also in `schedule-calendar/development/`.
+  - Not executed or adopted into the simulator here.
+- **Designed, revised repeatedly — aging:**
+  - wide decline from 27, with an early 4.0 annual cap (16:57), later superseded: striker 4.5 at 40, and a 41+ cliff of 5 / 7 / 9 / 12 / 15;
+  - the midfielder table "locked" at 21:08 was revised at 21:29;
+  - the final interpolation, goalkeeper law and age convention are not established from the chat. **The early 4.0 cap is not the final rule.**
+- **Designed — Fitness** (18:48 – 19:01):
+  - bypasses POT suppression and gives role-specific athletic gains directly (halved annual packages for 190 Medium sessions; e.g. wide: Sprint 2, Stamina 2.5, Balance 2);
+  - no generic exposure credit;
+  - Normal is locked; Light / Intense are provisional.
+- **Reported and located** (22:04): `TOUCHLINE_Aging_Fitness_v1_2026-10-06.zip`.
+  - The attachment is 22:12, 12,586 bytes, SHA-256 `ab7eee6f…`; the spec, config and JS are also in `schedule-calendar/aging-fitness/`.
+  - The chat recorded the name with a hyphen. Contents were not executed here.
+- **Designed and reported — calendar:**
+  - session time / load replaced by development and stamina (Rest +25, Light +15, Normal +5, Intense −10 points);
+  - LOW / STANDARD / HIGH with proportional 7 % / 29 % / 100 % meters, instead of equal 1 / 2 / 3 bars;
+  - advance-to-matchday simulates the intervening games and leaves the selected match unplayed.
+  - `Touchline_Playable_Calendar.html` was reported with meters, Fitness and season-end aging, 18 logic checks (22:17). Then Set Pieces (role-specific, POT-suppressed, Jumping excluded), 19 checks (22:32).
+  - One 8-second preview timer replaced the 3-second rotation; a 45 % → 70 % Rest demonstration state. No browser visual check was reported.
+- **Incomplete — performance calibration:**
+  - the +0.03-per-OVR universal proposal gave way to league-specific linear / bucketed expectations (EPL 75 → 6.0, 85 → 7.0), benchmarked on G+A/90 with sample confidence;
+  - the user's last verdict: wingers close, strikers too generous, CAM much too generous;
+  - the latest replacement curves (01:32, 7 Oct) are proposals; no acceptance or implementation is recovered.
+- **Workstream end of day:**
+  - the exposure and aging / Fitness packages are delivered (files located), and the calendar prototype has reported logic checks;
+  - Fitness Light / Intense and the performance benchmark are provisional;
+  - nothing is adopted into the authoritative simulator.
+
 **End-of-day state.** The qualified swing baseline is PSTAR5CHAB. TD2 is clean inside its certified window but fails as preregistered. Three user decisions stand before the prerequisite gates: F1, the uncertified early-contact scope; F2, the escalation as a TD2 step; F3, the touchdown-time rate criterion. No PG-1 or official E2 run.
 
 ---
@@ -1996,11 +2125,27 @@ A day of stop-and-decide cycles: 11 commits stop for a user decision or review, 
 
 **Adopted / not adopted.** Nothing adopted. TD2, TD2B, D1G v1 and DVG are all FAIL; the TD2C battery has never run. TD-17 recorded; TD-15 reaffirmed as gating.
 
-**[Local] Parallel: manager-app interface.**
-- Screenshots 12:59 – 16:39 show the standings, the Champions League league-phase and knockout views, and the schedule with a training-day panel (focus, intensity, development and stamina).
-- At 22:34, a squad colour test (`Touchline_Development_Colour_Test.html`, which is no longer in `~/Downloads`).
-- `Touchline_Playable_Calendar.html` (23:10).
-- A selection is archived in [`chronicle_screens/2026-10-07_manager_ui/`](../review_artifacts/chronicle_screens/2026-10-07_manager_ui/).
+**Parallel: calendar and competition polish; the last colour request** ([Chat extraction] C19; [Local] workspace `2026-10-05/new-chat-5/`, `~/Downloads`; screenshots).
+- **Reported** (13:06 – 14:21):
+  - duplicate Prepare-match / debug notices removed; competition colours in the legend; out-of-month cells dimmed;
+  - a compact, bold charcoal cutoff band;
+  - the EPL header fade / charcoal table extended to FA and Carabao;
+  - stamina colours and a custom emerald bolt.
+- **Screenshots** 12:59 – 16:39 show the standings, the Champions League league-phase and knockout views, and the schedule with a training-day panel (focus, intensity, development and stamina). A selection is archived in [`chronicle_screens/2026-10-07_manager_ui/`](../review_artifacts/chronicle_screens/2026-10-07_manager_ui/).
+- **The squad colour test** (`Touchline_Development_Colour_Test.html`, 22:33; screenshot 22:34) precedes the scoped correction below. The file is in `~/Downloads`, unchanged since 22:33; this corrects the entry's earlier "no longer in `~/Downloads`".
+- **Designed, then reported** (22:47 → 22:49): a tightly scoped correction.
+  - Use the supplied HTML only for the left Squad Management base; make the fitness icon and 100 % white; keep the gold stars; change nothing else.
+  - The user-supplied reference build is in the workspace (`attachments/squad-summary-reference/`, 22:48).
+- **Background:** almost-black green → grainy charcoal → the standings dark-glass background, the last accepted direction.
+- **Requested** (23:07): light-green status text to a muted red distinct from the bolt, and competition names in their competition's colours.
+  - The reply's body is not recovered (23:09).
+  - **Reconstructed as implemented:** the final build `Touchline_Playable_Calendar.html` (workspace 23:09, `~/Downloads` 23:10, identical, SHA-256 `8021cf56…`) differs from the 22:48 reference by:
+    - both panels in the standings dark-glass material;
+    - per-competition label colours (UCL, FA Cup, Carabao);
+    - only the fitness value and bolt white, with the stars untouched;
+    - stamina-cost text in a muted rose beside the unchanged red bolt and bar.
+  - **Uncertain:** whether "status text" meant exactly that element.
+- **Workstream end of day:** the manager design is refined across standings, competitions, calendar and squad, and the final file is located. Model calibration (performance; Fitness Light / Intense) is still open.
 
 **Publication housekeeping** (8 Oct, from about 02:40; inside this chronicle day by the 06:00 rule). [Session] The user: "Before doing any further physical-character/E2 work, perform repository publication and daily-archive housekeeping … Do not fabricate, backdate or rewrite commit timestamps".
 - **Audit.**
@@ -2069,7 +2214,11 @@ The recommendation is 1 (a) and 2. No PG-1 or official E2 has run.
 - **The 28 – 29 Sep slide-tackle passes** ([Local], uncommitted by the user's instruction):
   - rear-contact friction and fall direction, and Follow-through V1 and V2, all in worktree `rear-contact-fall`;
   - Reference Tackle V1, in worktree `reference-tackle`, with its third-party reference clip on the Desktop.
-- **The redesigned manager-app interface** ([Local], 1 – 7 Oct): self-contained pages in `~/Downloads` (`Touchline_Playable_*.html`, latest `Touchline_Playable_Calendar.html`). Its source and authoring session are not recorded.
+- **The manager interface, ratings workbooks and development model** ([Local] + [Chat extraction], 1 – 7 Oct). None is in Git, and none is integrated. Performance calibration, Fitness Light / Intense and the Araújo edits are pending (Appendix G).
+  - **HTML prototypes:** cards, squad, pack opening, finance / staff, the broad mockup, standings, knockouts, training ground, calendar.
+  - **Workbooks:** flank rules; the 4 Oct ranked workbook.
+  - **Design packages:** exposure; aging / Fitness.
+  - **Location:** the user's Codex workspace (`~/Documents/Codex/2026-10-0X/`) and `~/Downloads`.
 - **The portfolio source package** ([Local], `~/Downloads/TOUCHLINE_PORTFOLIO_SOURCE_ASSETS/`, 28 Sep) and the Astra transfer zip.
 - **One generated evidence archive** (`runs_records_240_REF_165.tgz`, 105.8 MB), removed from the V2 history for publication on 8 Oct, is kept locally outside Git (7 Oct entry).
 - **The Astra character roster** ([Astra], `~/Downloads/TOUCHLINE_ASTRA_MIGRATION_PACKAGE`): 20 individually built players (19 plus Courtois), including the 3D Salah; the B back-print lock; the unfinished player-art workshop, whose source was never recovered. Only Courtois and the six later outfield players reached the runtime.
@@ -2182,7 +2331,14 @@ An index to the narrative above, not a substitute for it.
 | 30 Sep | D6 diagnostic; friction-sensing fix | FC-Sim Git | `f18c8a7` |
 | 30 Sep | G1 promoted (locomotion architecture parity) | FC-Sim Git | `772d0bd` |
 | 30 Sep | G2a approved (yaw + in-place gait) | FC-Sim Git | `6f1ef85` |
-| 1–7 Oct | Redesigned manager-app interface (cards, standings, squad, schedule, Champions League) | Local | `~/Downloads/Touchline_*.html`; `review_artifacts/chronicle_screens/` |
+| 1 Oct | Player-card tiers and photographic direction; flip / glimmer prototypes; first Liverpool batch | Chat extraction + Local | C01; workspace `touchline_card_back/`, `liverpool_card_batch/` |
+| 2 Oct | Corrected 21-player cards; live-rating squad prototype (−5 per attribute out of position); flank workbook; pack opening | Chat extraction + Local | C02 – C04 |
+| 3 Oct | Simplified finance / transfer model; staff screen; 11-profile ratings export (file not found) | Chat extraction + Local | C05 – C06 |
+| 4 Oct | Re-ranked ratings workbook; broad 30-screen mockup (Figma partial); standings review begins | Chat extraction + Local | C07 – C09; `2026-27-ratings-updated-ranked-2026-10-04.xlsx` (local); `chronicle_screens/2026-10-04_manager_ui/` |
+| 5 Oct | Standings / knockout refinements; FA and Carabao cups; training ground; development split decided | Chat extraction + Local | C10 – C13; `chronicle_screens/2026-10-05_manager_ui/` |
+| 6 Oct | Exposure and aging / Fitness packages; calendar development and stamina; performance calibration open | Chat extraction + Local | C14 – C18; packages located locally |
+| 7 Oct | Calendar / competition polish; final colour pass (final build located) | Chat extraction + Local | C19; `chronicle_screens/2026-10-07_manager_ui/` |
+
 | 1 Oct | G2b Option 1 (landing fixed; walk not stable) | FC-Sim Git | `77966eb` |
 | 1 Oct | Plant characterisation; Controller A vs B | FC-Sim Git | `9d4f7d9`, `e39f312` |
 | 1 Oct | Foot-architecture gate (F0 kept) | FC-Sim Git | `89f970c` |
@@ -2264,6 +2420,10 @@ An index to the narrative above, not a substitute for it.
   - `TOUCHLINE_SCENE_ENVIRONMENT.zip` (an unmodified copy of repository files at `2c80700`);
   - `review_artifacts/ASTRA_KICK_SYSTEM_HANDOFF.zip` (a zip of the kick-handoff folder);
   - the 20 Sep history handoff and the 23 Sep memory export (later summaries of 5–23 Sep).
+- **Chat extraction (integrated 8 Oct).** Astra reconstructed the user's 1 – 7 Oct chat history and supplied it as a documentation package. It could not write to the repository (HTTP 403).
+  - Its ledger, source register, quantitative record, conflict register and acquisition queue are kept in [`review_artifacts/chat_history_reconstruction_2026-10-08/`](../review_artifacts/chat_history_reconstruction_2026-10-08/), as the citation record, not a second chronicle.
+  - Its seven day supplements were audited and merged into the day entries here.
+  - A local audit of the 30 queued originals is in [`ORIGINALS_STATUS.tsv`](../review_artifacts/chat_history_reconstruction_2026-10-08/ORIGINALS_STATUS.tsv): 26 located locally; none in Git.
 - **Session records ([Session], from 28 Sep).** The Claude Code and Codex session logs on the development machine record the user's instructions with timestamps. From 2 Oct, the physical-character branches also save every user decision verbatim in `review_artifacts/physical_character_v1|v2/sources/`. The V1 file names carry UTC times; the V2 file names carry only dates.
 - **Terminology.** "V6" names three different things:
   1. the **SOUTH V6** dive sprite (6 Sep);
@@ -2326,7 +2486,11 @@ The FC-Simulator day headings were checked against every commit's recorded times
 12. **Morning boundaries, 29 Sep – 7 Oct:** `39c8dd2` (06:46, 2 Oct), `7d10111` (07:15, 3 Oct) and `ac3a3c4` … `9e2a0b7` (06:36 – 07:25, 5 Oct) are probably the tails of the previous nights' autonomous runways.
 13. **Preregistration order** (2 – 7 Oct): commit messages state that each preregistration came before its code. Git proves only commit times, and some gaps are minutes (TD2B 6 min, DVG 13 min).
 14. **User decisions, 2 – 7 Oct:** their time is known from the commits that saved them. A `sources/` file's date is a calendar date, so some belong to the previous chronicle day.
-15. **Work outside Git, 28 Sep – 7 Oct:** dated by session records and file times. These cover the 28 Sep snow work and portfolio package, the slide-tackle worktrees, and the manager-interface pages in `~/Downloads`. Who built those pages is not recorded.
+15. **Work outside Git, 28 Sep – 7 Oct:** dated by session records and file times. These cover the 28 Sep snow work and portfolio package, and the slide-tackle worktrees. The 1 – 7 Oct manager-interface, ratings and development work is dated by the chat extraction's UTC times, converted at +01:00, and by the local originals' file times. The extraction is selected excerpts, so an undated or unrecovered step is not filled in.
+16. **Corrected 8 Oct:**
+    - the 7 Oct entry had said `Touchline_Development_Colour_Test.html` was "no longer in `~/Downloads`"; it is there, unchanged since 22:33 (a truncated directory listing caused the error);
+    - the "authorship not recorded" notes on the manager pages are qualified by the chat extraction and the Codex workspace paths.
+
 
 ## Appendix D — The early simulator lineage and calibration record
 
@@ -2397,8 +2561,32 @@ How the 18 Aug primary-source extraction ([Chat]) was reconciled with the other 
    - **Exclude** personal images and third-party footage.
    - **The remote** is `fc-simulator`. Never rewrite, squash or force-push published history without the user's approval.
    - **GitHub rejects files over 100 MiB**, and large pushes go in batches of ≤ 0.4 GB.
+   - **An original recovered later is filed under its historical day**, not as new work: images in `chronicle_screens/<date>_<subject>/` with a `MANIFEST.tsv` row; other originals noted in the day entry and in `ORIGINALS_STATUS.tsv`. A candidate is never added without its original bytes, and no date, hash or screenshot is invented.
    - **Generated archives of 50 MB or more**, and raw per-run record archives, stay outside Git with a SHA-256 pointer file (the V2 branch's `EVIDENCE_STORAGE_POLICY.md`; the pre-commit guard is in `tools/git-hooks/`).
 
 The request to use at the end of each day:
 
 > Update today's Touchline Development Chronicle entry from today's commits and work. Include important experiments, discoveries, decisions, failures and remaining issues — not just the final code. Documentation only; do not run validation.
+
+## Appendix G — Originals still to archive or recover (1 – 7 Oct)
+
+The full list of 30 entries is in [`ORIGINALS_STATUS.tsv`](../review_artifacts/chat_history_reconstruction_2026-10-08/ORIGINALS_STATUS.tsv), with paths, sizes, times and SHA-256.
+
+**Not in the Git archive, but located locally.** Archive each under its historical day on the owner's decision:
+
+| day | original | where | identity |
+|---|---|---|---|
+| 4 Oct | `2026-27-ratings-updated-ranked-2026-10-04.xlsx` | `~/Downloads` (17:37) | name and time match the reported delivery; contents not compared with the report |
+| 6 Oct | `TOUCHLINE_Exposure_Development_Package.zip` | Codex workspace attachment (16:32) | name and time match; not executed |
+| 6 Oct | `TOUCHLINE_Aging_Fitness_v1_2026-10-06.zip` | Codex workspace attachment (22:12) | name differs by one character (underscore vs hyphen); not executed |
+| 7 Oct | `Touchline_Playable_Calendar.html` (latest) | Codex workspace (23:09) = `~/Downloads` (23:10) | diff against the 22:48 reference inspected (7 Oct entry) |
+
+**Not found:**
+- the 3 Oct final-review workbook;
+- the 4 Oct mockup review-package ZIP;
+- the 5 Oct metallic rim-detail / standings PNGs;
+- the 6 – 7 Oct performance-comparison tables (never files).
+
+**Publication limits that still apply:**
+- card images and HTML that embed real players' photos stay unpublished (8 Oct decision);
+- the HTML pages rely on online crests.
