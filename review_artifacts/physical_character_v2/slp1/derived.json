@@ -1,0 +1,266 @@
+{
+ "generated": "slp1/scripts/derive.mjs",
+ "body": "V2-REF",
+ "massKg": 78.91,
+ "W0m": 0.1745,
+ "pelvisCom0": [
+  0,
+  1.0159,
+  -0.0006
+ ],
+ "hipMid0": [
+  0,
+  0.9568,
+  -0.0035
+ ],
+ "com0": [
+  0,
+  1.0273,
+  0.0086
+ ],
+ "comMinusPelvisCom0": [
+  0,
+  0.0113,
+  0.0092
+ ],
+ "soleHalfLengthM": [
+  0.1057,
+  0.1057
+ ],
+ "wholeBodyInertiaAboutPelvisComKgm2": [
+  13.7693,
+  1.2388,
+  14.6068
+ ],
+ "ik": "StandController.legIKBounded, hard anatomical box, fallback none, residual ≤ 1e-6",
+ "speeds": {
+  "walk": {
+   "v": 1.2,
+   "stepHz": 1.8113,
+   "contactS": 0.7082,
+   "apexM": 0.03,
+   "rampS": 1,
+   "provenance": "RESEARCH-DERIVED (sources/2026-10-08_cf6_human_walking_calibration_pack.md): linear interpolation at 1.2 m/s between the pack's 1.11760 and 1.34112 m/s rows — cadence 105.8 / 113.6 steps/min (C M) → 108.68 steps/min = 1.8113 Hz (step 0.6625 m = v / f; pack C D kinematic step 0.6613 m); combined double support 28.8 / 27.4 % (H F/D) → 28.28 % → contact = stride × (50 % + DS / 2) = 1.1042 s × 64.14 % = 0.7082 s. Apex 0.03 m = Touchline E2 apex decision (sources/2026-10-06_user_decision_e2_apex30.md). Ramp 1.0 s: provisional.",
+   "stanceSweepM": 0.8498,
+   "feasible": true,
+   "supportDhM": -0.09,
+   "touchdownPitchDeg": 5,
+   "liftoffPitchDeg": 15,
+   "lateralReachPerLegM": [
+    0.38,
+    0.38
+   ],
+   "R": 0.38,
+   "hComM": 0.9373,
+   "omega": 3.2352,
+   "caps": {
+    "horizontalN": 313.8535,
+    "verticalUpN": 1161.1607,
+    "verticalDownN": 193.5268,
+    "torqueNm": 81.7995
+   },
+   "Jstar": 97.0111,
+   "impulses": {
+    "small": 24.2528,
+    "moderate": 72.7583,
+    "large": 194.0221
+   },
+   "springs": {
+    "1Hz": {
+     "Klin": 3115.2419,
+     "Dlin": 991.6123,
+     "Krot": [
+      543.5915,
+      48.9072,
+      576.653
+     ],
+     "Drot": [
+      173.0305,
+      15.5676,
+      183.5543
+     ]
+    },
+    "2Hz": {
+     "Klin": 12460.9677,
+     "Dlin": 1983.2246,
+     "Krot": [
+      2174.3659,
+      195.6288,
+      2306.6118
+     ],
+     "Drot": [
+      346.0611,
+      31.1353,
+      367.1087
+     ]
+    },
+    "4Hz": {
+     "Klin": 49843.8709,
+     "Dlin": 3966.4492,
+     "Krot": [
+      8697.4634,
+      782.5153,
+      9226.4473
+     ],
+     "Drot": [
+      692.1221,
+      62.2706,
+      734.2173
+     ]
+    }
+   }
+  },
+  "jog": {
+   "v": 3,
+   "stepHz": 2.8,
+   "contactS": 0.26,
+   "apexM": 0.1,
+   "rampS": 1.5,
+   "provenance": "PROVISIONAL DIAGNOSTIC (Amendment 1): plausible-magnitude stress-test values from general running-biomechanics knowledge, NOT literature-verified in this session (web search budget exhausted; Dorn, Schache & Pandy 2012 J Exp Biol 215:1944 Table 2 fetched but its values are image-only). 168 steps/min, step 1.071 m, contact 0.26 s (duty factor 0.36), apex 0.10 m, ramp 1.5 s.",
+   "stanceSweepM": 0.78,
+   "feasible": true,
+   "supportDhM": -0.07,
+   "touchdownPitchDeg": 10,
+   "liftoffPitchDeg": 15,
+   "lateralReachPerLegM": [
+    0.34,
+    0.34
+   ],
+   "R": 0.34,
+   "hComM": 0.9573,
+   "omega": 3.2013,
+   "caps": {
+    "horizontalN": 274.9492,
+    "verticalUpN": 1161.1607,
+    "verticalDownN": 193.5268,
+    "torqueNm": 81.7995
+   },
+   "Jstar": 85.8878,
+   "impulses": {
+    "small": 21.472,
+    "moderate": 64.4159,
+    "large": 171.7757
+   },
+   "springs": {
+    "1Hz": {
+     "Klin": 3115.2419,
+     "Dlin": 991.6123,
+     "Krot": [
+      543.5915,
+      48.9072,
+      576.653
+     ],
+     "Drot": [
+      173.0305,
+      15.5676,
+      183.5543
+     ]
+    },
+    "2Hz": {
+     "Klin": 12460.9677,
+     "Dlin": 1983.2246,
+     "Krot": [
+      2174.3659,
+      195.6288,
+      2306.6118
+     ],
+     "Drot": [
+      346.0611,
+      31.1353,
+      367.1087
+     ]
+    },
+    "4Hz": {
+     "Klin": 49843.8709,
+     "Dlin": 3966.4492,
+     "Krot": [
+      8697.4634,
+      782.5153,
+      9226.4473
+     ],
+     "Drot": [
+      692.1221,
+      62.2706,
+      734.2173
+     ]
+    }
+   }
+  },
+  "run": {
+   "v": 6,
+   "stepHz": 3.2,
+   "contactS": 0.15,
+   "apexM": 0.18,
+   "rampS": 3,
+   "provenance": "PROVISIONAL DIAGNOSTIC (Amendment 1): as jog. 192 steps/min, step 1.875 m, contact 0.15 s (duty factor 0.24, flight ≈ 0.16 s per step), apex 0.18 m, ramp 3.0 s.",
+   "stanceSweepM": 0.9,
+   "feasible": true,
+   "supportDhM": -0.1,
+   "touchdownPitchDeg": 10,
+   "liftoffPitchDeg": 15,
+   "lateralReachPerLegM": [
+    0.4,
+    0.4
+   ],
+   "R": 0.4,
+   "hComM": 0.9273,
+   "omega": 3.2526,
+   "caps": {
+    "horizontalN": 333.935,
+    "verticalUpN": 1161.1607,
+    "verticalDownN": 193.5268,
+    "torqueNm": 81.7995
+   },
+   "Jstar": 102.6661,
+   "impulses": {
+    "small": 25.6665,
+    "moderate": 76.9996,
+    "large": 205.3322
+   },
+   "springs": {
+    "1Hz": {
+     "Klin": 3115.2419,
+     "Dlin": 991.6123,
+     "Krot": [
+      543.5915,
+      48.9072,
+      576.653
+     ],
+     "Drot": [
+      173.0305,
+      15.5676,
+      183.5543
+     ]
+    },
+    "2Hz": {
+     "Klin": 12460.9677,
+     "Dlin": 1983.2246,
+     "Krot": [
+      2174.3659,
+      195.6288,
+      2306.6118
+     ],
+     "Drot": [
+      346.0611,
+      31.1353,
+      367.1087
+     ]
+    },
+    "4Hz": {
+     "Klin": 49843.8709,
+     "Dlin": 3966.4492,
+     "Krot": [
+      8697.4634,
+      782.5153,
+      9226.4473
+     ],
+     "Drot": [
+      692.1221,
+      62.2706,
+      734.2173
+     ]
+    }
+   }
+  }
+ }
+}
