@@ -21,6 +21,15 @@
 //     suspends it during its planned DS transfer, holdSupervisor()); it is active again in the release hold and in the step. A shadow copy of the same test records
 //     whether the suspension was ever needed ("would-abort").
 // After the plan ends the request holds (ξ_ref = the stance centroid, full stance) until the step command; the E2 step itself is unchanged.
+// ── CF-2 (--cf=2 = CF-1 + CF-2; COUNTERFACTUAL, user approval 2026-10-08, forward stepping only, diagnostics/loco_cf2_2026-10-08/): the trailing-leg swing. Diagnosis
+// (CF-1 refused decisions): the single-step planner's path certificate and the swing servo solve the leg IK in the bounded solver's STATIC soft box, whose ankle DF bound is
+// the knee-STRAIGHT 20° (spec rom.df.active). The body model's own passive law — applied in the physics (sim/v2_passive.js COUPLING_LAWS; spec COUPLINGS, Cho 2016) —
+// gives the soft DF limit 20° + 15°·clamp(kneeFlex/90°, 0, 1). The trailing leg's mid-swing needs 20.1–25.3° DF at 25–41° knee flexion: inside the body's coupled
+// limit (24.2–26.8°), far inside the hard 45°. CF-2 makes the IK's soft box consistent with that existing law, and nothing else: when a SOFT bounded leg-IK solve
+// fails the static box (err > 1e-6), it is retried with the ankle DF bound = the coupling law at the solution's knee flexion (fixed point, ≤ 2 refinements; accepted
+// only if the solution's DF ≤ the law at its own knee flexion). Every solve the static box already reached is untouched. No new parameter, no foot pitch rule, no
+// hard limit / capacity / clearance / gain change, no body-specific setting. It acts wherever the controller or the planner solve that leg IK (planner path / reach
+// certificates and the swing servo alike). Foot pitch and a pelvis-aware path check were evaluated diagnostically and are not needed (see the results).
 // usage: V2_KNEE_MODEL=v2k V2_ANKLE_NEUTRAL_K=0.13 node tools/loco_probe.mjs --human=V2-REF --first=L --steps=2 [--hz=240] [--dx=0.10] [--Ttr=4] [--rel=0.5] [--Tds=4]
 //        [--Tsw=0.6] [--apex=0.030] [--kind=forward|lateral] [--dy=0.08] --out=<file.json.gz>
 // kind lateral: the E2 preregistered lateral commanded step (0.08 m outward from the anchor), alternating legs — the feet stay side by side, so the existing (lateral) transfer applies
@@ -32,7 +41,7 @@ const here = path.dirname(fileURLToPath(import.meta.url)), J = await loadJolt(pa
 const HUMAN = arg("human", "V2-REF"), FIRST = arg("first", "L"), STEPS = +arg("steps", 2), HZ = +arg("hz", 240), CONFIG = arg("cfg", "PSTAR5CHABV"), DX = +arg("dx", 0.10), TTR = +arg("Ttr", 4), REL = +arg("rel", 0.5),
   TDS = +arg("Tds", 4.0), TSW = +arg("Tsw", 0.6), APEX = +arg("apex", 0.030), OUT = arg("out", ""), TRACE = +arg("trace", 4), KIND = arg("kind", "forward"), DY = +arg("dy", 0.08), CF = +arg("cf", 0);
 if (process.env.V2_KNEE_MODEL !== "v2k" || process.env.V2_ANKLE_NEUTRAL_K !== "0.13") throw new Error("E1a configuration env required");
-if (![0, 1].includes(CF) || !["forward", "lateral"].includes(KIND) || !["L", "R"].includes(FIRST) || !CFG[CONFIG] || CONFIG !== "PSTAR5CHABV" || !(STEPS >= 1)) throw new Error("args");
+if (![0, 1, 2].includes(CF) || (CF === 2 && arg("kind", "forward") !== "forward") || !["forward", "lateral"].includes(KIND) || !["L", "R"].includes(FIRST) || !CFG[CONFIG] || CONFIG !== "PSTAR5CHABV" || !(STEPS >= 1)) throw new Error("args");
 // DIAGNOSTIC settings (logged in the output): certificate logged-not-enforced with the smoke placeholder allowance; the commanded DS duration knob
 FS.clearAllow = { rise: 0, apex: 0, descent: 0 }; const TDS0 = FS.TdsCmd; FS.TdsCmd = TDS;
 const D = 180 / Math.PI, mj = (u) => { u = Math.min(1, Math.max(0, u)); return u * u * u * (10 - 15 * u + 6 * u * u); };
@@ -54,7 +63,25 @@ const cfHold = { holdSupervisor: () => G.ph === "TRANSFER", active: () => false,
 const spec = e2Spec(HUMAN), pd = { t0: 1, dur: 2, dz: 0.025 }, n0 = swingOf(0);
 const def = { ...g3Def(n0 === 0 ? "U:R" : "U:L"), key: "LOCO", title: "DIAGNOSTIC locomotion viability probe", lam: lamFn, supervise: { e2: { pushEnd: () => null } }, holds: [], seconds: 7 + STEPS * (TTR + REL + TDS + 4) + 12, push: null, torque: null };
 const s = new G3Sim(J, spec, def, { stand: { ikRefTwist: true, lifecycle: true, pelvisDrop: pd, ...CFG[CONFIG] }, passiveOpts: { kneeModel: "v2k" }, ...(HZ !== 240 ? { cfg: { hz: HZ } } : {}) });
-const C = s.ctrl, dt = s.dt; if (C.o.d1Guard !== 2 || !C.o.vffPelvisAir || !C.o.vffPassiveRef || C.o.e2 !== 2 || !C.o.swingAccFF || C.o.e2td) throw new Error("configuration");
+const C = s.ctrl, dt = s.dt; const CF2 = { solves: 0, used: 0, refused: 0, planner: 0, dfMax: -Infinity, marginMin: Infinity, perStep: null };
+if (CF === 2) { const orig = C.legIKBounded.bind(C), D0 = 180 / Math.PI;
+  // convention-free form of the law in the solver's coordinates: the static soft DF bound IS the law at knee flexion 0 (20°, anatomical; checked to 0.05°), so the coupled
+  // bound = static bound + 15°·clamp(kneeFlex/90°, 0, 1), with kneeFlex = knee coordinate − its soft lower bound (anatomical 0°) — both read from each body's own spec
+  for (const n of [0, 1]) { const ks = C.legK[n], ja = C.spec.joints[ks[2]], jk = C.spec.joints[ks[1]];
+    if (C.spec !== spec || Math.abs(ja.limits.soft.hi[1] * D0 - 32.5) > 0.05 || Math.abs(jk.limits.soft.lo[1] * D0 + 70) > 0.05) throw new Error("CF-2: joint convention " + JSON.stringify([ja.limits.soft.hi[1] * D0, jk.limits.soft.lo[1] * D0])); }
+  C.legIKBounded = (st, ev, n, pP, qP, footPose = null, bo = null) => { const r = orig(st, ev, n, pP, qP, footPose, bo); if (!(bo && bo.limits === "soft") || r.err <= 1e-6) return r;
+    CF2.solves++; const rh = orig(st, ev, n, pP, qP, footPose, { ...bo, limits: "hard" }); if (rh.err > 1e-6) { CF2.refused++; return r; }
+    const ks = C.legK[n], ja = C.spec.joints[ks[2]], hi0 = ja.limits.soft.hi[1], kLo = C.spec.joints[ks[1]].limits.soft.lo[1];
+    const extra = (x3) => (15 * Math.min(1, Math.max(0, (x3 - kLo) * D0 / 90))) / D0;   // the law's increment over the static bound at the knee coordinate x3 (rad)
+    let kx = rh.x[3], out = null;
+    try { for (let it = 0; it < 3 && !out; it++) { ja.limits.soft.hi[1] = hi0 + extra(kx); const r2 = orig(st, ev, n, pP, qP, footPose, bo), lim = hi0 + extra(r2.x[3]);
+        if (r2.err <= 1e-6 && r2.x[4] <= lim + 1e-12) out = { r2, df: (r2.x[4] - hi0) * D0 + 20, lim: (lim - hi0) * D0 + 20 }; else kx = r2.x[3]; } }
+    finally { ja.limits.soft.hi[1] = hi0; }
+    if (!out) { CF2.refused++; return r; }
+    CF2.used++; if (C._e2plan) CF2.planner++; CF2.dfMax = Math.max(CF2.dfMax, out.df); CF2.marginMin = Math.min(CF2.marginMin, out.lim - out.df);
+    if (CF2.perStep && !C._e2plan) { const q = CF2.perStep; q.used++; q.dfMax = Math.max(q.dfMax, out.df); q.marginMin = Math.min(q.marginMin, out.lim - out.df); }
+    return out.r2; }; }
+if (C.o.d1Guard !== 2 || !C.o.vffPelvisAir || !C.o.vffPassiveRef || C.o.e2 !== 2 || !C.o.swingAccFF || C.o.e2td) throw new Error("configuration");
 const B = spec.bodies, bi = (nm) => B.findIndex(b => b.name === nm), FT = ["foot_L", "foot_R"].map(bi), PEL = bi("pelvis"), JI = (nm) => spec.joints.findIndex(j => j.name === nm);
 const LEG = ["hip_L", "hip_R", "knee_L", "knee_R", "ankle_L", "ankle_R"].map(JI);
 const solePts = FT.map(f => B[f].shapes.filter(h => h.type === "hull").flatMap(h => h.points.map(p => V.add(p, h.pos))));
@@ -93,10 +120,20 @@ function protocol(t, st) { const lc = C.lc; if (G.fail) return; const n = swingO
 // ankle DF / inversion; ctrl/v2_stand.js legIKBounded) against spec joints[k].limits.soft — degrees beyond the soft bound (read-only)
 function softViol(r, n) { const ks = C.legK[n], L = ks.map(k => spec.joints[k].limits.soft), lo = [L[0].lo[0], L[0].lo[1], L[0].lo[2], L[1].lo[1], L[2].lo[1], L[2].lo[2]], hi = [L[0].hi[0], L[0].hi[1], L[0].hi[2], L[1].hi[1], L[2].hi[1], L[2].hi[2]];
   const nm = ["hip.twist", "hip.flex", "hip.abd", "knee.flex", "ankle.df", "ankle.inv"], out = {}; r.x.forEach((v, i) => { const e = v < lo[i] ? v - lo[i] : v > hi[i] ? v - hi[i] : 0; if (Math.abs(e) > 1e-9) out[nm[i]] = +(e * D).toFixed(2); }); return out; }
+// read-only: the body model's own pose-dependent soft DF limit (sim/v2_passive.js COUPLING_LAWS: 20° + 15°·clamp(kneeFlex/90°, 0, 1), anatomical) at the hard solution's
+// knee flexion vs. the DF that solution needs; and, for comparison only, the smallest toe-down foot pitch that makes the flat-sole pose feasible in the static soft box
+function couplingDiag(rh, n, st, ev, pel, pose) { const ks = C.legK[n], jk = spec.joints[ks[1]], ja = spec.joints[ks[2]], kneeC = 70, dfC = -12.5, kf = rh.x[3] * D + kneeC, df = rh.x[4] * D + dfC, lim = 20 + 15 * Math.min(1, Math.max(0, kf / 90));
+  const side = Q.rot(pose.rot, [1, 0, 0]), pitched = (deg) => ({ pos: pose.pos, rot: Q.mul(Q.axis(side, deg / D), pose.rot) });
+  let ptc = null; for (const sg of [1, -1]) { let lo = 0, hi = 30; if (C.legIKBounded(st, ev, n, pel.pos, pel.rot, pitched(sg * hi), { limits: "soft", fallback: "none" }).err > 1e-6) continue;
+    for (let k = 0; k < 14; k++) { const m = (lo + hi) / 2; if (C.legIKBounded(st, ev, n, pel.pos, pel.rot, pitched(sg * m), { limits: "soft", fallback: "none" }).err > 1e-6) lo = m; else hi = m; }
+    const toeDrop = (() => { const P = solePts[n], R0 = pose.rot, R1 = pitched(sg * hi).rot, low = (R) => Math.min(...P.map(p => V.add(pose.pos, Q.rot(R, p))[1])); return +((low(R0) - low(R1)) * 1000).toFixed(2); })();
+    if (!ptc || hi < Math.abs(ptc.deg)) ptc = { deg: +(sg * hi).toFixed(2), lowestPointDropMm: toeDrop }; }
+  return { kneeFlexDeg: +kf.toFixed(2), dfNeededDeg: +df.toFixed(2), staticSoftDfDeg: 20, coupledSoftDfDeg: +lim.toFixed(2), withinCoupled: df <= lim + 1e-9, pitchAlternative: ptc }; }
 function pathDiag(q) { const n = q.n, st = C.e2st, ev = C.e2ev, A = q.A, fr = stepFrame(C, st, n), goal = candPose(A, fr, KIND === "lateral" ? 0 : DX, KIND === "lateral" ? DY : 0, 0), L = liftRef(A, FS.liftDelayPlan), pel = swingFrame(C, st, n);
   const sg = stepSegment({ p: L.p, v: L.v, a: L.a, th: [0, 0, 0], w: [0, 0, 0], al: [0, 0, 0] }, goal, TSW, { z: q.apexZ, tk: 0.5 * TSW }), ks = C.legK[n], hip = V.add(pel.pos, Q.rot(pel.rot, C.anchor[ks[0]])), out = [];
   C._e2plan = (C._e2plan || 0) + 1; try { for (let i = 0; i < 11; i++) { const e = stepAt(sg, sg.T * i / 10), pose = { pos: e.pos, rot: e.rot }, rs = C.legIKBounded(st, ev, n, pel.pos, pel.rot, pose, { limits: "soft", fallback: "none" }), rh = C.legIKBounded(st, ev, n, pel.pos, pel.rot, pose, { limits: "hard", fallback: "none" });
-    out.push({ i, phi: i / 10, softErr: +rs.err.toExponential(2), hardErr: +rh.err.toExponential(2), softViolHard: rs.err > 1e-6 ? softViol(rh, n) : null, hipToFootM: +V.dist(hip, e.pos).toFixed(4), footRelStance: r4([e.pos[0] - st[C.feet[1 - n]].pos[0], e.pos[1], e.pos[2] - st[C.feet[1 - n]].pos[2]]) }); } } finally { C._e2plan--; }
+    const cpl = rs.err > 1e-6 ? couplingDiag(rh, n, st, ev, pel, pose) : null;
+    out.push({ i, phi: i / 10, softErr: +rs.err.toExponential(2), hardErr: +rh.err.toExponential(2), softViolHard: rs.err > 1e-6 ? softViol(rh, n) : null, coupling: cpl, hipToFootM: +V.dist(hip, e.pos).toFixed(4), footRelStance: r4([e.pos[0] - st[C.feet[1 - n]].pos[0], e.pos[1], e.pos[2] - st[C.feet[1 - n]].pos[2]]) }); } } finally { C._e2plan--; }
   return { goalRelStance: r4([goal.pos[0] - st[C.feet[1 - n]].pos[0], goal.pos[2] - st[C.feet[1 - n]].pos[2]]), legLen: +(V.len(C.anchor[ks[1]]) + V.len(C.anchor[ks[2]])).toFixed(4), samples: out }; }
 function newStep(t) { const n = swingOf(G.k); G.cur = { k: G.k + 1, swing: "LR"[n], stance: "LR"[1 - n], tTransfer: t, transfer: { xiMarginMin: Infinity, slipMax: [0, 0], xiErrMax: 0, pStanceMinHi: Infinity, wouldAbort: null, shadowOut: 0, trailFzEnd: null }, m: null }; G.steps.push(G.cur);
   if (CF) { const I = C.info, m = 1 - n, rs = centroid2(I.polys[m]); G.cf = { m, rs, plan: cmdPlan({ t0: t, xi0: I.xi, xid0: [I.w0 * (I.xi[0] - I.p[0]), I.w0 * (I.xi[1] - I.p[1])], rs, tTD: t + TTR }), last: null };
@@ -111,9 +148,9 @@ function command(t) { const n = swingOf(G.k), q = (G.seq = C.e2seq = new StepSeq
       pelvisH: +st[PEL].pos[1].toFixed(4), stanceShare: I.share ? +I.share[m].toFixed(4) : null, swingState: C.lc.feet[n].state,
       pelvisYawDrift: pel0.yaw == null ? null : +wrap(heading(st[PEL].rot) - pel0.yaw).toFixed(3), footYawDrift: FT.map((b, j) => +wrap(heading(st[b].rot) - foot0[j].yaw).toFixed(3)),
       pelvisLatFromFeetMid: (() => { const mid = [(st[FT[0]].pos[0] + st[FT[1]].pos[0]) / 2, (st[FT[0]].pos[2] + st[FT[1]].pos[2]) / 2], d = [st[PEL].pos[0] - mid[0], st[PEL].pos[2] - mid[1]]; return +((d[0] * lat[0] + d[1] * lat[1]) * 1000).toFixed(2); })(),
-      progress: r4(xz(st[PEL].pos).map((v, j) => v - xz(pel0.pos)[j])), xiErrNow: I.xiRef ? +(d2(I.xi, I.xiRef) * 1000).toFixed(2) : null, comH: +I.c[1].toFixed(4), trailFz: +(C.sense.Fz[n] / (C.M * 9.81)).toFixed(4),
+      progress: r4(xz(st[PEL].pos).map((v, j) => v - xz(pel0.pos)[j])), feetSepInitialLatM: +(st[FT[1]].pos[0] - st[FT[0]].pos[0]).toFixed(4), feetSepInitialFwdM: +(st[FT[1]].pos[2] - st[FT[0]].pos[2]).toFixed(4), xiErrNow: I.xiRef ? +(d2(I.xi, I.xiRef) * 1000).toFixed(2) : null, comH: +I.c[1].toFixed(4), trailFz: +(C.sense.Fz[n] / (C.M * 9.81)).toFixed(4),
       transfer: G.cur.transfer ? { xiErrMaxMm: +(G.cur.transfer.xiErrMax * 1000).toFixed(2), xiSupMarginMinMm: +(G.cur.transfer.xiMarginMin * 1000).toFixed(2), pStarStanceMarginMinAtHighShareMm: Number.isFinite(G.cur.transfer.pStanceMinHi) ? +(G.cur.transfer.pStanceMinHi * 1000).toFixed(2) : null, wouldAbort: G.cur.transfer.wouldAbort, releaseAfterS: G.cur.transfer.tTouch != null && G.cur.transfer.tRel0 != null ? r4(G.cur.transfer.tTouch - G.cur.transfer.tRel0) : null, cf: G.cur.transfer.cf || null } : null } };
-  G.cur.m = { stanceFoot0: { pos: st[FT[m]].pos.slice(), yaw: heading(st[FT[m]].rot) }, swingFoot0: st[FT[n]].pos.slice(), clrMin: Infinity, clrMinWin: Infinity, hMax: -Infinity, trkMax: 0, xiSupMin: Infinity, xiStanceMinSS: Infinity, pOutMax: 0, copOutMax: 0,
+  CF2.perStep = { used: 0, dfMax: -Infinity, marginMin: Infinity }; G.cur.m = { swTiltMax: 0, ankDfMax: -Infinity, dfMarginMin: Infinity, kneeFlexMax: -Infinity, stanceFoot0: { pos: st[FT[m]].pos.slice(), yaw: heading(st[FT[m]].rot) }, swingFoot0: st[FT[n]].pos.slice(), clrMin: Infinity, clrMinWin: Infinity, hMax: -Infinity, trkMax: 0, xiSupMin: Infinity, xiStanceMinSS: Infinity, pOutMax: 0, copOutMax: 0,
     xiErrMax: 0, pelTiltMax: 0, pelHMin: Infinity, hardMin: Infinity, hardWho: null, sat: 0, satWho: {}, dTau0Max: 0, dTau0Who: null, eClosPos: 0, eClosMax: 0, stanceSlip: 0, stanceTilt: 0, stanceYaw: 0, vTD: null, tdPos: null, liftShareMin: 1 }; }
 function finishStep(t) { const q = G.seq, c = G.cur, m = c.m, S = q.summary(), st = s.st, n = swingOf(G.k);
   const F = S.Fcmd || S.F; c.seq = { ph: q.ph, tAir: S.tAir, tTDm: S.tTDm, tAcc0: S.tAcc0, handBackT: S.handBackT, doneT: S.doneT, early: S.early, late: S.late, failedTD: S.failedTD, nocertSwing: S.nocertSwing, replans: S.calls.filter(x => /re-plan/.test(x.kind)).length,
@@ -125,7 +162,13 @@ function finishStep(t) { const q = G.seq, c = G.cur, m = c.m, S = q.summary(), s
     xiSupportMarginMinMm: +(m.xiSupMin * 1000).toFixed(2), xiStanceMarginMinSSmm: Number.isFinite(m.xiStanceMinSS) ? +(m.xiStanceMinSS * 1000).toFixed(2) : null, pStarOutsideMaxMm: +(m.pOutMax * 1000).toFixed(2), copOutsideMaxMm: +(m.copOutMax * 1000).toFixed(2),
     xiErrMaxMm: +(m.xiErrMax * 1000).toFixed(2), pelvisTiltMaxDeg: +m.pelTiltMax.toFixed(2), pelvisHminM: +m.pelHMin.toFixed(4), legHardMarginMinDeg: +m.hardMin.toFixed(2), legHardWho: m.hardWho, satAxisTicks: m.sat, satWho: m.satWho, dTau0MaxNm: +m.dTau0Max.toFixed(2), dTau0Who: m.dTau0Who,
     energyClosurePosJ: +m.eClosPos.toFixed(4), energyClosureMaxTickJ: +m.eClosMax.toFixed(4), liftShareMin: +m.liftShareMin.toFixed(4),
-    tAcceptToSupport: null, doneXiErrMm: q.ph === "DONE" && C.info.qsRef ? +(d2(C.info.xi, C.info.qsRef) * 1000).toFixed(2) : null, doneComV: q.ph === "DONE" ? r4(Math.hypot(C.info.v[0], C.info.v[2])) : null, durStep: r4(t - c.tTransfer) }; G.cur.m = null; }
+    swingFootTiltMaxDeg: +m.swTiltMax.toFixed(2), swingAnkleDfMaxDeg: Number.isFinite(m.ankDfMax) ? +m.ankDfMax.toFixed(2) : null, swingKneeFlexMaxDeg: Number.isFinite(m.kneeFlexMax) ? +m.kneeFlexMax.toFixed(2) : null,
+    swingDfMarginToCoupledMinDeg: Number.isFinite(m.dfMarginMin) ? +m.dfMarginMin.toFixed(2) : null, swingDfOverStatic20Deg: Number.isFinite(m.ankDfMax) ? +(m.ankDfMax - 20).toFixed(2) : null,
+    cf2: CF === 2 && CF2.perStep ? { servoCoupledSolves: CF2.perStep.used, dfMaxDeg: Number.isFinite(CF2.perStep.dfMax) ? +CF2.perStep.dfMax.toFixed(2) : null, marginMinDeg: Number.isFinite(CF2.perStep.marginMin) ? +CF2.perStep.marginMin.toFixed(2) : null } : null,
+    landedSupport: S.events.some(e => /landed foot SUPPORT/.test(e.what)),
+    tAcceptToSupport: null, doneXiErrMm: q.ph === "DONE" && C.info.qsRef ? +(d2(C.info.xi, C.info.qsRef) * 1000).toFixed(2) : null, doneComV: q.ph === "DONE" ? r4(Math.hypot(C.info.v[0], C.info.v[2])) : null, durStep: r4(t - c.tTransfer) };
+  const R0 = c.result; R0.physical = !!(c.cmd && c.cmd.init.swingState === "TOUCHING" && R0.liftoff && R0.clearanceMinMm != null && R0.clearanceMinMm > 0 && R0.contact && R0.accepted && R0.landedSupport && R0.done);   // the complete physical lifecycle
+  G.cur.m = null; }
 // ── run ──
 let foot0 = null; const trace = [], pel0 = { yaw: null, pos: null }; let prevE = null, prevW = null, prevCmd = null, hashes = {}, footPrev = null;
 const t0w = Date.now();
@@ -140,6 +183,8 @@ while (true) { if (!s.tick()) break; const t = s.n * dt, st = s.st, I = C.info, 
   // per-step measurement while a step is active
   if (G.cur && G.cur.m && G.ph === "STEP") { const m = G.cur.m, q = G.seq, sw = lcF[n].state, airborne = q.tAir != null && q.tTDm == null;
     if (q.tAir == null) m.liftShareMin = Math.min(m.liftShareMin, lcF[n].s ?? 1);
+    if (airborne) { const qsA = qsOf(st), kA = JI(n === 0 ? "ankle_L" : "ankle_R"), kK = JI(n === 0 ? "knee_L" : "knee_R"), dfA = anat(kA, qsA, "df"), kfA = anat(kK, qsA, "flex");
+      m.swTiltMax = Math.max(m.swTiltMax, tilt(st[FT[n]].rot)); m.ankDfMax = Math.max(m.ankDfMax, dfA); m.kneeFlexMax = Math.max(m.kneeFlexMax, kfA); m.dfMarginMin = Math.min(m.dfMarginMin, 20 + 15 * Math.min(1, Math.max(0, kfA / 90)) - dfA); }
     if (airborne) { const c = clearMm(n, st); m.clrMin = Math.min(m.clrMin, c); m.hMax = Math.max(m.hMax, c); const phi = (t - q.tLo) / q.T; if (phi >= 0.2 && phi <= 0.8) m.clrMinWin = Math.min(m.clrMinWin, c);
       const tg = lcF[n].swing; if (tg) m.trkMax = Math.max(m.trkMax, V.len(V.sub(st[FT[n]].pos, tg.pos)) * 1000); }
     if (q.tTDm != null && m.vTD == null) { const v = st[FT[n]].v; m.vTD = { down: +(-v[1]).toFixed(4), horiz: +Math.hypot(v[0], v[2]).toFixed(4) }; m.tdPos = st[FT[n]].pos.slice(); }
@@ -160,9 +205,10 @@ while (true) { if (!s.tick()) break; const t = s.n * dt, st = s.st, I = C.info, 
   if (s.n % 240 === 0) hashes[String(Math.round(t))] = (s.h >>> 0).toString(16).padStart(8, "0");
   if (G.stopAt != null && t >= G.stopAt - 1e-9) break; }
 if (G.cur && G.cur.m && G.seq) finishStep(s.n * dt);
-const done = G.steps.filter(x => x.result && x.result.done).length, out = { generated: "tools/loco_probe.mjs", diagnostic: true, note: "DIAGNOSTIC locomotion viability probe — not a qualification; no criterion, mechanism or verdict of E2 is affected",
-  run: { human: HUMAN, first: FIRST, steps: STEPS, kind: KIND, cf: CF ? "CF-1 (counterfactual between-steps transfer; diagnostic only)" : null, dy: KIND === "lateral" ? DY : 0, hz: HZ, config: CONFIG, dx: DX, Ttr: TTR, rel: REL, Tds: TDS, TdsDesign: TDS0, Tsw: TSW, apex: APEX, clearance: "computed and logged, not enforced (diagNoClearance; placeholder allowance 0/0/0)" },
+let physical = 0; for (const x of G.steps) { if (x.result && x.result.physical) physical++; else break; }
+const done = G.steps.filter(x => x.result && x.result.done).length, out = { physicalSteps: physical, cf2Totals: CF === 2 ? { coupledSolves: CF2.used, plannerSolves: CF2.planner, refused: CF2.refused, dfMaxDeg: Number.isFinite(CF2.dfMax) ? +CF2.dfMax.toFixed(2) : null, marginMinDeg: Number.isFinite(CF2.marginMin) ? +CF2.marginMin.toFixed(2) : null } : null, generated: "tools/loco_probe.mjs", diagnostic: true, note: "DIAGNOSTIC locomotion viability probe — not a qualification; no criterion, mechanism or verdict of E2 is affected",
+  run: { human: HUMAN, first: FIRST, steps: STEPS, kind: KIND, cf: CF === 2 ? "CF-1 + CF-2 (counterfactual transfer + coupled soft-limit trailing-leg IK; diagnostic only)" : CF ? "CF-1 (counterfactual between-steps transfer; diagnostic only)" : null, dy: KIND === "lateral" ? DY : 0, hz: HZ, config: CONFIG, dx: DX, Ttr: TTR, rel: REL, Tds: TDS, TdsDesign: TDS0, Tsw: TSW, apex: APEX, clearance: "computed and logged, not enforced (diagNoClearance; placeholder allowance 0/0/0)" },
   completed: done, fail: G.fail, steps: G.steps, endT: r4(s.n * dt), hashEnd: (s.h >>> 0).toString(16).padStart(8, "0"), hashes, wallS: (Date.now() - t0w) / 1000, mass: C.M,
   traceCols: ["t", "step", "ph", "seq", "states", "shares", "lamR", "xi", "xiRef", "pStar", "cop", "com", "comV", "pelvis", "pelvisYawDrift", "pelvisTilt", "footL", "footR", "clrL", "clrR", "xiSupMarginMm", "dTau0", "dClos", "FzBW", "cmdShare", "touchPieces", "xiMarginL_mm", "xiMarginR_mm", "pStarMarginL_mm", "pStarMarginR_mm", "xiRefDot"], trace };
 s.destroy(); if (OUT) fs.writeFileSync(OUT, OUT.endsWith(".gz") ? zlib.gzipSync(JSON.stringify(out)) : JSON.stringify(out));
-console.log(`LOCO${CF ? " CF-1" : ""} ${HUMAN} ${KIND} first ${FIRST} [Ttr ${TTR} rel ${REL} Tds ${TDS} Tsw ${TSW}]: ${done}/${STEPS} steps DONE; ${G.fail ? `FAIL step ${G.fail.step} @ ${G.fail.t.toFixed(3)} s (${G.fail.phase}): ${G.fail.why}` : "no failure"}; end ${out.endT} s; wall ${out.wallS.toFixed(0)} s; hash ${out.hashEnd}`);
+console.log(`LOCO${CF === 2 ? " CF-2" : CF ? " CF-1" : ""} ${HUMAN} ${KIND} first ${FIRST} [Ttr ${TTR} rel ${REL} Tds ${TDS} Tsw ${TSW}]: ${done}/${STEPS} steps DONE (${physical} consecutive physical); ${G.fail ? `FAIL step ${G.fail.step} @ ${G.fail.t.toFixed(3)} s (${G.fail.phase}): ${G.fail.why}` : "no failure"}; end ${out.endT} s; wall ${out.wallS.toFixed(0)} s; hash ${out.hashEnd}`);
