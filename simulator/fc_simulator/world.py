@@ -17,6 +17,18 @@ BALL_R = 0.11          # physical ball radius: out-of-play / goal decisions use
 G = 9.81
 MU_ROLL, MU_AIR = 4.2, 0.8
 REST, KEEP, SETTLE = 0.55, 0.80, 1.0
+# Kept in sync with sandbox/visual/ball-surface.js; game tuning, not a measured turf model.
+BALL_SURFACES = {
+    'off': (4.2, .80, .55, 1.),
+    'light': (3.45, .86, .50, 1.),
+    'rain': (2.65, .92, .44, 1.),
+    'snow-light': (4.35, .79, .53, .98),
+    'snow': (6.1, .65, .34, .65),
+    'snow-extreme': (9.2, .45, .20, .45),
+}
+def ball_surface(weather):
+    return BALL_SURFACES.get(weather, BALL_SURFACES['off'])
+
 REACH, GK_REACH, EXCL = 0.9, 1.6, 0.45
 ACC, BRAKE = 4.8, 6.5
 # ── PLAYER LOCOMOTION RESPONSIVENESS V1 (candidate A, direction-decomposed) ──
@@ -63,6 +75,7 @@ def predict_stop(ball):
     BallVariables principle). Airborne/bouncing: horizontal velocity carries
     through hang time and the geometric bounce chain (restitution 0.55)
     before rolling friction bites — chasers wait at the RIGHT spot."""
+    mu_roll, _, ground_rest, _ = ball_surface(ball.get("surface_weather", "off"))
     sp = math.hypot(ball['vx'], ball['vy'])
     z, vz = ball['z'], ball['vz']
     if sp < 0.2 and z < 0.2: return ball['x'], ball['y']
@@ -71,8 +84,8 @@ def predict_stop(ball):
     if z > 0.05 or vz > 0.5:
         vzi = math.sqrt(max(0.0, vz*vz + 2*G*max(0.0, z)))
         t_land = (vz + vzi) / G
-        hang = min(t_land + (2 * 0.55 * vzi / G) / (1 - 0.55), 6.0)
-    d = sp*hang + sp*sp/(2*MU_ROLL)
+        hang = min(t_land + (2 * ground_rest * vzi / G) / (1 - ground_rest), 6.0)
+    d = sp*hang + sp*sp/(2*mu_roll)
     return ball['x'] + ball['vx']/sp*d, ball['y'] + ball['vy']/sp*d
 def dist(ax, ay, bx, by): return math.hypot(ax - bx, ay - by)
 
@@ -90,8 +103,10 @@ FAM = {  # launch families (real speeds; lofted solved with real gravity)
 }
 
 class Body:
-    def __init__(self, roster):
+    def __init__(self, roster, weather="off"):
         # roster: list of dicts {pid, team(0/1), gk(bool), vmax, acc}
+        self.weather = weather
+        self.mu_roll, self.ground_keep, self.ground_rest, self.settle_keep = ball_surface(weather)
         self.t = 0.0; self.tick_n = 0
         self.players = {}
         for r in roster:
@@ -104,6 +119,8 @@ class Body:
         self.ball = {'x': 52.5, 'y': 34.0, 'z': 0.0, 'vx': 0.0, 'vy': 0.0, 'vz': 0.0,
                      'ctrl': None, 'last': None, 'exclPid': None, 'exclT': 0.0, 'held': None,
                      'state': 'ROLLING', 'estT': 0.0}
+        if weather in BALL_SURFACES and weather != "off":
+            self.ball["surface_weather"] = weather
         self.intents = {}
         self.events = []           # physical events (wake sources)
         self.contacts = []
@@ -275,16 +292,18 @@ class Body:
         if b['z'] > 0: b['vz'] -= G*DT
         if b['z'] <= 0:
             if b['vz'] < 0:
-                r = -b['vz']*REST
-                if r < SETTLE: b['vz'] = 0.0; b['state'] = 'ROLLING'
+                r = -b['vz']*self.ground_rest
+                if r < SETTLE:
+                    b['vz'] = 0.0; b['state'] = 'ROLLING'
+                    b['vx'] *= self.settle_keep; b['vy'] *= self.settle_keep
                 else:
-                    b['vz'] = r; b['vx'] *= KEEP; b['vy'] *= KEEP
+                    b['vz'] = r; b['vx'] *= self.ground_keep; b['vy'] *= self.ground_keep
                     self._contact('BOUNCE', None)
             b['z'] = max(0.0, b['z'])
         else: b['state'] = 'AIRBORNE'
         sp = math.hypot(b['vx'], b['vy'])
         if sp > 0:
-            mu = MU_AIR if b['z'] > 0.05 else MU_ROLL
+            mu = MU_AIR if b['z'] > 0.05 else self.mu_roll
             ns = max(0.0, sp - mu*DT)
             b['vx'] *= ns/sp; b['vy'] *= ns/sp
         d = dist(b['x'], b['y'], px, py)
@@ -530,7 +549,7 @@ class Body:
                 return
             if bsp < 0.5 and self.t - p.get('_lastTouchT', -9.0) >= 0.10:
                 ux, uy = (p['x'] - b['x']) / max(d, 1e-9), (p['y'] - b['y']) / max(d, 1e-9)
-                u = min(1.6, math.sqrt(2 * MU_ROLL * max(0.05, d - 0.30)))
+                u = min(1.6, math.sqrt(2 * self.mu_roll * max(0.05, d - 0.30)))
                 b['vx'], b['vy'], b['vz'] = ux * u, uy * u, 0.0
                 p['touchT'] = 0.18
                 p['_lastTouchT'] = self.t
@@ -574,7 +593,7 @@ class Body:
         ux, uy = math.cos(a0), math.sin(a0)
         s0 = (b['x'] - p['x']) * ux + (b['y'] - p['y']) * uy
         pv_along = max(0.0, p['vx'] * ux + p['vy'] * uy)
-        u = pv_along + (s_c - s0 + 0.5 * MU_ROLL * T * T) / T
+        u = pv_along + (s_c - s0 + 0.5 * self.mu_roll * T * T) / T
         u = clamp(u, 0.5, pv + 3.5)
         if knock_scale > 1.0: u = min(u * knock_scale, pv + 3.5 * knock_scale)
         # physical impulse, not overwrite (V1.1): obsolete velocity is

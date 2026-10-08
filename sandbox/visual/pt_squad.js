@@ -179,7 +179,7 @@ function ptSquadPredict(t, n) {
   for (let k = 1; k <= n; k++) {
     x += vx * PT_DT; y += vy * PT_DT; z += vz * PT_DT;
     if (z > 0) vz -= PT.G * PT_DT;
-    if (z <= 0) { if (vz < 0) { const r = -vz * PT.REST; if (r < PT.SETTLE) vz = 0; else { vz = r; vx *= PT.KEEP; vy *= PT.KEEP; } } z = Math.max(0, z); }
+    if (z <= 0) { if (vz < 0) { const r = -vz * PT.REST; if (r < PT.SETTLE) { vz = 0; vx *= PT.SETTLE_KEEP; vy *= PT.SETTLE_KEEP; } else { vz = r; vx *= PT.KEEP; vy *= PT.KEEP; } } z = Math.max(0, z); }
     const sp = Math.hypot(vx, vy); if (sp > 0) { const ns = Math.max(0, sp - (z > 0.05 ? PT.MU_AIR : PT.MU_ROLL) * PT_DT); vx *= ns / sp; vy *= ns / sp; }
     P[3 * k] = x; P[3 * k + 1] = y; P[3 * k + 2] = z;
   }

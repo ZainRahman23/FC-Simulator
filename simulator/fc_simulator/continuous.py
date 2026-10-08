@@ -58,7 +58,7 @@ class Lab:
                                'acc': 3.6 + a.get('acceleration', 60)/100*1.9,
                                'pfoot': str(getattr(st.player, 'preferred_foot', 'R'))[:1].upper()})
                 self.team_of[st.player.player_id] = tnum
-        self.body = Body(roster)
+        self.body = Body(roster, weather=getattr(engine, "surface_weather", "off"))
         self.body.ball['x'], self.body.ball['y'] = 52.5, 34.0
         self.body.ball['state'] = 'DEAD'                    # dead until the first restart is taken
         self.gk_of = {0: None, 1: None}

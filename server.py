@@ -21,7 +21,7 @@ import threading
 import traceback
 import uuid
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT / "simulator"))
@@ -122,6 +122,7 @@ async def error_boundary(request: Request, call_next):
 
 # ── request models ───────────────────────────────────────────────────────────
 class StartRequest(BaseModel):
+    weather: Literal["off", "light", "rain", "snow-light", "snow", "snow-extreme"] = "off"
     fixture_id: str
     seed: int
     save_id: str = "local"
@@ -296,7 +297,9 @@ def _build_engine(start_request: dict[str, Any]) -> MatchEngine:
     home = bridge.build_team(start_request["home_team"], "HOME")
     away = bridge.build_team(start_request["away_team"], "AWAY")
     config = bridge.build_config(start_request.get("config"), start_request.get("coach_ai"))
-    return MatchEngine(home, away, bridge.ATTRIBUTE_STATS, int(start_request["seed"]), config)
+    engine = MatchEngine(home, away, bridge.ATTRIBUTE_STATS, int(start_request["seed"]), config)
+    engine.surface_weather = start_request.get("weather", "off")
+    return engine
 
 
 def _recover_match(match_id: str) -> dict[str, Any] | None:

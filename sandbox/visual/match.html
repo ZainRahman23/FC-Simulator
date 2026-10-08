@@ -30,7 +30,7 @@
 
   <section>
     <label for="weather">Weather</label>
-    <select id="weather" onchange="TouchlineRain.setWeather(this.value)" style="width:100%;margin-bottom:8px"><option value="rain">Rain</option><option value="light">Light rain</option><option value="off">Dry</option></select>
+    <select id="weather" onchange="TouchlineRain.setWeather(this.value)" style="width:100%;margin-bottom:8px"><option value="rain">Rain</option><option value="light">Light rain</option><option value="off">Dry</option><option value="snow-light">Light snow</option><option value="snow">Snow</option><option value="snow-extreme">Extreme snow</option></select>
     <label for="ball-design">Match ball design</label>
     <select id="ball-design" onchange="TouchlineBall.setDesign(this.value)" style="width:100%;margin-bottom:8px">
       <option value="classic">Classic · white / charcoal</option>
@@ -170,10 +170,10 @@
 <script src="anim3d/gk3d_backend.js"></script>
 <script src="ball-art.js"></script>
 <script>document.getElementById("ball-design").value=TouchlineBall.getDesign();</script>
-<script src="corner-flags.js"></script><script src="stadium-art.js"></script><script src="rain.js"></script>
+<script src="corner-flags.js"></script><script src="stadium-art.js"></script><script src="rain.js?v=snow3"></script><script src="ball-surface.js?v=snowphysics1"></script>
 <script>document.getElementById("weather").value=TouchlineRain.getWeather();</script>
-<script src="match.js?v=pt2"></script>
-<script src="pt_squad.js"></script>
+<script src="match.js?v=snowphysics1"></script>
+<script src="pt_squad.js?v=snowphysics1"></script>
 <script src="pt_defend.js"></script>   <!-- DEFENDING V1: jockey / standing tackle / slide tackle / occupancy (simulation), inert outside defending drills -->
 <script src="pt_react.js"></script>   <!-- TACKLED-PLAYER V1: contact / balance / fall (simulation), inert outside defending drills -->
 <script src="anim3d/gk_playtest.js"></script>

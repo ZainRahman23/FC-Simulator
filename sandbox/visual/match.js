@@ -310,7 +310,7 @@ async function startMatch() {
   const fixture = await loadJSON("fixture_liv_eve.json");
   const r = await fetch(API + "/matches/start", {
     method: "POST", headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(fixture),
+    body: JSON.stringify({ ...fixture, weather: typeof TouchlineRain === "undefined" ? "off" : TouchlineRain.getWeather() }),
   }).then(x => x.json());
   S.pb.matchId = r.match_id;
   S.pb.meta = { fixture: fixture.fixture_id, seed: fixture.seed,
@@ -1615,7 +1615,8 @@ function ballTestStep() {
       const [, v] = t.script.shift();
       t.v = v.slice(); t.grounded = t.v[2] <= 0;
     }
-  const G = 9.81, REST = 0.55, KEEP = 0.8, MU = 4.2, SETTLE = 0.9;
+  const surface = typeof TouchlineSurface === "undefined" ? {roll:4.2,bounce:.55,keep:.8} : TouchlineSurface.current();
+  const G = 9.81, REST = surface.bounce, KEEP = surface.keep, MU = surface.roll, SETTLE = 0.9;
   if (!t.grounded) {
     t.p[0] += t.v[0] * dt; t.p[1] += t.v[1] * dt; t.p[2] += t.v[2] * dt;
     t.v[2] -= G * dt;
@@ -2181,7 +2182,11 @@ function ptKickEntry(tech, foot, mirror) {
 // as the accepted ball tests already port step_ball. Nothing here touches
 // match state (S.pb), match AI, or the engine.
 const PT = {  // world.py Body constants, ported verbatim — keep in sync
-  G: 9.81, MU_ROLL: 4.2, MU_AIR: 0.8, REST: 0.55, KEEP: 0.80, SETTLE: 1.0,
+  G: 9.81, MU_AIR: 0.8, SETTLE: 1.0,
+  get SETTLE_KEEP() { return typeof TouchlineSurface === "undefined" ? 1 : TouchlineSurface.current().settleKeep; },
+  get MU_ROLL() { return typeof TouchlineSurface === "undefined" ? 4.2 : TouchlineSurface.current().roll; },
+  get REST() { return typeof TouchlineSurface === "undefined" ? .55 : TouchlineSurface.current().bounce; },
+  get KEEP() { return typeof TouchlineSurface === "undefined" ? .80 : TouchlineSurface.current().keep; },
   REACH: 0.9, EXCL: 0.45, ACC: 4.8, BRAKE: 6.5, VMAX: 8.2, RUNV: 5.0,
   // PLAYER LOCOMOTION RESPONSIVENESS V1 (candidate A, world.py mirror)
   ACC_GAIN: 8.5 / 4.8, BRAKE_PLANT: 12.0, ACC_LAT: 10.0, ACC_START: 9.5,
@@ -2516,10 +2521,10 @@ function ptGoalFrameStep(b, dt) {
 }
 function ptFam(fam, D) {          // world.py FAM launch families (port)
   const c = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
-  if (fam === "SHORT") return [c(Math.sqrt(2 * PT.MU_ROLL * D + 6.5 * 6.5), 8, 19), 0];
-  if (fam === "DRIVEN") return [c(Math.sqrt(2 * PT.MU_ROLL * D + 7.0 * 7.0), 14, 26), 0];
-  if (fam === "THROUGH") return [c(Math.sqrt(2 * PT.MU_ROLL * D + 4.0 * 4.0), 10, 24), 0];   // weighted into space, dies ~2 m past (world.py FAM)
-  if (fam === "CUTBACK") return [c(Math.sqrt(2 * PT.MU_ROLL * D + 6.0 * 6.0), 9, 18), 0];
+  if (fam === "SHORT") return [c(Math.sqrt(2 * 4.2 * D + 6.5 * 6.5), 8, 19), 0];
+  if (fam === "DRIVEN") return [c(Math.sqrt(2 * 4.2 * D + 7.0 * 7.0), 14, 26), 0];
+  if (fam === "THROUGH") return [c(Math.sqrt(2 * 4.2 * D + 4.0 * 4.0), 10, 24), 0];   // weighted into space, dies ~2 m past (world.py FAM)
+  if (fam === "CUTBACK") return [c(Math.sqrt(2 * 4.2 * D + 6.0 * 6.0), 9, 18), 0];
   if (fam === "LOFT") { const T = c(D / 16, 0.8, 2.2); return [D / T, PT.G * T / 2]; }
   if (fam === "CLEAR") { const T = c(D / 11, 1.2, 2.6); return [D / T, PT.G * T / 2 * 1.15]; }
   return [c(24 + D * 0.3, 24, 31), c(0.5 + D * 0.06, 0.5, 2.2)];   // SHOT
@@ -3281,7 +3286,7 @@ function gkPredict(gk, b) {
     px += vx * dt; py += vy * dt; pz += vz * dt;   // (1) advance (same as the real ball)
     if (pz > 0) vz -= PT.G * dt;                  // (2) gravity
     if (pz <= 0) {                                // (3) ground bounce (same REST/KEEP/SETTLE; spin bleeds)
-      if (vz < 0) { const r = -vz * PT.REST; if (r < PT.SETTLE) vz = 0; else { vz = r; vx *= PT.KEEP; vy *= PT.KEEP; } sObs *= PT_CURVE.bounceKeep; }
+      if (vz < 0) { const r = -vz * PT.REST; if (r < PT.SETTLE) { vz = 0; vx *= PT.SETTLE_KEEP; vy *= PT.SETTLE_KEEP; } else { vz = r; vx *= PT.KEEP; vy *= PT.KEEP; } sObs *= PT_CURVE.bounceKeep; }
       pz = Math.max(0, pz);
     }
     const sp2 = Math.hypot(vx, vy);               // (4) friction (air vs roll by height)
@@ -6190,7 +6195,7 @@ function ptBallStep(t) {
       if (b.z <= 0) {
         if (b.vz < 0) {
           const r = -b.vz * PT.REST;
-          if (r < PT.SETTLE) b.vz = 0;
+          if (r < PT.SETTLE) { b.vz = 0; b.vx *= PT.SETTLE_KEEP; b.vy *= PT.SETTLE_KEEP; }
           else { b.vz = r; b.vx *= PT.KEEP; b.vy *= PT.KEEP; }
           if (b.curve) b.curve.s *= PT_CURVE.bounceKeep;   // ground contact bleeds spin
         }
@@ -6837,15 +6842,18 @@ function drawGoalGeoDebug(side) {
   strokeSeg3(gx, 2.44, 30.34, gx, 2.44, 37.66);
 }
 function draw(sample, dt) {
+  // Server matches lock weather at kickoff so buffered playback stays truthful.
+  const weatherControl = document.getElementById("weather");
+  if (weatherControl) { weatherControl.disabled = !!S.pb.matchId && !(S.pt && S.pt.on); weatherControl.title = weatherControl.disabled ? "Weather is set at kickoff. Training allows changes during play." : "Change pitch conditions"; }
   if (typeof TouchlineRain !== "undefined") TouchlineRain.step(dt);
   S.frameNo = (S.frameNo || 0) + 1;    // per-frame cache key (net projections)
   ctx.imageSmoothingEnabled = false;
   ctx.fillStyle = "#284a31"; // Quiet empty surround for the pitch/character art direction.
   ctx.fillRect(0, 0, cv.width, cv.height);
   drawGroundPerspective();
+  if (typeof TouchlineRain !== "undefined") TouchlineRain.ground(ctx, sproj3, RES);
   if (typeof TouchlineStadium !== "undefined") { TouchlineStadium.ground(ctx, sproj3); TouchlineStadium.draw(ctx, sproj3, "far"); }
   drawMarkings();
-  if (typeof TouchlineRain !== "undefined") TouchlineRain.ground(ctx, sproj3, RES);
   if (typeof CornerFlags !== "undefined") CornerFlags.draw(ctx, sproj3, typeof FLAG_TIME === "number" ? FLAG_TIME : performance.now() / 1000, "far");
   if (S.dbg.occ && sample) drawOccDebug(sample);
   if (S.dbg.grid) drawGrid();
