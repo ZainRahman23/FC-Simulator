@@ -2563,3 +2563,12 @@ Guard off vs on: commands 10¹⁷ – 10²¹ → ≤ 1.35 kN·m; Σ+ up to 2,499
 **Decisions pending:** CQ-1b judgement for out-of-envelope runs; the CQ-3a erratum; then adoption → TD2C → E2 sequence.
 
 Not pushed.
+
+## 2026-10-08 — Publication rewrite of the 33 unpublished commits (user decision; source `sources/2026-10-08_user_decision_publication_rewrite.md`)
+
+- **PUB-1:** the generated archive `e2/evidence_smoke_H/runs_records_240_REF_165.tgz` (105,822,358 B, > GitHub's 100 MiB limit) is removed from the unpublished history `e519c8f` … `6e03afe` only. No Git LFS. Nothing published is rewritten.
+- **PUB-2:** 33 commits replayed one for one: same trees minus that path, same order, parents, author and committer identities and dates; original messages plus provenance trailers. Old → new map, verification and regeneration: `PUBLICATION_REWRITE_2026-10-08.md` / `.tsv`. The new head of the rewritten tail is `e5ea11f` (was `6e03afe`).
+- **PUB-3:** the archive is kept locally outside Git (SHA-256 `765df83e…`), and regenerable with `e2/scripts/run_smoke_matrix_H.sh` on `9578ccf`. The matrix's compact evidence stays committed.
+- **PUB-4:** references to rewritten commits now carry `old [published as new]`; run logs keep their original hashes, with `commit.published.txt` beside them.
+- **PUB-5:** evidence storage. Raw per-run record archives (`runs_records_*.tgz`) are git-ignored, and any generated archive of 50 MB or more stays outside Git under the policy in `EVIDENCE_STORAGE_POLICY.md`. A local pre-commit size guard is in `tools/git-hooks/`.
+- No simulation result, criterion or code path changed.
