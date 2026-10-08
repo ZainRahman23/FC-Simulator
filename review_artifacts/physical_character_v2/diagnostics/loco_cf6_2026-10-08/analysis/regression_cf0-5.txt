@@ -1,0 +1,217 @@
+# CF-6 regression (§10): --cf=0..5 re-executed with the CF-6 harness (tools/loco_probe.mjs as committed with CF-6; last edit 2026-10-08 22:34:49, regression finished 22:43:16).
+# Expected end hashes = the committed evidence of the probe, CF-1, CF-2, CF-3, CF-4 and CF-5 studies. Records compared field for field for CF-3/4/5.
+OK  5c82a687 5c82a687 cf5__V2-165-62_s10
+OK  4f48bbfd 4f48bbfd cf5__V2-165-62_s20
+OK  056e95fb 056e95fb cf5__V2-198-92_s10
+OK  e1701a44 e1701a44 cf5__V2-198-92_s20
+OK  facb57ad facb57ad cf5__V2-REF_s10
+OK  770b5fcf 770b5fcf cf5__V2-REF_s2
+OK  4594884e 4594884e cf5__V2-REF_s20
+OK  9d9812d7 9d9812d7 cf5__V2-REF_s4
+OK  bccb5e96 bccb5e96 cf5__V2-REF_s6
+OK  87a83fbf 87a83fbf cf5__V2-long-legs_s10
+OK  0d9fb6db 0d9fb6db cf5__V2-long-legs_s20
+OK  cb96f729 cb96f729 loco_cf1_2026-10-08__evidence__cf1_V2-165-62_L
+OK  3eb0b370 3eb0b370 loco_cf1_2026-10-08__evidence__cf1_V2-165-62_R
+OK  7219b09b 7219b09b loco_cf1_2026-10-08__evidence__cf1_V2-198-92_L
+OK  a6326990 a6326990 loco_cf1_2026-10-08__evidence__cf1_V2-198-92_R
+OK  43a0565c 43a0565c loco_cf1_2026-10-08__evidence__cf1_V2-REF_L
+OK  cee49e0b cee49e0b loco_cf1_2026-10-08__evidence__cf1_V2-REF_R
+OK  116e1090 116e1090 loco_cf1_2026-10-08__evidence__cf1_V2-long-legs_L
+OK  ab12f4f7 ab12f4f7 loco_cf1_2026-10-08__evidence__cf1_V2-long-legs_R
+OK  1b2eb9c7 1b2eb9c7 loco_cf1_2026-10-08__evidence__cf1lat_V2-165-62_L
+OK  1fcd4fc7 1fcd4fc7 loco_cf1_2026-10-08__evidence__cf1lat_V2-165-62_R
+OK  911ee10e 911ee10e loco_cf1_2026-10-08__evidence__cf1lat_V2-198-92_L
+OK  5d254ee4 5d254ee4 loco_cf1_2026-10-08__evidence__cf1lat_V2-198-92_R
+OK  70079733 70079733 loco_cf1_2026-10-08__evidence__cf1lat_V2-REF_L
+OK  7708dfa4 7708dfa4 loco_cf1_2026-10-08__evidence__cf1lat_V2-REF_R
+OK  77cb3b84 77cb3b84 loco_cf1_2026-10-08__evidence__cf1lat_V2-long-legs_L
+OK  03224559 03224559 loco_cf1_2026-10-08__evidence__cf1lat_V2-long-legs_R
+OK  a6b663c4 a6b663c4 loco_cf2_2026-10-08__evidence__cf2_V2-165-62_L
+OK  2b351ed3 2b351ed3 loco_cf2_2026-10-08__evidence__cf2_V2-165-62_R
+OK  86f06dd4 86f06dd4 loco_cf2_2026-10-08__evidence__cf2_V2-198-92_L
+OK  87eef202 87eef202 loco_cf2_2026-10-08__evidence__cf2_V2-198-92_R
+OK  b7595850 b7595850 loco_cf2_2026-10-08__evidence__cf2_V2-REF_L
+OK  dff59e79 dff59e79 loco_cf2_2026-10-08__evidence__cf2_V2-REF_R
+OK  f2fad0f3 f2fad0f3 loco_cf2_2026-10-08__evidence__cf2_V2-long-legs_L
+OK  9b309793 9b309793 loco_cf2_2026-10-08__evidence__cf2_V2-long-legs_R
+OK  2c0c8300 2c0c8300 loco_cf2_2026-10-08__evidence__staged_2step__s2_V2-165-62_L
+OK  c5974833 c5974833 loco_cf2_2026-10-08__evidence__staged_2step__s2_V2-165-62_R
+OK  4eb6b97b 4eb6b97b loco_cf2_2026-10-08__evidence__staged_2step__s2_V2-198-92_L
+OK  1f283a3d 1f283a3d loco_cf2_2026-10-08__evidence__staged_2step__s2_V2-198-92_R
+OK  4c56b161 4c56b161 loco_cf2_2026-10-08__evidence__staged_2step__s2_V2-REF_L
+OK  a3939379 a3939379 loco_cf2_2026-10-08__evidence__staged_2step__s2_V2-REF_R
+OK  130a0b16 130a0b16 loco_cf2_2026-10-08__evidence__staged_2step__s2_V2-long-legs_L
+OK  8b9542a2 8b9542a2 loco_cf2_2026-10-08__evidence__staged_2step__s2_V2-long-legs_R
+OK  1590b274 1590b274 loco_cf3_2026-10-08__evidence__stage1__s1_V2-165-62_L
+OK  de1ac029 de1ac029 loco_cf3_2026-10-08__evidence__stage1__s1_V2-198-92_L
+OK  73947684 73947684 loco_cf3_2026-10-08__evidence__stage1__s1_V2-REF_L
+OK  3f46e307 3f46e307 loco_cf3_2026-10-08__evidence__stage1__s1_V2-long-legs_L
+OK  75cc1370 75cc1370 loco_cf3_2026-10-08__evidence__stage1_relmax3__s1_V2-165-62_L
+OK  13d2e52e 13d2e52e loco_cf3_2026-10-08__evidence__stage1_relmax3__s1_V2-198-92_L
+OK  8402c0e8 8402c0e8 loco_cf3_2026-10-08__evidence__stage1_relmax3__s1_V2-REF_L
+OK  3f46e307 3f46e307 loco_cf3_2026-10-08__evidence__stage1_relmax3__s1_V2-long-legs_L
+OK  ae0ed509 ae0ed509 loco_cf3_2026-10-08__evidence__stage2__c1.5_V2-165-62_L
+OK  54874058 54874058 loco_cf3_2026-10-08__evidence__stage2__c1.5_V2-198-92_L
+OK  f646f266 f646f266 loco_cf3_2026-10-08__evidence__stage2__c1.5_V2-REF_L
+OK  cfc21cac cfc21cac loco_cf3_2026-10-08__evidence__stage2__c1.5_V2-long-legs_L
+OK  fc964072 fc964072 loco_cf3_2026-10-08__evidence__stage2__c2_V2-165-62_L
+OK  2a79a4ae 2a79a4ae loco_cf3_2026-10-08__evidence__stage2__c2_V2-198-92_L
+OK  88862615 88862615 loco_cf3_2026-10-08__evidence__stage2__c2_V2-REF_L
+OK  db33f85d db33f85d loco_cf3_2026-10-08__evidence__stage2__c2_V2-long-legs_L
+OK  c8809fe7 c8809fe7 loco_cf3_2026-10-08__evidence__stage2__c3_V2-REF_L
+OK  9b515165 9b515165 loco_cf3_2026-10-08__evidence__stage2__c5_V2-REF_L
+OK  30f25bd2 30f25bd2 loco_cf4_2026-10-08__evidence__extended__Tst1_V2-198-92_s60
+OK  212a053a 212a053a loco_cf4_2026-10-08__evidence__extended__Tst1_V2-REF_s60
+OK  b870f37a b870f37a loco_cf4_2026-10-08__evidence__faster__Tst1_V2-165-62_s20
+OK  b1755621 b1755621 loco_cf4_2026-10-08__evidence__faster__Tst1_V2-198-92_s20
+OK  a0f1fa32 a0f1fa32 loco_cf4_2026-10-08__evidence__faster__Tst1_V2-REF_s20
+OK  4163610d 4163610d loco_cf4_2026-10-08__evidence__faster__Tst1_V2-long-legs_s20
+OK  f5639263 f5639263 loco_cf4_2026-10-08__evidence__ladder__ladder_Tst2.5_V2-REF_s4
+OK  4db00861 4db00861 loco_cf4_2026-10-08__evidence__ladder__ladder_Tst2_V2-REF_s4
+OK  9b4030ed 9b4030ed loco_cf4_2026-10-08__evidence__ladder__ladder_Tst3_V2-REF_s4
+OK  02934f12 02934f12 loco_cf4_2026-10-08__evidence__staged__Tst2_V2-165-62_s10
+OK  20e8bc16 20e8bc16 loco_cf4_2026-10-08__evidence__staged__Tst2_V2-165-62_s2
+OK  bae6f9ff bae6f9ff loco_cf4_2026-10-08__evidence__staged__Tst2_V2-165-62_s20
+OK  21b3c3f6 21b3c3f6 loco_cf4_2026-10-08__evidence__staged__Tst2_V2-165-62_s4
+OK  37068d6a 37068d6a loco_cf4_2026-10-08__evidence__staged__Tst2_V2-165-62_s6
+OK  ae6db10e ae6db10e loco_cf4_2026-10-08__evidence__staged__Tst2_V2-198-92_s10
+OK  a080bdfe a080bdfe loco_cf4_2026-10-08__evidence__staged__Tst2_V2-198-92_s2
+OK  4afd5ce1 4afd5ce1 loco_cf4_2026-10-08__evidence__staged__Tst2_V2-198-92_s20
+OK  583f8562 583f8562 loco_cf4_2026-10-08__evidence__staged__Tst2_V2-198-92_s4
+OK  d8850d7a d8850d7a loco_cf4_2026-10-08__evidence__staged__Tst2_V2-198-92_s6
+OK  beff180d beff180d loco_cf4_2026-10-08__evidence__staged__Tst2_V2-REF_s10
+OK  b0c138b7 b0c138b7 loco_cf4_2026-10-08__evidence__staged__Tst2_V2-REF_s2
+OK  f0de0513 f0de0513 loco_cf4_2026-10-08__evidence__staged__Tst2_V2-REF_s20
+OK  4db00861 4db00861 loco_cf4_2026-10-08__evidence__staged__Tst2_V2-REF_s4
+OK  4dae56be 4dae56be loco_cf4_2026-10-08__evidence__staged__Tst2_V2-REF_s6
+OK  e94cf8a5 e94cf8a5 loco_cf4_2026-10-08__evidence__staged__Tst2_V2-long-legs_s10
+OK  73c474b9 73c474b9 loco_cf4_2026-10-08__evidence__staged__Tst2_V2-long-legs_s2
+OK  099acd29 099acd29 loco_cf4_2026-10-08__evidence__staged__Tst2_V2-long-legs_s20
+OK  27370afc 27370afc loco_cf4_2026-10-08__evidence__staged__Tst2_V2-long-legs_s4
+OK  fd223e21 fd223e21 loco_cf4_2026-10-08__evidence__staged__Tst2_V2-long-legs_s6
+OK  71ae0b1a 71ae0b1a loco_probe_2026-10-08__evidence__p1_V2-165-62_L
+OK  59aa9a35 59aa9a35 loco_probe_2026-10-08__evidence__p1_V2-165-62_R
+OK  b3ed8536 b3ed8536 loco_probe_2026-10-08__evidence__p1_V2-198-92_L
+OK  19a96c96 19a96c96 loco_probe_2026-10-08__evidence__p1_V2-198-92_R
+OK  c6536a96 c6536a96 loco_probe_2026-10-08__evidence__p1_V2-REF_L
+OK  9d0d895f 9d0d895f loco_probe_2026-10-08__evidence__p1_V2-REF_R
+OK  10abd2d2 10abd2d2 loco_probe_2026-10-08__evidence__p1_V2-long-legs_L
+OK  34418bb1 34418bb1 loco_probe_2026-10-08__evidence__p1_V2-long-legs_R
+OK  6508e4e1 6508e4e1 loco_probe_2026-10-08__evidence__p1lat_V2-165-62_L
+OK  2532f490 2532f490 loco_probe_2026-10-08__evidence__p1lat_V2-165-62_R
+OK  cfd513f8 cfd513f8 loco_probe_2026-10-08__evidence__p1lat_V2-198-92_L
+OK  3f20744b 3f20744b loco_probe_2026-10-08__evidence__p1lat_V2-198-92_R
+OK  a0b5dbdd a0b5dbdd loco_probe_2026-10-08__evidence__p1lat_V2-REF_L
+OK  84d86f78 84d86f78 loco_probe_2026-10-08__evidence__p1lat_V2-REF_R
+OK  d9fea0c3 d9fea0c3 loco_probe_2026-10-08__evidence__p1lat_V2-long-legs_L
+OK  d99856e3 d99856e3 loco_probe_2026-10-08__evidence__p1lat_V2-long-legs_R
+SUMMARY hashes 106 / 106 full records identical (wallS / decision-log ms stripped) {'cf3': [18, 18], 'cf4': [29, 29], 'cf5': [11, 11]} mismatches []
+
+# harness summary lines
+LOCO CF-1 V2-165-62 forward first R [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 1/20 steps DONE (1 consecutive physical); FAIL step 2 @ 20.096 s (STEP): sequencer NOCERT: NO_CERTIFIED_ONE_STEP at the decision: step not executed (fallback: return to double support); end 20.3458 s; wall 8 s; hash 3eb0b370
+LOCO CF-1 V2-REF forward first R [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 1/20 steps DONE (1 consecutive physical); FAIL step 2 @ 20.125 s (STEP): sequencer NOCERT: NO_CERTIFIED_ONE_STEP at the decision: step not executed (fallback: return to double support); end 20.375 s; wall 8 s; hash cee49e0b
+LOCO CF-1 V2-165-62 forward first L [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 1/20 steps DONE (1 consecutive physical); FAIL step 2 @ 20.071 s (STEP): sequencer NOCERT: NO_CERTIFIED_ONE_STEP at the decision: step not executed (fallback: return to double support); end 20.3208 s; wall 8 s; hash cb96f729
+LOCO CF-1 V2-198-92 forward first L [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 1/20 steps DONE (1 consecutive physical); FAIL step 2 @ 20.242 s (STEP): sequencer NOCERT: NO_CERTIFIED_ONE_STEP at the decision: step not executed (fallback: return to double support); end 20.4917 s; wall 9 s; hash 7219b09b
+LOCO CF-1 V2-REF forward first L [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 1/20 steps DONE (1 consecutive physical); FAIL step 2 @ 20.121 s (STEP): sequencer NOCERT: NO_CERTIFIED_ONE_STEP at the decision: step not executed (fallback: return to double support); end 20.3708 s; wall 9 s; hash 43a0565c
+LOCO CF-1 V2-198-92 forward first R [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 1/20 steps DONE (1 consecutive physical); FAIL step 2 @ 20.271 s (STEP): sequencer NOCERT: NO_CERTIFIED_ONE_STEP at the decision: step not executed (fallback: return to double support); end 20.5208 s; wall 9 s; hash a6326990
+LOCO CF-1 V2-long-legs forward first L [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 1/20 steps DONE (1 consecutive physical); FAIL step 2 @ 19.504 s (STEP): sequencer NOCERT: NO_CERTIFIED_ONE_STEP at the decision: step not executed (fallback: return to double support); end 19.7542 s; wall 8 s; hash 116e1090
+LOCO CF-1 V2-long-legs forward first R [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 1/20 steps DONE (1 consecutive physical); FAIL step 2 @ 19.529 s (STEP): sequencer NOCERT: NO_CERTIFIED_ONE_STEP at the decision: step not executed (fallback: return to double support); end 19.7792 s; wall 8 s; hash ab12f4f7
+LOCO CF-1 V2-198-92 lateral first R [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 1/20 steps DONE (1 consecutive physical); FAIL step 2 @ 20.508 s (RELEASE): unload time-out: the swing foot never TOUCHING ≥ 0.5 s within 3 s (state SUPPORT, share 1.000); end 20.7583 s; wall 8 s; hash 5d254ee4
+LOCO CF-1 V2-165-62 lateral first L [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 1/20 steps DONE (1 consecutive physical); FAIL step 2 @ 20.425 s (RELEASE): unload time-out: the swing foot never TOUCHING ≥ 0.5 s within 3 s (state SUPPORT, share 1.000); end 20.675 s; wall 8 s; hash 1b2eb9c7
+LOCO CF-1 V2-165-62 lateral first R [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 1/20 steps DONE (1 consecutive physical); FAIL step 2 @ 20.425 s (RELEASE): unload time-out: the swing foot never TOUCHING ≥ 0.5 s within 3 s (state SUPPORT, share 1.000); end 20.675 s; wall 9 s; hash 1fcd4fc7
+LOCO CF-1 V2-198-92 lateral first L [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 1/20 steps DONE (1 consecutive physical); FAIL step 2 @ 20.508 s (RELEASE): unload time-out: the swing foot never TOUCHING ≥ 0.5 s within 3 s (state SUPPORT, share 1.000); end 20.7583 s; wall 8 s; hash 911ee10e
+LOCO CF-1 V2-REF lateral first L [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 1/20 steps DONE (1 consecutive physical); FAIL step 2 @ 20.442 s (RELEASE): unload time-out: the swing foot never TOUCHING ≥ 0.5 s within 3 s (state SUPPORT, share 1.000); end 20.6917 s; wall 9 s; hash 70079733
+LOCO CF-1 V2-long-legs lateral first R [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 1/20 steps DONE (1 consecutive physical); FAIL step 2 @ 20.158 s (RELEASE): unload time-out: the swing foot never TOUCHING ≥ 0.5 s within 3 s (state SUPPORT, share 1.000); end 20.4083 s; wall 8 s; hash 03224559
+LOCO CF-1 V2-REF lateral first R [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 1/20 steps DONE (1 consecutive physical); FAIL step 2 @ 20.442 s (RELEASE): unload time-out: the swing foot never TOUCHING ≥ 0.5 s within 3 s (state SUPPORT, share 1.000); end 20.6917 s; wall 9 s; hash 7708dfa4
+LOCO CF-1 V2-long-legs lateral first L [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 1/20 steps DONE (1 consecutive physical); FAIL step 2 @ 20.158 s (RELEASE): unload time-out: the swing foot never TOUCHING ≥ 0.5 s within 3 s (state SUPPORT, share 1.000); end 20.4083 s; wall 9 s; hash 77cb3b84
+LOCO CF-2 V2-165-62 forward first L [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 9/20 steps DONE (9 consecutive physical); FAIL step 10 @ 100.858 s (STEP): sequencer NOCERT: NO_CERTIFIED_ONE_STEP at the decision: step not executed (fallback: return to double support); end 101.1083 s; wall 41 s; hash a6b663c4
+LOCO CF-2 V2-165-62 forward first R [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 9/20 steps DONE (9 consecutive physical); FAIL step 10 @ 100.688 s (STEP): sequencer NOCERT: NO_CERTIFIED_ONE_STEP at the decision: step not executed (fallback: return to double support); end 100.9375 s; wall 42 s; hash 2b351ed3
+LOCO CF-2 V2-REF forward first L [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 9/20 steps DONE (9 consecutive physical); FAIL step 10 @ 100.367 s (STEP): sequencer NOCERT: NO_CERTIFIED_ONE_STEP at the decision: step not executed (fallback: return to double support); end 100.6167 s; wall 42 s; hash b7595850
+LOCO CF-2 V2-198-92 forward first L [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 9/20 steps DONE (9 consecutive physical); FAIL step 10 @ 100.421 s (STEP): sequencer NOCERT: NO_CERTIFIED_ONE_STEP at the decision: step not executed (fallback: return to double support); end 100.6708 s; wall 42 s; hash 86f06dd4
+LOCO CF-2 V2-REF forward first R [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 9/20 steps DONE (9 consecutive physical); FAIL step 10 @ 100.463 s (STEP): sequencer NOCERT: NO_CERTIFIED_ONE_STEP at the decision: step not executed (fallback: return to double support); end 100.7125 s; wall 42 s; hash dff59e79
+LOCO CF-2 V2-198-92 forward first R [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 9/20 steps DONE (9 consecutive physical); FAIL step 10 @ 100.513 s (STEP): sequencer NOCERT: NO_CERTIFIED_ONE_STEP at the decision: step not executed (fallback: return to double support); end 100.7625 s; wall 42 s; hash 87eef202
+LOCO CF-2 V2-165-62 forward first L [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 2/2 steps DONE (2 consecutive physical); no failure; end 25.75 s; wall 11 s; hash 2c0c8300
+LOCO CF-2 V2-165-62 forward first R [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 2/2 steps DONE (2 consecutive physical); no failure; end 25.775 s; wall 11 s; hash c5974833
+LOCO CF-2 V2-198-92 forward first R [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 2/2 steps DONE (2 consecutive physical); no failure; end 25.95 s; wall 11 s; hash 1f283a3d
+LOCO CF-2 V2-198-92 forward first L [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 2/2 steps DONE (2 consecutive physical); no failure; end 25.9208 s; wall 12 s; hash 4eb6b97b
+LOCO CF-2 V2-REF forward first L [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 2/2 steps DONE (2 consecutive physical); no failure; end 25.8 s; wall 12 s; hash 4c56b161
+LOCO CF-2 V2-long-legs forward first L [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 2/2 steps DONE (2 consecutive physical); no failure; end 25.1875 s; wall 11 s; hash 130a0b16
+LOCO CF-2 V2-REF forward first R [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 2/2 steps DONE (2 consecutive physical); no failure; end 25.8042 s; wall 12 s; hash a3939379
+LOCO CF-2 V2-long-legs forward first R [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 2/2 steps DONE (2 consecutive physical); no failure; end 25.2125 s; wall 11 s; hash 8b9542a2
+LOCO CF-2 V2-long-legs forward first L [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 9/20 steps DONE (9 consecutive physical); FAIL step 10 @ 97.825 s (STEP): sequencer NOCERT: NO_CERTIFIED_ONE_STEP at the decision: step not executed (fallback: return to double support); end 98.075 s; wall 44 s; hash f2fad0f3
+LOCO CF-2 V2-long-legs forward first R [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 9/20 steps DONE (9 consecutive physical); FAIL step 10 @ 97.996 s (STEP): sequencer NOCERT: NO_CERTIFIED_ONE_STEP at the decision: step not executed (fallback: return to double support); end 98.2458 s; wall 45 s; hash 9b309793
+LOCO CF-3 V2-165-62 forward first L [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 5/20 steps DONE (5 consecutive physical); FAIL step 6 @ 65.450 s (RELEASE): unload time-out: the swing foot never TOUCHING ≥ 0.5 s within 3 s (state TOUCHING, share 0.000); end 65.7 s; wall 28 s; hash 75cc1370
+LOCO CF-3 V2-198-92 forward first L [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 5/20 steps DONE (5 consecutive physical); FAIL step 6 @ 65.879 s (RELEASE): unload time-out: the swing foot never TOUCHING ≥ 0.5 s within 3 s (state TOUCHING, share 0.000); end 66.1292 s; wall 29 s; hash 13d2e52e
+LOCO CF-3 V2-REF forward first L [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 5/20 steps DONE (5 consecutive physical); FAIL step 6 @ 65.583 s (RELEASE): unload time-out: the swing foot never TOUCHING ≥ 0.5 s within 3 s (state TOUCHING, share 0.000); end 65.8333 s; wall 37 s; hash 8402c0e8
+LOCO CF-3 V2-165-62 forward first L [Ttr 0.3624 rel 0.0453 Tds 0.3624 Tsw 0.6]: 0/20 steps DONE (0 consecutive physical); FAIL step 1 @ 6.067 s (STEP): sequencer NOCERT: NO_CERTIFIED_ONE_STEP at the decision: step not executed (fallback: return to double support); end 6.3167 s; wall 3 s; hash ae0ed509
+LOCO CF-3 V2-198-92 forward first L [Ttr 0.3624 rel 0.0453 Tds 0.3624 Tsw 0.6]: 0/20 steps DONE (0 consecutive physical); FAIL step 1 @ 6.154 s (STEP): sequencer NOCERT: NO_CERTIFIED_ONE_STEP at the decision: step not executed (fallback: return to double support); end 6.4042 s; wall 3 s; hash 54874058
+LOCO CF-3 V2-REF forward first L [Ttr 0.3624 rel 0.0453 Tds 0.3624 Tsw 0.6]: 0/20 steps DONE (0 consecutive physical); FAIL step 1 @ 6.092 s (STEP): sequencer NOCERT: NO_CERTIFIED_ONE_STEP at the decision: step not executed (fallback: return to double support); end 6.3417 s; wall 4 s; hash f646f266
+LOCO CF-3 V2-long-legs forward first L [Ttr 0.3624 rel 0.0453 Tds 0.3624 Tsw 0.6]: 0/20 steps DONE (0 consecutive physical); FAIL step 1 @ 5.842 s (STEP): sequencer NOCERT: NO_CERTIFIED_ONE_STEP at the decision: step not executed (fallback: return to double support); end 6.0917 s; wall 3 s; hash cfc21cac
+LOCO CF-3 V2-long-legs forward first L [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 20/20 steps DONE (20 consecutive physical); no failure; end 224.5333 s; wall 111 s; hash 3f46e307
+LOCO CF-3 V2-REF forward first L [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 20/20 steps DONE (20 consecutive physical); no failure; end 230.5042 s; wall 113 s; hash 73947684
+LOCO CF-3 V2-165-62 forward first L [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 20/20 steps DONE (20 consecutive physical); no failure; end 229.8708 s; wall 113 s; hash 1590b274
+LOCO CF-3 V2-198-92 forward first L [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 20/20 steps DONE (20 consecutive physical); no failure; end 232.0167 s; wall 113 s; hash de1ac029
+LOCO CF-3 V2-165-62 forward first L [Ttr 0.5976 rel 0.0747 Tds 0.5976 Tsw 0.6]: 20/20 steps DONE (20 consecutive physical); no failure; end 110.9042 s; wall 65 s; hash fc964072
+LOCO CF-3 V2-long-legs forward first L [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 20/20 steps DONE (20 consecutive physical); no failure; end 224.5333 s; wall 128 s; hash 3f46e307
+LOCO CF-3 V2-long-legs forward first L [Ttr 0.5976 rel 0.0747 Tds 0.5976 Tsw 0.6]: 20/20 steps DONE (20 consecutive physical); no failure; end 103.8042 s; wall 69 s; hash db33f85d
+LOCO CF-3 V2-198-92 forward first L [Ttr 0.5976 rel 0.0747 Tds 0.5976 Tsw 0.6]: 20/20 steps DONE (20 consecutive physical); no failure; end 108.7917 s; wall 72 s; hash 2a79a4ae
+LOCO CF-3 V2-REF forward first L [Ttr 0.5976 rel 0.0747 Tds 0.5976 Tsw 0.6]: 20/20 steps DONE (20 consecutive physical); no failure; end 111.3292 s; wall 74 s; hash 88862615
+LOCO CF-3 V2-REF forward first L [Ttr 1.0682 rel 0.1335 Tds 1.0682 Tsw 0.6]: 20/20 steps DONE (20 consecutive physical); no failure; end 123.55 s; wall 81 s; hash c8809fe7
+LOCO CF-4 V2-165-62 forward first L [Tst 1 S 0.06 v 0.0339 Tsw 0.6]: 20/20 steps DONE (20 consecutive physical); no failure; end 42.6417 s; wall 29 s; hash b870f37a
+LOCO CF-4 V2-198-92 forward first L [Tst 1 S 0.06 v 0.0339 Tsw 0.6]: 20/20 steps DONE (20 consecutive physical); no failure; end 42.4792 s; wall 28 s; hash b1755621
+LOCO CF-4 V2-REF forward first L [Tst 1 S 0.06 v 0.0339 Tsw 0.6]: 20/20 steps DONE (20 consecutive physical); no failure; end 42.6 s; wall 28 s; hash a0f1fa32
+LOCO CF-4 V2-REF forward first L [Tst 2.5 S 0.06 v 0.0183 Tsw 0.6]: 4/4 steps DONE (4 consecutive physical); no failure; end 21.0417 s; wall 13 s; hash f5639263
+LOCO CF-4 V2-REF forward first L [Tst 2 S 0.06 v 0.0217 Tsw 0.6]: 4/4 steps DONE (4 consecutive physical); no failure; end 19.0208 s; wall 12 s; hash 4db00861
+LOCO CF-4 V2-long-legs forward first L [Tst 1 S 0.06 v 0.0339 Tsw 0.6]: 20/20 steps DONE (20 consecutive physical); no failure; end 42.5292 s; wall 29 s; hash 4163610d
+LOCO CF-4 V2-REF forward first L [Tst 3 S 0.06 v 0.0159 Tsw 0.6]: 4/4 steps DONE (4 consecutive physical); no failure; end 23.0667 s; wall 15 s; hash 9b4030ed
+LOCO CF-4 V2-198-92 forward first L [Tst 1 S 0.06 v 0.0339 Tsw 0.6]: 60/60 steps DONE (60 consecutive physical); no failure; end 111.3875 s; wall 80 s; hash 30f25bd2
+LOCO CF-4 V2-165-62 forward first L [Tst 2 S 0.06 v 0.0217 Tsw 0.6]: 2/2 steps DONE (2 consecutive physical); no failure; end 13.525 s; wall 8 s; hash 20e8bc16
+LOCO CF-3 V2-REF forward first L [Ttr 2.0094 rel 0.2512 Tds 2.0094 Tsw 0.6]: 20/20 steps DONE (20 consecutive physical); no failure; end 155.7833 s; wall 94 s; hash 9b515165
+LOCO CF-4 V2-REF forward first L [Tst 1 S 0.06 v 0.0339 Tsw 0.6]: 60/60 steps DONE (60 consecutive physical); no failure; end 111.725 s; wall 75 s; hash 212a053a
+LOCO CF-4 V2-165-62 forward first L [Tst 2 S 0.06 v 0.0217 Tsw 0.6]: 10/10 steps DONE (10 consecutive physical); no failure; end 35.5458 s; wall 24 s; hash 02934f12
+LOCO CF-4 V2-165-62 forward first L [Tst 2 S 0.06 v 0.0217 Tsw 0.6]: 4/4 steps DONE (4 consecutive physical); no failure; end 19.0292 s; wall 12 s; hash 21b3c3f6
+LOCO CF-4 V2-198-92 forward first L [Tst 2 S 0.06 v 0.0217 Tsw 0.6]: 2/2 steps DONE (2 consecutive physical); no failure; end 13.5167 s; wall 9 s; hash a080bdfe
+LOCO CF-4 V2-165-62 forward first L [Tst 2 S 0.06 v 0.0217 Tsw 0.6]: 6/6 steps DONE (6 consecutive physical); no failure; end 24.5375 s; wall 16 s; hash 37068d6a
+LOCO CF-4 V2-198-92 forward first L [Tst 2 S 0.06 v 0.0217 Tsw 0.6]: 10/10 steps DONE (10 consecutive physical); no failure; end 35.4875 s; wall 23 s; hash ae6db10e
+LOCO CF-4 V2-198-92 forward first L [Tst 2 S 0.06 v 0.0217 Tsw 0.6]: 4/4 steps DONE (4 consecutive physical); no failure; end 19.0083 s; wall 12 s; hash 583f8562
+LOCO CF-4 V2-198-92 forward first L [Tst 2 S 0.06 v 0.0217 Tsw 0.6]: 6/6 steps DONE (6 consecutive physical); no failure; end 24.5042 s; wall 15 s; hash d8850d7a
+LOCO CF-4 V2-REF forward first L [Tst 2 S 0.06 v 0.0217 Tsw 0.6]: 2/2 steps DONE (2 consecutive physical); no failure; end 13.5208 s; wall 8 s; hash b0c138b7
+LOCO CF-4 V2-165-62 forward first L [Tst 2 S 0.06 v 0.0217 Tsw 0.6]: 20/20 steps DONE (20 consecutive physical); no failure; end 63.0792 s; wall 40 s; hash bae6f9ff
+LOCO CF-4 V2-REF forward first L [Tst 2 S 0.06 v 0.0217 Tsw 0.6]: 10/10 steps DONE (10 consecutive physical); no failure; end 35.5167 s; wall 22 s; hash beff180d
+LOCO CF-4 V2-REF forward first L [Tst 2 S 0.06 v 0.0217 Tsw 0.6]: 4/4 steps DONE (4 consecutive physical); no failure; end 19.0208 s; wall 12 s; hash 4db00861
+LOCO CF-4 V2-198-92 forward first L [Tst 2 S 0.06 v 0.0217 Tsw 0.6]: 20/20 steps DONE (20 consecutive physical); no failure; end 62.9542 s; wall 39 s; hash 4afd5ce1
+LOCO CF-4 V2-REF forward first L [Tst 2 S 0.06 v 0.0217 Tsw 0.6]: 6/6 steps DONE (6 consecutive physical); no failure; end 24.5208 s; wall 15 s; hash 4dae56be
+LOCO CF-4 V2-long-legs forward first L [Tst 2 S 0.06 v 0.0217 Tsw 0.6]: 2/2 steps DONE (2 consecutive physical); no failure; end 13.5167 s; wall 8 s; hash 73c474b9
+LOCO CF-4 V2-long-legs forward first L [Tst 2 S 0.06 v 0.0217 Tsw 0.6]: 10/10 steps DONE (10 consecutive physical); no failure; end 35.4875 s; wall 22 s; hash e94cf8a5
+LOCO CF-4 V2-long-legs forward first L [Tst 2 S 0.06 v 0.0217 Tsw 0.6]: 4/4 steps DONE (4 consecutive physical); no failure; end 19.0083 s; wall 12 s; hash 27370afc
+LOCO V2-165-62 forward first L [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 1/2 steps DONE (1 consecutive physical); FAIL step 2 @ 19.979 s (RELEASE): unload time-out: the swing foot never TOUCHING ≥ 0.5 s within 3 s (state SUPPORT, share 1.000); end 20.2292 s; wall 12 s; hash 71ae0b1a
+LOCO CF-4 V2-long-legs forward first L [Tst 2 S 0.06 v 0.0217 Tsw 0.6]: 6/6 steps DONE (6 consecutive physical); no failure; end 24.5042 s; wall 16 s; hash fd223e21
+LOCO CF-4 V2-REF forward first L [Tst 2 S 0.06 v 0.0217 Tsw 0.6]: 20/20 steps DONE (20 consecutive physical); no failure; end 63.0167 s; wall 40 s; hash f0de0513
+LOCO V2-165-62 forward first R [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 1/2 steps DONE (1 consecutive physical); FAIL step 2 @ 19.979 s (RELEASE): unload time-out: the swing foot never TOUCHING ≥ 0.5 s within 3 s (state SUPPORT, share 1.000); end 20.2292 s; wall 12 s; hash 59aa9a35
+LOCO V2-198-92 forward first L [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 1/2 steps DONE (1 consecutive physical); FAIL step 2 @ 20.029 s (RELEASE): unload time-out: the swing foot never TOUCHING ≥ 0.5 s within 3 s (state SUPPORT, share 1.000); end 20.2792 s; wall 12 s; hash b3ed8536
+LOCO V2-198-92 forward first R [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 1/2 steps DONE (1 consecutive physical); FAIL step 2 @ 20.033 s (RELEASE): unload time-out: the swing foot never TOUCHING ≥ 0.5 s within 3 s (state SUPPORT, share 1.000); end 20.2833 s; wall 12 s; hash 19a96c96
+LOCO V2-REF forward first L [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 1/2 steps DONE (1 consecutive physical); FAIL step 2 @ 19.983 s (RELEASE): unload time-out: the swing foot never TOUCHING ≥ 0.5 s within 3 s (state SUPPORT, share 1.000); end 20.2333 s; wall 12 s; hash c6536a96
+LOCO V2-REF forward first R [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 1/2 steps DONE (1 consecutive physical); FAIL step 2 @ 19.983 s (RELEASE): unload time-out: the swing foot never TOUCHING ≥ 0.5 s within 3 s (state SUPPORT, share 1.000); end 20.2333 s; wall 12 s; hash 9d0d895f
+LOCO V2-long-legs forward first L [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 1/2 steps DONE (1 consecutive physical); FAIL step 2 @ 19.183 s (RELEASE): unload time-out: the swing foot never TOUCHING ≥ 0.5 s within 3 s (state SUPPORT, share 1.000); end 19.4333 s; wall 12 s; hash 10abd2d2
+LOCO V2-165-62 lateral first L [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 1/20 steps DONE (1 consecutive physical); FAIL step 2 @ 15.442 s (TRANSFER): supervisor abort (stance-only CoP test) in TRANSFER; end 15.6917 s; wall 10 s; hash 6508e4e1
+LOCO V2-long-legs forward first R [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 1/2 steps DONE (1 consecutive physical); FAIL step 2 @ 19.183 s (RELEASE): unload time-out: the swing foot never TOUCHING ≥ 0.5 s within 3 s (state SUPPORT, share 1.000); end 19.4333 s; wall 13 s; hash 34418bb1
+LOCO CF-4 V2-long-legs forward first L [Tst 2 S 0.06 v 0.0217 Tsw 0.6]: 20/20 steps DONE (20 consecutive physical); no failure; end 62.9417 s; wall 42 s; hash 099acd29
+LOCO V2-165-62 lateral first R [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 1/20 steps DONE (1 consecutive physical); FAIL step 2 @ 15.442 s (TRANSFER): supervisor abort (stance-only CoP test) in TRANSFER; end 15.6917 s; wall 11 s; hash 2532f490
+LOCO V2-198-92 lateral first L [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 1/20 steps DONE (1 consecutive physical); FAIL step 2 @ 15.496 s (TRANSFER): supervisor abort (stance-only CoP test) in TRANSFER; end 15.7458 s; wall 11 s; hash cfd513f8
+LOCO V2-198-92 lateral first R [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 1/20 steps DONE (1 consecutive physical); FAIL step 2 @ 15.500 s (TRANSFER): supervisor abort (stance-only CoP test) in TRANSFER; end 15.75 s; wall 11 s; hash 3f20744b
+LOCO V2-REF lateral first L [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 1/20 steps DONE (1 consecutive physical); FAIL step 2 @ 15.446 s (TRANSFER): supervisor abort (stance-only CoP test) in TRANSFER; end 15.6958 s; wall 11 s; hash a0b5dbdd
+LOCO V2-long-legs lateral first L [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 1/20 steps DONE (1 consecutive physical); FAIL step 2 @ 14.646 s (TRANSFER): supervisor abort (stance-only CoP test) in TRANSFER; end 14.8958 s; wall 10 s; hash d9fea0c3
+LOCO V2-REF lateral first R [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 1/20 steps DONE (1 consecutive physical); FAIL step 2 @ 15.446 s (TRANSFER): supervisor abort (stance-only CoP test) in TRANSFER; end 15.6958 s; wall 11 s; hash 84d86f78
+LOCO V2-long-legs lateral first R [Ttr 4 rel 0.5 Tds 4 Tsw 0.6]: 1/20 steps DONE (1 consecutive physical); FAIL step 2 @ 14.646 s (TRANSFER): supervisor abort (stance-only CoP test) in TRANSFER; end 14.8958 s; wall 10 s; hash d99856e3
+LOCO CF-5 V2-165-62 forward first L [Tst 1 S 0.06 walk-plan Tsw 0.6]: 10/10 steps DONE (10 consecutive physical); no failure; end 21.6583 s; wall 17 s; hash 5c82a687
+LOCO CF-5 V2-198-92 forward first L [Tst 1 S 0.06 walk-plan Tsw 0.6]: 10/10 steps DONE (10 consecutive physical); no failure; end 21.5917 s; wall 18 s; hash 056e95fb
+LOCO CF-5 V2-long-legs forward first L [Tst 1 S 0.06 walk-plan Tsw 0.6]: 10/10 steps DONE (10 consecutive physical); no failure; end 21.5875 s; wall 17 s; hash 87a83fbf
+LOCO CF-5 V2-REF forward first L [Tst 1 S 0.06 walk-plan Tsw 0.6]: 2/2 steps DONE (2 consecutive physical); no failure; end 7.6833 s; wall 6 s; hash 770b5fcf
+LOCO CF-5 V2-165-62 forward first L [Tst 1 S 0.06 walk-plan Tsw 0.6]: 20/20 steps DONE (20 consecutive physical); no failure; end 39.1125 s; wall 30 s; hash 4f48bbfd
+LOCO CF-5 V2-REF forward first L [Tst 1 S 0.06 walk-plan Tsw 0.6]: 10/10 steps DONE (10 consecutive physical); no failure; end 21.625 s; wall 16 s; hash facb57ad
+LOCO CF-5 V2-REF forward first L [Tst 1 S 0.06 walk-plan Tsw 0.6]: 4/4 steps DONE (4 consecutive physical); no failure; end 11.1708 s; wall 7 s; hash 9d9812d7
+LOCO CF-5 V2-198-92 forward first L [Tst 1 S 0.06 walk-plan Tsw 0.6]: 20/20 steps DONE (20 consecutive physical); no failure; end 38.9708 s; wall 29 s; hash e1701a44
+LOCO CF-5 V2-long-legs forward first L [Tst 1 S 0.06 walk-plan Tsw 0.6]: 20/20 steps DONE (20 consecutive physical); no failure; end 38.975 s; wall 29 s; hash 0d9fb6db
+LOCO CF-5 V2-REF forward first L [Tst 1 S 0.06 walk-plan Tsw 0.6]: 6/6 steps DONE (6 consecutive physical); no failure; end 14.6542 s; wall 14 s; hash bccb5e96
+LOCO CF-5 V2-REF forward first L [Tst 1 S 0.06 walk-plan Tsw 0.6]: 20/20 steps DONE (20 consecutive physical); no failure; end 39.0417 s; wall 29 s; hash 4594884e
