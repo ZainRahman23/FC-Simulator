@@ -2603,3 +2603,34 @@ Not pushed.
   - versioned U-1 (window from the first contact-force tick; net non-generation or a TD-15 attribution rule);
   - a controller change at impact.
 - **Known risk for official E2:** the R-B recovery touchdown fails R-4 / R-5 on the final configuration (SMK-R diagnostic).
+
+## 2026-10-08 — ARCHITECTURE PIVOT: simulation-authoritative supported physical character; CF-6 closed as evidence (`sources/2026-10-08_user_decision_pivot_supported_locomotion_slp1.md`)
+
+- **CF-6 closed exactly as evidence** (`diagnostics/loco_cf6_2026-10-08/CF6_CLOSURE.md`):
+  - nothing in the CF-6 folder, the preregistration (1e98e1d), the results (b6edadc) or the replays (7651a25) is altered;
+  - CF-1 … CF-6 remain historical evidence.
+- **Recorded reading:**
+  - CF-6 demonstrated 59 consecutive genuinely continuous steps at 0.10 m/s, with convergence and no accumulating physical instability.
+  - The higher-speed failures occurred in the gait / planning / control layer. They did not establish a C-class structural body limitation.
+  - The 0.10 m/s motion is not production-quality walking. It is evidence about repeated physical support stability.
+- **Stopped:**
+  - autonomous-gait development (no CF-7; the CF-6 report's next-experiment options are not run);
+  - autonomous speed increase.
+- **New production locomotion architecture:**
+  - The football simulation / movement layer owns the authoritative world trajectory, velocity, acceleration, facing and intended action.
+  - V2 remains the physical character (body, masses / inertias, articulated colliders, joints and limits, contacts, actuators / capacities, feet, ground interaction).
+  - An artificial support / locomotion-authority layer drives it along the prescribed trajectory while keeping it upright. It is not a football decision-maker and never changes football outcomes.
+  - Contacts stay live while supported.
+  - Intended hierarchy: strong support when unobstructed; physical reaction with support retained (small disturbance); displacement / stride disruption / stumble (moderate); support breaks and the articulated body falls (large or badly placed); later recovery reacquires support.
+  - **No "impulse > X = ragdoll" rule.**
+- **First task:** the SLP-1 (Supported Locomotion Prototype 1) design / preregistration only, then stop for approval. SLP-1 asks:
+  - can V2-REF be externally driven through realistic-speed straight-line locomotion (≈ 1.2 / 3 / 6 m/s) while remaining a genuine contactable articulated body;
+  - can a small disturbance matrix produce sensible retained- vs lost-support behaviour without autonomous balance;
+  - what is the CPU cost compared with autonomous V2.
+- **Constraints:**
+  - default-off; regression preserved; no new randomness;
+  - no V2 physical-parameter changes for appearance;
+  - no football-simulation changes;
+  - no TD2C / E2 resumption (they remain at E2-22);
+  - no running / tackling / recovery / animation / production-walking work beyond SLP-1;
+  - daily publication rule unchanged; today's work not pushed early.
