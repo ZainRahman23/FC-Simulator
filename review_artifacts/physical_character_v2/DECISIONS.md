@@ -2634,3 +2634,16 @@ Not pushed.
   - no TD2C / E2 resumption (they remain at E2-22);
   - no running / tackling / recovery / animation / production-walking work beyond SLP-1;
   - daily publication rule unchanged; today's work not pushed early.
+
+## 2026-10-09 — SLP-1 STOPPED at its calibration step (preregistered stop rule), matrix not run (`slp1/SLP1_RESULTS.md`; approval `sources/2026-10-08_user_approval_slp1_with_amendments.md`)
+
+- **Protocol:** frozen 49785b7, plus amendments 1 – 2 recorded before any evidence run (a38e8fa).
+  - Amendment 1: shank disturbance-point candidates.
+  - Amendment 2: leg IK at the reference pelvis, after smoke run 0 showed the measured-pelvis frame leaves the legs straight.
+- **Calibration (§4.1):** no support frequency in {1, 2, 4} Hz met A1 – A6 at all three speeds. Stop rule fired: "ordinary undisturbed motion requires forces beyond the frozen caps".
+  - Walk 1.2 m/s: tracked, but the support was saturated on 68 – 93 % of ticks (pelvis pitch / roll torque); posture collapsed; support carried 74 – 88 % of body weight.
+  - Jog / run: the forward cap was saturated in the speed ramp → lag → recoverability margin exceeded → α decay → fall.
+- **Classification:** primarily locomotion authoring (the driver gives the legs neither pelvis-orientation control nor propulsion), plus one architecture-level tension (recoverability-derived caps also carrying ordinary locomotion). No V2 body limit.
+- **Held:** support integrity (no writes, caps respected); α-driven loss without state reset; determinism 9 / 9; regression 106 / 106 and components 58 / 58.
+- **CPU:** no saving (walk 933 – 952 vs autonomous 892 µs per step); the driver's IK dominates.
+- **Decision needed** (nothing started): A authoring fix (SLP-1b), B decouple ordinary authority from the recoverability bound, or C both. No LOC-1 / TD2C / E2 / further development.

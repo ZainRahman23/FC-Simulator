@@ -18,6 +18,7 @@ export const SLP_STAND = { ikRefTwist: true, lifecycle: true, ...CFG.PSTAR5CHABV
 
 export class SLPSim extends G2Sim {
   constructor(J, spec, slp, opts = {}) { super(J, spec, { title: "SLP-1 supported locomotion (DIAGNOSTIC)", seconds: slp.seconds }, { ...opts, slp, stand: SLP_STAND, passiveOpts: { kneeModel: "v2k" } }); }
+  _sense() { return this.probeRows ? super._sense() : { Fz: [0, 0], touch: [0, 0] }; }   // lean CPU mode (probes off): G2's controller sensing hook needs the probes; the SLP driver never reads it
   _slpInit() {
     const o = this.opts.slp, d = o.der, g = o.gait, B = this.spec.bodies, M = this.M, st = this.st, pel = this.ctrl.pelvis, w = this.w;
     const p0 = st[pel].com.slice(), traj = new Trajectory({ v: g.v, rampS: g.rampS, dh: d.supportDhM, p0 }), sched = new Schedule({ stepHz: g.stepHz, contactS: g.contactS });

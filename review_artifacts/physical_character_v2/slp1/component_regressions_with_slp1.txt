@@ -1,0 +1,61 @@
+# tools/v2_component_regressions.mjs with the SLP-1 code present, run in its own (historical, env-free) configuration, 2026-10-09 00:12:31
+PASS R1.a   boot sole geometry mirror-identical L vs R (all 8 bodies): max point mismatch 0.00e+0 m
+PASS R1.b   usable regions are mirror images (vertex count, vertices): count mismatches 0, max vertex mismatch 3.47e-18 m
+PASS R1.c   usable regions are mirror images (boundary, area, centroid): Hausdorff 3.47e-18 m, area 2.18e-16 rel, centroid 6.97e-18 m  (former construction: Hausdorff 4.76e-6 m)
+PASS R1.d   no CoP-area loss: the corrected region contains the former one: former region outside the corrected one by ≤ 0.00e+0 m; area change +1.19 … +1.43 %
+PASS R1.e   deterministic construction: bit-identical
+PASS R1.f   strictly convex: no reflex vertex; insidePoly exact (winding) on a 1 mm grid: reflex vertices 0, inside-test disagreements 0
+PASS R1.g   CoP projection onto the region is 1-Lipschitz (continuous boundary behaviour): max |Δ projection| / |Δ target| 1.000000
+PASS R1.h   invariant to the sampling of the same outline (extra collinear points, order, 1e-15 perturbation): max region change 3.10e-17 m
+PASS R2.a   unit normalisation: unit length, direction unchanged, no NaN (identity / 180° / 90°); degenerate Jolt input throws: ‖u‖² − 1 ≤ 6.66e-16, direction change ≤ 2.22e-16, NaN 0, unitQ(0) throws: true
+PASS R2.b   controller-side inputs are unit (body orientations, joint quaternions): ‖q‖² − 1 ≤ 4.44e-16 (orientations), 2.22e-16 (joint quaternions) over 24 states (raw Jolt: 2.01e-7)
+PASS R2.c   no material orientation change (numerical error only): max |Q.rot(raw) − Q.rot(unit)| 2.51e-7
+PASS R2.d   mirrored states: exact L/R joint-axis correspondence on the controller side: max ||σ| − 1| 1.67e-15
+PASS R2.e   deterministic (re-reading the same state): bit-identical
+PASS R2.f   passive plant bit-identical to the historical G1 (normalisation does not reach it): V2-REF upright 271f9e58, V1-matched leanR c3600c78, V2-REF drop1m 2581f5a3
+PASS R3.a   IK: identical reachability classification for every mirrored problem pair: 0 mismatches over 558 pairs (3 bodies)
+PASS R3.b   IK: reachable targets solved to the rounding floor (polished, ≤ 1e-14) and mirrored (≤ 1e-12 m): 288 pairs: residual ≤ 1.39e-15, mirror Δ ≤ 3.33e-15 m
+PASS R3.c   IK: unreachable targets reported unreachable, optima mirrored (≤ 1e-6 m): 270 pairs: all reported (residual > 1e-6): true; mirror Δ ≤ 4.77e-11 m
+PASS R3.d   IK: the target is never modified: 0 modified
+PASS R3.e   IK: production (staged FK) equals the plain reference implementation bit for bit: 0 of 558 solves differ
+PASS R4.a   bounded IK: opt-in (STAND.ikBounds false by default; the option routes legIK to legIKBounded): default off, option honoured: true
+PASS R4.b   bounded IK: every returned solution inside the anatomical hard limits: 420 solves
+PASS R4.c   bounded IK: equals the unconstrained IK wherever that solution is anatomically valid (≤ 1e-9 rad, solved ≤ 1e-12): 0 of 166 differ
+PASS R4.d   bounded IK: an anatomically invalid unconstrained solution is never accepted — solved on a valid branch (≤ 1e-12) or reported unreachable (> 1e-6): 14 invalid: 0 valid branch, 14 reported
+PASS R4.g   bounded IK fallback: every unreached target returns the box-constrained least-squares optimum (KKT ≤ 1e-7): 254 unreached solves: KKT max 3.80e-10
+PASS R4.e   bounded IK: L/R mirror-equivariant (classification; solution reached ≤ 1e-12 rad, unreached ≤ 1e-6 rad): 0 classification mismatches; Δ reached ≤ 1.22e-14, unreached ≤ 3.97e-8 rad
+PASS R4.f   bounded IK: the target is never modified: 0 modified
+PASS R5.a   twist-policy diagnostic options off by default (ikTwistBlend null, ikTwistTau 0, yawCmd null): default off: true
+PASS R5.b   ikTwistBlend 0 ≡ validated 'current' and 1 ≡ ikRefTwist (bit-identical IK solutions): blend 0 ≡ current: true; blend 1 ≡ reference: true
+PASS R5.c   mechanism: hip-rotation IK target follows the leg twist under 'current' (slope ≈ −1) and not under reference (≈ 0): slope current -0.985, reference 0.000
+PASS R5.d   drifting-reference filter state is saved by getState; the default controller state is unchanged (no new key): filter state saved: true; default state has no twFilt key: true
+PASS R6.a   certificate bound: Lipschitz rate claims hold (position rate ≤ lever for hip / knee, 0 for ankle; orientation rate ≤ 1): 2000 points × 6: max pos rate / lever 1.000000000, ankle position rate 0, max orientation rate 0.999999853
+PASS R6.b   certificate bound: no cell containing a known anatomical solution is pruned (bisection path to Σ LIP·h < 1e-9): 80 valid targets: 0 pruned
+PASS R6.c   certificate decides: a known invalid target → PROVEN-INFEASIBLE; the same target with the held knee axial twist moved (now solvable) → not certified: as defined: warm residual 5.33e-2 → PROVEN-INFEASIBLE (3290881 cells); knee axial -5°: solvable, certificate UNDECIDED
+PASS R6.d   the 8-D (twist-free) chain equals the production legChain bit for bit at the held twist values: max |Δr| 0
+PASS R6.e   tight twist levers (opt-in): 8-D rate claims hold (position rate ≤ lever incl. knee axial ≈ 0; ankle coordinates 0; orientation ≤ 1): knee-axial lever 1.00e-9 m, hip-twist 0.4386 m (generic 0.8663); max pos rate / lever 1.000000000, ankle 0, orientation 0.999999998
+PASS R7.a   lifecycle: contact flicker (8/0 pieces every tick, 0.2 s) never confirms AIRBORNE; the control weights s, a stay 0: start TOUCHING; states TOUCHING/LIFTOFF
+PASS R7.b   lifecycle: liftoff confirmed after the debounce; airborne weight continuous (Δa per tick ≤ 1.5·dt/release): AIRBORNE at tick 3, max Δa 0.0624
+PASS R7.c   lifecycle: a touchdown impact without intent is not support; intent + contact starts load acceptance after acceptDebounce; s continuous to SUPPORT: impact phase: TOUCHDOWN; LOAD_ACCEPT at tick 11; end SUPPORT; max Δs 0.0624
+PASS R7.d   lifecycle: a load reading taken during self-contact is ignored (no support); the same load from the turf alone is accepted: with self-contact: TOUCHING; without: TOUCHING/LOAD_ACCEPT/SUPPORT
+PASS R7.e   lifecycle: contact anchor captured on the turf, frozen while airborne, re-captured flat (landing x/z/yaw, previous height and tilt) at touchdown: frozen true; touchdown anchor x/z 0.11/0.21, y 0, flat true
+PASS R7.f   lifecycle: low load releases support only when the plan does not want load on that foot: wanted: SUPPORT; not wanted: SUPPORT/UNLOADING/TOUCHING
+PASS R7.g   lifecycle: deterministic; getState / setState round trip mid-sequence continues bit-identically: identical true
+PASS R7.h   lifecycle: a commanded swing target is the leg's target in a contact state; clearing it returns to the contact anchor: commanded used true; back to anchor true
+PASS R7.i   lifecycle option off by default; the default controller state / info carry no lifecycle key: off true
+PASS R8.a   corrected knee off by default: no v2k term, the old knee axial law: v2k false
+PASS R8.b   v2k envelope: θ0 = Walker polynomial, slack / calibrated bounds at 0 / 30 / 90°, deep-flexion defaults (no extra shift, no narrowing): θ0(30) 8.6298, bounds(0) [-12.5,14], (90) [-10.116,28.884]
+PASS R8.c   v2k: the passive layer's knee axial generalised torque equals the specification law (both knees, slack / law / end-stop): worst excess 0.00e+0 N·m
+PASS R8.d   v2k + reference policy: the knee twist in the posture-IK chain is θ0(solved flexion); old knee: the unchanged twist value: max |rot − θ0| 5.33e-15°; old knee unchanged true
+PASS R8.e   v2k: closed flexion–axial loop through the end range does no net passive work: ∮τ·dq -2.41e-5 J (∮|τ·dq| 9.627 J)
+PASS R8.f   v2k sensitivity override (deep δ150 = +5°) shifts θ0(150°) by 5° and nothing below 120°; the frozen set is unchanged: Δθ0(150) 5, Δθ0(120) 0
+PASS R9.a   ankle-stiffness override absent by default: k = the env value, else the spec default: k 0
+PASS R9.b   the override sets k exactly and clearing it restores the previous value: on 0.13, cleared 0
+PASS R10.a  unload-fix flags default OFF (ffLockedAxis, shareCap): ffLockedAxis false, shareCap false
+PASS R10.b  B1 lockedAxisFF reproduces the free-swing generalized force (knee, twist 7°, flexion 24°): |ΔQ_sy| 2.50e-10 N·m
+PASS R10.c  B3 shareClamp: a request below loadOff caps the commanded share; requests ≥ loadOff are untouched: 5/5 cases
+PASS R10.d  B1 scope = the joints with one locked swing axis, actuated twist and swing (knees, elbows): elbow_L,elbow_R,knee_L,knee_R
+PASS R11.a  touchRest default OFF: touchRest false
+PASS R11.b  touchRest: the released, touching foot rests (load in (0, loadOff)) without losing contact (G3 U:R, lifecycle): release 6.196 s, contact losses 0, resting load 1.07 N (loadOff 7.74 N)
+
+component regressions: 58/58 pass
