@@ -2586,3 +2586,20 @@ Not pushed.
 - **Erratum DVG2-E1** (`3e1c33c`, evaluator): class-B gates read the SV-2 evaluator's per-run metrics one level too high, so the first evaluation was FAIL (CQ-1bB). It is preserved; the same records were re-evaluated after the fix.
 - **Reported (TD-17):** 7 of the 13 exact-flag folds are robust to perturbation (branch difference at the fold). There is no closed-loop L / R difference (CQ-3b 96 / 96).
 - **Adopted:** DVG (`d1Guard: 2`) in PSTAR5CHABV / PSTAR5CHABTDV. Next: TD2C amendment A5 and the TD2C battery.
+
+## 2026-10-08 — E2-22: TD2C (with DVG) DOES NOT VALIDATE as preregistered (U-1 only) → STOPPED before E2 integration / PG-1 / official E2
+
+- **Battery** (`e2/TD2C_RESULTS.md`; frozen `de464a8`, A5): 3,552 / 3,552 runs.
+  - **Pass:** C-1 … C-10 (the full touchdown contract), C-6x classification, U-2 … U-7 (every obstacle run RECOVERED), TD-G2 / G3, DG-6 / DG-4b.
+  - **Fail: U-1 in 54 runs, all obs20 (+20 mm)**: 180 Hz 48, 240 Hz 6, 480 Hz 0. All fail (a) Σ+ > 0.5 J; 18 (180 Hz) also fail (c), a window's cumulative closure above +0.05 J.
+- **Diagnosis** (post-hoc, labelled):
+  - The excess lies entirely in the collision window.
+  - The first contact force precedes the sensed onset by one tick, so the frozen window (A2.8) misses the impact's dissipation tick. Measured from it, the collision never rises above its pre-impact energy (net −0.35 J).
+  - The positive closure ticks accompany IK-derived feed-forward held across the impact: R0 Σ+ 0.14 J; guard off 0.98 J; DVG 0.77 J.
+  - Reading: a timestep-proportional ledger closure error at a stiff impact (the TD-15 class). DVG reduces it rather than causing it.
+- **SV-2R** (diagnostic only, per its prereg): would validate, all T / I items 432 / 432; allowance 1.75 … 0.55 mm, not entered.
+- **Decisions needed:** U-1 for the out-of-envelope +20 mm obstacle at 180 / 240 Hz:
+  - keep as frozen and investigate the impact ledger;
+  - versioned U-1 (window from the first contact-force tick; net non-generation or a TD-15 attribution rule);
+  - a controller change at impact.
+- **Known risk for official E2:** the R-B recovery touchdown fails R-4 / R-5 on the final configuration (SMK-R diagnostic).

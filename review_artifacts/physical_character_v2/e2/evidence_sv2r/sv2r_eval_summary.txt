@@ -1,0 +1,23 @@
+runs 432/432; pre-freeze reachability rejections 0; runtime reachability rejections 0
+trajectory | set | n ON | β ON | β OFF | γ OFF | RMS ON / OFF mean (mm) | ON/OFF ratio | peak ON max
+  R-F    | R | 48 | -0.07 | — | — | 0.75 / 0.00 | — | 1.47
+  R-L    | R | 48 | 0.08 | — | — | 0.70 / 0.00 | — | 1.67
+  C-F7   | C | 48 | -0.03 | — | — | 0.72 / 0.00 | — | 1.39
+  C-F13  | C | 48 | -0.09 | — | — | 0.81 / 0.00 | — | 1.66
+  C-L5   | C | 48 | 0.08 | — | — | 0.70 / 0.00 | — | 1.58
+  H-T45  | H | 48 | -0.05 | — | — | 1.25 / 0.00 | — | 2.48
+  H-A40  | H | 48 | -0.02 | — | — | 0.93 / 0.00 | — | 1.72
+  H-D    | H | 48 | -0.04 | — | — | 0.69 / 0.00 | — | 1.38
+  H-F15  | H | 48 | -0.11 | — | — | 0.87 / 0.00 | — | 1.83
+PASS T-1 (0 failing items)
+PASS T-2 (0 failing items)
+PASS T-3 (0 failing items)
+PASS I-1 (0 failing items)
+PASS I-2 (0 failing items)
+PASS I-3 (0 failing items)
+PASS I-4 (0 failing items)
+PASS I-5 (0 failing items)
+PASS I-6 (0 failing items)
+PASS I-7 (0 failing items)
+SV-2R: SERVO VALIDATES
+per-bin allowance (mm, φ 0.20 … 0.80 in 0.05 bins): 1.75 1.50 1.25 0.90 0.50 0.20 0.00 0.00 0.00 0.15 0.35 0.55

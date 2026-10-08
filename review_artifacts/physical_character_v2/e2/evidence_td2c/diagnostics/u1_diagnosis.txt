@@ -1,0 +1,40 @@
+# TD2C U-1 diagnosis (post-hoc, labelled; nothing adopted). Source: the frozen TD2C battery records (de464a8) + 3 scratch counterfactual runs.
+
+## Σ+ by condition and rate (TDV), n / median / max / runs > 0.5 J / outcomes / guard engaged
+nominal   180: 144 / 0.154 / 0.216 / 0 / {'RECOVERED': 144} / 0
+nominal   240: 144 / 0.108 / 0.151 / 0 / {'RECOVERED': 144} / 0
+nominal   480: 144 / 0.069 / 0.098 / 0 / {'RECOVERED': 144} / 0
+beyond    180: 144 / 0.147 / 0.205 / 0 / {'RECOVERED': 144} / 0
+beyond    240: 144 / 0.106 / 0.147 / 0 / {'RECOVERED': 144} / 0
+beyond    480: 144 / 0.070 / 0.093 / 0 / {'RECOVERED': 144} / 0
+obs5      180: 144 / 0.165 / 0.228 / 0 / {'RECOVERED': 144} / 28
+obs5      240: 144 / 0.115 / 0.156 / 0 / {'RECOVERED': 144} / 24
+obs5      480: 144 / 0.072 / 0.127 / 0 / {'RECOVERED': 144} / 20
+earlyOOE  180: 144 / 0.263 / 0.390 / 0 / {'RECOVERED': 144} / 60
+earlyOOE  240: 144 / 0.187 / 0.295 / 0 / {'RECOVERED': 144} / 52
+earlyOOE  480: 144 / 0.109 / 0.163 / 0 / {'RECOVERED': 144} / 42
+obs20     180: 144 / 0.383 / 0.771 / 48 / {'RECOVERED': 144} / 144
+obs20     240: 144 / 0.295 / 0.606 / 6 / {'RECOVERED': 144} / 144
+obs20     480: 144 / 0.207 / 0.344 / 0 / {'RECOVERED': 144} / 144
+
+## Worst case obs20 V2-190-85 L 180 C-F7: per-tick closure around first contact (window onset = touch 0→>0 at t1 = 8.9333)
+t 8.9222 closure -0.0042 J  dTau0    4.10  touch 0  Fz 0 N  state AIRBORNE
+t 8.9278 closure -0.5010 J  dTau0   91.73  touch 0  Fz 555 N  state AIRBORNE
+t 8.9333 closure -0.1754 J  dTau0  255.96  touch 8  Fz 853 N  state TOUCHDOWN
+t 8.9389 closure +0.0983 J  dTau0  260.95  touch 8  Fz 721 N  state TOUCHDOWN
+t 8.9444 closure +0.1304 J  dTau0   24.72  touch 8  Fz 892 N  state TOUCHDOWN
+t 8.9500 closure +0.1296 J  dTau0   30.17  touch 8  Fz 885 N  state TOUCHDOWN
+t 8.9556 closure +0.1079 J  dTau0   40.89  touch 8  Fz 739 N  state TOUCHDOWN
+t 8.9611 closure +0.0703 J  dTau0   44.31  touch 8  Fz 541 N  state TOUCHDOWN
+t 8.9667 closure -0.0009 J  dTau0  114.63  touch 8  Fz 291 N  state TOUCHDOWN
+t 8.9722 closure -0.1037 J  dTau0  107.84  touch 8  Fz 2 N  state TOUCHDOWN
+t 8.9778 closure -0.1073 J  dTau0   99.85  touch 8  Fz 0 N  state TOUCHDOWN
+t 8.9833 closure -0.1201 J  dTau0   90.04  touch 8  Fz 0 N  state TOUCHDOWN
+t 8.9889 closure -0.1558 J  dTau0   78.49  touch 7  Fz 0 N  state TOUCHDOWN
+t 8.9944 closure -0.2267 J  dTau0   71.82  touch 2  Fz 0 N  state TOUCHDOWN
+t 9.0000 closure -0.1565 J  dTau0   73.56  touch 0  Fz 0 N  state TOUCHDOWN
+
+## Counterfactuals, same case (scratch tree; TDV reproduces the battery hash 065e0002)
+DVG (frozen config): Σ+ 0.771 J; collision window from one tick before the sensed onset: positive 0.537, net -0.352, cumulative max -0.140 J
+no IK-derived feed-forward (R0; swing changes: later liftoff): Σ+ 0.144 J; collision window from one tick before the sensed onset: positive 0.014, net -0.780, cumulative max -0.062 J
+guard off (TD2B): Σ+ 0.984 J; collision window from one tick before the sensed onset: positive 0.458, net -0.868, cumulative max -0.219 J

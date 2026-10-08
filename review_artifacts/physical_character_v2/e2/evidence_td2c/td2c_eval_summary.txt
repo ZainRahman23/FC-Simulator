@@ -1,0 +1,55 @@
+runs 3552/3552; runtime reachability exclusions 0
+REPORTED per configuration / condition / set: runs with any E1a-7 violation (PCI) worst PCI ratio | first touch relative to search start (ms) med [min, max] | contact downward speed med/max, tangential max (pc), foot horizontal max (mm/s) | impact %BW med/max, 10 ms max, first 12 ms max | 50 ms impulse max (N·s) | penetration min (mm) | rebounds | slip max / placement max (mm) | new-region deviation max approach φ .8–1 / search (mm) | contact phases
+  AB nominal R       n  96 | viol 6 (PCI 6) 1.06 | tC -56 [-61, -50] | vN 59.2/76.4 vT 53.2 fvT 51.6 | impact 25.5/38.6 w10 23.8 first12 25.3 | I50 3.25 | pen -0.00 | reb 0 | slip 3.07 place 4.49 | dev 1.14 / — | approach
+  AB nominal C       n 144 | viol 0 (PCI 0) 0.84 | tC -56 [-63, -50] | vN 59.7/77.2 vT 73.0 fvT 72.7 | impact 20.4/48.9 w10 22.3 first12 3.8 | I50 3.82 | pen -0.00 | reb 0 | slip 3.22 place 2.67 | dev 1.38 / — | approach
+  AB nominal H       n 192 | viol 8 (PCI 8) 1.15 | tC -57 [-67, -44] | vN 76.9/122.4 vT 90.9 fvT 91.0 | impact 35.2/60.3 w10 32.0 first12 42.6 | I50 4.87 | pen -0.00 | reb 32 | slip 5.85 place 8.59 | dev 1.53 / — | approach
+  TD nominal R       n  96 | viol 0 (PCI 0) 0.80 | tC 151 [143, 154] | vN 22.9/26.9 vT 33.4 fvT 30.6 | impact 5.8/9.7 w10 7.0 first12 0.0 | I50 0.70 | pen -0.00 | reb 0 | slip 2.72 place 2.77 | dev 1.36 / 0.34 | search
+  TD nominal C       n 144 | viol 0 (PCI 0) 0.73 | tC 152 [148, 154] | vN 22.3/28.2 vT 25.6 fvT 22.5 | impact 4.7/7.3 w10 4.5 first12 0.0 | I50 0.47 | pen -0.00 | reb 0 | slip 1.64 place 1.71 | dev 1.43 / 0.24 | search
+  TD nominal H       n 192 | viol 0 (PCI 0) 0.83 | tC 148 [142, 154] | vN 25.0/30.5 vT 29.1 fvT 25.9 | impact 5.6/12.0 w10 7.6 first12 0.0 | I50 0.92 | pen -0.00 | reb 0 | slip 2.91 place 3.08 | dev 2.17 / 0.48 | search
+  TD earlyC R        n  96 | viol 0 (PCI 0) 0.80 | tC 148 [137, 150] | vN 23.8/27.1 vT 31.4 fvT 29.1 | impact 6.3/12.9 w10 6.9 first12 0.0 | I50 0.78 | pen -0.00 | reb 0 | slip 2.56 place 2.60 | dev 1.36 / 0.35 | search
+  TD earlyC C        n 144 | viol 0 (PCI 0) 0.73 | tC 148 [143, 150] | vN 23.4/28.2 vT 24.8 fvT 22.0 | impact 5.5/9.4 w10 5.0 first12 0.0 | I50 0.59 | pen -0.00 | reb 0 | slip 1.65 place 1.67 | dev 1.44 / 0.23 | search
+  TD earlyC H        n 192 | viol 0 (PCI 0) 0.83 | tC 148 [137, 150] | vN 25.9/31.0 vT 28.3 fvT 25.4 | impact 6.1/14.3 w10 8.5 first12 0.0 | I50 0.99 | pen -0.00 | reb 0 | slip 2.98 place 3.15 | dev 2.17 / 0.48 | search
+  TD lateC R         n  96 | viol 0 (PCI 0) 0.80 | tC 154 [143, 157] | vN 22.5/26.5 vT 33.2 fvT 30.4 | impact 5.6/9.0 w10 6.4 first12 0.0 | I50 0.62 | pen -0.00 | reb 0 | slip 2.77 place 2.86 | dev 1.35 / 0.34 | search
+  TD lateC C         n 144 | viol 0 (PCI 0) 0.73 | tC 154 [148, 157] | vN 22.0/26.8 vT 25.5 fvT 22.4 | impact 4.5/7.2 w10 4.2 first12 0.0 | I50 0.37 | pen -0.00 | reb 0 | slip 1.73 place 1.75 | dev 1.43 / 0.24 | search
+  TD lateC H         n 192 | viol 0 (PCI 0) 0.83 | tC 153 [143, 157] | vN 24.5/30.4 vT 29.1 fvT 25.8 | impact 4.8/10.0 w10 6.7 first12 0.0 | I50 0.81 | pen -0.00 | reb 0 | slip 2.83 place 2.99 | dev 2.17 / 0.48 | search
+  TD beyond R        n  96 | viol 0 (PCI 0) 0.79 | tC 1086 [1080, 1087] | vN 8.7/9.2 vT 1.5 fvT 1.4 | impact 3.0/7.7 w10 3.1 first12 0.0 | I50 0.00 | pen -0.00 | reb 0 | slip 1.79 place 1.80 | dev 0.84 / 0.29 | escalated search
+  TD beyond C        n 144 | viol 0 (PCI 0) 0.73 | tC 1086 [1082, 1087] | vN 8.7/9.0 vT 1.2 fvT 1.1 | impact 2.1/5.5 w10 2.6 first12 0.0 | I50 0.00 | pen -0.00 | reb 0 | slip 0.98 place 1.00 | dev 0.98 / 0.25 | escalated search
+  TD beyond H        n 192 | viol 0 (PCI 0) 0.83 | tC 1086 [1080, 1087] | vN 8.7/9.4 vT 2.8 fvT 2.5 | impact 1.0/3.8 w10 1.8 first12 0.0 | I50 0.00 | pen -0.00 | reb 0 | slip 2.37 place 2.35 | dev 1.51 / 0.38 | escalated search
+  TD noground R      n  96 | viol 0 (PCI 0) 0.16 | tC — [—, —] | vN —/— vT — fvT — | impact —/— w10 — first12 — | I50 — | pen — | reb 0 | slip — place — | dev 0.84 / 0.29 | 
+PASS TD-G2 (0 failing items)
+PASS TD-G3 (0 failing items)
+PASS TD-1 (0 failing items)
+PASS TD-2 (0 failing items)
+PASS TD-3 (0 failing items)
+PASS TD-4 (0 failing items)
+PASS TD-5 (0 failing items)
+PASS TD-6 (0 failing items)
+PASS TD-7 (0 failing items)
+PASS TD-8 (0 failing items)
+PASS TD-9 (0 failing items)
+PASS TD-10 (0 failing items)
+PASS C-6x (0 failing items)
+FAIL U-1 (54 failing items)
+PASS U-2 (0 failing items)
+PASS U-3 (0 failing items)
+PASS U-4 (0 failing items)
+PASS U-5 (0 failing items)
+PASS U-6 (0 failing items)
+PASS U-7 (0 failing items)
+PASS DG-6 (0 failing items)
+PASS DG-4b (0 failing items)
+   U-1: PSTAR5CHABTDV|obs20|V2-REF|L|180|R-F: Σ+ 0.555 J, per-tick > 0.05 J outside collision windows 0, inside without prior collision dissipation 0, windows whose cumulative closure exceeds +0.05 J 0 (strict per-tick E1a-8 ticks 4)
+   U-1: PSTAR5CHABTDV|obs20|V2-REF|L|180|C-F7: Σ+ 0.637 J, per-tick > 0.05 J outside collision windows 0, inside without prior collision dissipation 3, windows whose cumulative closure exceeds +0.05 J 1 (strict per-tick E1a-8 ticks 5)
+   U-1: PSTAR5CHABTDV|obs20|V2-REF|L|180|H-T45: Σ+ 0.542 J, per-tick > 0.05 J outside collision windows 0, inside without prior collision dissipation 0, windows whose cumulative closure exceeds +0.05 J 0 (strict per-tick E1a-8 ticks 4)
+   U-1: PSTAR5CHABTDV|obs20|V2-REF|L|180|H-A40: Σ+ 0.537 J, per-tick > 0.05 J outside collision windows 0, inside without prior collision dissipation 0, windows whose cumulative closure exceeds +0.05 J 0 (strict per-tick E1a-8 ticks 5)
+   U-1: PSTAR5CHABTDV|obs20|V2-REF|R|180|R-F: Σ+ 0.561 J, per-tick > 0.05 J outside collision windows 0, inside without prior collision dissipation 0, windows whose cumulative closure exceeds +0.05 J 0 (strict per-tick E1a-8 ticks 4)
+   U-1: PSTAR5CHABTDV|obs20|V2-REF|R|180|C-F7: Σ+ 0.641 J, per-tick > 0.05 J outside collision windows 0, inside without prior collision dissipation 3, windows whose cumulative closure exceeds +0.05 J 1 (strict per-tick E1a-8 ticks 5)
+touchdown time spread across rates (diagnostic) nominal: median 2.1 ms, max 10.4 ms
+touchdown time spread across rates (diagnostic) earlyC: median 0.7 ms, max 11.1 ms
+touchdown time spread across rates (diagnostic) lateC: median 2.4 ms, max 11.8 ms
+touchdown time spread across rates (diagnostic) beyond: median 3.5 ms, max 7.6 ms
+OBSTACLE obs5: n 432; outcomes {"RECOVERED":432}; D1G engaged 72 (rate-inconsistent 8); contact φ med 0.870; vN med/max 108/175 mm/s; impact med/max 65/150 % BW (10 ms 69); I50 11.16 N·s; rebounds 419; pen min -0.58 mm; slip max 94.31 mm (stance 0.11); E1a-7 runs 358 (worst 11.11); sat R/C runs 0; held D1 max 499.0; |τ0| max 503; |Δτ0| max 196; strict E1a-8 runs 0; Σ+ max 0.228; window cum. max 0.025; impact-tick closure min -0.163
+OBSTACLE earlyOOE: n 432; outcomes {"RECOVERED":432}; D1G engaged 154 (rate-inconsistent 18); contact φ med 0.819; vN med/max 178/255 mm/s; impact med/max 108/279 % BW (10 ms 105); I50 23.58 N·s; rebounds 390; pen min -1.15 mm; slip max 209.86 mm (stance 0.11); E1a-7 runs 432 (worst 11.64); sat R/C runs 0; held D1 max 778.8; |τ0| max 821; |Δτ0| max 437; strict E1a-8 runs 72; Σ+ max 0.390; window cum. max 0.015; impact-tick closure min -0.653
+OBSTACLE obs20: n 432; outcomes {"RECOVERED":432}; D1G engaged 432 (rate-inconsistent 0); contact φ med 0.757; vN med/max 259/358 mm/s; impact med/max 157/348 % BW (10 ms 148); I50 33.06 N·s; rebounds 178; pen min -1.17 mm; slip max 313.33 mm (stance 4.20); E1a-7 runs 432 (worst 15.35); sat R/C runs 0; held D1 max 941.9; |τ0| max 1001; |Δτ0| max 327; strict E1a-8 runs 169; Σ+ max 0.771; window cum. max 0.362; impact-tick closure min -0.990
+D1G engagements outside the obstacle class: 0
+TD2C: DOES NOT VALIDATE
