@@ -1,6 +1,6 @@
 # Touchline — Development Chronicle
 
-The history of the Touchline football project as a whole, from the first requirement for the simulator (18 Aug 2026, about 13:00 local) to the current collaboration state (`touchline-current`, 28 Sep 2026). It is a development diary, not a changelog: what was tried, what failed, what was learned, and what worked at the end of each day.
+The history of the Touchline football project as a whole, from the first requirement for the simulator (18 Aug 2026, about 13:00 local) through the physical-character work of 7 Oct 2026 and its publication early on 8 Oct. It is a development diary, not a changelog: what was tried, what failed, what was learned, and what worked at the end of each day.
 
 Touchline's history is spread across more than one place: two GitHub repositories, a set of local release folders, a separate character-art workstream, and several later handoff documents. **Repository boundaries are treated as evidence, not chapters.** Where the work moved from one place to another, a short *Transition* note explains what moved and why.
 
@@ -23,6 +23,7 @@ Touchline's history is spread across more than one place: two GitHub repositorie
 | **[Local]** | A file on the development machine that was never committed: release folders, untracked review folders, exported packages |
 | **[Astra]** | Records of the separate character-art workstream (the "Astra" packages in `~/Downloads`) |
 | **[Later]** | A handoff or recollection written after the events it describes (the 20 Sep history handoff, the 23 Sep memory export and migration handoff) |
+| **[Session]** | AI-assistant session records on the development machine (Claude Code `~/.claude/projects/`, Codex `~/.codex/sessions/`): the user's contemporaneous instructions and decisions, with timestamps (UTC, converted to local). Used from 28 Sep. Where a decision was also saved verbatim in a repository `sources/` folder, that copy is cited as [Doc] |
 
 Priority when sources disagree: a contemporaneous source or executable artifact, then contemporaneous tool or file output, then contemporaneous conversation, then later reconstruction. A **[Later]** source is used for colour and for work that left no other trace. Where it overlaps Git, Git wins, and the event is counted once.
 
@@ -31,7 +32,7 @@ Priority when sources disagree: a contemporaneous source or executable artifact,
 - Local file times were converted into the offset in force at the time. For August this is proven, not assumed: backup files named with their creation time (for example `…pre-rc7-20260824-025946.db`) match their recorded modification times exactly at −07:00.
 - For 8–13 Sep, when the offset changed, local file times are **Uncertain** by up to eight hours.
 
-**Scope.** Conversation evidence starts at 20:00 UTC on 18 Aug (13:00 local), with the opening request. Package and file evidence starts at 14:12 local on 18 Aug; commit evidence starts on 27 Aug. The chronicle ends at `touchline-current` = `e2c98ec` (28 Sep). Parallel work by other contributors is mentioned only where it bears on the main line; one example is the Coach MVP pull request on the FC-Simulator repository (`claude/coach-mvp`, 23 Sep).
+**Scope.** Conversation evidence starts at 20:00 UTC on 18 Aug (13:00 local), with the opening request. Package and file evidence starts at 14:12 local on 18 Aug; commit evidence starts on 27 Aug. The chronicle runs through the 7 Oct day, which ends with the 8 Oct publication housekeeping. The playable collaboration state is still `touchline-current` (`e2c98ec`, plus documentation commits); the physical-character work of 29 Sep – 7 Oct is on its own branches (Part IV). Parallel work by other contributors is mentioned only where it bears on the main line; one example is the Coach MVP pull request on the FC-Simulator repository (`claude/coach-mvp`, 23 Sep).
 
 ---
 
@@ -1061,13 +1062,22 @@ The longest single run of the project, taking the outfield player from nothing t
 
 ## Monday 28 September 2026 — Environment integration and publishing
 
-**Evidence:** [FC-Sim Git] 5 commits at 12:19, `5a0e025` → `e2c98ec` (merge). Branch `touchline-current`, pushed to the FC-Simulator GitHub repository this day.
+**Evidence:** [FC-Sim Git] 5 commits at 12:19, `5a0e025` → `e2c98ec` (merge), and 2 documentation commits, `d064fe0` (16:32) and `4baf37b` (19:54). Branch `touchline-current`, pushed to the FC-Simulator GitHub repository this day. [Session] Codex and Claude Code session records (added 8 Oct). [Local] as noted.
 
-**Reconstructed — the environment work.** It was authored in the main working tree between about 25 and 28 Sep, in parallel with the tackling branch. **Who authored it, and in which session, is not recorded (Uncertain).** The dates come from file modification times: `corner-flags.js` 25 Sep, `ball-art.js` and `stadium-art.js` 27 Sep, `rain.js` 28 Sep 00:16. It consists of:
+**The environment work** was authored in the main working tree between 25 and 28 Sep, in parallel with the tackling branch. It consists of:
 - a Tottenham-inspired seating bowl with a crowd atlas and the near stand cut away for the broadcast camera;
 - pitch mowing bands on the real box/spot/halfway boundaries;
 - a continuous 32-panel sphere ball at the physical 0.11 m radius, with a design selector;
 - seeded rain with a weather selector.
+
+**Who authored it (corrected 8 Oct; previously Uncertain).** [Session] records show it was done in the user's own Codex sessions:
+- the corner flag from 25 Sep 23:31 ("one continuous red flag", pole "akin to the white stripes on the pitch");
+- the ball on 27 Sep from 12:41, with the 2026 World Cup ball as a broad-brush reference and the physical scale researched;
+- the pitch colours at 15:26;
+- the dugout, stands and crowd from 15:52;
+- rain from 00:14 on 28 Sep.
+
+The file modification times agree: `corner-flags.js` 25 Sep, `ball-art.js` and `stadium-art.js` 27 Sep, `rain.js` 28 Sep 00:16.
 
 **Discovery.** `match.html` had loaded `corner-flags.js` since Defending V1 (`57c6539`), but the file had never been committed, so any fresh clone would fail to load it (`5a0e025`).
 
@@ -1078,12 +1088,952 @@ The longest single run of the project, taking the outfield player from nothing t
 - `touchline-current` and the baseline tags were published.
 - The Coach MVP pull request by another contributor, which touches only the manager and web layer, was left untouched.
 
-**End-of-day state.** One branch another developer can clone and run: the full outfield and keeper runtime with the new stadium, pitch, ball and weather.
+**Later the same day (added 8 Oct).** [FC-Sim Git] `d064fe0` (16:32) and `4baf37b` (19:54), docs only: this chronicle and `TOUCHLINE_PORTFOLIO_RECOVERABILITY_AUDIT.md`, pushed. [Session] user instructions from 20:23 to 02:26. The rest is [Local].
+- **Snow, and weather on the ball** (Codex session, 16:27 – 17:42). The user asked: "now add snowing (with a couple of different states and one of them can be extreme snow)", then "make it affect the ball trajectory", then "add snow affect".
+  - Light snow, snow and extreme snow were added, with snow drawn on the grass outside the pitch lines too.
+  - A per-weather ball surface (`ball-surface.js`, mirrored in `world.py`) and a match weather that locks at kickoff. The "off" constants are unchanged.
+  - Recorded in that session: the same pass travels 17.2 m dry, 16.7 / 11.9 / 7.9 m in light / normal / extreme snow; rain is unchanged.
+  - **It was never committed.** Found during the 8 Oct audit, it is now committed as it stood, on its own branch: `environment/weather-snow-surface-v1`, `9468ddd`, from `8ae5e94`, not merged into `touchline-current`.
+- **Portfolio Capture V1** (20:23 – 20:56): a curated source package for a future portfolio, not the portfolio site.
+  - `~/Downloads/TOUCHLINE_PORTFOLIO_SOURCE_ASSETS/`: 22 stage folders, 186 candidate files, 187 MB.
+  - A manifest that tags each file ORIGINAL, RECAPTURED or DERIVED.
+  - Historical states were recaptured only from disposable worktrees (`a0cd26d`, `c4f13e1`, `5f68f2e`, `4baf37b`) and copies.
+  - A local contact-sheet page, `PORTFOLIO_CAPTURE_REVIEW.html`.
+  - A curated transfer zip for the Astra portfolio workstream, `TOUCHLINE_PORTFOLIO_FOR_ASTRA.zip` (57.7 MB). The user decided against putting the 187 MB into GitHub "just to give Astra access".
+- **Slide tackle: rear-contact fall direction** (from 23:08; worktree `rear-contact-fall`, branch `prototype/rear-contact-fall` at `4baf37b`, uncommitted). The user's problem: an attacker slide-tackled from behind could be sent *forward*.
+  - **Diagnosis** (review `review_artifacts/rear_contact_fall/`, 01:06):
+    - the contact normal was right, but the contact was frictionless, so the tackler's travel along the run (the defining fact of a rear challenge) was discarded;
+    - the topple read the attacker's world velocity as if the swept support were still planted;
+    - separately, the presentation blended the SIDE and BACK landings through an upright body, so a correct 137° back fall rendered as a man still standing.
+  - **Change** (slide contacts only; standing tackles keep V1 bit-for-bit):
+    - a Coulomb-bounded tangential impulse, μc = 0.5;
+    - a lost support carried with the impulse, with the tackler paying the friction impulse;
+    - back falls drawn from the BACK basis alone, turned by the residual.
+  - **Result:** direct rear at 3 and 5 m/s now falls BACK (head direction −2.40 / +2.93 rad) while still travelling downfield. Every non-slide fixture is identical, and the slide outcome changes are itemised. One example: `sl_from_behind` changes from WON to MISS, caused only by the tackler's friction impulse.
+  - **User (01:26):** "I approve of the rear-contact physics direction from the previous pass, including the new contact/friction behavior and the fact that physically corrected contacts may legitimately change tackle outcomes."
+- **Slide Follow-through V1** (01:26 – 02:05; presentation only, same worktree; review `review_artifacts/slide_follow_through/`).
+  - **Diagnosis:** the tackler held one key pose from launch to get-up (limb "liveliness" 0.0 – 0.3 rad/s for 0.8 – 1.3 s), and the carrier lay frozen while his root slid.
+  - **Found on the way:** the previous pass's back-fall yaw sign was mirrored for rear-diagonal falls. The rig frame is (x, height, −y). The simulation was never wrong.
+  - **Change:** follow-through driven by simulation facts: hip settle, counter-twist, the free arm coming down, a swept-foot carry, a lower-body-first cascade, a startle-then-protective arm reach, and a trunk-inertia spring on the authoritative root acceleration.
+  - **Result:** frozen windows gone (tackler slide 0.07 – 0.28 → 0.54 – 0.85 rad/s); recovery hand-back pop 412 → 150 and 420 → 16 rad/s²; authority checks identical with animation on and off.
+
+**End-of-day state.** `touchline-current` is published: one branch another developer can clone and run, with the full outfield and keeper runtime and the new stadium, pitch, ball and rain. Outside it are the uncommitted snow work, the portfolio package, and the rear-contact and Follow-through V1 passes in the `rear-contact-fall` worktree, which are awaiting review.
 
 ---
 
 
-# Part IV — The present
+# Part IV — The physical character (29 Sep – 7 Oct)
+
+From 29 Sep the main line of work left the playable game.
+- **The aim:** a physically articulated character whose body really occupies space, so that contact changes motion on the step it happens.
+- **The method:** a sequence of gates, each preregistered, frozen before its battery and stopped at any failure for the user's decision.
+- **Where it lives:** local branches in their own worktrees, until the 8 Oct publication (7 Oct entry).
+
+**In parallel** (1 – 7 Oct, [Local]), a redesigned manager-app interface was iterated as self-contained HTML pages in `~/Downloads`. Its source is outside every repository, and which assistant or session built it is not recorded (Uncertain). It is noted in each day it touches.
+
+## Tuesday 29 September 2026 — Follow-through V2 set aside, one reference tackle, then a physical character
+
+**Evidence:** [Session] user instructions from 10:39. [Local] worktrees `rear-contact-fall` and `reference-tackle` (uncommitted, review pages 16:54 and 18:37); `~/Desktop/Screen Recording 2026-09-29 at 5.25.13 PM.mov` (the reference clip). Physical character:
+- [FC-Sim Git] 24 commits on `prototype/physical-character-v1`, `4dbb5a2` (02:12, 30 Sep) → `4062764` (04:39, 30 Sep).
+  - The branch was created from `touchline-current` at `4baf37b` at 19:25 (branch reflog).
+  - Tag `checkpoint/physchar-pre-crossover` → `b0a84d2` (03:26).
+- [Session] user messages 19:16 → 02:10 (transcript `6a70b682…`).
+- [Doc] all first committed in `4dbb5a2`: `ARCHITECTURE.md`, `SUBSTRATE_DECISION.md` (+ `spikes/substrate/`), the Gate A / B / C1 / C2 reports, `balance_review/BALANCE_REVIEW.md`, `v1_1/ANATOMY_V1_1_REPORT.md`.
+- [Doc] from the runway: `v1_1/PROMOTION.md`, `OVERNIGHT_2026-09-30_REPORT.md`, `LOCOMOTION_PROPOSAL.md`.
+- [Local] uncommitted snapshots in `worktrees/`: `_preserved_2026-09-29_physical_character_gate_a` (21:39), `…gate_b` (22:37), `…gate_c1` (23:28), `_preserved_2026-09-30_physical_character_gate_c2` (00:37), `…v1_1` (01:59).
+
+**Slide Follow-through V2** (10:39 – 16:56; [Local] `review_artifacts/slide_follow_through_v2/`). The user: "I reviewed Follow-through V1. It is an improvement, but I do not consider the follow-through finished yet". After contact, both players settled into fixed shapes and slid.
+- **Diagnosis, measured on V1:** after the sweep the simulation had no rotational state at all. The tackler's pelvis was flat (0.1 – 0.3 rad/s) while his root decelerated from 5.3 m/s, and the faller's ground phase was pure translation.
+- **FALL BODY V2:** a fallen player becomes a reduced rigid body until his momentum is gone: rounded rings of contact points, inelastic contacts, Coulomb friction at the slide's own body-on-grass μ, rolling resistance, and 8 sub-steps per tick.
+- **SLIDE BODY V2:** the slider gets roll toward the stomach, trunk lowering and yaw, and the tackling leg extends → sweeps → unloads → retracts.
+- **Validation:**
+  - animation on and off are identical; non-slide fixtures identical with the new physics on and off; deterministic; energy never increases;
+  - the direct-rear mirror pair is exact (2 · 10⁻¹⁴ m). The diagonal pair grows a 2 µm rounding asymmetry to 12.7 cm through a later reception;
+  - several slide outcomes changed and were itemised.
+- **Limits recorded:** a rigid fall body lands on the shoulders where a real body folds at the hip; the fall body does not touch the ball; a standing-occupancy pop of 370 m/s² remains.
+
+**V2 set aside; Reference Tackle V1** (17:33 – 18:38; [Local] worktree `reference-tackle`, branch `prototype/reference-tackle-v1` at `4baf37b`).
+- **User (17:33):** "Stop work on the generalized Follow-through V2 approach. Do not commit V2. Put it aside as an experiment." Instead: reproduce **one** real slide tackle, from a 1.6 s reference clip the user supplied, "as closely and convincingly as possible", as a gold-standard vertical slice.
+- **User (17:44):** approved authoring "dense paired joint curves rather than trying to derive this motion from V2's generalized rigid-body system". The reference is authoritative: "Match what is actually visible". "Do not commit yet."
+- **Built:** `sandbox/visual/reftackle/`, a standalone harness that reuses only the skeleton / IK, locomotion run-in, character loader and ball. It has:
+  - a master timeline f56 – f152;
+  - per-joint keys flagged measured or inferred, about every 2 frames through launch → seat → curl;
+  - plant intervals and a fitted reference camera;
+  - side-by-side, ghost and gameplay-camera views.
+- **Corrections to the approved breakdown, found while matching:** the camera is static (the breakdown said it pushed in), and the ball is not pinned after the block (it squirts on at about 3 m/s).
+- **Archived:** [the approved event breakdown](../review_artifacts/chronicle_screens/2026-09-29_reference_tackle/Screenshot_2026-09-29_at_5.42.54_PM.png) (17:42).
+
+**Status of the slide-tackle line** (as at 8 Oct): every pass of 28 – 29 Sep is still uncommitted, under the user's instructions:
+- rear-contact physics and Follow-through V1 (approved direction, reviewed) and V2 ("Do not commit V2") share one worktree's files;
+- Reference Tackle V1 is under "Do not commit or push without my approval";
+- the reference clip is third-party footage and is not for the public repository.
+
+They were left [Local] in the 8 Oct housekeeping; the decision is the user's.
+
+**The pivot (19:16).**
+- The user: "MAJOR PIVOT — PHYSICALLY ARTICULATED CHARACTER / CONTACT SYSTEM V1 … Stop extending the current defensive-animation/contact architecture."
+  - The recurring failure across all the defensive work: "players visually make contact → their bodies continue through/inside one another → only afterward does a fall/reaction animation occur."
+- The new model:
+  - authored animation supplies intent;
+  - an articulated physical body occupies space and collides;
+  - finite motors drive that body;
+  - the rendered skeleton follows the body.
+- Reference Tackle V1 was kept as target data, with Gates A–E to follow.
+- The first deliverable was to be research and architecture only, "Then STOP and wait for my approval."
+- The test the architecture would be judged by: "When shin meets leg, the physical bodies cannot continue through one another. The contact must affect their motion on that contact step."
+- Work moved to a new worktree and branch at 19:25. Nothing was committed until 02:12.
+
+> **Transition 6 — from presentation-driven contact to a physical character (29 Sep, 19:16 → 19:25).** Reference Tackle V1 made the defect behind every defensive pass explicit: the bodies visibly met, carried on *through* each other, and only then played a reaction.
+> - The work moved to a Jolt rigid-body humanoid, driven by finite motors, which the rendered skeleton follows.
+> - It got a new branch and worktree, `prototype/physical-character-v1`, from `4baf37b`. It does not touch `touchline-current`.
+> - The authored Reference Tackle motion was kept as target data.
+
+**Architecture, then the substrate reopened (19:16 → 20:40).**
+- The first proposal (`ARCHITECTURE.md`):
+  - 14 rigid bodies;
+  - de Leva mass fractions applied to the recorded weight (Gabriel 78 kg);
+  - swing–twist joints and implicit PD motors;
+  - a **custom XPBD solver at 60 Hz × 20 substeps**, with Jolt as the fallback.
+- At 19:56 the user accepted the diagnosis but reopened the solver choice: "Own the football-specific physical-character/controller layer ourselves, but do not unnecessarily reinvent mature generic rigid-body physics infrastructure." The context was Rabona (Furkan Sarıhan), built on Bullet.
+- Research plus a disposable spike (`spikes/substrate/`, Node, a few seconds of CPU):
+  - **Jolt** was the only engine to keep first touch at 0.2 mm in both a 15 m/s rotating shin sweep and a 13 m/s linear hit, with a same-frame response and no tunnelling. It needed speculative contacts plus Touchline-owned adaptive substeps.
+  - **Rapier:** CCD on both bodies behaved bit-identically to no CCD (100 mm penetration, 2 of 5 tunnels at 15 m/s).
+  - **Bullet:** ammo.js is still Bullet 2.82 and blew up at 60 Hz.
+  - **Custom XPBD** was rejected as the substrate: "we would be building a general engine."
+- At 20:40 the user approved Jolt via JoltPhysics.js as the "provisional physics substrate", with Rapier as first fallback and XPBD as a last resort.
+- A single-state rule was locked: "There is one character spatial state. The Jolt articulated bodies are that physical state."
+- Fast-limb collision was explicitly left unresolved until Gate D.
+
+**Gate A — passive 14-body humanoid (approved 21:36).**
+- Set-up: Jolt 5.6.0, Gabriel (190 cm, 78 kg), 240 Hz, 30 velocity / 4 position iterations, soft knee and elbow stops, five deterministic drops.
+- Results:
+  - joints separate by at most 4.6 mm in flight;
+  - colliders sink at most 13.9 mm into the turf briefly and 5.3 mm at rest;
+  - every drop is asleep within 1.85 s;
+  - the largest single-step energy gain is 2.6 J;
+  - cost is 0.17–0.26 ms per 60 Hz frame;
+  - 3/3 repeats bit-identical, and Node = Chrome.
+- Flagged for the user: the rendered mesh dips up to 2.4 cm below the turf at rest, and hard limits yield up to 7.2° on impact.
+- Discoveries:
+  - `Math.sin` is not bit-identical between Node 22 and Chrome 154. Deterministic `dsin` / `dcos` were added, and a production rule followed: no `Math.sin/cos/…` in any input to the physics.
+  - Hard knee stops injected up to 14 J.
+  - A trapped box-shaped hand injected 29 J.
+  - Raising position iterations from 4 to 8 increased the energy gain from 2.6 to 7.2 J.
+- The user: "Do not spend this pass polishing the remaining turf sinking or brief joint-limit overshoot".
+
+**Gate B — finite motors (21:36 → 22:13).**
+- Results, as recorded in the 22:13 review request:
+  - about 3° tracking error across 13 joints;
+  - about 8° peak on a reversal;
+  - no position or velocity writes after initialisation;
+  - a boot moving at 1.02 m/s was stopped by a post on its arrival step (885 N, no geometric penetration), and penetration stayed ≤ 0.74 mm even at 8× strength;
+  - a blocked hip kept 22° of error at 208 N·m against its 220 N·m limit;
+  - cost about 0.6 ms per frame.
+- **Limitation:** the whole-body tests relied on a temporary pelvis support (≤ 250 N, 100 N·m per axis). Without it the body toppled after about 5.5 s.
+- **Self-review** (`balance_review/`: "I built Gate B, so I have tried to review it as an outsider would"). The support had absorbed 45 of the 46.6 N·s chest shove and 25 of the 45 N·s pelvis shove.
+- At 22:28 the user accepted the motor architecture, but whole-body results "must be labelled support-assisted". The support was retired and kept only as a labelled historical fixture.
+
+**Gate C1 — unsupported balance, feet in place (approved 23:25).**
+- Rules: zero pelvis support, root anchor or state writes, asserted in every test.
+- Control: a capture-point CoP law plus a hip strategy.
+- Sensing: per-foot loads reconstructed from whole-body momentum change and ankle constraint impulse.
+- Results over 59 tests:
+  - 20 s of quiet standing with 1.0 mm sway RMS;
+  - 10–30 N·s pushes recovered in 0.13–0.33 s;
+  - outcome classes escalate IN_PLACE → HIP → STEP_NEEDED → released → GROUNDED;
+  - on ice (μ 0.08) the feet are flagged SLIPPING within 42 ms;
+  - a 100 ms sensing delay makes recovery 2–4× slower;
+  - falls are honest, beginning 62 ms after STEP_NEEDED;
+  - pelvis residual force 0.039 N mean;
+  - 59/59 bit-identical ×3, and Chrome = Node.
+
+**Gate C2 — weight transfer and foot placement (approved 00:47 after live review).**
+- Results over 13 tests:
+  - the load share moves 5 % → 95 % → 50 %;
+  - a foot lifts only once its load is under 5 % BW for 50 ms;
+  - single support holds for 3.3 s;
+  - a target 1.2 m away is projected to 18.5 cm;
+  - a swing that hits a box stalls and is held (0.12 mm penetration);
+  - 5 of 6 alternating placements complete, and one was honestly rejected.
+- Exposed by C2:
+  - the hip joint centres sit **32.3 cm apart (≈ 1.8× human)**;
+  - standing on one leg therefore needs 124 N·m of hip abduction (88 % of the 140 N·m cap) and a 13.4° trunk lean;
+  - 20° of ankle dorsiflexion limited reach.
+- The user: "Do not add an arbitrary large minimum foot-separation rule" and "Do not compensate with stronger muscles". The response was a bounded anatomy calibration, V1.1, with V1 kept reproducible.
+
+**V1.1 anatomy / ROM calibration (00:47 → 01:59).**
+- **Cause of the 32 cm hips:** the Astra shared-skeleton template hangs each leg at x = ±0.1805 m (±0.1615 m for this player), and V1 used rig bone origins as joint centres. "It was a rig-template property carried into the physics."
+- **Corrections:**
+  - hip centres moved to 18.4 cm apart (Bardakos & Freeman 2012; Hara 2016);
+  - knees placed on the hip → ankle line;
+  - shoulder centres lowered;
+  - ankle dorsiflexion raised from 20° to 30°;
+  - **no strength raised**, and four torque caps lowered to the evidence;
+  - mesh, colliders and visible width unchanged.
+- **Effect:** static hip-abduction demand 124 → 74 N·m, and the trunk lean 13.4° → 0°.
+- **Regressions reported rather than hidden:**
+  - C2 weight transfer no longer completes: the swing foot keeps 85 N against the 38 N gate;
+  - Gate A drop A gains 12.8 J at the knee stop;
+  - drop B overshoots a shoulder limit by 16.4°.
+- [Local] Snapshot taken as a "CANDIDATE" at 01:59.
+
+**The overnight runway (02:10).** "I am going to leave this running unattended for approximately 6 hours."
+- The roadmap: V1.1 integration → C3 → C4 → C5 → a two-character slice → the Reference Tackle "if — and only if" the slice was sound.
+- "Clearly labelled local checkpoint commits" were allowed; nothing was to be pushed.
+
+**Checkpoint and V1.1 promotion** (`4dbb5a2`, `e14354b`).
+- `4dbb5a2` committed the evening's untracked work (178 files). V1 reproduces under `--calib V1`: A 5/5, B 20/20, C1 59/59, C2 13/13.
+- `e14354b` (02:36) promoted V1.1 (`WORKING_CALIB = "V1.1"`).
+  - **The C2 fix:** a planned upper bound on the unloading foot's share, never below the physical minimum (found by exact convex clipping).
+  - One stricter liftoff condition was added.
+  - Reach is now a consistent pelvis-height band.
+  - Result: J_repeat 6/6 (V1: 5/6).
+  - `v1_1/PROMOTION.md` records that V1 had lifted off partly through an accidental +6 mm medial CoP bias, which was not restored.
+
+**C3 — one physics-driven corrective step** (`1aa4f5e`, `d0d8e0f`, `e4dc66a`, `e97f909`, `cca491e`, `be5c27b`, `73eabe4`).
+- 29 tests ×3, Browser = Node 29/29. One step catches forward pushes of 70–100 N·s (115 N·s with a projected foothold) and backward pushes of 40–50 N·s.
+- Lateral pushes of 55 N·s and more fall honestly.
+  - The 3-D crossover planner shows they need a foot speed of 5.1–6.3 m/s, above the 4.5 m/s cap.
+  - With the cap lifted to 7 m/s, the swing foot struck the stance shin and came to rest on the stance boot.
+- **Multi-step experiment: 0 of 8 rescued.**
+  - First reading: the longest first step leaves no room for a second (Koolen 2012).
+  - That reading was overturned 14 minutes later (`cca491e`): the failed steps already *predicted* capture. They touched down early, at u = 0.44–0.73 of the swing and 26–57 cm short, because the hip saturated on backward swings and the toe skimmed the turf on late forward ones.
+- Swing-shaping options (`step.h0`, `step.heelUp`) cut landing error from 26.6 to 8.3 cm but changed no outcome. The default was kept.
+- All the options combined still rescued 0 of 8 (`73eabe4`): "capacity is the locomotion gate's job".
+
+**C4 reactive arms and C5 protective falls, both opt-in** (`40ad2fe`, `b0a84d2`, `596b147`, `963bade`, `5535a06`).
+- **C4:** no in-place boundary moved; recovery times changed by −43 % to +18 %; one marginal step regressed. The first, unbraked version had turned 3 recovered steps into falls.
+- **C5:**
+  - forward and backward falls now land hands-first, with head impact 0.12–0.30 m/s (0.41–1.09 m/s without it);
+  - lateral falls are mixed;
+  - one late case is worse (0.77 → 1.2 m/s).
+  - A bracing arm that stayed raised on the turf now fades once the body is at rest; two variants of that fix were rejected.
+  - Browser = Node 34/34.
+
+**Gate D — two characters in one world** (`4cd5526`, `9df21f0`, `c509497`, `7c7a6fc`).
+- 28 bodies, with physics the only coupling between the two characters.
+- **The invariant holds.** On the step the gap would close, both bodies' velocities change in opposite directions. In D2 (3.9 m/s closing), A changes by −1.19 m/s and B by +0.44 m/s. This happens 1–2 steps before the ≤ 0.5 mm touch.
+- Contact depth: first touch ≤ 1.8 mm. A foot trapped under a falling pelvis compresses up to 8.4 mm.
+- **Isolation:** while apart, each character is bit-identical to its single-character run. Cost is 1.2–2.0 ms per frame.
+- `c509497` corrected the report's account of D4: A leans on B for about 2 s, then drifts off and falls because his one step is already used.
+
+**D6 — a physical slide into a standing player** (`d79b5b3`, `f5503ba`, `0dee87c`).
+- **Set-up:**
+  - the slider holds the Reference Tackle's measured tackler joint keys (f94 → f114) through finite motors, with no root actuator;
+  - he starts at 5.5 m/s, and the run-up is not simulated;
+  - B stands with C1 + C3.
+- **Result:** the contact is arrested on its step, and B stays upright.
+- `f5503ba`: the reference keys broke this body's range of motion (trail knee 145° against a 140° limit; ankle 48° against 30°). They are now clamped, and first-touch penetration fell from 9.3 to 5.1 mm.
+- `0dee87c`: a reactive contact yield was rejected. The penetration happens on the impact step itself, so the lever is how stiffly the leg tracks *before* impact.
+
+**Stopping short of the Reference Tackle** (`1542819`, `6d24d27`, `4062764`).
+- From the report: the reference attacker jogs at about 3 m/s and hurdles the slider. Reproducing him would need a kinematic attacker or root dragging, so "the Reference Tackle is blocked on a prerequisite, and I stopped there instead of faking it."
+- `6d24d27` corrected two claims in the report:
+  - the multi-step "Cause" was relabelled "First reading";
+  - "no outcome flipped" was corrected: B is knocked down when the slide gap is 0.85 m.
+- `4062764`: `LOCOMOTION_PROPOSAL.md` ("nothing built").
+  - It recommends Coros-style walking with reference gait targets (B + C) through gates L1–L6.
+  - It leaves four decisions to the user.
+
+**Validation.** After every change:
+- the approved and promoted hashes were identical: A, B, C1 and C2 on V1 and on V1.1, plus C3 29/29;
+- 0 teleports and 0 velocity writes after t = 0.
+
+**Adopted:** Jolt; V1.1 as the working body; C3's one-step default.
+
+**Default-off:** C4, C5, `step.maxSteps` / `nStep` / `h0` / `heelUp`, `externalSupport`.
+
+**Rejected:** the 2-D crossover route (reverted), a boot-sized foot collider, unbraked arms, the reactive yield, and lateral head flexion.
+
+**End-of-day state.** At 04:39 there were 24 local commits, nothing pushed, and 360 review images left untracked under the media policy.
+- **Approved on V1 (by the user):** Gates A–C2.
+- **Promoted:** V1.1 as the working foundation.
+- **Partial:** C3; C4 and C5 (both off by default); D6.
+- **Passed with limitations:** Gate D.
+- **Blocked:** the Reference Tackle.
+- **Next decision:** locomotion, i.e. how the attacker moves.
+
+---
+
+## Wednesday 30 September 2026 — Reboot, the D6 diagnostic, a reconciled locomotion architecture, G1 and G2a
+
+**Evidence:**
+- [FC-Sim Git] 5 commits on `prototype/physical-character-v1`, `2e66018` (13:41) → `6f1ef85` (01:32, 1 Oct).
+- [Session] [Doc] user messages at 13:38, 16:01, 22:55, 23:25 and 01:31, in `sources/`. From 16:01 the work ran in a new Claude session (`d4761610…`) after the reboot.
+- [Astra] an independent architecture review, pasted at 17:01 (`sources/2026-09-30T1601_astra_…`).
+- [Doc] `HANDOFF_2026-09-30_REBOOT.md`, `d6_diagnostic/D6_DIAGNOSTIC_REPORT.md`, `LOCOMOTION_ARCHITECTURE_FINAL.md`, `g1a/G1A_REPORT.md`, `g1b/G1B_REPORT.md`, `g2a/G2A_REPORT.md`.
+- [Local] `_preserved_2026-09-30_physical_character_overnight/` (13:42).
+
+**No recorded work from 04:39 to 13:38** (Uncertain whether any happened).
+
+**Reboot preservation (13:38 → 13:42)** (`2e66018`, `6e13e9c`).
+- The user: "I need to reboot my Mac now. Stop all further development and make the entire current physical-character project state safely recoverable".
+- **Discovery:** the overnight evidence had been produced with tools that lived only in the session scratchpad (`/private/tmp`, cleared on reboot).
+- `2e66018` moved them into `tools/review/`:
+  - `regress.sh`;
+  - the Browser = Node checker;
+  - the capture scripts;
+  - 87 analysis probes (716 KB, text only).
+- `6e13e9c` added the reboot handoff. The session's closing "REBOOT SAFE" report (14:45) is archived [as a screenshot](../review_artifacts/chronicle_screens/2026-09-30_physical_character/Screenshot_2026-09-30_at_2.45.58_PM.png).
+- [Local] The snapshot holds a git bundle of the branch and the 360 untracked review images (≈ 94 MB). The five earlier snapshots were verified at 90/90 checksums.
+
+**D6 diagnostic (16:01 → 16:52)** (`f18c8a7`). The user had reviewed the overnight gates: "Gate D contact generally looks solid", but in D6 the standing player barely reacts. "Do not simply make the standing player fall."
+- **Measured, not assumed:**
+  - the slider hits the outer side of B's left boot 1.8 cm above the turf;
+  - it sweeps that boot 16 cm toward the midline, under the COM, where it becomes the loaded support (≈ 1.9 BW) and its friction pins it;
+  - A → B impulse 173 N·s (2.3 kN peak); B's own peak momentum is 18 N·s.
+- **Checks:**
+  - with B's controller frozen at impact, the same hit knocks him down;
+  - a 100 ms sensing delay changes nothing.
+- **Verdict:** physically justified. **The user's decision:** the baseline is not made to fall.
+- **A real bug, fixed (general, approved).** The friction observer took a foot pushed by another body as a turf measurement. B "measured" μ 0.037 on 0.9 turf and kept it. The observer now ignores feet touched by a non-turf body. Only D6_slide changed. A "step at 70 % load" in the matrix had been an artefact of this bug.
+- **D6X matrix (24 variants ×3).** The response forms a continuous spectrum:
+  - absorbed (slider arrives at 1.3 m/s);
+  - local disturbance;
+  - recovered in place (the 3.4 m/s baseline);
+  - corrective step (a knee-height hit);
+  - fall (arrival ≥ 4.8 m/s, a thigh-height hit, or 80 % of the weight on the struck foot).
+- **Four observations documented, not changed:**
+  - C3 never re-plans after one refusal;
+  - C1 releases posture early;
+  - the outcome is sensitive to arrival speed;
+  - shin contact is bistable.
+- Browser = Node was deferred (puppeteer-core not installed).
+
+**Locomotion architecture: Claude and Astra reconciled (17:01).**
+- [Astra]: "make its next milestone 'explainable disturbance response,' not 'make D6 fall'". It recommended:
+  - a contact-aware hybrid controller;
+  - a single actuator authority;
+  - flight and landing before running.
+- The user, with it: "I approve the physical-contact foundation as sufficient to proceed … Do not automatically defer to Astra. Do not defend your previous proposal merely because you wrote it."
+- `LOCOMOTION_ARCHITECTURE_FINAL.md` ([Local] file time 17:12; committed in `772d0bd`):
+  - **one actuator arbiter per joint axis**, in priority order P0 support > P1 balance > P2 task > P3 style;
+  - a gait/support state taken from contact truth;
+  - a planner with a viability monitor;
+  - C1–C5 re-hosted as modules, with claims tagged [R] research / [E] engineering / [H] hypothesis;
+  - first gate: G1a.
+- **Uncertain:** the user's approval of this document is not preserved as a source.
+
+**G1a and G1b** (G1a report [Local] 22:48; G1b report 23:19).
+- **G1a:** new arbiter, gait, planner and loco layers. **18 criteria pass**, including:
+  - parity with C1–C3;
+  - support realised at 96.2 % under saturation (9.2 % without arbitration);
+  - an early touchdown accepted 108 ms early.
+- **G1a fails two:**
+  - 480 Hz convergence: 4–15 % differences in the 50 ms landing windows;
+  - controller cost 0.13–0.76 ms against a 0.4 ms budget.
+- At 22:55 the user approved the architecture, but asked for a G1b closure pass first.
+- **G1b:**
+  - 240 and 480 Hz are the same physical event (0–100 ms impulse 73.6 vs 75.6 N·s), so 240 Hz is kept;
+  - 22 characters measured in one world cost 20.1 / 26.1 ms (p50 / p95) per 60 Hz frame, against a 16.7 ms frame, so "a physics-scaling plan" is needed;
+  - of five open items, only pelvis yaw (±12°, growing) blocks G2;
+  - the motion still reads as "robotic marching".
+- At 23:25 the user promoted G1. The 30 N·s mid-swing fall was accepted as an honest boundary. "G2 … should be the first genuinely human-looking physical walk."
+- `772d0bd` (23:27) recorded G1 PROMOTED and added the G1 baseline (26 scenarios ×3) to `regress.sh`. Browser = Node was verified with headless Chrome.
+
+**G2a — yaw regulation and an in-place gait** (`6f1ef85`).
+- Pelvis yaw stays within 5° of the intended heading (G1: ±13°). An intended 30° turn is followed.
+- External-impulse ledger ≤ 0.041 N·s; 16/16 in-place steps.
+- In its own words, "a careful march": double support ≈ 45 %, and no heel rise before toe-off.
+- At 01:31 the user approved G2a "as the foundation for forward walking" and opened an 8-hour runway, G2b → G2e, each gated on evidence.
+
+**End-of-day state.** 29 local commits, nothing pushed.
+- G1 promoted; G2a approved.
+- The G2b overnight runway is under way (next entry).
+- Still open: the four D6 observations; C3–C5 partial.
+
+---
+
+## Thursday 1 October 2026 — G2b forward walking: six stops for review, no robust walk
+
+**Evidence:**
+- [FC-Sim Git] 16 commits on `prototype/physical-character-v1`, `dbc1ddb` (10:05) → `37a0849` (04:19, 2 Oct). Six are labelled WIP.
+- [Doc] user decisions at 10:26, 11:29, 13:15, 16:32, 18:22 and 22:20, plus the 02:52 overnight brief (2 Oct), in `sources/`.
+- [Doc] `g2_walk/NIGHT_LOG.md`, `G2B_OPTION1_REVIEW.md`, `g2_char/G2_PLANT_REPORT.md`, `g2_walker/G2B_WALKER_REVIEW.md`, `foot_gate/FOOT_GATE_REVIEW.md`, `g2_speed/G2_SPEED_SWING_REVIEW.md`, `g2_unified/G2B_UNIFIED_REVIEW.md`, `g2_overnight/OVERNIGHT_LOG.md`.
+
+The day ran as a fixed loop: build → measure → STOP for review → user decision.
+
+**Overnight G2b (01:32 → 10:05)** (`dbc1ddb`, `adade72`).
+- The design: a capture-point (DCM) walking plan with finite double support, a cadence derived from the human walk ratio, and of_loco's WALK as the reference.
+- **Measured rigid-foot limit.** The 0.358 m boot pivots only at its toe edge, 0.277 m ahead of the ankle, so a loaded heel rise needs ≈ 208 N·m against an ≈ 150 N·m envelope. A toe joint was documented but not built.
+- **Result:** 56 configurations at 0.4–0.8 m/s all fell within 2–7 steps, with pelvis yaw of ±20–30° at touchdown.
+- **General findings:**
+  - the late-stance ankle has ≈ 1 cm of sideways CoP authority;
+  - the weight-split solver assumed sole-edge CoPs the ankles cannot produce (fixed opt-in with a ±2.5 cm band).
+
+**Option 1: landing and closed-loop placement (10:26 → 11:24)** (`77966eb`, `34de412`). The user: "fix landing mechanics and forward foot-placement control … do not change the body architecture or add a toe joint yet."
+- **Touchdown moved into the human range:**
+  - foot forward velocity 1.55 → −0.07 m/s;
+  - peak vertical force 1136 → 578 N;
+  - foothold error 6–12 → 0.5–2 cm.
+- **The walk:** 2–5 upright steps over six starts.
+- Zero sensing delay and independent torque limits did not help, so "the stepping-controller design is" the limit.
+- **Own errors found by bisection:**
+  - the option `retract` collided with an of_loco parameter, adding ≈ 1 m of "retraction" to every swing without an explicit override;
+  - a default-on clearance change broke the in-place baseline (20/20 → 2).
+- **Recount:** the overnight "20/20" and "5–7 step" counts included steps taken after a fall. They are now counted fall-aware.
+
+**Plant characterisation (11:29 → 12:16)** (`9d4f7d9`). The user: "Do not continue parameter-tuning the current stepping controller."
+- 456 deterministic open-loop runs:
+  - a sideways error grows 10–12× per step and flips side;
+  - independent forward and sideways laws are stable in ≈ 1 % of the gain plane;
+  - double support lasts 0.22–0.38 s, not the assumed 0.15 s;
+  - the arms cancel ≈ 40 % of the yaw (human ≈ 64 %).
+- An earlier "5× the arms" figure was corrected to ≈ 1.7×.
+
+**Controller A vs a SIMBICON-style B (13:15 → 16:29)** (`981e761`, `e39f312`). Approved by the user, with a cadence of 105–115 steps/min and a width of 0.20–0.22 m "as evidence-backed experimental starting regions, not immutable constants".
+- **Results:** A walks 9–13 steps from all six starts (mean 11.2); B 5–7; the old G2b 2–3.
+- **Closed-loop eigenvalues:** sideways −0.44 (stable); forward +1.25 (unstable).
+- **The bound:** steps longer than ≈ 0.30 m fail their swing.
+- **Correction:** an unverified human bound on whole-body angular momentum ("< 0.03") was replaced by the verified 0.014 ± 0.003.
+
+**Foot-architecture gate (16:32 → 17:53)** (`89f970c`). The user: keep A, "Do not accept Option C", and compare feet before changing the body.
+- **Feet compared:**
+  - F1: a rigid, human-sized outline;
+  - F2: a passive MTP toe joint (0.15 m ahead of the ankle, −30…+60°);
+  - F2h: the same toe on the human-sized outline.
+- **At matched states, no foot beat the current boot (F0).** Maximum viable step: F0 0.42, F1 0.39, F2 0.32, F2h 0.38 m.
+- F2's stance worked (heel rise, rollover), but after long steps 94–99 % of its swings failed.
+- **Correction:** the walker review's "mostly the body" claim was measured on an older inner loop (v7) and does not hold on v8.
+
+**Speed regulation and swing execution (18:22 → 21:04)** (`53a81db`, `c7fd98b`, `45426b6`). The user: keep F0 (F2h opt-in), make the logic foot-agnostic, and classify every failure.
+- **Causal account of the speed creep:**
+  - no hidden force (the turf impulse matches the pendulum geometry within ±5 N·s);
+  - Controller A's target was a ≈ 0.63 m/s state, so it steered the walk faster;
+  - every baseline fall was a swing that was already infeasible when it was planned;
+  - the swing ran 50 ms behind real time.
+- **Capture-point tracking (`walk.dcmRef`):** speed held at 0.45 ± 0.08 m/s (previously 0.65 ± 0.25), but survival was 10.2 steps (7–15), against 11.2 (9–13).
+- **Not adopted:** a generic swing; a pelvis lowered by 3 cm made swing failures worse (23 → 36 %).
+
+**Unified controller (22:20 → 02:10)** (`10c8d74`, `fa55c9d`, `0c4520e`). The user: one hierarchy, "desired locomotion velocity → stance/ground-reaction regulation → … → physical swing execution", with reachability as a hard constraint.
+- **The 50 ms lag located:** the swing hip used the delayed pelvis pitch rate.
+- **The fix keeps the 50 ms latency.** An internal forward model predicts the pelvis rate instead: landing error +6.7 → +1.0 cm, swing success 63 → 87 %.
+- **Best result:** 14.7 upright steps (6–40) over six starts. One start walked all 40 steps at ≈ 0.5 m/s; the others ended after 6–11.
+- The review named the inherited swing as the binding limit.
+
+**Overnight runway, first phases (02:52 → 04:19, 2 Oct)** (`996dd7b`, `37a0849`). The brief: "COMPLETE THE WALKING FOUNDATION".
+- **Swing executor X** was built but not adopted. The inherited swing turned out to execute late foothold changes with a gain of ≈ 0.65 / 0.57 / 0.50, and timing changes fully. That overturned the unified review's premise.
+- **Failure mechanism:** the heel-strike CoP stays behind the COM for 0.2–0.3 s in early stance.
+- Rocker compliance, a two-step preview and a stronger stance gain were tested; none was adopted.
+- **Speed envelope:** no stable range anywhere from 0.30 to 0.70 m/s.
+
+**Validation.** At every commit:
+- `regress.sh` identical (12 suites by the evening);
+- G2W_A8 hashes and foot-gate F0 / F2h 42/42 unchanged from when each was introduced;
+- all walking code opt-in.
+
+Identification dumps (up to 361 MB) were kept out of Git.
+
+**[Local] Parallel: card design** (outside the repositories).
+- Two AI-generated "Touchline 2027" Salah card images (`~/Downloads/ChatGPT Image Oct 1, 2026, …` 17:24 and 17:47).
+- `Touchline_Salah_Diamond_Flip.html` and `…_Glimmer.html` (22:39, 22:56).
+- The workstream that built the pages is not recorded (Uncertain). Not archived: they depict a real player.
+
+**End-of-day state.** 45 local commits, nothing pushed.
+- G2b not achieved.
+- Default foot F0; F2h opt-in.
+- Yaw unresolved.
+- The runway continued past 06:00, ending in the decision report `39c8dd2` (06:46, next day).
+
+---
+
+## Friday 2 October 2026 — Physical Character V1 frozen; V2 begins as a clean sheet
+
+**Evidence:** [FC-Sim Git] 12 commits: 4 on `prototype/physical-character-v1`, then 8 on `prototype/physical-character-v2`, `39c8dd2` (06:46) → `77815db` (04:31, 3 Oct). Tag `checkpoint/physchar-v1-final-research` → `11149df` (annotated 16:28, local only). [Doc] `PHYSICAL_CHARACTER_V1_FINAL_HANDOFF.md`, `PHYSICAL_CHARACTER_V1_LESSONS.md`, `g2_stepper/`; `PHYSICAL_CHARACTER_V2_SPEC.md`, `DECISIONS.md` (the 2026-10-02 sections and the first 2026-10-03 section), `g0/G0_REPORT.md`, `g1/G1_REPORT.md`; 8 user briefs and decisions in the two `sources/` folders. [Local] The snapshot `_preserved_2026-10-02_physical_character_v1_final/` (files written 16:21–16:31). The V2 branch and worktree were created at 17:45 (branch reflog, directory birth time).
+
+**The overnight G2b stop** (`39c8dd2`, 06:46; the tail of the 1 Oct night's runway).
+- **Still no robust walk.** Used as a perfect-model oracle, the simulator searching one step ahead averaged 17.0 upright steps; a depth-2 beam held all 28 searched steps on two starts.
+- **The report** concluded that "the plant is controllable by lookahead placement". It offered A, stance mechanics (recommended), or B, a lookahead predictive layer.
+- **Not adopted:** `ctrl.Lref` and three new map sets, whose best typical walk was 10.8 steps.
+
+**The Physical Stepper consolidation** (`157ba0b` 14:55, `d133e1a` 15:24).
+- **The brief:** the user's "MAJOR ARCHITECTURE CONSOLIDATION" came with three Astra reports. It asked for a KEEP / REPLACE / DEFER / EXPERIMENTAL record before any code. Where a report conflicts with a measurement, the measurement wins (`g2_stepper/DECISION_RECORD.md`).
+- **Built, all opt-in:** exact snapshot / restore sessions (16/16 bit-identical to replays); a contact-event schema; a surrogate model and a step planner (held-out live: 8.7–10.0 upright steps).
+- **The best oracle** held all 20 searched steps on 6/6 starts. On a 40-step horizon it held one start but collapsed after 29 on another. Not robust.
+- **Recommendation A, transition-planned walking:** plan the double support's duration at touchdown. It went to the user and was never implemented (handoff §S).
+
+**Corrections made the same day.**
+- **The overnight beam's 28–34 steps** reproduce only with its 4-decimal command rounding. Exact commands give 26 / 13 / 20, so a 0.1 mm difference decided between 13 and 34 steps.
+- **"Stepping cannot brake"** (`157ba0b`) holds only near the controller's own decision; long steps brake by −0.03 to −0.07 m/s per step (`d133e1a`). This claim and the overnight lookahead claim are two of the three overturned conclusions in `PHYSICAL_CHARACTER_V1_LESSONS.md` §19.
+- **An event target** used the foot-body origin, not the sole centre (≈ 7 cm). Control was unaffected.
+
+**The V1 freeze** (`11149df`, 16:28). The user's preservation brief: "Do not begin V2. … Do not improve walking."
+- **No runtime code changed.** The commit adds the final handoff (A–V), the lessons, a manifest, and the user's briefs and the Astra reports verbatim. Regression at `d133e1a`: regress.sh 12/12, G2W_A8 6/6, foot gate 42/42 ×2, session_check 16/16.
+- [Local] **Outside Git:** bundles (1.68 GB / 46 MB), untracked evidence (431 MB), scratch files and transcripts, with checksums.
+
+> **Transition — V1 frozen; V2 starts from a clean sheet (`11149df` → `5646d71`).** The user's brief: "V2 is not a patch to V1. It is a clean-sheet physical humanoid designed using everything V1 taught us." V2 got its own branch, cut from the freeze tag, and its own worktree; V1's branch has stayed at the freeze commit.
+> - **What crossed (spec §21):** the lessons, the Jolt adapter pattern, deterministic maths and hashing, the snapshot oracle, the contact-event lifecycle.
+> - **What stayed behind:** V1's display-mesh body, its walking controllers, its maps and its opt-in flags.
+> - **The rule carried forward:** "Simulation decides what happens; animation visually explains what happened."
+
+**The V2 specification** (`5646d71`, 18:26; research only, 27 sections, every number reproducible from `calc/`).
+- **The premise was challenged first:** "A new body is justified. What makes it justified is not the walking failure." V1's geometry came from a stylised display mesh (36 × 16.4 cm box boots, an upper arm 25 % short). No V1 body property was tied to the speed creep.
+- **The body:** 14 bodies and 13 joints, with 35 rotational DOF against V1's 31 (knee axial rotation and forearm pronation added); a 31-bone Unity-compatible skeleton; a 1.82 m / 78 kg reference, an 11.3 cm boot and zero body damping.
+- **Gates:** the brief's "DO NOT DESIGN WALKING FIRST" became gates G0 (anatomy) to G7 (forward walking), with G5 a first-class transition gate.
+- **User decision:** D1–D10 approved, except D7 (browser WASM vs native Jolt for 22 players), which is deferred; on a contradiction in G0, "stop rather than silently changing the specification."
+
+**V2-G0: anatomy and static construction** (`9aacdf3` 19:32, `e84bca9` 20:10).
+- **Built:** a deterministic human generator (bodies, joints, colliders, skeleton, physics → render mapping); a Jolt adapter ported from V1; a WebGL2 review page. Node and headless Chrome agree on 8/8 bodies.
+- **The first run stopped on two specification contradictions,** and the spec was not changed: no head sphere fits both head length and breadth (+15.5 mm); population bands were applied to the ±2 SD leg variants.
+- **User decision:** C1, a front-to-back head capsule ("Do not widen the tolerance merely to preserve the sphere"); C2, separate checks for morphology variants.
+- **G0 PASS** on all 8 bodies (46/46 or 45/45), global 4/4.
+- **The user approved G0 visually** and briefed G1, passive physics only: "A passive body falling over is success, not failure."
+
+**V2-G1: passive physics (overnight).**
+- **Criteria first:** pre-registered (`5e4548d`, 00:58) "so the history shows the thresholds were fixed first".
+- **Built** (`963cd9c`, 01:37): the passive tissue as one conservative potential in Jolt's implicit motor rows; 17 curated scenarios.
+- **A G0 defect:** Jolt's gyroscopic term was off, so a free body conserved angular velocity instead of angular momentum. A free asymmetric body drifted |ΔL|/|L| = 1.53 over 2 s; with the term on, 2.5e-3.
+- **G1 FAIL** on 5 of 13 checks, traced to seven causes: impact warm-start; the rigid stops; the boot's one-face manifold; the head capsule; slop; float32; the 15 m/s impact.
+- **User decisions C1–C7**, then autonomy ("Under no circumstances begin G2 while I am away"): 60 iterations; end-stop margins measured per joint ("Do not silently redefine human ROM to whatever Jolt permits"); a boot experiment first; a two-sphere head; no global 720 Hz and no indiscriminate CCD.
+- **Applied by 04:31** (`7632dbe`, `e06d177`, `77815db`), with criteria v2 pre-registered.
+- **Seven passive-drive defects (G1-D2…D8)** were found and fixed. Two examples: start-of-step linearisation let a joint enter the stiff stop without doing work (thoracic +9.2 J in one step); Jolt silently clamped drive targets onto the joint limits.
+
+**End-of-day state.** V1 is frozen and recoverable. V2 is specified; G0 has passed and been approved. G1's criteria v2 are fixed and its final evidence run is under way (it finished at 07:15 on 3 Oct).
+
+---
+
+## Saturday 3 October 2026 — V2-G1 and G2 pass; a Jolt turf-contact defect; G3 held at the pre-G4 stop
+
+**Evidence:** [FC-Sim Git] 33 commits on `prototype/physical-character-v2`, `7d10111` (07:15) → `f85e396` (04:34, 4 Oct). [Doc] `DECISIONS.md` (the 2026-10-03 sections, "2026-10-03/04" and the two early 2026-10-04 sections); `g1/` (incl. `g1/heel/HEEL_RISE_REPORT.md`); `g2/`; `g3/`; `engine_blowup_B/B_REPORT.md`; `symmetry_corrections/`; `PRE_G4_OVERNIGHT_REPORT.md`; 13 user decisions and instructions in `sources/` (11 dated 2026-10-03, 2 dated 2026-10-04 but given before 06:00).
+
+A day of stop-and-decide cycles: 11 commits stop for a user decision or review, and 10 pre-register criteria or tolerances before their evaluation run.
+
+**G1 closed** (`7d10111` → `2108c15`).
+- **The overnight run ended NOT YET PASSED** (V2-REF 10/17, V1-matched 12/17, variants 31/40), with four causes left. The main one: Jolt builds a boot manifold from one supporting face and drops the deepest point. The single hull therefore missed > 10 mm in 1.6 % of orientations (worst 35 mm).
+- **User decisions D1–D4:** a 10-piece boot of identical geometry (+19 % physics); 150 velocity iterations, "a validated correctness configuration, not yet the accepted production-performance configuration" (debt TD-1); 1.5° settled excursion tolerated, with the ROM unchanged; four test-definition corrections.
+- **G1 PASS** (`e531487`, 11:04): 17/17, 17/17, 40/40; step energy rise 0.000 J; emergency-stop ticks 0; 0.458 ms per tick per player (+39 %). Two genuine rate effects failed row 8 as pre-registered; a v3.1 evaluation applying the user's D4a text was "recorded openly".
+- **Found while integrating:** Jolt's default 1 mm hull tolerance dropped slivers at the boot's internal seams (−0.28 % volume). Fixed with 1e-5 m.
+- **The heel rise** (`dd9026a`). The user asked for the cause of a heel rise (0 → 238 mm) onto the toe in the 1 m feet-first drop. The collapsing shank does +2.75 J of work on the foot through the ankle joint, while the ankle tissue absorbs −1.03 J. The rise stops at a torque-free strut pose (70.2°; the geometric value is 70.84°).
+- **User decision** (`2108c15`, 12:20): "Do not tune the body to make this passive fall look more human." The drop is "a mechanical torture test of the passive plant", and the probe stays permanently. **V2-G1 accepted as passed.**
+
+**V2-G2: active standing** (`3bd8533` 13:11, `a3ccc46` 13:37).
+- **V1's standing work** was studied read-only, not ported.
+- **New:** finite actuators in a parallel constraint whose limits are exactly the capacity; a capture-point ankle strategy (kξ = 1/3, i.e. 1.33 mgh, from human evidence); a measured CoP region.
+- **PASS 13/13** (620 runs): quiet stance on 8/8 bodies for 60 s at ≤ 8.1 % of capacity. V2-REF no-step boundary, recovered / not: F 15 / 20, B 15 / 20, L = R 20 / 25 N·s.
+- **Run 1** had exposed an L/R order dependence in the CoP allocation and a measurement-window bug. Both were fixed, and run 1 is kept.
+- **Hip and arm strategies:** no gain, not adopted.
+- **Accepted** in the user's G3 instruction (`e2c0df3`, 13:51).
+
+**V2-G3: weight transfer, and the ankle law** (`871ab62` → `12309ee`).
+- **NOT PASSED, 15/19** (`f080253`, 15:08). Failing rows: the short-legs body's near-single-support share 0.948 vs 0.95; mirrored slip 0.76 vs 0.5 mm; browser ≠ Node (`Math.hypot` / `atan2` in G2-era IK); controller cost 0.152 ms under a 9-process load.
+- **New finding TD-11:** the ankle's ab/adduction axis has no actuator and no stiffness inside ±10°, so the leg twists freely on the planted foot. G2 has it too.
+- **User:** "do not declare G3 passed and do not start G4."
+- **The resolution** (`677cb6e`, `3d9ebb7`): deterministic maths in the controller and the G1 passive layer, with G2 outcomes 620/620 identical; G3 16/19; the 95 % threshold was the brief's example number; isolated controller cost 0.036 ms; both safety mechanisms kept: without the hold, a push drags an unloaded foot 53–230 mm.
+- **User:** revised criteria approved, and an evidence-based ankle law near 0.3–0.5 N·m/° ordered: "do not simply choose a stiffness because it gives the best controller result."
+- **The literature check:** the primary sources did not support 0.3–0.5 N·m/° for this coordinate, so 0.10 N·m/° was pre-registered (`a028bed`).
+- **It failed G1** (`12309ee`, 17:15): a one-step +450 J ankle blow-up at 720 Hz. Every stiffness from 0.05 to 0.5 failed (up to +45,983 J). **Not adopted.** The default returned to k = 0. Switching to 0.15, which removed the twist, was refused as "choosing by G3 score".
+
+**Investigation B: the energy came from under the turf** (`1bbf994` 18:56, `d7a7fcb` 19:43). The user: "approve B only", then two autonomous hours.
+- **The root cause is Jolt v5.6.0's narrow phase, not the ankle.** Near the 100 m turf box, GJK hands a boot piece to EPA, which returns an unconverged triangle facing the wrong way. The contact lands on the box's bottom face, 2 m down, and the position solver teleports the boot 25–160 mm and turns it 45–173° in one step, with no velocity change. The +182 J … +75,766 J is the end-stop potential of that forced pose.
+- **The accepted k = 0 plant was exposed too:** 4 events in 1,054 runs; +34,300 J from sliding the turf 341 mm under a resting body; G2 / G3 had 0 invalid manifolds in 37 M contacts.
+- **The proof:** bit-exact native reproduction, reduced to one shape query; a diagnostic EPA patch took reversals from 2,110 to 0 over 175 M poses; Jolt's `PlaneShape` turf gave 0.
+- **Falsified:** a smaller box, the convex radius, speculative contacts, the compound boot.
+- An upstream issue was drafted, not sent. **Corrected openly:** TD-12 was reworded; an event count first written "5 of ~2,800" is 4 of 1,054.
+
+**The flat-plane turf** (`68693b9` → `1204777`). **User:** "a collision-representation correction, not a change to the intended world geometry"; "Do not patch Jolt"; reopen G1.
+- **G1 PASS** under criteria v4, which gate turf-contact validity (`e17bc73`, 22:49): the 19 recorded reversed states are clean; 225 M native poses gave 0 invalid; no systematic difference over 254 paired plane-vs-box runs; physics −7 %.
+- **G2 PASS** (`13b0848`): 620/620, 0 outcome changes.
+- **G3 18/19** (`1204777`): only J2 failed, and it failed identically on the box. A direct probe found the controller mirror-equivariant to numerical tolerance. The cause was J2's own definition, which compared two physical runs.
+
+**Symmetry and the pre-G4 stop (after midnight).**
+- **User:** split J2 into J2a (controller mirror-equivariance) and J2b (mirrored physical outcomes). Criteria v3 (`97a0c5d`) disclosed in advance that J2a would fail; the tolerances were not widened.
+- **The v3 result** (`d80f88f`, 00:34): 19/20, J2a 0/81. Three controller defects: a collinear hull vertex kept on the left boot only (4.8 µm, amplified to 1.66 mm of CoP); a one-sided finite-difference IK Jacobian; unit-quaternion formulas applied to Jolt's non-unit float32 orientations.
+- **User, Option 1:** "Do not preserve an asymmetric controller merely because its errors partially cancel the plant's solver-order asymmetry." Corrected in `e9bcf96`, with permanent component regressions.
+- **Validation** (`7eb6248`): J2a 79/81. The J2b floor (1,027 runs) is chaotic amplification, not Jolt's ordering. IK cost rose 0.023 → 0.107 ms, and two marginal G1 rows now failed.
+- **Overnight, unattended** (`833ec4a` → `f85e396`): global quaternion normalisation was **rejected** because it flipped those two G1 rows; normalising only at the controller boundary leaves the plant bit-identical.
+- **Also overnight:** an exact point-in-region test (a reflex vertex had made the old convex-only test misclassify ~2.7 % of the foot region); an IK polish; staged forward kinematics (−25 % IK cost). A G4 IK study found 1,336 of 16,704 reachable targets anatomically invalid; bounded IK stays opt-in, default off.
+- **G3 v3.2** (`d67f417`, 04:31): **all 20 rows pass, but G3 is not declared.** The J2b tolerances fixed before the run (A 0.5 / B 10 / C 2 mm, `8e57a3e`) failed their pre-registered meaningfulness test: 0 of 3 injected asymmetries detected. J2a detected all three by 9–12 orders of magnitude.
+
+**Corrections and process errors** (recorded in `DECISIONS.md`).
+- **Gate errors:** in G3 run 1 a one-tick probe lag at release failed three rows (window fixed, physics hashes identical); row J's 0.5 mm tolerance was "my criterion-design error".
+- **Bookkeeping:** a TD-3 / TD-11 label collision; a comparator reading 620/620 as 617/620; a "minimality" note drawn from nominal scenes, withdrawn.
+- **Tooling and checks:** mid-line `//` comments silently swallowed code twice, and `node --check` does not catch it; `sigmaErr` was gated by mistake, a category error kept in the history; an earlier "1 change" in G3 was a pairing artifact.
+
+**Adopted vs not adopted.**
+- **Adopted:** the 10-piece boot and 150 iterations; the 3° end-stop with its 1.5° tolerance; parallel finite actuators and the capture-point ankle strategy; the G3 transfer / hold / feasibility options; deterministic maths; the `PlaneShape` turf; the symmetry package.
+- **Not adopted, or left default-off:** the hip / trunk / arm and knee strategies; the ankle neutral-zone law (`V2_ANKLE_NEUTRAL_K`, default 0); the EPA patches, the contact guard and the penetration cap; global quaternion normalisation; bounded leg IK.
+
+**[Local] Parallel: manager-app pages** (outside the repositories; authorship not recorded, Uncertain): `~/Downloads/Touchline_Finance.html` (23:50), `Touchline_Squad.html` (23:54), `Touchline_Matchday.html` (02:01, 4 Oct). These are self-contained pages of 10 – 16 MB.
+
+**End-of-day state.**
+- **Gates:** V2-G0, G1 (flat plane, criteria v4) and G2 pass. G3 passes all 20 rows under v3.2 but is not declared.
+- **Plant:** `PlaneShape` turf, 10-piece boot, 150 iterations, ankle k = 0.
+- **Not started:** G4, the ankle re-investigation and the 180 Hz study.
+- **Next blocker:** the user's choice on J2b and the G4 foothold-IK policy, then the ankle (`PRE_G4_OVERNIGHT_REPORT.md`, 21 items).
+
+---
+
+## Sunday 4 October 2026 — G3 closed, a corrected knee, and the first E1a run
+
+**Evidence:** [FC-Sim Git] 46 commits on `prototype/physical-character-v2`, `bb0ec47` (11:20) → `7b0ecf6` (05:56, 5 Oct). [Doc] `review_artifacts/physical_character_v2/`: `DECISIONS.md` FP-11 → UF-1; `PRE_G4_REPORT_ANKLE_IK.md`, `PRE_G4_DECISION_REPORT.md`, `pre_g4_runway/`, `final_pre_e1a/`, `knee_axial_review/`, `knee_correction/`, `e1a/`, `unload_fix/`, `touch_semantics/`. Ten user decisions and instructions are saved verbatim in `sources/`: six dated 2026-10-04, and four dated 2026-10-05 that were committed before 06:00.
+
+**Starting state.** The overnight report (`f85e396`, 04:34, previous entry) had stopped at the pre-G4 decision point. All 20 rows of G3 v3.2 passed, but G3 was not declared, because J2b failed its own pre-registered meaningfulness test.
+
+**User decision: J2 Option (a), and G3 passes** (`bb0ec47`).
+- J2a (controller mirror-equivariance) becomes the normative left/right gate. J2b (two physical runs compared) becomes a permanent diagnostic, reported by class. The user called this "a test-design correction supported by the preregistered test-of-the-test, not a relaxation made because the production character failed."
+- **G3 criteria v3.3: PASS 20/20** (19 gating rows, J2b reported); J2a 81/81. The history from v1 to v3.2 is preserved.
+- The same decision authorised the ankle reinvestigation (Phase F), the 180 Hz investigation (Phase G) and IK research. G4 was still not authorised.
+
+**Ankle Phase F / G and anatomical IK** (`4b544ca` → `4cc8b09`, 11:24–13:59).
+- Pre-registered before any k > 0 run: k = 0.11 / 0.13 / 0.15 against 0, requirements A–H, and "never by G3 score".
+- **No candidate is evidence-supported with the validated controller.** B, C and D fail for all three. Perturbed G1 failure rates are 6.3 / 11.3 / 7.7 %, against 5.0 % at k = 0 (`3219bdc`).
+- **Mechanism** (`2d4815e`): the residual leg twist is an *actuator-powered* limit cycle of the posture IK's "twist DOFs at current" policy, present even at k = 0. A second mechanism is a knee-axial end range reached in prone rest.
+- **Phase G:** the 180 Hz event is an end-range integration error. It converges with dt and is net dissipative.
+- **IK:** ground-level footholds within ±30° yaw are 0 of 2,256 invalid. The invalid 8 % is mostly ±45° yaw with a pelvis that does not turn. The bounded-IK fallback was refined but **not adopted**, and a foothold contract was proposed (L1 geometric / L2 anatomical / L3 dynamic, `5dcb7ce`).
+
+**Pre-G4 research runway** (`bd29db7` → `f31e523`, 11 commits, 14:11–16:30). The user was away "approximately 2–3 hours": "Do not start G4 and do not stop early merely because you encounter a decision point."
+- **Twist root cause** (`8cfb25b`, `4718079`). "Twist at current" turns the hip into a world-referenced pelvis spring acting on unanchored legs. It pumps in +19 J against −17 J of damping per 8 s.
+  - Across 8 bodies × 5 disturbances, "current" fails to decay in 25/40 runs; reference, blend and drift fail in 0/40.
+- **The G4-critical finding** (`adaad68`, `aa3bf6d`): in single support the stance ankle reaches its ab/adduction end range under every twist policy. The passive ankle axial path is the only net yaw anchor.
+- **Interface audit** (`2dc9f04`, `1952f20`): 12 hazards at contact-to-liftoff, 7 and later 8 of them confirmed with an external-lift probe. One example is 55–158 N·m torque steps at re-contact.
+- **Reachability certificates** (`e98aa2f`): all 1,336 invalid targets are proven infeasible as defined. But with the held twist DOFs free, 94.7 % become feasible, so the definition decides the answer.
+- E1a / E1b (lift → hover → replace) and an E2 short step were designed. Verdict: "Not yet for G4 experiment runs" (`PRE_G4_DECISION_REPORT.md`).
+
+**Final pre-E1a resolution** (`07ca15d` → `82dfdba`, 9 commits, 17:27–19:14). The user asked for a state "where the next decision can simply be AUTHORISE E1a or DO NOT AUTHORISE E1a".
+- **Support / contact lifecycle** built, default OFF (`07ca15d`): SUPPORT → UNLOADING → TOUCHING → LIFTOFF → AIRBORNE → TOUCHDOWN → LOAD_ACCEPT.
+  - Refined and frozen (`1926df6`, `f4fa331`, `0bdde9f`). One fix: a state-switched height had caused an 88 N·m τ0 jump.
+  - External-lift matrix: 88 runs, 0 falls, 0 chatter.
+- **Twist-policy battery** (pre-registered `d22a1e7`): strictly, none is eligible (`60471db`). Reference fails only a capacity fall shared by every policy, which is a pre-registration flaw and was not re-scored. "Current" is rejected.
+- **Single-support yaw:** human yaw resistance is distributed, including an active subtalar path that our ankle omits.
+- **Knee:** the knee envelope is what blocks k > 0, but a literature-shaped envelope breaks other G1 rows.
+- **Ankle law:** k ≈ 0.13 fails G1 under every knee model.
+- The E1 pre-registration was frozen (5 mm lift, 2.5 cm pelvis drop). Verdict: **DO NOT AUTHORISE E1a**, and nothing was adopted (FP-14).
+
+**Knee axial literature review** (`b2f25bb`, 20:53). The user asked: "Do not design the model to make our existing G1/G2/G3 tests pass."
+- At physiological torques the current knee is 2.6–4× too wide (64–66° at 5 N·m, against 16° in vivo at full extension). Its zero is fixed.
+- The evidence supports a neutral θ0 that moves with flexion (the Walker curve to 120°). No code was changed (KR-1).
+
+**Corrected knee `v2k`** (`0267291`, `097dcb7`, `89cb31e`, 21:23–22:54).
+- **User:** "I approve proceeding with the knee architecture correction before E1a, but I do not approve treating uncertain deep-flexion numbers as established anatomy."
+- The instruction cites an independent "Astra knee review" that was never supplied as a file (**Uncertain:** its content).
+- **Order of work:** the parameterisation and the KV0–KV10 battery were pre-registered first (`0267291`). The implementation was then frozen default-off (`097dcb7`), with one potential U(θ, φ).
+- **Results:** the mechanics validate. The plant follows the law within 0.001°, and in the E1a pelvis drop the knee tracks θ0 within 1.4°.
+- **Strictly NOT QUALIFIED:** three threshold flaws in the pre-registration (errata E1–E3), a bad test premise (E4), and a splayed-leg hip rest in G1 1.S′.
+- **Gain:** the perturbed G1 failure rate is 4.3 / 5.3 %, against 5.0 / 11.3 % with the old knee.
+
+**Closing the decisions before E1a** (`56a87b8`, `ed59b3b`, `1d43f80`, 23:55–00:32). The user: "Do not simply convert failures into passes."
+- **Superseding criteria** KV2b′ / KV3b′ / KV4a.3′ / G1-5′. Each passes on the corrected and the old knee and fails on adversarial variants. The original FAILs are kept.
+- **The splayed-leg hip rest** is a genuine finding, 15/15 in all 35 deep-flexion cells. This corrects KC-1's reading.
+- **Configuration frozen:** `v2k` central, ankle k 0.13 (as a passive tissue value only), reference twist semantics and the lifecycle; G3 row K → K′.
+- **Qualification v2:** everything qualifies except the hip rest (2.09° at hip_L.rot, against 1.5°). So E1a was **NOT READY, with one blocker**.
+
+**E1a authorised, run, and failed** (`76cd5ef` → `74fd215`, 03:23–03:49).
+- **User:** "I now explicitly authorize E1a."
+  - The hip rest becomes a recorded exception that does not gate E1a, with a hip review made mandatory (TD-16): "not an acceptance of the hip excursion as anatomically correct, not a tolerance change, and not permission to tune around it."
+  - E1b and anything later stayed unauthorised.
+- **Result:** the harness was committed before the run (`c3b09d1`). All 10 runs then hit the pre-registered unload time-out, so no lift was ever commanded. Nine criteria fail, all as consequences of no lift; determinism is 21/21.
+- **Cause:** the zero-share foot keeps 1.02–1.25 % BW, just above the 1 % release threshold. Earlier tests had unloaded the foot with an *external* lift, which hid this.
+
+**The unload root cause, and B1 + B3** (`fd1993d` → `2ce81f3`, 04:16–05:12).
+- **Root cause, a latent controller bug:** the knee flexion feed-forward lacked the locked-axis twist term −tan t·(T·ẑ).
+  - The feed-forward is 5.9 N·m short, so the posture PD sags and leaves the pelvis 0.94 mm low.
+  - The zero-share leg then presses 8.75 N into the turf, and the lifecycle deadlocks.
+- **User:** B1 + B3 approved; the 1 % threshold stays. The controller "may never kinematically lift, teleport, pin, detach or otherwise force the foot".
+- **Results** (2,182 runs): B1 cuts the residual from 7.7–9.5 N to 0.4–0.8 N. But at drops ≥ 1 cm the released foot leaves the turf by itself (A1 fails), because of a pre-existing defect in the TOUCHING hold. **Not adopted** (UF-1).
+
+**The touching-foot runway begins** (`1ce8cd2`, `63543e8`, `7b0ecf6`, 05:43–05:56). The user was away "for several hours".
+- **Cause found:** the released foot's target height follows the foot itself, so the foot has no vertical stiffness, and pelvis settling lifts it.
+- Only "surface vertical reference + small seating force" gave 0 spontaneous lift-offs everywhere. Candidate C (B1 + `touchRest`) was pre-registered with 2,146 runs, before any result.
+
+**Corrections and process errors.**
+- **The mid-line `//` defect** (recorded twice in FP-6) recurred twice:
+  - `1926df6` crashed `gates/v2_g1.js`; fixed in `6c8140c`; no results came from the broken file;
+  - `knee_v2k_ctrl.mjs` (`ed59b3b`); three items were re-run.
+- **Figures corrected:** the pelvis-yaw figure became 85 %, not "74–91 %" (`e98aa2f`). A contaminated box-turf G1 sweep was discarded (`82dfdba`).
+- **Development errors:** an ablation dispatch bug, with 25 runs marked void (`fd1993d`).
+
+**Adopted vs not adopted.**
+- **Adopted:** G3 criteria v3.3, and the frozen pre-E1a configuration (accepted by the user at 03:23, KC-5).
+- **Not adopted, or left default-off / diagnostic:** the bounded IK, the twist policies other than reference, the diagnostic knees, the deep-flexion alternatives, and B1 + B3.
+
+**[Local] Parallel: manager-app interface.** `Touchline_Squad_Updated.html` (00:42, 5 Oct). The first screenshots of the redesigned standings and squad-management screens (04:13) are archived in [`chronicle_screens/2026-10-04_manager_ui/`](../review_artifacts/chronicle_screens/2026-10-04_manager_ui/).
+
+**End-of-day state.** E1a has been run once and failed before any lift. The deadlock is explained (B1), but a released foot then floats off the turf. Candidate C is frozen. **Reconstructed:** its official validation ran across the day boundary, and the result was committed at 06:36. Next blocker: the released-but-touching foot.
+
+---
+
+## Monday 5 October 2026 — E1a passes, E1b closes, E2 stops at the planning gate
+
+**Evidence:** [FC-Sim Git] 35 commits on `prototype/physical-character-v2`, `ac3a3c4` (06:36) → `e519c8f` (05:26, 6 Oct). The first five (06:36–07:25) finish the overnight touch-rest runway. [Doc] `DECISIONS.md` TR-1 → E2-8 (headings dated 2026-10-05 and 2026-10-06); `touch_semantics/`, `preswing/`, `e1a/`, `e1b_fix/`, `p15_capture/`, `e1b_ta/`, `e1b_close/`, `e2/`. Eleven user decisions and instructions are saved in `sources/`: six dated 2026-10-05, five dated 2026-10-06.
+
+**Candidate C fails, at the end of the night** (`ac3a3c4` → `9e2a0b7`, 06:36–07:25).
+- **Official validation FAIL** on three criteria:
+  - R1, 2/240: late release on a straight leg (pre-existing);
+  - R3, 17/144: 0.5 mm hovers bounce;
+  - R7, 150/480: the resting foot drifts (pre-existing, halved by C).
+- **The hold itself works:** across 1,447 runs C has zero spontaneous contact losses, while B1 alone loses contact in 122 of 352 (`touch_semantics/RUNWAY_REPORT.md`).
+- **C2**, a continuous seat ramp, was refuted (18/144 against 17). R3 is caused by the 0.5 mm touch-sensing gap, not the seat (TR-1a).
+- **G0–G3:** C fails G2 2.2b symmetry (9/12) because of `touchRest`; B1 alone gives 12/12 (TR-2).
+
+**Pre-swing / contact-boundary runway** (`a98d43a` → `3da5e5e`, 13:11–14:44).
+- **User:** "The vertical release/touching problem appears converged", but "do not simply accept the observed ~1 mm drag and do not arbitrarily anchor the foot."
+- **Research:** a lightly loaded foot in contact should be held by contact and friction, not servoed.
+- **Erratum TR-3:** R7 had measured rotation about a fixed contact point, not slip.
+- **Refuted and kept as records:** `nullWanted` (a fall), `nullAccept` (an acceptance slide), and the actual-pelvis frame.
+- **Candidate P\*** = B1 + `touchRest` + `lcVff "lin"` + `lcTouch.reseed`. Its 924-run validation was pre-registered (`abdd3da`), and the E1b tooling was committed before any E1b run (`9ef02bf`).
+- **P\* passes V1–V15** (`3da5e5e`):
+  - contact-point slip ≤ 0.04 mm; 20 mm hover error ≤ 0.89 mm;
+  - slip under fast motion ≤ 1.9 mm (C: 9.1); G0–G3 pass.
+  - Adopted as configuration **PSTAR** (defaults off). B1 alone fails G3 I2, so it is adopted only together with the hold.
+
+**E1a PASS, E1b FAIL** (`d499453`, `11d2fea`, 14:50–14:59).
+- **E1a**, rerun with PSTAR on the frozen protocol, criteria and harness: **all E1a-1…17 pass** on 8 bodies plus the mirrored run, with determinism 21/21.
+  - Hover error ≤ 1.3 mm (limit 3); touchdown 0.25 mm from the foothold; torque steps ≤ 6.2 N·m.
+  - Erratum E1-3: one sub-check was vacuous because of a harness defect. Its corrected measurement passes.
+- **E1b** (28 runs: 20 mm lift, 1.5 s hover) fails two criteria; everything else, including the 5 N·s pushes, passes.
+  - **E1b-7:** the abort clears the swing target in one tick, which causes 114–218 N·m τ0. This is pre-existing hazard H9.
+  - **E1b-17:** V2-REF's stance-ankle yaw is under-damped (±6–8°).
+
+**E1b fix, reuse-first** (`a89c307`, `99c71e9`, `19dbc73`, 18:35–19:18).
+- **User:** "Do not start broad new bottom-up invention if an established solution already covers the problem." The named references were PyPnC, IHMC and BLF.
+- **PSTAR2** adds two mechanisms:
+  - `footYaw`: an actuator on the passive-only foot ab/adduction axis, at 0.64 × the approved subtalar capacity;
+  - `lcPutDown`: a quintic put-down from BLF's swing planner.
+- **E1b-17 fixed:** 56/56 yaw runs.
+- **The put-down is smooth** (0.9–2.2 N·m against 22–38), **but 13/23 P15 aborts now fall.** A second, masked E1b-7 source was found, which corrects E1-4. PSTAR2 was **not adopted** (E1-5).
+
+**The P15 capture study, then T-A** (`997a5e7` → `7a945de`, 20:46–21:48).
+- **User:** "Do not choose P1–P5 yet and do not weaken P15."
+- **Research:** IHMC's `FlamingoStanceState` puts the lifted foot straight down in place.
+- **Capture analysis:** a lateral LIPM predicts 32/32 outcomes. P15 is recoverable in place if support follows measured contact. What actually fails is the acceptance pipeline: a 0.15 s intent delay, the 10 % floor and the fixed ramp.
+- **User:** "Choose T-A: capture-timed put-down", and "do not force an impossible in-place recovery."
+- **PSTAR3** catches all 23 P15 aborts with 0 falls (`7a945de`). But it still fails three items:
+  - E1b-18 on V2-165-62: the old stance foot moves 6.8–7.9 mm (limit 5);
+  - E1b-7 on V2-long-legs: 10.23 N·m;
+  - E1b-7 on V2-REF at 480 Hz: one tick over.
+- 12/23 aborts were classed "step required", though all were still caught. The study's claim that all eight bodies recover in place was "too strong" (TA-1).
+
+**E1b closed; foot-yaw adopted; E2 frozen for review** (`ca4aad6`, `6e0bf0a`, 22:05–23:17).
+- **User:** "Approve Decision 1." P15 is split by T-A's capture verdict into class A (in place) and class B (STEP_REQUIRED). Class B is not to be counted "as E1b passes merely because the current in-place controller happens to catch them".
+- **Two evidence-based corrections**, pre-registered before the run:
+  - T-A revision 1 had double-counted the timing margin;
+  - the RATE limit now scales by × max(1, 240/hz).
+- **E1b CLOSED** with PSTAR4: class A 19/19 recovered without changing the foothold, and 0 falls. The 4 STEP_REQUIRED cases (all on V2-165-62) became E2 obligations.
+- **Foot-yaw** was adopted independently as PSTARY. The E2 design and criteria were frozen for review, not implemented.
+
+**E2 overnight** (`5eb1ccb` → `e519c8f`, 13 commits, 00:15–05:26 on 6 Oct).
+- **E2 v2** (`5eb1ccb`): an explicit CERTIFIED_ONE_STEP / NO_CERTIFIED_ONE_STEP planner verdict, and reach taken from Touchline's own IK certifier.
+- **User:** "Approve E2 v2 architecture and frozen criteria. Authorize implementation and physical E2 execution", and "The planning certificates are predictions only."
+- **PSTAR5** (`41a5cc8`): the planning gate PG-1 certifies 0 of 32 steps (clearance 3.0/3.2 mm against 5 mm).
+- **A1 + B1** (`b2dde1c`): PG-1 still fails, now at φ 0.80.
+- **D1** (`c9b9485` → `25b185c`): the acceleration feed-forward is exact. But the servo battery does not validate, because of a ~30 % shortfall in the velocity feed-forward.
+- **Root cause** (`9570ccc`): `lcVff`'s one-step IK rate is damped by μ0 = 0.01, which is close to the smallest Gauss–Newton eigenvalue, so vertical rates come out at ×0.31–0.34.
+- **Under the overnight autonomous instruction** (`6c30e64` → `9578ccf`):
+  - `vffRate "sr"` (damping on the commanded-target term only) cuts tracking error from 5.6 to 3.6–4.1 mm RMS;
+  - `srAll` was **refuted** (τ0 up to 11,553 N·m);
+  - a handoff fix cut the liftoff torque step from 9.6 to 0.8 N·m;
+  - the PSTAR4S regressions pass.
+- **S2 servo re-validation fails** (V-1/V-2/V-4), with RMS 1.3–2.0 mm. PG-1 is 0/32, because the frozen reference is 5.40 mm above the turf at φ 0.80. `E2_OVERNIGHT_REPORT.md`: "**BLOCKED ON PLANNING DECISION**" (`e519c8f`).
+
+**Corrections and process errors.**
+- **Causes revised:** the R3 cause (TR-1a), the TR-1 / TR-2 causes (TR-3), and the single-cause E1b-7 diagnosis in E1-4 (`19dbc73`).
+- **Errata:** in the harnesses and tooling (E1-3, E1b-e1, E1bF-e1…e3), E1bF-e4 (hip z is abduction), and a count corrected from 11/16 to 10/16.
+- **The mid-line `//` defect, for the third time in two days:** `e1bta_checks.mjs`, fixed in `610aad0`.
+- **A report omission** is admitted in E2-3: "my previous report omitted that the descent end failed too".
+
+**Adopted vs not adopted.**
+- **Adopted:** PSTAR (P\*), PSTAR4 (which closed E1b), PSTARY (foot-yaw), and `vffRate "sr"` for E2 (E2-6).
+- **Not adopted:** C, C2, PSTAR2, PSTAR3, `srAll` and `vffPassive`.
+- **Implemented default-off, never officially run:** PSTAR5 / 5B / 5C.
+- **Left to the user:** whether PSTAR4S replaces PSTAR4 as the E1 baseline.
+
+**[Local] Parallel: manager-app interface and research** (outside the repositories).
+- **Thirteen iterations of the playable interface**, 12:59 → 02:40 on 6 Oct, as `~/Downloads/Touchline_Playable_*.html`:
+  - Fixed, Refined, Metallic, Hierarchy;
+  - Glass standings, Carousel, Restored header;
+  - All competitions, Training ground, Schedule;
+  - Knockout rounds, Minimal knockouts.
+- **Screenshots** of the metallic and glass standings, the Champions League knockout view and the schedule are archived in [`chronicle_screens/2026-10-05_manager_ui/`](../review_artifacts/chronicle_screens/2026-10-05_manager_ui/).
+- **`~/Downloads/Touchline_Reuse_Blueprint.md`** with `Touchline_Reuse_Source_Register.json` (13:43): "independent research, not an implementation", ranking 31 reusable locomotion sources (PyPnC, BLF, IHMC first).
+  - These are the three references the day's reuse-first instruction names.
+  - Its author is not recorded (Uncertain).
+
+**End-of-day state.** E1a passed and E1b closed. E2 is implemented default-off but has had no official run: PG-1 certifies 0/32 commanded steps under the frozen 25 mm apex. Decisions requested: A, the apex and window (recommendation 30 mm); B, the E2-5 impact metric; C, the servo-battery criteria; D, PSTAR4S as the E1 baseline.
+
+---
+
+## Tuesday 6 October 2026 — Apex 30 mm, A + B, and the first touchdown coordinators
+
+**Evidence:** [FC-Sim Git] 20 commits on `prototype/physical-character-v2`, `0625226` (12:19) → `c99e536` (04:35, 7 Oct). [Doc] `review_artifacts/physical_character_v2/DECISIONS.md` E2-9 … E2-15; in `e2/`: `E2_PREREG_AMENDMENT_A30`, `E2_A30_PG1_RESULTS`, `SWING_SERVO_VALIDATION_V2_PROPOSAL` / `_PREREG` / `_RESULTS`, `TOUCHDOWN_A30_ANALYSIS_PLAN`, `VERTICAL_RESIDUAL_DIAGNOSIS`, `AB_VALIDATION_*`, `AB2_VALIDATION_*`, `TOUCHDOWN_COORDINATOR_DESIGN_STOP`, `EXECUTION_FEASIBILITY`, `FB1A_TR1B_*`, `TD2_DESIGN_STUDY`, `TD2_PREREG` / `_RESULTS`, `OVERNIGHT_TD2_MORNING_REPORT`. Seven user decisions saved verbatim in `sources/` (six dated 6 Oct, one dated 7 Oct).
+
+**Starting state.** The overnight run had ended at 05:26 (`e519c8f`, 5 Oct entry) "BLOCKED ON PLANNING DECISION": the S2 servo re-validation did not validate and PG-1 was 0 / 32, because the frozen 25 mm swing passed only 5.40 mm above the turf at φ 0.80 against a 5 mm clearance requirement.
+
+**Method, all day.** Each step followed the same pattern: a user decision saved verbatim; a preregistration committed before any code ("freeze step 1"); a default-off implementation, harness and evaluator committed before any battery run ("freeze step 2"); the full battery; a results document and a DECISIONS entry; a stop at any failure. Default paths were checked bit-identical at every stage (KV0, reference hashes, suite 58 / 58).
+
+**Apex 30 mm and PG-1** (`0625226`, `2310aa3`).
+- User: "Approve A1: revise the nominal E2 swing apex from 25 mm to 30 mm" … "Do not continue increasing apex height." Recorded as the versioned trajectory `A30`; T 0.6 s, the 50 % knot and every threshold unchanged.
+- The amendment documented the measured tracking uncertainty (0.75 mm worst at φ 0.75 – 0.80) and a clearance budget of 1.60 mm at φ 0.8 (0.40 mm at 25 mm).
+- **PG-1: 0 / 32.** The gate configuration refused all 32 decisions because no validated tracked allowance existed. Envelope margin 3.41 – 3.62 mm; only an offline φ-resolved check would certify (5.87 mm, margin 0.87). The 30 mm swing is path-certified for every body: "the gate is servo validation".
+- Touchdown analysis on the old 25 mm data: the instantaneous peak scales with the solver step (480 / 180 Hz ratio up to 2.30); a 10 ms window mean does not (≤ 0.95). Recommended, **not adopted**. A new servo battery, SV-2, was proposed.
+
+**SV-2 swing-servo validation** (frozen `84b92b1` 15:53 → results `c3034fa` 16:29).
+- The user approved it with per-0.05-φ-bin allowances drawn from independent runs; trajectories a body cannot reach are to be rejected by the reachability check, not allowed to inflate the allowance.
+- Frozen: 876 runs, four separate verdicts. The reachability pre-check rejected C-L11 for 7 bodies. The touchdown analysis plan (`d41b92a`) and the PG-1 runner (`cd3cd8f`) were committed before the SV-2 evaluation was read.
+- **DOES NOT VALIDATE.** The representative set passes everything; tracking RMS 1.3 – 2.3 mm. Fails: T-1 (C-F7 0.26, C-L5 0.28, limit ≤ 0.25; residual vertical and D1-insensitive); I-2 (52 runs, foot-flat transients 6 – 21 ms after contact); I-3 / I-4 (C-L11 on V2-long-legs, a servo runaway near the reach boundary: "certified reachable but not executable"); I-6 (84 runs, contact loss after long fast landings).
+- Allowance computed for the record, NOT VALID, not entered. With it, a what-if PG-1 is still 0 / 32: 4.977 mm at φ 0.80, short by 0.023 mm. PG-1 and the 30 mm touchdown matrix were not run.
+
+**Vertical-residual diagnosis** (`93f9548`, `65b98ad`). The user asked for a diagnosis only ("Do not change behaviour yet") and said "do not round the 4.977 mm result into a pass".
+- Default-off diagnostic hooks (including removing the turf), then 884 matched runs.
+- **M1, floating-base pelvis coupling:** the velocity feed-forward's pelvis-motion term keeps damping μ0, so the leg drags the foot with the pelvis. It accounts for the whole T-1 vertical residual. **M2, uncompensated passive ankle damping:** 0.99° tilt predicted vs 0.94° measured.
+- With both causes removed, T-1 C-F7 0.259 → 0.009 and C-L5 0.275 → 0.088, so T-1 was kept as frozen.
+- Contact speed ∝ δ^0.62 (r 0.90, 315 touchdowns). Most of the 10 ms "impact" is premature load: 22.3 → 10.2 % BW with the pelvis term kept through contact.
+- Proposed, not implemented: (A) singularity-robust damping on the pelvis term during flight; (B) passive-damping feed-forward.
+
+**A + B, then AB2** (`54629de`, `0e832fb`, `28f2632`, `b4c6e16`).
+- The user approved A and B, a minimal touchdown coordinator and an execution-feasibility check, in an eight-step order.
+- A (`vffPelvisAir`) and B (`vffPassiveRef`) were built default-off, with a recording-only torque ledger.
+- **Factorial battery, 1,728 runs: DOES NOT VALIDATE**, stopped at stage 2.
+  - T-1 passes every id under AB, for the predicted reason (C-1 … C-3 pass); tilt −90 %; worst binding-window deviation −1.60 → −0.60 mm.
+  - FAIL AB-4a / 4b: 7 runs (V2-198-92 R-L) exceed the commanded-torque continuity limit by 0.7 – 6 % within −2 … +5 ticks of contact.
+  - FAIL AB-7: R-L β_y falls 47 % against the 50 % required.
+- User: "preserve the completed A+B battery exactly as a failed preregistered validation" and "Do not accelerate A's early-airborne ramp merely to turn the measured 47% beta reduction into the old 50% threshold."
+- The **AB2** amendment split ownership by lifecycle: A is judged from the first genuinely airborne tick, and contact-transition continuity moves to the coordinator ("not exempted").
+- **AB2 VALIDATES** (1,728 / 1,728, bit-identical to the AB records; airborne β_y −56 … −74 %). A + B are qualified as swing mechanisms (PSTAR5CHAB). The AB battery stays FAIL.
+
+**The first touchdown coordinator, stopped at design** (`9f57fb0`, 22:56).
+- A default-off draft (`ctrl/v2_touchdown.js`) was checked on smoke runs only. Within T 0.6 s, the apex at T / 2 and the validated A + B envelope, no C2 final approach could finish tangential motion before the contact band, keep normal approach speed low (best ≈ 60 mm/s) **and** stay inside the jerk envelope. It was not preregistered, validated or adopted.
+- **Execution-feasibility certifier** (`certifyExecution` plus closed-loop replay, `tools/exec_qualify.mjs`): 240 Hz sweep 144 / 160 qualified, no false rejection. All 16 rejections are C-L11, including the V2-long-legs counterexample. Not yet wired into `plan()`.
+
+**1A / 1B, after midnight** (`d6d4868`, `452cc60`, `9610cb6`).
+- After a research review, the user ordered two controller fixes before any touchdown timing choice: floating-base angular compensation (1A) and a command-level near-contact transition (1B).
+- Freeze amendment A1 replaced 1A-0's tolerance with a like-for-like control after the raw check failed. The cause was D1's own 1 mm finite-difference step, and the change was disclosed as made after seeing the output. A3 predicted that 1B would fail.
+- **2,160 runs. 1A DOES NOT VALIDATE** on one item: foot angular speed at the first touching tick 0.464 vs 0.363 rad/s on set H, an impact-phase sampling effect. **1B DOES NOT VALIDATE**: transition-violating runs R 6 → 10, H 8 → 42 (max commanded 64.4 N·m); 6 new rebounds; slip up to 10.4 mm.
+- User (committed 02:53): "do not adopt 1A, reject 1B, and proceed from the qualified AB baseline."
+
+**Overnight runway: TD2** (`d14d34f`, `5015dc6`, `63d489b`, `c99e536`).
+- The user handed over an autonomous runway: "The goal overnight is maximum legitimate progress, not a forced E2 pass." **Reconstructed:** the user was away from about 02:53 until the next decision, committed at 12:33.
+- Offline design study: C0 (the AB baseline), C1 (corridor), C5 (clock) and C6 (creep) were rejected. **C2 was selected:** the validated swing to a raised band top, a tangential-settling dwell, then a bounded rest-to-rest search until measured contact.
+- **Discovery:** AB's load peak is not the first impact. It is a flat-foot slap about 20 ms after an edge-first contact.
+- At freeze step 2, amendments A1 – A5 re-derived the parameters from a turf-off qualification (h_B 2.05 → 2.80 mm, D_max 2.70 mm, τ_s 0.205 s, τ_c 0.1459 s, plus τ_d 0.085 s). They also replaced the preregistered escalation, which turned out to be a target step (9.15 × the E1a-7 ratio), with an E2-style re-target.
+- **Battery, 1,824 runs (03:34 – 04:29): DOES NOT VALIDATE.**
+  - Nominal + late, 864 runs, clean: 0 E1a-7 violations (AB 14); impact ≤ 11.9 % BW (AB ≤ 60 %, 261 runs > 25 %); horizontal contact speed ≤ 34 mm/s; 0 rebounds.
+  - Fails on the early condition, which was bit-identical to AB (predicted).
+  - Fails on the beyond condition: the E2-style escalation drops ≈ 12.8 mm in ≈ 0.1 s, with 28 / 96 runs violating. A counterfactual TD2-step escalation was 18 / 18 clean.
+  - Fails on TD-10, touchdown-time rate stability: up to 18.8 ms vs 10 ms.
+- Stopped before SV-2 re-qualification, PG-1 and E2. Morning report at 04:35.
+
+**Corrections and process errors** (all recorded in the documents).
+- `0625226`: the overnight report's 0.75 mm window-restricted allowance was wrong; it is 2.24 mm.
+- `d41b92a`: the 25 mm touchdown analysis in `2310aa3` used integer-tick windows and R-leg-only groups, and wrongly claimed "≥ 2 ticks". It was recomputed with exact windows. Its 10 ms rationale, first "recalled, not sourced", was given sources (Blackburn 2016; Gruber 2017).
+- TD2, from the morning report §7:
+  - a wrong apex-knot rule in the design kinematics;
+  - the preregistered band was inadequate for the new region ("I should have run it before the first preregistration");
+  - the early condition "was defined so that it equals the AB baseline";
+  - TD-10 copied a provisional 10 ms;
+  - the harness was edited mid-qualification;
+  - a job script had an unexported variable;
+  - the web-search budget ran out (200 / 200).
+
+**Adopted / not adopted.** Adopted: the A30 trajectory; A + B as qualified swing mechanisms (AB2). Not adopted: the 10 ms impact formulation (E2-5 unchanged), the SV-2 allowance, `vffPassive` (stays diagnostic), the coordinator draft, 1A. Rejected: 1B. Failed: TD2.
+
+**End-of-day state.** The qualified swing baseline is PSTAR5CHAB. TD2 is clean inside its certified window but fails as preregistered. Three user decisions stand before the prerequisite gates: F1, the uncertified early-contact scope; F2, the escalation as a TD2 step; F3, the touchdown-time rate criterion. No PG-1 or official E2 run.
+
+---
+
+## Wednesday 7 October 2026 — TD2B, the D1 guard and DVG
+
+**Evidence:** [FC-Sim Git] 11 commits on `prototype/physical-character-v2`, `13d2d09` (12:33) → `bd4c56e` (02:19, 8 Oct). [Doc] `DECISIONS.md` E2-16 … E2-20 (sections dated 2026-10-07 and 2026-10-08); in `e2/`: `TD2B_PREREG` / `_RESULTS`, `D1G_TD2C_PREREG`, `D1G_RESULTS`, `DVG_PREREG`, `DVG_RESULTS`. Three user decisions in `sources/` (two dated 7 Oct, one dated 8 Oct).
+
+**TD2B, midday** (`13d2d09`, `9cab1a9`, `0114429`).
+- User: "Preserve the existing TD2 preregistration and 1,824-run result permanently as FAIL." Three decisions:
+  - a certified possible-contact window derived before the battery;
+  - an escalation that keeps the search's invariants ("Do not retain the current failed escalation that jumps the target ~13 mm in ~0.1 s");
+  - physics-rate invariance in place of the ≤ 10 ms touchdown-time criterion.
+- Preregistered:
+  - the window from contact geometry, qualified tracking and terrain uncertainty (h_B 2.85 mm, D_max 2.75 mm, τ_s 0.21 s; in-window terrain ± 0.05 mm);
+  - out-of-envelope early terrain at +10 mm ("earlyOOE"), judged by E2 §2a;
+  - escalation as a continued bounded search (offline: reachable, 0.765 s, 24.5 mm/s);
+  - no ground as an explicit failure.
+- Freeze amendments: A1 fixed an evaluator false flag (the B-8 search floor had been applied to approach rows). A2 disclosed a smoke blow-up on earlyOOE V2-198-92 L 480 H-D (commanded Δτ0 ≈ 10¹⁴ N·m) and predicted that B-9 might fail. Criteria unchanged.
+- **Battery, 2,688 runs (12:40 – 14:22): DOES NOT VALIDATE, on earlyOOE only.**
+  - B-9 integrity fails in 170 runs (closure up to 477 J per tick); B-11 handling fails in 16 (12 aborts).
+  - The other 2,256 runs (nominal, earlyC, lateC, beyond, no ground) are clean: 0 E1a-7 violations; impact ≤ 14.3 % BW; no rebounds; escalated contact ≈ 9 mm/s.
+  - B-10 physics-rate invariance passes.
+- **Mechanism:**
+  1. a collision at ≈ 180 mm/s;
+  2. E2's hand-back overshoots 3.3 – 4.3 mm into the turf;
+  3. the IK target becomes unreachable;
+  4. D1, evaluated at a singular configuration, commands up to 2 · 10¹⁸ N·m.
+
+  Counterfactual: no D1 at unreachable targets removes every Σ+ failure, abort and fall (24 / 24). The documents record this as "a pre-existing controller robustness defect".
+
+**D1 guard (D1G v1), evening** (`4051ba2` 22:56, `3914a0c`, `d0ad788` 23:56).
+- User: approve the guard as a versioned correction ("Do not implement this merely as a special case for the +10 mm obstacle"). Out-of-window terrain becomes an unexpected-obstacle event: "Do not require 'no abort or fall' for an arbitrary unexpected obstacle."
+- Preregistered:
+  - D1 is valid only when the IK target is reached, well-conditioned and finite, with a continuous fade / ramp over 0.10 s;
+  - validation DG-0 … DG-7;
+  - TD2C = TD2B + D1G, with event classes TOUCHDOWN / LATE_TOUCHDOWN / UNEXPECTED_OBSTACLE / TOUCHDOWN_FAILED and obstacles at +5 / +10 / +20 mm.
+- Amendment A1 added V4, the certifier's torque feasibility, after a smoke run showed that V1 – V3 let a "valid" D1 reach ≈ 5,000 N·m before the guard engaged. The amendment discloses that the change came from an obstacle smoke run: "The user may judge otherwise."
+- **Battery, 774 jobs (23:29 – 23:51): DOES NOT VALIDATE.**
+  - The guard's own items pass: DG-0; DG-1 (c), 432 / 432 SV-2 runs bit-identical; DG-3 (b); DG-4; DG-6, guard step ≤ 6.2 N·m. Commands 10²⁰ – 10²¹ → ≤ 4.2 · 10³ N·m; Σ+ ≈ 2,500 → ≤ 0.9 J.
+  - FAIL DG-2 (iv): 26 runs above B_cmd, caused by the servo's joint-rate feed-forward, not D1.
+  - FAIL DG-5: 43 runs, rate-dependent (180 Hz 37, 240 Hz 6, 480 Hz 0) and consistent with the existing debt TD-15.
+  - FAIL DG-3 (a): 4 of 4,056 samples, an IK mirror fold.
+- Stop rule: TD2C not run, D1G not adopted.
+
+**DVG (D1G v2), after midnight** (`0214283`, `b25f0b0`, `b08b77a`, `7de6c00`, `bd4c56e`).
+- User (dated 8 Oct):
+  - extend the validity rule to the joint-rate feed-forward;
+  - treat the 180 Hz end-range energy as pre-existing debt "provided the existing evidence really establishes independence";
+  - record the mirror fold as an IK-level finding;
+  - "Do not redefine the failed historical command-bound criterion".
+- Preregistered: one validity verdict and one slew-limited fade weight per leg, covering every IK-derived feed-forward (D1, joint rate, B's reference rate); qualification CQ-0 … CQ-6.
+  - The hold-phase energy persists with no IK feed-forward at all, so it is recorded as TD-15-consistent and gates any later certification of that regime.
+  - **New debt TD-17:** bounded-IK branch selection at a soft-bound fold.
+- **Erratum E1** (`7de6c00`): the first implementation dropped a held D1 in one tick when the target ended mid-fade (162 / 18 per-axis law violations, found by the smoke of the prepared TD2C amendment). The first CQ run on `b08b77a` was **aborted unevaluated** at 01:05 (73 / 1,426 jobs). Set CQ-6x was added (the commanded target released while the guard is engaged).
+- **Battery, 1,522 jobs on `7de6c00` (01:13 – 02:15): DOES NOT VALIDATE.**
+  - Passes:
+    - identity;
+    - AB 432 / 432 and E1a / E1b 38 / 38 bit-identical;
+    - reach stress: finite, 0 over-capacity, joint-rate commands ≤ 0.35 × the force–velocity limit;
+    - L / R pairs, determinism;
+    - energy: 24 failures, all attributed to TD-15;
+    - guard law: step ≤ 0.66 × the bound.
+  - FAIL CQ-1b: on the out-of-envelope SV-2 run C-L11, V2-long-legs, 180 Hz, I-4 saturation rises 4.26 → 5.17 % (one knee axis, 33 ms, during the fade). On the same run I-2, I-3 and the blow-up are resolved.
+  - FAIL CQ-3a: one mirror mismatch the classifier missed. The knee was 4.5 · 10⁻¹⁰ rad inside its soft bound, so the exact `atBound` flag was false: "a mechanical tool defect", not re-evaluated.
+
+**Corrections and process errors.** TD2B A1 evaluator false flag; D1G's preregistered V1 – V3 rule, which would predictably have failed (V4 added, disclosed); DVG erratum E1 and the aborted first run; the CQ-3a classifier, whose test was stricter than the preregistered definition.
+
+**Adopted / not adopted.** Nothing adopted. TD2, TD2B, D1G v1 and DVG are all FAIL; the TD2C battery has never run. TD-17 recorded; TD-15 reaffirmed as gating.
+
+**[Local] Parallel: manager-app interface.**
+- Screenshots 12:59 – 16:39 show the standings, the Champions League league-phase and knockout views, and the schedule with a training-day panel (focus, intensity, development and stamina).
+- At 22:34, a squad colour test (`Touchline_Development_Colour_Test.html`, which is no longer in `~/Downloads`).
+- `Touchline_Playable_Calendar.html` (23:10).
+- A selection is archived in [`chronicle_screens/2026-10-07_manager_ui/`](../review_artifacts/chronicle_screens/2026-10-07_manager_ui/).
+
+**Publication housekeeping** (8 Oct, from about 02:40; inside this chronicle day by the 06:00 rule). [Session] The user: "Before doing any further physical-character/E2 work, perform repository publication and daily-archive housekeeping … Do not fabricate, backdate or rewrite commit timestamps".
+- **Audit.**
+  - 202 local physical-character commits, author dates 30 Sep 02:12 → 8 Oct 02:19.
+  - Committer dates equal author dates, apart from one 13-second amend.
+  - No secrets in the unpublished history.
+- **Pushed unchanged to FC-Simulator** (no rewrite, no force), 170 of the 202 commits:
+  - `prototype/physical-character-v1` = `11149df`, all 49 of V1's commits;
+  - `prototype/physical-character-v2` through `9578ccf` (6 Oct 04:56).
+  - It went up in batches of ≤ 0.4 GB, because 1.2 GB batches were disconnected by the server.
+- **Not pushed: 33 commits.**
+  - They run from `e519c8f` (6 Oct 05:26) through `bd4c56e` and `6e03afe`.
+  - `e519c8f` adds `e2/evidence_smoke_H/runs_records_240_REF_165.tgz`: 105,822,358 bytes, above GitHub's 100 MiB per-file limit.
+  - Publishing them needs either a history rewrite, which changes hashes the preregistrations cite, or Git LFS. Both are the user's decision.
+- **Committed and pushed:** `environment/weather-snow-surface-v1` (`9468ddd`), the 28 Sep snow work.
+- **Preserved:** `6e03afe` (local) moves the unadopted TD2C amendment A5 and the E2 integration draft out of a temporary scratch directory into `e2/drafts/`, not applied.
+- **Left [Local]** under the user's earlier instructions or the media policy:
+  - the slide-tackle passes (`rear-contact-fall`);
+  - Reference Tackle V1 (`reference-tackle`);
+  - V1's untracked review stills, logs and dumps (510 files, ≈ 0.95 GB);
+  - the ≈ 4 GB of goalkeeper review folders.
+- **This chronicle** was caught up from 29 Sep. Eleven screenshots were archived in [`review_artifacts/chronicle_screens/`](../review_artifacts/chronicle_screens/) (with [`MANIFEST.tsv`](../review_artifacts/chronicle_screens/MANIFEST.tsv): original bytes and SHA-256), and the daily publication rule was added (Appendix F, rule 6).
+
+**End-of-day state.** DVG stopped before adoption at `bd4c56e`. Decisions pending (`DVG_RESULTS.md` §3; none taken):
+1. CQ-1b: judge the out-of-envelope run by "no newly failing item" or by no material worsening. Options: (a) accept as non-material; (b) investigate saturation during the fade; (c) other.
+2. The CQ-3a erratum: treat a coordinate within 10⁻⁶ rad of its soft bound as on it, then re-run the 24 mirror probes.
+3. If both resolve: adopt DVG → the prepared TD2C amendment → the frozen TD2C battery → E2 integration (the draft is preserved, not applied, in `e2/drafts/`, `6e03afe`) → SV-2 re-qualification → PG-1 → official E2.
+
+The recommendation is 1 (a) and 2. No PG-1 or official E2 has run.
+
+---
+
+# Part V — The present
 
 ## Current state of the Touchline project
 
@@ -1098,7 +2048,25 @@ The longest single run of the project, taking the outfield player from nothing t
 - **Environment.** Rail broadcast camera, pitch with mowing, stadium bowl and crowd, rigid goal frame and strand net, sphere ball art and rain.
 - **Baselines.** Frozen tags `baseline/*` on GitHub.
 
+**The physical character** (`prototype/physical-character-v2`; GitHub at `9578ccf`, local head `6e03afe`; not part of the playable game):
+- **The body.** A clean-sheet Jolt humanoid: 14 bodies, 35 rotational DOF, finite actuators at exact capacity, a 10-piece boot on a `PlaneShape` turf; validated at 180, 240 and 480 Hz.
+- **Gates.**
+  - V2-G0 to G3 passed; G3 under criteria v3.3, with J2a as the normative symmetry gate.
+  - E1a (lift, hover, replace) passed; E1b closed under PSTAR4.
+  - The qualified swing baseline is PSTAR5CHAB.
+- **E2 (one physical step) has not passed.** TD2, TD2B, the D1 guard v1 and DVG all DO NOT VALIDATE as preregistered.
+  - The decisions in `e2/DVG_RESULTS.md` §3 are pending: CQ-1b judgement, the CQ-3a erratum, then TD2C → E2 integration → SV-2 re-qualification → PG-1 → official E2.
+  - Debts TD-15 (180 Hz end-range integration) and TD-17 (bounded-IK fold) gate later certification.
+- **V1** (`prototype/physical-character-v1` = `11149df`) is frozen as the research record: Gates A–D, C3–C5, D6 and the G2b walking studies, with no robust walk.
+
 **Touchline material that exists but is *not* in `touchline-current`** (nothing here should be assumed integrated):
+- **Snow weather and weather-dependent ball physics** (28 Sep, the user's Codex session): committed on 8 Oct on its own branch, `environment/weather-snow-surface-v1` (`9468ddd`, GitHub). Not merged.
+- **The 28 – 29 Sep slide-tackle passes** ([Local], uncommitted by the user's instruction):
+  - rear-contact friction and fall direction, and Follow-through V1 and V2, all in worktree `rear-contact-fall`;
+  - Reference Tackle V1, in worktree `reference-tackle`, with its third-party reference clip on the Desktop.
+- **The redesigned manager-app interface** ([Local], 1 – 7 Oct): self-contained pages in `~/Downloads` (`Touchline_Playable_*.html`, latest `Touchline_Playable_Calendar.html`). Its source and authoring session are not recorded.
+- **The portfolio source package** ([Local], `~/Downloads/TOUCHLINE_PORTFOLIO_SOURCE_ASSETS/`, 28 Sep) and the Astra transfer zip.
+- **33 physical-character V2 commits not yet on GitHub** (`e519c8f` … `6e03afe`). One file in `e519c8f` exceeds GitHub's 100 MiB limit (7 Oct entry).
 - **The Astra character roster** ([Astra], `~/Downloads/TOUCHLINE_ASTRA_MIGRATION_PACKAGE`): 20 individually built players (19 plus Courtois), including the 3D Salah; the B back-print lock; the unfinished player-art workshop, whose source was never recovered. Only Courtois and the six later outfield players reached the runtime.
 - **The Astra V6 character-renderer repository:** its commit history (`57bddf9` … `5e89a7a`) is known only as labels; no object database was recovered.
 - **The Astra kick-system design** ([Local] `review_artifacts/astra_kick_system_handoff/`): handed off on 19 Sep. The design that came back is not recorded here, and Shooting V1 was instead recovered from the existing sprite kick families.
@@ -1114,14 +2082,20 @@ The longest single run of the project, taking the outfield player from nothing t
   - Live matches run the Python engine and body.
   - The playtest's physical stack, including the goalkeeper, dribbling, shooting, passing, defending and contact physics, runs in JavaScript (`match.js`, `pt_*.js`).
   - Reconciling the two is the largest open architectural task.
-- **Contact physics.** No limb-level collision: residual limb brushes and leg–leg tangles in slide pile-ups; arms posed rather than collided. There is no general rigid-body system, by design.
+- **Contact physics.** No limb-level collision in the playable game: residual limb brushes and leg–leg tangles in slide pile-ups; arms posed rather than collided. The game has no general rigid-body system, by design. The physical-character branches (Part IV) are the attempt to change that, and are not integrated.
+- **Physical character.**
+  - E2 touchdown is blocked on the DVG decisions.
+  - The 180 Hz end-range energy (TD-15) and the IK soft-bound fold (TD-17) are open.
+  - Twenty-two characters cost 20 – 26 ms per 60 Hz frame (G1b, V1), so a physics-scaling plan is needed.
+  - No robust walk exists yet (V1).
 - **Sprint dribbling** still loses the ball (not hidden). The Dribbling V1 boot-plan lateral mirror is recorded and unfixed.
 - **Goalkeeper presentation.**
   - Two backends coexist, with families still review-only.
   - Audits flagged set-depth geometry at close range and the X3 curl's size (about 4–5× a measured free kick).
 - **Characters.** Most of the Astra roster, back-print B and the workshop are outside the runtime, and the workshop source is missing.
 - **Referee.** Foul facts are recorded but no calls are made.
-- **Repository weight.** About 1.5 GB of history, mostly committed review media.
+- **Repository weight.** About 1.5 GB of history before 8 Oct. The physical-character branches add about 2.6 GB of objects (uncompressed), mostly battery evidence and review media.
+- **Publication.** 33 local V2 commits wait on a decision about the 105.8 MB evidence file in `e519c8f`: rewrite that part of the history, move the file to LFS, or keep the commits local.
 
 ## Architecture at a glance
 
@@ -1191,6 +2165,57 @@ An index to the narrative above, not a substitute for it.
 | 27 Sep | Slide contact geometry V1.2 and body interaction | FC-Sim Git | `a1357dd`, `d539e7a` (`baseline/slide-contact-v1.2`) |
 | 25–28 Sep | Stadium / pitch / ball / rain presentation | Local → FC-Sim Git | `2ecefaf` |
 | 28 Sep | `touchline-current` published | FC-Sim Git | `e2c98ec` |
+| 28 Sep | Snow weather and weather-dependent ball surface (user's Codex session); committed 8 Oct on its own branch | Session → FC-Sim Git | `9468ddd` (`environment/weather-snow-surface-v1`) |
+| 28 Sep | Portfolio source package (186 files) and Astra transfer zip | Local | `~/Downloads/TOUCHLINE_PORTFOLIO_SOURCE_ASSETS/` |
+| 28–29 Sep | Slide tackle: rear-contact friction and fall direction (approved direction), Follow-through V1 | Local | worktree `rear-contact-fall` (uncommitted) |
+| 29 Sep | Follow-through V2 set aside ("Do not commit V2"); Reference Tackle V1 | Local | worktrees `rear-contact-fall`, `reference-tackle` (uncommitted) |
+| 29 Sep | Physical-character pivot; Jolt substrate approved; Gates A–C2 approved (uncommitted until 02:12) | FC-Sim Git | `4dbb5a2` |
+| 29 Sep | V1.1 anatomy promoted as working foundation | FC-Sim Git | `e14354b` |
+| 29 Sep | C3 corrective stepping (partial); C4 / C5 opt-in | FC-Sim Git | `1aa4f5e`, `cca491e`, `40ad2fe`, `b0a84d2` |
+| 29 Sep | Gate D two-character slice; D6 physical slide | FC-Sim Git | `4cd5526`, `d79b5b3`, `f5503ba` |
+| 29 Sep | Overnight report; locomotion proposal | FC-Sim Git | `1542819`, `4062764` |
+| 30 Sep | Reboot preservation (tooling + handoff) | FC-Sim Git | `2e66018`, `6e13e9c` |
+| 30 Sep | D6 diagnostic; friction-sensing fix | FC-Sim Git | `f18c8a7` |
+| 30 Sep | G1 promoted (locomotion architecture parity) | FC-Sim Git | `772d0bd` |
+| 30 Sep | G2a approved (yaw + in-place gait) | FC-Sim Git | `6f1ef85` |
+| 1–7 Oct | Redesigned manager-app interface (cards, standings, squad, schedule, Champions League) | Local | `~/Downloads/Touchline_*.html`; `review_artifacts/chronicle_screens/` |
+| 1 Oct | G2b Option 1 (landing fixed; walk not stable) | FC-Sim Git | `77966eb` |
+| 1 Oct | Plant characterisation; Controller A vs B | FC-Sim Git | `9d4f7d9`, `e39f312` |
+| 1 Oct | Foot-architecture gate (F0 kept) | FC-Sim Git | `89f970c` |
+| 1 Oct | Speed regulation stop; unified controller stop | FC-Sim Git | `c7fd98b`, `fa55c9d` |
+| 2 Oct | Physical Stepper consolidation; V1 walking research stops (transition-planned walking recommended, not built) | FC-Sim Git | `157ba0b`, `d133e1a` |
+| 2 Oct | Physical Character V1 frozen; tag `checkpoint/physchar-v1-final-research` | FC-Sim Git | `11149df` |
+| 2 Oct | V2 clean-sheet specification approved; branch `prototype/physical-character-v2` | FC-Sim Git | `5646d71` |
+| 2 Oct | V2-G0 anatomy / static construction PASS (after C1 / C2) | FC-Sim Git | `9aacdf3`, `e84bca9` |
+| 2 Oct | V2-G1 passive physics built; FAIL, decisions C1–C7; passive-drive defects G1-D1…D8 fixed | FC-Sim Git | `963cd9c`, `7632dbe`, `77815db` |
+| 3 Oct | V2-G1 PASS (10-piece boot, 150 iterations); accepted after the heel-rise investigation | FC-Sim Git | `e531487`, `dd9026a`, `2108c15` |
+| 3 Oct | V2-G2 active standing PASS 13/13; accepted | FC-Sim Git | `a3ccc46`, `e2c0df3` |
+| 3 Oct | V2-G3 15/19 → 16/19; ankle neutral-zone law not adopted | FC-Sim Git | `f080253`, `677cb6e`, `12309ee` |
+| 3 Oct | Investigation B (Jolt EPA reversed turf manifold); flat-plane turf adopted; G1 / G2 re-validated | FC-Sim Git | `d7a7fcb`, `e17bc73`, `13b0848` |
+| 3 Oct | J2 split; controller symmetry corrections; G3 v3.2 20/20 but not declared; pre-G4 stop | FC-Sim Git | `d80f88f`, `e9bcf96`, `833ec4a`, `d67f417`, `f85e396` |
+| 4 Oct | G3 PASS 20/20 under criteria v3.3: J2a the normative symmetry gate, J2b a permanent diagnostic | FC-Sim Git | `bb0ec47` |
+| 4 Oct | Ankle k > 0 reinvestigation: no candidate evidence-supported; the posture IK's twist limit cycle identified | FC-Sim Git | `4b544ca`, `2d4815e`, `3219bdc`, `4cc8b09` |
+| 4 Oct | Pre-G4 research runway and consolidated decision report ("not yet for G4 experiment runs") | FC-Sim Git | `8cfb25b`, `2dc9f04`, `afe14e4`, `e98aa2f` |
+| 4 Oct | Support / contact lifecycle built (default off); final pre-E1a report: DO NOT AUTHORISE E1a | FC-Sim Git | `07ca15d`, `f4fa331`, `82dfdba` |
+| 4 Oct | Knee axial literature review; corrected knee `v2k` pre-registered, built default-off, qualified | FC-Sim Git | `b2f25bb`, `0267291`, `097dcb7`, `89cb31e` |
+| 4 Oct | Pre-E1a configuration frozen (`v2k` + ankle k 0.13 + reference twist + lifecycle); qualification v2: one blocker | FC-Sim Git | `56a87b8`, `1d43f80` |
+| 4 Oct | E1a authorised (5 Oct 03:23); first official E1a run fails before any lift; knee feed-forward bug found; B1 + B3 not qualified | FC-Sim Git | `76cd5ef`, `439175a`, `74fd215`, `fd1993d`, `2ce81f3` |
+| 5 Oct | Candidate C fails its validation; pre-swing candidate P\* passes and is adopted as configuration PSTAR | FC-Sim Git | `ac3a3c4`, `abdd3da`, `3da5e5e` |
+| 5 Oct | **E1a PASS** (5 mm lift, hover, replace; 8 bodies + mirrored) | FC-Sim Git | `d499453` |
+| 5 Oct | E1b fails under PSTAR; PSTAR2 and T-A (PSTAR3) fail validation; P15 capture study | FC-Sim Git | `11d2fea`, `19dbc73`, `997a5e7`, `7a945de` |
+| 5 Oct | **E1b CLOSED** (PSTAR4, P15 split A / B); foot-yaw actuator adopted (PSTARY); E2 architecture frozen for review | FC-Sim Git | `ca4aad6`, `6e0bf0a` |
+| 5 Oct | E2 v2 implemented default-off (PSTAR5 / 5B / 5C); velocity-feed-forward rate defect found and corrected; E2 blocked on the planning gate (6 Oct 00:15–05:26) | FC-Sim Git | `5eb1ccb`, `41a5cc8`, `9570ccc`, `6c30e64`, `e519c8f` |
+| 6 Oct | Apex 30 mm amendment (A30); PG-1 0 / 32 | FC-Sim Git | `0625226`, `2310aa3` |
+| 6 Oct | SV-2 swing-servo validation frozen and run: DOES NOT VALIDATE | FC-Sim Git | `84b92b1`, `c3034fa` |
+| 6 Oct | Vertical-residual diagnosis (pelvis coupling M1, passive ankle damping M2) | FC-Sim Git | `93f9548`, `65b98ad` |
+| 6 Oct | A + B: AB battery FAIL; AB2 VALIDATES, A + B qualified as swing mechanisms | FC-Sim Git | `54629de`, `0e832fb`, `28f2632`, `b4c6e16` |
+| 6 Oct | First touchdown coordinator stopped at design; execution-feasibility certifier | FC-Sim Git | `9f57fb0` |
+| 6 Oct | 1A / 1B: both DO NOT VALIDATE (later: 1A not adopted, 1B rejected) | FC-Sim Git | `d6d4868`, `452cc60`, `9610cb6` |
+| 6 Oct | TD2 touchdown coordinator: DOES NOT VALIDATE (clean in its certified window); morning report | FC-Sim Git | `d14d34f`, `5015dc6`, `63d489b`, `c99e536` |
+| 7 Oct | TD2B: DOES NOT VALIDATE (earlyOOE only); D1 singularity defect found | FC-Sim Git | `13d2d09`, `9cab1a9`, `0114429` |
+| 7 Oct | D1 guard v1: DOES NOT VALIDATE; TD2C not run | FC-Sim Git | `4051ba2`, `3914a0c`, `d0ad788` |
+| 7 Oct | DVG (D1G v2): erratum E1, first run aborted; combined qualification DOES NOT VALIDATE; TD-17 recorded | FC-Sim Git | `0214283`, `b25f0b0`, `b08b77a`, `7de6c00`, `bd4c56e` |
+| 8 Oct | Physical-character branches published (170 commits); 33 held back by a 100 MiB file; chronicle caught up | FC-Sim Git | `11149df`, `9578ccf` (GitHub); local `6e03afe` |
 
 ## Appendix B — Repository provenance
 
@@ -1205,6 +2230,7 @@ An index to the narrative above, not a substitute for it.
   - First pushed on 4 Sep at 19:34 (−07:00): branch `visual-integration-v1` at `cad400a` (still the default branch), with `main` fast-forwarded to it minutes later.
   - `main` was advanced to `ff3a89f` on 19 Sep and tagged `checkpoint/sprite-baseline-2026-09-19`.
   - `touchline-current` and the `baseline/*` tags were pushed on 28 Sep.
+  - **8 Oct:** `prototype/physical-character-v1` (`11149df`), `prototype/physical-character-v2` (through `9578ccf`) and `environment/weather-snow-surface-v1` (`9468ddd`) were pushed. This was authentic history with its original dates: no rewrite, no force. 33 later V2 commits remain local (7 Oct entry). The checkpoint tags `checkpoint/physchar-pre-crossover` and `checkpoint/physchar-v1-final-research` were pushed with them.
   - It also carries the Coach MVP pull request (`claude/coach-mvp`).
   - It is **authoritative for everything from 27 Aug onward**.
 - **Why the switch happened is not recorded (Uncertain).** The evidence shows the move but not the reason. TouchlineSimulator received checkpoint pushes, while FC-Simulator became the tracking remote from 4 Sep, when the goalkeeper work began to accumulate.
@@ -1234,6 +2260,7 @@ An index to the narrative above, not a substitute for it.
   - `TOUCHLINE_SCENE_ENVIRONMENT.zip` (an unmodified copy of repository files at `2c80700`);
   - `review_artifacts/ASTRA_KICK_SYSTEM_HANDOFF.zip` (a zip of the kick-handoff folder);
   - the 20 Sep history handoff and the 23 Sep memory export (later summaries of 5–23 Sep).
+- **Session records ([Session], from 28 Sep).** The Claude Code and Codex session logs on the development machine record the user's instructions with timestamps. From 2 Oct, the physical-character branches also save every user decision verbatim in `review_artifacts/physical_character_v1|v2/sources/`. The V1 file names carry UTC times; the V2 file names carry only dates.
 - **Terminology.** "V6" names three different things:
   1. the **SOUTH V6** dive sprite (6 Sep);
   2. the **v6** skeletal far-dive lifecycle (20 Sep);
@@ -1241,9 +2268,9 @@ An index to the narrative above, not a substitute for it.
 
 ## Appendix C — Chronology cross-check
 
-**Development days represented: 30 dated days, plus the undated 8–13 Sep period.**
+**Development days represented: 39 dated days, plus the undated 8–13 Sep period.**
 - 8 before Git: 18 (the chat day plus the local evening), 19, 21, 22, 23, 24, 25 and 26 Aug. The morning of 27 Aug belongs to the 27 Aug Git day.
-- 19 Git days.
+- 28 Git days (19 to 28 Sep, plus 29 Sep – 7 Oct on the physical-character branches).
 - 3 evidenced only outside Git: 2 Sep (goalkeeper stages, [Local]), 14 Sep (screenshots, [Local]) and 21 Sep (the Astra character, [Astra]).
 - The 8–13 Sep sprite-generator period is [Later] only and has no dated artifact.
 
@@ -1269,7 +2296,16 @@ The FC-Simulator day headings were checked against every commit's recorded times
 | Fri 25 Sep | 3 | 23:18 → 03:30 (+02:00) |
 | Sat 26 Sep | 2 | 21:13 → 04:53 (+02:00) |
 | Sun 27 Sep | 2 | 20:54 → 03:05 (+01:00) |
-| Mon 28 Sep | 5 | 12:19 (+01:00) |
+| Mon 28 Sep | 7 | 12:19 → 19:54 (+01:00) |
+| Tue 29 Sep | 24 | 02:12 → 04:39, both on 30 Sep (+01:00) |
+| Wed 30 Sep | 5 | 13:41 → 01:32 on 1 Oct (+01:00) |
+| Thu 1 Oct | 16 | 10:05 → 04:19 on 2 Oct (+01:00) |
+| Fri 2 Oct | 12 | 06:46 → 04:31 on 3 Oct (+01:00) |
+| Sat 3 Oct | 33 | 07:15 → 04:34 on 4 Oct (+01:00) |
+| Sun 4 Oct | 46 | 11:20 → 05:56 on 5 Oct (+01:00) |
+| Mon 5 Oct | 35 | 06:36 → 05:26 on 6 Oct (+01:00) |
+| Tue 6 Oct | 20 | 12:19 → 04:35 on 7 Oct (+01:00) |
+| Wed 7 Oct | 11 + 3 | 12:33 → 02:19 on 8 Oct; then the housekeeping commits `9468ddd`, `6e03afe` and this entry's documentation commit, from 02:55 on 8 Oct (+01:00) |
 
 **Where the evidence is incomplete or ambiguous.**
 1. **Before 18 Aug:** no evidence of any work. The conversation opens with the requirement itself, and the extraction finds nothing earlier.
@@ -1283,6 +2319,10 @@ The FC-Simulator day headings were checked against every commit's recorded times
 9. **The Astra track:** dated by delivered file times and by commit labels without dates. The order of its commits is known; their exact days are Reconstructed.
 10. **The environment work (25–28 Sep):** dated by working-tree file times; who authored it, and in which session, is not recorded.
 11. **Deduplicated overlaps:** listed in Appendix B.
+12. **Morning boundaries, 29 Sep – 7 Oct:** `39c8dd2` (06:46, 2 Oct), `7d10111` (07:15, 3 Oct) and `ac3a3c4` … `9e2a0b7` (06:36 – 07:25, 5 Oct) are probably the tails of the previous nights' autonomous runways.
+13. **Preregistration order** (2 – 7 Oct): commit messages state that each preregistration came before its code. Git proves only commit times, and some gaps are minutes (TD2B 6 min, DVG 13 min).
+14. **User decisions, 2 – 7 Oct:** their time is known from the commits that saved them. A `sources/` file's date is a calendar date, so some belong to the previous chronicle day.
+15. **Work outside Git, 28 Sep – 7 Oct:** dated by session records and file times. These cover the 28 Sep snow work and portfolio package, the slide-tackle worktrees, and the manager-interface pages in `~/Downloads`. Who built those pages is not recorded.
 
 ## Appendix D — The early simulator lineage and calibration record
 
@@ -1343,6 +2383,16 @@ How the 18 Aug primary-source extraction ([Chat]) was reconciled with the other 
 3. **Record failures as they happen:** commit messages should keep saying what was tried and rejected. Review-only work that is never committed gets one line labelled **[Local]**. Work done in another workstream (Astra, another account, another repository) gets an entry with its provenance label.
 4. **Label certainty and provenance** as in this document. When work crosses a repository or workstream boundary, add a *Transition* note.
 5. **Keep the appendices current:** new baseline tags go into the day entry, Current state and the milestone map.
+
+6. **Daily publication/archive rule** (the user's instruction, 8 Oct 2026, verbatim):
+
+   > Daily publication/archive rule: On the first Touchline development prompt/session of each new calendar day, before beginning new research, design, implementation or simulation work: 1. identify whether the previous day's work has been completely committed; 2. finish coherent commits for that previous work; 3. update the existing daily development archive for the previous day; 4. archive relevant new screenshots/photos/evidence; 5. push the legitimate previous-day commits and archive update to the configured remote; 6. verify the push; 7. only then begin the new day's requested work. If multiple days have elapsed, catch up each missing daily archive entry from evidence before beginning new work. Never fabricate work, commit dates or archive entries to fill a calendar. This housekeeping should happen once at the start of the first project work of a new day, not before every prompt during the same day.
+
+   In practice:
+   - **The archive** is this chronicle on `touchline-current`. Screenshots go to `review_artifacts/chronicle_screens/<date>_<subject>/`, as unmodified originals listed in `MANIFEST.tsv` with SHA-256.
+   - **Exclude** personal images and third-party footage.
+   - **The remote** is `fc-simulator`. Never rewrite, squash or force-push published history without the user's approval.
+   - **GitHub rejects files over 100 MiB**, and large pushes go in batches of ≤ 0.4 GB.
 
 The request to use at the end of each day:
 
