@@ -95,14 +95,6 @@
 | ladder_Tst2_V2-REF_s4 | 4 | none | 18 (14) | 0 | 21.36 | 4.84 |
 | ladder_Tst3_V2-REF_s4 | 4 | none | 22 (15) | 0 | 21.37 | 4.79 |
 
-# CF-3 cadence summary (nominal cycle C from the uniform settling scale: s = Ttr / 4, C = 0.73 + 8.5 s)
-
-| run | nominal C s/step | Ttr / Tds / rel s | consecutive physical | realized cycle s (steps ≥ 2) | release lag s | |v_COM| at transfer start, max m/s | |v_COM| max in step m/s | |v_COM| at decision, max mm/s | sat axis-ticks per step | Δτ0 max N·m | E+ max J | ξ SS margin min mm | first failure | refused-decision prediction |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| ladder_Tst2.5_V2-REF_s4 | 9.23 | 4 / 4 / 0.5 | 4 | 2.61 – 3.25 | 0.12 – 0.12 | 0.069 | 0.069 | 25.9 | 0 – 2 | 13.8 | 0.037 | 17.7 | none | — |
-| ladder_Tst2_V2-REF_s4 | 9.23 | 4 / 4 / 0.5 | 4 | 2.16 – 2.75 | 0.12 – 0.12 | 0.092 | 0.092 | 35.4 | 0 – 3 | 13.5 | 0.037 | 15.2 | none | — |
-| ladder_Tst3_V2-REF_s4 | 9.23 | 4 / 4 / 0.5 | 4 | 3.07 – 3.76 | 0.12 – 0.12 | 0.054 | 0.054 | 20.6 | 0 – 1 | 14.0 | 0.036 | 20.3 | none | — |
-
 # CF-4 schedule summary (v = S / (Tst + planning liftoff delay + swing T); inherited = steps ≥ 2, i.e. swings that follow a previous step's touchdown)
 
 | run | Tst s | S m | v plan mm/s | consecutive physical | step period s (≥ 2) | COM fwd at decision, inherited min – max mm/s | ‖v_COM‖ at decision max mm/s | ξ fwd lead at decision mm | ξ lat rel. stance mm | first failure |
@@ -897,31 +889,6 @@
 | Tst2_V2-long-legs_s4 | 4 | none | 10 (10) | 0 | 20.92 | 5.17 |
 | Tst2_V2-long-legs_s6 | 6 | none | 16 (16) | 0 | 20.92 | 5.17 |
 
-# CF-3 cadence summary (nominal cycle C from the uniform settling scale: s = Ttr / 4, C = 0.73 + 8.5 s)
-
-| run | nominal C s/step | Ttr / Tds / rel s | consecutive physical | realized cycle s (steps ≥ 2) | release lag s | |v_COM| at transfer start, max m/s | |v_COM| max in step m/s | |v_COM| at decision, max mm/s | sat axis-ticks per step | Δτ0 max N·m | E+ max J | ξ SS margin min mm | first failure | refused-decision prediction |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Tst2_V2-165-62_s10 | 9.23 | 4 / 4 / 0.5 | 10 | 2.19 – 2.75 | 0.12 – 0.12 | 0.082 | 0.082 | 31.3 | 0 – 3 | 9.5 | 0.029 | 10.8 | none | — |
-| Tst2_V2-165-62_s2 | 9.23 | 4 / 4 / 0.5 | 2 | 2.19 – 2.19 | 0.12 – 0.12 | 0.082 | 0.082 | 30.1 | 0 – 3 | 9.5 | 0.029 | 11.6 | none | — |
-| Tst2_V2-165-62_s20 | 9.23 | 4 / 4 / 0.5 | 20 | 2.19 – 2.75 | 0.12 – 0.12 | 0.082 | 0.082 | 31.5 | 0 – 3 | 25.9 | 0.029 | 10.8 | none | — |
-| Tst2_V2-165-62_s4 | 9.23 | 4 / 4 / 0.5 | 4 | 2.19 – 2.75 | 0.12 – 0.12 | 0.082 | 0.082 | 30.7 | 0 – 3 | 9.5 | 0.029 | 11.6 | none | — |
-| Tst2_V2-165-62_s6 | 9.23 | 4 / 4 / 0.5 | 6 | 2.19 – 2.75 | 0.12 – 0.12 | 0.082 | 0.082 | 31.3 | 0 – 3 | 9.5 | 0.029 | 11.6 | none | — |
-| Tst2_V2-198-92_s10 | 9.23 | 4 / 4 / 0.5 | 10 | 2.13 – 2.75 | 0.12 – 0.12 | 0.101 | 0.101 | 40.2 | 0 – 3 | 17.9 | 0.042 | 17.2 | none | — |
-| Tst2_V2-198-92_s2 | 9.23 | 4 / 4 / 0.5 | 2 | 2.13 – 2.13 | 0.12 – 0.12 | 0.101 | 0.101 | 39.9 | 0 – 3 | 17.9 | 0.042 | 18.1 | none | — |
-| Tst2_V2-198-92_s20 | 9.23 | 4 / 4 / 0.5 | 20 | 2.13 – 2.75 | 0.12 – 0.12 | 0.101 | 0.101 | 40.2 | 0 – 3 | 17.9 | 0.042 | 16.2 | none | — |
-| Tst2_V2-198-92_s4 | 9.23 | 4 / 4 / 0.5 | 4 | 2.13 – 2.75 | 0.12 – 0.12 | 0.101 | 0.101 | 39.9 | 0 – 3 | 17.9 | 0.042 | 18.1 | none | — |
-| Tst2_V2-198-92_s6 | 9.23 | 4 / 4 / 0.5 | 6 | 2.13 – 2.75 | 0.12 – 0.12 | 0.101 | 0.101 | 40.2 | 0 – 3 | 17.9 | 0.042 | 18.1 | none | — |
-| Tst2_V2-REF_s10 | 9.23 | 4 / 4 / 0.5 | 10 | 2.16 – 2.75 | 0.12 – 0.12 | 0.092 | 0.092 | 35.9 | 0 – 3 | 13.5 | 0.037 | 14.4 | none | — |
-| Tst2_V2-REF_s2 | 9.23 | 4 / 4 / 0.5 | 2 | 2.16 – 2.16 | 0.12 – 0.12 | 0.092 | 0.092 | 35.2 | 0 – 3 | 13.5 | 0.037 | 15.2 | none | — |
-| Tst2_V2-REF_s20 | 9.23 | 4 / 4 / 0.5 | 20 | 2.16 – 2.75 | 0.12 – 0.12 | 0.092 | 0.092 | 36.0 | 0 – 3 | 13.5 | 0.037 | 14.4 | none | — |
-| Tst2_V2-REF_s4 | 9.23 | 4 / 4 / 0.5 | 4 | 2.16 – 2.75 | 0.12 – 0.12 | 0.092 | 0.092 | 35.4 | 0 – 3 | 13.5 | 0.037 | 15.2 | none | — |
-| Tst2_V2-REF_s6 | 9.23 | 4 / 4 / 0.5 | 6 | 2.16 – 2.75 | 0.12 – 0.12 | 0.092 | 0.092 | 35.9 | 0 – 3 | 13.5 | 0.037 | 15.2 | none | — |
-| Tst2_V2-long-legs_s10 | 9.23 | 4 / 4 / 0.5 | 10 | 2.14 – 2.75 | 0.12 – 0.12 | 0.095 | 0.095 | 39.0 | 0 – 2 | 15.9 | 0.037 | 18.9 | none | — |
-| Tst2_V2-long-legs_s2 | 9.23 | 4 / 4 / 0.5 | 2 | 2.14 – 2.14 | 0.12 – 0.12 | 0.095 | 0.095 | 39.0 | 0 – 2 | 15.9 | 0.035 | 19.8 | none | — |
-| Tst2_V2-long-legs_s20 | 9.23 | 4 / 4 / 0.5 | 20 | 2.14 – 2.75 | 0.12 – 0.12 | 0.095 | 0.095 | 39.0 | 0 – 2 | 15.9 | 0.038 | 17.8 | none | — |
-| Tst2_V2-long-legs_s4 | 9.23 | 4 / 4 / 0.5 | 4 | 2.14 – 2.75 | 0.12 – 0.12 | 0.095 | 0.095 | 39.0 | 0 – 2 | 15.9 | 0.036 | 19.8 | none | — |
-| Tst2_V2-long-legs_s6 | 9.23 | 4 / 4 / 0.5 | 6 | 2.14 – 2.75 | 0.12 – 0.12 | 0.095 | 0.095 | 39.0 | 0 – 2 | 15.9 | 0.036 | 19.8 | none | — |
-
 # CF-4 schedule summary (v = S / (Tst + planning liftoff delay + swing T); inherited = steps ≥ 2, i.e. swings that follow a previous step's touchdown)
 
 | run | Tst s | S m | v plan mm/s | consecutive physical | step period s (≥ 2) | COM fwd at decision, inherited min – max mm/s | ‖v_COM‖ at decision max mm/s | ξ fwd lead at decision mm | ξ lat rel. stance mm | first failure |
@@ -1661,15 +1628,6 @@
 | Tst1_V2-REF_s20 | 20 | none | 58 (58) | 0 | 21.11 | 5.07 |
 | Tst1_V2-long-legs_s20 | 20 | none | 28 (28) | 0 | 20.70 | 5.37 |
 
-# CF-3 cadence summary (nominal cycle C from the uniform settling scale: s = Ttr / 4, C = 0.73 + 8.5 s)
-
-| run | nominal C s/step | Ttr / Tds / rel s | consecutive physical | realized cycle s (steps ≥ 2) | release lag s | |v_COM| at transfer start, max m/s | |v_COM| max in step m/s | |v_COM| at decision, max mm/s | sat axis-ticks per step | Δτ0 max N·m | E+ max J | ξ SS margin min mm | first failure | refused-decision prediction |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Tst1_V2-165-62_s20 | 9.23 | 4 / 4 / 0.5 | 20 | 1.30 – 1.74 | 0.12 – 0.12 | 0.177 | 0.177 | 76.3 | 0 – 14 | 10.5 | 0.030 | 7.7 | none | — |
-| Tst1_V2-198-92_s20 | 9.23 | 4 / 4 / 0.5 | 20 | 1.24 – 2.20 | 0.12 – 0.12 | 0.205 | 0.206 | 97.5 | 0 – 20 | 22.9 | 0.054 | 15.5 | none | — |
-| Tst1_V2-REF_s20 | 9.23 | 4 / 4 / 0.5 | 20 | 1.27 – 1.74 | 0.12 – 0.12 | 0.192 | 0.192 | 87.6 | 0 – 17 | 16.5 | 0.042 | 13.1 | none | — |
-| Tst1_V2-long-legs_s20 | 9.23 | 4 / 4 / 0.5 | 20 | 1.25 – 1.73 | 0.12 – 0.12 | 0.195 | 0.196 | 93.1 | 0 – 18 | 15.6 | 0.041 | 16.0 | none | — |
-
 # CF-4 schedule summary (v = S / (Tst + planning liftoff delay + swing T); inherited = steps ≥ 2, i.e. swings that follow a previous step's touchdown)
 
 | run | Tst s | S m | v plan mm/s | consecutive physical | step period s (≥ 2) | COM fwd at decision, inherited min – max mm/s | ‖v_COM‖ at decision max mm/s | ξ fwd lead at decision mm | ξ lat rel. stance mm | first failure |
@@ -2372,13 +2330,6 @@
 |---|---|---|---|---|---|---|
 | Tst1_V2-198-92_s60 | 60 | none | 3 (3) | 0 | 20.35 | 5.63 |
 | Tst1_V2-REF_s60 | 60 | none | 175 (175) | 0 | 21.11 | 5.07 |
-
-# CF-3 cadence summary (nominal cycle C from the uniform settling scale: s = Ttr / 4, C = 0.73 + 8.5 s)
-
-| run | nominal C s/step | Ttr / Tds / rel s | consecutive physical | realized cycle s (steps ≥ 2) | release lag s | |v_COM| at transfer start, max m/s | |v_COM| max in step m/s | |v_COM| at decision, max mm/s | sat axis-ticks per step | Δτ0 max N·m | E+ max J | ξ SS margin min mm | first failure | refused-decision prediction |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Tst1_V2-198-92_s60 | 9.23 | 4 / 4 / 0.5 | 60 | 1.24 – 2.20 | 0.12 – 0.12 | 0.205 | 0.206 | 97.5 | 0 – 20 | 22.9 | 0.054 | 15.5 | none | — |
-| Tst1_V2-REF_s60 | 9.23 | 4 / 4 / 0.5 | 60 | 1.26 – 1.74 | 0.12 – 0.12 | 0.192 | 0.192 | 87.6 | 0 – 17 | 16.5 | 0.042 | 11.7 | none | — |
 
 # CF-4 schedule summary (v = S / (Tst + planning liftoff delay + swing T); inherited = steps ≥ 2, i.e. swings that follow a previous step's touchdown)
 

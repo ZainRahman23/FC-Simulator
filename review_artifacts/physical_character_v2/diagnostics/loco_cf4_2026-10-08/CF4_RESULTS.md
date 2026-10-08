@@ -305,4 +305,9 @@ If "continuous gait" is read strictly as momentum carried through touchdown, it 
    - CF-4 now uses the supervisor's own stance choice, the higher-share foot. CF-1 – 3 are unchanged.
 3. **Landing error was missing for CF-4.** The walking-frame landing error was recorded only at the sequencer's DONE. It is now also recorded at the landed SUPPORT for CF-4.
 
+**Correction (8 Oct 2026, during CF-5).** `CF4_TABLES.md` as first committed held a misfiled "CF-3 cadence summary" block for the CF-4 runs.
+- Cause: the report tool selected runs by a label substring, and the CF-4 label names CF-3.
+- Its "nominal cycle" values are meaningless for CF-4. No result in this document used that block.
+- The tool now selects by the label's start, and the tables were regenerated (see `../loco_cf5_2026-10-08/CF5_RESULTS.md` §9).
+
 **Stop.** Nothing was adopted. TD2C / E2 was not resumed. No production walking was implemented, and no running. Stopped for review.
