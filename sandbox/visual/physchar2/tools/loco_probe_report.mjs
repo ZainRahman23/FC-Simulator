@@ -1,0 +1,21 @@
+// ═══ physchar2/tools/loco_probe_report.mjs — DIAGNOSTIC: tables from tools/loco_probe.mjs outputs (no simulation). usage: node tools/loco_probe_report.mjs <dir> > report.txt
+import fs from "fs"; import path from "path"; import zlib from "zlib";
+const dir = process.argv[2], files = fs.readdirSync(dir).filter(f => f.endsWith(".json.gz")).sort();
+const runs = files.map(f => ({ f, d: JSON.parse(zlib.gunzipSync(fs.readFileSync(path.join(dir, f))).toString()) }));
+const f2 = (x, n = 2) => (x == null ? "—" : typeof x === "number" ? x.toFixed(n) : String(x));
+console.log("# runs (DIAGNOSTIC — not qualification)\n");
+console.log("| run | kind | body | first | steps DONE | first failure (step, phase) | end s | hash |"); console.log("|---|---|---|---|---|---|---|---|");
+for (const { f, d } of runs) console.log(`| ${f} | ${d.run.kind || "forward"} | ${d.run.human} | ${d.run.first} | ${d.completed} / ${d.run.steps} | ${d.fail ? `step ${d.fail.step}, ${d.fail.phase}: ${d.fail.why}` : "none"} | ${d.endT} | ${d.hashEnd} |`);
+console.log("\n# per completed step\n");
+const H = ["run", "step", "swing", "lift delay s", "φ contact", "clr min (φ 0.2–0.8) mm", "apex mm", "swing track max mm", "TD v down / horiz m/s", "foothold err mm", "step len mm", "stance slip mm", "stance tilt°", "ξ SS margin mm", "ξ support margin mm", "p* outside mm", "CoP outside mm", "pelvis tilt max°", "leg hard margin°", "sat axis-ticks", "Δτ0 max N·m", "E+ J", "E max/tick J", "done ξ err mm", "done |v| m/s", "re-plans", "liftoff re-cert"];
+console.log("| " + H.join(" | ") + " |"); console.log("|" + H.map(() => "---").join("|") + "|");
+for (const { f, d } of runs) for (const s of d.steps) { const r = s.result; if (!r) continue; const q = s.seq || {};
+  console.log(`| ${f.replace(".json.gz", "")} | ${s.k} | ${s.swing} | ${f2(r.liftDelay, 3)} | ${f2(r.phiContact, 3)} | ${f2(r.clearanceMinWinMm)} | ${f2(r.apexMm, 1)} | ${f2(r.swingTrackMaxMm)} | ${r.tdVel ? f2(r.tdVel.down, 3) + " / " + f2(r.tdVel.horiz, 3) : "—"} | ${f2(r.finalPosErrMm)} | ${f2(r.stepLenMm, 1)} | ${f2(r.stanceSlipMm)} | ${f2(r.stanceTiltMaxDeg)} | ${f2(r.xiStanceMarginMinSSmm, 1)} | ${f2(r.xiSupportMarginMinMm, 1)} | ${f2(r.pStarOutsideMaxMm, 1)} | ${f2(r.copOutsideMaxMm, 1)} | ${f2(r.pelvisTiltMaxDeg)} | ${f2(r.legHardMarginMinDeg)} | ${r.satAxisTicks} | ${f2(r.dTau0MaxNm, 1)} | ${f2(r.energyClosurePosJ, 4)} | ${f2(r.energyClosureMaxTickJ, 4)} | ${f2(r.doneXiErrMm, 1)} | ${f2(r.doneComV, 3)} | ${q.replans ?? "—"} | ${q.liftoffRecert || "—"} |`); }
+console.log("\n# state handed to each commanded step (the decision tick)\n");
+console.log("| run | step | verdict | dx / dy m | T s | slack s | swing rel. stance (fwd, lat) m | ξ rel. stance (fwd, lat) m | ξ stance margin mm | |v_COM| m/s | pelvis yaw rel. stance° | feet yaw diff° | pelvis tilt° | stance share |"); console.log("|---|---|---|---|---|---|---|---|---|---|---|---|---|---|");
+for (const { f, d } of runs) for (const s of d.steps) { const c = s.cmd; if (!c) continue; const i = c.init;
+  console.log(`| ${f.replace(".json.gz", "")} | ${s.k} | ${c.verdict} | ${f2(c.dx, 3)} / ${f2(c.dy, 3)} | ${f2(c.T)} | ${f2(c.slack, 3)} | ${i.swingRelStance.map(x => f2(x, 3)).join(", ")} | ${i.xiRelStance.map(x => f2(x, 3)).join(", ")} | ${f2(i.xiStanceMarginMm, 1)} | ${f2(i.comV, 3)} | ${f2(i.pelvisYawRelStance)} | ${f2(i.feetYawDiff)} | ${f2(i.pelvisTilt)} | ${f2(i.stanceShare, 3)} |`); }
+console.log("\n# load-split geometry at the first failure (the controller's G3 share rule: p* projected on the line between the feet's region centroids)\n");
+console.log("| run | stance centroid (x, z) m | ξ_ref (x, z) m | p* (x, z) m | projected stance share (p*) | commanded share (stance, other) | measured Fz / BW (L, R) |"); console.log("|---|---|---|---|---|---|---|");
+for (const { f, d } of runs) { const g = d.fail && d.fail.split; if (!g) continue; const st = d.steps[d.fail.step - 1], sL = st && st.stance === "L", c = sL ? g.centroidL : g.centroidR, sh = sL ? g.projLeftShare_pStar : 1 - g.projLeftShare_pStar, cs = sL ? g.cmdShare : [g.cmdShare[1], g.cmdShare[0]];
+  console.log(`| ${f.replace(".json.gz", "")} | ${c.map(x => f2(x, 4)).join(", ")} | ${g.xiRef.map(x => f2(x, 4)).join(", ")} | ${g.pStar.map(x => f2(x, 4)).join(", ")} | ${f2(sh, 4)} | ${cs.map(x => f2(x, 4)).join(", ")} | ${g.FzBW.map(x => f2(x, 4)).join(", ")} |`); }
