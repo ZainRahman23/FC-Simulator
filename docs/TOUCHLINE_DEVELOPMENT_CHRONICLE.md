@@ -1754,7 +1754,7 @@ A day of stop-and-decide cycles: 11 commits stop for a user decision or review, 
 
 ## Monday 5 October 2026 — E1a passes, E1b closes, E2 stops at the planning gate
 
-**Evidence:** [FC-Sim Git] 35 commits on `prototype/physical-character-v2`, `ac3a3c4` (06:36) → `e519c8f` (05:26, 6 Oct). The first five (06:36–07:25) finish the overnight touch-rest runway. [Doc] `DECISIONS.md` TR-1 → E2-8 (headings dated 2026-10-05 and 2026-10-06); `touch_semantics/`, `preswing/`, `e1a/`, `e1b_fix/`, `p15_capture/`, `e1b_ta/`, `e1b_close/`, `e2/`. Eleven user decisions and instructions are saved in `sources/`: six dated 2026-10-05, five dated 2026-10-06.
+**Evidence:** [FC-Sim Git] 35 commits on `prototype/physical-character-v2`, `ac3a3c4` (06:36) → `d202cac` (05:26, 6 Oct). The first five (06:36–07:25) finish the overnight touch-rest runway. [Doc] `DECISIONS.md` TR-1 → E2-8 (headings dated 2026-10-05 and 2026-10-06); `touch_semantics/`, `preswing/`, `e1a/`, `e1b_fix/`, `p15_capture/`, `e1b_ta/`, `e1b_close/`, `e2/`. Eleven user decisions and instructions are saved in `sources/`: six dated 2026-10-05, five dated 2026-10-06.
 
 **Candidate C fails, at the end of the night** (`ac3a3c4` → `9e2a0b7`, 06:36–07:25).
 - **Official validation FAIL** on three criteria:
@@ -1811,7 +1811,7 @@ A day of stop-and-decide cycles: 11 commits stop for a user decision or review, 
 - **E1b CLOSED** with PSTAR4: class A 19/19 recovered without changing the foothold, and 0 falls. The 4 STEP_REQUIRED cases (all on V2-165-62) became E2 obligations.
 - **Foot-yaw** was adopted independently as PSTARY. The E2 design and criteria were frozen for review, not implemented.
 
-**E2 overnight** (`5eb1ccb` → `e519c8f`, 13 commits, 00:15–05:26 on 6 Oct).
+**E2 overnight** (`5eb1ccb` → `d202cac`, 13 commits, 00:15–05:26 on 6 Oct).
 - **E2 v2** (`5eb1ccb`): an explicit CERTIFIED_ONE_STEP / NO_CERTIFIED_ONE_STEP planner verdict, and reach taken from Touchline's own IK certifier.
 - **User:** "Approve E2 v2 architecture and frozen criteria. Authorize implementation and physical E2 execution", and "The planning certificates are predictions only."
 - **PSTAR5** (`41a5cc8`): the planning gate PG-1 certifies 0 of 32 steps (clearance 3.0/3.2 mm against 5 mm).
@@ -1823,7 +1823,7 @@ A day of stop-and-decide cycles: 11 commits stop for a user decision or review, 
   - `srAll` was **refuted** (τ0 up to 11,553 N·m);
   - a handoff fix cut the liftoff torque step from 9.6 to 0.8 N·m;
   - the PSTAR4S regressions pass.
-- **S2 servo re-validation fails** (V-1/V-2/V-4), with RMS 1.3–2.0 mm. PG-1 is 0/32, because the frozen reference is 5.40 mm above the turf at φ 0.80. `E2_OVERNIGHT_REPORT.md`: "**BLOCKED ON PLANNING DECISION**" (`e519c8f`).
+- **S2 servo re-validation fails** (V-1/V-2/V-4), with RMS 1.3–2.0 mm. PG-1 is 0/32, because the frozen reference is 5.40 mm above the turf at φ 0.80. `E2_OVERNIGHT_REPORT.md`: "**BLOCKED ON PLANNING DECISION**" (`d202cac`).
 
 **Corrections and process errors.**
 - **Causes revised:** the R3 cause (TR-1a), the TR-1 / TR-2 causes (TR-3), and the single-cause E1b-7 diagnosis in E1-4 (`19dbc73`).
@@ -1854,32 +1854,32 @@ A day of stop-and-decide cycles: 11 commits stop for a user decision or review, 
 
 ## Tuesday 6 October 2026 — Apex 30 mm, A + B, and the first touchdown coordinators
 
-**Evidence:** [FC-Sim Git] 20 commits on `prototype/physical-character-v2`, `0625226` (12:19) → `c99e536` (04:35, 7 Oct). [Doc] `review_artifacts/physical_character_v2/DECISIONS.md` E2-9 … E2-15; in `e2/`: `E2_PREREG_AMENDMENT_A30`, `E2_A30_PG1_RESULTS`, `SWING_SERVO_VALIDATION_V2_PROPOSAL` / `_PREREG` / `_RESULTS`, `TOUCHDOWN_A30_ANALYSIS_PLAN`, `VERTICAL_RESIDUAL_DIAGNOSIS`, `AB_VALIDATION_*`, `AB2_VALIDATION_*`, `TOUCHDOWN_COORDINATOR_DESIGN_STOP`, `EXECUTION_FEASIBILITY`, `FB1A_TR1B_*`, `TD2_DESIGN_STUDY`, `TD2_PREREG` / `_RESULTS`, `OVERNIGHT_TD2_MORNING_REPORT`. Seven user decisions saved verbatim in `sources/` (six dated 6 Oct, one dated 7 Oct).
+**Evidence:** [FC-Sim Git] 20 commits on `prototype/physical-character-v2`, `ac4674e` (12:19) → `6606ad5` (04:35, 7 Oct). [Doc] `review_artifacts/physical_character_v2/DECISIONS.md` E2-9 … E2-15; in `e2/`: `E2_PREREG_AMENDMENT_A30`, `E2_A30_PG1_RESULTS`, `SWING_SERVO_VALIDATION_V2_PROPOSAL` / `_PREREG` / `_RESULTS`, `TOUCHDOWN_A30_ANALYSIS_PLAN`, `VERTICAL_RESIDUAL_DIAGNOSIS`, `AB_VALIDATION_*`, `AB2_VALIDATION_*`, `TOUCHDOWN_COORDINATOR_DESIGN_STOP`, `EXECUTION_FEASIBILITY`, `FB1A_TR1B_*`, `TD2_DESIGN_STUDY`, `TD2_PREREG` / `_RESULTS`, `OVERNIGHT_TD2_MORNING_REPORT`. Seven user decisions saved verbatim in `sources/` (six dated 6 Oct, one dated 7 Oct).
 
-**Starting state.** The overnight run had ended at 05:26 (`e519c8f`, 5 Oct entry) "BLOCKED ON PLANNING DECISION": the S2 servo re-validation did not validate and PG-1 was 0 / 32, because the frozen 25 mm swing passed only 5.40 mm above the turf at φ 0.80 against a 5 mm clearance requirement.
+**Starting state.** The overnight run had ended at 05:26 (`d202cac`, 5 Oct entry) "BLOCKED ON PLANNING DECISION": the S2 servo re-validation did not validate and PG-1 was 0 / 32, because the frozen 25 mm swing passed only 5.40 mm above the turf at φ 0.80 against a 5 mm clearance requirement.
 
 **Method, all day.** Each step followed the same pattern: a user decision saved verbatim; a preregistration committed before any code ("freeze step 1"); a default-off implementation, harness and evaluator committed before any battery run ("freeze step 2"); the full battery; a results document and a DECISIONS entry; a stop at any failure. Default paths were checked bit-identical at every stage (KV0, reference hashes, suite 58 / 58).
 
-**Apex 30 mm and PG-1** (`0625226`, `2310aa3`).
+**Apex 30 mm and PG-1** (`ac4674e`, `eaddffd`).
 - User: "Approve A1: revise the nominal E2 swing apex from 25 mm to 30 mm" … "Do not continue increasing apex height." Recorded as the versioned trajectory `A30`; T 0.6 s, the 50 % knot and every threshold unchanged.
 - The amendment documented the measured tracking uncertainty (0.75 mm worst at φ 0.75 – 0.80) and a clearance budget of 1.60 mm at φ 0.8 (0.40 mm at 25 mm).
 - **PG-1: 0 / 32.** The gate configuration refused all 32 decisions because no validated tracked allowance existed. Envelope margin 3.41 – 3.62 mm; only an offline φ-resolved check would certify (5.87 mm, margin 0.87). The 30 mm swing is path-certified for every body: "the gate is servo validation".
 - Touchdown analysis on the old 25 mm data: the instantaneous peak scales with the solver step (480 / 180 Hz ratio up to 2.30); a 10 ms window mean does not (≤ 0.95). Recommended, **not adopted**. A new servo battery, SV-2, was proposed.
 
-**SV-2 swing-servo validation** (frozen `84b92b1` 15:53 → results `c3034fa` 16:29).
+**SV-2 swing-servo validation** (frozen `7bde433` 15:53 → results `76f81d0` 16:29).
 - The user approved it with per-0.05-φ-bin allowances drawn from independent runs; trajectories a body cannot reach are to be rejected by the reachability check, not allowed to inflate the allowance.
-- Frozen: 876 runs, four separate verdicts. The reachability pre-check rejected C-L11 for 7 bodies. The touchdown analysis plan (`d41b92a`) and the PG-1 runner (`cd3cd8f`) were committed before the SV-2 evaluation was read.
+- Frozen: 876 runs, four separate verdicts. The reachability pre-check rejected C-L11 for 7 bodies. The touchdown analysis plan (`9a538a7`) and the PG-1 runner (`a7def97`) were committed before the SV-2 evaluation was read.
 - **DOES NOT VALIDATE.** The representative set passes everything; tracking RMS 1.3 – 2.3 mm. Fails: T-1 (C-F7 0.26, C-L5 0.28, limit ≤ 0.25; residual vertical and D1-insensitive); I-2 (52 runs, foot-flat transients 6 – 21 ms after contact); I-3 / I-4 (C-L11 on V2-long-legs, a servo runaway near the reach boundary: "certified reachable but not executable"); I-6 (84 runs, contact loss after long fast landings).
 - Allowance computed for the record, NOT VALID, not entered. With it, a what-if PG-1 is still 0 / 32: 4.977 mm at φ 0.80, short by 0.023 mm. PG-1 and the 30 mm touchdown matrix were not run.
 
-**Vertical-residual diagnosis** (`93f9548`, `65b98ad`). The user asked for a diagnosis only ("Do not change behaviour yet") and said "do not round the 4.977 mm result into a pass".
+**Vertical-residual diagnosis** (`84a6922`, `4afccb7`). The user asked for a diagnosis only ("Do not change behaviour yet") and said "do not round the 4.977 mm result into a pass".
 - Default-off diagnostic hooks (including removing the turf), then 884 matched runs.
 - **M1, floating-base pelvis coupling:** the velocity feed-forward's pelvis-motion term keeps damping μ0, so the leg drags the foot with the pelvis. It accounts for the whole T-1 vertical residual. **M2, uncompensated passive ankle damping:** 0.99° tilt predicted vs 0.94° measured.
 - With both causes removed, T-1 C-F7 0.259 → 0.009 and C-L5 0.275 → 0.088, so T-1 was kept as frozen.
 - Contact speed ∝ δ^0.62 (r 0.90, 315 touchdowns). Most of the 10 ms "impact" is premature load: 22.3 → 10.2 % BW with the pelvis term kept through contact.
 - Proposed, not implemented: (A) singularity-robust damping on the pelvis term during flight; (B) passive-damping feed-forward.
 
-**A + B, then AB2** (`54629de`, `0e832fb`, `28f2632`, `b4c6e16`).
+**A + B, then AB2** (`1a65417`, `b735b95`, `3c46742`, `85758ab`).
 - The user approved A and B, a minimal touchdown coordinator and an execution-feasibility check, in an eight-step order.
 - A (`vffPelvisAir`) and B (`vffPassiveRef`) were built default-off, with a recording-only torque ledger.
 - **Factorial battery, 1,728 runs: DOES NOT VALIDATE**, stopped at stage 2.
@@ -1890,17 +1890,17 @@ A day of stop-and-decide cycles: 11 commits stop for a user decision or review, 
 - The **AB2** amendment split ownership by lifecycle: A is judged from the first genuinely airborne tick, and contact-transition continuity moves to the coordinator ("not exempted").
 - **AB2 VALIDATES** (1,728 / 1,728, bit-identical to the AB records; airborne β_y −56 … −74 %). A + B are qualified as swing mechanisms (PSTAR5CHAB). The AB battery stays FAIL.
 
-**The first touchdown coordinator, stopped at design** (`9f57fb0`, 22:56).
+**The first touchdown coordinator, stopped at design** (`bc3d558`, 22:56).
 - A default-off draft (`ctrl/v2_touchdown.js`) was checked on smoke runs only. Within T 0.6 s, the apex at T / 2 and the validated A + B envelope, no C2 final approach could finish tangential motion before the contact band, keep normal approach speed low (best ≈ 60 mm/s) **and** stay inside the jerk envelope. It was not preregistered, validated or adopted.
 - **Execution-feasibility certifier** (`certifyExecution` plus closed-loop replay, `tools/exec_qualify.mjs`): 240 Hz sweep 144 / 160 qualified, no false rejection. All 16 rejections are C-L11, including the V2-long-legs counterexample. Not yet wired into `plan()`.
 
-**1A / 1B, after midnight** (`d6d4868`, `452cc60`, `9610cb6`).
+**1A / 1B, after midnight** (`c4c7061`, `0150ce8`, `e658953`).
 - After a research review, the user ordered two controller fixes before any touchdown timing choice: floating-base angular compensation (1A) and a command-level near-contact transition (1B).
 - Freeze amendment A1 replaced 1A-0's tolerance with a like-for-like control after the raw check failed. The cause was D1's own 1 mm finite-difference step, and the change was disclosed as made after seeing the output. A3 predicted that 1B would fail.
 - **2,160 runs. 1A DOES NOT VALIDATE** on one item: foot angular speed at the first touching tick 0.464 vs 0.363 rad/s on set H, an impact-phase sampling effect. **1B DOES NOT VALIDATE**: transition-violating runs R 6 → 10, H 8 → 42 (max commanded 64.4 N·m); 6 new rebounds; slip up to 10.4 mm.
 - User (committed 02:53): "do not adopt 1A, reject 1B, and proceed from the qualified AB baseline."
 
-**Overnight runway: TD2** (`d14d34f`, `5015dc6`, `63d489b`, `c99e536`).
+**Overnight runway: TD2** (`3bb6752`, `d285f10`, `20d7837`, `6606ad5`).
 - The user handed over an autonomous runway: "The goal overnight is maximum legitimate progress, not a forced E2 pass." **Reconstructed:** the user was away from about 02:53 until the next decision, committed at 12:33.
 - Offline design study: C0 (the AB baseline), C1 (corridor), C5 (clock) and C6 (creep) were rejected. **C2 was selected:** the validated swing to a raised band top, a tangential-settling dwell, then a bounded rest-to-rest search until measured contact.
 - **Discovery:** AB's load peak is not the first impact. It is a flat-foot slap about 20 ms after an edge-first contact.
@@ -1913,8 +1913,8 @@ A day of stop-and-decide cycles: 11 commits stop for a user decision or review, 
 - Stopped before SV-2 re-qualification, PG-1 and E2. Morning report at 04:35.
 
 **Corrections and process errors** (all recorded in the documents).
-- `0625226`: the overnight report's 0.75 mm window-restricted allowance was wrong; it is 2.24 mm.
-- `d41b92a`: the 25 mm touchdown analysis in `2310aa3` used integer-tick windows and R-leg-only groups, and wrongly claimed "≥ 2 ticks". It was recomputed with exact windows. Its 10 ms rationale, first "recalled, not sourced", was given sources (Blackburn 2016; Gruber 2017).
+- `ac4674e`: the overnight report's 0.75 mm window-restricted allowance was wrong; it is 2.24 mm.
+- `9a538a7`: the 25 mm touchdown analysis in `eaddffd` used integer-tick windows and R-leg-only groups, and wrongly claimed "≥ 2 ticks". It was recomputed with exact windows. Its 10 ms rationale, first "recalled, not sourced", was given sources (Blackburn 2016; Gruber 2017).
 - TD2, from the morning report §7:
   - a wrong apex-knot rule in the design kinematics;
   - the preregistered band was inadequate for the new region ("I should have run it before the first preregistration");
@@ -1932,9 +1932,9 @@ A day of stop-and-decide cycles: 11 commits stop for a user decision or review, 
 
 ## Wednesday 7 October 2026 — TD2B, the D1 guard and DVG
 
-**Evidence:** [FC-Sim Git] 11 commits on `prototype/physical-character-v2`, `13d2d09` (12:33) → `bd4c56e` (02:19, 8 Oct). [Doc] `DECISIONS.md` E2-16 … E2-20 (sections dated 2026-10-07 and 2026-10-08); in `e2/`: `TD2B_PREREG` / `_RESULTS`, `D1G_TD2C_PREREG`, `D1G_RESULTS`, `DVG_PREREG`, `DVG_RESULTS`. Three user decisions in `sources/` (two dated 7 Oct, one dated 8 Oct).
+**Evidence:** [FC-Sim Git] 11 commits on `prototype/physical-character-v2`, `b6fe3c0` (12:33) → `b54bb6a` (02:19, 8 Oct). [Doc] `DECISIONS.md` E2-16 … E2-20 (sections dated 2026-10-07 and 2026-10-08); in `e2/`: `TD2B_PREREG` / `_RESULTS`, `D1G_TD2C_PREREG`, `D1G_RESULTS`, `DVG_PREREG`, `DVG_RESULTS`. Three user decisions in `sources/` (two dated 7 Oct, one dated 8 Oct).
 
-**TD2B, midday** (`13d2d09`, `9cab1a9`, `0114429`).
+**TD2B, midday** (`b6fe3c0`, `2200cd9`, `4836364`).
 - User: "Preserve the existing TD2 preregistration and 1,824-run result permanently as FAIL." Three decisions:
   - a certified possible-contact window derived before the battery;
   - an escalation that keeps the search's invariants ("Do not retain the current failed escalation that jumps the target ~13 mm in ~0.1 s");
@@ -1957,7 +1957,7 @@ A day of stop-and-decide cycles: 11 commits stop for a user decision or review, 
 
   Counterfactual: no D1 at unreachable targets removes every Σ+ failure, abort and fall (24 / 24). The documents record this as "a pre-existing controller robustness defect".
 
-**D1 guard (D1G v1), evening** (`4051ba2` 22:56, `3914a0c`, `d0ad788` 23:56).
+**D1 guard (D1G v1), evening** (`8e0cf07` 22:56, `19eb4d5`, `20e782d` 23:56).
 - User: approve the guard as a versioned correction ("Do not implement this merely as a special case for the +10 mm obstacle"). Out-of-window terrain becomes an unexpected-obstacle event: "Do not require 'no abort or fall' for an arbitrary unexpected obstacle."
 - Preregistered:
   - D1 is valid only when the IK target is reached, well-conditioned and finite, with a continuous fade / ramp over 0.10 s;
@@ -1971,7 +1971,7 @@ A day of stop-and-decide cycles: 11 commits stop for a user decision or review, 
   - FAIL DG-3 (a): 4 of 4,056 samples, an IK mirror fold.
 - Stop rule: TD2C not run, D1G not adopted.
 
-**DVG (D1G v2), after midnight** (`0214283`, `b25f0b0`, `b08b77a`, `7de6c00`, `bd4c56e`).
+**DVG (D1G v2), after midnight** (`72506d0`, `f9e0a11`, `6b7ab90`, `d3f9bcc`, `b54bb6a`).
 - User (dated 8 Oct):
   - extend the validity rule to the joint-rate feed-forward;
   - treat the 180 Hz end-range energy as pre-existing debt "provided the existing evidence really establishes independence";
@@ -1980,8 +1980,8 @@ A day of stop-and-decide cycles: 11 commits stop for a user decision or review, 
 - Preregistered: one validity verdict and one slew-limited fade weight per leg, covering every IK-derived feed-forward (D1, joint rate, B's reference rate); qualification CQ-0 … CQ-6.
   - The hold-phase energy persists with no IK feed-forward at all, so it is recorded as TD-15-consistent and gates any later certification of that regime.
   - **New debt TD-17:** bounded-IK branch selection at a soft-bound fold.
-- **Erratum E1** (`7de6c00`): the first implementation dropped a held D1 in one tick when the target ended mid-fade (162 / 18 per-axis law violations, found by the smoke of the prepared TD2C amendment). The first CQ run on `b08b77a` was **aborted unevaluated** at 01:05 (73 / 1,426 jobs). Set CQ-6x was added (the commanded target released while the guard is engaged).
-- **Battery, 1,522 jobs on `7de6c00` (01:13 – 02:15): DOES NOT VALIDATE.**
+- **Erratum E1** (`d3f9bcc`): the first implementation dropped a held D1 in one tick when the target ended mid-fade (162 / 18 per-axis law violations, found by the smoke of the prepared TD2C amendment). The first CQ run on `6b7ab90` was **aborted unevaluated** at 01:05 (73 / 1,426 jobs). Set CQ-6x was added (the commanded target released while the guard is engaged).
+- **Battery, 1,522 jobs on `d3f9bcc` (01:13 – 02:15): DOES NOT VALIDATE.**
   - Passes:
     - identity;
     - AB 432 / 432 and E1a / E1b 38 / 38 bit-identical;
@@ -2011,12 +2011,17 @@ A day of stop-and-decide cycles: 11 commits stop for a user decision or review, 
   - `prototype/physical-character-v1` = `11149df`, all 49 of V1's commits;
   - `prototype/physical-character-v2` through `9578ccf` (6 Oct 04:56).
   - It went up in batches of ≤ 0.4 GB, because 1.2 GB batches were disconnected by the server.
-- **Not pushed: 33 commits.**
-  - They run from `e519c8f` (6 Oct 05:26) through `bd4c56e` and `6e03afe`.
-  - `e519c8f` adds `e2/evidence_smoke_H/runs_records_240_REF_165.tgz`: 105,822,358 bytes, above GitHub's 100 MiB per-file limit.
-  - Publishing them needs either a history rewrite, which changes hashes the preregistrations cite, or Git LFS. Both are the user's decision.
+- **Held back, then repaired the same morning: 33 commits.**
+  - They ran from the original `e519c8f` (6 Oct 05:26) through `bd4c56e` and `6e03afe`.
+  - `e519c8f` had added `e2/evidence_smoke_H/runs_records_240_REF_165.tgz`: 105,822,358 bytes of generated evidence, above GitHub's 100 MiB per-file limit.
+  - **User decision** (saved in `sources/2026-10-08_user_decision_publication_rewrite.md`): remove the archive from the unpublished history only. No Git LFS, and nothing published is to be rewritten.
+  - **The repair.** The 33 commits were replayed one for one: same trees minus that one file, the same order, author and committer dates, original messages plus provenance trailers. They were then pushed as a normal fast-forward on `9578ccf`.
+  - **Provenance:** `PUBLICATION_REWRITE_2026-10-08.md` / `.tsv` on the V2 branch map every old hash to its replacement, and references in the V2 documents now carry both (`old [published as new]`).
+  - **The archive** is kept locally outside Git (SHA-256 `765df83e…`). It can be regenerated with `e2/scripts/run_smoke_matrix_H.sh` on `9578ccf`.
+  - **Prevention:** an evidence-storage policy, a `.gitignore` rule for raw run-record archives, and a pre-commit size guard.
+  - **In this chronicle, hashes from 6 Oct 05:26 onward are the published ones.**
 - **Committed and pushed:** `environment/weather-snow-surface-v1` (`9468ddd`), the 28 Sep snow work.
-- **Preserved:** `6e03afe` (local) moves the unadopted TD2C amendment A5 and the E2 integration draft out of a temporary scratch directory into `e2/drafts/`, not applied.
+- **Preserved:** `e5ea11f` moves the unadopted TD2C amendment A5 and the E2 integration draft out of a temporary scratch directory into `e2/drafts/`, not applied.
 - **Left [Local]** under the user's earlier instructions or the media policy:
   - the slide-tackle passes (`rear-contact-fall`);
   - Reference Tackle V1 (`reference-tackle`);
@@ -2024,10 +2029,10 @@ A day of stop-and-decide cycles: 11 commits stop for a user decision or review, 
   - the ≈ 4 GB of goalkeeper review folders.
 - **This chronicle** was caught up from 29 Sep. Eleven screenshots were archived in [`review_artifacts/chronicle_screens/`](../review_artifacts/chronicle_screens/) (with [`MANIFEST.tsv`](../review_artifacts/chronicle_screens/MANIFEST.tsv): original bytes and SHA-256), and the daily publication rule was added (Appendix F, rule 6).
 
-**End-of-day state.** DVG stopped before adoption at `bd4c56e`. Decisions pending (`DVG_RESULTS.md` §3; none taken):
+**End-of-day state.** DVG stopped before adoption at `b54bb6a`. Decisions pending (`DVG_RESULTS.md` §3; none taken):
 1. CQ-1b: judge the out-of-envelope run by "no newly failing item" or by no material worsening. Options: (a) accept as non-material; (b) investigate saturation during the fade; (c) other.
 2. The CQ-3a erratum: treat a coordinate within 10⁻⁶ rad of its soft bound as on it, then re-run the 24 mirror probes.
-3. If both resolve: adopt DVG → the prepared TD2C amendment → the frozen TD2C battery → E2 integration (the draft is preserved, not applied, in `e2/drafts/`, `6e03afe`) → SV-2 re-qualification → PG-1 → official E2.
+3. If both resolve: adopt DVG → the prepared TD2C amendment → the frozen TD2C battery → E2 integration (the draft is preserved, not applied, in `e2/drafts/`, `e5ea11f`) → SV-2 re-qualification → PG-1 → official E2.
 
 The recommendation is 1 (a) and 2. No PG-1 or official E2 has run.
 
@@ -2048,7 +2053,7 @@ The recommendation is 1 (a) and 2. No PG-1 or official E2 has run.
 - **Environment.** Rail broadcast camera, pitch with mowing, stadium bowl and crowd, rigid goal frame and strand net, sphere ball art and rain.
 - **Baselines.** Frozen tags `baseline/*` on GitHub.
 
-**The physical character** (`prototype/physical-character-v2`; GitHub at `9578ccf`, local head `6e03afe`; not part of the playable game):
+**The physical character** (`prototype/physical-character-v2`, head `21b6f06` on GitHub; not part of the playable game):
 - **The body.** A clean-sheet Jolt humanoid: 14 bodies, 35 rotational DOF, finite actuators at exact capacity, a 10-piece boot on a `PlaneShape` turf; validated at 180, 240 and 480 Hz.
 - **Gates.**
   - V2-G0 to G3 passed; G3 under criteria v3.3, with J2a as the normative symmetry gate.
@@ -2066,7 +2071,7 @@ The recommendation is 1 (a) and 2. No PG-1 or official E2 has run.
   - Reference Tackle V1, in worktree `reference-tackle`, with its third-party reference clip on the Desktop.
 - **The redesigned manager-app interface** ([Local], 1 – 7 Oct): self-contained pages in `~/Downloads` (`Touchline_Playable_*.html`, latest `Touchline_Playable_Calendar.html`). Its source and authoring session are not recorded.
 - **The portfolio source package** ([Local], `~/Downloads/TOUCHLINE_PORTFOLIO_SOURCE_ASSETS/`, 28 Sep) and the Astra transfer zip.
-- **33 physical-character V2 commits not yet on GitHub** (`e519c8f` … `6e03afe`). One file in `e519c8f` exceeds GitHub's 100 MiB limit (7 Oct entry).
+- **One generated evidence archive** (`runs_records_240_REF_165.tgz`, 105.8 MB), removed from the V2 history for publication on 8 Oct, is kept locally outside Git (7 Oct entry).
 - **The Astra character roster** ([Astra], `~/Downloads/TOUCHLINE_ASTRA_MIGRATION_PACKAGE`): 20 individually built players (19 plus Courtois), including the 3D Salah; the B back-print lock; the unfinished player-art workshop, whose source was never recovered. Only Courtois and the six later outfield players reached the runtime.
 - **The Astra V6 character-renderer repository:** its commit history (`57bddf9` … `5e89a7a`) is known only as labels; no object database was recovered.
 - **The Astra kick-system design** ([Local] `review_artifacts/astra_kick_system_handoff/`): handed off on 19 Sep. The design that came back is not recorded here, and Shooting V1 was instead recovered from the existing sprite kick families.
@@ -2095,7 +2100,6 @@ The recommendation is 1 (a) and 2. No PG-1 or official E2 has run.
 - **Characters.** Most of the Astra roster, back-print B and the workshop are outside the runtime, and the workshop source is missing.
 - **Referee.** Foul facts are recorded but no calls are made.
 - **Repository weight.** About 1.5 GB of history before 8 Oct. The physical-character branches add about 2.6 GB of objects (uncompressed), mostly battery evidence and review media.
-- **Publication.** 33 local V2 commits wait on a decision about the 105.8 MB evidence file in `e519c8f`: rewrite that part of the history, move the file to LFS, or keep the commits local.
 
 ## Architecture at a glance
 
@@ -2204,18 +2208,18 @@ An index to the narrative above, not a substitute for it.
 | 5 Oct | **E1a PASS** (5 mm lift, hover, replace; 8 bodies + mirrored) | FC-Sim Git | `d499453` |
 | 5 Oct | E1b fails under PSTAR; PSTAR2 and T-A (PSTAR3) fail validation; P15 capture study | FC-Sim Git | `11d2fea`, `19dbc73`, `997a5e7`, `7a945de` |
 | 5 Oct | **E1b CLOSED** (PSTAR4, P15 split A / B); foot-yaw actuator adopted (PSTARY); E2 architecture frozen for review | FC-Sim Git | `ca4aad6`, `6e0bf0a` |
-| 5 Oct | E2 v2 implemented default-off (PSTAR5 / 5B / 5C); velocity-feed-forward rate defect found and corrected; E2 blocked on the planning gate (6 Oct 00:15–05:26) | FC-Sim Git | `5eb1ccb`, `41a5cc8`, `9570ccc`, `6c30e64`, `e519c8f` |
-| 6 Oct | Apex 30 mm amendment (A30); PG-1 0 / 32 | FC-Sim Git | `0625226`, `2310aa3` |
-| 6 Oct | SV-2 swing-servo validation frozen and run: DOES NOT VALIDATE | FC-Sim Git | `84b92b1`, `c3034fa` |
-| 6 Oct | Vertical-residual diagnosis (pelvis coupling M1, passive ankle damping M2) | FC-Sim Git | `93f9548`, `65b98ad` |
-| 6 Oct | A + B: AB battery FAIL; AB2 VALIDATES, A + B qualified as swing mechanisms | FC-Sim Git | `54629de`, `0e832fb`, `28f2632`, `b4c6e16` |
-| 6 Oct | First touchdown coordinator stopped at design; execution-feasibility certifier | FC-Sim Git | `9f57fb0` |
-| 6 Oct | 1A / 1B: both DO NOT VALIDATE (later: 1A not adopted, 1B rejected) | FC-Sim Git | `d6d4868`, `452cc60`, `9610cb6` |
-| 6 Oct | TD2 touchdown coordinator: DOES NOT VALIDATE (clean in its certified window); morning report | FC-Sim Git | `d14d34f`, `5015dc6`, `63d489b`, `c99e536` |
-| 7 Oct | TD2B: DOES NOT VALIDATE (earlyOOE only); D1 singularity defect found | FC-Sim Git | `13d2d09`, `9cab1a9`, `0114429` |
-| 7 Oct | D1 guard v1: DOES NOT VALIDATE; TD2C not run | FC-Sim Git | `4051ba2`, `3914a0c`, `d0ad788` |
-| 7 Oct | DVG (D1G v2): erratum E1, first run aborted; combined qualification DOES NOT VALIDATE; TD-17 recorded | FC-Sim Git | `0214283`, `b25f0b0`, `b08b77a`, `7de6c00`, `bd4c56e` |
-| 8 Oct | Physical-character branches published (170 commits); 33 held back by a 100 MiB file; chronicle caught up | FC-Sim Git | `11149df`, `9578ccf` (GitHub); local `6e03afe` |
+| 5 Oct | E2 v2 implemented default-off (PSTAR5 / 5B / 5C); velocity-feed-forward rate defect found and corrected; E2 blocked on the planning gate (6 Oct 00:15–05:26) | FC-Sim Git | `5eb1ccb`, `41a5cc8`, `9570ccc`, `6c30e64`, `d202cac` |
+| 6 Oct | Apex 30 mm amendment (A30); PG-1 0 / 32 | FC-Sim Git | `ac4674e`, `eaddffd` |
+| 6 Oct | SV-2 swing-servo validation frozen and run: DOES NOT VALIDATE | FC-Sim Git | `7bde433`, `76f81d0` |
+| 6 Oct | Vertical-residual diagnosis (pelvis coupling M1, passive ankle damping M2) | FC-Sim Git | `84a6922`, `4afccb7` |
+| 6 Oct | A + B: AB battery FAIL; AB2 VALIDATES, A + B qualified as swing mechanisms | FC-Sim Git | `1a65417`, `b735b95`, `3c46742`, `85758ab` |
+| 6 Oct | First touchdown coordinator stopped at design; execution-feasibility certifier | FC-Sim Git | `bc3d558` |
+| 6 Oct | 1A / 1B: both DO NOT VALIDATE (later: 1A not adopted, 1B rejected) | FC-Sim Git | `c4c7061`, `0150ce8`, `e658953` |
+| 6 Oct | TD2 touchdown coordinator: DOES NOT VALIDATE (clean in its certified window); morning report | FC-Sim Git | `3bb6752`, `d285f10`, `20d7837`, `6606ad5` |
+| 7 Oct | TD2B: DOES NOT VALIDATE (earlyOOE only); D1 singularity defect found | FC-Sim Git | `b6fe3c0`, `2200cd9`, `4836364` |
+| 7 Oct | D1 guard v1: DOES NOT VALIDATE; TD2C not run | FC-Sim Git | `8e0cf07`, `19eb4d5`, `20e782d` |
+| 7 Oct | DVG (D1G v2): erratum E1, first run aborted; combined qualification DOES NOT VALIDATE; TD-17 recorded | FC-Sim Git | `72506d0`, `f9e0a11`, `6b7ab90`, `d3f9bcc`, `b54bb6a` |
+| 8 Oct | Physical-character branches published with their original dates; the unpublished 33-commit tail replayed without a 105.8 MB generated archive (old → new map kept); chronicle caught up | FC-Sim Git | `11149df`, `9578ccf`, `21b6f06`; `PUBLICATION_REWRITE_2026-10-08.md` |
 
 ## Appendix B — Repository provenance
 
@@ -2230,7 +2234,7 @@ An index to the narrative above, not a substitute for it.
   - First pushed on 4 Sep at 19:34 (−07:00): branch `visual-integration-v1` at `cad400a` (still the default branch), with `main` fast-forwarded to it minutes later.
   - `main` was advanced to `ff3a89f` on 19 Sep and tagged `checkpoint/sprite-baseline-2026-09-19`.
   - `touchline-current` and the `baseline/*` tags were pushed on 28 Sep.
-  - **8 Oct:** `prototype/physical-character-v1` (`11149df`), `prototype/physical-character-v2` (through `9578ccf`) and `environment/weather-snow-surface-v1` (`9468ddd`) were pushed. This was authentic history with its original dates: no rewrite, no force. 33 later V2 commits remain local (7 Oct entry). The checkpoint tags `checkpoint/physchar-pre-crossover` and `checkpoint/physchar-v1-final-research` were pushed with them.
+  - **8 Oct:** `prototype/physical-character-v1` (`11149df`), `prototype/physical-character-v2` (through `9578ccf`) and `environment/weather-snow-surface-v1` (`9468ddd`) were pushed. This was authentic history with its original dates: no rewrite, no force. The 33 commits after `9578ccf` were first held back by a 105.8 MB generated archive. On the user's decision they were replayed without it and pushed, with an old → new map (`PUBLICATION_REWRITE_2026-10-08.md`; 7 Oct entry). No published commit was rewritten. The checkpoint tags `checkpoint/physchar-pre-crossover` and `checkpoint/physchar-v1-final-research` were pushed with them.
   - It also carries the Coach MVP pull request (`claude/coach-mvp`).
   - It is **authoritative for everything from 27 Aug onward**.
 - **Why the switch happened is not recorded (Uncertain).** The evidence shows the move but not the reason. TouchlineSimulator received checkpoint pushes, while FC-Simulator became the tracking remote from 4 Sep, when the goalkeeper work began to accumulate.
@@ -2305,7 +2309,7 @@ The FC-Simulator day headings were checked against every commit's recorded times
 | Sun 4 Oct | 46 | 11:20 → 05:56 on 5 Oct (+01:00) |
 | Mon 5 Oct | 35 | 06:36 → 05:26 on 6 Oct (+01:00) |
 | Tue 6 Oct | 20 | 12:19 → 04:35 on 7 Oct (+01:00) |
-| Wed 7 Oct | 11 + 3 | 12:33 → 02:19 on 8 Oct; then the housekeeping commits `9468ddd`, `6e03afe` and this entry's documentation commit, from 02:55 on 8 Oct (+01:00) |
+| Wed 7 Oct | 11, then housekeeping | 12:33 → 02:19 on 8 Oct; then from 02:55 on 8 Oct: `9468ddd`, `e5ea11f`, `c1328ef`, `9e95b87`, and the publication repair `7ecd115`, `117168e`, `21b6f06` with its chronicle update (+01:00) |
 
 **Where the evidence is incomplete or ambiguous.**
 1. **Before 18 Aug:** no evidence of any work. The conversation opens with the requirement itself, and the extraction finds nothing earlier.
@@ -2393,6 +2397,7 @@ How the 18 Aug primary-source extraction ([Chat]) was reconciled with the other 
    - **Exclude** personal images and third-party footage.
    - **The remote** is `fc-simulator`. Never rewrite, squash or force-push published history without the user's approval.
    - **GitHub rejects files over 100 MiB**, and large pushes go in batches of ≤ 0.4 GB.
+   - **Generated archives of 50 MB or more**, and raw per-run record archives, stay outside Git with a SHA-256 pointer file (the V2 branch's `EVIDENCE_STORAGE_POLICY.md`; the pre-commit guard is in `tools/git-hooks/`).
 
 The request to use at the end of each day:
 
