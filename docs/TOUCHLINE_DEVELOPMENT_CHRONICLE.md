@@ -1614,7 +1614,7 @@ Identification dumps (up to 361 MB) were kept out of Git.
   - Reported examples: Van Dijk CB 88 → ST 76 → CB 88; Szoboszlai gains CDM eligibility (82, no penalty). Not re-verified.
 - **Reported, conflicting** (23:11): `2026-27-ratings-flank-rules-updated.xlsx`, attribute-based weak-foot / opposite-flank deductions, 226 player checks.
   - The chat's last scale (high / medium / low: 4★ 3 / 2 / 1, 3★ 4 / 3 / 2, 2★ 5 / 4 / 3, 1★ 6 / 5 / 4, 5★ none) conflicts with a saved summary (3★ 6 / 4 / 2 …).
-  - A file of that name is on the Desktop (23:13). Its contents were not inspected, so the conflict stands.
+  - A file of that name is on the Desktop (23:13). [Local, inspected 8 Oct] Its Rules sheet stores the chat's last scale (1★ 6 / 5 / 4, 2★ 5 / 4 / 3, 3★ 4 / 3 / 2, 4★ 3 / 2 / 1, 5★ none). For that file the conflict therefore resolves in the chat's favour. The file is archived in the portfolio package (Stage 24, Appendix G).
 - **Reported and located** (00:28, 3 Oct): `Touchline_Pack_Opening.html` (workspace 00:26).
   - Top tear, five concealed tier-coloured cards flying left to right, click-to-flip reveal, replay, Diamond glints.
   - No spending, payment or acquisition backend.
@@ -1624,6 +1624,7 @@ Identification dumps (up to 361 MB) were kept out of Git.
   - A role change costs 1 and a formation change 4; out-of-10 ratings move beside the names.
   - The exact time and final build are not recovered. A `touchline_matchday/` build exists in the workspace, but that it is the final Influence artifact is not established.
 - **Problems:** a connection drop affected the final squad save and visual sizing.
+- **Screenshot** (added 8 Oct): the ratings workbook during the review (14:04), in [`chronicle_screens/2026-10-02_ratings/`](../review_artifacts/chronicle_screens/2026-10-02_ratings/).
 - **Workstream end of day:** cards corrected; live-rating squad, flank workbook and pack-opening prototypes exist. The final flank scale and every UI save are unverified.
 
 **End-of-day state.** V1 is frozen and recoverable. V2 is specified; G0 has passed and been approved. G1's criteria v2 are fixed and its final evidence run is under way (it finished at 07:15 on 3 Oct).
@@ -1697,6 +1698,9 @@ A day of stop-and-decide cycles: 11 commits stop for a user decision or review, 
   - no amortization; one-time transfer fees; sales credited 1 : 1;
   - overspending reduces next season's budget (example: 95 % against 85 % → next budget 75 %);
   - the 24-point sanction at **120 %**, not 130 %.
+    - [Local, recaptured 8 Oct] In the final build (23:34), 120 % is next season's 24-point threshold after the 95 % example overspend (75 % / 105 % / 120 %).
+    - This season's scale gives 6 points just above the 115 % red limit, then +6 per 5 pp, so 24 points at 130 %.
+    - The 13:02 first pass still used real-regulation-style rules: amortisation, a levy and a separate 70 % UEFA limit.
 - **Reported:** `Touchline_Finance.html`.
   - First pass 13:03; the build survives as the workspace's `before_contracts/` (13:02, 0.3 MB).
   - Corrected calculations at 14:03 ("a £100m sale adds £100m of room"), with an in-place save **failure**; replacement copies were supplied.
@@ -1804,7 +1808,7 @@ A day of stop-and-decide cycles: 11 commits stop for a user decision or review, 
 - **Reported and located** (14:30): `2026-27-ratings-updated-ranked-2026-10-04.xlsx`.
   - 226 players; 416 approved input changes across 20 players; physical rank 1 – 226; a rank-changes tab; 78 eligible-position calculations; no formula errors reported.
   - Anderson 87.40 → 87 and Barcola 81.46 → 81 (inputs unchanged); Messi rank 6 → 4, Osimhen 12 → 8.
-  - A file of that name is in `~/Downloads` (17:37, 733,683 bytes, SHA-256 `d4ddabc8…`). Nothing was recomputed here, so the figures remain reported.
+  - A file of that name is in `~/Downloads` (17:37, 733,683 bytes, SHA-256 `d4ddabc8…`). Checked 8 Oct against its stored values (no recalculation): these four figures and the 226-player / 20-profile / 416-change counts match. Archived in the portfolio package (Stage 26).
 - **Incomplete:** Araújo's edits were still proposed / pending at 20:53 – 20:55. No later lock, or workbook applying them, is recovered.
 - **Designed** (20:48 – 21:07):
   - unify the separately built screens around the Squad stadium / card look;
@@ -1812,7 +1816,7 @@ A day of stop-and-decide cycles: 11 commits stop for a user decision or review, 
   - Manager and Club Runner differ in firing / leaving / continuity, not in controls;
   - browser first, with the match / training / rest calendar as the core flow.
 - **Reported, partly located:** a connected HTML mockup.
-  - **Conflicting count:** an earlier reply claimed 33 screens; the final one (22:29) says 30 screens and 23 checks.
+  - **Conflicting count:** an earlier reply claimed 33 screens; the final one (22:29) says 30 screens and 23 checks. The build's own screen map lists 29 numbered entries (recaptured 8 Oct, portfolio Stage 26).
   - `Touchline_Club_Management_Mockup.html` is in `~/Downloads` (22:19, 8.7 MB). The review-package ZIP is not found.
   - **Figma incomplete:** shells, navigation, tokens and 10 components; detailed content and images unfinished after the quota.
 - **Designed, then reported** (from 03:14, 5 Oct): the standings review.
@@ -2040,6 +2044,7 @@ A day of stop-and-decide cycles: 11 commits stop for a user decision or review, 
 - **Reported and located** (22:04): `TOUCHLINE_Aging_Fitness_v1_2026-10-06.zip`.
   - The attachment is 22:12, 12,586 bytes, SHA-256 `ab7eee6f…`; the spec, config and JS are also in `schedule-calendar/aging-fitness/`.
   - The chat recorded the name with a hyphen. Contents were not executed here.
+  - [Local, read 8 Oct; not executed] Its config (v1.0) has decline tables for six outfield groups and none for goalkeepers, striker 4.5 at 40, and the universal 41+ cliff. Charted in the portfolio package (Stage 28).
 - **Designed and reported — calendar:**
   - session time / load replaced by development and stamina (Rest +25, Light +15, Normal +5, Intense −10 points);
   - LOW / STANDARD / HIGH with proportional 7 % / 29 % / 100 % meters, instead of equal 1 / 2 / 3 bars;
@@ -2050,6 +2055,7 @@ A day of stop-and-decide cycles: 11 commits stop for a user decision or review, 
   - the +0.03-per-OVR universal proposal gave way to league-specific linear / bucketed expectations (EPL 75 → 6.0, 85 → 7.0), benchmarked on G+A/90 with sample confidence;
   - the user's last verdict: wingers close, strikers too generous, CAM much too generous;
   - the latest replacement curves (01:32, 7 Oct) are proposals; no acceptance or implementation is recovered.
+- **Screenshot** (added 8 Oct): the calendar's training panel (23:10: focus, intensity, development rate, stamina), in [`chronicle_screens/2026-10-06_manager_ui/`](../review_artifacts/chronicle_screens/2026-10-06_manager_ui/).
 - **Workstream end of day:**
   - the exposure and aging / Fitness packages are delivered (files located), and the calendar prototype has reported logic checks;
   - Fitness Light / Intense and the performance benchmark are provisional;
@@ -2145,6 +2151,11 @@ A day of stop-and-decide cycles: 11 commits stop for a user decision or review, 
     - only the fitness value and bolt white, with the stars untouched;
     - stamina-cost text in a muted rose beside the unchanged red bolt and bar.
   - **Uncertain:** whether "status text" meant exactly that element.
+  - [Local, recaptured 8 Oct] Compared with the session's own pre-change snapshot (`outputs/before-impact-league-colours.html`, 23:09), the final build changes two things:
+    - the stamina-cost value and "Bar consumed" go from light green to muted rose;
+    - the Champions League label goes from lilac to blue.
+
+    The image attached with the request (`attachments/impact-colours/reference-1.png`, 23:08) shows the stamina element. Portfolio Stage 29.
 - **Workstream end of day:** the manager design is refined across standings, competitions, calendar and squad, and the final file is located. Model calibration (performance; Fitness Light / Intense) is still open.
 
 **Publication housekeeping** (8 Oct, from about 02:40; inside this chronicle day by the 06:00 rule). [Session] The user: "Before doing any further physical-character/E2 work, perform repository publication and daily-archive housekeeping … Do not fabricate, backdate or rewrite commit timestamps".
@@ -2219,7 +2230,7 @@ The recommendation is 1 (a) and 2. No PG-1 or official E2 has run.
   - **Workbooks:** flank rules; the 4 Oct ranked workbook.
   - **Design packages:** exposure; aging / Fitness.
   - **Location:** the user's Codex workspace (`~/Documents/Codex/2026-10-0X/`) and `~/Downloads`.
-- **The portfolio source package** ([Local], `~/Downloads/TOUCHLINE_PORTFOLIO_SOURCE_ASSETS/`, 28 Sep) and the Astra transfer zip.
+- **The portfolio source package** ([Local], `~/Downloads/TOUCHLINE_PORTFOLIO_SOURCE_ASSETS/`, 28 Sep) and the Astra transfer zip. It was extended on 8 Oct with stages 23 – 29 for the 1 – 7 Oct work (Appendix G).
 - **One generated evidence archive** (`runs_records_240_REF_165.tgz`, 105.8 MB), removed from the V2 history for publication on 8 Oct, is kept locally outside Git (7 Oct entry).
 - **The Astra character roster** ([Astra], `~/Downloads/TOUCHLINE_ASTRA_MIGRATION_PACKAGE`): 20 individually built players (19 plus Courtois), including the 3D Salah; the B back-print lock; the unfinished player-art workshop, whose source was never recovered. Only Courtois and the six later outfield players reached the runtime.
 - **The Astra V6 character-renderer repository:** its commit history (`57bddf9` … `5e89a7a`) is known only as labels; no object database was recovered.
@@ -2572,19 +2583,33 @@ The request to use at the end of each day:
 
 The full list of 30 entries is in [`ORIGINALS_STATUS.tsv`](../review_artifacts/chat_history_reconstruction_2026-10-08/ORIGINALS_STATUS.tsv), with paths, sizes, times and SHA-256.
 
-**Not in the Git archive, but located locally.** Archive each under its historical day on the owner's decision:
+**Archived on 8 Oct in the portfolio source package** (local, outside Git as decided on 28 Sep; byte-identical copies):
 
-| day | original | where | identity |
+| day | original | package path (`~/Downloads/TOUCHLINE_PORTFOLIO_SOURCE_ASSETS/`) | identity |
 |---|---|---|---|
-| 4 Oct | `2026-27-ratings-updated-ranked-2026-10-04.xlsx` | `~/Downloads` (17:37) | name and time match the reported delivery; contents not compared with the report |
-| 6 Oct | `TOUCHLINE_Exposure_Development_Package.zip` | Codex workspace attachment (16:32) | name and time match; not executed |
-| 6 Oct | `TOUCHLINE_Aging_Fitness_v1_2026-10-06.zip` | Codex workspace attachment (22:12) | name differs by one character (underscore vs hyphen); not executed |
-| 7 Oct | `Touchline_Playable_Calendar.html` (latest) | Codex workspace (23:09) = `~/Downloads` (23:10) | diff against the 22:48 reference inspected (7 Oct entry) |
+| 2 Oct | `2026-27-ratings-flank-rules-updated.xlsx` | `24_squad_live_ratings/original/` | Desktop file (23:13); its Rules sheet stores the chat's last weak-foot scale (2 Oct entry) |
+| 4 Oct | `2026-27-ratings-updated-ranked-2026-10-04.xlsx` | `26_ranked_ratings_broad_mockup/original/` | stored values match the reported figures (4 Oct entry); a Quick Look render of the rank-changes sheet is beside it |
+| 6 Oct | `TOUCHLINE_Exposure_Development_Package.zip` | `28_development_model/original/` | attachment (16:32), inner files 15:26; charted, not executed |
+| 6 Oct | `TOUCHLINE_Aging_Fitness_v1_2026-10-06.zip` | `28_development_model/original/` | attachment (22:12), inner files 21:03; name differs from the chat's by one character; charted, not executed |
+| 7 Oct | `Touchline_Playable_Calendar.html` (latest) | `29_calendar_polish/original/` | the 23:09 build (= `~/Downloads` 23:10); recaptured against the 23:09 pre-change snapshot (7 Oct entry) |
+
+**The package's stages 23 – 29**, one per chronicle day from 1 to 7 Oct, add 75 media and these 5 originals. Open them in the package's `PORTFOLIO_CAPTURE_REVIEW.html`, group 9. The media are:
+- 44 ORIGINAL: the owner's screenshots, the sessions' own preview renders and two animated card previews;
+- 15 RECAPTURED: finance, mockup, workbook, pack opening and calendar, all from disposable copies of the original files;
+- 10 GENERATED (AI images): card art, standings concepts, a background and an icon study;
+- 2 derived charts;
+- 4 third-party references.
+
+Paths, hashes and the fidelity notes are in the package's `TOUCHLINE_PORTFOLIO_ASSET_MANIFEST.md`, and the per-original status is in `ORIGINALS_STATUS.tsv` (column `portfolio_package`).
+
+**Also added to Git on 8 Oct:** eight of the owner's screenshots from these days, filed under their days in `chronicle_screens/` with `MANIFEST.tsv` rows (2 Oct ratings; 4, 5, 6 and 7 Oct manager UI). Until then they existed only on the Desktop or as chat attachments. Three are surviving chat-attachment copies at 2047 px. Session preview renders, card images, generated images and third-party references stay local.
 
 **Not found:**
 - the 3 Oct final-review workbook;
 - the 4 Oct mockup review-package ZIP;
-- the 5 Oct metallic rim-detail / standings PNGs;
+- the 5 Oct metallic rim-detail / standings PNGs (the 5 Oct 12:00 – 15:00 standings work left no workspace files; the 13:56 screenshot and the `~/Downloads` HTML builds survive);
+- images of the 4:59 gold-fill / rim experiment and its 05:04 reversion (4 Oct entry);
+- the first 6 Oct Calendar builds (22:17 / 22:32), which were overwritten in place; the 23:10 screenshot of their training panel survives;
 - the 6 – 7 Oct performance-comparison tables (never files).
 
 **Publication limits that still apply:**
