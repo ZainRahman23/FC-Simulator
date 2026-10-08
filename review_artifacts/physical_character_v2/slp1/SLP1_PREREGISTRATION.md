@@ -340,4 +340,23 @@ SLP-1 does not establish any of the following:
 
 ## 10. Amendments
 
-None at freezing.
+None at freezing. Added after freezing, before any evidence run (calibration or matrix), each with its reason:
+
+**Amendment 1 (implementation of §2.4's shank point).**
+- The left-shank collider is a tapered capsule whose triangle mesh has no vertex within ±10 % of mid-height, so the frozen vertex rule had no candidate.
+- The candidate set now also contains the mesh's triangle-edge crossings of the band's centre plane (mid-height for the shank; the top-band centre for the thorax).
+- The selected point is still the minimum-x surface point of the band, the rule's stated intent. The thorax point is unchanged: its band has vertices.
+
+**Amendment 2 (§2.3.4, leg IK frame): the reference pelvis pose, not the measured one.**
+- This reverts §9 change 5 to the approved draft's choice.
+- Evidence: smoke run 0 (`evidence/smoke/smoke0_walk_D0_f1_measuredPelvisIK.json.gz`, walk, D0, f = 1 Hz).
+  - With the IK at the measured pelvis, the legs' targets always equal their current configuration, so the legs never follow the prescribed support height.
+  - The straight legs held the pelvis 6 – 9 cm above the reference while S pulled down at its 0.25·M·g cap.
+  - Feet could not reach their footholds (touchdown errors 0.8 – 1.3 m), and the body fell at 2.21 s.
+- This is a driver-authoring defect of the frozen text (the legs ignore the locomotion reference), not a support-layer outcome. Reference-pelvis frame: origin = p_ref(t) − (initial pelvis COM − origin), orientation q0.
+- Two implementation bugs were also fixed before evidence runs:
+  - `pitched()` threw at near-zero pitch angles (sign test at 1e-9); it now picks the sign that raises the other sole edge.
+  - The disturbance point candidate fix above.
+- Smoke run 1 (`evidence/smoke/smoke1_walk_D0_f1_referencePelvisIK.json.gz`) is with amendment 2. It is recorded as a smoke run only and is not used for any criterion.
+
+No other change. In particular, no driver, gain, cap, spring or criterion change follows from smoke run 1. The calibration (§4.1) runs on this code exactly as frozen plus amendments 1 – 2.
