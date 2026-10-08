@@ -11,7 +11,7 @@
 - **Probes 2–4 were not run.** The stop rule applies: the same failure prevents step 2 on every body.
 
 **Files:**
-- Harness: `sandbox/visual/physchar2/tools/loco_probe.mjs`.
+- Harness: `sandbox/visual/physchar2/tools/loco_probe.mjs`. It was later extended with the CF-1 counterfactual (`--cf=1`, default off, `../loco_cf1_2026-10-08/`); with `--cf=0` it reproduces these 16 runs bit-identically.
 - Tables: `tools/loco_probe_report.mjs` → `LOCO_PROBE_TABLES.md`.
 - Evidence: `evidence/*.json.gz`, one per run, with per-step records, the failure snapshot and a 60 Hz trace.
 - Reproduction: `scripts/run_loco_probe.sh`.
