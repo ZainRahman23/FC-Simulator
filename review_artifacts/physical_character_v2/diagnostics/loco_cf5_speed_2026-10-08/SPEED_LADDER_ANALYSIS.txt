@@ -1,0 +1,242 @@
+== L1_V2-165-62_s20.json.gz: V2-165-62 S 0.06 Tst 0.7 Tsw 0.55 | physical 20/20
+   commanded {'cycleS': 1.5335, 'cadenceHz': 0.652, 'speedMmS': 39.1} | realized {'speedMmS': 43.2, 'periodS': [1.375, 1.383], 'cadenceHz': 0.725, 'stepAdvanceM': [0.0575, 0.062], 'stepChosenM': [0.0599, 0.0644]}
+   COM fwd cycle {'mean': [42.2, 45.8], 'min': [19.9, 26.9], 'max': [60.8, 69.7]} | at {'decision': [26.6, 33.6], 'liftoff': [24.7, 30.8], 'preTouchdown': [29.5, 32.0], 'touchdown': [30.9, 32.9], 'afterAcceptance': [60.7, 65.6], 'nextLiftoff': [24.7, 27.2], 'post01': [32.2, 39.8]}
+   support {'bothContactS': [0.852, 0.885], 'bothSupportS': [0.581, 0.635], 'flightS': [0.0, 0.0]} | continuity {'vbarMmS': 43.2, 'cminMmS': 10.8, 'maxConsecutive': 19, 'touchdownBelowCmin': 0, 'notContinuous': False} | events {'early': 0, 'late': 0, 'failedTD': 0, 'replans': 0, 'nocertSwing': 0, 'shadowAbort': 0, 'rClamped': 0, 'contactLost': 0}
+     xiErrTransferMm         12.499 …    15.600  halves    14.164 →    13.481  slope -0.0544
+     xiErrSwingMm             9.640 …    12.170  halves    10.789 →    10.531  slope -0.0337
+     captureHullTDmm         84.180 …    85.820  halves    85.144 →    85.015  slope -0.0113
+     xiLeadDecisionMm        -7.830 …    -5.990  halves    -6.673 →    -6.481  slope +0.0172
+     xiLatDecisionMm         21.410 …    26.270  halves    24.127 →    23.062  slope -0.0836
+     vrpFwdMm               -11.590 …    -9.560  halves   -10.310 →   -10.098  slope +0.0188
+     vrpLatMm                15.860 …    21.230  halves    18.861 →    17.688  slope -0.0922
+     footholdErrMm            2.110 …     2.280  halves     2.204 →     2.237  slope +0.0039
+     landingLatErrMm         -5.360 …     5.120  halves     0.571 →     0.012  slope -0.1117
+     widthMm                150.400 …   165.200  halves   158.667 →   155.620  slope -0.2219
+     tdDownMmS               28.600 …    54.700  halves    50.667 →    48.630  slope -0.0754
+     slipMm                   0.370 …     0.610  halves     0.459 →     0.569  slope +0.0121
+     releaseS                 0.117 …     0.117  halves     0.117 →     0.117  slope +0.0000
+     trailFzPct               0.010 …     0.020  halves     0.011 →     0.015  slope +0.0003
+     satAnkleInv              6.000 …     6.000  halves     6.000 →     6.000  slope +0.0000
+     satAll                   6.000 …     8.000  halves     6.778 →     6.300  slope -0.0333
+     hardMarginDeg           10.610 …    10.810  halves    10.690 →    10.756  slope +0.0059
+     dTau0Nm                 12.077 …    14.633  halves    13.496 →    12.915  slope -0.0449
+     energyResJ               0.047 …     0.052  halves     0.049 →     0.049  slope -0.0000
+     pStarOutMm               0.000 …     0.000  halves     0.000 →     0.000  slope +0.0000
+     pelvisTiltDeg            6.450 …     6.920  halves     6.548 →     6.502  slope -0.0068
+     pelvisYawDeg            -0.800 …     0.584  halves    -0.081 →    -0.101  slope +0.0076
+     footYawLDeg             -1.595 …    -0.275  halves    -0.701 →    -1.388  slope -0.0712
+     footYawRDeg              0.121 …     1.394  halves     0.478 →     1.177  slope +0.0727
+     phiContact               0.909 …     0.917  halves     0.910 →     0.911  slope +0.0000
+     touchdownToSupportS      0.429 …     0.463  halves     0.444 →     0.446  slope +0.0000
+== L1_V2-198-92_s20.json.gz: V2-198-92 S 0.06 Tst 0.7 Tsw 0.55 | physical 20/20
+   commanded {'cycleS': 1.5335, 'cadenceHz': 0.652, 'speedMmS': 39.1} | realized {'speedMmS': 43.4, 'periodS': [1.371, 1.375], 'cadenceHz': 0.728, 'stepAdvanceM': [0.0577, 0.0604], 'stepChosenM': [0.0602, 0.063]}
+   COM fwd cycle {'mean': [42.7, 46.9], 'min': [21.4, 29.3], 'max': [59.9, 68.5]} | at {'decision': [29.8, 37.2], 'liftoff': [27.8, 34.5], 'preTouchdown': [30.3, 33.5], 'touchdown': [30.5, 32.3], 'afterAcceptance': [59.7, 62.1], 'nextLiftoff': [27.8, 29.7], 'post01': [33.3, 38.6]}
+   support {'bothContactS': [0.847, 0.885], 'bothSupportS': [0.548, 0.601], 'flightS': [0.0, 0.0]} | continuity {'vbarMmS': 43.4, 'cminMmS': 10.9, 'maxConsecutive': 19, 'touchdownBelowCmin': 0, 'notContinuous': False} | events {'early': 0, 'late': 0, 'failedTD': 0, 'replans': 0, 'nocertSwing': 0, 'shadowAbort': 0, 'rClamped': 0, 'contactLost': 0}
+     xiErrTransferMm         13.346 …    15.845  halves    14.567 →    15.135  slope +0.0310
+     xiErrSwingMm            10.670 …    12.950  halves    11.900 →    12.547  slope +0.0464
+     captureHullTDmm         98.670 …   101.570  halves   100.072 →    98.989  slope -0.0956
+     xiLeadDecisionMm        -5.470 …    -3.830  halves    -4.346 →    -4.366  slope +0.0037
+     xiLatDecisionMm         26.690 …    30.220  halves    28.654 →    29.522  slope +0.0484
+     vrpFwdMm               -10.080 …    -8.230  halves    -8.812 →    -8.836  slope +0.0040
+     vrpLatMm                17.880 …    21.880  halves    20.109 →    21.089  slope +0.0546
+     footholdErrMm            2.340 …     2.610  halves     2.394 →     2.563  slope +0.0162
+     landingLatErrMm         -4.380 …     5.320  halves     0.351 →    -1.457  slope -0.2102
+     widthMm                180.400 …   193.200  halves   187.533 →   191.020  slope +0.2035
+     tdDownMmS               44.600 …    49.900  halves    48.133 →    45.140  slope -0.2746
+     slipMm                   0.394 …     0.980  halves     0.418 →     0.734  slope +0.0343
+     releaseS                 0.117 …     0.117  halves     0.117 →     0.117  slope -0.0000
+     trailFzPct               0.010 …     0.020  halves     0.010 →     0.012  slope +0.0003
+     satAnkleInv              5.000 …     6.000  halves     5.111 →     5.000  slope -0.0140
+     satAll                   6.000 …     8.000  halves     6.222 →     6.000  slope -0.0281
+     hardMarginDeg            7.970 …     9.930  halves     8.841 →     8.133  slope -0.0793
+     dTau0Nm                 20.230 …    23.098  halves    21.453 →    22.154  slope +0.0374
+     energyResJ               0.073 …     0.084  halves     0.078 →     0.081  slope +0.0004
+     pStarOutMm               0.000 …     0.000  halves     0.000 →     0.000  slope +0.0000
+     pelvisTiltDeg            5.820 …     6.230  halves     5.923 →     5.897  slope -0.0045
+     pelvisYawDeg            -0.891 …     0.645  halves    -0.139 →    -0.033  slope +0.0110
+     footYawLDeg             -3.265 …    -0.214  halves    -1.126 →    -2.775  slope -0.1705
+     footYawRDeg              0.164 …     3.137  halves     0.950 →     2.588  slope +0.1708
+     phiContact               0.909 …     0.909  halves     0.909 →     0.909  slope +0.0000
+     touchdownToSupportS      0.450 …     0.487  halves     0.468 →     0.483  slope +0.0014
+== L1_V2-long-legs_s20.json.gz: V2-long-legs S 0.06 Tst 0.7 Tsw 0.55 | physical 20/20
+   commanded {'cycleS': 1.5335, 'cadenceHz': 0.652, 'speedMmS': 39.1} | realized {'speedMmS': 43.0, 'periodS': [1.375, 1.379], 'cadenceHz': 0.726, 'stepAdvanceM': [0.0569, 0.0604], 'stepChosenM': [0.0601, 0.0635]}
+   COM fwd cycle {'mean': [41.7, 46.6], 'min': [20.2, 28.5], 'max': [59.5, 69.4]} | at {'decision': [29.8, 36.9], 'liftoff': [27.4, 33.6], 'preTouchdown': [29.1, 32.5], 'touchdown': [29.0, 30.9], 'afterAcceptance': [59.4, 63.1], 'nextLiftoff': [27.4, 29.6], 'post01': [32.2, 37.3]}
+   support {'bothContactS': [0.847, 0.885], 'bothSupportS': [0.564, 0.601], 'flightS': [0.0, 0.0]} | continuity {'vbarMmS': 43.0, 'cminMmS': 10.8, 'maxConsecutive': 19, 'touchdownBelowCmin': 0, 'notContinuous': False} | events {'early': 0, 'late': 0, 'failedTD': 0, 'replans': 0, 'nocertSwing': 0, 'shadowAbort': 0, 'rClamped': 0, 'contactLost': 0}
+     xiErrTransferMm         10.762 …    13.472  halves    12.361 →    11.704  slope -0.0229
+     xiErrSwingMm             8.950 …    11.250  halves    10.127 →     9.997  slope +0.0079
+     captureHullTDmm         90.840 …    93.440  halves    92.163 →    91.570  slope -0.0641
+     xiLeadDecisionMm        -5.020 …    -3.350  halves    -3.909 →    -3.741  slope +0.0097
+     xiLatDecisionMm         21.300 …    25.410  halves    23.938 →    22.889  slope -0.0364
+     vrpFwdMm                -9.160 …    -7.290  halves    -7.911 →    -7.720  slope +0.0112
+     vrpLatMm                13.630 …    18.240  halves    16.583 →    15.408  slope -0.0408
+     footholdErrMm            2.820 …     3.060  halves     2.903 →     2.999  slope +0.0116
+     landingLatErrMm         -6.130 …     5.630  halves     0.548 →    -1.029  slope -0.2040
+     widthMm                163.300 …   178.700  halves   173.578 →   169.860  slope -0.1074
+     tdDownMmS               38.900 …    44.500  halves    41.600 →    41.490  slope -0.1105
+     slipMm                   0.413 …     1.151  halves     0.661 →     0.994  slope +0.0375
+     releaseS                 0.117 …     0.117  halves     0.117 →     0.117  slope -0.0000
+     trailFzPct               0.010 …     0.030  halves     0.019 →     0.028  slope +0.0005
+     satAnkleInv              4.000 …     5.000  halves     4.667 →     4.300  slope -0.0158
+     satAll                   4.000 …     6.000  halves     4.889 →     4.300  slope -0.0333
+     hardMarginDeg            9.240 …     9.980  halves     9.388 →     9.335  slope -0.0122
+     dTau0Nm                 15.209 …    17.074  halves    15.997 →    15.641  slope -0.0297
+     energyResJ               0.062 …     0.070  halves     0.066 →     0.066  slope +0.0001
+     pStarOutMm               0.000 …     0.000  halves     0.000 →     0.000  slope +0.0000
+     pelvisTiltDeg            6.480 …     6.990  halves     6.581 →     6.534  slope -0.0071
+     pelvisYawDeg            -0.938 …     0.760  halves    -0.072 →    -0.086  slope +0.0095
+     footYawLDeg             -2.193 …    -0.207  halves    -0.934 →    -1.944  slope -0.1052
+     footYawRDeg              0.134 …     2.000  halves     0.745 →     1.748  slope +0.1050
+     phiContact               0.909 …     0.909  halves     0.909 →     0.909  slope +0.0000
+     touchdownToSupportS      0.450 …     0.483  halves     0.464 →     0.466  slope +0.0005
+== L1_V2-REF_s20.json.gz: V2-REF S 0.06 Tst 0.7 Tsw 0.55 | physical 20/20
+   commanded {'cycleS': 1.5335, 'cadenceHz': 0.652, 'speedMmS': 39.1} | realized {'speedMmS': 43.3, 'periodS': [1.375, 1.379], 'cadenceHz': 0.727, 'stepAdvanceM': [0.0574, 0.0605], 'stepChosenM': [0.0599, 0.0629]}
+   COM fwd cycle {'mean': [42.2, 46.4], 'min': [20.9, 28.2], 'max': [60.0, 69.0]} | at {'decision': [28.3, 35.6], 'liftoff': [26.4, 32.7], 'preTouchdown': [29.9, 32.9], 'touchdown': [30.8, 32.4], 'afterAcceptance': [59.9, 63.0], 'nextLiftoff': [26.4, 28.5], 'post01': [32.7, 38.9]}
+   support {'bothContactS': [0.847, 0.885], 'bothSupportS': [0.568, 0.601], 'flightS': [0.0, 0.0]} | continuity {'vbarMmS': 43.3, 'cminMmS': 10.8, 'maxConsecutive': 19, 'touchdownBelowCmin': 0, 'notContinuous': False} | events {'early': 0, 'late': 0, 'failedTD': 0, 'replans': 0, 'nocertSwing': 0, 'shadowAbort': 0, 'rClamped': 0, 'contactLost': 0}
+     xiErrTransferMm         12.649 …    16.033  halves    14.371 →    13.570  slope -0.0683
+     xiErrSwingMm            10.180 …    12.970  halves    11.662 →    10.797  slope -0.0343
+     captureHullTDmm         91.680 …    94.160  halves    92.617 →    92.334  slope -0.0532
+     xiLeadDecisionMm        -6.550 …    -4.800  halves    -5.442 →    -5.218  slope +0.0192
+     xiLatDecisionMm         23.590 …    28.820  halves    26.348 →    25.122  slope -0.1036
+     vrpFwdMm               -10.750 …    -8.790  halves    -9.514 →    -9.267  slope +0.0212
+     vrpLatMm                16.390 …    22.250  halves    19.481 →    18.109  slope -0.1161
+     footholdErrMm            2.220 …     2.390  halves     2.272 →     2.361  slope +0.0085
+     landingLatErrMm         -5.400 …     4.950  halves     0.429 →    -1.334  slope -0.2172
+     widthMm                165.900 …   182.500  halves   174.433 →   171.090  slope -0.2849
+     tdDownMmS               48.400 …    53.100  halves    51.178 →    50.740  slope -0.0318
+     slipMm                   0.371 …     0.836  halves     0.441 →     0.714  slope +0.0272
+     releaseS                 0.117 …     0.117  halves     0.117 →     0.117  slope +0.0000
+     trailFzPct               0.010 …     0.020  halves     0.012 →     0.018  slope +0.0006
+     satAnkleInv              5.000 …     6.000  halves     5.556 →     5.400  slope -0.0088
+     satAll                   5.000 …     8.000  halves     6.778 →     5.700  slope -0.0947
+     hardMarginDeg            9.310 …    10.110  halves     9.491 →     9.394  slope -0.0143
+     dTau0Nm                 15.755 …    19.291  halves    17.623 →    16.728  slope -0.0754
+     energyResJ               0.060 …     0.068  halves     0.064 →     0.065  slope +0.0000
+     pStarOutMm               0.000 …     0.000  halves     0.000 →     0.000  slope +0.0000
+     pelvisTiltDeg            6.090 …     6.520  halves     6.186 →     6.126  slope -0.0068
+     pelvisYawDeg            -1.038 …     0.857  halves    -0.097 →    -0.079  slope +0.0110
+     footYawLDeg             -2.375 …    -0.247  halves    -0.969 →    -2.093  slope -0.1162
+     footYawRDeg              0.150 …     2.186  halves     0.758 →     1.880  slope +0.1168
+     phiContact               0.909 …     0.909  halves     0.909 →     0.909  slope +0.0000
+     touchdownToSupportS      0.446 …     0.479  halves     0.463 →     0.458  slope +0.0003
+== L2_V2-165-62_s20.json.gz: V2-165-62 S 0.06 Tst 0.5 Tsw 0.5 | physical 10/20 FAIL step 11: sequencer NOCERT: NO_CERTIFIED_ONE_STEP at the decision: step not executed (fallback: return to double support)
+   commanded {'cycleS': 1.2835, 'cadenceHz': 0.779, 'speedMmS': 46.7} | realized {'speedMmS': 52.9, 'periodS': [1.121, 1.125], 'cadenceHz': 0.891, 'stepAdvanceM': [0.0574, 0.06], 'stepChosenM': [0.0604, 0.0631]}
+   COM fwd cycle {'mean': [52.1, 55.5], 'min': [24.3, 36.2], 'max': [76.5, 85.0]} | at {'decision': [40.1, 47.6], 'liftoff': [37.0, 43.5], 'preTouchdown': [38.5, 42.4], 'touchdown': [36.7, 39.1], 'afterAcceptance': [63.0, 68.8], 'nextLiftoff': [37.0, 39.2], 'post01': [42.3, 49.3]}
+   support {'bothContactS': [0.647, 0.668], 'bothSupportS': [0.349, 0.367], 'flightS': [0.0, 0.0]} | continuity {'vbarMmS': 52.9, 'cminMmS': 13.2, 'maxConsecutive': 8, 'touchdownBelowCmin': 1, 'notContinuous': False} | events {'early': 0, 'late': 0, 'failedTD': 0, 'replans': 0, 'nocertSwing': 0, 'shadowAbort': 0, 'rClamped': 0, 'contactLost': 0}
+     xiErrTransferMm          0.285 …    13.674  halves    12.480 →     0.300  slope -1.8804
+     xiErrSwingMm            11.640 …    29.080  halves    12.486 →    16.736  slope +1.0156
+     captureHullTDmm         83.100 …    85.590  halves    84.632 →    83.638  slope -0.1892
+     xiLeadDecisionMm        -5.260 …    -3.880  halves    -4.292 →    -4.458  slope -0.0248
+     xiLatDecisionMm         23.660 …    27.910  halves    25.060 →    26.642  slope +0.2620
+     vrpFwdMm               -10.130 …    -8.570  halves    -9.038 →    -9.226  slope -0.0281
+     vrpLatMm                15.740 …    20.530  halves    17.314 →    19.098  slope +0.2954
+     footholdErrMm            2.780 …     2.910  halves     2.815 →     2.858  slope +0.0112
+     landingLatErrMm         -3.720 …     4.910  halves     1.385 →    -0.356  slope -0.3018
+     widthMm                150.500 …   166.300  halves   156.660 →   161.860  slope +0.7976
+     tdDownMmS               44.500 …    50.200  halves    48.200 →    46.900  slope -0.3700
+     slipMm                   0.545 …     1.277  halves     0.717 →     1.131  slope +0.0839
+     releaseS                 0.104 …     0.117  halves     0.117 →     0.109  slope -0.0013
+     trailFzPct               0.000 …     0.000  halves     0.000 →     0.000  slope +0.0000
+     satAnkleInv              2.000 …    26.000  halves    16.400 →    19.400  slope -0.0182
+     satAll                   4.000 …    30.000  halves    18.400 →    21.400  slope -0.0424
+     hardMarginDeg            9.760 …    13.858  halves    10.278 →    10.670  slope +0.1373
+     dTau0Nm                 13.270 …    19.980  halves    13.772 →    15.654  slope +0.4272
+     energyResJ               0.020 …     0.058  halves     0.055 →     0.049  slope -0.0018
+     pStarOutMm               0.000 …     0.000  halves     0.000 →     0.000  slope +0.0000
+     pelvisTiltDeg            4.410 …     7.440  halves     7.100 →     6.530  slope -0.1590
+     pelvisYawDeg            -0.524 …     0.286  halves    -0.126 →    -0.140  slope -0.0036
+     footYawLDeg             -1.916 …    -0.272  halves    -0.794 →    -1.642  slope -0.1691
+     footYawRDeg              0.289 …     1.663  halves     0.633 →     1.440  slope +0.1630
+     phiContact               0.908 …     0.908  halves     0.908 →     0.908  slope +0.0000
+     touchdownToSupportS      0.483 …     0.504  halves     0.489 →     0.499  slope +0.0019
+== L2_V2-198-92_s20.json.gz: V2-198-92 S 0.06 Tst 0.5 Tsw 0.5 | physical 3/20 FAIL step 4: sequencer NOCERT: NO_CERTIFIED_ONE_STEP at the decision: step not executed (fallback: return to double support)
+   commanded {'cycleS': 1.2835, 'cadenceHz': 0.779, 'speedMmS': 46.7} | realized {'speedMmS': 53.5, 'periodS': [1.125, 1.125], 'cadenceHz': 0.889, 'stepAdvanceM': [0.06, 0.06], 'stepChosenM': [0.0618, 0.0633]}
+   COM fwd cycle {'mean': [52.9, 56.7], 'min': [26.7, 36.6], 'max': [74.1, 82.9]} | at {'decision': [43.7, 51.0], 'liftoff': [40.5, 47.1], 'preTouchdown': [40.3, 44.4], 'touchdown': [37.8, 40.2], 'afterAcceptance': [61.1, 62.5], 'nextLiftoff': [40.5, 40.5], 'post01': [43.5, 47.5]}
+   support {'bothContactS': [0.651, 0.668], 'bothSupportS': [0.351, 0.367], 'flightS': [0.0, 0.0]} | continuity {'vbarMmS': 53.5, 'cminMmS': 13.4, 'maxConsecutive': 1, 'touchdownBelowCmin': 1, 'notContinuous': False} | events {'early': 0, 'late': 1, 'failedTD': 0, 'replans': 1, 'nocertSwing': 0, 'shadowAbort': 0, 'rClamped': 0, 'contactLost': 0}
+     xiErrTransferMm          0.366 …    13.080  halves    13.080 →     0.377  slope -6.3456
+     xiErrSwingMm            13.740 …    34.100  halves    13.740 →    24.200  slope +10.1800
+     xiLeadDecisionMm        -3.230 …    -1.670  halves    -1.670 →    -2.865  slope -0.7800
+     xiLatDecisionMm         30.970 …    33.650  halves    30.970 →    32.885  slope +1.3400
+     vrpFwdMm                -9.230 …    -7.420  halves    -7.420 →    -8.805  slope -0.9050
+     vrpLatMm                18.970 …    22.070  halves    18.970 →    21.180  slope +1.5500
+     widthMm                190.200 …   196.100  halves   190.200 →   194.300  slope +2.9500
+     slipMm                   0.486 …     1.026  halves     0.486 →     1.012  slope +0.2701
+     releaseS                 0.100 …     0.117  halves     0.117 →     0.104  slope -0.0083
+     trailFzPct               0.000 …     0.000  halves     0.000 →     0.000  slope +0.0000
+     satAnkleInv              0.000 …    26.000  halves    23.000 →    13.000  slope -11.5000
+     satAll                   0.000 …    30.000  halves    25.000 →    15.000  slope -12.5000
+     hardMarginDeg           10.350 …    11.373  halves    10.540 →    10.862  slope +0.4165
+     dTau0Nm                 25.240 …    36.330  halves    25.240 →    31.520  slope +5.5450
+     energyResJ               0.022 …     0.082  halves     0.082 →     0.050  slope -0.0303
+     pStarOutMm               0.000 …     0.000  halves     0.000 →     0.000  slope +0.0000
+     pelvisTiltDeg            3.870 …     6.680  halves     6.680 →     5.080  slope -1.4050
+     pelvisYawDeg            -3.824 …     2.943  halves    -1.574 →    -0.440  slope -1.1250
+     footYawLDeg             -0.503 …    -0.161  halves    -0.161 →    -0.470  slope -0.1710
+     footYawRDeg              0.198 …     0.448  halves     0.198 →     0.335  slope +0.1250
+== L2_V2-long-legs_s20.json.gz: V2-long-legs S 0.06 Tst 0.5 Tsw 0.5 | physical 20/20
+   commanded {'cycleS': 1.2835, 'cadenceHz': 0.779, 'speedMmS': 46.7} | realized {'speedMmS': 51.9, 'periodS': [1.125, 1.129], 'cadenceHz': 0.888, 'stepAdvanceM': [0.0505, 0.0602], 'stepChosenM': [0.0544, 0.064]}
+   COM fwd cycle {'mean': [45.8, 56.3], 'min': [25.0, 36.1], 'max': [63.3, 84.0]} | at {'decision': [38.0, 50.9], 'liftoff': [34.9, 46.2], 'preTouchdown': [35.3, 43.2], 'touchdown': [32.7, 38.4], 'afterAcceptance': [55.4, 67.7], 'nextLiftoff': [34.9, 41.8], 'post01': [41.9, 47.1]}
+   support {'bothContactS': [0.647, 0.668], 'bothSupportS': [0.332, 0.367], 'flightS': [0.0, 0.0]} | continuity {'vbarMmS': 51.9, 'cminMmS': 13.0, 'maxConsecutive': 19, 'touchdownBelowCmin': 0, 'notContinuous': False} | events {'early': 0, 'late': 1, 'failedTD': 0, 'replans': 1, 'nocertSwing': 0, 'shadowAbort': 0, 'rClamped': 0, 'contactLost': 0}
+     xiErrTransferMm          0.294 …    11.168  halves     7.323 →     4.280  slope -0.1012
+     xiErrSwingMm             9.600 …    12.580  halves    11.246 →    11.183  slope -0.0327
+     captureHullTDmm         89.210 …    93.230  halves    91.738 →    90.724  slope -0.0685
+     xiLeadDecisionMm        -2.210 …     0.390  halves    -1.650 →    -1.251  slope +0.0492
+     xiLatDecisionMm         24.640 …    28.860  halves    26.530 →    26.970  slope -0.0114
+     vrpFwdMm                -7.520 …    -4.550  halves    -6.884 →    -6.427  slope +0.0563
+     vrpLatMm                14.060 …    18.900  halves    16.230 →    16.735  slope -0.0130
+     footholdErrMm            3.560 …     3.950  halves     3.666 →     3.807  slope +0.0128
+     landingLatErrMm         -5.490 …     6.360  halves     0.577 →    -0.260  slope -0.1312
+     widthMm                163.500 …   180.500  halves   171.600 →   172.540  slope -0.2061
+     tdDownMmS               33.400 …    42.200  halves    38.144 →    36.530  slope -0.0781
+     slipMm                   0.369 …     1.179  halves     0.417 →     0.880  slope +0.0483
+     releaseS                 0.100 …     0.117  halves     0.114 →     0.109  slope -0.0002
+     trailFzPct               0.000 …     0.010  halves     0.002 →     0.003  slope +0.0002
+     satAnkleInv             14.000 …    26.000  halves    18.889 →    20.400  slope +0.0561
+     satAll                  14.000 …    28.000  halves    20.444 →    21.600  slope +0.0246
+     hardMarginDeg            8.890 …    10.170  halves     9.929 →     9.252  slope -0.0692
+     dTau0Nm                 16.650 …    19.980  halves    18.251 →    18.566  slope -0.0138
+     energyResJ               0.069 …     0.081  halves     0.072 →     0.076  slope +0.0003
+     pStarOutMm               0.000 …     0.000  halves     0.000 →     0.000  slope +0.0000
+     pelvisTiltDeg            6.810 …     7.520  halves     7.184 →     7.097  slope -0.0108
+     pelvisYawDeg            -2.123 …     1.983  halves    -0.173 →     0.025  slope +0.0042
+     footYawLDeg             -2.374 …    -0.162  halves    -0.943 →    -2.027  slope -0.1146
+     footYawRDeg              0.212 …     2.330  halves     0.825 →     1.951  slope +0.1186
+     phiContact               0.908 …     0.908  halves     0.908 →     0.908  slope +0.0000
+     touchdownToSupportS      0.479 …     0.508  halves     0.493 →     0.496  slope +0.0001
+== L2_V2-REF_s20.json.gz: V2-REF S 0.06 Tst 0.5 Tsw 0.5 | physical 20/20
+   commanded {'cycleS': 1.2835, 'cadenceHz': 0.779, 'speedMmS': 46.7} | realized {'speedMmS': 53.0, 'periodS': [1.121, 1.125], 'cadenceHz': 0.891, 'stepAdvanceM': [0.0575, 0.0602], 'stepChosenM': [0.0606, 0.0633]}
+   COM fwd cycle {'mean': [52.1, 56.1], 'min': [25.6, 36.8], 'max': [74.4, 83.8]} | at {'decision': [42.3, 49.6], 'liftoff': [39.2, 45.5], 'preTouchdown': [39.3, 43.4], 'touchdown': [36.9, 39.6], 'afterAcceptance': [61.6, 67.4], 'nextLiftoff': [39.2, 41.0], 'post01': [42.7, 48.6]}
+   support {'bothContactS': [0.647, 0.668], 'bothSupportS': [0.332, 0.367], 'flightS': [0.0, 0.0]} | continuity {'vbarMmS': 53.0, 'cminMmS': 13.3, 'maxConsecutive': 19, 'touchdownBelowCmin': 0, 'notContinuous': False} | events {'early': 0, 'late': 1, 'failedTD': 0, 'replans': 1, 'nocertSwing': 0, 'shadowAbort': 0, 'rClamped': 0, 'contactLost': 0}
+     xiErrTransferMm          0.317 …    12.625  halves     5.590 →     0.332  slope -0.5001
+     xiErrSwingMm            11.620 …    14.180  halves    12.707 →    13.981  slope +0.1171
+     captureHullTDmm         90.040 …    93.530  halves    92.128 →    90.587  slope -0.1466
+     xiLeadDecisionMm        -3.600 …    -2.490  halves    -2.970 →    -3.067  slope -0.0051
+     xiLatDecisionMm         26.420 …    30.490  halves    28.004 →    30.138  slope +0.1925
+     vrpFwdMm                -8.980 …    -7.710  halves    -8.254 →    -8.365  slope -0.0058
+     vrpLatMm                16.350 …    21.000  halves    18.159 →    20.598  slope +0.2201
+     footholdErrMm            2.860 …     3.100  halves     2.916 →     3.050  slope +0.0133
+     landingLatErrMm         -4.520 …     5.670  halves     0.361 →    -1.012  slope -0.1466
+     widthMm                164.600 …   180.500  halves   171.778 →   179.220  slope +0.6361
+     tdDownMmS               42.000 …    49.900  halves    47.422 →    43.340  slope -0.3886
+     slipMm                   0.456 …     1.167  halves     0.505 →     0.905  slope +0.0408
+     releaseS                 0.100 …     0.117  halves     0.114 →     0.101  slope -0.0011
+     trailFzPct               0.000 …     0.000  halves     0.000 →     0.000  slope +0.0000
+     satAnkleInv             14.000 …    26.000  halves    20.222 →    24.800  slope +0.4526
+     satAll                  16.000 …    30.000  halves    22.444 →    26.800  slope +0.4491
+     hardMarginDeg            8.790 …    10.340  halves    10.039 →     9.126  slope -0.0941
+     dTau0Nm                 19.060 …    21.750  halves    19.799 →    21.416  slope +0.1495
+     energyResJ               0.065 …     0.078  halves     0.070 →     0.074  slope +0.0004
+     pStarOutMm               0.000 …     0.000  halves     0.000 →     0.000  slope +0.0000
+     pelvisTiltDeg            6.570 …     7.010  halves     6.712 →     6.726  slope -0.0004
+     pelvisYawDeg            -2.089 …     1.867  halves    -0.180 →    -0.024  slope +0.0022
+     footYawLDeg             -2.645 …    -0.210  halves    -1.078 →    -2.278  slope -0.1261
+     footYawRDeg              0.268 …     2.536  halves     0.934 →     2.135  slope +0.1261
+     phiContact               0.908 …     0.908  halves     0.908 →     0.908  slope +0.0000
+     touchdownToSupportS      0.483 …     0.508  halves     0.494 →     0.508  slope +0.0012
+== L2b_V2-REF_s20.json.gz: V2-REF S 0.06 Tst 0.42 Tsw 0.47 | physical 2/20 FAIL step 3: sequencer NOCERT: NO_CERTIFIED_ONE_STEP at the decision: step not executed (fallback: return to double support)
+   commanded {'cycleS': 1.1735, 'cadenceHz': 0.852, 'speedMmS': 51.1} | realized {'speedMmS': 59.6, 'periodS': [1.017, 1.017], 'cadenceHz': 0.984, 'stepAdvanceM': None, 'stepChosenM': [0.0632, 0.0632]}
+   COM fwd cycle {'mean': [61.9, 61.9], 'min': [29.4, 29.4], 'max': [91.3, 91.3]} | at {'decision': [42.9, 56.5], 'liftoff': [52.2, 52.2], 'preTouchdown': [50.1, 50.1], 'touchdown': [44.1, 44.1], 'afterAcceptance': [56.9, 56.9], 'nextLiftoff': None, 'post01': [47.6, 47.6]}
+   support {'bothContactS': [0.585, 0.585], 'bothSupportS': [0.284, 0.284], 'flightS': [0.0, 0.0]} | continuity {'vbarMmS': 59.6, 'cminMmS': 14.9, 'maxConsecutive': 0, 'touchdownBelowCmin': 1, 'notContinuous': False} | events {'early': 0, 'late': 1, 'failedTD': 0, 'replans': 4, 'nocertSwing': 1, 'shadowAbort': 0, 'rClamped': 0, 'contactLost': 0}
+== L3_V2-REF_s20.json.gz: V2-REF S 0.06 Tst 0.35 Tsw 0.45 | physical 2/20 FAIL step 3: sequencer NOCERT: NO_CERTIFIED_ONE_STEP at the decision: step not executed (fallback: return to double support)
+   commanded {'cycleS': 1.0835, 'cadenceHz': 0.923, 'speedMmS': 55.4} | realized {'speedMmS': 66.6, 'periodS': [0.929, 0.929], 'cadenceHz': 1.076, 'stepAdvanceM': None, 'stepChosenM': [0.0635, 0.0635]}
+   COM fwd cycle {'mean': [67.5, 67.5], 'min': [31.0, 31.0], 'max': [98.8, 98.8]} | at {'decision': [56.8, 64.7], 'liftoff': [59.5, 59.5], 'preTouchdown': [56.5, 56.5], 'touchdown': [48.7, 48.7], 'afterAcceptance': [75.9, 75.9], 'nextLiftoff': None, 'post01': [57.9, 57.9]}
+   support {'bothContactS': [0.501, 0.501], 'bothSupportS': [0.234, 0.234], 'flightS': [0.0, 0.0]} | continuity {'vbarMmS': 66.6, 'cminMmS': 16.7, 'maxConsecutive': 0, 'touchdownBelowCmin': 1, 'notContinuous': False} | events {'early': 0, 'late': 2, 'failedTD': 0, 'replans': 18, 'nocertSwing': 12, 'shadowAbort': 0, 'rClamped': 0, 'contactLost': 0}
