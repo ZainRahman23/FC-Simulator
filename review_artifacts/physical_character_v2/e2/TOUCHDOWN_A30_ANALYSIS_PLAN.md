@@ -4,7 +4,7 @@
 
 **Authority:**
 - user decision 2026-10-06 (`../sources/2026-10-06_user_decision_sv2_battery.md`);
-- `SWING_SERVO_VALIDATION_V2_PREREG.md` §7 (frozen in 84b92b1).
+- `SWING_SERVO_VALIDATION_V2_PREREG.md` §7 (frozen in 84b92b1 [published as 7bde433]).
 
 This file adds the operational definitions, the reading rules and the sourced rationale for the window. It does **not** change E2-5, any E2 criterion or any threshold. The matrix runs only if SV-2 validates and PG-1 certifies 32 / 32 (prereg §8).
 

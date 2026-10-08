@@ -7,4 +7,4 @@ These two drafts were prepared on 8 Oct 2026 (00:59 – 01:01 BST) in a temporar
 | file | what | apply |
 |---|---|---|
 | `TD2C_AMENDMENT_A5_amend_td2c.py` | TD2C amendment A5 (`DVG_PREREG.md` §5.4): TD2C runs with the adopted DVG (configurations PSTAR5CHABV / PSTAR5CHABTDV and DVG's guard-law checks only; conditions and criteria unchanged) | `python3 TD2C_AMENDMENT_A5_amend_td2c.py <worktree root>`, after a DVG adoption decision |
-| `E2_INTEGRATION_DRAFT.patch` | E2 integration draft: a non-test step runs approach → search → measured TOUCHDOWN → acceptance → DONE (`ctrl/v2_footstep.js`, `ctrl/v2_step.js`, `tools/e2_run.mjs`) | `git apply` on `bd4c56e` (checked: applies cleanly) |
+| `E2_INTEGRATION_DRAFT.patch` | E2 integration draft: a non-test step runs approach → search → measured TOUCHDOWN → acceptance → DONE (`ctrl/v2_footstep.js`, `ctrl/v2_step.js`, `tools/e2_run.mjs`) | `git apply` on `bd4c56e` [published as `b54bb6a`] (checked: applies cleanly) |

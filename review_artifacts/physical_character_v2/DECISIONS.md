@@ -2221,7 +2221,7 @@ No 30 mm touchdown matrix, smoke or official run. Not pushed.
 
 ### E2-10: SV-2 frozen and run; DOES NOT VALIDATE → STOPPED; allowance not entered, PG-1 and the touchdown matrix not run (`e2/SWING_SERVO_VALIDATION_V2_PREREG.md`, `e2/SWING_SERVO_VALIDATION_V2_RESULTS.md`, `e2/TOUCHDOWN_A30_ANALYSIS_PLAN.md`)
 
-**Frozen before any run** (84b92b1):
+**Frozen before any run** (84b92b1 [published as 7bde433]):
 - one E2-shaped ground-ending step per run;
 - reachability pre-check with the planner's certifier: C-L11 rejected for 7 bodies;
 - 876 runs;
@@ -2308,7 +2308,7 @@ The φ 0.80 failure is preserved. Not pushed.
 
 ## 2026-10-06: A + B implementation and factorial validation (`sources/2026-10-06_user_decision_AB_touchdown.md`)
 
-### E2-12: A + B implemented (default off); validation DOES NOT VALIDATE → STOPPED at stage 2 (`e2/AB_VALIDATION_PREREG.md`, frozen 54629de; `e2/AB_VALIDATION_RESULTS.md`)
+### E2-12: A + B implemented (default off); validation DOES NOT VALIDATE → STOPPED at stage 2 (`e2/AB_VALIDATION_PREREG.md`, frozen 54629de [published as 1a65417]; `e2/AB_VALIDATION_RESULTS.md`)
 
 **Implemented (default off, bit-identical when off):**
 - **A** (`vffPelvisAir`): the pelvis-motion part of a commanded swing's velocity task gets the same singularity-robust damping as the target part, weighted by airborne weight × commanded-swing weight.
@@ -2336,7 +2336,7 @@ Decisions pending (user). Touchdown coordinator not started. Not pushed.
 
 ### E2-13: AB2 VALIDATES (A + B qualified as swing mechanisms); touchdown coordinator STOPPED at design (substantive conflict); execution-feasibility extension implemented and verified
 
-**AB2** (`e2/AB2_VALIDATION_PREREG.md` frozen 28f2632; `e2/AB2_VALIDATION_RESULTS.md`): the versioned amendment with ownership split by lifecycle / measured-contact semantics.
+**AB2** (`e2/AB2_VALIDATION_PREREG.md` frozen 28f2632 [published as 3c46742]; `e2/AB2_VALIDATION_RESULTS.md`): the versioned amendment with ownership split by lifecycle / measured-contact semantics.
 - 1,728 / 1,728 runs, bit-identical to the AB battery (preserved as FAIL).
 - Every item passes: airborne-window β_y −56 … −74 %; swing continuity clean; no regression outside the contact transition; T-1 unchanged.
 - The contact transition (AB: 6 / 0 / 8 runs R / C / H) remains the coordinator's requirement.
@@ -2367,8 +2367,8 @@ Stopped before PG-1 / official E2 as instructed. Not pushed.
 ### E2-14: 1A DOES NOT VALIDATE (one item), 1B DOES NOT VALIDATE → stopped before the touchdown coordinator
 
 **Preregistration** (`e2/FB1A_TR1B_PREREG.md`):
-- design and criteria in d6d4868;
-- freeze in 452cc60 with amendments A1 – A3 (A3 disclosed the smoke prediction that 1B fails).
+- design and criteria in d6d4868 [published as c4c7061];
+- freeze in 452cc60 [published as 0150ce8] with amendments A1 – A3 (A3 disclosed the smoke prediction that 1B fails).
 
 **Results** (`e2/FB1A_TR1B_RESULTS.md`, `e2/evidence_fb/`): 2,160 / 2,160 runs; G passes (identity; determinism vs AB2 864 / 864).
 
@@ -2407,7 +2407,7 @@ Not pushed.
 - Rejected: C0 the AB baseline; C1 the corridor (infeasible); C5 the clock; C6 the creep.
 - **Selected C2:** the validated swing to the foothold + band height, then a bounded rest-to-rest search, until measured contact; E2 acceptance / hand-back; lifecycle accommodation.
 
-**Preregistration and freeze** (`e2/TD2_PREREG.md`; d14d34f / 5015dc6, A1 – A5):
+**Preregistration and freeze** (`e2/TD2_PREREG.md`; d14d34f [published as 3bb6752] / 5015dc6 [published as d285f10], A1 – A5):
 - the parameters were re-derived from a turf-off qualification of the new trajectory region (Decision 4): h_B 2.80 mm, D_max 2.70 mm, τ_s 0.205 s, τ_c 0.1459 s;
 - a 0.085 s tangential-settling interval was added (Decision 2);
 - the escalation was made E2-style smooth.
@@ -2435,7 +2435,7 @@ Not pushed.
 
 ### E2-16: TD2B DOES NOT VALIDATE (out-of-envelope early terrain only); clean inside the certified window, for beyond / noground, and on physics-rate invariance
 
-**Preregistration** (`e2/TD2B_PREREG.md`; 13d2d09; freeze 9cab1a9):
+**Preregistration** (`e2/TD2B_PREREG.md`; 13d2d09 [published as b6fe3c0]; freeze 9cab1a9 [published as 2200cd9]):
 - certified window from contact geometry + qualified tracking + terrain uncertainty (h_B 2.85, D_max 2.75, τ_s 0.21 s);
 - early / late terrain ±0.05 mm inside the window; earlyOOE +10 mm under E2 §2a;
 - escalation = continued bounded search to the planner's turf; noground = explicit failure;
@@ -2486,7 +2486,7 @@ TD2 and TD2B stay FAIL. Not pushed.
 
 ### E2-18: D1G validation DOES NOT VALIDATE as preregistered → stopped before TD2C
 
-**Battery:** `e2/D1G_RESULTS.md`; frozen 3914a0c; 774 jobs.
+**Battery:** `e2/D1G_RESULTS.md`; frozen 3914a0c [published as 19eb4d5]; 774 jobs.
 
 **Pass:**
 - DG-0 identity;
@@ -2545,7 +2545,7 @@ Not pushed.
 
 ### E2-20: DVG combined qualification DOES NOT VALIDATE as preregistered → stopped before adoption and TD2C
 
-**Battery:** `e2/DVG_RESULTS.md`; frozen 7de6c00 (erratum E1); 1,522 jobs. The first run (b08b77a) was aborted unevaluated.
+**Battery:** `e2/DVG_RESULTS.md`; frozen 7de6c00 [published as d3f9bcc] (erratum E1); 1,522 jobs. The first run (b08b77a [published as 6b7ab90]) was aborted unevaluated.
 
 **Pass:**
 - CQ-0 identity; CQ-1a (AB 432 / 432 bit-identical); CQ-1c (E1a / E1b 38 / 38 bit-identical, incl. P15);
@@ -2566,8 +2566,8 @@ Not pushed.
 
 ## 2026-10-08 — Publication rewrite of the 33 unpublished commits (user decision; source `sources/2026-10-08_user_decision_publication_rewrite.md`)
 
-- **PUB-1:** the generated archive `e2/evidence_smoke_H/runs_records_240_REF_165.tgz` (105,822,358 B, > GitHub's 100 MiB limit) is removed from the unpublished history `e519c8f` … `6e03afe` only. No Git LFS. Nothing published is rewritten.
-- **PUB-2:** 33 commits replayed one for one: same trees minus that path, same order, parents, author and committer identities and dates; original messages plus provenance trailers. Old → new map, verification and regeneration: `PUBLICATION_REWRITE_2026-10-08.md` / `.tsv`. The new head of the rewritten tail is `e5ea11f` (was `6e03afe`).
+- **PUB-1:** the generated archive `e2/evidence_smoke_H/runs_records_240_REF_165.tgz` (105,822,358 B, > GitHub's 100 MiB limit) is removed from the unpublished history `e519c8f` [published as `d202cac`] … `6e03afe` [published as `e5ea11f`] only. No Git LFS. Nothing published is rewritten.
+- **PUB-2:** 33 commits replayed one for one: same trees minus that path, same order, parents, author and committer identities and dates; original messages plus provenance trailers. Old → new map, verification and regeneration: `PUBLICATION_REWRITE_2026-10-08.md` / `.tsv`. The new head of the rewritten tail is `e5ea11f` (old head `6e03afe`).
 - **PUB-3:** the archive is kept locally outside Git (SHA-256 `765df83e…`), and regenerable with `e2/scripts/run_smoke_matrix_H.sh` on `9578ccf`. The matrix's compact evidence stays committed.
 - **PUB-4:** references to rewritten commits now carry `old [published as new]`; run logs keep their original hashes, with `commit.published.txt` beside them.
 - **PUB-5:** evidence storage. Raw per-run record archives (`runs_records_*.tgz`) are git-ignored, and any generated archive of 50 MB or more stays outside Git under the policy in `EVIDENCE_STORAGE_POLICY.md`. A local pre-commit size guard is in `tools/git-hooks/`.

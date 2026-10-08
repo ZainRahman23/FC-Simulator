@@ -5,12 +5,12 @@
 **Design study:** `TD2_DESIGN_STUDY.md`.
 
 **Preregistration:** `TD2_PREREG.md`:
-- design and criteria committed in d14d34f, before any TD2 code;
-- freeze in 5015dc6 with amendments A1 – A5, before any battery run.
+- design and criteria committed in d14d34f [published as 3bb6752], before any TD2 code;
+- freeze in 5015dc6 [published as d285f10] with amendments A1 – A5, before any battery run.
 
 A3 recorded, before the battery, the prediction that the early condition fails.
 
-**Battery:** `scripts/run_td2_val.sh` on a clean archive of 5015dc6. 1,824 / 1,824 runs (03:34 – 04:29).
+**Battery:** `scripts/run_td2_val.sh` on a clean archive of 5015dc6 [published as d285f10]. 1,824 / 1,824 runs (03:34 – 04:29).
 
 **Evidence** (`evidence_td2/`):
 - `td2_eval_summary.txt`, `td2_eval.json.gz`;

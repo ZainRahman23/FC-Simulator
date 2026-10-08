@@ -2,7 +2,7 @@
 
 **Authority:** `../sources/2026-10-06_user_decision_AB2_coordinator.md`.
 
-**Preregistration:** `AB2_VALIDATION_PREREG.md`, frozen in 28f2632 before any AB2 run; the battery ran on that commit.
+**Preregistration:** `AB2_VALIDATION_PREREG.md`, frozen in 28f2632 [published as 3c46742] before any AB2 run; the battery ran on that commit.
 
 **Evidence:** `evidence_ab2/`. Records are omitted as duplicates; see `RECORDS_NOTE.txt`.
 
@@ -51,4 +51,4 @@ Applied-torque steps stay ≤ 10.3 N·m under AB. **These remain the coordinator
 
 ## Consequence
 
-A (`vffPelvisAir`) and B (`vffPassiveRef`) are **qualified swing mechanisms**: configuration PSTAR5CHAB, implementations unchanged since 54629de. Their contact-transition continuity is not qualified; it is the coordinator's requirement. See `TOUCHDOWN_COORDINATOR_DESIGN_STOP.md` for why the coordinator stage stopped.
+A (`vffPelvisAir`) and B (`vffPassiveRef`) are **qualified swing mechanisms**: configuration PSTAR5CHAB, implementations unchanged since 54629de [published as 1a65417]. Their contact-transition continuity is not qualified; it is the coordinator's requirement. See `TOUCHDOWN_COORDINATOR_DESIGN_STOP.md` for why the coordinator stage stopped.

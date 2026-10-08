@@ -2,7 +2,7 @@
 
 **Authority:** `../sources/2026-10-07_user_decision_TD2_next_iteration.md` (verbatim).
 
-**Preserved permanently as FAIL, not reinterpreted:** `TD2_PREREG.md` (d14d34f / 5015dc6), `TD2_RESULTS.md`, `evidence_td2/` (1,824 runs). This includes TD-10 (≤ 10 ms touchdown time) and its failure. TD2's frozen harness and module behaviour stay reproducible: `ctrl/v2_td2.js` keeps its TD2 constants as defaults, and TD2B is passed explicitly.
+**Preserved permanently as FAIL, not reinterpreted:** `TD2_PREREG.md` (d14d34f [published as 3bb6752] / 5015dc6 [published as d285f10]), `TD2_RESULTS.md`, `evidence_td2/` (1,824 runs). This includes TD-10 (≤ 10 ms touchdown time) and its failure. TD2's frozen harness and module behaviour stay reproducible: `ctrl/v2_td2.js` keeps its TD2 constants as defaults, and TD2B is passed explicitly.
 
 **Unchanged:**
 - the normal TD2 architecture: validated AB swing → raised terminal approach → settle → bounded terrain-normal search → measured Jolt contact → E2 acceptance / hand-back → lifecycle contact hold / load acceptance;

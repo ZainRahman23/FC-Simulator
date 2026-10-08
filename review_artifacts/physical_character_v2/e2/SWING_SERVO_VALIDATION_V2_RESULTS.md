@@ -2,7 +2,7 @@
 
 **Authority:** user decision 2026-10-06 (`../sources/2026-10-06_user_decision_sv2_battery.md`).
 
-**Preregistration:** `SWING_SERVO_VALIDATION_V2_PREREG.md`, frozen in 84b92b1 before any battery run. The battery ran on that commit (clean archived tree; `evidence_sv2/commit.txt`).
+**Preregistration:** `SWING_SERVO_VALIDATION_V2_PREREG.md`, frozen in 84b92b1 [published as 7bde433] before any battery run. The battery ran on that commit (clean archived tree; `evidence_sv2/commit.txt`).
 
 **Evidence** (`evidence_sv2/`):
 - `sv2_eval_summary.txt`, `sv2_eval.json`;

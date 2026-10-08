@@ -2,7 +2,7 @@
 
 **Authority:** `../sources/2026-10-06_user_decision_AB_touchdown.md`.
 
-**Preregistration:** `AB_VALIDATION_PREREG.md`, frozen in 54629de before any battery run. The battery ran on that commit from a clean archived tree.
+**Preregistration:** `AB_VALIDATION_PREREG.md`, frozen in 54629de [published as 1a65417] before any battery run. The battery ran on that commit from a clean archived tree.
 
 **Evidence** (`evidence_ab/`):
 - `ab_eval_summary.txt`, `ab_eval.json.gz`;

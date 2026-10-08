@@ -3,12 +3,12 @@
 **Authority:** `../sources/2026-10-07_user_decision_TD2_next_iteration.md`.
 
 **Preregistration:** `TD2B_PREREG.md`:
-- design, window, escalation and bounds committed in 13d2d09, before any TD2B code;
-- freeze in 9cab1a9 with amendments A1 – A3, before any battery run.
+- design, window, escalation and bounds committed in 13d2d09 [published as b6fe3c0], before any TD2B code;
+- freeze in 9cab1a9 [published as 2200cd9] with amendments A1 – A3, before any battery run.
 
 A2 disclosed before the battery the smoke blow-up on earlyOOE V2-198-92 L 480 H-D and the prediction that B-9 may fail.
 
-**Battery:** `scripts/run_td2b_val.sh` on a clean archive of 9cab1a9. 2,688 / 2,688 runs (12:40 – 14:22); 0 runtime reachability exclusions.
+**Battery:** `scripts/run_td2b_val.sh` on a clean archive of 9cab1a9 [published as 2200cd9]. 2,688 / 2,688 runs (12:40 – 14:22); 0 runtime reachability exclusions.
 
 **Evidence** (`evidence_td2b/`):
 - `td2b_eval_summary.txt`, `td2b_eval.json.gz`;

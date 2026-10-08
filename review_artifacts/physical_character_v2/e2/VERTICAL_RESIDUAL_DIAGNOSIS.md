@@ -28,7 +28,7 @@
 
 **Tables:** `tools/vres_analyze.mjs` → `evidence_vres/vres_analysis.txt` / `.json.gz`.
 
-**Runs:** 884 (rounds r1–r6). Job lists and logs are in `evidence_vres/*_jobs_and_logs.tgz`, plus a V2-REF 240 Hz record subset. r1 ran on the tree committed unchanged as 93f9548 (`r1_provenance.txt`).
+**Runs:** 884 (rounds r1–r6). Job lists and logs are in `evidence_vres/*_jobs_and_logs.tgz`, plus a V2-REF 240 Hz record subset. r1 ran on the tree committed unchanged as 93f9548 [published as 84a6922] (`r1_provenance.txt`).
 
 **Coverage:** V2-REF, V2-165-62 (the body that sets SV-2's binding bin) and V2-198-92 (heaviest); left leg; 180 / 240 / 480 Hz. Trajectories:
 - V0, vertical-only;

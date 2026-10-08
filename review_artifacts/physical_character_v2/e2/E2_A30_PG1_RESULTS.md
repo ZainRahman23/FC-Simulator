@@ -2,7 +2,7 @@
 
 **Authority:** `../sources/2026-10-06_user_decision_e2_apex30.md`.
 
-**Preregistration:** `E2_PREREG_AMENDMENT_A30.md` (commit 0625226, before any A30 run).
+**Preregistration:** `E2_PREREG_AMENDMENT_A30.md` (commit 0625226 [published as ac4674e], before any A30 run).
 
 **Evidence:** `evidence_pg_A30/`.
 

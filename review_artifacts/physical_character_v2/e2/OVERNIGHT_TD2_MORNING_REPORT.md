@@ -11,7 +11,7 @@ The message referred to "the decisions in my previous message" and "the design s
 | 1. terminal-approach / contact-search design study | **done** (`TD2_DESIGN_STUDY.md`) |
 | 2. finite candidate structures compared offline, infeasible ones rejected | **done:** C0 AB baseline, C1 corridor, C5 clock, C6 creep rejected; C2 feasible |
 | 3. simplest evidence-supported design selected | **done:** C2 "TD2", band-top approach + settling dwell + bounded rest-to-rest search |
-| 4. preregistration committed before implementation | **done** (d14d34f) |
+| 4. preregistration committed before implementation | **done** (d14d34f [published as 3bb6752]) |
 | 5. implemented behind default-off configuration | **done:** `ctrl/v2_td2.js`, CFG `PSTAR5CHABTD`; default paths bit-identical |
 | 6. full independent validation (8 bodies × 2 legs × 3 rates × R / C / H × early / nominal / late / beyond) | **done**, 1,824 runs. **DOES NOT VALIDATE** as preregistered |
 | 7. causal diagnosis of failures | **done** (§5), with labelled counterfactuals |
@@ -22,15 +22,15 @@ The message referred to "the decisions in my previous message" and "the design s
 
 | commit | content |
 |---|---|
-| d14d34f | runway decision verbatim; TD2 design study; **TD2 preregistration** (freeze step 1, before any code) |
-| 5015dc6 | TD2 implementation (default-off) + harness `tools/td2_val.mjs` + evaluator `tools/td2_eval.mjs` + `TD2_RUN_LIST.json` + `scripts/run_td2_val.sh`; amendments A1 – A5; qualification evidence `evidence_td2_design/` (**freeze step 2, before any battery run**) |
-| 63d489b | TD2 results (`TD2_RESULTS.md`, `evidence_td2/`), DECISIONS E2-15 |
+| d14d34f [published as 3bb6752] | runway decision verbatim; TD2 design study; **TD2 preregistration** (freeze step 1, before any code) |
+| 5015dc6 [published as d285f10] | TD2 implementation (default-off) + harness `tools/td2_val.mjs` + evaluator `tools/td2_eval.mjs` + `TD2_RUN_LIST.json` + `scripts/run_td2_val.sh`; amendments A1 – A5; qualification evidence `evidence_td2_design/` (**freeze step 2, before any battery run**) |
+| 63d489b [published as 20d7837] | TD2 results (`TD2_RESULTS.md`, `evidence_td2/`), DECISIONS E2-15 |
 
 **Configurations:**
 - PSTAR5CHAB (AB baseline, AB2-qualified);
 - **PSTAR5CHABTD** = PSTAR5CHAB + `e2td: "search"`. Read only by the commanding layer; the StandController does not read it.
 
-1A (`d1FloatBase`) and 1B (`lcTransition`) stay default-off and unused. Earlier commits from yesterday: d6d4868, 452cc60, 9610cb6 (1A / 1B).
+1A (`d1FloatBase`) and 1B (`lcTransition`) stay default-off and unused. Earlier commits from yesterday: d6d4868 [published as c4c7061], 452cc60 [published as 0150ce8], 9610cb6 [published as e658953] (1A / 1B).
 
 ## 3. Gates attempted
 

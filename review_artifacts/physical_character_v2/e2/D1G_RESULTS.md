@@ -3,10 +3,10 @@
 **Authority:** `../sources/2026-10-07_user_decision_D1guard_TD2C.md`.
 
 **Preregistration:** `D1G_TD2C_PREREG.md`:
-- Parts I – III committed in 4051ba2, before any D1G code;
-- freeze step 2 with amendments A1 – A4 in 3914a0c, before any battery run.
+- Parts I – III committed in 4051ba2 [published as 8e0cf07], before any D1G code;
+- freeze step 2 with amendments A1 – A4 in 3914a0c [published as 19eb4d5], before any battery run.
 
-**Battery:** `scripts/run_d1g_val.sh` on a clean archive of 3914a0c (23:29 – 23:51):
+**Battery:** `scripts/run_d1g_val.sh` on a clean archive of 3914a0c [published as 19eb4d5] (23:29 – 23:51):
 - 774 / 774 jobs: DG-2 reach stress 288, DG-4 (a) repeats 24, DG-3 (a) mirror probes 24, DG-1 (c) SV-2 servo-on with the guard 438;
 - evaluated by `tools/d1g_eval.mjs`.
 
@@ -26,7 +26,7 @@ TD2 and TD2B stay FAIL. Nothing is pushed.
 
 | item | result | detail |
 |---|---|---|
-| DG-0 identity (default path) | **PASS** | at 3914a0c: KV0 IDENTICAL, 58 / 58, 99c29491, b62309f5, 3dd9f13d, b63184da × 3, c76cadc7, 56717579, TD2B records 787cc0c9 / 83369114 (the TD2B earlyOOE blow-up reproduced with the guard off) |
+| DG-0 identity (default path) | **PASS** | at 3914a0c [published as 19eb4d5]: KV0 IDENTICAL, 58 / 58, 99c29491, b62309f5, 3dd9f13d, b63184da × 3, c76cadc7, 56717579, TD2B records 787cc0c9 / 83369114 (the TD2B earlyOOE blow-up reproduced with the guard off) |
 | DG-1 (c) equivalence, SV-2 servo-on | **PASS** | 432 / 432 runs with zero invalid D1 evaluations are **bit-identical** to the SV-2 battery. The 6 engaged runs are V2-long-legs C-L11, the trajectory SV-2 already recorded as not executable for that body. The frozen SV-2 evaluator on the guarded records shows no newly failing item for them |
 | DG-1 (a, b) | not run | they are part of the TD2C battery (stop rule). Smoke: AB, TDC nominal / beyond / noground, and V2-long-legs H-T45 all bit-identical with zero engagement |
 | **DG-2** reach stress, guard on (144 runs) | **FAIL** (26 runs) | (i) finite: PASS; (ii) over-capacity 0: PASS; (iii) guard bound c = w · D_held / OFF = 0: PASS (0 violations); (v) every run reached the invalid region: PASS. **(iv) commanded \|τ0\| ≤ B_cmd: FAIL in 26 runs** (deep 12, diag 14; up to 4,233 N·m vs B_cmd 2,265 – 3,345 N·m by body) |

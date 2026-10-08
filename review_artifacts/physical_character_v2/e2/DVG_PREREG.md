@@ -263,7 +263,7 @@ The criteria of §4, the sets, the attribution rule and the stop rules are uncha
 ### Erratum E1 (implementation, not design)
 
 **The defect:**
-- The first implementation (b08b77a) applied the guard's held / ramped terms only into slots the tick had already filled with a fresh term.
+- The first implementation (b08b77a [published as 6b7ab90]) applied the guard's held / ramped terms only into slots the tick had already filled with a fresh term.
 - When the commanded target ended mid-fade, no D1 was evaluated (no swing reference), and the held D1 was dropped in one tick. That violated §1: "once engaged, until back in PASS"; FADE "holds the last valid terms".
 
 **How it was found:**
@@ -274,7 +274,7 @@ The criteria of §4, the sets, the attribution rule and the stop rules are uncha
 - Re-smoke: 0 law violations; U-1 … U-7 and DG-6 pass on those runs.
 - The stress hash is unchanged (deep V2-198-92 L 240 a9ff2f0a: the target is held there, so the defect could not occur).
 
-### The first CQ run (b08b77a)
+### The first CQ run (b08b77a [published as 6b7ab90])
 
 - It was started (00:58) and **aborted at 01:05, unevaluated**, as soon as the defect was confirmed: 73 / 1,426 jobs done, CQ-0 12 PASS lines.
 - It was not evaluated, and none of its runs is used.

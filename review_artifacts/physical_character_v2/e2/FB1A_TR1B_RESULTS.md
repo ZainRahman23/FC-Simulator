@@ -3,11 +3,11 @@
 **Authority:** `../sources/2026-10-06_user_decision_1A1B_touchdown_timing.md` ("Preregister and validate both corrections before using them to choose touchdown timing. If either correction fails substantively, stop.").
 
 **Preregistration:** `FB1A_TR1B_PREREG.md`:
-- design and criteria committed in d6d4868, before any 1A / 1B code;
-- implementation, tools and amendments A1 – A3 frozen in 452cc60, before any battery run;
+- design and criteria committed in d6d4868 [published as c4c7061], before any 1A / 1B code;
+- implementation, tools and amendments A1 – A3 frozen in 452cc60 [published as 0150ce8], before any battery run;
 - A3 recorded the smoke-based prediction that 1B-3 and 1B-5 would fail.
 
-**Battery:** `scripts/run_fb_val.sh` on a clean archive of 452cc60; 2,160 / 2,160 runs; 0 runtime reachability exclusions.
+**Battery:** `scripts/run_fb_val.sh` on a clean archive of 452cc60 [published as 0150ce8]; 2,160 / 2,160 runs; 0 runtime reachability exclusions.
 
 **Evidence** (`evidence_fb/`):
 - `fb_eval_summary.txt`, `fb_eval.json.gz`;

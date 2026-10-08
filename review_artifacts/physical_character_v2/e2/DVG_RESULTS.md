@@ -3,11 +3,11 @@
 **Authority:** `../sources/2026-10-08_user_decision_rate_ff_guard_combined_qualification.md`.
 
 **Preregistration:** `DVG_PREREG.md`:
-- §§0 – 7 committed in b25f0b0, before any DVG code;
-- freeze step 2 with amendments A1 – A4 in b08b77a;
-- erratum E1 and freeze step 2b with amendment A5 in 7de6c00.
+- §§0 – 7 committed in b25f0b0 [published as f9e0a11], before any DVG code;
+- freeze step 2 with amendments A1 – A4 in b08b77a [published as 6b7ab90];
+- erratum E1 and freeze step 2b with amendment A5 in 7de6c00 [published as d3f9bcc].
 
-**Battery:** `scripts/run_dvg_cq.sh` on a clean archive of 7de6c00 (01:13 – 02:15). 1,522 / 1,522 jobs:
+**Battery:** `scripts/run_dvg_cq.sh` on a clean archive of 7de6c00 [published as d3f9bcc] (01:13 – 02:15). 1,522 / 1,522 jobs:
 - reach stress 528, repeats 24, mirror probes 24;
 - AB 432, SV-2 servo-on 438;
 - E1a 10 + E1b 28, each with the guard on and off.
