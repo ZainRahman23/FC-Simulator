@@ -2572,3 +2572,17 @@ Not pushed.
 - **PUB-4:** references to rewritten commits now carry `old [published as new]`; run logs keep their original hashes, with `commit.published.txt` beside them.
 - **PUB-5:** evidence storage. Raw per-run record archives (`runs_records_*.tgz`) are git-ignored, and any generated archive of 50 MB or more stays outside Git under the policy in `EVIDENCE_STORAGE_POLICY.md`. A local pre-commit size guard is in `tools/git-hooks/`.
 - No simulation result, criterion or code path changed.
+
+## 2026-10-08 — E2-21: DVG2 qualification PASS (after evaluator erratum E1); DVG adopted (user instruction `sources/2026-10-08_user_instruction_overnight_dvg2_td2c_e2.md`)
+
+- **DVG2** (`e2/DVG2_PREREG.md`, frozen `d426ceb`) re-qualified the unchanged DVG implementation. The DVG CQ stays FAIL as recorded.
+  - CQ-3a's fold classifier corrected to margin ≤ IK.h, with a mirror-equivalence safeguard for newly classified folds.
+  - CQ-1b split by the frozen execution-feasibility certifier: class A keeps the frozen gate; class B gets the physical-safety gates B-1 … B-8, with continuous saturation ≤ 50 ms (E2-11 / I-4 continuous bound = τ_deact), and the 5 % fraction reported only.
+- **Result** (`e2/DVG2_RESULTS.md`): **PASS**.
+  - Classification: 48 class-B cases, all C-L11; the 240 Hz verdicts are identical to the 6 Oct sweep.
+  - The 6 engaged V2-long-legs C-L11 runs are class B and pass B-1 … B-8: saturation 5.2 % / ≤ 33 ms; safety items {I-6} ⊂ unguarded {I-3, I-6}; certifier still NOT QUALIFIED.
+  - CQ-3a: the gated CQ mismatch is now a mirror-equivalent fold.
+  - Every other item passes; 1,496 / 1,496 end hashes identical to the CQ battery.
+- **Erratum DVG2-E1** (`3e1c33c`, evaluator): class-B gates read the SV-2 evaluator's per-run metrics one level too high, so the first evaluation was FAIL (CQ-1bB). It is preserved; the same records were re-evaluated after the fix.
+- **Reported (TD-17):** 7 of the 13 exact-flag folds are robust to perturbation (branch difference at the fold). There is no closed-loop L / R difference (CQ-3b 96 / 96).
+- **Adopted:** DVG (`d1Guard: 2`) in PSTAR5CHABV / PSTAR5CHABTDV. Next: TD2C amendment A5 and the TD2C battery.

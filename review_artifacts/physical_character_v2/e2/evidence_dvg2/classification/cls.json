@@ -1,0 +1,2447 @@
+{
+ "generated": "tools/dvg2_cls.mjs",
+ "prereg": "e2/DVG2_PREREG.md §3",
+ "cls": {
+  "V2-REF|L|180|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF L 180 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.96° torque ratio 0.13 self 79.0 mm clear 5.92 mm"
+  },
+  "V2-REF|L|180|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF L 180 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.00° torque ratio 0.13 self 86.2 mm clear 5.92 mm"
+  },
+  "V2-REF|L|180|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF L 180 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.34° torque ratio 0.12 self 79.7 mm clear 5.92 mm"
+  },
+  "V2-REF|L|180|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF L 180 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.43° torque ratio 0.14 self 75.3 mm clear 5.92 mm"
+  },
+  "V2-REF|L|180|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF L 180 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.49° torque ratio 0.11 self 86.2 mm clear 5.92 mm"
+  },
+  "V2-REF|L|180|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-REF L 180 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (8.2e-5); φ 1.00 nominal: IK not reached (2.6e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 6.78e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 1.44° torque ratio 0.13 self 86.2 mm clear 5.92 mm"
+  },
+  "V2-REF|L|180|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF L 180 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.06° torque ratio 0.18 self 79.0 mm clear 6.07 mm"
+  },
+  "V2-REF|L|180|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF L 180 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.39° torque ratio 0.15 self 79.2 mm clear 8.33 mm"
+  },
+  "V2-REF|L|180|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF L 180 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.73° torque ratio 0.17 self 86.2 mm clear 5.92 mm"
+  },
+  "V2-REF|L|180|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF L 180 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.74° torque ratio 0.15 self 73.5 mm clear 5.92 mm"
+  },
+  "V2-REF|L|240|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF L 240 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.97° torque ratio 0.13 self 79.0 mm clear 5.92 mm"
+  },
+  "V2-REF|L|240|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF L 240 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.01° torque ratio 0.13 self 86.2 mm clear 5.92 mm"
+  },
+  "V2-REF|L|240|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF L 240 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.34° torque ratio 0.12 self 79.7 mm clear 5.92 mm"
+  },
+  "V2-REF|L|240|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF L 240 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.43° torque ratio 0.14 self 75.3 mm clear 5.92 mm"
+  },
+  "V2-REF|L|240|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF L 240 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.50° torque ratio 0.11 self 86.2 mm clear 5.92 mm"
+  },
+  "V2-REF|L|240|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-REF L 240 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (9.6e-5); φ 1.00 nominal: IK not reached (2.8e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 6.37e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 1.44° torque ratio 0.13 self 86.2 mm clear 5.92 mm"
+  },
+  "V2-REF|L|240|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF L 240 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.06° torque ratio 0.18 self 79.0 mm clear 6.07 mm"
+  },
+  "V2-REF|L|240|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF L 240 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.39° torque ratio 0.15 self 79.2 mm clear 8.33 mm"
+  },
+  "V2-REF|L|240|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF L 240 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.73° torque ratio 0.17 self 86.2 mm clear 5.92 mm"
+  },
+  "V2-REF|L|240|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF L 240 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.75° torque ratio 0.15 self 73.5 mm clear 5.92 mm"
+  },
+  "V2-REF|L|480|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF L 480 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.97° torque ratio 0.13 self 79.0 mm clear 5.92 mm"
+  },
+  "V2-REF|L|480|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF L 480 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.01° torque ratio 0.13 self 86.1 mm clear 5.92 mm"
+  },
+  "V2-REF|L|480|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF L 480 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.34° torque ratio 0.12 self 79.7 mm clear 5.92 mm"
+  },
+  "V2-REF|L|480|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF L 480 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.43° torque ratio 0.14 self 75.3 mm clear 5.92 mm"
+  },
+  "V2-REF|L|480|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF L 480 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.50° torque ratio 0.11 self 86.1 mm clear 5.92 mm"
+  },
+  "V2-REF|L|480|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-REF L 480 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (8.9e-5); φ 1.00 nominal: IK not reached (2.7e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 6.56e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 1.44° torque ratio 0.13 self 86.1 mm clear 5.92 mm"
+  },
+  "V2-REF|L|480|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF L 480 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.06° torque ratio 0.18 self 79.0 mm clear 6.07 mm"
+  },
+  "V2-REF|L|480|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF L 480 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.39° torque ratio 0.16 self 79.1 mm clear 8.32 mm"
+  },
+  "V2-REF|L|480|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF L 480 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.73° torque ratio 0.17 self 86.1 mm clear 5.92 mm"
+  },
+  "V2-REF|L|480|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF L 480 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.75° torque ratio 0.15 self 73.5 mm clear 5.92 mm"
+  },
+  "V2-REF|R|180|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF R 180 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.96° torque ratio 0.13 self 79.0 mm clear 5.92 mm"
+  },
+  "V2-REF|R|180|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF R 180 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.01° torque ratio 0.13 self 86.2 mm clear 5.92 mm"
+  },
+  "V2-REF|R|180|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF R 180 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.34° torque ratio 0.12 self 79.7 mm clear 5.92 mm"
+  },
+  "V2-REF|R|180|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF R 180 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.43° torque ratio 0.14 self 75.3 mm clear 5.92 mm"
+  },
+  "V2-REF|R|180|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF R 180 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.49° torque ratio 0.11 self 86.2 mm clear 5.92 mm"
+  },
+  "V2-REF|R|180|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-REF R 180 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (8.2e-5); φ 1.00 nominal: IK not reached (2.6e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 6.77e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 1.44° torque ratio 0.13 self 86.2 mm clear 5.92 mm"
+  },
+  "V2-REF|R|180|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF R 180 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.06° torque ratio 0.18 self 79.0 mm clear 6.07 mm"
+  },
+  "V2-REF|R|180|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF R 180 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.39° torque ratio 0.15 self 79.2 mm clear 8.33 mm"
+  },
+  "V2-REF|R|180|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF R 180 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.73° torque ratio 0.17 self 86.2 mm clear 5.92 mm"
+  },
+  "V2-REF|R|180|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF R 180 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.74° torque ratio 0.15 self 73.5 mm clear 5.92 mm"
+  },
+  "V2-REF|R|240|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF R 240 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.97° torque ratio 0.13 self 79.0 mm clear 5.92 mm"
+  },
+  "V2-REF|R|240|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF R 240 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.01° torque ratio 0.13 self 86.2 mm clear 5.92 mm"
+  },
+  "V2-REF|R|240|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF R 240 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.34° torque ratio 0.12 self 79.7 mm clear 5.92 mm"
+  },
+  "V2-REF|R|240|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF R 240 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.43° torque ratio 0.14 self 75.3 mm clear 5.92 mm"
+  },
+  "V2-REF|R|240|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF R 240 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.50° torque ratio 0.11 self 86.2 mm clear 5.92 mm"
+  },
+  "V2-REF|R|240|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-REF R 240 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (9.8e-5); φ 1.00 nominal: IK not reached (2.8e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 6.32e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 1.44° torque ratio 0.13 self 86.2 mm clear 5.92 mm"
+  },
+  "V2-REF|R|240|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF R 240 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.06° torque ratio 0.18 self 79.0 mm clear 6.07 mm"
+  },
+  "V2-REF|R|240|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF R 240 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.39° torque ratio 0.15 self 79.2 mm clear 8.33 mm"
+  },
+  "V2-REF|R|240|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF R 240 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.73° torque ratio 0.17 self 86.2 mm clear 5.92 mm"
+  },
+  "V2-REF|R|240|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF R 240 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.74° torque ratio 0.15 self 73.5 mm clear 5.92 mm"
+  },
+  "V2-REF|R|480|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF R 480 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.96° torque ratio 0.13 self 78.9 mm clear 5.92 mm"
+  },
+  "V2-REF|R|480|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF R 480 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.00° torque ratio 0.13 self 86.1 mm clear 5.92 mm"
+  },
+  "V2-REF|R|480|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF R 480 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.34° torque ratio 0.12 self 79.7 mm clear 5.92 mm"
+  },
+  "V2-REF|R|480|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF R 480 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.43° torque ratio 0.14 self 75.3 mm clear 5.92 mm"
+  },
+  "V2-REF|R|480|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF R 480 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.49° torque ratio 0.11 self 86.1 mm clear 5.92 mm"
+  },
+  "V2-REF|R|480|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-REF R 480 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (8.9e-5); φ 1.00 nominal: IK not reached (2.7e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 6.57e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 1.44° torque ratio 0.13 self 86.1 mm clear 5.92 mm"
+  },
+  "V2-REF|R|480|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF R 480 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.06° torque ratio 0.18 self 79.0 mm clear 6.07 mm"
+  },
+  "V2-REF|R|480|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF R 480 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.39° torque ratio 0.15 self 79.1 mm clear 8.32 mm"
+  },
+  "V2-REF|R|480|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF R 480 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.73° torque ratio 0.17 self 86.1 mm clear 5.92 mm"
+  },
+  "V2-REF|R|480|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-REF R 480 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.74° torque ratio 0.15 self 73.5 mm clear 5.92 mm"
+  },
+  "V2-165-62|L|180|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 L 180 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.79° torque ratio 0.12 self 70.4 mm clear 5.92 mm"
+  },
+  "V2-165-62|L|180|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 L 180 Hz R-L: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.40 p2+: IK not reached (1.2e-3)]; replay OK → QUALIFIED | min margin analytic 0.01° torque ratio 0.12 self 77.3 mm clear 5.92 mm"
+  },
+  "V2-165-62|L|180|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 L 180 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.13° torque ratio 0.11 self 71.0 mm clear 5.92 mm"
+  },
+  "V2-165-62|L|180|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 L 180 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.30° torque ratio 0.13 self 65.8 mm clear 5.92 mm"
+  },
+  "V2-165-62|L|180|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 L 180 Hz C-L5: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.35 p2+: IK not reached (1.3e-3)]; replay OK → QUALIFIED | min margin analytic 0.02° torque ratio 0.10 self 77.3 mm clear 5.92 mm"
+  },
+  "V2-165-62|L|180|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-165-62 L 180 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (2.6e-4); φ 1.00 nominal: IK not reached (4.4e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 2.67e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 0.19° torque ratio 0.14 self 77.3 mm clear 5.92 mm"
+  },
+  "V2-165-62|L|180|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 L 180 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.92° torque ratio 0.17 self 70.4 mm clear 6.07 mm"
+  },
+  "V2-165-62|L|180|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 L 180 Hz H-A40: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.30 p2+: IK not reached (4.2e-4)]; replay OK → QUALIFIED | min margin analytic 0.05° torque ratio 0.15 self 70.4 mm clear 8.33 mm"
+  },
+  "V2-165-62|L|180|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 L 180 Hz H-D: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 1.00 p1+: conditioning λmin 7.88e-5 < ε²]; replay OK → QUALIFIED | min margin analytic 1.61° torque ratio 0.16 self 77.3 mm clear 5.92 mm"
+  },
+  "V2-165-62|L|180|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 L 180 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.65° torque ratio 0.15 self 64.9 mm clear 5.92 mm"
+  },
+  "V2-165-62|L|240|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 L 240 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.79° torque ratio 0.12 self 70.3 mm clear 5.92 mm"
+  },
+  "V2-165-62|L|240|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 L 240 Hz R-L: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.40 p2+: IK not reached (1.2e-3)]; replay OK → QUALIFIED | min margin analytic 0.02° torque ratio 0.12 self 77.3 mm clear 5.92 mm"
+  },
+  "V2-165-62|L|240|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 L 240 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.13° torque ratio 0.11 self 71.0 mm clear 5.92 mm"
+  },
+  "V2-165-62|L|240|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 L 240 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.30° torque ratio 0.13 self 65.8 mm clear 5.92 mm"
+  },
+  "V2-165-62|L|240|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 L 240 Hz C-L5: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.35 p2+: IK not reached (1.3e-3)]; replay OK → QUALIFIED | min margin analytic 0.02° torque ratio 0.10 self 77.3 mm clear 5.92 mm"
+  },
+  "V2-165-62|L|240|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-165-62 L 240 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (2.7e-4); φ 1.00 nominal: IK not reached (4.5e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 2.33e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 0.19° torque ratio 0.14 self 77.3 mm clear 5.92 mm"
+  },
+  "V2-165-62|L|240|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 L 240 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.92° torque ratio 0.17 self 70.3 mm clear 6.07 mm"
+  },
+  "V2-165-62|L|240|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 L 240 Hz H-A40: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.30 p2+: IK not reached (4.0e-4)]; replay OK → QUALIFIED | min margin analytic 0.05° torque ratio 0.15 self 70.3 mm clear 8.33 mm"
+  },
+  "V2-165-62|L|240|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 L 240 Hz H-D: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 1.00 p1+: conditioning λmin 7.50e-5 < ε²]; replay OK → QUALIFIED | min margin analytic 1.61° torque ratio 0.16 self 77.3 mm clear 5.92 mm"
+  },
+  "V2-165-62|L|240|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 L 240 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.65° torque ratio 0.15 self 64.9 mm clear 5.92 mm"
+  },
+  "V2-165-62|L|480|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 L 480 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.79° torque ratio 0.12 self 70.3 mm clear 5.92 mm"
+  },
+  "V2-165-62|L|480|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 L 480 Hz R-L: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.40 p2+: IK not reached (1.2e-3)]; replay OK → QUALIFIED | min margin analytic 0.02° torque ratio 0.12 self 77.3 mm clear 5.92 mm"
+  },
+  "V2-165-62|L|480|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 L 480 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.13° torque ratio 0.11 self 71.0 mm clear 5.92 mm"
+  },
+  "V2-165-62|L|480|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 L 480 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.30° torque ratio 0.13 self 65.8 mm clear 5.92 mm"
+  },
+  "V2-165-62|L|480|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 L 480 Hz C-L5: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.35 p2+: IK not reached (1.3e-3)]; replay OK → QUALIFIED | min margin analytic 0.02° torque ratio 0.10 self 77.3 mm clear 5.92 mm"
+  },
+  "V2-165-62|L|480|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-165-62 L 480 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (2.6e-4); φ 1.00 nominal: IK not reached (4.4e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 2.61e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 0.19° torque ratio 0.14 self 77.3 mm clear 5.92 mm"
+  },
+  "V2-165-62|L|480|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 L 480 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.92° torque ratio 0.17 self 70.3 mm clear 6.07 mm"
+  },
+  "V2-165-62|L|480|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 L 480 Hz H-A40: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.30 p2+: IK not reached (4.0e-4)]; replay OK → QUALIFIED | min margin analytic 0.05° torque ratio 0.15 self 70.3 mm clear 8.32 mm"
+  },
+  "V2-165-62|L|480|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 L 480 Hz H-D: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 1.00 p1+: conditioning λmin 7.61e-5 < ε²]; replay OK → QUALIFIED | min margin analytic 1.61° torque ratio 0.16 self 77.3 mm clear 5.92 mm"
+  },
+  "V2-165-62|L|480|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 L 480 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.65° torque ratio 0.15 self 64.8 mm clear 5.92 mm"
+  },
+  "V2-165-62|R|180|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 R 180 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.79° torque ratio 0.12 self 70.4 mm clear 5.92 mm"
+  },
+  "V2-165-62|R|180|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 R 180 Hz R-L: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.40 p2+: IK not reached (1.2e-3)]; replay OK → QUALIFIED | min margin analytic 0.02° torque ratio 0.12 self 77.3 mm clear 5.92 mm"
+  },
+  "V2-165-62|R|180|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 R 180 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.13° torque ratio 0.11 self 71.0 mm clear 5.92 mm"
+  },
+  "V2-165-62|R|180|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 R 180 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.30° torque ratio 0.13 self 65.8 mm clear 5.92 mm"
+  },
+  "V2-165-62|R|180|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 R 180 Hz C-L5: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.35 p2+: IK not reached (1.3e-3)]; replay OK → QUALIFIED | min margin analytic 0.02° torque ratio 0.10 self 77.3 mm clear 5.92 mm"
+  },
+  "V2-165-62|R|180|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-165-62 R 180 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (2.6e-4); φ 1.00 nominal: IK not reached (4.4e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 2.66e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 0.19° torque ratio 0.14 self 77.3 mm clear 5.92 mm"
+  },
+  "V2-165-62|R|180|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 R 180 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.92° torque ratio 0.17 self 70.4 mm clear 6.07 mm"
+  },
+  "V2-165-62|R|180|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 R 180 Hz H-A40: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.30 p2+: IK not reached (4.1e-4)]; replay OK → QUALIFIED | min margin analytic 0.05° torque ratio 0.15 self 70.4 mm clear 8.33 mm"
+  },
+  "V2-165-62|R|180|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 R 180 Hz H-D: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 1.00 p1+: conditioning λmin 7.82e-5 < ε²]; replay OK → QUALIFIED | min margin analytic 1.61° torque ratio 0.16 self 77.3 mm clear 5.92 mm"
+  },
+  "V2-165-62|R|180|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 R 180 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.65° torque ratio 0.15 self 64.9 mm clear 5.92 mm"
+  },
+  "V2-165-62|R|240|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 R 240 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.79° torque ratio 0.12 self 70.3 mm clear 5.92 mm"
+  },
+  "V2-165-62|R|240|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 R 240 Hz R-L: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.40 p2+: IK not reached (1.2e-3)]; replay OK → QUALIFIED | min margin analytic 0.02° torque ratio 0.12 self 77.3 mm clear 5.92 mm"
+  },
+  "V2-165-62|R|240|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 R 240 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.13° torque ratio 0.11 self 71.0 mm clear 5.92 mm"
+  },
+  "V2-165-62|R|240|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 R 240 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.30° torque ratio 0.13 self 65.8 mm clear 5.92 mm"
+  },
+  "V2-165-62|R|240|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 R 240 Hz C-L5: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.35 p2+: IK not reached (1.3e-3)]; replay OK → QUALIFIED | min margin analytic 0.03° torque ratio 0.10 self 77.3 mm clear 5.92 mm"
+  },
+  "V2-165-62|R|240|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-165-62 R 240 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (2.7e-4); φ 1.00 nominal: IK not reached (4.5e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 2.37e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 0.20° torque ratio 0.14 self 77.3 mm clear 5.92 mm"
+  },
+  "V2-165-62|R|240|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 R 240 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.92° torque ratio 0.17 self 70.3 mm clear 6.07 mm"
+  },
+  "V2-165-62|R|240|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 R 240 Hz H-A40: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.30 p2+: IK not reached (4.0e-4)]; replay OK → QUALIFIED | min margin analytic 0.05° torque ratio 0.15 self 70.3 mm clear 8.33 mm"
+  },
+  "V2-165-62|R|240|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 R 240 Hz H-D: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 1.00 p1+: conditioning λmin 7.44e-5 < ε²]; replay OK → QUALIFIED | min margin analytic 1.61° torque ratio 0.16 self 77.3 mm clear 5.92 mm"
+  },
+  "V2-165-62|R|240|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 R 240 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.65° torque ratio 0.15 self 64.9 mm clear 5.92 mm"
+  },
+  "V2-165-62|R|480|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 R 480 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.79° torque ratio 0.12 self 70.3 mm clear 5.92 mm"
+  },
+  "V2-165-62|R|480|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 R 480 Hz R-L: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.40 p2+: IK not reached (1.2e-3)]; replay OK → QUALIFIED | min margin analytic 0.02° torque ratio 0.12 self 77.3 mm clear 5.92 mm"
+  },
+  "V2-165-62|R|480|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 R 480 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.13° torque ratio 0.11 self 71.0 mm clear 5.92 mm"
+  },
+  "V2-165-62|R|480|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 R 480 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.30° torque ratio 0.13 self 65.8 mm clear 5.92 mm"
+  },
+  "V2-165-62|R|480|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 R 480 Hz C-L5: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.35 p2+: IK not reached (1.3e-3)]; replay OK → QUALIFIED | min margin analytic 0.02° torque ratio 0.10 self 77.3 mm clear 5.92 mm"
+  },
+  "V2-165-62|R|480|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-165-62 R 480 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (2.6e-4); φ 1.00 nominal: IK not reached (4.4e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 2.57e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 0.19° torque ratio 0.14 self 77.3 mm clear 5.92 mm"
+  },
+  "V2-165-62|R|480|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 R 480 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.92° torque ratio 0.17 self 70.3 mm clear 6.07 mm"
+  },
+  "V2-165-62|R|480|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 R 480 Hz H-A40: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.30 p2+: IK not reached (4.1e-4)]; replay OK → QUALIFIED | min margin analytic 0.05° torque ratio 0.15 self 70.3 mm clear 8.32 mm"
+  },
+  "V2-165-62|R|480|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 R 480 Hz H-D: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 1.00 p1+: conditioning λmin 7.60e-5 < ε²]; replay OK → QUALIFIED | min margin analytic 1.61° torque ratio 0.16 self 77.3 mm clear 5.92 mm"
+  },
+  "V2-165-62|R|480|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-165-62 R 480 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.65° torque ratio 0.15 self 64.8 mm clear 5.92 mm"
+  },
+  "V2-175-70|L|180|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 L 180 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.51° torque ratio 0.12 self 76.0 mm clear 5.92 mm"
+  },
+  "V2-175-70|L|180|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 L 180 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.50° torque ratio 0.13 self 82.5 mm clear 5.92 mm"
+  },
+  "V2-175-70|L|180|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 L 180 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.86° torque ratio 0.11 self 76.1 mm clear 5.92 mm"
+  },
+  "V2-175-70|L|180|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 L 180 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.98° torque ratio 0.14 self 71.2 mm clear 5.92 mm"
+  },
+  "V2-175-70|L|180|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 L 180 Hz C-L5: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.45 p2+: IK not reached (9.8e-5)]; replay OK → QUALIFIED | min margin analytic 0.08° torque ratio 0.11 self 82.5 mm clear 5.92 mm"
+  },
+  "V2-175-70|L|180|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-175-70 L 180 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (1.4e-4); φ 1.00 nominal: IK not reached (3.2e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 5.34e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 0.95° torque ratio 0.13 self 82.5 mm clear 5.92 mm"
+  },
+  "V2-175-70|L|180|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 L 180 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.61° torque ratio 0.18 self 76.0 mm clear 6.07 mm"
+  },
+  "V2-175-70|L|180|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 L 180 Hz H-A40: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.40 p2+: IK not reached (4.3e-4)]; replay OK → QUALIFIED | min margin analytic 0.11° torque ratio 0.15 self 76.2 mm clear 8.33 mm"
+  },
+  "V2-175-70|L|180|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 L 180 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.29° torque ratio 0.17 self 82.5 mm clear 5.92 mm"
+  },
+  "V2-175-70|L|180|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 L 180 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.31° torque ratio 0.15 self 70.5 mm clear 5.92 mm"
+  },
+  "V2-175-70|L|240|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 L 240 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.51° torque ratio 0.12 self 76.0 mm clear 5.92 mm"
+  },
+  "V2-175-70|L|240|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 L 240 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.51° torque ratio 0.13 self 82.6 mm clear 5.92 mm"
+  },
+  "V2-175-70|L|240|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 L 240 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.87° torque ratio 0.11 self 76.2 mm clear 5.92 mm"
+  },
+  "V2-175-70|L|240|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 L 240 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.99° torque ratio 0.14 self 71.2 mm clear 5.92 mm"
+  },
+  "V2-175-70|L|240|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 L 240 Hz C-L5: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.45 p2+: IK not reached (8.2e-5)]; replay OK → QUALIFIED | min margin analytic 0.09° torque ratio 0.11 self 82.6 mm clear 5.92 mm"
+  },
+  "V2-175-70|L|240|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-175-70 L 240 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (1.6e-4); φ 1.00 nominal: IK not reached (3.5e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 4.73e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 0.51° torque ratio 0.13 self 82.6 mm clear 5.92 mm"
+  },
+  "V2-175-70|L|240|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 L 240 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.61° torque ratio 0.18 self 76.0 mm clear 6.07 mm"
+  },
+  "V2-175-70|L|240|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 L 240 Hz H-A40: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.40 p2+: IK not reached (4.2e-4)]; replay OK → QUALIFIED | min margin analytic 0.11° torque ratio 0.15 self 76.3 mm clear 8.33 mm"
+  },
+  "V2-175-70|L|240|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 L 240 Hz H-D: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 1.00 p1+: conditioning λmin 9.91e-5 < ε²]; replay OK → QUALIFIED | min margin analytic 2.29° torque ratio 0.17 self 82.6 mm clear 5.92 mm"
+  },
+  "V2-175-70|L|240|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 L 240 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.31° torque ratio 0.15 self 70.6 mm clear 5.92 mm"
+  },
+  "V2-175-70|L|480|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 L 480 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.51° torque ratio 0.12 self 76.0 mm clear 5.92 mm"
+  },
+  "V2-175-70|L|480|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 L 480 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.51° torque ratio 0.13 self 82.5 mm clear 5.92 mm"
+  },
+  "V2-175-70|L|480|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 L 480 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.87° torque ratio 0.11 self 76.1 mm clear 5.92 mm"
+  },
+  "V2-175-70|L|480|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 L 480 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.99° torque ratio 0.14 self 71.1 mm clear 5.92 mm"
+  },
+  "V2-175-70|L|480|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 L 480 Hz C-L5: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.45 p2+: IK not reached (8.4e-5)]; replay OK → QUALIFIED | min margin analytic 0.08° torque ratio 0.11 self 82.5 mm clear 5.92 mm"
+  },
+  "V2-175-70|L|480|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-175-70 L 480 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (1.5e-4); φ 1.00 nominal: IK not reached (3.3e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 5.17e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 0.88° torque ratio 0.13 self 82.5 mm clear 5.92 mm"
+  },
+  "V2-175-70|L|480|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 L 480 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.61° torque ratio 0.18 self 76.0 mm clear 6.07 mm"
+  },
+  "V2-175-70|L|480|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 L 480 Hz H-A40: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.40 p2+: IK not reached (4.1e-4)]; replay OK → QUALIFIED | min margin analytic 0.11° torque ratio 0.15 self 76.2 mm clear 8.32 mm"
+  },
+  "V2-175-70|L|480|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 L 480 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.29° torque ratio 0.17 self 82.5 mm clear 5.92 mm"
+  },
+  "V2-175-70|L|480|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 L 480 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.32° torque ratio 0.15 self 70.5 mm clear 5.92 mm"
+  },
+  "V2-175-70|R|180|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 R 180 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.51° torque ratio 0.12 self 76.0 mm clear 5.92 mm"
+  },
+  "V2-175-70|R|180|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 R 180 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.50° torque ratio 0.13 self 82.5 mm clear 5.92 mm"
+  },
+  "V2-175-70|R|180|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 R 180 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.86° torque ratio 0.11 self 76.1 mm clear 5.92 mm"
+  },
+  "V2-175-70|R|180|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 R 180 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.99° torque ratio 0.14 self 71.2 mm clear 5.92 mm"
+  },
+  "V2-175-70|R|180|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 R 180 Hz C-L5: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.45 p2+: IK not reached (9.6e-5)]; replay OK → QUALIFIED | min margin analytic 0.08° torque ratio 0.11 self 82.5 mm clear 5.92 mm"
+  },
+  "V2-175-70|R|180|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-175-70 R 180 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (1.4e-4); φ 1.00 nominal: IK not reached (3.2e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 5.30e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 0.95° torque ratio 0.13 self 82.5 mm clear 5.92 mm"
+  },
+  "V2-175-70|R|180|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 R 180 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.61° torque ratio 0.18 self 76.0 mm clear 6.07 mm"
+  },
+  "V2-175-70|R|180|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 R 180 Hz H-A40: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.40 p2+: IK not reached (4.3e-4)]; replay OK → QUALIFIED | min margin analytic 0.11° torque ratio 0.15 self 76.2 mm clear 8.33 mm"
+  },
+  "V2-175-70|R|180|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 R 180 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.29° torque ratio 0.17 self 82.5 mm clear 5.92 mm"
+  },
+  "V2-175-70|R|180|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 R 180 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.31° torque ratio 0.15 self 70.5 mm clear 5.92 mm"
+  },
+  "V2-175-70|R|240|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 R 240 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.51° torque ratio 0.12 self 76.0 mm clear 5.92 mm"
+  },
+  "V2-175-70|R|240|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 R 240 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.51° torque ratio 0.13 self 82.6 mm clear 5.92 mm"
+  },
+  "V2-175-70|R|240|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 R 240 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.87° torque ratio 0.11 self 76.2 mm clear 5.92 mm"
+  },
+  "V2-175-70|R|240|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 R 240 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.99° torque ratio 0.14 self 71.2 mm clear 5.92 mm"
+  },
+  "V2-175-70|R|240|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 R 240 Hz C-L5: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.45 p2+: IK not reached (8.1e-5)]; replay OK → QUALIFIED | min margin analytic 0.09° torque ratio 0.11 self 82.6 mm clear 5.92 mm"
+  },
+  "V2-175-70|R|240|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-175-70 R 240 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (1.7e-4); φ 1.00 nominal: IK not reached (3.5e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 4.67e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 0.44° torque ratio 0.13 self 82.6 mm clear 5.92 mm"
+  },
+  "V2-175-70|R|240|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 R 240 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.61° torque ratio 0.18 self 76.0 mm clear 6.07 mm"
+  },
+  "V2-175-70|R|240|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 R 240 Hz H-A40: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.40 p2+: IK not reached (4.2e-4)]; replay OK → QUALIFIED | min margin analytic 0.11° torque ratio 0.15 self 76.3 mm clear 8.33 mm"
+  },
+  "V2-175-70|R|240|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 R 240 Hz H-D: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 1.00 p1+: conditioning λmin 9.86e-5 < ε²]; replay OK → QUALIFIED | min margin analytic 2.29° torque ratio 0.17 self 82.6 mm clear 5.92 mm"
+  },
+  "V2-175-70|R|240|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 R 240 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.31° torque ratio 0.15 self 70.6 mm clear 5.92 mm"
+  },
+  "V2-175-70|R|480|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 R 480 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.51° torque ratio 0.12 self 75.9 mm clear 5.92 mm"
+  },
+  "V2-175-70|R|480|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 R 480 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.50° torque ratio 0.13 self 82.5 mm clear 5.92 mm"
+  },
+  "V2-175-70|R|480|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 R 480 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.86° torque ratio 0.11 self 76.1 mm clear 5.92 mm"
+  },
+  "V2-175-70|R|480|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 R 480 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.99° torque ratio 0.14 self 71.1 mm clear 5.92 mm"
+  },
+  "V2-175-70|R|480|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 R 480 Hz C-L5: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.45 p2+: IK not reached (9.9e-5)]; replay OK → QUALIFIED | min margin analytic 0.08° torque ratio 0.11 self 82.5 mm clear 5.92 mm"
+  },
+  "V2-175-70|R|480|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-175-70 R 480 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (1.5e-4); φ 1.00 nominal: IK not reached (3.3e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 5.17e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 0.89° torque ratio 0.13 self 82.5 mm clear 5.92 mm"
+  },
+  "V2-175-70|R|480|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 R 480 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.61° torque ratio 0.18 self 75.9 mm clear 6.07 mm"
+  },
+  "V2-175-70|R|480|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 R 480 Hz H-A40: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.40 p2+: IK not reached (4.3e-4)]; replay OK → QUALIFIED | min margin analytic 0.11° torque ratio 0.15 self 76.2 mm clear 8.32 mm"
+  },
+  "V2-175-70|R|480|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 R 480 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.29° torque ratio 0.17 self 82.5 mm clear 5.92 mm"
+  },
+  "V2-175-70|R|480|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-175-70 R 480 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.31° torque ratio 0.15 self 70.5 mm clear 5.92 mm"
+  },
+  "V2-190-85|L|180|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 L 180 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.45° torque ratio 0.13 self 82.6 mm clear 5.92 mm"
+  },
+  "V2-190-85|L|180|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 L 180 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.54° torque ratio 0.14 self 90.4 mm clear 5.92 mm"
+  },
+  "V2-190-85|L|180|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 L 180 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.85° torque ratio 0.12 self 83.9 mm clear 5.92 mm"
+  },
+  "V2-190-85|L|180|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 L 180 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.91° torque ratio 0.14 self 80.2 mm clear 5.92 mm"
+  },
+  "V2-190-85|L|180|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 L 180 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.04° torque ratio 0.12 self 90.4 mm clear 5.92 mm"
+  },
+  "V2-190-85|L|180|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-190-85 L 180 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (5.2e-5); φ 1.00 nominal: IK not reached (2.3e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 7.51e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 0.87° torque ratio 0.13 self 90.4 mm clear 5.92 mm"
+  },
+  "V2-190-85|L|180|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 L 180 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.54° torque ratio 0.19 self 82.6 mm clear 6.07 mm"
+  },
+  "V2-190-85|L|180|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 L 180 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.90° torque ratio 0.16 self 82.6 mm clear 8.33 mm"
+  },
+  "V2-190-85|L|180|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 L 180 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.21° torque ratio 0.18 self 90.4 mm clear 5.92 mm"
+  },
+  "V2-190-85|L|180|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 L 180 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.20° torque ratio 0.16 self 77.2 mm clear 5.92 mm"
+  },
+  "V2-190-85|L|240|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 L 240 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.45° torque ratio 0.13 self 82.6 mm clear 5.92 mm"
+  },
+  "V2-190-85|L|240|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 L 240 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.55° torque ratio 0.14 self 90.4 mm clear 5.92 mm"
+  },
+  "V2-190-85|L|240|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 L 240 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.85° torque ratio 0.12 self 83.9 mm clear 5.92 mm"
+  },
+  "V2-190-85|L|240|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 L 240 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.91° torque ratio 0.14 self 80.2 mm clear 5.92 mm"
+  },
+  "V2-190-85|L|240|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 L 240 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.05° torque ratio 0.12 self 90.4 mm clear 5.92 mm"
+  },
+  "V2-190-85|L|240|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-190-85 L 240 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (7.2e-5); φ 1.00 nominal: IK not reached (2.5e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 6.92e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 0.41° torque ratio 0.13 self 90.4 mm clear 5.92 mm"
+  },
+  "V2-190-85|L|240|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 L 240 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.54° torque ratio 0.19 self 82.6 mm clear 6.07 mm"
+  },
+  "V2-190-85|L|240|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 L 240 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.90° torque ratio 0.16 self 82.7 mm clear 8.33 mm"
+  },
+  "V2-190-85|L|240|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 L 240 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.21° torque ratio 0.18 self 90.4 mm clear 5.92 mm"
+  },
+  "V2-190-85|L|240|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 L 240 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.21° torque ratio 0.16 self 77.2 mm clear 5.92 mm"
+  },
+  "V2-190-85|L|480|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 L 480 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.45° torque ratio 0.13 self 82.5 mm clear 5.92 mm"
+  },
+  "V2-190-85|L|480|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 L 480 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.54° torque ratio 0.14 self 90.3 mm clear 5.92 mm"
+  },
+  "V2-190-85|L|480|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 L 480 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.85° torque ratio 0.12 self 83.8 mm clear 5.92 mm"
+  },
+  "V2-190-85|L|480|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 L 480 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.91° torque ratio 0.14 self 80.1 mm clear 5.92 mm"
+  },
+  "V2-190-85|L|480|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 L 480 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.04° torque ratio 0.12 self 90.3 mm clear 5.92 mm"
+  },
+  "V2-190-85|L|480|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-190-85 L 480 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (5.3e-5); φ 1.00 nominal: IK not reached (2.3e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 7.46e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 0.85° torque ratio 0.13 self 90.3 mm clear 5.92 mm"
+  },
+  "V2-190-85|L|480|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 L 480 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.54° torque ratio 0.19 self 82.5 mm clear 6.07 mm"
+  },
+  "V2-190-85|L|480|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 L 480 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.90° torque ratio 0.16 self 82.6 mm clear 8.32 mm"
+  },
+  "V2-190-85|L|480|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 L 480 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.21° torque ratio 0.18 self 90.3 mm clear 5.92 mm"
+  },
+  "V2-190-85|L|480|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 L 480 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.21° torque ratio 0.16 self 77.1 mm clear 5.92 mm"
+  },
+  "V2-190-85|R|180|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 R 180 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.45° torque ratio 0.13 self 82.6 mm clear 5.92 mm"
+  },
+  "V2-190-85|R|180|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 R 180 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.54° torque ratio 0.14 self 90.4 mm clear 5.92 mm"
+  },
+  "V2-190-85|R|180|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 R 180 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.85° torque ratio 0.12 self 83.9 mm clear 5.92 mm"
+  },
+  "V2-190-85|R|180|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 R 180 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.91° torque ratio 0.14 self 80.2 mm clear 5.92 mm"
+  },
+  "V2-190-85|R|180|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 R 180 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.04° torque ratio 0.12 self 90.4 mm clear 5.92 mm"
+  },
+  "V2-190-85|R|180|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-190-85 R 180 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (5.5e-5); φ 1.00 nominal: IK not reached (2.4e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 7.42e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 0.82° torque ratio 0.13 self 90.4 mm clear 5.92 mm"
+  },
+  "V2-190-85|R|180|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 R 180 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.54° torque ratio 0.19 self 82.6 mm clear 6.07 mm"
+  },
+  "V2-190-85|R|180|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 R 180 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.90° torque ratio 0.16 self 82.7 mm clear 8.33 mm"
+  },
+  "V2-190-85|R|180|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 R 180 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.21° torque ratio 0.18 self 90.4 mm clear 5.92 mm"
+  },
+  "V2-190-85|R|180|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 R 180 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.20° torque ratio 0.16 self 77.2 mm clear 5.92 mm"
+  },
+  "V2-190-85|R|240|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 R 240 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.45° torque ratio 0.13 self 82.6 mm clear 5.92 mm"
+  },
+  "V2-190-85|R|240|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 R 240 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.55° torque ratio 0.14 self 90.4 mm clear 5.92 mm"
+  },
+  "V2-190-85|R|240|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 R 240 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.85° torque ratio 0.12 self 83.9 mm clear 5.92 mm"
+  },
+  "V2-190-85|R|240|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 R 240 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.91° torque ratio 0.14 self 80.2 mm clear 5.92 mm"
+  },
+  "V2-190-85|R|240|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 R 240 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.05° torque ratio 0.12 self 90.4 mm clear 5.92 mm"
+  },
+  "V2-190-85|R|240|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-190-85 R 240 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (7.0e-5); φ 1.00 nominal: IK not reached (2.5e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 6.98e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 0.48° torque ratio 0.13 self 90.4 mm clear 5.92 mm"
+  },
+  "V2-190-85|R|240|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 R 240 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.54° torque ratio 0.19 self 82.6 mm clear 6.07 mm"
+  },
+  "V2-190-85|R|240|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 R 240 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.91° torque ratio 0.16 self 82.7 mm clear 8.33 mm"
+  },
+  "V2-190-85|R|240|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 R 240 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.21° torque ratio 0.18 self 90.4 mm clear 5.92 mm"
+  },
+  "V2-190-85|R|240|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 R 240 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.21° torque ratio 0.16 self 77.2 mm clear 5.92 mm"
+  },
+  "V2-190-85|R|480|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 R 480 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.45° torque ratio 0.13 self 82.5 mm clear 5.92 mm"
+  },
+  "V2-190-85|R|480|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 R 480 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.54° torque ratio 0.14 self 90.3 mm clear 5.92 mm"
+  },
+  "V2-190-85|R|480|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 R 480 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.85° torque ratio 0.12 self 83.8 mm clear 5.92 mm"
+  },
+  "V2-190-85|R|480|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 R 480 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.91° torque ratio 0.14 self 80.1 mm clear 5.92 mm"
+  },
+  "V2-190-85|R|480|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 R 480 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.04° torque ratio 0.12 self 90.3 mm clear 5.92 mm"
+  },
+  "V2-190-85|R|480|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-190-85 R 480 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (5.3e-5); φ 1.00 nominal: IK not reached (2.3e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 7.46e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 0.85° torque ratio 0.13 self 90.3 mm clear 5.92 mm"
+  },
+  "V2-190-85|R|480|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 R 480 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.54° torque ratio 0.19 self 82.5 mm clear 6.07 mm"
+  },
+  "V2-190-85|R|480|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 R 480 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.90° torque ratio 0.16 self 82.6 mm clear 8.32 mm"
+  },
+  "V2-190-85|R|480|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 R 480 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.21° torque ratio 0.18 self 90.3 mm clear 5.92 mm"
+  },
+  "V2-190-85|R|480|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-190-85 R 480 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.21° torque ratio 0.16 self 77.1 mm clear 5.92 mm"
+  },
+  "V2-198-92|L|180|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 L 180 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.90° torque ratio 0.13 self 86.3 mm clear 5.92 mm"
+  },
+  "V2-198-92|L|180|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 L 180 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.05° torque ratio 0.14 self 94.6 mm clear 5.92 mm"
+  },
+  "V2-198-92|L|180|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 L 180 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.33° torque ratio 0.13 self 88.2 mm clear 5.92 mm"
+  },
+  "V2-198-92|L|180|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 L 180 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.35° torque ratio 0.15 self 84.3 mm clear 5.92 mm"
+  },
+  "V2-198-92|L|180|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 L 180 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.56° torque ratio 0.12 self 94.6 mm clear 5.92 mm"
+  },
+  "V2-198-92|L|180|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-198-92 L 180 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (4.4e-5); φ 1.00 nominal: IK not reached (2.2e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 7.64e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 1.02° torque ratio 0.13 self 94.6 mm clear 5.92 mm"
+  },
+  "V2-198-92|L|180|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 L 180 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.99° torque ratio 0.20 self 86.3 mm clear 6.07 mm"
+  },
+  "V2-198-92|L|180|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 L 180 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.38° torque ratio 0.16 self 86.3 mm clear 8.33 mm"
+  },
+  "V2-198-92|L|180|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 L 180 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.50° torque ratio 0.18 self 94.6 mm clear 5.92 mm"
+  },
+  "V2-198-92|L|180|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 L 180 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.64° torque ratio 0.16 self 81.3 mm clear 5.92 mm"
+  },
+  "V2-198-92|L|240|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 L 240 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.90° torque ratio 0.13 self 86.3 mm clear 5.92 mm"
+  },
+  "V2-198-92|L|240|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 L 240 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.05° torque ratio 0.14 self 94.6 mm clear 5.92 mm"
+  },
+  "V2-198-92|L|240|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 L 240 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.33° torque ratio 0.13 self 88.2 mm clear 5.92 mm"
+  },
+  "V2-198-92|L|240|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 L 240 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.36° torque ratio 0.15 self 84.3 mm clear 5.92 mm"
+  },
+  "V2-198-92|L|240|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 L 240 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.56° torque ratio 0.12 self 94.6 mm clear 5.92 mm"
+  },
+  "V2-198-92|L|240|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-198-92 L 240 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (6.0e-5); φ 1.00 nominal: IK not reached (2.4e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 7.15e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 0.77° torque ratio 0.13 self 94.6 mm clear 5.92 mm"
+  },
+  "V2-198-92|L|240|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 L 240 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.99° torque ratio 0.20 self 86.3 mm clear 6.07 mm"
+  },
+  "V2-198-92|L|240|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 L 240 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.38° torque ratio 0.16 self 86.3 mm clear 8.33 mm"
+  },
+  "V2-198-92|L|240|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 L 240 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.42° torque ratio 0.18 self 94.6 mm clear 5.92 mm"
+  },
+  "V2-198-92|L|240|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 L 240 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.64° torque ratio 0.16 self 81.3 mm clear 5.92 mm"
+  },
+  "V2-198-92|L|480|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 L 480 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.90° torque ratio 0.13 self 86.2 mm clear 5.92 mm"
+  },
+  "V2-198-92|L|480|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 L 480 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.05° torque ratio 0.14 self 94.5 mm clear 5.92 mm"
+  },
+  "V2-198-92|L|480|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 L 480 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.33° torque ratio 0.13 self 88.1 mm clear 5.92 mm"
+  },
+  "V2-198-92|L|480|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 L 480 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.35° torque ratio 0.15 self 84.3 mm clear 5.92 mm"
+  },
+  "V2-198-92|L|480|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 L 480 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.56° torque ratio 0.12 self 94.5 mm clear 5.92 mm"
+  },
+  "V2-198-92|L|480|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-198-92 L 480 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (4.8e-5); φ 1.00 nominal: IK not reached (2.3e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 7.52e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 0.97° torque ratio 0.13 self 94.5 mm clear 5.92 mm"
+  },
+  "V2-198-92|L|480|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 L 480 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.99° torque ratio 0.20 self 86.2 mm clear 6.07 mm"
+  },
+  "V2-198-92|L|480|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 L 480 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.38° torque ratio 0.16 self 86.3 mm clear 8.32 mm"
+  },
+  "V2-198-92|L|480|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 L 480 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.46° torque ratio 0.18 self 94.5 mm clear 5.92 mm"
+  },
+  "V2-198-92|L|480|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 L 480 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.64° torque ratio 0.16 self 81.2 mm clear 5.92 mm"
+  },
+  "V2-198-92|R|180|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 R 180 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.90° torque ratio 0.13 self 86.3 mm clear 5.92 mm"
+  },
+  "V2-198-92|R|180|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 R 180 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.05° torque ratio 0.14 self 94.6 mm clear 5.92 mm"
+  },
+  "V2-198-92|R|180|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 R 180 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.33° torque ratio 0.13 self 88.2 mm clear 5.92 mm"
+  },
+  "V2-198-92|R|180|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 R 180 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.35° torque ratio 0.15 self 84.3 mm clear 5.92 mm"
+  },
+  "V2-198-92|R|180|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 R 180 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.56° torque ratio 0.12 self 94.6 mm clear 5.92 mm"
+  },
+  "V2-198-92|R|180|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-198-92 R 180 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (4.3e-5); φ 1.00 nominal: IK not reached (2.2e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 7.66e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 1.03° torque ratio 0.13 self 94.6 mm clear 5.92 mm"
+  },
+  "V2-198-92|R|180|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 R 180 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.99° torque ratio 0.20 self 86.3 mm clear 6.07 mm"
+  },
+  "V2-198-92|R|180|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 R 180 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.38° torque ratio 0.16 self 86.3 mm clear 8.33 mm"
+  },
+  "V2-198-92|R|180|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 R 180 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.50° torque ratio 0.18 self 94.6 mm clear 5.92 mm"
+  },
+  "V2-198-92|R|180|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 R 180 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.64° torque ratio 0.16 self 81.3 mm clear 5.92 mm"
+  },
+  "V2-198-92|R|240|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 R 240 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.90° torque ratio 0.13 self 86.3 mm clear 5.92 mm"
+  },
+  "V2-198-92|R|240|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 R 240 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.05° torque ratio 0.14 self 94.6 mm clear 5.92 mm"
+  },
+  "V2-198-92|R|240|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 R 240 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.33° torque ratio 0.13 self 88.2 mm clear 5.92 mm"
+  },
+  "V2-198-92|R|240|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 R 240 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.35° torque ratio 0.15 self 84.3 mm clear 5.92 mm"
+  },
+  "V2-198-92|R|240|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 R 240 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.56° torque ratio 0.12 self 94.6 mm clear 5.92 mm"
+  },
+  "V2-198-92|R|240|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-198-92 R 240 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (6.6e-5); φ 1.00 nominal: IK not reached (2.5e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 6.99e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 0.66° torque ratio 0.13 self 94.6 mm clear 5.92 mm"
+  },
+  "V2-198-92|R|240|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 R 240 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.99° torque ratio 0.20 self 86.3 mm clear 6.07 mm"
+  },
+  "V2-198-92|R|240|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 R 240 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.38° torque ratio 0.16 self 86.3 mm clear 8.33 mm"
+  },
+  "V2-198-92|R|240|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 R 240 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.42° torque ratio 0.18 self 94.6 mm clear 5.92 mm"
+  },
+  "V2-198-92|R|240|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 R 240 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.64° torque ratio 0.16 self 81.3 mm clear 5.92 mm"
+  },
+  "V2-198-92|R|480|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 R 480 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.90° torque ratio 0.13 self 86.2 mm clear 5.92 mm"
+  },
+  "V2-198-92|R|480|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 R 480 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.05° torque ratio 0.14 self 94.5 mm clear 5.92 mm"
+  },
+  "V2-198-92|R|480|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 R 480 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.33° torque ratio 0.13 self 88.1 mm clear 5.92 mm"
+  },
+  "V2-198-92|R|480|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 R 480 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.35° torque ratio 0.15 self 84.3 mm clear 5.92 mm"
+  },
+  "V2-198-92|R|480|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 R 480 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.56° torque ratio 0.12 self 94.5 mm clear 5.92 mm"
+  },
+  "V2-198-92|R|480|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-198-92 R 480 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (5.0e-5); φ 1.00 nominal: IK not reached (2.3e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 7.47e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 0.94° torque ratio 0.13 self 94.5 mm clear 5.92 mm"
+  },
+  "V2-198-92|R|480|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 R 480 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.99° torque ratio 0.20 self 86.2 mm clear 6.07 mm"
+  },
+  "V2-198-92|R|480|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 R 480 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.38° torque ratio 0.16 self 86.3 mm clear 8.32 mm"
+  },
+  "V2-198-92|R|480|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 R 480 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.46° torque ratio 0.18 self 94.5 mm clear 5.92 mm"
+  },
+  "V2-198-92|R|480|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-198-92 R 480 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.64° torque ratio 0.16 self 81.2 mm clear 5.92 mm"
+  },
+  "V2-long-legs|L|180|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs L 180 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.23° torque ratio 0.13 self 78.7 mm clear 5.92 mm"
+  },
+  "V2-long-legs|L|180|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs L 180 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.29° torque ratio 0.13 self 85.8 mm clear 5.92 mm"
+  },
+  "V2-long-legs|L|180|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs L 180 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.64° torque ratio 0.12 self 79.3 mm clear 5.92 mm"
+  },
+  "V2-long-legs|L|180|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs L 180 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.68° torque ratio 0.14 self 75.0 mm clear 5.92 mm"
+  },
+  "V2-long-legs|L|180|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs L 180 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.81° torque ratio 0.12 self 85.8 mm clear 5.92 mm"
+  },
+  "V2-long-legs|L|180|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-long-legs L 180 Hz C-L11: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.90 p1+: IK not reached (5.7e-4)]; replay REJECTED (E1a-7 violations in the swing: 5; IK unreached before contact (max residual 2.5e-3); soft-limit margin 0.00°; abort) → NOT QUALIFIED | min margin analytic 1.60° torque ratio 0.18 self 85.8 mm clear 5.92 mm"
+  },
+  "V2-long-legs|L|180|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs L 180 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.32° torque ratio 0.19 self 78.7 mm clear 6.07 mm"
+  },
+  "V2-long-legs|L|180|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs L 180 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.70° torque ratio 0.16 self 78.8 mm clear 8.33 mm"
+  },
+  "V2-long-legs|L|180|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs L 180 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.95° torque ratio 0.17 self 85.8 mm clear 5.92 mm"
+  },
+  "V2-long-legs|L|180|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs L 180 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.98° torque ratio 0.15 self 73.2 mm clear 5.92 mm"
+  },
+  "V2-long-legs|L|240|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs L 240 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.23° torque ratio 0.13 self 78.7 mm clear 5.92 mm"
+  },
+  "V2-long-legs|L|240|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs L 240 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.30° torque ratio 0.13 self 85.8 mm clear 5.92 mm"
+  },
+  "V2-long-legs|L|240|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs L 240 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.64° torque ratio 0.12 self 79.3 mm clear 5.92 mm"
+  },
+  "V2-long-legs|L|240|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs L 240 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.69° torque ratio 0.14 self 75.0 mm clear 5.92 mm"
+  },
+  "V2-long-legs|L|240|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs L 240 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.81° torque ratio 0.12 self 85.8 mm clear 5.92 mm"
+  },
+  "V2-long-legs|L|240|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-long-legs L 240 Hz C-L11: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.90 p1+: IK not reached (5.9e-4)]; replay REJECTED (E1a-7 violations in the swing: 9; IK unreached before contact (max residual 4.3e-3); soft-limit margin 0.00°) → NOT QUALIFIED | min margin analytic 1.42° torque ratio 0.18 self 85.8 mm clear 5.92 mm"
+  },
+  "V2-long-legs|L|240|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs L 240 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.33° torque ratio 0.19 self 78.7 mm clear 6.07 mm"
+  },
+  "V2-long-legs|L|240|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs L 240 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.71° torque ratio 0.16 self 78.8 mm clear 8.33 mm"
+  },
+  "V2-long-legs|L|240|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs L 240 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.96° torque ratio 0.17 self 85.8 mm clear 5.92 mm"
+  },
+  "V2-long-legs|L|240|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs L 240 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.99° torque ratio 0.15 self 73.2 mm clear 5.92 mm"
+  },
+  "V2-long-legs|L|480|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs L 480 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.23° torque ratio 0.13 self 78.6 mm clear 5.92 mm"
+  },
+  "V2-long-legs|L|480|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs L 480 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.30° torque ratio 0.13 self 85.8 mm clear 5.92 mm"
+  },
+  "V2-long-legs|L|480|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs L 480 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.64° torque ratio 0.12 self 79.3 mm clear 5.92 mm"
+  },
+  "V2-long-legs|L|480|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs L 480 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.69° torque ratio 0.14 self 74.9 mm clear 5.92 mm"
+  },
+  "V2-long-legs|L|480|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs L 480 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.81° torque ratio 0.12 self 85.8 mm clear 5.92 mm"
+  },
+  "V2-long-legs|L|480|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-long-legs L 480 Hz C-L11: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.90 p1+: IK not reached (5.7e-4)]; replay REJECTED (E1a-7 violations in the swing: 31; IK unreached before contact (max residual 7.6e-3); soft-limit margin 0.00°) → NOT QUALIFIED | min margin analytic 1.59° torque ratio 0.18 self 85.8 mm clear 5.92 mm"
+  },
+  "V2-long-legs|L|480|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs L 480 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.33° torque ratio 0.19 self 78.6 mm clear 6.07 mm"
+  },
+  "V2-long-legs|L|480|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs L 480 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.71° torque ratio 0.16 self 78.8 mm clear 8.33 mm"
+  },
+  "V2-long-legs|L|480|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs L 480 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.96° torque ratio 0.17 self 85.8 mm clear 5.92 mm"
+  },
+  "V2-long-legs|L|480|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs L 480 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.99° torque ratio 0.15 self 73.1 mm clear 5.92 mm"
+  },
+  "V2-long-legs|R|180|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs R 180 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.23° torque ratio 0.13 self 78.7 mm clear 5.92 mm"
+  },
+  "V2-long-legs|R|180|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs R 180 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.29° torque ratio 0.13 self 85.8 mm clear 5.92 mm"
+  },
+  "V2-long-legs|R|180|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs R 180 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.64° torque ratio 0.12 self 79.3 mm clear 5.92 mm"
+  },
+  "V2-long-legs|R|180|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs R 180 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.69° torque ratio 0.14 self 75.0 mm clear 5.92 mm"
+  },
+  "V2-long-legs|R|180|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs R 180 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.81° torque ratio 0.12 self 85.8 mm clear 5.92 mm"
+  },
+  "V2-long-legs|R|180|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-long-legs R 180 Hz C-L11: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.90 p1+: IK not reached (5.7e-4)]; replay REJECTED (E1a-7 violations in the swing: 5; IK unreached before contact (max residual 2.6e-3); soft-limit margin 0.00°) → NOT QUALIFIED | min margin analytic 1.59° torque ratio 0.18 self 85.8 mm clear 5.92 mm"
+  },
+  "V2-long-legs|R|180|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs R 180 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.32° torque ratio 0.19 self 78.7 mm clear 6.07 mm"
+  },
+  "V2-long-legs|R|180|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs R 180 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.70° torque ratio 0.16 self 78.8 mm clear 8.33 mm"
+  },
+  "V2-long-legs|R|180|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs R 180 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.95° torque ratio 0.17 self 85.8 mm clear 5.92 mm"
+  },
+  "V2-long-legs|R|180|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs R 180 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.98° torque ratio 0.15 self 73.2 mm clear 5.92 mm"
+  },
+  "V2-long-legs|R|240|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs R 240 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.23° torque ratio 0.13 self 78.7 mm clear 5.92 mm"
+  },
+  "V2-long-legs|R|240|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs R 240 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.30° torque ratio 0.13 self 85.8 mm clear 5.92 mm"
+  },
+  "V2-long-legs|R|240|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs R 240 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.64° torque ratio 0.12 self 79.4 mm clear 5.92 mm"
+  },
+  "V2-long-legs|R|240|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs R 240 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.69° torque ratio 0.14 self 75.0 mm clear 5.92 mm"
+  },
+  "V2-long-legs|R|240|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs R 240 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.81° torque ratio 0.12 self 85.8 mm clear 5.92 mm"
+  },
+  "V2-long-legs|R|240|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-long-legs R 240 Hz C-L11: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.90 p1+: IK not reached (5.9e-4)]; replay REJECTED (E1a-7 violations in the swing: 8; IK unreached before contact (max residual 2.9e-3); soft-limit margin 0.00°) → NOT QUALIFIED | min margin analytic 1.43° torque ratio 0.18 self 85.8 mm clear 5.92 mm"
+  },
+  "V2-long-legs|R|240|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs R 240 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.32° torque ratio 0.19 self 78.7 mm clear 6.07 mm"
+  },
+  "V2-long-legs|R|240|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs R 240 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.70° torque ratio 0.16 self 78.8 mm clear 8.33 mm"
+  },
+  "V2-long-legs|R|240|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs R 240 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.96° torque ratio 0.17 self 85.8 mm clear 5.92 mm"
+  },
+  "V2-long-legs|R|240|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs R 240 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.99° torque ratio 0.15 self 73.2 mm clear 5.92 mm"
+  },
+  "V2-long-legs|R|480|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs R 480 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.23° torque ratio 0.13 self 78.6 mm clear 5.92 mm"
+  },
+  "V2-long-legs|R|480|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs R 480 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.29° torque ratio 0.13 self 85.8 mm clear 5.92 mm"
+  },
+  "V2-long-legs|R|480|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs R 480 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.64° torque ratio 0.12 self 79.3 mm clear 5.92 mm"
+  },
+  "V2-long-legs|R|480|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs R 480 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.69° torque ratio 0.14 self 74.9 mm clear 5.92 mm"
+  },
+  "V2-long-legs|R|480|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs R 480 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.81° torque ratio 0.12 self 85.8 mm clear 5.92 mm"
+  },
+  "V2-long-legs|R|480|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-long-legs R 480 Hz C-L11: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.90 p1+: IK not reached (5.8e-4)]; replay REJECTED (E1a-7 violations in the swing: 17; IK unreached before contact (max residual 1.9e-3); soft-limit margin 0.00°) → NOT QUALIFIED | min margin analytic 1.52° torque ratio 0.18 self 85.8 mm clear 5.92 mm"
+  },
+  "V2-long-legs|R|480|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs R 480 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.32° torque ratio 0.19 self 78.6 mm clear 6.07 mm"
+  },
+  "V2-long-legs|R|480|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs R 480 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.70° torque ratio 0.16 self 78.8 mm clear 8.32 mm"
+  },
+  "V2-long-legs|R|480|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs R 480 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.95° torque ratio 0.17 self 85.8 mm clear 5.92 mm"
+  },
+  "V2-long-legs|R|480|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-long-legs R 480 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.98° torque ratio 0.15 self 73.1 mm clear 5.92 mm"
+  },
+  "V2-short-legs|L|180|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs L 180 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.63° torque ratio 0.13 self 79.4 mm clear 5.92 mm"
+  },
+  "V2-short-legs|L|180|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs L 180 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.65° torque ratio 0.13 self 86.6 mm clear 5.92 mm"
+  },
+  "V2-short-legs|L|180|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs L 180 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.98° torque ratio 0.12 self 80.1 mm clear 5.92 mm"
+  },
+  "V2-short-legs|L|180|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs L 180 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.11° torque ratio 0.14 self 75.7 mm clear 5.92 mm"
+  },
+  "V2-short-legs|L|180|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs L 180 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.11° torque ratio 0.11 self 86.6 mm clear 5.92 mm"
+  },
+  "V2-short-legs|L|180|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-short-legs L 180 Hz C-L11: positional REJECTED; analytic REJECTED (3: φ 0.90 nominal: IK not reached (4.7e-4); φ 0.95 nominal: IK not reached (1.6e-3)) [ENVELOPE-SENSITIVE: φ 0.85 p0+: IK not reached (5.1e-4)]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 1.11° torque ratio 0.18 self 86.6 mm clear 5.92 mm"
+  },
+  "V2-short-legs|L|180|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs L 180 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.73° torque ratio 0.18 self 79.4 mm clear 6.07 mm"
+  },
+  "V2-short-legs|L|180|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs L 180 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.02° torque ratio 0.15 self 79.5 mm clear 8.33 mm"
+  },
+  "V2-short-legs|L|180|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs L 180 Hz H-D: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.95 p1+: IK not reached (7.1e-4)]; replay OK → QUALIFIED | min margin analytic 2.45° torque ratio 0.18 self 86.6 mm clear 5.92 mm"
+  },
+  "V2-short-legs|L|180|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs L 180 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.44° torque ratio 0.15 self 73.9 mm clear 5.92 mm"
+  },
+  "V2-short-legs|L|240|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs L 240 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.63° torque ratio 0.13 self 79.4 mm clear 5.92 mm"
+  },
+  "V2-short-legs|L|240|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs L 240 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.65° torque ratio 0.13 self 86.6 mm clear 5.92 mm"
+  },
+  "V2-short-legs|L|240|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs L 240 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.98° torque ratio 0.12 self 80.1 mm clear 5.92 mm"
+  },
+  "V2-short-legs|L|240|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs L 240 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.12° torque ratio 0.14 self 75.7 mm clear 5.92 mm"
+  },
+  "V2-short-legs|L|240|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs L 240 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.11° torque ratio 0.11 self 86.6 mm clear 5.92 mm"
+  },
+  "V2-short-legs|L|240|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-short-legs L 240 Hz C-L11: positional REJECTED; analytic REJECTED (3: φ 0.90 nominal: IK not reached (4.8e-4); φ 0.95 nominal: IK not reached (1.6e-3)) [ENVELOPE-SENSITIVE: φ 0.85 p0+: IK not reached (5.2e-4)]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 1.12° torque ratio 0.18 self 86.6 mm clear 5.92 mm"
+  },
+  "V2-short-legs|L|240|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs L 240 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.74° torque ratio 0.18 self 79.4 mm clear 6.07 mm"
+  },
+  "V2-short-legs|L|240|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs L 240 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.02° torque ratio 0.15 self 79.5 mm clear 8.33 mm"
+  },
+  "V2-short-legs|L|240|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs L 240 Hz H-D: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.90 p1+: conditioning λmin 9.87e-5 < ε²]; replay OK → QUALIFIED | min margin analytic 2.45° torque ratio 0.18 self 86.6 mm clear 5.92 mm"
+  },
+  "V2-short-legs|L|240|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs L 240 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.45° torque ratio 0.15 self 73.9 mm clear 5.92 mm"
+  },
+  "V2-short-legs|L|480|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs L 480 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.63° torque ratio 0.13 self 79.3 mm clear 5.92 mm"
+  },
+  "V2-short-legs|L|480|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs L 480 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.65° torque ratio 0.13 self 86.5 mm clear 5.92 mm"
+  },
+  "V2-short-legs|L|480|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs L 480 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.98° torque ratio 0.12 self 80.0 mm clear 5.92 mm"
+  },
+  "V2-short-legs|L|480|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs L 480 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.12° torque ratio 0.14 self 75.6 mm clear 5.92 mm"
+  },
+  "V2-short-legs|L|480|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs L 480 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.11° torque ratio 0.11 self 86.5 mm clear 5.92 mm"
+  },
+  "V2-short-legs|L|480|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-short-legs L 480 Hz C-L11: positional REJECTED; analytic REJECTED (3: φ 0.90 nominal: IK not reached (4.6e-4); φ 0.95 nominal: IK not reached (1.6e-3)) [ENVELOPE-SENSITIVE: φ 0.85 p0+: IK not reached (5.1e-4)]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 1.12° torque ratio 0.18 self 86.5 mm clear 5.92 mm"
+  },
+  "V2-short-legs|L|480|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs L 480 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.74° torque ratio 0.18 self 79.3 mm clear 6.07 mm"
+  },
+  "V2-short-legs|L|480|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs L 480 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.02° torque ratio 0.15 self 79.5 mm clear 8.33 mm"
+  },
+  "V2-short-legs|L|480|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs L 480 Hz H-D: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.95 p1+: IK not reached (7.2e-4)]; replay OK → QUALIFIED | min margin analytic 2.45° torque ratio 0.18 self 86.5 mm clear 5.92 mm"
+  },
+  "V2-short-legs|L|480|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs L 480 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.45° torque ratio 0.15 self 73.9 mm clear 5.92 mm"
+  },
+  "V2-short-legs|R|180|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs R 180 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.63° torque ratio 0.13 self 79.4 mm clear 5.92 mm"
+  },
+  "V2-short-legs|R|180|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs R 180 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.65° torque ratio 0.13 self 86.6 mm clear 5.92 mm"
+  },
+  "V2-short-legs|R|180|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs R 180 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.98° torque ratio 0.12 self 80.1 mm clear 5.92 mm"
+  },
+  "V2-short-legs|R|180|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs R 180 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.11° torque ratio 0.14 self 75.7 mm clear 5.92 mm"
+  },
+  "V2-short-legs|R|180|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs R 180 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.11° torque ratio 0.11 self 86.6 mm clear 5.92 mm"
+  },
+  "V2-short-legs|R|180|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-short-legs R 180 Hz C-L11: positional REJECTED; analytic REJECTED (3: φ 0.90 nominal: IK not reached (4.7e-4); φ 0.95 nominal: IK not reached (1.6e-3)) [ENVELOPE-SENSITIVE: φ 0.85 p0-: IK not reached (5.1e-4)]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 1.11° torque ratio 0.18 self 86.6 mm clear 5.92 mm"
+  },
+  "V2-short-legs|R|180|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs R 180 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.73° torque ratio 0.18 self 79.4 mm clear 6.07 mm"
+  },
+  "V2-short-legs|R|180|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs R 180 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.02° torque ratio 0.15 self 79.5 mm clear 8.33 mm"
+  },
+  "V2-short-legs|R|180|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs R 180 Hz H-D: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.95 p1+: IK not reached (7.1e-4)]; replay OK → QUALIFIED | min margin analytic 2.45° torque ratio 0.18 self 86.6 mm clear 5.92 mm"
+  },
+  "V2-short-legs|R|180|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs R 180 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.45° torque ratio 0.15 self 73.9 mm clear 5.92 mm"
+  },
+  "V2-short-legs|R|240|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs R 240 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.63° torque ratio 0.13 self 79.4 mm clear 5.92 mm"
+  },
+  "V2-short-legs|R|240|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs R 240 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.65° torque ratio 0.13 self 86.6 mm clear 5.92 mm"
+  },
+  "V2-short-legs|R|240|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs R 240 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.98° torque ratio 0.12 self 80.1 mm clear 5.92 mm"
+  },
+  "V2-short-legs|R|240|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs R 240 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.12° torque ratio 0.14 self 75.7 mm clear 5.92 mm"
+  },
+  "V2-short-legs|R|240|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs R 240 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.11° torque ratio 0.11 self 86.6 mm clear 5.92 mm"
+  },
+  "V2-short-legs|R|240|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-short-legs R 240 Hz C-L11: positional REJECTED; analytic REJECTED (3: φ 0.90 nominal: IK not reached (4.9e-4); φ 0.95 nominal: IK not reached (1.6e-3)) [ENVELOPE-SENSITIVE: φ 0.85 p0-: IK not reached (5.3e-4)]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 1.12° torque ratio 0.19 self 86.6 mm clear 5.92 mm"
+  },
+  "V2-short-legs|R|240|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs R 240 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.74° torque ratio 0.18 self 79.4 mm clear 6.07 mm"
+  },
+  "V2-short-legs|R|240|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs R 240 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.02° torque ratio 0.15 self 79.5 mm clear 8.33 mm"
+  },
+  "V2-short-legs|R|240|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs R 240 Hz H-D: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.90 p1+: conditioning λmin 9.85e-5 < ε²]; replay OK → QUALIFIED | min margin analytic 2.45° torque ratio 0.18 self 86.6 mm clear 5.92 mm"
+  },
+  "V2-short-legs|R|240|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs R 240 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.45° torque ratio 0.15 self 73.9 mm clear 5.92 mm"
+  },
+  "V2-short-legs|R|480|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs R 480 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.63° torque ratio 0.13 self 79.3 mm clear 5.92 mm"
+  },
+  "V2-short-legs|R|480|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs R 480 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.64° torque ratio 0.13 self 86.5 mm clear 5.92 mm"
+  },
+  "V2-short-legs|R|480|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs R 480 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.97° torque ratio 0.12 self 80.0 mm clear 5.92 mm"
+  },
+  "V2-short-legs|R|480|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs R 480 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.11° torque ratio 0.14 self 75.6 mm clear 5.92 mm"
+  },
+  "V2-short-legs|R|480|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs R 480 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.11° torque ratio 0.11 self 86.5 mm clear 5.92 mm"
+  },
+  "V2-short-legs|R|480|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V2-short-legs R 480 Hz C-L11: positional REJECTED; analytic REJECTED (3: φ 0.90 nominal: IK not reached (4.6e-4); φ 0.95 nominal: IK not reached (1.6e-3)) [ENVELOPE-SENSITIVE: φ 0.85 p0-: IK not reached (5.1e-4)]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 1.11° torque ratio 0.18 self 86.5 mm clear 5.92 mm"
+  },
+  "V2-short-legs|R|480|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs R 480 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.73° torque ratio 0.18 self 79.3 mm clear 6.07 mm"
+  },
+  "V2-short-legs|R|480|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs R 480 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.02° torque ratio 0.15 self 79.5 mm clear 8.33 mm"
+  },
+  "V2-short-legs|R|480|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs R 480 Hz H-D: positional OK; analytic OK [ENVELOPE-SENSITIVE: φ 0.95 p1+: IK not reached (7.1e-4)]; replay OK → QUALIFIED | min margin analytic 2.44° torque ratio 0.18 self 86.5 mm clear 5.92 mm"
+  },
+  "V2-short-legs|R|480|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V2-short-legs R 480 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.44° torque ratio 0.15 self 73.8 mm clear 5.92 mm"
+  },
+  "V1-matched|L|180|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched L 180 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.45° torque ratio 0.13 self 82.6 mm clear 5.92 mm"
+  },
+  "V1-matched|L|180|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched L 180 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.55° torque ratio 0.14 self 90.4 mm clear 5.92 mm"
+  },
+  "V1-matched|L|180|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched L 180 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.85° torque ratio 0.12 self 83.9 mm clear 5.92 mm"
+  },
+  "V1-matched|L|180|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched L 180 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.91° torque ratio 0.14 self 80.2 mm clear 5.92 mm"
+  },
+  "V1-matched|L|180|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched L 180 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.05° torque ratio 0.12 self 90.4 mm clear 5.92 mm"
+  },
+  "V1-matched|L|180|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V1-matched L 180 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (6.8e-5); φ 1.00 nominal: IK not reached (2.5e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 7.04e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 0.54° torque ratio 0.13 self 90.4 mm clear 5.92 mm"
+  },
+  "V1-matched|L|180|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched L 180 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.54° torque ratio 0.19 self 82.6 mm clear 6.07 mm"
+  },
+  "V1-matched|L|180|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched L 180 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.90° torque ratio 0.16 self 82.7 mm clear 8.33 mm"
+  },
+  "V1-matched|L|180|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched L 180 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.21° torque ratio 0.18 self 90.4 mm clear 5.92 mm"
+  },
+  "V1-matched|L|180|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched L 180 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.21° torque ratio 0.16 self 77.2 mm clear 5.92 mm"
+  },
+  "V1-matched|L|240|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched L 240 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.45° torque ratio 0.13 self 82.6 mm clear 5.92 mm"
+  },
+  "V1-matched|L|240|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched L 240 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.55° torque ratio 0.14 self 90.4 mm clear 5.92 mm"
+  },
+  "V1-matched|L|240|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched L 240 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.86° torque ratio 0.12 self 83.9 mm clear 5.92 mm"
+  },
+  "V1-matched|L|240|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched L 240 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.91° torque ratio 0.14 self 80.2 mm clear 5.92 mm"
+  },
+  "V1-matched|L|240|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched L 240 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.05° torque ratio 0.12 self 90.4 mm clear 5.92 mm"
+  },
+  "V1-matched|L|240|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V1-matched L 240 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (8.0e-5); φ 1.00 nominal: IK not reached (2.6e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 6.71e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 1.97° torque ratio 0.13 self 90.4 mm clear 5.92 mm"
+  },
+  "V1-matched|L|240|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched L 240 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.54° torque ratio 0.19 self 82.6 mm clear 6.07 mm"
+  },
+  "V1-matched|L|240|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched L 240 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.91° torque ratio 0.16 self 82.7 mm clear 8.33 mm"
+  },
+  "V1-matched|L|240|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched L 240 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.21° torque ratio 0.18 self 90.4 mm clear 5.92 mm"
+  },
+  "V1-matched|L|240|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched L 240 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.21° torque ratio 0.16 self 77.2 mm clear 5.92 mm"
+  },
+  "V1-matched|L|480|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched L 480 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.45° torque ratio 0.13 self 82.6 mm clear 5.92 mm"
+  },
+  "V1-matched|L|480|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched L 480 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.55° torque ratio 0.14 self 90.3 mm clear 5.92 mm"
+  },
+  "V1-matched|L|480|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched L 480 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.85° torque ratio 0.12 self 83.8 mm clear 5.92 mm"
+  },
+  "V1-matched|L|480|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched L 480 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.91° torque ratio 0.14 self 80.1 mm clear 5.92 mm"
+  },
+  "V1-matched|L|480|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched L 480 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.05° torque ratio 0.12 self 90.3 mm clear 5.92 mm"
+  },
+  "V1-matched|L|480|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V1-matched L 480 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (6.8e-5); φ 1.00 nominal: IK not reached (2.5e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 7.03e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 0.53° torque ratio 0.13 self 90.3 mm clear 5.92 mm"
+  },
+  "V1-matched|L|480|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched L 480 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.54° torque ratio 0.19 self 82.6 mm clear 6.07 mm"
+  },
+  "V1-matched|L|480|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched L 480 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.91° torque ratio 0.16 self 82.6 mm clear 8.32 mm"
+  },
+  "V1-matched|L|480|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched L 480 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.21° torque ratio 0.18 self 90.3 mm clear 5.92 mm"
+  },
+  "V1-matched|L|480|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched L 480 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.21° torque ratio 0.16 self 77.1 mm clear 5.92 mm"
+  },
+  "V1-matched|R|180|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched R 180 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.45° torque ratio 0.13 self 82.6 mm clear 5.92 mm"
+  },
+  "V1-matched|R|180|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched R 180 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.55° torque ratio 0.14 self 90.4 mm clear 5.92 mm"
+  },
+  "V1-matched|R|180|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched R 180 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.85° torque ratio 0.12 self 83.9 mm clear 5.92 mm"
+  },
+  "V1-matched|R|180|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched R 180 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.91° torque ratio 0.14 self 80.2 mm clear 5.92 mm"
+  },
+  "V1-matched|R|180|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched R 180 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.05° torque ratio 0.12 self 90.4 mm clear 5.92 mm"
+  },
+  "V1-matched|R|180|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V1-matched R 180 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (7.1e-5); φ 1.00 nominal: IK not reached (2.5e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 6.95e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 0.44° torque ratio 0.13 self 90.4 mm clear 5.92 mm"
+  },
+  "V1-matched|R|180|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched R 180 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.54° torque ratio 0.19 self 82.6 mm clear 6.07 mm"
+  },
+  "V1-matched|R|180|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched R 180 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.91° torque ratio 0.16 self 82.7 mm clear 8.33 mm"
+  },
+  "V1-matched|R|180|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched R 180 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.21° torque ratio 0.18 self 90.4 mm clear 5.92 mm"
+  },
+  "V1-matched|R|180|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched R 180 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.21° torque ratio 0.16 self 77.2 mm clear 5.92 mm"
+  },
+  "V1-matched|R|240|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched R 240 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.45° torque ratio 0.13 self 82.6 mm clear 5.92 mm"
+  },
+  "V1-matched|R|240|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched R 240 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.55° torque ratio 0.14 self 90.4 mm clear 5.92 mm"
+  },
+  "V1-matched|R|240|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched R 240 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.85° torque ratio 0.12 self 83.9 mm clear 5.92 mm"
+  },
+  "V1-matched|R|240|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched R 240 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.91° torque ratio 0.14 self 80.2 mm clear 5.92 mm"
+  },
+  "V1-matched|R|240|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched R 240 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.05° torque ratio 0.12 self 90.4 mm clear 5.92 mm"
+  },
+  "V1-matched|R|240|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V1-matched R 240 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (8.6e-5); φ 1.00 nominal: IK not reached (2.7e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 6.52e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 1.94° torque ratio 0.13 self 90.4 mm clear 5.92 mm"
+  },
+  "V1-matched|R|240|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched R 240 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.54° torque ratio 0.19 self 82.6 mm clear 6.07 mm"
+  },
+  "V1-matched|R|240|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched R 240 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.91° torque ratio 0.16 self 82.7 mm clear 8.32 mm"
+  },
+  "V1-matched|R|240|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched R 240 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.21° torque ratio 0.18 self 90.4 mm clear 5.92 mm"
+  },
+  "V1-matched|R|240|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched R 240 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.21° torque ratio 0.16 self 77.2 mm clear 5.92 mm"
+  },
+  "V1-matched|R|480|R-F": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched R 480 Hz R-F: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.45° torque ratio 0.13 self 82.5 mm clear 5.92 mm"
+  },
+  "V1-matched|R|480|R-L": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched R 480 Hz R-L: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.55° torque ratio 0.14 self 90.3 mm clear 5.92 mm"
+  },
+  "V1-matched|R|480|C-F7": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched R 480 Hz C-F7: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.85° torque ratio 0.12 self 83.8 mm clear 5.92 mm"
+  },
+  "V1-matched|R|480|C-F13": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched R 480 Hz C-F13: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.91° torque ratio 0.14 self 80.1 mm clear 5.92 mm"
+  },
+  "V1-matched|R|480|C-L5": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched R 480 Hz C-L5: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 1.05° torque ratio 0.12 self 90.3 mm clear 5.92 mm"
+  },
+  "V1-matched|R|480|C-L11": {
+   "qualified": false,
+   "verdict": "NOT QUALIFIED",
+   "line": "EXQ V1-matched R 480 Hz C-L11: positional REJECTED; analytic REJECTED (2: φ 0.95 nominal: IK not reached (6.7e-5); φ 1.00 nominal: IK not reached (2.5e-4)) [ENVELOPE-SENSITIVE: φ 0.85 p1+: conditioning λmin 7.05e-5 < ε²]; replay REJECTED (soft-limit margin —°; no contact) → NOT QUALIFIED | min margin analytic 0.55° torque ratio 0.13 self 90.3 mm clear 5.92 mm"
+  },
+  "V1-matched|R|480|H-T45": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched R 480 Hz H-T45: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 2.54° torque ratio 0.19 self 82.6 mm clear 6.07 mm"
+  },
+  "V1-matched|R|480|H-A40": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched R 480 Hz H-A40: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 0.90° torque ratio 0.16 self 82.6 mm clear 8.32 mm"
+  },
+  "V1-matched|R|480|H-D": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched R 480 Hz H-D: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.21° torque ratio 0.18 self 90.3 mm clear 5.92 mm"
+  },
+  "V1-matched|R|480|H-F15": {
+   "qualified": true,
+   "verdict": "QUALIFIED",
+   "line": "EXQ V1-matched R 480 Hz H-F15: positional OK; analytic OK; replay OK → QUALIFIED | min margin analytic 3.21° torque ratio 0.16 self 77.1 mm clear 5.92 mm"
+  }
+ },
+ "missing": [],
+ "sweepMismatch": [],
+ "sweepLineDiff": [],
+ "classBexecutable": [
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 180,
+   "traj": "C-L11"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 240,
+   "traj": "C-L11"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "L",
+   "hz": 480,
+   "traj": "C-L11"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 180,
+   "traj": "C-L11"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 240,
+   "traj": "C-L11"
+  },
+  {
+   "body": "V2-long-legs",
+   "side": "R",
+   "hz": 480,
+   "traj": "C-L11"
+  }
+ ]
+}
