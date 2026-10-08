@@ -1,0 +1,183 @@
+diff --git a/sandbox/visual/physchar2/ctrl/v2_footstep.js b/sandbox/visual/physchar2/ctrl/v2_footstep.js
+index 6fa2289..9cef7d8 100644
+--- a/sandbox/visual/physchar2/ctrl/v2_footstep.js
++++ b/sandbox/visual/physchar2/ctrl/v2_footstep.js
+@@ -20,6 +20,7 @@ import { clampPoly, polyDist, IK, _eigMinSym } from "./v2_stand.js";
+ import { stepSegment, stepAt, qexp } from "./v2_swing.js";
+ import { realisable, inset, cmdPlan, dsPlan, recPlan, clonePlan, dcmTick, centroid2, smooth01 } from "./v2_dcm.js";
+ import { TA } from "./v2_capture.js";
++import { TD2B, td2bOn, approachGoal, searchEnd } from "./v2_td2.js";
+ 
+ export const PLAN_MARGINS = { copSS: 0.0023, copRamp: 0.0152, copFull: 0.0040, shareLag: 0.008, landBase: 0.00164 };   // measured (E2_TIMING_LOAD_ASSUMPTIONS.md §3)
+ export const FS = {
+@@ -78,9 +79,9 @@ export const eLandOf = (d, T, wn) => PLAN_MARGINS.landBase + 5.77 * d / (wn * wn
+ //      plan0 (the current execution plan to continue, or null = a fresh plan from the measured state), contactNow (already in contact: tc = 0) }
+ // c: { pose, L (landed region at the pose), T (remaining swing to the planned touchdown), Tr, eLand, rMid }
+ export function predict(X, c, delay = 0, keep = false) { const M = PLAN_MARGINS, w = X.w, dt = X.dt, m = 1 - X.n, rec = X.mode === "recovery";
+-  const tN = X.tNow ?? 0, Tlo = c.Tlo || 0, S = inset(X.info.polys[m], M.copSS), Lr = inset(c.L, c.eLand + M.copRamp), Lf = inset(c.L, c.eLand + M.copFull), tc = tN + (X.contactNow ? 0 : Tlo + c.T + TA.margin) + delay, tAcc = tc + X.debounce + M.shareLag;   // Tlo: remaining liftoff delay (B1)
++  const tN = X.tNow ?? 0, Tlo = c.Tlo || 0, S = inset(X.info.polys[m], M.copSS), Lr = inset(c.L, c.eLand + M.copRamp), Lf = inset(c.L, c.eLand + M.copFull), tc = tN + (X.contactNow ? 0 : Tlo + (c.Ttd ?? c.T) + TA.margin) + delay, tAcc = tc + X.debounce + M.shareLag;   // TD2C: the planned touchdown   // Tlo: remaining liftoff delay (B1)
+   const horizon = tAcc + c.Tr + TA.horizon, Rfin = realisable(S, Lf, 1, X.minShare);   // all times absolute (plan0 is the execution plan, in simulation time)
+-  let xi = X.xi0.slice(), pPrev = X.p0.slice(), P = X.plan0 ? clonePlan(X.plan0) : rec ? recPlan({ t0: tN, xi0: xi, Tds: FS.TdsRec, u: latU(X.info, X.n) }) : cmdPlan({ t0: tN, xi0: xi, xid0: [w * (xi[0] - pPrev[0]), w * (xi[1] - pPrev[1])], rs: X.rs, tTD: tN + Tlo + c.T });
++  let xi = X.xi0.slice(), pPrev = X.p0.slice(), P = X.plan0 ? clonePlan(X.plan0) : rec ? recPlan({ t0: tN, xi0: xi, Tds: FS.TdsRec, u: latU(X.info, X.n) }) : cmdPlan({ t0: tN, xi0: xi, xid0: [w * (xi[0] - pPrev[0]), w * (xi[1] - pPrev[1])], rs: X.rs, tTD: tN + Tlo + (c.Ttd ?? c.T) });
+   let reinit = X.mode !== "commanded" || (P.kind === "ds"), vrpOut = 0, vrpWorst = 0, out = keep ? [] : null, early = false;
+   for (let k = 0; ; k++) { const t = tN + k * dt; if (t > horizon + 1e-9) break;
+     const s = t < tAcc ? 0 : smooth01((t - tAcc) / c.Tr), contacted = t >= tc - 1e-12, floor = rec ? X.minShare * (contacted ? mj((t - tc) / X.abortDur) : 0) : X.minShare;
+@@ -169,9 +170,11 @@ export function certifyPath(X, sg) { const v = []; for (let i = 0; i < FS.nPath;
+ export const moveOf = (X, pose) => (X.F0 ? V.dist(X.F0.pos, pose.pos) : V.dist(X.foot.pos, pose.pos));
+ function cand(X, pose, T, Tr, eFix = null) { const d = moveOf(X, pose), wn = 2 * Math.PI * X.ctrl.lc.o.swingHz, T1 = Math.max(T, 1e-3);
+   const eLand = eFix != null ? eFix : X.contactNow ? 0 : X.F0 ? X.eLand0 + 5.77 * d / (wn * wn * T1 * T1) : eLandOf(Math.max(d, 1e-9), T1, wn);
+-  return { pose, T, Tr, d, eLand, Tlo: X.liftDelay || 0, L: footprintAt(X.ctrl, X.n, pose), rMid: [X.rMid0[0] + 0.5 * (pose.pos[0] - X.foot.pos[0]), X.rMid0[1] + 0.5 * (pose.pos[2] - X.foot.pos[2])] }; }
++  return { pose, T, Tr, d, eLand, Tlo: X.liftDelay || 0, L: footprintAt(X.ctrl, X.n, pose), rMid: [X.rMid0[0] + 0.5 * (pose.pos[0] - X.foot.pos[0]), X.rMid0[1] + 0.5 * (pose.pos[2] - X.foot.pos[2])], ...(tdOf(X) ? { Ttd: T + (X.contactNow ? 0 : TD2B.tauD + TD2B.tauC) } : {}) }; }
++// TD2C (e2/E2_TD2C_INTEGRATION.md; o.e2td "search2"; commanded steps only): the swing segment ends at rest at the band top (approachGoal), the search follows; touchdown is planned at T + τ_d + τ_c
++export const tdOf = (X) => X.mode === "commanded" && !!X.ctrl && td2bOn(X.ctrl.o);
+ // the swing segment a candidate implies (from the current reference state; apex knot for commanded steps that have not passed it)
+-export function segFor(X, pose, T) { const knot = X.apex != null && X.knotT != null && X.knotT > 1e-6 && X.knotT < T - 1e-6 ? { z: X.apexZ, tk: X.knotT } : null; return stepSegment(X.ref, pose, T, knot); }
++export function segFor(X, pose, T) { const knot = X.apex != null && X.knotT != null && X.knotT > 1e-6 && X.knotT < T - 1e-6 ? { z: X.apexZ, tk: X.knotT } : null; return stepSegment(X.ref, tdOf(X) ? approachGoal(pose, TD2B) : pose, T, knot); }
+ // ── the planner ──
+ // X adds: { ctrl, st, ev, pel, A (anchor), fr, foot (current foot pose), ref (current reference state for the swing), nominal {dx, dy, dz}, Tseed, apex, apexZ, knotT,
+ //           corridor name, rMid0, Tfixed (re-plan keeping the touchdown time) }
+@@ -185,9 +188,10 @@ export function plan(X) { const t0 = typeof performance !== "undefined" ? perfor
+       if (X.Tfixed == null && X.Tseed != null && T > X.Tseed + 1e-9) continue;
+       for (const Tr of FS.TrGrid) { const c = cand(X, pose, T, Tr); log.evaluated++; const r = predict(X, c); if (!ok(r)) continue;
+         const sg = segFor(X, pose, T), pc = certifyPath(X, sg); if (!pc.ok) { log.pathFail = (log.pathFail || 0) + 1; break; }
++        if (tdOf(X)) { const pe = searchEnd(pose, TD2B); if (!ikFeasible(X.ctrl, X.st, X.ev, X.n, X.pel, { pos: pe.pos, rot: pe.rot })) { log.searchEndFail = (log.searchEndFail || 0) + 1; break; } }   // TD2C: the search end is reachable
+         // X.diagNoClearance: DIAGNOSTIC smoke runs only (never official; tools/e2_eval.mjs rejects such runs) — the certificate is computed and logged, not enforced
+         const cl = certifyClearance(X, sg); if (!cl.ok && X.diagNoClearance) log.clearanceNotEnforced = { margin: cl.margin, at: cl.at, envelope: cl.envelope }; else if (!cl.ok) { log.clearanceFail = (log.clearanceFail || 0) + 1; log.clearance = log.clearance || { margin: cl.margin, at: cl.at, envelope: cl.envelope, dx: q.dx, dy: q.dy }; break; }
+-        return done({ clearance: { margin: cl.margin, at: cl.at, envelope: cl.envelope }, verdict: "CERTIFIED_ONE_STEP", nominal: isNom(q), dx: q.dx, dy: q.dy, dz, pose, T, Tr, eLand: c.eLand, rMid: c.rMid, slack: slackOf(X, c), seg: sg, path: pc, cert: { geometry: q.geo, reach: grid.certified(q.dx, q.dy) } }); } }
++        return done({ clearance: { margin: cl.margin, at: cl.at, envelope: cl.envelope }, verdict: "CERTIFIED_ONE_STEP", nominal: isNom(q), dx: q.dx, dy: q.dy, dz, pose, T, ...(c.Ttd != null ? { Ttd: c.Ttd } : {}), Tr, eLand: c.eLand, rMid: c.rMid, slack: slackOf(X, c), seg: sg, path: pc, cert: { geometry: q.geo, reach: grid.certified(q.dx, q.dy) } }); } }
+     return done({ verdict: "NO_CERTIFIED_ONE_STEP", why: !nodes.length ? "no certified reach node" : log.clearanceFail ? `clearance certificate fails at every capturing, path-certified node (nominal: margin ${(log.clearance.margin * 1000).toFixed(1)} mm at φ ${log.clearance.at.toFixed(2)}, envelope ${(log.clearance.envelope * 1000).toFixed(1)} mm; need ≥ ${FS.clearMin * 1000} mm)` : "no corridor node certifies (timed capture / VRP / path)" }); }
+   // recovery: maximise the slack over certified nodes × T ≥ T_min(d) × ramps
+   const res = []; for (const q of grid.nodes.filter(q => grid.certified(q.dx, q.dy))) { const pose = candPose(X.A, X.fr, q.dx, q.dy, 0), d = moveOf(X, pose), T0 = X.Tfixed != null ? X.Tfixed : Tmin(d, wn); let best = null;
+diff --git a/sandbox/visual/physchar2/ctrl/v2_step.js b/sandbox/visual/physchar2/ctrl/v2_step.js
+index cc15b56..49681e6 100644
+--- a/sandbox/visual/physchar2/ctrl/v2_step.js
++++ b/sandbox/visual/physchar2/ctrl/v2_step.js
+@@ -19,6 +19,7 @@
+ import { refState, stepSegment, stepAt, stepRef, stepPrev, segRef, segment, segAt, qlog } from "./v2_swing.js";
+ import { V, Q } from "../core/v2_math.js";
+ import { cmdPlan, dsPlan, recPlan, dcmTick, lamFromVrp, realisable, inset } from "./v2_dcm.js";
++import { TD2B, td2bOn, approachGoal, searchSegment, searchEnd, escalationSegment } from "./v2_td2.js";
+ import { plan as fsPlan, check as fsCheck, trajectory as fsTraj, FS, PLAN_MARGINS, stepFrame, swingFrame, landingValid, ikFeasible, latU, liftRef, certifyPath, certifyClearance } from "./v2_footstep.js";
+ 
+ const CONTACT = ["TOUCHDOWN", "TOUCHING", "LOAD_ACCEPT", "SUPPORT", "UNLOADING"], mj = (u) => { u = Math.min(1, Math.max(0, u)); return u * u * u * (10 - 15 * u + 6 * u * u); };
+@@ -47,7 +48,7 @@ export class StepSequencer {
+     const L = this.B1 ? liftRef(this.A, Tlo) : null, ref0 = this.B1 ? { p: L.p, v: L.v, a: L.a, th: [0, 0, 0], w: [0, 0, 0], al: [0, 0, 0] } : refState([this.A], this.A.rot, this.dt);
+     const X = this.ctx(t, "commanded", { ref: ref0, nominal: cmd.nominal, Tseed: cmd.T, apex: cmd.apex, apexZ: this.apexZ, knotT: this.knotAbs - t - Tlo, liftDelay: Tlo, corridor: cmd.kind, diagNoClearance: !!cmd.diagNoClearance }), R = fsPlan(X);
+     this.logCall(t, "decision", R, X); if (R.verdict !== "CERTIFIED_ONE_STEP") { this.ph = "NOCERT"; this.ncT = t; this.ev(t, "NO_CERTIFIED_ONE_STEP at the decision: step not executed (fallback: return to double support)"); return R; }
+-    this.adopt(t, R); this.tTD = t + Tlo + R.T; this.plan = cmdPlan({ t0: t, xi0: I.xi, xid0: [I.w0 * (I.xi[0] - I.p[0]), I.w0 * (I.xi[1] - I.p[1])], rs: this.rs, tTD: this.tTD }); this.initCom(I);
++    this.td = td2bOn(c.o); this.adopt(t, R); this.tTD = t + Tlo + (R.Ttd ?? R.T); this.plan = cmdPlan({ t0: t, xi0: I.xi, xid0: [I.w0 * (I.xi[0] - I.p[0]), I.w0 * (I.xi[1] - I.p[1])], rs: this.rs, tTD: this.tTD }); this.initCom(I);   // TD2C: the planned touchdown T + τ_d + τ_c
+     this.preds.push({ t, kind: "decision", tTD: this.tTD, traj: this.traj(fsTraj(X, R.pose, R.T, R.Tr)) });
+     if (this.B1) { this.ph = "LIFT"; this.liftT0 = t; this.sgPlan = R.seg; this.sg = null; this.segT0 = null; this.tStart = null; } else this.ph = "SWING";
+     this.ev(t, "step command: CERTIFIED_ONE_STEP" + (this.B1 ? " — vertical liftoff phase first" : ""), { T: R.T, Tr: R.Tr }); return R; }
+@@ -56,7 +57,7 @@ export class StepSequencer {
+   // noisy difference). T = the seed from liftoff (no compression); apex knot at liftoff + T/2. The recomputed swing is re-certified online (path, clearance, timed capture)
+   startSwing(t, L) { const c = this.ctrl, st = c.e2st, b = st[c.feet[this.n]], Rg = this.F.rot, vO = V.add(b.v, V.cross(b.w, V.sub(b.pos, b.com)));
+     const ref = { p: b.pos.slice(), v: vO, a: L.a.slice(), th: qlog(Q.mul(Q.conj(Rg), b.rot)), w: Q.rot(Q.conj(Rg), b.w), al: [0, 0, 0] };
+-    this.tLo = t; this.tStart = t; this.segT0 = t; this.tTD = t + this.T; this.knotAbs = t + 0.5 * this.T; this.sg = stepSegment(ref, this.F, this.T, { z: this.apexZ, tk: 0.5 * this.T }); this.ph = "SWING"; c.e2reanchor = this.n; if (c.o.e2reanchorVel) c.e2reanchorPrev = stepPrev(this.sg, this.dt);
++    this.tLo = t; this.tStart = t; this.segT0 = t; this.tTD = t + this.T + (this.td ? TD2B.tauD + TD2B.tauC : 0); this.knotAbs = t + 0.5 * this.T; this.sg = stepSegment(ref, this.td ? approachGoal(this.F, TD2B) : this.F, this.T, { z: this.apexZ, tk: 0.5 * this.T }); this.ph = "SWING"; c.e2reanchor = this.n; if (c.o.e2reanchorVel) c.e2reanchorPrev = stepPrev(this.sg, this.dt);
+     const X = this.ctx(t, this.mode, { plan0: this.plan }), path = certifyPath(X, this.sg), clr = certifyClearance(X, this.sg), chk = fsCheck(X, this.F, this.T, this.Tr, this.eLand), ok = path.ok && clr.ok && chk.ok;
+     this.calls.push({ t, kind: "liftoff re-certification", verdict: ok ? "CERTIFIED_ONE_STEP" : "NO_CERTIFIED_ONE_STEP", why: ok ? null : [path.ok ? null : "path", clr.ok ? null : `clearance margin ${(clr.margin * 1000).toFixed(1)} mm at φ ${clr.at != null ? clr.at.toFixed(2) : "—"} (envelope ${(clr.envelope * 1000).toFixed(1)} mm)`, chk.ok ? null : "timed capture: " + chk.why].filter(Boolean).join("; "),
+       pose: { pos: r6(this.F.pos), rot: r6(this.F.rot) }, T: this.T, Tr: this.Tr, path: path.verdicts, cert: this.cert || null, clearance: { margin: clr.margin, at: clr.at, envelope: clr.envelope }, state: { p: r6(ref.p), v: r6(ref.v), a: r6(ref.a), th: r6(ref.th), w: r6(ref.w), liftRef: r6(L.p) } });
+@@ -69,7 +70,7 @@ export class StepSequencer {
+     this.logCall(t, "recovery decision", R, X); if (R.verdict !== "CERTIFIED_ONE_STEP") { this.ph = "NOCERT"; this.ev(t, "NO_CERTIFIED_ONE_STEP at the recovery decision: no foothold forced (T-A in-place fallback continues)"); return R; }
+     this.adopt(t, R); this.plan = recPlan({ t0: t, xi0: I.xi, Tds: FS.TdsRec, u: latU(I, n) }); this.initCom(I); this.airSeen = true;
+     this.preds.push({ t, kind: "recovery decision", tTD: t + R.T, traj: this.traj(fsTraj(X, R.pose, R.T, R.Tr)) }); this.ph = "SWING"; this.ev(t, "recovery step: CERTIFIED_ONE_STEP", { T: R.T, Tr: R.Tr, slack: R.slack }); return R; }
+-  adopt(t, R) { this.F = R.pose; this.Fcmd = R.pose; this.eLand = R.eLand; this.cert = R.cert || null; this.T = R.T; this.Tr = R.Tr; this.sg = R.seg; this.segT0 = t; this.tTD = t + R.T; this.slack = R.slack; }
++  adopt(t, R) { this.F = R.pose; this.Fcmd = R.pose; this.eLand = R.eLand; this.cert = R.cert || null; this.T = R.T; this.Tr = R.Tr; this.sg = R.seg; this.segT0 = t; this.tTD = t + (R.Ttd ?? R.T); this.slack = R.slack; this.srch = null; this.srchT0 = null; }
+   initCom(I) { this.comRef = [I.c[0], I.c[2]]; }
+   traj(r) { return { recovers: r.recovers, why: r.why, s: (r.out || []).filter((_, i) => i % 2 === 0).map(o => [r6(o.t), r6(o.xi), r6(o.xiRef), r6(o.vrp), r6(o.s)]) }; }
+   // re-plan of the running swing from the measured state: commanded steps keep the touchdown time (Tfixed); after a FAILED touchdown the planner's own footholds (on the
+@@ -78,16 +79,16 @@ export class StepSequencer {
+   replan(t, why, failed = false) { const lift = this.ph === "LIFT", tau = lift ? t - this.liftT0 : 0, rem = lift ? Math.max(0, FS.liftDelayPlan - tau) : 0, Lp = lift ? liftRef(this.A, tau + rem) : null;
+     const X = this.ctx(t, this.mode, { ref: lift ? { p: Lp.p, v: Lp.v, a: Lp.a, th: [0, 0, 0], w: [0, 0, 0], al: [0, 0, 0] } : stepRef(this.sg, t - this.segT0), nominal: this.cmd ? { ...this.cmd.nominal, ...(failed ? { dz: 0 } : {}) } : null, Tseed: this.cmd && !failed ? this.cmd.T : null, apex: this.cmd ? this.cmd.apex : null, apexZ: this.apexZ,
+       knotT: lift ? 0.5 * this.T : this.knotAbs != null ? this.knotAbs - t : null, liftDelay: rem, diagNoClearance: !!(this.cmd && this.cmd.diagNoClearance), corridor: this.cmd ? this.cmd.kind : "recovery",
+-      Tfixed: this.mode === "commanded" && !failed ? (lift ? this.T : Math.max(this.tTD - t, 2 * this.dt)) : null, plan0: this.plan, F0: this.F, eLand0: this.eLand, phiOff: lift ? 0 : t - this.tStart, phiDen: lift ? this.T : this.tTD - this.tStart }), R = fsPlan(X);
++      Tfixed: this.mode === "commanded" && !failed ? (lift ? this.T : Math.max((this.td ? this.segT0 + this.sg.T : this.tTD) - t, 2 * this.dt)) : null, plan0: this.plan, F0: this.F, eLand0: this.eLand, phiOff: lift ? 0 : t - this.tStart, phiDen: lift ? this.T : this.tTD - this.tStart }), R = fsPlan(X);
+     this.logCall(t, "re-plan (" + why + ")", R, X);
+     if (R.verdict !== "CERTIFIED_ONE_STEP") { this.nocertSwing = (this.nocertSwing || 0) + 1; this.ev(t, "re-plan NO_CERTIFIED_ONE_STEP: last certified plan kept (best effort)", { why }); return; }
+-    this.adopt(t, R); if (lift) { this.sg = null; this.segT0 = null; this.tTD = t + rem + R.T; } if (this.plan.kind === "cmd") this.plan.tTD = this.tTD; this.ev(t, "re-plan adopted", { dx: R.dx, dy: R.dy, T: R.T, Tr: R.Tr }); }
++    this.adopt(t, R); if (lift) { this.sg = null; this.segT0 = null; this.tTD = t + rem + (R.Ttd ?? R.T); } if (this.plan.kind === "cmd") this.plan.tTD = this.tTD; this.ev(t, "re-plan adopted", { dx: R.dx, dy: R.dy, T: R.T, Tr: R.Tr }); }
+   env(t) { const c = this.ctrl, I = c.info, n = this.n, M = PLAN_MARGINS; if (this.plan.kind !== "rec") return { w: I.w0, dt: this.dt, rMid: I.qsRef };
+     const s = c.lc.feet[n].s, floor = c.o.minShare * this.fsc(t), S = inset(I.polys[1 - n], M.copSS), R = s > 0 ? realisable(S, inset(I.polys[n], s < 1 ? M.copRamp : M.copFull), s, floor) : S;
+     return { w: I.w0, dt: this.dt, R, Rm: M.copFull, s, rMid: I.qsRef }; }
+   fsc(t) { return this.mode !== "recovery" ? 1 : this.tContact == null ? 0 : mj((t - this.tContact) / this.abortDur); }   // recovery: T-A's floor rule (0 until the first contact, then min-jerk over abortDur)
+   accept(t, why, land) { const c = this.ctrl, I = c.info; this.ph = "LANDED"; this.accepted = true; this.tAcc0 = t; this.ev(t, "touchdown accepted: " + why);
+-    this.F = { pos: land.pos.slice(), rot: land.rot.slice() }; const u = t - this.segT0; this.hb = stepSegment(stepRef(this.sg, u, land.rot), land, Math.max(this.sg.T - u, c.lc.o.accept), null); this.hbT0 = t;
++    this.F = { pos: land.pos.slice(), rot: land.rot.slice() }; const cs = this.curSeg(t), u = t - cs.t0; this.hb = stepSegment(stepRef(cs.sg, u, land.rot), land, Math.max(cs.sg.T - u, c.lc.o.accept), null); this.hbT0 = t;   // TD2C: from the current commanded segment
+     if (this.plan.kind === "cmd") { this.plan = dsPlan({ t0: t, xi0: I.xi, xid0: [I.w0 * (I.xi[0] - I.p[0]), I.w0 * (I.xi[1] - I.p[1])], Tds: FS.TdsCmd }); this.initCom(I); }
+     const X = this.ctx(t, this.mode, { contactNow: true, plan0: this.plan.kind === "rec" ? this.plan : null }); this.preds.push({ t, kind: "contact re-initialisation", traj: this.traj(fsTraj(X, land, 0, this.Tr)) }); }
+   // per-tick: once per controller tick (memoised); returns the request fields or null when inactive
+@@ -106,7 +107,9 @@ export class StepSequencer {
+       if (e.done && inContact) { lc.setSwingTarget(n, null); this.ph = "NOLIFT"; this.ncT = t; this.ev(t, "foot back on its anchor: return to double support"); this.last = null; return null; }
+       setTarget(c, n, e); this.last = { ph: this.ph }; return { lam: n === 1 ? 0 : 1, dl: 0, ddl: 0 }; }
+     if (this.ph === "SWING") { const u = t - this.segT0;
++      if (this.td && !this.srch && !this.re && u >= this.sg.T + TD2B.tauD - 1e-9) { this.srch = searchSegment(approachGoal(this.F, TD2B), TD2B); this.srchT0 = this.segT0 + this.sg.T + TD2B.tauD; this.ev(t, "TD2C: bounded search started"); }   // after the settling interval at the band top
+       if (this.airSeen && inContact) { if (this.tTDm == null) { this.tTDm = t; this.ev(t, "measured contact: " + stt); }
++        if (this.td && !this.cls) { this.cls = { cls: this.re ? "LATE_TOUCHDOWN" : this.srch ? "TOUCHDOWN" : "UNEXPECTED_OBSTACLE", t, phi: (t - this.tStart) / Math.max(1e-9, this.tTD - this.tStart) }; this.ev(t, "TD2C event class: " + this.cls.cls); }
+         const frac = (t - this.tStart) / Math.max(1e-9, this.tTD - this.tStart);
+         if (frac >= FS.gate - 1e-9) this.accept(t, `measured contact at ${(100 * frac).toFixed(0)} % of the swing (≥ 60 % gate)`, f.hold);
+         // early contact: the planner, re-run from the measured state, keeps the current foothold while it still certifies (commanded: the nominal priority; recovery: keep while
+@@ -118,10 +121,11 @@ export class StepSequencer {
+           if (chk.ok) { this.calls.push({ t, kind: "early-contact certification", verdict: "CERTIFIED_ONE_STEP", pose: { pos: r6(land.pos), rot: r6(land.rot) } }); this.Fcmd = { pos: land.pos.slice(), rot: land.rot.slice() }; this.accept(t, "early contact location certified by the planner", land); } } }
+       else if (this.tTDm != null && !inContact) { this.ev(t, "contact lost again before acceptance: " + stt); this.tTDm = null; }
+       if (this.ph === "SWING") {
+-        if (u > this.sg.T + FS.lateHold - 1e-9 && !this.failedTD) { this.failedTD = t; this.ev(t, "FAILED touchdown: no contact 0.3 s after the planned touchdown — re-plan from the measured state (no contact declared)"); this.replan(t, "failed touchdown", true); }
++        if (this.td && this.tdFailedEsc(t, u)) { /* TD2C escalation / explicit failure handled */ }
++        else if (!this.td && u > this.sg.T + FS.lateHold - 1e-9 && !this.failedTD) { this.failedTD = t; this.ev(t, "FAILED touchdown: no contact 0.3 s after the planned touchdown — re-plan from the measured state (no contact declared)"); this.replan(t, "failed touchdown", true); }
+         else if (u < this.sg.T && (!inContact || !this.airSeen)) { const X = this.ctx(t, this.mode, { plan0: this.plan }), chk = fsCheck(X, this.F, this.sg.T - u, this.Tr, this.eLand); this.chk = chk.ok; if (!chk.ok) this.replan(t, chk.why || "check failed"); }
+-        if (u >= this.sg.T && !this.lateSeen && !inContact) { this.lateSeen = t; this.ev(t, "late contact: foothold held (≤ 0.3 s)"); }
+-        const e = stepAt(this.sg, t - this.segT0); setTarget(c, n, e); this.swRef = e; } }
++        if (t >= (this.td ? this.tTD : this.segT0 + this.sg.T) - 1e-9 && !this.lateSeen && !inContact) { this.lateSeen = t; this.ev(t, "late contact: foothold held (≤ 0.3 s)"); }
++        if (this.ph === "SWING") { const cs = this.curSeg(t), e = stepAt(cs.sg, t - cs.t0); setTarget(c, n, e); this.swRef = e; } } }
+     if (this.ph === "LANDED") { if (stt === "SUPPORT") { this.ph = "DS"; this.ev(t, "landed foot SUPPORT"); }
+       else if (this.hb && this.handBackT == null) { const e = stepAt(this.hb, t - this.hbT0); this.swRef = e; if (e.done && f.a <= 0) { lc.setSwingTarget(n, null); this.handBackT = t; this.ev(t, "hand-back: swing target cleared (reference at the landed anchor, a = 0)"); } else setTarget(c, n, e); } }
+     if (this.ph === "DS") { const P = this.plan, tEnd = P.kind === "ds" ? P.t0 + P.Tds : P.h ? P.h.t0 + P.Tds : Infinity;
+@@ -134,7 +138,23 @@ export class StepSequencer {
+     const intent = this.rec, ramp = this.rec || this.accepted, req = { lam: lamR, dl: 0, ddl: 0, xiRef: r.xi, xiRefDot: r.xid, ...(intent ? { intent: [n === 0, n === 1] } : {}), ...(ramp ? { acceptDur: [n === 0 ? this.Tr : null, n === 1 ? this.Tr : null] } : {}), ...(this.rec ? { floorScale: fsc } : {}) };
+     this.last = { ph: this.ph, dph: r.phase, xiRef: r.xi, xiRefDot: r.xid, vrp: r.vrp, comRef: this.comRef.slice(), lamL, fsc, intent, swRef: this.swRef ? { p: this.swRef.pos, v: this.swRef.vel, a: this.swRef.acc } : null, chk: this.chk ?? null };
+     return req; }
++  // TD2C: the commanded segment being followed (escalated search, search, or the approach)
++  curSeg(t) { return this.re ? { sg: this.re, t0: this.reT0 } : this.srch ? { sg: this.srch, t0: this.srchT0 } : { sg: this.sg, t0: this.segT0 }; }
++  // TD2C failed touchdown (e2/TD2B_PREREG.md §2 with E2 semantics): no contact by the planned touchdown + E2's late hold → failed touchdown; the bounded search CONTINUES (normal coordinate
++  // only, tangential target and landing orientation held) down to the planner's turf window's late edge (anchor + h_B − D_max) at the search's peak speed, the continuation certified from the
++  // measured state (timed capture with the escalation's touchdown; the floor pose reachable) — if not certified, or no depth is left: explicit touchdown failure (target held, nothing declared,
++  // no λ transfer). No contact by the escalated search's end + the late hold → explicit failure
++  tdFailedEsc(t, u) { const c = this.ctrl;
++    if (!this.failedTD && t > this.tTD + FS.lateHold - 1e-9) { this.failedTD = t; const cs = this.curSeg(t), e0 = stepAt(cs.sg, t - cs.t0), floorY = this.A.pos[1] + TD2B.hB - TD2B.Dmax, re = escalationSegment({ pos: e0.pos, rot: this.F.rot }, floorY, TD2B);
++      this.ev(t, "FAILED touchdown (TD2C): no contact 0.3 s after the planned touchdown — the bounded search continues to the planner's turf window (E2 failed-touchdown semantics; no contact declared)");
++      let ok = !!re; if (re) { const X = this.ctx(t, this.mode, { plan0: this.plan }), end = { pos: [e0.pos[0], floorY, e0.pos[2]], rot: this.F.rot }, ik = ikFeasible(c, X.st, X.ev, this.n, X.pel, end), chk = fsCheck(X, end, re.T, this.Tr, this.eLand); ok = ik && chk.ok;
++        this.calls.push({ t, kind: "TD2C escalation certification", verdict: ok ? "CERTIFIED_ONE_STEP" : "NO_CERTIFIED_ONE_STEP", why: ok ? null : [ik ? null : "floor pose not reachable", chk.ok ? null : "timed capture: " + chk.why].filter(Boolean).join("; "), pose: { pos: r6(end.pos), rot: r6(end.rot) }, T: re.T }); }
++      if (ok) { this.re = re; this.reT0 = t; this.reFloor = floorY; this.tTD = t + re.T; if (this.plan.kind === "cmd") this.plan.tTD = this.tTD; this.ev(t, "TD2C escalated search", { T: re.T, floor: floorY }); }
++      else { this.tdFail = t; this.ph = "TDFAIL"; this.cls = this.cls || { cls: "TOUCHDOWN_FAILED", t }; this.ev(t, "TD2C explicit touchdown failure: " + (re ? "continuation not certified" : "no depth left") + " — target held, nothing declared, no load transfer"); }
++      return true; }
++    if (this.re && !this.tdFail && t - this.reT0 > this.re.T + FS.lateHold - 1e-9) { this.tdFail = t; this.ph = "TDFAIL"; this.cls = this.cls || { cls: "TOUCHDOWN_FAILED", t }; this.ev(t, "TD2C explicit touchdown failure: no contact by the escalated search's end + 0.3 s — target held, nothing declared, no load transfer"); return true; }
++    return !!this.failedTD; }
+   summary() { return { mode: this.mode || null, ph: this.ph, n: this.n ?? null, A: this.A ? { pos: r6(this.A.pos), rot: r6(this.A.rot) } : null, F: this.F ? { pos: r6(this.F.pos), rot: r6(this.F.rot) } : null, Fcmd: this.Fcmd ? { pos: r6(this.Fcmd.pos), rot: r6(this.Fcmd.rot) } : null, T: this.T ?? null, Tr: this.Tr ?? null, slack: this.slack ?? null,
+     tStart: this.tStart ?? null, tTD: this.tTD ?? null, tAir: this.tAir ?? null, tLo: this.tLo ?? null, liftT0: this.liftT0 ?? null, B1: !!this.B1, tTDm: this.tTDm ?? null, tContact: this.tContact ?? null, tAcc0: this.tAcc0 ?? null, handBackT: this.handBackT ?? null, doneT: this.doneT ?? null,
+-    early: this.earlySeen ?? null, late: this.lateSeen ?? null, failedTD: this.failedTD ?? null, nocertSwing: this.nocertSwing || 0, calls: this.calls, events: this.events, preds: this.preds }; }
++    early: this.earlySeen ?? null, late: this.lateSeen ?? null, failedTD: this.failedTD ?? null, td2c: this.td ? { cls: this.cls || null, srchT0: this.srchT0 ?? null, reT0: this.reT0 ?? null, reFloor: this.reFloor ?? null, tdFail: this.tdFail ?? null } : null, nocertSwing: this.nocertSwing || 0, calls: this.calls, events: this.events, preds: this.preds }; }
+ }
+diff --git a/sandbox/visual/physchar2/tools/e2_run.mjs b/sandbox/visual/physchar2/tools/e2_run.mjs
+index 888dcc2..87da860 100644
+--- a/sandbox/visual/physchar2/tools/e2_run.mjs
++++ b/sandbox/visual/physchar2/tools/e2_run.mjs
+@@ -11,7 +11,7 @@ import { loadJolt } from "../core/v2_jolt.js"; import { e2Sim, e2Spec, CFG, E2P
+ import { V, Q } from "../core/v2_math.js"; import { kneeEnvelopeV2K } from "../spec/v2_knee.js";
+ const here = path.dirname(fileURLToPath(import.meta.url)), J = await loadJolt(path.join(here, "../vendor/jolt-physics.wasm-compat.js")), arg = (k, d) => (process.argv.find(a => a.startsWith(`--${k}=`)) || `--${k}=${d}`).split("=").slice(1).join("=");
+ const PROTO = arg("protocol", "step"), HUMAN = arg("human", "V2-REF"), SIDE = arg("side", "L"), KIND = arg("kind", "forward"), HZ = +arg("hz", 240), VAR = arg("variant", "") || null, PERT = arg("pert", "none"), CONFIG = arg("config", "PSTAR5"), OUT = arg("out", ""), D = 180 / Math.PI, AX = [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
+-if (!["step", "p15"].includes(PROTO) || !["L", "R"].includes(SIDE) || !["forward", "lateral"].includes(KIND) || !["PSTAR5", "PSTAR5B", "PSTAR5C", "PSTAR4", "PSTAR5BS", "PSTAR5CS", "PSTAR5BH", "PSTAR5CH"].includes(CONFIG) || ![null, "low", "late"].includes(VAR)) throw new Error("arguments");
++if (!["step", "p15"].includes(PROTO) || !["L", "R"].includes(SIDE) || !["forward", "lateral"].includes(KIND) || !["PSTAR5", "PSTAR5B", "PSTAR5C", "PSTAR4", "PSTAR5BS", "PSTAR5CS", "PSTAR5BH", "PSTAR5CH", "PSTAR5CHAB", "PSTAR5CHABV", "PSTAR5CHABTDV"].includes(CONFIG) || ![null, "low", "late"].includes(VAR)) throw new Error("arguments");
+ const pert = PROTO === "p15" ? PERT : PERT === "none" ? null : (() => { const [dir, when] = PERT.split(":"); if (!["lat", "fwd"].includes(dir) || !["pre", "s50", "s80", "contact", "la50"].includes(when)) throw new Error("pert"); return { dir, when }; })();
+ if (PROTO === "p15" && !["none", "P15", "PF", "PB", "PL", "PR", "YAW", "YAWN"].includes(PERT)) throw new Error("p15 pert");
+ // --traj=v2|A30: the versioned commanded-step trajectory seeds (gates/v2_e2.js E2TRAJ; default v2 = frozen; A30 = e2/E2_PREREG_AMENDMENT_A30.md)
+@@ -25,8 +25,8 @@ if (run.diagAllow) { const { FS } = await import("../ctrl/v2_footstep.js"); FS.c
+ const spec = e2Spec(HUMAN), { s, H, nL, nS, seq } = e2Sim(J, spec, run);
+ const cfg = { kneeV2K: s.P.kneeIsV2K, ankleK: ankleNeutralKPerDeg(), lifecycle: !!s.ctrl.lc, ikRefTwist: !!s.ctrl.o.ikRefTwist, contactSupport: !!s.ctrl.o.contactSupport, holdUnloaded: !!s.ctrl.o.holdUnloaded, ikFeasible: !!s.ctrl.o.ikFeasible, hz: 1 / s.dt, pelvisDrop: !!s.ctrl.o.pelvisDrop, config: CONFIG,
+   ffLockedAxis: !!s.ctrl.o.ffLockedAxis, touchRest: !!s.ctrl.o.touchRest, lcVff: s.ctrl.o.lcVff || null, reseed: !!(s.ctrl.o.lcTouch && s.ctrl.o.lcTouch.reseed), footYaw: s.ctrl.o.footYaw, lcPutDown: !!s.ctrl.o.lcPutDown, abortCapture: s.ctrl.o.abortCapture, e2: s.ctrl.o.e2 || false, swingAccFF: !!s.ctrl.o.swingAccFF,
+-  footYawAxes: s.act.ax.flat().filter(x => x && x.footYaw).length, ...(s.ctrl.o.vffRate ? { vffRate: s.ctrl.o.vffRate } : {}), ...(s.ctrl.o.e2reanchorVel ? { e2reanchorVel: true } : {}) };
+-if (!(cfg.kneeV2K && cfg.ankleK === 0.13 && cfg.lifecycle && cfg.ikRefTwist && cfg.contactSupport && cfg.holdUnloaded && cfg.ikFeasible && Math.abs(s.dt - 1 / HZ) < 1e-12 && cfg.pelvisDrop && cfg.ffLockedAxis && cfg.touchRest && cfg.lcVff === "lin" && cfg.reseed && cfg.footYaw === true && cfg.lcPutDown && cfg.abortCapture === 2 && cfg.footYawAxes === 2 && cfg.e2 === ({ PSTAR5: true, PSTAR5B: 2, PSTAR5C: 2, PSTAR5BS: 2, PSTAR5CS: 2, PSTAR5BH: 2, PSTAR5CH: 2 }[CONFIG] ?? false) && cfg.swingAccFF === ["PSTAR5C", "PSTAR5CS", "PSTAR5CH"].includes(CONFIG) && (cfg.vffRate ?? null) === (run.xstand && run.xstand.vffRate !== undefined ? run.xstand.vffRate : ["PSTAR5BS", "PSTAR5CS", "PSTAR5BH", "PSTAR5CH"].includes(CONFIG) ? "sr" : null) && !!cfg.e2reanchorVel === (run.xstand && run.xstand.e2reanchorVel !== undefined ? !!run.xstand.e2reanchorVel : ["PSTAR5BH", "PSTAR5CH"].includes(CONFIG)))) throw new Error("E2 configuration mismatch " + JSON.stringify(cfg));
++  footYawAxes: s.act.ax.flat().filter(x => x && x.footYaw).length, ...(s.ctrl.o.vffRate ? { vffRate: s.ctrl.o.vffRate } : {}), ...(s.ctrl.o.e2reanchorVel ? { e2reanchorVel: true } : {}), ...(CONFIG.startsWith("PSTAR5CHAB") ? { vffPelvisAir: !!s.ctrl.o.vffPelvisAir, vffPassiveRef: !!s.ctrl.o.vffPassiveRef, e2td: s.ctrl.o.e2td || null, d1Guard: s.ctrl.o.d1Guard || false } : {}) };   // E2 integration: the AB / TD2C / DVG configurations
++if (!(cfg.kneeV2K && cfg.ankleK === 0.13 && cfg.lifecycle && cfg.ikRefTwist && cfg.contactSupport && cfg.holdUnloaded && cfg.ikFeasible && Math.abs(s.dt - 1 / HZ) < 1e-12 && cfg.pelvisDrop && cfg.ffLockedAxis && cfg.touchRest && cfg.lcVff === "lin" && cfg.reseed && cfg.footYaw === true && cfg.lcPutDown && cfg.abortCapture === 2 && cfg.footYawAxes === 2 && cfg.e2 === ({ PSTAR5: true, PSTAR5B: 2, PSTAR5C: 2, PSTAR5BS: 2, PSTAR5CS: 2, PSTAR5BH: 2, PSTAR5CH: 2, PSTAR5CHAB: 2, PSTAR5CHABV: 2, PSTAR5CHABTDV: 2 }[CONFIG] ?? false) && cfg.swingAccFF === ["PSTAR5C", "PSTAR5CS", "PSTAR5CH", "PSTAR5CHAB", "PSTAR5CHABV", "PSTAR5CHABTDV"].includes(CONFIG) && (!CONFIG.startsWith("PSTAR5CHAB") || (cfg.vffPelvisAir && cfg.vffPassiveRef && cfg.e2td === (CONFIG === "PSTAR5CHABTDV" ? "search2" : null) && cfg.d1Guard === (CONFIG === "PSTAR5CHAB" ? false : 2))) && (cfg.vffRate ?? null) === (run.xstand && run.xstand.vffRate !== undefined ? run.xstand.vffRate : ["PSTAR5BS", "PSTAR5CS", "PSTAR5BH", "PSTAR5CH", "PSTAR5CHAB", "PSTAR5CHABV", "PSTAR5CHABTDV"].includes(CONFIG) ? "sr" : null) && !!cfg.e2reanchorVel === (run.xstand && run.xstand.e2reanchorVel !== undefined ? !!run.xstand.e2reanchorVel : ["PSTAR5BH", "PSTAR5CH", "PSTAR5CHAB", "PSTAR5CHABV", "PSTAR5CHABTDV"].includes(CONFIG)))) throw new Error("E2 configuration mismatch " + JSON.stringify(cfg));
+ const B = spec.bodies, bi = (n) => B.findIndex(b => b.name === n), FT = ["foot_L", "foot_R"].map(bi), sd = ["L", "R"], JI = (n) => spec.joints.findIndex(j => j.name === n);
+ const LEGJ = ["hip_L", "hip_R", "knee_L", "knee_R", "ankle_L", "ankle_R"].map(JI), KN = [JI("knee_L"), JI("knee_R")], ANK = [JI("ankle_L"), JI("ankle_R")], HIP = [JI("hip_L"), JI("hip_R")];
+ const SEG = ["foot_" + sd[nS], "shank_" + sd[nS], "thigh_" + sd[nS], "pelvis", "thorax"].map(bi), PEL = bi("pelvis");
