@@ -328,3 +328,40 @@ Physics, timeline and commanding are otherwise identical, so DG-1 can compare en
 ## A4. No other change
 
 The criteria of Parts I – II, the conditions, heights, matrix and stop rules are unchanged.
+
+## A5. TD2C with the adopted DVG guard (dated 2026-10-08; after DVG2 passed, before any TD2C battery run; `DVG_PREREG.md` §5.4, user instruction 2026-10-08 item 2)
+
+**What changes: only the guard TD2C runs, and the checks of that guard's law.**
+- **Configurations:**
+  - PSTAR5CHABG → **PSTAR5CHABV** (A + B + DVG);
+  - PSTAR5CHABTDC → **PSTAR5CHABTDV** (TD2B + DVG).
+
+  Every run-list entry keeps its condition, body, leg, rate and trajectory (`TD2C_RUN_LIST.json`, 3,552 runs).
+- **Guard records and law:**
+  - `td2c_val` records DVG's trace (state, w, V1 – V4, torque ratio, rate envelope, source tick, slew reference, per-axis applied / source / fresh contributions);
+  - `td2c_eval` checks DVG's law with `dvg_lib.guardLaw` (the CQ-6 / DVG2 law: exact law, held source, weight law with its slew limit, guard-attributable step ≤ the E1a-7 commanded bound, rate envelope, V4-valid source). That replaces D1G v1's `guardMetrics`.
+  - DVG's weight law replaces D1G v1's fixed fade length, so the fade-length item (DG-4 (b)) is not applicable and is counted as 0.
+- **The guard's independent qualification:** the clause "TD2C validates iff … and DG-0 … DG-7 pass" is met by the adopted guard's own qualification, **DVG2** (PASS, `DVG2_RESULTS.md`), which replaced D1G v1's DG battery. The DG items TD2C evaluates on its own records stay gated, under these ids:
+  - TD-G2 = DG-1 (a, b), bit-identity of the non-engaged AB / TDC runs to the TD2B logs;
+  - DG-6 with DVG's law;
+  - U-2 (c) with DVG's law.
+
+**Unchanged (the user's restated TD2C contract, item 2, maps one-to-one onto Part II):**
+- in-window terrain → TOUCHDOWN, the full touchdown contract (C-1 … C-10 = B-1 … B-10);
+- below the window inside the late-search envelope → LATE_TOUCHDOWN, bounded TD2 search / escalation;
+- above the certified early window → UNEXPECTED_OBSTACLE, the out-of-envelope event (II.4). It needs:
+  - bounded, finite commands (U-2, U-3, including the frozen B_cmd items U-2 (d) / U-3);
+  - no generated energy (U-1);
+  - no fabricated support (U-4);
+  - authoritative collision (U-5);
+  - explicit classification (U-6).
+
+  It does not need recovery or the 25 % BW contract (U-7);
+- no ground → TOUCHDOWN_FAILED;
+- C-6x;
+- the 30 mm apex, A + B (AB2), the execution-feasibility certifier and the touchdown engineering contracts;
+- the conditions, heights, criteria, matrix and stop rules.
+
+**Applied by** the preserved script `e2/drafts/TD2C_AMENDMENT_A5_amend_td2c.py`, which was prepared on 8 Oct before the DVG CQ evaluation. It edits only those lines of `td2c_val`, `td2c_eval` and the run list.
+
+**Known before this freeze (disclosed):** the A5-amended tools were smoke-run on 8 Oct during the DVG work, on earlyOOE V2-198-92 L 480 H-D and obs20 V2-198-92 L 180 H-D. That smoke found DVG erratum E1. After E1's fix, both runs had 0 law violations and passed U-1 … U-7 and DG-6 (`evidence_dvg_design/erratum_E1_and_cq6x_smoke.txt`). No other TD2C run with DVG exists.

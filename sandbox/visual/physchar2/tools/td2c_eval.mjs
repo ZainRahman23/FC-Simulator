@@ -3,14 +3,14 @@
 // frozen B-10 bounds (reported under the ids TD-1 … TD-10 for continuity), configurations AB (PSTAR5CHABG) / TD (PSTAR5CHABTDC). TD-G2 (C-G2 = DG-1 (a, b)) compares end hashes with the
 // TD2B battery's logs; B-11 is replaced by the unexpected-obstacle items U-1 … U-7 (obs5 / earlyOOE / obs20; B-9 is not applied to them); C-6x the event classification.
 // usage: node tools/td2c_eval.mjs --dir=<runs> --list=<TD2C_RUN_LIST.json> --fbjson=<evidence_fb/fb_eval.json.gz> --td2blogs=<dir of the TD2B run logs> [--json=<out>]
-import fs from "fs"; import path from "path"; import zlib from "zlib"; import { guardMetrics, bCmd } from "./d1g_lib.mjs";
+import fs from "fs"; import path from "path"; import zlib from "zlib"; import { bCmd } from "./d1g_lib.mjs"; import { guardLaw } from "./dvg_lib.mjs";   // amendment A5: the guard law is DVG's
 const arg = (k, d) => (process.argv.find(a => a.startsWith(`--${k}=`)) || `--${k}=${d}`).split("=").slice(1).join("=");
 const DIR = arg("dir", "."), LIST = JSON.parse(fs.readFileSync(arg("list", ""))), JS = arg("json", ""), FBJ = JSON.parse(zlib.gunzipSync(fs.readFileSync(arg("fbjson", "")))), TDBLOGS = arg("td2blogs", "");
 const f2 = (x, d = 2) => (x == null || !isFinite(x) ? "—" : x.toFixed(d)), mx = (a) => a.reduce((m, x) => Math.max(m, x), -Infinity), mn = (a) => a.reduce((m, x) => Math.min(m, x), Infinity), mean = (a) => a.reduce((s, v) => s + v, 0) / Math.max(1, a.length);
 const med = (a) => { if (!a.length) return null; const b = a.slice().sort((x, y) => x - y); return b.length % 2 ? b[b.length >> 1] : 0.5 * (b[b.length / 2 - 1] + b[b.length / 2]); };
 const rms = (a) => Math.sqrt(a.reduce((s, v) => s + v * v, 0) / Math.max(1, a.length)), BINS = []; for (let i = 0; i < 12; i++) BINS.push([+(0.2 + 0.05 * i).toFixed(2), +(0.25 + 0.05 * i).toFixed(2)]);
 const binOf = (phi) => { for (let i = 0; i < BINS.length; i++) if (phi >= BINS[i][0] - 1e-9 && (phi < BINS[i][1] - 1e-9 || (i === BINS.length - 1 && phi <= 0.8 + 1e-9))) return i; return -1; };
-const SETS = { "R-F": "R", "R-L": "R", "C-F7": "C", "C-F13": "C", "C-L5": "C", "H-T45": "H", "H-A40": "H", "H-D": "H", "H-F15": "H" }, hyp = (a) => Math.hypot(...a), AB = "PSTAR5CHABG", TD = "PSTAR5CHABTDC", OBST = ["obs5", "earlyOOE", "obs20"], TAU_G = 0.10;
+const SETS = { "R-F": "R", "R-L": "R", "C-F7": "C", "C-F13": "C", "C-L5": "C", "H-T45": "H", "H-A40": "H", "H-D": "H", "H-F15": "H" }, hyp = (a) => Math.hypot(...a), AB = "PSTAR5CHABV", TD = "PSTAR5CHABTDV", OBST = ["obs5", "earlyOOE", "obs20"], TAU_G = 0.10;
 // B-10 frozen cross-rate bounds (e2/TD2B_PREREG.md §3)
 const XB = { vN: 30.78, vT: 62.53, place: 3.0, tilt: 0.339, w: 0.2268, yaw: 2.0, w10: 0.2761, i50: 1.742, i50tick: 0.25, pen: 2.0, slip: 3.0, supT: 0.1267 }, IN_WIN = ["nominal", "earlyC", "lateC"], CONTACT_CONDS = ["nominal", "earlyC", "lateC", "beyond"];
 const FS_GATE = 0.6; const yawOf = (q) => { const f = [2 * (q[0] * q[2] + q[3] * q[1]), 2 * (q[1] * q[2] - q[3] * q[0]), 1 - 2 * (q[0] * q[0] + q[1] * q[1])]; return Math.atan2(f[0], f[2]) * 180 / Math.PI; }, wrap = (a) => { while (a > 180) a -= 360; while (a < -180) a += 360; return a; };
@@ -79,7 +79,8 @@ function cMetrics(r, q) { const dt = 1 / r.hz, se = r.series, c = r.td2c, n = r.
   se.t.forEach((t, i) => { const v = +se.closInc[i]; if (v > 0.05) strictBad++; const w = inW(t); if (w < 0) { if (v > 0.05) outBad++; return; } const P = wprof[w]; if (P.first == null) P.first = v; P.cum += v; P.cumMax = Math.max(P.cumMax, P.cum); if (v > 0) P.pos += v; if (v > 0.05 && P.cum > 0.05) inBad++; });
   for (const P of wprof) { cumMaxAll = Math.max(cumMaxAll, P.cumMax); if (P.cumMax > 0.05) inBad += 0; }
   const winBad = wprof.filter(P => P.cumMax > 0.05).length, closPos = se.closInc.reduce((s2, v) => s2 + Math.max(0, +v), 0), closMax = Math.max(...se.closInc.map(Number));
-  const { lawBad, lawWorst, attrMax, attrBad, srcHoldBad, dwBad, lenBad, nFade, nRamp, heldMax } = guardMetrics(r, TAU_G);
+  const GL = c.gtr && c.gtr.length ? guardLaw(c.gtr, r.hz, r.tau) : { lawBad: 0, lawWorst: 0, attrMax: 0, attrBad: 0, srcBad: 0, wBad: 0, cBad: 0, fades: 0, ramps: 0, heldMax: 0, rateMax: 0, srcInvalid: 0 };
+  const lawBad = GL.lawBad, lawWorst = GL.lawWorst, attrMax = GL.attrMax, attrBad = GL.attrBad, srcHoldBad = GL.srcBad + GL.srcInvalid, dwBad = GL.wBad + GL.cBad + (GL.rateMax < 1 ? 0 : 1), lenBad = 0, nFade = GL.fades, nRamp = GL.ramps, heldMax = GL.heldMax;   // amendment A5: DVG's law (the weight law replaces the fixed fade length; the rate envelope and source validity are part of DG-6)
   const ikBad = r.rows.filter(x => x.ikErr != null && !Number.isFinite(x.ikErr)).length, sw = r.trans.filter(q2 => q2.n === n && tLo != null && q2.t > tLo - 1e-9);
   const fabricated = sw.filter(q2 => ["TOUCHDOWN", "LOAD_ACCEPT", "SUPPORT"].includes(q2.to) && !(q2.touch > 0)).length, supNotLA = sw.filter(q2 => q2.to === "SUPPORT" && q2.from !== "LOAD_ACCEPT").length;
   const L = r.integrity.ledger, ext = c.ledgerExt, abort = r.events.abortT != null, fell = !!c.fell, both = r.events.finalStates.every(s2 => s2 === "SUPPORT"), outcome = abort ? "ABORTED" : fell ? "FELL" : both ? "RECOVERED" : "UNCLASSIFIED";
