@@ -42,7 +42,7 @@ const CLS = arg("cls") && fs.existsSync(arg("cls")) ? JSON.parse(fs.readFileSync
   if (N && O) for (const { b } of engA) { const k = b.replace(/_/g, "|"), newIds = [...idsOf(N.failures, k)].filter(i => !idsOf(O.failures, k).has(i)); if (newIds.length) F("CQ-1bA", `${b} (class A: certified): DVG engaged and SV-2 items newly failing: ${newIds.join(", ")}`); }
   // class B: B-1 … B-8
   const SAFE = ["I-1", "I-3", "I-5", "I-6", "I-7"], verdict = {}, satRep = [];
-  if (N && O) for (const { b, q, c } of engB) { const k = b.replace(/_/g, "|"), m = N.runs[k], m0 = O.runs[k], v = {}, rec = path.join(arg("sv2"), `sv2_${b}.json.gz`), L = lawOfSidecar(path.join(arg("sv2"), `sv2g_${b}.dvg.json.gz`));
+  if (N && O) for (const { b, q, c } of engB) { const k = b.replace(/_/g, "|"), m = N.runs[k] && N.runs[k].m, m0 = O.runs[k] && O.runs[k].m, v = {}, rec = path.join(arg("sv2"), `sv2_${b}.json.gz`), L = lawOfSidecar(path.join(arg("sv2"), `sv2g_${b}.dvg.json.gz`));   // erratum DVG2-E1: the SV-2 evaluator's per-run metrics are under .m (was read one level up)
     if (!m || !m0 || !fs.existsSync(rec) || !L) { F("CQ-1bB", `${b}: missing metrics / record / guard trace`); continue; } const r = load(rec), se = r.series;
     const finSeries = ["dTau", "dTau0", "closInc"].every(f => se[f].every(x => x != null && Number.isFinite(Number(x)))), finRows = r.rows.every(x => x.legTau.every(z => z[1] != null && Number.isFinite(z[1])));
     v["B-1"] = finSeries && finRows && !!r.hashes.end && L.every(x => x.srcInvalid === 0 && x.rateMax < 1);
