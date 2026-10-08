@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Touchline pre-commit size guard (tools/git-hooks/pre-commit).
+# Policy: review_artifacts/physical_character_v2/EVIDENCE_STORAGE_POLICY.md
+#   >= 100 MiB : always rejected (GitHub refuses such files).
+#   >=  50 MiB : rejected unless ALLOW_LARGE_EVIDENCE=1 (a deliberate, reviewed exception).
+# Install: cp tools/git-hooks/pre-commit "$(git rev-parse --git-common-dir)/hooks/pre-commit"
+hard=104857600; soft=52428800; bad=0
+while IFS= read -r -d '' f; do
+  s=$(git cat-file -s ":$f" 2>/dev/null) || continue
+  if [ "$s" -ge "$hard" ]; then
+    echo "pre-commit: '$f' is $s bytes (>= 100 MiB). GitHub rejects it: keep it outside Git (EVIDENCE_STORAGE_POLICY.md)." >&2; bad=1
+  elif [ "$s" -ge "$soft" ] && [ "${ALLOW_LARGE_EVIDENCE:-0}" != 1 ]; then
+    echo "pre-commit: '$f' is $s bytes (>= 50 MiB). Generated archives this large stay outside Git (EVIDENCE_STORAGE_POLICY.md); ALLOW_LARGE_EVIDENCE=1 only for a reviewed exception." >&2; bad=1
+  fi
+done < <(git diff --cached --name-only --diff-filter=AM -z)
+exit $bad

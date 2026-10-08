@@ -63,3 +63,8 @@ __pycache__/
 chrome-manifest/
 /*.zip
 review_artifacts/*.zip
+
+# ── generated raw per-run record archives: kept outside Git, regenerable from the
+#    committed run scripts (review_artifacts/physical_character_v2/EVIDENCE_STORAGE_POLICY.md).
+#    Compact evidence (logs, evaluations, summaries, small archives) stays committed. ──
+review_artifacts/**/runs_records_*.tgz
