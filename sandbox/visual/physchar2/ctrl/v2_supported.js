@@ -29,6 +29,8 @@ export class Trajectory {
   vh(t) { return this.dh * mjD(t / this.settleS) / this.settleS; }
   pos(t) { return [this.p0[0], this.p0[1] + this.h(t), this.p0[2] + this.s(t)]; }
   vel(t) { return [0, this.vh(t), this.vz(t)]; }
+  az(t) { const u = (t - this.tg) / this.T; return t <= this.tg || u >= 1 ? 0 : this.v * mjD(u) / this.T; }   // SLP-1b: prescribed forward acceleration
+  ah(t) { const u = t / this.settleS; return u <= 0 || u >= 1 ? 0 : this.dh * 60 * u * (1 - u) * (1 - 2 * u) / (this.settleS * this.settleS); }
 }
 // ── §2.3.2 schedule: foot n's phase at t ──
 export class Schedule {
@@ -79,13 +81,43 @@ export class SupportedDriver {
     this.pelOff = V.sub(st0[C.pelvis].com, st0[C.pelvis].pos); this.pelQ0 = Q.norm(st0[C.pelvis].rot);
     this.legs = [0, 1].map(n => ({ prevStance: true, planted: { ...this.foot0[n] }, seg: null, segT0: 0, tTD: -Infinity, tLO: null, prevT: null, prevOK: false, ikErr: 0, phaseKey: null }));
     this.tauPrev = null; this.dTau0 = 0; this.fallen = false; this.events = []; this.shares = [0.5, 0.5]; this.wSt = [1, 1]; this.target = [null, null];
+    // SLP-1b (review_artifacts/physical_character_v2/slp1/SLP1b_AMENDMENT.md, frozen 1137244): version "1b" only; version "1" (SLP-1) is untouched by everything below
+    this.v1b = cfg.version === "1b";
+    if (this.v1b) { const S = cfg.sched; this.flight = S.tc < S.T / 2 - 1e-12; this.Fpk = Math.PI * this.M * G * (S.T / 2) / (2 * S.tc);
+      let c0 = [0, 0, 0]; st0.forEach((b, i) => { c0 = V.add(c0, V.sc(b.com, B[i].mass)); }); c0 = V.sc(c0, 1 / this.M); this.c0p0 = V.sub(c0, st0[C.pelvis].com); this._precompute1b(); }
   }
+  // ── SLP-1b B3: scheduled vertical stance forces (schedule only; identical in the precompute and at run time) ──
+  _shares1b(ph, t) { const S = this.cfg.sched, sh = [0, 0];
+    if (ph[0].initial && ph[1].initial) { const sL = 0.5 * (1 - mj(t / S.tg)); sh[0] = sL; sh[1] = 1 - sL; }
+    else if (ph[0].stance && ph[1].stance) { const lead = ph[0].tTD > ph[1].tTD ? 0 : 1, tr = 1 - lead, a = ph[lead].tTD, b = ph[tr].tLO, x = b > a ? mj((t - a) / (b - a)) : 1; sh[lead] = x; sh[tr] = 1 - x; }
+    else for (const n of [0, 1]) if (ph[n].stance) sh[n] = Math.max(0, Math.min(1, ph[n].initial ? 1 : (t - ph[n].tTD) / BLEND, (ph[n].tLO - t) / BLEND));
+    return sh; }
+  fySched(t, ph = null) { const S = this.cfg.sched; ph = ph || [0, 1].map(n => S.phase(n, t)); const sh = this._shares1b(ph, t);
+    const fy = [0, 1].map(n => (this.flight && ph[n].stance && !ph[n].initial ? this.Fpk * Math.sin(Math.PI * Math.min(1, Math.max(0, (t - ph[n].tTD) / S.tc))) : sh[n] * this.M * G)); return { fy, ph, sh }; }
+  // ── SLP-1b B4: the deviation δ that the scheduled leg forces produce relative to the authoritative trajectory (open loop, 240 Hz grid, before t = 0) ──
+  _precompute1b() { const { traj, sched: S, dt, seconds } = this.cfg, N = Math.ceil(seconds / dt) + 4, M = this.M;
+    const da = [new Float64Array(N), new Float64Array(N), new Float64Array(N)], sumFy = new Float64Array(N);
+    for (let i = 0; i < N; i++) { const t = i * dt; if (t < S.tg - 1e-12) { sumFy[i] = M * G; continue; }
+      const { fy, ph } = this.fySched(t), xc = V.add(traj.pos(t), this.c0p0); let Fs = [0, 0, 0];
+      for (const n of [0, 1]) { if (!(fy[n] > 0) || !ph[n].stance) continue; let cp;
+        if (ph[n].initial) cp = V.add(this.foot0[n].pos, Q.rot(this.foot0[n].rot, this.sole[n].c));
+        else { const fl = this.tdTarget(n, ph[n].tTD).flat, u = (t - ph[n].tTD) / S.tc; cp = V.add(fl.pos, Q.rot(fl.rot, this.sole[n][u < 0.2 ? "heel" : u <= 0.6 ? "c" : "toe"])); }
+        const h = xc[1] - cp[1]; Fs = V.add(Fs, V.sc([(xc[0] - cp[0]) / h, 1, (xc[2] - cp[2]) / h], fy[n])); }
+      sumFy[i] = fy[0] + fy[1]; const a = [Fs[0] / M, Fs[1] / M - G - traj.ah(t), Fs[2] / M - traj.az(t)]; for (let k = 0; k < 3; k++) da[k][i] = a[k]; }
+    const hw = Math.max(1, Math.round(S.T / 4 / dt)), detrend = (f) => { const P = new Float64Array(f.length + 1); for (let i = 0; i < f.length; i++) P[i + 1] = P[i] + f[i];
+      const out = new Float64Array(f.length); for (let i = 0; i < f.length; i++) { const a = Math.max(0, i - hw), b = Math.min(f.length - 1, i + hw); out[i] = f[i] - (P[b + 1] - P[a]) / (b - a + 1); } return out; };
+    const integ = (f) => { const o = new Float64Array(f.length); for (let i = 1; i < f.length; i++) o[i] = o[i - 1] + f[i - 1] * dt; return o; };
+    const dv = da.map(f => detrend(integ(f))), dx = dv.map(f => detrend(integ(f))), ay = new Float64Array(N);
+    for (let i = 1; i < N - 1; i++) ay[i] = (dv[1][i + 1] - dv[1][i - 1]) / (2 * dt);
+    this.d1b = { dx, dv, ay, sumFy, N }; }
+  ref1b(i) { const D = this.d1b, j = Math.min(D.N - 1, Math.max(0, i)); return { dx: [D.dx[0][j], D.dx[1][j], D.dx[2][j]], dv: [D.dv[0][j], D.dv[1][j], D.dv[2][j]], ay: D.ay[j], sumFy: D.sumFy[j] }; }
   // flat pose of foot n: sole centroid at world forward position zc (initial lateral position, height, yaw); pitched about a sole edge keeping it on the turf
   flatAt(n, zc) { const f = this.foot0[n], cW = V.add(f.pos, Q.rot(f.rot, this.sole[n].c)); return { pos: [f.pos[0], f.pos[1], f.pos[2] + zc - cW[2]], rot: f.rot.slice() }; }
   pitched(n, pose, th, pivot) { if (!(th > 1e-9)) return { pos: pose.pos.slice(), rot: pose.rot.slice() }; const pw = V.add(pose.pos, Q.rot(pose.rot, this.sole[n][pivot])), a = Q.rot(pose.rot, [1, 0, 0]), other = pivot === "heel" ? "toe" : "heel";
     const cand = [1, -1].map(sg => { const q = Q.axis(a, sg * th), p2 = V.add(pw, Q.rot(q, V.sub(pose.pos, pw))), r2 = Q.norm(Q.mul(q, pose.rot)); return { pos: p2, rot: r2, oy: V.add(p2, Q.rot(r2, this.sole[n][other]))[1] }; });
     const b = cand[0].oy >= cand[1].oy ? cand[0] : cand[1]; return { pos: b.pos, rot: b.rot }; }   // the sign that raises the other sole edge (the pivot stays on the turf)
-  tdTarget(n, tTD) { const { traj, sched } = this.cfg, zc = this.hip0z + traj.s(tTD + sched.tc / 2); const flat = this.flatAt(n, zc); return { flat, pose: this.pitched(n, flat, this.cfg.pitchTD, "heel") }; }
+  tdTarget(n, tTD) { const { traj, sched } = this.cfg, tm = tTD + sched.tc / 2, zc = this.hip0z + traj.s(tm) - (this.v1b ? traj.az(tm) / (this.cfg.omega * this.cfg.omega) : 0);   // 1b B2: shift back by a_ref / ω²
+    const flat = this.flatAt(n, zc); return { flat, pose: this.pitched(n, flat, this.cfg.pitchTD, "heel") }; }
   stancePose(n, t) { const L = this.legs[n]; if (!isFinite(L.tTD)) return { pose: { pos: L.planted.pos.slice(), rot: L.planted.rot.slice() }, cp: V.add(L.planted.pos, Q.rot(L.planted.rot, this.sole[n].c)) };
     const u = (t - L.tTD) / this.cfg.sched.tc, P = L.planted; let pose, cp;
     if (u < 0.2) { pose = this.pitched(n, P, this.cfg.pitchTD * (1 - mj(u / 0.2)), "heel"); cp = V.add(P.pos, Q.rot(P.rot, this.sole[n].heel)); }
@@ -117,13 +149,17 @@ export class SupportedDriver {
     st = unitStates(st); ev = unitEv(ev); const C = this.C, P = C.P, B = this.spec.bodies, cmd = [];
     let c = [0, 0, 0]; st.forEach((b, i) => { c = V.add(c, V.sc(b.com, B[i].mass)); }); c = V.sc(c, 1 / this.M);
     const ph = this.fallen ? null : this._events(t, st), pel = { pos: V.sub(this.cfg.traj.pos(t), this.pelOff), rot: this.pelQ0 }, F = [null, null], cps = [null, null], ikT = {};
+    const fy1b = this.v1b && !this.fallen ? this.fySched(t).fy : null, pm = st[C.pelvis], yRef1b = this.v1b ? this.cfg.traj.pos(t)[1] + this.ref1b(Math.round(t / dt)).dx[1] - this.pelOff[1] : null;
     if (!this.fallen) for (const n of [0, 1]) { const L = this.legs[n]; let pose, cp = null;
       if (ph[n].stance) { const sp = this.stancePose(n, t); pose = sp.pose; cp = sp.cp; } else pose = stepAt(L.seg, t - L.segT0);
-      this.target[n] = pose; const r = C.legIKBounded(st, ev, n, pel.pos, pel.rot, { pos: pose.pos, rot: pose.rot }, { limits: "hard", fallback: "none" }); L.ikErr = r.err;
+      let fr = pel; if (this.v1b) { const w = this.wSt[n], qa = pm.rot, s0 = qa[0] * this.pelQ0[0] + qa[1] * this.pelQ0[1] + qa[2] * this.pelQ0[2] + qa[3] * this.pelQ0[3] < 0 ? -1 : 1;   // 1b B1: posture "ik" frame (stance) ↔ actual frame (swing)
+        fr = { pos: [pm.pos[0], pm.pos[1] + w * (yRef1b - pm.pos[1]), pm.pos[2]], rot: Q.norm(qa.map((x, i) => (1 - w) * x + w * s0 * this.pelQ0[i])) }; }
+      this.target[n] = pose; const r = C.legIKBounded(st, ev, n, fr.pos, fr.rot, { pos: pose.pos, rot: pose.rot }, { limits: "hard", fallback: "none" }); L.ikErr = r.err;
       const key = ph[n].stance ? "S" + ph[n].tTD : "W" + ph[n].tLO, sameKey = L.phaseKey === key; L.phaseKey = key; L.wRef = {};
       for (const [k, q] of r.targets) { ikT[k] = q; const qp = L.prevT && L.prevT[k]; if (sameKey && qp) { const s = qp[0] * q[0] + qp[1] * q[1] + qp[2] * q[2] + qp[3] * q[3] < 0 ? -1 : 1, d = Q.mul(Q.conj(qp), q.map(x => x * s)); L.wRef[k] = [2 * d[0] / dt, 2 * d[1] / dt, 2 * d[2] / dt]; } }
       L.prevT = Object.fromEntries(r.targets.map(([k, q]) => [k, q.slice()]));
-      if (this.shares[n] > 0 && cp) { const hz = c[1] - cp[1], u = [(c[0] - cp[0]) / hz, 1, (c[2] - cp[2]) / hz]; F[n] = V.sc(u, this.shares[n] * this.M * G); cps[n] = cp; } }
+      if (this.v1b) { if (fy1b[n] > 0 && cp) { const hz = c[1] - cp[1], u = [(c[0] - cp[0]) / hz, 1, (c[2] - cp[2]) / hz]; F[n] = V.sc(u, fy1b[n]); cps[n] = cp; } }
+      else if (this.shares[n] > 0 && cp) { const hz = c[1] - cp[1], u = [(c[0] - cp[0]) / hz, 1, (c[2] - cp[2]) / hz]; F[n] = V.sc(u, this.shares[n] * this.M * G); cps[n] = cp; } }
     const geff = [0, -G, 0]; let dMax = 0; const tauNow = {};
     for (const d of P.jd) { const k = d.k, pj = C.jointAt(st, k); let T = [0, 0, 0];
       for (const i of C.sub[k]) T = V.sub(T, V.cross(V.sub(st[i].com, pj), V.sc(geff, B[i].mass)));

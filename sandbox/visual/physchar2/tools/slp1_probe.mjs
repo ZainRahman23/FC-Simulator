@@ -6,25 +6,31 @@
 import fs from "fs"; import path from "path"; import zlib from "zlib"; import { fileURLToPath, pathToFileURL } from "url";
 import { loadJolt } from "../core/v2_jolt.js"; import { e2Spec } from "../gates/v2_e2.js"; import { SLPSim, SLP_TRACE_COLS } from "../gates/v2_slp.js"; import { V, Q } from "../core/v2_math.js";
 const here = path.dirname(fileURLToPath(import.meta.url)), ROOT = path.join(here, "../../../.."), SLPDIR = path.join(ROOT, "review_artifacts/physical_character_v2/slp1");
-const arg = (k, d) => (process.argv.find(a => a.startsWith(`--${k}=`)) || `--${k}=${d}`).split("=").slice(1).join("="), SPEED = arg("speed", "walk"), CASE = arg("case", "D0"), F = +arg("f", 1), OUT = arg("out", ""), LEAN = process.argv.includes("--lean");
+const arg = (k, d) => (process.argv.find(a => a.startsWith(`--${k}=`)) || `--${k}=${d}`).split("=").slice(1).join("="), SPEED = arg("speed", "walk"), CASE = arg("case", "D0"), F = +arg("f", 1), OUT = arg("out", ""), LEAN = process.argv.includes("--lean"), VERSION = arg("version", "1");
 if (process.env.V2_KNEE_MODEL !== "v2k" || process.env.V2_ANKLE_NEUTRAL_K !== "0.13") throw new Error("E1a configuration env required");
-if (!["walk", "jog", "run"].includes(SPEED) || !["D0", "D1", "D2", "D3", "D4", "D5", "D2c"].includes(CASE) || ![1, 2, 4].includes(F)) throw new Error("args");
+if (!["1", "1b"].includes(VERSION) || !["walk", "jog", "run"].includes(SPEED) || !["D0", "D1", "D2", "D3", "D4", "D5", "D2c"].includes(CASE) || ![1, 2, 4].includes(F)) throw new Error("args");
 const derived = JSON.parse(fs.readFileSync(path.join(SLPDIR, "derived.json"), "utf8")), { GAIT } = await import(pathToFileURL(path.join(SLPDIR, "gait_inputs.mjs")).href);
 const der = derived.speeds[SPEED], gait = GAIT[SPEED]; if (!der || !der.feasible) throw new Error("speed not derived");
 const T = 2 / gait.stepHz, tsw = T - gait.contactS, tg = 0.5, tSteady = tg + gait.rampS + 1, tMin = tg + gait.rampS + 3;
 const kfind = (off) => { for (let k = 0; ; k++) { const t = tg + k * T + off; if (t >= tMin - 1e-9) return t; } }, tdPred = CASE === "D0" ? null : CASE === "D4" ? kfind(tsw / 2) : kfind(tsw + gait.contactS / 2);
 const seconds = CASE === "D0" ? tg + gait.rampS + 6 : tdPred + 3;
 const J = await loadJolt(path.join(here, "../vendor/jolt-physics.wasm-compat.js")), spec = e2Spec("V2-REF"), t0w = Date.now();
-const sim = new SLPSim(J, spec, { seconds, der, gait, f: F, case: CASE }, LEAN ? { probes: false } : {}), S = sim.S, dt = sim.dt, M = sim.M, B = spec.bodies;
+const sim = new SLPSim(J, spec, { seconds, der, gait, f: F, case: CASE, version: VERSION }, LEAN ? { probes: false } : {}), S = sim.S, dt = sim.dt, M = sim.M, B = spec.bodies;
 // per-tick accumulators
 const A = { n: 0, satSteady: 0, nSteady: 0, errSq: 0, errMax: 0, z0: null, t0: null, z1: null, t1: null, legFz: 0, supFy: 0, nLoad: 0, ikMax: [0, 0], ikSum: [0, 0], actSatSum: 0, actSatMax: 0, hmMin: Infinity, dTauMax: 0, nAll: 0,
-  vHist: [], devMaxPost: 0, devPost: [], win: null, slip: [[], []], slipCur: [null, null], alphaSeries: [], postEnd: null };
+  vHist: [], devMaxPost: 0, devPost: [], win: null, slip: [[], []], slipCur: [null, null], alphaSeries: [], postEnd: null,
+  // SLP-1b additions (also filled for version 1): A7 vertical support vs legs, A8 forward propulsion, pelvis pitch / roll, tracking vs the scheduled reference
+  rampSupJz: 0, rampGndJz: 0, stSupPos: 0, stGndPos: 0, stSupNeg: 0, stGndNeg: 0, pitch: [], roll: [], e1bSq: 0, e1bMax: 0, n1b: 0 };
 let done = false;
 while (!done && sim.tick()) { const L = S.last, t = L.t, pel = sim.st[S.pel], pr = S.traj.pos(t), eh = Math.hypot(pel.com[0] - pr[0], pel.com[2] - pr[2]);
   A.nAll++; A.vHist.push([t, L.v.slice()]); if (A.vHist.length > 120) A.vHist.shift();
   const steady = t >= tSteady - 1e-9 && (tdPred == null || t < tdPred - 1e-9);
   if (steady) { A.nSteady++; if (L.sat) A.satSteady++; A.errSq += eh * eh; A.errMax = Math.max(A.errMax, eh); if (A.z0 == null) { A.z0 = pel.com[2]; A.t0 = t; } A.z1 = pel.com[2]; A.t1 = t;
     if (!LEAN) { A.legFz += L.Fz[0] + L.Fz[1]; A.supFy += L.F[1]; A.nLoad++; } }
+  if (!LEAN) { const Fgz = L.Fg[0][2] + L.Fg[1][2], inRamp = t >= tg - 1e-9 && t < tg + gait.rampS - 1e-9;
+    if (inRamp) { A.rampSupJz += L.F[2] * dt; A.rampGndJz += Fgz * dt; }
+    if (steady) { A.stSupPos += Math.max(0, L.F[2]) * dt; A.stGndPos += Math.max(0, Fgz) * dt; A.stSupNeg += Math.min(0, L.F[2]) * dt; A.stGndNeg += Math.min(0, Fgz) * dt; } }
+  if (steady) { A.pitch.push(L.pitchDeg); A.roll.push(L.rollDeg); if (L.pe1b) { const e = Math.hypot(L.pe1b[0], L.pe1b[2]); A.e1bSq += e * e; A.e1bMax = Math.max(A.e1bMax, e); A.n1b++; } }
   if (t >= tSteady - 1e-9) { for (const n of [0, 1]) { const e = S.drv.legs[n].ikErr; A.ikMax[n] = Math.max(A.ikMax[n], e); A.ikSum[n] += e; } A.actSatSum += L.satAct; A.actSatMax = Math.max(A.actSatMax, L.satAct); A.hmMin = Math.min(A.hmMin, L.hm.m); A.dTauMax = Math.max(A.dTauMax, S.drv.dTau0); }
   // planted-foot slip: sole-centroid horizontal drift during the flat part of each stance (0.2 ≤ u ≤ 0.6)
   for (const n of [0, 1]) { const lg = S.drv.legs[n], p = lg.phase; if (!p || !p.stance || !isFinite(p.tTD)) { if (A.slipCur[n]) { A.slip[n].push(A.slipCur[n]); A.slipCur[n] = null; } continue; }
@@ -45,13 +51,21 @@ const contactOutside = [0, 1].map(n => contacts[n].filter(([a, b]) => a >= tStea
 const r = (x, k = 4) => (x == null || !isFinite(x) ? x : +x.toFixed(k)), slipAll = [0, 1].map(n => A.slip[n].filter(x => x.tTD >= tSteady && (tdPred == null || x.tTD < tdPred)).map(x => x.max));
 const cpuTot = sim.cpu.step + sim.cpu.passive + sim.cpu.measure + sim.cpu2.ctrl + sim.cpu2.act + sim.cpu2.probe, us = (x) => r(x / sim.n * 1000, 2);
 const W = A.win, D = S.dist, Jd = D ? (D.case === "D2c" ? (D.impactor ? D.impactor.transferredImpulseNs[0] : null) : D.J) : null;
-const out = { generated: "tools/slp1_probe.mjs", prereg: "slp1/SLP1_PREREGISTRATION.md @49785b7", run: { body: "V2-REF", speed: SPEED, case: CASE, fHz: F, lean: LEAN, hz: 1 / dt, seconds, tSteady, tdPred, gait, der: { ...der, springs: undefined, spring: der.springs[F + "Hz"] } },
+const out = { generated: "tools/slp1_probe.mjs", prereg: VERSION === "1b" ? "slp1/SLP1b_AMENDMENT.md @1137244 (on SLP1_PREREGISTRATION.md @49785b7)" : "slp1/SLP1_PREREGISTRATION.md @49785b7", run: { body: "V2-REF", version: VERSION, speed: SPEED, case: CASE, fHz: F, lean: LEAN, hz: 1 / dt, seconds, tSteady, tdPred, gait, der: { ...der, springs: undefined, spring: der.springs[F + "Hz"] } },
   endT: r(sim.n * dt, 5), hashEnd: (sim.h >>> 0).toString(16).padStart(8, "0"), hashes: S.hashes, wallS: (Date.now() - t0w) / 1000,
   architecture: { A1_realisedSpeed: A.t1 > A.t0 ? r((A.z1 - A.z0) / (A.t1 - A.t0), 5) : null, A1_target: gait.v, A2_pelvisErrRmsM: A.nSteady ? r(Math.sqrt(A.errSq / A.nSteady), 5) : null, A2_pelvisErrMaxM: r(A.errMax, 5),
     A3_satFraction: A.nSteady ? r(A.satSteady / A.nSteady, 5) : null, A4_alphaMinSteady: null, A4_alphaMinRun: r(S.alphaMin, 6), A4_fallT: S.fallT, A4_fallWhy: S.fallWhy,
     A5: { finite: sim.A.finite, authorityWrites: sim.ledger.authorityWrites, maxCapExcessN: r(S.maxCapExcess, 6), posCorrMaxMm: r(sim.A.inv.pcMaxMm, 3), posCorrAt: sim.A.inv.pcAt, posCorrBody: sim.A.inv.pcBody, energyResidualJ: r(S.res, 4), energySumPosJ: r(S.sumPos, 4),
       ledger: { WactJ: r(sim.ledger.Wact, 3), WsupportJ: r(S.Wsup, 3), WpulseJ: r(S.Wpulse, 3), passiveDampingJ: r(sim.ledger.damping, 3) } },
     A6: { scheduledStances: stances.length, stancesWithContact: stances.filter(x => x.contact).length, missed: stances.filter(x => !x.contact).map(x => ({ foot: "LR"[x.n], td: r(x.td) })) } },
+  slp1b: { version: VERSION,
+    A7_legWeightFraction: A.nLoad ? r(A.legFz / (A.legFz + A.supFy), 4) : null,
+    A8a_rampSupportNetForwardImpulseNs: r(A.rampSupJz, 3), A8a_rampGroundNetForwardImpulseNs: r(A.rampGndJz, 3), A8a_trajectoryMomentumGainNs: r(M * gait.v, 3), A8a_supportShareOfMomentum: r(A.rampSupJz / (M * gait.v), 4),
+    A8b_steadySupportPositiveImpulseNs: r(A.stSupPos, 3), A8b_steadyGroundPositiveImpulseNs: r(A.stGndPos, 3), A8b_supportShareOfPositiveImpulse: A.stSupPos + A.stGndPos > 0 ? r(A.stSupPos / (A.stSupPos + A.stGndPos), 4) : null,
+    steadyNegativeImpulsesNs: { support: r(A.stSupNeg, 3), ground: r(A.stGndNeg, 3) },
+    pelvisPitchDeg: A.pitch.length ? { min: r(Math.min(...A.pitch), 2), max: r(Math.max(...A.pitch), 2), rms: r(Math.sqrt(A.pitch.reduce((a, x) => a + x * x, 0) / A.pitch.length), 2) } : null,
+    pelvisRollDeg: A.roll.length ? { min: r(Math.min(...A.roll), 2), max: r(Math.max(...A.roll), 2), rms: r(Math.sqrt(A.roll.reduce((a, x) => a + x * x, 0) / A.roll.length), 2) } : null,
+    pelvisErrVsScheduledRefM: A.n1b ? { rms: r(Math.sqrt(A.e1bSq / A.n1b), 5), max: r(A.e1bMax, 5) } : null },
   authoring: { legVsSupportVerticalN: A.nLoad ? { legMean: r(A.legFz / A.nLoad, 2), supportMean: r(A.supFy / A.nLoad, 2), legFraction: r(A.legFz / (A.legFz + A.supFy), 4), weightN: r(M * 9.81, 2) } : null,
     contactPattern: { contactInScheduledStanceFrac: stances.length ? r(stances.reduce((s, x) => s + x.contactS, 0) / stances.reduce((s, x) => s + (x.lo - x.td), 0), 4) : null, contactOutsideStanceS: contactOutside.map(x => r(x, 4)) },
     plantedSlipMm: slipAll.map(a => (a.length ? { n: a.length, max: r(1000 * Math.max(...a), 2), mean: r(1000 * a.reduce((s, x) => s + x, 0) / a.length, 2) } : null)),
@@ -65,5 +79,5 @@ const out = { generated: "tools/slp1_probe.mjs", prereg: "slp1/SLP1_PREREGISTRAT
   events: S.drv.events, fz20: S.fz20.ev, traceCols: SLP_TRACE_COLS, trace: S.trace };
 const steadyRows = S.trace.filter(x => x[0] >= tSteady && (tdPred == null || x[0] < tdPred)); out.architecture.A4_alphaMinSteady = steadyRows.length ? r(Math.min(...steadyRows.map(x => x[1])), 6) : null;
 if (OUT) fs.writeFileSync(OUT, zlib.gzipSync(JSON.stringify(out)));
-const a = out.architecture; console.log(`SLP-1 ${SPEED} ${CASE} f=${F}${LEAN ? " lean" : ""}: end ${out.endT}s hash ${out.hashEnd} | A1 v ${a.A1_realisedSpeed}/${gait.v} A2 rms ${a.A2_pelvisErrRmsM} max ${a.A2_pelvisErrMaxM} A3 sat ${a.A3_satFraction} A4 αmin ${a.A4_alphaMinSteady} fall ${a.A4_fallT} A5 Σ+ ${a.A5.energySumPosJ} pc ${a.A5.posCorrMaxMm} A6 ${a.A6.stancesWithContact}/${a.A6.scheduledStances}${D ? ` | dist αmin ${out.disturbance.alphaMin} loss ${out.disturbance.lossT} fall ${out.disturbance.fallT} cancel ${out.disturbance.window && out.disturbance.window.cancellationRatio}` : ""} | ${out.cpu.usPerTick.total} µs/tick, wall ${out.wallS}s`);
+const a = out.architecture; console.log(`SLP-${VERSION} ${SPEED} ${CASE} f=${F}${LEAN ? " lean" : ""}: end ${out.endT}s hash ${out.hashEnd} | A1 v ${a.A1_realisedSpeed}/${gait.v} A2 rms ${a.A2_pelvisErrRmsM} max ${a.A2_pelvisErrMaxM} A3 sat ${a.A3_satFraction} A4 αmin ${a.A4_alphaMinSteady} fall ${a.A4_fallT} A5 Σ+ ${a.A5.energySumPosJ} pc ${a.A5.posCorrMaxMm} A6 ${a.A6.stancesWithContact}/${a.A6.scheduledStances} A7 ${out.slp1b.A7_legWeightFraction} A8a ${out.slp1b.A8a_supportShareOfMomentum} A8b ${out.slp1b.A8b_supportShareOfPositiveImpulse}${D ? ` | dist αmin ${out.disturbance.alphaMin} loss ${out.disturbance.lossT} fall ${out.disturbance.fallT} cancel ${out.disturbance.window && out.disturbance.window.cancellationRatio}` : ""} | ${out.cpu.usPerTick.total} µs/tick, wall ${out.wallS}s`);
 sim.w.destroy();

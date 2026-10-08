@@ -2647,3 +2647,23 @@ Not pushed.
 - **Held:** support integrity (no writes, caps respected); α-driven loss without state reset; determinism 9 / 9; regression 106 / 106 and components 58 / 58.
 - **CPU:** no saving (walk 933 – 952 vs autonomous 892 µs per step); the driver's IK dominates.
 - **Decision needed** (nothing started): A authoring fix (SLP-1b), B decouple ordinary authority from the recoverability bound, or C both. No LOC-1 / TD2C / E2 / further development.
+
+## 2026-10-09 — SLP-1b (option A; `sources/2026-10-09_user_decision_slp1b_option_a.md`) STOPPED at calibration under the user's stop condition (`slp1/SLP1b_RESULTS.md`)
+
+- **Amendment:** `SLP1b_AMENDMENT.md`, frozen 1137244, versioned driver "1b".
+  - B1: stance legs use the controller's validated posture "ik" frame; swing legs use the actual frame.
+  - B2: foothold shift a_ref / ω² for propulsion.
+  - B3: half-sine stance forces for flight gaits.
+  - B4: support tracks the scheduled-force oscillation.
+  - Caps unchanged. SLP-1 preserved (version "1" reproduces its hashes).
+- **Calibration:** D0 × f {1, 2, 4} × walk / jog / run, each twice, all identical pairs. No configuration meets A1 – A8.
+  - walk falls at 2.42 / 6.91 s, or (4 Hz) is dragged with the support 100 % saturated and the legs carrying 9 %;
+  - jog falls at 2.08 – 2.17 s; run falls at 2.61 – 2.73 s.
+- **Why:**
+  - Before the first forward-cap saturation (≈ 0.4 – 1.0 s after gait start), the legs carry 78 – 123 % of body weight and hold the pelvis (pitch ≤ 1.5° in walk / jog), but supply little propulsion (the support gives 52 – 88 % of the positive forward impulse).
+  - Through-COM leg forces need a COM lead that the path-holding support suppresses; momentum lag then turns touchdowns into braking, the forward cap saturates, the capped pelvis push against foot braking pitches the body past the 81.8 N·m cap, and it collapses.
+  - Jog / run stance loads decay after impact, and the support carries the flights.
+- **Classification:** architecture (with balance removed, the support is the sole momentum corrector, and recoverability-derived caps are too small for ordinary stabilisation), plus authoring gaps (start-up propulsion, no trajectory-consistent COM lead, stance-force realisation). No V2 body limit.
+- **CPU:** 827 – 951 µs per step vs 892 autonomous; no saving.
+- **Matrix / impactor:** not run.
+- **Awaiting user decision:** separate the ordinary-stabilisation caps from the recoverability bound (option B), and / or the authoring items.

@@ -25,7 +25,7 @@ export class SLPSim extends G2Sim {
     const sp = d.springs[o.f + "Hz"]; if (!sp) throw new Error("spring " + o.f);
     const caps = { h: d.caps.horizontalN, up: d.caps.verticalUpN, down: d.caps.verticalDownN, torque: d.caps.torqueNm };
     const sup = new SupportLayer(w, pel, p0, { lin: sp.Klin, dlin: sp.Dlin, rot: sp.Krot, drot: sp.Drot }, caps);
-    const drv = new SupportedDriver(this.ctrl, this.spec, st, { traj, sched, pitchTD: d.touchdownPitchDeg * D2R, pitchLO: d.liftoffPitchDeg * D2R, apex: g.apexM });
+    const drv = new SupportedDriver(this.ctrl, this.spec, st, { traj, sched, pitchTD: d.touchdownPitchDeg * D2R, pitchLO: d.liftoffPitchDeg * D2R, apex: g.apexM, version: o.version || "1", omega: d.omega, seconds: o.seconds, dt: this.dt });
     let com0 = [0, 0, 0]; st.forEach((b, i) => { com0 = V.add(com0, V.sc(b.com, B[i].mass)); }); com0 = V.sc(com0, 1 / M);
     // body-fixed disturbance points (§2.4): thorax-left = min-x vertex in the top 25 % of the thorax collider's local y-range; shank-left = min-x vertex within ±10 % of mid-height
     const bi = (nm) => B.findIndex(b => b.name === nm), pts = (i) => { const f = w.bodyTriangles(i), P = []; for (let k = 0; k < f.length; k += 3) P.push([f[k], f[k + 1], f[k + 2]]); return P; };
@@ -49,8 +49,11 @@ export class SLPSim extends G2Sim {
   _ctrl(init) { if (!this.S) this._slpInit(); let t0 = now(); const cmd = this.S.drv.compute(this.n * this.dt, this.st, this.up.ev, this.dt), t1 = now(); this.cpu2.ctrl += t1 - t0;
     this.aplan = this.act.compute(this.st, this.up.ev, cmd, this.dt, init); const t2 = now(); this.cpu2.act += t2 - t1; (this.cpuSamples || (this.cpuSamples = [])).push(t2 - t0); }
   _disturb() { const S = this.S, t = this.n * this.dt, dt = this.dt, t0 = now();
-    S.sup.setAlpha(S.auth.alpha); const sh = S.drv.shares, ffY = S.auth.alpha * Math.max(0, 1 - sh[0] - sh[1]) * S.M * G;
-    S.sup.setTargets(V.sub(S.traj.pos(t + dt), S.p0), S.traj.vel(t + dt), ffY); S.ffY = ffY; S.cpuSupport += now() - t0;
+    S.sup.setAlpha(S.auth.alpha);
+    if (S.drv.v1b) { const r = S.drv.ref1b(this.n + 1), ffY = S.auth.alpha * (S.M * (G + r.ay) - r.sumFy);   // SLP-1b B4: track the scheduled-force motion; vertical feed-forward = the scheduled residual
+      S.sup.setTargets(V.add(V.sub(S.traj.pos(t + dt), S.p0), r.dx), V.add(S.traj.vel(t + dt), r.dv), ffY); S.ffY = ffY; }
+    else { const sh = S.drv.shares, ffY = S.auth.alpha * Math.max(0, 1 - sh[0] - sh[1]) * S.M * G; S.sup.setTargets(V.sub(S.traj.pos(t + dt), S.p0), S.traj.vel(t + dt), ffY); S.ffY = ffY; }
+    S.cpuSupport += now() - t0;
     S.pulseLast = null; const D = S.dist;
     if (D && D.case !== "D2c" && t >= D.td - 1e-9 && t < D.td + 0.03 - 1e-9) { const P = S.points[D.point], b = this.st[P.body], at = V.add(b.pos, Q.rot(Q.norm(b.rot), P.local)), F = [D.J / 0.03, 0, 0];
       this.w.addForceAt(P.body, F, at); S.pulseLast = { body: P.body, F, local: P.local, at }; if (D.applied == null) D.applied = { t, at: at.slice(), body: this.spec.bodies[P.body].name, local: P.local.slice() }; }
@@ -88,18 +91,21 @@ export class SLPSim extends G2Sim {
     const aPrev = S.auth.alpha, alpha = S.auth.step(xiErr, S.fallT != null, dt); S.alphaMin = Math.min(S.alphaMin, alpha);
     if (S.lossT == null && alpha < 0.05) { S.lossT = t; } if (alpha < 0.99 && S.disruptT == null) S.disruptT = t;
     // foot loads (ankle-probe ground reaction) + the pack's 20 N contact log; impactor contacts / velocity
-    const Fz = this.probeRows ? this.probeRows.map(r => (r ? Math.max(0, r.JyN) : 0)) : [NaN, NaN];
+    const Fz = this.probeRows ? this.probeRows.map(r => (r ? Math.max(0, r.JyN) : 0)) : [NaN, NaN], Fg = this.probeRows ? this.probeRows.map(r => (r && r.Jc ? V.sc(r.Jc, 1 / dt) : [0, 0, 0])) : [[NaN, NaN, NaN], [NaN, NaN, NaN]];
+    const qrel = Q.mul(Q.norm(st[pel].rot), Q.conj(S.q0)), sgq = qrel[3] < 0 ? -1 : 1, rvec = (() => { const v = [qrel[0] * sgq, qrel[1] * sgq, qrel[2] * sgq], sn = Math.hypot(...v), ang = 2 * Math.atan2(sn, Math.abs(qrel[3])); return sn > 1e-12 ? V.sc(v, ang / sn) : [0, 0, 0]; })();
+    const pitchDeg = rvec[0] * R2D, rollDeg = rvec[2] * R2D, ref1b = S.drv.v1b ? S.drv.ref1b(this.n) : null, pe1b = ref1b ? V.sub(st[pel].com, V.add(pr, ref1b.dx)) : null;
     for (const n of [0, 1]) { const on = Fz[n] >= 20; if (on !== S.fz20.on[n]) { S.fz20.on[n] = on; S.fz20.ev[n].push([+t.toFixed(5), on ? 1 : 0]); } }
     if (S.imp) { const r = this._impRead(); S.imp.vLast = r.v; for (const ct of this.lastContacts || []) if (ct.a === IMP_IDX || ct.b === IMP_IDX) { const bi = ct.a === IMP_IDX ? ct.b : ct.a; if (bi >= 0) S.imp.contacts.push({ t: +t.toFixed(5), body: B[bi].name, depthMm: +(ct.depth * 1000).toFixed(3), pt: (ct.a === IMP_IDX ? ct.pts2 : ct.pts)[0].map(x => +x.toFixed(4)) }); } }
     // energy ledger: E (+ impactor KE) − E0 vs W_act + W_support + W_pulse − passive damping; Σ+ of the residual's positive increments
     let E = this.A.E[this.A.E.length - 1]; if (S.imp) { const r = this._impRead(); E += 0.5 * S.imp.mass * V.dot(r.v, r.v); } else if (S.dist && S.dist.impactor) { const ve = S.dist.impactor.vEnd; E += 0.5 * S.dist.impactor.massKg * V.dot(ve, ve); }
     const res = E - S.E0 - (this.ledger.Wact + S.Wsup + S.Wpulse - this.ledger.damping); if (S.ticks > 0 && res > S.resPrev) S.sumPos += res - S.resPrev; S.resPrev = res; S.res = res;
     const hm = this._hardMin(), satAct = (this.actRes || []).filter(r => r.sat).length;
-    S.ticks++; if (sat) S.satTicks++; S.last = { t, alpha, mhat: S.auth.mhat, xiErr, F, T, sat, c, v, Fz, hm, satAct };
+    S.ticks++; if (sat) S.satTicks++; S.last = { t, alpha, mhat: S.auth.mhat, xiErr, F, T, sat, c, v, Fz, hm, satAct, Fg, pitchDeg, rollDeg, pe1b };
     if (this.n % 4 === 0) { const pe = V.sub(st[pel].com, pr), qr = S.q0, qd = Q.mul(Q.conj(qr), Q.norm(st[pel].rot)), angR = 2 * Math.atan2(Math.hypot(qd[0], qd[1], qd[2]), Math.abs(qd[3])) * R2D;
       const r5 = (x) => +x.toFixed(5), ph = S.drv.legs.map(l => (l.phase ? (l.phase.stance ? "S" : "W") : "-"));
-      S.trace.push([r5(t), r5(alpha), r5(S.auth.mhat), r5(xiErr), F.map(r5), T.map(r5), sat ? 1 : 0, pe.map(r5), r5(angR), c.map(r5), v.map(r5), Fz.map(x => +x.toFixed(2)), ph.join(""), S.drv.legs.map(l => +l.ikErr.toExponential(2)), satAct, +hm.m.toFixed(3), r5(res), +S.drv.dTau0.toFixed(3), S.drv.shares.map(r5), r5(S.ffY || 0), st[S.points["thorax-left"].body].com.map(r5)]); }
+      S.trace.push([r5(t), r5(alpha), r5(S.auth.mhat), r5(xiErr), F.map(r5), T.map(r5), sat ? 1 : 0, pe.map(r5), r5(angR), c.map(r5), v.map(r5), Fz.map(x => +x.toFixed(2)), ph.join(""), S.drv.legs.map(l => +l.ikErr.toExponential(2)), satAct, +hm.m.toFixed(3), r5(res), +S.drv.dTau0.toFixed(3), S.drv.shares.map(r5), r5(S.ffY || 0), st[S.points["thorax-left"].body].com.map(r5), Fg.map(f => f.map(x => +x.toFixed(2))), +pitchDeg.toFixed(3), +rollDeg.toFixed(3), pe1b ? pe1b.map(r5) : null]); }
     if (this.n % 240 === 0) S.hashes[String(Math.round(t))] = (this.h >>> 0).toString(16).padStart(8, "0");
     S.stPrev = st.map(b => ({ pos: b.pos.slice(), rot: b.rot.slice(), com: b.com.slice(), v: b.v.slice(), w: b.w.slice() })); }
 }
-export const SLP_TRACE_COLS = ["t", "alpha", "mhat", "xiErrM", "supF_N[x,y,z]", "supT_Nm[x,y,z]", "supSat", "pelvisPosErrM[x,y,z]", "pelvisRotFromInitialDeg", "com", "comV", "footFzN[L,R]", "phase[LR]", "ikErr[L,R]", "actSatAxes", "legHardMarginMinDeg", "energyResidualJ", "dTau0Nm", "shares[L,R]", "supFFyN", "thoraxCom"];
+export const SLP_TRACE_COLS = ["t", "alpha", "mhat", "xiErrM", "supF_N[x,y,z]", "supT_Nm[x,y,z]", "supSat", "pelvisPosErrM[x,y,z]", "pelvisRotFromInitialDeg", "com", "comV", "footFzN[L,R]", "phase[LR]", "ikErr[L,R]", "actSatAxes", "legHardMarginMinDeg", "energyResidualJ", "dTau0Nm", "shares[L,R]", "supFFyN", "thoraxCom",
+  "groundF_N[L[x,y,z],R[x,y,z]]", "pelvisPitchDeg(about +x, world, vs q0)", "pelvisRollDeg(about +z)", "pelvisErrVsScheduledRefM[x,y,z] (1b: p_ref + δx)"];

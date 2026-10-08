@@ -1,0 +1,641 @@
+{
+ "walk_f1": {
+  "hash": "cfe3d864",
+  "firstForwardCapT": 1.11667,
+  "fallT": 2.4166666666666665,
+  "W1": {
+   "window_s": [
+    0.5,
+    1.117
+   ],
+   "comFwdSpeedEnd": 0.453,
+   "vRefEnd": 0.819,
+   "legWeightFraction": 1.035,
+   "legVertMeanN": 839.0,
+   "supVertMeanN": -28.4,
+   "fwdImpulseNs": {
+    "groundNet": -16.1,
+    "supportNet": 57.2,
+    "groundPos": 9.4,
+    "supportPos": 57.8,
+    "supportShareOfPos": 0.86
+   },
+   "supportSatPct": 8.1,
+   "pitchDeg": [
+    -0.1,
+    1.5
+   ],
+   "rollDeg": [
+    -3.4,
+    -0.1
+   ],
+   "pelvisErrVsAuthoritativeMaxM": 0.029,
+   "pelvisErrVsScheduledMaxM": 0.035,
+   "actSatAxesMean": 1.16,
+   "legHardMarginMinDeg": 12.44,
+   "stanceContactFrac": null,
+   "stances": 0
+  },
+  "W2": {
+   "window_s": [
+    0.5,
+    2.417
+   ],
+   "comFwdSpeedEnd": 1.579,
+   "vRefEnd": 1.2,
+   "legWeightFraction": 0.788,
+   "legVertMeanN": 602.2,
+   "supVertMeanN": 162.1,
+   "fwdImpulseNs": {
+    "groundNet": -125.4,
+    "supportNet": 252.9,
+    "groundPos": 29.3,
+    "supportPos": 269.1,
+    "supportShareOfPos": 0.902
+   },
+   "supportSatPct": 66.1,
+   "pitchDeg": [
+    -0.1,
+    83.3
+   ],
+   "rollDeg": [
+    -6.5,
+    8.7
+   ],
+   "pelvisErrVsAuthoritativeMaxM": 0.177,
+   "pelvisErrVsScheduledMaxM": 0.171,
+   "actSatAxesMean": 2.5,
+   "legHardMarginMinDeg": -8.04,
+   "stanceContactFrac": 0.666,
+   "stances": 2
+  }
+ },
+ "walk_f2": {
+  "hash": "040141ed",
+  "firstForwardCapT": 1.1,
+  "fallT": 6.9125,
+  "W1": {
+   "window_s": [
+    0.5,
+    1.1
+   ],
+   "comFwdSpeedEnd": 0.495,
+   "vRefEnd": 0.784,
+   "legWeightFraction": 1.153,
+   "legVertMeanN": 936.3,
+   "supVertMeanN": -124.2,
+   "fwdImpulseNs": {
+    "groundNet": -18.6,
+    "supportNet": 62.1,
+    "groundPos": 8.4,
+    "supportPos": 63.1,
+    "supportShareOfPos": 0.883
+   },
+   "supportSatPct": 25.0,
+   "pitchDeg": [
+    -0.3,
+    0.6
+   ],
+   "rollDeg": [
+    -3.1,
+    0.0
+   ],
+   "pelvisErrVsAuthoritativeMaxM": 0.01,
+   "pelvisErrVsScheduledMaxM": 0.013,
+   "actSatAxesMean": 1.11,
+   "legHardMarginMinDeg": 12.7,
+   "stanceContactFrac": null,
+   "stances": 0
+  },
+  "W2": {
+   "window_s": [
+    0.5,
+    6.912
+   ],
+   "comFwdSpeedEnd": 1.212,
+   "vRefEnd": 1.2,
+   "legWeightFraction": 0.478,
+   "legVertMeanN": 366.7,
+   "supVertMeanN": 399.8,
+   "fwdImpulseNs": {
+    "groundNet": -391.6,
+    "supportNet": 476.4,
+    "groundPos": 64.6,
+    "supportPos": 871.7,
+    "supportShareOfPos": 0.931
+   },
+   "supportSatPct": 90.9,
+   "pitchDeg": [
+    -178.5,
+    176.7
+   ],
+   "rollDeg": [
+    -22.8,
+    21.5
+   ],
+   "pelvisErrVsAuthoritativeMaxM": 0.145,
+   "pelvisErrVsScheduledMaxM": 0.136,
+   "actSatAxesMean": 3.47,
+   "legHardMarginMinDeg": -9.48,
+   "stanceContactFrac": 0.257,
+   "stances": 10
+  }
+ },
+ "walk_f4": {
+  "hash": "01343fff",
+  "firstForwardCapT": 1.03333,
+  "fallT": null,
+  "W1": {
+   "window_s": [
+    0.5,
+    1.033
+   ],
+   "comFwdSpeedEnd": 0.427,
+   "vRefEnd": 0.637,
+   "legWeightFraction": 1.227,
+   "legVertMeanN": 989.8,
+   "supVertMeanN": -183.3,
+   "fwdImpulseNs": {
+    "groundNet": -7.8,
+    "supportNet": 49.2,
+    "groundPos": 7.4,
+    "supportPos": 51.2,
+    "supportShareOfPos": 0.874
+   },
+   "supportSatPct": 84.4,
+   "pitchDeg": [
+    -0.3,
+    0.3
+   ],
+   "rollDeg": [
+    -3.1,
+    0.1
+   ],
+   "pelvisErrVsAuthoritativeMaxM": 0.009,
+   "pelvisErrVsScheduledMaxM": 0.004,
+   "actSatAxesMean": 0.84,
+   "legHardMarginMinDeg": 12.94,
+   "stanceContactFrac": null,
+   "stances": 0
+  },
+  "W2": {
+   "window_s": [
+    0.5,
+    7.5
+   ],
+   "comFwdSpeedEnd": 1.019,
+   "vRefEnd": 1.2,
+   "legWeightFraction": 0.292,
+   "legVertMeanN": 223.4,
+   "supVertMeanN": 541.4,
+   "fwdImpulseNs": {
+    "groundNet": -291.8,
+    "supportNet": 367.7,
+    "groundPos": 36.2,
+    "supportPos": 884.2,
+    "supportShareOfPos": 0.961
+   },
+   "supportSatPct": 97.9,
+   "pitchDeg": [
+    -0.3,
+    145.9
+   ],
+   "rollDeg": [
+    -23.7,
+    28.2
+   ],
+   "pelvisErrVsAuthoritativeMaxM": 0.09,
+   "pelvisErrVsScheduledMaxM": 0.078,
+   "actSatAxesMean": 3.6,
+   "legHardMarginMinDeg": -14.67,
+   "stanceContactFrac": 0.169,
+   "stances": 11
+  }
+ },
+ "jog_f1": {
+  "hash": "78645f75",
+  "firstForwardCapT": 0.93333,
+  "fallT": 2.0791666666666666,
+  "W1": {
+   "window_s": [
+    0.5,
+    0.933
+   ],
+   "comFwdSpeedEnd": 0.082,
+   "vRefEnd": 0.405,
+   "legWeightFraction": 0.776,
+   "legVertMeanN": 597.7,
+   "supVertMeanN": 172.3,
+   "fwdImpulseNs": {
+    "groundNet": 1.4,
+    "supportNet": 14.3,
+    "groundPos": 7.8,
+    "supportPos": 20.4,
+    "supportShareOfPos": 0.723
+   },
+   "supportSatPct": 15.4,
+   "pitchDeg": [
+    -0.6,
+    1.1
+   ],
+   "rollDeg": [
+    -2.8,
+    -0.1
+   ],
+   "pelvisErrVsAuthoritativeMaxM": 0.018,
+   "pelvisErrVsScheduledMaxM": 0.021,
+   "actSatAxesMean": 1.15,
+   "legHardMarginMinDeg": 11.66,
+   "stanceContactFrac": null,
+   "stances": 0
+  },
+  "W2": {
+   "window_s": [
+    0.5,
+    2.079
+   ],
+   "comFwdSpeedEnd": 2.621,
+   "vRefEnd": 3,
+   "legWeightFraction": 0.614,
+   "legVertMeanN": 459.5,
+   "supVertMeanN": 288.5,
+   "fwdImpulseNs": {
+    "groundNet": -51.0,
+    "supportNet": 248.3,
+    "groundPos": 52.3,
+    "supportPos": 256.6,
+    "supportShareOfPos": 0.831
+   },
+   "supportSatPct": 66.3,
+   "pitchDeg": [
+    -0.6,
+    95.3
+   ],
+   "rollDeg": [
+    -7.8,
+    16.2
+   ],
+   "pelvisErrVsAuthoritativeMaxM": 0.476,
+   "pelvisErrVsScheduledMaxM": 0.482,
+   "actSatAxesMean": 3.45,
+   "legHardMarginMinDeg": -12.55,
+   "stanceContactFrac": 0.597,
+   "stances": 3
+  }
+ },
+ "jog_f2": {
+  "hash": "63c5cf8a",
+  "firstForwardCapT": 0.91667,
+  "fallT": 2.1333333333333333,
+  "W1": {
+   "window_s": [
+    0.5,
+    0.917
+   ],
+   "comFwdSpeedEnd": 0.077,
+   "vRefEnd": 0.366,
+   "legWeightFraction": 0.846,
+   "legVertMeanN": 671.3,
+   "supVertMeanN": 121.8,
+   "fwdImpulseNs": {
+    "groundNet": -0.5,
+    "supportNet": 13.3,
+    "groundPos": 5.9,
+    "supportPos": 21.2,
+    "supportShareOfPos": 0.783
+   },
+   "supportSatPct": 20.0,
+   "pitchDeg": [
+    -0.4,
+    0.5
+   ],
+   "rollDeg": [
+    -2.7,
+    -0.0
+   ],
+   "pelvisErrVsAuthoritativeMaxM": 0.007,
+   "pelvisErrVsScheduledMaxM": 0.008,
+   "actSatAxesMean": 0.76,
+   "legHardMarginMinDeg": 11.57,
+   "stanceContactFrac": null,
+   "stances": 0
+  },
+  "W2": {
+   "window_s": [
+    0.5,
+    2.133
+   ],
+   "comFwdSpeedEnd": 2.773,
+   "vRefEnd": 3,
+   "legWeightFraction": 0.569,
+   "legVertMeanN": 411.2,
+   "supVertMeanN": 311.5,
+   "fwdImpulseNs": {
+    "groundNet": -64.3,
+    "supportNet": 262.7,
+    "groundPos": 44.3,
+    "supportPos": 272.9,
+    "supportShareOfPos": 0.86
+   },
+   "supportSatPct": 74.7,
+   "pitchDeg": [
+    -2.2,
+    124.1
+   ],
+   "rollDeg": [
+    -10.2,
+    12.2
+   ],
+   "pelvisErrVsAuthoritativeMaxM": 0.479,
+   "pelvisErrVsScheduledMaxM": 0.484,
+   "actSatAxesMean": 3.32,
+   "legHardMarginMinDeg": -10.72,
+   "stanceContactFrac": 0.485,
+   "stances": 3
+  }
+ },
+ "jog_f4": {
+  "hash": "c4c72080",
+  "firstForwardCapT": 0.91667,
+  "fallT": 2.1708333333333334,
+  "W1": {
+   "window_s": [
+    0.5,
+    0.917
+   ],
+   "comFwdSpeedEnd": 0.091,
+   "vRefEnd": 0.366,
+   "legWeightFraction": 0.904,
+   "legVertMeanN": 728.5,
+   "supVertMeanN": 77.6,
+   "fwdImpulseNs": {
+    "groundNet": -1.9,
+    "supportNet": 14.2,
+    "groundPos": 5.6,
+    "supportPos": 24.1,
+    "supportShareOfPos": 0.812
+   },
+   "supportSatPct": 64.0,
+   "pitchDeg": [
+    -0.2,
+    0.3
+   ],
+   "rollDeg": [
+    -2.6,
+    -0.0
+   ],
+   "pelvisErrVsAuthoritativeMaxM": 0.005,
+   "pelvisErrVsScheduledMaxM": 0.004,
+   "actSatAxesMean": 0.84,
+   "legHardMarginMinDeg": 11.51,
+   "stanceContactFrac": null,
+   "stances": 0
+  },
+  "W2": {
+   "window_s": [
+    0.5,
+    2.171
+   ],
+   "comFwdSpeedEnd": 2.822,
+   "vRefEnd": 3,
+   "legWeightFraction": 0.568,
+   "legVertMeanN": 413.0,
+   "supVertMeanN": 314.6,
+   "fwdImpulseNs": {
+    "groundNet": -40.1,
+    "supportNet": 269.2,
+    "groundPos": 41.5,
+    "supportPos": 281.9,
+    "supportShareOfPos": 0.872
+   },
+   "supportSatPct": 90.1,
+   "pitchDeg": [
+    -6.3,
+    122.6
+   ],
+   "rollDeg": [
+    -25.1,
+    10.9
+   ],
+   "pelvisErrVsAuthoritativeMaxM": 0.482,
+   "pelvisErrVsScheduledMaxM": 0.487,
+   "actSatAxesMean": 3.05,
+   "legHardMarginMinDeg": -9.13,
+   "stanceContactFrac": 0.458,
+   "stances": 3
+  }
+ },
+ "run_f1": {
+  "hash": "a6bcd4a2",
+  "firstForwardCapT": 1.53333,
+  "fallT": 2.6083333333333334,
+  "W1": {
+   "window_s": [
+    0.5,
+    1.533
+   ],
+   "comFwdSpeedEnd": 0.903,
+   "vRefEnd": 1.309,
+   "legWeightFraction": 0.79,
+   "legVertMeanN": 602.0,
+   "supVertMeanN": 159.6,
+   "fwdImpulseNs": {
+    "groundNet": 54.2,
+    "supportNet": 18.4,
+    "groundPos": 67.9,
+    "supportPos": 72.4,
+    "supportShareOfPos": 0.516
+   },
+   "supportSatPct": 54.8,
+   "pitchDeg": [
+    -9.6,
+    6.3
+   ],
+   "rollDeg": [
+    -2.8,
+    10.9
+   ],
+   "pelvisErrVsAuthoritativeMaxM": 0.031,
+   "pelvisErrVsScheduledMaxM": 0.03,
+   "actSatAxesMean": 2.52,
+   "legHardMarginMinDeg": -0.6,
+   "stanceContactFrac": 0.944,
+   "stances": 2
+  },
+  "W2": {
+   "window_s": [
+    0.5,
+    2.608
+   ],
+   "comFwdSpeedEnd": 4.065,
+   "vRefEnd": 5.022,
+   "legWeightFraction": 0.682,
+   "legVertMeanN": 508.4,
+   "supVertMeanN": 236.6,
+   "fwdImpulseNs": {
+    "groundNet": 16.2,
+    "supportNet": 306.9,
+    "groundPos": 114.6,
+    "supportPos": 361.3,
+    "supportShareOfPos": 0.759
+   },
+   "supportSatPct": 74.0,
+   "pitchDeg": [
+    -9.6,
+    72.8
+   ],
+   "rollDeg": [
+    -2.8,
+    10.9
+   ],
+   "pelvisErrVsAuthoritativeMaxM": 0.594,
+   "pelvisErrVsScheduledMaxM": 0.585,
+   "actSatAxesMean": 4.31,
+   "legHardMarginMinDeg": -5.99,
+   "stanceContactFrac": 0.978,
+   "stances": 5
+  }
+ },
+ "run_f2": {
+  "hash": "78e67e4a",
+  "firstForwardCapT": 1.08333,
+  "fallT": 2.7333333333333334,
+  "W1": {
+   "window_s": [
+    0.5,
+    1.083
+   ],
+   "comFwdSpeedEnd": 0.293,
+   "vRefEnd": 0.298,
+   "legWeightFraction": 0.833,
+   "legVertMeanN": 690.3,
+   "supVertMeanN": 138.7,
+   "fwdImpulseNs": {
+    "groundNet": 15.1,
+    "supportNet": 4.7,
+    "groundPos": 23.0,
+    "supportPos": 31.1,
+    "supportShareOfPos": 0.575
+   },
+   "supportSatPct": 42.9,
+   "pitchDeg": [
+    -0.4,
+    4.9
+   ],
+   "rollDeg": [
+    -2.7,
+    0.3
+   ],
+   "pelvisErrVsAuthoritativeMaxM": 0.01,
+   "pelvisErrVsScheduledMaxM": 0.009,
+   "actSatAxesMean": 2.03,
+   "legHardMarginMinDeg": -0.25,
+   "stanceContactFrac": null,
+   "stances": 0
+  },
+  "W2": {
+   "window_s": [
+    0.5,
+    2.733
+   ],
+   "comFwdSpeedEnd": 4.451,
+   "vRefEnd": 5.343,
+   "legWeightFraction": 0.626,
+   "legVertMeanN": 479.3,
+   "supVertMeanN": 286.4,
+   "fwdImpulseNs": {
+    "groundNet": -12.3,
+    "supportNet": 354.7,
+    "groundPos": 99.8,
+    "supportPos": 411.6,
+    "supportShareOfPos": 0.805
+   },
+   "supportSatPct": 83.7,
+   "pitchDeg": [
+    -8.8,
+    97.1
+   ],
+   "rollDeg": [
+    -2.7,
+    8.4
+   ],
+   "pelvisErrVsAuthoritativeMaxM": 0.566,
+   "pelvisErrVsScheduledMaxM": 0.57,
+   "actSatAxesMean": 4.3,
+   "legHardMarginMinDeg": -9.32,
+   "stanceContactFrac": 0.88,
+   "stances": 6
+  }
+ },
+ "run_f4": {
+  "hash": "ac6e0f0d",
+  "firstForwardCapT": 1.08333,
+  "fallT": 2.6958333333333333,
+  "W1": {
+   "window_s": [
+    0.5,
+    1.083
+   ],
+   "comFwdSpeedEnd": 0.26,
+   "vRefEnd": 0.298,
+   "legWeightFraction": 0.867,
+   "legVertMeanN": 733.4,
+   "supVertMeanN": 112.3,
+   "fwdImpulseNs": {
+    "groundNet": 15.4,
+    "supportNet": 4.0,
+    "groundPos": 22.7,
+    "supportPos": 32.8,
+    "supportShareOfPos": 0.591
+   },
+   "supportSatPct": 71.4,
+   "pitchDeg": [
+    -0.2,
+    3.3
+   ],
+   "rollDeg": [
+    -2.6,
+    0.6
+   ],
+   "pelvisErrVsAuthoritativeMaxM": 0.006,
+   "pelvisErrVsScheduledMaxM": 0.004,
+   "actSatAxesMean": 2,
+   "legHardMarginMinDeg": 0.32,
+   "stanceContactFrac": null,
+   "stances": 0
+  },
+  "W2": {
+   "window_s": [
+    0.5,
+    2.696
+   ],
+   "comFwdSpeedEnd": 3.91,
+   "vRefEnd": 5.23,
+   "legWeightFraction": 0.609,
+   "legVertMeanN": 443.1,
+   "supVertMeanN": 284.0,
+   "fwdImpulseNs": {
+    "groundNet": -11.6,
+    "supportNet": 331.5,
+    "groundPos": 75.8,
+    "supportPos": 392.0,
+    "supportShareOfPos": 0.838
+   },
+   "supportSatPct": 90.2,
+   "pitchDeg": [
+    -10.1,
+    100.8
+   ],
+   "rollDeg": [
+    -4.9,
+    13.1
+   ],
+   "pelvisErrVsAuthoritativeMaxM": 0.687,
+   "pelvisErrVsScheduledMaxM": 0.682,
+   "actSatAxesMean": 3.78,
+   "legHardMarginMinDeg": -6.27,
+   "stanceContactFrac": 0.801,
+   "stances": 6
+  }
+ }
+}
