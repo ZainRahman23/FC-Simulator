@@ -2542,3 +2542,24 @@ Not pushed.
 **TD-17 (debt):** bounded-IK branch selection at a soft-bound fold (active-set path dependence). It is not gated in CQ or TD2C.
 
 Not pushed.
+
+### E2-20: DVG combined qualification DOES NOT VALIDATE as preregistered → stopped before adoption and TD2C
+
+**Battery:** `e2/DVG_RESULTS.md`; frozen 7de6c00 (erratum E1); 1,522 jobs. The first run (b08b77a) was aborted unevaluated.
+
+**Pass:**
+- CQ-0 identity; CQ-1a (AB 432 / 432 bit-identical); CQ-1c (E1a / E1b 38 / 38 bit-identical, incl. P15);
+- CQ-2 (finite, 0 over-capacity, joint-rate commands ≤ 0.35 × force–velocity limit);
+- CQ-3b, CQ-4;
+- CQ-5 (24 energy failures, all attributed to TD-15 against the no-feed-forward reference);
+- CQ-6 (exact law, guard step ≤ 0.66 × bound, incl. after target release).
+
+Guard off vs on: commands 10¹⁷ – 10²¹ → ≤ 1.35 kN·m; Σ+ up to 2,499 J → ≤ 0.89 J.
+
+**Fail:**
+- **CQ-1b:** SV-2 C-L11 on V2-long-legs (out of the executable envelope) at 180 Hz: I-4 saturation 4.26 → 5.17 % (one knee axis, 33 ms, during the fade). Meanwhile I-2 applied (0 violations), I-3 and the blow-up are resolved.
+- **CQ-3a:** one mirror mismatch that the classifier missed as an IK fold. The knee is 4.5 · 10⁻¹⁰ rad inside its soft bound and the exact `atBound` flag is false: a mechanical tool defect.
+
+**Decisions pending:** CQ-1b judgement for out-of-envelope runs; the CQ-3a erratum; then adoption → TD2C → E2 sequence.
+
+Not pushed.

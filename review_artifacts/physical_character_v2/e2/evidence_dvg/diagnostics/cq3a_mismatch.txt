@@ -1,0 +1,6 @@
+# CQ-3a diagnosis (post-hoc): the one gated mirror mismatch, V2-165-62 diag t 9.7875
+L err 1.35e-4 R err 3.66e-16 iterations 6 15
+L soft-limit margins (deg) [31.541,36.623,33.697,0,32.08,14.567] atBound flags [false,false,false,false,false,false]
+R soft-limit margins (deg) [32.114,37.704,33.754,2.124,33.138,14.558]
+L knee coordinate -1.2217304759452066 — 4.508e-10 rad inside its soft bound (−1.2217304763960308)
+L solve under input perturbation 1e-13 / -1e-13 / 1e-11 / -1e-11: 5.9e-16 5.9e-16 5.9e-16 5.9e-16 (flips to reached = the mirror side)

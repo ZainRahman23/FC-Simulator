@@ -1,0 +1,44 @@
+# CQ-1b diagnosis (post-hoc): SV-2 V2-long-legs C-L11, unguarded (SV-2 battery) vs DVG
+## SV-2 battery (unguarded) failing items for these runs
+I-2: V2-long-legs|L|180|on|C-L11 E1a-7: applied Δτ max 183.91 (violations 21), commanded Δτ0 max 32042444414523.15 (violations 32) N·m
+I-3: V2-long-legs|L|180|on|C-L11 energy closure max 5.39e+0 J/tick, Σ+ 8.043 J, authority 0
+I-6: V2-long-legs|L|180|on|C-L11 TOUCHDOWN entries 3, rebound 2, re-entries < 60 ms 0
+I-2: V2-long-legs|L|240|on|C-L11 E1a-7: applied Δτ max 192.60 (violations 27), commanded Δτ0 max 277574469130808.03 (violations 36) N·m
+I-3: V2-long-legs|L|240|on|C-L11 energy closure max 4.21e-1 J/tick, Σ+ 1.123 J, authority 0
+I-4: V2-long-legs|L|240|on|C-L11 saturation 5.6 % / 29 ms
+I-6: V2-long-legs|L|240|on|C-L11 TOUCHDOWN entries 3, rebound 2, re-entries < 60 ms 0
+I-2: V2-long-legs|L|480|on|C-L11 E1a-7: applied Δτ max 181.44 (violations 60), commanded Δτ0 max 4231980043155062.00 (violations 111) N·m
+I-3: V2-long-legs|L|480|on|C-L11 energy closure max 7.16e-2 J/tick, Σ+ 0.501 J, authority 0
+I-4: V2-long-legs|L|480|on|C-L11 saturation 10.9 % / 60 ms
+I-6: V2-long-legs|L|480|on|C-L11 TOUCHDOWN entries 3, rebound 2, re-entries < 60 ms 0
+I-2: V2-long-legs|R|180|on|C-L11 E1a-7: applied Δτ max 162.05 (violations 25), commanded Δτ0 max 16187691666340.63 (violations 33) N·m
+I-3: V2-long-legs|R|180|on|C-L11 energy closure max 6.27e-1 J/tick, Σ+ 1.984 J, authority 0
+I-6: V2-long-legs|R|180|on|C-L11 TOUCHDOWN entries 3, rebound 2, re-entries < 60 ms 0
+I-2: V2-long-legs|R|240|on|C-L11 E1a-7: applied Δτ max 160.83 (violations 32), commanded Δτ0 max 4495169523942194.50 (violations 39) N·m
+I-3: V2-long-legs|R|240|on|C-L11 energy closure max 3.12e+0 J/tick, Σ+ 5.882 J, authority 0
+I-4: V2-long-legs|R|240|on|C-L11 saturation 5.6 % / 29 ms
+I-6: V2-long-legs|R|240|on|C-L11 TOUCHDOWN entries 2, rebound 1, re-entries < 60 ms 0
+I-2: V2-long-legs|R|480|on|C-L11 E1a-7: applied Δτ max 172.36 (violations 49), commanded Δτ0 max 2126431400600702.50 (violations 96) N·m
+I-3: V2-long-legs|R|480|on|C-L11 energy closure max 1.02e-1 J/tick, Σ+ 0.526 J, authority 0
+I-4: V2-long-legs|R|480|on|C-L11 saturation 7.1 % / 38 ms
+I-6: V2-long-legs|R|480|on|C-L11 TOUCHDOWN entries 3, rebound 2, re-entries < 60 ms 0
+## DVG failing items for these runs
+I-2: V2-long-legs|L|180|on|C-L11 E1a-7: applied Δτ max 9.56 (violations 0), commanded Δτ0 max 65.53 (violations 8) N·m
+I-4: V2-long-legs|L|180|on|C-L11 saturation 5.2 % / 33 ms
+I-6: V2-long-legs|L|180|on|C-L11 TOUCHDOWN entries 3, rebound 2, re-entries < 60 ms 0
+I-2: V2-long-legs|L|240|on|C-L11 E1a-7: applied Δτ max 8.09 (violations 0), commanded Δτ0 max 48.17 (violations 10) N·m
+I-4: V2-long-legs|L|240|on|C-L11 saturation 5.2 % / 33 ms
+I-6: V2-long-legs|L|240|on|C-L11 TOUCHDOWN entries 3, rebound 2, re-entries < 60 ms 0
+I-2: V2-long-legs|L|480|on|C-L11 E1a-7: applied Δτ max 10.05 (violations 0), commanded Δτ0 max 45.27 (violations 25) N·m
+I-4: V2-long-legs|L|480|on|C-L11 saturation 5.2 % / 31 ms
+I-6: V2-long-legs|L|480|on|C-L11 TOUCHDOWN entries 3, rebound 2, re-entries < 60 ms 0
+I-2: V2-long-legs|R|180|on|C-L11 E1a-7: applied Δτ max 9.19 (violations 0), commanded Δτ0 max 65.48 (violations 8) N·m
+I-4: V2-long-legs|R|180|on|C-L11 saturation 5.2 % / 33 ms
+I-6: V2-long-legs|R|180|on|C-L11 TOUCHDOWN entries 3, rebound 2, re-entries < 60 ms 0
+I-2: V2-long-legs|R|240|on|C-L11 E1a-7: applied Δτ max 8.09 (violations 0), commanded Δτ0 max 48.17 (violations 10) N·m
+I-4: V2-long-legs|R|240|on|C-L11 saturation 5.2 % / 33 ms
+I-6: V2-long-legs|R|240|on|C-L11 TOUCHDOWN entries 3, rebound 2, re-entries < 60 ms 0
+I-2: V2-long-legs|R|480|on|C-L11 E1a-7: applied Δτ max 10.05 (violations 0), commanded Δτ0 max 45.46 (violations 25) N·m
+I-4: V2-long-legs|R|480|on|C-L11 saturation 5.2 % / 31 ms
+I-6: V2-long-legs|R|480|on|C-L11 TOUCHDOWN entries 3, rebound 2, re-entries < 60 ms 0
+## saturation timing, DVG, V2-long-legs L 180 Hz: one knee axis (joint 9 axis 1) saturated 6 / 116 swing rows (t 7.894 – 7.922 s); guard FADE 7.833 – 7.961 s
