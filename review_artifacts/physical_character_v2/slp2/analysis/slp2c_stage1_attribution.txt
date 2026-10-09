@@ -1,0 +1,16 @@
+== SLP-2C stage1 (2c) d05c186a fall 2.3583333333333334
+  [0.500,1.054) max|pitch|   2.3  B Jz  -34.1   L: stance Jz   -5.9 Jy   40.5 | swing Jz    4.6 Jy   12.7 (swing ticks with Fy>20 N: 4/24) || R: stance Jz   27.4 Jy  381.4 | swing Jz    0.0 Jy    0.0 (swing ticks with Fy>20 N: 0/0)
+  [1.054,1.450) max|pitch|  39.6  B Jz   58.0   L: stance Jz   21.9 Jy  243.1 | swing Jz    0.0 Jy    0.0 (swing ticks with Fy>20 N: 0/0) || R: stance Jz    0.0 Jy    0.0 | swing Jz  -60.9 Jy   80.9 (swing ticks with Fy>20 N: 22/23)
+  [1.450,1.608) max|pitch|  41.2  B Jz  -25.9   L: stance Jz   12.2 Jy  121.3 | swing Jz    0.0 Jy    0.0 (swing ticks with Fy>20 N: 0/0) || R: stance Jz   -2.3 Jy    3.4 | swing Jz    0.0 Jy    0.0 (swing ticks with Fy>20 N: 0/0)
+  [1.608,2.004) max|pitch|  97.0  B Jz   -0.8   L: stance Jz    0.0 Jy    0.0 | swing Jz   16.0 Jy  156.4 (swing ticks with Fy>20 N: 18/24) || R: stance Jz    0.0 Jy    0.0 | swing Jz    0.0 Jy    0.0 (swing ticks with Fy>20 N: 0/0)
+== SLP-2 walk f1 (2) 6fbee446 fall 2.5208333333333335
+  [0.500,1.054) max|pitch|   1.9  B Jz   11.8   L: stance Jz  -14.1 Jy   63.4 | swing Jz    4.5 Jy   53.1 (swing ticks with Fy>20 N: 6/24) || R: stance Jz   -5.0 Jy  359.6 | swing Jz    0.0 Jy    0.0 (swing ticks with Fy>20 N: 0/0)
+  [1.054,1.450) max|pitch|  23.5  B Jz  109.4   L: stance Jz  -46.4 Jy  291.0 | swing Jz    0.0 Jy    0.0 (swing ticks with Fy>20 N: 0/0) || R: stance Jz    0.0 Jy    0.0 | swing Jz  -59.3 Jy   69.9 (swing ticks with Fy>20 N: 16/23)
+  [1.450,1.608) max|pitch|  25.3  B Jz   15.1   L: stance Jz    1.4 Jy   49.4 | swing Jz    0.0 Jy    0.0 (swing ticks with Fy>20 N: 0/0) || R: stance Jz   -5.1 Jy  102.8 | swing Jz    0.0 Jy    0.0 (swing ticks with Fy>20 N: 0/0)
+  [1.608,2.004) max|pitch|  43.6  B Jz  -16.4   L: stance Jz    0.0 Jy    0.0 | swing Jz   -9.5 Jy  109.1 (swing ticks with Fy>20 N: 15/24) || R: stance Jz   20.2 Jy  112.6 | swing Jz    0.0 Jy    0.0 (swing ticks with Fy>20 N: 0/0)
+
+# Swing-phase ground contact (scheduled swing ticks with ground Fy > 20 N) and the legs' forward impulse split by scheduled phase, window [0.5 s, first |pitch| > 5°) — SLP-2 calibration f1 and SLP-2C stage 1
+SLP-2 walk             window 0.5–1.167 s: swing ticks in contact 7/30 (23 %) | legs forward impulse: stance   -46.6 N·s, swing (drag)     1.7 N·s | B   37.6 N·s
+SLP-2 jog              window 0.5–1.633 s: swing ticks in contact 13/83 (16 %) | legs forward impulse: stance   -84.5 N·s, swing (drag)     3.6 N·s | B   65.3 N·s
+SLP-2 run              window 0.5–0.933 s: swing ticks in contact 4/33 (12 %) | legs forward impulse: stance     4.0 N·s, swing (drag)     0.3 N·s | B   -2.4 N·s
+SLP-2C walk stage 1    window 0.5–1.183 s: swing ticks in contact 10/31 (32 %) | legs forward impulse: stance    10.7 N·s, swing (drag)    -5.7 N·s | B  -13.7 N·s

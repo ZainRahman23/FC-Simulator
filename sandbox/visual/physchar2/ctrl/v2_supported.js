@@ -82,7 +82,8 @@ export class SupportedDriver {
     this.legs = [0, 1].map(n => ({ prevStance: true, planted: { ...this.foot0[n] }, seg: null, segT0: 0, tTD: -Infinity, tLO: null, prevT: null, prevOK: false, ikErr: 0, phaseKey: null }));
     this.tauPrev = null; this.dTau0 = 0; this.fallen = false; this.events = []; this.shares = [0.5, 0.5]; this.wSt = [1, 1]; this.target = [null, null];
     // SLP-1b (review_artifacts/physical_character_v2/slp1/SLP1b_AMENDMENT.md, frozen 1137244): version "1b" only; version "1" (SLP-1) is untouched by everything below
-    this.v1b = cfg.version === "1b" || cfg.version === "2"; this.v2 = cfg.version === "2";   // SLP-2 (slp2/SLP2_PREREGISTRATION.md, frozen 03455b8): 1b's B1 / B3 / B4 legs and reference, WITHOUT B2 and without the −a_T term (A carries a_T)
+    this.v1b = ["1b", "2", "2c"].includes(cfg.version); this.v2 = cfg.version === "2" || cfg.version === "2c"; this.v2c = cfg.version === "2c";   // SLP-2C (slp2/SLP2C_PREREGISTRATION.md, frozen b35b31a): v2 + C1 + C2
+    if (this.v2c) { const lo = C.lc.o; this.tauD = 3 / (lo.swingZeta * 2 * Math.PI * lo.swingHz); }   // C1: three time constants of the existing swing servo   // SLP-2 (slp2/SLP2_PREREGISTRATION.md, frozen 03455b8): 1b's B1 / B3 / B4 legs and reference, WITHOUT B2 and without the −a_T term (A carries a_T)
     if (this.v1b) { const S = cfg.sched; this.flight = S.tc < S.T / 2 - 1e-12; this.Fpk = Math.PI * this.M * G * (S.T / 2) / (2 * S.tc);
       let c0 = [0, 0, 0]; st0.forEach((b, i) => { c0 = V.add(c0, V.sc(b.com, B[i].mass)); }); c0 = V.sc(c0, 1 / this.M); this.c0p0 = V.sub(c0, st0[C.pelvis].com); this._precompute1b(); }
   }
@@ -136,6 +137,7 @@ export class SupportedDriver {
         const start = isFinite(L.tTD) ? this.stancePose(n, p.tLO - 1e-9).pose : { pos: L.planted.pos.slice(), rot: L.planted.rot.slice() }, goal = this.tdTarget(n, p.tTD).pose;
         const ref = { p: start.pos, v: [0, 0, 0], a: [0, 0, 0], th: qlog(Q.mul(Q.conj(goal.rot), start.rot)), w: [0, 0, 0], al: [0, 0, 0] };
         L.seg = stepSegment(ref, goal, S.tsw, { z: Math.max(start.pos[1], goal.pos[1]) + this.cfg.apex, tk: S.tsw / 2 }); L.segT0 = p.tLO; L.tLO = p.tLO;
+        L.segH = this.v2c ? stepSegment(ref, goal, S.tsw - this.tauD, null) : null;   // C1: horizontal position + orientation settle at rest τ_d before touchdown (vertical keeps L.seg)
         this.events.push({ t: +t.toFixed(5), foot: "LR"[n], ev: "LO" }); }
       L.prevStance = p.stance; L.phase = p; }
     // shares (§2.3.5): settle 0.5 / 0.5 → right 1 by t_g; single stance 1 (0.03 s ramps after TD / before LO when the other foot is in flight); DS min-jerk lead / trail; flight 0
@@ -151,7 +153,9 @@ export class SupportedDriver {
     const ph = this.fallen ? null : this._events(t, st), pel = { pos: V.sub(this.cfg.traj.pos(t), this.pelOff), rot: this.pelQ0 }, F = [null, null], cps = [null, null], ikT = {};
     const fy1b = this.v1b && !this.fallen ? this.fySched(t).fy : null, pm = st[C.pelvis], yRef1b = this.v1b ? this.cfg.traj.pos(t)[1] + this.ref1b(Math.round(t / dt)).dx[1] - this.pelOff[1] : null;
     if (!this.fallen) for (const n of [0, 1]) { const L = this.legs[n]; let pose, cp = null;
-      if (ph[n].stance) { const sp = this.stancePose(n, t); pose = sp.pose; cp = sp.cp; } else pose = stepAt(L.seg, t - L.segT0);
+      if (ph[n].stance) { const sp = this.stancePose(n, t); pose = sp.pose; cp = sp.cp; }
+      else if (this.v2c && L.segH) { const h = stepAt(L.segH, t - L.segT0), v = stepAt(L.seg, t - L.segT0); pose = { pos: [h.pos[0], v.pos[1], h.pos[2]], rot: h.rot }; }
+      else pose = stepAt(L.seg, t - L.segT0);
       let fr = pel; if (this.v1b) { const w = this.wSt[n], qa = pm.rot, s0 = qa[0] * this.pelQ0[0] + qa[1] * this.pelQ0[1] + qa[2] * this.pelQ0[2] + qa[3] * this.pelQ0[3] < 0 ? -1 : 1;   // 1b B1: posture "ik" frame (stance) ↔ actual frame (swing)
         fr = { pos: [pm.pos[0], pm.pos[1] + w * (yRef1b - pm.pos[1]), pm.pos[2]], rot: Q.norm(qa.map((x, i) => (1 - w) * x + w * s0 * this.pelQ0[i])) }; }
       this.target[n] = pose; const r = C.legIKBounded(st, ev, n, fr.pos, fr.rot, { pos: pose.pos, rot: pose.rot }, { limits: "hard", fallback: "none" }); L.ikErr = r.err;
@@ -169,7 +173,7 @@ export class SupportedDriver {
       const Lk = C.o.ffLockedAxis ? C.lockedFix[k] : null, tB1 = Lk != null ? lockedAxisFF(T, axW, decompose(q).tw, Lk) : 0;
       const g = C.gain[k], gs = side >= 0 ? C.gainSwing[k] : null, w = leg ? this.wSt[side] : 1, K = leg ? w * g.K + (1 - w) * gs.K : g.K, Dg = leg ? w * g.D + (1 - w) * gs.D : g.D;
       const wR = leg && ikT[k] ? this.legs[side].wRef[k] : null;
-      cmd[k] = KEYS.map((key, i) => { const tff = Lk != null && i === 3 - Lk ? tB1 : V.dot(T, axW[i]), wv = wR ? (1 - w) * (Dg + dt * K) * wR[i] : 0, tau0 = tff + K * e[i] + wv;
+      cmd[k] = KEYS.map((key, i) => { const tff = Lk != null && i === 3 - Lk ? tB1 : V.dot(T, axW[i]), wv = wR ? (this.v2c ? 1 : 1 - w) * (Dg + dt * K) * wR[i] : 0, tau0 = tff + K * e[i] + wv;
         const pv = this.tauPrev ? this.tauPrev[k * 3 + i] : undefined; if (pv != null) dMax = Math.max(dMax, Math.abs(tau0 - pv)); tauNow[k * 3 + i] = tau0; return { K, D: Dg, tau0, ff: tff }; }); }
     this.tauPrev = tauNow; this.dTau0 = dMax; this.comNow = c; return cmd; }
   setFallen(t) { if (!this.fallen) { this.fallen = true; this.events.push({ t: +t.toFixed(5), ev: "FALLEN: gait stopped, posture hold (velocities untouched)" }); } }

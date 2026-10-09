@@ -1,0 +1,231 @@
+{
+ "speed": "walk",
+ "hash": "d05c186a",
+ "hashRepeat": "d05c186a",
+ "fallT": 2.3583333333333334,
+ "firstPitchOver5": 1.18333,
+ "P": {
+  "P1": false,
+  "P2": false,
+  "P3": false,
+  "P4": false,
+  "P5": false,
+  "P6": true,
+  "P7": false,
+  "P8": false,
+  "base": {
+   "A1": true,
+   "A4": false,
+   "A5": false,
+   "A6": true
+  },
+  "pass": false
+ },
+ "touchdowns": [
+  {
+   "t": 0.0083,
+   "foot": "L",
+   "vFwd": 0.005,
+   "vLat": -0.016,
+   "vDown": 0.073,
+   "aheadOfComM": 0.023,
+   "sched": "stance"
+  },
+  {
+   "t": 0.0083,
+   "foot": "R",
+   "vFwd": 0.003,
+   "vLat": 0.012,
+   "vDown": 0.072,
+   "aheadOfComM": 0.023,
+   "sched": "stance"
+  },
+  {
+   "t": 0.8292,
+   "foot": "L",
+   "vFwd": 0.045,
+   "vLat": 0.038,
+   "vDown": 0.195,
+   "aheadOfComM": 0.3,
+   "sched": "swing"
+  },
+  {
+   "t": 0.9833,
+   "foot": "L",
+   "vFwd": 0.349,
+   "vLat": -0.385,
+   "vDown": 0.241,
+   "aheadOfComM": 0.277,
+   "sched": "stance"
+  },
+  {
+   "t": 1.7333,
+   "foot": "L",
+   "vFwd": 2.258,
+   "vLat": 1.967,
+   "vDown": 0.083,
+   "aheadOfComM": -0.37,
+   "sched": "swing"
+  },
+  {
+   "t": 2.8917,
+   "foot": "L",
+   "vFwd": -0.906,
+   "vLat": 0.075,
+   "vDown": 2.4,
+   "aheadOfComM": -0.751,
+   "sched": "stance"
+  },
+  {
+   "t": 3.2,
+   "foot": "R",
+   "vFwd": 1.317,
+   "vLat": 0.608,
+   "vDown": 0.62,
+   "aheadOfComM": -0.845,
+   "sched": "swing"
+  },
+  {
+   "t": 3.2333,
+   "foot": "L",
+   "vFwd": 1.29,
+   "vLat": 0.739,
+   "vDown": 0.204,
+   "aheadOfComM": -0.826,
+   "sched": "stance"
+  }
+ ],
+ "W1_preCollapse": {
+  "window_s": [
+   0.5,
+   1.183
+  ],
+  "A_forwardImpulseNs": 75.69,
+  "legs_netForwardImpulseNs": 5.07,
+  "legs_forward_stance_vs_swingNs": [
+   10.72,
+   -5.65
+  ],
+  "swingTicksInContact": "10/31",
+  "legs_verticalImpulseNs": 540.6,
+  "weightImpulseNs": 529.0,
+  "B_forwardImpulseNs": -13.71,
+  "B_meanAbsFracOfCap": {
+   "Fx": 0.184,
+   "Fy": 0.065,
+   "Fz": 0.326,
+   "Tx": 0.548,
+   "Ty": 0.048,
+   "Tz": 0.196
+  },
+  "B_saturatedPct": 26.8,
+  "D_comFwdM_range": [
+   0.0303,
+   0.064
+  ],
+  "Dv_fwd_range": [
+   -0.146,
+   0.193
+  ],
+  "pelvisPitchDeg": [
+   -2.3,
+   5.0
+  ],
+  "pelvisRollDeg": [
+   -0.4,
+   1.8
+  ],
+  "legHardMarginMinDeg": -0.49,
+  "actSatAxesMean": 1.12
+ },
+ "W2_toFall": {
+  "window_s": [
+   0.5,
+   2.358
+  ],
+  "A_forwardImpulseNs": 94.69,
+  "legs_netForwardImpulseNs": 17.08,
+  "legs_forward_stance_vs_swingNs": [
+   57.39,
+   -40.31
+  ],
+  "swingTicksInContact": "44/83",
+  "legs_verticalImpulseNs": 1049.2,
+  "weightImpulseNs": 1445.0,
+  "B_forwardImpulseNs": -34.84,
+  "B_meanAbsFracOfCap": {
+   "Fx": 0.222,
+   "Fy": 0.315,
+   "Fz": 0.403,
+   "Tx": 0.796,
+   "Ty": 0.213,
+   "Tz": 0.572
+  },
+  "B_saturatedPct": 66.1,
+  "D_comFwdM_range": [
+   0.0195,
+   0.1004
+  ],
+  "Dv_fwd_range": [
+   -0.212,
+   0.371
+  ],
+  "pelvisPitchDeg": [
+   -2.3,
+   140.8
+  ],
+  "pelvisRollDeg": [
+   -18.9,
+   35.4
+  ],
+  "legHardMarginMinDeg": -9.43,
+  "actSatAxesMean": 3.28
+ },
+ "events": [
+  {
+   "t": 0.5,
+   "foot": "L",
+   "ev": "LO"
+  },
+  {
+   "t": 0.9,
+   "foot": "L",
+   "ev": "TD",
+   "tdErrMm": 62.49,
+   "footContactMeasured": null
+  },
+  {
+   "t": 1.05417,
+   "foot": "R",
+   "ev": "LO"
+  },
+  {
+   "t": 1.45,
+   "foot": "R",
+   "ev": "TD",
+   "tdErrMm": 884.89,
+   "footContactMeasured": null
+  },
+  {
+   "t": 1.60833,
+   "foot": "L",
+   "ev": "LO"
+  },
+  {
+   "t": 2.00417,
+   "foot": "L",
+   "ev": "TD",
+   "tdErrMm": 891.45,
+   "footContactMeasured": null
+  },
+  {
+   "t": 2.15833,
+   "foot": "R",
+   "ev": "LO"
+  },
+  {
+   "t": 2.35833,
+   "ev": "FALLEN: gait stopped, posture hold (velocities untouched)"
+  }
+ ]
+}

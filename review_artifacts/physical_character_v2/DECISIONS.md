@@ -2688,3 +2688,13 @@ Not pushed.
 - **A9** (mean |B| ≤ 25 % of caps) and **A10** failed at all speeds and frequencies. Walk falls or is dragged; jog falls at 2.38 – 2.60 s; run at 2.85 – 2.93 s. 9 / 9 deterministic pairs.
 - **Classification:** A / B separation validated for translation; failure = C contact realisation under decision 3; no V2 body limit. SLP-1 / 1b preserved (hashes reproduced). CPU 819 – 944 vs 892 µs per step.
 - **Awaiting user:** C contact quality (LOC-1-type), a restricted refinement of decision 3, or ending the SLP series.
+
+## 2026-10-09 — SLP-2C STOPPED at stage 1 (walk 1.2 m/s failed; staged stop rule); jog / run, SLP-2 calibration rerun and matrix not run (`slp2/SLP2C_RESULTS.md`; decision `sources/2026-10-09_user_decision_slp2c_contact_compatible_legs.md`)
+
+- **Frozen:** b35b31a; no amendments. Driver version "2c" only (C1 swing horizontal settles τ_d = 0.149 s before touchdown; C2 velocity feed-forward on stance legs). A / B / R / body / contacts unchanged. P9 passes (versions 1 / 1b / 2 reproduce all nine f1 hashes).
+- **Stage 1:** D0, f = 1 Hz, run twice, d05c186a both; FALLEN at 2.358 s (before the steady window), so P1 – P5, P7, P8 fail; P6 n/a.
+- **C2** removed most stance braking (L stance −16.7 vs −44.4 N·s pre-collapse) but overshot into propulsion: the R stance foot pushed +27.4 N·s before and during double support (SLP-2 −5.1). B cancelled it, pitch torque 62 % of cap before any touchdown, body 30 – 64 mm ahead of R.
+- **C1** cut the first-touchdown forward speed to 0.045 m/s (from 0.138); contact still 67 ms early, with a bounce. Compressing the 1.33 m swing into 0.247 s made it unfollowable: the trailing foot lagged its target by up to 0.88 m, stayed on the turf toe-down (91 / 95 swing ticks, 110 – 470 N) and braked −62.6 N·s, starting before the pitch collapse. B pitch torque reached its cap, pitch 40°, fall.
+- **Verdict:** C physically real (planted flat-phase slip 0.0 mm, legs 102 % of weight pre-collapse, no writes); not mechanically neutral.
+- **Classification:** same family (contact forces against A absorbed by B), mechanism moved to stance propulsion plus swing-foot drag. No prohibited measure shown to be required; no V2 body limit shown.
+- **Awaiting user:** (1) read-only swing-feasibility diagnosis (recommended first), (2) a new SLP-2C amendment (full-T_sw horizontal swing, swing inertial feed-forward and clearance, stance feed-forward from the authoritative sweep rate), or (3) end the SLP series.
